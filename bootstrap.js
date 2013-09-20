@@ -7,11 +7,11 @@ Cu.import("resource://gre/modules/Services.jsm");
 function install(data, reason) {
     Components.utils.import("resource://gre/modules/FileUtils.jsm");
     Components.utils.import("resource://gre/modules/NetUtil.jsm");
-    var file =
-    FileUtils.getFile('ProfD',['extensions','zotero-better-bibtex@iris-advies.com','resources','translators','Better BibTex.js']);
+    var file = FileUtils.getFile('ProfD',['extensions','zotero-better-bibtex@iris-advies.com','resources','translators','Better BibTex.js']);
     NetUtil.asyncFetch(file, function(inputStream, status) {
         if (!Components.isSuccessCode(status)) {
             // Handle error!
+            Zotero.debug("Better BibTex installation failed");
             return;
         }
         // The file data is contained within inputStream.
@@ -40,6 +40,7 @@ function install(data, reason) {
         
         var data = splitTranslator(data);
         var Zotero = Components.classes["@zotero.org/Zotero;1"].getService(Components.interfaces.nsISupports).wrappedJSObject;
+        Zotero.debug("Better BibTex installed");
         Zotero.Translators.save(data.header, data.code);
         //re-initialize Zotero translators so Better Bibtex shows up right away
         Zotero.Translators.init()

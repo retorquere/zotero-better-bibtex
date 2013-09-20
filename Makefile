@@ -11,9 +11,14 @@ zotero.xpi: FORCE
 	zip -r $@ chrome chrome.manifest install.rdf resources bootstrap.js
 
 zotero-%-zotero-better-bibtex.xpi: zotero.xpi
-	rm zotero-*.xpi
+	rm -f zotero-*.xpi
 	mv $< $@
 	xsltproc -stringparam xpi $@ update.xsl install.rdf > update.rdf
+
+publish:
+	git add .
+	git commit -am ${RELEASE}
+	git push
 
 Makefile.in: install.rdf
 	echo "all: zotero-${RELEASE}-zotero-better-bibtex.xpi" > Makefile.in
