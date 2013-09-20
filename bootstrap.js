@@ -47,7 +47,7 @@ function install(data, reason) {
     });
 }
 
-function load() {}
+function load() { install(data, reason); }
 
 function unload() {}
 
