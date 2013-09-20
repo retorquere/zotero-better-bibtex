@@ -8,7 +8,7 @@ function install(data, reason) {
     Components.utils.import("resource://gre/modules/FileUtils.jsm");
     Components.utils.import("resource://gre/modules/NetUtil.jsm");
     var file =
-    FileUtils.getFile('ProfD',['extensions','zotero-better-bibtex@iris-advies.com','resource','translators','Better BibTex.js']);
+    FileUtils.getFile('ProfD',['extensions','zotero-better-bibtex@iris-advies.com','resources','translators','Better BibTex.js']);
     NetUtil.asyncFetch(file, function(inputStream, status) {
         if (!Components.isSuccessCode(status)) {
             // Handle error!
