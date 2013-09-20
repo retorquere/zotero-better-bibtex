@@ -47,6 +47,14 @@ function install(data, reason) {
     });
 }
 
+function load() {}
+
+function unload() {}
+
+function startup(data, reason) { install(data, reason); }
+
+function shutdown(data, reason) { }
+
 /**
  * Handle the add-on being uninstalled
  */
