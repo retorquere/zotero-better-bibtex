@@ -12,6 +12,9 @@
 		"exportFileData": false,
 		"useJournalAbbreviation": false
 	},
+  "configOptions": {
+    "getCollections": true
+  },
 	"inRepository": true,
 	"translatorType": 3,
 	"browserSupport": "gcsv",
