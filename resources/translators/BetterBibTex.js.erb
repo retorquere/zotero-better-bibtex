@@ -3,6 +3,56 @@
 <%= render 'converter.js' %>
 <%= render 'parse-bibtex.js' %>
 
+convert.to_latex = function(str) {
+  let res = '';
+  let strlen = str.length;
+  let c;
+  let textMode = true;
+
+  for (let i=0; i < strlen; i++) {
+    c = str.charAt(i);
+    ca = this.unicode2latex[c] || c;
+
+    if (ca[0] == '\\' || ca[0] == '{'') { // command or block always OK
+      res += ca;
+      textMode = ca.match(/}$/;
+    } else {
+      if (!textMode) {
+        res += '{}';
+        textMode = true;
+      }
+      res += c;
+    }
+  }
+  return res;
+}
+
+convert.from_latex = function(str) {
+  let chunks = str.split('\\');
+  let res = chunks.shift();
+  let m, i, c, l;
+
+  for (chunk of chunks) {
+    chunk = '\\' + chunk;
+    l = chunk.length;
+    m = null;
+    for (i=2; i<=l; i++) {
+      if (this.latex2unicode[chunk.substring(0, i)]) {
+        m = i;
+      } else {
+        break;
+      }
+    }
+
+    if (m) {
+      res += this.latex2unicode[chunk.substring(0, m)] + chunk.substring(m, chunk.length);
+    } else {
+      res += chunk;
+    }
+  }
+  return res;
+}
+
 function detectImport() {
 	var maxChars = 1048576; // 1MB
 	
