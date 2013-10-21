@@ -18,7 +18,7 @@
 	"inRepository": true,
 	"translatorType": 3,
 	"browserSupport": "gcsv",
-	"lastUpdated": "2013-08-01 10:05:00"
+	"lastUpdated": "2013-10-01 10:05:00"
 }
 
 function detectImport() {
@@ -1875,7 +1875,7 @@ function getFieldValue(read) {
 				value = value.replace(mapped, unicode);
 			}
 		}
-		
+
 		// kill braces
 		value = value.replace(/([^\\])[{}]+/g, "$1");
 		if(value[0] == "{") {
@@ -2183,7 +2183,7 @@ function writeField(field, value, isMacro) {
 		}
 	}
 	if (Zotero.getOption("exportCharset") != "UTF-8") {
-		value = value.replace(/[\u0080-\uFFFF]/g, mapAccent);
+		value = Zotero.BetterBibTexUnicode.to_latex(value);
 	}
 	//convert the HTML markup allowed in Zotero for rich text to TeX; excluding doi/url/file shouldn't be necessary, but better to be safe;
 	if (!((field == "url") || (field == "doi") || (field == "file"))) value = mapHTMLmarkup(value);
