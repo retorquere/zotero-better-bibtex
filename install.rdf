@@ -2,12 +2,12 @@
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 	
 	<Description about="urn:mozilla:install-manifest">
-		<em:id>zotero-better-bibtex@iris-advies.com</em:id>
+		<em:id>better-bibtex@iris-advies.com</em:id>
 		<em:name>Better BibTex import/export</em:name>
-		<em:version>0.0.7</em:version>
+		<em:version>0.0.8</em:version>
 		<em:description>Retains citekeys across BibTex import/export</em:description>
 		<em:creator>Emiliano Heyns</em:creator>
-		<em:updateURL>https://raw.github.com/friflaj/zotero-zotero-better-bibtex/master/update.rdf</em:updateURL>
+		<em:updateURL>https://raw.github.com/friflaj/zotero-better-bibtex/master/update.rdf</em:updateURL>
 		<em:type>2</em:type> <!-- type=extension -->
     <em:bootstrap>true</em:bootstrap>
     <em:unpack>true</em:unpack>
