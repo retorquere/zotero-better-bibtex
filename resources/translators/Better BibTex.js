@@ -7,7 +7,7 @@
 	"maxVersion": "",
 	"priority": 100,
 	"displayOptions": {
-		"exportCharset": "UTF-8",
+		"exportCharset": "ASCII",
 		"exportNotes": true,
 		"exportFileData": false,
 		"useJournalAbbreviation": false
