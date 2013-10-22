@@ -5,3 +5,4 @@ Zotero.BetterBibTex = {
 
 // Initialize the utility
 window.addEventListener('load', function(e) { Zotero.BetterBibTex.init(); }, false);
+// search metadata = indexOf('{')
