@@ -121,7 +121,7 @@ file UNICODE => ['chrome/content/zotero-better-bibtex/unicode.xml', 'Rakefile'] 
 end
 
 PARSEBIBTEX = 'resource/translators/parse-bibtex.js'
-file TRANSLATION => ([PARSEBIBTEX] + Dir[File.dirname(TRANSLATION) + '/*.*'].reject{|f| f == TRANSLATION}).uniq do |t|
+file TRANSLATOR => ([PARSEBIBTEX] + Dir[File.dirname(TRANSLATOR) + '/*.*'].reject{|f| f == TRANSLATOR}).uniq do |t|
   puts "Creating #{t.name}"
   File.open(t.name, 'wb', :encoding => 'utf-8'){|f|
     f.write(ERB.new(File.open(t.name + '.erb', 'rb', :encoding => 'utf-8').read).result)
@@ -131,5 +131,7 @@ end
 file PARSEBIBTEX do |t|
   puts "Downloading #{t.name}"
   File.open(t.name, 'wb', :encoding => 'utf-8'){|f|
-  f.write(URI.parse('https://raw.github.com/mikolalysenko/bibtex-parser/master/parse-bibtex.js').read.gsub('module.exports = doParse', '') }
+    f.write(URI.parse('https://raw.github.com/mikolalysenko/bibtex-parser/master/parse-bibtex.js').read
+                .gsub('module.exports = doParse', ''))
+  }
 end
