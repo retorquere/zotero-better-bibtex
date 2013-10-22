@@ -639,18 +639,22 @@ function doImport() {
 }
 
 function escape(value, sep) {
-	if (!value && typeof value != "number") { return; }
+  if (typeof value == 'number') { return value; }
+  if (!value) { return; }
 
   if (value instanceof Array) {
     if (value.length == 0) { return; }
-    if (value.length == 1) { return escape(value[0]); }
-    return '{' + [escape(v) for (v of value)].join(sep) + '}';
+    return [escape(v) for (v of value)].join(sep);
   }
-  if (typeof value == 'number') { return '' + value; }
-  return '{' + _unicode.to_latex('' + value) + '}';
+  return _unicode.to_latex('' + value);
 }
 function writeField(field, value) {
-	if (!value && typeof value != "number") return;
+  if (typeof value == 'number') {
+  } else {
+    if (!value) { return; }
+    value = '{' + value + '}';
+  }
+  
 	Zotero.write(",\n\t" + field + " = " + value);
 }
 
