@@ -4,15 +4,17 @@ Zotero.BetterBibTex = {
 
     var header = null;
     var data = null;
+    var start = -1;
 
     try {
       data = Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/BetterBibTex.js");
+      if (data) { start = data.indexOf('{'); }
 
-      if (data) {
+      if (start >= 0) {
         let len = 0;
         for (len = 0; len < 3000; len++) {
           try {
-            header = JSON.parse(data.substring(0, len).trim());
+            header = JSON.parse(data.substring(start, len).trim());
             data = data.substring(len, data.length);
             break;
           } catch (err) {
@@ -38,4 +40,3 @@ Zotero.BetterBibTex = {
 
 // Initialize the utility
 window.addEventListener('load', function(e) { Zotero.BetterBibTex.init(); }, false);
-// search metadata = indexOf('{')
