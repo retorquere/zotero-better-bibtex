@@ -27,10 +27,13 @@ Zotero.BetterBibTex = {
     }
 
     if (header) {
-      console.log("Installing Better BibTex");
+      prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero-better-bibtex.");
+      if (header['displayOptions']) { header['displayOptions']['exportCharset'] = prefs.getCharPref('encoding'); }
+      if (header['configOptions']) { header['configOptions']['getCollections'] = prefs.getBoolPref('recursive'); }
+      console.log("Installing Better BibTex: " + JSON.stringify(header));
       Zotero.Translators.save(header, data);
       //re-initialize Zotero translators so Better Bibtex shows up right away
-      Zotero.Translators.init()
+      Zotero.Translators.init();
       console.log("Better BibTex installed");
     } else {
       console.log("Invalid or missing translator metadata JSON object");

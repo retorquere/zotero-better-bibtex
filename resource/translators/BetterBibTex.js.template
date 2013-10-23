@@ -7,6 +7,7 @@
 	"maxVersion": "",
 	"priority": 100,
 	"displayOptions": {
+    "exportCharset": "ASCII",
 		"exportNotes": true,
 		"exportFileData": false,
 		"useJournalAbbreviation": false
@@ -14,7 +15,7 @@
   "configOptions": {
     "getCollections": true
   },
-	"inRepository": true,
+	"inRepository": false,
 	"translatorType": 3,
 	"browserSupport": "gcsv",
 	"lastUpdated": "2013-10-01 10:05:00"
@@ -662,10 +663,27 @@ function doImport() {
     bibtex += chunk;
   }
 
-  bibtex = JSON.parse(doParse(bibtex));
-  console.log(JSON.stringify(bibtex));
+  var bib = JSON.parse(doParse(bibtex));
+  var comments = bib['@comments'];
+  delete bib['@comments'];
 
-  alert('do something here');
+  for (key in bib) {
+    entry = bib[key];
+    if (!entry || !entry.entryType) {
+      Zotero.debug('No entry type for ' + entry);
+      continue;
+    }
+
+    var zoteroType = bibtex2zoteroTypeMap[entry.entryType.toLowerCase()];
+    if (!zoteroType) {
+      Zotero.debug('Unsupported bibtex entry type ' + entry.entryType);
+      continue;
+    }
+
+    var item = new Zotero.Item(zoteroType);
+    item.extra = '';
+  }
+
 
 	//for (var key in jabref.root) { if (jabref.root.hasOwnProperty(key)) { jabref.root[key].complete(); } }
 }
@@ -678,7 +696,12 @@ function escape(value, sep) {
     if (value.length == 0) { return; }
     return [escape(v) for (v of value)].join(sep);
   }
-  return _unicode.to_latex('' + value);
+
+  if (Zotero.getOption("exportCharset") == 'UTF-8') {
+    return '' + value;
+  else {
+    return _unicode.to_latex('' + value);
+  };
 }
 function writeField(field, value) {
   if (typeof value == 'number') {

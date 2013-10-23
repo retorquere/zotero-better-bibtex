@@ -17,7 +17,6 @@ SOURCES = %w{chrome resource defaults chrome.manifest install.rdf bootstrap.js}
 
 XPI = "zotero-#{EXTENSION}-#{RELEASE}.xpi"
 
-PARSEBIBTEX = 'resource/translators/parse-bibtex.js'
 UNICODE_JS = 'resource/translators/unicodeconverter.js'
 UNICODE_XML = 'resource/translators/unicode.xml'
 
@@ -117,7 +116,7 @@ file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
   "); }
 end
 
-file TRANSLATOR => [TRANSLATOR + '.template', PARSEBIBTEX, UNICODE_JS, 'Rakefile'] do |t|
+file TRANSLATOR => ['../translators/BibTex.js', UNICODE_JS, 'Rakefile'] do |t|
   puts "Creating #{t.name}"
   
   root = File.dirname(t.name)
@@ -128,12 +127,6 @@ file TRANSLATOR => [TRANSLATOR + '.template', PARSEBIBTEX, UNICODE_JS, 'Rakefile
     end
     f.write(template)
   }
-end
-
-file PARSEBIBTEX do |t|
-  download('https://raw.github.com/mikolalysenko/bibtex-parser/master/parse-bibtex.js', t.name)
-  body = File.open(t.name, 'rb', :encoding => 'utf-8').read.gsub('module.exports = doParse', '')
-  File.open(t.name, 'wb', :encoding => 'utf-8'){|f| f.write(body); }
 end
 
 file UNICODE_XML do |t|
