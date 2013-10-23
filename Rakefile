@@ -77,15 +77,12 @@ file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
   latex2unicode = {};
   mapping.xpath('//character[@id and @mode and latex]').each{|char|
     id = char['id'].to_s
+    next unless char.at('.//latex')
 
-    next if id =~ /^U[-0-9A-F]+$/ && id =~ /-/
+    raise "Unexpected char #{id.inspect}" unless id =~ /^U[0-9A-F]{4,}(-[0-9A-F]{4,})*$/i
 
-    raise "Unexpected char #{id.inspect}" unless id =~ /^U[0-9A-F]+$/i
-
-    id.gsub!(/^U/, '')
-    id.gsub!(/^0/, '') if id.size == 5 && id =~ /^0/
-
-    key = [id.gsub(/^U/i, '').hex].pack('U')
+    id = id.split('-').collect{|n| ((n.gsub(/^U/, ''))[-4,4]).hex}
+    key = id.pack('U' * id.size)
     value = char.at('.//latex').inner_text.strip
 
     value = "``" if value == "\\textquotedblleft"
