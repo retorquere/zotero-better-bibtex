@@ -2,6 +2,7 @@ require 'rake'
 require 'nokogiri'
 require 'net/http'
 require 'json'
+require 'fileutils'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
@@ -14,6 +15,8 @@ SOURCES = %w{chrome resource defaults chrome.manifest install.rdf bootstrap.js}
             .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/}
             .collect{|f| f =~ /\.coffee$/i ? f.gsub(/\.coffee$/i, '.js') : f}
             .collect{|f| f =~ /\/unicode\/.xml$/ ? f.gsub(/\/unicode\.xml$/, '/unicode.js') : f } + [TRANSLATOR]
+
+FileUtils.mkdir_p(File.dirname(TRANSLATOR))
 
 XPI = "zotero-#{EXTENSION}-#{RELEASE}.xpi"
 
@@ -112,7 +115,7 @@ file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
   "); }
 end
 
-file TRANSLATOR => ['../translators/BibTex.js', UNICODE_JS, 'Rakefile'] do |t|
+file TRANSLATOR => ['../translators/BibTeX.js', UNICODE_JS, 'Rakefile'] do |t|
   puts "Creating #{t.name}"
   
   root = File.dirname(t.name)
