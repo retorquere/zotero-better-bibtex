@@ -77,7 +77,6 @@ file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
   latex2unicode = {};
   mapping.xpath('//character[@id and @mode and latex]').each{|char|
     id = char['id'].to_s
-    next unless char.at('.//latex')
 
     raise "Unexpected char #{id.inspect}" unless id =~ /^U[0-9A-F]{4,}(-[0-9A-F]{4,})*$/i
 

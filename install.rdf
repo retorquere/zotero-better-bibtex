@@ -4,7 +4,7 @@
 	<Description about="urn:mozilla:install-manifest">
 		<em:id>better-bibtex@iris-advies.com</em:id>
 		<em:name>Zotero Better BibTex import/export</em:name>
-		<em:version>0.0.13</em:version>
+		<em:version>0.0.14</em:version>
 		<em:description>Retains citekeys across BibTex import/export</em:description>
 		<em:creator>Emiliano Heyns</em:creator>
 		<em:updateURL>https://raw.github.com/friflaj/zotero-better-bibtex/master/update.rdf</em:updateURL>
