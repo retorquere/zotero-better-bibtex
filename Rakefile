@@ -6,15 +6,15 @@ require 'json'
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
 RELEASE = Nokogiri::XML(File.open('install.rdf')).at('//em:version').inner_text
-SOURCES = %w{chrome resources defaults chrome.manifest install.rdf bootstrap.js}
+TRANSLATOR = 'resource/translators/BetterBibTex.js'
+SOURCES = %w{chrome resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
             .select{|f| File.file?(f)}
             .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/}
             .collect{|f| f =~ /\.coffee$/i ? f.gsub(/\.coffee$/i, '.js') : f}
-            .collect{|f| f =~ /\/unicode\/.xml$/ ? f.gsub(/\/unicode\.xml$/, '/unicode.js') : f }
+            .collect{|f| f =~ /\/unicode\/.xml$/ ? f.gsub(/\/unicode\.xml$/, '/unicode.js') : f } + [TRANSLATOR]
 
 XPI = "zotero-#{EXTENSION}-#{RELEASE}.xpi"
-UNICODE = 'chrome/content/zotero-better-bibtex/unicode.js'
 
 task :default => XPI do
 end
@@ -23,13 +23,13 @@ rule '.coffee' => '.js' do |t|
   sh "coffee -c #{t.source}"
 end
 
-file XPI => SOURCES + [UNICODE] do
+file XPI => SOURCES do |t|
   Dir['*.xpi'].each{|xpi| File.unlink(xpi)}
-  sh "zip -r #{XPI} #{SOURCES.collect{|f| "\"#{f}\""}.join(' ')}"
+  sh "zip -r #{t.name} #{t.prerequisites.collect{|f| "\"#{f}\""}.join(' ')}"
 end
 
-file 'update.rdf' => [XPI, 'install.rdf'] do
-  update_rdf = Nokogiri::XML(File.open('update.rdf'))
+file 'update.rdf' => [XPI, 'install.rdf'] do |t|
+  update_rdf = Nokogiri::XML(File.open(t.name))
   update_rdf.at('//em:version').content = RELEASE
   update_rdf.at('//RDF:Description')['about'] = "urn:mozilla:extension:#{EXTENSION_ID}"
   update_rdf.xpath('//em:updateLink').each{|link| link.content = "https://raw.github.com/friflaj/zotero-#{EXTENSION}/master/#{XPI}" }
@@ -37,8 +37,63 @@ file 'update.rdf' => [XPI, 'install.rdf'] do
   File.open('update.rdf','wb') {|f| update_rdf.write_xml_to f}
 end
 
-file 'resources/translators/Better BibTex.js' => '../translators/BibTeX.js' do |t|
-  cp t.prerequisites[0], t.name, :verbose => true
+file TRANSLATOR => ['../translators/BibTeX.js', 'chrome/content/zotero-better-bibtex/unicode.xml', 'Rakefile'] do |t|
+  puts "Creating #{t.name}"
+
+  tr = File.open(t.prerequisites[0], 'rb', :encoding => 'utf-8').read
+
+  mapping = Nokogiri::XML(open(t.prerequisites[1]))
+
+  charmap = {}
+  mapping.xpath('//character[@id and @mode and latex]').each{|char|
+    id = char['id'].to_s
+
+    next if id =~ /^U[-0-9A-F]+$/ && id =~ /-/
+
+    raise "Unexpected char #{id.inspect}" unless id =~ /^U[0-9A-F]+$/i
+
+    id.gsub!(/^U/, '')
+    id.gsub!(/^0/, '') if id.size == 5 && id =~ /^0/
+
+    key = [id.gsub(/^U/i, '').hex].pack('U')
+    value = char.at('.//latex').inner_text.strip
+
+    value = "``" if value == "\\textquotedblleft"
+    value = "''" if value == "\\textquotedblright"
+    value = "`" if value == "\\textasciigrave"
+    value = "'" if value == "\\textquotesingle"
+    value = ' ' if value == "\\space"
+
+    next if key == value
+
+    if key == "\u00A0"
+      value = ' '
+    else
+      value = "\\ensuremath{#{value}}" if char['mode'] == 'math'
+      value = "{#{value}}" if value !~ /^\\/ || value !~ /}$/
+    end
+    charmap[key.gsub("\\", "\\\\\\")] = value.gsub("\\", "\\\\\\")
+  }
+  #_charmap = charmap.to_json
+  _charmap = JSON.pretty_generate(charmap)
+
+  tr.gsub!('// TOASCII //', "
+    var _unicode = {
+      charmap: " + _charmap + ",
+      to_latex: function(str) {
+        let res = '';
+        let strlen = str.length;
+        let c = null;
+        for (let i=0; i < strlen; i++) {
+          c = str.charAt(i);
+          res += (this.charmap[c] || c);
+        }
+        return res;
+      }
+    };
+  ")
+
+  File.open(t.name, 'wb', :encoding => 'utf-8'){|f| f.write(tr); }
 end
 
 task :publish => [XPI, 'update.rdf'] do
