@@ -107,6 +107,7 @@ file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
   File.open(t.name, 'wb', :encoding => 'utf-8'){|f| f.write("
     if (!convert) { var convert = {}; }
     convert.unicode2latex = #{JSON.pretty_generate(unicode2latex)};
+    convert.unicode2latex_maxpattern = #{unicode2latex.keys.collect{|k| k.size}.max};
     convert.latex2unicode = #{JSON.pretty_generate(latex2unicode)};
   "); }
 end
