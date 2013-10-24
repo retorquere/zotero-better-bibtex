@@ -33,7 +33,7 @@ Zotero.BetterBibTex = {
 
       // install bibtex translator
       console.log("Installing " + header.label + ' translator (charset=' + ((header.displayOptions && header.displayOptions.exportCharset) || 'default')
-                              + ', recursive=' + !!(header.configOptions && header.configOptions.getCollections));
+                              + ', recursive=' + !!(header.configOptions && header.configOptions.getCollections) + ')');
       Zotero.Translators.save(header, "var asCitation = false;\n" + data);
 
       // cite key exporter
@@ -54,7 +54,7 @@ Zotero.BetterBibTex = {
 	      lastUpdated: "2013-10-24 10:05:00"
       };
       console.log("Installing " + header.label + ' translator (charset=' + ((header.displayOptions && header.displayOptions.exportCharset) || 'default')
-                              + ', recursive=' + !!(header.configOptions && header.configOptions.getCollections));
+                              + ', recursive=' + !!(header.configOptions && header.configOptions.getCollections) + ')');
       Zotero.Translators.save(header, "var asCitation = true;\n" + data);
 
       //re-initialize Zotero translators so Better Bibtex shows up right away

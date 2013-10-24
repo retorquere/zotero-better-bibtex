@@ -76,9 +76,11 @@ file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
 
   mapping = Nokogiri::XML(open(t.prerequisites[0]))
 
+  mapping.at('//charlist') << "<character id='U0026' dec='38' mode='text' type='punctuation'><latex>\\&</latex></character>"
+
   unicode2latex = {};
   latex2unicode = {};
-  mapping.xpath('//character[@dec and @mode and latex]').each{|char|
+  mapping.xpath('//character[@dec and latex]').each{|char|
     id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
     key = id.pack('U' * id.size)
     value = char.at('.//latex').inner_text.strip
@@ -105,10 +107,12 @@ file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
   }
 
   File.open(t.name, 'wb', :encoding => 'utf-8'){|f| f.write("
-    if (!convert) { var convert = {}; }
-    convert.unicode2latex = #{JSON.pretty_generate(unicode2latex)};
-    convert.unicode2latex_maxpattern = #{unicode2latex.keys.collect{|k| k.size}.max};
-    convert.latex2unicode = #{JSON.pretty_generate(latex2unicode)};
+    var convert = {
+      unicode2latex: #{JSON.pretty_generate(unicode2latex)},
+      unicode2latex_maxpattern: #{unicode2latex.keys.collect{|k| k.size}.max},
+
+      latex2unicode: #{JSON.pretty_generate(latex2unicode)}
+    };
   "); }
 end
 
