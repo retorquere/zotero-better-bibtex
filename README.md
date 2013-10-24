@@ -4,7 +4,7 @@ When installed, this extension will override the standard BibTex import-export t
 a secon converter called "BibTeX cite keys" which will allow exporting entries as \\citep{.....} using these same keys.
 If you set this translator as your export default, you can drag and drop bibtex citations.
 
-The citekeys are stored in the "extra" field of the item, using bibtex: <your citekey>. If you edit and re-export,
+The citekeys are stored in the "extra" field of the item, using bibtex: [your citekey]. If you edit and re-export,
 these citekes will be used.
 
 The extension also does a more thorough mapping between unicode characters and latex commands.
