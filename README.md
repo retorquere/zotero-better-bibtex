@@ -5,7 +5,7 @@ a secon converter called "BibTeX cite keys" which will allow exporting entries a
 If you set this translator as your export default, you can drag and drop bibtex citations.
 
 The citekeys are stored in the "extra" field of the item, using bibtex: [your citekey]. If you edit and re-export,
-these citekes will be used.
+these citekeys will be used.
 
 The extension also does a more thorough mapping between unicode characters and latex commands.
 Whether it does is configurable (no UI thoug, search for better-bibtex in about:config).
