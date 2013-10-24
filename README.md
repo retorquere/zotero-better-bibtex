@@ -1,7 +1,7 @@
 # zotero-better-bibtex
 
 When installed, this extension will override the standard BibTex import-export to retain bibtex keys. It also installs
-a secon converter called "BibTeX cite keys" which will allow exporting entries as \\citep{.....} using these same keys.
+a second converter called "BibTeX cite keys" which will allow exporting entries as \\citep{.....} using these same keys.
 If you set this translator as your export default, you can drag and drop bibtex citations.
 
 The citekeys are stored in the "extra" field of the item, using bibtex: [your citekey]. If you edit and re-export,
