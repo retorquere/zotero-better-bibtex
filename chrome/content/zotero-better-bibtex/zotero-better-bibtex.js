@@ -28,10 +28,35 @@ Zotero.BetterBibTex = {
 
     if (header) {
       prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero-better-bibtex.");
-      if (header['displayOptions']) { header['displayOptions']['exportCharset'] = prefs.getCharPref('encoding'); }
-      if (header['configOptions']) { header['configOptions']['getCollections'] = prefs.getBoolPref('recursive'); }
-      console.log("Installing Better BibTex: " + JSON.stringify(header));
-      Zotero.Translators.save(header, data);
+      if (header.displayOptions) { header.displayOptions.exportCharset = prefs.getCharPref('encoding'); }
+      if (header.configOptions) { header.configOptions.getCollections = prefs.getBoolPref('recursive'); }
+
+      // install bibtex translator
+      console.log("Installing " + header.label + ' translator (charset=' + ((header.displayOptions && header.displayOptions.exportCharset) || 'default')
+                              + ', recursive=' + !!(header.configOptions && header.configOptions.getCollections));
+      Zotero.Translators.save(header, "var asCitation = false;\n" + data);
+
+      // cite key exporter
+      header = {
+	      translatorID: 'b4a5ab19-c3a2-42de-9961-07ae484b8cb0',
+	      label: 'BibTeX cite keys',
+	      creator: 'Emiliano heyns',
+	      target: 'bib',
+	      minVersion: '2.1.9',
+	      maxVersion: '',
+	      priority: 100,
+        configOptions: {
+          getCollections: prefs.getBoolPref('recursive')
+        },
+	      inRepository: true,
+	      translatorType: 2,
+	      browserSupport: "gcsv",
+	      lastUpdated: "2013-10-24 10:05:00"
+      };
+      console.log("Installing " + header.label + ' translator (charset=' + ((header.displayOptions && header.displayOptions.exportCharset) || 'default')
+                              + ', recursive=' + !!(header.configOptions && header.configOptions.getCollections));
+      Zotero.Translators.save(header, "var asCitation = true;\n" + data);
+
       //re-initialize Zotero translators so Better Bibtex shows up right away
       Zotero.Translators.init();
       console.log("Better BibTex installed");
