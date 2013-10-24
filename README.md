@@ -11,3 +11,5 @@ The extension also does a more thorough mapping between unicode characters and l
 Whether it does is configurable (no UI thoug, search for better-bibtex in about:config).
 When exporting a collection, the extension defaults to a recursive export, but this too can be configured
 in about:config.
+
+Install by downloading the XPI above; after that, it will auto-update
