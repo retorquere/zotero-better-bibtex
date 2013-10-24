@@ -78,12 +78,8 @@ file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
 
   unicode2latex = {};
   latex2unicode = {};
-  mapping.xpath('//character[@id and @mode and latex]').each{|char|
-    id = char['id'].to_s
-
-    raise "Unexpected char #{id.inspect}" unless id =~ /^U[0-9A-F]{4,}(-[0-9A-F]{4,})*$/i
-
-    id = id.split('-').collect{|n| ((n.gsub(/^U/, ''))[-4,4]).hex}
+  mapping.xpath('//character[@dec and @mode and latex]').each{|char|
+    id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
     key = id.pack('U' * id.size)
     value = char.at('.//latex').inner_text.strip
 
