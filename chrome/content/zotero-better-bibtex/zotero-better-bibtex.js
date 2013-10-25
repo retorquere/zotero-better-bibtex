@@ -55,7 +55,7 @@ Zotero.BetterBibTex = {
       };
       console.log("Installing " + header.label + ' translator (charset=' + ((header.displayOptions && header.displayOptions.exportCharset) || 'default')
                               + ', recursive=' + !!(header.configOptions && header.configOptions.getCollections) + ')');
-      Zotero.Translators.save(header, "var asCitation = true;\n" + data);
+      Zotero.Translators.save(header, "var asCitation = true; var citationCommand = '" + prefs.getCharPref('citecommand') + "';\n" + data);
 
       //re-initialize Zotero translators so Better Bibtex shows up right away
       Zotero.Translators.init();
