@@ -6,12 +6,11 @@ If you set this translator as your export default, you can drag and drop bibtex 
 the "extra" field of the item, using bibtex: [your citekey]. If you edit and re-export, these citekeys will be used.
 
 The extension also does a more thorough mapping between unicode characters and latex commands.
-When exporting a collection, the extension defaults to a recursive export, but this too can be configured
-in about:config.
 
-Install by downloading the XPI above; after that, it will auto-update
+Install by downloading the XPI above; after that, it will auto-update.
 
-Configuration currently does not have an UI; to change the settings, go to about:config to change the following keys
+Configuration currently does not have an UI; to change the settings, go to about:config to change the following keys.
+A change to these requires a restart of Zotero to take effect.
 
 | key                                       | default |                                                                           |
 |:----------------------------------------- |:------- |:------------------------------------------------------------------------- |
