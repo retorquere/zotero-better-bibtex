@@ -8,20 +8,22 @@ EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
 RELEASE = Nokogiri::XML(File.open('install.rdf')).at('//em:version').inner_text
 
-TRANSLATOR = 'resource/translators/BetterBibTex.js'
+BETTERBIBTEX = 'resource/translators/BetterBibTex.js'
+BETTERCITETEX = 'resource/translators/BetterCiteTex.js'
+BETTERBIBLATEX = 'resource/translators/BetterBibLaTex.js'
 SOURCES = %w{chrome resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
             .select{|f| File.file?(f)}
-            .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/}
+            .reject{|f| File.basename(f) =~ /^_/ || f =~ /[~]$/ || f =~ /\.swp$/}
             .collect{|f| f =~ /\.coffee$/i ? f.gsub(/\.coffee$/i, '.js') : f}
-            .collect{|f| f =~ /\/unicode\/.xml$/ ? f.gsub(/\/unicode\.xml$/, '/unicode.js') : f } + [TRANSLATOR]
+            .collect{|f| f =~ /\/unicode\/.xml$/ ? f.gsub(/\/unicode\.xml$/, '/unicode.js') : f } + [BETTERBIBTEX]
 
-FileUtils.mkdir_p(File.dirname(TRANSLATOR))
+FileUtils.mkdir_p(File.dirname(BETTERBIBTEX))
 
 XPI = "zotero-#{EXTENSION}-#{RELEASE}.xpi"
 
-UNICODE_JS = 'resource/translators/unicodeconverter.js'
-UNICODE_XML = 'resource/translators/unicode.xml'
+UNICODE_JS = 'resource/translators/_unicodeconverter.js'
+UNICODE_XML = 'resource/translators/_unicode.xml'
 
 task :default => XPI do
 end
@@ -116,7 +118,7 @@ file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
   "); }
 end
 
-file TRANSLATOR => ['../translators/BibTeX.js', UNICODE_JS, 'Rakefile'] do |t|
+file BETTERBIBTEX => ['../translators/BibTeX.js', UNICODE_JS, 'Rakefile'] do |t|
   puts "Creating #{t.name}"
   
   root = File.dirname(t.name)
