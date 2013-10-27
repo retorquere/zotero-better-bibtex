@@ -1,4 +1,4 @@
-# zotero-better-bibtex
+# Zotero: Better Bib(La)Tex
 
 When installed, this extension will override the standard BibTex import-export to retain bibtex keys. It also installs a
 second converter called "BibTeX cite keys" which will allow exporting entries as \\cite{.....} using these same keys.
@@ -22,3 +22,6 @@ extensions.zotero-better-bibtex.recursive     | true            | Collection exp
 extensions.zotero-better-bibtex.citecommand   | cite            | LaTeX command for citekey export. Do not include the leading backslash    |
 extensions.zotero-better-bibtex.citekeyformat | \[auth]\[year]  | citeky generation template                                                |
 
+## Plans
+
+Incorporate BibLaTeX features from https://github.com/andersjohansson/zotero-biblatex-translator
