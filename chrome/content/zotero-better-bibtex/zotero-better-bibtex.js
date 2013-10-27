@@ -28,16 +28,16 @@ Zotero.BetterBibTex = {
 
     if (header) {
       prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero-better-bibtex.");
+      var config = {};
 
-      var citeKeyFormat = prefs.getCharPref('citekeyformat');
-      if (!citeKeyFormat || !citeKeyFormat.match(/\[/)) { citeKeyFormat = null; }
-      citeKeyFormat = JSON.stringify(citeKeyFormat);
+      config.citeKeyFormat = prefs.getCharPref('citekeyformat');
+      if (!config.citeKeyFormat || !config.citeKeyFormat.match(/\[/)) { config.citeKeyFormat = null; }
 
       if (header.configOptions) { header.configOptions.getCollections = prefs.getBoolPref('recursive'); }
 
       // install bibtex translator
       console.log("Installing " + header.label);
-      Zotero.Translators.save(header, "var citeKeyFormat = " + citeKeyFormat + ";\n" + data);
+      Zotero.Translators.save(header, "var config = " + JSON.stringify(config) + ";\n" + data);
 
       // cite key exporter
       header = {
@@ -56,8 +56,13 @@ Zotero.BetterBibTex = {
 	      browserSupport: "gcsv",
 	      lastUpdated: "2013-10-24 10:05:00"
       };
+
+      config.citecommand = prefs.getCharPref('citecommand');
+      if (!config.citeCommand || config.citeCommand.length == 0) { config.citeCommand = null; }
+      config.exportCitation = true;
+
       console.log("Installing " + header.label);
-      Zotero.Translators.save(header, "var citationCommand = " + JSON.stringify(prefs.getCharPref('citecommand')) + "; var citeKeyFormat = " + citeKeyFormat + ";\n" + data);
+      Zotero.Translators.save(header, "var config = " + JSON.stringify(config) + ";\n" + data);
 
       //re-initialize Zotero translators so Better Bibtex shows up right away
       Zotero.Translators.init();
