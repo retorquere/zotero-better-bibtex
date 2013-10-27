@@ -28,13 +28,16 @@ Zotero.BetterBibTex = {
 
     if (header) {
       prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero-better-bibtex.");
-      if (header.displayOptions) { header.displayOptions.exportCharset = prefs.getCharPref('encoding'); }
+
+      var citeKeyFormat = prefs.getCharPref('citekeyformat');
+      if (!citeKeyFormat || !citeKeyFormat.match(/\[/)) { citeKeyFormat = null; }
+      citeKeyFormat = JSON.stringify(citeKeyFormat);
+
       if (header.configOptions) { header.configOptions.getCollections = prefs.getBoolPref('recursive'); }
 
       // install bibtex translator
-      console.log("Installing " + header.label + ' translator (charset=' + ((header.displayOptions && header.displayOptions.exportCharset) || 'default')
-                              + ', recursive=' + !!(header.configOptions && header.configOptions.getCollections) + ')');
-      Zotero.Translators.save(header, "var asCitation = false;\n" + data);
+      console.log("Installing " + header.label);
+      Zotero.Translators.save(header, "var citeKeyFormat = " + citeKeyFormat + ";\n" + data);
 
       // cite key exporter
       header = {
@@ -53,9 +56,8 @@ Zotero.BetterBibTex = {
 	      browserSupport: "gcsv",
 	      lastUpdated: "2013-10-24 10:05:00"
       };
-      console.log("Installing " + header.label + ' translator (charset=' + ((header.displayOptions && header.displayOptions.exportCharset) || 'default')
-                              + ', recursive=' + !!(header.configOptions && header.configOptions.getCollections) + ')');
-      Zotero.Translators.save(header, "var asCitation = true; var citationCommand = '" + prefs.getCharPref('citecommand') + "';\n" + data);
+      console.log("Installing " + header.label);
+      Zotero.Translators.save(header, "var citationCommand = " + JSON.stringify(prefs.getCharPref('citecommand')) + "; var citeKeyFormat = " + citeKeyFormat + ";\n" + data);
 
       //re-initialize Zotero translators so Better Bibtex shows up right away
       Zotero.Translators.init();
