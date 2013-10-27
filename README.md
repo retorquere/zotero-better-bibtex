@@ -20,5 +20,5 @@ A change to these requires a restart of Zotero to take effect.
 |:------------------------------------------- |:--------------- |:------------------------------------------------------------------------- |
 extensions.zotero-better-bibtex.recursive     | true            | Collection export is recursive into subcollections (true) or not (false)  |
 extensions.zotero-better-bibtex.citecommand   | cite            | LaTeX command for citekey export. Do not include the leading backslash    |
-extensions.zotero-better-bibtex.citekeyformat | \[auth]\[year]  | LaTeX command for citekey export. Do not include the leading backslash    |
+extensions.zotero-better-bibtex.citekeyformat | \[auth]\[year]  | citeky generation template                                                |
 
