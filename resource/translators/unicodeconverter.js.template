@@ -3,99 +3,92 @@
       unicode2latex: {
   "#": {
     "latex": "\\\\#",
-    "math": false
+    "force": true
   },
   "$": {
     "latex": "\\\\textdollar",
-    "math": false
+    "force": true
   },
   "%": {
     "latex": "\\\\%",
-    "math": false
+    "force": true
   },
   "&": {
     "latex": "\\\\&",
-    "math": false
+    "force": true
   },
   "*": {
     "latex": "\\\\ast",
-    "math": true
+    "math": true,
+    "force": true
   },
   "\\\\": {
     "latex": "\\\\textbackslash",
-    "math": false
+    "force": true
   },
   "^": {
     "latex": "\\\\^{}",
-    "math": false
+    "force": true
   },
   "_": {
     "latex": "\\\\_",
-    "math": true
+    "math": true,
+    "force": true
   },
   "{": {
     "latex": "\\\\lbrace",
-    "math": true
+    "math": true,
+    "force": true
   },
   "|": {
     "latex": "\\\\vert",
-    "math": true
+    "math": true,
+    "force": true
   },
   "}": {
     "latex": "\\\\rbrace",
-    "math": true
+    "math": true,
+    "force": true
   },
   "~": {
     "latex": "\\\\textasciitilde",
-    "math": false
+    "force": true
   },
   " ": {
-    "latex": " ",
-    "math": false
+    "latex": " "
   },
   "¡": {
-    "latex": "\\\\textexclamdown",
-    "math": false
+    "latex": "\\\\textexclamdown"
   },
   "¢": {
-    "latex": "\\\\textcent",
-    "math": false
+    "latex": "\\\\textcent"
   },
   "£": {
-    "latex": "\\\\textsterling",
-    "math": false
+    "latex": "\\\\textsterling"
   },
   "¤": {
-    "latex": "\\\\textcurrency",
-    "math": false
+    "latex": "\\\\textcurrency"
   },
   "¥": {
-    "latex": "\\\\textyen",
-    "math": false
+    "latex": "\\\\textyen"
   },
   "¦": {
-    "latex": "\\\\textbrokenbar",
-    "math": false
+    "latex": "\\\\textbrokenbar"
   },
   "§": {
-    "latex": "\\\\textsection",
-    "math": false
+    "latex": "\\\\textsection"
   },
   "¨": {
-    "latex": "\\\\textasciidieresis",
-    "math": false
+    "latex": "\\\\textasciidieresis"
   },
   "©": {
-    "latex": "\\\\textcopyright",
-    "math": false
+    "latex": "\\\\textcopyright"
   },
   "ª": {
-    "latex": "\\\\textordfeminine",
-    "math": false
+    "latex": "\\\\textordfeminine"
   },
   "«": {
-    "latex": "\\\\guillemotleft",
-    "math": false
+    "latex": "\\\\guillemotleft"
   },
   "¬": {
     "latex": "\\\\lnot",
@@ -106,16 +99,13 @@
     "math": true
   },
   "®": {
-    "latex": "\\\\textregistered",
-    "math": false
+    "latex": "\\\\textregistered"
   },
   "¯": {
-    "latex": "\\\\textasciimacron",
-    "math": false
+    "latex": "\\\\textasciimacron"
   },
   "°": {
-    "latex": "\\\\textdegree",
-    "math": false
+    "latex": "\\\\textdegree"
   },
   "±": {
     "latex": "\\\\pm",
@@ -130,844 +120,641 @@
     "math": true
   },
   "´": {
-    "latex": "\\\\textasciiacute",
-    "math": false
+    "latex": "\\\\textasciiacute"
   },
   "µ": {
     "latex": "\\\\mathrm{\\\\mu}",
     "math": true
   },
   "¶": {
-    "latex": "\\\\textparagraph",
-    "math": false
+    "latex": "\\\\textparagraph"
   },
   "·": {
     "latex": "\\\\cdot",
     "math": true
   },
   "¸": {
-    "latex": "\\\\c{}",
-    "math": false
+    "latex": "\\\\c{}"
   },
   "¹": {
     "latex": "{^1}",
     "math": true
   },
   "º": {
-    "latex": "\\\\textordmasculine",
-    "math": false
+    "latex": "\\\\textordmasculine"
   },
   "»": {
-    "latex": "\\\\guillemotright",
-    "math": false
+    "latex": "\\\\guillemotright"
   },
   "¼": {
-    "latex": "\\\\textonequarter",
-    "math": false
+    "latex": "\\\\textonequarter"
   },
   "½": {
-    "latex": "\\\\textonehalf",
-    "math": false
+    "latex": "\\\\textonehalf"
   },
   "¾": {
-    "latex": "\\\\textthreequarters",
-    "math": false
+    "latex": "\\\\textthreequarters"
   },
   "¿": {
-    "latex": "\\\\textquestiondown",
-    "math": false
+    "latex": "\\\\textquestiondown"
   },
   "À": {
-    "latex": "\\\\`{A}",
-    "math": false
+    "latex": "\\\\`{A}"
   },
   "Á": {
-    "latex": "\\\\'{A}",
-    "math": false
+    "latex": "\\\\'{A}"
   },
   "Â": {
-    "latex": "\\\\^{A}",
-    "math": false
+    "latex": "\\\\^{A}"
   },
   "Ã": {
-    "latex": "\\\\~{A}",
-    "math": false
+    "latex": "\\\\~{A}"
   },
   "Ä": {
-    "latex": "\\\\\"{A}",
-    "math": false
+    "latex": "\\\\\"{A}"
   },
   "Å": {
-    "latex": "\\\\AA",
-    "math": false
+    "latex": "\\\\AA"
   },
   "Æ": {
-    "latex": "\\\\AE",
-    "math": false
+    "latex": "\\\\AE"
   },
   "Ç": {
-    "latex": "\\\\c{C}",
-    "math": false
+    "latex": "\\\\c{C}"
   },
   "È": {
-    "latex": "\\\\`{E}",
-    "math": false
+    "latex": "\\\\`{E}"
   },
   "É": {
-    "latex": "\\\\'{E}",
-    "math": false
+    "latex": "\\\\'{E}"
   },
   "Ê": {
-    "latex": "\\\\^{E}",
-    "math": false
+    "latex": "\\\\^{E}"
   },
   "Ë": {
-    "latex": "\\\\\"{E}",
-    "math": false
+    "latex": "\\\\\"{E}"
   },
   "Ì": {
-    "latex": "\\\\`{I}",
-    "math": false
+    "latex": "\\\\`{I}"
   },
   "Í": {
-    "latex": "\\\\'{I}",
-    "math": false
+    "latex": "\\\\'{I}"
   },
   "Î": {
-    "latex": "\\\\^{I}",
-    "math": false
+    "latex": "\\\\^{I}"
   },
   "Ï": {
-    "latex": "\\\\\"{I}",
-    "math": false
+    "latex": "\\\\\"{I}"
   },
   "Ð": {
-    "latex": "\\\\DH",
-    "math": false
+    "latex": "\\\\DH"
   },
   "Ñ": {
-    "latex": "\\\\~{N}",
-    "math": false
+    "latex": "\\\\~{N}"
   },
   "Ò": {
-    "latex": "\\\\`{O}",
-    "math": false
+    "latex": "\\\\`{O}"
   },
   "Ó": {
-    "latex": "\\\\'{O}",
-    "math": false
+    "latex": "\\\\'{O}"
   },
   "Ô": {
-    "latex": "\\\\^{O}",
-    "math": false
+    "latex": "\\\\^{O}"
   },
   "Õ": {
-    "latex": "\\\\~{O}",
-    "math": false
+    "latex": "\\\\~{O}"
   },
   "Ö": {
-    "latex": "\\\\\"{O}",
-    "math": false
+    "latex": "\\\\\"{O}"
   },
   "×": {
-    "latex": "\\\\texttimes",
-    "math": false
+    "latex": "\\\\texttimes"
   },
   "Ø": {
-    "latex": "\\\\O",
-    "math": false
+    "latex": "\\\\O"
   },
   "Ù": {
-    "latex": "\\\\`{U}",
-    "math": false
+    "latex": "\\\\`{U}"
   },
   "Ú": {
-    "latex": "\\\\'{U}",
-    "math": false
+    "latex": "\\\\'{U}"
   },
   "Û": {
-    "latex": "\\\\^{U}",
-    "math": false
+    "latex": "\\\\^{U}"
   },
   "Ü": {
-    "latex": "\\\\\"{U}",
-    "math": false
+    "latex": "\\\\\"{U}"
   },
   "Ý": {
-    "latex": "\\\\'{Y}",
-    "math": false
+    "latex": "\\\\'{Y}"
   },
   "Þ": {
-    "latex": "\\\\TH",
-    "math": false
+    "latex": "\\\\TH"
   },
   "ß": {
-    "latex": "\\\\ss",
-    "math": false
+    "latex": "\\\\ss"
   },
   "à": {
-    "latex": "\\\\`{a}",
-    "math": false
+    "latex": "\\\\`{a}"
   },
   "á": {
-    "latex": "\\\\'{a}",
-    "math": false
+    "latex": "\\\\'{a}"
   },
   "â": {
-    "latex": "\\\\^{a}",
-    "math": false
+    "latex": "\\\\^{a}"
   },
   "ã": {
-    "latex": "\\\\~{a}",
-    "math": false
+    "latex": "\\\\~{a}"
   },
   "ä": {
-    "latex": "\\\\\"{a}",
-    "math": false
+    "latex": "\\\\\"{a}"
   },
   "å": {
-    "latex": "\\\\aa",
-    "math": false
+    "latex": "\\\\aa"
   },
   "æ": {
-    "latex": "\\\\ae",
-    "math": false
+    "latex": "\\\\ae"
   },
   "ç": {
-    "latex": "\\\\c{c}",
-    "math": false
+    "latex": "\\\\c{c}"
   },
   "è": {
-    "latex": "\\\\`{e}",
-    "math": false
+    "latex": "\\\\`{e}"
   },
   "é": {
-    "latex": "\\\\'{e}",
-    "math": false
+    "latex": "\\\\'{e}"
   },
   "ê": {
-    "latex": "\\\\^{e}",
-    "math": false
+    "latex": "\\\\^{e}"
   },
   "ë": {
-    "latex": "\\\\\"{e}",
-    "math": false
+    "latex": "\\\\\"{e}"
   },
   "ì": {
-    "latex": "\\\\`{\\\\i}",
-    "math": false
+    "latex": "\\\\`{\\\\i}"
   },
   "í": {
-    "latex": "\\\\'{\\\\i}",
-    "math": false
+    "latex": "\\\\'{\\\\i}"
   },
   "î": {
-    "latex": "\\\\^{\\\\i}",
-    "math": false
+    "latex": "\\\\^{\\\\i}"
   },
   "ï": {
-    "latex": "\\\\\"{\\\\i}",
-    "math": false
+    "latex": "\\\\\"{\\\\i}"
   },
   "ð": {
-    "latex": "\\\\dh",
-    "math": false
+    "latex": "\\\\dh"
   },
   "ñ": {
-    "latex": "\\\\~{n}",
-    "math": false
+    "latex": "\\\\~{n}"
   },
   "ò": {
-    "latex": "\\\\`{o}",
-    "math": false
+    "latex": "\\\\`{o}"
   },
   "ó": {
-    "latex": "\\\\'{o}",
-    "math": false
+    "latex": "\\\\'{o}"
   },
   "ô": {
-    "latex": "\\\\^{o}",
-    "math": false
+    "latex": "\\\\^{o}"
   },
   "õ": {
-    "latex": "\\\\~{o}",
-    "math": false
+    "latex": "\\\\~{o}"
   },
   "ö": {
-    "latex": "\\\\\"{o}",
-    "math": false
+    "latex": "\\\\\"{o}"
   },
   "÷": {
     "latex": "\\\\div",
     "math": true
   },
   "ø": {
-    "latex": "\\\\o",
-    "math": false
+    "latex": "\\\\o"
   },
   "ù": {
-    "latex": "\\\\`{u}",
-    "math": false
+    "latex": "\\\\`{u}"
   },
   "ú": {
-    "latex": "\\\\'{u}",
-    "math": false
+    "latex": "\\\\'{u}"
   },
   "û": {
-    "latex": "\\\\^{u}",
-    "math": false
+    "latex": "\\\\^{u}"
   },
   "ü": {
-    "latex": "\\\\\"{u}",
-    "math": false
+    "latex": "\\\\\"{u}"
   },
   "ý": {
-    "latex": "\\\\'{y}",
-    "math": false
+    "latex": "\\\\'{y}"
   },
   "þ": {
-    "latex": "\\\\th",
-    "math": false
+    "latex": "\\\\th"
   },
   "ÿ": {
-    "latex": "\\\\\"{y}",
-    "math": false
+    "latex": "\\\\\"{y}"
   },
   "Ā": {
-    "latex": "\\\\={A}",
-    "math": false
+    "latex": "\\\\={A}"
   },
   "ā": {
-    "latex": "\\\\={a}",
-    "math": false
+    "latex": "\\\\={a}"
   },
   "Ă": {
-    "latex": "\\\\u{A}",
-    "math": false
+    "latex": "\\\\u{A}"
   },
   "ă": {
-    "latex": "\\\\u{a}",
-    "math": false
+    "latex": "\\\\u{a}"
   },
   "Ą": {
-    "latex": "\\\\k{A}",
-    "math": false
+    "latex": "\\\\k{A}"
   },
   "ą": {
-    "latex": "\\\\k{a}",
-    "math": false
+    "latex": "\\\\k{a}"
   },
   "Ć": {
-    "latex": "\\\\'{C}",
-    "math": false
+    "latex": "\\\\'{C}"
   },
   "ć": {
-    "latex": "\\\\'{c}",
-    "math": false
+    "latex": "\\\\'{c}"
   },
   "Ĉ": {
-    "latex": "\\\\^{C}",
-    "math": false
+    "latex": "\\\\^{C}"
   },
   "ĉ": {
-    "latex": "\\\\^{c}",
-    "math": false
+    "latex": "\\\\^{c}"
   },
   "Ċ": {
-    "latex": "\\\\.{C}",
-    "math": false
+    "latex": "\\\\.{C}"
   },
   "ċ": {
-    "latex": "\\\\.{c}",
-    "math": false
+    "latex": "\\\\.{c}"
   },
   "Č": {
-    "latex": "\\\\v{C}",
-    "math": false
+    "latex": "\\\\v{C}"
   },
   "č": {
-    "latex": "\\\\v{c}",
-    "math": false
+    "latex": "\\\\v{c}"
   },
   "Ď": {
-    "latex": "\\\\v{D}",
-    "math": false
+    "latex": "\\\\v{D}"
   },
   "ď": {
-    "latex": "\\\\v{d}",
-    "math": false
+    "latex": "\\\\v{d}"
   },
   "Đ": {
-    "latex": "\\\\DJ",
-    "math": false
+    "latex": "\\\\DJ"
   },
   "đ": {
-    "latex": "\\\\dj",
-    "math": false
+    "latex": "\\\\dj"
   },
   "Ē": {
-    "latex": "\\\\={E}",
-    "math": false
+    "latex": "\\\\={E}"
   },
   "ē": {
-    "latex": "\\\\={e}",
-    "math": false
+    "latex": "\\\\={e}"
   },
   "Ĕ": {
-    "latex": "\\\\u{E}",
-    "math": false
+    "latex": "\\\\u{E}"
   },
   "ĕ": {
-    "latex": "\\\\u{e}",
-    "math": false
+    "latex": "\\\\u{e}"
   },
   "Ė": {
-    "latex": "\\\\.{E}",
-    "math": false
+    "latex": "\\\\.{E}"
   },
   "ė": {
-    "latex": "\\\\.{e}",
-    "math": false
+    "latex": "\\\\.{e}"
   },
   "Ę": {
-    "latex": "\\\\k{E}",
-    "math": false
+    "latex": "\\\\k{E}"
   },
   "ę": {
-    "latex": "\\\\k{e}",
-    "math": false
+    "latex": "\\\\k{e}"
   },
   "Ě": {
-    "latex": "\\\\v{E}",
-    "math": false
+    "latex": "\\\\v{E}"
   },
   "ě": {
-    "latex": "\\\\v{e}",
-    "math": false
+    "latex": "\\\\v{e}"
   },
   "Ĝ": {
-    "latex": "\\\\^{G}",
-    "math": false
+    "latex": "\\\\^{G}"
   },
   "ĝ": {
-    "latex": "\\\\^{g}",
-    "math": false
+    "latex": "\\\\^{g}"
   },
   "Ğ": {
-    "latex": "\\\\u{G}",
-    "math": false
+    "latex": "\\\\u{G}"
   },
   "ğ": {
-    "latex": "\\\\u{g}",
-    "math": false
+    "latex": "\\\\u{g}"
   },
   "Ġ": {
-    "latex": "\\\\.{G}",
-    "math": false
+    "latex": "\\\\.{G}"
   },
   "ġ": {
-    "latex": "\\\\.{g}",
-    "math": false
+    "latex": "\\\\.{g}"
   },
   "Ģ": {
-    "latex": "\\\\c{G}",
-    "math": false
+    "latex": "\\\\c{G}"
   },
   "ģ": {
-    "latex": "\\\\c{g}",
-    "math": false
+    "latex": "\\\\c{g}"
   },
   "Ĥ": {
-    "latex": "\\\\^{H}",
-    "math": false
+    "latex": "\\\\^{H}"
   },
   "ĥ": {
-    "latex": "\\\\^{h}",
-    "math": false
+    "latex": "\\\\^{h}"
   },
   "Ħ": {
-    "latex": "{\\\\fontencoding{LELA}\\\\selectfont\\\\char40}",
-    "math": false
+    "latex": "{\\\\fontencoding{LELA}\\\\selectfont\\\\char40}"
   },
   "ħ": {
     "latex": "\\\\Elzxh",
     "math": true
   },
   "Ĩ": {
-    "latex": "\\\\~{I}",
-    "math": false
+    "latex": "\\\\~{I}"
   },
   "ĩ": {
-    "latex": "\\\\~{\\\\i}",
-    "math": false
+    "latex": "\\\\~{\\\\i}"
   },
   "Ī": {
-    "latex": "\\\\={I}",
-    "math": false
+    "latex": "\\\\={I}"
   },
   "ī": {
-    "latex": "\\\\={\\\\i}",
-    "math": false
+    "latex": "\\\\={\\\\i}"
   },
   "Ĭ": {
-    "latex": "\\\\u{I}",
-    "math": false
+    "latex": "\\\\u{I}"
   },
   "ĭ": {
-    "latex": "\\\\u{\\\\i}",
-    "math": false
+    "latex": "\\\\u{\\\\i}"
   },
   "Į": {
-    "latex": "\\\\k{I}",
-    "math": false
+    "latex": "\\\\k{I}"
   },
   "į": {
-    "latex": "\\\\k{i}",
-    "math": false
+    "latex": "\\\\k{i}"
   },
   "İ": {
-    "latex": "\\\\.{I}",
-    "math": false
+    "latex": "\\\\.{I}"
   },
   "ı": {
-    "latex": "\\\\i",
-    "math": false
+    "latex": "\\\\i"
   },
   "Ĳ": {
-    "latex": "IJ",
-    "math": false
+    "latex": "IJ"
   },
   "ĳ": {
-    "latex": "ij",
-    "math": false
+    "latex": "ij"
   },
   "Ĵ": {
-    "latex": "\\\\^{J}",
-    "math": false
+    "latex": "\\\\^{J}"
   },
   "ĵ": {
-    "latex": "\\\\^{\\\\j}",
-    "math": false
+    "latex": "\\\\^{\\\\j}"
   },
   "Ķ": {
-    "latex": "\\\\c{K}",
-    "math": false
+    "latex": "\\\\c{K}"
   },
   "ķ": {
-    "latex": "\\\\c{k}",
-    "math": false
+    "latex": "\\\\c{k}"
   },
   "ĸ": {
-    "latex": "{\\\\fontencoding{LELA}\\\\selectfont\\\\char91}",
-    "math": false
+    "latex": "{\\\\fontencoding{LELA}\\\\selectfont\\\\char91}"
   },
   "Ĺ": {
-    "latex": "\\\\'{L}",
-    "math": false
+    "latex": "\\\\'{L}"
   },
   "ĺ": {
-    "latex": "\\\\'{l}",
-    "math": false
+    "latex": "\\\\'{l}"
   },
   "Ļ": {
-    "latex": "\\\\c{L}",
-    "math": false
+    "latex": "\\\\c{L}"
   },
   "ļ": {
-    "latex": "\\\\c{l}",
-    "math": false
+    "latex": "\\\\c{l}"
   },
   "Ľ": {
-    "latex": "\\\\v{L}",
-    "math": false
+    "latex": "\\\\v{L}"
   },
   "ľ": {
-    "latex": "\\\\v{l}",
-    "math": false
+    "latex": "\\\\v{l}"
   },
   "Ŀ": {
-    "latex": "{\\\\fontencoding{LELA}\\\\selectfont\\\\char201}",
-    "math": false
+    "latex": "{\\\\fontencoding{LELA}\\\\selectfont\\\\char201}"
   },
   "ŀ": {
-    "latex": "{\\\\fontencoding{LELA}\\\\selectfont\\\\char202}",
-    "math": false
+    "latex": "{\\\\fontencoding{LELA}\\\\selectfont\\\\char202}"
   },
   "Ł": {
-    "latex": "\\\\L",
-    "math": false
+    "latex": "\\\\L"
   },
   "ł": {
-    "latex": "\\\\l",
-    "math": false
+    "latex": "\\\\l"
   },
   "Ń": {
-    "latex": "\\\\'{N}",
-    "math": false
+    "latex": "\\\\'{N}"
   },
   "ń": {
-    "latex": "\\\\'{n}",
-    "math": false
+    "latex": "\\\\'{n}"
   },
   "Ņ": {
-    "latex": "\\\\c{N}",
-    "math": false
+    "latex": "\\\\c{N}"
   },
   "ņ": {
-    "latex": "\\\\c{n}",
-    "math": false
+    "latex": "\\\\c{n}"
   },
   "Ň": {
-    "latex": "\\\\v{N}",
-    "math": false
+    "latex": "\\\\v{N}"
   },
   "ň": {
-    "latex": "\\\\v{n}",
-    "math": false
+    "latex": "\\\\v{n}"
   },
   "ŉ": {
-    "latex": "'n",
-    "math": false
+    "latex": "'n"
   },
   "Ŋ": {
-    "latex": "\\\\NG",
-    "math": false
+    "latex": "\\\\NG"
   },
   "ŋ": {
-    "latex": "\\\\ng",
-    "math": false
+    "latex": "\\\\ng"
   },
   "Ō": {
-    "latex": "\\\\={O}",
-    "math": false
+    "latex": "\\\\={O}"
   },
   "ō": {
-    "latex": "\\\\={o}",
-    "math": false
+    "latex": "\\\\={o}"
   },
   "Ŏ": {
-    "latex": "\\\\u{O}",
-    "math": false
+    "latex": "\\\\u{O}"
   },
   "ŏ": {
-    "latex": "\\\\u{o}",
-    "math": false
+    "latex": "\\\\u{o}"
   },
   "Ő": {
-    "latex": "\\\\H{O}",
-    "math": false
+    "latex": "\\\\H{O}"
   },
   "ő": {
-    "latex": "\\\\H{o}",
-    "math": false
+    "latex": "\\\\H{o}"
   },
   "Œ": {
-    "latex": "\\\\OE",
-    "math": false
+    "latex": "\\\\OE"
   },
   "œ": {
-    "latex": "\\\\oe",
-    "math": false
+    "latex": "\\\\oe"
   },
   "Ŕ": {
-    "latex": "\\\\'{R}",
-    "math": false
+    "latex": "\\\\'{R}"
   },
   "ŕ": {
-    "latex": "\\\\'{r}",
-    "math": false
+    "latex": "\\\\'{r}"
   },
   "Ŗ": {
-    "latex": "\\\\c{R}",
-    "math": false
+    "latex": "\\\\c{R}"
   },
   "ŗ": {
-    "latex": "\\\\c{r}",
-    "math": false
+    "latex": "\\\\c{r}"
   },
   "Ř": {
-    "latex": "\\\\v{R}",
-    "math": false
+    "latex": "\\\\v{R}"
   },
   "ř": {
-    "latex": "\\\\v{r}",
-    "math": false
+    "latex": "\\\\v{r}"
   },
   "Ś": {
-    "latex": "\\\\'{S}",
-    "math": false
+    "latex": "\\\\'{S}"
   },
   "ś": {
-    "latex": "\\\\'{s}",
-    "math": false
+    "latex": "\\\\'{s}"
   },
   "Ŝ": {
-    "latex": "\\\\^{S}",
-    "math": false
+    "latex": "\\\\^{S}"
   },
   "ŝ": {
-    "latex": "\\\\^{s}",
-    "math": false
+    "latex": "\\\\^{s}"
   },
   "Ş": {
-    "latex": "\\\\c{S}",
-    "math": false
+    "latex": "\\\\c{S}"
   },
   "ş": {
-    "latex": "\\\\c{s}",
-    "math": false
+    "latex": "\\\\c{s}"
   },
   "Š": {
-    "latex": "\\\\v{S}",
-    "math": false
+    "latex": "\\\\v{S}"
   },
   "š": {
-    "latex": "\\\\v{s}",
-    "math": false
+    "latex": "\\\\v{s}"
   },
   "Ţ": {
-    "latex": "\\\\c{T}",
-    "math": false
+    "latex": "\\\\c{T}"
   },
   "ţ": {
-    "latex": "\\\\c{t}",
-    "math": false
+    "latex": "\\\\c{t}"
   },
   "Ť": {
-    "latex": "\\\\v{T}",
-    "math": false
+    "latex": "\\\\v{T}"
   },
   "ť": {
-    "latex": "\\\\v{t}",
-    "math": false
+    "latex": "\\\\v{t}"
   },
   "Ŧ": {
-    "latex": "{\\\\fontencoding{LELA}\\\\selectfont\\\\char47}",
-    "math": false
+    "latex": "{\\\\fontencoding{LELA}\\\\selectfont\\\\char47}"
   },
   "ŧ": {
-    "latex": "{\\\\fontencoding{LELA}\\\\selectfont\\\\char63}",
-    "math": false
+    "latex": "{\\\\fontencoding{LELA}\\\\selectfont\\\\char63}"
   },
   "Ũ": {
-    "latex": "\\\\~{U}",
-    "math": false
+    "latex": "\\\\~{U}"
   },
   "ũ": {
-    "latex": "\\\\~{u}",
-    "math": false
+    "latex": "\\\\~{u}"
   },
   "Ū": {
-    "latex": "\\\\={U}",
-    "math": false
+    "latex": "\\\\={U}"
   },
   "ū": {
-    "latex": "\\\\={u}",
-    "math": false
+    "latex": "\\\\={u}"
   },
   "Ŭ": {
-    "latex": "\\\\u{U}",
-    "math": false
+    "latex": "\\\\u{U}"
   },
   "ŭ": {
-    "latex": "\\\\u{u}",
-    "math": false
+    "latex": "\\\\u{u}"
   },
   "Ů": {
-    "latex": "\\\\r{U}",
-    "math": false
+    "latex": "\\\\r{U}"
   },
   "ů": {
-    "latex": "\\\\r{u}",
-    "math": false
+    "latex": "\\\\r{u}"
   },
   "Ű": {
-    "latex": "\\\\H{U}",
-    "math": false
+    "latex": "\\\\H{U}"
   },
   "ű": {
-    "latex": "\\\\H{u}",
-    "math": false
+    "latex": "\\\\H{u}"
   },
   "Ų": {
-    "latex": "\\\\k{U}",
-    "math": false
+    "latex": "\\\\k{U}"
   },
   "ų": {
-    "latex": "\\\\k{u}",
-    "math": false
+    "latex": "\\\\k{u}"
   },
   "Ŵ": {
-    "latex": "\\\\^{W}",
-    "math": false
+    "latex": "\\\\^{W}"
   },
   "ŵ": {
-    "latex": "\\\\^{w}",
-    "math": false
+    "latex": "\\\\^{w}"
   },
   "Ŷ": {
-    "latex": "\\\\^{Y}",
-    "math": false
+    "latex": "\\\\^{Y}"
   },
   "ŷ": {
-    "latex": "\\\\^{y}",
-    "math": false
+    "latex": "\\\\^{y}"
   },
   "Ÿ": {
-    "latex": "\\\\\"{Y}",
-    "math": false
+    "latex": "\\\\\"{Y}"
   },
   "Ź": {
-    "latex": "\\\\'{Z}",
-    "math": false
+    "latex": "\\\\'{Z}"
   },
   "ź": {
-    "latex": "\\\\'{z}",
-    "math": false
+    "latex": "\\\\'{z}"
   },
   "Ż": {
-    "latex": "\\\\.{Z}",
-    "math": false
+    "latex": "\\\\.{Z}"
   },
   "ż": {
-    "latex": "\\\\.{z}",
-    "math": false
+    "latex": "\\\\.{z}"
   },
   "Ž": {
-    "latex": "\\\\v{Z}",
-    "math": false
+    "latex": "\\\\v{Z}"
   },
   "ž": {
-    "latex": "\\\\v{z}",
-    "math": false
+    "latex": "\\\\v{z}"
   },
   "ƒ": {
     "latex": "f",
     "math": true
   },
   "ƕ": {
-    "latex": "\\\\texthvlig",
-    "math": false
+    "latex": "\\\\texthvlig"
   },
   "ƞ": {
-    "latex": "\\\\textnrleg",
-    "math": false
+    "latex": "\\\\textnrleg"
   },
   "ƪ": {
     "latex": "\\\\eth",
     "math": true
   },
   "ƺ": {
-    "latex": "{\\\\fontencoding{LELA}\\\\selectfont\\\\char195}",
-    "math": false
+    "latex": "{\\\\fontencoding{LELA}\\\\selectfont\\\\char195}"
   },
   "ǂ": {
-    "latex": "\\\\textdoublepipe",
-    "math": false
+    "latex": "\\\\textdoublepipe"
   },
   "ǵ": {
-    "latex": "\\\\'{g}",
-    "math": false
+    "latex": "\\\\'{g}"
   },
   "ɐ": {
     "latex": "\\\\Elztrna",
@@ -986,8 +773,7 @@
     "math": true
   },
   "ɘ": {
-    "latex": "{\\\\fontencoding{LEIP}\\\\selectfont\\\\char61}",
-    "math": false
+    "latex": "{\\\\fontencoding{LEIP}\\\\selectfont\\\\char61}"
   },
   "ə": {
     "latex": "\\\\Elzschwa",
@@ -998,8 +784,7 @@
     "math": true
   },
   "ɡ": {
-    "latex": "g",
-    "math": false
+    "latex": "g"
   },
   "ɣ": {
     "latex": "\\\\Elzpgamma",
@@ -1034,8 +819,7 @@
     "math": true
   },
   "ɲ": {
-    "latex": "\\\\Elzltln",
-    "math": false
+    "latex": "\\\\Elzltln"
   },
   "ɳ": {
     "latex": "\\\\Elzrtln",
@@ -1046,8 +830,7 @@
     "math": true
   },
   "ɸ": {
-    "latex": "\\\\textphi",
-    "math": false
+    "latex": "\\\\textphi"
   },
   "ɹ": {
     "latex": "\\\\Elztrnr",
@@ -1074,8 +857,7 @@
     "math": true
   },
   "ɿ": {
-    "latex": "{\\\\fontencoding{LEIP}\\\\selectfont\\\\char202}",
-    "math": false
+    "latex": "{\\\\fontencoding{LEIP}\\\\selectfont\\\\char202}"
   },
   "ʂ": {
     "latex": "\\\\Elzrtls",
@@ -1134,8 +916,7 @@
     "math": true
   },
   "ʞ": {
-    "latex": "\\\\textturnk",
-    "math": false
+    "latex": "\\\\textturnk"
   },
   "ʤ": {
     "latex": "\\\\Elzdyogh",
@@ -1146,12 +927,10 @@
     "math": true
   },
   "ʼ": {
-    "latex": "'",
-    "math": false
+    "latex": "'"
   },
   "ˇ": {
-    "latex": "\\\\textasciicaron",
-    "math": false
+    "latex": "\\\\textasciicaron"
   },
   "ˈ": {
     "latex": "\\\\Elzverts",
@@ -1186,192 +965,147 @@
     "math": true
   },
   "˘": {
-    "latex": "\\\\textasciibreve",
-    "math": false
+    "latex": "\\\\textasciibreve"
   },
   "˙": {
-    "latex": "\\\\textperiodcentered",
-    "math": false
+    "latex": "\\\\textperiodcentered"
   },
   "˚": {
-    "latex": "\\\\r{}",
-    "math": false
+    "latex": "\\\\r{}"
   },
   "˛": {
-    "latex": "\\\\k{}",
-    "math": false
+    "latex": "\\\\k{}"
   },
   "˜": {
-    "latex": "\\\\texttildelow",
-    "math": false
+    "latex": "\\\\texttildelow"
   },
   "˝": {
-    "latex": "\\\\H{}",
-    "math": false
+    "latex": "\\\\H{}"
   },
   "˥": {
-    "latex": "\\\\tone{55}",
-    "math": false
+    "latex": "\\\\tone{55}"
   },
   "˦": {
-    "latex": "\\\\tone{44}",
-    "math": false
+    "latex": "\\\\tone{44}"
   },
   "˧": {
-    "latex": "\\\\tone{33}",
-    "math": false
+    "latex": "\\\\tone{33}"
   },
   "˨": {
-    "latex": "\\\\tone{22}",
-    "math": false
+    "latex": "\\\\tone{22}"
   },
   "˩": {
-    "latex": "\\\\tone{11}",
-    "math": false
+    "latex": "\\\\tone{11}"
   },
   "̀": {
-    "latex": "\\\\`",
-    "math": false
+    "latex": "\\\\`"
   },
   "́": {
-    "latex": "\\\\'",
-    "math": false
+    "latex": "\\\\'"
   },
   "̂": {
-    "latex": "\\\\^",
-    "math": false
+    "latex": "\\\\^"
   },
   "̃": {
-    "latex": "\\\\~",
-    "math": false
+    "latex": "\\\\~"
   },
   "̄": {
-    "latex": "\\\\=",
-    "math": false
+    "latex": "\\\\="
   },
   "̆": {
-    "latex": "\\\\u",
-    "math": false
+    "latex": "\\\\u"
   },
   "̇": {
-    "latex": "\\\\.",
-    "math": false
+    "latex": "\\\\."
   },
   "̈": {
-    "latex": "\\\\\"",
-    "math": false
+    "latex": "\\\\\""
   },
   "̊": {
-    "latex": "\\\\r",
-    "math": false
+    "latex": "\\\\r"
   },
   "̋": {
-    "latex": "\\\\H",
-    "math": false
+    "latex": "\\\\H"
   },
   "̌": {
-    "latex": "\\\\v",
-    "math": false
+    "latex": "\\\\v"
   },
   "̏": {
-    "latex": "\\\\cyrchar\\\\C",
-    "math": false
+    "latex": "\\\\cyrchar\\\\C"
   },
   "̑": {
-    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char177}",
-    "math": false
+    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char177}"
   },
   "̘": {
-    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char184}",
-    "math": false
+    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char184}"
   },
   "̙": {
-    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char185}",
-    "math": false
+    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char185}"
   },
   "̡": {
     "latex": "\\\\Elzpalh",
     "math": true
   },
   "̢": {
-    "latex": "\\\\Elzrh",
-    "math": false
+    "latex": "\\\\Elzrh"
   },
   "̧": {
-    "latex": "\\\\c",
-    "math": false
+    "latex": "\\\\c"
   },
   "̨": {
-    "latex": "\\\\k",
-    "math": false
+    "latex": "\\\\k"
   },
   "̪": {
     "latex": "\\\\Elzsbbrg",
     "math": true
   },
   "̫": {
-    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char203}",
-    "math": false
+    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char203}"
   },
   "̯": {
-    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char207}",
-    "math": false
+    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char207}"
   },
   "̵": {
-    "latex": "\\\\Elzxl",
-    "math": false
+    "latex": "\\\\Elzxl"
   },
   "̶": {
-    "latex": "\\\\Elzbar",
-    "math": false
+    "latex": "\\\\Elzbar"
   },
   "̷": {
-    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char215}",
-    "math": false
+    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char215}"
   },
   "̸": {
-    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char216}",
-    "math": false
+    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char216}"
   },
   "̺": {
-    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char218}",
-    "math": false
+    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char218}"
   },
   "̻": {
-    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char219}",
-    "math": false
+    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char219}"
   },
   "̼": {
-    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char220}",
-    "math": false
+    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char220}"
   },
   "̽": {
-    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char221}",
-    "math": false
+    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char221}"
   },
   "͡": {
-    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char225}",
-    "math": false
+    "latex": "{\\\\fontencoding{LECO}\\\\selectfont\\\\char225}"
   },
   "Ά": {
-    "latex": "\\\\'{A}",
-    "math": false
+    "latex": "\\\\'{A}"
   },
   "Έ": {
-    "latex": "\\\\'{E}",
-    "math": false
+    "latex": "\\\\'{E}"
   },
   "Ή": {
-    "latex": "\\\\'{H}",
-    "math": false
+    "latex": "\\\\'{H}"
   },
   "Ί": {
-    "latex": "\\\\'{}{I}",
-    "math": false
+    "latex": "\\\\'{}{I}"
   },
   "Ό": {
-    "latex": "\\\\'{}O",
-    "math": false
+    "latex": "\\\\'{}O"
   },
   "Ύ": {
     "latex": "\\\\mathrm{'Y}",
@@ -1490,8 +1224,7 @@
     "math": true
   },
   "ά": {
-    "latex": "\\\\'{$\\\\alpha$}",
-    "math": false
+    "latex": "\\\\'{$\\\\alpha$}"
   },
   "έ": {
     "latex": "\\\\acute{\\\\epsilon}",
@@ -1538,8 +1271,7 @@
     "math": true
   },
   "θ": {
-    "latex": "\\\\texttheta",
-    "math": false
+    "latex": "\\\\texttheta"
   },
   "ι": {
     "latex": "\\\\iota",
@@ -1618,8 +1350,7 @@
     "math": true
   },
   "ό": {
-    "latex": "\\\\'{o}",
-    "math": false
+    "latex": "\\\\'{o}"
   },
   "ύ": {
     "latex": "\\\\acute{\\\\upsilon}",
@@ -1630,12 +1361,10 @@
     "math": true
   },
   "ϐ": {
-    "latex": "\\\\Pisymbol{ppi022}{87}",
-    "math": false
+    "latex": "\\\\Pisymbol{ppi022}{87}"
   },
   "ϑ": {
-    "latex": "\\\\textvartheta",
-    "math": false
+    "latex": "\\\\textvartheta"
   },
   "ϒ": {
     "latex": "\\\\Upsilon",
@@ -1678,804 +1407,605 @@
     "math": true
   },
   "ϴ": {
-    "latex": "\\\\textTheta",
-    "math": false
+    "latex": "\\\\textTheta"
   },
   "϶": {
     "latex": "\\\\backepsilon",
     "math": true
   },
   "Ё": {
-    "latex": "\\\\cyrchar\\\\CYRYO",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRYO"
   },
   "Ђ": {
-    "latex": "\\\\cyrchar\\\\CYRDJE",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRDJE"
   },
   "Ѓ": {
-    "latex": "\\\\cyrchar{\\\\'\\\\CYRG}",
-    "math": false
+    "latex": "\\\\cyrchar{\\\\'\\\\CYRG}"
   },
   "Є": {
-    "latex": "\\\\cyrchar\\\\CYRIE",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRIE"
   },
   "Ѕ": {
-    "latex": "\\\\cyrchar\\\\CYRDZE",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRDZE"
   },
   "І": {
-    "latex": "\\\\cyrchar\\\\CYRII",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRII"
   },
   "Ї": {
-    "latex": "\\\\cyrchar\\\\CYRYI",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRYI"
   },
   "Ј": {
-    "latex": "\\\\cyrchar\\\\CYRJE",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRJE"
   },
   "Љ": {
-    "latex": "\\\\cyrchar\\\\CYRLJE",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRLJE"
   },
   "Њ": {
-    "latex": "\\\\cyrchar\\\\CYRNJE",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRNJE"
   },
   "Ћ": {
-    "latex": "\\\\cyrchar\\\\CYRTSHE",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRTSHE"
   },
   "Ќ": {
-    "latex": "\\\\cyrchar{\\\\'\\\\CYRK}",
-    "math": false
+    "latex": "\\\\cyrchar{\\\\'\\\\CYRK}"
   },
   "Ў": {
-    "latex": "\\\\cyrchar\\\\CYRUSHRT",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRUSHRT"
   },
   "Џ": {
-    "latex": "\\\\cyrchar\\\\CYRDZHE",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRDZHE"
   },
   "А": {
-    "latex": "\\\\cyrchar\\\\CYRA",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRA"
   },
   "Б": {
-    "latex": "\\\\cyrchar\\\\CYRB",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRB"
   },
   "В": {
-    "latex": "\\\\cyrchar\\\\CYRV",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRV"
   },
   "Г": {
-    "latex": "\\\\cyrchar\\\\CYRG",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRG"
   },
   "Д": {
-    "latex": "\\\\cyrchar\\\\CYRD",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRD"
   },
   "Е": {
-    "latex": "\\\\cyrchar\\\\CYRE",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRE"
   },
   "Ж": {
-    "latex": "\\\\cyrchar\\\\CYRZH",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRZH"
   },
   "З": {
-    "latex": "\\\\cyrchar\\\\CYRZ",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRZ"
   },
   "И": {
-    "latex": "\\\\cyrchar\\\\CYRI",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRI"
   },
   "Й": {
-    "latex": "\\\\cyrchar\\\\CYRISHRT",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRISHRT"
   },
   "К": {
-    "latex": "\\\\cyrchar\\\\CYRK",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRK"
   },
   "Л": {
-    "latex": "\\\\cyrchar\\\\CYRL",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRL"
   },
   "М": {
-    "latex": "\\\\cyrchar\\\\CYRM",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRM"
   },
   "Н": {
-    "latex": "\\\\cyrchar\\\\CYRN",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRN"
   },
   "О": {
-    "latex": "\\\\cyrchar\\\\CYRO",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRO"
   },
   "П": {
-    "latex": "\\\\cyrchar\\\\CYRP",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRP"
   },
   "Р": {
-    "latex": "\\\\cyrchar\\\\CYRR",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRR"
   },
   "С": {
-    "latex": "\\\\cyrchar\\\\CYRS",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRS"
   },
   "Т": {
-    "latex": "\\\\cyrchar\\\\CYRT",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRT"
   },
   "У": {
-    "latex": "\\\\cyrchar\\\\CYRU",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRU"
   },
   "Ф": {
-    "latex": "\\\\cyrchar\\\\CYRF",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRF"
   },
   "Х": {
-    "latex": "\\\\cyrchar\\\\CYRH",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRH"
   },
   "Ц": {
-    "latex": "\\\\cyrchar\\\\CYRC",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRC"
   },
   "Ч": {
-    "latex": "\\\\cyrchar\\\\CYRCH",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRCH"
   },
   "Ш": {
-    "latex": "\\\\cyrchar\\\\CYRSH",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRSH"
   },
   "Щ": {
-    "latex": "\\\\cyrchar\\\\CYRSHCH",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRSHCH"
   },
   "Ъ": {
-    "latex": "\\\\cyrchar\\\\CYRHRDSN",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRHRDSN"
   },
   "Ы": {
-    "latex": "\\\\cyrchar\\\\CYRERY",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRERY"
   },
   "Ь": {
-    "latex": "\\\\cyrchar\\\\CYRSFTSN",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRSFTSN"
   },
   "Э": {
-    "latex": "\\\\cyrchar\\\\CYREREV",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYREREV"
   },
   "Ю": {
-    "latex": "\\\\cyrchar\\\\CYRYU",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRYU"
   },
   "Я": {
-    "latex": "\\\\cyrchar\\\\CYRYA",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRYA"
   },
   "а": {
-    "latex": "\\\\cyrchar\\\\cyra",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyra"
   },
   "б": {
-    "latex": "\\\\cyrchar\\\\cyrb",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrb"
   },
   "в": {
-    "latex": "\\\\cyrchar\\\\cyrv",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrv"
   },
   "г": {
-    "latex": "\\\\cyrchar\\\\cyrg",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrg"
   },
   "д": {
-    "latex": "\\\\cyrchar\\\\cyrd",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrd"
   },
   "е": {
-    "latex": "\\\\cyrchar\\\\cyre",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyre"
   },
   "ж": {
-    "latex": "\\\\cyrchar\\\\cyrzh",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrzh"
   },
   "з": {
-    "latex": "\\\\cyrchar\\\\cyrz",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrz"
   },
   "и": {
-    "latex": "\\\\cyrchar\\\\cyri",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyri"
   },
   "й": {
-    "latex": "\\\\cyrchar\\\\cyrishrt",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrishrt"
   },
   "к": {
-    "latex": "\\\\cyrchar\\\\cyrk",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrk"
   },
   "л": {
-    "latex": "\\\\cyrchar\\\\cyrl",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrl"
   },
   "м": {
-    "latex": "\\\\cyrchar\\\\cyrm",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrm"
   },
   "н": {
-    "latex": "\\\\cyrchar\\\\cyrn",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrn"
   },
   "о": {
-    "latex": "\\\\cyrchar\\\\cyro",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyro"
   },
   "п": {
-    "latex": "\\\\cyrchar\\\\cyrp",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrp"
   },
   "р": {
-    "latex": "\\\\cyrchar\\\\cyrr",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrr"
   },
   "с": {
-    "latex": "\\\\cyrchar\\\\cyrs",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrs"
   },
   "т": {
-    "latex": "\\\\cyrchar\\\\cyrt",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrt"
   },
   "у": {
-    "latex": "\\\\cyrchar\\\\cyru",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyru"
   },
   "ф": {
-    "latex": "\\\\cyrchar\\\\cyrf",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrf"
   },
   "х": {
-    "latex": "\\\\cyrchar\\\\cyrh",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrh"
   },
   "ц": {
-    "latex": "\\\\cyrchar\\\\cyrc",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrc"
   },
   "ч": {
-    "latex": "\\\\cyrchar\\\\cyrch",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrch"
   },
   "ш": {
-    "latex": "\\\\cyrchar\\\\cyrsh",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrsh"
   },
   "щ": {
-    "latex": "\\\\cyrchar\\\\cyrshch",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrshch"
   },
   "ъ": {
-    "latex": "\\\\cyrchar\\\\cyrhrdsn",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrhrdsn"
   },
   "ы": {
-    "latex": "\\\\cyrchar\\\\cyrery",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrery"
   },
   "ь": {
-    "latex": "\\\\cyrchar\\\\cyrsftsn",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrsftsn"
   },
   "э": {
-    "latex": "\\\\cyrchar\\\\cyrerev",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrerev"
   },
   "ю": {
-    "latex": "\\\\cyrchar\\\\cyryu",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyryu"
   },
   "я": {
-    "latex": "\\\\cyrchar\\\\cyrya",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrya"
   },
   "ё": {
-    "latex": "\\\\cyrchar\\\\cyryo",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyryo"
   },
   "ђ": {
-    "latex": "\\\\cyrchar\\\\cyrdje",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrdje"
   },
   "ѓ": {
-    "latex": "\\\\cyrchar{\\\\'\\\\cyrg}",
-    "math": false
+    "latex": "\\\\cyrchar{\\\\'\\\\cyrg}"
   },
   "є": {
-    "latex": "\\\\cyrchar\\\\cyrie",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrie"
   },
   "ѕ": {
-    "latex": "\\\\cyrchar\\\\cyrdze",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrdze"
   },
   "і": {
-    "latex": "\\\\cyrchar\\\\cyrii",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrii"
   },
   "ї": {
-    "latex": "\\\\cyrchar\\\\cyryi",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyryi"
   },
   "ј": {
-    "latex": "\\\\cyrchar\\\\cyrje",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrje"
   },
   "љ": {
-    "latex": "\\\\cyrchar\\\\cyrlje",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrlje"
   },
   "њ": {
-    "latex": "\\\\cyrchar\\\\cyrnje",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrnje"
   },
   "ћ": {
-    "latex": "\\\\cyrchar\\\\cyrtshe",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrtshe"
   },
   "ќ": {
-    "latex": "\\\\cyrchar{\\\\'\\\\cyrk}",
-    "math": false
+    "latex": "\\\\cyrchar{\\\\'\\\\cyrk}"
   },
   "ў": {
-    "latex": "\\\\cyrchar\\\\cyrushrt",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrushrt"
   },
   "џ": {
-    "latex": "\\\\cyrchar\\\\cyrdzhe",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrdzhe"
   },
   "Ѡ": {
-    "latex": "\\\\cyrchar\\\\CYROMEGA",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYROMEGA"
   },
   "ѡ": {
-    "latex": "\\\\cyrchar\\\\cyromega",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyromega"
   },
   "Ѣ": {
-    "latex": "\\\\cyrchar\\\\CYRYAT",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRYAT"
   },
   "Ѥ": {
-    "latex": "\\\\cyrchar\\\\CYRIOTE",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRIOTE"
   },
   "ѥ": {
-    "latex": "\\\\cyrchar\\\\cyriote",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyriote"
   },
   "Ѧ": {
-    "latex": "\\\\cyrchar\\\\CYRLYUS",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRLYUS"
   },
   "ѧ": {
-    "latex": "\\\\cyrchar\\\\cyrlyus",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrlyus"
   },
   "Ѩ": {
-    "latex": "\\\\cyrchar\\\\CYRIOTLYUS",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRIOTLYUS"
   },
   "ѩ": {
-    "latex": "\\\\cyrchar\\\\cyriotlyus",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyriotlyus"
   },
   "Ѫ": {
-    "latex": "\\\\cyrchar\\\\CYRBYUS",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRBYUS"
   },
   "Ѭ": {
-    "latex": "\\\\cyrchar\\\\CYRIOTBYUS",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRIOTBYUS"
   },
   "ѭ": {
-    "latex": "\\\\cyrchar\\\\cyriotbyus",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyriotbyus"
   },
   "Ѯ": {
-    "latex": "\\\\cyrchar\\\\CYRKSI",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRKSI"
   },
   "ѯ": {
-    "latex": "\\\\cyrchar\\\\cyrksi",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrksi"
   },
   "Ѱ": {
-    "latex": "\\\\cyrchar\\\\CYRPSI",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRPSI"
   },
   "ѱ": {
-    "latex": "\\\\cyrchar\\\\cyrpsi",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrpsi"
   },
   "Ѳ": {
-    "latex": "\\\\cyrchar\\\\CYRFITA",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRFITA"
   },
   "Ѵ": {
-    "latex": "\\\\cyrchar\\\\CYRIZH",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRIZH"
   },
   "Ѹ": {
-    "latex": "\\\\cyrchar\\\\CYRUK",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRUK"
   },
   "ѹ": {
-    "latex": "\\\\cyrchar\\\\cyruk",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyruk"
   },
   "Ѻ": {
-    "latex": "\\\\cyrchar\\\\CYROMEGARND",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYROMEGARND"
   },
   "ѻ": {
-    "latex": "\\\\cyrchar\\\\cyromegarnd",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyromegarnd"
   },
   "Ѽ": {
-    "latex": "\\\\cyrchar\\\\CYROMEGATITLO",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYROMEGATITLO"
   },
   "ѽ": {
-    "latex": "\\\\cyrchar\\\\cyromegatitlo",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyromegatitlo"
   },
   "Ѿ": {
-    "latex": "\\\\cyrchar\\\\CYROT",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYROT"
   },
   "ѿ": {
-    "latex": "\\\\cyrchar\\\\cyrot",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrot"
   },
   "Ҁ": {
-    "latex": "\\\\cyrchar\\\\CYRKOPPA",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRKOPPA"
   },
   "ҁ": {
-    "latex": "\\\\cyrchar\\\\cyrkoppa",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrkoppa"
   },
   "҂": {
-    "latex": "\\\\cyrchar\\\\cyrthousands",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrthousands"
   },
   "҈": {
-    "latex": "\\\\cyrchar\\\\cyrhundredthousands",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrhundredthousands"
   },
   "҉": {
-    "latex": "\\\\cyrchar\\\\cyrmillions",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrmillions"
   },
   "Ҍ": {
-    "latex": "\\\\cyrchar\\\\CYRSEMISFTSN",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRSEMISFTSN"
   },
   "ҍ": {
-    "latex": "\\\\cyrchar\\\\cyrsemisftsn",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrsemisftsn"
   },
   "Ҏ": {
-    "latex": "\\\\cyrchar\\\\CYRRTICK",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRRTICK"
   },
   "ҏ": {
-    "latex": "\\\\cyrchar\\\\cyrrtick",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrrtick"
   },
   "Ґ": {
-    "latex": "\\\\cyrchar\\\\CYRGUP",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRGUP"
   },
   "ґ": {
-    "latex": "\\\\cyrchar\\\\cyrgup",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrgup"
   },
   "Ғ": {
-    "latex": "\\\\cyrchar\\\\CYRGHCRS",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRGHCRS"
   },
   "ғ": {
-    "latex": "\\\\cyrchar\\\\cyrghcrs",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrghcrs"
   },
   "Ҕ": {
-    "latex": "\\\\cyrchar\\\\CYRGHK",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRGHK"
   },
   "ҕ": {
-    "latex": "\\\\cyrchar\\\\cyrghk",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrghk"
   },
   "Җ": {
-    "latex": "\\\\cyrchar\\\\CYRZHDSC",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRZHDSC"
   },
   "җ": {
-    "latex": "\\\\cyrchar\\\\cyrzhdsc",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrzhdsc"
   },
   "Ҙ": {
-    "latex": "\\\\cyrchar\\\\CYRZDSC",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRZDSC"
   },
   "ҙ": {
-    "latex": "\\\\cyrchar\\\\cyrzdsc",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrzdsc"
   },
   "Қ": {
-    "latex": "\\\\cyrchar\\\\CYRKDSC",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRKDSC"
   },
   "қ": {
-    "latex": "\\\\cyrchar\\\\cyrkdsc",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrkdsc"
   },
   "Ҝ": {
-    "latex": "\\\\cyrchar\\\\CYRKVCRS",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRKVCRS"
   },
   "ҝ": {
-    "latex": "\\\\cyrchar\\\\cyrkvcrs",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrkvcrs"
   },
   "Ҟ": {
-    "latex": "\\\\cyrchar\\\\CYRKHCRS",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRKHCRS"
   },
   "ҟ": {
-    "latex": "\\\\cyrchar\\\\cyrkhcrs",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrkhcrs"
   },
   "Ҡ": {
-    "latex": "\\\\cyrchar\\\\CYRKBEAK",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRKBEAK"
   },
   "ҡ": {
-    "latex": "\\\\cyrchar\\\\cyrkbeak",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrkbeak"
   },
   "Ң": {
-    "latex": "\\\\cyrchar\\\\CYRNDSC",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRNDSC"
   },
   "ң": {
-    "latex": "\\\\cyrchar\\\\cyrndsc",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrndsc"
   },
   "Ҥ": {
-    "latex": "\\\\cyrchar\\\\CYRNG",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRNG"
   },
   "ҥ": {
-    "latex": "\\\\cyrchar\\\\cyrng",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrng"
   },
   "Ҧ": {
-    "latex": "\\\\cyrchar\\\\CYRPHK",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRPHK"
   },
   "ҧ": {
-    "latex": "\\\\cyrchar\\\\cyrphk",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrphk"
   },
   "Ҩ": {
-    "latex": "\\\\cyrchar\\\\CYRABHHA",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRABHHA"
   },
   "ҩ": {
-    "latex": "\\\\cyrchar\\\\cyrabhha",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrabhha"
   },
   "Ҫ": {
-    "latex": "\\\\cyrchar\\\\CYRSDSC",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRSDSC"
   },
   "ҫ": {
-    "latex": "\\\\cyrchar\\\\cyrsdsc",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrsdsc"
   },
   "Ҭ": {
-    "latex": "\\\\cyrchar\\\\CYRTDSC",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRTDSC"
   },
   "ҭ": {
-    "latex": "\\\\cyrchar\\\\cyrtdsc",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrtdsc"
   },
   "Ү": {
-    "latex": "\\\\cyrchar\\\\CYRY",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRY"
   },
   "ү": {
-    "latex": "\\\\cyrchar\\\\cyry",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyry"
   },
   "Ұ": {
-    "latex": "\\\\cyrchar\\\\CYRYHCRS",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRYHCRS"
   },
   "ұ": {
-    "latex": "\\\\cyrchar\\\\cyryhcrs",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyryhcrs"
   },
   "Ҳ": {
-    "latex": "\\\\cyrchar\\\\CYRHDSC",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRHDSC"
   },
   "ҳ": {
-    "latex": "\\\\cyrchar\\\\cyrhdsc",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrhdsc"
   },
   "Ҵ": {
-    "latex": "\\\\cyrchar\\\\CYRTETSE",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRTETSE"
   },
   "ҵ": {
-    "latex": "\\\\cyrchar\\\\cyrtetse",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrtetse"
   },
   "Ҷ": {
-    "latex": "\\\\cyrchar\\\\CYRCHRDSC",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRCHRDSC"
   },
   "ҷ": {
-    "latex": "\\\\cyrchar\\\\cyrchrdsc",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrchrdsc"
   },
   "Ҹ": {
-    "latex": "\\\\cyrchar\\\\CYRCHVCRS",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRCHVCRS"
   },
   "ҹ": {
-    "latex": "\\\\cyrchar\\\\cyrchvcrs",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrchvcrs"
   },
   "Һ": {
-    "latex": "\\\\cyrchar\\\\CYRSHHA",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRSHHA"
   },
   "һ": {
-    "latex": "\\\\cyrchar\\\\cyrshha",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrshha"
   },
   "Ҽ": {
-    "latex": "\\\\cyrchar\\\\CYRABHCH",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRABHCH"
   },
   "ҽ": {
-    "latex": "\\\\cyrchar\\\\cyrabhch",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrabhch"
   },
   "Ҿ": {
-    "latex": "\\\\cyrchar\\\\CYRABHCHDSC",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRABHCHDSC"
   },
   "ҿ": {
-    "latex": "\\\\cyrchar\\\\cyrabhchdsc",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrabhchdsc"
   },
   "Ӏ": {
-    "latex": "\\\\cyrchar\\\\CYRpalochka",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRpalochka"
   },
   "Ӄ": {
-    "latex": "\\\\cyrchar\\\\CYRKHK",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRKHK"
   },
   "ӄ": {
-    "latex": "\\\\cyrchar\\\\cyrkhk",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrkhk"
   },
   "Ӈ": {
-    "latex": "\\\\cyrchar\\\\CYRNHK",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRNHK"
   },
   "ӈ": {
-    "latex": "\\\\cyrchar\\\\cyrnhk",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrnhk"
   },
   "Ӌ": {
-    "latex": "\\\\cyrchar\\\\CYRCHLDSC",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRCHLDSC"
   },
   "ӌ": {
-    "latex": "\\\\cyrchar\\\\cyrchldsc",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrchldsc"
   },
   "Ӕ": {
-    "latex": "\\\\cyrchar\\\\CYRAE",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRAE"
   },
   "ӕ": {
-    "latex": "\\\\cyrchar\\\\cyrae",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrae"
   },
   "Ә": {
-    "latex": "\\\\cyrchar\\\\CYRSCHWA",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRSCHWA"
   },
   "ә": {
-    "latex": "\\\\cyrchar\\\\cyrschwa",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrschwa"
   },
   "Ӡ": {
-    "latex": "\\\\cyrchar\\\\CYRABHDZE",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYRABHDZE"
   },
   "ӡ": {
-    "latex": "\\\\cyrchar\\\\cyrabhdze",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrabhdze"
   },
   "Ө": {
-    "latex": "\\\\cyrchar\\\\CYROTLD",
-    "math": false
+    "latex": "\\\\cyrchar\\\\CYROTLD"
   },
   "ө": {
-    "latex": "\\\\cyrchar\\\\cyrotld",
-    "math": false
+    "latex": "\\\\cyrchar\\\\cyrotld"
   },
   " ": {
-    "latex": "\\\\hspace{0.6em}",
-    "math": false
+    "latex": "\\\\hspace{0.6em}"
   },
   " ": {
-    "latex": "\\\\hspace{1em}",
-    "math": false
+    "latex": "\\\\hspace{1em}"
   },
   " ": {
-    "latex": "\\\\hspace{0.33em}",
-    "math": false
+    "latex": "\\\\hspace{0.33em}"
   },
   " ": {
-    "latex": "\\\\hspace{0.25em}",
-    "math": false
+    "latex": "\\\\hspace{0.25em}"
   },
   " ": {
-    "latex": "\\\\hspace{0.166em}",
-    "math": false
+    "latex": "\\\\hspace{0.166em}"
   },
   " ": {
-    "latex": "\\\\hphantom{0}",
-    "math": false
+    "latex": "\\\\hphantom{0}"
   },
   " ": {
-    "latex": "\\\\hphantom{,}",
-    "math": false
+    "latex": "\\\\hphantom{,}"
   },
   " ": {
-    "latex": "\\\\hspace{0.167em}",
-    "math": false
+    "latex": "\\\\hspace{0.167em}"
   },
   "   ": {
     "latex": "\\\\;",
@@ -2486,84 +2016,66 @@
     "math": true
   },
   "‐": {
-    "latex": "-",
-    "math": false
+    "latex": "-"
   },
   "–": {
-    "latex": "\\\\textendash",
-    "math": false
+    "latex": "\\\\textendash"
   },
   "—": {
-    "latex": "\\\\textemdash",
-    "math": false
+    "latex": "\\\\textemdash"
   },
   "―": {
-    "latex": "\\\\rule{1em}{1pt}",
-    "math": false
+    "latex": "\\\\rule{1em}{1pt}"
   },
   "‖": {
     "latex": "\\\\Vert",
     "math": true
   },
   "‘": {
-    "latex": "`",
-    "math": false
+    "latex": "`"
   },
   "’": {
-    "latex": "'",
-    "math": false
+    "latex": "'"
   },
   "‚": {
-    "latex": ",",
-    "math": false
+    "latex": ","
   },
   "‛": {
     "latex": "\\\\Elzreapos",
     "math": true
   },
   "“": {
-    "latex": "``",
-    "math": false
+    "latex": "``"
   },
   "”": {
-    "latex": "''",
-    "math": false
+    "latex": "''"
   },
   "„": {
-    "latex": ",,",
-    "math": false
+    "latex": ",,"
   },
   "†": {
-    "latex": "\\\\textdagger",
-    "math": false
+    "latex": "\\\\textdagger"
   },
   "‡": {
-    "latex": "\\\\textdaggerdbl",
-    "math": false
+    "latex": "\\\\textdaggerdbl"
   },
   "•": {
-    "latex": "\\\\textbullet",
-    "math": false
+    "latex": "\\\\textbullet"
   },
   "․": {
-    "latex": ".",
-    "math": false
+    "latex": "."
   },
   "‥": {
-    "latex": "..",
-    "math": false
+    "latex": ".."
   },
   "…": {
-    "latex": "\\\\ldots",
-    "math": false
+    "latex": "\\\\ldots"
   },
   "‰": {
-    "latex": "\\\\textperthousand",
-    "math": false
+    "latex": "\\\\textperthousand"
   },
   "‱": {
-    "latex": "\\\\textpertenthousand",
-    "math": false
+    "latex": "\\\\textpertenthousand"
   },
   "′": {
     "latex": "{'}",
@@ -2582,32 +2094,26 @@
     "math": true
   },
   "‹": {
-    "latex": "\\\\guilsinglleft",
-    "math": false
+    "latex": "\\\\guilsinglleft"
   },
   "›": {
-    "latex": "\\\\guilsinglright",
-    "math": false
+    "latex": "\\\\guilsinglright"
   },
   "⁗": {
     "latex": "''''",
     "math": true
   },
   " ": {
-    "latex": "\\\\mkern4mu",
-    "math": false
+    "latex": "\\\\mkern4mu"
   },
   "⁠": {
-    "latex": "\\\\nolinebreak",
-    "math": false
+    "latex": "\\\\nolinebreak"
   },
   "₧": {
-    "latex": "\\\\ensuremath{\\\\Elzpes}",
-    "math": false
+    "latex": "\\\\ensuremath{\\\\Elzpes}"
   },
   "€": {
-    "latex": "\\\\mbox{\\\\texteuro}",
-    "math": false
+    "latex": "\\\\mbox{\\\\texteuro}"
   },
   "⃛": {
     "latex": "\\\\dddot",
@@ -2622,8 +2128,7 @@
     "math": true
   },
   "ℊ": {
-    "latex": "\\\\mathscr{g}",
-    "math": false
+    "latex": "\\\\mathscr{g}"
   },
   "ℋ": {
     "latex": "\\\\mathscr{H}",
@@ -2662,8 +2167,7 @@
     "math": true
   },
   "№": {
-    "latex": "\\\\cyrchar\\\\textnumero",
-    "math": false
+    "latex": "\\\\cyrchar\\\\textnumero"
   },
   "℘": {
     "latex": "\\\\wp",
@@ -2694,8 +2198,7 @@
     "math": true
   },
   "™": {
-    "latex": "\\\\texttrademark",
-    "math": false
+    "latex": "\\\\texttrademark"
   },
   "ℤ": {
     "latex": "\\\\mathbb{Z}",
@@ -2718,8 +2221,7 @@
     "math": true
   },
   "Å": {
-    "latex": "\\\\AA",
-    "math": false
+    "latex": "\\\\AA"
   },
   "ℬ": {
     "latex": "\\\\mathscr{B}",
@@ -3118,8 +2620,7 @@
     "math": true
   },
   "−": {
-    "latex": "-",
-    "math": false
+    "latex": "-"
   },
   "∓": {
     "latex": "\\\\mp",
@@ -3378,8 +2879,7 @@
     "math": true
   },
   "≔": {
-    "latex": ":=",
-    "math": false
+    "latex": ":="
   },
   "≕": {
     "latex": "=:",
@@ -3974,8 +3474,7 @@
     "math": true
   },
   "⌅": {
-    "latex": "\\\\barwedge",
-    "math": false
+    "latex": "\\\\barwedge"
   },
   "⌆": {
     "latex": "\\\\perspcorrespond",
@@ -4054,48 +3553,37 @@
     "math": true
   },
   "␣": {
-    "latex": "\\\\textvisiblespace",
-    "math": false
+    "latex": "\\\\textvisiblespace"
   },
   "①": {
-    "latex": "\\\\ding{172}",
-    "math": false
+    "latex": "\\\\ding{172}"
   },
   "②": {
-    "latex": "\\\\ding{173}",
-    "math": false
+    "latex": "\\\\ding{173}"
   },
   "③": {
-    "latex": "\\\\ding{174}",
-    "math": false
+    "latex": "\\\\ding{174}"
   },
   "④": {
-    "latex": "\\\\ding{175}",
-    "math": false
+    "latex": "\\\\ding{175}"
   },
   "⑤": {
-    "latex": "\\\\ding{176}",
-    "math": false
+    "latex": "\\\\ding{176}"
   },
   "⑥": {
-    "latex": "\\\\ding{177}",
-    "math": false
+    "latex": "\\\\ding{177}"
   },
   "⑦": {
-    "latex": "\\\\ding{178}",
-    "math": false
+    "latex": "\\\\ding{178}"
   },
   "⑧": {
-    "latex": "\\\\ding{179}",
-    "math": false
+    "latex": "\\\\ding{179}"
   },
   "⑨": {
-    "latex": "\\\\ding{180}",
-    "math": false
+    "latex": "\\\\ding{180}"
   },
   "⑩": {
-    "latex": "\\\\ding{181}",
-    "math": false
+    "latex": "\\\\ding{181}"
   },
   "Ⓢ": {
     "latex": "\\\\circledS",
@@ -4114,8 +3602,7 @@
     "math": true
   },
   "■": {
-    "latex": "\\\\ding{110}",
-    "math": false
+    "latex": "\\\\ding{110}"
   },
   "□": {
     "latex": "\\\\square",
@@ -4138,8 +3625,7 @@
     "math": true
   },
   "▲": {
-    "latex": "\\\\ding{115}",
-    "math": false
+    "latex": "\\\\ding{115}"
   },
   "△": {
     "latex": "\\\\bigtriangleup",
@@ -4162,8 +3648,7 @@
     "math": true
   },
   "▼": {
-    "latex": "\\\\ding{116}",
-    "math": false
+    "latex": "\\\\ding{116}"
   },
   "▽": {
     "latex": "\\\\bigtriangledown",
@@ -4186,8 +3671,7 @@
     "math": true
   },
   "◆": {
-    "latex": "\\\\ding{117}",
-    "math": false
+    "latex": "\\\\ding{117}"
   },
   "◊": {
     "latex": "\\\\lozenge",
@@ -4198,8 +3682,7 @@
     "math": true
   },
   "●": {
-    "latex": "\\\\ding{108}",
-    "math": false
+    "latex": "\\\\ding{108}"
   },
   "◐": {
     "latex": "\\\\Elzcirfl",
@@ -4214,8 +3697,7 @@
     "math": true
   },
   "◗": {
-    "latex": "\\\\ding{119}",
-    "math": false
+    "latex": "\\\\ding{119}"
   },
   "◘": {
     "latex": "\\\\Elzrvbull",
@@ -4238,136 +3720,104 @@
     "math": true
   },
   "★": {
-    "latex": "\\\\ding{72}",
-    "math": false
+    "latex": "\\\\ding{72}"
   },
   "☆": {
-    "latex": "\\\\ding{73}",
-    "math": false
+    "latex": "\\\\ding{73}"
   },
   "☎": {
-    "latex": "\\\\ding{37}",
-    "math": false
+    "latex": "\\\\ding{37}"
   },
   "☛": {
-    "latex": "\\\\ding{42}",
-    "math": false
+    "latex": "\\\\ding{42}"
   },
   "☞": {
-    "latex": "\\\\ding{43}",
-    "math": false
+    "latex": "\\\\ding{43}"
   },
   "☾": {
-    "latex": "\\\\rightmoon",
-    "math": false
+    "latex": "\\\\rightmoon"
   },
   "☿": {
-    "latex": "\\\\mercury",
-    "math": false
+    "latex": "\\\\mercury"
   },
   "♀": {
-    "latex": "\\\\venus",
-    "math": false
+    "latex": "\\\\venus"
   },
   "♂": {
-    "latex": "\\\\male",
-    "math": false
+    "latex": "\\\\male"
   },
   "♃": {
-    "latex": "\\\\jupiter",
-    "math": false
+    "latex": "\\\\jupiter"
   },
   "♄": {
-    "latex": "\\\\saturn",
-    "math": false
+    "latex": "\\\\saturn"
   },
   "♅": {
-    "latex": "\\\\uranus",
-    "math": false
+    "latex": "\\\\uranus"
   },
   "♆": {
-    "latex": "\\\\neptune",
-    "math": false
+    "latex": "\\\\neptune"
   },
   "♇": {
-    "latex": "\\\\pluto",
-    "math": false
+    "latex": "\\\\pluto"
   },
   "♈": {
-    "latex": "\\\\aries",
-    "math": false
+    "latex": "\\\\aries"
   },
   "♉": {
-    "latex": "\\\\taurus",
-    "math": false
+    "latex": "\\\\taurus"
   },
   "♊": {
-    "latex": "\\\\gemini",
-    "math": false
+    "latex": "\\\\gemini"
   },
   "♋": {
-    "latex": "\\\\cancer",
-    "math": false
+    "latex": "\\\\cancer"
   },
   "♌": {
-    "latex": "\\\\leo",
-    "math": false
+    "latex": "\\\\leo"
   },
   "♍": {
-    "latex": "\\\\virgo",
-    "math": false
+    "latex": "\\\\virgo"
   },
   "♎": {
-    "latex": "\\\\libra",
-    "math": false
+    "latex": "\\\\libra"
   },
   "♏": {
-    "latex": "\\\\scorpio",
-    "math": false
+    "latex": "\\\\scorpio"
   },
   "♐": {
-    "latex": "\\\\sagittarius",
-    "math": false
+    "latex": "\\\\sagittarius"
   },
   "♑": {
-    "latex": "\\\\capricornus",
-    "math": false
+    "latex": "\\\\capricornus"
   },
   "♒": {
-    "latex": "\\\\aquarius",
-    "math": false
+    "latex": "\\\\aquarius"
   },
   "♓": {
-    "latex": "\\\\pisces",
-    "math": false
+    "latex": "\\\\pisces"
   },
   "♠": {
-    "latex": "\\\\ding{171}",
-    "math": false
+    "latex": "\\\\ding{171}"
   },
   "♢": {
     "latex": "\\\\diamond",
     "math": true
   },
   "♣": {
-    "latex": "\\\\ding{168}",
-    "math": false
+    "latex": "\\\\ding{168}"
   },
   "♥": {
-    "latex": "\\\\ding{170}",
-    "math": false
+    "latex": "\\\\ding{170}"
   },
   "♦": {
-    "latex": "\\\\ding{169}",
-    "math": false
+    "latex": "\\\\ding{169}"
   },
   "♩": {
-    "latex": "\\\\quarternote",
-    "math": false
+    "latex": "\\\\quarternote"
   },
   "♪": {
-    "latex": "\\\\eighthnote",
-    "math": false
+    "latex": "\\\\eighthnote"
   },
   "♭": {
     "latex": "\\\\flat",
@@ -4382,644 +3832,484 @@
     "math": true
   },
   "✁": {
-    "latex": "\\\\ding{33}",
-    "math": false
+    "latex": "\\\\ding{33}"
   },
   "✂": {
-    "latex": "\\\\ding{34}",
-    "math": false
+    "latex": "\\\\ding{34}"
   },
   "✃": {
-    "latex": "\\\\ding{35}",
-    "math": false
+    "latex": "\\\\ding{35}"
   },
   "✄": {
-    "latex": "\\\\ding{36}",
-    "math": false
+    "latex": "\\\\ding{36}"
   },
   "✆": {
-    "latex": "\\\\ding{38}",
-    "math": false
+    "latex": "\\\\ding{38}"
   },
   "✇": {
-    "latex": "\\\\ding{39}",
-    "math": false
+    "latex": "\\\\ding{39}"
   },
   "✈": {
-    "latex": "\\\\ding{40}",
-    "math": false
+    "latex": "\\\\ding{40}"
   },
   "✉": {
-    "latex": "\\\\ding{41}",
-    "math": false
+    "latex": "\\\\ding{41}"
   },
   "✌": {
-    "latex": "\\\\ding{44}",
-    "math": false
+    "latex": "\\\\ding{44}"
   },
   "✍": {
-    "latex": "\\\\ding{45}",
-    "math": false
+    "latex": "\\\\ding{45}"
   },
   "✎": {
-    "latex": "\\\\ding{46}",
-    "math": false
+    "latex": "\\\\ding{46}"
   },
   "✏": {
-    "latex": "\\\\ding{47}",
-    "math": false
+    "latex": "\\\\ding{47}"
   },
   "✐": {
-    "latex": "\\\\ding{48}",
-    "math": false
+    "latex": "\\\\ding{48}"
   },
   "✑": {
-    "latex": "\\\\ding{49}",
-    "math": false
+    "latex": "\\\\ding{49}"
   },
   "✒": {
-    "latex": "\\\\ding{50}",
-    "math": false
+    "latex": "\\\\ding{50}"
   },
   "✓": {
-    "latex": "\\\\ding{51}",
-    "math": false
+    "latex": "\\\\ding{51}"
   },
   "✔": {
-    "latex": "\\\\ding{52}",
-    "math": false
+    "latex": "\\\\ding{52}"
   },
   "✕": {
-    "latex": "\\\\ding{53}",
-    "math": false
+    "latex": "\\\\ding{53}"
   },
   "✖": {
-    "latex": "\\\\ding{54}",
-    "math": false
+    "latex": "\\\\ding{54}"
   },
   "✗": {
-    "latex": "\\\\ding{55}",
-    "math": false
+    "latex": "\\\\ding{55}"
   },
   "✘": {
-    "latex": "\\\\ding{56}",
-    "math": false
+    "latex": "\\\\ding{56}"
   },
   "✙": {
-    "latex": "\\\\ding{57}",
-    "math": false
+    "latex": "\\\\ding{57}"
   },
   "✚": {
-    "latex": "\\\\ding{58}",
-    "math": false
+    "latex": "\\\\ding{58}"
   },
   "✛": {
-    "latex": "\\\\ding{59}",
-    "math": false
+    "latex": "\\\\ding{59}"
   },
   "✜": {
-    "latex": "\\\\ding{60}",
-    "math": false
+    "latex": "\\\\ding{60}"
   },
   "✝": {
-    "latex": "\\\\ding{61}",
-    "math": false
+    "latex": "\\\\ding{61}"
   },
   "✞": {
-    "latex": "\\\\ding{62}",
-    "math": false
+    "latex": "\\\\ding{62}"
   },
   "✟": {
-    "latex": "\\\\ding{63}",
-    "math": false
+    "latex": "\\\\ding{63}"
   },
   "✠": {
-    "latex": "\\\\ding{64}",
-    "math": false
+    "latex": "\\\\ding{64}"
   },
   "✡": {
-    "latex": "\\\\ding{65}",
-    "math": false
+    "latex": "\\\\ding{65}"
   },
   "✢": {
-    "latex": "\\\\ding{66}",
-    "math": false
+    "latex": "\\\\ding{66}"
   },
   "✣": {
-    "latex": "\\\\ding{67}",
-    "math": false
+    "latex": "\\\\ding{67}"
   },
   "✤": {
-    "latex": "\\\\ding{68}",
-    "math": false
+    "latex": "\\\\ding{68}"
   },
   "✥": {
-    "latex": "\\\\ding{69}",
-    "math": false
+    "latex": "\\\\ding{69}"
   },
   "✦": {
-    "latex": "\\\\ding{70}",
-    "math": false
+    "latex": "\\\\ding{70}"
   },
   "✧": {
-    "latex": "\\\\ding{71}",
-    "math": false
+    "latex": "\\\\ding{71}"
   },
   "✩": {
-    "latex": "\\\\ding{73}",
-    "math": false
+    "latex": "\\\\ding{73}"
   },
   "✪": {
-    "latex": "\\\\ding{74}",
-    "math": false
+    "latex": "\\\\ding{74}"
   },
   "✫": {
-    "latex": "\\\\ding{75}",
-    "math": false
+    "latex": "\\\\ding{75}"
   },
   "✬": {
-    "latex": "\\\\ding{76}",
-    "math": false
+    "latex": "\\\\ding{76}"
   },
   "✭": {
-    "latex": "\\\\ding{77}",
-    "math": false
+    "latex": "\\\\ding{77}"
   },
   "✮": {
-    "latex": "\\\\ding{78}",
-    "math": false
+    "latex": "\\\\ding{78}"
   },
   "✯": {
-    "latex": "\\\\ding{79}",
-    "math": false
+    "latex": "\\\\ding{79}"
   },
   "✰": {
-    "latex": "\\\\ding{80}",
-    "math": false
+    "latex": "\\\\ding{80}"
   },
   "✱": {
-    "latex": "\\\\ding{81}",
-    "math": false
+    "latex": "\\\\ding{81}"
   },
   "✲": {
-    "latex": "\\\\ding{82}",
-    "math": false
+    "latex": "\\\\ding{82}"
   },
   "✳": {
-    "latex": "\\\\ding{83}",
-    "math": false
+    "latex": "\\\\ding{83}"
   },
   "✴": {
-    "latex": "\\\\ding{84}",
-    "math": false
+    "latex": "\\\\ding{84}"
   },
   "✵": {
-    "latex": "\\\\ding{85}",
-    "math": false
+    "latex": "\\\\ding{85}"
   },
   "✶": {
-    "latex": "\\\\ding{86}",
-    "math": false
+    "latex": "\\\\ding{86}"
   },
   "✷": {
-    "latex": "\\\\ding{87}",
-    "math": false
+    "latex": "\\\\ding{87}"
   },
   "✸": {
-    "latex": "\\\\ding{88}",
-    "math": false
+    "latex": "\\\\ding{88}"
   },
   "✹": {
-    "latex": "\\\\ding{89}",
-    "math": false
+    "latex": "\\\\ding{89}"
   },
   "✺": {
-    "latex": "\\\\ding{90}",
-    "math": false
+    "latex": "\\\\ding{90}"
   },
   "✻": {
-    "latex": "\\\\ding{91}",
-    "math": false
+    "latex": "\\\\ding{91}"
   },
   "✼": {
-    "latex": "\\\\ding{92}",
-    "math": false
+    "latex": "\\\\ding{92}"
   },
   "✽": {
-    "latex": "\\\\ding{93}",
-    "math": false
+    "latex": "\\\\ding{93}"
   },
   "✾": {
-    "latex": "\\\\ding{94}",
-    "math": false
+    "latex": "\\\\ding{94}"
   },
   "✿": {
-    "latex": "\\\\ding{95}",
-    "math": false
+    "latex": "\\\\ding{95}"
   },
   "❀": {
-    "latex": "\\\\ding{96}",
-    "math": false
+    "latex": "\\\\ding{96}"
   },
   "❁": {
-    "latex": "\\\\ding{97}",
-    "math": false
+    "latex": "\\\\ding{97}"
   },
   "❂": {
-    "latex": "\\\\ding{98}",
-    "math": false
+    "latex": "\\\\ding{98}"
   },
   "❃": {
-    "latex": "\\\\ding{99}",
-    "math": false
+    "latex": "\\\\ding{99}"
   },
   "❄": {
-    "latex": "\\\\ding{100}",
-    "math": false
+    "latex": "\\\\ding{100}"
   },
   "❅": {
-    "latex": "\\\\ding{101}",
-    "math": false
+    "latex": "\\\\ding{101}"
   },
   "❆": {
-    "latex": "\\\\ding{102}",
-    "math": false
+    "latex": "\\\\ding{102}"
   },
   "❇": {
-    "latex": "\\\\ding{103}",
-    "math": false
+    "latex": "\\\\ding{103}"
   },
   "❈": {
-    "latex": "\\\\ding{104}",
-    "math": false
+    "latex": "\\\\ding{104}"
   },
   "❉": {
-    "latex": "\\\\ding{105}",
-    "math": false
+    "latex": "\\\\ding{105}"
   },
   "❊": {
-    "latex": "\\\\ding{106}",
-    "math": false
+    "latex": "\\\\ding{106}"
   },
   "❋": {
-    "latex": "\\\\ding{107}",
-    "math": false
+    "latex": "\\\\ding{107}"
   },
   "❍": {
-    "latex": "\\\\ding{109}",
-    "math": false
+    "latex": "\\\\ding{109}"
   },
   "❏": {
-    "latex": "\\\\ding{111}",
-    "math": false
+    "latex": "\\\\ding{111}"
   },
   "❐": {
-    "latex": "\\\\ding{112}",
-    "math": false
+    "latex": "\\\\ding{112}"
   },
   "❑": {
-    "latex": "\\\\ding{113}",
-    "math": false
+    "latex": "\\\\ding{113}"
   },
   "❒": {
-    "latex": "\\\\ding{114}",
-    "math": false
+    "latex": "\\\\ding{114}"
   },
   "❖": {
-    "latex": "\\\\ding{118}",
-    "math": false
+    "latex": "\\\\ding{118}"
   },
   "❘": {
-    "latex": "\\\\ding{120}",
-    "math": false
+    "latex": "\\\\ding{120}"
   },
   "❙": {
-    "latex": "\\\\ding{121}",
-    "math": false
+    "latex": "\\\\ding{121}"
   },
   "❚": {
-    "latex": "\\\\ding{122}",
-    "math": false
+    "latex": "\\\\ding{122}"
   },
   "❛": {
-    "latex": "\\\\ding{123}",
-    "math": false
+    "latex": "\\\\ding{123}"
   },
   "❜": {
-    "latex": "\\\\ding{124}",
-    "math": false
+    "latex": "\\\\ding{124}"
   },
   "❝": {
-    "latex": "\\\\ding{125}",
-    "math": false
+    "latex": "\\\\ding{125}"
   },
   "❞": {
-    "latex": "\\\\ding{126}",
-    "math": false
+    "latex": "\\\\ding{126}"
   },
   "❡": {
-    "latex": "\\\\ding{161}",
-    "math": false
+    "latex": "\\\\ding{161}"
   },
   "❢": {
-    "latex": "\\\\ding{162}",
-    "math": false
+    "latex": "\\\\ding{162}"
   },
   "❣": {
-    "latex": "\\\\ding{163}",
-    "math": false
+    "latex": "\\\\ding{163}"
   },
   "❤": {
-    "latex": "\\\\ding{164}",
-    "math": false
+    "latex": "\\\\ding{164}"
   },
   "❥": {
-    "latex": "\\\\ding{165}",
-    "math": false
+    "latex": "\\\\ding{165}"
   },
   "❦": {
-    "latex": "\\\\ding{166}",
-    "math": false
+    "latex": "\\\\ding{166}"
   },
   "❧": {
-    "latex": "\\\\ding{167}",
-    "math": false
+    "latex": "\\\\ding{167}"
   },
   "❶": {
-    "latex": "\\\\ding{182}",
-    "math": false
+    "latex": "\\\\ding{182}"
   },
   "❷": {
-    "latex": "\\\\ding{183}",
-    "math": false
+    "latex": "\\\\ding{183}"
   },
   "❸": {
-    "latex": "\\\\ding{184}",
-    "math": false
+    "latex": "\\\\ding{184}"
   },
   "❹": {
-    "latex": "\\\\ding{185}",
-    "math": false
+    "latex": "\\\\ding{185}"
   },
   "❺": {
-    "latex": "\\\\ding{186}",
-    "math": false
+    "latex": "\\\\ding{186}"
   },
   "❻": {
-    "latex": "\\\\ding{187}",
-    "math": false
+    "latex": "\\\\ding{187}"
   },
   "❼": {
-    "latex": "\\\\ding{188}",
-    "math": false
+    "latex": "\\\\ding{188}"
   },
   "❽": {
-    "latex": "\\\\ding{189}",
-    "math": false
+    "latex": "\\\\ding{189}"
   },
   "❾": {
-    "latex": "\\\\ding{190}",
-    "math": false
+    "latex": "\\\\ding{190}"
   },
   "❿": {
-    "latex": "\\\\ding{191}",
-    "math": false
+    "latex": "\\\\ding{191}"
   },
   "➀": {
-    "latex": "\\\\ding{192}",
-    "math": false
+    "latex": "\\\\ding{192}"
   },
   "➁": {
-    "latex": "\\\\ding{193}",
-    "math": false
+    "latex": "\\\\ding{193}"
   },
   "➂": {
-    "latex": "\\\\ding{194}",
-    "math": false
+    "latex": "\\\\ding{194}"
   },
   "➃": {
-    "latex": "\\\\ding{195}",
-    "math": false
+    "latex": "\\\\ding{195}"
   },
   "➄": {
-    "latex": "\\\\ding{196}",
-    "math": false
+    "latex": "\\\\ding{196}"
   },
   "➅": {
-    "latex": "\\\\ding{197}",
-    "math": false
+    "latex": "\\\\ding{197}"
   },
   "➆": {
-    "latex": "\\\\ding{198}",
-    "math": false
+    "latex": "\\\\ding{198}"
   },
   "➇": {
-    "latex": "\\\\ding{199}",
-    "math": false
+    "latex": "\\\\ding{199}"
   },
   "➈": {
-    "latex": "\\\\ding{200}",
-    "math": false
+    "latex": "\\\\ding{200}"
   },
   "➉": {
-    "latex": "\\\\ding{201}",
-    "math": false
+    "latex": "\\\\ding{201}"
   },
   "➊": {
-    "latex": "\\\\ding{202}",
-    "math": false
+    "latex": "\\\\ding{202}"
   },
   "➋": {
-    "latex": "\\\\ding{203}",
-    "math": false
+    "latex": "\\\\ding{203}"
   },
   "➌": {
-    "latex": "\\\\ding{204}",
-    "math": false
+    "latex": "\\\\ding{204}"
   },
   "➍": {
-    "latex": "\\\\ding{205}",
-    "math": false
+    "latex": "\\\\ding{205}"
   },
   "➎": {
-    "latex": "\\\\ding{206}",
-    "math": false
+    "latex": "\\\\ding{206}"
   },
   "➏": {
-    "latex": "\\\\ding{207}",
-    "math": false
+    "latex": "\\\\ding{207}"
   },
   "➐": {
-    "latex": "\\\\ding{208}",
-    "math": false
+    "latex": "\\\\ding{208}"
   },
   "➑": {
-    "latex": "\\\\ding{209}",
-    "math": false
+    "latex": "\\\\ding{209}"
   },
   "➒": {
-    "latex": "\\\\ding{210}",
-    "math": false
+    "latex": "\\\\ding{210}"
   },
   "➓": {
-    "latex": "\\\\ding{211}",
-    "math": false
+    "latex": "\\\\ding{211}"
   },
   "➔": {
-    "latex": "\\\\ding{212}",
-    "math": false
+    "latex": "\\\\ding{212}"
   },
   "➘": {
-    "latex": "\\\\ding{216}",
-    "math": false
+    "latex": "\\\\ding{216}"
   },
   "➙": {
-    "latex": "\\\\ding{217}",
-    "math": false
+    "latex": "\\\\ding{217}"
   },
   "➚": {
-    "latex": "\\\\ding{218}",
-    "math": false
+    "latex": "\\\\ding{218}"
   },
   "➛": {
-    "latex": "\\\\ding{219}",
-    "math": false
+    "latex": "\\\\ding{219}"
   },
   "➜": {
-    "latex": "\\\\ding{220}",
-    "math": false
+    "latex": "\\\\ding{220}"
   },
   "➝": {
-    "latex": "\\\\ding{221}",
-    "math": false
+    "latex": "\\\\ding{221}"
   },
   "➞": {
-    "latex": "\\\\ding{222}",
-    "math": false
+    "latex": "\\\\ding{222}"
   },
   "➟": {
-    "latex": "\\\\ding{223}",
-    "math": false
+    "latex": "\\\\ding{223}"
   },
   "➠": {
-    "latex": "\\\\ding{224}",
-    "math": false
+    "latex": "\\\\ding{224}"
   },
   "➡": {
-    "latex": "\\\\ding{225}",
-    "math": false
+    "latex": "\\\\ding{225}"
   },
   "➢": {
-    "latex": "\\\\ding{226}",
-    "math": false
+    "latex": "\\\\ding{226}"
   },
   "➣": {
-    "latex": "\\\\ding{227}",
-    "math": false
+    "latex": "\\\\ding{227}"
   },
   "➤": {
-    "latex": "\\\\ding{228}",
-    "math": false
+    "latex": "\\\\ding{228}"
   },
   "➥": {
-    "latex": "\\\\ding{229}",
-    "math": false
+    "latex": "\\\\ding{229}"
   },
   "➦": {
-    "latex": "\\\\ding{230}",
-    "math": false
+    "latex": "\\\\ding{230}"
   },
   "➧": {
-    "latex": "\\\\ding{231}",
-    "math": false
+    "latex": "\\\\ding{231}"
   },
   "➨": {
-    "latex": "\\\\ding{232}",
-    "math": false
+    "latex": "\\\\ding{232}"
   },
   "➩": {
-    "latex": "\\\\ding{233}",
-    "math": false
+    "latex": "\\\\ding{233}"
   },
   "➪": {
-    "latex": "\\\\ding{234}",
-    "math": false
+    "latex": "\\\\ding{234}"
   },
   "➫": {
-    "latex": "\\\\ding{235}",
-    "math": false
+    "latex": "\\\\ding{235}"
   },
   "➬": {
-    "latex": "\\\\ding{236}",
-    "math": false
+    "latex": "\\\\ding{236}"
   },
   "➭": {
-    "latex": "\\\\ding{237}",
-    "math": false
+    "latex": "\\\\ding{237}"
   },
   "➮": {
-    "latex": "\\\\ding{238}",
-    "math": false
+    "latex": "\\\\ding{238}"
   },
   "➯": {
-    "latex": "\\\\ding{239}",
-    "math": false
+    "latex": "\\\\ding{239}"
   },
   "➱": {
-    "latex": "\\\\ding{241}",
-    "math": false
+    "latex": "\\\\ding{241}"
   },
   "➲": {
-    "latex": "\\\\ding{242}",
-    "math": false
+    "latex": "\\\\ding{242}"
   },
   "➳": {
-    "latex": "\\\\ding{243}",
-    "math": false
+    "latex": "\\\\ding{243}"
   },
   "➴": {
-    "latex": "\\\\ding{244}",
-    "math": false
+    "latex": "\\\\ding{244}"
   },
   "➵": {
-    "latex": "\\\\ding{245}",
-    "math": false
+    "latex": "\\\\ding{245}"
   },
   "➶": {
-    "latex": "\\\\ding{246}",
-    "math": false
+    "latex": "\\\\ding{246}"
   },
   "➷": {
-    "latex": "\\\\ding{247}",
-    "math": false
+    "latex": "\\\\ding{247}"
   },
   "➸": {
-    "latex": "\\\\ding{248}",
-    "math": false
+    "latex": "\\\\ding{248}"
   },
   "➹": {
-    "latex": "\\\\ding{249}",
-    "math": false
+    "latex": "\\\\ding{249}"
   },
   "➺": {
-    "latex": "\\\\ding{250}",
-    "math": false
+    "latex": "\\\\ding{250}"
   },
   "➻": {
-    "latex": "\\\\ding{251}",
-    "math": false
+    "latex": "\\\\ding{251}"
   },
   "➼": {
-    "latex": "\\\\ding{252}",
-    "math": false
+    "latex": "\\\\ding{252}"
   },
   "➽": {
-    "latex": "\\\\ding{253}",
-    "math": false
+    "latex": "\\\\ding{253}"
   },
   "➾": {
-    "latex": "\\\\ding{254}",
-    "math": false
+    "latex": "\\\\ding{254}"
   },
   "⟵": {
     "latex": "\\\\longleftarrow",
@@ -5602,24 +4892,19 @@
     "math": true
   },
   "ﬀ": {
-    "latex": "ff",
-    "math": false
+    "latex": "ff"
   },
   "ﬁ": {
-    "latex": "fi",
-    "math": false
+    "latex": "fi"
   },
   "ﬂ": {
-    "latex": "fl",
-    "math": false
+    "latex": "fl"
   },
   "ﬃ": {
-    "latex": "ffi",
-    "math": false
+    "latex": "ffi"
   },
   "ﬄ": {
-    "latex": "ffl",
-    "math": false
+    "latex": "ffl"
   },
   "𝐀": {
     "latex": "\\\\mathbf{A}",
@@ -8298,8 +7583,7 @@
     "math": true
   },
   "𝚹": {
-    "latex": "\\\\mathbf{\\\\vartheta}",
-    "math": false
+    "latex": "\\\\mathbf{\\\\vartheta}"
   },
   "𝚺": {
     "latex": "\\\\mathbf{\\\\Sigma}",
@@ -8442,24 +7726,19 @@
     "math": true
   },
   "𝛝": {
-    "latex": "\\\\mathbf{\\\\vartheta}",
-    "math": false
+    "latex": "\\\\mathbf{\\\\vartheta}"
   },
   "𝛞": {
-    "latex": "\\\\mathbf{\\\\varkappa}",
-    "math": false
+    "latex": "\\\\mathbf{\\\\varkappa}"
   },
   "𝛟": {
-    "latex": "\\\\mathbf{\\\\phi}",
-    "math": false
+    "latex": "\\\\mathbf{\\\\phi}"
   },
   "𝛠": {
-    "latex": "\\\\mathbf{\\\\varrho}",
-    "math": false
+    "latex": "\\\\mathbf{\\\\varrho}"
   },
   "𝛡": {
-    "latex": "\\\\mathbf{\\\\varpi}",
-    "math": false
+    "latex": "\\\\mathbf{\\\\varpi}"
   },
   "𝛢": {
     "latex": "\\\\mathsl{\\\\Alpha}",
@@ -8530,8 +7809,7 @@
     "math": true
   },
   "𝛳": {
-    "latex": "\\\\mathsl{\\\\vartheta}",
-    "math": false
+    "latex": "\\\\mathsl{\\\\vartheta}"
   },
   "𝛴": {
     "latex": "\\\\mathsl{\\\\Sigma}",
@@ -8674,24 +7952,19 @@
     "math": true
   },
   "𝜗": {
-    "latex": "\\\\mathsl{\\\\vartheta}",
-    "math": false
+    "latex": "\\\\mathsl{\\\\vartheta}"
   },
   "𝜘": {
-    "latex": "\\\\mathsl{\\\\varkappa}",
-    "math": false
+    "latex": "\\\\mathsl{\\\\varkappa}"
   },
   "𝜙": {
-    "latex": "\\\\mathsl{\\\\phi}",
-    "math": false
+    "latex": "\\\\mathsl{\\\\phi}"
   },
   "𝜚": {
-    "latex": "\\\\mathsl{\\\\varrho}",
-    "math": false
+    "latex": "\\\\mathsl{\\\\varrho}"
   },
   "𝜛": {
-    "latex": "\\\\mathsl{\\\\varpi}",
-    "math": false
+    "latex": "\\\\mathsl{\\\\varpi}"
   },
   "𝜜": {
     "latex": "\\\\mathbit{\\\\Alpha}",
@@ -8762,8 +8035,7 @@
     "math": true
   },
   "𝜭": {
-    "latex": "\\\\mathbit{O}",
-    "math": false
+    "latex": "\\\\mathbit{O}"
   },
   "𝜮": {
     "latex": "\\\\mathbit{\\\\Sigma}",
@@ -8906,24 +8178,19 @@
     "math": true
   },
   "𝝑": {
-    "latex": "\\\\mathbit{\\\\vartheta}",
-    "math": false
+    "latex": "\\\\mathbit{\\\\vartheta}"
   },
   "𝝒": {
-    "latex": "\\\\mathbit{\\\\varkappa}",
-    "math": false
+    "latex": "\\\\mathbit{\\\\varkappa}"
   },
   "𝝓": {
-    "latex": "\\\\mathbit{\\\\phi}",
-    "math": false
+    "latex": "\\\\mathbit{\\\\phi}"
   },
   "𝝔": {
-    "latex": "\\\\mathbit{\\\\varrho}",
-    "math": false
+    "latex": "\\\\mathbit{\\\\varrho}"
   },
   "𝝕": {
-    "latex": "\\\\mathbit{\\\\varpi}",
-    "math": false
+    "latex": "\\\\mathbit{\\\\varpi}"
   },
   "𝝖": {
     "latex": "\\\\mathsfbf{\\\\Alpha}",
@@ -8994,8 +8261,7 @@
     "math": true
   },
   "𝝧": {
-    "latex": "\\\\mathsfbf{\\\\vartheta}",
-    "math": false
+    "latex": "\\\\mathsfbf{\\\\vartheta}"
   },
   "𝝨": {
     "latex": "\\\\mathsfbf{\\\\Sigma}",
@@ -9138,24 +8404,19 @@
     "math": true
   },
   "𝞋": {
-    "latex": "\\\\mathsfbf{\\\\vartheta}",
-    "math": false
+    "latex": "\\\\mathsfbf{\\\\vartheta}"
   },
   "𝞌": {
-    "latex": "\\\\mathsfbf{\\\\varkappa}",
-    "math": false
+    "latex": "\\\\mathsfbf{\\\\varkappa}"
   },
   "𝞍": {
-    "latex": "\\\\mathsfbf{\\\\phi}",
-    "math": false
+    "latex": "\\\\mathsfbf{\\\\phi}"
   },
   "𝞎": {
-    "latex": "\\\\mathsfbf{\\\\varrho}",
-    "math": false
+    "latex": "\\\\mathsfbf{\\\\varrho}"
   },
   "𝞏": {
-    "latex": "\\\\mathsfbf{\\\\varpi}",
-    "math": false
+    "latex": "\\\\mathsfbf{\\\\varpi}"
   },
   "𝞐": {
     "latex": "\\\\mathsfbfsl{\\\\Alpha}",
@@ -9226,8 +8487,7 @@
     "math": true
   },
   "𝞡": {
-    "latex": "\\\\mathsfbfsl{\\\\vartheta}",
-    "math": false
+    "latex": "\\\\mathsfbfsl{\\\\vartheta}"
   },
   "𝞢": {
     "latex": "\\\\mathsfbfsl{\\\\Sigma}",
@@ -9370,24 +8630,19 @@
     "math": true
   },
   "𝟅": {
-    "latex": "\\\\mathsfbfsl{\\\\vartheta}",
-    "math": false
+    "latex": "\\\\mathsfbfsl{\\\\vartheta}"
   },
   "𝟆": {
-    "latex": "\\\\mathsfbfsl{\\\\varkappa}",
-    "math": false
+    "latex": "\\\\mathsfbfsl{\\\\varkappa}"
   },
   "𝟇": {
-    "latex": "\\\\mathsfbfsl{\\\\phi}",
-    "math": false
+    "latex": "\\\\mathsfbfsl{\\\\phi}"
   },
   "𝟈": {
-    "latex": "\\\\mathsfbfsl{\\\\varrho}",
-    "math": false
+    "latex": "\\\\mathsfbfsl{\\\\varrho}"
   },
   "𝟉": {
-    "latex": "\\\\mathsfbfsl{\\\\varpi}",
-    "math": false
+    "latex": "\\\\mathsfbfsl{\\\\varpi}"
   },
   "𝟎": {
     "latex": "\\\\mathbf{0}",

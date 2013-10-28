@@ -9,7 +9,7 @@ EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
 RELEASE = Nokogiri::XML(File.open('install.rdf')).at('//em:version').inner_text
 
-MAIN            = 'resource/translators/_BibTex.js'
+MAIN            = 'resource/translators/BibTex.js.template'
 BETTERBIBTEX    = 'resource/translators/BetterBibTex.js'
 BETTERCITETEX   = 'resource/translators/BetterCiteTex.js'
 BETTERBIBLATEX  = 'resource/translators/BetterBibLaTex.js'
@@ -98,16 +98,20 @@ file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
 
     next if key == value
 
+    force = (key =~ /^[\x20-\x7E]$/)
     if key == "\u00A0"
       value = ' '
       mathmode = false
     else
       mathmode = (char['mode'] == 'math')
     end
+
     key = key.gsub("\\", "\\\\\\")
     value = value.gsub("\\", "\\\\\\")
 
-    unicode2latex[key] = {latex: value, math: mathmode}
+    unicode2latex[key] = {latex: value}
+    unicode2latex[key][:math] = true if mathmode
+    unicode2latex[key][:force] = true if force
     latex2unicode[value] = key
   }
 
@@ -176,15 +180,15 @@ class Template
   end
 end
 
-file BETTERBIBLATEX => [Template.name(BETTERBIBLATEX), UNICODE_JS, 'Rakefile'] do |t|
+file BETTERBIBLATEX => [Template.name(BETTERBIBLATEX), MAIN, UNICODE_JS, 'Rakefile'] do |t|
   Template.new(t.name).generate
 end
 
-file BETTERBIBTEX => [Template.name(BETTERBIBTEX), UNICODE_JS, 'Rakefile'] do |t|
+file BETTERBIBTEX => [Template.name(BETTERBIBTEX), MAIN, UNICODE_JS, 'Rakefile'] do |t|
   Template.new(t.name).generate
 end
 
-file BETTERCITETEX => [Template.name(BETTERCITETEX), UNICODE_JS, 'Rakefile'] do |t|
+file BETTERCITETEX => [Template.name(BETTERCITETEX), MAIN, UNICODE_JS, 'Rakefile'] do |t|
   Template.new(t.name).generate
 end
 

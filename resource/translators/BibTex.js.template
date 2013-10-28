@@ -157,9 +157,14 @@ convert.to_latex = function(str) {
   for (var i=0; i < strlen; i++) {
     c = str.charAt(i);
     if (!convert.unicode2latex[c]) {
-      convert.unicode2latex[c] = {latex: c, math: false};
+      convert.unicode2latex[c] = {latex: c};
     }
-    ca = convert.unicode2latex[c].latex;
+
+    if (config.exportCharset == 'UTF-8' && !convert.unicode2latex[c].force) {
+      ca = c;
+    } else {
+      ca = convert.unicode2latex[c].latex;
+    }
 
     if (ca[0] == '\\' || ca[0] == '{') { // command or block always OK
       if (convert.unicode2latex[c] && convert.unicode2latex[c].math != mathMode) {
