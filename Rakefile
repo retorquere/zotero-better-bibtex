@@ -155,6 +155,7 @@ class Template
         header = JSON.parse(code[start, length])
         break
       rescue JSON::ParserError
+        header = nil
         length += 1
       end
     end
