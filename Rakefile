@@ -3,27 +3,30 @@ require 'nokogiri'
 require 'net/http'
 require 'json'
 require 'fileutils'
+require 'erubis'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
 RELEASE = Nokogiri::XML(File.open('install.rdf')).at('//em:version').inner_text
 
-BETTERBIBTEX = 'resource/translators/BetterBibTex.js'
-BETTERCITETEX = 'resource/translators/BetterCiteTex.js'
-BETTERBIBLATEX = 'resource/translators/BetterBibLaTex.js'
+MAIN            = 'resource/translators/_BibTex.js'
+BETTERBIBTEX    = 'resource/translators/BetterBibTex.js'
+BETTERCITETEX   = 'resource/translators/BetterCiteTex.js'
+BETTERBIBLATEX  = 'resource/translators/BetterBibLaTex.js'
+
 SOURCES = %w{chrome resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
             .select{|f| File.file?(f)}
-            .reject{|f| File.basename(f) =~ /^_/ || f =~ /[~]$/ || f =~ /\.swp$/}
+            .reject{|f| File.extname(f) == '.template' || f =~ /[~]$/ || f =~ /\.swp$/}
             .collect{|f| f =~ /\.coffee$/i ? f.gsub(/\.coffee$/i, '.js') : f}
-            .collect{|f| f =~ /\/unicode\/.xml$/ ? f.gsub(/\/unicode\.xml$/, '/unicode.js') : f } + [BETTERBIBTEX]
+            .collect{|f| f =~ /\/unicode\/.xml$/ ? f.gsub(/\/unicode\.xml$/, '/unicode.js') : f } + [BETTERBIBTEX, BETTERCITETEX, BETTERBIBLATEX]
 
 FileUtils.mkdir_p(File.dirname(BETTERBIBTEX))
 
 XPI = "zotero-#{EXTENSION}-#{RELEASE}.xpi"
 
-UNICODE_JS = 'resource/translators/_unicodeconverter.js'
-UNICODE_XML = 'resource/translators/_unicode.xml'
+UNICODE_JS = 'resource/translators/unicodeconverter.js.template'
+UNICODE_XML = 'resource/translators/unicode.xml.template'
 
 task :default => XPI do
 end
@@ -118,17 +121,71 @@ file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
   "); }
 end
 
-file BETTERBIBTEX => ['../translators/BibTeX.js', UNICODE_JS, 'Rakefile'] do |t|
-  puts "Creating #{t.name}"
-  
-  root = File.dirname(t.name)
-  File.open(t.name, 'wb', :encoding => 'utf-8'){|f|
-    template = File.open(t.prerequisites[0], 'rb', :encoding => 'utf-8').read
-    while template =~ /(\/\*: include (.*?) :\*\/)/ do
-      template.gsub!($1, File.open(File.join(root, $2), 'rb', :encoding=> 'utf-8').read)
+class Template
+  def self.name(target)
+    return target+ '.template'
+  end
+
+  def initialize(target)
+    @target = target
+    @template = Template.name(@target)
+    @root = File.dirname(@template)
+    @_timestamp = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
+  end
+  attr_reader :_id, :_label, :_timestamp
+
+  def _render(partial)
+    return render(File.read(File.join(@root, partial + '.template')))
+  end
+
+  def generate
+    puts "Creating #{@target}"
+
+    code = File.open(@template, 'rb', :encoding => 'utf-8').read
+
+    header = nil
+    start = code.index('{')
+    length = 2
+    while start && length < 1024
+      begin
+        header = JSON.parse(code[start, length])
+        break
+      rescue JSON::ParserError
+        length += 1
+      end
     end
-    f.write(template)
-  }
+
+    raise "No header in #{@template}" unless header
+
+    @_id = header['translatorID']
+    @_label = header['label']
+
+    code = render(code)
+
+    File.open(@target, 'wb', :encoding => 'utf-8'){|f|
+      f.write(code)
+    }
+  end
+
+  def render(template)
+    return template.gsub(/\/\*= (.*?) =\*\//){|match, command|
+      arguments = $1.split
+      command = arguments.shift
+      self.send("_#{command}".intern, *arguments)
+    }
+  end
+end
+
+file BETTERBIBLATEX => [Template.name(BETTERBIBLATEX), UNICODE_JS, 'Rakefile'] do |t|
+  Template.new(t.name).generate
+end
+
+file BETTERBIBTEX => [Template.name(BETTERBIBTEX), UNICODE_JS, 'Rakefile'] do |t|
+  Template.new(t.name).generate
+end
+
+file BETTERCITETEX => [Template.name(BETTERCITETEX), UNICODE_JS, 'Rakefile'] do |t|
+  Template.new(t.name).generate
 end
 
 file UNICODE_XML do |t|
@@ -144,6 +201,6 @@ def download(url, file)
   http.use_ssl = true if url =~ /^https/i
   http.verify_mode = OpenSSL::SSL::VERIFY_NONE # read into this
   resp = http.get(uri.request_uri)
-  
+
   open(file, 'wb', :encoding => 'utf-8') { |file| file.write(resp.body) }
 end

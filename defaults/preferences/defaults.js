@@ -1,3 +1,3 @@
-pref("extensions.zotero-better-bibtex.recursive", true);
-pref("extensions.zotero-better-bibtex.citecommand", 'cite');
-pref("extensions.zotero-better-bibtex.citekeyformat", '[auth][year]');
+pref("extensions.zotero-better-bibtex.getCollections", true);
+pref("extensions.zotero-better-bibtex.citeCommand", 'cite');
+pref("extensions.zotero-better-bibtex.citeKeyFormat", '[auth][year]');
