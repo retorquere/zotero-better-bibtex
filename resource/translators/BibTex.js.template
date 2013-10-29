@@ -836,7 +836,7 @@ var CiteKeys = {
   },
 
   clean: function(str) {
-    return ZU.removeDiacritics(str).replace(CiteKeys.unsafecharsunsafechars, '').trim();
+    return ZU.removeDiacritics(str).replace(CiteKeys.unsafechars, '').trim();
   },
 
   _auth: function(item, onlyEditors, n, m) {
@@ -1036,7 +1036,7 @@ var CiteKeys = {
     });
 
   	basekey = CiteKeys.clean(basekey);
-  	basekey = basekey.replace(CiteKeys.unsafechars, '');
+  	basekey = basekey.replace(CiteKeys.unsafechars, '').replace(' ', '');
 
   	citekey = basekey;
   	var i = 0;
