@@ -2,10 +2,18 @@ Zotero.BetterBibTex = {
   prefs: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero-better-bibtex."),
 
   init: function () {
-    Zotero.BetterBibTex.load('BetterBibTex.js');
-    Zotero.BetterBibTex.load('BetterBibLaTex.js');
-    Zotero.BetterBibTex.load('BetterCiteTex.js');
+    // Zotero.BetterBibTex.safeLoad('BetterBibLaTex.js');
+    Zotero.BetterBibTex.safeLoad('BetterCiteTex.js');
+    Zotero.BetterBibTex.safeLoad('BetterBibTex.js');
     Zotero.Translators.init();
+  },
+
+  safeLoad: function(translator) {
+    try {
+      Zotero.BetterBibTex.load(translator);
+    } catch (err) {
+      console.log('Loading ' + translator + ' failed: ' + err);
+    }
   },
 
   load: function(translator) {
@@ -44,7 +52,8 @@ Zotero.BetterBibTex = {
       if (!header[section]) { continue; }
       for (option in header[section]) {
         override = null;
-        var value = header[section][option];
+          var value = header[section][option];
+        try {
         switch (typeof value) {
           case 'boolean':
             override = Zotero.BetterBibTex.prefs.getBoolPref(option);
@@ -57,8 +66,14 @@ Zotero.BetterBibTex = {
             if (override && override.trim() == '') { override = null; }
             break;
         }
+        } catch (err) {
+          console.log('Better ' + header.label + ' failed to get option ' + section + '.' + option + ': ' + err);
+          continue;
+        }
         if (((typeof override) == 'undefined') || (override === null)) { continue; }
+        console.log('setting ' + section + '.' + [option] + '=' + override);
         header[section][option] = override;
+        data = data.replace("Zotero.getOption('" + option + "')", JSON.stringify(override)); // explicit override, ought not be required
       }
     }
 
