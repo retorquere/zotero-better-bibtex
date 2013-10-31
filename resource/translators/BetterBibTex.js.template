@@ -54,7 +54,7 @@ function doExport() {
         if (field == 'url') {
           writeField(field, escape_url(value));
         } else {
-          writeField(field, escape(value));
+          writeField(field, escape(value), true);
         }
       }
     }
@@ -70,21 +70,21 @@ function doExport() {
     
     if(item.publicationTitle) {
       if(item.itemType == "bookSection" || item.itemType == "conferencePaper") {
-        writeField("booktitle", escape(item.publicationTitle));
+        writeField("booktitle", escape(item.publicationTitle), true);
       } else if(Zotero.getOption("useJournalAbbreviation")){
-        writeField("journal", escape(item.journalAbbreviation));
+        writeField("journal", escape(item.journalAbbreviation)), true;
       } else {
-        writeField("journal", escape(item.publicationTitle));
+        writeField("journal", escape(item.publicationTitle)), true;
       }
     }
     
     if(item.publisher) {
       if(item.itemType == "thesis") {
-        writeField("school", escape(item.publisher));
+        writeField("school", escape(item.publisher), true);
       } else if(item.itemType =="report") {
-        writeField("institution", escape(item.publisher));
+        writeField("institution", escape(item.publisher), true);
       } else {
-        writeField("publisher", escape(item.publisher));
+        writeField("publisher", escape(item.publisher), true);
       }
     }
     
@@ -119,7 +119,7 @@ function doExport() {
     if(item.date) {
       var date = Zotero.Utilities.strToDate(item.date);
       if (typeof date.year === 'undefined') {
-        writeField("year", escape(item.date));
+        writeField("year", escape(item.date), true);
       } else {
         // need to use non-localized abbreviation
         if(typeof date.month == "number") {

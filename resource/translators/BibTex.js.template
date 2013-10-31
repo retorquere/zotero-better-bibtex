@@ -713,12 +713,13 @@ function escape(value, sep) {
   return convert.to_latex(value);
 }
 
-function writeField(field, value) {
+function writeField(field, value, doublequote) {
   if (typeof value == 'number') {
   } else {
     if (!value) { return; }
-    value = '{' + value + '}';
   }
+  value = '{' + value + '}';
+  if (doublequote) { value = '{' + value + '}'; }
   
   Zotero.write(",\n\t" + field + " = " + value);
 }
