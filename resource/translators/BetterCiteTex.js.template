@@ -6,6 +6,7 @@
 	"minVersion": "2.1.9",
 	"maxVersion": "",
 	"priority": 100,
+  "displayOptions": {},
   "configOptions": {
     "getCollections": true,
     "citeCommand": "cite",

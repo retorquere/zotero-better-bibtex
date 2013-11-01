@@ -1,7 +1,18 @@
+
+function safeGetOption(option)
+{
+  try {
+    return Zotero.getOption(option);
+  } catch (err) {
+    Zotero.debug('Error fetching option ' + option + ': ' + err);
+    return;
+  }
+}
+
 var config = {
-  citeCommand:      Zotero.getOption('citeCommand'),
-  citeKeyFormat:    Zotero.getOption('citeKeyFormat'),
-  exportCharset:    Zotero.getOption('exportCharset'),
+  citeCommand:      safeGetOption('citeCommand'),
+  citeKeyFormat:    safeGetOption('citeKeyFormat'),
+  exportCharset:    safeGetOption('exportCharset'),
   translator: {
     id: '/*= id =*/',
     label:  '/*= label =*/'

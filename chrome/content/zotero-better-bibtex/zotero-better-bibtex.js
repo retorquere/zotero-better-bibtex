@@ -73,7 +73,7 @@ Zotero.BetterBibTex = {
         if (((typeof override) == 'undefined') || (override === null)) { continue; }
         console.log('setting ' + section + '.' + [option] + '=' + override);
         header[section][option] = override;
-        data = data.replace("Zotero.getOption('" + option + "')", JSON.stringify(override)); // explicit override, ought not be required
+        data = data.replace("safeGetOption('" + option + "')", JSON.stringify(override)); // explicit override, ought not be required
       }
     }
 
