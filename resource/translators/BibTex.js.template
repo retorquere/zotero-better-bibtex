@@ -966,22 +966,24 @@ var CiteKeys = {
     return lastpage;
   },
 
+  words: function(str) {
+    return [CiteKeys.clean(word) for (word of item.title.split(/\s+/)) if (word != '')];
+  },
+
   _shorttitle: function(item) {
     if (!item.title) { return null; }
-    var words = [CiteKeys.clean(word) for (word of item.title.split(/\s+/))];
+    var words = CiteKeys.words(item.title);
     return words.slice(0,3).join('');
   },
 
-  skipWords: ['a','an','the','some','from','on','in','to','of','do','with','der','die','das','ein','eine','einer','eines','einem','einen','un','une','la','le',
-                           'l','el','las','los','al','uno','una','unos','unas','de','des','del','d'],
+  skipWords: ['a','an','the','some','from','on','in','to','of','do','with','der','die','das','ein',
+              'eine','einer','eines','einem','einen','un','une','la','le',
+              'l','el','las','los','al','uno','una','unos','unas','de','des','del','d'],
 
   _veryshorttitle: function(item) {
     if (!item.title) { return null; }
-    var words = [CiteKeys.clean(word) for (word of item.title.split(/\s+/))];
-    trLog('veryshort: ' + JSON.stringify(words));
+    var words = CiteKeys.words(item.title);
     words = [word for (word of words) if (CiteKeys.skipWords.indexOf(word.toLowerCase()) == -1)];
-    trLog('veryshort (relevant): ' + JSON.stringify(words));
-    trLog('veryshort (3): ' + JSON.stringify(words.slice(0,3)));
     return words.slice(0,3).join('');
   },
 
@@ -1056,7 +1058,6 @@ var CiteKeys = {
     });
 
   	basekey = CiteKeys.clean(basekey);
-  	basekey = basekey.replace(CiteKeys.unsafechars(), '');
 
   	citekey = basekey;
   	var i = 0;
