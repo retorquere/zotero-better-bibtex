@@ -797,7 +797,15 @@ function isTitleCase(string) {
 var CiteKeys = {
   keys: [],
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
-  unsafechars: /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\| ]/ig,
+  safechars: 'a-z0-9!$*+-./:;?[],
+  _unsafechars: null,
+
+  unsafechars: function() {
+    if (!CiteKeys._unsafechars) {
+      CiteKeys._unsafechars = new RegExp(CiteKeys._unsafechars, 'ig');
+    }
+    return CiteKeys._unsafechars;
+  },
 
   extract: function(item) {
     trLog('CiteKeys.extract');
@@ -848,7 +856,7 @@ var CiteKeys = {
   },
 
   clean: function(str) {
-    return ZU.removeDiacritics(str).replace(CiteKeys.unsafechars, '').trim();
+    return ZU.removeDiacritics(str).replace(CiteKeys.unsafechars(), '').trim();
   },
 
   _auth: function(item, onlyEditors, n, m) {
@@ -960,7 +968,7 @@ var CiteKeys = {
 
   _shorttitle: function(item) {
     if (!item.title) { return null; }
-    var words = [word for (word of CiteKeys.clean(item.title).split(/\s+/))];
+    var words = [CiteKeys.clean(word) for (word of item.title.split(/\s+/))];
     return words.slice(0,3).join('');
   },
 
@@ -969,7 +977,7 @@ var CiteKeys = {
 
   _veryshorttitle: function(item) {
     if (!item.title) { return null; }
-    var words = [word for (word of CiteKeys.clean(item.title).split(/\s+/))];
+    var words = [CiteKeys.clean(word) for (word of item.title.split(/\s+/))];
     trLog('veryshort: ' + JSON.stringify(words));
     words = [word for (word of words) if (CiteKeys.skipWords.indexOf(word.toLowerCase()) == -1)];
     trLog('veryshort (relevant): ' + JSON.stringify(words));
@@ -1048,7 +1056,7 @@ var CiteKeys = {
     });
 
   	basekey = CiteKeys.clean(basekey);
-  	basekey = basekey.replace(CiteKeys.unsafechars, '').replace(' ', '');
+  	basekey = basekey.replace(CiteKeys.unsafechars(), '');
 
   	citekey = basekey;
   	var i = 0;
