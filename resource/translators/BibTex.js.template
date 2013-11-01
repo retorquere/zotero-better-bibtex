@@ -161,13 +161,21 @@ convert.to_latex = function(str) {
   chunk_to_latex = function(arr) {
     var chr;
     var res = ''
+    var textMode=true;
 
     for (chr of arr) {
-      if (!chr.match(/^[\\{/) && !res.match(/[} ]$/)) {
-        res += '{}';
+      if (chr.match(/^[\\{]/)) {
+        textMode = chr.match(/[ }]$/);
+      } else {
+        if (!textMode) {
+          res += '{}';
+          textMode = true;
+        }
       }
+
       res += chr;
     }
+
     return res;
   }
 
@@ -809,7 +817,6 @@ var CiteKeys = {
   unsafechars: /[^-a-z0-9!\$\*\+\.\/:;\?\[\]]/ig,
 
   extract: function(item) {
-    trLog('CiteKeys.extract');
     if (!item.extra) { return null; }
 
     var m = CiteKeys.embeddedKeyRE.exec(item.extra);
@@ -857,9 +864,7 @@ var CiteKeys = {
   },
 
   clean: function(str) {
-    trLog('dirty: ' + str);
     str = ZU.removeDiacritics(str).replace(CiteKeys.unsafechars, '').trim();
-    trLog('clean: ' + str);
     return str;
   },
 
@@ -1025,13 +1030,10 @@ var CiteKeys = {
   },
 
   build: function(item) {
-    trLog('CiteKeys.build');
     var citekey = CiteKeys.extract(item);
     if (citekey) { return citekey; }
 
-    trLog('format = ' + config.citeKeyFormat);
     var basekey = config.citeKeyFormat.replace(/\[([^\]]+)\]/g, function(match, command) {
-      trLog('citekey: ' + command);
       var cmds = command.split(':');
       var field = cmds.shift();
       var value = null;
@@ -1044,7 +1046,6 @@ var CiteKeys = {
       var onlyEditors = (field.match(/^edtr/) || field.match(/^editors/));
       field = field.replace(/^edtr/, 'auth').replace(/^editors/, 'authors');
 
-      trLog('key: ' + field);
       var value = CiteKeys['_' + field.replace('.', '_')](item, onlyEditors, N, M);
       if (value) { value = CiteKeys.clean(value); }
 
@@ -1062,7 +1063,6 @@ var CiteKeys = {
     });
 
   	basekey = CiteKeys.clean(basekey);
-    trLog('basekey: ' + basekey);
 
   	citekey = basekey;
   	var i = 0;
@@ -1071,7 +1071,6 @@ var CiteKeys = {
   		citekey = basekey + "-" + i;
   	}
   	CiteKeys.keys[citekey] = true;
-    trLog('citekey: ' + citekey);
   	return citekey;
   }
 };

@@ -106,16 +106,14 @@ file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
       mathmode = (char['mode'] == 'math')
     end
 
-    key = key.gsub("\\", "\\\\\\")
-    value = value.gsub("\\", "\\\\\\")
-
     unicode2latex[key] = {latex: value}
     unicode2latex[key][:math] = true if mathmode
     unicode2latex[key][:force] = true if force
     latex2unicode[value] = key
   }
 
-  File.open(t.name, 'wb', :encoding => 'utf-8'){|f| f.write("
+  #File.open(t.name, 'wb', :encoding => 'utf-8'){|f| f.write("
+  File.open(t.name, 'w'){|f| f.write("
     var convert = {
       unicode2latex: #{JSON.pretty_generate(unicode2latex)},
       unicode2latex_maxpattern: #{unicode2latex.keys.collect{|k| k.size}.max},
@@ -145,7 +143,8 @@ class Template
   def generate
     puts "Creating #{@target}"
 
-    code = File.open(@template, 'rb', :encoding => 'utf-8').read
+    #code = File.open(@template, 'rb', :encoding => 'utf-8').read
+    code = File.open(@template, 'r').read
 
     header = nil
     start = code.index('{')
@@ -167,7 +166,8 @@ class Template
 
     code = render(code)
 
-    File.open(@target, 'wb', :encoding => 'utf-8'){|f|
+    #File.open(@target, 'wb', :encoding => 'utf-8'){|f|
+    File.open(@target, 'w'){|f|
       f.write(code)
     }
   end
@@ -207,5 +207,6 @@ def download(url, file)
   http.verify_mode = OpenSSL::SSL::VERIFY_NONE # read into this
   resp = http.get(uri.request_uri)
 
-  open(file, 'wb', :encoding => 'utf-8') { |file| file.write(resp.body) }
+  #open(file, 'wb', :encoding => 'utf-8') { |file| file.write(resp.body) }
+  open(file, 'w') { |file| file.write(resp.body) }
 end
