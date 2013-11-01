@@ -797,7 +797,7 @@ function isTitleCase(string) {
 var CiteKeys = {
   keys: [],
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
-  safechars: 'a-z0-9!$*+-./:;?[],
+  safechars: 'a-z0-9!$*+-./:;?[]',
   _unsafechars: null,
 
   unsafechars: function() {
@@ -967,7 +967,7 @@ var CiteKeys = {
   },
 
   words: function(str) {
-    return [CiteKeys.clean(word) for (word of item.title.split(/\s+/)) if (word != '')];
+    return [CiteKeys.clean(word) for (word of str.split(/\s+/)) if (word != '')];
   },
 
   _shorttitle: function(item) {
