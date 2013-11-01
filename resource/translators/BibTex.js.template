@@ -797,15 +797,7 @@ function isTitleCase(string) {
 var CiteKeys = {
   keys: [],
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
-  safechars: 'a-z0-9!$*+-./:;?[]',
-  _unsafechars: null,
-
-  unsafechars: function() {
-    if (!CiteKeys._unsafechars) {
-      CiteKeys._unsafechars = new RegExp(CiteKeys._unsafechars, 'ig');
-    }
-    return CiteKeys._unsafechars;
-  },
+  unsafechars: /[^-a-z0-9!\$\*\+\.\/:;\?\[\]]/ig,
 
   extract: function(item) {
     trLog('CiteKeys.extract');
@@ -856,7 +848,10 @@ var CiteKeys = {
   },
 
   clean: function(str) {
-    return ZU.removeDiacritics(str).replace(CiteKeys.unsafechars(), '').trim();
+    trLog('dirty: ' + str);
+    str = ZU.removeDiacritics(str).replace(CiteKeys.unsafechars, '').trim();
+    trLog('clean: ' + str);
+    return str;
   },
 
   _auth: function(item, onlyEditors, n, m) {
@@ -1058,6 +1053,7 @@ var CiteKeys = {
     });
 
   	basekey = CiteKeys.clean(basekey);
+    trLog('basekey: ' + basekey);
 
   	citekey = basekey;
   	var i = 0;
@@ -1066,6 +1062,7 @@ var CiteKeys = {
   		citekey = basekey + "-" + i;
   	}
   	CiteKeys.keys[citekey] = true;
+    trLog('citekey: ' + citekey);
   	return citekey;
   }
 };
