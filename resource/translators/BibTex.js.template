@@ -157,19 +157,33 @@ convert.latex2unicode["\\url"] = '';
 convert.latex2unicode["\\href"] = '';
 
 convert.to_latex = function(str) {
+
+  chunk_to_latex = function(arr) {
+    var chr;
+    var res = ''
+
+    for (chr of arr) {
+      if (!chr.match(/^[\\{/) && !res.match(/[} ]$/)) {
+        res += '{}';
+      }
+      res += chr;
+    }
+    return res;
+  }
+
   str = '' + str;
-  var res = '';
   var strlen = str.length;
   var c, ca;
   var l;
-  var textMode = true;
-  var mathMode = false;
+
+  var res = [];
 
   for (var i=0; i < strlen; i++) {
     c = str.charAt(i);
     if (!convert.unicode2latex[c]) {
-      convert.unicode2latex[c] = {latex: c};
+      convert.unicode2latex[c] = {latex: c, math:false};
     }
+    convert.unicode2latex[c].math = !!convert.unicode2latex[c].math;
 
     if (config.exportCharset == 'UTF-8' && !convert.unicode2latex[c].force) {
       ca = c;
@@ -177,28 +191,23 @@ convert.to_latex = function(str) {
       ca = convert.unicode2latex[c].latex;
     }
 
-    if (ca[0] == '\\' || ca[0] == '{') { // command or block always OK
-      if (convert.unicode2latex[c] && convert.unicode2latex[c].math != mathMode) {
-        if (convert.unicode2latex[c].math) {
-          res += '\\ensuremath{'
-        } else {
-          res += '}'
-        }
-        mathMode = convert.unicode2latex[c].math;
-      }
-
-      res += ca;
-      textMode = ca.match(/[} ]$/);
+    var last = res.length - 1;
+    if (res.length == 0 || convert.unicode2latex[c].math != res[last].math) {
+      res.push({chars: [ca], math: convert.unicode2latex[c].math});
     } else {
-      if (!textMode) {
-        res += '{}';
-        textMode = true;
-      }
-      res += c;
+      res[last].chars.push(ca);
     }
   }
 
-  if (mathMode) { res += '}'; }
+  res = res.map(function(chunk) {
+    if (chunk.math) {
+      return '\\ensuremath{' + chunk_to_latex(chunk.chars) + '}';
+    } else {
+      return chunk_to_latex(chunk.chars);
+    }
+  });
+
+  res = chunk_to_latex(res);
 
   return res.replace(/{}\s+/g, ' ');
 }
