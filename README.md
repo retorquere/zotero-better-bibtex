@@ -1,15 +1,19 @@
 # Zotero: Better Bib(La)Tex
 
-When installed, this extension will override the standard BibTex import-export to retain bibtex keys. It also installs a
-second converter called "BibTeX cite keys" which will allow exporting entries as \\cite{.....} using these same keys.
-If you set this translator as your export default, you can drag and drop bibtex citations. The citekeys are stored in
-the "extra" field of the item, using bibtex: [your citekey]. If you edit and re-export, these citekeys will be used.
+When installed, this extension will override the standard Bib(La)Tex import-export to add the following:
+
+* drag-and-drop citations (set the "BibTex cite keys" as the default export format)
+* set your own citation keys
+* cleaner (de)LaTeXifier
+* JabRef groups import
+* configurable citekey generator
+
+Your self-chosen citation keys are stored in the "extra" field of the item, using bibtex: [your citekey]. If you edit
+and re-export, these citekeys will be used.
 
 This plugin also implements a new citekey generator for those entries that don't have one set explicitly; you can
 configure this by setting the configuration format using the key specified ni the table below; the formatter follows the
 [JabRef key formatting syntax](http://jabref.sourceforge.net/help/LabelPatterns.php).
-
-The extension also does a more thorough mapping between unicode characters and latex commands.
 
 Install by downloading the XPI above; after that, it will auto-update.
 
@@ -19,9 +23,13 @@ A change to these requires a restart of Zotero to take effect.
 | key                                         | default         |                                                                           |
 |:------------------------------------------- |:--------------- |:------------------------------------------------------------------------- |
 extensions.zotero-better-bibtex.recursive     | true            | Collection export is recursive into subcollections (true) or not (false)  |
-extensions.zotero-better-bibtex.citecommand   | cite            | LaTeX command for citekey export. Do not include the leading backslash    |
-extensions.zotero-better-bibtex.citekeyformat | \[auth]\[year]  | citeky generation template                                                |
+extensions.zotero-better-bibtex.citeCommand   | cite            | LaTeX command for citekey export. Do not include the leading backslash    |
+extensions.zotero-better-bibtex.citeKeyFormat | \[auth]\[year]  | citeky generation template                                                |
 
 ## Plans
 
-Incorporate BibLaTeX features from https://github.com/andersjohansson/zotero-biblatex-translator
+JabRef groups export
+
+## Notes
+
+BibLaTeX features from https://github.com/andersjohansson/zotero-biblatex-translator
