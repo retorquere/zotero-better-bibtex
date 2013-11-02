@@ -8843,6 +8843,14 @@
   "𝟿": {
     "latex": "\\mathtt{9}",
     "math": true
+  },
+  "[": {
+    "latex": "[",
+    "math": true
+  },
+  "]": {
+    "latex": "]",
+    "math": true
   }
 },
       unicode2latex_maxpattern: 3,

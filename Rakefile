@@ -12,14 +12,14 @@ RELEASE = Nokogiri::XML(File.open('install.rdf')).at('//em:version').inner_text
 MAIN            = 'resource/translators/BibTex.js.template'
 BETTERBIBTEX    = 'resource/translators/BetterBibTex.js'
 BETTERCITETEX   = 'resource/translators/BetterCiteTex.js'
-#BETTERBIBLATEX  = 'resource/translators/BetterBibLaTex.js'
+BETTERBIBLATEX  = 'resource/translators/BetterBibLaTex.js'
 
 SOURCES = %w{chrome resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
             .select{|f| File.file?(f)}
             .reject{|f| File.extname(f) == '.template' || f =~ /[~]$/ || f =~ /\.swp$/}
             .collect{|f| f =~ /\.coffee$/i ? f.gsub(/\.coffee$/i, '.js') : f}
-            .collect{|f| f =~ /\/unicode\/.xml$/ ? f.gsub(/\/unicode\.xml$/, '/unicode.js') : f } + [BETTERBIBTEX, BETTERCITETEX]
+            .collect{|f| f =~ /\/unicode\/.xml$/ ? f.gsub(/\/unicode\.xml$/, '/unicode.js') : f } + [BETTERBIBTEX, BETTERCITETEX, BETTERBIBLATEX]
 
 FileUtils.mkdir_p(File.dirname(BETTERBIBTEX))
 
@@ -111,6 +111,8 @@ file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
     unicode2latex[key][:force] = true if force
     latex2unicode[value] = key
   }
+  unicode2latex['['] = {latex: '[', math: true}
+  unicode2latex[']'] = {latex: ']', math: true}
 
   #File.open(t.name, 'wb', :encoding => 'utf-8'){|f| f.write("
   File.open(t.name, 'w'){|f| f.write("
@@ -181,9 +183,9 @@ class Template
   end
 end
 
-#file BETTERBIBLATEX => [Template.name(BETTERBIBLATEX), MAIN, UNICODE_JS, 'Rakefile'] do |t|
-#  Template.new(t.name).generate
-#end
+file BETTERBIBLATEX => [Template.name(BETTERBIBLATEX), MAIN, UNICODE_JS, 'Rakefile'] do |t|
+  Template.new(t.name).generate
+end
 
 file BETTERBIBTEX => [Template.name(BETTERBIBTEX), MAIN, UNICODE_JS, 'Rakefile'] do |t|
   Template.new(t.name).generate

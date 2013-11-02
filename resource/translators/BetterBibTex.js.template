@@ -21,6 +21,45 @@
 	"lastUpdated": "/*= timestamp =*/"
 }
 
+var fieldMap = {
+  address:"place",
+  chapter:"section",
+  edition:"edition",
+  type:"type",
+  series:"series",
+  title:"title",
+  volume:"volume",
+  copyright:"rights",
+  isbn:"ISBN",
+  issn:"ISSN",
+  lccn:"callNumber",
+  shorttitle:"shortTitle",
+  url:"url",
+  doi:"DOI",
+  abstract:"abstractNote",
+  nationality: "country",
+  language:"language",
+  assignee:"assignee"
+};
+
+var zotero2tex = {
+  book:             ['book', 'booklet', 'manual', 'proceedings'],
+  bookSection:      ['incollection', 'inbook'],
+  journalArticle:   [':article', ':misc'],
+  magazineArticle:  'article',
+  newspaperArticle: 'article',
+  thesis:           ['phdthesis', 'mastersthesis'],
+  manuscript:       'unpublished',
+  patent:           'patent',
+  conferencePaper:  ['inproceedings', 'conference'],
+  report:           'techreport',
+  letter:           'misc',
+  interview:        'misc',
+  film:             'misc',
+  artwork:          'misc',
+  webpage:          'misc'
+};
+
 /*= render BibTex.js =*/
 
 function doExport() {
@@ -36,7 +75,7 @@ function doExport() {
     if(item.itemType == "note" || item.itemType == "attachment") continue;
 
     // determine type
-    var type = zotero2bibtexTypeMap[item.itemType];
+    var type = zotero2tex[item.itemType];
     if (typeof(type) == "function") { type = type(item); }
     if(!type) type = "misc";
     
@@ -99,21 +138,25 @@ function doExport() {
       for(creator of item.creators) {
         var creatorString = [namepart for (namepart of [creator.lastName, creator.firstName]) if (namepart)].join(', ');
 
-        if ((creator.creatorType == "editor") || (creator.creatorType == "seriesEditor")) {
-          editors.push(creatorString);
-        } else if (creator.creatorType == "translator") {
-          translators.push(creatorString);
-        } else if (creator.creatorType == primaryCreatorType) {
-          authors.push(creatorString);
-        } else {
-          collaborators.push(creatorString);
+        switch (creator.creatorType) {
+          case 'editor':
+          case 'seriesEditor':
+            editors.push(creatorString);
+            break;
+          case 'translator':
+            translators.push(creatorString);
+          case primaryCreatorType:
+            authors.push(creatorString);
+            break;
+          default:
+            collaborators.push(creatorString);
         }
       }
 
-      writeField("author", escape(authors, ' and '));
-      writeField("editor", escape(editors, ' and '));
-      writeField("translator", escape(translators, ' and '));
-      writeField("collaborator", escape(collaborators, ' and '));
+      writeField('author', escape(authors, ' and '));
+      writeField('editor', escape(editors, ' and '));
+      writeField('translator', escape(translators, ' and '));
+      writeField('collaborator', escape(collaborators, ' and '));
     }
     
     if(item.date) {
@@ -172,7 +215,6 @@ function doExport() {
 
 var exports = {
 	"doExport": doExport,
-	"doImport": doImport,
 	"setKeywordDelimRe": setKeywordDelimRe,
 	"setKeywordSplitOnSpace": setKeywordSplitOnSpace
 }
