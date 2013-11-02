@@ -580,7 +580,7 @@ function processComment() {
 function beginRecord(type, closeChar) {
   type = Zotero.Utilities.trimInternal(type.toLowerCase());
   if(type != "string") {
-    var zoteroType = bibtex2zoteroTypeMap[type];
+    var zoteroType = tex2zotero[type];
     if (!zoteroType) {
       trLog("discarded item from BibTeX; type was "+type);
       return;
