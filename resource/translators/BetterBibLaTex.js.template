@@ -236,7 +236,7 @@ function doExport() {
           creatorString = "{" + creator.lastName + "}";
         }
 
-        case (creator.creatorType) {
+        switch (creator.creatorType) {
           case 'author':
           case 'interviewer':
           case 'director':
@@ -269,7 +269,7 @@ function doExport() {
         }
       }
 
-      writeField('author', escape(author, ' and '));
+      writeField('author', escape(authors, ' and '));
       writeField('bookauthor', escape(bookauthors, ' and '));
       writeField('commentator', escape(commentators, ' and '));
       writeField('editor', escape(editors, ' and '));

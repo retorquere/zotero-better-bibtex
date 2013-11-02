@@ -2,7 +2,7 @@ Zotero.BetterBibTex = {
   prefs: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero-better-bibtex."),
 
   init: function () {
-    // Zotero.BetterBibTex.safeLoad('BetterBibLaTex.js');
+    Zotero.BetterBibTex.safeLoad('BetterBibLaTex.js');
     Zotero.BetterBibTex.safeLoad('BetterCiteTex.js');
     Zotero.BetterBibTex.safeLoad('BetterBibTex.js');
     Zotero.Translators.init();

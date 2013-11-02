@@ -90,7 +90,7 @@ for (zotero in zotero2tex) {
       tex2zotero[tex.replace(/^:/, '')] = zotero;
     }
     return tex.replace(/^:/, '');
-  }
+  });
 
   zotero2tex[zotero] = zotero2tex[zotero][0];
 }
@@ -788,7 +788,7 @@ var CiteKeys = {
     return key;
   },
 
-  collectCreators: function(item) {
+  getCreators: function(item, onlyEditors) {
     if(!item.creators || !item.creators.length) { return {}; }
 
     var creators = {
@@ -823,12 +823,8 @@ var CiteKeys = {
       if (creators[type].length == 0) { creators[type] = null; }
     }
 
-  },
-
-  getCreators: function(item, onlyEditors) {
-    var creators = CiteKeys.collectCreators(item);
     if (onlyEditors) { return creators.editors; }
-    return creators.authors) || creators.editors) || creators.collaborators) || creators.translators) || null;
+    return creators.authors || creators.editors || creators.collaborators || creators.translators || null;
   },
 
   clean: function(str) {
