@@ -233,7 +233,7 @@ function doExport() {
         if (creator.firstName && creator.lastName) {
           creatorString = creator.lastName + ", " + creator.firstName;
         } else {
-          creatorString = "{" + creator.lastName + "}";
+          creatorString = {literal: creator.lastName}
         }
 
         switch (creator.creatorType) {

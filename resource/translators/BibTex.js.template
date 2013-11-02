@@ -686,7 +686,7 @@ function doImport() {
 function escape_url(str) {
   return str.replace(/[\{\}\\_]/g, function(chr){'%' + ('00' + chr.charCodeAt(0).toString(16)).slice(-2)});
 }
-function escape(value, sep, doublequote) {
+function escape(value, sep) {
   if (typeof value == 'number') { return value; }
   if (!value) { return; }
 
@@ -695,6 +695,8 @@ function escape(value, sep, doublequote) {
     return [escape(v) for (v of value)].join(sep);
   }
 
+  var doublequote = value.literal;
+  value = value.literal || value;
   value = convert.to_latex(value);
   if (doublequote) { value = '{' + value + '}'; }
   return value;
