@@ -81,6 +81,7 @@ var inputFieldMap = {
   location:"place"
 };
 
+if (!zotero2tex) { var zotero2tex = {}; }
 var tex2zotero = {};
 for (zotero in zotero2tex) {
   if (!(zotero2tex[zotero] instanceof Array)) { zotero2tex[zotero] = [zotero2tex[zotero]]; }
