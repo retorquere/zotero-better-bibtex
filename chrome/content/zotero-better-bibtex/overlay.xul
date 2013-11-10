@@ -16,6 +16,15 @@
 		<menuitem insertbefore="zotero-tb-actions-separator" label="&zotero-better-bibtex.name;"
 			oncommand="Zotero.Link local files.insertLinkLocalFiles()"/>
 	</menupopup -->
+
+  <menupopup id="zotero-collectionmenu">
+    <menuitem id="id-zotero-better-bibtex-collection-showkey" label="&zotero.better-bibtex.show-collection-key;"
+      oncommand="alert((ZoteroPane_Local.getSelectedCollection().libraryID || 0) + '_' + ZoteroPane_Local.getSelectedCollection().key)"/>
+	</menupopup>
+
+  <!-- treecols id="zotero-items-columns-header">
+    <treecol insertafter="zotero-items-column-extra" id="zotero-items-column-citekey" hidden="true" label="&zotero.better-bibtex.citekey_column;" flex="1" zotero-persist="width ordinal hidden sortActive sortDirection"/>
+  </treecols -->
 	
 	<!-- Include the main extension logic -->
 	<script src="chrome://zotero/content/include.js"/>
