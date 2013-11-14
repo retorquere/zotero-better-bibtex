@@ -848,7 +848,7 @@ var CiteKeys = {
     var authors = CiteKeys.getCreators(item, onlyEditors);
     if (!authors) { return null; }
 
-    return authors[creator.authors.length - 1];
+    return authors[authors.length - 1];
   },
 
   _authors: function(item, onlyEditors, n) {
