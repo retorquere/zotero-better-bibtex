@@ -23,8 +23,6 @@ configure this by setting the configuration format using the key specified ni th
 For the drag and drop citations, go to zotero preferences, tab Export, under Default Output Format, select BibTeX
 citations.
 
-Install by downloading the XPI above; after that, it will auto-update.
-
 Configuration currently does not have an UI; to change the settings, go to about:config to change the following keys.
 A change to these requires a restart of Zotero to take effect.
 
