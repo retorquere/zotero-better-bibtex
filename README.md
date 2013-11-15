@@ -12,7 +12,7 @@ Your self-chosen citation keys are stored in the "extra" field of the item, usin
 and re-export, these citekeys will be used.
 
 In case you have ambiguous keys (both resolve to Smith2013 for example), drag and drop won't yield the same keys
-as export (which does ambiguate them). You will have to either:
+as export (which does disambiguate them). You will have to either:
 * Set an explicit cite key for at least one of them, or
 * Configure your generator to generate non-ambigous keys (see below)
 
