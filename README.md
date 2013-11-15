@@ -38,7 +38,8 @@ Install by downloading the [latest version](https://raw.github.com/friflaj/zoter
 
 ## Plans
 
-JabRef groups export
+* JabRef groups export
+* Pull-export of .bib file
 
 ## Notes
 
