@@ -34,7 +34,7 @@ extensions.zotero-better-bibtex.recursive     | true            | Collection exp
 extensions.zotero-better-bibtex.citeCommand   | cite            | LaTeX command for citekey export. Do not include the leading backslash    |
 extensions.zotero-better-bibtex.citeKeyFormat | \[auth]\[year]  | citeky generation template                                                |
 
-Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.0.38.xpi).
+Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.0.39.xpi).
 
 ## Plans
 
