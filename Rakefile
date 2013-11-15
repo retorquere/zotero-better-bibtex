@@ -49,10 +49,16 @@ file 'update.rdf' => [XPI, 'install.rdf'] do |t|
   File.open('update.rdf','wb') {|f| update_rdf.write_xml_to f}
 end
 
-task :publish => [XPI, 'update.rdf'] do
+task :publish => ['README.md', 'update.rdf'] do
   sh "git add --all ."
   sh "git commit -am #{RELEASE}"
   sh "git push"
+end
+
+file 'README.md' => XPI do |t|
+  readme = File.open(t.name).read
+  readme.gsub!(/\(http[^)]+\.xpi\)/, "(https://raw.github.com/friflaj/zotero-#{EXTENSION}/master/#{XPI})")
+  File.open(t.name, 'w'){|f| f.write(readme)}
 end
 
 task :release, :bump do |t, args|
