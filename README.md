@@ -38,6 +38,8 @@ Install by downloading the [latest version](https://raw.github.com/friflaj/zoter
 
 * JabRef groups export
 * Pull-export of .bib file
+* Submission to Mozilla Extensino registry
+* GUI for preferences
 
 ## Notes
 
