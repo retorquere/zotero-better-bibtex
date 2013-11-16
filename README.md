@@ -20,7 +20,7 @@ This plugin also implements a new citekey generator for those entries that don't
 configure this by setting the configuration format using the key specified ni the table below; the formatter follows the
 [JabRef key formatting syntax](http://jabref.sourceforge.net/help/LabelPatterns.php).
 
-For the drag and drop citations, go to zotero preferences, tab Export, under Default Output Format, select BibTeX
+If you want to use the drag and drop citations, a one-time setup is required. Go to zotero preferences, tab Export, under Default Output Format, select BibTeX
 citations.
 
 Configuration currently does not have an UI; to change the settings, go to about:config to change the following keys.
