@@ -4,6 +4,7 @@ require 'net/http'
 require 'json'
 require 'fileutils'
 require 'time'
+require 'zip/filesystem'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
@@ -38,6 +39,17 @@ end
 file XPI => SOURCES do |t|
   Dir['*.xpi'].each{|xpi| File.unlink(xpi)}
   sh "zip -r #{t.name} #{t.prerequisites.collect{|f| "\"#{f}\""}.join(' ')}"
+
+  moz_xpi = "moz-addons-#{t.name}"
+  FileUtils.cp(t.name, moz_xpi)
+
+  Zip::File.open(moz_xpi) {|zf|
+    install_rdf = Nokogiri::XML(zf.file.read('install.rdf'))
+    install_rdf.at('//em:updateURL').unlink
+    zf.file.open('install.rdf', 'w') {|f|
+      f.write install_rdf.to_xml
+    }
+  }
 end
 
 file 'update.rdf' => [XPI, 'install.rdf'] do |t|
