@@ -55,9 +55,11 @@ task :publish => ['README.md', 'update.rdf'] do
   sh "git push"
 end
 
-file 'README.md' => XPI do |t|
+file 'README.md' => [XPI, 'Rakefile'] do |t|
+  puts 'Updating README.md'
   readme = File.open(t.name).read
   readme.gsub!(/\(http[^)]+\.xpi\)/, "(https://raw.github.com/friflaj/zotero-#{EXTENSION}/master/#{XPI})")
+  readme.gsub!(/\*\*[0-9]+\.[0-9]+\.[0-9]+\*\*/, "**#{RELEASE}**")
   File.open(t.name, 'w'){|f| f.write(readme)}
 end
 
@@ -95,6 +97,10 @@ file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
     id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
     key = id.pack('U' * id.size)
     value = char.at('.//latex').inner_text.strip
+
+    # need to figure something out for this. This hase the for X<combining char>, which needs to be transformed to 
+    # \combinecommand{X}
+    #raise value if value =~ /LECO/
 
     value = "``" if value == "\\textquotedblleft"
     value = "''" if value == "\\textquotedblright"
