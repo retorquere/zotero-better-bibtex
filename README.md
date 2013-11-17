@@ -9,6 +9,7 @@ When installed, this extension will override the standard Bib(La)Tex import-expo
 * cleaner (de)LaTeXifier
 * JabRef groups import
 * configurable citekey generator
+* exports dates like 'forthcoming' as 'forthcoming' instead of empty.
 
 Your self-chosen citation keys are stored in the "extra" field of the item, using bibtex: [your citekey]. If you edit
 and re-export, these citekeys will be used.
