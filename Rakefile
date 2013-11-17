@@ -114,6 +114,7 @@ file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
     # \combinecommand{X}
     #raise value if value =~ /LECO/
 
+    value = "\\$" if value == "\\textdollar"
     value = "``" if value == "\\textquotedblleft"
     value = "''" if value == "\\textquotedblright"
     value = "`" if value == "\\textasciigrave"
