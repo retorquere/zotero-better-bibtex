@@ -1,5 +1,7 @@
 # Zotero: Better Bib(La)Tex
 
+Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.0.40.xpi).
+
 When installed, this extension will override the standard Bib(La)Tex import-export to add the following:
 
 * drag-and-drop citations (set the "BibTex cite keys" as the default export format)
@@ -31,8 +33,6 @@ A change to these requires a restart of Zotero to take effect.
 extensions.zotero-better-bibtex.recursive     | true                       | Collection export is recursive into subcollections (true) or not (false)  |
 extensions.zotero-better-bibtex.citeCommand   | cite                       | LaTeX command for citekey export. Do not include the leading backslash    |
 extensions.zotero-better-bibtex.citeKeyFormat | \[auth]\[year]             | citeky generation template                                                |
-
-Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.0.40.xpi).
 
 ## Support -- read carefully
 
