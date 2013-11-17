@@ -26,11 +26,11 @@ citations.
 Configuration currently does not have an UI; to change the settings, go to about:config to change the following keys.
 A change to these requires a restart of Zotero to take effect.
 
-| key                                         | default         |                                                                           |
-|:------------------------------------------- |:--------------- |:------------------------------------------------------------------------- |
-extensions.zotero-better-bibtex.recursive     | true            | Collection export is recursive into subcollections (true) or not (false)  |
-extensions.zotero-better-bibtex.citeCommand   | cite            | LaTeX command for citekey export. Do not include the leading backslash    |
-extensions.zotero-better-bibtex.citeKeyFormat | \[auth]\[year]  | citeky generation template                                                |
+| key                                         | default                    |                                                                           |
+|:------------------------------------------- |:-------------------------- |:------------------------------------------------------------------------- |
+extensions.zotero-better-bibtex.recursive     | true                       | Collection export is recursive into subcollections (true) or not (false)  |
+extensions.zotero-better-bibtex.citeCommand   | cite                       | LaTeX command for citekey export. Do not include the leading backslash    |
+extensions.zotero-better-bibtex.citeKeyFormat | \[auth]\[year]             | citeky generation template                                                |
 
 Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.0.40.xpi).
 
@@ -44,7 +44,9 @@ are the breaks.
 
 ## Plans
 
-* Pull-export of .bib file
+* Pull-export of .bib file using Biber remote support
+* Scan library for citation key conflicts
+* Generate-and-set fixed key
 * GUI for preferences
 * Submission to Mozilla Extension registry
 * JabRef groups export
