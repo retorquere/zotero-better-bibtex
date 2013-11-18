@@ -2,20 +2,35 @@ Zotero.BetterBibTex = {
   prefs: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero-better-bibtex."),
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   translators: {},
+  server: null,
+
+  object: function(o) { // From http://javascript.crockford.com/prototypal.html
+    function F() {}
+    F.prototype = o;
+    return new F();
+  },
+
+  log: function(msg, err) {
+    msg = '[better-bibtex] ' + msg;
+    if (err) { msg += ' (' + err + ')'; }
+    console.log(msg);
+  },
 
   init: function () {
     Zotero.BetterBibTex.safeLoad('BetterBibLaTex.js');
     Zotero.BetterBibTex.safeLoad('BetterCiteTex.js');
     Zotero.BetterBibTex.safeLoad('BetterBibTex.js');
     Zotero.Translators.init();
+
+    Zotero.Translators.server = new Zotero.BetterBibTex.Server(Zotero.BetterBibTex.prefs.getIntPref('port'));
   },
 
   export: function(translator, collectionkey) {
     var lkh = Zotero.Collections.parseLibraryKeyHash(collectionkey);
-    if (!lkh) { return collectionkey + ' not found'; }
+    if (!lkh) { throw (collectionkey + ' not found'); }
 
     var col = Zotero.Collections.getByLibraryAndKey(lkh.libraryID, lkh.key);
-    if (!col) { return collectionkey + ' not found'; }
+    if (!col) { throw (collectionkey + ' not found'); }
 
     var translator = Zotero.BetterBibTex.translators[translator.toLowerCase()];
     if (!translator) { return 'No translator' + translator; }
@@ -43,7 +58,7 @@ Zotero.BetterBibTex = {
     if (status.success) {
       return status.data;
     } else {
-      return 'export failed';
+      throw ('export failed');
     }
   },
 
@@ -51,12 +66,12 @@ Zotero.BetterBibTex = {
     try {
       Zotero.BetterBibTex.load(translator);
     } catch (err) {
-      console.log('Loading ' + translator + ' failed: ' + err);
+      Zotero.BetterBibTex.log('Loading ' + translator + ' failed: ' + err);
     }
   },
 
   load: function(translator) {
-    console.log('Loading ' + translator);
+    Zotero.BetterBibTex.log('Loading ' + translator);
 
     var header = null;
     var data = null;
@@ -82,7 +97,7 @@ Zotero.BetterBibTex = {
     }
 
     if (!header) {
-      console.log('Loading ' + translator + ' failed: ' + err);
+      Zotero.BetterBibTex.log('Loading ' + translator + ' failed: ' + err);
       return;
     }
 
@@ -108,18 +123,107 @@ Zotero.BetterBibTex = {
             break;
         }
         } catch (err) {
-          console.log('Better ' + header.label + ' failed to get option ' + section + '.' + option + ': ' + err);
           continue;
         }
         if (((typeof override) == 'undefined') || (override === null)) { continue; }
-        console.log('setting ' + section + '.' + [option] + '=' + override);
+        Zotero.BetterBibTex.log('setting ' + section + '.' + [option] + '=' + override);
         header[section][option] = override;
         data = data.replace("safeGetOption('" + option + "')", JSON.stringify(override)); // explicit override, ought not be required
       }
     }
 
-    console.log("Installing " + header.label);
+    Zotero.BetterBibTex.log("Installing " + header.label);
     Zotero.Translators.save(header, data);
+  },
+
+/* vim:set ts=2 sw=2 et: */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/*
+ * To use try out this JS server socket implementation, just copy this file
+ * into the "components" directory of a Mozilla build.  Then load the URL
+ * http://localhost:4444/ in the browser.  You should see a page get loaded
+ * that was served up by this component :-)
+ *
+ * This code requires Mozilla 1.6 or better.
+ */
+
+  Server: function(port) { 
+    const nsISupports = Components.interfaces.nsISupports;
+    const nsIObserver = Components.interfaces.nsIObserver;
+    const nsIServerSocket = Components.interfaces.nsIServerSocket;
+    const nsIServerSocketListener = Components.interfaces.nsIServerSocketListener;
+    const nsITransport = Components.interfaces.nsITransport;
+    const nsIScriptableInputStream = Components.interfaces.nsIScriptableInputStream;
+
+    this.QueryInterface = function(iid) {
+      if (iid.equals(nsIObserver) || iid.equals(nsIServerSocketListener) || iid.equals(nsISupports)) return this;
+
+      throw Components.results.NS_ERROR_NO_INTERFACE;
+    };
+
+    this.observe = function(subject, topic, data) {
+      Zotero.BetterBibTex.log(">>> observe [" + topic + "]");
+      this.startListening();
+    };
+
+    /* this function is called when we receive a new connection */
+    this.onSocketAccepted = function(serverSocket, clientSocket) {
+      Zotero.BetterBibTex.log(">>> accepted connection on "+clientSocket.host+":"+clientSocket.port);
+
+      var input = clientSocket.openInputStream(nsITransport.OPEN_BLOCKING, 0, 0);
+      var output = clientSocket.openOutputStream(nsITransport.OPEN_BLOCKING, 0, 0);
+
+      var req = this.request(input);
+      req = req.split(/\r?\n/);
+      req = req[0];
+      Zotero.BetterBibTex.log(req);
+
+      var cmd = req.match(/^GET\s+\/(bib(la)?tex)\/([^\s]+_[^\s]+)(\sHTTP\/)?/i);
+      if (cmd) {
+        var translator = cmd[1];
+        var collection = cmd[3].replace(/\.bib$/i, '');
+
+        var response = Zotero.BetterBibTex.export(translator, collection);
+        var n = output.write(response, response.length);
+        Zotero.BetterBibTex.log(">>> wrote "+n+" bytes");
+      } else {
+        Zotero.BetterBibTex.log('no support for ' + req);
+      }
+
+      input.close();
+      output.close();
+    };
+
+    this.onStopListening = function(serverSocket, status) {
+      Zotero.BetterBibTex.log(">>> shutting down server socket");
+    };
+
+    this.startListening = function() {
+      const SERVERSOCKET_CONTRACTID = "@mozilla.org/network/server-socket;1";
+      var socket = Components.classes[SERVERSOCKET_CONTRACTID].createInstance(nsIServerSocket);
+      socket.init(this.port, false /* loopback only */, -1);
+      Zotero.BetterBibTex.log(">>> listening on port "+socket.port);
+      socket.asyncListen(this);
+    };
+
+    this.request = function(input) {
+      var req = '';
+      /* use nsIScriptableInputStream to consume all of the data on the stream */
+
+      var sin = Components.classes["@mozilla.org/scriptableinputstream;1"].createInstance(nsIScriptableInputStream);
+      sin.init(input);
+
+      /* discard all data */
+      while (sin.available() > 0) req += sin.read(512);
+      return req;
+    };
+
+    Zotero.BetterBibTex.log('server started');
+    this.port = port;
+    this.startListening();
   }
 };
 
