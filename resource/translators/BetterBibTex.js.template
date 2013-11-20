@@ -166,7 +166,7 @@ function doExport() {
       } else {
         // need to use non-localized abbreviation
         if(typeof date.month == "number") {
-          writeField("month", escape(months[date.month]));
+          writeField("month", escape(months[date.month]), true);
         }
         writeField("year", escape(date.year));
       }
