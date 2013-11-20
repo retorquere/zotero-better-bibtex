@@ -4,3 +4,4 @@ skin      zotero-better-bibtex  default chrome/skin/default/zotero-better-bibtex
 resource  zotero-better-bibtex          resource/
 
 overlay	chrome://zotero/content/zoteroPane.xul	chrome://zotero-better-bibtex/content/overlay.xul
+overlay	chrome://zotero/content/preferences/preferences.xul	chrome://zotero-better-bibtex/content/preferences.xul

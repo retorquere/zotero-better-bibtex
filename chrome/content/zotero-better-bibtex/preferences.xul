@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://zotero-better-bibtex/skin/overlay.css" type="text/css"?>
+<!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
+
+<overlay id="zotero-better-bibtex-preferences"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	
+  <prefwindow id="zotero-prefs">
+    <prefpane id="zotero-prefpane-better-bibtex"
+            insertafter="zotero-prefpane-advanced"
+            label="&zotero.better-bibtex.preferences.prefpane.better-bibtex;" image="chrome://zotero-better-bibtex/skin/prefs.png"/>
+      <preferences id="zotero-preferences-cite">
+        <preference id="pref-better-bibtex-recursive" name="extensions.zotero-better-bibtex.getCollections" type="bool"/>
+        <preference id="pref-better-bibtex-citecommand" name="extensions.zotero-better-bibtex.citeCommand" type="string"/>
+        <preference id="pref-better-bibtex-format" name="extensions.zotero-better-bibtex.citeKeyFormat" type="string"/>
+        <preference id="pref-better-bibtex-port" name="extensions.zotero-better-bibtex.port" type="int"/>
+      <preferences>
+      <hbox>
+        <grid>
+          <columns>
+            <column/>
+            <column/>
+          </columns>
+          <rows>
+            <row>
+              <box/>
+              <label value="&zotero.better-bibtex.restart-required;" hidden="true"/>
+            </row>
+            <row>
+              <box/>
+              <checkbox label="&zotero.better-bibtex.preferences.recursive;" preference="extensions.zotero-better-bibtex.getCollections" />
+            </row>
+            <row>
+              <label value="&zotero.better-bibtex.cite.command;"/>
+              <textbox label="&zotero.better-bibtex.preferences.cite.command;" preference="extensions.zotero-better-bibtex.citeCommand" />
+            </row>
+            <row>
+              <label value="&zotero.better-bibtex.cite.format;"/>
+              <textbox label="&zotero.better-bibtex.preferences.cite.format;" preference="extensions.zotero-better-bibtex.citeKeyFormat" />
+            </row>
+            <row>
+              <label value="&zotero.better-bibtex.port;"/>
+              <textbox label="&zotero.better-bibtex.preferences.port;" preference="extensions.zotero-better-bibtex.port" size="5"/>
+            </row>
+          </rows>
+        </grid>
+      </hbox>
+    </prefpane>
+  </prefwindow>
+
+	<!-- Include the main extension logic -->
+	<script src="chrome://zotero/content/include.js"/>
+	<script src="chrome://zotero-better-bibtex/content/include.js" type="application/javascript;version=1.8"/>
+</overlay>
