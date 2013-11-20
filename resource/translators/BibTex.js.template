@@ -703,14 +703,13 @@ function escape(value, sep) {
   return value;
 }
 
-function writeField(field, value, doublequote) {
+function writeField(field, value) {
   if (typeof value == 'number') {
   } else {
     if (!value) { return; }
+    if (! ('' + value).match(/^[a-z0-9]+$/i)) { value = '{' + value + '}'; }
   }
-  value = '{' + value + '}';
-  if (doublequote) { value = '{' + value + '}'; }
-  
+
   Zotero.write(",\n\t" + field + " = " + value);
 }
 

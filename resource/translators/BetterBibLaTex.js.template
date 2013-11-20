@@ -121,7 +121,7 @@ function doExport() {
         if (field == 'url') {
           writeField(field, escape_url(value));
         } else {
-          writeField(field, escape(value), true);
+          writeField(field, escape(value));
         }
       }
     }
