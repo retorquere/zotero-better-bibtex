@@ -3,12 +3,7 @@ Zotero.BetterBibTex = {
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   translators: {},
   server: null,
-
-  object: function(o) { // From http://javascript.crockford.com/prototypal.html
-    function F() {}
-    F.prototype = o;
-    return new F();
-  },
+  threadManager: Components.classes["@mozilla.org/thread-manager;1"].getService(),
 
   log: function(msg, err) {
     msg = '[better-bibtex] ' + msg;
@@ -156,7 +151,6 @@ Zotero.BetterBibTex = {
     const nsIServerSocket = Components.interfaces.nsIServerSocket;
     const nsIServerSocketListener = Components.interfaces.nsIServerSocketListener;
     const nsITransport = Components.interfaces.nsITransport;
-    const nsIScriptableInputStream = Components.interfaces.nsIScriptableInputStream;
 
     this.QueryInterface = function(iid) {
       if (iid.equals(nsIObserver) || iid.equals(nsIServerSocketListener) || iid.equals(nsISupports)) return this;
@@ -176,25 +170,8 @@ Zotero.BetterBibTex = {
       var input = clientSocket.openInputStream(nsITransport.OPEN_BLOCKING, 0, 0);
       var output = clientSocket.openOutputStream(nsITransport.OPEN_BLOCKING, 0, 0);
 
-      var req = this.request(input);
-      req = req.split(/\r?\n/);
-      req = req[0];
-      Zotero.BetterBibTex.log(req);
-
-      var cmd = req.match(/^GET\s+\/(bib(la)?tex)\/([^\s]+_[^\s]+)(\sHTTP\/)?/i);
-      if (cmd) {
-        var translator = cmd[1];
-        var collection = cmd[3].replace(/\.bib$/i, '');
-
-        var response = Zotero.BetterBibTex.export(translator, collection);
-        var n = output.write(response, response.length);
-        Zotero.BetterBibTex.log(">>> wrote "+n+" bytes");
-      } else {
-        Zotero.BetterBibTex.log('no support for ' + req);
-      }
-
-      input.close();
-      output.close();
+      var handler = new Zotero.BetterBibTex.RequestHandler(input, output);
+      input.asyncWait(handler, 0, 0, Zotero.BetterBibTex.threadManager.mainThread);
     };
 
     this.onStopListening = function(serverSocket, status) {
@@ -209,21 +186,58 @@ Zotero.BetterBibTex = {
       socket.asyncListen(this);
     };
 
+    Zotero.BetterBibTex.log('server started');
+    this.port = port;
+    this.startListening();
+  },
+
+  RequestHandler: function(input, output) {
+    const nsIScriptableInputStream = Components.interfaces.nsIScriptableInputStream;
+
+    this.input = input;
+    this.output = output;
+
+    this.onInputStreamReady = function(input) {
+      var req = this.request();
+      req = req.split(/\r?\n/);
+      req = req[0];
+      Zotero.BetterBibTex.log(req);
+
+      var response = null;
+      var cmd = req.match(/^GET\s+\/(bib(la)?tex)\/([^\s]+_[^\s]+)(\sHTTP\/)?/i);
+
+      if (cmd) {
+        var translator = cmd[1];
+        var collection = cmd[3].replace(/\.bib$/i, '');
+
+        try {
+          response = "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n" + Zotero.BetterBibTex.export(translator, collection);
+        } catch (err) {
+          response = "HTTP/1.1 404 Not Found\nContent-Type: text/plain\n\nNo collection found: " + err;
+        }
+      } else {
+        Zotero.BetterBibTex.log('no support for ' + req);
+        response = "HTTP/1.1 501 Not Implemented\nContent-Type: text/plain\n\nCommand not implemented: " + req;
+      }
+      var n = this.output.write(response, response.length);
+      Zotero.BetterBibTex.log(">>> wrote "+n+" bytes");
+
+      this.input.close();
+      this.output.close();
+    };
+
     this.request = function(input) {
       var req = '';
       /* use nsIScriptableInputStream to consume all of the data on the stream */
 
       var sin = Components.classes["@mozilla.org/scriptableinputstream;1"].createInstance(nsIScriptableInputStream);
-      sin.init(input);
+      sin.init(this.input);
 
       /* discard all data */
       while (sin.available() > 0) req += sin.read(512);
       return req;
     };
 
-    Zotero.BetterBibTex.log('server started');
-    this.port = port;
-    this.startListening();
   }
 };
 
