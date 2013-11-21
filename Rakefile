@@ -13,6 +13,7 @@ RELEASE = Nokogiri::XML(File.open('install.rdf')).at('//em:version').inner_text
 MAIN            = 'resource/translators/BibTex.js.template'
 BETTERBIBTEX    = 'resource/translators/BetterBibTex.js'
 BETTERCITETEX   = 'resource/translators/BetterCiteTex.js'
+PANDOCCITE      = 'resource/translators/PandocCite.js'
 BETTERBIBLATEX  = 'resource/translators/BetterBibLaTex.js'
 
 SOURCES = %w{chrome resource defaults chrome.manifest install.rdf bootstrap.js}
@@ -20,7 +21,7 @@ SOURCES = %w{chrome resource defaults chrome.manifest install.rdf bootstrap.js}
             .select{|f| File.file?(f)}
             .reject{|f| File.extname(f) == '.template' || f =~ /[~]$/ || f =~ /\.swp$/}
             .collect{|f| f =~ /\.coffee$/i ? f.gsub(/\.coffee$/i, '.js') : f}
-            .collect{|f| f =~ /\/unicode\/.xml$/ ? f.gsub(/\/unicode\.xml$/, '/unicode.js') : f } + [BETTERBIBTEX, BETTERCITETEX, BETTERBIBLATEX]
+            .collect{|f| f =~ /\/unicode\/.xml$/ ? f.gsub(/\/unicode\.xml$/, '/unicode.js') : f } + [PANDOCCITE, BETTERBIBTEX, BETTERCITETEX, BETTERBIBLATEX]
 
 FileUtils.mkdir_p(File.dirname(BETTERBIBTEX))
 
@@ -216,7 +217,10 @@ file BETTERBIBTEX => [Template.name(BETTERBIBTEX), MAIN, UNICODE_JS, 'Rakefile']
   Template.new(t.name).generate
 end
 
-file BETTERCITETEX => [Template.name(BETTERCITETEX), MAIN, UNICODE_JS, 'Rakefile'] do |t|
+file BETTERCITETEX => [Template.name(BETTERCITETEX), MAIN, 'Rakefile'] do |t|
+  Template.new(t.name).generate
+end
+file PANDOCCITE => [Template.name(PANDOCCITE), MAIN, 'Rakefile'] do |t|
   Template.new(t.name).generate
 end
 

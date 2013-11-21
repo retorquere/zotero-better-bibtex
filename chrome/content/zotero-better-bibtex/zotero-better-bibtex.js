@@ -15,6 +15,7 @@ Zotero.BetterBibTex = {
     Zotero.BetterBibTex.safeLoad('BetterBibLaTex.js');
     Zotero.BetterBibTex.safeLoad('BetterCiteTex.js');
     Zotero.BetterBibTex.safeLoad('BetterBibTex.js');
+    Zotero.BetterBibTex.safeLoad('PandocCite.js');
     Zotero.Translators.init();
 
     Zotero.Translators.server = new Zotero.BetterBibTex.Server(Zotero.BetterBibTex.prefs.getIntPref('port'));
