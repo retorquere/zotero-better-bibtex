@@ -28,7 +28,7 @@ Zotero.BetterBibTex = {
   },
 
   endpoints: {
-    bibliography: {
+    collection: {
       supportedMethods: ['GET'],
 
       init: function(url, data, sendResponseCallback) {
