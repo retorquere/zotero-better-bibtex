@@ -1,51 +1,74 @@
 # Zotero: Better Bib(La)Tex
 
-Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.0.42.xpi).
+Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.0.43.xpi).
 
-When installed, this extension will override the standard Bib(La)Tex import-export to add the following:
+This extension aims to make Zotero effective for us LaTeX holdouts. It adds the following features:
 
-* drag-and-drop citations (set the "BibTex cite keys" as the default export format)
-* set your own citation keys
-* cleaner (de)LaTeXifier
-* JabRef groups import
-* configurable citekey generator
-* exports dates like 'forthcoming' as 'forthcoming' instead of empty.
+## Set your own, fixed citation keys
 
-Your self-chosen citation keys are stored in the "extra" field of the item, using bibtex: [your citekey]. If you edit
-and re-export, these citekeys will be used.
+You can fix the citation key for a reference by adding the text "bibtex: [your citekey]" (sans quotes) anywhere in the
+"extra" field of the reference.
+
+## Drag and drop citations
+
+You can drag and drop citations into your LaTeX editor, and it will add a proper \cite{citekey}. The actual command is
+configurable by setting the config option "extensions.zotero-better-bibtex.citeCommand" (default: cite). Do not include the leading backslash. This
+feature requires a one-time setup: go to zotero preferences, tab Export, under Default Output Format, select "Bib(La)TeX citations".
+
+## Recursive collection export
+
+You can export collections including/excluding its child collections by modifying
+the config option "extensions.zotero-better-bibtex.recursive" (default: true).
+
+## JabRef groups import
+
+During import, if JabRef explicit (not dynamic) groups are present, collections will be created to mirror these
+
+## configurable citekey generator
+
+This plugin also implements a new citekey generator for those entries that don't have one set explicitly; you can
+configure this by setting the configuration format using the key specified ni the table below; the formatter follows the
+[JabRef key formatting syntax](http://jabref.sourceforge.net/help/LabelPatterns.php).
+The format can be set by modifying the config option "extensions.zotero-better-bibtex.citeKeyFormat" (default: \[auth]\[year]).
+
+## Date field exports
+
+Export dates like 'forthcoming' as 'forthcoming' instead of empty.
+
+## Pull export
+
+You can fetch your library as part of your build,using curl or somesuch, or with a biblatex remote statement like \addbibresource[location=remote]{http://localhost:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}.
+For Zotero standalone this is enabled by default; for Zotero embedded, you need to set the config key "extensions.zotero.httpServer.enabled" to true. You can then fetch your bibliography on the url
+http://localhost:23119/better-bibtex/collection?\[collectionID].[format], where collectionID is:
+* the ID you get by right-clicking your collection and selecting "Show collection key"
+* the path "/[library id]/full/path/to/collection" (the library id is the first number from the key you get in the option above; it's always '0' for your personal library)
+
+The format is either 'bibtex' or 'biblatex', and determines the translator used for export.
+
+## Things to watch out for
+
+### Duplicate keys
 
 In case you have ambiguous keys (both resolve to Smith2013 for example), drag and drop won't yield the same keys
 as export (which does disambiguate them). You will have to either:
 * Set an explicit cite key for at least one of them, or
 * Configure your generator to generate non-ambigous keys (see below)
 
-This plugin also implements a new citekey generator for those entries that don't have one set explicitly; you can
-configure this by setting the configuration format using the key specified ni the table below; the formatter follows the
-[JabRef key formatting syntax](http://jabref.sourceforge.net/help/LabelPatterns.php).
+### Configuration
 
-If you want to use the drag and drop citations, a one-time setup is required. Go to zotero preferences, tab Export, under Default Output Format, select BibTeX
-citations.
-
-Configuration currently does not have an UI; to change the settings, go to about:config to change the following keys.
-A change to these requires a restart of Zotero to take effect.
-
-| key                                         | default                    |                                                                           |
-|:------------------------------------------- |:-------------------------- |:------------------------------------------------------------------------- |
-extensions.zotero-better-bibtex.recursive     | true                       | Collection export is recursive into subcollections (true) or not (false)  |
-extensions.zotero-better-bibtex.citeCommand   | cite                       | LaTeX command for citekey export. Do not include the leading backslash    |
-extensions.zotero-better-bibtex.citeKeyFormat | \[auth]\[year]             | citeky generation template                                                |
+Configuration currently does not have an UI; to change the settings, go to about:config to change the keys mentioned
+above. A change to these requires a restart of Zotero to take effect.
 
 ## Support -- read carefully
 
 My time is extremely limited for a number of very great reasons (you shall have to trust me on this). Because of this, I cannot accept bug reports
-or support requests on anything but the latest version, currently at **0.0.42**. If you submit an issue report,
+or support requests on anything but the latest version, currently at **0.0.43**. If you submit an issue report,
 please include the version that you are on. By the time I get to your issue, the latest version might have bumped up already, and you
 will have to upgrade (you might have auto-upgraded already however) and re-verify that your issue still exists. Apologies for the inconvenience, but such
 are the breaks.
 
 ## Plans
 
-* Pull-export of .bib file using Biber remote support
 * Scan library for citation key conflicts
 * Generate-and-set fixed key
 * GUI for preferences
