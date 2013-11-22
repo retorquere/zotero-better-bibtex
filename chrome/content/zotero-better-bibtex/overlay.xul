@@ -19,7 +19,7 @@
 
   <menupopup id="zotero-collectionmenu">
     <menuitem id="id-zotero-better-bibtex-collection-showkey" label="&zotero.better-bibtex.show-collection-key;"
-      oncommand="alert((ZoteroPane_Local.getSelectedCollection().libraryID || 0) + '_' + ZoteroPane_Local.getSelectedCollection().key)"/>
+              oncommand="alert('/' + (ZoteroPane_Local.getSelectedCollection().libraryID || 0) + '/' + ZoteroPane_Local.getSelectedCollection().key)"/>
 	</menupopup>
 
   <!-- treecols id="zotero-items-columns-header">

@@ -3,9 +3,9 @@
 	
 	<Description about="urn:mozilla:install-manifest">
 		<em:id>better-bibtex@iris-advies.com</em:id>
-		<em:name>Zotero Better Bib(La)Tex import/export</em:name>
-		<em:version>0.0.42</em:version>
-		<em:description>When installed, this extension will override the standard Bib(La)Tex import-export to add the following: * drag-and-drop citations (set the "BibTex cite keys" as the default export format) * set your own citation keys * cleaner (de)LaTeXifier * JabRef groups import * configurable citekey generator</em:description>
+		<em:name>Zotero Better Bib(La)Tex</em:name>
+		<em:version>0.0.43</em:version>
+    <em:description>When installed, this extension will override the standard Bib(La)Tex import-export to add the following: * Set your own, fixed citation keys * Drag and drop citations * Recursive collection export * JabRef groups import * Configurable citekey generator * Better date field exports * Pull export for bibliography * More info @ https://github.com/friflaj/zotero-better-bibtex</em:description>
 		<em:creator>Emiliano Heyns</em:creator>
 		<em:updateURL>https://raw.github.com/friflaj/zotero-better-bibtex/master/update.rdf</em:updateURL>
 		<em:type>2</em:type> <!-- type=extension -->

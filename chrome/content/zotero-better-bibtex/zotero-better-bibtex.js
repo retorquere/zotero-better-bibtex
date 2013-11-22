@@ -6,9 +6,18 @@ Zotero.BetterBibTex = {
   translators: {},
   threadManager: Components.classes["@mozilla.org/thread-manager;1"].getService(),
 
-  log: function(msg, err) {
+  log: function(msg, e) {
     msg = '[better-bibtex] ' + msg;
-    if (err) { msg += ' (' + err + ')'; }
+    if (e) {
+      msg += "\nan error occurred: ";
+      if (e.name) {
+        msg += e.name + ": " + e.message + " \n(" + e.fileName + ", " + e.lineNumber + ")";
+      } else {
+        msg += e;
+      }
+      if (e.stack) { msg += "\n" + e.stack; }
+    }
+    Zotero.debug(msg);
     console.log(msg);
   },
 
@@ -32,13 +41,32 @@ Zotero.BetterBibTex = {
       supportedMethods: ['GET'],
 
       init: function(url, data, sendResponseCallback) {
+        var collection;
+
         try {
-          var path = url.query[''].split('.');
-          var translator = path.pop();
-          var collection = path.join('.');
-          sendResponseCallback(200, "text/plain", Zotero.BetterBibTex.export(translator, collection));
+          collection = url.query[''];
         } catch (err) {
-          sendResponseCallback(404, "text/plain", "Could not export bibliography: " + err);
+          collection = null;
+        }
+
+        if (!collection) {
+          sendResponseCallback(501, "text/plain", "Could not export bibliography: no path");
+          return;
+        }
+
+        try {
+          var path = collection.split('.');
+
+          if (path.length == 1) {
+            sendResponseCallback(404, "text/plain", "Could not export bibliography '" + collection + "': no format specified");
+            return;
+          }
+          var translator = path.pop();
+          var path = path.join('.');
+          sendResponseCallback(200, "text/plain", Zotero.BetterBibTex.export(translator, path));
+        } catch (err) {
+          Zotero.BetterBibTex.log("Could not export bibliography '" + collection + "'", err);
+          sendResponseCallback(404, "text/plain", "Could not export bibliography '" + collection + "': " + err);
         }
       }
     }
@@ -46,14 +74,21 @@ Zotero.BetterBibTex = {
 
   export: function(translator, collectionkey) {
     if (collectionkey.charAt(0) != '/') { collectionkey = '/0/' + collectionkey; }
+    Zotero.BetterBibTex.log('exporting ' + collectionkey + ' in ' + translator);
+
     var path = collectionkey.split('/');
     path.shift(); // remove leading /
-    var libid = path.shift();
+
+    var libid = parseInt(path.shift());
+    if (isNaN(libid)) {
+      throw('Not a valid library ID: ' + collectionkey);
+    }
+
     var key = '' + path[0];
     
     var col = null;
     for (var name of path) {
-      var children = Zotero.getCollections(col, false, libid);
+      var children = Zotero.getCollections(col && col.id, false, libid);
       col = null;
       for (child of children) {
         if (child.name.toLowerCase() == name.toLowerCase()) {
@@ -71,7 +106,7 @@ Zotero.BetterBibTex = {
     if (!col) { throw (collectionkey + ' not found'); }
 
     var translator = Zotero.BetterBibTex.translators[translator.toLowerCase()];
-    if (!translator) { return 'No translator' + translator; }
+    if (!translator) { throw('No translator' + translator); }
 
     var item;
     var items = col.getChildren(true, false, 'item');
@@ -104,7 +139,7 @@ Zotero.BetterBibTex = {
     try {
       Zotero.BetterBibTex.load(translator);
     } catch (err) {
-      Zotero.BetterBibTex.log('Loading ' + translator + ' failed: ' + err);
+      Zotero.BetterBibTex.log('Loading ' + translator + ' failed', err);
     }
   },
 
@@ -135,7 +170,7 @@ Zotero.BetterBibTex = {
     }
 
     if (!header) {
-      Zotero.BetterBibTex.log('Loading ' + translator + ' failed: ' + err);
+      Zotero.BetterBibTex.log('Loading ' + translator + ' failed', err);
       return;
     }
 
