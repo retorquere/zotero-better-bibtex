@@ -45,6 +45,8 @@ http://localhost:23119/better-bibtex/collection?\[collectionID].[format], where 
 
 The format is either 'bibtex' or 'biblatex', and determines the translator used for export.
 
+Zotero needs to be running for this to work.
+
 ## Things to watch out for
 
 ### Duplicate keys
