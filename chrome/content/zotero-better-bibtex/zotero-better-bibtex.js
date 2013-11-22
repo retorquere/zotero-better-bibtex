@@ -5,6 +5,7 @@ Zotero.BetterBibTex = {
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   translators: {},
   threadManager: Components.classes["@mozilla.org/thread-manager;1"].getService(),
+  windowMediator: Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator),
 
   log: function(msg, e) {
     msg = '[better-bibtex] ' + msg;
@@ -26,6 +27,7 @@ Zotero.BetterBibTex = {
     Zotero.BetterBibTex.safeLoad('BetterCiteTex.js');
     Zotero.BetterBibTex.safeLoad('BetterBibTex.js');
     Zotero.BetterBibTex.safeLoad('PandocCite.js');
+    Zotero.BetterBibTex.safeLoad('KeyOnly.js');
     Zotero.Translators.init();
 
     for (var endpoint of Object.keys(Zotero.BetterBibTex.endpoints)) {
@@ -113,6 +115,10 @@ Zotero.BetterBibTex = {
     items = [item.id for (item of items)];
     items = Zotero.Items.get(items);
 
+    return Zotero.BetterBibTex.translate(translator, items);
+  },
+
+  translate: function(translator, items) {
     var translation = new Zotero.Translate.Export();
     translation.setItems(items);
     translation.setTranslator(translator);
@@ -207,6 +213,46 @@ Zotero.BetterBibTex = {
 
     Zotero.BetterBibTex.log("Installing " + header.label);
     Zotero.Translators.save(header, data);
+  },
+
+  setCiteKeys: function() {
+    var translator = Zotero.BetterBibTex.translators['citationkeys'];
+
+    var win = Zotero.BetterBibTex.windowMediator.getMostRecentWindow("navigator:browser");
+    var items = win.ZoteroPane.getSelectedItems();
+    items = Zotero.Items.get([item.id for (item of items)]);
+    var items = [item for (item of items) if (!(item.isAttachment() || item.isNote()))];
+
+    try {
+      var keys = Zotero.BetterBibTex.translate(translator, [item.id for (item of items)]).split(',');
+    } catch (err) {
+      alert('Cannot set keys: ' + err);
+      return;
+    }
+
+    if (items.length != keys.length) {
+      alert(keys.length + ' keys for ' + itemIDs.length + ' items');
+      return;
+    }
+
+    for (var i = 0; i <= items.length; i++) {
+      item = items[i];
+      var key = keys[i];
+
+      Zotero.BetterBibTex.log('setting ' + item.id + ' to ' + key);
+
+      var extra = '' + item.extra;
+      extra = extra .replace(/bibtex:\s*[^\s\r\n]+/, '');
+      extra = extra.trim();
+
+      if (extra.length > 0) { extra += "\n"; }
+      item.extra = extra + 'bibtex: ' + key;
+      item.save();
+    }
+  },
+
+  restartRequired: function() {
+    return true;
   }
 };
 

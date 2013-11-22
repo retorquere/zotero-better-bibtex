@@ -22,6 +22,11 @@
               oncommand="alert('/' + (ZoteroPane_Local.getSelectedCollection().libraryID || 0) + '/' + ZoteroPane_Local.getSelectedCollection().key)"/>
 	</menupopup>
 
+  <menupopup id="zotero-itemmenu">
+    <menuitem id="id-zotero-better-bibtex-set-citekey" label="&zotero.better-bibtex.set-citekey;"
+              oncommand="Zotero.BetterBibTex.setCiteKeys();"/>
+	</menupopup>
+
   <!-- treecols id="zotero-items-columns-header">
     <treecol insertafter="zotero-items-column-extra" id="zotero-items-column-citekey" hidden="true" label="&zotero.better-bibtex.citekey_column;" flex="1" zotero-persist="width ordinal hidden sortActive sortDirection"/>
   </treecols -->

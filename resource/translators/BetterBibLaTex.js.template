@@ -1,6 +1,6 @@
 {
   "translatorID": "b6e39b57-8942-4d11-8259-342c46ce395f",
-  "translatorType": 2,
+  "translatorType": 3,
   "label": "BibLaTeX",
   "creator": "Simon Kornblith, Richard Karnesky, Anders Johansson and Emiliano Heyns",
   "target": "bib",

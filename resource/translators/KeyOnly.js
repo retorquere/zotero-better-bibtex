@@ -1,7 +1,7 @@
 {
-	"translatorID": "4c52eb69-e778-4a78-8ca2-4edf024a5074",
-	"label": "Pandoc citations",
-	"creator": "Erik Hetzner & Emiliano heyns",
+	"translatorID": "0a3d926d-467c-4162-acb6-45bded77edbb",
+	"label": "Citation Keys",
+	"creator": "Emiliano heyns",
 	"target": "bib",
 	"minVersion": "2.1.9",
 	"maxVersion": "",
@@ -34,8 +34,8 @@ var config = {
   citeKeyFormat:    safeGetOption('citeKeyFormat'),
   exportCharset:    safeGetOption('exportCharset'),
   translator: {
-    id: '4c52eb69-e778-4a78-8ca2-4edf024a5074',
-    label:  'Pandoc citations'
+    id: '0a3d926d-467c-4162-acb6-45bded77edbb',
+    label:  'Citation Keys'
   }
 };
 
@@ -12149,7 +12149,7 @@ function doExport() {
   while (item = Zotero.nextItem()) {
     citation.push(CiteKeys.build(item));
   }
-  Zotero.write(['@' + key for (key of citation)].join(' '));
+  Zotero.write(citation.join(','));
 }
 
 var exports = {

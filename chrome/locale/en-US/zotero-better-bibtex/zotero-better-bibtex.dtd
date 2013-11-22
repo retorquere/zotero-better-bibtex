@@ -1,2 +1,8 @@
 <!ENTITY zotero.better-bibtex.citekey_column	"Cite Key">
 <!ENTITY zotero.better-bibtex.show-collection-key "Show Collection key">
+<!ENTITY zotero.better-bibtex.set-citekey "Generate BibTex key">
+<!ENTITY zotero.better-bibtex.preferences.prefpane.better-bibtex "Better Bib(La)Tex">
+<!ENTITY zotero.better-bibtex.restart-required "Restart Required">
+<!ENTITY zotero.better-bibtex.preferences.recursive "Export collections recursively">
+<!ENTITY zotero.better-bibtex.cite.command "Citation command">
+<!ENTITY zotero.better-bibtex.cite.format "Citation key format">
