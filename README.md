@@ -24,7 +24,7 @@ the config option "extensions.zotero-better-bibtex.recursive" (default: true).
 
 During import, if JabRef explicit (not dynamic) groups are present, collections will be created to mirror these
 
-## configurable citekey generator
+## Configurable citekey generator
 
 This plugin also implements a new citekey generator for those entries that don't have one set explicitly; you can
 configure this by setting the configuration format using the key specified ni the table below; the formatter follows the
