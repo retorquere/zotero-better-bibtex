@@ -1,6 +1,6 @@
 # Zotero: Better Bib(La)Tex
 
-Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.0.43.xpi).
+Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.0.44.xpi).
 
 This extension aims to make Zotero effective for us LaTeX holdouts. It adds the following features:
 
@@ -58,13 +58,12 @@ as export (which does disambiguate them). You will have to either:
 
 ### Configuration
 
-Configuration currently does not have an UI; to change the settings, go to about:config to change the keys mentioned
-above. A change to these requires a restart of Zotero to take effect.
+The Better BibTex configuration pane can be found under the regular Zotero preferences pane, tab 'Better Bib(La)Tex'.
 
 ## Support -- read carefully
 
 My time is extremely limited for a number of very great reasons (you shall have to trust me on this). Because of this, I cannot accept bug reports
-or support requests on anything but the latest version, currently at **0.0.43**. If you submit an issue report,
+or support requests on anything but the latest version, currently at **0.0.44**. If you submit an issue report,
 please include the version that you are on. By the time I get to your issue, the latest version might have bumped up already, and you
 will have to upgrade (you might have auto-upgraded already however) and re-verify that your issue still exists. Apologies for the inconvenience, but such
 are the breaks.
