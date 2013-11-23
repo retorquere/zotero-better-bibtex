@@ -42,6 +42,6 @@ function updatePreferences(load) {
     serverAddress.setAttribute('hidden', !serverEnabled);
     serverLabel.setAttribute('hidden', !serverEnabled);
   } catch (err) {
-    console.log('better bibtex: updating prefs failed' + err);
+    console.log('better bibtex: updating prefs failed: ' + err);
   }
 }

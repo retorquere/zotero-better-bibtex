@@ -226,19 +226,24 @@ Zotero.BetterBibTex = {
     var translator = Zotero.BetterBibTex.translators['citationkeys'];
 
     var win = Zotero.BetterBibTex.windowMediator.getMostRecentWindow("navigator:browser");
+    var item;
     var items = win.ZoteroPane.getSelectedItems();
     items = Zotero.Items.get([item.id for (item of items)]);
-    var items = [item for (item of items) if (!(item.isAttachment() || item.isNote()))];
+    items = [item for (item of items) if (!(item.isAttachment() || item.isNote()))];
 
     try {
-      var keys = Zotero.BetterBibTex.translate(translator, [item.id for (item of items)]).split(',');
+      Zotero.BetterBibTex.log('Fetching keys: for ' + items.length + ' items');
+      var keys = Zotero.BetterBibTex.translate(translator, [item for (item of items)]);
+      Zotero.BetterBibTex.log('Found keys: ' + keys);
+      var key;
+      keys = [key for (key of keys.split(',')) if (key != '')];
     } catch (err) {
-      alert('Cannot set keys: ' + err);
+      Zotero.BetterBibTex.log('Cannot set keys: ', err);
       return;
     }
 
     if (items.length != keys.length) {
-      alert(keys.length + ' keys for ' + itemIDs.length + ' items');
+      Zotero.BetterBibTex.log(keys.length + ' keys for ' + items.length + ' items');
       return;
     }
 
@@ -248,12 +253,11 @@ Zotero.BetterBibTex = {
 
       Zotero.BetterBibTex.log('setting ' + item.id + ' to ' + key);
 
-      var extra = '' + item.extra;
+      var extra = '' + item.getField('extra');
       extra = extra .replace(/bibtex:\s*[^\s\r\n]+/, '');
       extra = extra.trim();
-
       if (extra.length > 0) { extra += "\n"; }
-      item.extra = extra + 'bibtex: ' + key;
+      item.setField('extra', extra + 'bibtex: ' + key);
       item.save();
     }
   }
