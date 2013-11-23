@@ -1,6 +1,6 @@
 # Zotero: Better Bib(La)Tex
 
-Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.0.44.xpi).
+Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.0.45.xpi).
 
 This extension aims to make Zotero effective for us LaTeX holdouts. It adds the following features:
 
@@ -47,35 +47,38 @@ The format is either 'bibtex' or 'biblatex', and determines the translator used 
 
 Zotero needs to be running for this to work.
 
-## Things to watch out for
+## Force citation key
 
-### Duplicate keys
+You can force the citation key to whatever Better BibTex would have exported by selecting references, right-clicking, and selecting "Generate BibTex key".
+
+# Things to watch out for
+
+## Duplicate keys
 
 In case you have ambiguous keys (both resolve to Smith2013 for example), drag and drop won't yield the same keys
 as export (which does disambiguate them). You will have to either:
 * Set an explicit cite key for at least one of them, or
 * Configure your generator to generate non-ambigous keys (see below)
 
-### Configuration
+## Configuration
 
 The Better BibTex configuration pane can be found under the regular Zotero preferences pane, tab 'Better Bib(La)Tex'.
 
-## Support -- read carefully
+# Support - read carefully
 
 My time is extremely limited for a number of very great reasons (you shall have to trust me on this). Because of this, I cannot accept bug reports
-or support requests on anything but the latest version, currently at **0.0.44**. If you submit an issue report,
+or support requests on anything but the latest version, currently at **0.0.45**. If you submit an issue report,
 please include the version that you are on. By the time I get to your issue, the latest version might have bumped up already, and you
 will have to upgrade (you might have auto-upgraded already however) and re-verify that your issue still exists. Apologies for the inconvenience, but such
 are the breaks.
 
-## Plans
+# Plans
 
 * Scan library for citation key conflicts
-* Generate-and-set fixed key
 * GUI for preferences
 * Submission to Mozilla Extension registry
 * JabRef groups export
 
-## Notes
+# Notes
 
 BibLaTeX features from https://github.com/andersjohansson/zotero-biblatex-translator
