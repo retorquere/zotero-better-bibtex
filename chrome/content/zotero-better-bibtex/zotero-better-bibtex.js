@@ -2,6 +2,7 @@ Components.utils.import("resource://gre/modules/Services.jsm");
 
 Zotero.BetterBibTex = {
   prefs: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero-better-bibtex."),
+  zotPrefs: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero."),
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   translators: {},
   threadManager: Components.classes["@mozilla.org/thread-manager;1"].getService(),
@@ -29,6 +30,12 @@ Zotero.BetterBibTex = {
     Zotero.BetterBibTex.safeLoad('PandocCite.js');
     Zotero.BetterBibTex.safeLoad('KeyOnly.js');
     Zotero.Translators.init();
+
+    Zotero.BetterBibTex.config = {
+      getCollections: Zotero.BetterBibTex.prefs.getBoolPref('getCollections'),
+      citeCommand: Zotero.BetterBibTex.prefs.getCharPref('citeCommand'),
+      citeKeyFormat: Zotero.BetterBibTex.prefs.getCharPref('citeKeyFormat')
+    };
 
     for (var endpoint of Object.keys(Zotero.BetterBibTex.endpoints)) {
       var url = "/better-bibtex/" + endpoint;
@@ -249,10 +256,6 @@ Zotero.BetterBibTex = {
       item.extra = extra + 'bibtex: ' + key;
       item.save();
     }
-  },
-
-  restartRequired: function() {
-    return true;
   }
 };
 

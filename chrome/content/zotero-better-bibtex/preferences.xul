@@ -8,11 +8,15 @@
   <prefwindow id="zotero-prefs">
     <prefpane id="zotero-prefpane-better-bibtex"
             insertafter="zotero-prefpane-advanced"
-            label="&zotero.better-bibtex.preferences.prefpane.better-bibtex;" image="chrome://zotero-better-bibtex/skin/prefs.png">
+            label="&zotero.better-bibtex.preferences.prefpane.better-bibtex;"
+            image="chrome://zotero-better-bibtex/skin/prefs.png"
+            onpaneload="updatePreferences();"
+            >
       <preferences id="zotero-preferences-cite">
         <preference id="pref-better-bibtex-recursive" name="extensions.zotero-better-bibtex.getCollections" type="bool"/>
         <preference id="pref-better-bibtex-citecommand" name="extensions.zotero-better-bibtex.citeCommand" type="string"/>
         <preference id="pref-better-bibtex-format" name="extensions.zotero-better-bibtex.citeKeyFormat" type="string"/>
+        <preference id="pref-better-bibtex-server" name="extensions.zotero.httpServer.enabled" type="bool"/>
       </preferences>
       <hbox flex="1">
         <grid>
@@ -21,18 +25,29 @@
           </columns>
           <rows>
             <row>
-              <label value="&zotero.better-bibtex.restart-required;" hidden="true"/>
+              <label id="id-better-bibtex-restart-required" class="header" value="&zotero.better-bibtex.restart-required;" hidden="true"/>
             </row>
             <row>
-              <checkbox label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive" onchange="return Zotero.BetterBibTex.restartRequired();"/>
+              <checkbox id="id-better-bibtex-preferences-getCollections" label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive" oncommand="updatePreferences();"/>
             </row>
             <row>
               <label value="&zotero.better-bibtex.cite.command;"/>
-              <textbox preference="pref-better-bibtex-citecommand" onchange="return Zotero.BetterBibTex.restartRequired();"/>
+              <textbox id="id-better-bibtex-preferences-citeCommand" preference="pref-better-bibtex-citecommand"
+                        onchange="updatePreferences(event);"
+                        onkeypress="setTimeout(updatePreferences, 1);"/>
             </row>
             <row>
               <label value="&zotero.better-bibtex.cite.format;"/>
-              <textbox preference="pref-better-bibtex-format"  onchange="return Zotero.BetterBibTex.restartRequired();"/>
+              <textbox id="id-better-bibtex-preferences-citeKeyFormat" preference="pref-better-bibtex-format"
+                        oninput="updatePreferences(event);"
+                        onkeypress="setTimeout(updatePreferences, 1);"/>
+            </row>
+            <row>
+              <checkbox id="id-better-bibtex-preferences-server-enabled" label="&zotero.better-bibtex.server.enabled;" preference="pref-better-bibtex-server" oncommand="updatePreferences();"/>
+            </row>
+            <row>
+              <label id="id-zotero-better-bibtex-server" value="&zotero.better-bibtex.server.address;" hidden="true"/>
+              <label id="id-zotero-better-bibtex-server-address" value="" hidden="true"/>
             </row>
           </rows>
         </grid>
@@ -41,6 +56,7 @@
   </prefwindow>
 
 	<!-- Include the main extension logic -->
+	<script src="preferences.js"/>
 	<script src="chrome://zotero/content/include.js"/>
 	<script src="chrome://zotero-better-bibtex/content/include.js" type="application/javascript;version=1.8"/>
 </overlay>
