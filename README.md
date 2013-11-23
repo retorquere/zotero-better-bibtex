@@ -72,7 +72,6 @@ are the breaks.
 
 * Scan library for citation key conflicts
 * Generate-and-set fixed key
-* GUI for preferences
 * Submission to Mozilla Extension registry
 * JabRef groups export
 
