@@ -1,4 +1,4 @@
-; make sure you a) pick a hotkey that suits you (I use Win-C) and an editor you like (in my case, texmaker)
+; make sure you a) pick a hotkey that suits you (I use Win-C) and b) an editor you like (in my case, texmaker)
 #c::
 SendInput, +^C
 ClipWait, 2
