@@ -19,8 +19,7 @@ If you want even more convenience, install [AutoHotKey](http://www.autohotkey.co
 
 ## Recursive collection export
 
-You can export collections including/excluding its child collections by modifying
-the config option "extensions.zotero-better-bibtex.recursive" (default: true).
+You can export collections including/excluding its child collections.
 
 ## JabRef groups import
 
