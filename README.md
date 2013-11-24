@@ -30,7 +30,6 @@ During import, if JabRef explicit (not dynamic) groups are present, collections 
 This plugin also implements a new citekey generator for those entries that don't have one set explicitly; you can
 configure this by setting the configuration format using the key specified ni the table below; the formatter follows the
 [JabRef key formatting syntax](http://jabref.sourceforge.net/help/LabelPatterns.php).
-The format can be set by modifying the config option "extensions.zotero-better-bibtex.citeKeyFormat" (default: \[auth]\[year]).
 
 ## Date field exports
 
