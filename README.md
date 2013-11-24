@@ -9,7 +9,7 @@ This extension aims to make Zotero effective for us LaTeX holdouts. It adds the 
 You can fix the citation key for a reference by adding the text "bibtex: [your citekey]" (sans quotes) anywhere in the
 "extra" field of the reference.
 
-## Drag and drop citations
+## Drag and drop/hotkey citations
 
 You can drag and drop citations into your LaTeX editor, and it will add a proper \cite{citekey}. The actual command is
 configurable by setting the config option "extensions.zotero-better-bibtex.citeCommand" (default: cite). Do not include the leading backslash. This
