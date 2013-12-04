@@ -112,7 +112,7 @@ function doExport() {
     var citekey = CiteKeys.build(item);
 
     // write citation key (removed the comma)
-    Zotero.write((first ? "" : ",\n\n") + "@"+type+"{"+citekey);
+    Zotero.write((first ? "" : "\n\n") + "@"+type+"{"+citekey);
     first = false;
 
     for(var field in fieldMap) {
