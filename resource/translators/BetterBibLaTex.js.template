@@ -132,30 +132,40 @@ function doExport() {
     writeField("number", escape(item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number));
 
     if (item.publicationTitle) {
-      if (item.itemType == "bookSection" || item.itemType == "conferencePaper") {
-        writeField("booktitle", escape(item.publicationTitle));
-      } else if (item.itemType == "magazineArticle" || item.itemType == "newspaperArticle") {
-        writeField("journaltitle", escape(item.publicationTitle));
-      } else if (item.itemType == "journalArticle") {
-        if (Zotero.getOption("useJournalAbbreviation")) {
-          writeField("journal", escape(item.journalAbbreviation));
-        } else {
-          writeField("journaltitle", escape(item.publicationTitle));
-          writeField("shortjournal", escape(item.journalAbbreviation));
-        }
-      }
+      switch (item.itemType) {
+        case 'bookSection':
+        case 'conferencePaper':
+          writeField("booktitle", escape(item.publicationTitle));
+          break;
 
-      // else if (item.itemType == "website" || item.itemType == "forumPost" || item.itemType == "blogPost" || item.itemType == "tvBroadcast" || item.itemType == "radioBroadcast") {
-      //  writeField("titleaddon", item.publicationTitle);
-      // 
-      //do nothing as websiteTitle, forumTitle, blogTitle,
-      //programTitle seems
-      //to be just aliases for publicationTitle and already
-      //are correctly mapped below
-      //      }
-      else {
-        //writeField("journaltitle", item.publicationTitle);
-        //TODO, did we miss something
+        case 'magazineArticle':
+        case 'newspaperArticle':
+          writeField("journaltitle", escape(item.publicationTitle));
+          break;
+
+        case 'journalArticle':
+          if (Zotero.getOption("useJournalAbbreviation")) {
+            writeField("journal", escape(item.journalAbbreviation));
+          } else {
+            writeField("journaltitle", escape(item.publicationTitle));
+            writeField("shortjournal", escape(item.journalAbbreviation));
+          }
+          break;
+
+        /*  do nothing as websiteTitle, forumTitle, blogTitle, programTitle seems
+            to be just aliases for publicationTitle and already are correctly mapped below
+        case 'website':
+        case 'forumPost':
+        case 'blogPost':
+        case 'tvBroadcast':
+        case 'radioBroadcast':
+          writeField("titleaddon", item.publicationTitle);
+          break;
+
+        */
+        default:
+          // writeField("journaltitle", item.publicationTitle);
+          //TODO, did we miss something
       }
     }
 
@@ -168,27 +178,31 @@ function doExport() {
     //don't really know if this is the best way
     writeField("series", escape(item.seriesTitle || item.series));
 
-    if (item.itemType == "thesis") {
-      writeField("school", escape(item.publisher)); //school is an acceptable alias in biblatex
-    } else if (item.itemType == "report") {
-      writeField("institution", escape(item.publisher));
-    } else {
-      writeField("publisher", escape(item.publisher));
+    switch (item.itemType) {
+      case 'thesis':
+        writeField("school", escape(item.publisher)); //school is an acceptable alias in biblatex
+        break;
+
+      case 'report':
+        writeField("institution", escape(item.publisher));
+        break;
+
+      default:
+        writeField("publisher", escape(item.publisher));
     }
 
-    //things concerning "type"
-    if (item.itemType == "letter") {
-      if (item.letterType) {
-        writeField("type", escape(item.letterType));
-      } else {
+    switch (item.itemType) {
+      case 'letter:
         //this isn't optimal, perhaps later versions of biblatex will add some suitable localization key
-        writeField("type", "Letter");
-      }
-    } else if (item.itemType == "email") {
-      writeField("type", "E-mail");
-    } else {
-      writeField("type",
-        escape(item.manuscriptType || item.thesisType || item.websiteType || item.presentationType || item.reportType || item.mapType));
+        writeField("type", escape(item.letterType || 'Letter'));
+        break;
+
+      case 'email':
+        writeField("type", "E-mail");
+        break;
+
+      default:
+        writeField("type", escape(item.manuscriptType || item.thesisType || item.websiteType || item.presentationType || item.reportType || item.mapType));
     }
 
     writeField("howpublished", escape(item.presentationType || item.manuscriptType));
@@ -196,20 +210,32 @@ function doExport() {
     //case of specific eprint-archives in archive-fields
     if (item.archive && item.archiveLocation) {
       var archive = true;
-      if (item.archive == "arXiv" || item.archive == "arxiv") {
-        writeField("eprinttype", "arxiv");
-        //assume call number is used for arxiv class
-        if (item.callNumber) { writeField("eprintclass", escape(item.callNumber)); }
-      } else if (item.archive = "JSTOR" || item.archive == "jstor") {
-        writeField("eprinttype", "jstor");
-      } else if (item.archive = "PubMed" || item.archive == "pubmed") {
-        writeField("eprinttype", "pubmed");
-      } else if (item.archive = "HDL" || item.archive == "hdl") {
-        writeField("eprinttype", "hdl");
-      } else if (item.archive = "googlebooks" || item.archive == "Google Books") {
-        writeField("eprinttype", "googlebooks");
-      } else {
-        archive = false;
+      switch (item.archive.toLowerCase()) {
+        case 'arxiv':
+          writeField("eprinttype", "arxiv");
+          //assume call number is used for arxiv class
+          if (item.callNumber) { writeField("eprintclass", escape(item.callNumber)); }
+          break;
+
+        case 'jstor':
+          writeField("eprinttype", "jstor");
+          break;
+
+        case 'pubmed':
+          writeField("eprinttype", "pubmed");
+          break;
+
+        case 'hdl':
+          writeField("eprinttype", "hdl");
+          break;
+
+        case 'googlebooks':
+        case 'google books:
+          writeField("eprinttype", "googlebooks");
+          break;
+
+        default:
+          archive = false;
       }
 
       if (archive) { writeField("eprint", escape(item.archiveLocation)); }
@@ -244,24 +270,31 @@ function doExport() {
           case 'presenter':
             authors.push(creatorString);
             break;
+
           case 'bookAuthor':
             bookauthors.push(creatorString);
             break;
+
           case 'commenter':
             commentators.push(creatorString);
             break;
+
           case 'editor':
             editors.push(creatorString);
             break;
+
           case 'inventor':
             holders.push(creatorString);
             break;
+
           case 'translator':
             translators.push(creatorString);
             break;
+
           case 'seriesEditor': //let's call them redacors
             editorbs.push(creatorString);
             break;
+
           default: // the rest into editora with editoratype = collaborator
             editoras.push(creatorString);
         }
