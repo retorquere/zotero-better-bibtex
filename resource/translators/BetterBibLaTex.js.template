@@ -97,7 +97,6 @@ function doExport() {
   // to make sure the BOM gets ignored
   Zotero.write("\n");
 
-  var first = true;
   var item;
   while (item = Zotero.nextItem()) {
     //don't export standalone notes and attachments
@@ -112,8 +111,7 @@ function doExport() {
     var citekey = CiteKeys.build(item);
 
     // write citation key (removed the comma)
-    Zotero.write((first ? "" : "\n\n") + "@"+type+"{"+citekey);
-    first = false;
+    Zotero.write("\n\n@"+type+"{"+citekey);
 
     for(var field in fieldMap) {
       if(item[fieldMap[field]]) {
