@@ -231,33 +231,34 @@ Zotero.BetterBibTex = {
     items = Zotero.Items.get([item.id for (item of items)]);
     items = [item for (item of items) if (!(item.isAttachment() || item.isNote()))];
 
+    // clear keys first so the generator can make fresh ones
+    for (item of items) {
+      var extra = '' + item.getField('extra');
+      extra = extra .replace(/bibtex:\s*[^\s\r\n]+/, '');
+      extra = extra.trim();
+      item.setField('extra', extra);
+      item.save();
+    }
+
     try {
       Zotero.BetterBibTex.log('Fetching keys: for ' + items.length + ' items');
       var keys = Zotero.BetterBibTex.translate(translator, [item for (item of items)]);
       Zotero.BetterBibTex.log('Found keys: ' + keys);
-      var key;
-      keys = [key for (key of keys.split(',')) if (key != '')];
+      keys = JSON.parse(keys);
     } catch (err) {
       Zotero.BetterBibTex.log('Cannot set keys: ', err);
       return;
     }
 
-    if (items.length != keys.length) {
-      Zotero.BetterBibTex.log(keys.length + ' keys for ' + items.length + ' items');
-      return;
-    }
+    for (item of items) {
+      if (!keys[item.key]) { continue; }
 
-    for (var i = 0; i <= items.length; i++) {
-      item = items[i];
-      var key = keys[i];
-
-      Zotero.BetterBibTex.log('setting ' + item.id + ' to ' + key);
+      Zotero.BetterBibTex.log('Setting key for ' + item.key + ': ' + keys[item.key]);
 
       var extra = '' + item.getField('extra');
-      extra = extra .replace(/bibtex:\s*[^\s\r\n]+/, '');
       extra = extra.trim();
       if (extra.length > 0) { extra += "\n"; }
-      item.setField('extra', extra + 'bibtex: ' + key);
+      item.setField('extra', extra + 'bibtex: ' + keys[item.key]);
       item.save();
     }
   }

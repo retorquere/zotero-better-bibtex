@@ -15,7 +15,7 @@
 	"inRepository": false,
 	"translatorType": 2,
 	"browserSupport": "gcsv",
-	"lastUpdated": "2013-11-22 13:47:55"
+	"lastUpdated": "2013-12-07 23:01:58"
 }
 
 
@@ -12145,11 +12145,11 @@ var CiteKeys = {
 
 function doExport() {
   var item;
-  var citation = [];
+  var citations = {};
   while (item = Zotero.nextItem()) {
-    citation.push(CiteKeys.build(item));
+    citations[item.key] = CiteKeys.build(item);
   }
-  Zotero.write(citation.join(','));
+  Zotero.write(JSON.stringify(citations));
 }
 
 var exports = {
