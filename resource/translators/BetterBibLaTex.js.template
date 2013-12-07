@@ -192,7 +192,7 @@ function doExport() {
     }
 
     switch (item.itemType) {
-      case 'letter:
+      case 'letter':
         //this isn't optimal, perhaps later versions of biblatex will add some suitable localization key
         writeField("type", escape(item.letterType || 'Letter'));
         break;
@@ -230,7 +230,7 @@ function doExport() {
           break;
 
         case 'googlebooks':
-        case 'google books:
+        case 'google books':
           writeField("eprinttype", "googlebooks");
           break;
 
