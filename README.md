@@ -73,6 +73,7 @@ are the breaks.
 
 # Plans
 
+* add "citekey" columns to reference list view
 * Scan library for citation key conflicts
 * Submission to Mozilla Extension registry
 * JabRef groups export
