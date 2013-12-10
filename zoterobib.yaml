@@ -1,0 +1,28 @@
+!config
+# Pull bibliography from zotero as part of build
+# author: Emiliano Heyns
+# last edited by: eeh, Dec 2nd 2013
+# requires arara 3.0+
+#
+# Sample usage
+#
+# % arara: zoterobib
+# % arara: zoterobib: {format: biblatex}
+# 
+# for windows, use http://www.confusedbycode.com/curl/#downloads
+identifier: zoterobib
+name: ZoteroBib
+commands: 
+- <arara> @{ isWindows( "cmd /c ", "" ) } curl --connect-timeout 5 -o "@{base}.bib" "http://localhost:@{port}/better-bibtex/collection?@{collection}.@{format}"
+arguments: 
+- identifier: base
+  flag: <arara> @{parameters.base}
+  default: <arara> @{getBasename(file)}
+- identifier: port
+  flag: <arara> @{parameters.port}
+  default: 23119
+- identifier: format
+  flag: <arara> @{parameters.format}
+  default: biblatex
+- identifier: collection
+  flag: <arara> @{parameters.collection}
