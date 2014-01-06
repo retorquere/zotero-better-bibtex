@@ -114,7 +114,7 @@ Zotero.BetterBibTex = {
 
     if (!col) { throw (collectionkey + ' not found'); }
 
-    var translator = Zotero.BetterBibTex.translators[translator.toLowerCase()];
+    var translator = Zotero.BetterBibTex.translators['better' + translator.toLowerCase()] || Zotero.BetterBibTex.translators[translator.toLowerCase()];
     if (!translator) { throw('No translator' + translator); }
 
     var item;
