@@ -1,3 +1,22 @@
+// select = filter
+Array.prototype.collect = function(transform)
+{
+  "use strict";
+  var result = [];
+
+  if (this === void 0 || this === null) throw new TypeError();
+
+  var t = Object(this);
+  var len = t.length >>> 0;
+  if (typeof transform !== "function") throw new TypeError();
+  var thisArg = void 0;
+
+  for (var i = 0; i < len; i++) {
+    if (i in t) result.push(transform.call(thisArg, t[i]));
+  }
+
+  return result;
+}
 
 function safeGetOption(option)
 {
@@ -114,7 +133,7 @@ convert.to_latex = function(str) {
     var res = ''
     var textMode=true;
 
-    for (chr of arr) {
+    arr.forEach(function(chr) {
       if (chr.match(/^[\\{]/)) {
         textMode = chr.match(/[^a-z]$/i);
       } else {
@@ -128,7 +147,7 @@ convert.to_latex = function(str) {
     }
 
     return res;
-  }
+  });
 
   str = '' + str;
   var strlen = str.length;
@@ -176,7 +195,7 @@ convert.from_latex = function(str) {
   var res = chunks.shift();
   var m, i, c, l;
 
-  for (chunk of chunks) {
+  chunks.forEach(function(chunk) {
     chunk = '\\' + chunk;
     l = chunk.length;
     m = null;
@@ -193,7 +212,7 @@ convert.from_latex = function(str) {
     } else {
       res += chunk;
     }
-  }
+  });
   return res;
 }
 
@@ -686,7 +705,7 @@ function escape(value, sep) {
 
   if (value instanceof Array) {
     if (value.length == 0) { return; }
-    return [escape(v) for (v of value)].join(sep);
+    return values.collect(escape).join(sep);
   }
 
   var doublequote = value.literal;
@@ -794,26 +813,25 @@ var CiteKeys = {
     };
     var primaryCreatorType = Zotero.Utilities.getCreatorsForType(item.itemType)[0];
     var creator;
-    for(creator of item.creators) {
-      if (!creator.lastName) { continue; }
-      var name = (creator.lastName);
-      if (name == '') { continue; }
-
-      switch (creator.creatorType) {
-        case 'editor':
-        case 'seriesEditor':
-          creators.editors.push(name);
-          break;
-        case 'translator':
-          creators.translators.push(name);
-          break;
-        case primaryCreatorType:
-          creators.authors.push(name);
-          break;
-        default:
-          creators.collaborators.push(name);
+    item.creators.forEach(function(creator) {
+      var name = ('' + creator.lastName).trim();
+      if (name != '') {
+        switch (creator.creatorType) {
+          case 'editor':
+          case 'seriesEditor':
+            creators.editors.push(name);
+            break;
+          case 'translator':
+            creators.translators.push(name);
+            break;
+          case primaryCreatorType:
+            creators.authors.push(name);
+            break;
+          default:
+            creators.collaborators.push(name);
+        }
       }
-    }
+    });
 
     for (type in creators) {
       if (creators[type].length == 0) { creators[type] = null; }
@@ -867,9 +885,9 @@ var CiteKeys = {
       case 2:
       case 3:
       case 4:
-        return [author.substring(0, 1) for (author of authors)].join('');
+        return authors.collect(function(author) { return author.substring(0, 1); }).join('');
       default:
-        return [author.substring(0, 1) for (author of authors.slice(0, 3))].join('') + '+';
+        return authors.slice(0, 3).collect(function(author) { return author.substring(0, 1); }).join('') + '+';
     }
   },
 
@@ -877,7 +895,7 @@ var CiteKeys = {
     var authors = CiteKeys.getCreators(item, onlyEditors);
     if (!authors) { return null; }
 
-    return [author.substring(0, n) for (author of authors)].join('');
+    return authors.collect(function(author) { return author.substring(0, n); }).join('');
   },
 
   _authorIni: function(item, onlyEditors) {
@@ -911,8 +929,8 @@ var CiteKeys = {
 
     switch (authors.length) {
       case 1:         return authors[0];
-      case 2: case 3: return [auth.substring(0,1) for (auth of authors)].join('');
-      default:        return [auth.substring(0,1) for (auth of authors)].join('') + '+';
+      case 2: case 3: return authors.collect(function(author) { return author.substring(0, 1); }).join('');
+      default:        return authors.collect(function(author) { return author.substring(0, 1); }).join('') + '+';
     }
   },
 
@@ -936,7 +954,7 @@ var CiteKeys = {
   },
 
   words: function(str) {
-    return [CiteKeys.clean(word) for (word of str.split(/\s+/)) if (word != '')];
+    return str.split(/\s+/).filter(function(word) { return (word != '');}).collect(CiteKeys.clean);
   },
 
   _shorttitle: function(item) {
@@ -951,9 +969,7 @@ var CiteKeys = {
 
   _veryshorttitle: function(item) {
     if (!item.title) { return null; }
-    var words = CiteKeys.words(item.title);
-    words = [word for (word of words) if (CiteKeys.skipWords.indexOf(word.toLowerCase()) == -1)];
-    return words.slice(0,3).join('');
+    return CiteKeys.words(item.title).filter(function(word) { return (CiteKeys.skipWords.indexOf(word.toLowerCase()) != -1); }).slice(0,3).join('');
   },
 
   _shortyear: function(item) {
@@ -1010,14 +1026,14 @@ var CiteKeys = {
       if (value) { value = CiteKeys.clean(value); }
 
       var cmd;
-      for (cmd of cmds) {
+      cmds.forEach(function(cmd) {
         if (cmd.match(/^[(].*[)]$/)) {
           if (!value) { value = cmd.substring(1, cmd.length - 2); }
         } else {
           value = CiteKeys['to_' + cmd](value);
         }
         if (value) { value = CiteKeys.clean(value); }
-      }
+      });
 
       return value ? value : '';
     });

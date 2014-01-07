@@ -253,7 +253,7 @@ function doExport() {
       var translators = [];
       var creator, creatorString;
 
-      for (creator of item.creators) {
+      item.creators.forEach(function(creator) {
         if (creator.firstName && creator.lastName) {
           creatorString = creator.lastName + ", " + creator.firstName;
         } else {
@@ -298,7 +298,7 @@ function doExport() {
           default: // the rest into editora with editoratype = collaborator
             editoras.push(creatorString);
         }
-      }
+      });
 
       writeField('author', escape(authors, ' and '));
       writeField('bookauthor', escape(bookauthors, ' and '));
@@ -328,7 +328,7 @@ function doExport() {
       writeField("note", escape(item.extra));
     }
 
-    writeField("keywords", escape([tag.tag for (tag of item.tags)], ', '));
+    writeField("keywords", escape(item.tags.collect(function(tag) {return tag.tag;}) , ', '));
 
     if (item.notes && Zotero.getOption("exportNotes")) {
       for(var i in item.notes) {
@@ -339,14 +339,14 @@ function doExport() {
 
     if(item.attachments) {
       var attachments = [];
-      for (att of item.attachments) {
+      item.attachments.forEach(function(att) {
         if (Zotero.getOption("exportFileData") && att.defaultPath && att.saveFile && att.saveFile(att.defaultPath, true)) {
           attachments.push({title: att.title, path: att.defaultPath, mimetype: att.mimeType});
         } else { if (att.localPath) {
           attachments.push({title: att.title, path: att.localPath, mimetype: att.mimeType});
         } }
-      }
-      attachments = [[att.title, att.path.replace(/([\\{}:;])/g, "\\$1"), att.mimetype].join(':') for (att of attachments)].join(';');
+      });
+      attachments = attachments.collect(function(att) { return [att.title, att.path.replace(/([\\{}:;])/g, "\\$1"), att.mimetype].join(':'); }).join(';');
       writeField("file", attachments);
     }
 

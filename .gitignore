@@ -2,6 +2,8 @@ unicodeconverter.js
 parse-bibtex.js
 unicode.xml
 Better*Tex.js
+KeyOnly.js
+PandocCite.js
 *~
 *.swp
 Gemfile.lock
