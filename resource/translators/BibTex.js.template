@@ -144,10 +144,10 @@ convert.to_latex = function(str) {
       }
 
       res += chr;
-    }
+    });
 
     return res;
-  });
+  }
 
   str = '' + str;
   var strlen = str.length;
@@ -705,7 +705,7 @@ function escape(value, sep) {
 
   if (value instanceof Array) {
     if (value.length == 0) { return; }
-    return values.collect(escape).join(sep);
+    return value.collect(escape).join(sep);
   }
 
   var doublequote = value.literal;
