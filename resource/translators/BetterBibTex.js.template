@@ -135,8 +135,9 @@ function doExport() {
       var collaborators = [];
       var primaryCreatorType = Zotero.Utilities.getCreatorsForType(item.itemType)[0];
       var creator;
-      for(creator of item.creators) {
-        var creatorString = [namepart for (namepart of [creator.lastName, creator.firstName]) if (namepart)].join(', ');
+
+      item.creators.forEach(function(creator) {
+        var creatorString = [creator.lastName, creator.firstName].filter(function(name) { return (('' + name).trim() != ''); }).join(', ');
 
         switch (creator.creatorType) {
           case 'editor':
@@ -151,7 +152,7 @@ function doExport() {
           default:
             collaborators.push(creatorString);
         }
-      }
+      });
 
       writeField('author', escape(authors, ' and '));
       writeField('editor', escape(editors, ' and '));
@@ -174,7 +175,7 @@ function doExport() {
     
     writeField("note", escape(item.extra));
     
-    writeField("keywords", escape([tag.tag for (tag of item.tags)], ', '));
+    writeField("keywords", escape(item.tags.collect(function(tag) { return tag.tag; }) , ', '));
     
     writeField("pages", escape(item.pages));
     
@@ -198,14 +199,14 @@ function doExport() {
     
     if(item.attachments) {
       var attachments = [];
-      for (att of item.attachments) {
+      item.attachments.forEach(function(att) {
         if (Zotero.getOption("exportFileData") && att.defaultPath && att.saveFile && att.saveFile(att.defaultPath, true)) {
           attachments.push({title: att.title, path: att.defaultPath, mimetype: att.mimeType});
         } else { if (att.localPath) {
           attachments.push({title: att.title, path: att.localPath, mimetype: att.mimeType});
         } }
-      }
-      attachments = [[att.title, att.path.replace(/([\\{}:;])/g, "\\$1"), att.mimetype].join(':') for (att of attachments)].join(';');
+      });
+      attachments = attachments.collect(function(att) { return [att.title, att.path.replace(/([\\{}:;])/g, "\\$1"), att.mimetype].join(':'); }).join(';');
       writeField("file", attachments);
     }
     

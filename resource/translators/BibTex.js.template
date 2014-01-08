@@ -178,7 +178,7 @@ convert.to_latex = function(str) {
   }
 
   res = res.map(function(chunk) {
-    if (chunk.math) {
+    if (chunk.math && config.exportCharset != 'UTF-8') {
       return '\\ensuremath{' + chunk_to_latex(chunk.chars) + '}';
     } else {
       return chunk_to_latex(chunk.chars);

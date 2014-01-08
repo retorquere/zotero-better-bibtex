@@ -26,7 +26,7 @@ function doExport() {
   while (item = Zotero.nextItem()) {
     citation.push(CiteKeys.build(item));
   }
-  Zotero.write(['@' + key for (key of citation)].join(' '));
+  Zotero.write(citation.collect(function(key) { return '@' + key; }).join(' '));
 }
 
 var exports = {
