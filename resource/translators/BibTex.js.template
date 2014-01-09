@@ -153,6 +153,7 @@ convert.to_latex = function(str) {
   var strlen = str.length;
   var c, ca;
   var l;
+  var unicode = (config.exportCharset.toLowerCase() == 'utf-8');
 
   var res = [];
 
@@ -163,22 +164,23 @@ convert.to_latex = function(str) {
     }
     convert.unicode2latex[c].math = !!convert.unicode2latex[c].math;
 
-    if (config.exportCharset == 'UTF-8' && !convert.unicode2latex[c].force) {
-      ca = c;
-    } else {
-      ca = convert.unicode2latex[c].latex;
+    if (unicode && !convert.unicode2latex[c].force) {
+      convert.unicode2latex[c].latex = c;
+      convert.unicode2latex[c].math = false;
     }
 
+    ca = convert.unicode2latex[c];
+
     var last = res.length - 1;
-    if (res.length == 0 || convert.unicode2latex[c].math != res[last].math) {
-      res.push({chars: [ca], math: convert.unicode2latex[c].math});
+    if (res.length == 0 || ca.math != res[last].math) {
+      res.push({chars: [ca.latex], math: ca.math});
     } else {
-      res[last].chars.push(ca);
+      res[last].chars.push(ca.latex);
     }
   }
 
   res = res.map(function(chunk) {
-    if (chunk.math && config.exportCharset != 'UTF-8') {
+    if (chunk.math) {
       return '\\ensuremath{' + chunk_to_latex(chunk.chars) + '}';
     } else {
       return chunk_to_latex(chunk.chars);
