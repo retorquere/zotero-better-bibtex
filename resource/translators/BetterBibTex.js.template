@@ -106,12 +106,12 @@ function doExport() {
       var accessYMD = item.accessDate.replace(/\s*\d+:\d+:\d+/, "");
       writeField("urldate", escape(accessYMD));
     }
-    
+
     if(item.publicationTitle) {
       if(item.itemType == "bookSection" || item.itemType == "conferencePaper") {
         writeField("booktitle", escape({literal: item.publicationTitle}));
-      } else if(Zotero.getOption("useJournalAbbreviation")){
-        writeField("journal", escape({literal:item.journalAbbreviation}));
+      } else if(Zotero.getOption("useJournalAbbreviation") && item.journalAbbreviation){
+        writeField('journal', escape({literal:item.journalAbbreviation}));
       } else {
         writeField("journal", escape({literal:item.publicationTitle}));
       }
