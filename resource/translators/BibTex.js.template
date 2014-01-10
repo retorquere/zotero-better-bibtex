@@ -259,25 +259,22 @@ function processField(item, field, value) {
     item.publicationTitle = value;
   } else if(field == "author" || field == "editor" || field == "translator") {
     // parse authors/editors/translators
-    var names = value.split(/ and /i); // now case insensitive
-    for(var i in names) {
-      var name = names[i];
-      // skip empty names
-      if (name.trim() == '') {
-        continue;
+    value.split(/ and /i).forEach(function(name) {
+      trLog('name = ' + name);
+      if (name.trim() != '') {
+        // Names in BibTeX can have three commas
+        pieces = name.split(',');
+        var creator = {};
+        if (pieces.length > 1) {
+          creator.firstName = pieces.pop().trim();
+          creator.lastName = pieces.join(',').trim();
+          creator.creatorType = field;
+        } else {
+          creator = Zotero.Utilities.cleanAuthor(name, field, false);
+        }
+        item.creators.push(creator);
       }
-      // Names in BibTeX can have three commas
-      pieces = name.split(',');
-      var creator = {};
-      if (pieces.length > 1) {
-        creator.firstName = pieces.pop().trim();
-        creator.lastName = pieces.join(',').trim();
-        creator.creatorType = field;
-      } else {
-        creator = Zotero.Utilities.cleanAuthor(name, field, false);
-      }
-      item.creators.push(creator);
-    }
+    });
   } else if(field == "institution" || field == "organization") {
     item.backupPublisher = value;
   } else if(field == "number"){ // fix for techreport
@@ -906,7 +903,9 @@ var CiteKeys = {
 
     var firstAuthor = authors.shift();
 
-    return firstAuthor.substring(0, 5) + [[a.substring(0, 1) for (a in auth.split(/\s+/))].join('') for(auth in authors)].join('');
+    return firstAuthor.substring(0, 5) + authors.collect(function(author) {
+      return auth.split(/\s+/).collect(function(name) { return name.substring(0, 1); }).join('');
+    }).join('');
   },
 
   _auth_auth_ea: function(item, onlyEditors) {
@@ -994,7 +993,7 @@ var CiteKeys = {
 
   to_abbr: function(value) {
     if (!value) { return null; }
-    return [word.substring(0,1) for (word in value.split(/\s+/))].join('');
+    return value.split(/\s+/).collect(function(word) { return word.substring(0, 1); }).join('');
   },
 
   to_lower: function(value) {
