@@ -153,7 +153,7 @@ convert.to_latex = function(str) {
   var strlen = str.length;
   var c, ca;
   var l;
-  var unicode = (config.exportCharset.toLowerCase() == 'utf-8');
+  var unicode = (config.exportCharset && config.exportCharset.toLowerCase() == 'utf-8');
 
   var res = [];
 
