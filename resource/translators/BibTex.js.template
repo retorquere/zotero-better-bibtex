@@ -704,7 +704,7 @@ function escape(value, sep) {
 
   if (value instanceof Array) {
     if (value.length == 0) { return; }
-    return value.collect(escape).join(sep);
+    return value.collect(function(word) { return escape(word); }).join(sep);
   }
 
   var doublequote = value.literal;
@@ -955,7 +955,7 @@ var CiteKeys = {
   },
 
   words: function(str) {
-    return str.split(/\s+/).filter(function(word) { return (word != '');}).collect(CiteKeys.clean);
+    return str.split(/\s+/).filter(function(word) { return (word != '');}).collect(function (word) { return CiteKeys.clean(word) });
   },
 
   _shorttitle: function(item) {
