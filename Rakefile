@@ -78,6 +78,8 @@ file 'README.md' => [XPI, 'Rakefile'] do |t|
 end
 
 task :release, :bump do |t, args|
+  `git checkout zotero*.xpi`
+
   bump = args[:bump] || 'patch'
 
   release = RELEASE.split('.').collect{|n| Integer(n)}

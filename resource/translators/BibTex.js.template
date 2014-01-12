@@ -970,7 +970,11 @@ var CiteKeys = {
 
   _veryshorttitle: function(item) {
     if (!item.title) { return null; }
-    return CiteKeys.words(item.title).filter(function(word) { return (CiteKeys.skipWords.indexOf(word.toLowerCase()) != -1); }).slice(0,3).join('');
+    return CiteKeys.words(item.title).collect(function (word) {
+        return word.replace(/[^a-zA-Z]/, '');
+      }).filter(function(word) {
+        return (word != '' && CiteKeys.skipWords.indexOf(word.toLowerCase()) == -1);
+      }).slice(0,3).join('');
   },
 
   _shortyear: function(item) {
