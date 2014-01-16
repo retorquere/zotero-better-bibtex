@@ -1013,9 +1013,10 @@ var CiteKeys = {
   },
 
   transform: function(key, prefix) {
-    var f = CiteKeys[prefix + key.replace('.', '_')];
+    var k = prefix + key.replace(/\./g, '_');
+    var f = CiteKeys[k];
     if (typeof f === 'function') { return f; }
-    throw("CiteKey formatter knows no function '" + key + "'");
+    throw("CiteKey formatter knows no function '" + key + "' (" + k + ")");
   },
 
   build: function(item) {

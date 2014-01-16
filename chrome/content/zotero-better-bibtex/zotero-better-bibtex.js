@@ -126,6 +126,8 @@ Zotero.BetterBibTex = {
   },
 
   translate: function(translator, items) {
+    if (!translator) { throw('null translator'); }
+
     var translation = new Zotero.Translate.Export();
     translation.setItems(items);
     translation.setTranslator(translator);
@@ -183,7 +185,7 @@ Zotero.BetterBibTex = {
     }
 
     if (!header) {
-      Zotero.BetterBibTex.log('Loading ' + translator + ' failed', err);
+      Zotero.BetterBibTex.log('Loading ' + translator + ' failed: could not parse header');
       return;
     }
 
