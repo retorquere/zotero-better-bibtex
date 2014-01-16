@@ -1012,6 +1012,12 @@ var CiteKeys = {
     return value.toUpperCase();
   },
 
+  transform: function(key, prefix) {
+    var f = CiteKeys[prefix + key.replace('.', '_')];
+    if (typeof f === 'function') { return f; }
+    throw("CiteKey formatter knows no function '" + key + "'");
+  },
+
   build: function(item) {
     var citekey = CiteKeys.extract(item);
     if (citekey) { return citekey; }
@@ -1029,7 +1035,7 @@ var CiteKeys = {
       var onlyEditors = (field.match(/^edtr/) || field.match(/^editors/));
       field = field.replace(/^edtr/, 'auth').replace(/^editors/, 'authors');
 
-      var value = CiteKeys['_' + field.replace('.', '_')](item, onlyEditors, N, M);
+      var value = CiteKeys.transform(field, '_')(item, onlyEditors, N, M);
       if (value) { value = CiteKeys.clean(value); }
 
       var cmd;
@@ -1037,7 +1043,7 @@ var CiteKeys = {
         if (cmd.match(/^[(].*[)]$/)) {
           if (!value) { value = cmd.substring(1, cmd.length - 2); }
         } else {
-          value = CiteKeys['to_' + cmd](value);
+          value = CiteKeys.transform(cmd, 'to_')(value);
         }
         if (value) { value = CiteKeys.clean(value); }
       });
