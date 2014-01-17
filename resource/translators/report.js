@@ -1,25 +1,25 @@
 /*
     ***** BEGIN LICENSE BLOCK *****
-    
+
     Copyright © 2009 Center for History and New Media
                      George Mason University, Fairfax, Virginia, USA
                      http://zotero.org
-    
+
     This file is part of Zotero.
-    
+
     Zotero is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-    
+
     Zotero is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Affero General Public License for more details.
-    
+
     You should have received a copy of the GNU Affero General Public License
     along with Zotero.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     ***** END LICENSE BLOCK *****
 */
 
@@ -27,13 +27,13 @@
 Zotero.Report = new function() {
 	this.generateHTMLDetails = generateHTMLDetails;
 	this.generateHTMLList = generateHTMLList;
-	
+
 	var escapeXML = function (str) {
 		str = str.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\ud800-\udfff\ufffe\uffff]/g, '\u2B1A');
 		return Zotero.Utilities.htmlSpecialChars(str);
 	}
-	
-	
+
+
 	function generateHTMLDetails(items, combineChildItems) {
 		var content = '<!DOCTYPE html>\n';
 		content += '<html>\n';
@@ -43,11 +43,11 @@ Zotero.Report = new function() {
 		content += '<link rel="stylesheet" type="text/css" media="screen,projection" href="zotero://report/detail_screen.css"/>\n';
 		content += '<link rel="stylesheet" type="text/css" media="print" href="zotero://report/detail_print.css"/>\n';
 		content += '</head>\n\n<body>\n';
-		
+
 		content += '<ul class="report' + (combineChildItems ? ' combineChildItems' : '') + '">\n';
 		for each(var arr in items) {
 			content += '\n<li id="i' + arr.itemID + '" class="item ' + arr.itemType + '">\n';
-			
+
 			if (arr.title) {
 				// Top-level item matched search, so display title
 				if (arr.reportSearchMatch) {
@@ -59,17 +59,17 @@ Zotero.Report = new function() {
 						+ ' <span class="title">' + escapeXML(arr.title) + '</span></h2>';
 				}
 			}
-			
+
 			// If parent matches search, display parent item metadata table and tags
 			if (arr.reportSearchMatch) {
 				content += _generateMetadataTable(arr);
-				
+
 				content += _generateTagsList(arr);
-				
+
 				// Independent note
 				if (arr['note']) {
 					content += '\n';
-					
+
 					// If not valid XML, display notes with entities encoded
 					var parser = Components.classes["@mozilla.org/xmlextras/domparser;1"]
 							.createInstance(Components.interfaces.nsIDOMParser);
@@ -91,7 +91,7 @@ Zotero.Report = new function() {
 					}
 				}
 			}
-			
+
 			// Children
 			if (arr.reportChildren) {
 				// Child notes
@@ -103,7 +103,7 @@ Zotero.Report = new function() {
 					content += '<ul class="notes">\n';
 					for each(var note in arr.reportChildren.notes) {
 						content += '<li id="i' + note.itemID + '">\n';
-						
+
 						// If not valid XML, display notes with entities encoded
 						var parser = Components.classes["@mozilla.org/xmlextras/domparser;1"]
 								.createInstance(Components.interfaces.nsIDOMParser);
@@ -122,19 +122,19 @@ Zotero.Report = new function() {
 						else {
 							content += note.note + '\n';
 						}
-						
+
 						// Child note tags
 						content += _generateTagsList(note);
-						
+
 						content += '</li>\n';
 					}
 					content += '</ul>\n';
 				}
-			
+
 				// Chid attachments
 				content += _generateAttachmentsList(arr.reportChildren);
 			}
-			
+
 			// Related
 			if (arr.reportSearchMatch && arr.related && arr.related.length) {
 				content += '<h3 class="related">' + escapeXML(Zotero.getString('itemFields.related')) + '</h3>\n';
@@ -147,26 +147,26 @@ Zotero.Report = new function() {
 				}
 				content += '</ul>\n';
 			}
-			
-			
+
+
 			content += '</li>\n\n';
 		}
 		content += '</ul>\n';
 		content += '</body>\n</html>';
-		
+
 		return content;
 	}
-	
-	
+
+
 	function generateHTMLList(items) {
-		
+
 	}
-	
-	
+
+
 	function _generateMetadataTable(arr) {
 		var table = false;
 		var content = '<table>\n';
-		
+
 		// Item type
 		content += '<tr>\n';
 		content += '<th>'
@@ -174,12 +174,12 @@ Zotero.Report = new function() {
 			+ '</th>\n';
 		content += '<td>' + escapeXML(Zotero.ItemTypes.getLocalizedString(arr.itemType)) + '</td>\n';
 		content += '</tr>\n';
-		
+
 		// Creators
 		if (arr['creators']) {
 			table = true;
 			var displayText;
-			
+
 			for each(var creator in arr['creators']) {
 				// Two fields
 				if (creator['fieldMode']==0) {
@@ -192,7 +192,7 @@ Zotero.Report = new function() {
 				else {
 					// TODO
 				}
-				
+
 				content += '<tr>\n';
 				content += '<th class="' + creator.creatorType + '">'
 					+ escapeXML(Zotero.getString('creatorTypes.' + creator.creatorType))
@@ -201,7 +201,7 @@ Zotero.Report = new function() {
 				content += '</tr>\n';
 			}
 		}
-		
+
 		// Move dateAdded and dateModified to the end of the array
 		var da = arr['dateAdded'];
 		var dm = arr['dateModified'];
@@ -209,13 +209,13 @@ Zotero.Report = new function() {
 		delete arr['dateModified'];
 		arr['dateAdded'] = da;
 		arr['dateModified'] = dm;
-		
+
 		for (var i in arr) {
 			// Skip certain fields
 			switch (i) {
 				case 'reportSearchMatch':
 				case 'reportChildren':
-				
+
 				case 'libraryID':
 				case 'key':
 				case 'itemType':
@@ -231,7 +231,7 @@ Zotero.Report = new function() {
 				case 'attachments':
 					continue;
 			}
-			
+
 			try {
 				var localizedFieldName = Zotero.ItemFields.getLocalizedString(arr.itemType, i);
 			}
@@ -240,17 +240,17 @@ Zotero.Report = new function() {
 				Zotero.debug('Localized string not available for ' + 'itemFields.' + i, 2);
 				continue;
 			}
-			
+
 			arr[i] = Zotero.Utilities.trim(arr[i] + '');
-			
+
 			// Skip empty fields
 			if (!arr[i]) {
 				continue;
 			}
-			
+
 			table = true;
 			var fieldText;
-			
+
 			if (i == 'url' && arr[i].match(/^https?:\/\//)) {
 				fieldText = '<a href="' + escapeXML(arr[i]) + '">'
 					+ escapeXML(arr[i]) + '</a>';
@@ -268,17 +268,17 @@ Zotero.Report = new function() {
 			else {
 				fieldText = escapeXML(arr[i]);
 			}
-			
+
 			content += '<tr>\n<th>' + escapeXML(localizedFieldName)
 				+ '</th>\n<td>' + fieldText + '</td>\n</tr>\n';
 		}
-		
+
 		content += '</table>';
-		
+
 		return table ? content : '';
 	}
-	
-	
+
+
 	function _generateTagsList(arr) {
 		var content = '';
 		if (arr['tags'] && arr['tags'].length) {
@@ -292,8 +292,8 @@ Zotero.Report = new function() {
 		}
 		return content;
 	}
-	
-	
+
+
 	function _generateAttachmentsList(arr) {
 		var content = '';
 		if (arr.attachments && arr.attachments.length) {
@@ -302,10 +302,10 @@ Zotero.Report = new function() {
 			for each(var attachment in arr.attachments) {
 				content += '<li id="i' + attachment.itemID + '">';
 				content += escapeXML(attachment.title);
-				
+
 				// Attachment tags
 				content += _generateTagsList(attachment);
-				
+
 				// Attachment note
 				if (attachment.note) {
 					content += '<div class="note">';
@@ -318,7 +318,7 @@ Zotero.Report = new function() {
 					}
 					content += '</div>';
 				}
-				
+
 				content += '</li>\n';
 			}
 			content += '</ul>\n';

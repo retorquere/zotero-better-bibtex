@@ -8,3 +8,4 @@
 <!ENTITY zotero.better-bibtex.cite.format "Citation key format">
 <!ENTITY zotero.better-bibtex.server.enabled "Enable export by HTTP">
 <!ENTITY zotero.better-bibtex.server.address "Bibliography export at ">
+<!ENTITY zotero.better-bibtex.biblatex.ascii "Force BibLaTex HTTP export to ASCII">

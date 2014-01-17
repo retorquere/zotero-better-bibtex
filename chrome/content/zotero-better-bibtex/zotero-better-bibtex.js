@@ -94,7 +94,7 @@ Zotero.BetterBibTex = {
     }
 
     var key = '' + path[0];
-    
+
     var col = null;
     for (var name of path) {
       var children = Zotero.getCollections(col && col.id, false, libid);
@@ -122,14 +122,21 @@ Zotero.BetterBibTex = {
     items = [item.id for (item of items)];
     items = Zotero.Items.get(items);
 
-    return Zotero.BetterBibTex.translate(translator, items);
+    var charset;
+    try {
+      charset = (Zotero.BetterBibTex.prefs.getBoolPref('BibLaTex.ASCII') ? 'US-ASCII' : 'UTF-8');
+    } catch (err) {
+      charset = 'UTF-8';
+    }
+    return Zotero.BetterBibTex.translate(translator, items, charset);
   },
 
-  translate: function(translator, items) {
+  translate: function(translator, items, charset) {
     if (!translator) { throw('null translator'); }
 
     var translation = new Zotero.Translate.Export();
     translation.setItems(items);
+    translation.setDisplayOptions({exportCharset: charset});
     translation.setTranslator(translator);
 
     var status = {finished: false};
@@ -198,18 +205,18 @@ Zotero.BetterBibTex = {
         override = null;
           var value = header[section][option];
         try {
-        switch (typeof value) {
-          case 'boolean':
-            override = Zotero.BetterBibTex.prefs.getBoolPref(option);
-            break;
-          case 'number':
-            override = Zotero.BetterBibTex.prefs.getIntPref(option);
-            break;
-          case 'string':
-            override = Zotero.BetterBibTex.prefs.getCharPref(option);
-            if (override && override.trim() == '') { override = null; }
-            break;
-        }
+          switch (typeof value) {
+            case 'boolean':
+              override = Zotero.BetterBibTex.prefs.getBoolPref(option);
+              break;
+            case 'number':
+              override = Zotero.BetterBibTex.prefs.getIntPref(option);
+              break;
+            case 'string':
+              override = Zotero.BetterBibTex.prefs.getCharPref(option);
+              if (override && override.trim() == '') { override = null; }
+              break;
+          }
         } catch (err) {
           continue;
         }

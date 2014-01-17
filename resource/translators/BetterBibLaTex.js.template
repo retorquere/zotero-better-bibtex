@@ -47,11 +47,11 @@ var fieldMap = {
 
 //POTENTIAL ISSUES
 //"programTitle", "bookTitle" //TODO, check!!
-// 
+//
 //  accessDate:"accessDate", //only written on attached webpage snapshots by zo
 //  journalAbbreviation:"journalAbbreviation", //not supported by bl
 
-//  country:"country", //TODO if patent, should be put into 'location' 
+//  country:"country", //TODO if patent, should be put into 'location'
 
 var zotero2tex = {
   book:                 'book',

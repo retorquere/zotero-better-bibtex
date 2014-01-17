@@ -17,6 +17,7 @@
         <preference id="pref-better-bibtex-citecommand" name="extensions.zotero-better-bibtex.citeCommand" type="string"/>
         <preference id="pref-better-bibtex-format" name="extensions.zotero-better-bibtex.citeKeyFormat" type="string"/>
         <preference id="pref-better-bibtex-server" name="extensions.zotero.httpServer.enabled" type="bool"/>
+        <preference id="pref-better-bibtex-biblatex-ascii" name="extensions.zotero-better-bibtex.BibLaTex.ASCII" type="bool"/>
       </preferences>
       <hbox flex="1">
         <grid>
@@ -24,9 +25,6 @@
             <column/>
           </columns>
           <rows>
-            <row>
-              <label id="id-better-bibtex-restart-required" class="header" value="&zotero.better-bibtex.restart-required;" hidden="true"/>
-            </row>
             <row>
               <checkbox id="id-better-bibtex-preferences-getCollections" label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive" oncommand="updatePreferences();"/>
             </row>
@@ -46,8 +44,14 @@
               <checkbox id="id-better-bibtex-preferences-server-enabled" label="&zotero.better-bibtex.server.enabled;" preference="pref-better-bibtex-server" oncommand="updatePreferences();"/>
             </row>
             <row>
+              <checkbox id="id-better-bibtex-preferences-biblatex-ascii" label="&zotero.better-bibtex.biblatex.ascii;" preference="pref-better-bibtex-biblatex-ascii" oncommand="updatePreferences();"/>
+            </row>
+            <row>
               <label id="id-zotero-better-bibtex-server" value="&zotero.better-bibtex.server.address;" hidden="true"/>
               <label id="id-zotero-better-bibtex-server-address" value="" hidden="true"/>
+            </row>
+            <row>
+              <label id="id-better-bibtex-restart-required" class="header" value="&zotero.better-bibtex.restart-required;" hidden="true"/>
             </row>
           </rows>
         </grid>
