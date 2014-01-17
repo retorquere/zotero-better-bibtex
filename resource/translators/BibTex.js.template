@@ -808,6 +808,7 @@ var CiteKeys = {
     var creators = {
       authors:        [],
       editors:        [],
+      translators:    [],
       collaborators:  []
     };
     var primaryCreatorType = Zotero.Utilities.getCreatorsForType(item.itemType)[0];
