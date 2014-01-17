@@ -38,8 +38,8 @@ Export dates like 'forthcoming' as 'forthcoming' instead of empty.
 
 You can fetch your library as part of your build, using curl (for example by using the included zoterobib.yaml arara
 rule), or with a biblatex remote statement like \addbibresource[location=remote]{http://localhost:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}.
-For Zotero standalone this is enabled by default; for Zotero embedded, you need to set the config key "extensions.zotero.httpServer.enabled" to true. You can then fetch your bibliography on the url
-http://localhost:23119/better-bibtex/collection?\[collectionID].[format], where collectionID is:
+For Zotero standalone this is enabled by default; for Zotero embedded, you need to enable the embedded webserver from the BBT preferences screen. You can then fetch your bibliography on the url
+http://localhost:23119/better-bibtex/collection?\[collectionID].\[format], where collectionID is:
 * the ID you get by right-clicking your collection and selecting "Show collection key"
 * the path "/[library id]/full/path/to/collection" (the library id is the first number from the key you get in the option above; it's always '0' for your personal library)
 
