@@ -804,8 +804,7 @@ var CiteKeys = {
   },
 
   getCreators: function(item, onlyEditors) {
-    if(!item.creators || !item.creators.length) { return {}; }
-
+    if(!item.creators || !item.creators.length) { return []; }
     var creators = {
       authors:        [],
       editors:        [],
