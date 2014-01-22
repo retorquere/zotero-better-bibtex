@@ -1,6 +1,6 @@
 # Zotero: Better Bib(La)Tex
 
-Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.1.0.xpi).
+Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.1.1.xpi).
 
 This extension aims to make Zotero effective for us LaTeX holdouts. It adds the following features:
 
@@ -67,7 +67,7 @@ The Better BibTex configuration pane can be found under the regular Zotero prefe
 # Support - read carefully
 
 My time is extremely limited for a number of very great reasons (you shall have to trust me on this). Because of this, I cannot accept bug reports
-or support requests on anything but the latest version, currently at **0.1.0**. If you submit an issue report,
+or support requests on anything but the latest version, currently at **0.1.1**. If you submit an issue report,
 please include the version that you are on. By the time I get to your issue, the latest version might have bumped up already, and you
 will have to upgrade (you might have auto-upgraded already however) and re-verify that your issue still exists. Apologies for the inconvenience, but such
 are the breaks.
