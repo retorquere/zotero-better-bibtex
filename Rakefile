@@ -63,7 +63,7 @@ file 'update.rdf' => [XPI, 'install.rdf'] do |t|
   File.open('update.rdf','wb') {|f| update_rdf.write_xml_to f}
 end
 
-task :publish => ['README.md', 'update.rdf'] do
+task :publish => ['README.md', XPI, 'update.rdf'] do
   sh "git add --all ."
   sh "git commit -am #{RELEASE}"
   sh "git push"

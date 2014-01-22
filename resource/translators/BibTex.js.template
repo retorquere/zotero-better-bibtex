@@ -32,6 +32,7 @@ var config = {
   citeCommand:      safeGetOption('citeCommand'),
   citeKeyFormat:    safeGetOption('citeKeyFormat'),
   exportCharset:    safeGetOption('exportCharset'),
+  forceUnicode:     safeGetOption('forceUnicode'),
   translator: {
     id: '/*= id =*/',
     label:  '/*= label =*/'
@@ -153,7 +154,7 @@ convert.to_latex = function(str) {
   var strlen = str.length;
   var c, ca;
   var l;
-  var unicode = (config.exportCharset && config.exportCharset.toLowerCase() == 'utf-8');
+  var unicode = (config.forceUnicode || (config.exportCharset && config.exportCharset.toLowerCase() == 'utf-8'));
 
   var res = [];
 
