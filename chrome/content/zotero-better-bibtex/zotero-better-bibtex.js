@@ -45,7 +45,8 @@ Zotero.BetterBibTex = {
     Zotero.BetterBibTex.config = {
       getCollections: recursive,
       citeCommand: Zotero.BetterBibTex.prefs.getCharPref('citeCommand'),
-      citeKeyFormat: Zotero.BetterBibTex.prefs.getCharPref('citeKeyFormat')
+      citeKeyFormat: Zotero.BetterBibTex.prefs.getCharPref('citeKeyFormat'),
+      forceUnicode: Zotero.BetterBibTex.prefs.getCharPref('forceUnicode')
     };
 
     for (var endpoint of Object.keys(Zotero.BetterBibTex.endpoints)) {
