@@ -13,7 +13,7 @@
             onpaneload="updatePreferences();"
             >
       <preferences id="zotero-preferences-cite">
-        <preference id="pref-better-bibtex-recursive" name="extensions.zotero-better-bibtex.getCollections" type="bool"/>
+        <preference id="pref-better-bibtex-recursive" name="extensions.zotero.recursiveCollections" type="bool"/>
         <preference id="pref-better-bibtex-citecommand" name="extensions.zotero-better-bibtex.citeCommand" type="string"/>
         <preference id="pref-better-bibtex-format" name="extensions.zotero-better-bibtex.citeKeyFormat" type="string"/>
         <preference id="pref-better-bibtex-server" name="extensions.zotero.httpServer.enabled" type="bool"/>

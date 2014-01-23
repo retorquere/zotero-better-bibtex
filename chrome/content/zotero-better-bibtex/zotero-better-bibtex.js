@@ -31,8 +31,19 @@ Zotero.BetterBibTex = {
     Zotero.BetterBibTex.safeLoad('KeyOnly.js');
     Zotero.Translators.init();
 
+    var recursive = false;
+    try {
+      recursive = zotPrefs.getBoolPref('recursiveCollections');
+    } catch (err) {}
+
+    try {
+      _recursive = Zotero.BetterBibTex.prefs.getBoolPref('getCollections');
+      Zotero.BetterBibTex.prefs.setBoolPref('getCollections', null);
+      if (_recursive != null) { recursive = _recursive; }
+    } catch (err) {}
+
     Zotero.BetterBibTex.config = {
-      getCollections: Zotero.BetterBibTex.prefs.getBoolPref('getCollections'),
+      getCollections: recursive,
       citeCommand: Zotero.BetterBibTex.prefs.getCharPref('citeCommand'),
       citeKeyFormat: Zotero.BetterBibTex.prefs.getCharPref('citeKeyFormat')
     };
