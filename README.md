@@ -1,6 +1,14 @@
 # Zotero: Better Bib(La)Tex
 
-Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.1.2.xpi).
+Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.1.2.xpi). If you are not prompted with a Firefox installation dialog then double-click the downloaded xpi; Firefox ought to start and present you with the installation dialog.
+
+For standalone Zotero, do the following:
+
+1. In the main menu go to Tools → Add-ons
+2. Select ‘Extensions’
+3. Click on the gear in the top-right corner and choose ‘Install Add-on From File...’
+4. Choose .xpi that you’ve just downloaded, click ‘Install’
+5. Restart Zotero
 
 This extension aims to make Zotero effective for us LaTeX holdouts. It adds the following features:
 
