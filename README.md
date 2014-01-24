@@ -1,6 +1,8 @@
 # Zotero: Better Bib(La)Tex
 
-Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.1.2.xpi). Then open standalone Zotero and:
+Install by downloading the [latest version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.1.2.xpi). If you are not prompted with a Firefox installation dialog then double-click the downloaded xpi; Firefox ought to start and present you with the installation dialog.
+
+For standalone Zotero, do the following:
 
 1. In the main menu go to Tools → Add-ons
 2. Select ‘Extensions’
