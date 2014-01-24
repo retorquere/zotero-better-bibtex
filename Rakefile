@@ -4,6 +4,7 @@ require 'net/http'
 require 'json'
 require 'fileutils'
 require 'time'
+require 'date'
 require 'zip/filesystem'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
@@ -66,6 +67,7 @@ end
 task :publish => ['README.md', XPI, 'update.rdf'] do
   sh "git add --all ."
   sh "git commit -am #{RELEASE}"
+  sh "git tag #{RELEASE}"
   sh "git push"
 end
 
@@ -74,6 +76,7 @@ file 'README.md' => [XPI, 'Rakefile'] do |t|
   readme = File.open(t.name).read
   readme.gsub!(/\(http[^)]+\.xpi\)/, "(https://raw.github.com/friflaj/zotero-#{EXTENSION}/master/#{XPI})")
   readme.gsub!(/\*\*[0-9]+\.[0-9]+\.[0-9]+\*\*/, "**#{RELEASE}**")
+  readme.gsub!(/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}/, DateTime.now.strftime('%Y-%m-%d %H:%M'))
   File.open(t.name, 'w'){|f| f.write(readme)}
 end
 
