@@ -975,7 +975,7 @@ var CiteKeys = {
         return word.replace(/[^a-zA-Z]/, '');
       }).filter(function(word) {
         return (word != '' && CiteKeys.skipWords.indexOf(word.toLowerCase()) == -1);
-      }).slice(0,3).join('');
+      }).slice(0,1).join('');
   },
 
   _shortyear: function(item) {
