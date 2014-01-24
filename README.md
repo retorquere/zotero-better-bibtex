@@ -6,7 +6,7 @@ For standalone Zotero, do the following:
 
 1. In the main menu go to Tools → Add-ons
 2. Select ‘Extensions’
-3. Click on a gear in the top-right corner and choose ‘Install Add-on From File...’
+3. Click on the gear in the top-right corner and choose ‘Install Add-on From File...’
 4. Choose .xpi that you’ve just downloaded, click ‘Install’
 5. Restart Zotero
 
