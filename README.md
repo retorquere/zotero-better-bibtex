@@ -6,10 +6,10 @@ on 2014-01-25 00:09). If you are not prompted with a Firefox installation dialog
 
 For standalone Zotero, do the following:
 
-1. In the main menu go to Tools → Add-ons
-2. Select ‘Extensions’
-3. Click on the gear in the top-right corner and choose ‘Install Add-on From File...’
-4. Choose .xpi that you’ve just downloaded, click ‘Install’
+1. In the main menu go to Tools > Add-ons
+2. Select 'Extensions'
+3. Click on the gear in the top-right corner and choose 'Install Add-on From File...'
+4. Choose .xpi that you’ve just downloaded, click 'Install'
 5. Restart Zotero
 
 This extension aims to make Zotero effective for us LaTeX holdouts. It adds the following features:
