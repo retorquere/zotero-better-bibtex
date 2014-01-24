@@ -23,6 +23,21 @@ Zotero.BetterBibTex = {
     console.log(msg);
   },
 
+  pref: function(key, dflt) {
+    try {
+      switch (typeof dflt) {
+        case 'boolean':
+          return Zotero.BetterBibTex.prefs.getBoolPref(key);
+        case 'number':
+          return Zotero.BetterBibTex.prefs.getIntPref(key);
+        case 'string':
+          return Zotero.BetterBibTex.prefs.getCharPref(key);
+      }
+    } catch (err) {
+      return dflt;
+    }
+  },
+
   init: function () {
     Zotero.BetterBibTex.safeLoad('BetterBibLaTex.js');
     Zotero.BetterBibTex.safeLoad('BetterCiteTex.js');
@@ -44,9 +59,9 @@ Zotero.BetterBibTex = {
 
     Zotero.BetterBibTex.config = {
       getCollections: recursive,
-      citeCommand: Zotero.BetterBibTex.prefs.getCharPref('citeCommand'),
-      citeKeyFormat: Zotero.BetterBibTex.prefs.getCharPref('citeKeyFormat'),
-      forceUnicode: Zotero.BetterBibTex.prefs.getCharPref('forceUnicode')
+      citeCommand: Zotero.BetterBibTex.pref('citeCommand', 'cite'),
+      citeKeyFormat: Zotero.BetterBibTex.pref('citeKeyFormat', '[auth][year]'),
+      forceUnicode: Zotero.BetterBibTex.pref('forceUnicode', false)
     };
 
     for (var endpoint of Object.keys(Zotero.BetterBibTex.endpoints)) {
