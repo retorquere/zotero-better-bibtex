@@ -36,9 +36,10 @@ var config = {
   translator: {
     id: '/*= id =*/',
     label:  '/*= label =*/',
-    unicode:  /*= unicode =*/ || safeGetOption('forceUnicode') || (config.exportCharset && config.exportCharset.toLowerCase() == 'utf-8')
+    unicode:  /*= unicode =*/ || safeGetOption('forceUnicode')
   }
 };
+config.unicode = config.unicode || (config.exportCharset && config.exportCharset.toLowerCase() == 'utf-8');
 
 function trLog(msg) { Zotero.debug('[better bibtex ' + config.translator.label + '] ' + msg); }
 
@@ -697,17 +698,17 @@ function doImport() {
 }
 
 function escape_url(url) {
-  var url = {href: url, label: url}
+  var href = url.replace(/([\\_%&{}])/g, "\\$1");
 
-  if (config.translator.unicode) {
-    url.href = url.href.replace(/([\\_%&{}])/g, "\\$1");
-  } else {
-    url.href = return url.replace(/([\\_%&{}])/g, "\\$1").replace(/[^\x21-\x7E]/g, function(chr){return "\\\%" + ('00' + chr.charCodeAt(0).toString(16)).slice(-2)});
+  if (!config.translator.unicode) {
+    href = href.replace(/[^\x21-\x7E]/g, function(chr){return "\\\%" + ('00' + chr.charCodeAt(0).toString(16)).slice(-2)});
   }
 
-  if (!config.fancyURLs) { return url.href; }
+  if (config.fancyURLs) {
+    return "\\href{" + href + "}{" + convert.to_latex(url) + "}";
+  }
 
-  return "\\href{" + url.href + "}{" + convert.to_latex(url.label) + "}";
+  return href;
 }
 function escape(value, sep) {
   if (typeof value == 'number') { return value; }
@@ -969,23 +970,130 @@ var CiteKeys = {
     return str.split(/\s+/).filter(function(word) { return (word != '');}).collect(function (word) { return CiteKeys.clean(word) });
   },
 
+  skipWords: [
+    'a',
+    'aboard',
+    'about',
+    'above',
+    'across',
+    'after',
+    'against',
+    'al',
+    'along',
+    'amid',
+    'among',
+    'an',
+    'and',
+    'anti',
+    'around',
+    'as',
+    'at',
+    'before',
+    'behind',
+    'below',
+    'beneath',
+    'beside',
+    'besides',
+    'between',
+    'beyond',
+    'but',
+    'by',
+    'd',
+    'das',
+    'de',
+    'del',
+    'der',
+    'des',
+    'despite',
+    'die',
+    'do',
+    'down',
+    'during',
+    'ein',
+    'eine',
+    'einem',
+    'einen',
+    'einer',
+    'eines',
+    'el',
+    'except',
+    'for',
+    'from',
+    'in',
+    'inside',
+    'into',
+    'l',
+    'la',
+    'las',
+    'le',
+    'like',
+    'los',
+    'near',
+    'nor',,
+    'of',
+    'off',
+    'on',
+    'onto',
+    'or',
+    'over',
+    'past',
+    'per',
+    'plus',
+    'round',
+    'save',
+    'since',
+    'so',
+    'some',
+    'than',
+    'the',
+    'through',
+    'to',
+    'toward',
+    'towards',
+    'un',
+    'una',
+    'unas',
+    'under',
+    'underneath',
+    'une',
+    'unlike',
+    'uno',
+    'unos',
+    'until',
+    'up',
+    'upon',
+    'versus',
+    'via',
+    'while',
+    'with',
+    'within',
+    'without',
+    'yet'
+  ],
+
+  titleWords: function(title, options) {
+    if (!title) { return null; }
+
+    var words = CiteKeys.words(title);
+
+    options = options || {};
+    if (options.asciiOnly) { words = words.collect(function (word) { return word.replace(/[^a-zA-Z]/, ''); }); }
+    words = words.filter(function(word) { return (word != ''); });
+    if (options.skipWords) { words = words.filter(function(word) { return (CiteKeys.skipWords.indexOf(word.toLowerCase()) == -1); }); }
+    if (words.length == 0) { return null; }
+    return words;
+  },
+
   _shorttitle: function(item) {
-    if (!item.title) { return null; }
-    var words = CiteKeys.words(item.title);
+    var words = CiteKeys.titleWords(item.title, {skipWords: true, asciiOnly: true});
+    if (!words) { return null; }
     return words.slice(0,3).join('');
   },
 
-  skipWords: ['a','an','the','some','from','on','in','to','of','do','with','der','die','das','ein',
-              'eine','einer','eines','einem','einen','un','une','la','le',
-              'l','el','las','los','al','uno','una','unos','unas','de','des','del','d'],
-
   _veryshorttitle: function(item) {
-    if (!item.title) { return null; }
-    return CiteKeys.words(item.title).collect(function (word) {
-        return word.replace(/[^a-zA-Z]/, '');
-      }).filter(function(word) {
-        return (word != '' && CiteKeys.skipWords.indexOf(word.toLowerCase()) == -1);
-      }).slice(0,1).join('');
+    var words = CiteKeys.titleWords(item.title, {skipWords: true, asciiOnly: true});
+    if (!words) { return null; }
+    return words.slice(0,1).join('');
   },
 
   _shortyear: function(item) {
@@ -1005,7 +1113,7 @@ var CiteKeys = {
   },
 
   _title: function(item) {
-    return item.title;
+    return titleWords(item.title).join('');
   },
 
   to_abbr: function(value) {
