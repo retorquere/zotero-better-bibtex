@@ -17,7 +17,8 @@
   "configOptions": {
     "citeKeyFormat": "[auth][year]",
     "getCollections": true,
-    "unicode": true
+    "unicode": true,
+    "fancyURLs": false
   },
   "lastUpdated": "2013-07-01 14:13"
 }
