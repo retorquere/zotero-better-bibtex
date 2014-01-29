@@ -32,14 +32,14 @@ var config = {
   citeCommand:      safeGetOption('citeCommand'),
   citeKeyFormat:    safeGetOption('citeKeyFormat'),
   exportCharset:    safeGetOption('exportCharset'),
-  forceUnicode:     safeGetOption('forceUnicode'),
   translator: {
     id: '/*= id =*/',
-    label:  '/*= label =*/'
+    label:  '/*= label =*/',
+    unicode:  /*= unicode =*/ || safeGetOption('forceUnicode') || (config.exportCharset && config.exportCharset.toLowerCase() == 'utf-8')
   }
 };
 
-function trLog(msg) { Zotero.debug('[better bibtex] ' + msg); }
+function trLog(msg) { Zotero.debug('[better bibtex ' + config.translator.label + '] ' + msg); }
 
 trLog('config = ' + JSON.stringify(config));
 
@@ -154,7 +154,6 @@ convert.to_latex = function(str) {
   var strlen = str.length;
   var c, ca;
   var l;
-  var unicode = (config.forceUnicode || (config.exportCharset && config.exportCharset.toLowerCase() == 'utf-8'));
 
   var res = [];
 
@@ -165,7 +164,7 @@ convert.to_latex = function(str) {
     }
     convert.unicode2latex[c].math = !!convert.unicode2latex[c].math;
 
-    if (unicode && !convert.unicode2latex[c].force) {
+    if (config.translator.unicode && !convert.unicode2latex[c].force) {
       convert.unicode2latex[c].latex = c;
       convert.unicode2latex[c].math = false;
     }
@@ -697,8 +696,11 @@ function doImport() {
 }
 
 function escape_url(url) {
-  // return str.replace(/[\{\}\\_]/g, function(chr){return '%' + ('00' + chr.charCodeAt(0).toString(16)).slice(-2)});
-  return url.replace(/([\\_%&{}])/g, "\\$1");
+  if (config.translator.unicode) {
+    return url.replace(/([\\_%&{}])/g, "\\$1");
+  } else {
+    return url.replace(/([\\_%&{}])/g, "\\$1").replace(/[^\x21-\x7E]/g, function(chr){return "\\\%" + ('00' + chr.charCodeAt(0).toString(16)).slice(-2)});
+  }
 }
 function escape(value, sep) {
   if (typeof value == 'number') { return value; }

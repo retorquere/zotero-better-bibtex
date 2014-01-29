@@ -168,7 +168,7 @@ class Template
     @root = File.dirname(@template)
     @_timestamp = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
   end
-  attr_reader :_id, :_label, :_timestamp
+  attr_reader :_id, :_label, :_timestamp, :_unicode
 
   def _render(partial)
     return render(File.read(File.join(@root, partial + '.template')))
@@ -197,6 +197,7 @@ class Template
 
     @_id = header['translatorID']
     @_label = header['label']
+    @_unicode = !!(header['configOptions'] && header['configOptions']['unicode'])
 
     code = render(code)
 
