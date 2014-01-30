@@ -26,9 +26,6 @@
           </columns>
           <rows>
             <row>
-              <checkbox id="id-better-bibtex-preferences-getCollections" label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive" oncommand="updatePreferences();"/>
-            </row>
-            <row>
               <label value="&zotero.better-bibtex.cite.command;"/>
               <textbox id="id-better-bibtex-preferences-citeCommand" preference="pref-better-bibtex-citecommand" onchange="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
             </row>
@@ -37,15 +34,18 @@
               <textbox id="id-better-bibtex-preferences-citeKeyFormat" preference="pref-better-bibtex-format" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
             </row>
             <row>
-              <checkbox id="id-better-bibtex-preferences-server-enabled" label="&zotero.better-bibtex.server.enabled;" preference="pref-better-bibtex-server" oncommand="updatePreferences();"/>
-            </row>
-            <row>
               <label value="&zotero.better-bibtex.unicode;"/>
               <radiogroup id="id-better-bibtex-preferences-unicode" orient="horizontal" preference="pref-better-bibtex-unicode" oncommand="updatePreferences();">
                 <radio id="id-better-bibtex-preferences-unicode-default" label="&zotero.better-bibtex.unicode.default;" value=""/>
                 <radio id="id-better-bibtex-preferences-unicode-always" label="&zotero.better-bibtex.unicode.always;" value="always"/>
                 <radio id="id-better-bibtex-preferences-unicode-never" label="&zotero.better-bibtex.unicode.never;" value="never"/>
               </radiogroup>
+            </row>
+            <row>
+              <checkbox id="id-better-bibtex-preferences-getCollections" label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive" oncommand="updatePreferences();"/>
+            </row>
+            <row>
+              <checkbox id="id-better-bibtex-preferences-server-enabled" label="&zotero.better-bibtex.server.enabled;" preference="pref-better-bibtex-server" oncommand="updatePreferences();"/>
             </row>
             <row>
               <label id="id-zotero-better-bibtex-server" value="&zotero.better-bibtex.server.address;" hidden="true"/>

@@ -1,8 +1,8 @@
 # Zotero: Better Bib(La)Tex
 
 Install by downloading the [latest
-version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.1.7.xpi) (**0.1.7**, released
-on 2014-01-30 22:47). If you are not prompted with a Firefox installation dialog then double-click the downloaded xpi; Firefox ought to start and present you with the installation dialog.
+version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.1.8.xpi) (**0.1.8**, released
+on 2014-01-30 22:53). If you are not prompted with a Firefox installation dialog then double-click the downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
 For standalone Zotero, do the following:
 
@@ -77,7 +77,7 @@ The Better BibTex configuration pane can be found under the regular Zotero prefe
 # Support - read carefully
 
 My time is extremely limited for a number of very great reasons (you shall have to trust me on this). Because of this, I cannot accept bug reports
-or support requests on anything but the latest version, currently at **0.1.7**. If you submit an issue report,
+or support requests on anything but the latest version, currently at **0.1.8**. If you submit an issue report,
 please include the version that you are on. By the time I get to your issue, the latest version might have bumped up already, and you
 will have to upgrade (you might have auto-upgraded already however) and re-verify that your issue still exists. Apologies for the inconvenience, but such
 are the breaks.
