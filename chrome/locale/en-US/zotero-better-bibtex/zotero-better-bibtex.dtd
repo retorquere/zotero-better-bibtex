@@ -12,3 +12,4 @@
 <!ENTITY zotero.better-bibtex.unicode.default "Default (Unicode for BibLaTeX, ASCII for BibTex)">
 <!ENTITY zotero.better-bibtex.unicode.always "Always">
 <!ENTITY zotero.better-bibtex.unicode.never "Never">
+<!ENTITY zotero.better-bibtex.fancyURLs "Fancy URLs">
