@@ -8,4 +8,7 @@
 <!ENTITY zotero.better-bibtex.cite.format "Citation key format">
 <!ENTITY zotero.better-bibtex.server.enabled "Enable export by HTTP">
 <!ENTITY zotero.better-bibtex.server.address "Bibliography export at ">
-<!ENTITY zotero.better-bibtex.biblatex.ascii "Force BibLaTex HTTP export to ASCII">
+<!ENTITY zotero.better-bibtex.unicode "Export as Unicode">
+<!ENTITY zotero.better-bibtex.unicode.default "Default (Unicode for BibLaTeX, ASCII for BibTex)">
+<!ENTITY zotero.better-bibtex.unicode.always "Always">
+<!ENTITY zotero.better-bibtex.unicode.never "Never">

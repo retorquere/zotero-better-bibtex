@@ -14,13 +14,7 @@
     "exportFileData": false,
     "useJournalAbbreviation": false
   },
-  "configOptions": {
-    "citeKeyFormat": "[auth][year]",
-    "getCollections": true,
-    "unicode": true,
-    "fancyURLs": false
-  },
-  "lastUpdated": "2013-07-01 14:13"
+  "lastUpdated": "/*= timestamp =*/"
 }
 
 var fieldMap = {

@@ -1,8 +1,12 @@
 Components.utils.import("resource://gre/modules/Services.jsm");
 
 Zotero.BetterBibTex = {
-  prefs: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero-better-bibtex."),
-  zotPrefs: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero."),
+  prefs: {
+    bbt: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero-better-bibtex."),
+    zotero: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero."),
+    hidden: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero.translators.better-bibtex.")
+  },
+
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   translators: {},
   threadManager: Components.classes["@mozilla.org/thread-manager;1"].getService(),
@@ -23,15 +27,16 @@ Zotero.BetterBibTex = {
     console.log(msg);
   },
 
-  pref: function(key, dflt) {
+  pref: function(key, dflt, branch) {
+    branch = Zotero.BetterBibTex.prefs[branch || 'bbt'];
     try {
       switch (typeof dflt) {
         case 'boolean':
-          return Zotero.BetterBibTex.prefs.getBoolPref(key);
+          return branch.getBoolPref(key);
         case 'number':
-          return Zotero.BetterBibTex.prefs.getIntPref(key);
+          return branch.getIntPref(key);
         case 'string':
-          return Zotero.BetterBibTex.prefs.getCharPref(key);
+          return branch.getCharPref(key);
       }
     } catch (err) {
       return dflt;
@@ -39,30 +44,19 @@ Zotero.BetterBibTex = {
   },
 
   init: function () {
-    Zotero.BetterBibTex.safeLoad('BetterBibLaTex.js');
-    Zotero.BetterBibTex.safeLoad('BetterCiteTex.js');
-    Zotero.BetterBibTex.safeLoad('BetterBibTex.js');
-    Zotero.BetterBibTex.safeLoad('PandocCite.js');
-    Zotero.BetterBibTex.safeLoad('KeyOnly.js');
-    Zotero.Translators.init();
-
-    var recursive = false;
-    try {
-      recursive = zotPrefs.getBoolPref('recursiveCollections');
-    } catch (err) {}
-
-    try {
-      _recursive = Zotero.BetterBibTex.prefs.getBoolPref('getCollections');
-      Zotero.BetterBibTex.prefs.setBoolPref('getCollections', null);
-      if (_recursive != null) { recursive = _recursive; }
-    } catch (err) {}
-
-    Zotero.BetterBibTex.config = {
-      getCollections: recursive,
-      citeCommand: Zotero.BetterBibTex.pref('citeCommand', 'cite'),
-      citeKeyFormat: Zotero.BetterBibTex.pref('citeKeyFormat', '[auth][year]'),
-      forceUnicode: Zotero.BetterBibTex.pref('forceUnicode', false)
-    };
+    // migrate options
+    Zotero.BetterBibTex.prefs.bbt.clearUserPref('BibLaTex.ASCII');
+    Zotero.BetterBibTex.prefs.bbt.clearUserPref('citekeyformat');
+    Zotero.BetterBibTex.prefs.bbt.clearUserPref('getCollections');
+    for (var option of ['citeCommand', 'citeKeyFormat']) {
+      try {
+        var value = Zotero.BetterBibTex.prefs.bbt.getCharPref(option);
+        if (value) {
+          Zotero.BetterBibTex.prefs.hidden.setCharPref(option, value);
+          Zotero.BetterBibTex.prefs.bbt.clearUserPref(option);
+        }
+      } catch (err) {}
+    }
 
     for (var endpoint of Object.keys(Zotero.BetterBibTex.endpoints)) {
       var url = "/better-bibtex/" + endpoint;
@@ -70,6 +64,13 @@ Zotero.BetterBibTex = {
       var ep = Zotero.Server.Endpoints[url] = function() {};
       ep.prototype = Zotero.BetterBibTex.endpoints[endpoint];
     }
+
+    Zotero.BetterBibTex.safeLoad('BetterBibLaTex.js');
+    Zotero.BetterBibTex.safeLoad('BetterCiteTex.js');
+    Zotero.BetterBibTex.safeLoad('BetterBibTex.js');
+    Zotero.BetterBibTex.safeLoad('PandocCite.js');
+    Zotero.BetterBibTex.safeLoad('KeyOnly.js');
+    Zotero.Translators.init();
   },
 
   endpoints: {
@@ -144,27 +145,21 @@ Zotero.BetterBibTex = {
     var translator = Zotero.BetterBibTex.translators['better' + translator.toLowerCase()] || Zotero.BetterBibTex.translators[translator.toLowerCase()];
     if (!translator) { throw('No translator' + translator); }
 
-    var item;
-    var items = col.getChildren(true, false, 'item');
+    var items = col.getChildren(Zotero.BetterBibTex.pref('recursiveCollections', false, 'zotero'), false, 'item');
     items = [item.id for (item of items)];
     items = Zotero.Items.get(items);
 
-    var charset;
-    try {
-      charset = (Zotero.BetterBibTex.prefs.getBoolPref('BibLaTex.ASCII') ? 'US-ASCII' : 'UTF-8');
-    } catch (err) {
-      charset = 'UTF-8';
-    }
-    return Zotero.BetterBibTex.translate(translator, items, charset);
+    return Zotero.BetterBibTex.translate(translator, items);
   },
 
-  translate: function(translator, items, charset) {
+  translate: function(translator, items) {
     if (!translator) { throw('null translator'); }
 
     var translation = new Zotero.Translate.Export();
     translation.setItems(items);
-    translation.setDisplayOptions({exportCharset: charset});
     translation.setTranslator(translator);
+    // if I don't do this, getHiddenPref croaks on translate.js@180
+    translation._translatorInfo = {};
 
     var status = {finished: false};
 
@@ -202,15 +197,17 @@ Zotero.BetterBibTex = {
     try {
       data = Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/translators/' + translator);
       if (data) { start = data.indexOf('{'); }
-
       if (start >= 0) {
-        let len = 0;
-        for (len = 0; len < 3000; len++) {
-          try {
-            header = JSON.parse(data.substring(start, len).trim());
-            data = data.substring(len, data.length);
-            break;
-          } catch (err) {
+        let len = data.indexOf('}', start);
+        if (len > 0) {
+          for (len -= start; len < 3000; len++) {
+            try {
+              header = JSON.parse(data.substring(start, len).trim());
+              // comment out header but keep linecount the same -- helps in debugging
+              data = '/*' + data.substring(0, start + len) + '*/' + data.substring(start + len, data.length);
+              break;
+            } catch (err) {
+            }
           }
         }
       }
@@ -224,35 +221,6 @@ Zotero.BetterBibTex = {
     }
 
     Zotero.BetterBibTex.translators[header.label.toLowerCase().replace(/[^a-z]/, '')] = header.translatorID;
-
-    var override;
-    for (section of ['configOptions', 'displayOptions']) {
-      if (!header[section]) { continue; }
-      for (option in header[section]) {
-        override = null;
-          var value = header[section][option];
-        try {
-          switch (typeof value) {
-            case 'boolean':
-              override = Zotero.BetterBibTex.prefs.getBoolPref(option);
-              break;
-            case 'number':
-              override = Zotero.BetterBibTex.prefs.getIntPref(option);
-              break;
-            case 'string':
-              override = Zotero.BetterBibTex.prefs.getCharPref(option);
-              if (override && override.trim() == '') { override = null; }
-              break;
-          }
-        } catch (err) {
-          continue;
-        }
-        if (((typeof override) == 'undefined') || (override === null)) { continue; }
-        Zotero.BetterBibTex.log('setting ' + section + '.' + [option] + '=' + override);
-        header[section][option] = override;
-        data = data.replace("safeGetOption('" + option + "')", JSON.stringify(override)); // explicit override, ought not be required
-      }
-    }
 
     Zotero.BetterBibTex.log("Installing " + header.label);
     Zotero.Translators.save(header, data);

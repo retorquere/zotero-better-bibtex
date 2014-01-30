@@ -14,10 +14,10 @@
             >
       <preferences id="zotero-preferences-cite">
         <preference id="pref-better-bibtex-recursive" name="extensions.zotero.recursiveCollections" type="bool"/>
-        <preference id="pref-better-bibtex-citecommand" name="extensions.zotero-better-bibtex.citeCommand" type="string"/>
-        <preference id="pref-better-bibtex-format" name="extensions.zotero-better-bibtex.citeKeyFormat" type="string"/>
+        <preference id="pref-better-bibtex-citecommand" name="extensions.zotero.translators.better-bibtex.citeCommand" type="string"/>
+        <preference id="pref-better-bibtex-format" name="extensions.zotero.translators.better-bibtex.citeKeyFormat" type="string"/>
         <preference id="pref-better-bibtex-server" name="extensions.zotero.httpServer.enabled" type="bool"/>
-        <preference id="pref-better-bibtex-biblatex-ascii" name="extensions.zotero-better-bibtex.BibLaTex.ASCII" type="bool"/>
+        <preference id="pref-better-bibtex-unicode" name="extensions.zotero.translators.better-bibtex.unicode" type="string"/>
       </preferences>
       <hbox flex="1">
         <grid>
@@ -30,28 +30,26 @@
             </row>
             <row>
               <label value="&zotero.better-bibtex.cite.command;"/>
-              <textbox id="id-better-bibtex-preferences-citeCommand" preference="pref-better-bibtex-citecommand"
-                        onchange="updatePreferences(event);"
-                        onkeypress="setTimeout(updatePreferences, 1);"/>
+              <textbox id="id-better-bibtex-preferences-citeCommand" preference="pref-better-bibtex-citecommand" onchange="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
             </row>
             <row>
               <label value="&zotero.better-bibtex.cite.format;"/>
-              <textbox id="id-better-bibtex-preferences-citeKeyFormat" preference="pref-better-bibtex-format"
-                        oninput="updatePreferences(event);"
-                        onkeypress="setTimeout(updatePreferences, 1);"/>
+              <textbox id="id-better-bibtex-preferences-citeKeyFormat" preference="pref-better-bibtex-format" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
             </row>
             <row>
               <checkbox id="id-better-bibtex-preferences-server-enabled" label="&zotero.better-bibtex.server.enabled;" preference="pref-better-bibtex-server" oncommand="updatePreferences();"/>
             </row>
             <row>
-              <checkbox id="id-better-bibtex-preferences-biblatex-ascii" label="&zotero.better-bibtex.biblatex.ascii;" preference="pref-better-bibtex-biblatex-ascii" oncommand="updatePreferences();"/>
+              <label value="&zotero.better-bibtex.unicode;"/>
+              <radiogroup id="id-better-bibtex-preferences-unicode" orient="horizontal" preference="pref-better-bibtex-unicode" oncommand="updatePreferences();">
+                <radio id="id-better-bibtex-preferences-unicode-default" label="&zotero.better-bibtex.unicode.default;" value=""/>
+                <radio id="id-better-bibtex-preferences-unicode-always" label="&zotero.better-bibtex.unicode.always;" value="always"/>
+                <radio id="id-better-bibtex-preferences-unicode-never" label="&zotero.better-bibtex.unicode.never;" value="never"/>
+              </radiogroup>
             </row>
             <row>
               <label id="id-zotero-better-bibtex-server" value="&zotero.better-bibtex.server.address;" hidden="true"/>
               <label id="id-zotero-better-bibtex-server-address" value="" hidden="true"/>
-            </row>
-            <row>
-              <label id="id-better-bibtex-restart-required" class="header" value="&zotero.better-bibtex.restart-required;" hidden="true"/>
             </row>
           </rows>
         </grid>

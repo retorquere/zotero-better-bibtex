@@ -7,11 +7,6 @@
 	"maxVersion": "",
 	"priority": 100,
   "displayOptions": {},
-  "configOptions": {
-    "getCollections": true,
-    "citeCommand": "cite",
-    "citeKeyFormat": "[auth][year]"
-  },
 	"inRepository": false,
 	"translatorType": 2,
 	"browserSupport": "gcsv",

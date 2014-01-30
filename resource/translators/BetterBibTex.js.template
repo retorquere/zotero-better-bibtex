@@ -11,11 +11,6 @@
 		"exportFileData": false,
 		"useJournalAbbreviation": false
 	},
-  "configOptions": {
-    "getCollections": true,
-    "citeKeyFormat": "[auth][year]",
-    "fancyURLs": false
-  },
 	"inRepository": false,
 	"translatorType": 2,
 	"browserSupport": "gcsv",
