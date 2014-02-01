@@ -65,11 +65,20 @@ Zotero.BetterBibTex = {
       ep.prototype = Zotero.BetterBibTex.endpoints[endpoint];
     }
 
-    Zotero.BetterBibTex.safeLoad('BetterBibLaTex.js');
-    Zotero.BetterBibTex.safeLoad('BetterCiteTex.js');
-    Zotero.BetterBibTex.safeLoad('BetterBibTex.js');
-    Zotero.BetterBibTex.safeLoad('PandocCite.js');
-    Zotero.BetterBibTex.safeLoad('KeyOnly.js');
+    Zotero.BetterBibTex.config = {}
+    for (var option of ['citeCommand', 'citeKeyFormat', 'fancyURLs', 'unicode']) {
+      var value = null;
+      try {
+        value = Zotero.BetterBibTex.prefs.hidden.getPref(option);
+      } catch(err) {}
+      Zotero.BetterBibTex.config[option] = value;
+    }
+
+    Zotero.BetterBibTex.safeLoad('Better BibTeX.js');
+    Zotero.BetterBibTex.safeLoad('Better BibLaTeX.js');
+    Zotero.BetterBibTex.safeLoad('BibTeX Citations.js');
+    Zotero.BetterBibTex.safeLoad('Pandoc Citations.js');
+    Zotero.BetterBibTex.safeLoad('BibTeX Citation Keys.js');
     Zotero.Translators.init();
   },
 
@@ -158,8 +167,6 @@ Zotero.BetterBibTex = {
     var translation = new Zotero.Translate.Export();
     translation.setItems(items);
     translation.setTranslator(translator);
-    // if I don't do this, getHiddenPref croaks on translate.js@180
-    translation._translatorInfo = {};
 
     var status = {finished: false};
 
@@ -204,7 +211,7 @@ Zotero.BetterBibTex = {
             try {
               header = JSON.parse(data.substring(start, len).trim());
               // comment out header but keep linecount the same -- helps in debugging
-              data = '/*' + data.substring(0, start + len) + '*/' + data.substring(start + len, data.length);
+              data = data.substring(start + len, data.length);
               break;
             } catch (err) {
             }
@@ -220,10 +227,14 @@ Zotero.BetterBibTex = {
       return;
     }
 
+    //header.hiddenPrefs = {}
+    //for(var pref in Zotero.BetterBibTex.config) { header.hiddenPrefs[pref]=Zotero.BetterBibTex.config[pref]; }
+
     Zotero.BetterBibTex.translators[header.label.toLowerCase().replace(/[^a-z]/, '')] = header.translatorID;
 
     Zotero.BetterBibTex.log("Installing " + header.label);
     Zotero.Translators.save(header, data);
+    Zotero.Translators.update([header]);
   },
 
   setCiteKeys: function() {

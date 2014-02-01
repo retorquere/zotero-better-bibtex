@@ -18,44 +18,25 @@ Array.prototype.collect = function(transform)
   return result;
 }
 
-function safeGetOption(option, hidden)
-{
-  try {
-    if (hidden) {
-      return Z.getHiddenPref('better-bibtex.' + option);
-    } else {
-      return Z.getOption(option);
-    }
-  } catch (err) {
-    Zotero.debug('Error fetching ' + (hidden ? 'hidden ' : '') + 'option ' + option + ': ' + err.stack);
-    return;
-  }
-}
-
 var config = {
-  exportCharset:    safeGetOption('exportCharset'),
-  citeCommand:      safeGetOption('citeCommand', true),
-  citeKeyFormat:    safeGetOption('citeKeyFormat', true),
-  fancyURLs:        safeGetOption('fancyURLs', true),
-  translator: {
-    id: '/*= id =*/',
-    label:  '/*= label =*/',
-    unicode:  /*= unicode =*/
-  }
-};
-config.translator.unicode = config.translator.unicode || (config.exportCharset && config.exportCharset.toLowerCase() == 'utf-8');
-switch (safeGetOption('unicode', true)) {
-  case 'always':
-    config.translator.unicode = true;
-    break;
-  case 'never':
-    config.translator.unicode = false;
-    break;
+  id: '/*= id =*/',
+  label:  '/*= label =*/',
+  unicode:  /*= unicode =*/
 }
 
-function trLog(msg) { Zotero.debug('[better bibtex ' + config.translator.label + '] ' + msg); }
+function unicode() {
+  switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
+    case 'always':
+      return true;
+    case 'never':
+      return false;
+    default:
+      var _charset = Zotero.getOption('exportCharset');
+      return config.unicode || (_charset && _charset.toLowerCase() == 'utf-8');
+  }
+}
 
-trLog('config = ' + JSON.stringify(config));
+function trLog(msg) { Zotero.debug('[' + config.label + '] ' + msg); }
 
 function detectImport() {
   var maxChars = 1048576; // 1MB
@@ -169,6 +150,8 @@ convert.to_latex = function(str) {
   var c, ca;
   var l;
 
+  var _unicode = unicode();
+
   var res = [];
 
   for (var i=0; i < strlen; i++) {
@@ -178,7 +161,7 @@ convert.to_latex = function(str) {
     }
     convert.unicode2latex[c].math = !!convert.unicode2latex[c].math;
 
-    if (config.translator.unicode && !convert.unicode2latex[c].force) {
+    if (_unicode && !convert.unicode2latex[c].force) {
       convert.unicode2latex[c].latex = c;
       convert.unicode2latex[c].math = false;
     }
@@ -712,11 +695,11 @@ function doImport() {
 function escape_url(url) {
   var href = url.replace(/([\\_%&{}])/g, "\\$1");
 
-  if (!config.translator.unicode) {
+  if (!unicode()) {
     href = href.replace(/[^\x21-\x7E]/g, function(chr){return "\\\%" + ('00' + chr.charCodeAt(0).toString(16)).slice(-2)});
   }
 
-  if (config.fancyURLs) {
+  if (Zotero.getHiddenPref('better-bibtex.fancyURLs')) {
     return "\\href{" + href + "}{" + convert.to_latex(url) + "}";
   }
 
@@ -1154,7 +1137,7 @@ var CiteKeys = {
     var citekey = CiteKeys.extract(item);
     if (citekey) { return citekey; }
 
-    var basekey = config.citeKeyFormat.replace(/\[([^\]]+)\]/g, function(match, command) {
+    var basekey = Zotero.getHiddenPref('better-bibtex.citeKeyFormat').replace(/\[([^\]]+)\]/g, function(match, command) {
       var cmds = command.split(':');
       var field = cmds.shift();
       var value = null;

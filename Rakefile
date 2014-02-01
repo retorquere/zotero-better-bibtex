@@ -11,12 +11,13 @@ EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
 RELEASE = Nokogiri::XML(File.open('install.rdf')).at('//em:version').inner_text
 
-MAIN            = 'resource/translators/BibTex.js.template'
-BETTERBIBTEX    = 'resource/translators/BetterBibTex.js'
-BETTERCITETEX   = 'resource/translators/BetterCiteTex.js'
-PANDOCCITE      = 'resource/translators/PandocCite.js'
-KEYONLYCITE     = 'resource/translators/KeyOnly.js'
-BETTERBIBLATEX  = 'resource/translators/BetterBibLaTex.js'
+MAIN            = 'resource/translators/BibTeX.js.template'
+
+BETTERBIBTEX    = 'resource/translators/Better BibTeX.js'
+BETTERBIBLATEX  = 'resource/translators/Better BibLaTeX.js'
+BETTERCITETEX   = 'resource/translators/BibTeX Citations.js'
+PANDOCCITE      = 'resource/translators/Pandoc Citations.js'
+KEYONLYCITE     = 'resource/translators/BibTeX Citation Keys.js'
 
 SOURCES = %w{chrome resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten

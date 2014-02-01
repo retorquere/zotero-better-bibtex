@@ -43,7 +43,7 @@
               </radiogroup>
             </row>
             <row>
-              <checkbox id="id-better-bibtex-preferences-fancy-urls" label="&zotero.better-bibtex.fancyURLs;" preference="pref-better-bibtex-fancyurls" oncommand="updatePreferences();"/>
+              <checkbox id="id-better-bibtex-preferences-fancyURLs" label="&zotero.better-bibtex.fancyURLs;" preference="pref-better-bibtex-fancyurls" oncommand="updatePreferences();"/>
             </row>
             <row>
               <checkbox id="id-better-bibtex-preferences-getCollections" label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive" oncommand="updatePreferences();"/>
@@ -54,6 +54,9 @@
             <row>
               <label id="id-zotero-better-bibtex-server" value="&zotero.better-bibtex.server.address;" hidden="true"/>
               <label id="id-zotero-better-bibtex-server-address" value="" hidden="true"/>
+            </row>
+            <row>
+              <label id="id-zotero-better-bibtex-restart-required" value="&zotero.better-bibtex.restart-required;" hidden="true"/>
             </row>
           </rows>
         </grid>

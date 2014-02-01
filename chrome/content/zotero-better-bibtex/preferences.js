@@ -16,4 +16,12 @@ function updatePreferences(load) {
 
   serverAddress.setAttribute('hidden', !serverEnabled);
   serverLabel.setAttribute('hidden', !serverEnabled);
+
+  if (false && Zotero.isStandalone) {
+    var restartRequired = false;
+    for (var option in Zotero.BetterBibTex.config) {
+      restartRequired = restartRequired || (Zotero.BetterBibTex.config[option] != document.getElementById('id-zotero-better-bibtex-' + option).getAttribute('value'));
+    }
+    document.getElementById('id-zotero-better-bibtex-restart-required').setAttribute('hidden', restartRequired);
+  }
 }
