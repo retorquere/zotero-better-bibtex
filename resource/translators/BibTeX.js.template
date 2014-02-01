@@ -311,6 +311,9 @@ function processField(item, field, value) {
     } else {
       item.date = value;
     }
+  } else if (field == "date") {
+    //We're going to assume that "date" and the date parts don't occur together. If they do, we pick date, which should hold all.
+    item.date = value;
   } else if(field == "pages") {
     if (item.itemType == "book" || item.itemType == "thesis" || item.itemType == "manuscript") {
       item.numPages = value;
@@ -654,6 +657,11 @@ function beginRecord(type, closeChar) {
           item.extra = '';
         }
         item.extra += 'bibtex: ' + item.itemID;
+
+        if (!item.publisher && item.backupPublisher) {
+          item.publisher=item.backupPublisher;
+          delete item.backupPublisher;
+        }
 
         item.complete();
       }
