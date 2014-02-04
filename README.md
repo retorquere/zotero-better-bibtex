@@ -1,17 +1,5 @@
 # Zotero: Better Bib(La)Tex
 
-Install by downloading the [latest
-version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.1.11.xpi) (**0.1.11**, released
-on 2014-02-04 16:01). If you are not prompted with a Firefox installation dialog then double-click the downloaded xpi; Firefox ought to start and present you with the installation dialog.
-
-For standalone Zotero, do the following:
-
-1. In the main menu go to Tools > Add-ons
-2. Select 'Extensions'
-3. Click on the gear in the top-right corner and choose 'Install Add-on From File...'
-4. Choose .xpi that you’ve just downloaded, click 'Install'
-5. Restart Zotero
-
 This extension aims to make Zotero effective for us LaTeX holdouts. It adds the following features:
 
 ## Set your own, fixed citation keys
@@ -22,10 +10,10 @@ You can fix the citation key for a reference by adding the text "bibtex: [your c
 ## Drag and drop/hotkey citations
 
 You can drag and drop citations into your LaTeX editor, and it will add a proper \cite{citekey}. The actual command is
-configurable by setting the config option "extensions.zotero-better-bibtex.citeCommand" (default: cite). Do not include the leading backslash. This
+configurable by setting the config option in the BBT preferences (see below). Do not include the leading backslash. This
 feature requires a one-time setup: go to zotero preferences, tab Export, under Default Output Format, select "Bib(La)TeX citations".
 
-If you want even more convenience, install [AutoHotKey](http://www.autohotkey.com/), modify the [Zotero sample macro](https://raw.github.com/friflaj/zotero-better-bibtex/master/FastCite.ahk), and add it to your AutoHotKey.ahk. If you use this macro unmodified, when you select one or more entries in Zotero, it will copy them, bring TexMaker to the forground, and paste your citation at the cursor. Caution: this macro does *not* check that you are in Zotero when you activate it, nor that TexMaker is actually running.
+If you want even more convenience (and you're on Windows), install [AutoHotKey](http://www.autohotkey.com/), modify the [Zotero sample macro](https://raw.github.com/friflaj/zotero-better-bibtex/master/FastCite.ahk), and add it to your AutoHotKey.ahk. If you use this macro unmodified, when you select one or more entries in Zotero, it will copy them, bring TexMaker to the forground, and paste your citation at the cursor. Caution: this macro does *not* check that you are in Zotero when you activate it, nor that TexMaker is actually running.
 
 ## Recursive collection export
 
@@ -74,10 +62,24 @@ as export (which does disambiguate them). You will have to either:
 
 The Better BibTex configuration pane can be found under the regular Zotero preferences pane, tab 'Better Bib(La)Tex'.
 
+# Installation (one-time)
+
+After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
+version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.1.10.xpi) (**0.1.10**, released
+on 2014-02-01 10:36). If you are not prompted with a Firefox installation dialog then double-click the downloaded xpi; Firefox ought to start and present you with the installation dialog.
+
+For standalone Zotero, do the following:
+
+1. In the main menu go to Tools > Add-ons
+2. Select 'Extensions'
+3. Click on the gear in the top-right corner and choose 'Install Add-on From File...'
+4. Choose .xpi that you’ve just downloaded, click 'Install'
+5. Restart Zotero
+
 # Support - read carefully
 
 My time is extremely limited for a number of very great reasons (you shall have to trust me on this). Because of this, I cannot accept bug reports
-or support requests on anything but the latest version, currently at **0.1.11**. If you submit an issue report,
+or support requests on anything but the latest version, currently at **0.1.10**. If you submit an issue report,
 please include the version that you are on. By the time I get to your issue, the latest version might have bumped up already, and you
 will have to upgrade (you might have auto-upgraded already however) and re-verify that your issue still exists. Apologies for the inconvenience, but such
 are the breaks.
