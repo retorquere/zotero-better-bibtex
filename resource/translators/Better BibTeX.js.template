@@ -192,10 +192,9 @@ function doExport() {
       writeField("howpublished", item.url);
     }*/
     if (item.notes && Zotero.getOption("exportNotes")) {
-      for(var i in item.notes) {
-        var note = item.notes[i];
+      item.notes.forEach(function(note) {
         writeField("annote", escape(Zotero.Utilities.unescapeHTML(note["note"])));
-      }
+      });
     }
 
     if(item.attachments) {

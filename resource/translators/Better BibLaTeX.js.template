@@ -327,10 +327,9 @@ function doExport() {
     writeField("keywords", escape(item.tags.collect(function(tag) {return tag.tag;}) , ', '));
 
     if (item.notes && Zotero.getOption("exportNotes")) {
-      for(var i in item.notes) {
-        var note = item.notes[i];
+      item.notes.forEach(function(note) {
         writeField("annote", escape(Zotero.Utilities.unescapeHTML(note["note"])));
-      }
+      });
     }
 
     if(item.attachments) {

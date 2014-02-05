@@ -355,12 +355,11 @@ function processField(item, field, value) {
     item.attachments = [{path:value.split(",")[0], mimeType:"application/pdf"}];
   } else if (field == "file") {
     var attachments = value.split(";");
-    for(var i in attachments){
-      var attachment = attachments[i];
+    attachments.forEach(function(attachment) {
       var parts = attachment.split(":");
       var filetitle = parts[0];
       var filepath = parts[1];
-      if (filepath.trim() === '') continue; // skip empty entries
+      if (filepath.trim() === '') return; // skip empty entries
       var filetype = parts[2];
 
       if (!filetype) { throw value; }
@@ -373,7 +372,7 @@ function processField(item, field, value) {
       } else {
         item.attachments.push({path:filepath, title:filetitle});
       }
-    }
+    });
   }
 }
 
@@ -847,9 +846,9 @@ var CiteKeys = {
       }
     });
 
-    for (type in creators) {
+    creators.forEach(function(type) {
       if (creators[type].length == 0) { creators[type] = null; }
-    }
+    });
 
     if (onlyEditors) { return creators.editors; }
     return creators.authors || creators.editors || creators.collaborators || creators.translators || null;
