@@ -818,12 +818,7 @@ var CiteKeys = {
 
   getCreators: function(item, onlyEditors) {
     if(!item.creators || !item.creators.length) { return []; }
-    var creators = {
-      authors:        [],
-      editors:        [],
-      translators:    [],
-      collaborators:  []
-    };
+    var creators = {};
     var primaryCreatorType = Zotero.Utilities.getCreatorsForType(item.itemType)[0];
     var creator;
     item.creators.forEach(function(creator) {
@@ -832,22 +827,22 @@ var CiteKeys = {
         switch (creator.creatorType) {
           case 'editor':
           case 'seriesEditor':
+            if (!creators.editors) { creators.editors = []; }
             creators.editors.push(name);
             break;
           case 'translator':
+            if (!creators.translators) { creators.translators = []; }
             creators.translators.push(name);
             break;
           case primaryCreatorType:
+            if (!creators.authors) { creators.authors = []; }
             creators.authors.push(name);
             break;
           default:
+            if (!creators.collaborators) { creators.collaborators = []; }
             creators.collaborators.push(name);
         }
       }
-    });
-
-    creators.forEach(function(type) {
-      if (creators[type].length == 0) { creators[type] = null; }
     });
 
     if (onlyEditors) { return creators.editors; }
