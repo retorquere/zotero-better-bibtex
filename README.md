@@ -84,6 +84,11 @@ please include the version that you are on. By the time I get to your issue, the
 will have to upgrade (you might have auto-upgraded already however) and re-verify that your issue still exists. Apologies for the inconvenience, but such
 are the breaks.
 
+## Known issues
+
+If you see a duplicate translator for Better BibLaTeX, go to "preferences/advanced/files", reset translators and
+restart.
+
 # Plans
 
 * add "citekey" columns to reference list view
