@@ -133,7 +133,12 @@ function doExport() {
       var creator;
 
       item.creators.forEach(function(creator) {
-        var creatorString = [creator.lastName, creator.firstName].filter(function(name) { return (('' + name).trim() != ''); }).join(', ');
+        if (('' + creator.firstName).trim() != '' && ('' + creator.lastName).trim() != '') {
+          creatorString = creator.lastName + ", " + creator.firstName;
+        } else {
+          creatorString = {literal: creator.lastName}
+        }
+
 
         switch (creator.creatorType) {
           case 'editor':

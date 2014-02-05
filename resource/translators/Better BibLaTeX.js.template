@@ -250,7 +250,7 @@ function doExport() {
       var creator, creatorString;
 
       item.creators.forEach(function(creator) {
-        if (creator.firstName && creator.lastName) {
+        if (('' + creator.firstName).trim() != '' && ('' + creator.lastName).trim() != '') {
           creatorString = creator.lastName + ", " + creator.firstName;
         } else {
           creatorString = {literal: creator.lastName}
