@@ -332,18 +332,7 @@ function doExport() {
       });
     }
 
-    if(item.attachments) {
-      var attachments = [];
-      item.attachments.forEach(function(att) {
-        if (Zotero.getOption("exportFileData") && att.defaultPath && att.saveFile && att.saveFile(att.defaultPath, true)) {
-          attachments.push({title: att.title, path: att.defaultPath, mimetype: att.mimeType});
-        } else { if (att.localPath) {
-          attachments.push({title: att.title, path: att.localPath, mimetype: att.mimeType});
-        } }
-      });
-      attachments = attachments.collect(function(att) { return [att.title, att.path.replace(/([\\{}:;])/g, "\\$1"), att.mimetype].join(':'); }).join(';');
-      writeField("file", attachments);
-    }
+    writeField("file", saveAttachments(item));
 
     Zotero.write("\n}");
   }
