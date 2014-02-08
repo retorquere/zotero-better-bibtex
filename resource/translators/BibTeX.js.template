@@ -906,7 +906,7 @@ var CiteKeys = {
       authors = authors.slice(0, n);
       if (etal) { authors.push('EtAl'); }
     }
-    authors = authors.join('');
+    authors = authors.join('.');
     return authors;
   },
 
@@ -920,9 +920,9 @@ var CiteKeys = {
       case 2:
       case 3:
       case 4:
-        return authors.collect(function(author) { return author.substring(0, 1); }).join('');
+        return authors.collect(function(author) { return author.substring(0, 1); }).join('.');
       default:
-        return authors.slice(0, 3).collect(function(author) { return author.substring(0, 1); }).join('') + '+';
+        return authors.slice(0, 3).collect(function(author) { return author.substring(0, 1); }).join('.') + '+';
     }
   },
 
@@ -930,7 +930,7 @@ var CiteKeys = {
     var authors = CiteKeys.getCreators(item, onlyEditors);
     if (!authors) { return null; }
 
-    return authors.collect(function(author) { return author.substring(0, n); }).join('');
+    return authors.collect(function(author) { return author.substring(0, n); }).join('.');
   },
 
   _authorIni: function(item, onlyEditors) {
@@ -939,25 +939,23 @@ var CiteKeys = {
 
     var firstAuthor = authors.shift();
 
-    return firstAuthor.substring(0, 5) + authors.collect(function(author) {
+    return [firstAuthor.substring(0, 5)].concat(authors.collect(function(author) {
       return auth.split(/\s+/).collect(function(name) { return name.substring(0, 1); }).join('');
-    }).join('');
+    })).join('.');
   },
 
   _auth_auth_ea: function(item, onlyEditors) {
     var authors = CiteKeys.getCreators(item, onlyEditors);
     if (!authors) { return null; }
 
-    var postfix = (authors.length > 2 ? '.ea' : '');
-    return authors.slice(0,2).join('') + postfix;
+    return authors.slice(0,2).concat(authors.length > 2 ? ['ea'] : []).join('.')
   },
 
   _auth_etal: function(item, onlyEditors) {
     var authors = CiteKeys.getCreators(item, onlyEditors);
     if (!authors) { return null; }
 
-    var postfix = (authors.length > 2 ? '.etal' : '');
-    return authors.slice(0,2).join('') + postfix;
+    return authors.slice(0,2).concat(authors.length > 2 ? ['ea'] : []).join('.')
   },
 
   _authshort: function(item, onlyEditors) {
@@ -965,9 +963,9 @@ var CiteKeys = {
     if (!authors) { return null; }
 
     switch (authors.length) {
-      case 1:         return authors[0];
-      case 2: case 3: return authors.collect(function(author) { return author.substring(0, 1); }).join('');
-      default:        return authors.collect(function(author) { return author.substring(0, 1); }).join('') + '+';
+      case 0:   return null;
+      case 1:   return authors[0];
+      default:  return authors.collect(function(author) { return author.substring(0, 1); }).join('.') + (authors.length > 3 ? '+' : '');
     }
   },
 
