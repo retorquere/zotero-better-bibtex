@@ -19,7 +19,19 @@ function doExport() {
   var item;
   var citations = {};
   while (item = Zotero.nextItem()) {
-    citations[item.key] = CiteKeys.build(item);
+    citations[item.key] = {key: CiteKeys.build(item)};
+  }
+
+  for (var key of Object.keys(CiteKeys.keys)) {
+    var duplicates = CiteKeys.keys[key];
+    duplicates.forEach(function(source) {
+      duplicates.forEach(function(target) {
+        if (source != target) {
+          citations[source].duplicates = citations[source].duplicates || [];
+          citations[source].duplicates.push(target);
+        }
+      });
+    });
   }
   Zotero.write(JSON.stringify(citations));
 }

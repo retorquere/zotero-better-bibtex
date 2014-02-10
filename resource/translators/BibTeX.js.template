@@ -843,6 +843,21 @@ var CiteKeys = {
     return key;
   },
 
+  register: function(item, key) {
+    var postfix;
+    if (CiteKeys.keys[key]) {
+      // register duplicate
+      CiteKeys.keys[key].push(item.key);
+      postfix = 0;
+      while (CiteKeys.keys[key + postfix]) { postfix++; }
+    } else {
+      postfix = '';
+      return key;
+    }
+    CiteKeys.keys[key + postfix] = [item.key];
+    return key + postfix;
+  },
+
   getCreators: function(item, onlyEditors) {
     if(!item.creators || !item.creators.length) { return []; }
     var creators = {};
@@ -1193,15 +1208,6 @@ var CiteKeys = {
       return value ? value : '';
     });
 
-    basekey = CiteKeys.clean(basekey);
-
-    citekey = basekey;
-    var i = 0;
-    while(CiteKeys.keys[citekey]) {
-      i++;
-      citekey = basekey + "-" + i;
-    }
-    CiteKeys.keys[citekey] = true;
-    return citekey;
+    return CiteKeys.register(item, CiteKeys.clean(basekey));
   }
 };

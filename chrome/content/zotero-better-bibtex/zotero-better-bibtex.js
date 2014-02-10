@@ -273,12 +273,12 @@ Zotero.BetterBibTex = {
     for (item of items) {
       if (!keys[item.key]) { continue; }
 
-      Zotero.BetterBibTex.log('Setting key for ' + item.key + ': ' + keys[item.key]);
+      Zotero.BetterBibTex.log('Setting key for ' + item.key + ': ' + keys[item.key].key);
 
       var extra = '' + item.getField('extra');
       extra = extra.trim();
       if (extra.length > 0) { extra += "\n"; }
-      item.setField('extra', extra + 'bibtex: ' + keys[item.key]);
+      item.setField('extra', extra + 'bibtex: ' + keys[item.key].key);
       item.save();
     }
   }
