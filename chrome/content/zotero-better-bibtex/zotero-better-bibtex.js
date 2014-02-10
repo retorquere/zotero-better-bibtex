@@ -271,14 +271,14 @@ Zotero.BetterBibTex = {
     }
 
     for (item of items) {
-      if (!keys[item.key]) { continue; }
+      if (!keys[item.itemID]) { continue; }
 
-      Zotero.BetterBibTex.log('Setting key for ' + item.key + ': ' + keys[item.key].key);
+      Zotero.BetterBibTex.log('Setting key for ' + item.itemID + ': ' + keys[item.itemID].key);
 
       var extra = '' + item.getField('extra');
       extra = extra.trim();
       if (extra.length > 0) { extra += "\n"; }
-      item.setField('extra', extra + 'bibtex: ' + keys[item.key].key);
+      item.setField('extra', extra + 'bibtex: ' + keys[item.itemID].key);
       item.save();
     }
   }

@@ -19,7 +19,7 @@ function doExport() {
   var item;
   var citations = {};
   while (item = Zotero.nextItem()) {
-    citations[item.key] = {key: CiteKeys.build(item)};
+    citations[item.itemID] = {key: CiteKeys.build(item)};
   }
 
   for (var key of Object.keys(CiteKeys.keys)) {
