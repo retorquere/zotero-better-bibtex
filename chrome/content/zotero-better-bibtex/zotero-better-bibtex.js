@@ -241,10 +241,24 @@ Zotero.BetterBibTex = {
     return translator;
   },
 
-  setCiteKeys: function() {
+  getCiteKeys: function(items) {
     var translator = Zotero.BetterBibTex.getTranslator('BibTeX Citation Keys');
     if (!translator) { throw('No translator' + translator); }
 
+    items = [item for (item of items) if (!(item.isAttachment() || item.isNote()))];
+
+    try {
+      Zotero.BetterBibTex.log('Fetching keys: for ' + items.length + ' items');
+      var keys = Zotero.BetterBibTex.translate(translator, [item for (item of items)]);
+      Zotero.BetterBibTex.log('Found keys: ' + keys);
+      return JSON.parse(keys);
+    } catch (err) {
+      Zotero.BetterBibTex.log('Cannot retrieve keys: ', err);
+      return null;
+    }
+  },
+
+  setCiteKeys: function() {
     var win = Zotero.BetterBibTex.windowMediator.getMostRecentWindow("navigator:browser");
     var item;
     var items = win.ZoteroPane.getSelectedItems();
@@ -260,12 +274,8 @@ Zotero.BetterBibTex = {
       item.save();
     }
 
-    try {
-      Zotero.BetterBibTex.log('Fetching keys: for ' + items.length + ' items');
-      var keys = Zotero.BetterBibTex.translate(translator, [item for (item of items)]);
-      Zotero.BetterBibTex.log('Found keys: ' + keys);
-      keys = JSON.parse(keys);
-    } catch (err) {
+    var keys = Zotero.BetterBibTex.getCiteKeys(items);
+    if (!keys) {
       Zotero.BetterBibTex.log('Cannot set keys: ', err);
       return;
     }

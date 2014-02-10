@@ -23,8 +23,12 @@ function doExport() {
   }
 
   for (var key of Object.keys(CiteKeys.keys)) {
-    var duplicates = CiteKeys.keys[key];
+    var duplicates = CiteKeys.keys[key].duplicates;
     duplicates.forEach(function(source) {
+      if (citations[source].key != CiteKeys.keys[key].original) {
+        citations[source].generated = CiteKeys.keys[key].original;
+      }
+
       duplicates.forEach(function(target) {
         if (source != target) {
           citations[source].duplicates = citations[source].duplicates || [];

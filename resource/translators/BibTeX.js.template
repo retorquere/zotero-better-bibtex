@@ -846,15 +846,13 @@ var CiteKeys = {
   register: function(item, key) {
     var postfix;
     if (CiteKeys.keys[key]) {
-      // register duplicate
-      CiteKeys.keys[key].push(item.itemID);
+      CiteKeys.keys[key].duplicates.push(item.itemID);
       postfix = 0;
       while (CiteKeys.keys[key + postfix]) { postfix++; }
     } else {
       postfix = '';
-      return key;
     }
-    CiteKeys.keys[key + postfix] = [item.itemID];
+    CiteKeys.keys[key + postfix] = {original: key, duplicates: [item.itemID]};
     return key + postfix;
   },
 
