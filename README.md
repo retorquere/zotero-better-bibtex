@@ -58,6 +58,8 @@ as export (which does disambiguate them). You will have to either:
 * Set an explicit cite key for at least one of them, or
 * Configure your generator to generate non-ambigous keys (see below)
 
+The plugin will generate bibtex comments to show whether a key conflicts and with which entry
+
 ## Configuration
 
 The Better BibTex configuration pane can be found under the regular Zotero preferences pane, tab 'Better Bib(La)Tex'.
@@ -92,7 +94,6 @@ restart.
 # Plans
 
 * add "citekey" columns to reference list view
-* Scan library for citation key conflicts
 * Submission to Mozilla Extension registry
 * JabRef groups export
 

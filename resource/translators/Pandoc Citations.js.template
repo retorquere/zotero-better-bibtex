@@ -16,12 +16,11 @@
 /*= render BibTeX.js =*/
 
 function doExport() {
-  var item;
   var citation = [];
-  while (item = Zotero.nextItem()) {
-    citation.push(CiteKeys.build(item));
-  }
-  Zotero.write(citation.collect(function(key) { return '@' + key; }).join(' '));
+  CiteKeys.initialize().forEach(function(item) {
+    if (CiteKeys.items[item.itemID]) { citation.push('@' + CiteKeys.items[item.itemID].key); }
+  });
+  Zotero.write(citation.join(' '));
 }
 
 var exports = {

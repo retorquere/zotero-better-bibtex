@@ -16,11 +16,10 @@
 /*= render BibTeX.js =*/
 
 function doExport() {
-  var item;
   var citation = [];
-  while (item = Zotero.nextItem()) {
-    citation.push(CiteKeys.build(item));
-  }
+  CiteKeys.initialize().forEach(function(item) {
+    if (CiteKeys.items[item.itemID]) { citation.push(CiteKeys.items[item.itemID].key); }
+  });
   Zotero.write("\\" + Zotero.getHiddenPref('better-bibtex.citeCommand') + "{" + citation.join(',') + '}');
 }
 

@@ -276,21 +276,21 @@ Zotero.BetterBibTex = {
 
     var keys = Zotero.BetterBibTex.getCiteKeys(items);
     if (!keys) {
-      Zotero.BetterBibTex.log('Cannot set keys: ', err);
+      Zotero.BetterBibTex.log('Cannot set keys');
       return;
     }
 
-    for (item of items) {
-      if (!keys[item.itemID]) { continue; }
+    items.forEach(function(item) {
+      if (keys[item.id]) {
+        Zotero.BetterBibTex.log('Setting key for ' + item.id + ': ' + keys[item.id].key);
 
-      Zotero.BetterBibTex.log('Setting key for ' + item.itemID + ': ' + keys[item.itemID].key);
-
-      var extra = '' + item.getField('extra');
-      extra = extra.trim();
-      if (extra.length > 0) { extra += "\n"; }
-      item.setField('extra', extra + 'bibtex: ' + keys[item.itemID].key);
-      item.save();
-    }
+        var extra = '' + item.getField('extra');
+        extra = extra.trim();
+        if (extra.length > 0) { extra += "\n"; }
+        item.setField('extra', extra + 'bibtex: ' + keys[item.id].key);
+        item.save();
+      }
+    });
   }
 };
 

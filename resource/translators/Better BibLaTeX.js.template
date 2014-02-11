@@ -93,21 +93,26 @@ function doExport() {
   // to make sure the BOM gets ignored
   Zotero.write("\n");
 
-  var item;
-  while (item = Zotero.nextItem()) {
+  CiteKeys.initialize().forEach(function(item) {
+    trLog('Generating for ' + JSON.stringify(item));
     //don't export standalone notes and attachments
-    if (item.itemType == "note" || item.itemType == "attachment") continue;
+    if (item.itemType == "note" || item.itemType == "attachment") return;
 
     // determine type
     var type = zotero2tex[item.itemType];
     if (typeof (type) == "function") { type = type(item); }
     if (!type) type = "misc";
 
-
-    var citekey = CiteKeys.build(item);
-
-    // write citation key (removed the comma)
-    Zotero.write("\n\n@"+type+"{"+citekey);
+    Zotero.write("\n\n");
+    Zotero.write("% better-bibtex: " + (CiteKeys.items[item.itemID].pinned ?  'pinned' : 'generated') + "\n");
+    if (CiteKeys.items[item.itemID].duplicates) {
+      Zotero.write("% better-bibtex: " + (CiteKeys.items[item.itemID].pinned ?  'hard' : 'soft') + " conflict");
+      if (CiteKeys.items[item.itemID].default && CiteKeys.items[item.itemID].default != CiteKeys.items[item.itemID].key) {
+        Zotero.write(" with " + CiteKeys.items[item.itemID].default);
+      }
+      Zotero.write("\n");
+    }
+    Zotero.write("@"+type+"{"+CiteKeys.items[item.itemID].key);
 
     for(var field in fieldMap) {
       if(item[fieldMap[field]]) {
@@ -335,7 +340,7 @@ function doExport() {
     writeField("file", saveAttachments(item));
 
     Zotero.write("\n}");
-  }
+  });
 }
 
 var exports = {

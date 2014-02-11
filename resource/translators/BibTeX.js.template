@@ -824,11 +824,73 @@ function isTitleCase(string) {
 }
 */
 
-
 var CiteKeys = {
   keys: [],
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   unsafechars: /[^-_a-z0-9!\$\*\+\.\/:;\?\[\]]/ig,
+
+  id: function(item) {
+    return item.itemID;
+    // return (item.libraryID ? item.libraryID : '0') + '/' + item.key;
+  },
+
+  initialize: function(items) {
+    CiteKeys.items = {};
+
+    if (!items) {
+      trLog('Export running, fetching items...');
+      items = [];
+      var item;
+      while (item = Zotero.nextItem()) {
+        trLog(item.itemID);
+        items.push(item);
+      }
+      trLog('Fetching ' + items.length + ' items...');
+    }
+
+    var generate = [];
+
+    trLog('Pinned items...');
+    items.forEach(function(item) {
+      if (item.itemType == "note" || item.itemType == "attachment") return;
+
+      // all pinned items first
+      if (CiteKeys.embeddedKeyRE.exec(item.extra)) {
+        CiteKeys.items[item.itemID] = {key: CiteKeys.build(item)};
+        trLog(item.itemID + ' pinned: ' + CiteKeys.items[item.itemID].key);
+      } else {
+        generate.push(item);
+      }
+    });
+
+    trLog('Generating keys for ' + items.length + ' items...');
+    generate.forEach(function(item) {
+      CiteKeys.items[item.itemID] = {key: CiteKeys.build(item)};
+      trLog(item.itemID + ' generated: ' + CiteKeys.items[item.itemID].key);
+    });
+
+    for (var key of Object.keys(CiteKeys.keys)) {
+      var duplicates = CiteKeys.keys[key].duplicates;
+      duplicates.forEach(function(source) {
+        if (source.pinned) {
+          CiteKeys.items[source.item].pinned = true;
+        } else {
+          if (CiteKeys.items[source.item].key != CiteKeys.keys[key].original) {
+            CiteKeys.items[source.item].default = CiteKeys.keys[key].original;
+          }
+        }
+
+        duplicates.forEach(function(target) {
+          if (source.item != target.item) {
+            CiteKeys.items[source.item].duplicates = CiteKeys.items[source.item].duplicates || [];
+            CiteKeys.items[source.item].duplicates.push(target.item);
+          }
+        });
+      });
+    }
+
+    return items;
+  },
 
   extract: function(item) {
     if (!item.extra) { return null; }
@@ -839,20 +901,20 @@ var CiteKeys = {
     item.extra = item.extra.replace(m[0], '');
     var key = m[1];
     if (CiteKeys.keys[key]) { trLog('BibTex export: duplicate key ' + key); }
-    CiteKeys.keys[key] = true;
     return key;
   },
 
-  register: function(item, key) {
+  register: function(item, key, pinned) {
     var postfix;
     if (CiteKeys.keys[key]) {
-      CiteKeys.keys[key].duplicates.push(item.itemID);
+      CiteKeys.keys[key].duplicates.push({item: item.itemID, pinned: pinned});
+      if (pinned) { return key; }
       postfix = 0;
       while (CiteKeys.keys[key + postfix]) { postfix++; }
     } else {
       postfix = '';
     }
-    CiteKeys.keys[key + postfix] = {original: key, duplicates: [item.itemID]};
+    CiteKeys.keys[key + postfix] = {original: key, duplicates: [{item: item.itemID, pinned: pinned}]};
     return key + postfix;
   },
 
@@ -1175,7 +1237,7 @@ var CiteKeys = {
 
   build: function(item) {
     var citekey = CiteKeys.extract(item);
-    if (citekey) { return citekey; }
+    if (citekey) { return CiteKeys.register(item, citekey, true); }
 
     var basekey = Zotero.getHiddenPref('better-bibtex.citeKeyFormat').replace(/\[([^\]]+)\]/g, function(match, command) {
       var cmds = command.split(':');
