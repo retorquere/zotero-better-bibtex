@@ -2,6 +2,10 @@
 
 This extension aims to make Zotero effective for us LaTeX holdouts. It adds the following features:
 
+## Duplicate keys
+
+The plugin will generate bibtex comments to show whether a key conflicts and with which entry
+
 ## Set your own, fixed citation keys
 
 You can fix the citation key for a reference by adding the text "bibtex: [your citekey]" (sans quotes) anywhere in the
