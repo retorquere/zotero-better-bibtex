@@ -65,7 +65,7 @@ function doExport() {
   Zotero.write("\n");
 
   var first = true;
-  CiteKeys.initialize.forEach(function(item) {
+  CiteKeys.initialize().forEach(function(item) {
     //don't export standalone notes and attachments
     if(item.itemType == "note" || item.itemType == "attachment") return;
 

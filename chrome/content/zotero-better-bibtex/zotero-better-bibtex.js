@@ -245,8 +245,6 @@ Zotero.BetterBibTex = {
     var translator = Zotero.BetterBibTex.getTranslator('BibTeX Citation Keys');
     if (!translator) { throw('No translator' + translator); }
 
-    items = [item for (item of items) if (!((item.isAttachment && item.isAttachment()) || (item.isNote && item.isNote())))];
-
     try {
       Zotero.BetterBibTex.log('Fetching keys: for ' + items.length + ' items');
       var keys = Zotero.BetterBibTex.translate(translator, [item for (item of items)]);
