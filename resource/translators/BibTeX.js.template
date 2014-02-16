@@ -131,6 +131,15 @@ for (zotero in zotero2tex) {
   zotero2tex[zotero] = zotero2tex[zotero][0];
 }
 
+function getBibTexType(itemType)
+{
+  var type = zotero2tex[item.itemType];
+  if (typeof (type) == "function") { type = type(item); }
+  if (!type) type = "misc";
+  return type;
+}
+
+
 /*
  * three-letter month abbreviations. i assume these are the same ones that the
  * docs say are defined in some appendix of the LaTeX book. (i don't have the
@@ -963,6 +972,10 @@ var CiteKeys = {
     var author = authors[m || 0];
     if (author && n) { author = author.substring(0, n); }
     return author;
+  },
+
+  _type: function(item) {
+    return getBibTexType(item.itemType);
   },
 
   _authorLast: function(item, onlyEditors) {
