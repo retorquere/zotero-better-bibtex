@@ -99,7 +99,7 @@ function doExport() {
     if (item.itemType == "note" || item.itemType == "attachment") return;
 
     // determine type
-    var type = getBibTexType(item.itemType);
+    var type = getBibTexType(item);
 
     Zotero.write("\n\n");
     Zotero.write("% better-bibtex: " + (CiteKeys.items[item.itemID].pinned ?  'pinned' : 'generated') + "\n");

@@ -131,7 +131,7 @@ for (zotero in zotero2tex) {
   zotero2tex[zotero] = zotero2tex[zotero][0];
 }
 
-function getBibTexType(itemType)
+function getBibTexType(item)
 {
   var type = zotero2tex[item.itemType];
   if (typeof (type) == "function") { type = type(item); }
@@ -975,7 +975,7 @@ var CiteKeys = {
   },
 
   _type: function(item) {
-    return getBibTexType(item.itemType);
+    return getBibTexType(item);
   },
 
   _authorLast: function(item, onlyEditors) {

@@ -70,7 +70,7 @@ function doExport() {
     if(item.itemType == "note" || item.itemType == "attachment") return;
 
     // determine type
-    var type = getBibTexType(item.itemType);
+    var type = getBibTexType(item);
 
     if (!first) { Zotero.write(",\n\n"); }
     first = false;
