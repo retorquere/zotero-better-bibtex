@@ -838,22 +838,18 @@ var CiteKeys = {
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   unsafechars: /[^-_a-z0-9!\$\*\+\.\/:;\?\[\]]/ig,
 
-  id: function(item) {
-    return item.itemID;
-    // return (item.libraryID ? item.libraryID : '0') + '/' + item.key;
-  },
-
   initialize: function(items) {
     CiteKeys.items = {};
 
     if (!items) {
       trLog('Export running, fetching items...');
-      items = [];
+      items = {};
       var item;
       while (item = Zotero.nextItem()) {
-        trLog(item.itemID);
-        items.push(item);
+        trLog('Adding ' + item.itemID);
+        items[item.itemID] = item; // duplicates?!
       }
+      items = Object.keys(items).map(function (key) { return items[key]; });
       trLog('Fetching ' + items.length + ' items...');
     }
 
@@ -863,7 +859,7 @@ var CiteKeys = {
     items.forEach(function(item) {
       if (item.itemType == "note" || item.itemType == "attachment") return;
 
-      // all pinned items first
+      // all pinned items first. Do *not* call generate yet, as this would register it!
       if (CiteKeys.embeddedKeyRE.exec(item.extra)) {
         CiteKeys.items[item.itemID] = {key: CiteKeys.build(item)};
         trLog(item.itemID + ' pinned: ' + CiteKeys.items[item.itemID].key);
