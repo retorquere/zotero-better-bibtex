@@ -16,11 +16,13 @@
         <preference id="pref-better-bibtex-recursive" name="extensions.zotero.recursiveCollections" type="bool"/>
         <preference id="pref-better-bibtex-citecommand" name="extensions.zotero.translators.better-bibtex.citeCommand" type="string"/>
         <preference id="pref-better-bibtex-format" name="extensions.zotero.translators.better-bibtex.citeKeyFormat" type="string"/>
+        <preference id="pref-better-bibtex-format-attachment" name="extensions.zotero.translators.better-bibtex.attachmentFormat" type="string"/>
+        <preference id="pref-better-bibtex-format-snapshot" name="extensions.zotero.translators.better-bibtex.snapshotFormat" type="string"/>
         <preference id="pref-better-bibtex-server" name="extensions.zotero.httpServer.enabled" type="bool"/>
         <preference id="pref-better-bibtex-unicode" name="extensions.zotero.translators.better-bibtex.unicode" type="string"/>
         <preference id="pref-better-bibtex-fancyurls" name="extensions.zotero.translators.better-bibtex.fancyURLs" type="bool"/>
       </preferences>
-      <hbox flex="1">
+      <vbox flex="1">
         <grid>
           <columns>
             <column/>
@@ -33,6 +35,14 @@
             <row>
               <label value="&zotero.better-bibtex.cite.format;"/>
               <textbox id="id-better-bibtex-preferences-citeKeyFormat" preference="pref-better-bibtex-format" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
+            </row>
+            <row>
+              <label value="&zotero.better-bibtex.attachment.format;"/>
+              <textbox id="id-better-bibtex-preferences-attachmentFormat" preference="pref-better-bibtex-format-attachment" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
+            </row>
+            <row>
+              <label value="&zotero.better-bibtex.snapshot.format;"/>
+              <textbox id="id-better-bibtex-preferences-snapshotFormat" preference="pref-better-bibtex-format-snapshot" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
             </row>
             <row>
               <label value="&zotero.better-bibtex.unicode;"/>
@@ -55,12 +65,11 @@
               <label id="id-zotero-better-bibtex-server" value="&zotero.better-bibtex.server.address;" hidden="true"/>
               <label id="id-zotero-better-bibtex-server-address" value="" hidden="true"/>
             </row>
-            <row>
-              <label id="id-zotero-better-bibtex-restart-required" value="&zotero.better-bibtex.restart-required;" hidden="true"/>
-            </row>
           </rows>
         </grid>
-      </hbox>
+
+        <label id="id-zotero-better-bibtex-format-unique-warning" hidden="true" style="color: red">&zotero.better-bibtex.format-unique-warning;</label>
+      </vbox>
     </prefpane>
   </prefwindow>
 

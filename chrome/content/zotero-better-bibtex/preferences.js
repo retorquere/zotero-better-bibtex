@@ -10,18 +10,29 @@ function updatePreferences(load) {
   } catch(err) {
     serverEnabled = false;
   }
+
+  var formats = {
+    attachmentFormat: {},
+    snapshotFormat: {}
+  };
+  for (var key of Object.keys(formats)) {
+    console.log(key);
+    formats[key].dflt = Zotero.BetterBibTex.prefs.dflt.getCharPref(key);
+    formats[key].user = document.getElementById('id-better-bibtex-preferences-' + key).value;
+  }
+  document.getElementById('id-zotero-better-bibtex-format-unique-warning').setAttribute('hidden', (
+      (formats.attachmentFormat.user == formats.attachmentFormat.dflt)
+      &&
+      (formats.snapshotFormat.user == formats.snapshotFormat.dflt)
+    )
+  );
+  console.log('warning: ' + JSON.stringify(formats));
+
   var url = 'http://localhost:' + serverPort + '/better-bibtex/collection/?';
   serverAddress.setAttribute('value', url);
   console.log('server: ' + serverEnabled + ' @ ' + url);
 
   serverAddress.setAttribute('hidden', !serverEnabled);
   serverLabel.setAttribute('hidden', !serverEnabled);
-
-  if (false && Zotero.isStandalone) {
-    var restartRequired = false;
-    for (var option in Zotero.BetterBibTex.config) {
-      restartRequired = restartRequired || (Zotero.BetterBibTex.config[option] != document.getElementById('id-zotero-better-bibtex-' + option).getAttribute('value'));
-    }
-    document.getElementById('id-zotero-better-bibtex-restart-required').setAttribute('hidden', restartRequired);
-  }
+  console.log('better bibtex: prefs updated');
 }

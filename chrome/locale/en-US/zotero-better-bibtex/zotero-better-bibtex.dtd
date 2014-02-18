@@ -6,6 +6,8 @@
 <!ENTITY zotero.better-bibtex.preferences.recursive "Export collections recursively">
 <!ENTITY zotero.better-bibtex.cite.command "Citation command">
 <!ENTITY zotero.better-bibtex.cite.format "Citation key format">
+<!ENTITY zotero.better-bibtex.attachment.format "Attachment export filename format">
+<!ENTITY zotero.better-bibtex.snapshot.format "Snapshot export filename format">
 <!ENTITY zotero.better-bibtex.server.enabled "Enable export by HTTP">
 <!ENTITY zotero.better-bibtex.server.address "Bibliography export at ">
 <!ENTITY zotero.better-bibtex.unicode "Export as Unicode">
@@ -13,3 +15,4 @@
 <!ENTITY zotero.better-bibtex.unicode.always "Always">
 <!ENTITY zotero.better-bibtex.unicode.never "Never">
 <!ENTITY zotero.better-bibtex.fancyURLs "Fancy URLs">
+<!ENTITY zotero.better-bibtex.format-unique-warning "Caution: the defaults guarantee that each attachment has a unique filename. If you change the default, make sure the resulting filenames remain unique!">

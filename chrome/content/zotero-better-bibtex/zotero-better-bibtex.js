@@ -2,9 +2,11 @@ Components.utils.import("resource://gre/modules/Services.jsm");
 
 Zotero.BetterBibTex = {
   prefs: {
-    bbt: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero-better-bibtex."),
     zotero: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero."),
-    hidden: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero.translators.better-bibtex.")
+    bbt:    Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero.translators.better-bibtex."),
+    dflt:   Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getDefaultBranch("extensions.zotero.translators.better-bibtex."),
+
+    legacy: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero-better-bibtex.")
   },
 
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
@@ -45,15 +47,15 @@ Zotero.BetterBibTex = {
 
   init: function () {
     // migrate options
-    Zotero.BetterBibTex.prefs.bbt.clearUserPref('BibLaTex.ASCII');
-    Zotero.BetterBibTex.prefs.bbt.clearUserPref('citekeyformat');
-    Zotero.BetterBibTex.prefs.bbt.clearUserPref('getCollections');
+    Zotero.BetterBibTex.prefs.legacy.clearUserPref('BibLaTex.ASCII');
+    Zotero.BetterBibTex.prefs.legacy.clearUserPref('citekeyformat');
+    Zotero.BetterBibTex.prefs.legacy.clearUserPref('getCollections');
     for (var option of ['citeCommand', 'citeKeyFormat']) {
       try {
-        var value = Zotero.BetterBibTex.prefs.bbt.getCharPref(option);
+        var value = Zotero.BetterBibTex.prefs.legacy.getCharPref(option);
         if (value) {
-          Zotero.BetterBibTex.prefs.hidden.setCharPref(option, value);
-          Zotero.BetterBibTex.prefs.bbt.clearUserPref(option);
+          Zotero.BetterBibTex.prefs.bbt.setCharPref(option, value);
+          Zotero.BetterBibTex.prefs.legacy.clearUserPref(option);
         }
       } catch (err) {}
     }
@@ -69,7 +71,7 @@ Zotero.BetterBibTex = {
     for (var option of ['citeCommand', 'citeKeyFormat', 'fancyURLs', 'unicode']) {
       var value = null;
       try {
-        value = Zotero.BetterBibTex.prefs.hidden.getPref(option);
+        value = Zotero.BetterBibTex.prefs.bbt.getPref(option);
       } catch(err) {}
       Zotero.BetterBibTex.config[option] = value;
     }
