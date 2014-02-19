@@ -17,7 +17,6 @@
         <preference id="pref-better-bibtex-citecommand" name="extensions.zotero.translators.better-bibtex.citeCommand" type="string"/>
         <preference id="pref-better-bibtex-format" name="extensions.zotero.translators.better-bibtex.citeKeyFormat" type="string"/>
         <preference id="pref-better-bibtex-format-attachment" name="extensions.zotero.translators.better-bibtex.attachmentFormat" type="string"/>
-        <preference id="pref-better-bibtex-format-snapshot" name="extensions.zotero.translators.better-bibtex.snapshotFormat" type="string"/>
         <preference id="pref-better-bibtex-server" name="extensions.zotero.httpServer.enabled" type="bool"/>
         <preference id="pref-better-bibtex-unicode" name="extensions.zotero.translators.better-bibtex.unicode" type="string"/>
         <preference id="pref-better-bibtex-fancyurls" name="extensions.zotero.translators.better-bibtex.fancyURLs" type="bool"/>
@@ -39,10 +38,6 @@
             <row>
               <label value="&zotero.better-bibtex.attachment.format;"/>
               <textbox id="id-better-bibtex-preferences-attachmentFormat" preference="pref-better-bibtex-format-attachment" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
-            </row>
-            <row>
-              <label value="&zotero.better-bibtex.snapshot.format;"/>
-              <textbox id="id-better-bibtex-preferences-snapshotFormat" preference="pref-better-bibtex-format-snapshot" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
             </row>
             <row>
               <label value="&zotero.better-bibtex.unicode;"/>

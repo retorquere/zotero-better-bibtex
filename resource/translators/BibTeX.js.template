@@ -43,13 +43,14 @@ function saveAttachments(item) {
 
   var attachments = [];
   item.attachments.forEach(function(att) {
+    trLog('attachment: ' + JSON.stringify(att, false, 2));
     if (Zotero.getOption("exportFileData") && att.defaultPath && att.saveFile) {
-      trLog('saving attachment to ' + att.defaultPath);
-      /*attachFile = attachment.getFile();
-      if(attachFile) {
-        attachmentArray.defaultPath = "files/" + attachmentArray.itemID + "/" + attachFile.leafName;
-      }*/
-      att.saveFile(att.defaultPath, true);
+      var format = Zotero.getHiddenPref('better-bibtex.attachmentFormat');
+      var customPath = (new Formatter(att, format, item)).format();
+      customPath = ZU.removeDiacritics(customPath).replace(/[\\:\*\?"<>\|;]/, '');
+      trLog('saving formatted attachment to ' + customPath + ' (' + format + ')');
+
+      att.saveFile(att.defaultPath);
       attachments.push({title: att.title, path: att.defaultPath, mimetype: att.mimeType});
       return;
     }
@@ -838,10 +839,12 @@ function isTitleCase(string) {
 }
 */
 
-function Formatter(item, pattern)
+function Formatter(item, pattern, parent)
 {
   var _item = item;
   var _pattern = pattern;
+  var _parent = (parent ? new Formatter(parent) : null);
+  var _this = this;
 
   function getCreators(onlyEditors) {
     if(!_item.creators || !_item.creators.length) { return []; }
@@ -994,16 +997,13 @@ function Formatter(item, pattern)
     return _words;
   }
 
-  var functions = {
-    name: 'function',
-
+  this.function = {
     id: function() {
       return _item.itemID;
     },
 
-    filename: function() {
-      if (_item.itemType == 'attachment') { return _item.leafName; }
-      return null;
+    key: function() {
+      return _item.key;
     },
 
     auth: function(onlyEditors, n, m) {
@@ -1073,14 +1073,14 @@ function Formatter(item, pattern)
       })).join('.');
     },
 
-    auth_auth_ea: function(onlyEditors) {
+    'auth.auth.ea': function(onlyEditors) {
       var authors = getCreators(onlyEditors);
       if (!authors) { return null; }
 
       return authors.slice(0,2).concat(authors.length > 2 ? ['ea'] : []).join('.')
     },
 
-    auth_etal: function(onlyEditors) {
+    'auth.etal': function(onlyEditors) {
       var authors = getCreators(onlyEditors);
       if (!authors) { return null; }
 
@@ -1147,47 +1147,57 @@ function Formatter(item, pattern)
 
     title: function() {
       return titleWords(_item.title).join('');
-    }
-  }
+    },
 
-  var filters = {
-    name: 'filter',
+    filename: function() {
+      if (_item.itemType == 'attachment') { return _item.title; }
+      return null;
+    }
+  };
+
+  this.filter = {
+    condense: function(value) {
+      return value.replace(/\s/, '');
+    },
 
     abbr: function(value) {
-      if (!value) { return null; }
       return value.split(/\s+/).collect(function(word) { return word.substring(0, 1); }).join('');
     },
 
     lower: function(value) {
-      if (!value) { return null; }
       return value.toLowerCase();
     },
 
     upper: function(value) {
-      if (!value) { return null; }
       return value.toUpperCase();
     },
 
     'id-': function(value) {
-      if (!value) { return null; }
       return _item.itemID + '-' + value;
     },
 
     '-id': function(value) {
-      if (!value) { return null; }
       var parts = value.split('.');
-      if (parts.length < 2) { return value; }
-      var ext = parts.pop();
-      parts.push('-' + _item.itemID);
-      parts.push(ext);
+      if (parts.length < 2) { return value + '-' + _item.itemID; }
+      parts[parts.length - 2] += '-' + _item.itemID;
       return parts.join('.');
-    },
-  }
+    }
+  };
 
-  function call(table, name) {
-    var _f = table[name.replace(/\./g, '_')];
+  function call(type, name) {
+    trLog('Looking up "' + type + '" for "' + name + '"');
+    var table = _this[type];
+    if (!table) { throw('!!No type "' + type + '"'); }
+    if (name.indexOf('!') == 0) {
+      if (!_parent) { throw('Parent ' + type + ' requested but no parent available'); }
+      table = _parent[type];
+      name = name.substring(1, name.length);
+    }
+    if (!table) { throw('No type "' + type + '"'); }
+
+    var _f = table[name];
     if (typeof _f === 'function') { return _f; }
-    throw('No format ' + table.name + ' "' + name + '"');
+    throw('No format ' + type + ' "' + name + '"');
   }
 
   this.format = function() {
@@ -1204,13 +1214,13 @@ function Formatter(item, pattern)
       var onlyEditors = (_function.match(/^edtr/) || _function.match(/^editors/));
       _function = _function.replace(/^edtr/, 'auth').replace(/^editors/, 'authors');
 
-      var value = call(functions, _function)(onlyEditors, N, M);
+      var value = call('function', _function)(onlyEditors, N, M);
 
       _filters.forEach(function(filter) {
         if (filter.match(/^[(].*[)]$/)) { // text between braces is default value in case a filter fails
           if (!value) { value = filter.substring(1, filter.length - 2); }
         } else {
-          value = call(filters, filter)(value);
+          if (value) { value = call('filter', filter)(value); }
         }
       });
 
