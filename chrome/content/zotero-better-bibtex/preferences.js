@@ -26,7 +26,6 @@ function updatePreferences(load) {
       (formats.snapshotFormat.user == formats.snapshotFormat.dflt)
     )
   );
-  console.log('warning: ' + JSON.stringify(formats));
 
   var url = 'http://localhost:' + serverPort + '/better-bibtex/collection/?';
   serverAddress.setAttribute('value', url);
@@ -35,4 +34,13 @@ function updatePreferences(load) {
   serverAddress.setAttribute('hidden', !serverEnabled);
   serverLabel.setAttribute('hidden', !serverEnabled);
   console.log('better bibtex: prefs updated');
+}
+
+function resetFormatters()
+{
+  ['attachmentFormat', 'snapshotFormat'].forEach(function(key) {
+    document.getElementById('id-better-bibtex-preferences-' + key).value = Zotero.BetterBibTex.prefs.dflt.getCharPref(key);
+    Zotero.BetterBibTex.prefs.bbt.clearUserPref(key);
+  });
+  updatePreferences();
 }

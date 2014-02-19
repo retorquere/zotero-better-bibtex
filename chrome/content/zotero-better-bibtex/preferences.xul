@@ -68,7 +68,10 @@
           </rows>
         </grid>
 
-        <label id="id-zotero-better-bibtex-format-unique-warning" hidden="true" style="color: red">&zotero.better-bibtex.format-unique-warning;</label>
+        <hbox id="id-zotero-better-bibtex-format-unique-warning" hidden="true">
+          <label style="color: red">&zotero.better-bibtex.format-unique-warning;</label>
+          <button label="&zotero.better-bibtex.format.reset;" oncommand="resetFormatters();"/>
+        </hbox>
       </vbox>
     </prefpane>
   </prefwindow>
