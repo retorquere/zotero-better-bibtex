@@ -13,34 +13,45 @@
             onpaneload="updatePreferences();"
             >
       <preferences id="zotero-preferences-cite">
-        <preference id="pref-better-bibtex-recursive" name="extensions.zotero-better-bibtex.getCollections" type="bool"/>
-        <preference id="pref-better-bibtex-citecommand" name="extensions.zotero-better-bibtex.citeCommand" type="string"/>
-        <preference id="pref-better-bibtex-format" name="extensions.zotero-better-bibtex.citeKeyFormat" type="string"/>
+        <preference id="pref-better-bibtex-recursive" name="extensions.zotero.recursiveCollections" type="bool"/>
+        <preference id="pref-better-bibtex-citecommand" name="extensions.zotero.translators.better-bibtex.citeCommand" type="string"/>
+        <preference id="pref-better-bibtex-format" name="extensions.zotero.translators.better-bibtex.citeKeyFormat" type="string"/>
+        <preference id="pref-better-bibtex-format-attachment" name="extensions.zotero.translators.better-bibtex.attachmentFormat" type="string"/>
         <preference id="pref-better-bibtex-server" name="extensions.zotero.httpServer.enabled" type="bool"/>
+        <preference id="pref-better-bibtex-unicode" name="extensions.zotero.translators.better-bibtex.unicode" type="string"/>
+        <preference id="pref-better-bibtex-fancyurls" name="extensions.zotero.translators.better-bibtex.fancyURLs" type="bool"/>
       </preferences>
-      <hbox flex="1">
+      <vbox flex="1">
         <grid>
           <columns>
             <column/>
           </columns>
           <rows>
             <row>
-              <label id="id-better-bibtex-restart-required" class="header" value="&zotero.better-bibtex.restart-required;" hidden="true"/>
-            </row>
-            <row>
-              <checkbox id="id-better-bibtex-preferences-getCollections" label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive" oncommand="updatePreferences();"/>
-            </row>
-            <row>
               <label value="&zotero.better-bibtex.cite.command;"/>
-              <textbox id="id-better-bibtex-preferences-citeCommand" preference="pref-better-bibtex-citecommand"
-                        onchange="updatePreferences(event);"
-                        onkeypress="setTimeout(updatePreferences, 1);"/>
+              <textbox id="id-better-bibtex-preferences-citeCommand" preference="pref-better-bibtex-citecommand" onchange="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
             </row>
             <row>
               <label value="&zotero.better-bibtex.cite.format;"/>
-              <textbox id="id-better-bibtex-preferences-citeKeyFormat" preference="pref-better-bibtex-format"
-                        oninput="updatePreferences(event);"
-                        onkeypress="setTimeout(updatePreferences, 1);"/>
+              <textbox id="id-better-bibtex-preferences-citeKeyFormat" preference="pref-better-bibtex-format" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
+            </row>
+            <row>
+              <label value="&zotero.better-bibtex.attachment.format;"/>
+              <textbox id="id-better-bibtex-preferences-attachmentFormat" preference="pref-better-bibtex-format-attachment" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
+            </row>
+            <row>
+              <label value="&zotero.better-bibtex.unicode;"/>
+              <radiogroup id="id-better-bibtex-preferences-unicode" orient="horizontal" preference="pref-better-bibtex-unicode" oncommand="updatePreferences();">
+                <radio id="id-better-bibtex-preferences-unicode-default" label="&zotero.better-bibtex.unicode.default;" value=""/>
+                <radio id="id-better-bibtex-preferences-unicode-always" label="&zotero.better-bibtex.unicode.always;" value="always"/>
+                <radio id="id-better-bibtex-preferences-unicode-never" label="&zotero.better-bibtex.unicode.never;" value="never"/>
+              </radiogroup>
+            </row>
+            <row>
+              <checkbox id="id-better-bibtex-preferences-fancyURLs" label="&zotero.better-bibtex.fancyURLs;" preference="pref-better-bibtex-fancyurls" oncommand="updatePreferences();"/>
+            </row>
+            <row>
+              <checkbox id="id-better-bibtex-preferences-getCollections" label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive" oncommand="updatePreferences();"/>
             </row>
             <row>
               <checkbox id="id-better-bibtex-preferences-server-enabled" label="&zotero.better-bibtex.server.enabled;" preference="pref-better-bibtex-server" oncommand="updatePreferences();"/>
@@ -51,7 +62,12 @@
             </row>
           </rows>
         </grid>
-      </hbox>
+
+        <hbox id="id-zotero-better-bibtex-format-unique-warning" hidden="true">
+          <label style="color: red">&zotero.better-bibtex.format-unique-warning;</label>
+          <button label="&zotero.better-bibtex.format.reset;" oncommand="resetFormatters();"/>
+        </hbox>
+      </vbox>
     </prefpane>
   </prefwindow>
 

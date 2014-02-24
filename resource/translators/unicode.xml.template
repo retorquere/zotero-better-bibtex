@@ -4,9 +4,9 @@
 
 <!--
 Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
-David Carlisle <davidc@nag.co.uk> 
+David Carlisle <davidc@nag.co.uk>
 
-This file is a collection of information about how to map 
+This file is a collection of information about how to map
 Unicode entities to LaTeX, and various SGML/XML entity
 sets (ISO and MathML). A Unicode character may be mapped
 to several entities.
@@ -25157,7 +25157,7 @@ for borrowings from their work
  </entity>
  <entity id="FilledVerySmallSquare" set="mmlextra">
   <desc>filled very small square</desc>
- </entity>                        
+ </entity>
  <description>BLACK SMALL SQUARE</description>
 </character>
 
@@ -25165,7 +25165,7 @@ for borrowings from their work
  <Wolfram>EmptyVerySmallSquare</Wolfram>
  <entity id="EmptyVerySmallSquare" set="mmlextra">
   <desc>empty small square</desc>
- </entity>                        
+ </entity>
  <description>WHITE SMALL SQUARE</description>
 </character>
 
@@ -25842,7 +25842,7 @@ for borrowings from their work
  </entity>
  <entity id="EmptySmallSquare" set="mmlextra">
   <desc>empty small square</desc>
- </entity>                        
+ </entity>
  <description unicode="3.2">WHITE MEDIUM SQUARE</description>
 </character>
 
@@ -25853,7 +25853,7 @@ for borrowings from their work
  </entity>
  <entity id="FilledSmallSquare" set="mmlextra">
   <desc>filled small square</desc>
- </entity>                        
+ </entity>
  <description unicode="3.2">BLACK MEDIUM SQUARE</description>
 </character>
 
@@ -29717,7 +29717,7 @@ for borrowings from their work
  </entity>
  <entity id="RoundImplies" set="mmlextra">
   <desc>round implies</desc>
- </entity>                        
+ </entity>
  <description unicode="3.2">RIGHT DOUBLE ARROW WITH ROUNDED HEAD</description>
 </character>
 
@@ -30945,7 +30945,7 @@ for borrowings from their work
  </entity>
  <entity id="RuleDelayed" set="mmlextra">
   <desc>rule-delayed (colon right arrow)</desc>
- </entity>                                 
+ </entity>
  <description unicode="3.2">RULE-DELAYED</description>
 </character>
 

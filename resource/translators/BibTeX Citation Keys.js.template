@@ -1,32 +1,23 @@
 {
 	"translatorID": "0a3d926d-467c-4162-acb6-45bded77edbb",
-	"label": "Citation Keys",
+	"label": "BibTex Citation Keys",
 	"creator": "Emiliano heyns",
 	"target": "bib",
 	"minVersion": "2.1.9",
 	"maxVersion": "",
 	"priority": 100,
   "displayOptions": {},
-  "configOptions": {
-    "getCollections": true,
-    "citeCommand": "cite",
-    "citeKeyFormat": "[auth][year]"
-  },
-	"inRepository": false,
+	"inRepository": true,
 	"translatorType": 2,
 	"browserSupport": "gcsv",
 	"lastUpdated": "/*= timestamp =*/"
 }
 
-/*= render BibTex.js =*/
+/*= render BibTeX.js =*/
 
 function doExport() {
-  var item;
-  var citations = {};
-  while (item = Zotero.nextItem()) {
-    citations[item.key] = CiteKeys.build(item);
-  }
-  Zotero.write(JSON.stringify(citations));
+  CiteKeys.initialize();
+  Zotero.write(JSON.stringify(CiteKeys.items));
 }
 
 var exports = {

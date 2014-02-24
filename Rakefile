@@ -4,18 +4,20 @@ require 'net/http'
 require 'json'
 require 'fileutils'
 require 'time'
+require 'date'
 require 'zip/filesystem'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
 RELEASE = Nokogiri::XML(File.open('install.rdf')).at('//em:version').inner_text
 
-MAIN            = 'resource/translators/BibTex.js.template'
-BETTERBIBTEX    = 'resource/translators/BetterBibTex.js'
-BETTERCITETEX   = 'resource/translators/BetterCiteTex.js'
-PANDOCCITE      = 'resource/translators/PandocCite.js'
-KEYONLYCITE     = 'resource/translators/KeyOnly.js'
-BETTERBIBLATEX  = 'resource/translators/BetterBibLaTex.js'
+MAIN            = 'resource/translators/BibTeX.js.template'
+
+BETTERBIBTEX    = 'resource/translators/Better BibTeX.js'
+BETTERBIBLATEX  = 'resource/translators/Better BibLaTeX.js'
+BETTERCITETEX   = 'resource/translators/BibTeX Citations.js'
+PANDOCCITE      = 'resource/translators/Pandoc Citations.js'
+KEYONLYCITE     = 'resource/translators/BibTeX Citation Keys.js'
 
 SOURCES = %w{chrome resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
@@ -63,9 +65,10 @@ file 'update.rdf' => [XPI, 'install.rdf'] do |t|
   File.open('update.rdf','wb') {|f| update_rdf.write_xml_to f}
 end
 
-task :publish => ['README.md', 'update.rdf'] do
+task :publish => ['README.md', XPI, 'update.rdf'] do
   sh "git add --all ."
   sh "git commit -am #{RELEASE}"
+  sh "git tag #{RELEASE}"
   sh "git push"
 end
 
@@ -74,6 +77,7 @@ file 'README.md' => [XPI, 'Rakefile'] do |t|
   readme = File.open(t.name).read
   readme.gsub!(/\(http[^)]+\.xpi\)/, "(https://raw.github.com/friflaj/zotero-#{EXTENSION}/master/#{XPI})")
   readme.gsub!(/\*\*[0-9]+\.[0-9]+\.[0-9]+\*\*/, "**#{RELEASE}**")
+  readme.gsub!(/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}/, DateTime.now.strftime('%Y-%m-%d %H:%M'))
   File.open(t.name, 'w'){|f| f.write(readme)}
 end
 
@@ -165,7 +169,7 @@ class Template
     @root = File.dirname(@template)
     @_timestamp = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
   end
-  attr_reader :_id, :_label, :_timestamp
+  attr_reader :_id, :_label, :_timestamp, :_unicode
 
   def _render(partial)
     return render(File.read(File.join(@root, partial + '.template')))
@@ -194,6 +198,7 @@ class Template
 
     @_id = header['translatorID']
     @_label = header['label']
+    @_unicode = !!(header['configOptions'] && header['configOptions']['unicode'])
 
     code = render(code)
 

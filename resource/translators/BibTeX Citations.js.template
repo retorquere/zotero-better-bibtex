@@ -1,32 +1,26 @@
 {
 	"translatorID": "b4a5ab19-c3a2-42de-9961-07ae484b8cb0",
-	"label": "Bib(La)TeX citations",
-	"creator": "Simon Kornblith, Richard Karnesky and Emiliano heyns",
+	"label": "BibTeX Citations",
+	"creator": "Emiliano heyns",
 	"target": "bib",
 	"minVersion": "2.1.9",
 	"maxVersion": "",
 	"priority": 100,
   "displayOptions": {},
-  "configOptions": {
-    "getCollections": true,
-    "citeCommand": "cite",
-    "citeKeyFormat": "[auth][year]"
-  },
-	"inRepository": false,
+	"inRepository": true,
 	"translatorType": 2,
 	"browserSupport": "gcsv",
 	"lastUpdated": "/*= timestamp =*/"
 }
 
-/*= render BibTex.js =*/
+/*= render BibTeX.js =*/
 
 function doExport() {
-  var item;
   var citation = [];
-  while (item = Zotero.nextItem()) {
-    citation.push(CiteKeys.build(item));
-  }
-  Zotero.write("\\" + config.citeCommand + "{" + citation.join(',') + '}');
+  CiteKeys.initialize().forEach(function(item) {
+    if (CiteKeys.items[item.itemID]) { citation.push(CiteKeys.items[item.itemID].key); }
+  });
+  Zotero.write("\\" + Zotero.getHiddenPref('better-bibtex.citeCommand') + "{" + citation.join(',') + '}');
 }
 
 var exports = {

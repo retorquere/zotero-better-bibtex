@@ -1,32 +1,26 @@
 {
 	"translatorID": "4c52eb69-e778-4a78-8ca2-4edf024a5074",
-	"label": "Pandoc citations",
+	"label": "Pandoc Citations",
 	"creator": "Erik Hetzner & Emiliano heyns",
 	"target": "bib",
 	"minVersion": "2.1.9",
 	"maxVersion": "",
 	"priority": 100,
   "displayOptions": {},
-  "configOptions": {
-    "getCollections": true,
-    "citeCommand": "cite",
-    "citeKeyFormat": "[auth][year]"
-  },
-	"inRepository": false,
+	"inRepository": true,
 	"translatorType": 2,
 	"browserSupport": "gcsv",
 	"lastUpdated": "/*= timestamp =*/"
 }
 
-/*= render BibTex.js =*/
+/*= render BibTeX.js =*/
 
 function doExport() {
-  var item;
   var citation = [];
-  while (item = Zotero.nextItem()) {
-    citation.push(CiteKeys.build(item));
-  }
-  Zotero.write(citation.collect(function(key) { return '@' + key; }).join(' '));
+  CiteKeys.initialize().forEach(function(item) {
+    if (CiteKeys.items[item.itemID]) { citation.push('@' + CiteKeys.items[item.itemID].key); }
+  });
+  Zotero.write(citation.join(' '));
 }
 
 var exports = {
