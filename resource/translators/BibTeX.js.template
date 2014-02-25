@@ -1049,9 +1049,9 @@ function Formatter(item, pattern, parent)
         case 2:
         case 3:
         case 4:
-          return authors.collect(function(author) { return author.substring(0, 1); }).join('.');
+          return authors.collect(function(author) { return author.substring(0, 1); });
         default:
-          return authors.slice(0, 3).collect(function(author) { return author.substring(0, 1); }).join('.') + '+';
+          return authors.slice(0, 3).collect(function(author) { return author.substring(0, 1); }) + '+';
       }
     },
 
