@@ -1007,7 +1007,7 @@ function Formatter(item, pattern, parent)
     },
 
     auth: function(onlyEditors, n, m) {
-      var authors = getCreators(_item, onlyEditors);
+      var authors = getCreators(onlyEditors);
       if (!authors) { return null; }
 
       var author = authors[m || 0];
@@ -1063,7 +1063,7 @@ function Formatter(item, pattern, parent)
     },
 
     authorIni: function(onlyEditors) {
-      var authors = CiteKeys.getCreators(item, onlyEditors);
+      var authors = getCreators(onlyEditors);
       if (!authors) { return null; }
 
       var firstAuthor = authors.shift();
