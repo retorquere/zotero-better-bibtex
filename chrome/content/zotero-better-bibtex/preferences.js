@@ -21,6 +21,7 @@ function updatePreferences(load) {
 
   serverAddress.setAttribute('hidden', !serverEnabled);
   serverLabel.setAttribute('hidden', !serverEnabled);
+  document.getElementById('id-zotero-better-bibtex-server-warning').setAttribute('hidden', serverEnabled);
   console.log('better bibtex: prefs updated');
 }
 

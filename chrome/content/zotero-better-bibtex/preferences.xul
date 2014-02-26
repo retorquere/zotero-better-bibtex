@@ -36,8 +36,8 @@
               <textbox id="id-better-bibtex-preferences-citeKeyFormat" preference="pref-better-bibtex-format" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
             </row>
             <row>
-              <label value="&zotero.better-bibtex.attachment.format;"/>
-              <textbox id="id-better-bibtex-preferences-attachmentFormat" preference="pref-better-bibtex-format-attachment" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
+              <label value="&zotero.better-bibtex.attachment.format;" hidden="true"/>
+              <textbox hidden="true" id="id-better-bibtex-preferences-attachmentFormat" preference="pref-better-bibtex-format-attachment" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
             </row>
             <row>
               <label value="&zotero.better-bibtex.unicode;"/>
@@ -67,6 +67,7 @@
           <label style="color: red">&zotero.better-bibtex.format-unique-warning;</label>
           <button label="&zotero.better-bibtex.format.reset;" oncommand="resetFormatters();"/>
         </hbox>
+        <label style="color: red" id="id-zotero-better-bibtex-server-warning" hidden="true">&zotero.better-bibtex.server.warning;</label>
       </vbox>
     </prefpane>
   </prefwindow>

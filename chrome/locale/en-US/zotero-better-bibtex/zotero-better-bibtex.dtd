@@ -9,6 +9,7 @@
 <!ENTITY zotero.better-bibtex.attachment.format "Attachment export filename format">
 <!ENTITY zotero.better-bibtex.server.enabled "Enable export by HTTP">
 <!ENTITY zotero.better-bibtex.server.address "Bibliography export at ">
+<!ENTITY zotero.better-bibtex.server.warning "BibTeX http export uses the general Zotero HTTP facility; please note that disabling this will disable ALL http facilities in zotero -- including the non-Firefox plugins">
 <!ENTITY zotero.better-bibtex.unicode "Export as Unicode">
 <!ENTITY zotero.better-bibtex.unicode.default "Default (Unicode for BibLaTeX, ASCII for BibTex)">
 <!ENTITY zotero.better-bibtex.unicode.always "Always">
