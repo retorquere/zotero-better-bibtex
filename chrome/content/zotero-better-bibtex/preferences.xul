@@ -63,11 +63,24 @@
           </rows>
         </grid>
 
-        <hbox id="id-zotero-better-bibtex-format-unique-warning" hidden="true">
-          <label style="color: red">&zotero.better-bibtex.format-unique-warning;</label>
-          <button label="&zotero.better-bibtex.format.reset;" oncommand="resetFormatters();"/>
-        </hbox>
-        <label style="color: red" id="id-zotero-better-bibtex-server-warning" hidden="true">&zotero.better-bibtex.server.warning;</label>
+        <groupbox id="id-zotero-better-bibtex-dragons">
+          <caption style="color: red" label="&zotero.better-bibtex.dragons;"/>
+
+          <hbox id="id-zotero-better-bibtex-recursive-warning" hidden="true">
+            <label style="color: red">&zotero.better-bibtex.recursive.warning;</label>
+            <label value=" "/>
+          </hbox>
+
+          <hbox id="id-zotero-better-bibtex-server-warning" hidden="true">
+            <label style="color: red">&zotero.better-bibtex.server.warning;</label>
+            <label value=" "/>
+          </hbox>
+
+          <hbox id="id-zotero-better-bibtex-format-unique-warning" hidden="true">
+            <label style="color: red">&zotero.better-bibtex.format-unique-warning;</label>
+            <button label="&zotero.better-bibtex.format.reset;" oncommand="resetFormatters();"/>
+          </hbox>
+        </groupbox>
       </vbox>
     </prefpane>
   </prefwindow>

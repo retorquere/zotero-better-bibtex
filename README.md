@@ -23,7 +23,8 @@ If you want even more convenience (and you're on Windows), install [AutoHotKey](
 
 ## Recursive collection export
 
-You can export collections including/excluding its child collections.
+You can export collections including/excluding its child collections. Note that this also sets Zotero to list collection
+contents recursively.
 
 ## JabRef groups import
 
