@@ -3,7 +3,10 @@ function updatePreferences(load) {
   var serverLabel = document.getElementById('id-zotero-better-bibtex-server');
   var serverAddress = document.getElementById('id-zotero-better-bibtex-server-address');
 
-  var serverEnabled = document.getElementById('id-better-bibtex-preferences-server-enabled').checked;
+  var serverCheckbox = document.getElementById('id-better-bibtex-preferences-server-enabled');
+  var serverEnabled = serverCheckbox.checked;
+  serverCheckbox.setAttribute('hidden', (Zotero.isStandalone && serverEnabled));
+
   var serverPort = null;
   try {
     serverPort = Zotero.BetterBibTex.prefs.zotero.getIntPref('httpServer.port');
