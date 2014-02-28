@@ -1138,10 +1138,10 @@ function Formatter(item, pattern, parent)
       return year + '';
     },
 
-    year: function(item) {
+    year: function() {
       if (!_item.date) { return null; }
       var date = Zotero.Utilities.strToDate(_item.date);
-      if (typeof date.year === 'undefined') { return item.date; }
+      if (typeof date.year === 'undefined') { return _item.date; }
       return date.year;
     },
 
