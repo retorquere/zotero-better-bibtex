@@ -79,8 +79,8 @@ facilities in zotero -- including the non-Firefox plugins.
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.1.34.xpi) (**0.1.34**, released
-on 2014-02-28 14:04). If you are not prompted with a Firefox installation dialog then double-click the downloaded xpi; Firefox ought to start and present you with the installation dialog.
+version](https://raw.github.com/friflaj/zotero-better-bibtex/master/zotero-better-bibtex-0.1.35.xpi) (**0.1.35**, released
+on 2014-03-02 09:47). If you are not prompted with a Firefox installation dialog then double-click the downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
 For standalone Zotero, do the following:
 
@@ -93,7 +93,7 @@ For standalone Zotero, do the following:
 # Support - read carefully
 
 My time is extremely limited for a number of very great reasons (you shall have to trust me on this). Because of this, I cannot accept bug reports
-or support requests on anything but the latest version, currently at **0.1.34**. If you submit an issue report,
+or support requests on anything but the latest version, currently at **0.1.35**. If you submit an issue report,
 please include the version that you are on. By the time I get to your issue, the latest version might have bumped up already, and you
 will have to upgrade (you might have auto-upgraded already however) and re-verify that your issue still exists. Apologies for the inconvenience, but such
 are the breaks.

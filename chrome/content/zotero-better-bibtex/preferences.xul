@@ -40,6 +40,12 @@
               <textbox hidden="true" id="id-better-bibtex-preferences-attachmentFormat" preference="pref-better-bibtex-format-attachment" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
             </row>
             <row>
+              <hbox id="id-zotero-better-bibtex-format-unique-warning" hidden="true">
+                <label style="color: red">&zotero.better-bibtex.format-unique-warning;</label>
+                <button label="&zotero.better-bibtex.format.reset;" oncommand="resetFormatters();"/>
+              </hbox>
+            </row>
+            <row>
               <label value="&zotero.better-bibtex.unicode;"/>
               <radiogroup id="id-better-bibtex-preferences-unicode" orient="horizontal" preference="pref-better-bibtex-unicode" oncommand="updatePreferences();">
                 <radio id="id-better-bibtex-preferences-unicode-default" label="&zotero.better-bibtex.unicode.default;" value=""/>
@@ -52,9 +58,11 @@
             </row>
             <row>
               <checkbox id="id-better-bibtex-preferences-getCollections" label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive" oncommand="updatePreferences();"/>
+              <label id="id-zotero-better-bibtex-recursive-warning" hidden="true" style="color: red">&zotero.better-bibtex.recursive.warning;</label>
             </row>
             <row>
               <checkbox id="id-better-bibtex-preferences-server-enabled" label="&zotero.better-bibtex.server.enabled;" preference="pref-better-bibtex-server" oncommand="updatePreferences();"/>
+              <label id="id-zotero-better-bibtex-server-warning" hidden="true" style="color: red">&zotero.better-bibtex.server.warning;</label>
             </row>
             <row>
               <label id="id-zotero-better-bibtex-server" value="&zotero.better-bibtex.server.address;" hidden="true"/>
@@ -62,25 +70,6 @@
             </row>
           </rows>
         </grid>
-
-        <groupbox id="id-zotero-better-bibtex-dragons">
-          <caption style="color: red" label="&zotero.better-bibtex.dragons;"/>
-
-          <hbox id="id-zotero-better-bibtex-recursive-warning" hidden="true">
-            <label style="color: red">&zotero.better-bibtex.recursive.warning;</label>
-            <label value=" "/>
-          </hbox>
-
-          <hbox id="id-zotero-better-bibtex-server-warning" hidden="true">
-            <label style="color: red">&zotero.better-bibtex.server.warning;</label>
-            <label value=" "/>
-          </hbox>
-
-          <hbox id="id-zotero-better-bibtex-format-unique-warning" hidden="true">
-            <label style="color: red">&zotero.better-bibtex.format-unique-warning;</label>
-            <button label="&zotero.better-bibtex.format.reset;" oncommand="resetFormatters();"/>
-          </hbox>
-        </groupbox>
       </vbox>
     </prefpane>
   </prefwindow>
