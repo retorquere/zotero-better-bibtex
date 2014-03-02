@@ -18,27 +18,104 @@
 }
 
 var fieldMap = {
-  location: "place",
-  chapter: "chapter",
-  edition: "edition",
-  title: "title",
-  volume: "volume",
-  rights: "rights", //it's rights in zotero nowadays
-  isbn: "ISBN",
-  issn: "ISSN",
-  url: "url",
-  doi: "DOI",
-  shorttitle: "shortTitle",
-  abstract: "abstract",
-  volumes: "numberOfVolumes",
-  version: "version",
-  eventtitle: "conferenceName",
-  language: "language",
-  issue: "issue",
-  pages: "pages",
-  pagetotal: "numPages"
+  location:   'place',
+  chapter:    'chapter',
+  edition:    'edition',
+  title:      'title',
+  volume:     'volume',
+  rights:     'rights',
+  isbn:       'ISBN',
+  issn:       'ISSN',
+  url:        'url',
+  doi:        'DOI',
+  series:     'series',
+  shorttitle: 'shortTitle',
+  abstract:   'abstractNote',
+  volumes:    'numberOfVolumes',
+  version:    'version',
+  eventtitle: 'conferenceName',
+  pages:      'pages',
+  pagetotal:  'numPages'
 };
 //more conversions done below with special rules
+
+var babelLanguageMap = {
+  af:         'afrikaans',
+  ar:         'arabic',
+  eu:         'basque',
+  br:         'breton',
+  bg:         'bulgarian',
+  ca:         'catalan',
+  hr:         'croatian',
+  cz:         'czech',
+  da:         'danish',
+  nl:         'dutch',
+  en:         'english',
+  en_us:      'american',
+  en_gb:      'british',
+  en_ca:      'canadian',
+  en_au:      'australian',
+  en_nz:      'newzealand',
+  eo:         'esperanto',
+  et:         'estonian',
+  fa:         'farsi',
+  fi:         'finnish',
+  fr:         'french',
+  fr_ca:      'canadien',
+  fur:        'friulan',
+  gl:         'galician',
+  de:         'german',
+  de_at:      'austrian',
+  de_de_1996: 'ngerman',
+  de_at_1996: 'naustrian',
+  de_1996:    'ngerman',
+  el:         'greek',
+  el_polyton: 'polutonikogreek',
+  he:         'hebrew',
+  hi:         'hindi',
+  is:         'icelandic',
+  id:         'indonesian', //aliases: bahasai, indon
+  ia:         'interlingua',
+  ga:         'irish',
+  it:         'italian',
+  ja:         'japanese',
+  la:         'latin',
+  lv:         'latvian',
+  lt:         'lithuanian',
+  dsb:        'lowersorbian',
+  hu:         'magyar',
+  zlm:        'malay', //aliases: bahasam, melayu (currently, there's no //real difference between bahasam and bahasai in babel)
+  mn:         'mongolian',
+  se:         'samin',
+  nn:         'nynorsk', //nynorsk
+  nb:         'norsk', //bokmal
+  no:         'norwegian', //'no' could be used, norwegian is an alias for 'norsk' in babel
+  zh:         'pinyin', //only supported chinese in babel is the romanization pinyin?
+  zh_latn:    'pinyin',
+  pl:         'polish',
+  pt:         'portuguese',
+  pt_pt:      'portuguese',
+  pt_br:      'brazilian',
+  ro:         'romanian',
+  rm:         'romansh',
+  ru:         'russian',
+  gd:         'scottish',
+  sr:         'serbian', //latin script as default?
+  sr_cyrl:    'serbianc',
+  sr_Latn:    'serbian',
+  sk:         'slovak',
+  sl:         'slovene',
+  //spanglish (pseudo language)
+  es:         'spanish',
+  sv:         'swedish',
+  th:         'thaicjk', //thaicjk preferred?
+  tr:         'turkish',
+  tk:         'turkmen',
+  uk:         'ukrainian',
+  hsb:        'uppersorbian',
+  vi:         'vietnamese',
+  cy:         'welsh'
+};
 
 
 //POTENTIAL ISSUES
@@ -100,6 +177,8 @@ function doExport() {
 
     // determine type
     var type = getBibTexType(item);
+    //biblatex recommends us to use mvbook for multi-volume books
+    if (type == 'book' && item.volume) { type = 'mvbook'; }
 
     Zotero.write("\n\n");
     Zotero.write("% better-bibtex: " + (CiteKeys.items[item.itemID].pinned ?  'pinned' : 'generated') + "\n");
@@ -123,12 +202,20 @@ function doExport() {
       }
     }
 
+    if (item.language) {
+      var language = babelLanguageMap[item.language.toLowerCase().replace(/[^a-z0-9]/, '_')] || item.language;
+      writeField('language', escape(language));
+    }
+
     // Fields needing special treatment and not easily translatable via fieldMap
     //e.g. where fieldname translation is dependent upon type, or special transformations
     //has to be made
 
     //all kinds of numbers (biblatex has additional support for journal number != issue, but zotero has not)
     writeField("number", escape(item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number));
+
+    //split numeric and nonnumeric issue specifications (for journals) into "number" and "issue"
+    writeField((isNaN(parseInt(item.issue)) ? 'issue' : 'number'), escape(item.issue));
 
     if (item.publicationTitle) {
       switch (item.itemType) {
@@ -178,11 +265,8 @@ function doExport() {
     writeField("series", escape(item.seriesTitle || item.series));
 
     switch (item.itemType) {
-      case 'thesis':
-        writeField("school", escape(item.publisher)); //school is an acceptable alias in biblatex
-        break;
-
       case 'report':
+      case 'thesis':
         writeField("institution", escape(item.publisher));
         break;
 
@@ -323,15 +407,16 @@ function doExport() {
       writeField("date", escape(Zotero.Utilities.strToISO(item.date)));
     }
 
-    if (item.extra) {
-      writeField("note", escape(item.extra));
-    }
+    writeBiblatexData(item); // modifies item.extra, so needs to go before the extra field is written out
+
+    writeField('note', escape(item.extra));
+    writeField('annotation', escape(item.meetingName));
 
     writeField("keywords", escape(item.tags.collect(function(tag) {return tag.tag;}) , ', '));
 
     if (item.notes && Zotero.getOption("exportNotes")) {
       item.notes.forEach(function(note) {
-        writeField("annote", escape(Zotero.Utilities.unescapeHTML(note["note"])));
+        writeField('annotation', escape(Zotero.Utilities.unescapeHTML(note["note"])));
       });
     }
 

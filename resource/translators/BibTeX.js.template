@@ -773,7 +773,7 @@ function escape(value, sep) {
 function writeField(field, value, bare) {
   if (typeof value == 'number') {
   } else {
-    if (!value) { return; }
+    if (!value || value == '') { return; }
   }
 
   if (!bare) { value = '{' + value + '}'; }
@@ -838,6 +838,18 @@ function isTitleCase(string) {
   return true;
 }
 */
+
+var biblatexdataRE = /biblatexdata\[([^\]]+)\]/;
+function writeBiblatexData(item) {
+  var m = biblatexdataRE.exec(item.extra);
+  if (!m) { return; }
+
+  item.extra = item.extra.replace(m[0], '').trim();
+  m[1].split(';').forEach(function(assignment) {
+    var data = assignment.split('=', 2);
+    writeField(data[0], escape(data[1]));
+  });
+}
 
 function Formatter(item, pattern, parent)
 {
@@ -1232,6 +1244,7 @@ function Formatter(item, pattern, parent)
 var CiteKeys = {
   keys: [],
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
+  andersJohanssonKeyRE: /biblatexcitekey\[([^\]]+)\]/,
   unsafechars: /[^-_a-z0-9!\$\*\+\.\/:;\?\[\]]/ig,
 
   initialize: function(items) {
@@ -1296,10 +1309,10 @@ var CiteKeys = {
   extract: function(item) {
     if (!item.extra) { return null; }
 
-    var m = CiteKeys.embeddedKeyRE.exec(item.extra);
+    var m = CiteKeys.embeddedKeyRE.exec(item.extra) || CiteKeys.andersJohanssonKeyRE.exec(item.extra);
     if (!m) { return null; }
 
-    item.extra = item.extra.replace(m[0], '');
+    item.extra = item.extra.replace(m[0], '').trim();
     var key = m[1];
     if (CiteKeys.keys[key]) { trLog('BibTex export: duplicate key ' + key); }
     return key;
