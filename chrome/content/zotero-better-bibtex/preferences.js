@@ -28,15 +28,6 @@ function updatePreferences(load) {
 
   document.getElementById('id-zotero-better-bibtex-recursive-warning').setAttribute('hidden', !document.getElementById('id-better-bibtex-preferences-getCollections').checked);
 
-  var dragons = document.getElementById('id-zotero-better-bibtex-dragons');
-  var hidden = true;
-  [].forEach.call(dragons.childNodes, function(warning) {
-    if (warning.getAttribute('hidden')) {
-      hidden = (hidden && (warning.getAttribute('hidden') == 'true'));
-    }
-  });
-  dragons.setAttribute('hidden', hidden);
-
   console.log('better bibtex: prefs updated');
 
 }
