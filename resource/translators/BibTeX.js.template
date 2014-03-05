@@ -1325,6 +1325,7 @@ var CiteKeys = {
       if (pinned) { return key; }
       postfix = 0;
       while (CiteKeys.keys[key + postfix]) { postfix++; }
+      postfix = String.fromCharCode('a'.charCodeAt() + postfix);
     } else {
       postfix = '';
     }
