@@ -1,6 +1,106 @@
 
     var convert = {
       unicode2latex: {
+   "A": {
+    "latex": "\{A\}",
+    "force": true
+  },
+   "B": {
+    "latex": "\{B\}",
+    "force": true
+  },
+   "C": {
+    "latex": "\{C\}",
+    "force": true
+  },
+    "D": {
+    "latex": "\{D\}",
+    "force": true
+  },
+   "E": {
+    "latex": "\{E\}",
+    "force": true
+  },
+   "F": {
+    "latex": "\{F\}",
+    "force": true
+  },
+   "G": {
+    "latex": "\{G\}",
+    "force": true
+  },
+   "H": {
+    "latex": "\{H\}",
+    "force": true
+  },
+   "I": {
+    "latex": "\{I\}",
+    "force": true
+  },
+   "J": {
+    "latex": "\{J\}",
+    "force": true
+  },
+   "K": {
+    "latex": "\{K\}",
+    "force": true
+  },
+   "L": {
+    "latex": "\{L\}",
+    "force": true
+  },
+   "M": {
+    "latex": "\{M\}",
+    "force": true
+  },
+   "N": {
+    "latex": "\{N\}",
+    "force": true
+  },
+   "O": {
+    "latex": "\{O\}",
+    "force": true
+  },
+   "P": {
+    "latex": "\{P\}",
+    "force": true
+  },
+   "Q": {
+    "latex": "\{Q\}",
+    "force": true
+  },
+   "R": {
+    "latex": "\{R\}",
+    "force": true
+  },
+   "S": {
+    "latex": "\{S\}",
+    "force": true
+  },
+   "T": {
+    "latex": "\{T\}",
+    "force": true
+  },
+   "U": {
+    "latex": "\{U\}",
+    "force": true
+  },
+   "V": {
+    "latex": "\{V\}",
+    "force": true
+  },
+   "X": {
+    "latex": "\{X\}",
+    "force": true
+  },
+   "Y": {
+    "latex": "\{Y\}",
+    "force": true
+  },
+   "Z": {
+    "latex": "\{Z\}",
+    "force": true
+  },
   "#": {
     "latex": "\\#",
     "force": true
