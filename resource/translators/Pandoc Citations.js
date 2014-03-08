@@ -1,7 +1,7 @@
 {
-	"translatorID": "b4a5ab19-c3a2-42de-9961-07ae484b8cb0",
-	"label": "BibTeX Citations",
-	"creator": "Emiliano heyns",
+	"translatorID": "4c52eb69-e778-4a78-8ca2-4edf024a5074",
+	"label": "Pandoc Citations",
+	"creator": "Erik Hetzner & Emiliano heyns",
 	"target": "bib",
 	"minVersion": "2.1.9",
 	"maxVersion": "",
@@ -13,14 +13,14 @@
 	"lastUpdated": "/*= timestamp =*/"
 }
 
-/*= render BibTeX.js =*/
+/*= include BibTeX.js =*/
 
 function doExport() {
   var citation = [];
   CiteKeys.initialize().forEach(function(item) {
-    if (CiteKeys.items[item.itemID]) { citation.push(CiteKeys.items[item.itemID].key); }
+    if (CiteKeys.items[item.itemID]) { citation.push('@' + CiteKeys.items[item.itemID].key); }
   });
-  Zotero.write("\\" + Zotero.getHiddenPref('better-bibtex.citeCommand') + "{" + citation.join(',') + '}');
+  Zotero.write(citation.join(' '));
 }
 
 var exports = {
@@ -29,4 +29,4 @@ var exports = {
 	"setKeywordSplitOnSpace": setKeywordSplitOnSpace
 }
 
-/*= render testcases.js =*/
+/*= include testcases.js =*/

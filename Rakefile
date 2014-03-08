@@ -1,48 +1,54 @@
 require 'rake'
 require 'nokogiri'
+require 'openssl'
 require 'net/http'
 require 'json'
 require 'fileutils'
 require 'time'
 require 'date'
-require 'zip/filesystem'
+require 'pp'
+require 'zip'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
 RELEASE = Nokogiri::XML(File.open('install.rdf')).at('//em:version').inner_text
 
-MAIN            = 'resource/translators/BibTeX.js.template'
+TRANSLATORS = ['Better BibTeX', 'Better BibLaTeX', 'BibTeX Citations', 'Pandoc Citations', 'BibTeX Citation Keys']
 
-BETTERBIBTEX    = 'resource/translators/Better BibTeX.js'
-BETTERBIBLATEX  = 'resource/translators/Better BibLaTeX.js'
-BETTERCITETEX   = 'resource/translators/BibTeX Citations.js'
-PANDOCCITE      = 'resource/translators/Pandoc Citations.js'
-KEYONLYCITE     = 'resource/translators/BibTeX Citation Keys.js'
+UNICODE_MAPPING = 'unicode/unicode.xml'
 
 SOURCES = %w{chrome resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
             .select{|f| File.file?(f)}
-            .reject{|f| File.extname(f) == '.template' || f =~ /[~]$/ || f =~ /\.swp$/}
-            .collect{|f| f =~ /\.coffee$/i ? f.gsub(/\.coffee$/i, '.js') : f}
-            .collect{|f| f =~ /\/unicode\/.xml$/ ? f.gsub(/\/unicode\.xml$/, '/unicode.js') : f } + [KEYONLYCITE, PANDOCCITE, BETTERBIBTEX, BETTERCITETEX, BETTERBIBLATEX]
-
-FileUtils.mkdir_p(File.dirname(BETTERBIBTEX))
+            .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [UNICODE_MAPPING]
 
 XPI = "zotero-#{EXTENSION}-#{RELEASE}.xpi"
-
-UNICODE_JS = 'resource/translators/unicodeconverter.js.template'
-UNICODE_XML = 'resource/translators/unicode.xml.template'
 
 task :default => XPI do
 end
 
-rule '.coffee' => '.js' do |t|
-  sh "coffee -c #{t.source}"
-end
-
 file XPI => SOURCES do |t|
   Dir['*.xpi'].each{|xpi| File.unlink(xpi)}
-  sh "zip -r #{t.name} #{t.prerequisites.collect{|f| "\"#{f}\""}.join(' ')}"
+
+  begin
+    puts "Creating #{t.name}"
+    Zip::File.open(t.name, 'w') do |zipfile|
+      t.prerequisites.reject{|f| f=~ /^(unicode|resource)\// }.each{|file|
+        zipfile.add(file, file)
+      }
+
+      zipfile.mkdir('resource/translators')
+      TRANSLATORS.each{|translator|
+        translator = "resource/translators/#{translator}.js"
+        zipfile.get_output_stream(translator){|f|
+          f.write((Translator.new translator ).to_s)
+        }
+      }
+    end
+  rescue => e
+    File.unlink(t.name) if File.exists?(t.name)
+    throw e
+  end
 
 #  moz_xpi = "moz-addons-#{t.name}"
 #  FileUtils.cp(t.name, moz_xpi)
@@ -104,89 +110,81 @@ end
 
 #### GENERATED FILES
 
-file UNICODE_JS => [UNICODE_XML, 'Rakefile'] do |t|
-  puts "Creating #{t.name}"
 
-  mapping = Nokogiri::XML(open(t.prerequisites[0]))
+class Translator
+  @@mapping = nil
 
-  mapping.at('//charlist') << "<character id='U0026' dec='38' mode='text' type='punctuation'><latex>\\&</latex></character>"
+  def initialize(source)
+    @source = source
+    @root = File.dirname(@source)
 
-  unicode2latex = {};
-  latex2unicode = {};
-  mapping.xpath('//character[@dec and latex]').each{|char|
-    id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
-    key = id.pack('U' * id.size)
-    value = char.at('.//latex').inner_text.strip
+    @_timestamp = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
+    @_unicode_mapping = Translator.mapping
+  end
+  attr_reader :_id, :_label, :_timestamp, :_unicode, :_unicode_mapping
 
-    # need to figure something out for this. This hase the for X<combining char>, which needs to be transformed to 
-    # \combinecommand{X}
-    #raise value if value =~ /LECO/
+  def self.mapping
+    if @@mapping.nil?
+      mapping = Nokogiri::XML(open(UNICODE_MAPPING))
 
-    value = "\\$" if value == "\\textdollar"
-    value = "``" if value == "\\textquotedblleft"
-    value = "''" if value == "\\textquotedblright"
-    value = "`" if value == "\\textasciigrave"
-    value = "'" if value == "\\textquotesingle"
-    value = ' ' if value == "\\space"
+      unicode2latex = {};
+      latex2unicode = {};
+      mapping.xpath('//character[@dec and latex]').each{|char|
+        id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
+        key = id.pack('U' * id.size)
+        value = char.at('.//latex').inner_text
 
-    next if key == value
+        # need to figure something out for this. This hase the for X<combining char>, which needs to be transformed to 
+        # \combinecommand{X}
+        #raise value if value =~ /LECO/
 
-    force = (key =~ /^[\x20-\x7E]$/)
-    if key == "\u00A0"
-      value = ' '
-      mathmode = false
-    else
-      mathmode = (char['mode'] == 'math')
+        next if key == value
+
+        force = (key =~ /^[\x20-\x7E]$/)
+        if key == "\u00A0"
+          value = ' '
+          mathmode = false
+        else
+          mathmode = (char['mode'] == 'math')
+        end
+
+        unicode2latex[key] = {latex: value}
+        unicode2latex[key][:math] = true if mathmode
+        unicode2latex[key][:force] = true if force
+        latex2unicode[value] = key
+      }
+      unicode2latex['['] = {latex: '[', math: true}
+      unicode2latex[']'] = {latex: ']', math: true}
+
+      @@mapping = "
+        var convert = {
+          unicode2latex: #{JSON.pretty_generate(unicode2latex)},
+          unicode2latex_maxpattern: #{unicode2latex.keys.collect{|k| k.size}.max},
+
+          latex2unicode: #{JSON.pretty_generate(latex2unicode)}
+        };
+      "
     end
 
-    unicode2latex[key] = {latex: value}
-    unicode2latex[key][:math] = true if mathmode
-    unicode2latex[key][:force] = true if force
-    latex2unicode[value] = key
-  }
-  unicode2latex['['] = {latex: '[', math: true}
-  unicode2latex[']'] = {latex: ']', math: true}
-
-  #File.open(t.name, 'wb', :encoding => 'utf-8'){|f| f.write("
-  File.open(t.name, 'w'){|f| f.write("
-    var convert = {
-      unicode2latex: #{JSON.pretty_generate(unicode2latex)},
-      unicode2latex_maxpattern: #{unicode2latex.keys.collect{|k| k.size}.max},
-
-      latex2unicode: #{JSON.pretty_generate(latex2unicode)}
-    };
-  "); }
-end
-
-class Template
-  def self.name(target)
-    return target+ '.template'
+    return @@mapping
   end
 
-  def initialize(target)
-    @target = target
-    @template = Template.name(@target)
-    @root = File.dirname(@template)
-    @_timestamp = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
-  end
-  attr_reader :_id, :_label, :_timestamp, :_unicode
-
-  def _render(partial)
-    return render(File.read(File.join(@root, partial + '.template')))
+  def _include(partial)
+    return render(File.read(File.join(@root, File.basename(partial))))
   end
 
-  def generate
-    puts "Creating #{@target}"
+  def to_s
+    puts "Creating #{@source}"
 
     #code = File.open(@template, 'rb', :encoding => 'utf-8').read
-    code = File.open(@template, 'r').read
+    js = File.open(@source, 'r').read
 
     header = nil
-    start = code.index('{')
+    start = js.index('{')
     length = 2
     while start && length < 1024
       begin
-        header = JSON.parse(code[start, length])
+        header = JSON.parse(js[start, length])
         break
       rescue JSON::ParserError
         header = nil
@@ -200,12 +198,7 @@ class Template
     @_label = header['label']
     @_unicode = !!(header['configOptions'] && header['configOptions']['unicode'])
 
-    code = render(code)
-
-    #File.open(@target, 'wb', :encoding => 'utf-8'){|f|
-    File.open(@target, 'w'){|f|
-      f.write(code)
-    }
+    return render(js)
   end
 
   def render(template)
@@ -217,37 +210,62 @@ class Template
   end
 end
 
-file BETTERBIBLATEX => [Template.name(BETTERBIBLATEX), MAIN, UNICODE_JS, 'Rakefile'] do |t|
-  Template.new(t.name).generate
-end
+file UNICODE_MAPPING => 'Rakefile' do |t|
+  begin
+    return unless download('http://www.w3.org/2003/entities/2007xml/unicode.xml', t.name)
 
-file BETTERBIBTEX => [Template.name(BETTERBIBTEX), MAIN, UNICODE_JS, 'Rakefile'] do |t|
-  Template.new(t.name).generate
-end
-file BETTERCITETEX => [Template.name(BETTERCITETEX), MAIN, 'Rakefile'] do |t|
-  Template.new(t.name).generate
-end
-file PANDOCCITE => [Template.name(PANDOCCITE), MAIN, 'Rakefile'] do |t|
-  Template.new(t.name).generate
-end
-file KEYONLYCITE => [Template.name(KEYONLYCITE), MAIN, 'Rakefile'] do |t|
-  Template.new(t.name).generate
-end
+    mapping = Nokogiri::XML(open(t.name))
+    #Nokogiri.parse(open(t.name))
+    puts mapping.errors
 
-file UNICODE_XML do |t|
-  download('http://www.w3.org/Math/characters/unicode.xml', t.name)
+    mapping.at('//charlist') << "<character id='U0026' dec='38' mode='text' type='punctuation'><latex>\\&</latex></character>"
+
+    {
+      "\\textdollar"        => "\\$",
+      "\\textquotedblleft"  => "``",
+      "\\textquotedblright" => "''",
+      "\\textasciigrave"    => "`",
+      "\\textquotesingle"   => "'",
+      "\\space"             => ' '
+    }.each_pair{|ist, soll|
+      nodes = mapping.xpath(".//latex[normalize-space(text())='#{ist}']")
+      next unless nodes
+      nodes.each{|node| node.content = soll }
+    }
+
+    File.open(t.name,'w') {|f| mapping.write_xml_to f}
+  rescue => e
+    File.rename(t.name, t.name + '.err') if File.exists?(t.name)
+    throw e
+  end
 end
 
 ### UTILS
 
 def download(url, file)
   puts "Downloading #{url} to #{file}"
-  uri = URI.parse(url)
-  http = Net::HTTP.new(uri.host, uri.port)
-  http.use_ssl = true if url =~ /^https/i
-  http.verify_mode = OpenSSL::SSL::VERIFY_NONE # read into this
-  resp = http.get(uri.request_uri)
+  uri = URI(url)
 
+  req = Net::HTTP::Get.new(uri.request_uri)
+  #http.use_ssl = true if url =~ /^https/i
+  #req.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+  if File.exists?(file)
+    stat = File.stat file
+    req['If-Modified-Since'] = stat.mtime.rfc2822
+  end
+
+  res = Net::HTTP.start(uri.hostname, uri.port) {|http|
+    http.request(req)
+  }
+
+  if res.is_a?(Net::HTTPSuccess)
+    FileUtils.mkdir_p(File.dirname(file))
+    open(file, 'w') { |file| file.write(res.body) }
+    return true
+  else
+    throw "Failed to download #{url}: #{res}"
+    return false
+  end
   #open(file, 'wb', :encoding => 'utf-8') { |file| file.write(resp.body) }
-  open(file, 'w') { |file| file.write(resp.body) }
 end

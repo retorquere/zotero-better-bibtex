@@ -25,6 +25,7 @@ var config = {
 }
 
 function unicode() {
+  trLog('unicode: ' + Zotero.getHiddenPref('better-bibtex.unicode'));
   switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
     case 'always':
       return true;
@@ -159,7 +160,7 @@ var jabref = {
   root: {}
 };
 
-/*= render unicodeconverter.js =*/
+/*= unicode_mapping =*/
 
 convert.latex2unicode["\\url"] = '';
 convert.latex2unicode["\\href"] = '';
@@ -226,9 +227,10 @@ convert.to_latex = function(str) {
     }
   });
 
-  res = chunk_to_latex(res);
+  res = chunk_to_latex(res).replace(/{}\s+/g, ' ');
 
-  return res.replace(/{}\s+/g, ' ');
+  trLog('to_latex("' + str + '", ' + _unicode + ') = "' + res + '"');
+  return res;
 }
 
 convert.from_latex = function(str) {

@@ -13,7 +13,7 @@
 	"lastUpdated": "/*= timestamp =*/"
 }
 
-/*= render BibTeX.js =*/
+/*= include BibTeX.js =*/
 
 function doExport() {
   CiteKeys.initialize();
@@ -26,4 +26,4 @@ var exports = {
 	"setKeywordSplitOnSpace": setKeywordSplitOnSpace
 }
 
-/*= render testcases.js =*/
+/*= include testcases.js =*/
