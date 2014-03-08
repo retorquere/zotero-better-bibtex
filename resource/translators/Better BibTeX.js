@@ -92,7 +92,7 @@ function doExport() {
         if (field == 'url') {
           writeField(field, escape_url(value));
         } else {
-          writeField(field, escape(value));
+          writeField(field, escape(value, {brace: true}));
         }
       }
     }
@@ -108,21 +108,21 @@ function doExport() {
 
     if(item.publicationTitle) {
       if(item.itemType == "bookSection" || item.itemType == "conferencePaper") {
-        writeField("booktitle", escape({literal: item.publicationTitle}));
+        writeField("booktitle", escape(item.publicationTitle, {brace: true}));
       } else if(Zotero.getOption("useJournalAbbreviation") && item.journalAbbreviation){
-        writeField('journal', escape({literal:item.journalAbbreviation}));
+        writeField('journal', escape(item.journalAbbreviation, {brace: true}));
       } else {
-        writeField("journal", escape({literal:item.publicationTitle}));
+        writeField("journal", escape(item.publicationTitle, {brace: true}));
       }
     }
 
     if(item.publisher) {
       if(item.itemType == "thesis") {
-        writeField("school", escape({literal:item.publisher}));
+        writeField("school", escape(item.publisher, {brace: true}));
       } else if(item.itemType =="report") {
-        writeField("institution", escape({literal:item.publisher}));
+        writeField("institution", escape(item.publisher, {brace: true}));
       } else {
-        writeField("publisher", escape({literal:item.publisher}));
+        writeField("publisher", escape(item.publisher, {brace: true}));
       }
     }
 
@@ -179,7 +179,7 @@ function doExport() {
 
     writeField("note", escape(item.extra));
 
-    writeField("keywords", escape(item.tags.collect(function(tag) { return tag.tag; }) , ', '));
+    writeField("keywords", escape(item.tags.collect(function(tag) { return tag.tag; }) , {brace: true, sep: ', '}));
 
     writeField("pages", escape(item.pages));
 

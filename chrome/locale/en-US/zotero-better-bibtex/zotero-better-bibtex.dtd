@@ -19,3 +19,4 @@
 <!ENTITY zotero.better-bibtex.fancyURLs "Fancy URLs">
 <!ENTITY zotero.better-bibtex.format-unique-warning "Caution: the default guarantees that each attachment has a unique filename. If you change the default, make sure the resulting filenames remain unique!">
 <!ENTITY zotero.better-bibtex.format.reset "Reset attachment formatter">
+<!ENTITY zotero.better-bibtex.brace-all "Wrap all fields in double-braces">

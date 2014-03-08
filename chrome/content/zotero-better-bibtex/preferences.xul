@@ -20,6 +20,7 @@
         <preference id="pref-better-bibtex-server" name="extensions.zotero.httpServer.enabled" type="bool"/>
         <preference id="pref-better-bibtex-unicode" name="extensions.zotero.translators.better-bibtex.unicode" type="string"/>
         <preference id="pref-better-bibtex-fancyurls" name="extensions.zotero.translators.better-bibtex.fancyURLs" type="bool"/>
+        <preference id="pref-better-bibtex-brace-all" name="extensions.zotero.translators.better-bibtex.brace-all" type="bool"/>
       </preferences>
       <vbox flex="1">
         <grid>
@@ -52,6 +53,9 @@
                 <radio id="id-better-bibtex-preferences-unicode-always" label="&zotero.better-bibtex.unicode.always;" value="always"/>
                 <radio id="id-better-bibtex-preferences-unicode-never" label="&zotero.better-bibtex.unicode.never;" value="never"/>
               </radiogroup>
+            </row>
+            <row>
+              <checkbox id="id-better-bibtex-preferences-brace-all" label="&zotero.better-bibtex.brace-all;" preference="pref-better-bibtex-brace-all" oncommand="updatePreferences();"/>
             </row>
             <row>
               <checkbox id="id-better-bibtex-preferences-fancyURLs" label="&zotero.better-bibtex.fancyURLs;" preference="pref-better-bibtex-fancyurls" oncommand="updatePreferences();"/>

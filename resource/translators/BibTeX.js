@@ -756,13 +756,20 @@ function escape_url(url) {
 
   return href;
 }
-function escape(value, sep) {
+
+function escape(value, options) {
+  options = (options || {})
+
   if (typeof value == 'number') { return value; }
   if (!value) { return; }
 
+  if (options.brace && !value.literal && Zotero.getHiddenPref('better-bibtex.brace-all')) {
+    value = {literal: value};
+  }
+
   if (value instanceof Array) {
     if (value.length == 0) { return; }
-    return value.collect(function(word) { return escape(word); }).join(sep);
+    return value.collect(function(word) { return escape(word, options); }).join(options.sep);
   }
 
   var doublequote = value.literal;

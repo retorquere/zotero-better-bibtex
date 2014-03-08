@@ -198,7 +198,7 @@ function doExport() {
         if (field == 'url') {
           writeField(field, escape_url(value));
         } else {
-          writeField(field, escape(value));
+          writeField(field, escape(value, {brace: true}));
         }
       }
     }
@@ -222,20 +222,20 @@ function doExport() {
       switch (item.itemType) {
         case 'bookSection':
         case 'conferencePaper':
-          writeField("booktitle", escape(item.publicationTitle));
+          writeField("booktitle", escape(item.publicationTitle, {brace: true}));
           break;
 
         case 'magazineArticle':
         case 'newspaperArticle':
-          writeField("journaltitle", escape(item.publicationTitle));
+          writeField("journaltitle", escape(item.publicationTitle, {brace: true}));
           break;
 
         case 'journalArticle':
           if (Zotero.getOption("useJournalAbbreviation")) {
-            writeField("journal", escape(item.journalAbbreviation));
+            writeField("journal", escape(item.journalAbbreviation, {brace: true}));
           } else {
-            writeField("journaltitle", escape(item.publicationTitle));
-            writeField("shortjournal", escape(item.journalAbbreviation));
+            writeField("journaltitle", escape(item.publicationTitle, {brace: true}));
+            writeField("shortjournal", escape(item.journalAbbreviation, {brace: true}));
           }
           break;
 
@@ -258,21 +258,20 @@ function doExport() {
 
     //TODO: check what happens to bookTitle, is that also an alias for publicationTitle?
 
-    writeField("booktitle", escape(item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle));
+    writeField("booktitle", escape(item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, {brace: true}));
 
-    writeField("titleaddon", escape(item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle));
+    writeField("titleaddon", escape(item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, {brace: true}));
 
     //don't really know if this is the best way
-    writeField("series", escape(item.seriesTitle || item.series));
-
+    writeField("series", escape(item.seriesTitle || item.series, {brace: true})); 
     switch (item.itemType) {
       case 'report':
       case 'thesis':
-        writeField("institution", escape(item.publisher));
+        writeField("institution", escape(item.publisher, {brace: true}));
         break;
 
       default:
-        writeField("publisher", escape(item.publisher));
+        writeField("publisher", escape(item.publisher, {brace: true}));
     }
 
     switch (item.itemType) {
@@ -384,19 +383,19 @@ function doExport() {
         }
       });
 
-      writeField('author', escape(authors, ' and '));
-      writeField('bookauthor', escape(bookauthors, ' and '));
-      writeField('commentator', escape(commentators, ' and '));
-      writeField('editor', escape(editors, ' and '));
+      writeField('author', escape(authors, {sep: ' and '}));
+      writeField('bookauthor', escape(bookauthors, {sep: ' and '}));
+      writeField('commentator', escape(commentators, {sep: ' and '}));
+      writeField('editor', escape(editors, {sep: ' and '}));
 
-      writeField('editora', escape(editoras, ' and '));
+      writeField('editora', escape(editoras, {sep: ' and '}));
       if (editoras.length > 0) { writeField('editoratype', 'collaborator'); }
 
-      writeField('editorb', escape(editorbs, ' and '));
+      writeField('editorb', escape(editorbs, {sep: ' and '}));
       if (editorbs.length > 0) { writeField('editorbtype', 'redactor'); }
 
-      writeField('holder', escape(holders, ' and '));
-      writeField('translator', escape(translators, ' and '));
+      writeField('holder', escape(holders, {sep: ' and '}));
+      writeField('translator', escape(translators, {sep: ' and '}));
     }
 
     if (item.accessDate) {
@@ -413,7 +412,7 @@ function doExport() {
     writeField('note', escape(item.extra));
     writeField('annotation', escape(item.meetingName));
 
-    writeField("keywords", escape(item.tags.collect(function(tag) {return tag.tag;}) , ', '));
+    writeField("keywords", escape(item.tags.collect(function(tag) {return tag.tag;}) ,{brace: true, sep: ', '}));
 
     if (item.notes && Zotero.getOption("exportNotes")) {
       item.notes.forEach(function(note) {
