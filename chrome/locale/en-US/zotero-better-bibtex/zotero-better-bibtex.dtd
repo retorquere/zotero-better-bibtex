@@ -16,7 +16,8 @@
 <!ENTITY zotero.better-bibtex.unicode.default "Default (Unicode for BibLaTeX, ASCII for BibTex)">
 <!ENTITY zotero.better-bibtex.unicode.always "Always">
 <!ENTITY zotero.better-bibtex.unicode.never "Never">
-<!ENTITY zotero.better-bibtex.fancyURLs "Fancy URLs">
+<!ENTITY zotero.better-bibtex.fancyURLs "Clickable URLs">
+<!ENTITY zotero.better-bibtex.fancyURLs.warning "Wraps urls in a \href field -- not supported by all bibliography processors!">
 <!ENTITY zotero.better-bibtex.format-unique-warning "Caution: the default guarantees that each attachment has a unique filename. If you change the default, make sure the resulting filenames remain unique!">
 <!ENTITY zotero.better-bibtex.format.reset "Reset attachment formatter">
 <!ENTITY zotero.better-bibtex.brace-all "Wrap all fields in double-braces">

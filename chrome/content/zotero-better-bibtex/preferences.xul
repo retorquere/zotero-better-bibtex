@@ -59,6 +59,7 @@
             </row>
             <row>
               <checkbox id="id-better-bibtex-preferences-fancyURLs" label="&zotero.better-bibtex.fancyURLs;" preference="pref-better-bibtex-fancyurls" oncommand="updatePreferences();"/>
+              <label id="id-better-bibtex-preferences-fancyURLs-warning" hidden="true" style="color: red">&zotero.better-bibtex.fancyURLs.warning;</label>
             </row>
             <row>
               <checkbox id="id-better-bibtex-preferences-getCollections" label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive" oncommand="updatePreferences();"/>

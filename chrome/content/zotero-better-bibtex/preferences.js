@@ -27,6 +27,7 @@ function updatePreferences(load) {
   document.getElementById('id-zotero-better-bibtex-server-warning').setAttribute('hidden', serverEnabled);
 
   document.getElementById('id-zotero-better-bibtex-recursive-warning').setAttribute('hidden', !document.getElementById('id-better-bibtex-preferences-getCollections').checked);
+  document.getElementById('id-better-bibtex-preferences-fancyURLs-warning').setAttribute('hidden', !document.getElementById('id-better-bibtex-preferences-fancyURLs').checked);
 
   console.log('better bibtex: prefs updated');
 
