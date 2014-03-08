@@ -72,7 +72,7 @@ file 'update.rdf' => [XPI, 'install.rdf'] do |t|
 end
 
 task :publish => ['README.md', XPI, 'update.rdf'] do
-  sh "git add --all ."
+  sh "git add #{XPI}"
   sh "git commit -am #{RELEASE}"
   sh "git tag #{RELEASE}"
   sh "git push"
