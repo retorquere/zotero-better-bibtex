@@ -13,7 +13,13 @@ EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
 RELEASE = Nokogiri::XML(File.open('install.rdf')).at('//em:version').inner_text
 
-TRANSLATORS = ['Better BibTeX', 'Better BibLaTeX', 'BibTeX Citations', 'Pandoc Citations', 'BibTeX Citation Keys']
+TRANSLATORS = [
+  {name: 'Better BibTeX'},
+  {name: 'Better BibLaTeX', unicode: true},
+  {name: 'BibTeX Citations'},
+  {name: 'Pandoc Citations'},
+  {name: 'BibTeX Citation Keys'}
+]
 
 UNICODE_MAPPING = 'unicode/unicode.xml'
 
@@ -39,9 +45,9 @@ file XPI => SOURCES do |t|
 
       zipfile.mkdir('resource/translators')
       TRANSLATORS.each{|translator|
-        translator = "resource/translators/#{translator}.js"
-        zipfile.get_output_stream(translator){|f|
-          f.write((Translator.new translator ).to_s)
+        translator[:source] = "resource/translators/#{translator[:name]}.js"
+        zipfile.get_output_stream(translator[:source]){|f|
+          f.write((Translator.new(translator)).to_s)
         }
       }
     end
@@ -88,7 +94,7 @@ file 'README.md' => [XPI, 'Rakefile'] do |t|
 end
 
 task :release, :bump do |t, args|
-  `git checkout zotero*.xpi`
+  puts `git checkout zotero*.xpi`
 
   bump = args[:bump] || 'patch'
 
@@ -105,6 +111,7 @@ task :release, :bump do |t, args|
   install_rdf.at('//em:version').content = release
   install_rdf.at('//em:updateURL').content = "https://raw.github.com/friflaj/zotero-#{EXTENSION}/master/update.rdf"
   File.open('install.rdf','wb') {|f| install_rdf.write_xml_to f}
+  puts `git add install.rdf`
   puts "Release set to #{release}. Please publish."
 end
 
@@ -114,9 +121,10 @@ end
 class Translator
   @@mapping = nil
 
-  def initialize(source)
-    @source = source
+  def initialize(translator)
+    @source = translator[:source]
     @root = File.dirname(@source)
+    @_unicode = !!(translator[:unicode])
 
     @_timestamp = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
     @_unicode_mapping = Translator.mapping
@@ -196,7 +204,6 @@ class Translator
 
     @_id = header['translatorID']
     @_label = header['label']
-    @_unicode = !!(header['configOptions'] && header['configOptions']['unicode'])
 
     return render(js)
   end
@@ -263,9 +270,11 @@ def download(url, file)
     FileUtils.mkdir_p(File.dirname(file))
     open(file, 'w') { |file| file.write(res.body) }
     return true
+  elsif res.is_a?(Net::HTTPNotModified)
+    puts 'Unchanged'
+    return false
   else
     throw "Failed to download #{url}: #{res}"
-    return false
   end
   #open(file, 'wb', :encoding => 'utf-8') { |file| file.write(resp.body) }
 end
