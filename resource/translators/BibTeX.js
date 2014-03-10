@@ -1,23 +1,3 @@
-// select = filter
-Array.prototype.collect = function(transform)
-{
-  "use strict";
-  var result = [];
-
-  if (this === void 0 || this === null) throw new TypeError();
-
-  var t = Object(this);
-  var len = t.length >>> 0;
-  if (typeof transform !== "function") throw new TypeError();
-  var thisArg = void 0;
-
-  for (var i = 0; i < len; i++) {
-    if (i in t) result.push(transform.call(thisArg, t[i]));
-  }
-
-  return result;
-}
-
 var config = {
   id: '/*= id =*/',
   label:  '/*= label =*/',
@@ -67,7 +47,7 @@ function saveAttachments(item) {
   if (attachments.length == 0) {
     return null;
   }
-  return attachments.collect(function(att) { return [att.title, att.path.replace(/([\\{}:;])/g, "\\$1"), att.mimetype].join(':'); }).join(';');
+  return attachments.map(function(att) { return [att.title, att.path.replace(/([\\{}:;])/g, "\\$1"), att.mimetype].join(':'); }).join(';');
 }
 
 function trLog(msg) { Zotero.debug('[' + config.label + '] ' + msg); }
@@ -166,6 +146,7 @@ convert.latex2unicode["\\url"] = '';
 convert.latex2unicode["\\href"] = '';
 
 convert.to_latex = function(str) {
+  var _unicode = unicode();
 
   chunk_to_latex = function(arr) {
     var chr;
@@ -188,46 +169,64 @@ convert.to_latex = function(str) {
     return res;
   }
 
-  str = '' + str;
-  var strlen = str.length;
-  var c, ca;
-  var l;
+  chunk_text = function(str) {
+    var strlen = str.length;
+    var c, ca;
+    var l;
 
-  var _unicode = unicode();
+    var res = [];
 
-  var res = [];
+    for (var i=0; i < strlen; i++) {
+      c = str.charAt(i);
+      if (!convert.unicode2latex[c]) {
+        convert.unicode2latex[c] = {latex: c, math:false};
+      }
+      convert.unicode2latex[c].math = !!convert.unicode2latex[c].math;
 
-  for (var i=0; i < strlen; i++) {
-    c = str.charAt(i);
-    if (!convert.unicode2latex[c]) {
-      convert.unicode2latex[c] = {latex: c, math:false};
+      if (_unicode && !convert.unicode2latex[c].force) {
+        convert.unicode2latex[c].latex = c;
+        convert.unicode2latex[c].math = false;
+      }
+
+      ca = convert.unicode2latex[c];
+
+      var last = res.length - 1;
+      if (res.length == 0 || ca.math != res[last].math) {
+        res.push({chars: [ca.latex], math: ca.math});
+      } else {
+        res[last].chars.push(ca.latex);
+      }
     }
-    convert.unicode2latex[c].math = !!convert.unicode2latex[c].math;
 
-    if (_unicode && !convert.unicode2latex[c].force) {
-      convert.unicode2latex[c].latex = c;
-      convert.unicode2latex[c].math = false;
-    }
+    res = res.map(function(chunk) {
+      if (chunk.math) {
+        return '\\ensuremath{' + chunk_to_latex(chunk.chars) + '}';
+      } else {
+        return chunk_to_latex(chunk.chars);
+      }
+    });
 
-    ca = convert.unicode2latex[c];
-
-    var last = res.length - 1;
-    if (res.length == 0 || ca.math != res[last].math) {
-      res.push({chars: [ca.latex], math: ca.math});
-    } else {
-      res[last].chars.push(ca.latex);
-    }
+    return chunk_to_latex(res).replace(/{}\s+/g, ' ');
   }
 
-  res = res.map(function(chunk) {
-    if (chunk.math) {
-      return '\\ensuremath{' + chunk_to_latex(chunk.chars) + '}';
-    } else {
-      return chunk_to_latex(chunk.chars);
-    }
-  });
+  var html2latex = {
+    sup:  {open: "\\ensuremath{^{", close: "}}"},
+    sub:  {open: "\\ensuremath{_{", close: "}}"},
+    i:    {open: "\\emph{",         close: "}"},
+    b:    {open: "\\textbf{",       close: "}"}
+  }
 
-  res = chunk_to_latex(res).replace(/{}\s+/g, ' ');
+  var res = ('' + str).split(/(<\/?[a-z]+>)/ig).map(function(chunk, index) {
+    trLog(index + ': ' + chunk);
+    if ((index % 2) == 1) { // odd elements = splitter == potential html tag
+      var sub = html2latex[chunk.replace(/[^a-z]/ig, '').toLowerCase()];
+      trLog(chunk + ' is html? ' + !!sub);
+      if (!sub) { return chunk_text(chunk); }
+      return sub[(chunk.charAt(1) == '/') ? 'close' : 'open'];
+    } else {
+      return chunk_text(chunk);
+    }
+  }).join('');
 
   trLog('to_latex("' + str + '", ' + _unicode + ') = "' + res + '"');
   return res;
@@ -765,13 +764,13 @@ function escape(value, options) {
   if (typeof value == 'number') { return value; }
   if (!value) { return; }
 
-  if (options.brace && !value.literal && Zotero.getHiddenPref('better-bibtex.brace-all')) {
-    value = {literal: value};
-  }
-
   if (value instanceof Array) {
     if (value.length == 0) { return; }
-    return value.collect(function(word) { return escape(word, options); }).join(options.sep);
+    return value.map(function(word) { return escape(word, options); }).join(options.sep);
+  }
+
+  if (options.brace && !value.literal && Zotero.getHiddenPref('better-bibtex.brace-all')) {
+    value = {literal: value};
   }
 
   var doublequote = value.literal;
@@ -903,7 +902,7 @@ function Formatter(item, pattern, parent)
   }
 
   function words(str) {
-    return str.split(/\s+/).filter(function(word) { return (word != '');}).collect(function (word) { return CiteKeys.clean(word) });
+    return str.split(/\s+/).filter(function(word) { return (word != '');}).map(function (word) { return CiteKeys.clean(word) });
   }
 
   _skipWords = [
@@ -1013,7 +1012,7 @@ function Formatter(item, pattern, parent)
     var _words = words(title);
 
     options = options || {};
-    if (options.asciiOnly) { _words = _words.collect(function (word) { return word.replace(/[^a-zA-Z]/, ''); }); }
+    if (options.asciiOnly) { _words = _words.map(function (word) { return word.replace(/[^a-zA-Z]/, ''); }); }
     _words = _words.filter(function(word) { return (word != ''); });
     if (options.skipWords) { _words = _words.filter(function(word) { return (_skipWords.indexOf(word.toLowerCase()) == -1); }); }
     if (_words.length == 0) { return null; }
@@ -1072,9 +1071,9 @@ function Formatter(item, pattern, parent)
         case 2:
         case 3:
         case 4:
-          return authors.collect(function(author) { return author.substring(0, 1); }).join('');
+          return authors.map(function(author) { return author.substring(0, 1); }).join('');
         default:
-          return authors.slice(0, 3).collect(function(author) { return author.substring(0, 1); }).join('') + '+';
+          return authors.slice(0, 3).map(function(author) { return author.substring(0, 1); }).join('') + '+';
       }
     },
 
@@ -1082,7 +1081,7 @@ function Formatter(item, pattern, parent)
       var authors = getCreators(onlyEditors);
       if (!authors) { return null; }
 
-      return authors.collect(function(author) { return author.substring(0, n); }).join('.');
+      return authors.map(function(author) { return author.substring(0, n); }).join('.');
     },
 
     authorIni: function(onlyEditors) {
@@ -1091,8 +1090,8 @@ function Formatter(item, pattern, parent)
 
       var firstAuthor = authors.shift();
 
-      return [firstAuthor.substring(0, 5)].concat(authors.collect(function(author) {
-        return auth.split(/\s+/).collect(function(name) { return name.substring(0, 1); }).join('');
+      return [firstAuthor.substring(0, 5)].concat(authors.map(function(author) {
+        return auth.split(/\s+/).map(function(name) { return name.substring(0, 1); }).join('');
       })).join('.');
     },
 
@@ -1117,7 +1116,7 @@ function Formatter(item, pattern, parent)
       switch (authors.length) {
         case 0:   return null;
         case 1:   return authors[0];
-        default:  return authors.collect(function(author) { return author.substring(0, 1); }).join('.') + (authors.length > 3 ? '+' : '');
+        default:  return authors.map(function(author) { return author.substring(0, 1); }).join('.') + (authors.length > 3 ? '+' : '');
       }
     },
 
@@ -1184,7 +1183,7 @@ function Formatter(item, pattern, parent)
     },
 
     abbr: function(value) {
-      return value.split(/\s+/).collect(function(word) { return word.substring(0, 1); }).join('');
+      return value.split(/\s+/).map(function(word) { return word.substring(0, 1); }).join('');
     },
 
     lower: function(value) {
@@ -1208,7 +1207,6 @@ function Formatter(item, pattern, parent)
   };
 
   function call(type, name) {
-    trLog('Looking up "' + type + '" for "' + name + '"');
     var table = _this[type];
     if (!table) { throw('!!No type "' + type + '"'); }
     if (name.indexOf('!') == 0) {

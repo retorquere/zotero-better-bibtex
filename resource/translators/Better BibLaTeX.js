@@ -412,7 +412,7 @@ function doExport() {
     writeField('note', escape(item.extra));
     writeField('annotation', escape(item.meetingName));
 
-    writeField("keywords", escape(item.tags.collect(function(tag) {return tag.tag;}), {brace: true, sep: ', '}));
+    writeField("keywords", escape(item.tags.map(function(tag) {return tag.tag;}), {brace: true, sep: ', '}));
 
     if (item.notes && Zotero.getOption("exportNotes")) {
       item.notes.forEach(function(note) {
