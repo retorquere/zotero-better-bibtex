@@ -758,6 +758,8 @@ function escape_url(url) {
 }
 
 function escape(value, options) {
+  if ((typeof options) == 'string') { options = {sep: options}; }
+  if ((typeof options) == 'boolean') { options = {brace: true}; }
   options = (options || {})
 
   if (typeof value == 'number') { return value; }

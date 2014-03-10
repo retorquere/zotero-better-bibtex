@@ -158,10 +158,10 @@ function doExport() {
         }
       });
 
-      writeField('author', escape(authors, ' and '));
-      writeField('editor', escape(editors, ' and '));
-      writeField('translator', escape(translators, ' and '));
-      writeField('collaborator', escape(collaborators, ' and '));
+      writeField('author', escape(authors, {sep: ' and '}));
+      writeField('editor', escape(editors, {sep: ' and '}));
+      writeField('translator', escape(translators, {sep: ' and '}));
+      writeField('collaborator', escape(collaborators, {sep: ' and '}));
     }
 
     if(item.date) {
@@ -171,7 +171,7 @@ function doExport() {
       } else {
         // need to use non-localized abbreviation
         if(typeof date.month == "number") {
-          writeField("month", escape(months[date.month]), true);
+          writeField("month", escape(months[date.month]), true); // no braces at all around the month
         }
         writeField("year", escape(date.year));
       }
@@ -179,7 +179,7 @@ function doExport() {
 
     writeField("note", escape(item.extra));
 
-    writeField("keywords", escape(item.tags.collect(function(tag) { return tag.tag; }) , {brace: true, sep: ', '}));
+    writeField("keywords", escape(item.tags.collect(function(tag) { return tag.tag; }), {brace: true, sep: ', '}));
 
     writeField("pages", escape(item.pages));
 
