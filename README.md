@@ -7,7 +7,7 @@ This extension aims to make Zotero effective for us LaTeX holdouts. It adds the 
 Currently supports i, b, sup and sub; more can be added on request. Finally add italics and super/supscript to your
 titles!
 
-## Duplicate keys; integration with [Zotero: Report Customizer](https://github.com/friflaj/zotero-report-customizer)
+## Duplicate keys; integration with [Report Customizer](https://github.com/friflaj/zotero-report-customizer)
 
 The plugin will generate bibtex comments to show whether a key conflicts and with which entry. This plugin now
 integrates with [Zotero: Report Customizer](https://github.com/friflaj/zotero-report-customizer), to display the bibtex key plus
