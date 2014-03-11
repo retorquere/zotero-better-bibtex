@@ -1,8 +1,9 @@
 var config = {
   id: '/*= id =*/',
   label:  '/*= label =*/',
-  unicode:  /*= unicode =*/
-}
+  unicode:  /*= unicode =*/,
+  release:  '/*= release =*/'
+};
 
 function unicode() {
   trLog('unicode: ' + Zotero.getHiddenPref('better-bibtex.unicode'));
@@ -146,89 +147,46 @@ convert.latex2unicode["\\url"] = '';
 convert.latex2unicode["\\href"] = '';
 
 convert.to_latex = function(str) {
-  var _unicode = unicode();
-
-  chunk_to_latex = function(arr) {
-    var chr;
-    var res = ''
-    var textMode=true;
-
-    arr.forEach(function(chr) {
-      if (chr.match(/^[\\{]/)) {
-        textMode = chr.match(/[^a-z]$/i);
-      } else {
-        if (!textMode) {
-          res += '{}';
-          textMode = true;
-        }
-      }
-
-      res += chr;
-    });
-
-    return res;
-  }
-
-  chunk_text = function(str) {
-    var strlen = str.length;
-    var c, ca;
-    var l;
-
-    var res = [];
-
-    for (var i=0; i < strlen; i++) {
-      c = str.charAt(i);
-      if (!convert.unicode2latex[c]) {
-        convert.unicode2latex[c] = {latex: c, math:false};
-      }
-      convert.unicode2latex[c].math = !!convert.unicode2latex[c].math;
-
-      if (_unicode && !convert.unicode2latex[c].force) {
-        convert.unicode2latex[c].latex = c;
-        convert.unicode2latex[c].math = false;
-      }
-
-      ca = convert.unicode2latex[c];
-
-      var last = res.length - 1;
-      if (res.length == 0 || ca.math != res[last].math) {
-        res.push({chars: [ca.latex], math: ca.math});
-      } else {
-        res[last].chars.push(ca.latex);
-      }
-    }
-
-    res = res.map(function(chunk) {
-      if (chunk.math) {
-        return '\\ensuremath{' + chunk_to_latex(chunk.chars) + '}';
-      } else {
-        return chunk_to_latex(chunk.chars);
-      }
-    });
-
-    return chunk_to_latex(res).replace(/{}\s+/g, ' ');
-  }
+  var regex = convert.unicode2latex[unicode() ? 'unicode' : 'ascii'];
 
   var html2latex = {
-    sup:  {open: "\\ensuremath{^{", close: "}}"},
-    sub:  {open: "\\ensuremath{_{", close: "}}"},
-    i:    {open: "\\emph{",         close: "}"},
-    b:    {open: "\\textbf{",       close: "}"}
+    sup:      {open: "\\ensuremath{^{", close: "}}"},
+    sub:      {open: "\\ensuremath{_{", close: "}}"},
+    i:        {open: "\\emph{",         close: "}"},
+    b:        {open: "\\textbf{",       close: "}"},
+    p:        {open: "\n\n",            close: "\n\n"},
+    apsn:     {open: "",                close: ""},
+    br:       {open: "\n\n",            close: ""},
+    'break':  {open: "\n\n",            close: ""}
   }
+  var tags = new RegExp('(' + Object.keys(html2latex).map(function(tag) { return '<\/?' + tag + '\/?>'} ).join('|') + ')', 'ig');
 
-  var res = ('' + str).split(/(<\/?[a-z]+>)/ig).map(function(chunk, index) {
+  var res = ('' + str).split(tags).map(function(chunk, index) {
     trLog(index + ': ' + chunk);
-    if ((index % 2) == 1) { // odd elements = splitter == potential html tag
-      var sub = html2latex[chunk.replace(/[^a-z]/ig, '').toLowerCase()];
-      trLog(chunk + ' is html? ' + !!sub);
-      if (!sub) { return chunk_text(chunk); }
-      return sub[(chunk.charAt(1) == '/') ? 'close' : 'open'];
-    } else {
-      return chunk_text(chunk);
-    }
-  }).join('');
+    if ((index % 2) == 1) { // odd element = splitter == html tag
 
-  trLog('to_latex("' + str + '", ' + _unicode + ') = "' + res + '"');
+      var tag = html2latex[chunk.replace(/[^a-z]/ig, '').toLowerCase()];
+      return tag[(chunk.charAt(1) == '/') ? 'close' : 'open'];
+
+    } else {
+
+      return chunk.split(regex.math).map(function(text, i) {
+
+        var latex = text.replace(regex.text, function(match) {
+          return (convert.unicode2latex.map[match] || match);
+        });
+
+        if ((i % 2) == 1) { // odd element == splitter == block of math
+          return '\\ensuremath{' + latex + '}';
+        }
+
+        return latex;
+
+      }).join('');
+    }
+  }).join('').replace(/{}\s+/g, ' ');;
+
+  trLog('to_latex("' + str + '", ' + unicode() + ') = "' + res + '"');
   return res;
 }
 

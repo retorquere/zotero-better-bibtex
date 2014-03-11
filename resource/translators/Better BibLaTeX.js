@@ -172,7 +172,6 @@ function doExport() {
   Zotero.write("\n");
 
   CiteKeys.initialize().forEach(function(item) {
-    trLog('Generating for ' + JSON.stringify(item));
     //don't export standalone notes and attachments
     if (item.itemType == "note" || item.itemType == "attachment") return;
 

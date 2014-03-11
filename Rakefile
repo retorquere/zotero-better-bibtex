@@ -128,50 +128,84 @@ class Translator
 
     @_timestamp = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
     @_unicode_mapping = Translator.mapping
+    @_release = RELEASE
   end
-  attr_reader :_id, :_label, :_timestamp, :_unicode, :_unicode_mapping
+  attr_reader :_id, :_label, :_timestamp, :_release, :_unicode, :_unicode_mapping
 
   def self.mapping
     if @@mapping.nil?
       mapping = Nokogiri::XML(open(UNICODE_MAPPING))
 
-      unicode2latex = {};
-      latex2unicode = {};
+      u2l = {
+        unicode: {
+          math: [],
+          map: {}
+        },
+        ascii: {
+          math: [],
+          map: {}
+        }
+      }
+
+      l2u = { }
+
       mapping.xpath('//character[@dec and latex]').each{|char|
         id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
         key = id.pack('U' * id.size)
         value = char.at('.//latex').inner_text
+        mathmode = (char['mode'] == 'math')
 
-        # need to figure something out for this. This hase the for X<combining char>, which needs to be transformed to 
+        case key
+          when '_', '}', '{', '[', ']'
+            value = "\\" + key
+            mathmode = false
+          when "\u00A0"
+            value = ' '
+            mathmode = false
+        end
+
+        next if key =~ /^[\x20-\x7E]$/ && ! %w{# $ % & ~ _ ^ { } [ ] > < \\}.include?(key)
+        next if key == value && !mathmode
+
+        # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to 
         # \combinecommand{X}
         #raise value if value =~ /LECO/
 
-        next if key == value
-
-        force = (key =~ /^[\x20-\x7E]$/)
-        if key == "\u00A0"
-          value = ' '
-          mathmode = false
-        else
-          mathmode = (char['mode'] == 'math')
+        if key =~ /^[\x20-\x7E]$/ # an ascii character that needs translation? Probably a TeX special character
+          u2l[:unicode][:map][key] = value.gsub(/ $/, '{}')
+          u2l[:unicode][:math] << key if mathmode
         end
+        u2l[:ascii][:map][key] = value.gsub(/ $/, '{}')
+        u2l[:ascii][:math] << key if mathmode
 
-        unicode2latex[key] = {latex: value}
-        unicode2latex[key][:math] = true if mathmode
-        unicode2latex[key][:force] = true if force
-        latex2unicode[value] = key
+        _value = value.gsub(/{}$/, '').strip
+        l2u[_value] = key if _value != ''
       }
-      unicode2latex['['] = {latex: '[', math: true}
-      unicode2latex[']'] = {latex: ']', math: true}
+
+      [:ascii, :unicode].each{|map|
+        u2l[map][:math] = '/(' + u2l[map][:math].collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('|') + ')/g'
+        u2l[map][:text] = '/' + u2l[map][:map].keys.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('|') + '/g'
+      }
 
       @@mapping = "
         var convert = {
-          unicode2latex: #{JSON.pretty_generate(unicode2latex)},
-          unicode2latex_maxpattern: #{unicode2latex.keys.collect{|k| k.size}.max},
+          unicode2latex: {
+            unicode: {
+              math: #{u2l[:unicode][:math]},
+              text: #{u2l[:unicode][:text]}
+            },
 
-          latex2unicode: #{JSON.pretty_generate(latex2unicode)}
+            ascii: {
+              math: #{u2l[:ascii][:math]},
+              text: #{u2l[:ascii][:text]}
+            },
+
+            map: #{JSON.pretty_generate(u2l[:ascii][:map])}
+          },
+
+          latex2unicode: #{JSON.pretty_generate(l2u)}
         };
-      "
+        "
     end
 
     return @@mapping
@@ -204,8 +238,11 @@ class Translator
 
     @_id = header['translatorID']
     @_label = header['label']
+    js = render(js)
 
-    return render(js)
+    #File.open(File.basename(@source), 'w'){|f| f.write(js) }
+
+    return js
   end
 
   def render(template)
@@ -225,7 +262,10 @@ file UNICODE_MAPPING => 'Rakefile' do |t|
     #Nokogiri.parse(open(t.name))
     puts mapping.errors
 
-    mapping.at('//charlist') << "<character id='U0026' dec='38' mode='text' type='punctuation'><latex>\\&</latex></character>"
+    mapping.at('//charlist') << "
+      <character id='U0026' dec='38' mode='text' type='punctuation'><latex>\\&</latex></character>
+      <character id='UFFFD' dec='239-191-189' mode='text' type='punctuation'><latex>\\dbend</latex></character>
+    "
 
     {
       "\\textdollar"        => "\\$",
