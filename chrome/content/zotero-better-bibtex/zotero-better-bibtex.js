@@ -120,45 +120,47 @@ Zotero.BetterBibTex = {
     }
   },
 
-  export: function(translator, collectionkey) {
-    if (collectionkey.charAt(0) != '/') { collectionkey = '/0/' + collectionkey; }
-    Zotero.BetterBibTex.log('exporting ' + collectionkey + ' in ' + translator);
+  export: function(translator, collections) {
+    var items = []
+    console.log('exporting: ' + collections + ' to ' + translator);
+    for (var collectionkey of collections.split('+')) {
+      if (collectionkey.charAt(0) != '/') { collectionkey = '/0/' + collectionkey; }
+      Zotero.BetterBibTex.log('exporting ' + collectionkey);
 
-    var path = collectionkey.split('/');
-    path.shift(); // remove leading /
+      var path = collectionkey.split('/');
+      path.shift(); // remove leading /
 
-    var libid = parseInt(path.shift());
-    if (isNaN(libid)) {
-      throw('Not a valid library ID: ' + collectionkey);
-    }
-
-    var key = '' + path[0];
-
-    var col = null;
-    for (var name of path) {
-      var children = Zotero.getCollections(col && col.id, false, libid);
-      col = null;
-      for (child of children) {
-        if (child.name.toLowerCase() == name.toLowerCase()) {
-          col = child;
-          break;
-        }
+      var libid = parseInt(path.shift());
+      if (isNaN(libid)) {
+        throw('Not a valid library ID: ' + collectionkey);
       }
-      if (!col) { break; }
+
+      var key = '' + path[0];
+
+      var col = null;
+      for (var name of path) {
+        var children = Zotero.getCollections(col && col.id, false, libid);
+        col = null;
+        for (child of children) {
+          if (child.name.toLowerCase() == name.toLowerCase()) {
+            col = child;
+            break;
+          }
+        }
+        if (!col) { break; }
+      }
+
+      if (!col) {
+        col = Zotero.Collections.getByLibraryAndKey(libid, key);
+      }
+
+      if (!col) { throw (collectionkey + ' not found'); }
+
+      var _items = col.getChildren(Zotero.BetterBibTex.pref('recursiveCollections', false, 'zotero'), false, 'item');
+      items = items.concat(Zotero.Items.get([item.id for (item of _items)]));
     }
 
-    if (!col) {
-      col = Zotero.Collections.getByLibraryAndKey(libid, key);
-    }
-
-    if (!col) { throw (collectionkey + ' not found'); }
-
-    var translator = Zotero.BetterBibTex.getTranslator(translator);
-    var items = col.getChildren(Zotero.BetterBibTex.pref('recursiveCollections', false, 'zotero'), false, 'item');
-    items = [item.id for (item of items)];
-    items = Zotero.Items.get(items);
-
-    return Zotero.BetterBibTex.translate(translator, items);
+    return Zotero.BetterBibTex.translate(Zotero.BetterBibTex.getTranslator(translator), items);
   },
 
   translate: function(translator, items) {
