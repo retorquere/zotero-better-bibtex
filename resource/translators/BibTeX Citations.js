@@ -6,6 +6,9 @@
 	"minVersion": "2.1.9",
 	"maxVersion": "",
 	"priority": 100,
+  "configOptions": {
+    "getCollections": "true"
+  },
   "displayOptions": {},
 	"inRepository": true,
 	"translatorType": 2,

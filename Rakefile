@@ -36,7 +36,7 @@ end
 task :test => XPI do
   dropbox = File.expand_path('~/Dropbox')
   Dir["#{dropbox}/*.xpi"].each{|xpi| File.unlink(xpi)}
-  FileUtils.cp(t.name, File.join(dropbox, t.name))
+  FileUtils.cp(XPI, File.join(dropbox, XPI))
 end
 
 file XPI => SOURCES do |t|

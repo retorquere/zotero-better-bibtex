@@ -18,6 +18,22 @@ function unicode() {
   }
 }
 
+function writeFieldMap(item, fieldMap) {
+  var field;
+  for(var field in fieldMap) {
+    var mapped = fieldMap[field].literal || fieldMap[field];
+    var brace = !!(fieldMap[field].literal);
+    if(item[fieldMap[field]]) {
+      value = item[fieldMap[field]];
+      if (field == 'url') {
+        writeField(mapped, escape_url(value));
+      } else {
+        writeField(mapped, escape(value, {brace: brace}));
+      }
+    }
+  }
+}
+
 function saveAttachments(item) {
   if(! item.attachments) {
     return null;
@@ -238,9 +254,12 @@ function setKeywordDelimRe( val, flags ) {
 }
 
 function processField(item, field, value) {
-  if(Zotero.Utilities.trim(value) == '') return null;
-  if(fieldMap[field]) {
-    item[fieldMap[field]] = value;
+  if (!value || Zotero.Utilities.trim(value) == '') return null;
+
+  var mapped = fieldMap[field].literal || fieldMap[field];
+
+  if(mapped) {
+    item[mapped] = value;
   } else if(inputFieldMap[field]) {
     item[inputFieldMap[field]] = value;
   } else if(field == "journal") {
@@ -1221,7 +1240,7 @@ var CiteKeys = {
       trLog('Export running, fetching items...');
       items = {};
       var item;
-      while (item = Zotero.nextItem()) {
+	    while (item = Zotero.nextItem()) {
         trLog('Adding ' + item.itemID);
         items[item.itemID] = item; // duplicates?!
       }

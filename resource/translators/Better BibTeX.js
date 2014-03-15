@@ -6,6 +6,9 @@
 	"minVersion": "2.1.9",
 	"maxVersion": "",
 	"priority": 100,
+  "configOptions": {
+    "getCollections": "true"
+  },
 	"displayOptions": {
 		"exportNotes": true,
 		"exportFileData": false,
@@ -18,24 +21,24 @@
 }
 
 var fieldMap = {
-  address:"place",
-  chapter:"section",
-  edition:"edition",
-  type:"type",
-  series:"series",
-  title:"title",
-  volume:"volume",
-  copyright:"rights",
-  isbn:"ISBN",
-  issn:"ISSN",
-  lccn:"callNumber",
-  shorttitle:"shortTitle",
-  url:"url",
-  doi:"DOI",
-  abstract:"abstractNote",
-  nationality: "country",
-  language:"language",
-  assignee:"assignee"
+  address:      {literal: 'place'},
+  chapter:      {literal: 'section'},
+  edition:      {literal: 'edition'},
+  type:         'type',
+  series:       {literal: 'series'},
+  title:        {literal: 'title'},
+  volume:       {literal: 'volume'},
+  copyright:    {literal: 'rights'},
+  isbn:         'ISBN',
+  issn:         'ISSN',
+  lccn:         'callNumber',
+  shorttitle:   {literal: 'shortTitle'},
+  url:          'url',
+  doi:          'DOI',
+  abstract:     'abstractNote',
+  nationality:  'country',
+  language:     'language',
+  assignee:     'assignee'
 };
 
 var zotero2tex = {
@@ -85,17 +88,7 @@ function doExport() {
     }
     Zotero.write("@"+type+"{"+CiteKeys.items[item.itemID].key);
 
-    var value;
-    for(var field in fieldMap) {
-      if(item[fieldMap[field]]) {
-        value = item[fieldMap[field]];
-        if (field == 'url') {
-          writeField(field, escape_url(value));
-        } else {
-          writeField(field, escape(value, {brace: true}));
-        }
-      }
-    }
+    writeFieldMap(item, fieldMap);
 
     if(item.reportNumber || item.issue || item.seriesNumber || item.patentNumber) {
       writeField("number", escape(item.reportNumber || item.issue || item.seriesNumber|| item.patentNumber));

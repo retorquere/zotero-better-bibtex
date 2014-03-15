@@ -8,6 +8,9 @@
   "maxVersion": "null",
   "priority": 50,
   "inRepository": true,
+  "configOptions": {
+    "getCollections": "true"
+  },
   "displayOptions": {
     "exportCharset": "UTF-8",
     "exportNotes": false,
@@ -18,22 +21,22 @@
 }
 
 var fieldMap = {
-  location:   'place',
-  chapter:    'chapter',
-  edition:    'edition',
-  title:      'title',
-  volume:     'volume',
-  rights:     'rights',
+  location:   {literal: 'place'},
+  chapter:    {literal: 'chapter'},
+  edition:    {literal: 'edition'},
+  title:      {literal: 'title'},
+  volume:     {literal: 'volume'},
+  rights:     {literal: 'rights'},
   isbn:       'ISBN',
   issn:       'ISSN',
   url:        'url',
   doi:        'DOI',
-  series:     'series',
-  shorttitle: 'shortTitle',
+  series:     {literal: 'series'},
+  shorttitle: {literal: 'shortTitle'},
   abstract:   'abstractNote',
   volumes:    'numberOfVolumes',
   version:    'version',
-  eventtitle: 'conferenceName',
+  eventtitle: {literal: 'conferenceName'},
   pages:      'pages',
   pagetotal:  'numPages'
 };
@@ -191,16 +194,7 @@ function doExport() {
     }
     Zotero.write("@"+type+"{"+CiteKeys.items[item.itemID].key);
 
-    for(var field in fieldMap) {
-      if(item[fieldMap[field]]) {
-        value = item[fieldMap[field]];
-        if (field == 'url') {
-          writeField(field, escape_url(value));
-        } else {
-          writeField(field, escape(value, {brace: true}));
-        }
-      }
-    }
+    writeFieldMap(item, fieldMap);
 
     if (item.language) {
       var language = babelLanguageMap[item.language.toLowerCase().replace(/[^a-z0-9]/, '_')] || item.language;
