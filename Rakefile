@@ -33,6 +33,12 @@ XPI = "zotero-#{EXTENSION}-#{RELEASE}.xpi"
 task :default => XPI do
 end
 
+task :test => XPI do
+  dropbox = File.expand_path('~/Dropbox')
+  Dir["#{dropbox}/*.xpi"].each{|xpi| File.unlink(xpi)}
+  FileUtils.cp(t.name, File.join(dropbox, t.name))
+end
+
 file XPI => SOURCES do |t|
   Dir['*.xpi'].each{|xpi| File.unlink(xpi)}
 
