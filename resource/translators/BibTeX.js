@@ -19,16 +19,16 @@ function unicode() {
 }
 
 function writeFieldMap(item, fieldMap) {
-  var field;
-  for(field in fieldMap) {
-    var mapped = fieldMap[field].literal || fieldMap[field];
-    var brace = !!(fieldMap[field].literal);
-    if(item[mapped]) {
-      value = item[mapped];
-      if (field == 'url') {
-        writeField(mapped, escape_url(value));
+  var bibtexField;
+  for(bibtexField in fieldMap) {
+    var zoteroField = fieldMap[bibtexField].literal || fieldMap[bibtexField];
+    var brace = !!(fieldMap[bibtexField].literal);
+    if(item[zoteroField]) {
+      value = item[zoteroField];
+      if (bibtexField == 'url') {
+        writeField(bibtexField, escape_url(value));
       } else {
-        writeField(mapped, escape(value, {brace: brace}));
+        writeField(bibtexField, escape(value, {brace: brace}));
       }
     }
   }
