@@ -31,7 +31,6 @@ var fieldMap = {
   issn:       'ISSN',
   url:        'url',
   doi:        'DOI',
-  series:     {literal: 'series'},
   shorttitle: {literal: 'shortTitle'},
   abstract:   'abstractNote',
   volumes:    'numberOfVolumes',
@@ -192,8 +191,10 @@ function doExport() {
       }
       Zotero.write("\n");
     }
+
     Zotero.write('@'+type+'{'+CiteKeys.items[item.itemID].key);
 
+    // Must be directly after entry start because it initializes the writing
     writeFieldMap(item, fieldMap);
 
     if (item.language) {
@@ -251,7 +252,7 @@ function doExport() {
 
     //TODO: check what happens to bookTitle, is that also an alias for publicationTitle?
 
-    writeField('booktitle', escape(item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, {brace: true}));
+    if (!FieldsWritten.booktitle) { writeField('booktitle', escape(item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, {brace: true})); }
 
     writeField('titleaddon', escape(item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, {brace: true}));
 

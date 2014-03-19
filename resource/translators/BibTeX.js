@@ -18,7 +18,10 @@ function unicode() {
   }
 }
 
+var FieldsWritten;
 function writeFieldMap(item, fieldMap) {
+  FieldsWritten = {};
+
   var bibtexField;
   for(bibtexField in fieldMap) {
     var zoteroField = fieldMap[bibtexField].literal || fieldMap[bibtexField];
@@ -33,6 +36,20 @@ function writeFieldMap(item, fieldMap) {
     }
   }
 }
+
+function writeField(field, value, bare) {
+  if (typeof value == 'number') {
+  } else {
+    if (!value || value == '') { return; }
+  }
+
+  if (!bare) { value = '{' + value + '}'; }
+
+  if (FieldsWritten[field]) { trLog('Field ' + field + ' output more than once!'); }
+  FieldsWritten[field] = true;
+  Zotero.write(",\n\t" + field + " = " + value);
+}
+
 
 function saveAttachments(item) {
   if(! item.attachments) {
@@ -756,17 +773,6 @@ function escape(value, options) {
   value = convert.to_latex(value);
   if (doublequote) { value = '{' + value + '}'; }
   return value;
-}
-
-function writeField(field, value, bare) {
-  if (typeof value == 'number') {
-  } else {
-    if (!value || value == '') { return; }
-  }
-
-  if (!bare) { value = '{' + value + '}'; }
-
-  Zotero.write(",\n\t" + field + " = " + value);
 }
 
 function mapHTMLmarkup(characters){

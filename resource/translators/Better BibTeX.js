@@ -88,6 +88,7 @@ function doExport() {
     }
     Zotero.write('@'+type+'{'+CiteKeys.items[item.itemID].key);
 
+    // Must be directly after entry start because it initializes the writing
     writeFieldMap(item, fieldMap);
 
     if(item.reportNumber || item.issue || item.seriesNumber || item.patentNumber) {
