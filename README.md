@@ -42,7 +42,7 @@ This plugin also implements a new citekey generator for those entries that don't
 'special' fields listed JabRef also allows all 'native' fields as key values; the plugin does the same but allows for
 *Zotero* native fields (case sensitive!), not Bib(La)TeX native fields. The possible fields are:
 
-|        field         |        field         |        field         |        field         |
+|                      |                      |                      |                      |
 | -------------------- | -------------------- | -------------------- | -------------------- |
 | abstractNote         | accessDate           | applicationNumber    | archive              |
 | archiveLocation      | artworkMedium        | artworkSize          | assignee             |
