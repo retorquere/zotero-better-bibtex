@@ -39,6 +39,12 @@ task :test => XPI do
   FileUtils.cp(XPI, File.join(dropbox, XPI))
 end
 
+task :tests do
+  Dir['test/*.xml'].each{|test|
+    Test.new(test)
+  }
+end
+
 file XPI => SOURCES do |t|
   Dir['*.xpi'].each{|xpi| File.unlink(xpi)}
 
@@ -123,6 +129,12 @@ end
 
 #### GENERATED FILES
 
+class Test
+  def initialize(test)
+    basename = File.join(File.dirname(test), File.basename(test, File.extname(test)))
+    js = basename + '.js'
+  end
+end
 
 class Translator
   @@mapping = nil
@@ -323,4 +335,21 @@ def download(url, file)
     throw "Failed to download #{url}: #{res}"
   end
   #open(file, 'wb', :encoding => 'utf-8') { |file| file.write(resp.body) }
+end
+
+task :fields do
+  fields = IO.readlines('../zotero/chrome/locale/en-US/zotero/zotero.properties').collect{|line|
+    m = line.match(/itemFields\.([a-zA-Z]+)/)
+    if m
+      m[1]
+    else
+      nil
+    end
+  }.compact.sort
+  fieldwidth = fields.collect{|f| f.size}.max
+
+  columns = 6
+  fields.each_slice(columns){|row|
+    puts (row.compact + ([''] * columns))[0..columns-1].collect{|f| f.ljust(fieldwidth) }.join(' | ')
+  }
 end

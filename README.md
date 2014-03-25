@@ -38,7 +38,29 @@ During import, if JabRef explicit (not dynamic) groups are present, collections 
 ## Configurable citekey generator
 
 This plugin also implements a new citekey generator for those entries that don't have one set explicitly; the formatter follows the
-[JabRef key formatting syntax](http://jabref.sourceforge.net/help/LabelPatterns.php).
+[JabRef key formatting syntax](http://jabref.sourceforge.net/help/LabelPatterns.php). Note that in addition to the
+'special' fields listed JabRef also allows all 'native' fields as key values; the plugin does the same but allows for
+*Zotero* native fields (case sensitive!), not Bib(La)TeX native fields. The possible fields are:
+
+DOI                  | ISBN                 | ISSN                 | abstractNote         | accessDate           | applicationNumber   
+archive              | archiveLocation      | artworkMedium        | artworkSize          | assignee             | attachments         
+audioFileType        | audioRecordingFormat | billNumber           | blogTitle            | bookTitle            | callNumber          
+caseName             | code                 | codeNumber           | codePages            | codeVolume           | committee           
+company              | conferenceName       | country              | court                | date                 | dateAdded           
+dateDecided          | dateEnacted          | dateModified         | dictionaryTitle      | distributor          | docketNumber        
+documentNumber       | edition              | encyclopediaTitle    | episodeNumber        | extra                | filingDate          
+firstPage            | forumTitle           | genre                | history              | institution          | interviewMedium     
+issue                | issueDate            | issuingAuthority     | itemType             | journalAbbreviation  | label               
+language             | legalStatus          | legislativeBody      | letterType           | libraryCatalog       | manuscriptType      
+mapType              | medium               | meetingName          | nameOfAct            | network              | notes               
+numPages             | number               | numberOfVolumes      | pages                | patentNumber         | place               
+postType             | presentationType     | priorityNumbers      | proceedingsTitle     | programTitle         | programmingLanguage 
+publicLawNumber      | publicationTitle     | publisher            | references           | related              | reportNumber        
+reportType           | reporter             | reporterVolume       | rights               | runningTime          | scale               
+section              | series               | seriesNumber         | seriesText           | seriesTitle          | session             
+shortTitle           | source               | studio               | subject              | system               | tags                
+thesisType           | title                | university           | url                  | version              | videoRecordingFormat
+volume               | websiteTitle         | websiteType          |                      |                      |                     
 
 ## Date field exports
 

@@ -159,12 +159,11 @@ function getBibTexType(item)
 
 
 /*
- * three-letter month abbreviations. i assume these are the same ones that the
+ * three-letter month abbreviations. I assume these are the same ones that the
  * docs say are defined in some appendix of the LaTeX book. (i don't have the
  * LaTeX book.)
  */
-var months = ["jan", "feb", "mar", "apr", "may", "jun",
-        "jul", "aug", "sep", "oct", "nov", "dec"];
+var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
 var jabref = {
   format: null,
@@ -939,6 +938,7 @@ function Formatter(item, pattern, parent)
     'for',
     'from',
     'in',
+    'is',
     'inside',
     'into',
     'l',
@@ -1151,6 +1151,13 @@ function Formatter(item, pattern, parent)
       return date.year;
     },
 
+    month: function() {
+      if (!_item.date) { return null; }
+      var date = Zotero.Utilities.strToDate(_item.date);
+      if (typeof date.year === 'undefined') { return null; }
+      return months[date.month];
+    },
+
     title: function() {
       return titleWords(_item.title).join('');
     },
@@ -1211,15 +1218,20 @@ function Formatter(item, pattern, parent)
       var _function = _filters.shift();
       var value = null;
 
-      var N = null;
-      var M = null;
-      _function.replace(/([0-9]+)_([0-9]+)$/, function(match, n, m) { N = n; M = m; return ''; });
-      _function.replace(/([0-9]+)$/, function(match, n) { N = n; return ''; });
+      var value;
+      if (_item[_function] && (typeof _item[_function] != 'function')) {
+        value = '' + _item[_function];
+      } else {
+        var N = null;
+        var M = null;
+        _function.replace(/([0-9]+)_([0-9]+)$/, function(match, n, m) { N = n; M = m; return ''; });
+        _function.replace(/([0-9]+)$/, function(match, n) { N = n; return ''; });
 
-      var onlyEditors = (_function.match(/^edtr/) || _function.match(/^editors/));
-      _function = _function.replace(/^edtr/, 'auth').replace(/^editors/, 'authors');
+        var onlyEditors = (_function.match(/^edtr/) || _function.match(/^editors/));
+        _function = _function.replace(/^edtr/, 'auth').replace(/^editors/, 'authors');
 
-      var value = call('function', _function)(onlyEditors, N, M);
+        value = call('function', _function)(onlyEditors, N, M);
+      }
 
       _filters.forEach(function(filter) {
         if (filter.match(/^[(].*[)]$/)) { // text between braces is default value in case a filter fails
