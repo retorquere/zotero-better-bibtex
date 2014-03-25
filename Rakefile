@@ -345,11 +345,15 @@ task :fields do
     else
       nil
     end
-  }.compact.sort
+  }.compact
+  fields << 'month'
+  fields.sort!{|a, b| a.downcase <=> b.downcase}
   fieldwidth = fields.collect{|f| f.size}.max
 
-  columns = 6
+  columns = 4
+  puts '| ' + ([' ' * fieldwidth] * columns).join(' | ') + ' |'
+  puts '| ' + (['-' * fieldwidth] * columns).join(' | ') + ' |'
   fields.each_slice(columns){|row|
-    puts (row.compact + ([''] * columns))[0..columns-1].collect{|f| f.ljust(fieldwidth) }.join(' | ')
+    puts '| ' + (row + ([''] * columns))[0..columns-1].collect{|f| f.ljust(fieldwidth) }.join(' | ') + ' |'
   }
 end
