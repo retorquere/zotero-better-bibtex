@@ -42,6 +42,8 @@ This plugin also implements a new citekey generator for those entries that don't
 'special' fields listed JabRef also allows all 'native' fields as key values; the plugin does the same but allows for
 *Zotero* native fields (case sensitive!), not Bib(La)TeX native fields. The possible fields are:
 
+                     |                      |                      |                      |                      |                     
+-------------------- | -------------------- | -------------------- | -------------------- | -------------------- | --------------------
 DOI                  | ISBN                 | ISSN                 | abstractNote         | accessDate           | applicationNumber   
 archive              | archiveLocation      | artworkMedium        | artworkSize          | assignee             | attachments         
 audioFileType        | audioRecordingFormat | billNumber           | blogTitle            | bookTitle            | callNumber          
@@ -52,15 +54,15 @@ documentNumber       | edition              | encyclopediaTitle    | episodeNumb
 firstPage            | forumTitle           | genre                | history              | institution          | interviewMedium     
 issue                | issueDate            | issuingAuthority     | itemType             | journalAbbreviation  | label               
 language             | legalStatus          | legislativeBody      | letterType           | libraryCatalog       | manuscriptType      
-mapType              | medium               | meetingName          | nameOfAct            | network              | notes               
-numPages             | number               | numberOfVolumes      | pages                | patentNumber         | place               
-postType             | presentationType     | priorityNumbers      | proceedingsTitle     | programTitle         | programmingLanguage 
-publicLawNumber      | publicationTitle     | publisher            | references           | related              | reportNumber        
-reportType           | reporter             | reporterVolume       | rights               | runningTime          | scale               
-section              | series               | seriesNumber         | seriesText           | seriesTitle          | session             
-shortTitle           | source               | studio               | subject              | system               | tags                
-thesisType           | title                | university           | url                  | version              | videoRecordingFormat
-volume               | websiteTitle         | websiteType          |                      |                      |                     
+mapType              | medium               | meetingName          | month                | nameOfAct            | network             
+notes                | numPages             | number               | numberOfVolumes      | pages                | patentNumber        
+place                | postType             | presentationType     | priorityNumbers      | proceedingsTitle     | programTitle        
+programmingLanguage  | publicLawNumber      | publicationTitle     | publisher            | references           | related             
+reportNumber         | reportType           | reporter             | reporterVolume       | rights               | runningTime         
+scale                | section              | series               | seriesNumber         | seriesText           | seriesTitle         
+session              | shortTitle           | source               | studio               | subject              | system              
+tags                 | thesisType           | title                | university           | url                  | version             
+videoRecordingFormat | volume               | websiteTitle         | websiteType          |                      |                     
 
 ## Date field exports
 
