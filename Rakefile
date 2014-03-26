@@ -16,8 +16,8 @@ RELEASE = Nokogiri::XML(File.open('install.rdf')).at('//em:version').inner_text
 TRANSLATORS = [
   {name: 'Better BibTeX'},
   {name: 'Better BibLaTeX', unicode: true},
-  {name: 'BibTeX Citations'},
-  {name: 'Pandoc Citations'},
+  {name: 'LaTeX Citation'},
+  {name: 'Pandoc Citation'},
   {name: 'BibTeX Citation Keys'}
 ]
 
