@@ -173,6 +173,8 @@ function doExport() {
   trLog('Export started: ' + JSON.stringify(config));
   Zotero.write("\n");
 
+  var usePrefix = Zotero.getHiddenPref('better-bibtex.useprefix');
+
   CiteKeys.initialize().forEach(function(item) {
     //don't export standalone notes and attachments
     if (item.itemType == 'note' || item.itemType == 'attachment') return;
@@ -196,6 +198,10 @@ function doExport() {
 
     // Must be directly after entry start because it initializes the writing
     writeFieldMap(item, fieldMap);
+
+    if (usePrefix) {
+      writeField('options', escape('useprefix'));
+    }
 
     if (item.language) {
       var language = babelLanguageMap[item.language.toLowerCase().replace(/[^a-z0-9]/, '_')] || item.language;
