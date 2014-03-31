@@ -119,7 +119,7 @@ facilities in zotero -- including the non-Firefox plugins.
 
 ## Omitting fields in the export
 
-Should you so wish, you can prevent fields of your choosing from being export. There is no GUI option for this, but in
+Should you so wish, you can prevent fields of your choosing from being exported. There is no GUI option for this, but in
 about:config, you can look up 'extensions.zotero.translators.better-bibtex.skipfields', and set its value to a
 comma-separated list of bibtex fields you do not want to see in your export. The fields are case-sensitive, separated by
 a comma *only*, no spaces.
