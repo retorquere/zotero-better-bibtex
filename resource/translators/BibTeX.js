@@ -38,6 +38,8 @@ function writeFieldMap(item, fieldMap) {
 }
 
 function writeField(field, value, bare) {
+  if (config.skipfields.indexOf(field) >= 0) { return; }
+
   if (typeof value == 'number') {
   } else {
     if (!value || value == '') { return; }

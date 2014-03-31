@@ -174,6 +174,7 @@ function doExport() {
   Zotero.write("\n");
 
   var usePrefix = Zotero.getHiddenPref('better-bibtex.useprefix');
+  config.skipfields = Zotero.getHiddenPref('better-bibtex.skipfields').split(',');
 
   CiteKeys.initialize().forEach(function(item) {
     //don't export standalone notes and attachments

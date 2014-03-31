@@ -117,6 +117,13 @@ The Better BibTex configuration pane can be found under the regular Zotero prefe
 BibTeX http export uses the general Zotero HTTP facility; please note that disabling this will disable ALL http
 facilities in zotero -- including the non-Firefox plugins.
 
+## Omitting fields in the export
+
+Should you so wish, you can prevent fields of your choosing from being export. There is no GUI option for this, but in
+about:config, you can look up 'extensions.zotero.translators.better-bibtex.skipfields', and set its value to a
+comma-separated list of bibtex fields you do not want to see in your export. The fields are case-sensitive, separated by
+a comma *only*, no spaces.
+
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
