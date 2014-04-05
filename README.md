@@ -7,10 +7,10 @@ This extension aims to make Zotero effective for us LaTeX holdouts. It adds the 
 Currently supports i, b, sup and sub; more can be added on request. Finally add italics and super/supscript to your
 titles!
 
-## Duplicate keys; integration with [Report Customizer](https://github.com/friflaj/zotero-report-customizer)
+## Duplicate keys; integration with [Report Customizer](https://github.com/ReichenHack/zotero-report-customizer)
 
 The plugin will generate bibtex comments to show whether a key conflicts and with which entry. This plugin now
-integrates with [Zotero: Report Customizer](https://github.com/friflaj/zotero-report-customizer), to display the bibtex key plus
+integrates with [Zotero: Report Customizer](https://github.com/ReichenHack/zotero-report-customizer), to display the bibtex key plus
 any conflicts between them in the zotero report.
 
 ## Set your own, fixed citation keys
@@ -24,7 +24,8 @@ You can drag and drop citations into your LaTeX editor, and it will add a proper
 configurable by setting the config option in the BBT preferences (see below). Do not include the leading backslash. This
 feature requires a one-time setup: go to zotero preferences, tab Export, under Default Output Format, select "LaTeX Citation".
 
-If you want even more convenience (and you're on Windows), install [AutoHotKey](http://www.autohotkey.com/), modify the [Zotero sample macro](https://raw.github.com/friflaj/zotero-better-bibtex/master/FastCite.ahk), and add it to your AutoHotKey.ahk. If you use this macro unmodified, when you select one or more entries in Zotero, it will copy them, bring TexMaker to the forground, and paste your citation at the cursor. Caution: this macro does *not* check that you are in Zotero when you activate it, nor that TexMaker is actually running.
+If you want even more convenience (and you're on Windows), install [AutoHotKey](http://www.autohotkey.com/), modify the
+[Zotero sample macro](https://raw.github.com/ReichenHack/zotero-better-bibtex/master/FastCite.ahk), and add it to your AutoHotKey.ahk. If you use this macro unmodified, when you select one or more entries in Zotero, it will copy them, bring TexMaker to the forground, and paste your citation at the cursor. Caution: this macro does *not* check that you are in Zotero when you activate it, nor that TexMaker is actually running.
 
 ## Recursive collection export
 

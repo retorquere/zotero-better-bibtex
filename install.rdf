@@ -5,7 +5,7 @@
 		<em:id>better-bibtex@iris-advies.com</em:id>
 		<em:name>Zotero Better Bib(La)Tex</em:name>
 		<em:version>0.2.24</em:version>
-    <em:description>Make Zotero useful for us LaTeX holdouts. More info @ https://github.com/friflaj/zotero-better-bibtex</em:description>
+    <em:description>Make Zotero useful for us LaTeX holdouts. More info @ https://github.com/ReichenHack/zotero-better-bibtex</em:description>
 		<em:creator>Emiliano Heyns</em:creator>
 		<em:updateURL>https://raw.github.com/ReichenHack/zotero-better-bibtex/master/update.rdf</em:updateURL>
 		<em:type>2</em:type> <!-- type=extension -->
