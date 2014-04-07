@@ -18,7 +18,7 @@
 	</menupopup -->
 
   <menupopup id="zotero-collectionmenu">
-    <menuitem id="id-zotero-better-bibtex-collection-showkey" label="&zotero.better-bibtex.show-collection-key;" oncommand="alert(serverURL(ZoteroPane_Local.getSelectedCollection(), '.biblatex') || '&zotero.better-bibtex.server.disabled;')"/>
+    <menuitem label="&zotero.better-bibtex.show-collection-key;" oncommand="alert(serverURL(ZoteroPane_Local.collectionsView, '.biblatex') || '&zotero.better-bibtex.server.disabled;')"/>
 	</menupopup>
 
   <menupopup id="zotero-itemmenu">

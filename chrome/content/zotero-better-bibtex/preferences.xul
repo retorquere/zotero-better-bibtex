@@ -73,10 +73,6 @@
               <checkbox id="id-better-bibtex-preferences-server-enabled" label="&zotero.better-bibtex.server.enabled;" preference="pref-better-bibtex-server" oncommand="updatePreferences();"/>
               <label id="id-zotero-better-bibtex-server-warning" hidden="true" style="color: red">&zotero.better-bibtex.server.warning;</label>
             </row>
-            <row>
-              <label id="id-zotero-better-bibtex-server" value="&zotero.better-bibtex.server.address;" hidden="true"/>
-              <label id="id-zotero-better-bibtex-server-address" value="" hidden="true"/>
-            </row>
           </rows>
         </grid>
       </vbox>
