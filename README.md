@@ -38,10 +38,12 @@ During import, if JabRef explicit (not dynamic) groups are present, collections 
 
 ## Configurable citekey generator
 
-This plugin also implements a new citekey generator for those entries that don't have one set explicitly; the formatter follows the
-[JabRef key formatting syntax](http://jabref.sourceforge.net/help/LabelPatterns.php). Note that in addition to the
-'special' fields listed JabRef also allows all 'native' fields as key values; the plugin does the same but allows for
-*Zotero* native fields (case sensitive!), not Bib(La)TeX native fields. The possible fields are:
+This plugin also implements a new citekey generator for those entries that don't have one set explicitly; the formatter
+follows the [JabRef key formatting syntax](http://jabref.sourceforge.net/help/LabelPatterns.php), with a twist; you can
+set multiple patterns separated by a vertical bar, of which the first will be applied that yields a non-empty string. If
+all return a non-empty string, a random key will be generated. Note that in addition to the 'special' fields listed
+JabRef also allows all 'native' fields as key values; the plugin does the same but allows for *Zotero* native fields
+(case sensitive!), not Bib(La)TeX native fields. The possible fields are:
 
 |                      |                      |                      |                      |
 | -------------------- | -------------------- | -------------------- | -------------------- |

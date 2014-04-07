@@ -62,10 +62,12 @@ function saveAttachments(item) {
   item.attachments.forEach(function(att) {
     trLog('attachment: ' + JSON.stringify(att, false, 2));
     if (Zotero.getOption("exportFileData") && att.defaultPath && att.saveFile) {
+      /*
       var format = Zotero.getHiddenPref('better-bibtex.attachmentFormat');
       var customPath = (new Formatter(att, format, item)).format();
       customPath = ZU.removeDiacritics(customPath).replace(/[\\:\*\?"<>\|;]/, '');
       trLog('saving formatted attachment to ' + customPath + ' (' + format + ')');
+      */
 
       att.saveFile(att.defaultPath);
       attachments.push({title: att.title, path: att.defaultPath, mimetype: att.mimeType});
@@ -846,12 +848,12 @@ function writeBiblatexData(item) {
   });
 }
 
-function Formatter(item, pattern, parent)
+function Formatter(pattern)
 {
-  var _item = item;
-  var _pattern = pattern;
-  var _parent = (parent ? new Formatter(parent) : null);
   var _this = this;
+  var _pattern = pattern;
+  var _item = null;
+  var _parent = null;
 
   function getCreators(onlyEditors) {
     if(!_item.creators || !_item.creators.length) { return []; }
@@ -1199,52 +1201,74 @@ function Formatter(item, pattern, parent)
     }
   };
 
-  function call(type, name) {
-    var table = _this[type];
-    if (!table) { throw('!!No type "' + type + '"'); }
+  function property() {
+    var args = Array.prototype.slice.call(arguments, 0);
+    var name = args.shift();
+    var table = _this.function;
+
     if (name.indexOf('!') == 0) {
       if (!_parent) { throw('Parent ' + type + ' requested but no parent available'); }
-      table = _parent[type];
+      table = _parent.function;
       name = name.substring(1, name.length);
     }
-    if (!table) { throw('No type "' + type + '"'); }
 
     var _f = table[name];
-    if (typeof _f === 'function') { return _f; }
-    throw('No format ' + type + ' "' + name + '"');
+    if (typeof _f === 'function') { return _f.apply(args); }
+
+    trLog('No property "' + name + '"');
+    return '';
   }
 
-  this.format = function() {
-    return _pattern.replace(/\[([^\]]+)\]/g, function(match, command) {
-      var _filters = command.split(':');
-      var _function = _filters.shift();
-      var value = null;
+  this.format = function(item, parent) {
+    _item = item;
+    if (parent) {
+      _parent = CiteKeys.formatter.parent;
+      _parent.init(parent);
+    } else {
+      _parent = null;
+    }
 
-      var value;
-      if (_item[_function] && (typeof _item[_function] != 'function')) {
-        value = '' + _item[_function];
-      } else {
-        var N = null;
-        var M = null;
-        _function.replace(/([0-9]+)_([0-9]+)$/, function(match, n, m) { N = n; M = m; return ''; });
-        _function.replace(/([0-9]+)$/, function(match, n) { N = n; return ''; });
 
-        var onlyEditors = (_function.match(/^edtr/) || _function.match(/^editors/));
-        _function = _function.replace(/^edtr/, 'auth').replace(/^editors/, 'authors');
+    var citekey = '';
 
-        value = call('function', _function)(onlyEditors, N, M);
-      }
+    _pattern.split('|').some(function(pattern) {
+      citekey = pattern.replace(/\[([^\]]+)\]/g, function(match, command) {
+        var _filters = command.split(':');
+        var _function = _filters.shift();
+        var value = null;
 
-      _filters.forEach(function(filter) {
-        if (filter.match(/^[(].*[)]$/)) { // text between braces is default value in case a filter fails
-          if (!value) { value = filter.substring(1, filter.length - 2); }
+        var value;
+        if (_item[_function] && (typeof _item[_function] != 'function')) {
+          value = '' + _item[_function];
         } else {
-          if (value) { value = call('filter', filter)(value); }
+          var N = null;
+          var M = null;
+          _function.replace(/([0-9]+)_([0-9]+)$/, function(match, n, m) { N = n; M = m; return ''; });
+          _function.replace(/([0-9]+)$/, function(match, n) { N = n; return ''; });
+
+          var onlyEditors = (_function.match(/^edtr/) || _function.match(/^editors/));
+          _function = _function.replace(/^edtr/, 'auth').replace(/^editors/, 'authors');
+
+          value = property(_function, onlyEditors, N, M);
         }
+
+        _filters.forEach(function(filter) {
+          if (filter.match(/^[(].*[)]$/)) { // text between braces is default value in case a filter fails
+            if (!value) { value = filter.substring(1, filter.length - 2); }
+          } else {
+            if (value) { value = _this.filter[filter](value); }
+          }
+        });
+
+        return value ? value : '';
       });
 
-      return value ? value : '';
+      return citekey != '';
     });
+
+    if (citekey == '') { citekey = 'zotero-' + _item.key; }
+
+    return citekey;
   }
 }
 
@@ -1267,12 +1291,15 @@ lobal\;bergmann1964logic\;vanberkel2010dutchrepubliclaboratory\;;
 }
 
 var CiteKeys = {
-  keys: [],
+  keys: {},
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   andersJohanssonKeyRE: /biblatexcitekey\[([^\]]+)\]/,
   unsafechars: /[^-_a-z0-9!\$\*\+\.\/:;\?\[\]]/ig,
 
   initialize: function(items) {
+    CiteKeys.formatter.item = new Formatter(Zotero.getHiddenPref('better-bibtex.citeKeyFormat'));
+    CiteKeys.formatter.parent = new Formatter(Zotero.getHiddenPref('better-bibtex.citeKeyFormat'));
+
     var _collections = [];
     var collection; while(collection = Zotero.nextCollection()) { _collections.push(collection); }
     trLog('collections: ' + JSON.stringify(_collections, null, 2));
@@ -1348,7 +1375,12 @@ var CiteKeys = {
 
   register: function(item, key, pinned) {
     var postfix;
+
+    // I *hate* javascript objects.
+    if ((typeof CiteKeys.keys[key]) == 'function') { CiteKeys.keys[key] = null; }
+
     if (CiteKeys.keys[key]) {
+      trLog('register ' + key + ': ' + JSON.stringify(CiteKeys.keys[key]));
       CiteKeys.keys[key].duplicates.push({item: item.itemID, pinned: pinned});
       if (pinned) { return key; }
       postfix = {n: 0, c:'a'};
@@ -1373,7 +1405,11 @@ var CiteKeys = {
     var citekey = CiteKeys.extract(item);
     if (citekey) { return CiteKeys.register(item, citekey, true); }
 
-    citekey = CiteKeys.clean((new Formatter(item, Zotero.getHiddenPref('better-bibtex.citeKeyFormat'))).format());
-    return CiteKeys.register(item, citekey);
+    return CiteKeys.register(item, CiteKeys.clean(CiteKeys.formatter.item.format(item)));
+  },
+
+  formatter: {
+    item: null,
+    parent: null
   }
 };

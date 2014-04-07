@@ -49,8 +49,6 @@ function updatePreferences(load) {
   var user = document.getElementById('id-better-bibtex-preferences-attachmentFormat').value;
   document.getElementById('id-zotero-better-bibtex-format-unique-warning').setAttribute('hidden', (user == dflt));
 
-  console.log('server: ' + serverEnabled + ' @ ' + url);
-
   document.getElementById('id-zotero-better-bibtex-server-warning').setAttribute('hidden', serverEnabled);
 
   document.getElementById('id-zotero-better-bibtex-recursive-warning').setAttribute('hidden', !document.getElementById('id-better-bibtex-preferences-getCollections').checked);
