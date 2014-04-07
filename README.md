@@ -16,7 +16,11 @@ any conflicts between them in the zotero report.
 ## Set your own, fixed citation keys
 
 You can fix the citation key for a reference by adding the text "bibtex: [your citekey]" (sans quotes) anywhere in the
-"extra" field of the reference.
+"extra" field of the reference, or by using biblatexcitekey[my_key].
+
+## Add your own biblatex fields
+
+You can add any field you like by using something like biblatexdata[origdate=1856;origtitle=An Old Title].
 
 ## Drag and drop/hotkey citations
 
