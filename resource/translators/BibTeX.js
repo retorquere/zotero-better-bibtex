@@ -188,7 +188,7 @@ convert.to_latex = function(str) {
     i:        {open: "\\emph{",         close: "}"},
     b:        {open: "\\textbf{",       close: "}"},
     p:        {open: "\n\n",            close: "\n\n"},
-    apsn:     {open: "",                close: ""},
+    span:     {open: "",                close: ""},
     br:       {open: "\n\n",            close: ""},
     'break':  {open: "\n\n",            close: ""}
   };
