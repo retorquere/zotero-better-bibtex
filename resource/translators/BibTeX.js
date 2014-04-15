@@ -272,7 +272,7 @@ function setKeywordDelimRe( val, flags ) {
 }
 
 function processField(item, field, value) {
-  if (!value || Zotero.Utilities.trim(value) == '') return null;
+  if (!fieldMap[field] || !value || Zotero.Utilities.trim(value) == '') return null;
 
   var mapped = fieldMap[field].literal || fieldMap[field];
 
