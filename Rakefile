@@ -258,7 +258,7 @@ class Translator
     @_label = header['label']
     js = render(js)
 
-    #File.open(File.basename(@source), 'w'){|f| f.write(js) }
+    #File.open(File.join('unicode', File.basename(@source)), 'w'){|f| f.write(js) }
 
     return js
   end

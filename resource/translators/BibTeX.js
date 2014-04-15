@@ -272,9 +272,9 @@ function setKeywordDelimRe( val, flags ) {
 }
 
 function processField(item, field, value) {
-  if (!fieldMap[field] || !value || Zotero.Utilities.trim(value) == '') return null;
+  if (!value || Zotero.Utilities.trim(value) == '') return false;
 
-  var mapped = fieldMap[field].literal || fieldMap[field];
+  var mapped = fieldMap[field] ? (fieldMap[field].literal || fieldMap[field]) : null;
 
   if(mapped) {
     item[mapped] = value;
@@ -411,7 +411,12 @@ function processField(item, field, value) {
         item.attachments.push({path:filepath, title:filetitle});
       }
     });
+  } else {
+    trLog('Unexpected field "' + field + '" in translator ' + config.label);
+    return;
   }
+
+  return true;
 }
 
 function getFieldValue(read) {
@@ -642,6 +647,7 @@ function beginRecord(type, closeChar) {
 
   var field = "";
   var value;
+  var unprocessed = {};
 
   // by setting dontRead to true, we can skip a read on the next iteration
   // of this loop. this is useful after we read past the end of a string.
@@ -679,7 +685,10 @@ function beginRecord(type, closeChar) {
       }
 
       if(item) {
-        processField(item, field.toLowerCase(), value);
+        if (typeof processField(item, field.toLowerCase(), value) == 'undefined') {
+          unprocessed[field.toLowerCase()] = (unprocessed[field.toLowerCase()] || []);
+          unprocessed[field.toLowerCase()].push(value);
+        }
       } else if(type == "string") {
         strings[field] = value;
       }
@@ -697,6 +706,16 @@ function beginRecord(type, closeChar) {
           item.extra = '';
         }
         item.extra += 'bibtex: ' + item.itemID;
+
+        for(bibtexField in unprocessed) {
+          unprocessed[bibtexField] = bibtexField.replace(/[=;]/, '#')
+                                      + '=' + unprocessed[bibtexField].map(function(value) { return value.replace(/[=;]/, '#'); }).join(':');
+        }
+        unprocessed = Object.keys(unprocessed).map(function(key) { return unprocessed[key]; }).join(';');
+
+        if (unprocessed != '') {
+          item.extra += "\nbiblatexdata[" + unprocessed + ']';
+        }
 
         if (!item.publisher && item.backupPublisher) {
           item.publisher=item.backupPublisher;
