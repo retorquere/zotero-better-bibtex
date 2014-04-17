@@ -6,7 +6,6 @@ var config = {
 };
 
 function unicode() {
-  trLog('unicode: ' + Zotero.getHiddenPref('better-bibtex.unicode'));
   switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
     case 'always':
       return true;
@@ -60,7 +59,6 @@ function saveAttachments(item) {
 
   var attachments = [];
   item.attachments.forEach(function(att) {
-    trLog('attachment: ' + JSON.stringify(att, false, 2));
     if (Zotero.getOption("exportFileData") && att.defaultPath && att.saveFile) {
       /*
       var format = Zotero.getHiddenPref('better-bibtex.attachmentFormat');
@@ -101,7 +99,6 @@ function detectImport() {
 
   var re = /^\s*@[a-zA-Z]+[\(\{]/;
   while((buffer = Zotero.read(4096)) && charsRead < maxChars) {
-    trLog("Scanning " + buffer.length + " characters for BibTeX");
     charsRead += buffer.length;
     for (var i=0; i<buffer.length; i++) {
       chr = buffer[i];
@@ -196,7 +193,6 @@ convert.to_latex = function(str) {
   var tags = new RegExp('(' + Object.keys(html2latex).map(function(tag) { return '<\/?' + tag + '\/?>'} ).join('|') + ')', 'ig');
 
   var res = ('' + str).split(tags).map(function(chunk, index) {
-    trLog(index + ': ' + chunk);
     if ((index % 2) == 1) { // odd element = splitter == html tag
 
       var tag = html2latex[chunk.replace(/[^a-z]/ig, '').toLowerCase()];
@@ -220,7 +216,6 @@ convert.to_latex = function(str) {
     }
   }).join('').replace(/{}\s+/g, ' ');
 
-  trLog('to_latex("' + str + '", ' + unicode() + ') = "' + res + '"');
   return res;
 }
 
@@ -295,7 +290,6 @@ function processField(item, field, value) {
   } else if(field == "author" || field == "editor" || field == "translator") {
     // parse authors/editors/translators
     value.split(/ and /i).forEach(function(name) {
-      trLog('name = ' + name);
       if (name.trim() != '') {
         // Names in BibTeX can have three commas
         pieces = name.split(',');
@@ -1113,7 +1107,7 @@ function Formatter(pattern)
       var authors = getCreators(onlyEditors);
       if (!authors) { return null; }
 
-      return authors.slice(0,2).concat(authors.length > 2 ? ['ea'] : []).join('.')
+      return authors.slice(0,1).concat(authors.length > 2 ? ['etal'] : []).join('.')
     },
 
     authshort: function(onlyEditors) {
@@ -1220,9 +1214,7 @@ function Formatter(pattern)
     }
   };
 
-  function property() {
-    var args = Array.prototype.slice.call(arguments, 0);
-    var name = args.shift();
+  function property(name, onlyEditors, n, m) {
     var table = _this.function;
 
     if (name.indexOf('!') == 0) {
@@ -1232,11 +1224,14 @@ function Formatter(pattern)
     }
 
     var _f = table[name];
-    if (typeof _f === 'function') { return _f.apply(args); }
+    if (typeof _f === 'function') { return _f(onlyEditors, n, m); }
 
     trLog('No property "' + name + '"');
     return '';
   }
+
+  var function_N_M = /^([^0-9]+)([0-9]+)_([0-9]+)$/;
+  var function_N = /^([^0-9]+)([0-9]+)$/;
 
   this.format = function(item, parent) {
     _item = item;
@@ -1254,21 +1249,34 @@ function Formatter(pattern)
       citekey = pattern.replace(/\[([^\]]+)\]/g, function(match, command) {
         var _filters = command.split(':');
         var _function = _filters.shift();
+        var _property = _function;
         var value = null;
 
         var value;
-        if (_item[_function] && (typeof _item[_function] != 'function')) {
-          value = '' + _item[_function];
+        var N;
+        var M;
+        var match;
+
+        if (match = function_N_M.exec(_function)) {
+          _function = match[1];
+          N = parseInt(match[2]);
+          M = parseInt(match[3]);
+        } else if (match = function_N.exec(_function)) {
+          _function = match[1];
+          N = parseInt(match[2]);
+          M = null;
         } else {
-          var N = null;
-          var M = null;
-          _function.replace(/([0-9]+)_([0-9]+)$/, function(match, n, m) { N = n; M = m; return ''; });
-          _function.replace(/([0-9]+)$/, function(match, n) { N = n; return ''; });
+          N = null;
+          M = null;
+        }
 
-          var onlyEditors = (_function.match(/^edtr/) || _function.match(/^editors/));
-          _function = _function.replace(/^edtr/, 'auth').replace(/^editors/, 'authors');
+        var onlyEditors = (_function.match(/^edtr/) || _function.match(/^editors/));
+        _function = _function.replace(/^edtr/, 'auth').replace(/^editors/, 'authors');
 
-          value = property(_function, onlyEditors, N, M);
+        value = property(_function, onlyEditors, N, M);
+
+        if (value == '' && _item[_property] && (typeof _item[_property] != 'function')) {
+          value = '' + _item[_property];
         }
 
         _filters.forEach(function(filter) {
