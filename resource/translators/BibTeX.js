@@ -1299,10 +1299,80 @@ function Formatter(pattern)
   }
 }
 
+function jabrefSerialize(arr, sep, wrap) {
+  return arr.map(function(v) {
+    v = ('' + v).replace(/;/g, "\\;");
+    if (wrap) { v = v.match(/.{1,70}/g).join("\n"); }
+    return v;
+  }).join(sep);
+}
+
 function exportJabRefGroups() {
+  collections = {};
+  var roots = [];
+  var collection;
+  while(collection = Zotero.nextCollection()) {
+    if (collection.childItems && collection.childItems.size != 0) {
+      // replace itemID with citation key
+      collection.childItems = collection.childItems.map(function(child) {return CiteKeys.itemId2citeKey[child]}).filter(function(child) { return child; });
+    } else {
+      collection.childItems = null;
+    }
+    collections[collection.id] = collection;
+    roots.push(collection.id);
+  }
+
+  // walk through all collections, resolve child collections
+  Object.keys(collections).map(function(id) { return collections[id]; }).forEach(function(collection) {
+    if (collection.childCollections && collection.childCollections.size != 0) {
+      collection.childCollections = collection.childCollections.map(function(id) {
+        var index = roots.indexOf(id);
+        if (index > -1) { roots.splice(index, 1); }
+        return collections[id];
+      }).filter(function(child) { return child; });;
+    } else {
+      collection.childCollections = null;
+    }
+  });
+
+  // roots now holds the IDs of the root collection, rest is resolved
+
+  if (roots.size == 0) {
+    return;
+  }
+
   Zotero.write("\n\n@comment{jabref-meta: groupsversion:3;}\n\n");
   Zotero.write("\n\n@comment{jabref-meta: groupstree:\n");
   Zotero.write("0 AllEntriesGroup:;\n");
+
+  var groups = [];
+  roots.forEach(function(id) {
+    groups = groups.concat(exportJabRefGroup(collections[id], 1));
+  });
+  groups = jabrefSerialize(groups, ";\n", true);
+  if (groups != '') { groups += "\n"; }
+  Zotero.write(groups + "}\n");
+}
+
+// jabref groups encoding is incredibly dense. A base-64 encoding of a json dump would have been much more sensible
+function exportJabRefGroup(collection, level) {
+  var group = [level + ' ExplicitGroup:' + collection.name, 0];
+  if (collection.childItems) {
+    group = group.concat(collection.childItems);
+  } else {
+    group.push('');
+  }
+  group = jabrefSerialize(group, ';');
+
+  var result = [group];
+  if (collection.childCollections) {
+    collection.childCollections.forEach(function(coll) {
+      result = result.concat(exportJabRefGroup(coll, level + 1));
+    });
+  }
+
+  return result;
+}
 
 /*
 @comment{jabref-meta: groupsversion:3;}
@@ -1315,10 +1385,12 @@ lobal\;bergmann1964logic\;vanberkel2010dutchrepubliclaboratory\;;
 1 ExplicitGroup:Second\;0\;;
 }
 */
-}
 
 var CiteKeys = {
   keys: {},
+  items: {},
+  itemId2citeKey: {},
+
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   andersJohanssonKeyRE: /biblatexcitekey\[([^\]]+)\]/,
   unsafechars: /[^-_a-z0-9!\$\*\+\.\/:;\?\[\]]/ig,
@@ -1327,42 +1399,30 @@ var CiteKeys = {
     CiteKeys.formatter.item = new Formatter(Zotero.getHiddenPref('better-bibtex.citeKeyFormat'));
     CiteKeys.formatter.parent = new Formatter(Zotero.getHiddenPref('better-bibtex.citeKeyFormat'));
 
-    var _collections = [];
-    var collection; while(collection = Zotero.nextCollection()) { _collections.push(collection); }
-    trLog('collections: ' + JSON.stringify(_collections, null, 2));
-    CiteKeys.items = {};
-
     if (!items) {
-      trLog('Export running, fetching items...');
       items = {};
       var item;
 	    while (item = Zotero.nextItem()) {
-        trLog('Adding ' + item.itemID);
         items[item.itemID] = item; // duplicates?!
       }
       items = Object.keys(items).map(function (key) { return items[key]; });
-      trLog('Fetching ' + items.length + ' items...');
     }
 
     var generate = [];
 
-    trLog('Pinned items...');
     items.forEach(function(item) {
       if (item.itemType == "note" || item.itemType == "attachment") return;
 
       // all pinned items first. Do *not* call generate yet, as this would register it!
       if (CiteKeys.embeddedKeyRE.exec(item.extra)) {
         CiteKeys.items[item.itemID] = {key: CiteKeys.build(item)};
-        trLog(item.itemID + ' pinned: ' + CiteKeys.items[item.itemID].key);
       } else {
         generate.push(item);
       }
     });
 
-    trLog('Generating keys for ' + items.length + ' items...');
     generate.forEach(function(item) {
       CiteKeys.items[item.itemID] = {key: CiteKeys.build(item)};
-      trLog(item.itemID + ' generated: ' + CiteKeys.items[item.itemID].key);
     });
 
     for (var key of Object.keys(CiteKeys.keys)) {
@@ -1407,7 +1467,6 @@ var CiteKeys = {
     if ((typeof CiteKeys.keys[key]) == 'function') { CiteKeys.keys[key] = null; }
 
     if (CiteKeys.keys[key]) {
-      trLog('register ' + key + ': ' + JSON.stringify(CiteKeys.keys[key]));
       CiteKeys.keys[key].duplicates.push({item: item.itemID, pinned: pinned});
       if (pinned) { return key; }
       postfix = {n: 0, c:'a'};
@@ -1420,6 +1479,7 @@ var CiteKeys = {
       postfix = '';
     }
     CiteKeys.keys[key + postfix] = {original: key, duplicates: [{item: item.itemID, pinned: pinned}]};
+    CiteKeys.itemId2citeKey[item.itemID] = key + postfix;
     return key + postfix;
   },
 

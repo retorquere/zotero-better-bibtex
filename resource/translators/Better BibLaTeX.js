@@ -430,6 +430,8 @@ function doExport() {
 
     Zotero.write("\n}");
   });
+
+  exportJabRefGroups();
 }
 
 var exports = {
