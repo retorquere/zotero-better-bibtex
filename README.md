@@ -36,9 +36,10 @@ If you want even more convenience (and you're on Windows), install [AutoHotKey](
 You can export collections including/excluding its child collections. Note that this also sets Zotero to list collection
 contents recursively.
 
-## JabRef groups import
+## JabRef groups import/export
 
-During import, if JabRef explicit (not dynamic) groups are present, collections will be created to mirror these
+During import, if JabRef explicit (not dynamic) groups are present, collections will be created to mirror these. During
+export, collections will be added to the export as explicit jabref groups.
 
 ## Configurable citekey generator
 
@@ -162,7 +163,6 @@ restart.
 
 * add "citekey" columns to reference list view
 * Submission to Mozilla Extension registry
-* JabRef groups export
 
 # Notes
 
