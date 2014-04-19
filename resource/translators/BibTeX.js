@@ -186,17 +186,32 @@ convert.to_latex = function(str) {
     b:        {open: "\\textbf{",       close: "}"},
     p:        {open: "\n\n",            close: "\n\n"},
     span:     {open: "",                close: ""},
-    br:       {open: "\n\n",            close: ""},
-    'break':  {open: "\n\n",            close: ""}
+    br:       {open: "\n\n",            close: "", empty: true},
+    'break':  {open: "\n\n",            close: "", empty: true}
   };
 
   var tags = new RegExp('(' + Object.keys(html2latex).map(function(tag) { return '<\/?' + tag + '\/?>'} ).join('|') + ')', 'ig');
 
+  var htmlstack = [];
+
   var res = ('' + str).split(tags).map(function(chunk, index) {
     if ((index % 2) == 1) { // odd element = splitter == html tag
 
-      var tag = html2latex[chunk.replace(/[^a-z]/ig, '').toLowerCase()];
-      return tag[(chunk.charAt(1) == '/') ? 'close' : 'open'];
+      var tag = chunk.replace(/[^a-z]/ig, '').toLowerCase();
+      var repl = html2latex[tag];
+      var open = (chunk.charAt(1) != '/');
+      var close = (!open || chunk.slice(-1, 1) == '/');
+      if (open) {
+        if (!close && !repl.empty) { htmlstack.unshift(tag); }
+        return repl.open;
+      } else {
+        if (tag == htmlstack[0]) {
+          htmlstack.shift();
+        } else {
+          trLog('Unexpected closing html tag "' + tag + '"');
+        }
+        return repl.close;
+      }
 
     } else {
 
@@ -215,6 +230,10 @@ convert.to_latex = function(str) {
       }).join('');
     }
   }).join('').replace(/{}\s+/g, ' ');
+
+  if (htmlstack.length != 0) {
+    trLog('Unmatched HTML tags: ' + htmlstack.join(', '));
+  }
 
   return res;
 }
