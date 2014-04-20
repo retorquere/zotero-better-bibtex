@@ -193,25 +193,37 @@ convert.to_latex = function(str) {
   var tags = new RegExp('(' + Object.keys(html2latex).map(function(tag) { return '<\/?' + tag + '\/?>'} ).join('|') + ')', 'ig');
 
   var htmlstack = [];
+  var close;
 
   var res = ('' + str).split(tags).map(function(chunk, index) {
     if ((index % 2) == 1) { // odd element = splitter == html tag
 
       var tag = chunk.replace(/[^a-z]/ig, '').toLowerCase();
       var repl = html2latex[tag];
-      var open = (chunk.charAt(1) != '/');
-      var close = (!open || chunk.slice(-1, 1) == '/');
-      if (open) {
-        if (!close && !repl.empty) { htmlstack.unshift(tag); }
+
+      // not a '/' at position 2 means it's an opening tag
+      if (chunk.charAt(1) != '/') {
+        // only add tag to the stack if it is not a self-closing tag. Self-closing tags ought to have the second-to-last
+        // character be a '/', but this is not a perfect world (loads of <br>'s out there, so tags that always *ought*
+        // to be empty are treated as such, regardless of whether the obligatory closing slash is present or not.
+        if (chunk.slice(-2, 1) != '/' && !repl.empty) { htmlstack.unshift(tag); }
         return repl.open;
-      } else {
-        if (tag == htmlstack[0]) {
-          htmlstack.shift();
-        } else {
-          trLog('Unexpected closing html tag "' + tag + '"');
-        }
-        return repl.close;
       }
+
+      // if it's a closing tag, it ought to be the first one on the stack
+      close = htmlstack.indexOf(tag);
+      if (close < 0) {
+        trLog('Ignoring unexpected close tag "' + tag + '"');
+        return '';
+      }
+
+      if (close > 0) {
+        trLog('Unexpected close tag "' + tag + '", closing "' + htmlstack.slice(0, close).join(', ') + '"');
+      }
+
+      close = htmlstack.slice(0, close).map(function(tag) { return html2latex[tag].close; }).join('');
+      htmlstack = htmlstack.slice(close + 1);
+      return close;
 
     } else {
 
@@ -233,6 +245,7 @@ convert.to_latex = function(str) {
 
   if (htmlstack.length != 0) {
     trLog('Unmatched HTML tags: ' + htmlstack.join(', '));
+    res += htmlstack.map(function(tag) { return html2latex[tag].close; }).join('');
   }
 
   return res;
