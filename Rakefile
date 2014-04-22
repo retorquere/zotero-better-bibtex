@@ -21,7 +21,7 @@ TRANSLATORS = [
   {name: 'BibTeX Citation Keys'}
 ]
 
-UNICODE_MAPPING = 'unicode/unicode.xml'
+UNICODE_MAPPING = 'tmp/unicode.xml'
 
 SOURCES = %w{chrome resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
@@ -51,7 +51,7 @@ file XPI => SOURCES do |t|
   begin
     puts "Creating #{t.name}"
     Zip::File.open(t.name, 'w') do |zipfile|
-      t.prerequisites.reject{|f| f=~ /^(unicode|resource)\// }.each{|file|
+      t.prerequisites.reject{|f| f=~ /^(tmp|resource)\// }.each{|file|
         zipfile.add(file, file)
       }
 
@@ -258,7 +258,7 @@ class Translator
     @_label = header['label']
     js = render(js)
 
-    #File.open(File.join('unicode', File.basename(@source)), 'w'){|f| f.write(js) }
+    File.open(File.join('tmp', File.basename(@source)), 'w'){|f| f.write(js) }
 
     return js
   end

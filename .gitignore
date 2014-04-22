@@ -2,4 +2,4 @@
 *.swp
 Gemfile.lock
 .bundle
-unicode
+tmp

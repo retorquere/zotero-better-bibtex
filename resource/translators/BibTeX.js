@@ -60,13 +60,6 @@ function saveAttachments(item) {
   var attachments = [];
   item.attachments.forEach(function(att) {
     if (Zotero.getOption("exportFileData") && att.defaultPath && att.saveFile) {
-      /*
-      var format = Zotero.getHiddenPref('better-bibtex.attachmentFormat');
-      var customPath = (new Formatter(att, format, item)).format();
-      customPath = ZU.removeDiacritics(customPath).replace(/[\\:\*\?"<>\|;]/, '');
-      trLog('saving formatted attachment to ' + customPath + ' (' + format + ')');
-      */
-
       att.saveFile(att.defaultPath);
       attachments.push({title: att.title, path: att.defaultPath, mimetype: att.mimeType});
       return;
@@ -893,19 +886,16 @@ function writeBiblatexData(item) {
   });
 }
 
-function Formatter(pattern)
-{
-  var _this = this;
-  var _pattern = pattern;
-  var _item = null;
-  var _parent = null;
+Formatter = {
+  pattern: null,
+  item: null,
 
-  function getCreators(onlyEditors) {
-    if(!_item.creators || !_item.creators.length) { return []; }
+  getCreators: function(onlyEditors) {
+    if(!Formatter.item.creators || !Formatter.item.creators.length) { return []; }
     var creators = {};
-    var primaryCreatorType = Zotero.Utilities.getCreatorsForType(_item.itemType)[0];
+    var primaryCreatorType = Zotero.Utilities.getCreatorsForType(Formatter.item.itemType)[0];
     var creator;
-    _item.creators.forEach(function(creator) {
+    Formatter.item.creators.forEach(function(creator) {
       var name = ('' + creator.lastName).trim();
       if (name != '') {
         switch (creator.creatorType) {
@@ -931,13 +921,13 @@ function Formatter(pattern)
 
     if (onlyEditors) { return creators.editors; }
     return creators.authors || creators.editors || creators.collaborators || creators.translators || null;
-  }
+  },
 
-  function words(str) {
+  words: function(str) {
     return str.split(/\s+/).filter(function(word) { return (word != '');}).map(function (word) { return CiteKeys.clean(word) });
-  }
+  },
 
-  _skipWords = [
+  skipWords: [
     'a',
     'aboard',
     'about',
@@ -1037,53 +1027,53 @@ function Formatter(pattern)
     'within',
     'without',
     'yet'
-  ];
+  ],
 
-  function titleWords(title, options) {
+  titleWords: function(title, options) {
     if (!title) { return null; }
 
-    var _words = words(title);
+    var _words = Formatter.words(title);
 
     options = options || {};
     if (options.asciiOnly) { _words = _words.map(function (word) { return word.replace(/[^a-zA-Z]/, ''); }); }
     _words = _words.filter(function(word) { return (word != ''); });
-    if (options.skipWords) { _words = _words.filter(function(word) { return (_skipWords.indexOf(word.toLowerCase()) == -1); }); }
+    if (options.skipWords) { _words = _words.filter(function(word) { return (Formatter.skipWords.indexOf(word.toLowerCase()) == -1); }); }
     if (_words.length == 0) { return null; }
     return _words;
-  }
+  },
 
-  this.function = {
+  functions: {
     id: function() {
-      return _item.itemID;
+      return Formatter.item.itemID;
     },
 
     key: function() {
-      return _item.key;
+      return Formatter.item.key;
     },
 
     auth: function(onlyEditors, n, m) {
-      var authors = getCreators(onlyEditors);
-      if (!authors) { return null; }
+      var authors = Formatter.getCreators(onlyEditors);
+      if (!authors) { return ''; }
 
       var author = authors[m || 0];
       if (author && n) { author = author.substring(0, n); }
-      return author;
+      return (author || '');
     },
 
     type: function() {
-      return getBibTexType(_item);
+      return getBibTexType(Formatter.item);
     },
 
     authorLast: function(onlyEditors) {
-      var authors = getCreators(onlyEditors);
-      if (!authors) { return null; }
+      var authors = Formatter.getCreators(onlyEditors);
+      if (!authors) { return ''; }
 
-      return authors[authors.length - 1];
+      return (authors[authors.length - 1] || '');
     },
 
     authors: function(onlyEditors, n) {
-      var authors = getCreators(onlyEditors);
-      if (!authors) { return null; }
+      var authors = Formatter.getCreators(onlyEditors);
+      if (!authors) { return ''; }
 
       if (n) {
         var etal = (authors.length > n);
@@ -1095,8 +1085,8 @@ function Formatter(pattern)
     },
 
     authorsAlpha: function(onlyEditors) {
-      var authors = getCreators(onlyEditors);
-      if (!authors) { return null; }
+      var authors = Formatter.getCreators(onlyEditors);
+      if (!authors) { return ''; }
 
       switch (authors.length) {
         case 1:
@@ -1111,15 +1101,15 @@ function Formatter(pattern)
     },
 
     authIni: function(onlyEditors, n) {
-      var authors = getCreators(onlyEditors);
-      if (!authors) { return null; }
+      var authors = Formatter.getCreators(onlyEditors);
+      if (!authors) { return ''; }
 
       return authors.map(function(author) { return author.substring(0, n); }).join('.');
     },
 
     authorIni: function(onlyEditors) {
-      var authors = getCreators(onlyEditors);
-      if (!authors) { return null; }
+      var authors = Formatter.getCreators(onlyEditors);
+      if (!authors) { return ''; }
 
       var firstAuthor = authors.shift();
 
@@ -1129,95 +1119,90 @@ function Formatter(pattern)
     },
 
     'auth.auth.ea': function(onlyEditors) {
-      var authors = getCreators(onlyEditors);
-      if (!authors) { return null; }
+      var authors = Formatter.getCreators(onlyEditors);
+      if (!authors) { return ''; }
 
       return authors.slice(0,2).concat(authors.length > 2 ? ['ea'] : []).join('.')
     },
 
     'auth.etal': function(onlyEditors) {
-      var authors = getCreators(onlyEditors);
-      if (!authors) { return null; }
+      var authors = Formatter.getCreators(onlyEditors);
+      if (!authors) { return ''; }
 
       return authors.slice(0,1).concat(authors.length > 2 ? ['etal'] : []).join('.')
     },
 
     authshort: function(onlyEditors) {
-      var authors = getCreators(onlyEditors);
-      if (!authors) { return null; }
+      var authors = Formatter.getCreators(onlyEditors);
+      if (!authors) { return ''; }
 
       switch (authors.length) {
-        case 0:   return null;
+        case 0:   return '';
         case 1:   return authors[0];
         default:  return authors.map(function(author) { return author.substring(0, 1); }).join('.') + (authors.length > 3 ? '+' : '');
       }
     },
 
     firstpage: function() {
-      if (!_item.pages) { return null;}
-      var firstpage = null;
-      _item.pages.replace(/^([0-9]+)/, function(match, fp) { firstpage = fp; });
+      if (!Formatter.item.pages) { return '';}
+      var firstpage = '';
+      Formatter.item.pages.replace(/^([0-9]+)/, function(match, fp) { firstpage = fp; });
       return firstpage;
     },
 
     keyword: function(dummy, n) {
-      if (!_item.tags || !_item.tags[n]) { return null; }
-      return _item.tags[n].tag;
+      if (!Formatter.item.tags || !Formatter.item.tags[n]) { return ''; }
+      return Formatter.item.tags[n].tag;
     },
 
     lastpage: function() {
-      if (!_item.pages) { return null;}
-      var lastpage = null;
-      _item.pages.replace(/([0-9]+)[^0-9]*$/, function(match, lp) { lastpage = lp; });
+      if (!Formatter.item.pages) { return '';}
+      var lastpage = '';
+      Formatter.item.pages.replace(/([0-9]+)[^0-9]*$/, function(match, lp) { lastpage = lp; });
       return lastpage;
     },
 
     shorttitle: function() {
-      var words = titleWords(_item.title, {skipWords: true, asciiOnly: true});
-      if (!words) { return null; }
+      var words = Formatter.titleWords(Formatter.item.title, {skipWords: true, asciiOnly: true});
+      if (!words) { return ''; }
       return words.slice(0,3).join('');
     },
 
     veryshorttitle: function() {
-      var words = titleWords(_item.title, {skipWords: true, asciiOnly: true});
-      if (!words) { return null; }
+      var words = Formatter.titleWords(Formatter.item.title, {skipWords: true, asciiOnly: true});
+      if (!words) { return ''; }
       return words.slice(0,1).join('');
     },
 
     shortyear: function() {
-      if (!_item.date) { return null; }
-      var date = Zotero.Utilities.strToDate(_item.date);
-      if (typeof date.year === 'undefined') { return null; }
+      if (!Formatter.item.date) { return ''; }
+      var date = Zotero.Utilities.strToDate(Formatter.item.date);
+      if (typeof date.year === 'undefined') { return ''; }
       var year = date.year % 100;
       if (year < 10) { return '0' + year; }
       return year + '';
     },
 
     year: function() {
-      if (!_item.date) { return null; }
-      var date = Zotero.Utilities.strToDate(_item.date);
-      if (typeof date.year === 'undefined') { return _item.date; }
+      if (!Formatter.item.date) { return ''; }
+      var date = Zotero.Utilities.strToDate(Formatter.item.date);
+      if (typeof date.year === 'undefined') { return Formatter.item.date; }
       return date.year;
     },
 
     month: function() {
-      if (!_item.date) { return null; }
-      var date = Zotero.Utilities.strToDate(_item.date);
-      if (typeof date.year === 'undefined') { return null; }
-      return months[date.month];
+      if (!Formatter.item.date) { return ''; }
+      var date = Zotero.Utilities.strToDate(Formatter.item.date);
+      if (typeof date.year === 'undefined') { return ''; }
+      return (months[date.month] || '');
     },
 
     title: function() {
-      return titleWords(_item.title).join('');
-    },
-
-    filename: function() {
-      if (_item.itemType == 'attachment') { return _item.title; }
-      return null;
+      return Formatter.titleWords(Formatter.item.title).join('');
     }
-  };
+  },
 
-  this.filter = {
+  filters: {
     condense: function(value) {
       return value.replace(/\s/, '');
     },
@@ -1232,68 +1217,32 @@ function Formatter(pattern)
 
     upper: function(value) {
       return value.toUpperCase();
-    },
-
-    'id-': function(value) {
-      return _item.itemID + '-' + value;
-    },
-
-    '-id': function(value) {
-      var parts = value.split('.');
-      if (parts.length < 2) { return value + '-' + _item.itemID; }
-      parts[parts.length - 2] += '-' + _item.itemID;
-      return parts.join('.');
     }
-  };
+  },
 
-  function property(name, onlyEditors, n, m) {
-    var table = _this.function;
+  function_N_M: /^([^0-9]+)([0-9]+)_([0-9]+)$/,
+  function_N: /^([^0-9]+)([0-9]+)$/,
 
-    if (name.indexOf('!') == 0) {
-      if (!_parent) { throw('Parent ' + type + ' requested but no parent available'); }
-      table = _parent.function;
-      name = name.substring(1, name.length);
-    }
-
-    var _f = table[name];
-    if (typeof _f === 'function') { return _f(onlyEditors, n, m); }
-
-    trLog('No property "' + name + '"');
-    return '';
-  }
-
-  var function_N_M = /^([^0-9]+)([0-9]+)_([0-9]+)$/;
-  var function_N = /^([^0-9]+)([0-9]+)$/;
-
-  this.format = function(item, parent) {
-    _item = item;
-    if (parent) {
-      _parent = CiteKeys.formatter.parent;
-      _parent.init(parent);
-    } else {
-      _parent = null;
-    }
-
+  format: function(item) {
+    Formatter.item = item;
 
     var citekey = '';
 
-    _pattern.split('|').some(function(pattern) {
+    Formatter.pattern.split('|').some(function(pattern) {
       citekey = pattern.replace(/\[([^\]]+)\]/g, function(match, command) {
         var _filters = command.split(':');
         var _function = _filters.shift();
         var _property = _function;
-        var value = null;
 
-        var value;
         var N;
         var M;
         var match;
 
-        if (match = function_N_M.exec(_function)) {
+        if (match = Formatter.function_N_M.exec(_function)) {
           _function = match[1];
           N = parseInt(match[2]);
           M = parseInt(match[3]);
-        } else if (match = function_N.exec(_function)) {
+        } else if (match = Formatter.function_N.exec(_function)) {
           _function = match[1];
           N = parseInt(match[2]);
           M = null;
@@ -1305,27 +1254,37 @@ function Formatter(pattern)
         var onlyEditors = (_function.match(/^edtr/) || _function.match(/^editors/));
         _function = _function.replace(/^edtr/, 'auth').replace(/^editors/, 'authors');
 
-        value = property(_function, onlyEditors, N, M);
+        var value = '';
+        if (Formatter.functions[_function]) {
+          value = Formatter.functions[_function](onlyEditors, N, M);
+        }
 
-        if (value == '' && _item[_property] && (typeof _item[_property] != 'function')) {
-          value = '' + _item[_property];
+        if (value == '' && Formatter.item[_property] && (typeof Formatter.item[_property] != 'function')) {
+          value = '' + Formatter.item[_property];
+        }
+
+        if (value == '' && !Formatter.functions[_function]) {
+          trLog('requested non-existent item function ' + _property);
         }
 
         _filters.forEach(function(filter) {
-          if (filter.match(/^[(].*[)]$/)) { // text between braces is default value in case a filter fails
-            if (!value) { value = filter.substring(1, filter.length - 2); }
+          if (filter.match(/^[(].*[)]$/)) { // text between braces is default value in case a filter or function fails
+            if (value == '') { value = filter.substring(1, filter.length - 2); }
+          } else if (Formatter.filters[filter]) {
+            value = Formatter.filters[filter](value);
           } else {
-            if (value) { value = _this.filter[filter](value); }
+            trLog('requested non-existent item filter ' + filter);
+            value = '';
           }
         });
 
-        return value ? value : '';
+        return value;
       });
 
       return citekey != '';
     });
 
-    if (citekey == '') { citekey = 'zotero-' + _item.key; }
+    if (citekey == '') { citekey = 'zotero-' + Formatter.item.key; }
 
     return citekey;
   }
@@ -1428,8 +1387,7 @@ var CiteKeys = {
   unsafechars: /[^-_a-z0-9!\$\*\+\.\/:;\?\[\]]/ig,
 
   initialize: function(items) {
-    CiteKeys.formatter.item = new Formatter(Zotero.getHiddenPref('better-bibtex.citeKeyFormat'));
-    CiteKeys.formatter.parent = new Formatter(Zotero.getHiddenPref('better-bibtex.citeKeyFormat'));
+    Formatter.pattern = Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
 
     if (!items) {
       items = {};
@@ -1524,11 +1482,6 @@ var CiteKeys = {
     var citekey = CiteKeys.extract(item);
     if (citekey) { return CiteKeys.register(item, citekey, true); }
 
-    return CiteKeys.register(item, CiteKeys.clean(CiteKeys.formatter.item.format(item)));
-  },
-
-  formatter: {
-    item: null,
-    parent: null
+    return CiteKeys.register(item, CiteKeys.clean(Formatter.format(item)));
   }
 };
