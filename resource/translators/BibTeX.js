@@ -216,7 +216,7 @@ convert.to_latex = function(str) {
 
       close = htmlstack.slice(0, close).map(function(tag) { return html2latex[tag].close; }).join('');
       htmlstack = htmlstack.slice(close + 1);
-      return close;
+      return repl.close;
 
     } else {
 
