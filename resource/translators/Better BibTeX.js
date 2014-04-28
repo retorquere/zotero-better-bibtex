@@ -198,6 +198,12 @@ function doExport() {
 
     writeField('file', saveAttachments(item));
 
+    // fully empty zotero reference generates invalid bibtex. This type-reassignment does nothing but adds the single
+    // field each entry needs as a minimum.
+    if (Object.keys(FieldsWritten).length == 0) {
+      writeField('type', escape(type));
+    }
+
     Zotero.write("\n}");
   });
 
