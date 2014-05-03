@@ -1,26 +1,57 @@
-var config = {
+var Config = {
   id: '/*= id =*/',
   label:  '/*= label =*/',
   unicode:  /*= unicode =*/,
   release:  '/*= release =*/'
+
+  initialize: function() {
+    if (Config.initialized) { return; }
+
+    Config.pattern = Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
+    Config.skipFields = Zotero.getHiddenPref('better-bibtex.skipfields').split(',');
+    Config.usePrefix = Zotero.getHiddenPref('better-bibtex.useprefix');
+    Config.braceAll = Zotero.getHiddenPref('better-bibtex.brace-all');
+    Config.exportFileData = Zotero.getOption("exportFileData");
+    Config.fancyURLs = Zotero.getHiddenPref('better-bibtex.fancyURLs');
+
+    switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
+      case 'always':
+        Config.unicode = true;
+        break;
+      case 'never':
+        Config.unicode = false;
+        break;
+      default:
+        var charset = Zotero.getOption('exportCharset');
+        Config.unicode = Config.unicode || (charset && charset.toLowerCase() == 'utf-8');
+        break;
+    }
+
+
+    Config.typeMap.toZotero = {};
+    for (var zotero in Config.typeMap.toBibTeX) {
+      if (!(Config.typeMap.toBibTeX[zotero] instanceof Array)) { Config.typeMap.toBibTeX[zotero] = [Config.typeMap.toBibTeX[zotero]]; }
+
+      Config.typeMap.toBibTeX[zotero] = Config.typeMap.toBibTeX[zotero].map(function(tex) {
+        if (!Config.typeMap.toZotero[tex] || tex.match(/^:/)) {
+          Config.typeMap.toZotero[tex.replace(/^:/, '')] = zotero;
+        }
+        return tex.replace(/^:/, '');
+      });
+
+      Config.typeMap.toBibTeX[zotero] = Config.typeMap.toBibTeX[zotero][0];
+    }
+
+    Config.usePrefix = Zotero.getHiddenPref('better-bibtex.useprefix');
+
+    Config.initialized = true;
+  },
+
+  fieldsWritten: {}
 };
 
-function unicode() {
-  switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
-    case 'always':
-      return true;
-    case 'never':
-      return false;
-    default:
-      var _charset = Zotero.getOption('exportCharset');
-      return config.unicode || (_charset && _charset.toLowerCase() == 'utf-8');
-  }
-}
 
-var FieldsWritten;
 function writeFieldMap(item, fieldMap) {
-  FieldsWritten = {};
-
   var bibtexField;
   for(bibtexField in fieldMap) {
     var zoteroField = fieldMap[bibtexField].literal || fieldMap[bibtexField];
@@ -37,7 +68,7 @@ function writeFieldMap(item, fieldMap) {
 }
 
 function writeField(field, value, bare) {
-  if (config.skipfields.indexOf(field) >= 0) { return; }
+  if (Config.skipfields.indexOf(field) >= 0) { return; }
 
   if (typeof value == 'number') {
   } else {
@@ -46,8 +77,8 @@ function writeField(field, value, bare) {
 
   if (!bare) { value = '{' + value + '}'; }
 
-  if (FieldsWritten[field]) { trLog('Field ' + field + ' output more than once!'); }
-  FieldsWritten[field] = true;
+  if (Config.fieldsWritten[field]) { trLog('Field ' + field + ' output more than once!'); }
+  Config.fieldsWritten[field] = true;
   Zotero.write(",\n\t" + field + " = " + value);
 }
 
@@ -79,7 +110,7 @@ function saveAttachments(item) {
   return attachments.map(function(att) { return [att.title, att.path.replace(/([\\{}:;])/g, "\\$1"), att.mimetype].join(':'); }).join(';');
 }
 
-function trLog(msg) { Zotero.debug('[' + config.label + '] ' + msg); }
+function trLog(msg) { Zotero.debug('[' + Config.label + '] ' + msg); }
 
 function detectImport() {
   var maxChars = 1048576; // 1MB
@@ -163,112 +194,6 @@ var jabref = {
   format: null,
   root: {}
 };
-
-/*= unicode_mapping =*/
-
-convert.latex2unicode["\\url"] = '';
-convert.latex2unicode["\\href"] = '';
-
-convert.to_latex = function(str) {
-  var regex = convert.unicode2latex[unicode() ? 'unicode' : 'ascii'];
-
-  var html2latex = {
-    sup:      {open: "\\ensuremath{^{", close: "}}"},
-    sub:      {open: "\\ensuremath{_{", close: "}}"},
-    i:        {open: "\\emph{",         close: "}"},
-    b:        {open: "\\textbf{",       close: "}"},
-    p:        {open: "\n\n",            close: "\n\n"},
-    span:     {open: "",                close: ""},
-    br:       {open: "\n\n",            close: "", empty: true},
-    'break':  {open: "\n\n",            close: "", empty: true}
-  };
-
-  var tags = new RegExp('(' + Object.keys(html2latex).map(function(tag) { return '<\/?' + tag + '\/?>'} ).join('|') + ')', 'ig');
-
-  var htmlstack = [];
-  var close;
-
-  var res = ('' + str).split(tags).map(function(chunk, index) {
-    if ((index % 2) == 1) { // odd element = splitter == html tag
-
-      var tag = chunk.replace(/[^a-z]/ig, '').toLowerCase();
-      var repl = html2latex[tag];
-
-      // not a '/' at position 2 means it's an opening tag
-      if (chunk.charAt(1) != '/') {
-        // only add tag to the stack if it is not a self-closing tag. Self-closing tags ought to have the second-to-last
-        // character be a '/', but this is not a perfect world (loads of <br>'s out there, so tags that always *ought*
-        // to be empty are treated as such, regardless of whether the obligatory closing slash is present or not.
-        if (chunk.slice(-2, 1) != '/' && !repl.empty) { htmlstack.unshift(tag); }
-        return repl.open;
-      }
-
-      // if it's a closing tag, it ought to be the first one on the stack
-      close = htmlstack.indexOf(tag);
-      if (close < 0) {
-        trLog('Ignoring unexpected close tag "' + tag + '"');
-        return '';
-      }
-
-      if (close > 0) {
-        trLog('Unexpected close tag "' + tag + '", closing "' + htmlstack.slice(0, close).join(', ') + '"');
-      }
-
-      close = htmlstack.slice(0, close).map(function(tag) { return html2latex[tag].close; }).join('');
-      htmlstack = htmlstack.slice(close + 1);
-      return repl.close;
-
-    } else {
-
-      return chunk.split(regex.math).map(function(text, i) {
-
-        var latex = text.replace(regex.text, function(match) {
-          return (convert.unicode2latex.map[match] || match);
-        });
-
-        if ((i % 2) == 1) { // odd element == splitter == block of math
-          return '\\ensuremath{' + latex + '}';
-        }
-
-        return latex;
-
-      }).join('');
-    }
-  }).join('').replace(/{}\s+/g, ' ');
-
-  if (htmlstack.length != 0) {
-    trLog('Unmatched HTML tags: ' + htmlstack.join(', '));
-    res += htmlstack.map(function(tag) { return html2latex[tag].close; }).join('');
-  }
-
-  return res;
-}
-
-convert.from_latex = function(str) {
-  var chunks = str.split('\\');
-  var res = chunks.shift();
-  var m, i, c, l;
-
-  chunks.forEach(function(chunk) {
-    chunk = '\\' + chunk;
-    l = chunk.length;
-    m = null;
-    for (i=2; i<=l; i++) {
-      if (convert.latex2unicode[chunk.substring(0, i)]) {
-        m = i;
-      } else {
-        break;
-      }
-    }
-
-    if (m) {
-      res += convert.latex2unicode[chunk.substring(0, m)] + chunk.substring(m, chunk.length);
-    } else {
-      res += chunk;
-    }
-  });
-  return res;
-}
 
 var strings = {};
 var keyRe = /[a-zA-Z0-9\-]/;
@@ -431,7 +356,7 @@ function processField(item, field, value) {
       }
     });
   } else {
-    trLog('Unexpected field "' + field + '" in translator ' + config.label);
+    trLog('Unexpected field "' + field + '" in translator ' + Config.label);
     return;
   }
 
@@ -479,7 +404,7 @@ function getFieldValue(read) {
   }
 
   if(value.length > 1) {
-    value = convert.from_latex(value);
+    value = LaTeX.latex2html(value);
 
     //convert tex markup into permitted HTML
     value = mapTeXmarkup(value);
@@ -781,12 +706,12 @@ function doImport() {
 function escape_url(url) {
   var href = url.replace(/([#\\_%&{}])/g, "\\$1");
 
-  if (!unicode()) {
+  if (!Config.unicode) {
     href = href.replace(/[^\x21-\x7E]/g, function(chr){return "\\\%" + ('00' + chr.charCodeAt(0).toString(16)).slice(-2)});
   }
 
-  if (Zotero.getHiddenPref('better-bibtex.fancyURLs')) {
-    return "\\href{" + href + "}{" + convert.to_latex(url) + "}";
+  if (Config.fancyURLs) {
+    return "\\href{" + href + "}{" + LaTeX.html2latex(url) + "}";
   }
 
   return href;
@@ -805,13 +730,13 @@ function escape(value, options) {
     return value.map(function(word) { return escape(word, options); }).join(options.sep);
   }
 
-  if (options.brace && !value.literal && Zotero.getHiddenPref('better-bibtex.brace-all')) {
+  if (options.brace && !value.literal && Config.braceAll) {
     value = {literal: value};
   }
 
   var doublequote = value.literal;
   value = value.literal || value;
-  value = convert.to_latex(value);
+  value = LaTeX.html2latex(value);
   if (doublequote) { value = '{' + value + '}'; }
   return value;
 }
@@ -887,7 +812,6 @@ function writeBiblatexData(item) {
 }
 
 Formatter = {
-  pattern: null,
   item: null,
 
   getCreators: function(onlyEditors) {
@@ -1228,7 +1152,7 @@ Formatter = {
 
     var citekey = '';
 
-    Formatter.pattern.split('|').some(function(pattern) {
+    Config.pattern.split('|').some(function(pattern) {
       citekey = pattern.replace(/\[([^\]]+)\]/g, function(match, command) {
         var _filters = command.split(':');
         var _function = _filters.shift();
@@ -1387,7 +1311,7 @@ var CiteKeys = {
   unsafechars: /[^-_a-z0-9!\$\*\+\.\/:;\?\[\]]/ig,
 
   initialize: function(items) {
-    Formatter.pattern = Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
+    Config.initialize();
 
     if (!items) {
       items = {};
@@ -1485,3 +1409,109 @@ var CiteKeys = {
     return CiteKeys.register(item, CiteKeys.clean(Formatter.format(item)));
   }
 };
+
+/*= unicode_mapping =*/
+
+LaTeX.toUnicode["\\url"] = '';
+LaTeX.toUnicode["\\href"] = '';
+
+LaTeX.html2latex = function(str) {
+  var regex = LaTeX.regex[unicode() ? 'unicode' : 'ascii'];
+
+  var html2latex = {
+    sup:      {open: "\\ensuremath{^{", close: "}}"},
+    sub:      {open: "\\ensuremath{_{", close: "}}"},
+    i:        {open: "\\emph{",         close: "}"},
+    b:        {open: "\\textbf{",       close: "}"},
+    p:        {open: "\n\n",            close: "\n\n"},
+    span:     {open: "",                close: ""},
+    br:       {open: "\n\n",            close: "", empty: true},
+    'break':  {open: "\n\n",            close: "", empty: true}
+  };
+
+  var tags = new RegExp('(' + Object.keys(html2latex).map(function(tag) { return '<\/?' + tag + '\/?>'} ).join('|') + ')', 'ig');
+
+  var htmlstack = [];
+  var close;
+
+  var res = ('' + str).split(tags).map(function(chunk, index) {
+    if ((index % 2) == 1) { // odd element = splitter == html tag
+
+      var tag = chunk.replace(/[^a-z]/ig, '').toLowerCase();
+      var repl = html2latex[tag];
+
+      // not a '/' at position 2 means it's an opening tag
+      if (chunk.charAt(1) != '/') {
+        // only add tag to the stack if it is not a self-closing tag. Self-closing tags ought to have the second-to-last
+        // character be a '/', but this is not a perfect world (loads of <br>'s out there, so tags that always *ought*
+        // to be empty are treated as such, regardless of whether the obligatory closing slash is present or not.
+        if (chunk.slice(-2, 1) != '/' && !repl.empty) { htmlstack.unshift(tag); }
+        return repl.open;
+      }
+
+      // if it's a closing tag, it ought to be the first one on the stack
+      close = htmlstack.indexOf(tag);
+      if (close < 0) {
+        trLog('Ignoring unexpected close tag "' + tag + '"');
+        return '';
+      }
+
+      if (close > 0) {
+        trLog('Unexpected close tag "' + tag + '", closing "' + htmlstack.slice(0, close).join(', ') + '"');
+      }
+
+      close = htmlstack.slice(0, close).map(function(tag) { return html2latex[tag].close; }).join('');
+      htmlstack = htmlstack.slice(close + 1);
+      return repl.close;
+
+    } else {
+
+      return chunk.split(regex.math).map(function(text, i) {
+
+        var latex = text.replace(regex.text, function(match) {
+          return (convert.unicode2latex.map[match] || match);
+        });
+
+        if ((i % 2) == 1) { // odd element == splitter == block of math
+          return '\\ensuremath{' + latex + '}';
+        }
+
+        return latex;
+
+      }).join('');
+    }
+  }).join('').replace(/{}\s+/g, ' ');
+
+  if (htmlstack.length != 0) {
+    trLog('Unmatched HTML tags: ' + htmlstack.join(', '));
+    res += htmlstack.map(function(tag) { return html2latex[tag].close; }).join('');
+  }
+
+  return res;
+}
+
+LaTeX.latex2html = function(str) {
+  var chunks = str.split('\\');
+  var res = chunks.shift();
+  var m, i, c, l;
+
+  chunks.forEach(function(chunk) {
+    chunk = '\\' + chunk;
+    l = chunk.length;
+    m = null;
+    for (i=2; i<=l; i++) {
+      if (LaTeX.toUnicode[chunk.substring(0, i)]) {
+        m = i;
+      } else {
+        break;
+      }
+    }
+
+    if (m) {
+      res += LaTeX.toUnicode[chunk.substring(0, m)] + chunk.substring(m, chunk.length);
+    } else {
+      res += chunk;
+    }
+  });
+  return res;
+}

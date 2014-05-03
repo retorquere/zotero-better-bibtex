@@ -21,6 +21,7 @@
 function doExport() {
   var citation = [];
   CiteKeys.initialize().forEach(function(item) {
+    Config.fieldsWritten = {};
     if (CiteKeys.items[item.itemID]) { citation.push('@' + CiteKeys.items[item.itemID].key); }
   });
   Zotero.write(citation.join(' '));

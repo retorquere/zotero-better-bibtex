@@ -67,10 +67,9 @@ function doExport() {
   trLog('doBibTexExport');
   Zotero.write("\n");
 
-  config.skipfields = Zotero.getHiddenPref('better-bibtex.skipfields').split(',');
-
   var first = true;
   CiteKeys.initialize().forEach(function(item) {
+    Config.fieldsWritten = {};
     //don't export standalone notes and attachments
     if(item.itemType == 'note' || item.itemType == 'attachment') return;
 
