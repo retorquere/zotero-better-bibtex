@@ -1129,7 +1129,7 @@ Formatter = {
       var authors = Formatter.getCreators(onlyEditors);
       if (!authors) { return ''; }
 
-      return authors.slice(0,1).concat(authors.length > 2 ? ['etal'] : []).join('.')
+      return authors.slice(0,1).concat(authors.length > 1 ? ['etal'] : []).join('.')
     },
 
     authshort: function(onlyEditors) {
