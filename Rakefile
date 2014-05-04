@@ -8,6 +8,7 @@ require 'time'
 require 'date'
 require 'pp'
 require 'zip'
+require 'tempfile'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
@@ -22,11 +23,13 @@ TRANSLATORS = [
 ]
 
 UNICODE_MAPPING = 'tmp/unicode.xml'
+BIBTEX_GRAMMAR  = Dir["resource/**/*.pegjs"][0]
+DICT            = 'tmp/dict.js'
 
 SOURCES = %w{chrome resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
             .select{|f| File.file?(f)}
-            .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [UNICODE_MAPPING]
+            .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [UNICODE_MAPPING, BIBTEX_GRAMMAR, DICT]
 
 XPI = "zotero-#{EXTENSION}-#{RELEASE}.xpi"
 
@@ -138,6 +141,8 @@ end
 
 class Translator
   @@mapping = nil
+  @@parser = nil
+  @@dict = nil
 
   def initialize(translator)
     @source = translator[:source]
@@ -146,9 +151,46 @@ class Translator
 
     @_timestamp = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
     @_unicode_mapping = Translator.mapping
+    @_bibtex_parser = Translator.parser
+    @_dict = Translator.dict
     @_release = RELEASE
+
   end
-  attr_reader :_id, :_label, :_timestamp, :_release, :_unicode, :_unicode_mapping
+  attr_reader :_id, :_label, :_timestamp, :_release, :_unicode, :_unicode_mapping, :_bibtex_parser, :_dict
+
+  def self.dict
+    @@dict ||= "var Dict = (function() {\nvar module = {};\n" + File.open(DICT).read + "\n
+      function assertString(key) {
+        if ((typeof key !== 'string') && (typeof key !== 'number')) {
+          throw new TypeError('key must be a string or number.');
+        }
+      }
+
+      function jsonCapableDict(init) {
+        var dict = module.exports(init);
+
+        dict.toJSON = function() {
+          var _dict = {};
+          this.forEach(function(value, key) { _dict[key] = value; });
+          return _dict;
+        }
+
+        return dict;
+      }
+
+      return jsonCapableDict;
+      })();\n"
+  end
+
+  def self.parser
+    if @@parser.nil?
+      parser = Tempfile.new('bibtex')
+      puts `pegjs -e BibTeX #{BIBTEX_GRAMMAR.inspect} #{parser.path.inspect}`
+      @@parser = File.open(parser.path).read
+      parser.unlink
+    end
+    return @@parser
+  end
 
   def self.mapping
     if @@mapping.nil?
@@ -206,8 +248,8 @@ class Translator
       }
 
       @@mapping = "
-        var convert = {
-          unicode2latex: {
+        var LaTeX = {
+          regex: {
             unicode: {
               math: #{u2l[:unicode][:math]},
               text: #{u2l[:unicode][:text]}
@@ -216,12 +258,11 @@ class Translator
             ascii: {
               math: #{u2l[:ascii][:math]},
               text: #{u2l[:ascii][:text]}
-            },
-
-            map: #{JSON.pretty_generate(u2l[:ascii][:map])}
+            }
           },
 
-          latex2unicode: #{JSON.pretty_generate(l2u)}
+          toLaTeX: #{JSON.pretty_generate(u2l[:ascii][:map])},
+          toUnicode: #{JSON.pretty_generate(l2u)}
         };
         "
     end
@@ -272,6 +313,10 @@ class Translator
   end
 end
 
+file DICT => ['Rakefile'] do |t|
+  download('https://raw.githubusercontent.com/domenic/dict/master/dict.js', t.name)
+end
+
 file UNICODE_MAPPING => 'Rakefile' do |t|
   begin
     return unless download('http://www.w3.org/2003/entities/2007xml/unicode.xml', t.name)
@@ -309,32 +354,8 @@ end
 
 def download(url, file)
   puts "Downloading #{url} to #{file}"
-  uri = URI(url)
-
-  req = Net::HTTP::Get.new(uri.request_uri)
-  #http.use_ssl = true if url =~ /^https/i
-  #req.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-  if File.exists?(file)
-    stat = File.stat file
-    req['If-Modified-Since'] = stat.mtime.rfc2822
-  end
-
-  res = Net::HTTP.start(uri.hostname, uri.port) {|http|
-    http.request(req)
-  }
-
-  if res.is_a?(Net::HTTPSuccess)
-    FileUtils.mkdir_p(File.dirname(file))
-    open(file, 'w') { |file| file.write(res.body) }
-    return true
-  elsif res.is_a?(Net::HTTPNotModified)
-    puts 'Unchanged'
-    return false
-  else
-    throw "Failed to download #{url}: #{res}"
-  end
-  #open(file, 'wb', :encoding => 'utf-8') { |file| file.write(resp.body) }
+  puts `curl -z #{file.inspect} -o #{file.inspect} #{url.inspect}`
+  return true
 end
 
 task :fields do

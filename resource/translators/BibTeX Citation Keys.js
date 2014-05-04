@@ -20,13 +20,11 @@
 
 function doExport() {
   CiteKeys.initialize();
-  Zotero.write(JSON.stringify(CiteKeys.items));
+  var keys = {};
+  CiteKeys.items.forEach(function(value, key) { keys[key] = value; });
+  Zotero.write(JSON.stringify(keys));
 }
 
 var exports = {
-	"doExport": doExport,
-	"setKeywordDelimRe": setKeywordDelimRe,
-	"setKeywordSplitOnSpace": setKeywordSplitOnSpace
+	"doExport": doExport
 }
-
-/*= include testcases.js =*/

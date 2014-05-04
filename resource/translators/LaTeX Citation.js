@@ -21,16 +21,12 @@
 function doExport() {
   var citation = [];
   CiteKeys.initialize().forEach(function(item) {
-    Config.fieldsWritten = {};
-    if (CiteKeys.items[item.itemID]) { citation.push(CiteKeys.items[item.itemID].key); }
+    Config.fieldsWritten = Dict({});
+    if (CiteKeys.items.has(item.itemID)) { citation.push(CiteKeys.items.get(item.itemID).key); }
   });
   Zotero.write("\\" + Zotero.getHiddenPref('better-bibtex.citeCommand') + "{" + citation.join(',') + '}');
 }
 
 var exports = {
-	"doExport": doExport,
-	"setKeywordDelimRe": setKeywordDelimRe,
-	"setKeywordSplitOnSpace": setKeywordSplitOnSpace
+	"doExport": doExport
 }
-
-/*= include testcases.js =*/
