@@ -40,6 +40,10 @@ task :test => XPI do
   dropbox = File.expand_path('~/Dropbox')
   Dir["#{dropbox}/*.xpi"].each{|xpi| File.unlink(xpi)}
   FileUtils.cp(XPI, File.join(dropbox, XPI))
+
+  Dir['test/*.test.json'].each{|test|
+    puts `node test/test.js #{File.basename(test).inspect}`
+  }
 end
 
 task :tests do

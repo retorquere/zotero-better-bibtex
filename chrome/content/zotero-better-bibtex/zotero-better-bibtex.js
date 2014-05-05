@@ -62,7 +62,7 @@ Zotero.BetterBibTex = {
 
     for (var endpoint of Object.keys(Zotero.BetterBibTex.endpoints)) {
       var url = "/better-bibtex/" + endpoint;
-      console.log('Registering endpoint ' + url);
+      Zotero.BetterBibTex.log('Registering endpoint ' + url);
       var ep = Zotero.Server.Endpoints[url] = function() {};
       ep.prototype = Zotero.BetterBibTex.endpoints[endpoint];
     }
@@ -114,7 +114,7 @@ Zotero.BetterBibTex = {
 
           var items = []
 
-          console.log('exporting: ' + path + ' to ' + translator);
+          Zotero.BetterBibTex.log('exporting: ' + path + ' to ' + translator);
           for (var collectionkey of path.split('+')) {
             if (collectionkey.charAt(0) != '/') { collectionkey = '/0/' + collectionkey; }
             Zotero.BetterBibTex.log('exporting ' + collectionkey);

@@ -228,7 +228,7 @@ function flushEntry(item) {
   // fully empty zotero reference generates invalid bibtex. This type-reassignment does nothing but adds the single
   // field each entry needs as a minimum.
   if (Config.fieldsWritten.size == 0) {
-    writeField('type', escape(type));
+    writeField('type', escape(getBibTexType(item)));
   }
 }
 
