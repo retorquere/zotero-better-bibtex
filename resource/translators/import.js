@@ -90,13 +90,13 @@ function jabrefGroups(comment) {
     }
 
     var collection = new Zotero.Collection();
-    collection.name = collectionPath[0];
+    collection.name = record.name;
     collection.type = 'collection';
     collection.children = fields;
 
     collections.push(collection);
     collectionAt[record.level] = collection;
-    var parent = (level > 1 ? collectionAt[record.level - 1] : null);
+    var parent = (record.level > 1 ? collectionAt[record.level - 1] : null);
 
     if (parent) {
       parent.children.push(collection);

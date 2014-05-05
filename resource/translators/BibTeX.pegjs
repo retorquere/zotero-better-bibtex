@@ -36,7 +36,13 @@ value
       return (bibtex.strings.has(val) ? bibtex.strings.get(val) : val);
     }
   / ["] val:[^"]* ["] { return val.join(''); }
-  / "{" val:string* "}" ","? { return val.join(''); }
+  / "{" val:string* "}" ","? {
+      val = val.join('').trim();
+      while (val.match(/^{.*}$/)) {
+        val = val.replace(/^{|}$/gm, '').trim();
+      }
+      return val;
+    }
 	
 string
   = str:([^\\{}] / "\\" .)+ { return str.join(''); }
