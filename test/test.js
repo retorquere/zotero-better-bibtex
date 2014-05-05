@@ -7,17 +7,25 @@ var args = process.argv.slice(2);
 var test = args.pop()      || 'Better BibTeX.test.json';
 
 test = JSON.parse(fs.readFileSync(__dirname + '/' + test, 'utf-8'));
-test.translator = 'var __zotero__header__ = ' + fs.readFileSync(__dirname + '/../tmp/' + (test.translator || 'Better BibTeX.js'))
-test.command = test.command   || 'export';
-test.input = test.input       || 'Better BibTeX.input.json';
-test.ouput = test.ouput       || 'Better BibTeX.output.bib';
+test.translator = 'var __zotero__header__ = ' + fs.readFileSync(__dirname + '/../tmp/' + test.translator)
+// test.command = test.command   || 'export';
+// test.input = test.input       || 'Better BibTeX.input.json';
+// test.ouput = test.ouput       || 'Better BibTeX.output.bib';
 test.preferences = test.preferences || {};
 test.options = test.options         || {};
 
 var Item = function () {
-  this.m = function () {
-    alert('this is m');
-  };
+  this.__defineGetter__("creators", function(){
+    return this.author;
+  });
+  this.__defineGetter__("date", function(){
+    try { return this.issued['date-parts'].join('-'); }
+    catch (e) { return null; }
+  });
+  this.__defineGetter__("year", function(){
+    try { return this.issued['date-parts'][0]; }
+    catch (e) { return null; }
+  });
 };
 
 function rename(item, from, to) {
@@ -45,7 +53,7 @@ var Zotero = {
   },
 
   getHiddenPref: function(key) {
-    return test.preferences['extensions.zotero.translators.' + key];
+    return test.preferences[key];
   },
 
   getOption: function(key) {
@@ -54,6 +62,12 @@ var Zotero = {
 
   removeDiacritics: function(str) {
     return str.replace(/[^!-~]/ig, '.');
+  },
+
+  Utilities: {
+    strToDate: function(str) {
+      return str;
+    }
   },
 
   nextItem: function() {
@@ -76,6 +90,7 @@ var Zotero = {
 var ZU = Zotero;
 
 function pref(key, value) {
+  key = key.replace('extensions.zotero.translators.', '');
   if (typeof test.preferences[key] == 'undefined') {
     test.preferences[key] = value;
   }

@@ -1,1 +1,6 @@
-{}
+{
+  "translator": "Better BibLaTeX.js",
+  "command": "export",
+  "input": "Better BibTeX.input.json"
+}
+

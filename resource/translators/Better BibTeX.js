@@ -371,7 +371,7 @@ function createZoteroReference(bibtexitem) {
       });
 
     } else {
-      biblatexdata.push(key.replace(/[=;]/g, '#') + '=' + value.replace(/[\r\n]+/g, ' ').replace(/[=;]g/, '#'));
+      biblatexdata.push(field.replace(/[=;]/g, '#') + '=' + value.replace(/[\r\n]+/g, ' ').replace(/[=;]g/, '#'));
     }
   });
 
