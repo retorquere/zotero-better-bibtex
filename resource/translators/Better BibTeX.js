@@ -181,7 +181,7 @@ function doExport() {
       }
     }
 
-    writeField('note', escape(item.extra));
+    writeExtra(item, 'note');
 
     writeField('keywords', escape(item.tags.map(function(tag) { return tag.tag; }), {brace: true, sep: ', '}));
 
@@ -206,11 +206,7 @@ function doExport() {
 
     writeField('file', saveAttachments(item));
 
-    // fully empty zotero reference generates invalid bibtex. This type-reassignment does nothing but adds the single
-    // field each entry needs as a minimum.
-    if (Config.fieldsWritten.size == 0) {
-      writeField('type', escape(type));
-    }
+    flushEntry(item);
 
     Zotero.write("\n}");
   });

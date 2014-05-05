@@ -209,15 +209,27 @@ function mapTeXmarkup(tex){
 }
 
 var biblatexdataRE = /biblatexdata\[([^\]]+)\]/;
-function writeBiblatexData(item) {
-  var m = biblatexdataRE.exec(item.extra);
-  if (!m) { return; }
+function writeExtra(item, field) {
+  if (!item.extra) { return; }
 
-  item.extra = item.extra.replace(m[0], '').trim();
-  m[1].split(';').forEach(function(assignment) {
-    var data = assignment.split('=', 2);
-    writeField(data[0], escape(data[1]));
-  });
+  var m = biblatexdataRE.exec(item.extra);
+  if (m) {
+    item.extra = item.extra.replace(m[0], '').trim();
+    m[1].split(';').forEach(function(assignment) {
+      var data = assignment.split('=', 2);
+      writeField(data[0], escape(data[1]));
+    });
+  }
+
+  writeField(field, escape(item.extra));
+}
+
+function flushEntry(item) {
+  // fully empty zotero reference generates invalid bibtex. This type-reassignment does nothing but adds the single
+  // field each entry needs as a minimum.
+  if (Config.fieldsWritten.size == 0) {
+    writeField('type', escape(type));
+  }
 }
 
 Formatter = {

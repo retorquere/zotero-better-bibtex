@@ -22,7 +22,7 @@ TRANSLATORS = [
   {name: 'BibTeX Citation Keys'}
 ]
 
-UNICODE_MAPPING = 'tmp/unicode.xml'
+UNICODE_MAPPING = 'tmp/unicode.json'
 BIBTEX_GRAMMAR  = Dir["resource/**/*.pegjs"][0]
 DICT            = 'tmp/dict.js'
 
@@ -194,7 +194,7 @@ class Translator
 
   def self.mapping
     if @@mapping.nil?
-      mapping = Nokogiri::XML(open(UNICODE_MAPPING))
+      mapping = JSON.parse(open(UNICODE_MAPPING).read)
 
       u2l = {
         unicode: {
@@ -209,37 +209,20 @@ class Translator
 
       l2u = { }
 
-      mapping.xpath('//character[@dec and latex]').each{|char|
-        id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
-        key = id.pack('U' * id.size)
-        value = char.at('.//latex').inner_text
-        mathmode = (char['mode'] == 'math')
-
-        case key
-          when '_', '}', '{', '[', ']'
-            value = "\\" + key
-            mathmode = false
-          when "\u00A0"
-            value = ' '
-            mathmode = false
-        end
-
-        next if key =~ /^[\x20-\x7E]$/ && ! %w{# $ % & ~ _ ^ { } [ ] > < \\}.include?(key)
-        next if key == value && !mathmode
-
+      mapping.each_pair{|key, repl|
         # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to 
         # \combinecommand{X}
         #raise value if value =~ /LECO/
 
         if key =~ /^[\x20-\x7E]$/ # an ascii character that needs translation? Probably a TeX special character
-          u2l[:unicode][:map][key] = value.gsub(/ $/, '{}')
-          u2l[:unicode][:math] << key if mathmode
+          u2l[:unicode][:map][key] = repl['latex'].gsub(/ $/, '{}')
+          u2l[:unicode][:math] << key if repl['math']
         end
-        u2l[:ascii][:map][key] = value.gsub(/ $/, '{}')
-        u2l[:ascii][:math] << key if mathmode
+        u2l[:ascii][:map][key] = repl['latex'].gsub(/ $/, '{}')
+        u2l[:ascii][:math] << key if repl['math']
 
-        _value = value.gsub(/{}$/, '').strip
-        l2u[_value] = key if _value != ''
+        latex = repl['latex'].gsub(/{}$/, '').strip
+        l2u[latex] = key if latex != ''
       }
 
       [:ascii, :unicode].each{|map|
@@ -319,10 +302,10 @@ end
 
 file UNICODE_MAPPING => 'Rakefile' do |t|
   begin
-    return unless download('http://www.w3.org/2003/entities/2007xml/unicode.xml', t.name)
+    xml = File.join(File.dirname(t.name), File.basename(t.name, File.extname(t.name)) + '.xml')
+    download('http://www.w3.org/2003/entities/2007xml/unicode.xml', xml)
 
-    mapping = Nokogiri::XML(open(t.name))
-    #Nokogiri.parse(open(t.name))
+    mapping = Nokogiri::XML(open(xml))
     puts mapping.errors
 
     mapping.at('//charlist') << "
@@ -343,7 +326,38 @@ file UNICODE_MAPPING => 'Rakefile' do |t|
       nodes.each{|node| node.content = soll }
     }
 
-    File.open(t.name,'w') {|f| mapping.write_xml_to f}
+    mapping.xpath('//latex').each{|node|
+      node.content = node.inner_text.gsub(/\\([^a-z]){(.)}/i){ "\\#{$1}#{$2}" }
+    }
+
+    json = {}
+    mapping.xpath('//character[@dec and latex]').each{|char|
+      id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
+      key = id.pack('U' * id.size)
+      value = char.at('.//latex').inner_text
+      mathmode = (char['mode'] == 'math')
+
+      case key
+        when '_', '}', '{', '[', ']'
+          value = "\\" + key
+          mathmode = false
+        when "\u00A0"
+          value = ' '
+          mathmode = false
+      end
+
+      next if key =~ /^[\x20-\x7E]$/ && ! %w{# $ % & ~ _ ^ { } [ ] > < \\}.include?(key)
+      next if key == value && !mathmode
+
+      # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to 
+      # \combinecommand{X}
+      #raise value if value =~ /LECO/
+
+      json[key] = {latex: value, math: mathmode}
+    }
+
+    #File.open(t.name,'w') {|f| mapping.write_xml_to f}
+    File.open(t.name,'w') {|f| f.write(json.to_json) }
   rescue => e
     File.rename(t.name, t.name + '.err') if File.exists?(t.name)
     throw e
@@ -376,5 +390,29 @@ task :fields do
   puts '| ' + (['-' * fieldwidth] * columns).join(' | ') + ' |'
   fields.each_slice(columns){|row|
     puts '| ' + (row + ([''] * columns))[0..columns-1].collect{|f| f.ljust(fieldwidth) }.join(' | ') + ' |'
+  }
+end
+
+file 'tmp/latex.pegjs' => UNICODE_MAPPING do |t|
+  mapping = {}
+  JSON.parse(open(UNICODE_MAPPING).read).each_pair{|key, repl|
+    latex = repl['latex']
+    mapping[latex] = key
+    latex.gsub!(/\\([^a-z])(.)/i){ "\\#{$1}{#{$2}}" }
+    mapping[latex] = key
+  }
+
+  File.open(t.name, 'w') {|f|
+    f.write("
+start
+	= latex*
+	
+latex
+  = \"\\mathmode{\" latex \"}\"
+  / \"\\emph{\" latex \"}\"
+  / \"{\" latex \"}\"
+  / (#{mapping.keys.collect{|k| [k, k.gsub(/ $/, '{}'), k.gsub(/ $/, "\n")] }.flatten.uniq.collect{|k| k.inspect}.join(' / ')})
+  / .
+        ")
   }
 end
