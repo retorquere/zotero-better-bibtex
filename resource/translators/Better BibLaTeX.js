@@ -228,7 +228,7 @@ function doExport() {
           break;
 
         case 'journalArticle':
-          if (Zotero.getOption('useJournalAbbreviation')) {
+          if (Config.useJournalAbbreviation) {
             writeField('journal', escape(item.journalAbbreviation, {brace: true}));
           } else {
             writeField('journaltitle', escape(item.publicationTitle, {brace: true}));
@@ -419,7 +419,7 @@ function doExport() {
 
     writeField('keywords', escape(item.tags.map(function(tag) {return tag.tag;}), {sep: ', '}));
 
-    if (item.notes && Zotero.getOption('exportNotes')) {
+    if (item.notes && Config.exportNotes) {
       item.notes.forEach(function(note) {
         writeField('annotation', escape(Zotero.Utilities.unescapeHTML(note.note)));
       });

@@ -23,8 +23,12 @@ var Config = {
     Config.skipFields = Zotero.getHiddenPref('better-bibtex.skipfields').split(',');
     Config.usePrefix = Zotero.getHiddenPref('better-bibtex.useprefix');
     Config.braceAll = Zotero.getHiddenPref('better-bibtex.brace-all');
-    Config.exportFileData = Zotero.getOption('exportFileData');
     Config.fancyURLs = Zotero.getHiddenPref('better-bibtex.fancyURLs');
+
+    Config.useJournalAbbreviation = Zotero.getOption('useJournalAbbreviation');
+    Config.exportCharset = Zotero.getOption('exportCharset');
+    Config.exportFileData = Zotero.getOption('exportFileData');
+    Config.exportNotes = Zotero.getOption('exportNotes');
 
     switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
       case 'always':
@@ -34,7 +38,7 @@ var Config = {
         Config.unicode = false;
         break;
       default:
-        var charset = Zotero.getOption('exportCharset');
+        var charset = Config.exportCharset;
         Config.unicode = Config.unicode || (charset && charset.toLowerCase() == 'utf-8');
         break;
     }

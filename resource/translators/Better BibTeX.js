@@ -113,7 +113,7 @@ function doExport() {
     if (item.publicationTitle) {
       if (item.itemType == 'bookSection' || item.itemType == 'conferencePaper') {
         writeField('booktitle', escape(item.publicationTitle, {brace: true}));
-      } else if (Zotero.getOption('useJournalAbbreviation') && item.journalAbbreviation){
+      } else if (Config.useJournalAbbreviation && item.journalAbbreviation){
         writeField('journal', escape(item.journalAbbreviation, {brace: true}));
       } else {
         writeField('journal', escape(item.publicationTitle, {brace: true}));
@@ -197,7 +197,7 @@ function doExport() {
     if (item.itemType == 'webpage') {
       writeField('howpublished', item.url);
     }*/
-    if (item.notes && Zotero.getOption('exportNotes')) {
+    if (item.notes && Config.exportNotes) {
       item.notes.forEach(function(note) {
         writeField('annote', escape(Zotero.Utilities.unescapeHTML(note.note)));
       });

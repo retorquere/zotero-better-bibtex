@@ -99,6 +99,12 @@ or any multiple of those, separated by a '+' sign.
 
 The format is either 'bibtex' or 'biblatex', and determines the translator used for export.
 
+You can add options to the export as URL parameters:
+
+* &exportCharset=&lt;charset&gt;
+* &exportNotes=true
+* &@useJournalAbbreviation=true
+
 Zotero needs to be running for this to work.
 
 ## Force citation key
