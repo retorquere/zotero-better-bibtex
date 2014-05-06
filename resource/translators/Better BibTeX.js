@@ -183,7 +183,7 @@ function doExport() {
 
     writeExtra(item, 'note');
 
-    writeField('keywords', escape(item.tags.map(function(tag) { return tag.tag; }), {brace: true, sep: ', '}));
+    writeField('keywords', escape(item.tags.map(function(tag) { return tag.tag; }), {sep: ', '}));
 
     writeField('pages', escape(item.pages));
 
@@ -345,7 +345,7 @@ function createZoteroReference(bibtexitem) {
         kw = value.split(/\s+/);
       }
       item.tags = kw.map(function(k) {
-        k = k.replace(/^[\s{]+|[}\s]+$/gm, '').trim();
+        return k.replace(/^[\s{]+|[}\s]+$/gm, '').trim();
       });
 
     } else if (field == 'comment' || field == 'annote' || field == 'review') {
