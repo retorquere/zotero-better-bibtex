@@ -19,7 +19,7 @@ reference
       });
       bibtex.references.push(ref);
     }
-  / err:([^\n] / "\n" [^}])* "\n}"? { bibtex.errors.push(err.join('')); }
+  /* / err:([^\n] / "\n" [^}])* "\n}"? { bibtex.errors.push(err.join('')); } */
 
 identifier
 	= letters:[a-zA-Z]+ { return letters.join(""); }
@@ -31,7 +31,7 @@ key_value
 	= _* key:identifier _* "=" _* val:value _* { return {key: key.trim().toLowerCase(), value: val.trim()}; }
 	
 value
-  = val:[^"{} \t\n\r,]+ ","? {
+  = val:[^#"{} \t\n\r,]+ ","? {
       val = val.join('');
       return (bibtex.strings.has(val) ? bibtex.strings.get(val) : val);
     }
@@ -46,10 +46,9 @@ value
   / _* "#" _* val:value { return val; }
 	
 string
-  = str:([^\\{}] / escapedchar)+ { return str.join(''); }
+  = str:[^\\{}]+ { return str.join(''); }
+  / str:("\\" .)+ { return str.map(function(chr) { return chr.join(''); }).join(''); }
   / "{" str:string* "}" { return '{' + str.join('') + '}'; }
 
-escapedchar
-  = "\\" chr:. { return chr; }
 _
     = w:[ \t\n\r]+ 

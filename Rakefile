@@ -37,11 +37,13 @@ task :default => XPI do
 end
 
 task :test => XPI do
-  dropbox = File.expand_path('~/Dropbox')
-  Dir["#{dropbox}/*.xpi"].each{|xpi| File.unlink(xpi)}
-  FileUtils.cp(XPI, File.join(dropbox, XPI))
+  #dropbox = File.expand_path('~/Dropbox')
+  #Dir["#{dropbox}/*.xpi"].each{|xpi| File.unlink(xpi)}
+  #FileUtils.cp(XPI, File.join(dropbox, XPI))
 
   Dir['test/*.test.json'].each{|test|
+    next unless test =~ /BibTeX2/
+    puts test
     puts `node test/test.js #{File.basename(test).inspect}`
   }
 end
@@ -219,14 +221,13 @@ class Translator
         #raise value if value =~ /LECO/
 
         if key =~ /^[\x20-\x7E]$/ # an ascii character that needs translation? Probably a TeX special character
-          u2l[:unicode][:map][key] = repl['latex'].gsub(/ $/, '{}')
+          u2l[:unicode][:map][key] = repl['latex']
           u2l[:unicode][:math] << key if repl['math']
         end
-        u2l[:ascii][:map][key] = repl['latex'].gsub(/ $/, '{}')
+        u2l[:ascii][:map][key] = repl['latex']
         u2l[:ascii][:math] << key if repl['math']
 
-        latex = repl['latex'].gsub(/{}$/, '').strip
-        l2u[latex] = key if latex =~ /\\/
+        l2u[repl['latex']] = key if repl['latex'] =~ /\\/
       }
 
       [:ascii, :unicode].each{|map|
@@ -330,10 +331,6 @@ file UNICODE_MAPPING => 'Rakefile' do |t|
       nodes.each{|node| node.content = soll }
     }
 
-    mapping.xpath('//latex').each{|node|
-      node.content = node.inner_text.gsub(/\\([^a-z]){(.)}/i){ "\\#{$1}#{$2}" }
-    }
-
     json = {}
     mapping.xpath('//character[@dec and latex]').each{|char|
       id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
@@ -394,29 +391,5 @@ task :fields do
   puts '| ' + (['-' * fieldwidth] * columns).join(' | ') + ' |'
   fields.each_slice(columns){|row|
     puts '| ' + (row + ([''] * columns))[0..columns-1].collect{|f| f.ljust(fieldwidth) }.join(' | ') + ' |'
-  }
-end
-
-file 'tmp/latex.pegjs' => UNICODE_MAPPING do |t|
-  mapping = {}
-  JSON.parse(open(UNICODE_MAPPING).read).each_pair{|key, repl|
-    latex = repl['latex']
-    mapping[latex] = key
-    latex.gsub!(/\\([^a-z])(.)/i){ "\\#{$1}{#{$2}}" }
-    mapping[latex] = key
-  }
-
-  File.open(t.name, 'w') {|f|
-    f.write("
-start
-	= latex*
-	
-latex
-  = \"\\mathmode{\" latex \"}\"
-  / \"\\emph{\" latex \"}\"
-  / \"{\" latex \"}\"
-  / (#{mapping.keys.collect{|k| [k, k.gsub(/ $/, '{}'), k.gsub(/ $/, "\n")] }.flatten.uniq.collect{|k| k.inspect}.join(' / ')})
-  / .
-        ")
   }
 end

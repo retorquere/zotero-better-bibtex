@@ -927,5 +927,6 @@ LaTeX.latex2html = function(str) {
       res += chunk;
     }
   });
+
   return res;
 }

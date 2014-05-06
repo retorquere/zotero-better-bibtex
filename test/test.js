@@ -41,6 +41,7 @@ function dflt(item, field, d) {
 
 var Zotero = {
   output: '',
+  input: '',
   items: [],
 
   debug: function(msg) {
@@ -50,6 +51,14 @@ var Zotero = {
 
   write: function(str) {
     Zotero.output += str;
+  },
+
+  read: function(n) {
+    console.log('read ' + n + ' from ' + Zotero.input.length);
+    if (Zotero.input == '') { return false; }
+    var r = Zotero.input.substring(0, n);
+    Zotero.input = Zotero.input.substring(n, Zotero.input.length);
+    return r;
   },
 
   getHiddenPref: function(key) {
@@ -67,6 +76,9 @@ var Zotero = {
   Utilities: {
     strToDate: function(str) {
       return str;
+    },
+    trimInternal: function(str) {
+      return str ? str.trim() : str;
     }
   },
 
@@ -111,7 +123,11 @@ switch (test.command) {
     break;
 
   case 'import':
+    test.input = __dirname + '/' + test.input;
+    Zotero.debug('Loading data from ' + test.input);
+    Zotero.input = fs.readFileSync(test.input, 'utf-8');
     doImport();
+    Zotero.debug(Zotero.output);
     break;
   case 'detect':
     doDetect();

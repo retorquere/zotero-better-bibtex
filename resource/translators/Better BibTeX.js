@@ -361,6 +361,7 @@ function createZoteroReference(bibtexitem) {
         attachment = attachment.split(':').map(function(att) { return att.trim(); });
         attachment = {title: attachment[0] == '' ? 'Attachment' : attachment[0], path: attachment[1], mimeType: attachment[2] };
         if (attachment.path != '') {
+          attachment.path = LaTeX.latex2html(attachment.path);
           if (attachment.mimeType && attachment.mimeType.match(/pdf/i)) {
             attachment.mimeType = 'application/pdf';
           } else {
