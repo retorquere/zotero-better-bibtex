@@ -216,7 +216,7 @@ function doExport() {
 
 function createZoteroReference(bibtexitem) {
   var type = Zotero.Utilities.trimInternal(bibtexitem.get('__type__').toLowerCase());
-  if (bibtexitem.has('type')) { type = Zotero.Utilities.trimInternal(bibtexitem.type.toLowerCase()); }
+  if (bibtexitem.has('type')) { type = Zotero.Utilities.trimInternal(bibtexitem.get('type').toLowerCase()); }
   type = Config.typeMap.toZotero.get(type) || 'journalArticle';
 
   trLog('creating reference for ' + JSON.stringify(bibtexitem));
@@ -340,12 +340,13 @@ function createZoteroReference(bibtexitem) {
       item.accessDate = value;
 
     } else if (field == 'keywords' || field == 'keyword') {
-      var re = new RegExp('\\s*[,;]\\s*', '');
-      if (!value.match(re)) {
-        item.tags = value.split(/\s+/);
-      } else {
-        item.tags = value.split(re);
+      var kw = value.split(/[,;]/);
+      if (kw.length == 1) {
+        kw = value.split(/\s+/);
       }
+      item.tags = kw.map(function(k) {
+        k = k.replace(/^[\s{]+|[}\s]+$/gm, '').trim();
+      });
 
     } else if (field == 'comment' || field == 'annote' || field == 'review') {
       item.notes.push({note:Zotero.Utilities.text2html(value)});
@@ -361,7 +362,7 @@ function createZoteroReference(bibtexitem) {
         attachment = attachment.split(':').map(function(att) { return att.trim(); });
         attachment = {title: attachment[0] == '' ? 'Attachment' : attachment[0], path: attachment[1], mimeType: attachment[2] };
         if (attachment.path != '') {
-          if (attachment.mimeType.match(/pdf/i)) {
+          if (attachment.mimeType && attachment.mimeType.match(/pdf/i)) {
             attachment.mimeType = 'application/pdf';
           } else {
             delete attachment.mimeType;
