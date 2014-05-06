@@ -23,7 +23,7 @@ var Config = {
     Config.skipFields = Zotero.getHiddenPref('better-bibtex.skipfields').split(',');
     Config.usePrefix = Zotero.getHiddenPref('better-bibtex.useprefix');
     Config.braceAll = Zotero.getHiddenPref('better-bibtex.brace-all');
-    Config.exportFileData = Zotero.getOption("exportFileData");
+    Config.exportFileData = Zotero.getOption('exportFileData');
     Config.fancyURLs = Zotero.getHiddenPref('better-bibtex.fancyURLs');
 
     switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
@@ -104,7 +104,7 @@ function saveAttachments(item) {
 
   var attachments = [];
   item.attachments.forEach(function(att) {
-    if (Zotero.getOption("exportFileData") && att.defaultPath && att.saveFile) {
+    if (Config.exportFileData && att.defaultPath && att.saveFile) {
       att.saveFile(att.defaultPath);
       attachments.push({title: att.title, path: att.defaultPath, mimetype: att.mimeType});
       return;

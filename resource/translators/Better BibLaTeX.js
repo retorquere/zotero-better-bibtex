@@ -183,7 +183,7 @@ function doExport() {
 
     var bibtexData = CiteKeys.items.get(int2str(item.itemID));
     Zotero.write("\n\n");
-    Zotero.write('% better-bibtex: ' + (bibtexData.pinned ?  'pinned' : 'generated') + "\n");
+    Zotero.write('% ' + Config.label + ': ' + (bibtexData.pinned ?  'pinned' : 'generated') + "\n");
     if (bibtexData.duplicates) {
       Zotero.write('% better-bibtex: ' + (bibtexData.pinned ?  'hard' : 'soft') + ' conflict');
       if (bibtexData.default && bibtexData.default != bibtexData.key) {
@@ -399,13 +399,17 @@ function doExport() {
       writeField('urldate', escape(Zotero.Utilities.strToISO(item.accessDate)));
     }
 
-    //TODO enable handling of date ranges when that's added to zotero
     if (item.date) {
       var date = Zotero.Utilities.strToISO(item.date);
       if (date) {
         writeField('date', escape(date));
       } else {
         writeField('date', escape({literal:item.date}));
+      }
+
+      date = Zotero.Utilities.strToDate(item.date);
+      if (date) {
+        writeField('year', escape(date.year))
       }
     }
 

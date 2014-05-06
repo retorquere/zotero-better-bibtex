@@ -43,6 +43,7 @@ value
       }
       return val;
     }
+  / _* "#" _* val:value { return val; }
 	
 string
   = str:([^\\{}] / "\\" .)+ { return str.join(''); }
