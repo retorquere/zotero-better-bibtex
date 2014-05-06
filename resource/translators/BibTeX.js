@@ -16,19 +16,20 @@ var Config = {
   unicode:  /*= unicode =*/,
   release:  '/*= release =*/',
 
-  initialize: function() {
-    if (Config.initialized) { return; }
+  initialize: function(options) {
+    if (!options && Config.initialized) { return; }
+    options = options || {};
 
-    Config.pattern = Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
-    Config.skipFields = Zotero.getHiddenPref('better-bibtex.skipfields').split(',');
-    Config.usePrefix = Zotero.getHiddenPref('better-bibtex.useprefix');
-    Config.braceAll = Zotero.getHiddenPref('better-bibtex.brace-all');
-    Config.fancyURLs = Zotero.getHiddenPref('better-bibtex.fancyURLs');
+    Config.pattern    = options.pattern   || Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
+    Config.skipFields = options.skipField || Zotero.getHiddenPref('better-bibtex.skipfields').split(',');
+    Config.usePrefix  = options.usePrefix || Zotero.getHiddenPref('better-bibtex.useprefix');
+    Config.braceAll   = options.braceAll  || Zotero.getHiddenPref('better-bibtex.brace-all');
+    Config.fancyURLs  = options.fancyURLs || Zotero.getHiddenPref('better-bibtex.fancyURLs');
 
-    Config.useJournalAbbreviation = Zotero.getOption('useJournalAbbreviation');
-    Config.exportCharset = Zotero.getOption('exportCharset');
-    Config.exportFileData = Zotero.getOption('exportFileData');
-    Config.exportNotes = Zotero.getOption('exportNotes');
+    Config.useJournalAbbreviation = options.useJournalAbbreviation  || Zotero.getOption('useJournalAbbreviation');
+    Config.exportCharset          = options.exportCharset           || Zotero.getOption('exportCharset');
+    Config.exportFileData         = options.exportFileData          || Zotero.getOption('exportFileData');
+    Config.exportNotes            = options.exportNotes             || Zotero.getOption('exportNotes');
 
     switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
       case 'always':
@@ -729,7 +730,11 @@ var CiteKeys = {
       var _items = Dict({});
       var item;
 	    while (item = Zotero.nextItem()) {
-        _items.set(int2str(item.itemID), item); // duplicates?!
+        if (item.itemType == ':test:options:') {
+          Config.initialize(item);
+        } else {
+          _items.set(int2str(item.itemID), item); // duplicates?!
+        }
       }
       items = [];
       _items.forEach(function(item) { items.push(item); });

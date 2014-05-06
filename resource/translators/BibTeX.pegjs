@@ -46,8 +46,10 @@ value
   / _* "#" _* val:value { return val; }
 	
 string
-  = str:([^\\{}] / "\\" .)+ { return str.join(''); }
+  = str:([^\\{}] / escapedchar)+ { return str.join(''); }
   / "{" str:string* "}" { return '{' + str.join('') + '}'; }
 
+escapedchar
+  = "\\" chr:. { return chr; }
 _
     = w:[ \t\n\r]+ 
