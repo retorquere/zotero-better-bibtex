@@ -162,6 +162,10 @@ If you submit an issue report,
 * Please make *sure* you are on the latest version **0.4.10**. Auto-update will usually take care of it.
 * Please include *specifics* of what doesn't work. I use this plugin every day myself, so "it doesn't work" is trivially
   false. Please tell me what you expected and what you see happening, and the relevant difference between them.
+* One problem/feature request, one issue.
+* Do not hijack existing issues. You can chime in on existing issues if you're close to certain it is the same problem,
+  otherwise, open a new issue. I rather have duplicate issues than issues I cannot close because they are in fact two or
+  more issues.
 * If your problem pertains to importing bibtex files, you *must* put up a sample for me to reproduce the issue with.
   *Do not* paste the sample in the issue, as the issue tracker will format it into oblivioin. Instead, choose one of
   these two options:
