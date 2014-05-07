@@ -30,7 +30,8 @@
     "edition": "ninth Dover printing, tenth GPO printing",
     "title": "Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables",
     "publisher": "Dover",
-    "date": "1964"
+    "date": "1964",
+    "extra": "bibtex: abramowitz+stegun"
   },
   {
     "itemType": "book",

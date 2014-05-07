@@ -928,5 +928,7 @@ LaTeX.latex2html = function(str) {
     }
   });
 
+  res = res.replace(/[\r\n\t ]+/gm, ' ').trim();
+
   return res;
 }

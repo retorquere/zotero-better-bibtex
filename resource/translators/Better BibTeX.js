@@ -226,7 +226,9 @@ function createZoteroReference(bibtexitem) {
   var biblatexdata = [];
   bibtexitem.forEach(function(value, field) {
     if (['__key__', '__type__', 'type'].indexOf(field) >= 0) { return; }
-    if (!value || Zotero.Utilities.trim(value) == '') { return; }
+    if (!value) { return; }
+    value = Zotero.Utilities.trim(LaTeX.latex2html(value));
+    if (value == '') { return; }
 
     if (fieldMap.has(field)) {
       zField = fieldMap.get(field);

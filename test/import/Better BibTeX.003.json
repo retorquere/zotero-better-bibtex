@@ -58,6 +58,7 @@
     ],
     "itemID": "conference:06",
     "title": "Proceedings of the Xth Conference on XYZ",
-    "date": "October 2006"
+    "date": "October 2006",
+    "extra": "bibtex: conference:06"
   }
 ]

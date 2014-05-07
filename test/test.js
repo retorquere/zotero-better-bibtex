@@ -36,7 +36,9 @@ var Zotero = {
     this.creators = [];
     this.attachments = [];
     this.notes = [];
-    this.complete = function() {}
+    this.complete = function() {
+      console.log('Item: ' + JSON.stringify(this));
+    }
 
     /*this.__defineGetter__("creators", function(){
       return this.author;
@@ -61,6 +63,7 @@ var Zotero = {
   },
 
   read: function(n) {
+    console.log('read ' + n + ' from ' + Zotero.input.length);
     if (Zotero.input == '') { return false; }
     var r = Zotero.input.substring(0, n);
     Zotero.input = Zotero.input.substring(n, Zotero.input.length);
@@ -94,7 +97,11 @@ var Zotero = {
     },
     text2html: function(value) {
       return value;
+    },
+    formatDate: function(date) {
+      return JSON.stringify(date);
     }
+
   },
 
   nextItem: function() {

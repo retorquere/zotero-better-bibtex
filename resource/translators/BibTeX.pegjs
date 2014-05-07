@@ -26,7 +26,7 @@ reference
         bibtex.references.push(ref);
       }
     }
-  / err:([^\n] / "\n" [^}])+ stop:"\n}"? { bibtex.errors.push('@' + join(err) + (stop ? stop : '')); }
+  /* / err:([^\n] / "\n" [^}])+ stop:"\n}"? { bibtex.errors.push('@' + join(err) + (stop ? stop : '')); } */
 
 identifier
 	= chars:[a-zA-Z]+ { return join(chars); }
@@ -35,18 +35,18 @@ citekey
   = str:[^,]+ { return join(str); }
 	
 key_value
-	= _* key:key _* "=" _* val:value _* { return {key: key.trim().toLowerCase(), value: val.trim()}; }
+	= _* key:key _* "=" _* val:value _* ("," _*)? { return {key: key.trim().toLowerCase(), value: val.trim()}; }
 
 key
   = key:[^ \t\n\r=]+ { return join(key); }
 
 value
-  = val:[^#"{} \t\n\r,]+ ","? {
+  = val:[^#"{} \t\n\r,]+ {
       val = join(val);
       return (bibtex.strings.has(val) ? bibtex.strings.get(val) : val);
     }
   / ["] val:[^"]* ["] { return join(val); }
-  / "{" val:string* "}" ","? {
+  / "{" val:string* "}" {
       val = join(val).trim();
       while (val.match(/^{.*}$/)) {
         val = val.replace(/^{|}$/gm, '').trim();

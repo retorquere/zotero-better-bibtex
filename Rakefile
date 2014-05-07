@@ -26,7 +26,7 @@ UNICODE_MAPPING = 'tmp/unicode.json'
 BIBTEX_GRAMMAR  = Dir["resource/**/*.pegjs"][0]
 DICT            = 'tmp/dict.js'
 
-SOURCES = %w{chrome resource defaults chrome.manifest install.rdf bootstrap.js}
+SOURCES = %w{chrome test/import test/export resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
             .select{|f| File.file?(f)}
             .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [UNICODE_MAPPING, BIBTEX_GRAMMAR, DICT]
@@ -41,11 +41,11 @@ task :test => XPI do
   Dir["#{dropbox}/*.xpi"].each{|xpi| File.unlink(xpi)}
   FileUtils.cp(XPI, File.join(dropbox, XPI))
 
-  Dir['test/*.test.json'].each{|test|
-    next unless test =~ /BibTeX2/
-    puts test
-    puts `node test/test.js #{File.basename(test).inspect}`
-  }
+  #Dir['test/*.test.json'].each{|test|
+  #  next unless test =~ /BibTeX2/
+  #  puts test
+  #  puts `node test/test.js #{File.basename(test).inspect}`
+  #}
 end
 
 task :tests do
@@ -60,7 +60,7 @@ file XPI => SOURCES do |t|
   begin
     puts "Creating #{t.name}"
     Zip::File.open(t.name, 'w') do |zipfile|
-      t.prerequisites.reject{|f| f=~ /^(tmp|resource)\// }.each{|file|
+      t.prerequisites.reject{|f| f=~ /^(test|tmp|resource)\// }.each{|file|
         zipfile.add(file, file)
       }
 
@@ -260,7 +260,7 @@ class Translator
 
   def get_testcases
     @_testcases = []
-    Dir["#{File.dirname(@source)}/import/#{File.basename(@source, File.extname(@source)) + '.*.bib'}"].sort.each{|test|
+    Dir["test/import/#{File.basename(@source, File.extname(@source)) + '.*.bib'}"].sort.each{|test|
       @_testcases << {type: 'import', input: File.open(test).read, items: JSON.parse(File.open(test.gsub(/\.bib$/, '.json')).read)}
     }
     @_testcases = JSON.pretty_generate(@_testcases)

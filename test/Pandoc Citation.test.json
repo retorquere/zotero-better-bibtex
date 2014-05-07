@@ -1,5 +1,0 @@
-{
-  "translator": "Pandoc Citation.js",
-  "command": "export",
-  "input": "Better BibTeX.input.json"
-}
