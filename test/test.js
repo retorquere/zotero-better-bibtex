@@ -32,7 +32,8 @@ var Zotero = {
   items: [],
 
 
-  Item: function () {
+  Item: function (type) {
+    console.log('Creating '+ type);
     this.creators = [];
     this.attachments = [];
     this.notes = [];
@@ -146,11 +147,11 @@ switch (test.command) {
 
   case 'import':
     test.input = __dirname + '/' + test.input;
-    //Zotero.debug('Loading data from ' + test.input);
     Zotero.input = fs.readFileSync(test.input, 'utf-8');
     doImport();
-    //Zotero.debug(Zotero.output);
+    Zotero.debug(Zotero.output);
     break;
+
   case 'detect':
     doDetect();
     break;

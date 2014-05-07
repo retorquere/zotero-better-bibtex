@@ -225,7 +225,7 @@ function createZoteroReference(bibtexitem) {
 
   var biblatexdata = [];
   bibtexitem.forEach(function(value, field) {
-    if (['__key__', '__type__', 'type'].indexOf(field) >= 0) { return; }
+    if (['__key__', '__type__', 'type', 'added-at', 'timestamp'].indexOf(field) >= 0) { return; }
     if (!value) { return; }
     value = Zotero.Utilities.trim(value);
     if (value == '') { return; }
@@ -386,6 +386,7 @@ function createZoteroReference(bibtexitem) {
   item.extra += 'bibtex: ' + item.itemID;
 
   if (biblatexdata.length > 0) {
+    biblatexdata.sort();
     item.extra += "\nbiblatexdata[" + biblatexdata.join(';') + ']';
   }
 

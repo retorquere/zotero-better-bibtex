@@ -28,6 +28,10 @@ function doImport() {
 
   var bib = BibTeX.parse(bib);
 
+  bib.errors.forEach(function(err) {
+    trLog('import error: ' + err);
+  });
+
   bib.references = bib.references.forEach(function(ref) {
     createZoteroReference(ref)
   });

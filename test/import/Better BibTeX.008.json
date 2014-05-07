@@ -1,6 +1,6 @@
 [
   {
-    "itemType": "book",
+    "itemType": "journalArticle",
     "creators": [
       {
         "firstName": "American Rights at",
@@ -23,6 +23,7 @@
     "itemID": "american_rights_at_work_public_2012",
     "url": "http://www.americanrightsatwork.org/blogcategory-275/",
     "title": "Public Service Research Foundation",
-    "date": "2012"
+    "date": "2012",
+    "extra": "bibtex: american_rights_at_work_public_2012"
   }
 ]
