@@ -14,19 +14,6 @@ test.translator = 'var __zotero__header__ = ' + fs.readFileSync(__dirname + '/..
 test.preferences = test.preferences || {};
 test.options = test.options         || {};
 
-var Item = function () {
-  this.__defineGetter__("creators", function(){
-    return this.author;
-  });
-  this.__defineGetter__("date", function(){
-    try { return this.issued['date-parts'].join('-'); }
-    catch (e) { return null; }
-  });
-  this.__defineGetter__("year", function(){
-    try { return this.issued['date-parts'][0]; }
-    catch (e) { return null; }
-  });
-};
 
 function rename(item, from, to) {
   item[to] = item[from];
@@ -44,6 +31,26 @@ var Zotero = {
   input: '',
   items: [],
 
+
+  Item: function () {
+    this.creators = [];
+    this.attachments = [];
+    this.notes = [];
+    this.complete = function() {}
+
+    /*this.__defineGetter__("creators", function(){
+      return this.author;
+    });
+    this.__defineGetter__("date", function(){
+      try { return this.issued['date-parts'].join('-'); }
+      catch (e) { return null; }
+    });
+    this.__defineGetter__("year", function(){
+      try { return this.issued['date-parts'][0]; }
+      catch (e) { return null; }
+    });*/
+  },
+
   debug: function(msg) {
     if (typeof msg != 'string') { msg = JSON.stringify(msg); }
     console.log(msg);
@@ -54,7 +61,6 @@ var Zotero = {
   },
 
   read: function(n) {
-    console.log('read ' + n + ' from ' + Zotero.input.length);
     if (Zotero.input == '') { return false; }
     var r = Zotero.input.substring(0, n);
     Zotero.input = Zotero.input.substring(n, Zotero.input.length);
@@ -77,8 +83,17 @@ var Zotero = {
     strToDate: function(str) {
       return str;
     },
+    trim: function(str) {
+      return str ? str.trim() : str;
+    },
     trimInternal: function(str) {
       return str ? str.trim() : str;
+    },
+    cleanAuthor: function(name, field, bool) {
+      return name;
+    },
+    text2html: function(value) {
+      return value;
     }
   },
 
@@ -86,7 +101,7 @@ var Zotero = {
     if (Zotero.items.length == 0) { return false; }
     var item = Zotero.items.shift();
 
-    item.prototype = new Item();
+    item.prototype = new Zotero.Item();
     rename(item, 'type', 'itemType');
     rename(item, 'id', 'itemID');
     dflt(item, 'tags', []);
@@ -116,18 +131,18 @@ eval(test.translator);
 switch (test.command) {
   case 'export':
     test.input = __dirname + '/' + test.input;
-    Zotero.debug('Loading items from ' + test.input);
+    //Zotero.debug('Loading items from ' + test.input);
     Zotero.items = JSON.parse(fs.readFileSync(test.input, 'utf-8'));
     doExport();
-    Zotero.debug(Zotero.output);
+    //Zotero.debug(Zotero.output);
     break;
 
   case 'import':
     test.input = __dirname + '/' + test.input;
-    Zotero.debug('Loading data from ' + test.input);
+    //Zotero.debug('Loading data from ' + test.input);
     Zotero.input = fs.readFileSync(test.input, 'utf-8');
     doImport();
-    Zotero.debug(Zotero.output);
+    //Zotero.debug(Zotero.output);
     break;
   case 'detect':
     doDetect();
