@@ -12,7 +12,7 @@ entry
   = _* "@comment" _* "{" comment:[^}]* "}" { bibtex.comments.push(join(comment).trim()); }
   / _* "@string" _* "{" _* str:key_value _* "}" { bibtex.strings.set(str.key, str.value); }
 	/ _* "@" !("string" / "comment") reference
-  / other:[^@\*]+ { bibtex.comments.push(join(other)); }
+  / other:[^@]+ { bibtex.comments.push(join(other).trim()); }
 
 reference
 	= type:identifier _* "{" _* id:citekey _* "," values:key_value* "}" _* {
@@ -26,7 +26,7 @@ reference
         bibtex.references.push(ref);
       }
     }
-  /* / err:([^\n] / "\n" [^}])+ stop:"\n}"? { bibtex.errors.push('@' + join(err) + (stop ? stop : '')); } */
+  / err:[^@]* { bibtex.errors.push('@' + join(err)); }
 
 identifier
 	= chars:[a-zA-Z]+ { return join(chars); }
@@ -46,18 +46,46 @@ value
       return (bibtex.strings.has(val) ? bibtex.strings.get(val) : val);
     }
   / ["] val:[^"]* ["] { return join(val); }
-  / "{" val:string* "}" {
-      val = join(val).trim();
-      while (val.match(/^{.*}$/)) {
-        val = val.replace(/^{|}$/gm, '').trim();
-      }
-      return val;
-    }
+  / '{' val:string* '}' { return join(val).trim(); }
   / _* "#" _* val:value { return val; }
-	
+
 string
-  = str:([^\\{}] / "\\" .)+ { return join(str); }
-  / "{" str:string* "}" { return '{' + join(str) + '}'; }
+  = text:plaintext                { return text; }
+  / "\\" text:[#$%&~_^{}\[\]><\\] { return text; }
+  / text:_+                       { return ' '; }
+  / '_' text:param                { return '<sub>' + text + '</sub>'; }
+  / '^' text:param                { return '<sup>' + text + '</sup>'; }
+  / "\\emph{" text:param "}"      { return '<i>' + text + '</i>'; }
+  / '{' text:string* '}'          { return join(text); }
+  / "%" [^\n]* "\n"               { return ''; }            /* comment */
+  / "\\" cmd:[^a-z] ('[' key_value* ']')?  param:param {  /* single-char command */
+                                                          var cmds = ["\\" + cmd + param];
+                                                          if (param.length == 1) { cmds.push("\\" + cmd + '{' + param + '}'); }
+                                                          if (param.length == 3 && param[0] == '{' && param[2] == '}') { cmds.push("\\" + cmd + param[2] ); }
+                                                          cmds.forEach(function(cmd) {
+                                                            if (LaTeX.toUnicode[cmd]) { return LaTeX.toUnicode[cmd]; }
+                                                          });
+                                                          return param;
+                                                       }
+  / "\\" cmd:[^a-z] ('[' key_value* ']')?  _+          {  /* single-char command without parameter*/
+                                                          if (LaTeX.toUnicode["\\" + cmd]) { return LaTeX.toUnicode["\\" + cmd]; }
+                                                          return cmd;
+                                                       }
+  / "\\" cmd:plaintext _+                              {  /* bare command */
+                                                          if (LaTeX.toUnicode["\\" + cmd]) { return LaTeX.toUnicode["\\" + cmd]; }
+                                                          return cmd;
+                                                       }
+  / "\\" cmd:plaintext ('[' key_value* ']')? '{' text:string* '}' { /* command */
+                                                                    return join(text);
+                                                                  }
+
+param
+  = text:[^{]             { return text; }
+  / '{' text:string* '}'  { return join(text); }
+
+plaintext
+  = text:[^ \t\n\r#$%&~_^{}\[\]><\\]+ { return join(text); }
 
 _
     = w:[ \t\n\r]+ 
+
