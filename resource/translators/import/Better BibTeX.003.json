@@ -1,0 +1,63 @@
+[
+  {
+    "itemType": "conferencePaper",
+    "creators": [
+      {
+        "firstName": "First",
+        "lastName": "Author",
+        "creatorType": "author"
+      },
+      {
+        "firstName": "Second",
+        "lastName": "Author",
+        "creatorType": "author"
+      }
+    ],
+    "notes": [
+
+    ],
+    "tags": [
+
+    ],
+    "seeAlso": [
+
+    ],
+    "attachments": [
+
+    ],
+    "itemID": "author:06",
+    "title": "Some publication title",
+    "pages": "330—331",
+    "extra": "bibtex: author:06\nbiblatexdata[crossref=conference:06]"
+  },
+  {
+    "itemType": "book",
+    "creators": [
+      {
+        "firstName": "First",
+        "lastName": "Editor",
+        "creatorType": "editor"
+      },
+      {
+        "firstName": "Second",
+        "lastName": "Editor",
+        "creatorType": "editor"
+      }
+    ],
+    "notes": [
+
+    ],
+    "tags": [
+
+    ],
+    "seeAlso": [
+
+    ],
+    "attachments": [
+
+    ],
+    "itemID": "conference:06",
+    "title": "Proceedings of the Xth Conference on XYZ",
+    "date": "October 2006"
+  }
+]

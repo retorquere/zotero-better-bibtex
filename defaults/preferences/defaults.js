@@ -5,7 +5,6 @@ pref("extensions.zotero.translators.better-bibtex.fancyURLs", false);
 pref("extensions.zotero.translators.better-bibtex.brace-all", true);
 pref("extensions.zotero.translators.better-bibtex.useprefix", false);
 pref("extensions.zotero.translators.better-bibtex.skipfields", '');
-pref("extensions.zotero.translators.better-bibtex.import", false);
 
 pref("services.sync.prefs.sync.extensions.zotero.translators.better-bibtex.citeCommand", true);
 pref("services.sync.prefs.sync.extensions.zotero.translators.better-bibtex.citeKeyFormat", true);

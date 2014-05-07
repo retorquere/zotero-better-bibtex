@@ -225,55 +225,6 @@ Zotero.BetterBibTex = {
           sendResponseCallback(404, "text/plain", "Could not export bibliography '" + collection + "': " + err);
         }
       }
-    },
-
-    import: {
-      supportedMethods: ['POST'],
-
-      init: function(url, data, sendResponseCallback) {
-        if (!Zotero.BetterBibTex.pref('import', false)) {
-          sendResponseCallback(403, "text/plain", "Import disabled");
-          return;
-        }
-
-        var params = {};
-        ['key', 'library', 'clear'].forEach(function(key) {
-          try {
-            params[key] = url.query[key];
-          } catch (e) {}
-        });
-
-        if (!params.key) {
-          sendResponseCallback(501, "text/plain", "no collection in " + JSON.stringify(params));
-          return;
-        }
-
-        try {
-          if (!params.library) { params.library = 0; }
-          params.library = parseInt(params.library);
-          if (params.library == 0) { params.library = null; }
-          // collection = Zotero.Collections.getByLibraryAndKey(library, key);
-        } catch (err) {
-          sendResponseCallback(501, "text/plain", '' + err);
-          return;
-        }
-
-        var selectedCollection = ZoteroPane.getSelectedCollection();
-        if (!selectedCollection || selectedCollection.libraryID != params.library || selectedCollection.key != params.key) {
-          sendResponseCallback(501, "text/plain", 'requested ' + params.library + '/' + params.key + ', selected ' + (selectedCollection ? (selectedCollection.libraryID + '/' + selectedCollection.key) : 'none'));
-          return;
-        }
-
-        if (params.clear) {
-          selectedCollection.getChildren(true, false, 'item').forEach(function(item) {
-            selectedCollection.removeItem(item.itemID);
-          });
-        }
-
-        Components.classes["@mozilla.org/widget/clipboardhelper;1"].getService(Components.interfaces.nsIClipboardHelper).copyString(data);
-        Zotero_File_Interface.importFromClipboard();
-        sendResponseCallback(200, "text/plain", 'Imported into ' + selectedCollection.name);
-      }
     }
   },
 

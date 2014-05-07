@@ -37,9 +37,9 @@ task :default => XPI do
 end
 
 task :test => XPI do
-  #dropbox = File.expand_path('~/Dropbox')
-  #Dir["#{dropbox}/*.xpi"].each{|xpi| File.unlink(xpi)}
-  #FileUtils.cp(XPI, File.join(dropbox, XPI))
+  dropbox = File.expand_path('~/Dropbox')
+  Dir["#{dropbox}/*.xpi"].each{|xpi| File.unlink(xpi)}
+  FileUtils.cp(XPI, File.join(dropbox, XPI))
 
   Dir['test/*.test.json'].each{|test|
     next unless test =~ /BibTeX2/
@@ -160,9 +160,9 @@ class Translator
     @_bibtex_parser = Translator.parser
     @_dict = Translator.dict
     @_release = RELEASE
-
+    get_testcases
   end
-  attr_reader :_id, :_label, :_timestamp, :_release, :_unicode, :_unicode_mapping, :_bibtex_parser, :_dict
+  attr_reader :_id, :_label, :_timestamp, :_release, :_unicode, :_unicode_mapping, :_bibtex_parser, :_dict, :_testcases
 
   def self.dict
     @@dict ||= "var Dict = (function() {\nvar module = {};\n" + File.open(DICT).read + "\n
@@ -256,6 +256,14 @@ class Translator
     end
 
     return @@mapping
+  end
+
+  def get_testcases
+    @_testcases = []
+    Dir["#{File.dirname(@source)}/import/#{File.basename(@source, File.extname(@source)) + '.*.bib'}"].sort.each{|test|
+      @_testcases << {type: 'import', input: File.open(test).read, items: JSON.parse(File.open(test.gsub(/\.bib$/, '.json')).read)}
+    }
+    @_testcases = JSON.pretty_generate(@_testcases)
   end
 
   def _include(partial)

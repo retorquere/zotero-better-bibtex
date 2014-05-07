@@ -1,0 +1,67 @@
+[
+  {
+    "itemType": "book",
+    "creators": [
+      {
+        "firstName": "Milton",
+        "lastName": "Abramowitz",
+        "creatorType": "author"
+      },
+      {
+        "firstName": "Irene A.",
+        "lastName": "Stegun",
+        "creatorType": "author"
+      }
+    ],
+    "notes": [
+
+    ],
+    "tags": [
+
+    ],
+    "seeAlso": [
+
+    ],
+    "attachments": [
+
+    ],
+    "itemID": "abramowitz+stegun",
+    "place": "New York",
+    "edition": "ninth Dover printing, tenth GPO printing",
+    "title": "Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables",
+    "publisher": "Dover",
+    "date": "1964"
+  },
+  {
+    "itemType": "book",
+    "creators": [
+      {
+        "firstName": "Joe",
+        "lastName": "Torre",
+        "creatorType": "author"
+      },
+      {
+        "firstName": "Tom",
+        "lastName": "Verducci",
+        "creatorType": "author"
+      }
+    ],
+    "notes": [
+
+    ],
+    "tags": [
+
+    ],
+    "seeAlso": [
+
+    ],
+    "attachments": [
+
+    ],
+    "itemID": "Torre2008",
+    "ISBN": "0385527403",
+    "publisher": "Doubleday",
+    "title": "The Yankee Years",
+    "date": "2008"
+  }
+]
