@@ -155,10 +155,21 @@ For standalone Zotero, do the following:
 # Support - read carefully
 
 My time is extremely limited for a number of very great reasons (you shall have to trust me on this). Because of this, I cannot accept bug reports
-or support requests on anything but the latest version, currently at **0.4.10**. If you submit an issue report,
-please include the version that you are on. By the time I get to your issue, the latest version might have bumped up already, and you
-will have to upgrade (you might have auto-upgraded already however) and re-verify that your issue still exists. Apologies for the inconvenience, but such
-are the breaks.
+or support requests on anything but the latest version, currently at **0.4.10**.
+
+If you submit an issue report,
+
+* Please make *sure* you are on the latest version **0.4.10**. Auto-update will usually take care of it.
+* Please include *specifics* of what doesn't work. I use this plugin every day myself, so "it doesn't work" is trivially
+  false. Please tell me what you expected and what you see happening, and the relevant difference between them.
+* If your problem pertains to importing bibtex files, you *must* put up a sample for me to reproduce the issue with.
+  *Do not* paste the sample in the issue, as the issue tracker will format it into oblivioin. Instead, choose one of
+  these two options:
+  * Post an URL in the issue where I can download your sample, or
+  * Put the sample in a [gist](https://gist.github.com/) and post the URL of the gist into the issue
+* If your problem pertains to exporting bibtex files, you *must* put up a sample for me to reproduce the issue with, in
+  CSL-JSON format (Zotero can do CSL-JSON export). For making the sample available to me: see 'import issues' in the
+  point directly above.
 
 ## Known issues
 
