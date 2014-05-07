@@ -227,7 +227,7 @@ class Translator
         u2l[:ascii][:map][key] = repl['latex']
         u2l[:ascii][:math] << key if repl['math']
 
-        l2u[repl['latex']] = key if repl['latex'] =~ /\\/
+        l2u[repl['latex'].strip] = key if repl['latex'] =~ /\\/
       }
 
       [:ascii, :unicode].each{|map|

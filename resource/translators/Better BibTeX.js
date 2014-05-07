@@ -227,7 +227,7 @@ function createZoteroReference(bibtexitem) {
   bibtexitem.forEach(function(value, field) {
     if (['__key__', '__type__', 'type'].indexOf(field) >= 0) { return; }
     if (!value) { return; }
-    value = Zotero.Utilities.trim(LaTeX.latex2html(value));
+    value = Zotero.Utilities.trim(value);
     if (value == '') { return; }
 
     if (fieldMap.has(field)) {
@@ -363,7 +363,7 @@ function createZoteroReference(bibtexitem) {
         attachment = attachment.split(':').map(function(att) { return att.trim(); });
         attachment = {title: attachment[0] == '' ? 'Attachment' : attachment[0], path: attachment[1], mimeType: attachment[2] };
         if (attachment.path != '') {
-          attachment.path = LaTeX.latex2html(attachment.path);
+          attachment.path = attachment.path;
           if (attachment.mimeType && attachment.mimeType.match(/pdf/i)) {
             attachment.mimeType = 'application/pdf';
           } else {

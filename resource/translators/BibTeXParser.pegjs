@@ -45,19 +45,22 @@ value
       val = join(val);
       return (bibtex.strings.has(val) ? bibtex.strings.get(val) : val);
     }
-  / ["] val:[^"]* ["] { return join(val); }
-  / '{' val:string* '}' { return join(val).trim(); }
+  / ["] & { bibtex.stringmode = true; return true;  } val:string* ["] & { delete bibtex.stringmode; return true; } { return join(val); }
+  / '{' & { bibtex.stringmode = false; return true; } val:string* '}' & { delete bibtex.stringmode; return true; } { return join(val).trim(); }
   / _* "#" _* val:value { return val; }
 
 string
   = text:plaintext                { return text; }
-  / "\\" text:[#$%&~_^{}\[\]><\\] { return text; }
+  / "\\" text:quotedchar          { return text; }
   / text:_+                       { return ' '; }
   / '_' text:param                { return '<sub>' + text + '</sub>'; }
   / '^' text:param                { return '<sup>' + text + '</sup>'; }
   / "\\emph{" text:param "}"      { return '<i>' + text + '</i>'; }
+  / "\\textit{" text:param "}"    { return '<i>' + text + '</i>'; }
+  / "\\textbf{" text:param "}"    { return '<b>' + text + '</b>'; }
+  / "\\textsc{" text:param "}"    { return '<span style="small-caps">' + text + '</span>'; }
   / '{' text:string* '}'          { return join(text); }
-  / "%" [^\n]* "\n"               { return ''; }            /* comment */
+  / "%" [^\n]* "\n"               { return ''; }          /* comment */
   / "\\" cmd:[^a-z] ('[' key_value* ']')?  param:param {  /* single-char command */
                                                           var cmds = ["\\" + cmd + param];
                                                           if (param.length == 1) { cmds.push("\\" + cmd + '{' + param + '}'); }
@@ -83,8 +86,13 @@ param
   = text:[^{]             { return text; }
   / '{' text:string* '}'  { return join(text); }
 
+quotedchar
+  = & { return !bibtex.stringmode; } text:[#$%&~_^{}\[\]><] { return text; }
+  / & { return bibtex.stringmode;  } text:["#$%&~_^{}\[\]><] { return text; }
+
 plaintext
-  = text:[^ \t\n\r#$%&~_^{}\[\]><\\]+ { return join(text); }
+  = & { return !bibtex.stringmode; } text:[^ \t\n\r#$%&~_^{}\[\]><\\]+ { return join(text); }
+  / & { return bibtex.stringmode;  } text:[^ "\t\n\r#$%&~_^{}\[\]><\\]+ { return join(text); }
 
 _
     = w:[ \t\n\r]+ 
