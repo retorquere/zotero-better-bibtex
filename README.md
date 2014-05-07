@@ -162,8 +162,9 @@ are the breaks.
 
 ## Known issues
 
-If you see a duplicate translator for Better BibLaTeX, go to "preferences/advanced/files", reset translators and
-restart.
+* If you see a duplicate translator for Better BibLaTeX, go to "preferences/advanced/files", reset translators and restart.
+* Zotero doesn't seem to handle importing of non-utf8 files particularly gracefully. If you're coming from JabRef,
+  please verify using file-database properties that your bibliography is saved in utf-8 format before importing.
 
 # Plans
 
