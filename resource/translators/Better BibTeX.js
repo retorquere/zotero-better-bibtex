@@ -86,7 +86,7 @@ function doExport() {
     if (!first) { Zotero.write(",\n\n"); }
     first = false;
 
-    var bibtexData = CiteKeys.items.get(int2str(item.itemID));
+    var bibtexData = CiteKeys.items.get(item.itemID);
     Zotero.write("\n\n");
     Zotero.write('% ' + Config.label + ': ' + (bibtexData.pinned ?  'pinned' : 'generated') + "\n");
     if (bibtexData.duplicates) {

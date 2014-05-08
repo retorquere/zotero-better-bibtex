@@ -1,15 +1,5 @@
 /*= dict =*/
 
-function int2str(i) {
-  switch (typeof i) {
-    case 'number':
-    case 'string':
-      return '' + i;
-  }
-
-  throw new TypeError('int2str accepts only ints, ' + (typeof i) + ' passed');
-}
-
 var Config = {
   id: '/*= id =*/',
   label:  '/*= label =*/',
@@ -661,7 +651,7 @@ function exportJabRefGroups() {
     } else {
       collection.childItems = null;
     }
-    collections.set(int2str(collection.id), collection);
+    collections.set(collection.id, collection);
     roots.push(collection.id);
   }
   if (collections.size == 0) {
@@ -674,7 +664,7 @@ function exportJabRefGroups() {
       collection.childCollections = collection.childCollections.map(function(id) {
         var index = roots.indexOf(id);
         if (index > -1) { roots.splice(index, 1); }
-        return collections.get(int2str(id));
+        return collections.get(id);
       }).filter(function(child) { return child; });;
     } else {
       collection.childCollections = null;
@@ -688,7 +678,7 @@ function exportJabRefGroups() {
 
   var groups = [];
   roots.forEach(function(id) {
-    groups = groups.concat(exportJabRefGroup(collections.get(int2str(id)), 1));
+    groups = groups.concat(exportJabRefGroup(collections.get(id), 1));
   });
   groups = jabrefSerialize(groups, ";\n", true);
   if (groups != '') { groups += "\n"; }
@@ -733,7 +723,7 @@ var CiteKeys = {
         if (item.itemType == ':test:options:') {
           Config.initialize(item);
         } else {
-          _items.set(int2str(item.itemID), item); // duplicates?!
+          _items.set(item.itemID, item); // duplicates?!
         }
       }
       items = [];
@@ -747,14 +737,14 @@ var CiteKeys = {
 
       // all pinned items first. Do *not* call for thise in generate yet, as this would register them!
       if (CiteKeys.embeddedKeyRE.exec(item.extra)) {
-        CiteKeys.items.set(int2str(item.itemID), {key: CiteKeys.build(item)});
+        CiteKeys.items.set(item.itemID, {key: CiteKeys.build(item)});
       } else {
         generate.push(item);
       }
     });
 
     generate.forEach(function(item) {
-      CiteKeys.items.set(int2str(item.itemID), {key: CiteKeys.build(item)});
+      CiteKeys.items.set(item.itemID, {key: CiteKeys.build(item)});
     });
 
     CiteKeys.keys.forEach(function(key) {
@@ -795,7 +785,7 @@ var CiteKeys = {
     var postfix;
 
     if (CiteKeys.keys.has(key)) {
-      CiteKeys.keys.get(key).duplicates.push({itemID: int2str(item.itemID), pinned: pinned});
+      CiteKeys.keys.get(key).duplicates.push({itemID: item.itemID, pinned: pinned});
       if (pinned) { return key; }
       postfix = {n: 0, c:'a'};
       while (CiteKeys.keys.has(key + postfix.c)) {
@@ -806,8 +796,8 @@ var CiteKeys = {
     } else {
       postfix = '';
     }
-    CiteKeys.keys.set(key + postfix, {original: key, duplicates: [{itemID: int2str(item.itemID), pinned: pinned}]});
-    CiteKeys.itemId2citeKey.set(int2str(item.itemID), key + postfix);
+    CiteKeys.keys.set(key + postfix, {original: key, duplicates: [{itemID: item.itemID, pinned: pinned}]});
+    CiteKeys.itemId2citeKey.set(item.itemID, key + postfix);
     return key + postfix;
   },
 

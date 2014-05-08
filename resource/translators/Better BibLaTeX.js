@@ -181,7 +181,7 @@ function doExport() {
     //biblatex recommends us to use mvbook for multi-volume books
     if (type == 'book' && item.volume) { type = 'mvbook'; }
 
-    var bibtexData = CiteKeys.items.get(int2str(item.itemID));
+    var bibtexData = CiteKeys.items.get(item.itemID);
     Zotero.write("\n\n");
     Zotero.write('% ' + Config.label + ': ' + (bibtexData.pinned ?  'pinned' : 'generated') + "\n");
     if (bibtexData.duplicates) {
