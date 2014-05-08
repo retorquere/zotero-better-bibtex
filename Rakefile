@@ -24,7 +24,7 @@ TRANSLATORS = [
 
 UNICODE_MAPPING = 'tmp/unicode.json'
 BIBTEX_GRAMMAR  = Dir["resource/**/*.pegjs"][0]
-DICT            = 'tmp/dict.js'
+DICT            = 'chrome/content/zotero-better-bibtex/dict.js'
 
 SOURCES = %w{chrome test/import test/export resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
@@ -165,32 +165,13 @@ class Translator
   attr_reader :_id, :_label, :_timestamp, :_release, :_unicode, :_unicode_mapping, :_bibtex_parser, :_dict, :_testcases
 
   def self.dict
-    @@dict ||= "var Dict = (function() {\nvar module = {};\n" + File.open(DICT).read + "\n
-      function assertString(key) {
-        if ((typeof key !== 'string') && (typeof key !== 'number')) {
-          throw new TypeError('key must be a string or number.');
-        }
-      }
-
-      function jsonCapableDict(init) {
-        var dict = module.exports(init);
-
-        dict.toJSON = function() {
-          var _dict = {};
-          this.forEach(function(value, key) { _dict[key] = value; });
-          return _dict;
-        }
-
-        return dict;
-      }
-
-      return jsonCapableDict;
-      })();\n"
+    @@dict ||= File.open(DICT).read
   end
 
   def self.parser
     if @@parser.nil?
       parser = Tempfile.new('bibtex')
+      puts "Generating parser from #{BIBTEX_GRAMMAR.inspect}"
       puts `pegjs -e BibTeX #{BIBTEX_GRAMMAR.inspect} #{parser.path.inspect}`
       @@parser = File.open(parser.path).read
       parser.unlink
@@ -307,10 +288,6 @@ class Translator
       self.send("_#{command}".intern, *arguments)
     }
   end
-end
-
-file DICT => ['Rakefile'] do |t|
-  download('https://raw.githubusercontent.com/domenic/dict/master/dict.js', t.name)
 end
 
 file UNICODE_MAPPING => 'Rakefile' do |t|

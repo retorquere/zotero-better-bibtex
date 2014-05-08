@@ -224,10 +224,10 @@ function createZoteroReference(bibtexitem) {
   item.itemID = bibtexitem.get('__key__');
 
   var biblatexdata = [];
-  bibtexitem.forEach(function(value, field) {
+  bibtexitem.forEach(function(field, value) {
     if (['__key__', '__type__', 'type', 'added-at', 'timestamp'].indexOf(field) >= 0) { return; }
     if (!value) { return; }
-    value = Zotero.Utilities.trim(value);
+    if (typeof value == 'string') { value = Zotero.Utilities.trim(value); }
     if (value == '') { return; }
 
     if (fieldMap.has(field)) {
@@ -352,25 +352,9 @@ function createZoteroReference(bibtexitem) {
     } else if (field == 'comment' || field == 'annote' || field == 'review') {
       item.notes.push({note:Zotero.Utilities.text2html(value)});
 
-    } else if (field == 'pdf' || field == 'path' /*Papers2 compatibility*/) {
-      item.attachments = [{path:value, mimeType:'application/pdf'}];
-
-    } else if (field == 'sentelink') { // the reference manager 'Sente' has a unique file scheme in exported BibTeX
-      item.attachments = [{path:value.split(',')[0], mimeType:'application/pdf'}];
-
     } else if (field == 'file') {
-      value.split(';').forEach(function(attachment) {
-        attachment = attachment.split(':').map(function(att) { return att.trim(); });
-        attachment = {title: attachment[0] == '' ? 'Attachment' : attachment[0], path: attachment[1], mimeType: attachment[2] };
-        if (attachment.path != '') {
-          attachment.path = attachment.path;
-          if (attachment.mimeType && attachment.mimeType.match(/pdf/i)) {
-            attachment.mimeType = 'application/pdf';
-          } else {
-            delete attachment.mimeType;
-          }
-          item.attachments.push(attachment);
-        }
+      value.forEach(function(attachment) {
+        item.attachments.push(attachment);
       });
 
     } else {

@@ -46,7 +46,7 @@ var Config = {
 
     if (Config.typeMap.toBibTeX) {
       Config.typeMap.toZotero = Dict({});
-      Config.typeMap.toBibTeX.forEach(function(bibtex, zotero) {
+      Config.typeMap.toBibTeX.forEach(function(zotero, bibtex) {
         if (!(bibtex instanceof Array)) { bibtex = [bibtex]; }
 
         bibtex = bibtex.map(function(tex) {
@@ -71,7 +71,7 @@ var Config = {
 };
 
 function writeFieldMap(item, fieldMap) {
-  fieldMap.forEach(function(zoteroField, bibtexField) {
+  fieldMap.forEach(function(bibtexField, zoteroField) {
     var brace = !!(zoteroField.literal);
     zoteroField = zoteroField.literal ? zoteroField.literal : zoteroField;
 
