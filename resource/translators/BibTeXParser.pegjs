@@ -196,5 +196,5 @@ filechars
   = text:filechar+ { return join(text); }
 
 filechar
-  = text:[^\\:;]+ { return join(text); }
+  = text:[^\\{}:;]+ { return join(text); }
   / "\\" text:.   { return text; }
