@@ -38,7 +38,7 @@ start
   = entries:entry* { return bibtex; }
 
 entry
-  = _* "@comment" _* "{" comment:string "}" { bibtex.comments.push(comment.trim()); }
+  = _* "@comment" _* "{" comment:string* "}" { bibtex.comments.push(join(comment).trim()); }
   / _* "@string" _* "{" _* str:key_value _* "}" { bibtex.strings.set(str.key, str.value); }
   / _* "@" !("string" / "comment") reference
   / other:[^@]+ { bibtex.comments.push(join(other).trim()); }

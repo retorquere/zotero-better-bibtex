@@ -1,4 +1,5 @@
 #!/bin/sh
-echo "{" > parser.pegjs
-cat ../chrome/content/zotero-better-bibtex/dict.js >> parser.pegjs
-sed 1d ../resource/translators/BibTeXParser.pegjs >> parser.pegjs
+echo "{" > ~/Dropbox/parser.pegjs
+echo "var LaTeX = {toUnicode: {}};" >> ~/Dropbox/parser.pegjs
+cat ../chrome/content/zotero-better-bibtex/dict.js >> ~/Dropbox/parser.pegjs
+sed 1d ../resource/translators/BibTeXParser.pegjs >> ~/Dropbox/parser.pegjs
