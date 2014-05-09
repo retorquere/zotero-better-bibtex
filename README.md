@@ -141,8 +141,8 @@ a comma *only*, no spaces.
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://raw.github.com/ReichenHack/zotero-better-bibtex/master/zotero-better-bibtex-0.4.14.xpi) (**0.4.14**, released
-on 2014-05-09 20:05). If you are not prompted with a Firefox installation dialog then double-click the downloaded xpi; Firefox ought to start and present you with the installation dialog.
+version](https://raw.github.com/ReichenHack/zotero-better-bibtex/master/zotero-better-bibtex-0.4.15.xpi) (**0.4.15**, released
+on 2014-05-09 20:21). If you are not prompted with a Firefox installation dialog then double-click the downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
 For standalone Zotero, do the following:
 
@@ -155,11 +155,11 @@ For standalone Zotero, do the following:
 # Support - read carefully
 
 My time is extremely limited for a number of very great reasons (you shall have to trust me on this). Because of this, I cannot accept bug reports
-or support requests on anything but the latest version, currently at **0.4.14**.
+or support requests on anything but the latest version, currently at **0.4.15**.
 
 If you submit an issue report,
 
-* Please make *sure* you are on the latest version **0.4.14**. Auto-update will usually take care of it.
+* Please make *sure* you are on the latest version **0.4.15**. Auto-update will usually take care of it.
 * Please include *specifics* of what doesn't work. I use this plugin every day myself, so "it doesn't work" is trivially
   false. Please tell me what you expected and what you see happening, and the relevant difference between them.
 * One problem/feature request, one issue.
