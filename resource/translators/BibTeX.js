@@ -715,9 +715,6 @@ function exportJabRefGroups() {
     collections.set(collection.id, collection);
     roots.push(collection.id);
   }
-  if (collections.size == 0) {
-    return;
-  }
 
   // walk through all collections, resolve child collections
   collections.forEach(function(collection) {
@@ -733,6 +730,7 @@ function exportJabRefGroups() {
   });
 
   // roots now holds the IDs of the root collection, rest is resolved
+  if (roots.size == 0) { return; }
   Zotero.write("\n\n@comment{jabref-meta: groupsversion:3;}\n\n");
   Zotero.write("\n\n@comment{jabref-meta: groupstree:\n");
   Zotero.write("0 AllEntriesGroup:;\n");
