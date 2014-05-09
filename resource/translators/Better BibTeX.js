@@ -227,9 +227,13 @@ function createZoteroReference(bibtexitem) {
   var item = new Zotero.Item(type);
   item.itemID = bibtexitem.get('__key__');
 
+  if (bibtexitem.has('__note__')) {
+    item.notes.push({note: ('The following fields were not imported:<br/>' + bibtexitem.get('__note__')).trim(), tags: ['#BBT Import']});
+  }
+
   var biblatexdata = [];
   bibtexitem.forEach(function(field, value) {
-    if (['__key__', '__type__', 'type', 'added-at', 'timestamp'].indexOf(field) >= 0) { return; }
+    if (['__note__', '__key__', '__type__', 'type', 'added-at', 'timestamp'].indexOf(field) >= 0) { return; }
     if (!value) { return; }
     if (typeof value == 'string') { value = Zotero.Utilities.trim(value); }
     if (value == '') { return; }

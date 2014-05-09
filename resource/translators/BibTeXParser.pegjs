@@ -51,7 +51,25 @@ reference
         var ref = Dict({'__type__': type.toLowerCase(), '__key__': id});
         values.forEach(function(v) {
           if (v.value && v.value != '') {
-            ref.set(v.key, v.value);
+            if (v.key == 'file') {
+              var attachments;
+              if (ref.has('file')) {
+                attachments = ref.get('file');
+              } else {
+                attachments = [];
+              }
+              ref.set('file', attachments.concat(v.value));
+            } else if (ref.has(v.key)) {
+              var note;
+              if (ref.has('__note__')) {
+                note = ref.get('__note__') + "<br/>\n";
+              } else {
+                note = '';
+              }
+              ref.set('__note__', note + v.key + '=' + v.value);
+            } else {
+              ref.set(v.key, v.value);
+            }
           }
         });
         bibtex.references.push(ref);
@@ -139,15 +157,15 @@ bracedparam
 
 quotedchar
   = & { return (bibtex.quote == '"');  } '"' { return '"'; }
-  / text:[#$%&_\^\[\]><]  { return text; }
+  / text:[#$%&_\^\[\]]  { return text; }
 
 url
   = text:[^\\{}]+ { return join(text); }
   / "\\" text:. { return text; }
 
 plaintext
-  = & { return (bibtex.quote == '"'); } text:[^ "\t\n\r#$%&~_\^{}\[\]><\\]+ { return join(text); }
-  / & { return (bibtex.quote != '"'); } text:[^ \t\n\r#$%&~_\^{}\[\]><\\]+  { return join(text); }
+  = & { return (bibtex.quote == '"'); } text:[^ "\t\n\r#$%&~_\^{}\[\]\\]+ { return join(text); }
+  / & { return (bibtex.quote != '"'); } text:[^ \t\n\r#$%&~_\^{}\[\]\\]+  { return join(text); }
 
 _
   = w:[ \t\n\r]+ 
