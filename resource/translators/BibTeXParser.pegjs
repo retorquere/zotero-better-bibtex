@@ -93,9 +93,10 @@ value
 
 string
   = text:plaintext                { return text; }
+  / "\\\\"                        { return "\n"; }
   / "\\" text:quotedchar          { return text; }
   / text:(_ / [~])+               { return ' '; }
-  / [#$&\[\]]+                    { return ''; } /* macro parameters, math mode, table separator, parameter separator */
+  / [#$&]+                        { return ''; } /* macro parameters, math mode, table separator, parameter separator */
   / '_' text:param                { return '<sub>' + text + '</sub>'; }
   / '^' text:param                { return '<sup>' + text + '</sup>'; }
   / "\\emph" text:bracedparam     { return '<i>' + text + '</i>'; }
@@ -106,7 +107,7 @@ string
   / '{' text:string* '}'          { return join(text); }
   / '$' text:string* '$'          { return join(text); }
   / "%" [^\n]* "\n"               { return ''; }          /* comment */
-  / "\\" cmd:[^a-z] ('[' key_value* ']')?  param:bracedparam {  /* single-char command */
+  / "\\" cmd:[^a-z] ('[' key_value* ']')?  param:param {  /* single-char command */
                                                           var cmds = ["\\" + cmd + param];
                                                           if (param.length == 1) { cmds.push("\\" + cmd + '{' + param + '}'); }
                                                           if (param.length == 3 && param[0] == '{' && param[2] == '}') { cmds.push("\\" + cmd + param[2] ); }
@@ -129,7 +130,8 @@ string
                                                                   }
 
 param
-  = text:[^{]             { return text; }
+  = text:[^\\{]           { return text; }
+  / "\\" text:.           { return text; }
   / text:bracedparam      { return text; }
 
 bracedparam
@@ -140,8 +142,8 @@ quotedchar
   / text:[#$%&_\^\[\]><]  { return text; }
 
 url
-  = text:[^#$%&~_\^\{}]+     { return join(text); }
-  / "\\" text:[#$%&~_\^\{}]  { return text; }
+  = text:[^\\{}]+ { return join(text); }
+  / "\\" text:. { return text; }
 
 plaintext
   = & { return (bibtex.quote == '"'); } text:[^ "\t\n\r#$%&~_\^{}\[\]><\\]+ { return join(text); }

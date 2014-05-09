@@ -70,7 +70,7 @@
     ],
     "attachments": [
       {
-        "path": "D:\\ARCHIWUM\\PRACE\\Artykuly_materialy\\selekcja_cech\\Hulse2009.pdf",
+        "path": "file:///D:/ARCHIWUM/PRACE/Artykuly_materialy/selekcja_cech/Hulse2009.pdf",
         "mimeType": "application\/pdf",
         "title": "Attachment"
       }
@@ -81,6 +81,7 @@
     "date": "2010-01-27",
     "ISBN": "978-0-7695-3902-7",
     "url": "http:\/\/dblp.uni-trier.de\/db\/conf\/icdm\/icdmw2009.htmlHulseKNW09",
-    "publisher": "IEEE Computer Society"
+    "publisher": "IEEE Computer Society",
+"proceedingsTitle": "ICDM Workshops"
   }
 ]
