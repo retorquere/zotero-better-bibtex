@@ -181,18 +181,10 @@ function doExport() {
     //biblatex recommends us to use mvbook for multi-volume books
     if (type == 'book' && item.volume) { type = 'mvbook'; }
 
-    var bibtexData = CiteKeys.items.get(item.itemID);
+    var bibtex = CiteKeys.get(item);
     Zotero.write("\n\n");
-    Zotero.write('% ' + Config.label + ': ' + (bibtexData.pinned ?  'pinned' : 'generated') + "\n");
-    if (bibtexData.duplicates) {
-      Zotero.write('% better-bibtex: ' + (bibtexData.pinned ?  'hard' : 'soft') + ' conflict');
-      if (bibtexData.default && bibtexData.default != bibtexData.key) {
-        Zotero.write(' with ' + bibtexData.default);
-      }
-      Zotero.write("\n");
-    }
-
-    Zotero.write('@'+type+'{'+bibtexData.key);
+    Zotero.write(CiteKeys.report(bibtex));
+    Zotero.write('@'+type+'{'+bibtex.key);
 
     writeFieldMap(item, fieldMap);
 

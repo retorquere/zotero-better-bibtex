@@ -5,7 +5,7 @@ var Dict = (function() {
 
   function mangle(key) {
     if ((typeof key !== 'string') && (typeof key !== 'number')) {
-      throw new TypeError("key must be a string or number.");
+      throw new TypeError('key must be a string or number; ' + JSON.stringify(key) + ' is a ' + (typeof key));
     }
     return MANGLE_STRING + key;
   }

@@ -1,5 +1,59 @@
 /*= dict =*/
 
+// http://www.paulfree.com/11/javascript-lambda-expressions/
+function lambda(l) {
+  var fn = l.match(/\((.*)\)\s*=>\s*(.*)/);
+  var p = [];
+  var b = "";
+
+  if ( fn.length > 0 ) fn.shift();
+  if ( fn.length > 0 ) b = fn.pop();
+  if ( fn.length > 0 ) p = fn.pop().replace(/^\s*|\s(?=\s)|\s*$|,/g, '').split(' ');
+
+  // prepend a return if not already there.
+  fn = ( ( ! /\s*return\s+/.test( b ) ) ? "return " : "" ) + b;
+
+  p.push( fn );
+
+  try {
+    return Function.apply( {}, p );
+  } catch(e) {
+    return null;
+  }
+}
+// http://www.paulfree.com/28/javascript-array-filtering/#more-28
+Array.prototype.where = function(f) {
+  var fn = f;
+  // if type of parameter is string
+  if ( typeof f == "string" )
+    // try to make it into a function
+    if ( ( fn = lambda( fn ) ) == null )
+      // if fail, throw exception
+      throw "Syntax error in lambda string: " + f;
+
+  // initialize result array
+  var res = [];
+  var l = this.length;
+  // set up parameters for filter function call
+  var p = [ 0, 0, res ];
+  // append any pass-through parameters to parameter array
+  for (var i = 1; i < arguments.length; i++) p.push( arguments[i] );
+  // for each array element, pass to filter function
+  for (var i = 0; i < l; i++)
+  {
+    // skip missing elements
+    if ( typeof this[ i ] == "undefined" ) continue;
+    // param1 = array element
+    p[ 0 ] = this[ i ];
+    // param2 = current indeex
+    p[ 1 ] = i;
+    // call filter function. if return true, copy element to results
+    if ( !! fn.apply(this, p)  ) res.push(this[i]);
+  }
+  // return filtered result
+  return res;
+}
+
 var Config = {
   id: '/*= id =*/',
   label:  '/*= label =*/',
@@ -647,7 +701,14 @@ function exportJabRefGroups() {
   while(collection = Zotero.nextCollection()) {
     if (collection.childItems && collection.childItems.size != 0) {
       // replace itemID with citation key
-      collection.childItems = collection.childItems.map(function(child) {return CiteKeys.itemId2citeKey.get(child)}).filter(function(child) { return child; });
+      collection.childItems = collection.childItems.map(function(child) {
+        var c = CiteKeys.db.where('(rec, i, res, key) => rec.key == key', child);
+        if (c) {
+          return c.item;
+        } else {
+          return null;
+        }
+      }).filter(function(child) { return child; });
     } else {
       collection.childItems = null;
     }
@@ -705,9 +766,21 @@ function exportJabRefGroup(collection, level) {
 }
 
 var CiteKeys = {
-  keys: Dict({}),
-  items: Dict({}),
-  itemId2citeKey: Dict({}),
+  db: [],
+
+  get: function(item) {
+    var rec = CiteKeys.db.where('(rec, i, res, id) => rec.item.itemID == id', item.itemID);
+    if (rec.length == 0) { return null; }
+    return rec[0];
+  },
+
+  report: function(data) {
+    var r = '% ' + Config.label + ': ' + (data.pinned ?  'pinned' : 'generated') + "\n";
+    if (data.conflict) {
+      r += '% better-bibtex: ' + (data.pinned ?  'hard' : 'soft') + ' conflict' + "\n";
+    }
+    return r;
+  },
 
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   andersJohanssonKeyRE: /biblatexcitekey\[([^\]]+)\]/,
@@ -719,7 +792,7 @@ var CiteKeys = {
     if (!items) {
       var _items = Dict({});
       var item;
-	    while (item = Zotero.nextItem()) {
+      while (item = Zotero.nextItem()) {
         if (item.itemType == ':test:options:') {
           Config.initialize(item);
         } else {
@@ -727,44 +800,16 @@ var CiteKeys = {
         }
       }
       items = [];
-      _items.forEach(function(item) { items.push(item); });
+      _items.forEach(function(key, item) { items.push(item); });
     }
-
-    var generate = [];
 
     items.forEach(function(item) {
       if (item.itemType == "note" || item.itemType == "attachment") return;
 
-      // all pinned items first. Do *not* call for thise in generate yet, as this would register them!
-      if (CiteKeys.embeddedKeyRE.exec(item.extra)) {
-        CiteKeys.items.set(item.itemID, {key: CiteKeys.build(item)});
-      } else {
-        generate.push(item);
-      }
+      CiteKeys.register(item);
     });
 
-    generate.forEach(function(item) {
-      CiteKeys.items.set(item.itemID, {key: CiteKeys.build(item)});
-    });
-
-    CiteKeys.keys.forEach(function(key) {
-      key.duplicates.forEach(function(source) {
-        if (source.pinned) {
-          CiteKeys.items.get(source.itemID).pinned = true;
-        } else {
-          if (CiteKeys.items.get(source.itemID).key != key.original) {
-            CiteKeys.items.get(source.itemID).default = key.original;
-          }
-        }
-
-        key.duplicates.forEach(function(target) {
-          if (source.itemID != target.itemID) {
-            CiteKeys.items.get(source.itemID).duplicates = CiteKeys.items.get(source.itemID).duplicates || [];
-            CiteKeys.items.get(source.itemID).duplicates.push(target.itemID);
-          }
-        });
-      });
-    });
+    CiteKeys.resolve();
 
     return items;
   },
@@ -777,40 +822,63 @@ var CiteKeys = {
 
     item.extra = item.extra.replace(m[0], '').trim();
     var key = m[1];
-    if (CiteKeys.keys.has(key)) { trLog('BibTex export: duplicate key ' + key); }
+
+    if (CiteKeys.db.where('(rec, i, res, key) => rec.key == key', key).length != 0) {
+      trLog('BibTex export: duplicate key ' + key);
+    }
     return key;
   },
 
-  register: function(item, key, pinned) {
-    var postfix;
+  register: function(item) {
+    var citekey = CiteKeys.extract(item);
+    var pinned = false;
 
-    if (CiteKeys.keys.has(key)) {
-      CiteKeys.keys.get(key).duplicates.push({itemID: item.itemID, pinned: pinned});
-      if (pinned) { return key; }
-      postfix = {n: 0, c:'a'};
-      while (CiteKeys.keys.has(key + postfix.c)) {
+    if (citekey) {
+      pinned = true;
+    } else {
+      citekey = CiteKeys.clean(Formatter.format(item));
+    }
+
+    CiteKeys.db.push({item: item, key: citekey, pinned: pinned, order: CiteKeys.db.length});
+  },
+
+  resolve: function() {
+    CiteKeys.db.where('(rec) => rec.pinned').forEach(function(rec) {
+      if (CiteKeys.db.where('(dup, i, res, org) => dup.pinned && dup.key == org.key && dup.item.itemID != org.item.itemID', rec).length != 0) {
+        rec.conflict = 'hard';
+      }
+    });
+
+    CiteKeys.db.where('(rec) => !rec.pinned').forEach(function(rec) {
+      var duplicates = CiteKeys.db.where('(dup, i, res, org) => dup.key == org.key && dup.item.itemID != org.item.itemID', rec).sort(
+        function(a, b) {
+          if (!!(a.pinned) != !!(b.pinned)) {
+            return ((a.pinned ? 0 : 1) - (b.pinned ? 0 : 1));
+          } else {
+            return (a.order - b.order);
+          }
+        });
+
+      if (duplicates.length != 0) {
+        if (duplicates[0].pinned || duplicates[0].order < rec.order) {
+          rec.conflict = 'soft';
+        }
+      }
+    });
+
+    CiteKeys.db.where('(rec) => rec.conflict == "soft"').forEach(function(rec) {
+      var postfix = {n: 0, c:'a'};
+      while (CiteKeys.db.where('(rec, i, res, key) => rec.key == key', rec.key + postfix.c).length != 0) {
         postfix.n++;
         postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
       }
-      postfix = postfix.c;
-    } else {
-      postfix = '';
-    }
-    CiteKeys.keys.set(key + postfix, {original: key, duplicates: [{itemID: item.itemID, pinned: pinned}]});
-    CiteKeys.itemId2citeKey.set(item.itemID, key + postfix);
-    return key + postfix;
+      rec.key += postfix.c;
+    });
   },
 
   clean: function(str) {
     str = ZU.removeDiacritics(str).replace(CiteKeys.unsafechars, '').trim();
     return str;
-  },
-
-  build: function(item) {
-    var citekey = CiteKeys.extract(item);
-    if (citekey) { return CiteKeys.register(item, citekey, true); }
-
-    return CiteKeys.register(item, CiteKeys.clean(Formatter.format(item)));
   }
 };
 

@@ -21,7 +21,7 @@
 function doExport() {
   CiteKeys.initialize();
   var keys = {};
-  CiteKeys.items.forEach(function(key, value) { keys[key] = value; });
+  CiteKeys.db.forEach(function(rec) { keys[rec.item.itemID] = rec.key; });
   Zotero.write(JSON.stringify(keys));
 }
 

@@ -3,3 +3,4 @@
 Gemfile.lock
 .bundle
 tmp
+test/*.json

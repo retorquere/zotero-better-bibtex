@@ -19,12 +19,8 @@
 /*= include BibTeX.js =*/
 
 function doExport() {
-  var citation = [];
-  CiteKeys.initialize().forEach(function(item) {
-    Config.fieldsWritten = Dict({});
-    if (CiteKeys.items.has(item.itemID)) { citation.push('@' + CiteKeys.items.get(item.itemID).key); }
-  });
-  Zotero.write(citation.join(' '));
+  CiteKeys.initialize();
+  Zotero.write("\\" + Zotero.getHiddenPref('better-bibtex.citeCommand') + CiteKeys.db.map(function(rec) { return ('@' + rec.key); }).join(' '));
 }
 
 var exports = {

@@ -86,18 +86,10 @@ function doExport() {
     if (!first) { Zotero.write(",\n\n"); }
     first = false;
 
-    var bibtexData = CiteKeys.items.get(item.itemID);
+    var bibtex = CiteKeys.get(item);
     Zotero.write("\n\n");
-    Zotero.write('% ' + Config.label + ': ' + (bibtexData.pinned ?  'pinned' : 'generated') + "\n");
-    if (bibtexData.duplicates) {
-      Zotero.write('% better-bibtex: ' + (bibtexData.pinned ?  'hard' : 'soft') + ' conflict');
-      if (bibtexData.default && bibtexData.default != bibtexData.key) {
-        Zotero.write(' with ' + bibtexData.default);
-      }
-      Zotero.write("\n");
-    }
-
-    Zotero.write('@'+type+'{'+bibtexData.key);
+    Zotero.write(CiteKeys.report(bibtex));
+    Zotero.write('@'+type+'{'+bibtex.key);
 
     writeFieldMap(item, fieldMap);
 
@@ -213,6 +205,18 @@ function doExport() {
   exportJabRefGroups();
 }
 
+function addToExtra(item, str) {
+  if (item.extra && item.extra != '') {
+    item.extra += "\n" + str;
+  } else {
+    item.extra = str;
+  }
+}
+
+function addToExtraData(data, key, value) {
+  data.push(key.replace(/[=;]/g, '#') + '=' + value.replace(/[\r\n]+/g, ' ').replace(/[=;]g/, '#'));
+}
+
 function createZoteroReference(bibtexitem) {
   var type = Zotero.Utilities.trimInternal(bibtexitem.get('__type__').toLowerCase());
   if (bibtexitem.has('type')) { type = Zotero.Utilities.trimInternal(bibtexitem.get('type').toLowerCase()); }
@@ -323,7 +327,7 @@ function createZoteroReference(bibtexitem) {
       }
 
     } else if (field == 'note') {
-      item.extra += '\n'+value;
+      addToExtra(item, value);
 
     } else if (field == 'howpublished') {
       if (value.length >= 7) {
@@ -331,7 +335,7 @@ function createZoteroReference(bibtexitem) {
         if (str == 'http://' || str == 'https:/' || str == 'mailto:') {
           item.url = value;
         } else {
-          item.extra += '\nPublished: '+value;
+          addToExtraData(biblatexdata, field, value);
         }
       }
 
@@ -358,20 +362,16 @@ function createZoteroReference(bibtexitem) {
       });
 
     } else {
-      biblatexdata.push(field.replace(/[=;]/g, '#') + '=' + value.replace(/[\r\n]+/g, ' ').replace(/[=;]g/, '#'));
+      addToExtraData(biblatexdata, field, value);
+
     }
   });
 
-  if (item.extra) {
-    item.extra += "\n";
-  } else {
-    item.extra = '';
-  }
-  item.extra += 'bibtex: ' + item.itemID;
+  addToExtra(item, 'bibtex: ' + item.itemID);
 
   if (biblatexdata.length > 0) {
     biblatexdata.sort();
-    item.extra += "\nbiblatexdata[" + biblatexdata.join(';') + ']';
+    addToExtra(item, "biblatexdata[" + biblatexdata.join(';') + ']');
   }
 
   if (!item.publisher && item.backupPublisher){
