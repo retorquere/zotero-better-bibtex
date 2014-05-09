@@ -228,35 +228,6 @@ function escape(value, options) {
   return value;
 }
 
-function mapHTMLmarkup(characters){
-  //converts the HTML markup allowed in Zotero for rich text to TeX
-  //since  < and > have already been escaped, we need this rather hideous code - I couldn't see a way around it though.
-  //italics and bold
-  characters = characters.replace(/\{\\textless\}i\{\\textgreater\}(.+?)\{\\textless\}\/i{\\textgreater\}/g, "\\textit{$1}")
-    .replace(/\{\\textless\}b\{\\textgreater\}(.+?)\{\\textless\}\/b{\\textgreater\}/g, "\\textbf{$1}");
-  //sub and superscript
-  characters = characters.replace(/\{\\textless\}sup\{\\textgreater\}(.+?)\{\\textless\}\/sup{\\textgreater\}/g, "\$^{\\textrm{$1}}\$")
-    .replace(/\{\\textless\}sub\{\\textgreater\}(.+?)\{\\textless\}\/sub\{\\textgreater\}/g, "\$_{\\textrm{$1}}\$");
-  //two variants of small caps
-  characters = characters.replace(/\{\\textless\}span\sstyle=\"small\-caps\"\{\\textgreater\}(.+?)\{\\textless\}\/span{\\textgreater\}/g, "\\textsc{$1}")
-    .replace(/\{\\textless\}sc\{\\textgreater\}(.+?)\{\\textless\}\/sc\{\\textgreater\}/g, "\\textsc{$1}");
-  return characters;
-}
-
-
-function mapTeXmarkup(tex){
-  //reverse of the above - converts tex mark-up into html mark-up permitted by Zotero
-  //italics and bold
-  tex = tex.replace(/\\textit\{([^\}]+\})/g, "<i>$1</i>").replace(/\\textbf\{([^\}]+\})/g, "<b>$1</b>");
-  //two versions of subscript the .* after $ is necessary because people m
-  tex = tex.replace(/\$[^\{\$]*_\{([^\}]+\})\$/g, "<sub>$1</sub>").replace(/\$[^\{]*_\{\\textrm\{([^\}]+\}\})/g, "<sub>$1</sub>");
-  //two version of superscript
-  tex = tex.replace(/\$[^\{]*\^\{([^\}]+\}\$)/g, "<sup>$1</sup>").replace(/\$[^\{]*\^\{\\textrm\{([^\}]+\}\})/g, "<sup>$1</sup>");
-  //small caps
-  tex = tex.replace(/\\textsc\{([^\}]+)/g, "<span style=\"small-caps\">$1</span>");
-  return tex;
-}
-
 var biblatexdataRE = /biblatexdata\[([^\]]+)\]/;
 function writeExtra(item, field) {
   if (!item.extra) { return; }
@@ -956,35 +927,6 @@ LaTeX.html2latex = function(str) {
     trLog('Unmatched HTML tags: ' + htmlstack.join(', '));
     res += htmlstack.map(function(tag) { return html2latex[tag].close; }).join('');
   }
-
-  return res;
-}
-
-LaTeX.latex2html = function(str) {
-  var chunks = str.split('\\');
-  var res = chunks.shift();
-  var m, i, c, l;
-
-  chunks.forEach(function(chunk) {
-    chunk = '\\' + chunk;
-    l = chunk.length;
-    m = null;
-    for (i=2; i<=l; i++) {
-      if (LaTeX.toUnicode[chunk.substring(0, i)]) {
-        m = i;
-      } else {
-        break;
-      }
-    }
-
-    if (m) {
-      res += LaTeX.toUnicode[chunk.substring(0, m)] + chunk.substring(m, chunk.length);
-    } else {
-      res += chunk;
-    }
-  });
-
-  res = res.replace(/[\r\n\t ]+/gm, ' ').trim();
 
   return res;
 }
