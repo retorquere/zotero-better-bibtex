@@ -170,7 +170,7 @@ function saveAttachments(item) {
   if (attachments.length == 0) {
     return null;
   }
-  return attachments.map(function(att) { return [att.title, att.path.replace(/([\\{}:;])/g, "\\$1"), att.mimetype].join(':'); }).join(';');
+  return attachments.map(function(att) { return [att.title, att.path, att.mimetype].map(function(part) { return part.replace(/([\\{}:;])/g, "\\$1"); }).join(':'); }).join(';');
 }
 
 function trLog(msg) { Zotero.debug('[' + Config.label + '] ' + msg); }
