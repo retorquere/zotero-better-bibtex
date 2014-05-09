@@ -775,11 +775,11 @@ var CiteKeys = {
   },
 
   report: function(data) {
-    var r = '% ' + Config.label + ': ' + (data.pinned ?  'pinned' : 'generated') + "\n";
+    var r = '% ' + Config.label + ': ' + (data.pinned ?  'pinned' : 'generated');
     if (data.conflict) {
-      r += '% better-bibtex: ' + (data.pinned ?  'hard' : 'soft') + ' conflict' + "\n";
+      r += ', ' + (data.pinned ?  'hard' : 'soft') + ' conflict';
     }
-    return r;
+    return r + "\n";
   },
 
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,

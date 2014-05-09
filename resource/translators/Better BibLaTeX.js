@@ -20,6 +20,26 @@
   "lastUpdated": "/*= timestamp =*/"
 }
 
+/* Remove this for next Zotero release */
+
+var strToISO = function(str) {
+  var date = Zotero.Utilities.strToDate(str);
+
+  if (date.year) {
+    var dateString = Zotero.Utilities.lpad(date.year, "0", 4);
+    if (parseInt(date.month) == date.month) {
+      dateString += "-"+Zotero.Utilities.lpad(date.month+1, "0", 2);
+      if(date.day) {
+        dateString += "-"+Zotero.Utilities.lpad(date.day, "0", 2);
+      }
+    }
+
+    return dateString;
+  }
+  return false;
+}
+
+
 /*= include BibTeX.js =*/
 
 var fieldMap = Dict({
@@ -388,11 +408,11 @@ function doExport() {
     }
 
     if (item.accessDate) {
-      writeField('urldate', escape(Zotero.Utilities.strToISO(item.accessDate)));
+      writeField('urldate', escape(strToISO(item.accessDate)));
     }
 
     if (item.date) {
-      var date = Zotero.Utilities.strToISO(item.date);
+      var date = strToISO(item.date);
       if (date) {
         writeField('date', escape(date));
       } else {
