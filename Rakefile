@@ -9,6 +9,8 @@ require 'date'
 require 'pp'
 require 'zip'
 require 'tempfile'
+require 'v8'
+require 'chronic'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
@@ -49,9 +51,7 @@ task :test => XPI do
 end
 
 task :tests do
-  Dir['test/*.xml'].each{|test|
-    Test.new(test)
-  }
+  Test.new('Better BibTeX', :import, '001')
 end
 
 file XPI => SOURCES do |t|
@@ -139,9 +139,112 @@ end
 #### GENERATED FILES
 
 class Test
-  def initialize(test)
-    basename = File.join(File.dirname(test), File.basename(test, File.extname(test)))
-    js = basename + '.js'
+  class Zotero
+    class Utils
+      def initialize(zotero)
+        @zotero = zotero
+      end
+
+      def strToDate(str)
+        return Chronic.parse(str)
+      end
+
+      def trim(str)
+        return str unless str
+        return str.strip
+      end
+
+      def trimInternal(str)
+        return trim(str)
+      end
+
+      def cleanAuthor(name, field, bool)
+        return name
+      end
+
+      def text2html(value)
+        return value.gsub(/&/, '&amp;').gsub('<', '&lt;').gsub('>', '&gt;')
+      end
+
+      def formatDate(date)
+        return date.inspect
+      end
+    end
+
+    def initialize(test)
+      @test = test
+      @Utilities = Utils.new(self)
+    end
+    attr_reader :Utilities
+
+    def getHiddenPref(key)
+      return @test.prefs[key];
+    end
+
+    def getOption(key)
+      return @test.options[key];
+    end
+
+    def debug(msg)
+      puts "#{@test.translator} #{@test.type} #{@test.id}:: #{msg}"
+    end
+
+    def read(n)
+      return false
+    end
+
+    def write(str)
+      puts str
+    end
+
+    def removeDiacritics(str)
+      str
+    end
+
+    def nextCollection
+      return false
+    end
+
+    def nextItem
+      return false
+    end
+  end
+
+  def pref(key, value)
+    tkey = key.sub(/^extensions\.zotero\.translators\./, '')
+    return unless tkey != key
+
+    puts "#{tkey} = #{value}"
+
+    @prefs[tkey] = value;
+  end
+  attr_reader :prefs
+  attr_reader :options
+  attr_reader :translator, :type, :id
+
+  def initialize(translator, type, id)
+    @translator = translator
+    @type = type
+    @id = id
+
+    puts "Running #{type} test #{id} for #{translator}"
+
+    @prefs = {}
+    @options = {}
+
+    options = "test/#{type}/#{translator}.options.json"
+    @options = JSON.parse(File.open(options).read) if File.exist?(options)
+
+    @ctx = cxt = V8::Context.new
+    @ctx['Zotero'] = Zotero.new(self)
+    @ctx['pref'] = lambda {|this, key, value| pref(key, value)}
+
+    @ctx.eval(File.open('defaults/preferences/defaults.js').read)
+    @ctx.eval('var __zotero__header__ = ' + File.open("tmp/#{translator}.js").read)
+
+    if type == :import
+      @ctx.eval('doImport();')
+    end
   end
 end
 
@@ -376,5 +479,16 @@ task :fields do
   puts '| ' + (['-' * fieldwidth] * columns).join(' | ') + ' |'
   fields.each_slice(columns){|row|
     puts '| ' + (row + ([''] * columns))[0..columns-1].collect{|f| f.ljust(fieldwidth) }.join(' | ') + ' |'
+  }
+end
+
+task :parser do
+  File.open(File.expand_path('~/Dropbox/parser.pegjs'), 'w'){|f|
+    f.write("{\nvar LaTeX = {toUnicode: {}};\n")
+    f.write(File.open('chrome/content/zotero-better-bibtex/dict.js').read + "\n")
+    IO.readlines('resource/translators/BibTeXParser.pegjs').each_with_index{|line, no|
+      next if no == 0
+      f.write(line)
+    }
   }
 end
