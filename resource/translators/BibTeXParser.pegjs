@@ -114,7 +114,7 @@ string
   / "\\\\"                        { return "\n"; }
   / "\\" text:quotedchar          { return text; }
   / text:(_ / [~])+               { return ' '; }
-  / [#$&]+                        { return ''; } /* macro parameters, math mode, table separator, parameter separator */
+  / [#$&]+                        { return ''; } /* macro parameters, math mode, table separator */
   / '_' text:param                { return '<sub>' + text + '</sub>'; }
   / '^' text:param                { return '<sup>' + text + '</sup>'; }
   / "\\emph" text:bracedparam     { return '<i>' + text + '</i>'; }

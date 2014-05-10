@@ -28,13 +28,16 @@ function doImport() {
 
   var bib = BibTeX.parse(bib);
 
-  bib.errors.forEach(function(err) {
-    trLog('import error: ' + err);
-  });
-
   bib.references = bib.references.forEach(function(ref) {
     createZoteroReference(ref)
   });
+
+  if (bib.errors.length > 0) {
+    var item = new Zotero.Item('note');
+    item.setNote(bib.errors.map(function(error {
+      return error..replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }).join('<br/>')));
+  }
 
   if (bib.comments.indexOf('jabref-meta: groupsversion:3;') >= 0) {
     var tree = bib.comments.filter(function(comment) { return (comment.indexOf('jabref-meta: groupstree:') == 0); });
