@@ -20,7 +20,7 @@
 
 function doExport() {
   CiteKeys.initialize();
-  Zotero.write("\\" + Zotero.getHiddenPref('better-bibtex.citeCommand') + CiteKeys.db.map(function(rec) { return ('@' + rec.key); }).join(' '));
+  Zotero.write(CiteKeys.db.map(function(rec) { return ('@' + rec.key); }).join(' '));
 }
 
 var exports = {
