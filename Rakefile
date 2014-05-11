@@ -188,33 +188,11 @@ class Test
     @ctx.eval('Zotero.Utilities.strToDate = function(str) { return Zotero.Utilities._strToDate(str); }')
 
     if type == :import
-      input = "test/#{type}/#{translator}.#{id}.bib"
-      if File.exists?(input)
-        @input = File.open(input).read
-      else
-        @input = ''
-      end
-      @items = [];
-      @ctx.eval("Zotero.Item = function(type) {
-                  this.__type__ = type;
-                  this.creators = [];
-                  this.notes = [];
-                  this.attachments = [];
-
-                  this.complete = function() {
-                    Zotero.complete(JSON.stringify(this));
-                  }
-                }")
-      @ctx.eval('doImport();')
-      puts "\n\nimported #{@items.size}"
+      import
     end
   end
   attr_reader :translator, :id, :type
   attr_accessor :Item
-
-  def complete(item)
-    @items << JSON.parse(item)
-  end
 
   def Utilities
     return self
@@ -285,6 +263,34 @@ class Test
 
   def formatDate(date)
     throw 'formatDate not implemented'
+  end
+
+  def complete(item)
+    @items << JSON.parse(item)
+  end
+
+  private
+
+  def import
+    input = "test/#{@type}/#{@translator}.#{@id}.bib"
+    if File.exists?(input)
+      @input = File.open(input).read
+    else
+      @input = ''
+    end
+    @items = [];
+    @ctx.eval("Zotero.Item = function(type) {
+                this.__type__ = type;
+                this.creators = [];
+                this.notes = [];
+                this.attachments = [];
+
+                this.complete = function() {
+                  Zotero.complete(JSON.stringify(this));
+                }
+              };\n")
+    @ctx.eval('doImport();')
+    puts "\n\nimported #{@items.size}"
   end
 end
 

@@ -34,9 +34,9 @@ function doImport() {
 
   if (bib.errors.length > 0) {
     var item = new Zotero.Item('note');
-    item.setNote(bib.errors.map(function(error {
-      return error..replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    }).join('<br/>')));
+    item.setNote(bib.errors.map(function(error) {
+      return error.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }).join('<br/>'));
   }
 
   if (bib.comments.indexOf('jabref-meta: groupsversion:3;') >= 0) {
