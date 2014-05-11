@@ -4,3 +4,4 @@ Gemfile.lock
 .bundle
 tmp
 test/import/*.out.json
+test/export/*.out.txt

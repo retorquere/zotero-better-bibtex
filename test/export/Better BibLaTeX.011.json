@@ -1,0 +1,52 @@
+[
+	{
+		"itemType": "conferencePaper",
+    "itemID": "Klassen2010",
+		"url": "",
+		"rights": "",
+		"series": "",
+		"volume": "",
+		"place": "",
+		"publisher": "",
+		"pages": "25-30",
+		"ISBN": "",
+		"date": "2010",
+		"callNumber": "",
+		"archiveLocation": "",
+		"extra": "svm liniowe najlepsze\nbibtex: Klassen2010\nbiblatexdata[bibsource=DBLP, http://dblp.uni-trier.de;crossref=DBLP:conf/cata/2010;groups=klasyfikacja;owner=sstudent]",
+		"DOI": "",
+		"accessDate": "",
+		"libraryCatalog": "",
+		"conferenceName": "",
+		"language": "",
+		"abstractNote": "",
+		"title": "Empirical Study of Support Vector Machine Kernels with Applications to Microarray Data",
+		"proceedingsTitle": "CATA",
+		"shortTitle": "",
+		"archive": "",
+		"creators": [
+			{
+				"creatorType": "author",
+				"firstName": "Myungsook",
+				"lastName": "Klassen"
+			},
+			{
+				"creatorType": "author",
+				"firstName": "Nyunsu",
+				"lastName": "Kim"
+			},
+			{
+				"creatorType": "author",
+				"firstName": "Wei Ming",
+				"lastName": "Liu"
+			}
+		],
+		"notes": [],
+		"attachments": [{"title":"Klassen2010.pdf",
+            "path":"klasyfikatory/Klassen2010.pdf",
+                    "mimeType":"application/pdf"}],
+		"tags": [],
+		"related": [],
+		"seeAlso": []
+	}
+]

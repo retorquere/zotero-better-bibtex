@@ -247,7 +247,7 @@ function writeExtra(item, field) {
 function flushEntry(item) {
   // fully empty zotero reference generates invalid bibtex. This type-reassignment does nothing but adds the single
   // field each entry needs as a minimum.
-  if (Config.fieldsWritten.size == 0) {
+  if (Config.fieldsWritten.length == 0) {
     writeField('type', escape(getBibTexType(item)));
   }
 }
@@ -494,7 +494,7 @@ Formatter = {
       var authors = Formatter.getCreators(onlyEditors);
       if (!authors) { return ''; }
 
-      if (authors.size == 2) { return authors.join('.'); }
+      if (authors.length == 2) { return authors.join('.'); }
 
       return authors.slice(0,1).concat(authors.length > 1 ? ['etal'] : []).join('.')
     },
@@ -670,7 +670,7 @@ function exportJabRefGroups() {
   var roots = [];
   var collection;
   while(collection = Zotero.nextCollection()) {
-    if (collection.childItems && collection.childItems.size != 0) {
+    if (collection.childItems && collection.childItems.length != 0) {
       // replace itemID with citation key
       collection.childItems = collection.childItems.map(function(child) {
         var c = CiteKeys.db.where('(rec, i, res, key) => rec.key == key', child);
@@ -689,7 +689,7 @@ function exportJabRefGroups() {
 
   // walk through all collections, resolve child collections
   collections.forEach(function(collection) {
-    if (collection.childCollections && collection.childCollections.size != 0) {
+    if (collection.childCollections && collection.childCollections.length != 0) {
       collection.childCollections = collection.childCollections.map(function(id) {
         var index = roots.indexOf(id);
         if (index > -1) { roots.splice(index, 1); }
@@ -701,7 +701,8 @@ function exportJabRefGroups() {
   });
 
   // roots now holds the IDs of the root collection, rest is resolved
-  if (roots.size == 0) { return; }
+  if (roots.length == 0) { return; }
+  Zotero.debug('jabref groups: ' + roots.length + ' root collections');
   Zotero.write("\n\n@comment{jabref-meta: groupsversion:3;}\n\n");
   Zotero.write("\n\n@comment{jabref-meta: groupstree:\n");
   Zotero.write("0 AllEntriesGroup:;\n");
@@ -759,25 +760,23 @@ var CiteKeys = {
     Config.initialize();
 
     if (!items) {
-      var _items = Dict({});
+      items = [];
+      var titles = Dict();
       var item;
+      var duplicate;
       while (item = Zotero.nextItem()) {
-        if (item.itemType == ':test:options:') {
-          Config.initialize(item);
+        // duplicates occur?!
+        if (titles.has(item.itemID)) {
+          Zotero.debug('WARNING: item "' + item.title + '" shares itemID with item "' + titles.get(item.itemID) + '"');
         } else {
-          _items.set(item.itemID, item); // duplicates?!
+          items.push(item);
+          titles.set(item.itemID, item.title);
         }
       }
-      items = [];
-      _items.forEach(function(key, item) { items.push(item); });
     }
 
-    items.forEach(function(item) {
-      if (item.itemType == "note" || item.itemType == "attachment") return;
-
-      CiteKeys.register(item);
-    });
-
+    items = items.filter(function(item) { return (item.itemType != "note" && item.itemType != "attachment"); });
+    items.forEach(function(item) { CiteKeys.register(item); });
     CiteKeys.resolve();
 
     return items;

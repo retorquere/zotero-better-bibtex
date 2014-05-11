@@ -62,14 +62,19 @@ var Dict = (function() {
       forEach: function (callback, thisArg) {
         if (typeof callback !== "function") { throw new TypeError("`callback` must be a function"); }
 
+        var keys = [];
         for (var mangledKey in store) {
           if (hasOwnProperty.call(store, mangledKey)) {
-            var key = unmangle(mangledKey);
-            var value = store[mangledKey];
-
-            callback.call(thisArg, key, value, dict);
+            keys.push(mangledKey);
           }
         }
+        keys.sort();
+        keys.forEach(function(mangledKey) {
+          var key = unmangle(mangledKey);
+          var value = store[mangledKey];
+
+          callback.call(thisArg, key, value, dict);
+        });
       },
 
       size: function () {

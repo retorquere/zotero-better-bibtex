@@ -11,6 +11,7 @@ require 'zip'
 require 'tempfile'
 require 'v8'
 require 'chronic'
+require 'diffy'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
@@ -40,7 +41,32 @@ XPI = "zotero-#{EXTENSION}-#{RELEASE}.xpi"
 task :default => XPI do
 end
 
+Dir['test/import/*.bib'].sort.each{|test|
+  test = File.basename(test).split('.')
+  id = "#{test[0].gsub(/[^A-Z]/, '').downcase}/i/#{test[1].to_i}"
+  desc "Test: #{id}"
+  task id => XPI do
+    Test.new(test[0], :import, test[1])
+  end
+}
+Dir['test/export/*.json'].sort.each{|test|
+  test = File.basename(test).split('.')
+  id = "#{test[0].gsub(/[^A-Z]/, '').downcase}/e/#{test[1].to_i}"
+  desc "Test: #{id}"
+  task id => XPI do
+    Test.new(test[0], :export, test[1])
+  end
+}
+
 task :test => XPI do
+  # vim -b file and once in vim:
+  #:set noeol
+  #:wq
+  Dir['test/export/*.json'].sort.each{|test|
+    test = File.basename(test).split('.')
+    Test.new(test[0], :export, test[1])
+  }
+
   Dir['test/import/*.bib'].sort.each{|test|
     test = File.basename(test).split('.')
     Test.new(test[0], :import, test[1])
@@ -185,8 +211,10 @@ class Test
 
     @ctx.eval(File.open('test/utilities.js').read)
 
-    if type == :import
-      import
+    case type
+      when :import then import
+      when :export then export
+      else throw "Unexpected test type #{type}"
     end
   end
   attr_reader :translator, :id, :type
@@ -232,13 +260,19 @@ class Test
   end
 
   def nextCollection
-    return false
+    proc do
+      false
+    end
   end
 
   def nextItem
-    return false if @items.nil? || @items.empty?
-    puts "::nextItem from #{@items.size}"
-    return @items.pop
+    proc do
+      if @items.nil? || @items.empty?
+        false
+      else
+        @items.shift
+      end
+    end
   end
 
   attr_accessor :getMonths
@@ -265,11 +299,62 @@ class Test
     return value.gsub(/&/, '&amp;').gsub('<', '&lt;').gsub('>', '&gt;')
   end
 
+  def lpad(string, pad, length)
+    return "#{string}".rjust(length, pad)
+  end
+
   def complete(item)
     @items << JSON.parse(item)
   end
 
   private
+
+  def textdiff(a, b)
+    _diff = ''
+    Tempfile.open('diff') do |da|
+      Tempfile.open('diff') do |db|
+        da.write(a)
+        da.close
+        db.write(b)
+        db.close
+        _diff = `diff -B -w -u #{da.path.inspect} #{db.path.inspect}`
+      end
+    end
+    _diff.gsub!(/^--- .*?\n/, '')
+    _diff.gsub!(/^\+\+\+ .*?\n/, '')
+    return _diff
+  end
+
+  def export
+    input = "test/#{@type}/#{@translator}.#{@id}.json"
+    expected = "test/#{@type}/#{@translator}.#{@id}.txt"
+    throw "#{input} does not exist" unless File.exists?(input)
+    throw "#{expected} does not exist" unless File.exists?(expected)
+
+    @output = ''
+
+    @items = JSON.parse(File.open(input).read)
+    @items.each_with_index{|item, i|
+      item['itemID'] = i+1
+      item['key'] = "X#{item['itemID']}"
+      item['tags'] = item['tags'].collect{|tag| {'tag' => tag}} if item['tags']
+    }
+
+    expected = File.open(expected).read
+
+    #@ctx.eval(File.open('test/item.js').read)
+    @ctx.eval('doExport();')
+
+    File.open("test/#{@type}/#{@translator}.#{@id}.out.txt", 'w'){|f| f.write(@output) }
+
+    diff = textdiff(expected, @output)
+    if diff == ''
+      puts "#{testName}: passed"
+    else
+      puts diff
+      throw "#{testName}: failed (expected => found)"
+    end
+  end
 
   def import
     input = "test/#{@type}/#{@translator}.#{@id}.bib"
@@ -326,11 +411,11 @@ class Translator
 
   def self.parser
     if @@parser.nil?
-      parser = Tempfile.new('bibtex')
       puts "Generating parser from #{BIBTEX_GRAMMAR.inspect}"
-      puts `pegjs -e BibTeX #{BIBTEX_GRAMMAR.inspect} #{parser.path.inspect}`
-      @@parser = File.open(parser.path).read
-      parser.unlink
+      Tempfile.open('bibtex') do |parser|
+        puts `pegjs -e BibTeX #{BIBTEX_GRAMMAR.inspect} #{parser.path.inspect}`
+        @@parser = File.open(parser.path).read
+      end
     end
     return @@parser
   end
