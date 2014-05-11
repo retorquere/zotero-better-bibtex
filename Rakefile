@@ -138,6 +138,24 @@ end
 
 #### GENERATED FILES
 
+class Hash
+ 
+  def deep_diff(b)
+    a = self
+    (a.keys | b.keys).inject({}) do |diff, k|
+      if a[k] != b[k]
+        if a[k].respond_to?(:deep_diff) && b[k].respond_to?(:deep_diff)
+          diff[k] = a[k].deep_diff(b[k])
+        else
+          diff[k] = [a[k], b[k]]
+        end
+      end
+      diff
+    end
+  end
+ 
+end
+
 class Test
   def pref(key, value)
     tkey = key.sub(/^extensions\.zotero\.translators\./, '')
@@ -167,6 +185,7 @@ class Test
 
     @ctx.eval(File.open('defaults/preferences/defaults.js').read)
     @ctx.eval('var __zotero__header__ = ' + File.open("tmp/#{translator}.js").read)
+    @ctx.eval('Zotero.Utilities.strToDate = function(str) { return Zotero.Utilities._strToDate(str); }')
 
     if type == :import
       input = "test/#{type}/#{translator}.#{id}.bib"
@@ -175,34 +194,26 @@ class Test
       else
         @input = ''
       end
+      @items = [];
+      @ctx.eval("Zotero.Item = function(type) {
+                  this.__type__ = type;
+                  this.creators = [];
+                  this.notes = [];
+                  this.attachments = [];
+
+                  this.complete = function() {
+                    Zotero.complete(JSON.stringify(this));
+                  }
+                }")
       @ctx.eval('doImport();')
+      puts "\n\nimported #{@items.size}"
     end
   end
   attr_reader :translator, :id, :type
+  attr_accessor :Item
 
-  def Item
-    puts 'Creating new item'
-    proc do
-      _test = self
-      Class.new do
-        define_method :initialize do |type|
-          @test = _test
-          @type = type
-
-          @creators = []
-          @notes = []
-          @attachments = []
-
-          puts 'new Item created'
-        end
-        attr_reader :creators
-        attr_reader :attachments
-        attr_reader :notes
-
-        def complete(dummy=nil)
-        end
-      end
-    end
+  def complete(item)
+    @items << JSON.parse(item)
   end
 
   def Utilities
@@ -218,7 +229,7 @@ class Test
   end
 
   def debug(msg)
-    puts "#{@translator} #{@type} #{@id}:: #{msg}"
+    puts "\n#{@translator} #{@type} #{@id}:: #{msg}"
   end
 
   def read(n)
@@ -230,11 +241,11 @@ class Test
   end
 
   def write(str)
-    puts str
+    @output += str
   end
 
   def removeDiacritics(str)
-    str
+    throw 'removeDiacritics not implemented'
   end
 
   def nextCollection
@@ -247,21 +258,25 @@ class Test
     return @items.pop
   end
 
-  def strToDate(str)
+  attr_accessor :strToDate
+  def _strToDate(str)
+    throw 'strToDate not implemented'
     return Chronic.parse(str)
   end
 
   def trim(str)
-    return str unless str
-    return str.strip
+    throw 'trim: argument must be a string' unless str.is_a?(String)
+    return str.gsub(/^\s+/, '').gsub(/\s+$/, '')
   end
 
   def trimInternal(str)
-    return trim(str)
+    @tire ||= Regexp.new('[\xA0\r\n\s]+', nil, 'n')
+    throw 'trimInternal: argument must be a string' unless str.is_a?(String)
+    return trim(str.gsub(@tire, ' '))
   end
 
   def cleanAuthor(name, field, bool)
-    return name
+    throw 'cleanAuthor not implemented'
   end
 
   def text2html(value)
@@ -269,7 +284,7 @@ class Test
   end
 
   def formatDate(date)
-    return date.inspect
+    throw 'formatDate not implemented'
   end
 end
 
