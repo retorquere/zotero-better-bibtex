@@ -39,19 +39,14 @@ task :default => XPI do
 end
 
 task :test => XPI do
+  Dir['test/import/*.bib'].sort.each{|test|
+    test = File.basename(test).split('.')
+    Test.new(test[0], :import, test[1])
+  }
+
   dropbox = File.expand_path('~/Dropbox')
   Dir["#{dropbox}/*.xpi"].each{|xpi| File.unlink(xpi)}
   FileUtils.cp(XPI, File.join(dropbox, XPI))
-
-  #Dir['test/*.test.json'].each{|test|
-  #  next unless test =~ /BibTeX2/
-  #  puts test
-  #  puts `node test/test.js #{File.basename(test).inspect}`
-  #}
-end
-
-task :tests do
-  Test.new('Better BibTeX', :import, '001')
 end
 
 file XPI => SOURCES do |t|
@@ -185,7 +180,8 @@ class Test
 
     @ctx.eval(File.open('defaults/preferences/defaults.js').read)
     @ctx.eval('var __zotero__header__ = ' + File.open("tmp/#{translator}.js").read)
-    @ctx.eval('Zotero.Utilities.strToDate = function(str) { return Zotero.Utilities._strToDate(str); }')
+
+    @ctx.eval(File.open('test/utilities.js').read)
 
     if type == :import
       import
@@ -194,6 +190,9 @@ class Test
   attr_reader :translator, :id, :type
   attr_accessor :Item
 
+  def Date
+    return self
+  end
   def Utilities
     return self
   end
@@ -206,8 +205,12 @@ class Test
     return @options[key];
   end
 
+  def testName
+    "#{@translator} #{@type} #{@id}"
+  end
+
   def debug(msg)
-    puts "\n#{@translator} #{@type} #{@id}:: #{msg}"
+    puts "\n#{testName}:: #{msg}"
   end
 
   def read(n)
@@ -236,10 +239,13 @@ class Test
     return @items.pop
   end
 
+  attr_accessor :getMonths
+  attr_accessor :formatDate
+  attr_accessor :cleanAuthor
   attr_accessor :strToDate
   def _strToDate(str)
-    throw 'strToDate not implemented'
-    return Chronic.parse(str)
+    date = Chronic.parse(str)
+    return {'year' => date.year, 'month' => date.month, 'day' => date.day}
   end
 
   def trim(str)
@@ -253,16 +259,8 @@ class Test
     return trim(str.gsub(@tire, ' '))
   end
 
-  def cleanAuthor(name, field, bool)
-    throw 'cleanAuthor not implemented'
-  end
-
   def text2html(value)
     return value.gsub(/&/, '&amp;').gsub('<', '&lt;').gsub('>', '&gt;')
-  end
-
-  def formatDate(date)
-    throw 'formatDate not implemented'
   end
 
   def complete(item)
@@ -273,24 +271,31 @@ class Test
 
   def import
     input = "test/#{@type}/#{@translator}.#{@id}.bib"
-    if File.exists?(input)
-      @input = File.open(input).read
-    else
-      @input = ''
-    end
-    @items = [];
-    @ctx.eval("Zotero.Item = function(type) {
-                this.__type__ = type;
-                this.creators = [];
-                this.notes = [];
-                this.attachments = [];
+    expected = "test/#{@type}/#{@translator}.#{@id}.json"
+    throw "#{input} does not exist" unless File.exists?(input)
+    throw "#{expected} does not exist" unless File.exists?(expected)
 
-                this.complete = function() {
-                  Zotero.complete(JSON.stringify(this));
-                }
-              };\n")
+    @input = File.open(input).read
+    expected = JSON.parse(File.open(expected).read)
+    @items = [];
+    @ctx.eval(File.open('test/item.js').read)
     @ctx.eval('doImport();')
-    puts "\n\nimported #{@items.size}"
+
+    File.open("test/#{@type}/#{@translator}.#{@id}.out.json", 'w'){|f| f.write(JSON.pretty_generate(@items)) }
+
+    throw "#{testName}: expected #{expected.size} items, found #{@items.size}" if @items.size != expected.size
+    errors = []
+    expected.zip(@items).each_with_index{|inout, i|
+      expected, found = *inout
+      diff = expected.deep_diff(found)
+      errors << {item: i + 1, diff: diff} if diff.size != 0
+    }
+    if errors.size != 0
+      pp errors
+      throw "#{testName}: failed (expected => found)"
+    end
+
+    puts "#{testName}: passed"
   end
 end
 

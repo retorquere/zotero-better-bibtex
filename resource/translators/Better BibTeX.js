@@ -371,6 +371,11 @@ function createZoteroReference(bibtexitem) {
     }
   });
 
+  if (item.itemType == 'conferencePaper' && item.publicationTitle && !item.proceedingsTitle) {
+    item.proceedingsTitle = item.publicationTitle;
+    delete item.publicationTitle;
+  }
+
   addToExtra(item, 'bibtex: ' + item.itemID);
 
   if (biblatexdata.length > 0) {
