@@ -139,77 +139,6 @@ end
 #### GENERATED FILES
 
 class Test
-  class Zotero
-    class Utils
-      def initialize(zotero)
-        @zotero = zotero
-      end
-
-      def strToDate(str)
-        return Chronic.parse(str)
-      end
-
-      def trim(str)
-        return str unless str
-        return str.strip
-      end
-
-      def trimInternal(str)
-        return trim(str)
-      end
-
-      def cleanAuthor(name, field, bool)
-        return name
-      end
-
-      def text2html(value)
-        return value.gsub(/&/, '&amp;').gsub('<', '&lt;').gsub('>', '&gt;')
-      end
-
-      def formatDate(date)
-        return date.inspect
-      end
-    end
-
-    def initialize(test)
-      @test = test
-      @Utilities = Utils.new(self)
-    end
-    attr_reader :Utilities
-
-    def getHiddenPref(key)
-      return @test.prefs[key];
-    end
-
-    def getOption(key)
-      return @test.options[key];
-    end
-
-    def debug(msg)
-      puts "#{@test.translator} #{@test.type} #{@test.id}:: #{msg}"
-    end
-
-    def read(n)
-      return false
-    end
-
-    def write(str)
-      puts str
-    end
-
-    def removeDiacritics(str)
-      str
-    end
-
-    def nextCollection
-      return false
-    end
-
-    def nextItem
-      return false
-    end
-  end
-
   def pref(key, value)
     tkey = key.sub(/^extensions\.zotero\.translators\./, '')
     return unless tkey != key
@@ -218,9 +147,6 @@ class Test
 
     @prefs[tkey] = value;
   end
-  attr_reader :prefs
-  attr_reader :options
-  attr_reader :translator, :type, :id
 
   def initialize(translator, type, id)
     @translator = translator
@@ -232,19 +158,118 @@ class Test
     @prefs = {}
     @options = {}
 
-    options = "test/#{type}/#{translator}.options.json"
+    options = "test/#{type}/#{translator}.#{id}.options.json"
     @options = JSON.parse(File.open(options).read) if File.exist?(options)
 
     @ctx = cxt = V8::Context.new
-    @ctx['Zotero'] = Zotero.new(self)
+    @ctx['Zotero'] = self
     @ctx['pref'] = lambda {|this, key, value| pref(key, value)}
 
     @ctx.eval(File.open('defaults/preferences/defaults.js').read)
     @ctx.eval('var __zotero__header__ = ' + File.open("tmp/#{translator}.js").read)
 
     if type == :import
+      input = "test/#{type}/#{translator}.#{id}.bib"
+      if File.exists?(input)
+        @input = File.open(input).read
+      else
+        @input = ''
+      end
       @ctx.eval('doImport();')
     end
+  end
+  attr_reader :translator, :id, :type
+
+  def Item
+    puts 'Creating new item'
+    proc do
+      _test = self
+      Class.new do
+        define_method :initialize do |type|
+          @test = _test
+          @type = type
+
+          @creators = []
+          @notes = []
+          @attachments = []
+
+          puts 'new Item created'
+        end
+        attr_reader :creators
+        attr_reader :attachments
+        attr_reader :notes
+
+        def complete(dummy=nil)
+        end
+      end
+    end
+  end
+
+  def Utilities
+    return self
+  end
+
+  def getHiddenPref(key)
+    return @prefs[key];
+  end
+
+  def getOption(key)
+    return @options[key];
+  end
+
+  def debug(msg)
+    puts "#{@translator} #{@type} #{@id}:: #{msg}"
+  end
+
+  def read(n)
+    return false unless @input && @input != ''
+
+    chunk = @input[0,n]
+    @input = @input[n, @input.length]
+    return chunk
+  end
+
+  def write(str)
+    puts str
+  end
+
+  def removeDiacritics(str)
+    str
+  end
+
+  def nextCollection
+    return false
+  end
+
+  def nextItem
+    return false if @items.nil? || @items.empty?
+    puts "::nextItem from #{@items.size}"
+    return @items.pop
+  end
+
+  def strToDate(str)
+    return Chronic.parse(str)
+  end
+
+  def trim(str)
+    return str unless str
+    return str.strip
+  end
+
+  def trimInternal(str)
+    return trim(str)
+  end
+
+  def cleanAuthor(name, field, bool)
+    return name
+  end
+
+  def text2html(value)
+    return value.gsub(/&/, '&amp;').gsub('<', '&lt;').gsub('>', '&gt;')
+  end
+
+  def formatDate(date)
+    return date.inspect
   end
 end
 
