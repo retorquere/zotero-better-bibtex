@@ -81,6 +81,7 @@ Zotero.BetterBibTex = {
     Zotero.BetterBibTex.safeLoad('LaTeX Citation.js');
     Zotero.BetterBibTex.safeLoad('Pandoc Citation.js');
     Zotero.BetterBibTex.safeLoad('BibTeX Citation Keys.js');
+    Zotero.BetterBibTex.safeLoad('Zotero TestCase.js');
     Zotero.Translators.init();
   },
 
