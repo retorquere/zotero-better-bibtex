@@ -17,13 +17,16 @@ function scrub(item) {
   delete item.libraryID;
   delete item.key;
   delete item.uniqueFields;
+  delete item.dateAdded;
+  delete item.dateModified;
+  delete item.uri;
 
   (item.creators || []).forEach(function(creator) {
     delete creator.creatorID;
     delete creator.fieldMode;
   });
 
-  (item.attachments || []).forEach(function(attachment) {
+  (item.__attachments || []).forEach(function(attachment) {
     attachment.path = attachment.localPath;
     delete attachment.localPath;
 
