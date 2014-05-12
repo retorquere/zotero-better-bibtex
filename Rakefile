@@ -24,7 +24,6 @@ TRANSLATORS = [
   {name: 'Pandoc Citation'},
   {name: 'BibTeX Citation Keys'},
   {name: 'Zotero TestCase'}
-
 ]
 
 UNICODE_MAPPING = 'tmp/unicode.json'
@@ -206,6 +205,7 @@ class Test
     @ctx['Zotero'] = self
     @ctx['pref'] = lambda {|this, key, value| pref(key, value)}
 
+    @ctx.eval(File.open('../zotero/chrome/content/zotero/xpcom/date.js').read)
     @ctx.eval(File.open('defaults/preferences/defaults.js').read)
     @ctx.eval('var __zotero__header__ = ' + File.open("tmp/#{translator}.js").read)
 
@@ -219,10 +219,8 @@ class Test
   end
   attr_reader :translator, :id, :type
   attr_accessor :Item
+  attr_accessor :Date
 
-  def Date
-    return self
-  end
   def Utilities
     return self
   end
@@ -279,10 +277,6 @@ class Test
   attr_accessor :formatDate
   attr_accessor :cleanAuthor
   attr_accessor :strToDate
-  def _strToDate(str)
-    date = Chronic.parse(str)
-    return {'year' => date.year, 'month' => date.month, 'day' => date.day}
-  end
 
   def trim(str)
     throw 'trim: argument must be a string' unless str.is_a?(String)

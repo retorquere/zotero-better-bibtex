@@ -1,5 +1,3 @@
-Zotero.Utilities.strToDate = function(str) { return Zotero.Utilities._strToDate(str); }
-
 Zotero.Utilities.cleanAuthor = function(author, type, useComma) {
     var allCaps = 'A-Z' +
                   '\u0400-\u042f';    //cyrilic
@@ -95,10 +93,4 @@ Zotero.Utilities.formatDate = function(date, shortFormat) {
     return string;
   }
 
-Zotero.Date.getMonths = function() {
-  return {
-    "short":["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    "long":["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-  };
-}
-
+Zotero.Utilities.strToDate = Zotero.Date.strToDate;
