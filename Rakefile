@@ -338,6 +338,13 @@ class Test
       item['itemID'] = i+1
       item['key'] = "X#{item['itemID']}"
       item['tags'] = item['tags'].collect{|tag| {'tag' => tag}} if item['tags']
+      if item['attachments']
+        item['attachments'].each{|att|
+          att['defaultPath'] = att['path']
+          att['localPath'] = att['path']
+          att.delete('path')
+        }
+      end
     }
 
     expected = File.open(expected).read
