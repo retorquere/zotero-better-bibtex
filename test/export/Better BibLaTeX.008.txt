@@ -1,0 +1,12 @@
+
+
+
+% Better BibLaTeX: pinned
+@article{american_rights_at_work_public_2012,
+	title = {{Public Service Research Foundation}},
+	url = {http://www.americanrightsatwork.org/blogcategory-275/},
+	author = {Work, American Rights at},
+	urldate = {2012-07-27},
+	date = {2012},
+	year = {2012}
+}

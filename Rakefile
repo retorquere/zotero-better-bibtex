@@ -11,7 +11,8 @@ require 'zip'
 require 'tempfile'
 require 'v8'
 require 'chronic'
-require 'diffy'
+require 'sqlite3'
+require 'asciidammit'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
@@ -30,6 +31,7 @@ UNICODE_MAPPING = 'tmp/unicode.json'
 BIBTEX_GRAMMAR  = Dir["resource/**/*.pegjs"][0]
 DICT            = 'chrome/content/zotero-better-bibtex/dict.js'
 DATE            = 'tmp/date.js'
+DB              = 'tmp/zotero.sqlite'
 
 SOURCES = %w{chrome test/import test/export resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
@@ -44,7 +46,7 @@ end
 Dir['test/import/*.bib'].sort.each{|test|
   test = File.basename(test).split('.')
   id = "#{test[0].gsub(/[^A-Z]/, '').downcase}/i/#{test[1].to_i}"
-  desc "Test: #{id}"
+  desc "Test: #{test[0]} import #{test[1]}"
   task id => XPI do
     Test.new(test[0], :import, test[1])
   end
@@ -52,7 +54,7 @@ Dir['test/import/*.bib'].sort.each{|test|
 Dir['test/export/*.json'].sort.each{|test|
   test = File.basename(test).split('.')
   id = "#{test[0].gsub(/[^A-Z]/, '').downcase}/e/#{test[1].to_i}"
-  desc "Test: #{id}"
+  desc "Test: #{test[0]} export #{test[1]}"
   task id => XPI do
     Test.new(test[0], :export, test[1])
   end
@@ -204,6 +206,8 @@ class Test
 
     @ctx = cxt = V8::Context.new
     @ctx['Zotero'] = self
+    @ctx['ZU'] = self
+    @ctx['Z'] = self
     @ctx['pref'] = lambda {|this, key, value| pref(key, value)}
 
     @ctx.eval(File.open(DATE).read)
@@ -211,6 +215,11 @@ class Test
     @ctx.eval('var __zotero__header__ = ' + File.open("tmp/#{translator}.js").read)
 
     @ctx.eval(File.open('test/utilities.js').read)
+
+    @db = SQLite3::Database.new(DB)
+    @db.execute('PRAGMA temp_store=MEMORY;')
+    @db.execute('PRAGMA journal_mode=MEMORY;')
+    @db.execute('PRAGMA synchronous = OFF;')
 
     case type
       when :import then import
@@ -224,6 +233,16 @@ class Test
 
   def Utilities
     return self
+  end
+
+  def getCreatorsForType(type)
+    cft = @db.execute('select ct.creatorType
+                       from creatorTypes ct
+                       join itemTypeCreatorTypes itct on itct.creatorTypeID = ct.creatorTypeID
+                       join itemTypes it on it.itemTypeID = itct.itemTypeID
+                       where it.typeName = ?', type).collect{|row| row[0]}
+    throw type.inspect if cft.empty?
+    return cft
   end
 
   def getHiddenPref(key)
@@ -255,7 +274,7 @@ class Test
   end
 
   def removeDiacritics(str)
-    throw 'removeDiacritics not implemented'
+    return str.asciidammit
   end
 
   def nextCollection
@@ -531,6 +550,21 @@ class Translator
       self.send("_#{command}".intern, *arguments)
     }
   end
+end
+
+file 'tmp/zotero.sql' do
+  download('https://raw.githubusercontent.com/zotero/zotero/4.0/resource/schema/system.sql', 'tmp/zotero.sql')
+end
+
+file DB => 'tmp/zotero.sql' do |t|
+  File.unlink(DB) if File.exists?(DB)
+
+  db = SQLite3::Database.new(DB)
+  db.execute('PRAGMA temp_store=MEMORY;')
+  db.execute('PRAGMA journal_mode=MEMORY;')
+  db.execute('PRAGMA synchronous = OFF;')
+  db.execute_batch(File.open(t.prerequisites[0]).read)
+  db.close
 end
 
 file DATE do

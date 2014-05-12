@@ -1,0 +1,14 @@
+
+
+
+% Better BibLaTeX: pinned
+@article{Oliveira_2009,
+	pages = {29},
+	title = {{USGS monitoring ecological impacts}},
+	volume = {{107}},
+	number = {29},
+	journaltitle = {{Oil \& Gas Journal}},
+	author = {Oliveira, A},
+	date = {2009},
+	year = {2009}
+}
