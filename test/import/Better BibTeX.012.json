@@ -1,0 +1,30 @@
+[
+  {
+    "itemType": "bookSection",
+    "creators": [
+      {
+        "firstName": "Niklas",
+        "lastName": "Möller",
+        "creatorType": "author"
+      }
+    ],
+    "notes": [
+
+    ],
+    "attachments": [
+     
+    ],
+    "seeAlso": [
+
+    ],
+    "tags": [
+
+    ],
+    "itemID": "moller2012conceptsrisksafety",
+    "publicationTitle": "Handbook of Risk Theory: Epistemology, Decision Theory, Ethics, and Social Implications of Risk",
+    "publisher": "Springer",
+    "title": "The Concepts of Risk and Safety",
+    "date": "2012",
+    "extra": "bibtex: moller2012conceptsrisksafety"
+  }
+]
