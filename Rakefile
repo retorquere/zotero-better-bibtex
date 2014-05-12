@@ -185,9 +185,6 @@ class Test
   def pref(key, value)
     tkey = key.sub(/^extensions\.zotero\.translators\./, '')
     return unless tkey != key
-
-    puts "#{tkey} = #{value}"
-
     @prefs[tkey] = value;
   end
 
@@ -196,7 +193,7 @@ class Test
     @type = type
     @id = id
 
-    puts "Running #{type} test #{id} for #{translator}"
+    puts "\n\nRunning #{type} test #{id} for #{translator}"
 
     @prefs = {}
     @options = {}
