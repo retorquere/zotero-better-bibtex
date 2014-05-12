@@ -2,10 +2,16 @@
 
 This extension aims to make Zotero effective for us LaTeX holdouts. It adds the following features:
 
-## Converts embedded HTML tags to LaTeX
+## Converts embedded HTML tags to LaTeX on export
 
 Currently supports i, b, sup and sub; more can be added on request. Finally add italics and super/supscript to your
 titles!
+
+## Imports your LaTeX and converts to unicode
+
+As of 0.5.3 Better Bib(La)TeX cleanly import most LaTeX constructs; stuff like \"{o} or \"o will be converted to their
+Unicode equivalents, and the import will recognize \emph, \textit, \textbf, \_{...} and ^{...} and convert them to
+italics, italics, bold, subscript and superscript.
 
 ## Duplicate keys; integration with [Report Customizer](https://github.com/ReichenHack/zotero-report-customizer)
 
