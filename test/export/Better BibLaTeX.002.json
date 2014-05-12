@@ -30,8 +30,7 @@
     "edition": "ninth Dover printing, tenth GPO printing",
     "title": "Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables",
     "publisher": "Dover",
-    "date": "1964",
-    "extra": "bibtex: abramowitz+stegun"
+    "date": "1964"
   },
   {
     "itemType": "book",
@@ -63,7 +62,6 @@
     "ISBN": "0385527403",
     "publisher": "Doubleday",
     "title": "The Yankee Years",
-    "date": "2008",
-    "extra": "bibtex: Torre2008"
+    "date": "2008"
   }
 ]

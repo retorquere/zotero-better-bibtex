@@ -1,3 +1,4 @@
+% Better BibLaTeX: pinned
 @Book{abramowitz+stegun,
  author    = "Milton {Abramowitz} and Irene A. {Stegun}",
  title     = "Handbook of Mathematical Functions with
@@ -8,6 +9,7 @@
  edition   = "ninth Dover printing, tenth GPO printing"
 }
 
+% Better BibLaTeX: pinned
 @Book{Torre2008,
  author    = "Joe Torre and Tom Verducci",
  publisher = "Doubleday",

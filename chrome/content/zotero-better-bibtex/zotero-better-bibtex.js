@@ -351,12 +351,12 @@ Zotero.BetterBibTex = {
 
     items.forEach(function(item) {
       if (keys[item.id]) {
-        Zotero.BetterBibTex.log('Setting key for ' + item.id + ': ' + keys[item.id].key);
+        Zotero.BetterBibTex.log('Setting key for ' + item.id + ': ' + keys[item.id]);
 
         var extra = '' + item.getField('extra');
         extra = extra.trim();
         if (extra.length > 0) { extra += "\n"; }
-        item.setField('extra', extra + 'bibtex: ' + keys[item.id].key);
+        item.setField('extra', extra + 'bibtex: ' + keys[item.id]);
         item.save();
       }
     });

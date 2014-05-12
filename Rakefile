@@ -29,11 +29,12 @@ TRANSLATORS = [
 UNICODE_MAPPING = 'tmp/unicode.json'
 BIBTEX_GRAMMAR  = Dir["resource/**/*.pegjs"][0]
 DICT            = 'chrome/content/zotero-better-bibtex/dict.js'
+DATE            = 'tmp/date.js'
 
 SOURCES = %w{chrome test/import test/export resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
             .select{|f| File.file?(f)}
-            .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [UNICODE_MAPPING, BIBTEX_GRAMMAR, DICT]
+            .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [DATE, UNICODE_MAPPING, BIBTEX_GRAMMAR, DICT]
 
 XPI = "zotero-#{EXTENSION}-#{RELEASE}.xpi"
 
@@ -205,7 +206,7 @@ class Test
     @ctx['Zotero'] = self
     @ctx['pref'] = lambda {|this, key, value| pref(key, value)}
 
-    @ctx.eval(File.open('../zotero/chrome/content/zotero/xpcom/date.js').read)
+    @ctx.eval(File.open(DATE).read)
     @ctx.eval(File.open('defaults/preferences/defaults.js').read)
     @ctx.eval('var __zotero__header__ = ' + File.open("tmp/#{translator}.js").read)
 
@@ -530,6 +531,10 @@ class Translator
       self.send("_#{command}".intern, *arguments)
     }
   end
+end
+
+file DATE do
+  download('https://raw.githubusercontent.com/zotero/zotero/4.0/chrome/content/zotero/xpcom/date.js', DATE)
 end
 
 file UNICODE_MAPPING => 'Rakefile' do |t|
