@@ -45,6 +45,15 @@ XPI = "zotero-#{EXTENSION}-#{RELEASE}.xpi"
 task :default => XPI do
 end
 
+Dir['test/detect/*.*'].sort.each{|test|
+  test = File.basename(test).split('.')
+  id = "#{test[0].gsub(/[^A-Z]/, '').downcase}/d/#{test[1].to_i}"
+  desc "Test: #{test[0]} detect #{test[1]}"
+  task id => [DB, XPI] do
+    Test.new(test[0], :detect, test[1], test[2])
+  end
+}
+
 Dir['test/import/*.bib'].sort.each{|test|
   test = File.basename(test).split('.')
   id = "#{test[0].gsub(/[^A-Z]/, '').downcase}/i/#{test[1].to_i}"
@@ -74,6 +83,11 @@ task :test => [DB, XPI] do
   Dir['test/import/*.bib'].sort.each{|test|
     test = File.basename(test).split('.')
     Test.new(test[0], :import, test[1])
+  }
+
+  Dir['test/detect/*.*'].sort.each{|test|
+    test = File.basename(test).split('.')
+    Test.new(test[0], :detect, test[1], test[2])
   }
 
   dropbox = File.expand_path('~/Dropbox')
@@ -190,7 +204,7 @@ class Test
     @prefs[tkey] = value;
   end
 
-  def initialize(translator, type, id)
+  def initialize(translator, type, id, extension = nil)
     @translator = translator
     @type = type
     @id = id
@@ -223,6 +237,7 @@ class Test
     case type
       when :import then import
       when :export then export
+      when :detect then detect(extension)
       else throw "Unexpected test type #{type}"
     end
   end
@@ -373,6 +388,19 @@ class Test
     else
       puts diff
       throw "#{testName}: failed (expected => found)"
+    end
+  end
+
+  def detect(extension)
+    input = "test/#{@type}/#{@translator}.#{@id}.#{extension}"
+    @input = File.open(input).read
+    expected = !!(extension.downcase == 'bib')
+    found = !!@ctx.eval('detectImport();')
+
+    if expected == found
+      puts "#{testName}: passed"
+    else
+      throw "#{testName}: expected #{expected ? '' : 'non-'}bibtex, found #{found ? '' : 'non-'}bibtex"
     end
   end
 
