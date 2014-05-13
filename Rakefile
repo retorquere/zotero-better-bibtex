@@ -76,20 +76,26 @@ task :test => [DB, XPI] do
   # vim -b file and once in vim:
   #:set noeol
   #:wq
+  tests = 0
   Dir['test/export/*.json'].sort.each{|test|
     test = File.basename(test).split('.')
     Test.new(test[0], :export, test[1])
+    tests += 1
   }
 
   Dir['test/import/*.bib'].sort.each{|test|
     test = File.basename(test).split('.')
     Test.new(test[0], :import, test[1])
+    tests += 1
   }
 
   Dir['test/detect/*.*'].sort.each{|test|
     test = File.basename(test).split('.')
     Test.new(test[0], :detect, test[1], test[2])
+    tests += 1
   }
+
+  puts "\n#{tests} tests ran\n"
 end
 
 task :dropbox => :test do
@@ -220,7 +226,7 @@ class Test
     options = "test/#{type}/#{translator}.#{id}.options.json"
     @options = JSON.parse(File.open(options).read) if File.exist?(options)
 
-    @ctx = cxt = V8::Context.new
+    @ctx = V8::Context.new
     @ctx['Zotero'] = self
     @ctx['ZU'] = self
     @ctx['Z'] = self
