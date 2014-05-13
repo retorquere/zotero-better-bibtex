@@ -5,7 +5,7 @@
 	"target": "bib",
 	"minVersion": "2.1.9",
 	"maxVersion": "",
-	"priority": 100,
+	"priority": 199,
   "configOptions": {
     "getCollections": "true"
   },
