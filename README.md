@@ -1,4 +1,4 @@
-# Zotero: Better Bib(La)TeX
+# Zotero: Better Bib(La)TeX [![Build Status](https://travis-ci.org/ReichenHack/zotero-better-bibtex.svg?branch=master)](https://travis-ci.org/ReichenHack/zotero-better-bibtex)
 
 This extension aims to make Zotero effective for us LaTeX holdouts. It adds the following features:
 
