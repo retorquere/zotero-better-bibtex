@@ -10,8 +10,8 @@ titles!
 ## Imports your LaTeX and converts to unicode
 
 As of 0.5.3 Better Bib(La)TeX cleanly import most LaTeX constructs; stuff like \"{o} or \"o will be converted to their
-Unicode equivalents, and the import will recognize \emph, \textit, \textbf, \_{...} and ^{...} and convert them to
-italics, italics, bold, subscript and superscript.
+Unicode equivalents, and the import will recognize and convert \emph (italics), \textit (italics), \textbf (bold), \_{...}
+(subscript) and ^{...} (superscript).
 
 ## Duplicate keys; integration with [Report Customizer](https://github.com/ReichenHack/zotero-report-customizer)
 
