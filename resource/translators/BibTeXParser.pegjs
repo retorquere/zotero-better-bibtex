@@ -199,6 +199,7 @@ attachment
 
                         parts.path = parts.path.replace(/\\/g, '/');
                         if (parts.path.match(/^[a-z]:\//i)) { parts.path = 'file:///' + parts.path; }
+                        if (parts.path.match(/^\/\//)) { parts.path = 'file:' + parts.path; }
 
                         return parts;
                     }
