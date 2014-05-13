@@ -4,6 +4,7 @@ require 'openssl'
 require 'net/http'
 require 'json'
 require 'fileutils'
+require 'open-uri'
 require 'time'
 require 'date'
 require 'pp'
@@ -89,7 +90,9 @@ task :test => [DB, XPI] do
     test = File.basename(test).split('.')
     Test.new(test[0], :detect, test[1], test[2])
   }
+end
 
+task :dropbox => :test do
   dropbox = File.expand_path('~/Dropbox')
   Dir["#{dropbox}/*.xpi"].each{|xpi| File.unlink(xpi)}
   FileUtils.cp(XPI, File.join(dropbox, XPI))
@@ -662,8 +665,14 @@ end
 
 def download(url, file)
   puts "Downloading #{url} to #{file}"
-  puts `curl -z #{file.inspect} -o #{file.inspect} #{url.inspect}`
-  return true
+  options = {}
+  options['If-Modified-Since'] = File.mtime(file).rfc2822 if File.exists?(file)
+  begin
+    open(url, options) {|remote|
+      open(file, 'wb'){|local| local.write(remote.read) }
+    }
+  rescue OpenURI::HTTPError => e
+  end
 end
 
 task :fields do
