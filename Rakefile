@@ -27,6 +27,8 @@ TRANSLATORS = [
   {name: 'Zotero TestCase'}
 ]
 
+Dir.mkdir('tmp') unless File.exists?('tmp')
+
 UNICODE_MAPPING = 'tmp/unicode.json'
 BIBTEX_GRAMMAR  = Dir["resource/**/*.pegjs"][0]
 DICT            = 'chrome/content/zotero-better-bibtex/dict.js'
@@ -47,7 +49,7 @@ Dir['test/import/*.bib'].sort.each{|test|
   test = File.basename(test).split('.')
   id = "#{test[0].gsub(/[^A-Z]/, '').downcase}/i/#{test[1].to_i}"
   desc "Test: #{test[0]} import #{test[1]}"
-  task id => XPI do
+  task id => [DB, XPI] do
     Test.new(test[0], :import, test[1])
   end
 }
@@ -55,12 +57,12 @@ Dir['test/export/*.json'].sort.each{|test|
   test = File.basename(test).split('.')
   id = "#{test[0].gsub(/[^A-Z]/, '').downcase}/e/#{test[1].to_i}"
   desc "Test: #{test[0]} export #{test[1]}"
-  task id => XPI do
+  task id => [DB, XPI] do
     Test.new(test[0], :export, test[1])
   end
 }
 
-task :test => XPI do
+task :test => [DB, XPI] do
   # vim -b file and once in vim:
   #:set noeol
   #:wq

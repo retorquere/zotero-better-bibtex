@@ -1,22 +1,25 @@
 /*= bibtex_parser =*/
 
 function detectImport() {
-  var bib = '';
   var c;
-  var maxChars = 1024 * 50;
+  var maxChars = 1024;
 
+  var input = Zotero.read(3);
   while (c = Zotero.read(1)) {
-    bib += c;
+    input += c;
 
-    try {
-      BibTeX.parse(bib);
-      return true;
-    } catch (e) {
+    if (input.match(/@[^{]+.*{.[^,]+,.*}/m)) {
+      try {
+        var bib = BibTeX.parse(input);
+        if (bib.references.length > 0) { trlog('Yes, BibTeX'); return true; }
+      } catch (e) {
+      }
     }
 
-    if (bib.length > maxChars) { break; }
+    if (input.length > maxChars) { break; }
   }
 
+  trLog('Not BibTeX, passing on');
   return false;
 }
 
