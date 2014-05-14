@@ -16,6 +16,7 @@
         <preference id="pref-better-bibtex-recursive" name="extensions.zotero.recursiveCollections" type="bool"/>
         <preference id="pref-better-bibtex-citecommand" name="extensions.zotero.translators.better-bibtex.citeCommand" type="string"/>
         <preference id="pref-better-bibtex-format" name="extensions.zotero.translators.better-bibtex.citeKeyFormat" type="string"/>
+        <preference id="pref-better-bibtex-skipFields" name="extensions.zotero.translators.better-bibtex.skipfields" type="string"/>
         <preference id="pref-better-bibtex-server" name="extensions.zotero.httpServer.enabled" type="bool"/>
         <preference id="pref-better-bibtex-unicode" name="extensions.zotero.translators.better-bibtex.unicode" type="string"/>
         <preference id="pref-better-bibtex-fancyurls" name="extensions.zotero.translators.better-bibtex.fancyURLs" type="bool"/>
@@ -37,10 +38,8 @@
               <textbox id="id-better-bibtex-preferences-citeKeyFormat" preference="pref-better-bibtex-format" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
             </row>
             <row>
-              <hbox id="id-zotero-better-bibtex-format-unique-warning" hidden="true">
-                <label style="color: red">&zotero.better-bibtex.format-unique-warning;</label>
-                <button label="&zotero.better-bibtex.format.reset;" oncommand="resetFormatters();"/>
-              </hbox>
+              <label value="&zotero.better-bibtex.skipFields;"/>
+              <textbox id="id-better-bibtex-preferences-skipFields" preference="pref-better-bibtex-skipFields" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
             </row>
             <row>
               <label value="&zotero.better-bibtex.unicode;"/>

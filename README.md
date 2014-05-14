@@ -42,6 +42,10 @@ If you want even more convenience (and you're on Windows), install [AutoHotKey](
 You can export collections including/excluding its child collections. Note that this also sets Zotero to list collection
 contents recursively.
 
+## Omit fields from export
+
+You can add a comma-separated list of fields you do not want in the exported file in the preferences to slim down your exports
+
 ## JabRef groups import/export
 
 During import, if JabRef explicit (not dynamic) groups are present, collections will be created to mirror these. During

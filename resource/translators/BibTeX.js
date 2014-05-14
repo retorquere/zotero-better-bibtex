@@ -65,7 +65,7 @@ var Config = {
     options = options || {};
 
     Config.pattern    = options.pattern   || Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
-    Config.skipFields = options.skipField || Zotero.getHiddenPref('better-bibtex.skipfields').split(',');
+    Config.skipFields = options.skipField || Zotero.getHiddenPref('better-bibtex.skipfields').split(',').map(function(field) { return field.trim(); });
     Config.usePrefix  = options.usePrefix || Zotero.getHiddenPref('better-bibtex.useprefix');
     Config.braceAll   = options.braceAll  || Zotero.getHiddenPref('better-bibtex.brace-all');
     Config.fancyURLs  = options.fancyURLs || Zotero.getHiddenPref('better-bibtex.fancyURLs');
