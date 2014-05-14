@@ -20,6 +20,9 @@ function doImport() {
     createZoteroReference(ref)
   });
 
+  if (bib.errors.length > 0) {
+    trLog("\n\n===== FOUND " + bib.errors.length + " ERRORS:\n\n * " + bib.errors.join("\n\n* "));
+  }
   /* setNote doesn't work in translator... how else can I report errors?
   if (bib.errors.length > 0) {
     var item = new Zotero.Item('note');

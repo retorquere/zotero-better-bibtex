@@ -139,13 +139,13 @@ string
                                                           if (LaTeX.toUnicode["\\" + cmd]) { return LaTeX.toUnicode["\\" + cmd]; }
                                                           return cmd;
                                                        }
-  / "\\" cmd:plaintext _+                              {  /* bare command */
-                                                          if (LaTeX.toUnicode["\\" + cmd]) { return LaTeX.toUnicode["\\" + cmd]; }
-                                                          return cmd;
-                                                       }
   / "\\" cmd:plaintext ('[' key_value* ']')? '{' text:string* '}' { /* command */
                                                                     return ((LaTeX.toUnicode["\\" + cmd] || '') + join(text));
                                                                   }
+  / "\\" cmd:plaintext _*                              {  /* bare command */
+                                                          if (LaTeX.toUnicode["\\" + cmd]) { return LaTeX.toUnicode["\\" + cmd]; }
+                                                          return cmd;
+                                                       }
 
 param
   = text:[^\\{]           { return text; }

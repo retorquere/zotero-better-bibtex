@@ -13,7 +13,15 @@
 }
 
 function scrub(item) {
-  delete item.itemID;
+  var itemID = CiteKeys.db.where('(rec, i, res, item) => rec.item.itemID == item.itemID', item);
+
+  if (itemID && itemID.length == 1) {
+    item.itemID = itemID[0].key;
+  } else {
+    trLog('no key found for ' + item.itemID);
+    delete item.itemID;
+  }
+
   delete item.libraryID;
   delete item.key;
   delete item.uniqueFields;
@@ -26,7 +34,7 @@ function scrub(item) {
     delete creator.fieldMode;
   });
 
-  (item.__attachments || []).forEach(function(attachment) {
+  (item.attachments || []).forEach(function(attachment) {
     attachment.path = attachment.localPath;
     delete attachment.localPath;
 
@@ -51,12 +59,32 @@ function scrub(item) {
     delete attachment.uniqueFields;
   });
 
+  (item.notes || []).forEach(function(note) {
+    delete note.itemID;
+    delete note.itemType;
+    delete note.dateAdded;
+    delete note.dateModified;
+    delete note.libraryID;
+    delete note.key;
+    delete note.sourceItemKey;
+    delete note.tags;
+    delete note.related;
+    note.note = (note.note || '').replace(/<[^>]*>/gm, '').replace(/[ \n\r\t]+/gm, ' ').trim();
+  });
+
+  item.tags = (item.tags || []).map(function(tag) { return tag.tag; });
+
   return item;
 }
 
+/*= include BibTeX.js =*/
+
 function doExport() {
-	var item, data = [];
-	while(item = Z.nextItem()) data.push(scrub(item));
+	var data = [];
+  CiteKeys.initialize().forEach(function(item) {
+    trLog('.');
+    data.push(scrub(item));
+  });
 	Zotero.write(JSON.stringify(data, null, "\t"));
 }
 
