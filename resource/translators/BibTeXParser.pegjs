@@ -157,7 +157,7 @@ bracedparam
 
 quotedchar
   = & { return (bibtex.quote == '"');  } '"' { return '"'; }
-  / text:[#$%&_\^\[\]]  { return text; }
+  / text:[#$%&_\^\[\]{}]  { return text; }
 
 url
   = text:[^\\{}]+ { return join(text); }

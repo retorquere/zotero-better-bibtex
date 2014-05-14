@@ -1,0 +1,23 @@
+[
+  {
+    "itemType": "journalArticle",
+    "creators": [
+
+    ],
+    "notes": [
+
+    ],
+    "attachments": [
+
+    ],
+    "seeAlso": [
+
+    ],
+    "tags": [
+
+    ],
+    "itemID": "BibTeXEscapeTest1",
+    "title": "Escaped backslash followed by {}:",
+    "extra": "bibtex: BibTeXEscapeTest1"
+  }
+]
