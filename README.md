@@ -186,7 +186,7 @@ or support requests on anything but the latest version, currently at **0.5.14**.
 
 If you submit an issue report,
 
-* Please make *sure* you are on the latest version **0.5.14**. Auto-update will usually take care of it.
+* Please make *sure* you are on the latest version, currently **0.5.14**. Auto-update will usually take care of it.
 * Please include *specifics* of what doesn't work. I use this plugin every day myself, so "it doesn't work" is trivially
   false. Please tell me what you expected and what you see happening, and the relevant difference between them.
 * One problem/feature request, one issue.
@@ -201,6 +201,9 @@ If you submit an issue report,
 * If your problem pertains to exporting bibTeX files, you *must* put up a sample for me to reproduce the issue with, in
   CSL-JSON format (Zotero can do CSL-JSON export). For making the sample available to me: see 'import issues' in the
   point directly above.
+* If your problem pertains to BBT interfering with other plugins, and this interference has something to do with
+  importing, you *must* include a sample file that triggers the issue. Don't just say "any file I import does" -- I need
+  a *specific* file that does.
 
 ## Known issues
 
