@@ -96,7 +96,7 @@ native fields. The possible fields are:
 
 BBT adds a few filter functions that JabRef (perhaps wisely) doesn't. These are:
 
-- *condense*: this replaces spaces in the value passed in. You can specify what to replace it with by adding it as a
+- **condense**: this replaces spaces in the value passed in. You can specify what to replace it with by adding it as a
   parameter, e.g *condense,_* will replace spaces with underscores. **Parameters should not contain spaces** unless you
   want the spaces in the value passed in to be replaced with those spaces in the parameter
 - **skipwords**: filters out common words like 'of', 'the', ...
