@@ -624,7 +624,7 @@ Formatter = {
       citekey = pattern.replace(/\[([^\]]+)\]/g, function(match, command) {
         var _filters = command.split(':');
         var _function = _filters.shift();
-        var _property = _function.toLowerCase();
+        var _property = _function;
 
         var N;
         var M;
@@ -651,9 +651,11 @@ Formatter = {
           value = Formatter.functions[_function](onlyEditors, N, M);
         }
 
-        if (value == '' && Formatter.item[_property] && (typeof Formatter.item[_property] != 'function')) {
-          value = '' + Formatter.item[_property];
-        }
+        [_property, _property.charAt(0).toLowerCase() + _property.slice(1)].forEach(function(prop) {
+          if (value == '' && Formatter.item[prop] && (typeof Formatter.item[prop] != 'function')) {
+            value = '' + Formatter.item[prop];
+          }
+        });
 
         if (value == '' && !Formatter.functions[_function]) {
           trLog('requested non-existent item function ' + _property);
