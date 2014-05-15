@@ -400,9 +400,9 @@ Formatter = {
     var _words = Formatter.words(title);
 
     options = options || {};
-    if (options.asciiOnly) { _words = _words.map(function (word) { return word.replace(/[^a-zA-Z]/, ''); }); }
+    if (options.asciiOnly) { _words = _words.map(function (word) { return word.replace(/[^a-zA-Z]/g, ''); }); }
     _words = _words.filter(function(word) { return (word != ''); });
-    if (options.skipWords) { _words = _words.filter(function(word) { return (Formatter.skipWords.indexOf(word.toLowerCase()) == -1); }); }
+    if (options.skipWords) { _words = _words.filter(function(word) { return (Formatter.skipWords.indexOf(word.toLowerCase()) < 0); }); }
     if (_words.length == 0) { return null; }
     return _words;
   },
@@ -513,7 +513,7 @@ Formatter = {
     firstpage: function() {
       if (!Formatter.item.pages) { return '';}
       var firstpage = '';
-      Formatter.item.pages.replace(/^([0-9]+)/, function(match, fp) { firstpage = fp; });
+      Formatter.item.pages.replace(/^([0-9]+)/g, function(match, fp) { firstpage = fp; });
       return firstpage;
     },
 
@@ -525,7 +525,7 @@ Formatter = {
     lastpage: function() {
       if (!Formatter.item.pages) { return '';}
       var lastpage = '';
-      Formatter.item.pages.replace(/([0-9]+)[^0-9]*$/, function(match, lp) { lastpage = lp; });
+      Formatter.item.pages.replace(/([0-9]+)[^0-9]*$/g, function(match, lp) { lastpage = lp; });
       return lastpage;
     },
 
@@ -564,14 +564,19 @@ Formatter = {
       return (months[date.month] || '');
     },
 
+    Title: function() {
+      return Formatter.titleWords(Formatter.item.title).join(' ');
+    },
+
     title: function() {
       return Formatter.titleWords(Formatter.item.title).join('');
     }
   },
 
   filters: {
-    condense: function(value) {
-      return value.replace(/\s/, '');
+    condense: function(value, sep) {
+      if (typeof sep == 'undefined') { sep = ''; }
+      return value.replace(/\s/g, sep);
     },
 
     abbr: function(value) {
@@ -584,6 +589,22 @@ Formatter = {
 
     upper: function(value) {
       return value.toUpperCase();
+    },
+
+    skipwords: function(value) {
+      return value.split(/\s+/).filter(function(word) { return (Formatter.skipWords.indexOf(word.toLowerCase()) < 0); }).join(' ');
+    },
+
+    select: function(value, start, n) {
+      value = value.split(/\s+/);
+      var end = value.length;
+
+      if (typeof start == 'undefined') { start = 1; }
+      start = parseInt(start) - 1;
+
+      if (typeof n != 'undefined') { end = start + parseInt(n); }
+
+      return value.slice(start, end).join(' ');
     }
   },
 
@@ -635,10 +656,13 @@ Formatter = {
         }
 
         _filters.forEach(function(filter) {
+          var params = filter.split(',');
+          filter = params.shift();
+          params.unshift(value);
           if (filter.match(/^[(].*[)]$/)) { // text between braces is default value in case a filter or function fails
             if (value == '') { value = filter.substring(1, filter.length - 2); }
           } else if (Formatter.filters[filter]) {
-            value = Formatter.filters[filter](value);
+            value = Formatter.filters[filter].apply(null, params);
           } else {
             trLog('requested non-existent item filter ' + filter);
             value = '';
@@ -692,7 +716,7 @@ function exportJabRefGroups() {
     if (collection.childCollections && collection.childCollections.length != 0) {
       collection.childCollections = collection.childCollections.map(function(id) {
         var index = roots.indexOf(id);
-        if (index > -1) { roots.splice(index, 1); }
+        if (index >= 0) { roots.splice(index, 1); }
         return collections.get(id);
       }).filter(function(child) { return child; });;
     } else {
@@ -754,7 +778,7 @@ var CiteKeys = {
 
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   andersJohanssonKeyRE: /biblatexcitekey\[([^\]]+)\]/,
-  unsafechars: /[^-_a-z0-9!\$\*\+\.\/:;\?\[\]]/ig,
+  unsafechars: /[^-_a-z0-9!\$\*\+\.\/,:;\?\[\]]/ig,
 
   initialize: function(items) {
     Config.initialize();

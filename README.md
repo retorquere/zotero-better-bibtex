@@ -91,6 +91,21 @@ JabRef also allows all 'native' fields as key values; the plugin does the same b
 | title                | university           | url                  | version              |
 | videoRecordingFormat | volume               | websiteTitle         | websiteType          |
 
+### Advanced usage
+
+BBT adds a few filter functions that JabRef (perhaps wisely) doesn't. These are:
+
+- *condense*: this replaces spaces in the value passed in. You can specify what to replace it with by adding it as a
+  parameter, e.g *condense,_* will replace spaces with underscores. **Parameters should not contain spaces** unless you
+  want the spaces in the value passed in to be replaced with those spaces in the parameter
+- **skipwords**: filters out common words like 'of', 'the', ...
+- **select**: selects words from the value passed in. The format is *select,start,number* (1-based), so *select,1,4*
+  would select the first four words
+
+Most functions on the item already strip whitespace and thereby make these functions sort of useless; the one function
+this will work with right now is *Title* (note the uppercase), which is the full title of the article without any
+filters pre-applied.
+
 ## Date field exports
 
 Export dates like 'forthcoming' as 'forthcoming' instead of empty.

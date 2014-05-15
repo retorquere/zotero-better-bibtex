@@ -210,7 +210,20 @@ class Test
   def pref(key, value)
     tkey = key.sub(/^extensions\.zotero\.translators\./, '')
     return unless tkey != key
-    @prefs[tkey] = value;
+    @prefs[tkey] ||= value;
+  end
+
+  def script(content, init = false)
+    content = content.read unless content.is_a?(String)
+    if init
+      File.write(@script, content, 0, mode: 'w')
+    else
+      File.write(@script, content, File.size(@script), mode: 'a')
+    end
+  end
+
+  def run
+    return @ctx.load(@script)
   end
 
   def initialize(translator, type, id, extension = nil)
@@ -220,11 +233,18 @@ class Test
 
     puts "\n\nRunning #{type} test #{id} for #{translator}"
 
+    @script = "tmp/#{translator}-#{type}-#{id}.js"
+    File.unlink(@script) if File.exists?(@script)
+
     @prefs = {}
     @options = {}
 
     options = "test/#{type}/#{translator}.#{id}.options.json"
     @options = JSON.parse(File.open(options).read) if File.exist?(options)
+    if @options['prefs']
+      @options['prefs'].each_pair{|k, v| @prefs[k] = v }
+      @options = @options['options'] || {}
+    end
 
     @ctx = V8::Context.new
     @ctx['Zotero'] = self
@@ -232,11 +252,11 @@ class Test
     @ctx['Z'] = self
     @ctx['pref'] = lambda {|this, key, value| pref(key, value)}
 
-    @ctx.eval(File.open(DATE).read)
-    @ctx.eval(File.open('defaults/preferences/defaults.js').read)
-    @ctx.eval('var __zotero__header__ = ' + File.open("tmp/#{translator}.js").read)
-
-    @ctx.eval(File.open('test/utilities.js').read)
+    script(File.open(DATE), :init)
+    script(File.open('defaults/preferences/defaults.js'))
+    script('var __zotero__header__ = ')
+    script(File.open("tmp/#{translator}.js"))
+    script(File.open('test/utilities.js'))
 
     @db = SQLite3::Database.new(DB)
     @db.execute('PRAGMA temp_store=MEMORY;')
@@ -249,6 +269,8 @@ class Test
       when :detect then detect(extension)
       else throw "Unexpected test type #{type}"
     end
+
+    File.unlink(@script) if File.exists?(@script)
   end
   attr_reader :translator, :id, :type
   attr_accessor :Item
@@ -387,7 +409,9 @@ class Test
     expected = File.open(expected).read
 
     #@ctx.eval(File.open('test/item.js').read)
-    @ctx.eval('doExport();')
+    script('doExport();')
+
+    run
 
     File.open("test/#{@type}/#{@translator}.#{@id}.out.txt", 'w'){|f| f.write(@output) }
 
@@ -403,8 +427,11 @@ class Test
   def detect(extension)
     input = "test/#{@type}/#{@translator}.#{@id}.#{extension}"
     @input = File.open(input).read
+
+    script('detectImport();')
+
     expected = !!(extension.downcase == 'bib')
-    found = !!@ctx.eval('detectImport();')
+    found = !!run
 
     if expected == found
       puts "#{testName}: passed"
@@ -422,8 +449,10 @@ class Test
     @input = File.open(input).read
     expected = JSON.parse(File.open(expected).read)
     @items = [];
-    @ctx.eval(File.open('test/item.js').read)
-    @ctx.eval('doImport();')
+    script(File.open('test/item.js'))
+    script('doImport();')
+
+    run
 
     File.open("test/#{@type}/#{@translator}.#{@id}.out.json", 'w'){|f| f.write(JSON.pretty_generate(@items)) }
 

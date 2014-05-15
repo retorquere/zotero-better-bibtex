@@ -1,0 +1,5 @@
+{
+  "prefs": {
+    "better-bibtex.citeKeyFormat": "[Title:skipwords:select,1,4:condense,_]"
+  }
+}
