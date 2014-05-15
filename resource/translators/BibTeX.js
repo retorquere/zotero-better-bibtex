@@ -400,7 +400,7 @@ Formatter = {
     var _words = Formatter.words(title);
 
     options = options || {};
-    if (options.asciiOnly) { _words = _words.map(function (word) { return word.replace(/[^a-zA-Z]/g, ''); }); }
+    if (options.asciiOnly) { _words = _words.map(function (word) { return word.replace(/[^ -~]/g, ''); }); }
     _words = _words.filter(function(word) { return (word != ''); });
     if (options.skipWords) { _words = _words.filter(function(word) { return (Formatter.skipWords.indexOf(word.toLowerCase()) < 0); }); }
     if (_words.length == 0) { return null; }
@@ -564,10 +564,6 @@ Formatter = {
       return (months[date.month] || '');
     },
 
-    Title: function() {
-      return Formatter.titleWords(Formatter.item.title).join(' ');
-    },
-
     title: function() {
       return Formatter.titleWords(Formatter.item.title).join('');
     }
@@ -592,7 +588,7 @@ Formatter = {
     },
 
     skipwords: function(value) {
-      return value.split(/\s+/).filter(function(word) { return (Formatter.skipWords.indexOf(word.toLowerCase()) < 0); }).join(' ');
+      return value.split(/\s+/).filter(function(word) { return (Formatter.skipWords.indexOf(word.toLowerCase()) < 0); }).join(' ').trim();
     },
 
     select: function(value, start, n) {
@@ -605,6 +601,14 @@ Formatter = {
       if (typeof n != 'undefined') { end = start + parseInt(n); }
 
       return value.slice(start, end).join(' ');
+    },
+
+    ascii: function(value) {
+      return value.replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim();
+    },
+
+    fold: function(value) {
+      return ZU.removeDiacritics(value).split(/\s+/).join(' ').trim();
     }
   },
 
@@ -620,7 +624,7 @@ Formatter = {
       citekey = pattern.replace(/\[([^\]]+)\]/g, function(match, command) {
         var _filters = command.split(':');
         var _function = _filters.shift();
-        var _property = _function;
+        var _property = _function.toLowerCase();
 
         var N;
         var M;

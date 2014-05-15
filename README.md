@@ -101,10 +101,12 @@ BBT adds a few filter functions that JabRef (perhaps wisely) doesn't. These are:
 - **skipwords**: filters out common words like 'of', 'the', ...
 - **select**: selects words from the value passed in. The format is *select,start,number* (1-based), so *select,1,4*
   would select the first four words
+- **ascii**: removes all non-ascii characters
+- **fold**: tries to replace diacritics with ascii look-alikes.
 
-Most functions on the item already strip whitespace and thereby make these functions sort of useless; the one function
-this will work with right now is *Title* (note the uppercase), which is the full title of the article without any
-filters pre-applied.
+Most functions on the item already strip whitespace and thereby make these functions sort of useless; these are mostly
+useful for when you use any of the options from the table above with the initial letter uppercased, which will make sure
+a function doesn't take precedence over direct-field access.
 
 ## Date field exports
 
