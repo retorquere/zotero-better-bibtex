@@ -15,13 +15,13 @@ This extension aims to make Zotero effective for us LaTeX holdouts. It adds the 
 
 ## Configuration
 
-The Better BibTeX configuration pane can be found under the regular Zotero preferences pane, tab 'Better Bib(La)TeX'.
+The Better BibTeX [configuration-pane|Customized-Exports](https://github.com/ReichenHack/zotero-better-bibtex/wiki/configuration-pane|Customized-Exports) can be found under the regular Zotero preferences pane, tab 'Better Bib(La)TeX'.
 
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
 version](https://raw.github.com/ReichenHack/zotero-better-bibtex/master/zotero-better-bibtex-0.5.14.xpi) (**0.5.14**,
-released on 2014-05-16 10:58). If you are not prompted with a Firefox installation dialog then double-click the
+released on 2014-05-16 11:05). If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
 For standalone Zotero, do the following:
