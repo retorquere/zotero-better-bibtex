@@ -155,13 +155,32 @@ task :publish => ['README.md', XPI, 'update.rdf'] do
   sh "git push"
 end
 
-file 'README.md' => [XPI, 'Rakefile'] do |t|
+file 'README.md' => ['../zotero-better-bibtex.wiki/Home.md', 'Rakefile'] do |t|
   puts 'Updating README.md'
-  readme = File.open(t.name).read
-  readme.gsub!(/\(http[^)]+\.xpi\)/, "(https://raw.github.com/ReichenHack/zotero-#{EXTENSION}/master/#{XPI})")
-  readme.gsub!(/\*\*[0-9]+\.[0-9]+\.[0-9]+\*\*/, "**#{RELEASE}**")
-  readme.gsub!(/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}/, DateTime.now.strftime('%Y-%m-%d %H:%M'))
-  File.open(t.name, 'w'){|f| f.write(readme)}
+
+  home = nil
+  [t.prerequisites[0], '../zotero-better-bibtex.wiki/Support-Request-Guidelines.md'].each{|patch|
+    next unless File.exists?(patch)
+    puts "Patching #{patch}"
+    readme = File.open(patch).read
+    readme.gsub!(/\(http[^)]+\.xpi\)/, "(https://raw.github.com/ReichenHack/zotero-#{EXTENSION}/master/#{XPI})")
+    readme.gsub!(/\*\*[0-9]+\.[0-9]+\.[0-9]+\*\*/, "**#{RELEASE}**")
+    readme.gsub!(/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}/, DateTime.now.strftime('%Y-%m-%d %H:%M'))
+    home = readme if patch =~ /Home\.md$/
+    File.open(patch, 'w'){|f| f.write(readme) }
+  }
+
+  if home
+    puts "Patching #{t.name}"
+    home.gsub!(/\[\[[^\]]+\]\]/) {|link|
+      link.gsub!(/^\[\[|\]\]$/, '')
+      text = link
+      link.gsub!(/\s/, '-')
+      link = "https://github.com/ReichenHack/zotero-better-bibtex/wiki/#{link}"
+      "[#{text}](#{link})"
+    }
+    File.open(t.name, 'w'){|f| f.write(home)}
+  end
 end
 
 task :release, :bump do |t, args|
