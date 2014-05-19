@@ -174,7 +174,8 @@ file 'README.md' => ['../zotero-better-bibtex.wiki/Home.md', 'Rakefile'] do |t|
     puts "Patching #{t.name}"
     home.gsub!(/\[\[[^\]]+\]\]/) {|link|
       link.gsub!(/^\[\[|\]\]$/, '')
-      text = link
+      text = link.gsub(/\|.*/, '')
+      link.gsub!(/.*\|/, '')
       link.gsub!(/\s/, '-')
       link = "https://github.com/ReichenHack/zotero-better-bibtex/wiki/#{link}"
       "[#{text}](#{link})"

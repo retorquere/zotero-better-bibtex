@@ -1,59 +1,5 @@
 /*= dict =*/
 
-// http://www.paulfree.com/11/javascript-lambda-expressions/
-function lambda(l) {
-  var fn = l.match(/\((.*)\)\s*=>\s*(.*)/);
-  var p = [];
-  var b = "";
-
-  if ( fn.length > 0 ) fn.shift();
-  if ( fn.length > 0 ) b = fn.pop();
-  if ( fn.length > 0 ) p = fn.pop().replace(/^\s*|\s(?=\s)|\s*$|,/g, '').split(' ');
-
-  // prepend a return if not already there.
-  fn = ( ( ! /\s*return\s+/.test( b ) ) ? "return " : "" ) + b;
-
-  p.push( fn );
-
-  try {
-    return Function.apply( {}, p );
-  } catch(e) {
-    return null;
-  }
-}
-// http://www.paulfree.com/28/javascript-array-filtering/#more-28
-Array.prototype.where = function(f) {
-  var fn = f;
-  // if type of parameter is string
-  if ( typeof f == "string" )
-    // try to make it into a function
-    if ( ( fn = lambda( fn ) ) == null )
-      // if fail, throw exception
-      throw "Syntax error in lambda string: " + f;
-
-  // initialize result array
-  var res = [];
-  var l = this.length;
-  // set up parameters for filter function call
-  var p = [ 0, 0, res ];
-  // append any pass-through parameters to parameter array
-  for (var i = 1; i < arguments.length; i++) p.push( arguments[i] );
-  // for each array element, pass to filter function
-  for (var i = 0; i < l; i++)
-  {
-    // skip missing elements
-    if ( typeof this[ i ] == "undefined" ) continue;
-    // param1 = array element
-    p[ 0 ] = this[ i ];
-    // param2 = current indeex
-    p[ 1 ] = i;
-    // call filter function. if return true, copy element to results
-    if ( !! fn.apply(this, p)  ) res.push(this[i]);
-  }
-  // return filtered result
-  return res;
-}
-
 var Config = {
   id: '/*= id =*/',
   label:  '/*= label =*/',
@@ -703,7 +649,7 @@ function exportJabRefGroups() {
     if (collection.childItems && collection.childItems.length != 0) {
       // replace itemID with citation key
       collection.childItems = collection.childItems.map(function(child) {
-        var c = CiteKeys.db.where('(rec, i, res, key) => rec.key == key', child);
+        var c = CiteKeys.db.filter(function(rec) { return (rec.key == child); });
         if (c) {
           return c.item;
         } else {
@@ -769,7 +715,7 @@ var CiteKeys = {
   db: [],
 
   get: function(item) {
-    var rec = CiteKeys.db.where('(rec, i, res, id) => rec.item.itemID == id', item.itemID);
+    var rec = CiteKeys.db.filter(function(rec) { return (rec.item.itemID == item.itemID); });
     if (rec.length == 0) { return null; }
     return rec[0];
   },
@@ -821,7 +767,7 @@ var CiteKeys = {
     item.extra = item.extra.replace(m[0], '').trim();
     var key = m[1];
 
-    if (CiteKeys.db.where('(rec, i, res, key) => rec.key == key', key).length != 0) {
+    if (CiteKeys.db.some(function(rec) { return (rec.key == key); })) {
       trLog('BibTex export: duplicate key ' + key);
     }
     return key;
@@ -841,14 +787,14 @@ var CiteKeys = {
   },
 
   resolve: function() {
-    CiteKeys.db.where('(rec) => rec.pinned').forEach(function(rec) {
-      if (CiteKeys.db.where('(dup, i, res, org) => dup.pinned && dup.key == org.key && dup.item.itemID != org.item.itemID', rec).length != 0) {
+    CiteKeys.db.filter(function(rec) { return rec.pinned; }).forEach(function(rec) {
+      if (CiteKeys.db.some(function(dup) { return (dup.pinned && dup.key == rec.key && dup.item.itemID != rec.item.itemID); })) {
         rec.conflict = 'hard';
       }
     });
 
-    CiteKeys.db.where('(rec) => !rec.pinned').forEach(function(rec) {
-      var duplicates = CiteKeys.db.where('(dup, i, res, org) => dup.key == org.key && dup.item.itemID != org.item.itemID', rec).sort(
+    CiteKeys.db.filter(function(rec) { return !rec.pinned; }).forEach(function(rec) {
+      var duplicates = CiteKeys.db.filter(function(dup) { return (dup.key == rec.key && dup.item.itemID != rec.item.itemID); }).sort(
         function(a, b) {
           if (!!(a.pinned) != !!(b.pinned)) {
             return ((a.pinned ? 0 : 1) - (b.pinned ? 0 : 1));
@@ -864,9 +810,9 @@ var CiteKeys = {
       }
     });
 
-    CiteKeys.db.where('(rec) => rec.conflict == "soft"').forEach(function(rec) {
+    CiteKeys.db.filter(function(rec) { return (rec.conflict == 'soft'); }).forEach(function(rec) {
       var postfix = {n: 0, c:'a'};
-      while (CiteKeys.db.where('(rec, i, res, key) => rec.key == key', rec.key + postfix.c).length != 0) {
+      while (CiteKeys.db.some(function(other) { return (other.key == (rec.key + postfix.c)); })) {
         postfix.n++;
         postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
       }

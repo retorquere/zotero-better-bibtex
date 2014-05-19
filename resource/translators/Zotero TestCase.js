@@ -13,7 +13,7 @@
 }
 
 function scrub(item) {
-  var itemID = CiteKeys.db.where('(rec, i, res, item) => rec.item.itemID == item.itemID', item);
+  var itemID = CiteKeys.db.filter(function(rec) { return (rec.item.itemID == item.itemID); });
 
   if (itemID && itemID.length == 1) {
     item.itemID = itemID[0].key;
