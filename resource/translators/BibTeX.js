@@ -734,7 +734,7 @@ var CiteKeys = {
 
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   andersJohanssonKeyRE: /biblatexcitekey\[([^\]]+)\]/,
-  safechars: /[-_a-z0-9!\$\*\+\.\/:;\?\[\]]/ig,
+  safechars: /[a-z0-9!\$\*\+\.\/;\?\[\]]/ig,
   // not  "@',\#}{%
 
   initialize: function(items) {
