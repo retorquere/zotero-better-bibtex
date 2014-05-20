@@ -730,7 +730,7 @@ var CiteKeys = {
 
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   andersJohanssonKeyRE: /biblatexcitekey\[([^\]]+)\]/,
-  unsafechars: /[^-_a-z0-9!\$\*\+\.\/,:;\?\[\]]/ig,
+  unsafechars: /[^-_a-z0-9!\$\*\+\.\/:;\?\[\]]/ig,
 
   initialize: function(items) {
     Config.initialize();

@@ -1,0 +1,14 @@
+
+
+
+% Better BibLaTeX: generated
+@article{physicalviolentvolcanology,
+	pages = {493-518},
+	title = {{The physical, violent volcanology of the 1600 eruption of Huaynaputina, southern Peru}},
+	volume = {{62}},
+	journaltitle = {{Title, with comma}},
+	author = {Adams, Nancy K and DeSilva, Shanaka L and Self, Steven and Salas, Guido and Schubring, Steven and Permenter, Jason L and Arbesman, Kendra},
+	date = {2001},
+	year = {2001},
+	keywords = {Vulcanian eruptions, breadcrust, plinian}
+}
