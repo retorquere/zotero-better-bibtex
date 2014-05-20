@@ -611,6 +611,8 @@ Formatter = {
           trLog('requested non-existent item function ' + _property);
         }
 
+        value = Formatter.stripHTML(value);
+
         _filters.forEach(function(filter) {
           var params = filter.split(',');
           filter = params.shift();
