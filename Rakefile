@@ -184,6 +184,37 @@ file 'README.md' => ['../zotero-better-bibtex.wiki/Home.md', 'Rakefile'] do |t|
   end
 end
 
+task :newtest, :translator, :type do |t, args|
+  translator = args[:translator]
+  type = args[:type]
+
+  translator = 'Better BibLaTeX' if translator == 'bbltx'
+  type = 'export' if type == 'e'
+
+  case type
+    when 'export'
+      template = []
+      tests = Dir['test/export/*.json'].collect{|input|
+        if File.basename(input) =~ /^#{translator}\.([0-9]+)\.json$/
+          Integer($1.gsub(/^0+/, ''))
+        else
+          nil
+        end
+      }.compact
+
+      throw "No #{type.inspect} tests for #{translator.inspect}" if tests.empty?
+      template = tests.max.to_s.rjust(3, '0')
+      newtest = (tests.max + 1).to_s.rjust(3, '0')
+
+      Dir["test/export/#{translator}.#{template}.*"].each{|src|
+        tgt = src.sub(template, newtest)
+        FileUtils.cp(src, tgt)
+      }
+    else
+      raise "Unexpected type #{type.inspect}"
+  end
+end
+
 task :release, :bump do |t, args|
   puts `git checkout zotero*.xpi`
 

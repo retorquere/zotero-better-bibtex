@@ -207,7 +207,7 @@ Formatter = {
     var primaryCreatorType = Zotero.Utilities.getCreatorsForType(Formatter.item.itemType)[0];
     var creator;
     Formatter.item.creators.forEach(function(creator) {
-      var name = ('' + creator.lastName).trim();
+      var name = Formatter.stripHTML('' + creator.lastName);
       if (name != '') {
         switch (creator.creatorType) {
           case 'editor':
@@ -235,7 +235,7 @@ Formatter = {
   },
 
   words: function(str) {
-    return str.split(/\s+/).filter(function(word) { return (word != '');}).map(function (word) { return CiteKeys.clean(word) });
+    return Formatter.stripHTML('' + str).split(/[\.,-\/#!$%\^&\*;:{}=\-\s`~()]+/).filter(function(word) { return (word != '');}).map(function (word) { return CiteKeys.clean(word) });
   },
 
   skipWords: [
@@ -351,6 +351,10 @@ Formatter = {
     if (options.skipWords) { _words = _words.filter(function(word) { return (Formatter.skipWords.indexOf(word.toLowerCase()) < 0); }); }
     if (_words.length == 0) { return null; }
     return _words;
+  },
+
+  stripHTML: function(str) {
+    return str.replace(/<\/?(sup|sub|i|b|p|span|br|break)\/?>/g, ' ').replace(/\s+/, ' ').trim();
   },
 
   functions: {
@@ -730,7 +734,8 @@ var CiteKeys = {
 
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   andersJohanssonKeyRE: /biblatexcitekey\[([^\]]+)\]/,
-  unsafechars: /[^-_a-z0-9!\$\*\+\.\/:;\?\[\]]/ig,
+  safechars: /[-_a-z0-9!\$\*\+\.\/:;\?\[\]]/ig,
+  // not  "@',\#}{%
 
   initialize: function(items) {
     Config.initialize();
@@ -821,6 +826,12 @@ var CiteKeys = {
   },
 
   clean: function(str) {
+    if (!CiteKeys.unsafechars) {
+      var unsafechars = '' + CiteKeys.safechars;
+      unsafechars = unsafechars.substring(0, 2) + '^' + unsafechars.substring(2, unsafechars.length);
+      CiteKeys.unsafechars = new RegExp(unsafechars, 'ig');
+    }
+
     str = ZU.removeDiacritics(str).replace(CiteKeys.unsafechars, '').trim();
     return str;
   }
