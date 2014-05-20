@@ -20,8 +20,8 @@ The Better BibTeX [configuration pane](https://github.com/ReichenHack/zotero-bet
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://raw.github.com/ReichenHack/zotero-better-bibtex/master/zotero-better-bibtex-0.5.16.xpi) (**0.5.16**,
-released on 2014-05-20 15:29). If you are not prompted with a Firefox installation dialog then double-click the
+version](https://raw.github.com/ReichenHack/zotero-better-bibtex/master/zotero-better-bibtex-0.5.17.xpi) (**0.5.17**,
+released on 2014-05-20 16:17). If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
 For standalone Zotero, do the following:
