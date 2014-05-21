@@ -424,7 +424,7 @@ function doExport() {
 
     writeExtra(item, (Config.fieldsWritten['note'] ? 'annotation' : 'note'));
 
-    writeField('keywords', escape(item.tags.map(function(tag) {return tag.tag;}), {sep: ', '}));
+    writeField('keywords', escape(item.tags.map(function(tag) {return tag.tag;}), {sep: ','}));
 
     if (item.notes && Config.exportNotes) {
       item.notes.forEach(function(note) {
@@ -440,6 +440,8 @@ function doExport() {
   });
 
   exportJabRefGroups();
+
+  Zotero.write("\n");
 }
 
 var exports = {

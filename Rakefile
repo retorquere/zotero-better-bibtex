@@ -153,6 +153,7 @@ task :publish => ['README.md', XPI, 'update.rdf'] do
   sh "git commit -am #{RELEASE}"
   sh "git tag #{RELEASE}"
   sh "git push"
+  sh "cd ../zotero-better-bibtex.wiki; git commit -am 'release'; git push"
 end
 
 file 'README.md' => ['../zotero-better-bibtex.wiki/Home.md', 'Rakefile'] do |t|
@@ -427,7 +428,7 @@ class Test
         da.close
         db.write(b)
         db.close
-        _diff = `diff -B -w -u #{da.path.inspect} #{db.path.inspect}`
+        _diff = `diff -B -u #{da.path.inspect} #{db.path.inspect}`
       end
     end
     _diff.gsub!(/^--- .*?\n/, '')

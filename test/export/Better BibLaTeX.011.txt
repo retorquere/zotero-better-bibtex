@@ -3,16 +3,16 @@
 
 % Better BibLaTeX: pinned
 @inproceedings{Klassen2010,
-	pages = {25-30},
-	title = {{Empirical Study of Support Vector Machine Kernels with Applications to Microarray Data}},
-	booktitle = {{CATA}},
-	author = {Klassen, Myungsook and Kim, Nyunsu and Liu, Wei Ming},
-	date = {2010},
-	year = {2010},
-	bibsource = {DBLP, http://dblp.uni-trier.de},
-	crossref = {DBLP:conf/cata/2010},
-	groups = {klasyfikacja},
-	owner = {sstudent},
-	note = {svm liniowe najlepsze},
-	file = {Klassen2010.pdf:klasyfikatory/Klassen2010.pdf:application/pdf}
+  pages = {25-30},
+  title = {{Empirical Study of Support Vector Machine Kernels with Applications to Microarray Data}},
+  booktitle = {{CATA}},
+  author = {Klassen, Myungsook and Kim, Nyunsu and Liu, Wei Ming},
+  date = {2010},
+  year = {2010},
+  bibsource = {DBLP, http://dblp.uni-trier.de},
+  crossref = {DBLP:conf/cata/2010},
+  groups = {klasyfikacja},
+  owner = {sstudent},
+  note = {svm liniowe najlepsze},
+  file = {Klassen2010.pdf:klasyfikatory/Klassen2010.pdf:application/pdf}
 }

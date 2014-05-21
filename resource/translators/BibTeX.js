@@ -88,7 +88,7 @@ function writeField(field, value, bare) {
 
   if (Config.fieldsWritten.has(field)) { trLog('Field ' + field + ' output more than once!'); }
   Config.fieldsWritten.set(field, true);
-  Zotero.write(",\n\t" + field + " = " + value);
+  Zotero.write(",\n  " + field + " = " + value);
 }
 
 
@@ -635,7 +635,7 @@ Formatter = {
 
     if (citekey == '') { citekey = 'zotero-' + Formatter.item.key; }
 
-    return citekey;
+    return CiteKeys.clean(citekey);
   }
 }
 
@@ -736,7 +736,7 @@ var CiteKeys = {
 
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   andersJohanssonKeyRE: /biblatexcitekey\[([^\]]+)\]/,
-  safechars: /[a-z0-9!\$\*\+\.\/;\?\[\]]/ig,
+  safechars: /[a-z0-9_!\$\*\+\.\/;\?\[\]]/ig,
   // not  "@',\#}{%
 
   initialize: function(items) {
@@ -830,7 +830,8 @@ var CiteKeys = {
   clean: function(str) {
     if (!CiteKeys.unsafechars) {
       var unsafechars = '' + CiteKeys.safechars;
-      unsafechars = unsafechars.substring(0, 2) + '^' + unsafechars.substring(2, unsafechars.length);
+      unsafechars = unsafechars.substring(unsafechars.indexOf('/') + 1, unsafechars.lastIndexOf('/'));
+      unsafechars = unsafechars.substring(0, 1) + '^' + unsafechars.substring(1, unsafechars.length);
       CiteKeys.unsafechars = new RegExp(unsafechars, 'ig');
     }
 
