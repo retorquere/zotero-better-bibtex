@@ -204,7 +204,20 @@ Zotero.BetterBibTex = {
         }
 
         try {
-          var path = library.split('.');
+          var libid = 0;
+          var path = library.split('/');
+          if (path.length > 1) {
+              path.shift(); // leading /
+              libid = parseInt(path[0]);
+              path.shift();
+
+              if (!Zotero.Libraries.exists(libid)) {
+                  sendResponseCallback(404, "text/plain", "Could not export bibliography: library '" + library + "' does not exist");
+                  return;
+              }
+          }
+
+          var path = path.join('/').split('.');
 
           if (path.length == 1) {
             sendResponseCallback(404, "text/plain", "Could not export bibliography '" + library + "': no format specified");
@@ -217,13 +230,13 @@ Zotero.BetterBibTex = {
             "text/plain",
             Zotero.BetterBibTex.translate(
               Zotero.BetterBibTex.getTranslator(translator),
-              Zotero.Items.getAll(),
+              Zotero.Items.getAll(false, libid, false),
               Zotero.BetterBibTex.displayOptions(url)
             )
           );
         } catch (err) {
-          Zotero.BetterBibTex.log("Could not export bibliography '" + collection + "'", err);
-          sendResponseCallback(404, "text/plain", "Could not export bibliography '" + collection + "': " + err);
+          Zotero.BetterBibTex.log("Could not export bibliography '" + library + "'", err);
+          sendResponseCallback(404, "text/plain", "Could not export bibliography '" + library + "': " + err);
         }
       }
     }

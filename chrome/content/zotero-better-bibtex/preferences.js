@@ -12,7 +12,7 @@ function serverURL(collectionsView, extension)
   }
 
   var isLibrary = true;
-  for (var type of ['Collection', 'Search', 'Trash', 'Group', 'Duplicates', 'Unfiled', 'Header', 'Bucket']) {
+  for (var type of ['Collection', 'Search', 'Trash', 'Duplicates', 'Unfiled', 'Header', 'Bucket']) {
     if (itemGroup['is' + type]()) {
       isLibrary = false;
       break;
@@ -27,7 +27,12 @@ function serverURL(collectionsView, extension)
   }
 
   if (isLibrary) {
-    url = 'library?library' + extension;
+    var libid = collectionsView.getSelectedLibraryID();
+    if (libid) {
+        url = 'library?/' + libid + '/library' + extension;
+    } else {
+        url = 'library?library' + extension;
+    }
   }
 
   if (!url) { return; }
