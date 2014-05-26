@@ -67,10 +67,10 @@ function writeFieldMap(item, fieldMap) {
 
     if(item[zoteroField]) {
       value = item[zoteroField];
-      if (bibtexField == 'url') {
-        writeField(bibtexField, escape_url(value));
+      if (['url', 'doi'].indexOf(bibtexField) >= 0) {
+        writeField(bibtexField, minimal_escape(value));
       } else {
-        writeField(bibtexField, escape(value, {brace: brace}));
+        writeField(bibtexField, latex_escape(value, {brace: brace}));
       }
     }
   });
@@ -136,7 +136,7 @@ function getBibTexType(item)
  */
 var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
-function escape_url(url) {
+function minimal_escape(url) {
   var href = url.replace(/([#\\_%&{}])/g, "\\$1");
 
   if (!Config.unicode) {
@@ -150,7 +150,7 @@ function escape_url(url) {
   return href;
 }
 
-function escape(value, options) {
+function latex_escape(value, options) {
   if ((typeof options) == 'string') { options = {sep: options}; }
   if ((typeof options) == 'boolean') { options = {brace: true}; }
   options = (options || {})
@@ -160,7 +160,7 @@ function escape(value, options) {
 
   if (value instanceof Array) {
     if (value.length == 0) { return; }
-    return value.map(function(word) { return escape(word, options); }).join(options.sep);
+    return value.map(function(word) { return latex_escape(word, options); }).join(options.sep);
   }
 
   if (options.brace && !value.literal && Config.braceAll) {
@@ -183,18 +183,18 @@ function writeExtra(item, field) {
     item.extra = item.extra.replace(m[0], '').trim();
     m[1].split(';').forEach(function(assignment) {
       var data = assignment.split('=', 2);
-      writeField(data[0], escape(data[1]));
+      writeField(data[0], latex_escape(data[1]));
     });
   }
 
-  writeField(field, escape(item.extra));
+  writeField(field, latex_escape(item.extra));
 }
 
 function flushEntry(item) {
   // fully empty zotero reference generates invalid bibtex. This type-reassignment does nothing but adds the single
   // field each entry needs as a minimum.
   if (Config.fieldsWritten.length == 0) {
-    writeField('type', escape(getBibTexType(item)));
+    writeField('type', latex_escape(getBibTexType(item)));
   }
 }
 

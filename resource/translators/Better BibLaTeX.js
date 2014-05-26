@@ -220,14 +220,14 @@ function doExport() {
     writeFieldMap(item, fieldMap);
 
     if (Config.usePrefix) {
-      writeField('options', escape('useprefix'));
+      writeField('options', latex_escape('useprefix'));
     }
 
     //all kinds of numbers (biblatex has additional support for journal number != issue, but zotero has not)
-    writeField('number', escape(item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number));
+    writeField('number', latex_escape(item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number));
 
     //split numeric and nonnumeric issue specifications (for journals) into "number" and "issue"
-    writeField((isNaN(parseInt(item.issue)) ? 'issue' : 'number'), escape(item.issue));
+    writeField((isNaN(parseInt(item.issue)) ? 'issue' : 'number'), latex_escape(item.issue));
 
     if (item.publicationTitle) {
       switch (item.itemType) {
@@ -235,44 +235,44 @@ function doExport() {
         case 'conferencePaper':
         case 'dictionaryEntry':
         case 'encyclopediaArticle':
-          writeField('booktitle', escape(item.publicationTitle, {brace: true}));
+          writeField('booktitle', latex_escape(item.publicationTitle, {brace: true}));
           break;
 
         case 'magazineArticle':
         case 'newspaperArticle':
-          writeField('journaltitle', escape(item.publicationTitle, {brace: true}));
+          writeField('journaltitle', latex_escape(item.publicationTitle, {brace: true}));
           break;
 
         case 'journalArticle':
           if (Config.useJournalAbbreviation) {
-            writeField('journal', escape(item.journalAbbreviation, {brace: true}));
+            writeField('journal', latex_escape(item.journalAbbreviation, {brace: true}));
           } else {
-            writeField('journaltitle', escape(item.publicationTitle, {brace: true}));
-            writeField('shortjournal', escape(item.journalAbbreviation, {brace: true}));
+            writeField('journaltitle', latex_escape(item.publicationTitle, {brace: true}));
+            writeField('shortjournal', latex_escape(item.journalAbbreviation, {brace: true}));
           }
           break;
       }
     }
 
-    if (!Config.fieldsWritten.has('booktitle')) { writeField('booktitle', escape(item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, {brace: true})); }
+    if (!Config.fieldsWritten.has('booktitle')) { writeField('booktitle', latex_escape(item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, {brace: true})); }
 
-    writeField('titleaddon', escape(item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, {brace: true}));
+    writeField('titleaddon', latex_escape(item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, {brace: true}));
 
-    writeField('series', escape(item.seriesTitle || item.series, {brace: true})); 
+    writeField('series', latex_escape(item.seriesTitle || item.series, {brace: true})); 
     switch (item.itemType) {
       case 'report':
       case 'thesis':
-        writeField('institution', escape(item.publisher, {brace: true}));
+        writeField('institution', latex_escape(item.publisher, {brace: true}));
         break;
 
       default:
-        writeField('publisher', escape(item.publisher, {brace: true}));
+        writeField('publisher', latex_escape(item.publisher, {brace: true}));
         break;
     }
 
     switch (item.itemType) {
       case 'letter':
-        writeField('type', escape(item.letterType || 'Letter'));
+        writeField('type', latex_escape(item.letterType || 'Letter'));
         break;
 
       case 'email':
@@ -283,12 +283,12 @@ function doExport() {
         if (item.itemType == 'thesis' && (item.thesisType || 'phd').match(/ph\.?d/i)) {
           writeField("type", "phdthesis");
         } else {
-          writeField('type', escape(item.manuscriptType || item.thesisType || item.websiteType || item.presentationType || item.reportType || item.mapType));
+          writeField('type', latex_escape(item.manuscriptType || item.thesisType || item.websiteType || item.presentationType || item.reportType || item.mapType));
         }
         break;
     }
 
-    writeField('howpublished', escape(item.presentationType || item.manuscriptType));
+    writeField('howpublished', latex_escape(item.presentationType || item.manuscriptType));
 
     //case of specific eprint-archives in archive-fields
     if (item.archive && item.archiveLocation) {
@@ -296,7 +296,7 @@ function doExport() {
       switch (item.archive.toLowerCase()) {
         case 'arxiv':
           writeField('eprinttype', 'arxiv');
-          writeField('eprintclass', escape(item.callNumber));
+          writeField('eprintclass', latex_escape(item.callNumber));
           break;
 
         case 'jstor':
@@ -320,10 +320,10 @@ function doExport() {
           archive = false;
       }
 
-      if (archive) { writeField('eprint', escape(item.archiveLocation)); }
+      if (archive) { writeField('eprint', latex_escape(item.archiveLocation)); }
     }
 
-    writeField('note', escape(item.meetingName));
+    writeField('note', latex_escape(item.meetingName));
 
     if (item.creators && item.creators.length) {
       // split creators into subcategories
@@ -384,51 +384,51 @@ function doExport() {
         }
       });
 
-      writeField('author', escape(authors, {sep: ' and '}));
-      writeField('bookauthor', escape(bookauthors, {sep: ' and '}));
-      writeField('commentator', escape(commentators, {sep: ' and '}));
-      writeField('editor', escape(editors, {sep: ' and '}));
+      writeField('author', latex_escape(authors, {sep: ' and '}));
+      writeField('bookauthor', latex_escape(bookauthors, {sep: ' and '}));
+      writeField('commentator', latex_escape(commentators, {sep: ' and '}));
+      writeField('editor', latex_escape(editors, {sep: ' and '}));
 
-      writeField('editora', escape(editoras, {sep: ' and '}));
+      writeField('editora', latex_escape(editoras, {sep: ' and '}));
       if (editoras.length > 0) { writeField('editoratype', 'collaborator'); }
 
-      writeField('editorb', escape(editorbs, {sep: ' and '}));
+      writeField('editorb', latex_escape(editorbs, {sep: ' and '}));
       if (editorbs.length > 0) { writeField('editorbtype', 'redactor'); }
 
-      writeField('holder', escape(holders, {sep: ' and '}));
-      writeField('translator', escape(translators, {sep: ' and '}));
+      writeField('holder', latex_escape(holders, {sep: ' and '}));
+      writeField('translator', latex_escape(translators, {sep: ' and '}));
     }
 
     if (item.accessDate) {
-      writeField('urldate', escape(strToISO(item.accessDate)));
+      writeField('urldate', latex_escape(strToISO(item.accessDate)));
     }
 
     if (item.date) {
       var date = strToISO(item.date);
       if (date) {
-        writeField('date', escape(date));
+        writeField('date', latex_escape(date));
       } else {
-        writeField('date', escape({literal:item.date}));
+        writeField('date', latex_escape({literal:item.date}));
       }
 
       date = Zotero.Utilities.strToDate(item.date);
       if (date) {
-        writeField('year', escape(date.year))
+        writeField('year', latex_escape(date.year))
       }
     }
 
     if (item.language) {
       var language = babelLanguageMap.get(item.language.toLowerCase().replace(/[^a-z0-9]/, '_')) || item.language;
-      writeField('language', escape(language || ''));
+      writeField('language', latex_escape(language || ''));
     }
 
     writeExtra(item, (Config.fieldsWritten['note'] ? 'annotation' : 'note'));
 
-    writeField('keywords', escape(item.tags.map(function(tag) {return tag.tag;}), {sep: ','}));
+    writeField('keywords', latex_escape(item.tags.map(function(tag) {return tag.tag;}), {sep: ','}));
 
     if (item.notes && Config.exportNotes) {
       item.notes.forEach(function(note) {
-        writeField('annotation', escape(Zotero.Utilities.unescapeHTML(note.note)));
+        writeField('annotation', latex_escape(Zotero.Utilities.unescapeHTML(note.note)));
       });
     }
 

@@ -94,31 +94,31 @@ function doExport() {
     writeFieldMap(item, fieldMap);
 
     if (item.reportNumber || item.issue || item.seriesNumber || item.patentNumber) {
-      writeField('number', escape(item.reportNumber || item.issue || item.seriesNumber|| item.patentNumber));
+      writeField('number', latex_escape(item.reportNumber || item.issue || item.seriesNumber|| item.patentNumber));
     }
 
     if (item.accessDate){
       var accessYMD = item.accessDate.replace(/\s*\d+:\d+:\d+/, '');
-      writeField('urldate', escape(accessYMD));
+      writeField('urldate', latex_escape(accessYMD));
     }
 
     if (item.publicationTitle) {
       if (item.itemType == 'bookSection' || item.itemType == 'conferencePaper') {
-        writeField('booktitle', escape(item.publicationTitle, {brace: true}));
+        writeField('booktitle', latex_escape(item.publicationTitle, {brace: true}));
       } else if (Config.useJournalAbbreviation && item.journalAbbreviation){
-        writeField('journal', escape(item.journalAbbreviation, {brace: true}));
+        writeField('journal', latex_escape(item.journalAbbreviation, {brace: true}));
       } else {
-        writeField('journal', escape(item.publicationTitle, {brace: true}));
+        writeField('journal', latex_escape(item.publicationTitle, {brace: true}));
       }
     }
 
     if (item.publisher) {
       if (item.itemType == 'thesis') {
-        writeField('school', escape(item.publisher, {brace: true}));
+        writeField('school', latex_escape(item.publisher, {brace: true}));
       } else if (item.itemType =='report') {
-        writeField('institution', escape(item.publisher, {brace: true}));
+        writeField('institution', latex_escape(item.publisher, {brace: true}));
       } else {
-        writeField('publisher', escape(item.publisher, {brace: true}));
+        writeField('publisher', latex_escape(item.publisher, {brace: true}));
       }
     }
 
@@ -153,34 +153,34 @@ function doExport() {
         }
       });
 
-      writeField('author', escape(authors, {sep: ' and '}));
-      writeField('editor', escape(editors, {sep: ' and '}));
-      writeField('translator', escape(translators, {sep: ' and '}));
-      writeField('collaborator', escape(collaborators, {sep: ' and '}));
+      writeField('author', latex_escape(authors, {sep: ' and '}));
+      writeField('editor', latex_escape(editors, {sep: ' and '}));
+      writeField('translator', latex_escape(translators, {sep: ' and '}));
+      writeField('collaborator', latex_escape(collaborators, {sep: ' and '}));
     }
 
     if (item.date) {
       var date = Zotero.Utilities.strToDate(item.date);
       if (typeof date.year === 'undefined') {
-        writeField('year', escape({literal:item.date}));
+        writeField('year', latex_escape({literal:item.date}));
       } else {
         // need to use non-localized abbreviation
         if (typeof date.month == 'number') {
-          writeField('month', escape(months[date.month]), true); // no braces at all around the month
+          writeField('month', latex_escape(months[date.month]), true); // no braces at all around the month
         }
-        writeField('year', escape(date.year));
+        writeField('year', latex_escape(date.year));
       }
     }
 
     writeExtra(item, 'note');
 
-    writeField('keywords', escape(item.tags.map(function(tag) { return tag.tag; }), {sep: ','}));
+    writeField('keywords', latex_escape(item.tags.map(function(tag) { return tag.tag; }), {sep: ','}));
 
-    writeField('pages', escape(item.pages));
+    writeField('pages', latex_escape(item.pages));
 
     // Commented out, because we don't want a books number of pages in the BibTeX "pages" field for books.
     //if (item.numPages) {
-    //  writeField('pages', escape(item.numPages));
+    //  writeField('pages', latex_escape(item.numPages));
     //}
 
     /* We'll prefer url over howpublished see
@@ -191,7 +191,7 @@ function doExport() {
     }*/
     if (item.notes && Config.exportNotes) {
       item.notes.forEach(function(note) {
-        writeField('annote', escape(Zotero.Utilities.unescapeHTML(note.note)));
+        writeField('annote', latex_escape(Zotero.Utilities.unescapeHTML(note.note)));
       });
     }
 
