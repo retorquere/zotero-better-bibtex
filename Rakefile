@@ -143,8 +143,8 @@ file 'update.rdf' => [XPI, 'install.rdf'] do |t|
   update_rdf = Nokogiri::XML(File.open(t.name))
   update_rdf.at('//em:version').content = RELEASE
   update_rdf.at('//RDF:Description')['about'] = "urn:mozilla:extension:#{EXTENSION_ID}"
-  update_rdf.xpath('//em:updateLink').each{|link| link.content = "https://raw.github.com/ReichenHack/zotero-#{EXTENSION}/master/#{XPI}" }
-  update_rdf.xpath('//em:updateInfoURL').each{|link| link.content = "https://github.com/ReichenHack/zotero-#{EXTENSION}" }
+  update_rdf.xpath('//em:updateLink').each{|link| link.content = "https://raw.github.com/AllThatIsTheCase/zotero-#{EXTENSION}/master/#{XPI}" }
+  update_rdf.xpath('//em:updateInfoURL').each{|link| link.content = "https://github.com/AllThatIsTheCase/zotero-#{EXTENSION}" }
   File.open('update.rdf','wb') {|f| update_rdf.write_xml_to f}
 end
 
@@ -164,7 +164,7 @@ file 'README.md' => ['../zotero-better-bibtex.wiki/Home.md', 'Rakefile'] do |t|
     next unless File.exists?(patch)
     puts "Patching #{patch}"
     readme = File.open(patch).read
-    readme.gsub!(/\(http[^)]+\.xpi\)/, "(https://raw.github.com/ReichenHack/zotero-#{EXTENSION}/master/#{XPI})")
+    readme.gsub!(/\(http[^)]+\.xpi\)/, "(https://raw.github.com/AllThatIsTheCase/zotero-#{EXTENSION}/master/#{XPI})")
     readme.gsub!(/\*\*[0-9]+\.[0-9]+\.[0-9]+\*\*/, "**#{RELEASE}**")
     readme.gsub!(/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}/, DateTime.now.strftime('%Y-%m-%d %H:%M'))
     home = readme if patch =~ /Home\.md$/
@@ -178,7 +178,7 @@ file 'README.md' => ['../zotero-better-bibtex.wiki/Home.md', 'Rakefile'] do |t|
       text = link.gsub(/\|.*/, '')
       link.gsub!(/.*\|/, '')
       link.gsub!(/\s/, '-')
-      link = "https://github.com/ReichenHack/zotero-better-bibtex/wiki/#{link}"
+      link = "https://github.com/AllThatIsTheCase/zotero-better-bibtex/wiki/#{link}"
       "[#{text}](#{link})"
     }
     File.open(t.name, 'w'){|f| f.write(home)}
@@ -232,7 +232,7 @@ task :release, :bump do |t, args|
 
   install_rdf = Nokogiri::XML(File.open('install.rdf'))
   install_rdf.at('//em:version').content = release
-  install_rdf.at('//em:updateURL').content = "https://raw.github.com/ReichenHack/zotero-#{EXTENSION}/master/update.rdf"
+  install_rdf.at('//em:updateURL').content = "https://raw.github.com/AllThatIsTheCase/zotero-#{EXTENSION}/master/update.rdf"
   File.open('install.rdf','wb') {|f| install_rdf.write_xml_to f}
   puts `git add install.rdf`
   puts "Release set to #{release}. Please publish."
