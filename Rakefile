@@ -164,7 +164,7 @@ file 'README.md' => ['../zotero-better-bibtex.wiki/Home.md', 'Rakefile'] do |t|
     next unless File.exists?(patch)
     puts "Patching #{patch}"
     readme = File.open(patch).read
-    readme.gsub!(/\(http[^)]+\.xpi\)/, "(https://raw.github.com/AllThatIsTheCase/zotero-#{EXTENSION}/master/#{XPI})")
+    readme.gsub!(/\(http[^)]+\.xpi\)/, "(https://github.com/AllThatIsTheCase/zotero-#{EXTENSION}/raw/master/#{XPI})")
     readme.gsub!(/\*\*[0-9]+\.[0-9]+\.[0-9]+\*\*/, "**#{RELEASE}**")
     readme.gsub!(/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}/, DateTime.now.strftime('%Y-%m-%d %H:%M'))
     home = readme if patch =~ /Home\.md$/
