@@ -19,9 +19,8 @@ The Better BibTeX [configuration pane](https://github.com/AllThatIsTheCase/zoter
 
 # Installation (one-time)
 
-After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://github.com/AllThatIsTheCase/zotero-better-bibtex/raw/master/zotero-better-bibtex-0.5.24.xpi) (**0.5.24**,
-released on 2014-05-29 16:10). If you are not prompted with a Firefox installation dialog then double-click the
+After installation, the plugin will auto-update to newer releases. Install by downloading the [latest version](https://github.com/AllThatIsTheCase/zotero-better-bibtex/raw/master/zotero-better-bibtex-0.5.25.xpi) (**0.5.25**,
+released on 2014-05-30 13:17). If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
 For standalone Zotero, do the following:
