@@ -14,6 +14,7 @@ require 'v8'
 require 'chronic'
 require 'sqlite3'
 require 'i18n'
+require 'json/minify'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
@@ -292,7 +293,7 @@ class Test
     @options = {}
 
     options = "test/#{type}/#{translator}.#{id}.options.json"
-    @options = JSON.parse(File.open(options).read) if File.exist?(options)
+    @options = JSON.parse(JSON.minify(File.open(options).read)) if File.exist?(options)
     if @options['prefs']
       @options['prefs'].each_pair{|k, v| @prefs[k] = v }
       @options = @options['options'] || {}
@@ -444,7 +445,7 @@ class Test
 
     @output = ''
 
-    @items = JSON.parse(File.open(input).read)
+    @items = JSON.parse(JSON.minify(File.open(input).read))
     @items.each_with_index{|item, i|
       item['itemID'] = i+1
       item['key'] = "X#{item['itemID']}"
@@ -499,7 +500,7 @@ class Test
     throw "#{expected} does not exist" unless File.exists?(expected)
 
     @input = File.open(input).read
-    expected = JSON.parse(File.open(expected).read)
+    expected = JSON.parse(JSON.minify(File.open(expected).read))
     @items = [];
     script(File.open('test/item.js'))
     script('doImport();')
@@ -653,7 +654,7 @@ class Translator
   def get_testcases
     @_testcases = []
     Dir["test/import/#{File.basename(@source, File.extname(@source)) + '.*.bib'}"].sort.each{|test|
-      @_testcases << {type: 'import', input: File.open(test).read, items: JSON.parse(File.open(test.gsub(/\.bib$/, '.json')).read)}
+      @_testcases << {type: 'import', input: File.open(test).read, items: JSON.parse(JSON.minify(File.open(test.gsub(/\.bib$/, '.json')).read))}
     }
     @_testcases = JSON.pretty_generate(@_testcases)
   end
