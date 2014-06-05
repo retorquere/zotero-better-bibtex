@@ -580,14 +580,46 @@ class Translator
         # \combinecommand{X}
         #raise value if value =~ /LECO/
 
+        latex = [repl['latex']]
+        case repl['latex']
+          when /^(\\[a-z][^\s]*)\s$/i, /^(\\[^a-z])\s$/i  # '\ss ', '\& ' => '{\\s}', '{\&}'
+            latex << "{#{$1}}"
+          when /^(\\[^a-z]){(.)}$/                       # '\"{a}' => '\"a'
+            latex << "#{$1}#{$2}"
+          when /^(\\[^a-z])(.)\s*$/                       # '\"a " => '\"{a}'
+            latex << "#{$1}{#{$2}}"
+          when /^{(\\[.]+)}$/                             # '{....}' '.... '
+            latex << "#{$1} "
+        end
+
+        # prefered option is braces-over-traling-space because of miktex bug that doesn't ignore spaces after commands
+        latex.sort!{|a, b|
+          nsa = !(a =~ /\s$/)
+          nsb = !(a =~ /\s$/)
+          ba = a.gsub(/[^{]/, '')
+          bb = b.gsub(/[^{]/, '')
+          if nsa == nsb
+            bb <=> ba
+          elsif nsa
+            -1
+          elsif nsb
+            1
+          else
+            a <=> b
+          end
+        }
+
         if key =~ /^[\x20-\x7E]$/ # an ascii character that needs translation? Probably a TeX special character
-          u2l[:unicode][:map][key] = repl['latex']
+          u2l[:unicode][:map][key] = latex[0]
           u2l[:unicode][:math] << key if repl['math']
         end
-        u2l[:ascii][:map][key] = repl['latex']
+
+        u2l[:ascii][:map][key] = latex[0]
         u2l[:ascii][:math] << key if repl['math']
 
-        l2u[repl['latex'].strip] = key if repl['latex'] =~ /\\/
+        latex.each{|ltx|
+          l2u[ltx] = key if ltx =~ /\\/
+        }
       }
 
       [:ascii, :unicode].each{|map|

@@ -203,6 +203,8 @@ function doExport() {
   });
 
   exportJabRefGroups();
+
+  Zotero.write("\n");
 }
 
 function addToExtra(item, str) {
