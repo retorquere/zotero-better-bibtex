@@ -1,6 +1,10 @@
 # Zotero: Better Bib(La)TeX [![Build Status](https://travis-ci.org/ZotPlus/zotero-better-bibtex.svg?branch=master)](https://travis-ci.org/ZotPlus/zotero-better-bibtex)
 
-This extension aims to make Zotero effective for us LaTeX holdouts. It adds the following features:
+This extension aims to make Zotero effective for us LaTeX holdouts. At its core, it behaves like any Zotero
+import/export module; anywhere you can export or import bibliography items in Zotero, you'll find Better Bib(La)TeX
+listed as one of the choices. If nothing else, you could keep your existing workflow as-is, and just enjoy the emproved
+LaTeX &lt;-&gt; unicode translation on in-and export. Over and above this improvemen, it adds the following features to
+Zotero:
 
 * **Converts from/to HTML/LaTeX**: Currently supports i/\emph/\textit, b/\textbf, sup/\_{...} and sub/^{...}; more can
   be added on request. Finally add italics and super/supscript to your titles! The plugin contains a comprehensive list
@@ -20,7 +24,7 @@ The Better BibTeX [configuration pane](https://github.com/ZotPlus/zotero-better-
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest version](https://github.com/ZotPlus/zotero-better-bibtex/raw/master/zotero-better-bibtex-0.5.28.xpi) (**0.5.28**,
-released on 2014-06-05 14:17). If you are not prompted with a Firefox installation dialog then double-click the
+released on 2014-06-05 20:00). If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
 For standalone Zotero, do the following:
@@ -33,8 +37,12 @@ For standalone Zotero, do the following:
 
 # Got problems? We got fixes!
 
-Before submitting an issue, please go through the [Support Request Guidelines](https://github.com/ZotPlus/zotero-better-bibtex/wiki/Support-Request-Guidelines); it will
-make sure I get your problem fixed as quick as possible. Clear bug reports commonly have time-to-fix of 10 minutes.
+If you have any questions on the use of the plugin, please do not hesitate to file a GitHub issue to ask for help. If
+you're reporting a bug in the plugin, please take a moment to glance through the [Support Request Guidelines](https://github.com/ZotPlus/zotero-better-bibtex/wiki/Support-Request-Guidelines); it will
+make sure I get your problem fixed as quick as possible. Clear bug reports commonly have time-to-fix of 10 minutes. The
+guidelines are very detailed, perhaps to the point of being off-putting, but please do not fret; these guidelines
+simply express my ideal bug submission. I of course prefer very clearly documented issue reports over fuzzy ones, but I
+prefer fuzzy ones over missed ones.
 
 # Plans
 
