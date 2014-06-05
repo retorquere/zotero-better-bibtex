@@ -354,7 +354,7 @@ Formatter = {
   },
 
   stripHTML: function(str) {
-    return str.replace(/<\/?(sup|sub|i|b|p|span|br|break)\/?>/g, ' ').replace(/\s+/, ' ').trim();
+    return str.replace(/<\/?(sup|sub|i|b|p|span|br|break)\/?>/g, '').replace(/\s+/, ' ').trim();
   },
 
   functions: {

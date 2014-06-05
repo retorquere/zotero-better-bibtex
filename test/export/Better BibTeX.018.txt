@@ -2,7 +2,7 @@
 
 
 % Better BibTeX: generated
-@article{Dasharpler2001,
+@article{Dassler2001,
   doi = {10.1175/1520-0493(1987)115<1606:GARSPP>2.0.CO;2},
   title = {{The physical: violent volcanology of the 1600 eruption of Huaynaputina, southern Peru}},
   volume = {{62}},

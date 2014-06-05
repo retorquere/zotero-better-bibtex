@@ -13,7 +13,7 @@ require 'tempfile'
 require 'v8'
 require 'chronic'
 require 'sqlite3'
-require 'asciidammit'
+require 'i18n'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
@@ -371,7 +371,7 @@ class Test
   end
 
   def removeDiacritics(str)
-    return str.asciidammit
+    I18n.transliterate(str)
   end
 
   def nextCollection
