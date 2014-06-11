@@ -204,9 +204,17 @@ task :newtest, :translator, :type do |t, args|
         end
       }.compact
 
+      lasttest = Dir['test/export/*.json'].collect{|input|
+        if File.basename(input) =~ /([0-9]+)\.json$/
+          Integer($1.gsub(/^0+/, ''))
+        else
+          nil
+        end
+      }.compact
+
       throw "No #{type.inspect} tests for #{translator.inspect}" if tests.empty?
       template = tests.max.to_s.rjust(3, '0')
-      newtest = (tests.max + 1).to_s.rjust(3, '0')
+      newtest = (lasttest.max + 1).to_s.rjust(3, '0')
 
       Dir["test/export/#{translator}.#{template}.*"].each{|src|
         tgt = src.sub(template, newtest)

@@ -845,10 +845,8 @@ var CiteKeys = {
 LaTeX.toUnicode["\\url"] = '';
 LaTeX.toUnicode["\\href"] = '';
 
-LaTeX.html2latex = function(str) {
-  var regex = LaTeX.regex[Config.unicode ? 'unicode' : 'ascii'];
-
-  var html2latex = {
+LaTeX.html2latexsupport = {
+  html2latex: {
     sup:      {open: "\\ensuremath{^{", close: "}}"},
     sub:      {open: "\\ensuremath{_{", close: "}}"},
     i:        {open: "\\emph{",         close: "}"},
@@ -857,65 +855,90 @@ LaTeX.html2latex = function(str) {
     span:     {open: "",                close: ""},
     br:       {open: "\n\n",            close: "", empty: true},
     'break':  {open: "\n\n",            close: "", empty: true}
-  };
+  },
 
-  var tags = new RegExp('(' + Object.keys(html2latex).map(function(tag) { return '<\/?' + tag + '\/?>'} ).join('|') + ')', 'ig');
+  htmlstack: [],
 
-  var htmlstack = [];
-  var close;
+  htmltag: function(str) {
+    var close;
+    var tag = str.replace(/[^a-z]/ig, '').toLowerCase();
+    var repl = LaTeX.html2latexsupport.html2latex[tag];
 
-  var res = ('' + str).split(tags).map(function(chunk, index) {
-    if ((index % 2) == 1) { // odd element = splitter == html tag
+    // not a '/' at position 2 means it's an opening tag
+    if (str.charAt(1) != '/') {
+      // only add tag to the stack if it is not a self-closing tag. Self-closing tags ought to have the second-to-last
+      // character be a '/', but this is not a perfect world (loads of <br>'s out there, so tags that always *ought*
+      // to be empty are treated as such, regardless of whether the obligatory closing slash is present or not.
+      if (str.slice(-2, 1) != '/' && !repl.empty) { LaTeX.html2latexsupport.htmlstack.unshift(tag); }
+      return repl.open;
+    }
 
-      var tag = chunk.replace(/[^a-z]/ig, '').toLowerCase();
-      var repl = html2latex[tag];
+    // if it's a closing tag, it ought to be the first one on the stack
+    close = LaTeX.html2latexsupport.htmlstack.indexOf(tag);
+    if (close < 0) {
+      trLog('Ignoring unexpected close tag "' + tag + '"');
+      return '';
+    }
 
-      // not a '/' at position 2 means it's an opening tag
-      if (chunk.charAt(1) != '/') {
-        // only add tag to the stack if it is not a self-closing tag. Self-closing tags ought to have the second-to-last
-        // character be a '/', but this is not a perfect world (loads of <br>'s out there, so tags that always *ought*
-        // to be empty are treated as such, regardless of whether the obligatory closing slash is present or not.
-        if (chunk.slice(-2, 1) != '/' && !repl.empty) { htmlstack.unshift(tag); }
-        return repl.open;
+    if (close > 0) {
+      trLog('Unexpected close tag "' + tag + '", closing "' + LaTeX.html2latexsupport.htmlstack.slice(0, close).join(', ') + '"');
+    }
+
+    close = LaTeX.html2latexsupport.htmlstack.slice(0, close).map(function(tag) { return html2latex[tag].close; }).join('');
+    LaTeX.html2latexsupport.htmlstack = LaTeX.html2latexsupport.htmlstack.slice(close + 1);
+    return repl.close;
+  },
+
+  unicode: function(str) {
+    var regex = LaTeX.regex[Config.unicode ? 'unicode' : 'ascii'];
+
+    return str.split(regex.math).map(function(text, i) {
+
+      var latex = text.replace(regex.text, function(match) {
+        return (LaTeX.toLaTeX[match] || match);
+      });
+
+      if ((i % 2) == 1) { // odd element == splitter == block of math
+        return '\\ensuremath{' + latex + '}';
       }
 
-      // if it's a closing tag, it ought to be the first one on the stack
-      close = htmlstack.indexOf(tag);
-      if (close < 0) {
-        trLog('Ignoring unexpected close tag "' + tag + '"');
-        return '';
-      }
+      return latex;
 
-      if (close > 0) {
-        trLog('Unexpected close tag "' + tag + '", closing "' + htmlstack.slice(0, close).join(', ') + '"');
-      }
+    }).join('');
+  }
 
-      close = htmlstack.slice(0, close).map(function(tag) { return html2latex[tag].close; }).join('');
-      htmlstack = htmlstack.slice(close + 1);
-      return repl.close;
+};
+
+LaTeX.html2latex = function(str) {
+  var tags = new RegExp('(' + Object.keys(LaTeX.html2latexsupport.html2latex).map(function(tag) { return '<\/?' + tag + '\/?>'} ).join('|') + ')', 'ig');
+
+  return ('' + str).split(/(<pre>.*?<\/pre>)/ig).map(function(chunk, pre) {
+    if ((pre % 2) == 1) { // odd element = splitter == pre block
+
+      return chunk.replace(/^<pre>/i, '').replace(/<\/pre>$/, '');
 
     } else {
 
-      return chunk.split(regex.math).map(function(text, i) {
+      LaTeX.html2latexsupport.htmlstack = [];
 
-        var latex = text.replace(regex.text, function(match) {
-          return (LaTeX.toLaTeX[match] || match);
-        });
+      var res = chunk.split(tags).map(function(chunk, htmltag) {
+        if ((htmltag % 2) == 1) { // odd element = splitter == html tag
 
-        if ((i % 2) == 1) { // odd element == splitter == block of math
-          return '\\ensuremath{' + latex + '}';
+          return LaTeX.html2latexsupport.htmltag(chunk);
+
+        } else {
+
+          return LaTeX.html2latexsupport.unicode(chunk);
+
         }
+      }).join('').replace(/{}\s+/g, ' ');
 
-        return latex;
+      if (LaTeX.html2latexsupport.htmlstack.length != 0) {
+        trLog('Unmatched HTML tags: ' + LaTeX.html2latexsupport.htmlstack.join(', '));
+        res += htmlstack.map(function(tag) { return LaTeX.html2latexsupport.html2latex[tag].close; }).join('');
+      }
 
-      }).join('');
+      return res;
     }
-  }).join('').replace(/{}\s+/g, ' ');
-
-  if (htmlstack.length != 0) {
-    trLog('Unmatched HTML tags: ' + htmlstack.join(', '));
-    res += htmlstack.map(function(tag) { return html2latex[tag].close; }).join('');
-  }
-
-  return res;
+  }).join('');
 }
