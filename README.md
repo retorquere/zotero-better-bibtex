@@ -8,7 +8,8 @@ Zotero:
 
 * **Converts from/to HTML/LaTeX**: Currently supports i/\emph/\textit, b/\textbf, sup/\_{...} and sub/^{...}; more can
   be added on request. Finally add italics and super/supscript to your titles! The plugin contains a comprehensive list
-  of LaTeX constructs, so stuff like \"{o} or \"o will be converted to their unicode equivalents on import.
+  of LaTeX constructs, so stuff like \"{o} or \"o will be converted to their unicode equivalents on import. If you need
+  literal LaTeX in your export: surround it with &lt;pre&gt;....&lt;/pre&gt; tags.
 * Integration with **[Report Customizer](https://github.com/ZotPlus/zotero-better-bibtex/wiki/Citation-Keys)**
 * Set your own, fixed **[Citation Keys](https://github.com/ZotPlus/zotero-better-bibtex/wiki/Citation-Keys)**, generate citation keys from JabRef patterns, drag and drop LaTeX citations, add other custom BibLaTeX fields
 * **[Customized Exports](https://github.com/ZotPlus/zotero-better-bibtex/wiki/Customized-Exports)**
@@ -23,8 +24,8 @@ The Better BibTeX [configuration pane](https://github.com/ZotPlus/zotero-better-
 
 # Installation (one-time)
 
-After installation, the plugin will auto-update to newer releases. Install by downloading the [latest version](https://github.com/ZotPlus/zotero-better-bibtex/raw/master/zotero-better-bibtex-0.5.28.xpi) (**0.5.28**,
-released on 2014-06-05 20:04). If you are not prompted with a Firefox installation dialog then double-click the
+After installation, the plugin will auto-update to newer releases. Install by downloading the [latest version](https://github.com/ZotPlus/zotero-better-bibtex/raw/master/zotero-better-bibtex-0.5.29.xpi) (**0.5.29**,
+released on 2014-06-11 21:28). If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
 For standalone Zotero, do the following:
