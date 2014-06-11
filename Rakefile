@@ -157,7 +157,7 @@ task :publish => ['README.md', XPI, 'update.rdf'] do
   sh "cd ../zotero-better-bibtex.wiki; git commit -am 'release'; git push"
 end
 
-file 'README.md' => ['../zotero-better-bibtex.wiki/Home.md', 'Rakefile'] do |t|
+file 'README.md' => ['../zotero-better-bibtex.wiki/Home.md', 'install.rdf', 'Rakefile'] do |t|
   puts 'Updating README.md'
 
   home = nil
