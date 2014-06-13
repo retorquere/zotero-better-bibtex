@@ -54,6 +54,17 @@ var Dict = (function() {
         return false;
       },
 
+      keys: function() {
+        var keys = [];
+        this.forEach(function(k, v) { keys.push(k); });
+        return keys;
+      },
+      values: function() {
+        var values = [];
+        this.forEach(function(k, v) { values.push(v); });
+        return values;
+      },
+
       clear: function () {
         store = Object.create(null);
         size = 0;

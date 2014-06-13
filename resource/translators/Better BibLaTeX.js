@@ -64,82 +64,135 @@ var fieldMap = Dict({
 
 var babelLanguageMap = Dict({
   af:         'afrikaans',
+  am:         'amharic',
   ar:         'arabic',
-  eu:         'basque',
-  br:         'breton',
+  ast:        'asturian',
   bg:         'bulgarian',
+  bn:         'bengali',
+  bo:         'tibetan',
+  br:         'breton',
   ca:         'catalan',
-  hr:         'croatian',
+  cop:        'coptic',
+  cy:         'welsh',
   cz:         'czech',
   da:         'danish',
-  nl:         'dutch',
-  en:         'english',
-  en_us:      'american',
-  en_gb:      'british',
-  en_ca:      'canadian',
-  en_au:      'australian',
-  en_nz:      'newzealand',
-  eo:         'esperanto',
-  et:         'estonian',
-  fa:         'farsi',
-  fi:         'finnish',
-  fr:         'french',
-  fr_ca:      'canadien',
-  fur:        'friulan',
-  gl:         'galician',
-  de:         'german',
+  de_1996:    'ngerman',
+  de_at_1996: 'naustrian',
   de_at:      'austrian',
   de_de_1996: 'ngerman',
-  de_at_1996: 'naustrian',
-  de_1996:    'ngerman',
+  de:         ['german', 'germanb'],
+  dsb:        ['lsorbian', 'lowersorbian'],
+  dv:         'divehi',
   el:         'greek',
   el_polyton: 'polutonikogreek',
+  en_au:      'australian',
+  en_ca:      'canadian',
+  en:         'english',
+  en_gb:      ['british', 'ukenglish'],
+  en_nz:      'newzealand',
+  en_us:      ['american', 'usenglish'],
+  eo:         'esperanto',
+  es:         'spanish',
+  et:         'estonian',
+  eu:         'basque',
+  fa:         'farsi',
+  fi:         'finnish',
+  fr_ca:      ['acadian', 'canadian', 'canadien'],
+  fr:         ['french', 'francais'],
+  fur:        'friulan',
+  ga:         'irish',
+  gd:         ['scottish', 'gaelic'],
+  gl:         'galician',
   he:         'hebrew',
   hi:         'hindi',
-  is:         'icelandic',
-  id:         'indonesian', //aliases: bahasai, indon
+  hr:         'croatian',
+  hsb:        ['usorbian', 'uppersorbian'],
+  hu:         'magyar',
+  hy:         'armenian',
   ia:         'interlingua',
-  ga:         'irish',
+  id:         ['indonesian', 'bahasa', 'bahasai', 'indon', 'meyalu'],
+  is:         'icelandic',
   it:         'italian',
   ja:         'japanese',
+  kn:         'kannada',
   la:         'latin',
-  lv:         'latvian',
+  lo:         'lao',
   lt:         'lithuanian',
-  dsb:        'lowersorbian',
-  hu:         'magyar',
-  zlm:        'malay', //aliases: bahasam, melayu (currently, there's no //real difference between bahasam and bahasai in babel)
+  lv:         'latvian',
+  ml:         'malayalam',
   mn:         'mongolian',
-  se:         'samin',
-  nn:         'nynorsk', //nynorsk
-  nb:         'norsk', //bokmal
-  no:         'norwegian', //'no' could be used, norwegian is an alias for 'norsk' in babel
-  zh:         'pinyin', //only supported chinese in babel is the romanization pinyin?
-  zh_latn:    'pinyin',
+  mr:         'marathi',
+  nb:         ['norsk', 'bokmal'],
+  // nko
+  nl:         'dutch',
+  nn:         'nynorsk',
+  no:         ['norwegian', 'norsk'],
+  oc:         'occitan',
   pl:         'polish',
-  pt:         'portuguese',
+  pms:        'piedmontese',
+  pt_br:      ['brazil', 'brazilian'],
+  pt:         ['portuguese', 'portuges'],
   pt_pt:      'portuguese',
-  pt_br:      'brazilian',
-  ro:         'romanian',
   rm:         'romansh',
+  ro:         'romanian',
   ru:         'russian',
-  gd:         'scottish',
-  sr:         'serbian', //latin script as default?
-  sr_cyrl:    'serbianc',
-  sr_Latn:    'serbian',
+  sa:         'sanskrit',
+  se:         'samin',
   sk:         'slovak',
-  sl:         'slovene',
-  //spanglish (pseudo language)
-  es:         'spanish',
+  sl:         ['slovenian', 'slovene'],
+  sq_al:      'albanian',
+  sr_cyrl:    'serbianc',
+  sr_latn:    'serbian',
+  sr:         'serbian', //latin script as default?
   sv:         'swedish',
-  th:         'thaicjk', //thaicjk preferred?
-  tr:         'turkish',
+  syr:        'syriac',
+  ta:         'tamil',
+  te:         'telugu',
+  th:         ['thai', 'thaicjk'],
   tk:         'turkmen',
+  tr:         'turkish',
   uk:         'ukrainian',
-  hsb:        'uppersorbian',
+  ur:         'urdu',
   vi:         'vietnamese',
-  cy:         'welsh'
+  zh_latn:    'pinyin',
+  zh:         'pinyin', //only supported chinese in babel is the romanization pinyin?
+  zlm:        ['malay', 'bahasam', 'melayu'],
 });
+babelLanguageMap.forEach(function(key, value) {
+  if (typeof value === 'string' ) {
+    babelLanguageMap.set(key, [value]);
+  }
+});
+var babelLanguageList = [].concat.apply([], babelLanguageMap.values()).filter(function(value, index, self) { return self.indexOf(value) === index; });
 
+function get_bigrams(string) {
+    // Takes a string and returns a list of bigrams
+    var s = string.toLowerCase();
+    var v = new Array(s.length-1);
+    for (i = 0; i< v.length; i++){
+        v[i] =s.slice(i,i+2);
+    }
+    return v;
+}
+
+function string_similarity(str1, str2){
+    /*
+    Perform bigram comparison between two strings
+    and return a percentage match in decimal form
+    */
+    var pairs1 = get_bigrams(str1);
+    var pairs2 = get_bigrams(str2);
+    var union = pairs1.length + pairs2.length;
+    var hit_count = 0;
+    for (x in pairs1){
+        for (y in pairs2){
+            if (pairs1[x] == pairs2[y]){
+                hit_count++;
+            }
+        }
+    }
+    return ((2.0 * hit_count) / union);
+}
 
 //POTENTIAL ISSUES
 //"programTitle", "bookTitle" //TODO, check!!
@@ -418,8 +471,20 @@ function doExport() {
     }
 
     if (item.language) {
-      var language = babelLanguageMap.get(item.language.toLowerCase().replace(/[^a-z0-9]/, '_')) || item.language;
-      writeField('language', latex_escape(language || ''));
+      var langlc = item.language.toLowerCase();
+      var language = babelLanguageMap.get(langlc.replace(/[^a-z0-9]/, '_'));
+      if (language) {
+        language = language[0];
+      } else {
+        var sim = babelLanguageList.map(function(id) { return {lang: id, sim: string_similarity(langlc, id)}; }).sort(function(a, b) { return b.sim - a.sim });
+        if (sim[0].sim >= 0.90) {
+          language = sim[0].lang;
+        } else {
+          language = null;
+        }
+      }
+
+      writeField('langid', latex_escape(language));
     }
 
     writeExtra(item, (Config.fieldsWritten['note'] ? 'annotation' : 'note'));
