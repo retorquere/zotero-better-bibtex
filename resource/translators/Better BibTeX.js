@@ -260,20 +260,26 @@ function createZoteroReference(bibtexitem) {
     } else if (field == 'fjournal') {
       if (item.publicationTitle) {
         // move publicationTitle to abbreviation
-        item.journalAbbreviation = value;
+        item.journalAbbreviation = item.publicationTitle;
       }
       item.publicationTitle = value;
 
     } else if (field == 'author' || field == 'editor' || field == 'translator') {
-      value.split(/ and /i).map(function(name) { return name.trim(); }).filter(function(name) { return (name != ''); }).forEach(function(name) {
+      value.forEach(function(name) {
         var creator = {};
-        var pieces = name.split(',');
-        if (pieces.length > 1) {
-          creator.firstName = pieces.pop().trim();
-          creator.lastName = pieces.join(',').trim();
+        if (name.literal) {
+          creator.firstName = name.literal
           creator.creatorType = field;
+          creator.fieldMode = 1; // forces single-field display in Zotero
         } else {
-          creator = Zotero.Utilities.cleanAuthor(name, field, false);
+          var pieces = name.split(',');
+          if (pieces.length > 1) {
+            creator.firstName = pieces.pop().trim();
+            creator.lastName = pieces.join(',').trim();
+            creator.creatorType = field;
+          } else {
+            creator = Zotero.Utilities.cleanAuthor(name, field, false);
+          }
         }
         item.creators.push(creator);
       });
@@ -359,7 +365,7 @@ function createZoteroReference(bibtexitem) {
         return k.replace(/^[\s{]+|[}\s]+$/gm, '').trim();
       });
 
-    } else if (field == 'comment' || field == 'annote' || field == 'review') {
+    } else if (field == 'comment' || field == 'annote' || field == 'review' || field == 'notes') {
       item.notes.push({note:Zotero.Utilities.text2html(value)});
 
     } else if (field == 'file') {

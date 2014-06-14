@@ -191,21 +191,24 @@ task :newtest, :translator, :type do |t, args|
   type = args[:type]
 
   translator = 'Better BibLaTeX' if translator == 'bbltx'
+  translator = 'Better BibTeX' if translator == 'bbtx'
   type = 'export' if type == 'e'
+  type = 'import' if type == 'i'
 
   case type
-    when 'export'
+    when 'export', 'import'
+      inputext = (type == 'export' ? 'json' : 'bib')
       template = []
-      tests = Dir['test/export/*.json'].collect{|input|
-        if File.basename(input) =~ /^#{translator}\.([0-9]+)\.json$/
+      tests = Dir["test/#{type}/*.#{inputext}"].collect{|input|
+        if File.basename(input) =~ /^#{translator}\.([0-9]+)\.#{inputext}$/
           Integer($1.gsub(/^0+/, ''))
         else
           nil
         end
       }.compact
 
-      lasttest = Dir['test/export/*.json'].collect{|input|
-        if File.basename(input) =~ /([0-9]+)\.json$/
+      lasttest = Dir["test/#{type}/*.#{inputext}"].collect{|input|
+        if File.basename(input) =~ /([0-9]+)\.#{inputext}$/
           Integer($1.gsub(/^0+/, ''))
         else
           nil
@@ -216,7 +219,7 @@ task :newtest, :translator, :type do |t, args|
       template = tests.max.to_s.rjust(3, '0')
       newtest = (lasttest.max + 1).to_s.rjust(3, '0')
 
-      Dir["test/export/#{translator}.#{template}.*"].each{|src|
+      Dir["test/#{type}/#{translator}.#{template}.*"].each{|src|
         tgt = src.sub(template, newtest)
         FileUtils.cp(src, tgt)
       }
@@ -257,6 +260,14 @@ class Hash
       if (a[k] || []) != (b[k] || []) && (a[k] || '') != (b[k] || '')
         if a[k].respond_to?(:deep_diff) && b[k].respond_to?(:deep_diff)
           diff[k] = a[k].deep_diff(b[k])
+        elsif a[k].is_a?(Array) && b[k].is_a?(Array)
+          extra = a[k] - b[k]
+          missing = b[k] - a[k]
+          if extra.empty? && missing.empty?
+            diff[k] = {order: a[k]}
+          else
+            diff[k] = {missing: missing, extra: extra}
+          end
         else
           diff[k] = [a[k], b[k]]
         end
@@ -558,11 +569,11 @@ class Translator
 
   def self.parser
     if @@parser.nil?
-      puts "Generating parser from #{BIBTEX_GRAMMAR.inspect}"
-      Tempfile.open('bibtex') do |parser|
-        puts `pegjs -e BibTeX #{BIBTEX_GRAMMAR.inspect} #{parser.path.inspect}`
-        @@parser = File.open(parser.path).read
-      end
+      p = 'tmp/parser.js'
+      puts "Generating #{p.inspect} from #{BIBTEX_GRAMMAR.inspect}"
+      puts `pegjs -e BibTeX #{BIBTEX_GRAMMAR.inspect} #{p.inspect}`
+      exit unless $? == 0
+      @@parser = File.open(p).read
     end
     return @@parser
   end

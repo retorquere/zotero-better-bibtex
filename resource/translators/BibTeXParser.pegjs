@@ -44,31 +44,43 @@ entry
   / other:[^@]+ { bibtex.comments.push(join(other).trim()); }
 
 reference
-  = type:identifier _* "{" _* id:citekey _* "," values:field* "}" _* {
-      if (values.length == 0) {
+  = type:identifier _* "{" _* id:citekey _* "," fields:field* "}" _* {
+      if (fields.length == 0) {
         error('@' + type + '{' + id + ',}');
       } else {
         var ref = Dict({'__type__': type.toLowerCase(), '__key__': id});
-        values.forEach(function(v) {
-          if (v.value && v.value != '') {
-            if (v.key == 'file') {
-              var attachments;
-              if (ref.has('file')) {
-                attachments = ref.get('file');
-              } else {
-                attachments = [];
-              }
-              ref.set('file', attachments.concat(v.value));
-            } else if (ref.has(v.key)) {
-              var note;
-              if (ref.has('__note__')) {
-                note = ref.get('__note__') + "<br/>\n";
-              } else {
-                note = '';
-              }
-              ref.set('__note__', note + v.key + '=' + v.value);
-            } else {
-              ref.set(v.key, v.value);
+        fields.forEach(function(field) {
+          if (field.value && field.value != '') {
+            switch (field.type) {
+              case 'file':
+                var attachments;
+                if (ref.has('file')) {
+                  attachments = ref.get('file');
+                } else {
+                  attachments = [];
+                }
+                ref.set('file', attachments.concat(field.value));
+                break;
+
+              case 'creator':
+                if (field.value.length > 0) {
+                  ref.set(field.key, field.value);
+                }
+                break;
+
+              default:
+                if (ref.has(field.key)) { // duplicate fields are not supposed to occur I think
+                  var note;
+                  if (ref.has('__note__')) {
+                    note = ref.get('__note__') + "<br/>\n";
+                  } else {
+                    note = '';
+                  }
+                  ref.set('__note__', note + field.key + '=' + field.value);
+                } else {
+                  ref.set(field.key, field.value);
+                }
+                break;
             }
           }
         });
@@ -84,11 +96,40 @@ citekey
   = str:[^,]+ { return join(str); }
 
 field
-  = _* key:attachmenttype _* '=' _* val:attachments _* (',' _*)? { return {key: 'file', value: filterattachments(val || [], key)}; }
+  = _* key:attachmenttype _* '=' _* val:attachments _* (',' _*)? { return {key: 'file', type: 'file', value: filterattachments(val || [], key)}; }
+  / _* key:creatortype _* '=' _* val:creators _* ("," _*)? {
+      var creators = [{string: ''}];
+      val.forEach(function(word) {
+        if (word.trim() == 'and') {
+          creators.push({string: ''});
+        } else {
+          var index = creators.length - 1;
+          if (word.trim() != '') { creators[index].literal = (creators[index].string.trim() == '' && /\s/.test(word.trim())); }
+          creators[index].string += word;
+        }
+      });
+
+      creators = creators.map(function(c) {
+        c.string = c.string.trim();
+        return c;
+      }).filter(function(c) {
+        return (c.string != '');
+      }).map(function(c) {
+        return (c.literal ? {literal: c.string} : c.string);
+      });
+      return {key: key, type: 'creator', value: creators};
+    }
   / key_value
+
+creators
+  = bracedvalue
+  / quotedvalue
 
 attachmenttype
   = ('sentelink' / 'file' / 'pdf' / 'path')
+
+creatortype
+  = ('author' / 'editor' / 'translator')
 
 attachments
   = '{' val:attachmentlist? '}' { return val; }
@@ -105,9 +146,15 @@ value
       val = join(val);
       return (bibtex.strings.has(val) ? bibtex.strings.get(val) : val);
     }
-  / '"' & { bibtex.quote = '"'; return true; }  val:string* '"' & { delete bibtex.quote; return true; } { return join(val); }
-  / '{' & { delete bibtex.quote; return true; } val:string* '}' & { delete bibtex.quote; return true; } { return join(val); }
+  / val:bracedvalue { return join(val); }
+  / val:quotedvalue { return join(val); }
   / _* "#" _* val:value { return val; }
+
+bracedvalue
+  = '{' & { delete bibtex.quote; return true; } val:string* '}' & { delete bibtex.quote; return true; } { return val; }
+
+quotedvalue
+  = '"' & { bibtex.quote = '"'; return true; }  val:string* '"' & { delete bibtex.quote; return true; } { return val; }
 
 string
   = text:plaintext                { return text; }
