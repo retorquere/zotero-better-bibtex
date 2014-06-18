@@ -165,6 +165,7 @@ babelLanguageMap.forEach(function(key, value) {
 });
 var babelLanguageList = [].concat.apply([], babelLanguageMap.values()).filter(function(value, index, self) { return self.indexOf(value) === index; });
 
+/* get_bigrams and string_similarity together implement http://www.catalysoft.com/articles/strikeamatch.html */
 function get_bigrams(string) {
     // Takes a string and returns a list of bigrams
     var s = string.toLowerCase();
@@ -174,7 +175,6 @@ function get_bigrams(string) {
     }
     return v;
 }
-
 function string_similarity(str1, str2){
     /*
     Perform bigram comparison between two strings
@@ -473,11 +473,19 @@ function doExport() {
     if (item.language) {
       var langlc = item.language.toLowerCase();
       var language = babelLanguageMap.get(langlc.replace(/[^a-z0-9]/, '_'));
-      if (language) {
+      if (language) { // if the language map has the exact language code, use that language
         language = language[0];
       } else {
-        var sim = babelLanguageList.map(function(id) { return {lang: id, sim: string_similarity(langlc, id)}; }).sort(function(a, b) { return b.sim - a.sim });
-        if (sim[0].sim >= 0.90) {
+        // if not, it's time to get crafty.
+        var sim = babelLanguageList.map(function(id) {
+          // for each possible language id, calculate its similarity to what was entered into zotero
+          return {lang: id, sim: string_similarity(langlc, id)};
+        }).sort(function(a, b) {
+          // sort the results so the most similar entries go to the front
+          return b.sim - a.sim
+        });
+
+        if (sim[0].sim >= 0.90) { // only pick up a match if it's at least 90% similar
           language = sim[0].lang;
         } else {
           language = null;
