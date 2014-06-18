@@ -22,6 +22,7 @@
         <preference id="pref-better-bibtex-fancyurls" name="extensions.zotero.translators.better-bibtex.fancyURLs" type="bool"/>
         <preference id="pref-better-bibtex-brace-all" name="extensions.zotero.translators.better-bibtex.brace-all" type="bool"/>
         <preference id="pref-better-bibtex-useprefix" name="extensions.zotero.translators.better-bibtex.useprefix" type="bool"/>
+        <preference id="pref-better-bibtex-langid" name="extensions.zotero.translators.better-bibtex.langid" type="string"/>
       </preferences>
       <vbox flex="1">
         <grid>
@@ -40,6 +41,13 @@
             <row>
               <label value="&zotero.better-bibtex.skipFields;"/>
               <textbox id="id-better-bibtex-preferences-skipFields" preference="pref-better-bibtex-skipFields" oninput="updatePreferences(event);" onkeypress="setTimeout(updatePreferences, 1);"/>
+            </row>
+            <row>
+              <label value="&zotero.better-bibtex.langid;"/>
+              <radiogroup id="id-better-bibtex-preferences-langid" orient="horizontal" preference="pref-better-bibtex-langid">
+                <radio id="id-better-bibtex-preferences-langid-babel" label="&zotero.better-bibtex.langid.babel;" value="babel"/>
+                <radio id="id-better-bibtex-preferences-langid-polyglossia" label="&zotero.better-bibtex.langid.polyglossia;" value="polyglossia"/>
+              </radiogroup>
             </row>
             <row>
               <label value="&zotero.better-bibtex.unicode;"/>

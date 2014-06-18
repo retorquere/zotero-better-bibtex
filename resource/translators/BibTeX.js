@@ -15,6 +15,7 @@ var Config = {
     Config.usePrefix  = options.usePrefix || Zotero.getHiddenPref('better-bibtex.useprefix');
     Config.braceAll   = options.braceAll  || Zotero.getHiddenPref('better-bibtex.brace-all');
     Config.fancyURLs  = options.fancyURLs || Zotero.getHiddenPref('better-bibtex.fancyURLs');
+    Config.langid     = options.langid    || Zotero.getHiddenPref('better-bibtex.langid');
 
     Config.useJournalAbbreviation = options.useJournalAbbreviation  || Zotero.getOption('useJournalAbbreviation');
     Config.exportCharset          = options.exportCharset           || Zotero.getOption('exportCharset');
@@ -91,32 +92,43 @@ function writeField(field, value, bare) {
   Zotero.write(",\n  " + field + " = " + value);
 }
 
+function escapeAttachments(attachments, wipeBraces) {
+  return attachments.map(function(att) {
+    return [att.title, att.path, att.mimetype].map(function(part) { return (wipeBraces ? part.replace('{', '(').replace('}', ')') : part).replace(/([\\{}:;])/g, "\\$1"); }).join(':');
+  }).join(';');
+}
+function writeAttachments(item) {
+  if(! item.attachments) { return ; }
 
-function saveAttachments(item) {
-  if(! item.attachments) {
-    return null;
-  }
-
+  trLog(item.attachments.length + ' attachments');
   var attachments = [];
+  var broken = [];
   item.attachments.forEach(function(att) {
-    if (Config.exportFileData && att.defaultPath && att.saveFile) {
-      att.saveFile(att.defaultPath);
-      attachments.push({title: att.title, path: att.defaultPath, mimetype: att.mimeType});
+    var a = {title: att.title, path: att.localPath, mimetype: att.mimeType};
+    var save = (Config.exportFileData && att.defaultPath && att.saveFile);
+
+    if (save) { a.path = att.defaultPath; }
+
+    if (a.path.match(/[{}]/)) { // latex really doesn't want you to do this.
+      broken.push(a);
       return;
     }
 
-    if (att.localPath) {
+    if (save) { att.saveFile(att.defaultPath); }
+
+    if (a.path) {
       attachments.push({title: att.title, path: att.localPath, mimetype: att.mimeType});
-      return;
+    } else {
+      trLog('WARNING: attachment without path: ' + att.title);
     }
-
-    Zotero.debug('WARNING: attachment without path: ' + att.title);
   });
 
-  if (attachments.length == 0) {
-    return null;
+  if (attachments.length != 0) {
+    writeField('file', escapeAttachments(attachments, true));
   }
-  return attachments.map(function(att) { return [att.title, att.path, att.mimetype].map(function(part) { return part.replace(/([\\{}:;])/g, "\\$1"); }).join(':'); }).join(';');
+  if (broken.length != 0) {
+    writeField('latex_doesnt_like_filenames_with_braces', escapeAttachments(broken, false));
+  }
 }
 
 function trLog(msg) { Zotero.debug('[' + Config.label + '] ' + msg); }

@@ -164,6 +164,13 @@ babelLanguageMap.forEach(function(key, value) {
   }
 });
 var babelLanguageList = [].concat.apply([], babelLanguageMap.values()).filter(function(value, index, self) { return self.indexOf(value) === index; });
+var polyglossia = [ 'albanian', 'amharic', 'arabic', 'armenian', 'asturian', 'bahasai', 'bahasam', 'basque', 'bengali', 'brazilian', 'brazil',
+                    'breton', 'bulgarian', 'catalan', 'coptic', 'croatian', 'czech', 'danish', 'divehi', 'dutch', 'english', 'british', 'ukenglish',
+                    'esperanto', 'estonian', 'farsi', 'finnish', 'french', 'friulan', 'galician', 'german', 'austrian', 'naustrian', 'greek', 'hebrew',
+                    'hindi', 'icelandic', 'interlingua', 'irish', 'italian', 'kannada', 'lao', 'latin', 'latvian', 'lithuanian', 'lsorbian', 'magyar',
+                    'malayalam', 'marathi', 'nko', 'norsk', 'nynorsk', 'occitan', 'piedmontese', 'polish', 'portuges', 'romanian', 'romansh', 'russian',
+                    'samin', 'sanskrit', 'scottish', 'serbian', 'slovak', 'slovenian', 'spanish', 'swedish', 'syriac', 'tamil', 'telugu', 'thai',
+                    'tibetan', 'turkish', 'turkmen', 'ukrainian', 'urdu', 'usorbian', 'vietnamese', 'welsh'];
 
 /* get_bigrams and string_similarity together implement http://www.catalysoft.com/articles/strikeamatch.html */
 function get_bigrams(string) {
@@ -505,7 +512,7 @@ function doExport() {
       });
     }
 
-    writeField('file', saveAttachments(item));
+    writeAttachments(item);
 
     flushEntry(item);
 

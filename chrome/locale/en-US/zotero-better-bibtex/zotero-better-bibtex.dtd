@@ -24,3 +24,6 @@
 <!ENTITY zotero.better-bibtex.format.reset "Reset attachment formatter">
 <!ENTITY zotero.better-bibtex.brace-all "Wrap all fields in double-braces">
 <!ENTITY zotero.better-bibtex.useprefix "Add 'useprefix' option to BibLaTeX export">
+<!ENTITY zotero.better-bibtex.langid "When exporting language information, use the conventions from">
+<!ENTITY zotero.better-bibtex.langid.babel "Babel">
+<!ENTITY zotero.better-bibtex.langid.polyglossia "Polyglossia">

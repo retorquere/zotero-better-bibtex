@@ -195,7 +195,7 @@ function doExport() {
       });
     }
 
-    writeField('file', saveAttachments(item));
+    writeAttachments(item);
 
     flushEntry(item);
 
