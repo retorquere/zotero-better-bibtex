@@ -1,0 +1,19 @@
+
+
+
+% Better BibLaTeX: generated
+@article{deOliveira2010-Liquidliquidequilibrium,
+  doi = {10.1016/j.jct.2010.06.007},
+  issn = {00219614},
+  pages = {1379-1385},
+  title = {{(Liquid+liquid) equilibrium of \{water+phenol+(1-butanol, or 2-butanol, or tert-butanol)\} systems}},
+  url = {http://linkinghub.elsevier.com/retrieve/pii/S0021961410002107},
+  volume = {{42}},
+  number = {11},
+  journaltitle = {{The Journal of Chemical Thermodynamics}},
+  author = {de Oliveira, Leonardo Hadlich and Aznar, Martín},
+  urldate = {2014-06-18},
+  date = {2010-11},
+  year = {2010},
+  langid = {english}
+}

@@ -247,7 +247,7 @@ Formatter = {
   },
 
   words: function(str) {
-    return Formatter.stripHTML('' + str).split(/[\.,-\/#!$%\^&\*;:{}=\-\s`~()]+/).filter(function(word) { return (word != '');}).map(function (word) { return CiteKeys.clean(word) });
+    return Formatter.stripHTML('' + str).split(/[\+\.,-\/#!$%\^&\*;:{}=\-\s`~()]+/).filter(function(word) { return (word != '');}).map(function (word) { return CiteKeys.clean(word) });
   },
 
   skipWords: [
@@ -748,7 +748,7 @@ var CiteKeys = {
 
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
   andersJohanssonKeyRE: /biblatexcitekey\[([^\]]+)\]/,
-  safechars: /[a-z0-9_!\$\*\+\.\/;\?\[\]]/ig,
+  safechars: /[-a-z0-9_!\$\*\+\.\/;\?\[\]]/ig,
   // not  "@',\#}{%
 
   initialize: function(items) {

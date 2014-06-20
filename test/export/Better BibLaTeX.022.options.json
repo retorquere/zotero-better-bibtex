@@ -1,0 +1,5 @@
+{
+  "prefs": {
+    "better-bibtex.citeKeyFormat": "[auth][year]-[shorttitle]"
+  }
+}
