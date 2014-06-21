@@ -1,0 +1,14 @@
+
+
+
+% Better BibLaTeX: generated
+@book{Manning2008,
+  isbn = {9780521865715},
+  location = {{New York}},
+  pagetotal = {496},
+  title = {{Introduction to Information Retrieval}},
+  publisher = {{Cambridge University Press}},
+  author = {Manning, Christopher D. and Raghavan, Prabhakar and Schütze, Hinrich},
+  date = {2008-07-07},
+  year = {2008}
+}

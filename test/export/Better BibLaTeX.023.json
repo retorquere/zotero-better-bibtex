@@ -1,0 +1,55 @@
+[
+	{
+		"itemID": "Manning2008-IntroductionInformationRetrieval",
+		"itemType": "book",
+		"url": "",
+		"rights": "",
+		"series": "",
+		"volume": "",
+		"edition": "",
+		"place": "New York",
+		"publisher": "Cambridge University Press",
+		"ISBN": "9780521865715",
+		"date": "July 7, 2008",
+		"callNumber": "",
+		"archiveLocation": "",
+		"extra": "",
+		"accessDate": "",
+		"seriesNumber": "",
+		"numberOfVolumes": "",
+		"libraryCatalog": "",
+		"language": "",
+		"abstractNote": "",
+		"title": "Introduction to Information Retrieval",
+		"shortTitle": "",
+		"numPages": "496",
+		"archive": "",
+		"creators": [
+			{
+				"creatorType": "author",
+				"firstName": "Christopher D.",
+				"lastName": "Manning"
+			},
+			{
+				"creatorType": "author",
+				"firstName": "Prabhakar",
+				"lastName": "Raghavan"
+			},
+			{
+				"creatorType": "author",
+				"firstName": "Hinrich",
+				"lastName": "Schütze"
+			}
+		],
+		"notes": [],
+		"attachments": [
+			{
+				"title": "Amazon.com Link",
+				"mimeType": "text/html"
+			}
+		],
+		"tags": [],
+		"related": [],
+		"seeAlso": []
+	}
+]

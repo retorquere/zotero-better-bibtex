@@ -105,9 +105,12 @@ function writeAttachments(item) {
   var broken = [];
   item.attachments.forEach(function(att) {
     var a = {title: att.title, path: att.localPath, mimetype: att.mimeType};
+    trLog(a);
     var save = (Config.exportFileData && att.defaultPath && att.saveFile);
 
     if (save) { a.path = att.defaultPath; }
+
+    if (!a.path) { return; } // amazon/googlebooks etc links show up as atachments without a path
 
     if (a.path.match(/[{}]/)) { // latex really doesn't want you to do this.
       broken.push(a);
@@ -131,7 +134,10 @@ function writeAttachments(item) {
   }
 }
 
-function trLog(msg) { Zotero.debug('[' + Config.label + '] ' + msg); }
+function trLog(msg) {
+  if (typeof msg != 'string') { msg = JSON.stringify(msg); }
+  Zotero.debug('[' + Config.label + '] ' + msg);
+}
 
 function getBibTexType(item)
 {
