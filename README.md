@@ -24,8 +24,8 @@ The Better BibTeX [configuration pane](https://github.com/ZotPlus/zotero-better-
 
 # Installation (one-time)
 
-After installation, the plugin will auto-update to newer releases. Install by downloading the [latest version](https://github.com/ZotPlus/zotero-better-bibtex/raw/master/zotero-better-bibtex-0.5.38.xpi) (**0.5.38**,
-released on 2014-06-21 14:41). If you are not prompted with a Firefox installation dialog then double-click the
+After installation, the plugin will auto-update to newer releases. Install by downloading the [latest version](https://github.com/ZotPlus/zotero-better-bibtex/raw/master/zotero-better-bibtex-0.5.39.xpi) (**0.5.39**,
+released on 2014-06-25 00:50). If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
 For standalone Zotero, do the following:
