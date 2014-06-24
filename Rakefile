@@ -190,8 +190,10 @@ task :newtest, :translator, :type do |t, args|
   translator = args[:translator]
   type = args[:type]
 
-  translator = 'Better BibLaTeX' if translator == 'bbltx'
-  translator = 'Better BibTeX' if translator == 'bbtx'
+  TRANSLATORS.each{|t|
+    id = t[:name].gsub(/[^A-Z]/, '').downcase
+    translator = t[:name] if translator.downcase == id
+  }
   type = 'export' if type == 'e'
   type = 'import' if type == 'i'
 
@@ -282,7 +284,7 @@ class Test
   def pref(key, value)
     tkey = key.sub(/^extensions\.zotero\.translators\./, '')
     return unless tkey != key
-    @prefs[tkey] ||= value;
+    @hiddenPrefs[tkey] ||= value;
   end
 
   def script(content, init = false)
@@ -308,24 +310,23 @@ class Test
     @script = "tmp/#{translator}-#{type}-#{id}.js"
     File.unlink(@script) if File.exists?(@script)
 
-    @prefs = {}
-    @options = {}
-
-    options = "test/#{type}/#{translator}.#{id}.options.json"
-    @options = JSON.parse(JSON.minify(File.open(options).read)) if File.exist?(options)
-    if @options['prefs']
-      @options['prefs'].each_pair{|k, v| @prefs[k] = v }
-      @options = @options['options'] || {}
-    end
-
     @ctx = V8::Context.new
     @ctx['Zotero'] = self
     @ctx['ZU'] = self
     @ctx['Z'] = self
     @ctx['pref'] = lambda {|this, key, value| pref(key, value)}
 
+    @hiddenPrefs = {}
+    @options = {}
+    @ctx.load('defaults/preferences/defaults.js')
+    options = "test/#{type}/#{translator}.#{id}.options.json"
+    if File.exist?(options)
+      _options = JSON.parse(JSON.minify(File.open(options).read))
+      _options['hiddenPrefs'].each_pair{|k,v| @hiddenPrefs[k] = v} # don't overwrite hiddenPrefs because the defaults would disappear
+      @options = _options['options'] || {}
+    end
+
     script(File.open(DATE), :init)
-    script(File.open('defaults/preferences/defaults.js'))
     script('var __zotero__header__ = ')
     script(File.open("tmp/#{translator}.js"))
     script(File.open('test/utilities.js'))
@@ -363,7 +364,7 @@ class Test
   end
 
   def getHiddenPref(key)
-    return @prefs[key];
+    return @hiddenPrefs[key];
   end
 
   def getOption(key)

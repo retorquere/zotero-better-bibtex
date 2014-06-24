@@ -16,6 +16,7 @@ var Config = {
     Config.braceAll   = options.braceAll  || Zotero.getHiddenPref('better-bibtex.brace-all');
     Config.fancyURLs  = options.fancyURLs || Zotero.getHiddenPref('better-bibtex.fancyURLs');
     Config.langid     = options.langid    || Zotero.getHiddenPref('better-bibtex.langid');
+    Config.conflictResolution = options.ConflictResolution || Zotero.getHiddenPref('better-bibtex.conflictResolution');
 
     Config.useJournalAbbreviation = options.useJournalAbbreviation  || Zotero.getOption('useJournalAbbreviation');
     Config.exportCharset          = options.exportCharset           || Zotero.getOption('exportCharset');
@@ -835,14 +836,16 @@ var CiteKeys = {
       }
     });
 
-    CiteKeys.db.filter(function(rec) { return (rec.conflict == 'soft'); }).forEach(function(rec) {
-      var postfix = {n: 0, c:'a'};
-      while (CiteKeys.db.some(function(other) { return (other.key == (rec.key + postfix.c)); })) {
-        postfix.n++;
-        postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
-      }
-      rec.key += postfix.c;
-    });
+    if (Config.conflictResolution) {
+      CiteKeys.db.filter(function(rec) { return (rec.conflict == 'soft'); }).forEach(function(rec) {
+        var postfix = {n: 0, c:'a'};
+        while (CiteKeys.db.some(function(other) { return (other.key == (rec.key + postfix.c)); })) {
+          postfix.n++;
+          postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
+        }
+        rec.key += postfix.c;
+      });
+    }
   },
 
   clean: function(str) {

@@ -23,6 +23,7 @@
         <preference id="pref-better-bibtex-brace-all" name="extensions.zotero.translators.better-bibtex.brace-all" type="bool"/>
         <preference id="pref-better-bibtex-useprefix" name="extensions.zotero.translators.better-bibtex.useprefix" type="bool"/>
         <preference id="pref-better-bibtex-langid" name="extensions.zotero.translators.better-bibtex.langid" type="string"/>
+        <preference id="pref-better-bibtex-conflictResolution" name="extensions.zotero.translators.better-bibtex.conflictResolution" type="bool"/>
       </preferences>
       <vbox flex="1">
         <grid>
@@ -59,6 +60,9 @@
             </row>
             <row>
               <checkbox id="id-better-bibtex-preferences-useprefix" label="&zotero.better-bibtex.useprefix;" preference="pref-better-bibtex-useprefix"/>
+            </row>
+            <row>
+              <checkbox id="id-better-bibtex-preferences-conflictResolution" label="&zotero.better-bibtex.conflictResolution;" preference="pref-better-bibtex-conflictResolution"/>
             </row>
             <row>
               <checkbox id="id-better-bibtex-preferences-brace-all" label="&zotero.better-bibtex.brace-all;" preference="pref-better-bibtex-brace-all" oncommand="updatePreferences();"/>
