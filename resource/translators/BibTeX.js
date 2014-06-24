@@ -227,6 +227,7 @@ Formatter = {
     var creator;
     Formatter.item.creators.forEach(function(creator) {
       var name = Formatter.stripHTML('' + creator.lastName);
+      if (name == '') { Formatter.stripHTML('' + creator.firstName); }
       if (name != '') {
         switch (creator.creatorType) {
           case 'editor':
