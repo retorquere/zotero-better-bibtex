@@ -16,7 +16,8 @@ var Config = {
     Config.braceAll   = options.braceAll  || Zotero.getHiddenPref('better-bibtex.brace-all');
     Config.fancyURLs  = options.fancyURLs || Zotero.getHiddenPref('better-bibtex.fancyURLs');
     Config.langid     = options.langid    || Zotero.getHiddenPref('better-bibtex.langid');
-    Config.conflictResolution = options.ConflictResolution || Zotero.getHiddenPref('better-bibtex.conflictResolution');
+    Config.conflictResolution = options.conflictResolution || Zotero.getHiddenPref('better-bibtex.conflictResolution');
+    Config.metadataAttachments = options.metadataAttachments || Zotero.getHiddenPref('better-bibtex.metadataAttachments');
 
     Config.useJournalAbbreviation = options.useJournalAbbreviation  || Zotero.getOption('useJournalAbbreviation');
     Config.exportCharset          = options.exportCharset           || Zotero.getOption('exportCharset');

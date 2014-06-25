@@ -379,6 +379,14 @@ function createZoteroReference(bibtexitem) {
     }
   });
 
+  if (Config.metadataAttachments) {
+    item.attachments.push({
+      title: "Better BibTeX metadata",
+      snapshot:false, mimeType:"text/html",
+      url: 'json://better-bibtex/' + JSON.stringify({citekey: bibtexitem.get('__key__')})
+    });
+  }
+
   if (item.itemType == 'conferencePaper' && item.publicationTitle && !item.proceedingsTitle) {
     item.proceedingsTitle = item.publicationTitle;
     delete item.publicationTitle;
