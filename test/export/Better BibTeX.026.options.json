@@ -1,0 +1,5 @@
+{
+  "hiddenPrefs": {
+    "better-bibtex.citeKeyFormat": "[auth:lower][year:(ND)][shorttitle:lower]"
+  }
+}

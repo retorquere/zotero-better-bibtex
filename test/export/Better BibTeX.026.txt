@@ -1,0 +1,9 @@
+
+
+
+% Better BibTeX: generated
+@unpublished{traumNDcomputationalmodelsnon,
+  title = {{Computational Models of Non-cooperative dialogue}},
+  author = {Traum, David},
+  file = {Traum - Computational Models of Non-cooperative dialogue.pdf:/home/seb/.mozilla/firefox/4urz0oyr.default/zotero/storage/ZFMDUD5U/Traum - Computational Models of Non-cooperative dialogue.pdf:application/pdf}
+}

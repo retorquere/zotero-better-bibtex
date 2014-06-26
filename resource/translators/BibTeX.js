@@ -639,7 +639,7 @@ Formatter = {
           filter = params.shift();
           params.unshift(value);
           if (filter.match(/^[(].*[)]$/)) { // text between braces is default value in case a filter or function fails
-            if (value == '') { value = filter.substring(1, filter.length - 2); }
+            if (value == '') { value = filter.substring(1, filter.length - 1); }
           } else if (Formatter.filters[filter]) {
             value = Formatter.filters[filter].apply(null, params);
           } else {
