@@ -580,6 +580,10 @@ Formatter = {
 
     fold: function(value) {
       return ZU.removeDiacritics(value).split(/\s+/).join(' ').trim();
+    },
+
+    capitalize: function(value) {
+      return value.replace(/((^|\s)[a-z])/g, function(m) { return m.toUpperCase(); });
     }
   },
 
