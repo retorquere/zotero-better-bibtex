@@ -31,7 +31,6 @@ function scrub(item) {
 
   (item.creators || []).forEach(function(creator) {
     delete creator.creatorID;
-    delete creator.fieldMode;
   });
 
   (item.attachments || []).forEach(function(attachment) {
