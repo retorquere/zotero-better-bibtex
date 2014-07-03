@@ -35,12 +35,13 @@ UNICODE_MAPPING = 'tmp/unicode.json'
 BIBTEX_GRAMMAR  = Dir["resource/**/*.pegjs"][0]
 DICT            = 'chrome/content/zotero-better-bibtex/dict.js'
 DATE            = 'tmp/date.js'
+ABBR            = 'tmp/abbreviations.json'
 DB              = 'tmp/zotero.sqlite'
 
 SOURCES = %w{chrome test/import test/export resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
             .select{|f| File.file?(f)}
-            .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [DATE, UNICODE_MAPPING, BIBTEX_GRAMMAR, DICT]
+            .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [ABBR, DATE, UNICODE_MAPPING, BIBTEX_GRAMMAR, DICT]
 
 XPI = "zotero-#{EXTENSION}-#{RELEASE}.xpi"
 
@@ -322,7 +323,7 @@ class Test
     options = "test/#{type}/#{translator}.#{id}.options.json"
     if File.exist?(options)
       _options = JSON.parse(JSON.minify(File.open(options).read))
-      _options['hiddenPrefs'].each_pair{|k,v| @hiddenPrefs[k] = v} # don't overwrite hiddenPrefs because the defaults would disappear
+      (_options['hiddenPrefs'] || {}).each_pair{|k,v| @hiddenPrefs[k] = v} # don't overwrite hiddenPrefs because the defaults would disappear
       @options = _options['options'] || {}
     end
 
@@ -549,6 +550,7 @@ class Translator
   @@mapping = nil
   @@parser = nil
   @@dict = nil
+  @@abbreviations = nil
 
   def initialize(translator)
     @source = translator[:source]
@@ -559,13 +561,19 @@ class Translator
     @_unicode_mapping = Translator.mapping
     @_bibtex_parser = Translator.parser
     @_dict = Translator.dict
+    @_abbreviations = Translator.abbreviations
     @_release = RELEASE
     get_testcases
   end
-  attr_reader :_id, :_label, :_timestamp, :_release, :_unicode, :_unicode_mapping, :_bibtex_parser, :_dict, :_testcases
+  attr_reader :_id, :_label, :_timestamp, :_release, :_unicode, :_unicode_mapping, :_bibtex_parser, :_dict, :_testcases, :_abbreviations
 
   def self.dict
     @@dict ||= File.open(DICT).read
+  end
+
+  def self.abbreviations
+    @@abbreviations ||= "Config.abbreviations = #{open(ABBR).read}"
+    @@abbreviations ||= "Config.abbreviations = #{JSON.parse(open(ABBR).read)['default']['container-title'].to_json}"
   end
 
   def self.parser
@@ -739,6 +747,9 @@ end
 
 file DATE do
   download('https://raw.githubusercontent.com/zotero/zotero/4.0/chrome/content/zotero/xpcom/date.js', DATE)
+end
+file ABBR do
+  download('https://raw.githubusercontent.com/zotero/zotero/4.0/resource/schema/abbreviations.json', ABBR)
 end
 
 file UNICODE_MAPPING => 'Rakefile' do |t|
