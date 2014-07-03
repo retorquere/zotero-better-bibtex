@@ -415,7 +415,7 @@ Formatter = {
         authors = authors.slice(0, n);
         if (etal) { authors.push('EtAl'); }
       }
-      authors = authors.join('.');
+      authors = authors.join('');
       return authors;
     },
 
