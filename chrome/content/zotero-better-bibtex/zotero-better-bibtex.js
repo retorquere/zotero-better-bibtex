@@ -353,7 +353,7 @@ Zotero.BetterBibTex = {
       extra = extra .replace(/bibtex:\s*[^\s\r\n]+/, '');
       extra = extra.trim();
       item.setField('extra', extra);
-      item.save();
+      item.save({ skipDateModifiedUpdate: true });
     }
 
     var keys = Zotero.BetterBibTex.getCiteKeys(items);
