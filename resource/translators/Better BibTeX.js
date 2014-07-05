@@ -412,7 +412,3 @@ var exports = {
 	'doExport': doExport,
 	'doImport': doImport
 }
-
-/** BEGIN TEST CASES **/
-var testCases = /*= testcases =*/
-/** END TEST CASES **/
