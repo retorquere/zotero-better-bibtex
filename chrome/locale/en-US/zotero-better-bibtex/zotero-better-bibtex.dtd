@@ -1,6 +1,6 @@
 <!ENTITY zotero.better-bibtex.citekey_column	"Cite Key">
 <!ENTITY zotero.better-bibtex.show-collection-key "BibLaTeX url">
-<!ENTITY zotero.better-bibtex.set-citekey "Generate BibTex key">
+<!ENTITY zotero.better-bibtex.set-citekey "Generate BibTeX key">
 <!ENTITY zotero.better-bibtex.preferences.prefpane.better-bibtex "Better Bib(La)Tex">
 <!ENTITY zotero.better-bibtex.restart-required "Restart Required">
 <!ENTITY zotero.better-bibtex.preferences.recursive "Export collections recursively">
@@ -15,7 +15,7 @@
 <!ENTITY zotero.better-bibtex.server.warning "BibTeX http export uses the general Zotero HTTP facility; please note that disabling this will disable ALL http facilities in zotero -- including the non-Firefox plugins">
 <!ENTITY zotero.better-bibtex.recursive.warning "Enabling recursive export also causes Zotero to display collection content recursively">
 <!ENTITY zotero.better-bibtex.unicode "Export as Unicode">
-<!ENTITY zotero.better-bibtex.unicode.default "Default (Unicode for BibLaTeX, ASCII for BibTex)">
+<!ENTITY zotero.better-bibtex.unicode.default "Default (Unicode for BibLaTeX, ASCII for BibTeX)">
 <!ENTITY zotero.better-bibtex.unicode.always "Always">
 <!ENTITY zotero.better-bibtex.unicode.never "Never">
 <!ENTITY zotero.better-bibtex.fancyURLs "Clickable URLs">

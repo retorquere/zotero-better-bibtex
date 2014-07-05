@@ -1,6 +1,6 @@
 Components.utils.import("resource://gre/modules/Services.jsm");
 
-Zotero.BetterBibTex = {
+Zotero.BetterBibTeX = {
   prefs: {
     zotero: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero."),
     bbt:    Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero.translators.better-bibtex."),
@@ -30,7 +30,7 @@ Zotero.BetterBibTex = {
   },
 
   pref: function(key, dflt, branch) {
-    branch = Zotero.BetterBibTex.prefs[branch || 'bbt'];
+    branch = Zotero.BetterBibTeX.prefs[branch || 'bbt'];
     try {
       switch (typeof dflt) {
         case 'boolean':
@@ -47,41 +47,40 @@ Zotero.BetterBibTex = {
 
   init: function () {
     // migrate options
-    Zotero.BetterBibTex.prefs.legacy.clearUserPref('BibLaTex.ASCII');
-    Zotero.BetterBibTex.prefs.legacy.clearUserPref('citekeyformat');
-    Zotero.BetterBibTex.prefs.legacy.clearUserPref('getCollections');
+    Zotero.BetterBibTeX.prefs.legacy.clearUserPref('BibLaTex.ASCII');
+    Zotero.BetterBibTeX.prefs.legacy.clearUserPref('citekeyformat');
+    Zotero.BetterBibTeX.prefs.legacy.clearUserPref('getCollections');
     for (var option of ['citeCommand', 'citeKeyFormat']) {
       try {
-        var value = Zotero.BetterBibTex.prefs.legacy.getCharPref(option);
+        var value = Zotero.BetterBibTeX.prefs.legacy.getCharPref(option);
         if (value) {
-          Zotero.BetterBibTex.prefs.bbt.setCharPref(option, value);
-          Zotero.BetterBibTex.prefs.legacy.clearUserPref(option);
+          Zotero.BetterBibTeX.prefs.bbt.setCharPref(option, value);
+          Zotero.BetterBibTeX.prefs.legacy.clearUserPref(option);
         }
       } catch (err) {}
     }
 
-    for (var endpoint of Object.keys(Zotero.BetterBibTex.endpoints)) {
+    for (var endpoint of Object.keys(Zotero.BetterBibTeX.endpoints)) {
       var url = "/better-bibtex/" + endpoint;
-      Zotero.BetterBibTex.log('Registering endpoint ' + url);
+      Zotero.BetterBibTeX.log('Registering endpoint ' + url);
       var ep = Zotero.Server.Endpoints[url] = function() {};
-      ep.prototype = Zotero.BetterBibTex.endpoints[endpoint];
+      ep.prototype = Zotero.BetterBibTeX.endpoints[endpoint];
     }
 
-    Zotero.BetterBibTex.config = {}
-    for (var option of ['citeCommand', 'citeKeyFormat', 'fancyURLs', 'unicode']) {
-      var value = null;
-      try {
-        value = Zotero.BetterBibTex.prefs.bbt.getPref(option);
-      } catch(err) {}
-      Zotero.BetterBibTex.config[option] = value;
-    }
+    Zotero.BetterBibTeX.Sandbox = {
+      hello: function() {
+        Zotero.BetterBibTeX.log('bbt: bbt.hello!');
+      }
+    };
+    Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = Zotero.BetterBibTeX.Sandbox;
+    Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = Zotero.BetterBibTeX.Sandbox;
 
-    Zotero.BetterBibTex.safeLoad('Better BibTeX.js');
-    Zotero.BetterBibTex.safeLoad('Better BibLaTeX.js');
-    Zotero.BetterBibTex.safeLoad('LaTeX Citation.js');
-    Zotero.BetterBibTex.safeLoad('Pandoc Citation.js');
-    Zotero.BetterBibTex.safeLoad('BibTeX Citation Keys.js');
-    Zotero.BetterBibTex.safeLoad('Zotero TestCase.js');
+    Zotero.BetterBibTeX.safeLoad('Better BibTeX.js');
+    Zotero.BetterBibTeX.safeLoad('Better BibLaTeX.js');
+    Zotero.BetterBibTeX.safeLoad('LaTeX Citation.js');
+    Zotero.BetterBibTeX.safeLoad('Pandoc Citation.js');
+    Zotero.BetterBibTeX.safeLoad('BibTeX Citation Keys.js');
+    Zotero.BetterBibTeX.safeLoad('Zotero TestCase.js');
     Zotero.Translators.init();
   },
 
@@ -98,7 +97,7 @@ Zotero.BetterBibTex = {
         hasParams = true;
       } catch (e) {}
     });
-    Zotero.BetterBibTex.log('displayOptions = ' + JSON.stringify(params));
+    Zotero.BetterBibTeX.log('displayOptions = ' + JSON.stringify(params));
     return (hasParams ? params : null);
   },
 
@@ -132,10 +131,10 @@ Zotero.BetterBibTex = {
 
           var items = []
 
-          Zotero.BetterBibTex.log('exporting: ' + path + ' to ' + translator);
+          Zotero.BetterBibTeX.log('exporting: ' + path + ' to ' + translator);
           for (var collectionkey of path.split('+')) {
             if (collectionkey.charAt(0) != '/') { collectionkey = '/0/' + collectionkey; }
-            Zotero.BetterBibTex.log('exporting ' + collectionkey);
+            Zotero.BetterBibTeX.log('exporting ' + collectionkey);
 
             var path = collectionkey.split('/');
             path.shift(); // remove leading /
@@ -166,21 +165,21 @@ Zotero.BetterBibTex = {
 
             if (!col) { throw (collectionkey + ' not found'); }
 
-            var _items = col.getChildren(Zotero.BetterBibTex.pref('recursiveCollections', false, 'zotero'), false, 'item');
+            var _items = col.getChildren(Zotero.BetterBibTeX.pref('recursiveCollections', false, 'zotero'), false, 'item');
             items = items.concat(Zotero.Items.get([item.id for (item of _items)]));
           }
 
           sendResponseCallback(
             200,
             "text/plain",
-            Zotero.BetterBibTex.translate(
-              Zotero.BetterBibTex.getTranslator(translator),
+            Zotero.BetterBibTeX.translate(
+              Zotero.BetterBibTeX.getTranslator(translator),
               items,
-              Zotero.BetterBibTex.displayOptions(url)
+              Zotero.BetterBibTeX.displayOptions(url)
             )
           );
         } catch (err) {
-          Zotero.BetterBibTex.log("Could not export bibliography '" + collection + "'", err);
+          Zotero.BetterBibTeX.log("Could not export bibliography '" + collection + "'", err);
           sendResponseCallback(404, "text/plain", "Could not export bibliography '" + collection + "': " + err);
         }
       }
@@ -228,14 +227,14 @@ Zotero.BetterBibTex = {
           sendResponseCallback(
             200,
             "text/plain",
-            Zotero.BetterBibTex.translate(
-              Zotero.BetterBibTex.getTranslator(translator),
+            Zotero.BetterBibTeX.translate(
+              Zotero.BetterBibTeX.getTranslator(translator),
               Zotero.Items.getAll(false, libid, false),
-              Zotero.BetterBibTex.displayOptions(url)
+              Zotero.BetterBibTeX.displayOptions(url)
             )
           );
         } catch (err) {
-          Zotero.BetterBibTex.log("Could not export bibliography '" + library + "'", err);
+          Zotero.BetterBibTeX.log("Could not export bibliography '" + library + "'", err);
           sendResponseCallback(404, "text/plain", "Could not export bibliography '" + library + "': " + err);
         }
       }
@@ -270,14 +269,14 @@ Zotero.BetterBibTex = {
 
   safeLoad: function(translator) {
     try {
-      Zotero.BetterBibTex.load(translator);
+      Zotero.BetterBibTeX.load(translator);
     } catch (err) {
-      Zotero.BetterBibTex.log('Loading ' + translator + ' failed', err);
+      Zotero.BetterBibTeX.log('Loading ' + translator + ' failed', err);
     }
   },
 
   load: function(translator) {
-    Zotero.BetterBibTex.log('Loading ' + translator);
+    Zotero.BetterBibTeX.log('Loading ' + translator);
 
     var header = null;
     var data = null;
@@ -305,43 +304,40 @@ Zotero.BetterBibTex = {
     }
 
     if (!header) {
-      Zotero.BetterBibTex.log('Loading ' + translator + ' failed: could not parse header');
+      Zotero.BetterBibTeX.log('Loading ' + translator + ' failed: could not parse header');
       return;
     }
 
-    //header.hiddenPrefs = {}
-    //for(var pref in Zotero.BetterBibTex.config) { header.hiddenPrefs[pref]=Zotero.BetterBibTex.config[pref]; }
+    Zotero.BetterBibTeX.translators[header.label.toLowerCase().replace(/[^a-z]/, '')] = header.translatorID;
 
-    Zotero.BetterBibTex.translators[header.label.toLowerCase().replace(/[^a-z]/, '')] = header.translatorID;
-
-    Zotero.BetterBibTex.log("Installing " + header.label);
+    Zotero.BetterBibTeX.log("Installing " + header.label);
     Zotero.Translators.save(header, data);
   },
 
   getTranslator: function(name) {
     name = name.toLowerCase().replace(/[^a-z]/, '');
-    var translator = Zotero.BetterBibTex.translators['better' + name] || Zotero.BetterBibTex.translators[name];
-    if (!translator) { throw('No translator' + name + '; available: ' + Object.keys(Zotero.BetterBibTex.translators).join(', ')); }
+    var translator = Zotero.BetterBibTeX.translators['better' + name] || Zotero.BetterBibTeX.translators[name];
+    if (!translator) { throw('No translator' + name + '; available: ' + Object.keys(Zotero.BetterBibTeX.translators).join(', ')); }
     return translator;
   },
 
   getCiteKeys: function(items) {
-    var translator = Zotero.BetterBibTex.getTranslator('BibTeX Citation Keys');
+    var translator = Zotero.BetterBibTeX.getTranslator('BibTeX Citation Keys');
     if (!translator) { throw('No translator' + translator); }
 
     try {
-      Zotero.BetterBibTex.log('Fetching keys: for ' + items.length + ' items');
-      var keys = Zotero.BetterBibTex.translate(translator, [item for (item of items)]);
-      Zotero.BetterBibTex.log('Found keys: ' + keys);
+      Zotero.BetterBibTeX.log('Fetching keys: for ' + items.length + ' items');
+      var keys = Zotero.BetterBibTeX.translate(translator, [item for (item of items)]);
+      Zotero.BetterBibTeX.log('Found keys: ' + keys);
       return JSON.parse(keys);
     } catch (err) {
-      Zotero.BetterBibTex.log('Cannot retrieve keys: ', err);
+      Zotero.BetterBibTeX.log('Cannot retrieve keys: ', err);
       return null;
     }
   },
 
   setCiteKeys: function() {
-    var win = Zotero.BetterBibTex.windowMediator.getMostRecentWindow("navigator:browser");
+    var win = Zotero.BetterBibTeX.windowMediator.getMostRecentWindow("navigator:browser");
     var item;
     var items = win.ZoteroPane.getSelectedItems();
     items = Zotero.Items.get([item.id for (item of items)]);
@@ -356,15 +352,15 @@ Zotero.BetterBibTex = {
       item.save({ skipDateModifiedUpdate: true });
     }
 
-    var keys = Zotero.BetterBibTex.getCiteKeys(items);
+    var keys = Zotero.BetterBibTeX.getCiteKeys(items);
     if (!keys) {
-      Zotero.BetterBibTex.log('Cannot set keys');
+      Zotero.BetterBibTeX.log('Cannot set keys');
       return;
     }
 
     items.forEach(function(item) {
       if (keys[item.id]) {
-        Zotero.BetterBibTex.log('Setting key for ' + item.id + ': ' + keys[item.id]);
+        Zotero.BetterBibTeX.log('Setting key for ' + item.id + ': ' + keys[item.id]);
 
         var extra = '' + item.getField('extra');
         extra = extra.trim();
@@ -377,4 +373,4 @@ Zotero.BetterBibTex = {
 };
 
 // Initialize the utility
-window.addEventListener('load', function(e) { Zotero.BetterBibTex.init(); }, false);
+window.addEventListener('load', function(e) { Zotero.BetterBibTeX.init(); }, false);

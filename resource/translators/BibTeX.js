@@ -140,7 +140,7 @@ function trLog(msg) {
   Zotero.debug('[' + Config.label + '] ' + msg);
 }
 
-function getBibTexType(item)
+function getBibTeXType(item)
 {
   var type = Config.typeMap.toBibTeX.get(item.itemType);
   if (typeof (type) == "function") { type = type(item); }
@@ -213,7 +213,7 @@ function flushEntry(item) {
   // fully empty zotero reference generates invalid bibtex. This type-reassignment does nothing but adds the single
   // field each entry needs as a minimum.
   if (Config.fieldsWritten.length == 0) {
-    writeField('type', latex_escape(getBibTexType(item)));
+    writeField('type', latex_escape(getBibTeXType(item)));
   }
 }
 
@@ -396,7 +396,7 @@ Formatter = {
     },
 
     type: function() {
-      return getBibTexType(Formatter.item);
+      return getBibTeXType(Formatter.item);
     },
 
     authorLast: function(onlyEditors) {
@@ -799,7 +799,7 @@ var CiteKeys = {
     var key = m[1];
 
     if (CiteKeys.db.some(function(rec) { return (rec.key == key); })) {
-      trLog('BibTex export: duplicate key ' + key);
+      trLog('BibTeX export: duplicate key ' + key);
     }
     return key;
   },

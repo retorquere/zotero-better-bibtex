@@ -1,6 +1,6 @@
 {
 	"translatorID": "0a3d926d-467c-4162-acb6-45bded77edbb",
-	"label": "BibTex Citation Keys",
+	"label": "BibTeX Citation Keys",
 	"creator": "Emiliano heyns",
 	"target": "bib",
 	"minVersion": "2.1.9",
@@ -18,7 +18,7 @@
 
 /*= include BibTeX.js =*/
 
-function doExport() {
+function doExport(options) {
   CiteKeys.initialize();
   var keys = {};
   CiteKeys.db.forEach(function(rec) { keys[rec.item.itemID] = rec.key; });

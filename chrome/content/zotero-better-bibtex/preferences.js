@@ -6,7 +6,7 @@ function serverURL(collectionsView, extension)
 
   var serverPort = null;
   try {
-    serverPort = Zotero.BetterBibTex.prefs.zotero.getIntPref('httpServer.port');
+    serverPort = Zotero.BetterBibTeX.prefs.zotero.getIntPref('httpServer.port');
   } catch(err) {
     return;
   }

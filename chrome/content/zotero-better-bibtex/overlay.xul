@@ -23,7 +23,7 @@
 
   <menupopup id="zotero-itemmenu">
     <menuitem id="id-zotero-better-bibtex-set-citekey" label="&zotero.better-bibtex.set-citekey;"
-              oncommand="Zotero.BetterBibTex.setCiteKeys();"/>
+              oncommand="Zotero.BetterBibTeX.setCiteKeys();"/>
 	</menupopup>
 
   <!-- treecols id="zotero-items-columns-header">

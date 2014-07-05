@@ -261,7 +261,7 @@ function doExport() {
     if (item.itemType == 'note' || item.itemType == 'attachment') return;
 
     // determine type
-    var type = getBibTexType(item);
+    var type = getBibTeXType(item);
 
     // inbook is reasonable at times, using a bookauthor should indicate this
     if (item.itemType == 'bookSection' && hasCreator(item, 'bookAuthor')) { type = 'inbook'; }
