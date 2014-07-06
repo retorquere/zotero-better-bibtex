@@ -6,34 +6,41 @@ var Config = {
   unicode:  /*= unicode =*/,
   release:  '/*= release =*/',
 
-  initialize: function() {
+  initialize: function(config) {
     if (Config.initialized) { return; }
 
-    Config.pattern    = Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
-    Config.skipFields = Zotero.getHiddenPref('better-bibtex.skipfields').split(',').map(function(field) { return field.trim(); });
-    Config.usePrefix  = Zotero.getHiddenPref('better-bibtex.useprefix');
-    Config.braceAll   = Zotero.getHiddenPref('better-bibtex.brace-all');
-    Config.fancyURLs  = Zotero.getHiddenPref('better-bibtex.fancyURLs');
-    Config.langid     = Zotero.getHiddenPref('better-bibtex.langid');
-    Config.conflictResolution = Zotero.getHiddenPref('better-bibtex.conflictResolution');
-    Config.metadataAttachments = Zotero.getHiddenPref('better-bibtex.metadataAttachments');
+    if (!config) { config = {}; }
 
-    Config.useJournalAbbreviation = Zotero.getOption('useJournalAbbreviation');
-    Config.exportCharset          = Zotero.getOption('exportCharset');
-    Config.exportFileData         = Zotero.getOption('exportFileData');
-    Config.exportNotes            = Zotero.getOption('exportNotes');
+    Config.pattern                = config.pattern                || Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
+    Config.skipFields             = config.skipFields             || Zotero.getHiddenPref('better-bibtex.skipfields').split(',').map(function(field) { return field.trim(); });
+    Config.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
+    Config.braceAll               = config.braceAll               || Zotero.getHiddenPref('better-bibtex.brace-all');
+    Config.fancyURLs              = config.fancyURLs              || Zotero.getHiddenPref('better-bibtex.fancyURLs');
+    Config.langid                 = config.langid                 || Zotero.getHiddenPref('better-bibtex.langid');
+    Config.conflictResolution     = config.conflictResolution     || Zotero.getHiddenPref('better-bibtex.conflictResolution');
+    Config.metadataAttachments    = config.metadataAttachments    || Zotero.getHiddenPref('better-bibtex.metadataAttachments');
+    Config.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
 
-    switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
-      case 'always':
-        Config.unicode = true;
-        break;
-      case 'never':
-        Config.unicode = false;
-        break;
-      default:
-        var charset = Config.exportCharset;
-        Config.unicode = Config.unicode || (charset && charset.toLowerCase() == 'utf-8');
-        break;
+    Config.useJournalAbbreviation = config.useJournalAbbreviation || Zotero.getOption('useJournalAbbreviation');
+    Config.exportCharset          = config.exportCharset          || Zotero.getOption('exportCharset');
+    Config.exportFileData         = config.exportFileData         || Zotero.getOption('exportFileData');
+    Config.exportNotes            = config.exportNotes            || Zotero.getOption('exportNotes');
+
+    if (typeof config.unicode == 'undefined') {
+      switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
+        case 'always':
+          Config.unicode = true;
+          break;
+        case 'never':
+          Config.unicode = false;
+          break;
+        default:
+          var charset = Config.exportCharset;
+          Config.unicode = Config.unicode || (charset && charset.toLowerCase() == 'utf-8');
+          break;
+      }
+    } else {
+      Config.unicode = config.unicode;
     }
 
     if (Config.typeMap.toBibTeX) {
@@ -51,8 +58,6 @@ var Config = {
         Config.typeMap.toBibTeX.set(zotero, bibtex[0]);
       });
     }
-
-    Config.usePrefix = Zotero.getHiddenPref('better-bibtex.useprefix');
 
     trLog('Configured: ' + JSON.stringify(Config));
     Config.initialized = true;
@@ -764,8 +769,6 @@ var CiteKeys = {
   // not  "@',\#}{%
 
   initialize: function(items) {
-    Config.initialize();
-
     if (!items) {
       items = [];
       var titles = Dict();
@@ -783,6 +786,9 @@ var CiteKeys = {
     }
 
     items = items.filter(function(item) { return (item.itemType != "note" && item.itemType != "attachment"); });
+
+    Config.initialize(items.length > 0 ? items[0].__config__ : null);
+
     items.forEach(function(item) { CiteKeys.register(item); });
     CiteKeys.resolve();
 
