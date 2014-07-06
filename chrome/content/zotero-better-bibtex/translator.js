@@ -20,8 +20,13 @@ Zotero.BetterBibTeX.KeyManager = new function() {
     var m = embeddedKeyRE.exec(item.extra) || andersJohanssonKeyRE.exec(item.extra);
     if (!m) { return null; }
 
-    if (!options.extractOnly && item.setField) {
-      item.setField('extra', extra.replace(m[0], '').trim());
+    if (!options.extractOnly) {
+      extra = extra.replace(m[0], '').trim();
+      if (item.setField) {
+        item.setField('extra', extra);
+      } else {
+        item.extra = extra;
+      }
     }
     var key = m[1];
 
@@ -518,6 +523,11 @@ Zotero.BetterBibTeX.KeyManager = new function() {
   }
 
   /* --------------------------- */
+
+  this.scrub = function(item) {
+    if (!this.extra) { return; } // ONLY for translator
+    extractKey(item, {extractOnly: false});
+  }
 
   this.get = function(item) {
     if (['string', 'number'].indexOf(typeof item) >= 0) {

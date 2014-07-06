@@ -1,11 +1,13 @@
 /*= dict =*/
 
 var Translator = new function() {
-  this.id      =  '/*= id =*/';
-  this.label   =  '/*= label =*/';
-  this.unicode =  /*= unicode =*/;
-  this.release =  '/*= release =*/';
-  this.typeMap = {};
+  var self = this;
+
+  self.id      =  '/*= id =*/';
+  self.label   =  '/*= label =*/';
+  self.unicode =  /*= unicode =*/;
+  self.release =  '/*= release =*/';
+  self.typeMap = {};
 
   var initialized = false;
 
@@ -14,58 +16,72 @@ var Translator = new function() {
 
     if (!config) { config = {}; }
 
-    this.pattern                = config.pattern                || Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
-    this.skipFields             = config.skipFields             || Zotero.getHiddenPref('better-bibtex.skipfields').split(',').map(function(field) { return field.trim(); });
-    this.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
-    this.braceAll               = config.braceAll               || Zotero.getHiddenPref('better-bibtex.brace-all');
-    this.fancyURLs              = config.fancyURLs              || Zotero.getHiddenPref('better-bibtex.fancyURLs');
-    this.langid                 = config.langid                 || Zotero.getHiddenPref('better-bibtex.langid');
-    this.conflictResolution     = config.conflictResolution     || Zotero.getHiddenPref('better-bibtex.conflictResolution');
-    this.metadataAttachments    = config.metadataAttachments    || Zotero.getHiddenPref('better-bibtex.metadataAttachments');
-    this.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
+    self.pattern                = config.pattern                || Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
+    self.skipFields             = config.skipFields             || Zotero.getHiddenPref('better-bibtex.skipfields').split(',').map(function(field) { return field.trim(); });
+    self.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
+    self.braceAll               = config.braceAll               || Zotero.getHiddenPref('better-bibtex.brace-all');
+    self.fancyURLs              = config.fancyURLs              || Zotero.getHiddenPref('better-bibtex.fancyURLs');
+    self.langid                 = config.langid                 || Zotero.getHiddenPref('better-bibtex.langid');
+    self.conflictResolution     = config.conflictResolution     || Zotero.getHiddenPref('better-bibtex.conflictResolution');
+    self.metadataAttachments    = config.metadataAttachments    || Zotero.getHiddenPref('better-bibtex.metadataAttachments');
+    self.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
 
-    this.useJournalAbbreviation = config.useJournalAbbreviation || Zotero.getOption('useJournalAbbreviation');
-    this.exportCharset          = config.exportCharset          || Zotero.getOption('exportCharset');
-    this.exportFileData         = config.exportFileData         || Zotero.getOption('exportFileData');
-    this.exportNotes            = config.exportNotes            || Zotero.getOption('exportNotes');
+    self.useJournalAbbreviation = config.useJournalAbbreviation || Zotero.getOption('useJournalAbbreviation');
+    self.exportCharset          = config.exportCharset          || Zotero.getOption('exportCharset');
+    self.exportFileData         = config.exportFileData         || Zotero.getOption('exportFileData');
+    self.exportNotes            = config.exportNotes            || Zotero.getOption('exportNotes');
 
     if (typeof config.unicode == 'undefined') {
       switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
         case 'always':
-          this.unicode = true;
+          self.unicode = true;
           break;
         case 'never':
-          this.unicode = false;
+          self.unicode = false;
           break;
         default:
-          var charset = this.exportCharset;
-          this.unicode = this.unicode || (charset && charset.toLowerCase() == 'utf-8');
+          var charset = self.exportCharset;
+          self.unicode = self.unicode || (charset && charset.toLowerCase() == 'utf-8');
           break;
       }
     } else {
-      this.unicode = config.unicode;
+      self.unicode = config.unicode;
     }
 
-    if (this.typeMap.toBibTeX) {
-      this.typeMap.toZotero = Dict({});
-      this.typeMap.toBibTeX.forEach(function(zotero, bibtex) {
+    if (self.typeMap.toBibTeX) {
+      self.typeMap.toZotero = Dict({});
+      self.typeMap.toBibTeX.forEach(function(zotero, bibtex) {
         if (!(bibtex instanceof Array)) { bibtex = [bibtex]; }
 
         bibtex = bibtex.map(function(tex) {
-          if (!this.typeMap.toZotero.has(tex) || tex.match(/^:/)) {
-            this.typeMap.toZotero.set(tex.replace(/^:/, ''), zotero);
+          if (!self.typeMap.toZotero.has(tex) || tex.match(/^:/)) {
+            self.typeMap.toZotero.set(tex.replace(/^:/, ''), zotero);
           }
           return tex.replace(/^:/, '');
         });
 
-        this.typeMap.toBibTeX.set(zotero, bibtex[0]);
+        self.typeMap.toBibTeX.set(zotero, bibtex[0]);
       });
     }
 
     initialized = true;
   }
 
-  this.item = (function() {
+  self.nextItem = function() {
+    while (item = Zotero.nextItem()) {
+      if (item.itemType != 'note' && item.itemType != 'attachment') { break; }
+    }
+
+    if (!item) { return; }
+
+    if (!initialized) { initialize(item); }
+    Translator.fieldsWritten = Dict({});
+    Zotero.BetterBibTeX.KeyManager.scrub(item);
+    return item;
+  }
+
+  /*
+  self.item = (function() {
     while (item = Zotero.nextItem()) {
       if (item.itemType == 'note' || item.itemType == 'attachment') { continue; }
       if (!initialized) { initialize(item); }
@@ -73,6 +89,7 @@ var Translator = new function() {
       yield item;
     }
   })();
+  */
 };
 
 function writeFieldMap(item, fieldMap) {
@@ -92,7 +109,7 @@ function writeFieldMap(item, fieldMap) {
 }
 
 function writeField(field, value, bare) {
-  if (Config.skipFields.indexOf(field) >= 0) { return; }
+  if (Translator.skipFields.indexOf(field) >= 0) { return; }
 
   if (typeof value == 'number') {
   } else {

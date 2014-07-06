@@ -255,7 +255,7 @@ function doExport() {
   // to make sure the BOM gets ignored
   Zotero.write("\n");
 
-  while (item = Translator.item.next()) {
+  while (item = Translator.nextItem()) {
     // determine type
     var type = getBibTeXType(item);
 
@@ -268,10 +268,9 @@ function doExport() {
     //biblatex recommends us to use mvbook for multi-volume books
     if (type == 'book' && item.volume) { type = 'mvbook'; }
 
-    var bibtex = CiteKeys.get(item);
+    var citekey = Zotero.BetterBibTeX.KeyManager.get(item);
     Zotero.write("\n\n");
-    Zotero.write(CiteKeys.report(bibtex));
-    Zotero.write('@'+type+'{'+bibtex.key);
+    Zotero.write('@'+type+'{'+citekey);
 
     writeFieldMap(item, fieldMap);
 
@@ -513,7 +512,7 @@ function doExport() {
     flushEntry(item);
 
     Zotero.write("\n}");
-  });
+  }
 
   exportJabRefGroups();
 

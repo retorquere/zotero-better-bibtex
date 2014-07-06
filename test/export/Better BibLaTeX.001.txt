@@ -1,4 +1,3 @@
-% Better BibLaTeX: pinned
 @article{Adams2001,
   pages = {493-518},
   title = {{The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru}},
