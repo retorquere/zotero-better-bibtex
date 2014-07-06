@@ -1,15 +1,31 @@
 Zotero.BetterBibTeX.KeyManager = new function() {
-  Zotero.DB.query('create temporary table BetterBibTeX (itemKey unique, citekey)');
+  Zotero.DB.query("ATTACH ':memory:' AS 'better-bibtex'");
+  Zotero.DB.query("create table better-bibtex.keys (key unique, citekey)");
 
   var embeddedKeyRE = /bibtex:\s*([^\s\r\n]+)/;
   var andersJohanssonKeyRE = /biblatexcitekey\[([^\]]+)\]/;
-  function extractKey(item, retain) {
-    if (!item.extra) { return null; }
+  function extractKey(item, options) {
+    options = options || {};
+
+    var extra;
+
+    if (item.getField) {
+      extra = item.getField('extra');
+    } else {
+      extra = item.extra;
+    }
+
+    if (!extra) { return null; }
 
     var m = embeddedKeyRE.exec(item.extra) || andersJohanssonKeyRE.exec(item.extra);
     if (!m) { return null; }
 
-    if (!retain) { item.extra = item.extra.replace(m[0], '').trim(); }
+    if (!options.extractOnly && item.setField) {
+      item.setField('extra', extra.replace(m[0], '').trim());
+      if (options.save && item.save) {
+        item.save({ skipDateModifiedUpdate: true });
+      }
+    }
     var key = m[1];
 
     return key;
@@ -23,25 +39,68 @@ Zotero.BetterBibTeX.KeyManager = new function() {
   unsafechars = new RegExp(unsafechars, 'ig');
 
   var rows = Zotero.DB.query("" +
-    "select i.key as itemKey, idv.value as extra" +
+    "select i.key as 'key', idv.value as extra" +
     "from items i " +
     "join itemData id on i.itemID = id.itemID " +
     "join itemDataValues idv on idv.valueID = id.valueID " +
     "join fields f on id.fieldID = f.fieldID  " +
     "where f.fieldName = 'extra' and idv.value like '%bibtex:%'");
   for each(var row in rows) {
-    Zotero.DB.query('insert into BetterBibTeX (itemKey, citekey) values (?, ?)', [row.key, extractKey({extra: row.extra})]);
+    Zotero.DB.query("insert into better-bibtex.keys ('key', citekey) values (?, ?)", [row.key, extractKey({extra: row.extra})]);
   }
 
   /* --------------------------- */
 
   this.get = function(item) {
-  };
+    var citekey = Zotero.DB.valueQuery("select citekey from better-bibtex.keys where 'key'=?", item.key);
+    if (citekey) { return citekey; }
 
-  this.free = function(citekey, item) {
+    var citekey = this.format(item);
+    var postfix = {n: 0, c:'a'};
+    while (!this.free(citekey + postfix.c, item)) {
+      postfix.n++;
+      postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
+    }
+
+    return this.set(citekey + postfix.c, item);
   }
 
   this.set = function(citekey, item) {
+    item = Zotero.Items.get(item.id);
+
+    extractKey(item);
+    // add to extra
+    // save to DB
+
+    return citekey;
+  }
+
+  this.free = function(citekey, item) {
+    var count = null
+
+    if (item) {
+      count = Zotero.DB.valueQuery("select count(*) from better-bibtex.keys where citekey=? and 'key' <> ?", [citekey, item.key]);
+    } else {
+      count = Zotero.DB.valueQuery("select count(*) from better-bibtex.keys where citekey=?", [citekey]);
+    }
+    return (parseInt(count) == 0);
+  }
+
+  this.duplicates = function(item) {
+    var dups = null;
+
+    if (item) {
+      var citekey = this.get(item);
+      dups = Zotero.DB.valueQuery("select count(*) - 1 as duplicates from better-bibtex.keys where citekey=? and 'key'
+      in ()", [citekey]);
+    } else {
+      dups = {};
+      rows = Zotero.DB.query("select citekey, count('key') as duplicates from better-bibtex.keys group by citekey having count('key') > 1");
+      for each(var row in rows) {
+        dups[row.citekey] = row.duplicates;
+      }
+    }
+    return dups;
   }
 };
 
