@@ -209,7 +209,7 @@ function string_similarity(str1, str2){
 
 //  country:"country", //TODO if patent, should be put into 'location'
 
-Config.typeMap.toBibTeX = Dict({
+Translator.typeMap.toBibTeX = Dict({
   book:                 'book',
   bookSection:          'inbook',
   journalArticle:       [':article', ':misc'],
@@ -255,11 +255,7 @@ function doExport() {
   // to make sure the BOM gets ignored
   Zotero.write("\n");
 
-  CiteKeys.initialize().forEach(function(item) {
-    Config.fieldsWritten = Dict({});
-    //don't export standalone notes and attachments
-    if (item.itemType == 'note' || item.itemType == 'attachment') return;
-
+  while (item = Translator.item.next()) {
     // determine type
     var type = getBibTeXType(item);
 
@@ -279,7 +275,7 @@ function doExport() {
 
     writeFieldMap(item, fieldMap);
 
-    if (Config.usePrefix) {
+    if (Translator.usePrefix) {
       writeField('options', latex_escape('useprefix'));
     }
 
@@ -304,7 +300,7 @@ function doExport() {
           break;
 
         case 'journalArticle':
-          if (Config.useJournalAbbreviation) {
+          if (Translator.useJournalAbbreviation) {
             writeField('journal', latex_escape(item.journalAbbreviation, {brace: true}));
           } else {
             writeField('journaltitle', latex_escape(item.publicationTitle, {brace: true}));
@@ -314,7 +310,7 @@ function doExport() {
       }
     }
 
-    if (!Config.fieldsWritten.has('booktitle')) { writeField('booktitle', latex_escape(item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, {brace: true})); }
+    if (!Translator.fieldsWritten.has('booktitle')) { writeField('booktitle', latex_escape(item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, {brace: true})); }
 
     writeField('titleaddon', latex_escape(item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, {brace: true}));
 
@@ -502,11 +498,11 @@ function doExport() {
       writeField('langid', latex_escape(language));
     }
 
-    writeExtra(item, (Config.fieldsWritten['note'] ? 'annotation' : 'note'));
+    writeExtra(item, (Translator.fieldsWritten['note'] ? 'annotation' : 'note'));
 
     writeField('keywords', latex_escape(item.tags.map(function(tag) {return tag.tag;}), {sep: ','}));
 
-    if (item.notes && Config.exportNotes) {
+    if (item.notes && Translator.exportNotes) {
       item.notes.forEach(function(note) {
         writeField('annotation', latex_escape(Zotero.Utilities.unescapeHTML(note.note)));
       });

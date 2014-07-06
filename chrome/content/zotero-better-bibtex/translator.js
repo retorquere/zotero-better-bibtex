@@ -520,6 +520,11 @@ Zotero.BetterBibTeX.KeyManager = new function() {
   /* --------------------------- */
 
   this.get = function(item) {
+    if (['string', 'number'].indexOf(typeof item) >= 0) {
+      item = Zotero.Items.get(item);
+      if (!item) { return; }
+    }
+
     var citekey = extractKey(item);
     if (citekey) { return citekey; }
 
