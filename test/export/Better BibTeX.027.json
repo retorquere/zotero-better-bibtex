@@ -28,14 +28,12 @@
 		"creators": [
 			{
 				"creatorType": "author",
-				"creatorID": 930,
 				"firstName": "Paul B",
 				"lastName": "Baltes",
 				"fieldMode": ""
 			},
 			{
 				"creatorType": "author",
-				"creatorID": 899,
 				"firstName": "Ursula M",
 				"lastName": "Staudinger",
 				"fieldMode": ""
@@ -51,32 +49,6 @@
 		],
 		"tags": [],
 		"related": [],
-		"seeAlso": [],
-		"uniqueFields": {
-			"title": "Wisdom: a metaheuristic (pragmatic) to orchestrate mind and virtue toward excellence.",
-			"abstractNote": "",
-			"publicationTitle": "American psychologist",
-			"volume": "55",
-			"issue": "1",
-			"pages": "122",
-			"date": "2000",
-			"series": "",
-			"seriesTitle": "",
-			"seriesText": "",
-			"journalAbbreviation": "",
-			"language": "",
-			"DOI": "",
-			"ISSN": "",
-			"shortTitle": "",
-			"url": "",
-			"accessDate": "",
-			"archive": "",
-			"archiveLocation": "",
-			"libraryCatalog": "",
-			"callNumber": "",
-			"rights": "",
-			"extra": "bibtex: baltes2000wisdommetaheuristicpragmatic"
-		},
-		"uri": "http://zotero.org/users/1535871/items/E7PTIP89"
+		"seeAlso": []
 	}
 ]

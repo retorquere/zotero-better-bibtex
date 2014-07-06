@@ -328,11 +328,16 @@ class Test
     end
 
     script(File.open(DATE), :init)
+    script("\nZotero.BetterBibTeX = {};\n")
+    script(File.open('chrome/content/zotero-better-bibtex/translator.js'))
     script('var __zotero__header__ = ')
     script(File.open("tmp/#{translator}.js"))
     script(File.open('test/utilities.js'))
 
-    @db = SQLite3::Database.new(DB)
+    dbname = DB + '.test'
+    File.unlink(dbname) if File.exists?(dbname)
+    FileUtils.cp(DB, dbname)
+    @db = SQLite3::Database.new(dbname)
     @db.execute('PRAGMA temp_store=MEMORY;')
     @db.execute('PRAGMA journal_mode=MEMORY;')
     @db.execute('PRAGMA synchronous = OFF;')
@@ -352,6 +357,20 @@ class Test
 
   def Utilities
     return self
+  end
+  def DB
+    return self
+  end
+
+  def query(sql, parameters=nil)
+    parameters ||= []
+    puts "#{sql} #{parameters}"
+    pst = @db.prepare sql
+    rows = []
+    pst.execute(*parameters).each{|row|
+      rows << Hash[*(pst.columns.zip(row).flatten)]
+    }
+    return rows
   end
 
   def getCreatorsForType(type)
@@ -458,6 +477,14 @@ class Test
     return _diff
   end
 
+  def hash(sql)
+    h = {}
+    @db.execute(sql).each{|row|
+      h[row[0]] = Integer(row[1])
+    }
+    return h
+  end
+
   def export
     input = "test/#{@type}/#{@translator}.#{@id}.json"
     expected = "test/#{@type}/#{@translator}.#{@id}.txt"
@@ -466,10 +493,14 @@ class Test
 
     @output = ''
 
+    itemTypeID = hash('select typeName, itemTypeID from itemTypes')
+    fieldID = hash('select fieldName, fieldID from fields')
+    creatorTypeID = hash('select creatorType, creatorTypeID from creatorTypes')
+
     @items = JSON.parse(JSON.minify(File.open(input).read))
     @items.each_with_index{|item, i|
       item['itemID'] = i+1
-      item['key'] = "X#{item['itemID']}"
+      item['key'] = "I#{item['itemID']}"
       item['tags'] = item['tags'].collect{|tag| {'tag' => tag}} if item['tags']
       if item['attachments']
         item['attachments'].each{|att|
@@ -478,6 +509,29 @@ class Test
           att.delete('path')
         }
       end
+
+      @db.execute('insert into items (itemID, itemTypeID, key) values (?, ?, ?)', item['itemID'], itemTypeID[item['itemType']], item['key']);
+      item.each_pair{|k, v|
+        next if %w{__config__ itemID itemType key}.include?(k)
+
+        if fieldID[k]
+          @db.execute('insert into itemDataValues (value) values (?)', v)
+          v = @db.last_insert_row_id
+          @db.execute('insert into itemData (itemID, fieldID, valueID) values (?, ?, ?)', item['itemID'], fieldID[k], v)
+        elsif k == 'creators'
+          item[k].each{|creator|
+            creator = creator.dup
+            @db.execute('insert into creatorData (firstName, lastName, fieldMode) values (?, ?, ?)', creator.delete('firstName'), creator.delete('lastName'), creator.delete('fieldMode'))
+            c = @db.last_insert_row_id
+            @db.execute("insert into creators (creatorID, creatorDataID, 'key') values (?, ?, ?)", c, c, "C#{c}")
+            @db.execute('insert into itemCreators (itemID, creatorID, creatorTypeID) values (?, ?, ?)', item['itemID'], c, creatorTypeID[creator.delete('creatorType')])
+            throw creator.inspect unless creator.empty?
+          }
+        elsif %w{related notes tags seeAlso attachments}.include?(k)
+        else
+          throw "#{k}: #{v.class}"
+        end
+      }
     }
 
     expected = File.open(expected).read
@@ -730,18 +784,25 @@ class Translator
   end
 end
 
-file 'tmp/zotero.sql' do
-  download('https://raw.githubusercontent.com/zotero/zotero/4.0/resource/schema/system.sql', 'tmp/zotero.sql')
+file 'tmp/system.sql' do
+  download('https://raw.githubusercontent.com/zotero/zotero/4.0/resource/schema/system.sql', 'tmp/system.sql')
+end
+file 'tmp/userdata.sql' do
+  download('https://raw.githubusercontent.com/zotero/zotero/4.0/resource/schema/userdata.sql', 'tmp/userdata.sql')
 end
 
-file DB => 'tmp/zotero.sql' do |t|
+file DB => ['tmp/system.sql', 'tmp/userdata.sql'] do |t|
   File.unlink(DB) if File.exists?(DB)
 
   db = SQLite3::Database.new(DB)
   db.execute('PRAGMA temp_store=MEMORY;')
   db.execute('PRAGMA journal_mode=MEMORY;')
   db.execute('PRAGMA synchronous = OFF;')
-  db.execute_batch(File.open(t.prerequisites[0]).read)
+  t.prerequisites.each{|sql|
+    sql = File.open(sql).read
+    sql.sub!('value UNIQUE', 'value')
+    db.execute_batch(sql)
+  }
   db.close
 end
 

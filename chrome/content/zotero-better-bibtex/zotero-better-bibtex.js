@@ -67,13 +67,9 @@ Zotero.BetterBibTeX = {
       ep.prototype = Zotero.BetterBibTeX.endpoints[endpoint];
     }
 
-    Zotero.BetterBibTeX.Sandbox = {
-      hello: function() {
-        Zotero.BetterBibTeX.log('bbt: bbt.hello!');
-      }
+    Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
+      KeyManager: Zotero.BetterBibTeX.KeyManager
     };
-    Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = Zotero.BetterBibTeX.Sandbox;
-    Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = Zotero.BetterBibTeX.Sandbox;
 
     Zotero.BetterBibTeX.safeLoad('Better BibTeX.js');
     Zotero.BetterBibTeX.safeLoad('Better BibLaTeX.js');
@@ -371,6 +367,3 @@ Zotero.BetterBibTeX = {
     });
   }
 };
-
-// Initialize the utility
-window.addEventListener('load', function(e) { Zotero.BetterBibTeX.init(); }, false);
