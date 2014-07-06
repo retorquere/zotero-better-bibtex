@@ -55,9 +55,6 @@
 			"id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
 			"label": "Zotero TestCase",
 			"unicode": null,
-			"release": "0.5.44",
-			"typeMap": {},
-			"fieldsWritten": {},
 			"pattern": "[authors][year]",
 			"skipFields": [
 				""
@@ -71,8 +68,7 @@
 			"useJournalAbbreviation": null,
 			"exportCharset": null,
 			"exportFileData": null,
-			"exportNotes": null,
-			"initialized": true
+			"exportNotes": null
 		}
 	}
 ]
