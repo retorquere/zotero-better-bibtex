@@ -81,9 +81,11 @@ function scrub(item) {
 function doExport() {
 	var data = [];
   CiteKeys.initialize().forEach(function(item) {
-    trLog('.');
     data.push(scrub(item));
   });
+  if (data.length > 0) {
+    data[0].__config__ = Config;
+  }
 	Zotero.write(JSON.stringify(data, null, "\t"));
 }
 
