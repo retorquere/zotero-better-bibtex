@@ -1,6 +1,6 @@
 Zotero.BetterBibTeX.KeyManager = new function() {
   Zotero.DB.query("ATTACH ':memory:' AS 'better-bibtex'");
-  Zotero.DB.query("create table better-bibtex.keys (key unique, citekey)");
+  Zotero.DB.query("create table better-bibtex.keys (library, item, citekey, unique(library, item))");
 
   var embeddedKeyRE = /bibtex:\s*([^\s\r\n]+)/;
   var andersJohanssonKeyRE = /biblatexcitekey\[([^\]]+)\]/;
@@ -22,9 +22,6 @@ Zotero.BetterBibTeX.KeyManager = new function() {
 
     if (!options.extractOnly && item.setField) {
       item.setField('extra', extra.replace(m[0], '').trim());
-      if (options.save && item.save) {
-        item.save({ skipDateModifiedUpdate: true });
-      }
     }
     var key = m[1];
 
@@ -65,12 +62,29 @@ Zotero.BetterBibTeX.KeyManager = new function() {
     return this.set(citekey + postfix.c, item);
   }
 
+  this.reset = function(item) {
+    this.delete(item.key);
+    return this.get(item);
+  }
+
+  this.delete(key) {
+    Zotero.DB.query("delete from better-bibtex.keys where 'key' = ?", [key]);
+  }
+
   this.set = function(citekey, item) {
     item = Zotero.Items.get(item.id);
 
-    extractKey(item);
-    // add to extra
-    // save to DB
+    var oldkey = extractKey(item, {extractOnly: false}); // remove old key, if any
+
+    if (oldkey == citekey) { return; }
+
+    var extra = '' + item.getField('extra');
+    extra = extra.trim();
+    if (extra.length > 0) { extra += "\n"; }
+    item.setField('extra', extra + 'bibtex: ' + citekey);
+    item.save({ skipDateModifiedUpdate: true });
+
+    Zotero.DB.query("insert or replace into better-bibtex.keys ('key', citekey) values (?, ?)", [item.key, citekey]);
 
     return citekey;
   }

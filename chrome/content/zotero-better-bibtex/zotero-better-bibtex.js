@@ -366,7 +366,7 @@ Zotero.BetterBibTeX = {
         extra = extra.trim();
         if (extra.length > 0) { extra += "\n"; }
         item.setField('extra', extra + 'bibtex: ' + keys[item.id]);
-        item.save();
+        item.save({ skipDateModifiedUpdate: true });
       }
     });
   }
