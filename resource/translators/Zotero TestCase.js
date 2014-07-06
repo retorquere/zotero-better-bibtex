@@ -84,7 +84,23 @@ function doExport() {
     data.push(scrub(item));
   });
   if (data.length > 0) {
-    data[0].__config__ = Config;
+    data[0].__config__ = {
+      id:                     Config.id,
+      label:                  Config.label,
+      unicode:                Config.unicode,
+      pattern:                Config.pattern,
+      skipFields:             Config.skipFields,
+      usePrefix:              Config.usePrefix,
+      braceAll:               Config.braceAll,
+      fancyURLs:              Config.fancyURLs,
+      langid:                 Config.langid,
+      conflictResolution:     Config.conflictResolution,
+      metadataAttachments:    Config.metadataAttachments,
+      useJournalAbbreviation: Config.useJournalAbbreviation,
+      exportCharset:          Config.exportCharset,
+      exportFileData:         Config.exportFileData,
+      exportNotes:            Config.exportNotes
+    };
   }
 	Zotero.write(JSON.stringify(data, null, "\t"));
 }
