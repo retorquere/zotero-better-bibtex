@@ -295,23 +295,18 @@ class Test
   class Item
     def initialize(test, id)
       @test = test
-      @id = id
+      @itemID = id
+      @libraryID = nil
     end
-
-    def libraryID
-      nil
-    end
-    def itemID
-      @id
-    end
+    attr_reader :itemID, :libraryID
 
     def getField(field)
-      return @test.itemGetField(@id, field)
+      return @test.itemGetField(@itemID, field)
     end
     def setField(field, value)
-      return @test.itemSetField(@id, field, value)
+      return @test.itemSetField(@itemID, field, value)
     end
-    def save
+    def save(options=nil)
       proc do
         true
       end
@@ -435,6 +430,8 @@ class Test
     self
   end
   def get(id)
+    throw "Cannot get nil item" unless id
+    puts "getting item #{id}"
     return Item.new(self, id)
   end
   def itemGetField(id, field)
@@ -591,7 +588,7 @@ class Test
       end
 
       puts "Loading #{item['itemID']} into DB"
-      @db.execute('insert into items (itemID, itemTypeID, key) values (?, ?, ?)', item['itemID'], @itemTypeID[item['itemType']], item['key']);
+      @db.execute('insert into items (itemID, itemTypeID, "key") values (?, ?, ?)', item['itemID'], @itemTypeID[item['itemType']], item['key']);
       item.each_pair{|k, v|
         next if %w{__config__ itemID itemType key}.include?(k)
 
@@ -604,7 +601,7 @@ class Test
             creator = creator.dup
             @db.execute('insert into creatorData (firstName, lastName, fieldMode) values (?, ?, ?)', creator.delete('firstName'), creator.delete('lastName'), creator.delete('fieldMode'))
             c = @db.last_insert_row_id
-            @db.execute("insert into creators (creatorID, creatorDataID, 'key') values (?, ?, ?)", c, c, "C#{c}")
+            @db.execute('insert into creators (creatorID, creatorDataID, "key") values (?, ?, ?)', c, c, "C#{c}")
             @db.execute('insert into itemCreators (itemID, creatorID, creatorTypeID) values (?, ?, ?)', item['itemID'], c, @creatorTypeID[creator.delete('creatorType')])
             throw creator.inspect unless creator.empty?
           }
@@ -897,7 +894,7 @@ end
 file UNICODE_MAPPING => 'Rakefile' do |t|
   begin
     xml = File.join(File.dirname(t.name), File.basename(t.name, File.extname(t.name)) + '.xml')
-    download('http://www.w3.org/2003/entities/2007xml/unicode.xml', xml)
+    download('http://web.archive.org/web/20131109072541/http://www.w3.org/2003/entities/2007xml/unicode.xml', xml)
 
     mapping = Nokogiri::XML(open(xml))
     puts mapping.errors

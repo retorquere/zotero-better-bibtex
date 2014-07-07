@@ -268,9 +268,8 @@ function doExport() {
     //biblatex recommends us to use mvbook for multi-volume books
     if (type == 'book' && item.volume) { type = 'mvbook'; }
 
-    var citekey = Zotero.BetterBibTeX.KeyManager.get(item);
     Zotero.write("\n\n");
-    Zotero.write('@'+type+'{'+citekey);
+    Zotero.write('@'+type+'{'+item.__citekey__);
 
     writeFieldMap(item, fieldMap);
 

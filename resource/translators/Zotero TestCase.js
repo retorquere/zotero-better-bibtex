@@ -13,6 +13,7 @@
 }
 
 function scrub(item) {
+  delete item.__citekey__;
   delete item.libraryID;
   delete item.key;
   delete item.uniqueFields;

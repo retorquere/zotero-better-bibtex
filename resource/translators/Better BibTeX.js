@@ -82,9 +82,8 @@ function doExport() {
     if (!first) { Zotero.write(",\n\n"); }
     first = false;
 
-    var citekey = Zotero.BetterBibTeX.KeyManager.get(item);
     Zotero.write("\n\n");
-    Zotero.write('@'+type+'{'+citekey);
+    Zotero.write('@'+type+'{'+item.__citekey__);
 
     writeFieldMap(item, fieldMap);
 

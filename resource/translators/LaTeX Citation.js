@@ -19,8 +19,11 @@
 /*= include BibTeX.js =*/
 
 function doExport() {
-  CiteKeys.initialize();
-  Zotero.write("\\" + Zotero.getHiddenPref('better-bibtex.citeCommand') + "{" + CiteKeys.db.map(function(rec) { return rec.key; }).join(',') + '}');
+  var keys = [];
+  while (item = Translator.nextItem()) {
+    keys.push(item.__citekey__);
+  }
+  Zotero.write("\\" + Zotero.getHiddenPref('better-bibtex.citeCommand') + "{" + keys.join(',') + '}');
 }
 
 var exports = {

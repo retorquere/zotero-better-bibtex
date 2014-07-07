@@ -21,7 +21,7 @@
 function doExport(options) {
   var keys = {};
   while (item = Translator.nextItem()) {
-    keys[item.itemID] = Zotero.BetterBibTeX.KeyManager.get(item);
+    keys[item.itemID] = item.__citekey__;
   }
   Zotero.write(JSON.stringify(keys));
 }

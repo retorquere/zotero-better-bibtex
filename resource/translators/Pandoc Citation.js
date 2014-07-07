@@ -21,7 +21,7 @@
 function doExport() {
   var keys = [];
   while (item = Translator.nextItem()) {
-    keys.push('@' + Zotero.BetterBibTeX.KeyManager.get(item));
+    keys.push('@' + item.__citekey__);
   }
   Zotero.write(keys.join(' '));
 }
