@@ -344,30 +344,7 @@ Zotero.BetterBibTeX = {
     items = [item for (item of items) if (!(item.isAttachment() || item.isNote()))];
 
     // clear keys first so the generator can make fresh ones
-    for (item of items) {
-      var extra = '' + item.getField('extra');
-      extra = extra .replace(/bibtex:\s*[^\s\r\n]+/, '');
-      extra = extra.trim();
-      item.setField('extra', extra);
-      item.save({ skipDateModifiedUpdate: true });
-    }
-
-    var keys = Zotero.BetterBibTeX.getCiteKeys(items);
-    if (!keys) {
-      Zotero.BetterBibTeX.log('Cannot set keys');
-      return;
-    }
-
-    items.forEach(function(item) {
-      if (keys[item.id]) {
-        Zotero.BetterBibTeX.log('Setting key for ' + item.id + ': ' + keys[item.id]);
-
-        var extra = '' + item.getField('extra');
-        extra = extra.trim();
-        if (extra.length > 0) { extra += "\n"; }
-        item.setField('extra', extra + 'bibtex: ' + keys[item.id]);
-        item.save({ skipDateModifiedUpdate: true });
-      }
-    });
+    for (item of items) { Zotero.BetterBibTeX.KeyManager.clear(item); }
+    Zotero.BetterBibTeX.getCiteKeys(items);
   }
 };

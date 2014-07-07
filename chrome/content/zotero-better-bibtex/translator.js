@@ -57,6 +57,11 @@ Zotero.BetterBibTeX.KeyManager = new function() {
     Zotero.DB.query('insert or replace into betterbibtex.keys (itemID, libraryID, citekey) values (?, ?, ?)', [item.itemID, item.libraryID || 0, citekey]);
   }
 
+  self.get = function(item) {
+    if (arguments.length > 1) { item = arguments[1]; }
+    return Zotero.DB.valueQuery('select citekey from betterbibtex.keys where itemID=? and libraryID = ?', [item.itemID, item.libraryID || 0]);
+  }
+
   self.clear = function(item) { // NOT FOR TRANSLATOR
     Zotero.DB.query('delete from betterbibtex.keys where itemID = ?', [item.itemID]);
   }

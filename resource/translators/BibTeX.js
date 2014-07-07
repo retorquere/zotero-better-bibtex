@@ -539,10 +539,9 @@ var Translator = new function() {
     };
   }
 
-  var citeKeys = Dict();
   self.citekey = function(item) {
-    if (citeKeys.has(item.itemID)) { return citeKeys.get(item.itemID); }
-    var citekey = Zotero.BetterBibTeX.KeyManager.extract(item);
+    Zotero.BetterBibTeX.KeyManager.extract(item);
+    var citekey = Zotero.BetterBibTeX.KeyManager.get(item);
     if (citekey) { return citekey; }
 
     citekey = formatter.format(item);
@@ -555,7 +554,6 @@ var Translator = new function() {
     }
 
     citekey = citekey + postfix.c;
-    citeKeys.set(item.itemID, citekey);
     Zotero.BetterBibTeX.KeyManager.set(item, citekey);
     return citekey;
   }
