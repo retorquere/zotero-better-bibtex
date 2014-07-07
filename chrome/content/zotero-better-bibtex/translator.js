@@ -553,11 +553,11 @@ Zotero.BetterBibTeX.KeyManager = new function() {
   }
 
   this.reset = function(item) {
-    this.delete(item);
+    this.remove(item);
     return this.get(item);
   }
 
-  this.delete = function(item) {
+  this.remove = function(item) {
     Zotero.DB.query('delete from betterbibtex.keys where itemID = ?', [item.itemID]);
   }
 

@@ -61,6 +61,25 @@ Zotero.BetterBibTeX = {
     Zotero.BetterBibTeX.safeLoad('BibTeX Citation Keys.js');
     Zotero.BetterBibTeX.safeLoad('Zotero TestCase.js');
     Zotero.Translators.init();
+
+    var notifierID = Zotero.Notifier.registerObserver(this.itemChanged, ['item']);
+    // Unregister callback when the window closes (important to avoid a memory leak)
+    window.addEventListener('unload', function(e) { Zotero.Notifier.unregisterObserver(notifierID); }, false);
+  },
+
+  itemChanged: {
+    notify: function(event, type, ids, extraData) {
+      switch (event) {
+        case 'delete':
+          extraData.forEach(function(item) { Zotero.BetterBibTeX.KeyManager.remove(item); });
+          break;
+
+        case 'add':
+        case 'modify':
+          ids.map(function(id) { Zotero.BetterBibTeX.KeyManager.get(id); });
+          break;
+      }
+    }
   },
 
   displayOptions: function(url) {
