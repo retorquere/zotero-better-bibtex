@@ -13,15 +13,6 @@
 }
 
 function scrub(item) {
-  var itemID = CiteKeys.db.filter(function(rec) { return (rec.item.itemID == item.itemID); });
-
-  if (itemID && itemID.length == 1) {
-    item.itemID = itemID[0].key;
-  } else {
-    trLog('no key found for ' + item.itemID);
-    delete item.itemID;
-  }
-
   delete item.libraryID;
   delete item.key;
   delete item.uniqueFields;
@@ -80,26 +71,26 @@ function scrub(item) {
 
 function doExport() {
 	var data = [];
-  CiteKeys.initialize().forEach(function(item) {
+  while (item = Translator.nextItem()) {
+    item.itemID = data.length + 1;
     data.push(scrub(item));
-  });
+  }
+
   if (data.length > 0) {
     data[0].__config__ = {
-      id:                     Config.id,
-      label:                  Config.label,
-      unicode:                Config.unicode,
-      pattern:                Config.pattern,
-      skipFields:             Config.skipFields,
-      usePrefix:              Config.usePrefix,
-      braceAll:               Config.braceAll,
-      fancyURLs:              Config.fancyURLs,
-      langid:                 Config.langid,
-      conflictResolution:     Config.conflictResolution,
-      metadataAttachments:    Config.metadataAttachments,
-      useJournalAbbreviation: Config.useJournalAbbreviation,
-      exportCharset:          Config.exportCharset,
-      exportFileData:         Config.exportFileData,
-      exportNotes:            Config.exportNotes
+      id:                     Translator.id,
+      label:                  Translator.label,
+      unicode:                Translator.unicode,
+      pattern:                Translator.pattern,
+      skipFields:             Translator.skipFields,
+      usePrefix:              Translator.usePrefix,
+      braceAll:               Translator.braceAll,
+      fancyURLs:              Translator.fancyURLs,
+      langid:                 Translator.langid,
+      useJournalAbbreviation: Translator.useJournalAbbreviation,
+      exportCharset:          Translator.exportCharset,
+      exportFileData:         Translator.exportFileData,
+      exportNotes:            Translator.exportNotes
     };
   }
 	Zotero.write(JSON.stringify(data, null, "\t"));

@@ -1,7 +1,4 @@
 
-
-
-% Better BibLaTeX: pinned
 @article{Frit2,
   doi = {10.1007/s13127-011-0069-8},
   pages = {71-80},

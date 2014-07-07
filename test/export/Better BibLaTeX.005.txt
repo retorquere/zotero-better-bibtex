@@ -1,7 +1,4 @@
 
-
-
-% Better BibLaTeX: pinned
 @article{Oliveira_2009,
   pages = {29},
   title = {{USGS monitoring ecological impacts}},

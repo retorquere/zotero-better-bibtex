@@ -9,7 +9,8 @@ function detectImport() {
 }
 
 function doImport() {
-  Config.initialize();
+  Translator.initialize();
+
   var bib = '';
   var read;
   while(read = Zotero.read(1024)) { bib += read; }

@@ -1,7 +1,4 @@
 
-
-
-% Better BibLaTeX: pinned
 @article{american_rights_at_work_public_2012,
   title = {{Public Service Research Foundation}},
   url = {http://www.americanrightsatwork.org/blogcategory-275/},

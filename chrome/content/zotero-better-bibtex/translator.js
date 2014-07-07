@@ -33,6 +33,7 @@ Zotero.BetterBibTeX.KeyManager = new function() {
     return key;
   };
 
+  Zotero.debug('Parsing keys');
   var rows = Zotero.DB.query("" +
     "select coalesce(i.libraryID, 0) as libraryID, i.itemID as itemID, idv.value as extra " +
     "from items i " +
@@ -41,6 +42,7 @@ Zotero.BetterBibTeX.KeyManager = new function() {
     "join fields f on id.fieldID = f.fieldID  " +
     "where f.fieldName = 'extra' and idv.value like '%bibtex:%'");
   rows.forEach(function(row) {
+    Zotero.debug('load: ' + JSON.stringify(row));
     Zotero.DB.query('insert into betterbibtex.keys (itemID, libraryID, citekey) values (?, ?, ?)', [row.itemID, row.libraryID, extractKey({extra: row.extra})]);
   });
 
@@ -50,13 +52,15 @@ Zotero.BetterBibTeX.KeyManager = new function() {
 
     oldkey = extractKey(item, {extractOnly: false}); // remove old key, if any
 
-    if (!item.getField) { item = Zotero.Item.get(item.itemID); }
+    if (!item.getField) { item = Zotero.Items.get(item.itemID); }
 
     var extra = '' + item.getField('extra');
     extra = extra.trim();
     if (extra.length > 0) { extra += "\n"; }
     item.setField('extra', extra + 'bibtex: ' + citekey);
     item.save({ skipDateModifiedUpdate: true });
+
+    Zotero.debug('' + (item.libraryID || 0) + '/' + item.itemID + ' => ' + citekey);
 
     Zotero.DB.query('insert or replace into betterbibtex.keys (itemID, libraryID, citekey) values (?, ?, ?)', [item.itemID, item.libraryID || 0, citekey]);
 
@@ -452,7 +456,7 @@ Zotero.BetterBibTeX.KeyManager = new function() {
   
       var citekey = '';
   
-      Zotero.BetterBibTeX.prefs.bbt.getCharPref('citeKeyFormat').pattern.split('|').some(function(pattern) {
+      Zotero.BetterBibTeX.prefs.bbt.getCharPref('citeKeyFormat').split('|').some(function(pattern) {
         citekey = pattern.replace(/\[([^\]]+)\]/g, function(match, command) {
           var _filters = command.split(':');
           var _function = _filters.shift();
@@ -539,7 +543,7 @@ Zotero.BetterBibTeX.KeyManager = new function() {
     if (citekey) { return citekey; }
 
     var citekey = formatter.format(item);
-    var postfix = {n: 0, c:'a'};
+    var postfix = {n: -1, c:''};
     while (!this.free(citekey + postfix.c, item)) {
       postfix.n++;
       postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
@@ -561,10 +565,18 @@ Zotero.BetterBibTeX.KeyManager = new function() {
     var count = null
 
     if (typeof item.itemID == 'undefined') {
-      count = Zotero.DB.valueQuery('select count(*) from betterbibtex.keys where citekey=? and itemID <> ? and libraryID = ?', [citekey, item.itemID, item.libraryID || 0]);
-    } else {
+      Zotero.debug('checking whether ' + citekey + ' is free');
       count = Zotero.DB.valueQuery('select count(*) from betterbibtex.keys where citekey=? and libraryID = ?', [citekey, item.libraryID || 0]);
+    } else {
+      Zotero.debug('checking whether ' + citekey + ' is taken by anyone else than ' + item.itemID);
+      count = Zotero.DB.valueQuery('select count(*) from betterbibtex.keys where citekey=? and itemID <> ? and libraryID = ?', [citekey, item.itemID, item.libraryID || 0]);
     }
+    var rows = Zotero.DB.query('select * from betterbibtex.keys');
+    var row;
+    for (row in rows) {
+      Zotero.debug(JSON.stringify(row));
+    }
+    Zotero.debug('checked: ' + JSON.stringify(count));
     return (parseInt(count) == 0);
   }
 

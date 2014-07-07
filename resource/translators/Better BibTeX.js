@@ -51,7 +51,7 @@ var inputFieldMap = Dict({
   location:     'place'
 });
 
-Config.typeMap.toBibTeX = Dict({
+Translator.typeMap.toBibTeX = Dict({
   book:             ['book', 'booklet', 'manual', 'proceedings'],
   bookSection:      ['incollection', 'inbook'],
   journalArticle:   [':article', ':misc'],
@@ -75,21 +75,16 @@ function doExport() {
   Zotero.write("\n");
 
   var first = true;
-  CiteKeys.initialize().forEach(function(item) {
-    Config.fieldsWritten = Dict({});
-    //don't export standalone notes and attachments
-    if (item.itemType == 'note' || item.itemType == 'attachment') return;
-
+  while (item = Translator.nextItem()) {
     // determine type
     var type = getBibTeXType(item);
 
     if (!first) { Zotero.write(",\n\n"); }
     first = false;
 
-    var bibtex = CiteKeys.get(item);
+    var citekey = Zotero.BetterBibTeX.KeyManager.get(item);
     Zotero.write("\n\n");
-    Zotero.write(CiteKeys.report(bibtex));
-    Zotero.write('@'+type+'{'+bibtex.key);
+    Zotero.write('@'+type+'{'+citekey);
 
     writeFieldMap(item, fieldMap);
 
@@ -105,7 +100,7 @@ function doExport() {
     if (item.publicationTitle) {
       if (item.itemType == 'bookSection' || item.itemType == 'conferencePaper') {
         writeField('booktitle', latex_escape(item.publicationTitle, {brace: true}));
-      } else if (Config.useJournalAbbreviation && item.journalAbbreviation){
+      } else if (Translator.useJournalAbbreviation && item.journalAbbreviation){
         writeField('journal', latex_escape(item.journalAbbreviation, {brace: true}));
       } else {
         writeField('journal', latex_escape(item.publicationTitle, {brace: true}));
@@ -189,7 +184,7 @@ function doExport() {
     if (item.itemType == 'webpage') {
       writeField('howpublished', item.url);
     }*/
-    if (item.notes && Config.exportNotes) {
+    if (item.notes && Translator.exportNotes) {
       item.notes.forEach(function(note) {
         writeField('annote', latex_escape(Zotero.Utilities.unescapeHTML(note.note)));
       });
@@ -200,7 +195,7 @@ function doExport() {
     flushEntry(item);
 
     Zotero.write("\n}");
-  });
+  }
 
   exportJabRefGroups();
 
@@ -222,7 +217,7 @@ function addToExtraData(data, key, value) {
 function createZoteroReference(bibtexitem) {
   var type = Zotero.Utilities.trimInternal(bibtexitem.get('__type__').toLowerCase());
   if (bibtexitem.has('type')) { type = Zotero.Utilities.trimInternal(bibtexitem.get('type').toLowerCase()); }
-  type = Config.typeMap.toZotero.get(type) || 'journalArticle';
+  type = Translator.typeMap.toZotero.get(type) || 'journalArticle';
 
   trLog('creating reference for ' + JSON.stringify(bibtexitem));
 
@@ -378,14 +373,6 @@ function createZoteroReference(bibtexitem) {
 
     }
   });
-
-  if (Config.metadataAttachments) {
-    item.attachments.push({
-      title: "Better BibTeX metadata",
-      snapshot:false, mimeType:"text/html",
-      url: 'json://better-bibtex/' + JSON.stringify({citekey: bibtexitem.get('__key__')})
-    });
-  }
 
   if (item.itemType == 'conferencePaper' && item.publicationTitle && !item.proceedingsTitle) {
     item.proceedingsTitle = item.publicationTitle;

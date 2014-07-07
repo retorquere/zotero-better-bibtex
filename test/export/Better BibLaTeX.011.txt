@@ -1,7 +1,4 @@
 
-
-
-% Better BibLaTeX: pinned
 @inproceedings{Klassen2010,
   pages = {25-30},
   title = {{Empirical Study of Support Vector Machine Kernels with Applications to Microarray Data}},

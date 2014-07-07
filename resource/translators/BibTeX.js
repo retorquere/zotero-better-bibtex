@@ -11,7 +11,7 @@ var Translator = new function() {
 
   var initialized = false;
 
-  function initialize(config) {
+  this.initialize = function(config) {
     if (initialized) { return; }
 
     if (!config) { config = {}; }
@@ -22,8 +22,6 @@ var Translator = new function() {
     self.braceAll               = config.braceAll               || Zotero.getHiddenPref('better-bibtex.brace-all');
     self.fancyURLs              = config.fancyURLs              || Zotero.getHiddenPref('better-bibtex.fancyURLs');
     self.langid                 = config.langid                 || Zotero.getHiddenPref('better-bibtex.langid');
-    self.conflictResolution     = config.conflictResolution     || Zotero.getHiddenPref('better-bibtex.conflictResolution');
-    self.metadataAttachments    = config.metadataAttachments    || Zotero.getHiddenPref('better-bibtex.metadataAttachments');
     self.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
 
     self.useJournalAbbreviation = config.useJournalAbbreviation || Zotero.getOption('useJournalAbbreviation');
@@ -74,7 +72,7 @@ var Translator = new function() {
 
     if (!item) { return; }
 
-    if (!initialized) { initialize(item); }
+    if (!initialized) { this.initialize(item); }
     Translator.fieldsWritten = Dict({});
     Zotero.BetterBibTeX.KeyManager.scrub(item);
     return item;

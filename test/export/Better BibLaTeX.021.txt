@@ -1,7 +1,4 @@
 
-
-
-% Better BibLaTeX: generated
 @article{deOliveira2010,
   doi = {10.1016/j.jct.2010.06.007},
   issn = {00219614},

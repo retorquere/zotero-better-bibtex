@@ -1,7 +1,3 @@
-
-
-
-% Better BibLaTeX: pinned
 @inproceedings{author:06,
   pages = {330—331},
   title = {{Some publication title}},
@@ -9,7 +5,6 @@
   crossref = {conference:06}
 }
 
-% Better BibLaTeX: pinned
 @collection{conference:06,
   title = {{Proceedings of the Xth Conference on XYZ}},
   editor = {Editor, First and Editor, Second},

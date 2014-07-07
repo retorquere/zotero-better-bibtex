@@ -1,7 +1,4 @@
 
-
-
-% Better BibLaTeX: pinned
 @article{test-ticket1661,
   title = {{non-braking space: ; accented characters: ñ and ñ; tilde in URL: http://example.com/{\textasciitilde}user}}
 }

@@ -1,6 +1,6 @@
 [
 	{
-		"itemID": "BaltesStaudinger2000",
+		"itemID": 1,
 		"itemType": "journalArticle",
 		"url": "",
 		"rights": "",
@@ -63,8 +63,6 @@
 			"braceAll": true,
 			"fancyURLs": false,
 			"langid": "babel",
-			"conflictResolution": true,
-			"metadataAttachments": null,
 			"useJournalAbbreviation": null,
 			"exportCharset": null,
 			"exportFileData": null,

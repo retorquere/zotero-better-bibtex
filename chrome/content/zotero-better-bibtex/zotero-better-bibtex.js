@@ -4,9 +4,6 @@ Zotero.BetterBibTeX = {
   prefs: {
     zotero: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero."),
     bbt:    Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero.translators.better-bibtex."),
-    dflt:   Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getDefaultBranch("extensions.zotero.translators.better-bibtex."),
-
-    legacy: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero-better-bibtex.")
   },
 
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
@@ -46,20 +43,6 @@ Zotero.BetterBibTeX = {
   },
 
   init: function () {
-    // migrate options
-    Zotero.BetterBibTeX.prefs.legacy.clearUserPref('BibLaTex.ASCII');
-    Zotero.BetterBibTeX.prefs.legacy.clearUserPref('citekeyformat');
-    Zotero.BetterBibTeX.prefs.legacy.clearUserPref('getCollections');
-    for (var option of ['citeCommand', 'citeKeyFormat']) {
-      try {
-        var value = Zotero.BetterBibTeX.prefs.legacy.getCharPref(option);
-        if (value) {
-          Zotero.BetterBibTeX.prefs.bbt.setCharPref(option, value);
-          Zotero.BetterBibTeX.prefs.legacy.clearUserPref(option);
-        }
-      } catch (err) {}
-    }
-
     for (var endpoint of Object.keys(Zotero.BetterBibTeX.endpoints)) {
       var url = "/better-bibtex/" + endpoint;
       Zotero.BetterBibTeX.log('Registering endpoint ' + url);

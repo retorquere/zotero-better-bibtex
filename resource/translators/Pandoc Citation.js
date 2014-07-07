@@ -19,8 +19,11 @@
 /*= include BibTeX.js =*/
 
 function doExport() {
-  CiteKeys.initialize();
-  Zotero.write(CiteKeys.db.map(function(rec) { return ('@' + rec.key); }).join(' '));
+  var keys = [];
+  while (item = Translator.nextItem()) {
+    keys.push('@' + Zotero.BetterBibTeX.KeyManager.get(item));
+  }
+  Zotero.write(keys.join(' '));
 }
 
 var exports = {

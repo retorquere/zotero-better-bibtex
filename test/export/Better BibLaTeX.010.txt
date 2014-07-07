@@ -1,7 +1,4 @@
 
-
-
-% Better BibLaTeX: pinned
 @inproceedings{Hulse2009,
   isbn = {978-0-7695-3902-7},
   pages = {507-514},

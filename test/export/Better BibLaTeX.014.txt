@@ -1,7 +1,4 @@
 
-
-
-% Better BibLaTeX: generated
 @article{physicalviolentvolcanology,
   pages = {493-518},
   title = {{The \emph{physical}, violent volcanology of the 1600 eruption of Huaynaputina, southern Peru}},

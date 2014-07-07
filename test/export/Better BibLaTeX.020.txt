@@ -1,7 +1,4 @@
 
-
-
-% Better BibLaTeX: generated
 @inbook{Canguilhem1994,
   isbn = {2705662219},
   location = {{Paris}},

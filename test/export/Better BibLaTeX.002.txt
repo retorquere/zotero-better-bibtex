@@ -1,6 +1,5 @@
 
 
-% Better BibLaTeX: generated
 @book{Abramowitz1964,
   edition = {{ninth Dover printing, tenth GPO printing}},
   location = {{New York}},
@@ -11,7 +10,6 @@
   year = {1964}
 }
 
-% Better BibLaTeX: generated
 @book{Torre2008,
   isbn = {0385527403},
   title = {{The Yankee Years}},

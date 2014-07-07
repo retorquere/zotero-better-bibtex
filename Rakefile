@@ -36,7 +36,7 @@ BIBTEX_GRAMMAR  = Dir["resource/**/*.pegjs"][0]
 DICT            = 'chrome/content/zotero-better-bibtex/dict.js'
 DATE            = 'tmp/date.js'
 ABBR            = 'tmp/abbreviations.json'
-DB              = 'tmp/zotero.sqlite'
+DBNAME          = 'tmp/zotero.sqlite'
 
 SOURCES = %w{chrome test/import test/export resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
@@ -52,7 +52,7 @@ Dir['test/detect/*.*'].sort.each{|test|
   test = File.basename(test).split('.')
   id = "#{test[0].gsub(/[^A-Z]/, '').downcase}/d/#{test[1].to_i}"
   desc "Test: #{test[0]} detect #{test[1]}"
-  task id => [DB, XPI] do
+  task id => [DBNAME, XPI] do
     Test.new(test[0], :detect, test[1], test[2])
   end
 }
@@ -61,7 +61,7 @@ Dir['test/import/*.bib'].sort.each{|test|
   test = File.basename(test).split('.')
   id = "#{test[0].gsub(/[^A-Z]/, '').downcase}/i/#{test[1].to_i}"
   desc "Test: #{test[0]} import #{test[1]}"
-  task id => [DB, XPI] do
+  task id => [DBNAME, XPI] do
     Test.new(test[0], :import, test[1])
   end
 }
@@ -69,12 +69,12 @@ Dir['test/export/*.json'].sort.each{|test|
   test = File.basename(test).split('.')
   id = "#{test[0].gsub(/[^A-Z]/, '').downcase}/e/#{test[1].to_i}"
   desc "Test: #{test[0]} export #{test[1]}"
-  task id => [DB, XPI] do
+  task id => [DBNAME, XPI] do
     Test.new(test[0], :export, test[1])
   end
 }
 
-task :test => [DB, XPI] do
+task :test => [DBNAME, XPI] do
   # vim -b file and once in vim:
   #:set noeol
   #:wq
@@ -282,10 +282,73 @@ class Hash
 end
 
 class Test
+  class Prefs
+    def initialize(test, branch)
+      @test = test
+      @branch = branch
+    end
+
+    def getCharPref(pref)
+      return @test.getCharPref(@branch + pref)
+    end
+  end
+  class Item
+    def initialize(test, id)
+      @test = test
+      @id = id
+    end
+
+    def libraryID
+      nil
+    end
+    def itemID
+      @id
+    end
+
+    def getField(field)
+      return @test.itemGetField(@id, field)
+    end
+    def setField(field, value)
+      return @test.itemSetField(@id, field, value)
+    end
+    def save
+      proc do
+        true
+      end
+    end
+  end
+
+  class DB
+    def initialize(db)
+      @db = db
+    end
+
+    def query(sql, parameters=nil)
+      parameters ||= []
+      pst = @db.prepare sql
+      rows = []
+      pst.execute(*parameters).each{|row|
+        rows << Hash[*(pst.columns.zip(row).flatten)]
+      }
+      return rows
+    end
+
+    def valueQuery(sql, parameters=nil)
+      parameters ||= []
+      rows = @db.execute(sql, *parameters)
+      return nil unless rows && rows.size > 0
+      return rows[0][0]
+    end
+  end
+
+  def getCharPref(key)
+    throw "#{key} not set" unless @preferences[key]
+    puts "#{key}: #{@preferences[key].inspect}"
+    return @preferences[key]
+  end
+
   def pref(key, value)
-    tkey = key.sub(/^extensions\.zotero\.translators\./, '')
-    return unless tkey != key
-    @hiddenPrefs[tkey] ||= value;
+    @preferences[key] ||= value;
   end
 
   def script(content, init = false)
@@ -315,32 +378,38 @@ class Test
     @ctx['Zotero'] = self
     @ctx['ZU'] = self
     @ctx['Z'] = self
+    #@ctx['prefsObjects'] = {'zotero' => Prefs.new(self, 'extensions.zotero.'), 'bbt' => Prefs.new(self, 'extensions.zotero.translators.better-bibtex.')}
+    @ctx['prefsObjects'] = {'bbt' => Prefs.new(self, 'extensions.zotero.translators.better-bibtex.')}
     @ctx['pref'] = lambda {|this, key, value| pref(key, value)}
 
-    @hiddenPrefs = {}
+    @preferences = {}
     @options = {}
     @ctx.load('defaults/preferences/defaults.js')
     options = "test/#{type}/#{translator}.#{id}.options.json"
     if File.exist?(options)
       _options = JSON.parse(JSON.minify(File.open(options).read))
-      (_options['hiddenPrefs'] || {}).each_pair{|k,v| @hiddenPrefs[k] = v} # don't overwrite hiddenPrefs because the defaults would disappear
+      (_options['hiddenPrefs'] || {}).each_pair{|k,v| @preferences["extensions.zotero.translators.#{k}"] = v} # don't overwrite hiddenPrefs because the defaults would disappear
       @options = _options['options'] || {}
     end
 
     script(File.open(DATE), :init)
-    script("\nZotero.BetterBibTeX = {};\n")
+    script("\nZotero.BetterBibTeX = { prefs: prefsObjects };\n")
     script(File.open('chrome/content/zotero-better-bibtex/translator.js'))
     script('var __zotero__header__ = ')
     script(File.open("tmp/#{translator}.js"))
     script(File.open('test/utilities.js'))
 
-    dbname = DB + '.test'
+    dbname = DBNAME + '.test'
     File.unlink(dbname) if File.exists?(dbname)
-    FileUtils.cp(DB, dbname)
+    FileUtils.cp(DBNAME, dbname)
     @db = SQLite3::Database.new(dbname)
     @db.execute('PRAGMA temp_store=MEMORY;')
     @db.execute('PRAGMA journal_mode=MEMORY;')
     @db.execute('PRAGMA synchronous = OFF;')
+
+    @itemTypeID = hash('select typeName, itemTypeID from itemTypes')
+    @fieldID = hash('select fieldName, fieldID from fields')
+    @creatorTypeID = hash('select creatorType, creatorTypeID from creatorTypes')
 
     case type
       when :import then import
@@ -352,25 +421,34 @@ class Test
     File.unlink(@script) if File.exists?(@script)
   end
   attr_reader :translator, :id, :type
-  attr_accessor :Item
-  attr_accessor :Date
+  #attr_accessor :Item
+  #attr_accessor :Date
 
   def Utilities
     return self
   end
   def DB
-    return self
+    @dbhandler ||= DB.new(@db)
   end
 
-  def query(sql, parameters=nil)
-    parameters ||= []
-    puts "#{sql} #{parameters}"
-    pst = @db.prepare sql
-    rows = []
-    pst.execute(*parameters).each{|row|
-      rows << Hash[*(pst.columns.zip(row).flatten)]
-    }
-    return rows
+  def Items
+    self
+  end
+  def get(id)
+    return Item.new(self, id)
+  end
+  def itemGetField(id, field)
+    @db.get_first_value('select value from itemDataValues idv join itemData id on id.valueID = idv.valueID where id.fieldID = ? and id.itemID = ?', @fieldID[field], id)
+  end
+  def itemSetField(id, field, value)
+    vid = @db.get_first_value('select id.valueID from itemData id where fieldID = ? and itemID = ?', @fieldID[field], id)
+    if vid
+      @db.execute('update itemDataValues set value = ? where valueID = ?', value, vid)
+    else
+      @db.execute('insert into itemDataValues (value) values (?)', value)
+      vid = @db.last_insert_row_id
+      @db.execute('insert into itemData (itemID, fieldID, valueID) values (?, ?, ?)', id, @fieldID[field], vid)
+    end
   end
 
   def getCreatorsForType(type)
@@ -384,7 +462,7 @@ class Test
   end
 
   def getHiddenPref(key)
-    return @hiddenPrefs[key];
+    return @preferences["extensions.zotero.translators.#{key}"]
   end
 
   def getOption(key)
@@ -421,12 +499,18 @@ class Test
     end
   end
 
+  def getItem(id)
+    return Item.new(self, id)
+  end
+
   def nextItem
+    @currentItem ||= 0
     proc do
-      if @items.nil? || @items.empty?
+      if @currentItem >= @items.length
         false
       else
-        @items.shift
+        @currentItem += 1
+        @items[@currentItem - 1]
       end
     end
   end
@@ -493,10 +577,6 @@ class Test
 
     @output = ''
 
-    itemTypeID = hash('select typeName, itemTypeID from itemTypes')
-    fieldID = hash('select fieldName, fieldID from fields')
-    creatorTypeID = hash('select creatorType, creatorTypeID from creatorTypes')
-
     @items = JSON.parse(JSON.minify(File.open(input).read))
     @items.each_with_index{|item, i|
       item['itemID'] = i+1
@@ -510,21 +590,22 @@ class Test
         }
       end
 
-      @db.execute('insert into items (itemID, itemTypeID, key) values (?, ?, ?)', item['itemID'], itemTypeID[item['itemType']], item['key']);
+      puts "Loading #{item['itemID']} into DB"
+      @db.execute('insert into items (itemID, itemTypeID, key) values (?, ?, ?)', item['itemID'], @itemTypeID[item['itemType']], item['key']);
       item.each_pair{|k, v|
         next if %w{__config__ itemID itemType key}.include?(k)
 
-        if fieldID[k]
+        if @fieldID[k]
           @db.execute('insert into itemDataValues (value) values (?)', v)
           v = @db.last_insert_row_id
-          @db.execute('insert into itemData (itemID, fieldID, valueID) values (?, ?, ?)', item['itemID'], fieldID[k], v)
+          @db.execute('insert into itemData (itemID, fieldID, valueID) values (?, ?, ?)', item['itemID'], @fieldID[k], v)
         elsif k == 'creators'
           item[k].each{|creator|
             creator = creator.dup
             @db.execute('insert into creatorData (firstName, lastName, fieldMode) values (?, ?, ?)', creator.delete('firstName'), creator.delete('lastName'), creator.delete('fieldMode'))
             c = @db.last_insert_row_id
             @db.execute("insert into creators (creatorID, creatorDataID, 'key') values (?, ?, ?)", c, c, "C#{c}")
-            @db.execute('insert into itemCreators (itemID, creatorID, creatorTypeID) values (?, ?, ?)', item['itemID'], c, creatorTypeID[creator.delete('creatorType')])
+            @db.execute('insert into itemCreators (itemID, creatorID, creatorTypeID) values (?, ?, ?)', item['itemID'], c, @creatorTypeID[creator.delete('creatorType')])
             throw creator.inspect unless creator.empty?
           }
         elsif %w{related notes tags seeAlso attachments}.include?(k)
@@ -791,10 +872,10 @@ file 'tmp/userdata.sql' do
   download('https://raw.githubusercontent.com/zotero/zotero/4.0/resource/schema/userdata.sql', 'tmp/userdata.sql')
 end
 
-file DB => ['tmp/system.sql', 'tmp/userdata.sql'] do |t|
-  File.unlink(DB) if File.exists?(DB)
+file DBNAME => ['tmp/system.sql', 'tmp/userdata.sql'] do |t|
+  File.unlink(DBNAME) if File.exists?(DBNAME)
 
-  db = SQLite3::Database.new(DB)
+  db = SQLite3::Database.new(DBNAME)
   db.execute('PRAGMA temp_store=MEMORY;')
   db.execute('PRAGMA journal_mode=MEMORY;')
   db.execute('PRAGMA synchronous = OFF;')

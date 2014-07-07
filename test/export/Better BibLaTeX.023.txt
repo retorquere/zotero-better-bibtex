@@ -1,7 +1,4 @@
 
-
-
-% Better BibLaTeX: generated
 @book{Manning2008,
   isbn = {9780521865715},
   location = {{New York}},

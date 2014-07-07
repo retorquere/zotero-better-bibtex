@@ -1,7 +1,4 @@
 
-
-
-% Better BibTeX: generated
 @unpublished{traumNDcomputationalmodelsnon,
   title = {{Computational Models of Non-cooperative dialogue}},
   author = {Traum, David},

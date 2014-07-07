@@ -1,7 +1,4 @@
 
-
-
-% Better BibTeX: generated
 @article{BaltesStaudinger2000,
   title = {{Wisdom: a metaheuristic (pragmatic) to orchestrate mind and virtue toward excellence.}},
   volume = {{55}},

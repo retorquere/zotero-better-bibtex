@@ -1,7 +1,4 @@
 
-
-
-% Better BibLaTeX: generated
 @article{10.1000/182+physical_volcanology_1600_eruption,
   doi = {10.1000/182},
   pages = {493-518},

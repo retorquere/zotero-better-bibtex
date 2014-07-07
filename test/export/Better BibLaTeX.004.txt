@@ -1,7 +1,4 @@
 
-
-
-% Better BibLaTeX: pinned
 @book{hicks2001,
   edition = {{1st,}},
   isbn = {0-69-697269-4},

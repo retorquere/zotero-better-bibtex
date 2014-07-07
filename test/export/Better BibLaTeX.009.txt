@@ -1,7 +1,4 @@
 
-
-
-% Better BibLaTeX: pinned, hard conflict
 @article{Adams2001,
   pages = {493-518},
   title = {{The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru}},
@@ -14,7 +11,6 @@
   file = {Attachment:Users/heatherwright/Documents/Scientific Papers/Adams_Huaynaputina.pdf:application/pdf}
 }
 
-% Better BibLaTeX: pinned, hard conflict
 @article{Adams2001,
   pages = {493-518},
   title = {{The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru}},

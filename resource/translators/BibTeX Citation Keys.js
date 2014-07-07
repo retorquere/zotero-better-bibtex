@@ -19,9 +19,10 @@
 /*= include BibTeX.js =*/
 
 function doExport(options) {
-  CiteKeys.initialize();
   var keys = {};
-  CiteKeys.db.forEach(function(rec) { keys[rec.item.itemID] = rec.key; });
+  while (item = Translator.nextItem()) {
+    keys[item.itemID] = Zotero.BetterBibTeX.KeyManager.get(item);
+  }
   Zotero.write(JSON.stringify(keys));
 }
 
