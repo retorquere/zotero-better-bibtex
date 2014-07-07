@@ -371,8 +371,6 @@ class Test
 
     @ctx = V8::Context.new
     @ctx['Zotero'] = self
-    @ctx['ZU'] = self
-    @ctx['Z'] = self
     #@ctx['prefsObjects'] = {'zotero' => Prefs.new(self, 'extensions.zotero.'), 'bbt' => Prefs.new(self, 'extensions.zotero.translators.better-bibtex.')}
     @ctx['prefsObjects'] = {'bbt' => Prefs.new(self, 'extensions.zotero.translators.better-bibtex.')}
     @ctx['pref'] = lambda {|this, key, value| pref(key, value)}

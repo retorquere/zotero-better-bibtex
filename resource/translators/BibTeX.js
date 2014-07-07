@@ -469,7 +469,7 @@ var Translator = new function() {
 
       var citekey = '';
 
-      Zotero.BetterBibTeX.prefs.bbt.getCharPref('citeKeyFormat').split('|').some(function(pattern) {
+      Translator.pattern.split('|').some(function(pattern) {
         citekey = pattern.replace(/\[([^\]]+)\]/g, function(match, command) {
           var _filters = command.split(':');
           var _function = _filters.shift();
@@ -548,6 +548,7 @@ var Translator = new function() {
     citekey = formatter.format(item);
 
     var postfix = {n: -1, c:''};
+    Zotero.debug('basekey: ' + (citekey + postfix.c));
     while (!Zotero.BetterBibTeX.KeyManager.isFree(citekey + postfix.c, item)) {
       postfix.n++;
       postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
