@@ -20,6 +20,9 @@ EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
 RELEASE = Nokogiri::XML(File.open('install.rdf')).at('//em:version').inner_text
 
+BRANCH=`git rev-parse --abbrev-ref HEAD`.strip
+TMP="tmp/#{BRANCH}"
+
 TRANSLATORS = [
   {name: 'Better BibTeX'},
   {name: 'Better BibLaTeX', unicode: true},
@@ -29,21 +32,21 @@ TRANSLATORS = [
   {name: 'Zotero TestCase'}
 ]
 
-Dir.mkdir('tmp') unless File.exists?('tmp')
+FileUtils.mkdir_p TMP
 
-UNICODE_MAPPING = 'tmp/unicode.json'
+UNICODE_MAPPING = "#{TMP}/unicode.json"
 BIBTEX_GRAMMAR  = Dir["resource/**/*.pegjs"][0]
 DICT            = 'chrome/content/zotero-better-bibtex/dict.js'
-DATE            = 'tmp/date.js'
-ABBR            = 'tmp/abbreviations.json'
-DB              = 'tmp/zotero.sqlite'
+DATE            = "#{TMP}/date.js"
+ABBR            = "#{TMP}/abbreviations.json"
+DB              = "#{TMP}/zotero.sqlite"
 
 SOURCES = %w{chrome test/import test/export resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
             .select{|f| File.file?(f)}
             .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [ABBR, DATE, UNICODE_MAPPING, BIBTEX_GRAMMAR, DICT]
 
-XPI = "zotero-#{EXTENSION}-#{RELEASE}.xpi"
+XPI = "zotero-#{EXTENSION}-#{RELEASE}#{BRANCH == 'master' ? '' : '-' + BRANCH}.xpi"
 
 task :default => XPI do
 end
@@ -308,7 +311,7 @@ class Test
 
     puts "\n\nRunning #{type} test #{id} for #{translator}"
 
-    @script = "tmp/#{translator}-#{type}-#{id}.js"
+    @script = "#{TMP}/#{translator}-#{type}-#{id}.js"
     File.unlink(@script) if File.exists?(@script)
 
     @ctx = V8::Context.new
@@ -329,7 +332,7 @@ class Test
 
     script(File.open(DATE), :init)
     script('var __zotero__header__ = ')
-    script(File.open("tmp/#{translator}.js"))
+    script(File.open("#{TMP}/#{translator}.js"))
     script(File.open('test/utilities.js'))
 
     @db = SQLite3::Database.new(DB)
@@ -578,7 +581,7 @@ class Translator
 
   def self.parser
     if @@parser.nil?
-      p = 'tmp/parser.js'
+      p = "#{TMP}/parser.js"
       puts "Generating #{p.inspect} from #{BIBTEX_GRAMMAR.inspect}"
       puts `pegjs -e BibTeX #{BIBTEX_GRAMMAR.inspect} #{p.inspect}`
       exit unless $? == 0
@@ -716,7 +719,7 @@ class Translator
     @_label = header['label']
     js = render(js)
 
-    File.open(File.join('tmp', File.basename(@source)), 'w'){|f| f.write(js) }
+    File.open(File.join(TMP, File.basename(@source)), 'w'){|f| f.write(js) }
 
     return js
   end
@@ -730,11 +733,11 @@ class Translator
   end
 end
 
-file 'tmp/zotero.sql' do
-  download('https://raw.githubusercontent.com/zotero/zotero/4.0/resource/schema/system.sql', 'tmp/zotero.sql')
+file "#{TMP}/zotero.sql" do |t|
+  download('https://raw.githubusercontent.com/zotero/zotero/4.0/resource/schema/system.sql', t.name)
 end
 
-file DB => 'tmp/zotero.sql' do |t|
+file DB => "#{TMP}/zotero.sql" do |t|
   File.unlink(DB) if File.exists?(DB)
 
   db = SQLite3::Database.new(DB)
