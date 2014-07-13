@@ -17,10 +17,10 @@ require 'i18n'
 require 'json/minify'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
-BRANCH=`git rev-parse --abbrev-ref HEAD`.strip
-EXTENSION = EXTENSION_ID.gsub(/@.*/, '') + (BRANCH == 'master' ? '' : '-' + BRANCH)
+EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
 RELEASE = Nokogiri::XML(File.open('install.rdf')).at('//em:version').inner_text
 
+BRANCH=`git rev-parse --abbrev-ref HEAD`.strip
 TMP="tmp/#{BRANCH}"
 
 TRANSLATORS = [
@@ -46,7 +46,7 @@ SOURCES = %w{chrome test/import test/export resource defaults chrome.manifest in
             .select{|f| File.file?(f)}
             .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [ABBR, DATE, UNICODE_MAPPING, BIBTEX_GRAMMAR, DICT]
 
-XPI = "zotero-#{EXTENSION}-#{RELEASE}.xpi"
+XPI = "zotero-#{EXTENSION}-#{RELEASE}#{BRANCH == 'master' ? '' : '-' + BRANCH}.xpi"
 
 task :default => XPI do
 end
@@ -131,24 +131,13 @@ file XPI => SOURCES do |t|
     File.unlink(t.name) if File.exists?(t.name)
     throw e
   end
-
-#  moz_xpi = "moz-addons-#{t.name}"
-#  FileUtils.cp(t.name, moz_xpi)
-#
-#  Zip::File.open(moz_xpi) {|zf|
-#    install_rdf = Nokogiri::XML(zf.file.read('install.rdf'))
-#    install_rdf.at('//em:updateURL').unlink
-#    zf.file.open('install.rdf', 'w') {|f|
-#      f.write install_rdf.to_xml
-#    }
-#  }
 end
 
 file 'update.rdf' => [XPI, 'install.rdf'] do |t|
   update_rdf = Nokogiri::XML(File.open(t.name))
   update_rdf.at('//em:version').content = RELEASE
   update_rdf.at('//RDF:Description')['about'] = "urn:mozilla:extension:#{EXTENSION_ID}"
-  update_rdf.xpath('//em:updateLink').each{|link| link.content = "https://raw.github.com/ZotPlus/zotero-#{EXTENSION}/master/#{XPI}" }
+  update_rdf.xpath('//em:updateLink').each{|link| link.content = "https://raw.github.com/ZotPlus/zotero-#{EXTENSION}/#{BRANCH}/#{XPI}" }
   update_rdf.xpath('//em:updateInfoURL').each{|link| link.content = "https://github.com/ZotPlus/zotero-#{EXTENSION}" }
   File.open('update.rdf','wb') {|f| update_rdf.write_xml_to f}
 end
@@ -169,7 +158,7 @@ file 'README.md' => ['wiki/Home.md', 'install.rdf', 'Rakefile'] do |t|
     next unless File.exists?(patch)
     puts "Patching #{patch}"
     readme = File.open(patch).read
-    readme.gsub!(/\(http[^)]+\.xpi\)/, "(https://github.com/ZotPlus/zotero-#{EXTENSION}/raw/master/#{XPI})")
+    readme.gsub!(/\(http[^)]+\.xpi\)/, "(https://github.com/ZotPlus/zotero-#{EXTENSION}/raw/#{BRANCH}/#{XPI})")
     readme.gsub!(/\*\*[0-9]+\.[0-9]+\.[0-9]+\*\*/, "**#{RELEASE}**")
     readme.gsub!(/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}/, DateTime.now.strftime('%Y-%m-%d %H:%M'))
     home = readme if patch =~ /Home\.md$/
@@ -250,7 +239,7 @@ task :release, :bump do |t, args|
 
   install_rdf = Nokogiri::XML(File.open('install.rdf'))
   install_rdf.at('//em:version').content = release
-  install_rdf.at('//em:updateURL').content = "https://raw.github.com/ZotPlus/zotero-#{EXTENSION}/master/update.rdf"
+  install_rdf.at('//em:updateURL').content = "https://raw.github.com/ZotPlus/zotero-#{EXTENSION}/#{BRANCH}/update.rdf"
   File.open('install.rdf','wb') {|f| install_rdf.write_xml_to f}
   puts `git add install.rdf`
   puts "Release set to #{release}. Please publish."
