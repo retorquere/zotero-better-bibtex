@@ -17,10 +17,10 @@ require 'i18n'
 require 'json/minify'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
-EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
+BRANCH=`git rev-parse --abbrev-ref HEAD`.strip
+EXTENSION = EXTENSION_ID.gsub(/@.*/, '') + (BRANCH == 'master' ? '' : '-' + BRANCH)
 RELEASE = Nokogiri::XML(File.open('install.rdf')).at('//em:version').inner_text
 
-BRANCH=`git rev-parse --abbrev-ref HEAD`.strip
 TMP="tmp/#{BRANCH}"
 
 TRANSLATORS = [
@@ -46,7 +46,7 @@ SOURCES = %w{chrome test/import test/export resource defaults chrome.manifest in
             .select{|f| File.file?(f)}
             .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [ABBR, DATE, UNICODE_MAPPING, BIBTEX_GRAMMAR, DICT]
 
-XPI = "zotero-#{EXTENSION}-#{RELEASE}#{BRANCH == 'master' ? '' : '-' + BRANCH}.xpi"
+XPI = "zotero-#{EXTENSION}-#{RELEASE}.xpi"
 
 task :default => XPI do
 end
