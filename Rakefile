@@ -319,17 +319,17 @@ class Test
     end
 
     def query(sql, parameters=nil)
+      throw "No query supplied" unless sql.strip != ''
       parameters ||= []
-      pst = @db.prepare sql
-      rows = []
-      pst.execute(*parameters).each{|row|
-        rows << Hash[*(pst.columns.zip(row).flatten)]
-      }
-      return rows
+      puts "#{sql}: #{parameters.collect{|v| v}.inspect}"
+      rows = @db.execute2(sql, *parameters)
+      columns = rows.shift
+      return rows.collect{|row| Hash[*(columns.zip(row).flatten)] }
     end
 
     def valueQuery(sql, parameters=nil)
       parameters ||= []
+      puts "#{sql}: #{parameters.collect{|v| v}.inspect}"
       rows = @db.execute(sql, *parameters)
       return nil unless rows && rows.size > 0
       return rows[0][0]

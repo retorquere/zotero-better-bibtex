@@ -74,12 +74,10 @@ Zotero.BetterBibTeX = {
           extraData.forEach(function(item) { Zotero.BetterBibTeX.KeyManager.clear(item); });
           break;
 
-/*
         case 'add':
         case 'modify':
-          ids.map(function(id) { Zotero.BetterBibTeX.KeyManager.get(id); });
+          Zotero.BetterBibTeX.KeyManager.updated(ids);
           break;
-*/
       }
     }
   },

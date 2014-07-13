@@ -4,6 +4,26 @@ Zotero.BetterBibTeX.KeyManager = new function() {
   Zotero.DB.query("ATTACH ':memory:' AS 'betterbibtex'");
   Zotero.DB.query('create table betterbibtex.keys (itemID primary key, libraryID not null, citekey not null)');
 
+  self.syncNeeded = function() {
+    if (!Zotero.Sync.Server.enabled) { return false; }
+    if (Zotero.Sync.Server.syncInProgress || Zotero.Sync.Server.updatesInProgress) { return true; }
+
+    var params = [];
+    var lastSync = Zotero.Sync.Server.lastLocalSyncTime();
+    if (lastSync) {
+      params = [Zotero.Date.dateToSQL(new Date(lastSync * 1000), true)];
+      lastSync = ' where clientDateModified > ?';
+    } else {
+      lastSync = '';
+    }
+
+    return (Zotero.DB.valueQuery('select count(*) from items' + lastSync, params) > 1000); // 1000 is an arbitrary limit to make sure we don't overtax the Zotero sync infrastructure
+  }
+
+  self.syncWarn = function() {
+    alert('Sync required! Apologies for the inconvenience, please see https://github.com/ZotPlus/zotero-better-bibtex/wiki/Citation-Keys#stable-keys for a full explanation');
+  }
+
   self.extract = function(item) {
     // the sandbox inserts itself in call parameters
     if (arguments.length > 1) { item = arguments[1]; }
@@ -23,15 +43,15 @@ Zotero.BetterBibTeX.KeyManager = new function() {
     return m[1];
   }
 
-  var rows = Zotero.DB.query("" +
+  var findKeysSQL = "" +
     "select coalesce(i.libraryID, 0) as libraryID, i.itemID as itemID, idv.value as extra " +
     "from items i " +
     "join itemData id on i.itemID = id.itemID " +
     "join itemDataValues idv on idv.valueID = id.valueID " +
     "join fields f on id.fieldID = f.fieldID  " +
-    "where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems) and idv.value like '%bibtex:%'");
+    "where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems) and idv.value like '%bibtex:%'";
+  var rows = Zotero.DB.query(findKeysSQL);
   rows.forEach(function(row) {
-    Zotero.debug('load: ' + JSON.stringify(row));
     Zotero.DB.query('insert into betterbibtex.keys (itemID, libraryID, citekey) values (?, ?, ?)', [row.itemID, row.libraryID, self.extract({extra: row.extra})]);
   });
 
@@ -62,8 +82,20 @@ Zotero.BetterBibTeX.KeyManager = new function() {
     return Zotero.DB.valueQuery('select citekey from betterbibtex.keys where itemID=? and libraryID = ?', [item.itemID, item.libraryID || 0]);
   }
 
-  self.clear = function(item) { // NOT FOR TRANSLATOR
+  self.clear = function(item) {
     Zotero.DB.query('delete from betterbibtex.keys where itemID = ?', [item.itemID]);
+  }
+
+  self.updated = function(itemIDs) {
+    if (itemIDs.length == 0) { return; }
+
+    itemIDs = '(' + itemIDs.map(function(id) { return '' + parseInt(id); }).join(',') + ')';
+    Zotero.DB.query('delete from betterbibtex.keys where itemID in (' + itemIDs + ')');
+
+    var rows = Zotero.DB.query(findKeysSQL + ' and i.itemID in ' + itemIDs);
+    rows.forEach(function(row) {
+      // Zotero.DB.query('insert into betterbibtex.keys (itemID, libraryID, citekey) values (?, ?, ?)', [row.itemID, row.libraryID, self.extract({extra: row.extra})]);
+    });
   }
 
   self.isFree = function(citekey, item) {

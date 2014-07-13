@@ -11,7 +11,7 @@ var Translator = new function() {
 
   var initialized = false;
 
-  this.initialize = function(config) {
+  self.initialize = function(config) {
     if (initialized) { return; }
 
     if (!config) { config = {}; }
@@ -74,7 +74,7 @@ var Translator = new function() {
 
     if (!initialized) { self.initialize(item); }
     Translator.fieldsWritten = Dict({});
-    item.__citekey__ = this.citekey(item);
+    item.__citekey__ = self.citekey(item);
     return item;
   }
 
@@ -539,6 +539,13 @@ var Translator = new function() {
     };
   }
 
+  var sync = {
+    needed: false,
+    test: {
+      treshold: 10,
+      assumedSafe: 0
+    }
+  };
   self.citekey = function(item) {
     Zotero.BetterBibTeX.KeyManager.extract(item);
     var citekey = Zotero.BetterBibTeX.KeyManager.get(item);
@@ -553,8 +560,17 @@ var Translator = new function() {
       postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
     }
 
+    if (!sync.needed) {
+      sync.test.assumedSafe += 1;
+      if (sync.test.assumedSafe >= sync.test.treshold) {
+        sync.needed = Zotero.BetterBibTeX.KeyManager.syncNeeded();
+        sync.test.assumedSafe = 0;
+      }
+      if (sync.needed) { Zotero.BetterBibTeX.KeyManager.syncWarn(); }
+    }
+
     citekey = citekey + postfix.c;
-    Zotero.BetterBibTeX.KeyManager.set(item, citekey);
+    if (!sync.needed) { Zotero.BetterBibTeX.KeyManager.set(item, citekey); }
     return citekey;
   }
 };
