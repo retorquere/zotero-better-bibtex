@@ -155,14 +155,14 @@ task :publish => ['README.md', XPI, 'update.rdf'] do
   sh "git commit -am #{RELEASE}"
   sh "git tag #{RELEASE}"
   sh "git push"
-  sh "cd ../zotero-better-bibtex.wiki; git commit -am 'release'; git push"
+  sh "cd wiki; git commit -am 'release'; git push"
 end
 
-file 'README.md' => ['../zotero-better-bibtex.wiki/Home.md', 'install.rdf', 'Rakefile'] do |t|
+file 'README.md' => ['wiki/Home.md', 'install.rdf', 'Rakefile'] do |t|
   puts 'Updating README.md'
 
   home = nil
-  [t.prerequisites[0], '../zotero-better-bibtex.wiki/Support-Request-Guidelines.md'].each{|patch|
+  [t.prerequisites[0], 'wiki/Support-Request-Guidelines.md'].each{|patch|
     next unless File.exists?(patch)
     puts "Patching #{patch}"
     readme = File.open(patch).read
