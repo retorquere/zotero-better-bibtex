@@ -94,7 +94,7 @@ Zotero.BetterBibTeX.KeyManager = new function() {
 
     var rows = Zotero.DB.query(findKeysSQL + ' and i.itemID in ' + itemIDs);
     rows.forEach(function(row) {
-      // Zotero.DB.query('insert into betterbibtex.keys (itemID, libraryID, citekey) values (?, ?, ?)', [row.itemID, row.libraryID, self.extract({extra: row.extra})]);
+      Zotero.DB.query('insert into betterbibtex.keys (itemID, libraryID, citekey) values (?, ?, ?)', [row.itemID, row.libraryID, self.extract({extra: row.extra})]);
     });
   }
 

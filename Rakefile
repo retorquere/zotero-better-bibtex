@@ -387,7 +387,7 @@ class Test
 
     script(File.open(DATE), :init)
     script("\nZotero.BetterBibTeX = { prefs: prefsObjects };\n")
-    script(File.open('chrome/content/zotero-better-bibtex/translator.js'))
+    script(File.open('chrome/content/zotero-better-bibtex/keymanager.js'))
     script('var __zotero__header__ = ')
     script(File.open("tmp/#{translator}.js"))
     script(File.open('test/utilities.js'))
