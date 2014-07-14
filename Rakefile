@@ -51,6 +51,10 @@ XPI = "zotero-#{EXTENSION}-#{RELEASE}#{BRANCH == 'master' ? '' : '-' + BRANCH}.x
 task :default => XPI do
 end
 
+task :clean do
+  FileUtils.rm_rf TMP
+end
+
 Dir['test/detect/*.*'].sort.each{|test|
   test = File.basename(test).split('.')
   id = "#{test[0].gsub(/[^A-Z]/, '').downcase}/d/#{test[1].to_i}"
