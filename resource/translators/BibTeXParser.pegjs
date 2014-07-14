@@ -178,7 +178,7 @@ string
                                                           if (param.length == 3 && param[0] == '{' && param[2] == '}') { cmds.push("\\" + cmd + param[2] ); }
                                                           var match = null;
                                                           cmds.forEach(function(cmd) {
-                                                            if (LaTeX.toUnicode[cmd]) { match = LaTeX.toUnicode[cmd]; }
+                                                            match = match || LaTeX.toUnicode[cmd];
                                                           });
                                                           return (match || param);
                                                        }
