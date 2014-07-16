@@ -15,6 +15,8 @@ require 'chronic'
 require 'sqlite3'
 require 'i18n'
 require 'json/minify'
+require 'rubygems/package'
+require 'zlib'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
@@ -939,6 +941,7 @@ end
 
 def download(url, file)
   puts "Downloading #{url} to #{file}"
+  FileUtils.mkdir_p(File.dirname(file))
   options = {}
   options['If-Modified-Since'] = File.mtime(file).rfc2822 if File.exists?(file)
   begin
@@ -979,4 +982,33 @@ task :parser do
       f.write(line)
     }
   }
+end
+
+task :abbrevs do
+  abbrevs = {}
+
+  lists = Nokogiri::HTML(open('http://jabref.sourceforge.net/resources.php'))
+  main = lists.at_css('div#main')
+  main.children.each{|child|
+    break if child.name == 'h3' && child['id'] == 'availablelists'
+    child.unlink
+  }
+  main.at_css('ul').css('li').each{|li|
+    link = li.at_css('a')['href']
+    link = "http://jabref.sourceforge.net/#{link}" unless link =~ /https?:\/\//
+    tgt = File.join("#{TMP}/abbrevs/", link.sub(/.*\//, ''))
+    download(link, tgt)
+    IO.readlines(tgt).each{|line|
+      begin
+        next if line =~ /^#/
+        next unless line =~ /=/
+        full, abbr = *(line.split('=', 2).collect{|v| v.strip})
+        next if full.downcase == abbr.downcase
+        abbrevs[full.downcase] = abbr
+      rescue ArgumentError
+      end
+    }
+  }
+  puts "#{abbrevs.size} abbreviations"
+  File.open('resource/abbreviations.json', 'w'){|f| f.write(JSON.pretty_generate(abbrevs)) }
 end
