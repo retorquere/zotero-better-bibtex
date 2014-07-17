@@ -1019,7 +1019,7 @@ task :abbrevs do
   db.execute('PRAGMA journal_mode=MEMORY;')
   db.execute('PRAGMA synchronous = OFF;')
 
-  db.execute('create table journalAbbreviationLists (name primary key, precedence not null)')
+  db.execute('create table journalAbbreviationLists (id primary key, name unique, precedence not null)')
   db.execute('create table journalAbbreviations (list not null, full not null, abbrev not null, primary key(list, full))');
 
   # more candidates:
@@ -1041,6 +1041,7 @@ task :abbrevs do
     href = link['href']
 
     db.execute('insert into journalAbbreviationLists (name, precedence) select ?, count(*) from journalAbbreviationLists', title)
+    id = db.last_insert_row_id
 
     href = "http://jabref.sourceforge.net/#{href}" unless href =~ /https?:\/\//
     tgt = File.join("#{TMP}/abbrevs/", href.sub(/.*\//, ''))
@@ -1051,7 +1052,7 @@ task :abbrevs do
         next unless line =~ /=/
         full, abbr = *(line.split('=', 2).collect{|v| v.strip})
         next if full.downcase == abbr.downcase
-        db.execute('insert or ignore into journalAbbreviations (list, full, abbrev) values (?, ?, ?)', title, full.downcase, abbr)
+        db.execute('insert or ignore into journalAbbreviations (list, full, abbrev) values (?, ?, ?)', id, full.downcase, abbr)
       rescue ArgumentError
       end
     }

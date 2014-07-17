@@ -34,7 +34,7 @@ Zotero.BetterBibTeX.KeyManager = new function() {
 
     return Zotero.DB.valueQuery('' +
       'select a.abbrev from betterbibtex.journalAbbreviations a ' +
-      'join betterbibtex.journalAbbreviationLists al on al.name = a.list ' +
+      'join betterbibtex.journalAbbreviationLists al on al.id = a.list ' +
       'where a.full = ? and al.precedence >= 0 order by al.precedence', [item.publicationTitle.toLowerCase()]);
   }
 
