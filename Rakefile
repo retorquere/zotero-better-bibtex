@@ -288,6 +288,10 @@ class Test
     def getCharPref(pref)
       return @test.getCharPref(@branch + pref)
     end
+
+    def get(pref)
+      return @test.getPref(@branch + pref)
+    end
   end
   class Item
     def initialize(test, id)
@@ -309,7 +313,6 @@ class Test
       end
     end
   end
-
   class DB
     def initialize(db)
       @db = db
@@ -318,7 +321,7 @@ class Test
     def query(sql, parameters=nil)
       throw "No query supplied" unless sql.strip != ''
       parameters ||= []
-      puts "#{sql}: #{parameters.collect{|v| v}.inspect}"
+      puts "#{sql.sub(/\n.*/m, '...')}: #{parameters.collect{|v| v}.inspect}"
       rows = @db.execute2(sql, *parameters)
       columns = rows.shift
       return rows.collect{|row| Hash[*(columns.zip(row).flatten)] }
@@ -326,13 +329,30 @@ class Test
 
     def valueQuery(sql, parameters=nil)
       parameters ||= []
-      puts "#{sql}: #{parameters.collect{|v| v}.inspect}"
+      puts "#{sql.sub(/\n.*/m, '...')}: #{parameters.collect{|v| v}.inspect}"
       rows = @db.execute(sql, *parameters)
       return nil unless rows && rows.size > 0
       return rows[0][0]
     end
   end
+  class FileProxy
+    def initialize(test)
+      @test = test
+    end
 
+    def getContentsFromURL(url)
+      case url
+        when /^resource:\/\/zotero-better-bibtex\/(.*)/
+          return open("resource/#{$1}").read
+      end
+      throw url
+    end
+  end
+
+  def getPref(key)
+    puts "#{key}: #{@preferences[key].inspect}"
+    return @preferences[key]
+  end
   def getCharPref(key)
     throw "#{key} not set" unless @preferences[key]
     puts "#{key}: #{@preferences[key].inspect}"
@@ -360,6 +380,8 @@ class Test
     @translator = translator
     @type = type
     @id = id
+
+    @File = FileProxy.new(self)
 
     puts "\n\nRunning #{type} test #{id} for #{translator}"
 
@@ -392,6 +414,7 @@ class Test
     dbname = DBNAME + '.test'
     File.unlink(dbname) if File.exists?(dbname)
     FileUtils.cp(DBNAME, dbname)
+    puts "#{DBNAME} copied to #{dbname}"
     @db = SQLite3::Database.new(dbname)
     @db.execute('PRAGMA temp_store=MEMORY;')
     @db.execute('PRAGMA journal_mode=MEMORY;')
@@ -409,8 +432,10 @@ class Test
     end
 
     File.unlink(@script) if File.exists?(@script)
+    @ctx.dispose
   end
   attr_reader :translator, :id, :type
+  attr_accessor :File
   #attr_accessor :Item
   #attr_accessor :Date
 
@@ -419,6 +444,9 @@ class Test
   end
   def DB
     @dbhandler ||= DB.new(@db)
+  end
+  def Prefs
+    @zotPrefs ||= Prefs.new(self, 'extensions.zotero.')
   end
 
   def Items
@@ -859,7 +887,6 @@ end
 
 file DBNAME => ["#{TMP}/system.sql", "#{TMP}/userdata.sql"] do |t|
   File.unlink(DBNAME) if File.exists?(DBNAME)
-  download('https://raw.githubusercontent.com/zotero/zotero/4.0/resource/schema/system.sql', t.name)
 
   db = SQLite3::Database.new(DBNAME)
   db.execute('PRAGMA temp_store=MEMORY;')
@@ -985,7 +1012,22 @@ task :parser do
 end
 
 task :abbrevs do
-  abbrevs = {}
+  dbname = "#{TMP}/abbreviations.sql"
+  File.unlink(dbname) if File.file?(dbname)
+  db = SQLite3::Database.new(dbname)
+  db.execute('PRAGMA temp_store=MEMORY;')
+  db.execute('PRAGMA journal_mode=MEMORY;')
+  db.execute('PRAGMA synchronous = OFF;')
+
+  db.execute('create table journalAbbreviationLists (name primary key, precedence not null)')
+  db.execute('create table journalAbbreviations (list not null, full not null, abbrev not null, primary key(list, full))');
+
+  # more candidates:
+  # http://journal-abbreviations.library.ubc.ca/dump.php
+  # http://www.ncbi.nlm.nih.gov/books/NBK3827/table/pubmedhelp.pubmedhelptable45/
+  # http://www.cas.org/content/references/corejournals
+  # http://www.efm.leeds.ac.uk/~mark/ISIabbr/
+  # http://www.csa.com/factsheets/supplements/ipa.php
 
   lists = Nokogiri::HTML(open('http://jabref.sourceforge.net/resources.php'))
   main = lists.at_css('div#main')
@@ -994,21 +1036,35 @@ task :abbrevs do
     child.unlink
   }
   main.at_css('ul').css('li').each{|li|
-    link = li.at_css('a')['href']
-    link = "http://jabref.sourceforge.net/#{link}" unless link =~ /https?:\/\//
-    tgt = File.join("#{TMP}/abbrevs/", link.sub(/.*\//, ''))
-    download(link, tgt)
+    link = li.at_css('a')
+    title = link.inner_text
+    href = link['href']
+
+    db.execute('insert into journalAbbreviationLists (name, precedence) select ?, count(*) from journalAbbreviationLists', title)
+
+    href = "http://jabref.sourceforge.net/#{href}" unless href =~ /https?:\/\//
+    tgt = File.join("#{TMP}/abbrevs/", href.sub(/.*\//, ''))
+    download(href, tgt)
     IO.readlines(tgt).each{|line|
       begin
         next if line =~ /^#/
         next unless line =~ /=/
         full, abbr = *(line.split('=', 2).collect{|v| v.strip})
         next if full.downcase == abbr.downcase
-        abbrevs[full.downcase] = abbr
+        db.execute('insert or ignore into journalAbbreviations (list, full, abbrev) values (?, ?, ?)', title, full.downcase, abbr)
       rescue ArgumentError
       end
     }
   }
-  puts "#{abbrevs.size} abbreviations"
-  File.open('resource/abbreviations.json', 'w'){|f| f.write(JSON.pretty_generate(abbrevs)) }
+  puts "#{db.get_first_value('select count(*) from journalAbbreviations')} abbreviations"
+  db.close
+
+  File.open('resource/abbreviations.sql', 'w'){|f|
+    StringIO.new(`sqlite3 #{dbname} .dump`).readlines.each{|line|
+      next unless line =~ /^(CREATE|INSERT)/
+      line.sub!(/^CREATE TABLE /, 'CREATE TABLE betterbibtex.')
+      line.sub!(/^INSERT INTO "journal/, 'INSERT INTO "betterbibtex.journal')
+      f.write(line)
+    }
+  }
 end

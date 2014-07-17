@@ -97,10 +97,11 @@ function doExport() {
     }
 
     if (item.publicationTitle) {
+      var abbr = Zotero.BetterBibTeX.KeyManager.journalAbbrev(item);
       if (item.itemType == 'bookSection' || item.itemType == 'conferencePaper') {
         writeField('booktitle', latex_escape(item.publicationTitle, {brace: true}));
-      } else if (Translator.useJournalAbbreviation && item.journalAbbreviation){
-        writeField('journal', latex_escape(item.journalAbbreviation, {brace: true}));
+      } else if (Translator.useJournalAbbreviation && abbr) {
+        writeField('journal', latex_escape(abbr, {brace: true}));
       } else {
         writeField('journal', latex_escape(item.publicationTitle, {brace: true}));
       }

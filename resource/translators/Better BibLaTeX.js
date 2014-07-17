@@ -298,11 +298,12 @@ function doExport() {
           break;
 
         case 'journalArticle':
-          if (Translator.useJournalAbbreviation) {
-            writeField('journal', latex_escape(item.journalAbbreviation, {brace: true}));
+          var abbr = Zotero.BetterBibTeX.KeyManager.journalAbbrev(item);
+          if (Translator.useJournalAbbreviation && abbr) {
+            writeField('journal', latex_escape(abbr, {brace: true}));
           } else {
             writeField('journaltitle', latex_escape(item.publicationTitle, {brace: true}));
-            writeField('shortjournal', latex_escape(item.journalAbbreviation, {brace: true}));
+            writeField('shortjournal', latex_escape(abbr, {brace: true}));
           }
           break;
       }

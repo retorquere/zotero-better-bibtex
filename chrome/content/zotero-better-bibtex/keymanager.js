@@ -20,26 +20,22 @@ Zotero.BetterBibTeX.KeyManager = new function() {
     return (Zotero.DB.valueQuery('select count(*) from items' + lastSync, params) > 1000); // 1000 is an arbitrary limit to make sure we don't overtax the Zotero sync infrastructure
   }
 
+  var abbreviationsLoaded = false;
   self.journalAbbrev = function(item) {
+    if (arguments.length > 1) { item = arguments[1]; }
     if (item.journalAbbreviation) { return item.journalAbbreviation; }
     if (!Zotero.Prefs.get('cite.automaticJournalAbbreviations')) { return; }
+    if (!item.publicationTitle) { return; }
 
-    // http://journal-abbreviations.library.ubc.ca/dump.php
-    // http://www.ncbi.nlm.nih.gov/books/NBK3827/table/pubmedhelp.pubmedhelptable45/
-    // http://jabref.sourceforge.net/journals/journal_abbreviations_general.txt
-    // http://jabref.sourceforge.net/journals/journal_abbreviations_ams.txt
-    // https://github.com/timstaley/jabref-astro-abbreviations
-    // https://raw.github.com/jrnold/jabref-econ-journal-abbrevs/master/aea-abbrevs.txt
-    // http://jabref.sourceforge.net/journals/journal_abbreviations_entrez.txt
-    // http://jabref.sourceforge.net/journals/journal_abbreviations_ieee.txt
-    // http://jabref.sourceforge.net/journals/journal_abbreviations_medicus.txt
-    // http://people.su.se/~alau4517/jabref.wos.txt
-    // http://jabref.sourceforge.net/journals/journal_abbreviations_lifescience.txt
-    // http://jabref.sourceforge.net/journals/journal_abbreviations_meteorology.txt
-    // http://jabref.sourceforge.net/journals/journal_abbreviations_sociology.txt
-    // http://www.cas.org/content/references/corejournals
-    // http://www.efm.leeds.ac.uk/~mark/ISIabbr/
-    // http://www.csa.com/factsheets/supplements/ipa.php
+    if (!abbreviationsLoaded) {
+      Zotero.DB.query(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/abbreviations.sql"));
+      abbreviationsLoaded = true;
+    }
+
+    return Zotero.DB.valueQuery('' +
+      'select a.abbrev from betterbibtex.journalAbbreviations a ' +
+      'join betterbibtex.journalAbbreviationLists al on al.name = a.list ' +
+      'where a.full = ? and al.precedence >= 0 order by al.precedence', [item.publicationTitle.toLowerCase()]);
   }
 
   self.syncWarn = function() {
