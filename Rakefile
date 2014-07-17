@@ -120,7 +120,7 @@ file XPI => SOURCES do |t|
   begin
     puts "Creating #{t.name}"
     Zip::File.open(t.name, 'w') do |zipfile|
-      t.prerequisites.reject{|f| f=~ /^(test|tmp|resource\/translators)\// }.each{|file|
+      t.prerequisites.reject{|f| f=~ /^(test|tmp|resource\/(translators|abbreviations))\// }.each{|file|
         zipfile.add(file, file)
       }
 
@@ -322,6 +322,18 @@ class Test
       throw "No query supplied" unless sql.strip != ''
       parameters ||= []
       puts "#{sql.sub(/\n.*/m, '...')}: #{parameters.collect{|v| v}.inspect}"
+
+      if sql =~ /;\n/m
+        sql = sql.split(";\n")
+        puts "Batch loading #{sql.size} statements"
+        sql.each_with_index{|stmt, i|
+          @db.execute(stmt)
+          print '.' if (i % 100) == 0
+        }
+        puts "loaded"
+        return
+      end
+
       rows = @db.execute2(sql, *parameters)
       columns = rows.shift
       return rows.collect{|row| Hash[*(columns.zip(row).flatten)] }
@@ -396,11 +408,12 @@ class Test
 
     @preferences = {}
     @options = {}
-    @ctx.load('defaults/preferences/defaults.js')
+    @ctx.load('defaults/preferences/defaults.js') # load defaults by executing the preferences file
     options = "test/#{type}/#{translator}.#{id}.options.json"
     if File.exist?(options)
       _options = JSON.parse(JSON.minify(File.open(options).read))
       (_options['hiddenPrefs'] || {}).each_pair{|k,v| @preferences["extensions.zotero.translators.#{k}"] = v} # don't overwrite hiddenPrefs because the defaults would disappear
+      (_options['preferences'] || {}).each_pair{|k,v| @preferences[k] = v} # don't overwrite hiddenPrefs because the defaults would disappear
       @options = _options['options'] || {}
     end
 
@@ -1012,7 +1025,7 @@ task :parser do
 end
 
 task :abbrevs do
-  dbname = "#{TMP}/abbreviations.sql"
+  dbname = "#{TMP}/abbreviations.sqlite"
   File.unlink(dbname) if File.file?(dbname)
   db = SQLite3::Database.new(dbname)
   db.execute('PRAGMA temp_store=MEMORY;')
@@ -1035,22 +1048,29 @@ task :abbrevs do
     break if child.name == 'h3' && child['id'] == 'availablelists'
     child.unlink
   }
-  main.at_css('ul').css('li').each{|li|
+  main.at_css('ul').css('li').each_with_index{|li, id|
     link = li.at_css('a')
     title = link.inner_text
     href = link['href']
 
-    db.execute('insert into journalAbbreviationLists (name, precedence) select ?, count(*) from journalAbbreviationLists', title)
-    id = db.last_insert_row_id
+    db.execute('insert into journalAbbreviationLists (id, name, precedence) values (?, ?, ?)', id, title, id)
 
     href = "http://jabref.sourceforge.net/#{href}" unless href =~ /https?:\/\//
-    tgt = File.join("#{TMP}/abbrevs/", href.sub(/.*\//, ''))
+    tgt = "#{TMP}/abbreviations/#{id.to_s.rjust(2,'0')}-#{href.sub(/.*\//, '')}"
     download(href, tgt)
-    IO.readlines(tgt).each{|line|
+  }
+  Dir["#{TMP}/abbreviations/*"].sort.each{|a|
+    puts "importing #{a}"
+    id = File.basename(a).sub(/-.*/, '').gsub(/^0+/, '')
+    id = '0' if id == ''
+    id = Integer(id)
+
+    IO.readlines(a).each{|line|
       begin
         next if line =~ /^#/
         next unless line =~ /=/
         full, abbr = *(line.split('=', 2).collect{|v| v.strip})
+        abbr.sub!(/;.*/, '')
         next if full.downcase == abbr.downcase
         db.execute('insert or ignore into journalAbbreviations (list, full, abbrev) values (?, ?, ?)', id, full.downcase, abbr)
       rescue ArgumentError
@@ -1064,7 +1084,7 @@ task :abbrevs do
     StringIO.new(`sqlite3 #{dbname} .dump`).readlines.each{|line|
       next unless line =~ /^(CREATE|INSERT)/
       line.sub!(/^CREATE TABLE /, 'CREATE TABLE betterbibtex.')
-      line.sub!(/^INSERT INTO "journal/, 'INSERT INTO "betterbibtex.journal')
+      line.sub!(/^INSERT INTO "([^"]+)"/, "INSERT INTO betterbibtex.\\1")
       f.write(line)
     }
   }

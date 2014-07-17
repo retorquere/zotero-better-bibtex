@@ -1,0 +1,11 @@
+{
+  "hiddenPrefs": {
+    "better-bibtex.citeKeyFormat": "[authors][year]"
+  },
+  "options": {
+    "useJournalAbbreviation": true
+  },
+  "preferences": {
+    "extensions.zotero.cite.automaticJournalAbbreviations": true
+  }
+}
