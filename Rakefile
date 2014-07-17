@@ -120,7 +120,7 @@ file XPI => SOURCES do |t|
   begin
     puts "Creating #{t.name}"
     Zip::File.open(t.name, 'w') do |zipfile|
-      t.prerequisites.reject{|f| f=~ /^(test|tmp|resource)\// }.each{|file|
+      t.prerequisites.reject{|f| f=~ /^(test|tmp|resource\/translators)\// }.each{|file|
         zipfile.add(file, file)
       }
 
