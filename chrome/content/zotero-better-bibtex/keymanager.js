@@ -23,6 +23,19 @@ Zotero.BetterBibTeX.KeyManager = new function() {
   var abbreviationsLoaded = false;
   self.journalAbbrev = function(item) {
     if (arguments.length > 1) { item = arguments[1]; }
+    console.log('better-bibtex: abbrev for ' + JSON.stringify(item));
+
+    var styleID = Zotero.BetterBibTeX.prefs.bbt.getCharPref('cslStyleID');
+    if (styleID == '') { styleID = Zotero.Styles.getVisible()[0].styleID; }
+    var style = Zotero.Styles.get(styleID);
+    var cp = style.getCiteProc(true);
+    cp.updateItems([item.itemID]);
+    cp.setOutputFormat('html');
+    console.log('better-bibtex: abbrev data=' + JSON.stringify(cp.makeBibliography()));
+
+    return '';
+
+    /*
     if (item.journalAbbreviation) { return item.journalAbbreviation; }
     if (!Zotero.Prefs.get('cite.automaticJournalAbbreviations')) { return; }
     if (!item.publicationTitle) { return; }
@@ -36,6 +49,7 @@ Zotero.BetterBibTeX.KeyManager = new function() {
       'select a.abbrev from betterbibtex.journalAbbreviations a ' +
       'join betterbibtex.journalAbbreviationLists al on al.id = a.list ' +
       'where a.full = ? and al.precedence >= 0 order by al.precedence', [item.publicationTitle.toLowerCase()]);
+    */
   }
 
   self.syncWarn = function() {
@@ -68,7 +82,7 @@ Zotero.BetterBibTeX.KeyManager = new function() {
     "join itemDataValues idv on idv.valueID = id.valueID " +
     "join fields f on id.fieldID = f.fieldID  " +
     "where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems) and idv.value like '%bibtex:%'";
-  var rows = Zotero.DB.query(findKeysSQL);
+  var rows = Zotero.DB.query(findKeysSQL) || [];
   rows.forEach(function(row) {
     Zotero.DB.query('insert into betterbibtex.keys (itemID, libraryID, citekey) values (?, ?, ?)', [row.itemID, row.libraryID, self.extract({extra: row.extra})]);
   });
@@ -110,7 +124,7 @@ Zotero.BetterBibTeX.KeyManager = new function() {
     itemIDs = '(' + itemIDs.map(function(id) { return '' + parseInt(id); }).join(',') + ')';
     Zotero.DB.query('delete from betterbibtex.keys where itemID in (' + itemIDs + ')');
 
-    var rows = Zotero.DB.query(findKeysSQL + ' and i.itemID in ' + itemIDs);
+    var rows = Zotero.DB.query(findKeysSQL + ' and i.itemID in ' + itemIDs) || [];
     rows.forEach(function(row) {
       Zotero.DB.query('insert into betterbibtex.keys (itemID, libraryID, citekey) values (?, ?, ?)', [row.itemID, row.libraryID, self.extract({extra: row.extra})]);
     });

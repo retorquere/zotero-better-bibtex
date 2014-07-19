@@ -236,6 +236,90 @@ Zotero.BetterBibTeX = {
           sendResponseCallback(404, "text/plain", "Could not export bibliography '" + library + "': " + err);
         }
       }
+    },
+
+    debug: {
+      supportedMethods: ['POST'],
+
+      init: function(url, data, sendResponseCallback) {
+        //if (!Zotero.BetterBibTeX.prefs.bbt.getBoolPref('debug')) { return; }
+
+        try {
+          var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService);
+
+          data = JSON.parse(data);
+          var batchRequest;
+          var response = [];
+
+          if (Array.isArray(data)) {
+            batchRequest = true;
+          } else {
+            data = [data];
+            batchRequest = false;
+          }
+
+          data.forEach(function(req) {
+            var result = {};
+            if (req.jsonrpc) { result.jsonrpc = req.jsonrpc; }
+            result.id = (req.id || (typeof req.id) == 'number' ? req.id : null);
+            if (!Array.isArray(req.params)) throw('Only array parameters are supported');
+
+            // METHODS
+            var method = {
+              session: function() {
+                Zotero.Debug.setStore(true);
+
+                if (Zotero.BetterBibTeX.prefs.stashed) {
+                  Zotero.BetterBibTeX.prefs.stashed.forEach(function(name, value) {
+                    switch (typeof value) {
+                      case 'boolean':
+                        prefs.setBoolPref(name, value);
+                        break;
+                      case 'number':
+                        prefs.setIntPref(name, value);
+                        break;
+                      case 'string':
+                        prefs.setCharPref(name, value);
+                        break;
+                    }
+                  });
+                }
+                Zotero.BetterBibTeX.prefs.stashed = Dict();
+              },
+
+              log: function() {
+                return Zotero.Debug.get();
+              },
+
+              import: function(file) {
+              },
+
+              setCharPref: function(name, value) {
+                if (!Zotero.BetterBibTeX.prefs.stashed.has(name)) { Zotero.BetterBibTeX.prefs.stashed.set(name, prefs.getCharPref(name)); }
+                prefs.setCharPref(name, value);
+              },
+              setBoolPref: function(name, value) {
+                if (!Zotero.BetterBibTeX.prefs.stashed.has(name)) { Zotero.BetterBibTeX.prefs.stashed.set(name, prefs.getBoolPref(name)); }
+                prefs.setBoolPref(name, value);
+              },
+              setIntPref: function(name, value) {
+                if (!Zotero.BetterBibTeX.prefs.stashed.has(name)) { Zotero.BetterBibTeX.prefs.stashed.set(name, prefs.getIntPref(name)); }
+                prefs.setIntPref(name, value);
+              }
+            }[req.method];
+
+            result.result = method.apply(null, req.params);
+            if (typeof result.result == 'undefined') { result.result = null; }
+            response.push(result);
+          });
+
+          if (!batchRequest) { response = response[0]; }
+
+          sendResponseCallback(200, "text/plain", JSON.stringify(response));
+        } catch (err) {
+          sendResponseCallback(200, "text/plain", JSON.stringify({jsonrpc: '2.0', error: {code: 500, message: '' + err}, id: null}));
+        }
+      }
     }
   },
 

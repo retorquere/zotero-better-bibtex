@@ -40,6 +40,16 @@ function serverURL(collectionsView, extension)
   return 'http://localhost:' + serverPort + '/better-bibtex/' + url
 }
 
+function BBTstyleChanged(index) {
+  var listbox = document.getElementById("better-bibtex-style-listbox");
+  if (index != undefined) {
+    var selectedItem = listbox.getItemAtIndex(index);
+  } else {
+    var selectedItem = listbox.selectedItem;
+  }
+  Zotero.BetterBibTeX.prefs.bbt.setCharPref('cslStyleID', selectedItem.getAttribute('value'));
+}
+
 function updatePreferences(load) {
   console.log('better bibtex: updating prefs');
 
@@ -55,6 +65,31 @@ function updatePreferences(load) {
   document.getElementById('id-zotero-better-bibtex-recursive-warning').setAttribute('hidden', !document.getElementById('id-better-bibtex-preferences-getCollections').checked);
   document.getElementById('id-better-bibtex-preferences-fancyURLs-warning').setAttribute('hidden', !document.getElementById('id-better-bibtex-preferences-fancyURLs').checked);
 
-  console.log('better bibtex: prefs updated');
+  var listbox = document.getElementById("better-bibtex-style-listbox");
+  var styles = Zotero.Styles.getVisible();
+  var fillList = (listbox.children.length == 0)
+  var selectedStyle = Zotero.BetterBibTeX.prefs.bbt.getCharPref('cslStyleID');
+  console.log('better bibtex: csl fill:' + fillList + ', selected: ' + selectedStyle);
+  var selectedIndex = -1;
+  for (var i = 0; i < styles.length; i++) {
+    if (fillList) {
+      console.log('better bibtex: adding ' + styles[i].styleID + '=' + styles[i].title);
+      var itemNode = document.createElement("listitem");
+      itemNode.setAttribute("value", styles[i].styleID);
+      itemNode.setAttribute("label", styles[i].title);
+      listbox.appendChild(itemNode);
+    }
+    if (styles[i].styleID == selectedStyle) { selectedIndex = i; }
+  }
 
+  if (selectedIndex == -1) { selectedIndex = 0; }
+  BBTstyleChanged(selectedIndex);
+
+  window.setTimeout(function () {
+    console.log('better bibtex: selecting ' + selectedIndex);
+    listbox.ensureIndexIsVisible(selectedIndex);
+    listbox.selectedIndex = selectedIndex;
+  }, 0);
+
+  console.log('better bibtex: prefs updated');
 }
