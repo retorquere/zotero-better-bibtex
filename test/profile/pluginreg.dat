@@ -1,0 +1,279 @@
+Generated File. Do not edit.
+
+[HEADER]
+Version|0.17|$
+Arch|x86-msvc|$
+
+[PLUGINS]
+NPSWF32_14_0_0_145.dll|$
+C:\Windows\SysWOW64\Macromed\Flash\NPSWF32_14_0_0_145.dll|$
+14.0.0.145|$
+1404865090661|0|0|0|$
+Shockwave Flash 14.0 r0|$
+Shockwave Flash|$
+2
+0|application/x-shockwave-flash|Adobe Flash movie|swf|$
+1|application/futuresplash|FutureSplash movie|spl|$
+npGoogleUpdate3.dll|$
+C:\Users\emile\AppData\Local\Google\Update\1.3.24.15\npGoogleUpdate3.dll|$
+1.3.24.15|$
+1404035654094|0|0|0|$
+Google Update|$
+Google Update|$
+2
+0|application/x-vnd.google.update3webcontrol.3|||$
+1|application/x-vnd.google.oneclickctrl.9|||$
+npGoogleUpdate3.dll|$
+C:\Program Files (x86)\Google\Update\1.3.24.15\npGoogleUpdate3.dll|$
+1.3.24.15|$
+1403342566513|0|0|0|$
+Google Update|$
+Google Update|$
+2
+0|application/x-vnd.google.update3webcontrol.3|||$
+1|application/x-vnd.google.oneclickctrl.9|||$
+npo1d.dll|$
+C:\Users\emile\AppData\Roaming\Mozilla\plugins\npo1d.dll|$
+5.4.2.18903|$
+1402046832000|0|0|0|$
+Version 5.4.2.18903|$
+Google Talk Plugin Video Renderer|$
+1
+0|application/o1d|Google Talk Plugin Video Renderer|o1d|$
+npgoogletalk.dll|$
+C:\Users\emile\AppData\Roaming\Mozilla\plugins\npgoogletalk.dll|$
+5.4.2.18903|$
+1402046830000|0|0|0|$
+Version 5.4.2.18903|$
+Google Talk Plugin|$
+1
+0|application/googletalk|Google voice and video chat|googletalk|$
+nppdf32.dll|$
+C:\Program Files (x86)\Adobe\Reader 11.0\Reader\AIR\nppdf32.dll|$
+11.0.7.79|$
+1399556924000|0|0|0|$
+Adobe PDF Plug-In For Firefox and Netscape 11.0.07|$
+Adobe Acrobat|$
+7
+0|application/pdf|Acrobat Portable Document Format|pdf|$
+1|application/vnd.adobe.pdfxml|Adobe PDF in XML Format|pdfxml|$
+2|application/vnd.adobe.x-mars|Adobe PDF in XML Format|mars|$
+3|application/vnd.fdf|Acrobat Forms Data Format|fdf|$
+4|application/vnd.adobe.xfdf|XML Version of Acrobat Forms Data Format|xfdf|$
+5|application/vnd.adobe.xdp+xml| Acrobat XML Data Package|xdp|$
+6|application/vnd.adobe.xfd+xml|Adobe FormFlow99 Data File|xfd|$
+nppdf32.dll|$
+C:\Program Files (x86)\Adobe\Reader 11.0\Reader\browser\nppdf32.dll|$
+11.0.7.79|$
+1399556922000|0|0|0|$
+Adobe PDF Plug-In For Firefox and Netscape 11.0.07|$
+Adobe Acrobat|$
+7
+0|application/pdf|Acrobat Portable Document Format|pdf|$
+1|application/vnd.adobe.pdfxml|Adobe PDF in XML Format|pdfxml|$
+2|application/vnd.adobe.x-mars|Adobe PDF in XML Format|mars|$
+3|application/vnd.fdf|Acrobat Forms Data Format|fdf|$
+4|application/vnd.adobe.xfdf|XML Version of Acrobat Forms Data Format|xfdf|$
+5|application/vnd.adobe.xdp+xml| Acrobat XML Data Package|xdp|$
+6|application/vnd.adobe.xfd+xml|Adobe FormFlow99 Data File|xfd|$
+npctrl.dll|$
+c:\Program Files (x86)\Microsoft Silverlight\5.1.30214.0\npctrl.dll|$
+5.1.30214.0|$
+1392328662000|0|0|0|$
+5.1.30214.0|$
+Silverlight Plug-In|$
+2
+0|application/x-silverlight|npctrl|scr|$
+1|application/x-silverlight-2|||$
+npvlc.dll|$
+C:\Program Files (x86)\VideoLAN\VLC\npvlc.dll|$
+2.1.3.0|$
+1391563882000|0|0|0|$
+VLC media player Web Plugin 2.1.3|$
+VLC Web Plugin|$
+44
+0|audio/mpeg|MPEG audio|mp2,mp3,mpga,mpega|$
+1|audio/x-mpeg|MPEG audio|mp2,mp3,mpga,mpega|$
+2|video/mpeg|MPEG video|mpg,mpeg,mpe|$
+3|video/x-mpeg|MPEG video|mpg,mpeg,mpe|$
+4|video/mpeg-system|MPEG video|mpg,mpeg,mpe,vob|$
+5|video/x-mpeg-system|MPEG video|mpg,mpeg,mpe,vob|$
+6|audio/mp4|MPEG-4 audio|aac,mp4,mpg4|$
+7|audio/x-m4a|MPEG-4 audio|m4a|$
+8|video/mp4|MPEG-4 video|mp4,mpg4|$
+9|application/mpeg4-iod|MPEG-4 video|mp4,mpg4|$
+10|application/mpeg4-muxcodetable|MPEG-4 video|mp4,mpg4|$
+11|video/x-m4v|MPEG-4 video|m4v|$
+12|video/x-msvideo|AVI video|avi|$
+13|application/ogg|Ogg stream|ogg|$
+14|video/ogg|Ogg video|ogv|$
+15|application/x-ogg|Ogg stream|ogg|$
+16|application/x-vlc-plugin|VLC plug-in||$
+17|video/x-ms-asf-plugin|Windows Media Video|asf,asx|$
+18|video/x-ms-asf|Windows Media Video|asf,asx|$
+19|application/x-mplayer2|Windows Media||$
+20|video/x-ms-wmv|Windows Media|wmv|$
+21|video/x-ms-wvx|Windows Media Video|wvx|$
+22|audio/x-ms-wma|Windows Media Audio|wma|$
+23|application/x-google-vlc-plugin|Google VLC plug-in||$
+24|audio/wav|WAV audio|wav|$
+25|audio/x-wav|WAV audio|wav|$
+26|audio/3gpp|3GPP audio|3gp,3gpp|$
+27|video/3gpp|3GPP video|3gp,3gpp|$
+28|audio/3gpp2|3GPP2 audio|3g2,3gpp2|$
+29|video/3gpp2|3GPP2 video|3g2,3gpp2|$
+30|video/divx|DivX video|divx|$
+31|video/flv|FLV video|flv|$
+32|video/x-flv|FLV video|flv|$
+33|application/x-matroska|Matroska video|mkv|$
+34|video/x-matroska|Matroska video|mkv|$
+35|audio/x-matroska|Matroska audio|mka|$
+36|application/xspf+xml|Playlist xspf|xspf|$
+37|audio/x-mpegurl|MPEG audio|m3u|$
+38|video/webm|WebM video|webm|$
+39|audio/webm|WebM audio|webm|$
+40|application/vnd.rn-realmedia|Real Media File|rm|$
+41|audio/x-realaudio|Real Media Audio|ra|$
+42|audio/amr|AMR audio|amr|$
+43|audio/x-flac|FLAC audio|flac|$
+npqtplugin5.dll|$
+C:\Program Files (x86)\QuickTime\Plugins\npqtplugin5.dll|$
+7.7.4.0|$
+1388615303508|0|0|0|$
+The QuickTime Plugin allows you to view a wide variety of multimedia content in Web pages. For more information, visit the <A HREF=http://www.apple.com/quicktime/>QuickTime</A> Web site.|$
+QuickTime Plug-in 7.7.4|$
+7
+0|application/x-mpeg|AMC-media|amc|$
+1|video/mp4|MPEG-4-media|MP4|$
+2|audio/mp4|MPEG-4-media|MP4|$
+3|audio/x-m4a|AAC audio|m4a|$
+4|audio/x-m4p|AAC audio|m4p|$
+5|audio/x-m4b|AAC audio book|m4b|$
+6|video/x-m4v|Video|m4v|$
+npqtplugin4.dll|$
+C:\Program Files (x86)\QuickTime\Plugins\npqtplugin4.dll|$
+7.7.4.0|$
+1388615302793|0|0|0|$
+The QuickTime Plugin allows you to view a wide variety of multimedia content in Web pages. For more information, visit the <A HREF=http://www.apple.com/quicktime/>QuickTime</A> Web site.|$
+QuickTime Plug-in 7.7.4|$
+7
+0|audio/mpeg|MPEG-audio|mpeg,mpg,m1s,m1a,mp2,mpm,mpa,m2a|$
+1|audio/x-mpeg|MPEG-audio|mpeg,mpg,m1s,m1a,mp2,mpm,mpa,m2a|$
+2|video/3gpp|3GPP-media|3gp,3gpp|$
+3|audio/3gpp|3GPP-media|3gp,3gpp|$
+4|video/3gpp2|3GPP2-media|3g2,3gp2|$
+5|audio/3gpp2|3GPP2-media|3g2,3gp2|$
+6|video/sd-video|SD-video|sdv|$
+npqtplugin3.dll|$
+C:\Program Files (x86)\QuickTime\Plugins\npqtplugin3.dll|$
+7.7.4.0|$
+1388615302471|0|0|0|$
+The QuickTime Plugin allows you to view a wide variety of multimedia content in Web pages. For more information, visit the <A HREF=http://www.apple.com/quicktime/>QuickTime</A> Web site.|$
+QuickTime Plug-in 7.7.4|$
+5
+0|audio/x-aac|AAC audio|aac,adts|$
+1|audio/x-caf|CAF audio|caf|$
+2|audio/x-ac3|AC3 audio|ac3|$
+3|video/x-mpeg|MPEG-media|mpeg,mpg,m1s,m1v,m1a,m75,m15,mp2,mpm,mpv,mpa|$
+4|video/mpeg|MPEG-media|mpeg,mpg,m1s,m1v,m1a,m75,m15,mp2,mpm,mpv,mpa|$
+npqtplugin2.dll|$
+C:\Program Files (x86)\QuickTime\Plugins\npqtplugin2.dll|$
+7.7.4.0|$
+1388615302185|0|0|0|$
+The QuickTime Plugin allows you to view a wide variety of multimedia content in Web pages. For more information, visit the <A HREF=http://www.apple.com/quicktime/>QuickTime</A> Web site.|$
+QuickTime Plug-in 7.7.4|$
+8
+0|audio/aiff|AIFF audio|aiff,aif,aifc,cdda|$
+1|audio/x-aiff|AIFF audio|aiff,aif,aifc,cdda|$
+2|audio/basic|uLaw/AU audio|au,snd,ulw|$
+3|audio/mid|MIDI|mid,midi,smf,kar|$
+4|audio/vnd.qcelp|QUALCOMM PureVoice audio|qcp|$
+5|audio/x-gsm|GSM-audio|gsm|$
+6|audio/amr|AMR-audio|AMR|$
+7|audio/aac|AAC audio|aac,adts|$
+npqtplugin.dll|$
+C:\Program Files (x86)\QuickTime\Plugins\npqtplugin.dll|$
+7.7.4.0|$
+1388615301749|0|0|0|$
+The QuickTime Plugin allows you to view a wide variety of multimedia content in Web pages. For more information, visit the <A HREF=http://www.apple.com/quicktime/>QuickTime</A> Web site.|$
+QuickTime Plug-in 7.7.4|$
+7
+0|application/sdp|SDP-streambeschrijving|sdp|$
+1|application/x-sdp|SDP-streambeschrijving|sdp|$
+2|application/x-rtsp|RTSP-streambeschrijving|rtsp,rts|$
+3|video/quicktime|QuickTime Movie|mov,qt,mqv|$
+4|video/flc|AutoDesk Animator|flc,fli,cel|$
+5|audio/x-wav|WAVE audio|wav,bwf|$
+6|audio/wav|WAVE audio|wav,bwf|$
+npwachk.dll|$
+C:\Program Files (x86)\Winamp Detect\npwachk.dll|$
+1.0.0.1|$
+1386902876000|0|0|0|$
+Winamp Application Detector|$
+Winamp Application Detector|$
+1
+0|application/x-winampx-1.0.0.1|winamp||$
+npFacebookVideoCalling.dll|$
+C:\Users\emile\AppData\Local\Facebook\Video\Skype\npFacebookVideoCalling.dll|$
+2.0.0.447|$
+1383731982000|0|0|0|$
+Facebook Video Calling Plugin|$
+Facebook Video Calling Plugin|$
+1
+0|application/skypesdk-plugin|||$
+npNokiaSuiteEnabler.dll|$
+C:\Program Files (x86)\Nokia\Nokia Suite\npNokiaSuiteEnabler.dll|$
+1.0.0.1|$
+1380738598000|0|0|0|$
+Nokia Suite Enabler Plugin|$
+Nokia Suite Enabler Plugin|$
+1
+0|application/x-enabler-nokiasuite|||$
+npnitromozilla.dll|$
+C:\Program Files (x86)\Nitro\Reader 3\npnitromozilla.dll|$
+3.5.5.2|$
+1371560574000|0|0|0|$
+Nitro PDF plugin for Firefox and Chrome|$
+Nitro PDF plugin for Firefox and Chrome|$
+1
+0|application/pdf|Acrobat Portable Document Format|pdf|$
+npPDFXCviewNPPlugin.dll|$
+C:\Program Files\Tracker Software\PDF Viewer\Win32\npPDFXCviewNPPlugin.dll|$
+2.5.210.0|$
+1361789344000|0|0|0|$
+PDF-XChange Viewer Netscape Gecko Plugin|$
+PDF-XChange Viewer|$
+1
+0|application/pdf|Portable Document Format|pdf|$
+NprtHarmonyPlugin.dll|$
+C:\Program Files (x86)\Logitech\Harmony Remote Driver\NprtHarmonyPlugin.dll|$
+1.1.0.0|$
+1348807910000|0|0|0|$
+Logitech Harmony Remote Plugin|$
+Harmony Firefox Plugin|$
+1
+0|application/x-harmonyplugin|Harmony Remote Plugin|rts|$
+NPSPWRAP.DLL|$
+C:\PROGRA~2\MICROS~2\Office14\NPSPWRAP.DLL|$
+14.0.4761.1000|$
+1269454958000|0|0|0|$
+The plug-in allows you to open and edit files using Microsoft Office applications|$
+Microsoft Office 2010|$
+1
+0|application/x-sharepoint|SharePoint Plug-in for Firefox||$
+NPAUTHZ.DLL|$
+C:\PROGRA~2\MICROS~2\Office14\NPAUTHZ.DLL|$
+14.0.4730.1010|$
+1263066138000|0|0|0|$
+Office Authorization plug-in for NPAPI browsers|$
+Microsoft Office 2010|$
+1
+0|application/x-msoffice14|14.0.4730.1010|*|$
+
+[INVALID]
+c:\Program Files (x86)\Microsoft Silverlight\5.1.30214.0\npctrlui.dll|$
+1392328662000|$
+C:\Program Files (x86)\Nitro\Reader 3\npdf.dll|$
+1371560602000|$
+C:\Program Files (x86)\Nitro\Reader 3\npnitroie.dll|$
+1371560574000|$

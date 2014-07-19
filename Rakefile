@@ -17,6 +17,9 @@ require 'i18n'
 require 'json/minify'
 require 'rubygems/package'
 require 'zlib'
+require 'headless'
+require 'selenium-webdriver'
+require 'jsonrpc-client'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
@@ -108,7 +111,7 @@ task :test => [DBNAME, XPI] do
   puts "\n#{tests} tests ran\n"
 end
 
-task :dropbox => :test do
+task :dropbox => XPI do
   dropbox = File.expand_path('~/Dropbox')
   Dir["#{dropbox}/*.xpi"].each{|xpi| File.unlink(xpi)}
   FileUtils.cp(XPI, File.join(dropbox, XPI))
@@ -1088,4 +1091,45 @@ task :abbrevs do
       f.write(line)
     }
   }
+end
+
+def format(m)
+  rjust = 'WARNING'.length
+  indent = ' ' * (rjust + ': '.length)
+
+  level = m.level.rjust(rjust, ' ')
+  msg = m.message.strip
+
+  "#{level}: #{msg}"
+end
+
+task :headless do
+  Headless.ly do
+    profile = Selenium::WebDriver::Firefox::Profile.new('/home/emile/zotero/zotero-better-bibtex/test/profile')
+    #profile.add_extension("/path/to/firebug.xpi")
+    profile.add_extension('zotero-better-bibtex-0.5.47-stable-keys.xpi')
+    profile['extensions.zotero.httpServer.enabled'] = true;
+    profile['extensions.zotero.debug.store'] = true;
+
+    profile['browser.download.dir'] = "/tmp/webdriver-downloads"
+    profile['browser.download.folderList'] = 2
+    profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
+    profile['pdfjs.disabled'] = true
+    #profile.log_file = File.join(File.dirname(__FILE__), 'tt.log')
+    puts profile.log_file
+
+    driver = Selenium::WebDriver.for :firefox, :profile => profile
+    driver.navigate.to 'http://google.com'
+    puts driver.title
+    rjust = 'WARNING'.length
+    indent = ' ' * (rjust + ': '.length)
+    log = driver.manage.logs.get('browser')
+    log = log.collect{|m| format(m) }
+    log = log.join("\n")
+    File.open('tt.log', 'w'){|f| f.write(log) }
+
+    client = JSONRPC::Client.new('http://localhost:23119/better-bibtex/debug')
+    File.open('tt.z.log', 'w'){|f| f.write(client.log) }
+    client.session
+  end
 end

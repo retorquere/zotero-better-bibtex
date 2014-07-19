@@ -6,6 +6,8 @@ pref("extensions.zotero.translators.better-bibtex.brace-all", true);
 pref("extensions.zotero.translators.better-bibtex.useprefix", false);
 pref("extensions.zotero.translators.better-bibtex.skipfields", '');
 pref("extensions.zotero.translators.better-bibtex.langid", 'babel');
+pref("extensions.zotero.translators.better-bibtex.cslStyleID", '');
+pref("extensions.zotero.translators.better-bibtex.debug", false
 
 pref("services.sync.prefs.sync.extensions.zotero.translators.better-bibtex.citeCommand", true);
 pref("services.sync.prefs.sync.extensions.zotero.translators.better-bibtex.citeKeyFormat", true);
