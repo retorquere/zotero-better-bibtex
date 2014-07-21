@@ -39,7 +39,7 @@ start
 
 entry
   = _* "@comment" _* "{" comment:string* "}" { bibtex.comments.push(join(comment).trim()); }
-  / _* "@string" _* "{" _* str:key_value _* "}" { bibtex.strings.set(str.key, str.value); }
+  / _* "@string" _* "{" _* str:key_value _* "}" { bibtex.strings[str.key] = str.value; }
   / _* "@" !("string" / "comment") reference
   / other:[^@]+ { bibtex.comments.push(join(other).trim()); }
 
@@ -54,31 +54,31 @@ reference
             switch (field.type) {
               case 'file':
                 var attachments;
-                if (ref.has('file')) {
-                  attachments = ref.get('file');
+                if (ref['file']) {
+                  attachments = ref['file'];
                 } else {
                   attachments = [];
                 }
-                ref.set('file', attachments.concat(field.value));
+                ref['file'] = attachments.concat(field.value);
                 break;
 
               case 'creator':
                 if (field.value.length > 0) {
-                  ref.set(field.key, field.value);
+                  ref[field.key] = field.value;
                 }
                 break;
 
               default:
-                if (ref.has(field.key)) { // duplicate fields are not supposed to occur I think
+                if (ref[field.key]) { // duplicate fields are not supposed to occur I think
                   var note;
-                  if (ref.has('__note__')) {
-                    note = ref.get('__note__') + "<br/>\n";
+                  if (ref['__note__']) {
+                    note = ref['__note__'] + "<br/>\n";
                   } else {
                     note = '';
                   }
-                  ref.set('__note__', note + field.key + '=' + field.value);
+                  ref['__note__'] = note + field.key + '=' + field.value;
                 } else {
-                  ref.set(field.key, field.value);
+                  ref[field.key] = field.value;
                 }
                 break;
             }
@@ -144,7 +144,7 @@ key
 value
   = val:[^#"{} \t\n\r,]+ {
       val = join(val);
-      return (bibtex.strings.has(val) ? bibtex.strings.get(val) : val);
+      return (bibtex.strings[val] || val);
     }
   / val:bracedvalue { return join(val); }
   / val:quotedvalue { return join(val); }

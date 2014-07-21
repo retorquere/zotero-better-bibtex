@@ -23,7 +23,6 @@ Zotero.BetterBibTeX = {
       if (e.stack) { msg += "\n" + e.stack; }
     }
     Zotero.debug(msg);
-    console.log(msg);
   },
 
   pref: function(key, dflt, branch) {
@@ -43,7 +42,8 @@ Zotero.BetterBibTeX = {
   },
 
   init: function () {
-    for (var endpoint of Object.keys(Zotero.BetterBibTeX.endpoints)) {
+    var endpoint;
+    for (endpoint in Zotero.BetterBibTeX.endpoints) {
       var url = "/better-bibtex/" + endpoint;
       Zotero.BetterBibTeX.log('Registering endpoint ' + url);
       var ep = Zotero.Server.Endpoints[url] = function() {};
@@ -71,7 +71,7 @@ Zotero.BetterBibTeX = {
     notify: function(event, type, ids, extraData) {
       switch (event) {
         case 'delete':
-          extraData.forEach(function(item) { Zotero.BetterBibTeX.KeyManager.clear(item); });
+          Object.keys(extraData).forEach(function(id) { Zotero.BetterBibTeX.KeyManager.clear({itemID: id}); });
           break;
 
         case 'add':
@@ -227,7 +227,7 @@ Zotero.BetterBibTeX = {
             "text/plain",
             Zotero.BetterBibTeX.translate(
               Zotero.BetterBibTeX.getTranslator(translator),
-              Zotero.Items.getAll(false, libid, false),
+              Zotero.Items.getAll(false, libid),
               Zotero.BetterBibTeX.displayOptions(url)
             )
           );
@@ -258,15 +258,29 @@ Zotero.BetterBibTeX = {
             batchRequest = false;
           }
 
+          // getAll is ridiculously unpredictable. Return value can be an array, an object (only one object present), or
+          // an exception (empty library), without any way to predict which.
+          function safeGetAll() {
+            var all;
+            try {
+              all = Zotero.Items.getAll();
+              if (all && !Array.isArray(all)) { all = [all]; }
+            } catch (err) {
+              all = false;
+            }
+            if (!all) { all = []; }
+            return all;
+          }
+
           data.forEach(function(req) {
             var result = {};
             if (req.jsonrpc) { result.jsonrpc = req.jsonrpc; }
             result.id = (req.id || (typeof req.id) == 'number' ? req.id : null);
             if (!Array.isArray(req.params)) throw('Only array parameters are supported');
 
-            // METHODS
+            // ------------------------- METHODS ---------------------------
             var method = {
-              session: function() {
+              reset: function() {
                 Zotero.Debug.setStore(true);
 
                 if (Zotero.BetterBibTeX.prefs.stashed) {
@@ -285,25 +299,60 @@ Zotero.BetterBibTeX = {
                   });
                 }
                 Zotero.BetterBibTeX.prefs.stashed = Dict();
+                Zotero.BetterBibTeX.debugExportOptions = Dict();
+
+                var all = safeGetAll();
+                if (all.length > 0) { Zotero.Items.erase(all.map(function(item) { return item.id; })); }
               },
 
               log: function() {
                 return Zotero.Debug.get();
               },
 
-              import: function(file) {
+              import: function(filename) {
+                var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
+                file.initWithPath(filename);
+                Zotero_File_Interface.importFile(file);
+                return true;
+              },
+
+              getAll: function() {
+                var all = safeGetAll();
+
+                /*
+                Zotero.BetterBibTeX.log('getAll found ' + all.length + ' items');
+                var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
+                file.initWithPath('/tmp/zotero.log');
+                var dbg = 'getAll: ' + all.length + " items\n";
+                for (var i = 0; i < all.length; i++) {
+                  dbg += (typeof all[i])+ "\n";
+                }
+                dbg += "\n";
+                dbg += Zotero.Debug.get();
+                Zotero.File.putContents(file, dbg);
+                */
+
+                if (all.length == 0) {
+                  Zotero.BetterBibTeX.log('getAll found no items');
+                  return [];
+                }
+
+                all.sort(function(a, b) { return a.itemID - b.itemID; });
+                var translator = Zotero.BetterBibTeX.getTranslator('Zotero TestCase');
+                var items = Zotero.BetterBibTeX.translate(translator, all, {exportNotes: true, exportFileData: false});
+                return JSON.parse(items).items;
               },
 
               setCharPref: function(name, value) {
-                if (!Zotero.BetterBibTeX.prefs.stashed.has(name)) { Zotero.BetterBibTeX.prefs.stashed.set(name, prefs.getCharPref(name)); }
+                if (typeof Zotero.BetterBibTeX.prefs.stashed[name] != 'undefined') { Zotero.BetterBibTeX.prefs.stashed[name] = prefs.getCharPref(name); }
                 prefs.setCharPref(name, value);
               },
               setBoolPref: function(name, value) {
-                if (!Zotero.BetterBibTeX.prefs.stashed.has(name)) { Zotero.BetterBibTeX.prefs.stashed.set(name, prefs.getBoolPref(name)); }
+                if (typeof Zotero.BetterBibTeX.prefs.stashed[name] != 'undefined') { Zotero.BetterBibTeX.prefs.stashed[name] = prefs.getBoolPref(name); }
                 prefs.setBoolPref(name, value);
               },
               setIntPref: function(name, value) {
-                if (!Zotero.BetterBibTeX.prefs.stashed.has(name)) { Zotero.BetterBibTeX.prefs.stashed.set(name, prefs.getIntPref(name)); }
+                if (typeof Zotero.BetterBibTeX.prefs.stashed[name] != 'undefined') { Zotero.BetterBibTeX.prefs.stashed[name] = prefs.getIntPref(name); }
                 prefs.setIntPref(name, value);
               }
             }[req.method];
@@ -315,9 +364,11 @@ Zotero.BetterBibTeX = {
 
           if (!batchRequest) { response = response[0]; }
 
-          sendResponseCallback(200, "text/plain", JSON.stringify(response));
+          sendResponseCallback(200, 'application/json', JSON.stringify(response));
         } catch (err) {
-          sendResponseCallback(200, "text/plain", JSON.stringify({jsonrpc: '2.0', error: {code: 500, message: '' + err}, id: null}));
+          var logs = '';
+          var logs = Zotero.Debug.get();
+          sendResponseCallback(200, 'application/json', JSON.stringify({jsonrpc: '2.0', error: {code: 500, message: '' + err + "\n" + logs}, id: null}));
         }
       }
     }

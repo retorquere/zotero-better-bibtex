@@ -1,15 +1,22 @@
 {
-	"translatorID": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
-	"label": "Zotero TestCase",
-	"creator": "Emiliano Heyns",
-	"target": "json",
-	"minVersion": "3.0b3",
-	"maxVersion": "",
-	"priority": 100,
-	"inRepository": true,
-	"translatorType": 2,
-	"browserSupport": "gcsv",
-	"lastUpdated": "/*= timestamp =*/"
+  "translatorID": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
+  "label": "Zotero TestCase",
+  "creator": "Emiliano Heyns",
+  "target": "json",
+  "minVersion": "3.0b3",
+  "maxVersion": "",
+  "priority": 100,
+  "configOptions": {
+    "getCollections": true
+  },
+  "displayOptions": {
+    "exportNotes": true,
+    "exportFileData": false
+  },
+  "inRepository": false,
+  "translatorType": 3,
+  "browserSupport": "gcsv",
+  "lastUpdated": "/*= timestamp =*/"
 }
 
 function scrub(item) {
@@ -20,36 +27,23 @@ function scrub(item) {
   delete item.dateAdded;
   delete item.dateModified;
   delete item.uri;
+  delete item.itemID;
 
   (item.creators || []).forEach(function(creator) {
     delete creator.creatorID;
   });
 
-  (item.attachments || []).forEach(function(attachment) {
-    attachment.path = attachment.localPath;
-    delete attachment.localPath;
-
-    delete attachment.itemID;
-    delete attachment.itemType;
-    delete attachment.dateAdded;
-    delete attachment.dateModified;
-    delete attachment.libraryID;
-    delete attachment.key;
-    delete attachment.url;
-    delete attachment.accessDate;
-    delete attachment.note;
-    delete attachment.sourceItemKey;
-    delete attachment.tags;
-    delete attachment.related;
-    delete attachment.creators;
-    delete attachment.notes;
-    delete attachment.seeAlso;
-    delete attachment.attachments;
-    delete attachment.uri;
-    delete attachment.charset;
-    delete attachment.uniqueFields;
+  item.attachments = (item.attachments || []).map(function(attachment) {
+    return {
+      path: attachment.localPath,
+      title: attachment.title,
+      mimeType: attachment.mimeType
+    };
   });
 
+  item.notes = (item.notes || []).map(function(note) { return (note.note || '').trim(); }).filter(function(note) { return note; });
+
+  /*
   (item.notes || []).forEach(function(note) {
     delete note.itemID;
     delete note.itemType;
@@ -60,25 +54,56 @@ function scrub(item) {
     delete note.sourceItemKey;
     delete note.tags;
     delete note.related;
-    note.note = (note.note || '').replace(/<[^>]*>/gm, '').replace(/[ \n\r\t]+/gm, ' ').trim();
+    // note.note = (note.note || '').replace(/<[^>]*>/gm, '').replace(/[ \n\r\t]+/gm, ' ').trim();
   });
+  */
 
   item.tags = (item.tags || []).map(function(tag) { return tag.tag; });
+  item.tags.sort();
+
+  ['attachments', 'seeAlso', 'notes', 'tags', 'creators'].forEach(function(prop) {
+    if (item[prop] && item[prop].length == 0) {
+      delete item[prop];
+    }
+  });
 
   return item;
 }
 
 /*= include BibTeX.js =*/
 
-function doExport() {
-	var data = [];
-  while (item = Translator.nextItem()) {
-    item.itemID = data.length + 1;
-    data.push(scrub(item));
+var items = null;
+function detectImport() {
+  var str, json = '';
+  while((str = Z.read(1048576)) !== false) { json += str; }
+
+  try {
+    items = JSON.parse(json);
+  } catch (e) {
+    Zotero.debug(e);
+    return false;
   }
 
-  if (data.length > 0) {
-    data[0].__config__ = {
+  if (!items.config || !items.items || items.config.id != Translator.id) { return false; }
+  return true;
+}
+
+function doImport() {
+  var prop;
+  items.items.forEach(function(i) {
+    var item = new Z.Item();
+    for (prop in i) {
+      item[prop] = i[prop];
+      item.complete();
+    }
+  });
+}
+
+function doExport() {
+  Translator.initialize();
+
+  var data = {
+    config: {
       id:                     Translator.id,
       label:                  Translator.label,
       unicode:                Translator.unicode,
@@ -92,11 +117,14 @@ function doExport() {
       exportCharset:          Translator.exportCharset,
       exportFileData:         Translator.exportFileData,
       exportNotes:            Translator.exportNotes
-    };
-  }
-	Zotero.write(JSON.stringify(data, null, "\t"));
-}
+    },
+    items: []
+  };
 
-var exports = {
-  "doExport": doExport
+  while (item = Zotero.nextItem()) {
+    if (item.itemType == 'note' || item.itemType == 'attachment') { continue; }
+    data.items.push(scrub(item));
+  }
+
+  Zotero.write(JSON.stringify(data, null, '  '));
 }

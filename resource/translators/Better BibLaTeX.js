@@ -160,7 +160,7 @@ var babelLanguageMap = Dict({
 });
 babelLanguageMap.forEach(function(key, value) {
   if (typeof value === 'string' ) {
-    babelLanguageMap.set(key, [value]);
+    babelLanguageMap[key] = [value];
   }
 });
 var babelLanguageList = [].concat.apply([], babelLanguageMap.values()).filter(function(value, index, self) { return self.indexOf(value) === index; });
@@ -309,7 +309,7 @@ function doExport() {
       }
     }
 
-    if (!Translator.fieldsWritten.has('booktitle')) { writeField('booktitle', latex_escape(item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, {brace: true})); }
+    if (!Translator.fieldsWritten['booktitle']) { writeField('booktitle', latex_escape(item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, {brace: true})); }
 
     writeField('titleaddon', latex_escape(item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, {brace: true}));
 
@@ -474,7 +474,7 @@ function doExport() {
 
     if (item.language) {
       var langlc = item.language.toLowerCase();
-      var language = babelLanguageMap.get(langlc.replace(/[^a-z0-9]/, '_'));
+      var language = babelLanguageMap[langlc.replace(/[^a-z0-9]/, '_')];
       if (language) { // if the language map has the exact language code, use that language
         language = language[0];
       } else {
