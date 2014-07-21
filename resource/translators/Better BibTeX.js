@@ -215,33 +215,35 @@ function addToExtraData(data, key, value) {
 }
 
 function createZoteroReference(bibtexitem) {
-  var type = Zotero.Utilities.trimInternal(bibtexitem.get('__type__').toLowerCase());
-  if (bibtexitem.has('type')) { type = Zotero.Utilities.trimInternal(bibtexitem.get('type').toLowerCase()); }
-  type = Translator.typeMap.toZotero.get(type) || 'journalArticle';
+  var type = Zotero.Utilities.trimInternal(bibtexitem.__type__.toLowerCase());
+  if (bibtexitem.type) { type = Zotero.Utilities.trimInternal(bibtexitem.type.toLowerCase()); }
+  type = Translator.typeMap.toZotero[type] || 'journalArticle';
 
   trLog('creating reference for ' + JSON.stringify(bibtexitem));
 
   var item = new Zotero.Item(type);
-  item.itemID = bibtexitem.get('__key__');
+  item.itemID = bibtexitem.__key__;
 
-  if (bibtexitem.has('__note__')) {
-    item.notes.push({note: ('The following fields were not imported:<br/>' + bibtexitem.get('__note__')).trim(), tags: ['#BBT Import']});
+  if (bibtexitem.__note__) {
+    item.notes.push({note: ('The following fields were not imported:<br/>' + bibtexitem.__note__).trim(), tags: ['#BBT Import']});
   }
 
   var biblatexdata = [];
   bibtexitem.forEach(function(field, value) {
+    Zotero.debug('import: ' + field + ' = ' + value);
+
     if (['__note__', '__key__', '__type__', 'type', 'added-at', 'timestamp'].indexOf(field) >= 0) { return; }
     if (!value) { return; }
     if (typeof value == 'string') { value = Zotero.Utilities.trim(value); }
     if (value == '') { return; }
 
-    if (fieldMap.has(field)) {
-      zField = fieldMap.get(field);
+    if (fieldMap[field]) {
+      zField = fieldMap[field];
       if (zField.literal) { zField = zField.literal; }
       item[zField] = value;
 
-    } else if (inputFieldMap.has(field)) {
-      zField = inputFieldMap.get(field);
+    } else if (inputFieldMap[field]) {
+      zField = inputFieldMap[field];
       if (zField.literal) { zField = zField.literal; }
       item[zField] = value;
 
@@ -337,13 +339,10 @@ function createZoteroReference(bibtexitem) {
       addToExtra(item, value);
 
     } else if (field == 'howpublished') {
-      if (value.length >= 7) {
-        var str = value.substr(0, 7);
-        if (str == 'http://' || str == 'https:/' || str == 'mailto:') {
-          item.url = value;
-        } else {
-          addToExtraData(biblatexdata, field, value);
-        }
+      if (/^(https?:\/\/|mailto:)/i.test(value)) {
+        item.url = value;
+      } else {
+        addToExtraData(biblatexdata, field, value);
       }
 
     //accept lastchecked or urldate for access date. These should never both occur. 
@@ -373,6 +372,8 @@ function createZoteroReference(bibtexitem) {
 
     }
   });
+
+  Zotero.debug('biblatexdata: ' + JSON.stringify(biblatexdata));
 
   if (item.itemType == 'conferencePaper' && item.publicationTitle && !item.proceedingsTitle) {
     item.proceedingsTitle = item.publicationTitle;

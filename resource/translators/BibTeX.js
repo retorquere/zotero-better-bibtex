@@ -47,18 +47,20 @@ var Translator = new function() {
     }
 
     if (self.typeMap.toBibTeX) {
-      self.typeMap.toZotero = Dict({});
+      Zotero.debug('typemap: ' + JSON.stringify(self.typeMap.toBibTeX));
+      self.typeMap.toZotero = Dict();
       self.typeMap.toBibTeX.forEach(function(zotero, bibtex) {
         if (!(bibtex instanceof Array)) { bibtex = [bibtex]; }
 
         bibtex = bibtex.map(function(tex) {
-          if (!self.typeMap.toZotero.has(tex) || tex.match(/^:/)) {
-            self.typeMap.toZotero.set(tex.replace(/^:/, ''), zotero);
+          Zotero.debug('tex: ' + tex);
+          if (!self.typeMap.toZotero[tex] || tex.match(/^:/)) {
+            self.typeMap.toZotero[tex.replace(/^:/, '')] = zotero;
           }
           return tex.replace(/^:/, '');
         });
 
-        self.typeMap.toBibTeX.set(zotero, bibtex[0]);
+        self.typeMap.toBibTeX[zotero] = bibtex[0];
       });
     }
 
@@ -72,7 +74,7 @@ var Translator = new function() {
 
     if (!item) { return; }
 
-    if (!initialized) { self.initialize(item); }
+    if (!initialized) { self.initialize(); }
     Translator.fieldsWritten = Dict({});
     item.__citekey__ = self.citekey(item);
     return item;
@@ -601,8 +603,8 @@ function writeField(field, value, bare) {
 
   if (!bare) { value = '{' + value + '}'; }
 
-  if (Translator.fieldsWritten.has(field)) { trLog('Field ' + field + ' output more than once!'); }
-  Translator.fieldsWritten.set(field, true);
+  if (Translator.fieldsWritten[field]) { trLog('Field ' + field + ' output more than once!'); }
+  Translator.fieldsWritten[field] = true;
   Zotero.write(",\n  " + field + " = " + value);
 }
 
@@ -655,7 +657,7 @@ function trLog(msg) {
 
 function getBibTeXType(item)
 {
-  var type = Translator.typeMap.toBibTeX.get(item.itemType);
+  var type = Translator.typeMap.toBibTeX[item.itemType];
   if (typeof (type) == "function") { type = type(item); }
   if (!type) type = "misc";
   return type;
@@ -752,7 +754,7 @@ function exportJabRefGroups() {
       collection.childItems = collection.childItems.map(function(child) { return Translator.citekey(child); }).filter(function(child) { return child; });
     }
 
-    collections.set(collection.id, collection);
+    collections[collection.id] = collection;
     roots.push(collection.id);
   }
 
@@ -762,7 +764,7 @@ function exportJabRefGroups() {
       collection.childCollections = collection.childCollections.map(function(id) {
         var index = roots.indexOf(id);
         if (index >= 0) { roots.splice(index, 1); }
-        return collections.get(id);
+        return collections[id];
       }).filter(function(child) { return child; });;
     } else {
       collection.childCollections = null;
@@ -778,7 +780,7 @@ function exportJabRefGroups() {
 
   var groups = [];
   roots.forEach(function(id) {
-    groups = groups.concat(exportJabRefGroup(collections.get(id), 1));
+    groups = groups.concat(exportJabRefGroup(collections[id], 1));
   });
   groups = jabrefSerialize(groups, ";\n", true);
   if (groups != '') { groups += "\n"; }

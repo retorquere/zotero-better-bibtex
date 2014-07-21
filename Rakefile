@@ -17,9 +17,8 @@ require 'i18n'
 require 'json/minify'
 require 'rubygems/package'
 require 'zlib'
-require 'headless'
-require 'selenium-webdriver'
-require 'jsonrpc-client'
+require 'shellwords'
+require 'open3'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
 EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
@@ -41,14 +40,27 @@ FileUtils.mkdir_p TMP
 
 UNICODE_MAPPING = "#{TMP}/unicode.json"
 BIBTEX_GRAMMAR  = Dir["resource/**/*.pegjs"][0]
-DICT            = 'chrome/content/zotero-better-bibtex/dict.js'
-DATE            = "#{TMP}/date.js"
 DBNAME          = "#{TMP}/zotero.sqlite"
+DICT            = 'chrome/content/zotero-better-bibtex/dict.js'
+
+def stir(livescript)
+  livescript = File.expand_path(livescript)
+  stirred = ''
+  IO.readlines(livescript).each{|line|
+    if line =~ /^#include\s+(.*)/
+      sweetener = File.join(File.dirname(cofee), $1.strip)
+      stirred += stir(sweetener)
+    else
+      stirred += line
+    end
+  }
+  stirred
+end
 
 SOURCES = %w{chrome test/import test/export resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
             .select{|f| File.file?(f)}
-            .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [DATE, UNICODE_MAPPING, BIBTEX_GRAMMAR, DICT]
+            .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [UNICODE_MAPPING, BIBTEX_GRAMMAR]
 
 XPI = "zotero-#{EXTENSION}-#{RELEASE}#{BRANCH == 'master' ? '' : '-' + BRANCH}.xpi"
 
@@ -420,8 +432,7 @@ class Test
       @options = _options['options'] || {}
     end
 
-    script(File.open(DATE), :init)
-    script("\nZotero.BetterBibTeX = { prefs: prefsObjects };\n")
+    script("\nZotero.BetterBibTeX = { prefs: prefsObjects };\n", :init)
     script(File.open('chrome/content/zotero-better-bibtex/keymanager.js'))
     script('var __zotero__header__ = ')
     script(File.open("#{TMP}/#{translator}.js"))
@@ -916,10 +927,6 @@ file DBNAME => ["#{TMP}/system.sql", "#{TMP}/userdata.sql"] do |t|
   db.close
 end
 
-file DATE do
-  download('https://raw.githubusercontent.com/zotero/zotero/4.0/chrome/content/zotero/xpcom/date.js', DATE)
-end
-
 file UNICODE_MAPPING => 'Rakefile' do |t|
   begin
     xml = File.join(File.dirname(t.name), File.basename(t.name, File.extname(t.name)) + '.xml')
@@ -1098,38 +1105,11 @@ def format(m)
   indent = ' ' * (rjust + ': '.length)
 
   level = m.level.rjust(rjust, ' ')
-  msg = m.message.strip
+  msg = m.message.strip.gsub("\n", "\n" + indent)
 
   "#{level}: #{msg}"
 end
 
-task :headless do
-  Headless.ly do
-    profile = Selenium::WebDriver::Firefox::Profile.new('/home/emile/zotero/zotero-better-bibtex/test/profile')
-    #profile.add_extension("/path/to/firebug.xpi")
-    profile.add_extension('zotero-better-bibtex-0.5.47-stable-keys.xpi')
-    profile['extensions.zotero.httpServer.enabled'] = true;
-    profile['extensions.zotero.debug.store'] = true;
-
-    profile['browser.download.dir'] = "/tmp/webdriver-downloads"
-    profile['browser.download.folderList'] = 2
-    profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
-    profile['pdfjs.disabled'] = true
-    #profile.log_file = File.join(File.dirname(__FILE__), 'tt.log')
-    puts profile.log_file
-
-    driver = Selenium::WebDriver.for :firefox, :profile => profile
-    driver.navigate.to 'http://google.com'
-    puts driver.title
-    rjust = 'WARNING'.length
-    indent = ' ' * (rjust + ': '.length)
-    log = driver.manage.logs.get('browser')
-    log = log.collect{|m| format(m) }
-    log = log.join("\n")
-    File.open('tt.log', 'w'){|f| f.write(log) }
-
-    client = JSONRPC::Client.new('http://localhost:23119/better-bibtex/debug')
-    File.open('tt.z.log', 'w'){|f| f.write(client.log) }
-    client.session
-  end
+task :headless => XPI do
+  system "cucumber --tags @import"
 end

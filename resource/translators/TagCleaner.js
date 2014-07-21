@@ -30,7 +30,7 @@ function doExport() {
   var keywords = Dict();
   while (item = Zotero.nextItem()) {
     item.tags.forEach(function(tag) {
-      keywords.set(tag.tag, tag.tag);
+      keywords[tag.tag] =  tag.tag;
     });
   }
 

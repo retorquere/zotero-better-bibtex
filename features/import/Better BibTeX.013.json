@@ -1,0 +1,31 @@
+{
+  "items": [
+    {
+      "itemType": "book",
+      "attachments": [
+        {
+          "title": ",.;'[]{}`-=~!@#$%^&()_+.pdf",
+          "path": "files/32/,.;'[]{}`-=~!@#$%^&()_+.pdf",
+          "mimeType": "application/pdf"
+        }
+      ],
+      "title": "Filename character test. Relative path",
+      "extra": "bibtex: id"
+    },
+    {
+      "itemType": "book",
+      "attachments": [
+        {
+          "title": ",.;'[]{}`-=~!@#$%^&()_+.pdf",
+          "path": "file:///C:/some/path/,.;'[]{}`-=~!@#$%^&()_+.pdf",
+          "mimeType": "application/pdf"
+        }
+      ],
+      "title": "Filename character test. Absolute path",
+      "extra": "bibtex: id2"
+    }
+  ],
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
+  }
+}

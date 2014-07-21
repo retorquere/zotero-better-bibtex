@@ -122,7 +122,7 @@ Zotero.BetterBibTeX.KeyManager = new function() {
     if (itemIDs.length == 0) { return; }
 
     itemIDs = '(' + itemIDs.map(function(id) { return '' + parseInt(id); }).join(',') + ')';
-    Zotero.DB.query('delete from betterbibtex.keys where itemID in (' + itemIDs + ')');
+    Zotero.DB.query('delete from betterbibtex.keys where itemID in ' + itemIDs);
 
     var rows = Zotero.DB.query(findKeysSQL + ' and i.itemID in ' + itemIDs) || [];
     rows.forEach(function(row) {

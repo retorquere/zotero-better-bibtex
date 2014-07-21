@@ -1,0 +1,12 @@
+{
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "title": "Escaped backslash followed by {}:",
+      "extra": "bibtex: BibTeXEscapeTest1"
+    }
+  ],
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
+  }
+}
