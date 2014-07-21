@@ -215,6 +215,7 @@ function addToExtraData(data, key, value) {
 }
 
 function createZoteroReference(bibtexitem) {
+  Zotero.debug('importing: ' + JSON.stringify(bibtexitem, null, '  '));
   var type = Zotero.Utilities.trimInternal(bibtexitem.__type__.toLowerCase());
   if (bibtexitem.type) { type = Zotero.Utilities.trimInternal(bibtexitem.type.toLowerCase()); }
   type = Translator.typeMap.toZotero[type] || 'journalArticle';
