@@ -136,7 +136,8 @@ attachments
   / '"' val:attachmentlist? '"' { return val; }
 
 key_value
-  = _* key:key _* "=" _* val:value _* ("," _*)? { return {key: key.trim().toLowerCase(), value: val.trim()}; }
+  = _* key:key _* "=" &{ return key == 'url'}_* val:url _* ("," _*)? { return {key: key.trim().toLowerCase(), value: val.trim()}; }
+  / _* key:key _* "=" _* val:value _* ("," _*)? { return {key: key.trim().toLowerCase(), value: val.trim()}; }
 
 key
   = key:[^ \t\n\r=]+ { return join(key); }
@@ -156,6 +157,10 @@ bracedvalue
 quotedvalue
   = '"' & { bibtex.quote = '"'; return true; }  val:string* '"' & { delete bibtex.quote; return true; } { return val; }
 
+url
+  = '{' & { delete bibtex.quote; return true; } val:urlchar* '}' & { delete bibtex.quote; return true; } { return join(val); }
+  / '"' & { bibtex.quote = '"'; return true; }  val:urlchar* '"' & { delete bibtex.quote; return true; } { return join(val); }
+
 string
   = text:plaintext                { return text; }
   / "\\\\"                        { return "\n"; }
@@ -165,7 +170,7 @@ string
   / '_' text:param                { return '<sub>' + text + '</sub>'; }
   / '^' text:param                { return '<sup>' + text + '</sup>'; }
   / "\\emph" text:bracedparam     { return '<i>' + text + '</i>'; }
-  / "\\url{" text:url* "}"        { return join(text); }
+  / "\\url{" text:urlchar* "}"    { return join(text); }
   / "\\textit" text:bracedparam   { return '<i>' + text + '</i>'; }
   / "\\textbf" text:bracedparam   { return '<b>' + text + '</b>'; }
   / "\\textsc" text:bracedparam   { return '<span style="small-caps">' + text + '</span>'; }
@@ -206,7 +211,7 @@ quotedchar
   = & { return (bibtex.quote == '"');  } '"' { return '"'; }
   / text:[#$%&_\^\[\]{}]  { return text; }
 
-url
+urlchar
   = text:[^\\{}]+ { return join(text); }
   / "\\" text:. { return text; }
 

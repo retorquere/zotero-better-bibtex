@@ -2,6 +2,7 @@
 
 function detectImport() {
   var input = Zotero.read(10240);
+  Zotero.debug('BBT detect against ' + input);
   var bib = BibTeX.parse(input);
   if (bib.references.length > 0) { trLog('Yes, BibTeX'); return true; }
   trLog('Not BibTeX, passing on');

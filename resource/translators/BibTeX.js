@@ -60,7 +60,7 @@ var Translator = new function() {
           return tex.replace(/^:/, '');
         });
 
-        self.typeMap.toBibTeX[zotero] = bibtex[0];
+        self.typeMap.toBibTeX[zotero] = bibtex[0].replace(/^:/, '');
       });
     }
 
