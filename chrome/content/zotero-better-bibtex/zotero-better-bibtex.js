@@ -269,7 +269,11 @@ Zotero.BetterBibTeX = {
               all = false;
             }
             if (!all) { all = []; }
-            return all;
+
+            // sometimes a pseudo-array is returned
+            var i, _all = [];
+            for (var i = 0; i < all.length; i++) { _all.push(all[i]); }
+            return _all;
           }
 
           data.forEach(function(req) {
@@ -324,10 +328,7 @@ Zotero.BetterBibTeX = {
                 var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
                 file.initWithPath('/tmp/zotero.log');
                 var dbg = 'getAll: ' + all.length + " items\n";
-                for (var i = 0; i < all.length; i++) {
-                  dbg += (typeof all[i])+ "\n";
-                }
-                dbg += "\n";
+                // dbg += all.map(function(item) { return JSON.stringify(item.serialize()); }).join("\n") + "\n";
                 dbg += Zotero.Debug.get();
                 Zotero.File.putContents(file, dbg);
                 */

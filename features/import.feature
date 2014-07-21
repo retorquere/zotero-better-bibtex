@@ -4,7 +4,6 @@ Feature: Import
 @bbtx-i-1
 Scenario: Better BibTeX Import 1
   When I import 'Better BibTeX.001.bib'
-  Then show the Zotero log
   Then the library should match 'Better BibTeX.001.json'
 
 @bbtx-i-2
