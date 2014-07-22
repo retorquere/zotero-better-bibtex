@@ -72,25 +72,27 @@ function scrub(item) {
 
 /*= include BibTeX.js =*/
 
-var items = null;
 function detectImport() {
+  Translator.initialize();
   var str, json = '';
   while((str = Z.read(1048576)) !== false) { json += str; }
 
+  var data;
   try {
-    items = JSON.parse(json);
+    data = JSON.parse(json);
   } catch (e) {
     Zotero.debug(e);
     return false;
   }
 
-  if (!items.config || !items.items || items.config.id != Translator.id) { return false; }
-  return true;
+  return (data && data.config && (data.config.id == Translator.id) && data.items);
 }
 
 function doImport() {
+  Translator.initialize();
+  var data = JSON.parse(json);
   var prop;
-  items.items.forEach(function(i) {
+  data.items.forEach(function(i) {
     var item = new Z.Item();
     for (prop in i) {
       item[prop] = i[prop];

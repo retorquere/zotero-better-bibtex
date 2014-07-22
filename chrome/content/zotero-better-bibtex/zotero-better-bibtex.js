@@ -324,6 +324,30 @@ Zotero.BetterBibTeX = {
                 return true;
               },
 
+              export: function(translator) {
+                var all = safeGetAll();
+
+                /*
+                Zotero.BetterBibTeX.log('getAll found ' + all.length + ' items');
+                var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
+                file.initWithPath('/tmp/zotero.log');
+                var dbg = 'getAll: ' + all.length + " items\n";
+                // dbg += all.map(function(item) { return JSON.stringify(item.serialize()); }).join("\n") + "\n";
+                dbg += Zotero.Debug.get();
+                Zotero.File.putContents(file, dbg);
+                */
+
+                if (all.length == 0) {
+                  Zotero.BetterBibTeX.log('getAll found no items');
+                  return '';
+                }
+
+                all.sort(function(a, b) { return a.itemID - b.itemID; });
+                var translator = Zotero.BetterBibTeX.getTranslator(translator);
+                var items = Zotero.BetterBibTeX.translate(translator, all, Zotero.BetterBibTeX.debugExportOptions);
+                return items;
+              },
+
               getAll: function() {
                 var all = safeGetAll();
 
@@ -348,6 +372,9 @@ Zotero.BetterBibTeX = {
                 return JSON.parse(items).items;
               },
 
+              setExportOption: function(name, value) {
+                Zotero.BetterBibTeX.debugExportOptions[name] = value;
+              },
               setCharPref: function(name, value) {
                 if (typeof Zotero.BetterBibTeX.prefs.stashed[name] != 'undefined') { Zotero.BetterBibTeX.prefs.stashed[name] = prefs.getCharPref(name); }
                 prefs.setCharPref(name, value);

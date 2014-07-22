@@ -262,11 +262,14 @@ function createZoteroReference(bibtexitem) {
 
     } else if (field == 'author' || field == 'editor' || field == 'translator') {
       value.forEach(function(creator) {
+        if (!creator) { return; }
+
         if (typeof creator == 'string') {
           creator = Zotero.Utilities.cleanAuthor(name, field, false);
         } else {
           creator.creatorType = field;
         }
+
         item.creators.push(creator);
       });
 
