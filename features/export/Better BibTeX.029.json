@@ -1,0 +1,37 @@
+{
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "volume": "55",
+      "issue": "1",
+      "pages": "122",
+      "publicationTitle": "American psychologist",
+      "date": "2000",
+      "title": "Wisdom: a metaheuristic (pragmatic) to orchestrate mind and virtue toward excellence.",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Paul B",
+          "lastName": "Baltes",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ursula M",
+          "lastName": "Staudinger",
+          "fieldMode": ""
+        }
+      ],
+      "attachments": [
+        {
+          "title": "Baltes_Staudinger_2000_Wisdom.pdf",
+          "mimeType": "application/pdf",
+          "path": "C:\\Users\\hnse\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\ekn344td.default\\zotero\\storage\\J99ADQEA\\Baltes_Staudinger_2000_Wisdom.pdf"
+        }
+      ]
+    }
+  ],
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
+  }
+}

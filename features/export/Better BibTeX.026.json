@@ -1,0 +1,25 @@
+{
+  "items": [
+    {
+      "itemType": "manuscript",
+      "title": "Computational Models of Non-cooperative dialogue",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "David",
+          "lastName": "Traum"
+        }
+      ],
+      "attachments": [
+        {
+          "title": "Traum - Computational Models of Non-cooperative dialogue.pdf",
+          "mimeType": "application/pdf",
+          "path": "/home/seb/.mozilla/firefox/4urz0oyr.default/zotero/storage/ZFMDUD5U/Traum - Computational Models of Non-cooperative dialogue.pdf"
+        }
+      ]
+    }
+  ],
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
+  }
+}

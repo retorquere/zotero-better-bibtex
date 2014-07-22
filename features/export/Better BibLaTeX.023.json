@@ -1,0 +1,39 @@
+{
+  "items": [
+    {
+      "itemType": "book",
+      "place": "New York",
+      "publisher": "Cambridge University Press",
+      "ISBN": "9780521865715",
+      "date": "July 7, 2008",
+      "title": "Introduction to Information Retrieval",
+      "numPages": "496",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Christopher D.",
+          "lastName": "Manning"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Prabhakar",
+          "lastName": "Raghavan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Hinrich",
+          "lastName": "Schütze"
+        }
+      ],
+      "attachments": [
+        {
+          "title": "Amazon.com Link",
+          "mimeType": "text/html"
+        }
+      ]
+    }
+  ],
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
+  }
+}
