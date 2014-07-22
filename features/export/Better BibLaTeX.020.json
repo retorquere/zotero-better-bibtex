@@ -1,0 +1,38 @@
+{
+  "items": [
+    {
+      "itemType": "bookSection",
+      "place": "Paris",
+      "publisher": "Hermann",
+      "pages": "665–86",
+      "ISBN": "2705662219",
+      "date": "1994",
+      "callNumber": "QA3 .C39 1994",
+      "libraryCatalog": "Library of Congress ISBN",
+      "language": "french",
+      "title": "In memoriam",
+      "bookTitle": "Œuvres complètes de philosophie des sciences",
+      "creators": [
+        {
+          "creatorType": "bookAuthor",
+          "firstName": "Jean",
+          "lastName": "Cavaillès"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Georges",
+          "lastName": "Canguilhem"
+        }
+      ],
+      "tags": [
+        "Mathematics",
+        "Philosophy",
+        "Science"
+      ],
+      "publicationTitle": "Œuvres complètes de philosophie des sciences"
+    }
+  ],
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
+  }
+}

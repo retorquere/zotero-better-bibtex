@@ -1,0 +1,46 @@
+{
+  "items": [
+    {
+      "itemType": "book",
+      "creators": [
+        {
+          "firstName": "Milton",
+          "lastName": "Abramowitz",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Irene A.",
+          "lastName": "Stegun",
+          "creatorType": "author"
+        }
+      ],
+      "place": "New York",
+      "edition": "ninth Dover printing, tenth GPO printing",
+      "title": "Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables",
+      "publisher": "Dover",
+      "date": "1964"
+    },
+    {
+      "itemType": "book",
+      "creators": [
+        {
+          "firstName": "Joe",
+          "lastName": "Torre",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Tom",
+          "lastName": "Verducci",
+          "creatorType": "author"
+        }
+      ],
+      "ISBN": "0385527403",
+      "publisher": "Doubleday",
+      "title": "The Yankee Years",
+      "date": "2008"
+    }
+  ],
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
+  }
+}
