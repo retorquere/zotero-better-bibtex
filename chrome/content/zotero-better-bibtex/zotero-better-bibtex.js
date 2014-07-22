@@ -307,6 +307,10 @@ Zotero.BetterBibTeX = {
 
                 var all = safeGetAll();
                 if (all.length > 0) { Zotero.Items.erase(all.map(function(item) { return item.id; })); }
+                try {
+                  var coll = Zotero.getCollections().map(function(c) { return c.id; });
+                  Zotero.Collections.erase(coll);
+                } catch (err) { }
               },
 
               log: function() {
@@ -369,7 +373,7 @@ Zotero.BetterBibTeX = {
         } catch (err) {
           var logs = '';
           var logs = Zotero.Debug.get();
-          sendResponseCallback(200, 'application/json', JSON.stringify({jsonrpc: '2.0', error: {code: 500, message: '' + err + "\n" + logs}, id: null}));
+          sendResponseCallback(200, 'application/json', JSON.stringify({jsonrpc: '2.0', error: {code: 5000, message: '' + err + "\n" + err.stack + "\n" + logs}, id: null}));
         }
       }
     }

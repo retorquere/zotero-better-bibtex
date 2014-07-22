@@ -3,22 +3,7 @@
 var Dict;
 if (!Dict) {
   Dict = function(init){
-    function getAllPropertyNames( obj ) {
-      var props = [];
-
-      do {
-        Object.getOwnPropertyNames(obj).forEach(function(prop) {
-          if (props.indexOf(prop) === -1) { props.push( prop ); }
-        });
-      } while (obj = Object.getPrototypeOf(obj));
-
-      return props;
-    }
-
-    var obj = {};
-    getAllPropertyNames(obj).forEach(function(prop) {
-      Object.defineProperty(obj, prop, { enumerable: false, configurable: false, writable: false, value: undefined });
-    });
+    var obj = Object.create(null);
 
     function forEach(callback) {
       Object.keys(this).forEach(function(prop) {
