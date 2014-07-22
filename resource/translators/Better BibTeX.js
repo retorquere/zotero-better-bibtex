@@ -215,7 +215,6 @@ function addToExtraData(data, key, value) {
 }
 
 function createZoteroReference(bibtexitem) {
-  Zotero.debug('importing: ' + JSON.stringify(bibtexitem, null, '  '));
   var type = Zotero.Utilities.trimInternal(bibtexitem.__type__.toLowerCase());
   if (bibtexitem.type) { type = Zotero.Utilities.trimInternal(bibtexitem.type.toLowerCase()); }
   type = Translator.typeMap.toZotero[type] || 'journalArticle';
@@ -231,7 +230,6 @@ function createZoteroReference(bibtexitem) {
 
   var biblatexdata = [];
   bibtexitem.forEach(function(field, value) {
-    Zotero.debug('import: ' + field + ' = ' + value);
 
     if (['__note__', '__key__', '__type__', 'type', 'added-at', 'timestamp'].indexOf(field) >= 0) { return; }
     if (!value) { return; }
@@ -263,21 +261,11 @@ function createZoteroReference(bibtexitem) {
       item.publicationTitle = value;
 
     } else if (field == 'author' || field == 'editor' || field == 'translator') {
-      value.forEach(function(name) {
-        var creator = {};
-        if (name.literal) {
-          creator.firstName = name.literal
-          creator.creatorType = field;
-          creator.fieldMode = 1; // forces single-field display in Zotero
+      value.forEach(function(creator) {
+        if (typeof creator == 'string') {
+          creator = Zotero.Utilities.cleanAuthor(name, field, false);
         } else {
-          var pieces = name.split(',');
-          if (pieces.length > 1) {
-            creator.firstName = pieces.pop().trim();
-            creator.lastName = pieces.join(',').trim();
-            creator.creatorType = field;
-          } else {
-            creator = Zotero.Utilities.cleanAuthor(name, field, false);
-          }
+          creator.creatorType = field;
         }
         item.creators.push(creator);
       });
@@ -374,8 +362,6 @@ function createZoteroReference(bibtexitem) {
     }
   });
 
-  Zotero.debug('biblatexdata: ' + JSON.stringify(biblatexdata));
-
   if (item.itemType == 'conferencePaper' && item.publicationTitle && !item.proceedingsTitle) {
     item.proceedingsTitle = item.publicationTitle;
     delete item.publicationTitle;
@@ -396,8 +382,3 @@ function createZoteroReference(bibtexitem) {
 }
 
 /*= include import.js =*/
-
-var exports = {
-	'doExport': doExport,
-	'doImport': doImport
-}

@@ -1,15 +1,30 @@
 /*= bibtex_parser =*/
 
 function detectImport() {
-  var input = Zotero.read(10240);
-  Zotero.debug('BBT detect against ' + input);
-  var bib = BibTeX.parse(input);
-  if (bib.references.length > 0) { trLog('Yes, BibTeX'); return true; }
-  trLog('Not BibTeX, passing on');
-  return false;
+  try {
+    var input = Zotero.read(102400);
+    Zotero.debug('BBT detect against ' + input);
+    var bib = BibTeX.parse(input);
+    if (bib.references.length > 0) { trLog('Yes, BibTeX'); return true; }
+    trLog('Not BibTeX, passing on');
+    return false;
+  } catch (e) {
+    Zotero.debug('better-bibtex: detect failed: ' + e + "\n" + e.stack);
+    return false;
+  }
 }
 
+
 function doImport() {
+  try {
+      _doImport();
+  } catch (e) {
+    Zotero.debug('better-bibtex: import failed: ' + e + "\n" + e.stack);
+    throw(e);
+  }
+}
+
+function _doImport() {
   Translator.initialize();
 
   var bib = '';
