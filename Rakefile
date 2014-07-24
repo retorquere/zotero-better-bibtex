@@ -610,7 +610,3 @@ def format(m)
 
   "#{level}: #{msg}"
 end
-
-task :headless => XPI do
-  system "cucumber --tags @import"
-end
