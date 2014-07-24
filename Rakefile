@@ -10,8 +10,6 @@ require 'date'
 require 'pp'
 require 'zip'
 require 'tempfile'
-require 'i18n'
-require 'json/minify'
 require 'rubygems/package'
 require 'zlib'
 require 'open3'
@@ -67,7 +65,7 @@ task :clean do
   FileUtils.rm_rf TMP
 end
 
-task :test, [:tag] => [XPI, ZOTERO_XPI] do |t, args|
+task :test, [:tag] => [XPI] do |t, args|
   tag = "@#{args[:tag]}".sub(/^@@/, '@')
 
   if tag == '@'
@@ -378,7 +376,7 @@ class Translator
   def get_testcases
     @_testcases = []
     Dir["test/import/#{File.basename(@source, File.extname(@source)) + '.*.bib'}"].sort.each{|test|
-      @_testcases << {type: 'import', input: File.open(test).read, items: JSON.parse(JSON.minify(File.open(test.gsub(/\.bib$/, '.json')).read))}
+      @_testcases << {type: 'import', input: File.open(test).read, items: JSON.parse(File.open(test.gsub(/\.bib$/, '.json')).read)}
     }
     @_testcases = JSON.pretty_generate(@_testcases)
   end

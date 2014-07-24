@@ -29,6 +29,7 @@ Before do
     profile['pdfjs.disabled'] = true
 
     BROWSER = Selenium::WebDriver.for :firefox, :profile => profile
+    sleep 2
     ZOTERO = JSONRPCClient.new('http://localhost:23119/better-bibtex/debug')
   end
 
