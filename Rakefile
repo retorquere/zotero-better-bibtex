@@ -76,7 +76,7 @@ task :test, [:tag] => [XPI, ZOTERO_XPI] do |t, args|
     tag = "--tags #{tag}"
   end
 
-  system "cucumber #{tag}"
+  system "cucumber #{tag}" or throw 'One or more tests failed'
 end
 
 task :dropbox => XPI do
