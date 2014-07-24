@@ -1,13 +1,13 @@
 @export
 Feature: Export
 
-@bbltx-e-1
+@bbltx-e-1 @e-1
 Scenario: Better BibLaTeX Export 1
   When I import 'Better BibLaTeX.001.json'
    And I export the library using 'Better BibLaTeX'
   Then the output should match 'Better BibLaTeX.001.bib'
 
-@btxck-e-1
+@btxck-e-1 @e-2
 Scenario: BibTeX Citation Keys Export 1
   When I import 'BibTeX Citation Keys.001.json'
    And I export the library using 'BibTeX Citation Keys'
