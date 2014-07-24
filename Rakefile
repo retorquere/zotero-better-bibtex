@@ -17,7 +17,6 @@ require 'i18n'
 require 'json/minify'
 require 'rubygems/package'
 require 'zlib'
-require 'shellwords'
 require 'open3'
 
 EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
