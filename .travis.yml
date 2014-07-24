@@ -3,7 +3,7 @@ git:
   submodules: false
 rvm:
   - 2.1.1
-script: rake test[import]
+script: rake test
 before_install:
 - sudo apt-get update
 - sudo apt-get install nodejs npm
