@@ -37,6 +37,7 @@ FileUtils.mkdir_p TMP
 UNICODE_MAPPING = "#{TMP}/unicode.json"
 BIBTEX_GRAMMAR  = Dir["resource/**/*.pegjs"][0]
 DICT            = 'chrome/content/zotero-better-bibtex/dict.js'
+ZOTERO_XPI      = 'tmp/zotero-4.0.21.5.xpi'
 
 def stir(livescript)
   livescript = File.expand_path(livescript)
@@ -66,7 +67,7 @@ task :clean do
   FileUtils.rm_rf TMP
 end
 
-task :test, [:tag] => XPI do |t, args|
+task :test, [:tag] => [XPI, ZOTERO_XPI] do |t, args|
   tag = "@#{args[:tag]}".sub(/^@@/, '@')
 
   if tag == '@'
@@ -425,11 +426,8 @@ class Translator
   end
 end
 
-file "#{TMP}/system.sql" do |t|
-  download('https://raw.githubusercontent.com/zotero/zotero/4.0/resource/schema/system.sql', t.name)
-end
-file "#{TMP}/userdata.sql" do |t|
-  download('https://raw.githubusercontent.com/zotero/zotero/4.0/resource/schema/userdata.sql', t.name)
+file ZOTERO_XPI do |t|
+  download("https://download.zotero.org/extension/#{File.basename(ZOTERO_XPI)}", t.name)
 end
 
 file UNICODE_MAPPING => 'Rakefile' do |t|
