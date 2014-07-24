@@ -28,6 +28,9 @@ Before do
     profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
     profile['pdfjs.disabled'] = true
 
+    # prevent 'Hi there noob!' popup
+    FileUtils.cp_r('features/zotero', profile.layout_on_disk)
+
     BROWSER = Selenium::WebDriver.for :firefox, :profile => profile
     ZOTERO = JSONRPCClient.new('http://localhost:23119/better-bibtex/debug')
   end
