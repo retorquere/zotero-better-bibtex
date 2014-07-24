@@ -10,47 +10,23 @@ Before do
     $headless = Headless.new
     $headless.start
 
-    profile_dir = 'tmp/seprofile'
-    newprofile = lambda {|mode|
+    profile_dir = File.expand_path('features/profile')
+    profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
 
-      if mode == :init
-        profile = Selenium::WebDriver::Firefox::Profile.new
-      else
-        profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
-      end
-
-      extensions = {
-        zotero: Dir[File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'tmp', 'zotero-*.xpi'))].first,
-        bbt: Dir['zotero-better-*.xpi'].first
-      }
-      extensions.values.each{|xpi|
-        profile.add_extension(xpi)
-      }
-      profile['extensions.zotero.httpServer.enabled'] = true;
-      profile['extensions.zotero.debug.store'] = true;
-      profile['extensions.zotero.debug.log'] = true;
-
-      profile['browser.download.dir'] = "/tmp/webdriver-downloads"
-      profile['browser.download.folderList'] = 2
-      profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
-      profile['pdfjs.disabled'] = true
-
-      # prevent 'Hi there noob!' popup
-      if mode == :init
-        tmp_profile = profile.layout_on_disk
-        FileUtils.rm_rf profile_dir
-        FileUtils.cp_r tmp_profile, profile_dir
-        FileUtils.cp_r 'features/zotero', profile_dir
-        FileUtils.rm_rf tmp_profile
-      end
-
-      profile
+    extensions = {
+      bbt: Dir['zotero-better-*.xpi'].first
     }
+    extensions.values.each{|xpi|
+      profile.add_extension(xpi)
+    }
+    profile['extensions.zotero.httpServer.enabled'] = true;
+    profile['extensions.zotero.debug.store'] = true;
+    profile['extensions.zotero.debug.log'] = true;
 
-    newprofile.call(:init)
-    profile = newprofile.call(:ready)
-
-    puts "profile = #{profile_dir.inspect}, #{Dir["#{profile_dir}/**/*"].size}"
+    profile['browser.download.dir'] = "/tmp/webdriver-downloads"
+    profile['browser.download.folderList'] = 2
+    profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
+    profile['pdfjs.disabled'] = true
 
     BROWSER = Selenium::WebDriver.for :firefox, :profile => profile
     ZOTERO = JSONRPCClient.new('http://localhost:23119/better-bibtex/debug')

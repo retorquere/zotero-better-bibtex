@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 16,
+  "addons": [
+    {
+      "id": "{972ce4c6-7e08-4474-a285-3208198ce6fd}",
+      "syncGUID": "xHzGepj44q5_",
+      "location": "app-global",
+      "version": "31.0",
+      "type": "theme",
+      "internalName": "classic\/1.0",
+      "updateURL": null,
+      "updateKey": null,
+      "optionsURL": null,
+      "optionsType": null,
+      "aboutURL": null,
+      "iconURL": null,
+      "icon64URL": null,
+      "defaultLocale": {
+        "name": "Default",
+        "description": "The default theme.",
+        "creator": "Mozilla",
+        "homepageURL": null,
+        "contributors": [
+          "Mozilla Contributors"
+        ]
+      },
+      "visible": true,
+      "active": true,
+      "userDisabled": false,
+      "appDisabled": false,
+      "descriptor": "C:\\Users\\emile\\Dropbox\\FirefoxPortable\\App\\firefox\\browser\\extensions\\{972ce4c6-7e08-4474-a285-3208198ce6fd}",
+      "installDate": 1406214392540,
+      "updateDate": 1406214392540,
+      "applyBackgroundUpdates": 1,
+      "skinnable": true,
+      "size": 3504,
+      "sourceURI": null,
+      "releaseNotesURI": null,
+      "softDisabled": false,
+      "foreignInstall": false,
+      "hasBinaryComponents": false,
+      "strictCompatibility": true,
+      "locales": [
+        
+      ],
+      "targetApplications": [
+        {
+          "id": "{ec8030f7-c20a-464f-9b0e-13a3a9e97384}",
+          "minVersion": "31.0",
+          "maxVersion": "31.0"
+        }
+      ],
+      "targetPlatforms": [
+        
+      ]
+    },
+    {
+      "id": "zotero@chnm.gmu.edu",
+      "syncGUID": "G5ul_f22g5iw",
+      "location": "app-profile",
+      "version": "4.0.21.5",
+      "type": "extension",
+      "internalName": null,
+      "updateURL": "https:\/\/www.zotero.org\/download\/update.rdf",
+      "updateKey": null,
+      "optionsURL": "chrome:\/\/zotero\/content\/preferences\/preferences.xul",
+      "optionsType": null,
+      "aboutURL": "chrome:\/\/zotero\/content\/about.xul",
+      "iconURL": "chrome:\/\/zotero\/skin\/zotero-new-z-48px.png",
+      "icon64URL": null,
+      "defaultLocale": {
+        "name": "Zotero",
+        "description": null,
+        "creator": "Center for History and New Media",
+        "homepageURL": "http:\/\/www.zotero.org",
+        "developers": [
+          "Simon Kornblith",
+          "David Norton",
+          "Dan Stillman"
+        ],
+        "contributors": [
+          "Dan Cohen",
+          "Sean Takats"
+        ]
+      },
+      "visible": true,
+      "active": true,
+      "userDisabled": false,
+      "appDisabled": false,
+      "descriptor": "C:\\Users\\emile\\Dropbox\\FirefoxPortable\\Data\\profile\\extensions\\zotero@chnm.gmu.edu.xpi",
+      "installDate": 1406214461588,
+      "updateDate": 1406214461588,
+      "applyBackgroundUpdates": 1,
+      "bootstrap": false,
+      "size": 14714481,
+      "sourceURI": "file:\/\/\/H:\/zotero\/zotero-better-bibtex\/tmp\/zotero-4.0.21.5.xpi",
+      "releaseNotesURI": null,
+      "softDisabled": false,
+      "foreignInstall": false,
+      "hasBinaryComponents": false,
+      "strictCompatibility": false,
+      "locales": [
+        
+      ],
+      "targetApplications": [
+        {
+          "id": "{ec8030f7-c20a-464f-9b0e-13a3a9e97384}",
+          "minVersion": "17.0",
+          "maxVersion": "30.*"
+        }
+      ],
+      "targetPlatforms": [
+        
+      ]
+    }
+  ]
+}
+

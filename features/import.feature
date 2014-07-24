@@ -1,7 +1,7 @@
 @import
 Feature: Import
 
-@bbtx-i-1
+@bbtx-i-1 @i-1
 Scenario: Better BibTeX Import 1
   When I import 'Better BibTeX.001.bib'
   Then the library should match 'Better BibTeX.001.json'
