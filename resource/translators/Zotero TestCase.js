@@ -90,14 +90,14 @@ function detectImport() {
 
 function doImport() {
   Translator.initialize();
+  var str, json = '';
+  while((str = Z.read(1048576)) !== false) { json += str; }
   var data = JSON.parse(json);
   var prop;
   data.items.forEach(function(i) {
     var item = new Z.Item();
-    for (prop in i) {
-      item[prop] = i[prop];
-      item.complete();
-    }
+    for (prop in i) { item[prop] = i[prop]; }
+    item.complete();
   });
 }
 
