@@ -344,7 +344,7 @@ Zotero.BetterBibTeX = {
 
                 all.sort(function(a, b) { return a.itemID - b.itemID; });
                 var translator = Zotero.BetterBibTeX.getTranslator(translator);
-                var items = Zotero.BetterBibTeX.translate(translator, all, Zotero.BetterBibTeX.debugExportOptions);
+                var items = Zotero.BetterBibTeX.translate(translator, all, Zotero.BetterBibTeX.debugExportOptions || {});
                 return items;
               },
 

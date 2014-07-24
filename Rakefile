@@ -97,7 +97,19 @@ Dir['test/export/*.json'].sort.each{|test|
   end
 }
 
-task :test => [DBNAME, XPI] do
+task :test, [:tag] => XPI do |t, args|
+  tag = "@#{args[:tag]}".sub(/^@@/, '@')
+
+  if tag == '@'
+    tag = ''
+  else
+    tag = "--tags #{tag}"
+  end
+
+  system "cucumber #{tag}"
+end
+
+task :oldtest => [DBNAME, XPI] do
   # vim -b file and once in vim:
   #:set noeol
   #:wq
