@@ -2,6 +2,7 @@ require 'headless'
 require 'selenium-webdriver'
 require 'json'
 require 'pp'
+require 'fileutils'
 
 Before do
   $headless ||= false
@@ -9,8 +10,15 @@ Before do
     $headless = Headless.new
     $headless.start
 
-    profile = Selenium::WebDriver::Firefox::Profile.new('/home/emile/zotero/zotero-better-bibtex/test/profile')
-    profile.add_extension(Dir['*.xpi'].first)
+    extensions = {
+      zotero: Dir[File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'tmp', 'zotero-*.xpi'))].first,
+      bbt: Dir['zotero-better-*.xpi'].first
+    }
+
+    profile = Selenium::WebDriver::Firefox::Profile.new
+    extensions.values.each{|xpi|
+      profile.add_extension(xpi)
+    }
     profile['extensions.zotero.httpServer.enabled'] = true;
     profile['extensions.zotero.debug.store'] = true;
     profile['extensions.zotero.debug.log'] = true;
