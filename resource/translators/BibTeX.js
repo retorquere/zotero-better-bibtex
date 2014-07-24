@@ -16,6 +16,18 @@ var Translator = new function() {
 
     if (!config) { config = {}; }
 
+    function getOption(option) { // for some reason Zotero *sometimes* throws a 'translate._displayOptions is undefiend'
+      // we don't care for TestCase translator as it doesn't use the prefs
+      if (self.id != '82512813-9edb-471c-aebc-eeaaf40c6cf9') { return Zotero.getOption(option); }
+
+      try {
+        return Zotero.getOption(option);
+      } catch (err) {
+        // Zotero.debug('' + err + "\n" + err.stack);
+        return;
+      }
+    };
+
     self.pattern                = config.pattern                || Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
     self.skipFields             = config.skipFields             || Zotero.getHiddenPref('better-bibtex.skipfields').split(',').map(function(field) { return field.trim(); });
     self.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
@@ -24,10 +36,10 @@ var Translator = new function() {
     self.langid                 = config.langid                 || Zotero.getHiddenPref('better-bibtex.langid');
     self.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
 
-    self.useJournalAbbreviation = config.useJournalAbbreviation || Zotero.getOption('useJournalAbbreviation');
-    self.exportCharset          = config.exportCharset          || Zotero.getOption('exportCharset');
-    self.exportFileData         = config.exportFileData         || Zotero.getOption('exportFileData');
-    self.exportNotes            = config.exportNotes            || Zotero.getOption('exportNotes');
+    self.useJournalAbbreviation = config.useJournalAbbreviation || getOption('useJournalAbbreviation');
+    self.exportCharset          = config.exportCharset          || getOption('exportCharset');
+    self.exportFileData         = config.exportFileData         || getOption('exportFileData');
+    self.exportNotes            = config.exportNotes            || getOption('exportNotes');
 
     if (typeof config.unicode == 'undefined') {
       switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
