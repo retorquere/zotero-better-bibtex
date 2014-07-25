@@ -22,6 +22,8 @@ Before do
     profile['extensions.zotero.httpServer.enabled'] = true;
     profile['extensions.zotero.debug.store'] = true;
     profile['extensions.zotero.debug.log'] = true;
+    profile['extensions.zotero.translators.better-bibtex.debug'] = true;
+    profile['extensions.zotero.translators.better-bibtex.attachmentRelativePath'] = true
 
     profile['browser.download.dir'] = "/tmp/webdriver-downloads"
     profile['browser.download.folderList'] = 2
@@ -47,17 +49,17 @@ Before('@export') do
   @testKind = 'export'
 end
 
-Given /^that ([^\s]+) is set to (.*)$/ do |pref, value|
-  if value =~ /^['"](.*)['"]$/
-    ZOTERO.setCharPref(pref, $1)
-  elsif ['false', 'true'].include?(value.downcase)
-    ZOTERO.setBoolPref(pref, value.downcase == 'true')
-  elsif value.downcase == 'null'
-    ZOTERO.setCharPref(pref, nil)
-  else
-    ZOTERO.setIntPref(pref, Integer(value))
-  end
-end
+#Given /^that ([^\s]+) is set to (.*)$/ do |pref, value|
+#  if value =~ /^['"](.*)['"]$/
+#    ZOTERO.setCharPref(pref, $1)
+#  elsif ['false', 'true'].include?(value.downcase)
+#    ZOTERO.setBoolPref(pref, value.downcase == 'true')
+#  elsif value.downcase == 'null'
+#    ZOTERO.setCharPref(pref, nil)
+#  else
+#    ZOTERO.setIntPref(pref, Integer(value))
+#  end
+#end
 
 When /^I import '([^']+)'$/ do |filename|
   bib = File.expand_path(File.join(File.dirname(__FILE__), '..', @testKind, filename))
@@ -119,13 +121,12 @@ When(/^I set (preference|export option) ([^\s]+) to (.*)$/) do |setting, name, v
 
   case setting
     when 'preference'
-      case value.class
-        when String
-          ZOTERO.setCharPref(name, value)
-        when Integer
-          ZOTERO.setIntPref(name, value)
-        else
-          ZOTERO.setBoolPref(name, value)
+      if value.is_a?(String)
+        ZOTERO.setCharPref(name, value)
+      elsif value.is_a?(Integer)
+        ZOTERO.setIntPref(name, value)
+      else
+        ZOTERO.setBoolPref(name, value)
       end
 
     else
