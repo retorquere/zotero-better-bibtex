@@ -96,16 +96,24 @@ function doExport() {
       writeField('urldate', latex_escape(accessYMD));
     }
 
-    if (item.publicationTitle) {
-      var abbr = Zotero.BetterBibTeX.KeyManager.journalAbbrev(item);
+    function () {
+      if (!item.publicationTitle) { return; }
+
       if (item.itemType == 'bookSection' || item.itemType == 'conferencePaper') {
-        writeField('booktitle', latex_escape(item.publicationTitle, {brace: true}));
-      } else if (Translator.useJournalAbbreviation && abbr) {
-        writeField('journal', latex_escape(abbr, {brace: true}));
-      } else {
-        writeField('journal', latex_escape(item.publicationTitle, {brace: true}));
+        return writeField('booktitle', latex_escape(item.publicationTitle, {brace: true}));
       }
-    }
+
+      if (item.itemType == 'bookSection' || item.itemType == 'conferencePaper') {
+        return writeField('booktitle', latex_escape(item.publicationTitle, {brace: true}));
+      }
+
+      var abbr = Translator.useJournalAbbreviation && Zotero.BetterBibTeX.KeyManager.journalAbbrev(item);
+      if (abbr) {
+        return writeField('journal', latex_escape(abbr, {brace: true}));
+      }
+
+      writeField('journal', latex_escape(item.publicationTitle, {brace: true}));
+    }();
 
     if (item.publisher) {
       if (item.itemType == 'thesis') {

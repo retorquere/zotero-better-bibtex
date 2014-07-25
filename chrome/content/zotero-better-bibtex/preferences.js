@@ -41,13 +41,16 @@ function serverURL(collectionsView, extension)
 }
 
 function BBTstyleChanged(index) {
-  var listbox = document.getElementById("better-bibtex-style-listbox");
+  var listbox = document.getElementById("better-bibtex-abbrev-style");
   if (index != undefined) {
     var selectedItem = listbox.getItemAtIndex(index);
   } else {
     var selectedItem = listbox.selectedItem;
   }
-  Zotero.BetterBibTeX.prefs.bbt.setCharPref('cslStyleID', selectedItem.getAttribute('value'));
+  var styleID = selectedItem.getAttribute('value');
+  Zotero.BetterBibTeX.prefs.bbt.setCharPref('auto-abbrev.style', styleID);
+  selectedStyleObj = Zotero.Styles.get(styleID);
+  selectedStyleObj.usesAbbreviation;
 }
 
 function updatePreferences(load) {
@@ -65,11 +68,11 @@ function updatePreferences(load) {
   document.getElementById('id-zotero-better-bibtex-recursive-warning').setAttribute('hidden', !document.getElementById('id-better-bibtex-preferences-getCollections').checked);
   document.getElementById('id-better-bibtex-preferences-fancyURLs-warning').setAttribute('hidden', !document.getElementById('id-better-bibtex-preferences-fancyURLs').checked);
 
-  var listbox = document.getElementById("better-bibtex-style-listbox");
-  var styles = Zotero.Styles.getVisible();
+  var styles = Zotero.Styles.getVisible().filter(function(style) { return style.usesAbbreviation; });
+
+  var listbox = document.getElementById("better-bibtex-abbrev-style");
   var fillList = (listbox.children.length == 0)
-  var selectedStyle = Zotero.BetterBibTeX.prefs.bbt.getCharPref('cslStyleID');
-  console.log('better bibtex: csl fill:' + fillList + ', selected: ' + selectedStyle);
+  var selectedStyle = Zotero.BetterBibTeX.prefs.bbt.getCharPref('auto-abbrev.style');
   var selectedIndex = -1;
   for (var i = 0; i < styles.length; i++) {
     if (fillList) {

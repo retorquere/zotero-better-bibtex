@@ -26,3 +26,5 @@
 <!ENTITY zotero.better-bibtex.langid "When exporting language information, use the conventions from">
 <!ENTITY zotero.better-bibtex.langid.babel "Babel">
 <!ENTITY zotero.better-bibtex.langid.polyglossia "Polyglossia">
+<!ENTITY zotero.better-bibtex.preferences.auto-abbrev "Automatically abbreviate journal title if none is set explicitly">
+<!ENTITY zotero.better-bibtex.preferences.auto-abbrev.style "Abbreviation style:">
