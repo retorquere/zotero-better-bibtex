@@ -13,7 +13,7 @@
     "exportNotes": true,
     "exportFileData": false
   },
-  "inRepository": false,
+  "inRepository": true,
   "translatorType": 3,
   "browserSupport": "gcsv",
   "lastUpdated": "/*= timestamp =*/"
@@ -73,7 +73,6 @@ function scrub(item) {
 /*= include BibTeX.js =*/
 
 function detectImport() {
-  Translator.initialize();
   var str, json = '';
   while((str = Z.read(1048576)) !== false) { json += str; }
 

@@ -60,7 +60,7 @@ Given /^that ([^\s]+) is set to (.*)$/ do |pref, value|
 end
 
 When /^I import '([^']+)'$/ do |filename|
-  bib = File.expand_path(File.join(File.dirname(__FILE__), '..', 'import', filename))
+  bib = File.expand_path(File.join(File.dirname(__FILE__), '..', @testKind, filename))
   ZOTERO.import(bib)
   sleep 2
   #puts ZOTERO.log
@@ -88,7 +88,7 @@ Then /^the library should match '([^']+)'$/ do |filename|
 
       expect(found).to eq(expected)
     else
-      throw "Unexpected #{@testkind} match file #{filename}"
+      throw "Unexpected #{@testKind} match file #{filename}"
   end
 end
 
@@ -126,7 +126,7 @@ end
 
 Then(/^the output should match '([^']+)'$/) do |filename|
   expected = File.expand_path(File.join(File.dirname(__FILE__), '..', @testKind, filename))
-  expect(@export).to eq(open(expected).read)
+  expect(@export.strip).to eq(open(expected).read.strip)
 end
 
 

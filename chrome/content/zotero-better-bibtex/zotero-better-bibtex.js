@@ -288,7 +288,7 @@ Zotero.BetterBibTeX = {
                 Zotero.Debug.setStore(true);
 
                 if (Zotero.BetterBibTeX.prefs.stashed) {
-                  Zotero.BetterBibTeX.prefs.stashed.forEach(function(name, value) {
+                  Dict.forEach(Zotero.BetterBibTeX.prefs.stashed, function(name, value) {
                     switch (typeof value) {
                       case 'boolean':
                         prefs.setBoolPref(name, value);
@@ -303,7 +303,7 @@ Zotero.BetterBibTeX = {
                   });
                 }
                 Zotero.BetterBibTeX.prefs.stashed = Dict();
-                Zotero.BetterBibTeX.debugExportOptions = Dict();
+                Zotero.BetterBibTeX.debugExportOptions = {};
 
                 var all = safeGetAll();
                 if (all.length > 0) { Zotero.Items.erase(all.map(function(item) { return item.id; })); }
@@ -328,10 +328,10 @@ Zotero.BetterBibTeX = {
                 var all = safeGetAll();
 
                 /*
-                Zotero.BetterBibTeX.log('getAll found ' + all.length + ' items');
+                Zotero.BetterBibTeX.log('export found ' + all.length + ' items');
                 var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
                 file.initWithPath('/tmp/zotero.log');
-                var dbg = 'getAll: ' + all.length + " items\n";
+                var dbg = 'export: ' + all.length + " items\n";
                 // dbg += all.map(function(item) { return JSON.stringify(item.serialize()); }).join("\n") + "\n";
                 dbg += Zotero.Debug.get();
                 Zotero.File.putContents(file, dbg);

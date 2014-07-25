@@ -169,7 +169,7 @@ function doExport() {
 
     writeExtra(item, 'note');
 
-    writeField('keywords', latex_escape(item.tags.map(function(tag) { return tag.tag; }), {sep: ','}));
+    writeTags('keywords', item);
 
     writeField('pages', latex_escape(item.pages));
 
@@ -229,7 +229,7 @@ function createZoteroReference(bibtexitem) {
   }
 
   var biblatexdata = [];
-  bibtexitem.forEach(function(field, value) {
+  Dict.forEach(bibtexitem, function(field, value) {
 
     if (['__note__', '__key__', '__type__', 'type', 'added-at', 'timestamp'].indexOf(field) >= 0) { return; }
     if (!value) { return; }

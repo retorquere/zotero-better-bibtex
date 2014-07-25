@@ -158,12 +158,12 @@ var babelLanguageMap = Dict({
   zh:         'pinyin', //only supported chinese in babel is the romanization pinyin?
   zlm:        ['malay', 'bahasam', 'melayu'],
 });
-babelLanguageMap.forEach(function(key, value) {
+Dict.forEach(babelLanguageMap, function(key, value) {
   if (typeof value === 'string' ) {
     babelLanguageMap[key] = [value];
   }
 });
-var babelLanguageList = [].concat.apply([], babelLanguageMap.values()).filter(function(value, index, self) { return self.indexOf(value) === index; });
+var babelLanguageList = [].concat.apply([], Dict.values(babelLanguageMap)).filter(function(value, index, self) { return self.indexOf(value) === index; });
 var polyglossia = [ 'albanian', 'amharic', 'arabic', 'armenian', 'asturian', 'bahasai', 'bahasam', 'basque', 'bengali', 'brazilian', 'brazil',
                     'breton', 'bulgarian', 'catalan', 'coptic', 'croatian', 'czech', 'danish', 'divehi', 'dutch', 'english', 'british', 'ukenglish',
                     'esperanto', 'estonian', 'farsi', 'finnish', 'french', 'friulan', 'galician', 'german', 'austrian', 'naustrian', 'greek', 'hebrew',
@@ -508,7 +508,7 @@ function bibtexExport() {
 
     writeExtra(item, (Translator.fieldsWritten['note'] ? 'annotation' : 'note'));
 
-    writeField('keywords', latex_escape(item.tags.map(function(tag) {return tag.tag;}), {sep: ','}));
+    writeTags('keywords', item);
 
     if (item.notes && Translator.exportNotes) {
       item.notes.forEach(function(note) {

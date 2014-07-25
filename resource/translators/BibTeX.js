@@ -16,18 +16,6 @@ var Translator = new function() {
 
     if (!config) { config = {}; }
 
-    function getOption(option) { // for some reason Zotero *sometimes* throws a 'translate._displayOptions is undefiend'
-      // we don't care for TestCase translator as it doesn't use the prefs
-      if (self.id != '82512813-9edb-471c-aebc-eeaaf40c6cf9') { return Zotero.getOption(option); }
-
-      try {
-        return Zotero.getOption(option);
-      } catch (err) {
-        // Zotero.debug('' + err + "\n" + err.stack);
-        return;
-      }
-    };
-
     self.pattern                = config.pattern                || Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
     self.skipFields             = config.skipFields             || Zotero.getHiddenPref('better-bibtex.skipfields').split(',').map(function(field) { return field.trim(); });
     self.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
@@ -36,10 +24,10 @@ var Translator = new function() {
     self.langid                 = config.langid                 || Zotero.getHiddenPref('better-bibtex.langid');
     self.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
 
-    self.useJournalAbbreviation = config.useJournalAbbreviation || getOption('useJournalAbbreviation');
-    self.exportCharset          = config.exportCharset          || getOption('exportCharset');
-    self.exportFileData         = config.exportFileData         || getOption('exportFileData');
-    self.exportNotes            = config.exportNotes            || getOption('exportNotes');
+    self.useJournalAbbreviation = config.useJournalAbbreviation || Zotero.getOption('useJournalAbbreviation');
+    self.exportCharset          = config.exportCharset          || Zotero.getOption('exportCharset');
+    self.exportFileData         = config.exportFileData         || Zotero.getOption('exportFileData');
+    self.exportNotes            = config.exportNotes            || Zotero.getOption('exportNotes');
 
     if (typeof config.unicode == 'undefined') {
       switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
@@ -61,7 +49,7 @@ var Translator = new function() {
     if (self.typeMap.toBibTeX) {
       Zotero.debug('typemap: ' + JSON.stringify(self.typeMap.toBibTeX));
       self.typeMap.toZotero = Dict();
-      self.typeMap.toBibTeX.forEach(function(zotero, bibtex) {
+      Dict.forEach(self.typeMap.toBibTeX, function(zotero, bibtex) {
         if (!(bibtex instanceof Array)) { bibtex = [bibtex]; }
 
         bibtex = bibtex.map(function(tex) {
@@ -590,7 +578,7 @@ var Translator = new function() {
 };
 
 function writeFieldMap(item, fieldMap) {
-  fieldMap.forEach(function(bibtexField, zoteroField) {
+  Dict.forEach(fieldMap, function(bibtexField, zoteroField) {
     var brace = !!(zoteroField.literal);
     zoteroField = zoteroField.literal ? zoteroField.literal : zoteroField;
 
@@ -618,6 +606,13 @@ function writeField(field, value, bare) {
   if (Translator.fieldsWritten[field]) { trLog('Field ' + field + ' output more than once!'); }
   Translator.fieldsWritten[field] = true;
   Zotero.write(",\n  " + field + " = " + value);
+}
+
+function writeTags(field, item) {
+  if (!item.tags || item.tags.length == 0) { return; }
+  var tags = item.tags.map(function(tag) {return tag.tag;});
+  tags.sort();
+  writeField(field, latex_escape(tags, {sep: ','}));
 }
 
 function escapeAttachments(attachments, wipeBraces) {
@@ -771,7 +766,7 @@ function exportJabRefGroups() {
   }
 
   // walk through all collections, resolve child collections
-  collections.forEach(function(collection) {
+  Dict.forEach(collections, function(collection) {
     if (collection.childCollections && collection.childCollections.length != 0) {
       collection.childCollections = collection.childCollections.map(function(id) {
         var index = roots.indexOf(id);
