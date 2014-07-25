@@ -161,11 +161,13 @@ Scenario: Zotero TestCase Export 28
    And I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[authors][year]'
   Then A library export using 'Zotero TestCase' should match 'Zotero TestCase.028.json'
 
-@bbtx-e-29
-Scenario: Better BibTeX Export 29
+#Issue 81
+@journal-abbrev
+Scenario: Journal abbreviations
   When I import 'Better BibTeX.029.json'
    And I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[authors][year]'
-   And I set preference extensions.zotero.cite.automaticJournalAbbreviations to true
+   And I set preference extensions.zotero.translators.better-bibtex.auto-abbrev to true
+   And I set preference extensions.zotero.translators.better-bibtex.auto-abbrev.style to 'http://www.zotero.org/styles/cell'
    And I set export option useJournalAbbreviation to true
   Then A library export using 'Better BibTeX' should match 'Better BibTeX.029.bib'
 
