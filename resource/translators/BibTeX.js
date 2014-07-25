@@ -24,6 +24,7 @@ var Translator = new function() {
     self.langid                 = config.langid                 || Zotero.getHiddenPref('better-bibtex.langid');
     self.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
     self.attachmentRelativePath = config.attachmentRelativePath || Zotero.getHiddenPref('better-bibtex.attachmentRelativePath');
+    self.debug                  = config.debug                  || Zotero.getHiddenPref('better-bibtex.debug');
 
     self.useJournalAbbreviation = config.useJournalAbbreviation || Zotero.getOption('useJournalAbbreviation');
     self.exportCharset          = config.exportCharset          || Zotero.getOption('exportCharset');
@@ -621,6 +622,7 @@ function escapeAttachments(attachments, wipeBraces) {
     return [att.title, att.path, att.mimetype].map(function(part) { return (wipeBraces ? part.replace('{', '(').replace('}', ')') : part).replace(/([\\{}:;])/g, "\\$1"); }).join(':');
   }).join(';');
 }
+var attachmentCounter = 0;
 function writeAttachments(item) {
   if(! item.attachments) { return ; }
 
@@ -641,11 +643,12 @@ function writeAttachments(item) {
       return;
     }
 
+    attachmentCounter += 1;
     if (save) {
       att.saveFile(a.path);
     } else {
       if (Translator.attachmentRelativePath) {
-        a.path = "files/" + att.itemID + "/" + att.localPath.replace(/.*\//, '');
+        a.path = "files/" + (Translator.debug ? attachmentCounter : att.itemID) + "/" + att.localPath.replace(/.*[\/\\]/, '');
       }
     }
 

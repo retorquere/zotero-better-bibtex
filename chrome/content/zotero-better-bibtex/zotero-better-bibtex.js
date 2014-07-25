@@ -242,7 +242,7 @@ Zotero.BetterBibTeX = {
       supportedMethods: ['POST'],
 
       init: function(url, data, sendResponseCallback) {
-        //if (!Zotero.BetterBibTeX.prefs.bbt.getBoolPref('debug')) { return; }
+        if (!Zotero.BetterBibTeX.prefs.bbt.getBoolPref('debug')) { return; }
 
         try {
           var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService);
@@ -311,6 +311,7 @@ Zotero.BetterBibTeX = {
                   var coll = Zotero.getCollections().map(function(c) { return c.id; });
                   Zotero.Collections.erase(coll);
                 } catch (err) { }
+                Zotero.DB.query('delete from betterbibtex.keys');
               },
 
               log: function() {

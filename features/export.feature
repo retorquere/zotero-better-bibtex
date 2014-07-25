@@ -56,7 +56,6 @@ Scenario: Better BibLaTeX Export 8
 @bbltx-e-9
 Scenario: Better BibLaTeX Export 9
   When I import 'Better BibLaTeX.009.json'
-   And I set preference extensions.zotero.translators.better-bibtex.attachmentRelativePath to true
   Then A library export using 'Better BibLaTeX' should match 'Better BibLaTeX.009.bib'
 
 @bbltx-e-10
