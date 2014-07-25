@@ -20,36 +20,29 @@ Zotero.BetterBibTeX.KeyManager = new function() {
     return (Zotero.DB.valueQuery('select count(*) from items' + lastSync, params) > 1000); // 1000 is an arbitrary limit to make sure we don't overtax the Zotero sync infrastructure
   }
 
-  var abbreviationsLoaded = false;
   self.journalAbbrev = function(item) {
     if (arguments.length > 1) { item = arguments[1]; }
-    console.log('better-bibtex: abbrev for ' + JSON.stringify(item));
+    if (item.journalAbbreviation) { return item.journalAbbreviation; }
+    if (!Zotero.BetterBibTeX.prefs.bbt.getBoolPref('auto-abbrev')) { return; }
 
-    var styleID = Zotero.BetterBibTeX.prefs.bbt.getCharPref('cslStyleID');
-    if (styleID == '') { styleID = Zotero.Styles.getVisible()[0].styleID; }
+    var styleID = Zotero.BetterBibTeX.prefs.bbt.getCharPref('auto-abbrev.style');
+    if (styleID == '') { styleID = Zotero.Styles.getVisible().filter(function(style) { return style.usesAbbreviation; })[0]; }
     var style = Zotero.Styles.get(styleID);
     var cp = style.getCiteProc(true);
-    cp.updateItems([item.itemID]);
+
     cp.setOutputFormat('html');
-    console.log('better-bibtex: abbrev data=' + JSON.stringify(cp.makeBibliography()));
+    cp.updateItems([item.itemID]);
+    cp.appendCitationCluster({"citationItems":[{id:item.itemID}], properties:{}}, true);
+    cp.makeBibliography();
 
-    return '';
-
-    /*
-    if (item.journalAbbreviation) { return item.journalAbbreviation; }
-    if (!Zotero.Prefs.get('cite.automaticJournalAbbreviations')) { return; }
-    if (!item.publicationTitle) { return; }
-
-    if (!abbreviationsLoaded) {
-      Zotero.DB.query(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/abbreviations.sql"));
-      abbreviationsLoaded = true;
+    if (cp.transform.abbrevs) {
+      var abbr = Dict.values(cp.transform.abbrevs);
+      abbr = abbr.filter(function(abbrev) { return abbrev['container-title'] && (Object.keys(abbrev['container-title']).length > 0); });
+      abbr = [].concat.apply([], abbr.map(function(abbrev) { return Dict.values(abbrev['container-title']); }));
+      if (abbr.length > 0) { return abbr[0]; }
     }
 
-    return Zotero.DB.valueQuery('' +
-      'select a.abbrev from betterbibtex.journalAbbreviations a ' +
-      'join betterbibtex.journalAbbreviationLists al on al.id = a.list ' +
-      'where a.full = ? and al.precedence >= 0 order by al.precedence', [item.publicationTitle.toLowerCase()]);
-    */
+    return '';
   }
 
   self.syncWarn = function() {

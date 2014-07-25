@@ -107,10 +107,6 @@ Then(/^I should find the following citation keys:$/) do |table|
   expect(found).to eq(expected)
 end
 
-When(/^I set export option useJournalAbbreviation to true$/) do
-  pending # express the regexp above with the code you wish you had
-  end
-
 When(/^I set (preference|export option) ([^\s]+) to (.*)$/) do |setting, name, value|
   value.strip!
   value = case value

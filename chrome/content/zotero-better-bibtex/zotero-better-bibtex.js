@@ -287,23 +287,28 @@ Zotero.BetterBibTeX = {
               reset: function() {
                 Zotero.Debug.setStore(true);
 
-                if (Zotero.BetterBibTeX.prefs.stashed) {
-                  Dict.forEach(Zotero.BetterBibTeX.prefs.stashed, function(name, value) {
-                    switch (typeof value) {
+                if (Zotero.BetterBibTeX.debug) {
+                  Dict.forEach(Zotero.BetterBibTeX.debug.prefs, function(name, value) {
+                    Zotero.debug('Restoring ' + name + ' to ' + JSON.stringify(value));
+                    switch (value.type) {
                       case 'boolean':
-                        prefs.setBoolPref(name, value);
+                        prefs.setBoolPref(name, value.value);
                         break;
                       case 'number':
-                        prefs.setIntPref(name, value);
+                        prefs.setIntPref(name, value.value);
                         break;
                       case 'string':
-                        prefs.setCharPref(name, value);
+                        prefs.setCharPref(name, value.value);
                         break;
+                      default:
+                        throw('Unexpected preference of type "' + value.type + '"');
                     }
                   });
                 }
-                Zotero.BetterBibTeX.prefs.stashed = Dict();
-                Zotero.BetterBibTeX.debugExportOptions = {};
+                Zotero.BetterBibTeX.debug = {
+                  prefs: Dict(),
+                  exportOptions: {}
+                };
 
                 var all = safeGetAll();
                 if (all.length > 0) { Zotero.Items.erase(all.map(function(item) { return item.id; })); }
@@ -345,7 +350,7 @@ Zotero.BetterBibTeX = {
 
                 all.sort(function(a, b) { return a.itemID - b.itemID; });
                 var translator = Zotero.BetterBibTeX.getTranslator(translator);
-                var items = Zotero.BetterBibTeX.translate(translator, all, Zotero.BetterBibTeX.debugExportOptions || {});
+                var items = Zotero.BetterBibTeX.translate(translator, all, Zotero.BetterBibTeX.debug.exportOptions || {});
                 return items;
               },
 
@@ -374,18 +379,18 @@ Zotero.BetterBibTeX = {
               },
 
               setExportOption: function(name, value) {
-                Zotero.BetterBibTeX.debugExportOptions[name] = value;
+                Zotero.BetterBibTeX.debug.exportOptions[name] = value;
               },
               setCharPref: function(name, value) {
-                if (typeof Zotero.BetterBibTeX.prefs.stashed[name] != 'undefined') { Zotero.BetterBibTeX.prefs.stashed[name] = prefs.getCharPref(name); }
+                if (!Zotero.BetterBibTeX.debug.prefs[name]) { Zotero.BetterBibTeX.debug.prefs[name] = {type: 'string', value: prefs.getCharPref(name)}; }
                 prefs.setCharPref(name, value);
               },
               setBoolPref: function(name, value) {
-                if (typeof Zotero.BetterBibTeX.prefs.stashed[name] != 'undefined') { Zotero.BetterBibTeX.prefs.stashed[name] = prefs.getBoolPref(name); }
+                if (!Zotero.BetterBibTeX.debug.prefs[name]) { Zotero.BetterBibTeX.debug.prefs[name] = {type: 'boolean', value: prefs.getBoolPref(name)}; }
                 prefs.setBoolPref(name, value);
               },
               setIntPref: function(name, value) {
-                if (typeof Zotero.BetterBibTeX.prefs.stashed[name] != 'undefined') { Zotero.BetterBibTeX.prefs.stashed[name] = prefs.getIntPref(name); }
+                if (!Zotero.BetterBibTeX.debug.prefs[name]) { Zotero.BetterBibTeX.debug.prefs[name] = {type: 'number', value: prefs.getIntPref(name)}; }
                 prefs.setIntPref(name, value);
               }
             }[req.method];

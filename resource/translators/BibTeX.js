@@ -24,6 +24,7 @@ var Translator = new function() {
     self.langid                 = config.langid                 || Zotero.getHiddenPref('better-bibtex.langid');
     self.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
     self.attachmentRelativePath = config.attachmentRelativePath || Zotero.getHiddenPref('better-bibtex.attachmentRelativePath');
+    self.autoAbbrev             = config.autoAbbrev             || Zotero.getHiddenPref('better-bibtex.auto-abbrev');
     self.debug                  = config.debug                  || Zotero.getHiddenPref('better-bibtex.debug');
 
     self.useJournalAbbreviation = config.useJournalAbbreviation || Zotero.getOption('useJournalAbbreviation');

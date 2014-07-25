@@ -251,12 +251,12 @@ function hasCreator(item, type) {
 }
 
 function doExport() {
-  try {
+  //try {
     bibtexExport();
-  } catch (e) {
-    Zotero.debug('better-bibtex: export failed: ' + e + "\n" + e.stack);
-    throw(e);
-  }
+  //} catch (e) {
+    //Zotero.debug('better-bibtex: export failed: ' + e + "\n" + (e.stack ? e.stack : ''));
+    //throw(e);
+  //}
 }
 
 function bibtexExport() {
@@ -307,8 +307,10 @@ function bibtexExport() {
           break;
 
         case 'journalArticle':
-          var abbr = Zotero.BetterBibTeX.KeyManager.journalAbbrev(item);
-          if (Translator.useJournalAbbreviation && abbr) {
+          Zotero.debug('csl: ' + Translator.useJournalAbbreviation);
+          var abbr = Translator.useJournalAbbreviation && Zotero.BetterBibTeX.KeyManager.journalAbbrev(item);
+          Zotero.debug('csl: abbr' + abbr);
+          if (abbr) {
             writeField('journal', latex_escape(abbr, {brace: true}));
           } else {
             writeField('journaltitle', latex_escape(item.publicationTitle, {brace: true}));

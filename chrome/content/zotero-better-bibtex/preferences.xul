@@ -23,7 +23,7 @@
         <preference id="pref-better-bibtex-brace-all" name="extensions.zotero.translators.better-bibtex.brace-all" type="bool"/>
         <preference id="pref-better-bibtex-useprefix" name="extensions.zotero.translators.better-bibtex.useprefix" type="bool"/>
         <preference id="pref-better-bibtex-langid" name="extensions.zotero.translators.better-bibtex.langid" type="string"/>
-        <preference id="pref-better-bibtex-style" name="extensions.zotero.translators.better-bibtex.cslStyleID" type="string"/>
+        <preference id="pref-better-bibtex-auto-abbrev" name="extensions.zotero.translators.better-bibtex.auto-abbrev" type="bool"/>
       </preferences>
       <vbox flex="1">
         <grid>
@@ -82,8 +82,9 @@
           </rows>
         </grid>
         <vbox>
-          <label>&zotero.better-bibtex.server.warning;</label>
-          <listbox id="better-bibtex-style-listbox" flex="1" onselect="BBTstyleChanged()"/>
+          <checkbox id="id-better-bibtex-preferences-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" preference="pref-better-bibtex-auto-abbrev"/>
+          <label>&zotero.better-bibtex.preferences.auto-abbrev.style;</label>
+          <listbox id="better-bibtex-abbrev-style" flex="1" onselect="BBTstyleChanged()"/>
         </vbox>
       </vbox>
     </prefpane>
