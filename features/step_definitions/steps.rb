@@ -36,7 +36,7 @@ Before do
   ZOTERO.reset
 end
 at_exit do
-  $headless.destroy
+  $headless.destroy if $headles
 end
 
 
@@ -92,8 +92,17 @@ Then /^the library should match '([^']+)'$/ do |filename|
   end
 end
 
-When(/^I export the library using '([^']+)'$/) do |translator|
-  @export = ZOTERO.export(translator)
+Then(/^A library export using '([^']+)' should match '([^']+)'$/) do |translator, filename|
+  found = ZOTERO.export(translator)
+  expected = File.expand_path(File.join(File.dirname(__FILE__), '..', @testKind, filename))
+  expect(found.strip).to eq(open(expected).read.strip)
+end
+
+Then(/^I should find the following citation keys:$/) do |table|
+  found = JSON.parse(ZOTERO.export('BibTeX Citation Keys'))
+  found = found.keys.sort{|a, b| Integer(a) <=> Integer(b)}.collect{|k| found[k] }
+  expected = table.hashes.collect{|data| data['key']}
+  expect(found).to eq(expected)
 end
 
 When(/^I set export option useJournalAbbreviation to true$/) do
@@ -122,11 +131,6 @@ When(/^I set (preference|export option) ([^\s]+) to (.*)$/) do |setting, name, v
     else
       ZOTERO.setExportOption(name, value)
   end
-end
-
-Then(/^the output should match '([^']+)'$/) do |filename|
-  expected = File.expand_path(File.join(File.dirname(__FILE__), '..', @testKind, filename))
-  expect(@export.strip).to eq(open(expected).read.strip)
 end
 
 

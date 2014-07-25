@@ -32,11 +32,15 @@ if (!Dict) {
     return obj;
   };
   Dict.forEach = function (obj, callback) {
-    Object.keys(obj).forEach(function(prop) {
+    var keys = Object.keys(obj);
+    keys.sort();
+    keys.forEach(function(prop) {
       callback.call(null, prop, obj[prop]);
     });
   };
-  Dict.values = function () {
-    return Object.keys(this).map(function(key) { return this[key]; });
+  Dict.values = function (obj) {
+    var keys = Object.keys(obj);
+    keys.sort();
+    return keys.map(function(key) { return obj[key]; });
   };
 }

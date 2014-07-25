@@ -23,6 +23,7 @@ var Translator = new function() {
     self.fancyURLs              = config.fancyURLs              || Zotero.getHiddenPref('better-bibtex.fancyURLs');
     self.langid                 = config.langid                 || Zotero.getHiddenPref('better-bibtex.langid');
     self.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
+    self.attachmentRelativePath = config.attachmentRelativePath || Zotero.getHiddenPref('better-bibtex.attachmentRelativePath');
 
     self.useJournalAbbreviation = config.useJournalAbbreviation || Zotero.getOption('useJournalAbbreviation');
     self.exportCharset          = config.exportCharset          || Zotero.getOption('exportCharset');
@@ -640,19 +641,23 @@ function writeAttachments(item) {
       return;
     }
 
-    if (save) { att.saveFile(att.defaultPath); }
-
-    if (a.path) {
-      attachments.push({title: att.title, path: att.localPath, mimetype: att.mimeType});
+    if (save) {
+      att.saveFile(a.path);
     } else {
-      trLog('WARNING: attachment without path: ' + att.title);
+      if (Translator.attachmentRelativePath) {
+        a.path = "files/" + att.itemID + "/" + att.localPath.replace(/.*\//, '');
+      }
     }
+
+    attachments.push(a);
   });
 
   if (attachments.length != 0) {
+    attachments.sort(function(a, b) { return a.path.localeCompare(b.path); });
     writeField('file', escapeAttachments(attachments, true));
   }
   if (broken.length != 0) {
+    broken.sort(function(a, b) { return a.path.localeCompare(b.path); });
     writeField('latex_doesnt_like_filenames_with_braces', escapeAttachments(broken, false));
   }
 }
