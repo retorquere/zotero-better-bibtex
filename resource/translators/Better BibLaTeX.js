@@ -307,7 +307,6 @@ function bibtexExport() {
           break;
 
         case 'journalArticle':
-          Zotero.debug('csl: ' + Translator.useJournalAbbreviation);
           var abbr = Translator.useJournalAbbreviation && Zotero.BetterBibTeX.KeyManager.journalAbbrev(item);
           Zotero.debug('csl: abbr' + abbr);
           if (abbr) {

@@ -159,7 +159,7 @@ Scenario: Better BibTeX Export 27
 @journal-abbrev
 Scenario: Journal abbreviations
   When I import 'Better BibTeX.029.json'
-   And I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[authors][year]'
+   And I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[authors][year][journal]'
    And I set preference extensions.zotero.translators.better-bibtex.auto-abbrev to true
    And I set preference extensions.zotero.translators.better-bibtex.auto-abbrev.style to 'http://www.zotero.org/styles/cell'
    And I set export option useJournalAbbreviation to true

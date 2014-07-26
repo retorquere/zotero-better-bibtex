@@ -286,6 +286,10 @@ var Translator = new function() {
         return (authors[authors.length - 1] || '');
       },
 
+      journal: function() {
+        return Zotero.BetterBibTeX.KeyManager.journalAbbrev(item);
+      },
+
       authors: function(onlyEditors, n) {
         var authors = getCreators(onlyEditors);
         if (!authors) { return ''; }
