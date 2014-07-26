@@ -639,11 +639,6 @@ function writeAttachments(item) {
 
     if (!a.path) { return; } // amazon/googlebooks etc links show up as atachments without a path
 
-    if (a.path.match(/[{}]/)) { // latex really doesn't want you to do this.
-      broken.push(a);
-      return;
-    }
-
     attachmentCounter += 1;
     if (save) {
       att.saveFile(a.path);
@@ -653,7 +648,11 @@ function writeAttachments(item) {
       }
     }
 
-    attachments.push(a);
+    if (a.path.match(/[{}]/)) { // latex really doesn't want you to do this.
+      broken.push(a);
+    } else {
+      attachments.push(a);
+    }
   });
 
   if (attachments.length != 0) {
