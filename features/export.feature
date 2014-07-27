@@ -68,8 +68,8 @@ Scenario: Better BibLaTeX Export 11
   When I import 'Better BibLaTeX.011.json'
   Then A library export using 'Better BibLaTeX' should match 'Better BibLaTeX.011.bib'
 
-@bbltx-e-12
-Scenario: Better BibLaTeX Export 12
+@advanced-keygen
+Scenario: Advanced key generator usage
   When I import 'Better BibLaTeX.012.json'
    And I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[DOI]+[Title:fold:ascii:skipwords:select,1,4:condense,_]'
   Then A library export using 'Better BibLaTeX' should match 'Better BibLaTeX.012.bib'

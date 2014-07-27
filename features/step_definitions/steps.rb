@@ -14,7 +14,8 @@ Before do
     profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
 
     extensions = {
-      bbt: Dir['zotero-better-*.xpi'].first
+      bbt: Dir['zotero-better-*.xpi'].first,
+      dbb: Dir['tmp/zotero-debug-*.xpi'].first,
     }
     extensions.values.each{|xpi|
       profile.add_extension(xpi)
@@ -32,10 +33,12 @@ Before do
 
     BROWSER = Selenium::WebDriver.for :firefox, :profile => profile
     sleep 2
-    ZOTERO = JSONRPCClient.new('http://localhost:23119/better-bibtex/debug')
+    DBB = JSONRPCClient.new('http://localhost:23119/debug-bridge')
+    DBB.bootstrap('Zotero.BetterBibTeX')
+    BBT = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
   end
 
-  ZOTERO.reset
+  BBT.reset
 end
 at_exit do
   $headless.destroy if $headles
@@ -63,10 +66,8 @@ end
 
 When /^I import '([^']+)'$/ do |filename|
   bib = File.expand_path(File.join(File.dirname(__FILE__), '..', @testKind, filename))
-  ZOTERO.import(bib)
+  BBT.import(bib)
   sleep 2
-  #puts ZOTERO.log
-  #puts browserLog
 end
 
 Then /^the library should match '([^']+)'$/ do |filename|
@@ -81,7 +82,7 @@ Then /^the library should match '([^']+)'$/ do |filename|
       }
       expected.normalize!
 
-      found = ZOTERO.getAll
+      found = BBT.getAll
       found.each{|item|
         item.delete('id')
         item['attachments'].each{|a| a.delete('path')} if item['attachments']
@@ -95,13 +96,13 @@ Then /^the library should match '([^']+)'$/ do |filename|
 end
 
 Then(/^A library export using '([^']+)' should match '([^']+)'$/) do |translator, filename|
-  found = ZOTERO.export(translator)
+  found = BBT.export(translator)
   expected = File.expand_path(File.join(File.dirname(__FILE__), '..', @testKind, filename))
   expect(found.strip).to eq(open(expected).read.strip)
 end
 
 Then(/^I should find the following citation keys:$/) do |table|
-  found = JSON.parse(ZOTERO.export('BibTeX Citation Keys'))
+  found = JSON.parse(BBT.export('BibTeX Citation Keys'))
   found = found.keys.sort{|a, b| Integer(a) <=> Integer(b)}.collect{|k| found[k] }
   expected = table.hashes.collect{|data| data['key']}
   expect(found).to eq(expected)
@@ -118,15 +119,15 @@ When(/^I set (preference|export option) ([^\s]+) to (.*)$/) do |setting, name, v
   case setting
     when 'preference'
       if value.is_a?(String)
-        ZOTERO.setCharPref(name, value)
+        BBT.setCharPref(name, value)
       elsif value.is_a?(Integer)
-        ZOTERO.setIntPref(name, value)
+        BBT.setIntPref(name, value)
       else
-        ZOTERO.setBoolPref(name, value)
+        BBT.setBoolPref(name, value)
       end
 
     else
-      ZOTERO.setExportOption(name, value)
+      BBT.setExportOption(name, value)
   end
 end
 
@@ -138,6 +139,6 @@ Then /^sleep ([0-9]+) seconds$/ do |secs|
 end
 
 Then /^show the (browser|Zotero) log$/ do |kind|
-  puts ZOTERO.log if kind == 'Zotero'
+  puts DBB.log if kind == 'Zotero'
   puts browserLog if kind == 'browser'
 end
