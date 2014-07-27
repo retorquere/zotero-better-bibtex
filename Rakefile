@@ -4,7 +4,7 @@ require 'openssl'
 require 'net/http'
 require 'json'
 require 'fileutils'
-require 'open-uri'
+require 'typhoeus'
 require 'time'
 require 'date'
 require 'pp'
@@ -35,7 +35,6 @@ FileUtils.mkdir_p TMP
 UNICODE_MAPPING = "#{TMP}/unicode.json"
 BIBTEX_GRAMMAR  = Dir["resource/**/*.pegjs"][0]
 DICT            = 'chrome/content/zotero-better-bibtex/dict.js'
-ZOTERO_XPI      = 'tmp/zotero-4.0.21.5.xpi'
 
 def stir(livescript)
   livescript = File.expand_path(livescript)
@@ -65,7 +64,14 @@ task :clean do
   FileUtils.rm_rf TMP
 end
 
-task :test, [:tag] => [XPI] do |t, args|
+task :debugbridge do
+  update = Nokogiri::XML(geturl('https://github.com/ZotPlus/zotero-debug-bridge/raw/master/update.rdf')).at('//em:updateLink').inner_text
+  debug_bridge = Dir['tmp/zotero-debug-bridge-*.xpi']
+  debug_bridge.each{|f| File.unlink(f)} if debug_bridge.size != 1 || update.sub(/.*\//, '') != File.basename(debug_bridge[0])
+  download(update, "tmp/#{update.sub(/.*\//, '')}") unless File.file?("tmp/#{update.sub(/.*\//, '')}")
+end
+
+task :test, [:tag] => [XPI, :debugbridge] do |t, args|
   tag = "@#{args[:tag]}".sub(/^@@/, '@')
 
   if tag == '@'
@@ -424,10 +430,6 @@ class Translator
   end
 end
 
-file ZOTERO_XPI do |t|
-  download("https://download.zotero.org/extension/#{File.basename(ZOTERO_XPI)}", t.name)
-end
-
 file UNICODE_MAPPING => 'Rakefile' do |t|
   begin
     xml = File.join(File.dirname(t.name), File.basename(t.name, File.extname(t.name)) + '.xml')
@@ -490,17 +492,27 @@ end
 
 ### UTILS
 
+def geturl(url)
+  response = Typhoeus.get(url, {followlocation: true})
+  raise "Request failed" unless response.success?
+  return response.body
+end
+
 def download(url, file)
   puts "Downloading #{url} to #{file}"
-  FileUtils.mkdir_p(File.dirname(file))
-  options = {}
-  options['If-Modified-Since'] = File.mtime(file).rfc2822 if File.exists?(file)
-  begin
-    open(url, options) {|remote|
-      open(file, 'wb'){|local| local.write(remote.read) }
-    }
-  rescue OpenURI::HTTPError => e
+  target = File.open(file, 'wb')
+  request = Typhoeus::Request.new(url, {followlocation: true})
+  request.on_headers do |response|
+    raise "Request failed: #{response.code.to_s}" unless response.code == 200 # response.success?
   end
+  request.on_body do |chunk|
+    target.write(chunk)
+  end
+  request.on_complete do |response|
+    target.close
+    throw "download failed" unless response.success?
+  end
+  request.run
 end
 
 task :fields do
@@ -553,7 +565,7 @@ task :abbrevs do
   # http://www.efm.leeds.ac.uk/~mark/ISIabbr/
   # http://www.csa.com/factsheets/supplements/ipa.php
 
-  lists = Nokogiri::HTML(open('http://jabref.sourceforge.net/resources.php'))
+  lists = Nokogiri::HTML(geturl('http://jabref.sourceforge.net/resources.php'))
   main = lists.at_css('div#main')
   main.children.each{|child|
     break if child.name == 'h3' && child['id'] == 'availablelists'
