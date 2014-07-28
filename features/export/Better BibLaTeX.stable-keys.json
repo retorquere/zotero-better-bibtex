@@ -1,0 +1,85 @@
+{
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "creators": [
+        {
+          "firstName": "U.",
+          "lastName": "Fritz",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "C.",
+          "lastName": "Corti",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "M.",
+          "lastName": "Päckert",
+          "creatorType": "author"
+        }
+      ],
+      "DOI": "10.1007/s13127-011-0069-8",
+      "title": "Fritz2012",
+      "publicationTitle": "Actes du 4<sup>ème</sup> Congrès Français d'Acoustique",
+      "date": "2012",
+      "volume": "12",
+      "pages": "71-80"
+    },
+    {
+      "itemType": "journalArticle",
+      "creators": [
+        {
+          "firstName": "U.",
+          "lastName": "Fritz",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "C.",
+          "lastName": "Corti",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "M.",
+          "lastName": "Päckert",
+          "creatorType": "author"
+        }
+      ],
+      "DOI": "10.1007/s13127-011-0069-8",
+      "title": "Fritz2012a",
+      "publicationTitle": "Actes du 4<sup>ème</sup> Congrès Français d'Acoustique",
+      "date": "2012",
+      "volume": "12",
+      "pages": "71-80"
+    },
+    {
+      "itemType": "journalArticle",
+      "creators": [
+        {
+          "firstName": "U.",
+          "lastName": "Fritz",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "C.",
+          "lastName": "Corti",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "M.",
+          "lastName": "Päckert",
+          "creatorType": "author"
+        }
+      ],
+      "DOI": "10.1007/s13127-011-0069-8",
+      "title": "Fritz2012b",
+      "publicationTitle": "Actes du 4<sup>ème</sup> Congrès Français d'Acoustique",
+      "date": "2012",
+      "volume": "12",
+      "pages": "71-80"
+    }
+  ],
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
+  }
+}

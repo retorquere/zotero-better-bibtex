@@ -45,13 +45,6 @@ at_exit do
 end
 
 
-Before('@import') do
-  @testKind = 'import'
-end
-Before('@export') do
-  @testKind = 'export'
-end
-
 #Given /^that ([^\s]+) is set to (.*)$/ do |pref, value|
 #  if value =~ /^['"](.*)['"]$/
 #    ZOTERO.setCharPref(pref, $1)
@@ -65,13 +58,13 @@ end
 #end
 
 When /^I import '([^']+)'$/ do |filename|
-  bib = File.expand_path(File.join(File.dirname(__FILE__), '..', @testKind, filename))
+  bib = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
   BBT.import(bib)
   sleep 2
 end
 
 Then /^the library should match '([^']+)'$/ do |filename|
-  expected = File.expand_path(File.join(File.dirname(__FILE__), '..', @testKind, filename))
+  expected = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
 
   case File.extname(expected)
     when '.json'
@@ -91,14 +84,18 @@ Then /^the library should match '([^']+)'$/ do |filename|
 
       expect(found).to eq(expected)
     else
-      throw "Unexpected #{@testKind} match file #{filename}"
+      throw "Unexpected match file #{filename}"
   end
 end
 
 Then(/^A library export using '([^']+)' should match '([^']+)'$/) do |translator, filename|
   found = BBT.export(translator)
-  expected = File.expand_path(File.join(File.dirname(__FILE__), '..', @testKind, filename))
+  expected = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
   expect(found.strip).to eq(open(expected).read.strip)
+end
+
+Then(/^Export the library using '([^']+)' to '([^']+)'$/) do |translator, filename|
+  File.open(filename, 'w'){|f| f.write(BBT.export(translator)) }
 end
 
 Then(/^I should find the following citation keys:$/) do |table|
