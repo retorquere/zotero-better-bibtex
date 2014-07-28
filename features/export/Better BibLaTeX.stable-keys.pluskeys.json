@@ -1,0 +1,298 @@
+{
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
+    "label": "Zotero TestCase",
+    "pattern": "[auth][year]",
+    "skipFields": [
+      ""
+    ],
+    "usePrefix": false,
+    "braceAll": true,
+    "fancyURLs": false,
+    "langid": "babel"
+  },
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "url": "",
+      "rights": "",
+      "series": "",
+      "volume": "12",
+      "issue": "",
+      "pages": "71-80",
+      "publicationTitle": "Actes du 4<sup>ème</sup> Congrès Français d'Acoustique",
+      "ISSN": "",
+      "date": "2012",
+      "callNumber": "",
+      "archiveLocation": "",
+      "extra": "bibtex: Fritz2012",
+      "journalAbbreviation": "",
+      "DOI": "10.1007/s13127-011-0069-8",
+      "accessDate": "",
+      "seriesTitle": "",
+      "seriesText": "",
+      "libraryCatalog": "",
+      "language": "",
+      "abstractNote": "",
+      "title": "Fritz2012",
+      "shortTitle": "",
+      "archive": "",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "U.",
+          "lastName": "Fritz",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Corti",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Päckert",
+          "fieldMode": ""
+        }
+      ],
+      "related": []
+    },
+    {
+      "itemType": "journalArticle",
+      "url": "",
+      "rights": "",
+      "series": "",
+      "volume": "12",
+      "issue": "",
+      "pages": "71-80",
+      "publicationTitle": "Actes du 4<sup>ème</sup> Congrès Français d'Acoustique",
+      "ISSN": "",
+      "date": "2012",
+      "callNumber": "",
+      "archiveLocation": "",
+      "extra": "bibtex: Fritz2012a",
+      "journalAbbreviation": "",
+      "DOI": "10.1007/s13127-011-0069-8",
+      "accessDate": "",
+      "seriesTitle": "",
+      "seriesText": "",
+      "libraryCatalog": "",
+      "language": "",
+      "abstractNote": "",
+      "title": "Fritz2012a",
+      "shortTitle": "",
+      "archive": "",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "U.",
+          "lastName": "Fritz",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Corti",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Päckert",
+          "fieldMode": ""
+        }
+      ],
+      "related": []
+    },
+    {
+      "itemType": "journalArticle",
+      "url": "",
+      "rights": "",
+      "series": "",
+      "volume": "12",
+      "issue": "",
+      "pages": "71-80",
+      "publicationTitle": "Actes du 4<sup>ème</sup> Congrès Français d'Acoustique",
+      "ISSN": "",
+      "date": "2012",
+      "callNumber": "",
+      "archiveLocation": "",
+      "extra": "bibtex: Fritz2012b",
+      "journalAbbreviation": "",
+      "DOI": "10.1007/s13127-011-0069-8",
+      "accessDate": "",
+      "seriesTitle": "",
+      "seriesText": "",
+      "libraryCatalog": "",
+      "language": "",
+      "abstractNote": "",
+      "title": "Fritz2012b",
+      "shortTitle": "",
+      "archive": "",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "U.",
+          "lastName": "Fritz",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Corti",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Päckert",
+          "fieldMode": ""
+        }
+      ],
+      "related": []
+    },
+    {
+      "itemType": "journalArticle",
+      "url": "",
+      "rights": "",
+      "series": "",
+      "volume": "12",
+      "issue": "",
+      "pages": "71-80",
+      "publicationTitle": "Actes du 4<sup>ème</sup> Congrès Français d'Acoustique",
+      "ISSN": "",
+      "date": "2012",
+      "callNumber": "",
+      "archiveLocation": "",
+      "extra": "bibtex: Fritz2012c",
+      "journalAbbreviation": "",
+      "DOI": "10.1007/s13127-011-0069-8",
+      "accessDate": "",
+      "seriesTitle": "",
+      "seriesText": "",
+      "libraryCatalog": "",
+      "language": "",
+      "abstractNote": "",
+      "title": "Fritz2012",
+      "shortTitle": "",
+      "archive": "",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "U.",
+          "lastName": "Fritz",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Corti",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Päckert",
+          "fieldMode": ""
+        }
+      ],
+      "related": []
+    },
+    {
+      "itemType": "journalArticle",
+      "url": "",
+      "rights": "",
+      "series": "",
+      "volume": "12",
+      "issue": "",
+      "pages": "71-80",
+      "publicationTitle": "Actes du 4<sup>ème</sup> Congrès Français d'Acoustique",
+      "ISSN": "",
+      "date": "2012",
+      "callNumber": "",
+      "archiveLocation": "",
+      "extra": "bibtex: Fritz2012d",
+      "journalAbbreviation": "",
+      "DOI": "10.1007/s13127-011-0069-8",
+      "accessDate": "",
+      "seriesTitle": "",
+      "seriesText": "",
+      "libraryCatalog": "",
+      "language": "",
+      "abstractNote": "",
+      "title": "Fritz2012a",
+      "shortTitle": "",
+      "archive": "",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "U.",
+          "lastName": "Fritz",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Corti",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Päckert",
+          "fieldMode": ""
+        }
+      ],
+      "related": []
+    },
+    {
+      "itemType": "journalArticle",
+      "url": "",
+      "rights": "",
+      "series": "",
+      "volume": "12",
+      "issue": "",
+      "pages": "71-80",
+      "publicationTitle": "Actes du 4<sup>ème</sup> Congrès Français d'Acoustique",
+      "ISSN": "",
+      "date": "2012",
+      "callNumber": "",
+      "archiveLocation": "",
+      "extra": "bibtex: Fritz2012e",
+      "journalAbbreviation": "",
+      "DOI": "10.1007/s13127-011-0069-8",
+      "accessDate": "",
+      "seriesTitle": "",
+      "seriesText": "",
+      "libraryCatalog": "",
+      "language": "",
+      "abstractNote": "",
+      "title": "Fritz2012b",
+      "shortTitle": "",
+      "archive": "",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "U.",
+          "lastName": "Fritz",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Corti",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Päckert",
+          "fieldMode": ""
+        }
+      ],
+      "related": []
+    }
+  ]
+}
