@@ -423,6 +423,7 @@ var Translator = new function() {
       }
     };
 
+    var punct = Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g');
     var filters = {
       condense: function(value, sep) {
         if (typeof sep == 'undefined') { sep = ''; }
@@ -467,6 +468,10 @@ var Translator = new function() {
 
       capitalize: function(value) {
         return value.replace(/((^|\s)[a-z])/g, function(m) { return m.toUpperCase(); });
+      },
+
+      nopunct: function(value) {
+        return Zotero.Utilities.XRegExp.replace(value, punct, '', 'all');
       }
     };
 

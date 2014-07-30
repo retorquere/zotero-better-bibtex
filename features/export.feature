@@ -176,7 +176,7 @@ Scenario: Stable citation keys
 @81
 Scenario: Journal abbreviations, issue 81
   When I import 'export/81.json'
-   And I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[authors2][year][journal]'
+   And I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[authors2][year][journal:nopunct]'
    And I set preference extensions.zotero.translators.better-bibtex.auto-abbrev to true
    And I set preference extensions.zotero.translators.better-bibtex.auto-abbrev.style to 'http://www.zotero.org/styles/cell'
    And I set export option useJournalAbbreviation to true
