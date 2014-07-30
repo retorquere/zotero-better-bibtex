@@ -173,3 +173,11 @@ Scenario: Stable citation keys
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.stable-keys.2.bib'
    And A library export using 'Zotero TestCase' should match 'export/Better BibLaTeX.stable-keys.pluskeys.json'
 
+@81
+Scenario: Journal abbreviations, issue 81
+  When I import 'export/81.json'
+   And I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[authors2][year][journal]'
+   And I set preference extensions.zotero.translators.better-bibtex.auto-abbrev to true
+   And I set preference extensions.zotero.translators.better-bibtex.auto-abbrev.style to 'http://www.zotero.org/styles/cell'
+   And I set export option useJournalAbbreviation to true
+  Then A library export using 'Better BibTeX' should match 'export/81.bib'
