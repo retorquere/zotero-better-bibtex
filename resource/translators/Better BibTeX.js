@@ -210,7 +210,7 @@ function doExport() {
 
 function addToExtra(item, str) {
   if (item.extra && item.extra != '') {
-    item.extra += "\n" + str;
+    item.extra += " \n" + str;
   } else {
     item.extra = str;
   }
