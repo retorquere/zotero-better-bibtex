@@ -181,3 +181,8 @@ Scenario: Journal abbreviations, issue 81
    And I set preference extensions.zotero.translators.better-bibtex.auto-abbrev.style to 'http://www.zotero.org/styles/cell'
    And I set export option useJournalAbbreviation to true
   Then A library export using 'Better BibTeX' should match 'export/81.bib'
+
+@85
+Scenario: Square brackets in Publication field (85)
+  When I import 'export/Square brackets in Publication field (85).json'
+  Then A library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85).bib'

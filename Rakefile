@@ -464,7 +464,10 @@ file UNICODE_MAPPING => 'Rakefile' do |t|
       mathmode = (char['mode'] == 'math')
 
       case key
-        when '_', '}', '{', '[', ']'
+        when '[', ']'
+          value = "{#{key}}"
+          mathmode = false
+        when '_', '}', '{'
           value = "\\" + key
           mathmode = false
         when "\u00A0"
