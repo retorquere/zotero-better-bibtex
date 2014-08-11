@@ -94,7 +94,7 @@ Zotero.BetterBibTeX.KeyManager = new function() {
     var _item = {extra: '' + item.getField('extra')};
     self.extract(_item);
     var extra = _item.extra.trim();
-    if (extra.length > 0) { extra += "\n"; }
+    if (extra.length > 0) { extra += " \n"; }
     item.setField('extra', extra + 'bibtex: ' + citekey);
 
     item.save({ skipDateModifiedUpdate: true });
