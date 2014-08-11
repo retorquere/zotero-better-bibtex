@@ -99,6 +99,8 @@ var Translator = new function() {
       return str;
     }
 
+    var caseNotUpperTitle = Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g');
+    var caseNotUpper = Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g');
     function getCreators(onlyEditors) {
       if(!item.creators || !item.creators.length) { return []; }
 
@@ -107,7 +109,16 @@ var Translator = new function() {
       var creator;
       item.creators.forEach(function(creator) {
         var name = stripHTML('' + creator.lastName);
-        if (name == '') { stripHTML('' + creator.firstName); }
+        if (name != '') {
+          if (flags.initials && creator.firstName) {
+            var initials = Zotero.Utilities.XRegExp.replace(creator.firstName, caseNotUpperTitle, '', 'all');
+            initials = Zotero.Utilities.removeDiacritics(initials);
+            var initials = Zotero.Utilities.XRegExp.replace(initials, caseNotUpper, '', 'all');
+            name += initials;
+          }
+        } else {
+          name = stripHTML('' + creator.firstName);
+        }
         if (name != '') {
           switch (creator.creatorType) {
             case 'editor':
@@ -477,6 +488,7 @@ var Translator = new function() {
 
     var function_N_M = /^([^0-9]+)([0-9]+)_([0-9]+)$/;
     var function_N = /^([^0-9]+)([0-9]+)$/;
+    var flags = Dict();
 
     self.format = function(_item) {
       item = _item;
@@ -488,6 +500,15 @@ var Translator = new function() {
           var _filters = command.split(':');
           var _function = _filters.shift();
           var _property = _function;
+
+          var _flags = _function.split(/([-+])/);
+          _function = _flags.shift();
+          flags = Dict();
+          while (_flags.length > 0) {
+            var m = _flags.shift();
+            var flag = _flags.shift();
+            if (flag) { flags[flag] = (m == '+'); }
+          }
 
           var N;
           var M;

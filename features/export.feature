@@ -155,7 +155,6 @@ Scenario: Better BibTeX Export 27
    And I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[authors][year]'
   Then A library export using 'Better BibTeX' should match 'export/Better BibTeX.027.bib'
 
-#Issue 81
 @journal-abbrev
 Scenario: Journal abbreviations
   When I import 'export/Better BibTeX.029.json'
@@ -174,15 +173,21 @@ Scenario: Stable citation keys
    And A library export using 'Zotero TestCase' should match 'export/Better BibLaTeX.stable-keys.pluskeys.json'
 
 @81
-Scenario: Journal abbreviations, issue 81
-  When I import 'export/81.json'
+Scenario: Journal abbreviations exported in bibtex (81)
+  When I import 'export/Journal abbreviations exported in bibtex (81).json'
    And I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[authors2][year][journal:nopunct]'
    And I set preference extensions.zotero.translators.better-bibtex.auto-abbrev to true
    And I set preference extensions.zotero.translators.better-bibtex.auto-abbrev.style to 'http://www.zotero.org/styles/cell'
    And I set export option useJournalAbbreviation to true
-  Then A library export using 'Better BibTeX' should match 'export/81.bib'
+  Then A library export using 'Better BibTeX' should match 'export/Journal abbreviations exported in bibtex (81).bib'
 
 @85
 Scenario: Square brackets in Publication field (85)
   When I import 'export/Square brackets in Publication field (85).json'
   Then A library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85).bib'
+
+@86
+Scenario: Include first name initial(s) in cite key generation pattern (86)
+  When I import 'export/Include first name initial(s) in cite key generation pattern (86).json'
+   And I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[auth+initials][year]'
+  Then A library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bib'
