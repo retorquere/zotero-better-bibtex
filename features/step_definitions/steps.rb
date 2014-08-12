@@ -38,7 +38,7 @@ Before do
     BBT = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
   end
 
-  BBT.reset
+  pp BBT.reset
 end
 at_exit do
   $headless.destroy if $headles
