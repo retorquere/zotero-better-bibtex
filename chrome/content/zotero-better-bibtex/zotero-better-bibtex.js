@@ -533,9 +533,10 @@ Zotero.BetterBibTeX = {
       var item = null;
       var translator = self;
 
-      var pattern = null;
+      var citeKeyFormat = null;
       self.init = function() {
-        pattern = Zotero.BetterBibTeX.prefs.bbt.getCharPref('citeKeyFormat');
+        citeKeyFormat = Zotero.BetterBibTeX.prefs.bbt.getCharPref('citeKeyFormat');
+        Zotero.BetterBibTeX.log('formatting pattern set to ' + citeKeyFormat);
       }
 
       var safechars = /[-:a-z0-9_!\$\*\+\.\/;\?\[\]]/ig;
@@ -951,11 +952,11 @@ Zotero.BetterBibTeX = {
           Zotero.BetterBibTeX.log('serialized item');
           item = _item;
         }
-        Zotero.BetterBibTeX.log('formatting using ' + pattern + ': ' + JSON.stringify(Object.keys(item)));
+        Zotero.BetterBibTeX.log('formatting using ' + citeKeyFormat + ': ' + JSON.stringify(Object.keys(item)));
 
         var citekey = '';
 
-        pattern.split('|').some(function(pattern) {
+        citeKeyFormat.split('|').some(function(pattern) {
           citekey = pattern.replace(/\[([^\]]+)\]/g, function(match, command) {
             var _filters = command.split(':');
             var _function = _filters.shift();
@@ -1036,33 +1037,56 @@ Zotero.BetterBibTeX = {
   },
 
   DebugBridge: {
+    data: {
+      prefs: Dict(),
+      exportOptions: {},
+      setPref: function(name, value, type) {
+        if (!Zotero.BetterBibTeX.DebugBridge.data.prefs[name]) { Zotero.BetterBibTeX.DebugBridge.data.prefs[name] = {type: type}; }
+        Zotero.BetterBibTeX.DebugBridge.data.prefs[name].set = value;
+
+        var reset = (typeof Zotero.BetterBibTeX.DebugBridge.data.prefs[name].reset == 'undefined');
+        Zotero.BetterBibTeX.log('setPref' + JSON.stringify([name, value, type]));
+
+        switch (type) {
+          case 'boolean':
+            if (reset) { Zotero.BetterBibTeX.DebugBridge.data.prefs[name].reset = Zotero.BetterBibTeX.prefs._.getBoolPref(name); }
+            Zotero.BetterBibTeX.prefs._.setBoolPref(name, value);
+            break;
+          case 'number':
+            if (reset) { Zotero.BetterBibTeX.DebugBridge.data.prefs[name].reset = Zotero.BetterBibTeX.prefs._.getIntPref(name); }
+            Zotero.BetterBibTeX.prefs._.setIntPref(name, value);
+            break;
+          case 'string':
+            if (reset) { Zotero.BetterBibTeX.DebugBridge.data.prefs[name].reset = Zotero.BetterBibTeX.prefs._.getCharPref(name); }
+            Zotero.BetterBibTeX.prefs._.setCharPref(name, value);
+            break;
+          default:
+            throw('Unexpected preference of type "' + value.type + '"');
+        }
+      }
+    },
     namespace: 'better-bibtex',
     methods: {
       reset: function() {
-        Zotero.Debug.setStore(true);
+        var retval = Zotero.BetterBibTeX.DebugBridge.data.prefs;
 
-        if (Zotero.BetterBibTeX.debug) {
-          Dict.forEach(Zotero.BetterBibTeX.debug.prefs, function(name, value) {
-            Zotero.debug('Restoring ' + name + ' to ' + JSON.stringify(value));
-            switch (value.type) {
-              case 'boolean':
-                Zotero.BetterBibTeX.prefs._.setBoolPref(name, value.value);
-                break;
-              case 'number':
-                 Zotero.BetterBibTeX.prefs._.setIntPref(name, value.value);
-                break;
-              case 'string':
-                 Zotero.BetterBibTeX.prefs._.setCharPref(name, value.value);
-                break;
-              default:
-                throw('Unexpected preference of type "' + value.type + '"');
-            }
-          });
-        }
-        Zotero.BetterBibTeX.debug = {
-          prefs: Dict(),
-          exportOptions: {}
-        };
+        Dict.forEach(Zotero.BetterBibTeX.DebugBridge.data.prefs, function(name, value) {
+          switch (value.type) {
+            case 'boolean':
+              Zotero.BetterBibTeX.prefs._.setBoolPref(name, value.reset);
+              break;
+            case 'number':
+               Zotero.BetterBibTeX.prefs._.setIntPref(name, value.reset);
+              break;
+            case 'string':
+               Zotero.BetterBibTeX.prefs._.setCharPref(name, value.reset);
+              break;
+            default:
+              throw('Cannot restore preference of type "' + value.type + '"');
+          }
+        });
+        Zotero.BetterBibTeX.DebugBridge.data.prefs = Dict();
+        Zotero.BetterBibTeX.DebugBridge.data.exportOptions = {};
 
         var all = Zotero.BetterBibTeX.safeGetAll();
         if (all.length > 0) { Zotero.Items.erase(all.map(function(item) { return item.id; })); }
@@ -1071,6 +1095,8 @@ Zotero.BetterBibTeX = {
           Zotero.Collections.erase(coll);
         } catch (err) { }
         Zotero.DB.query('delete from betterbibtex.keys');
+
+        return retval;
       },
 
       import: function(filename) {
@@ -1100,7 +1126,7 @@ Zotero.BetterBibTeX = {
 
         all.sort(function(a, b) { return a.itemID - b.itemID; });
         var translator = Zotero.BetterBibTeX.getTranslator(translator);
-        var items = Zotero.BetterBibTeX.translate(translator, all, Zotero.BetterBibTeX.debug.exportOptions || {});
+        var items = Zotero.BetterBibTeX.translate(translator, all, Zotero.BetterBibTeX.DebugBridge.data.exportOptions || {});
         return items;
       },
 
@@ -1133,19 +1159,16 @@ Zotero.BetterBibTeX = {
       },
 
       setExportOption: function(name, value) {
-        Zotero.BetterBibTeX.debug.exportOptions[name] = value;
+        Zotero.BetterBibTeX.DebugBridge.data.exportOptions[name] = value;
       },
       setCharPref: function(name, value) {
-        if (!Zotero.BetterBibTeX.debug.prefs[name]) { Zotero.BetterBibTeX.debug.prefs[name] = {type: 'string', value: Zotero.BetterBibTeX.prefs._.getCharPref(name)}; }
-        Zotero.BetterBibTeX.prefs._.setCharPref(name, value);
+        Zotero.BetterBibTeX.DebugBridge.data.setPref(name, value, 'string');
       },
       setBoolPref: function(name, value) {
-        if (!Zotero.BetterBibTeX.debug.prefs[name]) { Zotero.BetterBibTeX.debug.prefs[name] = {type: 'boolean', value: Zotero.BetterBibTeX.prefs._.getBoolPref(name)}; }
-        Zotero.BetterBibTeX.prefs._.setBoolPref(name, value);
+        Zotero.BetterBibTeX.DebugBridge.data.setPref(name, value, 'boolean');
       },
       setIntPref: function(name, value) {
-        if (!Zotero.BetterBibTeX.debug.prefs[name]) { Zotero.BetterBibTeX.debug.prefs[name] = {type: 'number', value: Zotero.BetterBibTeX.prefs._.getIntPref(name)}; }
-        Zotero.BetterBibTeX.prefs._.setIntPref(name, value);
+        Zotero.BetterBibTeX.DebugBridge.data.setPref(name, value, 'number');
       }
     }
   }
