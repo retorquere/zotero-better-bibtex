@@ -335,7 +335,6 @@ Zotero.BetterBibTeX = {
     // clear keys first so the generator can make fresh ones
     var items = Zotero.BetterBibTeX.clearCiteKeys(true);
 
-    Zotero.BetterBibTeX.KeyManager.formatter.init();
     items.forEach(function(item) {
       var citekey = Zotero.BetterBibTeX.KeyManager.formatter.format(item);
       Zotero.BetterBibTeX.KeyManager.set(item, citekey, true);
@@ -504,6 +503,7 @@ Zotero.BetterBibTeX = {
       }
 
       var autopin = (Zotero.BetterBibTeX.KeyManager.allowAutoPin() && Zotero.BetterBibTeX.prefs.bbt.getCharPref('pin-citekeys') == 'on-change');
+      Zotero.BetterBibTeX.log('generating new keys for ' + JSON.stringify(Object.keys(generate)) + ', pin: ' + autopin);
       for (let item of Zotero.BetterBibTeX.safeGet(Object.keys(generate))) {
         var citekey = Zotero.BetterBibTeX.KeyManager.formatter.format(item);
         Zotero.BetterBibTeX.KeyManager.set(item, citekey, autopin);
@@ -532,12 +532,6 @@ Zotero.BetterBibTeX = {
       var self = this;
       var item = null;
       var translator = self;
-
-      var citeKeyFormat = null;
-      self.init = function() {
-        citeKeyFormat = Zotero.BetterBibTeX.prefs.bbt.getCharPref('citeKeyFormat');
-        Zotero.BetterBibTeX.log('formatting pattern set to ' + citeKeyFormat);
-      }
 
       var safechars = /[-:a-z0-9_!\$\*\+\.\/;\?\[\]]/ig;
       // not  "@',\#{}%
@@ -952,11 +946,10 @@ Zotero.BetterBibTeX = {
           Zotero.BetterBibTeX.log('serialized item');
           item = _item;
         }
-        Zotero.BetterBibTeX.log('formatting using ' + citeKeyFormat + ': ' + JSON.stringify(Object.keys(item)));
 
         var citekey = '';
 
-        citeKeyFormat.split('|').some(function(pattern) {
+        Zotero.BetterBibTeX.prefs.bbt.getCharPref('citeKeyFormat').split('|').some(function(pattern) {
           citekey = pattern.replace(/\[([^\]]+)\]/g, function(match, command) {
             var _filters = command.split(':');
             var _function = _filters.shift();

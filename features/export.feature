@@ -72,7 +72,7 @@ Scenario: Better BibLaTeX Export 11
 Scenario: Advanced key generator usage
   When I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[DOI]+[Title:fold:ascii:skipwords:select,1,4:condense,_]'
    And I import 'export/Better BibLaTeX.012.json'
-   And show the Zotero log
+   #And show the Zotero log
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.012.bib'
 
 @bbltx-e-13

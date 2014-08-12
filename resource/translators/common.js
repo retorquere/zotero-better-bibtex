@@ -30,8 +30,6 @@ var Translator = new function() {
     self.exportFileData         = Zotero.getOption('exportFileData');
     self.exportNotes            = Zotero.getOption('exportNotes');
 
-    if (Zotero.BetterBibTeX) { Zotero.BetterBibTeX.KeyManager.formatter.init(); }
-
     switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
       case 'always':
         self.unicode = true;
