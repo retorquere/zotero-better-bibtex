@@ -16,7 +16,7 @@
 	"lastUpdated": "/*= timestamp =*/"
 }
 
-/*= include BibTeX.js =*/
+/*= include common.js =*/
 
 function doExport() {
   var keys = [];
