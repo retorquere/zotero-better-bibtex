@@ -26,7 +26,6 @@ TRANSLATORS = [
   {name: 'Better BibLaTeX', unicode: true},
   {name: 'LaTeX Citation'},
   {name: 'Pandoc Citation'},
-  {name: 'BibTeX Citation Keys'},
   {name: 'Zotero TestCase'}
 ]
 
