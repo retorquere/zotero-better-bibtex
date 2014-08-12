@@ -10,6 +10,7 @@ pref("extensions.zotero.translators.better-bibtex.auto-abbrev.style", '');
 pref("extensions.zotero.translators.better-bibtex.auto-abbrev", true);
 pref("extensions.zotero.translators.better-bibtex.attachmentRelativePath", false);
 pref("extensions.zotero.translators.better-bibtex.debug", false);
+pref("extensions.zotero.translators.better-bibtex.pin-citekeys", '');
 
 pref("services.sync.prefs.sync.extensions.zotero.translators.better-bibtex.citeCommand", true);
 pref("services.sync.prefs.sync.extensions.zotero.translators.better-bibtex.citeKeyFormat", true);

@@ -63,6 +63,9 @@ function updatePreferences(load) {
   // var url = serverURL();
   // if (!url) { serverEnabled = false; }
 
+  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-change').setAttribute('disabled', !Zotero.BetterBibTeX.KeyManager.allowAutoPin());
+  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-export').setAttribute('disabled', !Zotero.BetterBibTeX.KeyManager.allowAutoPin());
+
   document.getElementById('id-zotero-better-bibtex-server-warning').setAttribute('hidden', serverEnabled);
 
   document.getElementById('id-zotero-better-bibtex-recursive-warning').setAttribute('hidden', !document.getElementById('id-better-bibtex-preferences-getCollections').checked);

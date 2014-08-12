@@ -2,7 +2,10 @@
 
 A showstopper bug has been found in the 0.6 series that I'm currently (2014-080-12) addressing. I expect the problem to
 be fixed today, but I'm doing extra testing; meanwhile, I've pulled the XPI for safety. It will be up as soon as
-possible, probably later todaym certainly this week.
+possible, probably later today but certainly this week. To do:
+
+* Only allow export-pinning when autosync is on
+* Fix performance issue with key generator
 
 # Zotero: Better Bib(La)TeX [![Build Status](https://travis-ci.org/ZotPlus/zotero-better-bibtex.svg?branch=master)](https://travis-ci.org/ZotPlus/zotero-better-bibtex)
 

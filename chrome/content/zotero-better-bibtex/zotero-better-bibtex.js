@@ -357,6 +357,16 @@ Zotero.BetterBibTeX = {
     for (var i = 0; i < all.length; i++) { _all.push(all[i]); }
     return _all;
   },
+  safeGet: function(ids) {
+    if (ids.length == 0) { return []; }
+    var all = Zotero.Items.get(ids);
+    if (!all) { return []; }
+
+    // sometimes a pseudo-array is returned
+    var i, _all = [];
+    for (var i = 0; i < all.length; i++) { _all.push(all[i]); }
+    return _all;
+  },
 
   KeyManager: new function() {
     var self = this;
@@ -388,7 +398,11 @@ Zotero.BetterBibTeX = {
       }
 
       return '';
-    }
+    };
+
+    self.allowAutoPin = function() {
+      return (Zotero.Prefs.get('sync.autoSync') || !Zotero.Sync.Server.enabled);
+    };
 
     // dual-use
     self.extract = function(item) {
@@ -435,10 +449,9 @@ Zotero.BetterBibTeX = {
 
       Zotero.BetterBibTeX.log('setting key ' + citekey + ' on ' + item.itemID + ', pinned: ' + pinned);
       var oldkey = self.extract(item);
-      if (oldkey == citekey) { return; } // prevent save loops in the notifier
-      Zotero.BetterBibTeX.log('confirm setting key ' + citekey + ' on ' + item.itemID + ', pinned: ' + pinned);
 
-      if (pinned) {
+      if (pinned && oldkey != citekey) {
+        Zotero.BetterBibTeX.log('saving key ' + citekey + ' on ' + item.itemID + ', pinned: ' + pinned);
         if (!item.getField) { item = Zotero.Items.get(item.itemID); }
         var _item = {extra: '' + item.getField('extra')};
         self.extract(_item);
@@ -477,13 +490,24 @@ Zotero.BetterBibTeX = {
     self.updated = function(itemIDs) {
       if (itemIDs.length == 0) { return; }
 
-      itemIDs = '(' + itemIDs.map(function(id) { return '' + parseInt(id); }).join(',') + ')';
-      Zotero.DB.query('delete from betterbibtex.keys where itemID in ' + itemIDs);
+      itemIDs = itemIDs.map(function(id) { return '' + parseInt(id); });
 
+      var generate = Dict();
+      for (let id of itemIDs) { generate[id] = true; }
+
+      itemIDs = '(' + itemIDs.join(',') + ')';
+      Zotero.DB.query('delete from betterbibtex.keys where itemID in ' + itemIDs);
       var rows = Zotero.DB.query(findKeysSQL + ' and i.itemID in ' + itemIDs) || [];
-      rows.forEach(function(row) {
+      for (let row of rows) {
+        delete generate['' + row.itemID];
         Zotero.DB.query('insert into betterbibtex.keys (itemID, libraryID, citekey, pinned) values (?, ?, ?, ?)', [row.itemID, row.libraryID, self.extract({extra: row.extra}), 1]);
-      });
+      }
+
+      var autopin = (Zotero.BetterBibTeX.KeyManager.allowAutoPin() && Zotero.BetterBibTeX.prefs.bbt.getCharPref('pin-citekeys') == 'on-change');
+      for (let item of Zotero.BetterBibTeX.safeGet(Object.keys(generate))) {
+        var citekey = Zotero.BetterBibTeX.KeyManager.formatter.format(item);
+        Zotero.BetterBibTeX.KeyManager.set(item, citekey, autopin);
+      }
     }
 
     self.isFree = function(citekey, item) {
