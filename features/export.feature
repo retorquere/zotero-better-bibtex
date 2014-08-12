@@ -167,10 +167,8 @@ Scenario: Journal abbreviations
 @stable-keys
 Scenario: Stable citation keys
   When I import 'export/Better BibLaTeX.stable-keys.json'
-  Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.stable-keys.1.bib'
-  When I import 'export/Better BibLaTeX.stable-keys.json'
+   And I import 'export/Better BibLaTeX.stable-keys.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.stable-keys.2.bib'
-   And A library export using 'Zotero TestCase' should match 'export/Better BibLaTeX.stable-keys.pluskeys.json'
 
 @81
 Scenario: Journal abbreviations exported in bibtex (81)

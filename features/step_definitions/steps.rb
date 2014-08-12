@@ -44,7 +44,6 @@ at_exit do
   $headless.destroy if $headles
 end
 
-
 #Given /^that ([^\s]+) is set to (.*)$/ do |pref, value|
 #  if value =~ /^['"](.*)['"]$/
 #    ZOTERO.setCharPref(pref, $1)
