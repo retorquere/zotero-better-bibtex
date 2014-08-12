@@ -97,12 +97,12 @@ Then(/^Export the library using '([^']+)' to '([^']+)'$/) do |translator, filena
   File.open(filename, 'w'){|f| f.write(BBT.export(translator)) }
 end
 
-Then(/^I should find the following citation keys:$/) do |table|
-  found = JSON.parse(BBT.export('BibTeX Citation Keys'))
-  found = found.keys.sort{|a, b| Integer(a) <=> Integer(b)}.collect{|k| found[k] }
-  expected = table.hashes.collect{|data| data['key']}
-  expect(found).to eq(expected)
-end
+#Then(/^I should find the following citation keys:$/) do |table|
+#  found = JSON.parse(BBT.export('BibTeX Citation Keys'))
+#  found = found.keys.sort{|a, b| Integer(a) <=> Integer(b)}.collect{|k| found[k] }
+#  expected = table.hashes.collect{|data| data['key']}
+#  expect(found).to eq(expected)
+#end
 
 When(/^I set (preference|export option) ([^\s]+) to (.*)$/) do |setting, name, value|
   value.strip!
@@ -137,4 +137,8 @@ end
 Then /^show the (browser|Zotero) log$/ do |kind|
   puts DBB.log if kind == 'Zotero'
   puts browserLog if kind == 'browser'
+end
+
+Then /^show the citekeys$/ do
+  pp BBT.getKeys
 end

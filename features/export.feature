@@ -6,13 +6,6 @@ Scenario: Better BibLaTeX Export 1
   When I import 'export/Better BibLaTeX.001.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.001.bib'
 
-@btxck-e-1 @e-2
-Scenario: BibTeX Citation Keys Export 1
-  When I import 'export/BibTeX Citation Keys.001.json'
-  Then I should find the following citation keys:
-    | key       |
-    | Adams2001 |
-
 @pc-e-1
 Scenario: Pandoc Citation Export 1
   When I import 'export/Pandoc Citation.001.json'
@@ -136,14 +129,6 @@ Scenario: Better BibLaTeX Export 23
   When I import 'export/Better BibLaTeX.023.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.023.bib'
 
-@btxck-e-24
-Scenario: BibTeX Citation Keys Export 24
-  When I import 'export/BibTeX Citation Keys.024.json'
-  Then I should find the following citation keys:
-    | key        |
-    | Adams2001  |
-    | Adams2001a |
-
 @bbtx-e-26
 Scenario: Better BibTeX Export 26
   When I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[auth:lower][year:(ND)][shorttitle:lower]'
@@ -168,7 +153,10 @@ Scenario: Journal abbreviations
 @stable-keys
 Scenario: Stable citation keys
   When I import 'export/Better BibLaTeX.stable-keys.json'
+  Then show the citekeys
    And I import 'export/Better BibLaTeX.stable-keys.json'
+  Then show the citekeys
+   And show the browser log
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.stable-keys.2.bib'
 
 @81
