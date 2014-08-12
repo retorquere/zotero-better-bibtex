@@ -20,7 +20,7 @@
 	"lastUpdated": "/*= timestamp =*/"
 }
 
-/*= include BibTeX.js =*/
+/*= include common.js =*/
 
 var fieldMap = Dict({
   address:      {literal: 'place'},

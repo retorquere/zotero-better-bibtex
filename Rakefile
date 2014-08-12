@@ -53,6 +53,7 @@ end
 SOURCES = %w{chrome test/import test/export resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
             .select{|f| File.file?(f)}
+            .collect{|f| f.sub(/\.pegjs$/, '.js')}
             .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [UNICODE_MAPPING]
 
 XPI = "zotero-#{EXTENSION}-#{RELEASE}#{BRANCH == 'master' ? '' : '-' + BRANCH}.xpi"

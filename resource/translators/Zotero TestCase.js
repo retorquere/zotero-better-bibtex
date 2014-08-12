@@ -28,9 +28,11 @@ function scrub(item) {
   delete item.dateModified;
   delete item.uri;
   delete item.itemID;
+  delete item.multi;
 
   (item.creators || []).forEach(function(creator) {
     delete creator.creatorID;
+    delete creator.multi;
   });
 
   item.attachments = (item.attachments || []).map(function(attachment) {
@@ -70,7 +72,7 @@ function scrub(item) {
   return item;
 }
 
-/*= include BibTeX.js =*/
+/*= include common.js =*/
 
 function detectImport() {
   var str, json = '';

@@ -40,7 +40,7 @@ var strToISO = function(str) {
 }
 
 
-/*= include BibTeX.js =*/
+/*= include common.js =*/
 
 var fieldMap = Dict({
   location:   {literal: 'place'},

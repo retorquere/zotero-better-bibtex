@@ -1,3 +1,9 @@
+# Notice: temporarily offline
+
+A showstopper bug has been found in the 0.6 series that I'm currently (2014-080-12) addressing. I expect the problem to
+be fixed today, but I'm doing extra testing; meanwhile, I've pulled the XPI for safety. It will be up as soon as
+possible, probably later todaym certainly this week.
+
 # Zotero: Better Bib(La)TeX [![Build Status](https://travis-ci.org/ZotPlus/zotero-better-bibtex.svg?branch=master)](https://travis-ci.org/ZotPlus/zotero-better-bibtex)
 
 This extension aims to make Zotero effective for us LaTeX holdouts. At its core, it behaves like any Zotero
