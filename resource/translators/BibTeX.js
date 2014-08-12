@@ -11,42 +11,38 @@ var Translator = new function() {
 
   var initialized = false;
 
-  self.initialize = function(config) {
+  self.initialize = function() {
     if (initialized) { return; }
 
-    if (!config) { config = {}; }
+    self.pattern                = Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
+    self.skipFields             = Zotero.getHiddenPref('better-bibtex.skipfields').split(',').map(function(field) { return field.trim(); });
+    self.usePrefix              = Zotero.getHiddenPref('better-bibtex.useprefix');
+    self.braceAll               = Zotero.getHiddenPref('better-bibtex.brace-all');
+    self.fancyURLs              = Zotero.getHiddenPref('better-bibtex.fancyURLs');
+    self.langid                 = Zotero.getHiddenPref('better-bibtex.langid');
+    self.usePrefix              = Zotero.getHiddenPref('better-bibtex.useprefix');
+    self.attachmentRelativePath = Zotero.getHiddenPref('better-bibtex.attachmentRelativePath');
+    self.autoAbbrev             = Zotero.getHiddenPref('better-bibtex.auto-abbrev');
+    self.debug                  = Zotero.getHiddenPref('better-bibtex.debug');
 
-    self.pattern                = config.pattern                || Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
-    self.skipFields             = config.skipFields             || Zotero.getHiddenPref('better-bibtex.skipfields').split(',').map(function(field) { return field.trim(); });
-    self.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
-    self.braceAll               = config.braceAll               || Zotero.getHiddenPref('better-bibtex.brace-all');
-    self.fancyURLs              = config.fancyURLs              || Zotero.getHiddenPref('better-bibtex.fancyURLs');
-    self.langid                 = config.langid                 || Zotero.getHiddenPref('better-bibtex.langid');
-    self.usePrefix              = config.usePrefix              || Zotero.getHiddenPref('better-bibtex.useprefix');
-    self.attachmentRelativePath = config.attachmentRelativePath || Zotero.getHiddenPref('better-bibtex.attachmentRelativePath');
-    self.autoAbbrev             = config.autoAbbrev             || Zotero.getHiddenPref('better-bibtex.auto-abbrev');
-    self.debug                  = config.debug                  || Zotero.getHiddenPref('better-bibtex.debug');
+    self.useJournalAbbreviation = Zotero.getOption('useJournalAbbreviation');
+    self.exportCharset          = Zotero.getOption('exportCharset');
+    self.exportFileData         = Zotero.getOption('exportFileData');
+    self.exportNotes            = Zotero.getOption('exportNotes');
 
-    self.useJournalAbbreviation = config.useJournalAbbreviation || Zotero.getOption('useJournalAbbreviation');
-    self.exportCharset          = config.exportCharset          || Zotero.getOption('exportCharset');
-    self.exportFileData         = config.exportFileData         || Zotero.getOption('exportFileData');
-    self.exportNotes            = config.exportNotes            || Zotero.getOption('exportNotes');
+    if (Zotero.BetterBibTeX) { Zotero.BetterBibTeX.KeyManager.formatter.init(); }
 
-    if (typeof config.unicode == 'undefined') {
-      switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
-        case 'always':
-          self.unicode = true;
-          break;
-        case 'never':
-          self.unicode = false;
-          break;
-        default:
-          var charset = self.exportCharset;
-          self.unicode = self.unicode || (charset && charset.toLowerCase() == 'utf-8');
-          break;
-      }
-    } else {
-      self.unicode = config.unicode;
+    switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
+      case 'always':
+        self.unicode = true;
+        break;
+      case 'never':
+        self.unicode = false;
+        break;
+      default:
+        var charset = self.exportCharset;
+        self.unicode = self.unicode || (charset && charset.toLowerCase() == 'utf-8');
+        break;
     }
 
     if (self.typeMap.toBibTeX) {
@@ -83,510 +79,14 @@ var Translator = new function() {
     return item;
   }
 
-  var formatter = new function() {
-    var translator = self;
-    var self = this;
-    var item = null;
-
-    var safechars = /[-:a-z0-9_!\$\*\+\.\/;\?\[\]]/ig;
-    // not  "@',\#{}%
-    var unsafechars = '' + safechars;
-    unsafechars = unsafechars.substring(unsafechars.indexOf('/') + 1, unsafechars.lastIndexOf('/'));
-    unsafechars = unsafechars.substring(0, 1) + '^' + unsafechars.substring(1, unsafechars.length);
-    unsafechars = new RegExp(unsafechars, 'ig');
-    function clean(str) {
-      str = Zotero.Utilities.removeDiacritics(str).replace(unsafechars, '').trim();
-      return str;
-    }
-
-    var caseNotUpperTitle = Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g');
-    var caseNotUpper = Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g');
-    function getCreators(onlyEditors) {
-      if(!item.creators || !item.creators.length) { return []; }
-
-      var creators = {};
-      var primaryCreatorType = Zotero.Utilities.getCreatorsForType(item.itemType)[0];
-      var creator;
-      item.creators.forEach(function(creator) {
-        var name = stripHTML('' + creator.lastName);
-        if (name != '') {
-          if (flags.initials && creator.firstName) {
-            var initials = Zotero.Utilities.XRegExp.replace(creator.firstName, caseNotUpperTitle, '', 'all');
-            initials = Zotero.Utilities.removeDiacritics(initials);
-            var initials = Zotero.Utilities.XRegExp.replace(initials, caseNotUpper, '', 'all');
-            name += initials;
-          }
-        } else {
-          name = stripHTML('' + creator.firstName);
-        }
-        if (name != '') {
-          switch (creator.creatorType) {
-            case 'editor':
-            case 'seriesEditor':
-              if (!creators.editors) { creators.editors = []; }
-              creators.editors.push(name);
-              break;
-            case 'translator':
-              if (!creators.translators) { creators.translators = []; }
-              creators.translators.push(name);
-              break;
-            case primaryCreatorType:
-              if (!creators.authors) { creators.authors = []; }
-              creators.authors.push(name);
-              break;
-            default:
-              if (!creators.collaborators) { creators.collaborators = []; }
-              creators.collaborators.push(name);
-          }
-        }
-      });
-
-      if (onlyEditors) { return creators.editors; }
-      return creators.authors || creators.editors || creators.collaborators || creators.translators || null;
-    }
-
-    function words(str) {
-      return stripHTML('' + str).split(/[\+\.,-\/#!$%\^&\*;:{}=\-\s`~()]+/).filter(function(word) { return (word != '');}).map(function (word) { return clean(word) });
-    }
-
-    var skipWords = [
-      'a',
-      'aboard',
-      'about',
-      'above',
-      'across',
-      'after',
-      'against',
-      'al',
-      'along',
-      'amid',
-      'among',
-      'an',
-      'and',
-      'anti',
-      'around',
-      'as',
-      'at',
-      'before',
-      'behind',
-      'below',
-      'beneath',
-      'beside',
-      'besides',
-      'between',
-      'beyond',
-      'but',
-      'by',
-      'd',
-      'das',
-      'de',
-      'del',
-      'der',
-      'des',
-      'despite',
-      'die',
-      'do',
-      'down',
-      'during',
-      'ein',
-      'eine',
-      'einem',
-      'einen',
-      'einer',
-      'eines',
-      'el',
-      'except',
-      'for',
-      'from',
-      'in',
-      'is',
-      'inside',
-      'into',
-      'l',
-      'la',
-      'las',
-      'le',
-      'like',
-      'los',
-      'near',
-      'nor',,
-      'of',
-      'off',
-      'on',
-      'onto',
-      'or',
-      'over',
-      'past',
-      'per',
-      'plus',
-      'round',
-      'save',
-      'since',
-      'so',
-      'some',
-      'than',
-      'the',
-      'through',
-      'to',
-      'toward',
-      'towards',
-      'un',
-      'una',
-      'unas',
-      'under',
-      'underneath',
-      'une',
-      'unlike',
-      'uno',
-      'unos',
-      'until',
-      'up',
-      'upon',
-      'versus',
-      'via',
-      'while',
-      'with',
-      'within',
-      'without',
-      'yet'
-    ];
-
-    function titleWords(title, options) {
-      if (!title) { return null; }
-
-      var _words = words(title);
-
-      options = options || {};
-      if (options.asciiOnly) { _words = _words.map(function (word) { return word.replace(/[^ -~]/g, ''); }); }
-      _words = _words.filter(function(word) { return (word != ''); });
-      if (options.skipWords) { _words = _words.filter(function(word) { return (skipWords.indexOf(word.toLowerCase()) < 0); }); }
-      if (_words.length == 0) { return null; }
-      return _words;
-    };
-
-    function stripHTML(str) {
-      return str.replace(/<\/?(sup|sub|i|b|p|span|br|break)\/?>/g, '').replace(/\s+/, ' ').trim();
-    };
-
-    var functions = {
-      id: function() {
-        return item.itemID;
-      },
-
-      key: function() {
-        return item.key;
-      },
-
-      auth: function(onlyEditors, n, m) {
-        var authors = getCreators(onlyEditors);
-        if (!authors) { return ''; }
-
-        var author = authors[m || 0];
-        if (author && n) { author = author.substring(0, n); }
-        return (author || '');
-      },
-
-      type: function() {
-        return getBibTeXType(item);
-      },
-
-      authorLast: function(onlyEditors) {
-        var authors = getCreators(onlyEditors);
-        if (!authors) { return ''; }
-
-        return (authors[authors.length - 1] || '');
-      },
-
-      journal: function() {
-        return Zotero.BetterBibTeX.KeyManager.journalAbbrev(item);
-      },
-
-      authors: function(onlyEditors, n) {
-        var authors = getCreators(onlyEditors);
-        if (!authors) { return ''; }
-
-        if (n) {
-          var etal = (authors.length > n);
-          authors = authors.slice(0, n);
-          if (etal) { authors.push('EtAl'); }
-        }
-        authors = authors.join('');
-        return authors;
-      },
-
-      authorsAlpha: function(onlyEditors) {
-        var authors = getCreators(onlyEditors);
-        if (!authors) { return ''; }
-
-        switch (authors.length) {
-          case 1:
-            return authors[0].substring(0, 3);
-          case 2:
-          case 3:
-          case 4:
-            return authors.map(function(author) { return author.substring(0, 1); }).join('');
-          default:
-            return authors.slice(0, 3).map(function(author) { return author.substring(0, 1); }).join('') + '+';
-        }
-      },
-
-      authIni: function(onlyEditors, n) {
-        var authors = getCreators(onlyEditors);
-        if (!authors) { return ''; }
-
-        return authors.map(function(author) { return author.substring(0, n); }).join('.');
-      },
-
-      authorIni: function(onlyEditors) {
-        var authors = getCreators(onlyEditors);
-        if (!authors) { return ''; }
-
-        var firstAuthor = authors.shift();
-
-        return [firstAuthor.substring(0, 5)].concat(authors.map(function(author) {
-          return auth.split(/\s+/).map(function(name) { return name.substring(0, 1); }).join('');
-        })).join('.');
-      },
-
-      'auth.auth.ea': function(onlyEditors) {
-        var authors = getCreators(onlyEditors);
-        if (!authors) { return ''; }
-
-        return authors.slice(0,2).concat(authors.length > 2 ? ['ea'] : []).join('.')
-      },
-
-      'auth.etal': function(onlyEditors) {
-        var authors = getCreators(onlyEditors);
-        if (!authors) { return ''; }
-
-        if (authors.length == 2) { return authors.join('.'); }
-
-        return authors.slice(0,1).concat(authors.length > 1 ? ['etal'] : []).join('.')
-      },
-
-      authshort: function(onlyEditors) {
-        var authors = getCreators(onlyEditors);
-        if (!authors) { return ''; }
-
-        switch (authors.length) {
-          case 0:   return '';
-          case 1:   return authors[0];
-          default:  return authors.map(function(author) { return author.substring(0, 1); }).join('.') + (authors.length > 3 ? '+' : '');
-        }
-      },
-
-      firstpage: function() {
-        if (!item.pages) { return '';}
-        var firstpage = '';
-        item.pages.replace(/^([0-9]+)/g, function(match, fp) { firstpage = fp; });
-        return firstpage;
-      },
-
-      keyword: function(dummy, n) {
-        if (!item.tags || !item.tags[n]) { return ''; }
-        return item.tags[n].tag;
-      },
-
-      lastpage: function() {
-        if (!item.pages) { return '';}
-        var lastpage = '';
-        item.pages.replace(/([0-9]+)[^0-9]*$/g, function(match, lp) { lastpage = lp; });
-        return lastpage;
-      },
-
-      shorttitle: function() {
-        var words = titleWords(item.title, {skipWords: true, asciiOnly: true});
-        if (!words) { return ''; }
-        return words.slice(0,3).join('');
-      },
-
-      veryshorttitle: function() {
-        var words = titleWords(item.title, {skipWords: true, asciiOnly: true});
-        if (!words) { return ''; }
-        return words.slice(0,1).join('');
-      },
-
-      shortyear: function() {
-        if (!item.date) { return ''; }
-        var date = Zotero.Utilities.strToDate(item.date);
-        if (typeof date.year === 'undefined') { return ''; }
-        var year = date.year % 100;
-        if (year < 10) { return '0' + year; }
-        return year + '';
-      },
-
-      year: function() {
-        if (!item.date) { return ''; }
-        var date = Zotero.Utilities.strToDate(item.date);
-        if (typeof date.year === 'undefined') { return item.date; }
-        return date.year;
-      },
-
-      month: function() {
-        if (!item.date) { return ''; }
-        var date = Zotero.Utilities.strToDate(item.date);
-        if (typeof date.year === 'undefined') { return ''; }
-        return (months[date.month] || '');
-      },
-
-      title: function() {
-        return titleWords(item.title).join('');
-      }
-    };
-
-    var punct = Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g');
-    var filters = {
-      condense: function(value, sep) {
-        if (typeof sep == 'undefined') { sep = ''; }
-        return value.replace(/\s/g, sep);
-      },
-
-      abbr: function(value) {
-        return value.split(/\s+/).map(function(word) { return word.substring(0, 1); }).join('');
-      },
-
-      lower: function(value) {
-        return value.toLowerCase();
-      },
-
-      upper: function(value) {
-        return value.toUpperCase();
-      },
-
-      skipwords: function(value) {
-        return value.split(/\s+/).filter(function(word) { return (skipWords.indexOf(word.toLowerCase()) < 0); }).join(' ').trim();
-      },
-
-      select: function(value, start, n) {
-        value = value.split(/\s+/);
-        var end = value.length;
-
-        if (typeof start == 'undefined') { start = 1; }
-        start = parseInt(start) - 1;
-
-        if (typeof n != 'undefined') { end = start + parseInt(n); }
-
-        return value.slice(start, end).join(' ');
-      },
-
-      ascii: function(value) {
-        return value.replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim();
-      },
-
-      fold: function(value) {
-        return Zotero.Utilities.removeDiacritics(value).split(/\s+/).join(' ').trim();
-      },
-
-      capitalize: function(value) {
-        return value.replace(/((^|\s)[a-z])/g, function(m) { return m.toUpperCase(); });
-      },
-
-      nopunct: function(value) {
-        return Zotero.Utilities.XRegExp.replace(value, punct, '', 'all');
-      }
-    };
-
-    var function_N_M = /^([^0-9]+)([0-9]+)_([0-9]+)$/;
-    var function_N = /^([^0-9]+)([0-9]+)$/;
-    var flags = Dict();
-
-    self.format = function(_item) {
-      item = _item;
-
-      var citekey = '';
-
-      Translator.pattern.split('|').some(function(pattern) {
-        citekey = pattern.replace(/\[([^\]]+)\]/g, function(match, command) {
-          var _filters = command.split(':');
-          var _function = _filters.shift();
-          var _property = _function;
-
-          var _flags = _function.split(/([-+])/);
-          _function = _flags.shift();
-          flags = Dict();
-          while (_flags.length > 0) {
-            var m = _flags.shift();
-            var flag = _flags.shift();
-            if (flag) { flags[flag] = (m == '+'); }
-          }
-
-          var N;
-          var M;
-          var match;
-
-          if (match = function_N_M.exec(_function)) {
-            _function = match[1];
-            N = parseInt(match[2]);
-            M = parseInt(match[3]);
-          } else if (match = function_N.exec(_function)) {
-            _function = match[1];
-            N = parseInt(match[2]);
-            M = null;
-          } else {
-            N = null;
-            M = null;
-          }
-
-          var onlyEditors = (_function.match(/^edtr/) || _function.match(/^editors/));
-          _function = _function.replace(/^edtr/, 'auth').replace(/^editors/, 'authors');
-
-          var value = '';
-          if (functions[_function]) {
-            value = functions[_function](onlyEditors, N, M);
-          }
-
-          [_property, _property.charAt(0).toLowerCase() + _property.slice(1)].forEach(function(prop) {
-            if (value == '' && item[prop] && (typeof item[prop] != 'function')) {
-              value = '' + item[prop];
-            }
-          });
-
-          if (value == '' && !functions[_function]) {
-            trLog('requested non-existent item function ' + _property);
-          }
-
-          value = stripHTML(value);
-
-          _filters.forEach(function(filter) {
-            var params = filter.split(',');
-            filter = params.shift();
-            params.unshift(value);
-            if (filter.match(/^[(].*[)]$/)) { // text between braces is default value in case a filter or function fails
-              if (value == '') { value = filter.substring(1, filter.length - 1); }
-            } else if (filters[filter]) {
-              value = filters[filter].apply(null, params);
-            } else {
-              trLog('requested non-existent item filter ' + filter);
-              value = '';
-            }
-          });
-
-          return value;
-        });
-
-        return citekey != '';
-      });
-
-      if (citekey == '') { citekey = 'zotero-' + (item.libraryID || 0) + '-' + item.key; }
-
-      item = null;
-      return clean(citekey);
-    };
-  }
-
-  var sync = {
-    needed: false,
-    test: {
-      treshold: 10,
-      assumedSafe: 0
-    }
-  };
   self.citekey = function(item) {
+    // remove any citekey from extra
     Zotero.BetterBibTeX.KeyManager.extract(item);
+
     var citekey = Zotero.BetterBibTeX.KeyManager.get(item);
     if (citekey) { return citekey; }
 
-    citekey = formatter.format(item);
+    citekey = Zotero.BetterBibTeX.KeyManager.formatter.format(item);
 
     var postfix = {n: -1, c:''};
     Zotero.debug('basekey: ' + (citekey + postfix.c));
@@ -595,17 +95,8 @@ var Translator = new function() {
       postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
     }
 
-    if (!sync.needed) {
-      sync.test.assumedSafe += 1;
-      if (sync.test.assumedSafe >= sync.test.treshold) {
-        sync.needed = Zotero.BetterBibTeX.KeyManager.syncNeeded();
-        sync.test.assumedSafe = 0;
-      }
-      if (sync.needed) { Zotero.BetterBibTeX.KeyManager.syncWarn(); }
-    }
-
     citekey = citekey + postfix.c;
-    if (!sync.needed) { Zotero.BetterBibTeX.KeyManager.set(item, citekey); }
+    Zotero.BetterBibTeX.KeyManager.set(item, citekey, false);
     return citekey;
   }
 };

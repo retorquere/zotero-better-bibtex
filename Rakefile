@@ -53,11 +53,15 @@ end
 SOURCES = %w{chrome test/import test/export resource defaults chrome.manifest install.rdf bootstrap.js}
             .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
             .select{|f| File.file?(f)}
-            .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [UNICODE_MAPPING, BIBTEX_GRAMMAR]
+            .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [UNICODE_MAPPING]
 
 XPI = "zotero-#{EXTENSION}-#{RELEASE}#{BRANCH == 'master' ? '' : '-' + BRANCH}.xpi"
 
 task :default => XPI do
+end
+
+rule '.js' => '.pegjs' do |t|
+  sh "pegjs -e #{File.basename(t.name, File.extname(t.name))} #{t.source} #{t.name}"
 end
 
 task :clean do
@@ -277,14 +281,7 @@ class Translator
   end
 
   def self.parser
-    if @@parser.nil?
-      p = "#{TMP}/parser.js"
-      puts "Generating #{p.inspect} from #{BIBTEX_GRAMMAR.inspect}"
-      puts `pegjs -e BibTeX #{BIBTEX_GRAMMAR.inspect} #{p.inspect}`
-      exit unless $? == 0
-      @@parser = File.open(p).read
-    end
-    return @@parser
+    @@parser ||= File.open(BIBTEX_GRAMMAR.sub(/\.pegjs$/, '.js')).read
   end
 
   def self.mapping

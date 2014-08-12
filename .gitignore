@@ -5,3 +5,4 @@ Gemfile.lock
 tmp
 features/import/*.out.json
 features/export/*.out.txt
+resource/translators/BibTeXParser.js
