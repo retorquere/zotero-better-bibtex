@@ -73,29 +73,11 @@ var Translator = new function() {
 
     if (!initialized) { self.initialize(); }
     Translator.fieldsWritten = Dict({});
-    item.__citekey__ = self.citekey(item);
+
+    // remove any citekey from extra -- the export doesn't need it
+    Zotero.BetterBibTeX.keymanager.extract(item);
+    item.__citekey__ = Zotero.BetterBibTeX.keymanager.get(item, 'on-export');
     return item;
-  }
-
-  self.citekey = function(item) {
-    // remove any citekey from extra
-    Zotero.BetterBibTeX.KeyManager.extract(item);
-
-    var citekey = Zotero.BetterBibTeX.KeyManager.get(item);
-    if (citekey) { return citekey; }
-
-    citekey = Zotero.BetterBibTeX.KeyManager.formatter.format(item);
-
-    var postfix = {n: -1, c:''};
-    Zotero.debug('basekey: ' + (citekey + postfix.c));
-    while (!Zotero.BetterBibTeX.KeyManager.isFree(citekey + postfix.c, item)) {
-      postfix.n++;
-      postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
-    }
-
-    citekey = citekey + postfix.c;
-    Zotero.BetterBibTeX.KeyManager.set(item, citekey, false);
-    return citekey;
   }
 };
 
@@ -285,7 +267,7 @@ function exportJabRefGroups() {
 
     // replace itemID with citation key
     if (collection.childItems) {
-      collection.childItems = collection.childItems.map(function(child) { return Translator.citekey(child); }).filter(function(child) { return child; });
+      collection.childItems = collection.childItems.map(function(child) { return Zotero.BetterBibTeX.keymanager.get(child); }).filter(function(child) { return child; });
     }
 
     collections[collection.id] = collection;

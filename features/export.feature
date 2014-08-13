@@ -63,38 +63,37 @@ Scenario: Better BibLaTeX Export 11
 
 @advanced-keygen
 Scenario: Advanced key generator usage
-  When I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[DOI]+[Title:fold:ascii:skipwords:select,1,4:condense,_]'
+  When I set preference translators.better-bibtex.citeKeyFormat to '[DOI]+[Title:fold:ascii:skipwords:select,1,4:condense,_]'
    And I import 'export/Better BibLaTeX.012.json'
-   #And show the Zotero log
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.012.bib'
 
 @bbltx-e-13
 Scenario: Better BibLaTeX Export 13
-  When I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[shorttitle]'
+  When I set preference translators.better-bibtex.citeKeyFormat to '[shorttitle]'
    And I import 'export/Better BibLaTeX.013.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.013.bib'
 
 @bbltx-e-14
 Scenario: Better BibLaTeX Export 14
-  When I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[shorttitle]'
+  When I set preference translators.better-bibtex.citeKeyFormat to '[shorttitle]'
    And I import 'export/Better BibLaTeX.014.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.014.bib'
 
 @bbltx-e-15
 Scenario: Better BibLaTeX Export 15
-  When I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[shorttitle]'
+  When I set preference translators.better-bibtex.citeKeyFormat to '[shorttitle]'
    And I import 'export/Better BibLaTeX.015.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.015.bib'
 
 @bbltx-e-16
 Scenario: Better BibLaTeX Export 16
-  When I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[auth:lower][year]'
+  When I set preference translators.better-bibtex.citeKeyFormat to '[auth:lower][year]'
    And I import 'export/Better BibLaTeX.016.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.016.bib'
 
 @bbltx-e-17
 Scenario: Better BibLaTeX Export 17
-  When I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[auth:lower][year]'
+  When I set preference translators.better-bibtex.citeKeyFormat to '[auth:lower][year]'
    And I import 'export/Better BibLaTeX.017.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.017.bib'
 
@@ -120,7 +119,7 @@ Scenario: Better BibLaTeX Export 21
 
 @bbltx-e-22
 Scenario: Better BibLaTeX Export 22
-  When I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[auth][year]-[shorttitle]'
+  When I set preference translators.better-bibtex.citeKeyFormat to '[auth][year]-[shorttitle]'
    And I import 'export/Better BibLaTeX.022.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.022.bib'
 
@@ -131,21 +130,21 @@ Scenario: Better BibLaTeX Export 23
 
 @bbtx-e-26
 Scenario: Better BibTeX Export 26
-  When I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[auth:lower][year:(ND)][shorttitle:lower]'
+  When I set preference translators.better-bibtex.citeKeyFormat to '[auth:lower][year:(ND)][shorttitle:lower]'
    And I import 'export/Better BibTeX.026.json'
   Then A library export using 'Better BibTeX' should match 'export/Better BibTeX.026.bib'
 
 @bbtx-e-27
 Scenario: Better BibTeX Export 27
-  When I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[authors][year]'
+  When I set preference translators.better-bibtex.citeKeyFormat to '[authors][year]'
    And I import 'export/Better BibTeX.027.json'
   Then A library export using 'Better BibTeX' should match 'export/Better BibTeX.027.bib'
 
 @journal-abbrev
 Scenario: Journal abbreviations
-  When I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[authors][year][journal]'
-   And I set preference extensions.zotero.translators.better-bibtex.auto-abbrev to true
-   And I set preference extensions.zotero.translators.better-bibtex.auto-abbrev.style to 'http://www.zotero.org/styles/cell'
+  When I set preference translators.better-bibtex.citeKeyFormat to '[authors][year][journal]'
+   And I set preference translators.better-bibtex.auto-abbrev to true
+   And I set preference translators.better-bibtex.auto-abbrev.style to 'http://www.zotero.org/styles/cell'
    And I set export option useJournalAbbreviation to true
    And I import 'export/Better BibTeX.029.json'
   Then A library export using 'Better BibTeX' should match 'export/Better BibTeX.029.bib'
@@ -156,14 +155,14 @@ Scenario: Stable citation keys
   Then show the citekeys
    And I import 'export/Better BibLaTeX.stable-keys.json'
   Then show the citekeys
-   And show the browser log
+   And show the Zotero log
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.stable-keys.2.bib'
 
 @81
 Scenario: Journal abbreviations exported in bibtex (81)
-  When I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[authors2][year][journal:nopunct]'
-   And I set preference extensions.zotero.translators.better-bibtex.auto-abbrev to true
-   And I set preference extensions.zotero.translators.better-bibtex.auto-abbrev.style to 'http://www.zotero.org/styles/cell'
+  When I set preference translators.better-bibtex.citeKeyFormat to '[authors2][year][journal:nopunct]'
+   And I set preference translators.better-bibtex.auto-abbrev to true
+   And I set preference translators.better-bibtex.auto-abbrev.style to 'http://www.zotero.org/styles/cell'
    And I set export option useJournalAbbreviation to true
    And I import 'export/Journal abbreviations exported in bibtex (81).json'
   Then A library export using 'Better BibTeX' should match 'export/Journal abbreviations exported in bibtex (81).bib'
@@ -175,6 +174,6 @@ Scenario: Square brackets in Publication field (85)
 
 @86
 Scenario: Include first name initial(s) in cite key generation pattern (86)
-  When I set preference extensions.zotero.translators.better-bibtex.citeKeyFormat to '[auth+initials][year]'
+  When I set preference translators.better-bibtex.citeKeyFormat to '[auth+initials][year]'
    And I import 'export/Include first name initial(s) in cite key generation pattern (86).json'
   Then A library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bib'
