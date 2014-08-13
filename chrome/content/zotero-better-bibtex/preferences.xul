@@ -63,7 +63,7 @@
             <row>
               <label value="&zotero.better-bibtex.pin-citekeys;"/>
               <radiogroup id="id-better-bibtex-preferences-pin-citekeys" orient="horizontal" preference="pref-better-bibtex-pin-citekeys" oncommand="updatePreferences();">
-                <radio id="id-better-bibtex-preferences-pin-citekeys-manual" label="&zotero.better-bibtex.pin-citekeys.manual;" value=""/>
+                <radio id="id-better-bibtex-preferences-pin-citekeys-manual" label="&zotero.better-bibtex.pin-citekeys.manual;" value="manual"/>
                 <radio id="id-better-bibtex-preferences-pin-citekeys-on-change" label="&zotero.better-bibtex.pin-citekeys.on-change;" value="on-change"/>
                 <radio id="id-better-bibtex-preferences-pin-citekeys-on-export" label="&zotero.better-bibtex.pin-citekeys.on-export;" value="on-export"/>
               </radiogroup>

@@ -104,7 +104,7 @@ function doExport() {
         writeField('booktitle', latex_escape(item.publicationTitle, {brace: true}));
 
       } else {
-        var abbr = Translator.useJournalAbbreviation && Zotero.BetterBibTeX.KeyManager.journalAbbrev(item);
+        var abbr = Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item);
         if (abbr) {
           writeField('journal', latex_escape(abbr, {brace: true}));
         } else {

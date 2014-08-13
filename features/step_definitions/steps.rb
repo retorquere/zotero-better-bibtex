@@ -38,7 +38,7 @@ Before do
     BBT = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
   end
 
-  pp BBT.reset
+  BBT.reset
 end
 at_exit do
   $headless.destroy if $headles
@@ -114,13 +114,7 @@ When(/^I set (preference|export option) ([^\s]+) to (.*)$/) do |setting, name, v
 
   case setting
     when 'preference'
-      if value.is_a?(String)
-        BBT.setCharPref(name, value)
-      elsif value.is_a?(Integer)
-        BBT.setIntPref(name, value)
-      else
-        BBT.setBoolPref(name, value)
-      end
+      BBT.setPreference(name, value);
 
     else
       BBT.setExportOption(name, value)
