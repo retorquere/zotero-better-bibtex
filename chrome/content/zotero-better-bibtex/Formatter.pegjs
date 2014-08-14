@@ -161,9 +161,9 @@
           var name = Formatter.stripHTML('' + creator.lastName);
           if (name !== '') {
             if (withInitials && creator.firstName) {
-              var initials = Zotero.Utilities.XRegExp.replace(creator.firstName, caseNotUpperTitle, '', 'all');
+              var initials = Zotero.Utilities.XRegExp.replace(creator.firstName, Formatter.caseNotUpperTitle, '', 'all');
               initials = Zotero.Utilities.removeDiacritics(initials);
-              initials = Zotero.Utilities.XRegExp.replace(initials, caseNotUpper, '', 'all');
+              initials = Zotero.Utilities.XRegExp.replace(initials, Formatter.caseNotUpper, '', 'all');
               name += initials;
             }
           } else {
@@ -210,7 +210,6 @@
 
     '=auth': function(onlyEditors, withInitials, n, m) {
       var authors = this.getCreators(onlyEditors, withInitials);
-      Zotero.BetterBibTeX.log('auth: ' + JSON.stringify(authors));
       if (!authors) { return ''; }
 
       var author = authors[m || 0];
