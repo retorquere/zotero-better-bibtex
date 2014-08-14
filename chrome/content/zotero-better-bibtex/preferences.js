@@ -6,7 +6,7 @@ function serverURL(collectionsView, extension)
 
   var serverPort = null;
   try {
-    serverPort = Zotero.BetterBibTeX.prefs.zotero.getIntPref('httpServer.port');
+    serverPort = Zotero.Prefs.get('httpServer.port');
   } catch(err) {
     return;
   }
@@ -48,7 +48,7 @@ function BBTstyleChanged(index) {
     var selectedItem = listbox.selectedItem;
   }
   var styleID = selectedItem.getAttribute('value');
-  Zotero.BetterBibTeX.prefs.bbt.setCharPref('auto-abbrev.style', styleID);
+  Zotero.BetterBibTeX.Prefs.setCharPref('auto-abbrev.style', styleID);
   selectedStyleObj = Zotero.Styles.get(styleID);
   selectedStyleObj.usesAbbreviation;
 }
@@ -63,8 +63,8 @@ function updatePreferences(load) {
   // var url = serverURL();
   // if (!url) { serverEnabled = false; }
 
-  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-change').setAttribute('disabled', !Zotero.BetterBibTeX.keymanager.allowAutoPin());
-  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-export').setAttribute('disabled', !Zotero.BetterBibTeX.keymanager.allowAutoPin());
+  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-change').setAttribute('disabled', !Zotero.BetterBibTeX.allowAutoPin());
+  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-export').setAttribute('disabled', !Zotero.BetterBibTeX.allowAutoPin());
 
   document.getElementById('id-zotero-better-bibtex-server-warning').setAttribute('hidden', serverEnabled);
 
@@ -75,7 +75,7 @@ function updatePreferences(load) {
 
   var listbox = document.getElementById("better-bibtex-abbrev-style");
   var fillList = (listbox.children.length == 0)
-  var selectedStyle = Zotero.BetterBibTeX.prefs.bbt.getCharPref('auto-abbrev.style');
+  var selectedStyle = Zotero.BetterBibTeX.Prefs.getCharPref('auto-abbrev.style');
   var selectedIndex = -1;
   for (var i = 0; i < styles.length; i++) {
     if (fillList) {
