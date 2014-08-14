@@ -192,22 +192,22 @@ field
         }
       });
       Zotero.debug(_dbg);
-      return {key: key, type: 'creator', value: Creators.parse(val)};
+      return {key: key.toLowerCase(), type: 'creator', value: Creators.parse(val)};
     }
   / key_value
 
 attachmenttype
-  = ('sentelink' / 'file' / 'pdf' / 'path')
+  = ('sentelink'i / 'file'i / 'pdf'i / 'path'i)
 
 creatortype
-  = ('author' / 'editor' / 'translator')
+  = ('author'i / 'editor'i / 'translator'i)
 
 attachments
   = '{' val:attachmentlist? '}' { return val; }
   / '"' val:attachmentlist? '"' { return val; }
 
 key_value
-  = _* key:key _* "=" &{ return key == 'url'}_* val:url _* ("," _*)? { return {key: key.trim().toLowerCase(), value: val.trim()}; }
+  = _* key:key _* "=" &{ return key.toLowerCase() == 'url'}_* val:url _* ("," _*)? { return {key: key.trim().toLowerCase(), value: val.trim()}; }
   / _* key:key _* "=" _* val:value _* ("," _*)? { return {key: key.trim().toLowerCase(), value: val.trim()}; }
 
 key
