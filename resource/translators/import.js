@@ -4,7 +4,7 @@ function detectImport() {
   try {
     var input = Zotero.read(102400);
     Zotero.debug('BBT detect against ' + input);
-    var bib = BibTeX.parse(input);
+    var bib = BetterBibTeXParser.parse(input);
     if (bib.references.length > 0) { trLog('Yes, BibTeX'); return true; }
     trLog('Not BibTeX, passing on');
     return false;
@@ -31,7 +31,7 @@ function _doImport() {
   var read;
   while(read = Zotero.read(1024)) { bib += read; }
 
-  var bib = BibTeX.parse(bib);
+  var bib = BetterBibTeXParser.parse(bib);
 
   bib.references = bib.references.forEach(function(ref) {
     createZoteroReference(ref)
