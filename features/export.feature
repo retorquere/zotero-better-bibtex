@@ -61,25 +61,25 @@ Scenario: Better BibLaTeX Export 11
   When I import 'export/Better BibLaTeX.011.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.011.bib'
 
-@failing @failing-1 @advanced-keygen
+@advanced-keygen
 Scenario: Advanced key generator usage
   When I set preference translators.better-bibtex.citeKeyFormat to '[DOI]+[Title:fold:ascii:skipwords:select,1,4:condense,_]'
    And I import 'export/Better BibLaTeX.012.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.012.bib'
 
-@failing @failing-2 @bbltx-e-13
+@failing @failing-1 @bbltx-e-13
 Scenario: Better BibLaTeX Export 13
   When I set preference translators.better-bibtex.citeKeyFormat to '[shorttitle]'
    And I import 'export/Better BibLaTeX.013.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.013.bib'
 
-@failing @failing-3 @bbltx-e-14
+@failing @failing-2 @bbltx-e-14
 Scenario: Better BibLaTeX Export 14
   When I set preference translators.better-bibtex.citeKeyFormat to '[shorttitle]'
    And I import 'export/Better BibLaTeX.014.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.014.bib'
 
-@failing @failing-4 @bbltx-e-15
+@failing @failing-3 @bbltx-e-15
 Scenario: Better BibLaTeX Export 15
   When I set preference translators.better-bibtex.citeKeyFormat to '[shorttitle]'
    And I import 'export/Better BibLaTeX.015.json'
@@ -117,7 +117,7 @@ Scenario: Better BibLaTeX Export 21
   When I import 'export/Better BibLaTeX.021.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.021.bib'
 
-@failing @failing-5 @bbltx-e-22
+@failing @failing-4 @bbltx-e-22
 Scenario: Better BibLaTeX Export 22
   When I set preference translators.better-bibtex.citeKeyFormat to '[auth][year]-[shorttitle]'
    And I import 'export/Better BibLaTeX.022.json'
@@ -128,19 +128,19 @@ Scenario: Better BibLaTeX Export 23
   When I import 'export/Better BibLaTeX.023.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.023.bib'
 
-@failing @failing-6 @bbtx-e-26
+@failing @failing-5 @bbtx-e-26
 Scenario: Better BibTeX Export 26
   When I set preference translators.better-bibtex.citeKeyFormat to '[auth:lower][year:(ND)][shorttitle:lower]'
    And I import 'export/Better BibTeX.026.json'
   Then A library export using 'Better BibTeX' should match 'export/Better BibTeX.026.bib'
 
-@failing @failing-7 @bbtx-e-27
+@failing @failing-6 @bbtx-e-27
 Scenario: Better BibTeX Export 27
   When I set preference translators.better-bibtex.citeKeyFormat to '[authors][year]'
    And I import 'export/Better BibTeX.027.json'
   Then A library export using 'Better BibTeX' should match 'export/Better BibTeX.027.bib'
 
-@failing @failing-8 @journal-abbrev
+@failing @failing-7 @journal-abbrev
 Scenario: Journal abbreviations
   When I set preference translators.better-bibtex.citeKeyFormat to '[authors][year][journal]'
    And I set preference translators.better-bibtex.auto-abbrev to true
@@ -149,7 +149,7 @@ Scenario: Journal abbreviations
    And I import 'export/Better BibTeX.029.json'
   Then A library export using 'Better BibTeX' should match 'export/Better BibTeX.029.bib'
 
-@failing @failing-9 @stable-keys
+@failing @failing-8 @stable-keys
 Scenario: Stable citation keys
   When I import 'export/Better BibLaTeX.stable-keys.json'
   Then show the citekeys
@@ -158,7 +158,7 @@ Scenario: Stable citation keys
    And show the Zotero log
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.stable-keys.2.bib'
 
-@failing @failing-10 @81
+@failing @failing-9 @81
 Scenario: Journal abbreviations exported in bibtex (81)
   When I set preference translators.better-bibtex.citeKeyFormat to '[authors2][year][journal:nopunct]'
    And I set preference translators.better-bibtex.auto-abbrev to true
@@ -167,12 +167,12 @@ Scenario: Journal abbreviations exported in bibtex (81)
    And I import 'export/Journal abbreviations exported in bibtex (81).json'
   Then A library export using 'Better BibTeX' should match 'export/Journal abbreviations exported in bibtex (81).bib'
 
-@failing @failing-11 @85
+@failing @failing-10 @85
 Scenario: Square brackets in Publication field (85)
   When I import 'export/Square brackets in Publication field (85).json'
   Then A library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85).bib'
 
-@failing @failing-12 @86
+@failing @failing-11 @86
 Scenario: Include first name initial(s) in cite key generation pattern (86)
   When I set preference translators.better-bibtex.citeKeyFormat to '[auth+initials][year]'
    And I import 'export/Include first name initial(s) in cite key generation pattern (86).json'

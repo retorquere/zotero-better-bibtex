@@ -41,8 +41,12 @@ Before do
   BBT.reset
 end
 at_exit do
-  $headless.destroy if $headles
+  $headless.destroy if $headless
 end
+
+#After do |s|
+#  STDOUT.puts 'log: ' + DBB.log
+#end
 
 #Given /^that ([^\s]+) is set to (.*)$/ do |pref, value|
 #  if value =~ /^['"](.*)['"]$/
@@ -123,14 +127,14 @@ end
 
 
 Then /^sleep ([0-9]+) seconds$/ do |secs|
-  puts "sleeping #{secs} seconds"
+  STDOUT.puts "sleeping #{secs} seconds"
   sleep Integer(secs)
-  puts "proceeding"
+  STDOUT.puts "proceeding"
 end
 
 Then /^show the (browser|Zotero) log$/ do |kind|
-  puts DBB.log if kind == 'Zotero'
-  puts browserLog if kind == 'browser'
+  STDOUT.puts DBB.log if kind == 'Zotero'
+  STDOUT.puts browserLog if kind == 'browser'
 end
 
 Then /^show the citekeys$/ do
