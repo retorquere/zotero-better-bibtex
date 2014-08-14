@@ -5,5 +5,5 @@ Gemfile.lock
 tmp
 features/import/*.out.json
 features/export/*.out.txt
-resource/translators/BetterBibTeXParser.js
+resource/translators/Parser.js
 chrome/content/zotero-better-bibtex/Formatter.js

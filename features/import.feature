@@ -81,3 +81,8 @@ Scenario: Better BibTeX Import 16
   When I import 'import/Better BibTeX.016.bib'
   Then the library should match 'import/Better BibTeX.016.json'
 
+@89
+Scenario: Author splitter failure (89)
+  When I import 'import/Author splitter failure.bib'
+  Then the library should match 'import/Author splitter failure.json'
+
