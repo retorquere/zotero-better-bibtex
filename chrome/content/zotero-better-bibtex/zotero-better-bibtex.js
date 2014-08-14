@@ -483,6 +483,13 @@ Zotero.BetterBibTeX = {
   },
 
   KeyManager: function() {
+    /*
+     * three-letter month abbreviations. I assume these are the same ones that the
+     * docs say are defined in some appendix of the LaTeX book. (i don't have the
+     * LaTeX book.)
+     */
+    this.months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+
     var self = this;
 
     self.journalAbbrev = function(item) {

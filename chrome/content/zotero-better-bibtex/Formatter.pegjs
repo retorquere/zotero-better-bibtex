@@ -17,7 +17,7 @@
     },
 
     words: function(str) {
-      return this.stripHTML('' + str).split(/[\+\.,-\/#!$%\^&\*;:{}=\-\s`~()]+/).filter(function(word) { return (word !== '');}).map(function (word) { return this.clean(word); });
+      return this.stripHTML('' + str).split(/[\+\.,-\/#!$%\^&\*;:{}=\-\s`~()]+/).filter(function(word) { return (word !== '');}).map(function (word) { return Formatter.clean(word); });
     },
 
     /*
@@ -235,7 +235,7 @@
     },
 
     '=authors': function(onlyEditors, withInitials, n) {
-      var authors = getCreators(onlyEditors, withInitials);
+      var authors = this.getCreators(onlyEditors, withInitials);
       if (!authors) { return ''; }
 
       if (n) {
@@ -248,7 +248,7 @@
     },
 
     '=authorsAlpha': function(onlyEditors, withInitials) {
-      var authors = getCreators(onlyEditors, withInitials);
+      var authors = this.getCreators(onlyEditors, withInitials);
       if (!authors) { return ''; }
 
       switch (authors.length) {
@@ -462,32 +462,31 @@ fcall
   }
 
 method
-  = prefix:('auth' / 'authors') postfix:[^\+_:\]]* flag:flag? params:mparam* {
-      params.unshift('false');
-      params.unshift(flag == 'initials' ? 'true' : 'false');
+  = prefix:('auth' / 'authors') postfix:[\.a-zA-Z]* flag:flag? params:mparams? {
+      params = ['false', flag == 'initials' ? 'true' : 'false'].concat(params || []);
       return 'this["=' + prefix + postfix.join('') + '"](' + params.join(',') + ')';
     }
-  / prefix:('edtr' / 'editors') postfix:[^\+_:\]]* flag:flag? params:mparam* {
+  / prefix:('edtr' / 'editors') postfix:[\.a-zA-Z]* flag:flag? params:mparams? {
+      params = ['true', flag == 'initials' ? 'true' : 'false'].concat(params || []);
       if (prefix === 'edtr') {
         prefix = 'auth';
       } else {
         prefix = 'authors';
       }
-      params.unshift('true');
-      params.unshift(flag == 'initials' ? 'true' : 'false');
       return 'this["=' + prefix + postfix.join('') + '"](' + params.join(',') + ')';
     }
-  / name:[^\+_:\]]+ flag:flag? params:mparam* {
+  / name:[\.a-zA-Z]+ flag:flag? params:mparams? {
       name = name.join('');
       if (Formatter['=' + name]) {
-        return 'this["=' + name + '"](' + params.join(',') + ')';
+        return 'this["=' + name + '"](' + (params || []).join(',') + ')';
       }
 
       return 'this.stripHTML(this.item["' + name + '"] || this.item["' + name.charAt(0).toLowerCase() + name.slice(1) + '"] || "")';
     }
 
-mparam
-  = '_' param:[0-9]+ { return param.join(''); }
+mparams
+  = n:[0-9]+ { return [parseInt(n.join(''))]; }
+  / n:[0-9]+ '_' m:[0-9]+ { return [parseInt(n.join('')), parseInt(m.join(''))]; }
 
 flag
   = '+' flag:[^_:\]]+ { return flag.join(''); }

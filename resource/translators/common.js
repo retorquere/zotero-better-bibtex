@@ -179,13 +179,6 @@ function getBibTeXType(item)
   return type;
 }
 
-/*
- * three-letter month abbreviations. I assume these are the same ones that the
- * docs say are defined in some appendix of the LaTeX book. (i don't have the
- * LaTeX book.)
- */
-var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-
 function minimal_escape(url) {
   var href = url.replace(/([#\\_%&{}])/g, "\\$1");
 

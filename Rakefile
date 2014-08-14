@@ -61,7 +61,7 @@ task :default => XPI do
 end
 
 rule '.js' => '.pegjs' do |t|
-  sh "pegjs -e #{File.basename(t.name, File.extname(t.name))} #{t.source} #{t.name}"
+  sh "pegjs -e BetterBibTeX#{File.basename(t.name, File.extname(t.name))} #{t.source} #{t.name}"
 end
 
 task :clean do
