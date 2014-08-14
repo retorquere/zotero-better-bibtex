@@ -163,16 +163,18 @@ Zotero.BetterBibTeX = {
   clearKey: function(item, onlyCache) {
     Zotero.BetterBibTeX.log('clearing key ' + (onlyCache ? 'cache ' : '') + item.itemID);
 
-    Zotero.BetterBibTeX.DB.query('delete from keys where itemID = ?', [item.itemID]);
-
     if (!onlyCache) {
       var _item = {extra: '' + item.getField('extra')};
-      var citekey = this.keymanager.extract(_item);
-      Zotero.BetterBibTeX.log('something to do? ' + citekey);
-      if (citekey) {
+      onlyCache = !this.keymanager.extract(_item);
+      Zotero.BetterBibTeX.log('something to do? ' + !onlyCache);
+      if (!onlyCache) {
         item.setField('extra', _item.extra);
         item.save();
       }
+    }
+
+    if (onlyCache) {
+      Zotero.BetterBibTeX.DB.query('delete from keys where itemID = ?', [item.itemID]);
     }
   },
 
@@ -489,6 +491,7 @@ Zotero.BetterBibTeX = {
      * LaTeX book.)
      */
     this.months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+    this.journalAbbrevCache = Dict();
 
     var self = this;
 
@@ -498,24 +501,27 @@ Zotero.BetterBibTeX = {
       if (item.journalAbbreviation) { return item.journalAbbreviation; }
       if (!Zotero.BetterBibTeX.Prefs.getBoolPref('auto-abbrev')) { return; }
 
-      var styleID = Zotero.BetterBibTeX.Prefs.getCharPref('auto-abbrev.style');
-      if (styleID === '') { styleID = Zotero.Styles.getVisible().filter(function(style) { return style.usesAbbreviation; })[0]; }
-      var style = Zotero.Styles.get(styleID);
-      var cp = style.getCiteProc(true);
+      if (typeof this.journalAbbrevCache[item.publicationTitle] === 'undefined') {
+        var styleID = Zotero.BetterBibTeX.Prefs.getCharPref('auto-abbrev.style');
+        if (styleID === '') { styleID = Zotero.Styles.getVisible().filter(function(style) { return style.usesAbbreviation; })[0]; }
+        var style = Zotero.Styles.get(styleID);
+        var cp = style.getCiteProc(true);
 
-      cp.setOutputFormat('html');
-      cp.updateItems([item.itemID]);
-      cp.appendCitationCluster({"citationItems":[{id:item.itemID}], properties:{}}, true);
-      cp.makeBibliography();
+        cp.setOutputFormat('html');
+        cp.updateItems([item.itemID]);
+        cp.appendCitationCluster({"citationItems":[{id:item.itemID}], properties:{}}, true);
+        cp.makeBibliography();
 
-      if (cp.transform.abbrevs) {
-        var abbr = Dict.values(cp.transform.abbrevs);
-        abbr = abbr.filter(function(abbrev) { return abbrev['container-title'] && (Object.keys(abbrev['container-title']).length > 0); });
-        abbr = [].concat.apply([], abbr.map(function(abbrev) { return Dict.values(abbrev['container-title']); }));
-        if (abbr.length > 0) { return abbr[0]; }
+        var abbrevs = cp;
+        ['transform', 'abbrevs', 'default', 'container-title'].forEach(function(p) {
+          if (abbrevs) { abbrevs = abbrevs[p]; }
+        });
+        for (let title in (abbrevs || {})) {
+          this.journalAbbrevCache[title] = abbrevs[title];
+        }
+        if (!this.journalAbbrevCache[item.publicationTitle]) { this.journalAbbrevCache[item.publicationTitle] = ''; }
       }
-
-      return '';
+      return this.journalAbbrevCache[item.publicationTitle];
     };
 
     // dual-use
@@ -541,7 +547,7 @@ Zotero.BetterBibTeX = {
     // TODO: remove repair action
     var fix = {
       start: Zotero.Date.dateToSQL(new Date(2014, 7, 10), true),
-      end: Zotero.Date.dateToSQL(new Date(2014, 7, 12), true)
+      end: Zotero.Date.dateToSQL(new Date(2014, 7, 14), true)
     };
 
     for (let row of Zotero.BetterBibTeX.array(Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL) || [])) {
@@ -582,7 +588,7 @@ Zotero.BetterBibTeX = {
         item.save();
 
         Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and pinned <> 1 and citekey = ?', [item.libraryID || 0, citekey.citekey]);
-        Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, pinned) values (?, ?, ?, 1)', [item.itemID, item.libraryID || 0, citekey]);
+        Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, pinned) values (?, ?, ?, 1)', [item.itemID, item.libraryID || 0, citekey.citekey]);
       }
 
       return citekey.citekey;

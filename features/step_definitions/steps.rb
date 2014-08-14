@@ -45,7 +45,7 @@ at_exit do
 end
 
 #After do |s|
-#  STDOUT.puts 'log: ' + DBB.log
+  #STDOUT.puts 'log: ' + DBB.log
 #end
 
 #Given /^that ([^\s]+) is set to (.*)$/ do |pref, value|

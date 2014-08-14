@@ -145,6 +145,7 @@ Scenario: Journal abbreviations
   When I set preference translators.better-bibtex.citeKeyFormat to '[authors][year][journal]'
    And I set preference translators.better-bibtex.auto-abbrev to true
    And I set preference translators.better-bibtex.auto-abbrev.style to 'http://www.zotero.org/styles/cell'
+   And I set preference translators.better-bibtex.pin-citekeys to 'on-export'
    And I set export option useJournalAbbreviation to true
    And I import 'export/Better BibTeX.029.json'
   Then A library export using 'Better BibTeX' should match 'export/Better BibTeX.029.bib'
@@ -152,10 +153,7 @@ Scenario: Journal abbreviations
 @stable-keys
 Scenario: Stable citation keys
   When I import 'export/Better BibLaTeX.stable-keys.json'
-  Then show the citekeys
    And I import 'export/Better BibLaTeX.stable-keys.json'
-  Then show the citekeys
-   And show the Zotero log
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.stable-keys.2.bib'
 
 @81
@@ -163,6 +161,7 @@ Scenario: Journal abbreviations exported in bibtex (81)
   When I set preference translators.better-bibtex.citeKeyFormat to '[authors2][year][journal:nopunct]'
    And I set preference translators.better-bibtex.auto-abbrev to true
    And I set preference translators.better-bibtex.auto-abbrev.style to 'http://www.zotero.org/styles/cell'
+   And I set preference translators.better-bibtex.pin-citekeys to 'on-export'
    And I set export option useJournalAbbreviation to true
    And I import 'export/Journal abbreviations exported in bibtex (81).json'
   Then A library export using 'Better BibTeX' should match 'export/Journal abbreviations exported in bibtex (81).bib'
