@@ -37,20 +37,21 @@ function serverURL(collectionsView, extension)
 
   if (!url) { return; }
 
-  return 'http://localhost:' + serverPort + '/better-bibtex/' + url
+  return 'http://localhost:' + serverPort + '/better-bibtex/' + url;
 }
 
 function BBTstyleChanged(index) {
   var listbox = document.getElementById("better-bibtex-abbrev-style");
-  if (index != undefined) {
-    var selectedItem = listbox.getItemAtIndex(index);
+  var selectedItem;
+  if (index !== undefined) {
+    selectedItem = listbox.getItemAtIndex(index);
   } else {
-    var selectedItem = listbox.selectedItem;
+    selectedItem = listbox.selectedItem;
   }
   var styleID = selectedItem.getAttribute('value');
   Zotero.BetterBibTeX.Prefs.setCharPref('auto-abbrev.style', styleID);
   selectedStyleObj = Zotero.Styles.get(styleID);
-  selectedStyleObj.usesAbbreviation;
+  Zotero.BetterBibTeX.Prefs.setCharPref('auto-abbrev.style', selectedStyle.styleID);
 }
 
 function updatePreferences(load) {
@@ -74,7 +75,7 @@ function updatePreferences(load) {
   var styles = Zotero.Styles.getVisible().filter(function(style) { return style.usesAbbreviation; });
 
   var listbox = document.getElementById("better-bibtex-abbrev-style");
-  var fillList = (listbox.children.length == 0)
+  var fillList = (listbox.children.length === 0);
   var selectedStyle = Zotero.BetterBibTeX.Prefs.getCharPref('auto-abbrev.style');
   var selectedIndex = -1;
   for (var i = 0; i < styles.length; i++) {
