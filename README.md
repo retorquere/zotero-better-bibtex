@@ -1,8 +1,8 @@
 # Notice: temporarily offline
 
-A showstopper bug has been found in the 0.6 series that I'm currently (2014-080-12) addressing. I expect the problem to
+A showstopper bug has been found in the 0.6 series that I'm currently (2014-08-12) addressing. I expect the problem to
 be fixed today, but I'm doing extra testing; meanwhile, I've pulled the XPI for safety. It will be up as soon as
-possible, probably later today but certainly this week. UPDATE: last problem squashed, testing today (2014-080-14),
+possible, probably later today but certainly this week. UPDATE: last problem squashed, testing today (2014-08-14),
 release hopefully tomorrow.
 
 # Zotero: Better Bib(La)TeX [![Build Status](https://travis-ci.org/ZotPlus/zotero-better-bibtex.svg?branch=master)](https://travis-ci.org/ZotPlus/zotero-better-bibtex)
