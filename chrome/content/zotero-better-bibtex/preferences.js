@@ -50,8 +50,7 @@ function BBTstyleChanged(index) {
   }
   var styleID = selectedItem.getAttribute('value');
   Zotero.BetterBibTeX.Prefs.setCharPref('auto-abbrev.style', styleID);
-  selectedStyleObj = Zotero.Styles.get(styleID);
-  Zotero.BetterBibTeX.Prefs.setCharPref('auto-abbrev.style', selectedStyle.styleID);
+  Zotero.BetterBibTeX.keymanager.journalAbbrevCache = Dict();
 }
 
 function updatePreferences(load) {
