@@ -158,7 +158,7 @@ Scenario: Stable citation keys
    And show the Zotero log
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.stable-keys.2.bib'
 
-@failing @failing-1 @81
+@81
 Scenario: Journal abbreviations exported in bibtex (81)
   When I set preference translators.better-bibtex.citeKeyFormat to '[authors2][year][journal:nopunct]'
    And I set preference translators.better-bibtex.auto-abbrev to true
@@ -167,12 +167,12 @@ Scenario: Journal abbreviations exported in bibtex (81)
    And I import 'export/Journal abbreviations exported in bibtex (81).json'
   Then A library export using 'Better BibTeX' should match 'export/Journal abbreviations exported in bibtex (81).bib'
 
-@failing @failing-2 @85
+@85
 Scenario: Square brackets in Publication field (85)
   When I import 'export/Square brackets in Publication field (85).json'
   Then A library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85).bib'
 
-@failing @failing-3 @86
+@86
 Scenario: Include first name initial(s) in cite key generation pattern (86)
   When I set preference translators.better-bibtex.citeKeyFormat to '[auth+initials][year]'
    And I import 'export/Include first name initial(s) in cite key generation pattern (86).json'
