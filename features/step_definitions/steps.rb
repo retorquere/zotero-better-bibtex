@@ -166,6 +166,12 @@ Then /^show the (browser|Zotero) log$/ do |kind|
   STDOUT.puts browserLog if kind == 'browser'
 end
 
+Then /^(write|append) the (browser|Zotero) log to '([^']+)'$/ do |action, kind, filename|
+  open(filename, action[0]){|f| 
+    f.write(kind == 'Zotero' ? DBB.log : browserLog)
+  }
+end
+
 Then /^show the citekeys$/ do
   pp BBT.getKeys
 end

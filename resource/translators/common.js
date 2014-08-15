@@ -65,10 +65,16 @@ var Translator = new function() {
     initialized = true;
   }
 
+  var startTime = null;
+  var exported = 0;
   self.nextItem = function() {
     while (item = Zotero.nextItem()) {
       if (item.itemType != 'note' && item.itemType != 'attachment') { break; }
     }
+
+    if (startTime) { Zotero.debug('Exported ' + exported + ' items, avg: ' + ((exported * 1000) / (Date.now() - startTime)) + ' items/sec'); }
+    if (!startTime) { startTime = Date.now(); }
+    exported += 1;
 
     if (!item) { return; }
 

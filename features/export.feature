@@ -178,6 +178,7 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
   Then A library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bib'
 
 #@bulk
-#Scenario: Bulk import
+#Scenario: Bulk import: performance work needed!
 #  When I import 2417 references with 52 attachments from 'export/Big whopping library.json'
 #  Then Export the library using 'Better BibLaTeX' to '/tmp/BWL.bib'
+#  Then write the Zotero log to 'zotero.log'
