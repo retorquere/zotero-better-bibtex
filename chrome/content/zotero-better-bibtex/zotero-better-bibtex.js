@@ -559,6 +559,8 @@ Zotero.BetterBibTeX = {
     self.get = function(item, pinmode) {
       if (item._sandboxManager) { item = arguments[1]; pinmode = arguments[2]; } // the sandbox inserts itself in call parameters
 
+      Zotero.BetterBibTeX.log('getting ' + pinmode + ' key for ' + JSON.stringify(item));
+
       var citekey = Zotero.BetterBibTeX.DB.rowQuery('select citekey, pinned from keys where itemID=? and libraryID = ?', [item.itemID, item.libraryID || 0]);
       if (!citekey) {
         Zotero.BetterBibTeX.log('keyformat: start');
@@ -650,6 +652,10 @@ Zotero.BetterBibTeX = {
         return true;
       },
 
+      librarySize: function() {
+        return Zotero.DB.valueQuery('select count(*) from items');
+      },
+
       export: function(translator) {
         var all = Zotero.BetterBibTeX.safeGetAll();
 
@@ -670,8 +676,23 @@ Zotero.BetterBibTeX = {
 
         all.sort(function(a, b) { return a.itemID - b.itemID; });
         translator = Zotero.BetterBibTeX.getTranslator(translator);
+
         var items = Zotero.BetterBibTeX.translate(translator, all, Zotero.BetterBibTeX.DebugBridge.data.exportOptions || {});
         return items;
+      },
+
+      exportToFile: function(translator, filename) {
+        var all = Zotero.BetterBibTeX.safeGetAll();
+        all.sort(function(a, b) { return a.itemID - b.itemID; });
+
+        Zotero.BetterBibTeX.log('export found ' + all.length + ' items');
+
+        var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
+        file.initWithPath(filename);
+
+        translator = Zotero.BetterBibTeX.getTranslator(translator);
+        Zotero.File.putContents(file, Zotero.BetterBibTeX.translate(translator, all, {exportNotes: true, exportFileData: false}));
+        return true;
       },
 
       getAll: function() {
