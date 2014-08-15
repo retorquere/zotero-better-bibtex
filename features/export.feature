@@ -181,10 +181,3 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
 #Scenario: Bulk import
 #  When I import 2417 references with 52 attachments from 'export/Big whopping library.json'
 #  Then Export the library using 'Better BibLaTeX' to '/tmp/BWL.bib'
-
-@90
-Scenario: Ignore/Remove last character if it is a punctuation (#90)
-  When I set preference translators.better-bibtex.citeKeyFormat to '[auth][year][Title:skipwords:select,1,1:capitalize:nopunct]'
-   And I import 1 reference from 'export/Mediatisieung Example (90).json'
-  Then A library export using 'Better BibTeX' should match 'export/Mediatisieung Example (90).bib'
-  Then show the Zotero log
