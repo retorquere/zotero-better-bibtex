@@ -417,7 +417,6 @@
 
     punct: Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
     '|nopunct': function(value) {
-      Zotero.debug('nopunct: ' + JSON.stringify(value) + '=>' + JSON.stringify(Zotero.Utilities.XRegExp.replace(value, this.punct, '', 'all')));
       return Zotero.Utilities.XRegExp.replace(value, this.punct, '', 'all');
     }
   };
