@@ -8,6 +8,7 @@ var Translator = new function() {
   self.unicode =  /*= unicode =*/;
   self.release =  '/*= release =*/';
   self.typeMap = {};
+  self.citekeys = Dict();
 
   var initialized = false;
 
@@ -77,6 +78,7 @@ var Translator = new function() {
     // remove any citekey from extra -- the export doesn't need it
     Zotero.BetterBibTeX.keymanager.extract(item);
     item.__citekey__ = Zotero.BetterBibTeX.keymanager.get(item, 'on-export');
+    this.citekeys[item.itemID] = item.__citekey__;
     return item;
   }
 };
@@ -260,7 +262,8 @@ function exportJabRefGroups() {
 
     // replace itemID with citation key
     if (collection.childItems) {
-      collection.childItems = collection.childItems.map(function(child) { return Zotero.BetterBibTeX.keymanager.get(child); }).filter(function(child) { return child; });
+      // TODO: need testcase infra for this
+      collection.childItems = collection.childItems.map(function(child) { return Translator.citekeys[child]; }).filter(function(child) { return child; });
     }
 
     collections[collection.id] = collection;

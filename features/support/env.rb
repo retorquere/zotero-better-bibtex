@@ -17,7 +17,7 @@ class JSONRPCClient
     result = {}
     params ||= []
     h = {"Content-Type" => "application/json"}
-    Net::HTTP.start(@address.host, @address.port) do |connection|
+    Net::HTTP.start(@address.host, @address.port, :read_timeout => (15 * 60)) do |connection| # 15 minute read timeout for bulk export
       body = connection.post(@address.path, {:method => method.to_s, :params => params}.to_json, h).body
       result = JSON.parse(body)
     end

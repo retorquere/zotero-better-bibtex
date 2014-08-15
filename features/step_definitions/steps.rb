@@ -68,16 +68,29 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
 
   entries = OpenStruct.new({start: BBT.librarySize})
 
-  attachments = attachments ? Integer(attachments) : 0
-
   BBT.import(bib)
 
+  start = Time.now
+
+  expected = references.to_i + attachments.to_i
+
   while !entries.now || entries.now != entries.new
-    sleep 1
+    sleep 2
     entries.now = entries.new || entries.start
     #STDOUT.puts entries.now
     entries.new = BBT.librarySize
+
+    elapsed = Time.now - start
+    if elapsed > 3
+      processed = entries.new - entries.start
+      remaining = expected - processed
+      speed = processed / elapsed
+      timeleft = (Time.mktime(0)+((expected - processed) / speed)).strftime("%H:%M:%S")
+      STDOUT.puts "Slow import: #{processed} entries @ #{speed.round(1)} entries/sec, #{timeleft} remaining"
+    end
   end
+
+
 
   expect(entries.now - entries.start).to eq(references.to_i + attachments.to_i)
 end

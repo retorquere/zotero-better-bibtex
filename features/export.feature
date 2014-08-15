@@ -6,8 +6,8 @@ Scenario: Better BibLaTeX Export 1
   When I import 1 reference from 'export/Better BibLaTeX.001.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.001.bib'
 
-@pc-e-1
-Scenario: Pandoc Citation Export 1
+@pandoc
+Scenario: Pandoc Citation Export
   When I import 1 reference with 1 attachment from 'export/Pandoc Citation.001.json'
   Then A library export using 'Pandoc Citation' should match 'export/Pandoc Citation.001.txt'
 
@@ -179,6 +179,6 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
 
 #@bulk
 #Scenario: Bulk import
-#  When I import 2417 references from 'export/Big whopping library.json'
+#  When I import 2417 references with 52 attachments from 'export/Big whopping library.json'
 #  Then Export the library using 'Better BibLaTeX' to '/tmp/BWL.bib'
 

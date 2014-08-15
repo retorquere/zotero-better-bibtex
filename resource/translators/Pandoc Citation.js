@@ -23,7 +23,7 @@ function doExport() {
   while (item = Translator.nextItem()) {
     keys.push('@' + item.__citekey__);
   }
-  Zotero.write(keys.join(' '));
+  Zotero.write('[' + keys.join('; ') + ']');
 }
 
 var exports = {
