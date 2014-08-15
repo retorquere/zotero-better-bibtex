@@ -3,6 +3,7 @@ require 'selenium-webdriver'
 require 'json'
 require 'pp'
 require 'fileutils'
+require 'ostruct'
 
 Before do
   $headless ||= false
@@ -39,6 +40,8 @@ Before do
   end
 
   BBT.reset
+  sleep 1
+  throw 'Library not empty!' unless BBT.librarySize == 0
 end
 at_exit do
   $headless.destroy if $headless
@@ -60,10 +63,23 @@ end
 #  end
 #end
 
-When /^I import '([^']+)'$/ do |filename|
+When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)'$/ do |references, dummy, attachments, filename|
   bib = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
+
+  entries = OpenStruct.new({start: BBT.librarySize})
+
+  attachments = attachments ? Integer(attachments) : 0
+
   BBT.import(bib)
-  sleep 2
+
+  while !entries.now || entries.now != entries.new
+    sleep 1
+    entries.now = entries.new || entries.start
+    #STDOUT.puts entries.now
+    entries.new = BBT.librarySize
+  end
+
+  expect(entries.now - entries.start).to eq(references.to_i + attachments.to_i)
 end
 
 Then /^the library should match '([^']+)'$/ do |filename|
@@ -98,7 +114,7 @@ Then(/^A library export using '([^']+)' should match '([^']+)'$/) do |translator
 end
 
 Then(/^Export the library using '([^']+)' to '([^']+)'$/) do |translator, filename|
-  File.open(filename, 'w'){|f| f.write(BBT.export(translator)) }
+  BBT.exportToFile(translator, filename)
 end
 
 #Then(/^I should find the following citation keys:$/) do |table|
