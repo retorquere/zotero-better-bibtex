@@ -165,17 +165,14 @@ Zotero.BetterBibTeX = {
 
     if (!onlyCache) {
       var _item = {extra: '' + item.getField('extra')};
-      onlyCache = !this.keymanager.extract(_item);
-      Zotero.BetterBibTeX.log('something to do? ' + !onlyCache);
-      if (!onlyCache) {
+      var citekey = !this.keymanager.extract(_item);
+      Zotero.BetterBibTeX.log('something to do? ' + citekey);
+      if (citekey) {
         item.setField('extra', _item.extra);
         item.save();
       }
     }
-
-    if (onlyCache) {
-      Zotero.BetterBibTeX.DB.query('delete from keys where itemID = ?', [item.itemID]);
-    }
+    Zotero.BetterBibTeX.DB.query('delete from keys where itemID = ?', [item.itemID]);
   },
 
   displayOptions: function(url) {
