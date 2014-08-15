@@ -93,9 +93,9 @@ Zotero.BetterBibTeX = {
         this.DB.query("insert or replace into _version_ (tablename, version) values ('keys', 1)");
         break;
     }
-    this.DB.query('PRAGMA temp_store=MEMORY;');
-    this.DB.query('PRAGMA journal_mode=MEMORY;');
-    this.DB.query('PRAGMA synchronous = OFF;');
+    // this.DB.query('PRAGMA temp_store=MEMORY;');
+    // this.DB.query('PRAGMA journal_mode=MEMORY;');
+    // this.DB.query('PRAGMA synchronous = OFF;');
 
     var endpoint;
     for (endpoint in Zotero.BetterBibTeX.endpoints) {
