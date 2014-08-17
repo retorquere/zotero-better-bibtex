@@ -565,16 +565,8 @@ Zotero.BetterBibTeX = {
       return m[1];
     };
 
-    // TODO: remove repair action
-    var fix = {
-      start: Zotero.Date.dateToSQL(new Date(2014, 7, 10), true),
-      end: Zotero.Date.dateToSQL(new Date(2014, 7, 14), true)
-    };
-
     for (let row of Zotero.BetterBibTeX.array(Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL) || [])) {
       Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, pinned) values (?, ?, ?, ?)', [row.itemID, row.libraryID, self.extract({extra: row.extra}), 1]);
-      // TODO: remove repair action
-      Zotero.DB.query('update items set dateModified = clientDateModified where itemID = ? and dateModified <> clientDateModified and clientDateModified between ? and ?', [row.itemID, fix.start, fix.end]);
     }
 
     self.get = function(item, pinmode) {
