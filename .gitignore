@@ -7,3 +7,5 @@ features/import/*.out.json
 features/export/*.out.txt
 resource/translators/Parser.js
 chrome/content/zotero-better-bibtex/Formatter.js
+update.rdf
+*.xpi

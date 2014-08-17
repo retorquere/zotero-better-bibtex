@@ -86,7 +86,7 @@ task :dropbox => EXTENSION.xpi do
   FileUtils.cp(EXTENSION.xpi, File.join(dropbox, EXTENSION.xpi))
 end
 
-file EXTENSION.xpi => EXTENSION.sources do |t|
+file EXTENSION.xpi => EXTENSION.sources + ['update.rdf', 'install.rdf'] do |t|
   #Dir['*.xpi'].each{|xpi| File.unlink(xpi)}
 
   files = t.prerequisites.reject{|f| f=~ /^(test|tmp|resource\/(translators|abbreviations))\// }
@@ -99,11 +99,11 @@ file EXTENSION.xpi => EXTENSION.sources do |t|
   EXTENSION.build(files)
 end
 
-file EXTENSION.update_rdf => [EXTENSION.xpi, 'install.rdf'] do |t|
+file 'update.rdf' => ['install.rdf'] do |t|
   EXTENSION.make_update_rdf
 end
 
-task :publish => ['README.md', EXTENSION.xpi, EXTENSION.update_rdf] do
+task :publish => ['README.md', EXTENSION.xpi, 'update.rdf'] do
   EXTENSION.publish
 end
 
@@ -111,8 +111,8 @@ file 'README.md' => ["www/#{EXTENSION.extension}/index.md", 'install.rdf', 'Rake
   EXTENSION.make_readme
 end
 
-task :release, :bump do |t, args|
-  EXTENSION.bump((args[:bump] || 'patch').intern)
+task :bump, :what do |t, args|
+  EXTENSION.bump((args[:what] || 'patch').intern)
 end
 
 #### GENERATED FILES
