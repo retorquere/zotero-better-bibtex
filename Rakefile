@@ -211,7 +211,7 @@ task :abbrevs do
   # http://www.efm.leeds.ac.uk/~mark/ISIabbr/
   # http://www.csa.com/factsheets/supplements/ipa.php
 
-  lists = Nokogiri::HTML(geturl('http://jabref.sourceforge.net/resources.php'))
+  lists = Nokogiri::HTML(ZotPlus::RakeHelper.geturl('http://jabref.sourceforge.net/resources.php'))
   main = lists.at_css('div#main')
   main.children.each{|child|
     break if child.name == 'h3' && child['id'] == 'availablelists'
