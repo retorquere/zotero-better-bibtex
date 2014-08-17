@@ -81,12 +81,12 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
     entries.new = BBT.librarySize
 
     elapsed = Time.now - start
-    if elapsed > 3
+    if elapsed > 5
       processed = entries.new - entries.start
       remaining = expected - processed
       speed = processed / elapsed
       timeleft = (Time.mktime(0)+((expected - processed) / speed)).strftime("%H:%M:%S")
-      STDOUT.puts "Slow import: #{processed} entries @ #{speed.round(1)} entries/sec, #{timeleft} remaining"
+      STDOUT.puts "Slow import (#{elapsed}): #{processed} entries @ #{speed.round(1)} entries/sec, #{timeleft} remaining"
     end
   end
 
