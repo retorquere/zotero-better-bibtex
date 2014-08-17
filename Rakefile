@@ -61,7 +61,13 @@ task :default => XPI do
 end
 
 rule '.js' => '.pegjs' do |t|
-  sh "pegjs -e BetterBibTeX#{File.basename(t.name, File.extname(t.name))} #{t.source} #{t.name}"
+  sh "pegjs -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{t.source} #{t.name}"
+end
+rule '.js' => '.hx' do |t|
+  sh "haxe -cp #{File.dirname(t.source)} #{t.source} -js #{t.name}"
+  js = open(t.name).read
+  js.sub!("\n})(typeof window != \"undefined\" ? window : exports);\n", "\n})(Zotero);\n")
+  open(t.name, 'w'){|f| f.write(js)}
 end
 
 task :clean do
