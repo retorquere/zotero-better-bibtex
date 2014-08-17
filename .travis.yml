@@ -8,8 +8,5 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install nodejs npm
   - npm install pegjs
-before_script:
-  - rm -f .gitmodules
-  - git clone https://github.com/ZotPlus/ZotPlus.github.io.git www
 addons:
   firefox: "30.0"

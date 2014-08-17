@@ -1,7 +1,3 @@
-[submodule "gh-pages"]
-	path = gh-pages
-	url = git@github.com:ZotPlus/zotero-better-bibtex.git
-  branch = gh-pages
 [submodule "www"]
 	path = www
 	url = git@github.com:ZotPlus/ZotPlus.github.io.git
