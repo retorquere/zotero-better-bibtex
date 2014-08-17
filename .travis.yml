@@ -1,12 +1,14 @@
 language: ruby
 git:
-  submodules: true
+  submodules: false
 rvm:
   - 2.1.1
 script: rake test
 before_install:
-- sudo apt-get update
-- sudo apt-get install nodejs npm
-- npm install pegjs
+  - sudo apt-get update
+  - sudo apt-get install nodejs npm
+  - npm install pegjs
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule update --init --recursive
 addons:
   firefox: "30.0"
