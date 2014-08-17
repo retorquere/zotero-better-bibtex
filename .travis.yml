@@ -1,6 +1,6 @@
 language: ruby
 git:
-  submodules: false
+  submodules: true
 rvm:
   - 2.1.1
 script: rake test
