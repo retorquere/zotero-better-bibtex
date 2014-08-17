@@ -13,13 +13,12 @@ require 'tempfile'
 require 'rubygems/package'
 require 'zlib'
 require 'open3'
-
-EXTENSION_ID = Nokogiri::XML(File.open('install.rdf')).at('//em:id').inner_text
-EXTENSION = EXTENSION_ID.gsub(/@.*/, '')
-RELEASE = Nokogiri::XML(File.open('install.rdf')).at('//em:version').inner_text
+require 'zotplus-rakehelper'
 
 BRANCH=`git rev-parse --abbrev-ref HEAD`.strip
 TMP="tmp/#{BRANCH}"
+UNICODE_MAPPING = "#{TMP}/unicode.json"
+EXTENSION = ZotPlus::RakeHelper.new([UNICODE_MAPPING])
 
 TRANSLATORS = [
   {name: 'Better BibTeX'},
@@ -31,7 +30,6 @@ TRANSLATORS = [
 
 FileUtils.mkdir_p TMP
 
-UNICODE_MAPPING = "#{TMP}/unicode.json"
 BIBTEX_GRAMMAR  = Dir["resource/**/*.pegjs"][0]
 DICT            = 'chrome/content/zotero-better-bibtex/dict.js'
 
@@ -49,15 +47,7 @@ def stir(livescript)
   stirred
 end
 
-SOURCES = %w{chrome test/import test/export resource defaults chrome.manifest install.rdf bootstrap.js}
-            .collect{|f| File.directory?(f) ?  Dir["#{f}/**/*"] : f}.flatten
-            .select{|f| File.file?(f)}
-            .collect{|f| f.sub(/\.pegjs$/, '.js')}
-            .reject{|f| f =~ /[~]$/ || f =~ /\.swp$/} + [UNICODE_MAPPING]
-
-XPI = "zotero-#{EXTENSION}-#{RELEASE}#{BRANCH == 'master' ? '' : '-' + BRANCH}.xpi"
-
-task :default => XPI do
+task :default => EXTENSION.xpi do
 end
 
 rule '.js' => '.pegjs' do |t|
@@ -75,13 +65,10 @@ task :clean do
 end
 
 task :debugbridge do
-  update = Nokogiri::XML(geturl('https://github.com/ZotPlus/zotero-debug-bridge/raw/master/update.rdf')).at('//em:updateLink').inner_text
-  debug_bridge = Dir['tmp/zotero-debug-bridge-*.xpi']
-  debug_bridge.each{|f| File.unlink(f)} if debug_bridge.size != 1 || update.sub(/.*\//, '') != File.basename(debug_bridge[0])
-  download(update, "tmp/#{update.sub(/.*\//, '')}") unless File.file?("tmp/#{update.sub(/.*\//, '')}")
+  EXTENSION.get_debugbridge
 end
 
-task :test, [:tag] => [XPI, :debugbridge] do |t, args|
+task :test, [:tag] => [EXTENSION.xpi, :debugbridge] do |t, args|
   tag = "@#{args[:tag]}".sub(/^@@/, '@')
 
   if tag == '@'
@@ -93,146 +80,39 @@ task :test, [:tag] => [XPI, :debugbridge] do |t, args|
   system "cucumber #{tag}" or throw 'One or more tests failed'
 end
 
-task :dropbox => XPI do
+task :dropbox => EXTENSION.xpi do
   dropbox = File.expand_path('~/Dropbox')
   Dir["#{dropbox}/*.xpi"].each{|xpi| File.unlink(xpi)}
-  FileUtils.cp(XPI, File.join(dropbox, XPI))
+  FileUtils.cp(EXTENSION.xpi, File.join(dropbox, EXTENSION.xpi))
 end
 
-file XPI => SOURCES do |t|
-  Dir['*.xpi'].each{|xpi| File.unlink(xpi)}
+file EXTENSION.xpi => EXTENSION.sources do |t|
+  #Dir['*.xpi'].each{|xpi| File.unlink(xpi)}
 
-  begin
-    puts "Creating #{t.name}"
-    Zip::File.open(t.name, 'w') do |zipfile|
-      t.prerequisites.reject{|f| f=~ /^(test|tmp|resource\/(translators|abbreviations))\// }.each{|file|
-        zipfile.add(file, file)
-      }
+  files = t.prerequisites.reject{|f| f=~ /^(test|tmp|resource\/(translators|abbreviations))\// }
 
-      zipfile.mkdir('resource/translators')
-      TRANSLATORS.each{|translator|
-        translator[:source] = "resource/translators/#{translator[:name]}.js"
-        zipfile.get_output_stream(translator[:source]){|f|
-          f.write((Translator.new(translator)).to_s)
-        }
-      }
-    end
-  rescue => e
-    File.unlink(t.name) if File.exists?(t.name)
-    throw e
-  end
-end
-
-file 'update.rdf' => [XPI, 'install.rdf'] do |t|
-  update_rdf = Nokogiri::XML(File.open(t.name))
-  update_rdf.at('//em:version').content = RELEASE
-  update_rdf.at('//RDF:Description')['about'] = "urn:mozilla:extension:#{EXTENSION_ID}"
-  update_rdf.xpath('//em:updateLink').each{|link| link.content = "https://raw.github.com/ZotPlus/zotero-#{EXTENSION}/#{BRANCH}/#{XPI}" }
-  update_rdf.xpath('//em:updateInfoURL').each{|link| link.content = "https://github.com/ZotPlus/zotero-#{EXTENSION}" }
-  File.open('update.rdf','wb') {|f| update_rdf.write_xml_to f}
-end
-
-task :publish => ['README.md', XPI, 'update.rdf'] do
-  sh "git add #{XPI}"
-  sh "git commit -am #{RELEASE}"
-  sh "git tag #{RELEASE}"
-  sh "git push"
-  sh "cd wiki; git commit -am 'release'; git push"
-end
-
-file 'README.md' => ['wiki/Home.md', 'install.rdf', 'Rakefile'] do |t|
-  puts 'Updating README.md'
-
-  home = nil
-  [t.prerequisites[0], 'wiki/Support-Request-Guidelines.md'].each{|patch|
-    next unless File.exists?(patch)
-    puts "Patching #{patch}"
-    readme = File.open(patch).read
-    readme.gsub!(/\(http[^)]+\.xpi\)/, "(https://github.com/ZotPlus/zotero-#{EXTENSION}/raw/#{BRANCH}/#{XPI})")
-    readme.gsub!(/\*\*[0-9]+\.[0-9]+\.[0-9]+\*\*/, "**#{RELEASE}**")
-    readme.gsub!(/[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}/, DateTime.now.strftime('%Y-%m-%d %H:%M'))
-    home = readme if patch =~ /Home\.md$/
-    File.open(patch, 'w'){|f| f.write(readme) }
+  TRANSLATORS.each{|translator|
+    translator[:source] = "resource/translators/#{translator[:name]}.js"
+    files << {translator[:source] => Translator.new(translator).to_s}
   }
 
-  if home
-    puts "Patching #{t.name}"
-    home.gsub!(/\[\[[^\]]+\]\]/) {|link|
-      link.gsub!(/^\[\[|\]\]$/, '')
-      text = link.gsub(/\|.*/, '')
-      link.gsub!(/.*\|/, '')
-      link.gsub!(/\s/, '-')
-      link = "https://github.com/ZotPlus/zotero-better-bibtex/wiki/#{link}"
-      "[#{text}](#{link})"
-    }
-    File.open(t.name, 'w'){|f| f.write(home)}
-  end
+  EXTENSION.build(files)
 end
 
-task :newtest, :translator, :type do |t, args|
-  translator = args[:translator]
-  type = args[:type]
+file EXTENSION.update_rdf => [EXTENSION.xpi, 'install.rdf'] do |t|
+  EXTENSION.make_update_rdf
+end
 
-  TRANSLATORS.each{|t|
-    id = t[:name].gsub(/[^A-Z]/, '').downcase
-    translator = t[:name] if translator.downcase == id
-  }
-  type = 'export' if type == 'e'
-  type = 'import' if type == 'i'
+task :publish => ['README.md', EXTENSION.xpi, EXTENSION.update_rdf] do
+  EXTENSION.publish
+end
 
-  case type
-    when 'export', 'import'
-      inputext = (type == 'export' ? 'json' : 'bib')
-      template = []
-      tests = Dir["test/#{type}/*.#{inputext}"].collect{|input|
-        if File.basename(input) =~ /^#{translator}\.([0-9]+)\.#{inputext}$/
-          Integer($1.gsub(/^0+/, ''))
-        else
-          nil
-        end
-      }.compact
-
-      lasttest = Dir["test/#{type}/*.#{inputext}"].collect{|input|
-        if File.basename(input) =~ /([0-9]+)\.#{inputext}$/
-          Integer($1.gsub(/^0+/, ''))
-        else
-          nil
-        end
-      }.compact
-
-      throw "No #{type.inspect} tests for #{translator.inspect}" if tests.empty?
-      template = tests.max.to_s.rjust(3, '0')
-      newtest = (lasttest.max + 1).to_s.rjust(3, '0')
-
-      Dir["test/#{type}/#{translator}.#{template}.*"].each{|src|
-        tgt = src.sub(template, newtest)
-        FileUtils.cp(src, tgt)
-      }
-    else
-      raise "Unexpected type #{type.inspect}"
-  end
+file 'README.md' => ["www/#{EXTENSION.extension}/index.md", 'install.rdf', 'Rakefile'] do |t|
+  EXTENSION.make_readme
 end
 
 task :release, :bump do |t, args|
-  puts `git checkout zotero*.xpi`
-
-  bump = args[:bump] || 'patch'
-
-  release = RELEASE.split('.').collect{|n| Integer(n)}
-  release = case bump
-            when 'major' then [release[0] + 1, 0, 0]
-            when 'minor' then [release[0], release[1] + 1, 0]
-            when 'patch' then [release[0], release[1], release[2] + 1]
-            else raise "Unexpected release increase #{bump.inspect}"
-            end
-  release = release.collect{|n| n.to_s}.join('.')
-
-  install_rdf = Nokogiri::XML(File.open('install.rdf'))
-  install_rdf.at('//em:version').content = release
-  install_rdf.at('//em:updateURL').content = "https://raw.github.com/ZotPlus/zotero-#{EXTENSION}/#{BRANCH}/update.rdf"
-  File.open('install.rdf','wb') {|f| install_rdf.write_xml_to f}
-  puts `git add install.rdf`
-  puts "Release set to #{release}. Please publish."
+  EXTENSION.bump((args[:bump] || 'patch').intern)
 end
 
 #### GENERATED FILES
@@ -277,7 +157,7 @@ class Translator
     @_unicode_mapping = Translator.mapping
     @_bibtex_parser = Translator.parser
     @_dict = Translator.dict
-    @_release = RELEASE
+    @_release = EXTENSION.release
     get_testcases
   end
   attr_reader :_id, :_label, :_timestamp, :_release, :_unicode, :_unicode_mapping, :_bibtex_parser, :_dict, :_testcases
@@ -436,7 +316,7 @@ end
 file UNICODE_MAPPING => 'Rakefile' do |t|
   begin
     xml = File.join(File.dirname(t.name), File.basename(t.name, File.extname(t.name)) + '.xml')
-    download('http://web.archive.org/web/20131109072541/http://www.w3.org/2003/entities/2007xml/unicode.xml', xml)
+    EXTENSION.download('http://web.archive.org/web/20131109072541/http://www.w3.org/2003/entities/2007xml/unicode.xml', xml)
 
     mapping = Nokogiri::XML(open(xml))
     puts mapping.errors
@@ -497,29 +377,6 @@ file UNICODE_MAPPING => 'Rakefile' do |t|
 end
 
 ### UTILS
-
-def geturl(url)
-  response = Typhoeus.get(url, {followlocation: true})
-  raise "Request failed" unless response.success?
-  return response.body
-end
-
-def download(url, file)
-  puts "Downloading #{url} to #{file}"
-  target = File.open(file, 'wb')
-  request = Typhoeus::Request.new(url, {followlocation: true})
-  request.on_headers do |response|
-    raise "Request failed: #{response.code.to_s}" unless response.code == 200 # response.success?
-  end
-  request.on_body do |chunk|
-    target.write(chunk)
-  end
-  request.on_complete do |response|
-    target.close
-    throw "download failed" unless response.success?
-  end
-  request.run
-end
 
 task :fields do
   fields = IO.readlines('../zotero/chrome/locale/en-US/zotero/zotero.properties').collect{|line|
@@ -586,7 +443,7 @@ task :abbrevs do
 
     href = "http://jabref.sourceforge.net/#{href}" unless href =~ /https?:\/\//
     tgt = "#{TMP}/abbreviations/#{id.to_s.rjust(2,'0')}-#{href.sub(/.*\//, '')}"
-    download(href, tgt)
+    EXTENSION.download(href, tgt)
   }
   Dir["#{TMP}/abbreviations/*"].sort.each{|a|
     puts "importing #{a}"
