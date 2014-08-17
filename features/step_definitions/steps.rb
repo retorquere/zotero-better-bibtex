@@ -48,7 +48,7 @@ at_exit do
 end
 
 #After do |s|
-  #STDOUT.puts 'log: ' + DBB.log
+#  STDOUT.puts 'log: ' + DBB.log
 #end
 
 #Given /^that ([^\s]+) is set to (.*)$/ do |pref, value|
@@ -93,6 +93,10 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
 
 
   expect(entries.now - entries.start).to eq(references.to_i + attachments.to_i)
+end
+
+Then /^write the library to '([^']+)'$/ do |filename|
+  open(filename, 'w'){|f| f.write(JSON.pretty_generate(BBT.getAll, :indent => '  ')) }
 end
 
 Then /^the library should match '([^']+)'$/ do |filename|

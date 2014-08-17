@@ -278,7 +278,7 @@ function createZoteroReference(bibtexitem) {
         if (!creator) { return; }
 
         if (typeof creator == 'string') {
-          creator = Zotero.Utilities.cleanAuthor(name, field, false);
+          creator = Zotero.Utilities.cleanAuthor(creator, field, false);
         } else {
           creator.creatorType = field;
         }

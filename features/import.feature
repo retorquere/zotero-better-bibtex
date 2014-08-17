@@ -86,3 +86,8 @@ Scenario: Author splitter failure (89)
   When I import 1 reference from 'import/Author splitter failure.bib'
   Then the library should match 'import/Author splitter failure.json'
 
+@92
+Scenario: Failure to handle unparsed author names (92)
+  When I import 1 reference from 'import/Failure to handle unparsed author names (92).bib'
+  Then the library should match 'import/Failure to handle unparsed author names (92).json'
+
