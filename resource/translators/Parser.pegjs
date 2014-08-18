@@ -123,9 +123,9 @@ start
   = entries:entry* { return bibtex; }
 
 entry
-  = _* "@comment" _* "{" comment:string* "}" { bibtex.comments.push(flatten(comment).trim()); }
-  / _* "@string" _* "{" _* str:key_value _* "}" { bibtex.strings[str.key] = str.value; }
-  / _* "@" !("string" / "comment") reference
+  = _* '@comment'i _* "{" comment:string* "}" { bibtex.comments.push(flatten(comment).trim()); }
+  / _* '@string'i _* "{" _* str:key_value _* "}" { bibtex.strings[str.key] = str.value; }
+  / _* '@' reference
   / other:[^@]+ { bibtex.comments.push(flatten(other).trim()); }
 
 reference
@@ -183,15 +183,6 @@ citekey
 field
   = _* key:attachmenttype _* '=' _* val:attachments _* (',' _*)? { return {key: 'file', type: 'file', value: filterattachments(val || [], key)}; }
   / _* key:creatortype _* '=' _* val:bracedvalue _* ("," _*)? {
-      var _dbg = 'PARSING: ';
-      val.forEach(function(fragment) {
-        if (fragment instanceof String) {
-          _dbg += '<<' + fragment + '>>';
-        } else {
-          _dbg += fragment;
-        }
-      });
-      Zotero.debug(_dbg);
       return {key: key.toLowerCase(), type: 'creator', value: Creators.parse(val)};
     }
   / key_value
