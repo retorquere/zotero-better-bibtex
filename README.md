@@ -8,7 +8,9 @@ Zotero:
 
 * Stable **[Citation Keys](https://zotplus.github.io/better-bibtex/Citation-Keys.html)**, without key clashes! Generates citation keys that take into account other existing keys in your library
   that are not part of the items you export. Prevent random breakage!
-* **Converts from/to HTML/LaTeX**: Currently supports i/\emph/\textit, b/\textbf, sup/\_{...} and sub/^{...}; more can
+* **Converts from/to HTML/LaTeX**: Currently supports &lt;i&gt;&#8660;\emph &amp; \textit, &lt;b&gt;&#8660;\textbf,
+  &lt;sup&gt;&#8660;\_{...}
+  and &lt;sub&gt;&#8660;^{...}; more can
   be added on request. Finally add italics and super/supscript to your titles! The plugin contains a comprehensive list
   of LaTeX constructs, so stuff like \"{o} or \"o will be converted to their unicode equivalents on import. If you need
   literal LaTeX in your export: surround it with &lt;pre&gt;....&lt;/pre&gt; tags.
@@ -28,8 +30,8 @@ The Better BibTeX [configuration pane](https://zotplus.github.io/better-bibtex/C
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.33.xpi)
-(**0.6.33**).
+version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.34.xpi)
+(**0.6.34**).
 If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
