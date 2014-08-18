@@ -125,6 +125,7 @@ start
 entry
   = _* '@comment'i _* "{" comment:string* "}" { bibtex.comments.push(flatten(comment).trim()); }
   / _* '@string'i _* "{" _* str:key_value _* "}" { bibtex.strings[str.key] = str.value; }
+  / _* '@preamble'i _* "{" _* simplestring _* "}"
   / _* '@' reference
   / other:[^@]+ { bibtex.comments.push(flatten(other).trim()); }
 
@@ -205,12 +206,14 @@ key
   = key:[^ \t\n\r=]+ { return flatten(key); }
 
 value
-  = val:[^#"{} \t\n\r,]+ {
-      val = flatten(val);
-      return (bibtex.strings[val] || val);
-    }
+  = val:[^#"{} \t\n\r,]+ { val = flatten(val); return (bibtex.strings[val] || val); }
   / val:bracedvalue { return flatten(val); }
   / _* "#" _* val:value { return val; }
+
+simplestring
+  = [^#"{} \t\n\r,]+
+  / '"' [^"]* '"'
+  / _* "#" _* simplestring
 
 bracedvalue
   = '{' & { delete bibtex.quote; return true; } val:string* '}' & { delete bibtex.quote; return true; } { return val; }
