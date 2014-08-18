@@ -232,6 +232,7 @@ url
 string
   = text:plaintext                { return text; }
   / "\\\\"                        { return "\n"; }
+  / bracket:[\[\]]                { return bracket; }
   / "\\" text:quotedchar          { return text; }
   / text:(_ / [~])+               { return ' '; }
   / [#$&]+                        { return ''; } /* macro parameters, math mode, table separator */

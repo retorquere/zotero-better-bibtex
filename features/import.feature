@@ -91,3 +91,8 @@ Scenario: Failure to handle unparsed author names (92)
   When I import 1 reference from 'import/Failure to handle unparsed author names (92).bib'
   Then the library should match 'import/Failure to handle unparsed author names (92).json'
 
+@94
+Scenario: Problem when importing BibTeX entries with square brackets #94
+  When I import 1 reference from 'import/Problem when importing BibTeX entries with square brackets #94.bib'
+  Then the library should match 'import/Problem when importing BibTeX entries with square brackets #94.json'
+
