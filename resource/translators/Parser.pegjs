@@ -245,7 +245,8 @@ string
   / "\\textsc" text:bracedparam   { return '<span style="small-caps">' + text + '</span>'; }
   / '{' text:string* '}'          { return new String(flatten(text)); }
   / '$' text:string* '$'          { return flatten(text); }
-  / "%" [^\n]* "\n"               { return ''; }          /* comment */
+  /* / "%" [^\n]* "\n"            { return ''; }          comment */
+  / '%'                           { return '%'; } // this doesn't feel rigth
   / "\\" cmd:[^a-z] ('[' key_value* ']')?  param:param {  /* single-char command */
                                                           var cmds = ["\\" + cmd + param];
                                                           if (param.length == 1) { cmds.push("\\" + cmd + '{' + param + '}'); }
