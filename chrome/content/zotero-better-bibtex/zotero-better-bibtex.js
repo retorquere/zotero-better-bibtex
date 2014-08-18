@@ -1,4 +1,5 @@
 Components.utils.import("resource://gre/modules/Services.jsm");
+Components.utils.import("resource://gre/modules/AddonManager.jsm");
 
 Zotero.BetterBibTeX = {
   Prefs: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero.translators.better-bibtex."),
@@ -44,7 +45,7 @@ Zotero.BetterBibTeX = {
   },
 
   embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
-  translators: {},
+  translators: Dict(),
   threadManager: Components.classes["@mozilla.org/thread-manager;1"].getService(),
   windowMediator: Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator),
 
@@ -85,7 +86,6 @@ Zotero.BetterBibTeX = {
     this.DB.query('create table if not exists _version_ (tablename primary key, version not null, unique (tablename, version))');
     this.DB.query("insert or ignore into _version_ (tablename, version) values ('keys', 0)");
 
-    this.log('keys version = ' + JSON.stringify(this.DB.valueQuery("select version from _version_ where tablename = 'keys'")));
     switch (this.DB.valueQuery("select version from _version_ where tablename = 'keys'")) {
       case 0:
         this.log('initializing DB: no tables');
@@ -110,16 +110,47 @@ Zotero.BetterBibTeX = {
       keymanager: Zotero.BetterBibTeX.keymanager
     };
 
+    var notifierID = Zotero.Notifier.registerObserver(this.itemChanged, ['item']);
+    // Unregister callback when the window closes (important to avoid a memory leak)
+    window.addEventListener('unload', function(e) { Zotero.Notifier.unregisterObserver(notifierID); }, false);
+
+    Zotero.BetterBibTeX.loadTranslators();
+
+    /*
+    AddonManager.addAddonListener({
+      onUninstalling: function(addon){
+        if (addon.id != 'better-bibtex@iris-advies.com') { return; }
+        Zotero.BetterBibTeX.removeTranslators();
+      },
+      onDisabling: function(addon) {
+        if (addon.id != 'better-bibtex@iris-advies.com') { return; }
+        Zotero.BetterBibTeX.removeTranslators();
+      },
+      onEnabled: function(addon) {
+        if (addon.id != 'better-bibtex@iris-advies.com') { return; }
+        Zotero.BetterBibTeX.loadTranslators();
+      }
+    });
+    */
+  },
+
+  loadTranslators: function() {
     this.safeLoad('Better BibTeX.js');
     this.safeLoad('Better BibLaTeX.js');
     this.safeLoad('LaTeX Citation.js');
     this.safeLoad('Pandoc Citation.js');
     this.safeLoad('Zotero TestCase.js');
     Zotero.Translators.init();
+  },
 
-    var notifierID = Zotero.Notifier.registerObserver(this.itemChanged, ['item']);
-    // Unregister callback when the window closes (important to avoid a memory leak)
-    window.addEventListener('unload', function(e) { Zotero.Notifier.unregisterObserver(notifierID); }, false);
+  removeTranslators: function() {
+    Dict.forEach(this.translators, function(name, header) {
+      var fileName = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID);
+      var destFile = Zotero.getTranslatorsDirectory();
+      destFile.append(fileName);
+      destFile.remove();
+    });
+    Zotero.Translators.init();
   },
 
   findKeysSQL: "" +
@@ -433,15 +464,15 @@ Zotero.BetterBibTeX = {
       return;
     }
 
-    Zotero.BetterBibTeX.translators[header.label.toLowerCase().replace(/[^a-z]/, '')] = header.translatorID;
+    Zotero.BetterBibTeX.translators[header.label.toLowerCase().replace(/[^a-z]/, '')] = header;
     Zotero.Translators.save(header, data);
   },
 
   getTranslator: function(name) {
     name = name.toLowerCase().replace(/[^a-z]/, '');
-    var translator = Zotero.BetterBibTeX.translators['better' + name] || Zotero.BetterBibTeX.translators[name] || Zotero.BetterBibTeX.translators['zotero' + name];
-    if (!translator) { throw('No translator' + name + '; available: ' + Object.keys(Zotero.BetterBibTeX.translators).join(', ')); }
-    return translator;
+    var translator = this.translators['better' + name] || this.translators[name] || this.translators['zotero' + name];
+    if (!translator) { throw('No translator' + name + '; available: ' + Object.keys(this.translators).join(', ')); }
+    return translator.translatorID;
   },
 
   clearCiteKeys: function(onlyCache) {
@@ -565,8 +596,11 @@ Zotero.BetterBibTeX = {
       return m[1];
     };
 
-    for (let row of Zotero.BetterBibTeX.array(Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL) || [])) {
-      Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, pinned) values (?, ?, ?, ?)', [row.itemID, row.libraryID, self.extract({extra: row.extra}), 1]);
+    if (Zotero.BetterBibTeX.Prefs.getBoolPref('scan-citekeys')) {
+      for (let row of Zotero.BetterBibTeX.array(Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL) || [])) {
+        Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, pinned) values (?, ?, ?, ?)', [row.itemID, row.libraryID, self.extract({extra: row.extra}), 1]);
+      }
+      Zotero.BetterBibTeX.Prefs.setBoolPref('scan-citekeys', false);
     }
 
     self.get = function(item, pinmode) {

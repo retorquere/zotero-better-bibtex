@@ -1,3 +1,9 @@
+@PREAMBLE{" \makeatletter
+\@ifundefined{url}{\newcommand{\url}[1]{\texttt{#1}}}{}
+\@ifundefined{bibcyr}{\newcommand{\bibcyr}[1]{---}}{}
+\ProvideTextCommandDefault{\textmu}{\ensuremath{\mu}}
+\makeatother "}
+
 @Article{Akhavan_2009,
 Title = {Synthesis and electrochromic study of sol-gel cuprous oxide nanoparticles accumulated on silica thin film},
 Author = {Akhavan, O. and Tohidi, H. and Moshfegh, A. Z.},

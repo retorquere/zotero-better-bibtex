@@ -96,8 +96,8 @@ Scenario: Problem when importing BibTeX entries with square brackets #94
   When I import 1 reference from 'import/Problem when importing BibTeX entries with square brackets #94.bib'
   Then the library should match 'import/Problem when importing BibTeX entries with square brackets #94.json'
 
-@95
-Scenario: Problem when importing BibTeX entries with percent sign #95
-  When I import 1 reference from 'import/Problem when importing BibTeX entries with percent sign #95.bib'
-  Then the library should match 'import/Problem when importing BibTeX entries with percent sign #95.json'
+@95 @96
+Scenario: Problem when importing BibTeX entries with percent sign #95 or preamble #96
+  When I import 1 reference from 'import/Problem when importing BibTeX entries with percent sign #95 or preamble #96.bib'
+  Then the library should match 'import/Problem when importing BibTeX entries with percent sign #95 or preamble #96.json'
 
