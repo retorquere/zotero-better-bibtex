@@ -14,6 +14,7 @@ var Translator = new function() {
 
   self.initialize = function() {
     if (initialized) { return; }
+    initialized = true;
 
     self.pattern                = Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
     self.skipFields             = Zotero.getHiddenPref('better-bibtex.skipfields').split(',').map(function(field) { return field.trim(); });
@@ -62,8 +63,38 @@ var Translator = new function() {
       });
     }
 
-    initialized = true;
-  }
+    self.collections = [];
+    var collection;
+    while(collection = Zotero.nextCollection()) {
+      self.collections.push(collection);
+    }
+
+    var collectionsByID = Dict();
+    var isRootCollection = Dict();
+    self.collections.forEach(function(coll) {
+      collectionsByID[coll.id] = coll;
+      isRootCollection[coll.id] = true;
+    });
+
+    self.collections.forEach(function(coll) {
+      delete coll.primary;
+      delete coll.fields;
+      delete coll.descendents; // there's something really wrong with these besides being misidentified ancestors
+
+      coll.items = coll.childItems;
+      delete coll.childItems;
+      coll.collections = coll.childCollections;
+      delete coll.childCollections;
+
+      coll.collections = coll.collections.map(function(id) {
+        delete isRootCollection[id];
+        return collectionsByID[id];
+      });
+      delete coll.childCollections;
+    });
+
+    self.collections = self.collections.filter(function(coll) { return isRootCollection[coll.id]; });
+  };
 
   var startTime = null;
   var exported = 0;
@@ -86,7 +117,8 @@ var Translator = new function() {
     item.__citekey__ = Zotero.BetterBibTeX.keymanager.get(item, 'on-export');
     this.citekeys[item.itemID] = item.__citekey__;
     return item;
-  }
+  };
+
 };
 
 function writeFieldMap(item, fieldMap) {

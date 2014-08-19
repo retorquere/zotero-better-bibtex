@@ -27,7 +27,6 @@ function scrub(item) {
   delete item.dateAdded;
   delete item.dateModified;
   delete item.uri;
-  delete item.itemID;
   delete item.multi;
 
   (item.creators || []).forEach(function(creator) {
@@ -121,6 +120,7 @@ function doExport() {
       exportFileData:         Translator.exportFileData,
       exportNotes:            Translator.exportNotes
     },
+    collections:              Translator.collections,
     items: []
   };
 
