@@ -524,7 +524,7 @@ function bibtexExport() {
     Zotero.write("\n}");
   }
 
-  exportJabRefGroups();
+  JabRef.exportGroups();
 
   Zotero.write("\n");
 }

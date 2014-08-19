@@ -210,7 +210,7 @@ function doExport() {
     Zotero.write("\n}");
   }
 
-  exportJabRefGroups();
+  JabRef.exportGroups();
 
   Zotero.write("\n");
 }
@@ -395,6 +395,7 @@ function createZoteroReference(bibtexitem) {
     delete item.backupPublisher;
   }
   item.complete();
+  return item;
 }
 
 /*= include import.js =*/

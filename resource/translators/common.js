@@ -281,80 +281,45 @@ function flushEntry(item) {
   }
 }
 
-function jabrefSerialize(arr, sep, wrap) {
+if (!JabRef) {
+  var JabRef = {};
+}
+
+JabRef.serialize = function(arr, sep, wrap) {
   return arr.map(function(v) {
     v = ('' + v).replace(/;/g, "\\;");
     if (wrap) { v = v.match(/.{1,70}/g).join("\n"); }
     return v;
   }).join(sep);
-}
+};
 
-function exportJabRefGroups() {
-  var collections = Dict({});
-  var roots = [];
-  var collection;
-  while(collection = Zotero.nextCollection()) {
-    if (collection.childItems && collection.childItems.length == 0) {
-      collection.childItems = null;
-    }
+JabRef.exportGroups = function() {
+  if (Translator.collections.length == 0) { return; }
 
-    // replace itemID with citation key
-    if (collection.childItems) {
-      // TODO: need testcase infra for this
-      collection.childItems = collection.childItems.map(function(child) { return Translator.citekeys[child]; }).filter(function(child) { return child; });
-    }
-
-    collections[collection.id] = collection;
-    roots.push(collection.id);
-  }
-
-  // walk through all collections, resolve child collections
-  Dict.forEach(collections, function(collection) {
-    if (collection.childCollections && collection.childCollections.length != 0) {
-      collection.childCollections = collection.childCollections.map(function(id) {
-        var index = roots.indexOf(id);
-        if (index >= 0) { roots.splice(index, 1); }
-        return collections[id];
-      }).filter(function(child) { return child; });;
-    } else {
-      collection.childCollections = null;
-    }
-  });
-
-  // roots now holds the IDs of the root collection, rest is resolved
-  if (roots.length == 0) { return; }
-  Zotero.debug('jabref groups: ' + roots.length + ' root collections');
   Zotero.write("\n\n@comment{jabref-meta: groupsversion:3;}\n\n");
   Zotero.write("\n\n@comment{jabref-meta: groupstree:\n");
   Zotero.write("0 AllEntriesGroup:;\n");
 
   var groups = [];
-  roots.forEach(function(id) {
-    groups = groups.concat(exportJabRefGroup(collections[id], 1));
+  Translator.collections.forEach(function(collection) {
+    groups = groups.concat(JabRef.exportGroup(collection, 1));
   });
-  groups = jabrefSerialize(groups, ";\n", true);
-  if (groups != '') { groups += "\n"; }
-  Zotero.write(groups + "}\n");
+  Zotero.write(this.serialize(groups, ";\n", true) + ";\n}\n");
 }
 
-function exportJabRefGroup(collection, level) {
+JabRef.exportGroup = function(collection, level) {
   var group = [level + ' ExplicitGroup:' + collection.name, 0];
-  if (collection.childItems) {
-    group = group.concat(collection.childItems);
-  } else {
-    group.push('');
-  }
-  group = jabrefSerialize(group, ';');
+  group = group.concat(collection.items.map(function(id) { return Translator.citekeys[id]; }));
+  group.push('');
+  group = this.serialize(group, ';');
 
   var result = [group];
-  if (collection.childCollections) {
-    collection.childCollections.forEach(function(coll) {
-      result = result.concat(exportJabRefGroup(coll, level + 1));
-    });
-  }
+  collection.collections.forEach(function(coll) {
+    result = result.concat(JabRef.exportGroup(coll, level + 1));
+  });
 
   return result;
-}
+};
 
 /*= unicode_mapping =*/
 

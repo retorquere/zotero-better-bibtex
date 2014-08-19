@@ -1,7 +1,12 @@
 {
   'use strict';
 
-  var bibtex = {pos: {}, references: [], strings: Dict({}), comments: [], errors: []};
+  var bibtex = {references: [], collections: [], strings: Dict({}), comments: [], errors: []};
+
+  function beep(msg) {
+    console.log(msg);
+    return true;
+  }
 
   function flatten(str) {
     return (Array.isArray(str) ? str.map(function(c) { return flatten(c); }).join('') : ('' + str));
@@ -123,7 +128,8 @@ start
   = entries:entry* { return bibtex; }
 
 entry
-  = _* '@comment'i _* "{" comment:string* "}" { bibtex.comments.push(flatten(comment).trim()); }
+  = _* '@comment'i _* "{" groupstree "}"
+  / _* '@comment'i _* "{" comment:string* "}" { bibtex.comments.push(flatten(comment).trim()); }
   / _* '@string'i _* "{" _* str:key_value _* "}" { bibtex.strings[str.key] = str.value; }
   / _* '@preamble'i _* "{" _* simplestring _* "}"
   / _* '@' reference
@@ -283,9 +289,6 @@ plaintext
   = & { return (bibtex.quote == '"'); } text:[^ "\t\n\r#$%&~_\^{}\[\]\\]+ { return flatten(text); }
   / & { return (bibtex.quote != '"'); } text:[^ \t\n\r#$%&~_\^{}\[\]\\]+  { return flatten(text); }
 
-_
-  = w:[ \t\n\r]+ 
-
 attachmentlist
   = car:attachment cdr:attachmentcdr*  { return [car].concat(cdr || []); }
 
@@ -335,3 +338,60 @@ filechars
 filechar
   = text:[^\\{}:;]+ { return flatten(text); }
   / "\\" text:.   { return text; }
+
+groupstree
+  = _* 'jabref-meta:'i _* id:'groupstree:'i _* groups:group* _* {
+      var levels = Dict();
+      var collections = [];
+      groups.forEach(function(group) {
+        if (!group) { return; }
+
+        var collection = Dict();
+        collection.name = group.data.shift();
+        var intersection = group.data.shift();
+
+        collection.items = group.data.filter(function(key) { return key !== ''; });
+        collection.collections = [];
+
+        levels[group.level] = collection;
+
+        if (group.level === 1) {
+          collections.push(collection);
+        } else {
+          levels[group.level - 1].collections.push(collection);
+
+          switch (intersection) {
+            case '0': // independent
+              break;
+
+            case '1': // intersection
+              collection.items = collection.items.filter(function(key) { levels[group.level - 1].items.indexOf(key) >= 0; });
+              break;
+
+            case '2': // union
+              collection.items = levels[group.level - 1].items.concat(collection.items).filter(function(value, index, self) { return self.indexOf(value) === index; });
+              break;
+
+          }
+        };
+      });
+      bibtex.collections = bibtex.collections.concat(collections);
+    }
+
+group
+  = [0-9]+ _* 'AllEntriesGroup:;'i _*                             { return null; }
+  / level:[0-9]+ _* 'ExplicitGroup:' _* group:grouparray* ';' _*  { return {level: parseInt(level), data:group}; }
+
+grouparray
+  = elt:groupelement _* ("\\" [\r\n]* ';')? { return elt; }
+
+groupelement
+  = chars:groupchars+ { return chars.join(''); }
+
+groupchars
+  = "\\" [\r\n]* "\\" [\r\n] char:. { return char; }
+  / [\r\n]+                         { return ''; }
+  / chars:[^\\;\r\n]+               { return chars.join(''); }
+_
+  = w:[ \t\n\r]+
+
