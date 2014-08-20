@@ -2,7 +2,7 @@
   "config": {
     "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
     "label": "Zotero TestCase",
-    "pattern": "[auth][year][journal]",
+    "pattern": "[auth][year]",
     "skipFields": [
       ""
     ],
@@ -11,7 +11,7 @@
     "fancyURLs": false,
     "langid": "babel",
     "exportFileData": false,
-    "exportNotes": true
+    "exportNotes": false
   },
   "items": [
     {
