@@ -3,10 +3,22 @@
     {
       "itemType": "journalArticle",
       "title": "non-braking space: ; accented characters: ñ and ñ; tilde in URL: http://example.com/~user",
-      "extra": "bibtex: test-ticket1661"
+      "extra": "bibtex: test-ticket1661",
+      "itemID": 0
     }
   ],
   "config": {
     "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
-  }
+  },
+  "collections": [
+    {
+      "name": "Better BibTeX.006",
+      "collections": [
+
+      ],
+      "items": [
+        0
+      ]
+    }
+  ]
 }

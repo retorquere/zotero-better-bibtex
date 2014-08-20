@@ -11,7 +11,7 @@ Scenario: Pandoc Citation Export
   When I import 1 reference with 1 attachment from 'export/Pandoc Citation.001.json'
   Then A library export using 'Pandoc Citation' should match 'export/Pandoc Citation.001.txt'
 
-@bbltx-e-2
+@e2
 Scenario: Better BibLaTeX Export 2
   When I import 2 references from 'export/Better BibLaTeX.002.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.002.bib'

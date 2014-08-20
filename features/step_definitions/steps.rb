@@ -37,6 +37,7 @@ Before do
     DBB = JSONRPCClient.new('http://localhost:23119/debug-bridge')
     DBB.bootstrap('Zotero.BetterBibTeX')
     BBT = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
+    BBT.init
   end
 
   BBT.reset
@@ -96,32 +97,37 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
 end
 
 Then /^write the library to '([^']+)'$/ do |filename|
-  open(filename, 'w'){|f| f.write(JSON.pretty_generate(BBT.getAll, :indent => '  ')) }
+  BBT.exportToFile('Zotero TestCase', filename)
 end
 
 Then /^the library should match '([^']+)'$/ do |filename|
   expected = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
+  expected = JSON.parse(open(expected).read)
 
-  case File.extname(expected)
-    when '.json'
-      expected = JSON.parse(open(expected).read)
-      expected = expected['items'] if expected.is_a?(Hash) && expected['items']
-      expected.each{|item|
-        item['attachments'].each{|a| a.delete('path')} if item['attachments']
-      }
-      expected.normalize!
+  found = BBT.library
 
-      found = BBT.getAll
-      found.each{|item|
-        item.delete('id')
-        item['attachments'].each{|a| a.delete('path')} if item['attachments']
-      }
-      found.normalize!
+  renum = lambda{|collection, idmap, items=true|
+    collection.delete('id')
+    collection['items'] = collection['items'].collect{|i| idmap[i] } if items
+    collection['collections'].each{|coll|
+      renum.call(coll, idmap)
+    }
+  }
+  [expected, found].each_with_index{|library, i|
+    library.delete('config')
+    newID = {}
+    library['items'].sort!{|a, b| a['itemID'] <=> b['itemID'] }
+    library['items'].each_with_index{|item, i|
+      newID[item['itemID']] = i
+      item['itemID'] = i
+      item.delete('itemID')
+      item['attachments'].each{|a| a.delete('path')} if item['attachments']
+    }
+    renum.call(library, newID, false)
+    library.normalize!
+  }
 
-      expect(found).to eq(expected)
-    else
-      throw "Unexpected match file #{filename}"
-  end
+  expect(found).to eq(expected)
 end
 
 Then(/^A library export using '([^']+)' should match '([^']+)'$/) do |translator, filename|

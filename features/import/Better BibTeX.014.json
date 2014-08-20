@@ -3,10 +3,22 @@
     {
       "itemType": "journalArticle",
       "title": "Escaped backslash followed by {}:",
-      "extra": "bibtex: BibTeXEscapeTest1"
+      "extra": "bibtex: BibTeXEscapeTest1",
+      "itemID": 0
     }
   ],
   "config": {
     "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
-  }
+  },
+  "collections": [
+    {
+      "name": "Better BibTeX.014",
+      "collections": [
+
+      ],
+      "items": [
+        0
+      ]
+    }
+  ]
 }

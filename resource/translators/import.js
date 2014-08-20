@@ -30,15 +30,16 @@ if (!JabRef) {
 }
 
 JabRef.importGroup = function(group) {
+  Zotero.debug(JSON.stringify(group));
   var collection = new Zotero.Collection();
   collection.type = 'collection';
   collection.name = group.name;
-  collection.children = group.children.map(function(key) { return JabRef.items[key]; });
+  collection.children = group.items.map(function(key) { return {type: 'item', id: key}; });
 
   group.collections.forEach(function(child) {
     collection.children.push(JabRef.importGroup(child));
   });
-  JabRef.collections.push(collection);
+  collection.complete();
   return collection;
 };
 
@@ -51,17 +52,12 @@ function _doImport() {
 
   var bib = BetterBibTeXParser.parse(data);
 
-  JabRef.items = Dict();
   bib.references = bib.references.forEach(function(ref) {
-    JabRef.items[ref.__key__] = createZoteroReference(ref);
+    createZoteroReference(ref);
   });
 
-  JabRef.collections = [];
   bib.collections.forEach(function(coll) {
     JabRef.importGroup(coll);
-  });
-  JabRef.collections.forEach(function(coll) {
-    coll.complete();
   });
 }
 
