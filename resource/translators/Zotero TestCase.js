@@ -63,7 +63,7 @@ function scrub(item) {
   item.tags.sort();
 
   ['attachments', 'seeAlso', 'notes', 'tags', 'creators'].forEach(function(prop) {
-    if (item[prop] && item[prop].length == 0) {
+    if (item[prop] && item[prop].length === 0) {
       delete item[prop];
     }
   });
@@ -96,6 +96,7 @@ function doImport() {
   var prop;
   data.items.forEach(function(i) {
     var item = new Z.Item();
+    var prop;
     for (prop in i) { item[prop] = i[prop]; }
     item.complete();
   });
@@ -120,8 +121,8 @@ function doExport() {
       exportFileData:         Translator.exportFileData,
       exportNotes:            Translator.exportNotes
     },
-    collections:              Translator.collections,
-    items: []
+    items: [],
+    collections:              Translator.collections()
   };
 
   while (item = Zotero.nextItem()) {

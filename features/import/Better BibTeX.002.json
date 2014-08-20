@@ -19,7 +19,8 @@
       "title": "Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables",
       "publisher": "Dover",
       "date": "1964",
-      "extra": "bibtex: abramowitz+stegun"
+      "extra": "bibtex: abramowitz+stegun",
+      "itemID": 0
     },
     {
       "itemType": "book",
@@ -39,10 +40,23 @@
       "publisher": "Doubleday",
       "title": "The Yankee Years",
       "date": "2008",
-      "extra": "bibtex: Torre2008"
+      "extra": "bibtex: Torre2008",
+      "itemID": 1
     }
   ],
   "config": {
     "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
-  }
+  },
+  "collections": [
+    {
+      "name": "Better BibTeX.002",
+      "collections": [
+
+      ],
+      "items": [
+        0,
+        1
+      ]
+    }
+  ]
 }

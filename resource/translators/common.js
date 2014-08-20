@@ -62,38 +62,41 @@ var Translator = new function() {
         self.typeMap.toBibTeX[zotero] = bibtex[0].replace(/^:/, '');
       });
     }
+  };
 
-    self.collections = [];
+  // The default collection structure passed is beyond screwed up.
+  function sanitizeCollection(coll) {
+    var sane = {
+      name: coll.name,
+      collections: [],
+      items: []
+    };
+
+    (coll.children || coll.descendents).forEach(function(c) {
+      switch (c.type) {
+        case 'item':
+          sane.items.push(c.id);
+          break;
+
+        case 'collection':
+          sane.collections.push(sanitizeCollection(c));
+          break;
+
+        default:
+          throw('Unexpected collection member type "' + c.type + '"');
+      }
+    });
+
+    return sane;
+  }
+
+  self.collections = function() {
+    var collections = [];
     var collection;
     while(collection = Zotero.nextCollection()) {
-      self.collections.push(collection);
+      collections.push(sanitizeCollection(collection));
     }
-
-    var collectionsByID = Dict();
-    var isRootCollection = Dict();
-    self.collections.forEach(function(coll) {
-      collectionsByID[coll.id] = coll;
-      isRootCollection[coll.id] = true;
-    });
-
-    self.collections.forEach(function(coll) {
-      delete coll.primary;
-      delete coll.fields;
-      delete coll.descendents; // there's something really wrong with these besides being misidentified ancestors
-
-      coll.items = coll.childItems;
-      delete coll.childItems;
-      coll.collections = coll.childCollections;
-      delete coll.childCollections;
-
-      coll.collections = coll.collections.map(function(id) {
-        delete isRootCollection[id];
-        return collectionsByID[id];
-      });
-      delete coll.childCollections;
-    });
-
-    self.collections = self.collections.filter(function(coll) { return isRootCollection[coll.id]; });
+    return collections;
   };
 
   var startTime = null;
@@ -142,7 +145,7 @@ function writeField(field, value, bare) {
 
   if (typeof value == 'number') {
   } else {
-    if (!value || value == '') { return; }
+    if (!value || value === '') { return; }
   }
 
   if (!bare) { value = '{' + value + '}'; }
@@ -153,7 +156,7 @@ function writeField(field, value, bare) {
 }
 
 function writeTags(field, item) {
-  if (!item.tags || item.tags.length == 0) { return; }
+  if (!item.tags || item.tags.length === 0) { return; }
   var tags = item.tags.map(function(tag) {return tag.tag;});
   tags.sort();
   writeField(field, latex_escape(tags, {sep: ','}));
@@ -196,11 +199,11 @@ function writeAttachments(item) {
     }
   });
 
-  if (attachments.length != 0) {
+  if (attachments.length !== 0) {
     attachments.sort(function(a, b) { return a.path.localeCompare(b.path); });
     writeField('file', escapeAttachments(attachments, true));
   }
-  if (broken.length != 0) {
+  if (broken.length !== 0) {
     broken.sort(function(a, b) { return a.path.localeCompare(b.path); });
     writeField('latex_doesnt_like_filenames_with_braces', escapeAttachments(broken, false));
   }
@@ -223,7 +226,7 @@ function minimal_escape(url) {
   var href = url.replace(/([#\\_%&{}])/g, "\\$1");
 
   if (!Translator.unicode) {
-    href = href.replace(/[^\x21-\x7E]/g, function(chr){return "\\\%" + ('00' + chr.charCodeAt(0).toString(16)).slice(-2)});
+    href = href.replace(/[^\x21-\x7E]/g, function(chr){ return "\\\%" + ('00' + chr.charCodeAt(0).toString(16)).slice(-2); });
   }
 
   if (Translator.fancyURLs) {
@@ -236,13 +239,13 @@ function minimal_escape(url) {
 function latex_escape(value, options) {
   if ((typeof options) == 'string') { options = {sep: options}; }
   if ((typeof options) == 'boolean') { options = {brace: true}; }
-  options = (options || {})
+  options = (options || {});
 
   if (typeof value == 'number') { return value; }
   if (!value) { return; }
 
   if (value instanceof Array) {
-    if (value.length == 0) { return; }
+    if (value.length === 0) { return; }
     return value.map(function(word) { return latex_escape(word, options); }).join(options.sep);
   }
 
@@ -276,7 +279,7 @@ function writeExtra(item, field) {
 function flushEntry(item) {
   // fully empty zotero reference generates invalid bibtex. This type-reassignment does nothing but adds the single
   // field each entry needs as a minimum.
-  if (Translator.fieldsWritten.length == 0) {
+  if (Translator.fieldsWritten.length === 0) {
     writeField('type', latex_escape(getBibTeXType(item)));
   }
 }
@@ -294,18 +297,20 @@ JabRef.serialize = function(arr, sep, wrap) {
 };
 
 JabRef.exportGroups = function() {
-  if (Translator.collections.length == 0) { return; }
+  var collections = Translator.collections();
 
-  Zotero.write("\n\n@comment{jabref-meta: groupsversion:3;}\n\n");
-  Zotero.write("\n\n@comment{jabref-meta: groupstree:\n");
+  if (collections.length === 0) { return; }
+
+  Zotero.write("\n\n@comment{jabref-meta: groupsversion:3;}\n");
+  Zotero.write("@comment{jabref-meta: groupstree:\n");
   Zotero.write("0 AllEntriesGroup:;\n");
 
   var groups = [];
-  Translator.collections.forEach(function(collection) {
+  collections.forEach(function(collection) {
     groups = groups.concat(JabRef.exportGroup(collection, 1));
   });
   Zotero.write(this.serialize(groups, ";\n", true) + ";\n}\n");
-}
+};
 
 JabRef.exportGroup = function(collection, level) {
   var group = [level + ' ExplicitGroup:' + collection.name, 0];
@@ -391,7 +396,7 @@ LaTeX.html2latexsupport = {
 };
 
 LaTeX.html2latex = function(str) {
-  var tags = new RegExp('(' + Object.keys(LaTeX.html2latexsupport.html2latex).map(function(tag) { return '<\/?' + tag + '\/?>'} ).join('|') + ')', 'ig');
+  var tags = new RegExp('(' + Object.keys(LaTeX.html2latexsupport.html2latex).map(function(tag) { return '<\/?' + tag + '\/?>'; } ).join('|') + ')', 'ig');
 
   return ('' + str).split(/(<pre>.*?<\/pre>)/ig).map(function(chunk, pre) {
     if ((pre % 2) == 1) { // odd element = splitter == pre block
@@ -414,7 +419,7 @@ LaTeX.html2latex = function(str) {
         }
       }).join('').replace(/{}\s+/g, ' ');
 
-      if (LaTeX.html2latexsupport.htmlstack.length != 0) {
+      if (LaTeX.html2latexsupport.htmlstack.length !== 0) {
         trLog('Unmatched HTML tags: ' + LaTeX.html2latexsupport.htmlstack.join(', '));
         res += htmlstack.map(function(tag) { return LaTeX.html2latexsupport.html2latex[tag].close; }).join('');
       }
@@ -422,4 +427,4 @@ LaTeX.html2latex = function(str) {
       return res;
     }
   }).join('');
-}
+};

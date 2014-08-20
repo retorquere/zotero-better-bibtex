@@ -31,10 +31,22 @@
           "path": "klasyfikatory/Klassen2010.pdf",
           "mimeType": "application/pdf"
         }
-      ]
+      ],
+      "itemID": 0
     }
   ],
   "config": {
     "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
-  }
+  },
+  "collections": [
+    {
+      "name": "Better BibTeX.011",
+      "collections": [
+
+      ],
+      "items": [
+        0
+      ]
+    }
+  ]
 }

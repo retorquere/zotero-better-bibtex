@@ -397,13 +397,11 @@ Zotero.BetterBibTeX = {
     }
   },
 
-
-
   translate: function(translator, items, displayOptions) {
     if (!translator) { throw('null translator'); }
 
     var translation = new Zotero.Translate.Export();
-    translation.setItems(items);
+    if (items) { translation.setItems(items); }
     translation.setTranslator(translator);
     translation.setDisplayOptions(displayOptions);
 
@@ -662,6 +660,20 @@ Zotero.BetterBibTeX = {
     },
     namespace: 'better-bibtex',
     methods: {
+      init: function() {
+        // monkey-patch Zotero.Items.getAll to get items sorted. With random order I can't really implement stable
+        // testing. A simple ORDER BY would have been easier and loads faster, but I can't reach into getAll.
+        Zotero.BetterBibTeX.log('patching Zotero.Items.getAll');
+        Zotero.Items.getAll = (function (original) {
+          return function(onlyTopLevel, libraryID, includeDeleted) {
+            var items = original.apply(this, arguments);
+            items.sort(function(a, b) { return a.itemID - b.itemID; });
+            return items;
+          };
+        })(Zotero.Items.getAll);
+        return true;
+      },
+
       reset: function() {
         Zotero.BetterBibTeX.init();
         var retval = Zotero.BetterBibTeX.DebugBridge.data.prefs;
@@ -695,40 +707,23 @@ Zotero.BetterBibTeX = {
       },
 
       export: function(translator) {
-        var all = Zotero.BetterBibTeX.safeGetAll();
-
-        /*
-        Zotero.BetterBibTeX.log('export found ' + all.length + ' items');
-        var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
-        file.initWithPath('/tmp/zotero.log');
-        var dbg = 'export: ' + all.length + " items\n";
-        // dbg += all.map(function(item) { return JSON.stringify(item.serialize()); }).join("\n") + "\n";
-        dbg += Zotero.Debug.get();
-        Zotero.File.putContents(file, dbg);
-        */
-
-        if (all.length === 0) {
-          Zotero.BetterBibTeX.log('getAll found no items');
-          return '';
-        }
-
-        all.sort(function(a, b) { return a.itemID - b.itemID; });
         translator = Zotero.BetterBibTeX.getTranslator(translator);
 
-        var items = Zotero.BetterBibTeX.translate(translator, all, Zotero.BetterBibTeX.DebugBridge.data.exportOptions || {});
-        return items;
+        return Zotero.BetterBibTeX.translate(translator, null, Zotero.BetterBibTeX.DebugBridge.data.exportOptions || {});
       },
 
       exportToFile: function(translator, filename) {
-        var all = Zotero.BetterBibTeX.safeGetAll();
-        all.sort(function(a, b) { return a.itemID - b.itemID; });
-
         var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
         file.initWithPath(filename);
 
         translator = Zotero.BetterBibTeX.getTranslator(translator);
-        Zotero.File.putContents(file, Zotero.BetterBibTeX.translate(translator, all, {exportNotes: true, exportFileData: false}));
+        Zotero.File.putContents(file, Zotero.BetterBibTeX.translate(translator, null, {exportNotes: true, exportFileData: false}));
         return true;
+      },
+
+      library: function() {
+        var translator = Zotero.BetterBibTeX.getTranslator('Zotero TestCase');
+        return JSON.parse(Zotero.BetterBibTeX.translate(translator, null, {exportNotes: true, exportFileData: false}));
       },
 
       getAll: function() {

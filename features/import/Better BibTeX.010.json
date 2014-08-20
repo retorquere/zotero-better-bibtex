@@ -77,10 +77,22 @@
       "url": "http://dblp.uni-trier.de/db/conf/icdm/icdmw2009.html#HulseKNW09",
       "publisher": "IEEE Computer Society",
       "proceedingsTitle": "ICDM Workshops",
-      "publicationTitle": "ICDM Workshops"
+      "publicationTitle": "ICDM Workshops",
+      "itemID": 0
     }
   ],
   "config": {
     "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
-  }
+  },
+  "collections": [
+    {
+      "name": "Better BibTeX.010",
+      "collections": [
+
+      ],
+      "items": [
+        0
+      ]
+    }
+  ]
 }

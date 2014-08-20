@@ -15,10 +15,22 @@
       "publicationTitle": "Oil & Gas Journal",
       "date": "2009",
       "pages": "29",
-      "extra": "bibtex: Oliveira_2009"
+      "extra": "bibtex: Oliveira_2009",
+      "itemID": 0
     }
   ],
   "config": {
     "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
-  }
+  },
+  "collections": [
+    {
+      "name": "Better BibTeX.005",
+      "collections": [
+
+      ],
+      "items": [
+        0
+      ]
+    }
+  ]
 }

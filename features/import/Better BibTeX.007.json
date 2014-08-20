@@ -25,10 +25,22 @@
       "date": "2012",
       "volume": "12",
       "pages": "71-80",
-      "extra": "bibtex: Frit2"
+      "extra": "bibtex: Frit2",
+      "itemID": 0
     }
   ],
   "config": {
     "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
-  }
+  },
+  "collections": [
+    {
+      "name": "Better BibTeX.007",
+      "collections": [
+
+      ],
+      "items": [
+        0
+      ]
+    }
+  ]
 }
