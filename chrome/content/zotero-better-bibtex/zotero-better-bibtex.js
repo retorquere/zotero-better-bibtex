@@ -553,7 +553,8 @@ Zotero.BetterBibTeX = {
 
       if (typeof this.journalAbbrevCache[item.publicationTitle] === 'undefined') {
         var styleID = Zotero.BetterBibTeX.Prefs.getCharPref('auto-abbrev.style');
-        if (styleID === '') { styleID = Zotero.Styles.getVisible().filter(function(style) { return style.usesAbbreviation; })[0]; }
+        if (styleID === '') { styleID = Zotero.Styles.getVisible().filter(function(style) { return style.usesAbbreviation; })[0].styleID; }
+        Zotero.debug('getting style: ' + styleID);
         var style = Zotero.Styles.get(styleID);
         var cp = style.getCiteProc(true);
 
@@ -609,7 +610,6 @@ Zotero.BetterBibTeX = {
         var Formatter = Zotero.BetterBibTeX.formatter(Zotero.BetterBibTeX.Prefs.getCharPref('citeKeyFormat'));
         citekey = new Formatter(Zotero.BetterBibTeX.toArray(item)).value;
         var postfix = {n: -1, c:''};
-        Zotero.debug('basekey: ' + (citekey + postfix.c));
         while (Zotero.BetterBibTeX.DB.valueQuery('select count(*) from keys where citekey=? and libraryID = ?', [citekey + postfix.c, item.libraryID || 0])) {
           postfix.n++;
           postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n);

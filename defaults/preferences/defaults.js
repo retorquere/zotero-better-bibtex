@@ -9,7 +9,7 @@ pref("extensions.zotero.translators.better-bibtex.langid", 'babel');
 pref("extensions.zotero.translators.better-bibtex.auto-abbrev.style", '');
 pref("extensions.zotero.translators.better-bibtex.auto-abbrev", true);
 pref("extensions.zotero.translators.better-bibtex.attachmentRelativePath", false);
-pref("extensions.zotero.translators.better-bibtex.debug", false);
+pref("extensions.zotero.translators.better-bibtex.testmode", false);
 pref("extensions.zotero.translators.better-bibtex.pin-citekeys", 'manual');
 pref("extensions.zotero.translators.better-bibtex.scan-citekeys", true);
 

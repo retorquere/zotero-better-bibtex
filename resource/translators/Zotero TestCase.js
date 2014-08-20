@@ -90,12 +90,14 @@ function detectImport() {
 
 function doImport() {
   Translator.initialize();
+
   var str, json = '';
   while((str = Z.read(1048576)) !== false) { json += str; }
   var data = JSON.parse(json);
+
   var prop;
   data.items.forEach(function(i) {
-    var item = new Z.Item();
+    var item = new Zotero.Item();
     var prop;
     for (prop in i) { item[prop] = i[prop]; }
     item.complete();
@@ -108,23 +110,9 @@ function doExport() {
   Translator.initialize();
 
   var data = {
-    config: {
-      id:                     Translator.id,
-      label:                  Translator.label,
-      unicode:                Translator.unicode,
-      pattern:                Translator.pattern,
-      skipFields:             Translator.skipFields,
-      usePrefix:              Translator.usePrefix,
-      braceAll:               Translator.braceAll,
-      fancyURLs:              Translator.fancyURLs,
-      langid:                 Translator.langid,
-      useJournalAbbreviation: Translator.useJournalAbbreviation,
-      exportCharset:          Translator.exportCharset,
-      exportFileData:         Translator.exportFileData,
-      exportNotes:            Translator.exportNotes
-    },
-    items: [],
-    collections:              Translator.collections()
+    config:       Translator.config(),
+    collections:  Translator.collections(),
+    items: []
   };
 
   while (item = Zotero.nextItem()) {

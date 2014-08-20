@@ -172,8 +172,7 @@ Scenario: Square brackets in Publication field (85)
 
 @86
 Scenario: Include first name initial(s) in cite key generation pattern (86)
-  When I set preference translators.better-bibtex.citeKeyFormat to '[auth+initials][year]'
-   And I import 1 reference with 1 attachment from 'export/Include first name initial(s) in cite key generation pattern (86).json'
+  When I import 1 reference with 1 attachment from 'export/Include first name initial(s) in cite key generation pattern (86).json'
   Then A library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bib'
 
 #@bulk
@@ -181,3 +180,9 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
 #  When I import 2417 references with 52 attachments from 'export/Big whopping library.json'
 #  Then Export the library using 'Better BibLaTeX' to '/tmp/BWL.bib'
 #  Then write the Zotero log to 'zotero.log'
+
+@98
+Scenario: Export of item to Better Bibtex fails for auth3_1 #98
+  When I import 1 reference from 'export/Export of item to Better Bibtex fails for auth3_1 #98.json'
+  Then A library export using 'Better BibTeX' should match 'export/Export of item to Better Bibtex fails for auth3_1 #98.bib'
+

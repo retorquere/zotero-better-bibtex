@@ -41,6 +41,7 @@ Before do
   end
 
   BBT.reset
+  BBT.setPreference('translators.better-bibtex.testmode', true)
   sleep 1
   throw 'Library not empty!' unless BBT.librarySize == 0
 end
@@ -48,9 +49,10 @@ at_exit do
   $headless.destroy if $headless
 end
 
-#After do |s|
-#  STDOUT.puts 'log: ' + DBB.log
-#end
+After do |s|
+  open('_zotero.log', 'w'){|f| f.write(DBB.log) } if @logcapture
+  @logcapture = false
+end
 
 #Given /^that ([^\s]+) is set to (.*)$/ do |pref, value|
 #  if value =~ /^['"](.*)['"]$/
@@ -64,8 +66,61 @@ end
 #  end
 #end
 
+When /I need a log capture/ do
+  @logcapture = true
+end
+
 When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)'$/ do |references, dummy, attachments, filename|
   bib = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
+
+  if File.extname(filename) == '.json'
+    begin
+      data = JSON.parse(open(bib).read)
+    rescue
+      data = {}
+    end
+
+    if data.is_a?(Hash) && data['config'].is_a?(Hash) && data['config']['label'] == 'Zotero TestCase'
+      data['config'].each_pair{|key, value|
+        case key
+          when 'id', 'label'
+            # pass
+
+          when 'useJournalAbbreviation', 'exportCharset', 'exportFileData', 'exportNotes'
+            BBT.setExportOption(key, value)
+
+          when 'fancyURLs', 'langid', 'attachmentRelativePath', 'unicode'
+            BBT.setPreference('translators.better-bibtex.' + key, value)
+
+          when 'pattern'
+            BBT.setPreference('translators.better-bibtex.citeKeyFormat', value)
+
+          when 'skipFields'
+            BBT.setPreference('translators.better-bibtex.skipfields', value.join(','))
+
+          when 'usePrefix'
+            BBT.setPreference('translators.better-bibtex.useprefix', value)
+
+          when 'braceAll'
+            BBT.setPreference('translators.better-bibtex.brace-all', value)
+
+          when 'autoAbbrev'
+            BBT.setPreference('translators.better-bibtex.auto-abbrev', value)
+
+          when 'autoAbbrevStyle'
+            BBT.setPreference('translators.better-bibtex.auto-abbrev.style', value)
+
+          when 'pinKeys'
+            BBT.setPreference('translators.better-bibtex.pin-citekeys', value)
+
+          else
+            raise "Unexpected config key #{key}"
+
+        end
+      }
+    end
+  end
+
 
   entries = OpenStruct.new({start: BBT.librarySize})
 
@@ -90,8 +145,6 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
       STDOUT.puts "Slow import (#{elapsed}): #{processed} entries @ #{speed.round(1)} entries/sec, #{timeleft} remaining"
     end
   end
-
-
 
   expect(entries.now - entries.start).to eq(references.to_i + attachments.to_i)
 end

@@ -484,8 +484,8 @@ method
     }
 
 mparams
-  = n:[0-9]+ { return [parseInt(n.join(''))]; }
-  / n:[0-9]+ '_' m:[0-9]+ { return [parseInt(n.join('')), parseInt(m.join(''))]; }
+  = n:[0-9]+ '_' m:[0-9]+ { return [parseInt(n.join('')), parseInt(m.join(''))]; }
+  / n:[0-9]+ { return [parseInt(n.join(''))]; }
 
 flag
   = '+' flag:[^_:\]]+ { return flag.join(''); }

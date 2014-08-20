@@ -5,34 +5,57 @@ var Translator = new function() {
 
   self.id      =  '/*= id =*/';
   self.label   =  '/*= label =*/';
-  self.unicode =  /*= unicode =*/;
+  self.unicode_default =  ('/*= unicode =*/' == 'true');
   self.release =  '/*= release =*/';
   self.typeMap = {};
   self.citekeys = Dict();
 
-  var initialized = false;
+  var preferences = Dict({
+    pattern:                'citeKeyFormat',
+    skipFields:             'skipfields',
+    usePrefix:              'useprefix',
+    braceAll:               'brace-all',
+    fancyURLs:              'fancyURLs',
+    langid:                 'langid',
+    attachmentRelativePath: 'attachmentRelativePath',
+    autoAbbrev:             'auto-abbrev',
+    autoAbbrevStyle:        'auto-abbrev.style',
+    unicode:                'unicode',
+    pinKeys:                'pin-citekeys'
+  });
+  var options = [ 'useJournalAbbreviation', 'exportCharset', 'exportFileData', 'exportNotes' ];
 
+
+  self.config = function() {
+    var config = Dict();
+    config.id = self.id;
+    config.label = self.label;
+
+    Dict.forEach(preferences, function(attribute) {
+      config[attribute] = Translator[attribute];
+    });
+    options.forEach(function(attribute) {
+      config[attribute] = Translator[attribute];
+    });
+    return config;
+  };
+
+  var initialized = false;
   self.initialize = function() {
     if (initialized) { return; }
     initialized = true;
 
-    self.pattern                = Zotero.getHiddenPref('better-bibtex.citeKeyFormat');
-    self.skipFields             = Zotero.getHiddenPref('better-bibtex.skipfields').split(',').map(function(field) { return field.trim(); });
-    self.usePrefix              = Zotero.getHiddenPref('better-bibtex.useprefix');
-    self.braceAll               = Zotero.getHiddenPref('better-bibtex.brace-all');
-    self.fancyURLs              = Zotero.getHiddenPref('better-bibtex.fancyURLs');
-    self.langid                 = Zotero.getHiddenPref('better-bibtex.langid');
-    self.usePrefix              = Zotero.getHiddenPref('better-bibtex.useprefix');
-    self.attachmentRelativePath = Zotero.getHiddenPref('better-bibtex.attachmentRelativePath');
-    self.autoAbbrev             = Zotero.getHiddenPref('better-bibtex.auto-abbrev');
-    self.debug                  = Zotero.getHiddenPref('better-bibtex.debug');
+    Dict.forEach(preferences, function(attribute, key) {
+      Translator[attribute] = Zotero.getHiddenPref('better-bibtex.' + key);
+    });
+    self.skipFields = self.skipFields.split(',').map(function(field) { return field.trim(); });
+    Translator.testmode = Zotero.getHiddenPref('better-bibtex.testmode');
 
-    self.useJournalAbbreviation = Zotero.getOption('useJournalAbbreviation');
-    self.exportCharset          = Zotero.getOption('exportCharset');
-    self.exportFileData         = Zotero.getOption('exportFileData');
-    self.exportNotes            = Zotero.getOption('exportNotes');
+    options.forEach(function(attribute) {
+      Translator[attribute] = Zotero.getOption(attribute);
+    });
 
-    switch (Zotero.getHiddenPref('better-bibtex.unicode')) {
+    switch (self.unicode) {
       case 'always':
         self.unicode = true;
         break;
@@ -41,9 +64,11 @@ var Translator = new function() {
         break;
       default:
         var charset = self.exportCharset;
-        self.unicode = self.unicode || (charset && charset.toLowerCase() == 'utf-8');
+        self.unicode = self.unicode_default || (charset && charset.toLowerCase() == 'utf-8');
         break;
     }
+
+    Zotero.debug('Translator: ' + JSON.stringify(self.config()));
 
     if (self.typeMap.toBibTeX) {
       Zotero.debug('typemap: ' + JSON.stringify(self.typeMap.toBibTeX));
@@ -121,7 +146,6 @@ var Translator = new function() {
     this.citekeys[item.itemID] = item.__citekey__;
     return item;
   };
-
 };
 
 function writeFieldMap(item, fieldMap) {
@@ -188,7 +212,7 @@ function writeAttachments(item) {
       att.saveFile(a.path);
     } else {
       if (Translator.attachmentRelativePath) {
-        a.path = "files/" + (Translator.debug ? attachmentCounter : att.itemID) + "/" + att.localPath.replace(/.*[\/\\]/, '');
+        a.path = "files/" + (Translator.testmode ? attachmentCounter : att.itemID) + "/" + att.localPath.replace(/.*[\/\\]/, '');
       }
     }
 
