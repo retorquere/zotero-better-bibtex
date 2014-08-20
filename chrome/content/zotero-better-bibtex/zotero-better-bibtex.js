@@ -726,30 +726,6 @@ Zotero.BetterBibTeX = {
         return JSON.parse(Zotero.BetterBibTeX.translate(translator, null, {exportNotes: true, exportFileData: false}));
       },
 
-      getAll: function() {
-        var all = Zotero.BetterBibTeX.safeGetAll();
-
-        /*
-        Zotero.BetterBibTeX.log('getAll found ' + all.length + ' items');
-        var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
-        file.initWithPath('/tmp/zotero.log');
-        var dbg = 'getAll: ' + all.length + " items\n";
-        // dbg += all.map(function(item) { return JSON.stringify(item.serialize()); }).join("\n") + "\n";
-        dbg += Zotero.Debug.get();
-        Zotero.File.putContents(file, dbg);
-        */
-
-        if (all.length === 0) {
-          Zotero.BetterBibTeX.log('getAll found no items');
-          return [];
-        }
-
-        all.sort(function(a, b) { return a.itemID - b.itemID; });
-        var translator = Zotero.BetterBibTeX.getTranslator('Zotero TestCase');
-        var items = Zotero.BetterBibTeX.translate(translator, all, {exportNotes: true, exportFileData: false});
-        return JSON.parse(items).items;
-      },
-
       getKeys: function() {
         return Zotero.BetterBibTeX.keymanager.keys();
       },

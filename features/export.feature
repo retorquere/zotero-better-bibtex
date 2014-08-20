@@ -112,7 +112,7 @@ Scenario: Better BibLaTeX Export 20
   When I import 1 reference from 'export/Better BibLaTeX.020.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.020.bib'
 
-@bbltx-e-21
+@e21
 Scenario: Better BibLaTeX Export 21
   When I import 1 reference with 1 attachment from 'export/Better BibLaTeX.021.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.021.bib'
@@ -152,9 +152,8 @@ Scenario: Journal abbreviations
 
 @stable-keys
 Scenario: Stable citation keys
-  When I import 3 references from 'export/Better BibLaTeX.stable-keys.json'
-   And I import 3 references from 'export/Better BibLaTeX.stable-keys.json'
-  Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.stable-keys.2.bib'
+  When I import 6 references from 'export/Better BibLaTeX.stable-keys.json'
+  Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.stable-keys.bib'
 
 @81
 Scenario: Journal abbreviations exported in bibtex (81)

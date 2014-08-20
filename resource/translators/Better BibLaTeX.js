@@ -39,7 +39,6 @@ var strToISO = function(str) {
   return false;
 }
 
-
 /*= include common.js =*/
 
 var fieldMap = Dict({

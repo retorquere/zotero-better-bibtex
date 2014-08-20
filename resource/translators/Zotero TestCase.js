@@ -100,6 +100,8 @@ function doImport() {
     for (prop in i) { item[prop] = i[prop]; }
     item.complete();
   });
+
+  //TODO: import collections
 }
 
 function doExport() {

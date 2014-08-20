@@ -101,7 +101,7 @@ Scenario: Problem when importing BibTeX entries with percent sign #95 or preambl
   When I import 1 reference from 'import/Problem when importing BibTeX entries with percent sign #95 or preamble #96.bib'
   Then the library should match 'import/Problem when importing BibTeX entries with percent sign #95 or preamble #96.json'
 
-@97
-Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #97
-  When I import 915 reference with 42 attachments from 'import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib'
-  Then the library should match 'import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json'
+#@97
+#Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #97
+#  When I import 915 reference with 42 attachments from 'import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib'
+#  Then the library should match 'import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json'
