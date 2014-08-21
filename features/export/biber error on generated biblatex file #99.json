@@ -1,0 +1,51 @@
+{
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
+    "label": "Zotero TestCase",
+    "pattern": "[auth.auth.ea][year]",
+    "skipFields": [
+      ""
+    ],
+    "usePrefix": false,
+    "braceAll": false,
+    "fancyURLs": false,
+    "langid": "babel",
+    "exportFileData": false,
+    "exportNotes": false
+  },
+  "items": [
+    {
+      "itemType": "book",
+      "url": "http://ptolemy.org/books/Systems",
+      "rights": "",
+      "series": "",
+      "volume": "",
+      "edition": "",
+      "place": "",
+      "publisher": "Ptolemy.org",
+      "ISBN": "",
+      "date": "2014",
+      "callNumber": "",
+      "archiveLocation": "",
+      "extra": "bibtex: \nbiblatexdata[ptolemaeus:14:systemdesigneditor=Claudius Ptolemaeus]",
+      "accessDate": "",
+      "seriesNumber": "",
+      "numberOfVolumes": "",
+      "libraryCatalog": "",
+      "language": "",
+      "abstractNote": "",
+      "title": "System Design, Modeling, and Simulation using Ptolemy II",
+      "shortTitle": "",
+      "numPages": "",
+      "archive": "",
+      "attachments": [
+        {
+          "path": "/home/abhishek/.zotero/zotero/41my9n7e.default/zotero/storage/3ICED3XD/ModelingTimedSystems.pdf",
+          "title": "ModelingTimedSystems.pdf",
+          "mimeType": "application/pdf"
+        }
+      ],
+      "related": []
+    }
+  ]
+}

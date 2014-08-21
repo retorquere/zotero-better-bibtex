@@ -186,3 +186,8 @@ Scenario: Export of item to Better Bibtex fails for auth3_1 #98
   When I import 1 reference from 'export/Export of item to Better Bibtex fails for auth3_1 #98.json'
   Then A library export using 'Better BibTeX' should match 'export/Export of item to Better Bibtex fails for auth3_1 #98.bib'
 
+@99
+Scenario: biber error on generated biblatex file #99
+  When I import 1 reference from 'export/biber error on generated biblatex file #99.json'
+  Then A library export using 'Better BibTeX' should match 'export/biber error on generated biblatex file #99.bib'
+

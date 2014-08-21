@@ -44,7 +44,7 @@ Zotero.BetterBibTeX = {
     return buffer;
   },
 
-  embeddedKeyRE: /bibtex:\s*([^\s\r\n]+)/,
+  embeddedKeyRE: /bibtex: *([^\s\r\n]+)/,
   translators: Dict(),
   threadManager: Components.classes["@mozilla.org/thread-manager;1"].getService(),
   windowMediator: Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator),
@@ -580,7 +580,7 @@ Zotero.BetterBibTeX = {
       if (item._sandboxManager) { item = arguments[1]; } // the sandbox inserts itself in call parameters
       if (item.getField) { item = {extra: item.getField('extra')}; }
 
-      var embeddedKeyRE = /bibtex:\s*([^\s\r\n]+)/;
+      var embeddedKeyRE = /bibtex: *([^\s\r\n]+)/;
       var andersJohanssonKeyRE = /biblatexcitekey\[([^\]]+)\]/;
       var extra = item.extra;
 
