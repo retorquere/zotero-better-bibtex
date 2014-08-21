@@ -30,8 +30,8 @@ The Better BibTeX [configuration pane](https://zotplus.github.io/better-bibtex/C
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.37.xpi)
-(**0.6.37**).
+version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.38.xpi)
+(**0.6.38**).
 If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
@@ -55,7 +55,8 @@ prefer fuzzy ones over missed ones.
 # Plans
 
 * add "citekey" columns to reference list view
-* add "citeley" field to reference editor
+* add "citekey" field to reference editor
 * sync citekey cleanly without abusing the "extra" field
 * faster journal abbreviator using the [LTWA](http://www.issn.org/services/online-services/access-to-the-ltwa/)
-* Submission to Mozilla Extension registry is off the table -- MER moves *much* to slow for my sometimes daily releases.
+* porting the bibtex parser to Jison for performance improvements
+* Submission to Addons.Mozilla.Org is off the table -- OMA moves *much* to slow for my sometimes daily releases.

@@ -30,6 +30,7 @@ var Translator = new function() {
     var config = Dict();
     config.id = self.id;
     config.label = self.label;
+    config.release = self.release;
 
     Dict.forEach(preferences, function(attribute) {
       config[attribute] = Translator[attribute];
