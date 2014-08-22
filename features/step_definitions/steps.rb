@@ -81,46 +81,14 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
     end
 
     if data.is_a?(Hash) && data['config'].is_a?(Hash) && data['config']['label'] == 'Zotero TestCase'
-      data['config'].each_pair{|key, value|
-        case key
-          when 'id', 'label'
-            # pass
-
-          when 'useJournalAbbreviation', 'exportCharset', 'exportFileData', 'exportNotes'
-            BBT.setExportOption(key, value)
-
-          when 'fancyURLs', 'langid', 'attachmentRelativePath', 'unicode'
-            BBT.setPreference('translators.better-bibtex.' + key, value)
-
-          when 'pattern'
-            BBT.setPreference('translators.better-bibtex.citeKeyFormat', value)
-
-          when 'skipFields'
-            BBT.setPreference('translators.better-bibtex.skipfields', value.join(','))
-
-          when 'usePrefix'
-            BBT.setPreference('translators.better-bibtex.useprefix', value)
-
-          when 'braceAll'
-            BBT.setPreference('translators.better-bibtex.brace-all', value)
-
-          when 'autoAbbrev'
-            BBT.setPreference('translators.better-bibtex.auto-abbrev', value)
-
-          when 'autoAbbrevStyle'
-            BBT.setPreference('translators.better-bibtex.auto-abbrev.style', value)
-
-          when 'pinKeys'
-            BBT.setPreference('translators.better-bibtex.pin-citekeys', value)
-
-          else
-            raise "Unexpected config key #{key}"
-
-        end
+      (data['config']['preferences'] || {}).each_pair{|key, value|
+        BBT.setPreference('translators.better-bibtex.' + key, value)
+      }
+      (data['config']['options'] || {}).each_pair{|key, value|
+        BBT.setExportOption(key, value)
       }
     end
   end
-
 
   entries = OpenStruct.new({start: BBT.librarySize})
 

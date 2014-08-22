@@ -2,16 +2,20 @@
   "config": {
     "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
     "label": "Zotero TestCase",
-    "pattern": "[auth][year]",
-    "skipFields": [
-      ""
-    ],
-    "usePrefix": false,
-    "braceAll": true,
-    "fancyURLs": false,
-    "langid": "babel",
-    "exportFileData": false,
-    "exportNotes": true
+    "preferences": {
+      "citeKeyFormat": "[auth][year]",
+      "skipfields": [
+        ""
+      ],
+      "useprefix": false,
+      "brace-all": true,
+      "fancyURLs": false,
+      "langid": "babel"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
   },
   "items": [
     {
@@ -48,7 +52,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 744,
@@ -101,7 +107,9 @@
         "NO2 sensor",
         "Rapid photothermal processing (RPP)"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 10,
@@ -157,7 +165,9 @@
         "Optical properties",
         "Sol-gel deposition"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 46,
@@ -229,7 +239,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 361,
@@ -259,7 +271,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "type": "",
       "publisher": "University of Illinois at Urbana-Champaign"
     },
@@ -303,7 +317,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 86,
@@ -339,7 +355,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 742,
@@ -381,7 +399,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 409,
@@ -429,7 +449,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 956,
@@ -469,7 +491,9 @@
         "crucible",
         "luminescence"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 27,
@@ -499,7 +523,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "type": "",
       "publisher": "Wayne State University, Dept. of Chemistry"
     },
@@ -555,7 +581,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 238,
@@ -636,7 +664,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 482,
@@ -696,7 +726,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Landolt-Börnstein"
     },
     {
@@ -727,7 +759,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "type": "",
       "publisher": "Zernike Institute for Advanced Materials, University of Groningen"
     },
@@ -795,7 +829,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 242,
@@ -843,7 +879,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 705,
@@ -897,7 +935,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 555,
@@ -942,7 +982,9 @@
         "membranes",
         "monolayers"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 768,
@@ -993,7 +1035,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 708,
@@ -1041,7 +1085,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 766,
@@ -1095,7 +1141,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 501,
@@ -1137,7 +1185,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 372,
@@ -1196,7 +1246,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of the 22nd European Photovoltaic Solar Energy Conference, Milan, Italy"
     },
     {
@@ -1254,7 +1306,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 472,
@@ -1314,7 +1368,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Landolt-Börnstein"
     },
     {
@@ -1368,7 +1424,9 @@
         "71.35.Lk",
         "78.47.+p"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 853,
@@ -1404,7 +1462,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 374,
@@ -1470,7 +1530,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 66,
@@ -1530,7 +1592,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 435,
@@ -1572,7 +1636,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 513,
@@ -1608,7 +1674,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 33,
@@ -1650,7 +1718,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 814,
@@ -1698,7 +1768,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 922,
@@ -1758,7 +1830,9 @@
         "Interface",
         "ZnO"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 464,
@@ -1813,7 +1887,9 @@
         "Microstructure-final",
         "TiO2"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 258,
@@ -1849,7 +1925,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 526,
@@ -1891,7 +1969,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 300,
@@ -1939,7 +2019,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 794,
@@ -2003,7 +2085,9 @@
         "conductivity",
         "doping"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 17,
@@ -2051,7 +2135,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 493,
@@ -2099,7 +2185,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 677,
@@ -2135,7 +2223,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 434,
@@ -2170,7 +2260,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of Second Cuprite Colloquium, University of Alberta, Edmonton, Canada"
     },
     {
@@ -2219,7 +2311,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 616,
@@ -2267,7 +2361,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 421,
@@ -2318,7 +2414,9 @@
         "reaction kinetics",
         "vacancies (crystal)"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 22,
@@ -2375,7 +2473,9 @@
       "tags": [
         "CuO"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 449,
@@ -2445,7 +2545,9 @@
         "Thin films",
         "Transmission electron microscopy"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 184,
@@ -2511,7 +2613,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 273,
@@ -2571,7 +2675,9 @@
         "Pulse electrodeposition",
         "p-nitrophenol"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 854,
@@ -2637,7 +2743,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 597,
@@ -2684,7 +2792,9 @@
         "conductivity",
         "doping"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 489,
@@ -2750,7 +2860,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 694,
@@ -2786,7 +2898,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 465,
@@ -2837,7 +2951,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 208,
@@ -2885,7 +3001,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 524,
@@ -2938,7 +3056,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of the Society of Photo-Optical Instrumentation Engineers (SPIE) Conference Series"
     },
     {
@@ -2984,7 +3104,9 @@
       "tags": [
         "doping"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 63,
@@ -3026,7 +3148,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 335,
@@ -3084,7 +3208,9 @@
         "doping",
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 782,
@@ -3156,7 +3282,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 310,
@@ -3216,7 +3344,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 386,
@@ -3291,7 +3421,9 @@
       "tags": [
         "doping"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 218,
@@ -3345,7 +3477,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 577,
@@ -3393,7 +3527,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 47,
@@ -3432,7 +3568,9 @@
       "tags": [
         "photoconductivity"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 56,
@@ -3481,7 +3619,9 @@
         "Oxidation",
         "Water vapor"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 549,
@@ -3529,7 +3669,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 808,
@@ -3571,7 +3713,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 553,
@@ -3637,7 +3781,9 @@
         "ultraviolet spectra",
         "voltammetry (chemical analysis)"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 460,
@@ -3721,7 +3867,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 950,
@@ -3769,7 +3917,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 199,
@@ -3847,7 +3997,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 274,
@@ -3902,7 +4054,9 @@
         "H2S",
         "ZnO"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 622,
@@ -3949,7 +4103,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of the 14th IEEE Photovoltaic Specialists Conference"
     },
     {
@@ -4006,7 +4162,9 @@
         "Thermal oxidation",
         "X-ray diffraction"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 801,
@@ -4048,7 +4206,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 756,
@@ -4096,7 +4256,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 14,
@@ -4138,7 +4300,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 247,
@@ -4201,7 +4365,9 @@
         "Self-diffusion and ionic conduction in nonmetals",
         "piezoresistance"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 637,
@@ -4237,7 +4403,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 485,
@@ -4297,7 +4465,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Landolt-Börnstein"
     },
     {
@@ -4334,7 +4504,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 528,
@@ -4382,7 +4554,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 417,
@@ -4424,7 +4598,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 648,
@@ -4465,7 +4641,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of the IRE"
     },
     {
@@ -4520,7 +4698,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 512,
@@ -4568,7 +4748,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 697,
@@ -4610,7 +4792,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 696,
@@ -4665,7 +4849,9 @@
         "Response time",
         "Solar light modulation"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 669,
@@ -4716,7 +4902,9 @@
       "tags": [
         "doping"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 842,
@@ -4764,7 +4952,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 6,
@@ -4803,7 +4993,9 @@
       "tags": [
         "review"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 219,
@@ -4875,7 +5067,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 860,
@@ -4934,7 +5128,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proocedings of the 14th IEEE Photovoltaic Specialists Conference"
     },
     {
@@ -5007,7 +5203,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 454,
@@ -5046,7 +5244,9 @@
       "notes": [
         "<p>Doi errato! 10.1007/BF00820858</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 165,
@@ -5082,7 +5282,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 810,
@@ -5127,7 +5329,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 720,
@@ -5169,7 +5373,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 505,
@@ -5232,7 +5438,9 @@
       "notes": [
         "<p>Natural crystal, T=2 K. Excitons, yellow series with s, p and d states by absorption of one and two photons. Rydberg of all three series.</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 592,
@@ -5283,7 +5491,9 @@
       "notes": [
         "<p>A summary of O&apos;Hara thesis with some more details. Diffusion coefficient of excitons (maybe is wrong) see paper.</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 610,
@@ -5334,7 +5544,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 402,
@@ -5385,7 +5597,9 @@
       "tags": [
         "doping"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 546,
@@ -5457,7 +5671,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 278,
@@ -5516,7 +5732,9 @@
         "Cupric oxide",
         "Cuprous oxide"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 197,
@@ -5558,7 +5776,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 270,
@@ -5606,7 +5826,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 657,
@@ -5657,7 +5879,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 87,
@@ -5699,7 +5923,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 351,
@@ -5771,7 +5997,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 422,
@@ -5819,7 +6047,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 365,
@@ -5873,7 +6103,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 251,
@@ -5909,7 +6141,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 35,
@@ -5993,7 +6227,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 76,
@@ -6032,7 +6268,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 835,
@@ -6079,7 +6317,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of 15th IEEE Photovoltaic Specialists Conference, Kissimmee, FL, USA"
     },
     {
@@ -6134,7 +6374,9 @@
         "Resistivity",
         "Thermal oxidation"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 263,
@@ -6176,7 +6418,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 424,
@@ -6228,7 +6472,9 @@
         "Surface properties",
         "electrodeposition"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 343,
@@ -6282,7 +6528,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 735,
@@ -6336,7 +6584,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 223,
@@ -6378,7 +6628,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 702,
@@ -6420,7 +6672,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 639,
@@ -6462,7 +6716,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 368,
@@ -6509,7 +6765,9 @@
         "D. Two-body process",
         "E. Two-photon excitation"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 681,
@@ -6566,7 +6824,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 683,
@@ -6621,7 +6881,9 @@
         "Thermodynamics",
         "Thin films"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 55,
@@ -6664,7 +6926,9 @@
         "galvanomagnetic effects",
         "nickel alloys"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 516,
@@ -6724,7 +6988,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 843,
@@ -6766,7 +7032,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 911,
@@ -6820,7 +7088,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 399,
@@ -6862,7 +7132,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 419,
@@ -6904,7 +7176,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 792,
@@ -6955,7 +7229,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 710,
@@ -7003,7 +7279,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 884,
@@ -7081,7 +7359,9 @@
         "Sulphidation",
         "electrodeposition"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 369,
@@ -7128,7 +7408,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of the Technical Sessions of the Institute of Physics - Sri Lanka"
     },
     {
@@ -7171,7 +7453,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 957,
@@ -7225,7 +7509,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 807,
@@ -7255,7 +7541,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "type": "",
       "publisher": "University of Hannover"
     },
@@ -7305,7 +7593,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 318,
@@ -7383,7 +7673,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 951,
@@ -7437,7 +7729,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 925,
@@ -7535,7 +7829,9 @@
         "Semiconducting materials",
         "Shape-controlled"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 660,
@@ -7577,7 +7873,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 551,
@@ -7631,7 +7929,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 850,
@@ -7667,7 +7967,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 457,
@@ -7739,7 +8041,9 @@
         "segregation",
         "thickness"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 375,
@@ -7799,7 +8103,9 @@
         "Precipitation",
         "Reduction"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 237,
@@ -7859,7 +8165,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 315,
@@ -7928,7 +8236,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 11,
@@ -8000,7 +8310,9 @@
         "sputtering",
         "thin film"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 862,
@@ -8084,7 +8396,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 381,
@@ -8144,7 +8458,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 367,
@@ -8192,7 +8508,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 714,
@@ -8228,7 +8546,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 24,
@@ -8279,7 +8599,9 @@
       "tags": [
         "CuO"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 490,
@@ -8315,7 +8637,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 311,
@@ -8363,7 +8687,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 881,
@@ -8435,7 +8761,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 440,
@@ -8474,7 +8802,9 @@
         "review",
         "solar cells"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 469,
@@ -8559,7 +8889,9 @@
         "surface area",
         "visible light irradiation"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of the 7th IEEE Conference on Nanotechnology IEEE-NANO 2007"
     },
     {
@@ -8608,7 +8940,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 583,
@@ -8644,7 +8978,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 491,
@@ -8692,7 +9028,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 475,
@@ -8752,7 +9090,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Landolt-Börnstein"
     },
     {
@@ -8795,7 +9135,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 859,
@@ -8837,7 +9179,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 319,
@@ -8892,7 +9236,9 @@
         "X-ray diffraction",
         "scanning electron microscopy"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 158,
@@ -8928,7 +9274,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 535,
@@ -8964,7 +9312,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 866,
@@ -9006,7 +9356,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 826,
@@ -9064,7 +9416,9 @@
         "doping",
         "sputtering"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of 13th IEEE PhotoVoltaic Specialists Conference"
     },
     {
@@ -9113,7 +9467,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 863,
@@ -9155,7 +9511,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 384,
@@ -9200,7 +9558,9 @@
       "notes": [
         "<p>Correggere il DOI! Il 18/02/2010 era sbagliato. 10.1007/BF00818188</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 530,
@@ -9248,7 +9608,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 903,
@@ -9302,7 +9664,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 282,
@@ -9362,7 +9726,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 38,
@@ -9422,7 +9788,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 3,
@@ -9470,7 +9838,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 809,
@@ -9542,7 +9912,9 @@
         "Hydrothermal synthesis",
         "Reduction"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 777,
@@ -9590,7 +9962,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 180,
@@ -9626,7 +10000,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 373,
@@ -9693,7 +10069,9 @@
         "electrodeposition",
         "photovoltaic cells"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 240,
@@ -9759,7 +10137,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 898,
@@ -9813,7 +10193,9 @@
         "Porous nanostructure",
         "Single crystalline"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 362,
@@ -9855,7 +10237,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 213,
@@ -9902,7 +10286,9 @@
         "EXCITONS",
         "Superfluidity"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 97,
@@ -9962,7 +10348,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 252,
@@ -10004,7 +10392,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 103,
@@ -10046,7 +10436,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 280,
@@ -10101,7 +10493,9 @@
         "doping",
         "electrodeposition"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 764,
@@ -10143,7 +10537,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 635,
@@ -10209,7 +10605,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 618,
@@ -10263,7 +10661,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 304,
@@ -10315,7 +10715,9 @@
         "cells",
         "solar"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 620,
@@ -10356,7 +10758,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of the 13th IEEE Photovoltaic Specialists Conference"
     },
     {
@@ -10399,7 +10803,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 249,
@@ -10453,7 +10859,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 337,
@@ -10510,7 +10918,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 614,
@@ -10563,7 +10973,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Transactions of JWRI"
     },
     {
@@ -10597,7 +11009,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "number": "0456513",
       "date": "1997"
     },
@@ -10647,7 +11061,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 816,
@@ -10689,7 +11105,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 668,
@@ -10731,7 +11149,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 186,
@@ -10773,7 +11193,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 928,
@@ -10815,7 +11237,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 174,
@@ -10862,7 +11286,9 @@
         "Photovoltaic",
         "Thin film devices and applications"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 348,
@@ -10907,7 +11333,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 865,
@@ -10972,7 +11400,9 @@
         "Flat band potential",
         "Grain orientation"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 239,
@@ -11028,7 +11458,9 @@
         "Solid state device",
         "semiconductor"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 670,
@@ -11082,7 +11514,9 @@
         "Magnetic impurity interactions",
         "Magnetic semiconductors"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 550,
@@ -11135,7 +11569,9 @@
         "Electroluminescence",
         "Excitons and related phenomena"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 106,
@@ -11207,7 +11643,9 @@
         "Optical properties",
         "Oxides"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 253,
@@ -11240,7 +11678,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "number": "1640335",
       "date": "1927"
     },
@@ -11287,7 +11727,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 851,
@@ -11335,7 +11777,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 897,
@@ -11395,7 +11839,9 @@
         "isothermal phase diagram",
         "material experiment"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 721,
@@ -11442,7 +11888,9 @@
         "photomemory",
         "spectrum"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 933,
@@ -11514,7 +11962,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 73,
@@ -11562,7 +12012,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 450,
@@ -11614,7 +12066,9 @@
         "reaction rate constants",
         "surface diffusion"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 573,
@@ -11662,7 +12116,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": ""
     },
     {
@@ -11711,7 +12167,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 192,
@@ -11759,7 +12217,9 @@
         "n-Cu2O",
         "n-Cu2O formation"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 909,
@@ -11808,7 +12268,9 @@
         "electrical conductivity transitions",
         "ohmic contacts"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 872,
@@ -11836,7 +12298,9 @@
       "title": "Cuprite --- Webmineral",
       "shortTitle": "",
       "archive": "",
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 141,
@@ -11908,7 +12372,9 @@
         "Semiconductors",
         "optical absorption spectra"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 820,
@@ -11950,7 +12416,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 533,
@@ -11998,7 +12466,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 458,
@@ -12028,7 +12498,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "type": "",
       "publisher": "University of Pittsburgh"
     },
@@ -12078,7 +12550,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 49,
@@ -12126,7 +12600,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 902,
@@ -12193,7 +12669,9 @@
         "metallic thin films",
         "surface diffusion"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 692,
@@ -12229,7 +12707,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 52,
@@ -12277,7 +12757,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 400,
@@ -12325,7 +12807,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 514,
@@ -12367,7 +12851,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 914,
@@ -12415,7 +12901,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 221,
@@ -12451,7 +12939,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 941,
@@ -12505,7 +12995,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 309,
@@ -12578,7 +13070,9 @@
         "Nanowire",
         "Single-walled carbon nanotubes"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 111,
@@ -12656,7 +13150,9 @@
         "evaporation",
         "ionization"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 713,
@@ -12722,7 +13218,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 548,
@@ -12770,7 +13268,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 468,
@@ -12806,7 +13306,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 700,
@@ -12836,7 +13338,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "type": "",
       "publisher": "University of Rochester"
     },
@@ -12880,7 +13384,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 845,
@@ -12925,7 +13431,9 @@
       "tags": [
         "doping"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 579,
@@ -12961,7 +13469,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 723,
@@ -13015,7 +13525,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 234,
@@ -13063,7 +13575,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 640,
@@ -13132,7 +13646,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 21,
@@ -13174,7 +13690,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 168,
@@ -13239,7 +13757,9 @@
         "Powder diffraction",
         "Semiconductors"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 487,
@@ -13293,7 +13813,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 558,
@@ -13341,7 +13863,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 780,
@@ -13377,7 +13901,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 634,
@@ -13425,7 +13951,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 855,
@@ -13473,7 +14001,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 682,
@@ -13524,7 +14054,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 115,
@@ -13579,7 +14111,9 @@
         "Nanocubes",
         "[gamma]-Irradiation"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 601,
@@ -13627,7 +14161,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 4,
@@ -13693,7 +14229,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 395,
@@ -13735,7 +14273,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 786,
@@ -13795,7 +14335,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 580,
@@ -13843,7 +14385,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 69,
@@ -13891,7 +14435,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 478,
@@ -13951,7 +14497,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Landolt-Börnstein"
     },
     {
@@ -14023,7 +14571,9 @@
         "solar cells",
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 848,
@@ -14068,7 +14618,9 @@
       "tags": [
         "doping"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 140,
@@ -14098,7 +14650,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "type": "",
       "publisher": "Dortmund University, Shaker, Aachen"
     },
@@ -14157,7 +14711,9 @@
         "nucleation",
         "surface diffusion"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 736,
@@ -14193,7 +14749,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 591,
@@ -14235,7 +14793,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 874,
@@ -14283,7 +14843,9 @@
         "Solvothermal",
         "nanorods"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 296,
@@ -14331,7 +14893,9 @@
         "doping",
         "silver"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 232,
@@ -14367,7 +14931,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 751,
@@ -14431,7 +14997,9 @@
         "cells",
         "solar"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 308,
@@ -14497,7 +15065,9 @@
         "Sensing mechanism",
         "Thin film sensor"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 727,
@@ -14569,7 +15139,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 684,
@@ -14605,7 +15177,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 569,
@@ -14674,7 +15248,9 @@
       "notes": [
         "<p>doi: 10.1021/j100887a006</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 413,
@@ -14756,7 +15332,9 @@
         "passivation",
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 217,
@@ -14798,7 +15376,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 166,
@@ -14843,7 +15423,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 664,
@@ -14897,7 +15479,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 600,
@@ -14939,7 +15523,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 226,
@@ -15002,7 +15588,9 @@
         "tin oxides",
         "xray diffraction"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 935,
@@ -15050,7 +15638,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 719,
@@ -15104,7 +15694,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 576,
@@ -15140,7 +15732,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 931,
@@ -15182,7 +15776,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 366,
@@ -15224,7 +15820,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 61,
@@ -15272,7 +15870,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 100,
@@ -15327,7 +15927,9 @@
         "Point defects",
         "Tenorite"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 753,
@@ -15390,7 +15992,9 @@
         "Semiconductor-electrolyte interfaces",
         "Surface photovoltage"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 443,
@@ -15456,7 +16060,9 @@
         "X-ray photoelectron spectroscopy",
         "oxide"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 198,
@@ -15547,7 +16153,9 @@
         "Semiconducting materials",
         "X-ray diffraction"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 822,
@@ -15582,7 +16190,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "number": "NSF-AER-75-23453-4",
       "type": "",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
@@ -15645,7 +16255,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 763,
@@ -15681,7 +16293,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 279,
@@ -15730,7 +16344,9 @@
         "electrodeposition",
         "p-n homojunction"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 584,
@@ -15781,7 +16397,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 15,
@@ -15835,7 +16453,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 149,
@@ -15883,7 +16503,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 521,
@@ -15934,7 +16556,9 @@
         "cells",
         "solar"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of 21st European Photovoltaic Solar Energy Conference, Dresden, Germany"
     },
     {
@@ -15988,7 +16612,9 @@
         "solar cell efficiency",
         "solar cells"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 717,
@@ -16030,7 +16656,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 352,
@@ -16072,7 +16700,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 503,
@@ -16127,7 +16757,9 @@
         "Spectral response",
         "electrodeposition"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 363,
@@ -16176,7 +16808,9 @@
         "D. Exciton",
         "D. Recombination"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 195,
@@ -16246,7 +16880,9 @@
         "Cu2O",
         "Solar energy materials"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 415,
@@ -16296,7 +16932,9 @@
         "localised states",
         "oxygen compounds"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 566,
@@ -16355,7 +16993,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of the International Conference on the Physics of Semiconductors, Exeter"
     },
     {
@@ -16398,7 +17038,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 743,
@@ -16446,7 +17088,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 488,
@@ -16511,7 +17155,9 @@
         "Photoelectrochemical solar cells",
         "Structural properties"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 752,
@@ -16577,7 +17223,9 @@
         "Photocatalyst",
         "Photoelectrode"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 552,
@@ -16628,7 +17276,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 589,
@@ -16670,7 +17320,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 774,
@@ -16722,7 +17374,9 @@
         "Exciton",
         "Photoluminescence"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 759,
@@ -16770,7 +17424,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 84,
@@ -16821,7 +17477,9 @@
       "notes": [
         "<p>This paper is based on T. Bretheau&apos;s and B. Sieber&apos;s thesis</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 326,
@@ -16869,7 +17527,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 323,
@@ -16930,7 +17590,9 @@
         "X-ray photoelectron spectroscopy",
         "surface structure"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 376,
@@ -16978,7 +17640,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 206,
@@ -17020,7 +17684,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 28,
@@ -17062,7 +17728,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 142,
@@ -17128,7 +17796,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 711,
@@ -17182,7 +17852,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 800,
@@ -17224,7 +17896,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 211,
@@ -17266,7 +17940,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 145,
@@ -17308,7 +17984,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 125,
@@ -17362,7 +18040,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 255,
@@ -17398,7 +18078,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 913,
@@ -17452,7 +18134,9 @@
         "XPS",
         "silicon"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 405,
@@ -17494,7 +18178,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 298,
@@ -17545,7 +18231,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 852,
@@ -17587,7 +18275,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 776,
@@ -17658,7 +18348,9 @@
         "A1. Dendrites",
         "A2. Electrochemical growth"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 494,
@@ -17706,7 +18398,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 918,
@@ -17748,7 +18442,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 98,
@@ -17784,7 +18480,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 663,
@@ -17832,7 +18530,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 250,
@@ -17874,7 +18574,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 554,
@@ -17919,7 +18621,9 @@
       "tags": [
         "doping"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 436,
@@ -17964,7 +18668,9 @@
       "notes": [
         "<p>SBB, DOI errato: 10.1139/p70-328</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 265,
@@ -18006,7 +18712,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 59,
@@ -18054,7 +18762,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 741,
@@ -18102,7 +18812,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 672,
@@ -18142,7 +18854,9 @@
         "review",
         "solar cell"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 599,
@@ -18184,7 +18898,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 20,
@@ -18254,7 +18970,9 @@
         "doping",
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 886,
@@ -18326,7 +19044,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 9,
@@ -18361,7 +19081,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "type": ""
     },
     {
@@ -18407,7 +19129,9 @@
       "tags": [
         "doping"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 58,
@@ -18458,7 +19182,9 @@
         "cells",
         "solar"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of the 23rd European Photovoltaic Solar Energy Conference, Valencia, Spain"
     },
     {
@@ -18543,7 +19269,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 594,
@@ -18594,7 +19322,9 @@
       "notes": [
         "<p>First retractation of exciton Bose-Einstein condensation (Lin&lt;sub&gt;1&lt;/sub&gt;993)</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 42,
@@ -18642,7 +19372,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 806,
@@ -18690,7 +19422,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 642,
@@ -18732,7 +19466,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 5,
@@ -18774,7 +19510,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 388,
@@ -18828,7 +19566,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 675,
@@ -18864,7 +19604,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 288,
@@ -18909,7 +19651,9 @@
       "notes": [
         "<p>I have the pdf thanks to Haugsrud himself</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 738,
@@ -18954,7 +19698,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 817,
@@ -19002,7 +19748,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 155,
@@ -19050,7 +19798,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 943,
@@ -19098,7 +19848,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 354,
@@ -19140,7 +19892,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 215,
@@ -19194,7 +19948,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Landolt-Börnstein"
     },
     {
@@ -19231,7 +19987,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 41,
@@ -19285,7 +20043,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 658,
@@ -19345,7 +20105,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 908,
@@ -19423,7 +20185,9 @@
         "B. Chemical synthesis",
         "C. X-ray diffraction"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 929,
@@ -19470,7 +20234,9 @@
         "Nucleation and growth: microscopic aspects",
         "Transmission electron microscopy"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 339,
@@ -19516,7 +20282,9 @@
         "doping",
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 113,
@@ -19561,7 +20329,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "number": "US2006/0256608A1",
       "date": "2006"
     },
@@ -19623,7 +20393,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 671,
@@ -19665,7 +20437,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 869,
@@ -19725,7 +20499,9 @@
         "B1. Nanomaterials",
         "B2. Semiconducting materials"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 160,
@@ -19778,7 +20554,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "``Mass and Charge Transport in Ceramics'', Ceramic Transactions"
     },
     {
@@ -19815,7 +20593,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 19,
@@ -19856,7 +20636,9 @@
         "hall",
         "mobility"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 725,
@@ -19910,7 +20692,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 734,
@@ -19994,7 +20778,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 954,
@@ -20051,7 +20837,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 357,
@@ -20117,7 +20905,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 586,
@@ -20204,7 +20994,9 @@
         "SOLAR ENERGY CONVERSION",
         "photovoltaic cells"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of the 1st European Photovoltaic Solar Energy Conference, Luxembourg"
     },
     {
@@ -20250,7 +21042,9 @@
       "tags": [
         "doping"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 329,
@@ -20316,7 +21110,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 838,
@@ -20363,7 +21159,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of the 16th IEEE Photovoltaic Specialists Conference"
     },
     {
@@ -20406,7 +21204,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 912,
@@ -20478,7 +21278,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 412,
@@ -20525,7 +21327,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 873,
@@ -20600,7 +21404,9 @@
       "tags": [
         "doping"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 78,
@@ -20669,7 +21475,9 @@
         "Total internal reflection",
         "Ultraviolet evanescent wave"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 427,
@@ -20705,7 +21513,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 608,
@@ -20753,7 +21563,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 740,
@@ -20807,7 +21619,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 804,
@@ -20855,7 +21669,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 518,
@@ -20883,7 +21699,9 @@
       "title": "Cuprite --- Mindat Directory",
       "shortTitle": "",
       "archive": "",
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 540,
@@ -20919,7 +21737,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 636,
@@ -20973,7 +21793,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 302,
@@ -21009,7 +21831,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 544,
@@ -21057,7 +21881,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 581,
@@ -21090,7 +21916,9 @@
       "notes": [
         "<p>Work published mainly in Noguet&lt;sub&gt;1&lt;/sub&gt;970</p>"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "type": "",
       "publisher": "University of Strasbourg"
     },
@@ -21134,7 +21962,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 699,
@@ -21170,7 +22000,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 557,
@@ -21236,7 +22068,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 757,
@@ -21278,7 +22112,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 497,
@@ -21326,7 +22162,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 691,
@@ -21362,7 +22200,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 353,
@@ -21404,7 +22244,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 504,
@@ -21440,7 +22282,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 1,
@@ -21494,7 +22338,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 312,
@@ -21536,7 +22382,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 275,
@@ -21584,7 +22432,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 628,
@@ -21614,7 +22464,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "type": "",
       "publisher": "University of Groningen, Faculty of Mathematics and Natural Sciences"
     },
@@ -21652,7 +22504,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 609,
@@ -21718,7 +22572,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 89,
@@ -21790,7 +22646,9 @@
         "Photoemission and photoelectron spectra",
         "Theories and models of many-electron systems"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 202,
@@ -21850,7 +22708,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 560,
@@ -21904,7 +22764,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 81,
@@ -21961,7 +22823,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 522,
@@ -22009,7 +22873,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 821,
@@ -22066,7 +22932,9 @@
         "Growth",
         "solar cell efficiency"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of 12th IEEE PhotoVoltaic Specialists Conference, Baton Rouge, LA, USA"
     },
     {
@@ -22103,7 +22971,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 466,
@@ -22156,7 +23026,9 @@
         "Magnetron co-sputtering process",
         "N-doped cuprous oxide"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 626,
@@ -22240,7 +23112,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 659,
@@ -22303,7 +23177,9 @@
       "tags": [
         "Oxidation"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 37,
@@ -22369,7 +23245,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 394,
@@ -22402,7 +23280,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "number": "4582542",
       "date": "April 1986"
     },
@@ -22476,7 +23356,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 857,
@@ -22518,7 +23400,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 438,
@@ -22575,7 +23459,9 @@
       "notes": [
         "<p>SBB, doi errato: 10.1139/p70-329</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 430,
@@ -22611,7 +23497,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 151,
@@ -22659,7 +23547,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 452,
@@ -22711,7 +23601,9 @@
         "mobility",
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 235,
@@ -22759,7 +23651,9 @@
         "electrodeposition",
         "solar cell"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 827,
@@ -22806,7 +23700,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "number": "DOE/ET/23010--T1",
       "type": "",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
@@ -22854,7 +23750,9 @@
         "cells",
         "solar"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of the 11th IEEE Photovoltaic Specialists Conference"
     },
     {
@@ -22922,7 +23820,9 @@
         "semiconductor materials",
         "sheet materials"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 532,
@@ -22964,7 +23864,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 135,
@@ -23000,7 +23902,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 666,
@@ -23051,7 +23955,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 674,
@@ -23087,7 +23993,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 39,
@@ -23135,7 +24043,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 484,
@@ -23195,7 +24105,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Landolt-Börnstein"
     },
     {
@@ -23238,7 +24150,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 143,
@@ -23305,7 +24219,9 @@
         "Photoemission",
         "Time-dependent density-functional theory"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 815,
@@ -23341,7 +24257,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 629,
@@ -23387,7 +24305,9 @@
         "Chemical vapour deposition",
         "Copper oxides"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 899,
@@ -23429,7 +24349,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 324,
@@ -23495,7 +24417,9 @@
         "Nanowire (NW)",
         "Photoluminescence"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 917,
@@ -23537,7 +24461,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 12,
@@ -23583,7 +24509,9 @@
         "Structural properties",
         "Thermal evaporation"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 316,
@@ -23652,7 +24580,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 940,
@@ -23706,7 +24636,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 94,
@@ -23742,7 +24674,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 328,
@@ -23790,7 +24724,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 520,
@@ -23854,7 +24790,9 @@
         "cells",
         "solar"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 423,
@@ -23896,7 +24834,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 172,
@@ -23941,7 +24881,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 266,
@@ -23995,7 +24937,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 508,
@@ -24060,7 +25004,9 @@
         "Cu2O",
         "Electronic structure"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 529,
@@ -24108,7 +25054,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 101,
@@ -24150,7 +25098,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 152,
@@ -24192,7 +25142,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 425,
@@ -24240,7 +25192,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 605,
@@ -24312,7 +25266,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 138,
@@ -24384,7 +25340,9 @@
         "Semiconductors",
         "optical absorption spectra"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 638,
@@ -24420,7 +25378,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 575,
@@ -24468,7 +25428,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 559,
@@ -24516,7 +25478,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 131,
@@ -24564,7 +25528,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 122,
@@ -24624,7 +25590,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 451,
@@ -24686,7 +25654,9 @@
         "Visible light",
         "photoelectrochemistry"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 322,
@@ -24740,7 +25710,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 285,
@@ -24818,7 +25790,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 25,
@@ -24875,7 +25849,9 @@
       "tags": [
         "CuO"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 121,
@@ -24923,7 +25899,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 169,
@@ -24965,7 +25943,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 178,
@@ -25001,7 +25981,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 416,
@@ -25043,7 +26025,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 871,
@@ -25091,7 +26075,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 92,
@@ -25127,7 +26113,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 704,
@@ -25175,7 +26163,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 136,
@@ -25227,7 +26217,9 @@
         "electrodeposition",
         "electroplating"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 748,
@@ -25287,7 +26279,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 643,
@@ -25323,7 +26317,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 879,
@@ -25365,7 +26361,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 833,
@@ -25400,7 +26398,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "number": "DOE/ET/23010--17",
       "type": "",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
@@ -25445,7 +26445,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 448,
@@ -25499,7 +26501,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 878,
@@ -25541,7 +26545,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 410,
@@ -25589,7 +26595,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 93,
@@ -25631,7 +26639,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 118,
@@ -25691,7 +26701,9 @@
         "High-energy ball milling",
         "Mechanochemistry"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 662,
@@ -25733,7 +26745,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 864,
@@ -25787,7 +26801,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 233,
@@ -25829,7 +26845,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 745,
@@ -25881,7 +26899,9 @@
         "Magnetic impurity interactions",
         "Magnetic semiconductors"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 332,
@@ -25941,7 +26961,9 @@
         "semiconductor materials",
         "semiconductor quantum wires"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 2,
@@ -25986,7 +27008,9 @@
       "tags": [
         "CuO"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 383,
@@ -26036,7 +27060,9 @@
         "nucleation",
         "scanning electron microscopy"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 889,
@@ -26064,7 +27090,9 @@
       "title": "Cuprite --- Wikipedia: The Free Encyclopedia",
       "shortTitle": "",
       "archive": "",
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 110,
@@ -26112,7 +27140,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 481,
@@ -26172,7 +27202,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Landolt-Börnstein"
     },
     {
@@ -26239,7 +27271,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 477,
@@ -26299,7 +27333,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Landolt-Börnstein"
     },
     {
@@ -26348,7 +27384,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 95,
@@ -26396,7 +27434,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": ""
     },
     {
@@ -26457,7 +27497,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Landolt-Börnstein"
     },
     {
@@ -26494,7 +27536,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 799,
@@ -26536,7 +27580,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 479,
@@ -26596,7 +27642,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Landolt-Börnstein"
     },
     {
@@ -26639,7 +27687,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 287,
@@ -26711,7 +27761,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 690,
@@ -26759,7 +27811,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 910,
@@ -26816,7 +27870,9 @@
         "X-ray diffraction",
         "X-ray photoelectron spectroscopy"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 927,
@@ -26858,7 +27914,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 818,
@@ -26912,7 +27970,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 164,
@@ -26960,7 +28020,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 445,
@@ -27020,7 +28082,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 509,
@@ -27062,7 +28126,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 803,
@@ -27116,7 +28182,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 170,
@@ -27158,7 +28226,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": ""
     },
     {
@@ -27201,7 +28271,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 496,
@@ -27243,7 +28315,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 515,
@@ -27303,7 +28377,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 291,
@@ -27345,7 +28421,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 162,
@@ -27396,7 +28474,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 404,
@@ -27438,7 +28518,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 893,
@@ -27487,7 +28569,9 @@
         "D. Exciton",
         "D. Recombination"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 330,
@@ -27577,7 +28661,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 538,
@@ -27625,7 +28711,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 268,
@@ -27673,7 +28761,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 944,
@@ -27721,7 +28811,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 679,
@@ -27763,7 +28855,9 @@
         "Sol-gel-like dip technique",
         "XRD"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 428,
@@ -27802,7 +28896,9 @@
       "notes": [
         "<p>SBB, volume 11 o B11?</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 259,
@@ -27838,7 +28934,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 40,
@@ -27886,7 +28984,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 185,
@@ -27937,7 +29037,9 @@
         "Zeeman and Stark splitting",
         "optical absorption spectra"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 51,
@@ -27979,7 +29081,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 621,
@@ -28031,7 +29135,9 @@
         "solar cell efficiency",
         "solar cells"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 934,
@@ -28079,7 +29185,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 517,
@@ -28143,7 +29251,9 @@
         "cells",
         "solar"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 596,
@@ -28173,7 +29283,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "type": "",
       "publisher": "University of Illinois at Urbana-Champaign"
     },
@@ -28229,7 +29341,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 536,
@@ -28283,7 +29397,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 471,
@@ -28319,7 +29435,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 905,
@@ -28382,7 +29500,9 @@
         "in situ",
         "surface reconstruction"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 45,
@@ -28424,7 +29544,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 336,
@@ -28478,7 +29600,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 90,
@@ -28538,7 +29662,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 241,
@@ -28604,7 +29730,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 945,
@@ -28652,7 +29780,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 398,
@@ -28694,7 +29824,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 758,
@@ -28742,7 +29874,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 729,
@@ -28790,7 +29924,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 446,
@@ -28838,7 +29974,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 567,
@@ -28880,7 +30018,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 377,
@@ -28940,7 +30080,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 392,
@@ -28982,7 +30124,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 225,
@@ -29024,7 +30168,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 895,
@@ -29066,7 +30212,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 836,
@@ -29101,7 +30249,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "number": "DOE/ET/23010--T10",
       "type": "",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
@@ -29164,7 +30314,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 746,
@@ -29206,7 +30358,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 272,
@@ -29254,7 +30408,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 340,
@@ -29347,7 +30503,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 578,
@@ -29407,7 +30565,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 839,
@@ -29442,7 +30602,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "number": "DOE/ER/10825--1",
       "type": "",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
@@ -29487,7 +30649,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 228,
@@ -29556,7 +30720,9 @@
       "tags": [
         "CuO"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 123,
@@ -29598,7 +30764,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 447,
@@ -29676,7 +30844,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 331,
@@ -29715,7 +30885,9 @@
       "tags": [
         "schottky"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 916,
@@ -29769,7 +30941,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 707,
@@ -29811,7 +30985,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 712,
@@ -29859,7 +31035,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 359,
@@ -29911,7 +31089,9 @@
         "Zirconium oxychloride octahydrate",
         "films"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 54,
@@ -29947,7 +31127,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 716,
@@ -30001,7 +31183,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 932,
@@ -30043,7 +31227,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 511,
@@ -30091,7 +31277,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 765,
@@ -30169,7 +31357,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 358,
@@ -30211,7 +31401,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 942,
@@ -30265,7 +31457,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 57,
@@ -30319,7 +31513,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 875,
@@ -30361,7 +31557,9 @@
         "photoconductivity",
         "transmittance"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 476,
@@ -30421,7 +31619,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Landolt-Börnstein"
     },
     {
@@ -30458,7 +31658,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 463,
@@ -30506,7 +31708,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 770,
@@ -30542,7 +31746,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 882,
@@ -30584,7 +31790,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 781,
@@ -30639,7 +31847,9 @@
         "passive film",
         "photoelectrochemistry"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 133,
@@ -30675,7 +31885,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 680,
@@ -30717,7 +31929,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 70,
@@ -30753,7 +31967,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 387,
@@ -30795,7 +32011,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 262,
@@ -30837,7 +32055,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 112,
@@ -30950,7 +32170,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "IEEE International Electron Devices Meeting, 2005. IEDM Technical Digest"
     },
     {
@@ -31005,7 +32227,9 @@
         "Nanostructured materials",
         "Optical spectroscopy"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 561,
@@ -31053,7 +32277,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 134,
@@ -31095,7 +32321,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 519,
@@ -31157,7 +32385,9 @@
         "normal modes",
         "thermomechanical effects"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 590,
@@ -31193,7 +32423,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 313,
@@ -31235,7 +32467,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 407,
@@ -31277,7 +32511,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 126,
@@ -31339,7 +32575,9 @@
         "N-Arylation",
         "Poly(ethylene glycol)"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 587,
@@ -31393,7 +32631,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 281,
@@ -31453,7 +32693,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 102,
@@ -31501,7 +32743,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 507,
@@ -31549,7 +32793,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 646,
@@ -31612,7 +32858,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 876,
@@ -31654,7 +32902,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 194,
@@ -31708,7 +32958,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 547,
@@ -31767,7 +33019,9 @@
         "Copper oxide",
         "thin film"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 132,
@@ -31809,7 +33063,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 231,
@@ -31845,7 +33101,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 888,
@@ -31873,7 +33131,9 @@
       "title": "Copper(II) oxide --- Wikipedia: The Free Encyclopedia",
       "shortTitle": "",
       "archive": "",
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 349,
@@ -31918,7 +33178,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 334,
@@ -31969,7 +33231,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 726,
@@ -32023,7 +33287,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 320,
@@ -32059,7 +33325,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 23,
@@ -32110,7 +33378,9 @@
       "tags": [
         "CuO"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 360,
@@ -32158,7 +33428,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 615,
@@ -32234,7 +33506,9 @@
         "doping",
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 64,
@@ -32282,7 +33556,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 630,
@@ -32334,7 +33610,9 @@
         "cells",
         "solar"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 500,
@@ -32376,7 +33654,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 715,
@@ -32448,7 +33728,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 649,
@@ -32508,7 +33790,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 625,
@@ -32544,7 +33828,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 71,
@@ -32589,7 +33875,9 @@
       "notes": [
         "<p>SBBrep</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 338,
@@ -32665,7 +33953,9 @@
         "doping",
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 510,
@@ -32755,7 +34045,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 652,
@@ -32803,7 +34095,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": ""
     },
     {
@@ -32876,7 +34170,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 947,
@@ -32918,7 +34214,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 849,
@@ -32954,7 +34252,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 952,
@@ -32993,7 +34293,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 379,
@@ -33035,7 +34337,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 220,
@@ -33107,7 +34411,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 656,
@@ -33143,7 +34449,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 75,
@@ -33185,7 +34493,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 749,
@@ -33215,7 +34525,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "type": "",
       "publisher": "University of Groningen"
     },
@@ -33259,7 +34571,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 824,
@@ -33294,7 +34608,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "number": "NSF-AER-75-23453-5",
       "type": "",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
@@ -33333,7 +34649,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 831,
@@ -33368,7 +34686,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "number": "DOE/ET/23010--12",
       "type": "",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
@@ -33415,7 +34735,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Prooceeding of the 13th IEEE Photovoltaic Specialists Conference"
     },
     {
@@ -33452,7 +34774,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 915,
@@ -33500,7 +34824,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 755,
@@ -33548,7 +34874,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 26,
@@ -33614,7 +34942,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 856,
@@ -33662,7 +34992,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 88,
@@ -33692,7 +35024,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "type": "",
       "publisher": "Ecole Polytechnique, Palaiseau, France"
     },
@@ -33761,7 +35095,9 @@
         "Photoelectrochemical properties",
         "Spray pyrolysis"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 562,
@@ -33797,7 +35133,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 256,
@@ -33839,7 +35177,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 327,
@@ -33893,7 +35233,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 805,
@@ -33935,7 +35277,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 8,
@@ -33989,7 +35333,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 868,
@@ -34043,7 +35389,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 16,
@@ -34085,7 +35433,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 946,
@@ -34121,7 +35471,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 693,
@@ -34160,7 +35512,9 @@
       "tags": [
         "doping"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 492,
@@ -34208,7 +35562,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 393,
@@ -34250,7 +35606,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 651,
@@ -34298,7 +35656,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 292,
@@ -34344,7 +35704,9 @@
         "thermal analysis",
         "vacancies (crystal)"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 283,
@@ -34386,7 +35748,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 784,
@@ -34440,7 +35804,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 290,
@@ -34482,7 +35848,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 761,
@@ -34518,7 +35886,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 173,
@@ -34572,7 +35942,9 @@
         "SnO2-doped",
         "Trifluralin"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 321,
@@ -34644,7 +36016,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 104,
@@ -34692,7 +36066,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 790,
@@ -34743,7 +36119,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 297,
@@ -34785,7 +36163,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 378,
@@ -34827,7 +36207,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 602,
@@ -34863,7 +36245,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 364,
@@ -34905,7 +36289,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 534,
@@ -34946,7 +36332,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 880,
@@ -35000,7 +36388,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 612,
@@ -35042,7 +36432,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 545,
@@ -35090,7 +36482,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 36,
@@ -35144,7 +36538,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 179,
@@ -35180,7 +36576,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 650,
@@ -35222,7 +36620,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 948,
@@ -35282,7 +36682,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 389,
@@ -35342,7 +36744,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 216,
@@ -35384,7 +36788,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 390,
@@ -35438,7 +36844,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 762,
@@ -35480,7 +36888,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 18,
@@ -35522,7 +36932,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 80,
@@ -35558,7 +36970,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 937,
@@ -35606,7 +37020,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 196,
@@ -35648,7 +37064,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 408,
@@ -35696,7 +37114,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 767,
@@ -35756,7 +37176,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 144,
@@ -35804,7 +37226,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 210,
@@ -35846,7 +37270,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 227,
@@ -35901,7 +37327,9 @@
         "electrodeposition",
         "thin film"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 787,
@@ -35967,7 +37395,9 @@
         "TiO2 film",
         "electrodeposition"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 733,
@@ -36033,7 +37463,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 397,
@@ -36099,7 +37531,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 203,
@@ -36147,7 +37581,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 7,
@@ -36195,7 +37631,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 207,
@@ -36243,7 +37681,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 229,
@@ -36291,7 +37731,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 406,
@@ -36347,7 +37789,9 @@
         "interconnects",
         "thermal effects"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 108,
@@ -36389,7 +37833,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 189,
@@ -36430,7 +37876,9 @@
         "hall",
         "mobility"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 154,
@@ -36518,7 +37966,9 @@
         "transistors",
         "wide band gap semiconductors"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 885,
@@ -36584,7 +38034,9 @@
         "electrodeposition",
         "scanning electron microscopy"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 444,
@@ -36626,7 +38078,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 613,
@@ -36698,7 +38152,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 678,
@@ -36746,7 +38202,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 603,
@@ -36781,7 +38239,9 @@
       "notes": [
         "<p>http://handle.dtic.mil/100.2/AD663435</p>"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "number": "",
       "type": "",
       "publisher": "Arizona State University Tempe Dept. of Chemistry"
@@ -36832,7 +38292,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 150,
@@ -36880,7 +38342,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 938,
@@ -36928,7 +38392,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 783,
@@ -37006,7 +38472,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 129,
@@ -37054,7 +38522,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 212,
@@ -37102,7 +38572,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 161,
@@ -37138,7 +38610,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 812,
@@ -37180,7 +38654,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 461,
@@ -37228,7 +38704,9 @@
         "D. Excitons",
         "D. Two-photon excitation"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 190,
@@ -37276,7 +38754,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 317,
@@ -37336,7 +38816,9 @@
         "refractive index",
         "scanning electron microscopy"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 542,
@@ -37381,7 +38863,9 @@
       "notes": [
         "<p>DOI errato come tutti quelli del canadian</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 341,
@@ -37423,7 +38907,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 243,
@@ -37468,7 +38954,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 676,
@@ -37516,7 +39004,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 264,
@@ -37558,7 +39048,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 611,
@@ -37606,7 +39098,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 380,
@@ -37654,7 +39148,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 474,
@@ -37714,7 +39210,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Landolt-Börnstein"
     },
     {
@@ -37755,7 +39253,9 @@
         "solar cells",
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 350,
@@ -37824,7 +39324,9 @@
       "tags": [
         "phonons"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 689,
@@ -37879,7 +39381,9 @@
         "Electrochromism",
         "Thin films"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 819,
@@ -37915,7 +39419,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 120,
@@ -37965,7 +39471,9 @@
         "Non-enzymatic sensor",
         "Porous film"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 109,
@@ -38013,7 +39521,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 128,
@@ -38055,7 +39565,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 67,
@@ -38115,7 +39627,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 698,
@@ -38157,7 +39671,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 632,
@@ -38199,7 +39715,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 396,
@@ -38247,7 +39765,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 665,
@@ -38314,7 +39834,9 @@
         "C. Infrared spectroscopy",
         "C. X-ray diffraction"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 156,
@@ -38356,7 +39878,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 930,
@@ -38392,7 +39916,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 119,
@@ -38476,7 +40002,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 91,
@@ -38542,7 +40070,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 204,
@@ -38587,7 +40117,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 633,
@@ -38622,7 +40154,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of the 5th Bulgarian--Greek Symposium in Semiconductors, Sofia"
     },
     {
@@ -38671,7 +40205,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 13,
@@ -38757,7 +40293,9 @@
         "Polychlorodibenzo-p-dioxins",
         "Polychlorodibenzofurans"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 382,
@@ -38811,7 +40349,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 441,
@@ -38867,7 +40407,9 @@
         "heavy fermions",
         "local density approximation"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 214,
@@ -38945,7 +40487,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 414,
@@ -38999,7 +40543,9 @@
         "Vapor deposition",
         "oxide"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 175,
@@ -39035,7 +40581,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 598,
@@ -39077,7 +40625,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 137,
@@ -39132,7 +40682,9 @@
         "Magnetoelectrochemistry",
         "Transient current"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 617,
@@ -39174,7 +40726,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 531,
@@ -39210,7 +40764,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 747,
@@ -39252,7 +40808,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 797,
@@ -39294,7 +40852,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 731,
@@ -39342,7 +40902,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 645,
@@ -39378,7 +40940,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 345,
@@ -39432,7 +40996,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 703,
@@ -39474,7 +41040,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 139,
@@ -39540,7 +41108,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 305,
@@ -39587,7 +41157,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of the 14th IEEE Photovoltaic Specialists Conference"
     },
     {
@@ -39630,7 +41202,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 177,
@@ -39678,7 +41252,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 277,
@@ -39720,7 +41296,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 556,
@@ -39781,7 +41359,9 @@
         "Electrochromism",
         "Thin films"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 730,
@@ -39823,7 +41403,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 371,
@@ -39882,7 +41464,9 @@
         "Photoelectrochemical cell",
         "n-Cu2O electrodes"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 798,
@@ -39930,7 +41514,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 653,
@@ -39990,7 +41576,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": ""
     },
     {
@@ -40033,7 +41621,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 74,
@@ -40081,7 +41671,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 209,
@@ -40123,7 +41715,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 157,
@@ -40165,7 +41759,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 923,
@@ -40225,7 +41821,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 269,
@@ -40273,7 +41871,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 829,
@@ -40314,7 +41914,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "number": "DOE/ET/23010--9",
       "type": "",
       "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
@@ -40359,7 +41961,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 183,
@@ -40407,7 +42011,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 181,
@@ -40445,7 +42051,9 @@
       "notes": [
         "<p>SBB. Sent by Elliott!</p>"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Proceedings of the International Conference on Semiconductor Physics (5th edition, Prague, 1960)"
     },
     {
@@ -40488,7 +42096,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 537,
@@ -40540,7 +42150,9 @@
         "doping",
         "solar cells"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 333,
@@ -40606,7 +42218,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 701,
@@ -40666,7 +42280,9 @@
         "Reflection spectroscopy",
         "Surface roughness"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 574,
@@ -40702,7 +42318,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Excitons at High Density"
     },
     {
@@ -40745,7 +42363,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 99,
@@ -40787,7 +42407,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 153,
@@ -40835,7 +42457,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 900,
@@ -40877,7 +42501,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 939,
@@ -40925,7 +42551,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 276,
@@ -40986,7 +42614,9 @@
         "Motion of wave packet",
         "Yellow series exciton"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 356,
@@ -41056,7 +42686,9 @@
         "short-circuit currents",
         "zinc compounds"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 732,
@@ -41098,7 +42730,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 293,
@@ -41140,7 +42774,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 718,
@@ -41192,7 +42828,9 @@
         "(crystal)",
         "vacancies"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 685,
@@ -41243,7 +42881,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 44,
@@ -41285,7 +42925,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 779,
@@ -41367,7 +43009,9 @@
         "A1. Crystal morphology",
         "A2. Electrodeposition"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 325,
@@ -41451,7 +43095,9 @@
         "electroplating",
         "scanning electron microscopy"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 523,
@@ -41508,7 +43154,9 @@
       "tags": [
         "sputtering"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 921,
@@ -41550,7 +43198,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 565,
@@ -41598,7 +43248,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 631,
@@ -41646,7 +43298,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 306,
@@ -41694,7 +43348,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 127,
@@ -41736,7 +43392,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 68,
@@ -41803,7 +43461,9 @@
         "optical absorption spectra",
         "semiconductor"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 222,
@@ -41845,7 +43505,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 60,
@@ -41919,7 +43581,9 @@
         "oxide",
         "thinfilm"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 904,
@@ -41984,7 +43648,9 @@
         "nucleation",
         "passivation"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 267,
@@ -42032,7 +43698,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 887,
@@ -42060,7 +43728,9 @@
       "title": "Copper(I) oxide --- Wikipedia, The Free Encyclopedia",
       "shortTitle": "",
       "archive": "",
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 906,
@@ -42114,7 +43784,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 295,
@@ -42150,7 +43822,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 771,
@@ -42186,7 +43860,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 187,
@@ -42222,7 +43898,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 347,
@@ -42264,7 +43942,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 248,
@@ -42324,7 +44004,9 @@
         "EXCITONS",
         "Non-equilibrium"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 418,
@@ -42366,7 +44048,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 29,
@@ -42399,7 +44083,9 @@
       "notes": [
         "<p>This work of this thesis was published in Assimos&lt;sub&gt;1&lt;/sub&gt;974</p>"
       ],
-      "related": [],
+      "related": [
+
+      ],
       "type": "",
       "publisher": "Wayne State University, Dept. of Chemistry"
     },
@@ -42437,7 +44123,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 858,
@@ -42473,7 +44161,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 890,
@@ -42527,7 +44217,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 919,
@@ -42600,7 +44292,9 @@
         "Nanoparticles",
         "Polyol process"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 284,
@@ -42648,7 +44342,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 568,
@@ -42702,7 +44398,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 867,
@@ -42750,7 +44448,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 724,
@@ -42792,7 +44492,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 527,
@@ -42834,7 +44536,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 891,
@@ -42876,7 +44580,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 43,
@@ -42924,7 +44630,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 813,
@@ -42975,7 +44683,9 @@
       "tags": [
         "Growth"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 706,
@@ -43024,7 +44734,9 @@
         "heterostructures",
         "optical absorption spectra"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 420,
@@ -43066,7 +44778,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 53,
@@ -43108,7 +44822,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 936,
@@ -43156,7 +44872,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 31,
@@ -43204,7 +44922,9 @@
       "tags": [
         "affinity"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 391,
@@ -43246,7 +44966,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 795,
@@ -43294,7 +45016,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 48,
@@ -43348,7 +45072,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 65,
@@ -43384,7 +45110,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 50,
@@ -43420,7 +45148,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 687,
@@ -43456,7 +45186,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 426,
@@ -43492,7 +45224,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 193,
@@ -43544,7 +45278,9 @@
         "H2",
         "evolution"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 486,
@@ -43613,7 +45349,9 @@
         "Optical constants",
         "Resistivity"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 294,
@@ -43655,7 +45393,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 728,
@@ -43709,7 +45449,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 456,
@@ -43751,7 +45493,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 607,
@@ -43799,7 +45543,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 894,
@@ -43841,7 +45587,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 303,
@@ -43891,7 +45639,9 @@
         "photovoltaic cells",
         "stoichiometry"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 778,
@@ -43952,7 +45702,9 @@
         "Dissociation",
         "N2O"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 525,
@@ -44048,7 +45800,9 @@
         "semiconductor materials",
         "semiconductor thin films"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 96,
@@ -44090,7 +45844,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": ""
     },
     {
@@ -44127,7 +45883,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 539,
@@ -44175,7 +45933,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 159,
@@ -44222,7 +45982,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "``Crystal Growth of Novel Electronic Materials'', Ceramic Transactions"
     },
     {
@@ -44283,7 +46045,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Landolt-Börnstein"
     },
     {
@@ -44345,7 +46109,9 @@
         "Photocatalysts",
         "Visible light"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 34,
@@ -44387,7 +46153,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 483,
@@ -44447,7 +46215,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Landolt-Börnstein"
     },
     {
@@ -44502,7 +46272,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 130,
@@ -44550,7 +46322,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 846,
@@ -44595,7 +46369,9 @@
       "tags": [
         "doping"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 431,
@@ -44634,7 +46410,9 @@
       "notes": [
         "<p>volume 15 o B15?</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 230,
@@ -44676,7 +46454,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 572,
@@ -44736,7 +46516,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 176,
@@ -44778,7 +46560,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 403,
@@ -44838,7 +46622,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 688,
@@ -44874,7 +46660,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 346,
@@ -44916,7 +46704,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 655,
@@ -44964,7 +46754,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 773,
@@ -45030,7 +46822,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 841,
@@ -45113,7 +46907,9 @@
           "fieldMode": ""
         }
       ],
-      "related": [],
+      "related": [
+
+      ],
       "publicationTitle": "Defect and Diffusion Forum"
     },
     {
@@ -45156,7 +46952,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 148,
@@ -45204,7 +47002,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 924,
@@ -45264,7 +47064,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 788,
@@ -45315,7 +47117,9 @@
       "notes": [
         "<p>SBB</p>"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 442,
@@ -45357,7 +47161,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 453,
@@ -45411,7 +47217,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 254,
@@ -45447,7 +47255,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 870,
@@ -45527,7 +47337,9 @@
         "Synchrotron radiation photoelectron spectroscopy",
         "Water"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 470,
@@ -45574,7 +47386,9 @@
         "Electrode materials",
         "Semiconductors"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 754,
@@ -45616,7 +47430,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 147,
@@ -45664,7 +47480,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 495,
@@ -45724,7 +47542,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 896,
@@ -45802,7 +47622,9 @@
         "Lithium ion battery",
         "Porous film"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 191,
@@ -45865,7 +47687,9 @@
         "impurities",
         "nucleation"
       ],
-      "related": []
+      "related": [
+
+      ]
     },
     {
       "itemID": 949,
@@ -45913,7 +47737,9 @@
           "fieldMode": ""
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     }
   ],
   "collections": [
@@ -45922,7 +47748,9 @@
       "collections": [
         {
           "name": "Cu2O",
-          "collections": [],
+          "collections": [
+
+          ],
           "items": [
             1,
             3,
@@ -46807,7 +48635,9 @@
         },
         {
           "name": "CuO",
-          "collections": [],
+          "collections": [
+
+          ],
           "items": [
             2,
             22,

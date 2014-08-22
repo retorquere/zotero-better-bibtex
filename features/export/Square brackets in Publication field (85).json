@@ -2,23 +2,30 @@
   "config": {
     "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
     "label": "Zotero TestCase",
-    "pattern": "[auth][year]",
-    "skipFields": [
-      ""
-    ],
-    "usePrefix": false,
-    "braceAll": true,
-    "fancyURLs": false,
-    "langid": "babel",
-    "exportFileData": false,
-    "exportNotes": false
+    "preferences": {
+      "citeKeyFormat": "[auth][year]",
+      "skipfields": [
+        ""
+      ],
+      "useprefix": false,
+      "brace-all": true,
+      "fancyURLs": false,
+      "langid": "babel"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false
+    }
   },
   "items": [
     {
       "multi": {
-        "main": {},
-        "_keys": {},
-        "_lsts": {}
+        "main": {
+        },
+        "_keys": {
+        },
+        "_lsts": {
+        }
       },
       "itemType": "journalArticle",
       "url": "http://arxiv.org/abs/1407.5694",
@@ -55,8 +62,11 @@
           "shortName": "",
           "birthYear": "",
           "multi": {
-            "_lst": [],
-            "_key": {},
+            "_lst": [
+
+            ],
+            "_key": {
+            },
             "main": false
           }
         },
@@ -68,8 +78,11 @@
           "shortName": "",
           "birthYear": "",
           "multi": {
-            "_lst": [],
-            "_key": {},
+            "_lst": [
+
+            ],
+            "_key": {
+            },
             "main": false
           }
         },
@@ -81,8 +94,11 @@
           "shortName": "",
           "birthYear": "",
           "multi": {
-            "_lst": [],
-            "_key": {},
+            "_lst": [
+
+            ],
+            "_key": {
+            },
             "main": false
           }
         }
@@ -108,7 +124,9 @@
         "Mathematics - Complex Variables",
         "Mathematics - Differential Geometry"
       ],
-      "related": []
+      "related": [
+
+      ]
     }
   ]
 }
