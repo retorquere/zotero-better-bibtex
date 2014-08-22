@@ -184,9 +184,11 @@ Then /^the library should match '([^']+)'$/ do |filename|
 end
 
 Then(/^A library export using '([^']+)' should match '([^']+)'$/) do |translator, filename|
-  found = BBT.export(translator)
+  found = BBT.export(translator).strip
   expected = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
-  expect(found.strip).to eq(open(expected).read.strip)
+  expected = open(expected).read.strip
+  open("tmp/#{File.basename(filename)}", 'w'){|f| f.write(found)} if found != expected
+  expect(found).to eq(expected)
 end
 
 Then(/^Export the library using '([^']+)' to '([^']+)'$/) do |translator, filename|

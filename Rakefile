@@ -69,7 +69,7 @@ task :test, [:tag] => [XPI, :debugbridge] do |t, args|
     tag = "--tags #{tag}"
   end
 
-  system "cucumber #{tag}" or throw 'One or more tests failed'
+  system "cucumber #{tag} | tee cucumber.log" or throw 'One or more tests failed'
 end
 
 task :dropbox => XPI do
@@ -168,6 +168,53 @@ file UNICODE_MAPPING => 'Rakefile' do |t|
     File.rename(t.name, t.name + '.err') if File.exists?(t.name)
     throw e
   end
+end
+
+task :markfailing do
+  tests = false
+
+  failing = {}
+  Dir['features/*.feature'].each{|f| failing[f] = [] }
+  IO.readlines('cucumber.log').each{|line|
+    tests ||= line =~ /^Failing Scenarios:/
+    next unless tests
+    next unless line =~ /^cucumber /
+
+    line.sub!(/^cucumber /, '')
+    line.sub!(/\s?#.*/, '')
+    line.strip!
+    file, line = *line.split(':', 2)
+    line = Integer(line)
+    failing[file] << line
+  }
+
+  tags = {}
+  failures = 0
+  failing.each_pair{|file, lines|
+    script = ''
+    IO.readlines(file).each_with_index{|line, i|
+      lineno = i + 1
+      throw "untagged #{file}@#{lineno}: #{line}" if lines.include?(lineno) && !tags[lineno - 1]
+
+      if line !~ /^@/
+        script += line
+        next
+      end
+
+      tags[lineno] = line
+
+      line.gsub!(/@failing[^\s]*/, '')
+      line.sub!(/\s+/, ' ')
+      line.strip!
+      if lines.include?(lineno + 1)
+        failures += 1
+        line = "@failing @failing-#{failures} #{line}"
+      end
+      script += line + "\n"
+    }
+
+    open(file, 'w'){|f| f.write(script) }
+  }
 end
 
 ### UTILS
