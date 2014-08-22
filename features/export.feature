@@ -191,3 +191,8 @@ Scenario: Empty 'bibtex:' clause in extra gobbles whatever follows #99
   When I import 1 reference from 'export/biber error on generated biblatex file #99.json'
   Then A library export using 'Better BibTeX' should match 'export/biber error on generated biblatex file #99.bib'
 
+@102
+Scenario: Shortjournal does not get exported to biblatex format #102
+  When I import 1 reference from 'export/Shortjournal does not get exported to biblatex format #102.json'
+  Then A library export using 'Better BibLaTeX' should match 'export/Shortjournal does not get exported to biblatex format #102.bib'
+
