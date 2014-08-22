@@ -3,7 +3,10 @@ git:
   submodules: false
 rvm:
   - 2.1.1
-script: rake test
+env:
+  TAG=import
+  TAG=export
+script: "rake test[$FEATURE]"
 before_install:
   - sudo apt-get update
   - sudo apt-get install nodejs npm
