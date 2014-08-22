@@ -306,9 +306,8 @@ function bibtexExport() {
           break;
 
         case 'journalArticle':
-          var abbr = Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item);
-          Zotero.debug('csl: abbr' + abbr);
-          if (abbr) {
+          var abbr = Zotero.BetterBibTeX.keymanager.journalAbbrev(item);
+          if (Translator.useJournalAbbreviation && abbr) {
             writeField('journal', latex_escape(abbr, {brace: true}));
           } else {
             writeField('journaltitle', latex_escape(item.publicationTitle, {brace: true}));
