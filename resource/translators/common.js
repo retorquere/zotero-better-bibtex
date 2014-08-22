@@ -31,12 +31,14 @@ var Translator = new function() {
     config.id = self.id;
     config.label = self.label;
     config.release = self.release;
+    config.preferences = {};
+    config.options = {};
 
-    Dict.forEach(preferences, function(attribute) {
-      config[attribute] = Translator[attribute];
+    Dict.forEach(preferences, function(attribute, key) {
+      config.preferences[key] = Translator[attribute];
     });
     options.forEach(function(attribute) {
-      config[attribute] = Translator[attribute];
+      config.options[attribute] = Translator[attribute];
     });
     return config;
   };

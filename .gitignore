@@ -9,3 +9,4 @@ resource/translators/Parser.js
 chrome/content/zotero-better-bibtex/Formatter.js
 update.rdf
 *.xpi
+*.log

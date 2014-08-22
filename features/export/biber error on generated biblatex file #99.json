@@ -2,16 +2,20 @@
   "config": {
     "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
     "label": "Zotero TestCase",
-    "pattern": "[auth.auth.ea][year]",
-    "skipFields": [
-      ""
-    ],
-    "usePrefix": false,
-    "braceAll": false,
-    "fancyURLs": false,
-    "langid": "babel",
-    "exportFileData": false,
-    "exportNotes": false
+    "preferences": {
+      "citeKeyFormat": "[auth.auth.ea][year]",
+      "skipfields": [
+        ""
+      ],
+      "useprefix": false,
+      "brace-all": false,
+      "fancyURLs": false,
+      "langid": "babel"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false
+    }
   },
   "items": [
     {
@@ -45,7 +49,9 @@
           "mimeType": "application/pdf"
         }
       ],
-      "related": []
+      "related": [
+
+      ]
     }
   ]
 }

@@ -2,17 +2,21 @@
   "config": {
     "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
     "label": "Zotero TestCase",
-    "pattern": "[auth3][auth3_1][auth3_2][auth3_3][auth3_4][shortyear]",
-    "skipFields": [
-      "url",
-      "issn"
-    ],
-    "usePrefix": false,
-    "braceAll": false,
-    "fancyURLs": false,
-    "langid": "babel",
-    "exportFileData": false,
-    "exportNotes": true
+    "preferences": {
+      "citeKeyFormat": "[auth3][auth3_1][auth3_2][auth3_3][auth3_4][shortyear]",
+      "skipfields": [
+        "url",
+        "issn"
+      ],
+      "useprefix": false,
+      "brace-all": false,
+      "fancyURLs": false,
+      "langid": "babel"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
   },
   "items": [
     {
@@ -61,7 +65,9 @@
         "veering",
         "walking"
       ],
-      "related": []
+      "related": [
+
+      ]
     }
   ]
 }
