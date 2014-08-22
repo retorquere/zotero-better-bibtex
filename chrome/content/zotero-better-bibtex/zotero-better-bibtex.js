@@ -91,7 +91,11 @@ Zotero.BetterBibTeX = {
         this.log('initializing DB: no tables');
         this.DB.query('create table keys (itemID primary key, libraryID not null, citekey not null, pinned)');
         this.DB.query("insert or replace into _version_ (tablename, version) values ('keys', 1)");
-        break;
+        // omission of 'break' is intentional!
+
+      case 1:
+        Zotero.BetterBibTeX.Prefs.setBoolPref('scan-citekeys', true);
+        this.DB.query("insert or replace into _version_ (tablename, version) values ('keys', 2)");
     }
     // this.DB.query('PRAGMA temp_store=MEMORY;');
     // this.DB.query('PRAGMA journal_mode=MEMORY;');
