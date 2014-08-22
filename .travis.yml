@@ -4,8 +4,8 @@ git:
 rvm:
   - 2.1.1
 env:
-  TAG=import
-  TAG=export
+  - TAG=import
+  - TAG=export
 script: "rake test[$FEATURE]"
 before_install:
   - sudo apt-get update
