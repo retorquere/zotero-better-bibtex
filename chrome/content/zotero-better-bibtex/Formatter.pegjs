@@ -84,6 +84,7 @@
       'la',
       'las',
       'le',
+      'les',
       'like',
       'los',
       'near',
@@ -126,7 +127,9 @@
       'with',
       'within',
       'without',
-      'yet'
+      'yet',
+      'zu',
+      'zum'
     ],
 
     titleWords: function(title, options) {
