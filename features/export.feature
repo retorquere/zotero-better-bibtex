@@ -112,12 +112,12 @@ Scenario: Better BibLaTeX Export 20
   When I import 1 reference from 'export/Better BibLaTeX.020.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.020.bib'
 
-@failing @failing-1 @e21
+@e21
 Scenario: Better BibLaTeX Export 21
   When I import 1 reference with 1 attachment from 'export/Better BibLaTeX.021.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.021.bib'
 
-@failing @failing-2 @bbltx-e-22
+@bbltx-e-22
 Scenario: Better BibLaTeX Export 22
   When I set preference translators.better-bibtex.citeKeyFormat to '[auth][year]-[shorttitle]'
    And I import 1 reference from 'export/Better BibLaTeX.022.json'
@@ -150,7 +150,7 @@ Scenario: Journal abbreviations
    And I import 1 reference with 1 attachment from 'export/Better BibTeX.029.json'
   Then A library export using 'Better BibTeX' should match 'export/Better BibTeX.029.bib'
 
-@failing @failing-3 @stable-keys
+@stable-keys
 Scenario: Stable citation keys
   When I import 6 references from 'export/Better BibLaTeX.stable-keys.json'
   Then A library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.stable-keys.bib'

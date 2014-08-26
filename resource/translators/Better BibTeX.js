@@ -184,7 +184,9 @@ function doExport() {
 
     writeTags('keywords', item);
 
-    writeField('pages', latex_escape(item.pages));
+    if (item.pages) {
+      writeField('pages', latex_escape(item.pages.replace(/[-\u2012-\u2015\u2053]+/g,"--")));
+    }
 
     // Commented out, because we don't want a books number of pages in the BibTeX "pages" field for books.
     //if (item.numPages) {
