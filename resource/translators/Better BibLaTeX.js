@@ -57,7 +57,6 @@ var fieldMap = Dict({
   volumes:    'numberOfVolumes',
   version:    'version',
   eventtitle: {literal: 'conferenceName'},
-  pages:      'pages',
   pagetotal:  'numPages'
 });
 
@@ -478,6 +477,10 @@ function bibtexExport() {
       if (date) {
         writeField('year', latex_escape(date.year))
       }
+    }
+
+    if (item.pages) {
+      writeField('pages', latex_escape(item.pages.replace(/[-\u2012-\u2015\u2053]+/g,"--")));
     }
 
     if (item.language) {
