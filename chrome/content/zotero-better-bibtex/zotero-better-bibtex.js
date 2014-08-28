@@ -44,7 +44,6 @@ Zotero.BetterBibTeX = {
     return buffer;
   },
 
-  embeddedKeyRE: /bibtex: *([^\s\r\n]+)/,
   translators: Dict(),
   threadManager: Components.classes["@mozilla.org/thread-manager;1"].getService(),
   windowMediator: Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator),
@@ -79,7 +78,6 @@ Zotero.BetterBibTeX = {
   },
 
   init: function () {
-    // this.log('initializing: ' + !this.initialized);
     if (this.initialized) { return; }
     this.initialized = true;
 
@@ -94,8 +92,9 @@ Zotero.BetterBibTeX = {
         // omission of 'break' is intentional!
 
       case 1:
+      case 2:
         Zotero.BetterBibTeX.Prefs.setBoolPref('scan-citekeys', true);
-        this.DB.query("insert or replace into _version_ (tablename, version) values ('keys', 2)");
+        this.DB.query("insert or replace into _version_ (tablename, version) values ('keys', 3)");
     }
     // this.DB.query('PRAGMA temp_store=MEMORY;');
     // this.DB.query('PRAGMA journal_mode=MEMORY;');
@@ -163,7 +162,8 @@ Zotero.BetterBibTeX = {
       "join itemData id on i.itemID = id.itemID " +
       "join itemDataValues idv on idv.valueID = id.valueID " +
       "join fields f on id.fieldID = f.fieldID  " +
-      "where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems) and idv.value like '%bibtex:%'",
+      "where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems) " +
+            "and (idv.value like '%bibtex:%' or idv.value like '%biblatexcitekey[%')",
 
   itemChanged: {
     notify: function(event, type, ids, extraData) {
@@ -179,7 +179,7 @@ Zotero.BetterBibTeX = {
           ids = '(' + ids.map(function(id) { return '' + id; }).join(',') + ')';
 
           Zotero.BetterBibTeX.DB.query('delete from keys where itemID in ' + ids);
-          for (let item of Zotero.BetterBibTeX.array(Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL + ' and i.itemID in ' + ids) || [])) {
+          for (let item of (Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL + ' and i.itemID in ' + ids) || [])) {
             var citekey = Zotero.BetterBibTeX.keymanager.extract({extra: item.extra});
             Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and pinned <> 1 and citekey = ?', [item.libraryID, citekey]);
             Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, pinned) values (?, ?, ?, 1)', [item.itemID, item.libraryID, citekey]);
@@ -558,7 +558,6 @@ Zotero.BetterBibTeX = {
       if (typeof this.journalAbbrevCache[item.publicationTitle] === 'undefined') {
         var styleID = Zotero.BetterBibTeX.Prefs.getCharPref('auto-abbrev.style');
         if (styleID === '') { styleID = Zotero.Styles.getVisible().filter(function(style) { return style.usesAbbreviation; })[0].styleID; }
-        Zotero.debug('getting style: ' + styleID);
         var style = Zotero.Styles.get(styleID);
         var cp = style.getCiteProc(true);
 
