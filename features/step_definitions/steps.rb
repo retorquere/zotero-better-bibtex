@@ -151,7 +151,7 @@ Then /^the library should match '([^']+)'$/ do |filename|
   expect(found).to eq(expected)
 end
 
-Then(/^A library export using '([^']+)' should match '([^']+)'$/) do |translator, filename|
+Then(/^a library export using '([^']+)' should match '([^']+)'$/) do |translator, filename|
   found = BBT.export(translator).strip
   expected = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
   expected = open(expected).read.strip
@@ -159,7 +159,7 @@ Then(/^A library export using '([^']+)' should match '([^']+)'$/) do |translator
   expect(found).to eq(expected)
 end
 
-Then(/^Export the library using '([^']+)' to '([^']+)'$/) do |translator, filename|
+Then(/^export the library using '([^']+)' to '([^']+)'$/) do |translator, filename|
   BBT.exportToFile(translator, filename)
 end
 

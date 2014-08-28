@@ -250,7 +250,7 @@ function getBibTeXType(item)
 }
 
 function minimal_escape(url) {
-  var href = url.replace(/([#\\_%&{}])/g, "\\$1");
+  var href = url.replace(/([#\\%&{}])/g, "\\$1");
 
   if (!Translator.unicode) {
     href = href.replace(/[^\x21-\x7E]/g, function(chr){ return "\\\%" + ('00' + chr.charCodeAt(0).toString(16)).slice(-2); });
