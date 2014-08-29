@@ -14,11 +14,9 @@ Before do
     profile_dir = File.expand_path('features/profile')
     profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
 
-    extensions = {
-      bbt: Dir['zotero-better-*.xpi'].first,
-      dbb: Dir['tmp/zotero-debug-*.xpi'].first,
-    }
-    extensions.values.each{|xpi|
+    STDOUT.puts "Installing plugins..."
+    Dir['tmp/plugins/*.xpi'].each{|xpi|
+      STDOUT.puts "Installing #{File.basename(xpi)}"
       profile.add_extension(xpi)
     }
     profile['extensions.zotero.httpServer.enabled'] = true;

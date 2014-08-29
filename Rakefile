@@ -13,6 +13,7 @@ require 'tempfile'
 require 'rubygems/package'
 require 'zlib'
 require 'open3'
+require 'yaml'
 require './lib/translator'
 
 FileUtils.mkdir_p 'tmp'
@@ -60,7 +61,18 @@ rule '.js' => '.hx' do |t|
   open(t.name, 'w'){|f| f.write(js)}
 end
 
-task :test, [:tag] => [XPI, :debugbridge] do |t, args|
+task :test, [:tag] => XPI do |t, args|
+  if File.file?('features/plugins.yml')
+    plugins = YAML.load_file('features/plugins.yml')
+  else
+    plugins = []
+  end
+  plugins << "file://" + File.expand_path(XPI)
+  plugins << 'https://zotplus.github.io/debug-bridge/update.rdf'
+  plugins << 'https://www.zotero.org/download/update.rdf'
+  plugins.uniq!
+  ZotPlus::RakeHelper.getxpis(plugins, 'tmp/plugins')
+
   tag = "@#{args[:tag]}".sub(/^@@/, '@')
 
   if tag == '@'
@@ -107,7 +119,7 @@ class Hash
 end
 
 
-file UNICODE_MAPPING => 'Rakefile' do |t|
+file '_' + UNICODE_MAPPING => 'Rakefile' do |t|
   begin
     xml = File.join(File.dirname(t.name), File.basename(t.name, File.extname(t.name)) + '.xml')
     ZotPlus::RakeHelper.download('http://web.archive.org/web/20131109072541/http://www.w3.org/2003/entities/2007xml/unicode.xml', xml)
