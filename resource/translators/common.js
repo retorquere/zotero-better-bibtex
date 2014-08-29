@@ -23,7 +23,13 @@ var Translator = new function() {
     unicode:                'unicode',
     pinKeys:                'pin-citekeys'
   });
-  var options = [ 'useJournalAbbreviation', 'exportCharset', 'exportFileData', 'exportNotes' ];
+  var options = {
+    useJournalAbbreviation: 'useJournalAbbreviation',
+    exportCharset:          'exportCharset',
+    exportFileData:         'exportFileData',
+    exportNotes:            'exportNotes',
+    exportCollections:      'Export Collections'
+  };
 
 
   self.config = function() {
@@ -37,8 +43,8 @@ var Translator = new function() {
     Dict.forEach(preferences, function(attribute, key) {
       config.preferences[key] = Translator[attribute];
     });
-    options.forEach(function(attribute) {
-      config.options[attribute] = Translator[attribute];
+    Dict.forEach(preferences, function(attribute, key) {
+      config.options[key] = Translator[attribute];
     });
     return config;
   };
@@ -54,9 +60,10 @@ var Translator = new function() {
     self.skipFields = self.skipFields.split(',').map(function(field) { return field.trim(); });
     Translator.testmode = Zotero.getHiddenPref('better-bibtex.testmode');
 
-    options.forEach(function(attribute) {
-      Translator[attribute] = Zotero.getOption(attribute);
+    Dict.forEach(options, function(attribute, key) {
+      Translator[attribute] = Zotero.getOption(key);
     });
+    Translator.exportCollections = (typeof Translator.exportCollections == 'undefined' ? true : Translator.exportCollections);
 
     switch (self.unicode) {
       case 'always':
@@ -119,6 +126,8 @@ var Translator = new function() {
   }
 
   self.collections = function() {
+    if (!self.exportCollections) { return []; }
+
     var collections = [];
     var collection;
     while(collection = Zotero.nextCollection()) {
