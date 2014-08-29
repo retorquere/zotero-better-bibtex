@@ -11,7 +11,8 @@
   },
   "displayOptions": {
     "exportNotes": true,
-    "exportFileData": false
+    "exportFileData": false,
+    "Export Collections": true
   },
   "inRepository": true,
   "translatorType": 3,

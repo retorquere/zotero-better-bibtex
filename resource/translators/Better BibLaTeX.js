@@ -15,7 +15,8 @@
     "exportCharset": "UTF-8",
     "exportNotes": false,
     "exportFileData": false,
-    "useJournalAbbreviation": false
+    "useJournalAbbreviation": false,
+    "Export Collections": true
   },
   "lastUpdated": "/*= timestamp =*/"
 }
