@@ -119,7 +119,7 @@ class Hash
 end
 
 
-file '_' + UNICODE_MAPPING => 'Rakefile' do |t|
+file UNICODE_MAPPING => 'Rakefile' do |t|
   begin
     xml = File.join(File.dirname(t.name), File.basename(t.name, File.extname(t.name)) + '.xml')
     ZotPlus::RakeHelper.download('http://web.archive.org/web/20131109072541/http://www.w3.org/2003/entities/2007xml/unicode.xml', xml)
