@@ -110,6 +110,7 @@ Zotero.BetterBibTeX = {
 
     this.keymanager = new this.KeyManager();
     Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
+      __exposedProps__: {keymanager: 'r'},
       keymanager: Zotero.BetterBibTeX.keymanager
     };
 
@@ -541,14 +542,6 @@ Zotero.BetterBibTeX = {
   KeyManager: function() {
     var self = this;
 
-    self.__exposedProps__ = {
-      months:         'r',
-      journalAbbrev:  'r',
-      extract:        'r',
-      get:            'r',
-      keys:           'r'
-    };
-
     /*
      * three-letter month abbreviations. I assume these are the same ones that the
      * docs say are defined in some appendix of the LaTeX book. (i don't have the
@@ -650,6 +643,19 @@ Zotero.BetterBibTeX = {
       return keys;
     };
 
+    self.__exposedProps__ = {
+      months:         'r',
+      journalAbbrev:  'r',
+      extract:        'r',
+      get:            'r',
+      keys:           'r'
+    };
+    // protect the exposed properties from further recursion -- Recoll Indexer messes with Function.prototype (a very
+    // bad idea) without making the new stuff it adds unenumerable
+    // (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
+    Object.keys(self.__exposedProps__).forEach(function(key) {
+      self[key].__exposedProps__ = [];
+    });
   },
 
   DebugBridge: {
