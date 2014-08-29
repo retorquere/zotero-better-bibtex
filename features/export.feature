@@ -1,8 +1,9 @@
 @export
 Feature: Export
 
-@bbltx-e-1 @e-1
+@e1
 Scenario: Better BibLaTeX Export 1
+  When I need a log capture
   When I import 1 reference from 'export/Better BibLaTeX.001.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.001.bib'
 

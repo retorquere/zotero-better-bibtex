@@ -539,6 +539,16 @@ Zotero.BetterBibTeX = {
   },
 
   KeyManager: function() {
+    var self = this;
+
+    self.__exposedProps__ = {
+      months:         'r',
+      journalAbbrev:  'r',
+      extract:        'r',
+      get:            'r',
+      keys:           'r'
+    };
+
     /*
      * three-letter month abbreviations. I assume these are the same ones that the
      * docs say are defined in some appendix of the LaTeX book. (i don't have the
@@ -547,15 +557,13 @@ Zotero.BetterBibTeX = {
     this.months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
     this.journalAbbrevCache = Dict();
 
-    var self = this;
-
     self.journalAbbrev = function(item) {
       if (item._sandboxManager) { item = arguments[1]; } // the sandbox inserts itself in call parameters
 
       if (item.journalAbbreviation) { return item.journalAbbreviation; }
       if (!Zotero.BetterBibTeX.Prefs.getBoolPref('auto-abbrev')) { return; }
 
-      if (typeof this.journalAbbrevCache[item.publicationTitle] === 'undefined') {
+      if (typeof self.journalAbbrevCache[item.publicationTitle] === 'undefined') {
         var styleID = Zotero.BetterBibTeX.Prefs.getCharPref('auto-abbrev.style');
         if (styleID === '') { styleID = Zotero.Styles.getVisible().filter(function(style) { return style.usesAbbreviation; })[0].styleID; }
         var style = Zotero.Styles.get(styleID);
@@ -571,11 +579,11 @@ Zotero.BetterBibTeX = {
           if (abbrevs) { abbrevs = abbrevs[p]; }
         });
         for (let title in (abbrevs || {})) {
-          this.journalAbbrevCache[title] = abbrevs[title];
+          self.journalAbbrevCache[title] = abbrevs[title];
         }
-        if (!this.journalAbbrevCache[item.publicationTitle]) { this.journalAbbrevCache[item.publicationTitle] = ''; }
+        if (!self.journalAbbrevCache[item.publicationTitle]) { self.journalAbbrevCache[item.publicationTitle] = ''; }
       }
-      return this.journalAbbrevCache[item.publicationTitle];
+      return self.journalAbbrevCache[item.publicationTitle];
     };
 
     // dual-use
