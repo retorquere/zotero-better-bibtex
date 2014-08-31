@@ -18,7 +18,6 @@ require './lib/translator'
 
 FileUtils.mkdir_p 'tmp'
 
-
 TRANSLATORS = [
   {name: 'Better BibTeX'},
   {name: 'Better BibLaTeX', unicode: true},
