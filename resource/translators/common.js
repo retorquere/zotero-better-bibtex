@@ -7,7 +7,6 @@ var Translator = new function() {
   self.label   =  '/*= label =*/';
   self.unicode_default =  ('/*= unicode =*/' == 'true');
   self.release =  '/*= release =*/';
-  self.typeMap = {};
   self.citekeys = Dict();
 
   var preferences = Dict({
@@ -31,6 +30,10 @@ var Translator = new function() {
     exportCollections:      'Export Collections'
   };
 
+  self.log = function(msg) {
+    if (typeof msg != 'string') { msg = JSON.stringify(msg); }
+    Zotero.debug('[' + this.label + '] ' + msg);
+  };
 
   self.config = function() {
     var config = Dict();
@@ -50,14 +53,14 @@ var Translator = new function() {
   };
 
   var initialized = false;
-  self.initialize = function() {
+  this.initialize = function() {
     if (initialized) { return; }
     initialized = true;
 
     Dict.forEach(preferences, function(attribute, key) {
       Translator[attribute] = Zotero.getHiddenPref('better-bibtex.' + key);
     });
-    self.skipFields = self.skipFields.split(',').map(function(field) { return field.trim(); });
+    this.skipFields = this.skipFields.split(',').map(function(field) { return field.trim(); });
     Translator.testmode = Zotero.getHiddenPref('better-bibtex.testmode');
 
     Dict.forEach(options, function(attribute, key) {
@@ -65,38 +68,43 @@ var Translator = new function() {
     });
     Translator.exportCollections = (typeof Translator.exportCollections == 'undefined' ? true : Translator.exportCollections);
 
-    switch (self.unicode) {
+    switch (this.unicode) {
       case 'always':
-        self.unicode = true;
+        this.unicode = true;
         break;
       case 'never':
-        self.unicode = false;
+        this.unicode = false;
         break;
       default:
-        var charset = self.exportCharset;
-        self.unicode = self.unicode_default || (charset && charset.toLowerCase() == 'utf-8');
+        var charset = this.exportCharset;
+        this.unicode = this.unicode_default || (charset && charset.toLowerCase() == 'utf-8');
         break;
     }
 
-    Zotero.debug('Translator: ' + JSON.stringify(self.config()));
+    Zotero.debug('Translator: ' + JSON.stringify(this.config()));
 
-    if (self.typeMap.toBibTeX) {
-      Zotero.debug('typemap: ' + JSON.stringify(self.typeMap.toBibTeX));
-      self.typeMap.toZotero = Dict();
-      Dict.forEach(self.typeMap.toBibTeX, function(zotero, bibtex) {
-        if (!(bibtex instanceof Array)) { bibtex = [bibtex]; }
+    if (this.typeMap) {
+      this.typeMap = {
+        BibTeX2Zotero: Dict(),
+        Zotero2BibTeX: Dict()
+      }
+      Dict.forEach(this.typeMap, function(bibtex, zotero) {
+        bibtex = bibtex.trim().split(/\s+/);
+        zotero = zotero.trim().split(/\s+/);
 
-        bibtex = bibtex.map(function(tex) {
-          Zotero.debug('tex: ' + tex);
-          if (!self.typeMap.toZotero[tex] || tex.match(/^:/)) {
-            self.typeMap.toZotero[tex.replace(/^:/, '')] = zotero;
-          }
-          return tex.replace(/^:/, '');
-        });
+        bibtex.forEach(function(type) {
+          if (this.typeMap.BibTeX2Zotero[type]) { return; }
+          this.typeMap.BibTeX2Zotero[type] = zotero[0];
+        }, this);
 
-        self.typeMap.toBibTeX[zotero] = bibtex[0].replace(/^:/, '');
-      });
+        zotero.forEach(function(type) {
+          if (this.typeMap.Zotero2BibTeX[type]) { return; }
+          this.typeMap.Zotero2BibTeX[type] = bibtex[0];
+        }, this);
+
+      }, this);
     }
+
   };
 
   // The default collection structure passed is beyond screwed up.
@@ -158,209 +166,213 @@ var Translator = new function() {
     this.citekeys[item.itemID] = item.__citekey__;
     return item;
   };
-};
 
-function writeFieldMap(item, fieldMap) {
-  Dict.forEach(fieldMap, function(bibtexField, zoteroField) {
-    var brace = !!(zoteroField.literal);
-    zoteroField = zoteroField.literal ? zoteroField.literal : zoteroField;
+  this.Reference = function(item) {
+    var fields = [];
+    var self = this;
 
-    if(item[zoteroField]) {
-      value = item[zoteroField];
-      if (['url', 'doi'].indexOf(bibtexField) >= 0) {
-        writeField(bibtexField, minimal_escape(value));
+    if (item.extra) {
+      var m = /biblatexdata\[([^\]]+)\]/.exec(item.extra);
+      if (m) {
+        item.extra = item.extra.replace(m[0], '').trim();
+        m[1].split(';').forEach(function(assignment) {
+          var data = assignment.match(/^([^=]+)=\s*(.*)/).slice(1);
+          fields.push({name: data[0], value: data[1]});
+        });
+      }
+    }
+
+    Dict.forEach(Translator.fieldMap, function(attr, f) {
+      if (!f.name) { return; }
+      var o = JSON.parse(JSON.stringify(f));
+      o.value = item[attr];
+      this.add(o);
+    }, this);
+
+    this.url = function(f) {
+      var href = ('' + f.value).replace(/([#\\%&{}])/g, "\\$1");
+
+      if (!Translator.unicode) {
+        href = href.replace(/[^\x21-\x7E]/g, function(chr){ return "\\\%" + ('00' + chr.charCodeAt(0).toString(16)).slice(-2); });
+      }
+
+      if (f.name === 'url' && Translator.fancyURLs) {
+        return "\\href{" + href + "}{" + LaTeX.html2latex(url) + "}";
+      }
+
+      return href;
+    };
+    this.doi = function(f) {
+      return this.url(f);
+    };
+    this.escape = function(f) {
+      if (typeof f.value == 'number') { return f.value; }
+      if (!f.value) { return null; }
+
+      if (f.value instanceof Array) {
+        if (f.value.length === 0) { return null; }
+        return f.value.map(function(word) {
+          var o = JSON.parse(JSON.stringify(f));
+          o.value = word;
+          return this.escape(o);
+        }).join(f.sep);
+      }
+
+      var value = LaTeX.html2latex(f.value);
+      if (f.value instanceof String) { value = new String('{' + value + '}'); }
+      return value;
+    };
+    this.tags = function(f) {
+      if (!f.value || f.value.length === 0) { return null; }
+      var tags = item.tags.map(function(tag) {return tag.tag;});
+      tags.sort();
+      f.value = tags;
+      f.sep = ',';
+      return this.escape(f);
+    };
+
+    var attachmentCounter = 0;
+    this.attachments = function(f) {
+      if (!f.value || f.value.length === 0) { return null; }
+
+      var attachments = [];
+      errors = [];
+      f.value.forEach(function(att) {
+        var a = {title: att.title, path: att.localPath, mimetype: att.mimeType};
+        var save = (Translator.exportFileData && att.defaultPath && att.saveFile);
+
+        if (save) { a.path = att.defaultPath; }
+
+        if (!a.path) { return; } // amazon/googlebooks etc links show up as atachments without a path
+
+        attachmentCounter += 1;
+        if (save) {
+          att.saveFile(a.path);
+        } else {
+          if (Translator.attachmentRelativePath) {
+            a.path = "files/" + (Translator.testmode ? attachmentCounter : att.itemID) + "/" + att.localPath.replace(/.*[\/\\]/, '');
+          }
+        }
+
+        if (a.path.match(/[{}]/)) { // latex really doesn't want you to do this.
+          erross.push('BibTeX cannot handle file paths with braces: ' + JSON.stringify(a.path));
+        } else {
+          attachments.push(a);
+        }
+      }, this);
+
+      if (errors.length !== 0) { f.errors = errors; }
+      if (attachments.length === 0) { return null; }
+
+      attachments.sort(function(a, b) { return a.path.localeCompare(b.path); });
+      return attachments.map(function(att) {
+        return [att.title, att.path, att.mimetype].map(function(part) { return part.replace(/([\\{}:;])/g, "\\$1"); }).join(':');
+      }).join(';');
+    }
+
+    /*
+    {
+      name:
+      value:
+      braces:
+      braceAll:
+      escape:
+    }
+    */
+    function field(f) {
+      if (Translator.skipFields.indexOf(f.name) >= 0) { return null; }
+
+      var value;
+      if (typeof f.value == 'number') {
+        value = f.value;
       } else {
-        writeField(bibtexField, latex_escape(value, {brace: brace}));
+        if (!f.value || f.value === '') { return; }
+
+        if (f.escape) {
+          if (typeof this[f.escape] !== 'function') { throw('Unsupported escape function ' + f.escape); }
+          value = this[f.escape](f);
+        } else {
+          value = this.escape(f);
+        }
+
+        if (value === '' || typeof(value) === 'undefined') { return null; }
+
+        if (f.braces) { value = '{' + value + '}'; }
+        if (f.braceAll) { value = '{' + value + '}'; }
       }
-    }
-  });
-}
 
-function writeField(field, value, bare) {
-  if (Translator.skipFields.indexOf(field) >= 0) { return; }
-
-  if (typeof value == 'number') {
-  } else {
-    if (!value || value === '') { return; }
-  }
-
-  if (!bare) { value = '{' + value + '}'; }
-
-  if (Translator.fieldsWritten[field]) { trLog('Field ' + field + ' output more than once!'); }
-  Translator.fieldsWritten[field] = true;
-  Zotero.write(",\n  " + field + " = " + value);
-}
-
-function writeTags(field, item) {
-  if (!item.tags || item.tags.length === 0) { return; }
-  var tags = item.tags.map(function(tag) {return tag.tag;});
-  tags.sort();
-  writeField(field, latex_escape(tags, {sep: ','}));
-}
-
-function escapeAttachments(attachments, wipeBraces) {
-  return attachments.map(function(att) {
-    return [att.title, att.path, att.mimetype].map(function(part) { return (wipeBraces ? part.replace('{', '(').replace('}', ')') : part).replace(/([\\{}:;])/g, "\\$1"); }).join(':');
-  }).join(';');
-}
-var attachmentCounter = 0;
-function writeAttachments(item) {
-  if(! item.attachments) { return ; }
-
-  trLog(item.attachments.length + ' attachments');
-  var attachments = [];
-  var broken = [];
-  item.attachments.forEach(function(att) {
-    var a = {title: att.title, path: att.localPath, mimetype: att.mimeType};
-    trLog(a);
-    var save = (Translator.exportFileData && att.defaultPath && att.saveFile);
-
-    if (save) { a.path = att.defaultPath; }
-
-    if (!a.path) { return; } // amazon/googlebooks etc links show up as atachments without a path
-
-    attachmentCounter += 1;
-    if (save) {
-      att.saveFile(a.path);
-    } else {
-      if (Translator.attachmentRelativePath) {
-        a.path = "files/" + (Translator.testmode ? attachmentCounter : att.itemID) + "/" + att.localPath.replace(/.*[\/\\]/, '');
-      }
+      return f.name + ' = ' + value;
     }
 
-    if (a.path.match(/[{}]/)) { // latex really doesn't want you to do this.
-      broken.push(a);
-    } else {
-      attachments.push(a);
+    this.add = function(field) {
+      field.braces = typeof(field.braces) === 'undefined' || field.braces || field.protect || field.value.match(/\s/);
+      field.protect = (typeof field.value !== 'number') && field.protect && Translator.braceAll;
+      fields.push(field);
+    };
+
+    this.complete = function() {
+      var itemtype = Translator.typeMap.Zotero2BibTeX[item.itemType] || 'misc';
+
+      if (fields.length == 0) { this.add({name: 'type', value: itemtype}); }
+
+      Zotero.write('@' + itemtype + '{' + item.__citekey__ + ",\n");
+      Zotero.write(fields.sort(function(a, b) {
+        var _a = a.name;
+        var _b = b.name;
+        if (a.name == b.name) {
+          _a = a.value;
+          _b = b.value;
+        }
+        if (_a < _b) return -1;
+        if (_a > _b) return 1;
+        return 0;
+      }).map(function(f) {
+        return field(f);
+      }).filter(function(f) {
+        return f;
+      })join(",\n"));
+      Zotero.write("\n}");
     }
-  });
-
-  if (attachments.length !== 0) {
-    attachments.sort(function(a, b) { return a.path.localeCompare(b.path); });
-    writeField('file', escapeAttachments(attachments, true));
-  }
-  if (broken.length !== 0) {
-    broken.sort(function(a, b) { return a.path.localeCompare(b.path); });
-    writeField('latex_doesnt_like_filenames_with_braces', escapeAttachments(broken, false));
-  }
-}
-
-function trLog(msg) {
-  if (typeof msg != 'string') { msg = JSON.stringify(msg); }
-  Zotero.debug('[' + Translator.label + '] ' + msg);
-}
-
-function getBibTeXType(item)
-{
-  var type = Translator.typeMap.toBibTeX[item.itemType];
-  if (typeof (type) == "function") { type = type(item); }
-  if (!type) type = "misc";
-  return type;
-}
-
-function minimal_escape(url) {
-  var href = url.replace(/([#\\%&{}])/g, "\\$1");
-
-  if (!Translator.unicode) {
-    href = href.replace(/[^\x21-\x7E]/g, function(chr){ return "\\\%" + ('00' + chr.charCodeAt(0).toString(16)).slice(-2); });
   }
 
-  if (Translator.fancyURLs) {
-    return "\\href{" + href + "}{" + LaTeX.html2latex(url) + "}";
-  }
+  var JabRef = {
+    serialize: function(arr, sep, wrap) {
+      return arr.map(function(v) {
+        v = ('' + v).replace(/;/g, "\\;");
+        if (wrap) { v = v.match(/.{1,70}/g).join("\n"); }
+        return v;
+      }).join(sep);
+    },
+    exportGroup: function(collection, level) {
+      var group = [level + ' ExplicitGroup:' + collection.name, 0];
+      group = group.concat(collection.items.map(function(id) { return Translator.citekeys[id]; }));
+      group.push('');
+      group = this.serialize(group, ';');
 
-  return href;
-}
+      var result = [group];
+      collection.collections.forEach(function(coll) {
+        result = result.concat(JabRef.exportGroup(coll, level + 1));
+      });
 
-function latex_escape(value, options) {
-  if ((typeof options) == 'string') { options = {sep: options}; }
-  if ((typeof options) == 'boolean') { options = {brace: true}; }
-  options = (options || {});
+      return result;
+    }
+  };
 
-  if (typeof value == 'number') { return value; }
-  if (!value) { return; }
+  this.exportGroups = function() {
+    if (this.collections.length === 0) { return; }
 
-  if (value instanceof Array) {
-    if (value.length === 0) { return; }
-    return value.map(function(word) { return latex_escape(word, options); }).join(options.sep);
-  }
+    Zotero.write("\n\n@comment{jabref-meta: groupsversion:3;}\n");
+    Zotero.write("@comment{jabref-meta: groupstree:\n");
+    Zotero.write("0 AllEntriesGroup:;\n");
 
-  if (options.brace && !value.literal && Translator.braceAll) {
-    value = {literal: value};
-  }
-
-  var doublequote = value.literal;
-  value = value.literal || value;
-  value = LaTeX.html2latex(value);
-  if (doublequote) { value = '{' + value + '}'; }
-  return value;
-}
-
-var biblatexdataRE = /biblatexdata\[([^\]]+)\]/;
-function writeExtra(item, field) {
-  if (!item.extra) { return; }
-
-  var m = biblatexdataRE.exec(item.extra);
-  if (m) {
-    item.extra = item.extra.replace(m[0], '').trim();
-    m[1].split(';').forEach(function(assignment) {
-      var data = assignment.split('=', 2);
-      writeField(data[0], latex_escape(data[1]));
+    var groups = [];
+    this.collections.forEach(function(collection) {
+      groups = groups.concat(JabRef.exportGroup(collection, 1));
     });
-  }
-
-  writeField(field, latex_escape(item.extra));
-}
-
-function flushEntry(item) {
-  // fully empty zotero reference generates invalid bibtex. This type-reassignment does nothing but adds the single
-  // field each entry needs as a minimum.
-  if (Translator.fieldsWritten.length === 0) {
-    writeField('type', latex_escape(getBibTeXType(item)));
-  }
-}
-
-if (!JabRef) {
-  var JabRef = {};
-}
-
-JabRef.serialize = function(arr, sep, wrap) {
-  return arr.map(function(v) {
-    v = ('' + v).replace(/;/g, "\\;");
-    if (wrap) { v = v.match(/.{1,70}/g).join("\n"); }
-    return v;
-  }).join(sep);
+    Zotero.write(this.serialize(groups, ";\n", true) + ";\n}\n");
+  };
 };
 
-JabRef.exportGroups = function() {
-  var collections = Translator.collections();
-
-  if (collections.length === 0) { return; }
-
-  Zotero.write("\n\n@comment{jabref-meta: groupsversion:3;}\n");
-  Zotero.write("@comment{jabref-meta: groupstree:\n");
-  Zotero.write("0 AllEntriesGroup:;\n");
-
-  var groups = [];
-  collections.forEach(function(collection) {
-    groups = groups.concat(JabRef.exportGroup(collection, 1));
-  });
-  Zotero.write(this.serialize(groups, ";\n", true) + ";\n}\n");
-};
-
-JabRef.exportGroup = function(collection, level) {
-  var group = [level + ' ExplicitGroup:' + collection.name, 0];
-  group = group.concat(collection.items.map(function(id) { return Translator.citekeys[id]; }));
-  group.push('');
-  group = this.serialize(group, ';');
-
-  var result = [group];
-  collection.collections.forEach(function(coll) {
-    result = result.concat(JabRef.exportGroup(coll, level + 1));
-  });
-
-  return result;
-};
 
 /*= unicode_mapping =*/
 
@@ -398,12 +410,12 @@ LaTeX.html2latexsupport = {
     // if it's a closing tag, it ought to be the first one on the stack
     close = LaTeX.html2latexsupport.htmlstack.indexOf(tag);
     if (close < 0) {
-      trLog('Ignoring unexpected close tag "' + tag + '"');
+      Translator.log('Ignoring unexpected close tag "' + tag + '"');
       return '';
     }
 
     if (close > 0) {
-      trLog('Unexpected close tag "' + tag + '", closing "' + LaTeX.html2latexsupport.htmlstack.slice(0, close).join(', ') + '"');
+      Translator.log('Unexpected close tag "' + tag + '", closing "' + LaTeX.html2latexsupport.htmlstack.slice(0, close).join(', ') + '"');
     }
 
     close = LaTeX.html2latexsupport.htmlstack.slice(0, close).map(function(tag) { return html2latex[tag].close; }).join('');
@@ -456,7 +468,7 @@ LaTeX.html2latex = function(str) {
       }).join('').replace(/{}\s+/g, ' ');
 
       if (LaTeX.html2latexsupport.htmlstack.length !== 0) {
-        trLog('Unmatched HTML tags: ' + LaTeX.html2latexsupport.htmlstack.join(', '));
+        Translator.log('Unmatched HTML tags: ' + LaTeX.html2latexsupport.htmlstack.join(', '));
         res += htmlstack.map(function(tag) { return LaTeX.html2latexsupport.html2latex[tag].close; }).join('');
       }
 

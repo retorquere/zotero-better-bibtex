@@ -23,51 +23,44 @@
 
 /*= include common.js =*/
 
-var fieldMap = Dict({
-  address:      {literal: 'place'},
-  chapter:      {literal: 'section'},
-  edition:      {literal: 'edition'},
-  type:         'type',
-  series:       {literal: 'series'},
-  title:        {literal: 'title'},
-  volume:       {literal: 'volume'},
-  copyright:    {literal: 'rights'},
-  isbn:         'ISBN',
-  issn:         'ISSN',
-  lccn:         'callNumber',
-  shorttitle:   {literal: 'shortTitle'},
-  url:          'url',
-  doi:          'DOI',
-  abstract:     'abstractNote',
-  nationality:  'country',
-  language:     'language',
-  assignee:     'assignee'
-});
-var inputFieldMap = Dict({
-  booktitle:    'publicationTitle',
-  school:       'publisher',
-  institution:  'publisher',
-  publisher:    'publisher',
-  issue:        'issue',
-  location:     'place'
+Translator.fieldMap = Dict({
+  // Zotero     BibTeX
+  place:        {name: 'address', protect: true, import: 'location'},
+  section:      {name: 'chapter', protect: true},
+  edition:      {name: 'edition', protect: true},
+  type:         {name: 'type'},
+  series:       {name: 'series', protect: true},
+  title:        {name: 'title', protect: true},
+  volume:       {name: 'volume', protect: true},
+  rights:       {name: 'copyright', protect: true},
+  ISBN:         {name: 'isbn'},
+  ISSN:         {name: 'issn'},
+  callNumber:   {name: 'lccn'},
+  shortTitle:   {name: 'shorttitle', protect: true},
+  url:          {name: 'url', escape: 'url'},
+  DOI:          {name: 'doi', escape: 'doi'},
+  abstractNote: {name: 'abstract'},
+  country:      {name: 'nationality'},
+  language:     {name: 'language'},
+  assignee:     {name: 'assignee'},
+  issue:        {name: 'issue'},
+
+  publicationTitle: {import: 'booktitle'},
+  publisher:        {import: ['school', 'institution', 'publisher']},
 });
 
-Translator.typeMap.toBibTeX = Dict({
-  book:             ['book', 'booklet', 'manual', 'proceedings'],
-  bookSection:      ['incollection', 'inbook'],
-  journalArticle:   [':article', ':misc'],
-  magazineArticle:  'article',
-  newspaperArticle: 'article',
-  thesis:           ['phdthesis', 'mastersthesis'],
-  manuscript:       'unpublished',
-  patent:           'patent',
-  conferencePaper:  ['inproceedings', 'conference'],
-  report:           'techreport',
-  letter:           'misc',
-  interview:        'misc',
-  film:             'misc',
-  artwork:          'misc',
-  webpage:          'misc'
+Translator.typeMap = Dict({
+  // BibTeX                            Zotero
+  // ----------------------------------------
+  'book booklet manual proceedings':  'book',
+  'incollection inbook':              'bookSection',
+  'article misc':                     'journalArticle magazineArticle newspaperArticle',
+  'phdthesis mastersthesis':          'thesis',
+  'unpublished':                      'manuscript',
+  'patent':                           'patent',
+  'inproceedings conference':         'conferencePaper',
+  'techreport':                       'report',
+  'misc':                             'letter interview film artwork webpage'
 });
 
 /*
@@ -82,53 +75,35 @@ function doExport() {
   // to make sure the BOM gets ignored
   Zotero.write("\n");
 
-  var first = true;
   while (item = Translator.nextItem()) {
-    // determine type
-    var type = getBibTeXType(item);
+    var ref = new Translator.Reference(item);
 
-    if (!first) { Zotero.write(",\n\n"); }
-    first = false;
+    ref.add({name: 'number', value: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber});
+    ref.add({name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*\d+:\d+:\d+/, '')});
 
-    Zotero.write("\n\n");
-    Zotero.write('@'+type+'{'+item.__citekey__);
-
-    writeFieldMap(item, fieldMap);
-
-    if (item.reportNumber || item.issue || item.seriesNumber || item.patentNumber) {
-      writeField('number', latex_escape(item.reportNumber || item.issue || item.seriesNumber|| item.patentNumber));
+    switch (item.itemType) {
+      case 'bookSection':
+      case 'conferencePaper':
+        ref.add(name: 'booktitle', value: item.publicationTitle, protect: true};
+        break;
+    
+      default:
+        ref.add({name: 'journal', value: (Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item)) || item.publicationTitle, protect: true});
+        break;
     }
 
-    if (item.accessDate){
-      var accessYMD = item.accessDate.replace(/\s*\d+:\d+:\d+/, '');
-      writeField('urldate', latex_escape(accessYMD));
-    }
+    switch (item.itemType) {
+      case 'thesis':
+        ref.add({name: 'school', value: item.publisher, protect: true});
+        break;
 
-    if (item.publicationTitle) {
-      if (item.itemType == 'bookSection' || item.itemType == 'conferencePaper') {
-        writeField('booktitle', latex_escape(item.publicationTitle, {brace: true}));
+      case 'report':
+        ref.add({name: 'institution', value: item.publisher, protect: true});
+        break;
 
-      } else if (item.itemType == 'bookSection' || item.itemType == 'conferencePaper') {
-        writeField('booktitle', latex_escape(item.publicationTitle, {brace: true}));
-
-      } else {
-        var abbr = Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item);
-        if (abbr) {
-          writeField('journal', latex_escape(abbr, {brace: true}));
-        } else {
-          writeField('journal', latex_escape(item.publicationTitle, {brace: true}));
-        }
-      }
-    }
-
-    if (item.publisher) {
-      if (item.itemType == 'thesis') {
-        writeField('school', latex_escape(item.publisher, {brace: true}));
-      } else if (item.itemType =='report') {
-        writeField('institution', latex_escape(item.publisher, {brace: true}));
-      } else {
-        writeField('publisher', latex_escape(item.publisher, {brace: true}));
-      }
+      default:
+        ref.add({name: 'publisher', value: item.publisher, protect: true});
+        break;
     }
 
     if (item.creators && item.creators.length) {
@@ -162,32 +137,30 @@ function doExport() {
         }
       });
 
-      writeField('author', latex_escape(authors, {sep: ' and '}));
-      writeField('editor', latex_escape(editors, {sep: ' and '}));
-      writeField('translator', latex_escape(translators, {sep: ' and '}));
-      writeField('collaborator', latex_escape(collaborators, {sep: ' and '}));
+      ref.add({name: 'author', value: authors, sep: ' and '});
+      ref.add({name: 'editor', value: editors, sep: ' and '});
+      ref.add({name: 'translator', value: translators, sep: ' and '});
+      ref.add({name: 'collaborator', value: collaborators, sep: ' and '});
     }
 
     if (item.date) {
       var date = Zotero.Utilities.strToDate(item.date);
       if (typeof date.year === 'undefined') {
-        writeField('year', latex_escape({literal:item.date}));
+        ref.add({name: 'year', value: item.date, protect: true});
       } else {
         // need to use non-localized abbreviation
         if (typeof date.month == 'number') {
-          writeField('month', latex_escape(months[date.month]), true); // no braces at all around the month
+          ref.add({name: 'month', value: months[date.month], braces: false});
         }
-        writeField('year', latex_escape(date.year));
+        ref.add({name: 'year', value: date.year});
       }
     }
 
-    writeExtra(item, 'note');
+    ref.add({name: 'note', value: item.extra});
 
-    writeTags('keywords', item);
+    ref.add({name: 'keywords', value: item.tags, escape: 'tags'});
 
-    if (item.pages) {
-      writeField('pages', latex_escape(item.pages.replace(/[-\u2012-\u2015\u2053]+/g,"--")));
-    }
+    ref.add({name: 'pages', value: item.pages && item.pages.replace(/[-\u2012-\u2015\u2053]+/g,"--")});
 
     // Commented out, because we don't want a books number of pages in the BibTeX "pages" field for books.
     //if (item.numPages) {
@@ -202,18 +175,16 @@ function doExport() {
     }*/
     if (item.notes && Translator.exportNotes) {
       item.notes.forEach(function(note) {
-        writeField('annote', latex_escape(Zotero.Utilities.unescapeHTML(note.note)));
+        ref.add({name: 'annote', value: Zotero.Utilities.unescapeHTML(note.note)});
       });
     }
 
-    writeAttachments(item);
+    ref.add({name: 'file', value:item.attachments, escape: 'attachments'});
 
-    flushEntry(item);
-
-    Zotero.write("\n}");
+    ref.complete();
   }
 
-  JabRef.exportGroups();
+  Translator.exportGroups();
 
   Zotero.write("\n");
 }
@@ -230,12 +201,23 @@ function addToExtraData(data, key, value) {
   data.push(key.replace(/[=;]/g, '#') + '=' + value.replace(/[\r\n]+/g, ' ').replace(/[=;]g/, '#'));
 }
 
+var fieldMap = null;
 function createZoteroReference(bibtexitem) {
+  if (!fieldMap) {
+    Dict.forEach(Translator.fieldMap, function(attribute, field) {
+      var fields = [];
+      if (field.name) { fields.push(name); }
+      if (field.import) { fields = fields.concat(field.import); }
+      fields.forEach(function(fieldname) {
+        if (fieldMap[fieldname]) { return; }
+        fieldMap[fieldname] = attribute;
+      });
+    });
+  }
+
   var type = Zotero.Utilities.trimInternal(bibtexitem.__type__.toLowerCase());
   if (bibtexitem.type) { type = Zotero.Utilities.trimInternal(bibtexitem.type.toLowerCase()); }
-  type = Translator.typeMap.toZotero[type] || 'journalArticle';
-
-  trLog('creating reference for ' + JSON.stringify(bibtexitem));
+  type = Translator.typeMap.BibTeX2Zotero[type] || 'journalArticle';
 
   var item = new Zotero.Item(type);
   item.itemID = bibtexitem.__key__;
@@ -253,14 +235,7 @@ function createZoteroReference(bibtexitem) {
     if (value == '') { return; }
 
     if (fieldMap[field]) {
-      zField = fieldMap[field];
-      if (zField.literal) { zField = zField.literal; }
-      item[zField] = value;
-
-    } else if (inputFieldMap[field]) {
-      zField = inputFieldMap[field];
-      if (zField.literal) { zField = zField.literal; }
-      item[zField] = value;
+      item[fieldMap[field]] = value;
 
     } else if (field == 'journal') {
       if (item.publicationTitle) {
