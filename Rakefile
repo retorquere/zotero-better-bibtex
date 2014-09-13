@@ -1,4 +1,5 @@
 require 'rake'
+require 'shellwords'
 require 'nokogiri'
 require 'openssl'
 require 'net/http'
@@ -18,46 +19,91 @@ require './lib/translator'
 
 FileUtils.mkdir_p 'tmp'
 
-TRANSLATORS = [
-  {name: 'Better BibTeX'},
-  {name: 'Better BibLaTeX', unicode: true},
-  {name: 'LaTeX Citation'},
-  {name: 'Pandoc Citation'},
-  {name: 'Zotero TestCase'}
-]
-
 UNICODE_MAPPING = "tmp/unicode.json"
-SOURCES = [UNICODE_MAPPING]
+UNICODE_MAPPING_JS = "resource/translators/unicode_mapping.js"
+MD5 = {file: 'tmp/md5-0.0.0.js', url: 'http://crypto-js.googlecode.com/svn/tags/0.0.0/build/rollups/md5.js', version: '3.1.2'}
+SWEET = "sjs --readable-names"
+MACROS = 'sweet/macros.js'
+
+class String
+  def shellescape
+    Shellwords.escape(self)
+  end
+end
+
+SOURCES = [MD5[:file].sub('0.0.0', MD5[:version])] + Dir['resource/translators/*.tjs'] + Dir['./**/*.sjs'] + Dir['./**/*.pegjs']
 
 require 'zotplus-rakehelper'
 
-ZIPFILES = SOURCES.reject{|f| f=~ /^(test|tmp|resource\/(translators|abbreviations))\// || f =~ /\.pegjs$/ } + TRANSLATORS.collect{|translator|
-  translator[:source] = "resource/translators/#{translator[:name]}.js"
-  {translator[:source] => Translator.new(translator)}
-}
-
-def stir(livescript)
-  livescript = File.expand_path(livescript)
-  stirred = ''
-  IO.readlines(livescript).each{|line|
-    if line =~ /^#include\s+(.*)/
-      sweetener = File.join(File.dirname(cofee), $1.strip)
-      stirred += stir(sweetener)
-    else
-      stirred += line
-    end
-  }
-  stirred
-end
+ZIPFILES = SOURCES.reject{|f| f=~ /^(test|tmp|resource\/(translators|abbreviations))\// || f =~ /\.(peg|s)js$/ }.collect{|f| f.sub(/\.tjs$/, '.js')}
 
 rule '.js' => '.pegjs' do |t|
   sh "pegjs -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{t.source} #{t.name}"
 end
-rule '.js' => '.hx' do |t|
-  sh "haxe -cp #{File.dirname(t.source)} #{t.source} -js #{t.name}"
-  js = open(t.name).read
-  js.sub!("\n})(typeof window != \"undefined\" ? window : exports);\n", "\n})(Zotero);\n")
-  open(t.name, 'w'){|f| f.write(js)}
+
+rule '.js' => ['.sjs', MACROS] do |t|
+  sh "#{SWEET} --module ./#{MACROS} --output #{t.name.shellescape} #{t.source.shellescape}"
+end
+
+def expand(f)
+  src = f.read
+  %w{" '}.each{|q|
+    src.gsub!(/\/\/\s*@include\s*#{q}([^#{q}]+)#{q}/){
+      puts "Including #{$1.inspect}"
+      expand(open(File.join(File.dirname(f.path), $1)))
+    }
+  }
+  return src
+end
+
+rule '.js' => ['.tjs', MACROS, UNICODE_MAPPING_JS, 'resource/translators/import.js', 'resource/translators/Parser.js', 'resource/translators/translator.js'] do |t|
+  js = File.open(t.source, 'r').read
+
+  header = nil
+  start = js.index('{')
+  length = 2
+  while start && length < 1024
+    begin
+      header = JSON.parse(js[start, length])
+      break
+    rescue JSON::ParserError
+      header = nil
+      length += 1
+    end
+  end
+
+  raise "No header in #{@template}" unless header
+
+  js = js[start + length, js.length]
+
+  timestamp = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
+  header['lastUpdated'] = timestamp
+  constants = "./tmp/sweet/#{File.basename(t.name, File.extname(t.name))}/header.sjs"
+  FileUtils.mkdir_p(File.dirname(constants))
+  open(constants, 'w') {|f|
+    f.write("
+      macro TranslatorInfo {
+        rule { $[.id] }         => { #{header['translatorID'].to_json} }
+        rule { $[.label] }      => { #{header['label'].to_json} }
+        rule { $[.timestamp] }  => { #{timestamp.to_json} }
+        rule { $[.release] }    => { #{RELEASE.to_json} }
+        rule { $[.unicode] }    => { #{(!(((header['displayOptions'] || {})['exportCharset'] || 'ascii').downcase =~ /ascii/)).to_json} }
+      }
+      export TranslatorInfo
+    ")
+  }
+
+  expanded = "./tmp/sweet/#{File.basename(t.name, File.extname(t.name))}/expanded.sjs"
+  #Tempfile.open('bundle') do |bundle|
+  open(expanded, 'w') do |bundle|
+    bundle.write(expand(OpenStruct.new(path: t.source, read: js.dup)))
+    bundle.close
+    sh "#{SWEET} --module ./#{MACROS} --module #{constants.shellescape} --output #{t.name.shellescape} #{expanded.shellescape}"
+    src = JSON.pretty_generate(header) + "\n\n" + open(t.name).read
+    open(t.name, 'w'){|f| f.write(src) }
+  end
+
+  FileUtils.cp(t.name, File.join('tmp', File.basename(t.name)))
 end
 
 task :test, [:tag] => XPI do |t, args|
@@ -117,6 +163,100 @@ class Hash
  
 end
 
+file MD5[:file].sub('0.0.0', MD5[:version]) do
+  Dir[MD5[:file].sub('0.0.0', '*')].each{|f| File.unlink?(f) }
+  ZotPlus::RakeHelper.download(MD5[:url].sub('0.0.0', MD5[:version]), MD5[:file].sub('0.0.0', MD5[:version]))
+end
+
+file UNICODE_MAPPING_JS => UNICODE_MAPPING do |t|
+  mapping = JSON.parse(open(t.source).read)
+
+  u2l = {
+    unicode: {
+      math: [],
+      map: {}
+    },
+    ascii: {
+      math: [],
+      map: {}
+    }
+  }
+
+  l2u = { }
+
+  mapping.each_pair{|key, repl|
+    # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to 
+    # \combinecommand{X}
+    #raise value if value =~ /LECO/
+
+    latex = [repl['latex']]
+    case repl['latex']
+      when /^(\\[a-z][^\s]*)\s$/i, /^(\\[^a-z])\s$/i  # '\ss ', '\& ' => '{\\s}', '{\&}'
+        latex << "{#{$1}}"
+      when /^(\\[^a-z]){(.)}$/                       # '\"{a}' => '\"a'
+        latex << "#{$1}#{$2}"
+      when /^(\\[^a-z])(.)\s*$/                       # '\"a " => '\"{a}'
+        latex << "#{$1}{#{$2}}"
+      when /^{(\\[.]+)}$/                             # '{....}' '.... '
+        latex << "#{$1} "
+    end
+
+    # prefered option is braces-over-traling-space because of miktex bug that doesn't ignore spaces after commands
+    latex.sort!{|a, b|
+      nsa = !(a =~ /\s$/)
+      nsb = !(a =~ /\s$/)
+      ba = a.gsub(/[^{]/, '')
+      bb = b.gsub(/[^{]/, '')
+      if nsa == nsb
+        bb <=> ba
+      elsif nsa
+        -1
+      elsif nsb
+        1
+      else
+        a <=> b
+      end
+    }
+
+    if key =~ /^[\x20-\x7E]$/ # an ascii character that needs translation? Probably a TeX special character
+      u2l[:unicode][:map][key] = latex[0]
+      u2l[:unicode][:math] << key if repl['math']
+    end
+
+    u2l[:ascii][:map][key] = latex[0]
+    u2l[:ascii][:math] << key if repl['math']
+
+    latex.each{|ltx|
+      l2u[ltx] = key if ltx =~ /\\/
+    }
+  }
+
+  [:ascii, :unicode].each{|map|
+    u2l[map][:math] = '/(' + u2l[map][:math].collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('|') + ')/g'
+    u2l[map][:text] = '/' + u2l[map][:map].keys.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('|') + '/g'
+  }
+
+  open(t.name, 'w'){|f|
+    f.write("
+      var LaTeX = {
+        regex: {
+          unicode: {
+            math: #{u2l[:unicode][:math]},
+            text: #{u2l[:unicode][:text]}
+          },
+
+          ascii: {
+            math: #{u2l[:ascii][:math]},
+            text: #{u2l[:ascii][:text]}
+          }
+        },
+
+        toLaTeX: #{JSON.pretty_generate(u2l[:ascii][:map])},
+        toUnicode: #{JSON.pretty_generate(l2u)}
+      };
+    ")
+  }
+end
 
 file UNICODE_MAPPING => 'Rakefile' do |t|
   begin
@@ -229,6 +369,12 @@ task :markfailing do
 end
 
 ### UTILS
+
+task :macros do
+  output = 'tmp/sweet-macros-test.js'
+  sh "#{SWEET} --module ./#{MACROS} --output #{output} #{File.join(File.dirname(MACROS), File.basename(MACROS, File.extname(MACROS)) + '-test.js')}"
+  sh "jshint #{output}"
+end
 
 task :fields do
   fields = IO.readlines('../zotero/chrome/locale/en-US/zotero/zotero.properties').collect{|line|

@@ -61,21 +61,21 @@
         groups[groups.length - 1].push(fragment);
       }
 
-      fragments.forEach(function(fragment) {
+      iterate (fragment over fragments) {
         if (fragment instanceof String) {
           push(fragment);
         } else {
-          fragment.split(sep).forEach(function(splinter, i) {
+          iterate (splinter, i over fragment.split(sep)) {
             // first word is before the separator, so it is appended to the previous chunk
             // all other words start a new entry
             push(splinter, i > 0);
-          });
+          }
         }
-      });
+      }
 
       groups = groups.map(function(group) { return compact(group); });
 
-      groups.forEach(function(group) { // 'trim' the groups
+      iterate (group over groups) { // 'trim' the groups
         if (group.length == 0) { return; }
         if (! (group[0] instanceof String)) {
           group[0] = group[0].replace(/^\s+/gm, '');
@@ -88,7 +88,7 @@
           group[last] = group[last].replace(/\s+$/gm, '');
           if (group[last] == '') { group.pop(); }
         }
-      });
+      }
       return groups;
     }
 
@@ -141,17 +141,18 @@ reference
         error('@' + type + '{' + id + ',}');
       } else {
         var ref = Dict({'__type__': type.toLowerCase(), '__key__': id});
-        fields.forEach(function(field) {
+
+        iterate (field over fields) {
           if (field.value && field.value != '') {
             switch (field.type) {
               case 'file':
                 var attachments;
-                if (ref['file']) {
-                  attachments = ref['file'];
+                if (ref.file) {
+                  attachments = ref.file;
                 } else {
                   attachments = [];
                 }
-                ref['file'] = attachments.concat(field.value);
+                ref.file = attachments.concat(field.value);
                 break;
 
               case 'creator':
@@ -163,19 +164,19 @@ reference
               default:
                 if (ref[field.key]) { // duplicate fields are not supposed to occur I think
                   var note;
-                  if (ref['__note__']) {
-                    note = ref['__note__'] + "<br/>\n";
+                  if (ref.__note__) {
+                    note = ref.__note__ + "<br/>\n";
                   } else {
                     note = '';
                   }
-                  ref['__note__'] = note + field.key + '=' + field.value;
+                  ref.__note__ = note + field.key + '=' + field.value;
                 } else {
                   ref[field.key] = field.value;
                 }
                 break;
             }
           }
-        });
+        }
         bibtex.references.push(ref);
       }
     }
@@ -252,9 +253,9 @@ string
                                                           if (param.length == 1) { cmds.push("\\" + cmd + '{' + param + '}'); }
                                                           if (param.length == 3 && param[0] == '{' && param[2] == '}') { cmds.push("\\" + cmd + param[2] ); }
                                                           var match = null;
-                                                          cmds.forEach(function(cmd) {
+                                                          iterate (cmd over cmds) {
                                                             match = match || LaTeX.toUnicode[cmd];
-                                                          });
+                                                          }
                                                           return (match || param);
                                                        }
   / "\\" cmd:[^a-z] ('[' key_value* ']')?  _+          {  /* single-char command without parameter*/
@@ -343,7 +344,8 @@ groupstree
   = _* 'jabref-meta:'i _* id:'groupstree:'i _* groups:group* _* {
       var levels = Dict();
       var collections = [];
-      groups.forEach(function(group) {
+
+      iterate (group over groups) {
         if (!group) { return; }
 
         var collection = Dict();
@@ -374,7 +376,7 @@ groupstree
 
           }
         };
-      });
+      }
       bibtex.collections = bibtex.collections.concat(collections);
     }
 
