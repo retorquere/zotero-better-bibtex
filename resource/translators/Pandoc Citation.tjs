@@ -12,11 +12,10 @@
   "displayOptions": {},
 	"inRepository": true,
 	"translatorType": 2,
-	"browserSupport": "gcsv",
-	"lastUpdated": "/*= timestamp =*/"
+	"browserSupport": "gcsv"
 }
 
-/*= include common.js =*/
+// @include "translator.js"
 
 function doExport() {
   var keys = [];

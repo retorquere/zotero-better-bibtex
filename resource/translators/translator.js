@@ -1,15 +1,13 @@
-/*= dict =*/
-
 var Translator = new function() {
   var self = this;
 
-  self.id      =  '/*= id =*/';
-  self.label   =  '/*= label =*/';
-  self.unicode_default =  ('/*= unicode =*/' == 'true');
-  self.release =  '/*= release =*/';
+  self.id      =  TranslatorInfo.id;
+  self.label   =  TranslatorInfo.label;
+  self.unicode_default =  TranslatorInfo.unicode;
+  self.release =  TranslatorInfo.release;
   self.citekeys = Dict();
 
-  var preferences = Dict({
+  var preferences = {
     pattern:                'citeKeyFormat',
     skipFields:             'skipfields',
     usePrefix:              'useprefix',
@@ -21,7 +19,7 @@ var Translator = new function() {
     autoAbbrevStyle:        'auto-abbrev.style',
     unicode:                'unicode',
     pinKeys:                'pin-citekeys'
-  });
+  };
   var options = {
     useJournalAbbreviation: 'useJournalAbbreviation',
     exportCharset:          'exportCharset',
@@ -43,12 +41,12 @@ var Translator = new function() {
     config.preferences = {};
     config.options = {};
 
-    Dict.forEach(preferences, function(attribute, key) {
+    iterate (attribute:key from preferences) {
       config.preferences[key] = Translator[attribute];
-    });
-    Dict.forEach(preferences, function(attribute, key) {
+    }
+    iterate (attribute:key from options) {
       config.options[key] = Translator[attribute];
-    });
+    }
     return config;
   };
 
@@ -57,15 +55,15 @@ var Translator = new function() {
     if (initialized) { return; }
     initialized = true;
 
-    Dict.forEach(preferences, function(attribute, key) {
+    iterate (attribute:key from preferences) {
       Translator[attribute] = Zotero.getHiddenPref('better-bibtex.' + key);
-    });
+    }
     this.skipFields = this.skipFields.split(',').map(function(field) { return field.trim(); });
     Translator.testmode = Zotero.getHiddenPref('better-bibtex.testmode');
 
-    Dict.forEach(options, function(attribute, key) {
+    iterate (attribute:key from options) {
       Translator[attribute] = Zotero.getOption(key);
-    });
+    }
     Translator.exportCollections = (typeof Translator.exportCollections == 'undefined' ? true : Translator.exportCollections);
 
     switch (this.unicode) {
@@ -84,25 +82,27 @@ var Translator = new function() {
     Zotero.debug('Translator: ' + JSON.stringify(this.config()));
 
     if (this.typeMap) {
+      var typeMap = this.typeMap;
       this.typeMap = {
         BibTeX2Zotero: Dict(),
         Zotero2BibTeX: Dict()
-      }
-      Dict.forEach(this.typeMap, function(bibtex, zotero) {
+      };
+
+      iterate (bibtex: zotero from typeMap) {
         bibtex = bibtex.trim().split(/\s+/);
         zotero = zotero.trim().split(/\s+/);
 
-        bibtex.forEach(function(type) {
+        iterate (type over bibtex) {
           if (this.typeMap.BibTeX2Zotero[type]) { return; }
           this.typeMap.BibTeX2Zotero[type] = zotero[0];
-        }, this);
+        }
 
-        zotero.forEach(function(type) {
+        iterate (type over zotero) {
           if (this.typeMap.Zotero2BibTeX[type]) { return; }
           this.typeMap.Zotero2BibTeX[type] = bibtex[0];
-        }, this);
+        }
 
-      }, this);
+      }
     }
 
   };
@@ -115,7 +115,7 @@ var Translator = new function() {
       items: []
     };
 
-    (coll.children || coll.descendents).forEach(function(c) {
+    iterate (c over coll.children || coll.descendents) {
       switch (c.type) {
         case 'item':
           sane.items.push(c.id);
@@ -128,7 +128,7 @@ var Translator = new function() {
         default:
           throw('Unexpected collection member type "' + c.type + '"');
       }
-    });
+    }
 
     return sane;
   }
@@ -137,8 +137,7 @@ var Translator = new function() {
     if (!self.exportCollections) { return []; }
 
     var collections = [];
-    var collection;
-    while(collection = Zotero.nextCollection()) {
+    each (collection from Zotero.nextCollection()) {
       collections.push(sanitizeCollection(collection));
     }
     return collections;
@@ -147,9 +146,14 @@ var Translator = new function() {
   var startTime = null;
   var exported = 0;
   self.nextItem = function() {
-    while (item = Zotero.nextItem()) {
-      if (item.itemType != 'note' && item.itemType != 'attachment') { break; }
+    var item = null;
+    each (i from Zotero.nextItem()) {
+      if (i.itemType != 'note' && i.itemType != 'attachment') {
+        item = i;
+        break;
+      }
     }
+    if (!item) { return; }
 
     if (startTime) { Zotero.debug('Exported ' + exported + ' items, avg: ' + ((exported * 1000) / (Date.now() - startTime)) + ' items/sec'); }
     if (!startTime) { startTime = Date.now(); }
@@ -171,29 +175,31 @@ var Translator = new function() {
     var fields = [];
     var self = this;
 
+    this.itemtype = Translator.typeMap.Zotero2BibTeX[item.itemType] || 'misc';
+
     if (item.extra) {
       var m = /biblatexdata\[([^\]]+)\]/.exec(item.extra);
       if (m) {
         item.extra = item.extra.replace(m[0], '').trim();
-        m[1].split(';').forEach(function(assignment) {
+        iterate (assignment over m[1].split(';')) {
           var data = assignment.match(/^([^=]+)=\s*(.*)/).slice(1);
           fields.push({name: data[0], value: data[1]});
-        });
+        }
       }
     }
 
-    Dict.forEach(Translator.fieldMap, function(attr, f) {
+    iterate (attr:f from Translator.fieldMap) {
       if (!f.name) { return; }
       var o = JSON.parse(JSON.stringify(f));
       o.value = item[attr];
       this.add(o);
-    }, this);
+    }
 
     this.url = function(f) {
       var href = ('' + f.value).replace(/([#\\%&{}])/g, "\\$1");
 
       if (!Translator.unicode) {
-        href = href.replace(/[^\x21-\x7E]/g, function(chr){ return "\\\%" + ('00' + chr.charCodeAt(0).toString(16)).slice(-2); });
+        href = href.replace(/[^\x21-\x7E]/g, function(chr){ return "\\%" + ('00' + chr.charCodeAt(0).toString(16)).slice(-2); });
       }
 
       if (f.name === 'url' && Translator.fancyURLs) {
@@ -219,7 +225,7 @@ var Translator = new function() {
       }
 
       var value = LaTeX.html2latex(f.value);
-      if (f.value instanceof String) { value = new String('{' + value + '}'); }
+      if (f.value instanceof String) { value = String('{' + value + '}'); }
       return value;
     };
     this.tags = function(f) {
@@ -237,7 +243,7 @@ var Translator = new function() {
 
       var attachments = [];
       errors = [];
-      f.value.forEach(function(att) {
+      iterate (att over f.value) {
         var a = {title: att.title, path: att.localPath, mimetype: att.mimeType};
         var save = (Translator.exportFileData && att.defaultPath && att.saveFile);
 
@@ -259,7 +265,7 @@ var Translator = new function() {
         } else {
           attachments.push(a);
         }
-      }, this);
+      }
 
       if (errors.length !== 0) { f.errors = errors; }
       if (attachments.length === 0) { return null; }
@@ -268,7 +274,7 @@ var Translator = new function() {
       return attachments.map(function(att) {
         return [att.title, att.path, att.mimetype].map(function(part) { return part.replace(/([\\{}:;])/g, "\\$1"); }).join(':');
       }).join(';');
-    }
+    };
 
     /*
     {
@@ -309,14 +315,15 @@ var Translator = new function() {
       field.protect = (typeof field.value !== 'number') && field.protect && Translator.braceAll;
       fields.push(field);
     };
+    this.has = function(name) {
+      return fields.filter(function(f) { return f.name === name; });
+    };
 
     this.complete = function() {
-      var itemtype = Translator.typeMap.Zotero2BibTeX[item.itemType] || 'misc';
+      if (fields.length === 0) { this.add({name: 'type', value: this.itemtype}); }
 
-      if (fields.length == 0) { this.add({name: 'type', value: itemtype}); }
-
-      Zotero.write('@' + itemtype + '{' + item.__citekey__ + ",\n");
-      Zotero.write(fields.sort(function(a, b) {
+      /*
+      fields.sort(function(a, b) {
         var _a = a.name;
         var _b = b.name;
         if (a.name == b.name) {
@@ -326,14 +333,16 @@ var Translator = new function() {
         if (_a < _b) return -1;
         if (_a > _b) return 1;
         return 0;
-      }).map(function(f) {
-        return field(f);
-      }).filter(function(f) {
-        return f;
-      })join(",\n"));
-      Zotero.write("\n}");
-    }
-  }
+      });
+      */
+
+      var ref = '@' + this.itemtype + '{' + item.__citekey__ + ",\n";
+      ref += fields.map(function(f) { return field(f); }).filter(function(f) { return f; }).join(",\n");
+      ref += "\n}\n";
+
+      Zotero.write(ref);
+    };
+  };
 
   var JabRef = {
     serialize: function(arr, sep, wrap) {
@@ -350,9 +359,9 @@ var Translator = new function() {
       group = this.serialize(group, ';');
 
       var result = [group];
-      collection.collections.forEach(function(coll) {
+      iterate (coll over collection.collections) {
         result = result.concat(JabRef.exportGroup(coll, level + 1));
-      });
+      }
 
       return result;
     }
@@ -366,15 +375,16 @@ var Translator = new function() {
     Zotero.write("0 AllEntriesGroup:;\n");
 
     var groups = [];
-    this.collections.forEach(function(collection) {
+
+    iterate (collection over this.collections) {
       groups = groups.concat(JabRef.exportGroup(collection, 1));
-    });
+    }
     Zotero.write(this.serialize(groups, ";\n", true) + ";\n}\n");
   };
 };
 
 
-/*= unicode_mapping =*/
+// @include "unicode_mapping.js"
 
 LaTeX.toUnicode["\\url"] = '';
 LaTeX.toUnicode["\\href"] = '';

@@ -1,4 +1,4 @@
-/*= bibtex_parser =*/
+// @include "Parser.js"
 
 function detectImport() {
   try {
@@ -36,9 +36,9 @@ JabRef.importGroup = function(group) {
   collection.name = group.name;
   collection.children = group.items.map(function(key) { return {type: 'item', id: key}; });
 
-  group.collections.forEach(function(child) {
+  iterate (child over group.collections) {
     collection.children.push(JabRef.importGroup(child));
-  });
+  }
   collection.complete();
   return collection;
 };
@@ -52,12 +52,12 @@ function _doImport() {
 
   var bib = BetterBibTeXParser.parse(data);
 
-  bib.references = bib.references.forEach(function(ref) {
+  iterate (ref over bib.references) {
     createZoteroReference(ref);
-  });
+  }
 
-  bib.collections.forEach(function(coll) {
+  iterate (coll over bib.collections) {
     JabRef.importGroup(coll);
-  });
+  }
 }
 
