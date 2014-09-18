@@ -44,7 +44,7 @@ var strToISO = function(str) {
 
 Translator.fieldMap = Dict({
   // Zotero         BibTeX
-  place:            {name: 'address', protect: true, import: 'location'},
+  place:            {name: 'location', protect: true},
   chapter:          {name: 'chapter', protect: true},
   edition:          {name: 'edition', protect: true},
   title:            {name: 'title', protect: true},
@@ -52,8 +52,8 @@ Translator.fieldMap = Dict({
   rights:           {name: 'rights', protect: true},
   ISBN:             {name: 'isbn'},
   ISSN:             {name: 'issn'},
-  url:              {name: 'url', escape: 'url'},
-  DOI:              {name: 'doi', escape: 'doi'},
+  url:              {name: 'url', esc: 'url'},
+  DOI:              {name: 'doi', esc: 'doi'},
   shortTitle:       {name: 'shorttitle', protect: true},
   abstractNote:     {name: 'abstract'},
   numberOfVolumes:  {name: 'volumes'},
@@ -191,12 +191,21 @@ var babelLanguageMap = Dict({
   zh:         'pinyin', //only supported chinese in babel is the romanization pinyin?
   zlm:        ['malay', 'bahasam', 'melayu'],
 });
-for (let _keys = Object.keys(babelLanguageMap), _i = _keys.length - 1, key = _keys[_i]; _i >= 0; key = _keys[--_i]) {
-  if (typeof babelLanguageMap[key] === 'string' ) {
-    babelLanguageMap[key] = [babelLanguageMap[key]];
+for_each (let key: let value of babelLanguageMap) {
+  if (typeof value === 'string' ) {
+    babelLanguageMap[key] = [value];
   }
 }
-var babelLanguageList = [].concat.apply([], Dict.values(babelLanguageMap)).filter(function(value, index, self) { return self.indexOf(value) === index; });
+
+// list of unique languages
+var babelLanguageList = [];
+for_each (let k: let v of babelLanguageMap) {
+  for_each (let lang in v) {
+    if (babelLanguageList.indexOf(lang) === -1) {
+      babelLanguageList.push(lang);
+    }
+  }
+}
 var polyglossia = [ 'albanian', 'amharic', 'arabic', 'armenian', 'asturian', 'bahasai', 'bahasam', 'basque', 'bengali', 'brazilian', 'brazil',
                     'breton', 'bulgarian', 'catalan', 'coptic', 'croatian', 'czech', 'danish', 'divehi', 'dutch', 'english', 'british', 'ukenglish',
                     'esperanto', 'estonian', 'farsi', 'finnish', 'french', 'friulan', 'galician', 'german', 'austrian', 'naustrian', 'greek', 'hebrew',
@@ -219,15 +228,17 @@ FuzzyLanguageLookup = {
 
   string_similarity: function(str1, str2){
     // Perform bigram comparison between two strings and return a percentage match in decimal form
-    var pairs1 = get_bigrams(str1);
-    var pairs2 = get_bigrams(str2);
+    var pairs1 = this.get_bigrams(str1);
+    var pairs2 = this.get_bigrams(str2);
     var union = pairs1.length + pairs2.length;
     var hit_count = 0;
-    for (let x = pairs1.length - 1; x >= 0; x--) {
-      for (let y = pairs2.length - 1; y >= 0; y--) {
-        if (pairs1[x] === pairs2[y]) { hit_count++; }
+
+    for_each (let p1 in pairs1) {
+      for_each (let p2 in pairs2) {
+        if (p1 === p2) { hit_count++; }
       }
     }
+
     return ((2.0 * hit_count) / union);
   },
 
@@ -236,9 +247,10 @@ FuzzyLanguageLookup = {
   lookup: function(langcode) {
     if (!this.cache[langcode]) {
       this.cache[langcode] = [];
-      for (let _l = babelLanguageList.length, _i = 0; _i < _l; _i++) {
+
+      for_each (let lc in babelLanguageList) {
         // for each possible language id, calculate its similarity to what was entered into zotero
-        this.cache[langcode].push({lang: babelLanguageList[_i], sim: this.string_similarity(langcode, babelLanguageList[_i])});
+        this.cache[langcode].push({lang: lc, sim: this.string_similarity(langcode, lc)});
       }
       this.cache[langcode].sort(function(a, b) {
         // sort the results so the most similar entries go to the front
@@ -258,7 +270,7 @@ function doExport() {
   // to make sure the BOM gets ignored
   Zotero.write("\n");
 
-  for (let item = Translator.nextItem(); item; item = Translator.nextItem()) {
+  for_each (let item from Translator.nextItem()) {
     var ref = new Translator.Reference(item);
 
     // inbook is reasonable at times, using a bookauthor should indicate this
@@ -387,11 +399,9 @@ function doExport() {
       var editorbs = [];
       var holders = [];
       var translators = [];
-      var creator, creatorString;
+      var creatorString;
 
-      for (let _l = item.creators.length, _i = 0; _i < _l; _i++) {
-        creator = item.creators[_i];
-
+      for_each (let creator in item.creators) {
         if (('' + creator.firstName).trim() !== '' && ('' + creator.lastName).trim() !== '') {
           creatorString = creator.lastName + ', ' + creator.firstName;
         } else {
@@ -449,8 +459,8 @@ function doExport() {
       ref.add({name: 'editorb', value: editorbs, sep: ' and '});
       if (editorbs.length > 0) { ref.add({name: 'editorbtype', value: 'redactor'}); }
 
-      ref.add({name: 'holder', holders, sep: ' and '});
-      ref.add({name: 'translator', translators, sep: ' and '});
+      ref.add({name: 'holder', value: holders, sep: ' and '});
+      ref.add({name: 'translator', value: translators, sep: ' and '});
     }
 
     if (item.accessDate) { ref.add({name: 'urldate', value: strToISO(item.accessDate)}); }
@@ -488,20 +498,20 @@ function doExport() {
 
     ref.add({name: ref.has('note') ? 'annotation' : 'note', value: item.extra});
 
-    ref.add({name: 'keywords', value: item.tags, escape: 'tags'});
+    ref.add({name: 'keywords', value: item.tags, esc: 'tags'});
 
     if (item.notes && Translator.exportNotes) {
-      for (let _l = item.notes.length, _i = 0; _i < _l; _i++) {
-        ref.add({name: 'annotation', value: Zotero.Utilities.unescapeHTML(items.notes[_i].note)});
+      for_each (let note in item.notes) {
+        ref.add({name: 'annotation', value: Zotero.Utilities.unescapeHTML(note.note)});
       }
     }
 
-    ref.add({name: 'file', value:item.attachments, escape: 'attachments'});
+    ref.add({name: 'file', value:item.attachments, esc: 'attachments'});
 
     ref.complete();
   }
 
-  JabRef.exportGroups();
+  Translator.exportGroups();
 
   Zotero.write("\n");
 }

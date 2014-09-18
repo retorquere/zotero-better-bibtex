@@ -29,7 +29,7 @@ function scrub(item) {
   delete item.uri;
   delete item.multi;
 
-  iterate (creator over item.creators || []) {
+  for_each (let creator in item.creators || []) {
     delete creator.creatorID;
     delete creator.multi;
   };
@@ -45,7 +45,7 @@ function scrub(item) {
   item.notes = (item.notes || []).map(function(note) { return (note.note || '').trim(); }).filter(function(note) { return note; });
 
   /*
-  iterate (note over item.notes || []) {
+  for_each (let note in item.notes || []) {
     delete note.itemID;
     delete note.itemType;
     delete note.dateAdded;
@@ -62,7 +62,7 @@ function scrub(item) {
   item.tags = (item.tags || []).map(function(tag) { return tag.tag; });
   item.tags.sort();
 
-  iterate (prop over ['attachments', 'seeAlso', 'notes', 'tags', 'creators']) {
+  for_each (let prop in ['attachments', 'seeAlso', 'notes', 'tags', 'creators']) {
     if (item[prop] && item[prop].length === 0) {
       delete item[prop];
     }
@@ -75,7 +75,7 @@ function scrub(item) {
 
 function detectImport() {
   var str, json = '';
-  while((str = Z.read(1048576)) !== false) { json += str; }
+  while((str = Zotero.read(1048576)) !== false) { json += str; }
 
   var data;
   try {
@@ -92,12 +92,12 @@ function doImport() {
   Translator.initialize();
 
   var str, json = '';
-  while((str = Z.read(1048576)) !== false) { json += str; }
+  while((str = Zotero.read(1048576)) !== false) { json += str; }
   var data = JSON.parse(json);
 
-  iterate (i over data.items) {
+  for_each (let i in data.items) {
     var item = new Zotero.Item();
-    iterate (prop:value from i) {
+    for_each (let prop:let value of i) {
       item[prop] = value;
     }
     item.complete();
@@ -115,7 +115,7 @@ function doExport() {
     items: []
   };
 
-  each (item from Zotero.nextItem()) {
+  for_each (var item from Zotero.nextItem()) {
     if (item.itemType == 'note' || item.itemType == 'attachment') { continue; }
     data.items.push(scrub(item));
   }

@@ -36,7 +36,7 @@ JabRef.importGroup = function(group) {
   collection.name = group.name;
   collection.children = group.items.map(function(key) { return {type: 'item', id: key}; });
 
-  iterate (child over group.collections) {
+  for_each (let child in group.collections) {
     collection.children.push(JabRef.importGroup(child));
   }
   collection.complete();
@@ -48,15 +48,15 @@ function _doImport() {
 
   var data = '';
   var read;
-  while(read = Zotero.read(1024)) { data += read; }
+  while((read = Zotero.read(1048576)) !== false) { data += read; }
 
   var bib = BetterBibTeXParser.parse(data);
 
-  iterate (ref over bib.references) {
+  for_each (let ref in bib.references) {
     createZoteroReference(ref);
   }
 
-  iterate (coll over bib.collections) {
+  for_each (let coll in bib.collections) {
     JabRef.importGroup(coll);
   }
 }

@@ -41,10 +41,10 @@ var Translator = new function() {
     config.preferences = {};
     config.options = {};
 
-    iterate (attribute:key from preferences) {
+    for_each (let attribute:let key of preferences) {
       config.preferences[key] = Translator[attribute];
     }
-    iterate (attribute:key from options) {
+    for_each (let attribute:let key of options) {
       config.options[key] = Translator[attribute];
     }
     return config;
@@ -55,16 +55,16 @@ var Translator = new function() {
     if (initialized) { return; }
     initialized = true;
 
-    iterate (attribute:key from preferences) {
+    for_each (let attribute:let key of preferences) {
       Translator[attribute] = Zotero.getHiddenPref('better-bibtex.' + key);
     }
-    this.skipFields = this.skipFields.split(',').map(function(field) { return field.trim(); });
+    this.skipFields = collect(for (field of this.skipFields.split(',')) field.trim());
     Translator.testmode = Zotero.getHiddenPref('better-bibtex.testmode');
 
-    iterate (attribute:key from options) {
+    for_each (let attribute:let key of options) {
       Translator[attribute] = Zotero.getOption(key);
     }
-    Translator.exportCollections = (typeof Translator.exportCollections == 'undefined' ? true : Translator.exportCollections);
+    Translator.exportCollections = (typeof Translator.exportCollections === 'undefined' ? true : Translator.exportCollections);
 
     switch (this.unicode) {
       case 'always':
@@ -88,23 +88,22 @@ var Translator = new function() {
         Zotero2BibTeX: Dict()
       };
 
-      iterate (bibtex: zotero from typeMap) {
+      for_each (let bibtex: let zotero of typeMap) {
         bibtex = bibtex.trim().split(/\s+/);
         zotero = zotero.trim().split(/\s+/);
 
-        iterate (type over bibtex) {
+        for_each (let type in bibtex) {
           if (this.typeMap.BibTeX2Zotero[type]) { return; }
           this.typeMap.BibTeX2Zotero[type] = zotero[0];
         }
 
-        iterate (type over zotero) {
+        for_each (let type in zotero) {
           if (this.typeMap.Zotero2BibTeX[type]) { return; }
           this.typeMap.Zotero2BibTeX[type] = bibtex[0];
         }
 
       }
     }
-
   };
 
   // The default collection structure passed is beyond screwed up.
@@ -115,7 +114,7 @@ var Translator = new function() {
       items: []
     };
 
-    iterate (c over coll.children || coll.descendents) {
+    for_each (let c in coll.children || coll.descendents) {
       switch (c.type) {
         case 'item':
           sane.items.push(c.id);
@@ -133,11 +132,11 @@ var Translator = new function() {
     return sane;
   }
 
-  self.collections = function() {
+  this.collections = function() {
     if (!self.exportCollections) { return []; }
 
     var collections = [];
-    each (collection from Zotero.nextCollection()) {
+    for_each (let collection from Zotero.nextCollection()) {
       collections.push(sanitizeCollection(collection));
     }
     return collections;
@@ -145,11 +144,10 @@ var Translator = new function() {
 
   var startTime = null;
   var exported = 0;
-  self.nextItem = function() {
+  this.nextItem = function() {
     var item = null;
-    each (i from Zotero.nextItem()) {
-      if (i.itemType != 'note' && i.itemType != 'attachment') {
-        item = i;
+    for_each (item from Zotero.nextItem()) {
+      if (item.itemType != 'note' && item.itemType != 'attachment') {
         break;
       }
     }
@@ -162,7 +160,6 @@ var Translator = new function() {
     if (!item) { return; }
 
     if (!initialized) { self.initialize(); }
-    Translator.fieldsWritten = Dict({});
 
     // remove any citekey from extra -- the export doesn't need it
     Zotero.BetterBibTeX.keymanager.extract(item);
@@ -171,31 +168,14 @@ var Translator = new function() {
     return item;
   };
 
+  var attachmentCounter = 0;
   this.Reference = function(item) {
     var fields = [];
     var self = this;
 
     this.itemtype = Translator.typeMap.Zotero2BibTeX[item.itemType] || 'misc';
 
-    if (item.extra) {
-      var m = /biblatexdata\[([^\]]+)\]/.exec(item.extra);
-      if (m) {
-        item.extra = item.extra.replace(m[0], '').trim();
-        iterate (assignment over m[1].split(';')) {
-          var data = assignment.match(/^([^=]+)=\s*(.*)/).slice(1);
-          fields.push({name: data[0], value: data[1]});
-        }
-      }
-    }
-
-    iterate (attr:f from Translator.fieldMap) {
-      if (!f.name) { return; }
-      var o = JSON.parse(JSON.stringify(f));
-      o.value = item[attr];
-      this.add(o);
-    }
-
-    this.url = function(f) {
+    this.esc_url = function(f) {
       var href = ('' + f.value).replace(/([#\\%&{}])/g, "\\$1");
 
       if (!Translator.unicode) {
@@ -208,42 +188,44 @@ var Translator = new function() {
 
       return href;
     };
-    this.doi = function(f) {
-      return this.url(f);
+
+    this.esc_doi = function(f) {
+      return this.esc_url(f);
     };
-    this.escape = function(f) {
+
+    this.esc_latex = function(f) {
       if (typeof f.value == 'number') { return f.value; }
       if (!f.value) { return null; }
 
       if (f.value instanceof Array) {
         if (f.value.length === 0) { return null; }
-        return f.value.map(function(word) {
-          var o = JSON.parse(JSON.stringify(f));
-          o.value = word;
-          return this.escape(o);
-        }).join(f.sep);
+
+        return (collect (for (word of f.value)) { let o = JSON.parse(JSON.stringify(f)); o.value = word; word = this.esc_latex(o); }).join(f.sep);
       }
 
       var value = LaTeX.html2latex(f.value);
       if (f.value instanceof String) { value = String('{' + value + '}'); }
       return value;
     };
-    this.tags = function(f) {
+
+    this.esc_tags = function(f) {
       if (!f.value || f.value.length === 0) { return null; }
-      var tags = item.tags.map(function(tag) {return tag.tag;});
-      tags.sort();
+      var tags = collect(for (tag of item.tags) tag.tag);
+      // sort tags for stable tests
+      if (Translator.testmode) {
+        tags.sort();
+      }
       f.value = tags;
       f.sep = ',';
-      return this.escape(f);
+      return this.esc_latex(f);
     };
 
-    var attachmentCounter = 0;
-    this.attachments = function(f) {
+    this.esc_attachments = function(f) {
       if (!f.value || f.value.length === 0) { return null; }
 
       var attachments = [];
       errors = [];
-      iterate (att over f.value) {
+      for_each (let att in f.value) {
         var a = {title: att.title, path: att.localPath, mimetype: att.mimeType};
         var save = (Translator.exportFileData && att.defaultPath && att.saveFile);
 
@@ -261,7 +243,7 @@ var Translator = new function() {
         }
 
         if (a.path.match(/[{}]/)) { // latex really doesn't want you to do this.
-          erross.push('BibTeX cannot handle file paths with braces: ' + JSON.stringify(a.path));
+          errors.push('BibTeX cannot handle file paths with braces: ' + JSON.stringify(a.path));
         } else {
           attachments.push(a);
         }
@@ -270,9 +252,17 @@ var Translator = new function() {
       if (errors.length !== 0) { f.errors = errors; }
       if (attachments.length === 0) { return null; }
 
-      attachments.sort(function(a, b) { return a.path.localeCompare(b.path); });
-      return attachments.map(function(att) {
-        return [att.title, att.path, att.mimetype].map(function(part) { return part.replace(/([\\{}:;])/g, "\\$1"); }).join(':');
+      // sort attachments for stable tests
+      if (Translator.testmode) {
+        attachments.sort(function(a, b) { return a.path.localeCompare(b.path); });
+      }
+
+      return (collect(for (att of attachments)) {
+        att = [att.title, att.path, att.mimetype];
+        for_each (let part, let i in att) {
+          att[i] = part.replace(/([\\{}:;])/g, "\\$1");
+        }
+        att = att.join(':')
       }).join(';');
     };
 
@@ -281,8 +271,8 @@ var Translator = new function() {
       name:
       value:
       braces:
-      braceAll:
-      escape:
+      protect:
+      esc:
     }
     */
     function field(f) {
@@ -292,56 +282,76 @@ var Translator = new function() {
       if (typeof f.value == 'number') {
         value = f.value;
       } else {
-        if (!f.value || f.value === '') { return; }
-
-        if (f.escape) {
-          if (typeof this[f.escape] !== 'function') { throw('Unsupported escape function ' + f.escape); }
-          value = this[f.escape](f);
+        if (f.esc) {
+          if (typeof self['esc_' + f.esc] !== 'function') { throw('Unsupported escape function ' + f.esc); }
+          value = self['esc_' + f.esc](f);
         } else {
-          value = this.escape(f);
+          value = self.esc_latex(f);
         }
 
-        if (value === '' || typeof(value) === 'undefined') { return null; }
+        if (!value) { return null; }
 
         if (f.braces) { value = '{' + value + '}'; }
-        if (f.braceAll) { value = '{' + value + '}'; }
+        if (f.protect) { value = '{' + value + '}'; }
       }
 
-      return f.name + ' = ' + value;
+      return '  ' + f.name + ' = ' + value;
     }
 
     this.add = function(field) {
+      if (typeof field.value !== 'number' && !field.value) { return; }
+      if (Array.isArray(field.value) && field.value.length === 0) { return; }
       field.braces = typeof(field.braces) === 'undefined' || field.braces || field.protect || field.value.match(/\s/);
       field.protect = (typeof field.value !== 'number') && field.protect && Translator.braceAll;
       fields.push(field);
     };
     this.has = function(name) {
-      return fields.filter(function(f) { return f.name === name; });
+      return (collect(for (f of fields) if (f.name === name) 1).length !== 0);
     };
 
     this.complete = function() {
       if (fields.length === 0) { this.add({name: 'type', value: this.itemtype}); }
 
-      /*
-      fields.sort(function(a, b) {
-        var _a = a.name;
-        var _b = b.name;
-        if (a.name == b.name) {
-          _a = a.value;
-          _b = b.value;
-        }
-        if (_a < _b) return -1;
-        if (_a > _b) return 1;
-        return 0;
-      });
-      */
+      // sort fields for stable tests
+      if (Translator.testmode) {
+        fields.sort(function(a, b) {
+          var _a = a.name;
+          var _b = b.name;
+          if (a.name == b.name) {
+            _a = a.value;
+            _b = b.value;
+          }
+          if (_a < _b) return -1;
+          if (_a > _b) return 1;
+          return 0;
+        });
+      }
 
       var ref = '@' + this.itemtype + '{' + item.__citekey__ + ",\n";
-      ref += fields.map(function(f) { return field(f); }).filter(function(f) { return f; }).join(",\n");
-      ref += "\n}\n";
+      ref += collect(for(filledfield of collect(for(f of fields) field(f))) if (filledfield) filledfield).join(",\n");
+      ref += "\n}\n\n";
 
       Zotero.write(ref);
     };
+
+    // initialization
+    if (item.extra) {
+      var m = /biblatexdata\[([^\]]+)\]/.exec(item.extra);
+      if (m) {
+        item.extra = item.extra.replace(m[0], '').trim();
+        for_each (let assignment in m[1].split(';')) {
+          var data = assignment.match(/^([^=]+)=\s*(.*)/).slice(1);
+          fields.push({name: data[0], value: data[1], protect: true});
+        }
+      }
+    }
+
+    for_each (let attr: let f of Translator.fieldMap) {
+      if (!f.name) { return; }
+      var o = JSON.parse(JSON.stringify(f));
+      o.value = item[attr];
+      this.add(o);
+    }
   };
 
   var JabRef = {
@@ -356,10 +366,10 @@ var Translator = new function() {
       var group = [level + ' ExplicitGroup:' + collection.name, 0];
       group = group.concat(collection.items.map(function(id) { return Translator.citekeys[id]; }));
       group.push('');
-      group = this.serialize(group, ';');
+      group = this.serialize(group, ';'); // not a function?!
 
       var result = [group];
-      iterate (coll over collection.collections) {
+      for_each (let coll in collection.collections) {
         result = result.concat(JabRef.exportGroup(coll, level + 1));
       }
 
@@ -368,18 +378,19 @@ var Translator = new function() {
   };
 
   this.exportGroups = function() {
-    if (this.collections.length === 0) { return; }
+    var collections = this.collections();
+    if (collections.length === 0) { return; }
 
-    Zotero.write("\n\n@comment{jabref-meta: groupsversion:3;}\n");
+    Zotero.write("@comment{jabref-meta: groupsversion:3;}\n");
     Zotero.write("@comment{jabref-meta: groupstree:\n");
     Zotero.write("0 AllEntriesGroup:;\n");
 
     var groups = [];
 
-    iterate (collection over this.collections) {
+    for_each (let collection in collections) {
       groups = groups.concat(JabRef.exportGroup(collection, 1));
     }
-    Zotero.write(this.serialize(groups, ";\n", true) + ";\n}\n");
+    Zotero.write(JabRef.serialize(groups, ";\n", true) + ";\n}\n");
   };
 };
 

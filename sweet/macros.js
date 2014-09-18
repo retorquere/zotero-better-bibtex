@@ -22,29 +22,44 @@ macroclass $param {
 */
 macro for_each {
 
-  // ** iterate over an object **
-  // for_each ([var|let]? key : [var|let]? value of object) { ... }
-  rule { ($key:$param $[:] $val:$param of $dict:expr) { $body ... } } => {
+  rule { ($key:$param $[:] $val:$param of sorted $dict:expr) { $body ... } } => {
+    var i = 0;
 
     do { // this will contain any let statements to the block scope
+      let dict = $dict;
+      let keys = Objects.keys(dict);
+      keys.sort();
+      let length = keys.length;
+      let i = 0;
       $key$decl $key$name = null;
       $val$decl $val$name = null;
-      let dict = $dict;
-      let keys = Object.keys(dict);
-      let length = keys.length;
-      let index = 0;
       // a while loop is faster than a for (;;)
-      while (index < length) {
-        $key$name = keys[index];
-        if (dict.hasOwnProperty && !dict.hasOwnProperty($key$name)) { continue; }
+      while (i < length) {
+        $key$name = keys[i];
         $val$name = dict[$key$name];
         $body...
-        index++;
+        i++;
       }
       dict = undefined;
       keys = undefined;
     } while (false)
-    
+  }
+
+  // ** iterate over an object **
+  // for_each ([var|let]? key : [var|let]? value of object) { ... }
+  rule { ($key:$param $[:] $val:$param of $dict:expr) { $body ... } } => {
+
+    var dict = $dict;
+    do { // work around Sweet.js issue #365
+      $key$decl $key$name = null;
+      for ($key$name in $dict) {
+        if (dict.hasOwnProperty && !dict.hasOwnProperty($key$name)) { continue; }
+        $val$decl $val$name = dict[$key$name];
+        $body...
+      }
+      dict = undefined;
+    } while (false)
+
   }
 
   // ** iterate over an array, with index **
@@ -90,8 +105,10 @@ macro Dict {
     // Wrapped in a function so it can be called as a simple expression
     (function(init) {
       var dict = Object.create(null);
-      for_each (let key: let value of init) {
-        dict[key] = value
+      var key;
+      for (key in init) {
+        if (init.hasOwnProperty && !init.hasOwnProperty(key)) { continue; }
+        dict[key] = init[key];
       }
       return dict;
     })($init)
@@ -101,45 +118,69 @@ macro Dict {
   rule {()} => { Object.create(null) }
 }
 
-// Helper macro for collect
-macro $collect {
-  rule { ($result:expr, $item:ident, $items:expr, $cond:expr) } => {
-    (function() {
-      var result = [];
-      for_each (let $item in $items) {
-        if ($cond) {
-          result.push($result);
-        }
-      }
-      return result;
-    }).bind(this)()
-  }
-}
-
 // array comprehensions
 macro collect {
-  // collect (expr for item of items)
-  rule { ($($result:expr for $item:ident in $items:expr)) } => {
-    $collect($result, $item, $items, true)
-  }
-  // collect (expr for item of items where condition-for-item)
-  rule { ($($result:expr for $item:ident in $items:expr where $cond:expr)) } => {
-    $collect($result, $item, $items, $cond)
-  }
 
-  rule { ($(for $item:ident in $items:expr)) { $body... } } => {
+  // collect( for (x of iterable) if (condition) x )
+  rule { ( for ($x:ident of $iterable:expr) if ($condition:expr) $result:expr) } => {
     (function() {
+      var $x;
       var result = [];
-      for_each (let $item in $items) {
-        $body...
-        if (typeof $item !== 'undefined') {
-          result.push($item);
+      var iterable = $iterable;
+      var i = 0, l = iterable.length;
+      while (i < l) {
+        $x = iterable[i];
+        if ($condition) {
+          result.push($result);
         }
+        i++;
       }
       return result;
     }).bind(this)()
   }
+
+  // collect( for (x of iterable) x )
+  rule { ( for ($x:ident of $iterable:expr) $result:expr) } => {
+    (function() {
+      var $x;
+      var result = [];
+      var iterable = $iterable;
+      var i = 0, l = iterable.length;
+      while (i < l) {
+        $x = iterable[i];
+        result.push($result);
+        i++;
+      }
+      return result;
+    }).bind(this)()
+  }
+
+  // collect( for (x of iterable) ) { ... }
+  rule { ( for ($x:ident of $iterable:expr) ) { $body... } } => {
+
+    (function() {
+      var $x;
+      var result = [];
+      var iterable = $iterable;
+      var i = 0, l = iterable.length;
+      while (i < l) {
+        $x = iterable[i];
+        $body...
+        if (typeof $x !== 'undefined') {
+          result.push($x);
+        }
+        i++;
+      }
+      return result;
+    }).bind(this)()
+
+  }
 }
+
+// operator == 9 left { $l, $r } => #{ $l === $r }
+// export ==
+// operator != 9 left { $l, $r } => #{ $l !== $r }
+// export !=
 
 export for_each
 export Dict
