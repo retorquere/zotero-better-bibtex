@@ -15,7 +15,6 @@ require 'rubygems/package'
 require 'zlib'
 require 'open3'
 require 'yaml'
-require './lib/translator'
 
 FileUtils.mkdir_p 'tmp'
 
@@ -31,11 +30,18 @@ class String
   end
 end
 
-SOURCES = [MD5[:file].sub('0.0.0', MD5[:version])] + Dir['resource/translators/*.tjs'] + Dir['./**/*.sjs'] + Dir['./**/*.pegjs']
-
+SOURCES = [
+  MD5[:file].sub('0.0.0', MD5[:version]),
+  Dir['./**/*.tjs'].collect{|f| f.sub(/\.tjs$/, '.js') },
+  Dir['./**/*.sjs'].collect{|f| f.sub(/\.sjs$/, '.js') },
+  Dir['./**/*.js'],
+  Dir['./**/*.pegjs'].collect{|f| f.sub(/\.pegjs$/, '.js') }
+].flatten.collect{|f| f.sub(/^\.\//, '') }.reject{|f| f =~ /^(sweet|www|tmp|features)\// }.uniq.sort
 require 'zotplus-rakehelper'
-
-ZIPFILES = SOURCES.reject{|f| f=~ /^(test|tmp|resource\/(translators|abbreviations))\// || f =~ /\.(peg|s)js$/ }.collect{|f| f.sub(/\.tjs$/, '.js')}
+ZIPFILES = [
+  SOURCES.reject{|f| f =~ /(^resource\/)|(Parser\.js$)|(\..+js$)/ },
+  Dir['resource/translators/*.tjs'].collect{|f| f.sub(/\.tjs$/, '.js') }
+].flatten.uniq.sort
 
 rule '.js' => '.pegjs' do |t|
   sh "pegjs -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{t.source} #{t.name}"
@@ -99,7 +105,7 @@ rule '.js' => ['.tjs', MACROS, UNICODE_MAPPING_JS, 'resource/translators/import.
     bundle.write(expand(OpenStruct.new(path: t.source, read: js.dup)))
     bundle.close
     sh "#{SWEET} --module ./#{MACROS} --module #{constants.shellescape} --output #{t.name.shellescape} #{expanded.shellescape}"
-    src = JSON.pretty_generate(header) + "\n\n" + open(t.name).read
+    src = JSON.pretty_generate(header) + "\n\n'use strict';\n" + open(t.name).read
     open(t.name, 'w'){|f| f.write(src) }
   end
 
@@ -371,8 +377,8 @@ end
 ### UTILS
 
 task :macros do
-  output = 'tmp/sweet-macros-test.js'
-  sh "#{SWEET} --module ./#{MACROS} --output #{output} #{File.join(File.dirname(MACROS), File.basename(MACROS, File.extname(MACROS)) + '-test.js')}"
+  output = 'tmp/macros-test.js'
+  sh "#{SWEET} --module ./#{MACROS} --output #{output} #{File.join(File.dirname(MACROS), 'tests.js')}"
   sh "jshint #{output}"
 end
 

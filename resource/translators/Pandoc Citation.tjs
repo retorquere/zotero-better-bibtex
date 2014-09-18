@@ -19,7 +19,7 @@
 
 function doExport() {
   var keys = [];
-  while (item = Translator.nextItem()) {
+  for_each (var item from Translator.nextItem()) {
     keys.push('@' + item.__citekey__);
   }
   Zotero.write('[' + keys.join('; ') + ']');

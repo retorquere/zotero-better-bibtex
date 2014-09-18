@@ -17,9 +17,10 @@
   "inRepository": true,
   "translatorType": 3,
   "browserSupport": "gcsv",
-  "lastUpdated": "2014-09-13 10:50:29"
+  "lastUpdated": "2014-09-18 22:30:41"
 }
 
+'use strict';
 function scrub(item) {
     delete item.__citekey__;
     delete item.libraryID;
@@ -29,17 +30,21 @@ function scrub(item) {
     delete item.dateModified;
     delete item.uri;
     delete item.multi;
-    let creator;
-    let items = item.creators || [];
-    let length = items.length;
-    let i;
-    for (i = 0; i < length; i++) {
-        creator = items[i];
-        delete creator.creatorID;
-        delete creator.multi;
-    }
-    items = undefined;
-    ;
+    do {
+        // this will contain any let statements to the block scope
+        let items = item.creators || [];
+        let length = items.length;
+        let creator = null;
+        let i = 0;
+        // a while loop is faster than a for (;;)
+        while (i < length) {
+            creator = items[i];
+            delete creator.creatorID;
+            delete creator.multi;
+            i++;
+        }
+        items = undefined;
+    } while (false);
     item.attachments = (item.attachments || []).map(function (attachment) {
         return {
             path: attachment.localPath,
@@ -53,7 +58,7 @@ function scrub(item) {
         return note;
     });
     /*
-  for (note <- item.notes || []) {
+  for_each (let note in item.notes || []) {
     delete note.itemID;
     delete note.itemType;
     delete note.dateAdded;
@@ -70,24 +75,28 @@ function scrub(item) {
         return tag.tag;
     });
     item.tags.sort();
-    let prop;
-    let items$2 = [
-            'attachments',
-            'seeAlso',
-            'notes',
-            'tags',
-            'creators'
-        ];
-    let length$2 = items$2.length;
-    let i$2;
-    for (i$2 = 0; i$2 < length$2; i$2++) {
-        prop = items$2[i$2];
-        if (item[prop] && item[prop].length === 0) {
-            delete item[prop];
+    do {
+        // this will contain any let statements to the block scope
+        let items$2 = [
+                'attachments',
+                'seeAlso',
+                'notes',
+                'tags',
+                'creators'
+            ];
+        let length$2 = items$2.length;
+        let prop = null;
+        let i$2 = 0;
+        // a while loop is faster than a for (;;)
+        while (i$2 < length$2) {
+            prop = items$2[i$2];
+            if (item[prop] && item[prop].length === 0) {
+                delete item[prop];
+            }
+            i$2++;
         }
-    }
-    items$2 = undefined;
-    ;
+        items$2 = undefined;
+    } while (false);
     return item;
 }
 var Translator = new function () {
@@ -130,34 +139,30 @@ var Translator = new function () {
             config.release = self.release;
             config.preferences = {};
             config.options = {};
-            let dict = preferences;
-            let keys = Object.keys(dict);
-            let length = keys.length;
-            let index;
-            for (index = 0; index < length; index++) {
-                let attribute = keys[index];
-                if (!dict.hasOwnProperty(attribute)) {
-                    continue;
+            var dict = preferences;
+            do {
+                let attribute = null;
+                for (attribute in preferences) {
+                    if (dict.hasOwnProperty && !dict.hasOwnProperty(attribute)) {
+                        continue;
+                    }
+                    let key = dict[attribute];
+                    config.preferences[key] = Translator[attribute];
                 }
-                let key = dict[attribute];
-                config.preferences[key] = Translator[attribute];
-            }
-            dict = undefined;
-            keys = undefined;
-            let dict$2 = options;
-            let keys$2 = Object.keys(dict$2);
-            let length$2 = keys$2.length;
-            let index$2;
-            for (index$2 = 0; index$2 < length$2; index$2++) {
-                let attribute = keys$2[index$2];
-                if (!dict$2.hasOwnProperty(attribute)) {
-                    continue;
+                dict = undefined;
+            } while (false);
+            var dict$2 = options;
+            do {
+                let attribute = null;
+                for (attribute in options) {
+                    if (dict$2.hasOwnProperty && !dict$2.hasOwnProperty(attribute)) {
+                        continue;
+                    }
+                    let key = dict$2[attribute];
+                    config.options[key] = Translator[attribute];
                 }
-                let key = dict$2[attribute];
-                config.options[key] = Translator[attribute];
-            }
-            dict$2 = undefined;
-            keys$2 = undefined;
+                dict$2 = undefined;
+            } while (false);
             return config;
         };
         var initialized = false;
@@ -166,39 +171,44 @@ var Translator = new function () {
                 return;
             }
             initialized = true;
-            let dict = preferences;
-            let keys = Object.keys(dict);
-            let length = keys.length;
-            let index;
-            for (index = 0; index < length; index++) {
-                let attribute = keys[index];
-                if (!dict.hasOwnProperty(attribute)) {
-                    continue;
+            var dict = preferences;
+            do {
+                let attribute = null;
+                for (attribute in preferences) {
+                    if (dict.hasOwnProperty && !dict.hasOwnProperty(attribute)) {
+                        continue;
+                    }
+                    let key = dict[attribute];
+                    Translator[attribute] = Zotero.getHiddenPref('better-bibtex.' + key);
                 }
-                let key = dict[attribute];
-                Translator[attribute] = Zotero.getHiddenPref('better-bibtex.' + key);
-            }
-            dict = undefined;
-            keys = undefined;
-            this.skipFields = this.skipFields.split(',').map(function (field) {
-                return field.trim();
-            });
+                dict = undefined;
+            } while (false);
+            this.skipFields = function () {
+                var field;
+                var result = [];
+                var iterable = this.skipFields.split(',');
+                var i$3 = 0, l = iterable.length;
+                while (i$3 < l) {
+                    field = iterable[i$3];
+                    result.push(field.trim());
+                    i$3++;
+                }
+                return result;
+            }.bind(this)();
             Translator.testmode = Zotero.getHiddenPref('better-bibtex.testmode');
-            let dict$2 = options;
-            let keys$2 = Object.keys(dict$2);
-            let length$2 = keys$2.length;
-            let index$2;
-            for (index$2 = 0; index$2 < length$2; index$2++) {
-                let attribute = keys$2[index$2];
-                if (!dict$2.hasOwnProperty(attribute)) {
-                    continue;
+            var dict$2 = options;
+            do {
+                let attribute = null;
+                for (attribute in options) {
+                    if (dict$2.hasOwnProperty && !dict$2.hasOwnProperty(attribute)) {
+                        continue;
+                    }
+                    let key = dict$2[attribute];
+                    Translator[attribute] = Zotero.getOption(key);
                 }
-                let key = dict$2[attribute];
-                Translator[attribute] = Zotero.getOption(key);
-            }
-            dict$2 = undefined;
-            keys$2 = undefined;
-            Translator.exportCollections = typeof Translator.exportCollections == 'undefined' ? true : Translator.exportCollections;
+                dict$2 = undefined;
+            } while (false);
+            Translator.exportCollections = typeof Translator.exportCollections === 'undefined' ? true : Translator.exportCollections;
             switch (this.unicode) {
             case 'always':
                 this.unicode = true;
@@ -218,45 +228,53 @@ var Translator = new function () {
                     BibTeX2Zotero: Object.create(null),
                     Zotero2BibTeX: Object.create(null)
                 };
-                let dict$3 = typeMap;
-                let keys$3 = Object.keys(dict$3);
-                let length$3 = keys$3.length;
-                let index$3;
-                for (index$3 = 0; index$3 < length$3; index$3++) {
-                    let bibtex = keys$3[index$3];
-                    if (!dict$3.hasOwnProperty(bibtex)) {
-                        continue;
-                    }
-                    let zotero = dict$3[bibtex];
-                    bibtex = bibtex.trim().split(/\s+/);
-                    zotero = zotero.trim().split(/\s+/);
-                    let type;
-                    let items = bibtex;
-                    let length$4 = items.length;
-                    let i;
-                    for (i = 0; i < length$4; i++) {
-                        type = items[i];
-                        if (this.typeMap.BibTeX2Zotero[type]) {
-                            return;
+                var dict$3 = typeMap;
+                do {
+                    let bibtex = null;
+                    for (bibtex in typeMap) {
+                        if (dict$3.hasOwnProperty && !dict$3.hasOwnProperty(bibtex)) {
+                            continue;
                         }
-                        this.typeMap.BibTeX2Zotero[type] = zotero[0];
+                        let zotero = dict$3[bibtex];
+                        bibtex = bibtex.trim().split(/\s+/);
+                        zotero = zotero.trim().split(/\s+/);
+                        do {
+                            // this will contain any let statements to the block scope
+                            let items = bibtex;
+                            let length = items.length;
+                            let type = null;
+                            let i = 0;
+                            // a while loop is faster than a for (;;)
+                            while (i < length) {
+                                type = items[i];
+                                if (this.typeMap.BibTeX2Zotero[type]) {
+                                    return;
+                                }
+                                this.typeMap.BibTeX2Zotero[type] = zotero[0];
+                                i++;
+                            }
+                            items = undefined;
+                        } while (false);
+                        do {
+                            // this will contain any let statements to the block scope
+                            let items$2 = zotero;
+                            let length$2 = items$2.length;
+                            let type = null;
+                            let i$2 = 0;
+                            // a while loop is faster than a for (;;)
+                            while (i$2 < length$2) {
+                                type = items$2[i$2];
+                                if (this.typeMap.Zotero2BibTeX[type]) {
+                                    return;
+                                }
+                                this.typeMap.Zotero2BibTeX[type] = bibtex[0];
+                                i$2++;
+                            }
+                            items$2 = undefined;
+                        } while (false);
                     }
-                    items = undefined;
-                    let type;
-                    let items$2 = zotero;
-                    let length$5 = items$2.length;
-                    let i$2;
-                    for (i$2 = 0; i$2 < length$5; i$2++) {
-                        type = items$2[i$2];
-                        if (this.typeMap.Zotero2BibTeX[type]) {
-                            return;
-                        }
-                        this.typeMap.Zotero2BibTeX[type] = bibtex[0];
-                    }
-                    items$2 = undefined;
-                }
-                dict$3 = undefined;
-                keys$3 = undefined;
+                    dict$3 = undefined;
+                } while (false);
             }
         };
         // The default collection structure passed is beyond screwed up.
@@ -266,50 +284,58 @@ var Translator = new function () {
                     collections: [],
                     items: []
                 };
-            let c;
-            let items = coll.children || coll.descendents;
-            let length = items.length;
-            let i;
-            for (i = 0; i < length; i++) {
-                c = items[i];
-                switch (c.type) {
-                case 'item':
-                    sane.items.push(c.id);
-                    break;
-                case 'collection':
-                    sane.collections.push(sanitizeCollection(c));
-                    break;
-                default:
-                    throw 'Unexpected collection member type "' + c.type + '"';
+            do {
+                // this will contain any let statements to the block scope
+                let items = coll.children || coll.descendents;
+                let length = items.length;
+                let c = null;
+                let i = 0;
+                // a while loop is faster than a for (;;)
+                while (i < length) {
+                    c = items[i];
+                    switch (c.type) {
+                    case 'item':
+                        sane.items.push(c.id);
+                        break;
+                    case 'collection':
+                        sane.collections.push(sanitizeCollection(c));
+                        break;
+                    default:
+                        throw 'Unexpected collection member type "' + c.type + '"';
+                    }
+                    i++;
                 }
-            }
-            items = undefined;
+                items = undefined;
+            } while (false);
             return sane;
         }
-        self.collections = function () {
+        this.collections = function () {
             if (!self.exportCollections) {
                 return [];
             }
             var collections = [];
-            let collection = Zotero.nextCollection();
-            while (collection) {
-                collections.push(sanitizeCollection(collection));
-                collection = Zotero.nextCollection();
-            }
+            do {
+                let collection = Zotero.nextCollection();
+                while (collection) {
+                    collections.push(sanitizeCollection(collection));
+                    collection = Zotero.nextCollection();
+                }
+            } while (false);
             return collections;
         };
         var startTime = null;
         var exported = 0;
-        self.nextItem = function () {
+        this.nextItem = function () {
             var item = null;
-            let i = Zotero.nextItem();
-            while (i) {
-                if (i.itemType != 'note' && i.itemType != 'attachment') {
-                    item = i;
-                    break;
+            do {
+                item = Zotero.nextItem();
+                while (item) {
+                    if (item.itemType != 'note' && item.itemType != 'attachment') {
+                        break;
+                    }
+                    item = Zotero.nextItem();
                 }
-                i = Zotero.nextItem();
-            }
+            } while (false);
             if (!item) {
                 return;
             }
@@ -326,74 +352,18 @@ var Translator = new function () {
             if (!initialized) {
                 self.initialize();
             }
-            Translator.fieldsWritten = function () {
-                var init = {};
-                var dict = Object.create(null);
-                let dict$2 = init;
-                let keys = Object.keys(dict$2);
-                let length = keys.length;
-                let index;
-                for (index = 0; index < length; index++) {
-                    let key = keys[index];
-                    if (!dict$2.hasOwnProperty(key)) {
-                        continue;
-                    }
-                    let value = dict$2[key];
-                    dict[key] = value;
-                }
-                dict$2 = undefined;
-                keys = undefined;
-                return dict;
-            }();
             // remove any citekey from extra -- the export doesn't need it
             Zotero.BetterBibTeX.keymanager.extract(item);
             item.__citekey__ = Zotero.BetterBibTeX.keymanager.get(item, 'on-export');
             this.citekeys[item.itemID] = item.__citekey__;
             return item;
         };
+        var attachmentCounter = 0;
         this.Reference = function (item) {
             var fields = [];
             var self$2 = this;
             this.itemtype = Translator.typeMap.Zotero2BibTeX[item.itemType] || 'misc';
-            if (item.extra) {
-                var m = /biblatexdata\[([^\]]+)\]/.exec(item.extra);
-                if (m) {
-                    item.extra = item.extra.replace(m[0], '').trim();
-                    let assignment;
-                    let items = m[1].split(';');
-                    let length = items.length;
-                    let i;
-                    for (i = 0; i < length; i++) {
-                        assignment = items[i];
-                        var data = assignment.match(/^([^=]+)=\s*(.*)/).slice(1);
-                        fields.push({
-                            name: data[0],
-                            value: data[1]
-                        });
-                    }
-                    items = undefined;
-                }
-            }
-            let dict = Translator.fieldMap;
-            let keys = Object.keys(dict);
-            let length$2 = keys.length;
-            let index;
-            for (index = 0; index < length$2; index++) {
-                let attr = keys[index];
-                if (!dict.hasOwnProperty(attr)) {
-                    continue;
-                }
-                let f = dict[attr];
-                if (!f.name) {
-                    return;
-                }
-                var o = JSON.parse(JSON.stringify(f));
-                o.value = item[attr];
-                this.add(o);
-            }
-            dict = undefined;
-            keys = undefined;
-            this.url = function (f$2) {
+            this.esc_url = function (f$2) {
                 var href = ('' + f$2.value).replace(/([#\\%&{}])/g, '\\$1');
                 if (!Translator.unicode) {
                     href = href.replace(/[^\x21-\x7E]/g, function (chr) {
@@ -405,10 +375,10 @@ var Translator = new function () {
                 }
                 return href;
             };
-            this.doi = function (f$2) {
-                return this.url(f$2);
+            this.esc_doi = function (f$2) {
+                return this.esc_url(f$2);
             };
-            this.escape = function (f$2) {
+            this.esc_latex = function (f$2) {
                 if (typeof f$2.value == 'number') {
                     return f$2.value;
                 }
@@ -419,11 +389,23 @@ var Translator = new function () {
                     if (f$2.value.length === 0) {
                         return null;
                     }
-                    return f$2.value.map(function (word) {
-                        var o$2 = JSON.parse(JSON.stringify(f$2));
-                        o$2.value = word;
-                        return this.escape(o$2);
-                    }).join(f$2.sep);
+                    return function () {
+                        var word;
+                        var result = [];
+                        var iterable = f$2.value;
+                        var i$2 = 0, l = iterable.length;
+                        while (i$2 < l) {
+                            word = iterable[i$2];
+                            let o$2 = JSON.parse(JSON.stringify(f$2));
+                            o$2.value = word;
+                            word = this.esc_latex(o$2);
+                            if (typeof word !== 'undefined') {
+                                result.push(word);
+                            }
+                            i$2++;
+                        }
+                        return result;
+                    }.bind(this)().join(f$2.sep);
                 }
                 var value = LaTeX.html2latex(f$2.value);
                 if (f$2.value instanceof String) {
@@ -431,86 +413,130 @@ var Translator = new function () {
                 }
                 return value;
             };
-            this.tags = function (f$2) {
+            this.esc_tags = function (f$2) {
                 if (!f$2.value || f$2.value.length === 0) {
                     return null;
                 }
-                var tags = item.tags.map(function (tag) {
-                        return tag.tag;
-                    });
-                tags.sort();
+                var tags = function () {
+                        var tag;
+                        var result = [];
+                        var iterable = item.tags;
+                        var i$2 = 0, l = iterable.length;
+                        while (i$2 < l) {
+                            tag = iterable[i$2];
+                            result.push(tag.tag);
+                            i$2++;
+                        }
+                        return result;
+                    }.bind(this)();
+                // sort tags for stable tests
+                if (Translator.testmode) {
+                    tags.sort();
+                }
                 f$2.value = tags;
                 f$2.sep = ',';
-                return this.escape(f$2);
+                return this.esc_latex(f$2);
             };
-            var attachmentCounter = 0;
-            this.attachments = function (f$2) {
+            this.esc_attachments = function (f$2) {
                 if (!f$2.value || f$2.value.length === 0) {
                     return null;
                 }
                 var attachments = [];
                 errors = [];
-                let att;
-                let items$2 = f$2.value;
-                let length$3 = items$2.length;
-                let i$2;
-                for (i$2 = 0; i$2 < length$3; i$2++) {
-                    att = items$2[i$2];
-                    var a = {
-                            title: att.title,
-                            path: att.localPath,
-                            mimetype: att.mimeType
-                        };
-                    var save = Translator.exportFileData && att.defaultPath && att.saveFile;
-                    if (save) {
-                        a.path = att.defaultPath;
-                    }
-                    if (!a.path) {
-                        return;
-                    }
-                    // amazon/googlebooks etc links show up as atachments without a path
-                    attachmentCounter += 1;
-                    if (save) {
-                        att.saveFile(a.path);
-                    } else {
-                        if (Translator.attachmentRelativePath) {
-                            a.path = 'files/' + (Translator.testmode ? attachmentCounter : att.itemID) + '/' + att.localPath.replace(/.*[\/\\]/, '');
+                do {
+                    // this will contain any let statements to the block scope
+                    let items$2 = f$2.value;
+                    let length$2 = items$2.length;
+                    let att = null;
+                    let i$2 = 0;
+                    // a while loop is faster than a for (;;)
+                    while (i$2 < length$2) {
+                        att = items$2[i$2];
+                        var a = {
+                                title: att.title,
+                                path: att.localPath,
+                                mimetype: att.mimeType
+                            };
+                        var save = Translator.exportFileData && att.defaultPath && att.saveFile;
+                        if (save) {
+                            a.path = att.defaultPath;
                         }
+                        if (!a.path) {
+                            return;
+                        }
+                        // amazon/googlebooks etc links show up as atachments without a path
+                        attachmentCounter += 1;
+                        if (save) {
+                            att.saveFile(a.path);
+                        } else {
+                            if (Translator.attachmentRelativePath) {
+                                a.path = 'files/' + (Translator.testmode ? attachmentCounter : att.itemID) + '/' + att.localPath.replace(/.*[\/\\]/, '');
+                            }
+                        }
+                        if (a.path.match(/[{}]/)) {
+                            // latex really doesn't want you to do this.
+                            errors.push('BibTeX cannot handle file paths with braces: ' + JSON.stringify(a.path));
+                        } else {
+                            attachments.push(a);
+                        }
+                        i$2++;
                     }
-                    if (a.path.match(/[{}]/)) {
-                        // latex really doesn't want you to do this.
-                        erross.push('BibTeX cannot handle file paths with braces: ' + JSON.stringify(a.path));
-                    } else {
-                        attachments.push(a);
-                    }
-                }
-                items$2 = undefined;
+                    items$2 = undefined;
+                } while (false);
                 if (errors.length !== 0) {
                     f$2.errors = errors;
                 }
                 if (attachments.length === 0) {
                     return null;
                 }
-                attachments.sort(function (a$2, b) {
-                    return a$2.path.localeCompare(b.path);
-                });
-                return attachments.map(function (att$2) {
-                    return [
-                        att$2.title,
-                        att$2.path,
-                        att$2.mimetype
-                    ].map(function (part) {
-                        return part.replace(/([\\{}:;])/g, '\\$1');
-                    }).join(':');
-                }).join(';');
+                // sort attachments for stable tests
+                if (Translator.testmode) {
+                    attachments.sort(function (a$2, b) {
+                        return a$2.path.localeCompare(b.path);
+                    });
+                }
+                return function () {
+                    var att$2;
+                    var result = [];
+                    var iterable = attachments;
+                    var i$3 = 0, l = iterable.length;
+                    while (i$3 < l) {
+                        att$2 = iterable[i$3];
+                        att$2 = [
+                            att$2.title,
+                            att$2.path,
+                            att$2.mimetype
+                        ];
+                        do {
+                            // this will contain any let statements to the block scope
+                            let items$3 = att$2;
+                            let length$3 = items$3.length;
+                            let part = null;
+                            let i$4 = 0;
+                            // a while loop is faster than a for (;;)
+                            while (i$4 < length$3) {
+                                part = items$3[i$4];
+                                att$2[i$4] = part.replace(/([\\{}:;])/g, '\\$1');
+                                i$4++;
+                            }
+                            items$3 = undefined;
+                        } while (false);
+                        att$2 = att$2.join(':');
+                        if (typeof att$2 !== 'undefined') {
+                            result.push(att$2);
+                        }
+                        i$3++;
+                    }
+                    return result;
+                }.bind(this)().join(';');
             };
             /*
     {
       name:
       value:
       braces:
-      braceAll:
-      escape:
+      protect:
+      esc:
     }
     */
             function field(f$2) {
@@ -521,38 +547,52 @@ var Translator = new function () {
                 if (typeof f$2.value == 'number') {
                     value = f$2.value;
                 } else {
-                    if (!f$2.value || f$2.value === '') {
-                        return;
-                    }
-                    if (f$2.escape) {
-                        if (typeof this[f$2.escape] !== 'function') {
-                            throw 'Unsupported escape function ' + f$2.escape;
+                    if (f$2.esc) {
+                        if (typeof self$2['esc_' + f$2.esc] !== 'function') {
+                            throw 'Unsupported escape function ' + f$2.esc;
                         }
-                        value = this[f$2.escape](f$2);
+                        value = self$2['esc_' + f$2.esc](f$2);
                     } else {
-                        value = this.escape(f$2);
+                        value = self$2.esc_latex(f$2);
                     }
-                    if (value === '' || typeof value === 'undefined') {
+                    if (!value) {
                         return null;
                     }
                     if (f$2.braces) {
                         value = '{' + value + '}';
                     }
-                    if (f$2.braceAll) {
+                    if (f$2.protect) {
                         value = '{' + value + '}';
                     }
                 }
-                return f$2.name + ' = ' + value;
+                return '  ' + f$2.name + ' = ' + value;
             }
             this.add = function (field$2) {
+                if (typeof field$2.value !== 'number' && !field$2.value) {
+                    return;
+                }
+                if (Array.isArray(field$2.value) && field$2.value.length === 0) {
+                    return;
+                }
                 field$2.braces = typeof field$2.braces === 'undefined' || field$2.braces || field$2.protect || field$2.value.match(/\s/);
                 field$2.protect = typeof field$2.value !== 'number' && field$2.protect && Translator.braceAll;
                 fields.push(field$2);
             };
             this.has = function (name) {
-                return fields.filter(function (f$2) {
-                    return f$2.name === name;
-                });
+                return function () {
+                    var f$2;
+                    var result = [];
+                    var iterable = fields;
+                    var i$2 = 0, l = iterable.length;
+                    while (i$2 < l) {
+                        f$2 = iterable[i$2];
+                        if (f$2.name === name) {
+                            result.push(1);
+                        }
+                        i$2++;
+                    }
+                    return result;
+                }.bind(this)().length !== 0;
             };
             this.complete = function () {
                 if (fields.length === 0) {
@@ -561,28 +601,94 @@ var Translator = new function () {
                         value: this.itemtype
                     });
                 }
-                /*
-      fields.sort(function(a, b) {
-        var _a = a.name;
-        var _b = b.name;
-        if (a.name == b.name) {
-          _a = a.value;
-          _b = b.value;
-        }
-        if (_a < _b) return -1;
-        if (_a > _b) return 1;
-        return 0;
-      });
-      */
+                // sort fields for stable tests
+                if (Translator.testmode) {
+                    fields.sort(function (a, b) {
+                        var _a = a.name;
+                        var _b = b.name;
+                        if (a.name == b.name) {
+                            _a = a.value;
+                            _b = b.value;
+                        }
+                        if (_a < _b)
+                            return -1;
+                        if (_a > _b)
+                            return 1;
+                        return 0;
+                    });
+                }
                 var ref = '@' + this.itemtype + '{' + item.__citekey__ + ',\n';
-                ref += fields.map(function (f$2) {
-                    return field(f$2);
-                }).filter(function (f$2) {
-                    return f$2;
-                }).join(',\n');
-                ref += '\n}\n';
+                ref += function () {
+                    var filledfield;
+                    var result = [];
+                    var iterable = function () {
+                            var f$2;
+                            var result$2 = [];
+                            var iterable$2 = fields;
+                            var i$3 = 0, l$2 = iterable$2.length;
+                            while (i$3 < l$2) {
+                                f$2 = iterable$2[i$3];
+                                result$2.push(field(f$2));
+                                i$3++;
+                            }
+                            return result$2;
+                        }.bind(this)();
+                    var i$2 = 0, l = iterable.length;
+                    while (i$2 < l) {
+                        filledfield = iterable[i$2];
+                        if (filledfield) {
+                            result.push(filledfield);
+                        }
+                        i$2++;
+                    }
+                    return result;
+                }.bind(this)().join(',\n');
+                ref += '\n}\n\n';
                 Zotero.write(ref);
             };
+            // initialization
+            if (item.extra) {
+                var m = /biblatexdata\[([^\]]+)\]/.exec(item.extra);
+                if (m) {
+                    item.extra = item.extra.replace(m[0], '').trim();
+                    do {
+                        // this will contain any let statements to the block scope
+                        let items = m[1].split(';');
+                        let length = items.length;
+                        let assignment = null;
+                        let i = 0;
+                        // a while loop is faster than a for (;;)
+                        while (i < length) {
+                            assignment = items[i];
+                            var data = assignment.match(/^([^=]+)=\s*(.*)/).slice(1);
+                            fields.push({
+                                name: data[0],
+                                value: data[1],
+                                protect: true
+                            });
+                            i++;
+                        }
+                        items = undefined;
+                    } while (false);
+                }
+            }
+            var dict = Translator.fieldMap;
+            do {
+                let attr = null;
+                for (attr in Translator.fieldMap) {
+                    if (dict.hasOwnProperty && !dict.hasOwnProperty(attr)) {
+                        continue;
+                    }
+                    let f = dict[attr];
+                    if (!f.name) {
+                        return;
+                    }
+                    var o = JSON.parse(JSON.stringify(f));
+                    o.value = item[attr];
+                    this.add(o);
+                }
+                dict = undefined;
+            } while (false);
         };
         var JabRef = {
                 serialize: function (arr, sep, wrap) {
@@ -604,37 +710,49 @@ var Translator = new function () {
                     }));
                     group.push('');
                     group = this.serialize(group, ';');
+                    // not a function?!
                     var result = [group];
-                    let coll;
-                    let items = collection.collections;
-                    let length = items.length;
-                    let i;
-                    for (i = 0; i < length; i++) {
-                        coll = items[i];
-                        result = result.concat(JabRef.exportGroup(coll, level + 1));
-                    }
-                    items = undefined;
+                    do {
+                        // this will contain any let statements to the block scope
+                        let items = collection.collections;
+                        let length = items.length;
+                        let coll = null;
+                        let i = 0;
+                        // a while loop is faster than a for (;;)
+                        while (i < length) {
+                            coll = items[i];
+                            result = result.concat(JabRef.exportGroup(coll, level + 1));
+                            i++;
+                        }
+                        items = undefined;
+                    } while (false);
                     return result;
                 }
             };
         this.exportGroups = function () {
-            if (this.collections.length === 0) {
+            var collections = this.collections();
+            if (collections.length === 0) {
                 return;
             }
-            Zotero.write('\n\n@comment{jabref-meta: groupsversion:3;}\n');
+            Zotero.write('@comment{jabref-meta: groupsversion:3;}\n');
             Zotero.write('@comment{jabref-meta: groupstree:\n');
             Zotero.write('0 AllEntriesGroup:;\n');
             var groups = [];
-            let collection;
-            let items = this.collections;
-            let length = items.length;
-            let i;
-            for (i = 0; i < length; i++) {
-                collection = items[i];
-                groups = groups.concat(JabRef.exportGroup(collection, 1));
-            }
-            items = undefined;
-            Zotero.write(this.serialize(groups, ';\n', true) + ';\n}\n');
+            do {
+                // this will contain any let statements to the block scope
+                let items = collections;
+                let length = items.length;
+                let collection = null;
+                let i = 0;
+                // a while loop is faster than a for (;;)
+                while (i < length) {
+                    collection = items[i];
+                    groups = groups.concat(JabRef.exportGroup(collection, 1));
+                    i++;
+                }
+                items = undefined;
+            } while (false);
+            Zotero.write(JabRef.serialize(groups, ';\n', true) + ';\n}\n');
         };
     }();
 var LaTeX = {
@@ -6278,7 +6396,7 @@ LaTeX.html2latex = function (str) {
 };
 function detectImport() {
     var str, json = '';
-    while ((str = Z.read(1048576)) !== false) {
+    while ((str = Zotero.read(1048576)) !== false) {
         json += str;
     }
     var data;
@@ -6293,34 +6411,37 @@ function detectImport() {
 function doImport() {
     Translator.initialize();
     var str, json = '';
-    while ((str = Z.read(1048576)) !== false) {
+    while ((str = Zotero.read(1048576)) !== false) {
         json += str;
     }
     var data = JSON.parse(json);
-    let i;
-    let items = data.items;
-    let length = items.length;
-    let i$2;
-    for (i$2 = 0; i$2 < length; i$2++) {
-        i = items[i$2];
-        var item = new Zotero.Item();
-        let dict = i;
-        let keys = Object.keys(dict);
-        let length$2 = keys.length;
-        let index;
-        for (index = 0; index < length$2; index++) {
-            let prop = keys[index];
-            if (!dict.hasOwnProperty(prop)) {
-                continue;
-            }
-            let value = dict[prop];
-            item[prop] = value;
+    do {
+        // this will contain any let statements to the block scope
+        let items = data.items;
+        let length = items.length;
+        let i = null;
+        let i$2 = 0;
+        // a while loop is faster than a for (;;)
+        while (i$2 < length) {
+            i = items[i$2];
+            var item = new Zotero.Item();
+            var dict = i;
+            do {
+                let prop = null;
+                for (prop in i) {
+                    if (dict.hasOwnProperty && !dict.hasOwnProperty(prop)) {
+                        continue;
+                    }
+                    let value = dict[prop];
+                    item[prop] = value;
+                }
+                dict = undefined;
+            } while (false);
+            item.complete();
+            i$2++;
         }
-        dict = undefined;
-        keys = undefined;
-        item.complete();
-    }
-    items = undefined;
+        items = undefined;
+    } while (false);
 }    //TODO: import collections
 function doExport() {
     Translator.initialize();
@@ -6329,13 +6450,15 @@ function doExport() {
             collections: Translator.collections(),
             items: []
         };
-    let item = Zotero.nextItem();
-    while (item) {
-        if (item.itemType == 'note' || item.itemType == 'attachment') {
-            continue;
+    do {
+        var item = Zotero.nextItem();
+        while (item) {
+            if (item.itemType == 'note' || item.itemType == 'attachment') {
+                continue;
+            }
+            data.items.push(scrub(item));
+            item = Zotero.nextItem();
         }
-        data.items.push(scrub(item));
-        item = Zotero.nextItem();
-    }
+    } while (false);
     Zotero.write(JSON.stringify(data, null, '  '));
 }

@@ -22,7 +22,7 @@ function serverURL(collectionsView, extension)
   var url = null;
 
   if (itemGroup.isCollection()) {
-    collection = collectionsView.getSelectedCollection();
+    var collection = collectionsView.getSelectedCollection();
     url = 'collection?/' + (collection.libraryID || 0) + '/' + collection.key + extension;
   }
 

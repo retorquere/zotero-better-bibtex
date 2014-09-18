@@ -36,13 +36,13 @@ Translator.fieldMap = Dict({
   ISSN:         {name: 'issn'},
   callNumber:   {name: 'lccn'},
   shortTitle:   {name: 'shorttitle', protect: true},
-  url:          {name: 'url', escape: 'url'},
-  DOI:          {name: 'doi', escape: 'doi'},
+  url:          {name: 'url', esc: 'url'},
+  DOI:          {name: 'doi', esc: 'doi'},
   abstractNote: {name: 'abstract'},
   country:      {name: 'nationality'},
   language:     {name: 'language'},
   assignee:     {name: 'assignee'},
-  issue:        {name: 'issue'},
+  issue:        {import: 'issue'},
 
   publicationTitle: {import: 'booktitle'},
   publisher:        {import: ['school', 'institution', 'publisher']},
@@ -74,7 +74,7 @@ function doExport() {
   // to make sure the BOM gets ignored
   Zotero.write("\n");
 
-  each (item from Translator.nextItem()) {
+  for_each (let item from Translator.nextItem()) {
     var ref = new Translator.Reference(item);
 
     ref.add({name: 'number', value: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber});
@@ -85,7 +85,7 @@ function doExport() {
       case 'conferencePaper':
         ref.add({name: 'booktitle', value: item.publicationTitle, protect: true});
         break;
-    
+
       default:
         ref.add({name: 'journal', value: (Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item)) || item.publicationTitle, protect: true});
         break;
@@ -113,7 +113,7 @@ function doExport() {
       var collaborators = [];
       var primaryCreatorType = Zotero.Utilities.getCreatorsForType(item.itemType)[0];
 
-      iterate (creator over item.creators) {
+      for_each (let creator in item.creators) {
         if (('' + creator.firstName).trim() !== '' && ('' + creator.lastName).trim() !== '') {
           creatorString = creator.lastName + ', ' + creator.firstName;
         } else {
@@ -160,7 +160,7 @@ function doExport() {
 
     ref.add({name: 'note', value: item.extra});
 
-    ref.add({name: 'keywords', value: item.tags, escape: 'tags'});
+    ref.add({name: 'keywords', value: item.tags, esc: 'tags'});
 
     ref.add({name: 'pages', value: item.pages && item.pages.replace(/[-\u2012-\u2015\u2053]+/g,"--")});
 
@@ -176,12 +176,12 @@ function doExport() {
       writeField('howpublished', item.url);
     }*/
     if (item.notes && Translator.exportNotes) {
-      iterate (note over item.notes) {
+      for_each (let note in item.notes) {
         ref.add({name: 'annote', value: Zotero.Utilities.unescapeHTML(note.note)});
       }
     }
 
-    ref.add({name: 'file', value:item.attachments, escape: 'attachments'});
+    ref.add({name: 'file', value:item.attachments, esc: 'attachments'});
 
     ref.complete();
   }
@@ -192,6 +192,7 @@ function doExport() {
 }
 
 function addToExtra(item, str) {
+  Zotero.debug('EXTRA=' + item.extra + ' + ' + str);
   if (item.extra && item.extra !== '') {
     item.extra += " \n" + str;
   } else {
@@ -206,11 +207,11 @@ function addToExtraData(data, key, value) {
 var fieldMap = null;
 function createZoteroReference(bibtexitem) {
   if (!fieldMap) {
-    iterate (attr:field from Translator.fieldMap) {
+    for_each (let attr: let field of Translator.fieldMap) {
       var fields = [];
       if (field.name) { fields.push(name); }
       if (field.import) { fields = fields.concat(field.import); }
-      iterate (f over fields) {
+      for_each (let f in fields) {
         if (!fieldMap[f]) {
           fieldMap[f] = attr;
         }
@@ -234,7 +235,7 @@ function createZoteroReference(bibtexitem) {
   }
 
   var biblatexdata = [];
-  iterate (field:value from bibtexitem) {
+  for_each (let field:let value of bibtexitem) {
     if (['__note__', '__key__', '__type__', 'type', 'added-at', 'timestamp'].indexOf(field) >= 0) { continue; }
     if (!value) { continue; }
     if (typeof value == 'string') { value = Zotero.Utilities.trim(value); }
@@ -258,7 +259,7 @@ function createZoteroReference(bibtexitem) {
       item.publicationTitle = value;
 
     } else if (field == 'author' || field == 'editor' || field == 'translator') {
-      iterate (creator over value) {
+      for_each (let creator in value) {
         if (!creator) { continue; }
 
         if (typeof creator == 'string') {
@@ -291,7 +292,7 @@ function createZoteroReference(bibtexitem) {
       } else {
         value += ' ';
       }
-    
+
       if (item.date) {
         if (value.indexOf(item.date) >= 0) {
           // value contains year and more
@@ -334,7 +335,7 @@ function createZoteroReference(bibtexitem) {
         addToExtraData(biblatexdata, field, value);
       }
 
-    //accept lastchecked or urldate for access date. These should never both occur. 
+    //accept lastchecked or urldate for access date. These should never both occur.
     //If they do we don't know which is better so we might as well just take the second one
     } else if (field == 'lastchecked'|| field == 'urldate'){
       item.accessDate = value;
@@ -350,7 +351,7 @@ function createZoteroReference(bibtexitem) {
       item.notes.push({note:Zotero.Utilities.text2html(value)});
 
     } else if (field == 'file') {
-      iterate (att over value) {
+      for_each (let att in value) {
         item.attachments.push(att);
       }
 
@@ -376,6 +377,7 @@ function createZoteroReference(bibtexitem) {
     item.publisher=item.backupPublisher;
     delete item.backupPublisher;
   }
+
   item.complete();
   return item;
 }

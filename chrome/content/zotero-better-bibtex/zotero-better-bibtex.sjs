@@ -20,46 +20,6 @@ Zotero.BetterBibTeX = {
     }
   },
 
-  pp: function(obj) {
-    var toString = Object.prototype.toString,
-        tab = 2,
-        buffer = '',
-        //Second argument is indent
-        indent = arguments[1] || 0,
-        //For better performance, Cache indentStr for a given indent.
-        indentStr = (function(n) { var str = ''; while(n--){ str += ' '; } return str; })(indent);
-
-    if(!obj || ( typeof obj != 'object' && typeof obj!= 'function' )){
-      //any non-object ( Boolean, String, Number), null, undefined, NaN
-      buffer += obj;
-    } else if(toString.call(obj) == '[object Date]') {
-      buffer += '[Date] ' + obj;
-    } else if(toString.call(obj) == '[object RegExp') {
-      buffer += '[RegExp] ' + obj;
-    } else if(toString.call(obj) == '[object Function]') {
-      buffer += '[Function] ' + obj;
-    } else if(toString.call(obj) == '[object Array]') {
-      var idx = 0, len = obj.length;
-      buffer += "[\n";
-      while(idx < len){
-        buffer += [ indentStr, idx, ': ', this.pp(obj[idx], indent + tab) ].join('');
-        buffer += "\n";
-        idx++;
-      }
-      buffer += indentStr + ']';
-    } else { //Handle Object
-      var prop;
-      buffer += "{\n";
-      for(prop in obj){
-        buffer += [ indentStr, prop, ': ', this.pp(obj[prop], indent + tab) ].join('');
-        buffer += "\n";
-      }
-      buffer += indentStr + '}';
-    }
-
-    return buffer;
-  },
-
   translators: Dict(),
   threadManager: Components.classes["@mozilla.org/thread-manager;1"].getService(),
   windowMediator: Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator),
@@ -176,12 +136,12 @@ Zotero.BetterBibTeX = {
   },
 
   removeTranslators: function() {
-    Dict.forEach(this.translators, function(name, header) {
+    for_each (let name:let header of this.translators) {
       var fileName = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID);
       var destFile = Zotero.getTranslatorsDirectory();
       destFile.append(fileName);
       destFile.remove();
-    });
+    }
     Zotero.Translators.init();
   },
 
@@ -198,7 +158,9 @@ Zotero.BetterBibTeX = {
     notify: function(event, type, ids, extraData) {
       switch (event) {
         case 'delete':
-          Object.keys(extraData).forEach(function(id) { Zotero.BetterBibTeX.clearKey({itemID: id}, true); });
+          for_each (let key : let v of extraData) {
+            Zotero.BetterBibTeX.clearKey({itemID: key}, true);
+          }
           break;
 
         case 'add':
@@ -208,13 +170,13 @@ Zotero.BetterBibTeX = {
           ids = '(' + ids.map(function(id) { return '' + id; }).join(',') + ')';
 
           Zotero.BetterBibTeX.DB.query('delete from keys where itemID in ' + ids);
-          for (let item of (Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL + ' and i.itemID in ' + ids) || [])) {
+          for_each (let item in Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL + ' and i.itemID in ' + ids) || []) {
             var citekey = Zotero.BetterBibTeX.keymanager.extract({extra: item.extra});
             Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID, citekey]);
             Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [item.itemID, item.libraryID, citekey]);
           }
 
-          for (let item of Zotero.BetterBibTeX.array(Zotero.DB.query('select coalesce(libraryID, 0) as libraryID, itemID from items where itemID in ' + ids) || [])) {
+          for_each (let item in Zotero.DB.query('select coalesce(libraryID, 0) as libraryID, itemID from items where itemID in ' + ids) || []) {
             Zotero.BetterBibTeX.keymanager.get(item, 'on-change');
           }
           break;
@@ -238,7 +200,7 @@ Zotero.BetterBibTeX = {
     var params = {};
     var hasParams = false;
 
-    ['exportCharset', 'exportNotes?', 'useJournalAbbreviation?'].forEach(function(key) {
+    for_each (let key in ['exportCharset', 'exportNotes?', 'useJournalAbbreviation?']) {
       try {
         var isBool = key.match(/[?]$/);
         if (isBool) { key = key.replace(isBool[0], ''); }
@@ -246,7 +208,7 @@ Zotero.BetterBibTeX = {
         if (isBool) { params[key] = (['y', 'yes', 'true'].indexOf(params[key].toLowerCase()) >= 0); }
         hasParams = true;
       } catch (e) {}
-    });
+    }
     return (hasParams ? params : null);
   },
 
@@ -281,7 +243,7 @@ Zotero.BetterBibTeX = {
           var items = [];
 
           Zotero.BetterBibTeX.log('exporting: ' + path + ' to ' + translator);
-          for (var collectionkey of path.split('+')) {
+          for_each (let collectionkey in path.split('+')) {
             if (collectionkey.charAt(0) !== '/') { collectionkey = '/0/' + collectionkey; }
             Zotero.BetterBibTeX.log('exporting ' + collectionkey);
 
@@ -296,10 +258,10 @@ Zotero.BetterBibTeX = {
             var key = '' + path[0];
 
             var col = null;
-            for (var name of path) {
+            for_each (let name in path) {
               var children = Zotero.getCollections(col && col.id, false, libid);
               col = null;
-              for (let child of children) {
+              for_each (let child in children) {
                 if (child.name.toLowerCase() === name.toLowerCase()) {
                   col = child;
                   break;
@@ -321,7 +283,8 @@ Zotero.BetterBibTeX = {
               recursive = false;
             }
             var _items = col.getChildren(recursive, false, 'item');
-            items = items.concat(Zotero.Items.get([item.id for (item of _items)]));
+            items = items.concat(Zotero.Items.get(collect(for (item of _items) item.id)));
+
           }
 
           sendResponseCallback(
@@ -415,7 +378,7 @@ Zotero.BetterBibTeX = {
         var win = Zotero.BetterBibTeX.windowMediator.getMostRecentWindow("navigator:browser");
         var item;
         var items = win.ZoteroPane.getSelectedItems();
-        items = Zotero.Items.get([item.id for (item of items)]);
+        items = Zotero.Items.get(collect(for (item of items) item.id));
 
         sendResponseCallback(
           200,
@@ -508,12 +471,11 @@ Zotero.BetterBibTeX = {
 
   clearCiteKeys: function(onlyCache) {
     var win = Zotero.BetterBibTeX.windowMediator.getMostRecentWindow("navigator:browser");
-    var item;
     var items = win.ZoteroPane.getSelectedItems();
-    items = Zotero.Items.get([item.id for (item of items)]);
-    items = [item for (item of items) if (!(item.isAttachment() || item.isNote()))];
+    items = Zotero.Items.get(collect(for (item of items) item.id));
+    items = collect(for (item of items) if (!item.isAttachment() && !item.isNote()) item);
 
-    for (item of items) { this.clearKey(item, onlyCache); }
+    for_each (let item in items) { this.clearKey(item, onlyCache); }
     return items;
   },
 
@@ -521,9 +483,9 @@ Zotero.BetterBibTeX = {
     // clear keys first so the generator can make fresh ones
     var items = this.clearCiteKeys(true);
 
-    items.forEach(function(item) {
+    for_each (let item in items) {
       Zotero.BetterBibTeX.keymanager.get(item, 'manual');
-    });
+    }
   },
 
   safeGetAll: function() {
@@ -596,11 +558,11 @@ Zotero.BetterBibTeX = {
         cp.makeBibliography();
 
         var abbrevs = cp;
-        ['transform', 'abbrevs', 'default', 'container-title'].forEach(function(p) {
+        for_each (let p in ['transform', 'abbrevs', 'default', 'container-title']) {
           if (abbrevs) { abbrevs = abbrevs[p]; }
-        });
-        for (let title in (abbrevs || {})) {
-          self.journalAbbrevCache[title] = abbrevs[title];
+        }
+        for_each (let title:let abbr of abbrevs || {}) {
+          self.journalAbbrevCache[title] = abbr;
         }
         if (!self.journalAbbrevCache[item.publicationTitle]) { self.journalAbbrevCache[item.publicationTitle] = ''; }
       }
@@ -628,7 +590,7 @@ Zotero.BetterBibTeX = {
     };
 
     if (Zotero.BetterBibTeX.Prefs.getBoolPref('scan-citekeys')) {
-      for (let row of Zotero.BetterBibTeX.array(Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL) || [])) {
+      for_each (let row in Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL) || []) {
         Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [row.itemID, row.libraryID, self.extract({extra: row.extra})]);
       }
       Zotero.BetterBibTeX.Prefs.setBoolPref('scan-citekeys', false);
@@ -682,9 +644,9 @@ Zotero.BetterBibTeX = {
     // protect the exposed properties from further recursion -- Recoll Indexer messes with Function.prototype (a very
     // bad idea) without making the new stuff it adds unenumerable
     // (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
-    Object.keys(self.__exposedProps__).forEach(function(key) {
+    for_each (let key:let value of self.__exposedProps__) {
       self[key].__exposedProps__ = [];
-    });
+    }
   },
 
   DebugBridge: {
@@ -724,9 +686,9 @@ Zotero.BetterBibTeX = {
         Zotero.BetterBibTeX.init();
         var retval = Zotero.BetterBibTeX.DebugBridge.data.prefs;
 
-        Dict.forEach(Zotero.BetterBibTeX.DebugBridge.data.prefs, function(name, value) {
+        for_each (let name:let value of Zotero.BetterBibTeX.DebugBridge.data.prefs) {
           if (value.reset !== null) { Zotero.Prefs.set(name, value.reset); }
-        });
+        }
         Zotero.BetterBibTeX.DebugBridge.data.prefs = Dict();
         Zotero.BetterBibTeX.DebugBridge.data.exportOptions = {};
 
@@ -752,7 +714,7 @@ Zotero.BetterBibTeX = {
         return Zotero.DB.valueQuery('select count(*) from items');
       },
 
-      export: function(translator) {
+      exportToString: function(translator) {
         translator = Zotero.BetterBibTeX.getTranslator(translator);
 
         return Zotero.BetterBibTeX.translate(translator, null, Zotero.BetterBibTeX.DebugBridge.data.exportOptions || {});

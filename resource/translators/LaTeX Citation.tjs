@@ -19,13 +19,11 @@
 
 function doExport() {
   var keys = [];
-  var item;
-  while (item = Translator.nextItem()) {
+  for_each (var item from Translator.nextItem()) {
     keys.push(item.__citekey__);
   }
 
-  var collection;
-  while (collection = Zotero.nextCollection()) {
+  for_each (var collection from Zotero.nextCollection()) {
     Zotero.debug('collection: ' + collection.name);
   }
 
