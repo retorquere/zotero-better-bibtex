@@ -36,6 +36,7 @@ macro for_each {
       // a while loop is faster than a for (;;)
       while (i < length) {
         $key$name = keys[i];
+        if (dict.hasOwnProperty && !dict.hasOwnProperty($key$name)) { continue; }
         $val$name = dict[$key$name];
         $body...
         i++;
