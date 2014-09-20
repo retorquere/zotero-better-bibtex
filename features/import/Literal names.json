@@ -1,4 +1,18 @@
 {
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
+  },
+  "collections": [
+    {
+      "name": "Literal names",
+      "collections": [
+
+      ],
+      "items": [
+        0
+      ]
+    }
+  ],
   "items": [
     {
       "itemType": "journalArticle",
@@ -128,20 +142,6 @@
       "date": "March 2013",
       "pages": "1342-1350",
       "itemID": 0
-    }
-  ],
-  "config": {
-    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
-  },
-  "collections": [
-    {
-      "name": "Better BibTeX.016",
-      "collections": [
-
-      ],
-      "items": [
-        0
-      ]
     }
   ]
 }

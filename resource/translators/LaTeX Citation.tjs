@@ -23,9 +23,11 @@ function doExport() {
     keys.push(item.__citekey__);
   }
 
+  /*
   for_each (var collection from Zotero.nextCollection()) {
     Zotero.debug('collection: ' + collection.name);
   }
+  */
 
   Zotero.write("\\" + Zotero.getHiddenPref('better-bibtex.citeCommand') + "{" + keys.join(',') + '}');
 }

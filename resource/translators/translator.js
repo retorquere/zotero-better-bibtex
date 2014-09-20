@@ -300,7 +300,9 @@ var Translator = new function() {
 
     this.add = function(field) {
       if (typeof field.value !== 'number' && !field.value) { return; }
+      if (typeof field.value === 'string' && field.value.trim() === '') { return; }
       if (Array.isArray(field.value) && field.value.length === 0) { return; }
+
       field.braces = typeof(field.braces) === 'undefined' || field.braces || field.protect || field.value.match(/\s/);
       field.protect = (typeof field.value !== 'number') && field.protect && Translator.braceAll;
       fields.push(field);

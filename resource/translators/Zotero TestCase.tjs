@@ -34,39 +34,33 @@ function scrub(item) {
     delete creator.multi;
   };
 
-  item.attachments = (item.attachments || []).map(function(attachment) {
-    return {
+  item.attachments = collect(for (attachment of item.attachments || [])
+    {
       path: attachment.localPath,
       title: attachment.title,
       mimeType: attachment.mimeType
-    };
-  });
+    }
+  );
 
-  item.notes = (item.notes || []).map(function(note) { return (note.note || '').trim(); }).filter(function(note) { return note; });
+  item.notes = collect(for (note of item.notes || []) if ((note.note || '').trim() !== '') (note.note || '').trim());
 
-  /*
-  for_each (let note in item.notes || []) {
-    delete note.itemID;
-    delete note.itemType;
-    delete note.dateAdded;
-    delete note.dateModified;
-    delete note.libraryID;
-    delete note.key;
-    delete note.sourceItemKey;
-    delete note.tags;
-    delete note.related;
-    // note.note = (note.note || '').replace(/<[^>]*>/gm, '').replace(/[ \n\r\t]+/gm, ' ').trim();
-  }
-  */
-
-  item.tags = (item.tags || []).map(function(tag) { return tag.tag; });
+  item.tags = collect(for (tag of item.tags || []) tag.tag);
   item.tags.sort();
 
-  for_each (let prop in ['attachments', 'seeAlso', 'notes', 'tags', 'creators']) {
-    if (item[prop] && item[prop].length === 0) {
-      delete item[prop];
+  for_each (let attr: let val of item) {
+    if (typeof val === 'number') { continue; }
+
+    if (Array.isArray(val) && val.length !== 0) { continue; }
+
+    if (typeof val === 'string') {
+      if (val.trim() === '') { delete item[attr]; }
+      continue;
     }
-  };
+
+    if (typeof val === 'undefined') {
+      delete item[attr];
+    }
+  }
 
   return item;
 }

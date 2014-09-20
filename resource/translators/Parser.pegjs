@@ -37,9 +37,13 @@
   var Creators = new function() {
     function compact(fragments) {
       return fragments.reduce(function(result, fragment) {
-        if (result.length == 0) { return [fragment]; }
+        if (result.length == 0) {
+          return [fragment];
+        }
 
-        if ((result[result.length - 1] instanceof String) || (fragment instanceof String)) { return result.concat(fragment); }
+        if ((result[result.length - 1] instanceof String) || (fragment instanceof String)) {
+          return result.concat(fragment);
+        }
 
         result[result.length - 1] += fragment;
         return result;
@@ -83,6 +87,7 @@
           if (group[last] == '') { group.pop(); }
         }
       }
+
       return groups;
     }
 
@@ -92,6 +97,7 @@
 
     this.parse = function(creators) {
       return split(creators, /\s+and\s/).map(function(creator) {
+
         var name = split(creator, ',');
 
         switch (name.length) {
@@ -238,7 +244,7 @@ string
   / "\\textit" text:bracedparam   { return '<i>' + text + '</i>'; }
   / "\\textbf" text:bracedparam   { return '<b>' + text + '</b>'; }
   / "\\textsc" text:bracedparam   { return '<span style="small-caps">' + text + '</span>'; }
-  / '{' text:string* '}'          { return String(flatten(text)); }
+  / '{' text:string* '}'          { return new String(flatten(text)); } // use 'new String', not 'String', because only 'new String' will match 'instanceof'!
   / '$' text:string* '$'          { return flatten(text); }
   /* / "%" [^\n]* "\n"            { return ''; }          comment */
   / '%'                           { return '%'; } // this doesn't feel rigth

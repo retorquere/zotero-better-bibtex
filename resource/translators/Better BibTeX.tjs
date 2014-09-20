@@ -192,7 +192,6 @@ function doExport() {
 }
 
 function addToExtra(item, str) {
-  Zotero.debug('EXTRA=' + item.extra + ' + ' + str);
   if (item.extra && item.extra !== '') {
     item.extra += " \n" + str;
   } else {
@@ -207,9 +206,11 @@ function addToExtraData(data, key, value) {
 var fieldMap = null;
 function createZoteroReference(bibtexitem) {
   if (!fieldMap) {
+    fieldMap = Dict();
+    var fields;
     for_each (let attr: let field of Translator.fieldMap) {
-      var fields = [];
-      if (field.name) { fields.push(name); }
+      fields = [];
+      if (field.name) { fields.push(field.name); }
       if (field.import) { fields = fields.concat(field.import); }
       for_each (let f in fields) {
         if (!fieldMap[f]) {
