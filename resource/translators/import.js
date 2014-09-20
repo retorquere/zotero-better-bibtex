@@ -5,8 +5,8 @@ function detectImport() {
     var input = Zotero.read(102400);
     Zotero.debug('BBT detect against ' + input);
     var bib = BetterBibTeXParser.parse(input);
-    if (bib.references.length > 0) { trLog('Yes, BibTeX'); return true; }
-    trLog('Not BibTeX, passing on');
+    if (bib.references.length > 0) { Translator.log('Yes, BibTeX'); return true; }
+    Translator.log('Not BibTeX, passing on');
     return false;
   } catch (e) {
     Zotero.debug('better-bibtex: detect failed: ' + e + "\n" + e.stack);
@@ -30,7 +30,6 @@ if (!JabRef) {
 }
 
 JabRef.importGroup = function(group) {
-  Zotero.debug(JSON.stringify(group));
   var collection = new Zotero.Collection();
   collection.type = 'collection';
   collection.name = group.name;

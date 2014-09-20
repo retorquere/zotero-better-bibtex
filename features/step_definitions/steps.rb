@@ -122,14 +122,14 @@ end
 
 def normalize(o)
   if o.is_a?(Hash)
-    a = []
-    o.each_pair{|k, v| a << {k => normalize(v)} }
-    a.sort{|a, b|
-      a.keys[0] <=> b.keys[0]
+    arr= []
+    o.each_pair{|k,v|
+      arr << {k => normalize(v)}
     }
-    return a
+    arr.sort!{|a, b| "#{a.keys[0]}~#{a.values[0]}" <=> "#{b.keys[0]}~#{b.values[0]}" }
+    return arr
   elsif o.is_a?(Array)
-    return o.collect{|v| normalize(v)}
+    return o.collect{|v| normalize(v)}.sort{|a,b| a.to_s <=> b.to_s}
   else
     return o
   end
@@ -162,7 +162,7 @@ Then /^the library should match '([^']+)'$/ do |filename|
     library.normalize!
   }
 
-  expect(normalize(found).to_yaml).to eq(normalize(expected).to_yaml)
+  expect(found.to_yaml).to eq(expected.to_yaml)
 end
 
 Then(/^a library export using '([^']+)' should match '([^']+)'$/) do |translator, filename|
