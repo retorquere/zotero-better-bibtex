@@ -12,15 +12,14 @@
   "displayOptions": {},
 	"inRepository": true,
 	"translatorType": 2,
-	"browserSupport": "gcsv",
-	"lastUpdated": "/*= timestamp =*/"
+	"browserSupport": "gcsv"
 }
 
-/*= include common.js =*/
+// @include "translator.js"
 
 function doExport() {
   var keys = [];
-  while (item = Translator.nextItem()) {
+  for_each (var item from Translator.nextItem()) {
     keys.push('@' + item.__citekey__);
   }
   Zotero.write('[' + keys.join('; ') + ']');

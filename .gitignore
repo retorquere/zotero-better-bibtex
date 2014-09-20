@@ -5,8 +5,13 @@ Gemfile.lock
 tmp
 features/import/*.out.json
 features/export/*.out.txt
-resource/translators/Parser.js
 chrome/content/zotero-better-bibtex/Formatter.js
 update.rdf
 *.xpi
 *.log
+resource/translators/Better BibLaTeX.js
+resource/translators/Better BibTeX.js
+resource/translators/LaTeX Citation.js
+resource/translators/Pandoc Citation.js
+resource/translators/Zotero TestCase.js
+resource/translators/Parser.js

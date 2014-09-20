@@ -76,10 +76,10 @@ Scenario: Better BibTeX Import 15
   When I import 1 reference with 2 attachments from 'import/Better BibTeX.015.bib'
   Then the library should match 'import/Better BibTeX.015.json'
 
-@bbtx-i-16
-Scenario: Better BibTeX Import 16
-  When I import 1 reference from 'import/Better BibTeX.016.bib'
-  Then the library should match 'import/Better BibTeX.016.json'
+@failing @failing-1 @bbtx-i-16
+Scenario: Literal names in braces
+  When I import 1 reference from 'import/Literal names.bib'
+  Then the library should match 'import/Literal names.json'
 
 @89
 Scenario: Author splitter failure (89)

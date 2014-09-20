@@ -1,7 +1,5 @@
 {
-  'use strict';
-
-  var bibtex = {references: [], collections: [], strings: Dict({}), comments: [], errors: []};
+  var bibtex = {references: [], collections: [], strings: Dict(), comments: [], errors: []};
 
   function beep(msg) {
     console.log(msg);
@@ -36,16 +34,16 @@
     return attachments;
   }
 
-  function error(str) {
-    bibtex.errors.push(str);
-  }
-
   var Creators = new function() {
     function compact(fragments) {
       return fragments.reduce(function(result, fragment) {
-        if (result.length == 0) { return [fragment]; }
+        if (result.length == 0) {
+          return [fragment];
+        }
 
-        if ((result[result.length - 1] instanceof String) || (fragment instanceof String)) { return result.concat(fragment); }
+        if ((result[result.length - 1] instanceof String) || (fragment instanceof String)) {
+          return result.concat(fragment);
+        }
 
         result[result.length - 1] += fragment;
         return result;
@@ -61,21 +59,21 @@
         groups[groups.length - 1].push(fragment);
       }
 
-      fragments.forEach(function(fragment) {
+      for_each (let fragment in fragments) {
         if (fragment instanceof String) {
           push(fragment);
         } else {
-          fragment.split(sep).forEach(function(splinter, i) {
+          for_each (let splinter, let i in fragment.split(sep)) {
             // first word is before the separator, so it is appended to the previous chunk
             // all other words start a new entry
             push(splinter, i > 0);
-          });
+          }
         }
-      });
+      }
 
       groups = groups.map(function(group) { return compact(group); });
 
-      groups.forEach(function(group) { // 'trim' the groups
+      for_each (let group in groups) { // 'trim' the groups
         if (group.length == 0) { return; }
         if (! (group[0] instanceof String)) {
           group[0] = group[0].replace(/^\s+/gm, '');
@@ -88,7 +86,8 @@
           group[last] = group[last].replace(/\s+$/gm, '');
           if (group[last] == '') { group.pop(); }
         }
-      });
+      }
+
       return groups;
     }
 
@@ -98,6 +97,7 @@
 
     this.parse = function(creators) {
       return split(creators, /\s+and\s/).map(function(creator) {
+
         var name = split(creator, ',');
 
         switch (name.length) {
@@ -138,20 +138,21 @@ entry
 reference
   = type:identifier _* "{" _* id:citekey _* "," fields:field* "}" _* {
       if (fields.length == 0) {
-        error('@' + type + '{' + id + ',}');
+        bibtex.errors.push('@' + type + '{' + id + ',}');
       } else {
         var ref = Dict({'__type__': type.toLowerCase(), '__key__': id});
-        fields.forEach(function(field) {
+
+        for_each (let field in fields) {
           if (field.value && field.value != '') {
             switch (field.type) {
               case 'file':
                 var attachments;
-                if (ref['file']) {
-                  attachments = ref['file'];
+                if (ref.file) {
+                  attachments = ref.file;
                 } else {
                   attachments = [];
                 }
-                ref['file'] = attachments.concat(field.value);
+                ref.file = attachments.concat(field.value);
                 break;
 
               case 'creator':
@@ -163,23 +164,23 @@ reference
               default:
                 if (ref[field.key]) { // duplicate fields are not supposed to occur I think
                   var note;
-                  if (ref['__note__']) {
-                    note = ref['__note__'] + "<br/>\n";
+                  if (ref.__note__) {
+                    note = ref.__note__ + "<br/>\n";
                   } else {
                     note = '';
                   }
-                  ref['__note__'] = note + field.key + '=' + field.value;
+                  ref.__note__ = note + field.key + '=' + field.value;
                 } else {
                   ref[field.key] = field.value;
                 }
                 break;
             }
           }
-        });
+        }
         bibtex.references.push(ref);
       }
     }
-  / err:[^@]* { error('@' + flatten(err)); }
+  / err:[^@]* { bibtex.errors.push('@' + flatten(err)); }
 
 identifier
   = chars:[a-zA-Z]+ { return flatten(chars); }
@@ -243,18 +244,18 @@ string
   / "\\textit" text:bracedparam   { return '<i>' + text + '</i>'; }
   / "\\textbf" text:bracedparam   { return '<b>' + text + '</b>'; }
   / "\\textsc" text:bracedparam   { return '<span style="small-caps">' + text + '</span>'; }
-  / '{' text:string* '}'          { return new String(flatten(text)); }
+  / '{' text:string* '}'          { return new String(flatten(text)); } // use 'new String', not 'String', because only 'new String' will match 'instanceof'!
   / '$' text:string* '$'          { return flatten(text); }
   /* / "%" [^\n]* "\n"            { return ''; }          comment */
   / '%'                           { return '%'; } // this doesn't feel rigth
-  / "\\" cmd:[^a-z] ('[' key_value* ']')?  param:param {  /* single-char command */
-                                                          var cmds = ["\\" + cmd + param];
-                                                          if (param.length == 1) { cmds.push("\\" + cmd + '{' + param + '}'); }
-                                                          if (param.length == 3 && param[0] == '{' && param[2] == '}') { cmds.push("\\" + cmd + param[2] ); }
+  / "\\" command:[^a-z] ('[' key_value* ']')?  param:param {  /* single-char command */
+                                                          var cmds = ["\\" + command + param];
+                                                          if (param.length == 1) { cmds.push("\\" + command + '{' + param + '}'); }
+                                                          if (param.length == 3 && param[0] == '{' && param[2] == '}') { cmds.push("\\" + command + param[2] ); }
                                                           var match = null;
-                                                          cmds.forEach(function(cmd) {
+                                                          for_each (let cmd in cmds) {
                                                             match = match || LaTeX.toUnicode[cmd];
-                                                          });
+                                                          }
                                                           return (match || param);
                                                        }
   / "\\" cmd:[^a-z] ('[' key_value* ']')?  _+          {  /* single-char command without parameter*/
@@ -343,14 +344,27 @@ groupstree
   = _* 'jabref-meta:'i _* id:'groupstree:'i _* groups:group* _* {
       var levels = Dict();
       var collections = [];
-      groups.forEach(function(group) {
+
+      function skipEmptyKeys(key) { return key !== ''; }
+      function intersect(v) { return this.indexOf(v) >= 0; }
+      function unique(arr) {
+        var result = [];
+        for_each (let v in arr) {
+          if (result.indexOf(v) === -1) {
+            result.push(v);
+          }
+        }
+        return result;
+      }
+
+      for_each (let group in groups) {
         if (!group) { return; }
 
         var collection = Dict();
         collection.name = group.data.shift();
         var intersection = group.data.shift();
 
-        collection.items = group.data.filter(function(key) { return key !== ''; });
+        collection.items = group.data.filter(skipEmptyKeys);
         collection.collections = [];
 
         levels[group.level] = collection;
@@ -365,16 +379,16 @@ groupstree
               break;
 
             case '1': // intersection
-              collection.items = collection.items.filter(function(key) { levels[group.level - 1].items.indexOf(key) >= 0; });
+              collection.items = collection.items.filter(intersect, levels[group.level - 1].items);
               break;
 
             case '2': // union
-              collection.items = levels[group.level - 1].items.concat(collection.items).filter(function(value, index, self) { return self.indexOf(value) === index; });
+              collection.items = unique(levels[group.level - 1].items.concat(collection.items));
               break;
 
           }
         };
-      });
+      }
       bibtex.collections = bibtex.collections.concat(collections);
     }
 

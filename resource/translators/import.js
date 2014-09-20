@@ -1,12 +1,12 @@
-/*= bibtex_parser =*/
+// @include "Parser.js"
 
 function detectImport() {
   try {
     var input = Zotero.read(102400);
     Zotero.debug('BBT detect against ' + input);
     var bib = BetterBibTeXParser.parse(input);
-    if (bib.references.length > 0) { trLog('Yes, BibTeX'); return true; }
-    trLog('Not BibTeX, passing on');
+    if (bib.references.length > 0) { Translator.log('Yes, BibTeX'); return true; }
+    Translator.log('Not BibTeX, passing on');
     return false;
   } catch (e) {
     Zotero.debug('better-bibtex: detect failed: ' + e + "\n" + e.stack);
@@ -30,15 +30,14 @@ if (!JabRef) {
 }
 
 JabRef.importGroup = function(group) {
-  Zotero.debug(JSON.stringify(group));
   var collection = new Zotero.Collection();
   collection.type = 'collection';
   collection.name = group.name;
   collection.children = group.items.map(function(key) { return {type: 'item', id: key}; });
 
-  group.collections.forEach(function(child) {
+  for_each (let child in group.collections) {
     collection.children.push(JabRef.importGroup(child));
-  });
+  }
   collection.complete();
   return collection;
 };
@@ -48,16 +47,16 @@ function _doImport() {
 
   var data = '';
   var read;
-  while(read = Zotero.read(1024)) { data += read; }
+  while((read = Zotero.read(1048576)) !== false) { data += read; }
 
   var bib = BetterBibTeXParser.parse(data);
 
-  bib.references = bib.references.forEach(function(ref) {
+  for_each (let ref in bib.references) {
     createZoteroReference(ref);
-  });
+  }
 
-  bib.collections.forEach(function(coll) {
+  for_each (let coll in bib.collections) {
     JabRef.importGroup(coll);
-  });
+  }
 }
 
