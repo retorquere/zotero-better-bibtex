@@ -4,6 +4,22 @@ Components.utils.import("resource://gre/modules/AddonManager.jsm");
 Zotero.BetterBibTeX = {
   Prefs: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.zotero.translators.better-bibtex."),
 
+  PrefsObserver: {
+    register: function() {
+      Zotero.BetterBibTeX.Prefs.addObserver('', this, false);
+    },
+    unregister: function() {
+      Zotero.BetterBibTeX.Prefs.removeObserver('', this);
+    },
+    observe: function(subject, topic, data) {
+      switch (data) {
+        case 'citeKeyFormat':
+          Zotero.BetterBibTeX.DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.Prefs.getCharPref('citeKeyFormat')]);
+          break;
+      }
+    }
+  },
+
   pp: function(obj) {
     var toString = Object.prototype.toString,
         tab = 2,
@@ -95,7 +111,19 @@ Zotero.BetterBibTeX = {
       case 2:
         Zotero.BetterBibTeX.Prefs.setBoolPref('scan-citekeys', true);
         this.DB.query("insert or replace into _version_ (tablename, version) values ('keys', 3)");
+        // omission of 'break' is intentional!
+
+      case 3:
+        this.DB.query('alter table keys rename to keys2');
+        this.DB.query('create table keys (itemID primary key, libraryID not null, citekey not null, citeKeyFormat)');
+        this.DB.query('insert into keys (itemID, libraryID, citekey, citeKeyFormat) select itemID, libraryID, citekey, case when pinned = 1 then null else ? end from keys2', [Zotero.BetterBibTeX.Prefs.getCharPref('citeKeyFormat')]);
+        this.DB.query("insert or replace into _version_ (tablename, version) values ('keys', 4)");
     }
+
+    // guard against pattern changes performed while the observer can't catch them
+    this.DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.Prefs.getCharPref('citeKeyFormat')]);
+    this.PrefsObserver.register();
+
     // this.DB.query('PRAGMA temp_store=MEMORY;');
     // this.DB.query('PRAGMA journal_mode=MEMORY;');
     // this.DB.query('PRAGMA synchronous = OFF;');
@@ -182,8 +210,8 @@ Zotero.BetterBibTeX = {
           Zotero.BetterBibTeX.DB.query('delete from keys where itemID in ' + ids);
           for (let item of (Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL + ' and i.itemID in ' + ids) || [])) {
             var citekey = Zotero.BetterBibTeX.keymanager.extract({extra: item.extra});
-            Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and pinned <> 1 and citekey = ?', [item.libraryID, citekey]);
-            Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, pinned) values (?, ?, ?, 1)', [item.itemID, item.libraryID, citekey]);
+            Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID, citekey]);
+            Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [item.itemID, item.libraryID, citekey]);
           }
 
           for (let item of Zotero.BetterBibTeX.array(Zotero.DB.query('select coalesce(libraryID, 0) as libraryID, itemID from items where itemID in ' + ids) || [])) {
@@ -601,7 +629,7 @@ Zotero.BetterBibTeX = {
 
     if (Zotero.BetterBibTeX.Prefs.getBoolPref('scan-citekeys')) {
       for (let row of Zotero.BetterBibTeX.array(Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL) || [])) {
-        Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, pinned) values (?, ?, ?, ?)', [row.itemID, row.libraryID, self.extract({extra: row.extra}), 1]);
+        Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [row.itemID, row.libraryID, self.extract({extra: row.extra})]);
       }
       Zotero.BetterBibTeX.Prefs.setBoolPref('scan-citekeys', false);
     }
@@ -609,21 +637,22 @@ Zotero.BetterBibTeX = {
     self.get = function(item, pinmode) {
       if (item._sandboxManager) { item = arguments[1]; pinmode = arguments[2]; } // the sandbox inserts itself in call parameters
 
-      var citekey = Zotero.BetterBibTeX.DB.rowQuery('select citekey, pinned from keys where itemID=? and libraryID = ?', [item.itemID, item.libraryID || 0]);
+      var citekey = Zotero.BetterBibTeX.DB.rowQuery('select citekey, citeKeyFormat from keys where itemID=? and libraryID = ?', [item.itemID, item.libraryID || 0]);
       if (!citekey) {
-        var Formatter = Zotero.BetterBibTeX.formatter(Zotero.BetterBibTeX.Prefs.getCharPref('citeKeyFormat'));
+        var pattern = Zotero.BetterBibTeX.Prefs.getCharPref('citeKeyFormat');
+        var Formatter = Zotero.BetterBibTeX.formatter(pattern);
         citekey = new Formatter(Zotero.BetterBibTeX.toArray(item)).value;
         var postfix = {n: -1, c:''};
         while (Zotero.BetterBibTeX.DB.valueQuery('select count(*) from keys where citekey=? and libraryID = ?', [citekey + postfix.c, item.libraryID || 0])) {
           postfix.n++;
           postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n);
         }
-        citekey = {citekey: citekey + postfix.c};
-        Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and pinned <> 1 and citekey = ?', [item.libraryID || 0, citekey.citekey]);
-        Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, pinned) values (?, ?, ?, 0)', [item.itemID, item.libraryID || 0, citekey.citekey]);
+        citekey = {citekey: citekey + postfix.c, citeKeyFormat: pattern};
+        Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID || 0, citekey.citekey]);
+        Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, ?)', [item.itemID, item.libraryID || 0, citekey.citekey, pattern]);
       }
 
-      if (!citekey.pinned && (pinmode === 'manual' || (Zotero.BetterBibTeX.allowAutoPin() && pinmode === Zotero.BetterBibTeX.Prefs.getCharPref('pin-citekeys')))) {
+      if (citekey.citeKeyFormat && (pinmode === 'manual' || (Zotero.BetterBibTeX.allowAutoPin() && pinmode === Zotero.BetterBibTeX.Prefs.getCharPref('pin-citekeys')))) {
         if (!item.getField) { item = Zotero.Items.get(item.itemID); }
         var _item = {extra: '' + item.getField('extra')};
         self.extract(_item);
@@ -631,8 +660,8 @@ Zotero.BetterBibTeX = {
         item.setField('extra', extra + " \nbibtex: " + citekey.citekey);
         item.save();
 
-        Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and pinned <> 1 and citekey = ?', [item.libraryID || 0, citekey.citekey]);
-        Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, pinned) values (?, ?, ?, 1)', [item.itemID, item.libraryID || 0, citekey.citekey]);
+        Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID || 0, citekey.citekey]);
+        Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [item.itemID, item.libraryID || 0, citekey.citekey]);
       }
 
       return citekey.citekey;

@@ -166,9 +166,11 @@ Scenario: Journal abbreviations exported in bibtex (81)
   Then a library export using 'Better BibTeX' should match 'export/Journal abbreviations exported in bibtex (81).bib'
 
 @85
-Scenario: Square brackets in Publication field (85)
+Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 reference with 1 attachment from 'export/Square brackets in Publication field (85).json'
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85).bib'
+  When I set preference translators.better-bibtex.citeKeyFormat to '[year]-updated'
+  Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85) after pattern change.bib'
 
 @86
 Scenario: Include first name initial(s) in cite key generation pattern (86)
