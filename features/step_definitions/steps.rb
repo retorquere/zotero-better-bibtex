@@ -4,6 +4,7 @@ require 'json'
 require 'pp'
 require 'fileutils'
 require 'ostruct'
+require 'yaml'
 
 Before do
   $headless ||= false
@@ -64,7 +65,7 @@ end
 #  end
 #end
 
-When /I need a log capture/ do
+When /capture the log/ do
   @logcapture = true
 end
 
@@ -119,6 +120,21 @@ Then /^write the library to '([^']+)'$/ do |filename|
   BBT.exportToFile('Zotero TestCase', filename)
 end
 
+def normalize(o)
+  if o.is_a?(Hash)
+    arr= []
+    o.each_pair{|k,v|
+      arr << {k => normalize(v)}
+    }
+    arr.sort!{|a, b| "#{a.keys[0]}~#{a.values[0]}" <=> "#{b.keys[0]}~#{b.values[0]}" }
+    return arr
+  elsif o.is_a?(Array)
+    return o.collect{|v| normalize(v)}.sort{|a,b| a.to_s <=> b.to_s}
+  else
+    return o
+  end
+end
+
 Then /^the library should match '([^']+)'$/ do |filename|
   expected = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
   expected = JSON.parse(open(expected).read)
@@ -146,11 +162,11 @@ Then /^the library should match '([^']+)'$/ do |filename|
     library.normalize!
   }
 
-  expect(found).to eq(expected)
+  expect(found.to_yaml).to eq(expected.to_yaml)
 end
 
 Then(/^a library export using '([^']+)' should match '([^']+)'$/) do |translator, filename|
-  found = BBT.export(translator).strip
+  found = BBT.exportToString(translator).strip
   expected = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
   expected = open(expected).read.strip
   open("tmp/#{File.basename(filename)}", 'w'){|f| f.write(found)} if found != expected
@@ -160,13 +176,6 @@ end
 Then(/^export the library using '([^']+)' to '([^']+)'$/) do |translator, filename|
   BBT.exportToFile(translator, filename)
 end
-
-#Then(/^I should find the following citation keys:$/) do |table|
-#  found = JSON.parse(BBT.export('BibTeX Citation Keys'))
-#  found = found.keys.sort{|a, b| Integer(a) <=> Integer(b)}.collect{|k| found[k] }
-#  expected = table.hashes.collect{|data| data['key']}
-#  expect(found).to eq(expected)
-#end
 
 When(/^I set (preference|export option) ([^\s]+) to (.*)$/) do |setting, name, value|
   value.strip!

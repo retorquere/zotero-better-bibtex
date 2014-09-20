@@ -102,6 +102,5 @@
 	<!-- Include the main extension logic -->
 	<script src="preferences.js"/>
 	<script src="chrome://zotero/content/include.js"/>
-	<script src="chrome://zotero-better-bibtex/content/dict.js"/>
 	<script src="chrome://zotero-better-bibtex/content/include.js" type="application/javascript;version=1.8"/>
 </overlay>
