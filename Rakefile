@@ -36,7 +36,7 @@ SOURCES = [
   Dir['./**/*.sjs'].collect{|f| f.sub(/\.sjs$/, '.js') },
   Dir['./**/*.js'],
   Dir['./**/*.pegjs'].collect{|f| f.sub(/\.pegjs$/, '.js') }
-].flatten.collect{|f| f.sub(/^\.\//, '') }.reject{|f| f =~ /^(sweet|www|tmp|features)\// }.uniq.sort
+].flatten.collect{|f| f.sub(/^\.\//, '') }.reject{|f| f =~ /^(sweet|www|node_modules|tmp|features)\// }.uniq.sort
 require 'zotplus-rakehelper'
 ZIPFILES = [
   SOURCES.reject{|f| f =~ /(^resource\/)|(Parser\.js$)|(\..+js$)/ },
