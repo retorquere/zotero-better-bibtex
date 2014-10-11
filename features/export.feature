@@ -198,3 +198,7 @@ Scenario: Shortjournal does not get exported to biblatex format #102 / biblatexc
   When I import 1 reference from 'export/Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105.bib'
 
+@108
+Scenario: DOI with underscores in extra field #108
+  When I import 1 reference from 'export/DOI with underscores in extra field #108.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/DOI with underscores in extra field #108.bib'
