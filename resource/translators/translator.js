@@ -51,9 +51,16 @@ var Translator = new function() {
   };
 
   var initialized = false;
+  this.BibLaTeXDataFieldMap = Dict();
+
   this.initialize = function() {
     if (initialized) { return; }
     initialized = true;
+
+    for_each (let attr: let f of Translator.fieldMap) {
+      if (!f.name) { continue; }
+      this.BibLaTeXDataFieldMap[f.name] = f;
+    }
 
     for_each (let attribute:let key of preferences) {
       Translator[attribute] = Zotero.getHiddenPref('better-bibtex.' + key);
@@ -93,12 +100,12 @@ var Translator = new function() {
         zotero = zotero.trim().split(/\s+/);
 
         for_each (let type in bibtex) {
-          if (this.typeMap.BibTeX2Zotero[type]) { return; }
+          if (this.typeMap.BibTeX2Zotero[type]) { continue; }
           this.typeMap.BibTeX2Zotero[type] = zotero[0];
         }
 
         for_each (let type in zotero) {
-          if (this.typeMap.Zotero2BibTeX[type]) { return; }
+          if (this.typeMap.Zotero2BibTeX[type]) { continue; }
           this.typeMap.Zotero2BibTeX[type] = bibtex[0];
         }
 
@@ -231,7 +238,7 @@ var Translator = new function() {
 
         if (save) { a.path = att.defaultPath; }
 
-        if (!a.path) { return; } // amazon/googlebooks etc links show up as atachments without a path
+        if (!a.path) { continue; } // amazon/googlebooks etc links show up as atachments without a path
 
         attachmentCounter += 1;
         if (save) {
@@ -343,13 +350,18 @@ var Translator = new function() {
         item.extra = item.extra.replace(m[0], '').trim();
         for_each (let assignment in m[1].split(';')) {
           var data = assignment.match(/^([^=]+)=\s*(.*)/).slice(1);
-          fields.push({name: data[0], value: data[1], protect: true});
+          var field = {name: data[0], value: data[1], protect: true};
+          if (Translator.BibLaTeXDataFieldMap[field.name]) {
+            field = JSON.parse(JSON.stringify(Translator.BibLaTeXDataFieldMap[field.name]));
+            field.value = data[1];
+          }
+          fields.push(field);
         }
       }
     }
 
     for_each (let attr: let f of Translator.fieldMap) {
-      if (!f.name) { return; }
+      if (!f.name || this.has(f.name)) { continue; }
       var o = JSON.parse(JSON.stringify(f));
       o.value = item[attr];
       this.add(o);
