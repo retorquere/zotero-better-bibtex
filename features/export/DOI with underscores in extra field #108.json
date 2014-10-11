@@ -6,7 +6,9 @@
     "preferences": {
       "citeKeyFormat": "[auth:lower]_[veryshorttitle:lower]_[shortyear]",
       "skipfields": [
-        "year"
+        "year",
+        "abstract",
+        "file"
       ],
       "useprefix": false,
       "brace-all": false,
@@ -26,10 +28,10 @@
   "collections": [],
   "items": [
     {
-      "itemID": 171,
+      "itemID": 203,
       "itemType": "bookSection",
       "publisher": "Springer",
-      "pages": "120.136",
+      "pages": "120–136",
       "date": "1999",
       "extra": "bibtex: koopman_efficient_99\nbiblatexdata[doi=10.1007/3-540-48515-5_8]",
       "libraryCatalog": "Google Scholar",
