@@ -1,11 +1,11 @@
 var Translator = new function() {
   var self = this;
 
-  self.id      =  TranslatorInfo.id;
-  self.label   =  TranslatorInfo.label;
-  self.unicode_default =  TranslatorInfo.unicode;
-  self.release =  TranslatorInfo.release;
-  self.citekeys = Dict();
+  this.id      =  TranslatorInfo.id;
+  this.label   =  TranslatorInfo.label;
+  this.unicode_default =  TranslatorInfo.unicode;
+  this.release =  TranslatorInfo.release;
+  this.citekeys = Dict();
 
   var preferences = {
     pattern:                'citeKeyFormat',
@@ -28,16 +28,16 @@ var Translator = new function() {
     exportCollections:      'Export Collections'
   };
 
-  self.log = function(msg) {
+  this.log = function(msg) {
     if (typeof msg != 'string') { msg = JSON.stringify(msg); }
     Zotero.debug('[' + this.label + '] ' + msg);
   };
 
-  self.config = function() {
+  this.config = function() {
     var config = Dict();
-    config.id = self.id;
-    config.label = self.label;
-    config.release = self.release;
+    config.id = this.id;
+    config.label = this.label;
+    config.release = this.release;
     config.preferences = {};
     config.options = {};
 
@@ -50,17 +50,19 @@ var Translator = new function() {
     return config;
   };
 
-  var initialized = false;
   this.BibLaTeXDataFieldMap = Dict();
 
+  var initialized = false;
   this.initialize = function() {
     if (initialized) { return; }
     initialized = true;
 
-    for_each (let attr: let f of Translator.fieldMap) {
-      if (!f.name) { continue; }
-      this.BibLaTeXDataFieldMap[f.name] = f;
+    this.log('initializing');
+
+    for_each (let attr: let f of Translator.fieldMap || {}) {
+      if (f.name) { this.BibLaTeXDataFieldMap[f.name] = f; }
     }
+    this.log('fieldmap');
 
     for_each (let attribute:let key of preferences) {
       Translator[attribute] = Zotero.getHiddenPref('better-bibtex.' + key);
@@ -85,8 +87,9 @@ var Translator = new function() {
         this.unicode = this.unicode_default || (charset && charset.toLowerCase() == 'utf-8');
         break;
     }
+    this.log('options');
 
-    Zotero.debug('Translator: ' + JSON.stringify(this.config()));
+    this.log('Translator: ' + JSON.stringify(this.config()));
 
     if (this.typeMap) {
       var typeMap = this.typeMap;
@@ -100,13 +103,15 @@ var Translator = new function() {
         zotero = zotero.trim().split(/\s+/);
 
         for_each (let type in bibtex) {
-          if (this.typeMap.BibTeX2Zotero[type]) { continue; }
-          this.typeMap.BibTeX2Zotero[type] = zotero[0];
+          if (!this.typeMap.BibTeX2Zotero[type]) {
+            this.typeMap.BibTeX2Zotero[type] = zotero[0];
+          }
         }
 
         for_each (let type in zotero) {
-          if (this.typeMap.Zotero2BibTeX[type]) { continue; }
-          this.typeMap.Zotero2BibTeX[type] = bibtex[0];
+          if (!this.typeMap.Zotero2BibTeX[type]) {
+            this.typeMap.Zotero2BibTeX[type] = bibtex[0];
+          }
         }
 
       }
@@ -140,7 +145,7 @@ var Translator = new function() {
   }
 
   this.collections = function() {
-    if (!self.exportCollections) { return []; }
+    if (!this.exportCollections) { return []; }
 
     var collections = [];
     for_each (let collection from Zotero.nextCollection()) {
@@ -166,7 +171,7 @@ var Translator = new function() {
 
     if (!item) { return; }
 
-    if (!initialized) { self.initialize(); }
+    if (!initialized) { this.initialize(); }
 
     // remove any citekey from extra -- the export doesn't need it
     Zotero.BetterBibTeX.keymanager.extract(item);
@@ -178,7 +183,11 @@ var Translator = new function() {
   var attachmentCounter = 0;
   this.Reference = function(item) {
     var fields = [];
-    var self = this;
+    var added = Dict();
+
+    this.has = function(name) {
+      return added[name];
+    };
 
     this.itemtype = Translator.typeMap.Zotero2BibTeX[item.itemType] || 'misc';
 
@@ -248,7 +257,6 @@ var Translator = new function() {
             a.path = "files/" + (Translator.testmode ? attachmentCounter : att.itemID) + "/" + att.localPath.replace(/.*[\/\\]/, '');
           }
         }
-
         if (a.path.match(/[{}]/)) { // latex really doesn't want you to do this.
           errors.push('BibTeX cannot handle file paths with braces: ' + JSON.stringify(a.path));
         } else {
@@ -282,40 +290,36 @@ var Translator = new function() {
       esc:
     }
     */
-    function field(f) {
-      if (Translator.skipFields.indexOf(f.name) >= 0) { return null; }
-
-      var value;
-      if (typeof f.value == 'number') {
-        value = f.value;
-      } else {
-        if (f.esc) {
-          if (typeof self['esc_' + f.esc] !== 'function') { throw('Unsupported escape function ' + f.esc); }
-          value = self['esc_' + f.esc](f);
-        } else {
-          value = self.esc_latex(f);
-        }
-
-        if (!value) { return null; }
-
-        if (f.braces) { value = '{' + value + '}'; }
-        if (f.protect) { value = '{' + value + '}'; }
-      }
-
-      return '  ' + f.name + ' = ' + value;
-    }
-
     this.add = function(field) {
+      if (Translator.skipFields.indexOf(field.name) >= 0) { return; }
+
       if (typeof field.value !== 'number' && !field.value) { return; }
       if (typeof field.value === 'string' && field.value.trim() === '') { return; }
       if (Array.isArray(field.value) && field.value.length === 0) { return; }
 
       field.braces = typeof(field.braces) === 'undefined' || field.braces || field.protect || field.value.match(/\s/);
       field.protect = (typeof field.value !== 'number') && field.protect && Translator.braceAll;
+
+      var value;
+      if (typeof field.value == 'number') {
+        value = field.value;
+      } else {
+        if (field.esc) {
+          if (typeof this['esc_' + field.esc] !== 'function') { throw('Unsupported escape function ' + field.esc); }
+          value = this['esc_' + field.esc](field);
+        } else {
+          value = this.esc_latex(field);
+        }
+
+        if (!value) { return null; }
+
+        if (field.braces) { value = '{' + value + '}'; }
+        if (field.protect) { value = '{' + value + '}'; }
+      }
+      field.bibtex = '  ' + field.name + ' = ' + value;
+
       fields.push(field);
-    };
-    this.has = function(name) {
-      return (collect(for (f of fields) if (f.name === name) 1).length !== 0);
+      added[field.name] = true;
     };
 
     this.complete = function() {
@@ -337,7 +341,7 @@ var Translator = new function() {
       }
 
       var ref = '@' + this.itemtype + '{' + item.__citekey__ + ",\n";
-      ref += collect(for(filledfield of collect(for(f of fields) field(f))) if (filledfield) filledfield).join(",\n");
+      ref += collect(for(field of fields) field.bibtex).join(",\n");
       ref += "\n}\n\n";
 
       Zotero.write(ref);
@@ -350,21 +354,22 @@ var Translator = new function() {
         item.extra = item.extra.replace(m[0], '').trim();
         for_each (let assignment in m[1].split(';')) {
           var data = assignment.match(/^([^=]+)=\s*(.*)/).slice(1);
-          var field = {name: data[0], value: data[1], protect: true};
+          var field = {name: data[0], value: data[1]};
           if (Translator.BibLaTeXDataFieldMap[field.name]) {
             field = JSON.parse(JSON.stringify(Translator.BibLaTeXDataFieldMap[field.name]));
             field.value = data[1];
           }
-          fields.push(field);
+          this.add(field);
         }
       }
     }
 
-    for_each (let attr: let f of Translator.fieldMap) {
-      if (!f.name || this.has(f.name)) { continue; }
-      var o = JSON.parse(JSON.stringify(f));
-      o.value = item[attr];
-      this.add(o);
+    for_each (let attr: let f of Translator.fieldMap || {}) {
+      if (f.name && !added[f.name]) {
+        var o = JSON.parse(JSON.stringify(f));
+        o.value = item[attr];
+        this.add(o);
+      }
     }
   };
 
