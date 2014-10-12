@@ -30,8 +30,8 @@ The Better BibTeX [configuration pane](https://zotplus.github.io/better-bibtex/C
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.44.xpi)
-(**0.6.44**).
+version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.45.xpi)
+(**0.6.45**).
 If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
@@ -59,4 +59,7 @@ prefer fuzzy ones over missed ones.
 * sync citekey cleanly without abusing the "extra" field
 * faster journal abbreviator using the [LTWA](http://www.issn.org/services/online-services/access-to-the-ltwa/)
 * porting the bibtex parser to Jison for performance improvements
-* Submission to Addons.Mozilla.Org is off the table -- OMA moves *much* to slow for my sometimes daily releases.
+* Automated background export (#70)
+* "Raw" BibTeX management (#100)
+
+Submission to Addons.Mozilla.Org is off the table -- OMA moves *much* to slow for my sometimes daily releases.
