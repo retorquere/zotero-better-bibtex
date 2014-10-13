@@ -48,16 +48,11 @@ function scrub(item) {
   item.tags.sort();
 
   for_each (let attr: let val of item) {
-    if (typeof val === 'number') { continue; }
-
-    if (Array.isArray(val) && val.length !== 0) { continue; }
-
-    if (typeof val === 'string') {
+    if (typeof val === 'number') {
+    } else if (Array.isArray(val) && val.length !== 0) { 
+    } else if (typeof val === 'string') {
       if (val.trim() === '') { delete item[attr]; }
-      continue;
-    }
-
-    if (typeof val === 'undefined') {
+    } else if (typeof val === 'undefined') {
       delete item[attr];
     }
   }
@@ -110,8 +105,7 @@ function doExport() {
   };
 
   for_each (var item from Zotero.nextItem()) {
-    if (item.itemType == 'note' || item.itemType == 'attachment') { continue; }
-    data.items.push(scrub(item));
+    if (item.itemType != 'note' && item.itemType != 'attachment') { data.items.push(scrub(item)); }
   }
 
   Zotero.write(JSON.stringify(data, null, '  '));

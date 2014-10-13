@@ -237,12 +237,13 @@ function createZoteroReference(bibtexitem) {
 
   var biblatexdata = [];
   for_each (let field:let value of bibtexitem) {
-    if (['__note__', '__key__', '__type__', 'type', 'added-at', 'timestamp'].indexOf(field) >= 0) { continue; }
-    if (!value) { continue; }
     if (typeof value == 'string') { value = Zotero.Utilities.trim(value); }
-    if (value === '') { continue; }
 
-    if (fieldMap[field]) {
+    if (['__note__', '__key__', '__type__', 'type', 'added-at', 'timestamp'].indexOf(field) >= 0) { 
+    } else if (!value) { 
+    } else if (value === '') { 
+
+    } else if (fieldMap[field]) {
       item[fieldMap[field]] = value;
 
     } else if (field == 'journal') {
@@ -261,15 +262,15 @@ function createZoteroReference(bibtexitem) {
 
     } else if (field == 'author' || field == 'editor' || field == 'translator') {
       for_each (let creator in value) {
-        if (!creator) { continue; }
+        if (creator) {
+          if (typeof creator == 'string') {
+            creator = Zotero.Utilities.cleanAuthor(creator, field, false);
+          } else {
+            creator.creatorType = field;
+          }
 
-        if (typeof creator == 'string') {
-          creator = Zotero.Utilities.cleanAuthor(creator, field, false);
-        } else {
-          creator.creatorType = field;
+          item.creators.push(creator);
         }
-
-        item.creators.push(creator);
       };
 
     } else if (field == 'institution' || field == 'organization') {
