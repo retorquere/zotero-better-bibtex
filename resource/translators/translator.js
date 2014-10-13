@@ -247,20 +247,20 @@ var Translator = new function() {
 
         if (save) { a.path = att.defaultPath; }
 
-        if (a.path) { // amazon/googlebooks etc links show up as atachments without a path
-          attachmentCounter += 1;
-          if (save) {
-            att.saveFile(a.path);
-          } else {
-            if (Translator.attachmentRelativePath) {
-              a.path = "files/" + (Translator.testmode ? attachmentCounter : att.itemID) + "/" + att.localPath.replace(/.*[\/\\]/, '');
-            }
+        if (!a.path) { continue; } // amazon/googlebooks etc links show up as atachments without a path
+
+        attachmentCounter += 1;
+        if (save) {
+          att.saveFile(a.path);
+        } else {
+          if (Translator.attachmentRelativePath) {
+            a.path = "files/" + (Translator.testmode ? attachmentCounter : att.itemID) + "/" + att.localPath.replace(/.*[\/\\]/, '');
           }
-          if (a.path.match(/[{}]/)) { // latex really doesn't want you to do this.
-            errors.push('BibTeX cannot handle file paths with braces: ' + JSON.stringify(a.path));
-          } else {
-            attachments.push(a);
-          }
+        }
+        if (a.path.match(/[{}]/)) { // latex really doesn't want you to do this.
+          errors.push('BibTeX cannot handle file paths with braces: ' + JSON.stringify(a.path));
+        } else {
+          attachments.push(a);
         }
       }
 

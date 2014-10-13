@@ -25,7 +25,7 @@ macro for_each {
   rule { ($key:$param $[:] $val:$param of sorted $dict:expr) { $body ... } } => {
     var i = 0;
 
-    do { // this will contain any let statements to the block scope
+    for (;;) { // this will contain any let statements to the block scope
       let dict = $dict;
       let keys = Objects.keys(dict);
       keys.sort();
@@ -43,7 +43,8 @@ macro for_each {
       }
       dict = undefined;
       keys = undefined;
-    } while (false)
+      break;
+    }
   }
 
   // ** iterate over an object **
@@ -51,7 +52,7 @@ macro for_each {
   rule { ($key:$param $[:] $val:$param of $dict:expr) { $body ... } } => {
 
     var dict = $dict;
-    do { // work around Sweet.js issue #365
+    for (;;) { // work around Sweet.js issue #365
       $key$decl $key$name = null;
       for ($key$name in $dict) {
         if (dict.hasOwnProperty && !dict.hasOwnProperty($key$name)) { continue; }
@@ -59,14 +60,15 @@ macro for_each {
         $body...
       }
       dict = undefined;
-    } while (false)
+      break;
+    }
 
   }
 
   // ** iterate over an array, with index **
   // for_each ([var|let]? val, [var|let]? index in array) { ... }
   rule { ($val:$param, $idx:$param in $items:expr) { $body... } }  => {
-    do { // this will contain any let statements to the block scope
+    for (;;) { // this will contain any let statements to the block scope
       let items = $items;
       let length = items.length;
       $val$decl $val$name = null;
@@ -78,7 +80,8 @@ macro for_each {
         $idx$name++;
       }
       items = undefined;
-    } while (false)
+      break;
+    }
   }
 
   // ** iterate over an array, without index **
@@ -89,13 +92,14 @@ macro for_each {
 
   // very specific to the Zotero generaror
   rule { ($item:$param from $generator:expr) { $body... } } => {
-    do {
+    for (;;) {
       $item$decl $item$name = $generator;
       while ($item$name) {
         $body...
         $item$name = $generator;
       }
-    } while (false)
+      break;
+    }
   }
 }
 
