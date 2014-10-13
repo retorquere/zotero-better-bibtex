@@ -204,7 +204,7 @@ Scenario: DOI with underscores in extra field #108
   Then a library export using 'Better BibLaTeX' should match 'export/DOI with underscores in extra field #108.bib'
 
 @110
-Scenario: DOI with underscores in extra field #108
+Scenario: two ISSN number are freezing browser #110
   When I import 1 reference from 'export/two ISSN number are freezing browser #110.json'
   #Then export the library using 'Better BibLaTeX' to '/tmp/bib.bib'
   Then a library export using 'Better BibLaTeX' should match 'export/two ISSN number are freezing browser #110.bib'
