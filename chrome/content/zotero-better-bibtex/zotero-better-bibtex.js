@@ -130,7 +130,7 @@ Zotero.BetterBibTeX = {
     },
     removeTranslators: function () {
         var dict = this.translators;
-        do {
+        for (;;) {
             let name = null;
             for (name in this.translators) {
                 if (dict.hasOwnProperty && !dict.hasOwnProperty(name)) {
@@ -143,7 +143,8 @@ Zotero.BetterBibTeX = {
                 destFile.remove();
             }
             dict = undefined;
-        } while (false);
+            break;
+        }
         Zotero.Translators.init();
     },
     findKeysSQL: '' + 'select coalesce(i.libraryID, 0) as libraryID, i.itemID as itemID, idv.value as extra ' + 'from items i ' + 'join itemData id on i.itemID = id.itemID ' + 'join itemDataValues idv on idv.valueID = id.valueID ' + 'join fields f on id.fieldID = f.fieldID  ' + 'where f.fieldName = \'extra\' and not i.itemID in (select itemID from deletedItems) ' + 'and (idv.value like \'%bibtex:%\' or idv.value like \'%biblatexcitekey[%\')',
@@ -152,7 +153,7 @@ Zotero.BetterBibTeX = {
             switch (event) {
             case 'delete':
                 var dict = extraData;
-                do {
+                for (;;) {
                     let key = null;
                     for (key in extraData) {
                         if (dict.hasOwnProperty && !dict.hasOwnProperty(key)) {
@@ -162,7 +163,8 @@ Zotero.BetterBibTeX = {
                         Zotero.BetterBibTeX.clearKey({ itemID: key }, true);
                     }
                     dict = undefined;
-                } while (false);
+                    break;
+                }
                 break;
             case 'add':
             case 'modify':
@@ -173,7 +175,7 @@ Zotero.BetterBibTeX = {
                     return '' + id;
                 }).join(',') + ')';
                 Zotero.BetterBibTeX.DB.query('delete from keys where itemID in ' + ids);
-                do {
+                for (;;) {
                     // this will contain any let statements to the block scope
                     let items = Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL + ' and i.itemID in ' + ids) || [];
                     let length = items.length;
@@ -195,8 +197,9 @@ Zotero.BetterBibTeX = {
                         i++;
                     }
                     items = undefined;
-                } while (false);
-                do {
+                    break;
+                }
+                for (;;) {
                     // this will contain any let statements to the block scope
                     let items$2 = Zotero.DB.query('select coalesce(libraryID, 0) as libraryID, itemID from items where itemID in ' + ids) || [];
                     let length$2 = items$2.length;
@@ -209,7 +212,8 @@ Zotero.BetterBibTeX = {
                         i$2++;
                     }
                     items$2 = undefined;
-                } while (false);
+                    break;
+                }
                 break;
             }
         }
@@ -228,7 +232,7 @@ Zotero.BetterBibTeX = {
     displayOptions: function (url) {
         var params = {};
         var hasParams = false;
-        do {
+        for (;;) {
             // this will contain any let statements to the block scope
             let items = [
                     'exportCharset',
@@ -260,7 +264,8 @@ Zotero.BetterBibTeX = {
                 i++;
             }
             items = undefined;
-        } while (false);
+            break;
+        }
         return hasParams ? params : null;
     },
     endpoints: {
@@ -287,7 +292,7 @@ Zotero.BetterBibTeX = {
                     path = path.join('.');
                     var items = [];
                     Zotero.BetterBibTeX.log('exporting: ' + path + ' to ' + translator);
-                    do {
+                    for (;;) {
                         // this will contain any let statements to the block scope
                         let items$2 = path.split('+');
                         let length = items$2.length;
@@ -309,7 +314,7 @@ Zotero.BetterBibTeX = {
                             }
                             var key = '' + path[0];
                             var col = null;
-                            do {
+                            for (;;) {
                                 // this will contain any let statements to the block scope
                                 let items$3 = path;
                                 let length$2 = items$3.length;
@@ -320,7 +325,7 @@ Zotero.BetterBibTeX = {
                                     name = items$3[i$2];
                                     var children = Zotero.getCollections(col && col.id, false, libid);
                                     col = null;
-                                    do {
+                                    for (;;) {
                                         // this will contain any let statements to the block scope
                                         let items$4 = children;
                                         let length$3 = items$4.length;
@@ -336,14 +341,16 @@ Zotero.BetterBibTeX = {
                                             i$3++;
                                         }
                                         items$4 = undefined;
-                                    } while (false);
+                                        break;
+                                    }
                                     if (!col) {
                                         break;
                                     }
                                     i$2++;
                                 }
                                 items$3 = undefined;
-                            } while (false);
+                                break;
+                            }
                             if (!col) {
                                 col = Zotero.Collections.getByLibraryAndKey(libid, key);
                             }
@@ -372,7 +379,8 @@ Zotero.BetterBibTeX = {
                             i++;
                         }
                         items$2 = undefined;
-                    } while (false);
+                        break;
+                    }
                     sendResponseCallback(200, 'text/plain', Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), items, Zotero.BetterBibTeX.displayOptions(url)));
                 } catch (err) {
                     Zotero.BetterBibTeX.log('Could not export bibliography \'' + collection + '\'', err);
@@ -555,7 +563,7 @@ Zotero.BetterBibTeX = {
             }
             return result;
         }.bind(this)();
-        do {
+        for (;;) {
             // this will contain any let statements to the block scope
             let items$2 = items;
             let length = items$2.length;
@@ -568,13 +576,14 @@ Zotero.BetterBibTeX = {
                 i++;
             }
             items$2 = undefined;
-        } while (false);
+            break;
+        }
         return items;
     },
     pinCiteKeys: function () {
         // clear keys first so the generator can make fresh ones
         var items = this.clearCiteKeys(true);
-        do {
+        for (;;) {
             // this will contain any let statements to the block scope
             let items$2 = items;
             let length = items$2.length;
@@ -587,7 +596,8 @@ Zotero.BetterBibTeX = {
                 i++;
             }
             items$2 = undefined;
-        } while (false);
+            break;
+        }
     },
     safeGetAll: function () {
         var all;
@@ -683,7 +693,7 @@ Zotero.BetterBibTeX = {
                 }, true);
                 cp.makeBibliography();
                 var abbrevs = cp;
-                do {
+                for (;;) {
                     // this will contain any let statements to the block scope
                     let items$2 = [
                             'transform',
@@ -703,9 +713,10 @@ Zotero.BetterBibTeX = {
                         i$2++;
                     }
                     items$2 = undefined;
-                } while (false);
+                    break;
+                }
                 var dict$2 = abbrevs || {};
-                do {
+                for (;;) {
                     let title = null;
                     for (title in abbrevs || {}) {
                         if (dict$2.hasOwnProperty && !dict$2.hasOwnProperty(title)) {
@@ -715,7 +726,8 @@ Zotero.BetterBibTeX = {
                         self.journalAbbrevCache[title] = abbr;
                     }
                     dict$2 = undefined;
-                } while (false);
+                    break;
+                }
                 if (!self.journalAbbrevCache[item.publicationTitle]) {
                     self.journalAbbrevCache[item.publicationTitle] = '';
                 }
@@ -746,7 +758,7 @@ Zotero.BetterBibTeX = {
             return m[1];
         };
         if (Zotero.BetterBibTeX.Prefs.getBoolPref('scan-citekeys')) {
-            do {
+            for (;;) {
                 // this will contain any let statements to the block scope
                 let items = Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL) || [];
                 let length = items.length;
@@ -763,7 +775,8 @@ Zotero.BetterBibTeX = {
                     i++;
                 }
                 items = undefined;
-            } while (false);
+                break;
+            }
             Zotero.BetterBibTeX.Prefs.setBoolPref('scan-citekeys', false);
         }
         self.get = function (item, pinmode) {
@@ -842,7 +855,7 @@ Zotero.BetterBibTeX = {
         // bad idea) without making the new stuff it adds unenumerable
         // (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
         var dict = self.__exposedProps__;
-        do {
+        for (;;) {
             let key = null;
             for (key in self.__exposedProps__) {
                 if (dict.hasOwnProperty && !dict.hasOwnProperty(key)) {
@@ -852,7 +865,8 @@ Zotero.BetterBibTeX = {
                 self[key].__exposedProps__ = [];
             }
             dict = undefined;
-        } while (false);
+            break;
+        }
     },
     DebugBridge: {
         data: {
@@ -895,7 +909,7 @@ Zotero.BetterBibTeX = {
                 Zotero.BetterBibTeX.init();
                 var retval = Zotero.BetterBibTeX.DebugBridge.data.prefs;
                 var dict = Zotero.BetterBibTeX.DebugBridge.data.prefs;
-                do {
+                for (;;) {
                     let name = null;
                     for (name in Zotero.BetterBibTeX.DebugBridge.data.prefs) {
                         if (dict.hasOwnProperty && !dict.hasOwnProperty(name)) {
@@ -907,7 +921,8 @@ Zotero.BetterBibTeX = {
                         }
                     }
                     dict = undefined;
-                } while (false);
+                    break;
+                }
                 Zotero.BetterBibTeX.DebugBridge.data.prefs = Object.create(null);
                 Zotero.BetterBibTeX.DebugBridge.data.exportOptions = {};
                 var all = Zotero.BetterBibTeX.safeGetAll();
