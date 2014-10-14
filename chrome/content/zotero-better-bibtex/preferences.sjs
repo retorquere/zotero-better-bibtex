@@ -60,6 +60,17 @@ function updatePreferences(load) {
   var serverEnabled = serverCheckbox.checked;
   serverCheckbox.setAttribute('hidden', (Zotero.isStandalone && serverEnabled));
 
+  var keyformat = document.getElementById('id-better-bibtex-preferences-citeKeyFormat');
+
+  try {
+    Zotero.BetterBibTeX.formatter(keyformat.value);
+    keyformat.setAttribute('style', '');
+    keyformat.setAttribute('tooltiptext', '');
+  } catch (err) {
+    keyformat.setAttribute('style', 'color: red');
+    keyformat.setAttribute('tooltiptext', '' + err);
+  }
+
   // var url = serverURL();
   // if (!url) { serverEnabled = false; }
 
