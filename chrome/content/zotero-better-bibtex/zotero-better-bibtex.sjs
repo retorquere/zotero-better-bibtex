@@ -743,6 +743,24 @@ Zotero.BetterBibTeX = {
       },
       setPreference: function(name, value) {
         Zotero.BetterBibTeX.DebugBridge.data.setPref(name, value);
+      },
+      select: function(attribute, value) {
+        for_each (let item in Zotero.BetterBibTeX.safeGetAll()) {
+          Zotero.BetterBibTeX.log('item: ' + item.id);
+        }
+        attribute = attribute.replace(/[^a-zA-Z]/, '');
+        var sql = "" +
+            "select i.itemID as itemID " +
+            "from items i " +
+            "join itemData id on i.itemID = id.itemID " +
+            "join itemDataValues idv on idv.valueID = id.valueID " +
+            "join fields f on id.fieldID = f.fieldID  " +
+            "where f.fieldName = '" + attribute + "' and not i.itemID in (select itemID from deletedItems) and idv.value = ?";
+        return Zotero.DB.valueQuery(sql, [value]);
+      },
+      pinCiteKey: function(id) {
+        Zotero.BetterBibTeX.clearKey({itemID: id}, true);
+        return Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'manual');
       }
     }
   }

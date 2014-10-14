@@ -51,6 +51,7 @@ end
 After do |s|
   open('_zotero.log', 'w'){|f| f.write(DBB.log) } if @logcapture
   @logcapture = false
+  @selected = nil
 end
 
 #Given /^that ([^\s]+) is set to (.*)$/ do |pref, value|
@@ -214,4 +215,14 @@ end
 
 Then /^show the citekeys$/ do
   pp BBT.getKeys
+end
+
+Then /^I select the first item where ([^\s]+) = '([^']+)'$/ do |attribute, value|
+  @selected = BBT.select(attribute, value)
+  expect(@selected).not_to be(nil)
+end
+
+Then /^I generate a new citation key$/ do
+  expect(@selected).not_to be(nil)
+  BBT.pinCiteKey(@selected)
 end
