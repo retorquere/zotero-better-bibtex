@@ -206,7 +206,12 @@ Scenario: DOI with underscores in extra field #108
 @110 @111
 Scenario: two ISSN number are freezing browser #110 / Generating keys and export broken #111
   When I import 1 reference from 'export/two ISSN number are freezing browser #110.json'
-  #Then export the library using 'Better BibLaTeX' to '/tmp/bib.bib'
   And I select the first item where publicationTitle = 'Genetics'
   And I generate a new citation key
   Then a library export using 'Better BibLaTeX' should match 'export/two ISSN number are freezing browser #110.bib'
+
+@112
+Scenario: Hang on non-file attachment export #112
+  When I import 2 references with 2 attachments from 'export/Hang on non-file attachment export #112.json'
+  #Then export the library using 'Better BibLaTeX' to '/tmp/bib.bib'
+  Then a library export using 'Better BibLaTeX' should match 'export/Hang on non-file attachment export #112.bib'
