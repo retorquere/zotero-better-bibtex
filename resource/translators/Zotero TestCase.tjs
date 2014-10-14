@@ -38,7 +38,8 @@ function scrub(item) {
     {
       path: attachment.localPath,
       title: attachment.title,
-      mimeType: attachment.mimeType
+      mimeType: attachment.mimeType,
+      url: attachment.url
     }
   );
 
@@ -106,7 +107,7 @@ function doExport() {
   };
 
   for_each (var item from Zotero.nextItem()) {
-    if (item.itemType != 'note' && item.itemType != 'attachment') { data.items.push(scrub(item)); }
+    data.items.push(scrub(item));
   }
 
   Zotero.write(JSON.stringify(data, null, '  '));

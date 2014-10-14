@@ -30,16 +30,14 @@ macro for_each {
       let keys = Objects.keys(dict);
       keys.sort();
       let length = keys.length;
-      let i = 0;
+      let i;
       $key$decl $key$name = null;
       $val$decl $val$name = null;
-      // a while loop is faster than a for (;;)
-      while (i < length) {
+      for (i=0; i<length; i++) { // a while loop is faster than a for (;;), but 'continue' does nasty things in a while loop
         $key$name = keys[i];
         if (dict.hasOwnProperty && !dict.hasOwnProperty($key$name)) { continue; }
         $val$name = dict[$key$name];
         $body...
-        i++;
       }
       dict = undefined;
       keys = undefined;
@@ -72,12 +70,10 @@ macro for_each {
       let items = $items;
       let length = items.length;
       $val$decl $val$name = null;
-      $idx$decl $idx$name = 0;
-      // a while loop is faster than a for (;;)
-      while ($idx$name < length) {
+      $idx$decl $idx$name;
+      for ($idx$name=0; $idx$name<length; $idx$name++) { // a while loop is faster than a for (;;), but 'continue' does nasty things in a while loop
         $val$name = items[$idx$name];
         $body...
-        $idx$name++;
       }
       items = undefined;
       break;
@@ -133,12 +129,11 @@ macro collect {
       var result = [];
       var iterable = $iterable;
       var i = 0, l = iterable.length;
-      while (i < l) {
+      for (i=0; i<l; i++) { // a while loop is faster than a for (;;), but 'continue' does nasty things in a while loop
         $x = iterable[i];
         if ($condition) {
           result.push($result);
         }
-        i++;
       }
       return result;
     }).bind(this)()
@@ -151,10 +146,9 @@ macro collect {
       var result = [];
       var iterable = $iterable;
       var i = 0, l = iterable.length;
-      while (i < l) {
+      for (i=0; i<l; i++) { // a while loop is faster than a for (;;), but 'continue' does nasty things in a while loop
         $x = iterable[i];
         result.push($result);
-        i++;
       }
       return result;
     }).bind(this)()
@@ -168,13 +162,12 @@ macro collect {
       var result = [];
       var iterable = $iterable;
       var i = 0, l = iterable.length;
-      while (i < l) {
+      for (i=0; i<l; i++) { // a while loop is faster than a for (;;), but 'continue' does nasty things in a while loop
         $x = iterable[i];
         $body...
         if (typeof $x !== 'undefined') {
           result.push($x);
         }
-        i++;
       }
       return result;
     }).bind(this)()

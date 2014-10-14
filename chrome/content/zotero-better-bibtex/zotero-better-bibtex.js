@@ -180,9 +180,8 @@ Zotero.BetterBibTeX = {
                     let items = Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL + ' and i.itemID in ' + ids) || [];
                     let length = items.length;
                     let item = null;
-                    let i = 0;
-                    // a while loop is faster than a for (;;)
-                    while (i < length) {
+                    let i;
+                    for (i = 0; i < length; i++) {
                         item = items[i];
                         var citekey = Zotero.BetterBibTeX.keymanager.extract({ extra: item.extra });
                         Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [
@@ -194,7 +193,6 @@ Zotero.BetterBibTeX = {
                             item.libraryID,
                             citekey
                         ]);
-                        i++;
                     }
                     items = undefined;
                     break;
@@ -204,12 +202,10 @@ Zotero.BetterBibTeX = {
                     let items$2 = Zotero.DB.query('select coalesce(libraryID, 0) as libraryID, itemID from items where itemID in ' + ids) || [];
                     let length$2 = items$2.length;
                     let item = null;
-                    let i$2 = 0;
-                    // a while loop is faster than a for (;;)
-                    while (i$2 < length$2) {
+                    let i$2;
+                    for (i$2 = 0; i$2 < length$2; i$2++) {
                         item = items$2[i$2];
                         Zotero.BetterBibTeX.keymanager.get(item, 'on-change');
-                        i$2++;
                     }
                     items$2 = undefined;
                     break;
@@ -241,9 +237,8 @@ Zotero.BetterBibTeX = {
                 ];
             let length = items.length;
             let key = null;
-            let i = 0;
-            // a while loop is faster than a for (;;)
-            while (i < length) {
+            let i;
+            for (i = 0; i < length; i++) {
                 key = items[i];
                 try {
                     var isBool = key.match(/[?]$/);
@@ -261,7 +256,6 @@ Zotero.BetterBibTeX = {
                     hasParams = true;
                 } catch (e) {
                 }
-                i++;
             }
             items = undefined;
             break;
@@ -297,9 +291,8 @@ Zotero.BetterBibTeX = {
                         let items$2 = path.split('+');
                         let length = items$2.length;
                         let collectionkey = null;
-                        let i = 0;
-                        // a while loop is faster than a for (;;)
-                        while (i < length) {
+                        let i;
+                        for (i = 0; i < length; i++) {
                             collectionkey = items$2[i];
                             if (collectionkey.charAt(0) !== '/') {
                                 collectionkey = '/0/' + collectionkey;
@@ -319,9 +312,8 @@ Zotero.BetterBibTeX = {
                                 let items$3 = path;
                                 let length$2 = items$3.length;
                                 let name = null;
-                                let i$2 = 0;
-                                // a while loop is faster than a for (;;)
-                                while (i$2 < length$2) {
+                                let i$2;
+                                for (i$2 = 0; i$2 < length$2; i$2++) {
                                     name = items$3[i$2];
                                     var children = Zotero.getCollections(col && col.id, false, libid);
                                     col = null;
@@ -330,15 +322,13 @@ Zotero.BetterBibTeX = {
                                         let items$4 = children;
                                         let length$3 = items$4.length;
                                         let child = null;
-                                        let i$3 = 0;
-                                        // a while loop is faster than a for (;;)
-                                        while (i$3 < length$3) {
+                                        let i$3;
+                                        for (i$3 = 0; i$3 < length$3; i$3++) {
                                             child = items$4[i$3];
                                             if (child.name.toLowerCase() === name.toLowerCase()) {
                                                 col = child;
                                                 break;
                                             }
-                                            i$3++;
                                         }
                                         items$4 = undefined;
                                         break;
@@ -346,7 +336,6 @@ Zotero.BetterBibTeX = {
                                     if (!col) {
                                         break;
                                     }
-                                    i$2++;
                                 }
                                 items$3 = undefined;
                                 break;
@@ -369,14 +358,12 @@ Zotero.BetterBibTeX = {
                                 var result = [];
                                 var iterable = _items;
                                 var i$4 = 0, l = iterable.length;
-                                while (i$4 < l) {
+                                for (i$4 = 0; i$4 < l; i$4++) {
                                     item = iterable[i$4];
                                     result.push(item.id);
-                                    i$4++;
                                 }
                                 return result;
                             }.bind(this)()));
-                            i++;
                         }
                         items$2 = undefined;
                         break;
@@ -448,10 +435,9 @@ Zotero.BetterBibTeX = {
                     var result = [];
                     var iterable = items;
                     var i = 0, l = iterable.length;
-                    while (i < l) {
+                    for (i = 0; i < l; i++) {
                         item$2 = iterable[i];
                         result.push(item$2.id);
-                        i++;
                     }
                     return result;
                 }.bind(this)());
@@ -542,10 +528,9 @@ Zotero.BetterBibTeX = {
             var result = [];
             var iterable = items;
             var i$2 = 0, l = iterable.length;
-            while (i$2 < l) {
+            for (i$2 = 0; i$2 < l; i$2++) {
                 item$2 = iterable[i$2];
                 result.push(item$2.id);
-                i$2++;
             }
             return result;
         }.bind(this)());
@@ -554,12 +539,11 @@ Zotero.BetterBibTeX = {
             var result = [];
             var iterable = items;
             var i$2 = 0, l = iterable.length;
-            while (i$2 < l) {
+            for (i$2 = 0; i$2 < l; i$2++) {
                 item$2 = iterable[i$2];
                 if (!item$2.isAttachment() && !item$2.isNote()) {
                     result.push(item$2);
                 }
-                i$2++;
             }
             return result;
         }.bind(this)();
@@ -568,12 +552,10 @@ Zotero.BetterBibTeX = {
             let items$2 = items;
             let length = items$2.length;
             let item = null;
-            let i = 0;
-            // a while loop is faster than a for (;;)
-            while (i < length) {
+            let i;
+            for (i = 0; i < length; i++) {
                 item = items$2[i];
                 this.clearKey(item, onlyCache);
-                i++;
             }
             items$2 = undefined;
             break;
@@ -588,12 +570,10 @@ Zotero.BetterBibTeX = {
             let items$2 = items;
             let length = items$2.length;
             let item = null;
-            let i = 0;
-            // a while loop is faster than a for (;;)
-            while (i < length) {
+            let i;
+            for (i = 0; i < length; i++) {
                 item = items$2[i];
                 Zotero.BetterBibTeX.keymanager.get(item, 'manual');
-                i++;
             }
             items$2 = undefined;
             break;
@@ -703,14 +683,12 @@ Zotero.BetterBibTeX = {
                         ];
                     let length$2 = items$2.length;
                     let p = null;
-                    let i$2 = 0;
-                    // a while loop is faster than a for (;;)
-                    while (i$2 < length$2) {
+                    let i$2;
+                    for (i$2 = 0; i$2 < length$2; i$2++) {
                         p = items$2[i$2];
                         if (abbrevs) {
                             abbrevs = abbrevs[p];
                         }
-                        i$2++;
                     }
                     items$2 = undefined;
                     break;
@@ -763,16 +741,14 @@ Zotero.BetterBibTeX = {
                 let items = Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL) || [];
                 let length = items.length;
                 let row = null;
-                let i = 0;
-                // a while loop is faster than a for (;;)
-                while (i < length) {
+                let i;
+                for (i = 0; i < length; i++) {
                     row = items[i];
                     Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [
                         row.itemID,
                         row.libraryID,
                         self.extract({ extra: row.extra })
                     ]);
-                    i++;
                 }
                 items = undefined;
                 break;
@@ -986,12 +962,10 @@ Zotero.BetterBibTeX = {
                     let items = Zotero.BetterBibTeX.safeGetAll();
                     let length = items.length;
                     let item = null;
-                    let i = 0;
-                    // a while loop is faster than a for (;;)
-                    while (i < length) {
+                    let i;
+                    for (i = 0; i < length; i++) {
                         item = items[i];
                         Zotero.BetterBibTeX.log('item: ' + item.id);
-                        i++;
                     }
                     items = undefined;
                     break;
