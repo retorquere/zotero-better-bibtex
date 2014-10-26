@@ -181,9 +181,11 @@ var Translator = new function() {
   };
 
   var attachmentCounter = 0;
+  var rawLaTeXTag = '#LaTeX';
   this.Reference = function(item) {
     var fields = [];
     var added = Dict();
+    var raw = (collect(for (tag of item.tags) if (tag.tag === rawLaTeXTag) tag.tag).length !== 0);
 
     this.has = function(name) {
       return added[name];
@@ -209,14 +211,16 @@ var Translator = new function() {
       return this.esc_url(f);
     };
 
-    this.esc_latex = function(f) {
+    this.esc_latex = function(f, raw) {
+      if (raw) { return f.value; }
+
       if (typeof f.value == 'number') { return f.value; }
       if (!f.value) { return null; }
 
       if (f.value instanceof Array) {
         if (f.value.length === 0) { return null; }
 
-        return (collect (for (word of f.value)) { let o = JSON.parse(JSON.stringify(f)); o.value = word; word = this.esc_latex(o); }).join(f.sep);
+        return (collect (for (word of f.value)) { let o = JSON.parse(JSON.stringify(f)); o.value = word; word = this.esc_latex(o, raw); }).join(f.sep);
       }
 
       var value = LaTeX.html2latex(f.value);
@@ -226,7 +230,7 @@ var Translator = new function() {
 
     this.esc_tags = function(f) {
       if (!f.value || f.value.length === 0) { return null; }
-      var tags = collect(for (tag of item.tags) tag.tag);
+      var tags = collect(for (tag of f.value) if (tag.tag !== rawLaTeXTag) tag.tag);
       // sort tags for stable tests
       if (Translator.testmode) {
         tags.sort();
@@ -308,7 +312,7 @@ var Translator = new function() {
           if (typeof this['esc_' + field.esc] !== 'function') { throw('Unsupported escape function ' + field.esc); }
           value = this['esc_' + field.esc](field);
         } else {
-          value = this.esc_latex(field);
+          value = this.esc_latex(field, raw);
         }
 
         if (!value) { return null; }
