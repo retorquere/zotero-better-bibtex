@@ -213,5 +213,10 @@ Scenario: two ISSN number are freezing browser #110 / Generating keys and export
 @112
 Scenario: Hang on non-file attachment export #112
   When I import 2 references with 2 attachments from 'export/Hang on non-file attachment export #112.json'
-  #Then export the library using 'Better BibLaTeX' to '/tmp/bib.bib'
   Then a library export using 'Better BibLaTeX' should match 'export/Hang on non-file attachment export #112.bib'
+
+@113
+Scenario: Math parts in title #113
+  When I import 1 references from 'export/Math parts in title #113.json'
+  #Then export the library using 'Better BibLaTeX' to '/tmp/bib.bib'
+  Then a library export using 'Better BibLaTeX' should match 'export/Math parts in title #113.bib'
