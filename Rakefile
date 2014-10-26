@@ -51,6 +51,13 @@ rule '.js' => ['.sjs', MACROS] do |t|
   sh "#{SWEET} --module ./#{MACROS} --output #{t.name.shellescape} #{t.source.shellescape}"
 end
 
+HAXE_TMP = File.expand_path('tmp/haxe')
+HAXE_SHARED = File.expand_path('www/haxe')
+HAXE_INCLUDES = []
+rule '.js' => ['.hx'] + HAXE_INCLUDES do |t|
+  sh "haxe --cwd #{File.dirname(File.expand_path(t.source)).shellescape} -cp #{HAXE_SHARED.shellescape} -cp #{HAXE_TMP.shellescape} -D js-classic -js #{File.basename(t.name).shellescape} #{File.basename(t.source).shellescape}"
+end
+
 def expand(f)
   src = f.read
   %w{" '}.each{|q|
