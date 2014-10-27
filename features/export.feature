@@ -210,10 +210,10 @@ Scenario: two ISSN number are freezing browser #110 / Generating keys and export
   And I generate a new citation key
   Then a library export using 'Better BibLaTeX' should match 'export/two ISSN number are freezing browser #110.bib'
 
-@112
-Scenario: Hang on non-file attachment export #112
-  When I import 2 references with 2 attachments from 'export/Hang on non-file attachment export #112.json'
-  Then a library export using 'Better BibLaTeX' should match 'export/Hang on non-file attachment export #112.bib'
+@112 @114
+Scenario: Hang on non-file attachment export #112/URL export broken for fancy URLs #114
+  When I import 2 references with 2 attachments from 'export/Hang on non-file attachment export #112 - URL export broken #114.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Hang on non-file attachment export #112 - URL export broken #114.bib'
 
 @113
 Scenario: Math parts in title #113
