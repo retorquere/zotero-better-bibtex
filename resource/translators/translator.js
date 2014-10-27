@@ -201,7 +201,7 @@ var Translator = new function() {
       }
 
       if (f.name === 'url' && Translator.fancyURLs) {
-        return "\\href{" + href + "}{" + LaTeX.html2latex(url) + "}";
+        return "\\href{" + href + "}{" + LaTeX.html2latex(href) + "}";
       }
 
       return href;

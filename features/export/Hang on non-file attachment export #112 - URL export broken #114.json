@@ -10,7 +10,7 @@
       ],
       "useprefix": false,
       "brace-all": true,
-      "fancyURLs": false,
+      "fancyURLs": true,
       "langid": "babel",
       "attachmentRelativePath": false,
       "auto-abbrev": true,
@@ -28,6 +28,7 @@
     {
       "itemID": 3,
       "itemType": "book",
+      "url": "http://www.google.com",
       "publisher": "Harvard University Press",
       "ISBN": "9780674042582",
       "date": "2009-07-01",
