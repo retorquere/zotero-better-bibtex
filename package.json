@@ -10,7 +10,6 @@
   "dependencies": {
     "livescript": "0.0.1",
     "pegjs": "~0.8.0",
-    "liveify": "~0.4.0",
     "sweet.js": "~0.7.1",
     "browserify": "~6.1.0"
   }
