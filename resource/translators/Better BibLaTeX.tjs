@@ -467,11 +467,6 @@ function doExport() {
 
     if (item.date) {
       ref.add({name: 'date', value: strToISO(item.date) || String(item.date)});
-
-      var date = Zotero.Utilities.strToDate(item.date);
-      if (date) {
-        ref.add({name: 'year', value: date.year});
-      }
     }
 
     if (item.pages) {
