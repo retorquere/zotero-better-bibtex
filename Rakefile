@@ -139,7 +139,18 @@ task :test, [:tag] => XPI do |t, args|
     tag = "--tags #{tag}"
   end
 
-  system "cucumber #{tag} | tee cucumber.log" or throw 'One or more tests failed'
+  success = true
+  open('cucumber.log', 'w'){|log|
+    IO.popen("cucumber #{tag}"){|io|
+      io.each { |line|
+        log.write(line)
+        puts line.chomp
+      }
+      io.close
+      success = ($?.to_i == 0)
+    }
+  }
+  throw 'One or more tests failed' unless success
 end
 
 task :dropbox => XPI do
