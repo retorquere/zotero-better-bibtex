@@ -70,51 +70,61 @@ When /capture the log/ do
   @logcapture = true
 end
 
-When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)'$/ do |references, dummy, attachments, filename|
-  bib = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
+When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)'( as '([^']+)')?$/ do |references, dummy, attachments, filename, dummy2, aliased|
+  Dir.mktmpdir {|dir|
+    bib = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
 
-  if File.extname(filename) == '.json'
-    begin
-      data = JSON.parse(open(bib).read)
-    rescue
-      data = {}
+    if aliased.to_s != ''
+      aliased = File.expand_path(File.join(dir, File.basename(aliased)))
+      FileUtils.cp(bib, aliased)
+      bib = aliased
+    else
+      bib = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
     end
 
-    if data.is_a?(Hash) && data['config'].is_a?(Hash) && data['config']['label'] == 'Zotero TestCase'
-      (data['config']['preferences'] || {}).each_pair{|key, value|
-        BBT.setPreference('translators.better-bibtex.' + key, value)
-      }
-      (data['config']['options'] || {}).each_pair{|key, value|
-        BBT.setExportOption(key, value)
-      }
+    if File.extname(filename) == '.json'
+      begin
+        data = JSON.parse(open(bib).read)
+      rescue
+        data = {}
+      end
+
+      if data.is_a?(Hash) && data['config'].is_a?(Hash) && data['config']['label'] == 'Zotero TestCase'
+        (data['config']['preferences'] || {}).each_pair{|key, value|
+          BBT.setPreference('translators.better-bibtex.' + key, value)
+        }
+        (data['config']['options'] || {}).each_pair{|key, value|
+          BBT.setExportOption(key, value)
+        }
+      end
     end
-  end
 
-  entries = OpenStruct.new({start: BBT.librarySize})
+    entries = OpenStruct.new({start: BBT.librarySize})
 
-  BBT.import(bib)
+    BBT.import(bib)
 
-  start = Time.now
+    start = Time.now
 
-  expected = references.to_i + attachments.to_i
+    expected = references.to_i + attachments.to_i
 
-  while !entries.now || entries.now != entries.new
-    sleep 2
-    entries.now = entries.new || entries.start
-    #STDOUT.puts entries.now
-    entries.new = BBT.librarySize
+    while !entries.now || entries.now != entries.new
+      sleep 2
+      entries.now = entries.new || entries.start
+      #STDOUT.puts entries.now
+      entries.new = BBT.librarySize
 
-    elapsed = Time.now - start
-    if elapsed > 5
-      processed = entries.new - entries.start
-      remaining = expected - processed
-      speed = processed / elapsed
-      timeleft = (Time.mktime(0)+((expected - processed) / speed)).strftime("%H:%M:%S")
-      STDOUT.puts "Slow import (#{elapsed}): #{processed} entries @ #{speed.round(1)} entries/sec, #{timeleft} remaining"
+      elapsed = Time.now - start
+      if elapsed > 5
+        processed = entries.new - entries.start
+        remaining = expected - processed
+        speed = processed / elapsed
+        timeleft = (Time.mktime(0)+((expected - processed) / speed)).strftime("%H:%M:%S")
+        STDOUT.puts "Slow import (#{elapsed}): #{processed} entries @ #{speed.round(1)} entries/sec, #{timeleft} remaining"
+      end
     end
-  end
 
-  expect(entries.now - entries.start).to eq(references.to_i + attachments.to_i)
+    expect(entries.now - entries.start).to eq(references.to_i + attachments.to_i)
+  }
 end
 
 Then /^write the library to '([^']+)'$/ do |filename|
@@ -220,6 +230,10 @@ end
 Then /^I select the first item where ([^\s]+) = '([^']+)'$/ do |attribute, value|
   @selected = BBT.select(attribute, value)
   expect(@selected).not_to be(nil)
+end
+
+Then /^I remove the selected item$/ do
+  BBT.remove(@selected)
 end
 
 Then /^I generate a new citation key$/ do

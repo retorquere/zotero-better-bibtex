@@ -193,30 +193,40 @@ Scenario: Empty 'bibtex:' clause in extra gobbles whatever follows #99
   When I import 1 reference from 'export/biber error on generated biblatex file #99.json'
   Then a library export using 'Better BibTeX' should match 'export/biber error on generated biblatex file #99.bib'
 
-@102 @105
+@failing @failing-21 @102 @105
 Scenario: Shortjournal does not get exported to biblatex format #102 / biblatexcitekey[my_key] does not seem to work -- bibtex: does #105
   When I import 1 reference from 'export/Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105.bib'
 
-@108
+@failing @failing-22 @108
 Scenario: DOI with underscores in extra field #108
   When I import 1 reference from 'export/DOI with underscores in extra field #108.json'
   Then a library export using 'Better BibLaTeX' should match 'export/DOI with underscores in extra field #108.bib'
 
-@110 @111
+@failing @failing-23 @110 @111
 Scenario: two ISSN number are freezing browser #110 / Generating keys and export broken #111
   When I import 1 reference from 'export/two ISSN number are freezing browser #110.json'
   And I select the first item where publicationTitle = 'Genetics'
   And I generate a new citation key
   Then a library export using 'Better BibLaTeX' should match 'export/two ISSN number are freezing browser #110.bib'
 
-@112 @114
+@failing @failing-24 @112 @114
 Scenario: Hang on non-file attachment export #112/URL export broken for fancy URLs #114
   When I import 2 references with 2 attachments from 'export/Hang on non-file attachment export #112 - URL export broken #114.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Hang on non-file attachment export #112 - URL export broken #114.bib'
 
-@113
+@failing @failing-25 @113
 Scenario: Math parts in title #113
   When I import 1 references from 'export/Math parts in title #113.json'
   #Then export the library using 'Better BibLaTeX' to '/tmp/bib.bib'
   Then a library export using 'Better BibLaTeX' should match 'export/Math parts in title #113.bib'
+
+@failing @failing-26 @117
+Scenario: Bibtex key regenerating issue when trashing items #117
+  When I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json'
+  And I select the first item where publicationTitle = 'Genetics'
+  And I remove the selected item
+  And I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json' as 'Second Import.json'
+  Then export the library using 'Better BibLaTeX' to '/tmp/BWL.bib'
+  Then a library export using 'Better BibLaTeX' should match 'export/Bibtex key regenerating issue when trashing items #117.bib'
+
