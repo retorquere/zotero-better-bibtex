@@ -168,6 +168,7 @@ Zotero.BetterBibTeX = {
                 break;
             case 'add':
             case 'modify':
+            case 'trash':
                 if (ids.length === 0) {
                     break;
                 }
@@ -175,40 +176,42 @@ Zotero.BetterBibTeX = {
                     return '' + id;
                 }).join(',') + ')';
                 Zotero.BetterBibTeX.DB.query('delete from keys where itemID in ' + ids);
-                for (;;) {
-                    // this will contain any let statements to the block scope
-                    let items = Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL + ' and i.itemID in ' + ids) || [];
-                    let length = items.length;
-                    let item = null;
-                    let i;
-                    for (i = 0; i < length; i++) {
-                        item = items[i];
-                        var citekey = Zotero.BetterBibTeX.keymanager.extract({ extra: item.extra });
-                        Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [
-                            item.libraryID,
-                            citekey
-                        ]);
-                        Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [
-                            item.itemID,
-                            item.libraryID,
-                            citekey
-                        ]);
+                if (event !== 'trash') {
+                    for (;;) {
+                        // this will contain any let statements to the block scope
+                        let items = Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL + ' and i.itemID in ' + ids) || [];
+                        let length = items.length;
+                        let item = null;
+                        let i;
+                        for (i = 0; i < length; i++) {
+                            item = items[i];
+                            var citekey = Zotero.BetterBibTeX.keymanager.extract({ extra: item.extra });
+                            Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [
+                                item.libraryID,
+                                citekey
+                            ]);
+                            Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [
+                                item.itemID,
+                                item.libraryID,
+                                citekey
+                            ]);
+                        }
+                        items = undefined;
+                        break;
                     }
-                    items = undefined;
-                    break;
-                }
-                for (;;) {
-                    // this will contain any let statements to the block scope
-                    let items$2 = Zotero.DB.query('select coalesce(libraryID, 0) as libraryID, itemID from items where itemID in ' + ids) || [];
-                    let length$2 = items$2.length;
-                    let item = null;
-                    let i$2;
-                    for (i$2 = 0; i$2 < length$2; i$2++) {
-                        item = items$2[i$2];
-                        Zotero.BetterBibTeX.keymanager.get(item, 'on-change');
+                    for (;;) {
+                        // this will contain any let statements to the block scope
+                        let items$2 = Zotero.DB.query('select coalesce(libraryID, 0) as libraryID, itemID from items where itemID in ' + ids) || [];
+                        let length$2 = items$2.length;
+                        let item = null;
+                        let i$2;
+                        for (i$2 = 0; i$2 < length$2; i$2++) {
+                            item = items$2[i$2];
+                            Zotero.BetterBibTeX.keymanager.get(item, 'on-change');
+                        }
+                        items$2 = undefined;
+                        break;
                     }
-                    items$2 = undefined;
-                    break;
                 }
                 break;
             }
@@ -915,6 +918,7 @@ Zotero.BetterBibTeX = {
                 } catch (err) {
                 }
                 Zotero.BetterBibTeX.DB.query('delete from keys');
+                Zotero.Items.emptyTrash();
                 return retval;
             },
             import: function (filename) {
@@ -957,22 +961,12 @@ Zotero.BetterBibTeX = {
                 Zotero.BetterBibTeX.DebugBridge.data.setPref(name, value);
             },
             select: function (attribute, value) {
-                for (;;) {
-                    // this will contain any let statements to the block scope
-                    let items = Zotero.BetterBibTeX.safeGetAll();
-                    let length = items.length;
-                    let item = null;
-                    let i;
-                    for (i = 0; i < length; i++) {
-                        item = items[i];
-                        Zotero.BetterBibTeX.log('item: ' + item.id);
-                    }
-                    items = undefined;
-                    break;
-                }
                 attribute = attribute.replace(/[^a-zA-Z]/, '');
                 var sql = '' + 'select i.itemID as itemID ' + 'from items i ' + 'join itemData id on i.itemID = id.itemID ' + 'join itemDataValues idv on idv.valueID = id.valueID ' + 'join fields f on id.fieldID = f.fieldID  ' + 'where f.fieldName = \'' + attribute + '\' and not i.itemID in (select itemID from deletedItems) and idv.value = ?';
                 return Zotero.DB.valueQuery(sql, [value]);
+            },
+            remove: function (id) {
+                Zotero.Items.trash([id]);
             },
             pinCiteKey: function (id) {
                 Zotero.BetterBibTeX.clearKey({ itemID: id }, true);
