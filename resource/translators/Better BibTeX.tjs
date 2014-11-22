@@ -246,6 +246,19 @@ function createZoteroReference(bibtexitem) {
     if (fieldMap[field]) {
       item[fieldMap[field]] = value;
 
+    } else if (field == 'subtitle') {
+      if (!item.title) item.title = '';
+      item.title = item.title.trim();
+      value = value.trim();
+   
+      if (!/[-–—:!?.;]$/.test(item.title) && !/^[-–—:.;¡¿]/.test(value)) {
+        item.title += ': ';
+      } else if (item.title.length) {
+        item.title += ' ';
+      }
+   
+      item.title += value;
+
     } else if (field == 'journal') {
       if (item.publicationTitle) {
         item.journalAbbreviation = value;
