@@ -15,6 +15,62 @@ require 'rubygems/package'
 require 'zlib'
 require 'open3'
 require 'yaml'
+require 'rake/loaders/makefile'
+
+def expand(file, options={})
+  dependencies = []
+
+  puts "expanding #{file.path.gsub(/^\.\//, '').inspect}"
+  src = file.read
+  src.gsub!(/(^|\n)require\s+'([^'\n]+)'[^\n]*/) {
+    tbi = $2.strip
+    puts "including #{tbi.inspect}"
+    rbi = File.join(File.dirname(file.path), tbi)
+    dependencies << tbi
+    result = expand(open(tbi), options)
+    if result.is_a?(Array)
+      dependencies << result[1]
+      result = result[0]
+    end
+    result
+  }
+  return [src, dependencies.flatten.uniq] if options[:collect]
+  return src
+end
+
+SOURCES = [
+  'chrome.manifest',
+  'chrome/content/zotero-better-bibtex/include.js',
+  'chrome/content/zotero-better-bibtex/overlay.xul',
+  'chrome/content/zotero-better-bibtex/preferences.js',
+  'chrome/content/zotero-better-bibtex/preferences.xul',
+  'chrome/content/zotero-better-bibtex/zotero-better-bibtex.js',
+  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
+  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.properties',
+  'chrome/skin/default/zotero-better-bibtex/overlay.css',
+  'chrome/skin/default/zotero-better-bibtex/prefs.png',
+  'defaults/preferences/defaults.js',
+  'install.rdf',
+  'resource/translators/Better BibLaTeX.js',
+  'resource/translators/Better BibTeX.js',
+  'resource/translators/LaTeX Citation.js',
+  'resource/translators/Pandoc Citation.js',
+  'resource/translators/Zotero TestCase.js',
+]
+
+file '.depends.mf' => SOURCES do |t|
+  open(t.name, 'w'){|d|
+    t.prerequisites.each{|js|
+      next unless File.extname(js) == '.js'
+      ls = js.sub(/\.js$/, '.ls')
+      dependencies = expand(open(ls), collect: true)[1]
+      dependencies.unshift(ls)
+      d.write("#{js.shellescape}: #{dependencies.collect{|d| d.shellescape }.join(' ')}\n")
+    }
+  }
+end
+
+import '.depends.mf'
 
 FileUtils.mkdir_p 'tmp'
 
@@ -29,6 +85,7 @@ class String
     Shellwords.escape(self)
   end
 end
+
 
 SOURCES = [
   MD5[:file].sub('0.0.0', MD5[:version]),
@@ -47,24 +104,35 @@ rule '.js' => '.pegjs' do |t|
   sh "pegjs -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{t.source} #{t.name}"
 end
 
+rule '.tls' => '.yml' do |t|
+  FileUtils.touch(t.name)
+  Rake::Task[t.name.sub(/\.tjs$/, '.js')].reenable
+  Rake::Task[t.name.sub(/\.tjs$/, '.js')].invoke
+end
+
+rule '.js' => '.ls' do |t|
+  output, status = Open3.capture2e("lsc -bpc", stdin_data: expand(open(t.source)))
+  raise output if status.exitstatus != 0
+
+  header = ''
+  output.gsub!(/\n\/\*=(.*)=\*\//m) { header = "#{$1.strip}\n"; '' }
+
+  open(t.name, 'w') {|target|
+    target.write(header + output)
+  }
+end
+
 rule '.js' => ['.sjs', MACROS] do |t|
   sh "#{SWEET} --module ./#{MACROS} --output #{t.name.shellescape} #{t.source.shellescape}"
 end
 
-HAXE_TMP = File.expand_path('tmp/haxe')
-HAXE_SHARED = File.expand_path('www/haxe')
-HAXE_INCLUDES = []
-rule '.js' => ['.hx'] + HAXE_INCLUDES do |t|
-  sh "haxe --cwd #{File.dirname(File.expand_path(t.source)).shellescape} -cp #{HAXE_SHARED.shellescape} -cp #{HAXE_TMP.shellescape} -D js-classic -js #{File.basename(t.name).shellescape} #{File.basename(t.source).shellescape}"
-end
-
-def expand(f)
-  src = f.read
-  %w{" '}.each{|q|
-    src.gsub!(/\/\/\s*@include\s*#{q}([^#{q}]+)#{q}/){
-      puts "Including #{$1.inspect}"
-      expand(open(File.join(File.dirname(f.path), $1)))
-    }
+def expand(file)
+  puts "expanding #{file.path.gsub(/^\.\//, '').inspect}"
+  src = file.read
+  src.gsub!(/(^|\n)require\s+'([^'\n]+)'[^\n]*/) {
+    tbi = $2.strip
+    puts "including #{tbi.inspect}"
+    expand(open(File.join(File.dirname(file.path), tbi)))
   }
   return src
 end
