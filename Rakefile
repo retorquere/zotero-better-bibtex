@@ -23,14 +23,32 @@ def expand(file, options={})
   puts "expanding #{file.path.gsub(/^\.\//, '').inspect}"
   src = file.read
   src.gsub!(/(^|\n)require\s+'([^'\n]+)'[^\n]*/) {
+    all = $0
     tbi = $2.strip
     puts "including #{tbi.inspect}"
-    rbi = File.join(File.dirname(file.path), tbi)
-    dependencies << tbi
-    result = expand(open(tbi), options)
-    if result.is_a?(Array)
-      dependencies << result[1]
-      result = result[0]
+
+    if tbi =~ /^js:/
+      result = all
+      dependencies << tbi.sub(/^js:/)
+    else
+      if tbi == ':constants:'
+        throw "No header information present" unless options[:header]
+        result = []
+        result << "Translator.id        = #{header['translatorID'].to_json}"
+        result << "Translator.label     = #{header['label'].to_json}"
+        result << "Translator.timestamp = #{header['lastUpdated'].to_json}"
+        result << "Translator.release   = #{RELEASE.to_json}"
+        result << "Translator.unicode   = #{(!(((header['displayOptions'] || {})['exportCharset'] || 'ascii').downcase =~ /ascii/)).to_json}"
+        result = result.join("\n")
+      else
+        tbi = File.join(File.dirname(file.path), tbi)
+        dependencies << tbi
+        result = expand(open(tbi), options)
+        if result.is_a?(Array)
+          dependencies << result[1]
+          result = result[0]
+        end
+      end
     end
     result
   }
@@ -38,7 +56,7 @@ def expand(file, options={})
   return src
 end
 
-SOURCES = [
+ZIPFILES = [
   'chrome.manifest',
   'chrome/content/zotero-better-bibtex/include.js',
   'chrome/content/zotero-better-bibtex/overlay.xul',
@@ -58,13 +76,45 @@ SOURCES = [
   'resource/translators/Zotero TestCase.js',
 ]
 
-file '.depends.mf' => SOURCES do |t|
+SOURCES = [
+  #'chrome/content/zotero-better-bibtex/auto-export.ls',
+  'chrome/content/zotero-better-bibtex/Formatter.pegjs',
+  'chrome/content/zotero-better-bibtex/include.ls',
+  'chrome/content/zotero-better-bibtex/overlay.xul',
+  'chrome/content/zotero-better-bibtex/preferences.ls',
+  'chrome/content/zotero-better-bibtex/preferences.xul',
+  'chrome/content/zotero-better-bibtex/zotero-better-bibtex.ls',
+  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
+  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.properties',
+  'chrome.manifest',
+  'chrome/skin/default/zotero-better-bibtex/overlay.css',
+  'chrome/skin/default/zotero-better-bibtex/prefs.png',
+  'defaults/preferences/defaults.ls',
+  'install.rdf',
+  'Rakefile',
+  'resource/translators/Better BibLaTeX.ls',
+  'resource/translators/Better BibTeX.ls',
+  'resource/translators/import.ls',
+  'resource/translators/LaTeX Citation.ls',
+  'resource/translators/Pandoc Citation.ls',
+  'resource/translators/Parser.pegjs',
+  'resource/translators/translator.ls',
+  'resource/translators/unicode_mapping.ls',
+  'resource/translators/Zotero TestCase.ls',
+  'tmp/unicode.xml',
+  'unicode.xsl',
+  'update.rdf',
+]
+
+file '.depends.mf' => ZIPFILES do |t|
   open(t.name, 'w'){|d|
     t.prerequisites.each{|js|
       next unless File.extname(js) == '.js'
       ls = js.sub(/\.js$/, '.ls')
+      yml = js.sub(/\.js$/, '.yml')
       dependencies = expand(open(ls), collect: true)[1]
       dependencies.unshift(ls)
+      dependencies.unshift(yml) if File.file?(yml)
       d.write("#{js.shellescape}: #{dependencies.collect{|d| d.shellescape }.join(' ')}\n")
     }
   }
@@ -74,117 +124,42 @@ import '.depends.mf'
 
 FileUtils.mkdir_p 'tmp'
 
-UNICODE_MAPPING = "tmp/unicode.json"
-UNICODE_MAPPING_JS = "resource/translators/unicode_mapping.js"
-MD5 = {file: 'tmp/md5-0.0.0.js', url: 'http://crypto-js.googlecode.com/svn/tags/0.0.0/build/rollups/md5.js', version: '3.1.2'}
-SWEET = "sjs --readable-names"
-MACROS = 'sweet/macros.js'
-
 class String
   def shellescape
     Shellwords.escape(self)
   end
 end
 
-
-SOURCES = [
-  MD5[:file].sub('0.0.0', MD5[:version]),
-  Dir['./**/*.tjs'].collect{|f| f.sub(/\.tjs$/, '.js') },
-  Dir['./**/*.sjs'].collect{|f| f.sub(/\.sjs$/, '.js') },
-  Dir['./**/*.js'],
-  Dir['./**/*.pegjs'].collect{|f| f.sub(/\.pegjs$/, '.js') }
-].flatten.collect{|f| f.sub(/^\.\//, '') }.reject{|f| f =~ /^(sweet|www|node_modules|tmp|features)\// }.uniq.sort
 require 'zotplus-rakehelper'
-ZIPFILES = [
-  SOURCES.reject{|f| f =~ /(^resource\/)|(Parser\.js$)|(\..+js$)/ },
-  Dir['resource/translators/*.tjs'].collect{|f| f.sub(/\.tjs$/, '.js') }
-].flatten.uniq.sort
 
 rule '.js' => '.pegjs' do |t|
   sh "pegjs -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{t.source} #{t.name}"
 end
 
-rule '.tls' => '.yml' do |t|
-  FileUtils.touch(t.name)
-  Rake::Task[t.name.sub(/\.tjs$/, '.js')].reenable
-  Rake::Task[t.name.sub(/\.tjs$/, '.js')].invoke
-end
-
 rule '.js' => '.ls' do |t|
-  output, status = Open3.capture2e("lsc -bpc", stdin_data: expand(open(t.source)))
+  header = t.source.sub(/\.ls$/, '.yml')
+  if File.file?(header)
+    header = YAML.load_file(header)
+    header['lastUpdated'] = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
+  else
+    header = nil
+  end
+
+  output, status = Open3.capture2e("lsc -bpc", stdin_data: expand(open(t.source), header: header))
   raise output if status.exitstatus != 0
 
-  header = ''
-  output.gsub!(/\n\/\*=(.*)=\*\//m) { header = "#{$1.strip}\n"; '' }
+  # include javascript generated from pegjs
+  output.gsub!(/(^|\n)require\s+'js:([^'\n]+)'[^\n]*/) {
+    tbi = $2.strip
+    puts "Importing javascript: #{tbi}"
+    tbi = File.join(File.dirname(t.source), tbi)
+    open(tbi).read
+  }
 
   open(t.name, 'w') {|target|
+    header = header ? JSON.pretty_generate(header) + "\n" : ''
     target.write(header + output)
   }
-end
-
-rule '.js' => ['.sjs', MACROS] do |t|
-  sh "#{SWEET} --module ./#{MACROS} --output #{t.name.shellescape} #{t.source.shellescape}"
-end
-
-def expand(file)
-  puts "expanding #{file.path.gsub(/^\.\//, '').inspect}"
-  src = file.read
-  src.gsub!(/(^|\n)require\s+'([^'\n]+)'[^\n]*/) {
-    tbi = $2.strip
-    puts "including #{tbi.inspect}"
-    expand(open(File.join(File.dirname(file.path), tbi)))
-  }
-  return src
-end
-
-rule '.js' => ['.tjs', MACROS, UNICODE_MAPPING_JS, 'resource/translators/import.js', 'resource/translators/Parser.js', 'resource/translators/translator.js'] do |t|
-  js = File.open(t.source, 'r').read
-
-  header = nil
-  start = js.index('{')
-  length = 2
-  while start && length < 1024
-    begin
-      header = JSON.parse(js[start, length])
-      break
-    rescue JSON::ParserError
-      header = nil
-      length += 1
-    end
-  end
-
-  raise "No header in #{@template}" unless header
-
-  js = js[start + length, js.length]
-
-  timestamp = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
-  header['lastUpdated'] = timestamp
-  constants = "./tmp/sweet/#{File.basename(t.name, File.extname(t.name))}/header.sjs"
-  FileUtils.mkdir_p(File.dirname(constants))
-  open(constants, 'w') {|f|
-    f.write("
-      macro TranslatorInfo {
-        rule { $[.id] }         => { #{header['translatorID'].to_json} }
-        rule { $[.label] }      => { #{header['label'].to_json} }
-        rule { $[.timestamp] }  => { #{timestamp.to_json} }
-        rule { $[.release] }    => { #{RELEASE.to_json} }
-        rule { $[.unicode] }    => { #{(!(((header['displayOptions'] || {})['exportCharset'] || 'ascii').downcase =~ /ascii/)).to_json} }
-      }
-      export TranslatorInfo
-    ")
-  }
-
-  expanded = "./tmp/sweet/#{File.basename(t.name, File.extname(t.name))}/expanded.sjs"
-  #Tempfile.open('bundle') do |bundle|
-  open(expanded, 'w') do |bundle|
-    bundle.write(expand(OpenStruct.new(path: t.source, read: js.dup)))
-    bundle.close
-    sh "#{SWEET} --module ./#{MACROS} --module #{constants.shellescape} --output #{t.name.shellescape} #{expanded.shellescape}"
-    src = JSON.pretty_generate(header) + "\n\n'use strict';\n" + open(t.name).read
-    open(t.name, 'w'){|f| f.write(src) }
-  end
-
-  FileUtils.cp(t.name, File.join('tmp', File.basename(t.name)))
 end
 
 task :test, [:tag] => XPI do |t, args|
@@ -227,42 +202,61 @@ task :dropbox => XPI do
   FileUtils.cp(XPI, File.join(dropbox, XPI))
 end
 
-#### GENERATED FILES
+file 'tmp/unicode.xml' do |t|
+  ZotPlus::RakeHelper.download('http://web.archive.org/web/20131109072541/http://www.w3.org/2003/entities/2007xml/unicode.xml', t.name)
+end
 
-class Hash
- 
-  def deep_diff(b)
-    a = self
-    (a.keys | b.keys).inject({}) do |diff, k|
-      if (a[k] || []) != (b[k] || []) && (a[k] || '') != (b[k] || '')
-        if a[k].respond_to?(:deep_diff) && b[k].respond_to?(:deep_diff)
-          diff[k] = a[k].deep_diff(b[k])
-        elsif a[k].is_a?(Array) && b[k].is_a?(Array)
-          extra = a[k] - b[k]
-          missing = b[k] - a[k]
-          if extra.empty? && missing.empty?
-            diff[k] = {order: a[k]}
-          else
-            diff[k] = {missing: missing, extra: extra}
-          end
-        else
-          diff[k] = [a[k], b[k]]
-        end
-      end
-      diff
+file 'resource/translators/unicode_mapping.ls' => 'tmp/unicode.xml' do |t|
+  mapping = Nokogiri::XML(open(t.source))
+
+  mapping.at('//charlist') << "
+    <character id='U0026' dec='38' mode='text' type='punctuation'><latex>\\&</latex></character>
+    <character id='UFFFD' dec='239-191-189' mode='text' type='punctuation'><latex>\\dbend</latex></character>
+  "
+
+  {
+    "\\textdollar"        => "\\$",
+    "\\textquotedblleft"  => "``",
+    "\\textquotedblright" => "''",
+    "\\textasciigrave"    => "`",
+    "\\textquotesingle"   => "'",
+    "\\space"             => ' '
+  }.each_pair{|ist, soll|
+    nodes = mapping.xpath(".//latex[normalize-space(text())='#{ist}']")
+    next unless nodes
+    nodes.each{|node| node.content = soll }
+  }
+
+  mapped = {}
+  mapping.xpath('//character[@dec and latex]').each{|char|
+    id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
+    key = id.pack('U' * id.size)
+    value = char.at('.//latex').inner_text
+    mathmode = (char['mode'] == 'math')
+
+    case key
+      when '[', ']'
+        value = "{#{key}}"
+        mathmode = false
+      when '_', '}', '{'
+        value = "\\" + key
+        mathmode = false
+      when "\u00A0"
+        value = ' '
+        mathmode = false
     end
-  end
- 
-end
 
-file MD5[:file].sub('0.0.0', MD5[:version]) do
-  Dir[MD5[:file].sub('0.0.0', '*')].each{|f| File.unlink?(f) }
-  ZotPlus::RakeHelper.download(MD5[:url].sub('0.0.0', MD5[:version]), MD5[:file].sub('0.0.0', MD5[:version]))
-end
+    next if key =~ /^[\x20-\x7E]$/ && ! %w{# $ % & ~ _ ^ { } [ ] > < \\}.include?(key)
+    next if key == value && !mathmode
 
-file UNICODE_MAPPING_JS => UNICODE_MAPPING do |t|
-  mapping = JSON.parse(open(t.source).read)
+    # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to 
+    # \combinecommand{X}
+    #raise value if value =~ /LECO/
 
+    mapped[key] = {latex: value, math: mathmode}
+  }
+
+  # TODO
   u2l = {
     unicode: {
       math: [],
@@ -350,69 +344,6 @@ file UNICODE_MAPPING_JS => UNICODE_MAPPING do |t|
   }
 end
 
-file UNICODE_MAPPING => 'Rakefile' do |t|
-  begin
-    xml = File.join(File.dirname(t.name), File.basename(t.name, File.extname(t.name)) + '.xml')
-    ZotPlus::RakeHelper.download('http://web.archive.org/web/20131109072541/http://www.w3.org/2003/entities/2007xml/unicode.xml', xml)
-
-    mapping = Nokogiri::XML(open(xml))
-    puts mapping.errors
-
-    mapping.at('//charlist') << "
-      <character id='U0026' dec='38' mode='text' type='punctuation'><latex>\\&</latex></character>
-      <character id='UFFFD' dec='239-191-189' mode='text' type='punctuation'><latex>\\dbend</latex></character>
-    "
-
-    {
-      "\\textdollar"        => "\\$",
-      "\\textquotedblleft"  => "``",
-      "\\textquotedblright" => "''",
-      "\\textasciigrave"    => "`",
-      "\\textquotesingle"   => "'",
-      "\\space"             => ' '
-    }.each_pair{|ist, soll|
-      nodes = mapping.xpath(".//latex[normalize-space(text())='#{ist}']")
-      next unless nodes
-      nodes.each{|node| node.content = soll }
-    }
-
-    json = {}
-    mapping.xpath('//character[@dec and latex]').each{|char|
-      id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
-      key = id.pack('U' * id.size)
-      value = char.at('.//latex').inner_text
-      mathmode = (char['mode'] == 'math')
-
-      case key
-        when '[', ']'
-          value = "{#{key}}"
-          mathmode = false
-        when '_', '}', '{'
-          value = "\\" + key
-          mathmode = false
-        when "\u00A0"
-          value = ' '
-          mathmode = false
-      end
-
-      next if key =~ /^[\x20-\x7E]$/ && ! %w{# $ % & ~ _ ^ { } [ ] > < \\}.include?(key)
-      next if key == value && !mathmode
-
-      # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to 
-      # \combinecommand{X}
-      #raise value if value =~ /LECO/
-
-      json[key] = {latex: value, math: mathmode}
-    }
-
-    #File.open(t.name,'w') {|f| mapping.write_xml_to f}
-    File.open(t.name,'w') {|f| f.write(json.to_json) }
-  rescue => e
-    File.rename(t.name, t.name + '.err') if File.exists?(t.name)
-    throw e
-  end
-end
-
 task :markfailing do
   tests = false
 
@@ -458,109 +389,4 @@ task :markfailing do
 
     open(file, 'w'){|f| f.write(script) }
   }
-end
-
-### UTILS
-
-task :macros do
-  output = 'tmp/macros-test.js'
-  sh "#{SWEET} --module ./#{MACROS} --output #{output} #{File.join(File.dirname(MACROS), 'tests.js')}"
-  sh "jshint #{output}"
-end
-
-task :fields do
-  fields = IO.readlines('../zotero/chrome/locale/en-US/zotero/zotero.properties').collect{|line|
-    m = line.match(/itemFields\.([a-zA-Z]+)/)
-    if m
-      m[1]
-    else
-      nil
-    end
-  }.compact
-  fields << 'month'
-  fields.sort!{|a, b| a.downcase <=> b.downcase}
-  fieldwidth = fields.collect{|f| f.size}.max
-
-  columns = 4
-  puts '| ' + ([' ' * fieldwidth] * columns).join(' | ') + ' |'
-  puts '| ' + (['-' * fieldwidth] * columns).join(' | ') + ' |'
-  fields.each_slice(columns){|row|
-    puts '| ' + (row + ([''] * columns))[0..columns-1].collect{|f| f.ljust(fieldwidth) }.join(' | ') + ' |'
-  }
-end
-
-task :abbrevs do
-  dbname = "tmp/abbreviations.sqlite"
-  File.unlink(dbname) if File.file?(dbname)
-  db = SQLite3::Database.new(dbname)
-  db.execute('PRAGMA temp_store=MEMORY;')
-  db.execute('PRAGMA journal_mode=MEMORY;')
-  db.execute('PRAGMA synchronous = OFF;')
-
-  db.execute('create table journalAbbreviationLists (id primary key, name unique, precedence not null)')
-  db.execute('create table journalAbbreviations (list not null, full not null, abbrev not null, primary key(list, full))');
-
-  # more candidates:
-  # http://journal-abbreviations.library.ubc.ca/dump.php
-  # http://www.ncbi.nlm.nih.gov/books/NBK3827/table/pubmedhelp.pubmedhelptable45/
-  # http://www.cas.org/content/references/corejournals
-  # http://www.efm.leeds.ac.uk/~mark/ISIabbr/
-  # http://www.csa.com/factsheets/supplements/ipa.php
-
-  lists = Nokogiri::HTML(ZotPlus::RakeHelper.geturl('http://jabref.sourceforge.net/resources.php'))
-  main = lists.at_css('div#main')
-  main.children.each{|child|
-    break if child.name == 'h3' && child['id'] == 'availablelists'
-    child.unlink
-  }
-  main.at_css('ul').css('li').each_with_index{|li, id|
-    link = li.at_css('a')
-    title = link.inner_text
-    href = link['href']
-
-    db.execute('insert into journalAbbreviationLists (id, name, precedence) values (?, ?, ?)', id, title, id)
-
-    href = "http://jabref.sourceforge.net/#{href}" unless href =~ /https?:\/\//
-    tgt = "tmp/abbreviations/#{id.to_s.rjust(2,'0')}-#{href.sub(/.*\//, '')}"
-    ZotPlus::RakeHelper.download(href, tgt)
-  }
-  Dir["#tmp/abbreviations/*"].sort.each{|a|
-    puts "importing #{a}"
-    id = File.basename(a).sub(/-.*/, '').gsub(/^0+/, '')
-    id = '0' if id == ''
-    id = Integer(id)
-
-    IO.readlines(a).each{|line|
-      begin
-        next if line =~ /^#/
-        next unless line =~ /=/
-        full, abbr = *(line.split('=', 2).collect{|v| v.strip})
-        abbr.sub!(/;.*/, '')
-        next if full.downcase == abbr.downcase
-        db.execute('insert or ignore into journalAbbreviations (list, full, abbrev) values (?, ?, ?)', id, full.downcase, abbr)
-      rescue ArgumentError
-      end
-    }
-  }
-  puts "#{db.get_first_value('select count(*) from journalAbbreviations')} abbreviations"
-  db.close
-
-  File.open('resource/abbreviations.sql', 'w'){|f|
-    StringIO.new(`sqlite3 #{dbname} .dump`).readlines.each{|line|
-      next unless line =~ /^(CREATE|INSERT)/
-      line.sub!(/^CREATE TABLE /, 'CREATE TABLE betterbibtex.')
-      line.sub!(/^INSERT INTO "([^"]+)"/, "INSERT INTO betterbibtex.\\1")
-      f.write(line)
-    }
-  }
-end
-
-def format(m)
-  rjust = 'WARNING'.length
-  indent = ' ' * (rjust + ': '.length)
-
-  level = m.level.rjust(rjust, ' ')
-  msg = m.message.strip.gsub("\n", "\n" + indent)
-
-  "#{level}: #{msg}"
 end
