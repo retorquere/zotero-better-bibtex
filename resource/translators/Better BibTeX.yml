@@ -1,0 +1,17 @@
+translatorID: "ca65189f-8815-4afe-8c8b-8c7c15f0edca"
+label: "Better BibTeX"
+creator: "Simon Kornblith, Richard Karnesky and Emiliano heyns"
+target: bib
+minVersion: "2.1.9"
+maxVersion: ""
+priority: 199
+configOptions: 
+  getCollections: true
+displayOptions: 
+  exportNotes: true
+  exportFileData: false
+  useJournalAbbreviation: false
+  "Export Collections": true
+inRepository: true
+translatorType: 3
+browserSupport: gcsv
