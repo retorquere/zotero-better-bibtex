@@ -160,7 +160,7 @@ JabRef.exportGroup = (collection, level) ->
 
 Reference = (item) ->
   @fields = []
-  @added = Object.create(null)
+  @has = Object.create(null)
   @raw = ([tag.tag for tag in item.tags when tag.tag == Translator.rawLaTeXTag].length >= 0)
 
   @itemtype = Translator.typeMap.Zotero2BibTeX[item.itemType] or 'misc'
@@ -181,7 +181,7 @@ Reference = (item) ->
         @add field
 
   for own attr, f of Translator.fieldMap or {}
-    if f.name and not @added[f.name]
+    if f.name and not @has[f.name]
       @add(@field(f, item[attr]))
 
 Reference::field = (f, value) ->
@@ -284,7 +284,7 @@ Reference::add = (field) ->
 
   field.bibtex = "  #{field.name} = #{value}"
   @fields.push field
-  @added[field.name] = true
+  @has[field.name] = true
 
 Reference::complete = ->
   @add({name: 'type', value: @itemtype}) if @fields.length == 0
