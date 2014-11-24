@@ -27,27 +27,25 @@ def expand(file, options={})
     tbi = $2.strip
     puts "including #{tbi.inspect}"
 
-    if tbi =~ /^js:/
+    if tbi =~ /^\.js$/
       result = all
-      dependencies << tbi.sub(/^js:/)
+      dependencies << tbi
+    elsif tbi == ':constants:'
+      throw "No header information present" unless options[:header]
+      result = []
+      result << "Translator.id        = #{options[:header]['translatorID'].to_json}"
+      result << "Translator.label     = #{options[:header]['label'].to_json}"
+      result << "Translator.timestamp = #{options[:header]['lastUpdated'].to_json}"
+      result << "Translator.release   = #{RELEASE.to_json}"
+      result << "Translator.unicode   = #{(!(((options[:header]['displayOptions'] || {})['exportCharset'] || 'ascii').downcase =~ /ascii/)).to_json}"
+      result = result.join("\n")
     else
-      if tbi == ':constants:'
-        throw "No header information present" unless options[:header]
-        result = []
-        result << "Translator.id        = #{header['translatorID'].to_json}"
-        result << "Translator.label     = #{header['label'].to_json}"
-        result << "Translator.timestamp = #{header['lastUpdated'].to_json}"
-        result << "Translator.release   = #{RELEASE.to_json}"
-        result << "Translator.unicode   = #{(!(((header['displayOptions'] || {})['exportCharset'] || 'ascii').downcase =~ /ascii/)).to_json}"
-        result = result.join("\n")
-      else
-        tbi = File.join(File.dirname(file.path), tbi)
-        dependencies << tbi
-        result = expand(open(tbi), options)
-        if result.is_a?(Array)
-          dependencies << result[1]
-          result = result[0]
-        end
+      tbi = File.join(File.dirname(file.path), tbi)
+      dependencies << tbi
+      result = File.file?(tbi) || !options[:collect] ? expand(open(tbi), options) : ''
+      if result.is_a?(Array)
+        dependencies << result[1]
+        result = result[0]
       end
     end
     result
@@ -94,32 +92,34 @@ SOURCES = [
   'Rakefile',
   'resource/translators/Better BibLaTeX.ls',
   'resource/translators/Better BibTeX.ls',
-  'resource/translators/import.ls',
   'resource/translators/LaTeX Citation.ls',
   'resource/translators/Pandoc Citation.ls',
   'resource/translators/Parser.pegjs',
   'resource/translators/translator.ls',
-  'resource/translators/unicode_mapping.ls',
+  'resource/translators/latex_unicode_mapping.ls',
   'resource/translators/Zotero TestCase.ls',
   'tmp/unicode.xml',
   'unicode.xsl',
   'update.rdf',
 ]
 
-file '.depends.mf' => ZIPFILES do |t|
+file '.depends.mf' => SOURCES do |t|
   open(t.name, 'w'){|d|
-    t.prerequisites.each{|js|
-      next unless File.extname(js) == '.js'
-      ls = js.sub(/\.js$/, '.ls')
-      yml = js.sub(/\.js$/, '.yml')
-      dependencies = expand(open(ls), collect: true)[1]
-      dependencies.unshift(ls)
-      dependencies.unshift(yml) if File.file?(yml)
-      d.write("#{js.shellescape}: #{dependencies.collect{|d| d.shellescape }.join(' ')}\n")
+    t.prerequisites.each{|src|
+      next unless %w{.yml .ls .pegjs}.include?(File.extname(src))
+      tgt = File.join(File.dirname(src), File.basename(src, File.extname(src)) + '.js')
+
+      if src =~ /\.ls$/
+        dependencies = expand(open(src), collect: true)[1]
+      else
+        dependencies = []
+      end
+      dependencies.unshift(src)
+
+      d.write("#{tgt.shellescape}: #{dependencies.collect{|d| d.shellescape }.join(' ')}\n")
     }
   }
 end
-
 import '.depends.mf'
 
 FileUtils.mkdir_p 'tmp'
@@ -145,11 +145,13 @@ rule '.js' => '.ls' do |t|
     header = nil
   end
 
-  output, status = Open3.capture2e("lsc -bpc", stdin_data: expand(open(t.source), header: header))
+  tmp = "tmp/#{File.basename(t.source)}"
+  open(tmp, 'w'){|f| f.write(expand(open(t.source), header: header)) }
+  output, status = Open3.capture2e("lsc -bpc #{tmp.shellescape}")
   raise output if status.exitstatus != 0
 
   # include javascript generated from pegjs
-  output.gsub!(/(^|\n)require\s+'js:([^'\n]+)'[^\n]*/) {
+  output.gsub!(/(^|\n)require\('js:([^'\n]+)'\);[^\n]*/) {
     tbi = $2.strip
     puts "Importing javascript: #{tbi}"
     tbi = File.join(File.dirname(t.source), tbi)
@@ -206,10 +208,10 @@ file 'tmp/unicode.xml' do |t|
   ZotPlus::RakeHelper.download('http://web.archive.org/web/20131109072541/http://www.w3.org/2003/entities/2007xml/unicode.xml', t.name)
 end
 
-file 'resource/translators/unicode_mapping.ls' => 'tmp/unicode.xml' do |t|
-  mapping = Nokogiri::XML(open(t.source))
+file 'resource/translators/latex_unicode_mapping.ls' => 'tmp/unicode.xml' do |t|
+  map = Nokogiri::XML(open(t.source))
 
-  mapping.at('//charlist') << "
+  map.at('//charlist') << "
     <character id='U0026' dec='38' mode='text' type='punctuation'><latex>\\&</latex></character>
     <character id='UFFFD' dec='239-191-189' mode='text' type='punctuation'><latex>\\dbend</latex></character>
   "
@@ -222,13 +224,13 @@ file 'resource/translators/unicode_mapping.ls' => 'tmp/unicode.xml' do |t|
     "\\textquotesingle"   => "'",
     "\\space"             => ' '
   }.each_pair{|ist, soll|
-    nodes = mapping.xpath(".//latex[normalize-space(text())='#{ist}']")
+    nodes = map.xpath(".//latex[normalize-space(text())='#{ist}']")
     next unless nodes
     nodes.each{|node| node.content = soll }
   }
 
-  mapped = {}
-  mapping.xpath('//character[@dec and latex]').each{|char|
+  mapping = {}
+  map.xpath('//character[@dec and latex]').each{|char|
     id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
     key = id.pack('U' * id.size)
     value = char.at('.//latex').inner_text
@@ -253,10 +255,9 @@ file 'resource/translators/unicode_mapping.ls' => 'tmp/unicode.xml' do |t|
     # \combinecommand{X}
     #raise value if value =~ /LECO/
 
-    mapped[key] = {latex: value, math: mathmode}
+    mapping[key] = {latex: value, math: mathmode}
   }
 
-  # TODO
   u2l = {
     unicode: {
       math: [],
@@ -322,26 +323,40 @@ file 'resource/translators/unicode_mapping.ls' => 'tmp/unicode.xml' do |t|
     u2l[map][:text] = '/' + u2l[map][:map].keys.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('|') + '/g'
   }
 
-  open(t.name, 'w'){|f|
-    f.write("
-      var LaTeX = {
-        regex: {
-          unicode: {
-            math: #{u2l[:unicode][:math]},
-            text: #{u2l[:unicode][:text]}
-          },
+  l2u["\\url"] = '';
+  l2u["\\href"] = '';
 
-          ascii: {
-            math: #{u2l[:ascii][:math]},
-            text: #{u2l[:ascii][:text]}
-          }
-        },
-
-        toLaTeX: #{JSON.pretty_generate(u2l[:ascii][:map])},
-        toUnicode: #{JSON.pretty_generate(l2u)}
-      };
-    ")
+  ls = {
+    LaTeX_regex: {
+      unicode: {
+        math: u2l[:unicode][:math],
+        text: u2l[:unicode][:text]
+      },
+      ascii: {
+        math: u2l[:ascii][:math],
+        text: u2l[:ascii][:text]
+      },
+    },
+    LaTeX_toLaTeX: u2l[:ascii][:map],
+    LaTeX_toUnicode: l2u
   }
+
+  tols = lambda do |hash, indent = ''|
+    ls = ''
+    hash.each_pair{|k, v|
+      ls += "#{indent}#{k.to_s.sub('_', '.')} ="
+      if v.is_a?(Hash)
+        ls += "\n" + tols.call(v, indent + '  ')
+      elsif v =~ /&\//
+        ls += " #{v}\n"
+      else
+        ls += " #{v.inspect}\n"
+      end
+    }
+    return ls
+  end
+
+  open(t.name, 'w'){|f| f.write(tols.call(ls)) }
 end
 
 task :markfailing do
