@@ -117,7 +117,7 @@ doExport = ->
 
 ## import
 
-require 'js:Parser.js'
+require 'Parser.js'
 
 detectImport = ->
   try

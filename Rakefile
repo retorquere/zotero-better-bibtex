@@ -20,26 +20,33 @@ require 'rake/loaders/makefile'
 def expand(file, options={})
   dependencies = []
 
-  puts "expanding #{file.path.gsub(/^\.\//, '').inspect}"
+  #puts "expanding #{file.path.gsub(/^\.\//, '').inspect}"
   src = file.read
   src.gsub!(/(^|\n)require\s+'([^'\n]+)'[^\n]*/) {
-    all = $0
+    all = $&
     tbi = $2.strip
-    puts "including #{tbi.inspect}"
 
-    if tbi =~ /^\.js$/
+    if tbi =~ /\.js$/
+      #puts "registering #{tbi.inspect}"
       result = all
+      tbi = File.join(File.dirname(file.path), tbi)
       dependencies << tbi
     elsif tbi == ':constants:'
-      throw "No header information present" unless options[:header]
-      result = []
-      result << "Translator.id        = #{options[:header]['translatorID'].to_json}"
-      result << "Translator.label     = #{options[:header]['label'].to_json}"
-      result << "Translator.timestamp = #{options[:header]['lastUpdated'].to_json}"
-      result << "Translator.release   = #{RELEASE.to_json}"
-      result << "Translator.unicode   = #{(!(((options[:header]['displayOptions'] || {})['exportCharset'] || 'ascii').downcase =~ /ascii/)).to_json}"
-      result = result.join("\n")
+      #puts "expanding #{tbi.inspect}"
+      if options[:collect]
+        result = ''
+      else
+        throw "No header information present" unless options[:header]
+        result = []
+        result << "Translator.id        = #{options[:header]['translatorID'].to_json}"
+        result << "Translator.label     = #{options[:header]['label'].to_json}"
+        result << "Translator.timestamp = #{options[:header]['lastUpdated'].to_json}"
+        result << "Translator.release   = #{RELEASE.to_json}"
+        result << "Translator.unicode   = #{(!(((options[:header]['displayOptions'] || {})['exportCharset'] || 'ascii').downcase =~ /ascii/)).to_json}"
+        result = result.join("\n")
+      end
     else
+      #puts "including #{tbi.inspect}"
       tbi = File.join(File.dirname(file.path), tbi)
       dependencies << tbi
       result = File.file?(tbi) || !options[:collect] ? expand(open(tbi), options) : ''
@@ -99,28 +106,8 @@ SOURCES = [
   'resource/translators/latex_unicode_mapping.ls',
   'resource/translators/Zotero TestCase.ls',
   'tmp/unicode.xml',
-  'unicode.xsl',
   'update.rdf',
 ]
-
-file '.depends.mf' => SOURCES do |t|
-  open(t.name, 'w'){|d|
-    t.prerequisites.each{|src|
-      next unless %w{.yml .ls .pegjs}.include?(File.extname(src))
-      tgt = File.join(File.dirname(src), File.basename(src, File.extname(src)) + '.js')
-
-      if src =~ /\.ls$/
-        dependencies = expand(open(src), collect: true)[1]
-      else
-        dependencies = []
-      end
-      dependencies.unshift(src)
-
-      d.write("#{tgt.shellescape}: #{dependencies.collect{|d| d.shellescape }.join(' ')}\n")
-    }
-  }
-end
-import '.depends.mf'
 
 FileUtils.mkdir_p 'tmp'
 
@@ -147,11 +134,12 @@ rule '.js' => '.ls' do |t|
 
   tmp = "tmp/#{File.basename(t.source)}"
   open(tmp, 'w'){|f| f.write(expand(open(t.source), header: header)) }
+  puts "Compiling #{t.source}"
   output, status = Open3.capture2e("lsc -bpc #{tmp.shellescape}")
   raise output if status.exitstatus != 0
 
   # include javascript generated from pegjs
-  output.gsub!(/(^|\n)require\('js:([^'\n]+)'\);[^\n]*/) {
+  output.gsub!(/(^|\n)require\('([^'\n]+\.js)'\);[^\n]*/) {
     tbi = $2.strip
     puts "Importing javascript: #{tbi}"
     tbi = File.join(File.dirname(t.source), tbi)
@@ -271,6 +259,8 @@ file 'resource/translators/latex_unicode_mapping.ls' => 'tmp/unicode.xml' do |t|
 
   l2u = { }
 
+  throw "Nils?"
+
   mapping.each_pair{|key, repl|
     # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to 
     # \combinecommand{X}
@@ -341,22 +331,25 @@ file 'resource/translators/latex_unicode_mapping.ls' => 'tmp/unicode.xml' do |t|
     LaTeX_toUnicode: l2u
   }
 
-  tols = lambda do |hash, indent = ''|
-    ls = ''
-    hash.each_pair{|k, v|
-      ls += "#{indent}#{k.to_s.sub('_', '.')} ="
-      if v.is_a?(Hash)
-        ls += "\n" + tols.call(v, indent + '  ')
-      elsif v =~ /&\//
-        ls += " #{v}\n"
-      else
-        ls += " #{v.inspect}\n"
-      end
-    }
-    return ls
-  end
+  ls = []
+  ls << 'LaTeX.regex ='
+  ls << '  unicode:'
+  ls << "    math: #{u2l[:unicode][:math]}"
+  ls << "    text: #{u2l[:unicode][:text]}"
+  ls << '  ascii:'
+  ls << "    math: #{u2l[:ascii][:math]}"
+  ls << "    text: #{u2l[:ascii][:text]}"
+  ls << 'LaTeX.toLaTeX ='
+  u2l[:ascii][:map].each_pair{|k, v|
+  ls << "  #{k.inspect}: #{v.inspect}"
+  }
+  ls << 'LaTeX.toUnicode ='
+  l2u.each_pair{|k, v|
+  ls << "  #{k.inspect}: #{v.inspect}"
+  }
+  ls << ''
 
-  open(t.name, 'w'){|f| f.write(tols.call(ls)) }
+  open(t.name, 'w'){|f| f.write(ls.join("\n")) }
 end
 
 task :markfailing do
@@ -405,3 +398,31 @@ task :markfailing do
     open(file, 'w'){|f| f.write(script) }
   }
 end
+
+file '.depends.mf' => SOURCES do |t|
+  open(t.name, 'w'){|dmf|
+    dependencies = {}
+
+    t.prerequisites.each{|src|
+      next unless File.extname(src) == '.ls'
+      js = File.join(File.dirname(src), File.basename(src, File.extname(src)) + '.js')
+
+      yml = File.join(File.dirname(src), File.basename(src, File.extname(src)) + '.yml')
+      if File.file?(yml)
+        dependencies[yml] ||= []
+        dependencies[yml] << js
+      end
+
+      expand(open(src), collect: true)[1].each{|dep|
+        dependencies[dep] ||= []
+        dependencies[dep] << js
+      }
+    }
+
+    dependencies.each_pair{|dependency, dependants|
+      dmf.write("#{dependants.uniq.sort.collect{|d| d.shellescape }.join(' ')} : #{dependency.shellescape}\n")
+    }
+  }
+end
+import '.depends.mf'
+
