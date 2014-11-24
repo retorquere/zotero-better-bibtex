@@ -339,7 +339,7 @@ Zotero.BetterBibTeX.KeyManager::get = (item, pinmode) ->
     _item = {extra: '' + item.getField 'extra'}
     @extract _item
     extra = _item.extra.trim!
-    item.setField('extra', "#extra \nbibtex: #{citekey.citekey}"
+    item.setField('extra', "#extra \nbibtex: #{citekey.citekey}")
     item.save!
 
     Zotero.BetterBibTeX.DB.query 'delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID || 0, citekey.citekey]
