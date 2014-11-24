@@ -249,8 +249,9 @@ Language = new ->
 
 Language.get_bigrams = (string) ->
   s = string.toLowerCase!
-  s = [s.slice(i, i+2) for i in [1 to s.length]
+  s = [s.slice(i, i+2) for i in [1 to s.length]]
   s.sort!
+  return s
 
 Language.string_similarity = (str1, str2) ->
   pairs1 = @get_bigrams str1
