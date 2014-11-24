@@ -3,10 +3,11 @@
 Gemfile.lock
 .bundle
 *.js
+.depends.mf
+resource/translators/latex_unicode_mapping.ls
 tmp
 features/import/*.out.json
 features/export/*.out.txt
-chrome/content/zotero-better-bibtex/Formatter.js
 update.rdf
 *.xpi
 *.log

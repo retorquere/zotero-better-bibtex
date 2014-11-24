@@ -1,6 +1,8 @@
 Components.utils.import 'resource://gre/modules/Services.jsm'
 Components.utils.import 'resource://gre/modules/AddonManager.jsm'
 
+require 'Formatter.js'
+
 Zotero.BetterBibTeX = new ->
   @prefs = (Components.classes.'@mozilla.org/preferences-service;1'.getService Components.interfaces.nsIPrefService).getBranch 'extensions.zotero.translators.better-bibtex.'
   @translators = Object.create null
