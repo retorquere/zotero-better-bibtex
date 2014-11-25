@@ -4,7 +4,7 @@ Gemfile.lock
 .bundle
 *.js
 .depends.mf
-resource/translators/latex_unicode_mapping.ls
+resource/translators/latex_unicode_mapping.coffee
 tmp
 features/import/*.out.json
 features/export/*.out.txt
