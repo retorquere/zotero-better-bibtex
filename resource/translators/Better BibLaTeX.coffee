@@ -1,4 +1,4 @@
-require 'translator.ls'
+require 'translator.coffee'
 
 Translator.fieldMap = {
   # Zotero          BibTeX
@@ -248,9 +248,9 @@ Language = new ->
 #  ]
 
 Language.get_bigrams = (string) ->
-  s = string.toLowerCase!
-  s = [s.slice(i, i+2) for i in [1 to s.length]]
-  s.sort!
+  s = string.toLowerCase()
+  s = (s.slice(i, i+2) for i in [0 ... s.length])
+  s.sort()
   return s
 
 Language.string_similarity = (str1, str2) ->
@@ -262,14 +262,14 @@ Language.string_similarity = (str1, str2) ->
   while pairs1.length > 0 && pairs2.length > 0
     if pairs1[0] == pairs2[0]
       hit_count++
-      pairs1.shift!
-      pairs2.shift!
+      pairs1.shift()
+      pairs2.shift()
       continue
 
     if pairs1[0] < pairs2[0]
-      pairs1.shift!
+      pairs1.shift()
     else
-      pairs2.shift!
+      pairs2.shift()
 
   return (2 * hit_count) / union
 
@@ -286,7 +286,7 @@ Reference::hasCreator = (type) -> (@item.creators || []).some ((creator) -> crea
 
 doExport = ->
   Zotero.write '\n'
-  while item = Translator.nextItem!
+  while item = Translator.nextItem()
     ref = new Translator.Reference item
 
     ref.itemtype = 'inbook' if item.itemType == 'bookSection' and ref.hasCreator('bookAuthor')
@@ -296,23 +296,23 @@ doExport = ->
     ref.add { name: 'options', value: 'useprefix' } if Translator.usePrefix
 
     ref.add { name: 'number', value: item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number }
-    ref.add { name: if isNaN parseInt item.issue then 'issue' else 'number', value: item.issue }
+    ref.add { name: (if isNaN parseInt item.issue then 'issue' else 'number'), value: item.issue }
 
     if item.publicationTitle
       switch item.itemType
-      case 'bookSection', 'conferencePaper', 'dictionaryEntry', 'encyclopediaArticle'
-        ref.add { name: 'booktitle', value: item.publicationTitle, protect: true }
+        when 'bookSection', 'conferencePaper', 'dictionaryEntry', 'encyclopediaArticle'
+          ref.add { name: 'booktitle', value: item.publicationTitle, protect: true }
 
-      case 'magazineArticle', 'newspaperArticle'
-        ref.add { name: 'journaltitle', value: item.publicationTitle, protect: true }
-
-      case 'journalArticle'
-        abbr = Zotero.BetterBibTeX.keymanager.journalAbbrev item
-        if Translator.useJournalAbbreviation and abbr
-          ref.add { name: 'journal', value: abbr, protect: true }
-        else
+        when 'magazineArticle', 'newspaperArticle'
           ref.add { name: 'journaltitle', value: item.publicationTitle, protect: true }
-          ref.add { name: 'shortjournal', value: abbr, protect: true }
+
+        when 'journalArticle'
+          abbr = Zotero.BetterBibTeX.keymanager.journalAbbrev item
+          if Translator.useJournalAbbreviation and abbr
+            ref.add { name: 'journal', value: abbr, protect: true }
+          else
+            ref.add { name: 'journaltitle', value: item.publicationTitle, protect: true }
+            ref.add { name: 'shortjournal', value: abbr, protect: true }
 
     ref.add { name: 'booktitle', value: item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, protect: true } if not ref.has 'booktitle'
 
@@ -320,51 +320,49 @@ doExport = ->
     ref.add { name: 'series', value: item.seriesTitle || item.series, protect: true }
 
     switch item.itemType
-    case 'report', 'thesis'
-      ref.add { name: 'institution', value: item.publisher, protect: true }
+      when 'report', 'thesis'
+        ref.add { name: 'institution', value: item.publisher, protect: true }
 
-    default
-      ref.add { name: 'publisher', value: item.publisher, protect: true }
+      else
+        ref.add { name: 'publisher', value: item.publisher, protect: true }
 
     switch item.itemType
-    case 'letter'
-      ref.add { name: 'type', value: item.letterType || 'Letter' }
+      when 'letter' then ref.add { name: 'type', value: item.letterType || 'Letter' }
 
-    case 'email'
-      ref.add { name: 'type', value: 'E-mail' }
+      when 'email'  then ref.add { name: 'type', value: 'E-mail' }
 
-    default
-      if item.itemType == 'thesis' and (item.thesisType || 'phd').match //ph\.?d//i
-        ref.add { name: 'type', value: 'phdthesis' }
       else
-        ref.add { name: 'type', value: item.manuscriptType || item.thesisType || item.websiteType || item.presentationType || item.reportType || item.mapType }
+        if item.itemType == 'thesis' and (item.thesisType || 'phd').match /ph\.?d/i
+          ref.add { name: 'type', value: 'phdthesis' }
+        else
+          ref.add { name: 'type', value: item.manuscriptType || item.thesisType || item.websiteType || item.presentationType || item.reportType || item.mapType }
 
     ref.add { name: 'howpublished', value: item.presentationType || item.manuscriptType }
 
     if item.archive and item.archiveLocation
       archive = true
-      switch item.archive.toLowerCase!
-      case 'arxiv'
-        ref.add { name: 'eprinttype', value: 'arxiv' }
-        ref.add { name: 'eprintclass', value: item.callNumber }
+      switch item.archive.toLowerCase()
+        when 'arxiv'
+          ref.add { name: 'eprinttype', value: 'arxiv' }
+          ref.add { name: 'eprintclass', value: item.callNumber }
 
-      case 'jstor'
-        ref.add { name: 'eprinttype', value: 'jstor' }
+        when 'jstor'
+          ref.add { name: 'eprinttype', value: 'jstor' }
 
-      case 'pubmed'
-        ref.add { name: 'eprinttype', value: 'pubmed' }
+        when 'pubmed'
+          ref.add { name: 'eprinttype', value: 'pubmed' }
 
-      case 'hdl'
-        ref.add { name: 'eprinttype', value: 'hdl' }
+        when 'hdl'
+          ref.add { name: 'eprinttype', value: 'hdl' }
 
-      case 'googlebooks', 'google books'
-        ref.add { name: 'eprinttype', value: 'googlebooks' }
+        when 'googlebooks', 'google books'
+          ref.add { name: 'eprinttype', value: 'googlebooks' }
 
-      default
-        archive = false
+        else
+          archive = false
 
       if archive
-        ref.add { name: 'eprint' value: item.archiveLocation }
+        ref.add { name: 'eprint', value: item.archiveLocation }
 
     ref.add { name: 'note', value: item.meetingName }
 
@@ -380,28 +378,28 @@ doExport = ->
         translator: []
 
       for creator in item.creators
-        if ('' + creator.firstName).trim! !== '' and ('' + creator.lastName).trim! !== ''
+        if ('' + creator.firstName).trim() != '' and ('' + creator.lastName).trim() != ''
           creatorString = creator.lastName + ', ' + creator.firstName
         else
           creatorString = String creator.lastName
 
         switch creator.creatorType
-        case 'author', 'interviewer', 'director', 'programmer', 'artist', 'podcaster', 'presenter'
-          creators.author.push creatorString
-        case 'bookAuthor'
-          creators.bookauthor.push creatorString
-        case 'commenter'
-          creators.commentator.push creatorString
-        case 'editor'
-          creators.editor.push creatorString
-        case 'inventor'
-          creators.holder.push creatorString
-        case 'translator'
-          creators.translator.push creatorString
-        case 'seriesEditor'
-          creators.editorb.push creatorString
-        default
-          creators.editora.push creatorString
+          when 'author', 'interviewer', 'director', 'programmer', 'artist', 'podcaster', 'presenter'
+            creators.author.push creatorString
+          when 'bookAuthor'
+            creators.bookauthor.push creatorString
+          when 'commenter'
+            creators.commentator.push creatorString
+          when 'editor'
+            creators.editor.push creatorString
+          when 'inventor'
+            creators.holder.push creatorString
+          when 'translator'
+            creators.translator.push creatorString
+          when 'seriesEditor'
+            creators.editorb.push creatorString
+          else
+            creators.editora.push creatorString
 
       for own field, value of creators
         ref.add { name: field, value: value, sep: ' and ' }
@@ -411,11 +409,11 @@ doExport = ->
 
     ref.add { name: 'urldate', value: strToISO item.accessDate } if item.accessDate
     ref.add { name: 'date', value: (strToISO item.date) || String item.date } if item.date
-    ref.add { name: 'pages', value: item.pages.replace //[-\u2012-\u2015\u2053]+//g, '--' } if item.pages
+    ref.add { name: 'pages', value: item.pages.replace /[-\u2012-\u2015\u2053]+/g, '--' } if item.pages
 
     if item.language
-      langlc = item.language.toLowerCase!
-      language = Language.babelMap[langlc.replace(//[^a-z0-9]//, '_')]
+      langlc = item.language.toLowerCase()
+      language = Language.babelMap[langlc.replace(/[^a-z0-9]/, '_')]
       if language
         language = language[0]
       else
@@ -424,7 +422,7 @@ doExport = ->
 
       ref.add { name: 'langid', value: language }
 
-    ref.add { name: if ref.has 'note' then 'annotation' else 'note', value: item.extra }
+    ref.add { name: (if ref.has 'note' then 'annotation' else 'note'), value: item.extra }
     ref.add { name: 'keywords', value: item.tags, esc: 'tags' }
 
     if item.notes and Translator.exportNotes
@@ -432,7 +430,7 @@ doExport = ->
         ref.add { name: 'annotation', value: Zotero.Utilities.unescapeHTML note.note }
 
     ref.add { name: 'file', value: item.attachments, esc: 'attachments' }
-    ref.complete!
+    ref.complete()
 
-  Translator.exportGroups!
+  Translator.exportGroups()
   Zotero.write '\n'

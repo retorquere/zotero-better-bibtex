@@ -24,6 +24,7 @@ def expand(file, options={})
   src = file.read
   src.gsub!(/(^|\n)require\s+'([^'\n]+)'[^\n]*/) {
     all = $&
+    prefix = $1
     tbi = $2.strip
 
     if tbi =~ /\.js$/
@@ -55,7 +56,7 @@ def expand(file, options={})
         result = result[0]
       end
     end
-    result
+    prefix + result
   }
   return [src, dependencies.flatten.uniq] if options[:collect]
   return src
@@ -82,29 +83,29 @@ ZIPFILES = [
 ]
 
 SOURCES = [
-  #'chrome/content/zotero-better-bibtex/auto-export.ls',
-  'chrome/content/zotero-better-bibtex/Formatter.pegjs',
-  'chrome/content/zotero-better-bibtex/include.ls',
+  #'chrome/content/zotero-better-bibtex/auto-export.coffee',
+  'chrome/content/zotero-better-bibtex/Formatter.pegcoffee',
+  'chrome/content/zotero-better-bibtex/include.coffee',
   'chrome/content/zotero-better-bibtex/overlay.xul',
-  'chrome/content/zotero-better-bibtex/preferences.ls',
+  'chrome/content/zotero-better-bibtex/preferences.coffee',
   'chrome/content/zotero-better-bibtex/preferences.xul',
-  'chrome/content/zotero-better-bibtex/zotero-better-bibtex.ls',
+  'chrome/content/zotero-better-bibtex/zotero-better-bibtex.coffee',
   'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
   'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.properties',
   'chrome.manifest',
   'chrome/skin/default/zotero-better-bibtex/overlay.css',
   'chrome/skin/default/zotero-better-bibtex/prefs.png',
-  'defaults/preferences/defaults.ls',
+  'defaults/preferences/defaults.coffee',
   'install.rdf',
   'Rakefile',
-  'resource/translators/Better BibLaTeX.ls',
-  'resource/translators/Better BibTeX.ls',
-  'resource/translators/LaTeX Citation.ls',
-  'resource/translators/Pandoc Citation.ls',
-  'resource/translators/Parser.pegjs',
-  'resource/translators/translator.ls',
-  'resource/translators/latex_unicode_mapping.ls',
-  'resource/translators/Zotero TestCase.ls',
+  'resource/translators/Better BibLaTeX.coffee',
+  'resource/translators/Better BibTeX.coffee',
+  'resource/translators/LaTeX Citation.coffee',
+  'resource/translators/Pandoc Citation.coffee',
+  'resource/translators/Parser.pegcoffee',
+  'resource/translators/translator.coffee',
+  'resource/translators/latex_unicode_mapping.coffee',
+  'resource/translators/Zotero TestCase.coffee',
   'tmp/unicode.xml',
   'update.rdf',
 ]
@@ -119,12 +120,12 @@ end
 
 require 'zotplus-rakehelper'
 
-rule '.js' => '.pegjs' do |t|
-  sh "pegjs -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{t.source} #{t.name}"
+rule '.js' => '.pegcoffee' do |t|
+  sh "pegjs --plugin pegjs-coffee-plugin -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{t.source} #{t.name}"
 end
 
-rule '.js' => '.ls' do |t|
-  header = t.source.sub(/\.ls$/, '.yml')
+rule '.js' => '.coffee' do |t|
+  header = t.source.sub(/\.coffee$/, '.yml')
   if File.file?(header)
     header = YAML.load_file(header)
     header['lastUpdated'] = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
@@ -135,7 +136,7 @@ rule '.js' => '.ls' do |t|
   tmp = "tmp/#{File.basename(t.source)}"
   open(tmp, 'w'){|f| f.write(expand(open(t.source), header: header)) }
   puts "Compiling #{t.source}"
-  output, status = Open3.capture2e("lsc -bpc #{tmp.shellescape}")
+  output, status = Open3.capture2e("coffee -bpc #{tmp.shellescape}")
   raise output if status.exitstatus != 0
 
   # include javascript generated from pegjs
@@ -145,6 +146,9 @@ rule '.js' => '.ls' do |t|
     tbi = File.join(File.dirname(t.source), tbi)
     open(tbi).read
   }
+
+  #output, status = Open3.capture2e('uglifyjs', stdin_data: output)
+  #raise output if status.exitstatus != 0
 
   open(t.name, 'w') {|target|
     header = header ? JSON.pretty_generate(header) + "\n" : ''
@@ -196,7 +200,7 @@ file 'tmp/unicode.xml' do |t|
   ZotPlus::RakeHelper.download('http://web.archive.org/web/20131109072541/http://www.w3.org/2003/entities/2007xml/unicode.xml', t.name)
 end
 
-file 'resource/translators/latex_unicode_mapping.ls' => 'tmp/unicode.xml' do |t|
+file 'resource/translators/latex_unicode_mapping.coffee' => 'tmp/unicode.xml' do |t|
   map = Nokogiri::XML(open(t.source))
 
   map.at('//charlist') << "
@@ -243,31 +247,23 @@ file 'resource/translators/latex_unicode_mapping.ls' => 'tmp/unicode.xml' do |t|
     # \combinecommand{X}
     #raise value if value =~ /LECO/
 
-    mapping[key] = {latex: value, math: mathmode}
+    mapping[key] = OpenStruct.new({latex: value, math: mathmode})
   }
 
   u2l = {
-    unicode: {
-      math: [],
-      map: {}
-    },
-    ascii: {
-      math: [],
-      map: {}
-    }
+    unicode: OpenStruct.new({ math: [], map: {} }),
+    ascii: OpenStruct.new({ math: [], map: {} })
   }
 
   l2u = { }
-
-  throw "Nils?"
 
   mapping.each_pair{|key, repl|
     # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to 
     # \combinecommand{X}
     #raise value if value =~ /LECO/
 
-    latex = [repl['latex']]
-    case repl['latex']
+    latex = [repl.latex]
+    case repl.latex
       when /^(\\[a-z][^\s]*)\s$/i, /^(\\[^a-z])\s$/i  # '\ss ', '\& ' => '{\\s}', '{\&}'
         latex << "{#{$1}}"
       when /^(\\[^a-z]){(.)}$/                       # '\"{a}' => '\"a'
@@ -296,12 +292,12 @@ file 'resource/translators/latex_unicode_mapping.ls' => 'tmp/unicode.xml' do |t|
     }
 
     if key =~ /^[\x20-\x7E]$/ # an ascii character that needs translation? Probably a TeX special character
-      u2l[:unicode][:map][key] = latex[0]
-      u2l[:unicode][:math] << key if repl['math']
+      u2l[:unicode].map[key] = latex[0]
+      u2l[:unicode].math << key if repl.math
     end
 
-    u2l[:ascii][:map][key] = latex[0]
-    u2l[:ascii][:math] << key if repl['math']
+    u2l[:ascii].map[key] = latex[0]
+    u2l[:ascii].math << key if repl.math
 
     latex.each{|ltx|
       l2u[ltx] = key if ltx =~ /\\/
@@ -309,38 +305,23 @@ file 'resource/translators/latex_unicode_mapping.ls' => 'tmp/unicode.xml' do |t|
   }
 
   [:ascii, :unicode].each{|map|
-    u2l[map][:math] = '/(' + u2l[map][:math].collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('|') + ')/g'
-    u2l[map][:text] = '/' + u2l[map][:map].keys.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('|') + '/g'
+    u2l[map].math = '/(' + u2l[map].math.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('|') + ')/g'
+    u2l[map].text = '/' + u2l[map].map.keys.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('|') + '/g'
   }
 
   l2u["\\url"] = '';
   l2u["\\href"] = '';
 
-  ls = {
-    LaTeX_regex: {
-      unicode: {
-        math: u2l[:unicode][:math],
-        text: u2l[:unicode][:text]
-      },
-      ascii: {
-        math: u2l[:ascii][:math],
-        text: u2l[:ascii][:text]
-      },
-    },
-    LaTeX_toLaTeX: u2l[:ascii][:map],
-    LaTeX_toUnicode: l2u
-  }
-
   ls = []
   ls << 'LaTeX.regex ='
   ls << '  unicode:'
-  ls << "    math: #{u2l[:unicode][:math]}"
-  ls << "    text: #{u2l[:unicode][:text]}"
+  ls << "    math: #{u2l[:unicode].math}"
+  ls << "    text: #{u2l[:unicode].text}"
   ls << '  ascii:'
-  ls << "    math: #{u2l[:ascii][:math]}"
-  ls << "    text: #{u2l[:ascii][:text]}"
+  ls << "    math: #{u2l[:ascii].math}"
+  ls << "    text: #{u2l[:ascii].text}"
   ls << 'LaTeX.toLaTeX ='
-  u2l[:ascii][:map].each_pair{|k, v|
+  u2l[:ascii].map.each_pair{|k, v|
   ls << "  #{k.inspect}: #{v.inspect}"
   }
   ls << 'LaTeX.toUnicode ='
@@ -404,7 +385,7 @@ file '.depends.mf' => SOURCES do |t|
     dependencies = {}
 
     t.prerequisites.each{|src|
-      next unless File.extname(src) == '.ls'
+      next unless File.extname(src) == '.coffee'
       js = File.join(File.dirname(src), File.basename(src, File.extname(src)) + '.js')
 
       yml = File.join(File.dirname(src), File.basename(src, File.extname(src)) + '.yml')

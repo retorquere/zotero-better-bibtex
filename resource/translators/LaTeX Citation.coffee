@@ -1,11 +1,11 @@
-require 'translator.ls'
+require 'translator.coffee'
 
 doExport = ->
   keys = []
-  while item = Translator.nextItem!
+  while item = Translator.nextItem()
     keys.push item.__citekey__
 
-  #while collection = Zotero.nextCollection!
+  #while collection = Zotero.nextCollection()
   #  Zotero.debug('collection: ' + collection.name)
 
   Zotero.write "\\#{Zotero.getHiddenPref('better-bibtex.citeCommand')}{#{keys.join(',')}}"

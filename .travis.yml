@@ -10,6 +10,6 @@ script: "rake test[$FEATURE]"
 before_install:
   - sudo apt-get update
   - sudo apt-get install nodejs npm
-  - npm install pegjs LiveScript
+  - npm install pegjs coffee-script uglify-js pegjs-coffee-plugin
 addons:
   firefox: "30.0"

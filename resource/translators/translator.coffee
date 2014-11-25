@@ -54,22 +54,19 @@ Translator.initialize = ->
 
   for own attribute, key of @preferences
     Translator[attribute] = Zotero.getHiddenPref "better-bibtex.#{key}"
-  @skipFields = (@skipFields.split ',').map ((field) -> field.trim!)
-  Translator.testmode = Zotero.getHiddenPref 'better-bibtex.testmode'
+  @skipFields = (field.trim() for field in @skipFields.split ',')
+  @testmode = Zotero.getHiddenPref 'better-bibtex.testmode'
 
   for own attribute, key of @options
     Translator[attribute] = Zotero.getOption key
-  Translator.exportCollections = if typeof Translator.exportCollections == 'undefined' then true else Translator.exportCollections
+  @exportCollections = if typeof @exportCollections == 'undefined' then true else @exportCollections
 
   switch @unicode
-  case 'always'
-    @unicode = true
-  case 'never'
-    @unicode = false
-  default
-    @unicode = @unicode_default or (@exportCharset and @exportCharset.toLowerCase! == 'utf-8')
+    when 'always' then @unicode = true
+    when 'never'  then @unicode = false
+    else @unicode = @unicode_default or (@exportCharset and @exportCharset.toLowerCase() == 'utf-8')
 
-  @log 'Translator: ' + JSON.stringify @config!
+  @log 'Translator: ' + JSON.stringify @config()
 
   if @typeMap
     typeMap = @typeMap
@@ -78,8 +75,8 @@ Translator.initialize = ->
       Zotero2BibTeX: Object.create(null)
 
     for own bibtex, zotero of typeMap
-      bibtex = bibtex.trim!.split //\s+//
-      zotero = zotero.trim!.split //\s+//
+      bibtex = bibtex.trim().split /\s+/
+      zotero = zotero.trim().split /\s+/
 
       for type in bibtex
         @typeMap.BibTeX2Zotero[type] ?= zotero[0]
@@ -96,28 +93,26 @@ Translator.sanitizeCollection = (coll) ->
 
   for c in coll.children or coll.descendents
     switch c.type
-    case 'item'
-      sane.items.push c.id
-    case 'collection'
-      sane.collections.push @sanitizeCollection c
-    default
-      throw "Unexpected collection member type '#{c.type}'"
+      when 'item'       then sane.items.push c.id
+      when 'collection' then sane.collections.push @sanitizeCollection c
+      else              throw "Unexpected collection member type '#{c.type}'"
+
   return sane
 
 Translator.collections = ->
   return [] unless @exportCollections
 
   collections = []
-  while collection = Zotero.nextCollection!
+  while collection = Zotero.nextCollection()
     collections.push @sanitizeCollection collection
   return collections
 
 Translator.nextItem = ->
-  while item = Zotero.nextItem!
+  while item = Zotero.nextItem()
     if item.itemType != 'note' and item.itemType != 'attachment' then break
   return unless item
 
-  @initialize!
+  @initialize()
 
   #remove any citekey from extra -- the export doesn't need it
   Zotero.BetterBibTeX.keymanager.extract item
@@ -127,7 +122,7 @@ Translator.nextItem = ->
   return item
 
 Translator.exportGroups = ->
-  collections = @collections!
+  collections = @collections()
   return if collections.length == 0
 
   Zotero.write '@comment{jabref-meta: groupsversion:3;}\n'
@@ -143,13 +138,13 @@ Translator.exportGroups = ->
 JabRef = {}
 
 JabRef.serialize = (arr, sep, wrap) ->
-  arr = [('' + v).replace(/;/g, "\\;") for v in arr]
-  arr = [v.match(/.{1,70}/g).join("\n") for v in arr] if wrap
+  arr = (('' + v).replace(/;/g, "\\;") for v in arr)
+  arr = (v.match(/.{1,70}/g).join("\n") for v in arr) if wrap
   return arr.join(sep)
 
 JabRef.exportGroup = (collection, level) ->
-  group = ["#level ExplicitGroup:#{collection.name}", 0]
-  group = group.concat([Translator.citekeys[id] for id in collection.items])
+  group = ["#{level} ExplicitGroup:#{collection.name}", 0]
+  group = group.concat((Translator.citekeys[id] for id in collection.items))
   group.push ''
   group = @serialize(group, ';')
 
@@ -161,16 +156,16 @@ JabRef.exportGroup = (collection, level) ->
 Reference = (item) ->
   @fields = []
   @has = Object.create(null)
-  @raw = ([tag.tag for tag in item.tags when tag.tag == Translator.rawLaTeXTag].length >= 0)
+  @raw = ((tag.tag for tag in item.tags when tag.tag == Translator.rawLaTeXTag).length >= 0)
 
   @itemtype = Translator.typeMap.Zotero2BibTeX[item.itemType] or 'misc'
 
   if item.extra
-    m = //biblatexdata\[([^\]]+)\]//.exec(item.extra)
+    m = /biblatexdata\[([^\]]+)\]/.exec(item.extra)
     if m
-      item.extra = item.extra.replace(m[0], '').trim!
+      item.extra = item.extra.replace(m[0], '').trim()
       for assignment in m[1].split(';')
-        data = assignment.match(//^([^=]+)=\s*(.*)//).slice(1)
+        data = assignment.match(/^([^=]+)=\s*(.*)/).slice(1)
         field =
           name: data[0]
           value: data[1]
@@ -185,17 +180,17 @@ Reference = (item) ->
       @add(@field(f, item[attr]))
 
 Reference::field = (f, value) ->
-  f = ^^f
-  f.value = value
-  return f
+  clone = ->
+  clone:: = f
+  clone = new clone
+  clone.value = value
+  return clone
 
 Reference::esc_url = (f) ->
-  href = ('' + f.value).replace //([#\\%&{}])//g, '\\$1'
-  if not Translator.unicode
-    href = href.replace //[^\x21-\x7E]//g, (chr) -> '\\%' + ('00' + (chr.charCodeAt 0).toString 16).slice -2
+  href = ('' + f.value).replace /([#\\%&{}])/g, '\\$1'
+  href = href.replace /[^\x21-\x7E]/g, (chr) -> '\\%' + ('00' + (chr.charCodeAt 0).toString 16).slice -2 if not Translator.unicode
 
-  return '\\href{' + href + '}{' + LaTeX.html2latex href + '}' if f.name == 'url' and Translator.fancyURLs
-
+  return "\\href{#{href}}{#{LaTeX.html2latex href}}" if f.name == 'url' and Translator.fancyURLs
   return href
 
 Reference::esc_doi = Reference::esc_url
@@ -206,18 +201,18 @@ Reference::esc_latex = (f, raw) ->
 
   if f.value instanceof Array
     return null if f.value.length == 0
-    return [@esc_latex(@field(f, word), raw) for word in f.value].join(f.sep)
+    return (@esc_latex(@field(f, word), raw) for word in f.value).join(f.sep)
 
   value = LaTeX.html2latex f.value
-  if f.value instanceof String then value = String("{#value}")
+  if f.value instanceof String then value = String("{#{value}}")
   return value
 
 Reference::esc_tags = (f) ->
   return null if not f.value or f.value.length == 0
-  tags = [tag.tag for tag in f.value when tag.tag != Translator.rawLaTeXTag]
+  tags = (tag.tag for tag in f.value when tag.tag != Translator.rawLaTeXTag)
 
   # sort tags for stable tests
-  tags.sort! if Translator.testmode
+  tags.sort() if Translator.testmode
 
   f.value = tags
   f.sep = ','
@@ -226,12 +221,11 @@ Reference::esc_tags = (f) ->
 Reference::esc_attachments = (f) ->
   return null if not f.value or f.value.length == 0
   attachments = []
-  att = void
   errors = []
 
   for att in f.value
     a =
-      att.title
+      title: att.title
       path: att.localPath
       mimetype: att.mimeType
 
@@ -245,9 +239,9 @@ Reference::esc_attachments = (f) ->
       att.saveFile a.path
     else
       if Translator.attachmentRelativePath
-        a.path = 'files/' + if Translator.testmode then @attachmentCounter else att.itemID + '/' + att.localPath.replace //.*[\/\\]//, ''
+        a.path = 'files/' + if Translator.testmode then @attachmentCounter else att.itemID + '/' + att.localPath.replace /.*[\/\\]/, ''
 
-    if a.path.match //[{}]// # latex really doesn't want you to do this.
+    if a.path.match /[{}]/ # latex really doesn't want you to do this.
       errors.push 'BibTeX cannot handle file paths with braces: ' + JSON.stringify a.path
     else
       attachments.push a
@@ -258,15 +252,15 @@ Reference::esc_attachments = (f) ->
   # sort attachments for stable tests
   attachments.sort ((a, b) -> a.path.localeCompare b.path) if Translator.testmode
 
-  return [[part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]].join(':') for att in attachments].join(';')
+  return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
 
 Reference::add = (field) ->
   return if Translator.skipFields.indexOf(field.name) >= 0
   return if typeof field.value != 'number' and not field.value
-  return if typeof field.value == 'string' and field.value.trim! == ''
+  return if typeof field.value == 'string' and field.value.trim() == ''
   return if Array.isArray(field.value) and field.value.length == 0
 
-  field.braces = typeof field.braces == 'undefined' or field.braces or field.protect or field.value.match //\s//
+  field.braces = typeof field.braces == 'undefined' or field.braces or field.protect or field.value.match /\s/
   field.protect = typeof field.value != 'number' and field.protect and Translator.braceAll
 
   if typeof field.value == 'number'
@@ -302,13 +296,13 @@ Reference::complete = ->
       return 0)
 
   ref = "@#{@itemtype}{#{item.__citekey__},\n"
-  ref += [field.bibtex for field in @fields].join(',\n')
+  ref += (field.bibtex for field in @fields).join(',\n')
   ref += '\n}\n\n'
   Zotero.write ref
 
 LaTeX = {}
 
-require 'latex_unicode_mapping.ls'
+require 'latex_unicode_mapping.coffee'
 
 LaTeX.support = {}
 
@@ -325,7 +319,7 @@ LaTeX.support.html2latex =
 LaTeX.support.htmlstack = []
 
 LaTeX.support.htmltag = (str) ->
-  tag = str.replace(//[^a-z]//g, '').toLowerCase!
+  tag = str.replace(/[^a-z]/g, '').toLowerCase()
   repl = @html2latex[tag]
 
   if str.charAt(1) != '/' # not a '/' at position 2 means it's an opening tag
@@ -338,13 +332,13 @@ LaTeX.support.htmltag = (str) ->
   # if it's a closing tag, it ought to be the first one on the stack
   close = @htmlstack.indexOf tag
   if close < 0
-    Translator.log "Ignoring unexpected close tag '#tag'"
+    Translator.log "Ignoring unexpected close tag '#{tag}'"
     return ''
 
-  Translator.log "Unexpected close tag '#tag', closing '#{@htmlstack.slice(0, close).join(', ')}'" if close > 0
+  Translator.log "Unexpected close tag '#{tag}', closing '#{@htmlstack.slice(0, close).join(', ')}'" if close > 0
 
   # TODO: this cannot be right
-  close = [@html2latex[tag].close for tag in @htmlstack.slice(0, close)].join('')
+  close = (@html2latex[tag].close for tag in @htmlstack.slice(0, close)).join('')
   @htmlstack = @htmlstack.slice close + 1
   return repl.close
 
@@ -355,9 +349,9 @@ LaTeX.support.convert = (r, text, i) ->
 
 LaTeX.support.unicode = (str) ->
   regex = LaTeX.regex[if Translator.unicode then 'unicode' else 'ascii']
-  return [@convert(regex.text, text, i) for text, i in str.split(regex.math)].join('')
+  return (@convert(regex.text, text, i) for text, i in str.split(regex.math)).join('')
 
-LaTeX.support.tagsRE = new RegExp("(#{["<\/?#tag\/?>" for tag in Object.keys(@html2latex)].join('|')})", 'ig')
+LaTeX.support.tagsRE = new RegExp("(#{["<\/?#{tag}\/?>" for tag in Object.keys(@html2latex)].join('|')})", 'ig')
 LaTeX.support.tags = (text, i) ->
   return @htmltag(text) if i % 2 == 1 # odd element = splitter == html tag
   return @unicode(text)
@@ -367,11 +361,11 @@ LaTeX.support.pre = (text, i) ->
   return text.replace(/^<pre>/i, '').replace(/<\/pre>$/, '') if i % 2 == 1 # odd element = splitter == pre block
 
   @htmlstack = []
-  res = [@tags(chunk, i) for chunk, i in text.split(@tagsRE)].join('').replace(/\{\}\s+/g, ' ')
+  res = (@tags(chunk, i) for chunk, i in text.split(@tagsRE)).join('').replace(/\{\}\s+/g, ' ')
   if @htmlstack.length != 0
     Translator.log("Unmatched HTML tags: #{@htmlstack.join(', ')}")
-    res += [@html2latex[tag].close for tag in @htmlstack].join('')
+    res += (@html2latex[tag].close for tag in @htmlstack).join('')
   return res
 
 LaTeX.html2latex = (str) ->
-  return [@support.pre(text) for tex in ('' + str).split(@support.preRE)].join('')
+  return (@support.pre(text) for tex in ('' + str).split(@support.preRE)).join('')

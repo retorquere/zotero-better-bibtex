@@ -10,21 +10,21 @@ serverURL = (collectionsView, extension) ->
 
   isLibrary = true
   for type of [ 'Collection', 'Search', 'Trash', 'Duplicates', 'Unfiled', 'Header', 'Bucket' ]
-    if itemGroup['is' + type]!
+    if itemGroup['is' + type]()
       isLibrary = false
       break
 
   url = null
-  if itemGroup.isCollection!
-    collection = collectionsView.getSelectedCollection!
+  if itemGroup.isCollection()
+    collection = collectionsView.getSelectedCollection()
     url = 'collection?/' + (collection.libraryID or 0) + '/' + collection.key + extension
 
   if isLibrary
-    libid = collectionsView.getSelectedLibraryID!
+    libid = collectionsView.getSelectedLibraryID()
     url = if libid then 'library?/' + libid + '/library' + extension else 'library?library' + extension
   if not url then return 
 
-  return "http://localhost:#serverPort/better-bibtex/#url"
+  return "http://localhost:#{serverPort}/better-bibtex/#{url}"
 
 BBTstyleChanged = (index) ->
   listbox = document.getElementById 'better-bibtex-abbrev-style'
@@ -48,13 +48,13 @@ updatePreferences = (load) ->
     keyformat.setAttribute 'style', 'color: red'
     keyformat.setAttribute 'tooltiptext', '' + err
 
-  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-change').setAttribute 'disabled', not Zotero.BetterBibTeX.allowAutoPin!
-  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-export').setAttribute 'disabled', not Zotero.BetterBibTeX.allowAutoPin!
+  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-change').setAttribute 'disabled', not Zotero.BetterBibTeX.allowAutoPin()
+  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-export').setAttribute 'disabled', not Zotero.BetterBibTeX.allowAutoPin()
   document.getElementById('id-zotero-better-bibtex-server-warning').setAttribute 'hidden', serverEnabled
   document.getElementById('id-zotero-better-bibtex-recursive-warning').setAttribute 'hidden', not document.getElementById('id-better-bibtex-preferences-getCollections').checked
   document.getElementById('id-better-bibtex-preferences-fancyURLs-warning').setAttribute 'hidden', not document.getElementById('id-better-bibtex-preferences-fancyURLs').checked
 
-  styles = Zotero.Styles.getVisible!.filter ((style) -> style.usesAbbreviation)
+  styles = Zotero.Styles.getVisible().filter ((style) -> style.usesAbbreviation)
 
   listbox = document.getElementById 'better-bibtex-abbrev-style'
   fillList = listbox.children.length is 0
