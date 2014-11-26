@@ -126,6 +126,7 @@ rule '.js' => '.pegcoffee' do |t|
   FileUtils.mv(tmp, t.name)
 end
 
+# TODO: dependencies don't work!
 rule '.js' => '.coffee' do |t|
   header = t.source.sub(/\.coffee$/, '.yml')
   if File.file?(header)
@@ -389,6 +390,9 @@ file '.depends.mf' => SOURCES do |t|
     t.prerequisites.each{|src|
       next unless File.extname(src) == '.coffee'
       js = File.join(File.dirname(src), File.basename(src, File.extname(src)) + '.js')
+
+      dependencies[src] ||= []
+      dependencies[src] << js
 
       yml = File.join(File.dirname(src), File.basename(src, File.extname(src)) + '.yml')
       if File.file?(yml)

@@ -44,19 +44,20 @@
 
   Creators = new ->
     # smush together regular strings
+    @reduce = (result, fragment) ->
+      # for the first item, return the item
+      return [fragment] if result.length is 0
+
+      # if either the last element of the result so far of the new string to be added is a literal, push it onto the
+      # result (don't smush literals)
+      return result.concat(fragment) if (result[result.length - 1] instanceof String) or (fragment instanceof String)
+
+      # regular strings -- add to tail
+      result[result.length - 1] += fragment
+      return result
+
     @compact = (fragments) ->
-      fragments.reduce ((result, fragment) ->
-        # for the first item, return the item
-        return [fragment] if result.length is 0
-
-        # if either the last element of the result so far of the new string to be added is a literal, push it onto the
-        # result (don't smush literals)
-        return result.concat(fragment) if (result[result.length - 1] instanceof String) or (fragment instanceof String)
-
-        # regular strings -- add to tail
-        result[result.length - 1] += fragment
-        return result
-      ), []
+      fragments.reduce(@reduce, [])
 
     @push = (groups, fragment, startNewGroup) ->
       groups.push [] if startNewGroup or groups.length is 0
@@ -91,7 +92,7 @@
 
         # remove whitespace at the end of the group
         last = group.length - 1
-        if typeof group[last] == 'string
+        if typeof group[last] == 'string'
           group[last] = group[last].replace(/\s+$/g, '')
           group.pop() if group[last] == ''
 
@@ -111,7 +112,7 @@
 
         when 1 # single string, no commas
           if name[0].length is 1 and (name[0][0] instanceof String) # single literal
-            return { lastName: "" + name[0][0], fieldMode: 1)
+            return { lastName: "" + name[0][0], fieldMode: 1 }
 
           # single string, no commas
           return @join name[0] # this will be cleaned up by zotero utils laters
@@ -240,25 +241,25 @@ string
   / '{' text:string* '}'          { return new String(flatten(text)) } // use 'new String', not 'String', because only 'new String' will match 'instanceof'!
   / '$' text:string* '$'          { return flatten(text) }
   /* / "%" [^\n]* "\n"            { return '' }          comment */
-  / '%'                           { return '%' } // this doesn't feel rigth
-  / "\\" command:[^a-z] ('[' key_value* ']')?  param:param {  /* single-char command */
-      cmds = ["\\" + command + param]
-      cmds.push "\\" + command + "{" + param + "}"  if param.length is 1
-      cmds.push "\\" + command + param[2]  if param.length is 3 and param[0] is "{" and param[2] is "}"
-      match = null
+  / '%'                           { return '%' } // this doesn't feel right
+  / "\\" command:[^a-z] ('[' key_value* ']')?  param:param {  # single-char command
+      cmds = ["\\#{command}#{param}"]
+      cmds.push "\\#{command}{#{param}}"    if param.length is 1
+      cmds.push "\\#{command}#{param[1]}"   if param.length is 3 and param[0] is '{' and param[2] is '}'
+      hit = null
       for cmd in cmds
-        match ?= LaTeX.toUnicode[cmd]
-      return match ? param
+        hit ?= LaTeX.toUnicode[cmd]
+      return hit ? param
     }
-  / "\\" cmd:[^a-z] ('[' key_value* ']')?  _+ {  /* single-char command without parameter*/
-      return LaTeX.toUnicode["\\#{cmd}"] if LaTeX.toUnicode["\\#{cmd}"])
+  / "\\" cmd:[^a-z] ('[' key_value* ']')?  _+ {  # single-char command without parameter
+      return LaTeX.toUnicode["\\#{cmd}"] if LaTeX.toUnicode["\\#{cmd}"]
       return cmd
     }
-  / "\\" cmd:plaintext ('[' key_value* ']')? '{' text:string* '}' { /* command */
+  / "\\" cmd:plaintext ('[' key_value* ']')? '{' text:string* '}' { # command
       return ((LaTeX.toUnicode["\\#{cmd}"] || '') + flatten(text))
     }
-  / "\\" cmd:plaintext _* {  /* bare command */
-      return LaTeX.toUnicode["\\#{cmd}"] if LaTeX.toUnicode["\\#{cmd}"])
+  / "\\" cmd:plaintext _* {  # bare command
+      return LaTeX.toUnicode["\\#{cmd}"] if LaTeX.toUnicode["\\#{cmd}"]
       return cmd
     }
 

@@ -4,13 +4,13 @@
   Formatter = new ->
     safechars = /[-:a-z0-9_!\$\*\+\.\/;\?\[\]]/g
     # not  "@',\#{}%
-    unsafechars = "" + safechars
-    unsafechars = unsafechars.substring(unsafechars.indexOf("/") + 1, unsafechars.lastIndexOf("/"))
-    unsafechars = unsafechars.substring(0, 1) + "^" + unsafechars.substring(1, unsafechars.length)
-    @unsafechars = new RegExp(unsafechars, "ig")
+    unsafechars = '' + safechars
+    unsafechars = unsafechars.substring(unsafechars.indexOf('/') + 1, unsafechars.lastIndexOf('/'))
+    unsafechars = unsafechars.substring(0, 1) + '^' + unsafechars.substring(1, unsafechars.length)
+    @unsafechars = new RegExp(unsafechars, 'ig')
 
     @clean = (str) ->
-      Zotero.Utilities.removeDiacritics(str).replace(@unsafechars, "").trim()
+      Zotero.Utilities.removeDiacritics(str).replace(@unsafechars, '').trim()
   
     @words = (str) ->
       return (@clean(word) for word in @stripHTML(str).split(/[\+\.,-\/#!$%\^&\*;:{}=\-\s`~()]+/) when word != '')
@@ -132,19 +132,19 @@
       words = (word.replace(/[^ -~]/g, '') for word in words) if options.asciiOnly
       words = (word for word in words when word != '')
       words = (word for word in words when @skipWords.indexOf(word.toLowerCase()) < 0) if options.skipWords
-      return null if words.length is 0
+      return null if words.length == 0
       return words
   
     @stripHTML = (str) ->
-      return ('' + str).replace(/<\/?(sup|sub|i|b|p|span|br|break)\/?>/g, "").replace(/\s+/, " ").trim()
+      return ('' + str).replace(/<\/?(sup|sub|i|b|p|span|br|break)\/?>/g, '').replace(/\s+/, ' ').trim()
   
-    @caseNotUpperTitle = Zotero.Utilities.XRegExp("[^\\p{Lu}\\p{Lt}]", "g")
-    @caseNotUpper = Zotero.Utilities.XRegExp("[^\\p{Lu}]", "g")
+    @caseNotUpperTitle = Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g')
+    @caseNotUpper = Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
 
     @getCreators = (onlyEditors, withInitials) ->
       return [] unless @item.creators?.length
-      kind = if onlyEditors then "editors" else "authors"
-      kind += "+initials" if withInitials
+      kind = if onlyEditors then 'editors' else 'authors'
+      kind += '+initials' if withInitials
 
       # because it gets set by the inheriting object!
       if typeof @creators[kind] == 'undefined'
@@ -165,11 +165,11 @@
           continue if name == ''
 
           switch creator.creatorType
-            when "editor", "seriesEditor"
+            when 'editor', 'seriesEditor'
               creators.editors ?= []
               creators.editors.push name
 
-            when "translator"
+            when 'translator'
               creators.translators ?= []
               creators.translators.push name
 
@@ -188,85 +188,85 @@
 
       return @creators[kind]
   
-    @["=id"] = ->
+    @['=id'] = ->
       return @item.itemID
   
-    @["=key"] = ->
+    @['=key'] = ->
       return @item.key
   
-    @["=auth"] = (onlyEditors, withInitials, n, m) ->
+    @['=auth'] = (onlyEditors, withInitials, n, m) ->
       authors = @getCreators(onlyEditors, withInitials)
-      return ""  unless authors
+      return ''  unless authors
       author = authors[m or 0]
       author = author.substring(0, n)  if author and n
       return author ? ''
   
     
     # only works in translator
-    @["=type"] = ->
+    @['=type'] = ->
       return getBibTeXType(@item)
   
-    @["=authorLast"] = (onlyEditors, withInitials) ->
+    @['=authorLast'] = (onlyEditors, withInitials) ->
       authors = @getCreators(onlyEditors, withInitials)
       return '' unless authors
       return authors[authors.length - 1] ? ''
   
-    @["=journal"] = ->
+    @['=journal'] = ->
       return Zotero.BetterBibTeX.keymanager.journalAbbrev(@item)
   
-    @["=authors"] = (onlyEditors, withInitials, n) ->
+    @['=authors'] = (onlyEditors, withInitials, n) ->
       authors = @getCreators(onlyEditors, withInitials)
       return '' unless authors
 
       if n
         etal = (authors.length > n)
         authors = authors.slice(0, n)
-        authors.push "EtAl"  if etal
+        authors.push 'EtAl'  if etal
 
-      authors = authors.join("")
+      authors = authors.join('')
       return authors
   
-    @["=authorsAlpha"] = (onlyEditors, withInitials) ->
+    @['=authorsAlpha'] = (onlyEditors, withInitials) ->
       authors = @getCreators(onlyEditors, withInitials)
       return '' unless authors
 
-      switch authors.length
+      return switch authors.length
         when 1
-          authors[0].substring 0, 3
+          return authors[0].substring 0, 3
 
         when 2, 3, 4
           return (author.substring(0, 1) for author in authors).join('')
 
         else
-          return (return author.substring(0, 1) for author in authors.slice(0, 3)).join("") + "+"
+          return (author.substring(0, 1) for author in authors.slice(0, 3)).join('') + '+'
   
-    @["=authIni"] = (onlyEditors, withInitials, n) ->
+    @['=authIni'] = (onlyEditors, withInitials, n) ->
       authors = @getCreators(onlyEditors, withInitials)
       return '' unless authors
       
       return (author.substring(0, n) for author in authors).join('.')
   
-    @["=authorIni"] = (onlyEditors, withInitials) ->
+    @['=authorIni'] = (onlyEditors, withInitials) ->
       authors = @getCreators(onlyEditors, withInitials)
-      return ""  unless authors
+      return ''  unless authors
       firstAuthor = authors.shift()
       
       return [firstAuthor.substring(0, 5)].concat(((name.substring(0, 1) for name in auth).join('.') for auth in authors)).join('.')
   
-    @["=auth.auth.ea"] = (onlyEditors, withInitials) ->
+    @['=auth.auth.ea'] = (onlyEditors, withInitials) ->
       authors = @getCreators(onlyEditors, withInitials)
       return '' unless authors
 
-      return authors.slice(0, 2).concat((if authors.length > 2 then ["ea"] else [])).join "."
+      return authors.slice(0, 2).concat((if authors.length > 2 then ['ea'] else [])).join '.'
   
-    @["=auth.etal"] = (onlyEditors, withInitials) ->
+    @['=auth.etal'] = (onlyEditors, withInitials) ->
       authors = @getCreators(onlyEditors, withInitials)
       return '' unless authors
 
-      return authors.join(".") if authors.length is 2
-      return authors.slice(0, 1).concat((if authors.length > 1 then ["etal"] else [])).join "."
+      return authors.join('.') if authors.length == 2
+      return authors.slice(0, 1).concat((if authors.length > 1 then ['etal'] else [])).join '.'
   
-    @["=authshort"] = (onlyEditors, withInitials) ->
+    @['=authshort'] = (onlyEditors, withInitials) ->
       authors = @getCreators(onlyEditors, withInitials)
       return '' unless authors
 
@@ -280,7 +280,7 @@
         else
           return (author.substring(0, 1) for author in authors).join('.') + (if authors.length > 3 then '+' else '')
   
-    @["=firstpage"] = ->
+    @['=firstpage'] = ->
       return '' unless @item.pages
       firstpage = ''
       @item.pages.replace /^([0-9]+)/g, (match, fp) ->
@@ -288,11 +288,11 @@
   
       return firstpage
   
-    @["=keyword"] = (dummy, n) ->
+    @['=keyword'] = (dummy, n) ->
       return '' if not @item.tags?[n]
       return @item.tags[n].tag
   
-    @["=lastpage"] = ->
+    @['=lastpage'] = ->
       return '' unless @item.pages
       lastpage = ''
       @item.pages.replace /([0-9]+)[^0-9]*$/g, (match, lp) ->
@@ -300,85 +300,85 @@
   
       return lastpage
   
-    @["=shorttitle"] = ->
+    @['=shorttitle'] = ->
       words = @titleWords(@item.title, { skipWords: true, asciiOnly: true})
       return ''  unless words
       words.slice(0, 3).join ''
   
-    @["=veryshorttitle"] = ->
+    @['=veryshorttitle'] = ->
       words = @titleWords(@item.title, { skipWords: true, asciiOnly: true})
       return '' unless words
       words.slice(0, 1).join ''
   
-    @["=shortyear"] = ->
+    @['=shortyear'] = ->
       return '' unless @item.date
       date = Zotero.Date.strToDate(@item.date)
-      return '' if typeof date.year is 'undefined'
+      return '' if typeof date.year == 'undefined'
       year = date.year % 100
       return "0#{year}"  if year < 10
       return '' + year
   
-    @["=year"] = ->
+    @['=year'] = ->
       return '' unless @item.date
       date = Zotero.Date.strToDate(@item.date)
-      return @item.date if typeof date.year is 'undefined'
+      return @item.date if typeof date.year == 'undefined'
       return date.year
   
-    @["=month"] = ->
+    @['=month'] = ->
       return '' unless @item.date
       date = Zotero.Date.strToDate(@item.date)
-      return '' if typeof date.year is 'undefined'
+      return '' if typeof date.year == 'undefined'
       return @months[date.month] ? ''
   
-    @["=title"] = ->
-      return @titleWords(@item.title).join ""
+    @['=title'] = ->
+      return @titleWords(@item.title).join('')
   
-    @["|"] = (value, dflt) ->
-      return dflt if value == ""
+    @['|'] = (value, dflt) ->
+      return dflt if value == ''
       return value
   
-    @["|condense"] = (value, sep) ->
-      sep = '' if typeof sep is 'undefined'
+    @['|condense'] = (value, sep) ->
+      sep = '' if typeof sep == 'undefined'
       return value.replace /\s/g, sep
   
-    @["|abbr"] = (value) ->
+    @['|abbr'] = (value) ->
       return (word.substring(0, 1) for word in value.split(/\s+/)).join('')
   
-    @["|lower"] = (value) ->
+    @['|lower'] = (value) ->
       return value.toLowerCase()
   
-    @["|upper"] = (value) ->
+    @['|upper'] = (value) ->
       return value.toUpperCase()
   
-    @["|skipwords"] = (value) ->
+    @['|skipwords'] = (value) ->
       return (word for word in value.split(/\s+/) when @skipWords.indexOf(word.toLowerCase()) < 0).join(' ').trim()
   
-    @["|select"] = (value, start, n) ->
+    @['|select'] = (value, start, n) ->
       value = value.split(/\s+/)
       end = value.length
-      start = 1 if typeof start is 'undefined'
+      start = 1 if typeof start == 'undefined'
       start = parseInt(start) - 1
-      end = start + parseInt(n) if typeof n isnt 'undefined'
-      return value.slice(start, end).join " "
+      end = start + parseInt(n) if typeof n != 'undefined'
+      return value.slice(start, end).join ' '
   
-    @["|ascii"] = (value) ->
-      return value.replace(/[^ -~]/g, "").split(/\s+/).join(" ").trim()
+    @['|ascii'] = (value) ->
+      return value.replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim()
   
-    @["|fold"] = (value) ->
-      return Zotero.Utilities.removeDiacritics(value).split(/\s+/).join(" ").trim()
+    @['|fold'] = (value) ->
+      return Zotero.Utilities.removeDiacritics(value).split(/\s+/).join(' ').trim()
   
-    @["|capitalize"] = (value) ->
+    @['|capitalize'] = (value) ->
       return value.replace /((^|\s)[a-z])/g, (m) ->
         m.toUpperCase()
   
-    @punct = Zotero.Utilities.XRegExp("\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}", "g")
-    @["|nopunct"] = (value) ->
-      return Zotero.Utilities.XRegExp.replace value, @punct, "", "all"
+    @punct = Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g')
+    @['|nopunct'] = (value) ->
+      return Zotero.Utilities.XRegExp.replace value, @punct, '', 'all'
 }
 
 start
   = formatter:formatter {
-      parser = Function("item", formatter)
+      parser = Function('item', formatter)
       parser:: = Formatter
       return parser
   }
@@ -386,14 +386,14 @@ start
 formatter
   = patterns:pattern+ {
       f = [
-        "this.item = item;"
-        "this.creators = {};"
-        "this.value = null;"
+        'this.item = item;'
+        'this.creators = {};'
+        'this.value = null;'
       ]
       for pattern in patterns
-        f.push "if (!this.value) { this.value = #{pattern}"; }"
+        f.push "if (!this.value) { this.value = #{pattern}; }"
 
-      f.push "if (this.value) { this.value = this.clean(this.value); }"
+      f.push 'if (this.value) { this.value = this.clean(this.value); }'
       f.push 'if (!this.value) { this.value = "zotero-" + this.item.libraryID + \"-\" + this.item.itemID; }'
       return f.join "\n"
   }
@@ -415,18 +415,24 @@ fcall
 
 method
   = prefix:('auth' / 'authors') postfix:[\.a-zA-Z]* flag:flag? params:mparams? {
-      params = [ "false", (if flag is "initials" then "true" else "false")].concat(params or [])
-      return '"this[\"=#{prefix + postfix.join("")}\"](#{params.join(",")})"
+      method = prefix + postfix.join('')
+      params = [ 'false', (if flag == 'initials' then 'true' else 'false') ].concat(params or []).join(',')
+      return "this['=#{method}'](#{params})"
     }
   / prefix:('edtr' / 'editors') postfix:[\.a-zA-Z]* flag:flag? params:mparams? {
-      params = [ "true", (if flag is "initials" then "true" else "false") ].concat(params or [])
-      prefix = if prefix is "edtr" then "auth" else "authors"
-      return "this[\"=#{prefix + postfix.join("")}\"](#{params.join(",")})"
+      prefix = if prefix == 'edtr' then 'auth' else 'authors'
+      method = prefix + postfix.join('')
+      params = [ 'true', (if flag == 'initials' then 'true' else 'false') ].concat(params or []).join(',')
+      return "this['=#{method}'](#{params})"
     }
   / name:[\.a-zA-Z]+ flag:flag? params:mparams? {
-      name = name.join("")
-      return "this[\"=#{name}\"](#{(params or []).join(",")})" if Formatter["=#{name}"]
-      return "this.stripHTML(this.item[\"#{name}\"] || this.item[\"#{name.charAt(0).toLowerCase() + name.slice(1)}\"] || '')"
+      name = name.join('')
+      if Formatter['=#{name}']
+        params = (params or []).join(',')
+        return "this['=#{name}'](#{params})"
+      else
+        caseName = name.charAt(0).toLowerCase() + name.slice(1)
+        return "this.stripHTML(this.item['#{name}'] || this.item['#{caseName}'] || '')"
     }
 
 mparams
@@ -441,9 +447,11 @@ filter
       return {prefix: 'this["|"](', postfix: ',' + JSON.stringify(def.join('')) + ')'}
   }
   / ':' name:[^:\],]+ params:fparam* {
+      name = name.join('')
       params = (JSON.stringify(p) for p in params)
       params.unshift() if params.length > 0
-      return {prefix: 'this["|' + name.join('') + '"](', postfix: params.join(',') + ')'}
+      params = params.join(',')
+      return { prefix: "this['|#{name}'](", postfix: "#{params})" }
     }
 
 fparam

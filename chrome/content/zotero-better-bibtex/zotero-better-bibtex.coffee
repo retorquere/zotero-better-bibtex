@@ -52,22 +52,22 @@ Zotero.BetterBibTeX.init = ->
   @DB.query 'create table if not exists _version_ (tablename primary key, version not null, unique (tablename, version))'
   @DB.query "insert or ignore into _version_ (tablename, version) values ('keys', 0)"
 
-  switch @DB.valueQuery("select version from _version_ where tablename = 'keys'")
-    when 0
-      @log 'initializing DB: no tables'
-      @DB.query 'create table keys (itemID primary key, libraryID not null, citekey not null, pinned)'
-      @DB.query "insert or replace into _version_ (tablename, version) values ('keys', 1)"
+  version = @DB.valueQuery("select version from _version_ where tablename = 'keys'")
+  if version == 0
+    @log 'initializing DB: no tables'
+    @DB.query 'create table keys (itemID primary key, libraryID not null, citekey not null, pinned)'
+    @DB.query "insert or replace into _version_ (tablename, version) values ('keys', 1)"
 
-    when 1, 2
-      @prefs.setBoolPref 'scan-citekeys', true
-      @DB.query "insert or replace into _version_ (tablename, version) values ('keys', 3)"
+  if version <= 2
+    @prefs.setBoolPref 'scan-citekeys', true
+    @DB.query "insert or replace into _version_ (tablename, version) values ('keys', 3)"
 
-    when 3
-      @DB.query 'alter table keys rename to keys2'
-      @DB.query 'create table keys (itemID primary key, libraryID not null, citekey not null, citeKeyFormat)'
-      @DB.query('insert into keys (itemID, libraryID, citekey, citeKeyFormat)
-                 select itemID, libraryID, citekey, case when pinned = 1 then null else ? end from keys2', [@prefs.getCharPref 'citeKeyFormat'])
-      @DB.query "insert or replace into _version_ (tablename, version) values ('keys', 4)"
+  if version <= 3
+    @DB.query 'alter table keys rename to keys2'
+    @DB.query 'create table keys (itemID primary key, libraryID not null, citekey not null, citeKeyFormat)'
+    @DB.query('insert into keys (itemID, libraryID, citekey, citeKeyFormat)
+               select itemID, libraryID, citekey, case when pinned = 1 then null else ? end from keys2', [@prefs.getCharPref 'citeKeyFormat'])
+    @DB.query "insert or replace into _version_ (tablename, version) values ('keys', 4)"
 
   @DB.query 'delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@prefs.getCharPref 'citeKeyFormat']
 
@@ -90,11 +90,13 @@ Zotero.BetterBibTeX.init = ->
       Zotero.BetterBibTeX.DB.query 'insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [ row.itemID, row.libraryID, @keymanager.extract({extra: row.extra}) ]
     @prefs.setBoolPref 'scan-citekeys', false
 
-  notifierID = Zotero.Notifier.registerObserver @itemChanged, ['item']
-  window.addEventListener 'unload', ((e) -> Zotero.Notifier.unregisterObserver notifierID), false
   @loadTranslators()
 
+  notifierID = Zotero.Notifier.registerObserver @itemChanged, ['item']
+  window.addEventListener 'unload', ((e) -> Zotero.Notifier.unregisterObserver notifierID), false
+
 Zotero.BetterBibTeX.loadTranslators = ->
+  @log "Loading translators"
   @safeLoad 'Better BibTeX.js'
   @safeLoad 'Better BibLaTeX.js'
   @safeLoad 'LaTeX Citation.js'
@@ -188,11 +190,12 @@ Zotero.BetterBibTeX.safeLoad = (translator) ->
     @log "Loading #{translator} failed", err
 
 Zotero.BetterBibTeX.load = (translator) ->
+  @log "Loading #{translator}"
   header = null
   data = null
   start = -1
   try
-    data = Zotero.File.getContentsFromURL 'resource://zotero-better-bibtex/translators/' + translator
+    data = Zotero.File.getContentsFromURL "resource://zotero-better-bibtex/translators/#{translator}"
     start = data.indexOf '{' if data
     if start >= 0
       len = data.indexOf '}', start
