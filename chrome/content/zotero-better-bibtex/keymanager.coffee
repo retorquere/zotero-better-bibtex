@@ -3,7 +3,7 @@ Zotero.BetterBibTeX.KeyManager = ->
   # docs say are defined in some appendix of the LaTeX book. (I don't have the
   # LaTeX book.)
   @months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
-  @journalAbbrevCache = OBject.create(null)
+  @journalAbbrevCache = Object.create(null)
 
   @__exposedProps__ = {
     months: 'r'
@@ -13,7 +13,7 @@ Zotero.BetterBibTeX.KeyManager = ->
     keys: 'r'
   }
   for own key, value of @__exposedProps__
-    self[key].__exposedProps__ = []
+    @[key].__exposedProps__ = []
 
 Zotero.BetterBibTeX.KeyManager::journalAbbrev = (item) ->
   item = arguments[1] if item._sandboxManager # the sandbox inserts itself in call parameters
