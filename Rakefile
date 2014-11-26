@@ -121,7 +121,9 @@ end
 require 'zotplus-rakehelper'
 
 rule '.js' => '.pegcoffee' do |t|
-  sh "pegjs --plugin pegjs-coffee-plugin -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{t.source} #{t.name}"
+  tmp = "tmp/#{File.basename(t.name)}"
+  sh "pegjs --plugin pegjs-coffee-plugin -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{t.source} #{tmp}"
+  FileUtils.mv(tmp, t.name)
 end
 
 rule '.js' => '.coffee' do |t|

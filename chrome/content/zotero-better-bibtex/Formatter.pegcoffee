@@ -129,7 +129,7 @@
       return null unless title
       words = @words(title)
 
-      words = (word.replace(/[^ -~]/g, ''); }) for word in words) if options.asciiOnly
+      words = (word.replace(/[^ -~]/g, '') for word in words) if options.asciiOnly
       words = (word for word in words when word != '')
       words = (word for word in words when @skipWords.indexOf(word.toLowerCase()) < 0) if options.skipWords
       return null if words.length is 0
