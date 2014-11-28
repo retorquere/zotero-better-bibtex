@@ -193,6 +193,12 @@ task :test, [:tag] => XPI do |t, args|
   throw 'One or more tests failed' unless success
 end
 
+task :clean do
+  Dir['**/*.js'].select{|f| f=~ /^(chrome|resources)\//}.each{|js|
+    File.unlink(js)
+  }
+end
+
 task :dropbox => XPI do
   dropbox = File.expand_path('~/Dropbox')
   Dir["#{dropbox}/*.xpi"].each{|xpi| File.unlink(xpi)}
@@ -412,4 +418,5 @@ file '.depends.mf' => SOURCES do |t|
   }
 end
 import '.depends.mf'
+
 
