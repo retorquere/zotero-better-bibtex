@@ -3,20 +3,21 @@ Components.utils.import 'resource://gre/modules/AddonManager.jsm'
 
 require 'Formatter.js'
 
-Zotero.BetterBibTeX = new ->
-  @prefs = (Components.classes['@mozilla.org/preferences-service;1'].getService Components.interfaces.nsIPrefService).getBranch 'extensions.zotero.translators.better-bibtex.'
-  @translators = Object.create null
-  @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
-  @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService Components.interfaces.nsIWindowMediator
-  @DB = new Zotero.DBConnection 'betterbibtex'
+Zotero.BetterBibTeX = Zotero.BetterBibTeX ? new class
+  constructor: ->
+    @prefs = (Components.classes['@mozilla.org/preferences-service;1'].getService Components.interfaces.nsIPrefService).getBranch 'extensions.zotero.translators.better-bibtex.'
+    @translators = Object.create null
+    @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
+    @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService Components.interfaces.nsIWindowMediator
+    @DB = new Zotero.DBConnection 'betterbibtex'
 
-  @findKeysSQL = 'select coalesce(i.libraryID, 0) as libraryID, i.itemID as itemID, idv.value as extra
-                  from items i 
-                  join itemData id on i.itemID = id.itemID
-                  join itemDataValues idv on idv.valueID = id.valueID
-                  join fields f on id.fieldID = f.fieldID
-                  where f.fieldName = \'extra\' and not i.itemID in (select itemID from deletedItems)
-                    and (idv.value like \'%bibtex:%\' or idv.value like \'%biblatexcitekey[%\')'
+    @findKeysSQL = 'select coalesce(i.libraryID, 0) as libraryID, i.itemID as itemID, idv.value as extra
+                    from items i 
+                    join itemData id on i.itemID = id.itemID
+                    join itemDataValues idv on idv.valueID = id.valueID
+                    join fields f on id.fieldID = f.fieldID
+                    where f.fieldName = \'extra\' and not i.itemID in (select itemID from deletedItems)
+                      and (idv.value like \'%bibtex:%\' or idv.value like \'%biblatexcitekey[%\')'
 
 
 Zotero.BetterBibTeX.prefsObserver = {}
@@ -75,9 +76,9 @@ Zotero.BetterBibTeX.init = ->
 
   for endpoint in @endpoints
     url = '/better-bibtex/' + endpoint
-    @log 'Registering endpoint ' + url
     ep = Zotero.Server.Endpoints[url] = ->
     ep.prototype = @endpoints[endpoint]
+    @log "Registered endpoint #{url}"
 
   @keymanager = new @KeyManager
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {

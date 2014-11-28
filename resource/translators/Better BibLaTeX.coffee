@@ -44,126 +44,127 @@ Translator.typeMap = {
   misc:                               'interview map instantMessage tvBroadcast radioBroadcast document'
 }
 
-Language = new ->
-  @babelMap = {
-    af: 'afrikaans'
-    am: 'amharic'
-    ar: 'arabic'
-    ast: 'asturian'
-    bg: 'bulgarian'
-    bn: 'bengali'
-    bo: 'tibetan'
-    br: 'breton'
-    ca: 'catalan'
-    cop: 'coptic'
-    cy: 'welsh'
-    cz: 'czech'
-    da: 'danish'
-    de_1996: 'ngerman'
-    de_at_1996: 'naustrian'
-    de_at: 'austrian'
-    de_de_1996: 'ngerman'
-    de: ['german', 'germanb']
-    dsb: ['lsorbian', 'lowersorbian']
-    dv: 'divehi'
-    el: 'greek'
-    el_polyton: 'polutonikogreek'
-    en_au: 'australian'
-    en_ca: 'canadian'
-    en: 'english'
-    en_gb: ['british', 'ukenglish']
-    en_nz: 'newzealand'
-    en_us: ['american', 'usenglish']
-    eo: 'esperanto'
-    es: 'spanish'
-    et: 'estonian'
-    eu: 'basque'
-    fa: 'farsi'
-    fi: 'finnish'
-    fr_ca: [
-      'acadian'
-      'canadian'
-      'canadien'
-    ]
-    fr: ['french', 'francais']
-    fur: 'friulan'
-    ga: 'irish'
-    gd: ['scottish', 'gaelic']
-    gl: 'galician'
-    he: 'hebrew'
-    hi: 'hindi'
-    hr: 'croatian'
-    hsb: ['usorbian', 'uppersorbian']
-    hu: 'magyar'
-    hy: 'armenian'
-    ia: 'interlingua'
-    id: [
-      'indonesian'
-      'bahasa'
-      'bahasai'
-      'indon'
-      'meyalu'
-    ]
-    is: 'icelandic'
-    it$$: 'italian'
-    ja: 'japanese'
-    kn: 'kannada'
-    la: 'latin'
-    lo: 'lao'
-    lt: 'lithuanian'
-    lv: 'latvian'
-    ml: 'malayalam'
-    mn: 'mongolian'
-    mr: 'marathi'
-    nb: ['norsk', 'bokmal']
-    nl: 'dutch'
-    nn: 'nynorsk'
-    no: ['norwegian', 'norsk']
-    oc: 'occitan'
-    pl: 'polish'
-    pms: 'piedmontese'
-    pt_br: ['brazil', 'brazilian']
-    pt: ['portuguese', 'portuges']
-    pt_pt: 'portuguese'
-    rm: 'romansh'
-    ro: 'romanian'
-    ru: 'russian'
-    sa: 'sanskrit'
-    se: 'samin'
-    sk: 'slovak'
-    sl: ['slovenian', 'slovene']
-    sq_al: 'albanian'
-    sr_cyrl: 'serbianc'
-    sr_latn: 'serbian'
-    sr: 'serbian'
-    sv: 'swedish'
-    syr: 'syriac'
-    ta: 'tamil'
-    te: 'telugu'
-    th: ['thai', 'thaicjk']
-    tk: 'turkmen'
-    tr: 'turkish'
-    uk: 'ukrainian'
-    ur: 'urdu'
-    vi: 'vietnamese'
-    zh_latn: 'pinyin'
-    zh: 'pinyin'
-    zlm: [
-      'malay'
-      'bahasam'
-      'melayu'
-    ]
-  }
-  for own key, value of @babelMap
-    @babelMap[key] = [value] if typeof value == 'string'
+Language = new class
+  constructor: ->
+    @babelMap = {
+      af: 'afrikaans'
+      am: 'amharic'
+      ar: 'arabic'
+      ast: 'asturian'
+      bg: 'bulgarian'
+      bn: 'bengali'
+      bo: 'tibetan'
+      br: 'breton'
+      ca: 'catalan'
+      cop: 'coptic'
+      cy: 'welsh'
+      cz: 'czech'
+      da: 'danish'
+      de_1996: 'ngerman'
+      de_at_1996: 'naustrian'
+      de_at: 'austrian'
+      de_de_1996: 'ngerman'
+      de: ['german', 'germanb']
+      dsb: ['lsorbian', 'lowersorbian']
+      dv: 'divehi'
+      el: 'greek'
+      el_polyton: 'polutonikogreek'
+      en_au: 'australian'
+      en_ca: 'canadian'
+      en: 'english'
+      en_gb: ['british', 'ukenglish']
+      en_nz: 'newzealand'
+      en_us: ['american', 'usenglish']
+      eo: 'esperanto'
+      es: 'spanish'
+      et: 'estonian'
+      eu: 'basque'
+      fa: 'farsi'
+      fi: 'finnish'
+      fr_ca: [
+        'acadian'
+        'canadian'
+        'canadien'
+      ]
+      fr: ['french', 'francais']
+      fur: 'friulan'
+      ga: 'irish'
+      gd: ['scottish', 'gaelic']
+      gl: 'galician'
+      he: 'hebrew'
+      hi: 'hindi'
+      hr: 'croatian'
+      hsb: ['usorbian', 'uppersorbian']
+      hu: 'magyar'
+      hy: 'armenian'
+      ia: 'interlingua'
+      id: [
+        'indonesian'
+        'bahasa'
+        'bahasai'
+        'indon'
+        'meyalu'
+      ]
+      is: 'icelandic'
+      it$$: 'italian'
+      ja: 'japanese'
+      kn: 'kannada'
+      la: 'latin'
+      lo: 'lao'
+      lt: 'lithuanian'
+      lv: 'latvian'
+      ml: 'malayalam'
+      mn: 'mongolian'
+      mr: 'marathi'
+      nb: ['norsk', 'bokmal']
+      nl: 'dutch'
+      nn: 'nynorsk'
+      no: ['norwegian', 'norsk']
+      oc: 'occitan'
+      pl: 'polish'
+      pms: 'piedmontese'
+      pt_br: ['brazil', 'brazilian']
+      pt: ['portuguese', 'portuges']
+      pt_pt: 'portuguese'
+      rm: 'romansh'
+      ro: 'romanian'
+      ru: 'russian'
+      sa: 'sanskrit'
+      se: 'samin'
+      sk: 'slovak'
+      sl: ['slovenian', 'slovene']
+      sq_al: 'albanian'
+      sr_cyrl: 'serbianc'
+      sr_latn: 'serbian'
+      sr: 'serbian'
+      sv: 'swedish'
+      syr: 'syriac'
+      ta: 'tamil'
+      te: 'telugu'
+      th: ['thai', 'thaicjk']
+      tk: 'turkmen'
+      tr: 'turkish'
+      uk: 'ukrainian'
+      ur: 'urdu'
+      vi: 'vietnamese'
+      zh_latn: 'pinyin'
+      zh: 'pinyin'
+      zlm: [
+        'malay'
+        'bahasam'
+        'melayu'
+      ]
+    }
+    for own key, value of @babelMap
+      @babelMap[key] = [value] if typeof value == 'string'
 
-  # list of unique languages
-  @babelList = []
-  for own k, v of @babelMap
-    for lang in v
-      @babelList.push lang if @babelList.indexOf(lang) < 0
+    # list of unique languages
+    @babelList = []
+    for own k, v of @babelMap
+      for lang in v
+        @babelList.push lang if @babelList.indexOf(lang) < 0
 
-  @cache = Object.create(null)
+    @cache = Object.create(null)
 
 #  @polyglossia = [
 #    'albanian'
@@ -287,7 +288,7 @@ Reference::hasCreator = (type) -> (@item.creators || []).some ((creator) -> crea
 doExport = ->
   Zotero.write '\n'
   while item = Translator.nextItem()
-    ref = new Translator.Reference item
+    ref = new Reference item
 
     ref.itemtype = 'inbook' if item.itemType == 'bookSection' and ref.hasCreator('bookAuthor')
     ref.itemtype = 'collection' if item.itemType == 'book' and not ref.hasCreator('author') and ref.hasCreator('editor')
@@ -314,7 +315,7 @@ doExport = ->
             ref.add { name: 'journaltitle', value: item.publicationTitle, protect: true }
             ref.add { name: 'shortjournal', value: abbr, protect: true }
 
-    ref.add { name: 'booktitle', value: item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, protect: true } if not ref.has 'booktitle'
+    ref.add { name: 'booktitle', value: item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, protect: true } if not ref.has.booktitle
 
     ref.add { name: 'titleaddon', value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, protect: true }
     ref.add { name: 'series', value: item.seriesTitle || item.series, protect: true }
@@ -404,11 +405,11 @@ doExport = ->
       for own field, value of creators
         ref.add { name: field, value: value, sep: ' and ' }
 
-      ref.add { name: 'editoratype', value: 'collaborator' } if editora.length > 0
-      ref.add { name: 'editorbtype', value: 'redactor' } if editorb.length > 0
+      ref.add { name: 'editoratype', value: 'collaborator' } if creators.editora.length > 0
+      ref.add { name: 'editorbtype', value: 'redactor' } if creators.editorb.length > 0
 
-    ref.add { name: 'urldate', value: strToISO item.accessDate } if item.accessDate
-    ref.add { name: 'date', value: (strToISO item.date) || String item.date } if item.date
+    ref.add { name: 'urldate', value: Zotero.Utilities.strToISO item.accessDate } if item.accessDate
+    ref.add { name: 'date', value: (Zotero.Utilities.strToISO item.date) || String item.date } if item.date
     ref.add { name: 'pages', value: item.pages.replace /[-\u2012-\u2015\u2053]+/g, '--' } if item.pages
 
     if item.language
@@ -422,7 +423,7 @@ doExport = ->
 
       ref.add { name: 'langid', value: language }
 
-    ref.add { name: (if ref.has 'note' then 'annotation' else 'note'), value: item.extra }
+    ref.add { name: (if ref.has.note then 'annotation' else 'note'), value: item.extra }
     ref.add { name: 'keywords', value: item.tags, esc: 'tags' }
 
     if item.notes and Translator.exportNotes

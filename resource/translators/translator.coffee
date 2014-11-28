@@ -1,33 +1,34 @@
-Translator = new ->
-  @citekeys = Object.create(null)
-  @attachmentCounter = 0
-  @rawLaTeXTag = '#LaTeX'
-  @preferences = {
-    pattern: 'citeKeyFormat'
-    skipFields: 'skipfields'
-    usePrefix: 'useprefix'
-    braceAll: 'brace-all'
-    fancyURLs: 'fancyURLs'
-    langid: 'langid'
-    attachmentRelativePath: 'attachmentRelativePath'
-    autoAbbrev: 'auto-abbrev'
-    autoAbbrevStyle: 'auto-abbrev.style'
-    unicode: 'unicode'
-    pinKeys: 'pin-citekeys'
-  }
-  @options = {
-    useJournalAbbreviation: 'useJournalAbbreviation'
-    exportCharset: 'exportCharset'
-    exportFileData: 'exportFileData'
-    exportNotes: 'exportNotes'
-    exportCollections: 'Export Collections'
-  }
-  @BibLaTeXDataFieldMap = Object.create(null)
+Translator = new class
+  constructor: ->
+    @citekeys = Object.create(null)
+    @attachmentCounter = 0
+    @rawLaTeXTag = '#LaTeX'
+    @preferences = {
+      pattern: 'citeKeyFormat'
+      skipFields: 'skipfields'
+      usePrefix: 'useprefix'
+      braceAll: 'brace-all'
+      fancyURLs: 'fancyURLs'
+      langid: 'langid'
+      attachmentRelativePath: 'attachmentRelativePath'
+      autoAbbrev: 'auto-abbrev'
+      autoAbbrevStyle: 'auto-abbrev.style'
+      unicode: 'unicode'
+      pinKeys: 'pin-citekeys'
+    }
+    @options = {
+      useJournalAbbreviation: 'useJournalAbbreviation'
+      exportCharset: 'exportCharset'
+      exportFileData: 'exportFileData'
+      exportNotes: 'exportNotes'
+      exportCollections: 'Export Collections'
+    }
+    @BibLaTeXDataFieldMap = Object.create(null)
 
 require ':constants:'
 
 Translator.log = (msg) ->
-  Zotero.debug "[#{@label}] #{if typeof msg == 'string' then msg else JSON.stringify(msg)}"
+  Zotero.debug "[better-bibtex : #{@label}] #{if typeof msg == 'string' then msg else JSON.stringify(msg)}"
 
 Translator.config = ->
   config = Object.create(null)
@@ -49,12 +50,16 @@ Translator.initialize = ->
   return if @initialized
   @initialized = true
 
+  @log "Initializing translator"
+
   for own attr, f of @fieldMap or {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
+  @log "Retrieving hidden prefs from #{JSON.stringify(@preferences)}"
   for own attribute, key of @preferences
+    @log "Retrieving hidden pref #{key} into #{attribute}"
     Translator[attribute] = Zotero.getHiddenPref "better-bibtex.#{key}"
-  @skipFields = (field.trim() for field in @skipFields.split ',')
+  @skipFields = (field.trim() for field in @skipFields.split(','))
   @testmode = Zotero.getHiddenPref 'better-bibtex.testmode'
 
   for own attribute, key of @options
@@ -153,31 +158,32 @@ JabRef.exportGroup = (collection, level) ->
     result = result.concat(JabRef.exportGroup(coll, level + 1))
   return result
 
-Reference = (item) ->
-  @fields = []
-  @has = Object.create(null)
-  @raw = ((tag.tag for tag in item.tags when tag.tag == Translator.rawLaTeXTag).length >= 0)
+class Reference
+  constructor: (@item) ->
+    @fields = []
+    @has = Object.create(null)
+    @raw = ((tag.tag for tag in @item.tags when tag.tag == Translator.rawLaTeXTag).length >= 0)
 
-  @itemtype = Translator.typeMap.Zotero2BibTeX[item.itemType] or 'misc'
+    @itemtype = Translator.typeMap.Zotero2BibTeX[@item.itemType] or 'misc'
 
-  if item.extra
-    m = /biblatexdata\[([^\]]+)\]/.exec(item.extra)
-    if m
-      item.extra = item.extra.replace(m[0], '').trim()
-      for assignment in m[1].split(';')
-        data = assignment.match(/^([^=]+)=\s*(.*)/).slice(1)
-        field =
-          name: data[0]
-          value: data[1]
+    if @item.extra
+      m = /biblatexdata\[([^\]]+)\]/.exec(@item.extra)
+      if m
+        @item.extra = @item.extra.replace(m[0], '').trim()
+        for assignment in m[1].split(';')
+          data = assignment.match(/^([^=]+)=\s*(.*)/).slice(1)
+          field =
+            name: data[0]
+            value: data[1]
 
-        if Translator.BibLaTeXDataFieldMap[field.name]
-          field = @field(Translator.BibLaTeXDataFieldMap[field.name], data[1])
+          if Translator.BibLaTeXDataFieldMap[field.name]
+            field = @field(Translator.BibLaTeXDataFieldMap[field.name], data[1])
 
-        @add field
+          @add field
 
-  for own attr, f of Translator.fieldMap or {}
-    if f.name and not @has[f.name]
-      @add(@field(f, item[attr]))
+    for own attr, f of Translator.fieldMap or {}
+      if f.name and not @has[f.name]
+        @add(@field(f, @item[attr]))
 
 Reference::field = (f, value) ->
   clone = ->
@@ -295,7 +301,7 @@ Reference::complete = ->
       if _a > _b then return 1
       return 0)
 
-  ref = "@#{@itemtype}{#{item.__citekey__},\n"
+  ref = "@#{@itemtype}{#{@item.__citekey__},\n"
   ref += (field.bibtex for field in @fields).join(',\n')
   ref += '\n}\n\n'
   Zotero.write ref
@@ -351,7 +357,7 @@ LaTeX.support.unicode = (str) ->
   regex = LaTeX.regex[if Translator.unicode then 'unicode' else 'ascii']
   return (@convert(regex.text, text, i) for text, i in str.split(regex.math)).join('')
 
-LaTeX.support.tagsRE = new RegExp("(#{["<\/?#{tag}\/?>" for tag in Object.keys(@html2latex)].join('|')})", 'ig')
+LaTeX.support.tagsRE = new RegExp("(#{["<\/?#{tag}\/?>" for tag in Object.keys(LaTeX.support.html2latex)].join('|')})", 'ig')
 LaTeX.support.tags = (text, i) ->
   return @htmltag(text) if i % 2 == 1 # odd element = splitter == html tag
   return @unicode(text)
@@ -368,4 +374,4 @@ LaTeX.support.pre = (text, i) ->
   return res
 
 LaTeX.html2latex = (str) ->
-  return (@support.pre(text) for tex in ('' + str).split(@support.preRE)).join('')
+  return (@support.pre(text) for text in ('' + str).split(@support.preRE)).join('')

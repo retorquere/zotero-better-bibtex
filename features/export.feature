@@ -1,7 +1,7 @@
 @export
 Feature: Export
 
-@e1
+@failing @failing-1 @e1 @logcapture
 Scenario: Better BibLaTeX Export 1
   When I import 1 reference from 'export/Better BibLaTeX.001.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.001.bib'

@@ -6,51 +6,53 @@ require 'fileutils'
 require 'ostruct'
 require 'yaml'
 
-Before do
-  $headless ||= false
-  unless $headless
-    $headless = Headless.new
-    $headless.start
+$headless ||= false
+unless $headless
+  $headless = Headless.new
+  $headless.start
 
-    profile_dir = File.expand_path('features/profile')
-    profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
+  profile_dir = File.expand_path('features/profile')
+  profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
 
-    STDOUT.puts "Installing plugins..."
-    Dir['tmp/plugins/*.xpi'].each{|xpi|
-      STDOUT.puts "Installing #{File.basename(xpi)}"
-      profile.add_extension(xpi)
-    }
-    profile['extensions.zotero.httpServer.enabled'] = true;
-    profile['extensions.zotero.debug.store'] = true;
-    profile['extensions.zotero.debug.log'] = true;
-    profile['extensions.zotero.translators.better-bibtex.debug'] = true;
-    profile['extensions.zotero.translators.better-bibtex.attachmentRelativePath'] = true
+  STDOUT.puts "Installing plugins..."
+  Dir['tmp/plugins/*.xpi'].each{|xpi|
+    STDOUT.puts "Installing #{File.basename(xpi)}"
+    profile.add_extension(xpi)
+  }
+  profile['extensions.zotero.httpServer.enabled'] = true;
+  profile['extensions.zotero.debug.store'] = true;
+  profile['extensions.zotero.debug.log'] = true;
+  profile['extensions.zotero.translators.better-bibtex.debug'] = true;
+  profile['extensions.zotero.translators.better-bibtex.attachmentRelativePath'] = true
 
-    profile['browser.download.dir'] = "/tmp/webdriver-downloads"
-    profile['browser.download.folderList'] = 2
-    profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
-    profile['pdfjs.disabled'] = true
+  profile['browser.download.dir'] = "/tmp/webdriver-downloads"
+  profile['browser.download.folderList'] = 2
+  profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
+  profile['pdfjs.disabled'] = true
 
-    BROWSER = Selenium::WebDriver.for :firefox, :profile => profile
-    sleep 2
-    DBB = JSONRPCClient.new('http://localhost:23119/debug-bridge')
-    DBB.bootstrap('Zotero.BetterBibTeX')
-    BBT = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
-    BBT.init
-  end
+  BROWSER = Selenium::WebDriver.for :firefox, :profile => profile
+  sleep 2
+  DBB = JSONRPCClient.new('http://localhost:23119/debug-bridge')
+  DBB.bootstrap('Zotero.BetterBibTeX')
+  BBT = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
+  BBT.init
 
-  BBT.reset
-  BBT.setPreference('translators.better-bibtex.testmode', true)
-  sleep 1
-  throw 'Library not empty!' unless BBT.librarySize == 0
+  Dir['*.debug'].each{|d| File.unlink(d) }
 end
 at_exit do
   $headless.destroy if $headless
 end
 
-After do |s|
-  open('_zotero.log', 'w'){|f| f.write(DBB.log) } if @logcapture
-  @logcapture = false
+Before do
+  BBT.reset
+  BBT.setPreference('translators.better-bibtex.testmode', true)
+  sleep 1
+  throw 'Library not empty!' unless BBT.librarySize == 0
+end
+
+After do |scenario|
+  open("#{scenario.title}.debug", 'w'){|f| f.write(DBB.log) } if scenario.source_tag_names.include?('@logcapture')
+  BBT.exportToFile('Zotero TestCase', "#{scenario.title}.json") if scenario.source_tag_names.include?('@librarydump')
   @selected = nil
 end
 
@@ -65,10 +67,6 @@ end
 #    ZOTERO.setIntPref(pref, Integer(value))
 #  end
 #end
-
-When /capture the log/ do
-  @logcapture = true
-end
 
 When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)'( as '([^']+)')?$/ do |references, dummy, attachments, filename, dummy2, aliased|
   Dir.mktmpdir {|dir|
