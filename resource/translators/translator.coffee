@@ -55,9 +55,7 @@ Translator.initialize = ->
   for own attr, f of @fieldMap or {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
-  @log "Retrieving hidden prefs from #{JSON.stringify(@preferences)}"
   for own attribute, key of @preferences
-    @log "Retrieving hidden pref #{key} into #{attribute}"
     Translator[attribute] = Zotero.getHiddenPref "better-bibtex.#{key}"
   @skipFields = (field.trim() for field in @skipFields.split(','))
   @testmode = Zotero.getHiddenPref 'better-bibtex.testmode'
@@ -185,10 +183,10 @@ class Reference
       if f.name and not @has[f.name]
         @add(@field(f, @item[attr]))
 
+Reference::log = (msg) -> Translator.log(msg)
+
 Reference::field = (f, value) ->
-  clone = ->
-  clone:: = f
-  clone = new clone
+  clone = JSON.parse(JSON.stringify(f))
   clone.value = value
   return clone
 
@@ -202,12 +200,14 @@ Reference::esc_url = (f) ->
 Reference::esc_doi = Reference::esc_url
 
 Reference::esc_latex = (f, raw) ->
-  return f.value if raw || typeof f.value == 'number'
+  return f.value if typeof f.value == 'number'
   return null unless f.value
 
-  if f.value instanceof Array
+  if Array.isArray(f.value)
     return null if f.value.length == 0
     return (@esc_latex(@field(f, word), raw) for word in f.value).join(f.sep)
+
+  return f.value if raw
 
   value = LaTeX.html2latex f.value
   if f.value instanceof String then value = String("{#{value}}")
@@ -272,11 +272,7 @@ Reference::add = (field) ->
   if typeof field.value == 'number'
     value = field.value
   else
-    if field.esc
-      throw "Unsupported escape function #{field.esc}" if typeof @["esc_#{field.esc}"] != 'function'
-      value = @["esc_#{field.esc}"](field)
-    else
-      value = @esc_latex(field, @raw)
+    value = @["esc_#{field.esc || 'latex'}"](field, (if field.esc then false else @raw))
 
     return null unless value
     value = '{' + value + '}' if field.braces
