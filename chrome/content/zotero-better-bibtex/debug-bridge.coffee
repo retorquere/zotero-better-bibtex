@@ -23,7 +23,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.init = ->
   # testing. A simple ORDER BY would have been easier and loads faster, but I can't reach into getAll.
   Zotero.Items.getAll = ((original) ->
     (onlyTopLevel, libraryID, includeDeleted) ->
-      items = original.apply this, arguments_
+      items = original.apply this, arguments
       items.sort ((a, b) -> a.itemID - b.itemID)
       items)(Zotero.Items.getAll)
   return true

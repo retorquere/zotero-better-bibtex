@@ -42,9 +42,8 @@
       result.push v if result.indexOf(v) < 0
     return result
 
-  Creators = new ->
-    # smush together regular strings
-    @reduce = (result, fragment) ->
+  Creators = new class
+    reduce: (result, fragment) ->
       # for the first item, return the item
       return [fragment] if result.length is 0
 
@@ -56,14 +55,14 @@
       result[result.length - 1] += fragment
       return result
 
-    @compact = (fragments) ->
+    compact: (fragments) ->
       fragments.reduce(@reduce, [])
 
-    @push = (groups, fragment, startNewGroup) ->
+    push: (groups, fragment, startNewGroup) ->
       groups.push [] if startNewGroup or groups.length is 0
       groups[groups.length - 1].push fragment
 
-    @split = (fragments, sep, groups=[]) ->
+    split: (fragments, sep, groups=[]) ->
       fragments = @compact(fragments)
 
       for fragment in fragments
@@ -98,12 +97,12 @@
 
       return groups
 
-    @join = (group) ->
+    join: (group) ->
       return group.join('').trim()
 
-    @creator = (str) ->
+    creator: (str) ->
 
-    @creator = (name) ->
+    creator: (name) ->
       name = split(name, ",")
 
       switch name.length
@@ -126,7 +125,7 @@
 
           return { lastName: lastName, firstName: firstName }
 
-    @parse = (creators) ->
+    parse: (creators) ->
       return (@creator(name) for name in @split(creators, /\s+and\s+/))
 }
 

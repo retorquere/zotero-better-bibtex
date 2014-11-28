@@ -1,26 +1,32 @@
 {
   # this returns an object to be used as a prototype. It assumes any object inheriting it well set 'item', 'creators'
   # and 'value' privately. Weirdness *will* happen if you forget this Emile!
-  Formatter = new ->
-    safechars = /[-:a-z0-9_!\$\*\+\.\/;\?\[\]]/g
-    # not  "@',\#{}%
-    unsafechars = '' + safechars
-    unsafechars = unsafechars.substring(unsafechars.indexOf('/') + 1, unsafechars.lastIndexOf('/'))
-    unsafechars = unsafechars.substring(0, 1) + '^' + unsafechars.substring(1, unsafechars.length)
-    @unsafechars = new RegExp(unsafechars, 'ig')
+  Formatter = new class
+    constructor: ->
+      safechars = /[-:a-z0-9_!\$\*\+\.\/;\?\[\]]/g
+      # not  "@',\#{}%
+      unsafechars = '' + safechars
+      unsafechars = unsafechars.substring(unsafechars.indexOf('/') + 1, unsafechars.lastIndexOf('/'))
+      unsafechars = unsafechars.substring(0, 1) + '^' + unsafechars.substring(1, unsafechars.length)
+      @unsafechars = new RegExp(unsafechars, 'ig')
 
-    @clean = (str) ->
+      @punct = Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g')
+
+      @caseNotUpperTitle = Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g')
+      @caseNotUpper = Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
+
+    clean: (str) ->
       Zotero.Utilities.removeDiacritics(str).replace(@unsafechars, '').trim()
   
-    @words = (str) ->
+    words: (str) ->
       return (@clean(word) for word in @stripHTML(str).split(/[\+\.,-\/#!$%\^&\*;:{}=\-\s`~()]+/) when word != '')
     
     # three-letter month abbreviations. I assume these are the same ones that the
     # docs say are defined in some appendix of the LaTeX book. (i don't have the
     # LaTeX book.)
-    @months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
+    months: [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
-    @skipWords = [
+    skipWords: [
       'a'
       'aboard'
       'about'
@@ -125,7 +131,7 @@
       'zum'
     ]
 
-    @titleWords = (title, options={}) ->
+    titleWords: (title, options={}) ->
       return null unless title
       words = @words(title)
 
@@ -135,13 +141,10 @@
       return null if words.length == 0
       return words
   
-    @stripHTML = (str) ->
+    stripHTML: (str) ->
       return ('' + str).replace(/<\/?(sup|sub|i|b|p|span|br|break)\/?>/g, '').replace(/\s+/, ' ').trim()
   
-    @caseNotUpperTitle = Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g')
-    @caseNotUpper = Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
-
-    @getCreators = (onlyEditors, withInitials) ->
+    getCreators: (onlyEditors, withInitials) ->
       return [] unless @item.creators?.length
       kind = if onlyEditors then 'editors' else 'authors'
       kind += '+initials' if withInitials
@@ -188,13 +191,13 @@
 
       return @creators[kind]
   
-    @['=id'] = ->
+    '=id': ->
       return @item.itemID
   
-    @['=key'] = ->
+    '=key': ->
       return @item.key
   
-    @['=auth'] = (onlyEditors, withInitials, n, m) ->
+    '=auth': (onlyEditors, withInitials, n, m) ->
       authors = @getCreators(onlyEditors, withInitials)
       return ''  unless authors
       author = authors[m or 0]
@@ -203,18 +206,18 @@
   
     
     # only works in translator
-    @['=type'] = ->
+    '=type': ->
       return getBibTeXType(@item)
   
-    @['=authorLast'] = (onlyEditors, withInitials) ->
+    '=authorLast': (onlyEditors, withInitials) ->
       authors = @getCreators(onlyEditors, withInitials)
       return '' unless authors
       return authors[authors.length - 1] ? ''
   
-    @['=journal'] = ->
+    '=journal': ->
       return Zotero.BetterBibTeX.keymanager.journalAbbrev(@item)
   
-    @['=authors'] = (onlyEditors, withInitials, n) ->
+    '=authors': (onlyEditors, withInitials, n) ->
       authors = @getCreators(onlyEditors, withInitials)
       return '' unless authors
 
@@ -226,7 +229,7 @@
       authors = authors.join('')
       return authors
   
-    @['=authorsAlpha'] = (onlyEditors, withInitials) ->
+    '=authorsAlpha': (onlyEditors, withInitials) ->
       authors = @getCreators(onlyEditors, withInitials)
       return '' unless authors
 
@@ -240,33 +243,33 @@
         else
           return (author.substring(0, 1) for author in authors.slice(0, 3)).join('') + '+'
   
-    @['=authIni'] = (onlyEditors, withInitials, n) ->
+    '=authIni': (onlyEditors, withInitials, n) ->
       authors = @getCreators(onlyEditors, withInitials)
       return '' unless authors
       
       return (author.substring(0, n) for author in authors).join('.')
   
-    @['=authorIni'] = (onlyEditors, withInitials) ->
+    '=authorIni': (onlyEditors, withInitials) ->
       authors = @getCreators(onlyEditors, withInitials)
       return ''  unless authors
       firstAuthor = authors.shift()
       
       return [firstAuthor.substring(0, 5)].concat(((name.substring(0, 1) for name in auth).join('.') for auth in authors)).join('.')
   
-    @['=auth.auth.ea'] = (onlyEditors, withInitials) ->
+    '=auth.auth.ea': (onlyEditors, withInitials) ->
       authors = @getCreators(onlyEditors, withInitials)
       return '' unless authors
 
       return authors.slice(0, 2).concat((if authors.length > 2 then ['ea'] else [])).join '.'
   
-    @['=auth.etal'] = (onlyEditors, withInitials) ->
+    '=auth.etal': (onlyEditors, withInitials) ->
       authors = @getCreators(onlyEditors, withInitials)
       return '' unless authors
 
       return authors.join('.') if authors.length == 2
       return authors.slice(0, 1).concat((if authors.length > 1 then ['etal'] else [])).join '.'
   
-    @['=authshort'] = (onlyEditors, withInitials) ->
+    '=authshort': (onlyEditors, withInitials) ->
       authors = @getCreators(onlyEditors, withInitials)
       return '' unless authors
 
@@ -280,7 +283,7 @@
         else
           return (author.substring(0, 1) for author in authors).join('.') + (if authors.length > 3 then '+' else '')
   
-    @['=firstpage'] = ->
+    '=firstpage': ->
       return '' unless @item.pages
       firstpage = ''
       @item.pages.replace /^([0-9]+)/g, (match, fp) ->
@@ -288,11 +291,11 @@
   
       return firstpage
   
-    @['=keyword'] = (dummy, n) ->
+    '=keyword': (dummy, n) ->
       return '' if not @item.tags?[n]
       return @item.tags[n].tag
   
-    @['=lastpage'] = ->
+    '=lastpage': ->
       return '' unless @item.pages
       lastpage = ''
       @item.pages.replace /([0-9]+)[^0-9]*$/g, (match, lp) ->
@@ -300,17 +303,17 @@
   
       return lastpage
   
-    @['=shorttitle'] = ->
+    '=shorttitle': ->
       words = @titleWords(@item.title, { skipWords: true, asciiOnly: true})
       return ''  unless words
       words.slice(0, 3).join ''
   
-    @['=veryshorttitle'] = ->
+    '=veryshorttitle': ->
       words = @titleWords(@item.title, { skipWords: true, asciiOnly: true})
       return '' unless words
       words.slice(0, 1).join ''
   
-    @['=shortyear'] = ->
+    '=shortyear': ->
       return '' unless @item.date
       date = Zotero.Date.strToDate(@item.date)
       return '' if typeof date.year == 'undefined'
@@ -318,42 +321,42 @@
       return "0#{year}"  if year < 10
       return '' + year
   
-    @['=year'] = ->
+    '=year': ->
       return '' unless @item.date
       date = Zotero.Date.strToDate(@item.date)
       return @item.date if typeof date.year == 'undefined'
       return date.year
   
-    @['=month'] = ->
+    '=month': ->
       return '' unless @item.date
       date = Zotero.Date.strToDate(@item.date)
       return '' if typeof date.year == 'undefined'
       return @months[date.month] ? ''
   
-    @['=title'] = ->
+    '=title': ->
       return @titleWords(@item.title).join('')
   
-    @['|'] = (value, dflt) ->
+    '|': (value, dflt) ->
       return dflt if value == ''
       return value
   
-    @['|condense'] = (value, sep) ->
+    '|condense': (value, sep) ->
       sep = '' if typeof sep == 'undefined'
       return value.replace /\s/g, sep
   
-    @['|abbr'] = (value) ->
+    '|abbr': (value) ->
       return (word.substring(0, 1) for word in value.split(/\s+/)).join('')
   
-    @['|lower'] = (value) ->
+    '|lower': (value) ->
       return value.toLowerCase()
   
-    @['|upper'] = (value) ->
+    '|upper': (value) ->
       return value.toUpperCase()
   
-    @['|skipwords'] = (value) ->
+    '|skipwords': (value) ->
       return (word for word in value.split(/\s+/) when @skipWords.indexOf(word.toLowerCase()) < 0).join(' ').trim()
   
-    @['|select'] = (value, start, n) ->
+    '|select': (value, start, n) ->
       value = value.split(/\s+/)
       end = value.length
       start = 1 if typeof start == 'undefined'
@@ -361,18 +364,17 @@
       end = start + parseInt(n) if typeof n != 'undefined'
       return value.slice(start, end).join ' '
   
-    @['|ascii'] = (value) ->
+    '|ascii': (value) ->
       return value.replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim()
   
-    @['|fold'] = (value) ->
+    '|fold': (value) ->
       return Zotero.Utilities.removeDiacritics(value).split(/\s+/).join(' ').trim()
   
-    @['|capitalize'] = (value) ->
+    '|capitalize': (value) ->
       return value.replace /((^|\s)[a-z])/g, (m) ->
         m.toUpperCase()
   
-    @punct = Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g')
-    @['|nopunct'] = (value) ->
+    '|nopunct': (value) ->
       return Zotero.Utilities.XRegExp.replace value, @punct, '', 'all'
 }
 

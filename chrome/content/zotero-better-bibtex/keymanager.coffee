@@ -1,19 +1,20 @@
-Zotero.BetterBibTeX.KeyManager = ->
-  # three-letter month abbreviations. I assume these are the same ones that the
-  # docs say are defined in some appendix of the LaTeX book. (I don't have the
-  # LaTeX book.)
-  @months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
-  @journalAbbrevCache = Object.create(null)
+class Zotero.BetterBibTeX.KeyManager
+  constructor: ->
+    # three-letter month abbreviations. I assume these are the same ones that the
+    # docs say are defined in some appendix of the LaTeX book. (I don't have the
+    # LaTeX book.)
+    @months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
+    @journalAbbrevCache = Object.create(null)
 
-  @__exposedProps__ = {
-    months: 'r'
-    journalAbbrev: 'r'
-    extract: 'r'
-    get: 'r'
-    keys: 'r'
-  }
-  for own key, value of @__exposedProps__
-    @[key].__exposedProps__ = []
+    @__exposedProps__ = {
+      months: 'r'
+      journalAbbrev: 'r'
+      extract: 'r'
+      get: 'r'
+      keys: 'r'
+    }
+    for own key, value of @__exposedProps__
+      @[key].__exposedProps__ = []
 
 Zotero.BetterBibTeX.KeyManager::journalAbbrev = (item) ->
   item = arguments[1] if item._sandboxManager # the sandbox inserts itself in call parameters
