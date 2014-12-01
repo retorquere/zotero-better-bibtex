@@ -1,10 +1,10 @@
 serverURL = (collectionsView, extension) ->
   return if not collectionsView
-  itemGroup = collectionsView._getItemAtRow collectionsView.selection.currentIndex
+  itemGroup = collectionsView._getItemAtRow(collectionsView.selection.currentIndex)
   return if not itemGroup
 
   try
-    serverPort = Zotero.Prefs.get 'httpServer.port'
+    serverPort = Zotero.Prefs.get('httpServer.port')
   catch err
     return
 
@@ -22,55 +22,57 @@ serverURL = (collectionsView, extension) ->
   if isLibrary
     libid = collectionsView.getSelectedLibraryID()
     url = if libid then 'library?/' + libid + '/library' + extension else 'library?library' + extension
-  if not url then return 
+  if not url then return
 
   return "http://localhost:#{serverPort}/better-bibtex/#{url}"
 
 BBTstyleChanged = (index) ->
-  listbox = document.getElementById 'better-bibtex-abbrev-style'
-  selectedItem = if index != 'undefined' then listbox.getItemAtIndex index else listbox.selectedItem
-  styleID = selectedItem.getAttribute 'value'
-  Zotero.BetterBibTeX.Prefs.setCharPref 'auto-abbrev.style', styleID
+  listbox = document.getElementById('better-bibtex-abbrev-style')
+  selectedItem = if index != 'undefined' then listbox.getItemAtIndex(index) else listbox.selectedItem
+  styleID = selectedItem.getAttribute('value')
+  Zotero.BetterBibTeX.prefs.setCharPref('auto-abbrev.style', styleID)
   Zotero.BetterBibTeX.keymanager.journalAbbrevCache = Object.create(null)
+  return
 
 updatePreferences = (load) ->
-  serverCheckbox = document.getElementById 'id-better-bibtex-preferences-server-enabled'
+  serverCheckbox = document.getElementById('id-better-bibtex-preferences-server-enabled')
   serverEnabled = serverCheckbox.checked
-  serverCheckbox.setAttribute 'hidden', Zotero.isStandalone && serverEnabled
+  serverCheckbox.setAttribute('hidden', Zotero.isStandalone && serverEnabled)
 
-  keyformat = document.getElementById 'id-better-bibtex-preferences-citeKeyFormat'
+  keyformat = document.getElementById('id-better-bibtex-preferences-citeKeyFormat')
 
   try
-    Zotero.BetterBibTeX.formatter keyformat.value
-    keyformat.setAttribute 'style', ''
-    keyformat.setAttribute 'tooltiptext', ''
+    Zotero.BetterBibTeX.formatter(keyformat.value)
+    keyformat.setAttribute('style', '')
+    keyformat.setAttribute('tooltiptext', '')
   catch err
-    keyformat.setAttribute 'style', 'color: red'
-    keyformat.setAttribute 'tooltiptext', '' + err
+    keyformat.setAttribute('style', 'color: red')
+    keyformat.setAttribute('tooltiptext', '' + err)
 
-  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-change').setAttribute 'disabled', not Zotero.BetterBibTeX.allowAutoPin()
-  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-export').setAttribute 'disabled', not Zotero.BetterBibTeX.allowAutoPin()
-  document.getElementById('id-zotero-better-bibtex-server-warning').setAttribute 'hidden', serverEnabled
-  document.getElementById('id-zotero-better-bibtex-recursive-warning').setAttribute 'hidden', not document.getElementById('id-better-bibtex-preferences-getCollections').checked
-  document.getElementById('id-better-bibtex-preferences-fancyURLs-warning').setAttribute 'hidden', not document.getElementById('id-better-bibtex-preferences-fancyURLs').checked
+  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-change').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())
+  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-export').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())
+  document.getElementById('id-zotero-better-bibtex-server-warning').setAttribute('hidden', serverEnabled)
+  document.getElementById('id-zotero-better-bibtex-recursive-warning').setAttribute('hidden', not document.getElementById('id-better-bibtex-preferences-getCollections').checked)
+  document.getElementById('id-better-bibtex-preferences-fancyURLs-warning').setAttribute('hidden', not document.getElementById('id-better-bibtex-preferences-fancyURLs').checked)
 
-  styles = Zotero.Styles.getVisible().filter ((style) -> style.usesAbbreviation)
+  styles = Zotero.Styles.getVisible().filter((style) -> style.usesAbbreviation)
 
-  listbox = document.getElementById 'better-bibtex-abbrev-style'
+  listbox = document.getElementById('better-bibtex-abbrev-style')
   fillList = listbox.children.length is 0
-  selectedStyle = Zotero.BetterBibTeX.Prefs.getCharPref 'auto-abbrev.style'
+  selectedStyle = Zotero.BetterBibTeX.prefs.getCharPref('auto-abbrev.style')
   selectedIndex = -1
   for style, i in styles
     if fillList
-      console.log "better bibtex: adding #{style.styleID}=#{style.title}"
-      itemNode = document.createElement 'listitem'
-      itemNode.setAttribute 'value', style.styleID
-      itemNode.setAttribute 'label', style.title
-      listbox.appendChild itemNode
+      itemNode = document.createElement('listitem')
+      itemNode.setAttribute('value', style.styleID)
+      itemNode.setAttribute('label', style.title)
+      listbox.appendChild(itemNode)
     if style.styleID is selectedStyle then selectedIndex = i
   if selectedIndex is -1 then selectedIndex = 0
-  BBTstyleChanged selectedIndex
+  BBTstyleChanged(selectedIndex)
 
-  window.setTimeout (->
-    listbox.ensureIndexIsVisible selectedIndex
-    listbox.selectedIndex = selectedIndex), 0
+  window.setTimeout((->
+    listbox.ensureIndexIsVisible(selectedIndex)
+    listbox.selectedIndex = selectedIndex
+    return), 0)
+  return

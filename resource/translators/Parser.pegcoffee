@@ -6,15 +6,11 @@
     comments: []
     errors: []
 
-  beep = (msg) ->
-    console.log msg
-    return true
-
-  flatten = (str) ->
-    return (flatten(s) for s in str).join('') if Array.isArray(str)
+  @flatten = (str) ->
+    return (@flatten(s) for s in str).join('') if Array.isArray(str)
     return '' + str
 
-  filterattachments = (attachments, key) ->
+  @filterattachments = (attachments, key) ->
     if key == 'sentelink'
       for attachment in attachments
         attachment.path = attachment.path.replace(/,.*/, '') if attachment.path
@@ -30,19 +26,19 @@
 
     return attachments
 
-  skipEmptyKeys = (key) ->
+  @skipEmptyKeys = (key) ->
     return key != ''
 
-  intersect = (v) ->
+  @intersect = (v) ->
     return @indexOf(v) >= 0
 
-  unique = (arr) ->
+  @unique = (arr) ->
     result = []
     for v in arr
       result.push v if result.indexOf(v) < 0
     return result
 
-  Creators = new class
+  @Creators = new class
     reduce: (result, fragment) ->
       # for the first item, return the item
       return [fragment] if result.length is 0
@@ -100,10 +96,8 @@
     join: (group) ->
       return group.join('').trim()
 
-    creator: (str) ->
-
     creator: (name) ->
-      name = split(name, ",")
+      name = @split(name, ",")
 
       switch name.length
         when 0
@@ -134,11 +128,11 @@ start
 
 entry
   = _* '@comment'i _* "{" groupstree "}"
-  / _* '@comment'i _* "{" comment:string* "}" { @bibtex.comments.push flatten(comment).trim() }
+  / _* '@comment'i _* "{" comment:string* "}" { @bibtex.comments.push @flatten(comment).trim() }
   / _* '@string'i _* "{" _* str:key_value _* "}" { @bibtex.strings[str.key] = str.value }
   / _* '@preamble'i _* "{" _* simplestring _* "}"
   / _* '@' reference
-  / other:[^@]+ { @bibtex.comments.push flatten(other).trim() }
+  / other:[^@]+ { @bibtex.comments.push @flatten(other).trim() }
 
 reference
   = type:identifier _* "{" _* id:citekey _* "," fields:field* "}" _* {
@@ -170,18 +164,18 @@ reference
 
         @bibtex.references.push ref
     }
-  / err:[^@]* { @bibtex.errors.push "@#{flatten(err)}" }
+  / err:[^@]* { @bibtex.errors.push "@#{@flatten(err)}" }
 
 identifier
-  = chars:[a-zA-Z]+ { return flatten(chars) }
+  = chars:[a-zA-Z]+ { return @flatten(chars) }
 
 citekey
-  = str:[^,]+ { return flatten(str) }
+  = str:[^,]+ { return @flatten(str) }
 
 field
-  = _* key:attachmenttype _* '=' _* val:attachments _* (',' _*)? { return {key: 'file', type: 'file', value: filterattachments(val || [], key)} }
+  = _* key:attachmenttype _* '=' _* val:attachments _* (',' _*)? { return {key: 'file', type: 'file', value: @filterattachments(val || [], key)} }
   / _* key:creatortype _* '=' _* val:bracedvalue _* ("," _*)? {
-      return {key: key.toLowerCase(), type: 'creator', value: Creators.parse(val)}
+      return {key: key.toLowerCase(), type: 'creator', value: @Creators.parse(val)}
     }
   / key_value
 
@@ -200,14 +194,14 @@ key_value
   / _* key:key _* "=" _* val:value _* ("," _*)? { return {key: key.trim().toLowerCase(), value: val.trim()} }
 
 key
-  = key:[^ \t\n\r=]+ { return flatten(key) }
+  = key:[^ \t\n\r=]+ { return @flatten(key) }
 
 value
   = val:[^#"{} \t\n\r,]+ {
-      val = flatten(val)
+      val = @flatten(val)
       return @bibtex.strings[val] or val
     }
-  / val:bracedvalue { return flatten(val) }
+  / val:bracedvalue { return @flatten(val) }
   / _* "#" _* val:value { return val }
 
 simplestring
@@ -220,8 +214,8 @@ bracedvalue
   / '"' & { @quote = '"'; true }  val:string* '"' & { delete @quote; true } { return val; }
 
 url
-  = '{' & { delete @quote; true } val:urlchar* '}' & { delete @quote; true } { return flatten(val) }
-  / '"' & { @quote = '"'; true }  val:urlchar* '"' & { delete @quote; true } { return flatten(val) }
+  = '{' & { delete @quote; true } val:urlchar* '}' & { delete @quote; true } { return @flatten(val) }
+  / '"' & { @quote = '"'; true }  val:urlchar* '"' & { delete @quote; true } { return @flatten(val) }
 
 string
   = text:plaintext                { return text }
@@ -233,12 +227,12 @@ string
   / '_' text:param                { return "<sub>#{text}</sub>" }
   / '^' text:param                { return "<sup>#{text}</sup>" }
   / "\\emph" text:bracedparam     { return "<i>#{text}</i>" }
-  / "\\url{" text:urlchar* "}"    { return flatten(text) }
+  / "\\url{" text:urlchar* "}"    { return @flatten(text) }
   / "\\textit" text:bracedparam   { return "<i>#{text}</i>" }
   / "\\textbf" text:bracedparam   { return "<b>#{text}</b>" }
   / "\\textsc" text:bracedparam   { return "<span style='small-caps'>#{text}</span>" }
-  / '{' text:string* '}'          { return new String(flatten(text)) } // use 'new String', not 'String', because only 'new String' will match 'instanceof'!
-  / '$' text:string* '$'          { return flatten(text) }
+  / '{' text:string* '}'          { return new String(@flatten(text)) } // use 'new String', not 'String', because only 'new String' will match 'instanceof'!
+  / '$' text:string* '$'          { return @flatten(text) }
   /* / "%" [^\n]* "\n"            { return '' }          comment */
   / '%'                           { return '%' } // this doesn't feel right
   / "\\" command:[^a-z] ('[' key_value* ']')?  param:param {  # single-char command
@@ -255,7 +249,7 @@ string
       return cmd
     }
   / "\\" cmd:plaintext ('[' key_value* ']')? '{' text:string* '}' { # command
-      return ((LaTeX.toUnicode["\\#{cmd}"] || '') + flatten(text))
+      return ((LaTeX.toUnicode["\\#{cmd}"] || '') + @flatten(text))
     }
   / "\\" cmd:plaintext _* {  # bare command
       return LaTeX.toUnicode["\\#{cmd}"] if LaTeX.toUnicode["\\#{cmd}"]
@@ -268,19 +262,19 @@ param
   / text:bracedparam      { return text }
 
 bracedparam
-  = '{' text:string* '}'  { return flatten(text) }
+  = '{' text:string* '}'  { return @flatten(text) }
 
 quotedchar
   = & { return (@quote == '"') } '"' { return '"' }
   / text:[#$%&_\^\[\]{}]  { return text }
 
 urlchar
-  = text:[^\\{}]+ { return flatten(text) }
+  = text:[^\\{}]+ { return @flatten(text) }
   / "\\" text:. { return text }
 
 plaintext
-  = & { return (@quote == '"') } text:[^ "\t\n\r#$%&~_\^{}\[\]\\]+ { return flatten(text) }
-  / & { return (@.quote != '"'); } text:[^ \t\n\r#$%&~_\^{}\[\]\\]+  { return flatten(text) }
+  = & { return (@quote == '"') } text:[^ "\t\n\r#$%&~_\^{}\[\]\\]+ { return @flatten(text) }
+  / & { return (@.quote != '"'); } text:[^ \t\n\r#$%&~_\^{}\[\]\\]+  { return @flatten(text) }
 
 attachmentlist
   = car:attachment cdr:attachmentcdr*  { return [car].concat(cdr || []) }
@@ -318,10 +312,10 @@ filepart
   = part:filechars?  { return (part || '') }
 
 filechars
-  = text:filechar+ { return flatten(text) }
+  = text:filechar+ { return @flatten(text) }
 
 filechar
-  = text:[^\\{}:;]+ { return flatten(text) }
+  = text:[^\\{}:;]+ { return @flatten(text) }
   / "\\" text:.   { return text }
 
 groupstree
@@ -336,7 +330,7 @@ groupstree
         collection.name = group.data.shift()
         intersection = group.data.shift()
 
-        collection.items = group.data.filter(skipEmptyKeys)
+        collection.items = group.data.filter(@skipEmptyKeys)
         collection.collections = []
 
         levels[group.level] = collection
@@ -348,10 +342,10 @@ groupstree
             #when "0" # independent
 
             when "1" # intersection
-              collection.items = collection.items.filter(intersect, levels[group.level - 1].items)
+              collection.items = collection.items.filter(@intersect, levels[group.level - 1].items)
 
             when "2" # union
-              collection.items = unique(levels[group.level - 1].items.concat(collection.items))
+              collection.items = @unique(levels[group.level - 1].items.concat(collection.items))
 
       @bibtex.collections = @bibtex.collections.concat(collections)
     }

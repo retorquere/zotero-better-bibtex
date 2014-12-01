@@ -10,6 +10,6 @@ script: "rake test[$FEATURE]"
 before_install:
   - sudo apt-get update
   - sudo apt-get install nodejs npm
-  - npm install pegjs coffee-script pegjs-coffee-plugin
+  - npm install pegjs coffee-script pegjs-coffee-plugin coffeelint coffeelint-no-implicit-returns
 addons:
   firefox: "30.0"

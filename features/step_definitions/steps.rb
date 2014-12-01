@@ -51,7 +51,8 @@ Before do
 end
 
 After do |scenario|
-  open("#{scenario.title}.debug", 'w'){|f| f.write(DBB.log) } if scenario.source_tag_names.include?('@logcapture')
+  #open("#{scenario.title}.debug", 'w'){|f| f.write(DBB.log) } if scenario.source_tag_names.include?('@logcapture')
+  open("#{scenario.title}.debug", 'w'){|f| f.write(DBB.log) } if scenario.failed?
   BBT.exportToFile('Zotero TestCase', "#{scenario.title}.json") if scenario.source_tag_names.include?('@librarydump')
   @selected = nil
 end
