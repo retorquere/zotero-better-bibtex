@@ -1,4 +1,5 @@
-require 'translator.coffee'
+require('translator.coffee')
+require('unicode_translator.coffee')
 
 Translator.fieldMap = {
   # Zotero      BibTeX
@@ -41,23 +42,23 @@ Translator.typeMap = {
 months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
 doExport = ->
-  Zotero.write '\n'
+  Zotero.write('\n')
   while item = Translator.nextItem()
-    ref = new Reference item
+    ref = new Reference(item)
 
-    ref.add { name: 'number', value: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber }
-    ref.add { name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*\d+:\d+:\d+/, '') }
+    ref.add({ name: 'number', value: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber })
+    ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*\d+:\d+:\d+/, '') })
 
     switch item.itemType
       when 'bookSection', 'conferencePaper'
-        ref.add { name: 'booktitle',  value: item.publicationTitle, protect: true }
+        ref.add({ name: 'booktitle',  value: item.publicationTitle, protect: true })
       else
-        ref.add { name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle, protect: true }
+        ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle, protect: true })
 
     switch item.itemType
-      when 'thesis' then ref.add { name: 'school', value: item.publisher, protect: true }
-      when 'report' then ref.add { name: 'institution', value: item.publisher, protect: true }
-      else               ref.add { name: 'publisher', value: item.publisher, protect: true }
+      when 'thesis' then ref.add({ name: 'school', value: item.publisher, protect: true })
+      when 'report' then ref.add({ name: 'institution', value: item.publisher, protect: true })
+      else               ref.add({ name: 'publisher', value: item.publisher, protect: true })
 
     if item.creators and item.creators.length
       # split creators into subcategories
@@ -71,74 +72,74 @@ doExport = ->
         if ('' + creator.firstName).trim() != '' and ('' + creator.lastName).trim() != ''
           creatorString = creator.lastName + ', ' + creator.firstName
         else
-          creatorString = String creator.lastName
+          creatorString = String(creator.lastName)
 
         switch creator.creatorType
-          when  'editor', 'seriesEditor'  then editors.push creatorString
-          when 'translator'               then translators.push creatorString
-          when primaryCreatorType         then authors.push creatorString
-          else                                 collaborators.push creatorString
+          when  'editor', 'seriesEditor'  then editors.push(creatorString)
+          when 'translator'               then translators.push(creatorString)
+          when primaryCreatorType         then authors.push(creatorString)
+          else                                 collaborators.push(creatorString)
 
-      ref.add { name: 'author', value: authors, sep: ' and ' }
-      ref.add { name: 'editor', value: editors, sep: ' and ' }
-      ref.add { name: 'translator', value: translators, sep: ' and ' }
-      ref.add { name: 'collaborator', value: collaborators, sep: ' and ' }
+      ref.add({ name: 'author', value: authors, sep: ' and ' })
+      ref.add({ name: 'editor', value: editors, sep: ' and ' })
+      ref.add({ name: 'translator', value: translators, sep: ' and ' })
+      ref.add({ name: 'collaborator', value: collaborators, sep: ' and ' })
 
     if item.date
-      date = Zotero.Utilities.strToDate item.date
+      date = Zotero.Utilities.strToDate(item.date)
       if typeof date.year == 'undefined'
-        ref.add { name: 'year', value: item.date, protect: true }
+        ref.add({ name: 'year', value: item.date, protect: true })
       else
         if typeof date.month == 'number'
-          ref.add { name: 'month', value: months[date.month], braces: false }
+          ref.add({ name: 'month', value: months[date.month], braces: false })
 
-        ref.add { name: 'year', value: date.year }
+        ref.add({ name: 'year', value: date.year })
 
-    ref.add { name: 'note', value: item.extra }
-    ref.add { name: 'keywords', value: item.tags, esc: 'tags' }
-    ref.add { name: 'pages', value: item.pages && item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--') }
+    ref.add({ name: 'note', value: item.extra })
+    ref.add({ name: 'keywords', value: item.tags, esc: 'tags' })
+    ref.add({ name: 'pages', value: item.pages && item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--') })
 
     if item.notes and Translator.exportNotes
       for note in item.notes
-        ref.add { name: 'annote', value: Zotero.Utilities.unescapeHTML(note.note) }
+        ref.add({ name: 'annote', value: Zotero.Utilities.unescapeHTML(note.note) })
 
-    ref.add { name: 'file', value: item.attachments, esc: 'attachments' }
+    ref.add({ name: 'file', value: item.attachments, esc: 'attachments' })
     ref.complete()
 
   Translator.exportGroups()
-  Zotero.write '\n'
+  Zotero.write('\n')
+  return
 
-## import
-
-require 'Parser.js'
+require('Parser.js')
 
 detectImport = ->
   try
-    input = Zotero.read 102400
-    Zotero.debug "BBT detect against #{input}"
-    bib = BetterBibTeXParser.parse input
+    input = Zotero.read(102400)
+    Translator.log("BBT detect against #{input}")
+    bib = BetterBibTeXParser.parse(input)
     return (bib.references.length > 0)
   catch e
-    Zotero.debug "better-bibtex: detect failed: #{e}\n#{e.stack}"
+    Translator.log("better-bibtex: detect failed: #{e}\n#{e.stack}")
     return false
+  return
 
 doImport = ->
   try
     Translator.initialize()
 
     data = ''
-    while (read = Zotero.read 0x100000) != false
+    while (read = Zotero.read(0x100000)) != false
       data += read
-    bib = BetterBibTeXParser.parse data
+    bib = BetterBibTeXParser.parse(data)
 
     for ref in bib.references
       new ZoteroItem(ref)
 
     for coll in bib.collections
-      JabRef.importGroup coll
+      JabRef.importGroup(coll)
 
   catch e
-    Zotero.debug 'better-bibtex: import failed: ' + e + '\n' + e.stack
+    Translator.log('better-bibtex: import failed: ' + e + '\n' + e.stack)
     throw e
 
 JabRef = JabRef ? {}
@@ -153,15 +154,16 @@ JabRef.importGroup = (group) ->
   collection.complete()
   return collection
 
-ZoteroItem = (bibtex) ->
-  @item = item
-  @type = Translator.typeMap.BibTeX2Zotero[Zotero.Utilities.trimInternal((bibtex.type || bibtex.__type__).toLowerCase())] || 'journalArticle'
-  @item = new Zotero.Item @type
-  @item.itemID = bibtexitem.__key__
-  @biblatexdata = []
-  @item.notes.push { note: ('The following fields were not imported:<br/>' + bibtexitem.__note__).trim(), tags: ['#BBT Import'] } if bibtex.__note__
-  @import(bibtex)
-  @item.complete()
+class ZoteroItem
+  constructor: (bibtex) ->
+    @type = Translator.typeMap.BibTeX2Zotero[Zotero.Utilities.trimInternal((bibtex.type || bibtex.__type__).toLowerCase())] || 'journalArticle'
+    @item = new Zotero.Item(@type)
+    @item.itemID = bibtex.__key__
+    @biblatexdata = []
+    @item.notes.push({ note: ('The following fields were not imported:<br/>' + bibtex.__note__).trim(), tags: ['#BBT Import'] }) if bibtex.__note__
+    @import(bibtex)
+    @item.complete()
+    Translator.log("XXX: item completed")
 
 ZoteroItem::keywordClean = (k) ->
   return k.replace(/^[\s{]+|[}\s]+$/g, '').trim()
@@ -171,22 +173,24 @@ ZoteroItem::addToExtra = (str) ->
     @item.extra += " \n#{str}"
   else
     @item.extra = str
+  return
 
 ZoteroItem::addToExtraData = (key, value) ->
-  @extradata.push key.replace(/[=;]/g, '#') + '=' + value.replace(/[\r\n]+/g, ' ').replace(/[=;]g/, '#')
+  @extradata.push(key.replace(/[=;]/g, '#') + '=' + value.replace(/[\r\n]+/g, ' ').replace(/[=;]g/, '#'))
+  return
 
-ZoteroItem::fieldMap = Object.create null
+ZoteroItem::fieldMap = Object.create(null)
 for own attr, field of Translator.fieldMap
   fields = []
-  fields.push field.name if field.name
-  if field.import then fields = fields.concat field.import
+  fields.push(field.name) if field.name
+  fields = fields.concat(field.import) if field.import
   for f in fields
     ZoteroItem::fieldMap[f] ?= attr
 
 ZoteroItem::import = (bibtex) ->
   for own field, value of bibtex
     continue if typeof value != 'number' && not value
-    value = Zotero.Utilities.trim value if typeof value == 'string'
+    value = Zotero.Utilities.trim(value) if typeof value == 'string'
     continue if value == ''
 
     if @fieldMap[field]
@@ -223,7 +227,7 @@ ZoteroItem::import = (bibtex) ->
             creator = Zotero.Utilities.cleanAuthor(creator, field, false)
           else
             creator.creatorType = field
-          @item.creators.push creator
+          @item.creators.push(creator)
 
       when 'institution', 'organization'
         @item.backupPublisher = value
@@ -236,14 +240,14 @@ ZoteroItem::import = (bibtex) ->
           else                             @item.issue = value
 
       when 'month'
-        month = months.indexOf value.toLowerCase()
+        month = months.indexOf(value.toLowerCase())
         if month >= 0
-          value = Zotero.Utilities.formatDate {month: month}
+          value = Zotero.Utilities.formatDate({month: month})
         else
           value += ' '
 
         if @item.date
-          if value.indexOf(item.date) >= 0 # value contains year and more
+          if value.indexOf(@item.date) >= 0 # value contains year and more
             @item.date = value
           else
             @item.date = value + @item.date
@@ -252,9 +256,9 @@ ZoteroItem::import = (bibtex) ->
 
       when 'year'
         if @item.date
-          item.date += value if item.date.indexOf(value) < 0
+          @item.date += value if @item.date.indexOf(value) < 0
         else
-          item.date = value
+          @item.date = value
 
       when 'date'
         @item.date = value
@@ -262,10 +266,10 @@ ZoteroItem::import = (bibtex) ->
       when 'pages'
         switch @item.itemType
           when 'book', 'thesis', 'manuscript' then @item.numPages = value
-          else                                     @item.pages = value.replace /--/g, '-'
+          else                                     @item.pages = value.replace(/--/g, '-')
 
       when 'note'
-        @addToExtra value
+        @addToExtra(value)
 
       when 'howpublished'
         if /^(https?:\/\/|mailto:)/i.test(value)
@@ -277,30 +281,32 @@ ZoteroItem::import = (bibtex) ->
         @item.accessDate = value
 
       when 'keywords', 'keyword'
-        keywords = value.split /[,;]/
-        keywords = value.split /\s+/ if keywords.length == 1
-        @item.tags = (keywordClean(kw) for kw in keywords)
+        keywords = value.split(/[,;]/)
+        keywords = value.split(/\s+/) if keywords.length == 1
+        @item.tags = (@keywordClean(kw) for kw in keywords)
 
       when 'comment', 'annote', 'review', 'notes'
-        @item.notes.push {note: Zotero.Utilities.text2html value}
+        @item.notes.push({note: Zotero.Utilities.text2html(value)})
 
       when 'file'
         for att in value
-          @item.attachments.push att
+          @item.attachments.push(att)
 
       else
-        @addToExtraData field, value
+        @addToExtraData(field, value)
 
   if @item.itemType == 'conferencePaper' and @item.publicationTitle and not @item.proceedingsTitle
     @item.proceedingsTitle = @item.publicationTitle
     delete @item.publicationTitle
 
-  @addToExtra 'bibtex: ' + item.itemID
+  @addToExtra('bibtex: ' + @item.itemID)
 
   if @biblatexdata.length > 0
     @biblatexdata.sort()
-    addToExtra "biblatexdata[#{@biblatexdata.join(';')}]"
+    @addToExtra("biblatexdata[#{@biblatexdata.join(';')}]")
 
   if not @item.publisher and @item.backupPublisher
     @item.publisher = @item.backupPublisher
     delete @item.backupPublisher
+
+  return

@@ -1,7 +1,7 @@
 {
   # this returns an object to be used as a prototype. It assumes any object inheriting it well set 'item', 'creators'
   # and 'value' privately. Weirdness *will* happen if you forget this Emile!
-  Formatter = new class
+  @Formatter = new class
     constructor: ->
       safechars = /[-:a-z0-9_!\$\*\+\.\/;\?\[\]]/g
       # not  "@',\#{}%
@@ -141,6 +141,9 @@
       return null if words.length == 0
       return words
   
+    log: (msg) ->
+      Zotero.debug("Formatter: #{msg}")
+
     stripHTML: (str) ->
       return ('' + str).replace(/<\/?(sup|sub|i|b|p|span|br|break)\/?>/g, '').replace(/\s+/, ' ').trim()
   
@@ -154,16 +157,16 @@
         creators = {}
         primaryCreatorType = Zotero.Utilities.getCreatorsForType(@item.itemType)[0]
         for creator in @item.creators
-          name = Formatter.stripHTML(creator.lastName)
+          name = @stripHTML(creator.lastName)
 
           if name != ''
             if withInitials and creator.firstName
-              initials = Zotero.Utilities.XRegExp.replace(creator.firstName, Formatter.caseNotUpperTitle, '', 'all')
+              initials = Zotero.Utilities.XRegExp.replace(creator.firstName, @caseNotUpperTitle, '', 'all')
               initials = Zotero.Utilities.removeDiacritics(initials)
-              initials = Zotero.Utilities.XRegExp.replace(initials, Formatter.caseNotUpper, '', 'all')
+              initials = Zotero.Utilities.XRegExp.replace(initials, @caseNotUpper, '', 'all')
               name += initials
           else
-            name = Formatter.stripHTML(creator.firstName)
+            name = @stripHTML(creator.firstName)
 
           continue if name == ''
 
@@ -380,8 +383,9 @@
 
 start
   = formatter:formatter {
+      @Formatter.log(formatter)
       parser = Function('item', formatter)
-      parser:: = Formatter
+      parser:: = @Formatter
       return parser
   }
 
@@ -417,24 +421,26 @@ fcall
 
 method
   = prefix:('auth' / 'authors') postfix:[\.a-zA-Z]* flag:flag? params:mparams? {
+      # do not re-use match vars! CS overwrites them!
       method = prefix + postfix.join('')
-      params = [ 'false', (if flag == 'initials' then 'true' else 'false') ].concat(params or []).join(',')
-      return "this['=#{method}'](#{params})"
+      param = [ 'false', (if flag == 'initials' then 'true' else 'false') ].concat(params or []).join(',')
+      return "this['=#{method}'](#{param})"
     }
   / prefix:('edtr' / 'editors') postfix:[\.a-zA-Z]* flag:flag? params:mparams? {
-      prefix = if prefix == 'edtr' then 'auth' else 'authors'
-      method = prefix + postfix.join('')
-      params = [ 'true', (if flag == 'initials' then 'true' else 'false') ].concat(params or []).join(',')
-      return "this['=#{method}'](#{params})"
+      # do not re-use match vars! CS overwrites them!
+      method = (if prefix == 'edtr' then 'auth' else 'authors') + postfix.join('')
+      param = [ 'true', (if flag == 'initials' then 'true' else 'false') ].concat(params or []).join(',')
+      return "this['=#{method}'](#{param})"
     }
   / name:[\.a-zA-Z]+ flag:flag? params:mparams? {
-      name = name.join('')
-      if Formatter['=#{name}']
-        params = (params or []).join(',')
-        return "this['=#{name}'](#{params})"
+      # do not re-use match vars! CS overwrites them!
+      method = name.join('')
+      if @Formatter["=#{method}"]
+        param = (params or []).join(',')
+        return "this['=#{method}'](#{param})"
       else
-        caseName = name.charAt(0).toLowerCase() + name.slice(1)
-        return "this.stripHTML(this.item['#{name}'] || this.item['#{caseName}'] || '')"
+        casedMethod = method.charAt(0).toLowerCase() + method.slice(1)
+        return "this.stripHTML(this.item['#{method}'] || this.item['#{casedMethod}'] || '')"
     }
 
 mparams
@@ -449,11 +455,12 @@ filter
       return {prefix: 'this["|"](', postfix: ',' + JSON.stringify(def.join('')) + ')'}
   }
   / ':' name:[^:\],]+ params:fparam* {
-      name = name.join('')
-      params = (JSON.stringify(p) for p in params)
-      params.unshift() if params.length > 0
-      params = params.join(',')
-      return { prefix: "this['|#{name}'](", postfix: "#{params})" }
+      # do not re-use match vars! CS overwrites them!
+      method = name.join('')
+      param = (JSON.stringify(p) for p in params)
+      param.unshift('') if param.length > 0 # this adds the first comma
+      param = param.join(',')
+      return { prefix: "this['|#{method}'](", postfix: "#{param})" }
     }
 
 fparam

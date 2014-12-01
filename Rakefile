@@ -17,12 +17,18 @@ require 'open3'
 require 'yaml'
 require 'rake/loaders/makefile'
 
+LINTED=[]
 def expand(file, options={})
   dependencies = []
 
   #puts "expanding #{file.path.gsub(/^\.\//, '').inspect}"
+  if File.extname(file.path) == '.coffee' && !options[:collect] && !LINTED.include?(file.path)
+    sh "coffeelint #{file.path.shellescape}"
+    LINTED << file.path
+  end
+
   src = file.read
-  src.gsub!(/(^|\n)require\s+'([^'\n]+)'[^\n]*/) {
+  src.gsub!(/(^|\n)require\s*\(?\s*'([^'\n]+)'[^\n]*/) {
     all = $&
     prefix = $1
     tbi = $2.strip
@@ -33,17 +39,18 @@ def expand(file, options={})
       tbi = File.join(File.dirname(file.path), tbi)
       dependencies << tbi
     elsif tbi == ':constants:'
+      dependencies << 'Rakefile'
       #puts "expanding #{tbi.inspect}"
       if options[:collect]
         result = ''
       else
         throw "No header information present" unless options[:header]
         result = []
-        result << "Translator.id        = #{options[:header]['translatorID'].to_json}"
-        result << "Translator.label     = #{options[:header]['label'].to_json}"
-        result << "Translator.timestamp = #{options[:header]['lastUpdated'].to_json}"
-        result << "Translator.release   = #{RELEASE.to_json}"
-        result << "Translator.unicode   = #{(!(((options[:header]['displayOptions'] || {})['exportCharset'] || 'ascii').downcase =~ /ascii/)).to_json}"
+        result << "Translator.id              = #{options[:header]['translatorID'].to_json}"
+        result << "Translator.label           = #{options[:header]['label'].to_json}"
+        result << "Translator.timestamp       = #{options[:header]['lastUpdated'].to_json}"
+        result << "Translator.release         = #{RELEASE.to_json}"
+        result << "Translator.unicode_default = #{(!(((options[:header]['displayOptions'] || {})['exportCharset'] || 'ascii').downcase =~ /ascii/)).to_json}"
         result = result.join("\n")
       end
     else
@@ -101,10 +108,12 @@ SOURCES = [
   'resource/translators/Better BibLaTeX.coffee',
   'resource/translators/Better BibTeX.coffee',
   'resource/translators/LaTeX Citation.coffee',
+  'resource/translators/mathchar.pegcoffee',
   'resource/translators/Pandoc Citation.coffee',
   'resource/translators/Parser.pegcoffee',
+  'resource/translators/Unicode2LaTeX.pegcoffee',
+  'resource/translators/unicode_translator.coffee',
   'resource/translators/translator.coffee',
-  'resource/translators/latex_unicode_mapping.coffee',
   'resource/translators/Zotero TestCase.coffee',
   'tmp/unicode.xml',
   'update.rdf',
@@ -121,12 +130,13 @@ end
 require 'zotplus-rakehelper'
 
 rule '.js' => '.pegcoffee' do |t|
-  tmp = "tmp/#{File.basename(t.name)}"
-  sh "pegjs --plugin pegjs-coffee-plugin -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{t.source} #{tmp}"
-  FileUtils.mv(tmp, t.name)
+  name = "tmp/#{File.basename(t.name)}"
+  source = "tmp/#{File.basename(t.source)}"
+  open(source, 'w'){|f| f.write(expand(open(t.source))) }
+  sh "pegjs --plugin pegjs-coffee-plugin -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{source} #{name}"
+  FileUtils.mv(name, t.name)
 end
 
-# TODO: dependencies don't work!
 rule '.js' => '.coffee' do |t|
   header = t.source.sub(/\.coffee$/, '.yml')
   if File.file?(header)
@@ -194,8 +204,9 @@ task :test, [:tag] => XPI do |t, args|
 end
 
 task :clean do
-  Dir['**/*.js'].select{|f| f=~ /^(chrome|resources)\//}.each{|js|
-    File.unlink(js)
+  clean = Dir['**/*.js'].select{|f| f=~ /^(chrome|resource)\//} + Dir['tmp/*'].select{|f| File.file?(f) }
+  clean.each{|f|
+    File.unlink(f)
   }
 end
 
@@ -209,8 +220,15 @@ file 'tmp/unicode.xml' do |t|
   ZotPlus::RakeHelper.download('http://web.archive.org/web/20131109072541/http://www.w3.org/2003/entities/2007xml/unicode.xml', t.name)
 end
 
-file 'resource/translators/latex_unicode_mapping.coffee' => 'tmp/unicode.xml' do |t|
-  map = Nokogiri::XML(open(t.source))
+file 'resource/translators/latex_unicode_mapping.coffee' => ['tmp/unicode.xml', 'Rakefile'] do |t|
+  unicode_mapper(t.source, t.name)
+end
+file 'resource/translators/mathchar.pegcoffee' => ['tmp/unicode.xml', 'Rakefile'] do |t|
+  unicode_mapper(t.source, t.name)
+end
+
+def unicode_mapper(source, tgt)
+  map = Nokogiri::XML(open(source))
 
   map.at('//charlist') << "
     <character id='U0026' dec='38' mode='text' type='punctuation'><latex>\\&</latex></character>
@@ -313,33 +331,33 @@ file 'resource/translators/latex_unicode_mapping.coffee' => 'tmp/unicode.xml' do
     }
   }
 
-  [:ascii, :unicode].each{|map|
-    u2l[map].math = '/(' + u2l[map].math.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('|') + ')/g'
-    u2l[map].text = '/' + u2l[map].map.keys.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('|') + '/g'
-  }
-
   l2u["\\url"] = '';
   l2u["\\href"] = '';
 
-  ls = []
-  ls << 'LaTeX.regex ='
-  ls << '  unicode:'
-  ls << "    math: #{u2l[:unicode].math}"
-  ls << "    text: #{u2l[:unicode].text}"
-  ls << '  ascii:'
-  ls << "    math: #{u2l[:ascii].math}"
-  ls << "    text: #{u2l[:ascii].text}"
-  ls << 'LaTeX.toLaTeX ='
-  u2l[:ascii].map.each_pair{|k, v|
-  ls << "  #{k.inspect}: #{v.inspect}"
-  }
-  ls << 'LaTeX.toUnicode ='
-  l2u.each_pair{|k, v|
-  ls << "  #{k.inspect}: #{v.inspect}"
-  }
-  ls << ''
+  if File.extname(tgt) == '.coffee'
+    ls = []
+    ls << 'LaTeX.toLaTeX ='
+    u2l[:ascii].map.each_pair{|k, v|
+    ls << "  #{k.inspect}: #{v.inspect}"
+    }
+    ls << 'LaTeX.toUnicode ='
+    l2u.each_pair{|k, v|
+    ls << "  #{k.inspect}: #{v.inspect}"
+    }
 
-  open(t.name, 'w'){|f| f.write(ls.join("\n")) }
+  elsif File.extname(tgt) == '.pegcoffee'
+    ls = []
+    ls << 'mathchar'
+    ls << "  = & { @unicode  } char:[#{u2l[:unicode].math.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('')}] { return char }"
+    ls << "  / & { !@unicode } char:[#{u2l[:ascii].math.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('')}] { return char }"
+    ls << ''
+    ls << 'textchar'
+    ls << "  = & { @unicode  } char:[#{u2l[:unicode].map.keys.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('')}] { return char }"
+    ls << "  / & { !@unicode } char:[#{u2l[:ascii].map.keys.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('')}] { return char }"
+  end
+
+  ls << ''
+  open(tgt, 'w'){|f| f.write(ls.join("\n")) }
 end
 
 task :markfailing do
@@ -394,7 +412,7 @@ file '.depends.mf' => SOURCES do |t|
     dependencies = {}
 
     t.prerequisites.each{|src|
-      next unless File.extname(src) == '.coffee'
+      next unless File.extname(src) == '.coffee' || File.extname(src) == '.pegcoffee'
       js = File.join(File.dirname(src), File.basename(src, File.extname(src)) + '.js')
 
       dependencies[src] ||= []

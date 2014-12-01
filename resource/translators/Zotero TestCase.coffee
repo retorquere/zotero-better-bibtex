@@ -1,4 +1,4 @@
-require 'translator.coffee'
+require('translator.coffee')
 
 scrub = (item) ->
   delete item.__citekey__
@@ -34,13 +34,13 @@ scrub = (item) ->
 
 detectImport = ->
   json = ''
-  while (str = Zotero.read 0x100000) != false
+  while (str = Zotero.read(0x100000)) != false
     json += str
 
   try
-    data = JSON.parse json
+    data = JSON.parse(json)
   catch e
-    Zotero.debug e
+    Translator.log(e)
     return false
 
   return (data and data.config and data.config.id == Translator.id and data.items)
@@ -49,10 +49,10 @@ doImport = ->
   Translator.initialize()
 
   json = ''
-  while (str = Zotero.read 0x100000) != false
+  while (str = Zotero.read(0x100000)) != false
     json += str
 
-  data = JSON.parse json
+  data = JSON.parse(json)
 
   for i in data.items
     item = new Zotero.Item
@@ -68,5 +68,6 @@ doExport = ->
     items: []
   }
   while item = Zotero.nextItem()
-    data.items.push scrub item
-  Zotero.write JSON.stringify(data, null, '  ')
+    data.items.push(scrub(item))
+  Zotero.write(JSON.stringify(data, null, '  '))
+  return

@@ -1,0 +1,50 @@
+{
+  @unicode = options.unicode
+  Zotero.debug("Unicode: #{@unicode}")
+}
+
+start
+  = text:text* closetag*                { return text.join('') }
+
+text
+  = text:mathchars+                     { return "\\ensuremath{#{(LaTeX.toLaTeX[c] || c for c in text).join('')}}" }
+  / text:textchars+                     { return (LaTeX.toLaTeX[c] || c for c in text).join('') }
+  / text:otherchar                      { return text }
+  / '<pre>'i text:prechars* '</pre>'i?  { return text.join('') }
+  / '<sup>'i text:text* closetag?       { return "\\textsuperscript{#{text.join('')}}" }
+  / '<sub>'i text:text* closetag?       { return "\\textsubscript{#{text.join('')}}" }
+  / '<i>'i text:text* closetag?         { return "\\emph{#{text.join('')}}" }
+  / '<b>'i text:text* closetag?         { return "\\textbf{#{text.join('')}}" }
+  / tagopen 'span' tagclose             { return '' }
+  / tagopen 'br'i tagclose              { return "\n\n" }
+  / tagopen 'break'i tagclose           { return "\n\n" }
+  / tagopen 'p'i tagclose               { return "\n\n" }
+
+mathchars
+  = !( tagopen tag tagclose ) char:mathchar { return char }
+
+textchars
+  = !( tagopen tag tagclose ) char:textchar { return char }
+
+otherchar
+  = !( tagopen tag tagclose ) char:. { return char }
+
+prechars
+  = !( tagopen 'pre'i tagclose ) char:. { return char }
+
+tagopen
+  = '<' '\/'?
+
+tagclose
+  = '\/'? '>'
+
+closetag = '</' tag:tag '>' { return tag }
+
+tag
+  = 'sup'i
+  / 'sub'i
+  / 'i'i
+  / 'b'i
+  / 'pre'i
+
+require 'mathchar.pegcoffee'

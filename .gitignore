@@ -6,6 +6,7 @@ Gemfile.lock
 *.js
 .depends.mf
 resource/translators/latex_unicode_mapping.coffee
+resource/translators/mathchar.pegcoffee
 tmp
 features/import/*.out.json
 features/export/*.out.txt
