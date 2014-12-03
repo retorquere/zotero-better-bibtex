@@ -6,15 +6,36 @@
     comments: []
     errors: []
 
+  @quote = (state) ->
+    switch state
+      when '"'
+        @braced = false
+        @quoted = true
+      when '{}'
+        @braced = true
+        @quoted = false
+      else
+        @braced = false
+        @quoted = false
+    return true
+
+  @lookahead = (n) ->
+    return "#{peg$currPos} :: #{input.substr(peg$currPos, n)}"
+
   @flatten = (str) ->
     return (@flatten(s) for s in str).join('') if Array.isArray(str)
     return '' + str
+
+  @log = (msg...) ->
+    msg = ((if (typeof m) in ['number', 'string'] then ('' + m) else JSON.stringify(m)) for m in msg).join(' ')
+    (Translator?.log || console.log)(msg)
+    return true
 
   @filterattachments = (attachments, key) ->
     if key == 'sentelink'
       for attachment in attachments
         attachment.path = attachment.path.replace(/,.*/, '') if attachment.path
-    attachments = (attachments for attachment in attachments when attachment.path && attachment.path != '')
+    attachments = (attachment for attachment in attachments when attachment.path && attachment.path != '')
 
     attachments.sort (a, b) ->
       if a.path < b.path
@@ -190,7 +211,7 @@ attachments
   / '"' val:attachmentlist? '"' { return val }
 
 key_value
-  = _* key:key _* "=" &{ return key.toLowerCase() == 'url'} _* val:url _* ("," _*)? { return {key: key.trim().toLowerCase(), value: val.trim()} }
+  = _* 'url'i _* "=" _* val:url _* ("," _*)? { return {key: 'url', value: val.trim()} }
   / _* key:key _* "=" _* val:value _* ("," _*)? { return {key: key.trim().toLowerCase(), value: val.trim()} }
 
 key
@@ -198,8 +219,9 @@ key
 
 value
   = val:[^#"{} \t\n\r,]+ {
-      val = @flatten(val)
-      return @bibtex.strings[val] or val
+      # don't re-use params
+      value = @flatten(val)
+      return @bibtex.strings[value] or value
     }
   / val:bracedvalue { return @flatten(val) }
   / _* "#" _* val:value { return val }
@@ -210,12 +232,12 @@ simplestring
   / _* "#" _* simplestring
 
 bracedvalue
-  = '{' & { delete @quote; true } val:string* '}' & { delete @quote; true } { return val }
-  / '"' & { @quote = '"'; true }  val:string* '"' & { delete @quote; true } { return val; }
+  = '{' &{ @quote('{}') } val:string* '}' &{ @quote() } { return val }
+  / '"' &{ @quote('"')  } val:string* '"' &{ @quote() } { return val }
 
 url
-  = '{' & { delete @quote; true } val:urlchar* '}' & { delete @quote; true } { return @flatten(val) }
-  / '"' & { @quote = '"'; true }  val:urlchar* '"' & { delete @quote; true } { return @flatten(val) }
+  = '{' &{ @quote('{}') } val:urlchar* '}' &{ @quote() } { return @flatten(val) }
+  / '"' &{ @quote('"')  } val:urlchar* '"' &{ @quote() } { return @flatten(val) }
 
 string
   = text:plaintext                { return text }
@@ -230,7 +252,7 @@ string
   / "\\url{" text:urlchar* "}"    { return @flatten(text) }
   / "\\textit" text:bracedparam   { return "<i>#{text}</i>" }
   / "\\textbf" text:bracedparam   { return "<b>#{text}</b>" }
-  / "\\textsc" text:bracedparam   { return "<span style='small-caps'>#{text}</span>" }
+  / "\\textsc" text:bracedparam   { return "<span style=\"small-caps\">#{text}</span>" }
   / '{' text:string* '}'          { return new String(@flatten(text)) } // use 'new String', not 'String', because only 'new String' will match 'instanceof'!
   / '$' text:string* '$'          { return @flatten(text) }
   /* / "%" [^\n]* "\n"            { return '' }          comment */
@@ -265,7 +287,7 @@ bracedparam
   = '{' text:string* '}'  { return @flatten(text) }
 
 quotedchar
-  = & { return (@quote == '"') } '"' { return '"' }
+  = &{ @quoted } '"' { return '"' }
   / text:[#$%&_\^\[\]{}]  { return text }
 
 urlchar
@@ -273,8 +295,8 @@ urlchar
   / "\\" text:. { return text }
 
 plaintext
-  = & { return (@quote == '"') } text:[^ "\t\n\r#$%&~_\^{}\[\]\\]+ { return @flatten(text) }
-  / & { return (@.quote != '"'); } text:[^ \t\n\r#$%&~_\^{}\[\]\\]+  { return @flatten(text) }
+  = &{ @quoted  } text:[^ "\t\n\r#$%&~_\^{}\[\]\\]+ { return @flatten(text) }
+  / &{ !@quoted } text:[^ \t\n\r#$%&~_\^{}\[\]\\]+  { return @flatten(text) }
 
 attachmentlist
   = car:attachment cdr:attachmentcdr*  { return [car].concat(cdr || []) }
@@ -283,15 +305,19 @@ attachmentcdr
   = ';' att:attachment  { return att }
 
 attachment
-  = parts:fileparts? {
-      parts = parts or []
-      parts = (v.trim() for v in parts or [])
+  = fileparts:fileparts? {
+      # do not re-use varnames as pegcoffee blanks them out!
+      parts = (v.trim() for v in fileparts || [])
 
-      return {} if parts.length == 0
-
-      attachment = { path: parts.shift() }
-      attachment.title = parts.shift() ? ''
-      attachment.mimeType = parts.shift() ? ''
+      switch parts.length
+        when 0
+          return {}
+        when 1
+          attachment = { path: parts.shift() }
+        else
+          attachment = { title: parts.shift() }
+          attachment.path = parts.shift() ? ''
+          attachment.mimeType = parts.shift() ? ''
 
       attachment.title = 'Attachment' unless attachment.title && attachment.title != '' 
       attachment.mimeType = 'application/pdf' if attachment.mimeType.match(/pdf/i) || attachment.path.match(/\.pdf$/i)

@@ -56,7 +56,6 @@ Zotero.BetterBibTeX.init = ->
 
   version = @DB.valueQuery("select version from _version_ where tablename = 'keys'")
   if version == 0
-    @log('initializing DB: no tables')
     @DB.query('create table keys (itemID primary key, libraryID not null, citekey not null, pinned)')
     @DB.query("insert or replace into _version_ (tablename, version) values ('keys', 1)")
 
@@ -79,7 +78,6 @@ Zotero.BetterBibTeX.init = ->
     url = "/better-bibtex/#{endpoint}"
     ep = Zotero.Server.Endpoints[url] = ->
     ep.prototype = @endpoints[endpoint]
-    @log("Registered endpoint #{url}")
 
   @keymanager = new @KeyManager
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
@@ -99,7 +97,6 @@ Zotero.BetterBibTeX.init = ->
   return
 
 Zotero.BetterBibTeX.loadTranslators = ->
-  @log("Loading translators")
   @safeLoad('Better BibTeX.js')
   @safeLoad('Better BibLaTeX.js')
   @safeLoad('LaTeX Citation.js')
@@ -135,12 +132,12 @@ Zotero.BetterBibTeX.itemChanged.notify = (event, type, ids, extraData) ->
 
       Zotero.BetterBibTeX.DB.query("delete from keys where itemID in #{ids}")
       if event != 'trash'
-        for item in Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL + ' and i.itemID in ' + ids) or []
+        for item in Zotero.DB.query("#{Zotero.BetterBibTeX.findKeysSQL} and i.itemID in #{ids}") or []
           citekey = Zotero.BetterBibTeX.keymanager.extract({extra: item.extra})
           Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID, citekey])
           Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [ item.itemID, item.libraryID, citekey ])
 
-        for item in Zotero.DB.query('select coalesce(libraryID, 0) as libraryID, itemID from items where itemID in ' + ids) or []
+        for item in Zotero.DB.query("select coalesce(libraryID, 0) as libraryID, itemID from items where itemID in #{ids}") or []
           Zotero.BetterBibTeX.keymanager.get(item, 'on-change')
 
 Zotero.BetterBibTeX.clearKey = (item, onlyCache) ->
@@ -197,7 +194,6 @@ Zotero.BetterBibTeX.safeLoad = (translator) ->
     @log("Loading #{translator} failed", err)
 
 Zotero.BetterBibTeX.load = (translator) ->
-  @log("Loading #{translator}")
   header = null
   data = null
   start = -1
