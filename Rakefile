@@ -204,7 +204,7 @@ task :test, [:tag] => XPI do |t, args|
 end
 
 task :clean do
-  clean = Dir['**/*.js'].select{|f| f=~ /^(chrome|resource)\//} + Dir['tmp/*'].select{|f| File.file?(f) }
+  clean = Dir['**/*.js'].select{|f| f=~ /^(defaults|chrome|resource)\//} + Dir['tmp/*'].select{|f| File.file?(f) }
   clean.each{|f|
     File.unlink(f)
   }
