@@ -15,7 +15,7 @@ scrub = (item) ->
     delete creator.multi
 
   item.attachments = ({ path: attachment.localPath, title: attachment.title, mimeType: attachment.mimeType, url: attachment.url } for attachment in item.attachments || [])
-  item.notes = (note.trim() for note in item.notes || [])
+  item.notes = (note.note.trim() for note in item.notes || [])
 
   item.tags = (tag.tag for tag in item.tags || [])
   item.tags.sort()

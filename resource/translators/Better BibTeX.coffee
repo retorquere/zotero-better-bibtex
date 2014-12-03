@@ -163,7 +163,8 @@ class ZoteroItem
     @item.notes.push({ note: ('The following fields were not imported:<br/>' + bibtex.__note__).trim(), tags: ['#BBT Import'] }) if bibtex.__note__
     @import(bibtex)
     @item.complete()
-    Translator.log("XXX: item completed")
+
+ZoteroItem::log = Translator.log
 
 ZoteroItem::keywordClean = (k) ->
   return k.replace(/^[\s{]+|[}\s]+$/g, '').trim()
@@ -176,7 +177,7 @@ ZoteroItem::addToExtra = (str) ->
   return
 
 ZoteroItem::addToExtraData = (key, value) ->
-  @extradata.push(key.replace(/[=;]/g, '#') + '=' + value.replace(/[\r\n]+/g, ' ').replace(/[=;]g/, '#'))
+  @biblatexdata.push(key.replace(/[=;]/g, '#') + '=' + value.replace(/[\r\n]+/g, ' ').replace(/[=;]g/, '#'))
   return
 
 ZoteroItem::fieldMap = Object.create(null)

@@ -1,6 +1,5 @@
 {
   @unicode = options.unicode
-  Zotero.debug("Unicode: #{@unicode}")
 }
 
 start
@@ -15,22 +14,26 @@ text
   / '<sub>'i text:text* closetag?       { return "\\textsubscript{#{text.join('')}}" }
   / '<i>'i text:text* closetag?         { return "\\emph{#{text.join('')}}" }
   / '<b>'i text:text* closetag?         { return "\\textbf{#{text.join('')}}" }
-  / tagopen 'span' tagclose             { return '' }
-  / tagopen 'br'i tagclose              { return "\n\n" }
-  / tagopen 'break'i tagclose           { return "\n\n" }
-  / tagopen 'p'i tagclose               { return "\n\n" }
+  / '<span'i style:[^>]* '>' text:text* closetag? {
+      t = text.join('')
+      t = "\\textsc{#{t}}" if style.join('').toLowerCase().match(/small-caps/)
+      return t
+    }
+  / tagopen 'br'i [^>]* tagclose        { return "\n\n" }
+  / tagopen 'break'i [^>]* tagclose     { return "\n\n" }
+  / tagopen 'p'i [^>]* tagclose         { return "\n\n" }
 
 mathchars
-  = !( tagopen tag tagclose ) char:mathchar { return char }
+  = !( tagopen tag [^>]* tagclose ) char:mathchar { return char }
 
 textchars
-  = !( tagopen tag tagclose ) char:textchar { return char }
+  = !( tagopen tag [^>]* tagclose ) char:textchar { return char }
 
 otherchar
-  = !( tagopen tag tagclose ) char:. { return char }
+  = !( tagopen tag [^>]* tagclose ) char:. { return char }
 
 prechars
-  = !( tagopen 'pre'i tagclose ) char:. { return char }
+  = !( tagopen 'pre'i [^>]* tagclose ) char:. { return char }
 
 tagopen
   = '<' '\/'?
@@ -46,5 +49,9 @@ tag
   / 'i'i
   / 'b'i
   / 'pre'i
+  / 'span'i
+  / 'br'i
+  / 'break'i
+  / 'p'i
 
 require 'mathchar.pegcoffee'

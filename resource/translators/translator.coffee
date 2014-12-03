@@ -27,7 +27,10 @@ Translator = new class
 
 require(':constants:')
 
-Translator.log = (msg) -> Zotero.debug("[better-bibtex : #{@label}] #{if typeof msg == 'string' then msg else JSON.stringify(msg)}")
+Translator.log = (msg...) ->
+  msg = ((if (typeof m) in ['number', 'string'] then ('' + m) else JSON.stringify(m)) for m in msg).join(' ')
+  Zotero.debug("[better-bibtex:#{@label}] #{msg}")
+  return true
 
 Translator.config = ->
   config = Object.create(null)
@@ -48,8 +51,6 @@ Translator.config = ->
 Translator.initialize = ->
   return if @initialized
   @initialized = true
-
-  @log("Initializing translator")
 
   for own attr, f of @fieldMap or {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
@@ -186,7 +187,7 @@ class Reference
       if f.name and not @has[f.name]
         @add(@field(f, @item[attr]))
 
-Reference::log = (msg) -> Translator.log(msg)
+Reference::log = Translator.log
 
 Reference::field = (f, value) ->
   clone = Object.create(f)
