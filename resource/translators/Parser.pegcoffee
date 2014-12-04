@@ -1,4 +1,6 @@
 {
+  @raw = options.raw
+
   @bibtex =
     references: []
     collections: []
@@ -28,6 +30,7 @@
 
   @log = (msg...) ->
     msg = ((if (typeof m) in ['number', 'string'] then ('' + m) else JSON.stringify(m)) for m in msg).join(' ')
+    msg = "\n\n*** #{msg} ***\n\n"
     (Translator?.log || console.log)(msg)
     return true
 
@@ -232,12 +235,22 @@ simplestring
   / _* "#" _* simplestring
 
 bracedvalue
-  = '{' &{ @quote('{}') } val:string* '}' &{ @quote() } { return val }
-  / '"' &{ @quote('"')  } val:string* '"' &{ @quote() } { return val }
+  = '{' &{ @quote('{}') } val:strings '}' &{ @quote() } { return val }
+  / '"' &{ @quote('"')  } val:strings '"' &{ @quote() } { return val }
 
 url
   = '{' &{ @quote('{}') } val:urlchar* '}' &{ @quote() } { return @flatten(val) }
   / '"' &{ @quote('"')  } val:urlchar* '"' &{ @quote() } { return @flatten(val) }
+
+strings
+  = &{ !@raw } strings:string*    { return strings }
+  / &{ @raw  } strings:raw*       { return [new String(strings.join(''))] }
+
+raw
+  = &{ @braced } text:[^\\{}]+    { return text.join('') }
+  / &{ @quoted } text:[^\\"]+     { return text.join('') }
+  / '\\' text:.                   { return "\\#{text}" }
+  / '{' text:raw* '}'             { return "{#{text.join('')}}" }
 
 string
   = text:plaintext                { return text }
