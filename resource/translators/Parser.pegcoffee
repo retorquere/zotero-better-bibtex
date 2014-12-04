@@ -244,13 +244,13 @@ url
 
 strings
   = &{ !@raw } strings:string*    { return strings }
-  / &{ @raw  } strings:raw*       { return [new String(strings.join(''))] }
+  / &{ @raw  } strings:raw*       { return strings }
 
 raw
   = &{ @braced } text:[^\\{}]+    { return text.join('') }
   / &{ @quoted } text:[^\\"]+     { return text.join('') }
   / '\\' text:.                   { return "\\#{text}" }
-  / '{' text:raw* '}'             { return "{#{text.join('')}}" }
+  / '{' text:raw* '}'             { return new String("{#{text.join('')}}") }
 
 string
   = text:plaintext                { return text }
