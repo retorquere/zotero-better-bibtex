@@ -25,6 +25,7 @@
         <preference id="pref-better-bibtex-langid" name="extensions.zotero.translators.better-bibtex.langid" type="string"/>
         <preference id="pref-better-bibtex-auto-abbrev" name="extensions.zotero.translators.better-bibtex.auto-abbrev" type="bool"/>
         <preference id="pref-better-bibtex-pin-citekeys" name="extensions.zotero.translators.better-bibtex.pin-citekeys" type="string"/>
+        <preference id="pref-better-bibtex-pin-raw-imports" name="extensions.zotero.translators.better-bibtex.raw-imports" type="bool"/>
       </preferences>
       <vbox flex="1">
         <grid>
@@ -87,6 +88,9 @@
               <label id="id-zotero-better-bibtex-server-warning" hidden="true" style="color: red">&zotero.better-bibtex.server.warning;</label>
             </row>
             <row>
+            </row>
+            <row>
+              <checkbox id="id-better-bibtex-preferences-raw-imports" label="&zotero.better-bibtex.raw-imports;" preference="pref-better-bibtex-raw-imports"/>
             </row>
           </rows>
         </grid>
