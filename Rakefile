@@ -149,7 +149,7 @@ rule '.js' => '.coffee' do |t|
   tmp = "tmp/#{File.basename(t.source)}"
   open(tmp, 'w'){|f| f.write(expand(open(t.source), header: header)) }
   puts "Compiling #{t.source}"
-  output, status = Open3.capture2e("coffee -bpc #{tmp.shellescape}")
+  output, status = Open3.capture2e("coffee -mbpc #{tmp.shellescape}")
   raise output if status.exitstatus != 0
 
   # include javascript generated from pegjs

@@ -15,6 +15,7 @@ Translator = new class
       autoAbbrevStyle: 'auto-abbrev.style'
       unicode: 'unicode'
       pinKeys: 'pin-citekeys'
+      rawImport: 'raw-imports'
     }
     @options = {
       useJournalAbbreviation: 'useJournalAbbreviation'
