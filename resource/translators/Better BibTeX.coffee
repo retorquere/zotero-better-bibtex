@@ -97,7 +97,11 @@ doExport = ->
 
     ref.add({ name: 'note', value: item.extra })
     ref.add({ name: 'keywords', value: item.tags, esc: 'tags' })
-    ref.add({ name: 'pages', value: item.pages && item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--') })
+
+    if item.pages
+      pages = item.pages
+      pages = pages.replace(/[-\u2012-\u2015\u2053]+/g, '--') unless ref.raw
+      ref.add({ name: 'pages', value: pages })
 
     if item.notes and Translator.exportNotes
       for note in item.notes

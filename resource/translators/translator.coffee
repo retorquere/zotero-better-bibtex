@@ -283,7 +283,7 @@ Reference::add = (field) ->
 
     return null unless value
     value = '{' + value + '}' if field.braces
-    value = '{' + value + '}' if field.protect
+    value = '{' + value + '}' if field.protect && !@raw
 
   field.bibtex = "  #{field.name} = #{value}"
   @fields.push(field)
