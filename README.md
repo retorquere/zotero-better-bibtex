@@ -23,6 +23,12 @@ Zotero:
 * **[Pull Export](https://zotplus.github.io/better-bibtex/Pull-Export)** from the embedded webserver
 * Automatic **[journal abbreviation](https://zotplus.github.io/better-bibtex/Citation-Keys.html)**
 
+Experimental:
+
+* Raw LaTeX import-export. An entry tagged with "#LaTeX" (case-sensitive!) will be exported as-is, so you can include
+  LaTeX markup in your references. If you enable "Raw BibTeX import" in the preferences, BibTeX imports will not be
+  escaped on import, and will automatically be tagged for raw export.
+
 ## Configuration
 
 The Better BibTeX [configuration pane](https://zotplus.github.io/better-bibtex/Customized-Exports.html) can be found under the regular Zotero preferences pane, tab 'Better Bib(La)TeX'.
@@ -30,8 +36,8 @@ The Better BibTeX [configuration pane](https://zotplus.github.io/better-bibtex/C
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.54.xpi)
-(**0.6.54**).
+version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.56.xpi)
+(**0.6.56**).
 If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
