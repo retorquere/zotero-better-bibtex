@@ -181,7 +181,7 @@ Then /^the library should match '([^']+)'$/ do |filename|
     library.normalize!
   }
 
-  expect(found.to_yaml).to eq(expected.to_yaml)
+  expect(JSON.pretty_generate(found)).to eq(JSON.pretty_generate(expected))
 end
 
 Then(/^a library export using '([^']+)' should match '([^']+)'$/) do |translator, filename|
@@ -196,7 +196,7 @@ Then(/^export the library using '([^']+)' to '([^']+)'$/) do |translator, filena
   BBT.exportToFile(translator, filename)
 end
 
-When(/^I set (preference|export option) ([^\s]+) to (.*)$/) do |setting, name, value|
+When(/^I set (preference|export option)\s+(.+)\s+to (.*)$/) do |setting, name, value|
   value.strip!
   value = case value
             when 'true', 'false' then (value == 'true')

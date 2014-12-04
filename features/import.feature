@@ -39,8 +39,10 @@ Scenario: Better BibTeX Import 7
 @100
 Scenario: option to mantain the braces and special commands in titles or all fields #100
   When I set preference translators.better-bibtex.raw-imports to true
+   And I set export option Export Collections to false
   When I import 1 reference from 'import/Better BibTeX.007.bib'
   Then the library should match 'import/Better BibTeX.007.raw.json'
+   And a library export using 'Better BibTeX' should match 'import/Better BibTeX.007.bib'
 
 @bbtx-i-8
 Scenario: Better BibTeX Import 8
