@@ -20,7 +20,7 @@
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>MHRA format with full notes and bibliography</summary>
-    <updated>2014-07-13T05:56:42+00:00</updated>
+    <updated>2014-08-30T16:59:28+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -270,18 +270,6 @@
       </if>
     </choose>
   </macro>
-  <macro name="editor-note">
-    <names variable="editor">
-      <name and="text" sort-separator=", " delimiter=", "/>
-      <label form="short" prefix=", " suffix="."/>
-    </names>
-  </macro>
-  <macro name="translator-note">
-    <names variable="translator">
-      <name and="text" sort-separator=", " delimiter=", "/>
-      <label form="verb-short" prefix=", " suffix="."/>
-    </names>
-  </macro>
   <macro name="recipient-note">
     <names variable="recipient" delimiter=", ">
       <label form="verb" prefix=" " suffix=" "/>
@@ -304,12 +292,6 @@
       </substitute>
     </names>
     <text macro="recipient-short"/>
-  </macro>
-  <macro name="interviewer-note">
-    <names variable="interviewer" delimiter=", ">
-      <label form="verb" prefix=" " suffix=" "/>
-      <name and="text" delimiter=", "/>
-    </names>
   </macro>
   <macro name="locators-newspaper">
     <choose>

@@ -27,7 +27,7 @@
 	</menupopup>
 
   <!-- treecols id="zotero-items-columns-header">
-    <treecol insertafter="zotero-items-column-extra" id="zotero-items-column-citekey" hidden="true" label="&zotero.better-bibtex.citekey_column;" flex="1" zotero-persist="width ordinal hidden sortActive sortDirection"/>
+    <treecol insertafter="zotero-items-column-extra" id="zotero-betterbibtex-citekey-col" hidden="true" label="&zotero.better-bibtex.citekey_column;" flex="1" zotero-persist="width ordinal hidden sortActive sortDirection"/>
   </treecols -->
 	
 	<!-- Include the main extension logic -->

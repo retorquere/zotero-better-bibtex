@@ -24,7 +24,7 @@
     <category citation-format="author-date"/>
     <category field="generic-base"/>
     <summary>The author-date variant of the Chicago style</summary>
-    <updated>2014-06-19T03:53:15+00:00</updated>
+    <updated>2014-10-03T06:48:15+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -95,6 +95,13 @@
       <name and="text" delimiter=", "/>
     </names>
   </macro>
+  <macro name="substitute-title">
+    <choose>
+      <if type="article-journal article-magazine article-newspaper review review-book" match="any">
+        <text macro="container-title"/>
+      </if>
+    </choose>
+  </macro>
   <macro name="contributors">
     <group delimiter=". ">
       <names variable="author">
@@ -103,6 +110,7 @@
         <substitute>
           <names variable="editor"/>
           <names variable="translator"/>
+          <text macro="substitute-title"/>
           <text macro="title"/>
         </substitute>
       </names>
@@ -115,6 +123,7 @@
       <substitute>
         <names variable="editor"/>
         <names variable="translator"/>
+        <text macro="substitute-title"/>
         <text macro="title"/>
       </substitute>
     </names>
@@ -141,6 +150,14 @@
         <else-if type="article-journal bill book chapter legal_case legislation motion_picture paper-conference" match="none">
           <text macro="archive"/>
         </else-if>
+      </choose>
+      <choose>
+        <if type="webpage post-weblog" match="any">
+          <date variable="issued" delimiter=" ">
+            <date-part name="month"/>
+            <date-part name="day"/>
+          </date>
+        </if>
       </choose>
       <choose>
         <if variable="issued" match="none">

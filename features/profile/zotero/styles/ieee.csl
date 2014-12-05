@@ -4,7 +4,7 @@
     <title>IEEE</title>
     <id>http://www.zotero.org/styles/ieee</id>
     <link href="http://www.zotero.org/styles/ieee" rel="self"/>
-    <link href="http://www.ieee.org/documents/stylemanual.pdf" rel="documentation"/>
+    <link href="http://www.ieee.org/documents/style_manual.pdf" rel="documentation"/>
     <link href="http://www.ieee.org/documents/auinfo07.pdf" rel="documentation"/>
     <author>
       <name>Michael Berkowitz</name>
@@ -28,7 +28,7 @@
     <category citation-format="numeric"/>
     <category field="engineering"/>
     <category field="generic-base"/>
-    <updated>2014-05-15T15:26:29+00:00</updated>
+    <updated>2014-09-03T18:34:20+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">

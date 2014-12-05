@@ -14,7 +14,7 @@
     <category field="generic-base"/>
     <issn>0028-0836</issn>
     <eissn>1476-4687</eissn>
-    <updated>2014-06-22T03:46:28+00:00</updated>
+    <updated>2014-09-10T06:11:43+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <macro name="title">
@@ -49,7 +49,7 @@
   </macro>
   <macro name="issuance">
     <choose>
-      <if type="bill book graphic legal_case legislation motion_picture report song chapter paper-conference" match="any">
+      <if type="bill book graphic legal_case legislation motion_picture report song thesis chapter paper-conference" match="any">
         <group delimiter=", " prefix="(" suffix=").">
           <text variable="publisher" form="long"/>
           <date variable="issued">
@@ -61,6 +61,16 @@
         <date prefix="(" suffix=")." variable="issued">
           <date-part name="year"/>
         </date>
+      </else>
+    </choose>
+  </macro>
+  <macro name="container-title">
+    <choose>
+      <if type="article-journal">
+        <text variable="container-title" font-style="italic" form="short"/>
+      </if>
+      <else>
+        <text variable="container-title" font-style="italic"/>
       </else>
     </choose>
   </macro>
@@ -93,7 +103,7 @@
             <text term="in" form="long" plural="false"/>
           </if>
         </choose>
-        <text variable="container-title" font-style="italic" form="short"/>
+        <text macro="container-title"/>
         <text macro="editor"/>
         <group font-weight="bold">
           <text variable="volume" suffix=","/>

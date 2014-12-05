@@ -19,7 +19,7 @@
     <category citation-format="numeric"/>
     <category field="medicine"/>
     <summary>Vancouver style as outlined by International Committee of Medical Journal Editors Uniform Requirements for Manuscripts Submitted to Biomedical Journals: Sample References</summary>
-    <updated>2014-06-08T18:57:37+00:00</updated>
+    <updated>2014-09-06T16:03:01+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -212,6 +212,7 @@
           <date-part name="year"/>
           <date-part name="month" form="short" strip-periods="true"/>
         </date>
+        <text macro="accessed-date" prefix=" "/>
       </else-if>
       <else-if type="patent">
         <group suffix=".">
@@ -226,11 +227,14 @@
       </else-if>
       <else-if type="speech">
         <group delimiter="; ">
-          <date variable="issued" delimiter=" ">
-            <date-part name="year"/>
-            <date-part name="month" form="short" strip-periods="true"/>
-            <date-part name="day"/>
-          </date>
+          <group delimiter=" ">
+            <date variable="issued" delimiter=" ">
+              <date-part name="year"/>
+              <date-part name="month" form="short" strip-periods="true"/>
+              <date-part name="day"/>
+            </date>
+            <text macro="accessed-date"/>
+          </group>
           <text variable="event-place"/>
         </group>
       </else-if>

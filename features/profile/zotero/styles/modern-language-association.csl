@@ -33,7 +33,7 @@
     <category citation-format="author"/>
     <category field="generic-base"/>
     <summary>This style adheres to the MLA 7th edition handbook and contains modifications to these types of sources: e-mail, forum posts, interviews, manuscripts, maps, presentations, TV broadcasts, and web pages.</summary>
-    <updated>2014-06-28T23:15:32+00:00</updated>
+    <updated>2014-09-21T00:39:49+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -157,9 +157,11 @@
       <else>
         <choose>
           <if variable="URL DOI" match="any">
-            <text variable="source" prefix=" " suffix=". " font-style="italic"/>
-            <text value="Web" prefix=" "/>
-            <text prefix=". " suffix="." macro="access"/>
+            <text variable="source" prefix=" " suffix="." font-style="italic"/>
+            <group>
+              <text value="Web." prefix=" "/>
+            </group>
+            <text prefix=" " suffix="." macro="access"/>
           </if>
           <else>
             <text value="Print" prefix=" "/>
@@ -389,9 +391,9 @@
           </date>
           <text variable="genre" prefix=" " suffix="."/>
         </else-if>
-        <else-if type="webpage">
-          <text variable="container-title" font-style="italic" prefix=" " suffix="."/>
+        <else-if type="webpage post-weblog" match="any">
           <text variable="genre" prefix=" " suffix="."/>
+          <text variable="container-title" font-style="italic" prefix=" " suffix="."/>
           <group delimiter=", " prefix=" ">
             <text macro="publisher"/>
             <text macro="issued-full-date" suffix="."/>
