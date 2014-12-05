@@ -30,7 +30,6 @@ Zotero.BetterBibTeX.DebugBridge.methods.init = ->
   return true
 
 Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
-  Zotero.BetterBibTeX.init()
   retval = Zotero.BetterBibTeX.DebugBridge.data.prefs
 
   for own name, value of Zotero.BetterBibTeX.DebugBridge.data.prefs

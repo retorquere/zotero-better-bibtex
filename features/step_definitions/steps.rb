@@ -14,11 +14,13 @@ unless $headless
   profile_dir = File.expand_path('features/profile')
   profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
 
+  STDOUT.sync = true
   STDOUT.puts "Installing plugins..."
   Dir['tmp/plugins/*.xpi'].each{|xpi|
     STDOUT.puts "Installing #{File.basename(xpi)}"
     profile.add_extension(xpi)
   }
+  profile['extensions.zotero.showIn'] = 2;
   profile['extensions.zotero.httpServer.enabled'] = true;
   profile['extensions.zotero.debug.store'] = true;
   profile['extensions.zotero.debug.log'] = true;
@@ -31,7 +33,10 @@ unless $headless
   profile['pdfjs.disabled'] = true
 
   BROWSER = Selenium::WebDriver.for :firefox, :profile => profile
+
   sleep 2
+  BROWSER.navigate.to('chrome://zotero/content/tab.xul') # does this trigger the window load?
+  #$headless.take_screenshot('/home/emile/zotero/zotero-better-bibtex/screenshot.png')
   DBB = JSONRPCClient.new('http://localhost:23119/debug-bridge')
   DBB.bootstrap('Zotero.BetterBibTeX')
   BBT = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')

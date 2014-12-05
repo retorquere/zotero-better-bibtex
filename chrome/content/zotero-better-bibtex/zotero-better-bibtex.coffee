@@ -3,21 +3,7 @@ Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
 require('Formatter.js')
 
-Zotero.BetterBibTeX = Zotero.BetterBibTeX ? new class
-  constructor: ->
-    @prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.zotero.translators.better-bibtex.')
-    @translators = Object.create(null)
-    @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
-    @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
-    @DB = new Zotero.DBConnection('betterbibtex')
-
-    @findKeysSQL = "select coalesce(i.libraryID, 0) as libraryID, i.itemID as itemID, idv.value as extra
-                    from items i
-                    join itemData id on i.itemID = id.itemID
-                    join itemDataValues idv on idv.valueID = id.valueID
-                    join fields f on id.fieldID = f.fieldID
-                    where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)
-                      and (idv.value like '%bibtex:%' or idv.value like '%biblatexcitekey[%')"
+Zotero.BetterBibTeX = {}
 
 Zotero.BetterBibTeX.prefsObserver = {}
 
@@ -48,8 +34,23 @@ Zotero.BetterBibTeX.formatter = (pattern) ->
   return @formatters[pattern]
 
 Zotero.BetterBibTeX.init = ->
+  @log("Running init: #{@initialized}")
   return if @initialized
   @initialized = true
+
+  @prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.zotero.translators.better-bibtex.')
+  @translators = Object.create(null)
+  @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
+  @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
+  @DB = new Zotero.DBConnection('betterbibtex')
+
+  @findKeysSQL = "select coalesce(i.libraryID, 0) as libraryID, i.itemID as itemID, idv.value as extra
+                  from items i
+                  join itemData id on i.itemID = id.itemID
+                  join itemDataValues idv on idv.valueID = id.valueID
+                  join fields f on id.fieldID = f.fieldID
+                  where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)
+                    and (idv.value like '%bibtex:%' or idv.value like '%biblatexcitekey[%')"
 
   @DB.query('create table if not exists _version_ (tablename primary key, version not null, unique (tablename, version))')
   @DB.query("insert or ignore into _version_ (tablename, version) values ('keys', 0)")
@@ -72,6 +73,12 @@ Zotero.BetterBibTeX.init = ->
 
   @DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@prefs.getCharPref('citeKeyFormat')])
 
+  @keymanager.init()
+  Zotero.Translate.Export::Sandbox.BetterBibTeX = {
+    __exposedProps__: {keymanager: 'r'}
+    keymanager: @keymanager
+  }
+
   @prefsObserver.register()
 
   for endpoint in @endpoints
@@ -79,15 +86,9 @@ Zotero.BetterBibTeX.init = ->
     ep = Zotero.Server.Endpoints[url] = ->
     ep.prototype = @endpoints[endpoint]
 
-  @keymanager = new @KeyManager
-  Zotero.Translate.Export::Sandbox.BetterBibTeX = {
-    __exposedProps__: {keymanager: 'r'}
-    keymanager: @keymanager
-  }
-
   if @prefs.getBoolPref('scan-citekeys')
     for row in Zotero.DB.query(@findKeysSQL) or []
-      Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [ row.itemID, row.libraryID, @keymanager.extract({extra: row.extra}) ])
+      @DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [ row.itemID, row.libraryID, @keymanager.extract({extra: row.extra}) ])
     @prefs.setBoolPref('scan-citekeys', false)
 
   @loadTranslators()
@@ -238,7 +239,7 @@ Zotero.BetterBibTeX.clearCiteKeys = (onlyCache) ->
 
 Zotero.BetterBibTeX.pinCiteKeys = ->
   for item in @clearCiteKeys(true)
-    Zotero.BetterBibTeX.keymanager.get(item, 'manual')
+    @keymanager.get(item, 'manual')
 
 Zotero.BetterBibTeX.safeGetAll = ->
   try

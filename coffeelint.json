@@ -35,7 +35,7 @@
 
   "no_empty_functions": { "level": "ignore" },
 
-  "no_empty_param_list": { "level": "error" },
+  "no_empty_param_list": { "level": "ignore" },
 
   "no_implicit_braces": { "level": "warn", "strict": true },
 

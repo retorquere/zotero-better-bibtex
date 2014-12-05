@@ -1,22 +1,23 @@
-class Zotero.BetterBibTeX.KeyManager
-  constructor: ->
-    # three-letter month abbreviations. I assume these are the same ones that the
-    # docs say are defined in some appendix of the LaTeX book. (I don't have the
-    # LaTeX book.)
-    @months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
-    @journalAbbrevCache = Object.create(null)
+Zotero.BetterBibTeX.keymanager = {}
 
-    @__exposedProps__ = {
-      months: 'r'
-      journalAbbrev: 'r'
-      extract: 'r'
-      get: 'r'
-      keys: 'r'
-    }
-    for own key, value of @__exposedProps__
-      @[key].__exposedProps__ = []
+Zotero.BetterBibTeX.keymanager.init = ->
+  # three-letter month abbreviations. I assume these are the same ones that the
+  # docs say are defined in some appendix of the LaTeX book. (I don't have the
+  # LaTeX book.)
+  @months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
+  @journalAbbrevCache = Object.create(null)
 
-Zotero.BetterBibTeX.KeyManager::journalAbbrev = (item) ->
+  @__exposedProps__ = {
+    months: 'r'
+    journalAbbrev: 'r'
+    extract: 'r'
+    get: 'r'
+    keys: 'r'
+  }
+  for own key, value of @__exposedProps__
+    @[key].__exposedProps__ = []
+
+Zotero.BetterBibTeX.keymanager.journalAbbrev = (item) ->
   item = arguments[1] if item._sandboxManager # the sandbox inserts itself in call parameters
 
   return item.journalAbbreviation if item.journalAbbreviation
@@ -44,7 +45,7 @@ Zotero.BetterBibTeX.KeyManager::journalAbbrev = (item) ->
 
   return @journalAbbrevCache[item.publicationTitle]
 
-Zotero.BetterBibTeX.KeyManager::extract = (item) ->
+Zotero.BetterBibTeX.keymanager.extract = (item) ->
   item = arguments[1] if item._sandboxManager
   item = {extra: item.getField('extra')} if item.getField
   return null unless item.extra
@@ -59,7 +60,7 @@ Zotero.BetterBibTeX.KeyManager::extract = (item) ->
   item.extra = item.extra.replace(m[0], '').trim()
   return m[1]
 
-Zotero.BetterBibTeX.KeyManager::get = (item, pinmode) ->
+Zotero.BetterBibTeX.keymanager.get = (item, pinmode) ->
   if item._sandboxManager
     item = arguments[1]
     pinmode = arguments[2]
@@ -91,6 +92,6 @@ Zotero.BetterBibTeX.KeyManager::get = (item, pinmode) ->
 
   return citekey.citekey
 
-Zotero.BetterBibTeX.KeyManager::keys = ->
+Zotero.BetterBibTeX.keymanager.keys = ->
   return Zotero.BetterBibTeX.DB.query('select * from keys order by libraryID, itemID')
 
