@@ -21,10 +21,10 @@ Zotero.BetterBibTeX.keymanager.journalAbbrev = (item) ->
   item = arguments[1] if item._sandboxManager # the sandbox inserts itself in call parameters
 
   return item.journalAbbreviation if item.journalAbbreviation
-  return unless Zotero.BetterBibTeX.prefs.getBoolPref('auto-abbrev')
+  return unless Zotero.BetterBibTeX.pref.get('auto-abbrev')
 
   if typeof @journalAbbrevCache[item.publicationTitle] is 'undefined'
-    styleID = Zotero.BetterBibTeX.prefs.getCharPref('auto-abbrev.style')
+    styleID = Zotero.BetterBibTeX.pref.get('auto-abbrev.style')
     styleID = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)[0].styleID if styleID is ''
     style = Zotero.Styles.get(styleID)
     cp = style.getCiteProc(true)
@@ -67,7 +67,7 @@ Zotero.BetterBibTeX.keymanager.get = (item, pinmode) ->
 
   citekey = Zotero.BetterBibTeX.DB.rowQuery('select citekey, citeKeyFormat from keys where itemID=? and libraryID = ?', [item.itemID, item.libraryID || 0])
   if not citekey
-    pattern = Zotero.BetterBibTeX.prefs.getCharPref('citeKeyFormat')
+    pattern = Zotero.BetterBibTeX.pref.get('citeKeyFormat')
     Formatter = Zotero.BetterBibTeX.formatter(pattern)
     citekey = new Formatter(Zotero.BetterBibTeX.toArray(item)).value
     postfix = { n: -1, c: '' }
@@ -79,7 +79,7 @@ Zotero.BetterBibTeX.keymanager.get = (item, pinmode) ->
     Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID || 0, citekey.citekey])
     Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, ?)', [ item.itemID, item.libraryID || 0, citekey.citekey, pattern ])
 
-  if citekey.citeKeyFormat && (pinmode == 'manual' || (Zotero.BetterBibTeX.allowAutoPin() && pinmode == Zotero.BetterBibTeX.prefs.getCharPref('pin-citekeys')))
+  if citekey.citeKeyFormat && (pinmode == 'manual' || (Zotero.BetterBibTeX.allowAutoPin() && pinmode == Zotero.BetterBibTeX.pref.get('pin-citekeys')))
     item = Zotero.Items.get(item.itemID) if not item.getField
     _item = {extra: '' + item.getField('extra')}
     @extract(_item)
