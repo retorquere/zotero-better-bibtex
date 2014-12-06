@@ -10,7 +10,7 @@
             insertafter="zotero-prefpane-advanced"
             label="&zotero.better-bibtex.preferences.prefpane.better-bibtex;"
             image="chrome://zotero-better-bibtex/skin/prefs.png"
-            onpaneload="updatePreferences();"
+            onpaneload="Zotero.BetterBibTeX.prefs.update();"
             >
       <preferences id="zotero-preferences-cite">
         <preference id="pref-better-bibtex-recursive" name="extensions.zotero.recursiveCollections" type="bool"/>
@@ -55,7 +55,7 @@
             </row>
             <row>
               <label value="&zotero.better-bibtex.unicode;"/>
-              <radiogroup id="id-better-bibtex-preferences-unicode" orient="horizontal" preference="pref-better-bibtex-unicode" oncommand="updatePreferences();">
+              <radiogroup id="id-better-bibtex-preferences-unicode" orient="horizontal" preference="pref-better-bibtex-unicode" oncommand="Zotero.BetterBibTeX.prefs.update();">
                 <radio id="id-better-bibtex-preferences-unicode-default" label="&zotero.better-bibtex.unicode.default;" value=""/>
                 <radio id="id-better-bibtex-preferences-unicode-always" label="&zotero.better-bibtex.unicode.always;" value="always"/>
                 <radio id="id-better-bibtex-preferences-unicode-never" label="&zotero.better-bibtex.unicode.never;" value="never"/>
@@ -63,7 +63,7 @@
             </row>
             <row>
               <label value="&zotero.better-bibtex.pin-citekeys;"/>
-              <radiogroup id="id-better-bibtex-preferences-pin-citekeys" orient="horizontal" preference="pref-better-bibtex-pin-citekeys" oncommand="updatePreferences();">
+              <radiogroup id="id-better-bibtex-preferences-pin-citekeys" orient="horizontal" preference="pref-better-bibtex-pin-citekeys" oncommand="Zotero.BetterBibTeX.prefs.update();">
                 <radio id="id-better-bibtex-preferences-pin-citekeys-manual" label="&zotero.better-bibtex.pin-citekeys.manual;" value="manual"/>
                 <radio id="id-better-bibtex-preferences-pin-citekeys-on-change" label="&zotero.better-bibtex.pin-citekeys.on-change;" value="on-change"/>
                 <radio id="id-better-bibtex-preferences-pin-citekeys-on-export" label="&zotero.better-bibtex.pin-citekeys.on-export;" value="on-export"/>
@@ -73,18 +73,18 @@
               <checkbox id="id-better-bibtex-preferences-useprefix" label="&zotero.better-bibtex.useprefix;" preference="pref-better-bibtex-useprefix"/>
             </row>
             <row>
-              <checkbox id="id-better-bibtex-preferences-brace-all" label="&zotero.better-bibtex.brace-all;" preference="pref-better-bibtex-brace-all" oncommand="updatePreferences();"/>
+              <checkbox id="id-better-bibtex-preferences-brace-all" label="&zotero.better-bibtex.brace-all;" preference="pref-better-bibtex-brace-all" oncommand="Zotero.BetterBibTeX.prefs.update();"/>
             </row>
             <row>
-              <checkbox id="id-better-bibtex-preferences-fancyURLs" label="&zotero.better-bibtex.fancyURLs;" preference="pref-better-bibtex-fancyurls" oncommand="updatePreferences();"/>
+              <checkbox id="id-better-bibtex-preferences-fancyURLs" label="&zotero.better-bibtex.fancyURLs;" preference="pref-better-bibtex-fancyurls" oncommand="Zotero.BetterBibTeX.prefs.update();"/>
               <label id="id-better-bibtex-preferences-fancyURLs-warning" hidden="true" style="color: red">&zotero.better-bibtex.fancyURLs.warning;</label>
             </row>
             <row>
-              <checkbox id="id-better-bibtex-preferences-getCollections" label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive" oncommand="updatePreferences();"/>
+              <checkbox id="id-better-bibtex-preferences-getCollections" label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive" oncommand="Zotero.BetterBibTeX.prefs.update();"/>
               <label id="id-zotero-better-bibtex-recursive-warning" hidden="true" style="color: red">&zotero.better-bibtex.recursive.warning;</label>
             </row>
             <row>
-              <checkbox id="id-better-bibtex-preferences-server-enabled" label="&zotero.better-bibtex.server.enabled;" preference="pref-better-bibtex-server" oncommand="updatePreferences();"/>
+              <checkbox id="id-better-bibtex-preferences-server-enabled" label="&zotero.better-bibtex.server.enabled;" preference="pref-better-bibtex-server" oncommand="Zotero.BetterBibTeX.prefs.update();"/>
               <label id="id-zotero-better-bibtex-server-warning" hidden="true" style="color: red">&zotero.better-bibtex.server.warning;</label>
             </row>
             <row>
@@ -97,14 +97,13 @@
         <vbox>
           <checkbox id="id-better-bibtex-preferences-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" preference="pref-better-bibtex-auto-abbrev"/>
           <label>&zotero.better-bibtex.preferences.auto-abbrev.style;</label>
-          <listbox id="better-bibtex-abbrev-style" flex="1" onselect="BBTstyleChanged()"/>
+          <listbox id="better-bibtex-abbrev-style" flex="1" onselect="Zotero.BetterBibTeX.prefs.styleChanged()"/>
         </vbox>
       </vbox>
     </prefpane>
   </prefwindow>
 
 	<!-- Include the main extension logic -->
-	<script src="preferences.js"/>
 	<script src="chrome://zotero/content/include.js"/>
 	<script src="chrome://zotero-better-bibtex/content/include.js" type="application/javascript;version=1.8"/>
 </overlay>
