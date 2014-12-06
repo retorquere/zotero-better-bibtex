@@ -233,7 +233,8 @@ Zotero.BetterBibTeX.getTranslator = (name) ->
 
 Zotero.BetterBibTeX.clearCiteKeys = (onlyCache) ->
   win = @windowMediator.getMostRecentWindow('navigator:browser')
-  for item in Zotero.Items.get((item.id for item in win.ZoteroPane.getSelectedItems() when !item.isAttachment() && !item.isNote()))
+  items = Zotero.Items.get((item.id for item in win.ZoteroPane.getSelectedItems() when !item.isAttachment() && !item.isNote()))
+  for item in items
     @clearKey(item, onlyCache)
   return items
 
