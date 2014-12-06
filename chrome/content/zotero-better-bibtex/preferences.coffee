@@ -1,40 +1,4 @@
-Zotero.BetterBibTeX.prefs = {}
-
-Zotero.BetterBibTeX.prefs.prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.zotero.translators.better-bibtex.')
-
-Zotero.BetterBibTeX.prefs.observer = {}
-
-Zotero.BetterBibTeX.prefs.observer.register = -> Zotero.BetterBibTeX.prefs.addObserver('', this, false)
-
-Zotero.BetterBibTeX.prefs.observer.unregister = -> Zotero.BetterBibTeX.prefs.removeObserver('', this)
-
-Zotero.BetterBibTeX.prefs.observer.observe = (subject, topic, data) ->
-  if data == 'citeKeyFormat'
-    Zotero.BetterBibTeX.DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.prefs.getCharPref('citeKeyFormat')])
-  return
-
-Zotero.BetterBibTeX.prefs.observe = -> @observer.register()
-
-Zotero.BetterBibTeX.prefs.get = (key) ->
-  return switch @prefs.getPrefType(key)
-    when @prefs.PREF_BOOL     then @prefs.getBoolPref(pref)
-    when @prefs.PREF_STRING   then @prefs.getCharPref(pref)
-    when @prefs.PREF_INT      then @prefs.getIntPref(pref)
-
-Zotero.BetterBibTeX.prefs.set = (key, value) ->
-  type = @prefs.getPrefType(key)
-  if type == 0
-    type = switch typeof value
-      when 'boolean' then @prefs.PREF_BOOL
-      when 'string'  then @prefs.PREF_STRING
-      else                @prefs.PREF_INT
-
-  return switch type
-    when @prefs.PREF_BOOL     then @prefs.setBoolPref(key, value)
-    when @prefs.PREF_STRING   then @prefs.setCharPref(key, value)
-    when @prefs.PREF_INT      then @prefs.setIntPref(key, value)
-
-Zotero.BetterBibTeX.prefs.serverURL = (collectionsView, extension) ->
+serverURL = (collectionsView, extension) ->
   return if not collectionsView
   itemGroup = collectionsView._getItemAtRow(collectionsView.selection.currentIndex)
   return if not itemGroup
@@ -62,15 +26,15 @@ Zotero.BetterBibTeX.prefs.serverURL = (collectionsView, extension) ->
 
   return "http://localhost:#{serverPort}/better-bibtex/#{url}"
 
-Zotero.BetterBibTeX.prefs.styleChanged = (index) ->
+BBTstyleChanged = (index) ->
   listbox = document.getElementById('better-bibtex-abbrev-style')
   selectedItem = if index != 'undefined' then listbox.getItemAtIndex(index) else listbox.selectedItem
   styleID = selectedItem.getAttribute('value')
-  @set('auto-abbrev.style', styleID)
+  Zotero.BetterBibTeX.prefs.setCharPref('auto-abbrev.style', styleID)
   Zotero.BetterBibTeX.keymanager.journalAbbrevCache = Object.create(null)
   return
 
-Zotero.BetterBibTeX.prefs.update = (load) ->
+updatePreferences = (load) ->
   serverCheckbox = document.getElementById('id-better-bibtex-preferences-server-enabled')
   serverEnabled = serverCheckbox.checked
   serverCheckbox.setAttribute('hidden', Zotero.isStandalone && serverEnabled)
@@ -105,7 +69,7 @@ Zotero.BetterBibTeX.prefs.update = (load) ->
       listbox.appendChild(itemNode)
     if style.styleID is selectedStyle then selectedIndex = i
   if selectedIndex is -1 then selectedIndex = 0
-  @styleChanged(selectedIndex)
+  BBTstyleChanged(selectedIndex)
 
   window.setTimeout((->
     listbox.ensureIndexIsVisible(selectedIndex)
