@@ -1,20 +1,7 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
-require('Formatter.js')
-
 Zotero.BetterBibTeX = {}
-
-Zotero.BetterBibTeX.prefsObserver = {}
-
-Zotero.BetterBibTeX.prefsObserver.register = -> Zotero.BetterBibTeX.prefs.addObserver('', this, false)
-
-Zotero.BetterBibTeX.prefsObserver.unregister = -> Zotero.BetterBibTeX.prefs.removeObserver('', this)
-
-Zotero.BetterBibTeX.prefsObserver.observe = (subject, topic, data) ->
-  if data == 'citeKeyFormat'
-    Zotero.BetterBibTeX.DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.prefs.getCharPref('citeKeyFormat')])
-  return
 
 Zotero.BetterBibTeX.log = (msg, e) ->
   msg = "[better-bibtex] #{msg}"
@@ -38,7 +25,6 @@ Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
 
-  @prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.zotero.translators.better-bibtex.')
   @translators = Object.create(null)
   @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
   @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
@@ -61,17 +47,17 @@ Zotero.BetterBibTeX.init = ->
     @DB.query("insert or replace into _version_ (tablename, version) values ('keys', 1)")
 
   if version <= 2
-    @prefs.setBoolPref('scan-citekeys', true)
+    @prefs.set('scan-citekeys', true)
     @DB.query("insert or replace into _version_ (tablename, version) values ('keys', 3)")
 
   if version <= 3
     @DB.query('alter table keys rename to keys2')
     @DB.query('create table keys (itemID primary key, libraryID not null, citekey not null, citeKeyFormat)')
     @DB.query('insert into keys (itemID, libraryID, citekey, citeKeyFormat)
-               select itemID, libraryID, citekey, case when pinned = 1 then null else ? end from keys2', [@prefs.getCharPref('citeKeyFormat')])
+               select itemID, libraryID, citekey, case when pinned = 1 then null else ? end from keys2', [@prefs.get('citeKeyFormat')])
     @DB.query("insert or replace into _version_ (tablename, version) values ('keys', 4)")
 
-  @DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@prefs.getCharPref('citeKeyFormat')])
+  @DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@prefs.get('citeKeyFormat')])
 
   @keymanager.init()
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
@@ -79,17 +65,17 @@ Zotero.BetterBibTeX.init = ->
     keymanager: @keymanager
   }
 
-  @prefsObserver.register()
+  @prefs.observe()
 
   for endpoint in @endpoints
     url = "/better-bibtex/#{endpoint}"
     ep = Zotero.Server.Endpoints[url] = ->
     ep.prototype = @endpoints[endpoint]
 
-  if @prefs.getBoolPref('scan-citekeys')
+  if @prefs.get('scan-citekeys')
     for row in Zotero.DB.query(@findKeysSQL) or []
       @DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [ row.itemID, row.libraryID, @keymanager.extract({extra: row.extra}) ])
-    @prefs.setBoolPref('scan-citekeys', false)
+    @prefs.set('scan-citekeys', false)
 
   @loadTranslators()
 
@@ -268,3 +254,6 @@ Zotero.BetterBibTeX.toArray = (item) ->
 require('keymanager.coffee')
 require('web-endpoints.coffee')
 require('debug-bridge.coffee')
+require('preferences.coffee')
+require('Formatter.js')
+
