@@ -12,4 +12,4 @@ before_install:
   - sudo apt-get install nodejs npm
   - npm install pegjs coffee-script pegjs-coffee-plugin coffeelint coffeelint-no-implicit-returns
 addons:
-  firefox: "30.0"
+  firefox: "33.0"
