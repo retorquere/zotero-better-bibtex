@@ -1,7 +1,5 @@
 language: ruby
-cache:
-- bundler
-- apt
+cache: apt
 git:
   submodules: false
 rvm:
