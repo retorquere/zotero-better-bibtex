@@ -1,4 +1,16 @@
-serverURL = (collectionsView, extension) ->
+Zotero.BetterBibTeX.pref = {}
+
+Zotero.BetterBibTeX.pref.prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.zotero.translators.better-bibtex.')
+
+Zotero.BetterBibTeX.pref.observer =
+  register: -> Zotero.BetterBibTeX.pref.prefs.addObserver('', this, false)
+  unregister: -> Zotero.BetterBibTeX.pref.prefs.removeObserver('', this)
+  observe: (subject, topic, data) ->
+    if data == 'citeKeyFormat'
+      Zotero.BetterBibTeX.DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citeKeyFormat')])
+    return
+
+Zotero.BetterBibTeX.pref.serverURL = (collectionsView, extension) ->
   return if not collectionsView
   itemGroup = collectionsView._getItemAtRow(collectionsView.selection.currentIndex)
   return if not itemGroup
@@ -14,7 +26,6 @@ serverURL = (collectionsView, extension) ->
       isLibrary = false
       break
 
-  url = null
   if itemGroup.isCollection()
     collection = collectionsView.getSelectedCollection()
     url = 'collection?/' + (collection.libraryID or 0) + '/' + collection.key + extension
@@ -26,15 +37,21 @@ serverURL = (collectionsView, extension) ->
 
   return "http://localhost:#{serverPort}/better-bibtex/#{url}"
 
-BBTstyleChanged = (index) ->
+Zotero.BetterBibTeX.pref.set = (key, value) ->
+  return Zotero.Prefs.set("translators.better-bibtex.#{key}", value)
+
+Zotero.BetterBibTeX.pref.get = (key) ->
+  return Zotero.Prefs.get("translators.better-bibtex.#{key}")
+
+Zotero.BetterBibTeX.pref.styleChanged = (index) ->
   listbox = document.getElementById('better-bibtex-abbrev-style')
   selectedItem = if index != 'undefined' then listbox.getItemAtIndex(index) else listbox.selectedItem
   styleID = selectedItem.getAttribute('value')
-  Zotero.BetterBibTeX.prefs.setCharPref('auto-abbrev.style', styleID)
+  Zotero.BetterBibTeX.pref.set('auto-abbrev.style', styleID)
   Zotero.BetterBibTeX.keymanager.journalAbbrevCache = Object.create(null)
   return
 
-updatePreferences = (load) ->
+Zotero.BetterBibTeX.pref.update = (load) ->
   serverCheckbox = document.getElementById('id-better-bibtex-preferences-server-enabled')
   serverEnabled = serverCheckbox.checked
   serverCheckbox.setAttribute('hidden', Zotero.isStandalone && serverEnabled)
@@ -59,7 +76,7 @@ updatePreferences = (load) ->
 
   listbox = document.getElementById('better-bibtex-abbrev-style')
   fillList = listbox.children.length is 0
-  selectedStyle = Zotero.BetterBibTeX.prefs.getCharPref('auto-abbrev.style')
+  selectedStyle = Zotero.BetterBibTeX.pref.get('auto-abbrev.style')
   selectedIndex = -1
   for style, i in styles
     if fillList
@@ -69,7 +86,7 @@ updatePreferences = (load) ->
       listbox.appendChild(itemNode)
     if style.styleID is selectedStyle then selectedIndex = i
   if selectedIndex is -1 then selectedIndex = 0
-  BBTstyleChanged(selectedIndex)
+  @styleChanged(selectedIndex)
 
   window.setTimeout((->
     listbox.ensureIndexIsVisible(selectedIndex)
