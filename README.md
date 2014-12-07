@@ -60,11 +60,16 @@ prefer fuzzy ones over missed ones.
 
 # Plans
 
-* add "citekey" columns to reference list view
+* add "citekey" columns to reference list view: IN PROGRESS
+* Automated background export (#70): IN POGRESS
+  * Groundwork for caching (required to keep performance acceptable): DONE
+  * Caching: IN PROGRESS
+  * Automated export
+  * GUI for it all
+* Scholarly Markdown support
 * add "citekey" field to reference editor
 * sync citekey cleanly without abusing the "extra" field
 * faster journal abbreviator using the [LTWA](http://www.issn.org/services/online-services/access-to-the-ltwa/)
 * porting the bibtex parser to Jison for performance improvements
-* Automated background export (#70)
 
 Submission to Addons.Mozilla.Org is off the table -- AMO moves *much* to slow for my sometimes daily releases.
