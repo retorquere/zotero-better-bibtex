@@ -1,34 +1,7 @@
-Zotero.BetterBibTeX.pref = {}
-
-Zotero.BetterBibTeX.pref.prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.zotero.translators.better-bibtex.')
-
-Zotero.BetterBibTeX.pref.observer =
-  register: -> Zotero.BetterBibTeX.pref.prefs.addObserver('', this, false)
-  unregister: -> Zotero.BetterBibTeX.pref.prefs.removeObserver('', this)
-  observe: (subject, topic, data) ->
-    if data == 'citeKeyFormat'
-      Zotero.BetterBibTeX.DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citeKeyFormat')])
-    return
-
-Zotero.BetterBibTeX.pref.stash = ->
-  @stashed = Object.create(null)
-  keys = @prefs.getChildList('')
-  Zotero.BetterBibTeX.log(":::stash prep:", keys)
-  for key in keys
-    @stashed[key] = @get(key)
-  Zotero.BetterBibTeX.log(":::preferences stashed:", @stashed)
-  return @stashed
-
-Zotero.BetterBibTeX.pref.restore = ->
-  Zotero.BetterBibTeX.log(":::restoring stashed preferences:", @stashed)
-  for own key, value of @stashed ? {}
-    @set(key, value)
-  return
-
-Zotero.BetterBibTeX.pref.serverURL = (collectionsView, extension) ->
-  return if not collectionsView
-  itemGroup = collectionsView._getItemAtRow(collectionsView.selection.currentIndex)
-  return if not itemGroup
+Zotero.BetterBibTeX.pref.serverURL = (extension) ->
+  win = Zotero.BetterBibTex.windowMediator.getMostRecentWindow('navigator:browser')
+  itemGroup = win?.ZoteroPane?.collectionsView?._getItemAtRow(collectionsView.selection.currentIndex)
+  return unless itemGroup
 
   try
     serverPort = Zotero.Prefs.get('httpServer.port')
@@ -52,13 +25,6 @@ Zotero.BetterBibTeX.pref.serverURL = (collectionsView, extension) ->
 
   return "http://localhost:#{serverPort}/better-bibtex/#{url}"
 
-Zotero.BetterBibTeX.pref.set = (key, value) ->
-  Zotero.BetterBibTeX.log(":::pref #{key} = #{value}")
-  return Zotero.Prefs.set("translators.better-bibtex.#{key}", value)
-
-Zotero.BetterBibTeX.pref.get = (key) ->
-  return Zotero.Prefs.get("translators.better-bibtex.#{key}")
-
 Zotero.BetterBibTeX.pref.styleChanged = (index) ->
   listbox = document.getElementById('better-bibtex-abbrev-style')
   selectedItem = if index != 'undefined' then listbox.getItemAtIndex(index) else listbox.selectedItem
@@ -67,7 +33,7 @@ Zotero.BetterBibTeX.pref.styleChanged = (index) ->
   Zotero.BetterBibTeX.keymanager.journalAbbrevCache = Object.create(null)
   return
 
-Zotero.BetterBibTeX.pref.update = (load) ->
+Zotero.BetterBibTeX.pref.update = ->
   serverCheckbox = document.getElementById('id-better-bibtex-preferences-server-enabled')
   serverEnabled = serverCheckbox.checked
   serverCheckbox.setAttribute('hidden', Zotero.isStandalone && serverEnabled)
