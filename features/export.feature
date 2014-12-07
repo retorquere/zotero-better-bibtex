@@ -97,22 +97,22 @@ Scenario: Better BibLaTeX Export 17
    And I import 1 reference from 'export/Better BibLaTeX.017.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.017.bib'
 
-@bbtx-e-18
+@failing @failing-14 @bbtx-e-18
 Scenario: Better BibTeX Export 18
   When I import 1 reference from 'export/Better BibTeX.018.json'
   Then a library export using 'Better BibTeX' should match 'export/Better BibTeX.018.bib'
 
-@bbltx-e-19
+@failing @failing-15 @bbltx-e-19
 Scenario: Better BibLaTeX Export 19
   When I import 1 reference from 'export/Better BibLaTeX.019.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.019.bib'
 
-@bbltx-e-20
+@failing @failing-16 @bbltx-e-20
 Scenario: Better BibLaTeX Export 20
   When I import 1 reference from 'export/Better BibLaTeX.020.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.020.bib'
 
-@e21
+@failing @failing-17 @e21
 Scenario: Better BibLaTeX Export 21
   When I import 1 reference with 1 attachment from 'export/Better BibLaTeX.021.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.021.bib'
@@ -123,7 +123,7 @@ Scenario: Better BibLaTeX Export 22
    And I import 1 reference from 'export/Better BibLaTeX.022.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.022.bib'
 
-@bbltx-e-23
+@failing @failing-18 @bbltx-e-23
 Scenario: Better BibLaTeX Export 23
   When I import 1 reference from 'export/Better BibLaTeX.023.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.023.bib'
@@ -150,7 +150,7 @@ Scenario: Journal abbreviations
    And I import 1 reference with 1 attachment from 'export/Better BibTeX.029.json'
   Then a library export using 'Better BibTeX' should match 'export/Better BibTeX.029.bib'
 
-@stable-keys
+@failing @failing-19 @stable-keys
 Scenario: Stable citation keys
   When I import 6 references from 'export/Better BibLaTeX.stable-keys.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.stable-keys.bib'
@@ -165,7 +165,7 @@ Scenario: Journal abbreviations exported in bibtex (81)
    And I import 1 reference from 'export/Journal abbreviations exported in bibtex (81).json'
   Then a library export using 'Better BibTeX' should match 'export/Journal abbreviations exported in bibtex (81).bib'
 
-@85
+@failing @failing-20 @85
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 reference with 1 attachment from 'export/Square brackets in Publication field (85).json'
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85).bib'

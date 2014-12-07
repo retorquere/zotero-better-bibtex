@@ -1,5 +1,5 @@
 require 'headless'
-require 'selenium-webdriver'
+require 'selenium/webdriver'
 require 'json'
 require 'pp'
 require 'fileutils'
@@ -8,12 +8,12 @@ require 'yaml'
 
 $headless ||= false
 unless $headless
-  $headless = Headless.new
+  $headless = Headless.new(display: 100) # reserve 100 for BBT
   $headless.start
 
   profile_dir = File.expand_path('features/profile')
   profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
-
+  
   STDOUT.sync = true
   STDOUT.puts "Installing plugins..."
   Dir['tmp/plugins/*.xpi'].each{|xpi|

@@ -5,16 +5,15 @@ require('Formatter.js')
 
 Zotero.BetterBibTeX = {}
 
-Zotero.BetterBibTeX.log = (msg, e) ->
-  msg = "[better-bibtex] #{msg}"
-  if e
-    msg += '\nan error occurred: '
-    if e.name
-      msg += "#{e.name}: #{e.message} \n(#{e.fileName}, #{e.lineNumber})"
-    else
-      msg += e
-    if e.stack then msg += '\n' + e.stack
-  Zotero.debug(msg)
+Zotero.BetterBibTeX.log = (msg...) ->
+  msg = for m in msg
+    switch
+      when (typeof m) in ['string', 'number'] then '' + m
+      when m instanceof Error and m.name then "#{m.name}: #{m.message} \n(#{m.fileName}, #{m.lineNumber})\n#{m.stack}"
+      when m instanceof Error then "#{e}\n#{e.stack}"
+      else JSON.stringify(m)
+
+  Zotero.debug("[better-bibtex] #{msg.join(' ')}")
   return
 
 Zotero.BetterBibTeX.formatter = (pattern) ->
@@ -27,7 +26,6 @@ Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
 
-  @prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.zotero.translators.better-bibtex.')
   @translators = Object.create(null)
   @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
   @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)

@@ -73,7 +73,6 @@ ZIPFILES = [
   'chrome.manifest',
   'chrome/content/zotero-better-bibtex/include.js',
   'chrome/content/zotero-better-bibtex/overlay.xul',
-  'chrome/content/zotero-better-bibtex/preferences.js',
   'chrome/content/zotero-better-bibtex/preferences.xul',
   'chrome/content/zotero-better-bibtex/zotero-better-bibtex.js',
   'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
