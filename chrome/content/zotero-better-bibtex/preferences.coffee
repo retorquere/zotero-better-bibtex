@@ -10,6 +10,21 @@ Zotero.BetterBibTeX.pref.observer =
       Zotero.BetterBibTeX.DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citeKeyFormat')])
     return
 
+Zotero.BetterBibTeX.pref.stash = ->
+  @stashed = Object.create(null)
+  keys = @prefs.getChildList('')
+  Zotero.BetterBibTeX.log(":::stash prep:", keys)
+  for key in keys
+    @stashed[key] = @get(key)
+  Zotero.BetterBibTeX.log(":::preferences stashed:", @stashed)
+  return @stashed
+
+Zotero.BetterBibTeX.pref.restore = ->
+  Zotero.BetterBibTeX.log(":::restoring stashed preferences:", @stashed)
+  for own key, value of @stashed ? {}
+    @set(key, value)
+  return
+
 Zotero.BetterBibTeX.pref.serverURL = (collectionsView, extension) ->
   return if not collectionsView
   itemGroup = collectionsView._getItemAtRow(collectionsView.selection.currentIndex)
@@ -38,6 +53,7 @@ Zotero.BetterBibTeX.pref.serverURL = (collectionsView, extension) ->
   return "http://localhost:#{serverPort}/better-bibtex/#{url}"
 
 Zotero.BetterBibTeX.pref.set = (key, value) ->
+  Zotero.BetterBibTeX.log(":::pref #{key} = #{value}")
   return Zotero.Prefs.set("translators.better-bibtex.#{key}", value)
 
 Zotero.BetterBibTeX.pref.get = (key) ->

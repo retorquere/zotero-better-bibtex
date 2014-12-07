@@ -1,25 +1,15 @@
 Zotero.BetterBibTeX.DebugBridge = {
-  data: {
-    prefs: Object.create(null)
-    exportOptions: {}
-  }
+  exportOptions: {}
   namespace: 'better-bibtex'
   methods: {}
 }
 
-Zotero.BetterBibTeX.DebugBridge.data.setPref = (name, value) ->
-  @prefs[name] ?= Object.create(null)
-  @prefs[name].set = value
-  if typeof @prefs[name].reset is 'undefined'
-    reset = null
-    try
-      reset = Zotero.Prefs.get(name)
-    catch
-    @prefs[name].reset = reset
-  Zotero.Prefs.set(name, value)
-  return
-
 Zotero.BetterBibTeX.DebugBridge.methods.init = ->
+  return if Zotero.BetterBibTeX.DebugBridge.initialized
+  Zotero.BetterBibTeX.DebugBridge.initialized = true
+
+  Zotero.BetterBibTeX.pref.stash()
+
   # monkey-patch Zotero.Items.getAll to get items sorted. With random order I can't really implement stable
   # testing. A simple ORDER BY would have been easier and loads faster, but I can't reach into getAll.
   Zotero.Items.getAll = ((original) ->
@@ -30,12 +20,10 @@ Zotero.BetterBibTeX.DebugBridge.methods.init = ->
   return true
 
 Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
-  retval = Zotero.BetterBibTeX.DebugBridge.data.prefs
+  Zotero.BetterBibTeX.DebugBridge.methods.init()
+  Zotero.BetterBibTeX.pref.restore()
 
-  for own name, value of Zotero.BetterBibTeX.DebugBridge.data.prefs
-    Zotero.Prefs.set(name, value.reset) if value.reset isnt null
-  Zotero.BetterBibTeX.DebugBridge.data.prefs = Object.create(null)
-  Zotero.BetterBibTeX.DebugBridge.data.exportOptions = {}
+  Zotero.BetterBibTeX.DebugBridge.exportOptions = {}
 
   try
     Zotero.Items.erase((item.id for item in Zotero.BetterBibTeX.safeGetAll()))
@@ -47,7 +35,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.BetterBibTeX.DB.query('delete from keys')
   Zotero.Items.emptyTrash()
 
-  return retval
+  return true
 
 Zotero.BetterBibTeX.DebugBridge.methods.import = (filename) ->
   file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile)
@@ -59,7 +47,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.librarySize = -> Zotero.DB.valueQuery('s
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator) ->
   translator = Zotero.BetterBibTeX.getTranslator(translator)
-  return Zotero.BetterBibTeX.translate(translator, null, Zotero.BetterBibTeX.DebugBridge.data.exportOptions || {})
+  return Zotero.BetterBibTeX.translate(translator, null, Zotero.BetterBibTeX.DebugBridge.exportOptions || {})
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, filename) ->
   file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile)
@@ -74,9 +62,9 @@ Zotero.BetterBibTeX.DebugBridge.methods.library = ->
 
 Zotero.BetterBibTeX.DebugBridge.methods.getKeys = -> Zotero.BetterBibTeX.keymanager.keys()
 
-Zotero.BetterBibTeX.DebugBridge.methods.setExportOption = (name, value) -> Zotero.BetterBibTeX.DebugBridge.data.exportOptions[name] = value
+Zotero.BetterBibTeX.DebugBridge.methods.setExportOption = (name, value) -> Zotero.BetterBibTeX.DebugBridge.exportOptions[name] = value
 
-Zotero.BetterBibTeX.DebugBridge.methods.setPreference = (name, value) -> Zotero.BetterBibTeX.DebugBridge.data.setPref(name, value)
+Zotero.BetterBibTeX.DebugBridge.methods.setPreference = (name, value) -> Zotero.Prefs.set(name, value)
 
 Zotero.BetterBibTeX.DebugBridge.methods.select = (attribute, value) ->
   attribute = attribute.replace(/[^a-zA-Z]/, '')
