@@ -8,6 +8,7 @@ Zotero:
 
 * Stable **[Citation Keys](https://zotplus.github.io/better-bibtex/Citation-Keys.html)**, without key clashes! Generates citation keys that take into account other existing keys in your library
   that are not part of the items you export. Prevent random breakage!
+* Adds citation key column to the reference list view
 * **Converts from/to HTML/LaTeX**: Currently supports &lt;i&gt;&#8660;\emph &amp; \textit, &lt;b&gt;&#8660;\textbf,
   &lt;sup&gt;&#8660;\_{...}
   and &lt;sub&gt;&#8660;^{...}; more can
@@ -36,8 +37,8 @@ The Better BibTeX [configuration pane](https://zotplus.github.io/better-bibtex/C
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.57.xpi)
-(**0.6.57**).
+version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.58.xpi)
+(**0.6.58**).
 If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
@@ -60,7 +61,6 @@ prefer fuzzy ones over missed ones.
 
 # Plans
 
-* add "citekey" columns to reference list view: IN PROGRESS
 * Automated background export (#70): IN POGRESS
   * Groundwork for caching (required to keep performance acceptable): DONE
   * Caching: IN PROGRESS
