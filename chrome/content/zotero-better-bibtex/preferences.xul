@@ -10,7 +10,7 @@
             insertafter="zotero-prefpane-advanced"
             label="&zotero.better-bibtex.preferences.prefpane.better-bibtex;"
             image="chrome://zotero-better-bibtex/skin/prefs.png"
-            onpaneload="Zotero.BetterBibTeX.pref.update();"
+            onpaneload="Zotero.BetterBibTeX.pref.update(document);"
             >
       <preferences id="zotero-preferences-cite">
         <preference id="pref-better-bibtex-recursive" name="extensions.zotero.recursiveCollections" type="bool"/>
@@ -105,5 +105,6 @@
 
 	<!-- Include the main extension logic -->
 	<script src="chrome://zotero/content/include.js"/>
-	<script src="chrome://zotero-better-bibtex/content/include.js" type="application/javascript;version=1.8"/>
+	<script src="chrome://zotero-better-bibtex/content/include.js"/>
+	<script src="chrome://zotero-better-bibtex/content/preferences.js"/><!-- needs to be included every time anew to bind windows and document -->
 </overlay>

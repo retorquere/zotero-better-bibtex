@@ -16,6 +16,40 @@ Zotero.BetterBibTeX.log = (msg...) ->
   Zotero.debug("[better-bibtex] #{msg.join(' ')}")
   return
 
+Zotero.BetterBibTeX.pref = {}
+
+Zotero.BetterBibTeX.pref.prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.zotero.translators.better-bibtex.')
+
+Zotero.BetterBibTeX.pref.observer =
+  register: -> Zotero.BetterBibTeX.pref.prefs.addObserver('', this, false)
+  unregister: -> Zotero.BetterBibTeX.pref.prefs.removeObserver('', this)
+  observe: (subject, topic, data) ->
+    if data == 'citeKeyFormat'
+      Zotero.BetterBibTeX.DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citeKeyFormat')])
+    return
+
+Zotero.BetterBibTeX.pref.stash = ->
+  @stashed = Object.create(null)
+  keys = @prefs.getChildList('')
+  Zotero.BetterBibTeX.log(":::stash prep:", keys)
+  for key in keys
+    @stashed[key] = @get(key)
+  Zotero.BetterBibTeX.log(":::preferences stashed:", @stashed)
+  return @stashed
+
+Zotero.BetterBibTeX.pref.restore = ->
+  Zotero.BetterBibTeX.log(":::restoring stashed preferences:", @stashed)
+  for own key, value of @stashed ? {}
+    @set(key, value)
+  return
+
+Zotero.BetterBibTeX.pref.set = (key, value) ->
+  Zotero.BetterBibTeX.log(":::pref #{key} = #{value}")
+  return Zotero.Prefs.set("translators.better-bibtex.#{key}", value)
+
+Zotero.BetterBibTeX.pref.get = (key) ->
+  return Zotero.Prefs.get("translators.better-bibtex.#{key}")
+
 Zotero.BetterBibTeX.formatter = (pattern) ->
   @formatters ?= Object.create(null)
   @formatters[pattern] = BetterBibTeXFormatter.parse(pattern) unless @formatters[pattern]
