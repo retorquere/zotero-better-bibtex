@@ -31,20 +31,16 @@ Zotero.BetterBibTeX.pref.observer =
 Zotero.BetterBibTeX.pref.stash = ->
   @stashed = Object.create(null)
   keys = @prefs.getChildList('')
-  Zotero.BetterBibTeX.log(":::stash prep:", keys)
   for key in keys
     @stashed[key] = @get(key)
-  Zotero.BetterBibTeX.log(":::preferences stashed:", @stashed)
   return @stashed
 
 Zotero.BetterBibTeX.pref.restore = ->
-  Zotero.BetterBibTeX.log(":::restoring stashed preferences:", @stashed)
   for own key, value of @stashed ? {}
     @set(key, value)
   return
 
 Zotero.BetterBibTeX.pref.set = (key, value) ->
-  Zotero.BetterBibTeX.log(":::pref #{key} = #{value}")
   return Zotero.Prefs.set("translators.better-bibtex.#{key}", value)
 
 Zotero.BetterBibTeX.pref.get = (key) ->
@@ -113,6 +109,19 @@ Zotero.BetterBibTeX.init = ->
     @pref.set('scan-citekeys', false)
 
   @loadTranslators()
+
+  # monkey-patch Zotero.ItemTreeView.prototype.getCellText to replace the 'extra' column with the citekey
+  # I wish I didn't have to hijack the extra field, but Zotero has checks in numerous places to make sure it only
+  # displays 'genuine' Zotero fields, and monkey-patching around all of those got to be way too invasive (and this
+  # fragile)
+  Zotero.ItemTreeView.prototype.getCellText = ((original) ->
+    return (row, column) ->
+      if column.id == 'zotero-items-column-extra' && Zotero.BetterBibTeX.pref.get('show-citekey')
+        item = this._getItemAtRow(row)
+        return Zotero.BetterBibTeX.keymanager.get({itemID: item.id, libraryID: item.libraryID})
+
+      return original.apply(this, arguments)
+    )(Zotero.ItemTreeView.prototype.getCellText)
 
   notifierID = Zotero.Notifier.registerObserver(@itemChanged, ['item'])
   window.addEventListener('unload', ((e) -> Zotero.Notifier.unregisterObserver(notifierID)), false)
