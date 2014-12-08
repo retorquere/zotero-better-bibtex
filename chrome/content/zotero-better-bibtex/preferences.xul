@@ -54,14 +54,14 @@
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.langid;"/>
-                    <radiogroup id="id-better-bibtex-preferences-langid" orient="horizontal" preference="pref-better-bibtex-langid">
+                    <radiogroup id="id-better-bibtex-preferences-langid" orient="vertical" preference="pref-better-bibtex-langid">
                       <radio id="id-better-bibtex-preferences-langid-babel" label="&zotero.better-bibtex.langid.babel;" value="babel"/>
                       <radio id="id-better-bibtex-preferences-langid-polyglossia" label="&zotero.better-bibtex.langid.polyglossia;" value="polyglossia"/>
                     </radiogroup>
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.pin-citekeys;"/>
-                    <radiogroup id="id-better-bibtex-preferences-pin-citekeys" orient="horizontal" preference="pref-better-bibtex-pin-citekeys" oncommand="Zotero.BetterBibTeX.pref.update();">
+                    <radiogroup id="id-better-bibtex-preferences-pin-citekeys" orient="vertical" preference="pref-better-bibtex-pin-citekeys" oncommand="Zotero.BetterBibTeX.pref.update();">
                       <radio id="id-better-bibtex-preferences-pin-citekeys-manual" label="&zotero.better-bibtex.pin-citekeys.manual;" value="manual"/>
                       <radio id="id-better-bibtex-preferences-pin-citekeys-on-change" label="&zotero.better-bibtex.pin-citekeys.on-change;" value="on-change"/>
                       <radio id="id-better-bibtex-preferences-pin-citekeys-on-export" label="&zotero.better-bibtex.pin-citekeys.on-export;" value="on-export"/>
@@ -88,7 +88,7 @@
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.unicode;"/>
-                    <radiogroup id="id-better-bibtex-preferences-unicode" orient="horizontal" preference="pref-better-bibtex-unicode" oncommand="Zotero.BetterBibTeX.pref.update();">
+                    <radiogroup id="id-better-bibtex-preferences-unicode" orient="vertical" preference="pref-better-bibtex-unicode" oncommand="Zotero.BetterBibTeX.pref.update();">
                       <radio id="id-better-bibtex-preferences-unicode-default" label="&zotero.better-bibtex.unicode.default;" value=""/>
                       <radio id="id-better-bibtex-preferences-unicode-always" label="&zotero.better-bibtex.unicode.always;" value="always"/>
                       <radio id="id-better-bibtex-preferences-unicode-never" label="&zotero.better-bibtex.unicode.never;" value="never"/>
