@@ -20,13 +20,14 @@ Zotero.BetterBibTeX.pref = {}
 
 Zotero.BetterBibTeX.pref.prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.zotero.translators.better-bibtex.')
 
-Zotero.BetterBibTeX.pref.observer =
+Zotero.BetterBibTeX.pref.observer = {
   register: -> Zotero.BetterBibTeX.pref.prefs.addObserver('', this, false)
   unregister: -> Zotero.BetterBibTeX.pref.prefs.removeObserver('', this)
   observe: (subject, topic, data) ->
     if data == 'citeKeyFormat'
       Zotero.BetterBibTeX.DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citeKeyFormat')])
     return
+}
 
 Zotero.BetterBibTeX.pref.stash = ->
   @stashed = Object.create(null)
@@ -118,7 +119,10 @@ Zotero.BetterBibTeX.init = ->
     return (row, column) ->
       if column.id == 'zotero-items-column-extra' && Zotero.BetterBibTeX.pref.get('show-citekey')
         item = this._getItemAtRow(row)
-        return Zotero.BetterBibTeX.keymanager.get({itemID: item.id, libraryID: item.libraryID})
+        if item?.ref?.isAttachment() || item?.ref?.isNote()
+          return ''
+        else
+          return Zotero.BetterBibTeX.keymanager.get({itemID: item.id, libraryID: item.libraryID})
 
       return original.apply(this, arguments)
     )(Zotero.ItemTreeView.prototype.getCellText)
