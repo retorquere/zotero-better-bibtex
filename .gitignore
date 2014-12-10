@@ -1,6 +1,7 @@
 *~
 *.swp
 *.debug
+*.cache
 Gemfile.lock
 .bundle
 *.js
