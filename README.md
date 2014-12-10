@@ -37,8 +37,8 @@ The Better BibTeX [configuration pane](https://zotplus.github.io/better-bibtex/C
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.58.xpi)
-(**0.6.58**).
+version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.59.xpi)
+(**0.6.59**).
 If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
