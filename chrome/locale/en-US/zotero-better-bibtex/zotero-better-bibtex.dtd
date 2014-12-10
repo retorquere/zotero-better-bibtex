@@ -41,3 +41,6 @@
 <!ENTITY zotero.better-bibtex.pin-citekeys.manual "No">
 <!ENTITY zotero.better-bibtex.pin-citekeys.on-change "On item change">
 <!ENTITY zotero.better-bibtex.pin-citekeys.on-export "On item export">
+<!ENTITY zotero.better-bibtex.pin-citekeys.key-conflict-policy "On conflict, non-pinned key should be">
+<!ENTITY zotero.better-bibtex.pin-citekeys.key-conflict-policy.change "changed (causes key changes)">
+<!ENTITY zotero.better-bibtex.pin-citekeys.key-conflict-policy.keep "kept (causes key duplicates)">

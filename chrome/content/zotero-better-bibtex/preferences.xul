@@ -27,6 +27,7 @@
         <preference id="pref-better-bibtex-pin-citekeys" name="extensions.zotero.translators.better-bibtex.pin-citekeys" type="string"/>
         <preference id="pref-better-bibtex-raw-imports" name="extensions.zotero.translators.better-bibtex.raw-imports" type="bool"/>
         <preference id="pref-better-bibtex-show-citekey" name="extensions.zotero.translators.better-bibtex.show-citekey" type="bool"/>
+        <preference id="pref-better-bibtex-citekey-conflict" name="extensions.zotero.translators.better-bibtex.key-conflict-policy" type="string"/>
       </preferences>
       <tabbox>
         <tabs>
@@ -65,6 +66,13 @@
                       <radio id="id-better-bibtex-preferences-pin-citekeys-manual" label="&zotero.better-bibtex.pin-citekeys.manual;" value="manual"/>
                       <radio id="id-better-bibtex-preferences-pin-citekeys-on-change" label="&zotero.better-bibtex.pin-citekeys.on-change;" value="on-change"/>
                       <radio id="id-better-bibtex-preferences-pin-citekeys-on-export" label="&zotero.better-bibtex.pin-citekeys.on-export;" value="on-export"/>
+                    </radiogroup>
+                  </row>
+                  <row>
+                    <label value="&zotero.better-bibtex.pin-citekeys.key-conflict-policy;"/>
+                    <radiogroup id="id-better-bibtex-preferences-key-conflict-policy" orient="vertical" preference="pref-better-bibtex-citekey-conflict" oncommand="Zotero.BetterBibTeX.pref.update();">
+                      <radio id="id-better-bibtex-preferences-key-conflict-policy-change" label="&zotero.better-bibtex.pin-citekeys.key-conflict-policy.change;" value="change"/>
+                      <radio id="id-better-bibtex-preferences-key-conflict-policy-keep" label="&zotero.better-bibtex.pin-citekeys.key-conflict-policy.keep;" value="keep"/>
                     </radiogroup>
                   </row>
                   <row>

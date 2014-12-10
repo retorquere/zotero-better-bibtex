@@ -165,7 +165,8 @@ Zotero.BetterBibTeX.itemChanged.notify = (event, type, ids, extraData) ->
       if event != 'trash'
         for item in Zotero.DB.query("#{Zotero.BetterBibTeX.findKeysSQL} and i.itemID in #{ids}") or []
           citekey = Zotero.BetterBibTeX.keymanager.extract({extra: item.extra})
-          Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID, citekey])
+          if Zotero.BetterBibTeX.pref.get('key-conflict-policy') == 'change'
+            Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID, citekey])
           Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [ item.itemID, item.libraryID, citekey ])
 
         for item in Zotero.DB.query("select coalesce(libraryID, 0) as libraryID, itemID from items where itemID in #{ids}") or []
