@@ -60,10 +60,19 @@ Zotero.BetterBibTeX.keymanager.extract = (item) ->
   item.extra = item.extra.replace(m[0], '').trim()
   return m[1]
 
-Zotero.BetterBibTeX.keymanager.get = (item, pinmode) ->
+Zotero.BetterBibTeX.keymanager.displayText = (item) ->
+  citekey = Zotero.BetterBibTeX.DB.rowQuery('select citekey, citeKeyFormat from keys where itemID=? and libraryID = ?', [item.itemID, item.libraryID || 0])
+
+  return citekey ? @get(item) + '*'
+
+Zotero.BetterBibTeX.keymanager.get = (item, options) ->
   if item._sandboxManager
     item = arguments[1]
-    pinmode = arguments[2]
+    options = arguments[2]
+
+  # legacy use, phase out later
+  if (typeof options) == 'string' || (options instanceof String)
+    options = {pinmode: options}
 
   citekey = Zotero.BetterBibTeX.DB.rowQuery('select citekey, citeKeyFormat from keys where itemID=? and libraryID = ?', [item.itemID, item.libraryID || 0])
   if not citekey
@@ -79,7 +88,7 @@ Zotero.BetterBibTeX.keymanager.get = (item, pinmode) ->
     Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID || 0, citekey.citekey])
     Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, ?)', [ item.itemID, item.libraryID || 0, citekey.citekey, pattern ])
 
-  if citekey.citeKeyFormat && (pinmode == 'manual' || (Zotero.BetterBibTeX.allowAutoPin() && pinmode == Zotero.BetterBibTeX.pref.get('pin-citekeys')))
+  if citekey.citeKeyFormat && (options.pinmode == 'manual' || (Zotero.BetterBibTeX.allowAutoPin() && options.pinmode == Zotero.BetterBibTeX.pref.get('pin-citekeys')))
     item = Zotero.Items.get(item.itemID) if not item.getField
     _item = {extra: '' + item.getField('extra')}
     @extract(_item)
@@ -90,6 +99,7 @@ Zotero.BetterBibTeX.keymanager.get = (item, pinmode) ->
     Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID || 0, citekey.citekey])
     Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [ item.itemID, item.libraryID || 0, citekey.citekey ])
 
+  return citekey if options.metadata
   return citekey.citekey
 
 Zotero.BetterBibTeX.keymanager.keys = ->
