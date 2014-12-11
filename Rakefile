@@ -217,7 +217,7 @@ task :dropbox => XPI do
 end
 
 file 'tmp/unicode.xml' do |t|
-  ZotPlus::RakeHelper.download('http://web.archive.org/web/20131109072541/http://www.w3.org/2003/entities/2007xml/unicode.xml', t.name)
+  ZotPlus::RakeHelper.download('http://www.w3.org/2003/entities/2007xml/unicode.xml', t.name)
 end
 
 file 'resource/translators/latex_unicode_mapping.coffee' => ['tmp/unicode.xml', 'Rakefile'] do |t|
