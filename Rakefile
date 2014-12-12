@@ -120,7 +120,7 @@ SOURCES = [
   'resource/translators/unicode_translator.coffee',
   'resource/translators/translator.coffee',
   'resource/translators/Zotero TestCase.coffee',
-  'tmp/unicode.xml',
+  'resource/translators/unicode.xml',
   'update.rdf',
 ]
 
@@ -221,14 +221,14 @@ task :dropbox => XPI do
   FileUtils.cp(XPI, File.join(dropbox, XPI))
 end
 
-file 'tmp/unicode.xml' do |t|
+file 'resource/translators/unicode.xml' do |t|
   ZotPlus::RakeHelper.download('http://www.w3.org/2003/entities/2007xml/unicode.xml', t.name)
 end
 
-file 'resource/translators/latex_unicode_mapping.coffee' => ['tmp/unicode.xml', 'Rakefile'] do |t|
+file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translators/unicode.xml', 'Rakefile'] do |t|
   unicode_mapper(t.source, t.name)
 end
-file 'resource/translators/mathchar.pegcoffee' => ['tmp/unicode.xml', 'Rakefile'] do |t|
+file 'resource/translators/mathchar.pegcoffee' => ['resource/translators/unicode.xml', 'Rakefile'] do |t|
   unicode_mapper(t.source, t.name)
 end
 
