@@ -130,6 +130,21 @@ Zotero.BetterBibTeX.init = ->
 
   notifierID = Zotero.Notifier.registerObserver(@itemChanged, ['item'])
   window.addEventListener('unload', ((e) -> Zotero.Notifier.unregisterObserver(notifierID)), false)
+
+  uninstaller = {
+    onUninstalling: (addon, needsRestart) ->
+      return unless addon.id == 'better-bibtex@iris-advies.com'
+      Zotero.BetterBibTeX.removeTranslators()
+      return
+
+    onOperationCancelled: (addon, needsRestart) ->
+      return unless addon.id == 'better-bibtex@iris-advies.com'
+      if !(addon.pendingOperations & AddonManager.PENDING_UNINSTALL)
+        Zotero.BetterBibTeX.loadTranslators()
+      return
+  }
+  AddonManager.addAddonListener(uninstaller)
+
   return
 
 Zotero.BetterBibTeX.loadTranslators = ->
@@ -142,12 +157,11 @@ Zotero.BetterBibTeX.loadTranslators = ->
   return
 
 Zotero.BetterBibTeX.removeTranslators = ->
-  for name in @translators
-    header = @translators[name]
+  for own name, header of @translators
     fileName = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)
     destFile = Zotero.getTranslatorsDirectory()
     destFile.append(fileName)
-    destFile.remove()
+    destFile.remove(false)
   Zotero.Translators.init()
   return
 
