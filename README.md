@@ -93,9 +93,9 @@ prefer fuzzy ones over missed ones.
 
 * Automated background export (#70): IN POGRESS
   * Groundwork for caching (required to keep performance acceptable): DONE
-  * Caching: IN PROGRESS
+  * Caching: DONE
   * Automated export
-  * GUI for it all
+  * GUI for it all: IN PROGRESS
 * Scholarly Markdown support
 * add "citekey" field to reference editor
 * sync citekey cleanly without abusing the "extra" field
