@@ -3,7 +3,7 @@
   "version": "0.6.61",
   "private": true,
   "description": "Better BibTeX support for Zotero",
-  "preferglobal": true
+  "preferglobal": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
