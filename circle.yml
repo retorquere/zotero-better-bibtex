@@ -1,8 +1,3 @@
-dependencies:
-  pre:
-    - sudo apt-get update; sudo apt-get install nodejs npm firefox
-  post:
-    - sudo npm install pegjs coffee-script pegjs-coffee-plugin coffeelint coffeelint-no-implicit-returns
 test:
   override:
     - rake test
