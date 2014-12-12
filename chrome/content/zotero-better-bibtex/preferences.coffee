@@ -1,6 +1,6 @@
 Zotero.BetterBibTeX.pref.serverURL = (extension) ->
-  win = Zotero.BetterBibTex.windowMediator.getMostRecentWindow('navigator:browser')
-  itemGroup = win?.ZoteroPane?.collectionsView?._getItemAtRow(collectionsView.selection.currentIndex)
+  collectionsView = Zotero.getActiveZoteroPane()?.collectionsView
+  itemGroup = collectionsView?._getItemAtRow(collectionsView.selection?.currentIndex)
   return unless itemGroup
 
   try
@@ -9,18 +9,18 @@ Zotero.BetterBibTeX.pref.serverURL = (extension) ->
     return
 
   isLibrary = true
-  for type of [ 'Collection', 'Search', 'Trash', 'Duplicates', 'Unfiled', 'Header', 'Bucket' ]
-    if itemGroup['is' + type]()
+  for type in [ 'Collection', 'Search', 'Trash', 'Duplicates', 'Unfiled', 'Header', 'Bucket' ]
+    if itemGroup["is#{type}"]()
       isLibrary = false
       break
 
   if itemGroup.isCollection()
     collection = collectionsView.getSelectedCollection()
-    url = 'collection?/' + (collection.libraryID or 0) + '/' + collection.key + extension
+    url = "collection?/#{collection.libraryID or 0}/#{collection.key + extension}"
 
   if isLibrary
     libid = collectionsView.getSelectedLibraryID()
-    url = if libid then 'library?/' + libid + '/library' + extension else 'library?library' + extension
+    url = if libid then "library?/#{libid}/library#{extension}" else "library?library#{extension}"
   if not url then return
 
   return "http://localhost:#{serverPort}/better-bibtex/#{url}"

@@ -7,3 +7,4 @@ if not Zotero.BetterBibTeX
     Zotero.BetterBibTeX.init()
     return
   ), false)
+Zotero.debug('BBT loaded')

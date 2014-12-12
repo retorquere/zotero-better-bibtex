@@ -12,42 +12,36 @@ Zotero.BetterBibTeX.endpoints.collection.init = (url, data, sendResponseCallback
 
   try
     path = collection.split('.')
-    if path.length is 1
+    if path.length == 1
       sendResponseCallback(404, 'text/plain', "Could not export bibliography '#{collection}': no format specified")
       return
 
     translator = path.pop()
     path = path.join('.')
-    items = []
-    for collectionkey in path.split('+')
-      collectionkey = "/0/#{collectionkey}" if collectionkey.charAt(0) isnt '/'
-      path = collectionkey.split('/')
-      path.shift()
+    path = "/0/#{path}" if path.charAt(0) != '/'
+    path = path.split('/')
+    path.shift() # removes empty field before first '/'
 
-      libid = parseInt(path.shift())
-      throw "Not a valid library ID: #{collectionkey}" if isNaN(libid)
+    libid = parseInt(path.shift())
+    throw "Not a valid library ID: #{collectionkey}" if isNaN(libid)
 
-      key = '' + path[0]
+    key = '' + path[0]
+    col = null
+    for name in path
+      children = Zotero.getCollections(col?.id, false, libid)
       col = null
-      for name in path
-        children = Zotero.getCollections(col?.id, false, libid)
-        col = null
-        for child in children
-          if child.name.toLowerCase() is name.toLowerCase()
-            col = child
-            break
-        if not col then break
-      col ?= Zotero.Collections.getByLibraryAndKey(libid, key)
-      throw "#{collectionkey} not found" unless col
+      for child in children
+        if child.name.toLowerCase() is name.toLowerCase()
+          col = child
+          break
+      if not col then break
+    col ?= Zotero.Collections.getByLibraryAndKey(libid, key)
+    throw "#{collectionkey} not found" unless col
 
-      try
-        recursive = Zotero.Prefs.get('recursiveCollections')
-      catch e
-        recursive = false
-
-      items = items.concat(Zotero.Items.get((item.id for item of col.getChildren(recursive, false, 'item'))))
-
-    sendResponseCallback(200, 'text/plain', Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), items, Zotero.BetterBibTeX.displayOptions(url)))
+    Zotero.BetterBibTeX.log(':::preparing to export', path)
+    bibtex = Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {collection: col}, Zotero.BetterBibTeX.displayOptions(url))
+    Zotero.BetterBibTeX.log(':::exporting', bibtex)
+    sendResponseCallback(200, 'text/plain', bibtex)
 
   catch err
     Zotero.BetterBibTeX.log("Could not export bibliography '#{collection}", err)
@@ -81,7 +75,7 @@ Zotero.BetterBibTeX.endpoints.library.init = (url, data, sendResponseCallback) -
       return
 
     translator = path.pop()
-    sendResponseCallback(200, 'text/plain', Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), Zotero.Items.getAll(false, libid), Zotero.BetterBibTeX.displayOptions(url)))
+    sendResponseCallback(200, 'text/plain', Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), null, Zotero.BetterBibTeX.displayOptions(url)))
 
   catch err
     Zotero.BetterBibTeX.log("Could not export bibliography '#{library}'", err)
@@ -100,6 +94,6 @@ Zotero.BetterBibTeX.endpoints.selected.init = (url, data, sendResponseCallback) 
 
   win = Zotero.BetterBibTeX.windowMediator.getMostRecentWindow('navigator:browser')
   items = Zotero.Items.get((item.id for item of win.ZoteroPane.getSelectedItems()))
-  sendResponseCallback(200, 'text/plain', Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), items, Zotero.BetterBibTeX.displayOptions(url)))
+  sendResponseCallback(200, 'text/plain', Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: items}, Zotero.BetterBibTeX.displayOptions(url)))
   return
 

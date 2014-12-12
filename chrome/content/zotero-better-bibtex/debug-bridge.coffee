@@ -32,7 +32,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
     Zotero.Collections.erase((coll.id for coll in Zotero.getCollections()))
   catch
 
-  Zotero.BetterBibTeX.DB.query('delete from keys')
+  Zotero.BetterBibTeX.keymanager.reset(true)
   Zotero.Items.emptyTrash()
 
   return true
