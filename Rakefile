@@ -92,10 +92,6 @@ ZIPFILES = [
 ]
 
 SOURCES = [
-  #'chrome/content/zotero-better-bibtex/auto-export.coffee',
-  "#{NODEBIN}/coffee",
-  "#{NODEBIN}/coffeelint",
-  "#{NODEBIN}/pegjs",
   'chrome/content/zotero-better-bibtex/Formatter.pegcoffee',
   'chrome/content/zotero-better-bibtex/include.coffee',
   'chrome/content/zotero-better-bibtex/overlay.xul',
@@ -109,18 +105,22 @@ SOURCES = [
   'chrome/skin/default/zotero-better-bibtex/prefs.png',
   'defaults/preferences/defaults.coffee',
   'install.rdf',
+  "#{NODEBIN}/coffee",
+  "#{NODEBIN}/coffeelint",
+  "#{NODEBIN}/pegjs",
   'Rakefile',
   'resource/translators/Better BibLaTeX.coffee',
   'resource/translators/Better BibTeX.coffee',
   'resource/translators/LaTeX Citation.coffee',
+  'resource/translators/latex_unicode_mapping.coffee',
   'resource/translators/mathchar.pegcoffee',
   'resource/translators/Pandoc Citation.coffee',
   'resource/translators/Parser.pegcoffee',
+  'resource/translators/translator.coffee',
   'resource/translators/Unicode2LaTeX.pegcoffee',
   'resource/translators/unicode_translator.coffee',
-  'resource/translators/translator.coffee',
-  'resource/translators/Zotero TestCase.coffee',
   'resource/translators/unicode.xml',
+  'resource/translators/Zotero TestCase.coffee',
   'update.rdf',
 ]
 
