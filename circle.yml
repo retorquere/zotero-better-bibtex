@@ -5,4 +5,5 @@ dependencies:
     - sudo npm install pegjs coffee-script pegjs-coffee-plugin coffeelint coffeelint-no-implicit-returns
 test:
   override:
-    - rake test
+    - case $CIRCLE_NODE_INDEX in 0) rake test[import] ;; 1) rake test[export] ;; esac:
+        parallel: true
