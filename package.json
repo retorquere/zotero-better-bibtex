@@ -1,0 +1,24 @@
+{
+  "name": "zotero-better-bibtex",
+  "version": "0.6.61",
+  "description": "Better BibTeX support for Zotero",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ZotPlus/zotero-better-bibtex.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZotPlus/zotero-better-bibtex/issues"
+  },
+  "dependencies": {
+    "coffee-script": "^1.8.0",
+    "coffeelint": "^1.6.1",
+    "coffeelint-no-implicit-returns": "0.0.4",
+    "pegjs": "^0.8.0",
+    "pegjs-coffee-plugin": "^0.2.2"
+  }
+}
