@@ -14,3 +14,4 @@ features/export/*.out.txt
 update.rdf
 *.xpi
 *.log
+node_modules
