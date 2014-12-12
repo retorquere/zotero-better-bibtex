@@ -7,10 +7,8 @@ rvm:
 env:
   - TAG=import
   - TAG=export
-script: "rake test[$FEATURE]"
+script: "bundle exec rake test[$FEATURE]"
 before_install:
   - sudo apt-get update
   - sudo apt-get install nodejs npm firefox
-  - npm install pegjs coffee-script pegjs-coffee-plugin coffeelint coffeelint-no-implicit-returns
-xddons:
-  firefox: "34.0"
+  - npm update
