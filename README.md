@@ -1,36 +1,66 @@
-# Zotero: Better Bib(La)TeX [![Circle CI](https://circleci.com/gh/ZotPlus/zotero-better-bibtex.svg?style=svg)](https://circleci.com/gh/ZotPlus/zotero-better-bibtex)
+# Zotero: Better Bib(La)TeX (BBT) [![Circle CI](https://circleci.com/gh/ZotPlus/zotero-better-bibtex.svg?style=svg)](https://circleci.com/gh/ZotPlus/zotero-better-bibtex)
 
 This extension aims to make Zotero effective for us LaTeX holdouts. At its core, it behaves like any Zotero
 import/export module; anywhere you can export or import bibliography items in Zotero, you'll find Better Bib(La)TeX
 listed as one of the choices. If nothing else, you could keep your existing workflow as-is, and just enjoy the emproved
-LaTeX &lt;-&gt; unicode translation on im-and export. Over and above this improvement, it adds the following features to
-Zotero:
+LaTeX &lt;-&gt; unicode translation on im-and export. Over and above this improvement, it addresses the following
+issues in Zotero:
 
-* Stable **[Citation Keys](https://zotplus.github.io/better-bibtex/Citation-Keys.html)**, without key clashes! Generates citation keys that take into account other existing keys in your library
-  that are not part of the items you export. Prevent random breakage!
-* Adds citation key column to the reference list view
-* **Converts from/to HTML/LaTeX**: Currently supports &lt;i&gt;&#8660;\emph &amp; \textit, &lt;b&gt;&#8660;\textbf,
+## Citation keys
+
+Zotero citations keys are fully auto-generated, using an algorithm that usually generates unique keys. For serious LaTeX
+users, this presents the following problems:
+
+* If a non-unique key is generated, which one gets postfixed with a distinguishing character is essentially
+  non-deterministic.
+* The keys are *always* auto-generated, so if you correct a typo in the author name, the key might change
+* You can't see the citation keys until you export them
+
+For a LaTeX author, the citation keys have their own meaning, fully separate from the other reference data, even if
+people usually pick a naming scheme related to them. As the citation key is *the* piece of data that connects your
+bibliography, this is a piece of data you want to have control over. BBT offers you this control:
+
+* Set your own, fixed **[citation keys](https://zotplus.github.io/better-bibtex/Citation-Keys.html)**
+* Stable **[citation keys](https://zotplus.github.io/better-bibtex/Citation-Keys.html)**, without key clashes. BBT generates citation keys that take into account other existing keys in your library
+  in a deterministic way, regardless of what part of your library you export, or the order in which you do it.
+* Drag and drop LaTeX citations to your favorite LaTeX editor
+* Generate citation keys from JabRef patterns
+* Shows both pinned (fixed) citation keys and dynamically generated ones in the reference list view
+* add other custom BibLaTeX fields
+
+## Unicode problems
+
+Zotero does all its work in UTF-8 Unicode, which is absolutely the right thing to do. Unfortunately, for those shackled
+to BibTeX and who cannot (yet) move to BibLaTeX, unicode is a major PITA. Also, Zotero supports some simple HTML markup
+in your references that Bib(La)TeX won't understand; BBT will
+
+* converts from/to HTML/LaTeX; Currently supports &lt;i&gt;&#8660;\emph &amp; \textit, &lt;b&gt;&#8660;\textbf,
   &lt;sup&gt;&#8660;\_{...}
   and &lt;sub&gt;&#8660;^{...}; more can
-  be added on request. Finally add italics and super/supscript to your titles! The plugin contains a comprehensive list
-  of LaTeX constructs, so stuff like \"{o} or \"o will be converted to their unicode equivalents on import. If you need
-  literal LaTeX in your export: surround it with &lt;pre&gt;....&lt;/pre&gt; tags.
-* Integration with **[Report Customizer](https://zotplus.github.io/better-bibtex/Citation-Keys.html)**
-* Set your own, fixed **[Citation Keys](https://zotplus.github.io/better-bibtex/Citation-Keys.html)**, generate citation keys from JabRef patterns, drag and drop LaTeX citations, add other custom BibLaTeX fields
-* **[Customized Exports](https://zotplus.github.io/better-bibtex/Customized-Exports.html)**
-* **Jabref groups import/export**: During import, if JabRef explicit (not dynamic) groups are present, collections will
-  be created to mirror these. During export, collections will be added to the export as explicit jabref groups.
-* **Fixes date field exports**: export dates like 'forthcoming' as 'forthcoming' instead of empty.
-* **[Pull Export](https://zotplus.github.io/better-bibtex/Pull-Export)** from the embedded webserver
-* Automatic **[journal abbreviation](https://zotplus.github.io/better-bibtex/Citation-Keys.html)**
+  be added on request.
+* The plugin contains a comprehensive list of LaTeX constructs, so stuff like \"{o} or \"o will be converted to their unicode equivalents on import.
 
-Experimental:
+## Going hardcore: Zotero as a BibTeX manager
 
-* Raw LaTeX import-export. An entry tagged with "#LaTeX" (case-sensitive!) will be exported as-is, so you can include
+If you'd really just rather hand-code your LaTeX constructs, BBT makes that possible:
+
+* You can add literal LaTeX anywhere in your reference by surrounding it with &lt;pre&gt;....&lt;/pre&gt; tags. BBT will
+  convert to/from unicode and (un)escape where required but will pass whatever is enclused in the pre tags unchanged.
+* An entry tagged with "#LaTeX" (case-sensitive!) will have all fields exported as-is, so you can include
   LaTeX markup in your references. If you enable "Raw BibTeX import" in the preferences, BibTeX imports will not be
   escaped on import, and will automatically be tagged for raw export.
 
-## Configuration
+## Other niceties
+
+* Integration with **[Report Customizer](https://zotplus.github.io/better-bibtex/Citation-Keys.html)**
+* **[Customized exports](https://zotplus.github.io/better-bibtex/Customized-Exports.html)**
+* **Jabref groups import/export**: During import, if JabRef explicit (not dynamic) groups are present, collections will
+  be created to mirror these. During export, collections will be added to the export as explicit jabref groups.
+* **Fixes date field exports**: export dates like 'forthcoming' as 'forthcoming' instead of empty.
+* **[Pull export](https://zotplus.github.io/better-bibtex/Pull-Export)** from the embedded webserver
+* Automatic **[journal abbreviation](https://zotplus.github.io/better-bibtex/Citation-Keys.html)** to bring BibTeX export on par with the Word integration
+
+# Configuration
 
 The Better BibTeX [configuration pane](https://zotplus.github.io/better-bibtex/Customized-Exports.html) can be found under the regular Zotero preferences pane, tab 'Better Bib(La)TeX'.
 
@@ -70,6 +100,5 @@ prefer fuzzy ones over missed ones.
 * add "citekey" field to reference editor
 * sync citekey cleanly without abusing the "extra" field
 * faster journal abbreviator using the [LTWA](http://www.issn.org/services/online-services/access-to-the-ltwa/)
-* porting the bibtex parser to Jison for performance improvements
 
 Submission to Addons.Mozilla.Org is off the table -- AMO moves *much* to slow for my sometimes daily releases.
