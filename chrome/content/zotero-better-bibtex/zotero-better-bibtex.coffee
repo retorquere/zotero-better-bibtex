@@ -25,6 +25,7 @@ Zotero.BetterBibTeX.pref.observer = {
   unregister: -> Zotero.BetterBibTeX.pref.prefs.removeObserver('', this)
   observe: (subject, topic, data) ->
     if data == 'citeKeyFormat'
+      Zotero.BetterBibTeX.keymanager.reset()
       Zotero.BetterBibTeX.DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citeKeyFormat')])
     return
 }
@@ -89,6 +90,7 @@ Zotero.BetterBibTeX.init = ->
                select itemID, libraryID, citekey, case when pinned = 1 then null else ? end from keys2', [@pref.get('citeKeyFormat')])
     @DB.query("insert or replace into _version_ (tablename, version) values ('keys', 4)")
 
+  Zotero.BetterBibTeX.keymanager.reset()
   @DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@pref.get('citeKeyFormat')])
 
   @keymanager.init()
@@ -99,10 +101,11 @@ Zotero.BetterBibTeX.init = ->
 
   @pref.observer.register()
 
-  for endpoint in @endpoints
-    url = "/better-bibtex/#{endpoint}"
+  for own name, endpoint of @endpoints
+    url = "/better-bibtex/#{name}"
     ep = Zotero.Server.Endpoints[url] = ->
-    ep.prototype = @endpoints[endpoint]
+    ep.prototype = endpoint
+    @log("Registered #{url}")
 
   if @pref.get('scan-citekeys')
     for row in Zotero.DB.query(@findKeysSQL) or []
@@ -180,6 +183,7 @@ Zotero.BetterBibTeX.itemChanged.notify = (event, type, ids, extraData) ->
 
       ids = '(' + ('' + id for id in ids).join(',') + ')'
 
+      Zotero.BetterBibTeX.keymanager.reset()
       Zotero.BetterBibTeX.DB.query("delete from keys where itemID in #{ids}")
       if event != 'trash'
         for item in Zotero.DB.query("#{Zotero.BetterBibTeX.findKeysSQL} and i.itemID in #{ids}") or []
@@ -198,6 +202,7 @@ Zotero.BetterBibTeX.clearKey = (item, onlyCache) ->
     if citekey
       item.setField('extra', _item.extra)
       item.save()
+  Zotero.BetterBibTeX.keymanager.reset()
   @DB.query('delete from keys where itemID = ?', [item.itemID])
   return
 
@@ -219,7 +224,8 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions) ->
   throw 'null translator' unless translator
 
   translation = new Zotero.Translate.Export
-  translation.setItems(items) if items
+  translation.setItems(items.items) if items?.items
+  translation.setCollection(items.collection) if items?.collection
   translation.setTranslator(translator)
   translation.setDisplayOptions(displayOptions)
 

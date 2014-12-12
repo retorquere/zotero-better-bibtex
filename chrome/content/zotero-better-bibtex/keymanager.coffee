@@ -6,6 +6,7 @@ Zotero.BetterBibTeX.keymanager.init = ->
   # LaTeX book.)
   @months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
   @journalAbbrevCache = Object.create(null)
+  @cache = Object.create(null)
 
   @__exposedProps__ = {
     months: 'r'
@@ -16,6 +17,11 @@ Zotero.BetterBibTeX.keymanager.init = ->
   }
   for own key, value of @__exposedProps__
     @[key].__exposedProps__ = []
+
+Zotero.BetterBibTeX.keymanager.reset = (hard) ->
+  Zotero.BetterBibTeX.DB.query('delete from keys') if hard
+  @cache = Object.create(null)
+  return
 
 Zotero.BetterBibTeX.keymanager.journalAbbrev = (item) ->
   item = arguments[1] if item._sandboxManager # the sandbox inserts itself in call parameters
@@ -74,21 +80,25 @@ Zotero.BetterBibTeX.keymanager.get = (item, options) ->
   if (typeof options) == 'string' || (options instanceof String)
     options = {pinmode: options}
 
-  citekey = Zotero.BetterBibTeX.DB.rowQuery('select citekey, citeKeyFormat from keys where itemID=? and libraryID = ?', [item.itemID, item.libraryID || 0])
+  citekey = @cache[item.itemID]
   if not citekey
-    pattern = Zotero.BetterBibTeX.pref.get('citeKeyFormat')
-    Formatter = Zotero.BetterBibTeX.formatter(pattern)
-    citekey = new Formatter(Zotero.BetterBibTeX.toArray(item)).value
-    postfix = { n: -1, c: '' }
-    while Zotero.BetterBibTeX.DB.valueQuery('select count(*) from keys where citekey=? and libraryID = ?', [citekey + postfix.c, item.libraryID || 0])
-      postfix.n++
-      postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
+    citekey = Zotero.BetterBibTeX.DB.rowQuery('select citekey, citeKeyFormat from keys where itemID=? and libraryID = ?', [item.itemID, item.libraryID || 0])
+    if not citekey
+      @cache = Object.create(null)
+      pattern = Zotero.BetterBibTeX.pref.get('citeKeyFormat')
+      Formatter = Zotero.BetterBibTeX.formatter(pattern)
+      citekey = new Formatter(Zotero.BetterBibTeX.toArray(item)).value
+      postfix = { n: -1, c: '' }
+      while Zotero.BetterBibTeX.DB.valueQuery('select count(*) from keys where citekey=? and libraryID = ?', [citekey + postfix.c, item.libraryID || 0])
+        postfix.n++
+        postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
 
-    citekey = { citekey: citekey + postfix.c, citeKeyFormat: pattern }
-    Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID || 0, citekey.citekey])
-    Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, ?)', [ item.itemID, item.libraryID || 0, citekey.citekey, pattern ])
+      citekey = { citekey: citekey + postfix.c, citeKeyFormat: pattern }
+      Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID || 0, citekey.citekey])
+      Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, ?)', [ item.itemID, item.libraryID || 0, citekey.citekey, pattern ])
 
   if citekey.citeKeyFormat && (options.pinmode == 'manual' || (Zotero.BetterBibTeX.allowAutoPin() && options.pinmode == Zotero.BetterBibTeX.pref.get('pin-citekeys')))
+    @cache = Object.create(null)
     item = Zotero.Items.get(item.itemID) if not item.getField
     _item = {extra: '' + item.getField('extra')}
     @extract(_item)
@@ -98,6 +108,8 @@ Zotero.BetterBibTeX.keymanager.get = (item, options) ->
 
     Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID || 0, citekey.citekey])
     Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [ item.itemID, item.libraryID || 0, citekey.citekey ])
+
+  @cache[item.itemID] = citekey
 
   return citekey if options.metadata
   return citekey.citekey
