@@ -57,6 +57,8 @@ Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
 
+  @uninstaller.init()
+
   @translators = Object.create(null)
   @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
   @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
@@ -305,3 +307,4 @@ require('preferences.coffee')
 require('keymanager.coffee')
 require('web-endpoints.coffee')
 require('debug-bridge.coffee')
+require('uninstaller.coffee')
