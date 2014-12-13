@@ -38,9 +38,7 @@ Zotero.BetterBibTeX.endpoints.collection.init = (url, data, sendResponseCallback
     col ?= Zotero.Collections.getByLibraryAndKey(libid, key)
     throw "#{collectionkey} not found" unless col
 
-    Zotero.BetterBibTeX.log(':::preparing to export', path)
     bibtex = Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {collection: col}, Zotero.BetterBibTeX.displayOptions(url))
-    Zotero.BetterBibTeX.log(':::exporting', bibtex)
     sendResponseCallback(200, 'text/plain', bibtex)
 
   catch err

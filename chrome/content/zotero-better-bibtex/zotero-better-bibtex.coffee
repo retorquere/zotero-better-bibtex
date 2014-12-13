@@ -70,6 +70,12 @@ Zotero.BetterBibTeX.init = ->
                   join fields f on id.fieldID = f.fieldID
                   where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)
                     and (idv.value like '%bibtex:%' or idv.value like '%biblatexcitekey[%')"
+  @findExtra = "select idv.value as extra
+                  from items i
+                  join itemData id on i.itemID = id.itemID
+                  join itemDataValues idv on idv.valueID = id.valueID
+                  join fields f on id.fieldID = f.fieldID
+                  where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)"
 
   @DB.query('create table if not exists _version_ (tablename primary key, version not null, unique (tablename, version))')
   @DB.query("insert or ignore into _version_ (tablename, version) values ('keys', 0)")
@@ -131,8 +137,10 @@ Zotero.BetterBibTeX.init = ->
       return original.apply(this, arguments)
     )(Zotero.ItemTreeView.prototype.getCellText)
 
-  notifierID = Zotero.Notifier.registerObserver(@itemChanged, ['item'])
-  window.addEventListener('unload', ((e) -> Zotero.Notifier.unregisterObserver(notifierID)), false)
+  nids = []
+  nids.push(Zotero.Notifier.registerObserver(@itemChanged, ['item']))
+  nids.push(Zotero.Notifier.registerObserver(@itemAdded, ['collection-item']))
+  window.addEventListener('unload', ((e) -> Zotero.Notifier.unregisterObserver(id) for id in nids), false)
 
   uninstaller = {
     onUninstalling: (addon, needsRestart) ->
@@ -156,6 +164,7 @@ Zotero.BetterBibTeX.loadTranslators = ->
   @safeLoad('LaTeX Citation.js')
   @safeLoad('Pandoc Citation.js')
   @safeLoad('Zotero TestCase.js')
+  @safeLoad('AuxScanner.js')
   Zotero.Translators.init()
   return
 
@@ -165,8 +174,58 @@ Zotero.BetterBibTeX.removeTranslators = ->
     destFile = Zotero.getTranslatorsDirectory()
     destFile.append(fileName)
     destFile.remove(false)
+  @translators = Object.create(null)
   Zotero.Translators.init()
   return
+
+Zotero.BetterBibTeX.itemAdded = {
+  notify: (event, type, collection_items) ->
+    Zotero.BetterBibTeX.log('::: itemAdded', event, type, collection_items)
+    return unless event == 'add'
+
+    for collection_item in collection_items
+      [collectionID, itemID] = collection_item.split('-')
+      Zotero.BetterBibTeX.log('::: itemAdded', collectionID, itemID)
+
+      collection = Zotero.Collections.get(collectionID)
+      Zotero.BetterBibTeX.log('::: itemAdded collection = ', collection?.id)
+      continue unless collection
+
+      extra = Zotero.DB.valueQuery("#{Zotero.BetterBibTeX.findExtra} and i.itemID = ?", [itemID])
+      Zotero.BetterBibTeX.log('::: itemAdded extra = ', extra)
+      continue unless extra
+
+      try
+        extra = JSON.parse(extra)
+      catch error
+        Zotero.BetterBibTeX.log('::: itemAdded extra not json ', extra, error)
+        continue
+
+      continue if extra.translator != 'BibTeX AUX Scanner'
+      Zotero.BetterBibTeX.log('::: AUX', collection.id, extra.citations)
+
+      missing = []
+      for citekey in extra.citations
+        Zotero.BetterBibTeX.log("::: citekey #{citekey}")
+        id = Zotero.BetterBibTeX.DB.valueQuery('select itemID from keys where libraryID = 0 and citekey = ?', [citekey])
+        if id
+          Zotero.BetterBibTeX.log("::: citekey #{citekey} found")
+          collection.addItem(id)
+        else
+          Zotero.BetterBibTeX.log("::: citekey #{citekey} missing")
+          missing.push("* #{citekey}")
+
+      if missing.length == 0
+        Zotero.BetterBibTeX.log("::: all citekeys found")
+        Zotero.Items.trash([itemID])
+      else
+        Zotero.BetterBibTeX.log("::: #{missing.length} citekeys missing")
+        item = Zotero.Items.get(itemID)
+        item.setField('extra', "Missing references:\n#{missing.join('\n')}")
+        item.save()
+
+    return
+}
 
 Zotero.BetterBibTeX.itemChanged = {}
 
@@ -194,6 +253,8 @@ Zotero.BetterBibTeX.itemChanged.notify = (event, type, ids, extraData) ->
 
         for item in Zotero.DB.query("select coalesce(libraryID, 0) as libraryID, itemID from items where itemID in #{ids}") or []
           Zotero.BetterBibTeX.keymanager.get(item, 'on-change')
+
+  return
 
 Zotero.BetterBibTeX.clearKey = (item, onlyCache) ->
   if not onlyCache
