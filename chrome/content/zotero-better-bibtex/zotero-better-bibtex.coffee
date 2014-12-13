@@ -132,6 +132,7 @@ Zotero.BetterBibTeX.init = ->
           return ''
         else
           key = Zotero.BetterBibTeX.keymanager.get({itemID: item.id, libraryID: item.libraryID}, {metadata: true})
+          return '' if key.citekey.match(/^zotero-null-[0-9]+$/)
           return key.citekey + (if key.citeKeyFormat then ' *' else '')
 
       return original.apply(this, arguments)
