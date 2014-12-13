@@ -164,7 +164,7 @@ Zotero.BetterBibTeX.loadTranslators = ->
   @safeLoad('LaTeX Citation.js')
   @safeLoad('Pandoc Citation.js')
   @safeLoad('Zotero TestCase.js')
-  @safeLoad('AuxScanner.js')
+  @safeLoad('BibTeXAuxScanner.js')
   Zotero.Translators.init()
   return
 
