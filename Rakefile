@@ -89,7 +89,7 @@ ZIPFILES = [
   'resource/translators/LaTeX Citation.js',
   'resource/translators/Pandoc Citation.js',
   'resource/translators/Zotero TestCase.js',
-  'resource/translators/AuxScanner.js',
+  'resource/translators/BibTeXAuxScanner.js',
 ]
 
 SOURCES = [
