@@ -2,12 +2,12 @@
 
 Recent changes:
 
-# 0.6.64
+**0.6.64**
 
 * hide fallback 'zotero-null-id' keys in the 'extra' column
 * extract cited items to a new .bib file (#118, LaTeX AUX scanner)
 
-# 0.6.63
+**0.6.63**
 
 * fixes #125 ("Biblatex URL" doesn´t show up)
 
