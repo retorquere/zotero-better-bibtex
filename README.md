@@ -1,5 +1,18 @@
 # Zotero: Better Bib(La)TeX (BBT) [![Circle CI](https://circleci.com/gh/ZotPlus/zotero-better-bibtex.svg?style=svg)](https://circleci.com/gh/ZotPlus/zotero-better-bibtex)
 
+Recent changes:
+
+# 0.6.64
+
+* hide fallback 'zotero-null-id' keys in the 'extra' column
+* extract cited items to a new .bib file (#118, LaTeX AUX scanner)
+
+# 0.6.63
+
+* fixes #125 ("Biblatex URL" doesn´t show up)
+
+[more](https://zotplus.github.io/better-bibtex/changelog.html)
+
 This extension aims to make Zotero effective for us LaTeX holdouts. At its core, it behaves like any Zotero
 import/export module; anywhere you can export or import bibliography items in Zotero, you'll find Better Bib(La)TeX
 listed as one of the choices. If nothing else, you could keep your existing workflow as-is, and just enjoy the emproved
@@ -26,7 +39,8 @@ bibliography, this is a piece of data you want to have control over. BBT offers 
 * Drag and drop LaTeX citations to your favorite LaTeX editor
 * Generate citation keys from JabRef patterns
 * Shows both pinned (fixed) citation keys and dynamically generated ones in the reference list view
-* add other custom BibLaTeX fields
+* Add other custom BibLaTeX fields
+* Scan your AUX files to get a list of references specifically for your article (and incidentally list missing references)
 
 ## Unicode problems
 
@@ -67,8 +81,8 @@ The Better BibTeX [configuration pane](https://zotplus.github.io/better-bibtex/C
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.63.xpi)
-(**0.6.63**).
+version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.64.xpi)
+(**0.6.64**).
 If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
