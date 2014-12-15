@@ -3,18 +3,18 @@ require('unicode_translator.coffee')
 
 Translator.fieldMap = {
   # Zotero      BibTeX
-  place:            { name: 'address', protect: true, import: 'location' }
-  section:          { name: 'chapter', protect: true }
-  edition:          { name: 'edition', protect: true }
-  type:             { name: 'type'}
-  series:           { name: 'series', protect: true }
-  title:            { name: 'title', protect: true }
-  volume:           { name: 'volume', protect: true }
-  rights:           { name: 'copyright',  protect: true }
+  place:            { name: 'address', preserveCaps: true, import: 'location' }
+  section:          { name: 'chapter', preserveCaps: true }
+  edition:          { name: 'edition', preserveCaps: true }
+  type:             { name: 'type', preserveCaps: true }
+  series:           { name: 'series', preserveCaps: true }
+  title:            { name: 'title', preserveCaps: true }
+  volume:           { name: 'volume', preserveCaps: true }
+  rights:           { name: 'copyright',  preserveCaps: true }
   ISBN:             { name: 'isbn' }
   ISSN:             { name: 'issn' }
   callNumber:       { name: 'lccn'}
-  shortTitle:       { name: 'shorttitle', protect: true }
+  shortTitle:       { name: 'shorttitle', preserveCaps: true }
   url:              { name: 'url', esc: 'url' }
   DOI:              { name: 'doi', esc: 'doi' }
   abstractNote:     { name: 'abstract' }
@@ -51,14 +51,14 @@ doExport = ->
 
     switch item.itemType
       when 'bookSection', 'conferencePaper'
-        ref.add({ name: 'booktitle',  value: item.publicationTitle, protect: true })
+        ref.add({ name: 'booktitle',  value: item.publicationTitle, preserveCaps: true })
       else
-        ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle, protect: true })
+        ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle, preserveCaps: true })
 
     switch item.itemType
-      when 'thesis' then ref.add({ name: 'school', value: item.publisher, protect: true })
-      when 'report' then ref.add({ name: 'institution', value: item.publisher, protect: true })
-      else               ref.add({ name: 'publisher', value: item.publisher, protect: true })
+      when 'thesis' then ref.add({ name: 'school', value: item.publisher, preserveCaps: true })
+      when 'report' then ref.add({ name: 'institution', value: item.publisher, preserveCaps: true })
+      else               ref.add({ name: 'publisher', value: item.publisher, preserveCaps: true })
 
     if item.creators and item.creators.length
       # split creators into subcategories
@@ -88,7 +88,7 @@ doExport = ->
     if item.date
       date = Zotero.Utilities.strToDate(item.date)
       if typeof date.year == 'undefined'
-        ref.add({ name: 'year', value: item.date, protect: true })
+        ref.add({ name: 'year', value: item.date, preserveCaps: true })
       else
         if typeof date.month == 'number'
           ref.add({ name: 'month', value: months[date.month], braces: false })
