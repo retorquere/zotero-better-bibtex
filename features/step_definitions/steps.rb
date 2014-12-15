@@ -59,22 +59,22 @@ Before do
 end
 
 After do |scenario|
-  return if ENV['CIRCLECI'] == 'true'
+  if ENV['CIRCLECI'] != 'true'
+    #open("#{scenario.title}.debug", 'w'){|f| f.write(DBB.log) } if scenario.source_tag_names.include?('@logcapture')
+    filename = scenario.title.gsub(/[^0-9A-z.\-]/, '_')
+    if scenario.failed? && ENV['CIRCLECI'] != 'true'
+      @logcaptures ||= 0
+      @logcaptures += 1
+      if @logcaptures <= 5
+        open("#{filename}.debug", 'w'){|f| f.write(DBB.log) }
+        open("#{filename}.log", 'w'){|f| f.write(browserLog) }
+      end
 
-  #open("#{scenario.title}.debug", 'w'){|f| f.write(DBB.log) } if scenario.source_tag_names.include?('@logcapture')
-  filename = scenario.title.gsub(/[^0-9A-z.\-]/, '_')
-  if scenario.failed? && ENV['CIRCLECI'] != 'true'
-    @logcaptures ||= 0
-    @logcaptures += 1
-    if @logcaptures <= 5
-      open("#{filename}.debug", 'w'){|f| f.write(DBB.log) }
-      open("#{filename}.log", 'w'){|f| f.write(browserLog) }
+      #BBT.exportToFile(@expectedExport.translator, File.join('/tmp', File.basename(@expectedExport.filename))) if @expectedExport
     end
 
-    #BBT.exportToFile(@expectedExport.translator, File.join('/tmp', File.basename(@expectedExport.filename))) if @expectedExport
+    BBT.exportToFile('Zotero TestCase', "#{filename}.json") if scenario.source_tag_names.include?('@librarydump')
   end
-
-  BBT.exportToFile('Zotero TestCase', "#{filename}.json") if scenario.source_tag_names.include?('@librarydump')
 end
 
 #Given /^that ([^\s]+) is set to (.*)$/ do |pref, value|
