@@ -62,7 +62,7 @@ After do |scenario|
   if ENV['CIRCLECI'] != 'true'
     #open("#{scenario.title}.debug", 'w'){|f| f.write(DBB.log) } if scenario.source_tag_names.include?('@logcapture')
     filename = scenario.title.gsub(/[^0-9A-z.\-]/, '_')
-    if scenario.failed? && ENV['CIRCLECI'] != 'true'
+    if scenario.failed?
       @logcaptures ||= 0
       @logcaptures += 1
       if @logcaptures <= 5
