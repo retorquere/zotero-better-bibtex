@@ -44,67 +44,67 @@ Scenario: option to mantain the braces and special commands in titles or all fie
   Then the library should match 'import/Better BibTeX.007.raw.json'
    And a library export using 'Better BibTeX' should match 'import/Better BibTeX.007.bib'
 
-@failing @failing-1 @bbtx-i-8
+@bbtx-i-8
 Scenario: Better BibTeX Import 8
   When I import 1 reference from 'import/Better BibTeX.008.bib'
   Then the library should match 'import/Better BibTeX.008.json'
 
-@failing @failing-2 @bbtx-i-9
+@bbtx-i-9
 Scenario: Better BibTeX Import 9
   When I import 3 references with 1 attachment from 'import/Better BibTeX.009.bib'
   Then the library should match 'import/Better BibTeX.009.json'
 
-@failing @failing-3 @bbtx-i-10
+@bbtx-i-10
 Scenario: Better BibTeX Import 10
   When I import 1 reference with 1 attachment from 'import/Better BibTeX.010.bib'
   Then the library should match 'import/Better BibTeX.010.json'
 
-@failing @failing-4 @bbtx-i-11
+@bbtx-i-11
 Scenario: Better BibTeX Import 11
   When I import 1 reference with 1 attachment from 'import/Better BibTeX.011.bib'
   Then the library should match 'import/Better BibTeX.011.json'
 
-@failing @failing-5 @bbtx-i-12
+@bbtx-i-12
 Scenario: Better BibTeX Import 12
   When I import 1 reference from 'import/Better BibTeX.012.bib'
   Then the library should match 'import/Better BibTeX.012.json'
 
-@failing @failing-6 @bbtx-i-13
+@bbtx-i-13
 Scenario: Better BibTeX Import 13
   When I import 2 references from 'import/Better BibTeX.013.bib'
   Then the library should match 'import/Better BibTeX.013.json'
 
-@failing @failing-7 @bbtx-i-14
+@bbtx-i-14
 Scenario: Better BibTeX Import 14
   When I import 1 reference from 'import/Better BibTeX.014.bib'
   Then the library should match 'import/Better BibTeX.014.json'
 
-@failing @failing-8 @bbtx-i-15
+@bbtx-i-15
 Scenario: Better BibTeX Import 15
   When I import 1 reference with 2 attachments from 'import/Better BibTeX.015.bib'
   Then the library should match 'import/Better BibTeX.015.json'
 
-@failing @failing-9 @bbtx-i-16
+@bbtx-i-16
 Scenario: Literal names in braces
   When I import 1 reference from 'import/Literal names.bib'
   Then the library should match 'import/Literal names.json'
 
-@failing @failing-10 @89
+@89
 Scenario: Author splitter failure (89)
   When I import 1 reference from 'import/Author splitter failure.bib'
   Then the library should match 'import/Author splitter failure.json'
 
-@failing @failing-11 @92
+@92
 Scenario: Failure to handle unparsed author names (92)
   When I import 1 reference from 'import/Failure to handle unparsed author names (92).bib'
   Then the library should match 'import/Failure to handle unparsed author names (92).json'
 
-@failing @failing-12 @94
+@94
 Scenario: Problem when importing BibTeX entries with square brackets #94
   When I import 1 reference from 'import/Problem when importing BibTeX entries with square brackets #94.bib'
   Then the library should match 'import/Problem when importing BibTeX entries with square brackets #94.json'
 
-@failing @failing-13 @95 @96
+@95 @96
 Scenario: Problem when importing BibTeX entries with percent sign #95 or preamble #96
   When I import 1 reference from 'import/Problem when importing BibTeX entries with percent sign #95 or preamble #96.bib'
   Then the library should match 'import/Problem when importing BibTeX entries with percent sign #95 or preamble #96.json'

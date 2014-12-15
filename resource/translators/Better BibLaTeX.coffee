@@ -3,23 +3,23 @@ require('unicode_translator.coffee')
 
 Translator.fieldMap = {
   # Zotero          BibTeX
-  place:            { name: 'location', protect: true }
-  chapter:          { name: 'chapter', protect: true }
-  edition:          { name: 'edition', protect: true }
-  title:            { name: 'title', protect: true }
-  volume:           { name: 'volume', protect: true }
-  rights:           { name: 'rights', protect: true }
+  place:            { name: 'location', preserveCaps: true }
+  chapter:          { name: 'chapter', preserveCaps: true }
+  edition:          { name: 'edition', preserveCaps: true }
+  title:            { name: 'title', preserveCaps: true }
+  volume:           { name: 'volume', preserveCaps: true }
+  rights:           { name: 'rights', preserveCaps: true }
   ISBN:             { name: 'isbn' }
   ISSN:             { name: 'issn' }
   url:              { name: 'url', esc: 'url' }
   DOI:              { name: 'doi', esc: 'doi' }
-  shortTitle:       { name: 'shorttitle', protect: true }
+  shortTitle:       { name: 'shorttitle', preserveCaps: true }
   abstractNote:     { name: 'abstract' }
   numberOfVolumes:  { name: 'volumes' }
   version:          { name: 'version' }
-  conferenceName:   { name: 'eventtitle', protect: true }
+  conferenceName:   { name: 'eventtitle', preserveCaps: true }
   numPages:         { name: 'pagetotal' }
-  type:             { name: 'type' }
+  type:             { name: 'type', preserveCaps: true }
 }
 
 Translator.typeMap = {
@@ -303,30 +303,30 @@ doExport = ->
     if item.publicationTitle
       switch item.itemType
         when 'bookSection', 'conferencePaper', 'dictionaryEntry', 'encyclopediaArticle'
-          ref.add({ name: 'booktitle', value: item.publicationTitle, protect: true })
+          ref.add({ name: 'booktitle', value: item.publicationTitle, preserveCaps: true })
 
         when 'magazineArticle', 'newspaperArticle'
-          ref.add({ name: 'journaltitle', value: item.publicationTitle, protect: true })
+          ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true })
 
         when 'journalArticle'
           abbr = Zotero.BetterBibTeX.keymanager.journalAbbrev(item)
           if Translator.useJournalAbbreviation and abbr
-            ref.add({ name: 'journal', value: abbr, protect: true })
+            ref.add({ name: 'journal', value: abbr, preserveCaps: true })
           else
-            ref.add({ name: 'journaltitle', value: item.publicationTitle, protect: true })
-            ref.add({ name: 'shortjournal', value: abbr, protect: true })
+            ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true })
+            ref.add({ name: 'shortjournal', value: abbr, preserveCaps: true })
 
-    ref.add({ name: 'booktitle', value: item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, protect: true }) if not ref.has.booktitle
+    ref.add({ name: 'booktitle', value: item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, preserveCaps: true }) if not ref.has.booktitle
 
-    ref.add({ name: 'titleaddon', value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, protect: true })
-    ref.add({ name: 'series', value: item.seriesTitle || item.series, protect: true })
+    ref.add({ name: 'titleaddon', value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, preserveCaps: true })
+    ref.add({ name: 'series', value: item.seriesTitle || item.series, preserveCaps: true })
 
     switch item.itemType
       when 'report', 'thesis'
-        ref.add({ name: 'institution', value: item.publisher, protect: true })
+        ref.add({ name: 'institution', value: item.publisher, preserveCaps: true })
 
       else
-        ref.add({ name: 'publisher', value: item.publisher, protect: true })
+        ref.add({ name: 'publisher', value: item.publisher, preserveCaps: true })
 
     switch item.itemType
       when 'letter' then ref.add({ name: 'type', value: item.letterType || 'Letter' })

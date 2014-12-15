@@ -266,24 +266,29 @@ Reference::esc_attachments = (f) ->
 
   return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
 
+Reference::preserveWordCaps = new Zotero.Utilities.XRegExp("
+  (^)([\\p{L}]+\\p{Lu}[\\p{L}]*)|
+  ([^\\p{L}])([\\p{L}]*\\p{Lu}[\\p{L}]*)
+  ".replace(/\s/g, ''), 'g')
+
 Reference::add = (field) ->
   return if Translator.skipFields.indexOf(field.name) >= 0
   return if typeof field.value != 'number' and not field.value
   return if typeof field.value == 'string' and field.value.trim() == ''
   return if Array.isArray(field.value) and field.value.length == 0
 
-  field.braces = typeof field.braces == 'undefined' or field.braces or field.protect or field.value.match(/\s/)
-  field.protect = typeof field.value != 'number' and field.protect and Translator.braceAll
-
   if typeof field.value == 'number'
     value = field.value
   else
+    field.preserveCaps = field.preserveCaps and Translator.braceAll
+    field.braces = (typeof field.braces == 'undefined') or field.braces or field.preserveCaps or field.value.match(/\s/)
     Translator.log("Escaping #{field.name} with #{field.esc} (raw: #{@raw})")
     value = @["esc_#{field.esc || 'latex'}"](field, (if field.esc then false else @raw))
 
     return null unless value
-    value = '{' + value + '}' if field.braces
-    value = '{' + value + '}' if field.protect && !@raw
+    if field.braces
+      value = Zotero.Utilities.XRegExp.replace(value, @preserveWordCaps, '${1}${3}{${2}${4}}') if field.preserveCaps && !@raw
+      value = "{#{value}}"
 
   field.bibtex = "  #{field.name} = #{value}"
   @fields.push(field)

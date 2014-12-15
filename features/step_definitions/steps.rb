@@ -53,22 +53,28 @@ Before do
   BBT.reset
   BBT.setPreference('translators.better-bibtex.testmode', true)
   @selected = nil
+  @expectedExport = nil
   sleep 1
   throw 'Library not empty!' unless BBT.librarySize == 0
 end
 
 After do |scenario|
+  return if ENV['CIRCLECI'] == 'true'
+
   #open("#{scenario.title}.debug", 'w'){|f| f.write(DBB.log) } if scenario.source_tag_names.include?('@logcapture')
-  if scenario.failed?
+  filename = scenario.title.gsub(/[^0-9A-z.\-]/, '_')
+  if scenario.failed? && ENV['CIRCLECI'] != 'true'
     @logcaptures ||= 0
     @logcaptures += 1
     if @logcaptures <= 5
-      open("#{scenario.title}.debug", 'w'){|f| f.write(DBB.log) }
-      open("#{scenario.title}.log", 'w'){|f| f.write(browserLog) }
+      open("#{filename}.debug", 'w'){|f| f.write(DBB.log) }
+      open("#{filename}.log", 'w'){|f| f.write(browserLog) }
     end
+
+    #BBT.exportToFile(@expectedExport.translator, File.join('/tmp', File.basename(@expectedExport.filename))) if @expectedExport
   end
 
-  BBT.exportToFile('Zotero TestCase', "#{scenario.title}.json") if scenario.source_tag_names.include?('@librarydump')
+  BBT.exportToFile('Zotero TestCase', "#{filename}.json") if scenario.source_tag_names.include?('@librarydump')
 end
 
 #Given /^that ([^\s]+) is set to (.*)$/ do |pref, value|
@@ -191,6 +197,9 @@ end
 
 Then(/^a library export using '([^']+)' should match '([^']+)'$/) do |translator, filename|
   found = BBT.exportToString(translator).strip
+
+  @expectedExport = OpenStruct.new(filename: filename, translator: translator)
+
   expected = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
   expected = open(expected).read.strip
   open("tmp/#{File.basename(filename)}", 'w'){|f| f.write(found)} if found != expected

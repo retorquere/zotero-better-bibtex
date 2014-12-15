@@ -8,7 +8,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.init = ->
   return if Zotero.BetterBibTeX.DebugBridge.initialized
   Zotero.BetterBibTeX.DebugBridge.initialized = true
 
-  Zotero.BetterBibTeX.pref.stash()
+  Zotero.BetterBibTeX.pref.stash() unless Zotero.BetterBibTeX.pref.stashed
 
   # monkey-patch Zotero.Items.getAll to get items sorted. With random order I can't really implement stable
   # testing. A simple ORDER BY would have been easier and loads faster, but I can't reach into getAll.
@@ -53,7 +53,9 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, filename) ->
   file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile)
   file.initWithPath(filename)
   translator = Zotero.BetterBibTeX.getTranslator(translator)
-  Zotero.File.putContents(file, Zotero.BetterBibTeX.translate(translator, null, { exportNotes: true, exportFileData: false }))
+  options = JSON.parse(JSON.stringify((Zotero.BetterBibTeX.DebugBridge.exportOptions || {})))
+  options.exportFileData = false
+  Zotero.File.putContents(file, Zotero.BetterBibTeX.translate(translator, null, options))
   return true
 
 Zotero.BetterBibTeX.DebugBridge.methods.library = ->

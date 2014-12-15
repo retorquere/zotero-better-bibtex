@@ -29,7 +29,7 @@
 <!ENTITY zotero.better-bibtex.fancyURLs "Clickable URLs">
 <!ENTITY zotero.better-bibtex.fancyURLs.warning "Wraps urls in a \href field -- not supported by all bibliography processors!">
 <!ENTITY zotero.better-bibtex.format-unique-warning "Caution: the default guarantees that each attachment has a unique filename. If you change the default, make sure the resulting filenames remain unique!">
-<!ENTITY zotero.better-bibtex.brace-all "Wrap all fields in double-braces">
+<!ENTITY zotero.better-bibtex.brace-all "Preserve capitalized words in BibTeX export">
 <!ENTITY zotero.better-bibtex.useprefix "Add 'useprefix' option to BibLaTeX export">
 <!ENTITY zotero.better-bibtex.raw-imports "Retain LaTeX markup on BibTeX import">
 <!ENTITY zotero.better-bibtex.langid "When exporting language information, use the conventions from">
