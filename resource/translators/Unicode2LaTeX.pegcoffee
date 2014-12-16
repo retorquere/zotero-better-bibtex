@@ -41,7 +41,7 @@ tagopen
 tagclose
   = '\/'? '>'
 
-closetag = '</' tag:tag '>' { return tag }
+closetag = '</' tag:tag ([^>a-zA-Z][^>]*)? '>' { return tag }
 
 tag
   = 'sup'i
