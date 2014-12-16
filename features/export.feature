@@ -229,3 +229,6 @@ Scenario: Bibtex key regenerating issue when trashing items #117
   And I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json' as 'Second Import.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Bibtex key regenerating issue when trashing items #117.bib'
 
+Scenario: Malformed HTML
+  When I import 1 reference from 'export/Malformed HTML.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Malformed HTML.bib'
