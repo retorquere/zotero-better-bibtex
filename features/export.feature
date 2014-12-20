@@ -233,6 +233,7 @@ Scenario: Malformed HTML
   Then a library export using 'Better BibLaTeX' should match 'export/Malformed HTML.bib'
 
 @127
-Scenario: Be robust against misconfigured journal abbreviator
+Scenario: Be robust against misconfigured journal abbreviator/html parser failure
   When I import 1 reference from 'export/Be robust against misconfigured journal abbreviator #127.json'
+  Then export the library using 'Better BibLaTeX' to '/tmp/bib.bib'
   Then a library export using 'Better BibLaTeX' should match 'export/Be robust against misconfigured journal abbreviator #127.bib'
