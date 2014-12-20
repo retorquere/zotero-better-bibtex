@@ -3,13 +3,10 @@
 }
 
 start
-  = text:text* closetag*                { return text.join('') }
+  = text:text*                          { return text.join('') }
 
 text
-  = text:mathchars+                     { return "\\ensuremath{#{(LaTeX.toLaTeX[c] || c for c in text).join('')}}" }
-  / text:textchars+                     { return (LaTeX.toLaTeX[c] || c for c in text).join('') }
-  / text:otherchar                      { return text }
-  / '<pre>'i text:prechars* '</pre>'i?  { return text.join('') }
+  = '<pre>'i text:prechars* '</pre>'i?  { return text.join('') }
   / '<sup>'i text:text* closetag?       { return "\\textsuperscript{#{text.join('')}}" }
   / '<sub>'i text:text* closetag?       { return "\\textsubscript{#{text.join('')}}" }
   / '<i>'i text:text* closetag?         { return "\\emph{#{text.join('')}}" }
@@ -22,6 +19,9 @@ text
   / tagopen 'br'i [^>]* tagclose        { return "\n\n" }
   / tagopen 'break'i [^>]* tagclose     { return "\n\n" }
   / tagopen 'p'i [^>]* tagclose         { return "\n\n" }
+  / text:mathchars+                     { return "\\ensuremath{#{(LaTeX.toLaTeX[c] || c for c in text).join('')}}" }
+  / text:textchars+                     { return (LaTeX.toLaTeX[c] || c for c in text).join('') }
+  / text:.                              { return text }
 
 mathchars
   = !( tagopen tag [^>]* tagclose ) char:mathchar { return char }
