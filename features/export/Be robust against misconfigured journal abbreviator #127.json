@@ -1,0 +1,120 @@
+{
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
+    "label": "Zotero TestCase",
+    "release": "0.6.63",
+    "preferences": {
+      "citeKeyFormat": "[auth][year]",
+      "skipfields": [
+        ""
+      ],
+      "useprefix": false,
+      "brace-all": true,
+      "fancyURLs": false,
+      "langid": "babel",
+      "attachmentRelativePath": false,
+      "auto-abbrev": true,
+      "auto-abbrev.style": "http://www.zotero.org/styles/american-physics-society",
+      "pin-citekeys": "manual",
+      "raw-imports": false
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "Export Collections": true
+    }
+  },
+  "collections": [],
+  "items": [
+    {
+      "itemID": 2630,
+      "itemType": "journalArticle",
+      "url": "http://pubs.acs.org/doi/abs/10.1021/nl2041222",
+      "volume": "12",
+      "issue": "4",
+      "pages": "1839-1844",
+      "publicationTitle": "Nano Letters",
+      "ISSN": "1530-6984, 1530-6992",
+      "date": "2012-04-11",
+      "extra": "bibtex: Chae2012a",
+      "DOI": "10.1021/nl2041222",
+      "accessDate": "2013-05-03 05:13:56",
+      "libraryCatalog": "CrossRef",
+      "title": "Enhanced Carrier Transport along Edges of Graphene Devices",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jungseok",
+          "lastName": "Chae",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Suyong",
+          "lastName": "Jung",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sungjong",
+          "lastName": "Woo",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Hongwoo",
+          "lastName": "Baek",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jeonghoon",
+          "lastName": "Ha",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Young Jae",
+          "lastName": "Song",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Young-Woo",
+          "lastName": "Son",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Nikolai B.",
+          "lastName": "Zhitenev",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Joseph A.",
+          "lastName": "Stroscio",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Young",
+          "lastName": "Kuk",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [],
+      "attachments": [
+        {
+          "path": "C:\\Users\\busse\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\krntet4f.default\\zotero\\storage\\VNNFENR2\\Chae2012.pdf",
+          "title": "Chae2012.pdf",
+          "mimeType": "application/pdf",
+          "url": ""
+        }
+      ],
+      "tags": [],
+      "related": [],
+      "seeAlso": []
+    }
+  ]
+}

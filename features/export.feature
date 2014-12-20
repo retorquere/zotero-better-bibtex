@@ -218,7 +218,6 @@ Scenario: Hang on non-file attachment export #112/URL export broken for fancy UR
 @113
 Scenario: Math parts in title #113
   When I import 1 references from 'export/Math parts in title #113.json'
-  #Then export the library using 'Better BibLaTeX' to '/tmp/bib.bib'
   Then a library export using 'Better BibLaTeX' should match 'export/Math parts in title #113.bib'
 
 @117
@@ -232,3 +231,8 @@ Scenario: Bibtex key regenerating issue when trashing items #117
 Scenario: Malformed HTML
   When I import 1 reference from 'export/Malformed HTML.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Malformed HTML.bib'
+
+@127
+Scenario: Be robust against misconfigured journal abbreviator
+  When I import 1 reference from 'export/Be robust against misconfigured journal abbreviator #127.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Be robust against misconfigured journal abbreviator #127.bib'
