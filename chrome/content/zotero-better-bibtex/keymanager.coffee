@@ -32,20 +32,22 @@ Zotero.BetterBibTeX.keymanager.journalAbbrev = (item) ->
   if typeof @journalAbbrevCache[item.publicationTitle] is 'undefined'
     styleID = Zotero.BetterBibTeX.pref.get('auto-abbrev.style')
     styleID = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)[0].styleID if styleID is ''
-    style = Zotero.Styles.get(styleID)
-    cp = style.getCiteProc(true)
+    style = Zotero.Styles.get(styleID) # how can this be null?
 
-    cp.setOutputFormat('html')
-    cp.updateItems([item.itemID])
-    cp.appendCitationCluster({ citationItems: [{id: item.itemID}], properties: {} } , true)
-    cp.makeBibliography()
+    if style
+      cp = style.getCiteProc(true)
 
-    abbrevs = cp
-    for p in ['transform', 'abbrevs', 'default', 'container-title']
-      abbrevs = abbrevs[p] if abbrevs
+      cp.setOutputFormat('html')
+      cp.updateItems([item.itemID])
+      cp.appendCitationCluster({ citationItems: [{id: item.itemID}], properties: {} } , true)
+      cp.makeBibliography()
 
-    for own title,abbr of abbrevs or {}
-      @journalAbbrevCache[title] = abbr
+      abbrevs = cp
+      for p in ['transform', 'abbrevs', 'default', 'container-title']
+        abbrevs = abbrevs[p] if abbrevs
+
+      for own title,abbr of abbrevs or {}
+        @journalAbbrevCache[title] = abbr
 
     @journalAbbrevCache[item.publicationTitle] ?= ''
 
