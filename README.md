@@ -81,8 +81,8 @@ The Better BibTeX [configuration pane](https://zotplus.github.io/better-bibtex/C
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.64.xpi)
-(**0.6.64**).
+version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.65.xpi)
+(**0.6.65**).
 If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
@@ -106,10 +106,9 @@ prefer fuzzy ones over missed ones.
 # Plans
 
 * Automated background export (#70): IN POGRESS
-  * Groundwork for caching (required to keep performance acceptable): DONE
-  * Caching: DONE
+  * Caching (required to keep performance acceptable): DONE
+  * GUI for it all: DONE
   * Automated export
-  * GUI for it all: IN PROGRESS
 * Scholarly Markdown support
 * add "citekey" field to reference editor
 * sync citekey cleanly without abusing the "extra" field
