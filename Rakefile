@@ -118,7 +118,6 @@ SOURCES = [
   'resource/translators/Pandoc Citation.coffee',
   'resource/translators/Parser.pegcoffee',
   'resource/translators/translator.coffee',
-  'resource/translators/Unicode2LaTeX.pegcoffee',
   'resource/translators/unicode_translator.coffee',
   'resource/translators/unicode.xml',
   'resource/translators/Zotero TestCase.coffee',
@@ -229,14 +228,7 @@ file 'resource/translators/unicode.xml' do |t|
 end
 
 file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translators/unicode.xml', 'Rakefile'] do |t|
-  unicode_mapper(t.source, t.name)
-end
-file 'resource/translators/mathchar.pegcoffee' => ['resource/translators/unicode.xml', 'Rakefile'] do |t|
-  unicode_mapper(t.source, t.name)
-end
-
-def unicode_mapper(source, tgt)
-  map = Nokogiri::XML(open(source))
+  map = Nokogiri::XML(open(t.source))
 
   map.at('//charlist') << "
     <character id='U0026' dec='38' mode='text' type='punctuation'><latex>\\&</latex></character>
@@ -342,30 +334,27 @@ def unicode_mapper(source, tgt)
   l2u["\\url"] = '';
   l2u["\\href"] = '';
 
-  if File.extname(tgt) == '.coffee'
-    ls = []
-    ls << 'LaTeX.toLaTeX ='
-    u2l[:ascii].map.each_pair{|k, v|
-    ls << "  #{k.inspect}: #{v.inspect}"
+  cs = []
+  cs << "LaTeX.toLaTeX = { unicode: Object.create(null), ascii: Object.create(null) }"
+  [:unicode, :ascii].each{|map|
+    cs << "LaTeX.toLaTeX.#{map}.math ="
+    u2l[map].map.each_pair{|k, v|
+    cs << "  #{k.inspect}: #{v.inspect}" if u2l[map].math.include?(k)
     }
-    ls << 'LaTeX.toUnicode ='
-    l2u.each_pair{|k, v|
-    ls << "  #{k.inspect}: #{v.inspect}"
+    cs << "LaTeX.toLaTeX.#{map}.text ="
+    u2l[map].map.each_pair{|k, v|
+    cs << "  #{k.inspect}: #{v.inspect}" unless u2l[map].math.include?(k)
     }
+  }
 
-  elsif File.extname(tgt) == '.pegcoffee'
-    ls = []
-    ls << 'mathchar'
-    ls << "  = & { @unicode  } char:[#{u2l[:unicode].math.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('')}] { return char }"
-    ls << "  / & { !@unicode } char:[#{u2l[:ascii].math.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('')}] { return char }"
-    ls << ''
-    ls << 'textchar'
-    ls << "  = & { @unicode  } char:[#{u2l[:unicode].map.keys.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('')}] { return char }"
-    ls << "  / & { !@unicode } char:[#{u2l[:ascii].map.keys.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('')}] { return char }"
-  end
+  cs << 'LaTeX.toUnicode ='
+  l2u.each_pair{|k, v|
+  cs << "  #{k.inspect}: #{v.inspect}"
+  }
 
-  ls << ''
-  open(tgt, 'w'){|f| f.write(ls.join("\n")) }
+  cs << ''
+
+  open(t.name, 'w'){|f| f.write(cs.join("\n")) }
 end
 
 task :markfailing do
@@ -394,7 +383,7 @@ task :markfailing do
       lineno = i + 1
       throw "untagged #{file}@#{lineno}: #{line}" if lines.include?(lineno) && !tags[lineno - 1]
 
-      if line !~ /^@/
+      if line !~ /^@/ && line.strip != ''
         script += line
         next
       end
