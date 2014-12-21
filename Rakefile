@@ -114,7 +114,6 @@ SOURCES = [
   'resource/translators/Better BibTeX.coffee',
   'resource/translators/LaTeX Citation.coffee',
   'resource/translators/latex_unicode_mapping.coffee',
-  'resource/translators/mathchar.pegcoffee',
   'resource/translators/Pandoc Citation.coffee',
   'resource/translators/Parser.pegcoffee',
   'resource/translators/translator.coffee',
