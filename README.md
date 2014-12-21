@@ -2,14 +2,14 @@
 
 Recent changes:
 
+## 0.6.65
+
+* Be robust against misconfigured journal abbreviator (#127)
+
 **0.6.64**
 
 * hide fallback 'zotero-null-id' keys in the 'extra' column
 * extract cited items to a new .bib file (#118, LaTeX AUX scanner)
-
-**0.6.63**
-
-* fixes #125 ("Biblatex URL" doesn´t show up)
 
 [more](https://zotplus.github.io/better-bibtex/changelog.html)
 
@@ -81,8 +81,8 @@ The Better BibTeX [configuration pane](https://zotplus.github.io/better-bibtex/C
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.65.xpi)
-(**0.6.65**).
+version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.6.66.xpi)
+(**0.6.66**).
 If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
