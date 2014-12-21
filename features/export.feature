@@ -228,6 +228,7 @@ Scenario: Bibtex key regenerating issue when trashing items #117
   And I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json' as 'Second Import.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Bibtex key regenerating issue when trashing items #117.bib'
 
+@malformed
 Scenario: Malformed HTML
   When I import 1 reference from 'export/Malformed HTML.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Malformed HTML.bib'
@@ -235,5 +236,4 @@ Scenario: Malformed HTML
 @127
 Scenario: Be robust against misconfigured journal abbreviator/html parser failure
   When I import 1 reference from 'export/Be robust against misconfigured journal abbreviator #127.json'
-  Then export the library using 'Better BibLaTeX' to '/tmp/bib.bib'
   Then a library export using 'Better BibLaTeX' should match 'export/Be robust against misconfigured journal abbreviator #127.bib'
