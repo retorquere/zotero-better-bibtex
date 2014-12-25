@@ -210,7 +210,6 @@ end
 task :clean do
   clean = Dir['**/*.js'].select{|f| f=~ /^(defaults|chrome|resource)\//} + Dir['tmp/*'].select{|f| File.file?(f) }
   clean << 'resource/translators/latex_unicode_mapping.coffee'
-  clean << 'resource/translators/mathchar.pegcoffee'
   clean.each{|f|
     File.unlink(f)
   }
