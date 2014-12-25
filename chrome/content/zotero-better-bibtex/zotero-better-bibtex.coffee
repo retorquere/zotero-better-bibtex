@@ -138,6 +138,8 @@ Zotero.BetterBibTeX.init = ->
       return original.apply(this, arguments)
     )(Zotero.ItemTreeView.prototype.getCellText)
 
+  @schomd.init()
+
   nids = []
   nids.push(Zotero.Notifier.registerObserver(@itemChanged, ['item']))
   nids.push(Zotero.Notifier.registerObserver(@itemAdded, ['collection-item']))
@@ -386,4 +388,5 @@ Zotero.BetterBibTeX.toArray = (item) ->
 require('preferences.coffee')
 require('keymanager.coffee')
 require('web-endpoints.coffee')
+require('schomd.coffee')
 require('debug-bridge.coffee')
