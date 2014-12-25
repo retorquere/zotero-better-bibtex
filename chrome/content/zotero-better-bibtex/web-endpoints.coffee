@@ -95,3 +95,35 @@ Zotero.BetterBibTeX.endpoints.selected.init = (url, data, sendResponseCallback) 
   sendResponseCallback(200, 'text/plain', Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: items}, Zotero.BetterBibTeX.displayOptions(url)))
   return
 
+Zotero.BetterBibTeX.endpoints.schomd = { supportedMethods: ['POST'] }
+Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
+  data = JSON.parse(data)
+  response = []
+
+  if Array.isArray(data)
+    batchRequest = true
+  else
+    data = [data]
+    batchRequest = false
+
+  for req in data
+    result = {}
+    result.jsonrpc = req.jsonrpc if req.jsonrpc
+    result.id = if req.id || (typeof req.id) == 'number' then req.id else null
+
+    try
+      switch req.method
+        when 'citation'
+          result.result = Zotero.BetterBibTeX.schomd.citation(req.params[0])
+
+        when 'bibliography'
+          result.result = Zotero.BetterBibTeX.schomd.bibliography(req.params[0])
+
+        else throw("Unsupported method '#{req.method}'")
+    catch err
+      result = {jsonrpc: '2.0', error: {code: 5000, message: '' + err + "\n" + err.stack}, id: result.id}
+
+    response.push(result)
+
+  response = response[0] unless batchRequest
+  return sendResponseCallback(200, 'application/json', JSON.stringify(response))
