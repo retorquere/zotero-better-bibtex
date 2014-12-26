@@ -9,7 +9,7 @@ Zotero.BetterBibTeX.schomd.init = ->
     # need not be idempotent.
     #
     text_escape: (text) ->
-      return text.replace(/([-"\\`\*_{}\[\]\(\)#\+\.!])/g, "\\$1").replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "<sup>#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}</sup>"))
+      return text.replace(/([-"\\`\*_{}\[\]\(\)#\+!])/g, "\\$1").replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "<sup>#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}</sup>"))
 
     bibstart: "<bibliography>\n"
     bibend: '</bibliography>'
@@ -45,7 +45,7 @@ Zotero.BetterBibTeX.schomd.init = ->
 
     '@bibliography/entry': (state, str) ->
       citekey = Zotero.BetterBibTeX.DB.valueQuery('select citekey from keys where itemID = ?', [state.registry.registry[@system_id].ref.id])
-      return "[@#{citekey}]: ##{citekey} \"#{str}\"\n<a name=\"#{citekey}\">#{str}</a>\n"
+      return "[@#{citekey}]: ##{citekey} \"#{str}\"\n<a name=\"#{citekey}\"></a>#{str}\n"
 
     '@display/block': (state, str) -> return "\n\n#{str}\n\n"
 
