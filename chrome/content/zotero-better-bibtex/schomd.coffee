@@ -9,10 +9,13 @@ Zotero.BetterBibTeX.schomd.init = ->
     # need not be idempotent.
     #
     text_escape: (text) ->
-      return text.replace(/([-"\\`\*_{}\[\]\(\)#\+!])/g, "\\$1").replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "<sup>#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}</sup>"))
+      text = text.replace(/([-"\\`\*_{}\[\]\(\)#\+!])/g, "\\$1")
+      text = text.replace(/([0-9])\./g, "$1\\.")
+      text = text.replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "<sup>#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}</sup>"))
+      return text
 
-    bibstart: "<bibliography>\n"
-    bibend: '</bibliography>'
+    bibstart: ''
+    bibend: ''
     '@font-style/italic': '_%%STRING%%_'
     '@font-style/oblique':'_%%STRING%%_'
     '@font-style/normal': false
@@ -45,20 +48,20 @@ Zotero.BetterBibTeX.schomd.init = ->
 
     '@bibliography/entry': (state, str) ->
       citekey = Zotero.BetterBibTeX.DB.valueQuery('select citekey from keys where itemID = ?', [state.registry.registry[@system_id].ref.id])
-      return "[@#{citekey}]: ##{citekey} \"#{str}\"\n<a name=\"#{citekey}\"></a>#{str}\n"
+      return "[@#{citekey}]: ##{citekey} \"#{str.replace(/\\/g, '').replace(/"/g, "'")}\"\n<a name=\"#{citekey}\"></a>#{str}\n"
 
-    '@display/block': (state, str) -> return "\n\n#{str}\n\n"
+    '@display/block': (state, str) -> "\n\n#{str}\n\n"
 
-    '@display/left-margin': (state, str) -> return str
+    '@display/left-margin': (state, str) -> str
 
-    '@display/right-inline': (state, str) -> return str
+    '@display/right-inline': (state, str) -> str
 
-    '@display/indent': (state, str) -> return "\n&nbsp;&nbsp;&nbsp;&nbsp;#{str}"
+    '@display/indent': (state, str) -> "\n&nbsp;&nbsp;&nbsp;&nbsp;#{str}"
 
-    '@showid/true': (state, str, cslid) -> return str
+    '@showid/true': (state, str, cslid) -> str
 
-    '@URL/true': (state, str) -> return "[#{str}](#{str})"
-    '@DOI/true': (state, str) -> return "[#{str}](http://dx.doi.org/#{str})"
+    '@URL/true': (state, str) -> "[#{str}](#{str})"
+    '@DOI/true': (state, str) -> "[#{str}](http://dx.doi.org/#{str})"
 
     "@quotes/false": false
   }
