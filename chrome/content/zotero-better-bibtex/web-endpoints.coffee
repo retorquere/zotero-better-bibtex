@@ -113,11 +113,8 @@ Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
 
     try
       switch req.method
-        when 'citation'
-          result.result = Zotero.BetterBibTeX.schomd.citation(req.params[0])
-
-        when 'bibliography'
-          result.result = Zotero.BetterBibTeX.schomd.bibliography(req.params[0])
+        when 'citation', 'bibliography'
+          result.result = Zotero.BetterBibTeX.schomd[req.method].apply(Zotero.BetterBibTeX.schomd, req.params)
 
         else throw("Unsupported method '#{req.method}'")
     catch err

@@ -67,27 +67,31 @@ Zotero.BetterBibTeX.schomd.init = ->
   }
   return
 
-Zotero.BetterBibTeX.schomd.citation = (citekeys) ->
+Zotero.BetterBibTeX.schomd.citation = (stylename, citekeys) ->
   citekeys = [citekeys] unless Array.isArray(citekeys)
   return '' if citekeys.length == 0
 
   vars = ('?' for citekey in citekeys).join(',')
   items = Zotero.BetterBibTeX.DB.columnQuery("select itemID from keys where citekey in (#{vars})", citekeys)
 
-  style = Zotero.Styles.get('http://www.zotero.org/styles/apa')
+  url = "http://www.zotero.org/styles/#{stylename ? 'apa'}"
+  Zotero.BetterBibTeX.log("selected style: #{url}")
+  style = Zotero.Styles.get(url)
   cp = style.getCiteProc()
   cp.setOutputFormat('markdown')
   cp.updateItems(items)
   return (cp.appendCitationCluster({citationItems: [{id:item}], properties:{}}, true)[0][1] for item in items)
 
-Zotero.BetterBibTeX.schomd.bibliography = (citekeys) ->
+Zotero.BetterBibTeX.schomd.bibliography = (stylename, citekeys) ->
   citekeys = [citekeys] unless Array.isArray(citekeys)
   return '' if citekeys.length == 0
 
   vars = ('?' for citekey in citekeys).join(',')
   items = Zotero.BetterBibTeX.DB.columnQuery("select itemID from keys where citekey in (#{vars})", citekeys)
 
-  style = Zotero.Styles.get('http://www.zotero.org/styles/apa')
+  url = "http://www.zotero.org/styles/#{stylename ? 'apa'}"
+  Zotero.BetterBibTeX.log("selected style: #{url}")
+  style = Zotero.Styles.get(url)
   cp = style.getCiteProc()
   cp.setOutputFormat('markdown')
   cp.updateItems(items)
