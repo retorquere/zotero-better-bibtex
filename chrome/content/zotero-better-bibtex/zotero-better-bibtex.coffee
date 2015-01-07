@@ -132,7 +132,7 @@ Zotero.BetterBibTeX.init = ->
           return ''
         else
           key = Zotero.BetterBibTeX.keymanager.get({itemID: item.id, libraryID: item.libraryID}, {metadata: true})
-          return '' if key.citekey.match(/^zotero-null-[0-9]+$/)
+          return '' if key.citekey.match(/^zotero-(null|[0-9]+)-[0-9]+$/)
           return key.citekey + (if key.citeKeyFormat then ' *' else '')
 
       return original.apply(this, arguments)
@@ -288,8 +288,15 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions) ->
   throw 'null translator' unless translator
 
   translation = new Zotero.Translate.Export
-  translation.setItems(items.items) if items?.items
+
+  for own key, value of items
+    switch key
+      when 'library' then translation.setItems(Zotero.Items.getAll(true, value))
+      when 'items' then translation.setItems(value)
+      when 'collection' then translation.setCollection(value)
+
   translation.setCollection(items.collection) if items?.collection
+
   translation.setTranslator(translator)
   translation.setDisplayOptions(displayOptions)
 
