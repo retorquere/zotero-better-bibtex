@@ -57,23 +57,26 @@ Zotero.BetterBibTeX.endpoints.library.init = (url, data, sendResponseCallback) -
     return
 
   try
-    libid = 0
-    path = library.split('/')
-    if path.length > 1
-      path.shift() # leading '/'
-      libid = parseInt(path.shift())
+    params = /^\/?([0-9]+)?\/?library.(.*)$/.exec(library)
 
-      if not Zotero.Libraries.exists(libid)
-        sendResponseCallback(404, 'text/plain', "Could not export bibliography: library '#{library}' does not exist")
-        return
+    libid = params[1]
+    format = params[2]
 
-    path = path.join('/').split('.')
-    if path.length is 1
+    if libid && not Zotero.Libraries.exists(libid)
+      sendResponseCallback(404, 'text/plain', "Could not export bibliography: library '#{library}' does not exist")
+      return
+
+    if !format
       sendResponseCallback(404, 'text/plain', "Could not export bibliography '#{library}': no format specified")
       return
 
-    translator = path.pop()
-    sendResponseCallback(200, 'text/plain', Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), null, Zotero.BetterBibTeX.displayOptions(url)))
+    translator = Zotero.BetterBibTeX.getTranslator(format)
+    if !translator
+      sendResponseCallback(404, 'text/plain', "Could not export bibliography '#{library}': unsupported format #{format}")
+      return
+
+    Zotero.BetterBibTeX.log("Exporting library #{libid} using #{format}")
+    sendResponseCallback(200, 'text/plain', Zotero.BetterBibTeX.translate(translator, {library: libid}, Zotero.BetterBibTeX.displayOptions(url)))
 
   catch err
     Zotero.BetterBibTeX.log("Could not export bibliography '#{library}'", err)
