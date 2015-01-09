@@ -72,7 +72,7 @@ doExport = ->
         if ('' + creator.firstName).trim() != '' and ('' + creator.lastName).trim() != ''
           creatorString = creator.lastName + ', ' + creator.firstName
         else
-          creatorString = String(creator.lastName)
+          creatorString = new String(creator.lastName)
 
         switch creator.creatorType
           when  'editor', 'seriesEditor'  then editors.push(creatorString)

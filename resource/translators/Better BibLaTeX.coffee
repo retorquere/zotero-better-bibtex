@@ -384,7 +384,7 @@ doExport = ->
         if ('' + creator.firstName).trim() != '' and ('' + creator.lastName).trim() != ''
           creatorString = creator.lastName + ', ' + creator.firstName
         else
-          creatorString = String(creator.lastName)
+          creatorString = new String(creator.lastName)
 
         switch creator.creatorType
           when 'author', 'interviewer', 'director', 'programmer', 'artist', 'podcaster', 'presenter'
@@ -411,7 +411,7 @@ doExport = ->
       ref.add({ name: 'editorbtype', value: 'redactor' }) if creators.editorb.length > 0
 
     ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate
-    ref.add({ name: 'date', value: Zotero.Utilities.strToISO(item.date) || String(item.date) }) if item.date
+    ref.add({ name: 'date', value: Zotero.Utilities.strToISO(item.date) || new String(item.date) }) if item.date
     ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )}) if item.pages
 
     if item.language
