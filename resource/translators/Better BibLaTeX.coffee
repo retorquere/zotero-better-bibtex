@@ -307,6 +307,7 @@ doExport = ->
 
         when 'magazineArticle', 'newspaperArticle'
           ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true })
+          ref.add({ name: 'journalsubtitle', value: item.section, preserveCaps: true }) if item.itemType == 'newspaperArticle'
 
         when 'journalArticle'
           abbr = Zotero.BetterBibTeX.keymanager.journalAbbrev(item)
