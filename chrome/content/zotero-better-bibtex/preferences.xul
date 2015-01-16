@@ -28,6 +28,7 @@
         <preference id="pref-better-bibtex-raw-imports" name="extensions.zotero.translators.better-bibtex.raw-imports" type="bool"/>
         <preference id="pref-better-bibtex-show-citekey" name="extensions.zotero.translators.better-bibtex.show-citekey" type="bool"/>
         <preference id="pref-better-bibtex-citekey-conflict" name="extensions.zotero.translators.better-bibtex.key-conflict-policy" type="string"/>
+        <preference id="pref-better-bibtex-doi-and-url" name="extensions.zotero.translators.better-bibtex.doi-and-url" type="string"/>
       </preferences>
       <tabbox>
         <tabs>
@@ -100,6 +101,14 @@
                       <radio id="id-better-bibtex-preferences-unicode-default" label="&zotero.better-bibtex.unicode.default;" value=""/>
                       <radio id="id-better-bibtex-preferences-unicode-always" label="&zotero.better-bibtex.unicode.always;" value="always"/>
                       <radio id="id-better-bibtex-preferences-unicode-never" label="&zotero.better-bibtex.unicode.never;" value="never"/>
+                    </radiogroup>
+                  </row>
+                  <row>
+                    <label value="&zotero.better-bibtex.doi-and-url;"/>
+                    <radiogroup orient="horizontal" preference="pref-better-bibtex-doi-and-url">
+                      <radio label="&zotero.better-bibtex.doi-and-url.both;" value="both"/>
+                      <radio label="&zotero.better-bibtex.doi-and-url.DOI;" value="doi"/>
+                      <radio label="&zotero.better-bibtex.doi-and-url.URL;" value="url"/>
                     </radiogroup>
                   </row>
                   <row>
