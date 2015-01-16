@@ -44,3 +44,7 @@
 <!ENTITY zotero.better-bibtex.pin-citekeys.key-conflict-policy "On conflict, non-pinned key should be">
 <!ENTITY zotero.better-bibtex.pin-citekeys.key-conflict-policy.change "changed (causes key changes)">
 <!ENTITY zotero.better-bibtex.pin-citekeys.key-conflict-policy.keep "kept (causes key duplicates)">
+<!ENTITY zotero.better-bibtex.doi-and-url "When a reference has both a DOI and an URL, export">
+<!ENTITY zotero.better-bibtex.doi-and-url.both "both">
+<!ENTITY zotero.better-bibtex.doi-and-url.DOI "DOI">
+<!ENTITY zotero.better-bibtex.doi-and-url.URL "URL">

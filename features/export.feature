@@ -180,7 +180,7 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
 #@bulk
 #Scenario: Bulk import: performance work needed!
 #  When I import 2417 references with 52 attachments from 'export/Big whopping library.json'
-#  Then Export the library using 'Better BibLaTeX' to '/tmp/BWL.bib'
+#  Then export the library using 'Better BibLaTeX' to '/tmp/BWL.bib'
 #  Then write the Zotero log to 'zotero.log'
 
 @98
@@ -247,3 +247,13 @@ Scenario: Exporting of single-field author lacks braces #130
 Scenario: Export Newspaper Article misses section field #132
   When I import 1 reference from 'export/Export Newspaper Article misses section field #132.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Export Newspaper Article misses section field #132.bib'
+
+@131
+Scenario: Omit URL export when DOI present. #131
+  When I import 3 references from 'export/Omit URL export when DOI present. #131.json'
+  And I set preference translators.better-bibtex.doi-and-url to 'both'
+  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.default.bib'
+  And I set preference translators.better-bibtex.doi-and-url to 'doi'
+  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-DOI.bib'
+  And I set preference translators.better-bibtex.doi-and-url to 'url'
+  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-url.bib'

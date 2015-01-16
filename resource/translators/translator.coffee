@@ -16,6 +16,7 @@ Translator = new class
       unicode: 'unicode'
       pinKeys: 'pin-citekeys'
       rawImport: 'raw-imports'
+      DOIandURL: 'doi-and-url'
     }
     @options = {
       useJournalAbbreviation: 'useJournalAbbreviation'
@@ -297,6 +298,14 @@ Reference::add = (field) ->
 
 Reference::complete = ->
   @add({name: 'type', value: @itemtype}) if @fields.length == 0
+
+  if Translator.DOIandURL != 'both'
+    doi = (i for field, i in @fields when field.name == 'doi')
+    url = (i for field, i in @fields when field.name == 'url')
+    if doi.length > 0 && url.length > 0
+      switch Translator.DOIandURL
+        when 'doi' then @fields.splice(url[0], 1)
+        when 'url' then @fields.splice(doi[0], 1)
 
   # sort fields for stable tests
   if Translator.testmode
