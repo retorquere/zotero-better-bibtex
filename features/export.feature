@@ -257,3 +257,8 @@ Scenario: Omit URL export when DOI present. #131
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-DOI.bib'
   And I set preference translators.better-bibtex.doi-and-url to 'url'
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-url.bib'
+
+@133
+Scenario: Extra ';' in biblatexadata causes export failure #133
+  When I import 2 reference from 'export/Extra semicolon in biblatexadata causes export failure #133.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Extra semicolon in biblatexadata causes export failure #133.bib'
