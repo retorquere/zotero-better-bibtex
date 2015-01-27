@@ -127,3 +127,93 @@ Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
 
   response = response[0] unless batchRequest
   return sendResponseCallback(200, 'application/json', JSON.stringify(response))
+
+Zotero.BetterBibTeX.endpoints.search = { supportedMethods: ['GET'] }
+Zotero.BetterBibTeX.endpoints.search.init = (url, data, sendResponseCallback) ->
+  try
+    query = url.query.query
+  catch err
+    query = null
+
+  if not query
+    sendResponseCallback(501, 'text/plain', 'No query specified')
+    return
+
+  try
+    Zotero = Components.classes["@zotero.org/Zotero;1"].getService(Components.interfaces.nsISupports).wrappedJSObject
+    search = new Zotero.Search()
+
+    # default search conditions - addCondition(condition, operator, value, required)
+    search.addCondition('quicksearch-titleCreatorYear', 'contains', query, false)
+#    search.addCondition('quicksearch-everything', 'contains', query, false)
+
+    # fetching result IDs
+    results = search.search()
+
+    if not results
+      Zotero.BetterBibTeX.log("No results found")
+      sendResponseCallback(200, 'text/plain', JSON.stringify([]))
+      return
+
+    # fetching items using IDs
+    items = Zotero.Items.get(results)
+
+    selected = []
+    for item in items
+      response = {
+        id: item.id
+        key: item.key
+        libraryKey: item.libraryKey
+        title: item.getField('title')
+        date: item.getField('date')
+        extra: item.getField('extra')
+        creators: []
+      }
+
+      for creator in item.getCreators()
+        author = {}
+        author.lastName = creator.ref.lastName
+        author.firstName = creator.ref.firstName
+        response.creators.push(author)
+      selected.push(response)
+
+    Zotero.BetterBibTeX.log("Search results for query #{query}")
+    sendResponseCallback(200, 'text/plain', JSON.stringify(selected))
+
+  catch err
+    Zotero.BetterBibTeX.log("Could not perform search: #{err}", err)
+    sendResponseCallback(404, 'text/plain', "Could not perform search: #{err}")
+
+Zotero.BetterBibTeX.endpoints.item = { supportedMethods: ['POST'] }
+Zotero.BetterBibTeX.endpoints.item.init = (url, data, sendResponseCallback) ->
+  data = JSON.parse(data)
+  response = []
+
+  if data
+    translator = if data.translator then data.translator else "betterbiblatex"
+    format = if data.format then data.format else "json"
+    items = switch
+      when data.ids then Zotero.Items.get(data.ids)
+      when data.bibtexKeys then Zotero.Items.get(Zotero.BetterBibTeX.schomd.item(data.bibtexKeys))
+
+  try
+    if format is "json"
+      for item in items
+        bibtex = Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: [item]}, Zotero.BetterBibTeX.displayOptions(url))
+        obj = {
+          id: item.id
+          key: item.key
+          bibtex: bibtex
+        }
+        response.push(obj)
+    else
+      bibtex = Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: items}, Zotero.BetterBibTeX.displayOptions(url))
+
+    Zotero.BetterBibTeX.log("Exporting items #{items}")
+    switch format
+      when "json" then sendResponseCallback(200, 'application/json', JSON.stringify(response))
+      when "text" then sendResponseCallback(200, 'plain/text', bibtex)
+
+  catch err
+    Zotero.BetterBibTeX.log("Could not export items '#{items}", err)
+    sendResponseCallback(404, 'text/plain', "Could not export items '#{items}': #{err}")
