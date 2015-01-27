@@ -116,9 +116,6 @@ Zotero.BetterBibTeX.schomd.search = (term) ->
     Zotero.BetterBibTeX.log("No results found")
     return []
 
-  # fetching items using IDs
-  items = Zotero.Items.get(results)
-
   return (
     {
       id: item.id
@@ -139,16 +136,18 @@ Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, format, library, display
   format ?= 'json'
   displayOptions ?= {}
 
-  switch format
-    when 'json'
-      return (
-        {
-          id: item.id
-          library: item.libraryID
-          key: item.key
-          bibtex: Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: [item]}, displayOptions)
-        } for item in items
-      )
+  if format == 'json'
+    return (
+      {
+        id: item.id
+        library: item.libraryID
+        key: item.key
+        bibtex: Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: [item]}, displayOptions)
+      } for item in items
+    )
 
-    else
-      return Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: items}, displayOptions)
+
+  # translate doesn't like being passed an empty set of items
+  return Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: items}, displayOptions) if items.length != 0
+
+  return []
