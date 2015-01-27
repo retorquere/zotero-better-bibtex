@@ -130,8 +130,8 @@ Zotero.BetterBibTeX.schomd.search = (term) ->
       )
     } for item in Zotero.Items.get(results))
 
-Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, format, library, displayOptions}) ->
-  items = @items(keys, {library: library})
+Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, format, library, displayOptions} = {}) ->
+  items = Zotero.Items.get(@items(keys, {library: library}))
   translator ?= 'betterbiblatex'
   format ?= 'json'
   displayOptions ?= {}
