@@ -266,5 +266,5 @@ end
 
 Then /^the markdown citation for (.*) should be '(.*)'$/ do |keys, citation|
   keys = keys.split(',').collect{|k| k.strip}
-  expect(SCHOMD.citation(keys)).to eq(citation)
+  expect(SCHOMD.citation(keys)).to eq(JSON.parse(citation))
 end
