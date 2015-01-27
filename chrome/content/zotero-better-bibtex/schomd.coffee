@@ -116,22 +116,22 @@ Zotero.BetterBibTeX.schomd.search = (term) ->
     Zotero.BetterBibTeX.log("No results found")
     return []
 
-    # fetching items using IDs
-    items = Zotero.Items.get(results)
+  # fetching items using IDs
+  items = Zotero.Items.get(results)
 
-    return (
-      {
-        id: item.id
-        key: item.key
-        libraryID: item.libraryID
-        libraryKey: item.libraryKey
-        title: item.getField('title')
-        date: item.getField('date')
-        extra: item.getField('extra')
-        creators: (
-          {lastName: creator.ref.lastName, firstName: creator.ref.firstName} for creator in item.getCreators()
-        )
-      } for item in Zotero.Items.get(results))
+  return (
+    {
+      id: item.id
+      key: item.key
+      libraryID: item.libraryID
+      libraryKey: item.libraryKey
+      title: item.getField('title')
+      date: item.getField('date')
+      extra: item.getField('extra')
+      creators: (
+        {lastName: creator.ref.lastName, firstName: creator.ref.firstName} for creator in item.getCreators()
+      )
+    } for item in Zotero.Items.get(results))
 
 Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, format, library, displayOptions}) ->
   items = @items(keys, {library: library})
