@@ -67,7 +67,7 @@ Zotero.BetterBibTeX.schomd.init = ->
   }
   return
 
-Zotero.BetterBibTeX.schomd.items = (citekeys, {library}) ->
+Zotero.BetterBibTeX.schomd.items = (citekeys, {library} = {}) ->
   citekeys = [citekeys] unless Array.isArray(citekeys)
   ids = []
   keys = []
@@ -80,7 +80,7 @@ Zotero.BetterBibTeX.schomd.items = (citekeys, {library}) ->
   vars = ('?' for citekey in keys).join(',')
   return ids.concat(Zotero.BetterBibTeX.DB.columnQuery("select itemID from keys where citekey in (#{vars}) and libraryID = ?", keys.concat([library || 0])))
 
-Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, library}) ->
+Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, library} = {}) ->
   items = @items(citekeys, {library: library})
   return '' if items.length == 0
 
@@ -92,7 +92,7 @@ Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, library}) ->
   cp.updateItems(items)
   return (cp.appendCitationCluster({citationItems: [{id:item}], properties:{}}, true)[0][1] for item in items)
 
-Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, library}) ->
+Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, library} = {}) ->
   items = @items(citekeys, {library: library})
   return '' if items.length == 0
 
@@ -131,7 +131,9 @@ Zotero.BetterBibTeX.schomd.search = (term) ->
     } for item in Zotero.Items.get(results))
 
 Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, format, library, displayOptions} = {}) ->
-  items = Zotero.Items.get(@items(keys, {library: library}))
+  items = @items(keys, {library: library})
+  #Zotero.Items.get doesn't like being passed an empty array
+  items = Zotero.Items.get(items) if items.length > 0
   translator ?= 'betterbiblatex'
   format ?= 'json'
   displayOptions ?= {}
