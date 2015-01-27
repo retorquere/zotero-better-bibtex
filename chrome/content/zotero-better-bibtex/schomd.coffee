@@ -67,20 +67,24 @@ Zotero.BetterBibTeX.schomd.init = ->
   }
   return
 
-Zotero.BetterBibTeX.schomd.item = (citekeys) ->
+Zotero.BetterBibTeX.schomd.items = (citekeys, {library}) ->
   citekeys = [citekeys] unless Array.isArray(citekeys)
-  return '' if citekeys.length == 0
-  vars = ('?' for citekey in citekeys).join(',')
-  return Zotero.BetterBibTeX.DB.columnQuery("select itemID from keys where citekey in (#{vars})", citekeys)
+  ids = []
+  keys = []
+  for key in citekeys
+    if typeof key == 'number'
+      ids.push(key)
+    else
+      keys.push(key)
+  return ids if keys.length == 0
+  vars = ('?' for citekey in keys).join(',')
+  return ids.concat(Zotero.BetterBibTeX.DB.columnQuery("select itemID from keys where citekey in (#{vars}) and libraryID = ?", keys.concat([library || 0])))
 
-Zotero.BetterBibTeX.schomd.citation = (stylename, citekeys) ->
-  citekeys = [citekeys] unless Array.isArray(citekeys)
-  return '' if citekeys.length == 0
+Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, library}) ->
+  items = @items(citekeys, {library: library})
+  return '' if items.length == 0
 
-  vars = ('?' for citekey in citekeys).join(',')
-  items = Zotero.BetterBibTeX.DB.columnQuery("select itemID from keys where citekey in (#{vars})", citekeys)
-
-  url = "http://www.zotero.org/styles/#{stylename ? 'apa'}"
+  url = "http://www.zotero.org/styles/#{style ? 'apa'}"
   Zotero.BetterBibTeX.log("selected style: #{url}")
   style = Zotero.Styles.get(url)
   cp = style.getCiteProc()
@@ -88,12 +92,9 @@ Zotero.BetterBibTeX.schomd.citation = (stylename, citekeys) ->
   cp.updateItems(items)
   return (cp.appendCitationCluster({citationItems: [{id:item}], properties:{}}, true)[0][1] for item in items)
 
-Zotero.BetterBibTeX.schomd.bibliography = (stylename, citekeys) ->
-  citekeys = [citekeys] unless Array.isArray(citekeys)
-  return '' if citekeys.length == 0
-
-  vars = ('?' for citekey in citekeys).join(',')
-  items = Zotero.BetterBibTeX.DB.columnQuery("select itemID from keys where citekey in (#{vars})", citekeys)
+Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, library}) ->
+  items = @items(citekeys, {library: library})
+  return '' if items.length == 0
 
   url = "http://www.zotero.org/styles/#{stylename ? 'apa'}"
   Zotero.BetterBibTeX.log("selected style: #{url}")
@@ -105,3 +106,49 @@ Zotero.BetterBibTeX.schomd.bibliography = (stylename, citekeys) ->
 
   return '' unless bib
   return bib[0].bibstart + bib[1].join("") + bib[0].bibend
+
+Zotero.BetterBibTeX.schomd.search = (term) ->
+  search = new Zotero.Search()
+  search.addCondition('quicksearch-titleCreatorYear', 'contains', term, false)
+  results = search.search()
+
+  if not results
+    Zotero.BetterBibTeX.log("No results found")
+    return []
+
+    # fetching items using IDs
+    items = Zotero.Items.get(results)
+
+    return (
+      {
+        id: item.id
+        key: item.key
+        libraryID: item.libraryID
+        libraryKey: item.libraryKey
+        title: item.getField('title')
+        date: item.getField('date')
+        extra: item.getField('extra')
+        creators: (
+          {lastName: creator.ref.lastName, firstName: creator.ref.firstName} for creator in item.getCreators()
+        )
+      } for item in Zotero.Items.get(results))
+
+Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, format, library, displayOptions}) ->
+  items = @items(keys, {library: library})
+  translator ?= 'betterbiblatex'
+  format ?= 'json'
+  displayOptions ?= {}
+
+  switch format
+    when 'json'
+      return (
+        {
+          id: item.id
+          library: item.libraryID
+          key: item.key
+          bibtex: Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: [item]}, displayOptions)
+        } for item in items
+      )
+
+    else
+      return Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: items}, displayOptions)
