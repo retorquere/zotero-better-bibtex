@@ -40,6 +40,7 @@ unless $headless
   DBB = JSONRPCClient.new('http://localhost:23119/debug-bridge')
   DBB.bootstrap('Zotero.BetterBibTeX')
   BBT = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
+  SCHOMD = JSONRPCClient.new('http://localhost:23119/better-bibtex/schomd')
   BBT.init
 
   Dir['*.debug'].each{|d| File.unlink(d) }
@@ -261,4 +262,9 @@ end
 Then /^I generate a new citation key$/ do
   expect(@selected).not_to be(nil)
   BBT.pinCiteKey(@selected)
+end
+
+Then /^the markdown citation for (.*) should be '(.*)'$/ do |keys, citation|
+  keys = keys.split(',').collect{|k| k.strip}
+  expect(SCHOMD.citation(keys)).to eq(citation)
 end

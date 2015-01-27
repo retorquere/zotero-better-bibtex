@@ -6,10 +6,11 @@ Scenario: Better BibTeX Import 1
   When I import 1 reference with 1 attachment from 'import/Better BibTeX.001.bib'
   Then the library should match 'import/Better BibTeX.001.json'
 
-@bbtx-i-2
+@bbtx-i-2 @schomd-citation
 Scenario: Better BibTeX Import 2
   When I import 2 references from 'import/Better BibTeX.002.bib'
   Then the library should match 'import/Better BibTeX.002.json'
+  And the markdown citation for Torre2008 should be '["\\(Torre & Verducci, 2008\\)"]'
 
 @bbtx-i-3
 Scenario: Better BibTeX Import 3
