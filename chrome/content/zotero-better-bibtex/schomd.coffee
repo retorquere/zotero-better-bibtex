@@ -76,9 +76,9 @@ Zotero.BetterBibTeX.schomd.items = (citekeys, {library}) ->
       ids.push(key)
     else
       keys.push(key)
-  return ids if keys.length == 0
+  return Zotero.Items.get(ids) if keys.length == 0
   vars = ('?' for citekey in keys).join(',')
-  return ids.concat(Zotero.BetterBibTeX.DB.columnQuery("select itemID from keys where citekey in (#{vars}) and libraryID = ?", keys.concat([library || 0])))
+  return Zotero.Items.get(ids.concat(Zotero.BetterBibTeX.DB.columnQuery("select itemID from keys where citekey in (#{vars}) and libraryID = ?", keys.concat([library || 0]))))
 
 Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, library}) ->
   items = @items(citekeys, {library: library})
