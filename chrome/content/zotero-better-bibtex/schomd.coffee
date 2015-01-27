@@ -67,6 +67,12 @@ Zotero.BetterBibTeX.schomd.init = ->
   }
   return
 
+Zotero.BetterBibTeX.schomd.item = (citekeys) ->
+  citekeys = [citekeys] unless Array.isArray(citekeys)
+  return '' if citekeys.length == 0
+  vars = ('?' for citekey in citekeys).join(',')
+  return Zotero.BetterBibTeX.DB.columnQuery("select itemID from keys where citekey in (#{vars})", citekeys)
+
 Zotero.BetterBibTeX.schomd.citation = (stylename, citekeys) ->
   citekeys = [citekeys] unless Array.isArray(citekeys)
   return '' if citekeys.length == 0
