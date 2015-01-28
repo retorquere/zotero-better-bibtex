@@ -97,8 +97,8 @@ Scenario: Better BibLaTeX Export 17
    And I import 1 reference from 'export/Better BibLaTeX.017.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.017.bib'
 
-@bbtx-e-18
-Scenario: Better BibTeX Export 18
+@bbtx-e-18 @139
+Scenario: Better BibTeX Export 18 / spans without attributes break export #139
   When I import 1 reference from 'export/Better BibTeX.018.json'
   Then a library export using 'Better BibTeX' should match 'export/Better BibTeX.018.bib'
 

@@ -24,7 +24,7 @@ LaTeX.emit = ->
 
 LaTeX.html2latex = (text) ->
   stack = []
-  mapping = if Translator.unicode then @toLaTeX.unicode else @toLaTeX.ascii
+  mapping = (if Translator.unicode then @toLaTeX.unicode else @toLaTeX.ascii)
 
   @latex = ''
   @acc = { prefix: '', text: '', postfix: ''}
@@ -47,7 +47,7 @@ LaTeX.html2latex = (text) ->
         @emit()
 
         tag = m[1].toLowerCase()
-        repl = if tag == 'span' && m[2].toLowerCase().match(/small-caps/) then 'smallcaps' else tag
+        repl = (if tag == 'span' && m[2]?.toLowerCase().match(/small-caps/) then 'smallcaps' else tag)
         stack.unshift({tag: tag, postfix: @html[repl].postfix})
         @latex += @html[repl].prefix
         text = m[3]
