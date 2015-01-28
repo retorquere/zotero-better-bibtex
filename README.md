@@ -1,13 +1,5 @@
 # Zotero: Better Bib(La)TeX (BBT) [![Circle CI](https://circleci.com/gh/ZotPlus/zotero-better-bibtex.svg?style=svg)](https://circleci.com/gh/ZotPlus/zotero-better-bibtex)
 
-Recent changes:
-
-## 0.7.1
-
-* Preliminary Scholarly Markdown support
-
-[more](https://zotplus.github.io/better-bibtex/changelog.html)
-
 This extension aims to make Zotero effective for us LaTeX holdouts. At its core, it behaves like any Zotero
 import/export module; anywhere you can export or import bibliography items in Zotero, you'll find Better Bib(La)TeX
 listed as one of the choices. If nothing else, you could keep your existing workflow as-is, and just enjoy the emproved
@@ -77,8 +69,8 @@ The Better BibTeX [configuration pane](https://zotplus.github.io/better-bibtex/C
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.7.6.xpi)
-(**0.7.6**).
+version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.7.7.xpi)
+(**0.7.7**).
 If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
