@@ -61,6 +61,7 @@ If you'd really just rather hand-code your LaTeX constructs, BBT makes that poss
 * **[Pull export](https://zotplus.github.io/better-bibtex/Pull-Export)** from the embedded webserver
 * Automatic **[journal abbreviation](https://zotplus.github.io/better-bibtex/Citation-Keys.html)** to bring BibTeX export on par with the Word integration
 * Preliminary scholarly markdown support through integration with [Zotero Citations for Atom](https://atom.io/packages/zotero-citations)
+* Spectacular must-see support for scholarly markdown with auto-complete citations for [Adobe Brackets](https://github.com/baig/brackets-zotero) by Wasif Hasan Baig
 
 # Configuration
 
