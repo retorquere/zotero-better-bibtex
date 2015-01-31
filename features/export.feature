@@ -260,5 +260,10 @@ Scenario: Omit URL export when DOI present. #131
 
 @133
 Scenario: Extra ';' in biblatexadata causes export failure #133
-  When I import 2 reference from 'export/Extra semicolon in biblatexadata causes export failure #133.json'
+  When I import 2 references from 'export/Extra semicolon in biblatexadata causes export failure #133.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Extra semicolon in biblatexadata causes export failure #133.bib'
+
+@140
+Scenario: HTML Fragment separator escaped in url #140
+  When I import 1 reference from 'export/HTML Fragment separator escaped in url #140.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/HTML Fragment separator escaped in url #140.bib'

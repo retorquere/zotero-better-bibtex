@@ -215,7 +215,10 @@ Reference::field = (f, value) ->
   return clone
 
 Reference::esc_url = (f) ->
-  href = ('' + f.value).replace(/([#\\%&{}])/g, '\\$1')
+  if Translator.label == 'Better BibTeX'
+    href = ('' + f.value).replace(/([#\\%&{}])/g, '\\$1')
+  else
+    href = ('' + f.value).replace(/([\\%&{}])/g, '\\$1')
   href = href.replace(/[^\x21-\x7E]/g, ((chr) -> '\\%' + ('00' + chr.charCodeAt(0).toString(16).slice(-2)))) if not Translator.unicode
 
   return "\\href{#{href}}{#{LaTeX.html2latex(href)}}" if f.name == 'url' and Translator.fancyURLs
