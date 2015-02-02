@@ -173,6 +173,23 @@ rule '.js' => '.coffee' do |t|
   }
 end
 
+task :newtest, [:kind, :name] do |t, args|
+  args[:name] =~ /#([0-9]+)/
+  tag = $1
+  open("features/#{args[:kind]}.feature", 'a') { |f|
+    f.puts("")
+    f.puts("@#{tag}") if tag
+    f.puts("Scenario: #{args[:name]}")
+    if args[:kind] == 'export'
+      f.puts("  When I import 1 reference from 'export/#{args[:name]}.json'")
+      f.puts("  Then a library export using 'Better BibLaTeX' should match 'export/#{args[:name]}.bib'")
+    else
+      f.puts("    When I import 1 reference from 'import/#{args[:name]}.bib'")
+      f.puts("    Then the library should match 'import/#{args[:name]}.json'")
+    end
+  }
+end
+
 task :test, [:tag] => XPI do |t, args|
   if File.file?('features/plugins.yml')
     plugins = YAML.load_file('features/plugins.yml')

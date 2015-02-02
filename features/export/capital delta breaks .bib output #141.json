@@ -1,0 +1,97 @@
+{
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
+    "label": "Zotero TestCase",
+    "release": "0.7.5",
+    "preferences": {
+      "citeKeyFormat": "[auth:lower][year]",
+      "skipfields": [
+        ""
+      ],
+      "useprefix": true,
+      "brace-all": true,
+      "fancyURLs": false,
+      "langid": "babel",
+      "attachmentRelativePath": false,
+      "auto-abbrev": true,
+      "auto-abbrev.style": "http://www.zotero.org/styles/cell",
+      "unicode": true,
+      "pin-citekeys": "manual",
+      "raw-imports": false,
+      "doi-and-url": "both"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "Export Collections": false
+    }
+  },
+  "collections": [],
+  "items": [
+    {
+      "itemID": 32,
+      "itemType": "journalArticle",
+      "url": "http://dx.doi.org/10.1021/ja01623a027",
+      "volume": "77",
+      "issue": "18",
+      "pages": "4781-4784",
+      "publicationTitle": "Journal of the American Chemical Society",
+      "ISSN": "0002-7863",
+      "date": "1955",
+      "journalAbbreviation": "J. Am. Chem. Soc.",
+      "DOI": "10.1021/ja01623a027",
+      "accessDate": "2015-02-02 09:11:00",
+      "libraryCatalog": "ACS Publications",
+      "title": "11-Oxygenated Steroids. XIII. Synthesis and Proof of Structure of Δ1,4-Pregnadiene-17α,21-diol-3,11,20-trione and Δ1,4-Pregnadiene-11β,17α,21-triol-3,20-dione",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Hershel L.",
+          "lastName": "Herzog",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Constance C.",
+          "lastName": "Payne",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Margaret A.",
+          "lastName": "Jevnik",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "David",
+          "lastName": "Gould",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Elliot L.",
+          "lastName": "Shapiro",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Eugene P.",
+          "lastName": "Oliveto",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "E. B.",
+          "lastName": "Hershberg",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [],
+      "attachments": [],
+      "tags": [],
+      "related": [],
+      "seeAlso": []
+    }
+  ]
+}

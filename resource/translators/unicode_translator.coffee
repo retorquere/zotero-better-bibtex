@@ -20,10 +20,7 @@ LaTeX.re = {
 LaTeX.emit = ->
   if @acc.text != ''
     if @acc.math
-      if @acc.text.match(/^{.*[^\\]}$/)
-        @latex += '\\ensuremath' + @acc.text
-      else
-        @latex += '\\ensuremath{' + @acc.text + '}'
+      @latex += "\\ensuremath{#{@acc.text}}"
     else
       @latex += @acc.text
   @acc = { math: false, text: ''}

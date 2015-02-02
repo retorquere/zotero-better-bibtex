@@ -116,7 +116,7 @@ Translator.collections = ->
 
 Translator.nextItem = ->
   while item = Zotero.nextItem()
-    if item.itemType != 'note' and item.itemType != 'attachment' then break
+    break if item.itemType != 'note' and item.itemType != 'attachment'
   return unless item
 
   @initialize()
@@ -237,7 +237,7 @@ Reference::esc_latex = (f, raw) ->
   return f.value if raw
 
   value = LaTeX.html2latex(f.value)
-  if f.value instanceof String then value = String("{#{value}}")
+  value = new String("{#{value}}") if f.value instanceof String
   return value
 
 Reference::esc_tags = (f) ->
@@ -280,8 +280,8 @@ Reference::esc_attachments = (f) ->
     else
       attachments.push(a)
 
-  if errors.length != 0 then f.errors = errors
-  if attachments.length == 0 then return null
+  f.errors = errors if errors.length != 0
+  return null if attachments.length == 0
 
   # sort attachments for stable tests
   attachments.sort( ( (a, b) -> a.path.localeCompare(b.path) ) ) if Translator.testmode
@@ -290,7 +290,7 @@ Reference::esc_attachments = (f) ->
 
 Reference::preserveWordCaps = new Zotero.Utilities.XRegExp("
   (^)([\\p{L}]+\\p{Lu}[\\p{L}]*)|
-  ([^\\p{L}])([\\p{L}]*\\p{Lu}[\\p{L}]*)
+  ([^\\\\\\p{L}])([\\p{L}]*\\p{Lu}[\\p{L}]*)
   ".replace(/\s/g, ''), 'g')
 
 Reference::add = (field) ->
@@ -336,8 +336,8 @@ Reference::complete = ->
       if a.name == b.name
         _a = a.value
         _b = b.value
-      if _a < _b then return -1
-      if _a > _b then return 1
+      return -1 if _a < _b
+      return 1  if _a > _b
       return 0) )
 
   ref = "@#{@itemtype}{#{@item.__citekey__},\n"
