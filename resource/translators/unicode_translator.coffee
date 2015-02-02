@@ -18,8 +18,15 @@ LaTeX.re = {
 }
 
 LaTeX.emit = ->
-  @latex += @acc.prefix + @acc.text + @acc.postfix if @acc.text != ''
-  @acc = { prefix: '', text: '', postfix: ''}
+  if @acc.text != ''
+    if @acc.math
+      if @acc.text.match(/^{.*[^\\]}$/)
+        @latex += '\\ensuremath' + @acc.text
+      else
+        @latex += '\\ensuremath{' + @acc.text + '}'
+    else
+      @latex += @acc.text
+  @acc = { math: false, text: ''}
   return
 
 LaTeX.html2latex = (text) ->
@@ -27,7 +34,7 @@ LaTeX.html2latex = (text) ->
   mapping = (if Translator.unicode then @toLaTeX.unicode else @toLaTeX.ascii)
 
   @latex = ''
-  @acc = { prefix: '', text: '', postfix: ''}
+  @acc = { math: false, text: ''}
 
   while text.length > 0
     switch
@@ -64,16 +71,14 @@ LaTeX.html2latex = (text) ->
         text = m[3]
 
       when mapping.math[text[0]]
-        @emit() if @acc.prefix == ''
-        @acc.prefix = '\\ensuremath{'
-        @acc.postfix = '}'
+        @emit() unless @acc.math
+        @acc.math = true
         @acc.text += mapping.math[text[0]]
         text = text.substring(1)
 
       else
-        @emit() if @acc.prefix != ''
-        @acc.prefix = ''
-        @acc.postfix = ''
+        @emit() if @acc.math
+        @acc.math = false
         @acc.text += mapping.text[text[0]] || text[0]
         text = text.substring(1)
 
