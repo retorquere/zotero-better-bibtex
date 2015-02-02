@@ -267,3 +267,8 @@ Scenario: Extra ';' in biblatexadata causes export failure #133
 Scenario: HTML Fragment separator escaped in url #140
   When I import 1 reference from 'export/HTML Fragment separator escaped in url #140.json'
   Then a library export using 'Better BibLaTeX' should match 'export/HTML Fragment separator escaped in url #140.bib'
+
+@141
+Scenario: capital delta breaks .bib output #141
+  When I import 1 reference from 'export/capital delta breaks .bib output #141.json'
+  Then a library export using 'Better BibTeX' should match 'export/capital delta breaks .bib output #141.bib'
