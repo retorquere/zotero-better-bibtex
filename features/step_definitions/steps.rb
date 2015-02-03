@@ -11,7 +11,7 @@ unless $headless
   $headless = Headless.new(display: 100) # reserve 100 for BBT
   $headless.start
 
-  profile_dir = File.expand_path('features/profile')
+  profile_dir = File.expand_path('test/fixtures/profile')
   profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
   
   STDOUT.sync = true
@@ -93,14 +93,14 @@ end
 
 When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)'( as '([^']+)')?$/ do |references, dummy, attachments, filename, dummy2, aliased|
   Dir.mktmpdir {|dir|
-    bib = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
+    bib = File.expand_path(File.join('test/fixtures', filename))
 
     if aliased.to_s != ''
       aliased = File.expand_path(File.join(dir, File.basename(aliased)))
       FileUtils.cp(bib, aliased)
       bib = aliased
     else
-      bib = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
+      bib = File.expand_path(File.join('test/fixtures', filename))
     end
 
     if File.extname(filename) == '.json'
@@ -168,7 +168,7 @@ def normalize(o)
 end
 
 Then /^the library should match '([^']+)'$/ do |filename|
-  expected = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
+  expected = File.expand_path(File.join('test/fixtures', filename))
   expected = JSON.parse(open(expected).read)
 
   found = BBT.library
@@ -202,7 +202,7 @@ Then(/^a library export using '([^']+)' should match '([^']+)'$/) do |translator
 
   @expectedExport = OpenStruct.new(filename: filename, translator: translator)
 
-  expected = File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
+  expected = File.expand_path(File.join('test/fixtures', filename))
   expected = open(expected).read.strip
   open("tmp/#{File.basename(filename)}", 'w'){|f| f.write(found)} if found != expected
   expect(found).to eq(expected)
