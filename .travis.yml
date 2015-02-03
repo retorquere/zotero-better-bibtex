@@ -5,8 +5,8 @@ git:
 rvm:
   - 2.1.3
 env:
-  - TAG=import
-  - TAG=export
+  - TAG=import LC_ALL=en_US.UTF-8
+  - TAG=export LC_ALL=en_US.UTF-8
 script: "bundle exec rake test[$FEATURE]"
 before_install:
   - sudo apt-get update
