@@ -207,6 +207,8 @@ class Reference
       if f.name and not @has[f.name]
         @add(@field(f, @item[attr]))
 
+    @add({name: 'timestamp', value: Zotero.Utilities.strToDate(@item.dateModified || @item.dateAdded)}) if @item.dateModified || @item.dateAdded
+
 Reference::log = Translator.log
 
 Reference::field = (f, value) ->
@@ -295,6 +297,7 @@ Reference::preserveWordCaps = new Zotero.Utilities.XRegExp("
 
 Reference::add = (field) ->
   return if Translator.skipFields.indexOf(field.name) >= 0
+  return if Translator.testmode && field.name == 'timestamp'
   return if typeof field.value != 'number' and not field.value
   return if typeof field.value == 'string' and field.value.trim() == ''
   return if Array.isArray(field.value) and field.value.length == 0
