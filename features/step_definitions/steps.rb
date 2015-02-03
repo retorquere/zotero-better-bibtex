@@ -26,6 +26,7 @@ unless $headless
   profile['extensions.zotero.debug.log'] = true;
   profile['extensions.zotero.translators.better-bibtex.debug'] = true;
   profile['extensions.zotero.translators.better-bibtex.attachmentRelativePath'] = true
+  profile['general.useragent.locale'] = 'en-US'
 
   profile['browser.download.dir'] = "/tmp/webdriver-downloads"
   profile['browser.download.folderList'] = 2
