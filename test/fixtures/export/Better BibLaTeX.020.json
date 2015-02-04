@@ -11,12 +11,12 @@
       "libraryCatalog": "Library of Congress ISBN",
       "language": "french",
       "title": "In memoriam",
-      "bookTitle": "Œuvres complètes de philosophie des sciences",
+      "bookTitle": "Œuvres complètes de philosophie des sciences",
       "creators": [
         {
           "creatorType": "bookAuthor",
           "firstName": "Jean",
-          "lastName": "Cavaillès"
+          "lastName": "Cavaillès"
         },
         {
           "creatorType": "author",
