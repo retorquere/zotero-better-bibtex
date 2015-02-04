@@ -7,7 +7,7 @@ rvm:
 env:
   - TAG=import
   - TAG=export
-script: "bundle exec rake test[$FEATURE]"
+script: "bundle exec rake test[$TAG]"
 before_install:
   - sudo apt-get update
   - sudo apt-get install nodejs npm firefox
