@@ -75,7 +75,7 @@ doExport = ->
           creatorString = new String(creator.lastName)
 
         switch creator.creatorType
-          when  'editor', 'seriesEditor'  then editors.push(creatorString)
+          when 'editor', 'seriesEditor'   then editors.push(creatorString)
           when 'translator'               then translators.push(creatorString)
           when primaryCreatorType         then authors.push(creatorString)
           else                                 collaborators.push(creatorString)
@@ -184,7 +184,8 @@ ZoteroItem::addToExtra = (str) ->
   return
 
 ZoteroItem::addToExtraData = (key, value) ->
-  @biblatexdata.push(key.replace(/[=;]/g, '#') + '=' + value.replace(/[\r\n]+/g, ' ').replace(/[=;]g/, '#'))
+  # @biblatexdata.push(key.replace(/[=;]/g, '#') + '=' + value.replace(/[\r\n]+/g, ' ').replace(/[=;]g/, '#'))
+  @biblatexdata.push("#{JSON.stringify(key)}: #{JSON.stringify(value)}")
   return
 
 ZoteroItem::fieldMap = Object.create(null)
@@ -196,6 +197,8 @@ for own attr, field of Translator.fieldMap
     ZoteroItem::fieldMap[f] ?= attr
 
 ZoteroItem::import = (bibtex) ->
+  hackyFields = []
+
   for own field, value of bibtex
     continue if typeof value != 'number' && not value
     value = Zotero.Utilities.trim(value) if typeof value == 'string'
@@ -300,6 +303,35 @@ ZoteroItem::import = (bibtex) ->
         for att in value
           @item.attachments.push(att)
 
+      when 'eprint', 'eprinttype'
+        # Support for IDs exported by BibLaTeX
+        @item["_#{field}"] = value
+
+        if @item._eprint && @item._eprinttype
+          switch @item._eprinttype.trim().toLowerCase()
+            when 'arxiv' then hackyFields.push("arXiv: #{value}")
+            when 'jstor' then hackyFields.push("JSTOR: #{value}")
+            when 'pubmed' then hackyFields.push("PMID: #{value}")
+            when 'hdl' then hackyFields.push("HDL: #{value}")
+            when 'googlebooks' then hackyFields.push("GoogleBooksID: #{value}")
+          delete @item._eprint
+          delete @item._eprinttype
+
+      when 'lccn'
+        hackyFields.push("LCCB: #{value}")
+
+      when 'mrnumber'
+        hackyFields.push("MR: #{value}")
+
+      when 'zmnumber'
+        hackyFields.push("Zbl: #{value}")
+
+      when 'pmid'
+        hackyFields.push("PMID: #{value}")
+
+      when 'pmcid'
+        hackyFields.push("PMCID: #{value}")
+
       else
         @addToExtraData(field, value)
 
@@ -311,7 +343,12 @@ ZoteroItem::import = (bibtex) ->
 
   if @biblatexdata.length > 0
     @biblatexdata.sort()
-    @addToExtra("biblatexdata[#{@biblatexdata.join(';')}]")
+    @addToExtra("biblatexdata{#{@biblatexdata.join(', ')}}")
+    # @addToExtra("biblatexdata[#{@biblatexdata.join(';')}]")
+
+  if hackyFields.length > 0
+    hackyFields.sort()
+    @addToExtra(hackyFields.join(" \n"))
 
   if not @item.publisher and @item.backupPublisher
     @item.publisher = @item.backupPublisher
