@@ -170,7 +170,9 @@ class Reference
     @itemtype = Translator.typeMap.Zotero2BibTeX[@item.itemType] or 'misc'
 
     if @item.extra
-      extra = ''
+      fields = []
+
+      extra = []
       for line in @item.extra.split("\n")
         m = /^\s*(LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\s*:\s*([\S]+)\s*$/.exec(line)
         switch m?[1]
@@ -183,10 +185,9 @@ class Reference
           when 'JSTOR'          then fields.push({ name: 'jstor', value: m[2] })
           when 'HDL'            then fields.push({ name: 'hdl', value: m[2] })
           when 'GoogleBooksID'  then fields.push({ name: 'googlebooks', value: m[2] })
-          else extra += "#{line}\n"
-      @item.extra = extra
+          else extra.push(line)
+      @item.extra = extra.join("\n")
 
-      fields = []
       m = /biblatexdata\[([^\]]+)\]/.exec(@item.extra)
       if m
         @item.extra = @item.extra.replace(m[0], '').trim()
