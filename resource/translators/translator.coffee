@@ -170,6 +170,22 @@ class Reference
     @itemtype = Translator.typeMap.Zotero2BibTeX[@item.itemType] or 'misc'
 
     if @item.extra
+      extra = ''
+      for line in @item.extra.split("\n")
+        m = /^\s*(LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\s*:\s*([\S]+)\s*$/.exec(line)
+        switch m?[1]
+          when 'LCCN'           then fields.push({ name: 'lccn', value: m[2] })
+          when 'MR'             then fields.push({ name: 'mrnumber', value: m[2] })
+          when 'Zbl'            then fields.push({ name: 'zmnumber', value: m[2] })
+          when 'PMCID'          then fields.push({ name: 'pmcid', value: m[2] })
+          when 'PMID'           then fields.push({ name: 'pmid', value: m[2] })
+          when 'arXiv'          then fields.push({ name: 'arxiv', value: m[2] })
+          when 'JSTOR'          then fields.push({ name: 'jstor', value: m[2] })
+          when 'HDL'            then fields.push({ name: 'hdl', value: m[2] })
+          when 'GoogleBooksID'  then fields.push({ name: 'googlebooks', value: m[2] })
+          else extra += "#{line}\n"
+      @item.extra = extra
+
       fields = []
       m = /biblatexdata\[([^\]]+)\]/.exec(@item.extra)
       if m

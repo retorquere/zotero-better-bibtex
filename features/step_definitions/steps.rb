@@ -16,7 +16,7 @@ unless $headless
   
   STDOUT.sync = true
   STDOUT.puts "Installing plugins..."
-  Dir['tmp/plugins/*.xpi'].each{|xpi|
+  Dir['tmp/plugins/*.xpi'].shuffle.each{|xpi|
     STDOUT.puts "Installing #{File.basename(xpi)}"
     profile.add_extension(xpi)
   }
@@ -26,7 +26,7 @@ unless $headless
   profile['extensions.zotero.debug.log'] = true;
   profile['extensions.zotero.translators.better-bibtex.debug'] = true;
   profile['extensions.zotero.translators.better-bibtex.attachmentRelativePath'] = true
-  profile['general.useragent.locale'] = 'en-US'
+  profile['extensions.zotfile.useZoteroToRename'] = true
 
   profile['browser.download.dir'] = "/tmp/webdriver-downloads"
   profile['browser.download.folderList'] = 2
