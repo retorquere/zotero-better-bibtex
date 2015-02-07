@@ -163,7 +163,7 @@ class ZoteroItem
     @type = Translator.typeMap.BibTeX2Zotero[Zotero.Utilities.trimInternal((bibtex.type || bibtex.__type__).toLowerCase())] || 'journalArticle'
     @item = new Zotero.Item(@type)
     @item.itemID = bibtex.__key__
-    @biblatexdata = []
+    @biblatexdata = {}
     @item.notes.push({ note: ('The following fields were not imported:<br/>' + bibtex.__note__).trim(), tags: ['#BBT Import'] }) if bibtex.__note__
     @import(bibtex)
     if Translator.rawImport
@@ -185,7 +185,8 @@ ZoteroItem::addToExtra = (str) ->
 
 ZoteroItem::addToExtraData = (key, value) ->
   # @biblatexdata.push(key.replace(/[=;]/g, '#') + '=' + value.replace(/[\r\n]+/g, ' ').replace(/[=;]g/, '#'))
-  @biblatexdata.push("#{JSON.stringify(key)}: #{JSON.stringify(value)}")
+  @biblatexdata[key] = value
+  @biblatexdatajson = true if key.match(/[\[\]=;\r\n]/) || value.match(/[\[\]=;\r\n]/)
   return
 
 ZoteroItem::fieldMap = Object.create(null)
@@ -341,10 +342,15 @@ ZoteroItem::import = (bibtex) ->
 
   @addToExtra('bibtex: ' + @item.itemID)
 
-  if @biblatexdata.length > 0
-    @biblatexdata.sort()
-    @addToExtra("biblatexdata{#{@biblatexdata.join(', ')}}")
-    # @addToExtra("biblatexdata[#{@biblatexdata.join(';')}]")
+  keys = Object.keys(@biblatexdata)
+  if keys.length > 0
+    keys.sort()
+    if @biblatexdatajson
+      biblatexdata = '{' + ("#{JSON.stringify(key)}: #{JSON.stringify(@biblatexdata[key])}" for key in keys).join(', ') + '}'
+    else
+      biblatexdata = '[' + ("#{key}=#{@biblatexdata[key]}" for key in keys).join(';') + ']'
+
+    @addToExtra("biblatexdata#{biblatexdata}")
 
   if hackyFields.length > 0
     hackyFields.sort()

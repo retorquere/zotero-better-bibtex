@@ -69,7 +69,7 @@ Zotero.BetterBibTeX.init = ->
                   join itemDataValues idv on idv.valueID = id.valueID
                   join fields f on id.fieldID = f.fieldID
                   where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)
-                    and (idv.value like '%bibtex:%' or idv.value like '%biblatexcitekey[%')"
+                    and (idv.value like '%bibtex:%' or idv.value like '%biblatexcitekey[%' or idv.value like '%biblatexcitekey{%')"
   @findExtra = "select idv.value as extra
                   from items i
                   join itemData id on i.itemID = id.itemID
@@ -95,6 +95,10 @@ Zotero.BetterBibTeX.init = ->
     @DB.query('insert into keys (itemID, libraryID, citekey, citeKeyFormat)
                select itemID, libraryID, citekey, case when pinned = 1 then null else ? end from keys2', [@pref.get('citeKeyFormat')])
     @DB.query("insert or replace into _version_ (tablename, version) values ('keys', 4)")
+
+  if version <= 4
+    @DB.query('drop table keys2')
+    @DB.query("insert or replace into _version_ (tablename, version) values ('keys', 5)")
 
   Zotero.BetterBibTeX.keymanager.reset()
   @DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@pref.get('citeKeyFormat')])
