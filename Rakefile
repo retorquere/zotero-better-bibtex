@@ -242,6 +242,11 @@ file 'resource/translators/unicode.xml' do |t|
   ZotPlus::RakeHelper.download('http://www.w3.org/2003/entities/2007xml/unicode.xml', t.name)
 end
 
+file 'resource/translators/xregexp-all-min.js' do |t|
+  ZotPlus::RakeHelper.download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all-min.js', t.name)
+end
+
+
 file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translators/unicode.xml', 'Rakefile'] do |t|
   map = Nokogiri::XML(open(t.source))
 

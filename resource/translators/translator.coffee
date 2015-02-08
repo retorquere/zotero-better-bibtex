@@ -29,6 +29,9 @@ Translator = new class
 
 require(':constants:')
 
+# Zotero ships with a lobotomized version
+require('xregexp-all-min.js')
+
 Translator.log = (msg...) ->
   msg = ((if (typeof m) in ['number', 'string'] then ('' + m) else JSON.stringify(m)) for m in msg).join(' ')
   Zotero.debug("[better-bibtex:#{@label}] #{msg}")
@@ -307,10 +310,7 @@ Reference::esc_attachments = (f) ->
 
   return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
 
-Reference::preserveWordCaps = new Zotero.Utilities.XRegExp("
-  (^)([\\p{L}]+\\p{Lu}[\\p{L}]*)|
-  ([^\\\\\\p{L}])([\\p{L}]*\\p{Lu}[\\p{L}]*)
-  ".replace(/\s/g, ''), 'g')
+Reference::preserveWordCaps = new XRegExp("\\b\\p{Letter}+\\p{Uppercase_Letter}\\p{Letter}*", 'g')
 
 Reference::add = (field) ->
   return if Translator.skipFields.indexOf(field.name) >= 0
@@ -329,7 +329,19 @@ Reference::add = (field) ->
 
     return null unless value
     if field.braces
-      value = Zotero.Utilities.XRegExp.replace(value, @preserveWordCaps, '${1}${3}{${2}${4}}') if field.preserveCaps && !@raw
+      if field.preserveCaps && !@raw
+        #value = XRegExp.replace(value, @preserveWordCaps, '{${0}}')
+        value = XRegExp.replace(value, @preserveWordCaps, (needle, pos, haystack) ->
+          Zotero.debug("Found needle #{JSON.stringify(needle)}")
+          backslashes = 0
+          for i in [pos - 1 .. 0] by -1
+            if haystack[i] == '\\'
+              backslashes++
+            else
+              break
+          return "{#{needle}}" if backslashes % 2 == 0
+          return needle
+        )
       value = "{#{value}}"
 
   field.bibtex = "  #{field.name} = #{value}"
