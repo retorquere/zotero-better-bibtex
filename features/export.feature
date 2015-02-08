@@ -272,3 +272,8 @@ Scenario: HTML Fragment separator escaped in url #140
 Scenario: capital delta breaks .bib output #141
   When I import 1 reference from 'export/capital delta breaks .bib output #141.json'
   Then a library export using 'Better BibTeX' should match 'export/capital delta breaks .bib output #141.bib'
+
+@146
+Scenario: German Umlaut "separated" by brackets #146
+  When I import 1 reference from 'export/German Umlaut "separated" by brackets #146.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/German Umlaut "separated" by brackets #146.bib'
