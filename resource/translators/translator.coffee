@@ -328,6 +328,7 @@ Reference::add = (field) ->
     value = @["esc_#{field.esc || 'latex'}"](field, (if field.esc then false else @raw))
 
     return null unless value
+
     if field.braces
       if field.preserveCaps && !@raw
         #value = XRegExp.replace(value, @preserveWordCaps, '{${0}}')
@@ -344,7 +345,7 @@ Reference::add = (field) ->
         )
       value = "{#{value}}"
 
-  field.bibtex = "  #{field.name} = #{value}"
+  field.bibtex = "  #{field.name} = #{value}".normalize('NFKC')
   @fields.push(field)
   @has[field.name] = true
   return
