@@ -31,6 +31,7 @@ require(':constants:')
 
 # Zotero ships with a lobotomized version
 require('xregexp-all-min.js')
+require('json5.js')
 
 Translator.log = (msg...) ->
   msg = ((if (typeof m) in ['number', 'string'] then ('' + m) else JSON.stringify(m)) for m in msg).join(' ')
@@ -191,10 +192,10 @@ class Reference
           else extra.push(line)
       @item.extra = extra.join("\n")
 
-      m = /biblatexdata\[([^\]]+)\]/.exec(@item.extra)
+      m = /(biblatexdata|bibtex|biblatex)\[([^\]]+)\]/.exec(@item.extra)
       if m
         @item.extra = @item.extra.replace(m[0], '').trim()
-        for assignment in m[1].split(';')
+        for assignment in m[2].split(';')
           data = assignment.match(/^([^=]+)=\s*(.*)/)
           unless data
             Zotero.debug("Not an assignment: #{assignment}")
@@ -202,13 +203,13 @@ class Reference
 
           fields.push({ name: data[1], value: data[2] })
 
-      m = /(biblatexdata)({[\s\S]+})/.exec(@item.extra)
+      m = /(biblatexdata|bibtex|biblatex)({[\s\S]+})/.exec(@item.extra)
       if m
         prefix = m[1]
         data = m[2]
         while data.indexOf('}') >= 0
           try
-            json = JSON.parse(data)
+            json = JSON5.parse(data)
           catch
             json = null
           break if json
@@ -219,8 +220,11 @@ class Reference
             fields.push({name: name, value: value})
 
       for field in fields
-        if Translator.BibLaTeXDataFieldMap[field.name]
-          field = @field(Translator.BibLaTeXDataFieldMap[field.name], field.value)
+        if field.name == 'referencetype'
+          @itemtype = field.value
+          continue
+
+        field = @field(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
         @add(field)
 
     for own attr, f of Translator.fieldMap or {}

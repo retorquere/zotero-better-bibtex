@@ -16,7 +16,7 @@
       ],
       "title": "Some publication title",
       "pages": "330—331",
-      "extra": "bibtex: author:06 \nbiblatexdata[crossref=conference:06]",
+      "extra": "bibtex: author:06 \nbibtex[crossref=conference:06]",
       "itemID": 0
     },
     {

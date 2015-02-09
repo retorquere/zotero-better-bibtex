@@ -184,7 +184,6 @@ ZoteroItem::addToExtra = (str) ->
   return
 
 ZoteroItem::addToExtraData = (key, value) ->
-  # @biblatexdata.push(key.replace(/[=;]/g, '#') + '=' + value.replace(/[\r\n]+/g, ' ').replace(/[=;]g/, '#'))
   @biblatexdata[key] = value
   @biblatexdatajson = true if key.match(/[\[\]=;\r\n]/) || value.match(/[\[\]=;\r\n]/)
   return
@@ -346,11 +345,11 @@ ZoteroItem::import = (bibtex) ->
   if keys.length > 0
     keys.sort()
     if @biblatexdatajson
-      biblatexdata = '{' + ("#{JSON.stringify(key)}: #{JSON.stringify(@biblatexdata[key])}" for key in keys).join(', ') + '}'
+      biblatexdata = 'bibtex{' + (JSON5.stringify({key: @biblatexdata[key]}).slice(1, -1) for key in keys).join(', ') + '}'
     else
-      biblatexdata = '[' + ("#{key}=#{@biblatexdata[key]}" for key in keys).join(';') + ']'
+      biblatexdata = 'bibtex[' + ("#{key}=#{@biblatexdata[key]}" for key in keys).join(';') + ']'
 
-    @addToExtra("biblatexdata#{biblatexdata}")
+    @addToExtra(biblatexdata)
 
   if hackyFields.length > 0
     hackyFields.sort()

@@ -263,8 +263,8 @@ Scenario: Extra ';' in biblatexadata causes export failure #133
   When I import 2 references from 'export/Extra semicolon in biblatexadata causes export failure #133.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Extra semicolon in biblatexadata causes export failure #133.bib'
 
-@140
-Scenario: HTML Fragment separator escaped in url #140
+@140 @147
+Scenario: HTML Fragment separator escaped in url #140 / Specify custom reference type #147
   When I import 1 reference from 'export/HTML Fragment separator escaped in url #140.json'
   Then a library export using 'Better BibLaTeX' should match 'export/HTML Fragment separator escaped in url #140.bib'
 

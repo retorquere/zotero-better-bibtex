@@ -31,7 +31,7 @@
       "itemID": 389,
       "itemType": "webpage",
       "url": "http://johnmacfarlane.net/pandoc/README.html#citations",
-      "extra": "bibtex: MacFarlaneJohna",
+      "extra": "bibtex: MacFarlaneJohna\nbiblatexdata[referencetype=archived]",
       "accessDate": "2015-01-31 16:24:56",
       "title": "Pandoc User’s Guide",
       "creators": [
