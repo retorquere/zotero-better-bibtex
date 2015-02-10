@@ -18,7 +18,7 @@
 	</menupopup -->
 
   <menupopup id="zotero-collectionmenu">
-    <menuitem label="&zotero.better-bibtex.show-collection-key;" oncommand="alert(serverURL(ZoteroPane_Local.collectionsView, '.biblatex') || '&zotero.better-bibtex.server.disabled;')"/>
+    <menuitem label="&zotero.better-bibtex.show-collection-key;" oncommand="alert(Zotero.BetterBibTeX.pref.serverURL('.biblatex') || '&zotero.better-bibtex.server.disabled;')"/>
 	</menupopup>
 
   <menupopup id="zotero-itemmenu">
@@ -27,11 +27,11 @@
 	</menupopup>
 
   <!-- treecols id="zotero-items-columns-header">
-    <treecol insertafter="zotero-items-column-extra" id="zotero-items-column-citekey" hidden="true" label="&zotero.better-bibtex.citekey_column;" flex="1" zotero-persist="width ordinal hidden sortActive sortDirection"/>
+    <treecol insertafter="zotero-items-column-extra" id="zotero-betterbibtex-citekey-col" hidden="true" label="&zotero.better-bibtex.citekey_column;" flex="1" zotero-persist="width ordinal hidden sortActive sortDirection"/>
   </treecols -->
 	
 	<!-- Include the main extension logic -->
 	<script src="chrome://zotero/content/include.js"/>
-	<script src="chrome://zotero-better-bibtex/content/include.js" type="application/javascript;version=1.8"/>
-	<script src="chrome://zotero-better-bibtex/content/preferences.js" type="application/javascript;version=1.8"/>
+  <script src="chrome://zotero-better-bibtex/content/include.js"/>
+  <script src="chrome://zotero-better-bibtex/content/preferences.js"/><!-- needs to be included every time anew to bind windows and document -->
 </overlay>

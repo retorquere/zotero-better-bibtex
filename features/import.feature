@@ -6,10 +6,11 @@ Scenario: Better BibTeX Import 1
   When I import 1 reference with 1 attachment from 'import/Better BibTeX.001.bib'
   Then the library should match 'import/Better BibTeX.001.json'
 
-@bbtx-i-2
+@bbtx-i-2 @schomd-citation
 Scenario: Better BibTeX Import 2
   When I import 2 references from 'import/Better BibTeX.002.bib'
   Then the library should match 'import/Better BibTeX.002.json'
+  And the markdown citation for Torre2008 should be '["\\(Torre & Verducci, 2008\\)"]'
 
 @bbtx-i-3
 Scenario: Better BibTeX Import 3
@@ -35,6 +36,14 @@ Scenario: Better BibTeX Import 6
 Scenario: Better BibTeX Import 7
   When I import 1 reference from 'import/Better BibTeX.007.bib'
   Then the library should match 'import/Better BibTeX.007.json'
+
+@100
+Scenario: option to mantain the braces and special commands in titles or all fields #100
+  When I set preference translators.better-bibtex.raw-imports to true
+   And I set export option Export Collections to false
+  When I import 1 reference from 'import/Better BibTeX.007.bib'
+  Then the library should match 'import/Better BibTeX.007.raw.json'
+   And a library export using 'Better BibTeX' should match 'import/Better BibTeX.007.bib'
 
 @bbtx-i-8
 Scenario: Better BibTeX Import 8

@@ -19,7 +19,11 @@ class JSONRPCClient
     h = {"Content-Type" => "application/json"}
     Net::HTTP.start(@address.host, @address.port, :read_timeout => (15 * 60)) do |connection| # 15 minute read timeout for bulk export
       body = connection.post(@address.path, {:method => method.to_s, :params => params}.to_json, h).body
-      result = JSON.parse(body)
+      begin
+        result = JSON.parse(body)
+      rescue
+        throw "Unexpected #{body.inspect} when requesting #{method}(#{params.join(',')})"
+      end
     end
     if error = result["error"]
       raise JSONRPCError, error["message"]

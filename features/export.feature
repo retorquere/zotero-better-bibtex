@@ -1,7 +1,7 @@
 @export
 Feature: Export
 
-@e1
+@e1 @logcapture
 Scenario: Better BibLaTeX Export 1
   When I import 1 reference from 'export/Better BibLaTeX.001.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.001.bib'
@@ -11,7 +11,7 @@ Scenario: Pandoc Citation Export
   When I import 1 reference with 1 attachment from 'export/Pandoc Citation.001.json'
   Then a library export using 'Pandoc Citation' should match 'export/Pandoc Citation.001.txt'
 
-@e2
+@e2 @logcapture
 Scenario: Better BibLaTeX Export 2
   When I import 2 references from 'export/Better BibLaTeX.002.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.002.bib'
@@ -97,8 +97,8 @@ Scenario: Better BibLaTeX Export 17
    And I import 1 reference from 'export/Better BibLaTeX.017.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.017.bib'
 
-@bbtx-e-18
-Scenario: Better BibTeX Export 18
+@bbtx-e-18 @139
+Scenario: Better BibTeX Export 18 / spans without attributes break export #139
   When I import 1 reference from 'export/Better BibTeX.018.json'
   Then a library export using 'Better BibTeX' should match 'export/Better BibTeX.018.bib'
 
@@ -180,7 +180,7 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
 #@bulk
 #Scenario: Bulk import: performance work needed!
 #  When I import 2417 references with 52 attachments from 'export/Big whopping library.json'
-#  Then Export the library using 'Better BibLaTeX' to '/tmp/BWL.bib'
+#  Then export the library using 'Better BibLaTeX' to '/tmp/BWL.bib'
 #  Then write the Zotero log to 'zotero.log'
 
 @98
@@ -218,5 +218,63 @@ Scenario: Hang on non-file attachment export #112/URL export broken for fancy UR
 @113
 Scenario: Math parts in title #113
   When I import 1 references from 'export/Math parts in title #113.json'
-  #Then export the library using 'Better BibLaTeX' to '/tmp/bib.bib'
   Then a library export using 'Better BibLaTeX' should match 'export/Math parts in title #113.bib'
+
+@117
+Scenario: Bibtex key regenerating issue when trashing items #117
+  When I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json'
+  And I select the first item where publicationTitle = 'Genetics'
+  And I remove the selected item
+  And I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json' as 'Second Import.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Bibtex key regenerating issue when trashing items #117.bib'
+
+@malformed
+Scenario: Malformed HTML
+  When I import 1 reference from 'export/Malformed HTML.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Malformed HTML.bib'
+
+@127
+Scenario: Be robust against misconfigured journal abbreviator/html parser failure
+  When I import 1 reference from 'export/Be robust against misconfigured journal abbreviator #127.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Be robust against misconfigured journal abbreviator #127.bib'
+
+@130
+Scenario: Exporting of single-field author lacks braces #130
+  When I import 1 reference from 'export/Exporting of single-field author lacks braces #130.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Exporting of single-field author lacks braces #130.bib'
+
+@132
+Scenario: Export Newspaper Article misses section field #132
+  When I import 1 reference from 'export/Export Newspaper Article misses section field #132.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Export Newspaper Article misses section field #132.bib'
+
+@131
+Scenario: Omit URL export when DOI present. #131
+  When I import 3 references from 'export/Omit URL export when DOI present. #131.json'
+  And I set preference translators.better-bibtex.doi-and-url to 'both'
+  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.default.bib'
+  And I set preference translators.better-bibtex.doi-and-url to 'doi'
+  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-DOI.bib'
+  And I set preference translators.better-bibtex.doi-and-url to 'url'
+  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-url.bib'
+
+@133
+Scenario: Extra ';' in biblatexadata causes export failure #133
+  When I import 2 references from 'export/Extra semicolon in biblatexadata causes export failure #133.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Extra semicolon in biblatexadata causes export failure #133.bib'
+
+@140 @147
+Scenario: HTML Fragment separator escaped in url #140 / Specify custom reference type #147
+  When I import 1 reference from 'export/HTML Fragment separator escaped in url #140.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/HTML Fragment separator escaped in url #140.bib'
+
+@141
+Scenario: capital delta breaks .bib output #141
+  When I import 1 reference from 'export/capital delta breaks .bib output #141.json'
+  Then a library export using 'Better BibTeX' should match 'export/capital delta breaks .bib output #141.bib'
+
+@146
+Scenario: German Umlaut "separated" by brackets #146
+  When I import 1 reference with 1 attachment from 'export/German Umlaut "separated" by brackets #146.json'
+  Then export the library using 'Better BibLaTeX' to '/tmp/BWL.bib'
+  Then a library export using 'Better BibLaTeX' should match 'export/German Umlaut "separated" by brackets #146.bib'

@@ -3,6 +3,13 @@
 <!ENTITY zotero.better-bibtex.citekey.set "Generate BibTeX key">
 <!ENTITY zotero.better-bibtex.citekey.clear "Clear BibTeX key">
 <!ENTITY zotero.better-bibtex.preferences.prefpane.better-bibtex "Better Bib(La)Tex">
+
+<!ENTITY zotero.better-bibtex.prefs.citation "Citation">
+<!ENTITY zotero.better-bibtex.prefs.import-export "Import/Export">
+<!ENTITY zotero.better-bibtex.prefs.journal-abbrev "Journal abbreviations">
+
+<!ENTITY zotero.better-bibtex.show-citekey "Show citekey instead of 'extra' field in reference list (requires restart)">
+
 <!ENTITY zotero.better-bibtex.restart-required "Restart Required">
 <!ENTITY zotero.better-bibtex.preferences.recursive "Export collections recursively">
 <!ENTITY zotero.better-bibtex.cite.command "Citation command">
@@ -22,8 +29,9 @@
 <!ENTITY zotero.better-bibtex.fancyURLs "Clickable URLs">
 <!ENTITY zotero.better-bibtex.fancyURLs.warning "Wraps urls in a \href field -- not supported by all bibliography processors!">
 <!ENTITY zotero.better-bibtex.format-unique-warning "Caution: the default guarantees that each attachment has a unique filename. If you change the default, make sure the resulting filenames remain unique!">
-<!ENTITY zotero.better-bibtex.brace-all "Wrap all fields in double-braces">
+<!ENTITY zotero.better-bibtex.brace-all "Preserve capitalized words in BibTeX export">
 <!ENTITY zotero.better-bibtex.useprefix "Add 'useprefix' option to BibLaTeX export">
+<!ENTITY zotero.better-bibtex.raw-imports "Retain LaTeX markup on BibTeX import">
 <!ENTITY zotero.better-bibtex.langid "When exporting language information, use the conventions from">
 <!ENTITY zotero.better-bibtex.langid.babel "Babel">
 <!ENTITY zotero.better-bibtex.langid.polyglossia "Polyglossia">
@@ -33,3 +41,10 @@
 <!ENTITY zotero.better-bibtex.pin-citekeys.manual "No">
 <!ENTITY zotero.better-bibtex.pin-citekeys.on-change "On item change">
 <!ENTITY zotero.better-bibtex.pin-citekeys.on-export "On item export">
+<!ENTITY zotero.better-bibtex.pin-citekeys.key-conflict-policy "On conflict, non-pinned key should be">
+<!ENTITY zotero.better-bibtex.pin-citekeys.key-conflict-policy.change "changed (causes key changes)">
+<!ENTITY zotero.better-bibtex.pin-citekeys.key-conflict-policy.keep "kept (causes key duplicates)">
+<!ENTITY zotero.better-bibtex.doi-and-url "When a reference has both a DOI and an URL, export">
+<!ENTITY zotero.better-bibtex.doi-and-url.both "both">
+<!ENTITY zotero.better-bibtex.doi-and-url.DOI "DOI">
+<!ENTITY zotero.better-bibtex.doi-and-url.URL "URL">

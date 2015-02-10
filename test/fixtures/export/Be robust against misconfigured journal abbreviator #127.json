@@ -1,0 +1,71 @@
+{
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
+    "label": "Zotero TestCase",
+    "release": "0.6.63",
+    "preferences": {
+      "citeKeyFormat": "[auth][year]",
+      "skipfields": [
+        ""
+      ],
+      "useprefix": false,
+      "brace-all": true,
+      "fancyURLs": false,
+      "langid": "babel",
+      "attachmentRelativePath": false,
+      "auto-abbrev": true,
+      "auto-abbrev.style": "http://www.zotero.org/styles/american-physics-society",
+      "pin-citekeys": "manual",
+      "raw-imports": false
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "Export Collections": true
+    }
+  },
+  "collections": [],
+  "items": [
+    {
+      "itemID": 2028,
+      "itemType": "journalArticle",
+      "url": "http://www.sciencedirect.com/science/article/pii/0092640X85900166",
+      "volume": "32",
+      "issue": "1",
+      "pages": "1–155",
+      "publicationTitle": "Atomic data and nuclear data tables",
+      "date": "1985",
+      "extra": "bibtex: Yeh1985",
+      "accessDate": "2013-01-11 09:39:35",
+      "libraryCatalog": "Google Scholar",
+      "title": "Atomic subshell photoionization cross sections and asymmetry parameters: 1⩽< i> Z</i>⩽ 103",
+      "shortTitle": "Atomic subshell photoionization cross sections and asymmetry parameters",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J. J.",
+          "lastName": "Yeh",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "I.",
+          "lastName": "Lindau",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [],
+      "attachments": [
+        {
+          "path": "C:\\Users\\busse\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\krntet4f.default\\zotero\\storage\\JX2J6CEG\\Yeh1985.pdf",
+          "title": "Yeh1985.pdf",
+          "mimeType": "application/pdf",
+          "url": ""
+        }
+      ],
+      "tags": [],
+      "related": [],
+      "seeAlso": []
+    }
+  ]
+}
