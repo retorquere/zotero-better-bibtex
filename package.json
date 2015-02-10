@@ -1,17 +1,26 @@
 {
-  "name": "better-bibtex",
-  "version": "0.0.0",
-  "browserify": {
-    "transform": [
-      "liveify"
-    ]
+  "name": "zotero-better-bibtex",
+  "version": "0.6.61",
+  "private": true,
+  "description": "Better BibTeX support for Zotero",
+  "preferglobal": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ZotPlus/zotero-better-bibtex.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZotPlus/zotero-better-bibtex/issues"
+  },
   "dependencies": {
-    "livescript": "0.0.1",
-    "pegjs": "~0.8.0",
-    "liveify": "~0.4.0",
-    "sweet.js": "~0.7.1",
-    "browserify": "~6.1.0"
+    "coffee-script": "^1.8.0",
+    "coffeelint": "^1.6.1",
+    "coffeelint-no-implicit-returns": "0.0.4",
+    "pegjs": "^0.8.0",
+    "pegjs-coffee-plugin": "^0.2.2"
   }
 }

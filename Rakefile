@@ -15,14 +15,115 @@ require 'rubygems/package'
 require 'zlib'
 require 'open3'
 require 'yaml'
+require 'rake/loaders/makefile'
+
+NODEBIN="node_modules/.bin"
+
+LINTED=[]
+def expand(file, options={})
+  dependencies = []
+
+  #puts "expanding #{file.path.gsub(/^\.\//, '').inspect}"
+  if File.extname(file.path) == '.coffee' && !options[:collect] && !LINTED.include?(file.path)
+    sh "#{NODEBIN}/coffeelint #{file.path.shellescape}"
+    LINTED << file.path
+  end
+
+  src = file.read
+  src.gsub!(/(^|\n)require\s*\(?\s*'([^'\n]+)'[^\n]*/) {
+    all = $&
+    prefix = $1
+    tbi = $2.strip
+
+    if tbi =~ /\.js$/
+      #puts "registering #{tbi.inspect}"
+      result = all
+      tbi = File.join(File.dirname(file.path), tbi)
+      dependencies << tbi
+    elsif tbi == ':constants:'
+      dependencies << 'Rakefile'
+      #puts "expanding #{tbi.inspect}"
+      if options[:collect]
+        result = ''
+      else
+        throw "No header information present" unless options[:header]
+        result = []
+        result << "Translator.id              = #{options[:header]['translatorID'].to_json}"
+        result << "Translator.label           = #{options[:header]['label'].to_json}"
+        result << "Translator.timestamp       = #{options[:header]['lastUpdated'].to_json}"
+        result << "Translator.release         = #{RELEASE.to_json}"
+        result << "Translator.unicode_default = #{(!(((options[:header]['displayOptions'] || {})['exportCharset'] || 'ascii').downcase =~ /ascii/)).to_json}"
+        result = result.join("\n")
+      end
+    else
+      #puts "including #{tbi.inspect}"
+      tbi = File.join(File.dirname(file.path), tbi)
+      dependencies << tbi
+      result = File.file?(tbi) || !options[:collect] ? expand(open(tbi), options) : ''
+      if result.is_a?(Array)
+        dependencies << result[1]
+        result = result[0]
+      end
+    end
+    prefix + result
+  }
+  return [src, dependencies.flatten.uniq] if options[:collect]
+  return src
+end
+
+ZIPFILES = [
+  'chrome.manifest',
+  'chrome/content/zotero-better-bibtex/include.js',
+  'chrome/content/zotero-better-bibtex/overlay.xul',
+  'chrome/content/zotero-better-bibtex/preferences.js',
+  'chrome/content/zotero-better-bibtex/preferences.xul',
+  'chrome/content/zotero-better-bibtex/zotero-better-bibtex.js',
+  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
+  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.properties',
+  'chrome/skin/default/zotero-better-bibtex/overlay.css',
+  'chrome/skin/default/zotero-better-bibtex/prefs.png',
+  'defaults/preferences/defaults.js',
+  'install.rdf',
+  'resource/translators/Better BibLaTeX.js',
+  'resource/translators/Better BibTeX.js',
+  'resource/translators/LaTeX Citation.js',
+  'resource/translators/Pandoc Citation.js',
+  'resource/translators/Zotero TestCase.js',
+  'resource/translators/BibTeXAuxScanner.js',
+]
+
+SOURCES = [
+  'chrome/content/zotero-better-bibtex/Formatter.pegcoffee',
+  'chrome/content/zotero-better-bibtex/include.coffee',
+  'chrome/content/zotero-better-bibtex/overlay.xul',
+  'chrome/content/zotero-better-bibtex/preferences.coffee',
+  'chrome/content/zotero-better-bibtex/preferences.xul',
+  'chrome/content/zotero-better-bibtex/zotero-better-bibtex.coffee',
+  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
+  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.properties',
+  'chrome.manifest',
+  'chrome/skin/default/zotero-better-bibtex/overlay.css',
+  'chrome/skin/default/zotero-better-bibtex/prefs.png',
+  'defaults/preferences/defaults.coffee',
+  'install.rdf',
+  "#{NODEBIN}/coffee",
+  "#{NODEBIN}/coffeelint",
+  "#{NODEBIN}/pegjs",
+  'Rakefile',
+  'resource/translators/Better BibLaTeX.coffee',
+  'resource/translators/Better BibTeX.coffee',
+  'resource/translators/LaTeX Citation.coffee',
+  'resource/translators/latex_unicode_mapping.coffee',
+  'resource/translators/Pandoc Citation.coffee',
+  'resource/translators/Parser.pegcoffee',
+  'resource/translators/translator.coffee',
+  'resource/translators/unicode_translator.coffee',
+  'resource/translators/unicode.xml',
+  'resource/translators/Zotero TestCase.coffee',
+  'update.rdf',
+]
 
 FileUtils.mkdir_p 'tmp'
-
-UNICODE_MAPPING = "tmp/unicode.json"
-UNICODE_MAPPING_JS = "resource/translators/unicode_mapping.js"
-MD5 = {file: 'tmp/md5-0.0.0.js', url: 'http://crypto-js.googlecode.com/svn/tags/0.0.0/build/rollups/md5.js', version: '3.1.2'}
-SWEET = "sjs --readable-names"
-MACROS = 'sweet/macros.js'
 
 class String
   def shellescape
@@ -30,93 +131,63 @@ class String
   end
 end
 
-SOURCES = [
-  MD5[:file].sub('0.0.0', MD5[:version]),
-  Dir['./**/*.tjs'].collect{|f| f.sub(/\.tjs$/, '.js') },
-  Dir['./**/*.sjs'].collect{|f| f.sub(/\.sjs$/, '.js') },
-  Dir['./**/*.js'],
-  Dir['./**/*.pegjs'].collect{|f| f.sub(/\.pegjs$/, '.js') }
-].flatten.collect{|f| f.sub(/^\.\//, '') }.reject{|f| f =~ /^(sweet|www|node_modules|tmp|features)\// }.uniq.sort
 require 'zotplus-rakehelper'
-ZIPFILES = [
-  SOURCES.reject{|f| f =~ /(^resource\/)|(Parser\.js$)|(\..+js$)/ },
-  Dir['resource/translators/*.tjs'].collect{|f| f.sub(/\.tjs$/, '.js') }
-].flatten.uniq.sort
 
-rule '.js' => '.pegjs' do |t|
-  sh "pegjs -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{t.source} #{t.name}"
+rule '.js' => '.pegcoffee' do |t|
+  name = "tmp/#{File.basename(t.name)}"
+  source = "tmp/#{File.basename(t.source)}"
+  open(source, 'w'){|f| f.write(expand(open(t.source))) }
+  sh "#{NODEBIN}/pegjs --plugin pegjs-coffee-plugin -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{source} #{name}"
+  FileUtils.mv(name, t.name)
 end
 
-rule '.js' => ['.sjs', MACROS] do |t|
-  sh "#{SWEET} --module ./#{MACROS} --output #{t.name.shellescape} #{t.source.shellescape}"
-end
+rule '.js' => '.coffee' do |t|
+  header = t.source.sub(/\.coffee$/, '.yml')
+  if File.file?(header)
+    header = YAML.load_file(header)
+    header['lastUpdated'] = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
+  else
+    header = nil
+  end
 
-HAXE_TMP = File.expand_path('tmp/haxe')
-HAXE_SHARED = File.expand_path('www/haxe')
-HAXE_INCLUDES = []
-rule '.js' => ['.hx'] + HAXE_INCLUDES do |t|
-  sh "haxe --cwd #{File.dirname(File.expand_path(t.source)).shellescape} -cp #{HAXE_SHARED.shellescape} -cp #{HAXE_TMP.shellescape} -D js-classic -js #{File.basename(t.name).shellescape} #{File.basename(t.source).shellescape}"
-end
+  tmp = "tmp/#{File.basename(t.source)}"
+  open(tmp, 'w'){|f| f.write(expand(open(t.source), header: header)) }
+  puts "Compiling #{t.source}"
+  output, status = Open3.capture2e("#{NODEBIN}/coffee -mbpc #{tmp.shellescape}")
+  raise output if status.exitstatus != 0
 
-def expand(f)
-  src = f.read
-  %w{" '}.each{|q|
-    src.gsub!(/\/\/\s*@include\s*#{q}([^#{q}]+)#{q}/){
-      puts "Including #{$1.inspect}"
-      expand(open(File.join(File.dirname(f.path), $1)))
-    }
+  # include javascript generated from pegjs
+  output.gsub!(/(^|\n)require\('([^'\n]+\.js)'\);[^\n]*/) {
+    tbi = $2.strip
+    puts "Importing javascript: #{tbi}"
+    tbi = File.join(File.dirname(t.source), tbi)
+    open(tbi).read
   }
-  return src
+
+  #output, status = Open3.capture2e('uglifyjs', stdin_data: output)
+  #raise output if status.exitstatus != 0
+
+  open(t.name, 'w') {|target|
+    header = header ? JSON.pretty_generate(header) + "\n" : ''
+    target.write(header + output)
+  }
 end
 
-rule '.js' => ['.tjs', MACROS, UNICODE_MAPPING_JS, 'resource/translators/import.js', 'resource/translators/Parser.js', 'resource/translators/translator.js'] do |t|
-  js = File.open(t.source, 'r').read
-
-  header = nil
-  start = js.index('{')
-  length = 2
-  while start && length < 1024
-    begin
-      header = JSON.parse(js[start, length])
-      break
-    rescue JSON::ParserError
-      header = nil
-      length += 1
+task :newtest, [:kind, :name] do |t, args|
+  args[:name] =~ /#([0-9]+)/
+  tag = $1
+  open("features/#{args[:kind]}.feature", 'a') { |f|
+    f.puts("")
+    f.puts("@#{tag}") if tag
+    f.puts("Scenario: #{args[:name]}")
+    if args[:kind] == 'export'
+      f.puts("  When I import 1 reference from 'export/#{args[:name]}.json'")
+      f.puts("  Then a library export using 'Better BibLaTeX' should match 'export/#{args[:name]}.bib'")
+    else
+      f.puts("    When I import 1 reference from 'import/#{args[:name]}.bib'")
+      f.puts("    Then the library should match 'import/#{args[:name]}.json'")
     end
-  end
-
-  raise "No header in #{@template}" unless header
-
-  js = js[start + length, js.length]
-
-  timestamp = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
-  header['lastUpdated'] = timestamp
-  constants = "./tmp/sweet/#{File.basename(t.name, File.extname(t.name))}/header.sjs"
-  FileUtils.mkdir_p(File.dirname(constants))
-  open(constants, 'w') {|f|
-    f.write("
-      macro TranslatorInfo {
-        rule { $[.id] }         => { #{header['translatorID'].to_json} }
-        rule { $[.label] }      => { #{header['label'].to_json} }
-        rule { $[.timestamp] }  => { #{timestamp.to_json} }
-        rule { $[.release] }    => { #{RELEASE.to_json} }
-        rule { $[.unicode] }    => { #{(!(((header['displayOptions'] || {})['exportCharset'] || 'ascii').downcase =~ /ascii/)).to_json} }
-      }
-      export TranslatorInfo
-    ")
   }
-
-  expanded = "./tmp/sweet/#{File.basename(t.name, File.extname(t.name))}/expanded.sjs"
-  #Tempfile.open('bundle') do |bundle|
-  open(expanded, 'w') do |bundle|
-    bundle.write(expand(OpenStruct.new(path: t.source, read: js.dup)))
-    bundle.close
-    sh "#{SWEET} --module ./#{MACROS} --module #{constants.shellescape} --output #{t.name.shellescape} #{expanded.shellescape}"
-    src = JSON.pretty_generate(header) + "\n\n'use strict';\n" + open(t.name).read
-    open(t.name, 'w'){|f| f.write(src) }
-  end
-
-  FileUtils.cp(t.name, File.join('tmp', File.basename(t.name)))
 end
 
 task :test, [:tag] => XPI do |t, args|
@@ -139,7 +210,26 @@ task :test, [:tag] => XPI do |t, args|
     tag = "--tags #{tag}"
   end
 
-  system "cucumber #{tag} | tee cucumber.log" or throw 'One or more tests failed'
+  success = true
+  open('cucumber.log', 'w'){|log|
+    IO.popen("cucumber #{tag}"){|io|
+      io.each { |line|
+        log.write(line)
+        puts line.chomp
+      }
+      io.close
+      success = ($?.to_i == 0)
+    }
+  }
+  throw 'One or more tests failed' unless success
+end
+
+task :clean do
+  clean = Dir['**/*.js'].select{|f| f=~ /^(defaults|chrome|resource)\//} + Dir['tmp/*'].select{|f| File.file?(f) }
+  clean << 'resource/translators/latex_unicode_mapping.coffee'
+  clean.each{|f|
+    File.unlink(f)
+  }
 end
 
 task :dropbox => XPI do
@@ -148,51 +238,71 @@ task :dropbox => XPI do
   FileUtils.cp(XPI, File.join(dropbox, XPI))
 end
 
-#### GENERATED FILES
+file 'resource/translators/unicode.xml' do |t|
+  ZotPlus::RakeHelper.download('http://www.w3.org/2003/entities/2007xml/unicode.xml', t.name)
+end
 
-class Hash
- 
-  def deep_diff(b)
-    a = self
-    (a.keys | b.keys).inject({}) do |diff, k|
-      if (a[k] || []) != (b[k] || []) && (a[k] || '') != (b[k] || '')
-        if a[k].respond_to?(:deep_diff) && b[k].respond_to?(:deep_diff)
-          diff[k] = a[k].deep_diff(b[k])
-        elsif a[k].is_a?(Array) && b[k].is_a?(Array)
-          extra = a[k] - b[k]
-          missing = b[k] - a[k]
-          if extra.empty? && missing.empty?
-            diff[k] = {order: a[k]}
-          else
-            diff[k] = {missing: missing, extra: extra}
-          end
-        else
-          diff[k] = [a[k], b[k]]
-        end
-      end
-      diff
+file 'resource/translators/xregexp-all-min.js' do |t|
+  ZotPlus::RakeHelper.download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all-min.js', t.name)
+end
+
+file 'resource/translators/json5.js' do |t|
+  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js', t.name)
+end
+
+file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translators/unicode.xml', 'Rakefile'] do |t|
+  map = Nokogiri::XML(open(t.source))
+
+  map.at('//charlist') << "
+    <character id='U0026' dec='38' mode='text' type='punctuation'><latex>\\&</latex></character>
+    <character id='UFFFD' dec='239-191-189' mode='text' type='punctuation'><latex>\\dbend</latex></character>
+  "
+
+  {
+    "\\textdollar"        => "\\$",
+    "\\textquotedblleft"  => "``",
+    "\\textquotedblright" => "''",
+    "\\textasciigrave"    => "`",
+    "\\textquotesingle"   => "'",
+    "\\space"             => ' '
+  }.each_pair{|ist, soll|
+    nodes = map.xpath(".//latex[normalize-space(text())='#{ist}']")
+    next unless nodes
+    nodes.each{|node| node.content = soll }
+  }
+
+  mapping = {}
+  map.xpath('//character[@dec and latex]').each{|char|
+    id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
+    key = id.pack('U' * id.size)
+    value = char.at('.//latex').inner_text
+    mathmode = (char['mode'] == 'math')
+
+    case key
+      when '[', ']'
+        value = "{#{key}}"
+        mathmode = false
+      when '_', '}', '{'
+        value = "\\" + key
+        mathmode = false
+      when "\u00A0"
+        value = ' '
+        mathmode = false
     end
-  end
- 
-end
 
-file MD5[:file].sub('0.0.0', MD5[:version]) do
-  Dir[MD5[:file].sub('0.0.0', '*')].each{|f| File.unlink?(f) }
-  ZotPlus::RakeHelper.download(MD5[:url].sub('0.0.0', MD5[:version]), MD5[:file].sub('0.0.0', MD5[:version]))
-end
+    next if key =~ /^[\x20-\x7E]$/ && ! %w{# $ % & ~ _ ^ { } [ ] > < \\}.include?(key)
+    next if key == value && !mathmode
 
-file UNICODE_MAPPING_JS => UNICODE_MAPPING do |t|
-  mapping = JSON.parse(open(t.source).read)
+    # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to 
+    # \combinecommand{X}
+    #raise value if value =~ /LECO/
+
+    mapping[key] = OpenStruct.new({latex: value, math: mathmode})
+  }
 
   u2l = {
-    unicode: {
-      math: [],
-      map: {}
-    },
-    ascii: {
-      math: [],
-      map: {}
-    }
+    unicode: OpenStruct.new({ math: [], map: {} }),
+    ascii: OpenStruct.new({ math: [], map: {} })
   }
 
   l2u = { }
@@ -202,8 +312,8 @@ file UNICODE_MAPPING_JS => UNICODE_MAPPING do |t|
     # \combinecommand{X}
     #raise value if value =~ /LECO/
 
-    latex = [repl['latex']]
-    case repl['latex']
+    latex = [repl.latex]
+    case repl.latex
       when /^(\\[a-z][^\s]*)\s$/i, /^(\\[^a-z])\s$/i  # '\ss ', '\& ' => '{\\s}', '{\&}'
         latex << "{#{$1}}"
       when /^(\\[^a-z]){(.)}$/                       # '\"{a}' => '\"a'
@@ -232,106 +342,42 @@ file UNICODE_MAPPING_JS => UNICODE_MAPPING do |t|
     }
 
     if key =~ /^[\x20-\x7E]$/ # an ascii character that needs translation? Probably a TeX special character
-      u2l[:unicode][:map][key] = latex[0]
-      u2l[:unicode][:math] << key if repl['math']
+      u2l[:unicode].map[key] = latex[0]
+      u2l[:unicode].math << key if repl.math
     end
 
-    u2l[:ascii][:map][key] = latex[0]
-    u2l[:ascii][:math] << key if repl['math']
+    u2l[:ascii].map[key] = latex[0]
+    u2l[:ascii].math << key if repl.math
 
     latex.each{|ltx|
       l2u[ltx] = key if ltx =~ /\\/
     }
   }
 
-  [:ascii, :unicode].each{|map|
-    u2l[map][:math] = '/(' + u2l[map][:math].collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('|') + ')/g'
-    u2l[map][:text] = '/' + u2l[map][:map].keys.collect{|key| key.gsub(/([\\\^\$\.\|\?\*\+\(\)\[\]\{\}])/, '\\\\\1') }.join('|') + '/g'
+  l2u["\\url"] = '';
+  l2u["\\href"] = '';
+
+  cs = []
+  cs << "LaTeX.toLaTeX = { unicode: Object.create(null), ascii: Object.create(null) }"
+  [:unicode, :ascii].each{|map|
+    cs << "LaTeX.toLaTeX.#{map}.math ="
+    u2l[map].map.each_pair{|k, v|
+    cs << "  #{k.inspect}: #{v.inspect}" if u2l[map].math.include?(k)
+    }
+    cs << "LaTeX.toLaTeX.#{map}.text ="
+    u2l[map].map.each_pair{|k, v|
+    cs << "  #{k.inspect}: #{v.inspect}" unless u2l[map].math.include?(k)
+    }
   }
 
-  open(t.name, 'w'){|f|
-    f.write("
-      var LaTeX = {
-        regex: {
-          unicode: {
-            math: #{u2l[:unicode][:math]},
-            text: #{u2l[:unicode][:text]}
-          },
-
-          ascii: {
-            math: #{u2l[:ascii][:math]},
-            text: #{u2l[:ascii][:text]}
-          }
-        },
-
-        toLaTeX: #{JSON.pretty_generate(u2l[:ascii][:map])},
-        toUnicode: #{JSON.pretty_generate(l2u)}
-      };
-    ")
+  cs << 'LaTeX.toUnicode ='
+  l2u.each_pair{|k, v|
+  cs << "  #{k.inspect}: #{v.inspect}"
   }
-end
 
-file UNICODE_MAPPING => 'Rakefile' do |t|
-  begin
-    xml = File.join(File.dirname(t.name), File.basename(t.name, File.extname(t.name)) + '.xml')
-    ZotPlus::RakeHelper.download('http://web.archive.org/web/20131109072541/http://www.w3.org/2003/entities/2007xml/unicode.xml', xml)
+  cs << ''
 
-    mapping = Nokogiri::XML(open(xml))
-    puts mapping.errors
-
-    mapping.at('//charlist') << "
-      <character id='U0026' dec='38' mode='text' type='punctuation'><latex>\\&</latex></character>
-      <character id='UFFFD' dec='239-191-189' mode='text' type='punctuation'><latex>\\dbend</latex></character>
-    "
-
-    {
-      "\\textdollar"        => "\\$",
-      "\\textquotedblleft"  => "``",
-      "\\textquotedblright" => "''",
-      "\\textasciigrave"    => "`",
-      "\\textquotesingle"   => "'",
-      "\\space"             => ' '
-    }.each_pair{|ist, soll|
-      nodes = mapping.xpath(".//latex[normalize-space(text())='#{ist}']")
-      next unless nodes
-      nodes.each{|node| node.content = soll }
-    }
-
-    json = {}
-    mapping.xpath('//character[@dec and latex]').each{|char|
-      id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
-      key = id.pack('U' * id.size)
-      value = char.at('.//latex').inner_text
-      mathmode = (char['mode'] == 'math')
-
-      case key
-        when '[', ']'
-          value = "{#{key}}"
-          mathmode = false
-        when '_', '}', '{'
-          value = "\\" + key
-          mathmode = false
-        when "\u00A0"
-          value = ' '
-          mathmode = false
-      end
-
-      next if key =~ /^[\x20-\x7E]$/ && ! %w{# $ % & ~ _ ^ { } [ ] > < \\}.include?(key)
-      next if key == value && !mathmode
-
-      # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to 
-      # \combinecommand{X}
-      #raise value if value =~ /LECO/
-
-      json[key] = {latex: value, math: mathmode}
-    }
-
-    #File.open(t.name,'w') {|f| mapping.write_xml_to f}
-    File.open(t.name,'w') {|f| f.write(json.to_json) }
-  rescue => e
-    File.rename(t.name, t.name + '.err') if File.exists?(t.name)
-    throw e
-  end
+  open(t.name, 'w'){|f| f.write(cs.join("\n")) }
 end
 
 task :markfailing do
@@ -360,7 +406,7 @@ task :markfailing do
       lineno = i + 1
       throw "untagged #{file}@#{lineno}: #{line}" if lines.include?(lineno) && !tags[lineno - 1]
 
-      if line !~ /^@/
+      if line !~ /^@/ && line.strip != ''
         script += line
         next
       end
@@ -381,107 +427,32 @@ task :markfailing do
   }
 end
 
-### UTILS
+file '.depends.mf' => SOURCES do |t|
+  open(t.name, 'w'){|dmf|
+    dependencies = {}
 
-task :macros do
-  output = 'tmp/macros-test.js'
-  sh "#{SWEET} --module ./#{MACROS} --output #{output} #{File.join(File.dirname(MACROS), 'tests.js')}"
-  sh "jshint #{output}"
-end
+    t.prerequisites.each{|src|
+      next unless File.extname(src) == '.coffee' || File.extname(src) == '.pegcoffee'
+      js = File.join(File.dirname(src), File.basename(src, File.extname(src)) + '.js')
 
-task :fields do
-  fields = IO.readlines('../zotero/chrome/locale/en-US/zotero/zotero.properties').collect{|line|
-    m = line.match(/itemFields\.([a-zA-Z]+)/)
-    if m
-      m[1]
-    else
-      nil
-    end
-  }.compact
-  fields << 'month'
-  fields.sort!{|a, b| a.downcase <=> b.downcase}
-  fieldwidth = fields.collect{|f| f.size}.max
+      dependencies[src] ||= []
+      dependencies[src] << js
 
-  columns = 4
-  puts '| ' + ([' ' * fieldwidth] * columns).join(' | ') + ' |'
-  puts '| ' + (['-' * fieldwidth] * columns).join(' | ') + ' |'
-  fields.each_slice(columns){|row|
-    puts '| ' + (row + ([''] * columns))[0..columns-1].collect{|f| f.ljust(fieldwidth) }.join(' | ') + ' |'
-  }
-end
-
-task :abbrevs do
-  dbname = "tmp/abbreviations.sqlite"
-  File.unlink(dbname) if File.file?(dbname)
-  db = SQLite3::Database.new(dbname)
-  db.execute('PRAGMA temp_store=MEMORY;')
-  db.execute('PRAGMA journal_mode=MEMORY;')
-  db.execute('PRAGMA synchronous = OFF;')
-
-  db.execute('create table journalAbbreviationLists (id primary key, name unique, precedence not null)')
-  db.execute('create table journalAbbreviations (list not null, full not null, abbrev not null, primary key(list, full))');
-
-  # more candidates:
-  # http://journal-abbreviations.library.ubc.ca/dump.php
-  # http://www.ncbi.nlm.nih.gov/books/NBK3827/table/pubmedhelp.pubmedhelptable45/
-  # http://www.cas.org/content/references/corejournals
-  # http://www.efm.leeds.ac.uk/~mark/ISIabbr/
-  # http://www.csa.com/factsheets/supplements/ipa.php
-
-  lists = Nokogiri::HTML(ZotPlus::RakeHelper.geturl('http://jabref.sourceforge.net/resources.php'))
-  main = lists.at_css('div#main')
-  main.children.each{|child|
-    break if child.name == 'h3' && child['id'] == 'availablelists'
-    child.unlink
-  }
-  main.at_css('ul').css('li').each_with_index{|li, id|
-    link = li.at_css('a')
-    title = link.inner_text
-    href = link['href']
-
-    db.execute('insert into journalAbbreviationLists (id, name, precedence) values (?, ?, ?)', id, title, id)
-
-    href = "http://jabref.sourceforge.net/#{href}" unless href =~ /https?:\/\//
-    tgt = "tmp/abbreviations/#{id.to_s.rjust(2,'0')}-#{href.sub(/.*\//, '')}"
-    ZotPlus::RakeHelper.download(href, tgt)
-  }
-  Dir["#tmp/abbreviations/*"].sort.each{|a|
-    puts "importing #{a}"
-    id = File.basename(a).sub(/-.*/, '').gsub(/^0+/, '')
-    id = '0' if id == ''
-    id = Integer(id)
-
-    IO.readlines(a).each{|line|
-      begin
-        next if line =~ /^#/
-        next unless line =~ /=/
-        full, abbr = *(line.split('=', 2).collect{|v| v.strip})
-        abbr.sub!(/;.*/, '')
-        next if full.downcase == abbr.downcase
-        db.execute('insert or ignore into journalAbbreviations (list, full, abbrev) values (?, ?, ?)', id, full.downcase, abbr)
-      rescue ArgumentError
+      yml = File.join(File.dirname(src), File.basename(src, File.extname(src)) + '.yml')
+      if File.file?(yml)
+        dependencies[yml] ||= []
+        dependencies[yml] << js
       end
-    }
-  }
-  puts "#{db.get_first_value('select count(*) from journalAbbreviations')} abbreviations"
-  db.close
 
-  File.open('resource/abbreviations.sql', 'w'){|f|
-    StringIO.new(`sqlite3 #{dbname} .dump`).readlines.each{|line|
-      next unless line =~ /^(CREATE|INSERT)/
-      line.sub!(/^CREATE TABLE /, 'CREATE TABLE betterbibtex.')
-      line.sub!(/^INSERT INTO "([^"]+)"/, "INSERT INTO betterbibtex.\\1")
-      f.write(line)
+      expand(open(src), collect: true)[1].each{|dep|
+        dependencies[dep] ||= []
+        dependencies[dep] << js
+      }
+    }
+
+    dependencies.each_pair{|dependency, dependants|
+      dmf.write("#{dependants.uniq.sort.collect{|d| d.shellescape }.join(' ')} : #{dependency.shellescape}\n")
     }
   }
 end
-
-def format(m)
-  rjust = 'WARNING'.length
-  indent = ' ' * (rjust + ': '.length)
-
-  level = m.level.rjust(rjust, ' ')
-  msg = m.message.strip.gsub("\n", "\n" + indent)
-
-  "#{level}: #{msg}"
-end
+import '.depends.mf'

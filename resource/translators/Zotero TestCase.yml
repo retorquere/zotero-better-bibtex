@@ -1,0 +1,16 @@
+translatorID: "82512813-9edb-471c-aebc-eeaaf40c6cf9"
+label: "Zotero TestCase"
+creator: "Emiliano Heyns"
+target: json
+minVersion: "3.0b3"
+maxVersion: ""
+priority: 100
+configOptions: 
+  getCollections: true
+displayOptions: 
+  exportNotes: true
+  exportFileData: false
+  "Export Collections": true
+inRepository: true
+translatorType: 3
+browserSupport: gcsv

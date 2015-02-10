@@ -1,0 +1,68 @@
+{
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
+    "label": "Zotero TestCase",
+    "release": "0.7.1",
+    "preferences": {
+      "citeKeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize]",
+      "skipfields": [
+        "abstract",
+        "note"
+      ],
+      "useprefix": false,
+      "brace-all": true,
+      "fancyURLs": false,
+      "langid": "babel",
+      "attachmentRelativePath": false,
+      "auto-abbrev": true,
+      "auto-abbrev.style": "http://www.zotero.org/styles/elsevier-harvard",
+      "pin-citekeys": "manual",
+      "raw-imports": false
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false,
+      "Export Collections": false
+    }
+  },
+  "collections": [],
+  "items": [
+    {
+      "itemID": 1348,
+      "itemType": "newspaperArticle",
+      "url": "http://apps.infomedia.dk.ep.fjernadgang.kb.dk/Ms3E/ShowArticle.aspx?outputFormat=Full&Duid=e4798c41",
+      "pages": "12",
+      "publicationTitle": "Weekendavisen",
+      "date": "4/7/2014",
+      "section": "Ideer",
+      "accessDate": "2014-09-15 19:49:56",
+      "title": "Stikord til en hukommelse",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Anders",
+          "lastName": "Boas",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [],
+      "attachments": [
+        {
+          "path": "/home/sune/Dropbox/Articles//Boas/Boas - 2014 - Stikord til en hukommelse.pdf",
+          "title": "Boas - 2014 - Stikord til en hukommelse.pdf",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/home/sune/.zotero/zotero/nax5hz8z.default/zotero/storage/5888XQWP/ShowArticle.html",
+          "title": "Infomedia - Søgning",
+          "mimeType": "text/html",
+          "url": "http://apps.infomedia.dk.ep.fjernadgang.kb.dk/Ms3E/ShowArticle.aspx?outputFormat=Full&Duid=e4798c41"
+        }
+      ],
+      "tags": [],
+      "related": [],
+      "seeAlso": []
+    }
+  ]
+}
