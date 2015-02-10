@@ -16,6 +16,11 @@ Zotero.BetterBibTeX.log = (msg...) ->
   Zotero.debug("[better-bibtex] #{msg.join(' ')}")
   return
 
+Zotero.BetterBibTeX.reportErrors = ->
+  ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
+  io = {}
+  win = ww.openWindow(null, 'chrome://zotero-better-bibtex/content/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', io)
+
 Zotero.BetterBibTeX.pref = {}
 
 Zotero.BetterBibTeX.pref.prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.zotero.translators.better-bibtex.')
