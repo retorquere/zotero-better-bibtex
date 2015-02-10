@@ -250,6 +250,10 @@ file 'resource/translators/json5.js' do |t|
   ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js', t.name)
 end
 
+file 'chrome/content/zotero-better-bibtex/jsencrypt.min.js' do |t|
+  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/travist/jsencrypt/master/bin/jsencrypt.min.js', t.name)
+end
+
 file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translators/unicode.xml', 'Rakefile'] do |t|
   map = Nokogiri::XML(open(t.source))
 

@@ -4,6 +4,8 @@
 <!ENTITY zotero.better-bibtex.citekey.clear "Clear BibTeX key">
 <!ENTITY zotero.better-bibtex.preferences.prefpane.better-bibtex "Better Bib(La)Tex">
 
+<!ENTITY zotero-better-bibtex.reportErrors "Report ZotPlus Errors...">
+
 <!ENTITY zotero.better-bibtex.prefs.citation "Citation">
 <!ENTITY zotero.better-bibtex.prefs.import-export "Import/Export">
 <!ENTITY zotero.better-bibtex.prefs.journal-abbrev "Journal abbreviations">
