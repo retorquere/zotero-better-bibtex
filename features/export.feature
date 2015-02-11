@@ -240,17 +240,17 @@ Scenario: Be robust against misconfigured journal abbreviator/html parser failur
 
 @130
 Scenario: Exporting of single-field author lacks braces #130
-  When I import 1 reference from 'export/Exporting of single-field author lacks braces #130.json'
+  When I import 1 reference with 1 attachment from 'export/Exporting of single-field author lacks braces #130.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Exporting of single-field author lacks braces #130.bib'
 
-@132
+@failing @failing-1 @132
 Scenario: Export Newspaper Article misses section field #132
-  When I import 1 reference from 'export/Export Newspaper Article misses section field #132.json'
+  When I import 1 reference with 1 attachment from 'export/Export Newspaper Article misses section field #132.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Export Newspaper Article misses section field #132.bib'
 
-@131
+@failing @failing-2 @131
 Scenario: Omit URL export when DOI present. #131
-  When I import 3 references from 'export/Omit URL export when DOI present. #131.json'
+  When I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json'
   And I set preference translators.better-bibtex.doi-and-url to 'both'
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.default.bib'
   And I set preference translators.better-bibtex.doi-and-url to 'doi'
@@ -263,14 +263,14 @@ Scenario: Extra ';' in biblatexadata causes export failure #133
   When I import 2 references from 'export/Extra semicolon in biblatexadata causes export failure #133.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Extra semicolon in biblatexadata causes export failure #133.bib'
 
-@140 @147
+@failing @failing-3 @140 @147
 Scenario: HTML Fragment separator escaped in url #140 / Specify custom reference type #147
-  When I import 1 reference from 'export/HTML Fragment separator escaped in url #140.json'
+  When I import 1 reference with 1 attachment from 'export/HTML Fragment separator escaped in url #140.json'
   Then a library export using 'Better BibLaTeX' should match 'export/HTML Fragment separator escaped in url #140.bib'
 
 @141
 Scenario: capital delta breaks .bib output #141
-  When I import 1 reference from 'export/capital delta breaks .bib output #141.json'
+  When I import 1 reference with 1 attachment from 'export/capital delta breaks .bib output #141.json'
   Then a library export using 'Better BibTeX' should match 'export/capital delta breaks .bib output #141.bib'
 
 @146
