@@ -3,20 +3,25 @@
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 <?xml-stylesheet href="chrome://zotero/skin/errorReport.css" type="text/css"?>
 
-<!DOCTYPE window SYSTEM "chrome://zotero/locale/zotero.dtd">
+<!DOCTYPE window [
+  <!ENTITY % ZoteroDTD SYSTEM "chrome://zotero/locale/zotero.dtd">
+  %ZoteroDTD;
+  <!ENTITY % BBTDTD SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
+  %BBTDTD;
+]>
 
 <wizard xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 	id="zotero-error-report" title="&zotero.errorReport.title;"
 	width="550" height="450">
 	
-	<wizardpage onpageshow="Zotero_Error_Report.init()" label=" ">
+	<wizardpage onpageshow="Zotero_BetterBibTeX_ErrorReport.init()" label=" ">
 		<description id="zotero-failure-message"/>
 		<textbox id="zotero-error-message" class="plain" readonly="true" multiline="true" flex="1"/>
 		<description id="zotero-unrelated-message">&zotero.general.note; &zotero.errorReport.unrelatedMessages;</description>
 		<description id="zotero-advance-message"/>
 	</wizardpage>
 	
-	<wizardpage onpageshow="Zotero_Error_Report.sendErrorReport()" label=" ">
+	<wizardpage onpageshow="Zotero_BetterBibTeX_ErrorReport.sendErrorReport()" label=" ">
 		<description>&zotero.errorReport.submissionInProgress;</description>
 	</wizardpage>
 	
@@ -26,7 +31,12 @@
 			&zotero.errorReport.reportID;
 			<textbox id="zotero-report-id" class="plain" readonly="true"/>
 		</description>
-		<description>&zotero.errorReport.postToForums;</description>
-		<description>&zotero.errorReport.notReviewed;</description>
+		<description>&zotero.better-bibtex.errorReport.postToGitHub;</description>
+		<description>&zotero.better-bibtex.errorReport.notReviewed;</description>
 	</wizardpage>
+
+  <!-- Include the main extension logic -->
+  <script src="chrome://zotero/content/include.js"/>
+  <script src="chrome://zotero-better-bibtex/content/include.js"/>
+  <script src="chrome://zotero-better-bibtex/content/errorReport.js"/><!-- needs to be included every time anew to bind windows and document -->
 </wizard>

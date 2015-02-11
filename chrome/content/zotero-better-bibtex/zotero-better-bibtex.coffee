@@ -20,6 +20,7 @@ Zotero.BetterBibTeX.reportErrors = ->
   ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
   io = {}
   win = ww.openWindow(null, 'chrome://zotero-better-bibtex/content/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', io)
+  return
 
 Zotero.BetterBibTeX.pref = {}
 
@@ -406,4 +407,3 @@ require('keymanager.coffee')
 require('web-endpoints.coffee')
 require('schomd.coffee')
 require('debug-bridge.coffee')
-require('jsencrypt.min.js')

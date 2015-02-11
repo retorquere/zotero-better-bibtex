@@ -72,7 +72,8 @@ def expand(file, options={})
 end
 
 ZIPFILES = [
-  'chrome.manifest',
+  'chrome/content/zotero-better-bibtex/errorReport.js',
+  'chrome/content/zotero-better-bibtex/errorReport.xul',
   'chrome/content/zotero-better-bibtex/include.js',
   'chrome/content/zotero-better-bibtex/overlay.xul',
   'chrome/content/zotero-better-bibtex/preferences.js',
@@ -80,16 +81,18 @@ ZIPFILES = [
   'chrome/content/zotero-better-bibtex/zotero-better-bibtex.js',
   'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
   'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.properties',
+  'chrome.manifest',
   'chrome/skin/default/zotero-better-bibtex/overlay.css',
   'chrome/skin/default/zotero-better-bibtex/prefs.png',
   'defaults/preferences/defaults.js',
   'install.rdf',
+  'resource/error-reporting.pub.pem',
   'resource/translators/Better BibLaTeX.js',
   'resource/translators/Better BibTeX.js',
+  'resource/translators/BibTeXAuxScanner.js',
   'resource/translators/LaTeX Citation.js',
   'resource/translators/Pandoc Citation.js',
   'resource/translators/Zotero TestCase.js',
-  'resource/translators/BibTeXAuxScanner.js',
 ]
 
 SOURCES = [
@@ -171,6 +174,13 @@ rule '.js' => '.coffee' do |t|
     header = header ? JSON.pretty_generate(header) + "\n" : ''
     target.write(header + output)
   }
+end
+
+task :keys, [:size] do |t, args|
+  args[:size] ||= 1024
+
+  sh "openssl genrsa -out error-reporting.priv.pem #{args[:size]}"
+  sh "openssl rsa -pubout -in error-reporting.priv.pem -out resource/error-reporting.pub.pem"
 end
 
 task :newtest, [:kind, :name] do |t, args|
