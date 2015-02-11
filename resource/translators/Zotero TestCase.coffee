@@ -58,6 +58,8 @@ doImport = ->
     item = new Zotero.Item
     for own prop, value of i
       item[prop] = value
+    for att in item.attachments || []
+      delete att.path if att.url
     item.complete()
 
 doExport = ->
