@@ -349,10 +349,13 @@ Reference::add = (field) ->
         )
       value = "{#{value}}"
 
-  field.bibtex = "  #{field.name} = #{value}".normalize('NFKC')
+  field.bibtex = "  #{field.name} = #{value}"
+  field.bibtex = field.bibtex.normalize('NFKC') if @normalize
   @fields.push(field)
   @has[field.name] = true
   return
+
+Reference::normalize = (typeof(''.normalize) == 'function')
 
 Reference::complete = ->
   @add({name: 'type', value: @itemtype}) if @fields.length == 0
