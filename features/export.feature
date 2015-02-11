@@ -270,7 +270,7 @@ Scenario: HTML Fragment separator escaped in url #140 / Specify custom reference
 
 @141
 Scenario: capital delta breaks .bib output #141
-  When I import 1 reference with 1 attachment from 'export/capital delta breaks .bib output #141.json'
+  When I import 1 reference from 'export/capital delta breaks .bib output #141.json'
   Then a library export using 'Better BibTeX' should match 'export/capital delta breaks .bib output #141.bib'
 
 @146
