@@ -28,5 +28,4 @@
 	<!-- Include the main extension logic -->
 	<script src="chrome://zotero/content/include.js"/>
   <script src="chrome://zotero-better-bibtex/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/preferences.js"/><!-- needs to be included every time anew to bind windows and document -->
 </overlay>
