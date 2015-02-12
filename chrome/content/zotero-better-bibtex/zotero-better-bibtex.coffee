@@ -83,6 +83,7 @@ Zotero.BetterBibTeX.init = ->
                   join fields f on id.fieldID = f.fieldID
                   where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)"
 
+  @pref.prefs.clearUserPref('brace-all')
   @DB.query('create table if not exists _version_ (tablename primary key, version not null, unique (tablename, version))')
   @DB.query("insert or ignore into _version_ (tablename, version) values ('keys', 0)")
 

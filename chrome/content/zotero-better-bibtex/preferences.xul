@@ -20,7 +20,7 @@
         <preference id="pref-better-bibtex-server" name="extensions.zotero.httpServer.enabled" type="bool"/>
         <preference id="pref-better-bibtex-unicode" name="extensions.zotero.translators.better-bibtex.unicode" type="string"/>
         <preference id="pref-better-bibtex-fancyurls" name="extensions.zotero.translators.better-bibtex.fancyURLs" type="bool"/>
-        <preference id="pref-better-bibtex-brace-all" name="extensions.zotero.translators.better-bibtex.brace-all" type="bool"/>
+        <preference id="pref-better-bibtex-preserveCaps" name="extensions.zotero.translators.better-bibtex.preserveCaps" type="string"/>
         <preference id="pref-better-bibtex-useprefix" name="extensions.zotero.translators.better-bibtex.useprefix" type="bool"/>
         <preference id="pref-better-bibtex-langid" name="extensions.zotero.translators.better-bibtex.langid" type="string"/>
         <preference id="pref-better-bibtex-auto-abbrev" name="extensions.zotero.translators.better-bibtex.auto-abbrev" type="bool"/>
@@ -112,10 +112,15 @@
                     </radiogroup>
                   </row>
                   <row>
-                    <checkbox id="id-better-bibtex-preferences-useprefix" label="&zotero.better-bibtex.useprefix;" preference="pref-better-bibtex-useprefix"/>
+                    <label value="&zotero.better-bibtex.preserveCaps;"/>
+                    <radiogroup orient="vertical" preference="pref-better-bibtex-doi-and-url">
+                      <radio label="&zotero.better-bibtex.preserveCaps.inner;" value="inner"/>
+                      <radio label="&zotero.better-bibtex.preserveCaps.all;" value="all"/>
+                      <radio label="&zotero.better-bibtex.preserveCaps.no;" value="no"/>
+                    </radiogroup>
                   </row>
                   <row>
-                    <checkbox id="id-better-bibtex-preferences-brace-all" label="&zotero.better-bibtex.brace-all;" preference="pref-better-bibtex-brace-all" oncommand="Zotero.BetterBibTeX.pref.update();"/>
+                    <checkbox id="id-better-bibtex-preferences-useprefix" label="&zotero.better-bibtex.useprefix;" preference="pref-better-bibtex-useprefix"/>
                   </row>
                   <row>
                     <checkbox id="id-better-bibtex-preferences-fancyURLs" label="&zotero.better-bibtex.fancyURLs;" preference="pref-better-bibtex-fancyurls" oncommand="Zotero.BetterBibTeX.pref.update();"/>

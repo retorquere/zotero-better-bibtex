@@ -7,7 +7,7 @@ Translator = new class
       pattern: 'citeKeyFormat'
       skipFields: 'skipfields'
       usePrefix: 'useprefix'
-      braceAll: 'brace-all'
+      preserveCaps: 'preserveCaps'
       fancyURLs: 'fancyURLs'
       langid: 'langid'
       attachmentRelativePath: 'attachmentRelativePath'
@@ -314,7 +314,11 @@ Reference::esc_attachments = (f) ->
 
   return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
 
-Reference::preserveWordCaps = new XRegExp("\\b\\p{Letter}+\\p{Uppercase_Letter}\\p{Letter}*", 'g')
+Reference::preserveCaps = {
+  inner: new XRegExp("\\b\\p{Letter}+\\p{Uppercase_Letter}\\p{Letter}*", 'g')
+  all: new XRegExp("\\b\\p{Letter}*\\p{Uppercase_Letter}\\p{Letter}*", 'g')
+}
+Reference::initialCapOnly = new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}+$")
 
 Reference::add = (field) ->
   return if Translator.skipFields.indexOf(field.name) >= 0
@@ -326,26 +330,32 @@ Reference::add = (field) ->
   if typeof field.value == 'number'
     value = field.value
   else
-    field.preserveCaps = field.preserveCaps and Translator.braceAll
-    field.braces = (typeof field.braces == 'undefined') or field.braces or field.preserveCaps or field.value.match(/\s/)
-    Translator.log("Escaping #{field.name} with #{field.esc} (raw: #{@raw})")
     value = @["esc_#{field.esc || 'latex'}"](field, (if field.esc then false else @raw))
 
     return null unless value
 
-    if field.braces
-      if field.preserveCaps && !@raw
-        #value = XRegExp.replace(value, @preserveWordCaps, '{${0}}')
-        value = XRegExp.replace(value, @preserveWordCaps, (needle, pos, haystack) ->
-          Zotero.debug("Found needle #{JSON.stringify(needle)}")
-          backslashes = 0
+    unless field.bare && !field.value.match(/\s/)
+      if Translator.preserveCaps != 'no' && field.preserveCaps && !@raw
+        value = XRegExp.replace(value, @preserveCaps[Translator.preserveCaps], (needle, pos, haystack) ->
+          return needle if needle.length < 2 # don't escape single-letter capitals
+          return needle if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, Reference::initialCapOnly)
+
+          c = 0
           for i in [pos - 1 .. 0] by -1
             if haystack[i] == '\\'
-              backslashes++
+              c++
             else
               break
-          return "{#{needle}}" if backslashes % 2 == 0
-          return needle
+          return needle if c % 2 == 1 # don't enclose LaTeX command
+
+          c = 0
+          for ch in haystack.slice(0, pos).replace(/\\./, '')
+            switch ch
+              when '{' then c++
+              when '}' then c++
+          return needle if c > 0 # don't enclose if already enclosed
+
+          return "{#{needle}}"
         )
       value = "{#{value}}"
 

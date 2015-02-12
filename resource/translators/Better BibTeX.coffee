@@ -80,10 +80,10 @@ doExport = ->
           when primaryCreatorType         then authors.push(creatorString)
           else                                 collaborators.push(creatorString)
 
-      ref.add({ name: 'author', value: authors, sep: ' and ' })
-      ref.add({ name: 'editor', value: editors, sep: ' and ' })
-      ref.add({ name: 'translator', value: translators, sep: ' and ' })
-      ref.add({ name: 'collaborator', value: collaborators, sep: ' and ' })
+      ref.add({ name: 'author', value: authors, sep: ' and ', preserveCaps: true })
+      ref.add({ name: 'editor', value: editors, sep: ' and ', preserveCaps: true })
+      ref.add({ name: 'translator', value: translators, sep: ' and ', preserveCaps: true })
+      ref.add({ name: 'collaborator', value: collaborators, sep: ' and ', preserveCaps: true })
 
     if item.date
       date = Zotero.Utilities.strToDate(item.date)
@@ -91,7 +91,7 @@ doExport = ->
         ref.add({ name: 'year', value: item.date, preserveCaps: true })
       else
         if typeof date.month == 'number'
-          ref.add({ name: 'month', value: months[date.month], braces: false })
+          ref.add({ name: 'month', value: months[date.month], bare: true })
 
         ref.add({ name: 'year', value: date.year })
 
