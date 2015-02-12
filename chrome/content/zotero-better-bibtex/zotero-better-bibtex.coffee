@@ -16,10 +16,24 @@ Zotero.BetterBibTeX.log = (msg...) ->
   Zotero.debug("[better-bibtex] #{msg.join(' ')}")
   return
 
-Zotero.BetterBibTeX.reportErrors = ->
+Zotero.BetterBibTeX.reportErrors = (details) ->
+  switch details
+    when 'collection'
+      collectionsView = Zotero.getActiveZoteroPane()?.collectionsView
+      itemGroup = collectionsView?._getItemAtRow(collectionsView.selection?.currentIndex)
+      if itemGroup?.isCollection()
+        collection = collectionsView.getSelectedCollection()
+    when 'items'
+      win = @windowMediator.getMostRecentWindow('navigator:browser')
+      items = win.ZoteroPane.getSelectedItems()
+      if items?.length > 0
+        items = Zotero.Items.get(item.id for item in items) if items?.length > 0
+      else
+        items = null
+
+  io = {wrappedJSObject: {items: items, collection: collection}}
   ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
-  io = {}
-  win = ww.openWindow(null, 'chrome://zotero-better-bibtex/content/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', io)
+  ww.openWindow(null, 'chrome://zotero-better-bibtex/content/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', io)
   return
 
 Zotero.BetterBibTeX.pref = {}
@@ -305,8 +319,6 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions) ->
       when 'library' then translation.setItems(Zotero.Items.getAll(true, value))
       when 'items' then translation.setItems(value)
       when 'collection' then translation.setCollection(value)
-
-  translation.setCollection(items.collection) if items?.collection
 
   translation.setTranslator(translator)
   translation.setDisplayOptions(displayOptions)

@@ -32,6 +32,11 @@ Zotero_BetterBibTeX_ErrorReport = new class
       files: {'errorlog.txt': {content: document.getElementById('zotero-error-message').value } }
     }
 
+    details = window.arguments[0].wrappedJSObject
+    if details.items || details.collection
+      translator = Zotero.BetterBibTeX.getTranslator('Zotero TestCase')
+      errorData.files['references.json'] = {content: Zotero.BetterBibTeX.translate(translator, details, { exportCollections: false, exportNotes: true, exportFileData: false }) }
+
     Zotero.HTTP.doPost('https://api.github.com/gists', JSON.stringify(errorData), (xmlhttp) ->
       wizard = document.getElementById('zotero-error-report')
       return  unless wizard
