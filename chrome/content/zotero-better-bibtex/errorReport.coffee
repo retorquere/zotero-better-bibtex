@@ -16,7 +16,7 @@ Zotero_BetterBibTeX_ErrorReport = new class
       document.getElementById('zotero-error-message').value = logText
       continueButton.disabled = false
       continueButton.focus()
-      str = Zotero.getString('errorReport.advanceMessage', continueButton.getAttribute('label'))
+      str = Zotero.getString('errorReport.advanceMessage', continueButton.getAttribute('label')).replace('Zotero', 'ZotPlus')
       document.getElementById('zotero-advance-message').setAttribute('value', str)
       return
     )
