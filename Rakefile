@@ -96,6 +96,7 @@ ZIPFILES = [
 ]
 
 SOURCES = [
+  'chrome/content/zotero-better-bibtex/errorReport.coffee',
   'chrome/content/zotero-better-bibtex/Formatter.pegcoffee',
   'chrome/content/zotero-better-bibtex/include.coffee',
   'chrome/content/zotero-better-bibtex/overlay.xul',
