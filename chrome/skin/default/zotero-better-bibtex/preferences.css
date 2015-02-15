@@ -1,0 +1,6 @@
+#better-bibtex-export-list listheader { padding-left: 0px; }
+#better-bibtex-export-list listitem { padding-left: 20px; }
+#better-bibtex-export-list listitem.export-state-error    { background:url("ic_sync_disabled_24px.svg") center left no-repeat; background-size: 18px 18px;}
+#better-bibtex-export-list listitem.export-state-pending  { background:url("ic_timer_24px.svg")         center left no-repeat; background-size: 18px 18px;}
+#better-bibtex-export-list listitem.export-state-running  { background:url("ic_sync_24px.svg")          center left no-repeat; background-size: 18px 18px;}
+#better-bibtex-export-list listitem.export-state-done     { background:url("ic_done_24px.svg")          center left no-repeat; background-size: 18px 18px;}

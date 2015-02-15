@@ -212,6 +212,48 @@ Zotero.BetterBibTeX.init = ->
       return original.apply(this, arguments)
     )(Zotero.ItemTreeView.prototype.getCellText)
 
+  # monkey-patch Zotero.Translate.Base.prototype.translate to capture export data
+  Zotero.Translate.Base.prototype.translate = ((original) ->
+    return (libraryID, saveAttachments) ->
+      if @translator?[0] && @type == 'export' && @path && @_displayOptions?['Keep updated']
+        progressWin = new Zotero.ProgressWindow()
+        #progressWin.changeHeadline(Zotero.getString("save.link"));
+        progressWin.changeHeadline('Auto-export')
+
+        if !@_collection?._id
+          progressWin.addLines(['Auto-export only supported for collections'])
+
+        else
+          progressWin.addLines(["Collection #{@_collection._name} set up for auto-export"])
+          # I don't want 'Keep updated' to be remembered as a default
+          try
+            settings = JSON.parse(Zotero.Prefs.get('export.translatorSettings'))
+            if settings['Keep updated']
+              delete settings['Keep updated']
+              Zotero.Prefs.set('export.translatorSettings', JSON.stringify(settings));
+          catch
+
+          # data to define new auto-export
+          config = {
+            target: @path
+            collection: {id: @_collection?._id, name: @_collection._name}
+            context: new Zotero.BetterBibTeX.Context( { id: @translator[0].translatorID, label: @translator[0].label, options: @_displayOptions, preferences: Zotero.BetterBibTeX.pref.snapshot() } )
+          }
+          Zotero.BetterBibTeX.auto.add(config)
+
+        progressWin.show()
+        progressWin.startCloseTimer()
+
+      # add exportPath for relativizing export paths (#126)
+      if @_displayOptions && @translator?[0]
+        for own name, header of Zotero.BetterBibTeX.translators
+          if header.translatorID == @translator[0].translatorID
+            @_displayOptions.exportPath = @path
+            break
+
+      return original.apply(this, arguments)
+    )(Zotero.Translate.Base.prototype.translate)
+
   @schomd.init()
 
   nids = []
