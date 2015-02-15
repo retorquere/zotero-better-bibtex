@@ -12,6 +12,7 @@ displayOptions:
   exportFileData: false
   useJournalAbbreviation: false
   "Export Collections": true
+  "Keep updated": false
 inRepository: true
 translatorType: 3
 browserSupport: gcsv
