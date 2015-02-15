@@ -46,8 +46,6 @@ detectImport = ->
   return (data and data.config and data.config.id == Translator.id and data.items)
 
 doImport = ->
-  Translator.initialize()
-
   json = ''
   while (str = Zotero.read(0x100000)) != false
     json += str
@@ -65,7 +63,7 @@ doImport = ->
 doExport = ->
   Translator.initialize()
   data = {
-    config: Translator.config()
+    config: Translator.config
     collections: Translator.collections()
     items: []
   }

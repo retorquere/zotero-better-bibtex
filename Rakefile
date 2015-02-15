@@ -30,10 +30,20 @@ def expand(file, options={})
   end
 
   src = file.read
-  src.gsub!(/(^|\n)require\s*\(?\s*'([^'\n]+)'[^\n]*/) {
+  src.gsub!("$namespace$", options[:namespace]) if options[:namespace]
+  throw "No namespace expension performed on #{file.path} with #{options.inspect}" if src =~ /\$namespace\$/
+  options.delete(:namespace)
+  src.gsub!(/(^|\n)require\s*\(?\s*'([^'\n]+)'([^\n]*)/) {
     all = $&
     prefix = $1
     tbi = $2.strip
+    namespace = $3
+
+    if namespace =~ /\s*,\s*'([^'\n]+)'/
+      namespace = $1
+    else
+      namespace = nil
+    end
 
     if tbi =~ /\.js$/
       #puts "registering #{tbi.inspect}"
@@ -57,9 +67,10 @@ def expand(file, options={})
       end
     else
       #puts "including #{tbi.inspect}"
-      tbi = File.join(File.dirname(file.path), tbi)
-      dependencies << tbi
-      result = File.file?(tbi) || !options[:collect] ? expand(open(tbi), options) : ''
+      i = [File.join(File.dirname(file.path), tbi), File.join('include', tbi)].detect{|f| File.file?(f) }
+      throw "#{tbi} not found in #{file.path}" unless i
+      dependencies << i
+      result = File.file?(i) || !options[:collect] ? expand(open(i), options.merge(namespace: namespace)) : ''
       if result.is_a?(Array)
         dependencies << result[1]
         result = result[0]
@@ -82,8 +93,6 @@ ZIPFILES = [
   'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
   'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.properties',
   'chrome.manifest',
-  'chrome/skin/default/zotero-better-bibtex/overlay.css',
-  'chrome/skin/default/zotero-better-bibtex/prefs.png',
   'defaults/preferences/defaults.js',
   'install.rdf',
   'resource/error-reporting.pub.pem',
@@ -93,7 +102,7 @@ ZIPFILES = [
   'resource/translators/LaTeX Citation.js',
   'resource/translators/Pandoc Citation.js',
   'resource/translators/Zotero TestCase.js',
-]
+] + Dir['chrome/skin/**/*.*']
 
 SOURCES = [
   'chrome/content/zotero-better-bibtex/errorReport.coffee',
@@ -106,8 +115,6 @@ SOURCES = [
   'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
   'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.properties',
   'chrome.manifest',
-  'chrome/skin/default/zotero-better-bibtex/overlay.css',
-  'chrome/skin/default/zotero-better-bibtex/prefs.png',
   'defaults/preferences/defaults.coffee',
   'install.rdf',
   "#{NODEBIN}/coffee",
@@ -125,7 +132,7 @@ SOURCES = [
   'resource/translators/unicode.xml',
   'resource/translators/Zotero TestCase.coffee',
   'update.rdf',
-]
+] + Dir['chrome/skin/**/*.*']
 
 FileUtils.mkdir_p 'tmp'
 
@@ -238,6 +245,7 @@ end
 task :clean do
   clean = Dir['**/*.js'].select{|f| f=~ /^(defaults|chrome|resource)\//} + Dir['tmp/*'].select{|f| File.file?(f) }
   clean << 'resource/translators/latex_unicode_mapping.coffee'
+  clean << '.depends.mf'
   clean.each{|f|
     File.unlink(f)
   }
