@@ -346,7 +346,7 @@ ZoteroItem::import = (bibtex) ->
     keys.sort() if Translator.testmode
     biblatexdata = switch
       when @biblatexdatajson && Translator.testmode
-        'bibtex{' + (for own k in keys
+        'bibtex{' + (for k in keys
           o = {}
           o[k] = @biblatexdata[k]
           JSON5.stringify(o).slice(1, -1)
