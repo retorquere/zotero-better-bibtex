@@ -21,6 +21,8 @@ Translator.initialize = ->
   return if @initialized
   @initialized = true
 
+  @caching = Zotero.getHiddenPref('better-bibtex.caching') && @label.indexOf('Better ') == 0
+
   for own attr, f of @fieldMap or {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
@@ -68,6 +70,9 @@ Translator.initialize = ->
   for own attribute, key of Translator.Context::options
     @config.options[key] = Translator[attribute]
 
+  @context = new @Context(@config)
+  @log(":::cache context = #{@context}")
+
   return
 
 # The default collection structure passed is beyond screwed up.
@@ -100,6 +105,13 @@ Translator.nextItem = ->
   return unless item
 
   @initialize()
+
+  cached = if @caching then Zotero.BetterBibTeX.cache.fetch(@context, item.itemID) else null
+  @log(':::cache hit?', cached?.citekey)
+  if cached?.citekey
+    @citekeys[item.itemID] = cached.citekey
+    Zotero.write(cached.entry)
+    return @nextItem()
 
   #remove any citekey from extra -- the export doesn't need it
   Zotero.BetterBibTeX.keymanager.extract(item)
@@ -370,4 +382,7 @@ Reference::complete = ->
   ref += (field.bibtex for field in @fields).join(',\n')
   ref += '\n}\n\n'
   Zotero.write(ref)
+
+  @log(':::ref stores', ref)
+  Zotero.BetterBibTeX.cache.store(Translator.context, @item.itemID, @item.__citekey__, ref) if Translator.caching
   return

@@ -262,28 +262,30 @@ Zotero.BetterBibTeX.itemAdded = {
     return
 }
 
-Zotero.BetterBibTeX.itemChanged = {}
+Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
+  Zotero.BetterBibTeX.keymanager.reset()
 
-Zotero.BetterBibTeX.itemChanged.notify = (event, type, ids, extraData) ->
   switch event
     when 'delete'
-      for key in extraData
-        v = extraData[key]
-        i = {itemID: key}
-        Zotero.BetterBibTeX.clearKey(i, true)
+      break if extraData.length == 0
+
+      for id in extraData
+        Zotero.BetterBibTeX.clearKey({itemID: id}, true)
+
+      Zotero.BetterBibTeX.DB.query("delete from cache where itemid in (#{('' + id for id in extraData).join(',')})")
 
     when 'add', 'modify', 'trash'
-      break if ids.length is 0
+      break if ids.length == 0
 
       ids = '(' + ('' + id for id in ids).join(',') + ')'
 
-      Zotero.BetterBibTeX.keymanager.reset()
       Zotero.BetterBibTeX.DB.query("delete from keys where itemID in #{ids}")
       if event != 'trash'
         for item in Zotero.DB.query("#{Zotero.BetterBibTeX.findKeysSQL} and i.itemID in #{ids}") or []
           citekey = Zotero.BetterBibTeX.keymanager.extract({extra: item.extra})
           if Zotero.BetterBibTeX.pref.get('key-conflict-policy') == 'change'
             Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID, citekey])
+            Zotero.BetterBibTeX.DB.query('delete from cache where citekey = ?', [citekey])
           Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [ item.itemID, item.libraryID, citekey ])
 
         for item in Zotero.DB.query("select coalesce(libraryID, 0) as libraryID, itemID from items where itemID in #{ids}") or []
@@ -409,7 +411,7 @@ Zotero.BetterBibTeX.safeGetAll = ->
   return all
 
 Zotero.BetterBibTeX.safeGet = (ids) ->
-  return [] if ids.length is 0
+  return [] if ids.length == 0
   all = Zotero.Items.get(ids)
   if not all then return []
   return all
