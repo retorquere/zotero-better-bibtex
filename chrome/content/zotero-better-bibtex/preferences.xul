@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
-<?xml-stylesheet href="chrome://zotero-better-bibtex/skin/overlay.css" type="text/css"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://zotero-better-bibtex/skin/preferences.css"?>
+
 <!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
 
 <overlay id="zotero-better-bibtex-preferences"
