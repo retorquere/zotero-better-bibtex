@@ -20,7 +20,10 @@ Zotero.BetterBibTeX.keymanager.init = ->
   return @
 
 Zotero.BetterBibTeX.keymanager.reset = (hard) ->
-  Zotero.BetterBibTeX.DB.query('delete from keys') if hard
+  if hard
+    Zotero.BetterBibTeX.DB.query('delete from keys')
+    Zotero.BetterBibTeX.DB.query('delete from cache')
+
   @cache = Object.create(null)
   return
 
