@@ -350,7 +350,7 @@ ZoteroItem::import = (bibtex) ->
           o = {}
           o[k] = @biblatexdata[k]
           JSON5.stringify(o).slice(1, -1)
-        )+ '}'
+        ) + '}'
 
       when @biblatexdatajson
         "bibtex#{JSON5.stringify(@biblatexdata)}"
