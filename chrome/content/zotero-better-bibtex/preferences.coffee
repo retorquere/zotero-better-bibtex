@@ -26,8 +26,8 @@ Zotero.BetterBibTeX.pref.serverURL = (extension) ->
   return "http://localhost:#{serverPort}/better-bibtex/#{url}"
 
 Zotero.BetterBibTeX.pref.styleChanged = (index) ->
-  listbox = document.getElementById('better-bibtex-abbrev-style')
-  selectedItem = if index != 'undefined' then listbox.getItemAtIndex(index) else listbox.selectedItem
+  stylebox = document.getElementById('better-bibtex-abbrev-style')
+  selectedItem = if index != 'undefined' then stylebox.getItemAtIndex(index) else stylebox.selectedItem
   styleID = selectedItem.getAttribute('value')
   Zotero.BetterBibTeX.pref.set('auto-abbrev.style', styleID)
   Zotero.BetterBibTeX.keymanager.journalAbbrevCache = Object.create(null)
@@ -56,8 +56,8 @@ Zotero.BetterBibTeX.pref.update = ->
 
   styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
 
-  listbox = document.getElementById('better-bibtex-abbrev-style')
-  fillList = listbox.children.length is 0
+  stylebox = document.getElementById('better-bibtex-abbrev-style')
+  fillList = stylebox.children.length is 0
   selectedStyle = Zotero.BetterBibTeX.pref.get('auto-abbrev.style')
   selectedIndex = -1
   for style, i in styles
@@ -65,13 +65,13 @@ Zotero.BetterBibTeX.pref.update = ->
       itemNode = document.createElement('listitem')
       itemNode.setAttribute('value', style.styleID)
       itemNode.setAttribute('label', style.title)
-      listbox.appendChild(itemNode)
+      stylebox.appendChild(itemNode)
     if style.styleID is selectedStyle then selectedIndex = i
   if selectedIndex is -1 then selectedIndex = 0
   @styleChanged(selectedIndex)
 
   window.setTimeout((->
-    listbox.ensureIndexIsVisible(selectedIndex)
-    listbox.selectedIndex = selectedIndex
+    stylebox.ensureIndexIsVisible(selectedIndex)
+    stylebox.selectedIndex = selectedIndex
     return), 0)
   return
