@@ -124,10 +124,9 @@ Zotero.BetterBibTeX.init = ->
   Zotero.BetterBibTeX.keymanager.reset()
   @DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@pref.get('citeKeyFormat')])
 
-  @keymanager.init()
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     __exposedProps__: {keymanager: 'r'}
-    keymanager: @keymanager
+    keymanager: @keymanager.init()
   }
 
   @pref.observer.register()

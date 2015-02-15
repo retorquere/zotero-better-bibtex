@@ -10,7 +10,7 @@
             insertafter="zotero-prefpane-advanced"
             label="&zotero.better-bibtex.preferences.prefpane.better-bibtex;"
             image="chrome://zotero-better-bibtex/skin/bibtex.svg"
-            onpaneload="Zotero.BetterBibTeX.pref.update(document);"
+            onpaneload="Zotero.BetterBibTeX.pref.update();"
             >
       <preferences id="zotero-preferences-cite">
         <preference id="pref-better-bibtex-recursive" name="extensions.zotero.recursiveCollections" type="bool"/>

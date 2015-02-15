@@ -54,7 +54,7 @@ Zotero.BetterBibTeX.pref.update = ->
   document.getElementById('id-zotero-better-bibtex-recursive-warning').setAttribute('hidden', not document.getElementById('id-better-bibtex-preferences-getCollections').checked)
   document.getElementById('id-better-bibtex-preferences-fancyURLs-warning').setAttribute('hidden', not document.getElementById('id-better-bibtex-preferences-fancyURLs').checked)
 
-  styles = Zotero.Styles.getVisible().filter((style) -> style.usesAbbreviation)
+  styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
 
   listbox = document.getElementById('better-bibtex-abbrev-style')
   fillList = listbox.children.length is 0
