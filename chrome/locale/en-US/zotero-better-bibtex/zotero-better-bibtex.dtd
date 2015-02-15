@@ -56,3 +56,18 @@
 
 <!ENTITY zotero.better-bibtex.errorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/ZotPlus/zotero-better-bibtex/issues) with this Report ID, a description of the problem, and any steps necessary to reproduce it.">
 <!ENTITY zotero.better-bibtex.errorReport.notReviewed "Error reports can not reviewed unless referred to in the GitHub issue tracker.">
+
+<!ENTITY zotero.better-bibtex.caching "Cache activity">
+
+<!ENTITY zotero.better-bibtex.prefs.auto-export "Automatic Export">
+<!ENTITY zotero.better-bibtex.prefs.auto-export.off "Disabled">
+<!ENTITY zotero.better-bibtex.prefs.auto-export.immediate "On Change">
+<!ENTITY zotero.better-bibtex.prefs.auto-export.idle "When Idle">
+<!ENTITY zotero.better-bibtex.preferences.auto-export.config "Export Configuration">
+<!ENTITY zotero.better-bibtex.auto-export.charset "Character encoding">
+<!ENTITY zotero.better-bibtex.auto-export.notes "Notes">
+<!ENTITY zotero.better-bibtex.auto-export.collection "Collection">
+<!ENTITY zotero.better-bibtex.auto-export.target "Output file">
+<!ENTITY zotero.better-bibtex.auto-export.translator "Translator">
+
+
