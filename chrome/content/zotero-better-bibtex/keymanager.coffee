@@ -17,6 +17,7 @@ Zotero.BetterBibTeX.keymanager.init = ->
   }
   for own key, value of @__exposedProps__
     @[key].__exposedProps__ = []
+  return @
 
 Zotero.BetterBibTeX.keymanager.reset = (hard) ->
   Zotero.BetterBibTeX.DB.query('delete from keys') if hard
