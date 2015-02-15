@@ -113,7 +113,7 @@
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.preserveCaps;"/>
-                    <radiogroup orient="vertical" preference="pref-better-bibtex-doi-and-url">
+                    <radiogroup orient="vertical" preference="pref-better-bibtex-preserveCaps">
                       <radio label="&zotero.better-bibtex.preserveCaps.inner;" value="inner"/>
                       <radio label="&zotero.better-bibtex.preserveCaps.all;" value="all"/>
                       <radio label="&zotero.better-bibtex.preserveCaps.no;" value="no"/>
