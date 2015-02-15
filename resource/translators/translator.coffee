@@ -3,31 +3,10 @@ Translator = new class
     @citekeys = Object.create(null)
     @attachmentCounter = 0
     @rawLaTag = '#LaTeX'
-    @preferences = {
-      pattern: 'citeKeyFormat'
-      skipFields: 'skipfields'
-      usePrefix: 'useprefix'
-      preserveCaps: 'preserveCaps'
-      fancyURLs: 'fancyURLs'
-      langid: 'langid'
-      attachmentRelativePath: 'attachmentRelativePath'
-      autoAbbrev: 'auto-abbrev'
-      autoAbbrevStyle: 'auto-abbrev.style'
-      unicode: 'unicode'
-      pinKeys: 'pin-citekeys'
-      rawImport: 'raw-imports'
-      DOIandURL: 'doi-and-url'
-    }
-    @options = {
-      useJournalAbbreviation: 'useJournalAbbreviation'
-      exportCharset: 'exportCharset'
-      exportFileData: 'exportFileData'
-      exportNotes: 'exportNotes'
-      exportCollections: 'Export Collections'
-    }
     @BibLaTeXDataFieldMap = Object.create(null)
 
 require(':constants:')
+require('context.coffee', 'Translator')
 
 # Zotero ships with a lobotomized version
 require('xregexp-all-min.js')
@@ -38,22 +17,6 @@ Translator.log = (msg...) ->
   Zotero.debug("[better-bibtex:#{@label}] #{msg}")
   return true
 
-Translator.config = ->
-  config = Object.create(null)
-  config.id = @id
-  config.label = @label
-  config.release = @release
-  config.preferences = Object.create(null)
-  config.options = Object.create(null)
-
-  for own attribute, key of @preferences
-    config.preferences[key] = Translator[attribute]
-
-  for own attribute, key of @options
-    config.options[key] = Translator[attribute]
-
-  return config
-
 Translator.initialize = ->
   return if @initialized
   @initialized = true
@@ -61,12 +24,12 @@ Translator.initialize = ->
   for own attr, f of @fieldMap or {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
-  for own attribute, key of @preferences
+  for own attribute, key of Translator.Context::preferences
     Translator[attribute] = Zotero.getHiddenPref("better-bibtex.#{key}")
   @skipFields = (field.trim() for field in @skipFields.split(','))
   @testmode = Zotero.getHiddenPref('better-bibtex.testmode')
 
-  for own attribute, key of @options
+  for own attribute, key of Translator.Context::options
     Translator[attribute] = Zotero.getOption(key)
   @exportCollections = if typeof @exportCollections == 'undefined' then true else @exportCollections
 
@@ -74,8 +37,6 @@ Translator.initialize = ->
     when 'always' then @unicode = true
     when 'never'  then @unicode = false
     else @unicode = @unicode_default or (@exportCharset and @exportCharset.toLowerCase() == 'utf-8')
-
-  @log("Translator: #{JSON.stringify(@config())}")
 
   if @typeMap
     typeMap = @typeMap
@@ -93,6 +54,21 @@ Translator.initialize = ->
 
       for type in zotero
         @typeMap.Zotero2BibTeX[type] ?= bibtex[0]
+
+  @config = Object.create(null)
+  @config.id = @id
+  @config.label = @label
+  @config.release = @release
+  @config.preferences = Object.create(null)
+  @config.options = Object.create(null)
+
+  for own attribute, key of Translator.Context::preferences
+    @config.preferences[key] = Translator[attribute]
+
+  for own attribute, key of Translator.Context::options
+    @config.options[key] = Translator[attribute]
+
+  return
 
 # The default collection structure passed is beyond screwed up.
 Translator.sanitizeCollection = (coll) ->

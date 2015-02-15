@@ -9,7 +9,7 @@
     <prefpane id="zotero-prefpane-better-bibtex"
             insertafter="zotero-prefpane-advanced"
             label="&zotero.better-bibtex.preferences.prefpane.better-bibtex;"
-            image="chrome://zotero-better-bibtex/skin/prefs.png"
+            image="chrome://zotero-better-bibtex/skin/bibtex.svg"
             onpaneload="Zotero.BetterBibTeX.pref.update(document);"
             >
       <preferences id="zotero-preferences-cite">
