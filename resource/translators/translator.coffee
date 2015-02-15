@@ -13,9 +13,16 @@ require('xregexp-all-min.js')
 require('json5.js')
 
 Translator.log = (msg...) ->
-  msg = ((if (typeof m) in ['number', 'string'] then ('' + m) else JSON.stringify(m)) for m in msg).join(' ')
-  Zotero.debug("[better-bibtex:#{@label}] #{msg}")
-  return true
+  msg = for m in msg
+    switch
+      when (typeof m) in ['string', 'number'] then '' + m
+      when m instanceof Error and m.name then "#{m.name}: #{m.message} \n(#{m.fileName}, #{m.lineNumber})\n#{m.stack}"
+      when m instanceof Error then "#{e}\n#{e.stack}"
+      else JSON.stringify(m)
+
+  Zotero.debug("[better-bibtex:#{@label}] #{msg.join(' ')}")
+  return
+
 
 Translator.initialize = ->
   return if @initialized
@@ -27,7 +34,8 @@ Translator.initialize = ->
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
   for own attribute, key of Translator.Context::preferences
-    Translator[attribute] = Zotero.getHiddenPref("better-bibtex.#{key}")
+    # prefer option over pref for auto-export
+    Translator[attribute] = Zotero.getOption(key) ? Zotero.getHiddenPref("better-bibtex.#{key}")
   @skipFields = (field.trim() for field in @skipFields.split(','))
   @testmode = Zotero.getHiddenPref('better-bibtex.testmode')
 
