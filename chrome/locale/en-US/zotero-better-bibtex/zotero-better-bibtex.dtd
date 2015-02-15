@@ -2,7 +2,7 @@
 <!ENTITY zotero.better-bibtex.show-collection-key "BibLaTeX url">
 <!ENTITY zotero.better-bibtex.citekey.set "Generate BibTeX key">
 <!ENTITY zotero.better-bibtex.citekey.clear "Clear BibTeX key">
-<!ENTITY zotero.better-bibtex.preferences.prefpane.better-bibtex "Better Bib(La)Tex">
+<!ENTITY zotero.better-bibtex.preferences.prefpane.better-bibtex "Better BibTeX">
 
 <!ENTITY zotero-better-bibtex.reportErrors "Report ZotPlus Errors...">
 
