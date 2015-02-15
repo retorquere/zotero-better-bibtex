@@ -343,11 +343,20 @@ ZoteroItem::import = (bibtex) ->
 
   keys = Object.keys(@biblatexdata)
   if keys.length > 0
-    keys.sort()
-    if @biblatexdatajson
-      biblatexdata = 'bibtex{' + (JSON5.stringify({key: @biblatexdata[key]}).slice(1, -1) for key in keys).join(', ') + '}'
-    else
-      biblatexdata = 'bibtex[' + ("#{key}=#{@biblatexdata[key]}" for key in keys).join(';') + ']'
+    keys.sort() if Translator.testmode
+    biblatexdata = switch
+      when @biblatexdatajson && Translator.testmode
+        'bibtex{' + (for own k in keys
+          o = {}
+          o[k] = @biblatexdata[k]
+          JSON5.stringify(o).slice(1, -1)
+        )+ '}'
+
+      when @biblatexdatajson
+        "bibtex#{JSON5.stringify(@biblatexdata)}"
+
+      else
+        biblatexdata = 'bibtex[' + ("#{key}=#{@biblatexdata[key]}" for key in keys).join(';') + ']'
 
     @addToExtra(biblatexdata)
 
