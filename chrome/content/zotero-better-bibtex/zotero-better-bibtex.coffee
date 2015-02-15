@@ -104,29 +104,37 @@ Zotero.BetterBibTeX.init = ->
   version = @DB.valueQuery("select version from _version_ where tablename = 'keys'")
   if version == 0
     @DB.query('create table keys (itemID primary key, libraryID not null, citekey not null, pinned)')
-    @DB.query("insert or replace into _version_ (tablename, version) values ('keys', 1)")
 
   if version <= 2
     @pref.set('scan-citekeys', true)
-    @DB.query("insert or replace into _version_ (tablename, version) values ('keys', 3)")
 
   if version <= 3
     @DB.query('alter table keys rename to keys2')
     @DB.query('create table keys (itemID primary key, libraryID not null, citekey not null, citeKeyFormat)')
     @DB.query('insert into keys (itemID, libraryID, citekey, citeKeyFormat)
                select itemID, libraryID, citekey, case when pinned = 1 then null else ? end from keys2', [@pref.get('citeKeyFormat')])
-    @DB.query("insert or replace into _version_ (tablename, version) values ('keys', 4)")
 
   if version <= 4
     @DB.query('drop table keys2')
-    @DB.query("insert or replace into _version_ (tablename, version) values ('keys', 5)")
 
-  Zotero.BetterBibTeX.keymanager.reset()
+  if version <= 5
+    @DB.query("
+      create table cache (
+        itemid not null,
+        context not null,
+        citekey not null,
+        entry not null,
+        primary key (itemid, context))
+      ")
+  @DB.query("insert or replace into _version_ (tablename, version) values ('keys', 6)")
+
+  @keymanager.reset()
   @DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@pref.get('citeKeyFormat')])
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
-    __exposedProps__: {keymanager: 'r'}
+    __exposedProps__: {keymanager: 'r', cache: 'r'}
     keymanager: @keymanager.init()
+    cache: @cache.init()
   }
 
   @pref.observer.register()
