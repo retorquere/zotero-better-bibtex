@@ -44,18 +44,33 @@ Zotero.BetterBibTeX.pref.observer = {
   register: -> Zotero.BetterBibTeX.pref.prefs.addObserver('', this, false)
   unregister: -> Zotero.BetterBibTeX.pref.prefs.removeObserver('', this)
   observe: (subject, topic, data) ->
-    if data == 'citeKeyFormat'
-      Zotero.BetterBibTeX.keymanager.reset()
-      Zotero.BetterBibTeX.DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citeKeyFormat')])
+    switch data
+      when 'citeKeyFormat'
+        Zotero.BetterBibTeX.keymanager.reset()
+        Zotero.BetterBibTeX.DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citeKeyFormat')])
+      when 'auto-export'
+        Zotero.BetterBibTeX.auto.process()
     return
 }
 
-Zotero.BetterBibTeX.pref.stash = ->
-  @stashed = Object.create(null)
-  keys = @prefs.getChildList('')
-  for key in keys
-    @stashed[key] = @get(key)
-  return @stashed
+Zotero.BetterBibTeX.pref.ZoteroObserver = {
+  register: -> Zotero.Prefs.prefBranch.addObserver('', this, false)
+  unregister: -> Zotero.Prefs.prefBranch.removeObserver('', this)
+  observe: (subject, topic, data) ->
+    if data == 'recursiveCollections'
+      recursive = Zotero.BetterBibTeX.auto.recursive()
+      Zotero.BetterBibTeX.DB.execute("update autoexport set recursive = ?, status = 'pending' where recursive <> ?", [recursive, recursive])
+      Zotero.BetterBibTeX.auto.process('recursiveCollections')
+    return
+}
+
+Zotero.BetterBibTeX.pref.snapshot = ->
+  stash = Object.create(null)
+  for key in @prefs.getChildList('')
+    stash[key] = @get(key)
+  return stash
+
+Zotero.BetterBibTeX.pref.stash = -> @stashed = @snapshot()
 
 Zotero.BetterBibTeX.pref.restore = ->
   for own key, value of @stashed ? {}
@@ -105,19 +120,19 @@ Zotero.BetterBibTeX.init = ->
   if version == 0
     @DB.query('create table keys (itemID primary key, libraryID not null, citekey not null, pinned)')
 
-  if version <= 2
+  if version < 3
     @pref.set('scan-citekeys', true)
 
-  if version <= 3
+  if version < 4
     @DB.query('alter table keys rename to keys2')
     @DB.query('create table keys (itemID primary key, libraryID not null, citekey not null, citeKeyFormat)')
     @DB.query('insert into keys (itemID, libraryID, citekey, citeKeyFormat)
                select itemID, libraryID, citekey, case when pinned = 1 then null else ? end from keys2', [@pref.get('citeKeyFormat')])
 
-  if version <= 4
+  if version < 5
     @DB.query('drop table keys2')
 
-  if version <= 5
+  if version < 6
     @DB.query("
       create table cache (
         itemid not null,
@@ -126,7 +141,21 @@ Zotero.BetterBibTeX.init = ->
         entry not null,
         primary key (itemid, context))
       ")
-  @DB.query("insert or replace into _version_ (tablename, version) values ('keys', 6)")
+
+  if version < 7
+    @DB.query("
+      create table autoexport (
+        id integer primary key not null,
+        collection_id not null,
+        collection_name not null,
+        path not null,
+        context not null,
+        recursive not null,
+        status not null,
+        unique (collection_id, path, context))
+      ")
+
+  @DB.query("insert or replace into _version_ (tablename, version) values ('keys', 7)")
 
   @keymanager.reset()
   @DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@pref.get('citeKeyFormat')])
