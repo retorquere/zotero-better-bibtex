@@ -276,5 +276,9 @@ Scenario: capital delta breaks .bib output #141
 @146
 Scenario: German Umlaut "separated" by brackets #146
   When I import 1 reference with 1 attachment from 'export/German Umlaut "separated" by brackets #146.json'
-  Then export the library using 'Better BibLaTeX' to '/tmp/BWL.bib'
   Then a library export using 'Better BibLaTeX' should match 'export/German Umlaut "separated" by brackets #146.bib'
+
+@failing
+Scenario: Export "Forthcoming" as "Forthcoming"
+  When I import 1 reference with 1 attachment from 'export/Export "Forthcoming" as "Forthcoming".json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Export "Forthcoming" as "Forthcoming".bib'
