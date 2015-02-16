@@ -1,0 +1,75 @@
+{
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
+    "label": "Zotero TestCase",
+    "release": "0.7.19",
+    "preferences": {
+      "citeKeyFormat": "[auth:lower][year]",
+      "skipfields": [
+        ""
+      ],
+      "useprefix": false,
+      "preserveCaps": "inner",
+      "fancyURLs": false,
+      "langid": "babel",
+      "attachmentRelativePath": false,
+      "auto-abbrev": true,
+      "auto-abbrev.style": "http://www.zotero.org/styles/cell",
+      "pin-citekeys": "manual",
+      "raw-imports": false,
+      "doi-and-url": "both"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false,
+      "Export Collections": false
+    }
+  },
+  "collections": [],
+  "items": [
+    {
+      "itemID": 375,
+      "itemType": "bookSection",
+      "url": "http://www.econ-pol.unisi.it/bartolini/papers/BARTOLINI-BILANCINI-SARRACINO.pdf",
+      "place": "Oxford",
+      "publisher": "Oxford University Press",
+      "date": "Forthcoming",
+      "extra": "bibtex: BartoliniForthcoming",
+      "accessDate": "2015-02-07 20:13:23",
+      "title": "Social Capital Predicts Happiness: World-Wide Evidence From Time Series",
+      "bookTitle": "Policies for Happiness",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Stefano",
+          "lastName": "Bartolini",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ennio",
+          "lastName": "Bilancini",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Francesco",
+          "lastName": "Sarracino",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [],
+      "attachments": [
+        {
+          "title": "BARTOLINI-BILANCINI-SARRACINO - BARTOLINI-BILANCINI-SARRACINO.pdf",
+          "mimeType": "application/pdf",
+          "url": "http://www.econ-pol.unisi.it/bartolini/papers/BARTOLINI-BILANCINI-SARRACINO.pdf"
+        }
+      ],
+      "tags": [],
+      "related": [],
+      "seeAlso": [],
+      "publicationTitle": "Policies for Happiness"
+    }
+  ]
+}
