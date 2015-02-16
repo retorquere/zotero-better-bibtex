@@ -7,6 +7,7 @@
 		<em:version>0.7.23</em:version>
     <em:description>Make Zotero useful for us LaTeX holdouts. More info @ https://github.com/ZotPlus/zotero-better-bibtex</em:description>
 		<em:creator>Emiliano Heyns</em:creator>
+    <em:iconURL>chrome://zotero-better-bibtex/skin/better-bibtex.svg</em:iconURL>
 		<em:updateURL>https://zotplus.github.io/better-bibtex/update.rdf</em:updateURL>
 		<em:type>2</em:type> <!-- type=extension -->
 
