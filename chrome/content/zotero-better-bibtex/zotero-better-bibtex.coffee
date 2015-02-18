@@ -350,32 +350,11 @@ Zotero.BetterBibTeX.safeLoad = (translator) ->
     @log("Loading #{translator} failed", err)
 
 Zotero.BetterBibTeX.load = (translator) ->
-  header = null
-  data = null
-  start = -1
-  try
-    data = Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}")
-    start = data.indexOf('{') if data
-    if start >= 0
-      len = data.indexOf('}', start)
-      if len > 0
-        len -= start
-        while len < 3000
-          try
-            header = JSON.parse(data.substring(start, len).trim())
-            data = data.substring(start + len, data.length)
-            break
-          catch
-          len++
-  catch err
-    header = null
-
-  if not header
-    @log("Loading #{translator} failed: could not parse header")
-    return
+  header = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}on"))
+  code = Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}")
 
   @translators[header.label.toLowerCase().replace(/[^a-z]/, '')] = header
-  Zotero.Translators.save(header, data)
+  Zotero.Translators.save(header, code)
   return
 
 Zotero.BetterBibTeX.getTranslator = (name) ->

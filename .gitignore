@@ -9,9 +9,8 @@ Gemfile.lock
 .depends.mf
 resource/translators/latex_unicode_mapping.coffee
 resource/translators/mathchar.pegcoffee
+resource/translators/*.json
 tmp
-features/import/*.out.json
-features/export/*.out.txt
 update.rdf
 *.xpi
 *.log
