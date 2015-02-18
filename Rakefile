@@ -331,8 +331,8 @@ file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translato
     next if key =~ /^[\x20-\x7E]$/ && ! %w{# $ % & ~ _ ^ { } [ ] > < \\}.include?(key)
     next if key == value && !mathmode
 
-    #value = "{\\#{$1}#{$2}}" if value =~ /^\\(["^`\.'~]){([^}]+)}$/
-    #value = "{\\#{$1} #{$2}}" if value =~ /^\\([cuHv]){([^}]+)}$/
+    value = "{\\#{$1}#{$2}}" if value =~ /^\\(["^`\.'~]){([^}]+)}$/
+    value = "{\\#{$1} #{$2}}" if value =~ /^\\([cuHv]){([^}]+)}$/
 
     # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to 
     # \combinecommand{X}
