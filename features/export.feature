@@ -278,7 +278,12 @@ Scenario: German Umlaut "separated" by brackets #146
   When I import 1 reference with 1 attachment from 'export/German Umlaut "separated" by brackets #146.json'
   Then a library export using 'Better BibLaTeX' should match 'export/German Umlaut "separated" by brackets #146.bib'
 
-@failing
+@forthcoming
 Scenario: Export "Forthcoming" as "Forthcoming"
   When I import 1 reference with 1 attachment from 'export/Export "Forthcoming" as "Forthcoming".json'
   Then a library export using 'Better BibLaTeX' should match 'export/Export "Forthcoming" as "Forthcoming".bib'
+
+@152
+Scenario: Export Č as {\v C}, not \v{C} #152
+  When I import 1 reference with 2 attachment from 'export/Export C as {v C}, not v{C} #152.json'
+  Then a library export using 'Better BibTeX' should match 'export/Export C as {v C}, not v{C} #152.bib'

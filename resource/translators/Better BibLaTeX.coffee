@@ -412,7 +412,14 @@ doExport = ->
       ref.add({ name: 'editorbtype', value: 'redactor' }) if creators.editorb.length > 0
 
     ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate
-    ref.add({ name: 'date', value: Zotero.Utilities.strToISO(item.date) || String(item.date) }) if item.date
+
+    if item.date
+      date = Zotero.Utilities.strToDate(item.date)
+      if typeof date.year == 'undefined'
+        ref.add({ name: 'year', value: item.date, preserveCaps: true })
+      else
+        ref.add({ name: 'date', value: Zotero.Utilities.strToISO(item.date) })
+
     ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )}) if item.pages
 
     if item.language

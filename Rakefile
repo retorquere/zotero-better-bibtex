@@ -18,6 +18,7 @@ require 'yaml'
 require 'rake/loaders/makefile'
 
 NODEBIN="node_modules/.bin"
+TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
 LINTED=[]
 def expand(file, options={})
@@ -97,11 +98,17 @@ ZIPFILES = [
   'install.rdf',
   'resource/error-reporting.pub.pem',
   'resource/translators/Better BibLaTeX.js',
+  'resource/translators/Better BibLaTeX.json',
   'resource/translators/Better BibTeX.js',
+  'resource/translators/Better BibTeX.json',
   'resource/translators/BibTeXAuxScanner.js',
+  'resource/translators/BibTeXAuxScanner.json',
   'resource/translators/LaTeX Citation.js',
+  'resource/translators/LaTeX Citation.json',
   'resource/translators/Pandoc Citation.js',
+  'resource/translators/Pandoc Citation.json',
   'resource/translators/Zotero TestCase.js',
+  'resource/translators/Zotero TestCase.json',
 ] + Dir['chrome/skin/**/*.*']
 
 SOURCES = [
@@ -144,6 +151,14 @@ end
 
 require 'zotplus-rakehelper'
 
+rule '.json' => '.yml' do |t|
+  open(t.name, 'w'){|f|
+    header = YAML::load_file(t.source)
+    header['lastUpdated'] = TIMESTAMP
+    f.write(JSON.pretty_generate(header))
+  }
+end
+
 rule '.js' => '.pegcoffee' do |t|
   name = "tmp/#{File.basename(t.name)}"
   source = "tmp/#{File.basename(t.source)}"
@@ -156,13 +171,14 @@ rule '.js' => '.coffee' do |t|
   header = t.source.sub(/\.coffee$/, '.yml')
   if File.file?(header)
     header = YAML.load_file(header)
-    header['lastUpdated'] = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
+    header['lastUpdated'] = TIMESTAMP
   else
     header = nil
   end
 
+  comment = "###\n DO NOT EDIT/REVIEW! Edit/review the CoffeScript source instead\n###\n"
   tmp = "tmp/#{File.basename(t.source)}"
-  open(tmp, 'w'){|f| f.write(expand(open(t.source), header: header)) }
+  open(tmp, 'w'){|f| f.write(comment + expand(open(t.source), header: header)) }
   puts "Compiling #{t.source}"
   output, status = Open3.capture2e("#{NODEBIN}/coffee -mbpc #{tmp.shellescape}")
   raise output if status.exitstatus != 0
@@ -179,8 +195,7 @@ rule '.js' => '.coffee' do |t|
   #raise output if status.exitstatus != 0
 
   open(t.name, 'w') {|target|
-    header = header ? JSON.pretty_generate(header) + "\n" : ''
-    target.write(header + output)
+    target.write(output)
   }
 end
 
@@ -315,6 +330,9 @@ file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translato
 
     next if key =~ /^[\x20-\x7E]$/ && ! %w{# $ % & ~ _ ^ { } [ ] > < \\}.include?(key)
     next if key == value && !mathmode
+
+    value = "{\\#{$1}#{$2}}" if value =~ /^\\(["^`\.'~]){([^}]+)}$/
+    value = "{\\#{$1} #{$2}}" if value =~ /^\\([cuHv]){([^}]+)}$/
 
     # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to 
     # \combinecommand{X}
