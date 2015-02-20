@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-<?xml-stylesheet href="chrome://zotero/skin/errorReport.css" type="text/css"?>
+<?xml-stylesheet href="chrome://zotero-better-bibtex/skin/errorReport.css" type="text/css"?>
 
 <!DOCTYPE window [
   <!ENTITY % ZoteroDTD SYSTEM "chrome://zotero/locale/zotero.dtd">
@@ -17,6 +17,7 @@
 	<wizardpage onpageshow="Zotero_BetterBibTeX_ErrorReport.init()" label=" ">
 		<description id="zotero-failure-message"/>
 		<textbox id="zotero-error-message" class="plain" readonly="true" multiline="true" flex="1"/>
+		<textbox id="zotero-references" class="plain" readonly="true" multiline="true" flex="1"/>
 		<description id="zotero-unrelated-message">&zotero.general.note; &zotero.errorReport.unrelatedMessages;</description>
 		<description id="zotero-advance-message"/>
 	</wizardpage>

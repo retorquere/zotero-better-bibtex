@@ -271,12 +271,14 @@ string
   /* / "%" [^\n]* "\n"            { return '' }          comment */
   / '%'                           { return '%' } // this doesn't feel right
   / "\\" command:[^a-z] ('[' key_value* ']')?  param:param {  # single-char command
-      cmds = ["\\#{command}#{param}"]
-      cmds.push "\\#{command}{#{param}}"    if param.length is 1
-      cmds.push "\\#{command}#{param[1]}"   if param.length is 3 and param[0] is '{' and param[2] is '}'
+      variants = ["\\#{command}#{param}"]
+      variants.push("{\\#{command}#{param}}")     if param.length is 1
+      variants.push("{\\#{command}#{param[1]}}")  if param.length is 3 and param[0] is '{' and param[2] is '}'
+
       hit = null
-      for cmd in cmds
-        hit ?= LaTeX.toUnicode[cmd]
+      for variant in variants
+        hit ?= LaTeX.toUnicode[variant]
+
       return hit ? param
     }
   / "\\" cmd:[^a-z] ('[' key_value* ']')?  _+ {  # single-char command without parameter

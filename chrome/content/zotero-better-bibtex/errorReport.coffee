@@ -5,15 +5,26 @@ Zotero_BetterBibTeX_ErrorReport = new class
     wizard = document.getElementById('zotero-error-report')
     continueButton = wizard.getButton('next')
     continueButton.disabled = true
+    document.getElementById('zotero-references').hidden = true
 
     Zotero.getSystemInfo((info) ->
-      errorData = Zotero.getErrors(true)
-      logText = "#{if errorData.length then errorData.join('\n') else Zotero.getString('errorReport.noErrorsLogged', Zotero.appName)}\n\n#{info}"
       if document.getElementById('zotero-failure-message').hasChildNodes()
         textNode = document.getElementById('zotero-failure-message').firstChild
         document.getElementById('zotero-failure-message').removeChild(textNode)
       document.getElementById('zotero-failure-message').appendChild(document.createTextNode(Zotero.getString('errorReport.followingReportWillBeSubmitted')))
+
+
+      details = window.arguments[0].wrappedJSObject
+      if details.items || details.collection
+        translator = Zotero.BetterBibTeX.getTranslator('Zotero TestCase')
+        references = Zotero.BetterBibTeX.translate(translator, details, { exportCollections: false, exportNotes: true, exportFileData: false })
+        document.getElementById('zotero-references').hidden = false
+        document.getElementById('zotero-references').value = references
+
+      errorData = Zotero.getErrors(true)
+      logText = "#{if errorData.length then errorData.join('\n') else Zotero.getString('errorReport.noErrorsLogged', Zotero.appName)}\n\n#{info}"
       document.getElementById('zotero-error-message').value = logText
+
       continueButton.disabled = false
       continueButton.focus()
       str = Zotero.getString('errorReport.advanceMessage', continueButton.getAttribute('label')).replace('Zotero', 'ZotPlus')
@@ -33,9 +44,7 @@ Zotero_BetterBibTeX_ErrorReport = new class
     }
 
     details = window.arguments[0].wrappedJSObject
-    if details.items || details.collection
-      translator = Zotero.BetterBibTeX.getTranslator('Zotero TestCase')
-      errorData.files['references.json'] = {content: Zotero.BetterBibTeX.translate(translator, details, { exportCollections: false, exportNotes: true, exportFileData: false }) }
+    errorData.files['references.json'] = {content: document.getElementById('zotero-references').value } if details.items || details.collection
 
     Zotero.HTTP.doPost('https://api.github.com/gists', JSON.stringify(errorData), (xmlhttp) ->
       wizard = document.getElementById('zotero-error-report')
