@@ -16,6 +16,13 @@ Zotero.BetterBibTeX.log = (msg...) ->
   Zotero.debug("[better-bibtex] #{msg.join(' ')}")
   return
 
+Zotero.BetterBibTeX.flash = (title, body) ->
+  progressWin = new Zotero.ProgressWindow()
+  progressWin.changeHeadline(title)
+  progressWin.addLines((if Array.isArray(body) then body else body.split("\n")))
+  progressWin.startCloseTimer()
+  return
+
 Zotero.BetterBibTeX.reportErrors = (details) ->
   switch details
     when 'collection'
@@ -140,7 +147,15 @@ Zotero.BetterBibTeX.init = ->
     ep.prototype = endpoint
     @log("Registered #{url}")
 
+  # clean up keys for items that have gone missing
+  @DB.query('create temporary table _items_ (id)')
+  for row in Zotero.DB.query('select coalesce(libraryID, 0) || itemID from items where not itemID in (select itemID from deletedItems)') or []
+    @DB.query('insert into _items_ (id) values (?)', row[0])
+  @DB.query('delete from keys where not coalesce(libraryID, 0) || itemID in (select id from _items_)')
+  @DB.query('drop table _items_')
+
   if @pref.get('scan-citekeys')
+    @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
     for row in Zotero.DB.query(@findKeysSQL) or []
       @DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [ row.itemID, row.libraryID, @keymanager.extract({extra: row.extra}) ])
     @pref.set('scan-citekeys', false)

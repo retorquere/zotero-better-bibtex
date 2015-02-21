@@ -29,6 +29,7 @@
         <preference id="pref-better-bibtex-pin-citekeys" name="extensions.zotero.translators.better-bibtex.pin-citekeys" type="string"/>
         <preference id="pref-better-bibtex-raw-imports" name="extensions.zotero.translators.better-bibtex.raw-imports" type="bool"/>
         <preference id="pref-better-bibtex-show-citekey" name="extensions.zotero.translators.better-bibtex.show-citekey" type="bool"/>
+        <preference id="pref-better-bibtex-rescan-citekeys" name="extensions.zotero.translators.better-bibtex.scan-citekeys" type="bool"/>
         <preference id="pref-better-bibtex-citekey-conflict" name="extensions.zotero.translators.better-bibtex.key-conflict-policy" type="string"/>
         <preference id="pref-better-bibtex-doi-and-url" name="extensions.zotero.translators.better-bibtex.doi-and-url" type="string"/>
         <preference id="pref-better-bibtex-attachments-nometadata" name="extensions.zotero.translators.better-bibtex.attachmentsNoMetadata" type="bool"/>
@@ -81,6 +82,9 @@
                   </row>
                   <row>
                     <checkbox id="id-better-bibtex-preferences-show-citekey" label="&zotero.better-bibtex.show-citekey;" preference="pref-better-bibtex-show-citekey"/>
+                  </row>
+                  <row>
+                    <checkbox label="&zotero.better-bibtex.rescan-citekeys;" preference="pref-better-bibtex-rescan-citekeys"/>
                   </row>
                 </rows>
               </grid>
