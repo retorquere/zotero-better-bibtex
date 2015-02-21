@@ -1,0 +1,72 @@
+{
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
+    "label": "Zotero TestCase",
+    "release": "0.7.27",
+    "preferences": {
+      "citeKeyFormat": "[auth][year]",
+      "skipfields": [
+        ""
+      ],
+      "useprefix": false,
+      "preserveCaps": "inner",
+      "fancyURLs": false,
+      "langid": "babel",
+      "attachmentRelativePath": true,
+      "auto-abbrev": true,
+      "auto-abbrev.style": "",
+      "pin-citekeys": "manual",
+      "raw-imports": false,
+      "doi-and-url": "both"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "Export Collections": true
+    }
+  },
+  "collections": [
+    {
+      "name": "Import fails to perform @String substitutions #154",
+      "collections": [
+
+      ],
+      "items": [
+        1
+      ]
+    }
+  ],
+  "items": [
+    {
+      "itemID": 1,
+      "itemType": "book",
+      "place": "London, UK",
+      "publisher": "Freds Publishing",
+      "extra": "bibtex: Bert:2001:SQL",
+      "title": "SQL is great",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R. A.",
+          "lastName": "Bert",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "attachments": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    }
+  ]
+}
