@@ -17,7 +17,7 @@
 <!ENTITY zotero.better-bibtex.cite.command "Citation command">
 <!ENTITY zotero.better-bibtex.skipFields "Fields to omit from export (comma-separated)">
 <!ENTITY zotero.better-bibtex.cite.format "Citation key format">
-<!ENTITY zotero.better-bibtex.attachment.format "Attachment export filename format">
+<!ENTITY zotero.better-bibtex.attachmentsNoMetadata "Export attachments without metadata">
 <!ENTITY zotero.better-bibtex.dragons "Caution -- here be dragons">
 <!ENTITY zotero.better-bibtex.server.enabled "Enable export by HTTP">
 <!ENTITY zotero.better-bibtex.server.disabled "Export by HTTP disabled">
