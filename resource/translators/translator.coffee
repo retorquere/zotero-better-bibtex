@@ -300,6 +300,7 @@ Reference::esc_attachments = (f) ->
   # sort attachments for stable tests
   attachments.sort( ( (a, b) -> a.path.localeCompare(b.path) ) ) if Translator.testmode
 
+  return (att.path.replace(/([\\{};])/g, "\\$1") for att in attachments).join(';') if Translator.attachmentsNoMetadata
   return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
 
 Reference::preserveCaps = {
