@@ -326,7 +326,7 @@ Reference::add = (field) ->
     unless field.bare && !field.value.match(/\s/)
       if Translator.preserveCaps != 'no' && field.preserveCaps && !@raw
         value = XRegExp.replace(value, @preserveCaps[Translator.preserveCaps], (needle, pos, haystack) ->
-          return needle if needle.length < 2 # don't escape single-letter capitals
+          #return needle if needle.length < 2 # don't escape single-letter capitals
           return needle if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, Reference::initialCapOnly)
 
           c = 0
