@@ -96,7 +96,6 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
   Dir.mktmpdir {|dir|
     bib = File.expand_path(File.join('test/fixtures', filename))
 
-    BBT.setPreference('translators.better-bibtex.testmode.timestamp', File.mtime(bib).to_s)
     if aliased.to_s != ''
       aliased = File.expand_path(File.join(dir, File.basename(aliased)))
       FileUtils.cp(bib, aliased)
