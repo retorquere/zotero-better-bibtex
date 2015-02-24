@@ -1,6 +1,9 @@
 @import
 Feature: Import
 
+Background:
+  Given I set preference translators.better-bibtex.testmode.timestamp to '2015-02-24 12:14:36 +0100'
+
 @bbtx-i-1 @i-1
 Scenario: Better BibTeX Import 1
   When I import 1 reference with 1 attachment from 'import/Better BibTeX.001.bib'
