@@ -30,6 +30,7 @@ Translator.initialize = ->
     Translator[attribute] = Zotero.getHiddenPref("better-bibtex.#{key}")
   @skipFields = (field.trim() for field in @skipFields.split(','))
   @testmode = Zotero.getHiddenPref('better-bibtex.testmode')
+  @testmode_timestamp = Zotero.getHiddenPref('better-bibtex.testmode.timestamp') if @testmode
 
   for own attribute, key of Translator.Context::options
     Translator[attribute] = Zotero.getOption(key)
@@ -219,7 +220,7 @@ class Reference
       if f.name and not @has[f.name]
         @add(@field(f, @item[attr]))
 
-    @add({name: 'timestamp', value: Zotero.Utilities.strToDate(@item.dateModified || @item.dateAdded)}) if @item.dateModified || @item.dateAdded
+    @add({name: 'timestamp', value: Translator.testmode_timestamp || @item.dateModified || @item.dateAdded})
 
 Reference::log = Translator.log
 
@@ -311,7 +312,6 @@ Reference::initialCapOnly = new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Let
 
 Reference::add = (field) ->
   return if Translator.skipFields.indexOf(field.name) >= 0
-  return if Translator.testmode && field.name == 'timestamp'
   return if typeof field.value != 'number' and not field.value
   return if typeof field.value == 'string' and field.value.trim() == ''
   return if Array.isArray(field.value) and field.value.length == 0
