@@ -8,10 +8,6 @@ Translator = new class
 require(':constants:')
 require('context.coffee', 'Translator')
 
-# Zotero ships with a lobotomized version
-require('xregexp-all-min.js')
-require('json5.js')
-
 Translator.log = (msg...) ->
   msg = ((if (typeof m) in ['number', 'string'] then ('' + m) else JSON.stringify(m)) for m in msg).join(' ')
   Zotero.debug("[better-bibtex:#{@label}] #{msg}")

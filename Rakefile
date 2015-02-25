@@ -87,6 +87,7 @@ ZIPFILES = [
   'chrome/content/zotero-better-bibtex/errorReport.js',
   'chrome/content/zotero-better-bibtex/errorReport.xul',
   'chrome/content/zotero-better-bibtex/include.js',
+  'chrome/content/zotero-better-bibtex/jsencrypt.min.js',
   'chrome/content/zotero-better-bibtex/overlay.xul',
   'chrome/content/zotero-better-bibtex/preferences.js',
   'chrome/content/zotero-better-bibtex/preferences.xul',
@@ -103,10 +104,12 @@ ZIPFILES = [
   'resource/translators/Better BibTeX.json',
   'resource/translators/BibTeXAuxScanner.js',
   'resource/translators/BibTeXAuxScanner.json',
+  'resource/translators/json5.js',
   'resource/translators/LaTeX Citation.js',
   'resource/translators/LaTeX Citation.json',
   'resource/translators/Pandoc Citation.js',
   'resource/translators/Pandoc Citation.json',
+  'resource/translators/xregexp-all-min.js',
   'resource/translators/Zotero TestCase.js',
   'resource/translators/Zotero TestCase.json',
 ] + Dir['chrome/skin/**/*.*']
@@ -221,6 +224,24 @@ task :newtest, [:kind, :name] do |t, args|
       f.puts("    Then the library should match 'import/#{args[:name]}.json'")
     end
   }
+end
+
+task :amo => XPI do
+  amo = XPI.sub(/\.xpi$/, '-amo.xpi')
+
+  Zip::File.open(amo, 'w') do |tgt|
+    Zip::File.open(XPI) do |src|
+      src.each do |entry|
+        data = entry.get_input_stream.read
+        if entry.name == 'install.rdf'
+          data = Nokogiri::XML(data)
+          data.at('//em:updateURL').unlink
+          data = data.to_xml
+        end
+        tgt.get_output_stream(entry.name) { |os| os.write data }
+      end
+    end
+  end
 end
 
 task :test, [:tag] => XPI do |t, args|
