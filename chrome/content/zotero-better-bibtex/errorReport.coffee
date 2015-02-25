@@ -1,5 +1,3 @@
-require('jsencrypt.min.js')
-
 Zotero_BetterBibTeX_ErrorReport = new class
   init: ->
     wizard = document.getElementById('zotero-error-report')

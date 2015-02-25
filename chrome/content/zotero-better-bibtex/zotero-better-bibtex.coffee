@@ -366,7 +366,12 @@ Zotero.BetterBibTeX.safeLoad = (translator) ->
 
 Zotero.BetterBibTeX.load = (translator) ->
   header = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}on"))
-  code = Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}")
+  code = [
+    # Zotero ships with a lobotomized version
+    Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/translators/xregexp-all-min.js'),
+    Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/translators/json5.js'),
+    Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}")
+  ].join("\n")
 
   @translators[header.label.toLowerCase().replace(/[^a-z]/, '')] = header
   Zotero.Translators.save(header, code)
