@@ -88,5 +88,4 @@ Zotero.BetterBibTeX.DebugBridge.methods.cache = ->
 Zotero.BetterBibTeX.DebugBridge.methods.remove = (id) -> Zotero.Items.trash([id])
 
 Zotero.BetterBibTeX.DebugBridge.methods.pinCiteKey = (id) ->
-  Zotero.BetterBibTeX.clearKey({itemID: id}, true)
   return Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'manual')
