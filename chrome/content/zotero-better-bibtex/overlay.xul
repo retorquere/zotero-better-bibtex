@@ -18,8 +18,8 @@
 	</menupopup>
 
   <menupopup id="zotero-itemmenu">
-    <menuitem id="id-zotero-better-bibtex-set-citekey" label="&zotero.better-bibtex.citekey.set;" oncommand="Zotero.BetterBibTeX.pinCiteKeys();"/>
-    <menuitem id="id-zotero-better-bibtex-clear-citekey" label="&zotero.better-bibtex.citekey.clear;" oncommand="Zotero.BetterBibTeX.clearCiteKeys();"/>
+    <menuitem id="id-zotero-better-bibtex-set-citekey" label="&zotero.better-bibtex.citekey.set;" oncommand="Zotero.BetterBibTeX.keymanager.selected('manual');"/>
+    <menuitem id="id-zotero-better-bibtex-clear-citekey" label="&zotero.better-bibtex.citekey.clear;" oncommand="Zotero.BetterBibTeX.keymanager.selected('reset');"/>
     <menuitem label="&zotero-better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors('items')"/>
 	</menupopup>
 

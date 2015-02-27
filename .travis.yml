@@ -12,3 +12,5 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install nodejs npm firefox
   - npm update
+addons:
+  firefox: "33.0"

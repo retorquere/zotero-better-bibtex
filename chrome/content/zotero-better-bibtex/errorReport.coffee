@@ -1,5 +1,3 @@
-require('jsencrypt.min.js')
-
 Zotero_BetterBibTeX_ErrorReport = new class
   init: ->
     wizard = document.getElementById('zotero-error-report')
@@ -13,7 +11,6 @@ Zotero_BetterBibTeX_ErrorReport = new class
         document.getElementById('zotero-failure-message').removeChild(textNode)
       document.getElementById('zotero-failure-message').appendChild(document.createTextNode(Zotero.getString('errorReport.followingReportWillBeSubmitted')))
 
-
       details = window.arguments[0].wrappedJSObject
       if details.items || details.collection
         translator = Zotero.BetterBibTeX.getTranslator('Zotero TestCase')
@@ -21,9 +18,10 @@ Zotero_BetterBibTeX_ErrorReport = new class
         document.getElementById('zotero-references').hidden = false
         document.getElementById('zotero-references').value = references
 
-      errorData = Zotero.getErrors(true)
-      logText = "#{if errorData.length then errorData.join('\n') else Zotero.getString('errorReport.noErrorsLogged', Zotero.appName)}\n\n#{info}"
-      document.getElementById('zotero-error-message').value = logText
+      errorLog = Zotero.File.getContentsFromURL('zotero://debug/').trim()
+      errorLog = Zotero.getErrors(true).join('\n').trim() if errorLog == ''
+      errorLog = Zotero.getString('errorReport.noErrorsLogged', Zotero.appName) if errorLog == ''
+      document.getElementById('zotero-error-message').value = errorLog + "\n\n" + info
 
       continueButton.disabled = false
       continueButton.focus()

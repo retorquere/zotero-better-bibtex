@@ -8,10 +8,6 @@ Translator = new class
 require(':constants:')
 require('context.coffee', 'Translator')
 
-# Zotero ships with a lobotomized version
-require('xregexp-all-min.js')
-require('json5.js')
-
 Translator.log = (msg...) ->
   msg = for m in msg
     switch
@@ -38,6 +34,7 @@ Translator.initialize = ->
     Translator[attribute] = Zotero.getOption(key) ? Zotero.getHiddenPref("better-bibtex.#{key}")
   @skipFields = (field.trim() for field in @skipFields.split(','))
   @testmode = Zotero.getHiddenPref('better-bibtex.testmode')
+  @testmode_timestamp = Zotero.getHiddenPref('better-bibtex.testmode.timestamp') if @testmode
 
   for own attribute, key of Translator.Context::options
     Translator[attribute] = Zotero.getOption(key)
@@ -121,11 +118,15 @@ Translator.nextItem = ->
     Zotero.write(cached.entry)
     return @nextItem()
 
-  #remove any citekey from extra -- the export doesn't need it
-  Zotero.BetterBibTeX.keymanager.extract(item)
-
-  item.__citekey__ = Zotero.BetterBibTeX.keymanager.get(item, 'on-export')
+  @log('unprepped item:', item)
+  item.__citekey__ = Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
   @citekeys[item.itemID] = item.__citekey__
+
+  #remove any citekey from extra -- the export doesn't need it
+  @log('pre-prepped item:', item)
+  Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
+  @log('prepped item:', item)
+
   return item
 
 Translator.exportGroups = ->
@@ -227,7 +228,7 @@ class Reference
       if f.name and not @has[f.name]
         @add(@field(f, @item[attr]))
 
-    @add({name: 'timestamp', value: Zotero.Utilities.strToDate(@item.dateModified || @item.dateAdded)}) if @item.dateModified || @item.dateAdded
+    @add({name: 'timestamp', value: Translator.testmode_timestamp || @item.dateModified || @item.dateAdded})
 
 Reference::log = Translator.log
 
@@ -308,6 +309,7 @@ Reference::esc_attachments = (f) ->
   # sort attachments for stable tests
   attachments.sort( ( (a, b) -> a.path.localeCompare(b.path) ) ) if Translator.testmode
 
+  return (att.path.replace(/([\\{};])/g, "\\$1") for att in attachments).join(';') if Translator.attachmentsNoMetadata
   return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
 
 Reference::preserveCaps = {
@@ -318,7 +320,6 @@ Reference::initialCapOnly = new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Let
 
 Reference::add = (field) ->
   return if Translator.skipFields.indexOf(field.name) >= 0
-  return if Translator.testmode && field.name == 'timestamp'
   return if typeof field.value != 'number' and not field.value
   return if typeof field.value == 'string' and field.value.trim() == ''
   return if Array.isArray(field.value) and field.value.length == 0
@@ -333,7 +334,7 @@ Reference::add = (field) ->
     unless field.bare && !field.value.match(/\s/)
       if Translator.preserveCaps != 'no' && field.preserveCaps && !@raw
         value = XRegExp.replace(value, @preserveCaps[Translator.preserveCaps], (needle, pos, haystack) ->
-          return needle if needle.length < 2 # don't escape single-letter capitals
+          #return needle if needle.length < 2 # don't escape single-letter capitals
           return needle if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, Reference::initialCapOnly)
 
           c = 0
