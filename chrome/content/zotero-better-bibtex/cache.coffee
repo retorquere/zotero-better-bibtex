@@ -1,7 +1,7 @@
 Zotero.BetterBibTeX.auto = {}
 
 Zotero.BetterBibTeX.auto.add = (state) ->
-  Zotero.BetterBibTeX.DB.query("insert into autoexport (collection_id, collection_name, path, context, recursive, status)
+  Zotero.DB.query("insert into betterbibtex.autoexport (collection_id, collection_name, path, context, recursive, status)
                                values (?, ?, ?, ?, ?, 'done')", [state.collection.id, state.collection.name, state.target, state.context, @recursive()])
   return
 
@@ -19,7 +19,7 @@ Zotero.BetterBibTeX.auto.process = (reason) ->
 
   Zotero.BetterBibTeX.log("Auto-export: #{reason}")
 
-  ae = Zotero.BetterBibTeX.DB.rowQuery("select * from autoexport where status == 'pending' limit 1")
+  ae = Zotero.DB.rowQuery("select * from betterbibtex.autoexport where status == 'pending' limit 1")
   return unless ae
   @running = '' + ae.id
 
@@ -30,7 +30,7 @@ Zotero.BetterBibTeX.auto.process = (reason) ->
   translation.setDisplayOptions(JSON.parse(ae.context))
 
   translation.setHandler('done', (obj, worked) ->
-    Zotero.BetterBibTeX.DB.query('update autoexport set status = ? where id = ?', [(if worked then 'done' else 'error'), Zotero.BetterBibTeX.auto.running])
+    Zotero.DB.query('update betterbibtex.autoexport set status = ? where id = ?', [(if worked then 'done' else 'error'), Zotero.BetterBibTeX.auto.running])
     Zotero.BetterBibTeX.auto.running = null
     Zotero.BetterBibTeX.auto.process(reason)
     return
@@ -61,7 +61,7 @@ Zotero.BetterBibTeX.cache.fetch = (context, itemid) ->
     context = arguments[1]
     itemid = arguments[2]
 
-  for cached in Zotero.BetterBibTeX.DB.query('select citekey, entry from cache where context = ? and itemid = ?', [context, itemid])
+  for cached in Zotero.DB.query('select citekey, entry from betterbibtex.cache where context = ? and itemid = ?', [context, itemid])
     cached = {citekey: cached.citekey, entry: cached.entry}
     throw("Malformed cache entry! #{cached}") unless cached.citekey && cached.entry
     @stats.hits += 1
@@ -79,5 +79,5 @@ Zotero.BetterBibTeX.cache.store = (context, itemid, citekey, entry) ->
 
   @stats.stores += 1
   Zotero.BetterBibTeX.log('::: caching entry', [context, itemid, citekey, entry])
-  Zotero.BetterBibTeX.DB.query("insert or replace into cache (context, itemid, citekey, entry) values (?, ?, ?, ?)", [context, itemid, citekey, entry])
+  Zotero.DB.query("insert or replace into betterbibtex.cache (context, itemid, citekey, entry) values (?, ?, ?, ?)", [context, itemid, citekey, entry])
   return null

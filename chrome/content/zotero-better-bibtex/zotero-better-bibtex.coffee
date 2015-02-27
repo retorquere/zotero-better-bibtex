@@ -55,7 +55,7 @@ Zotero.BetterBibTeX.pref.observer = {
   observe: (subject, topic, data) ->
     if data == 'citeKeyFormat'
       Zotero.BetterBibTeX.keymanager.reset()
-      Zotero.BetterBibTeX.DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citeKeyFormat')])
+      Zotero.DB.query('delete from betterbibtex.keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citeKeyFormat')])
     return
 }
 
@@ -89,9 +89,10 @@ Zotero.BetterBibTeX.init = ->
   @translators = Object.create(null)
   @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
   @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
-  @DB = new Zotero.DBConnection('betterbibtex')
+  db = Zotero.getZoteroDatabase('betterbibtex')
+  Zotero.DB.query('ATTACH ? AS betterbibtex', [db.path])
 
-  @findKeysSQL = "select coalesce(i.libraryID, 0) as libraryID, i.itemID as itemID, idv.value as extra
+  @findKeysSQL = "select i.itemID as itemID, idv.value as extra
                   from items i
                   join itemData id on i.itemID = id.itemID
                   join itemDataValues idv on idv.valueID = id.valueID
@@ -106,38 +107,47 @@ Zotero.BetterBibTeX.init = ->
                   where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)"
 
   @pref.prefs.clearUserPref('brace-all')
-  @DB.query('create table if not exists _version_ (tablename primary key, version not null, unique (tablename, version))')
-  @DB.query("insert or ignore into _version_ (tablename, version) values ('keys', 0)")
+  Zotero.DB.query('create table if not exists betterbibtex._version_ (tablename primary key, version not null, unique (tablename, version))')
+  Zotero.DB.query("insert or ignore into betterbibtex._version_ (tablename, version) values ('keys', 0)")
 
-  version = @DB.valueQuery("select version from _version_ where tablename = 'keys'")
+  version = Zotero.DB.valueQuery("select version from betterbibtex._version_ where tablename = 'keys'")
+  @log("Booting BBT, schema: #{version}")
   if version == 0
-    @DB.query('create table keys (itemID primary key, libraryID not null, citekey not null, pinned)')
+    Zotero.DB.query('create table betterbibtex.keys (itemID primary key, libraryID not null, citekey not null, pinned)')
 
   if version <= 2
     @pref.set('scan-citekeys', true)
 
   if version <= 3
-    @DB.query('alter table keys rename to keys2')
-    @DB.query('create table keys (itemID primary key, libraryID not null, citekey not null, citeKeyFormat)')
-    @DB.query('insert into keys (itemID, libraryID, citekey, citeKeyFormat)
-               select itemID, libraryID, citekey, case when pinned = 1 then null else ? end from keys2', [@pref.get('citeKeyFormat')])
+    Zotero.DB.query('alter table betterbibtex.keys rename to keys2')
+    Zotero.DB.query('create table betterbibtex.keys (itemID primary key, libraryID not null, citekey not null, citeKeyFormat)')
+    Zotero.DB.query('insert into betterbibtex.keys (itemID, libraryID, citekey, citeKeyFormat)
+               select itemID, libraryID, citekey, case when pinned = 1 then null else ? end from betterbibtex.keys2', [@pref.get('citeKeyFormat')])
 
   if version <= 4
-    @DB.query('drop table keys2')
+    Zotero.DB.query('drop table betterbibtex.keys2')
 
   if version <= 5
-    @DB.query("
-      create table cache (
+    Zotero.DB.query("
+      create table betterbibtex.cache (
         itemid not null,
         context not null,
         citekey not null,
         entry not null,
         primary key (itemid, context))
       ")
-  @DB.query("insert or replace into _version_ (tablename, version) values ('keys', 6)")
+
+  if version <= 6
+    Zotero.DB.query('alter table betterbibtex.keys rename to _keys_')
+    Zotero.DB.query('create table betterbibtex.keys (itemID primary key, citekey not null, citeKeyFormat)')
+    Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citeKeyFormat) select itemID, citekey, citeKeyFormat from betterbibtex._keys_')
+    Zotero.DB.query('drop table betterbibtex._keys_')
+    @pref.set('scan-citekeys', true)
+
+  Zotero.DB.query("insert or replace into betterbibtex._version_ (tablename, version) values ('keys', 7)")
 
   @keymanager.reset()
-  @DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@pref.get('citeKeyFormat')])
+  Zotero.DB.query('delete from betterbibtex.keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@pref.get('citeKeyFormat')])
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     __exposedProps__: {keymanager: 'r', cache: 'r'}
@@ -154,16 +164,18 @@ Zotero.BetterBibTeX.init = ->
     @log("Registered #{url}")
 
   # clean up keys for items that have gone missing
-  @DB.query('create temporary table _items_ (id)')
-  for row in Zotero.DB.query('select coalesce(libraryID, 0) || itemID from items where not itemID in (select itemID from deletedItems)') or []
-    @DB.query('insert into _items_ (id) values (?)', row[0])
-  @DB.query('delete from keys where not coalesce(libraryID, 0) || itemID in (select id from _items_)')
-  @DB.query('drop table _items_')
+  Zotero.DB.query('delete from betterbibtex.keys where not itemID in (select itemID from items)')
 
   if @pref.get('scan-citekeys')
     @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
+    patched = []
     for row in Zotero.DB.query(@findKeysSQL) or []
-      @DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [ row.itemID, row.libraryID, @keymanager.extract({extra: row.extra}) ])
+      patched.push('' + row.itemID)
+      @log('scan:', row)
+      @keymanager.set(row, @keymanager.extract({extra: row.extra}).__citekey__)
+    if patched.length > 0
+      for row in Zotero.DB.query("select * from betterbibtex.keys where citeKeyFormat is null and itemID not in (#{patched.join(', ')})")
+        @keymanager.remove(row)
     @pref.set('scan-citekeys', false)
 
   @loadTranslators()
@@ -179,7 +191,7 @@ Zotero.BetterBibTeX.init = ->
         if !(item?.ref) || item.ref.isAttachment() || item.ref.isNote()
           return ''
         else
-          key = Zotero.BetterBibTeX.keymanager.get({itemID: item.id, libraryID: item.libraryID}, {metadata: true})
+          key = Zotero.BetterBibTeX.keymanager.get({itemID: item.id})
           return '' if key.citekey.match(/^zotero-(null|[0-9]+)-[0-9]+$/)
           return key.citekey + (if key.citeKeyFormat then ' *' else '')
 
@@ -261,7 +273,7 @@ Zotero.BetterBibTeX.itemAdded = {
       missing = []
       for citekey in extra.citations
         Zotero.BetterBibTeX.log("::: citekey #{citekey}")
-        id = Zotero.BetterBibTeX.DB.valueQuery('select itemID from keys where libraryID = 0 and citekey = ?', [citekey])
+        id = Zotero.DB.valueQuery('select itemID from betterbibtex.keys where citekey = ? and itemID in (select itemID from items where coalesce(libraryID, 0) = ?)', [citekey, collection.libraryID])
         if id
           Zotero.BetterBibTeX.log("::: citekey #{citekey} found")
           collection.addItem(id)
@@ -295,14 +307,13 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
       for id in ids
         Zotero.BetterBibTeX.keymanager.remove({itemID: id})
 
-      ids = '(' + ('' + id for id in ids).join(',') + ')'
-      for item in Zotero.DB.query("#{Zotero.BetterBibTeX.findKeysSQL} and i.itemID in #{ids}") or []
-        citekey = Zotero.BetterBibTeX.keymanager.extract(item, true)
+      for item in Zotero.DB.query("#{Zotero.BetterBibTeX.findKeysSQL} and i.itemID in (#{('' + id for id in ids).join(',')})") or []
+        citekey = Zotero.BetterBibTeX.keymanager.extract(item).__citekey__
         Zotero.BetterBibTeX.keymanager.set(item, citekey)
-        Zotero.BetterBibTeX.DB.query('delete from cache where citekey = ?', [citekey])
+        Zotero.DB.query('delete from betterbibtex.cache where citekey = ?', [citekey])
 
-      for item in Zotero.DB.query("select coalesce(libraryID, 0) as libraryID, itemID from items where itemID in #{ids}") or []
-        Zotero.BetterBibTeX.keymanager.get(item, 'on-change')
+      for id in ids
+        Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'on-change')
 
   return
 

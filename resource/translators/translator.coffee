@@ -110,11 +110,15 @@ Translator.nextItem = ->
     Zotero.write(cached.entry)
     return @nextItem()
 
-  #remove any citekey from extra -- the export doesn't need it
-  Zotero.BetterBibTeX.keymanager.extract(item)
-
-  item.__citekey__ = Zotero.BetterBibTeX.keymanager.get(item, 'on-export')
+  @log('unprepped item:', item)
+  item.__citekey__ = Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
   @citekeys[item.itemID] = item.__citekey__
+
+  #remove any citekey from extra -- the export doesn't need it
+  @log('pre-prepped item:', item)
+  Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
+  @log('prepped item:', item)
+
   return item
 
 Translator.exportGroups = ->
