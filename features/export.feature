@@ -1,7 +1,10 @@
 @export
 Feature: Export
 
-@e1 @logcapture
+Background:
+  Given I set preference translators.better-bibtex.testmode.timestamp to '2015-02-24 12:14:36 +0100'
+
+@e1
 Scenario: Better BibLaTeX Export 1
   When I import 1 reference from 'export/Better BibLaTeX.001.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.001.bib'
@@ -11,7 +14,7 @@ Scenario: Pandoc Citation Export
   When I import 1 reference with 1 attachment from 'export/Pandoc Citation.001.json'
   Then a library export using 'Pandoc Citation' should match 'export/Pandoc Citation.001.txt'
 
-@e2 @logcapture
+@e2
 Scenario: Better BibLaTeX Export 2
   When I import 2 references from 'export/Better BibLaTeX.002.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.002.bib'

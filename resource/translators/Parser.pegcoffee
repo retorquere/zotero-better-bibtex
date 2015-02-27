@@ -153,7 +153,7 @@ start
 entry
   = _* '@comment'i _* "{" groupstree "}"
   / _* '@comment'i _* "{" comment:string* "}" { @bibtex.comments.push @flatten(comment).trim() }
-  / _* '@string'i _* "{" _* str:key_value _* "}" { @bibtex.strings[str.key] = str.value }
+  / _* '@string'i _* "{" _* str:key_value _* "}" { @bibtex.strings[str.verbatimKey] = str.value }
   / _* '@preamble'i _* "{" _* simplestring _* "}"
   / _* '@' reference
   / other:[^@]+ { @bibtex.comments.push @flatten(other).trim() }
@@ -215,7 +215,7 @@ attachments
 
 key_value
   = _* 'url'i _* "=" _* val:url _* ("," _*)? { return {key: 'url', value: val.trim()} }
-  / _* key:key _* "=" _* val:value _* ("," _*)? { return {key: key.trim().toLowerCase(), value: val.trim()} }
+  / _* key:key _* "=" _* val:value _* ("," _*)? { return {key: key.trim().toLowerCase(), value: val.trim(), verbatimKey: key.trim()} }
 
 key
   = key:[^ \t\n\r=]+ { return @flatten(key) }

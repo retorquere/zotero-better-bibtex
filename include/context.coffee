@@ -35,6 +35,7 @@ $namespace$.Context::preferences = {
   pinKeys: 'pin-citekeys'
   rawImport: 'raw-imports'
   DOIandURL: 'doi-and-url'
+  attachmentsNoMetadata: 'attachmentsNoMetadata'
 }
 $namespace$.Context::options = {
   useJournalAbbreviation: 'useJournalAbbreviation'

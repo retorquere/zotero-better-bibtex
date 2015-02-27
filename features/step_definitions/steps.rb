@@ -63,7 +63,7 @@ end
 
 After do |scenario|
   if ENV['CIRCLECI'] != 'true'
-    #open("#{scenario.title}.debug", 'w'){|f| f.write(DBB.log) } if scenario.source_tag_names.include?('@logcapture')
+    open("#{scenario.title}.debug", 'w'){|f| f.write(DBB.log) } if scenario.source_tag_names.include?('@logcapture')
     filename = scenario.title.gsub(/[^0-9A-z.\-]/, '_')
     if scenario.failed?
       @logcaptures ||= 0
@@ -94,6 +94,7 @@ end
 #end
 
 When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)'( as '([^']+)')?$/ do |references, dummy, attachments, filename, dummy2, aliased|
+  bib = nil
   Dir.mktmpdir {|dir|
     bib = File.expand_path(File.join('test/fixtures', filename))
 
@@ -101,8 +102,6 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
       aliased = File.expand_path(File.join(dir, File.basename(aliased)))
       FileUtils.cp(bib, aliased)
       bib = aliased
-    else
-      bib = File.expand_path(File.join('test/fixtures', filename))
     end
 
     if File.extname(filename) == '.json'

@@ -1,6 +1,9 @@
 @import
 Feature: Import
 
+Background:
+  Given I set preference translators.better-bibtex.testmode.timestamp to '2015-02-24 12:14:36 +0100'
+
 @bbtx-i-1 @i-1
 Scenario: Better BibTeX Import 1
   When I import 1 reference with 1 attachment from 'import/Better BibTeX.001.bib'
@@ -114,3 +117,8 @@ Scenario: Problem when importing BibTeX entries with percent sign #95 or preambl
 #Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #97
 #  When I import 915 reference with 42 attachments from 'import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib'
 #  Then the library should match 'import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json'
+
+@154
+Scenario: Import fails to perform @String substitutions #154
+  When I import 1 reference from 'import/Import fails to perform @String substitutions #154.bib'
+  Then the library should match 'import/Import fails to perform @String substitutions #154.json'
