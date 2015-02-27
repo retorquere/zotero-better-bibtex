@@ -82,10 +82,10 @@ Zotero.BetterBibTeX.DebugBridge.methods.select = (attribute, value) ->
 Zotero.BetterBibTeX.DebugBridge.methods.cache = ->
   return {
     stats: Zotero.BetterBibTeX.cache.stats
-    data: Zotero.BetterBibTeX.DB.query('select * from cache')
+    data: Zotero.DB.query('select * from betterbibtex.cache')
   }
 
 Zotero.BetterBibTeX.DebugBridge.methods.remove = (id) -> Zotero.Items.trash([id])
 
 Zotero.BetterBibTeX.DebugBridge.methods.pinCiteKey = (id) ->
-  return Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'manual')
+  return Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'manual').citekey

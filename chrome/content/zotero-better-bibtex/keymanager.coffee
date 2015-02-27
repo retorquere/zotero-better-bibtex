@@ -9,7 +9,7 @@ Zotero.BetterBibTeX.keymanager.init = ->
   @months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
   @journalAbbrevCache = Object.create(null)
   @cache = Object.create(null)
-  for row in Zotero.BetterBibTeX.DB.query('select itemID, citekey, citeKeyFormat from keys')
+  for row in Zotero.DB.query('select itemID, citekey, citeKeyFormat from betterbibtex.keys')
     @cache[row.itemID] = {citekey: row.citekey, citeKeyFormat: row.citeKeyFormat}
   @log('CACHE PRIMED', @cache)
 
@@ -26,8 +26,8 @@ Zotero.BetterBibTeX.keymanager.init = ->
 
 Zotero.BetterBibTeX.keymanager.reset = (hard) ->
   if hard
-    Zotero.BetterBibTeX.DB.query('delete from keys')
-    Zotero.BetterBibTeX.DB.query('delete from cache')
+    Zotero.DB.query('delete from betterbibtex.keys')
+    Zotero.DB.query('delete from betterbibtex.cache')
 
   @cache = Object.create(null)
   @log('KEY CACHE CLEARED')
@@ -63,58 +63,69 @@ Zotero.BetterBibTeX.keymanager.journalAbbrev = (item) ->
 
   return @journalAbbrevCache[item.publicationTitle]
 
-Zotero.BetterBibTeX.keymanager.extract = (item, clone) ->
-  item = arguments[1] if item._sandboxManager
+Zotero.BetterBibTeX.keymanager.extract = (item, insitu) ->
+  if item._sandboxManager
+    item = arguments[1]
+    insitu = arguments[2]
+
+  @log('extract:', item, insitu)
   switch
     when item.getField
-      item = {extra: item.getField('extra')}
-    when clone
+      @log('keymanager.extract: real item, converting to export item')
+      item = {itemID: item.id, extra: item.getField('extra')}
+    when !insitu
+      @log('keymanager.extract: export item, cloning')
       item = {extra: item.extra.slice(0)}
-  return null unless item.extra
+
+  return item unless item.extra
 
   embeddedKeyRE = /bibtex: *([^\s\r\n]+)/
   andersJohanssonKeyRE = /biblatexcitekey\[([^\]]+)\]/
-  extra = item.extra
 
   m = embeddedKeyRE.exec(item.extra) or andersJohanssonKeyRE.exec(item.extra)
-  return null unless m
+  return item unless m
 
   item.extra = item.extra.replace(m[0], '').trim()
-  return m[1]
+  item.__citekey__ = m[1]
 
-# TODO
-Zotero.BetterBibTeX.keymanager.displayText = (item) ->
-  citekey = Zotero.BetterBibTeX.DB.rowQuery('select citekey, citeKeyFormat from keys where itemID=? and libraryID = ?', [item.itemID, item.libraryID || 0])
+  @log('extract::', item)
+  return item
 
-  return citekey ? @get(item) + '*'
-
-Zotero.BetterBibTeX.keymanager.selected = (options) ->
-  win = @windowMediator.getMostRecentWindow('navigator:browser')
+Zotero.BetterBibTeX.keymanager.selected = (pinmode) ->
+  win = Zotero.BetterBibTeX.windowMediator.getMostRecentWindow('navigator:browser')
   items = Zotero.Items.get((item.id for item in win.ZoteroPane.getSelectedItems() when !item.isAttachment() && !item.isNote()))
 
   for item in items
-    @get(item, options)
+    @get(item, pinmode)
 
 Zotero.BetterBibTeX.keymanager.set = (item, citekey) ->
   if Zotero.BetterBibTeX.pref.get('key-conflict-policy') == 'change'
     # remove soft-keys that conflict with pinned keys
-    Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID || 0, citekey])
+    Zotero.DB.query("
+      delete from betterbibtex.keys
+      where citekey = ?
+        and citeKeyFormat is not null
+        and itemID in (
+          select itemID from items where coalesce(libraryID, 0) in (
+            select coalesce(libraryID, 0) from items where itemID = ?
+          )
+        )", [citekey, item.itemID])
 
   # store new key
-  Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, null)', [ item.itemID, item.libraryID || 0, citekey])
+  Zotero.DB.query('insert or replace into betterbibtex.keys (itemID, citekey, citeKeyFormat) values (?, ?, null)', [ item.itemID, citekey])
 
-  @cached[item.itemID] = {citekey: citekey, citeKeyFormat: null}
+  @cache[item.itemID] = {citekey: citekey, citeKeyFormat: null}
   return
 
 Zotero.BetterBibTeX.keymanager.remove = (item) ->
-  Zotero.BetterBibTeX.DB.query('delete from keys where itemID = ?', [item.itemID])
+  Zotero.DB.query('delete from betterbibtex.keys where itemID = ?', [item.itemID])
   delete @cache[item.itemID]
   return
 
-Zotero.BetterBibTeX.keymanager.get = (item, options) ->
+Zotero.BetterBibTeX.keymanager.get = (item, pinmode) ->
   if item._sandboxManager
     item = arguments[1]
-    options = arguments[2]
+    pinmode = arguments[2]
 
   # pinmode can be:
   #  reset: clear any pinned key, generate new dynamic key
@@ -123,58 +134,60 @@ Zotero.BetterBibTeX.keymanager.get = (item, options) ->
   #  on-export: generate and pin if pin-citekeys is on-export, 'null' behavior if not
   #  null: fetch -> generate -> return
 
-  # legacy use, phase out later
-  options = {pinmode: options} if (typeof options) == 'string' || (options instanceof String)
-
-  cached = @cache[item.itemID] || Zotero.BetterBibTeX.DB.rowQuery('select citekey, citeKeyFormat from keys where itemID=? and libraryID = ?', [item.itemID, item.libraryID || 0]) || {}
+  cached = @cache[item.itemID] || Zotero.DB.rowQuery('select citekey, citeKeyFormat from betterbibtex.keys where itemID=?', [item.itemID]) || {}
+  @log('keymanager.get', item, pinmode, cached)
   extra = {
     save: false
-    body: ''
+    extra: ''
   }
 
-  options.pinmode = 'manual' if options.pinmode == Zotero.BetterBibTeX.pref.get('pin-citekeys')
+  pinmode = 'manual' if pinmode == Zotero.BetterBibTeX.pref.get('pin-citekeys')
   citeKeyFormat = Zotero.BetterBibTeX.pref.get('citeKeyFormat')
 
-  switch options.pinmode
+  switch pinmode
     when 'reset', 'manual' # clear any pinned key
-      if cached.citekey && !cached.citeKeyFormat
-        extra = {save: true, body: @extract(item, true) }
-        cached = {citekey: null, citeKeyFormat: (if options.pinmode == 'manual' then null else citeKeyFormat)}
+      if cached.citekey && !cached.citeKeyFormat # if we've found a key and it was pinned
+        item = Zotero.Items.get(item.itemID) unless item.extra
+        extra = {
+          extra: @extract(item).extra || ''
+          save: true
+        }
+        @log("keymanager.get reset #{pinmode}: extra", extra)
+      cached = {citekey: null, citeKeyFormat: (if pinmode == 'manual' then null else citeKeyFormat)}
 
   if !cached.citekey
+    @log('keymanager.get: generating new key')
     Formatter = Zotero.BetterBibTeX.formatter(citeKeyFormat)
     cached.citekey = new Formatter(Zotero.BetterBibTeX.toArray(item)).value
     postfix = { n: -1, c: '' }
-    while Zotero.BetterBibTeX.DB.valueQuery('select count(*) from keys where citekey=? and libraryID = ? and itemID <> ?', [cached.citekey + postfix.c, item.libraryID || 0, item.itemID])
+    libraryID = item.libraryID || Zotero.DB.valueQuery('select libraryID from items where itemID = ?', [item.itemID]) || 0
+    while Zotero.DB.valueQuery('select count(*) from betterbibtex.keys where citekey = ? and itemID <> ? and itemID in (select itemID from items where coalesce(libraryID, 0) = ?)', [cached.citekey + postfix.c, item.itemID, libraryID])
       postfix.n++
       postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
 
     cached.citekey += postfix.c
-    cached.citeKeyFormat = (if options.pinmode == 'manual' then null else citeKeyFormat)
-    citekey = { citekey: citekey + postfix.c, citeKeyFormat: pattern }
-
-    # remove soft-keys that conflict with pinned keys
-    Zotero.BetterBibTeX.DB.query('delete from keys where libraryID = ? and citeKeyFormat is not null and citekey = ?', [item.libraryID || 0, citekey.citekey])
+    cached.citeKeyFormat = (if pinmode == 'manual' then null else citeKeyFormat)
 
     # store new key
-    Zotero.BetterBibTeX.DB.query('insert or replace into keys (itemID, libraryID, citekey, citeKeyFormat) values (?, ?, ?, ?)', [ item.itemID, item.libraryID || 0, citekey.citekey, citekey.citeKeyFormat ])
+    Zotero.DB.query('insert or replace into betterbibtex.keys (itemID, citekey, citeKeyFormat) values (?, ?, ?)', [ item.itemID, cached.citekey, cached.citeKeyFormat ])
 
-    if options.pinmode == 'manual'
-      extra.body += " \nbibtex: #{citekey.citekey}"
+    if pinmode == 'manual'
+      @log('keymanager.get, add key to body: extra', extra)
+      extra.extra += " \nbibtex: #{cached.citekey}"
       extra.save = true
 
+  @log('keymanager.get pre-save: extra', extra)
   if extra.save
-    extra.body = extra.body.trim()
+    extra.extra = extra.extra.trim()
     item = Zotero.Items.get(item.itemID) if not item.getField
-    if extra.body != item.getField('extra')
-      item.setField('extra', extra.body)
+    if extra.extra != item.getField('extra')
+      item.setField('extra', extra.extra)
       item.save()
 
   @cache[item.itemID] = cached
 
-  return cached if options.metadata
-  return cached.citekey
+  return cached
 
 Zotero.BetterBibTeX.keymanager.keys = ->
-  return Zotero.BetterBibTeX.DB.query('select * from keys order by libraryID, itemID')
+  return Zotero.DB.query('select * from betterbibtex.keys order by itemID')
 

@@ -43,11 +43,11 @@ Zotero.BetterBibTeX.schomd.init = ->
     '@quotes/false': false
 
     '@cite/entry': (state, str) ->
-      citekey = Zotero.BetterBibTeX.DB.valueQuery('select citekey from keys where itemID = ?', [state.registry.registry[@system_id].ref.id])
+      citekey = Zotero.DB.valueQuery('select citekey from betterbibtex.keys where itemID = ?', [state.registry.registry[@system_id].ref.id])
       return "[#{str}][@#{citekey}]"
 
     '@bibliography/entry': (state, str) ->
-      citekey = Zotero.BetterBibTeX.DB.valueQuery('select citekey from keys where itemID = ?', [state.registry.registry[@system_id].ref.id])
+      citekey = Zotero.DB.valueQuery('select citekey from betterbibtex.keys where itemID = ?', [state.registry.registry[@system_id].ref.id])
       return "[@#{citekey}]: ##{citekey} \"#{str.replace(/\\/g, '').replace(/"/g, "'")}\"\n<a name=\"#{citekey}\"></a>#{str}\n"
 
     '@display/block': (state, str) -> "\n\n#{str}\n\n"
@@ -78,7 +78,7 @@ Zotero.BetterBibTeX.schomd.items = (citekeys, {library} = {}) ->
       keys.push(key)
   return ids if keys.length == 0
   vars = ('?' for citekey in keys).join(',')
-  return ids.concat(Zotero.BetterBibTeX.DB.columnQuery("select itemID from keys where citekey in (#{vars}) and libraryID = ?", keys.concat([library || 0])))
+  return ids.concat(Zotero.DB.columnQuery("select itemID from betterbibtex.keys where citekey in (#{vars}) and itemID in (select itemID from items where coalesce(libraryID, 0) = ?)", keys.concat([library || 0])))
 
 Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, library} = {}) ->
   items = @items(citekeys, {library: library})
