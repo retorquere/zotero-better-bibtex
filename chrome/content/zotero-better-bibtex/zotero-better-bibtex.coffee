@@ -112,22 +112,22 @@ Zotero.BetterBibTeX.init = ->
 
   version = Zotero.DB.valueQuery("select version from betterbibtex._version_ where tablename = 'keys'")
   @log("Booting BBT, schema: #{version}")
-  if version == 0
+  if version < 1
     Zotero.DB.query('create table betterbibtex.keys (itemID primary key, libraryID not null, citekey not null, pinned)')
 
-  if version <= 2
+  if version < 3
     @pref.set('scan-citekeys', true)
 
-  if version <= 3
+  if version < 4
     Zotero.DB.query('alter table betterbibtex.keys rename to keys2')
     Zotero.DB.query('create table betterbibtex.keys (itemID primary key, libraryID not null, citekey not null, citeKeyFormat)')
     Zotero.DB.query('insert into betterbibtex.keys (itemID, libraryID, citekey, citeKeyFormat)
                select itemID, libraryID, citekey, case when pinned = 1 then null else ? end from betterbibtex.keys2', [@pref.get('citeKeyFormat')])
 
-  if version <= 4
+  if version < 5
     Zotero.DB.query('drop table betterbibtex.keys2')
 
-  if version <= 5
+  if version < 6
     Zotero.DB.query("
       create table betterbibtex.cache (
         itemid not null,
@@ -137,7 +137,7 @@ Zotero.BetterBibTeX.init = ->
         primary key (itemid, context))
       ")
 
-  if version <= 6
+  if version < 7
     Zotero.DB.query('alter table betterbibtex.keys rename to _keys_')
     Zotero.DB.query('create table betterbibtex.keys (itemID primary key, citekey not null, citeKeyFormat)')
     Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citeKeyFormat) select itemID, citekey, citeKeyFormat from betterbibtex._keys_')
