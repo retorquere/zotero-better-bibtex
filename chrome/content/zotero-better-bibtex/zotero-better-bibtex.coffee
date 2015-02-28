@@ -138,7 +138,7 @@ Zotero.BetterBibTeX.init = ->
 
   version = Zotero.DB.valueQuery("select version from betterbibtex._version_ where tablename = 'keys'")
   @log("Booting BBT, schema: #{version}")
-  if version == 0
+  if version < 1
     Zotero.DB.query('create table betterbibtex.keys (itemID primary key, libraryID not null, citekey not null, pinned)')
 
   if version < 3
