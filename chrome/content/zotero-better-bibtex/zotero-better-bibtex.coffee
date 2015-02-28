@@ -171,7 +171,7 @@ Zotero.BetterBibTeX.init = ->
     @pref.set('scan-citekeys', true)
 
   if version < 8
-    @DB.query("
+    Zotero.DB.query("
       create table betterbibtex.autoexport (
         id integer primary key not null,
         collection_id not null,
@@ -182,7 +182,6 @@ Zotero.BetterBibTeX.init = ->
         status not null,
         unique (collection_id, path, context))
       ")
-
 
   Zotero.DB.query("insert or replace into betterbibtex._version_ (tablename, version) values ('keys', 8)")
 
