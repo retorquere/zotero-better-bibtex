@@ -279,7 +279,7 @@ task :test, [:tag] => XPI do |t, args|
 end
 
 task :clean do
-  clean = Dir['**/*.js'].select{|f| f=~ /^(defaults|chrome|resource)\//} + Dir['tmp/*'].select{|f| File.file?(f) }
+  clean = Dir['**/*.js'].select{|f| f=~ /^(defaults|chrome|resource)\//} + Dir['tmp/*'].select{|f| File.file?(f) } + Dir['resource/transators/*.json']
   clean << 'resource/translators/latex_unicode_mapping.coffee'
   clean << '.depends.mf'
   clean.each{|f|
@@ -341,6 +341,9 @@ file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translato
       when '[', ']'
         value = "{#{key}}"
         mathmode = false
+      # TODO: replace '}' and '{' with textbrace(left|right) once the bug mentioned in
+      # http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754
+      # is widely enough distributed
       when '_', '}', '{'
         value = "\\" + key
         mathmode = false
