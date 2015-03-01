@@ -71,6 +71,7 @@ Zotero.BetterBibTeX.keymanager.extract = (item, insitu) ->
   @log('extract:', item, insitu)
   switch
     when item.getField
+      throw("#{insitu}: cannot extract in-situ for real items") if insitu
       @log('keymanager.extract: real item, converting to export item')
       item = {itemID: item.id, extra: item.getField('extra')}
     when !insitu
