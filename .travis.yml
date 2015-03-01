@@ -7,6 +7,8 @@ rvm:
 env:
   - TAG=import
   - TAG=export
+  - TAG=import CACHE=yes
+  - TAG=export CACHE=yes
 script: "bundle exec rake test[$TAG]"
 before_install:
   - sudo apt-get update
