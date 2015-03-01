@@ -29,6 +29,8 @@ LaTeX.emit = ->
   @acc = { math: false, text: ''}
   return
 
+require('BraceBalancer.js')
+
 LaTeX.html2latex = (text) ->
   stack = []
   mapping = (if Translator.unicode then @toLaTeX.unicode else @toLaTeX.ascii)
@@ -87,4 +89,4 @@ LaTeX.html2latex = (text) ->
   for tag in stack
     @latex += tag.postfix
 
-  return @latex
+  return BetterBibTeXBraceBalancer.parse(@latex)
