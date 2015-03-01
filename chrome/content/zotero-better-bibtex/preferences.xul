@@ -41,7 +41,7 @@
           <tab label="&zotero.better-bibtex.prefs.citation;"/>
           <tab label="&zotero.better-bibtex.prefs.import-export;"/>
           <tab label="&zotero.better-bibtex.prefs.journal-abbrev;"/>
-          <tab label="&zotero.better-bibtex.prefs.auto-export;"/>
+          <tab id="better-bibtex-prefs-auto-export" label="&zotero.better-bibtex.prefs.auto-export;"/>
         </tabs>
 
         <tabpanels>

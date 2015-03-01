@@ -15,9 +15,9 @@ Zotero.BetterBibTeX.log = (msg...) ->
     switch
       when (typeof m) in ['string', 'number'] then '' + m
       when Array.isArray(m) then JSON.stringify(m)
-      when (typeof m) == 'object' then JSON.stringify(Zotero.BetterBibTeX.inspect(m)) # unpacks db query objects
       when m instanceof Error and m.name then "#{m.name}: #{m.message} \n(#{m.fileName}, #{m.lineNumber})\n#{m.stack}"
       when m instanceof Error then "#{e}\n#{e.stack}"
+      when (typeof m) == 'object' then JSON.stringify(Zotero.BetterBibTeX.inspect(m)) # unpacks db query objects
       else JSON.stringify(m)
 
   Zotero.debug("[better-bibtex] #{msg.join(' ')}")
@@ -480,6 +480,8 @@ Zotero.BetterBibTeX.load = (translator) ->
     Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/translators/json5.js'),
     Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}")
   ].join("\n")
+
+  delete header.displayOptions['Keep updated'] if header.displayOptions && Zotero.BetterBibTeX.pref.get('auto-export') == 'disabled'
 
   @translators[header.label.toLowerCase().replace(/[^a-z]/, '')] = header
   Zotero.Translators.save(header, code)
