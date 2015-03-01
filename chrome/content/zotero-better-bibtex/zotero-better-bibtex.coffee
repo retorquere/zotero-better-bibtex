@@ -258,7 +258,7 @@ Zotero.BetterBibTeX.init = ->
             settings = JSON.parse(Zotero.Prefs.get('export.translatorSettings'))
             if settings['Keep updated']
               delete settings['Keep updated']
-              Zotero.Prefs.set('export.translatorSettings', JSON.stringify(settings));
+              Zotero.Prefs.set('export.translatorSettings', JSON.stringify(settings))
           catch
 
           # data to define new auto-export
