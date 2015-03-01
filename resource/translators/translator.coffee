@@ -67,7 +67,7 @@ Translator.initialize = ->
   for own attribute, key of Translator.Context::options
     @config.options[key] = Translator[attribute]
 
-  @context = new @Context(@config)
+  @context = new @Context(@config).toJSON()
   @log(":::cache context = #{@context}")
 
   return
