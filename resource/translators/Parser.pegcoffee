@@ -261,6 +261,7 @@ string
   / [#$&]+                        { return '' } /* macro parameters, math mode, table separator */
   / '_' text:param                { return "<sub>#{text}</sub>" }
   / '^' text:param                { return "<sup>#{text}</sup>" }
+  / "\\vphantom" text:bracedparam { return '' }
   / "\\emph" text:bracedparam     { return "<i>#{text}</i>" }
   / "\\url{" text:urlchar* "}"    { return @flatten(text) }
   / "\\textit" text:bracedparam   { return "<i>#{text}</i>" }
