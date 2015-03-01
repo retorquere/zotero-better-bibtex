@@ -100,7 +100,7 @@ Zotero.BetterBibTeX.pref.update = ->
   Zotero.BetterBibTeX.log('loading exports:', refill, exportlist.children.length)
 
   selectedExport = -1
-  for ae in Zotero.BetterBibTeX.DB.query("select * from autoexport order by collection_name, path")
+  for ae in Zotero.DB.query("select * from betterbibtex.autoexport order by collection_name, path")
     selectedExport = 0
     Zotero.BetterBibTeX.log(':::ae', @clone(ae))
     if refill
@@ -121,7 +121,7 @@ Zotero.BetterBibTeX.pref.exportSelected = (index) ->
   exportbox = document.getElementById('better-bibtex-export-list')
   selectedItem = if index != 'undefined' then exportbox.getItemAtIndex(index) else exportbox.selectedItem
 
-  ae = Zotero.BetterBibTeX.DB.rowQuery('select * from autoexport where id = ?', [selectedItem.getAttribute('value')])
+  ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport where id = ?', [selectedItem.getAttribute('value')])
   ae.context = JSON.parse(ae.context)
   Zotero.BetterBibTeX.log(':::selected', @clone(ae))
 

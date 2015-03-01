@@ -69,6 +69,7 @@ Zotero.BetterBibTeX.schomd.init = ->
 
 Zotero.BetterBibTeX.schomd.items = (citekeys, {library} = {}) ->
   citekeys = [citekeys] unless Array.isArray(citekeys)
+
   ids = []
   keys = []
   for key in citekeys
@@ -77,15 +78,21 @@ Zotero.BetterBibTeX.schomd.items = (citekeys, {library} = {}) ->
     else
       keys.push(key)
   return ids if keys.length == 0
-  vars = ('?' for citekey in keys).join(',')
-  return ids.concat(Zotero.DB.columnQuery("select itemID from betterbibtex.keys where citekey in (#{vars}) and itemID in (select itemID from items where coalesce(libraryID, 0) = ?)", keys.concat([library || 0])))
+
+  sql = "select itemID from betterbibtex.keys
+         where citekey in (#{('?' for citekey in keys).join(',')})
+           and itemID in (select itemID from items where coalesce(libraryID, 0) = ?)"
+  keys.push(library || 0)
+  found = Zotero.DB.columnQuery(sql, keys)
+  return ids unless keys
+  return ids.concat(found)
 
 Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, library} = {}) ->
   items = @items(citekeys, {library: library})
+
   return '' if items.length == 0
 
   url = "http://www.zotero.org/styles/#{style ? 'apa'}"
-  Zotero.BetterBibTeX.log("selected style: #{url}")
   style = Zotero.Styles.get(url)
   cp = style.getCiteProc()
   cp.setOutputFormat('markdown')
@@ -97,7 +104,6 @@ Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, library} = {}) ->
   return '' if items.length == 0
 
   url = "http://www.zotero.org/styles/#{stylename ? 'apa'}"
-  Zotero.BetterBibTeX.log("selected style: #{url}")
   style = Zotero.Styles.get(url)
   cp = style.getCiteProc()
   cp.setOutputFormat('markdown')
@@ -112,9 +118,7 @@ Zotero.BetterBibTeX.schomd.search = (term) ->
   search.addCondition('quicksearch-titleCreatorYear', 'contains', term, false)
   results = search.search()
 
-  if not results
-    Zotero.BetterBibTeX.log("No results found")
-    return []
+  return [] if not results
 
   return (
     {

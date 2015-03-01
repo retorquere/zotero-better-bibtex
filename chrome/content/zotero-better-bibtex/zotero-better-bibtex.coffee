@@ -14,6 +14,7 @@ Zotero.BetterBibTeX.log = (msg...) ->
   msg = for m in msg
     switch
       when (typeof m) in ['string', 'number'] then '' + m
+      when Array.isArray(m) then JSON.stringify(m)
       when (typeof m) == 'object' then JSON.stringify(Zotero.BetterBibTeX.inspect(m)) # unpacks db query objects
       when m instanceof Error and m.name then "#{m.name}: #{m.message} \n(#{m.fileName}, #{m.lineNumber})\n#{m.stack}"
       when m instanceof Error then "#{e}\n#{e.stack}"
@@ -56,7 +57,7 @@ Zotero.BetterBibTeX.pref.observer = {
     switch data
       when 'citeKeyFormat'
         Zotero.BetterBibTeX.keymanager.reset()
-        Zotero.BetterBibTeX.DB.query('delete from keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citeKeyFormat')])
+        Zotero.DB.query('delete from betterbibtex.keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citeKeyFormat')])
       when 'auto-export'
         Zotero.BetterBibTeX.auto.process()
     return
@@ -68,7 +69,7 @@ Zotero.BetterBibTeX.pref.ZoteroObserver = {
   observe: (subject, topic, data) ->
     if data == 'recursiveCollections'
       recursive = Zotero.BetterBibTeX.auto.recursive()
-      Zotero.BetterBibTeX.DB.execute("update autoexport set recursive = ?, status = 'pending' where recursive <> ?", [recursive, recursive])
+      Zotero.DB.execute("update betterbibtex.autoexport set recursive = ?, status = 'pending' where recursive <> ?", [recursive, recursive])
       Zotero.BetterBibTeX.auto.process('recursiveCollections')
     return
 }
@@ -330,6 +331,7 @@ Zotero.BetterBibTeX.removeTranslators = ->
 Zotero.BetterBibTeX.itemAdded = {
   notify: (event, type, collection_items) ->
     Zotero.BetterBibTeX.log('::: itemAdded', event, type, collection_items)
+    collections = []
 
     # monitor items added to collection to find BibTeX AUX Scanner data. The scanner adds a dummy item whose 'extra'
     # field has instructions on what to do after import
@@ -378,14 +380,14 @@ Zotero.BetterBibTeX.itemAdded = {
 
     if collections.length != 0
       collections = ('' + id for id in collections).join(',')
-      Zotero.BetterBibTeX.DB.query("update autoexport set status = 'pending' where collection_id in (#{collections})")
+      Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection_id in (#{collections})")
       Zotero.BetterBibTeX.auto.process('collectionChanged')
 
     return
 }
 
 Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
-  Zotero.BetterBibTeX.DB.query("delete from autoexport where collection_id in (#{('' + id for id in extraData).join(',')})") if event == 'delete' && extraData.length > 0
+  Zotero.DB.query("delete from betterbibtex.autoexport where collection_id in (#{('' + id for id in extraData).join(',')})") if event == 'delete' && extraData.length > 0
   return
 
 Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
@@ -397,9 +399,6 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
       for id in (if event == 'delete' then extraData else ids) || []
         Zotero.BetterBibTeX.keymanager.remove({itemID: id})
       collections = Zotero.Collections.getCollectionsContainingItems(extraData, true)
-
-    when 'add', 'modify', 'trash'
-      break if ids.length == 0
 
     when 'add', 'modify'
       break if ids.length == 0
@@ -418,7 +417,7 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
 
   if collections.length != 0
     collections = ('' + id for id in collections).join(',')
-    Zotero.BetterBibTeX.DB.query("update autoexport set status = 'pending' where collection_id in (#{collections})")
+    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection_id in (#{collections})")
     Zotero.BetterBibTeX.auto.process('itemChanged')
 
   return
