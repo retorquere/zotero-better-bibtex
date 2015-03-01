@@ -20,11 +20,12 @@ unless $headless
     STDOUT.puts "Installing #{File.basename(xpi)}"
     profile.add_extension(xpi)
   }
-  profile['extensions.zotero.showIn'] = 2;
-  profile['extensions.zotero.httpServer.enabled'] = true;
-  profile['extensions.zotero.debug.store'] = true;
-  profile['extensions.zotero.debug.log'] = true;
-  profile['extensions.zotero.translators.better-bibtex.debug'] = true;
+  profile['extensions.zotero.showIn'] = 2
+  profile['extensions.zotero.httpServer.enabled'] = true
+  profile['extensions.zotero.debug.store'] = true
+  profile['extensions.zotero.debug.log'] = true
+  profile['extensions.zotero.translators.better-bibtex.debug'] = true
+  profile['extensions.zotero.translators.better-bibtex.caching'] = true if ENV['CACHE'] == 'yes'
   profile['extensions.zotero.translators.better-bibtex.attachmentRelativePath'] = true
   profile['extensions.zotfile.useZoteroToRename'] = true
 
@@ -221,7 +222,7 @@ When(/^I set (preference|export option)\s+(.+)\s+to (.*)$/) do |setting, name, v
 
   case setting
     when 'preference'
-      BBT.setPreference(name, value);
+      BBT.setPreference(name, value)
 
     else
       BBT.setExportOption(name, value)
