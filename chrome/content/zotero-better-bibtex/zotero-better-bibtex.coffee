@@ -57,7 +57,10 @@ Zotero.BetterBibTeX.pref.observer = {
     switch data
       when 'citeKeyFormat'
         Zotero.BetterBibTeX.keymanager.reset()
+        # delete all dynamic keys that have a different citekeyformat (should be all)
         Zotero.DB.query('delete from betterbibtex.keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citeKeyFormat')])
+        # delete all cache entries that do not correspond to items with pinned keys
+        Zotero.DB.query('delete from betterbibtex.cache where not itemID in (select itemID from betterbibtex.keys where citeKeyFormat is null)')
       when 'auto-export'
         Zotero.BetterBibTeX.auto.process()
     return
@@ -157,7 +160,7 @@ Zotero.BetterBibTeX.init = ->
   if version < 6
     Zotero.DB.query("
       create table betterbibtex.cache (
-        itemid not null,
+        itemID not null,
         context not null,
         citekey not null,
         entry not null,
