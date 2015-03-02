@@ -244,7 +244,7 @@ task :amo => XPI do
   end
 end
 
-task :test, [:tag] => [:clean, XPI] do |t, args|
+task :test, [:tag] => XPI do |t, args|
   if File.file?('features/plugins.yml')
     plugins = YAML.load_file('features/plugins.yml')
   else
