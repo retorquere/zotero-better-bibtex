@@ -7,9 +7,9 @@ $namespace$.Context = class
     @translator = config.label
 
     for section in ['preferences', 'options']
-      for own key, value of @[section]
+      for own attribute, key of @[section]
         continue unless @valid[key]
-        @[key] = value
+        @[key] = config[section][key]
 
   # deterministic JSON so I can use it as a key
   toJSON: ->
