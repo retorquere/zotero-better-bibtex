@@ -290,3 +290,8 @@ Scenario: Export "Forthcoming" as "Forthcoming"
 Scenario: Export Č as {\v C}, not \v{C} #152
   When I import 1 reference with 2 attachment from 'export/Export C as {v C}, not v{C} #152.json'
   Then a library export using 'Better BibTeX' should match 'export/Export C as {v C}, not v{C} #152.bib'
+
+@160
+Scenario: Capitalisation in techreport titles #160
+  When I import 1 reference from 'export/Capitalisation in techreport titles #160.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Capitalisation in techreport titles #160.bib'

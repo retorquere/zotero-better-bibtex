@@ -14,7 +14,7 @@ Zotero.BetterBibTeX.auto.recursive = ->
 Zotero.BetterBibTeX.auto.process = (reason) ->
   return if @running
   switch Zotero.BetterBibTeX.pref.get('auto-export')
-    when 'off'  then return
+    when 'off', 'disabled'  then return
     when 'idle' then return unless @idle
 
   Zotero.BetterBibTeX.log("Auto-export: #{reason}")
