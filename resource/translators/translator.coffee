@@ -329,6 +329,16 @@ Reference::add = (field) ->
 
     unless field.bare && !field.value.match(/\s/)
       if Translator.preserveCaps != 'no' && field.preserveCaps && !@raw
+        braced = []
+        scan = value.replace(/\\./, '..')
+        for i in [0...value.length]
+          braced[i] = (braced[i - 1] || 0)
+          braced[i] += switch scan[i]
+            when '{' then 1
+            when '}' then -1
+            else          0
+          braced[i] = 0 if braced[i] < 0
+
         value = XRegExp.replace(value, @preserveCaps[Translator.preserveCaps], (needle, pos, haystack) ->
           #return needle if needle.length < 2 # don't escape single-letter capitals
           return needle if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, Reference::initialCapOnly)
@@ -341,13 +351,7 @@ Reference::add = (field) ->
               break
           return needle if c % 2 == 1 # don't enclose LaTeX command
 
-          c = 0
-          for ch in haystack.slice(0, pos).replace(/\\./, '')
-            switch ch
-              when '{' then c++
-              when '}' then c++
-          return needle if c > 0 # don't enclose if already enclosed
-
+          return needle if braced[pos] > 0
           return "{#{needle}}"
         )
       value = "{#{value}}"
