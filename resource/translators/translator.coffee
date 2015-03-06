@@ -9,6 +9,7 @@ require(':constants:')
 require('context.coffee', 'Translator')
 
 Translator.log = (msg...) ->
+  return unless @logging
   msg = for m in msg
     switch
       when (typeof m) in ['string', 'number'] then '' + m
@@ -19,12 +20,12 @@ Translator.log = (msg...) ->
   Zotero.debug("[better-bibtex:#{@label}] #{msg.join(' ')}")
   return
 
-
 Translator.initialize = ->
   return if @initialized
   @initialized = true
 
   @caching = Zotero.getHiddenPref('better-bibtex.caching') && @label.indexOf('Better ') == 0
+  @logging = Zotero.getHiddenPref('better-bibtex.debug.log')
 
   for own attr, f of @fieldMap or {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
