@@ -11,6 +11,7 @@ Zotero.BetterBibTeX.inspect = (o) ->
   return clone
 
 Zotero.BetterBibTeX.log = (msg...) ->
+  return unless @logging
   msg = for m in msg
     switch
       when (typeof m) in ['string', 'number'] then '' + m
@@ -62,7 +63,7 @@ Zotero.BetterBibTeX.pref.observer = {
         # delete all cache entries that do not correspond to items with pinned keys
         Zotero.DB.query('delete from betterbibtex.cache where not itemID in (select itemID from betterbibtex.keys where citeKeyFormat is null)')
       when 'auto-export'
-        Zotero.BetterBibTeX.auto.process()
+        Zotero.BetterBibTeX.auto.process() unless Zotero.BetterBibTeX.pref.get('auto-export') == 'disabled'
     return
 }
 
@@ -70,10 +71,15 @@ Zotero.BetterBibTeX.pref.ZoteroObserver = {
   register: -> Zotero.Prefs.prefBranch.addObserver('', this, false)
   unregister: -> Zotero.Prefs.prefBranch.removeObserver('', this)
   observe: (subject, topic, data) ->
-    if data == 'recursiveCollections'
-      recursive = Zotero.BetterBibTeX.auto.recursive()
-      Zotero.DB.execute("update betterbibtex.autoexport set recursive = ?, status = 'pending' where recursive <> ?", [recursive, recursive])
-      Zotero.BetterBibTeX.auto.process('recursiveCollections')
+    switch data
+      when 'recursiveCollections'
+        return if Zotero.BetterBibTeX.pref.get('auto-export') == 'disabled'
+        recursive = Zotero.BetterBibTeX.auto.recursive()
+        Zotero.DB.execute("update betterbibtex.autoexport set recursive = ?, status = 'pending' where recursive <> ?", [recursive, recursive])
+        Zotero.BetterBibTeX.auto.process('recursiveCollections')
+      when 'debug.log'
+        Zotero.BetterBibTeX.logging = Zotero.Prefs.get(data)
+        Zotero.BetterBibTeX.pref.set(data, Zotero.BetterBibTeX.logging)
     return
 }
 
@@ -115,6 +121,9 @@ Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
 Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
+
+  @logging = Zotero.Prefs.get('debug.log')
+  @pref.set('debug.log', @logging)
 
   @translators = Object.create(null)
   @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
@@ -200,7 +209,6 @@ Zotero.BetterBibTeX.init = ->
 
   @pref.observer.register()
   @pref.ZoteroObserver.register()
-
 
   for own name, endpoint of @endpoints
     url = "/better-bibtex/#{name}"
@@ -381,7 +389,7 @@ Zotero.BetterBibTeX.itemAdded = {
         item.setField('extra', "Missing references:\n#{missing.join('\n')}")
         item.save()
 
-    if collections.length != 0
+    unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('auto-export') == 'disabled'
       collections = ('' + id for id in collections).join(',')
       Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection_id in (#{collections})")
       Zotero.BetterBibTeX.auto.process('collectionChanged')
@@ -418,7 +426,7 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
       for id in ids
         Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'on-change')
 
-  if collections.length != 0
+  unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('auto-export') == 'disabled'
     collections = ('' + id for id in collections).join(',')
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection_id in (#{collections})")
     Zotero.BetterBibTeX.auto.process('itemChanged')

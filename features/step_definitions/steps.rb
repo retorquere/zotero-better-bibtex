@@ -22,9 +22,13 @@ unless $headless
   }
   profile['extensions.zotero.showIn'] = 2
   profile['extensions.zotero.httpServer.enabled'] = true
-  profile['extensions.zotero.debug.store'] = true
-  profile['extensions.zotero.debug.log'] = true
-  profile['extensions.zotero.translators.better-bibtex.debug'] = true
+
+  if ENV['CI'] != 'true'
+    profile['extensions.zotero.debug.store'] = true
+    profile['extensions.zotero.debug.log'] = true
+    profile['extensions.zotero.translators.better-bibtex.debug'] = true
+  end
+
   profile['extensions.zotero.translators.better-bibtex.caching'] = true if ENV['CACHE'] == 'yes'
   profile['extensions.zotero.translators.better-bibtex.attachmentRelativePath'] = true
   profile['extensions.zotfile.useZoteroToRename'] = true
