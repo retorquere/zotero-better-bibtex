@@ -1,5 +1,8 @@
 language: ruby
-cache: apt
+sudo: false
+cache: 
+- apt
+- bundler
 git:
   submodules: false
 rvm:
@@ -12,6 +15,7 @@ env:
   - TAG=bulk   CACHE=yes
 script: "bundle exec rake test[$TAG]"
 before_install:
+  - npm update
+ignore_before_install:
   - sudo apt-get update
   - sudo apt-get install nodejs npm firefox
-  - npm update
