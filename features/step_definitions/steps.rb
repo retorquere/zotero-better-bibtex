@@ -62,12 +62,12 @@ at_exit do
 end
 
 Before do |scenario|
-  BBT.reset
+  BBT.reset unless scenario.source_tag_names.include?('@bulk')
   BBT.setPreference('translators.better-bibtex.testmode', true)
   @selected = nil
   @expectedExport = nil
   sleep 1
-  throw 'Library not empty!' unless BBT.librarySize == 0
+  throw 'Library not empty!' unless BBT.librarySize == 0 || scenario.source_tag_names.include?('@bulk')
 end
 
 After do |scenario|

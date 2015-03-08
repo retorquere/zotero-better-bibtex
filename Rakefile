@@ -258,10 +258,16 @@ task :test, [:tag] => XPI do |t, args|
 
   tag = "@#{args[:tag]}".sub(/^@@/, '@')
 
+  sh "git checkout test/fixtures/profile"
   if tag == '@'
-    tag = ''
+    tag = '--tags ~@bulk'
   else
-    tag = "--tags #{tag}"
+    if tag == '@bulk'
+      FileUtils.cp('test/fixtures/profile/zotero/zotero-bulk.sqlite', 'test/fixtures/profile/zotero/zotero.sqlite')
+      tag = "--tags @bulk"
+    else
+      tag = "--tags #{tag} --tags ~@bulk"
+    end
   end
 
   success = true

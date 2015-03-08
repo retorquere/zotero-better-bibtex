@@ -9,10 +9,9 @@ env:
   - TAG=export
   - TAG=import CACHE=yes
   - TAG=export CACHE=yes
+  - TAG=bulk   CACHE=yes
 script: "bundle exec rake test[$TAG]"
 before_install:
   - sudo apt-get update
   - sudo apt-get install nodejs npm firefox
   - npm update
-addons:
-  firefox: "33.0"
