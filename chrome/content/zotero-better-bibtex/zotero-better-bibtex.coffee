@@ -201,7 +201,7 @@ Zotero.BetterBibTeX.init = ->
 
   if version < 8
     Zotero.DB.query("
-      create table betterbibtex.autoexport (
+      create table if not exists betterbibtex.autoexport (
         id integer primary key not null,
         collection_id not null,
         collection_name not null,
