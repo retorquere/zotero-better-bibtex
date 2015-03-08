@@ -111,12 +111,28 @@ Zotero.BetterBibTeX.idleService = Components.classes["@mozilla.org/widget/idlese
 Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
   switch topic
     when 'idle'
+      Zotero.BetterBibTeX.cache.reap()
       Zotero.BetterBibTeX.auto.idle = true
       Zotero.BetterBibTeX.auto.process('idle')
 
     when 'back'
       Zotero.BetterBibTeX.auto.idle = false
   return
+
+Zotero.BetterBibTeX.uninstallObserver =
+  observe: (subject, topic, data) ->
+    if topic == 'quit-application-requested'
+      @unregister()
+      Zotero.BetterBibTeX.cache.reap()
+    return
+  register: ->
+    observerService = Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService)
+    observerService.addObserver(@, 'quit-application-requested', false)
+    return
+  unregister: ->
+    observerService = Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService)
+    observerService.removeObserver(@, 'quit-application-requested')
+    return
 
 Zotero.BetterBibTeX.init = ->
   return if @initialized
@@ -196,7 +212,21 @@ Zotero.BetterBibTeX.init = ->
         unique (collection_id, path, context))
       ")
 
-  Zotero.DB.query("insert or replace into betterbibtex._version_ (tablename, version) values ('keys', 8)")
+  if version < 9
+    Zotero.DB.query('alter table betterbibtex.cache rename to _cache_')
+    Zotero.DB.query("
+      create table betterbibtex.cache (
+        itemID not null,
+        context not null,
+        citekey not null,
+        entry not null,
+        lastaccess default CURRENT_TIMESTAMP,
+        primary key (itemid, context))
+      ")
+    Zotero.DB.query('insert into betterbibtex.cache (itemID, context, citekey, entry) select itemID, context, citekey, entry from betterbibtex._cache_')
+    Zotero.DB.query('drop table betterbibtex._cache_')
+
+  Zotero.DB.query("insert or replace into betterbibtex._version_ (tablename, version) values ('keys', 9)")
 
   @keymanager.reset()
   Zotero.DB.query('delete from betterbibtex.keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@pref.get('citeKeyFormat')])
@@ -209,6 +239,7 @@ Zotero.BetterBibTeX.init = ->
 
   @pref.observer.register()
   @pref.ZoteroObserver.register()
+  @uninstallObserver.register()
 
   for own name, endpoint of @endpoints
     url = "/better-bibtex/#{name}"

@@ -52,16 +52,33 @@ Zotero.BetterBibTeX.cache.init = ->
     hits: 0
     misses: 0
     stores: 0
+    access: {}
   }
 
+  Zotero.DB._connection.createFunction('bbtaccess', 2, @access)
+
   return @
+
+Zotero.BetterBibTeX.cache.access = (itemID, context) ->
+  Zotero.BetterBibTeX.cache.stats.access[itemID] ?= {}
+  Zotero.BetterBibTeX.cache.stats.access[itemID][context] = Date.now()
+  return
+
+Zotero.BetterBibTeX.cache.reap = ->
+  for own itemID, access of @stats.access
+    for own context, accesstime of access
+      Zotero.DB.query("update betterbibtex.cache set lastaccess = ? where itemID = ? and context = ?", [accesstime.toISOString().substring(0, 19).replace('T', ' '), itemID, context])
+  Zotero.BetterBibTeX.cache.stats.access = {}
+  Zotero.DB.query("delete from betterbibtex.cache where lastaccess < datetime('now','-1 month')")
+  return
+
 
 Zotero.BetterBibTeX.cache.fetch = (context, itemid) ->
   if context._sandboxManager
     context = arguments[1]
     itemid = arguments[2]
 
-  for cached in Zotero.DB.query('select citekey, entry from betterbibtex.cache where context = ? and itemid = ?', [context, itemid])
+  for cached in Zotero.DB.query('select citekey, entry, bbtaccess(itemID, context) from betterbibtex.cache where context = ? and itemid = ?', [context, itemid])
     cached = {citekey: cached.citekey, entry: cached.entry}
     throw("Malformed cache entry! #{cached}") unless cached.citekey && cached.entry
     @stats.hits += 1
