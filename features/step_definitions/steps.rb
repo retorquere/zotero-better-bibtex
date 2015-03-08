@@ -5,6 +5,7 @@ require 'pp'
 require 'fileutils'
 require 'ostruct'
 require 'yaml'
+require 'benchmark'
 
 $headless ||= false
 unless $headless
@@ -22,6 +23,7 @@ unless $headless
   }
   profile['extensions.zotero.showIn'] = 2
   profile['extensions.zotero.httpServer.enabled'] = true
+  profile['dom.max_chrome_script_run_time'] = 600
 
   if ENV['CI'] != 'true'
     profile['extensions.zotero.debug.store'] = true
@@ -38,7 +40,9 @@ unless $headless
   profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
   profile['pdfjs.disabled'] = true
 
-  BROWSER = Selenium::WebDriver.for :firefox, :profile => profile
+  client = Selenium::WebDriver::Remote::Http::Default.new
+  client.timeout = 600 # seconds – default is 60
+  BROWSER = Selenium::WebDriver.for :firefox, :profile => profile, :http_client => client
 
   sleep 2
   BROWSER.navigate.to('chrome://zotero/content/tab.xul') # does this trigger the window load?
@@ -57,7 +61,7 @@ at_exit do
   $headless.destroy if $headless
 end
 
-Before do
+Before do |scenario|
   BBT.reset
   BBT.setPreference('translators.better-bibtex.testmode', true)
   @selected = nil
@@ -204,7 +208,8 @@ Then /^the library should match '([^']+)'$/ do |filename|
 end
 
 Then(/^a library export using '([^']+)' should match '([^']+)'$/) do |translator, filename|
-  found = BBT.exportToString(translator).strip
+  found = nil
+  bm = Benchmark.measure { found = BBT.exportToString(translator).strip }
 
   @expectedExport = OpenStruct.new(filename: filename, translator: translator)
 
@@ -215,7 +220,7 @@ Then(/^a library export using '([^']+)' should match '([^']+)'$/) do |translator
 end
 
 Then(/^export the library using '([^']+)' to '([^']+)'$/) do |translator, filename|
-  BBT.exportToFile(translator, filename)
+  bm = Benchmark.measure { BBT.exportToFile(translator, filename) }
 end
 
 When(/^I set (preference|export option)\s+(.+)\s+to (.*)$/) do |setting, name, value|
@@ -253,8 +258,16 @@ Then /^(write|append) the (browser|Zotero) log to '([^']+)'$/ do |action, kind, 
   }
 end
 
+Then /restore '([^']+)'$/ do |db|
+  BBT.restore(db)
+end
+
 Then /^show the citekeys$/ do
   pp BBT.getKeys
+end
+
+Then /^save the query log to '([^']+)'$$/ do |filename|
+  open(filename, 'w'){|f| f.write(BBT.sql.to_yaml) }
 end
 
 Then /^I select the first item where ([^\s]+) = '([^']+)'$/ do |attribute, value|

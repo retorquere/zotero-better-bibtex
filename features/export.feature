@@ -182,9 +182,11 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
 
 #@bulk
 #Scenario: Bulk import: performance work needed!
-#  When I import 2417 references with 52 attachments from 'export/Big whopping library.json'
-#  Then export the library using 'Better BibLaTeX' to '/tmp/BWL.bib'
-#  Then write the Zotero log to 'zotero.log'
+#  When I import 1242 references with 581 attachments from 'export/Big whopping library.json'
+#  And I set preference translators.better-bibtex.caching to true
+#  Then save the query log to 'sql.yml'
+#   And a library export using 'Better BibLaTeX' should match 'export/Big whopping library.bib'
+#   And a library export using 'Better BibLaTeX' should match 'export/Big whopping library.bib'
 
 @98
 Scenario: Export of item to Better Bibtex fails for auth3_1 #98
