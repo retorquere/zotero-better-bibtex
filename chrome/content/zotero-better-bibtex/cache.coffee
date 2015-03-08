@@ -68,7 +68,7 @@ Zotero.BetterBibTeX.cache.reap = ->
   for own itemID, access of @stats.access
     for own context, accesstime of access
       Zotero.DB.query("update betterbibtex.cache set lastaccess = ? where itemID = ? and context = ?", [accesstime.toISOString().substring(0, 19).replace('T', ' '), itemID, context])
-  Zotero.BetterBibTeX.cache.stats.access = {}
+  @stats.access = {}
   Zotero.DB.query("delete from betterbibtex.cache where lastaccess < datetime('now','-1 month')")
   return
 
