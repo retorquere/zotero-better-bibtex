@@ -181,7 +181,7 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
   Then a library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bib'
 
 @bulk
-Scenario: Bulk import: performance work needed!
+Scenario: Bulk export cache testing
   When I import 1242 references with 581 attachments from 'export/Big whopping library.json'
    And I set preference translators.better-bibtex.caching to true
    And a timed library export using 'Better BibLaTeX' should match 'export/Big whopping library.bib'
