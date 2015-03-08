@@ -62,12 +62,12 @@ at_exit do
 end
 
 Before do |scenario|
-  BBT.reset unless scenario.source_tag_names.include?('@bulk')
+  BBT.reset
   BBT.setPreference('translators.better-bibtex.testmode', true)
   @selected = nil
   @expectedExport = nil
   sleep 1
-  throw 'Library not empty!' unless BBT.librarySize == 0 || scenario.source_tag_names.include?('@bulk')
+  throw 'Library not empty!' unless BBT.librarySize == 0
 end
 
 After do |scenario|
@@ -207,9 +207,10 @@ Then /^the library should match '([^']+)'$/ do |filename|
   expect(JSON.pretty_generate(found)).to eq(JSON.pretty_generate(expected))
 end
 
-Then(/^a library export using '([^']+)' should match '([^']+)'$/) do |translator, filename|
+Then(/^a (timed )?library export using '([^']+)' should match '([^']+)'$/) do |timed, translator, filename|
   found = nil
   bm = Benchmark.measure { found = BBT.exportToString(translator).strip }
+  puts bm if timed
 
   @expectedExport = OpenStruct.new(filename: filename, translator: translator)
 
