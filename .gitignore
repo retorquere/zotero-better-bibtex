@@ -3,7 +3,6 @@
 *.swp
 *.debug
 *.cache
-Gemfile.lock
 .bundle
 *.js
 .depends.mf
