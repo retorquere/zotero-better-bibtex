@@ -183,9 +183,9 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
 @bulk
 Scenario: Bulk import: performance work needed!
   When I import 1242 references with 581 attachments from 'export/Big whopping library.json'
-  And I set preference translators.better-bibtex.caching to true
-   And a library export using 'Better BibLaTeX' should match 'export/Big whopping library.bib'
-   And a library export using 'Better BibLaTeX' should match 'export/Big whopping library.bib'
+   And I set preference translators.better-bibtex.caching to true
+   And a timed library export using 'Better BibLaTeX' should match 'export/Big whopping library.bib'
+   And a timed library export using 'Better BibLaTeX' should match 'export/Big whopping library.bib'
 
 @98
 Scenario: Export of item to Better Bibtex fails for auth3_1 #98
