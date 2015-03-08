@@ -89,4 +89,5 @@ LaTeX.html2latex = (text) ->
   for tag in stack
     @latex += tag.postfix
 
-  return BetterBibTeXBraceBalancer.parse(@latex)
+  return BetterBibTeXBraceBalancer.parse(@latex) if @latex.indexOf("\\{") >= 0 || @latex.indexOf("\\textleftbrace") || @latex.indexOf("\\}") >= 0 || @latex.indexOf("\\textrightbrace")
+  return @latex

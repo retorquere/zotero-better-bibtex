@@ -1,5 +1,6 @@
 Zotero.BetterBibTeX.DebugBridge = {
   exportOptions: {}
+  sql: []
   namespace: 'better-bibtex'
   methods: {}
 }
@@ -17,6 +18,13 @@ Zotero.BetterBibTeX.DebugBridge.methods.init = ->
       items = original.apply(this, arguments)
       items.sort(((a, b) -> a.itemID - b.itemID))
       return items)(Zotero.Items.getAll)
+
+  #Zotero.DBConnection.prototype.getStatement = ((original) ->
+  #  return (sql, params, checkParams) ->
+  #    Zotero.BetterBibTeX.DebugBridge.sql.push({sql, params})
+  #    return original.apply(this, arguments)
+  #  )(Zotero.DBConnection.prototype.getStatement)
+
   return true
 
 Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
@@ -24,6 +32,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.BetterBibTeX.pref.restore()
 
   Zotero.BetterBibTeX.DebugBridge.exportOptions = {}
+  Zotero.BetterBibTeX.DebugBridge.sql = []
 
   try
     Zotero.Items.erase((item.id for item in Zotero.BetterBibTeX.safeGetAll()))
@@ -86,6 +95,8 @@ Zotero.BetterBibTeX.DebugBridge.methods.cache = ->
   }
 
 Zotero.BetterBibTeX.DebugBridge.methods.remove = (id) -> Zotero.Items.trash([id])
+
+Zotero.BetterBibTeX.DebugBridge.methods.sql = -> Zotero.BetterBibTeX.DebugBridge.sql
 
 Zotero.BetterBibTeX.DebugBridge.methods.pinCiteKey = (id) ->
   return Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'manual').citekey
