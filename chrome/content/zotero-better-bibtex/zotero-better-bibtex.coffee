@@ -212,7 +212,7 @@ Zotero.BetterBibTeX.init = ->
         unique (collection_id, path, context))
       ")
 
-  if version < 9
+  if version < 10
     Zotero.DB.query('alter table betterbibtex.cache rename to _cache_')
     Zotero.DB.query("
       create table betterbibtex.cache (
@@ -220,13 +220,13 @@ Zotero.BetterBibTeX.init = ->
         context not null,
         citekey not null,
         entry not null,
-        lastaccess default CURRENT_TIMESTAMP,
+        lastaccess not null default CURRENT_TIMESTAMP,
         primary key (itemid, context))
       ")
     Zotero.DB.query('insert into betterbibtex.cache (itemID, context, citekey, entry) select itemID, context, citekey, entry from betterbibtex._cache_')
     Zotero.DB.query('drop table betterbibtex._cache_')
 
-  Zotero.DB.query("insert or replace into betterbibtex._version_ (tablename, version) values ('keys', 9)")
+  Zotero.DB.query("insert or replace into betterbibtex._version_ (tablename, version) values ('keys', 10)")
 
   @keymanager.reset()
   Zotero.DB.query('delete from betterbibtex.keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@pref.get('citeKeyFormat')])
