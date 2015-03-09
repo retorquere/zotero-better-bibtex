@@ -25,7 +25,7 @@ Translator.initialize = ->
   @initialized = true
 
   @caching = Zotero.getHiddenPref('better-bibtex.caching') && @label.indexOf('Better ') == 0
-  @logging = Zotero.getHiddenPref('better-bibtex.debug.log')
+  @logging = Zotero.getHiddenPref('better-bibtex.logging')
 
   for own attr, f of @fieldMap or {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
@@ -393,6 +393,5 @@ Reference::complete = ->
   ref += '\n}\n\n'
   Zotero.write(ref)
 
-  @log(':::ref stores', ref)
   Zotero.BetterBibTeX.cache.store(Translator.context, @item.itemID, @item.__citekey__, ref) if Translator.caching
   return

@@ -77,9 +77,6 @@ Zotero.BetterBibTeX.pref.ZoteroObserver = {
         recursive = Zotero.BetterBibTeX.auto.recursive()
         Zotero.DB.execute("update betterbibtex.autoexport set recursive = ?, status = 'pending' where recursive <> ?", [recursive, recursive])
         Zotero.BetterBibTeX.auto.process('recursiveCollections')
-      when 'debug.log'
-        Zotero.BetterBibTeX.logging = Zotero.Prefs.get(data)
-        Zotero.BetterBibTeX.pref.set(data, Zotero.BetterBibTeX.logging)
     return
 }
 
@@ -138,8 +135,11 @@ Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
 
-  @logging = Zotero.Prefs.get('debug.log')
-  @pref.set('debug.log', @logging)
+  @log('initializing')
+
+  @logging = Zotero.Debug.enabled
+  Zotero.debug("BBT: logging = #{@logging}")
+  @pref.set('logging', @logging)
 
   @translators = Object.create(null)
   @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
@@ -228,14 +228,14 @@ Zotero.BetterBibTeX.init = ->
 
   Zotero.DB.query("insert or replace into betterbibtex._version_ (tablename, version) values ('keys', 10)")
 
-  @keymanager.reset()
-  Zotero.DB.query('delete from betterbibtex.keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@pref.get('citeKeyFormat')])
-
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     __exposedProps__: {keymanager: 'r', cache: 'r'}
     keymanager: @keymanager.init()
     cache: @cache.init()
   }
+
+  @keymanager.reset()
+  Zotero.DB.query('delete from betterbibtex.keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@pref.get('citeKeyFormat')])
 
   @pref.observer.register()
   @pref.ZoteroObserver.register()
@@ -263,6 +263,14 @@ Zotero.BetterBibTeX.init = ->
     @pref.set('scan-citekeys', false)
 
   @loadTranslators()
+
+  # monkey-patch Zotero.debug.setStore to notice logging changes
+  Zotero.Debug.setStore = ((original) ->
+    return (enable) ->
+      Zotero.BetterBibTeX.logging = enable
+      Zotero.BetterBibTeX.pref.set('logging', enable)
+      return original.apply(this, arguments)
+    )(Zotero.Debug.setStore)
 
   # monkey-patch Zotero.ItemTreeView.prototype.getCellText to replace the 'extra' column with the citekey
   # I wish I didn't have to hijack the extra field, but Zotero has checks in numerous places to make sure it only
@@ -348,6 +356,7 @@ Zotero.BetterBibTeX.init = ->
   }
   AddonManager.addAddonListener(uninstaller)
 
+  @log('initialized')
   return
 
 Zotero.BetterBibTeX.loadTranslators = ->
@@ -403,7 +412,7 @@ Zotero.BetterBibTeX.itemAdded = {
       missing = []
       for citekey in extra.citations
         Zotero.BetterBibTeX.log("::: citekey #{citekey}")
-        id = Zotero.DB.valueQuery('select itemID from betterbibtex.keys where citekey = ? and itemID in (select itemID from items where coalesce(libraryID, 0) = ?)', [citekey, collection.libraryID])
+        id = Zotero.DB.valueQuery('select itemID from betterbibtex.keys where citekey = ? and itemID in (select itemID from items where coalesce(libraryID, 0) = ?)', [citekey, collection.libraryID || 0])
         if id
           Zotero.BetterBibTeX.log("::: citekey #{citekey} found")
           collection.addItem(id)
