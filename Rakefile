@@ -267,7 +267,6 @@ task :test, [:tag] => XPI do |t, args|
       tag = ''
     else
       tag = "--tags #{tag} --tags ~@bulk"
-    end
   end
 
   success = true
