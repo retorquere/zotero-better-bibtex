@@ -269,9 +269,16 @@ task :test, [:tag] => XPI do |t, args|
       tag = "--tags #{tag} --tags ~@bulk"
   end
 
+  if ENV['CI'] == 'true'
+    logfile = 'cucumber.json'
+    format = '--format json'
+  else
+    logfile = 'cucumber.log'
+    format = ''
+  end
   success = true
-  open('cucumber.log', 'w'){|log|
-    IO.popen("cucumber #{tag}"){|io|
+  open(logfile, 'w'){|log|
+    IO.popen("cucumber #{format} #{tag}"){|io|
       io.each { |line|
         log.write(line)
         puts line.chomp
