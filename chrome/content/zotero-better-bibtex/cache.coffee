@@ -70,7 +70,7 @@ Zotero.BetterBibTeX.cache.fetch = (context, itemID) ->
     context = arguments[1]
     itemID = arguments[2]
 
-  for cached in Zotero.DB.query('select citekey, entry, bbtaccess(itemID, context) from betterbibtex.cache where context = ? and itemID = ?', [context, itemID])
+  for cached in Zotero.DB.query('select citekey, entry from betterbibtex.cache where context = ? and itemID = ?', [context, itemID])
     @stats.access[itemID] ?= {}
     @stats.access[itemID][context] = Date.now()
     cached = {citekey: cached.citekey, entry: cached.entry}
