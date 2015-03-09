@@ -263,7 +263,7 @@ task :test, [:tag] => XPI do |t, args|
       tag = '--tags ~@bulk'
     when '@bulk'
       tag = "--tags @bulk"
-    when '*'
+    when '@*'
       tag = ''
     else
       tag = "--tags #{tag} --tags ~@bulk"
