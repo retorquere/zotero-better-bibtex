@@ -3,7 +3,10 @@ Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
 require('Formatter.js')
 
-Zotero.BetterBibTeX = {}
+Zotero.BetterBibTeX = {
+  serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
+  document: Components.classes["@mozilla.org/xul/xul-document;1"].getService(Components.interfaces.nsIDOMDocument)
+}
 
 Zotero.BetterBibTeX.inspect = (o) ->
   clone = Object.create(null)
@@ -131,6 +134,23 @@ Zotero.BetterBibTeX.uninstallObserver =
     observerService.removeObserver(@, 'quit-application-requested')
     return
 
+Zotero.BetterBibTeX.SQLColumns = (table) ->
+  statement = Zotero.DB.getStatement("pragma betterbibtex.table_info(#{table})", null, true)
+
+  # Get name column
+  for i in [0...statement.columnCount]
+    name = i if statement.getColumnName(i).toLowerCase() == 'name'
+
+  columns = null
+  while statement.executeStep()
+    columns ?= {}
+    columns[Zotero.DB._getTypedValue(statement, name)] = true
+  statement.finalize()
+
+  @log('schema', table, columns)
+
+  return columns
+
 Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
@@ -162,58 +182,43 @@ Zotero.BetterBibTeX.init = ->
                   where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)"
 
   @pref.prefs.clearUserPref('brace-all')
-  Zotero.DB.query('create table if not exists betterbibtex._version_ (tablename primary key, version not null, unique (tablename, version))')
-  Zotero.DB.query("insert or ignore into betterbibtex._version_ (tablename, version) values ('keys', 0)")
 
-  version = Zotero.DB.valueQuery("select version from betterbibtex._version_ where tablename = 'keys'")
+  Zotero.DB.query("create table if not exists betterbibtex.schema (lock primary key default 'schema' check (lock='schema'), version not null)")
+
+  ### migrate '_version_' to 'schema' ###
+  if @SQLColumns('_version_')
+    Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) select 'schema', version from betterbibtex._version_ order by version desc limit 1")
+    Zotero.DB.query('drop table betterbibtex._version_')
+
+  ### initialize 'schema' ###
+  Zotero.DB.query("insert or ignore into betterbibtex.schema (lock, version) values ('schema', 0)")
+  version = Zotero.DB.valueQuery("select version from betterbibtex.schema")
   @log("Booting BBT, schema: #{version}")
-  if version < 1
-    Zotero.DB.query('create table betterbibtex.keys (itemID primary key, libraryID not null, citekey not null, pinned)')
 
-  if version < 3
-    @pref.set('scan-citekeys', true)
-
-  if version < 4
-    Zotero.DB.query('alter table betterbibtex.keys rename to keys2')
-    Zotero.DB.query('create table betterbibtex.keys (itemID primary key, libraryID not null, citekey not null, citeKeyFormat)')
-    Zotero.DB.query('insert into betterbibtex.keys (itemID, libraryID, citekey, citeKeyFormat)
-               select itemID, libraryID, citekey, case when pinned = 1 then null else ? end from betterbibtex.keys2', [@pref.get('citeKeyFormat')])
-
-  if version < 5
-    Zotero.DB.query('drop table betterbibtex.keys2')
-
-  if version < 6
-    Zotero.DB.query("
-      create table betterbibtex.cache (
-        itemID not null,
-        context not null,
-        citekey not null,
-        entry not null,
-        primary key (itemid, context))
-      ")
-
-  if version < 7
+  ### upgrade 'keys' table ###
+  columns = @SQLColumns('keys')
+  if columns?.pinned || columns?.libraryID
     Zotero.DB.query('alter table betterbibtex.keys rename to _keys_')
+  if !columns || columns?.pinned || columns?.libraryID
     Zotero.DB.query('create table betterbibtex.keys (itemID primary key, citekey not null, citeKeyFormat)')
-    Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citeKeyFormat) select itemID, citekey, citeKeyFormat from betterbibtex._keys_')
+  switch
+    when columns?.pinned
+      Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citeKeyFormat)
+                       select itemID, citekey, case when pinned = 1 then null else ? end from betterbibtex._keys_', [@pref.get('citeKeyFormat')])
+    when columns?.libraryID
+      Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citeKeyFormat)
+                       select itemID, citekey, citeKeyFormat from betterbibtex._keys_')
+  if columns?.pinned || columns?.libraryID
     Zotero.DB.query('drop table betterbibtex._keys_')
-    @pref.set('scan-citekeys', true)
 
-  if version < 8
-    Zotero.DB.query("
-      create table if not exists betterbibtex.autoexport (
-        id integer primary key not null,
-        collection_id not null,
-        collection_name not null,
-        path not null,
-        context not null,
-        recursive not null,
-        status not null,
-        unique (collection_id, path, context))
-      ")
+  ### drop 'keys2' table, upgrade leftovers ###
+  Zotero.DB.query('drop table betterbibtex.keys2') if @SQLColumns('keys2')
 
-  if version < 10
-    Zotero.DB.query('alter table betterbibtex.cache rename to _cache_')
+  ### upgrade 'cache' table ###
+  columns = @SQLColumns('cache')
+  unless columns?.lastaccess
+    if columns
+      Zotero.DB.query('alter table betterbibtex.cache rename to _cache_')
     Zotero.DB.query("
       create table betterbibtex.cache (
         itemID not null,
@@ -223,10 +228,29 @@ Zotero.BetterBibTeX.init = ->
         lastaccess not null default CURRENT_TIMESTAMP,
         primary key (itemid, context))
       ")
-    Zotero.DB.query('insert into betterbibtex.cache (itemID, context, citekey, entry) select itemID, context, citekey, entry from betterbibtex._cache_')
-    Zotero.DB.query('drop table betterbibtex._cache_')
+    unless columns.lastaccess
+      Zotero.DB.query('insert into betterbibtex.cache (itemID, context, citekey, entry) select itemID, context, citekey, entry from betterbibtex._cache_')
+      Zotero.DB.query('drop table betterbibtex._cache_')
 
-  Zotero.DB.query("insert or replace into betterbibtex._version_ (tablename, version) values ('keys', 10)")
+  ### upgrade 'autoexport' table ###
+  Zotero.DB.query("
+    create table if not exists betterbibtex.autoexport (
+      id integer primary key not null,
+      collection_id not null,
+      collection_name not null,
+      path not null,
+      context not null,
+      recursive not null,
+      status not null,
+      unique (collection_id, path, context))
+    ")
+
+  ### schema 3 & 7 had a scanning flaw, force rescan ###
+  if version < 7
+    @pref.set('scan-citekeys', true)
+
+  ### mark current version ###
+  Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', 11)")
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     __exposedProps__: {keymanager: 'r', cache: 'r'}
@@ -408,6 +432,7 @@ Zotero.BetterBibTeX.itemAdded = {
 
       continue if extra.translator != 'BibTeX AUX Scanner'
       Zotero.BetterBibTeX.log('::: AUX', collection.id, extra.citations)
+      Zotero.Items.trash([itemID])
 
       missing = []
       for citekey in extra.citations
@@ -418,16 +443,27 @@ Zotero.BetterBibTeX.itemAdded = {
           collection.addItem(id)
         else
           Zotero.BetterBibTeX.log("::: citekey #{citekey} missing")
-          missing.push("* #{citekey}")
+          missing.push(citekey)
 
       if missing.length == 0
         Zotero.BetterBibTeX.log("::: all citekeys found")
-        Zotero.Items.trash([itemID])
       else
-        Zotero.BetterBibTeX.log("::: #{missing.length} citekeys missing")
-        item = Zotero.Items.get(itemID)
-        item.setField('extra', "Missing references:\n#{missing.join('\n')}")
+        report = new Zotero.BetterBibTeX.HTMLNode('http://www.w3.org/1999/xhtml', 'html')
+        report.div(->
+          @p(-> @b('BibTeX AUX scan'))
+          @p('Missing references:')
+          @ul(->
+            for citekey in missing
+              @li(citekey)
+            return
+          )
+          return
+        )
+        item = new Zotero.Item('note')
+        item.libraryID = collection.libraryID
+        item.setNote(report.serialize())
         item.save()
+        collection.addItem(item.id)
 
     unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('auto-export') == 'disabled'
       Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection_id in #{Zotero.BetterBibTeX.SQLSet(collections)}")
@@ -573,6 +609,69 @@ Zotero.BetterBibTeX.toArray = (item) ->
   item = item.toArray() if item.setField # TODO: switch to serialize when Zotero does
   throw 'format: no item\n' + (new Error('dummy')).stack if not item.itemType
   return item
+
+class Zotero.BetterBibTeX.XmlNode
+  constructor: (@namespace, @root, @doc) ->
+    if !@doc
+      @doc = Zotero.BetterBibTeX.document.implementation.createDocument(@namespace, @root, null)
+      @root = @doc.documentElement
+
+  serialize: -> Zotero.BetterBibTeX.serializer.serializeToString(@doc)
+
+  alias: (names) ->
+    for name in names
+      @Node::[name] = do (name) -> (v...) -> XmlNode::add.apply(@, [{"#{name}": v[0]}].concat(v.slice(1)))
+    return
+
+  set: (node, attrs...) ->
+    for attr in attrs
+      for own name, value of attr
+        switch
+          when typeof value == 'function'
+            value.call(new @Node(@namespace, node, @doc))
+
+          when name == ''
+            node.appendChild(@doc.createTextNode('' + value))
+
+          else
+            node.setAttribute(name, '' + value)
+    return
+
+  add: (content...) ->
+    if typeof content[0] == 'object'
+      for own name, attrs of content[0]
+        continue if name == ''
+        node = @doc.createElementNS(@namespace, name)
+        @root.appendChild(node)
+        content = [attrs].concat(content.slice(1))
+        break # there really should only be one pair here!
+    node ?= @root
+
+    content = (c for c in content when typeof c == 'number' || c)
+
+    for attrs in content
+      switch
+        when typeof attrs == 'string'
+          node.appendChild(@doc.createTextNode(attrs))
+
+        when typeof attrs == 'function'
+          attrs.call(new @Node(@namespace, node, @doc))
+
+        when attrs.appendChild
+          node.appendChild(attrs)
+
+        else
+          @set(node, attrs)
+
+    return
+
+class Zotero.BetterBibTeX.HTMLNode extends Zotero.BetterBibTeX.XmlNode
+  constructor: (@namespace, @root, @doc) ->
+    super(@namespace, @root, @doc)
+
+  Node: HTMLNode
+
+  HTMLNode::alias(['b', 'p', 'div', 'ul', 'li'])
 
 require('preferences.coffee')
 require('keymanager.coffee')
