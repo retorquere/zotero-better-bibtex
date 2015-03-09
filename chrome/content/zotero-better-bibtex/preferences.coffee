@@ -54,6 +54,8 @@ Zotero.BetterBibTeX.pref.collectionPath = (id) ->
   return coll.name
 
 Zotero.BetterBibTeX.pref.update = ->
+  return unless Zotero.BetterBibTeX.initialized # ?!?!
+
   document.getElementById('better-bibtex-prefs-auto-export').setAttribute('hidden', Zotero.BetterBibTeX.pref.get('auto-export') == 'disabled')
 
   serverCheckbox = document.getElementById('id-better-bibtex-preferences-server-enabled')
