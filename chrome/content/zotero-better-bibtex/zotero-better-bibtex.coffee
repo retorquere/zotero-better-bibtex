@@ -228,7 +228,7 @@ Zotero.BetterBibTeX.init = ->
         lastaccess not null default CURRENT_TIMESTAMP,
         primary key (itemid, context))
       ")
-    unless columns.lastaccess
+    if columns && !columns.lastaccess
       Zotero.DB.query('insert into betterbibtex.cache (itemID, context, citekey, entry) select itemID, context, citekey, entry from betterbibtex._cache_')
       Zotero.DB.query('drop table betterbibtex._cache_')
 
