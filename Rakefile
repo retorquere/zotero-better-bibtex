@@ -258,11 +258,13 @@ task :test, [:tag] => XPI do |t, args|
 
   tag = "@#{args[:tag]}".sub(/^@@/, '@')
 
-  if tag == '@'
-    tag = '--tags ~@bulk'
-  else
-    if tag == '@bulk'
+  case tag
+    when '@'
+      tag = '--tags ~@bulk'
+    when '@bulk'
       tag = "--tags @bulk"
+    when '*'
+      tag = ''
     else
       tag = "--tags #{tag} --tags ~@bulk"
     end
