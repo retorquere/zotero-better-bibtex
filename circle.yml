@@ -7,3 +7,6 @@ test:
   override:
     - bundle exec rake circle:
         parallel: true
+        files:
+          - features/export.feature
+          - features/import.feature
