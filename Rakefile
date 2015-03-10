@@ -270,7 +270,7 @@ task :test, [:tag] => XPI do |t, args|
   end
 
   success = true
-  open(logfile, 'w'){|log|
+  open('cucumber.log', 'w'){|log|
     IO.popen("cucumber #{tag}"){|io|
       io.each { |line|
         log.write(line)
