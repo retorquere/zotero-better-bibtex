@@ -290,7 +290,7 @@ task :test, [:tag] => XPI do |t, args|
   throw 'One or more tests failed' unless success
 end
 
-task :circle, => XPI do |t, args|
+task :circle => XPI do |t, args|
   if File.file?('features/plugins.yml')
     plugins = YAML.load_file('features/plugins.yml')
   else
