@@ -95,6 +95,8 @@ Translator.sanitizeCollection = (coll) ->
       when 'collection' then sane.collections.push(@sanitizeCollection(c))
       else              throw "Unexpected collection member type '#{c.type}'"
 
+  sane.collections.sort( ( (a, b) -> a.name.localeCompare(b.name) ) ) if Translator.testmode
+
   return sane
 
 Translator.collections = ->
@@ -150,7 +152,9 @@ JabRef.serialize = (arr, sep, wrap) ->
 
 JabRef.exportGroup = (collection, level) ->
   group = ["#{level} ExplicitGroup:#{collection.name}", 0]
-  group = group.concat((Translator.citekeys[id] for id in collection.items))
+  items = (Translator.citekeys[id] for id in collection.items)
+  items.sort() if Translator.testmode
+  group = group.concat(items)
   group.push('')
   group = @serialize(group, ';')
 
