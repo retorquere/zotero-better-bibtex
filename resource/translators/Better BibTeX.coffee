@@ -51,9 +51,13 @@ doExport = ->
 
     switch item.itemType
       when 'bookSection', 'conferencePaper'
-        ref.add({ name: 'booktitle',  value: item.publicationTitle, preserveCaps: true })
+        title = item.publicationTitle
+        is_bibvar = Translator.bibVariables && (title.match(/^[a-zA-Z][a-zA-Z0-9_]*$/) != null)
+        ref.add({ name: 'booktitle',  preserveCaps: true, value: title, bare: is_bibvar, esc: if is_bibvar then "raw" else null })
       else
-        ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle, preserveCaps: true })
+        title = Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle
+        is_bibvar = if !Translator.bibVariables || title == undefined then false else (title.match(/^[a-zA-Z][a-zA-Z0-9_]*$/) != null)
+        ref.add({ name: 'journal', value: title, preserveCaps: true, bare: is_bibvar, esc: if is_bibvar then "raw" else null })
 
     switch item.itemType
       when 'thesis' then ref.add({ name: 'school', value: item.publisher, preserveCaps: true })

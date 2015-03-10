@@ -234,6 +234,9 @@ Reference::field = (f, value) ->
   clone.value = value
   return clone
 
+Reference::esc_raw = (f) ->
+  return f.value
+
 Reference::esc_url = (f) ->
   if Translator.label == 'Better BibTeX'
     href = ('' + f.value).replace(/([#\\%&{}])/g, '\\$1')
