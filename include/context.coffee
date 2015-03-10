@@ -43,6 +43,7 @@ $namespace$.Context::options = {
   exportFileData: 'exportFileData'
   exportNotes: 'exportNotes'
   exportCollections: 'Export Collections'
+  bibVariables: 'Preserve Bib variables'
 }
 $namespace$.Context::valid = new ->
   for own k, v of $namespace$.Context::preferences
