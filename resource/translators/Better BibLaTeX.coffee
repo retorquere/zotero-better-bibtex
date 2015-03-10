@@ -300,22 +300,35 @@ doExport = ->
     ref.add({ name: 'number', value: item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number })
     ref.add({ name: (if isNaN(parseInt(item.issue)) then 'issue' else 'number'), value: item.issue })
 
+    switch
+      when item.itemType in ['bookSection', 'conferencePaper']
+        is_bibvar = Translator.preserveBibTeXVariables && item.publicationTitle.match(/^[a-z][a-z0-9_]*$/i)
+        ref.add({ name: 'booktitle',  preserveCaps: true, value: item.publicationTitle, bare: is_bibvar, esc: if is_bibvar then 'raw' else null })
+      when Translator.preserveBibTeXVariables && item.publicationTitle.match(/^[a-z][a-z0-9_]*$/i)
+        ref.add({ name: 'journal', value: item.publicationTitle, preserveCaps: true, bare: true, esc: 'raw' })
+      else
+        ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle, preserveCaps: true })
+
     if item.publicationTitle
+      is_bibvar = Translator.preserveBibTeXVariables && item.publicationTitle.match(/^[a-z][a-z0-9_]*$/i)
       switch item.itemType
         when 'bookSection', 'conferencePaper', 'dictionaryEntry', 'encyclopediaArticle'
-          ref.add({ name: 'booktitle', value: item.publicationTitle, preserveCaps: true })
+          ref.add({ name: 'booktitle', value: item.publicationTitle, preserveCaps: true, bare: is_bibvar, esc: if is_bibvar then 'raw' else null})
 
         when 'magazineArticle', 'newspaperArticle'
-          ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true })
+          ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true, bare: is_bibvar, esc: if is_bibvar then 'raw' else null })
           ref.add({ name: 'journalsubtitle', value: item.section, preserveCaps: true }) if item.itemType == 'newspaperArticle'
 
         when 'journalArticle'
-          abbr = Zotero.BetterBibTeX.keymanager.journalAbbrev(item)
-          if Translator.useJournalAbbreviation and abbr
-            ref.add({ name: 'journal', value: abbr, preserveCaps: true })
+          if is_bibvar
+            ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true, bare: true, esc: 'raw' })
           else
-            ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true })
-            ref.add({ name: 'shortjournal', value: abbr, preserveCaps: true })
+            abbr = Zotero.BetterBibTeX.keymanager.journalAbbrev(item)
+            if Translator.useJournalAbbreviation and abbr
+              ref.add({ name: 'journal', value: abbr, preserveCaps: true })
+            else
+              ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true })
+              ref.add({ name: 'shortjournal', value: abbr, preserveCaps: true })
 
     ref.add({ name: 'booktitle', value: item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, preserveCaps: true }) if not ref.has.booktitle
 

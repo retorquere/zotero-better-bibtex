@@ -49,15 +49,14 @@ doExport = ->
     ref.add({ name: 'number', value: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*\d+:\d+:\d+/, '') })
 
-    switch item.itemType
-      when 'bookSection', 'conferencePaper'
-        title = item.publicationTitle
-        is_bibvar = Translator.bibVariables && (title.match(/^[a-zA-Z][a-zA-Z0-9_]*$/) != null)
-        ref.add({ name: 'booktitle',  preserveCaps: true, value: title, bare: is_bibvar, esc: if is_bibvar then "raw" else null })
+    switch
+      when item.itemType in ['bookSection', 'conferencePaper']
+        is_bibvar = Translator.preserveBibTeXVariables && item.publicationTitle.match(/^[a-z][a-z0-9_]*$/i)
+        ref.add({ name: 'booktitle',  preserveCaps: true, value: item.publicationTitle, bare: is_bibvar, esc: if is_bibvar then 'raw' else null })
+      when Translator.preserveBibTeXVariables && item.publicationTitle.match(/^[a-z][a-z0-9_]*$/i)
+        ref.add({ name: 'journal', value: item.publicationTitle, preserveCaps: true, bare: true, esc: 'raw' })
       else
-        title = Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle
-        is_bibvar = if !Translator.bibVariables || title == undefined then false else (title.match(/^[a-zA-Z][a-zA-Z0-9_]*$/) != null)
-        ref.add({ name: 'journal', value: title, preserveCaps: true, bare: is_bibvar, esc: if is_bibvar then "raw" else null })
+        ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle, preserveCaps: true })
 
     switch item.itemType
       when 'thesis' then ref.add({ name: 'school', value: item.publisher, preserveCaps: true })
