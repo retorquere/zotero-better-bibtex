@@ -479,35 +479,29 @@ Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
 Zotero.BetterBibTeX.SQLSet = (values) -> '(' + ('' + v for v in values).join(', ') + ')'
 
 Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
+  return unless type == 'item' && event in ['delete', 'trash', 'add', 'modify']
+  ids = extraData if event == 'delete'
+  return unless ids.length > 0
+
+  Zotero.BetterBibTeX.log('itemChanged', event, type, ids, extraData)
+
   Zotero.BetterBibTeX.keymanager.reset()
-  collections = []
+  Zotero.DB.query("delete from betterbibtex.cache where itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}")
 
-  switch event
-    when 'delete', 'trash'
-      ids = extraData if event == 'delete'
-      if ids.length > 0
-        for id in ids
-          Zotero.BetterBibTeX.keymanager.remove({itemID: id})
-        collections = Zotero.Collections.getCollectionsContainingItems(ids, true)
-        Zotero.DB.query("delete from betterbibtex.cache where itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}")
+  # this is safe -- either a pinned key is restored below, or it needs to be regenerated anyhow after change
+  for id in ids
+    Zotero.BetterBibTeX.keymanager.remove({itemID: id})
 
-    when 'add', 'modify'
-      break if ids.length == 0
+  if event in ['add', 'modify']
+    for item in Zotero.DB.query("#{Zotero.BetterBibTeX.findKeysSQL} and i.itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}") or []
+      citekey = Zotero.BetterBibTeX.keymanager.extract(item).__citekey__
+      Zotero.BetterBibTeX.keymanager.set(item, citekey)
+      Zotero.DB.query('delete from betterbibtex.cache where citekey = ?', [citekey])
 
-      Zotero.DB.query("delete from betterbibtex.cache where itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}")
+    for id in ids
+      Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'on-change')
 
-      collections = Zotero.Collections.getCollectionsContainingItems(ids, true)
-      for id in ids
-        Zotero.BetterBibTeX.keymanager.remove({itemID: id})
-
-      for item in Zotero.DB.query("#{Zotero.BetterBibTeX.findKeysSQL} and i.itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}") or []
-        citekey = Zotero.BetterBibTeX.keymanager.extract(item).__citekey__
-        Zotero.BetterBibTeX.keymanager.set(item, citekey)
-        Zotero.DB.query('delete from betterbibtex.cache where citekey = ?', [citekey])
-
-      for id in ids
-        Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'on-change')
-
+  collections = Zotero.Collections.getCollectionsContainingItems(ids, true)
   unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('auto-export') == 'disabled'
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection_id in #{Zotero.BetterBibTeX.SQLSet(collections)}")
     Zotero.BetterBibTeX.auto.process('itemChanged')
