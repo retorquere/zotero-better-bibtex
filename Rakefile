@@ -290,6 +290,22 @@ task :test, [:tag] => XPI do |t, args|
   throw 'One or more tests failed' unless success
 end
 
+task :circle, => XPI do |t, args|
+  if File.file?('features/plugins.yml')
+    plugins = YAML.load_file('features/plugins.yml')
+  else
+    plugins = []
+  end
+  plugins << "file://" + File.expand_path(XPI)
+  plugins << 'https://zotplus.github.io/debug-bridge/update.rdf'
+  plugins << 'https://www.zotero.org/download/update.rdf'
+  plugins.uniq!
+  ZotPlus::RakeHelper.getxpis(plugins, 'tmp/plugins')
+
+  FileUtils.mkdir_p("#{ENV['CIRCLE_TEST_REPORTS']}/cucumber")
+  sh "cucumber --format json --out #{ENV['CIRCLE_TEST_REPORTS']}/cucumber/tests.cucumber"
+end
+
 task :clean do
   clean = Dir['**/*.js'].select{|f| f=~ /^(defaults|chrome|resource)\//} + Dir['tmp/*'].select{|f| File.file?(f) } + Dir['resource/transators/*.json']
   clean << 'resource/translators/latex_unicode_mapping.coffee'
