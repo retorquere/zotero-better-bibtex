@@ -3,4 +3,4 @@ machine:
     version: 2.1.3
 test:
   override:
-    - CACHE=yes bundle exec rake test[@*]
+    - CACHE=yes bundle exec rake test[export] test[import] test[bulk]
