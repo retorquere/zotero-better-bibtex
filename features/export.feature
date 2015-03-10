@@ -296,3 +296,8 @@ Scenario: Export Č as {\v C}, not \v{C} #152
 Scenario: Capitalisation in techreport titles #160
   When I import 1 reference from 'export/Capitalisation in techreport titles #160.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Capitalisation in techreport titles #160.bib'
+
+@163
+Scenario: Preserve Bib variable names #163
+  When I import 1 reference from 'export/Preserve Bib variable names #163.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Preserve Bib variable names #163.bib'
