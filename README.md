@@ -27,7 +27,8 @@ bibliography, this is a piece of data you want to have control over. BBT offers 
 * Generate citation keys from JabRef patterns
 * Shows both pinned (fixed) citation keys and dynamically generated ones in the reference list view
 * Add other custom BibLaTeX fields
-* Scan your AUX files to get a list of references specifically for your article (and incidentally list missing references)
+* Scan your AUX files to get a list of references specifically for your article (and incidentally list missing
+  references) by importing it.
 
 ## Unicode problems
 
