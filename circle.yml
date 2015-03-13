@@ -5,8 +5,6 @@ machine:
     CACHE: yes
 test:
   override:
-    - bundle exec rake circle:
+    - case $CIRCLE_NODE_INDEX in 0) bundle exec rake test[export] ;; 1) bundle exec rake test[import] ;; 2) bundle exec rake test[bulk] ;; esac:
         parallel: true
-        files:
-          - features/export.feature
-          - features/import.feature
+
