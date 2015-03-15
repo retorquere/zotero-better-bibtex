@@ -245,12 +245,12 @@ Zotero.BetterBibTeX.init = ->
       unique (collection_id, path, context))
     ")
 
-  ### schema 3 & 7 had a scanning flaw, force rescan ###
-  if version < 7
+  ### schema 3, 7 & 12 had a scanning flaw, force rescan ###
+  if version < 12
     @pref.set('scan-citekeys', true)
 
   ### mark current version ###
-  Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', 11)")
+  Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', 12)")
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     __exposedProps__: {keymanager: 'r', cache: 'r'}
