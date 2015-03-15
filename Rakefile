@@ -244,6 +244,12 @@ task :amo => XPI do
   end
 end
 
+task :validate => XPI do
+  dir = File.expand_path(File.dirname(XPI)).shellescape
+  xpi = File.basename(XPI).shellescape
+  sh "docker run --rm -v #{dir}:/xpi marceloandrader/amo-validator /xpi/#{xpi} -v -t extension --selfhosted"
+end
+
 task :test, [:tag] => XPI do |t, args|
   if File.file?('features/plugins.yml')
     plugins = YAML.load_file('features/plugins.yml')
