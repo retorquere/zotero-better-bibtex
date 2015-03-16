@@ -92,7 +92,7 @@ Zotero.BetterBibTeX.pref.update = ->
       stylebox.appendChild(itemNode)
     if style.styleID is selectedStyle then selectedIndex = i
   selectedIndex = 0 if selectedIndex is -1
-  @styleChanged(selectedIndex)
+  Zotero.BetterBibTeX.pref.styleChanged(selectedIndex)
 
   window.setTimeout((->
     stylebox.ensureIndexIsVisible(selectedIndex)
@@ -134,7 +134,7 @@ Zotero.BetterBibTeX.pref.exportSelected = (index) ->
   @display('id-better-bibtex-preferences-auto-export-translator', ae.context.translator)
   @display('id-better-bibtex-preferences-auto-export-keyformat', ae.context.citeKeyFormat)
   @display('id-better-bibtex-preferences-auto-export-skipFields', ae.context.skipfields)
-  document.getElementById('id-better-bibtex-preferences-auto-export-preserveCaps').checked = ae.context.preserveCaps
+  @display('id-better-bibtex-preferences-auto-export-preserveCaps', ae.context.preserveCaps)
   document.getElementById('id-better-bibtex-preferences-auto-export-auto-abbrev').checked = ae.context['auto-abbrev'] && ae.context.useJournalAbbreviation
   @display('id-better-bibtex-preferences-auto-export-auto-abbrev-style', (style.title for style in Zotero.Styles.getVisible() when style.styleID == ae.context['auto-abbrev.style'])?[0] ? '')
   @display('id-better-bibtex-preferences-auto-export-unicode', switch

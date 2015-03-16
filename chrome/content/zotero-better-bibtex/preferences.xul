@@ -218,6 +218,10 @@
                         <checkbox id="id-better-bibtex-preferences-auto-export-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" disabled="true"/>
                       </row>
                       <row>
+                        <label value="&zotero.better-bibtex.preserveCaps;"/>
+                        <textbox id="id-better-bibtex-preferences-auto-export-preserveCaps" disabled="true"/>
+                      </row>
+                      <row>
                         <label value="&zotero.better-bibtex.preferences.auto-abbrev.style;"/>
                         <textbox id="id-better-bibtex-preferences-auto-export-auto-abbrev-style" disabled="true"/>
                       </row>
