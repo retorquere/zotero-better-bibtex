@@ -27,7 +27,7 @@ Zotero.BetterBibTeX.auto.process = (reason) ->
   translation.setCollection(Zotero.Collections.get(ae.collection_id))
 
   path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
-  path.initWithPath(ae.path);
+  path.initWithPath(ae.path)
   translation.setLocation(path)
   translation.setTranslator(ae.translatorID)
   translation.setDisplayOptions(JSON.parse(ae.context))
