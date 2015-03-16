@@ -25,7 +25,10 @@ Zotero.BetterBibTeX.auto.process = (reason) ->
 
   translation = new Zotero.Translate.Export()
   translation.setCollection(Zotero.Collections.get(ae.collection_id))
-  translation.setLocation(ae.path) # TODO: nsiFile
+
+  path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
+  path.initWithPath(ae.path);
+  translation.setLocation(path)
   translation.setTranslator(ae.translatorID)
   translation.setDisplayOptions(JSON.parse(ae.context))
 
