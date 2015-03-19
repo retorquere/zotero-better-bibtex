@@ -46,8 +46,7 @@
 
         <tabpanels>
           <tabpanel orient="vertical"><!-- citation -->
-            <vbox flex="1">
-              <grid>
+              <grid class="better-bibtex-prefs" flex="1">
                 <columns>
                   <column/>
                   <column flex="1"/>
@@ -91,11 +90,9 @@
                   </row>
                 </rows>
               </grid>
-            </vbox>
           </tabpanel>
           <tabpanel orient="vertical"><!-- import-export -->
-            <vbox flex="1">
-              <grid>
+              <grid class="better-bibtex-prefs" flex="1">
                 <columns>
                   <column/>
                   <column flex="1"/>
@@ -156,19 +153,16 @@
                   </row>
                 </rows>
               </grid>
-            </vbox>
           </tabpanel>
           <tabpanel orient="vertical"><!-- journal abbrev -->
-            <vbox flex="1">
-              <vbox>
+            <vbox class="better-bibtex-prefs" flex="1">
                 <checkbox id="id-better-bibtex-preferences-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" preference="pref-better-bibtex-auto-abbrev"/>
                 <label>&zotero.better-bibtex.preferences.auto-abbrev.style;</label>
                 <listbox id="better-bibtex-abbrev-style" flex="1" onselect="Zotero.BetterBibTeX.pref.styleChanged()"/>
-              </vbox>
             </vbox>
           </tabpanel>
           <tabpanel orient="vertical"><!-- auto export -->
-            <vbox flex="1">
+            <vbox class="better-bibtex-prefs" flex="1">
               <hbox>
                 <label value="&zotero.better-bibtex.prefs.auto-export;"/>
                 <radiogroup id="id-better-bibtex-preferences-auto-export" orient="horizontal" preference="pref-better-bibtex-auto-export">

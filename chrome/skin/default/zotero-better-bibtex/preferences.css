@@ -4,3 +4,9 @@
 #better-bibtex-export-list listitem.export-state-pending  { background:url("ic_timer_24px.svg")         center left no-repeat; background-size: 18px 18px;}
 #better-bibtex-export-list listitem.export-state-running  { background:url("ic_sync_24px.svg")          center left no-repeat; background-size: 18px 18px;}
 #better-bibtex-export-list listitem.export-state-done     { background:url("ic_done_24px.svg")          center left no-repeat; background-size: 18px 18px;}
+
+.better-bibtex-prefs description, .better-bibtex-prefs label, .better-bibtex-prefs checkbox {
+  max-width: none;
+  max-height: none;
+}
+
