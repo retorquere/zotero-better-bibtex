@@ -138,8 +138,8 @@ Zotero.BetterBibTeX.pref.exportSelected = (index) ->
   document.getElementById('id-better-bibtex-preferences-auto-export-auto-abbrev').checked = ae.context['auto-abbrev'] && ae.context.useJournalAbbreviation
   @display('id-better-bibtex-preferences-auto-export-auto-abbrev-style', (style.title for style in Zotero.Styles.getVisible() when style.styleID == ae.context['auto-abbrev.style'])?[0] ? '')
   @display('id-better-bibtex-preferences-auto-export-unicode', switch
-    when ae.context.unicode == '' && ae.contex.exportCharset == 'UTF-8'  then 'yes'
-    when ae.context.unicode == ''                                        then 'no'
+    when ae.context.unicode == '' && ae.context.exportCharset == 'UTF-8'  then 'yes'
+    when ae.context.unicode == ''                                         then 'no'
     else ae.context.unicode)
   document.getElementById('id-better-bibtex-preferences-auto-export-notes').checked = ae.context.exportNotes
   return

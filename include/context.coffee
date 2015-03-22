@@ -15,11 +15,11 @@ $namespace$.Context = class
   toJSON: ->
     keys = Object.keys(@)
     keys.sort()
-    return '{' + (for k in keys
-      o = {}
-      o[k] = @[k]
-      JSON.stringify(o).slice(1, -1)
-    ) + '}'
+    fields = []
+    for k in keys
+      continue if typeof @[k] == 'undefined'
+      fields.push(JSON.stringify({"#{k}": @[k]}).slice(1, -1))
+    return "{#{fields.join(', ')}}"
 
 $namespace$.Context::preferences = {
   pattern: 'citeKeyFormat'

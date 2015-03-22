@@ -1,8 +1,8 @@
 Zotero.BetterBibTeX.auto = {}
 
 Zotero.BetterBibTeX.auto.add = (state) ->
-  Zotero.DB.query("insert into betterbibtex.autoexport (collection_id, collection_name, path, context, recursive, status)
-                               values (?, ?, ?, ?, ?, 'done')", [state.collection.id, state.collection.name, state.target, state.context, @recursive()])
+  Zotero.DB.query("insert or replace into betterbibtex.autoexport (collection_id, collection_name, path, context, recursive, status)
+                               values (?, ?, ?, ?, ?, 'done')", [state.collection.id, state.collection.name, state.target, state.context.toJSON(), @recursive()])
   return
 
 Zotero.BetterBibTeX.auto.recursive = ->
