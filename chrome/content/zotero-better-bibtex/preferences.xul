@@ -21,7 +21,6 @@
         <preference id="pref-better-bibtex-skipFields" name="extensions.zotero.translators.better-bibtex.skipfields" type="string"/>
         <preference id="pref-better-bibtex-server" name="extensions.zotero.httpServer.enabled" type="bool"/>
         <preference id="pref-better-bibtex-unicode" name="extensions.zotero.translators.better-bibtex.unicode" type="string"/>
-        <preference id="pref-better-bibtex-fancyurls" name="extensions.zotero.translators.better-bibtex.fancyURLs" type="bool"/>
         <preference id="pref-better-bibtex-preserveCaps" name="extensions.zotero.translators.better-bibtex.preserveCaps" type="string"/>
         <preference id="pref-better-bibtex-useprefix" name="extensions.zotero.translators.better-bibtex.useprefix" type="bool"/>
         <preference id="pref-better-bibtex-langid" name="extensions.zotero.translators.better-bibtex.langid" type="string"/>
@@ -146,10 +145,6 @@
                   </row>
                   <row>
                     <checkbox id="id-better-bibtex-preferences-raw-imports" label="&zotero.better-bibtex.raw-imports;" preference="pref-better-bibtex-raw-imports"/>
-                  </row>
-                  <row>
-                    <checkbox id="id-better-bibtex-preferences-fancyURLs" label="&zotero.better-bibtex.fancyURLs;" preference="pref-better-bibtex-fancyurls" oncommand="Zotero.BetterBibTeX.pref.update();"/>
-                    <label id="id-better-bibtex-preferences-fancyURLs-warning" hidden="true" style="color: red">&zotero.better-bibtex.fancyURLs.warning;</label>
                   </row>
                 </rows>
               </grid>
