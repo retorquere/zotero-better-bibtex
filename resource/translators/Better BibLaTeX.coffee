@@ -300,20 +300,23 @@ doExport = ->
       ref.add({ name: 'eprint', value: item.published, esc: 'verbatim' })
       delete item.publisher
 
-    if m = item.url?.match(/^http:\/\/www.jstor.org\/stable\/(.*)/i)
+    if m = item.url?.match(/^http:\/\/www.jstor.org\/stable\/([\S]+)$/i)
       ref.add({ name: 'eprinttype', value: 'jstor'})
       ref.add({ name: 'eprint', value: m[1], esc: 'verbatim' })
       delete item.url
+      ref.remove('url')
 
-    if m = item.url?.match(/^http:\/\/books.google.com\/books?id=(.*)/i)
+    if m = item.url?.match(/^http:\/\/books.google.com\/books?id=([\S]+)$/i)
       ref.add({ name: 'eprinttype', value: 'googlebooks'})
       ref.add({ name: 'eprint', value: m[1], esc: 'verbatim' })
       delete item.url
+      ref.remove('url')
 
-    if m = item.url?.match(/^http:\/\/www.ncbi.nlm.nih.gov\/pubmed\/(.*)/i)
+    if m = item.url?.match(/^http:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i)
       ref.add({ name: 'eprinttype', value: 'pubmed'})
       ref.add({ name: 'eprint', value: m[1], esc: 'verbatim' })
       delete item.url
+      ref.remove('url')
 
     for eprinttype in ['pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks']
       if ref.has[eprinttype] && not ref.has.eprinttype
