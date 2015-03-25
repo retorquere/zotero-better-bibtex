@@ -329,7 +329,8 @@ Reference::add = (field) ->
   return if typeof field.value == 'string' and field.value.trim() == ''
   return if Array.isArray(field.value) and field.value.length == 0
 
-  throw "duplicated field #{field.name}" if @has[field.name]
+  @remove(field.name) if field.replace
+  throw "duplicate field '#{field.name}' for #{@item.__citekey__}" if @has[field.name]
 
   if typeof field.value == 'number'
     value = field.value

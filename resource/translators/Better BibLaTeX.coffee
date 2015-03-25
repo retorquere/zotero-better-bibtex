@@ -385,15 +385,15 @@ doExport = ->
         ref.add({ name: 'publisher', value: item.publisher, preserveCaps: true })
 
     switch item.itemType
-      when 'letter' then ref.add({ name: 'type', value: item.letterType || 'Letter' })
+      when 'letter' then ref.add({ name: 'type', value: item.letterType || 'Letter', replace: true })
 
-      when 'email'  then ref.add({ name: 'type', value: 'E-mail' })
+      when 'email'  then ref.add({ name: 'type', value: 'E-mail', replace: true })
 
       else
         if item.itemType == 'thesis' and (item.thesisType || 'phd').match(/ph\.?d/i)
-          ref.add({ name: 'type', value: 'phdthesis' })
+          ref.add({ name: 'type', value: 'phdthesis', replace: true })
         else
-          ref.add({ name: 'type', value: item.manuscriptType || item.thesisType || item.websiteType || item.presentationType || item.reportType || item.mapType })
+          ref.add({ name: 'type', value: item.manuscriptType || item.thesisType || item.websiteType || item.presentationType || item.reportType || item.mapType, replace: true })
 
     ref.add({ name: 'howpublished', value: item.presentationType || item.manuscriptType })
 
