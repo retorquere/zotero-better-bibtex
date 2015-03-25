@@ -301,3 +301,8 @@ Scenario: Capitalisation in techreport titles #160
 #Scenario: Preserve Bib variable names #163
 #  When I import 1 reference from 'export/Preserve Bib variable names #163.json'
 #  Then a library export using 'Better BibLaTeX' should match 'export/Preserve Bib variable names #163.bib'
+
+@170
+Scenario: Better BibTeX does not use biblatex fields eprint and eprinttype #170
+  When I import 1 reference with 2 attachments from 'export/Better BibTeX does not use biblatex fields eprint and eprinttype #170.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Better BibTeX does not use biblatex fields eprint and eprinttype #170.bib'

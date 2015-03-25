@@ -295,10 +295,10 @@ doExport = ->
     ref.itemtype = 'collection' if item.itemType == 'book' and not ref.hasCreator('author') and ref.hasCreator('editor')
     ref.itemtype = 'mvbook' if ref.itemtype == 'book' and item.volume
 
-    if (item.publisher?.toLowerCase().indexOf('arxiv') || -1) >= 0
+    if m = item.publicationTitle?.match(/^arxiv:\s*([\S]+)/i)
       ref.add({ name: 'eprinttype', value: 'arxiv'})
-      ref.add({ name: 'eprint', value: item.published, esc: 'verbatim' })
-      delete item.publisher
+      ref.add({ name: 'eprint', value: m[1], esc: 'verbatim' })
+      delete item.publicationTitle
 
     if m = item.url?.match(/^http:\/\/www.jstor.org\/stable\/([\S]+)$/i)
       ref.add({ name: 'eprinttype', value: 'jstor'})
@@ -319,9 +319,10 @@ doExport = ->
       ref.remove('url')
 
     for eprinttype in ['pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks']
-      if ref.has[eprinttype] && not ref.has.eprinttype
-        ref.add({ name: 'eprinttype', value: eprinttype})
-        ref.add({ name: 'eprint', value: ref.has[eprinttype].value, esc: 'verbatim' })
+      if ref.has[eprinttype]
+        if not ref.has.eprinttype
+          ref.add({ name: 'eprinttype', value: eprinttype})
+          ref.add({ name: 'eprint', value: ref.has[eprinttype].value, esc: 'verbatim' })
         ref.remove(eprinttype)
 
     if item.archive and item.archiveLocation
