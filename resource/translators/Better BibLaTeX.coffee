@@ -295,6 +295,57 @@ doExport = ->
     ref.itemtype = 'collection' if item.itemType == 'book' and not ref.hasCreator('author') and ref.hasCreator('editor')
     ref.itemtype = 'mvbook' if ref.itemtype == 'book' and item.volume
 
+    if (item.publisher?.toLowerCase().indexOf('arxiv') || -1) >= 0
+      ref.add({ name: 'eprinttype', value: 'arxiv'})
+      ref.add({ name: 'eprint', value: item.published, esc: 'verbatim' })
+      delete item.publisher
+
+    if m = item.url?.match(/^http:\/\/www.jstor.org\/stable\/(.*)/i)
+      ref.add({ name: 'eprinttype', value: 'jstor'})
+      ref.add({ name: 'eprint', value: m[1], esc: 'verbatim' })
+      delete item.url
+
+    if m = item.url?.match(/^http:\/\/books.google.com\/books?id=(.*)/i)
+      ref.add({ name: 'eprinttype', value: 'googlebooks'})
+      ref.add({ name: 'eprint', value: m[1], esc: 'verbatim' })
+      delete item.url
+
+    if m = item.url?.match(/^http:\/\/www.ncbi.nlm.nih.gov\/pubmed\/(.*)/i)
+      ref.add({ name: 'eprinttype', value: 'pubmed'})
+      ref.add({ name: 'eprint', value: m[1], esc: 'verbatim' })
+      delete item.url
+
+    for eprinttype in ['pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks']
+      if ref.has[eprinttype] && not ref.has.eprinttype
+        ref.add({ name: 'eprinttype', value: eprinttype})
+        ref.add({ name: 'eprint', value: ref.has[eprinttype].value, esc: 'verbatim' })
+        ref.remove(eprinttype)
+
+    if item.archive and item.archiveLocation
+      archive = true
+      switch item.archive.toLowerCase()
+        when 'arxiv'
+          ref.add({ name: 'eprinttype', value: 'arxiv' })           unless ref.has.eprinttype
+          ref.add({ name: 'eprintclass', value: item.callNumber, esc: 'verbatim' })
+
+        when 'jstor'
+          ref.add({ name: 'eprinttype', value: 'jstor' })           unless ref.has.eprinttype
+
+        when 'pubmed'
+          ref.add({ name: 'eprinttype', value: 'pubmed' })          unless ref.has.eprinttype
+
+        when 'hdl'
+          ref.add({ name: 'eprinttype', value: 'hdl' })             unless ref.has.eprinttype
+
+        when 'googlebooks', 'google books'
+          ref.add({ name: 'eprinttype', value: 'googlebooks' })     unless ref.has.eprinttype
+
+        else
+          archive = false
+
+      if archive
+        ref.add({ name: 'eprint', value: item.archiveLocation, esc: 'verbatim' })    unless ref.has.eprint
+
     ref.add({ name: 'options', value: 'useprefix' }) if Translator.usePrefix
 
     ref.add({ name: 'number', value: item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number })
@@ -345,31 +396,6 @@ doExport = ->
           ref.add({ name: 'type', value: item.manuscriptType || item.thesisType || item.websiteType || item.presentationType || item.reportType || item.mapType })
 
     ref.add({ name: 'howpublished', value: item.presentationType || item.manuscriptType })
-
-    if item.archive and item.archiveLocation
-      archive = true
-      switch item.archive.toLowerCase()
-        when 'arxiv'
-          ref.add({ name: 'eprinttype', value: 'arxiv' })
-          ref.add({ name: 'eprintclass', value: item.callNumber })
-
-        when 'jstor'
-          ref.add({ name: 'eprinttype', value: 'jstor' })
-
-        when 'pubmed'
-          ref.add({ name: 'eprinttype', value: 'pubmed' })
-
-        when 'hdl'
-          ref.add({ name: 'eprinttype', value: 'hdl' })
-
-        when 'googlebooks', 'google books'
-          ref.add({ name: 'eprinttype', value: 'googlebooks' })
-
-        else
-          archive = false
-
-      if archive
-        ref.add({ name: 'eprint', value: item.archiveLocation })
 
     ref.add({ name: 'note', value: item.meetingName })
 

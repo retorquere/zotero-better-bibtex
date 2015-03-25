@@ -5,7 +5,7 @@ require('Formatter.js')
 
 Zotero.BetterBibTeX = {
   serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
-  document: Components.classes["@mozilla.org/xul/xul-document;1"].getService(Components.interfaces.nsIDOMDocument)
+  document: Components.classes['@mozilla.org/xul/xul-document;1'].getService(Components.interfaces.nsIDOMDocument)
 }
 
 Zotero.BetterBibTeX.inspect = (o) ->
@@ -107,7 +107,7 @@ Zotero.BetterBibTeX.formatter = (pattern) ->
   @formatters[pattern] = BetterBibTeXFormatter.parse(pattern) unless @formatters[pattern]
   return @formatters[pattern]
 
-Zotero.BetterBibTeX.idleService = Components.classes["@mozilla.org/widget/idleservice;1"].getService(Components.interfaces.nsIIdleService)
+Zotero.BetterBibTeX.idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
   switch topic
     when 'idle'
@@ -134,6 +134,8 @@ Zotero.BetterBibTeX.uninstallObserver =
     observerService.removeObserver(@, 'quit-application-requested')
     return
 
+Zotero.BetterBibTeX.version = (version) -> ("00000#{ver}".slice(-5) for ver in version.split('.')).join('.')
+
 Zotero.BetterBibTeX.SQLColumns = (table) ->
   statement = Zotero.DB.getStatement("pragma betterbibtex.table_info(#{table})", null, true)
 
@@ -151,6 +153,116 @@ Zotero.BetterBibTeX.SQLColumns = (table) ->
 
   return columns
 
+Zotero.BetterBibTeX.updateSchema = ->
+  Zotero.DB.query("create table if not exists betterbibtex.schema (lock primary key default 'schema' check (lock='schema'), version not null)")
+
+  ### migrate '_version_' to 'schema' ###
+  if @SQLColumns('_version_')
+    Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) select 'schema', version from betterbibtex._version_ order by version desc limit 1")
+    Zotero.DB.query('drop table betterbibtex._version_')
+
+  ### initialize 'schema' ###
+  Zotero.DB.query("insert or ignore into betterbibtex.schema (lock, version) values ('schema', '')")
+  ### migrate from serial numbers to extension version ###
+  Zotero.DB.query("update betterbibtex.schema set version = case version
+    when 0 then '0.6.6'
+    when 1 then '0.6.38'
+    when 2 then '0.6.41'
+    when 3 then '0.6.43'
+    when 4 then '0.6.11'
+    when 5 then '0.7.22'
+    when 6 then '0.7.32'
+    when 7 then '0.7.33'
+    when 8 then '0.7.34'
+    when 9 then '0.8.0'
+    when 10 then '0.8.1'
+    when 11 then '0.8.5'
+    when 12 then '0.8.10'
+    else version
+    end")
+  installed = @version(Zotero.DB.valueQuery("select version from betterbibtex.schema"))
+  installing = @version(@release)
+  Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', ?)", [@release])
+  @log("schema: #{@release}")
+
+  return if installed == installing
+
+  if installed < @version('0.8.10')
+    ### upgrade 'keys' table ###
+    columns = @SQLColumns('keys')
+    if columns?.pinned || columns?.libraryID
+      Zotero.DB.query('alter table betterbibtex.keys rename to _keys_')
+    if !columns || columns?.pinned || columns?.libraryID
+      Zotero.DB.query('create table betterbibtex.keys (itemID primary key, citekey not null, citeKeyFormat)')
+    switch
+      when columns?.pinned
+        Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citeKeyFormat)
+                         select itemID, citekey, case when pinned = 1 then null else ? end from betterbibtex._keys_', [@pref.get('citeKeyFormat')])
+      when columns?.libraryID
+        Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citeKeyFormat)
+                         select itemID, citekey, citeKeyFormat from betterbibtex._keys_')
+    if columns?.pinned || columns?.libraryID
+      Zotero.DB.query('drop table betterbibtex._keys_')
+
+    ### drop 'keys2' table, upgrade leftovers ###
+    Zotero.DB.query('drop table betterbibtex.keys2') if @SQLColumns('keys2')
+
+    ### upgrade 'cache' table ###
+    columns = @SQLColumns('cache')
+    unless columns?.lastaccess
+      if columns
+        Zotero.DB.query('alter table betterbibtex.cache rename to _cache_')
+      Zotero.DB.query("
+        create table betterbibtex.cache (
+          itemID not null,
+          context not null,
+          citekey not null,
+          entry not null,
+          lastaccess not null default CURRENT_TIMESTAMP,
+          primary key (itemid, context))
+        ")
+      if columns && !columns.lastaccess
+        Zotero.DB.query('insert into betterbibtex.cache (itemID, context, citekey, entry) select itemID, context, citekey, entry from betterbibtex._cache_')
+        Zotero.DB.query('drop table betterbibtex._cache_')
+
+    ### upgrade 'autoexport' table ###
+    Zotero.DB.query("
+      create table if not exists betterbibtex.autoexport (
+        id integer primary key not null,
+        collection_id not null,
+        collection_name not null,
+        path not null,
+        context not null,
+        recursive not null,
+        status not null,
+        unique (collection_id, path, context))
+      ")
+
+  ### schema 0.6.43, 0.7.33 & 0.8.10 had a scanning flaw, force rescan ###
+  if installed < @version('0.8.10')
+    @pref.set('scan-citekeys', true)
+
+  # 0.8.11 changes BibLaTeX export, drop cache
+  if installed < @version('0.8.11')
+    Zotero.DB.query("delete from betterbibtex.cache")
+
+  return
+
+Zotero.BetterBibTeX.findKeysSQL = "select i.itemID as itemID, idv.value as extra
+                  from items i
+                  join itemData id on i.itemID = id.itemID
+                  join itemDataValues idv on idv.valueID = id.valueID
+                  join fields f on id.fieldID = f.fieldID
+                  where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)
+                    and (idv.value like '%bibtex:%' or idv.value like '%biblatexcitekey[%' or idv.value like '%biblatexcitekey{%')"
+
+Zotero.BetterBibTeX.findExtra = "select idv.value as extra
+                  from items i
+                  join itemData id on i.itemID = id.itemID
+                  join itemDataValues idv on idv.valueID = id.valueID
+                  join fields f on id.fieldID = f.fieldID
+                  where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)"
+
 Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
@@ -167,90 +279,15 @@ Zotero.BetterBibTeX.init = ->
   db = Zotero.getZoteroDatabase('betterbibtex')
   Zotero.DB.query('ATTACH ? AS betterbibtex', [db.path])
 
-  @findKeysSQL = "select i.itemID as itemID, idv.value as extra
-                  from items i
-                  join itemData id on i.itemID = id.itemID
-                  join itemDataValues idv on idv.valueID = id.valueID
-                  join fields f on id.fieldID = f.fieldID
-                  where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)
-                    and (idv.value like '%bibtex:%' or idv.value like '%biblatexcitekey[%' or idv.value like '%biblatexcitekey{%')"
-  @findExtra = "select idv.value as extra
-                  from items i
-                  join itemData id on i.itemID = id.itemID
-                  join itemDataValues idv on idv.valueID = id.valueID
-                  join fields f on id.fieldID = f.fieldID
-                  where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)"
-
   @pref.prefs.clearUserPref('brace-all')
 
-  Zotero.DB.query("create table if not exists betterbibtex.schema (lock primary key default 'schema' check (lock='schema'), version not null)")
+  AddonManager.getAddonByID('better-bibtex@iris-advies.com', (addon) -> Zotero.BetterBibTeX.release = addon.version)
+  thread = @threadManager.currentThread
+  while not @release
+    thread.processNextEvent(true)
+  @log("My extension's version is #{@release}")
 
-  ### migrate '_version_' to 'schema' ###
-  if @SQLColumns('_version_')
-    Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) select 'schema', version from betterbibtex._version_ order by version desc limit 1")
-    Zotero.DB.query('drop table betterbibtex._version_')
-
-  ### initialize 'schema' ###
-  Zotero.DB.query("insert or ignore into betterbibtex.schema (lock, version) values ('schema', 0)")
-  version = Zotero.DB.valueQuery("select version from betterbibtex.schema")
-  @log("Booting BBT, schema: #{version}")
-
-  ### upgrade 'keys' table ###
-  columns = @SQLColumns('keys')
-  if columns?.pinned || columns?.libraryID
-    Zotero.DB.query('alter table betterbibtex.keys rename to _keys_')
-  if !columns || columns?.pinned || columns?.libraryID
-    Zotero.DB.query('create table betterbibtex.keys (itemID primary key, citekey not null, citeKeyFormat)')
-  switch
-    when columns?.pinned
-      Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citeKeyFormat)
-                       select itemID, citekey, case when pinned = 1 then null else ? end from betterbibtex._keys_', [@pref.get('citeKeyFormat')])
-    when columns?.libraryID
-      Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citeKeyFormat)
-                       select itemID, citekey, citeKeyFormat from betterbibtex._keys_')
-  if columns?.pinned || columns?.libraryID
-    Zotero.DB.query('drop table betterbibtex._keys_')
-
-  ### drop 'keys2' table, upgrade leftovers ###
-  Zotero.DB.query('drop table betterbibtex.keys2') if @SQLColumns('keys2')
-
-  ### upgrade 'cache' table ###
-  columns = @SQLColumns('cache')
-  unless columns?.lastaccess
-    if columns
-      Zotero.DB.query('alter table betterbibtex.cache rename to _cache_')
-    Zotero.DB.query("
-      create table betterbibtex.cache (
-        itemID not null,
-        context not null,
-        citekey not null,
-        entry not null,
-        lastaccess not null default CURRENT_TIMESTAMP,
-        primary key (itemid, context))
-      ")
-    if columns && !columns.lastaccess
-      Zotero.DB.query('insert into betterbibtex.cache (itemID, context, citekey, entry) select itemID, context, citekey, entry from betterbibtex._cache_')
-      Zotero.DB.query('drop table betterbibtex._cache_')
-
-  ### upgrade 'autoexport' table ###
-  Zotero.DB.query("
-    create table if not exists betterbibtex.autoexport (
-      id integer primary key not null,
-      collection_id not null,
-      collection_name not null,
-      path not null,
-      context not null,
-      recursive not null,
-      status not null,
-      unique (collection_id, path, context))
-    ")
-
-  ### schema 3, 7 & 12 had a scanning flaw, force rescan ###
-  if version < 12
-    @pref.set('scan-citekeys', true)
-
-  ### mark current version ###
-  Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', 12)")
+  @updateSchema()
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     __exposedProps__: {keymanager: 'r', cache: 'r'}
@@ -546,8 +583,9 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions) ->
     return)
   translation.translate()
 
-  while not status.finished # ugly spinlock
-    continue
+  thread = @threadManager.currentThread
+  while not status.finished
+    thread.processNextEvent(true)
 
   return status.data if status.success
   throw 'export failed'

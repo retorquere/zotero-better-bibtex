@@ -176,17 +176,17 @@ class Reference
 
       extra = []
       for line in @item.extra.split("\n")
-        m = /^\s*(LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\s*:\s*([\S]+)\s*$/.exec(line)
-        switch m?[1]
-          when 'LCCN'           then fields.push({ name: 'lccn', value: m[2] })
-          when 'MR'             then fields.push({ name: 'mrnumber', value: m[2] })
-          when 'Zbl'            then fields.push({ name: 'zmnumber', value: m[2] })
-          when 'PMCID'          then fields.push({ name: 'pmcid', value: m[2] })
-          when 'PMID'           then fields.push({ name: 'pmid', value: m[2] })
-          when 'arXiv'          then fields.push({ name: 'arxiv', value: m[2] })
-          when 'JSTOR'          then fields.push({ name: 'jstor', value: m[2] })
-          when 'HDL'            then fields.push({ name: 'hdl', value: m[2] })
-          when 'GoogleBooksID'  then fields.push({ name: 'googlebooks', value: m[2] })
+        m = /^\s*(LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\s*:\s*([\S]+)\s*$/i.exec(line)
+        switch m?[1].toLowerCase()
+          when 'lccn'           then fields.push({ name: 'lccn', value: m[2] })
+          when 'mr'             then fields.push({ name: 'mrnumber', value: m[2] })
+          when 'zbl'            then fields.push({ name: 'zmnumber', value: m[2] })
+          when 'pmcid'          then fields.push({ name: 'pmcid', value: m[2] })
+          when 'pmid'           then fields.push({ name: 'pmid', value: m[2] })
+          when 'arxiv'          then fields.push({ name: 'arxiv', value: m[2] })
+          when 'jstor'          then fields.push({ name: 'jstor', value: m[2] })
+          when 'hdl'            then fields.push({ name: 'hdl', value: m[2] })
+          when 'googlebooksid'  then fields.push({ name: 'googlebooks', value: m[2] })
           else extra.push(line)
       @item.extra = extra.join("\n")
 
@@ -241,7 +241,7 @@ Reference::field = (f, value) ->
 Reference::esc_raw = (f) ->
   return f.value
 
-Reference::esc_url = (f) ->
+Reference::esc_verbatim = (f) ->
   if Translator.label == 'Better BibTeX'
     href = ('' + f.value).replace(/([#\\%&{}])/g, '\\$1')
   else
@@ -251,7 +251,8 @@ Reference::esc_url = (f) ->
   return "\\href{#{href}}{#{LaTeX.html2latex(href)}}" if f.name == 'url' and Translator.fancyURLs
   return href
 
-Reference::esc_doi = Reference::esc_url
+Reference::esc_doi = Reference::esc_verbatim
+Reference::esc_url = Reference::esc_verbatim
 
 Reference::esc_latex = (f, raw) ->
   return f.value if typeof f.value == 'number'
@@ -328,6 +329,8 @@ Reference::add = (field) ->
   return if typeof field.value == 'string' and field.value.trim() == ''
   return if Array.isArray(field.value) and field.value.length == 0
 
+  throw "duplicated field #{field.name}" if @has[field.name]
+
   if typeof field.value == 'number'
     value = field.value
   else
@@ -367,7 +370,16 @@ Reference::add = (field) ->
   field.bibtex = "  #{field.name} = #{value}"
   field.bibtex = field.bibtex.normalize('NFKC') if @normalize
   @fields.push(field)
-  @has[field.name] = true
+  @has[field.name] = field
+  return
+
+Reference::remove = (name) ->
+  return unless @has[name]
+  delete @has[name]
+  for field, i in @fields
+    if field.name == name
+      @fields.splice(i, 1)
+      return
   return
 
 Reference::normalize = (typeof (''.normalize) == 'function')
