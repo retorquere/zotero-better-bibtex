@@ -444,7 +444,7 @@ doExport = ->
       ref.add({ name: 'editoratype', value: 'collaborator' }) if creators.editora.length > 0
       ref.add({ name: 'editorbtype', value: 'redactor' }) if creators.editorb.length > 0
 
-    ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate
+    ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate && item.url
 
     if item.date
       date = Zotero.Utilities.strToDate(item.date)
