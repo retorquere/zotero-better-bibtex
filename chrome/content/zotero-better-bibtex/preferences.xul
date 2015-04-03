@@ -17,22 +17,22 @@
       <preferences id="zotero-preferences-cite">
         <preference id="pref-better-bibtex-recursive" name="extensions.zotero.recursiveCollections" type="bool"/>
         <preference id="pref-better-bibtex-citecommand" name="extensions.zotero.translators.better-bibtex.citeCommand" type="string"/>
-        <preference id="pref-better-bibtex-format" name="extensions.zotero.translators.better-bibtex.citeKeyFormat" type="string"/>
-        <preference id="pref-better-bibtex-skipFields" name="extensions.zotero.translators.better-bibtex.skipfields" type="string"/>
+        <preference id="pref-better-bibtex-format" name="extensions.zotero.translators.better-bibtex.citekeyFormat" type="string"/>
+        <preference id="pref-better-bibtex-skipFields" name="extensions.zotero.translators.better-bibtex.skipFields" type="string"/>
         <preference id="pref-better-bibtex-server" name="extensions.zotero.httpServer.enabled" type="bool"/>
         <preference id="pref-better-bibtex-unicode" name="extensions.zotero.translators.better-bibtex.unicode" type="string"/>
         <preference id="pref-better-bibtex-preserveCaps" name="extensions.zotero.translators.better-bibtex.preserveCaps" type="string"/>
         <preference id="pref-better-bibtex-useprefix" name="extensions.zotero.translators.better-bibtex.useprefix" type="bool"/>
         <preference id="pref-better-bibtex-langid" name="extensions.zotero.translators.better-bibtex.langid" type="string"/>
-        <preference id="pref-better-bibtex-auto-abbrev" name="extensions.zotero.translators.better-bibtex.auto-abbrev" type="bool"/>
-        <preference id="pref-better-bibtex-pin-citekeys" name="extensions.zotero.translators.better-bibtex.pin-citekeys" type="string"/>
-        <preference id="pref-better-bibtex-raw-imports" name="extensions.zotero.translators.better-bibtex.raw-imports" type="bool"/>
+        <preference id="pref-better-bibtex-auto-abbrev" name="extensions.zotero.translators.better-bibtex.autoAbbrev" type="bool"/>
+        <preference id="pref-better-bibtex-pin-citekeys" name="extensions.zotero.translators.better-bibtex.pinCitekeys" type="string"/>
+        <preference id="pref-better-bibtex-raw-imports" name="extensions.zotero.translators.better-bibtex.rawImports" type="bool"/>
         <preference id="pref-better-bibtex-caching" name="extensions.zotero.translators.better-bibtex.caching" type="bool"/>
-        <preference id="pref-better-bibtex-show-citekey" name="extensions.zotero.translators.better-bibtex.show-citekey" type="bool"/>
-        <preference id="pref-better-bibtex-auto-export" name="extensions.zotero.translators.better-bibtex.auto-export" type="string"/>
-        <preference id="pref-better-bibtex-rescan-citekeys" name="extensions.zotero.translators.better-bibtex.scan-citekeys" type="bool"/>
-        <preference id="pref-better-bibtex-citekey-conflict" name="extensions.zotero.translators.better-bibtex.key-conflict-policy" type="string"/>
-        <preference id="pref-better-bibtex-doi-and-url" name="extensions.zotero.translators.better-bibtex.doi-and-url" type="string"/>
+        <preference id="pref-better-bibtex-show-citekey" name="extensions.zotero.translators.better-bibtex.showCitekeys" type="bool"/>
+        <preference id="pref-better-bibtex-auto-export" name="extensions.zotero.translators.better-bibtex.autoExport" type="string"/>
+        <preference id="pref-better-bibtex-rescan-citekeys" name="extensions.zotero.translators.better-bibtex.scanCitekeys" type="bool"/>
+        <preference id="pref-better-bibtex-citekey-conflict" name="extensions.zotero.translators.better-bibtex.keyConflictPolicy" type="string"/>
+        <preference id="pref-better-bibtex-doi-and-url" name="extensions.zotero.translators.better-bibtex.DOIandURL" type="string"/>
         <preference id="pref-better-bibtex-attachments-nometadata" name="extensions.zotero.translators.better-bibtex.attachmentsNoMetadata" type="bool"/>
       </preferences>
       <tabbox>
@@ -57,7 +57,7 @@
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.cite.format;"/>
-                    <textbox id="id-better-bibtex-preferences-citeKeyFormat" preference="pref-better-bibtex-format" oninput="Zotero.BetterBibTeX.pref.update();" onkeypress="setTimeout(Zotero.BetterBibTeX.pref.update, 1);"/>
+                    <textbox id="id-better-bibtex-preferences-citekeyFormat" preference="pref-better-bibtex-format" oninput="Zotero.BetterBibTeX.pref.update();" onkeypress="setTimeout(Zotero.BetterBibTeX.pref.update, 1);"/>
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.langid;"/>
@@ -167,7 +167,7 @@
                 </radiogroup>
               </hbox>
               <hbox>
-                <listbox id="better-bibtex-export-list" flex="1" onselect="Zotero.BetterBibTeX.pref.exportSelected()">
+                <listbox id="better-bibtex-export-list" flex="1" onselect="Zotero.BetterBibTeX.pref.autoexport.selected()">
                   <listcols>
                     <listcol flex="1"/>
                   </listcols>
@@ -175,7 +175,7 @@
                     <listheader label="&zotero.better-bibtex.preferences.auto-export.config;"/>
                   </listhead>
                 </listbox>
-                <groupbox>
+                <groupbox flex="1">
                   <caption label="&zotero.better-bibtex.preferences.auto-export.config;"/>
                   <grid>
                     <columns>
@@ -224,6 +224,10 @@
                     </rows>
                   </grid>
                 </groupbox>
+              </hbox>
+              <hbox>
+                <button id="auto-export-remove" label="&zotero.better-bibtex.auto-export.remove;" oncommand="Zotero.BetterBibTeX.pref.autoexport.remove()"/>
+                <button id="auto-export-mark" label="&zotero.better-bibtex.auto-export.mark;" oncommand="Zotero.BetterBibTeX.pref.autoexport.mark()"/>
               </hbox>
             </vbox>
           </tabpanel>

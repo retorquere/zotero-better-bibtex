@@ -59,14 +59,14 @@ Zotero.BetterBibTeX.pref.observer = {
   unregister: -> Zotero.BetterBibTeX.pref.prefs.removeObserver('', this)
   observe: (subject, topic, data) ->
     switch data
-      when 'citeKeyFormat'
+      when 'citekeyFormat'
         Zotero.BetterBibTeX.keymanager.reset()
         # delete all dynamic keys that have a different citekeyformat (should be all)
-        Zotero.DB.query('delete from betterbibtex.keys where citeKeyFormat is not null and citeKeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citeKeyFormat')])
+        Zotero.DB.query('delete from betterbibtex.keys where citekeyFormat is not null and citekeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citekeyFormat')])
         # delete all cache entries that do not correspond to items with pinned keys
-        Zotero.DB.query('delete from betterbibtex.cache where not itemID in (select itemID from betterbibtex.keys where citeKeyFormat is null)')
-      when 'auto-export'
-        Zotero.BetterBibTeX.auto.process() unless Zotero.BetterBibTeX.pref.get('auto-export') == 'disabled'
+        Zotero.DB.query('delete from betterbibtex.cache where not itemID in (select itemID from betterbibtex.keys where citekeyFormat is null)')
+      when 'autoExport'
+        Zotero.BetterBibTeX.auto.process() unless Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
     return
 }
 
@@ -76,7 +76,7 @@ Zotero.BetterBibTeX.pref.ZoteroObserver = {
   observe: (subject, topic, data) ->
     switch data
       when 'recursiveCollections'
-        return if Zotero.BetterBibTeX.pref.get('auto-export') == 'disabled'
+        return if Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
         recursive = Zotero.BetterBibTeX.auto.recursive()
         Zotero.DB.execute("update betterbibtex.autoexport set recursive = ?, status = 'pending' where recursive <> ?", [recursive, recursive])
         Zotero.BetterBibTeX.auto.process('recursiveCollections')
@@ -136,6 +136,12 @@ Zotero.BetterBibTeX.uninstallObserver =
 
 Zotero.BetterBibTeX.version = (version) -> ("00000#{ver}".slice(-5) for ver in version.split('.')).join('.')
 
+Zotero.BetterBibTeX.foreign_keys = (enabled) ->
+  statement = Zotero.DB.getStatement("PRAGMA foreign_keys = #{if enabled then 'ON' else 'OFF'}", null, true)
+  statement.executeStep()
+  statement.finalize()
+  return
+
 Zotero.BetterBibTeX.SQLColumns = (table) ->
   statement = Zotero.DB.getStatement("pragma betterbibtex.table_info(#{table})", null, true)
 
@@ -187,64 +193,101 @@ Zotero.BetterBibTeX.updateSchema = ->
 
   return if installed == installing
 
-  if installed < @version('0.8.10')
-    ### upgrade 'keys' table ###
-    columns = @SQLColumns('keys')
-    if columns?.pinned || columns?.libraryID
-      Zotero.DB.query('alter table betterbibtex.keys rename to _keys_')
-    if !columns || columns?.pinned || columns?.libraryID
-      Zotero.DB.query('create table betterbibtex.keys (itemID primary key, citekey not null, citeKeyFormat)')
-    switch
-      when columns?.pinned
-        Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citeKeyFormat)
-                         select itemID, citekey, case when pinned = 1 then null else ? end from betterbibtex._keys_', [@pref.get('citeKeyFormat')])
-      when columns?.libraryID
-        Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citeKeyFormat)
-                         select itemID, citekey, citeKeyFormat from betterbibtex._keys_')
-    if columns?.pinned || columns?.libraryID
-      Zotero.DB.query('drop table betterbibtex._keys_')
+  @log("schema: upgrade from #{installed}")
 
-    ### drop 'keys2' table, upgrade leftovers ###
-    Zotero.DB.query('drop table betterbibtex.keys2') if @SQLColumns('keys2')
+  @pref.set('scanCitekeys', true)
+  for key in @prefs.getChildList('')
+    switch key
+      when 'auto-abbrev.style' then @pref.set('autoAbbrevStyle', @pref.get(key))
+      when 'auto-abbrev' then @pref.set('autoAbbrev', @pref.get(key))
+      when 'auto-export' then @pref.set('autoExport', @pref.get(key))
+      when 'citeKeyFormat' then @pref.set('citekeyFormat', @pref.get(key))
+      when 'doi-and-url' then @pref.set('DOIandURL', @pref.get(key))
+      when 'key-conflict-policy' then @pref.set('keyConflictPolicy', @pref.get(key))
+      when 'pin-citekeys' then @pref.set('pinCitekeys', @pref.get(key))
+      when 'raw-imports' then @pref.set('rawImports', @pref.get(key))
+      when 'show-citekey' then @pref.set('showCitekeys', @pref.get(key))
+      else continue
+    @pref.prefs.clearUserPref(key)
 
-    ### upgrade 'cache' table ###
-    columns = @SQLColumns('cache')
-    unless columns?.lastaccess
-      if columns
-        Zotero.DB.query('alter table betterbibtex.cache rename to _cache_')
-      Zotero.DB.query("
-        create table betterbibtex.cache (
-          itemID not null,
-          context not null,
-          citekey not null,
-          entry not null,
-          lastaccess not null default CURRENT_TIMESTAMP,
-          primary key (itemid, context))
-        ")
-      if columns && !columns.lastaccess
-        Zotero.DB.query('insert into betterbibtex.cache (itemID, context, citekey, entry) select itemID, context, citekey, entry from betterbibtex._cache_')
-        Zotero.DB.query('drop table betterbibtex._cache_')
+  @foreign_keys(false)
 
-    ### upgrade 'autoexport' table ###
-    Zotero.DB.query("
-      create table if not exists betterbibtex.autoexport (
-        id integer primary key not null,
-        collection_id not null,
-        collection_name not null,
-        path not null,
-        context not null,
-        recursive not null,
-        status not null,
-        unique (collection_id, path, context))
-      ")
+  columns = Object.create(null)
+  for table in ['keys', 'autoexport', 'context']
+    columns[table] = @SQLColumns(table)
+    Zotero.DB.query("alter table betterbibtex.#{table} rename to _#{table}_") if columns[table]
+  Zotero.DB.query('drop table betterbibtex.keys2') if @SQLColumns('keys2')
+  Zotero.DB.query('drop table betterbibtex.cache') if @SQLColumns('cache')
 
-  ### schema 0.6.43, 0.7.33 & 0.8.10 had a scanning flaw, force rescan ###
-  if installed < @version('0.8.10')
-    @pref.set('scan-citekeys', true)
+  ### clean slate ###
+  Zotero.DB.query('create table betterbibtex.keys (itemID primary key, citekey not null, citekeyFormat)')
+  Zotero.DB.query("
+    create table betterbibtex.context (
+      id int primary key,
 
-  # 0.8.11 changes BibLaTeX export, drop cache
-  if installed < @version('0.8.11')
-    Zotero.DB.query("delete from betterbibtex.cache")
+      -- preferences
+      attachmentRelativePath CHECK(usePrefix in ('true', 'false')),
+      attachmentsNoMetadata CHECK(usePrefix in ('true', 'false')),
+      autoAbbrev CHECK(usePrefix in ('true', 'false')),
+      autoAbbrevStyle not null,
+      citekeyFormat not null,
+      DOIandURL CHECK (DOIandURL in ('doi', 'url', 'both'),
+      langID not null,
+      preserveCaps CHECK(preserveCaps in ('all', 'inner', 'no')),
+      skipFields not null,
+      unicode CHECK(unicode in ('always', 'never', 'auto')),
+      usePrefix CHECK(usePrefix in ('true', 'false')),
+
+      -- options
+      exportCharset not null,
+      exportNotes CHECK(exportNotes in ('true', 'false')),
+      preserveBibTeXVariables CHECK(preserveBibTeXVariables in ('true', 'false')),
+      useJournalAbbreviation CHECK(useJournalAbbreviation in ('true', 'false')),
+
+      unique (
+        attachmentRelativePath, attachmentsNoMetadata, autoAbbrev, autoAbbrevStyle, citekeyFormat, DOIandURL,
+        langID, preserveCaps, skipFields, unicode, usePrefix,
+
+        exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation)
+      )
+    ")
+  Zotero.DB.query("
+    create table betterbibtex.cache (
+      itemID not null,
+      context not null,
+      citekey not null,
+      entry not null,
+      lastaccess not null default CURRENT_TIMESTAMP,
+      primary key (itemid, context)),
+      foreign key (context) references (betterbibtex.context)
+    ")
+  Zotero.DB.query("
+    create table if not exists betterbibtex.autoexport (
+      id integer primary key not null,
+      collection not null,
+      path not null,
+      context not null,
+      recursive CHECK(recursive in ('true', 'false')),
+      status CHECK(status in ('pending', 'error', 'done')),
+      foreign key (context) references betterbibtex.context(id)
+      )
+    ")
+
+  ### upgrade ###
+
+  if columns.keys
+    if columns.keys.pinned
+      Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citekeyFormat)
+                      select itemID, citekey, case when pinned = 1 then null else ? end from betterbibtex._keys_', [@pref.get('citekeyFormat')])
+    else
+      Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citekeyFormat)
+                      select itemID, citekey, citekeyFormat from betterbibtex._keys_')
+
+  ### cleanup ###
+  for table in ['keys', 'autoexport', 'context']
+    Zotero.DB.query("drop table betterbibtex._#{table}_") if columns[table]
+
+  @foreign_keys(true)
 
   return
 
@@ -296,7 +339,7 @@ Zotero.BetterBibTeX.init = ->
   }
 
   @keymanager.reset()
-  Zotero.DB.query('delete from betterbibtex.keys where citeKeyFormat is not null and citeKeyFormat <> ?', [@pref.get('citeKeyFormat')])
+  Zotero.DB.query('delete from betterbibtex.keys where citekeyFormat is not null and citekeyFormat <> ?', [@pref.get('citekeyFormat')])
 
   @pref.observer.register()
   @pref.ZoteroObserver.register()
@@ -311,7 +354,7 @@ Zotero.BetterBibTeX.init = ->
   # clean up keys for items that have gone missing
   Zotero.DB.query('delete from betterbibtex.keys where not itemID in (select itemID from items)')
 
-  if @pref.get('scan-citekeys')
+  if @pref.get('scanCitekeys')
     @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
     patched = []
     for row in Zotero.DB.query(@findKeysSQL) or []
@@ -319,9 +362,9 @@ Zotero.BetterBibTeX.init = ->
       @log('scan:', row)
       @keymanager.set(row, @keymanager.extract({extra: row.extra}).__citekey__)
     if patched.length > 0
-      for row in Zotero.DB.query("select * from betterbibtex.keys where citeKeyFormat is null and itemID not in #{@SQLSet(patched)}")
+      for row in Zotero.DB.query("select * from betterbibtex.keys where citekeyFormat is null and itemID not in #{@SQLSet(patched)}")
         @keymanager.remove(row)
-    @pref.set('scan-citekeys', false)
+    @pref.set('scanCitekeys', false)
 
   @loadTranslators()
 
@@ -339,14 +382,14 @@ Zotero.BetterBibTeX.init = ->
   # fragile)
   Zotero.ItemTreeView.prototype.getCellText = ((original) ->
     return (row, column) ->
-      if column.id == 'zotero-items-column-extra' && Zotero.BetterBibTeX.pref.get('show-citekey')
+      if column.id == 'zotero-items-column-extra' && Zotero.BetterBibTeX.pref.get('showCitekeys')
         item = this._getItemAtRow(row)
         if !(item?.ref) || item.ref.isAttachment() || item.ref.isNote()
           return ''
         else
           key = Zotero.BetterBibTeX.keymanager.get({itemID: item.id})
           return '' if key.citekey.match(/^zotero-(null|[0-9]+)-[0-9]+$/)
-          return key.citekey + (if key.citeKeyFormat then ' *' else '')
+          return key.citekey + (if key.citekeyFormat then ' *' else '')
 
       return original.apply(this, arguments)
     )(Zotero.ItemTreeView.prototype.getCellText)
@@ -356,7 +399,6 @@ Zotero.BetterBibTeX.init = ->
     return (libraryID, saveAttachments) ->
       if @translator?[0] && @type == 'export' && @path && @_displayOptions?['Keep updated']
         progressWin = new Zotero.ProgressWindow()
-        #progressWin.changeHeadline(Zotero.getString("save.link"));
         progressWin.changeHeadline('Auto-export')
 
         if !@_collection?._id
@@ -502,7 +544,7 @@ Zotero.BetterBibTeX.itemAdded = {
         item.save()
         collection.addItem(item.id)
 
-    unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('auto-export') == 'disabled'
+    unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
       Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection_id in #{Zotero.BetterBibTeX.SQLSet(collections)}")
       Zotero.BetterBibTeX.auto.process('collectionChanged')
 
@@ -539,7 +581,7 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
       Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'on-change')
 
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true)
-  unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('auto-export') == 'disabled'
+  unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection_id in #{Zotero.BetterBibTeX.SQLSet(collections)}")
     Zotero.BetterBibTeX.auto.process('itemChanged')
 
@@ -605,7 +647,7 @@ Zotero.BetterBibTeX.load = (translator) ->
     Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}")
   ].join("\n")
 
-  delete header.displayOptions['Keep updated'] if header.displayOptions && Zotero.BetterBibTeX.pref.get('auto-export') == 'disabled'
+  delete header.displayOptions['Keep updated'] if header.displayOptions && Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
 
   @translators[header.label.toLowerCase().replace(/[^a-z]/, '')] = header
   Zotero.Translators.save(header, code)

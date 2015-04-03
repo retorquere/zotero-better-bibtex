@@ -69,6 +69,8 @@
 <!ENTITY zotero.better-bibtex.auto-export.collection "Collection">
 <!ENTITY zotero.better-bibtex.auto-export.target "Output file">
 <!ENTITY zotero.better-bibtex.auto-export.translator "Translator">
+<!ENTITY zotero.better-bibtex.auto-export.remove "Remove">
+<!ENTITY zotero.better-bibtex.auto-export.mark "Export">
 
 
 <!ENTITY zotero.better-bibtex.rescan-citekeys "Re-scan pinned citekeys after restart">

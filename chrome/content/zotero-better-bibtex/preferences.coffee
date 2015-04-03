@@ -29,7 +29,7 @@ Zotero.BetterBibTeX.pref.styleChanged = (index) ->
   stylebox = document.getElementById('better-bibtex-abbrev-style')
   selectedItem = if index != 'undefined' then stylebox.getItemAtIndex(index) else stylebox.selectedItem
   styleID = selectedItem.getAttribute('value')
-  Zotero.BetterBibTeX.pref.set('auto-abbrev.style', styleID)
+  Zotero.BetterBibTeX.pref.set('autoAbbrevStyle', styleID)
   Zotero.BetterBibTeX.keymanager.journalAbbrevCache = Object.create(null)
   return
 
@@ -56,13 +56,13 @@ Zotero.BetterBibTeX.pref.collectionPath = (id) ->
 Zotero.BetterBibTeX.pref.update = ->
   return unless Zotero.BetterBibTeX.initialized # ?!?!
 
-  document.getElementById('better-bibtex-prefs-auto-export').setAttribute('hidden', Zotero.BetterBibTeX.pref.get('auto-export') == 'disabled')
+  document.getElementById('better-bibtex-prefs-auto-export').setAttribute('hidden', Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled')
 
   serverCheckbox = document.getElementById('id-better-bibtex-preferences-server-enabled')
   serverEnabled = serverCheckbox.checked
   serverCheckbox.setAttribute('hidden', Zotero.isStandalone && serverEnabled)
 
-  keyformat = document.getElementById('id-better-bibtex-preferences-citeKeyFormat')
+  keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
 
   try
     Zotero.BetterBibTeX.formatter(keyformat.value)
@@ -76,13 +76,12 @@ Zotero.BetterBibTeX.pref.update = ->
   document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-export').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())
   document.getElementById('id-zotero-better-bibtex-server-warning').setAttribute('hidden', serverEnabled)
   document.getElementById('id-zotero-better-bibtex-recursive-warning').setAttribute('hidden', not document.getElementById('id-better-bibtex-preferences-getCollections').checked)
-  document.getElementById('id-better-bibtex-preferences-fancyURLs-warning').setAttribute('hidden', not document.getElementById('id-better-bibtex-preferences-fancyURLs').checked)
 
   styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
 
   stylebox = document.getElementById('better-bibtex-abbrev-style')
   refill = stylebox.children.length is 0
-  selectedStyle = Zotero.BetterBibTeX.pref.get('auto-abbrev.style')
+  selectedStyle = Zotero.BetterBibTeX.pref.get('autoAbbrevStyle')
   selectedIndex = -1
   for style, i in styles
     if refill
@@ -114,32 +113,59 @@ Zotero.BetterBibTeX.pref.update = ->
       itemNode.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == ae.id then 'running' else ae.status}")
       itemNode.setAttribute('tooltiptext', "#{@collectionPath(ae.collection_id)} -> #{ae.path}")
       exportlist.appendChild(itemNode)
-  @exportSelected(selectedIndex) if selectedExport >= 0
+  if selectedExport >= 0
+    @autoexport.selected(selectedIndex)
+  else
+    document.getElementById('auto-export-remove').setAttribute('disabled', true)
+    document.getElementById('auto-export-mark').setAttribute('disabled', true)
 
   ca = document.getElementById('id-better-bibtex-preferences-cache-activity')
   ca.value = if Zotero.BetterBibTeX.pref.get('caching') then "+#{Zotero.BetterBibTeX.cache.stats.hits || 0}/-#{Zotero.BetterBibTeX.cache.stats.misses || 0}" else '-'
 
   return
 
-Zotero.BetterBibTeX.pref.exportSelected = (index) ->
-  exportbox = document.getElementById('better-bibtex-export-list')
-  selectedItem = if index != 'undefined' then exportbox.getItemAtIndex(index) else exportbox.selectedItem
+Zotero.BetterBibTeX.pref.autoexport =
+  selected: (index) ->
+    exportbox = document.getElementById('better-bibtex-export-list')
+    selectedItem = if (typeof index) == 'undefined' then exportbox.selectedItem else exportbox.getItemAtIndex(index)
 
-  ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport where id = ?', [selectedItem.getAttribute('value')])
-  ae.context = JSON.parse(ae.context)
-  Zotero.BetterBibTeX.log(':::selected', @clone(ae))
+    document.getElementById('auto-export-remove').setAttribute('disabled', false)
+    document.getElementById('auto-export-mark').setAttribute('disabled', false)
 
-  @display('id-better-bibtex-preferences-auto-export-collection', ae.collection_name)
-  @display('id-better-bibtex-preferences-auto-export-target', ae.path)
-  @display('id-better-bibtex-preferences-auto-export-translator', ae.context.translator)
-  @display('id-better-bibtex-preferences-auto-export-keyformat', ae.context.citeKeyFormat)
-  @display('id-better-bibtex-preferences-auto-export-skipFields', ae.context.skipfields)
-  @display('id-better-bibtex-preferences-auto-export-preserveCaps', ae.context.preserveCaps)
-  document.getElementById('id-better-bibtex-preferences-auto-export-auto-abbrev').checked = ae.context['auto-abbrev'] && ae.context.useJournalAbbreviation
-  @display('id-better-bibtex-preferences-auto-export-auto-abbrev-style', (style.title for style in Zotero.Styles.getVisible() when style.styleID == ae.context['auto-abbrev.style'])?[0] ? '')
-  @display('id-better-bibtex-preferences-auto-export-unicode', switch
-    when ae.context.unicode == '' && ae.context.exportCharset == 'UTF-8'  then 'yes'
-    when ae.context.unicode == ''                                         then 'no'
-    else ae.context.unicode)
-  document.getElementById('id-better-bibtex-preferences-auto-export-notes').checked = ae.context.exportNotes
-  return
+    ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport ae join betterbibtex.context ctx on ae.context = ctx.id where ae.id = ?', [selectedItem.getAttribute('value')])
+    ae.context = new Zotero.BetterBibTeX.Context(ae)
+    Zotero.BetterBibTeX.log(':::selected', @clone(ae))
+
+    @display('id-better-bibtex-preferences-auto-export-collection', ae.collection_name)
+    @display('id-better-bibtex-preferences-auto-export-target', ae.path)
+    @display('id-better-bibtex-preferences-auto-export-translator', ae.context.translator)
+    @display('id-better-bibtex-preferences-auto-export-keyformat', ae.context.citekeyFormat)
+    @display('id-better-bibtex-preferences-auto-export-skipFields', ae.context.skipFields)
+    @display('id-better-bibtex-preferences-auto-export-preserveCaps', ae.context.preserveCaps)
+    document.getElementById('id-better-bibtex-preferences-auto-export-auto-abbrev').checked = ae.context.autoAbbrev && ae.context.useJournalAbbreviation
+    @display('id-better-bibtex-preferences-auto-export-auto-abbrev-style', (style.title for style in Zotero.Styles.getVisible() when style.styleID == ae.context.autoAbbrevStyle)?[0] ? '')
+    @display('id-better-bibtex-preferences-auto-export-unicode', switch
+      when ae.context.unicode == '' && ae.context.exportCharset == 'UTF-8'  then 'yes'
+      when ae.context.unicode == ''                                         then 'no'
+      else ae.context.unicode)
+    document.getElementById('id-better-bibtex-preferences-auto-export-notes').checked = ae.context.exportNotes
+    return
+
+  remove: ->
+    exportlist = document.getElementById('better-bibtex-export-list')
+    selectedItem = exportlist.selectedItem
+    return unless selectedItem
+    id = selectedItem.getAttribute('value')
+    Zotero.DB.query('delete from betterbibtex.autoexport where id = ?', [id])
+    exportlist.removeChild(node) for node in exportlist.children when node.nodeName == 'listitem'
+    Zotero.BetterBibTeX.pref.update()
+    return
+
+  mark: ->
+    exportlist = document.getElementById('better-bibtex-export-list')
+    selectedItem = exportlist.selectedItem
+    return unless selectedItem
+    id = selectedItem.getAttribute('value')
+    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where id = ?", [id])
+    selectedItem.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == id then 'running' else 'pending'}")
+    return

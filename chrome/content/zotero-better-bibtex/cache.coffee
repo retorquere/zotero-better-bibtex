@@ -1,8 +1,14 @@
 Zotero.BetterBibTeX.auto = {}
 
 Zotero.BetterBibTeX.auto.add = (state) ->
-  Zotero.DB.query("insert or replace into betterbibtex.autoexport (collection_id, collection_name, path, context, recursive, status)
-                               values (?, ?, ?, ?, ?, 'done')", [state.collection.id, state.collection.name, state.target, state.context.toJSON(), @recursive()])
+  context = new Zotero.BetterBibTeX.Context(state.context).db()
+  columns = Object.keys(context)
+  vars = ('?' for col in columns).join(', ')
+  params = (context[col] for col in columns)
+
+  cid = Zotero.DB.query("insert or replace into betterbibtex.context (#{columns}) values (#{vars})", params)
+  Zotero.DB.query("insert or replace into betterbibtex.autoexport (collection, path, context, recursive, status)
+                  values (?, ?, ?, ?, ?, 'done')", [state.collection.id, state.target, cid, @recursive()])
   return
 
 Zotero.BetterBibTeX.auto.recursive = ->
@@ -13,24 +19,28 @@ Zotero.BetterBibTeX.auto.recursive = ->
 
 Zotero.BetterBibTeX.auto.process = (reason) ->
   return if @running
-  switch Zotero.BetterBibTeX.pref.get('auto-export')
+  switch Zotero.BetterBibTeX.pref.get('autoExport')
     when 'off', 'disabled'  then return
     when 'idle' then return unless @idle
 
   Zotero.BetterBibTeX.log("Auto-export: #{reason}")
 
-  ae = Zotero.DB.rowQuery("select * from betterbibtex.autoexport where status == 'pending' limit 1")
+  ae = Zotero.DB.rowQuery("select *
+                           from betterbibtex.autoexport ae
+                           join betterbibtex.context c on ae.context = c.id
+                           where status == 'pending' limit 1")
   return unless ae
   @running = '' + ae.id
 
   translation = new Zotero.Translate.Export()
-  translation.setCollection(Zotero.Collections.get(ae.collection_id))
+  translation.setCollection(Zotero.Collections.get(ae.collection))
 
   path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
   path.initWithPath(ae.path)
   translation.setLocation(path)
   translation.setTranslator(ae.translatorID)
-  translation.setDisplayOptions(JSON.parse(ae.context))
+
+  translation.setDisplayOptions(new Zotero.BetterBibTeX.Context(ae))
 
   translation.setHandler('done', (obj, worked) ->
     Zotero.DB.query('update betterbibtex.autoexport set status = ? where id = ?', [(if worked then 'done' else 'error'), Zotero.BetterBibTeX.auto.running])
@@ -73,9 +83,19 @@ Zotero.BetterBibTeX.cache.fetch = (context, itemID) ->
     context = arguments[1]
     itemID = arguments[2]
 
-  for cached in Zotero.DB.query('select citekey, entry from betterbibtex.cache where context = ? and itemID = ?', [context, itemID])
+  context = new Zotero.BetterBibTeX.Context(context).db()
+  columns = Object.keys(context)
+  condition = ("#{col} = ?" for col in columns)
+  conditions.push("itemID = ?")
+  params = (context[col] for col in columns)
+  params.push(itemID)
+
+  for cached in Zotero.DB.query("select citekey, entry, c.context
+                                 from betterbibtex.cache c
+                                 join betterbibtex.context ctx on ctx.id = c.context
+                                 where #{condition.join(' and ')}", params)
     @stats.access[itemID] ?= {}
-    @stats.access[itemID][context] = Date.now()
+    @stats.access[itemID][cached.context] = Date.now()
     cached = {citekey: cached.citekey, entry: cached.entry}
     throw("Malformed cache entry! #{cached}") unless cached.citekey && cached.entry
     @stats.hits += 1
@@ -92,6 +112,13 @@ Zotero.BetterBibTeX.cache.store = (context, itemid, citekey, entry) ->
     entry = arguments[4]
 
   @stats.stores += 1
-  Zotero.BetterBibTeX.log('::: caching entry', [context, itemid, citekey, entry])
-  Zotero.DB.query("insert or replace into betterbibtex.cache (context, itemid, citekey, entry, lastaccess) values (?, ?, ?, ?, CURRENT_TIMESTAMP)", [context, itemid, citekey, entry])
+
+  context = new Zotero.BetterBibTeX.Context(context).db()
+  columns = Object.keys(context)
+  vars = ('?' for col in columns).join(', ')
+  params = (context[col] for col in columns)
+  cid = Zotero.DB.query("insert or replace into betterbibtex.context (#{columns}) values (#{vars})", params)
+
+  Zotero.BetterBibTeX.log('::: caching entry', [cid, itemid, citekey, entry])
+  Zotero.DB.query("insert or replace into betterbibtex.cache (context, itemid, citekey, entry, lastaccess) values (?, ?, ?, ?, CURRENT_TIMESTAMP)", [cid, itemid, citekey, entry])
   return null
