@@ -87,6 +87,9 @@ After do |scenario|
 
     open("#{filename}.cache", 'w'){|f| f.write(BBT.cache.to_yaml)} if scenario.failed? || scenario.source_tag_names.include?('@dumpcache')
     BBT.exportToFile('Zotero TestCase', "#{filename}.json") if scenario.source_tag_names.include?('@librarydump')
+
+    # `FAIL=FAST cucumber` to stop on first failure
+    Cucumber.wants_to_quit = (ENV['FAIL'] == 'FAST') && scenario.failed?
   end
 end
 

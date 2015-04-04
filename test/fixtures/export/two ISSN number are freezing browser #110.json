@@ -4,9 +4,11 @@
     "label": "Zotero TestCase",
     "release": "0.6.44",
     "preferences": {
-      "brace-all": true,
       "fancyURLs": false,
-      "attachmentRelativePath": false
+      "attachmentRelativePath": false,
+      "usePrefix": true,
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/nature"
     },
     "options": {
       "exportFileData": false,

@@ -4,9 +4,12 @@
     "label": "Zotero TestCase",
     "release": "0.6.63",
     "preferences": {
-      "brace-all": true,
+      "citekeyFormat": "[auth][year]",
       "fancyURLs": false,
-      "attachmentRelativePath": false
+      "attachmentRelativePath": false,
+      "usePrefix": false,
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/american-physics-society"
     },
     "options": {
       "exportFileData": false,

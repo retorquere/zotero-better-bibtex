@@ -4,9 +4,12 @@
     "label": "Zotero TestCase",
     "release": "0.7.11",
     "preferences": {
-      "brace-all": true,
-      "fancyURLs": false,
-      "attachmentRelativePath": false
+      "attachmentRelativePath": false,
+      "citekeyFormat": "[auth][year]",
+      "skipFields": "keywords,abstract,file",
+      "usePrefix": false,
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/ieee"
     },
     "options": {
       "exportFileData": false,

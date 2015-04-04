@@ -4,7 +4,7 @@
     "label": "Zotero TestCase",
     "release": "0.6.44",
     "preferences": {
-      "brace-all": true,
+      "usePrefix": true,
       "fancyURLs": false,
       "attachmentRelativePath": false
     },

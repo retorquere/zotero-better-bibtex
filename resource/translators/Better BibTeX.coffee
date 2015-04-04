@@ -137,7 +137,7 @@ doImport = ->
     data = ''
     while (read = Zotero.read(0x100000)) != false
       data += read
-    bib = BetterBibTeXParser.parse(data, {raw: Translator.rawImport})
+    bib = BetterBibTeXParser.parse(data, {raw: Translator.rawImports})
 
     for ref in bib.references
       new ZoteroItem(ref)
@@ -169,7 +169,7 @@ class ZoteroItem
     @biblatexdata = {}
     @item.notes.push({ note: ('The following fields were not imported:<br/>' + bibtex.__note__).trim(), tags: ['#BBT Import'] }) if bibtex.__note__
     @import(bibtex)
-    if Translator.rawImport
+    if Translator.rawImports
       @item.tags ?= []
       @item.tags.push(Translator.rawLaTag)
     @item.complete()

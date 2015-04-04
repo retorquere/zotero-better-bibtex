@@ -6,7 +6,12 @@
     "preferences": {
       "preserveCaps": "inner",
       "fancyURLs": false,
-      "attachmentRelativePath": false
+      "attachmentRelativePath": false,
+      "citekeyFormat": "[auth][year]",
+      "skipFields": "note,language,file,urldate",
+      "preserveCaps": "inner",
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell"
     },
     "options": {
       "exportFileData": false,

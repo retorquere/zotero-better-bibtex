@@ -79,7 +79,7 @@ Zotero.BetterBibTeX.pref.ZoteroObserver = {
       when 'recursiveCollections'
         return if Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
         recursive = "#{!!Zotero.BetterBibTeX.auto.recursive()}"
-        Zotero.DB.execute("update betterbibtex.autoexport set includeChildCollections = ?, status = 'pending' where includeChildCollections <> ?", [recursive, recursive])
+        Zotero.DB.execute("update betterbibtex.autoexport set exportedRecursively = ?, status = 'pending' where exportedRecursively <> ?", [recursive, recursive])
         Zotero.BetterBibTeX.auto.process('recursiveCollections')
     return
 }
@@ -255,7 +255,7 @@ Zotero.BetterBibTeX.updateSchema = ->
       collection not null,
       path not null,
       exportOptions not null,
-      includeChildCollections CHECK(includeChildCollections in ('true', 'false')),
+      exportedRecursively CHECK(exportedRecursively in ('true', 'false')),
       status CHECK(status in ('pending', 'error', 'done')),
       foreign key (exportOptions) references exportoptions(id)
       )

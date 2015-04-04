@@ -4,10 +4,15 @@
     "label": "Zotero TestCase",
     "release": "0.7.32",
     "preferences": {
-      "preserveCaps": "all",
-      "fancyURLs": false,
       "attachmentRelativePath": false,
-      "attachmentsNoMetadata": false
+      "attachmentsNoMetadata": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoAbbrev": true,
+      "citekeyFormat": "[auth]_[year]",
+      "DOIandURL": "doi",
+      "preserveCaps": "all",
+      "rawImports": false,
+      "usePrefix": false
     },
     "options": {
       "exportFileData": false,

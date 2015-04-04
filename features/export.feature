@@ -178,6 +178,7 @@ Scenario: Square brackets in Publication field (85), and non-pinned keys must ch
 @86
 Scenario: Include first name initial(s) in cite key generation pattern (86)
   When I import 1 reference with 1 attachment from 'export/Include first name initial(s) in cite key generation pattern (86).json'
+   And I set preference translators.better-bibtex.citekeyFormat to '[auth+initials][year]'
   Then a library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bib'
 
 @bulk

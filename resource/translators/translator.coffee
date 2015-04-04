@@ -30,7 +30,7 @@ Translator.initialize = ->
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
   @skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
-  for pref in ['usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'attachmentRelativePath', 'rawImport', 'DOIandURL', 'attachmentsNoMetadata']
+  for pref in ['usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'attachmentRelativePath', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata']
     @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
 
   for option in ['useJournalAbbreviation', 'exportCharset', 'exportFileData', 'exportNotes']

@@ -4,11 +4,13 @@
     "label": "Zotero TestCase",
     "release": "0.8.7",
     "preferences": {
-      "preserveCaps": "inner",
-      "fancyURLs": false,
       "attachmentRelativePath": false,
-      "unicode": false,
-      "attachmentsNoMetadata": false
+      "attachmentsNoMetadata": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoAbbrev": true,
+      "citekeyFormat": "[authors][shortyear]",
+      "preserveCaps": "inner",
+      "skipFields": "file,abstract"
     },
     "options": {
       "exportFileData": false,

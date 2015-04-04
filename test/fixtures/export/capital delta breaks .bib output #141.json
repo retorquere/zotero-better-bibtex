@@ -4,10 +4,13 @@
     "label": "Zotero TestCase",
     "release": "0.7.5",
     "preferences": {
-      "brace-all": true,
-      "fancyURLs": false,
+      "citekeyFormat": "[auth:lower][year]",
       "attachmentRelativePath": false,
-      "unicode": true
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoAbbrev": true,
+      "fancyURLs": false,
+      "unicode": true,
+      "usePrefix": true
     },
     "options": {
       "exportFileData": false,

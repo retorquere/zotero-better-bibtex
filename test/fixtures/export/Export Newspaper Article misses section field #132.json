@@ -4,9 +4,14 @@
     "label": "Zotero TestCase",
     "release": "0.7.1",
     "preferences": {
-      "brace-all": true,
       "fancyURLs": false,
-      "attachmentRelativePath": false
+      "attachmentRelativePath": false,
+      "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize]",
+      "skipFields": "abstract,note",
+      "usePrefix": false,
+      "attachmentRelativePath": false,
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard"
     },
     "options": {
       "exportFileData": false,
