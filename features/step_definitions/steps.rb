@@ -31,7 +31,7 @@ unless $headless
     profile['extensions.zotero.translators.better-bibtex.debug'] = true
   end
 
-  profile['extensions.zotero.translators.better-bibtex.caching'] = true if ENV['CACHE'] == 'yes' || ENV['CIRCLECI'] == 'true'
+  profile['extensions.zotero.translators.better-bibtex.caching'] = true if ENV['CACHE'] == 'yes'
   profile['extensions.zotero.translators.better-bibtex.attachmentRelativePath'] = true
   profile['extensions.zotfile.useZoteroToRename'] = true
 
@@ -71,7 +71,7 @@ Before do |scenario|
 end
 
 After do |scenario|
-  if ENV['CIRCLECI'] != 'true'
+  if ENV['CI'] != 'true'
     open("#{scenario.title}.debug", 'w'){|f| f.write(DBB.log) } if scenario.source_tag_names.include?('@logcapture')
     filename = scenario.title.gsub(/[^0-9A-z.\-]/, '_')
     if scenario.failed?
