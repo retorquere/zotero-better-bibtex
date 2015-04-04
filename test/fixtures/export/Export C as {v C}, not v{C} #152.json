@@ -4,23 +4,9 @@
     "label": "Zotero TestCase",
     "release": "0.7.24",
     "preferences": {
-      "citeKeyFormat": "[auth][year]",
-      "skipfields": [
-        "note",
-        "language",
-        "file",
-        "urldate"
-      ],
-      "useprefix": false,
       "preserveCaps": "inner",
       "fancyURLs": false,
-      "langid": "babel",
-      "attachmentRelativePath": false,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "http://www.zotero.org/styles/cell",
-      "pin-citekeys": "manual",
-      "raw-imports": false,
-      "doi-and-url": "both"
+      "attachmentRelativePath": false
     },
     "options": {
       "exportFileData": false,
@@ -28,7 +14,9 @@
       "Export Collections": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 2942,
@@ -123,8 +111,12 @@
       "tags": [
         "Quantum Physics"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     }
   ]
 }

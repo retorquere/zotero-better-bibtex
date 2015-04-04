@@ -4,18 +4,9 @@
     "label": "Zotero TestCase",
     "release": "0.6.47",
     "preferences": {
-      "citeKeyFormat": "[auth][year]",
-      "skipfields": [
-        ""
-      ],
-      "useprefix": false,
       "brace-all": true,
       "fancyURLs": true,
-      "langid": "babel",
-      "attachmentRelativePath": false,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "http://www.zotero.org/styles/elsevier-harvard",
-      "pin-citekeys": "manual"
+      "attachmentRelativePath": false
     },
     "options": {
       "exportFileData": false,
@@ -23,7 +14,9 @@
       "Export Collections": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 3,
@@ -45,7 +38,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "title": "Google Books Link",
@@ -56,8 +51,12 @@
       "tags": [
         "Law / General"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 5,
@@ -78,7 +77,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "title": "Google Books Link",
@@ -89,8 +90,12 @@
       "tags": [
         "Fiction / Literary"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     }
   ]
 }

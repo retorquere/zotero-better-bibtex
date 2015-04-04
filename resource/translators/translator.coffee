@@ -64,13 +64,6 @@ Translator.initialize = ->
       for type in zotero
         @typeMap.Zotero2BibTeX[type] ?= bibtex[0]
 
-  @config = Object.create(null)
-  @config.id = @id
-  @config.label = @label
-  @config.release = @release
-  @config.preferences = Object.create(null)
-  @config.options = Object.create(null)
-
   return
 
 # The default collection structure passed is beyond screwed up.
@@ -322,7 +315,7 @@ Reference::add = (field) ->
   return if Array.isArray(field.value) and field.value.length == 0
 
   @remove(field.name) if field.replace
-  throw "duplicate field '#{field.name}' for #{@item.__citekey__}" if @has[field.name]
+  throw "duplicate field '#{field.name}' for #{@item.__citekey__}" if @has[field.name] && !field.allowDuplicates
 
   if typeof field.value == 'number'
     value = field.value

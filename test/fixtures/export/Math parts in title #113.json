@@ -4,20 +4,9 @@
     "label": "Zotero TestCase",
     "release": "0.6.48",
     "preferences": {
-      "citeKeyFormat": "[auth:lower]_[veryshorttitle:lower]_[shortyear]",
-      "skipfields": [
-        "year",
-        "abstract",
-        "file"
-      ],
-      "useprefix": false,
       "brace-all": false,
       "fancyURLs": false,
-      "langid": "babel",
-      "attachmentRelativePath": false,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "http://www.zotero.org/styles/cell",
-      "pin-citekeys": "manual"
+      "attachmentRelativePath": false
     },
     "options": {
       "exportFileData": false,
@@ -25,7 +14,9 @@
       "Export Collections": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 286,
@@ -36,12 +27,24 @@
       "accessDate": "2014-10-26 21:15:44",
       "title": "Do integers modulo $n$ minus $\\frac n 2$ (i.e. signed integers) still form a commutative ring? - Mathematics Stack Exchange",
       "shortTitle": "Do integers modulo $n$ minus $\\frac n 2$ (i.e. signed integers) still form a commutative ring?",
-      "creators": [],
-      "notes": [],
-      "attachments": [],
-      "tags": ["#LaTeX"],
-      "related": [],
-      "seeAlso": []
+      "creators": [
+
+      ],
+      "notes": [
+
+      ],
+      "attachments": [
+
+      ],
+      "tags": [
+        "#LaTeX"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     }
   ]
 }

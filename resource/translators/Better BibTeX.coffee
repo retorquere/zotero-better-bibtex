@@ -98,7 +98,7 @@ doExport = ->
 
         ref.add({ name: 'year', value: date.year })
 
-    ref.add({ name: 'note', value: item.extra })
+    ref.add({ name: 'note', value: item.extra, allowDuplicates: true })
     ref.add({ name: 'keywords', value: item.tags, esc: 'tags' })
 
     if item.pages
@@ -108,7 +108,7 @@ doExport = ->
 
     if item.notes and Translator.exportNotes
       for note in item.notes
-        ref.add({ name: 'annote', value: Zotero.Utilities.unescapeHTML(note.note) })
+        ref.add({ name: 'annote', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true })
 
     ref.add({ name: 'file', value: item.attachments, esc: 'attachments' })
     ref.complete()

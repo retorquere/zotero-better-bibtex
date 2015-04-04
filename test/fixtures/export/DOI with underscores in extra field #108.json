@@ -4,20 +4,9 @@
     "label": "Zotero TestCase",
     "release": "0.6.44",
     "preferences": {
-      "citeKeyFormat": "[auth:lower]_[veryshorttitle:lower]_[shortyear]",
-      "skipfields": [
-        "year",
-        "abstract",
-        "file"
-      ],
-      "useprefix": false,
       "brace-all": false,
       "fancyURLs": false,
-      "langid": "babel",
-      "attachmentRelativePath": false,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "http://www.zotero.org/styles/cell",
-      "pin-citekeys": "manual"
+      "attachmentRelativePath": false
     },
     "options": {
       "exportFileData": false,
@@ -25,7 +14,9 @@
       "Export Collections": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 203,
@@ -51,11 +42,21 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "notes": [
+
+      ],
+      "attachments": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Implementation of Functional Languages"
     }
   ]

@@ -4,20 +4,9 @@
     "label": "Zotero TestCase",
     "release": "0.7.19",
     "preferences": {
-      "citeKeyFormat": "[auth:lower][year]",
-      "skipfields": [
-        ""
-      ],
-      "useprefix": false,
       "preserveCaps": "inner",
       "fancyURLs": false,
-      "langid": "babel",
-      "attachmentRelativePath": false,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "http://www.zotero.org/styles/cell",
-      "pin-citekeys": "manual",
-      "raw-imports": false,
-      "doi-and-url": "both"
+      "attachmentRelativePath": false
     },
     "options": {
       "exportFileData": false,
@@ -25,7 +14,9 @@
       "Export Collections": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 375,
@@ -58,7 +49,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "title": "BARTOLINI-BILANCINI-SARRACINO - BARTOLINI-BILANCINI-SARRACINO.pdf",
@@ -66,9 +59,15 @@
           "url": "http://www.econ-pol.unisi.it/bartolini/papers/BARTOLINI-BILANCINI-SARRACINO.pdf"
         }
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Policies for Happiness"
     }
   ]

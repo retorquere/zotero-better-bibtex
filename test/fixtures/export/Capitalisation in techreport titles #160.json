@@ -4,20 +4,9 @@
     "label": "Zotero TestCase",
     "release": "0.7.32",
     "preferences": {
-      "citeKeyFormat": "[auth]_[year]",
-      "skipfields": [
-        ""
-      ],
-      "useprefix": false,
       "preserveCaps": "all",
       "fancyURLs": false,
-      "langid": "babel",
       "attachmentRelativePath": false,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "http://www.zotero.org/styles/cell",
-      "pin-citekeys": "manual",
-      "raw-imports": false,
-      "doi-and-url": "doi",
       "attachmentsNoMetadata": false
     },
     "options": {
@@ -26,7 +15,9 @@
       "Export Collections": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 136,
@@ -50,7 +41,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "path": "C:\\UserData\\ZoteroDatabase\\storage\\8BTMWQHX\\SALINPORK_final_report.pdf",
@@ -59,9 +52,15 @@
           "url": ""
         }
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publisher": "Royal Veterinary and Agricultural University, Department of Animal Health and Animal Science, Division of Ethology and Health"
     }
   ]

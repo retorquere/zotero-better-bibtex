@@ -4,20 +4,9 @@
     "label": "Zotero TestCase",
     "release": "0.7.1",
     "preferences": {
-      "citeKeyFormat": "[auth][year]",
-      "skipfields": [
-        "Accessed",
-        ""
-      ],
-      "useprefix": false,
       "brace-all": true,
       "fancyURLs": false,
-      "langid": "babel",
-      "attachmentRelativePath": false,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "http://www.zotero.org/styles/american-medical-association",
-      "pin-citekeys": "manual",
-      "raw-imports": false
+      "attachmentRelativePath": false
     },
     "options": {
       "exportFileData": false,
@@ -25,7 +14,9 @@
       "Export Collections": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 3149,
@@ -72,7 +63,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "path": "/Users/BNL28/zotero-storage/storage/NZFDBFKI/06152428.pdf",
@@ -85,8 +78,12 @@
         "bdec15",
         "zotero_testcase"
       ],
-      "related": [],
-      "seeAlso": [],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "High Performance Computing (HiPC), 2011 18th International Conference on"
     },
     {
@@ -144,7 +141,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "path": "/Users/BNL28/zotero-storage/storage/FKSJTBGQ/Cumming et al. - 2014 - Application Centric Energy-efficiency Study of Dis.pdf",
@@ -157,8 +156,12 @@
         "bdec15",
         "zotero_testcase"
       ],
-      "related": [],
-      "seeAlso": [],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Proceedings of the International Conference for High Performance Computing, Networking, Storage and Analysis"
     },
     {
@@ -195,7 +198,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "path": "/Users/BNL28/zotero-storage/storage/P2JMZW55/BAMS-D-11-00094.html",
@@ -223,8 +228,12 @@
         "p-gmdm41",
         "zotero_testcase"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     }
   ]
 }

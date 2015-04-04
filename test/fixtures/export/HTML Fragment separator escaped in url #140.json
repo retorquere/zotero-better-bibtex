@@ -4,20 +4,9 @@
     "label": "Zotero TestCase",
     "release": "0.7.6",
     "preferences": {
-      "citeKeyFormat": "[auth][year]",
-      "skipfields": [
-        ""
-      ],
-      "useprefix": false,
       "brace-all": true,
       "fancyURLs": false,
-      "langid": "babel",
-      "attachmentRelativePath": false,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "http://www.zotero.org/styles/cell",
-      "pin-citekeys": "manual",
-      "raw-imports": false,
-      "doi-and-url": "both"
+      "attachmentRelativePath": false
     },
     "options": {
       "exportFileData": false,
@@ -25,7 +14,9 @@
       "Export Collections": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 389,
@@ -42,7 +33,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "path": "/home/whk/.zotero/zotero/qpj7bsud.default/zotero/storage/R2TFG5NC/README.html",
@@ -51,9 +44,15 @@
           "url": "http://johnmacfarlane.net/pandoc/README.html#citations"
         }
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     }
   ]
 }

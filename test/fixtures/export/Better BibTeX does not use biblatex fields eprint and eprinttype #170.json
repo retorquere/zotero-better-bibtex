@@ -4,22 +4,10 @@
     "label": "Zotero TestCase",
     "release": "0.8.7",
     "preferences": {
-      "citeKeyFormat": "[authors][shortyear]",
-      "skipfields": [
-        "file",
-        "abstract"
-      ],
-      "useprefix": false,
       "preserveCaps": "inner",
       "fancyURLs": false,
-      "langid": "babel",
       "attachmentRelativePath": false,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "http://www.zotero.org/styles/cell",
       "unicode": false,
-      "pin-citekeys": "manual",
-      "raw-imports": false,
-      "doi-and-url": "both",
       "attachmentsNoMetadata": false
     },
     "options": {
@@ -28,7 +16,9 @@
       "Export Collections": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 6,
@@ -61,7 +51,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "path": "/Users/denizstiegemann/Library/Application Support/Zotero/Profiles/f8xleype.default/zotero/storage/6QUH3QBM/Bachmann et al. - 2014 - Lieb-Robinson bounds, Arveson spectrum and Haag-Ru.pdf",
@@ -81,8 +73,12 @@
         "Mathematical Physics",
         "Quantum Physics"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     }
   ]
 }

@@ -4,20 +4,10 @@
     "label": "Zotero TestCase",
     "release": "0.6.64",
     "preferences": {
-      "citeKeyFormat": "[auth:lower][year]",
-      "skipfields": [
-        ""
-      ],
-      "useprefix": false,
       "brace-all": true,
       "fancyURLs": false,
-      "langid": "babel",
       "attachmentRelativePath": false,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "http://www.zotero.org/styles/cell",
-      "unicode": "always",
-      "pin-citekeys": "manual",
-      "raw-imports": false
+      "unicode": "always"
     },
     "options": {
       "exportFileData": false,
@@ -25,7 +15,9 @@
       "Export Collections": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 1405,
@@ -41,7 +33,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "path": "C:\\Users\\emile\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\5l8v25mv.default\\zotero\\storage\\RQ8PTWHW\\The Relevance Of Wittgenstein's Philosophy Of Psychology To The Psychological.pdf",
@@ -50,9 +44,15 @@
           "url": ""
         }
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     }
   ]
 }

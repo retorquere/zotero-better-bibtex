@@ -4,22 +4,9 @@
     "label": "Zotero TestCase",
     "release": "0.7.11",
     "preferences": {
-      "citeKeyFormat": "[auth][year]",
-      "skipfields": [
-        "keywords",
-        "abstract",
-        "file"
-      ],
-      "useprefix": false,
       "brace-all": true,
       "fancyURLs": false,
-      "langid": "babel",
-      "attachmentRelativePath": false,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "http://www.zotero.org/styles/ieee",
-      "pin-citekeys": "manual",
-      "raw-imports": false,
-      "doi-and-url": "both"
+      "attachmentRelativePath": false
     },
     "options": {
       "exportFileData": false,
@@ -27,7 +14,9 @@
       "Export Collections": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 8,
@@ -63,8 +52,12 @@
         "Niederspannung",
         "Verteilnetz"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     }
   ]
 }

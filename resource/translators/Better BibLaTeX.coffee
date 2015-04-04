@@ -401,7 +401,7 @@ doExport = ->
 
     ref.add({ name: 'howpublished', value: item.presentationType || item.manuscriptType })
 
-    ref.add({ name: 'note', value: item.meetingName })
+    ref.add({ name: 'note', value: item.meetingName, allowDuplicates: true })
 
     if item.creators and item.creators.length
       creators = {
@@ -467,12 +467,12 @@ doExport = ->
 
       ref.add({ name: 'langid', value: language })
 
-    ref.add({ name: (if ref.has.note then 'annotation' else 'note'), value: item.extra })
+    ref.add({ name: (if ref.has.note then 'annotation' else 'note'), value: item.extra, allowDuplicates: true })
     ref.add({ name: 'keywords', value: item.tags, esc: 'tags' })
 
     if item.notes and Translator.exportNotes
       for note in item.notes
-        ref.add({ name: 'annotation', value: Zotero.Utilities.unescapeHTML(note.note) })
+        ref.add({ name: 'annotation', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true })
 
     ref.add({ name: 'file', value: item.attachments, esc: 'attachments' })
     ref.complete()

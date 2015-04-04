@@ -4,20 +4,9 @@
     "label": "Zotero TestCase",
     "release": "0.7.1",
     "preferences": {
-      "citeKeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize]",
-      "skipfields": [
-        "abstract",
-        "note"
-      ],
-      "useprefix": false,
       "brace-all": true,
       "fancyURLs": false,
-      "langid": "babel",
-      "attachmentRelativePath": false,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "http://www.zotero.org/styles/elsevier-harvard",
-      "pin-citekeys": "manual",
-      "raw-imports": false
+      "attachmentRelativePath": false
     },
     "options": {
       "exportFileData": false,
@@ -25,7 +14,9 @@
       "Export Collections": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 1348,
@@ -45,7 +36,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "path": "/home/sune/Dropbox/Articles//Boas/Boas - 2014 - Stikord til en hukommelse.pdf",
@@ -60,9 +53,15 @@
           "url": "http://apps.infomedia.dk.ep.fjernadgang.kb.dk/Ms3E/ShowArticle.aspx?outputFormat=Full&Duid=e4798c41"
         }
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     }
   ]
 }

@@ -66,37 +66,37 @@ Scenario: Better BibLaTeX Export 11
 
 @advanced-keygen
 Scenario: Advanced key generator usage
-  When I set preference translators.better-bibtex.citeKeyFormat to '[DOI]+[Title:fold:ascii:skipwords:select,1,4:condense,_]'
+  When I set preference translators.better-bibtex.citekeyFormat to '[DOI]+[Title:fold:ascii:skipwords:select,1,4:condense,_]'
    And I import 1 reference with 1 attachment from 'export/Better BibLaTeX.012.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.012.bib'
 
 @bbltx-e-13
 Scenario: Better BibLaTeX Export 13
-  When I set preference translators.better-bibtex.citeKeyFormat to '[shorttitle]'
+  When I set preference translators.better-bibtex.citekeyFormat to '[shorttitle]'
    And I import 1 reference from 'export/Better BibLaTeX.013.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.013.bib'
 
 @bbltx-e-14
 Scenario: Better BibLaTeX Export 14
-  When I set preference translators.better-bibtex.citeKeyFormat to '[shorttitle]'
+  When I set preference translators.better-bibtex.citekeyFormat to '[shorttitle]'
    And I import 1 reference from 'export/Better BibLaTeX.014.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.014.bib'
 
 @bbltx-e-15
 Scenario: Better BibLaTeX Export 15
-  When I set preference translators.better-bibtex.citeKeyFormat to '[shorttitle]'
+  When I set preference translators.better-bibtex.citekeyFormat to '[shorttitle]'
    And I import 1 reference from 'export/Better BibLaTeX.015.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.015.bib'
 
 @bbltx-e-16
 Scenario: Better BibLaTeX Export 16
-  When I set preference translators.better-bibtex.citeKeyFormat to '[auth:lower][year]'
+  When I set preference translators.better-bibtex.citekeyFormat to '[auth:lower][year]'
    And I import 1 reference from 'export/Better BibLaTeX.016.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.016.bib'
 
 @bbltx-e-17
 Scenario: Better BibLaTeX Export 17
-  When I set preference translators.better-bibtex.citeKeyFormat to '[auth:lower][year]'
+  When I set preference translators.better-bibtex.citekeyFormat to '[auth:lower][year]'
    And I import 1 reference from 'export/Better BibLaTeX.017.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.017.bib'
 
@@ -122,7 +122,7 @@ Scenario: Better BibLaTeX Export 21
 
 @bbltx-e-22
 Scenario: Better BibLaTeX Export 22
-  When I set preference translators.better-bibtex.citeKeyFormat to '[auth][year]-[shorttitle]'
+  When I set preference translators.better-bibtex.citekeyFormat to '[auth][year]-[shorttitle]'
    And I import 1 reference from 'export/Better BibLaTeX.022.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibLaTeX.022.bib'
 
@@ -133,22 +133,22 @@ Scenario: Better BibLaTeX Export 23
 
 @bbtx-e-26
 Scenario: Better BibTeX Export 26
-  When I set preference translators.better-bibtex.citeKeyFormat to '[auth:lower][year:(ND)][shorttitle:lower]'
+  When I set preference translators.better-bibtex.citekeyFormat to '[auth:lower][year:(ND)][shorttitle:lower]'
    And I import 1 reference with 1 attachment from 'export/Better BibTeX.026.json'
   Then a library export using 'Better BibTeX' should match 'export/Better BibTeX.026.bib'
 
 @bbtx-e-27
 Scenario: Better BibTeX Export 27
-  When I set preference translators.better-bibtex.citeKeyFormat to '[authors][year]'
+  When I set preference translators.better-bibtex.citekeyFormat to '[authors][year]'
    And I import 1 reference with 1 attachment from 'export/Better BibTeX.027.json'
   Then a library export using 'Better BibTeX' should match 'export/Better BibTeX.027.bib'
 
 @journal-abbrev
 Scenario: Journal abbreviations
-  When I set preference translators.better-bibtex.citeKeyFormat to '[authors][year][journal]'
-   And I set preference translators.better-bibtex.auto-abbrev to true
-   And I set preference translators.better-bibtex.auto-abbrev.style to 'http://www.zotero.org/styles/cell'
-   And I set preference translators.better-bibtex.pin-citekeys to 'on-export'
+  When I set preference translators.better-bibtex.citekeyFormat to '[authors][year][journal]'
+   And I set preference translators.better-bibtex.autoAbbrev to true
+   And I set preference translators.better-bibtex.autoAbbrevStyle to 'http://www.zotero.org/styles/cell'
+   And I set preference translators.better-bibtex.pinCitekeys to 'on-export'
    And I set export option useJournalAbbreviation to true
    And I import 1 reference with 1 attachment from 'export/Better BibTeX.029.json'
   Then a library export using 'Better BibTeX' should match 'export/Better BibTeX.029.bib'
@@ -160,10 +160,10 @@ Scenario: Stable citation keys
 
 @81
 Scenario: Journal abbreviations exported in bibtex (81)
-  When I set preference translators.better-bibtex.citeKeyFormat to '[authors2][year][journal:nopunct]'
-   And I set preference translators.better-bibtex.auto-abbrev to true
-   And I set preference translators.better-bibtex.auto-abbrev.style to 'http://www.zotero.org/styles/cell'
-   And I set preference translators.better-bibtex.pin-citekeys to 'on-export'
+  When I set preference translators.better-bibtex.citekeyFormat to '[authors2][year][journal:nopunct]'
+   And I set preference translators.better-bibtex.autoAbbrev to true
+   And I set preference translators.better-bibtex.autoAbbrevStyle to 'http://www.zotero.org/styles/cell'
+   And I set preference translators.better-bibtex.pinCitekeys to 'on-export'
    And I set export option useJournalAbbreviation to true
    And I import 1 reference from 'export/Journal abbreviations exported in bibtex (81).json'
   Then a library export using 'Better BibTeX' should match 'export/Journal abbreviations exported in bibtex (81).bib'
@@ -172,7 +172,7 @@ Scenario: Journal abbreviations exported in bibtex (81)
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 reference with 1 attachment from 'export/Square brackets in Publication field (85).json'
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85).bib'
-  When I set preference translators.better-bibtex.citeKeyFormat to '[year]-updated'
+  When I set preference translators.better-bibtex.citekeyFormat to '[year]-updated'
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85) after pattern change.bib'
 
 @86
@@ -255,11 +255,11 @@ Scenario: Export Newspaper Article misses section field #132
 @131
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json'
-  And I set preference translators.better-bibtex.doi-and-url to 'both'
+  And I set preference translators.better-bibtex.DOIandURL to 'both'
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.default.bib'
-  And I set preference translators.better-bibtex.doi-and-url to 'doi'
+  And I set preference translators.better-bibtex.DOIandURL to 'doi'
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-DOI.bib'
-  And I set preference translators.better-bibtex.doi-and-url to 'url'
+  And I set preference translators.better-bibtex.DOIandURL to 'url'
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-url.bib'
 
 @133
@@ -306,3 +306,8 @@ Scenario: Capitalisation in techreport titles #160
 Scenario: Better BibTeX does not use biblatex fields eprint and eprinttype #170
   When I import 1 reference with 2 attachments from 'export/Better BibTeX does not use biblatex fields eprint and eprinttype #170.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Better BibTeX does not use biblatex fields eprint and eprinttype #170.bib'
+
+@174
+Scenario: References with multiple notes fail to export #174
+  When I import 1 reference with 2 attachments from 'export/References with multiple notes fail to export #174.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/References with multiple notes fail to export #174.bib'

@@ -4,19 +4,9 @@
     "label": "Zotero TestCase",
     "release": "0.6.63",
     "preferences": {
-      "citeKeyFormat": "[auth][year]",
-      "skipfields": [
-        ""
-      ],
-      "useprefix": false,
       "brace-all": true,
       "fancyURLs": false,
-      "langid": "babel",
-      "attachmentRelativePath": false,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "http://www.zotero.org/styles/american-physics-society",
-      "pin-citekeys": "manual",
-      "raw-imports": false
+      "attachmentRelativePath": false
     },
     "options": {
       "exportFileData": false,
@@ -24,7 +14,9 @@
       "Export Collections": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 2028,
@@ -54,7 +46,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "path": "C:\\Users\\busse\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\krntet4f.default\\zotero\\storage\\JX2J6CEG\\Yeh1985.pdf",
@@ -63,9 +57,15 @@
           "url": ""
         }
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     }
   ]
 }

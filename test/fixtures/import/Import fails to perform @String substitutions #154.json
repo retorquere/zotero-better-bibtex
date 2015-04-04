@@ -4,20 +4,9 @@
     "label": "Zotero TestCase",
     "release": "0.7.27",
     "preferences": {
-      "citeKeyFormat": "[auth][year]",
-      "skipfields": [
-        ""
-      ],
-      "useprefix": false,
       "preserveCaps": "inner",
       "fancyURLs": false,
-      "langid": "babel",
-      "attachmentRelativePath": true,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "",
-      "pin-citekeys": "manual",
-      "raw-imports": false,
-      "doi-and-url": "both"
+      "attachmentRelativePath": true
     },
     "options": {
       "exportFileData": false,

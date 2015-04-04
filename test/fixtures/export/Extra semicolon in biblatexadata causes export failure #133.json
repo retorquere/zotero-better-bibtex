@@ -4,20 +4,9 @@
     "label": "Zotero TestCase",
     "release": "0.7.5",
     "preferences": {
-      "citeKeyFormat": "[auth][year]",
-      "skipfields": [
-        ""
-      ],
-      "useprefix": false,
       "brace-all": true,
       "fancyURLs": false,
-      "langid": "babel",
-      "attachmentRelativePath": false,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "http://www.zotero.org/styles/cell",
-      "pin-citekeys": "manual",
-      "raw-imports": false,
-      "doi-and-url": "both"
+      "attachmentRelativePath": false
     },
     "options": {
       "exportFileData": false,
@@ -25,9 +14,11 @@
       "Export Collections": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
-      {
+    {
       "itemID": 3884,
       "itemType": "journalArticle",
       "volume": "47",
@@ -361,16 +352,24 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
+      "notes": [
+
+      ],
+      "attachments": [
+
+      ],
       "tags": [
         "error estimate",
         "ill-posed problems",
         "modified Tikhonov  regularization",
         "numerical analytic continuation"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 9,
@@ -706,16 +705,24 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
+      "notes": [
+
+      ],
+      "attachments": [
+
+      ],
       "tags": [
         "error estimate",
         "ill-posed problems",
         "modified Tikhonov  regularization",
         "numerical analytic continuation"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     }
   ]
 }

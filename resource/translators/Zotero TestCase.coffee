@@ -63,10 +63,23 @@ doImport = ->
 doExport = ->
   Translator.initialize()
   data = {
-    config: Translator.config
+    config: {
+      id: Translator.id
+      label: Translator.label
+      release: Translator.release
+      preferences: {}
+      options: {}
+    }
     collections: Translator.collections()
     items: []
   }
+
+  for pref in ['citekeyFormat', 'skipFields', 'usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'attachmentRelativePath', 'autoAbbrev',
+               'autoAbbrevStyle', 'unicode', 'pinCitekeys', 'rawImport', 'DOIandURL', 'attachmentsNoMetadata']
+    data.config.preferences[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
+  for option in ['useJournalAbbreviation', 'exportCharset', 'exportFileData', 'exportNotes', 'exportCollections', 'preserveBibTeXVariables']
+    data.config.options[option] = Zotero.getOption(option)
+
   while item = Zotero.nextItem()
     data.items.push(scrub(item))
   Zotero.write(JSON.stringify(data, null, '  '))

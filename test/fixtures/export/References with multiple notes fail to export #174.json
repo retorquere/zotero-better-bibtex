@@ -1,0 +1,61 @@
+{
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
+    "label": "Zotero TestCase",
+    "release": "0.8.2",
+    "preferences": {
+      "preserveCaps": "all",
+      "fancyURLs": false,
+      "attachmentRelativePath": false,
+      "attachmentsNoMetadata": true
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "Export Collections": false
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemID": 653,
+      "itemType": "document",
+      "publisher": "Doubleday",
+      "date": "2008",
+      "extra": "bibtex: Torre2008",
+      "title": "XYZZY",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Joe",
+          "lastName": "Torre",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Tom",
+          "lastName": "Verducci",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+        "note 1",
+        "note 2"
+      ],
+      "attachments": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    }
+  ]
+}

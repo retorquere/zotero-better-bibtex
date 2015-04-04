@@ -209,6 +209,8 @@ Zotero.BetterBibTeX.updateSchema = ->
       when 'pin-citekeys' then @pref.set('pinCitekeys', @pref.get(key))
       when 'raw-imports' then @pref.set('rawImports', @pref.get(key))
       when 'show-citekey' then @pref.set('showCitekeys', @pref.get(key))
+      when 'skipfields' then @pref.set('skipFields', @pref.get(key))
+      when 'useprefix' then @pref.set('usePrefix', @pref.get(key))
       else continue
     @pref.prefs.clearUserPref(key)
 

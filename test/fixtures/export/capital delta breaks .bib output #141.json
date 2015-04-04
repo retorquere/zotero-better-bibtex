@@ -4,21 +4,10 @@
     "label": "Zotero TestCase",
     "release": "0.7.5",
     "preferences": {
-      "citeKeyFormat": "[auth:lower][year]",
-      "skipfields": [
-        ""
-      ],
-      "useprefix": true,
       "brace-all": true,
       "fancyURLs": false,
-      "langid": "babel",
       "attachmentRelativePath": false,
-      "auto-abbrev": true,
-      "auto-abbrev.style": "http://www.zotero.org/styles/cell",
-      "unicode": true,
-      "pin-citekeys": "manual",
-      "raw-imports": false,
-      "doi-and-url": "both"
+      "unicode": true
     },
     "options": {
       "exportFileData": false,
@@ -26,7 +15,9 @@
       "Export Collections": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 32,
@@ -87,11 +78,21 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "attachments": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     }
   ]
 }

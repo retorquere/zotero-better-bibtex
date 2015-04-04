@@ -3,15 +3,8 @@
     "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
     "label": "Zotero TestCase",
     "preferences": {
-      "citeKeyFormat": "[auth3][auth3_1][auth3_2][auth3_3][auth3_4][shortyear]",
-      "skipfields": [
-        "url",
-        "issn"
-      ],
-      "useprefix": false,
       "brace-all": false,
-      "fancyURLs": false,
-      "langid": "babel"
+      "fancyURLs": false
     },
     "options": {
       "exportFileData": false,
