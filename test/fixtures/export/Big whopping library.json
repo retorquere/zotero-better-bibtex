@@ -4,10 +4,15 @@
     "label": "Zotero TestCase",
     "release": "0.7.33",
     "preferences": {
-      "preserveCaps": "inner",
-      "fancyURLs": false,
       "attachmentRelativePath": false,
-      "attachmentsNoMetadata": false
+      "attachmentsNoMetadata": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
+      "autoAbbrev": true,
+      "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize]",
+      "DOIandURL": "both",
+      "fancyURLs": false,
+      "preserveCaps": "inner",
+      "skipFields": "abstract,note,file"
     },
     "options": {
       "exportFileData": false,
