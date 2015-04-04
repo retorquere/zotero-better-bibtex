@@ -6,7 +6,6 @@ Translator = new class
     @BibLaTeXDataFieldMap = Object.create(null)
 
 require(':constants:')
-require('context.coffee', 'Translator')
 
 Translator.log = (msg...) ->
   return unless @logging
@@ -30,21 +29,23 @@ Translator.initialize = ->
   for own attr, f of @fieldMap or {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
-  for own attribute, key of Translator.Context::preferences
-    # prefer option over pref for auto-export
-    Translator[attribute] = Zotero.getOption(key) ? Zotero.getHiddenPref("better-bibtex.#{key}")
-  @skipFields = (field.trim() for field in @skipFields.split(','))
-  @testmode = Zotero.getHiddenPref('better-bibtex.testmode')
-  @testmode_timestamp = Zotero.getHiddenPref('better-bibtex.testmode.timestamp') if @testmode
+  @skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
+  for pref in ['usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'attachmentRelativePath', 'rawImport', 'DOIandURL', 'attachmentsNoMetadata']
+    @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
 
-  for own attribute, key of Translator.Context::options
-    Translator[attribute] = Zotero.getOption(key)
-  @exportCollections = if typeof @exportCollections == 'undefined' then true else @exportCollections
+  for option in ['useJournalAbbreviation', 'exportCharset', 'exportFileData', 'exportNotes']
+    @[option] = Zotero.getOption(option)
+  @exportCollections = Zotero.getOption('Export Collections')
+  @exportCollections = true if typeof @exportCollections == 'undefined'
+  @preserveBibTeXVariables = Zotero.getOption('Preserve BibTeX variables')
 
-  switch @unicode
+  @testmode = Zotero.getHiddenPref('better-bibtex.testMode')
+  @testmode_timestamp = Zotero.getHiddenPref('better-bibtex.testMode.timestamp') if @testmode
+
+  @unicode = switch Zotero.getHiddenPref('better-bibtex.unicode')
     when 'always' then @unicode = true
     when 'never'  then @unicode = false
-    else @unicode = @unicode_default or (@exportCharset and @exportCharset.toLowerCase() == 'utf-8')
+    else @unicode = @unicode_default or (@exportCharset?.toLowerCase() == 'utf-8')
 
   if @typeMap
     typeMap = @typeMap
@@ -69,14 +70,6 @@ Translator.initialize = ->
   @config.release = @release
   @config.preferences = Object.create(null)
   @config.options = Object.create(null)
-
-  for own attribute, key of Translator.Context::preferences
-    @config.preferences[key] = Translator[attribute]
-
-  for own attribute, key of Translator.Context::options
-    @config.options[key] = Translator[attribute]
-
-  @context = new @Context(@config)
 
   return
 
@@ -412,5 +405,5 @@ Reference::complete = ->
   ref += '\n}\n\n'
   Zotero.write(ref)
 
-  Zotero.BetterBibTeX.cache.store(Translator.context, @item.itemID, @item.__citekey__, ref) if Translator.caching
+  Zotero.BetterBibTeX.cache.store(Translator, @item.itemID, @item.__citekey__, ref) if Translator.caching
   return

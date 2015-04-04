@@ -63,7 +63,7 @@ end
 
 Before do |scenario|
   BBT.reset
-  BBT.setPreference('translators.better-bibtex.testmode', true)
+  BBT.setPreference('translators.better-bibtex.testMode', true)
   @selected = nil
   @expectedExport = nil
   sleep 1

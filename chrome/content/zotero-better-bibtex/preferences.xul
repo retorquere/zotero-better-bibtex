@@ -196,30 +196,13 @@
                         <textbox id="id-better-bibtex-preferences-auto-export-translator" disabled="true"/>
                       </row>
                       <row>
-                        <label value="&zotero.better-bibtex.cite.format;"/>
-                        <textbox id="id-better-bibtex-preferences-auto-export-keyformat" disabled="true"/>
-                      </row>
-                      <row>
-                        <label value="&zotero.better-bibtex.skipFields;"/>
-                        <textbox id="id-better-bibtex-preferences-auto-export-skipFields" disabled="true"/>
-                      </row>
-                      <row>
                         <checkbox id="id-better-bibtex-preferences-auto-export-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" disabled="true"/>
                       </row>
                       <row>
-                        <label value="&zotero.better-bibtex.preserveCaps;"/>
-                        <textbox id="id-better-bibtex-preferences-auto-export-preserveCaps" disabled="true"/>
-                      </row>
-                      <row>
-                        <label value="&zotero.better-bibtex.preferences.auto-abbrev.style;"/>
-                        <textbox id="id-better-bibtex-preferences-auto-export-auto-abbrev-style" disabled="true"/>
-                      </row>
-                      <row>
-                        <label value="&zotero.better-bibtex.unicode;"/>
-                        <textbox id="id-better-bibtex-preferences-auto-export-unicode" disabled="true"/>
-                      </row>
-                      <row>
                         <checkbox id="id-better-bibtex-preferences-auto-export-notes" label="&zotero.better-bibtex.auto-export.notes;" disabled="true"/>
+                      </row>
+                      <row>
+                        <checkbox id="id-better-bibtex-preferences-auto-export-id-better-bibtex-preferences-auto-export-preserve-bibvars" label="&zotero.better-bibtex.auto-export.preserveBibTeXVariables;" disabled="true"/>
                       </row>
                     </rows>
                   </grid>

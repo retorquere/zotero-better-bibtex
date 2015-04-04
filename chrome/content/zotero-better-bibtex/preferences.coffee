@@ -132,23 +132,15 @@ Zotero.BetterBibTeX.pref.autoexport =
     document.getElementById('auto-export-remove').setAttribute('disabled', false)
     document.getElementById('auto-export-mark').setAttribute('disabled', false)
 
-    ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport ae join betterbibtex.context ctx on ae.context = ctx.id where ae.id = ?', [selectedItem.getAttribute('value')])
-    ae.context = new Zotero.BetterBibTeX.Context(ae)
+    ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport ae join betterbibtex.exportoptions eo on ae.exportoptions = eo.id where ae.id = ?', [selectedItem.getAttribute('value')])
     Zotero.BetterBibTeX.log(':::selected', @clone(ae))
 
-    @display('id-better-bibtex-preferences-auto-export-collection', ae.collection_name)
+    @display('id-better-bibtex-preferences-auto-export-collection', 'ae.collection_name')
     @display('id-better-bibtex-preferences-auto-export-target', ae.path)
-    @display('id-better-bibtex-preferences-auto-export-translator', ae.context.translator)
-    @display('id-better-bibtex-preferences-auto-export-keyformat', ae.context.citekeyFormat)
-    @display('id-better-bibtex-preferences-auto-export-skipFields', ae.context.skipFields)
-    @display('id-better-bibtex-preferences-auto-export-preserveCaps', ae.context.preserveCaps)
-    document.getElementById('id-better-bibtex-preferences-auto-export-auto-abbrev').checked = ae.context.autoAbbrev && ae.context.useJournalAbbreviation
-    @display('id-better-bibtex-preferences-auto-export-auto-abbrev-style', (style.title for style in Zotero.Styles.getVisible() when style.styleID == ae.context.autoAbbrevStyle)?[0] ? '')
-    @display('id-better-bibtex-preferences-auto-export-unicode', switch
-      when ae.context.unicode == '' && ae.context.exportCharset == 'UTF-8'  then 'yes'
-      when ae.context.unicode == ''                                         then 'no'
-      else ae.context.unicode)
-    document.getElementById('id-better-bibtex-preferences-auto-export-notes').checked = ae.context.exportNotes
+    @display('id-better-bibtex-preferences-auto-export-translator', 'ae.translatorID')
+    document.getElementById('id-better-bibtex-preferences-auto-export-auto-abbrev').checked = (ae.useJournalAbbreviation == 'true')
+    document.getElementById('id-better-bibtex-preferences-auto-export-notes').checked = (ae.exportNotes == 'true')
+    document.getElementById('id-better-bibtex-preferences-auto-export-preserve-bibvars').checked = (ae.preserveBibTeXVariables == 'true')
     return
 
   remove: ->

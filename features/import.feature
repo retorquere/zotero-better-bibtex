@@ -2,7 +2,7 @@
 Feature: Import
 
 Background:
-  Given I set preference translators.better-bibtex.testmode.timestamp to '2015-02-24 12:14:36 +0100'
+  Given I set preference translators.better-bibtex.testMode.timestamp to '2015-02-24 12:14:36 +0100'
 
 @bbtx-i-1 @i-1
 Scenario: Better BibTeX Import 1
