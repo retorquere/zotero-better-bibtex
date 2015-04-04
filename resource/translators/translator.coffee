@@ -99,7 +99,7 @@ Translator.nextItem = ->
 
   @initialize()
 
-  cached = if @caching then Zotero.BetterBibTeX.cache.fetch(@context, item.itemID) else null
+  cached = if @caching then Zotero.BetterBibTeX.cache.fetch(Translator, item.itemID) else null
   @log(':::cache hit?', cached?.citekey)
   if cached?.citekey
     @citekeys[item.itemID] = cached.citekey

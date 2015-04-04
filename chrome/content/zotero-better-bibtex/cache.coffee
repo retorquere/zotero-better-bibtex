@@ -1,11 +1,9 @@
 Zotero.BetterBibTeX.auto = {}
 
 Zotero.BetterBibTeX.auto.add = (collection, path, options) ->
-  o = Zotero.BetterBibTeX.cache.exportOptions(options)
-  id = Zotero.DB.query('insert or replace into betterbibtex.exportoptions (translatorID, exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation)
-                         values (?, ?, ?, ?, ?)', [o.translatorID, o.exportCharset, o.exportNotes, o.preserveBibTeXVariables, o.useJournalAbbreviation])
+  eo = Zotero.BetterBibTeX.cache.exportOptions(options)
   Zotero.DB.query("insert or replace into betterbibtex.autoexport (collection, path, exportoptions, includeChildCollections, status)
-                  values (?, ?, ?, ?, 'done')", [state.collection.id, state.target, id, "#{!!@recursive()}"])
+                  values (?, ?, ?, ?, 'done')", [state.collection.id, state.target, eo, "#{!!@recursive()}"])
   return
 
 Zotero.BetterBibTeX.auto.recursive = ->
@@ -56,15 +54,27 @@ Zotero.BetterBibTeX.auto.process = (reason) ->
 Zotero.BetterBibTeX.cache = {}
 
 Zotero.BetterBibTeX.cache.exportOptions = (options) ->
-  o = {}
-  for own key, value of options
-    key = key.replace(' ', '')
-    key = key.charAt(0).toLowerCase() + key.slice(1)
-    o[key] = switch key
-      when 'exportCharset' then (value || 'UTF-8').toUpperCase()
-      when 'exportNotes', 'preserveBibTeXVariables', 'useJournalAbbreviation' then "#{!!value}"
-      when 'translatorID' then value || ''
-  return o
+  # insert or replace would have been easier, but sqlite bumps the auto-inc for every time we do this (which is often
+  # for cache stores)
+  params = [
+    options.translatorID
+    (options.exportCharset || 'UTF-8').toUpperCase()
+    "#{!!options.exportNotes}"
+    "#{!!(options['Preserve BibTeX Variables'] || options.preserveBibTeXVariables)}"
+    "#{!!options.useJournalAbbreviation}"
+  ]
+  @exportOptionsCache ?= {}
+  key = params.join('::')
+  return @exportOptionsCache[key] if @exportOptionsCache[key]
+
+  id = Zotero.DB.valueQuery('select id
+                             from betterbibtex.exportoptions
+                             where translatorID = ? and exportCharset = ? and exportNotes = ? and preserveBibTeXVariables = ? and useJournalAbbreviation = ?', params)
+  if not id
+    id = Zotero.DB.query('insert into betterbibtex.exportoptions (translatorID, exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation)
+                          values (?, ?, ?, ?, ?)', params)
+  @exportOptionsCache[key] = id
+  return id
 
 Zotero.BetterBibTeX.cache.init = ->
   @__exposedProps__ = {
@@ -96,13 +106,8 @@ Zotero.BetterBibTeX.cache.fetch = (options, itemID) ->
     options = arguments[1]
     itemID = arguments[2]
 
-  o = @exportOptions(options)
-  cached = Zotero.DB.rowQuery('select citekey, entry, exportoptions
-                               from betterbibtex.cache c
-                               join betterbibtex.exportoptions eo on eo.id = c.exportoptions
-                               where itemID = ?
-                                and translatorID = ? exportCharset = ? and exportNotes = ? and preserveBibTeXVariables = ? and useJournalAbbreviation = ?', [
-                               itemID, o.translatorID, o.exportCharset, o.exportNotes, o.preserveBibTeXVariables, o.useJournalAbbreviation])
+  eo = @exportOptions(options)
+  cached = Zotero.DB.rowQuery('select citekey, entry, exportoptions from betterbibtex.cache where itemID = ? and exportoptions = ?', [itemID, eo])
   if cached?.citekey && cached?.entry
     @stats.access[itemID] ?= {}
     @stats.access[itemID][cached.exportoptions] = Date.now()
@@ -122,8 +127,6 @@ Zotero.BetterBibTeX.cache.store = (options, itemid, citekey, entry) ->
 
   @stats.stores += 1
 
-  o = Zotero.BetterBibTeX.cache.exportOptions(options)
-  id = Zotero.DB.query('insert or replace into betterbibtex.exportoptions (translatorID, exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation)
-                         values (?, ?, ?, ?)', [o.translatorID, o.exportCharset, o.exportNotes, o.preserveBibTeXVariables, o.useJournalAbbreviation])
-  Zotero.DB.query("insert or replace into betterbibtex.cache (exportoptions, itemid, citekey, entry, lastaccess) values (?, ?, ?, ?, CURRENT_TIMESTAMP)", [id, itemid, citekey, entry])
-  return null
+  eo = Zotero.BetterBibTeX.cache.exportOptions(options)
+  Zotero.DB.query("insert or replace into betterbibtex.cache (exportoptions, itemid, citekey, entry, lastaccess) values (?, ?, ?, ?, CURRENT_TIMESTAMP)", [eo, itemid, citekey, entry])
+  return

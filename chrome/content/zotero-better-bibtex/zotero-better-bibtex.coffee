@@ -227,7 +227,7 @@ Zotero.BetterBibTeX.updateSchema = ->
   Zotero.DB.query('create table betterbibtex.keys (itemID primary key, citekey not null, citekeyFormat)')
   Zotero.DB.query("
     create table betterbibtex.exportoptions (
-      id int primary key,
+      id INTEGER PRIMARY KEY NOT NULL DEFAULT NULL,
 
       translatorID not null,
       exportCharset not null,
@@ -251,7 +251,7 @@ Zotero.BetterBibTeX.updateSchema = ->
     ")
   Zotero.DB.query("
     create table betterbibtex.autoexport (
-      id integer primary key,
+      id INTEGER PRIMARY KEY NOT NULL DEFAULT NULL,
       collection not null,
       path not null,
       exportOptions not null,

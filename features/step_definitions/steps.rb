@@ -89,7 +89,7 @@ After do |scenario|
     BBT.exportToFile('Zotero TestCase', "#{filename}.json") if scenario.source_tag_names.include?('@librarydump')
 
     # `FAIL=FAST cucumber` to stop on first failure
-    Cucumber.wants_to_quit = (ENV['FAIL'] == 'FAST') && scenario.failed?
+    Cucumber.wants_to_quit = (ENV['FAIL'] == 'fast') && scenario.failed?
   end
 end
 

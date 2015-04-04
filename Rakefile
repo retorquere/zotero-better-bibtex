@@ -59,7 +59,7 @@ def expand(file, options={})
       else
         throw "No header information present" unless options[:header]
         result = []
-        result << "Translator.id              = #{options[:header]['translatorID'].to_json}"
+        result << "Translator.translatorID    = #{options[:header]['translatorID'].to_json}"
         result << "Translator.label           = #{options[:header]['label'].to_json}"
         result << "Translator.timestamp       = #{options[:header]['lastUpdated'].to_json}"
         result << "Translator.release         = #{RELEASE.to_json}"
