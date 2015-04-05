@@ -1,3 +1,4 @@
+---
 language: ruby
 sudo: false
 cache:
@@ -19,3 +20,11 @@ before_install:
 ignore_before_install:
 - sudo apt-get update
 - sudo apt-get install nodejs npm firefox
+deploy:
+  provider: releases
+  api_key:
+    secure: T7szb2Pl7AeK6aoJQqOVyupJq1JC+DzcewH03lMBnGROx6cFV8CWLKT7r51lh0D+LDxM6M1eZ4nKLCJe3GqJj8Q29CVZtg46W8YV/I4aGxJesD40k3VlUdqaLuj3a7kHPrAvJHw1glDe2pWgHO43vUcqJF2tsdFMNbsCwqNpH0c=
+  file: zotero-better-bibtex-0.8.20.xpi
+  skip_cleanup: true
+  true:
+    tags: true
