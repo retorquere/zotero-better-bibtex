@@ -519,7 +519,15 @@ task :markfailing do
   }
 end
 
-
+task :release do
+  travis = YAML::load_file('.travis.yml')
+  travis['deploy']['file'] = XPI
+  open('.travis.yml', 'w'){|f| f.write(travis.to_yaml) }
+  sh "git add .travis.yml"
+  sh "git commit -m 'v#{RELEASE}'"
+  sh "git tag -a 'v#{RELEASE}' -m 'v#{RELEASE}'"
+  sh "git push"
+end
 
 file '.depends.mf' => SOURCES do |t|
   open(t.name, 'w'){|dmf|
