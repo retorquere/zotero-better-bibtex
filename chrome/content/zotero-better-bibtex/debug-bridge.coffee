@@ -59,13 +59,27 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator) ->
   return Zotero.BetterBibTeX.translate(translator, null, Zotero.BetterBibTeX.DebugBridge.exportOptions || {})
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, filename) ->
+  translation = new Zotero.Translate.Export()
+
   file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile)
   file.initWithPath(filename)
+  translation.setLocation(file)
+
   translator = Zotero.BetterBibTeX.getTranslator(translator)
+  translation.setTranslator(translator)
+
   options = JSON.parse(JSON.stringify((Zotero.BetterBibTeX.DebugBridge.exportOptions || {})))
   options.exportFileData = false
-  Zotero.File.putContents(file, Zotero.BetterBibTeX.translate(translator, null, options))
-  return true
+  translation.setDisplayOptions(options)
+
+  status = 'working'
+  translation.setHandler('done', (obj, worked) -> status = if worked then 'ok' else 'error')
+  translation.translate()
+  thread = Zotero.BetterBibTeX.threadManager.currentThread
+  while status == 'working'
+    thread.processNextEvent(true)
+
+  return (status == 'ok')
 
 Zotero.BetterBibTeX.DebugBridge.methods.library = ->
   translator = Zotero.BetterBibTeX.getTranslator('Zotero TestCase')

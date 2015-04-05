@@ -33,7 +33,7 @@ Translator.initialize = ->
   for pref in ['usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'attachmentRelativePath', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata']
     @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
 
-  for option in ['useJournalAbbreviation', 'exportCharset', 'exportFileData', 'exportNotes']
+  for option in ['useJournalAbbreviation', 'exportPath', 'exportCharset', 'exportFileData', 'exportNotes']
     @[option] = Zotero.getOption(option)
   @exportCollections = Zotero.getOption('Export Collections')
   @exportCollections = true if typeof @exportCollections == 'undefined'
@@ -281,17 +281,20 @@ Reference::esc_attachments = (f) ->
 
     continue unless a.path # amazon/googlebooks etc links show up as atachments without a path
 
-    Translator.attachmentCounter += 1
-    if save
-      att.saveFile(a.path)
-    else
-      if Translator.attachmentRelativePath
-        a.path = "files/#{if Translator.testmode then Translator.attachmentCounter else att.itemID}/#{att.localPath.replace(/.*[\/\\]/, '')}"
-
     if a.path.match(/[{}]/) # latex really doesn't want you to do this.
       errors.push("BibTeX cannot handle file paths with braces: #{JSON.stringify(a.path)}")
-    else
-      attachments.push(a)
+      continue
+
+    switch
+      when save
+        att.saveFile(a.path)
+      when Translator.testmode
+        Translator.attachmentCounter += 1
+        a.path = "files/#{Translator.attachmentCounter}/#{att.localPath.replace(/.*[\/\\]/, '')}"
+      when Translator.attachmentRelativePath
+        a.path = att.localPath.slice(Translator.exportPath.length) if Translator.exportPath && att.localPath.indexOf(Translator.exportPath) == 0
+
+    attachments.push(a)
 
   f.errors = errors if errors.length != 0
   return null if attachments.length == 0

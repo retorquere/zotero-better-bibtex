@@ -382,41 +382,38 @@ Zotero.BetterBibTeX.init = ->
       return original.apply(this, arguments)
     )(Zotero.ItemTreeView.prototype.getCellText)
 
-  # monkey-patch Zotero.Translate.Base.prototype.translate to capture export data
-  Zotero.Translate.Base.prototype.translate = ((original) ->
-    return (libraryID, saveAttachments) ->
-      if @translator?[0] && @type == 'export' && @path && @_displayOptions?['Keep updated']
-        progressWin = new Zotero.ProgressWindow()
-        progressWin.changeHeadline('Auto-export')
-
-        if !@_collection?._id
-          progressWin.addLines(['Auto-export only supported for collections'])
-
-        else
-          progressWin.addLines(["Collection #{@_collection._name} set up for auto-export"])
-          # I don't want 'Keep updated' to be remembered as a default
-          try
-            settings = JSON.parse(Zotero.Prefs.get('export.translatorSettings'))
-            if settings['Keep updated']
-              delete settings['Keep updated']
-              Zotero.Prefs.set('export.translatorSettings', JSON.stringify(settings))
-          catch
-
-          @_displayOptions.translatorID = @translator[0].translatorID
-          Zotero.BetterBibTeX.auto.add(@_collection._id, @path, @_displayOptions)
-
-        progressWin.show()
-        progressWin.startCloseTimer()
-
-      # add exportPath for relativizing export paths (#126)
-      if @_displayOptions && @translator?[0]
+  Zotero.Translate.Export.prototype.translate = ((original) ->
+    return ->
+      if @translator?[0] && @location && typeof @location == 'object'
         for own name, header of Zotero.BetterBibTeX.translators
-          if header.translatorID == @translator[0].translatorID
-            @_displayOptions.exportPath = @path
-            break
+          if header.translatorID == @translator[0]
+            @_displayOptions.exportPath = @location.path.slice(0, -@location.leafName.length)
+
+        if @_displayOptions?['Keep updated']
+          progressWin = new Zotero.ProgressWindow()
+          progressWin.changeHeadline('Auto-export')
+
+          if !@_collection?._id
+            progressWin.addLines(['Auto-export only supported for collections'])
+
+          else
+            progressWin.addLines(["Collection #{@_collection._name} set up for auto-export"])
+            # I don't want 'Keep updated' to be remembered as a default
+            try
+              settings = JSON.parse(Zotero.Prefs.get('export.translatorSettings'))
+              if settings['Keep updated']
+                delete settings['Keep updated']
+                Zotero.Prefs.set('export.translatorSettings', JSON.stringify(settings))
+            catch
+
+            @_displayOptions.translatorID = @translator[0]
+            Zotero.BetterBibTeX.auto.add(@_collection._id, @path, @_displayOptions)
+
+          progressWin.show()
+          progressWin.startCloseTimer()
 
       return original.apply(this, arguments)
-    )(Zotero.Translate.Base.prototype.translate)
+    )(Zotero.Translate.Export.prototype.translate)
 
   @schomd.init()
 
