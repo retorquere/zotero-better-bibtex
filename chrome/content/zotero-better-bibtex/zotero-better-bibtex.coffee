@@ -220,8 +220,8 @@ Zotero.BetterBibTeX.updateSchema = ->
   for table in ['keys']
     columns[table] = @SQLColumns(table)
     Zotero.DB.query("alter table betterbibtex.#{table} rename to _#{table}_") if columns[table]
-  Zotero.DB.query('drop table betterbibtex.keys2') if @SQLColumns('keys2')
-  Zotero.DB.query('drop table betterbibtex.cache') if @SQLColumns('cache')
+  Zotero.DB.query('drop table if exists betterbibtex.keys2')
+  Zotero.DB.query('drop table if exists betterbibtex.cache')
 
   ### clean slate ###
   Zotero.DB.query('create table betterbibtex.keys (itemID primary key, citekey not null, citekeyFormat)')
