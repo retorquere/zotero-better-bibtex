@@ -10,4 +10,5 @@ test:
 deployment:
   master:
     branch: master
-    commands: bundle exec rake deploy
+    commands:
+      - bundle exec rake deploy
