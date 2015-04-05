@@ -534,7 +534,10 @@ end
 
 task :deploy => [XPI, GR] do
   throw "GITHUB_TOKEN not set" unless ENV['GITHUB_TOKEN']
-  if ENV['CIRCLE_SHA1'] = `git rev-list --tags --date-order --max-count=1`
+  tagged = `git rev-list --tags --date-order --max-count=1`.strip
+  current = ENV['CIRCLE_SHA1'].strip
+  puts "Tagged=#{tagged}, current=#{current}"
+  if tagged == current
     puts "Deploying #{RELEASE} (#{ENV['CIRCLE_SHA1']})"
     sh "#{GR} release --user ZotPlus --repo zotero-better-bibtex --tag #{RELEASE} --name 'v#{RELEASE}'"
     sh "#{GR} upload --user ZotPlus --repo zotero-better-bibtex --tag #{RELEASE} --name '#{XPI}' --file '#{XPI}'"
