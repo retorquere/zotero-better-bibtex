@@ -19,12 +19,3 @@ before_install:
 ignore_before_install:
 - sudo apt-get update
 - sudo apt-get install nodejs npm firefox
-before_deploy: "mv zotero-better-bibtex-*xpi zotero-better-bibtex.xpi"
-deploy:
-  provider: releases
-  api_key:
-    secure: SenzRttZYc1DfdieYH74WF4yMh5ncvKnsNsuXH+6jbOqzun7e6PKAHUTODJG1Y9iFsI6MWMY6n/XF4hDAfMV9+G1iG9nqqdQxKFGbMPLxjh8D6ikcBMQyVUw2XCFYaYDR9Z+TciXRosnBeIulxY8tPOdjcZGY9+wHNLSxwmqkfE=
-  file: zotero-better-bibtex.xpi
-  skip_cleanup: true
-  on:
-    tags: true

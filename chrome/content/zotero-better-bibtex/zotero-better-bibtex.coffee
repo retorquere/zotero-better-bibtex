@@ -525,6 +525,7 @@ Zotero.BetterBibTeX.itemAdded = {
         collection.addItem(item.id)
 
     unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
+      collections = Zotero.BetterBibTeX.addChildCollections(collections)
       Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection_id in #{Zotero.BetterBibTeX.SQLSet(collections)}")
       Zotero.BetterBibTeX.auto.process('collectionChanged')
 
@@ -560,12 +561,17 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
     for id in ids
       Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'on-change')
 
-  collections = Zotero.Collections.getCollectionsContainingItems(ids, true)
+  collections = Zotero.BetterBibTeX.addChildCollections(Zotero.Collections.getCollectionsContainingItems(ids, true))
   unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection_id in #{Zotero.BetterBibTeX.SQLSet(collections)}")
     Zotero.BetterBibTeX.auto.process('itemChanged')
 
   return
+
+Zotero.BetterBibTeX.addChildCollections = (collections) ->
+  return collections unless Zotero.BetterBibTeX.auto.recursive()
+  return collections if collections.length == 0
+  return collections.concat(Zotero.BetterBibTeX.addChildCollections([].concat((coll.getChildCollections(true) for coll in collections)...)))
 
 Zotero.BetterBibTeX.displayOptions = (url) ->
   params = {}
