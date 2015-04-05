@@ -5,13 +5,13 @@
       <RDF:Seq>
         <RDF:li>
           <RDF:Description>
-            <em:version>0.8.17</em:version>
+            <em:version>0.8.18</em:version>
             <em:targetApplication>
               <RDF:Description>
                 <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
                 <em:minVersion>17.0</em:minVersion>
                 <em:maxVersion>23.*</em:maxVersion>
-                <em:updateLink>https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.8.17.xpi</em:updateLink>
+                <em:updateLink>https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.8.18.xpi</em:updateLink>
                 <em:updateInfoURL>https://zotplus.github.io/better-bibtex</em:updateInfoURL>
               </RDF:Description>
             </em:targetApplication>
@@ -20,7 +20,7 @@
                 <em:id>zotero@chnm.gmu.edu</em:id>
                 <em:minVersion>3.0</em:minVersion>
                 <em:maxVersion>4.0.*</em:maxVersion>
-                <em:updateLink>https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.8.17.xpi</em:updateLink>
+                <em:updateLink>https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.8.18.xpi</em:updateLink>
                 <em:updateInfoURL>https://zotplus.github.io/better-bibtex</em:updateInfoURL>
               </RDF:Description>
             </em:targetApplication>
