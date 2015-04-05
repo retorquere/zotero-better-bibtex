@@ -71,8 +71,8 @@ The Better BibTeX [configuration pane](https://zotplus.github.io/better-bibtex/C
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.8.11.xpi)
-(**0.8.11**).
+version](https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.8.13.xpi)
+(**0.8.13**).
 If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
@@ -104,3 +104,11 @@ prefer fuzzy ones over missed ones.
 * faster journal abbreviator using the [LTWA](http://www.issn.org/services/online-services/access-to-the-ltwa/)
 
 Submission to Addons.Mozilla.Org is off the table -- AMO moves *much* to slow for my sometimes daily releases.
+
+<script type="text/javascript">
+
+  if (window.location.hash.trim() == '#xpi') {
+    window.location = 'https://zotplus.github.io/better-bibtex/zotero-better-bibtex-0.8.13.xpi';
+  }
+
+</script>
