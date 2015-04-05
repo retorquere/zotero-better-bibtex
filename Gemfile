@@ -23,3 +23,4 @@ gem 'zip-zip' # will load compatibility for old rubyzip API.
 gem 'typhoeus'
 gem 'zotplus-rakehelper'
 gem 'github_api'
+gem 'travis'
