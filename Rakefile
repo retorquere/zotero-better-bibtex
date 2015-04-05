@@ -519,14 +519,28 @@ task :markfailing do
   }
 end
 
-task :release do
-  travis = YAML::load_file('.travis.yml')
-  travis['deploy']['file'] = XPI
-  open('.travis.yml', 'w'){|f| f.write(travis.to_yaml) }
-  sh "git add .travis.yml"
+task :release => XPI do
   sh "git commit -m 'v#{RELEASE}'"
   sh "git tag -a 'v#{RELEASE}' -m 'v#{RELEASE}'"
   sh "git push"
+end
+
+GR="node_modules/.bin/github-release"
+task GR do
+  tmp = 'tmp/github-release.tar.bz2'
+  ZotPlus::RakeHelper.download('https://github.com/aktau/github-release/releases/download/v0.5.3/linux-amd64-github-release.tar.bz2', tmp)
+  sh "tar xjf #{tmp} -C node_modules/.bin --strip-components 3"
+end
+
+task :deploy => [XPI, GR] do
+  throw "GITHUB_TOKEN not set" unless ENV['GITHUB_TOKEN']
+  if ENV['CIRCLE_SHA1'] = `git rev-list --tags --date-order --max-count=1`
+    puts "Deploying #{RELEASE} (#{ENV['CIRCLE_SHA1']})"
+    sh "#{GR} release --user ZotPlus --repo zotero-better-bibtex --tag #{RELEASE} --name 'v#{RELEASE}'"
+    sh "#{GR} upload --user ZotPlus --repo zotero-better-bibtex --tag #{RELEASE} --name '#{XPI}' --file '#{XPI}'"
+  else
+    puts "Not a tagged release"
+  end
 end
 
 file '.depends.mf' => SOURCES do |t|
