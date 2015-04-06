@@ -3,15 +3,20 @@ machine:
     version: 2.1.5
   environment:
     CACHE: yes
+checkout:
+  post:
 test:
   override:
-    - case $CIRCLE_NODE_INDEX in 0) bundle exec rake test[export] ;; 1) bundle exec rake test[import] ;; 2) bundle exec rake test[bulk] ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) bundle exec rake test[export1] ;; 1) bundle exec rake test[export2] ;; 2) bundle exec rake test[import] ;; 3) bundle exec rake test[bulkexport] ;; esac:
         parallel: true
 deployment:
   master:
     branch: master
     commands:
+      - git submodule sync
+      - git submodule update --init # use submodules to pull in www
       - mv cucumber.status cucumber.0.status
       - scp node1:zotero-better-bibtex/cucumber.status cucumber.1.status
       - scp node2:zotero-better-bibtex/cucumber.status cucumber.2.status
+      - scp node3:zotero-better-bibtex/cucumber.status cucumber.3.status
       - bundle exec rake deploy
