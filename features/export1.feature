@@ -191,12 +191,3 @@ Scenario: Empty 'bibtex:' clause in extra gobbles whatever follows #99
   When I import 1 reference from 'export/biber error on generated biblatex file #99.json'
   Then a library export using 'Better BibTeX' should match 'export/biber error on generated biblatex file #99.bib'
 
-@102 @105
-Scenario: Shortjournal does not get exported to biblatex format #102 / biblatexcitekey[my_key] does not seem to work -- bibtex: does #105
-  When I import 1 reference from 'export/Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105.json'
-  Then a library export using 'Better BibLaTeX' should match 'export/Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105.bib'
-
-@108
-Scenario: DOI with underscores in extra field #108
-  When I import 1 reference from 'export/DOI with underscores in extra field #108.json'
-  Then a library export using 'Better BibLaTeX' should match 'export/DOI with underscores in extra field #108.bib'

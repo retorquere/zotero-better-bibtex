@@ -4,6 +4,16 @@ Feature: Export
 Background:
   Given I set preference translators.better-bibtex.testMode.timestamp to '2015-02-24 12:14:36 +0100'
 
+@102 @105
+Scenario: Shortjournal does not get exported to biblatex format #102 / biblatexcitekey[my_key] does not seem to work -- bibtex: does #105
+  When I import 1 reference from 'export/Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105.bib'
+
+@108
+Scenario: DOI with underscores in extra field #108
+  When I import 1 reference from 'export/DOI with underscores in extra field #108.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/DOI with underscores in extra field #108.bib'
+
 @110 @111
 Scenario: two ISSN number are freezing browser #110 / Generating keys and export broken #111
   When I import 1 reference from 'export/two ISSN number are freezing browser #110.json'
