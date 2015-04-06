@@ -3,6 +3,7 @@
 *.swp
 *.debug
 *.cache
+*.status
 .bundle
 *.js
 .depends.mf

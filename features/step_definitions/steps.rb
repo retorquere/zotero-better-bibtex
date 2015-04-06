@@ -54,8 +54,9 @@ unless $headless
   BBT.init
 
   Dir['*.debug'].each{|d| File.unlink(d) }
-  Dir['*.cache'].each{|d| File.unlink(d) }
+  Dir['*.status'].each{|d| File.unlink(d) }
   Dir['*.log'].each{|d| File.unlink(d) unless File.basename(d) == 'cucumber.log' }
+  open('cucumber.status', 'w'){|f| f.write('success')}
 end
 at_exit do
   $headless.destroy if $headless
@@ -71,6 +72,9 @@ Before do |scenario|
 end
 
 After do |scenario|
+  @failed ||= scenario.failed?
+  open('cucumber.status', 'w'){|f| f.write('failed')} if @failed
+
   if ENV['CI'] != 'true'
     open("#{scenario.title}.debug", 'w'){|f| f.write(DBB.log) } if scenario.source_tag_names.include?('@logcapture')
     filename = scenario.title.gsub(/[^0-9A-z.\-]/, '_')
