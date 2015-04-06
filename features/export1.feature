@@ -181,13 +181,6 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
    And I set preference translators.better-bibtex.citekeyFormat to '[auth+initials][year]'
   Then a library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bib'
 
-@bulk
-Scenario: Bulk export cache testing
-  When I import 1241 references with 581 attachments from 'export/Big whopping library.json'
-   And I set preference translators.better-bibtex.caching to true
-   And a timed library export using 'Better BibLaTeX' should match 'export/Big whopping library.bib'
-   And a timed library export using 'Better BibLaTeX' should match 'export/Big whopping library.bib'
-
 @98
 Scenario: Export of item to Better Bibtex fails for auth3_1 #98
   When I import 1 reference from 'export/Export of item to Better Bibtex fails for auth3_1 #98.json'
