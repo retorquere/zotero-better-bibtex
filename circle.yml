@@ -5,6 +5,11 @@ machine:
     CACHE: yes
 checkout:
   post:
+    - git submodule sync
+    - git submodule update --init # use submodules to pull in www
+dependencies:
+  cache_directories:
+    - "www"
 test:
   override:
     - bundle exec rake test:
@@ -13,8 +18,6 @@ deployment:
   master:
     branch: master
     commands:
-      - git submodule sync
-      - git submodule update --init # use submodules to pull in www
       - mv cucumber.status cucumber.0.status
       - scp node1:zotero-better-bibtex/cucumber.status cucumber.1.status
       - scp node2:zotero-better-bibtex/cucumber.status cucumber.2.status
