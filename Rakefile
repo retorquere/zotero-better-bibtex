@@ -261,9 +261,14 @@ task :test, [:tag] => XPI do |t, args|
   plugins.uniq!
   ZotPlus::RakeHelper.getxpis(plugins, 'tmp/plugins')
 
-  tag = {'0' => 'export1', '1' => 'export2', '2' => 'import', '3' => 'bulkexport'}[ENV['CIRCLE_NODE_INDEX'].to_s] if ENV['CIRCLE_SHA1'].to_s != ''
-  tag = "@#{args[:tag]}".sub(/^@@/, '@')
+  if ENV['CIRCLE_SHA1'].to_s != ''
+    tag = {'0' => 'export1', '1' => 'export2', '2' => 'import', '3' => 'bulkexport'}[ENV['CIRCLE_NODE_INDEX'].to_s]
+  else
+    tag = args[:tag]
+  end
+  tag = "@#{tag}".sub(/^@@/, '@')
   puts "Tests running: #{tag}"
+  exit
 
   if tag == '@'
     tag = ''
