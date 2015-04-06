@@ -7,7 +7,7 @@ checkout:
   post:
 test:
   override:
-    - case $CIRCLE_NODE_INDEX in 0) bundle exec rake test[export1] ;; 1) bundle exec rake test[export2] ;; 2) bundle exec rake test[import] ;; 3) bundle exec rake test[bulkexport] ;; esac:
+    - bundle exec rake test:
         parallel: true
 deployment:
   master:
