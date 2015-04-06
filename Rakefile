@@ -532,8 +532,8 @@ task :deploy => [XPI, GR, UPDATE_RDF] do
     throw "#{status}: #{result}" unless result == 'success'
   }
   throw "GITHUB_TOKEN not set" unless ENV['GITHUB_TOKEN']
-  tagged = `git rev-list -1 #{RELEASE}`.strip
-  current = ENV['CIRCLE_SHA1'].to_s.strip
+  tagged = `git log -n 1 --pretty=oneline`.strip
+  current = "#{ENV['CIRCLE_SHA1']} release: #{XPI}"
   puts "#{RELEASE}: tagged=#{tagged}, current=#{current}"
   if tagged == current
     puts "Deploying #{RELEASE} (#{ENV['CIRCLE_SHA1']})"
