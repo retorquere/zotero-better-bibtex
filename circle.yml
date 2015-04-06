@@ -12,6 +12,6 @@ deployment:
     branch: master
     commands:
       - mv cucumber.status cucumber.0.status
-      - scp node1:cucumber.status cucumber.1.status
-      - scp node2:cucumber.status cucumber.2.status
+      - scp node1:zotero-better-bibtex/cucumber.status cucumber.1.status
+      - scp node2:zotero-better-bibtex/cucumber.status cucumber.2.status
       - bundle exec rake deploy
