@@ -268,7 +268,6 @@ task :test, [:tag] => XPI do |t, args|
   end
   tag = "@#{tag}".sub(/^@@/, '@')
   puts "Tests running: #{tag}"
-  exit
 
   if tag == '@'
     tag = ''
