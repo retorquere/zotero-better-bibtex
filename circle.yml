@@ -6,7 +6,6 @@ machine:
 checkout:
   post:
     - git submodule sync
-    - git submodule update --init # use submodules to pull in www
 dependencies:
   cache_directories:
     - "www"
