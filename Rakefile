@@ -532,14 +532,10 @@ task :deploy => [XPI, GR, UPDATE_RDF] do
     throw "#{status}: #{result}" unless result == 'success'
   }
   throw "GITHUB_TOKEN not set" unless ENV['GITHUB_TOKEN']
-  tag = `git rev-list --tags --date-order --max-count=1 --pretty=oneline`
-  puts "Deploy? #{tag}"
-  tagged = tag.strip.split(/\s+/)
-  release = tagged[-1] if tagged.length > 1
-  tagged = tagged[0]
+  tagged = `git rev-list #{RELEASE} | head -1`
   current = ENV['CIRCLE_SHA1'].to_s.strip
-  puts "Tagged=#{release}:#{tagged}, current=#{RELEASE}:#{current}"
-  if tagged == current && release == RELEASE
+  puts "#{RELEASE}: tagged=#{tagged}, current=#{current}"
+  if tagged == current
     puts "Deploying #{RELEASE} (#{ENV['CIRCLE_SHA1']})"
     sh "#{GR} release --user ZotPlus --repo zotero-better-bibtex --tag #{RELEASE} --name 'v#{RELEASE}'"
     #sh "#{GR} upload --user ZotPlus --repo zotero-better-bibtex --tag #{RELEASE} --name '#{XPI}' --file '#{XPI}'"
