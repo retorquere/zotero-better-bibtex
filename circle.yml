@@ -5,7 +5,7 @@ machine:
     CACHE: yes
 checkout:
   post:
-    - git submodule sync
+    - git submodule update --init
 dependencies:
   cache_directories:
     - "bin"
