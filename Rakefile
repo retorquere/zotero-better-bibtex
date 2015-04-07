@@ -536,10 +536,10 @@ task :deploy => [XPI, GR, UPDATE_RDF] do
   tagged = `git log -n 1 --pretty=oneline`.strip
   current = "#{ENV['CIRCLE_SHA1']} release: #{XPI}"
   puts "#{RELEASE}: tagged=#{tagged}, current=#{current}"
-  if true || tagged == current
+  if tagged == current
     puts "Deploying #{RELEASE} (#{ENV['CIRCLE_SHA1']})"
     sh "#{GR} release --user ZotPlus --repo zotero-better-bibtex --tag #{RELEASE} --name 'v#{RELEASE}'"
-    #sh "#{GR} upload --user ZotPlus --repo zotero-better-bibtex --tag #{RELEASE} --name '#{XPI}' --file '#{XPI}'"
+    sh "#{GR} upload --user ZotPlus --repo zotero-better-bibtex --tag #{RELEASE} --name '#{XPI}' --file '#{XPI}'"
     open("www/_includes/#{EXTENSION}-version.html", 'w'){|f| f.write(RELEASE) }
     system "cd www; rake publish"
   else
