@@ -574,14 +574,14 @@ Zotero.BetterBibTeX.withParentCollections = (collections) ->
 
   return Zotero.DB.columnQuery("
     with recursive recursivecollections as (
-      select collectionID, parentCollectionID  
-      from collections 
+      select collectionID, parentCollectionID
+      from collections
       where collectionID in #{Zotero.BetterBibTeX.SQLSet(collections)}
 
       union all
 
       select p.collectionID, p.parentCollectionID
-      from collections p 
+      from collections p
       join recursivecollections as c on c.parentCollectionID = p.collectionID
     ) select distinct collectionID from recursivecollections")
 
