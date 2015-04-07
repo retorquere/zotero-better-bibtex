@@ -3,9 +3,6 @@ machine:
     version: 2.1.5
   environment:
     CACHE: yes
-checkout:
-  post:
-    - git submodule update --init
 dependencies:
   cache_directories:
     - "bin"
@@ -17,6 +14,8 @@ deployment:
   master:
     branch: master
     commands:
+      - git submodule update --init
+      - cd www; git checkout master; git pull
       - git config --global user.name "$CIRCLE_USERNAME"
       - git config --global user.email "$CIRCLE_USERNAME@$CIRCLE_PROJECT_USERNAME.github.com"
       - git config --global push.default matching
