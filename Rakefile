@@ -527,7 +527,7 @@ task GR do
   sh "tar xjf #{tmp} -C bin --strip-components 3"
 end
 
-task :deploy => [XPI, GR, UPDATE_RDF] do
+task :deploy => ['README.md', XPI, GR, UPDATE_RDF] do
   Dir['cucumber.*.status'].each{|status|
     result = open(status).read
     throw "#{status}: #{result}" unless result == 'success'
@@ -538,6 +538,7 @@ task :deploy => [XPI, GR, UPDATE_RDF] do
   puts "#{RELEASE}: tagged=#{tagged}, current=#{current}"
   if tagged == current
     puts "Deploying #{RELEASE} (#{ENV['CIRCLE_SHA1']})"
+    sh "git add README.md; git commit -m 'README for #{RELEASE}; git push"
     sh "#{GR} release --user ZotPlus --repo zotero-better-bibtex --tag #{RELEASE} --name 'v#{RELEASE}'"
     sh "#{GR} upload --user ZotPlus --repo zotero-better-bibtex --tag #{RELEASE} --name '#{XPI}' --file '#{XPI}'"
     open("www/_includes/#{EXTENSION}-version.html", 'w'){|f| f.write(RELEASE) }
