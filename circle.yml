@@ -8,7 +8,7 @@ checkout:
     - git submodule sync
 dependencies:
   cache_directories:
-    - "www"
+    - "bin"
 test:
   override:
     - bundle exec rake test:
@@ -17,6 +17,8 @@ deployment:
   master:
     branch: master
     commands:
+      - git config --global user.name "$CIRCLE_USERNAME"
+      - git config --global user.email "$CIRCLE_USERNAME@$CIRCLE_PROJECT_USERNAME.github.com"
       - mv cucumber.status cucumber.0.status
       - scp node1:zotero-better-bibtex/cucumber.status cucumber.1.status
       - scp node2:zotero-better-bibtex/cucumber.status cucumber.2.status
