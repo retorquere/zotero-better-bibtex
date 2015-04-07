@@ -519,11 +519,12 @@ task :markfailing do
   }
 end
 
-GR="node_modules/.bin/github-release"
+GR="bin/github-release"
 task GR do
+  FileUtils.mkdir_p('bin')
   tmp = 'tmp/github-release.tar.bz2'
   ZotPlus::RakeHelper.download('https://github.com/aktau/github-release/releases/download/v0.5.3/linux-amd64-github-release.tar.bz2', tmp)
-  sh "tar xjf #{tmp} -C node_modules/.bin --strip-components 3"
+  sh "tar xjf #{tmp} -C bin --strip-components 3"
 end
 
 task :deploy => [XPI, GR, UPDATE_RDF] do
