@@ -217,7 +217,7 @@ Zotero.BetterBibTeX.updateSchema = ->
   @foreign_keys(false)
 
   columns = Object.create(null)
-  for table in ['keys']
+  for table in ['keys', 'autoexport', 'exportoptions']
     columns[table] = @SQLColumns(table)
     Zotero.DB.query("alter table betterbibtex.#{table} rename to _#{table}_") if columns[table]
   Zotero.DB.query('drop table if exists betterbibtex.keys2')
@@ -261,7 +261,7 @@ Zotero.BetterBibTeX.updateSchema = ->
       )
     ")
 
-  ### upgrade ###
+  ### migrate data where needed ###
 
   if columns.keys
     if columns.keys.pinned
@@ -272,7 +272,8 @@ Zotero.BetterBibTeX.updateSchema = ->
                       select itemID, citekey, citekeyFormat from betterbibtex._keys_')
 
   ### cleanup ###
-  for table in ['keys']
+
+  for table in ['keys', 'autoexport', 'exportoptions']
     Zotero.DB.query("drop table betterbibtex._#{table}_") if columns[table]
 
   @foreign_keys(true)
