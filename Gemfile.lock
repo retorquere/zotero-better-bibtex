@@ -6,7 +6,7 @@ GEM
     bibtex-ruby (4.0.12)
       latex-decode (~> 0.0)
     builder (3.2.2)
-    childprocess (0.5.5)
+    childprocess (0.5.6)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.0)
     cucumber (2.0.0)
@@ -84,9 +84,9 @@ GEM
       rspec-core (~> 3.2.0)
       rspec-expectations (~> 3.2.0)
       rspec-mocks (~> 3.2.0)
-    rspec-core (3.2.2)
+    rspec-core (3.2.3)
       rspec-support (~> 3.2.0)
-    rspec-expectations (3.2.0)
+    rspec-expectations (3.2.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.2.0)
     rspec-mocks (3.2.1)
@@ -101,7 +101,7 @@ GEM
       websocket (~> 1.0)
     slop (3.6.0)
     thread_safe (0.3.5)
-    travis (1.7.5)
+    travis (1.7.6)
       addressable (~> 2.3)
       backports
       faraday (~> 0.9)
@@ -118,7 +118,7 @@ GEM
     websocket (1.2.1)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.74)
+    zotplus-rakehelper (0.0.75)
       nokogiri
       rake
       rickshaw
