@@ -527,7 +527,7 @@ task GR do
   sh "tar xjf #{tmp} -C bin --strip-components 3"
 end
 
-task :deploy => ['README.md', XPI, GR, UPDATE_RDF] do
+task :deploy => [XPI, GR, UPDATE_RDF] do
   Dir['cucumber.*.status'].each{|status|
     result = open(status).read
     throw "#{status}: #{result}" unless result == 'success'
@@ -542,7 +542,6 @@ task :deploy => ['README.md', XPI, GR, UPDATE_RDF] do
     sh "#{GR} upload --user ZotPlus --repo zotero-better-bibtex --tag #{RELEASE} --name '#{XPI}' --file '#{XPI}'"
     open("www/_includes/#{EXTENSION}-version.html", 'w'){|f| f.write(RELEASE) }
     system "cd www; rake publish"
-    sh "git add README.md; git commit -m 'README for #{RELEASE}'; git push"
   else
     puts "Not a tagged release"
   end
