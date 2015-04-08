@@ -16,3 +16,5 @@ update.rdf
 *.log
 node_modules
 bin/github-release
+.ruby-version
+vendor
