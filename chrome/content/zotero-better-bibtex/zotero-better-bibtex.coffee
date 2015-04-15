@@ -493,10 +493,10 @@ Zotero.BetterBibTeX.itemAdded = {
 
       note = null
       switch extra.translator
-        case 'ca65189f-8815-4afe-8c8b-8c7c15f0edca' # Better BibTeX
+        when 'ca65189f-8815-4afe-8c8b-8c7c15f0edca' # Better BibTeX
           note = extra.note
 
-        case '0af8f14d-9af7-43d9-a016-3c5df3426c98' # BibTeX AUX Scanner
+        when '0af8f14d-9af7-43d9-a016-3c5df3426c98' # BibTeX AUX Scanner
           Zotero.BetterBibTeX.log('::: AUX', collection.id, extra.citations)
           Zotero.Items.trash([itemID])
 
