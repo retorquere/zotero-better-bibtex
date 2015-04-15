@@ -145,6 +145,12 @@ doImport = ->
     for coll in bib.collections
       JabRef.importGroup(coll)
 
+    if bib.errors && bib.errors.length > 0
+      item = new Zotero.Item('journalArticle')
+      item.title = Translator.label
+      item.extra = JSON.stringify({translator: Translator.id, note: bib.errors.join("\n\n"))
+      item.complete()
+
   catch e
     Translator.log('better-bibtex: import failed: ' + e + '\n' + e.stack)
     throw e

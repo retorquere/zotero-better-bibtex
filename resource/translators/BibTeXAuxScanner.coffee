@@ -12,7 +12,7 @@ doImport = ->
   while (str = Zotero.read(0x100000)) != false
     aux += str
 
-  data = {translator: Translator.label, citations: Object.create(null)}
+  data = {translator: Translator.id, citations: Object.create(null)}
 
   re = /\\citation{([^}]+)}/g
   while m = re.exec(aux)

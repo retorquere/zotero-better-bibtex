@@ -491,40 +491,48 @@ Zotero.BetterBibTeX.itemAdded = {
         Zotero.BetterBibTeX.log('::: itemAdded extra not json ', extra, error)
         continue
 
-      continue if extra.translator != 'BibTeX AUX Scanner'
-      Zotero.BetterBibTeX.log('::: AUX', collection.id, extra.citations)
-      Zotero.Items.trash([itemID])
+      note = null
+      switch extra.translator
+        case 'ca65189f-8815-4afe-8c8b-8c7c15f0edca' # Better BibTeX
+          note = extra.note
 
-      missing = []
-      for citekey in extra.citations
-        Zotero.BetterBibTeX.log("::: citekey #{citekey}")
-        id = Zotero.DB.valueQuery('select itemID from betterbibtex.keys where citekey = ? and itemID in (select itemID from items where coalesce(libraryID, 0) = ?)', [citekey, collection.libraryID || 0])
-        if id
-          Zotero.BetterBibTeX.log("::: citekey #{citekey} found")
-          collection.addItem(id)
-        else
-          Zotero.BetterBibTeX.log("::: citekey #{citekey} missing")
-          missing.push(citekey)
+        case '0af8f14d-9af7-43d9-a016-3c5df3426c98' # BibTeX AUX Scanner
+          Zotero.BetterBibTeX.log('::: AUX', collection.id, extra.citations)
+          Zotero.Items.trash([itemID])
 
-      if missing.length == 0
-        Zotero.BetterBibTeX.log("::: all citekeys found")
-      else
-        report = new Zotero.BetterBibTeX.HTMLNode('http://www.w3.org/1999/xhtml', 'html')
-        report.div(->
-          @p(-> @b('BibTeX AUX scan'))
-          @p('Missing references:')
-          @ul(->
-            for citekey in missing
-              @li(citekey)
-            return
-          )
-          return
-        )
-        item = new Zotero.Item('note')
-        item.libraryID = collection.libraryID
-        item.setNote(report.serialize())
-        item.save()
-        collection.addItem(item.id)
+          missing = []
+          for citekey in extra.citations
+            Zotero.BetterBibTeX.log("::: citekey #{citekey}")
+            id = Zotero.DB.valueQuery('select itemID from betterbibtex.keys where citekey = ? and itemID in (select itemID from items where coalesce(libraryID, 0) = ?)', [citekey, collection.libraryID || 0])
+            if id
+              Zotero.BetterBibTeX.log("::: citekey #{citekey} found")
+              collection.addItem(id)
+            else
+              Zotero.BetterBibTeX.log("::: citekey #{citekey} missing")
+              missing.push(citekey)
+
+          if missing.length == 0
+            Zotero.BetterBibTeX.log("::: all citekeys found")
+          else
+            report = new Zotero.BetterBibTeX.HTMLNode('http://www.w3.org/1999/xhtml', 'html')
+            report.div(->
+              @p(-> @b('BibTeX AUX scan'))
+              @p('Missing references:')
+              @ul(->
+                for citekey in missing
+                  @li(citekey)
+                return
+              )
+              return
+            )
+            note = report.serialize()
+
+        if note
+          item = new Zotero.Item('note')
+          item.libraryID = collection.libraryID
+          item.setNote(note)
+          item.save()
+          collection.addItem(item.id)
 
     unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
       collections = Zotero.BetterBibTeX.withParentCollections(collections)
