@@ -387,8 +387,9 @@ Zotero.BetterBibTeX.init = ->
     return ->
       if @translator?[0] && @location && typeof @location == 'object'
         for own name, header of Zotero.BetterBibTeX.translators
-          if header.translatorID == @translator[0]
+          if header.translatorID == @translator[0].translatorID
             @_displayOptions.exportPath = @location.path.slice(0, -@location.leafName.length)
+            Zotero.BetterBibTeX.log("captured export path: #{@_displayOptions.exportPath}")
 
         if @_displayOptions?['Keep updated']
           progressWin = new Zotero.ProgressWindow()
@@ -407,7 +408,7 @@ Zotero.BetterBibTeX.init = ->
                 Zotero.Prefs.set('export.translatorSettings', JSON.stringify(settings))
             catch
 
-            @_displayOptions.translatorID = @translator[0]
+            @_displayOptions.translatorID = @translator[0].translatorID
             Zotero.BetterBibTeX.auto.add(@_collection._id, @path, @_displayOptions)
 
           progressWin.show()
@@ -562,8 +563,9 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
     for id in ids
       Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'on-change')
 
+  collections = Zotero.Collections.getCollectionsContainingItems(ids, true)
   unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
-    collections = Zotero.BetterBibTeX.withParentCollections(Zotero.Collections.getCollectionsContainingItems(ids, true))
+    collections = Zotero.BetterBibTeX.withParentCollections(collections)
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection_id in #{Zotero.BetterBibTeX.SQLSet(collections)}")
     Zotero.BetterBibTeX.auto.process('itemChanged')
 

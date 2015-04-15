@@ -103,13 +103,13 @@ Zotero.BetterBibTeX.pref.update = ->
   Zotero.BetterBibTeX.log('loading exports:', refill, exportlist.children.length)
 
   selectedExport = -1
-  for ae in Zotero.DB.query("select * from betterbibtex.autoexport order by collection_name, path")
+  for ae in Zotero.DB.query("select * from betterbibtex.autoexport order by path")
     selectedExport = 0
     Zotero.BetterBibTeX.log(':::ae', @clone(ae))
     if refill
       itemNode = document.createElement('listitem')
       itemNode.setAttribute('value', ae.id)
-      itemNode.setAttribute('label', "#{ae.collection_name} -> #{ae.path.replace(/^.*[\\\/]/, '')}")
+      itemNode.setAttribute('label', "collection_name -> #{ae.path.replace(/^.*[\\\/]/, '')}")
       itemNode.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == ae.id then 'running' else ae.status}")
       itemNode.setAttribute('tooltiptext', "#{@collectionPath(ae.collection_id)} -> #{ae.path}")
       exportlist.appendChild(itemNode)
