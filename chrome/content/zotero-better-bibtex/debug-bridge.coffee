@@ -40,6 +40,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.Collections.erase((coll.id for coll in Zotero.getCollections()))
   Zotero.BetterBibTeX.keymanager.reset(true)
   Zotero.Items.emptyTrash()
+  Zotero.DB.query('delete from betterbibtex.cache')
 
   err = JSON.stringify((item.toArray() for item in Zotero.BetterBibTeX.safeGetAll()))
   throw "reset failed -- Library not empty -- #{err}" unless Zotero.DB.valueQuery('select count(*) from items') == 0
