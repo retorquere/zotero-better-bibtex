@@ -67,8 +67,6 @@ Before do |scenario|
   BBT.setPreference('translators.better-bibtex.testMode', true)
   @selected = nil
   @expectedExport = nil
-  sleep 1
-  throw 'Library not empty!' unless BBT.librarySize == 0
 end
 
 After do |scenario|
@@ -76,8 +74,8 @@ After do |scenario|
   open('cucumber.status', 'w'){|f| f.write('failed')} if @failed
 
   if ENV['CI'] != 'true'
-    open("#{scenario.title}.debug", 'w'){|f| f.write(DBB.log) } if scenario.source_tag_names.include?('@logcapture')
-    filename = scenario.title.gsub(/[^0-9A-z.\-]/, '_')
+    open("#{scenario.name}.debug", 'w'){|f| f.write(DBB.log) } if scenario.source_tag_names.include?('@logcapture')
+    filename = scenario.name.gsub(/[^0-9A-z.\-]/, '_')
     if scenario.failed?
       @logcaptures ||= 0
       @logcaptures += 1

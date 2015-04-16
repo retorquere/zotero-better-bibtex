@@ -34,15 +34,15 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.BetterBibTeX.DebugBridge.exportOptions = {}
   Zotero.BetterBibTeX.DebugBridge.sql = []
 
-  try
-    Zotero.Items.erase((item.id for item in Zotero.BetterBibTeX.safeGetAll()))
-  catch
-  try
-    Zotero.Collections.erase((coll.id for coll in Zotero.getCollections()))
-  catch
-
+  Zotero.Items.erase((item.id for item in Zotero.BetterBibTeX.safeGetAll()))
+  for item in Zotero.BetterBibTeX.safeGetAll() # notes don't get erased in bulk?!
+    item.erase()
+  Zotero.Collections.erase((coll.id for coll in Zotero.getCollections()))
   Zotero.BetterBibTeX.keymanager.reset(true)
   Zotero.Items.emptyTrash()
+
+  err = JSON.stringify((item.toArray() for item in Zotero.BetterBibTeX.safeGetAll()))
+  throw "reset failed -- Library not empty -- #{err}" unless Zotero.DB.valueQuery('select count(*) from items') == 0
 
   return true
 
