@@ -12,10 +12,7 @@ env:
 - TAG=import
 - TAG=export1
 - TAG=export2
-- TAG=import      CACHE=yes
-- TAG=export1     CACHE=yes
-- TAG=export2     CACHE=yes
-- TAG=bulkexport  CACHE=yes
+- TAG=bulkexport
 script: bundle exec rake test[$TAG]
 before_install:
 - npm update

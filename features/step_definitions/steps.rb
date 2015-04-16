@@ -31,7 +31,6 @@ unless $headless
     profile['extensions.zotero.translators.better-bibtex.debug'] = true
   end
 
-  profile['extensions.zotero.translators.better-bibtex.caching'] = true if ENV['CACHE'] == 'yes'
   profile['extensions.zotero.translators.better-bibtex.attachmentRelativePath'] = true
   profile['extensions.zotfile.useZoteroToRename'] = true
 

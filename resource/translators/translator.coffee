@@ -23,14 +23,14 @@ Translator.initialize = ->
   return if @initialized
   @initialized = true
 
-  @caching = Zotero.getHiddenPref('better-bibtex.caching') && @label.indexOf('Better ') == 0
+  @caching = {'f895aa0d-f28e-47fe-b247-2ea77c6ed583': 'Better BibLaTeX', 'ca65189f-8815-4afe-8c8b-8c7c15f0edca': 'Better BibTeX'}[Translator.translatorID]
   @logging = Zotero.getHiddenPref('better-bibtex.logging')
 
   for own attr, f of @fieldMap or {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
   @skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
-  for pref in ['usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'attachmentRelativePath', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata']
+  for pref in ['usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata']
     @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
 
   for option in ['useJournalAbbreviation', 'exportPath', 'exportCharset', 'exportFileData', 'exportNotes']
@@ -291,8 +291,8 @@ Reference::esc_attachments = (f) ->
       when Translator.testmode
         Translator.attachmentCounter += 1
         a.path = "files/#{Translator.attachmentCounter}/#{att.localPath.replace(/.*[\/\\]/, '')}"
-      when Translator.attachmentRelativePath
-        a.path = att.localPath.slice(Translator.exportPath.length) if Translator.exportPath && att.localPath.indexOf(Translator.exportPath) == 0
+      when Translator.exportPath && att.localPath.indexOf(Translator.exportPath) == 0
+        a.path = att.localPath.slice(Translator.exportPath.length)
 
     attachments.push(a)
 

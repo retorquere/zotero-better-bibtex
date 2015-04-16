@@ -27,7 +27,6 @@
         <preference id="pref-better-bibtex-auto-abbrev" name="extensions.zotero.translators.better-bibtex.autoAbbrev" type="bool"/>
         <preference id="pref-better-bibtex-pin-citekeys" name="extensions.zotero.translators.better-bibtex.pinCitekeys" type="string"/>
         <preference id="pref-better-bibtex-raw-imports" name="extensions.zotero.translators.better-bibtex.rawImports" type="bool"/>
-        <preference id="pref-better-bibtex-caching" name="extensions.zotero.translators.better-bibtex.caching" type="bool"/>
         <preference id="pref-better-bibtex-show-citekey" name="extensions.zotero.translators.better-bibtex.showCitekeys" type="bool"/>
         <preference id="pref-better-bibtex-auto-export" name="extensions.zotero.translators.better-bibtex.autoExport" type="string"/>
         <preference id="pref-better-bibtex-rescan-citekeys" name="extensions.zotero.translators.better-bibtex.scanCitekeys" type="bool"/>
