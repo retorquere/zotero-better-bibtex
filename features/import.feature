@@ -53,9 +53,9 @@ Scenario: Better BibTeX Import 8
   When I import 1 reference from 'import/Better BibTeX.008.bib'
   Then the library should match 'import/Better BibTeX.008.json'
 
-@bbtx-i-9
-Scenario: Better BibTeX Import 9
-  When I import 3 references with 1 attachment from 'import/Better BibTeX.009.bib'
+@i9
+Scenario: Malformed BibTeX entry on import
+  When I import 3 references with 2 attachment from 'import/Better BibTeX.009.bib'
   Then the library should match 'import/Better BibTeX.009.json'
 
 @bbtx-i-10

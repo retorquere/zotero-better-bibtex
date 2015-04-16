@@ -52,7 +52,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.import = (filename) ->
   Zotero_File_Interface.importFile(file)
   return true
 
-Zotero.BetterBibTeX.DebugBridge.methods.librarySize = -> Zotero.DB.valueQuery('select count(*) from items')
+Zotero.BetterBibTeX.DebugBridge.methods.librarySize = -> Zotero.DB.valueQuery('select count(*) from items i where not i.itemID in (select d.itemID from deletedItems d)')
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator) ->
   translator = Zotero.BetterBibTeX.getTranslator(translator)

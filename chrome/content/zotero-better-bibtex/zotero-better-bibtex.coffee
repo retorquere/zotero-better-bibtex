@@ -494,11 +494,17 @@ Zotero.BetterBibTeX.itemAdded = {
       note = null
       switch extra.translator
         when 'ca65189f-8815-4afe-8c8b-8c7c15f0edca' # Better BibTeX
-          note = extra.note
+          if extra.notimported && extra.notimported.length > 0
+            report = new Zotero.BetterBibTeX.HTMLNode('http://www.w3.org/1999/xhtml', 'html')
+            report.div(->
+              @p(-> @b('Better BibTeX could not import'))
+              @pre(extra.notimported)
+              return
+            )
+            note = report.serialize()
 
         when '0af8f14d-9af7-43d9-a016-3c5df3426c98' # BibTeX AUX Scanner
           Zotero.BetterBibTeX.log('::: AUX', collection.id, extra.citations)
-          Zotero.Items.trash([itemID])
 
           missing = []
           for citekey in extra.citations
@@ -528,6 +534,7 @@ Zotero.BetterBibTeX.itemAdded = {
             note = report.serialize()
 
       if note
+        Zotero.Items.trash([itemID])
         item = new Zotero.Item('note')
         item.libraryID = collection.libraryID
         item.setNote(note)
@@ -754,7 +761,7 @@ class Zotero.BetterBibTeX.HTMLNode extends Zotero.BetterBibTeX.XmlNode
 
   Node: HTMLNode
 
-  HTMLNode::alias(['b', 'p', 'div', 'ul', 'li'])
+  HTMLNode::alias(['pre', 'b', 'p', 'div', 'ul', 'li'])
 
 require('preferences.coffee')
 require('keymanager.coffee')
