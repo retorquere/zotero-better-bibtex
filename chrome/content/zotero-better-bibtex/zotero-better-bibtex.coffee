@@ -527,12 +527,12 @@ Zotero.BetterBibTeX.itemAdded = {
             )
             note = report.serialize()
 
-        if note
-          item = new Zotero.Item('note')
-          item.libraryID = collection.libraryID
-          item.setNote(note)
-          item.save()
-          collection.addItem(item.id)
+      if note
+        item = new Zotero.Item('note')
+        item.libraryID = collection.libraryID
+        item.setNote(note)
+        item.save()
+        collection.addItem(item.id)
 
     unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
       collections = Zotero.BetterBibTeX.withParentCollections(collections)

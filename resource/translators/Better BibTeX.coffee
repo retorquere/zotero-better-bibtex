@@ -148,7 +148,7 @@ doImport = ->
     if bib.errors && bib.errors.length > 0
       item = new Zotero.Item('journalArticle')
       item.title = Translator.label
-      item.extra = JSON.stringify({translator: Translator.id, note: bib.errors.join("\n\n"))
+      item.extra = JSON.stringify({translator: Translator.id, note: bib.errors.join("\n\n")})
       item.complete()
 
   catch e

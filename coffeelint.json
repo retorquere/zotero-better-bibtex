@@ -37,7 +37,7 @@
 
   "no_empty_param_list": { "level": "ignore" },
 
-  "no_implicit_braces": { "level": "warn", "strict": true },
+  "no_implicit_braces": { "level": "ignore", "strict": true },
 
   "no_implicit_parens": { "strict": true, "level": "error" },
 
