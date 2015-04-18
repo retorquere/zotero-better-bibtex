@@ -1,7 +1,7 @@
 pref('extensions.zotero.translators.better-bibtex.attachmentsNoMetadata', false)
 pref('extensions.zotero.translators.better-bibtex.autoAbbrevStyle', '')
 pref('extensions.zotero.translators.better-bibtex.autoAbbrev', true)
-pref('extensions.zotero.translators.better-bibtex.autoExport', 'disabled')
+pref('extensions.zotero.translators.better-bibtex.autoExport', 'off')
 pref('extensions.zotero.translators.better-bibtex.citeCommand', 'cite')
 pref('extensions.zotero.translators.better-bibtex.citekeyFormat', '[auth][year]')
 pref('extensions.zotero.translators.better-bibtex.DOIandURL', 'both')

@@ -56,8 +56,6 @@ Zotero.BetterBibTeX.pref.collectionPath = (id) ->
 Zotero.BetterBibTeX.pref.update = ->
   return unless Zotero.BetterBibTeX.initialized # ?!?!
 
-  document.getElementById('better-bibtex-prefs-auto-export').setAttribute('hidden', Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled')
-
   serverCheckbox = document.getElementById('id-better-bibtex-preferences-server-enabled')
   serverEnabled = serverCheckbox.checked
   serverCheckbox.setAttribute('hidden', Zotero.isStandalone && serverEnabled)
@@ -109,7 +107,7 @@ Zotero.BetterBibTeX.pref.update = ->
     if refill
       itemNode = document.createElement('listitem')
       itemNode.setAttribute('value', ae.id)
-      itemNode.setAttribute('label', "collection_name -> #{ae.path.replace(/^.*[\\\/]/, '')}")
+      itemNode.setAttribute('label', "#{Zotero.Collections.get(ae.collection)?.name || ae.collection} -> #{ae.path.replace(/^.*[\\\/]/, '')}")
       itemNode.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == ae.id then 'running' else ae.status}")
       itemNode.setAttribute('tooltiptext', "#{@collectionPath(ae.collection)} -> #{ae.path}")
       exportlist.appendChild(itemNode)
@@ -135,9 +133,9 @@ Zotero.BetterBibTeX.pref.autoexport =
     ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport ae join betterbibtex.exportoptions eo on ae.exportoptions = eo.id where ae.id = ?', [selectedItem.getAttribute('value')])
     Zotero.BetterBibTeX.log(':::selected', Zotero.BetterBibTeX.pref.clone(ae))
 
-    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-collection', 'ae.collection_name')
+    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-collection', "#{Zotero.Collections.get(ae.collection)?.name || ae.collection}")
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-target', ae.path)
-    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-translator', 'ae.translatorID')
+    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-translator', Zotero.BetterBibTeX.translatorName(ae.translatorID))
     document.getElementById('id-better-bibtex-preferences-auto-export-auto-abbrev').checked = (ae.useJournalAbbreviation == 'true')
     document.getElementById('id-better-bibtex-preferences-auto-export-notes').checked = (ae.exportNotes == 'true')
     document.getElementById('id-better-bibtex-preferences-auto-export-preserve-bibvars').checked = (ae.preserveBibTeXVariables == 'true')

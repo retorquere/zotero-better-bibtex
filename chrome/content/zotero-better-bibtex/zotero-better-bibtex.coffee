@@ -67,7 +67,7 @@ Zotero.BetterBibTeX.pref.observer = {
     # if any var changes, drop the cache and kick off all exports
     Zotero.DB.query('delete from betterbibtex.cache')
     Zotero.DB.query("update betterbibtex.autoexport set status='pending'")
-    Zotero.BetterBibTeX.auto.process() unless Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
+    Zotero.BetterBibTeX.auto.process()
     return
 }
 
@@ -77,7 +77,6 @@ Zotero.BetterBibTeX.pref.ZoteroObserver = {
   observe: (subject, topic, data) ->
     switch data
       when 'recursiveCollections'
-        return if Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
         recursive = "#{!!Zotero.BetterBibTeX.auto.recursive()}"
         Zotero.DB.execute("update betterbibtex.autoexport set exportedRecursively = ?, status = 'pending' where exportedRecursively <> ?", [recursive, recursive])
         Zotero.BetterBibTeX.auto.process('recursiveCollections')
@@ -542,7 +541,7 @@ Zotero.BetterBibTeX.itemAdded = {
         item.save()
         collection.addItem(item.id)
 
-    unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
+    unless collections.length == 0
       collections = Zotero.BetterBibTeX.withParentCollections(collections)
       Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
       Zotero.BetterBibTeX.auto.process('collectionChanged')
@@ -580,7 +579,7 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
       Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'on-change')
 
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true)
-  unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
+  unless collections.length == 0
     collections = Zotero.BetterBibTeX.withParentCollections(collections)
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
     Zotero.BetterBibTeX.auto.process('itemChanged')
@@ -664,7 +663,7 @@ Zotero.BetterBibTeX.load = (translator) ->
     Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}")
   ].join("\n")
 
-  delete header.displayOptions['Keep updated'] if header.displayOptions && Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
+  delete header.displayOptions['Keep updated'] if header.displayOptions
 
   @translators[header.label.toLowerCase().replace(/[^a-z]/, '')] = header
   Zotero.Translators.save(header, code)
@@ -677,6 +676,11 @@ Zotero.BetterBibTeX.getTranslator = (name) ->
   translator ?= @translators["zotero#{name}"]
   throw "No translator #{name}; available: #{Object.keys(@translators).join(', ')}" unless translator
   return translator.translatorID
+
+Zotero.BetterBibTeX.translatorName = (id) ->
+  for own name, tr of @translators
+    return tr.label if tr.translatorID == id
+  return "#{id}"
 
 Zotero.BetterBibTeX.safeGetAll = ->
   try
