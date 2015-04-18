@@ -1,9 +1,9 @@
 Zotero.BetterBibTeX.auto = {}
 
-Zotero.BetterBibTeX.auto.add = (collection, path, options) ->
+Zotero.BetterBibTeX.auto.add = (collectionID, path, options) ->
   eo = Zotero.BetterBibTeX.cache.exportOptions(options)
-  Zotero.DB.query("insert or replace into betterbibtex.autoexport (collection, path, exportoptions, includeChildCollections, status)
-                  values (?, ?, ?, ?, 'done')", [state.collection.id, state.target, eo, "#{!!@recursive()}"])
+  Zotero.DB.query("insert or replace into betterbibtex.autoexport (collection, path, exportOptions, exportedRecursively, status)
+                  values (?, ?, ?, ?, 'done')", [collectionID, path, eo, "#{!!@recursive()}"])
   return
 
 Zotero.BetterBibTeX.auto.recursive = ->

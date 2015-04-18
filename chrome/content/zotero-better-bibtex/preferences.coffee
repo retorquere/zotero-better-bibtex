@@ -105,13 +105,13 @@ Zotero.BetterBibTeX.pref.update = ->
   selectedExport = -1
   for ae in Zotero.DB.query("select * from betterbibtex.autoexport order by path")
     selectedExport = 0
-    Zotero.BetterBibTeX.log(':::ae', @clone(ae))
+    Zotero.BetterBibTeX.log(':::ae', Zotero.BetterBibTeX.pref.clone(ae))
     if refill
       itemNode = document.createElement('listitem')
       itemNode.setAttribute('value', ae.id)
       itemNode.setAttribute('label', "collection_name -> #{ae.path.replace(/^.*[\\\/]/, '')}")
       itemNode.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == ae.id then 'running' else ae.status}")
-      itemNode.setAttribute('tooltiptext', "#{@collectionPath(ae.collection_id)} -> #{ae.path}")
+      itemNode.setAttribute('tooltiptext', "#{@collectionPath(ae.collection)} -> #{ae.path}")
       exportlist.appendChild(itemNode)
   if selectedExport >= 0
     @autoexport.selected(selectedIndex)
@@ -133,11 +133,11 @@ Zotero.BetterBibTeX.pref.autoexport =
     document.getElementById('auto-export-mark').setAttribute('disabled', false)
 
     ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport ae join betterbibtex.exportoptions eo on ae.exportoptions = eo.id where ae.id = ?', [selectedItem.getAttribute('value')])
-    Zotero.BetterBibTeX.log(':::selected', @clone(ae))
+    Zotero.BetterBibTeX.log(':::selected', Zotero.BetterBibTeX.pref.clone(ae))
 
-    @display('id-better-bibtex-preferences-auto-export-collection', 'ae.collection_name')
-    @display('id-better-bibtex-preferences-auto-export-target', ae.path)
-    @display('id-better-bibtex-preferences-auto-export-translator', 'ae.translatorID')
+    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-collection', 'ae.collection_name')
+    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-target', ae.path)
+    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-translator', 'ae.translatorID')
     document.getElementById('id-better-bibtex-preferences-auto-export-auto-abbrev').checked = (ae.useJournalAbbreviation == 'true')
     document.getElementById('id-better-bibtex-preferences-auto-export-notes').checked = (ae.exportNotes == 'true')
     document.getElementById('id-better-bibtex-preferences-auto-export-preserve-bibvars').checked = (ae.preserveBibTeXVariables == 'true')

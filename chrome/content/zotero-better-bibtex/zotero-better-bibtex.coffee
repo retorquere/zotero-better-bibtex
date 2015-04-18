@@ -219,6 +219,7 @@ Zotero.BetterBibTeX.updateSchema = ->
   columns = Object.create(null)
   for table in ['keys', 'autoexport', 'exportoptions']
     columns[table] = @SQLColumns(table)
+    Zotero.DB.query("drop table if exists betterbibtex._#{table}_")
     Zotero.DB.query("alter table betterbibtex.#{table} rename to _#{table}_") if columns[table]
   Zotero.DB.query('drop table if exists betterbibtex.keys2')
   Zotero.DB.query('drop table if exists betterbibtex.cache')
@@ -543,14 +544,14 @@ Zotero.BetterBibTeX.itemAdded = {
 
     unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
       collections = Zotero.BetterBibTeX.withParentCollections(collections)
-      Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection_id in #{Zotero.BetterBibTeX.SQLSet(collections)}")
+      Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
       Zotero.BetterBibTeX.auto.process('collectionChanged')
 
     return
 }
 
 Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
-  Zotero.DB.query("delete from betterbibtex.autoexport where collection_id in #{Zotero.BetterBibTeX.SQLSet(extraData)}") if event == 'delete' && extraData.length > 0
+  Zotero.DB.query("delete from betterbibtex.autoexport where collection in #{Zotero.BetterBibTeX.SQLSet(extraData)}") if event == 'delete' && extraData.length > 0
   return
 
 Zotero.BetterBibTeX.SQLSet = (values) -> '(' + ('' + v for v in values).join(', ') + ')'
@@ -581,7 +582,7 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true)
   unless collections.length == 0 || Zotero.BetterBibTeX.pref.get('autoExport') == 'disabled'
     collections = Zotero.BetterBibTeX.withParentCollections(collections)
-    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection_id in #{Zotero.BetterBibTeX.SQLSet(collections)}")
+    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
     Zotero.BetterBibTeX.auto.process('itemChanged')
 
   return

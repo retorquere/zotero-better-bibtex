@@ -201,7 +201,7 @@
                         <checkbox id="id-better-bibtex-preferences-auto-export-notes" label="&zotero.better-bibtex.auto-export.notes;" disabled="true"/>
                       </row>
                       <row>
-                        <checkbox id="id-better-bibtex-preferences-auto-export-id-better-bibtex-preferences-auto-export-preserve-bibvars" label="&zotero.better-bibtex.auto-export.preserveBibTeXVariables;" disabled="true"/>
+                        <checkbox id="id-better-bibtex-preferences-auto-export-preserve-bibvars" label="&zotero.better-bibtex.auto-export.preserveBibTeXVariables;" disabled="true"/>
                       </row>
                     </rows>
                   </grid>
