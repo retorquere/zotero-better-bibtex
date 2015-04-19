@@ -34,7 +34,7 @@ def loadZotero(profile)
       # reuse existing profile
 
     when nil
-      STDOUT.puts "starting Firefox with #{profile} profile"
+      #STDOUT.puts "starting Firefox with #{profile} profile"
       $Firefox.profile = profile
     
       xpi = Dir['*.xpi']
@@ -64,10 +64,10 @@ def loadZotero(profile)
       plugins.uniq!
       getxpis(plugins, 'tmp/plugins')
      
-      STDOUT.sync = true
-      STDOUT.puts "Installing plugins..."
+      #STDOUT.sync = true
+      #STDOUT.puts "Installing plugins..."
       Dir['tmp/plugins/*.xpi'].shuffle.each{|xpi|
-        STDOUT.puts "Installing #{File.basename(xpi)}"
+        #STDOUT.puts "Installing #{File.basename(xpi)}"
         profile.add_extension(xpi)
       }
       profile['extensions.zotero.showIn'] = 2
@@ -88,16 +88,16 @@ def loadZotero(profile)
       profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
       profile['pdfjs.disabled'] = true
     
-      STDOUT.puts "Starting Firefox..."
+      #STDOUT.puts "Starting Firefox..."
       client = Selenium::WebDriver::Remote::Http::Default.new
       client.timeout = 600 # seconds – default is 60
       $Firefox.browser = Selenium::WebDriver.for :firefox, :profile => profile, :http_client => client
-      STDOUT.puts "Firefox started"
+      #STDOUT.puts "Firefox started"
     
       sleep 2
-      STDOUT.puts "Starting Zotero..."
+      #STDOUT.puts "Starting Zotero..."
       $Firefox.browser.navigate.to('chrome://zotero/content/tab.xul') # does this trigger the window load?
-      STDOUT.puts "Zotero started"
+      #STDOUT.puts "Zotero started"
       #$headless.take_screenshot('/home/emile/zotero/zotero-better-bibtex/screenshot.png')
       $Firefox.DebugBridge = JSONRPCClient.new('http://localhost:23119/debug-bridge')
       $Firefox.DebugBridge.bootstrap('Zotero.BetterBibTeX')
@@ -123,7 +123,7 @@ Before do |scenario|
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.testMode.timestamp', '2015-02-24 12:14:36 +0100')
   @selected = nil
   @expectedExport = nil
-  STDOUT.puts "State reset, ready to go"
+  #STDOUT.puts "State reset, ready to go"
 end
 
 After do |scenario|
@@ -212,7 +212,7 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
         remaining = expected - processed
         speed = processed / elapsed
         timeleft = (Time.mktime(0)+((expected - processed) / speed)).strftime("%H:%M:%S")
-        STDOUT.puts "Slow import (#{elapsed}): #{processed} entries @ #{speed.round(1)} entries/sec, #{timeleft} remaining"
+        #STDOUT.puts "Slow import (#{elapsed}): #{processed} entries @ #{speed.round(1)} entries/sec, #{timeleft} remaining"
       end
     end
 
@@ -305,9 +305,9 @@ end
 
 
 Then /^sleep ([0-9]+) seconds$/ do |secs|
-  STDOUT.puts "sleeping #{secs} seconds"
+  #STDOUT.puts "sleeping #{secs} seconds"
   sleep Integer(secs)
-  STDOUT.puts "proceeding"
+  #STDOUT.puts "proceeding"
 end
 
 Then /^show the (browser|Zotero) log$/ do |kind|
