@@ -27,80 +27,88 @@ end
 
 def loadZotero(profile)
   profile ||= 'default'
-
-  xpi = Dir['*.xpi']
-  cmd "rake" if xpi.length == 0
-  xpi = Dir['*.xpi']
-  throw "Expected exactly one XPI, found #{xpi.length}" unless xpi.length == 1
-  xpi = xpi.first
-
   $Firefox ||= OpenStruct.new
-  throw "Firefox profile #{profile} requested but #{$Firefox.profile} already running" if $Firefox.profile && $Firefox.profile != profile
-  STDOUT.puts "starting Firefox with #{profile} profile"
-  $Firefox.profile = profile
 
-  profiles = File.expand_path('test/fixtures/profiles/')
-  FileUtils.mkdir_p(profiles)
-  profile_dir = File.join(profiles, profile)
-  if !File.directory?(profile_dir)
-    archive = File.join('tmp', profile + '.tar.gz')
-    download("https://github.com/ZotPlus/zotero-better-bibtex/releases/download/test-profiles/#{profile}.tar.gz", archive)
-    cmd "tar -xzC #{profiles.shellescape} -f #{archive.shellescape}"
+  case $Firefox.profile
+    when profile
+      # reuse existing profile
+
+    when nil
+      STDOUT.puts "starting Firefox with #{profile} profile"
+      $Firefox.profile = profile
+    
+      xpi = Dir['*.xpi']
+      cmd "rake" if xpi.length == 0
+      xpi = Dir['*.xpi']
+      throw "Expected exactly one XPI, found #{xpi.length}" unless xpi.length == 1
+      xpi = xpi.first
+    
+      profiles = File.expand_path('test/fixtures/profiles/')
+      FileUtils.mkdir_p(profiles)
+      profile_dir = File.join(profiles, profile)
+      if !File.directory?(profile_dir)
+        archive = File.join('tmp', profile + '.tar.gz')
+        download("https://github.com/ZotPlus/zotero-better-bibtex/releases/download/test-profiles/#{profile}.tar.gz", archive)
+        cmd "tar -xzC #{profiles.shellescape} -f #{archive.shellescape}"
+      end
+      profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
+    
+      if File.file?('features/plugins.yml')
+        plugins = YAML.load_file('features/plugins.yml')
+      else
+        plugins = []
+      end
+      plugins << "file://" + File.expand_path("#{Dir['*.xpi'][0]}")
+      plugins << 'https://zotplus.github.io/debug-bridge/update.rdf'
+      plugins << 'https://www.zotero.org/download/update.rdf'
+      plugins.uniq!
+      getxpis(plugins, 'tmp/plugins')
+     
+      STDOUT.sync = true
+      STDOUT.puts "Installing plugins..."
+      Dir['tmp/plugins/*.xpi'].shuffle.each{|xpi|
+        STDOUT.puts "Installing #{File.basename(xpi)}"
+        profile.add_extension(xpi)
+      }
+      profile['extensions.zotero.showIn'] = 2
+      profile['extensions.zotero.httpServer.enabled'] = true
+      profile['dom.max_chrome_script_run_time'] = 600
+    
+      if ENV['CI'] != 'true'
+        profile['extensions.zotero.debug.store'] = true
+        profile['extensions.zotero.debug.log'] = true
+        profile['extensions.zotero.translators.better-bibtex.debug'] = true
+      end
+    
+      profile['extensions.zotero.translators.better-bibtex.attachmentRelativePath'] = true
+      profile['extensions.zotfile.useZoteroToRename'] = true
+    
+      profile['browser.download.dir'] = "/tmp/webdriver-downloads"
+      profile['browser.download.folderList'] = 2
+      profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
+      profile['pdfjs.disabled'] = true
+    
+      client = Selenium::WebDriver::Remote::Http::Default.new
+      client.timeout = 600 # seconds – default is 60
+      $Firefox.browser = Selenium::WebDriver.for :firefox, :profile => profile, :http_client => client
+    
+      sleep 2
+      $Firefox.browser.navigate.to('chrome://zotero/content/tab.xul') # does this trigger the window load?
+      #$headless.take_screenshot('/home/emile/zotero/zotero-better-bibtex/screenshot.png')
+      $Firefox.DBB = JSONRPCClient.new('http://localhost:23119/debug-bridge')
+      $Firefox.DBB.bootstrap('Zotero.BetterBibTeX')
+      $Firefox.BBT = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
+      $Firefox.SCHOMD = JSONRPCClient.new('http://localhost:23119/better-bibtex/schomd')
+      $Firefox.BBT.init
+    
+      Dir['*.debug'].each{|d| File.unlink(d) }
+      Dir['*.status'].each{|d| File.unlink(d) }
+      Dir['*.log'].each{|d| File.unlink(d) unless File.basename(d) == 'cucumber.log' }
+      open('cucumber.status', 'w'){|f| f.write('success')}
+
+    else
+      throw "Firefox profile #{profile} requested but #{$Firefox.profile} already running"
   end
-  profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
-
-  if File.file?('features/plugins.yml')
-    plugins = YAML.load_file('features/plugins.yml')
-  else
-    plugins = []
-  end
-  plugins << "file://" + File.expand_path("#{Dir['*.xpi'][0]}")
-  plugins << 'https://zotplus.github.io/debug-bridge/update.rdf'
-  plugins << 'https://www.zotero.org/download/update.rdf'
-  plugins.uniq!
-  getxpis(plugins, 'tmp/plugins')
- 
-  STDOUT.sync = true
-  STDOUT.puts "Installing plugins..."
-  Dir['tmp/plugins/*.xpi'].shuffle.each{|xpi|
-    STDOUT.puts "Installing #{File.basename(xpi)}"
-    profile.add_extension(xpi)
-  }
-  profile['extensions.zotero.showIn'] = 2
-  profile['extensions.zotero.httpServer.enabled'] = true
-  profile['dom.max_chrome_script_run_time'] = 600
-
-  if ENV['CI'] != 'true'
-    profile['extensions.zotero.debug.store'] = true
-    profile['extensions.zotero.debug.log'] = true
-    profile['extensions.zotero.translators.better-bibtex.debug'] = true
-  end
-
-  profile['extensions.zotero.translators.better-bibtex.attachmentRelativePath'] = true
-  profile['extensions.zotfile.useZoteroToRename'] = true
-
-  profile['browser.download.dir'] = "/tmp/webdriver-downloads"
-  profile['browser.download.folderList'] = 2
-  profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
-  profile['pdfjs.disabled'] = true
-
-  client = Selenium::WebDriver::Remote::Http::Default.new
-  client.timeout = 600 # seconds – default is 60
-  $Firefox.browser = Selenium::WebDriver.for :firefox, :profile => profile, :http_client => client
-
-  sleep 2
-  $Firefox.browser.navigate.to('chrome://zotero/content/tab.xul') # does this trigger the window load?
-  #$headless.take_screenshot('/home/emile/zotero/zotero-better-bibtex/screenshot.png')
-  $Firefox.DBB = JSONRPCClient.new('http://localhost:23119/debug-bridge')
-  $Firefox.DBB.bootstrap('Zotero.BetterBibTeX')
-  $Firefox.BBT = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
-  $Firefox.SCHOMD = JSONRPCClient.new('http://localhost:23119/better-bibtex/schomd')
-  $Firefox.BBT.init
-
-  Dir['*.debug'].each{|d| File.unlink(d) }
-  Dir['*.status'].each{|d| File.unlink(d) }
-  Dir['*.log'].each{|d| File.unlink(d) unless File.basename(d) == 'cucumber.log' }
-  open('cucumber.status', 'w'){|f| f.write('success')}
 end
 
 Before do |scenario|
