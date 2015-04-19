@@ -1,6 +1,6 @@
 machine:
   ruby:
-    version: 2.2
+    version: "2.2"
   environment:
     CIRCLE_USERNAME: retorquere
 dependencies:
