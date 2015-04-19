@@ -18,4 +18,3 @@ node_modules
 bin/github-release
 .ruby-version
 vendor
-test/fixtures/profiles

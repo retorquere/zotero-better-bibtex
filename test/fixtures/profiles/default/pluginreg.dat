@@ -1,0 +1,43 @@
+Generated File. Do not edit.
+
+[HEADER]
+Version|0.17|$
+Arch|x86-msvc|$
+
+[PLUGINS]
+npMeetingJoinPluginOC.dll|$
+C:\Program Files\Microsoft Office 15\root\VFS\ProgramFilesX86\Mozilla Firefox\plugins\npMeetingJoinPluginOC.dll|$
+15.0.4420.1017|$
+1417471285971|0|0|0|$
+The plugin allows you to have a better experience with Microsoft Lync|$
+Microsoft Office 2013|$
+1
+0|application/vnd.microsoft.communicator.ocsmeeting|Lync Plug-in for Firefox||$
+npspwrap.dll|$
+C:\Program Files\Microsoft Office 15\root\Office15\npspwrap.dll|$
+15.0.4420.1017|$
+1417471238003|0|0|0|$
+The plugin allows you to have a better experience with Microsoft SharePoint|$
+Microsoft Office 2013|$
+2
+0|application/x-sharepoint|SharePoint Plug-in for Firefox||$
+1|application/x-sharepoint-uc|||$
+npGoogleUpdate3.dll|$
+C:\Program Files (x86)\Google\Update\1.3.25.11\npGoogleUpdate3.dll|$
+1.3.25.11|$
+1416590053470|0|0|0|$
+Google Update|$
+Google Update|$
+2
+0|application/x-vnd.google.update3webcontrol.3|||$
+1|application/x-vnd.google.oneclickctrl.9|||$
+npPicasa3.dll|$
+C:\Program Files (x86)\Google\Picasa3\npPicasa3.dll|$
+3.0.0.0|$
+1407889732000|0|0|0|$
+Picasa plugin|$
+Picasa|$
+1
+0|application/x-picasa-detect|3.1|pinstall|$
+
+[INVALID]
