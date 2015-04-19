@@ -63,7 +63,7 @@ def browserLogFormat(m)
 end
 
 def browserLog
-  log = BROWSER.manage.logs.get('browser')
+  log = $Firefox.browser.manage.logs.get('browser')
   log = log.collect{|m| browserLogFormat(m) }
   log = log.join("\n")
   return log

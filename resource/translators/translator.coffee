@@ -93,25 +93,23 @@ Translator.collections = ->
   return collections
 
 Translator.nextItem = ->
-  while item = Zotero.nextItem()
-    break if item.itemType != 'note' and item.itemType != 'attachment'
-  return unless item
-
   @initialize()
 
-  cached = if @caching then Zotero.BetterBibTeX.cache.fetch(Translator, item.itemID) else null
-  @log(':::cache hit?', cached?.citekey)
-  if cached?.citekey
-    @citekeys[item.itemID] = cached.citekey
-    Zotero.write(cached.entry)
-    return @nextItem()
+  while item = Zotero.nextItem()
+    continue if item.itemType == 'note' || item.itemType == 'attachment'
+    if @caching
+      cached = Zotero.BetterBibTeX.cache.fetch(Translator, item.itemID)
+      if cached?.citekey
+        @citekeys[item.itemID] = cached.citekey
+        Zotero.write(cached.entry)
+        continue
 
-  Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
-  item.__citekey__ ?= Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
-  @citekeys[item.itemID] = item.__citekey__
-  @log("nextItem: #{item.itemID} = #{item.__citekey__}")
+    Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
+    item.__citekey__ ?= Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
+    @citekeys[item.itemID] = item.__citekey__
+    return item
 
-  return item
+  return null
 
 Translator.exportGroups = ->
   collections = @collections()
