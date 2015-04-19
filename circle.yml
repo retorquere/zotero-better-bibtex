@@ -7,8 +7,8 @@ dependencies:
     - test/fixtures/profiles
 test:
   override:
-    - mkdir -p $CIRCLE_TEST_REPORTS/cucumber
-    - bundle exec cucumber --format json --out $CIRCLE_TEST_REPORTS/cucumber/tests.cucumber
+    - bundle exec rake test:
+        parallel: true
 deployment:
   master:
     branch: master
