@@ -462,10 +462,13 @@ Zotero.BetterBibTeX.removeTranslators = ->
   return
 
 Zotero.BetterBibTeX.removeTranslator = (header) ->
-  fileName = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)
-  destFile = Zotero.getTranslatorsDirectory()
-  destFile.append(fileName)
-  destFile.remove(false)
+  try
+    fileName = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)
+    destFile = Zotero.getTranslatorsDirectory()
+    destFile.append(fileName)
+    destFile.remove(false)
+  catch err
+    @log("failed to remove #{header.label}:", err)
   return
 
 Zotero.BetterBibTeX.itemAdded = {
