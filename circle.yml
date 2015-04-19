@@ -4,8 +4,6 @@ machine:
   environment:
     CIRCLE_USERNAME: retorquere
 dependencies:
-  pre:
-    - sudo apt-get update; sudo apt-get install 7z
   cache_directories:
     - "bin"
     - test/fixtures/profiles
