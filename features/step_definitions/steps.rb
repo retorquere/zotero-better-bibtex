@@ -40,7 +40,7 @@ def loadZotero(profile)
   profile_dir = File.join(profiles, profile)
   if !File.directory?(profile_dir)
     archive = File.join('tmp', profile + '.tar.gz')
-    cmd "wget -O #{archive.shellescape} https://github.com/ZotPlus/zotero-better-bibtex/releases/download/test-profiles/#{profile}.tar.gz"
+    cmd "curl -L -o #{archive.shellescape} https://github.com/ZotPlus/zotero-better-bibtex/releases/download/test-profiles/#{profile}.tar.gz"
     cmd "tar -xzC #{profiles.shellescape} -f #{archive.shellescape}"
   end
   profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
