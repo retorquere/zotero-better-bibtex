@@ -21,6 +21,10 @@ def cmd(cmdline)
   throw cmdline unless system(cmdline)
 end
 
+def download(url, path)
+  cmd "curl -L -s -S -o #{path.shellescape} #{url.shellescape}"
+end
+
 def loadZotero(profile)
   profile ||= 'default'
 
@@ -40,7 +44,7 @@ def loadZotero(profile)
   profile_dir = File.join(profiles, profile)
   if !File.directory?(profile_dir)
     archive = File.join('tmp', profile + '.tar.gz')
-    cmd "curl -L -o #{archive.shellescape} https://github.com/ZotPlus/zotero-better-bibtex/releases/download/test-profiles/#{profile}.tar.gz"
+    download("https://github.com/ZotPlus/zotero-better-bibtex/releases/download/test-profiles/#{profile}.tar.gz", archive)
     cmd "tar -xzC #{profiles.shellescape} -f #{archive.shellescape}"
   end
   profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)

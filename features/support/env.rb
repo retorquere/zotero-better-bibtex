@@ -133,8 +133,7 @@ def getxpis(sources, dir)
       FileUtils.cp(path, "#{dir}/#{s.xpi}")
     else
       puts "Downloading #{s.xpi}"
-      output = "#{dir}/#{s.xpi}".shellescape
-      system "curl -L -o #{output} #{s.url.shellescape}"
+      download(s.url, "#{dir}/#{s.xpi}")
     end
   }
 end
