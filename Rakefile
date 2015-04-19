@@ -250,17 +250,6 @@ task :validate => XPI do
 end
 
 task :test, [:tag] => XPI do |t, args|
-  if File.file?('features/plugins.yml')
-    plugins = YAML.load_file('features/plugins.yml')
-  else
-    plugins = []
-  end
-  plugins << "file://" + File.expand_path(XPI)
-  plugins << 'https://zotplus.github.io/debug-bridge/update.rdf'
-  plugins << 'https://www.zotero.org/download/update.rdf'
-  plugins.uniq!
-  ZotPlus::RakeHelper.getxpis(plugins, 'tmp/plugins')
-
   if ENV['CIRCLE_SHA1'].to_s != ''
     tag = {'0' => 'export1', '1' => 'export2', '2' => 'import', '3' => 'bulkexport'}[ENV['CIRCLE_NODE_INDEX'].to_s]
   else

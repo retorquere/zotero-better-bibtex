@@ -1,9 +1,6 @@
 @export @export2
 Feature: Export
 
-Background:
-  Given I set preference translators.better-bibtex.testMode.timestamp to '2015-02-24 12:14:36 +0100'
-
 @102 @105
 Scenario: Shortjournal does not get exported to biblatex format #102 / biblatexcitekey[my_key] does not seem to work -- bibtex: does #105
   When I import 1 reference from 'export/Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105.json'

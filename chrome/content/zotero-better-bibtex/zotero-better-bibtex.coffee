@@ -663,8 +663,6 @@ Zotero.BetterBibTeX.load = (translator) ->
     Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}")
   ].join("\n")
 
-  delete header.displayOptions['Keep updated'] if header.displayOptions
-
   @translators[header.label.toLowerCase().replace(/[^a-z]/, '')] = header
   Zotero.Translators.save(header, code)
   return

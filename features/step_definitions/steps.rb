@@ -6,15 +6,56 @@ require 'fileutils'
 require 'ostruct'
 require 'yaml'
 require 'benchmark'
+require 'shellwords'
 
 $headless ||= false
 unless $headless
   $headless = Headless.new(display: 100) # reserve 100 for BBT
   $headless.start
+end
+at_exit do
+  $headless.destroy if $headless
+end
 
-  profile_dir = File.expand_path('test/fixtures/profile')
+def cmd(cmdline)
+  throw cmdline unless system(cmdline)
+end
+
+def loadZotero(profile)
+  profile ||= 'default'
+
+  xpi = Dir['*.xpi']
+  cmd "rake" if xpi.length == 0
+  xpi = Dir['*.xpi']
+  throw "Expected exactly one XPI, found #{xpi.length}" unless xpi.length == 1
+  xpi = xpi.first
+
+  $Firefox ||= OpenStruct.new
+  throw "Firefox profile #{profile} requested but #{$Firefox.profile} already running" if $Firefox.profile && $Firefox.profile != profile
+  STDOUT.puts "starting Firefox with #{profile} profile"
+  $Firefox.profile = profile
+
+  profiles = File.expand_path('test/fixtures/profiles/')
+  FileUtils.mkdir_p(profiles)
+  profile_dir = File.join(profiles, profile)
+  if !File.directory?(profile_dir)
+    archive = File.join('tmp', profile + '.7z')
+    cmd "wget -O #{archive.shellescape} https://github.com/ZotPlus/zotero-better-bibtex/releases/download/test-profiles/#{profile}.7z"
+    cmd "7z x -o#{profiles.shellescape} #{archive.shellescape}"
+  end
   profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
-  
+
+  if File.file?('features/plugins.yml')
+    plugins = YAML.load_file('features/plugins.yml')
+  else
+    plugins = []
+  end
+  plugins << "file://" + File.expand_path("#{Dir['*.xpi'][0]}")
+  plugins << 'https://zotplus.github.io/debug-bridge/update.rdf'
+  plugins << 'https://www.zotero.org/download/update.rdf'
+  plugins.uniq!
+  getxpis(plugins, 'tmp/plugins')
+ 
   STDOUT.sync = true
   STDOUT.puts "Installing plugins..."
   Dir['tmp/plugins/*.xpi'].shuffle.each{|xpi|
@@ -41,29 +82,29 @@ unless $headless
 
   client = Selenium::WebDriver::Remote::Http::Default.new
   client.timeout = 600 # seconds – default is 60
-  BROWSER = Selenium::WebDriver.for :firefox, :profile => profile, :http_client => client
+  $Firefox.browser = Selenium::WebDriver.for :firefox, :profile => profile, :http_client => client
 
   sleep 2
-  BROWSER.navigate.to('chrome://zotero/content/tab.xul') # does this trigger the window load?
+  $Firefox.browser.navigate.to('chrome://zotero/content/tab.xul') # does this trigger the window load?
   #$headless.take_screenshot('/home/emile/zotero/zotero-better-bibtex/screenshot.png')
-  DBB = JSONRPCClient.new('http://localhost:23119/debug-bridge')
-  DBB.bootstrap('Zotero.BetterBibTeX')
-  BBT = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
-  SCHOMD = JSONRPCClient.new('http://localhost:23119/better-bibtex/schomd')
-  BBT.init
+  $Firefox.DBB = JSONRPCClient.new('http://localhost:23119/debug-bridge')
+  $Firefox.DBB.bootstrap('Zotero.BetterBibTeX')
+  $Firefox.BBT = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
+  $Firefox.SCHOMD = JSONRPCClient.new('http://localhost:23119/better-bibtex/schomd')
+  $Firefox.BBT.init
 
   Dir['*.debug'].each{|d| File.unlink(d) }
   Dir['*.status'].each{|d| File.unlink(d) }
   Dir['*.log'].each{|d| File.unlink(d) unless File.basename(d) == 'cucumber.log' }
   open('cucumber.status', 'w'){|f| f.write('success')}
 end
-at_exit do
-  $headless.destroy if $headless
-end
 
 Before do |scenario|
-  BBT.reset
-  BBT.setPreference('translators.better-bibtex.testMode', true)
+  loadZotero(scenario.source_tag_names.collect{|tag| (tag =~ /^@firefox-/ ? tag.sub(/^@firefox-/, '') : nil)}.first)
+  $Firefox.BBT.reset unless scenario.source_tag_names.include?('@noreset')
+  expect($Firefox.BBT.cacheSize).not_to eq(0) if scenario.source_tag_names.include?('@keepcache')
+  $Firefox.BBT.setPreference('translators.better-bibtex.testMode', true)
+  $Firefox.BBT.setPreference('translators.better-bibtex.testMode.timestamp', '2015-02-24 12:14:36 +0100')
   @selected = nil
   @expectedExport = nil
 end
@@ -73,21 +114,21 @@ After do |scenario|
   open('cucumber.status', 'w'){|f| f.write('failed')} if @failed
 
   if ENV['CI'] != 'true'
-    open("#{scenario.name}.debug", 'w'){|f| f.write(DBB.log) } if scenario.source_tag_names.include?('@logcapture')
+    open("#{scenario.name}.debug", 'w'){|f| f.write($Firefox.DBB.log) } if scenario.source_tag_names.include?('@logcapture')
     filename = scenario.name.gsub(/[^0-9A-z.\-]/, '_')
     if scenario.failed?
       @logcaptures ||= 0
       @logcaptures += 1
       if @logcaptures <= 5
-        open("#{filename}.debug", 'w'){|f| f.write(DBB.log) }
+        open("#{filename}.debug", 'w'){|f| f.write($Firefox.DBB.log) }
         open("#{filename}.log", 'w'){|f| f.write(browserLog) }
       end
 
       #BBT.exportToFile(@expectedExport.translator, File.join('/tmp', File.basename(@expectedExport.filename))) if @expectedExport
     end
 
-    open("#{filename}.cache", 'w'){|f| f.write(BBT.cache.to_yaml)} if scenario.failed? || scenario.source_tag_names.include?('@dumpcache')
-    BBT.exportToFile('Zotero TestCase', "#{filename}.json") if scenario.source_tag_names.include?('@librarydump')
+    open("#{filename}.cache", 'w'){|f| f.write($Firefox.BBT.cache.to_yaml)} if scenario.failed? || scenario.source_tag_names.include?('@dumpcache')
+    $Firefox.BBT.exportToFile('Zotero TestCase', "#{filename}.json") if scenario.source_tag_names.include?('@librarydump')
 
     # `FAIL=FAST cucumber` to stop on first failure
     Cucumber.wants_to_quit = (ENV['FAIL'] == 'fast') && scenario.failed?
@@ -126,17 +167,17 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
 
       if data.is_a?(Hash) && data['config'].is_a?(Hash) && data['config']['label'] == 'Zotero TestCase'
         (data['config']['preferences'] || {}).each_pair{|key, value|
-          BBT.setPreference('translators.better-bibtex.' + key, value)
+          $Firefox.BBT.setPreference('translators.better-bibtex.' + key, value)
         }
         (data['config']['options'] || {}).each_pair{|key, value|
-          BBT.setExportOption(key, value)
+          $Firefox.BBT.setExportOption(key, value)
         }
       end
     end
 
-    entries = OpenStruct.new({start: BBT.librarySize})
+    entries = OpenStruct.new({start: $Firefox.BBT.librarySize})
 
-    BBT.import(bib)
+    $Firefox.BBT.import(bib)
 
     start = Time.now
 
@@ -146,7 +187,7 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
       sleep 2
       entries.now = entries.new || entries.start
       #STDOUT.puts entries.now
-      entries.new = BBT.librarySize
+      entries.new = $Firefox.BBT.librarySize
 
       elapsed = Time.now - start
       if elapsed > 5
@@ -163,7 +204,7 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
 end
 
 Then /^write the library to '([^']+)'$/ do |filename|
-  BBT.exportToFile('Zotero TestCase', filename)
+  $Firefox.BBT.exportToFile('Zotero TestCase', filename)
 end
 
 def normalize(o)
@@ -185,7 +226,7 @@ Then /^the library should match '([^']+)'$/ do |filename|
   expected = File.expand_path(File.join('test/fixtures', filename))
   expected = JSON.parse(open(expected).read)
 
-  found = BBT.library
+  found = $Firefox.BBT.library
 
   renum = lambda{|collection, idmap, items=true|
     collection.delete('id')
@@ -213,7 +254,7 @@ end
 
 Then(/^a (timed )?library export using '([^']+)' should match '([^']+)'$/) do |timed, translator, filename|
   found = nil
-  bm = Benchmark.measure { found = BBT.exportToString(translator).strip }
+  bm = Benchmark.measure { found = $Firefox.BBT.exportToString(translator).strip }
   puts bm if timed
 
   @expectedExport = OpenStruct.new(filename: filename, translator: translator)
@@ -225,7 +266,7 @@ Then(/^a (timed )?library export using '([^']+)' should match '([^']+)'$/) do |t
 end
 
 Then(/^export the library using '([^']+)' to '([^']+)'$/) do |translator, filename|
-  bm = Benchmark.measure { BBT.exportToFile(translator, filename) }
+  bm = Benchmark.measure { $Firefox.BBT.exportToFile(translator, filename) }
 end
 
 When(/^I set (preference|export option)\s+(.+)\s+to (.*)$/) do |setting, name, value|
@@ -238,10 +279,10 @@ When(/^I set (preference|export option)\s+(.+)\s+to (.*)$/) do |setting, name, v
 
   case setting
     when 'preference'
-      BBT.setPreference(name, value)
+      $Firefox.BBT.setPreference(name, value)
 
     else
-      BBT.setExportOption(name, value)
+      $Firefox.BBT.setExportOption(name, value)
   end
 end
 
@@ -253,43 +294,43 @@ Then /^sleep ([0-9]+) seconds$/ do |secs|
 end
 
 Then /^show the (browser|Zotero) log$/ do |kind|
-  STDOUT.puts DBB.log if kind == 'Zotero'
+  STDOUT.puts $Firefox.DBB.log if kind == 'Zotero'
   STDOUT.puts browserLog if kind == 'browser'
 end
 
 Then /^(write|append) the (browser|Zotero) log to '([^']+)'$/ do |action, kind, filename|
   open(filename, action[0]){|f| 
-    f.write(kind == 'Zotero' ? DBB.log : browserLog)
+    f.write(kind == 'Zotero' ? $Firefox.DBB.log : browserLog)
   }
 end
 
 Then /restore '([^']+)'$/ do |db|
-  BBT.restore(db)
+  $Firefox.BBT.restore(db)
 end
 
 Then /^show the citekeys$/ do
-  pp BBT.getKeys
+  pp $Firefox.BBT.getKeys
 end
 
 Then /^save the query log to '([^']+)'$$/ do |filename|
-  open(filename, 'w'){|f| f.write(BBT.sql.to_yaml) }
+  open(filename, 'w'){|f| f.write($Firefox.BBT.sql.to_yaml) }
 end
 
 Then /^I select the first item where ([^\s]+) = '([^']+)'$/ do |attribute, value|
-  @selected = BBT.select(attribute, value)
+  @selected = $Firefox.BBT.select(attribute, value)
   expect(@selected).not_to be(nil)
 end
 
 Then /^I remove the selected item$/ do
-  BBT.remove(@selected)
+  $Firefox.BBT.remove(@selected)
 end
 
 Then /^I generate a new citation key$/ do
   expect(@selected).not_to be(nil)
-  BBT.pinCiteKey(@selected)
+  $Firefox.BBT.pinCiteKey(@selected)
 end
 
 Then /^the markdown citation for (.*) should be '(.*)'$/ do |keys, citation|
   keys = keys.split(',').collect{|k| k.strip}
-  expect(SCHOMD.citation(keys)).to eq(JSON.parse(citation))
+  expect($Firefox.SCHOMD.citation(keys)).to eq(JSON.parse(citation))
 end

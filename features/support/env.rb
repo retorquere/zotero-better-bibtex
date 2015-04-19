@@ -4,6 +4,9 @@ require 'pp'
 require 'net/http'
 require 'addressable/uri'
 require 'json'
+require 'shellwords'
+require 'open-uri'
+require 'nokogiri'
 
 class JSONRPCError < StandardError
 end
@@ -83,3 +86,56 @@ class Hash
     }
   end
 end
+
+def resolvexpi(source)
+  if source =~ /update\.rdf$/
+    update_rdf = Nokogiri::XML(open(source).read)
+    update_rdf.remove_namespaces!
+    url = update_rdf.at('//updateLink').inner_text
+  elsif source =~ /^https:\/\/addons\.mozilla\.org\//
+    page = open(source).read
+    page = Nokogiri::HTML(page)
+    url = page.at_css('p.install-button').at_css('a')['href']
+
+    url = URI.join(source, url ).to_s if url !~ /^http/
+
+    return resolvexpi(url) if url =~ /\/contribute\/roadblock\//
+
+    # AMO uses redirects, so I can't write the file to the final name just yet
+    final_uri = nil
+    open(url) do |h|
+      final_uri = h.base_uri
+    end
+    url = final_uri.to_s
+  elsif source =~ /^file:/ || source =~ /\.xpi(\?|$)/
+    url = source
+  else
+    throw "Unsupported XPI source #{source}"
+  end
+
+  return OpenStruct.new(url: url, xpi: url.sub(/.*\//, '').sub(/\?.*$/, ''))
+end
+
+def getxpis(sources, dir)
+  FileUtils.mkdir_p(dir)
+  installed = Dir["#{dir}/*.xpi"].collect{|f| File.basename(f) }
+
+  sources = sources.collect{|s| resolvexpi(s) }
+
+  (installed - sources.collect{|s| s.xpi}).each{|xpi|
+    puts "Removing #{xpi}"
+    File.unlink("#{dir}/#{xpi}")
+  }
+  sources.reject{|s| installed.include?(s.xpi) && s.url !~ /^file:/ }.each{|s|
+    if s.url =~ /^file:/
+      puts "Copying #{s.xpi}"
+      path = s.url.sub(/^file:/, '')
+      FileUtils.cp(path, "#{dir}/#{s.xpi}")
+    else
+      puts "Downloading #{s.xpi}"
+      output = "#{dir}/#{s.xpi}".shellescape
+      system "curl -o #{output} #{s.url.shellescape}"
+    end
+  }
+end
+
