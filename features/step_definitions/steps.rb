@@ -72,7 +72,7 @@ def loadZotero(profile)
       }
       profile['extensions.zotero.showIn'] = 2
       profile['extensions.zotero.httpServer.enabled'] = true
-      profile['dom.max_chrome_script_run_time'] = 600
+      profile['dom.max_chrome_script_run_time'] = 6000
     
       if ENV['CI'] != 'true'
         profile['extensions.zotero.debug.store'] = true
@@ -90,7 +90,7 @@ def loadZotero(profile)
     
       #STDOUT.puts "Starting Firefox..."
       client = Selenium::WebDriver::Remote::Http::Default.new
-      client.timeout = 600 # seconds – default is 60
+      client.timeout = 6000 # seconds – default is 60
       $Firefox.browser = Selenium::WebDriver.for :firefox, :profile => profile, :http_client => client
       #STDOUT.puts "Firefox started"
     
