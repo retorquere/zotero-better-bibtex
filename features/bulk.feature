@@ -1,4 +1,4 @@
-@bulkexport
+@test-cluster-3 @bulkexport
 Feature: Bulk Export & Cache
 
 Scenario: Minor bulk export cache testing

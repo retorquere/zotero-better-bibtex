@@ -1,13 +1,15 @@
 machine:
   ruby:
     version: "2.2"
+  environment:
+    CUCUMBER: bundle exec cucucumber --tag ~@noci
 dependencies:
   cache_directories:
     - "bin"
     - test/fixtures/profiles
 test:
   override:
-    - bundle exec rake test:
+    - case $CIRCLE_NODE_INDEX in [012]) $CUCUMBER --tags @test-cluster-$CIRCLE_NODE_INDEX ;; *) $CUCUMBER --tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2 ;; esac:
         parallel: true
 deployment:
   master:
@@ -18,7 +20,6 @@ deployment:
       - git config --global user.name "$CIRCLE_USERNAME"
       - git config --global user.email "$CIRCLE_USERNAME@$CIRCLE_PROJECT_USERNAME.github.com"
       - git config --global push.default matching
-      - git config -l
       - mv cucumber.status cucumber.0.status
       - scp node1:zotero-better-bibtex/cucumber.status cucumber.1.status
       - scp node2:zotero-better-bibtex/cucumber.status cucumber.2.status
