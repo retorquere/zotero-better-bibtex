@@ -9,10 +9,10 @@ git:
 rvm:
 - 2.1.3
 env:
-- TAG=--tag @test-cluster-0 --tag ~@noci
-- TAG=--tag @test-cluster-1 --tag ~@noci
-- TAG=--tag @test-cluster-2 --tag ~@noci
-- TAG=--tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2 --tag ~@noci
+- TAG="--tag @test-cluster-0 --tag ~@noci"
+- TAG="--tag @test-cluster-1 --tag ~@noci"
+- TAG="--tag @test-cluster-2 --tag ~@noci"
+- TAG="--tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2 --tag ~@noci"
 script: bundle exec cucumber $TAG
 before_install:
 - npm update
