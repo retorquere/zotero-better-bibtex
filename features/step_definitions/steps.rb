@@ -176,13 +176,9 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
     end
 
     if File.extname(filename) == '.json'
-      begin
-        data = JSON.parse(open(bib).read)
-      rescue
-        data = {}
-      end
+      data = JSON.parse(open(bib).read)
 
-      if data.is_a?(Hash) && data['config'].is_a?(Hash) && data['config']['label'] == 'Zotero TestCase'
+      if data['config']['label'] == 'Zotero TestCase'
         (data['config']['preferences'] || {}).each_pair{|key, value|
           $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.' + key, value)
         }

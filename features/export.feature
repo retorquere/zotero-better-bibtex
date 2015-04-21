@@ -94,7 +94,7 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.005                                                               | 1          |
      | Better BibLaTeX.006                                                               | 1          |
      | Better BibLaTeX.007                                                               | 1          |
-     | Better BibLaTeX.009                                                               | 2          |
+     | Better BibLaTeX.009                                                               | 4          |
      | Better BibLaTeX.010                                                               | 2          |
      | Better BibLaTeX.011                                                               | 2          |
      | Better BibLaTeX.013                                                               | 1          |

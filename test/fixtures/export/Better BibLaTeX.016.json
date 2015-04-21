@@ -22,7 +22,8 @@
     }
   ],
   "config": {
-    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9"
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
+    "label": "Zotero TestCase",
     "preferences": {
       "citekeyFormat": "[auth:lower][year]"
     }
