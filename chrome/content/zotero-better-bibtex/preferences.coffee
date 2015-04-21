@@ -136,6 +136,7 @@ Zotero.BetterBibTeX.pref.autoexport =
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-collection', "#{Zotero.Collections.get(ae.collection)?.name || ae.collection}")
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-target', ae.path)
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-translator', Zotero.BetterBibTeX.translatorName(ae.translatorID))
+    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-charset', Zotero.BetterBibTeX.translatorName(ae.exportCharset))
     document.getElementById('id-better-bibtex-preferences-auto-export-auto-abbrev').checked = (ae.useJournalAbbreviation == 'true')
     document.getElementById('id-better-bibtex-preferences-auto-export-notes').checked = (ae.exportNotes == 'true')
     document.getElementById('id-better-bibtex-preferences-auto-export-preserve-bibvars').checked = (ae.preserveBibTeXVariables == 'true')
