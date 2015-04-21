@@ -71,22 +71,22 @@ Scenario: Journal abbreviations exported in bibtex (81)
 
 @test-cluster-0
 Scenario Outline: BibLaTeX Export with preference
-  When I set preference translators.better-bibtex.citekeyFormat to '[DOI]+[Title:fold:ascii:skipwords:select,1,4:condense,_]'
+  When I set preference translators.better-bibtex.citekeyFormat to '<citekeyformat>'
   And I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.bib'
 
   Examples:
-    | preference    | value                                                     | references  | file                    |
-    | citekeyFormat | [DOI]+[Title:fold:ascii:skipwords:select,1,4:condense,_]  | 2           | Better BibLaTeX.keygen  |
-    | citekeyFormat | [shorttitle]                                              | 1           | Better BibLaTeX.013     |
-    | citekeyFormat | [shorttitle]                                              | 1           | Better BibLaTeX.014     |
-    | citekeyFormat | [shorttitle]                                              | 1           | Better BibLaTeX.015     |
-    | citekeyFormat | [auth:lower][year]                                        | 1           | Better BibLaTeX.016     |
-    | citekeyFormat | [auth:lower][year]                                        | 1           | Better BibLaTeX.017     |
-    | citekeyFormat | [auth:lower][year]                                        | 1           | Better BibLaTeX.017     |
-    | citekeyFormat | [auth][year]-[shorttitle]                                 | 1           | Better BibLaTeX.022     |
-    | citekeyFormat | [auth:lower][year:(ND)][shorttitle:lower]                 | 1           | Better BibLaTeX.026     |
-    | citekeyFormat | [authors][year]                                           | 1           | Better BibLaTeX.027     |
+    | citekeyformat                                             | references  | file                    |
+    | [DOI]+[Title:fold:ascii:skipwords:select,1,4:condense,_]  | 2           | Better BibLaTeX.keygen  |
+    | [shorttitle]                                              | 1           | Better BibLaTeX.013     |
+    | [shorttitle]                                              | 1           | Better BibLaTeX.014     |
+    | [shorttitle]                                              | 1           | Better BibLaTeX.015     |
+    | [auth:lower][year]                                        | 1           | Better BibLaTeX.016     |
+    | [auth:lower][year]                                        | 1           | Better BibLaTeX.017     |
+    | [auth:lower][year]                                        | 1           | Better BibLaTeX.017     |
+    | [auth][year]-[shorttitle]                                 | 1           | Better BibLaTeX.022     |
+    | [auth:lower][year:(ND)][shorttitle:lower]                 | 1           | Better BibLaTeX.026     |
+    | [authors][year]                                           | 1           | Better BibLaTeX.027     |
 
 @test-cluster-1
 Scenario Outline: BibLaTeX Export
