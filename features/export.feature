@@ -70,23 +70,14 @@ Scenario: Journal abbreviations exported in bibtex (81)
   Then a library export using 'Better BibTeX' should match 'export/Journal abbreviations exported in bibtex (81).bib'
 
 @test-cluster-0
-Scenario Outline: BibLaTeX Export with preference
-  When I set preference translators.better-bibtex.citekeyFormat to '<citekeyformat>'
-  And I import <references> references from 'export/<file>.json'
-  Then a library export using 'Better BibLaTeX' should match 'export/<file>.bib'
+Scenario Outline: BibLaTeX Export
+  Given I import <references> references from 'export/<file>.json'
+  Then a library export using 'Better BibTeX' should match 'export/<file>.bib'
 
   Examples:
-    | citekeyformat                                             | references  | file                    |
-    | [DOI]+[Title:fold:ascii:skipwords:select,1,4:condense,_]  | 2           | Better BibLaTeX.keygen  |
-    | [shorttitle]                                              | 1           | Better BibLaTeX.013     |
-    | [shorttitle]                                              | 1           | Better BibLaTeX.014     |
-    | [shorttitle]                                              | 1           | Better BibLaTeX.015     |
-    | [auth:lower][year]                                        | 1           | Better BibLaTeX.016     |
-    | [auth:lower][year]                                        | 1           | Better BibLaTeX.017     |
-    | [auth:lower][year]                                        | 1           | Better BibLaTeX.017     |
-    | [auth][year]-[shorttitle]                                 | 1           | Better BibLaTeX.022     |
-    | [auth:lower][year:(ND)][shorttitle:lower]                 | 1           | Better BibLaTeX.026     |
-    | [authors][year]                                           | 1           | Better BibLaTeX.027     |
+     | file                                                                              | references |
+     | Better BibTeX.026                                                                 | 1          |
+     | Better BibTeX.027                                                                 | 1          |
 
 @test-cluster-1
 Scenario Outline: BibLaTeX Export
@@ -94,40 +85,47 @@ Scenario Outline: BibLaTeX Export
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.bib'
 
   Examples:
-    | references | file                                                         |
-    | 1          | Better BibLaTeX.001                                          |
-    | 2          | Better BibLaTeX.002                                          |
-    | 2          | Better BibLaTeX.003                                          |
-    | 1          | Better BibLaTeX.004                                          |
-    | 1          | Better BibLaTeX.005                                          |
-    | 1          | Better BibLaTeX.006                                          |
-    | 1          | Better BibLaTeX.007                                          |
-    | 1          | Better underscores in URL fields should not be escaped #104  |
-    | 2          | Better BibLaTeX.009                                          |
-    | 2          | Better BibLaTeX.010                                          |
-    | 2          | Better BibLaTeX.011                                          |
-    | 1          | Better BibLaTeX.018                                          |
-    | 1          | Better BibLaTeX.019                                          |
-    | 1          | Better BibLaTeX.020                                          |
-    | 1          | Better BibLaTeX.021                                          |
-    | 1          | Better BibLaTeX.023                                          |
-    | 6          | Better BibLaTeX.stable-keys                                  |
-    | 1          | Export of item to Better Bibtex fails for auth3_1 #98        |
-    | 1          | biber error on generated biblatex file #99                   |
-    | 1          | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105 |
-    | 1          | DOI with underscores in extra field #108                     |
-    | 4          | Hang on non-file attachment export #112 - URL export broken #114 |
-    | 1          | Math parts in title #113                                     |
-    | 1          | Malformed HTML                                               |
-    | 1          | Be robust against misconfigured journal abbreviator #127     |
-    | 2          | Exporting of single-field author lacks braces #130           |
-    | 2          | Export Newspaper Article misses section field #132           |
-    | 2          | Extra semicolon in biblatexadata causes export failure #133  |
-    | 2          | HTML Fragment separator escaped in url #140 #147             |
-    | 1          | capital delta breaks .bib output #141                        |
-    | 2          | German Umlaut "separated" by brackets #146                   |
-    | 2          | Export "Forthcoming" as "Forthcoming"                        |
-    | 3          | Export C as {v C}, not v{C} #152                             |
-    | 1          | Capitalisation in techreport titles #160                     |
-    | 3          | Better BibTeX does not use biblatex fields eprint and eprinttype #170 |
-    | 3          | References with multiple notes fail to export #174           |
+     | file                                                                              | references |
+     | Be robust against misconfigured journal abbreviator #127                          | 1          |
+     | Better BibLaTeX.001                                                               | 1          |
+     | Better BibLaTeX.002                                                               | 2          |
+     | Better BibLaTeX.003                                                               | 2          |
+     | Better BibLaTeX.004                                                               | 1          |
+     | Better BibLaTeX.005                                                               | 1          |
+     | Better BibLaTeX.006                                                               | 1          |
+     | Better BibLaTeX.007                                                               | 1          |
+     | Better BibLaTeX.009                                                               | 2          |
+     | Better BibLaTeX.010                                                               | 2          |
+     | Better BibLaTeX.011                                                               | 2          |
+     | Better BibLaTeX.013                                                               | 1          |
+     | Better BibLaTeX.014                                                               | 1          |
+     | Better BibLaTeX.015                                                               | 1          |
+     | Better BibLaTeX.016                                                               | 1          |
+     | Better BibLaTeX.017                                                               | 1          |
+     | Better BibLaTeX.018                                                               | 1          |
+     | Better BibLaTeX.019                                                               | 1          |
+     | Better BibLaTeX.020                                                               | 1          |
+     | Better BibLaTeX.021                                                               | 1          |
+     | Better BibLaTeX.022                                                               | 1          |
+     | Better BibLaTeX.023                                                               | 1          |
+     | Better BibLaTeX.keygen                                                            | 2          |
+     | Better BibLaTeX.stable-keys                                                       | 6          |
+     | Better BibTeX does not use biblatex fields eprint and eprinttype #170             | 3          |
+     | Better underscores in URL fields should not be escaped #104                       | 1          |
+     | biber error on generated biblatex file #99                                        | 1          |
+     | capital delta breaks .bib output #141                                             | 1          |
+     | Capitalisation in techreport titles #160                                          | 1          |
+     | DOI with underscores in extra field #108                                          | 1          |
+     | Export C as {v C}, not v{C} #152                                                  | 3          |
+     | Export "Forthcoming" as "Forthcoming"                                             | 2          |
+     | Exporting of single-field author lacks braces #130                                | 2          |
+     | Export Newspaper Article misses section field #132                                | 2          |
+     | Export of item to Better Bibtex fails for auth3_1 #98                             | 1          |
+     | Extra semicolon in biblatexadata causes export failure #133                       | 2          |
+     | German Umlaut "separated" by brackets #146                                        | 2          |
+     | Hang on non-file attachment export #112 - URL export broken #114                  | 4          |
+     | HTML Fragment separator escaped in url #140 #147                                  | 2          |
+     | Malformed HTML                                                                    | 1          |
+     | Math parts in title #113                                                          | 1          |
+     | References with multiple notes fail to export #174                                | 3          |
+     | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105 | 1          |
