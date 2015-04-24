@@ -210,6 +210,9 @@ Zotero.BetterBibTeX.updateSchema = ->
       when 'show-citekey' then @pref.set('showCitekeys', @pref.get(key))
       when 'skipfields' then @pref.set('skipFields', @pref.get(key))
       when 'useprefix' then @pref.set('usePrefix', @pref.get(key))
+      when 'unicode'
+        @pref.set('asciiBibTeX', (@pref.get(key) != 'always'))
+        @pref.set('asciiBibLaTeX', (@pref.get(key) == 'never'))
       else continue
     @pref.prefs.clearUserPref(key)
 

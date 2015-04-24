@@ -42,10 +42,10 @@ Translator.initialize = ->
   @testmode = Zotero.getHiddenPref('better-bibtex.testMode')
   @testmode_timestamp = Zotero.getHiddenPref('better-bibtex.testMode.timestamp') if @testmode
 
-  @unicode = switch Zotero.getHiddenPref('better-bibtex.unicode')
-    when 'always' then @unicode = true
-    when 'never'  then @unicode = false
-    else @unicode = @unicode_default or (@exportCharset?.toLowerCase() == 'utf-8')
+  @unicode = switch Translator.translatorID
+    when 'f895aa0d-f28e-47fe-b247-2ea77c6ed583' then !Zotero.getHiddenPref('better-bibtex.asciiBibLaTeX')
+    when 'ca65189f-8815-4afe-8c8b-8c7c15f0edca' then !Zotero.getHiddenPref('better-bibtex.asciiBibTeX')
+    else true
 
   if @typeMap
     typeMap = @typeMap

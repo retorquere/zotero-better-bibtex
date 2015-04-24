@@ -8,7 +8,6 @@ priority: 199
 configOptions: 
   getCollections: true
 displayOptions: 
-  exportCharset: "ASCII"
   exportNotes: true
   exportFileData: false
   useJournalAbbreviation: false

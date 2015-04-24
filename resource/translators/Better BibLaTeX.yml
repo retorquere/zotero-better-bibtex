@@ -10,7 +10,6 @@ inRepository: true
 configOptions: 
   getCollections: true
 displayOptions: 
-  exportCharset: "UTF-8"
   exportNotes: false
   exportFileData: false
   useJournalAbbreviation: false

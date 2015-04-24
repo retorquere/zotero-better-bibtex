@@ -20,7 +20,8 @@
         <preference id="pref-better-bibtex-format" name="extensions.zotero.translators.better-bibtex.citekeyFormat" type="string"/>
         <preference id="pref-better-bibtex-skipFields" name="extensions.zotero.translators.better-bibtex.skipFields" type="string"/>
         <preference id="pref-better-bibtex-server" name="extensions.zotero.httpServer.enabled" type="bool"/>
-        <preference id="pref-better-bibtex-unicode" name="extensions.zotero.translators.better-bibtex.unicode" type="string"/>
+        <preference id="pref-better-bibtex-asciiBibTeX" name="extensions.zotero.translators.better-bibtex.asciiBibTeX" type="bool"/>
+        <preference id="pref-better-bibtex-asciiBibLaTeX" name="extensions.zotero.translators.better-bibtex.asciiBibLaTeX" type="bool"/>
         <preference id="pref-better-bibtex-preserveCaps" name="extensions.zotero.translators.better-bibtex.preserveCaps" type="string"/>
         <preference id="pref-better-bibtex-useprefix" name="extensions.zotero.translators.better-bibtex.useprefix" type="bool"/>
         <preference id="pref-better-bibtex-langid" name="extensions.zotero.translators.better-bibtex.langid" type="string"/>
@@ -101,12 +102,10 @@
                     <textbox id="id-better-bibtex-preferences-skipFields" preference="pref-better-bibtex-skipFields" oninput="Zotero.BetterBibTeX.pref.update();" onkeypress="setTimeout(Zotero.BetterBibTeX.pref.update, 1);"/>
                   </row>
                   <row>
-                    <label value="&zotero.better-bibtex.unicode;"/>
-                    <radiogroup id="id-better-bibtex-preferences-unicode" orient="vertical" preference="pref-better-bibtex-unicode" oncommand="Zotero.BetterBibTeX.pref.update();">
-                      <radio id="id-better-bibtex-preferences-unicode-default" label="&zotero.better-bibtex.unicode.default;" value=""/>
-                      <radio id="id-better-bibtex-preferences-unicode-always" label="&zotero.better-bibtex.unicode.always;" value="always"/>
-                      <radio id="id-better-bibtex-preferences-unicode-never" label="&zotero.better-bibtex.unicode.never;" value="never"/>
-                    </radiogroup>
+                    <checkbox label="&zotero.better-bibtex.ascii.BibTeX;" preference="pref-better-bibtex-asciiBibTeX"/>
+                  </row>
+                  <row>
+                    <checkbox label="&zotero.better-bibtex.ascii.BibLaTeX;" preference="pref-better-bibtex-asciiBibLaTeX"/>
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.doi-and-url;"/>
