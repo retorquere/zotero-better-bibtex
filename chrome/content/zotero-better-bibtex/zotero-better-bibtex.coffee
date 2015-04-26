@@ -193,6 +193,12 @@ Zotero.BetterBibTeX.updateSchema = ->
 
   return if installed == installing
 
+  progressWin = new Zotero.ProgressWindow()
+  progressWin.changeHeadline('Better BibTeX: updating database')
+  progressWin.addLines(['Updating database, this could take a while'])
+  progressWin.show()
+  progressWin.startCloseTimer()
+
   @log("schema: upgrade from #{installed}")
 
   @pref.set('scanCitekeys', true)
