@@ -28,7 +28,7 @@ Zotero.BetterBibTeX.auto.process = (reason) ->
   @running = '' + ae.id
 
   translation = new Zotero.Translate.Export()
-  translation.setCollection(Zotero.Collections.get(ae.collection))
+  translation.setCollection(Zotero.Collections.get(ae.collection)) if ae.collection != 'library'
 
   path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
   path.initWithPath(ae.path)

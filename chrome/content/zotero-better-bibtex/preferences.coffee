@@ -107,7 +107,9 @@ Zotero.BetterBibTeX.pref.update = ->
     if refill
       itemNode = document.createElement('listitem')
       itemNode.setAttribute('value', ae.id)
-      itemNode.setAttribute('label', "#{Zotero.Collections.get(ae.collection)?.name || ae.collection} -> #{ae.path.replace(/^.*[\\\/]/, '')}")
+
+      name = if ae.collection == 'library' then 'Library' else (Zotero.Collections.get(ae.collection)?.name || ae.collection)
+      itemNode.setAttribute('label', "#{name} -> #{ae.path.replace(/^.*[\\\/]/, '')}")
       itemNode.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == ae.id then 'running' else ae.status}")
       itemNode.setAttribute('tooltiptext', "#{@collectionPath(ae.collection)} -> #{ae.path}")
       exportlist.appendChild(itemNode)
@@ -133,7 +135,8 @@ Zotero.BetterBibTeX.pref.autoexport =
     ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport ae join betterbibtex.exportoptions eo on ae.exportoptions = eo.id where ae.id = ?', [selectedItem.getAttribute('value')])
     Zotero.BetterBibTeX.log(':::selected', Zotero.BetterBibTeX.pref.clone(ae))
 
-    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-collection', "#{Zotero.Collections.get(ae.collection)?.name || ae.collection}")
+    name = if ae.collection == 'library' then 'Library' else (Zotero.Collections.get(ae.collection)?.name || ae.collection)
+    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-collection', name)
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-target', ae.path)
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-translator', Zotero.BetterBibTeX.translatorName(ae.translatorID))
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-charset', Zotero.BetterBibTeX.translatorName(ae.exportCharset))

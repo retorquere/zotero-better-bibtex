@@ -78,7 +78,8 @@ Zotero.BetterBibTeX.pref.ZoteroObserver = {
     switch data
       when 'recursiveCollections'
         recursive = "#{!!Zotero.BetterBibTeX.auto.recursive()}"
-        Zotero.DB.execute("update betterbibtex.autoexport set exportedRecursively = ?, status = 'pending' where exportedRecursively <> ?", [recursive, recursive])
+        # libraries are always recursive
+        Zotero.DB.execute("update betterbibtex.autoexport set exportedRecursively = ?, status = 'pending' where exportedRecursively <> ? and collection <> 'library'", [recursive, recursive])
         Zotero.BetterBibTeX.auto.process('recursiveCollections')
     return
 }
@@ -404,22 +405,23 @@ Zotero.BetterBibTeX.init = ->
           progressWin = new Zotero.ProgressWindow()
           progressWin.changeHeadline('Auto-export')
 
-          if !@_collection?._id
-            progressWin.addLines(['Auto-export only supported for collections'])
+          # I don't want 'Keep updated' to be remembered as a default
+          try
+            settings = JSON.parse(Zotero.Prefs.get('export.translatorSettings'))
+            if settings['Keep updated']
+              delete settings['Keep updated']
+              Zotero.Prefs.set('export.translatorSettings', JSON.stringify(settings))
+          catch
 
-          else
+          if @_collection?._id
             progressWin.addLines(["Collection #{@_collection._name} set up for auto-export"])
-            # I don't want 'Keep updated' to be remembered as a default
-            try
-              settings = JSON.parse(Zotero.Prefs.get('export.translatorSettings'))
-              if settings['Keep updated']
-                delete settings['Keep updated']
-                Zotero.Prefs.set('export.translatorSettings', JSON.stringify(settings))
-            catch
+            collection = @_collection._id
+          else
+            progressWin.addLines(['Auto-export of full library'])
+            collection = 'library'
 
-            @_displayOptions.translatorID = @translator[0].translatorID
-            Zotero.BetterBibTeX.auto.add(@_collection._id, @path, @_displayOptions)
-
+          @_displayOptions.translatorID = @translator[0].translatorID
+          Zotero.BetterBibTeX.auto.add(collection, @path, @_displayOptions)
           progressWin.show()
           progressWin.startCloseTimer()
 
@@ -557,11 +559,10 @@ Zotero.BetterBibTeX.itemAdded = {
         item.save()
         collection.addItem(item.id)
 
-    unless collections.length == 0
-      collections = Zotero.BetterBibTeX.withParentCollections(collections)
-      Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
-      Zotero.BetterBibTeX.auto.process('collectionChanged')
-
+    collections = Zotero.BetterBibTeX.withParentCollections(collections) if collections.length != 0
+    collections.push('library')
+    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
+    Zotero.BetterBibTeX.auto.process('collectionChanged')
     return
 }
 
@@ -595,10 +596,10 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
       Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'on-change')
 
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true)
-  unless collections.length == 0
-    collections = Zotero.BetterBibTeX.withParentCollections(collections)
-    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
-    Zotero.BetterBibTeX.auto.process('itemChanged')
+  collections = Zotero.BetterBibTeX.withParentCollections(collections) unless collections.length == 0
+  collections.push('library')
+  Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
+  Zotero.BetterBibTeX.auto.process('itemChanged')
 
   return
 
