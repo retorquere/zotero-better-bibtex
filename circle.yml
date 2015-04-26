@@ -7,10 +7,6 @@ dependencies:
   cache_directories:
     - "bin"
     - test/fixtures/profiles
-xtest:
-  override:
-    - case $CIRCLE_NODE_INDEX in [012]) $CUCUMBER --tags @test-cluster-$CIRCLE_NODE_INDEX ;; *) $CUCUMBER --tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2 ;; esac:
-        parallel: true
 deployment:
   master:
     branch: master
