@@ -496,7 +496,7 @@ task GR do
   sh "tar xjf #{tmp} -C bin --strip-components 3"
 end
 
-task :deploy => [XPI, GR, UPDATE_RDF] do
+task :deploy => [XPI, GR] do
   Dir['cucumber.*.status'].each{|status|
     result = open(status).read
     throw "#{status}: #{result}" unless result == 'success'
