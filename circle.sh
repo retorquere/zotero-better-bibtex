@@ -29,10 +29,6 @@ case $1 in
       git config --global user.name "$CIRCLE_USERNAME"
       git config --global user.email "$CIRCLE_USERNAME@$CIRCLE_PROJECT_USERNAME.github.com"
       git config --global push.default matching
-      mv cucumber.status cucumber.0.status
-      scp node1:zotero-better-bibtex/cucumber.status cucumber.1.status
-      scp node2:zotero-better-bibtex/cucumber.status cucumber.2.status
-      scp node3:zotero-better-bibtex/cucumber.status cucumber.3.status
       bundle exec rake deploy
     else
       echo 'not a tagged release'
