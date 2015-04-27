@@ -84,7 +84,7 @@ Scenario Outline: BibLaTeX Export
      | Export C as {v C}, not v{C} #152                                                  | 3          |
      | Export of item to Better Bibtex fails for auth3_1 #98                             | 1          |
 
-@test-cluster-1 @bblt
+@test-cluster-0 @bblt
 Scenario Outline: BibLaTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.bib'
@@ -107,6 +107,14 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.014                                                               | 1          |
      | Better BibLaTeX.015                                                               | 1          |
      | Better BibLaTeX.016                                                               | 1          |
+
+@test-cluster-1 @bblt
+Scenario Outline: BibLaTeX Export
+  Given I import <references> references from 'export/<file>.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/<file>.bib'
+
+  Examples:
+     | file                                                                              | references |
      | Better BibLaTeX.017                                                               | 1          |
      | Better BibLaTeX.019                                                               | 1          |
      | Better BibLaTeX.020                                                               | 1          |
