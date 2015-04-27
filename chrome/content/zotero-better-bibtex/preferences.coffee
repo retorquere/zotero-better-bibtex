@@ -27,7 +27,7 @@ Zotero.BetterBibTeX.pref.serverURL = (extension) ->
 
 Zotero.BetterBibTeX.pref.styleChanged = (index) ->
   stylebox = document.getElementById('better-bibtex-abbrev-style')
-  selectedItem = if index != 'undefined' then stylebox.getItemAtIndex(index) else stylebox.selectedItem
+  selectedItem = if typeof index != 'undefined' then stylebox.getItemAtIndex(index) else stylebox.selectedItem
   styleID = selectedItem.getAttribute('value')
   Zotero.BetterBibTeX.pref.set('autoAbbrevStyle', styleID)
   Zotero.BetterBibTeX.keymanager.journalAbbrevCache = Object.create(null)

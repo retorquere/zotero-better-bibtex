@@ -129,3 +129,4 @@ Scenario Outline: BibLaTeX Export
      | References with multiple notes fail to export #174                                | 3          |
      | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105 | 1          |
      | underscores in URL fields should not be escaped #104                              | 1          |
+     | Allow explicit field override                                                     | 1          |

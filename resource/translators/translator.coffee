@@ -154,6 +154,12 @@ class Reference
 
     @itemtype = Translator.typeMap.Zotero2BibTeX[@item.itemType] or 'misc'
 
+    for own attr, f of Translator.fieldMap or {}
+      if f.name and not @has[f.name]
+        @add(@field(f, @item[attr]))
+
+    @add({name: 'timestamp', value: Translator.testmode_timestamp || @item.dateModified || @item.dateAdded})
+
     if @item.extra
       fields = []
 
@@ -161,15 +167,15 @@ class Reference
       for line in @item.extra.split("\n")
         m = /^\s*(LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\s*:\s*([\S]+)\s*$/i.exec(line)
         switch m?[1].toLowerCase()
-          when 'lccn'           then fields.push({ name: 'lccn', value: m[2] })
-          when 'mr'             then fields.push({ name: 'mrnumber', value: m[2] })
-          when 'zbl'            then fields.push({ name: 'zmnumber', value: m[2] })
-          when 'pmcid'          then fields.push({ name: 'pmcid', value: m[2] })
-          when 'pmid'           then fields.push({ name: 'pmid', value: m[2] })
-          when 'arxiv'          then fields.push({ name: 'arxiv', value: m[2] })
-          when 'jstor'          then fields.push({ name: 'jstor', value: m[2] })
-          when 'hdl'            then fields.push({ name: 'hdl', value: m[2] })
-          when 'googlebooksid'  then fields.push({ name: 'googlebooks', value: m[2] })
+          when 'lccn'           then fields.push({ replace: true, name: 'lccn', value: m[2] })
+          when 'mr'             then fields.push({ replace: true, name: 'mrnumber', value: m[2] })
+          when 'zbl'            then fields.push({ replace: true, name: 'zmnumber', value: m[2] })
+          when 'pmcid'          then fields.push({ replace: true, name: 'pmcid', value: m[2] })
+          when 'pmid'           then fields.push({ replace: true, name: 'pmid', value: m[2] })
+          when 'arxiv'          then fields.push({ replace: true, name: 'arxiv', value: m[2] })
+          when 'jstor'          then fields.push({ replace: true, name: 'jstor', value: m[2] })
+          when 'hdl'            then fields.push({ replace: true, name: 'hdl', value: m[2] })
+          when 'googlebooksid'  then fields.push({ replace: true, name: 'googlebooks', value: m[2] })
           else extra.push(line)
       @item.extra = extra.join("\n")
 
@@ -182,7 +188,7 @@ class Reference
             Zotero.debug("Not an assignment: #{assignment}")
             continue
 
-          fields.push({ name: data[1], value: data[2] })
+          fields.push({ replace: true, name: data[1], value: data[2] })
 
       m = /(biblatexdata|bibtex|biblatex)({[\s\S]+})/.exec(@item.extra)
       if m
@@ -198,7 +204,7 @@ class Reference
         if json
           @item.extra = @item.extra.replace(prefix + data, '').trim()
           for name, value of json
-            fields.push({name: name, value: value})
+            fields.push({replace: true, name: name, value: value})
 
       for field in fields
         if field.name == 'referencetype'
@@ -207,12 +213,6 @@ class Reference
 
         field = @field(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
         @add(field)
-
-    for own attr, f of Translator.fieldMap or {}
-      if f.name and not @has[f.name]
-        @add(@field(f, @item[attr]))
-
-    @add({name: 'timestamp', value: Translator.testmode_timestamp || @item.dateModified || @item.dateAdded})
 
 Reference::log = Translator.log
 
