@@ -18,7 +18,7 @@ case $1 in
     ;;
 
   deploy)
-    TAGGED=`git log -n 1 --pretty=oneline`.strip
+    TAGGED=`git log -n 1 --pretty=oneline`
     XPI=`ls *.xpi`
     BUILD="$CIRCLE_SHA1 release: $XPI"
     echo "tagged: $TAGGED"
