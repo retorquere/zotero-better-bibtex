@@ -10,7 +10,8 @@
     },
     "options": {
       "exportFileData": false,
-      "exportNotes": true
+      "exportNotes": true,
+      "Export Collections": true
     }
   },
   "items": [
