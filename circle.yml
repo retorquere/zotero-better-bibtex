@@ -2,7 +2,7 @@ machine:
   ruby:
     version: "2.2"
   environment:
-    CUCUMBER: bundle exec cucumber --tag ~@noci
+    CUCUMBER: bundle exec rake && bundle exec cucumber --tag ~@noci
 dependencies:
   cache_directories:
     - "bin"
