@@ -18,6 +18,8 @@ case $1 in
     TAGGED=`git log -n 1 --pretty=oneline`.strip
     XPI=`ls *.xpi`
     BUILD="$CIRCLE_SHA1 release: $XPI"
+    echo "tagged: $TAGGED"
+    echo "build: $BUILD"
     if [ "$TAGGED" = "$BUILD" ] ; then
       git submodule update --init
       cd www; git checkout master; git pull
