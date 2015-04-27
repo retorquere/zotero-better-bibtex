@@ -1,4 +1,5 @@
 require 'rake'
+require 'rake/clean'
 require 'shellwords'
 require 'nokogiri'
 require 'openssl'
@@ -22,10 +23,8 @@ TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
 LINTED=[]
 def expand(file, options={})
-  dependencies = []
-
   #puts "expanding #{file.path.gsub(/^\.\//, '').inspect}"
-  if File.extname(file.path) == '.coffee' && !options[:collect] && !LINTED.include?(file.path)
+  if File.extname(file.path) == '.coffee' && !LINTED.include?(file.path)
     sh "#{NODEBIN}/coffeelint #{file.path.shellescape}"
     LINTED << file.path
   end
@@ -49,37 +48,23 @@ def expand(file, options={})
     if tbi =~ /\.js$/
       #puts "registering #{tbi.inspect}"
       result = all
-      tbi = File.join(File.dirname(file.path), tbi)
-      dependencies << tbi
     elsif tbi == ':constants:'
-      dependencies << 'Rakefile'
-      #puts "expanding #{tbi.inspect}"
-      if options[:collect]
-        result = ''
-      else
-        throw "No header information present" unless options[:header]
-        result = []
-        result << "Translator.translatorID    = #{options[:header]['translatorID'].to_json}"
-        result << "Translator.label           = #{options[:header]['label'].to_json}"
-        result << "Translator.timestamp       = #{options[:header]['lastUpdated'].to_json}"
-        result << "Translator.release         = #{RELEASE.to_json}"
-        result << "Translator.unicode_default = #{(!(((options[:header]['displayOptions'] || {})['exportCharset'] || 'ascii').downcase =~ /ascii/)).to_json}"
-        result = result.join("\n")
-      end
+      throw "No header information present" unless options[:header]
+      result = []
+      result << "Translator.translatorID    = #{options[:header]['translatorID'].to_json}"
+      result << "Translator.label           = #{options[:header]['label'].to_json}"
+      result << "Translator.timestamp       = #{options[:header]['lastUpdated'].to_json}"
+      result << "Translator.release         = #{RELEASE.to_json}"
+      result << "Translator.unicode_default = #{(!(((options[:header]['displayOptions'] || {})['exportCharset'] || 'ascii').downcase =~ /ascii/)).to_json}"
+      result = result.join("\n")
     else
       #puts "including #{tbi.inspect}"
       i = [File.join(File.dirname(file.path), tbi), File.join('include', tbi)].detect{|f| File.file?(f) }
       throw "#{tbi} not found in #{file.path}" unless i
-      dependencies << i
-      result = File.file?(i) || !options[:collect] ? expand(open(i), options.merge(namespace: namespace)) : ''
-      if result.is_a?(Array)
-        dependencies << result[1]
-        result = result[0]
-      end
+      result = File.file?(i) ? expand(open(i), options.merge(namespace: namespace)) : ''
     end
     prefix + result
   }
-  return [src, dependencies.flatten.uniq] if options[:collect]
   return src
 end
 
@@ -114,34 +99,96 @@ ZIPFILES = [
   'resource/translators/Zotero TestCase.json',
 ] + Dir['chrome/skin/**/*.*']
 
-SOURCES = [
-  'chrome/content/zotero-better-bibtex/errorReport.coffee',
-  'chrome/content/zotero-better-bibtex/Formatter.pegcoffee',
-  'chrome/content/zotero-better-bibtex/include.coffee',
-  'chrome/content/zotero-better-bibtex/overlay.xul',
-  'chrome/content/zotero-better-bibtex/preferences.coffee',
-  'chrome/content/zotero-better-bibtex/preferences.xul',
-  'chrome/content/zotero-better-bibtex/zotero-better-bibtex.coffee',
-  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
-  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.properties',
-  'chrome.manifest',
-  'defaults/preferences/defaults.coffee',
-  'install.rdf',
-  "#{NODEBIN}/coffee",
-  "#{NODEBIN}/coffeelint",
-  "#{NODEBIN}/pegjs",
-  'Rakefile',
-  'resource/translators/Better BibLaTeX.coffee',
-  'resource/translators/Better BibTeX.coffee',
-  'resource/translators/LaTeX Citation.coffee',
-  'resource/translators/latex_unicode_mapping.coffee',
-  'resource/translators/Pandoc Citation.coffee',
-  'resource/translators/Parser.pegcoffee',
-  'resource/translators/translator.coffee',
-  'resource/translators/unicode_translator.coffee',
-  'resource/translators/unicode.xml',
-  'resource/translators/Zotero TestCase.coffee',
-] + Dir['chrome/skin/**/*.*']
+def makedepend
+  scanning = ZIPFILES.dup
+  scanned = []
+  dependencies={}
+  while scanning.length > 0
+    target = scanning.pop
+    scanned << target
+
+    next if target == 'Rakefile'
+
+    sources = []
+    case File.extname(target)
+      when '.js'
+        %w{coffee pegcoffee}.each{|ext|
+          src = File.join(File.dirname(target), File.basename(target, File.extname(target)) + ".#{ext}")
+          sources << src if File.file?(src)
+        }
+        if File.file?(target)
+          IO.readlines(target).each{|line|
+            next unless line =~ /^require\s*\(?\s*'([^'\n]+)'/
+            required = $1.strip
+            if required == ':constants:'
+              required = 'Rakefile'
+            else
+              required = File.join(File.dirname(target), required)
+            end
+            scanning << required unless (scanned + scanning).include?(required)
+            sources << required
+          }
+        end
+
+      when '.json'
+        sources << File.join(File.dirname(target), File.basename(target, File.extname(target)) + '.yml')
+
+      when '.coffee'
+        if File.file?(target)
+          IO.readlines(target).each{|line|
+            next unless line =~ /^require\s*\(?\s*'([^'\n]+)'([^\n]*)/
+            required = $1.strip
+            if required == ':constants:'
+              required = 'Rakefile'
+            else
+              required = File.join(File.dirname(target), required)
+            end
+            scanning << required unless (scanned + scanning).include?(required)
+            sources << required
+          }
+        end
+
+      when '.manifest', '.xul', '.rdf', '.dtd', '.properties', '.pem', '.svg', '.css', '.yml', '.pegcoffee'
+      else throw "Unexpected extension for #{target}"
+    end
+
+    sources.each{|source|
+      dependencies[source] ||= []
+      dependencies[source] << target
+      scanning << source unless (scanned + scanning).include?(source)
+    }
+  end
+
+  begin
+    done = true
+    dependencies.each_pair{|dependency, dependants|
+      dependants.each{|dep|
+        if File.extname(dep) == '.coffee'
+          done = false
+          dependants.delete(dep)
+          dependencies[dep].each{|d|
+            dependants << d
+          }
+        end
+      }
+    }
+  end until done
+
+  open('.depend.mf', 'w'){|dmf|
+    dependencies.each_pair{|dependency, dependants|
+      dmf.write("#{dependants.uniq.sort.collect{|d| d.shellescape }.join(' ')} : #{dependency.shellescape}\n")
+    }
+  }
+end
+makedepend
+import '.depend.mf'
+
+Dir['**/*.js'].reject{|f| f =~ /^node_modules\//}.each{|f| CLEAN.include(f)}
+CLEAN.include('tmp/**/*')
+CLEAN.include('resource/transators/*.json')
+CLEAN.include('.depend.mf')
+CLEAN.include('resource/translators/latex_unicode_mapping.coffee')
+CLEAN.include('*.xpi')
 
 FileUtils.mkdir_p 'tmp'
 
@@ -250,7 +297,7 @@ task :validate => XPI do
 end
 
 task :test, [:tag] => XPI do |t, args|
-  tag = "@#{tag}".sub(/^@@/, '@')
+  tag = "@#{args[:tag]}".sub(/^@@/, '@')
 
   if tag == '@'
     tag = ''
@@ -260,27 +307,7 @@ task :test, [:tag] => XPI do |t, args|
 
   puts "Tests running: #{tag}"
 
-  success = true
-  open('cucumber.log', 'w'){|log|
-    IO.popen("cucumber #{tag}"){|io|
-      io.each { |line|
-        log.write(line)
-        puts line.chomp
-      }
-      io.close
-      success = ($?.to_i == 0)
-    }
-  }
-  throw 'One or more tests failed' unless success
-end
-
-task :clean do
-  clean = Dir['**/*.js'].select{|f| f=~ /^(defaults|chrome|resource)\//} + Dir['tmp/*'].select{|f| File.file?(f) } + Dir['resource/transators/*.json']
-  clean << 'resource/translators/latex_unicode_mapping.coffee'
-  clean << '.depends.mf'
-  clean.each{|f|
-    File.unlink(f)
-  }
+  sh "script -ec 'cucumber --no-color #{tag}' cucumber.log"
 end
 
 task :dropbox => XPI do
@@ -515,33 +542,3 @@ task :deploy => [XPI, GR] do
     puts "Not a tagged release"
   end
 end
-
-file '.depends.mf' => SOURCES do |t|
-  open(t.name, 'w'){|dmf|
-    dependencies = {}
-
-    t.prerequisites.each{|src|
-      next unless File.extname(src) == '.coffee' || File.extname(src) == '.pegcoffee'
-      js = File.join(File.dirname(src), File.basename(src, File.extname(src)) + '.js')
-
-      dependencies[src] ||= []
-      dependencies[src] << js
-
-      yml = File.join(File.dirname(src), File.basename(src, File.extname(src)) + '.yml')
-      if File.file?(yml)
-        dependencies[yml] ||= []
-        dependencies[yml] << js
-      end
-
-      expand(open(src), collect: true)[1].each{|dep|
-        dependencies[dep] ||= []
-        dependencies[dep] << js
-      }
-    }
-
-    dependencies.each_pair{|dependency, dependants|
-      dmf.write("#{dependants.uniq.sort.collect{|d| d.shellescape }.join(' ')} : #{dependency.shellescape}\n")
-    }
-  }
-end
-import '.depends.mf'
