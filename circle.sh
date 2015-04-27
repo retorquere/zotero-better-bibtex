@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 bundle exec rake 
 
 case $1 in
