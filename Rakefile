@@ -55,7 +55,6 @@ def expand(file, options={})
       result << "Translator.label           = #{options[:header]['label'].to_json}"
       result << "Translator.timestamp       = #{options[:header]['lastUpdated'].to_json}"
       result << "Translator.release         = #{RELEASE.to_json}"
-      result << "Translator.unicode_default = #{(!(((options[:header]['displayOptions'] || {})['exportCharset'] || 'ascii').downcase =~ /ascii/)).to_json}"
       result = result.join("\n")
     else
       #puts "including #{tbi.inspect}"
@@ -513,32 +512,4 @@ task :markfailing do
 
     open(file, 'w'){|f| f.write(script) }
   }
-end
-
-GR="bin/github-release"
-task GR do
-  FileUtils.mkdir_p('bin')
-  tmp = 'tmp/github-release.tar.bz2'
-  ZotPlus::RakeHelper.download('https://github.com/aktau/github-release/releases/download/v0.5.3/linux-amd64-github-release.tar.bz2', tmp)
-  sh "tar xjf #{tmp} -C bin --strip-components 3"
-end
-
-task :deploy => [XPI, GR] do
-  Dir['cucumber.*.status'].each{|status|
-    result = open(status).read
-    throw "#{status}: #{result}" unless result == 'success'
-  }
-  throw "GITHUB_TOKEN not set" unless ENV['GITHUB_TOKEN']
-  tagged = `git log -n 1 --pretty=oneline`.strip
-  current = "#{ENV['CIRCLE_SHA1']} release: #{XPI}"
-  puts "#{RELEASE}: tagged=#{tagged}, current=#{current}"
-  if tagged == current
-    puts "Deploying #{RELEASE} (#{ENV['CIRCLE_SHA1']})"
-    sh "#{GR} release --user ZotPlus --repo zotero-better-bibtex --tag #{RELEASE} --name 'v#{RELEASE}'"
-    sh "#{GR} upload --user ZotPlus --repo zotero-better-bibtex --tag #{RELEASE} --name '#{XPI}' --file '#{XPI}'"
-    open("www/_includes/#{EXTENSION}-version.html", 'w'){|f| f.write(RELEASE) }
-    system "cd www; rake publish"
-  else
-    puts "Not a tagged release"
-  end
 end
