@@ -18,12 +18,12 @@ case $1 in
     ;;
 
   deploy)
-    TAGGED=`git log -n 1 --pretty=oneline`
     XPI=`ls *.xpi`
-    BUILD="$CIRCLE_SHA1 release: $XPI"
-    echo "tagged: $TAGGED"
-    echo "build: $BUILD"
-    if [ "$TAGGED" = "$BUILD" ] ; then
+    RELEASE="$CIRCLE_SHA1 release: $XPI"
+    CHECKIN=`git log -n 1 --pretty=oneline`
+    echo "release: $CHECKIN"
+    echo "release: $RELEASE"
+    if [ "$CHECKIN" = "$RELEASE" ] ; then
       git submodule update --init
       cd www; git checkout master; git pull
       git config --global user.name "$CIRCLE_USERNAME"
