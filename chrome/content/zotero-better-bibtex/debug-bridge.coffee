@@ -85,7 +85,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, filename) ->
 
 Zotero.BetterBibTeX.DebugBridge.methods.library = ->
   translator = Zotero.BetterBibTeX.getTranslator('Zotero TestCase')
-  return JSON.parse(Zotero.BetterBibTeX.translate(translator, null, { exportNotes: true, exportFileData: false }))
+  return JSON.parse(Zotero.BetterBibTeX.translate(translator, null, { 'Export Collections': true, exportNotes: true, exportFileData: false }))
 
 Zotero.BetterBibTeX.DebugBridge.methods.getKeys = -> Zotero.BetterBibTeX.keymanager.keys()
 
