@@ -43,7 +43,7 @@ detectImport = ->
     Translator.log(e)
     return false
 
-  return (data and data.config and data.config.id == Translator.translatorID and data.items)
+  return data?.config?.id == Translator.translatorID && data.items
 
 doImport = ->
   json = ''
