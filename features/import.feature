@@ -15,7 +15,7 @@ Scenario: option to mantain the braces and special commands in titles or all fie
 
 Scenario Outline: Better BibTeX Import
   When I import <references> reference from 'import/<file>.bib'
-   And I set export option Export Collections to true
+   And I set export option Export Collections to false
   Then the library should match 'import/<file>.json'
 
   Examples:
