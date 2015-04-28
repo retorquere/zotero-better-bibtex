@@ -182,7 +182,7 @@ end
 makedepend
 import '.depend.mf'
 
-Dir['**/*.js'].reject{|f| f =~ /^node_modules\//}.each{|f| CLEAN.include(f)}
+Dir['**/*.js'].reject{|f| f =~ /^(node_modules|www)\//}.each{|f| CLEAN.include(f)}
 CLEAN.include('tmp/**/*')
 CLEAN.include('resource/transators/*.json')
 CLEAN.include('.depend.mf')
