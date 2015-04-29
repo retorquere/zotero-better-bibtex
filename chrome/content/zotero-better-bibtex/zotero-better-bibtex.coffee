@@ -596,6 +596,7 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
       Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'on-change')
 
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true)
+  collections ?= []
   collections = Zotero.BetterBibTeX.withParentCollections(collections) unless collections.length == 0
   collections.push("'library'")
   Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
