@@ -560,7 +560,7 @@ Zotero.BetterBibTeX.itemAdded = {
         collection.addItem(item.id)
 
     collections = Zotero.BetterBibTeX.withParentCollections(collections) if collections.length != 0
-    collections.push('library')
+    collections.push("'library'")
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
     Zotero.BetterBibTeX.auto.process('collectionChanged')
     return
@@ -597,7 +597,7 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
 
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true)
   collections = Zotero.BetterBibTeX.withParentCollections(collections) unless collections.length == 0
-  collections.push('library')
+  collections.push("'library'")
   Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
   Zotero.BetterBibTeX.auto.process('itemChanged')
 
