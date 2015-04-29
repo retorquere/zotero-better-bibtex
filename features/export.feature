@@ -100,13 +100,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.006                                                               | 1          |
      | Better BibLaTeX.007                                                               | 1          |
      | Better BibLaTeX.009                                                               | 4          |
-     | Better BibLaTeX.010                                                               | 2          |
-     | Better BibLaTeX.011                                                               | 2          |
-     | Better BibLaTeX.012                                                               | 2          |
-     | Better BibLaTeX.013                                                               | 1          |
-     | Better BibLaTeX.014                                                               | 1          |
-     | Better BibLaTeX.015                                                               | 1          |
-     | Better BibLaTeX.016                                                               | 1          |
 
 @test-cluster-1 @bblt
 Scenario Outline: BibLaTeX Export
@@ -115,6 +108,13 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                              | references |
+     | Better BibLaTeX.010                                                               | 2          |
+     | Better BibLaTeX.011                                                               | 2          |
+     | Better BibLaTeX.012                                                               | 2          |
+     | Better BibLaTeX.013                                                               | 1          |
+     | Better BibLaTeX.014                                                               | 1          |
+     | Better BibLaTeX.015                                                               | 1          |
+     | Better BibLaTeX.016                                                               | 1          |
      | Better BibLaTeX.017                                                               | 1          |
      | Better BibLaTeX.019                                                               | 1          |
      | Better BibLaTeX.020                                                               | 1          |
