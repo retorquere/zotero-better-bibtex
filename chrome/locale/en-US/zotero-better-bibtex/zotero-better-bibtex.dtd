@@ -71,6 +71,7 @@
 <!ENTITY zotero.better-bibtex.auto-export.preserveBibTeXVariables "Preserve BibTeX variables">
 <!ENTITY zotero.better-bibtex.auto-export.remove "Remove">
 <!ENTITY zotero.better-bibtex.auto-export.mark "Mark">
+<!ENTITY zotero.better-bibtex.auto-export.add "You can only review and remove exports here. To add an auto-export, perform a regular export and check 'Keep Updated'.">
 
 
 <!ENTITY zotero.better-bibtex.rescan-citekeys "Re-scan pinned citekeys after restart">

@@ -156,6 +156,7 @@
           </tabpanel>
           <tabpanel orient="vertical"><!-- auto export -->
             <vbox class="better-bibtex-prefs" flex="1">
+              <label value="&zotero.better-bibtex.auto-export.add;"/>
               <hbox>
                 <label value="&zotero.better-bibtex.prefs.auto-export;"/>
                 <radiogroup id="id-better-bibtex-preferences-auto-export" orient="horizontal" preference="pref-better-bibtex-auto-export">
