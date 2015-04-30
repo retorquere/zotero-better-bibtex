@@ -146,4 +146,4 @@ Scenario: auto-export
     | translator      | Better BibLaTeX |
   And I select the first item where publisher = 'IEEE'
   And I remove the selected item
-  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.default.bib'
+  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.autoexport.bib'

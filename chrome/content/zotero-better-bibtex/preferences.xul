@@ -182,6 +182,10 @@
                     </columns>
                     <rows>
                       <row>
+                        <label value="&zotero.better-bibtex.auto-export.status;"/>
+                        <textbox id="id-better-bibtex-preferences-auto-export-status" disabled="true"/>
+                      </row>
+                      <row>
                         <label value="&zotero.better-bibtex.auto-export.collection;"/>
                         <textbox id="id-better-bibtex-preferences-auto-export-collection" disabled="true"/>
                       </row>

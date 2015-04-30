@@ -135,6 +135,7 @@ Zotero.BetterBibTeX.pref.autoexport =
     ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport ae join betterbibtex.exportoptions eo on ae.exportoptions = eo.id where ae.id = ?', [selectedItem.getAttribute('value')])
     Zotero.BetterBibTeX.log(':::selected', Zotero.BetterBibTeX.pref.clone(ae))
 
+    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-status', ae.status)
     name = if ae.collection == 'library' then 'Library' else (Zotero.Collections.get(ae.collection)?.name || ae.collection)
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-collection', name)
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-target', ae.path)
@@ -162,4 +163,5 @@ Zotero.BetterBibTeX.pref.autoexport =
     id = selectedItem.getAttribute('value')
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where id = ?", [id])
     selectedItem.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == id then 'running' else 'pending'}")
+    @selected()
     return

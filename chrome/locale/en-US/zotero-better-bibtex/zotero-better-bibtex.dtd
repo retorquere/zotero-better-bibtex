@@ -62,6 +62,7 @@
 <!ENTITY zotero.better-bibtex.prefs.auto-export.immediate "On Change">
 <!ENTITY zotero.better-bibtex.prefs.auto-export.idle "When Idle">
 <!ENTITY zotero.better-bibtex.preferences.auto-export.config "Export Configuration">
+<!ENTITY zotero.better-bibtex.auto-export.status "Status">
 <!ENTITY zotero.better-bibtex.auto-export.charset "Character encoding">
 <!ENTITY zotero.better-bibtex.auto-export.notes "Notes">
 <!ENTITY zotero.better-bibtex.auto-export.collection "Collection">
