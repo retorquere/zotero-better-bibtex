@@ -201,17 +201,11 @@
                         <label value="&zotero.better-bibtex.auto-export.charset;"/>
                         <textbox id="id-better-bibtex-preferences-auto-export-charset" disabled="true"/>
                       </row>
-                      <row>
-                        <checkbox id="id-better-bibtex-preferences-auto-export-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" disabled="true"/>
-                      </row>
-                      <row>
-                        <checkbox id="id-better-bibtex-preferences-auto-export-notes" label="&zotero.better-bibtex.auto-export.notes;" disabled="true"/>
-                      </row>
-                      <row>
-                        <checkbox id="id-better-bibtex-preferences-auto-export-preserve-bibvars" label="&zotero.better-bibtex.auto-export.preserveBibTeXVariables;" disabled="true"/>
-                      </row>
                     </rows>
                   </grid>
+                  <checkbox id="id-better-bibtex-preferences-auto-export-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" disabled="true"/>
+                  <checkbox id="id-better-bibtex-preferences-auto-export-notes" label="&zotero.better-bibtex.auto-export.notes;" disabled="true"/>
+                  <checkbox id="id-better-bibtex-preferences-auto-export-preserve-bibvars" label="&zotero.better-bibtex.auto-export.preserveBibTeXVariables;" disabled="true"/>
                 </groupbox>
               </hbox>
               <hbox>
