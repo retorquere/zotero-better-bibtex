@@ -68,7 +68,7 @@ def loadZotero(profile)
       #STDOUT.sync = true
       #STDOUT.puts "Installing plugins..."
       (Dir['*.xpi'] + Dir['test/fixtures/plugins/*.xpi']).each{|xpi|
-        #STDOUT.puts "Installing #{File.basename(xpi)}"
+        STDOUT.puts "Installing #{File.basename(xpi)}"
         profile.add_extension(xpi)
       }
 
