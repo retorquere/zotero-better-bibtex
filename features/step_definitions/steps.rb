@@ -54,7 +54,8 @@ def loadZotero(profile)
       end
       profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
     
-      if connected?
+      unless ENV['OFFLINE'].to_s.downcase == 'yes'
+        STDOUT.puts 'Getting plugins'
         if File.file?('features/plugins.yml')
           plugins = YAML.load_file('features/plugins.yml')
         else

@@ -131,11 +131,3 @@ def getxpis(sources, dir)
     download(s.url, "#{dir}/#{s.xpi}")
   }
 end
-
-def connected?
-  begin
-    return true if open('http://github.com')
-  rescue
-    return false
-  end
-end
