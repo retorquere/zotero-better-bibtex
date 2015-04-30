@@ -3,7 +3,7 @@
 
 source 'https://rubygems.org'
 
-#gem 'facets'
+gem 'os'
 #gem 'trollop'
 gem 'rake'
 gem 'nokogiri'

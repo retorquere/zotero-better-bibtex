@@ -1,4 +1,5 @@
 require 'rake'
+require 'os'
 require 'rake/clean'
 require 'shellwords'
 require 'nokogiri'
@@ -306,7 +307,11 @@ task :test, [:tag] => XPI do |t, args|
 
   puts "Tests running: #{tag}"
 
-  sh "script -ec 'cucumber --no-color #{tag}' cucumber.log"
+  if OS.mac?
+    sh "script -q -t 1 cucumuber.log cucumber --no-color #{tag}"
+  else
+    sh "script -ec 'cucumber --no-color #{tag}' cucumber.log"
+  end
 end
 
 task :dropbox => XPI do

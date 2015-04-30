@@ -1,4 +1,5 @@
-require 'headless'
+require 'os'
+
 require 'selenium/webdriver'
 require 'json'
 require 'pp'
@@ -8,18 +9,23 @@ require 'yaml'
 require 'benchmark'
 require 'shellwords'
 
-$headless ||= false
-unless $headless
-  $headless = Headless.new(display: 100) # reserve 100 for BetterBibTeX
-  $headless.start
-end
-at_exit do
-  $headless.destroy if $headless
+if !OS.mac?
+  require 'headless'
+  $headless ||= false
+  unless $headless
+    $headless = Headless.new(display: 100) # reserve 100 for BetterBibTeX
+    $headless.start
+  end
+  at_exit do
+    $headless.destroy if $headless
+  end
 end
 
 def cmd(cmdline)
   throw cmdline unless system(cmdline)
 end
+
+cmd('rake')
 
 def download(url, path)
   cmd "curl -L -s -S -o #{path.shellescape} #{url.shellescape}"
@@ -113,6 +119,9 @@ def loadZotero(profile)
     else
       throw "Firefox profile #{profile} requested but #{$Firefox.profile} already running"
   end
+end
+at_exit do
+  $Firefox.browser.quit if $Firefox && $Firefox.browser
 end
 
 Before do |scenario|
@@ -299,6 +308,24 @@ When(/^I set (preference|export option)\s+(.+)\s+to (.*)$/) do |setting, name, v
   end
 end
 
+When /^I auto-export to '(.*)' using:$/ do |path, table|
+  unless @translators
+    @translators = {}
+    Dir['resource/translators/*.yml'].each{|tr|
+      tr = YAML.load_file(tr)
+      @translators[tr['label']] = tr['translatorID']
+    }
+  end
+  options = table.rows_hash
+
+  options['translatorID'] = @translators[options.delete('translator')]
+  options['exportCharset'] ||= 'UTF-8'
+  options['exportNotes'] = (options['exportNotes'] == 'true')
+  options['preserveBibTeXVariables'] = (options['preserveBibTeXVariables'] == 'true')
+  options['useJournalAbbreviation'] = (options['useJournalAbbreviation'] == 'true')
+  #options['collection'] = options['collection'].to_i unless options['collection'] == 'library'
+  $Firefox.BetterBibTeX.autoExport(path, options)
+end
 
 Then /^sleep ([0-9]+) seconds$/ do |secs|
   #STDOUT.puts "sleeping #{secs} seconds"

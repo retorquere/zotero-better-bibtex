@@ -41,6 +41,8 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.BetterBibTeX.keymanager.reset(true)
   Zotero.Items.emptyTrash()
   Zotero.DB.query('delete from betterbibtex.cache')
+  Zotero.DB.query('delete from betterbibtex.exportOptions')
+  Zotero.DB.query('delete from betterbibtex.autoExport')
 
   err = JSON.stringify((item.toArray() for item in Zotero.BetterBibTeX.safeGetAll()))
   throw "reset failed -- Library not empty -- #{err}" unless Zotero.DB.valueQuery('select count(*) from items') == 0
@@ -116,3 +118,8 @@ Zotero.BetterBibTeX.DebugBridge.methods.sql = -> Zotero.BetterBibTeX.DebugBridge
 
 Zotero.BetterBibTeX.DebugBridge.methods.pinCiteKey = (id) ->
   return Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'manual').citekey
+
+Zotero.BetterBibTeX.DebugBridge.methods.autoExport = (path, options) ->
+  Zotero.Prefs.set('translators.better-bibtex.autoExport', 'change')
+  Zotero.BetterBibTeX.auto.add('library', path, options)
+  return true

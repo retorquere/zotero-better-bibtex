@@ -138,3 +138,12 @@ Scenario Outline: BibLaTeX Export
      | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105 | 1          |
      | underscores in URL fields should not be escaped #104                              | 1          |
      | Allow explicit field override                                                     | 1          |
+
+@test-cluster-1 @ae
+Scenario: auto-export
+  Given I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json'
+  When I auto-export to 'tmp/library.bib' using:
+    | translator      | Better BibLaTeX |
+  And I select the first item where publisher = 'IEEE'
+  And I remove the selected item
+  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.default.bib'

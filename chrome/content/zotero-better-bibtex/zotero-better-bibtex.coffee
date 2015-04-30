@@ -436,7 +436,7 @@ Zotero.BetterBibTeX.init = ->
   nids.push(Zotero.Notifier.registerObserver(@itemAdded, ['collection-item']))
   window.addEventListener('unload', ((e) -> Zotero.Notifier.unregisterObserver(id) for id in nids), false)
 
-  @idleService.addIdleObserver(@idleObserver, 60)
+  @idleService.addIdleObserver(@idleObserver, @pref.get('autoExportIdleWait'))
 
   uninstaller = {
     onUninstalling: (addon, needsRestart) ->
