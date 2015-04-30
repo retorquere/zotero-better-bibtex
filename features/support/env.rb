@@ -123,18 +123,12 @@ def getxpis(sources, dir)
   sources = sources.collect{|s| resolvexpi(s) }
 
   (installed - sources.collect{|s| s.xpi}).each{|xpi|
-    #puts "Removing #{xpi}"
+    puts "Removing #{xpi}"
     File.unlink("#{dir}/#{xpi}")
   }
   sources.reject{|s| installed.include?(s.xpi) && s.url !~ /^file:/ }.each{|s|
-    if s.url =~ /^file:/
-      #puts "Copying #{s.xpi}"
-      path = s.url.sub(/^file:/, '')
-      FileUtils.cp(path, "#{dir}/#{s.xpi}")
-    else
-      #puts "Downloading #{s.xpi}"
-      download(s.url, "#{dir}/#{s.xpi}")
-    end
+    puts "Downloading #{s.xpi}"
+    download(s.url, "#{dir}/#{s.xpi}")
   }
 end
 
