@@ -5,6 +5,7 @@ dependencies:
   cache_directories:
     - "bin"
     - test/fixtures/profiles
+    - test/fixtures/plugins
 test:
   override:
     - ./circle.sh build:

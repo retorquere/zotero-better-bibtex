@@ -41,7 +41,6 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.BetterBibTeX.keymanager.reset(true)
   Zotero.Items.emptyTrash()
   Zotero.DB.query('delete from betterbibtex.cache')
-  Zotero.DB.query('delete from betterbibtex.exportOptions')
   Zotero.DB.query('delete from betterbibtex.autoExport')
 
   err = JSON.stringify((item.toArray() for item in Zotero.BetterBibTeX.safeGetAll()))

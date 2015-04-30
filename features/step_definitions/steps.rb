@@ -25,6 +25,7 @@ def cmd(cmdline)
   throw cmdline unless system(cmdline)
 end
 
+Dir['*.xpi'].each{|xpi| File.unlink(xpi)}
 cmd('rake')
 
 def download(url, path)
@@ -43,12 +44,6 @@ def loadZotero(profile)
       #STDOUT.puts "starting Firefox with #{profile} profile"
       $Firefox.profile = profile
     
-      xpi = Dir['*.xpi']
-      cmd "rake" if xpi.length == 0
-      xpi = Dir['*.xpi']
-      throw "Expected exactly one XPI, found #{xpi.length}" unless xpi.length == 1
-      xpi = xpi.first
-    
       profiles = File.expand_path('test/fixtures/profiles/')
       FileUtils.mkdir_p(profiles)
       profile_dir = File.join(profiles, profile)
@@ -59,23 +54,24 @@ def loadZotero(profile)
       end
       profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
     
-      if File.file?('features/plugins.yml')
-        plugins = YAML.load_file('features/plugins.yml')
-      else
-        plugins = []
+      if connected?
+        if File.file?('features/plugins.yml')
+          plugins = YAML.load_file('features/plugins.yml')
+        else
+          plugins = []
+        end
+        plugins << 'https://zotplus.github.io/debug-bridge/update.rdf'
+        plugins << 'https://www.zotero.org/download/update.rdf'
+        plugins.uniq!
+        getxpis(plugins, 'test/fixtures/plugins')
       end
-      plugins << "file://" + File.expand_path("#{Dir['*.xpi'][0]}")
-      plugins << 'https://zotplus.github.io/debug-bridge/update.rdf'
-      plugins << 'https://www.zotero.org/download/update.rdf'
-      plugins.uniq!
-      getxpis(plugins, 'tmp/plugins')
-     
       #STDOUT.sync = true
       #STDOUT.puts "Installing plugins..."
-      Dir['tmp/plugins/*.xpi'].shuffle.each{|xpi|
+      (Dir['*.xpi'] + Dir['test/fixtures/plugins/*.xpi']).each{|xpi|
         #STDOUT.puts "Installing #{File.basename(xpi)}"
         profile.add_extension(xpi)
       }
+
       profile['extensions.zotero.showIn'] = 2
       profile['extensions.zotero.httpServer.enabled'] = true
       profile['dom.max_chrome_script_run_time'] = 6000
@@ -114,7 +110,6 @@ def loadZotero(profile)
       Dir['*.debug'].each{|d| File.unlink(d) }
       Dir['*.status'].each{|d| File.unlink(d) }
       Dir['*.log'].each{|d| File.unlink(d) unless File.basename(d) == 'cucumber.log' }
-      open('cucumber.status', 'w'){|f| f.write('success')}
 
     else
       throw "Firefox profile #{profile} requested but #{$Firefox.profile} already running"
@@ -136,9 +131,6 @@ Before do |scenario|
 end
 
 After do |scenario|
-  @failed ||= scenario.failed?
-  open('cucumber.status', 'w'){|f| f.write('failed')} if @failed
-
   if ENV['CI'] != 'true'
     open("#{scenario.name}.debug", 'w'){|f| f.write($Firefox.DebugBridge.log) } if scenario.source_tag_names.include?('@logcapture')
     filename = scenario.name.gsub(/[^0-9A-z.\-]/, '_')

@@ -138,3 +138,10 @@ def getxpis(sources, dir)
   }
 end
 
+def connected?
+  begin
+    return true if open('http://github.com')
+  rescue
+    return false
+  end
+end

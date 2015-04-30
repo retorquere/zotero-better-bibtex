@@ -10,6 +10,7 @@
 resource/translators/latex_unicode_mapping.coffee
 resource/translators/mathchar.pegcoffee
 resource/translators/*.json
+test/fixtures/plugins
 tmp
 update.rdf
 *.xpi

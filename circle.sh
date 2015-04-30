@@ -3,7 +3,6 @@
 set -e
 set -u
 
-bundle exec rake 
 
 case $1 in
   build)
@@ -18,6 +17,7 @@ case $1 in
     ;;
 
   deploy)
+    bundle exec rake
     XPI=`ls *.xpi`
     RELEASE="$CIRCLE_SHA1 release: $XPI"
     CHECKIN=`git log -n 1 --pretty=oneline`
