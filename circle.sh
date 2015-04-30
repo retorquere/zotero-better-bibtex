@@ -21,7 +21,7 @@ case $1 in
     XPI=`ls *.xpi`
     RELEASE="$CIRCLE_SHA1 release: $XPI"
     CHECKIN=`git log -n 1 --pretty=oneline`
-    echo "release: $CHECKIN"
+    echo "checkin: $CHECKIN"
     echo "release: $RELEASE"
     if [ "$CHECKIN" = "$RELEASE" ] ; then
       git submodule update --init
