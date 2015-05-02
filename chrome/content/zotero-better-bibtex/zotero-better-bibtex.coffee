@@ -156,8 +156,6 @@ Zotero.BetterBibTeX.SQLColumns = (table) ->
     columns[Zotero.DB._getTypedValue(statement, name)] = true
   statement.finalize()
 
-  @log('schema', table, columns)
-
   return columns
 
 Zotero.BetterBibTeX.updateSchema = ->
@@ -190,7 +188,6 @@ Zotero.BetterBibTeX.updateSchema = ->
   installed = @version(Zotero.DB.valueQuery("select version from betterbibtex.schema"))
   installing = @version(@release)
   Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', ?)", [@release])
-  @log("schema: #{@release}")
 
   return if installed == installing
 
@@ -199,8 +196,6 @@ Zotero.BetterBibTeX.updateSchema = ->
   progressWin.addLines(['Updating database, this could take a while'])
   progressWin.show()
   progressWin.startCloseTimer()
-
-  @log("schema: upgrade from #{installed}")
 
   @pref.set('scanCitekeys', true)
   for key in @pref.prefs.getChildList('')
@@ -309,10 +304,7 @@ Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
 
-  @log('initializing')
-
   @logging = Zotero.Debug.enabled
-  Zotero.debug("BBT: logging = #{@logging}")
   @pref.set('logging', @logging)
 
   @translators = Object.create(null)
@@ -327,7 +319,6 @@ Zotero.BetterBibTeX.init = ->
   thread = @threadManager.currentThread
   while not @release
     thread.processNextEvent(true)
-  @log("My extension's version is #{@release}")
 
   @updateSchema()
 
@@ -348,7 +339,6 @@ Zotero.BetterBibTeX.init = ->
     url = "/better-bibtex/#{name}"
     ep = Zotero.Server.Endpoints[url] = ->
     ep.prototype = endpoint
-    @log("Registered #{url}")
 
   # clean up keys for items that have gone missing
   Zotero.DB.query('delete from betterbibtex.keys where not itemID in (select itemID from items)')
@@ -358,7 +348,6 @@ Zotero.BetterBibTeX.init = ->
     patched = []
     for row in Zotero.DB.query(@findKeysSQL) or []
       patched.push(row.itemID)
-      @log('scan:', row)
       @keymanager.set(row, @keymanager.extract({extra: row.extra}).__citekey__)
     if patched.length > 0
       for row in Zotero.DB.query("select * from betterbibtex.keys where citekeyFormat is null and itemID not in #{@SQLSet(patched)}")
@@ -397,9 +386,8 @@ Zotero.BetterBibTeX.init = ->
     return ->
       if @translator?[0] && @location && typeof @location == 'object'
         for own name, header of Zotero.BetterBibTeX.translators
-          if header.translatorID == @translator[0].translatorID
+          if header.translatorID == @translator[0]
             @_displayOptions.exportPath = @location.path.slice(0, -@location.leafName.length)
-            Zotero.BetterBibTeX.log("captured export path: #{@_displayOptions.exportPath}")
 
         if @_displayOptions?['Keep updated']
           progressWin = new Zotero.ProgressWindow()
@@ -425,7 +413,7 @@ Zotero.BetterBibTeX.init = ->
               collection = 'library'
 
           if collection
-            @_displayOptions.translatorID = @translator[0].translatorID
+            @_displayOptions.translatorID = @translator[0]
             Zotero.BetterBibTeX.auto.add(collection, @path, @_displayOptions)
           progressWin.show()
           progressWin.startCloseTimer()
@@ -457,7 +445,6 @@ Zotero.BetterBibTeX.init = ->
   }
   AddonManager.addAddonListener(uninstaller)
 
-  @log('initialized')
   return
 
 Zotero.BetterBibTeX.loadTranslators = ->
@@ -489,7 +476,6 @@ Zotero.BetterBibTeX.removeTranslator = (header) ->
 
 Zotero.BetterBibTeX.itemAdded = {
   notify: (event, type, collection_items) ->
-    Zotero.BetterBibTeX.log('::: itemAdded', event, type, collection_items)
     collections = []
 
     # monitor items added to collection to find BibTeX AUX Scanner data. The scanner adds a dummy item whose 'extra'
@@ -497,7 +483,6 @@ Zotero.BetterBibTeX.itemAdded = {
 
     for collection_item in collection_items
       [collectionID, itemID] = collection_item.split('-')
-      Zotero.BetterBibTeX.log('::: itemAdded', collectionID, itemID)
       collections.push(collectionID)
 
       # aux-scanner only triggers on add
@@ -511,7 +496,6 @@ Zotero.BetterBibTeX.itemAdded = {
       try
         extra = JSON.parse(extra)
       catch error
-        Zotero.BetterBibTeX.log('::: itemAdded extra not json ', extra, error)
         continue
 
       note = null
@@ -527,22 +511,16 @@ Zotero.BetterBibTeX.itemAdded = {
             note = report.serialize()
 
         when '0af8f14d-9af7-43d9-a016-3c5df3426c98' # BibTeX AUX Scanner
-          Zotero.BetterBibTeX.log('::: AUX', collection.id, extra.citations)
 
           missing = []
           for citekey in extra.citations
-            Zotero.BetterBibTeX.log("::: citekey #{citekey}")
             id = Zotero.DB.valueQuery('select itemID from betterbibtex.keys where citekey = ? and itemID in (select itemID from items where coalesce(libraryID, 0) = ?)', [citekey, collection.libraryID || 0])
             if id
-              Zotero.BetterBibTeX.log("::: citekey #{citekey} found")
               collection.addItem(id)
             else
-              Zotero.BetterBibTeX.log("::: citekey #{citekey} missing")
               missing.push(citekey)
 
-          if missing.length == 0
-            Zotero.BetterBibTeX.log("::: all citekeys found")
-          else
+          if missing.length != 0
             report = new Zotero.BetterBibTeX.HTMLNode('http://www.w3.org/1999/xhtml', 'html')
             report.div(->
               @p(-> @b('BibTeX AUX scan'))
@@ -581,8 +559,6 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
   return unless type == 'item' && event in ['delete', 'trash', 'add', 'modify']
   ids = extraData if event == 'delete'
   return unless ids.length > 0
-
-  Zotero.BetterBibTeX.log('itemChanged', event, type, ids, extraData)
 
   Zotero.BetterBibTeX.keymanager.reset()
   Zotero.DB.query("delete from betterbibtex.cache where itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}")
@@ -674,7 +650,6 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions) ->
 Zotero.BetterBibTeX.load = (translator) ->
   try
     header = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}on"))
-    @log('loading translator', header)
     @removeTranslator(header)
     code = [
       # Zotero ships with a lobotomized version

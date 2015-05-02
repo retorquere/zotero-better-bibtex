@@ -18,8 +18,6 @@ Zotero.BetterBibTeX.auto.process = (reason) ->
     when 'off'  then return
     when 'idle' then return unless @idle
 
-  Zotero.BetterBibTeX.log("Auto-export: #{reason}")
-
   ae = Zotero.DB.rowQuery("select *
                            from betterbibtex.autoexport ae
                            join betterbibtex.exportoptions eo on ae.exportoptions = eo.id
@@ -112,7 +110,6 @@ Zotero.BetterBibTeX.cache.fetch = (options, itemID) ->
     @stats.access[itemID] ?= {}
     @stats.access[itemID][cached.exportoptions] = Date.now()
     @stats.hits += 1
-    Zotero.BetterBibTeX.log('::: found cache entry', cached)
     return cached
 
   @stats.misses += 1

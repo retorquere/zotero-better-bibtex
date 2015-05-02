@@ -288,7 +288,7 @@ Then(/^'([^']+)' should match '([^']+)'$/) do |found, expected|
 end
 
 Then(/^I? ?export the library using '([^']+)' to '([^']+)'$/) do |translator, filename|
-  bm = Benchmark.measure { $Firefox.BetterBibTeX.exportToFile(translator, File.expand_path(filename)) }
+  $Firefox.BetterBibTeX.exportToFile(translator, File.expand_path(filename))
 end
 
 When(/^I set (preference|export option)\s+(.+)\s+to (.*)$/) do |setting, name, value|
@@ -304,27 +304,9 @@ When(/^I set (preference|export option)\s+(.+)\s+to (.*)$/) do |setting, name, v
       $Firefox.BetterBibTeX.setPreference(name, value)
 
     else
+      @keepUpdated = value if name == 'Keep updated'
       $Firefox.BetterBibTeX.setExportOption(name, value)
   end
-end
-
-When /^I auto-export to '(.*)' using:$/ do |path, table|
-  unless @translators
-    @translators = {}
-    Dir['resource/translators/*.yml'].each{|tr|
-      tr = YAML.load_file(tr)
-      @translators[tr['label']] = tr['translatorID']
-    }
-  end
-  options = table.rows_hash
-
-  options['translatorID'] = @translators[options.delete('translator')]
-  options['exportCharset'] ||= 'UTF-8'
-  options['exportNotes'] = (options['exportNotes'] == 'true')
-  options['preserveBibTeXVariables'] = (options['preserveBibTeXVariables'] == 'true')
-  options['useJournalAbbreviation'] = (options['useJournalAbbreviation'] == 'true')
-  #options['collection'] = options['collection'].to_i unless options['collection'] == 'library'
-  $Firefox.BetterBibTeX.autoExport(path, options)
 end
 
 Then /^sleep ([0-9]+) seconds$/ do |secs|

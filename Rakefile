@@ -185,7 +185,7 @@ import '.depend.mf'
 
 Dir['**/*.js'].reject{|f| f =~ /^(node_modules|www)\//}.each{|f| CLEAN.include(f)}
 CLEAN.include('tmp/**/*')
-CLEAN.include('resource/transators/*.json')
+CLEAN.include('resource/translators/*.json')
 CLEAN.include('.depend.mf')
 CLEAN.include('resource/translators/latex_unicode_mapping.coffee')
 CLEAN.include('*.xpi')

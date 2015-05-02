@@ -98,12 +98,10 @@ Zotero.BetterBibTeX.pref.update = ->
 
   exportlist = document.getElementById('better-bibtex-export-list')
   refill = (1 for node in exportlist.children when node.nodeName == 'listitem').length is 0
-  Zotero.BetterBibTeX.log('loading exports:', refill, exportlist.children.length)
 
   selectedExport = -1
   for ae in Zotero.DB.query("select * from betterbibtex.autoexport order by path")
     selectedExport = 0
-    Zotero.BetterBibTeX.log(':::ae', Zotero.BetterBibTeX.pref.clone(ae))
     if refill
       itemNode = document.createElement('listitem')
       itemNode.setAttribute('value', ae.id)
@@ -133,7 +131,6 @@ Zotero.BetterBibTeX.pref.autoexport =
     document.getElementById('auto-export-mark').setAttribute('disabled', false)
 
     ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport ae join betterbibtex.exportoptions eo on ae.exportoptions = eo.id where ae.id = ?', [selectedItem.getAttribute('value')])
-    Zotero.BetterBibTeX.log(':::selected', Zotero.BetterBibTeX.pref.clone(ae))
 
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-status', ae.status)
     name = if ae.collection == 'library' then 'Library' else (Zotero.Collections.get(ae.collection)?.name || ae.collection)

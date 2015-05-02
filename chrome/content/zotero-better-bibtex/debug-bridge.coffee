@@ -118,7 +118,11 @@ Zotero.BetterBibTeX.DebugBridge.methods.sql = -> Zotero.BetterBibTeX.DebugBridge
 Zotero.BetterBibTeX.DebugBridge.methods.pinCiteKey = (id) ->
   return Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'manual').citekey
 
-Zotero.BetterBibTeX.DebugBridge.methods.autoExport = (path, options) ->
-  Zotero.Prefs.set('translators.better-bibtex.autoExport', 'change')
-  Zotero.BetterBibTeX.auto.add('library', path, options)
-  return true
+Zotero.BetterBibTeX.DebugBridge.methods.autoExports = ->
+  exports = []
+  for e in Zotero.DB.query('select * from betterbibtex.autoexport ae join betterbibtex.exportoptions eo on ae.exportoptions = eo.id')
+    ae = {}
+    for own k, v of e
+      ae[k] = v
+    exports.push(ae)
+  return exports

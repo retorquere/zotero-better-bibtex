@@ -383,7 +383,6 @@
 
 start
   = formatter:formatter {
-      @Formatter.log(formatter)
       parser = Function('item', formatter)
       parser:: = @Formatter
       return parser
