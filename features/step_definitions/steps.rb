@@ -25,6 +25,12 @@ def cmd(cmdline)
   throw cmdline unless system(cmdline)
 end
 
+STDOUT.sync = true unless ENV['CI'] == 'true'
+def say(msg)
+  return if ENV['CI'] == 'true'
+  STDOUT.puts msg
+end
+
 Dir['*.xpi'].each{|xpi| File.unlink(xpi)}
 cmd('rake')
 
@@ -41,7 +47,7 @@ def loadZotero(profile)
       # reuse existing profile
 
     when nil
-      #STDOUT.puts "starting Firefox with #{profile} profile"
+      say "starting Firefox with #{profile} profile"
       $Firefox.profile = profile
     
       profiles = File.expand_path('test/fixtures/profiles/')
@@ -55,7 +61,7 @@ def loadZotero(profile)
       profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
     
       unless ENV['OFFLINE'].to_s.downcase == 'yes'
-        STDOUT.puts 'Getting plugins'
+        say 'Getting plugins'
         if File.file?('features/plugins.yml')
           plugins = YAML.load_file('features/plugins.yml')
         else
@@ -66,10 +72,9 @@ def loadZotero(profile)
         plugins.uniq!
         getxpis(plugins, 'test/fixtures/plugins')
       end
-      #STDOUT.sync = true
-      #STDOUT.puts "Installing plugins..."
+      say "Installing plugins..."
       (Dir['*.xpi'] + Dir['test/fixtures/plugins/*.xpi']).each{|xpi|
-        STDOUT.puts "Installing #{File.basename(xpi)}"
+        say "Installing #{File.basename(xpi)}"
         profile.add_extension(xpi)
       }
 
@@ -91,16 +96,16 @@ def loadZotero(profile)
       profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
       profile['pdfjs.disabled'] = true
     
-      #STDOUT.puts "Starting Firefox..."
+      say "Starting Firefox..."
       client = Selenium::WebDriver::Remote::Http::Default.new
       client.timeout = 6000 # seconds – default is 60
       $Firefox.browser = Selenium::WebDriver.for :firefox, :profile => profile, :http_client => client
-      #STDOUT.puts "Firefox started"
+      say "Firefox started"
     
       sleep 2
-      #STDOUT.puts "Starting Zotero..."
+      say "Starting Zotero..."
       $Firefox.browser.navigate.to('chrome://zotero/content/tab.xul') # does this trigger the window load?
-      #STDOUT.puts "Zotero started"
+      say "Zotero started"
       #$headless.take_screenshot('/home/emile/zotero/zotero-better-bibtex/screenshot.png')
       $Firefox.DebugBridge = JSONRPCClient.new('http://localhost:23119/debug-bridge')
       $Firefox.DebugBridge.bootstrap('Zotero.BetterBibTeX')
@@ -128,7 +133,6 @@ Before do |scenario|
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.testMode.timestamp', '2015-02-24 12:14:36 +0100')
   @selected = nil
   @expectedExport = nil
-  #STDOUT.puts "State reset, ready to go"
 end
 
 After do |scenario|
@@ -201,7 +205,6 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
     while !entries.now || entries.now != entries.new
       sleep 2
       entries.now = entries.new || entries.start
-      #STDOUT.puts entries.now
       entries.new = $Firefox.BetterBibTeX.librarySize
 
       elapsed = Time.now - start
@@ -210,7 +213,7 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
         remaining = expected - processed
         speed = processed / elapsed
         timeleft = (Time.mktime(0)+((expected - processed) / speed)).strftime("%H:%M:%S")
-        STDOUT.puts "Slow import (#{elapsed}): #{processed} entries @ #{speed.round(1)} entries/sec, #{timeleft} remaining"
+        say "Slow import (#{elapsed}): #{processed} entries @ #{speed.round(1)} entries/sec, #{timeleft} remaining"
       end
     end
 
@@ -310,14 +313,12 @@ When(/^I set (preference|export option)\s+(.+)\s+to (.*)$/) do |setting, name, v
 end
 
 Then /^I? ?wait ([0-9]+) seconds?$/ do |secs|
-  #STDOUT.puts "sleeping #{secs} seconds"
   sleep Integer(secs)
-  #STDOUT.puts "proceeding"
 end
 
 Then /^show the (browser|Zotero) log$/ do |kind|
-  STDOUT.puts $Firefox.DebugBridge.log if kind == 'Zotero'
-  STDOUT.puts browserLog if kind == 'browser'
+  say $Firefox.DebugBridge.log if kind == 'Zotero'
+  say browserLog if kind == 'browser'
 end
 
 Then /^(write|append) the (browser|Zotero) log to '([^']+)'$/ do |action, kind, filename|
