@@ -312,8 +312,10 @@ When(/^I set (preference|export option)\s+(.+)\s+to (.*)$/) do |setting, name, v
   end
 end
 
-Then /^I? ?wait ([0-9]+) seconds?$/ do |secs|
-  sleep Integer(secs)
+Then /^I? ?wait ([0-9]+) seconds?(.*)/ do |secs, comment|
+  wait = Integer(secs)
+  wait = 0 if comment =~ / CI$/ && ENV['CI'] != 'true'
+  sleep wait unless wait == 0
 end
 
 Then /^show the (browser|Zotero) log$/ do |kind|
