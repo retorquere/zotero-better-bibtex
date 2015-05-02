@@ -147,4 +147,5 @@ Scenario: auto-export
   And I export the library using 'Better BibLaTeX' to 'tmp/autoexport.bib'
   When I select the first item where publisher = 'IEEE'
   And I remove the selected item
+  And I wait 2 seconds
   Then 'tmp/autoexport.bib' should match 'export/autoexport.after.bib'

@@ -309,7 +309,7 @@ When(/^I set (preference|export option)\s+(.+)\s+to (.*)$/) do |setting, name, v
   end
 end
 
-Then /^sleep ([0-9]+) seconds$/ do |secs|
+Then /^I? ?wait ([0-9]+) seconds?$/ do |secs|
   #STDOUT.puts "sleeping #{secs} seconds"
   sleep Integer(secs)
   #STDOUT.puts "proceeding"
