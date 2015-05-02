@@ -141,9 +141,10 @@ Scenario Outline: BibLaTeX Export
 
 @test-cluster-1 @ae
 Scenario: auto-export
-  Given I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json'
-  When I auto-export to 'tmp/library.bib' using:
-    | translator      | Better BibLaTeX |
-  And I select the first item where publisher = 'IEEE'
+  Given I import 3 references with 2 attachments from 'export/autoexport.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/autoexport.before.bib'
+  When I set export option Keep Updated to true
+  And I export the library using 'Better BibLaTeX' to 'tmp/autoexport.bib'
+  When I select the first item where publisher = 'IEEE'
   And I remove the selected item
-  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.autoexport.bib'
+  Then 'tmp/autoexport.bib' should match 'export/autoexport.after.bib'
