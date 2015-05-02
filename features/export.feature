@@ -139,7 +139,7 @@ Scenario Outline: BibLaTeX Export
      | underscores in URL fields should not be escaped #104                              | 1          |
      | Allow explicit field override                                                     | 1          |
 
-@test-cluster-1 @ae
+@test-cluster-0 @ae
 Scenario: auto-export
   Given I import 3 references with 2 attachments from 'export/autoexport.json'
   Then a library export using 'Better BibLaTeX' should match 'export/autoexport.before.bib'
