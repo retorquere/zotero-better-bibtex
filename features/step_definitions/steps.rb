@@ -280,15 +280,15 @@ Then(/^a (timed )?library export using '([^']+)' should match '([^']+)'$/) do |t
   expect(found).to eq(expected)
 end
 
-Then(/^'([^']+)' should match '([^']+)'$/) do |file1, file2|
-  found = open(File.expand_path(file1)).read.strip
-  expected = File.expand_path(File.join('test/fixtures', filename))
+Then(/^'([^']+)' should match '([^']+)'$/) do |found, expected|
+  found = open(File.expand_path(found)).read.strip
+  expected = File.expand_path(File.join('test/fixtures', expected))
   expected = open(expected).read.strip
   expect(found).to eq(expected)
 end
 
 Then(/^I? ?export the library using '([^']+)' to '([^']+)'$/) do |translator, filename|
-  bm = Benchmark.measure { $Firefox.BetterBibTeX.exportToFile(translator, filename) }
+  bm = Benchmark.measure { $Firefox.BetterBibTeX.exportToFile(translator, File.expand_path(filename)) }
 end
 
 When(/^I set (preference|export option)\s+(.+)\s+to (.*)$/) do |setting, name, value|
