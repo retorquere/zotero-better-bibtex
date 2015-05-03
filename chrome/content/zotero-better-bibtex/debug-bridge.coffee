@@ -40,7 +40,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.Collections.erase((coll.id for coll in Zotero.getCollections()))
   Zotero.BetterBibTeX.keymanager.reset(true)
   Zotero.Items.emptyTrash()
-  Zotero.DB.query('delete from betterbibtex.cache')
+  Zotero.DB.query('delete from betterbibtexcache.cache')
   Zotero.DB.query('delete from betterbibtex.autoExport')
 
   err = JSON.stringify((item.toArray() for item in Zotero.BetterBibTeX.safeGetAll()))
@@ -55,7 +55,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.import = (filename) ->
   return true
 
 Zotero.BetterBibTeX.DebugBridge.methods.librarySize = -> Zotero.DB.valueQuery('select count(*) from items i where not i.itemID in (select d.itemID from deletedItems d)')
-Zotero.BetterBibTeX.DebugBridge.methods.cacheSize = -> Zotero.DB.valueQuery('select count(*) from betterbibtex.cache')
+Zotero.BetterBibTeX.DebugBridge.methods.cacheSize = -> Zotero.DB.valueQuery('select count(*) from betterbibtexcache.cache')
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator) ->
   translator = Zotero.BetterBibTeX.getTranslator(translator)
@@ -108,7 +108,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.select = (attribute, value) ->
 Zotero.BetterBibTeX.DebugBridge.methods.cache = ->
   return {
     stats: Zotero.BetterBibTeX.cache.stats
-    data: Zotero.DB.query('select * from betterbibtex.cache')
+    data: Zotero.DB.query('select * from betterbibtexcache.cache')
   }
 
 Zotero.BetterBibTeX.DebugBridge.methods.remove = (id) -> Zotero.Items.trash([id])

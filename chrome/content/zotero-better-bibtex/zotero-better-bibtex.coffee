@@ -65,7 +65,7 @@ Zotero.BetterBibTeX.pref.observer = {
         Zotero.DB.query('delete from betterbibtex.keys where citekeyFormat is not null and citekeyFormat <> ?', [Zotero.BetterBibTeX.pref.get('citekeyFormat')])
 
     # if any var changes, drop the cache and kick off all exports
-    Zotero.DB.query('delete from betterbibtex.cache')
+    Zotero.DB.query('delete from betterbibtexcache.cache')
     Zotero.DB.query("update betterbibtex.autoexport set status='pending'")
     Zotero.BetterBibTeX.auto.process()
     return
@@ -227,6 +227,7 @@ Zotero.BetterBibTeX.updateSchema = ->
     Zotero.DB.query("alter table betterbibtex.#{table} rename to _#{table}_") if columns[table]
   Zotero.DB.query('drop table if exists betterbibtex.keys2')
   Zotero.DB.query('drop table if exists betterbibtex.cache')
+  Zotero.DB.query('drop table if exists betterbibtexcache.cache')
 
   ### clean slate ###
   Zotero.DB.query('create table betterbibtex.keys (itemID primary key, citekey not null, citekeyFormat)')
@@ -244,14 +245,13 @@ Zotero.BetterBibTeX.updateSchema = ->
       )
     ")
   Zotero.DB.query("
-    create table betterbibtex.cache (
+    create table betterbibtexcache.cache (
       itemID not null,
       exportoptions not null,
       citekey not null,
       entry not null,
       lastaccess not null default CURRENT_TIMESTAMP,
-      primary key (itemid, exportoptions),
-      foreign key (exportoptions) references exportoptions(id)
+      primary key (itemid, exportoptions)
       )
     ")
   Zotero.DB.query("
@@ -312,6 +312,16 @@ Zotero.BetterBibTeX.init = ->
   @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
   db = Zotero.getZoteroDatabase('betterbibtex')
   Zotero.DB.query('ATTACH ? AS betterbibtex', [db.path])
+  db = Zotero.getZoteroDatabase('betterbibtexcache')
+  Zotero.DB.query('ATTACH ? AS betterbibtexcache', [db.path])
+  for pragma in [ 'betterbibtexcache.auto_vacuum = NONE', 'betterbibtexcache.journal_mode = OFF', 'betterbibtexcache.synchronous = OFF', 'temp_store = MEMORY' ]
+    statement = Zotero.DB.getStatement("PRAGMA #{pragma}", null, true)
+    statement.executeStep()
+    statement.finalize()
+  try # corruption detection is prudent after the above pragmas
+    Zotero.DB.query('select * from betterbibtexcache')
+  catch
+    Zotero.DB.query('drop table if exists betterbibtexcache.cache')
 
   @pref.prefs.clearUserPref('brace-all')
 
@@ -561,7 +571,7 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
   return unless ids.length > 0
 
   Zotero.BetterBibTeX.keymanager.reset()
-  Zotero.DB.query("delete from betterbibtex.cache where itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}")
+  Zotero.DB.query("delete from betterbibtexcache.cache where itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}")
 
   # this is safe -- either a pinned key is restored below, or it needs to be regenerated anyhow after change
   for id in ids
@@ -571,7 +581,7 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
     for item in Zotero.DB.query("#{Zotero.BetterBibTeX.findKeysSQL} and i.itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}") or []
       citekey = Zotero.BetterBibTeX.keymanager.extract(item).__citekey__
       Zotero.BetterBibTeX.keymanager.set(item, citekey)
-      Zotero.DB.query('delete from betterbibtex.cache where citekey = ?', [citekey])
+      Zotero.DB.query('delete from betterbibtexcache.cache where citekey = ?', [citekey])
 
     for id in ids
       Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'on-change')

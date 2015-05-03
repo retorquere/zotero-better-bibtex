@@ -94,9 +94,9 @@ Zotero.BetterBibTeX.cache.init = ->
 Zotero.BetterBibTeX.cache.reap = ->
   for own itemID, access of @stats.access
     for own options, accesstime of access
-      Zotero.DB.query("update betterbibtex.cache set lastaccess = ? where itemID = ? and exportoptions = ?", [accesstime.toISOString().substring(0, 19).replace('T', ' '), itemID, options])
+      Zotero.DB.query("update betterbibtexcache.cache set lastaccess = ? where itemID = ? and exportoptions = ?", [accesstime.toISOString().substring(0, 19).replace('T', ' '), itemID, options])
   @stats.access = {}
-  Zotero.DB.query("delete from betterbibtex.cache where lastaccess < datetime('now','-1 month')")
+  Zotero.DB.query("delete from betterbibtexcache.cache where lastaccess < datetime('now','-1 month')")
   return
 
 Zotero.BetterBibTeX.cache.fetch = (options, itemID) ->
@@ -105,7 +105,7 @@ Zotero.BetterBibTeX.cache.fetch = (options, itemID) ->
     itemID = arguments[2]
 
   eo = @exportOptions(options)
-  cached = Zotero.DB.rowQuery('select citekey, entry, exportoptions from betterbibtex.cache where itemID = ? and exportoptions = ?', [itemID, eo])
+  cached = Zotero.DB.rowQuery('select citekey, entry, exportoptions from betterbibtexcache.cache where itemID = ? and exportoptions = ?', [itemID, eo])
   if cached?.citekey && cached?.entry
     @stats.access[itemID] ?= {}
     @stats.access[itemID][cached.exportoptions] = Date.now()
@@ -125,5 +125,5 @@ Zotero.BetterBibTeX.cache.store = (options, itemid, citekey, entry) ->
   @stats.stores += 1
 
   eo = Zotero.BetterBibTeX.cache.exportOptions(options)
-  Zotero.DB.query("insert or replace into betterbibtex.cache (exportoptions, itemid, citekey, entry, lastaccess) values (?, ?, ?, ?, CURRENT_TIMESTAMP)", [eo, itemid, citekey, entry])
+  Zotero.DB.query("insert or replace into betterbibtexcache.cache (exportoptions, itemid, citekey, entry, lastaccess) values (?, ?, ?, ?, CURRENT_TIMESTAMP)", [eo, itemid, citekey, entry])
   return
