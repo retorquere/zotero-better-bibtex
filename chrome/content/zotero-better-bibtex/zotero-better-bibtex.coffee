@@ -395,8 +395,10 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Translate.Export.prototype.translate = ((original) ->
     return ->
       if @translator?[0] && @location && typeof @location == 'object'
+        translatorID = @translator[0]
+        translatorID = translatorID.translatorID if translatorID.translatorID
         for own name, header of Zotero.BetterBibTeX.translators
-          if header.translatorID == @translator[0]
+          if header.translatorID == translatorID
             @_displayOptions.exportPath = @location.path.slice(0, -@location.leafName.length)
 
         if @_displayOptions?['Keep updated']
@@ -423,7 +425,7 @@ Zotero.BetterBibTeX.init = ->
               collection = null
 
           if collection
-            @_displayOptions.translatorID = @translator[0]
+            @_displayOptions.translatorID = translatorID
             Zotero.BetterBibTeX.auto.add(collection, @location.path, @_displayOptions)
           progressWin.show()
           progressWin.startCloseTimer()
