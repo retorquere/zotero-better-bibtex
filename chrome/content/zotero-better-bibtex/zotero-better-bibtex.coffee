@@ -411,20 +411,20 @@ Zotero.BetterBibTeX.init = ->
               Zotero.Prefs.set('export.translatorSettings', JSON.stringify(settings))
           catch
 
-          collection = null
           switch
             when @_collection?._id
               progressWin.addLines(["Collection #{@_collection._name} set up for auto-export"])
               collection = @_collection._id
-            when @_items?.length
-              progressWin.addLines(['Auto-export only supported for collections and libraries'])
-            else
+            when !@_items
               progressWin.addLines(['Auto-export of full library'])
               collection = 'library'
+            else
+              progressWin.addLines(['Auto-export only supported for collections and libraries'])
+              collection = null
 
           if collection
             @_displayOptions.translatorID = @translator[0]
-            Zotero.BetterBibTeX.auto.add(collection, @path, @_displayOptions)
+            Zotero.BetterBibTeX.auto.add(collection, @location.path, @_displayOptions)
           progressWin.show()
           progressWin.startCloseTimer()
 
