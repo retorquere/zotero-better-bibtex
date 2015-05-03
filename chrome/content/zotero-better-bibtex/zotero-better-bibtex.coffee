@@ -144,7 +144,8 @@ Zotero.BetterBibTeX.foreign_keys = (enabled) ->
   return
 
 Zotero.BetterBibTeX.SQLColumns = (table) ->
-  statement = Zotero.DB.getStatement("pragma betterbibtex.table_info(#{table})", null, true)
+  schema = if table == 'cache' then 'cache' else ''
+  statement = Zotero.DB.getStatement("pragma betterbibtex#{schema}.table_info(#{table})", null, true)
 
   # Get name column
   for i in [0...statement.columnCount]
@@ -189,7 +190,7 @@ Zotero.BetterBibTeX.updateSchema = ->
   installing = @version(@release)
   Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', ?)", [@release])
 
-  return if installed == installing
+  return if installed == installing && !(['cache', 'keys', 'autoexport', 'exportoptions'].some((table) => !@SQLColumns(table)))
 
   progressWin = new Zotero.ProgressWindow()
   progressWin.changeHeadline('Better BibTeX: updating database')
@@ -397,6 +398,7 @@ Zotero.BetterBibTeX.init = ->
       if @translator?[0] && @location && typeof @location == 'object'
         translatorID = @translator[0]
         translatorID = translatorID.translatorID if translatorID.translatorID
+        Zotero.BetterBibTeX.log('translate:', translatorID)
         for own name, header of Zotero.BetterBibTeX.translators
           if header.translatorID == translatorID
             @_displayOptions.exportPath = @location.path.slice(0, -@location.leafName.length)
