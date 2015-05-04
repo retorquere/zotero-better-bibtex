@@ -282,7 +282,7 @@ def preferenceValue(value)
   return value
 end
 
-Then(/^the following library export should match '([^']+):'$/) do |filename, table|
+Then(/^the following library export should match '([^']+)':$/) do |filename, table|
   exportOptions = table.rows_hash
   exportOptions.each{ |_,str| preferenceValue(str) }
   exportOptions = @exportOptions.merge(exportOptions)
