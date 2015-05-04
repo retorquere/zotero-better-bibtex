@@ -11,7 +11,7 @@ displayOptions:
   exportNotes: true
   exportFileData: false
   useJournalAbbreviation: false
-  "Export Collections": true
+  "Export collections": true
   "Keep updated": false
   "Preserve Bib variables": false
 inRepository: true

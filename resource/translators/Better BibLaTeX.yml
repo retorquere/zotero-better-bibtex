@@ -13,5 +13,5 @@ displayOptions:
   exportNotes: false
   exportFileData: false
   useJournalAbbreviation: false
-  "Export Collections": true
+  "Export collections": true
   "Keep updated": false

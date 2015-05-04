@@ -308,9 +308,9 @@ task :test, [:tag] => XPI do |t, args|
   puts "Tests running: #{tag}"
 
   if OS.mac?
-    sh "script -q -t 1 cucumuber.log cucumber --no-color #{tag}"
+    sh "script -q -t 1 cucumuber.log cucumber --strict --no-color #{tag}"
   else
-    sh "script -ec 'cucumber --no-color #{tag}' cucumber.log"
+    sh "script -ec 'cucumber --strict --no-color #{tag}' cucumber.log"
   end
 end
 

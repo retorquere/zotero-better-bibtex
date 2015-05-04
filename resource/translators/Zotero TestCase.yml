@@ -10,7 +10,7 @@ configOptions:
 displayOptions: 
   exportNotes: true
   exportFileData: false
-  "Export Collections": true
+  "Export collections": true
 inRepository: true
 translatorType: 3
 browserSupport: gcsv

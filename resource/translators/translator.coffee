@@ -35,7 +35,7 @@ Translator.initialize = ->
 
   for option in ['useJournalAbbreviation', 'exportPath', 'exportCharset', 'exportFileData', 'exportNotes']
     @[option] = Zotero.getOption(option)
-  @exportCollections = !!Zotero.getOption('Export Collections')
+  @exportCollections = !!Zotero.getOption('Export collections')
   @preserveBibTeXVariables = !!Zotero.getOption('Preserve BibTeX variables')
 
   @testmode = Zotero.getHiddenPref('better-bibtex.testMode')
