@@ -133,6 +133,7 @@ Before do |scenario|
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.testMode.timestamp', '2015-02-24 12:14:36 +0100')
   @selected = nil
   @expectedExport = nil
+  @exportOptions = {}
 end
 
 After do |scenario|
@@ -188,9 +189,7 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
         (data['config']['preferences'] || {}).each_pair{|key, value|
           $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.' + key, value)
         }
-        (data['config']['options'] || {}).each_pair{|key, value|
-          $Firefox.BetterBibTeX.setExportOption(key, value)
-        }
+        @exportOptions = data['config']['options'] || {}
       end
     end
 
@@ -240,11 +239,16 @@ def normalize(o)
   end
 end
 
-Then /^the library should match '([^']+)'$/ do |filename|
+Then /^the library (without collections )?should match '([^']+)'$/ do |nocollections, filename|
   expected = File.expand_path(File.join('test/fixtures', filename))
   expected = JSON.parse(open(expected).read)
 
   found = $Firefox.BetterBibTeX.library
+  
+  if nocollections
+    expected['collections'] = []
+    found['collections'] = []
+  end
 
   renum = lambda{|collection, idmap, items=true|
     collection.delete('id')
@@ -270,10 +274,36 @@ Then /^the library should match '([^']+)'$/ do |filename|
   expect(JSON.pretty_generate(found)).to eq(JSON.pretty_generate(expected))
 end
 
-Then(/^a (timed )?library export using '([^']+)' should match '([^']+)'$/) do |timed, translator, filename|
+def preferenceValue(value)
+  value.strip!
+  return (value == 'true') if ['true', 'false'].include?(value)
+  return Integer(value) if value =~ /^[0-9]+$/
+  return value[1..-1] if value =~ /^'[^']+'$/
+  return value
+end
+
+Then(/^the following library export should match '([^']+):'$/) do |filename, table|
+  exportOptions = table.rows_hash
+  exportOptions.each{ |_,str| preferenceValue(str) }
+  exportOptions = @exportOptions.merge(exportOptions)
+
+  translator = exportOptions.delete('translator')
+  benchmark = (exportOptions.delete('benchmark') == 'true')
+
   found = nil
-  bm = Benchmark.measure { found = $Firefox.BetterBibTeX.exportToString(translator).strip }
-  puts bm if timed
+  bm = Benchmark.measure { found = $Firefox.BetterBibTeX.exportToString(translator, exportOptions).strip }
+  puts bm if benchmark
+
+  @expectedExport = OpenStruct.new(filename: filename, translator: translator)
+
+  expected = File.expand_path(File.join('test/fixtures', filename))
+  expected = open(expected).read.strip
+  open("tmp/#{File.basename(filename)}", 'w'){|f| f.write(found)} if found != expected
+  expect(found).to eq(expected)
+end
+
+Then(/^a library export using '([^']+)' should match '([^']+)'$/) do |translator, filename|
+  found = $Firefox.BetterBibTeX.exportToString(translator, @exportOptions).strip
 
   @expectedExport = OpenStruct.new(filename: filename, translator: translator)
 
@@ -290,26 +320,27 @@ Then(/^'([^']+)' should match '([^']+)'$/) do |found, expected|
   expect(found).to eq(expected)
 end
 
-Then(/^I? ?export the library using '([^']+)' to '([^']+)'$/) do |translator, filename|
-  $Firefox.BetterBibTeX.exportToFile(translator, File.expand_path(filename))
+Then(/I? ?export the library to '([^']+)':$/) do |filename, table|
+  exportOptions = table.rows_hash
+  exportOptions.each{ |_,str| preferenceValue(str) }
+  exportOptions = @exportOptions.merge(exportOptions)
+
+  translator = exportOptions.delete('translator')
+  benchmark = (exportOptions.delete('benchmark') == 'true')
+
+  bm = Benchmark.measure { $Firefox.BetterBibTeX.exportToFile(translator, exportOptions, File.expand_path(filename)) }
+  puts bm if benchmark
 end
 
-When(/^I set (preference|export option)\s+(.+)\s+to (.*)$/) do |setting, name, value|
-  value.strip!
-  value = case value
-            when 'true', 'false' then (value == 'true')
-            when /^'.*'$/ then value.gsub(/^'|'$/, '')
-            else Integer(value)
-          end
-
-  case setting
-    when 'preference'
-      $Firefox.BetterBibTeX.setPreference(name, value)
-
-    else
-      @keepUpdated = value if name == 'Keep updated'
-      $Firefox.BetterBibTeX.setExportOption(name, value)
-  end
+When(/^I set preferences:$/) do |table|
+  table.rows_hash.each_pair{ |name, value|
+    name = "translators.better-bibtex#{name}" if name[0] == '.'
+    $Firefox.BetterBibTeX.setPreference(name, preferenceValue(value))
+  }
+end
+When(/^I set preference (.*) to (.*)$/) do |name, value|
+  name = "translators.better-bibtex#{name}" if name[0] == '.'
+  $Firefox.BetterBibTeX.setPreference(name, preferenceValue(value))
 end
 
 Then /^I? ?wait ([0-9]+) seconds?(.*)/ do |secs, comment|

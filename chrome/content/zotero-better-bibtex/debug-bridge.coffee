@@ -1,6 +1,4 @@
 Zotero.BetterBibTeX.DebugBridge = {
-  exportOptions: {}
-  sql: []
   namespace: 'better-bibtex'
   methods: {}
 }
@@ -8,8 +6,6 @@ Zotero.BetterBibTeX.DebugBridge = {
 Zotero.BetterBibTeX.DebugBridge.methods.init = ->
   return if Zotero.BetterBibTeX.DebugBridge.initialized
   Zotero.BetterBibTeX.DebugBridge.initialized = true
-
-  Zotero.BetterBibTeX.pref.stash() unless Zotero.BetterBibTeX.pref.stashed
 
   # monkey-patch Zotero.Items.getAll to get items sorted. With random order I can't really implement stable
   # testing. A simple ORDER BY would have been easier and loads faster, but I can't reach into getAll.
@@ -19,20 +15,13 @@ Zotero.BetterBibTeX.DebugBridge.methods.init = ->
       items.sort(((a, b) -> a.itemID - b.itemID))
       return items)(Zotero.Items.getAll)
 
-  #Zotero.DBConnection.prototype.getStatement = ((original) ->
-  #  return (sql, params, checkParams) ->
-  #    Zotero.BetterBibTeX.DebugBridge.sql.push({sql, params})
-  #    return original.apply(this, arguments)
-  #  )(Zotero.DBConnection.prototype.getStatement)
-
   return true
 
 Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.BetterBibTeX.DebugBridge.methods.init()
-  Zotero.BetterBibTeX.pref.restore()
 
-  Zotero.BetterBibTeX.DebugBridge.exportOptions = {}
-  Zotero.BetterBibTeX.DebugBridge.sql = []
+  for key in Zotero.BetterBibTeX.pref.prefs.getChildList('')
+    Zotero.BetterBibTeX.pref.prefs.clearUserPref(key)
 
   Zotero.Items.erase((item.id for item in Zotero.BetterBibTeX.safeGetAll()))
   for item in Zotero.BetterBibTeX.safeGetAll() # notes don't get erased in bulk?!
@@ -57,11 +46,11 @@ Zotero.BetterBibTeX.DebugBridge.methods.import = (filename) ->
 Zotero.BetterBibTeX.DebugBridge.methods.librarySize = -> Zotero.DB.valueQuery('select count(*) from items i where not i.itemID in (select d.itemID from deletedItems d)')
 Zotero.BetterBibTeX.DebugBridge.methods.cacheSize = -> Zotero.DB.valueQuery('select count(*) from betterbibtexcache.cache')
 
-Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator) ->
+Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator, exportOptions) ->
   translator = Zotero.BetterBibTeX.getTranslator(translator)
-  return Zotero.BetterBibTeX.translate(translator, null, Zotero.BetterBibTeX.DebugBridge.exportOptions || {})
+  return Zotero.BetterBibTeX.translate(translator, null, exportOptions ? {})
 
-Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, filename) ->
+Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, exportOptions, filename) ->
   translation = new Zotero.Translate.Export()
 
   file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile)
@@ -71,9 +60,9 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, filename) ->
   translator = Zotero.BetterBibTeX.getTranslator(translator)
   translation.setTranslator(translator)
 
-  options = JSON.parse(JSON.stringify((Zotero.BetterBibTeX.DebugBridge.exportOptions || {})))
-  options.exportFileData = false
-  translation.setDisplayOptions(options)
+  exportOptions ?= {}
+  exportOptions.exportFileData = false
+  translation.setDisplayOptions(exportOptions)
 
   status = 'working'
   translation.setHandler('done', (obj, worked) -> status = if worked then 'ok' else 'error')
@@ -89,8 +78,6 @@ Zotero.BetterBibTeX.DebugBridge.methods.library = ->
   return JSON.parse(Zotero.BetterBibTeX.translate(translator, null, { 'Export Collections': true, exportNotes: true, exportFileData: false }))
 
 Zotero.BetterBibTeX.DebugBridge.methods.getKeys = -> Zotero.BetterBibTeX.keymanager.keys()
-
-Zotero.BetterBibTeX.DebugBridge.methods.setExportOption = (name, value) -> Zotero.BetterBibTeX.DebugBridge.exportOptions[name] = value
 
 Zotero.BetterBibTeX.DebugBridge.methods.setPreference = (name, value) -> Zotero.Prefs.set(name, value)
 
@@ -112,8 +99,6 @@ Zotero.BetterBibTeX.DebugBridge.methods.cache = ->
   }
 
 Zotero.BetterBibTeX.DebugBridge.methods.remove = (id) -> Zotero.Items.trash([id])
-
-Zotero.BetterBibTeX.DebugBridge.methods.sql = -> Zotero.BetterBibTeX.DebugBridge.sql
 
 Zotero.BetterBibTeX.DebugBridge.methods.pinCiteKey = (id) ->
   return Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'manual').citekey

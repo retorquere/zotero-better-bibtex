@@ -7,11 +7,11 @@ Scenario: Better BibTeX Import 2
   And the markdown citation for Torre2008 should be '["\\(Torre & Verducci, 2008\\)"]'
 
 Scenario: option to mantain the braces and special commands in titles or all fields #100
-  When I set preference translators.better-bibtex.rawImports to true
-   And I set export option Export Collections to false
-  When I import 1 reference from 'import/Better BibTeX.007.bib'
+  When I set preference .rawImports to true
+  And I import 1 reference from 'import/Better BibTeX.007.bib'
   Then the library should match 'import/Better BibTeX.007.raw.json'
-   And a library export using 'Better BibTeX' should match 'import/Better BibTeX.007.bib'
+   And a library export using 'Better BibTeX' with these options should match 'import/Better BibTeX.007.bib'
+    | Export Collections | false |
 
 Scenario Outline: Better BibTeX Import
   When I import <references> reference from 'import/<file>.bib'

@@ -9,11 +9,11 @@ Feature: Export
 @test-cluster-0 @131
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json'
-  And I set preference translators.better-bibtex.DOIandURL to 'both'
+  And I set preference .DOIandURL to both
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.default.bib'
-  And I set preference translators.better-bibtex.DOIandURL to 'doi'
+  And I set preference .DOIandURL to doi
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-DOI.bib'
-  And I set preference translators.better-bibtex.DOIandURL to 'url'
+  And I set preference .DOIandURL to url
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-url.bib'
 
 @test-cluster-0 @117
@@ -35,13 +35,13 @@ Scenario: two ISSN number are freezing browser #110 / Generating keys and export
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 reference with 1 attachment from 'export/Square brackets in Publication field (85).json'
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85).bib'
-  When I set preference translators.better-bibtex.citekeyFormat to '[year]-updated'
+  And I set preference .citekeyFormat to [year]-updated
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85) after pattern change.bib'
 
 @test-cluster-0 @86
 Scenario: Include first name initial(s) in cite key generation pattern (86)
   When I import 1 reference with 1 attachment from 'export/Include first name initial(s) in cite key generation pattern (86).json'
-   And I set preference translators.better-bibtex.citekeyFormat to '[auth+initials][year]'
+   And I set preference .citekeyFormat to [auth+initials][year]
   Then a library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bib'
 
 @test-cluster-0 @pandoc
@@ -51,23 +51,27 @@ Scenario: Pandoc Citation Export
 
 @test-cluster-0 @journal-abbrev
 Scenario: Journal abbreviations
-  When I set preference translators.better-bibtex.citekeyFormat to '[authors][year][journal]'
-   And I set preference translators.better-bibtex.autoAbbrev to true
-   And I set preference translators.better-bibtex.autoAbbrevStyle to 'http://www.zotero.org/styles/cell'
-   And I set preference translators.better-bibtex.pinCitekeys to 'on-export'
-   And I set export option useJournalAbbreviation to true
+  When I set preferences:
+    | .citekeyFormat    | [authors][year][journal]          |
+    | .autoAbbrev       | true                              |
+    | .autoAbbrevStyle  | http://www.zotero.org/styles/cell |
+    | .pinCitekeys      | on-export                         |
    And I import 1 reference with 1 attachment from 'export/Better BibTeX.029.json'
-  Then a library export using 'Better BibTeX' should match 'export/Better BibTeX.029.bib'
+  Then the following library export should match 'export/Better BibTeX.029.bib'
+    | translator             | Better BibTeX  |
+    | useJournalAbbreviation | true           |
 
 @test-cluster-0 @81
 Scenario: Journal abbreviations exported in bibtex (81)
-  When I set preference translators.better-bibtex.citekeyFormat to '[authors2][year][journal:nopunct]'
-   And I set preference translators.better-bibtex.autoAbbrev to true
-   And I set preference translators.better-bibtex.autoAbbrevStyle to 'http://www.zotero.org/styles/cell'
-   And I set preference translators.better-bibtex.pinCitekeys to 'on-export'
-   And I set export option useJournalAbbreviation to true
+  When I set preferences:
+    | .citekeyFormat          | [authors2][year][journal:nopunct] |
+    | .autoAbbrev             | true                              |
+    | .autoAbbrevStyle        | http://www.zotero.org/styles/cell |
+    | .pinCitekeys            | on-export                         |
    And I import 1 reference from 'export/Journal abbreviations exported in bibtex (81).json'
-  Then a library export using 'Better BibTeX' should match 'export/Journal abbreviations exported in bibtex (81).bib'
+  Then the following library export should match 'export/Journal abbreviations exported in bibtex (81).bib'
+    | translator              | Better BibTeX  |
+    | useJournalAbbreviation  | true           |
 
 @test-cluster-0 @bbt
 Scenario Outline: BibLaTeX Export
@@ -143,8 +147,9 @@ Scenario Outline: BibLaTeX Export
 Scenario: auto-export
   Given I import 3 references with 2 attachments from 'export/autoexport.json'
   Then a library export using 'Better BibLaTeX' should match 'export/autoexport.before.bib'
-  When I set export option Keep updated to true
-  And I export the library using 'Better BibLaTeX' to 'tmp/autoexport.bib'
+  And I export the library to 'tmp/autoexport.bib':
+    | translator    | Better BibLaTeX |
+    | Keep updated  | true            |
   When I select the first item where publisher = 'IEEE'
   And I remove the selected item
   And I wait 5 seconds, if I'm in CI
