@@ -12,7 +12,7 @@
     "options": {
       "exportFileData": false,
       "exportNotes": true,
-      "Export Collections": false
+      "Export collections": false
     }
   },
   "collections": [

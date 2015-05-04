@@ -14,7 +14,7 @@
     "options": {
       "exportFileData": false,
       "exportNotes": true,
-      "Export Collections": true
+      "Export collections": true
     }
   },
   "collections": [
