@@ -262,8 +262,8 @@ Zotero.BetterBibTeX.updateSchema = ->
       path not null,
       exportOptions not null,
       exportedRecursively CHECK(exportedRecursively in ('true', 'false')),
-      status CHECK(status in ('pending', 'error', 'done')),
-      foreign key (exportOptions) references exportoptions(id)
+      status CHECK(status in ('pending', 'error', 'done'))
+      -- foreign key (exportOptions) references exportoptions(id)
       )
     ")
 
@@ -279,7 +279,7 @@ Zotero.BetterBibTeX.updateSchema = ->
 
   ### cleanup ###
 
-  for table in ['keys', 'autoexport', 'exportoptions']
+  for table in ['exportoptions', 'autoexport', 'keys']
     Zotero.DB.query("drop table betterbibtex._#{table}_") if columns[table]
 
   #@foreign_keys(true)
