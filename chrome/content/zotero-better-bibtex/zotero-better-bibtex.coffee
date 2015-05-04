@@ -398,7 +398,6 @@ Zotero.BetterBibTeX.init = ->
       if @translator?[0] && @location && typeof @location == 'object'
         translatorID = @translator[0]
         translatorID = translatorID.translatorID if translatorID.translatorID
-        Zotero.BetterBibTeX.log('translate:', translatorID)
         for own name, header of Zotero.BetterBibTeX.translators
           if header.translatorID == translatorID
             @_displayOptions.exportPath = @location.path.slice(0, -@location.leafName.length)

@@ -48,7 +48,8 @@ Zotero.BetterBibTeX.DebugBridge.methods.cacheSize = -> Zotero.DB.valueQuery('sel
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator, exportOptions) ->
   translator = Zotero.BetterBibTeX.getTranslator(translator)
-  return Zotero.BetterBibTeX.translate(translator, null, exportOptions ? {})
+  exportOptions ?= {}
+  return Zotero.BetterBibTeX.translate(translator, null, exportOptions)
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, exportOptions, filename) ->
   translation = new Zotero.Translate.Export()
@@ -75,7 +76,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, exportOption
 
 Zotero.BetterBibTeX.DebugBridge.methods.library = ->
   translator = Zotero.BetterBibTeX.getTranslator('Zotero TestCase')
-  return JSON.parse(Zotero.BetterBibTeX.translate(translator, null, { 'Export Collections': true, exportNotes: true, exportFileData: false }))
+  return JSON.parse(Zotero.BetterBibTeX.translate(translator, null, { 'Export collections': true, exportNotes: true, exportFileData: false }))
 
 Zotero.BetterBibTeX.DebugBridge.methods.getKeys = -> Zotero.BetterBibTeX.keymanager.keys()
 
