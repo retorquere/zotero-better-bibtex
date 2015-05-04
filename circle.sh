@@ -8,10 +8,10 @@ case $1 in
   build)
     case $CIRCLE_NODE_INDEX in
       [012])
-        bundle exec cucumber --tag ~@noci --tags @test-cluster-$CIRCLE_NODE_INDEX
+        bundle exec cucumber --strict --tag ~@noci --tags @test-cluster-$CIRCLE_NODE_INDEX
         ;;
       *)
-        bundle exec cucumber --tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2
+        bundle exec cucumber --strict --tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2
         ;;
     esac
     ;;
