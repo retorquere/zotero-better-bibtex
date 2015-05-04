@@ -219,7 +219,7 @@ Zotero.BetterBibTeX.updateSchema = ->
       else continue
     @pref.prefs.clearUserPref(key)
 
-  @foreign_keys(false)
+  #@foreign_keys(false)
 
   columns = Object.create(null)
   for table in ['keys', 'autoexport', 'exportoptions']
@@ -282,7 +282,7 @@ Zotero.BetterBibTeX.updateSchema = ->
   for table in ['keys', 'autoexport', 'exportoptions']
     Zotero.DB.query("drop table betterbibtex._#{table}_") if columns[table]
 
-  @foreign_keys(true)
+  #@foreign_keys(true)
 
   return
 
