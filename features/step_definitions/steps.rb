@@ -276,7 +276,8 @@ end
 
 def preferenceValue(value)
   value.strip!
-  return (value == 'true') if ['true', 'false'].include?(value)
+  return true if value == 'true'
+  return false if value == 'false'
   return Integer(value) if value =~ /^[0-9]+$/
   return value[1..-1] if value =~ /^'[^']+'$/
   return value

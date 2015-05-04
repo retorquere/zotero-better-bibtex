@@ -8,7 +8,7 @@ Translator = new class
 require(':constants:')
 
 Translator.log = (msg...) ->
-  return unless @logging || @testMode
+  return unless @logging
   msg = for m in msg
     switch
       when (typeof m) in ['string', 'number'] then '' + m
@@ -23,8 +23,11 @@ Translator.initialize = ->
   return if @initialized
   @initialized = true
 
+  @testmode = Zotero.getHiddenPref('better-bibtex.testMode')
+  @testmode_timestamp = Zotero.getHiddenPref('better-bibtex.testMode.timestamp') if @testmode
+  @logging = Zotero.getHiddenPref('better-bibtex.logging') || @testmode
+
   @caching = {'f895aa0d-f28e-47fe-b247-2ea77c6ed583': 'Better BibLaTeX', 'ca65189f-8815-4afe-8c8b-8c7c15f0edca': 'Better BibTeX'}[Translator.translatorID]
-  @logging = Zotero.getHiddenPref('better-bibtex.logging')
 
   for own attr, f of @fieldMap or {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
@@ -35,11 +38,8 @@ Translator.initialize = ->
 
   for option in ['useJournalAbbreviation', 'exportPath', 'exportCharset', 'exportFileData', 'exportNotes']
     @[option] = Zotero.getOption(option)
-  @exportCollections = !!Zotero.getOption('Export collections')
-  @preserveBibTeXVariables = !!Zotero.getOption('Preserve BibTeX variables')
-
-  @testmode = Zotero.getHiddenPref('better-bibtex.testMode')
-  @testmode_timestamp = Zotero.getHiddenPref('better-bibtex.testMode.timestamp') if @testmode
+  @exportCollections = Zotero.getOption('Export collections')
+  @preserveBibTeXVariables = Zotero.getOption('Preserve BibTeX variables')
 
   @unicode = switch Translator.translatorID
     when 'f895aa0d-f28e-47fe-b247-2ea77c6ed583' then !Zotero.getHiddenPref('better-bibtex.asciiBibLaTeX')
