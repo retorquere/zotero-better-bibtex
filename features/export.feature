@@ -57,7 +57,7 @@ Scenario: Journal abbreviations
     | .autoAbbrevStyle  | http://www.zotero.org/styles/cell |
     | .pinCitekeys      | on-export                         |
    And I import 1 reference with 1 attachment from 'export/Better BibTeX.029.json'
-  Then the following library export should match 'export/Better BibTeX.029.bib'
+  Then the following library export should match 'export/Better BibTeX.029.bib':
     | translator             | Better BibTeX  |
     | useJournalAbbreviation | true           |
 
@@ -69,7 +69,7 @@ Scenario: Journal abbreviations exported in bibtex (81)
     | .autoAbbrevStyle        | http://www.zotero.org/styles/cell |
     | .pinCitekeys            | on-export                         |
    And I import 1 reference from 'export/Journal abbreviations exported in bibtex (81).json'
-  Then the following library export should match 'export/Journal abbreviations exported in bibtex (81).bib'
+  Then the following library export should match 'export/Journal abbreviations exported in bibtex (81).bib':
     | translator              | Better BibTeX  |
     | useJournalAbbreviation  | true           |
 
