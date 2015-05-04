@@ -263,9 +263,9 @@ Zotero.BetterBibTeX.updateSchema = ->
       exportOptions not null,
       exportedRecursively CHECK(exportedRecursively in ('true', 'false')),
       status CHECK(status in ('pending', 'error', 'done'))
-      -- foreign key (exportOptions) references exportoptions(id)
       )
     ")
+  # foreign key (exportOptions) references exportoptions(id)
 
   ### migrate data where needed ###
 
