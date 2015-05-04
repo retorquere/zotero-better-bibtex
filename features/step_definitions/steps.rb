@@ -292,7 +292,7 @@ Then(/^the following library export should match '([^']+)':$/) do |filename, tab
 
   found = nil
   bm = Benchmark.measure { found = $Firefox.BetterBibTeX.exportToString(translator, exportOptions).strip }
-  puts bm if benchmark
+  STDOUT.puts bm if benchmark
 
   @expectedExport = OpenStruct.new(filename: filename, translator: translator)
 
@@ -329,7 +329,7 @@ Then(/I? ?export the library to '([^']+)':$/) do |filename, table|
   benchmark = (exportOptions.delete('benchmark') == 'true')
 
   bm = Benchmark.measure { $Firefox.BetterBibTeX.exportToFile(translator, exportOptions, File.expand_path(filename)) }
-  puts bm if benchmark
+  STDOUT.puts bm if benchmark
 end
 
 When(/^I set preferences:$/) do |table|
