@@ -315,7 +315,7 @@ Zotero.BetterBibTeX.init = ->
   Zotero.DB.query('ATTACH ? AS betterbibtex', [db.path])
   db = Zotero.getZoteroDatabase('betterbibtexcache')
   Zotero.DB.query('ATTACH ? AS betterbibtexcache', [db.path])
-  for pragma in [ 'betterbibtexcache.auto_vacuum = NONE', 'betterbibtexcache.journal_mode = OFF', 'betterbibtexcache.synchronous = OFF', 'temp_store = MEMORY' ]
+  for pragma in [ 'betterbibtexcache.auto_vacuum = NONE', 'betterbibtexcache.journal_mode = OFF', 'betterbibtexcache.synchronous = OFF' ]
     statement = Zotero.DB.getStatement("PRAGMA #{pragma}", null, true)
     statement.executeStep()
     statement.finalize()
