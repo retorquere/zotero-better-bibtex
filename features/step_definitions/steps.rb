@@ -33,6 +33,18 @@ end
 
 Dir['*.xpi'].each{|xpi| File.unlink(xpi)}
 cmd('rake')
+unless ENV['OFFLINE'].to_s.downcase == 'yes'
+  say 'Getting plugins'
+  if File.file?('features/plugins.yml')
+    plugins = YAML.load_file('features/plugins.yml')
+  else
+    plugins = []
+  end
+  plugins << 'https://zotplus.github.io/debug-bridge/update.rdf'
+  plugins << 'https://www.zotero.org/download/update.rdf'
+  plugins.uniq!
+  getxpis(plugins, 'test/fixtures/plugins')
+end
 
 def download(url, path)
   cmd "curl -L -s -S -o #{path.shellescape} #{url.shellescape}"
@@ -60,18 +72,6 @@ def loadZotero(profile)
       end
       profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
     
-      unless ENV['OFFLINE'].to_s.downcase == 'yes'
-        say 'Getting plugins'
-        if File.file?('features/plugins.yml')
-          plugins = YAML.load_file('features/plugins.yml')
-        else
-          plugins = []
-        end
-        plugins << 'https://zotplus.github.io/debug-bridge/update.rdf'
-        plugins << 'https://www.zotero.org/download/update.rdf'
-        plugins.uniq!
-        getxpis(plugins, 'test/fixtures/plugins')
-      end
       say "Installing plugins..."
       (Dir['*.xpi'] + Dir['test/fixtures/plugins/*.xpi']).each{|xpi|
         say "Installing #{File.basename(xpi)}"
@@ -88,7 +88,6 @@ def loadZotero(profile)
         profile['extensions.zotero.translators.better-bibtex.debug'] = true
       end
     
-      profile['extensions.zotero.translators.better-bibtex.attachmentRelativePath'] = true
       profile['extensions.zotfile.useZoteroToRename'] = true
     
       profile['browser.download.dir'] = "/tmp/webdriver-downloads"
@@ -131,6 +130,7 @@ Before do |scenario|
   expect($Firefox.BetterBibTeX.cacheSize).not_to eq(0) if scenario.source_tag_names.include?('@keepcache')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.testMode', true)
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.testMode.timestamp', '2015-02-24 12:14:36 +0100')
+  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.attachmentRelativePath', true)
   @selected = nil
   @expectedExport = nil
   @exportOptions = {}

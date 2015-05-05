@@ -5,6 +5,11 @@ set -u
 
 
 case $1 in
+  dependencies)
+    bundle exec rake bin/github-release
+    bundle exec cucumber --tag @dependencies
+    ;;
+
   build)
     case $CIRCLE_NODE_INDEX in
       [012])
