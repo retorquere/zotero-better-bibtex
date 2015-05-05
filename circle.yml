@@ -2,8 +2,7 @@ machine:
   ruby:
     version: "2.2"
 dependencies:
-  pre:
-    - bundle install
+  post:
     - ./circle.sh dependencies
   cache_directories:
     - bin
