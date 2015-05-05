@@ -296,7 +296,7 @@ task :validate => XPI do
   sh "docker run --rm -v #{dir}:/xpi marceloandrader/amo-validator /xpi/#{xpi} -v -t extension --selfhosted"
 end
 
-task :test, [:tag] => XPI do |t, args|
+task :test, [:tag] => [XPI, :plugins] do |t, args|
   tag = "@#{args[:tag]}".sub(/^@@/, '@')
 
   if tag == '@'

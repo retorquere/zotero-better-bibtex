@@ -33,18 +33,7 @@ end
 
 Dir['*.xpi'].each{|xpi| File.unlink(xpi)}
 cmd('rake')
-unless ENV['OFFLINE'].to_s.downcase == 'yes'
-  say 'Getting plugins'
-  if File.file?('features/plugins.yml')
-    plugins = YAML.load_file('features/plugins.yml')
-  else
-    plugins = []
-  end
-  plugins << 'https://zotplus.github.io/debug-bridge/update.rdf'
-  plugins << 'https://www.zotero.org/download/update.rdf'
-  plugins.uniq!
-  getxpis(plugins, 'test/fixtures/plugins')
-end
+cmd('rake plugins')
 
 def download(url, path)
   cmd "curl -L -s -S -o #{path.shellescape} #{url.shellescape}"

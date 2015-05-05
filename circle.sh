@@ -6,8 +6,7 @@ set -u
 
 case $1 in
   dependencies)
-    bundle exec rake bin/github-release
-    bundle exec cucumber --tag @dependencies
+    bundle exec rake bin/github-release plugins
     ;;
 
   build)
