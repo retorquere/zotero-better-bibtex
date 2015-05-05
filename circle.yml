@@ -3,9 +3,10 @@ machine:
     version: "2.2"
 dependencies:
   pre:
+    - bundle install
     - ./circle.sh dependencies
   cache_directories:
-    - "bin"
+    - bin
     - test/fixtures/profiles
     - test/fixtures/plugins
 test:
