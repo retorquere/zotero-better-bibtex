@@ -103,6 +103,7 @@ def loadZotero(profile)
     
       Dir['*.debug'].each{|d| File.unlink(d) }
       Dir['*.status'].each{|d| File.unlink(d) }
+      Dir['*.cache'].each{|d| File.unlink(d) }
       Dir['*.log'].each{|d| File.unlink(d) unless File.basename(d) == 'cucumber.log' }
 
     else

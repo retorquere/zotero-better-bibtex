@@ -490,13 +490,17 @@ Zotero.BetterBibTeX.removeTranslator = (header) ->
 Zotero.BetterBibTeX.itemAdded = {
   notify: (event, type, collection_items) ->
     collections = []
+    items = []
 
     # monitor items added to collection to find BibTeX AUX Scanner data. The scanner adds a dummy item whose 'extra'
     # field has instructions on what to do after import
 
+    return if collection_items.length == 0
+
     for collection_item in collection_items
       [collectionID, itemID] = collection_item.split('-')
       collections.push(collectionID)
+      items.push(itemID)
 
       # aux-scanner only triggers on add
       continue unless event == 'add'
@@ -556,8 +560,10 @@ Zotero.BetterBibTeX.itemAdded = {
         collection.addItem(item.id)
 
     collections = Zotero.BetterBibTeX.withParentCollections(collections) if collections.length != 0
-    collections.push("'library'")
-    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
+    for libraryID in Zotero.DB.columnQuery("select distinct coalesce(libraryID, 0) from ites where itemID in #{Zotero.BetterBibTeX.SQLSet(items)}")
+      collections.push("'library'") if libraryID == 0
+    if collections.length > 0
+      Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
     Zotero.BetterBibTeX.auto.process('collectionChanged')
     return
 }
@@ -592,8 +598,10 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true)
   collections ?= []
   collections = Zotero.BetterBibTeX.withParentCollections(collections) unless collections.length == 0
-  collections.push("'library'")
-  Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
+  for libraryID in Zotero.DB.columnQuery("select distinct coalesce(libraryID, 0) from ites where itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}")
+    collections.push("'library'") if libraryID == 0
+  if collections.length > 0
+    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
   Zotero.BetterBibTeX.auto.process('itemChanged')
 
   return
