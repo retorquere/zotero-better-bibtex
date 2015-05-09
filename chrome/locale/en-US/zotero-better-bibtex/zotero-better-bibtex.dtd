@@ -1,10 +1,11 @@
+<!ENTITY zotero.better-bibtex.exportGroup	"Export group...">
 <!ENTITY zotero.better-bibtex.citekey_column	"Cite Key">
 <!ENTITY zotero.better-bibtex.show-collection-key "BibLaTeX url">
 <!ENTITY zotero.better-bibtex.citekey.set "Generate BibTeX key">
 <!ENTITY zotero.better-bibtex.citekey.clear "Clear BibTeX key">
 <!ENTITY zotero.better-bibtex.preferences.prefpane.better-bibtex "Better BibTeX">
 
-<!ENTITY zotero-better-bibtex.reportErrors "Report ZotPlus Errors...">
+<!ENTITY zotero.better-bibtex.reportErrors "Report ZotPlus Errors...">
 
 <!ENTITY zotero.better-bibtex.prefs.citation "Citation">
 <!ENTITY zotero.better-bibtex.prefs.import-export "Import/Export">

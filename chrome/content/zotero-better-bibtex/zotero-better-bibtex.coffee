@@ -192,11 +192,7 @@ Zotero.BetterBibTeX.updateSchema = ->
 
   return if installed == installing && !(['cache', 'keys', 'autoexport', 'exportoptions'].some((table) => !@SQLColumns(table)))
 
-  progressWin = new Zotero.ProgressWindow()
-  progressWin.changeHeadline('Better BibTeX: updating database')
-  progressWin.addLines(['Updating database, this could take a while'])
-  progressWin.show()
-  progressWin.startCloseTimer()
+  @flash('Better BibTeX: updating database', 'Updating database, this could take a while')
 
   @pref.set('scanCitekeys', true)
   for key in @pref.prefs.getChildList('')
@@ -393,6 +389,7 @@ Zotero.BetterBibTeX.init = ->
       return original.apply(this, arguments)
     )(Zotero.ItemTreeView.prototype.getCellText)
 
+  # monkey-patch translate to capture export path and auto-export
   Zotero.Translate.Export.prototype.translate = ((original) ->
     return ->
       if @translator?[0] && @location && typeof @location == 'object'
@@ -433,6 +430,17 @@ Zotero.BetterBibTeX.init = ->
 
       return original.apply(this, arguments)
     )(Zotero.Translate.Export.prototype.translate)
+
+  # monkey-patch buildCollectionContextMenu to add group library export
+  ZoteroPane_Local.buildCollectionContextMenu = ((original) ->
+    return ->
+      itemGroup = @collectionsView._getItemAtRow(@collectionsView.selection.currentIndex)
+
+      menuItem = @document.getElementById('zotero-better-bibtex-export-group')
+      menuItem.setAttribute('disabled', false)
+      menuItem.setAttribute('hidden', !itemGroup.isGroup())
+      return original.apply(this, arguments)
+    )(ZoteroPane_Local.buildCollectionContextMenu)
 
   @schomd.init()
 
@@ -725,6 +733,22 @@ Zotero.BetterBibTeX.toArray = (item) ->
   item = item.toArray() if item.setField # TODO: switch to serialize when Zotero does
   throw 'format: no item\n' + (new Error('dummy')).stack if not item.itemType
   return item
+
+Zotero.BetterBibTeX.exportGroup = ->
+  itemGroup = ZoteroPane_Local.collectionsView._getItemAtRow(ZoteroPane_Local.collectionsView.selection.currentIndex)
+  return unless itemGroup.isGroup()
+  group = Zotero.Groups.get(itemGroup.ref.id)
+
+  items = Zotero.DB.columnQuery('select itemID from items where libraryID = ? and not itemID in (select itemID from deletedItems)', [group.libraryID])
+  if items.length == 0
+    Zotero.BetterBibTeX.flash('Cannot export empty group')
+    return
+
+  exporter = new Zotero_File_Exporter()
+  exporter.name = group.name
+  exporter.items = Zotero.Items.get(items)
+  exporter.save()
+  return
 
 class Zotero.BetterBibTeX.XmlNode
   constructor: (@namespace, @root, @doc) ->

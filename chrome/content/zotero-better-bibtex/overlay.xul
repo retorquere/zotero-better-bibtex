@@ -9,18 +9,19 @@
 	</stringbundleset>
 	
 	<menupopup id="zotero-tb-actions-popup">
-		<menuitem insertafter="zotero-tb-actions-reportErrors" label="&zotero-better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors()"/>
+		<menuitem insertafter="zotero-tb-actions-reportErrors" label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors()"/>
 	</menupopup>
 
   <menupopup id="zotero-collectionmenu">
+    <menuitem id="zotero-better-bibtex-export-group" label="&zotero.better-bibtex.exportGroup;" oncommand="Zotero.BetterBibTeX.exportGroup()"/>
     <menuitem label="&zotero.better-bibtex.show-collection-key;" oncommand="alert(Zotero.BetterBibTeX.pref.serverURL('.biblatex') || '&zotero.better-bibtex.server.disabled;')"/>
-    <menuitem label="&zotero-better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors('collection')"/>
+    <menuitem label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors('collection')"/>
 	</menupopup>
 
   <menupopup id="zotero-itemmenu">
     <menuitem id="id-zotero-better-bibtex-set-citekey" label="&zotero.better-bibtex.citekey.set;" oncommand="Zotero.BetterBibTeX.keymanager.selected('manual');"/>
     <menuitem id="id-zotero-better-bibtex-clear-citekey" label="&zotero.better-bibtex.citekey.clear;" oncommand="Zotero.BetterBibTeX.keymanager.selected('reset');"/>
-    <menuitem label="&zotero-better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors('items')"/>
+    <menuitem label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors('items')"/>
 	</menupopup>
 
   <!-- treecols id="zotero-items-columns-header">
