@@ -26,7 +26,18 @@ Zotero.BetterBibTeX.auto.process = (reason) ->
   @running = '' + ae.id
 
   translation = new Zotero.Translate.Export()
-  translation.setCollection(Zotero.Collections.get(ae.collection)) if ae.collection != 'library'
+
+  switch
+    when ae.collection == 'library'
+      # do nothing, which implies library export
+
+    when m = /^group:([0-9]+)$/.match(ae.collection)
+      items = Zotero.DB.columnQuery('select itemID from items where libraryID in (select libraryID from groups where groupID = ?) and not itemID in (select itemID from deletedItems)', [m[1]])
+      items = Zotero.Items.get(items) unless items.length == 0
+      translation.setItems(items)
+
+    else
+      translation.setCollection(Zotero.Collections.get(ae.collection))
 
   path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
   path.initWithPath(ae.path)

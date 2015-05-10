@@ -392,12 +392,11 @@ Zotero.BetterBibTeX.init = ->
   # monkey-patch translate to capture export path and auto-export
   Zotero.Translate.Export.prototype.translate = ((original) ->
     return ->
-      # convert group:ID into its library items
-      if typeof @_collection == 'string' && m = /^group:([0-9]+)$/.exec(@_collection)
-        collection = @_collection
-        groupID = m[1]
+      # convert group into its library items
+      if @_collection?.objectType == 'group'
+        group = @_collection
         delete @_collection
-        @_items = Zotero.DB.columnQuery('select itemID from items where libraryID in (select libraryID from groups where groupID = ?) and not itemID in (select itemID from deletedItems)', [groupID])
+        @_items = Zotero.DB.columnQuery('select itemID from items where libraryID in (select libraryID from groups where groupID = ?) and not itemID in (select itemID from deletedItems)', [group.id])
         @_items = Zotero.Items.get(@_items) unless @_items.length == 0
 
       # requested translator
@@ -406,15 +405,17 @@ Zotero.BetterBibTeX.init = ->
 
       for own name, header of Zotero.BetterBibTeX.translators
         break if header.translatorID == translatorID
+        header = null
 
       # regular behavior for non-BBT translators
-      return original.apply(this, arguments) unless header.translatorID == translatorID
+      return original.apply(this, arguments) unless header
 
       # export path for relative exports
       @_displayOptions.exportPath = @location.path.slice(0, -@location.leafName.length) if @location && typeof @location == 'object'
 
       # If no capture, we're done
       return original.apply(this, arguments) unless @_displayOptions?['Keep updated']
+
       # I don't want 'Keep updated' to be remembered as a default
       try
         settings = JSON.parse(Zotero.Prefs.get('export.translatorSettings'))
@@ -427,13 +428,13 @@ Zotero.BetterBibTeX.init = ->
       progressWin.changeHeadline('Auto-export')
 
       switch
-        when groupID # group export, already converted to its corresponding items above
-          group = Zotero.Groups.get(groupID)
+        when group # group export, already converted to its corresponding items above
           progressWin.addLines(["Group #{group.name} set up for auto-export"])
+          collection = "group:#{group.id}"
 
-        when @_collection?._id
-          progressWin.addLines(["Collection #{@_collection._name} set up for auto-export"])
-          collection = @_collection._id
+        when @_collection?.id
+          progressWin.addLines(["Collection #{@_collection.name} set up for auto-export"])
+          collection = @_collection.id
 
         when !@_items
           progressWin.addLines(['Auto-export of full library'])
@@ -590,8 +591,11 @@ Zotero.BetterBibTeX.itemAdded = {
         collection.addItem(item.id)
 
     collections = Zotero.BetterBibTeX.withParentCollections(collections) if collections.length != 0
-    for libraryID in Zotero.DB.columnQuery("select distinct coalesce(libraryID, 0) from items where itemID in #{Zotero.BetterBibTeX.SQLSet(items)}")
-      collections.push("'library'") if libraryID == 0
+    for groupID in Zotero.DB.columnQuery("select distinct coalesce(g.groupID, 0) from items i left join groups g on i.libraryID = g.libraryID where itemID in #{Zotero.BetterBibTeX.SQLSet(items)}")
+      if groupID == 0
+        collections.push("'library'")
+      else
+        collections.push("'group:#{groupID}'")
     if collections.length > 0
       Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
     Zotero.BetterBibTeX.auto.process('collectionChanged')
@@ -628,8 +632,11 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true)
   collections ?= []
   collections = Zotero.BetterBibTeX.withParentCollections(collections) unless collections.length == 0
-  for libraryID in Zotero.DB.columnQuery("select distinct coalesce(libraryID, 0) from items where itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}")
-    collections.push("'library'") if libraryID == 0
+  for groupID in Zotero.DB.columnQuery("select distinct coalesce(g.groupID, 0) from items i left join groups g on i.libraryID = g.libraryID where itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}")
+    if groupID == 0
+      collections.push("'library'")
+    else
+      collections.push("'group:#{groupID}'")
   if collections.length > 0
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
   Zotero.BetterBibTeX.auto.process('itemChanged')
@@ -761,8 +768,8 @@ Zotero.BetterBibTeX.exportGroup = ->
   return unless itemGroup.isGroup()
 
   exporter = new Zotero_File_Exporter()
-  exporter.collection = "group:#{itemGroup.ref.id}"
-  exporter.name = Zotero.Groups.get(itemGroup.ref.id).name
+  exporter.collection = Zotero.Groups.get(itemGroup.ref.id)
+  exporter.name = exporter.collection.name
   exporter.save()
   return
 
