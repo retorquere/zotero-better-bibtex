@@ -392,41 +392,63 @@ Zotero.BetterBibTeX.init = ->
   # monkey-patch translate to capture export path and auto-export
   Zotero.Translate.Export.prototype.translate = ((original) ->
     return ->
-      if @translator?[0] && @location && typeof @location == 'object'
-        translatorID = @translator[0]
-        translatorID = translatorID.translatorID if translatorID.translatorID
-        for own name, header of Zotero.BetterBibTeX.translators
-          if header.translatorID == translatorID
-            @_displayOptions.exportPath = @location.path.slice(0, -@location.leafName.length)
+      # convert group:ID into its library items
+      if typeof @_collection == 'string' && m = /^group:([0-9]+)$/.exec(@_collection)
+        collection = @_collection
+        groupID = m[1]
+        delete @_collection
+        @_items = Zotero.DB.columnQuery('select itemID from items where libraryID in (select libraryID from groups where groupID = ?) and not itemID in (select itemID from deletedItems)', [groupID])
+        @_items = Zotero.Items.get(@_items) unless @_items.length == 0
 
-        if @_displayOptions?['Keep updated']
-          progressWin = new Zotero.ProgressWindow()
-          progressWin.changeHeadline('Auto-export')
+      # requested translator
+      translatorID = @translator?[0]
+      translatorID = translatorID.translatorID if translatorID?.translatorID
 
-          # I don't want 'Keep updated' to be remembered as a default
-          try
-            settings = JSON.parse(Zotero.Prefs.get('export.translatorSettings'))
-            if settings['Keep updated']
-              delete settings['Keep updated']
-              Zotero.Prefs.set('export.translatorSettings', JSON.stringify(settings))
-          catch
+      for own name, header of Zotero.BetterBibTeX.translators
+        break if header.translatorID == translatorID
 
-          switch
-            when @_collection?._id
-              progressWin.addLines(["Collection #{@_collection._name} set up for auto-export"])
-              collection = @_collection._id
-            when !@_items
-              progressWin.addLines(['Auto-export of full library'])
-              collection = 'library'
-            else
-              progressWin.addLines(['Auto-export only supported for collections and libraries'])
-              collection = null
+      # regular behavior for non-BBT translators
+      return original.apply(this, arguments) unless header.translatorID == translatorID
 
-          if collection
-            @_displayOptions.translatorID = translatorID
-            Zotero.BetterBibTeX.auto.add(collection, @location.path, @_displayOptions)
-          progressWin.show()
-          progressWin.startCloseTimer()
+      # export path for relative exports
+      @_displayOptions.exportPath = @location.path.slice(0, -@location.leafName.length) if @location && typeof @location == 'object'
+
+      # If no capture, we're done
+      return original.apply(this, arguments) unless @_displayOptions?['Keep updated']
+      # I don't want 'Keep updated' to be remembered as a default
+      try
+        settings = JSON.parse(Zotero.Prefs.get('export.translatorSettings'))
+        if settings['Keep updated']
+          delete settings['Keep updated']
+          Zotero.Prefs.set('export.translatorSettings', JSON.stringify(settings))
+      catch
+
+      progressWin = new Zotero.ProgressWindow()
+      progressWin.changeHeadline('Auto-export')
+
+      switch
+        when groupID # group export, already converted to its corresponding items above
+          group = Zotero.Groups.get(groupID)
+          progressWin.addLines(["Group #{group.name} set up for auto-export"])
+
+        when @_collection?._id
+          progressWin.addLines(["Collection #{@_collection._name} set up for auto-export"])
+          collection = @_collection._id
+
+        when !@_items
+          progressWin.addLines(['Auto-export of full library'])
+          collection = 'library'
+
+        else
+          progressWin.addLines(['Auto-export only supported for groups, collections and libraries'])
+          collection = null
+
+      progressWin.show()
+      progressWin.startCloseTimer()
+
+      if collection
+        @_displayOptions.translatorID = translatorID
+        Zotero.BetterBibTeX.auto.add(collection, @location.path, @_displayOptions)
 
       return original.apply(this, arguments)
     )(Zotero.Translate.Export.prototype.translate)
@@ -737,16 +759,10 @@ Zotero.BetterBibTeX.toArray = (item) ->
 Zotero.BetterBibTeX.exportGroup = ->
   itemGroup = ZoteroPane_Local.collectionsView._getItemAtRow(ZoteroPane_Local.collectionsView.selection.currentIndex)
   return unless itemGroup.isGroup()
-  group = Zotero.Groups.get(itemGroup.ref.id)
-
-  items = Zotero.DB.columnQuery('select itemID from items where libraryID = ? and not itemID in (select itemID from deletedItems)', [group.libraryID])
-  if items.length == 0
-    Zotero.BetterBibTeX.flash('Cannot export empty group')
-    return
 
   exporter = new Zotero_File_Exporter()
-  exporter.name = group.name
-  exporter.items = Zotero.Items.get(items)
+  exporter.collection = "group:#{itemGroup.ref.id}"
+  exporter.name = Zotero.Groups.get(itemGroup.ref.id).name
   exporter.save()
   return
 
