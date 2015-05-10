@@ -106,11 +106,16 @@ Zotero.BetterBibTeX.pref.update = ->
       itemNode = document.createElement('listitem')
       itemNode.setAttribute('value', ae.id)
 
-      name = if ae.collection == 'library' then 'Library' else (Zotero.Collections.get(ae.collection)?.name || ae.collection)
+      name = switch
+        when ae.collection == 'library' then 'Library'
+        when m = /^group:([0-9]+)$/.match(ae.collection) then Zotero.Groups.get(m[1])?.name || ae.collection
+        else Zotero.Collections.get(ae.collection)?.name || "collection:#{ae.collection}"
+
       itemNode.setAttribute('label', "#{name} -> #{ae.path.replace(/^.*[\\\/]/, '')}")
       itemNode.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == ae.id then 'running' else ae.status}")
       itemNode.setAttribute('tooltiptext', "#{@collectionPath(ae.collection)} -> #{ae.path}")
       exportlist.appendChild(itemNode)
+
   if selectedExport >= 0
     @autoexport.selected(selectedIndex)
   else
@@ -133,7 +138,10 @@ Zotero.BetterBibTeX.pref.autoexport =
     ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport ae join betterbibtex.exportoptions eo on ae.exportoptions = eo.id where ae.id = ?', [selectedItem.getAttribute('value')])
 
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-status', ae.status)
-    name = if ae.collection == 'library' then 'Library' else (Zotero.Collections.get(ae.collection)?.name || ae.collection)
+    name = switch
+      when ae.collection == 'library' then 'Library'
+      when m = /^group:([0-9]+)$/.match(ae.collection) then Zotero.Groups.get(m[1])?.name || ae.collection
+      else Zotero.Collections.get(ae.collection)?.name || "collection:#{ae.collection}"
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-collection', name)
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-target', ae.path)
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-translator', Zotero.BetterBibTeX.translatorName(ae.translatorID))
