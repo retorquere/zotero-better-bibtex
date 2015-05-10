@@ -568,7 +568,7 @@ Zotero.BetterBibTeX.itemAdded = {
         collection.addItem(item.id)
 
     collections = Zotero.BetterBibTeX.withParentCollections(collections) if collections.length != 0
-    for libraryID in Zotero.DB.columnQuery("select distinct coalesce(libraryID, 0) from ites where itemID in #{Zotero.BetterBibTeX.SQLSet(items)}")
+    for libraryID in Zotero.DB.columnQuery("select distinct coalesce(libraryID, 0) from items where itemID in #{Zotero.BetterBibTeX.SQLSet(items)}")
       collections.push("'library'") if libraryID == 0
     if collections.length > 0
       Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
@@ -606,7 +606,7 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true)
   collections ?= []
   collections = Zotero.BetterBibTeX.withParentCollections(collections) unless collections.length == 0
-  for libraryID in Zotero.DB.columnQuery("select distinct coalesce(libraryID, 0) from ites where itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}")
+  for libraryID in Zotero.DB.columnQuery("select distinct coalesce(libraryID, 0) from items where itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}")
     collections.push("'library'") if libraryID == 0
   if collections.length > 0
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
