@@ -486,6 +486,9 @@ Zotero.BetterBibTeX.init = ->
         menuItem.setAttribute('disabled', false)
         menuItem.setAttribute('hidden', !(itemGroup.isLibrary(true) || itemGroup.isCollection()))
 
+      menuItem = @document.getElementById('zotero-better-bibtex-collectionmenu-separator')
+      menuItem.setAttribute('hidden', !(itemGroup.isLibrary(true) || itemGroup.isCollection()))
+
       return original.apply(this, arguments)
     )(zoteroPane.buildCollectionContextMenu)
 

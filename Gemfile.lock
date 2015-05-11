@@ -3,7 +3,7 @@ GEM
   specs:
     addressable (2.3.8)
     backports (3.6.4)
-    bibtex-ruby (4.0.12)
+    bibtex-ruby (4.0.13)
       latex-decode (~> 0.0)
     builder (3.2.2)
     childprocess (0.5.6)
@@ -46,10 +46,10 @@ GEM
       nokogiri (~> 1.6.3)
       oauth2
     hashie (3.4.1)
-    headless (2.0.0)
+    headless (2.1.0)
     highline (1.7.2)
     json (1.8.2)
-    jwt (1.4.1)
+    jwt (1.5.0)
     latex-decode (0.2.2)
       unicode (~> 0.4)
     launchy (2.4.3)
@@ -78,7 +78,7 @@ GEM
     pusher-client (0.6.0)
       json
       websocket (~> 1.0)
-    rack (1.6.0)
+    rack (1.6.1)
     rake (10.4.2)
     rickshaw (0.3.1)
     rspec (3.2.0)

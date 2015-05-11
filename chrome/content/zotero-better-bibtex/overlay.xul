@@ -13,6 +13,7 @@
 	</menupopup>
 
   <menupopup id="zotero-collectionmenu">
+    <menuseparator id="zotero-better-bibtex-collectionmenu-separator"/>
     <menuitem id="zotero-better-bibtex-export-group" label="&zotero.better-bibtex.exportGroup;" oncommand="Zotero.BetterBibTeX.exportGroup()"/>
     <menuitem id="zotero-better-bibtex-show-export-url" label="&zotero.better-bibtex.show-collection-key;" oncommand="alert(Zotero.BetterBibTeX.pref.serverURL('.biblatex') || '&zotero.better-bibtex.server.disabled;')"/>
     <menuitem id="zotero-better-bibtex-report-errors" label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors('collection')"/>
