@@ -12,7 +12,7 @@ Zotero_BetterBibTeX_ErrorReport = new class
       document.getElementById('zotero-failure-message').appendChild(document.createTextNode(Zotero.getString('errorReport.followingReportWillBeSubmitted')))
 
       details = window.arguments[0].wrappedJSObject
-      if details.items || details.collection
+      if details.data
         translator = Zotero.BetterBibTeX.getTranslator('Zotero TestCase')
         references = Zotero.BetterBibTeX.translate(translator, details, { exportCollections: false, exportNotes: true, exportFileData: false })
         document.getElementById('zotero-references').hidden = false
@@ -42,7 +42,7 @@ Zotero_BetterBibTeX_ErrorReport = new class
     }
 
     details = window.arguments[0].wrappedJSObject
-    errorData.files['references.json'] = {content: document.getElementById('zotero-references').value } if details.items || details.collection
+    errorData.files['references.json'] = {content: document.getElementById('zotero-references').value } if details.data
 
     Zotero.HTTP.doPost('https://api.github.com/gists', JSON.stringify(errorData), (xmlhttp) ->
       wizard = document.getElementById('zotero-error-report')

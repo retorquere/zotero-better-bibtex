@@ -35,17 +35,24 @@ Zotero.BetterBibTeX.flash = (title, body) ->
   return
 
 Zotero.BetterBibTeX.reportErrors = (details) ->
+  pane = Zotero.getActiveZoteroPane()
+  data = {}
   switch details
     when 'collection'
-      collectionsView = Zotero.getActiveZoteroPane()?.collectionsView
+      collectionsView = pane?.collectionsView
       itemGroup = collectionsView?._getItemAtRow(collectionsView.selection?.currentIndex)
-      if itemGroup?.isCollection()
-        collection = collectionsView.getSelectedCollection()
-    when 'items'
-      win = @windowMediator.getMostRecentWindow('navigator:browser')
-      items = win.ZoteroPane.getSelectedItems()
+      switch itemGroup?.type
+        when 'collection'
+          data = { data: true, collection: collectionsView.getSelectedCollection() }
+        when 'library'
+          data = { data: true }
+        when 'group'
+          data = { data: true, collection: Zotero.Groups.get(collectionsView.getSelectedLibraryID())
 
-  io = {wrappedJSObject: {items: items, collection: collection}}
+    when 'items'
+      data = { data: true, items: pane?.getSelectedItems() }
+
+  io = {wrappedJSObject: data}
   ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
   ww.openWindow(null, 'chrome://zotero-better-bibtex/content/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', io)
   return
@@ -462,6 +469,11 @@ Zotero.BetterBibTeX.init = ->
       menuItem = @document.getElementById('zotero-better-bibtex-export-group')
       menuItem.setAttribute('disabled', false)
       menuItem.setAttribute('hidden', !itemGroup.isGroup())
+
+      menuItem = @document.getElementById('zotero-better-bibtex-show-export-url')
+      menuItem.setAttribute('disabled', false)
+      menuItem.setAttribute('hidden', !(itemGroup.isLibrary(true) || itemGroup.isCollection()))
+
       return original.apply(this, arguments)
     )(ZoteroPane_Local.buildCollectionContextMenu)
 

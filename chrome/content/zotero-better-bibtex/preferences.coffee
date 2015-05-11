@@ -8,17 +8,11 @@ Zotero.BetterBibTeX.pref.serverURL = (extension) ->
   catch err
     return
 
-  isLibrary = true
-  for type in [ 'Collection', 'Search', 'Trash', 'Duplicates', 'Unfiled', 'Header', 'Bucket' ]
-    if itemGroup["is#{type}"]()
-      isLibrary = false
-      break
-
   if itemGroup.isCollection()
     collection = collectionsView.getSelectedCollection()
     url = "collection?/#{collection.libraryID or 0}/#{collection.key + extension}"
 
-  if isLibrary
+  if itemGroup.isLibrary(true)
     libid = collectionsView.getSelectedLibraryID()
     url = if libid then "library?/#{libid}/library#{extension}" else "library?library#{extension}"
   if not url then return
