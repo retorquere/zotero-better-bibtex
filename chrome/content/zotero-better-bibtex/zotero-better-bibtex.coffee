@@ -470,9 +470,10 @@ Zotero.BetterBibTeX.init = ->
       menuItem.setAttribute('disabled', false)
       menuItem.setAttribute('hidden', !itemGroup.isGroup())
 
-      menuItem = @document.getElementById('zotero-better-bibtex-show-export-url')
-      menuItem.setAttribute('disabled', false)
-      menuItem.setAttribute('hidden', !(itemGroup.isLibrary(true) || itemGroup.isCollection()))
+      for id in ['zotero-better-bibtex-show-export-url', 'zotero-better-bibtex-report-errors']
+        menuItem = @document.getElementById(id)
+        menuItem.setAttribute('disabled', false)
+        menuItem.setAttribute('hidden', !(itemGroup.isLibrary(true) || itemGroup.isCollection()))
 
       return original.apply(this, arguments)
     )(ZoteroPane_Local.buildCollectionContextMenu)
