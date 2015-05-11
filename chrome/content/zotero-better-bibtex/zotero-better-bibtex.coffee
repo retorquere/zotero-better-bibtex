@@ -399,23 +399,24 @@ Zotero.BetterBibTeX.init = ->
   # monkey-patch translate to capture export path and auto-export
   Zotero.Translate.Export.prototype.translate = ((original) ->
     return ->
+      # requested translator
+      translator = @translator?[0]
+      return original.apply(this, arguments) unless translator
+
+      # detect BBT
+      for own name, bbt of Zotero.BetterBibTeX.translators
+        break if bbt.translatorID == translator.translatorID
+        bbt = null
+
       # convert group into its library items
       if @_collection?.objectType == 'group'
-        group = @_collection
+        @_group = @_collection
         delete @_collection
-        @_items = Zotero.DB.columnQuery('select itemID from items where libraryID in (select libraryID from groups where groupID = ?) and not itemID in (select itemID from deletedItems)', [group.id])
+        @_items = Zotero.DB.columnQuery('select itemID from items where libraryID in (select libraryID from groups where groupID = ?) and not itemID in (select itemID from deletedItems)', [@_group.id])
         @_items = Zotero.Items.get(@_items) unless @_items.length == 0
 
-      # requested translator
-      translatorID = @translator?[0]
-      translatorID = translatorID.translatorID if translatorID?.translatorID
-
-      for own name, header of Zotero.BetterBibTeX.translators
-        break if header.translatorID == translatorID
-        header = null
-
       # regular behavior for non-BBT translators
-      return original.apply(this, arguments) unless header
+      return original.apply(this, arguments) unless bbt
 
       # export path for relative exports
       @_displayOptions.exportPath = @location.path.slice(0, -@location.leafName.length) if @location && typeof @location == 'object'
@@ -435,9 +436,9 @@ Zotero.BetterBibTeX.init = ->
       progressWin.changeHeadline('Auto-export')
 
       switch
-        when group # group export, already converted to its corresponding items above
+        when @_group # group export, already converted to its corresponding items above
           progressWin.addLines(["Group #{group.name} set up for auto-export"])
-          collection = "group:#{group.id}"
+          collection = "group:#{@_group.id}"
 
         when @_collection?.id
           progressWin.addLines(["Collection #{@_collection.name} set up for auto-export"])
@@ -455,11 +456,19 @@ Zotero.BetterBibTeX.init = ->
       progressWin.startCloseTimer()
 
       if collection
-        @_displayOptions.translatorID = translatorID
+        @_displayOptions.translatorID = translator.translatorID
         Zotero.BetterBibTeX.auto.add(collection, @location.path, @_displayOptions)
 
       return original.apply(this, arguments)
     )(Zotero.Translate.Export.prototype.translate)
+
+  # monkey-patch _prepareTranslation to add collections for group export
+  Zotero.Translate.Export.prototype._prepareTranslation = ((original) ->
+    return ->
+      r = original.apply(this, arguments)
+      @_itemGetter._collectionsLeft = @_group.getCollections() if @_group && @_translatorInfo?.configOptions?.getCollections
+      return r
+    )(Zotero.Translate.Export.prototype._prepareTranslation)
 
   # monkey-patch buildCollectionContextMenu to add group library export
   zoteroPane = Zotero.getActiveZoteroPane()
