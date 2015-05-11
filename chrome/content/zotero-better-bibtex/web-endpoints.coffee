@@ -35,7 +35,7 @@ Zotero.BetterBibTeX.endpoints.collection.init = (url, data, sendResponseCallback
           col = child
           break
       if not col then break
-    col ?= Zotero.Collections.getByLibraryAndKey(libid, key)
+    col ||= Zotero.Collections.getByLibraryAndKey(libid, key)
     throw "#{collectionkey} not found" unless col
 
     bibtex = Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {collection: col}, Zotero.BetterBibTeX.displayOptions(url))

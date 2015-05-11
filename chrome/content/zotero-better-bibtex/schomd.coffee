@@ -138,9 +138,9 @@ Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, format, library, display
   items = @items(keys, {library: library})
   #Zotero.Items.get doesn't like being passed an empty array
   items = Zotero.Items.get(items) if items.length > 0
-  translator ?= 'betterbiblatex'
-  format ?= 'json'
-  displayOptions ?= {}
+  translator ||= 'betterbiblatex'
+  format ||= 'json'
+  displayOptions ||= {}
 
   if format == 'json'
     return (

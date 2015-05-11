@@ -172,19 +172,19 @@
 
           switch creator.creatorType
             when 'editor', 'seriesEditor'
-              creators.editors ?= []
+              creators.editors ||= []
               creators.editors.push name
 
             when 'translator'
-              creators.translators ?= []
+              creators.translators ||= []
               creators.translators.push name
 
             when primaryCreatorType
-              creators.authors ?= []
+              creators.authors ||= []
               creators.authors.push name
 
             else
-              creators.collaborators ?= []
+              creators.collaborators ||= []
               creators.collaborators.push name
   
         if onlyEditors

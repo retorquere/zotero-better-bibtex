@@ -71,7 +71,7 @@ Zotero.BetterBibTeX.cache.exportOptions = (options) ->
     "#{!!(options['Preserve BibTeX Variables'] || options.preserveBibTeXVariables)}"
     "#{!!options.useJournalAbbreviation}"
   ]
-  @exportOptionsCache ?= {}
+  @exportOptionsCache ||= {}
   key = params.join('::')
   return @exportOptionsCache[key] if @exportOptionsCache[key]
 
@@ -117,7 +117,7 @@ Zotero.BetterBibTeX.cache.fetch = (options, itemID) ->
   eo = @exportOptions(options)
   cached = Zotero.DB.rowQuery('select citekey, entry, exportoptions from betterbibtexcache.cache where itemID = ? and exportoptions = ?', [itemID, eo])
   if cached?.citekey && cached?.entry
-    @stats.access[itemID] ?= {}
+    @stats.access[itemID] ||= {}
     @stats.access[itemID][cached.exportoptions] = Date.now()
     @stats.hits += 1
     return cached

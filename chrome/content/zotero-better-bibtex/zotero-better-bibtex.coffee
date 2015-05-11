@@ -111,7 +111,7 @@ Zotero.BetterBibTeX.pref.get = (key) ->
   return Zotero.Prefs.get("translators.better-bibtex.#{key}")
 
 Zotero.BetterBibTeX.formatter = (pattern) ->
-  @formatters ?= Object.create(null)
+  @formatters ||= Object.create(null)
   @formatters[pattern] = BetterBibTeXFormatter.parse(pattern) unless @formatters[pattern]
   return @formatters[pattern]
 
@@ -160,7 +160,7 @@ Zotero.BetterBibTeX.SQLColumns = (table) ->
 
   columns = null
   while statement.executeStep()
-    columns ?= {}
+    columns ||= {}
     columns[Zotero.DB._getTypedValue(statement, name)] = true
   statement.finalize()
 
@@ -400,12 +400,13 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Translate.Export.prototype.translate = ((original) ->
     return ->
       # requested translator
-      translator = @translator?[0]
-      return original.apply(this, arguments) unless translator
+      translatorID = @translator?[0]
+      translatorID = translatorID.translatorID if translatorID.translatorID
+      return original.apply(this, arguments) unless translatorID
 
       # detect BBT
       for own name, bbt of Zotero.BetterBibTeX.translators
-        break if bbt.translatorID == translator.translatorID
+        break if bbt.translatorID == translatorID
         bbt = null
 
       # convert group into its library items
@@ -456,7 +457,7 @@ Zotero.BetterBibTeX.init = ->
       progressWin.startCloseTimer()
 
       if collection
-        @_displayOptions.translatorID = translator.translatorID
+        @_displayOptions.translatorID = translatorID
         Zotero.BetterBibTeX.auto.add(collection, @location.path, @_displayOptions)
 
       return original.apply(this, arguments)
@@ -614,11 +615,11 @@ Zotero.BetterBibTeX.itemAdded = {
         collection.addItem(item.id)
 
     collections = Zotero.BetterBibTeX.withParentCollections(collections) if collections.length != 0
-    for groupID in Zotero.DB.columnQuery("select distinct coalesce(g.groupID, 0) from items i left join groups g on i.libraryID = g.libraryID where itemID in #{Zotero.BetterBibTeX.SQLSet(items)}")
-      if groupID == 0
-        collections.push("'library'")
-      else
+    for groupID in Zotero.DB.columnQuery("select distinct g.groupID from items i left join groups g on i.libraryID = g.libraryID where itemID in #{Zotero.BetterBibTeX.SQLSet(items)}")
+      if groupID
         collections.push("'group:#{groupID}'")
+      else
+        collections.push("'library'")
     if collections.length > 0
       Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
     Zotero.BetterBibTeX.auto.process('collectionChanged')
@@ -652,14 +653,13 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
     for id in ids
       Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'on-change')
 
-  collections = Zotero.Collections.getCollectionsContainingItems(ids, true)
-  collections ?= []
+  collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
   collections = Zotero.BetterBibTeX.withParentCollections(collections) unless collections.length == 0
-  for groupID in Zotero.DB.columnQuery("select distinct coalesce(g.groupID, 0) from items i left join groups g on i.libraryID = g.libraryID where itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}")
-    if groupID == 0
-      collections.push("'library'")
-    else
+  for groupID in Zotero.DB.columnQuery("select distinct g.groupID from items i left join groups g on i.libraryID = g.libraryID where itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}")
+    if groupID
       collections.push("'group:#{groupID}'")
+    else
+      collections.push("'library'")
   if collections.length > 0
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
   Zotero.BetterBibTeX.auto.process('itemChanged')
@@ -753,8 +753,8 @@ Zotero.BetterBibTeX.load = (translator) ->
 Zotero.BetterBibTeX.getTranslator = (name) ->
   name = name.toLowerCase().replace(/[^a-z]/, '')
   translator = @translators[name]
-  translator ?= @translators["better#{name}"]
-  translator ?= @translators["zotero#{name}"]
+  translator ||= @translators["better#{name}"]
+  translator ||= @translators["zotero#{name}"]
   throw "No translator #{name}; available: #{Object.keys(@translators).join(', ')}" unless translator
   return translator.translatorID
 
@@ -832,7 +832,7 @@ class Zotero.BetterBibTeX.XmlNode
         @root.appendChild(node)
         content = [attrs].concat(content.slice(1))
         break # there really should only be one pair here!
-    node ?= @root
+    node ||= @root
 
     content = (c for c in content when typeof c == 'number' || c)
 
