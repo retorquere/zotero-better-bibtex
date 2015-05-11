@@ -92,8 +92,8 @@ Zotero.BetterBibTeX.endpoints.selected.init = (url, data, sendResponseCallback) 
     sendResponseCallback(501, 'text/plain', 'Could not export bibliography: no path')
     return
 
-  win = Zotero.BetterBibTeX.windowMediator.getMostRecentWindow('navigator:browser')
-  items = Zotero.Items.get((item.id for item of win.ZoteroPane.getSelectedItems()))
+  zoteroPane = Zotero.getActiveZoteroPane()
+  items = Zotero.Items.get((item.id for item of zoteroPane.getSelectedItems()))
   sendResponseCallback(200, 'text/plain', Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: items}, Zotero.BetterBibTeX.displayOptions(url)))
   return
 

@@ -462,7 +462,8 @@ Zotero.BetterBibTeX.init = ->
     )(Zotero.Translate.Export.prototype.translate)
 
   # monkey-patch buildCollectionContextMenu to add group library export
-  ZoteroPane_Local.buildCollectionContextMenu = ((original) ->
+  zoteroPane = Zotero.getActiveZoteroPane()
+  zoteroPane.buildCollectionContextMenu = ((original) ->
     return ->
       itemGroup = @collectionsView._getItemAtRow(@collectionsView.selection.currentIndex)
 
@@ -476,7 +477,7 @@ Zotero.BetterBibTeX.init = ->
         menuItem.setAttribute('hidden', !(itemGroup.isLibrary(true) || itemGroup.isCollection()))
 
       return original.apply(this, arguments)
-    )(ZoteroPane_Local.buildCollectionContextMenu)
+    )(zoteroPane.buildCollectionContextMenu)
 
   @schomd.init()
 
@@ -777,7 +778,8 @@ Zotero.BetterBibTeX.toArray = (item) ->
   return item
 
 Zotero.BetterBibTeX.exportGroup = ->
-  itemGroup = ZoteroPane_Local.collectionsView._getItemAtRow(ZoteroPane_Local.collectionsView.selection.currentIndex)
+  zoteroPane = Zotero.getActiveZoteroPane()
+  itemGroup = zoteroPane.collectionsView._getItemAtRow(zoteroPane.collectionsView.selection.currentIndex)
   return unless itemGroup.isGroup()
 
   exporter = new Zotero_File_Exporter()

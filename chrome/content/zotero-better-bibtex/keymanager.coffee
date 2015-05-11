@@ -86,8 +86,8 @@ Zotero.BetterBibTeX.keymanager.extract = (item, insitu) ->
   return item
 
 Zotero.BetterBibTeX.keymanager.selected = (pinmode) ->
-  win = Zotero.BetterBibTeX.windowMediator.getMostRecentWindow('navigator:browser')
-  items = Zotero.Items.get((item.id for item in win.ZoteroPane.getSelectedItems() when !item.isAttachment() && !item.isNote()))
+  zoteroPane = Zotero.getActiveZoteroPane()
+  items = Zotero.Items.get((item.id for item in zoteroPane.getSelectedItems() when !item.isAttachment() && !item.isNote()))
 
   for item in items
     @get(item, pinmode)
