@@ -47,7 +47,7 @@ Zotero.BetterBibTeX.reportErrors = (details) ->
         when 'library'
           data = { data: true }
         when 'group'
-          data = { data: true, collection: Zotero.Groups.get(collectionsView.getSelectedLibraryID())
+          data = { data: true, collection: Zotero.Groups.get(collectionsView.getSelectedLibraryID()) }
 
     when 'items'
       data = { data: true, items: pane?.getSelectedItems() }
