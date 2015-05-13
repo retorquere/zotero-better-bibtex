@@ -57,6 +57,10 @@ def expand(file, options={})
       result << "Translator.label           = #{options[:header]['label'].to_json}"
       result << "Translator.timestamp       = #{options[:header]['lastUpdated'].to_json}"
       result << "Translator.release         = #{RELEASE.to_json}"
+      Dir['resource/translators/*.yml'].sort.each{|yml|
+        header = YAML.load_file(yml)
+        result << "Translator.#{header['label'].gsub(/\s/, '')} = true" if header['translatorID'] == options[:header]['translatorID']
+      }
       result = result.join("\n")
     else
       #puts "including #{tbi.inspect}"
@@ -303,6 +307,8 @@ task :test, [:tag] => [XPI, :plugins] do |t, args|
   tag = "@#{args[:tag]}".sub(/^@@/, '@')
 
   if tag == '@'
+    tag = "--tag ~@noci"
+  elsif tag == '@all'
     tag = ''
   else
     tag = "--tags #{tag}"

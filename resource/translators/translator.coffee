@@ -153,12 +153,6 @@ class Reference
 
     @itemtype = Translator.typeMap.Zotero2BibTeX[@item.itemType] or 'misc'
 
-    for own attr, f of Translator.fieldMap or {}
-      if f.name and not @has[f.name]
-        @add(@field(f, @item[attr]))
-
-    @add({name: 'timestamp', value: Translator.testmode_timestamp || @item.dateModified || @item.dateAdded})
-
     if @item.extra
       fields = []
 
@@ -175,11 +169,17 @@ class Reference
           when 'lccn', 'pmcid'
             fields.push({ name: name, value: m[2] })
           when 'pmid', 'arxiv', 'jstor', 'hdl'
-            fields.push({ name: 'eprinttype', value: m[1].toLowerCase() })
-            fields.push({ name: 'eprint', value: m[2] })
+            if Translator.BetterBibLaTeX
+              fields.push({ name: 'eprinttype', value: m[1].toLowerCase() })
+              fields.push({ name: 'eprint', value: m[2] })
+            else
+              fields.push({ name: name, value: m[2] })
           when 'googlebooksid'
-            fields.push({ name: 'eprinttype', value: 'googlebooks' })
-            fields.push({ name: 'eprint', value: m[2] })
+            if Translator.BetterBibLaTeX
+              fields.push({ name: 'eprinttype', value: 'googlebooks' })
+              fields.push({ name: 'eprint', value: m[2] })
+            else
+              fields.push({ name: 'googlebooks', value: m[2] })
 
           else extra.push(line)
       @item.extra = extra.join("\n")
@@ -219,6 +219,12 @@ class Reference
         field = @field(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
         field.noreplace = true
         @add(field)
+
+    for own attr, f of Translator.fieldMap or {}
+      if f.name and not @has[f.name]
+        @add(@field(f, @item[attr]))
+
+    @add({name: 'timestamp', value: Translator.testmode_timestamp || @item.dateModified || @item.dateAdded})
 
 Reference::log = Translator.log
 
