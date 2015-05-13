@@ -199,6 +199,8 @@ Zotero.BetterBibTeX.updateSchema = ->
 
   return if installed == installing && !(['cache', 'keys', 'autoexport', 'exportoptions'].some((table) => !@SQLColumns(table)))
 
+  Zotero.DB.beginTransaction()
+
   @flash('Better BibTeX: updating database', 'Updating database, this could take a while')
 
   @pref.set('scanCitekeys', true)
@@ -287,7 +289,7 @@ Zotero.BetterBibTeX.updateSchema = ->
 
   #@foreign_keys(true)
 
-  return
+  Zotero.DB.commitTransaction()
 
 Zotero.BetterBibTeX.findKeysSQL = "select i.itemID as itemID, idv.value as extra
                   from items i
