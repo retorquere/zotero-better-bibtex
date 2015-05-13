@@ -1,0 +1,55 @@
+{
+  "config": {
+    "id": "82512813-9edb-471c-aebc-eeaaf40c6cf9",
+    "label": "Zotero TestCase",
+    "release": "0.9.25",
+    "preferences": {
+      "citekeyFormat": "[auth][year]",
+      "skipFields": "",
+      "usePrefix": false,
+      "preserveCaps": "inner",
+      "fancyURLs": false,
+      "langID": "babel",
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
+      "pinCitekeys": "manual",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections": [],
+  "items": [
+    {
+      "itemID": 1708,
+      "itemType": "webpage",
+      "url": "http://www.technologyreview.com/featuredstory/520446/the-decline-of-wikipedia/",
+      "date": "2013-10-22",
+      "extra": "bibtex: simonite2013declinewikipediaeven\nbiblatexdata[titleaddon=MIT Technology Review]",
+      "accessDate": "2013-10-26 09:05:28",
+      "abstractNote": "The community that built the largest encyclopedia in history is shrinking, even as more people and Internet services depend on it than ever. Can it be revived, or is this the end of the Web’s idealistic era?",
+      "websiteTitle": "MIT Technology Review",
+      "title": "The Decline of Wikipedia: Even As More People Than Ever Rely on It, Fewer People Create It",
+      "shortTitle": "The Decline of Wikipedia",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Tom",
+          "lastName": "Simonite",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [],
+      "attachments": [
+      ],
+      "tags": [],
+      "related": [],
+      "seeAlso": [],
+      "publicationTitle": "MIT Technology Review"
+    }
+  ]
+}

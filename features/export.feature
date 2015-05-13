@@ -105,6 +105,7 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.007                                                               | 1          |
      | Better BibLaTeX.009                                                               | 4          |
      | BraceBalancer                                                                     | 1          |
+     | Fields in Extra should override defaults                                          | 1          |
 
 @test-cluster-1 @bblt @bblt-1
 Scenario Outline: BibLaTeX Export
