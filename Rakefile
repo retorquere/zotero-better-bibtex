@@ -18,6 +18,7 @@ require 'zlib'
 require 'open3'
 require 'yaml'
 require 'rake/loaders/makefile'
+require 'selenium-webdriver'
 
 NODEBIN="node_modules/.bin"
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
@@ -229,7 +230,9 @@ rule '.js' => '.coffee' do |t|
   tmp = "tmp/#{File.basename(t.source)}"
   open(tmp, 'w'){|f| f.write(comment + expand(open(t.source), header: header)) }
   puts "Compiling #{t.source}"
-  output, status = Open3.capture2e("#{NODEBIN}/coffee -mbpc #{tmp.shellescape}")
+
+  compile = "#{NODEBIN}/coffee -bcp #{tmp.shellescape}"
+  output, status = Open3.capture2e(compile)
   raise output if status.exitstatus != 0
 
   # include javascript generated from pegjs
@@ -314,10 +317,14 @@ task :test, [:tag] => [XPI, :plugins] do |t, args|
   end
 end
 
-task :dropbox => XPI do
-  dropbox = File.expand_path('~/Dropbox')
-  Dir["#{dropbox}/*.xpi"].each{|xpi| File.unlink(xpi)}
-  FileUtils.cp(XPI, File.join(dropbox, XPI))
+task :share => XPI do
+  if OS.mac?
+    folder = File.expand_path('~/Google Drive/Public')
+  else
+    raise 'No share folder'
+  end
+  Dir["#{folder}/*.xpi"].each{|xpi| File.unlink(xpi)}
+  FileUtils.cp(XPI, File.join(folder, XPI))
 end
 
 file 'resource/translators/unicode.xml' do |t|
@@ -517,4 +524,36 @@ task :markfailing do
 
     open(file, 'w'){|f| f.write(script) }
   }
+end
+
+task :jasmine do
+
+  profiles = File.expand_path('test/fixtures/profiles/')
+  FileUtils.mkdir_p(profiles)
+  profile_dir = File.join(profiles, 'default')
+  profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
+
+  (Dir['*.xpi'] + Dir['test/fixtures/plugins/*.xpi']).each{|xpi|
+    profile.add_extension(xpi)
+  }
+
+  profile['extensions.zotero.showIn'] = 2
+  profile['extensions.zotero.httpServer.enabled'] = true
+  profile['dom.max_chrome_script_run_time'] = 6000
+  profile['extensions.zotfile.useZoteroToRename'] = true
+  profile['browser.download.dir'] = "/tmp/webdriver-downloads"
+  profile['browser.download.folderList'] = 2
+  profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
+  profile['pdfjs.disabled'] = true
+  driver = Selenium::WebDriver.for :firefox, :profile => profile
+
+  driver.navigate.to('chrome://zotero/content/tab.xul')
+  output = driver.execute_script('return Object.keys(Zotero);')
+  #output = driver.execute_script('return consoleReporter.getLogsAsString();')
+  driver.quit
+
+  print output
+
+  # Make sure to exit with code > 0 if there is a test failure
+  #raise RuntimeError, 'Failure' unless status === 'success'
 end

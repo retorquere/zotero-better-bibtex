@@ -24,7 +24,7 @@ Zotero.BetterBibTeX.log = (msg...) ->
       when (typeof m) == 'object' then JSON.stringify(Zotero.BetterBibTeX.inspect(m)) # unpacks db query objects
       else JSON.stringify(m)
 
-  Zotero.debug("[better-bibtex] #{msg.join(' ')}")
+  Zotero.debug("[better-bibtex #{(new Date).toISOString()}] #{msg.join(' ')}")
   return
 
 Zotero.BetterBibTeX.flash = (title, body) ->
@@ -197,7 +197,13 @@ Zotero.BetterBibTeX.updateSchema = ->
   installing = @version(@release)
   Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', ?)", [@release])
 
-  return if installed == installing && !(['cache', 'keys', 'autoexport', 'exportoptions'].some((table) => !@SQLColumns(table)))
+  tables = "SELECT 'betterbibtex.' || name FROM betterbibtex.sqlite_master WHERE type='table'
+            UNION ALL
+            SELECT 'betterbibtexcache.' || name FROM betterbibtexcache.sqlite_master WHERE type='table'
+            ORDER BY 1"
+  tables = Zotero.DB.columnQuery(tables)
+  tables = (tables || []).join(' + ')
+  return if installed == installing && tables == 'betterbibtex.autoexport + betterbibtex.exportoptions + betterbibtex.keys + betterbibtex.schema + betterbibtexcache.cache'
 
   Zotero.DB.beginTransaction()
 
@@ -325,8 +331,9 @@ Zotero.BetterBibTeX.init = ->
     statement.executeStep()
     statement.finalize()
   try # corruption detection is prudent after the above pragmas
-    Zotero.DB.query('select * from betterbibtexcache')
-  catch
+    Zotero.DB.query('select * from betterbibtexcache.cache')
+  catch e
+    @log('cache corrupt:', e)
     Zotero.DB.query('drop table if exists betterbibtexcache.cache')
 
   @pref.prefs.clearUserPref('brace-all')
@@ -347,10 +354,6 @@ Zotero.BetterBibTeX.init = ->
   @keymanager.reset()
   Zotero.DB.query('delete from betterbibtex.keys where citekeyFormat is not null and citekeyFormat <> ?', [@pref.get('citekeyFormat')])
 
-  @pref.observer.register()
-  @pref.ZoteroObserver.register()
-  @quitObserver.register()
-
   for own name, endpoint of @endpoints
     url = "/better-bibtex/#{name}"
     ep = Zotero.Server.Endpoints[url] = ->
@@ -360,6 +363,7 @@ Zotero.BetterBibTeX.init = ->
   Zotero.DB.query('delete from betterbibtex.keys where not itemID in (select itemID from items)')
 
   if @pref.get('scanCitekeys')
+    Zotero.DB.beginTransaction()
     @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
     patched = []
     for row in Zotero.DB.query(@findKeysSQL) or []
@@ -368,6 +372,7 @@ Zotero.BetterBibTeX.init = ->
     if patched.length > 0
       for row in Zotero.DB.query("select * from betterbibtex.keys where citekeyFormat is null and itemID not in #{@SQLSet(patched)}")
         @keymanager.remove(row)
+    Zotero.DB.commitTransaction()
     @pref.set('scanCitekeys', false)
 
   @loadTranslators()
@@ -495,6 +500,10 @@ Zotero.BetterBibTeX.init = ->
     )(zoteroPane.buildCollectionContextMenu)
 
   @schomd.init()
+
+  @pref.observer.register()
+  @pref.ZoteroObserver.register()
+  @quitObserver.register()
 
   nids = []
   nids.push(Zotero.Notifier.registerObserver(@itemChanged, ['item']))
