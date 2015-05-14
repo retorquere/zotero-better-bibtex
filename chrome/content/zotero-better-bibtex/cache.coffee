@@ -1,180 +1,139 @@
-Zotero.BetterBibTeX.cache = new class
-  constructor: ->
-    @db = new Loki('cache.db', {env: 'BROWSER'})
-    @cache = @db.addCollection('cache')
-    @access = @db.addCollection('access')
+Zotero.BetterBibTeX.auto = {}
 
-    @log = Zotero.BetterBibTeX.log
-    @__exposedProps__ = {
-      fetch: 'r'
-      store: 'r'
-    }
-    for own key, value of @__exposedProps__
-      @[key].__exposedProps__ = []
+Zotero.BetterBibTeX.auto.add = (collectionID, path, options) ->
+  eo = Zotero.BetterBibTeX.cache.exportOptions(options)
+  Zotero.DB.query("insert or replace into betterbibtex.autoexport (collection, path, exportOptions, exportedRecursively, status)
+                  values (?, ?, ?, ?, 'done')", [collectionID, path, eo, "#{!!@recursive()}"])
+  return
 
-  load: ->
-    for item in Zotero.DB.query('select * from betterbibtex.cache')
-      @cache.insert({
-        itemID: Integer(item.itemID)
-        translatorID: item.translatorID
-        exportCharset: (item.exportCharset || 'UTF-8').toUpperCase()
-        exportNotes: (item.exportNotes == 'true')
-        preserveBibTeXVariables: (item.preserveBibTeXVariables == 'true')
-        useJournalAbbreviation: (item.useJournalAbbreviation == 'true')
-        citekey: item.citekey
-        bibtex: item.bibtex
-      })
-    @cache.flushChanges()
-    @access.flushChanges()
+Zotero.BetterBibTeX.auto.recursive = ->
+  try
+    return if Zotero.Prefs.get('recursiveCollections') then 'true' else 'false'
+  catch
+  return 'undefined'
 
-  remove: (itemID) ->
-    @cache.removeWhere({itemID: Integer(itemID)})
+Zotero.BetterBibTeX.auto.process = (reason) ->
+  return if @running
+  switch Zotero.BetterBibTeX.pref.get('autoExport')
+    when 'off'  then return
+    when 'idle' then return unless @idle
 
-  reset: ->
-    @db.query('delete from betterbibtex.cache')
-    @cache.removeDataOnly()
-    @cache.flushChanges()
-    @access.removeDataOnly()
-    @access.flushChanges()
+  ae = Zotero.DB.rowQuery("select *
+                           from betterbibtex.autoexport ae
+                           join betterbibtex.exportoptions eo on ae.exportoptions = eo.id
+                           where status == 'pending' limit 1")
+  return unless ae
+  @running = '' + ae.id
 
-  bool: (v) -> if v then 'true' else 'false'
+  translation = new Zotero.Translate.Export()
 
-  flush: ->
-    @db.beginTransaction()
+  switch
+    when ae.collection == 'library' then # do nothing, which implies library export
 
-    for change in @cache.getChanges()
-      o = change.obj
-      key = [o.itemID, o.translatorID, o.exportCharset, @bool(o.exportNotes), @bool(o.preserveBibTeXVariables), @bool(o.useJournalAbbreviation)]
-      switch change.operation
-        when 'I', 'U'
-          Zotero.DB.query("insert or update into betterbibtex.cache
-                            (itemID, translatorID, exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation, citekey, bibtex, lastaccess)
-                           values
-                            (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)", key.concat([o.citekey, o.bibtex]))
-
-        when 'R'
-          Zotero.DB.query("delete from betterbibtex.cache where itemID = ? and translatorID = ? and exportCharset = ?  and exportNotes = ? and preserveBibTeXVariables = ? and useJournalAbbreviation = ?", key)
-
-    for change in @access.getChanges()
-      o = change.obj
-      key = [o.itemID, o.translatorID, o.exportCharset, @bool(o.exportNotes), @bool(o.preserveBibTeXVariables), @bool(o.useJournalAbbreviation)]
-      Zotero.DB.query("update betterbibtex.cache set lastaccess = CURRENT_TIMESTAMP where itemID = ? and translatorID = ? and exportCharset = ?  and exportNotes = ? and preserveBibTeXVariables = ? and useJournalAbbreviation = ?", key)
-
-    @db.query("delete from betterbibtex.cache where lastaccess < datetime('now','-1 month')")
-
-    @db.commitTransaction()
-    @cache.flushChanges()
-    @access.flushChanges()
-
-  record: (item) ->
-    return {
-      itemID: Integer(item.itemID)
-      translatorID: item.translatorID
-      exportCharset: (item.exportCharset || 'UTF-8').toUpperCase()
-      exportNotes: !!item.exportNotes
-      preserveBibTeXVariables: !!item.preserveBibTeXVariables
-      useJournalAbbreviation: !!item.useJournalAbbreviation
-    }
-
-  fetch: (item) ->
-    if item._sandboxManager
-      item = arguments[1]
-
-    record = @record(item)
-    cached = @cache.findOne(record)
-    @access.insert(record) if cached && !@access.findOne(record)
-    return cached
-
-  store: (item, citekey, bibtex) ->
-    if options._sandboxManager
-      item = arguments[1]
-      citekey = arguments[2]
-      bibtex = arguments[3]
-
-    record = {
-      itemID: Integer(item.itemID)
-      translatorID: item.translatorID
-      exportCharset: (item.exportCharset || 'UTF-8').toUpperCase()
-      exportNotes: !!item.exportNotes
-      preserveBibTeXVariables: !!item.preserveBibTeXVariables
-      useJournalAbbreviation: !!item.useJournalAbbreviation
-    }
-    cached = @cache.findOne(record)
-    if cached
-      cached.citekey = citekey
-      cached.bibtex = bibtex
-      cached.lastaccess = Date.now()
-      @cache.update(cached)
-    else
-      record.citekey = citekey
-      record.bibtex = bibtex
-      record.lastaccess = Date.now()
-      @cache.insert(record)
-
-Zotero.BetterBibTeX.auto = new class
-  constructor: ->
-    @db = Zotero.DB
-    @bool = Zotero.BetterBibTeX.cache.bool
-
-  add: (collection, path, context) ->
-    @db.query("insert or replace into betterbibtex.autoexport (collection, path, translatorID, exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation, exportedRecursively, status)
-               values (?, ?, ?, ?, 'done')", [
-                collection,
-                path,
-                context.translatorID,
-                (context.exportCharset || 'UTF-8').toUpperCase(),
-                @bool(context.exportNotes),
-                @bool(context.preserveBibTeXVariables),
-                @bool(context.useJournalAbbreviation),
-                @bool(@recursive())])
-
-  recursive: ->
-    try
-      return if Zotero.Prefs.get('recursiveCollections') then 'true' else 'false'
-    catch
-    return 'undefined'
-
-  reset: ->
-    @db.query("update betterbibtex.autoexport set status='pending'")
-
-  process: (reason) ->
-    return if @running
-    switch Zotero.BetterBibTeX.pref.get('autoExport')
-      when 'off'  then return
-      when 'idle' then return unless @idle
-
-    ae = Zotero.DB.rowQuery("select * from betterbibtex.autoexport ae where status == 'pending' limit 1")
-    return unless ae
-    @running = '' + ae.id
-
-    translation = new Zotero.Translate.Export()
-
-    if m = /^library(:([0-9]+))?$/.match(ae.collection)
-      items = Zotero.Items.get(false, m[2])
+    when m = /^group:([0-9]+)$/.match(ae.collection)
+      items = Zotero.DB.columnQuery('select itemID from items where libraryID in (select libraryID from groups where groupID = ?) and not itemID in (select itemID from deletedItems)', [m[1]])
+      items = Zotero.Items.get(items) unless items.length == 0
       translation.setItems(items)
 
     else
       translation.setCollection(Zotero.Collections.get(ae.collection))
 
-    path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
-    path.initWithPath(ae.path)
-    translation.setLocation(path)
-    translation.setTranslator(ae.translatorID)
+  path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
+  path.initWithPath(ae.path)
+  translation.setLocation(path)
+  translation.setTranslator(ae.translatorID)
 
-    translation.setDisplayOptions({
-      exportCharset: ae.exportCharset
-      exportNotes: (ae.exportNotes == 'true')
-      'Preserve BibTeX Variables': (ae.preserveBibTeXVariables == 'true')
-      useJournalAbbreviation: (ae.useJournalAbbreviation == 'true')
-    })
+  translation.setDisplayOptions({
+    exportCharset: ae.exportCharset
+    exportNotes: (ae.exportNotes == 'true')
+    'Preserve BibTeX Variables': (ae.preserveBibTeXVariables == 'true')
+    useJournalAbbreviation: (ae.useJournalAbbreviation == 'true')
+  })
 
-    translation.setHandler('done', (obj, worked) ->
-      Zotero.DB.query('update betterbibtex.autoexport set status = ? where id = ?', [(if worked then 'done' else 'error'), Zotero.BetterBibTeX.auto.running])
-      Zotero.BetterBibTeX.auto.running = null
-      Zotero.BetterBibTeX.auto.process(reason)
-      return
-    )
-    translation.translate()
+  translation.setHandler('done', (obj, worked) ->
+    Zotero.DB.query('update betterbibtex.autoexport set status = ? where id = ?', [(if worked then 'done' else 'error'), Zotero.BetterBibTeX.auto.running])
+    Zotero.BetterBibTeX.auto.running = null
+    Zotero.BetterBibTeX.auto.process(reason)
     return
+  )
+  translation.translate()
+  return
 
-require('lokijs.js')
+Zotero.BetterBibTeX.cache = {}
+
+Zotero.BetterBibTeX.cache.exportOptions = (options) ->
+  # insert or replace would have been easier, but sqlite bumps the auto-inc for every time we do this (which is often
+  # for cache stores)
+  params = [
+    options.translatorID
+    (options.exportCharset || 'UTF-8').toUpperCase()
+    "#{!!options.exportNotes}"
+    "#{!!(options['Preserve BibTeX Variables'] || options.preserveBibTeXVariables)}"
+    "#{!!options.useJournalAbbreviation}"
+  ]
+  @exportOptionsCache ||= {}
+  key = params.join('::')
+  return @exportOptionsCache[key] if @exportOptionsCache[key]
+
+  id = Zotero.DB.valueQuery('select id
+                             from betterbibtex.exportoptions
+                             where translatorID = ? and exportCharset = ? and exportNotes = ? and preserveBibTeXVariables = ? and useJournalAbbreviation = ?', params)
+  if not id
+    id = Zotero.DB.query('insert into betterbibtex.exportoptions (translatorID, exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation)
+                          values (?, ?, ?, ?, ?)', params)
+  @exportOptionsCache[key] = id
+  return id
+
+Zotero.BetterBibTeX.cache.init = ->
+  @__exposedProps__ = {
+    fetch: 'r'
+    store: 'r'
+  }
+  for own key, value of @__exposedProps__
+    @[key].__exposedProps__ = []
+
+  @stats = {
+    hits: 0
+    misses: 0
+    stores: 0
+    access: {}
+  }
+
+  return @
+
+Zotero.BetterBibTeX.cache.reap = ->
+  for own itemID, access of @stats.access
+    for own options, accesstime of access
+      Zotero.DB.query("update betterbibtexcache.cache set lastaccess = ? where itemID = ? and exportoptions = ?", [accesstime.toISOString().substring(0, 19).replace('T', ' '), itemID, options])
+  @stats.access = {}
+  Zotero.DB.query("delete from betterbibtexcache.cache where lastaccess < datetime('now','-1 month')")
+  return
+
+Zotero.BetterBibTeX.cache.fetch = (options, itemID) ->
+  if options._sandboxManager
+    options = arguments[1]
+    itemID = arguments[2]
+
+  eo = @exportOptions(options)
+  cached = Zotero.DB.rowQuery('select citekey, entry, exportoptions from betterbibtexcache.cache where itemID = ? and exportoptions = ?', [itemID, eo])
+  if cached?.citekey && cached?.entry
+    @stats.access[itemID] ||= {}
+    @stats.access[itemID][cached.exportoptions] = Date.now()
+    @stats.hits += 1
+    return cached
+
+  @stats.misses += 1
+  return null
+
+Zotero.BetterBibTeX.cache.store = (options, itemid, citekey, entry) ->
+  if options._sandboxManager
+    options = arguments[1]
+    itemid = arguments[2]
+    citekey = arguments[3]
+    entry = arguments[4]
+
+  @stats.stores += 1
+
+  eo = Zotero.BetterBibTeX.cache.exportOptions(options)
+  Zotero.DB.query("insert or replace into betterbibtexcache.cache (exportoptions, itemid, citekey, entry, lastaccess) values (?, ?, ?, ?, CURRENT_TIMESTAMP)", [eo, itemid, citekey, entry])
+  return
