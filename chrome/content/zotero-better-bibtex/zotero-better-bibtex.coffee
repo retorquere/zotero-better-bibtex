@@ -72,6 +72,9 @@ Zotero.BetterBibTeX.pref.observer = {
         # delete all dynamic keys that have a different citekeyformat (should be all)
         Zotero.BetterBibTeX.keymanager.clearDynamic()
 
+      when 'autoAbbrevStyle'
+        Zotero.BetterBibTeX.keymanager.resetJournalAbbrevs()
+
     # if any var changes, drop the cache and kick off all exports
     Zotero.BetterBibTeX.cache.reset()
     Zotero.BetterBibTeX.auto.reset()
@@ -352,6 +355,10 @@ Zotero.BetterBibTeX.init = ->
     thread.processNextEvent(true)
 
   @attachDatabase()
+  cfi = @pref.get('cacheFlushInterval')
+  cfi = 1 if typeof cfi != 'number' || cfi < 1
+  cfi = 5 if cfi > 5
+  setInterval((-> Zotero.BetterBibTeX.cache.flush(); Zotero.BetterBibTeX.keymanager.flush()), cfi * 1000 * 60)
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     __exposedProps__: {keymanager: 'r', cache: 'r'}

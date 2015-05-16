@@ -24,7 +24,6 @@ Zotero.BetterBibTeX.pref.styleChanged = (index) ->
   selectedItem = if typeof index != 'undefined' then stylebox.getItemAtIndex(index) else stylebox.selectedItem
   styleID = selectedItem.getAttribute('value')
   Zotero.BetterBibTeX.pref.set('autoAbbrevStyle', styleID)
-  Zotero.BetterBibTeX.keymanager.journalAbbrevCache = Object.create(null)
   return
 
 Zotero.BetterBibTeX.pref.clone = (obj) ->
@@ -116,8 +115,8 @@ Zotero.BetterBibTeX.pref.update = ->
     document.getElementById('auto-export-remove').setAttribute('disabled', true)
     document.getElementById('auto-export-mark').setAttribute('disabled', true)
 
-  ca = document.getElementById('id-better-bibtex-preferences-cache-activity')
-  ca.value = if Zotero.BetterBibTeX.pref.get('caching') then "+#{Zotero.BetterBibTeX.cache.stats.hits || 0}/-#{Zotero.BetterBibTeX.cache.stats.misses || 0}" else '-'
+  #ca = document.getElementById('id-better-bibtex-preferences-cache-activity')
+  #ca.value = if Zotero.BetterBibTeX.pref.get('caching') then "+#{Zotero.BetterBibTeX.cache.stats.hits || 0}/-#{Zotero.BetterBibTeX.cache.stats.misses || 0}" else '-'
 
   return
 

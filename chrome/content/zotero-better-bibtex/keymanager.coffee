@@ -49,6 +49,9 @@ Zotero.BetterBibTeX.keymanager = new class
     @keys.removeDataOnly()
     @keys.flushChanges()
 
+  resetJournalAbbrevs: ->
+    @journalAbbrevs = Object.create(null)
+
   clearDynamic: ->
     citekeyFormat = Zotero.BetterBibTeX.pref.get('citekeyFormat')
     @keys.removeWhere((obj) -> obj.citekeyFormat && obj.citekeyFormat != citekeyFormat)
