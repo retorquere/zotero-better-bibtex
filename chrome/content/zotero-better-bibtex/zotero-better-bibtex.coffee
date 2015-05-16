@@ -494,6 +494,15 @@ Zotero.BetterBibTeX.init = ->
       return original.apply(this, arguments)
     )(zoteroPane.buildCollectionContextMenu)
 
+  # monkey-patch zotfile wildcard table to add bibtex key
+  if Zotero.ZotFile
+    Zotero.ZotFile.wildcardTable = ((original) ->
+      return (item) ->
+        table = original.apply(this, arguments)
+        table['%b'] = Zotero.BetterBibTeX.keymanager.get(item).citekey if item.isAttachment() || item.isNote()
+        return table
+      )(Zotero.ZotFile.wildcardTable)
+
   @schomd.init()
 
   @pref.observer.register()
