@@ -329,6 +329,8 @@ end
 task :share => XPI do
   if OS.mac?
     folder = File.expand_path('~/Google Drive/Public')
+  elsif OS.linux?
+    folder = File.expand_path('~/GoogleDrive/Public')
   else
     raise 'No share folder'
   end
