@@ -7,13 +7,23 @@ Zotero.BetterBibTeX.DebugBridge.methods.init = ->
   return if Zotero.BetterBibTeX.DebugBridge.initialized
   Zotero.BetterBibTeX.DebugBridge.initialized = true
 
-  # monkey-patch Zotero.Items.getAll to get items sorted. With random order I can't really implement stable
-  # testing. A simple ORDER BY would have been easier and loads faster, but I can't reach into getAll.
-  Zotero.Items.getAll = ((original) ->
-    return (onlyTopLevel, libraryID, includeDeleted) ->
-      items = original.apply(this, arguments)
-      items.sort(((a, b) -> a.itemID - b.itemID))
-      return items)(Zotero.Items.getAll)
+  # replacing Zotero.Items.getAll to get items sorted. With random order I can't really implement stable
+  # testing.
+  Zotero.Items.getAll = (onlyTopLevel, libraryID, includeDeleted) ->
+    sql = 'SELECT A.itemID FROM items A'
+    if onlyTopLevel
+      sql += ' LEFT JOIN itemNotes B USING (itemID) LEFT JOIN itemAttachments C ON (C.itemID=A.itemID) WHERE B.sourceItemID IS NULL AND C.sourceItemID IS NULL'
+    else
+      sql += ' WHERE 1'
+    if !includeDeleted
+      sql += ' AND A.itemID NOT IN (SELECT itemID FROM deletedItems)'
+    if libraryID
+      sql += ' AND libraryID=? ORDER BY A.itemID'
+      ids = Zotero.DB.columnQuery(sql, libraryID)
+    else
+      sql += ' AND libraryID IS NULL ORDER BY A.itemID'
+      ids = Zotero.DB.columnQuery(sql)
+    return @get(ids) || []
 
   return true
 
@@ -27,15 +37,15 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   for item in Zotero.BetterBibTeX.safeGetAll() # notes don't get erased in bulk?!
     item.erase()
   Zotero.Collections.erase((coll.id for coll in Zotero.getCollections()))
-  Zotero.BetterBibTeX.keymanager.reset(true)
   Zotero.Items.emptyTrash()
-  Zotero.DB.query('delete from betterbibtexcache.cache')
-  Zotero.DB.query('delete from betterbibtex.autoExport')
 
+  Zotero.BetterBibTeX.keymanager.reset()
+  Zotero.BetterBibTeX.cache.reset()
+  Zotero.BetterBibTeX.auto.clear()
+
+  return true if Zotero.DB.valueQuery('select count(*) from items') == 0
   err = JSON.stringify((item.toArray() for item in Zotero.BetterBibTeX.safeGetAll()))
-  throw "reset failed -- Library not empty -- #{err}" unless Zotero.DB.valueQuery('select count(*) from items') == 0
-
-  return true
+  throw "reset failed -- Library not empty -- #{err}"
 
 Zotero.BetterBibTeX.DebugBridge.methods.import = (filename) ->
   file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile)
@@ -44,7 +54,6 @@ Zotero.BetterBibTeX.DebugBridge.methods.import = (filename) ->
   return true
 
 Zotero.BetterBibTeX.DebugBridge.methods.librarySize = -> Zotero.DB.valueQuery('select count(*) from items i where not i.itemID in (select d.itemID from deletedItems d)')
-Zotero.BetterBibTeX.DebugBridge.methods.cacheSize = -> Zotero.DB.valueQuery('select count(*) from betterbibtexcache.cache')
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator, exportOptions) ->
   translator = Zotero.BetterBibTeX.getTranslator(translator)
@@ -93,12 +102,6 @@ Zotero.BetterBibTeX.DebugBridge.methods.select = (attribute, value) ->
 
   return Zotero.DB.valueQuery(sql, [value])
 
-Zotero.BetterBibTeX.DebugBridge.methods.cache = ->
-  return {
-    stats: Zotero.BetterBibTeX.cache.stats
-    data: Zotero.DB.query('select * from betterbibtexcache.cache')
-  }
-
 Zotero.BetterBibTeX.DebugBridge.methods.remove = (id) -> Zotero.Items.trash([id])
 
 Zotero.BetterBibTeX.DebugBridge.methods.pinCiteKey = (id) ->
@@ -106,7 +109,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.pinCiteKey = (id) ->
 
 Zotero.BetterBibTeX.DebugBridge.methods.autoExports = ->
   exports = []
-  for e in Zotero.DB.query('select * from betterbibtex.autoexport ae join betterbibtex.exportoptions eo on ae.exportoptions = eo.id')
+  for e in Zotero.DB.query('select * from betterbibtex.autoexport')
     ae = {}
     for own k, v of e
       ae[k] = v

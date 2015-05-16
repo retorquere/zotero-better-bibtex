@@ -97,14 +97,14 @@ Translator.nextItem = ->
   while item = Zotero.nextItem()
     continue if item.itemType == 'note' || item.itemType == 'attachment'
     if @caching
-      cached = Zotero.BetterBibTeX.cache.fetch(Translator, item.itemID)
+      cached = Zotero.BetterBibTeX.cache.fetch(item.itemID, Translator)
       if cached?.citekey
         @citekeys[item.itemID] = cached.citekey
-        Zotero.write(cached.entry)
+        Zotero.write(cached.bibtex)
         continue
 
     Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
-    item.__citekey__ ?= Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
+    item.__citekey__ ||= Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
     @citekeys[item.itemID] = item.__citekey__
     return item
 
@@ -134,9 +134,9 @@ JabRef.serialize = (arr, sep, wrap) ->
 
 JabRef.exportGroup = (collection, level) ->
   group = ["#{level} ExplicitGroup:#{collection.name}", 0]
-  items = (Translator.citekeys[id] for id in collection.items)
-  items.sort() if Translator.testmode
-  group = group.concat(items)
+  references = (Translator.citekeys[id] for id in collection.items)
+  references.sort() if Translator.testmode
+  group = group.concat(references)
   group.push('')
   group = @serialize(group, ';')
 
@@ -413,5 +413,5 @@ Reference::complete = ->
   ref += '\n}\n\n'
   Zotero.write(ref)
 
-  Zotero.BetterBibTeX.cache.store(Translator, @item.itemID, @item.__citekey__, ref) if Translator.caching
+  Zotero.BetterBibTeX.cache.store(@item.itemID, Translator, @item.__citekey__, ref) if Translator.caching
   return

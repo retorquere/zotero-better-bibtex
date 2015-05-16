@@ -20,7 +20,7 @@
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>MHRA format with full notes and bibliography</summary>
-    <updated>2014-08-30T16:59:28+00:00</updated>
+    <updated>2015-03-02T23:29:34+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -251,7 +251,7 @@
         <text term="in" suffix=" "/>
       </if>
     </choose>
-    <text variable="container-title" font-style="italic"/>
+    <text variable="container-title" text-case="title" font-style="italic"/>
   </macro>
   <macro name="edition-note">
     <choose>
@@ -297,9 +297,9 @@
     <choose>
       <if type="article-newspaper">
         <group delimiter=", ">
-          <group>
-            <text variable="edition" suffix=" "/>
-            <text term="edition" prefix=" "/>
+          <group delimiter=" ">
+            <text variable="edition"/>
+            <text term="edition"/>
           </group>
           <group>
             <text term="section" suffix=" "/>

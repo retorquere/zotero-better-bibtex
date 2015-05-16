@@ -24,7 +24,7 @@
     <category citation-format="author-date"/>
     <category field="generic-base"/>
     <summary>The author-date variant of the Chicago style</summary>
-    <updated>2014-10-03T06:48:15+00:00</updated>
+    <updated>2015-05-09T09:49:51+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -42,10 +42,16 @@
   <macro name="secondary-contributors">
     <choose>
       <if type="chapter paper-conference" match="none">
-        <names variable="editor translator" delimiter=". ">
-          <label form="verb" text-case="capitalize-first" suffix=" "/>
-          <name and="text" delimiter=", "/>
-        </names>
+        <group delimiter=". ">
+          <names variable="editor translator" delimiter=". ">
+            <label form="verb" text-case="capitalize-first" suffix=" "/>
+            <name and="text" delimiter=", "/>
+          </names>
+          <names variable="director" delimiter=". ">
+            <label form="verb" text-case="capitalize-first" suffix=" "/>
+            <name and="text" delimiter=", "/>
+          </names>
+        </group>
       </if>
     </choose>
   </macro>
@@ -97,7 +103,7 @@
   </macro>
   <macro name="substitute-title">
     <choose>
-      <if type="article-journal article-magazine article-newspaper review review-book" match="any">
+      <if type="article-magazine article-newspaper review review-book" match="any">
         <text macro="container-title"/>
       </if>
     </choose>
@@ -201,13 +207,29 @@
         </group>
       </else-if>
       <else-if variable="reviewed-author">
-        <group delimiter=", ">
-          <text variable="title" font-style="italic" prefix="Review of "/>
-          <names variable="reviewed-author">
-            <label form="verb-short" text-case="lowercase" suffix=" "/>
-            <name and="text" delimiter=", "/>
-          </names>
-        </group>
+        <choose>
+          <if variable="reviewed-title">
+            <group delimiter=". ">
+              <text variable="title" text-case="title" quotes="true"/>
+              <group delimiter=", ">
+                <text variable="reviewed-title" text-case="title" font-style="italic" prefix="Review of "/>
+                <names variable="reviewed-author">
+                  <label form="verb-short" text-case="lowercase" suffix=" "/>
+                  <name and="text" delimiter=", "/>
+                </names>
+              </group>
+            </group>
+          </if>
+          <else>
+            <group delimiter=", ">
+              <text variable="title" text-case="title" font-style="italic" prefix="Review of "/>
+              <names variable="reviewed-author">
+                <label form="verb-short" text-case="lowercase" suffix=" "/>
+                <name and="text" delimiter=", "/>
+              </names>
+            </group>
+          </else>
+        </choose>
       </else-if>
       <else-if type="legal_case interview" match="any">
         <text variable="title"/>
@@ -232,7 +254,7 @@
           </else>
         </choose>
       </if>
-      <else-if type="chapter  paper-conference" match="any">
+      <else-if type="chapter paper-conference" match="any">
         <choose>
           <if is-numeric="edition">
             <group delimiter=" " prefix=", ">
@@ -329,9 +351,9 @@
     <choose>
       <if type="article-newspaper">
         <group prefix=", " delimiter=", ">
-          <group>
-            <text variable="edition" suffix=" "/>
-            <text term="edition" prefix=" "/>
+          <group delimiter=" ">
+            <text variable="edition"/>
+            <text term="edition"/>
           </group>
           <group>
             <text term="section" form="short" suffix=" "/>
@@ -408,15 +430,47 @@
   <macro name="date">
     <choose>
       <if variable="issued">
-        <date variable="issued">
-          <date-part name="year"/>
-        </date>
+        <group delimiter=" ">
+          <date variable="original-date" form="text" date-parts="year" prefix="(" suffix=")"/>
+          <date variable="issued">
+            <date-part name="year"/>
+          </date>
+        </group>
       </if>
       <else-if variable="accessed">
         <date variable="accessed">
           <date-part name="year"/>
         </date>
       </else-if>
+      <else-if variable="status">
+        <text variable="status" text-case="capitalize-first"/>
+      </else-if>
+      <else>
+        <text term="no date" form="short"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="date-in-text">
+    <choose>
+      <if variable="issued">
+        <group delimiter=" ">
+          <date variable="original-date" form="text" date-parts="year" prefix="[" suffix="]"/>
+          <date variable="issued">
+            <date-part name="year"/>
+          </date>
+        </group>
+      </if>
+      <else-if variable="accessed">
+        <date variable="accessed">
+          <date-part name="year"/>
+        </date>
+      </else-if>
+      <else-if variable="status">
+        <text variable="status"/>
+      </else-if>
+      <else>
+        <text term="no date" form="short"/>
+      </else>
     </choose>
   </macro>
   <macro name="day-month">
@@ -521,10 +575,21 @@
   <citation et-al-min="4" et-al-use-first="1" disambiguate-add-year-suffix="true" disambiguate-add-names="true" disambiguate-add-givenname="true" givenname-disambiguation-rule="primary-name">
     <layout prefix="(" suffix=")" delimiter="; ">
       <group delimiter=", ">
-        <group delimiter=" ">
-          <text macro="contributors-short"/>
-          <text macro="date"/>
-        </group>
+        <choose>
+          <if variable="issued accessed" match="any">
+            <group delimiter=" ">
+              <text macro="contributors-short"/>
+              <text macro="date-in-text"/>
+            </group>
+          </if>
+          <!---comma before forthcoming and n.d.-->
+          <else>
+            <group delimiter=", ">
+              <text macro="contributors-short"/>
+              <text macro="date-in-text"/>
+            </group>
+          </else>
+        </choose>
         <text macro="point-locators"/>
       </group>
     </layout>
@@ -533,6 +598,7 @@
     <sort>
       <key macro="contributors"/>
       <key variable="issued"/>
+      <key variable="title"/>
     </sort>
     <layout suffix=".">
       <group delimiter=". ">

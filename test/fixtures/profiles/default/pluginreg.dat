@@ -1,43 +1,102 @@
 Generated File. Do not edit.
 
 [HEADER]
-Version|0.17|$
-Arch|x86-msvc|$
+Version:0.17:$
+Arch:x86_64-gcc3:$
 
 [PLUGINS]
-npMeetingJoinPluginOC.dll|$
-C:\Program Files\Microsoft Office 15\root\VFS\ProgramFilesX86\Mozilla Firefox\plugins\npMeetingJoinPluginOC.dll|$
-15.0.4420.1017|$
-1417471285971|0|0|0|$
-The plugin allows you to have a better experience with Microsoft Lync|$
-Microsoft Office 2013|$
+QuickTime Plugin.plugin:$
+/Library/Internet Plug-Ins/QuickTime Plugin.plugin:$
+7.7.3:$
+1410315161000:0:0:0:$
+The QuickTime Plugin allows you to view a wide variety of multimedia content in web pages. For more information, visit the <A HREF=http://www.apple.com/quicktime>QuickTime</A> Web site.:$
+QuickTime Plug-in 7.7.3:$
+38
+0:video/x-msvideo:Video For Windows:avi,vfw:$
+1:video/3gpp2:3GPP2 media:3g2,3gp2:$
+2:audio/mpeg3:MP3 audio:mp3,swa:$
+3:audio/mp3:MP3 audio:mp3,swa:$
+4:audio/x-caf:CAF audio:caf:$
+5:audio/mpeg:MPEG audio:mpeg,mpg,m1s,m1a,mp2,mpm,mpa,m2a,mp3,swa:$
+6:video/quicktime:QuickTime Movie:mov,qt,mqv:$
+7:audio/x-mpeg3:MP3 audio:mp3,swa:$
+8:video/mp4:MPEG-4 media:mp4:$
+9:application/x-sdp:SDP stream descriptor:sdp:$
+10:audio/wav:WAVE audio:wav,bwf:$
+11:video/avi:Video For Windows:avi,vfw:$
+12:audio/mp4:MPEG-4 media:mp4:$
+13:video/x-m4v:Video:m4v:$
+14:audio/x-wav:WAVE audio:wav,bwf:$
+15:application/sdp:SDP stream descriptor:sdp:$
+16:audio/x-aiff:AIFF audio:aiff,aif,aifc,cdda:$
+17:video/x-mpeg:MPEG media:mpeg,mpg,m1s,m1v,m1a,m75,m15,mp2,mpm,mpv,mpa:$
+18:video/3gpp:3GPP media:3gp,3gpp:$
+19:video/msvideo:Video For Windows:avi,vfw:$
+20:audio/x-mpeg:MPEG audio:mpeg,mpg,m1s,m1a,mp2,mpm,mpa,m2a,mp3,swa:$
+21:audio/vnd.qcelp:QUALCOMM PureVoice audio:qcp:$
+22:audio/x-mp3:MP3 audio:mp3,swa:$
+23:application/x-rtsp:RTSP stream descriptor:rtsp,rts:$
+24:audio/amr:AMR audio:AMR:$
+25:video/sd-video:SD video:sdv:$
+26:audio/aiff:AIFF audio:aiff,aif,aifc,cdda:$
+27:video/mpeg:MPEG media:mpeg,mpg,m1s,m1v,m1a,m75,m15,mp2,mpm,mpv,mpa:$
+28:audio/3gpp2:3GPP2 media:3g2,3gp2:$
+29:audio/aac:AAC audio:aac,adts:$
+30:audio/x-m4b:AAC audio book:m4b:$
+31:audio/x-m4p:AAC audio:m4p:$
+32:audio/x-gsm:GSM audio:gsm:$
+33:application/x-mpeg:AMC media:amc:$
+34:audio/x-aac:AAC audio:aac,adts:$
+35:audio/basic:uLaw/AU audio:au,snd,ulw:$
+36:audio/x-m4a:AAC audio:m4a:$
+37:audio/3gpp:3GPP media:3gp,3gpp:$
+Default Browser.plugin:$
+/Library/Internet Plug-Ins/Default Browser.plugin:$
+600:$
+1425962594000:0:0:0:$
+Provides information about the default web browser:$
+Default Browser Helper:$
 1
-0|application/vnd.microsoft.communicator.ocsmeeting|Lync Plug-in for Firefox||$
-npspwrap.dll|$
-C:\Program Files\Microsoft Office 15\root\Office15\npspwrap.dll|$
-15.0.4420.1017|$
-1417471238003|0|0|0|$
-The plugin allows you to have a better experience with Microsoft SharePoint|$
-Microsoft Office 2013|$
+0:application/apple-default-browser:Provides information about the default web browser::$
+AdobePDFViewerNPAPI.plugin:$
+/Library/Internet Plug-Ins/AdobePDFViewerNPAPI.plugin:$
+15.007.20033:$
+1426587604000:0:0:0:$
+Adobe® Acrobat® Plug-in for Web Browsers, Version 15.007.20033:$
+Adobe Acrobat NPAPI Plug-in, Version 15.007.20033:$
+8
+0:application/vnd.adobe.pdf:Acrobat Portable Document Format:pdf:$
+1:application/vnd.adobe.pdfxml:Acrobat XML Portable Document Format:pdfxml:$
+2:application/vnd.adobe.x-mars:Acrobat XML Portable Document Format:mars:$
+3:application/vnd.adobe.xdp+xml:XML Data Package:xdp:$
+4:application/vnd.fdf:Acrobat Forms Data Format:fdf:$
+5:application/vnd.adobe.xfd+xml:FormFlow99 Data File:xfd:$
+6:application/pdf:Acrobat Portable Document Format:pdf:$
+7:application/vnd.adobe.xfdf:Acrobat Forms Data Format in XML:xfdf:$
+SharePointBrowserPlugin.plugin:$
+/Library/Internet Plug-Ins/SharePointBrowserPlugin.plugin:$
+14.4.9:$
+1427266800000:0:0:0:$
+Microsoft Office for Mac SharePoint Browser Plug-in:$
+SharePoint Browser Plug-in:$
 2
-0|application/x-sharepoint|SharePoint Plug-in for Firefox||$
-1|application/x-sharepoint-uc|||$
-npGoogleUpdate3.dll|$
-C:\Program Files (x86)\Google\Update\1.3.25.11\npGoogleUpdate3.dll|$
-1.3.25.11|$
-1416590053470|0|0|0|$
-Google Update|$
-Google Update|$
-2
-0|application/x-vnd.google.update3webcontrol.3|||$
-1|application/x-vnd.google.oneclickctrl.9|||$
-npPicasa3.dll|$
-C:\Program Files (x86)\Google\Picasa3\npPicasa3.dll|$
-3.0.0.0|$
-1407889732000|0|0|0|$
-Picasa plugin|$
-Picasa|$
+0:application/x-sharepoint:Microsoft Office for Mac SharePoint Browser Plug-in::$
+1:application/x-sharepoint-protocolhandler:Microsoft Office for Mac Protocol Handler::$
+AdobeAAMDetect.plugin:$
+/Library/Internet Plug-Ins/AdobeAAMDetect.plugin:$
+3.0.0.0:$
+1431353789000:0:0:0:$
+Creative Cloud Desktop Plugin.v_3_0_0_0:$
+AdobeAAMDetect:$
 1
-0|application/x-picasa-detect|3.1|pinstall|$
+0:application/x-adobeaamdetect:Creative Cloud Desktop Plugin.v_3_0_0_0::$
 
 [INVALID]
+/Library/Internet Plug-Ins/AdobePDFViewer.plugin:$
+1426587604000:$
+/Library/Internet Plug-Ins/SharePointWebKitPlugin.webplugin:$
+1427266800000:$
+/Library/Internet Plug-Ins/nsIQTScriptablePlugin.xpt:$
+1410315163000:$
+/Library/Internet Plug-Ins/Quartz Composer.webplugin:$
+1410301211000:$

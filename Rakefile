@@ -194,6 +194,9 @@ CLEAN.include('resource/translators/*.json')
 CLEAN.include('.depend.mf')
 CLEAN.include('resource/translators/latex_unicode_mapping.coffee')
 CLEAN.include('*.xpi')
+CLEAN.include('*.log')
+CLEAN.include('*.cache')
+CLEAN.include('*.debug')
 
 FileUtils.mkdir_p 'tmp'
 
@@ -335,6 +338,22 @@ end
 
 file 'resource/translators/unicode.xml' do |t|
   ZotPlus::RakeHelper.download('http://www.w3.org/2003/entities/2007xml/unicode.xml', t.name)
+end
+
+file 'chrome/content/zotero-better-bibtex/lokijs.js' => 'Rakefile' do |t|
+  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js', t.name)
+
+  #js = open(t.name).read
+  #open(t.name, 'w'){|f|
+    #f.puts("
+      #Zotero.BetterBibTeX.cache.stringify = (function () {
+        #module = {};
+        #require = function() { throw new Error('this is not commonJS'); }
+        ##{js}
+        #return module.exports;
+      #})();
+    #")
+  #}
 end
 
 file 'resource/translators/xregexp-all-min.js' do |t|

@@ -39,89 +39,69 @@ def download(url, path)
   cmd "curl -L -s -S -o #{path.shellescape} #{url.shellescape}"
 end
 
-def loadZotero(profile)
-  profile ||= 'default'
-  $Firefox ||= OpenStruct.new
+def loadZotero
+  return if $Firefox
+  $Firefox = OpenStruct.new
 
-  case $Firefox.profile
-    when profile
-      # reuse existing profile
+  profile = Selenium::WebDriver::Firefox::Profile.new(File.expand_path('test/fixtures/profiles/default'))
 
-    when nil
-      say "starting Firefox with #{profile} profile"
-      $Firefox.profile = profile
-    
-      profiles = File.expand_path('test/fixtures/profiles/')
-      FileUtils.mkdir_p(profiles)
-      profile_dir = File.join(profiles, profile)
-      if !File.directory?(profile_dir)
-        archive = File.join('tmp', profile + '.tar.gz')
-        download("https://github.com/ZotPlus/zotero-better-bibtex/releases/download/test-profiles/#{profile}.tar.gz", archive)
-        cmd "tar -xzC #{profiles.shellescape} -f #{archive.shellescape}"
-      end
-      profile = Selenium::WebDriver::Firefox::Profile.new(profile_dir)
-    
-      say "Installing plugins..."
-      (Dir['*.xpi'] + Dir['test/fixtures/plugins/*.xpi']).each{|xpi|
-        say "Installing #{File.basename(xpi)}"
-        profile.add_extension(xpi)
-      }
+  say "Installing plugins..."
+  (Dir['*.xpi'] + Dir['test/fixtures/plugins/*.xpi']).each{|xpi|
+    say "Installing #{File.basename(xpi)}"
+    profile.add_extension(xpi)
+  }
 
-      profile['extensions.zotero.showIn'] = 2
-      profile['extensions.zotero.httpServer.enabled'] = true
-      profile['dom.max_chrome_script_run_time'] = 6000
-    
-      if ENV['CI'] != 'true'
-        profile['extensions.zotero.debug.store'] = true
-        profile['extensions.zotero.debug.log'] = true
-        profile['extensions.zotero.translators.better-bibtex.debug'] = true
-      end
-    
-      profile['extensions.zotfile.useZoteroToRename'] = true
-    
-      profile['browser.download.dir'] = "/tmp/webdriver-downloads"
-      profile['browser.download.folderList'] = 2
-      profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
-      profile['pdfjs.disabled'] = true
-    
-      say "Starting Firefox..."
-      client = Selenium::WebDriver::Remote::Http::Default.new
-      client.timeout = 6000 # seconds – default is 60
-      $Firefox.browser = Selenium::WebDriver.for :firefox, :profile => profile, :http_client => client
-      say "Firefox started"
-    
-      sleep 2
-      say "Starting Zotero..."
-      $Firefox.browser.navigate.to('chrome://zotero/content/tab.xul') # does this trigger the window load?
-      say "Zotero started"
-      #$headless.take_screenshot('/home/emile/zotero/zotero-better-bibtex/screenshot.png')
-      $Firefox.DebugBridge = JSONRPCClient.new('http://localhost:23119/debug-bridge')
-      $Firefox.DebugBridge.bootstrap('Zotero.BetterBibTeX')
-      $Firefox.BetterBibTeX = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
-      $Firefox.ScholarlyMarkdown = JSONRPCClient.new('http://localhost:23119/better-bibtex/schomd')
-      $Firefox.BetterBibTeX.init
-    
-      Dir['*.debug'].each{|d| File.unlink(d) }
-      Dir['*.status'].each{|d| File.unlink(d) }
-      Dir['*.cache'].each{|d| File.unlink(d) }
-      Dir['*.log'].each{|d| File.unlink(d) unless File.basename(d) == 'cucumber.log' }
+  profile['extensions.zotero.showIn'] = 2
+  profile['extensions.zotero.httpServer.enabled'] = true
+  profile['dom.max_chrome_script_run_time'] = 6000
+  profile['browser.shell.checkDefaultBrowser'] = false
 
-    else
-      throw "Firefox profile #{profile} requested but #{$Firefox.profile} already running"
+  if ENV['CI'] != 'true'
+    profile['extensions.zotero.debug.store'] = true
+    profile['extensions.zotero.debug.log'] = true
+    profile['extensions.zotero.translators.better-bibtex.logging'] = true
   end
+
+  profile['extensions.zotfile.useZoteroToRename'] = true
+
+  profile['browser.download.dir'] = "/tmp/webdriver-downloads"
+  profile['browser.download.folderList'] = 2
+  profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
+  profile['pdfjs.disabled'] = true
+
+  say "Starting Firefox..."
+  client = Selenium::WebDriver::Remote::Http::Default.new
+  client.timeout = 6000 # seconds – default is 60
+  $Firefox.browser = Selenium::WebDriver.for :firefox, :profile => profile, :http_client => client
+  say "Firefox started"
+
+  sleep 2
+  say "Starting Zotero..."
+  $Firefox.browser.navigate.to('chrome://zotero/content/tab.xul') # does this trigger the window load?
+  say "Zotero started"
+  #$headless.take_screenshot('/home/emile/zotero/zotero-better-bibtex/screenshot.png')
+  $Firefox.DebugBridge = JSONRPCClient.new('http://localhost:23119/debug-bridge')
+  $Firefox.DebugBridge.bootstrap('Zotero.BetterBibTeX')
+  $Firefox.BetterBibTeX = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
+  $Firefox.ScholarlyMarkdown = JSONRPCClient.new('http://localhost:23119/better-bibtex/schomd')
+  $Firefox.BetterBibTeX.init
+
+  Dir['*.debug'].each{|d| File.unlink(d) }
+  Dir['*.status'].each{|d| File.unlink(d) }
+  Dir['*.log'].each{|d| File.unlink(d) unless File.basename(d) == 'cucumber.log' }
 end
 at_exit do
   $Firefox.browser.quit if $Firefox && $Firefox.browser
 end
 
 Before do |scenario|
-  loadZotero(scenario.source_tag_names.collect{|tag| (tag =~ /^@firefox-/ ? tag.sub(/^@firefox-/, '') : nil)}.first)
+  loadZotero
   $Firefox.BetterBibTeX.reset unless scenario.source_tag_names.include?('@noreset')
-  expect($Firefox.BetterBibTeX.cacheSize).not_to eq(0) if scenario.source_tag_names.include?('@keepcache')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.testMode', true)
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.testMode.timestamp', '2015-02-24 12:14:36 +0100')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.attachmentRelativePath', true)
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.autoExport', 'on-change')
+  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.logging', true) if ENV['CI'] != 'true'
   @selected = nil
   @expectedExport = nil
   @exportOptions = {}
@@ -142,7 +122,6 @@ After do |scenario|
       #BetterBibTeX.exportToFile(@expectedExport.translator, File.join('/tmp', File.basename(@expectedExport.filename))) if @expectedExport
     end
 
-    open("#{filename}.cache", 'w'){|f| f.write($Firefox.BetterBibTeX.cache.to_yaml)} if scenario.failed? || scenario.source_tag_names.include?('@dumpcache')
     $Firefox.BetterBibTeX.exportToFile('Zotero TestCase', "#{filename}.json") if scenario.source_tag_names.include?('@librarydump')
 
     # `FAIL=FAST cucumber` to stop on first failure
@@ -161,6 +140,10 @@ end
 #    ZOTERO.setIntPref(pref, Integer(value))
 #  end
 #end
+
+When /^I? ?reset the database to '([^']+)'$/ do |db|
+  $Firefox.BetterBibTeX.reset(db)
+end
 
 When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)'( as '([^']+)')?$/ do |references, dummy, attachments, filename, dummy2, aliased|
   bib = nil
@@ -354,10 +337,6 @@ end
 
 Then /restore '([^']+)'$/ do |db|
   $Firefox.BetterBibTeX.restore(db)
-end
-
-Then /^show the citekeys$/ do
-  pp $Firefox.BetterBibTeX.getKeys
 end
 
 Then /^save the query log to '([^']+)'$$/ do |filename|

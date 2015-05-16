@@ -2,7 +2,7 @@
 	{
 		"name": "CrossRef Lookup",
 		"alias": "CrossRef",
-		"icon": "file:///C:/Users/emile/AppData/Roaming/Mozilla/Firefox/Profiles/6wy1x13o.Zotero%20Test%20Profile/zotero/locate/CrossRef%20Lookup.gif",
+		"icon": "file:///Users/emile/Library/Application%20Support/Firefox/Profiles/qdsjifg5.test/zotero/locate/CrossRef%20Lookup.gif",
 		"_urlTemplate": "http://crossref.org/openurl?{z:openURL}&pid=zter:zter321",
 		"description": "CrossRef Search Engine",
 		"hidden": false,
@@ -16,7 +16,7 @@
 	{
 		"name": "Google Scholar Search",
 		"alias": "Google Scholar",
-		"icon": "file:///C:/Users/emile/AppData/Roaming/Mozilla/Firefox/Profiles/6wy1x13o.Zotero%20Test%20Profile/zotero/locate/Google%20Scholar%20Search.ico",
+		"icon": "file:///Users/emile/Library/Application%20Support/Firefox/Profiles/qdsjifg5.test/zotero/locate/Google%20Scholar%20Search.ico",
 		"_urlTemplate": "http://scholar.google.com/scholar?as_q=&as_epq={z:title}&as_occt=title&as_sauthors={rft:aufirst?}+{rft:aulast?}&as_ylo={z:year?}&as_yhi={z:year?}&as_sdt=1.&as_sdtp=on&as_sdtf=&as_sdts=22&",
 		"description": "Google Scholar Search",
 		"hidden": false,

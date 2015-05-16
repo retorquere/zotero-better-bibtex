@@ -9,7 +9,7 @@ case $1 in
     bundle exec rake bin/github-release plugins
     ;;
 
-  build)
+  test)
     case $CIRCLE_NODE_INDEX in
       [012])
         bundle exec cucumber --strict --tag ~@noci --tags @test-cluster-$CIRCLE_NODE_INDEX

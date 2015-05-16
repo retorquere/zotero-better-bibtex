@@ -80,10 +80,10 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                              | references |
+     | Empty bibtex: clause in extra gobbles whatever follows #99                        | 1          |
      | Better BibTeX.018                                                                 | 1          |
      | Better BibTeX.026                                                                 | 2          |
      | Better BibTeX.027                                                                 | 2          |
-     | Empty bibtex: clause in extra gobbles whatever follows #99                        | 1          |
      | capital delta breaks .bib output #141                                             | 1          |
      | Export C as {v C}, not v{C} #152                                                  | 3          |
      | Export of item to Better Bibtex fails for auth3_1 #98                             | 1          |
@@ -114,6 +114,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                              | references |
+     | Better BibLaTeX.stable-keys                                                       | 6          |
      | Better BibLaTeX.010                                                               | 2          |
      | Better BibLaTeX.011                                                               | 2          |
      | Better BibLaTeX.012                                                               | 2          |
@@ -127,7 +128,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.021                                                               | 2          |
      | Better BibLaTeX.022                                                               | 1          |
      | Better BibLaTeX.023                                                               | 1          |
-     | Better BibLaTeX.stable-keys                                                       | 6          |
      | Better BibTeX does not use biblatex fields eprint and eprinttype #170             | 3          |
      | Capitalisation in techreport titles #160                                          | 1          |
      | DOI with underscores in extra field #108                                          | 1          |

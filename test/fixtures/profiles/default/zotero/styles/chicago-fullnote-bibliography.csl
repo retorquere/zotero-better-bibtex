@@ -28,7 +28,7 @@
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>Chicago format with full notes and bibliography</summary>
-    <updated>2014-05-16T16:30:10+00:00</updated>
+    <updated>2015-04-09T05:05:44+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -323,7 +323,7 @@
       <text variable="medium"/>
       <choose>
         <if variable="title" match="none"/>
-        <else-if type="thesis speech" match="any"/>
+        <else-if type="manuscript thesis speech" match="any"/>
         <else>
           <text variable="genre"/>
         </else>
@@ -604,11 +604,54 @@
       </if>
     </choose>
   </macro>
+  <macro name="event-note">
+    <text variable="event"/>
+  </macro>
   <macro name="event">
-    <group delimiter=" ">
-      <text term="presented at"/>
-      <text variable="event"/>
+    <choose>
+      <if variable="title">
+        <group delimiter=" ">
+          <text term="presented at"/>
+          <text variable="event"/>
+        </group>
+      </if>
+      <else>
+        <group delimiter=" ">
+          <text term="presented at" text-case="capitalize-first"/>
+          <text variable="event"/>
+        </group>
+      </else>
+    </choose>
+  </macro>
+  <macro name="originally-published">
+    <group delimiter=", ">
+      <group delimiter=": ">
+        <text variable="original-publisher-place"/>
+        <text variable="original-publisher"/>
+      </group>
+      <date variable="original-date" form="text" date-parts="year"/>
     </group>
+  </macro>
+  <macro name="reprint-note">
+    <!--needs localization-->
+    <choose>
+      <if variable="original-date issued" match="all">
+        <choose>
+          <!--for whatever reason in notes, when we have both original and new publishers, reprint doesn't appear-->
+          <if variable="original-publisher original-publisher-place" match="none">
+            <text value="repr."/>
+          </if>
+        </choose>
+      </if>
+    </choose>
+  </macro>
+  <macro name="reprint">
+    <!--needs localization-->
+    <choose>
+      <if variable="original-date issued" match="all">
+        <text value="reprint" text-case="capitalize-first"/>
+      </if>
+    </choose>
   </macro>
   <macro name="publisher">
     <choose>
@@ -651,6 +694,9 @@
           </else>
         </choose>
       </if>
+      <else-if variable="status">
+        <text variable="status"/>
+      </else-if>
       <else-if variable="accessed URL" match="all"/>
       <else>
         <text term="no date" form="short"/>
@@ -659,12 +705,13 @@
   </macro>
   <macro name="point-locators-subsequent">
     <choose>
-      <if variable="locator">
+      <if type="legal_case"/>
+      <else-if variable="locator">
         <choose>
           <if locator="page" match="none">
             <group delimiter=" ">
               <choose>
-                <if type="bill book graphic legal_case legislation motion_picture report song" match="any">
+                <if type="bill book graphic legislation motion_picture report song" match="any">
                   <choose>
                     <if variable="volume">
                       <group delimiter=", ">
@@ -687,7 +734,7 @@
               <text variable="locator"/>
             </group>
           </if>
-          <else-if type="bill book graphic legal_case legislation motion_picture report song" match="any">
+          <else-if type="bill book graphic legislation motion_picture report song" match="any">
             <group delimiter=":">
               <number variable="volume" form="numeric"/>
               <text variable="locator"/>
@@ -697,7 +744,7 @@
             <text variable="locator"/>
           </else>
         </choose>
-      </if>
+      </else-if>
     </choose>
   </macro>
   <macro name="point-locators-join-with-colon">
@@ -832,7 +879,7 @@
   </macro>
   <macro name="issue-note-join-with-space">
     <choose>
-      <if type="article-journal legal_case" variable="publisher-place publisher" match="any">
+      <if type="article-journal legal_case manuscript thesis" variable="publisher-place publisher" match="any">
         <!--Chicago doesn't use publisher/place for Newspapers and we want the date delimited by a comma-->
         <choose>
           <if type="article-newspaper" match="none">
@@ -851,7 +898,7 @@
   </macro>
   <macro name="issue-note-join-with-comma">
     <choose>
-      <if type="article-journal legal_case" variable="publisher-place publisher" match="none">
+      <if type="article-journal legal_case manuscript thesis" variable="publisher-place publisher" match="none">
         <text macro="issue-note"/>
       </if>
       <else-if type="article-newspaper">
@@ -886,16 +933,20 @@
       </else-if>
       <else-if variable="publisher-place event-place publisher genre" match="any">
         <group prefix="(" suffix=")" delimiter=", ">
-          <group delimiter=" ">
-            <choose>
-              <if variable="title" match="none"/>
-              <else-if type="thesis speech" match="any">
-                <text variable="genre"/>
-              </else-if>
-            </choose>
-            <text macro="event"/>
+          <choose>
+            <if variable="title" match="none"/>
+            <else-if type="manuscript thesis speech" match="any">
+              <text variable="genre"/>
+            </else-if>
+          </choose>
+          <text macro="event-note"/>
+          <group delimiter="; ">
+            <text macro="originally-published"/>
+            <group delimiter=", ">
+              <text macro="reprint-note"/>
+              <text macro="publisher"/>
+            </group>
           </group>
-          <text macro="publisher"/>
           <text macro="issued"/>
         </group>
       </else-if>
@@ -981,7 +1032,13 @@
               <text variable="genre" text-case="capitalize-first"/>
             </if>
           </choose>
-          <text macro="publisher"/>
+          <group delimiter=". ">
+            <text macro="originally-published"/>
+            <group delimiter=", ">
+              <text macro="reprint"/>
+              <text macro="publisher"/>
+            </group>
+          </group>
           <text macro="issued"/>
         </group>
       </else-if>

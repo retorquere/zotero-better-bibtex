@@ -10,7 +10,7 @@ dependencies:
     - test/fixtures/plugins
 test:
   override:
-    - ./circle.sh build:
+    - ./circle.sh test:
         parallel: true
 deployment:
   master:

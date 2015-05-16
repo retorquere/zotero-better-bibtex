@@ -101,8 +101,8 @@ Zotero.BetterBibTeX.pref.update = ->
       itemNode.setAttribute('value', ae.id)
 
       name = switch
-        when ae.collection == 'library' then 'Library'
-        when m = /^group:([0-9]+)$/.match(ae.collection) then Zotero.Groups.get(m[1])?.name || ae.collection
+        when ae.collection == 'library' then Zotero.Libraries.getName() || ae.collection
+        when m = /^library:([0-9]+)$/.exec(ae.collection) then Zotero.Libraries.getName(m[1]) || ae.collection
         else Zotero.Collections.get(ae.collection)?.name || "collection:#{ae.collection}"
 
       itemNode.setAttribute('label', "#{name} -> #{ae.path.replace(/^.*[\\\/]/, '')}")
@@ -129,12 +129,12 @@ Zotero.BetterBibTeX.pref.autoexport =
     document.getElementById('auto-export-remove').setAttribute('disabled', false)
     document.getElementById('auto-export-mark').setAttribute('disabled', false)
 
-    ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport ae join betterbibtex.exportoptions eo on ae.exportoptions = eo.id where ae.id = ?', [selectedItem.getAttribute('value')])
+    ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport where id = ?', [selectedItem.getAttribute('value')])
 
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-status', ae.status)
     name = switch
-      when ae.collection == 'library' then 'Library'
-      when m = /^group:([0-9]+)$/.match(ae.collection) then Zotero.Groups.get(m[1])?.name || ae.collection
+      when ae.collection == 'library' then Zotero.Libraries.getName() || ae.collection
+      when m = /^library:([0-9]+)$/.exec(ae.collection) then Zotero.Libraries.getName(m[1]) || ae.collection
       else Zotero.Collections.get(ae.collection)?.name || "collection:#{ae.collection}"
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-collection', name)
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-target', ae.path)
