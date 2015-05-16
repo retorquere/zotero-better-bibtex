@@ -433,7 +433,7 @@ Zotero.BetterBibTeX.init = ->
 
       switch
         when @_group # group export, already converted to its corresponding items above
-          progressWin.addLines(["Group #{group.name} set up for auto-export"])
+          progressWin.addLines(["Group #{@_group.name} set up for auto-export"])
           collection = "library:#{@_group.libraryID}"
 
         when @_collection?.id
