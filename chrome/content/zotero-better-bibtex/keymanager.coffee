@@ -161,6 +161,15 @@ Zotero.BetterBibTeX.keymanager = new class
       item = arguments[1]
       pinmode = arguments[2]
 
+    type = item.itemType
+    if !type
+      item = Zotero.item.get(item.itemID) unless item.itemTypeID
+      type = switch item.itemTypeID
+        when 0 then 'note'
+        when 14 then 'attachment'
+        else 'reference'
+    return if type in ['note', 'attachment']
+
     # pinmode can be:
     #  reset: clear any pinned key, generate new dynamic key
     #  manual: generate and pin
