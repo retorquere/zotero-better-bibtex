@@ -68,6 +68,7 @@ def loadZotero
   profile['browser.download.folderList'] = 2
   profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
   profile['pdfjs.disabled'] = true
+  profile['extensions.zotfile.useZoteroToRename'] = true
 
   say "Starting Firefox..."
   client = Selenium::WebDriver::Remote::Http::Default.new
