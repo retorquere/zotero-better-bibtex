@@ -42,6 +42,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.BetterBibTeX.keymanager.reset()
   Zotero.BetterBibTeX.cache.reset()
   Zotero.BetterBibTeX.auto.clear()
+  Zotero.Translate.ItemGetter::serialized = Object.create(null)
 
   return true if Zotero.DB.valueQuery('select count(*) from items') == 0
   err = JSON.stringify((item.toArray() for item in Zotero.BetterBibTeX.safeGetAll()))

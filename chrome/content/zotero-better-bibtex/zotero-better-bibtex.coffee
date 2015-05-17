@@ -522,7 +522,7 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Translate.ItemGetter::serialized = Object.create(null)
   Zotero.Translate.ItemGetter::_serialize = (item, isAttachmentID) ->
     if isAttachmentID
-      itemID = parseInt(item) unless typeof item == 'number'
+      itemID = (if typeof item == 'number' then item else parseInt(item))
       serialized = @serialized[itemID]
       if serialized?.itemType == 'attachment'
         return JSON.parse(JSON.stringify(serialized))
@@ -532,14 +532,14 @@ Zotero.BetterBibTeX.init = ->
     # no serialization for attachments when their data is exported
     return @_attachmentToArray(item) if item.isAttachment() && @_exportFileData
 
-    itemID = parseInt(item.itemID) unless typeof item.itemID == 'number'
+    itemID = (if typeof item.itemID == 'number' then item.itemID else parseInt(item.itemID))
     serialized = @serialized[itemID]
     if !serialized
-      serialized = if item.isAttachment() then @_attachmentToArray(item) else @_itemToArray(item)
+      serialized = (if item.isAttachment() then @_attachmentToArray(item) else @_itemToArray(item))
       if serialized
         @serialized[itemID] = serialized
       else
-        @serialized[itemID] = {itemID}
+        serialized = @serialized[itemID] = {itemID}
 
     if serialized.itemType
       return JSON.parse(JSON.stringify(serialized))
