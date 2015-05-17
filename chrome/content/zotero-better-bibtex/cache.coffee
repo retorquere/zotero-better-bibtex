@@ -21,10 +21,13 @@ Zotero.BetterBibTeX.cache = new class
     for item in Zotero.DB.query('select * from betterbibtex.cache')
       @cache.insert({
         itemID: @integer(item.itemID)
-        translatorID: item.translatorID
-        exportCharset: (item.exportCharset || 'UTF-8').toUpperCase()
+        exportCharset: item.exportCharset
+        exportCollections: (item.exportCollections == 'true')
+        exportFileData: (item.exportFileData == 'true')
         exportNotes: (item.exportNotes == 'true')
+        getCollections: (item.getCollections == 'true')
         preserveBibTeXVariables: (item.preserveBibTeXVariables == 'true')
+        translatorID: item.translatorID
         useJournalAbbreviation: (item.useJournalAbbreviation == 'true')
         citekey: item.citekey
         bibtex: item.bibtex
@@ -50,16 +53,25 @@ Zotero.BetterBibTeX.cache = new class
 
     for change in @cache.getChanges()
       o = change.obj
-      key = [o.itemID, o.translatorID, o.exportCharset, @bool(o.exportNotes), @bool(o.preserveBibTeXVariables), @bool(o.useJournalAbbreviation)]
+      key = [o.itemID, o.exportCharset, @bool(o.exportCollections), @bool(o.exportFileData), @bool(o.exportNotes), @bool(o.getCollections), @bool(o.preserveBibTeXVariables), o.translatorID, @bool(o.useJournalAbbreviation)]
       switch change.operation
         when 'I', 'U'
           Zotero.DB.query("insert or update into betterbibtex.cache
-                            (itemID, translatorID, exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation, citekey, bibtex, lastaccess)
+                            (itemID, exportCharset, exportCollections, exportFileData, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess)
                            values
-                            (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)", key.concat([o.citekey, o.bibtex]))
+                            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)", key.concat([o.citekey, o.bibtex]))
 
         when 'R'
-          Zotero.DB.query("delete from betterbibtex.cache where itemID = ? and translatorID = ? and exportCharset = ?  and exportNotes = ? and preserveBibTeXVariables = ? and useJournalAbbreviation = ?", key)
+          Zotero.DB.query("delete from betterbibtex.cache
+                           where itemID = ?
+                           and exportCharset = ?
+                           and exportCollections = ?
+                           and exportFileData = ?
+                           and exportNotes = ?
+                           and getCollections = ?
+                           and preserveBibTeXVariables = ?
+                           and translatorID = ?
+                           and useJournalAbbreviation = ?", key)
 
     for change in @access.getChanges()
       o = change.obj
@@ -75,10 +87,13 @@ Zotero.BetterBibTeX.cache = new class
   record: (itemID, context) ->
     return {
       itemID: @integer(itemID)
-      translatorID: context.translatorID
-      exportCharset: (context.exportCharset || 'UTF-8').toUpperCase()
+      exportCharset: context.exportCharset
+      exportCollections: !!context.exportCollections
+      exportFileData: !!context.exportFileData
       exportNotes: !!context.exportNotes
+      getCollections: !!context.getCollections
       preserveBibTeXVariables: !!context.preserveBibTeXVariables
+      translatorID: context.translatorID
       useJournalAbbreviation: !!context.useJournalAbbreviation
     }
 
@@ -86,6 +101,9 @@ Zotero.BetterBibTeX.cache = new class
     if itemID._sandboxManager
       itemID = arguments[1]
       context = arguments[1]
+
+    # file paths vary if exportFileData is on
+    return if context.exportFileData
 
     record = @record(itemID, context)
     cached = @cache.findOne(record)
@@ -98,6 +116,9 @@ Zotero.BetterBibTeX.cache = new class
       context = arguments[2]
       citekey = arguments[3]
       bibtex = arguments[4]
+
+    # file paths vary if exportFileData is on
+    return if context.exportFileData
 
     record = @record(itemID, context)
     cached = @cache.findOne(record)

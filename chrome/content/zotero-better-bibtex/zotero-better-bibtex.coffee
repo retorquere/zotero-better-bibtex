@@ -191,8 +191,8 @@ Zotero.BetterBibTeX.attachDatabase = ->
   upgrade ||= tables.join(' + ') != 'autoexport + cache + keys'
   for check in [
     'SELECT itemID, citekey, citekeyFormat FROM betterbibtex.keys'
-    'SELECT id, collection, path, translatorID, exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation, exportedRecursively, status FROM betterbibtex.autoexport'
-    'SELECT itemID, translatorID, exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation, citekey, bibtex, lastaccess FROM betterbibtex.cache'
+    'SELECT id, collection, path, exportCharset, exportCollections, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, exportedRecursively, status FROM betterbibtex.autoexport'
+    'SELECT itemID, exportCharset, exportCollections, exportFileData, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess FROM betterbibtex.cache'
     ]
     continue if upgrade
     try
@@ -241,16 +241,19 @@ Zotero.BetterBibTeX.attachDatabase = ->
       create table betterbibtex.cache (
         itemID not null,
 
-        translatorID not null,
         exportCharset not null,
-        exportNotes CHECK(exportNotes in ('true', 'false')),
-        preserveBibTeXVariables CHECK(preserveBibTeXVariables in ('true', 'false')),
-        useJournalAbbreviation CHECK(useJournalAbbreviation in ('true', 'false')),
+        exportCollections default 'false' CHECK(exportCollections in ('true', 'false')),
+        exportFileData default 'false' CHECK(exportFileData in ('true', 'false')),
+        exportNotes default 'false' CHECK(exportNotes in ('true', 'false')),
+        getCollections default 'false' CHECK(getCollections in ('true', 'false')),
+        preserveBibTeXVariables default 'false' CHECK(preserveBibTeXVariables in ('true', 'false')),
+        translatorID not null,
+        useJournalAbbreviation default 'false' CHECK(useJournalAbbreviation in ('true', 'false')),
 
         citekey not null,
         bibtex not null,
         lastaccess not null default CURRENT_TIMESTAMP,
-        PRIMARY KEY (itemID, translatorID, exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation)
+        PRIMARY KEY (itemID, exportCharset, exportCollections, exportFileData, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation)
         )
       ")
 
@@ -261,16 +264,17 @@ Zotero.BetterBibTeX.attachDatabase = ->
         collection not null,
         path not null,
 
-        translatorID not null,
         exportCharset not null,
-        exportNotes CHECK(exportNotes in ('true', 'false')),
-        preserveBibTeXVariables CHECK(preserveBibTeXVariables in ('true', 'false')),
-        useJournalAbbreviation CHECK(useJournalAbbreviation in ('true', 'false')),
+        exportNotes default 'false' CHECK(exportNotes in ('true', 'false')),
+        preserveBibTeXVariables default 'false' CHECK(preserveBibTeXVariables in ('true', 'false')),
+        translatorID not null,
+        useJournalAbbreviation default 'false' CHECK(useJournalAbbreviation in ('true', 'false')),
 
         exportedRecursively CHECK(exportedRecursively in ('true', 'false')),
         status CHECK(status in ('pending', 'error', 'done')),
 
-        UNIQUE (collection, path, translatorID, exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation)
+        UNIQUE (collection, exportCharset, exportNotes, preserveBibTeXVariables, translatorID, useJournalAbbreviation),
+        UNIQUE (path)
         )
       ")
 
@@ -284,14 +288,32 @@ Zotero.BetterBibTeX.attachDatabase = ->
         Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citekeyFormat)
                         select itemID, citekey, citekeyFormat from betterbibtex."-keys-"')
 
-    if Zotero.DB.tableExists('betterbibtex."-exportoptions-"')
-      Zotero.DB.query('
-        insert into betterbibtex.autoexport
-          (collection, path, translatorID, exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation, exportedRecursively, status)
-        select
-          ae.collection, ae.path, eo.translatorID, eo.exportCharset, eo.exportNotes, eo.preserveBibTeXVariables, eo.useJournalAbbreviation, ae.exportedRecursively, ae.status
-        from betterbibtex."-autoexport-" ae
-        join betterbibtex."-exportoptions-" eo on ae.exportoptions = eo.id')
+    if Zotero.DB.tableExists('betterbibtex."-autoexport-"')
+      Zotero.DB.query('insert into betterbibtex.autoexport (
+        collection,
+        path,
+
+        exportCharset,
+        exportNotes,
+        preserveBibTeXVariables,
+        translatorID,
+        useJournalAbbreviation,
+
+        exportedRecursively,
+        status)
+      select
+        collection,
+        path,
+
+        exportCharset,
+        exportNotes,
+        preserveBibTeXVariables,
+        translatorID,
+        useJournalAbbreviation,
+
+        exportedRecursively,
+        status
+      from betterbibtex."-autoexport-"')
 
     ### cleanup ###
 
@@ -466,12 +488,63 @@ Zotero.BetterBibTeX.init = ->
     )(Zotero.Translate.Export.prototype.translate)
 
   # monkey-patch _prepareTranslation to add collections for group export
+  # and notify itemgetter whether we're doing exportFileData
   Zotero.Translate.Export.prototype._prepareTranslation = ((original) ->
     return ->
       r = original.apply(this, arguments)
       @_itemGetter._collectionsLeft = @_group.getCollections() if @_group && @_translatorInfo?.configOptions?.getCollections
+      @_itemGetter._exportFileData = @_displayOptions.exportFileData
       return r
     )(Zotero.Translate.Export.prototype._prepareTranslation)
+
+  # replace Zotero.Translate.ItemGetter.prototype.nextItem to fetch from pre-serialization cache.
+  # object serialization is the approx 80% of the work being done while translating!
+  Zotero.Translate.ItemGetter::nextItem = ->
+    while @_itemsLeft.length != 0
+      returnItem = @_itemsLeft.shift()
+      # export file data for single files
+      if returnItem.isAttachment()
+        # an independent attachment
+        returnItemArray = @_serialize(returnItem)
+        return returnItemArray if returnItemArray
+      else
+        returnItemArray = @_serialize(returnItem)
+        # get attachments, although only urls will be passed if exportFileData is off
+        returnItemArray.attachments = new Array
+        attachments = returnItem.getAttachments()
+        for attachmentID in attachments
+          attachmentInfo = @_serialize(attachmentID, true) || @_serialize(Zotero.Items.get(attachmentID))
+          returnItemArray.attachments.push(attachmentInfo) if attachmentInfo
+        return returnItemArray
+    return false
+
+  # yes, this is defined on the object prototype, it's a shared cache
+  Zotero.Translate.ItemGetter::serialized = Object.create(null)
+  Zotero.Translate.ItemGetter::_serialize = (item, isAttachmentID) ->
+    if isAttachmentID
+      itemID = parseInt(item) unless typeof item == 'number'
+      serialized = @serialized[itemID]
+      if serialized?.itemType == 'attachment'
+        return JSON.parse(JSON.stringify(serialized))
+      else
+        return null
+
+    # no serialization for attachments when their data is exported
+    return @_attachmentToArray(item) if item.isAttachment() && @_exportFileData
+
+    itemID = parseInt(item.itemID) unless typeof item.itemID == 'number'
+    serialized = @serialized[itemID]
+    if !serialized
+      serialized = if item.isAttachment() then @_attachmentToArray(item) else @_itemToArray(item)
+      if serialized
+        @serialized[itemID] = serialized
+      else
+        @serialized[itemID] = {itemID}
+
+    if serialized.itemType
+      return JSON.parse(JSON.stringify(serialized))
+    else
+      return null
 
   # monkey-patch buildCollectionContextMenu to add group library export
   zoteroPane = Zotero.getActiveZoteroPane()
@@ -655,12 +728,12 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
   ids = extraData if event == 'delete'
   return unless ids.length > 0
 
-  for id in ids
-    Zotero.BetterBibTeX.cache.remove({itemID: id})
-
-  # this is safe -- either a pinned key is restored below, or it needs to be regenerated anyhow after change
-  for id in ids
-    Zotero.BetterBibTeX.keymanager.remove({itemID: id})
+  for itemID in ids
+    itemID = parseInt(itemID) unless typeof itemID == 'number'
+    delete Zotero.Translate.ItemGetter::serialized[itemID]
+    Zotero.BetterBibTeX.cache.remove({itemID})
+    # this is safe -- either a pinned key is restored below, or it needs to be regenerated anyhow after change
+    Zotero.BetterBibTeX.keymanager.remove({itemID})
 
   if event in ['add', 'modify']
     for item in Zotero.DB.query("#{Zotero.BetterBibTeX.findKeysSQL} and i.itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}") or []

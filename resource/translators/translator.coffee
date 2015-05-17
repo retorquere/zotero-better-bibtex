@@ -40,6 +40,7 @@ Translator.initialize = ->
     @[option] = Zotero.getOption(option)
   @exportCollections = Zotero.getOption('Export collections')
   @preserveBibTeXVariables = Zotero.getOption('Preserve BibTeX variables')
+  @caching = false if @exportFileData
 
   @unicode = switch Translator.translatorID
     when 'f895aa0d-f28e-47fe-b247-2ea77c6ed583' then !Zotero.getHiddenPref('better-bibtex.asciiBibLaTeX')

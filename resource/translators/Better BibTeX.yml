@@ -13,7 +13,7 @@ displayOptions:
   useJournalAbbreviation: false
   "Export collections": true
   "Keep updated": false
-  "Preserve Bib variables": false
+  "Preserve BibTeX variables": false
 inRepository: true
 translatorType: 3
 browserSupport: gcsv
