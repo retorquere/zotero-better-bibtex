@@ -163,7 +163,7 @@ Zotero.BetterBibTeX.keymanager = new class
 
     type = item.itemType
     if !type
-      item = Zotero.item.get(item.itemID) unless item.itemTypeID
+      item = Zotero.Items.get(item.itemID) unless item.itemTypeID
       type = switch item.itemTypeID
         when 0 then 'note'
         when 14 then 'attachment'
