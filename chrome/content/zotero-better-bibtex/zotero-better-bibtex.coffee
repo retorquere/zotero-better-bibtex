@@ -1,5 +1,6 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
+Components.utils.import('resource://zotero/config.js')
 
 require('Formatter.js')
 require('lokijs.js')
@@ -138,6 +139,14 @@ Zotero.BetterBibTeX.quitObserver =
       @unregister()
       Zotero.BetterBibTeX.cache.flush()
       Zotero.BetterBibTeX.keymanager.flush()
+
+      try
+        serialized = Zotero.getZoteroDirectory()
+        serialized.append('bbt-serialized-items.json')
+        serialized.remove(false) if serialized.exists()
+        Zotero.File.putContents(serialized, JSON.stringify(Zotero.Translate.ItemGetter::serialized))
+      catch
+
     return
   register: ->
     observerService = Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService)
@@ -403,11 +412,11 @@ Zotero.BetterBibTeX.init = ->
       return original.apply(this, arguments)
     )(Zotero.Debug.setStore)
 
-  # monkey-patch Zotero.ItemTreeView.prototype.getCellText to replace the 'extra' column with the citekey
+  # monkey-patch Zotero.ItemTreeView::getCellText to replace the 'extra' column with the citekey
   # I wish I didn't have to hijack the extra field, but Zotero has checks in numerous places to make sure it only
   # displays 'genuine' Zotero fields, and monkey-patching around all of those got to be way too invasive (and thus
   # fragile)
-  Zotero.ItemTreeView.prototype.getCellText = ((original) ->
+  Zotero.ItemTreeView::getCellText = ((original) ->
     return (row, column) ->
       if column.id == 'zotero-items-column-extra' && Zotero.BetterBibTeX.pref.get('showCitekeys')
         item = this._getItemAtRow(row)
@@ -419,20 +428,15 @@ Zotero.BetterBibTeX.init = ->
           return key.citekey + (if key.citekeyFormat then ' *' else '')
 
       return original.apply(this, arguments)
-    )(Zotero.ItemTreeView.prototype.getCellText)
+    )(Zotero.ItemTreeView::getCellText)
 
   # monkey-patch translate to capture export path and auto-export
-  Zotero.Translate.Export.prototype.translate = ((original) ->
+  Zotero.Translate.Export::translate = ((original) ->
     return ->
       # requested translator
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
       return original.apply(this, arguments) unless translatorID
-
-      # detect BBT
-      for own name, bbt of Zotero.BetterBibTeX.translators
-        break if bbt.translatorID == translatorID
-        bbt = null
 
       # convert group into its library items
       if @_collection?.objectType == 'group'
@@ -441,7 +445,7 @@ Zotero.BetterBibTeX.init = ->
         @_items = Zotero.Items.getAll(false, @_group.libraryID)
 
       # regular behavior for non-BBT translators
-      return original.apply(this, arguments) unless bbt
+      return original.apply(this, arguments) unless Zotero.BetterBibTeX.translators[translatorID]
 
       # export path for relative exports
       @_displayOptions.exportPath = @location.path.slice(0, -@location.leafName.length) if @location && typeof @location == 'object'
@@ -485,41 +489,60 @@ Zotero.BetterBibTeX.init = ->
         Zotero.BetterBibTeX.auto.add(collection, @location.path, @_displayOptions)
 
       return original.apply(this, arguments)
-    )(Zotero.Translate.Export.prototype.translate)
+    )(Zotero.Translate.Export::translate)
 
   # monkey-patch _prepareTranslation to add collections for group export
   # and notify itemgetter whether we're doing exportFileData
-  Zotero.Translate.Export.prototype._prepareTranslation = ((original) ->
+  Zotero.Translate.Export::_prepareTranslation = ((original) ->
     return ->
       r = original.apply(this, arguments)
       @_itemGetter._collectionsLeft = @_group.getCollections() if @_group && @_translatorInfo?.configOptions?.getCollections
-      @_itemGetter._exportFileData = @_displayOptions.exportFileData
-      return r
-    )(Zotero.Translate.Export.prototype._prepareTranslation)
 
-  # replace Zotero.Translate.ItemGetter.prototype.nextItem to fetch from pre-serialization cache.
+      # caching shortcut sentinels
+      translatorID = @translator?[0]
+      translatorID = translatorID.translatorID if translatorID.translatorID
+      @_itemGetter._BetterBibTeX = Zotero.BetterBibTeX.translators[translatorID]
+      @_itemGetter._exportFileData = @_displayOptions.exportFileData
+
+      return r
+    )(Zotero.Translate.Export::_prepareTranslation)
+
+  # monkey-patch Zotero.Translate.ItemGetter::nextItem to fetch from pre-serialization cache.
   # object serialization is the approx 80% of the work being done while translating!
-  Zotero.Translate.ItemGetter::nextItem = ->
-    while @_itemsLeft.length != 0
-      returnItem = @_itemsLeft.shift()
-      # export file data for single files
-      if returnItem.isAttachment()
-        # an independent attachment
-        returnItemArray = @_serialize(returnItem)
-        return returnItemArray if returnItemArray
-      else
-        returnItemArray = @_serialize(returnItem)
-        # get attachments, although only urls will be passed if exportFileData is off
-        returnItemArray.attachments = new Array
-        attachments = returnItem.getAttachments()
-        for attachmentID in attachments
-          attachmentInfo = @_serialize(attachmentID, true) || @_serialize(Zotero.Items.get(attachmentID))
-          returnItemArray.attachments.push(attachmentInfo) if attachmentInfo
-        return returnItemArray
-    return false
+  Zotero.Translate.ItemGetter::nextItem = ((original) ->
+    return ->
+      # don't mess with this unless I know it's in BBT
+      return original.apply(this, arguments) unless @_BetterBibTeX
+
+      while @_itemsLeft.length != 0
+        returnItem = @_itemsLeft.shift()
+        # export file data for single files
+        if returnItem.isAttachment()
+          # an independent attachment
+          returnItemArray = @_serialize(returnItem)
+          return returnItemArray if returnItemArray
+        else
+          returnItemArray = @_serialize(returnItem)
+          # get attachments, although only urls will be passed if exportFileData is off
+          returnItemArray.attachments = new Array
+          attachments = returnItem.getAttachments()
+          for attachmentID in attachments
+            attachmentInfo = @_serialize(attachmentID, true) || @_serialize(Zotero.Items.get(attachmentID))
+            returnItemArray.attachments.push(attachmentInfo) if attachmentInfo
+          return returnItemArray
+      return false
+    )(Zotero.Translate.ItemGetter::nextItem)
 
   # yes, this is defined on the object prototype, it's a shared cache
-  Zotero.Translate.ItemGetter::serialized = Object.create(null)
+  try
+    serialized = Zotero.getZoteroDirectory()
+    serialized.append('bbt-serialized-items.json')
+    Zotero.File.putContents(serialized, JSON.stringify(Zotero.Translate.ItemGetter::serialized))
+    Zotero.Translate.ItemGetter::serialized = JSON.parse(Zotero.File.getContents(serialized))
+  catch
+    Zotero.Translate.ItemGetter::serialized = {}
+  Zotero.Translate.ItemGetter::serialized = {version: ZOTERO_CONFIG.VERSION} if Zotero.Translate.ItemGetter::serialized.version != ZOTERO_CONFIG.VERSION
+
   Zotero.Translate.ItemGetter::_serialize = (item, isAttachmentID) ->
     if isAttachmentID
       itemID = (if typeof item == 'number' then item else parseInt(item))
@@ -617,7 +640,7 @@ Zotero.BetterBibTeX.loadTranslators = ->
   return
 
 Zotero.BetterBibTeX.removeTranslators = ->
-  for own name, header of @translators
+  for own id, header of @translators
     @removeTranslator(header)
   @translators = Object.create(null)
   Zotero.Translators.init()
@@ -830,28 +853,28 @@ Zotero.BetterBibTeX.load = (translator) ->
       Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}")
     ].join("\n")
 
-    @translators[header.label.toLowerCase().replace(/[^a-z]/, '')] = header
+    @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
     Zotero.Translators.save(header, code)
-
-    #filename = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)
-    #file = Zotero.getTranslatorsDirectory()
-    #file.append(filename)
-    #Zotero.File.putContents(file, JSON.stringify(header) + "\n\n" + code)
   catch err
     @log("Loading #{translator} failed", err)
   return
 
 Zotero.BetterBibTeX.getTranslator = (name) ->
+  return @translators[name.replace(/\s/, '')].translatorID if @translators[name.replace(/\s/, '')]
+
   name = name.toLowerCase().replace(/[^a-z]/, '')
-  translator = @translators[name]
-  translator ||= @translators["better#{name}"]
-  translator ||= @translators["zotero#{name}"]
-  throw "No translator #{name}; available: #{Object.keys(@translators).join(', ')}" unless translator
-  return translator.translatorID
+  translators = {}
+  for id, header of @translators
+    label = header.label.toLowerCase().replace(/[^a-z]/, '')
+    translators[label] = header.translatorID
+    translators[label.replace(/^zotero/, '')] = header.translatorID
+    translators[label.replace(/^better/, '')] = header.translatorID
+  return translators[name] if translators[name]
+  throw "No translator #{name}; available: #{JSON.stringify(translators)} from #{JSON.stringify(@translators)}"
 
 Zotero.BetterBibTeX.translatorName = (id) ->
-  for own name, tr of @translators
-    return tr.label if tr.translatorID == id
+  for own translatorID, tr of @translators
+    return tr.label if translatorID == id
   return "#{id}"
 
 Zotero.BetterBibTeX.safeGetAll = ->
