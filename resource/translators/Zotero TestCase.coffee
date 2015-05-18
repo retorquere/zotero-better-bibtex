@@ -9,6 +9,7 @@ scrub = (item) ->
   delete item.dateModified
   delete item.uri
   delete item.multi
+  delete item.attachmentIDs
 
   for creator in item.creators or []
     delete creator.creatorID
