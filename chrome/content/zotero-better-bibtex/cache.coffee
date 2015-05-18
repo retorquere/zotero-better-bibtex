@@ -18,7 +18,9 @@ Zotero.BetterBibTeX.cache = new class
     return _v
 
   load: ->
+    size = 0
     for item in Zotero.DB.query('select * from betterbibtex.cache')
+      size += 1
       @cache.insert({
         itemID: @integer(item.itemID)
         exportCharset: item.exportCharset
@@ -34,6 +36,7 @@ Zotero.BetterBibTeX.cache = new class
       })
     @cache.flushChanges()
     @access.flushChanges()
+    Zotero.BetterBibTeX.log("export cache: loaded #{size} items")
 
   remove: (what) ->
     what.itemID = @integer(what.itemID) unless what.itemID == undefined
@@ -50,6 +53,8 @@ Zotero.BetterBibTeX.cache = new class
 
   flush: ->
     Zotero.DB.beginTransaction()
+
+    Zotero.BetterBibTeX.log("export cache: flushing #{@cache.getChanges().length} changes")
 
     for change in @cache.getChanges()
       o = change.obj
@@ -108,6 +113,7 @@ Zotero.BetterBibTeX.cache = new class
     record = @record(itemID, context)
     cached = @cache.findOne(record)
     @access.insert(record) if cached && !@access.findOne(record)
+    Zotero.BetterBibTeX.log("export cache: #{if cached then 'hit' else 'miss'} for #{itemID}")
     return cached
 
   store: (itemID, context, citekey, bibtex) ->

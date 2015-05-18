@@ -142,10 +142,11 @@ Zotero.BetterBibTeX.quitObserver =
 
       try
         serialized = Zotero.getZoteroDirectory()
-        serialized.append('bbt-serialized-items.json')
+        serialized.append('better-bibtex-serialized-items.json')
         serialized.remove(false) if serialized.exists()
         Zotero.File.putContents(serialized, JSON.stringify(Zotero.Translate.ItemGetter::serialized))
-      catch
+      catch e
+        Zotero.BetterBibTeX.log('failed to save serialization cache:', e)
 
     return
   register: ->
@@ -540,28 +541,38 @@ Zotero.BetterBibTeX.init = ->
   # yes, this is defined on the object prototype, it's a shared cache
   try
     serialized = Zotero.getZoteroDirectory()
-    serialized.append('bbt-serialized-items.json')
-    Zotero.File.putContents(serialized, JSON.stringify(Zotero.Translate.ItemGetter::serialized))
+    serialized.append('better-bibtex-serialized-items.json')
     Zotero.Translate.ItemGetter::serialized = JSON.parse(Zotero.File.getContents(serialized))
-  catch
+    Zotero.BetterBibTeX.log("serialization cache loaded: #{Object.keys(Zotero.Translate.ItemGetter::serialized).length}")
+  catch e
+    Zotero.BetterBibTeX.log('failed to load serialization cache:', e)
     Zotero.Translate.ItemGetter::serialized = {}
-  Zotero.Translate.ItemGetter::serialized = {version: ZOTERO_CONFIG.VERSION} if Zotero.Translate.ItemGetter::serialized.version != ZOTERO_CONFIG.VERSION
+  if Zotero.Translate.ItemGetter::serialized.version != ZOTERO_CONFIG.VERSION
+    Zotero.BetterBibTeX.log("resetting serialization cache after upgrade from #{Zotero.Translate.ItemGetter::serialized.version || 'initial install'} to #{ZOTERO_CONFIG.VERSION}")
+    Zotero.Translate.ItemGetter::serialized = {version: ZOTERO_CONFIG.VERSION}
 
   Zotero.Translate.ItemGetter::_serialize = (item, isAttachmentID) ->
     if isAttachmentID
       itemID = (if typeof item == 'number' then item else parseInt(item))
       serialized = @serialized[itemID]
       if serialized?.itemType == 'attachment'
+        Zotero.BetterBibTeX.log("serialization cache hit for #{item}")
         return JSON.parse(JSON.stringify(serialized))
       else
+        Zotero.BetterBibTeX.log("serialization cache miss for #{item}")
         return null
 
     # no serialization for attachments when their data is exported
-    return @_attachmentToArray(item) if item.isAttachment() && @_exportFileData
+    if item.isAttachment() && @_exportFileData
+      Zotero.BetterBibTeX.log("serialization cache miss for #{item.itemID}")
+      return @_attachmentToArray(item)
 
     itemID = (if typeof item.itemID == 'number' then item.itemID else parseInt(item.itemID))
     serialized = @serialized[itemID]
-    if !serialized
+    if serialized
+      Zotero.BetterBibTeX.log("serialization cache hit for #{item.itemID}")
+    else
+      Zotero.BetterBibTeX.log("serialization cache miss for #{item.itemID}")
       serialized = (if item.isAttachment() then @_attachmentToArray(item) else @_itemToArray(item))
       if serialized
         @serialized[itemID] = serialized
