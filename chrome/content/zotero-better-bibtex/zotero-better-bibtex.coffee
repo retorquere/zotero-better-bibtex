@@ -540,10 +540,8 @@ Zotero.BetterBibTeX.init = ->
       itemID = (if typeof item == 'number' then item else parseInt(item))
       serialized = @serialized[itemID]
       if serialized?.itemType == 'attachment'
-        Zotero.BetterBibTeX.log("serialization cache hit for #{item}")
         return JSON.parse(JSON.stringify(serialized))
       else
-        Zotero.BetterBibTeX.log("serialization cache miss for #{item}")
         return null
 
     # no serialization for attachments when their data is exported
@@ -553,10 +551,7 @@ Zotero.BetterBibTeX.init = ->
 
     itemID = (if typeof item.itemID == 'number' then item.itemID else parseInt(item.itemID))
     serialized = @serialized[itemID]
-    if serialized
-      Zotero.BetterBibTeX.log("serialization cache hit for #{item.itemID}")
-    else
-      Zotero.BetterBibTeX.log("serialization cache miss for #{item.itemID}")
+    if !serialized
       serialized = (if item.isAttachment() then @_attachmentToArray(item) else @_itemToArray(item))
       if serialized
         @serialized[itemID] = serialized
