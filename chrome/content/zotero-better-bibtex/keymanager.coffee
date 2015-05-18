@@ -57,17 +57,18 @@ Zotero.BetterBibTeX.keymanager = new class
     @keys.removeWhere((obj) -> obj.citekeyFormat && obj.citekeyFormat != citekeyFormat)
 
   flush: ->
-    Zotero.DB.beginTransaction()
+    tip = Zotero.DB.transactionInProgress()
+    Zotero.DB.beginTransaction() unless tip
 
     for change in @keys.getChanges()
       o = change.obj
       switch change.operation
         when 'I', 'U'
-          Zotero.DB.query('insert or update into betterbibtex.keys (itemID, citekey, citekeyFormat) values (?, ?, ?)', [o.itemID, o.citekey, o.citekeyFormat])
+          Zotero.DB.query('insert or replace into betterbibtex.keys (itemID, citekey, citekeyFormat) values (?, ?, ?)', [o.itemID, o.citekey, o.citekeyFormat])
         when 'R'
           Zotero.DB.query('delete from betterbibtex.keys where itemID = ?', [o.itemID])
 
-    Zotero.DB.commitTransaction()
+    Zotero.DB.commitTransaction() unless tip
     @keys.flushChanges()
 
   journalAbbrev: (item) ->

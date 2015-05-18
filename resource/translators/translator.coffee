@@ -27,7 +27,7 @@ Translator.initialize = ->
   @testmode_timestamp = Zotero.getHiddenPref('better-bibtex.testMode.timestamp') if @testmode
   @logging = Zotero.getHiddenPref('better-bibtex.logging') || @testmode
 
-  @caching = {'f895aa0d-f28e-47fe-b247-2ea77c6ed583': 'Better BibLaTeX', 'ca65189f-8815-4afe-8c8b-8c7c15f0edca': 'Better BibTeX'}[Translator.translatorID]
+  @caching = @BetterBibLaTeX || @BetterBibTeX
 
   for own attr, f of @fieldMap or {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
@@ -42,9 +42,9 @@ Translator.initialize = ->
   @preserveBibTeXVariables = Zotero.getOption('Preserve BibTeX variables')
   @caching = false if @exportFileData
 
-  @unicode = switch Translator.translatorID
-    when 'f895aa0d-f28e-47fe-b247-2ea77c6ed583' then !Zotero.getHiddenPref('better-bibtex.asciiBibLaTeX')
-    when 'ca65189f-8815-4afe-8c8b-8c7c15f0edca' then !Zotero.getHiddenPref('better-bibtex.asciiBibTeX')
+  @unicode = switch
+    when @BetterBibLaTeX then !Zotero.getHiddenPref('better-bibtex.asciiBibLaTeX')
+    when @BetterBibTeX then !Zotero.getHiddenPref('better-bibtex.asciiBibTeX')
     else true
 
   if @typeMap
@@ -63,8 +63,6 @@ Translator.initialize = ->
 
       for type in zotero
         @typeMap.Zotero2BibTeX[type] ?= bibtex[0]
-
-  return
 
 # The default collection structure passed is beyond screwed up.
 Translator.sanitizeCollection = (coll) ->
@@ -415,4 +413,3 @@ Reference::complete = ->
   Zotero.write(ref)
 
   Zotero.BetterBibTeX.cache.store(@item.itemID, Translator, @item.__citekey__, ref) if Translator.caching
-  return

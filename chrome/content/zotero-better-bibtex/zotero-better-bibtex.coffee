@@ -135,28 +135,13 @@ Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
 
 Zotero.BetterBibTeX.quitObserver =
   observe: (subject, topic, data) ->
-    if topic == 'quit-application-requested'
-      @unregister()
-      Zotero.BetterBibTeX.cache.flush()
-      Zotero.BetterBibTeX.keymanager.flush()
-
-      try
-        serialized = Zotero.getZoteroDirectory()
-        serialized.append('better-bibtex-serialized-items.json')
-        serialized.remove(false) if serialized.exists()
-        Zotero.File.putContents(serialized, JSON.stringify(Zotero.Translate.ItemGetter::serialized))
-      catch e
-        Zotero.BetterBibTeX.log('failed to save serialization cache:', e)
-
-    return
+    @unregister() if topic == 'quit-application-requested'
   register: ->
     observerService = Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService)
     observerService.addObserver(@, 'quit-application-requested', false)
-    return
   unregister: ->
     observerService = Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService)
     observerService.removeObserver(@, 'quit-application-requested')
-    return
 
 Zotero.BetterBibTeX.version = (version) -> ("00000#{ver}".slice(-5) for ver in version.split('.')).join('.')
 
@@ -201,7 +186,7 @@ Zotero.BetterBibTeX.attachDatabase = ->
   upgrade ||= tables.join(' + ') != 'autoexport + cache + keys'
   for check in [
     'SELECT itemID, citekey, citekeyFormat FROM betterbibtex.keys'
-    'SELECT id, collection, path, exportCharset, exportCollections, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, exportedRecursively, status FROM betterbibtex.autoexport'
+    'SELECT id, collection, path, exportCharset, exportNotes, preserveBibTeXVariables, translatorID, useJournalAbbreviation, exportedRecursively, status FROM betterbibtex.autoexport'
     'SELECT itemID, exportCharset, exportCollections, exportFileData, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess FROM betterbibtex.cache'
     ]
     continue if upgrade
@@ -214,7 +199,8 @@ Zotero.BetterBibTeX.attachDatabase = ->
   if upgrade
     @flash('Better BibTeX: updating database', 'Updating database, this could take a while')
 
-    Zotero.DB.beginTransaction()
+    tip = Zotero.DB.transactionInProgress()
+    Zotero.DB.beginTransaction() unless tip
 
     if Zotero.DB.tableExists('betterbibtex.autoexport')
       Zotero.DB.query("update betterbibtex.autoexport set collection = (select 'library:' || libraryID from groups where 'group:' || groupID = collection) where collection like 'group:%'")
@@ -330,10 +316,9 @@ Zotero.BetterBibTeX.attachDatabase = ->
     for table in Zotero.DB.columnQuery("SELECT name FROM betterbibtex.sqlite_master WHERE type='table' AND name like '-%-'") || []
       Zotero.DB.query("drop table if exists betterbibtex.\"#{table}\"")
 
-    Zotero.DB.commitTransaction()
+    Zotero.DB.commitTransaction() unless tip
 
   if @pref.get('scanCitekeys')
-    Zotero.DB.beginTransaction()
     @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
     patched = []
     for row in Zotero.DB.query(@findKeysSQL) or []
@@ -342,18 +327,17 @@ Zotero.BetterBibTeX.attachDatabase = ->
     if patched.length > 0
       for row in Zotero.DB.query("select * from betterbibtex.keys where citekeyFormat is null and itemID not in #{@SQLSet(patched)}")
         @keymanager.remove(row)
-    Zotero.DB.commitTransaction()
     @pref.set('scanCitekeys', false)
 
-  @cache.load()
   @keymanager.load()
   @keymanager.clearDynamic()
 
-  check = Object.create(null)
-  for key in @keymanager.keys.where((obj) -> true)
-    check[key.itemID] = key.citekey
-  for obj in @cache.cache.where((obj) -> true)
-    throw new Error('Cache out of sync with keymanager') unless check[obj.itemID] == obj.citekey
+  mismatched = Zotero.DB.query('select c.itemID, c.citekey as cached, k.citekey from betterbibtex.cache c join betterbibtex.keys k on c.itemID = k.itemID and c.citekey <> k.citekey') || []
+  for m in mismatched
+    Zotero.BetterBibTeX.log("export cache: citekey mismatch! #{m.itemID} cached=#{m.cached} key=#{m.citekey}")
+  if mismatched.length > 0
+    Zotero.DB.query('delete from betterbibtex.cache')
+  @cache.load()
 
 Zotero.BetterBibTeX.findKeysSQL = "select i.itemID as itemID, idv.value as extra
                   from items i
@@ -529,9 +513,8 @@ Zotero.BetterBibTeX.init = ->
         else
           returnItemArray = @_serialize(returnItem)
           # get attachments, although only urls will be passed if exportFileData is off
-          returnItemArray.attachments = new Array
-          attachments = returnItem.getAttachments()
-          for attachmentID in attachments
+          returnItemArray.attachments = []
+          for attachmentID in returnItemArray.attachmentIDs
             attachmentInfo = @_serialize(attachmentID, true) || @_serialize(Zotero.Items.get(attachmentID))
             returnItemArray.attachments.push(attachmentInfo) if attachmentInfo
           return returnItemArray
@@ -547,9 +530,10 @@ Zotero.BetterBibTeX.init = ->
   catch e
     Zotero.BetterBibTeX.log('failed to load serialization cache:', e)
     Zotero.Translate.ItemGetter::serialized = {}
-  if Zotero.Translate.ItemGetter::serialized.version != ZOTERO_CONFIG.VERSION
-    Zotero.BetterBibTeX.log("resetting serialization cache after upgrade from #{Zotero.Translate.ItemGetter::serialized.version || 'initial install'} to #{ZOTERO_CONFIG.VERSION}")
-    Zotero.Translate.ItemGetter::serialized = {version: ZOTERO_CONFIG.VERSION}
+
+  if Zotero.Translate.ItemGetter::serialized.Zotero != ZOTERO_CONFIG.VERSION || Zotero.Translate.ItemGetter::serialized.BetterBibTeX != @release
+    Zotero.BetterBibTeX.log("resetting serialization cache after upgrade from Zotero #{Zotero.Translate.ItemGetter::serialized.Zotero || 'initial install'} to #{ZOTERO_CONFIG.VERSION}, BBT {Zotero.Translate.ItemGetter::serialized.BetterBibTeX || 'initial install'} to #{@release}")
+    Zotero.Translate.ItemGetter::serialized = {Zotero: ZOTERO_CONFIG.VERSION, BetterBibTeX: @release}
 
   Zotero.Translate.ItemGetter::_serialize = (item, isAttachmentID) ->
     if isAttachmentID
@@ -576,8 +560,9 @@ Zotero.BetterBibTeX.init = ->
       serialized = (if item.isAttachment() then @_attachmentToArray(item) else @_itemToArray(item))
       if serialized
         @serialized[itemID] = serialized
+        serialized.attachmentIDs = (if serialized.itemType == 'attachment' then null else item.getAttachments()) || []
       else
-        serialized = @serialized[itemID] = {itemID}
+        serialized = @serialized[itemID] = {itemID, attachmentIDS: []}
 
     if serialized.itemType
       return JSON.parse(JSON.stringify(serialized))
@@ -619,6 +604,19 @@ Zotero.BetterBibTeX.init = ->
   @pref.observer.register()
   @pref.ZoteroObserver.register()
   @quitObserver.register()
+  Zotero.addShutdownListener(->
+    Zotero.BetterBibTeX.log('shutting down')
+    Zotero.BetterBibTeX.cache.flush()
+    Zotero.BetterBibTeX.keymanager.flush()
+
+    try
+      serialized = Zotero.getZoteroDirectory()
+      serialized.append('better-bibtex-serialized-items.json')
+      serialized.remove(false) if serialized.exists()
+      Zotero.File.putContents(serialized, JSON.stringify(Zotero.Translate.ItemGetter::serialized))
+    catch e
+      Zotero.BetterBibTeX.log('failed to save serialization cache:', e)
+  )
 
   nids = []
   nids.push(Zotero.Notifier.registerObserver(@itemChanged, ['item']))

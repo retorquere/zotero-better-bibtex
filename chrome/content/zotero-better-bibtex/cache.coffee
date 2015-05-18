@@ -1,7 +1,7 @@
 Zotero.BetterBibTeX.cache = new class
   constructor: ->
-    @cache = Zotero.BetterBibTeX.Cache.addCollection('cache')
-    @access = Zotero.BetterBibTeX.Cache.addCollection('access')
+    @cache = Zotero.BetterBibTeX.Cache.addCollection('cache', {disableChangesApi: false})
+    @access = Zotero.BetterBibTeX.Cache.addCollection('access', {disableChangesApi: false})
 
     @log = Zotero.BetterBibTeX.log
     @__exposedProps__ = {
@@ -18,9 +18,8 @@ Zotero.BetterBibTeX.cache = new class
     return _v
 
   load: ->
-    size = 0
-    for item in Zotero.DB.query('select * from betterbibtex.cache')
-      size += 1
+    @cache.flushChanges()
+    for item in Zotero.DB.query('select itemID, exportCharset, exportCollections, exportFileData, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex from betterbibtex.cache')
       @cache.insert({
         itemID: @integer(item.itemID)
         exportCharset: item.exportCharset
@@ -36,13 +35,13 @@ Zotero.BetterBibTeX.cache = new class
       })
     @cache.flushChanges()
     @access.flushChanges()
-    Zotero.BetterBibTeX.log("export cache: loaded #{size} items")
 
   remove: (what) ->
     what.itemID = @integer(what.itemID) unless what.itemID == undefined
     @cache.removeWhere(what)
 
   reset: ->
+    Zotero.BetterBibTeX.log("export cache: reset")
     Zotero.DB.query('delete from betterbibtex.cache')
     @cache.removeDataOnly()
     @cache.flushChanges()
@@ -52,16 +51,17 @@ Zotero.BetterBibTeX.cache = new class
   bool: (v) -> if v then 'true' else 'false'
 
   flush: ->
-    Zotero.DB.beginTransaction()
-
     Zotero.BetterBibTeX.log("export cache: flushing #{@cache.getChanges().length} changes")
+
+    tip = Zotero.DB.transactionInProgress()
+    Zotero.DB.beginTransaction() unless tip
 
     for change in @cache.getChanges()
       o = change.obj
       key = [o.itemID, o.exportCharset, @bool(o.exportCollections), @bool(o.exportFileData), @bool(o.exportNotes), @bool(o.getCollections), @bool(o.preserveBibTeXVariables), o.translatorID, @bool(o.useJournalAbbreviation)]
       switch change.operation
         when 'I', 'U'
-          Zotero.DB.query("insert or update into betterbibtex.cache
+          Zotero.DB.query("insert or replace into betterbibtex.cache
                             (itemID, exportCharset, exportCollections, exportFileData, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess)
                            values
                             (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)", key.concat([o.citekey, o.bibtex]))
@@ -85,14 +85,15 @@ Zotero.BetterBibTeX.cache = new class
 
     Zotero.DB.query("delete from betterbibtex.cache where lastaccess < datetime('now','-1 month')")
 
-    Zotero.DB.commitTransaction()
+    Zotero.DB.commitTransaction() unless tip
     @cache.flushChanges()
     @access.flushChanges()
 
   record: (itemID, context) ->
+    throw new Error("No translator ID supplied in #{JSON.stringify(Object.keys(context))}") unless context.translatorID
     return {
       itemID: @integer(itemID)
-      exportCharset: context.exportCharset
+      exportCharset: (context.exportCharset || 'UTF-8').toUpperCase()
       exportCollections: !!context.exportCollections
       exportFileData: !!context.exportFileData
       exportNotes: !!context.exportNotes
@@ -105,7 +106,7 @@ Zotero.BetterBibTeX.cache = new class
   fetch: (itemID, context) ->
     if itemID._sandboxManager
       itemID = arguments[1]
-      context = arguments[1]
+      context = arguments[2]
 
     # file paths vary if exportFileData is on
     return if context.exportFileData
@@ -113,7 +114,6 @@ Zotero.BetterBibTeX.cache = new class
     record = @record(itemID, context)
     cached = @cache.findOne(record)
     @access.insert(record) if cached && !@access.findOne(record)
-    Zotero.BetterBibTeX.log("export cache: #{if cached then 'hit' else 'miss'} for #{itemID}")
     return cached
 
   store: (itemID, context, citekey, bibtex) ->
