@@ -590,7 +590,7 @@ Zotero.BetterBibTeX.init = ->
     Zotero.ZotFile.wildcardTable = ((original) ->
       return (item) ->
         table = original.apply(this, arguments)
-        table['%b'] = Zotero.BetterBibTeX.keymanager.get(item).citekey if item.isAttachment() || item.isNote()
+        table['%b'] = Zotero.BetterBibTeX.keymanager.get(item).citekey unless item.isAttachment() || item.isNote()
         return table
       )(Zotero.ZotFile.wildcardTable)
 
