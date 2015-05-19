@@ -62,13 +62,13 @@ def loadZotero
     profile['extensions.zotero.translators.better-bibtex.logging'] = true
   end
 
-  profile['extensions.zotfile.useZoteroToRename'] = true
+  profile['extensions.zotfile.automatic_renaming'] = 1
+  profile['extensions.zotfile.watch_folder'] = false
 
   profile['browser.download.dir'] = "/tmp/webdriver-downloads"
   profile['browser.download.folderList'] = 2
   profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
   profile['pdfjs.disabled'] = true
-  profile['extensions.zotfile.useZoteroToRename'] = true
 
   say "Starting Firefox..."
   client = Selenium::WebDriver::Remote::Http::Default.new
