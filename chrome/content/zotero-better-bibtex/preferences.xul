@@ -144,6 +144,9 @@
                   <row>
                     <checkbox id="id-better-bibtex-preferences-raw-imports" label="&zotero.better-bibtex.raw-imports;" preference="pref-better-bibtex-raw-imports"/>
                   </row>
+                  <row>
+                    <button label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors()"/>
+                  </row>
                 </rows>
               </grid>
           </tabpanel>
