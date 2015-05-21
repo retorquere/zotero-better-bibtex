@@ -5,8 +5,9 @@ doExport = ->
   while item = Translator.nextItem()
     keys.push(item.__citekey__)
 
-  #while collection = Zotero.nextCollection()
-  #  Translator.log('collection: ' + collection.name)
-
-  Zotero.write("\\#{Zotero.getHiddenPref('better-bibtex.citeCommand')}{#{keys.join(',')}}")
+  cmd = "#{Zotero.getHiddenPref('better-bibtex.citeCommand')}".strip()
+  if cmd == ''
+    Zotero.write(keys.join(','))
+  else
+    Zotero.write("\\#{Zotero.getHiddenPref('better-bibtex.citeCommand')}{#{keys.join(',')}}")
   return
