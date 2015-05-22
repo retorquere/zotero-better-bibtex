@@ -143,7 +143,7 @@ Zotero.BetterBibTeX.quitObserver =
     observerService = Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService)
     observerService.removeObserver(@, 'quit-application-requested')
 
-Zotero.BetterBibTeX.version = (version) -> ("00000#{ver}".slice(-5) for ver in version.split('.')).join('.')
+Zotero.BetterBibTeX.version = (version) -> version.split('.')[0]
 
 Zotero.BetterBibTeX.foreign_keys = (enabled) ->
   statement = Zotero.DB.getStatement("PRAGMA foreign_keys = #{if enabled then 'ON' else 'OFF'}", null, true)
@@ -531,9 +531,9 @@ Zotero.BetterBibTeX.init = ->
     Zotero.BetterBibTeX.log('failed to load serialization cache:', e)
     Zotero.Translate.ItemGetter::serialized = {}
 
-  if Zotero.Translate.ItemGetter::serialized.Zotero != ZOTERO_CONFIG.VERSION || Zotero.Translate.ItemGetter::serialized.BetterBibTeX != @release
+  if Zotero.Translate.ItemGetter::serialized.Zotero != ZOTERO_CONFIG.VERSION || Zotero.Translate.ItemGetter::serialized.BetterBibTeX != @version(@release)
     Zotero.BetterBibTeX.log("resetting serialization cache after upgrade from Zotero #{Zotero.Translate.ItemGetter::serialized.Zotero || 'initial install'} to #{ZOTERO_CONFIG.VERSION}, BBT {Zotero.Translate.ItemGetter::serialized.BetterBibTeX || 'initial install'} to #{@release}")
-    Zotero.Translate.ItemGetter::serialized = {Zotero: ZOTERO_CONFIG.VERSION, BetterBibTeX: @release}
+    Zotero.Translate.ItemGetter::serialized = {Zotero: ZOTERO_CONFIG.VERSION, BetterBibTeX: @version(@release)}
 
   Zotero.Translate.ItemGetter::_serialize = (item, isAttachmentID) ->
     if isAttachmentID
