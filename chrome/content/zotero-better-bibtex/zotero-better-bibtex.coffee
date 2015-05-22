@@ -439,7 +439,7 @@ Zotero.BetterBibTeX.init = ->
       return original.apply(this, arguments) unless @_displayOptions?['Keep updated']
 
       if @_displayOptions.exportFileData
-        @flash('Ignoring "Export File Data"', 'Export of file data is disabled for "Keep updated"')
+        Zotero.BetterBibTeX.flash('Ignoring "Export File Data"', 'Export of file data is disabled for "Keep updated"')
         delete @_displayOptions.exportFileData
 
       # I don't want 'Keep updated' to be remembered as a default
