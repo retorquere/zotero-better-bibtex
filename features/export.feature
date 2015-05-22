@@ -45,9 +45,10 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
   Then a library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bib'
 
 @test-cluster-0 @pandoc
-Scenario: Pandoc Citation Export
-  When I import 1 reference with 1 attachment from 'export/Pandoc Citation.001.json'
-  Then a library export using 'Pandoc Citation' should match 'export/Pandoc Citation.001.txt'
+Scenario: Pandoc/LaTeX Citation Export
+  When I import 1 reference with 1 attachment from 'export/Pandoc Citation.json'
+  Then a library export using 'Pandoc Citation' should match 'export/Pandoc Citation.pandoc'
+  And a library export using 'LaTeX Citation' should match 'export/Pandoc Citation.latex'
 
 @test-cluster-0 @journal-abbrev
 Scenario: Journal abbreviations
