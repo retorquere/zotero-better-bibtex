@@ -12,12 +12,21 @@ Translator.log = (msg...) ->
   msg = for m in msg
     switch
       when (typeof m) in ['string', 'number'] then '' + m
+      when Array.isArray(m) then JSON.stringify(m)
       when m instanceof Error and m.name then "#{m.name}: #{m.message} \n(#{m.fileName}, #{m.lineNumber})\n#{m.stack}"
       when m instanceof Error then "#{e}\n#{e.stack}"
       else JSON.stringify(m)
 
   Zotero.debug("[better-bibtex:#{@label}] #{msg.join(' ')}")
-  return
+
+Translator.log.object = (o) ->
+  no = {}
+  for k, v of o
+    no[k] = v
+  return no
+
+Translator.log.array = (a) ->
+  return (v for v in a)
 
 Translator.initialize = ->
   return if @initialized
@@ -25,7 +34,6 @@ Translator.initialize = ->
 
   @testmode = Zotero.getHiddenPref('better-bibtex.testMode')
   @testmode_timestamp = Zotero.getHiddenPref('better-bibtex.testMode.timestamp') if @testmode
-  @logging = Zotero.getHiddenPref('better-bibtex.logging') || @testmode
 
   @caching = @BetterBibLaTeX || @BetterBibTeX
 

@@ -152,7 +152,7 @@ doImport = ->
       item.complete()
 
   catch e
-    Translator.log('better-bibtex: import failed: ' + e + '\n' + e.stack)
+    Translator.log("better-bibtex: import failed: #{e}\n#{e.stack}")
     throw e
 
 JabRef = JabRef ? {}

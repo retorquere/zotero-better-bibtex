@@ -10,20 +10,22 @@ Zotero.BetterBibTeX = {
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
 
-Zotero.BetterBibTeX.inspect = (o) ->
-  clone = Object.create(null)
-  clone[k] = v for own k, v of o
-  return clone
+Translator.log.object = (o) ->
+  no = {}
+  for k, v of o
+    no[k] = v
+  return no
+
+Translator.log.array = (a) ->
+  return (v for v in a)
 
 Zotero.BetterBibTeX.log = (msg...) ->
-  return unless @logging
   msg = for m in msg
     switch
       when (typeof m) in ['string', 'number'] then '' + m
       when Array.isArray(m) then JSON.stringify(m)
       when m instanceof Error and m.name then "#{m.name}: #{m.message} \n(#{m.fileName}, #{m.lineNumber})\n#{m.stack}"
       when m instanceof Error then "#{e}\n#{e.stack}"
-      when (typeof m) == 'object' then JSON.stringify(Zotero.BetterBibTeX.inspect(m)) # unpacks db query objects
       else JSON.stringify(m)
 
   Zotero.debug("[better-bibtex #{(new Date).toISOString()}] #{msg.join(' ')}")
@@ -358,9 +360,6 @@ Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
 
-  @logging = Zotero.Debug.enabled
-  @pref.set('logging', @logging)
-
   @translators = Object.create(null)
   @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
   @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
@@ -388,14 +387,6 @@ Zotero.BetterBibTeX.init = ->
     ep.prototype = endpoint
 
   @loadTranslators()
-
-  # monkey-patch Zotero.debug.setStore to notice logging changes
-  Zotero.Debug.setStore = ((original) ->
-    return (enable) ->
-      Zotero.BetterBibTeX.logging = enable
-      Zotero.BetterBibTeX.pref.set('logging', enable)
-      return original.apply(this, arguments)
-    )(Zotero.Debug.setStore)
 
   # monkey-patch Zotero.ItemTreeView::getCellText to replace the 'extra' column with the citekey
   # I wish I didn't have to hijack the extra field, but Zotero has checks in numerous places to make sure it only
