@@ -10,13 +10,13 @@ Zotero.BetterBibTeX = {
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
 
-Translator.log.object = (o) ->
+Zotero.BetterBibTeX.log.object = (o) ->
   _o = {}
   for k, v of o
     _o[k] = v
   return _o
 
-Translator.log.array = (a) ->
+Zotero.BetterBibTeX.log.array = (a) ->
   return (v for v in a)
 
 Zotero.BetterBibTeX.log = (msg...) ->
