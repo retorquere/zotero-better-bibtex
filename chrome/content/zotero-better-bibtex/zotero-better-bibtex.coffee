@@ -453,7 +453,7 @@ Zotero.BetterBibTeX.init = ->
       # If no capture, we're done
       return original.apply(this, arguments) unless @_displayOptions?['Keep updated']
 
-      Zotero.BetterBibTeX.debug('Captured auto-export:', @location.path, @log.object(@_displayOptions))
+      Zotero.BetterBibTeX.debug('Captured auto-export:', @location.path, Zotero.BetterBibTeX.log.object(@_displayOptions))
 
       if @_displayOptions.exportFileData
         Zotero.BetterBibTeX.flash('Ignoring "Export File Data"', 'Export of file data is disabled for "Keep updated"')

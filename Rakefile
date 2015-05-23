@@ -328,13 +328,8 @@ task :test, [:tag] => [XPI, :plugins] do |t, args|
 end
 
 task :share => XPI do
-  if OS.mac?
-    folder = File.expand_path('~/Google Drive/Public')
-  elsif OS.linux?
-    folder = File.expand_path('~/GoogleDrive/Public')
-  else
-    raise 'No share folder'
-  end
+  folder = ['~/Google Drive/Public', '~/GoogleDrive/Public' ].collect{|p| File.expand_path(p) }.detect{|p| File.directory?(p) }
+  raise "No share folder" unless folder
   Dir["#{folder}/*.xpi"].each{|xpi| File.unlink(xpi)}
   FileUtils.cp(XPI, File.join(folder, XPI))
 end
