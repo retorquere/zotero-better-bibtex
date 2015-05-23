@@ -33,7 +33,7 @@ Zotero.BetterBibTeX.keymanager = new class
   report: (msg) ->
     @log(msg)
     for key in @keys.where((obj) -> true)
-      @log("key:, @log.object(key))
+      @log('key:', @log.object(key))
 
   load: ->
     # clean up keys for items that have gone missing

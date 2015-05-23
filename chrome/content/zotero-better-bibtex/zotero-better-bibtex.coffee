@@ -11,10 +11,10 @@ Zotero.BetterBibTeX = {
 }
 
 Translator.log.object = (o) ->
-  no = {}
+  _o = {}
   for k, v of o
-    no[k] = v
-  return no
+    _o[k] = v
+  return _o
 
 Translator.log.array = (a) ->
   return (v for v in a)
