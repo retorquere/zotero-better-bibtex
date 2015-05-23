@@ -10,14 +10,10 @@ Zotero.BetterBibTeX = {
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
 
-Zotero.BetterBibTeX.log.object = (o) ->
-  _o = {}
-  for k, v of o
-    _o[k] = v
-  return _o
+Zotero.BetterBibTeX.debug_off = ->
 
-Zotero.BetterBibTeX.log.array = (a) ->
-  return (v for v in a)
+Zotero.BetterBibTeX.debug = (msg...) ->
+  @log([ '[' + DEBUG + ']' ].concat(msg))
 
 Zotero.BetterBibTeX.log = (msg...) ->
   msg = for m in msg
@@ -28,8 +24,18 @@ Zotero.BetterBibTeX.log = (msg...) ->
       when m instanceof Error then "#{e}\n#{e.stack}"
       else JSON.stringify(m)
 
-  Zotero.debug("[better-bibtex #{(new Date).toISOString()}] #{msg.join(' ')}")
+  Zotero.debug("[better" + "-bibtex #{(new Date).toISOString()}] #{msg.join(' ')}")
   return
+
+Zotero.BetterBibTeX.log.object = (o) ->
+  _o = {}
+  for k, v of o
+    _o[k] = v
+  return _o
+
+Zotero.BetterBibTeX.log.array = (a) ->
+  return (v for v in a)
+
 
 Zotero.BetterBibTeX.flash = (title, body) ->
   progressWin = new Zotero.ProgressWindow()
@@ -360,6 +366,8 @@ Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
 
+  @debug = @debug_off unless Zotero.BetterBibTeX.pref.get('debug')
+
   @translators = Object.create(null)
   @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
   @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
@@ -594,6 +602,8 @@ Zotero.BetterBibTeX.init = ->
     Zotero.BetterBibTeX.log('shutting down')
     Zotero.BetterBibTeX.cache.flush()
     Zotero.BetterBibTeX.keymanager.flush()
+
+    Zotero.Prefs.set('debug.store', true) if Zotero.BetterBibTeX.pref.get('debug')
 
     try
       serialized = Zotero.getZoteroDirectory()
