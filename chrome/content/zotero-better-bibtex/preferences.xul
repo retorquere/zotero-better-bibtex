@@ -15,25 +15,25 @@
             onpaneload="Zotero.BetterBibTeX.pref.update();"
             >
       <preferences id="zotero-preferences-cite">
-        <preference id="pref-better-bibtex-recursive" name="extensions.zotero.recursiveCollections" type="bool"/>
-        <preference id="pref-better-bibtex-citecommand" name="extensions.zotero.translators.better-bibtex.citeCommand" type="string"/>
-        <preference id="pref-better-bibtex-format" name="extensions.zotero.translators.better-bibtex.citekeyFormat" type="string"/>
-        <preference id="pref-better-bibtex-skipFields" name="extensions.zotero.translators.better-bibtex.skipFields" type="string"/>
-        <preference id="pref-better-bibtex-server" name="extensions.zotero.httpServer.enabled" type="bool"/>
-        <preference id="pref-better-bibtex-asciiBibTeX" name="extensions.zotero.translators.better-bibtex.asciiBibTeX" type="bool"/>
-        <preference id="pref-better-bibtex-asciiBibLaTeX" name="extensions.zotero.translators.better-bibtex.asciiBibLaTeX" type="bool"/>
-        <preference id="pref-better-bibtex-preserveCaps" name="extensions.zotero.translators.better-bibtex.preserveCaps" type="string"/>
-        <preference id="pref-better-bibtex-useprefix" name="extensions.zotero.translators.better-bibtex.useprefix" type="bool"/>
-        <preference id="pref-better-bibtex-langid" name="extensions.zotero.translators.better-bibtex.langid" type="string"/>
-        <preference id="pref-better-bibtex-auto-abbrev" name="extensions.zotero.translators.better-bibtex.autoAbbrev" type="bool"/>
-        <preference id="pref-better-bibtex-pin-citekeys" name="extensions.zotero.translators.better-bibtex.pinCitekeys" type="string"/>
-        <preference id="pref-better-bibtex-raw-imports" name="extensions.zotero.translators.better-bibtex.rawImports" type="bool"/>
-        <preference id="pref-better-bibtex-show-citekey" name="extensions.zotero.translators.better-bibtex.showCitekeys" type="bool"/>
-        <preference id="pref-better-bibtex-auto-export" name="extensions.zotero.translators.better-bibtex.autoExport" type="string"/>
-        <preference id="pref-better-bibtex-rescan-citekeys" name="extensions.zotero.translators.better-bibtex.scanCitekeys" type="bool"/>
-        <preference id="pref-better-bibtex-citekey-conflict" name="extensions.zotero.translators.better-bibtex.keyConflictPolicy" type="string"/>
-        <preference id="pref-better-bibtex-doi-and-url" name="extensions.zotero.translators.better-bibtex.DOIandURL" type="string"/>
-        <preference id="pref-better-bibtex-attachments-nometadata" name="extensions.zotero.translators.better-bibtex.attachmentsNoMetadata" type="bool"/>
+        <preference name="extensions.zotero.httpServer.enabled"                               id="pref-better-bibtex-server"                  type="bool"/>
+        <preference name="extensions.zotero.recursiveCollections"                             id="pref-better-bibtex-recursive"               type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.asciiBibLaTeX"          id="pref-better-bibtex-asciiBibLaTeX"           type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.asciiBibTeX"            id="pref-better-bibtex-asciiBibTeX"             type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.attachmentsNoMetadata"  id="pref-better-bibtex-attachments-nometadata"  type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.autoAbbrev"             id="pref-better-bibtex-auto-abbrev"             type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.autoExport"             id="pref-better-bibtex-auto-export"             type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.citeCommand"            id="pref-better-bibtex-citecommand"             type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.citekeyFormat"          id="pref-better-bibtex-format"                  type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.DOIandURL"              id="pref-better-bibtex-doi-and-url"             type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.keyConflictPolicy"      id="pref-better-bibtex-citekey-conflict"        type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.langid"                 id="pref-better-bibtex-langid"                  type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.pinCitekeys"            id="pref-better-bibtex-pin-citekeys"            type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.preserveCaps"           id="pref-better-bibtex-preserveCaps"            type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.rawImports"             id="pref-better-bibtex-raw-imports"             type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.scanCitekeys"           id="pref-better-bibtex-rescan-citekeys"         type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.showCitekeys"           id="pref-better-bibtex-show-citekey"            type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.skipFields"             id="pref-better-bibtex-skipFields"              type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.useprefix"              id="pref-better-bibtex-useprefix"               type="bool"/>
       </preferences>
       <tabbox>
         <tabs>
@@ -143,9 +143,6 @@
                   </row>
                   <row>
                     <checkbox id="id-better-bibtex-preferences-raw-imports" label="&zotero.better-bibtex.raw-imports;" preference="pref-better-bibtex-raw-imports"/>
-                  </row>
-                  <row>
-                    <button label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors()"/>
                   </row>
                 </rows>
               </grid>

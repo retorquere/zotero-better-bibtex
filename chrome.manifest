@@ -5,3 +5,4 @@ resource  zotero-better-bibtex          resource/
 
 overlay	chrome://zotero/content/zoteroPane.xul	chrome://zotero-better-bibtex/content/overlay.xul
 overlay	chrome://zotero/content/preferences/preferences.xul	chrome://zotero-better-bibtex/content/preferences.xul
+overlay	chrome://zotero/content/preferences/preferences_advanced.xul chrome://zotero-better-bibtex/content/preferences_advanced.xul

@@ -109,11 +109,14 @@ Zotero.BetterBibTeX.cache = new class
       context = arguments[2]
 
     # file paths vary if exportFileData is on
-    return if context.exportFileData
+    if context.exportFileData
+      Zotero.BetterBibTeX.debug("cache fetch for #{itemID} rejected as file data is being exported")
+      return
 
     record = @record(itemID, context)
     cached = @cache.findOne(record)
     @access.insert(record) if cached && !@access.findOne(record)
+    Zotero.BetterBibTeX.debug("cache fetch for #{itemID}", if cached then 'hit' else 'miss')
     return cached
 
   store: (itemID, context, citekey, bibtex) ->
@@ -124,7 +127,9 @@ Zotero.BetterBibTeX.cache = new class
       bibtex = arguments[4]
 
     # file paths vary if exportFileData is on
-    return if context.exportFileData
+    if context.exportFileData
+      Zotero.BetterBibTeX.debug("cache store for #{itemID} rejected as file data is being exported")
+      return
 
     record = @record(itemID, context)
     cached = @cache.findOne(record)
@@ -133,17 +138,20 @@ Zotero.BetterBibTeX.cache = new class
       cached.bibtex = bibtex
       cached.lastaccess = Date.now()
       @cache.update(cached)
+      Zotero.BetterBibTeX.debug("cache store for #{itemID}: replace")
     else
       record.citekey = citekey
       record.bibtex = bibtex
       record.lastaccess = Date.now()
       @cache.insert(record)
+      Zotero.BetterBibTeX.debug("cache store for #{itemID}: insert")
 
 Zotero.BetterBibTeX.auto = new class
   constructor: ->
     @bool = Zotero.BetterBibTeX.cache.bool
 
   add: (collection, path, context) ->
+    Zotero.BetterBibTeX.debug("auto-export set up for #{collection} to #{path}")
     Zotero.DB.query("insert or replace into betterbibtex.autoexport (collection, path, translatorID, exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation, exportedRecursively, status)
                values (?, ?, ?, ?, ?, ?, ?, ?, 'done')", [
                 collection,

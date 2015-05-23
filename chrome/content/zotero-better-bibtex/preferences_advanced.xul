@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://zotero-better-bibtex/skin/preferences.css"?>
+
+<!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
+
+<overlay id="zotero-better-bibtex-preferences-advanced"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <prefpane id="zotero-prefpane-advanced">
+    <preferences>
+      <preference name="extensions.zotero.translators.better-bibtex.debug"                  id="pref-better-bibtex-debug"                   type="bool"/>
+    </preferences>
+
+    <tabbox id="zotero-prefpane-advanced-tabs">
+      <tabpanels id="zotero-prefpane-advanced-tabpanels">
+        <tabpanel id="zotero-prefpane-advanced-general-tab" orient="vertical">
+
+          <groupbox>
+            <caption label="&zotero.better-bibtex.preferences.debugOutputLogging;"/>
+            <hbox align="center">
+              <button label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors()"/>
+              <checkbox label="&zotero.better-bibtex.debug;" preference="pref-better-bibtex-debug"/>
+            </hbox>
+          </groupbox>
+
+        </tabpanel>
+      </tabpanels>
+    </tabbox>
+  </prefpane>
+
+	<!-- Include the main extension logic -->
+	<script src="chrome://zotero/content/include.js"/>
+	<script src="chrome://zotero-better-bibtex/content/include.js"/>
+	<script src="chrome://zotero-better-bibtex/content/preferences.js"/><!-- needs to be included every time anew to bind windows and document -->
+</overlay>

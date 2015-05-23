@@ -12,8 +12,17 @@ Zotero.BetterBibTeX = {
 
 Zotero.BetterBibTeX.debug_off = ->
 
-Zotero.BetterBibTeX.debug = (msg...) ->
+Zotero.BetterBibTeX.debug_on = (msg...) ->
   @log([ '[' + DEBUG + ']' ].concat(msg))
+
+Zotero.BetterBibTeX.debugMode = ->
+  if @pref.get('debug')
+    Zotero.Debug.setStore(true)
+    Zotero.Prefs.set('debug.store', true)
+    @debug = @debug_on
+    @flash('Debug mode active', 'Debug mode is active. This will affect performance.')
+  else
+    @debug = @debug_off
 
 Zotero.BetterBibTeX.log = (msg...) ->
   msg = for m in msg
@@ -83,6 +92,10 @@ Zotero.BetterBibTeX.pref.observer = {
 
       when 'autoAbbrevStyle'
         Zotero.BetterBibTeX.keymanager.resetJournalAbbrevs()
+
+      when 'debug'
+        @debugMode()
+        return # don't drop the cache just for this
 
     # if any var changes, drop the cache and kick off all exports
     Zotero.BetterBibTeX.cache.reset()
@@ -366,7 +379,7 @@ Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
 
-  @debug = @debug_off unless Zotero.BetterBibTeX.pref.get('debug')
+  @debugMode()
 
   @translators = Object.create(null)
   @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
@@ -420,6 +433,7 @@ Zotero.BetterBibTeX.init = ->
       # requested translator
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
+      Zotero.BetterBibTeX.debug('export: ', translatorID)
       return original.apply(this, arguments) unless translatorID
 
       # convert group into its library items
@@ -434,11 +448,16 @@ Zotero.BetterBibTeX.init = ->
       # export path for relative exports
       @_displayOptions.exportPath = @location.path.slice(0, -@location.leafName.length) if @location && typeof @location == 'object'
 
+      Zotero.BetterBibTeX.debug('export to', @location.path) if @location
+
       # If no capture, we're done
       return original.apply(this, arguments) unless @_displayOptions?['Keep updated']
 
+      Zotero.BetterBibTeX.debug('Captured auto-export:', @location.path, @log.object(@_displayOptions))
+
       if @_displayOptions.exportFileData
         Zotero.BetterBibTeX.flash('Ignoring "Export File Data"', 'Export of file data is disabled for "Keep updated"')
+        Zotero.BetterBibTeX.debug('Ignoring "Export File Data"', 'Export of file data is disabled for "Keep updated"')
         delete @_displayOptions.exportFileData
 
       # I don't want 'Keep updated' to be remembered as a default
@@ -603,7 +622,7 @@ Zotero.BetterBibTeX.init = ->
     Zotero.BetterBibTeX.cache.flush()
     Zotero.BetterBibTeX.keymanager.flush()
 
-    Zotero.Prefs.set('debug.store', true) if Zotero.BetterBibTeX.pref.get('debug')
+    Zotero.BetterBibTeX.debugMode()
 
     try
       serialized = Zotero.getZoteroDirectory()
