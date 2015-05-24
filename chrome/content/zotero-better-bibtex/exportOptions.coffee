@@ -22,6 +22,7 @@ Zotero_File_Interface_Export.init = ((original) ->
           if !node.getAttribute('better-bibtex')
             node.setAttribute('better-bibtex', 'true')
             node.addEventListener('command', BBTCoherentExportOptions)
+          node.checked = false if node.id == 'export-option-Keep updated'
 
     return r
   )(Zotero_File_Interface_Export.init)

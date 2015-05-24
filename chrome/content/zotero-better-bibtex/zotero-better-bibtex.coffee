@@ -455,18 +455,8 @@ Zotero.BetterBibTeX.init = ->
 
       Zotero.BetterBibTeX.debug('Captured auto-export:', @location.path, Zotero.BetterBibTeX.log.object(@_displayOptions))
 
-      if @_displayOptions.exportFileData
-        Zotero.BetterBibTeX.flash('Ignoring "Export File Data"', 'Export of file data is disabled for "Keep updated"')
-        Zotero.BetterBibTeX.debug('Ignoring "Export File Data"', 'Export of file data is disabled for "Keep updated"')
-        delete @_displayOptions.exportFileData
-
-      # I don't want 'Keep updated' to be remembered as a default
-      try
-        settings = JSON.parse(Zotero.Prefs.get('export.translatorSettings'))
-        if settings['Keep updated']
-          delete settings['Keep updated']
-          Zotero.Prefs.set('export.translatorSettings', JSON.stringify(settings))
-      catch
+      delete @_displayOptions.exportFileData
+      delete @_displayOptions['Export collections']
 
       progressWin = new Zotero.ProgressWindow()
       progressWin.changeHeadline('Auto-export')
