@@ -236,7 +236,7 @@ rule '.js' => '.coffee' do |t|
     header = nil
   end
 
-  comment = "###\n DO NOT EDIT/REVIEW! Edit/review the CoffeScript source instead\n###\n"
+  comment = "# Comment for the generated javascript:\n###\n DO NOT EDIT/REVIEW! Edit/review the CoffeScript source instead\n###\n"
   tmp = "tmp/#{File.basename(t.source)}"
   open(tmp, 'w'){|f| f.write(comment + expand(open(t.source), header: header)) }
   puts "Compiling #{t.source}"
