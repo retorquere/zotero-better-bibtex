@@ -223,9 +223,6 @@ Zotero.BetterBibTeX.attachDatabase = ->
     tip = Zotero.DB.transactionInProgress()
     Zotero.DB.beginTransaction() unless tip
 
-    if Zotero.DB.tableExists('betterbibtex.autoexport')
-      Zotero.DB.query("update betterbibtex.autoexport set collection = (select 'library:' || libraryID from groups where 'group:' || groupID = collection) where collection like 'group:%'")
-
     @pref.set('scanCitekeys', true)
     for key in @pref.prefs.getChildList('')
       switch key
@@ -338,6 +335,8 @@ Zotero.BetterBibTeX.attachDatabase = ->
       Zotero.DB.query("drop table if exists betterbibtex.\"#{table}\"")
 
     Zotero.DB.commitTransaction() unless tip
+
+  Zotero.DB.query("update betterbibtex.autoexport set collection = (select 'library:' || libraryID from groups where 'group:' || groupID = collection) where collection like 'group:%'")
 
   if @pref.get('scanCitekeys')
     @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
