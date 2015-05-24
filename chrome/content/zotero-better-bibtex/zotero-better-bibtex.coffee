@@ -13,7 +13,7 @@ Zotero.BetterBibTeX = {
 Zotero.BetterBibTeX.debug_off = ->
 
 Zotero.BetterBibTeX.debug_on = (msg...) ->
-  @log([ '[' + DEBUG + ']' ].concat(msg))
+  @log.apply(@, [ '[' + 'DEBUG' + ']' ].concat(msg))
 
 Zotero.BetterBibTeX.debugMode = ->
   if @pref.get('debug')

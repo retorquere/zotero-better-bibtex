@@ -3,8 +3,9 @@ Zotero.BetterBibTeX.keymanager = new class
     @log = Zotero.BetterBibTeX.log
     @journalAbbrevs = Object.create(null)
     @keys = Zotero.BetterBibTeX.Cache.addCollection('keys')
-    #@keys.on('insert', (data) -> Zotero.debug("keymanager.get: loki insert #{JSON.stringify(data)}"))
-    #@keys.on('update', (data) -> Zotero.debug("keymanager.get: loki update #{JSON.stringify(data)}"))
+    @keys.on('insert', (data) -> Zotero.BetterBibTeX.debug("keymanager.get: loki insert #{JSON.stringify(data)}"))
+    @keys.on('update', (data) -> Zotero.BetterBibTeX.debug("keymanager.get: loki update #{JSON.stringify(data)}"))
+    @keys.on('delete', (data) -> Zotero.BetterBibTeX.debug("keymanager.get: loki delete #{JSON.stringify(data)}"))
 
     # three-letter month abbreviations. I assume these are the same ones that the
     # docs say are defined in some appendix of the LaTeX book. (I don't have the
@@ -121,33 +122,132 @@ Zotero.BetterBibTeX.keymanager = new class
 
     item.extra = item.extra.replace(m[0], '').trim()
     item.__citekey__ = m[1].trim()
+    delete item.__citekey__ if item.__citekey__ == ''
     return item
 
-  selected: (pinmode) ->
+  free: (item) ->
+    Formatter = Zotero.BetterBibTeX.formatter(Zotero.BetterBibTeX.pref.get('citekeyFormat'))
+    citekey = (new Formatter(Zotero.BetterBibTeX.toArray(item))).value
+
+    libraryID = @integer(if item.libraryID == undefined then Zotero.DB.valueQuery('select libraryID from items where itemID = ?', [item.itemID]) else item.libraryID)
+    itemID = @integer(item.itemID)
+    in_use = (key.citekey for key in @keys.where((o) -> o.libraryID == libraryID && o.itemID != itemID && o.citekey.indexOf(citekey) == 0 && (o.citekey.length - citekey.length) in [0, 1]))
+    Zotero.BetterBibTeX.debug("keymanager.free: find free key default=#{citekey}, taken:", in_use, 'cache:', @keys.where((o) -> true))
+    postfix = { n: -1, c: '' }
+    while (citekey + postfix.c) in in_use
+      postfix.n++
+      postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
+
+    return citekey + postfix.c
+
+  selected: (action) ->
+    Zotero.BetterBibTeX.debug("keymanager.selected: #{action}")
+
     zoteroPane = Zotero.getActiveZoteroPane()
     items = Zotero.Items.get((item.id for item in zoteroPane.getSelectedItems() when !item.isAttachment() && !item.isNote()))
 
-    for item in items
-      @get(item, pinmode)
+    throw new Error("Unexpected action #{action}") unless action in ['set', 'reset']
 
-  set: (item, citekey) ->
+    for item in items
+      @remove(item, action == 'set')
+
+    if action == 'set'
+      for item in items
+        @set(item, @free(item), true)
+
+  save: (item, citekey) ->
+    # only save if no change
+    item = Zotero.Items.get(item.itemID) unless item.getField
+
+    extra = @extract(item)
+
+    if (extra.__citekey__ == citekey) || (!citekey && !extra.__citekey__)
+      Zotero.BetterBibTeX.debug("keymanager.save: no change", Zotero.BetterBibTeX.log.object(extra), citekey, !!(extra.__citekey__ == citekey), !citekey, !extra.__citekey__)
+      return
+
+    extra = extra.extra
+    extra += " \nbibtex: #{citekey}" if citekey
+    extra = extra.trim()
+    if extra == item.getField('extra')
+      Zotero.BetterBibTeX.debug("keymanager.save: no change, but not expected here!")
+      return
+
+    if citekey
+      Zotero.BetterBibTeX.debug("keymanager.save(#{item.itemID}), set key #{citekey}")
+    else
+      Zotero.BetterBibTeX.debug("keymanager.save(#{item.itemID}), remove key")
+    item.setField('extra', extra)
+    item.save()
+
+  set: (item, citekey, pin) ->
+    Zotero.BetterBibTeX.debug("keymanager.set: #{item.itemID}, #{citekey}, #{!!pin}")
+
     throw new Error('Cannot set empty cite key') if !citekey || citekey.trim() == ''
 
-    if Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
-      # remove soft-keys that conflict with pinned keys
-      @keys.removeWhere({citekey: { '$eq': citekey }, libraryID: { '$eq': item.libraryID || null }, citekeyFormat: { '$ne' : null }})
+    # no keys for notes and attachments
+    return unless @eligible(item)
+
+    item = Zotero.Items.get(item.itemID) unless item.getField
+
+    itemID = @integer(item.itemID)
+    libraryID = @integer(item.libraryID)
+
+    if pin && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
+      # remove soft-keys which conflict with pinned keys
+      @keys.removeWhere((o) -> o.citekey == citekey && o.libraryID == libraryID && o.itemID != itemID && o.citekeyFormat)
 
     # store new key
-    key = @keys.findOne({itemID: @integer(item.itemID)})
+    key = @keys.findOne({itemID})
+    citekeyFormat = if pin then null else Zotero.BetterBibTeX.pref.get('citekeyFormat')
     if key
       key.citekey = citekey
-      key.citekeyFormat = null
+      key.citekeyFormat = citekeyFormat
       @keys.update(key)
     else
-      @keys.insert({itemID: @integer(item.itemID), libraryID: item.libraryID, citekey: citekey, citekeyFormat: null})
+      key = {itemID, libraryID, citekey, citekeyFormat}
+      @keys.insert(key)
 
-  remove: (item) ->
+    @save(item, citekey) if pin
+
+    return key
+
+  remove: (item, soft) ->
+    Zotero.BetterBibTeX.debug("keymanager.remove: #{item.itemID}, soft: #{!!soft}")
+
     @keys.removeWhere({itemID: @integer(item.itemID)})
+    @save(item) unless soft # only use soft remove if you know a hard set follows!
+
+  eligible: (item) ->
+    type = item.itemType
+    if !type
+      item = Zotero.Items.get(item.itemID) unless item.itemTypeID
+      type = switch item.itemTypeID
+        when 0 then 'note'
+        when 14 then 'attachment'
+        else 'reference'
+    return type not in ['note', 'attachment']
+
+  get: (item, pinmode) ->
+    if item._sandboxManager
+      item = arguments[1]
+      pinmode = arguments[2]
+
+    Zotero.BetterBibTeX.debug("keymanager.get: getting key for #{item.itemID}: #{pinmode}")
+
+    # no keys for notes and attachments
+    return unless @eligible(item)
+
+    # pinmode can be:
+    #  on-change: generate and pin if pinCitekeys is on-change, 'null' behavior if not
+    #  on-export: generate and pin if pinCitekeys is on-export, 'null' behavior if not
+    #  null: fetch -> generate -> return
+
+    pin = (pinmode == Zotero.BetterBibTeX.pref.get('pinCitekeys'))
+    cached = @keys.findOne({itemID: @integer(item.itemID)})
+
+    # if we have a cache hit which is pinned, or no pinning is requested, return it
+    return cached if cached && (!pin || !cached.citekeyFormat)
+    return @set(item, @free(item), pin)
 
   resolve: (citekeys, libraryID) ->
     try
@@ -157,76 +257,3 @@ Zotero.BetterBibTeX.keymanager = new class
     return (key.itemID for key in @keys.find({citekey: { '$in': citekeys }, libraryID: libraryID})) if Array.isArray(citekeys)
     return (key.itemID for key in @keys.find({citekey: citekeys, libraryID: libraryID}))
 
-  get: (item, pinmode) ->
-    if item._sandboxManager
-      item = arguments[1]
-      pinmode = arguments[2]
-
-    type = item.itemType
-    if !type
-      item = Zotero.Items.get(item.itemID) unless item.itemTypeID
-      type = switch item.itemTypeID
-        when 0 then 'note'
-        when 14 then 'attachment'
-        else 'reference'
-    return if type in ['note', 'attachment']
-
-    # pinmode can be:
-    #  reset: clear any pinned key, generate new dynamic key
-    #  manual: generate and pin
-    #  on-change: generate and pin if pinCitekeys is on-change, 'null' behavior if not
-    #  on-export: generate and pin if pinCitekeys is on-export, 'null' behavior if not
-    #  null: fetch -> generate -> return
-
-    pinmode = 'manual' if pinmode == Zotero.BetterBibTeX.pref.get('pinCitekeys')
-    itemID = @integer(item.itemID)
-    libraryID = @integer(item.libraryID || Zotero.DB.valueQuery('select libraryID from items where itemID = ?', [item.itemID]) || null)
-    citekeyFormat = Zotero.BetterBibTeX.pref.get('citekeyFormat')
-
-    cached = @keys.findOne({itemID})
-
-    todo = {}
-
-    if pinmode in ['reset', 'manual'] # clear any pinned key
-      if cached && !cached.citekeyFormat # if we've found a key and it was pinned
-        todo.citekeyFormat = (if pinmode == 'manual' then null else citekeyFormat)
-
-    if !cached || pinmode in ['reset', 'manual'] # generate new key
-      Formatter = Zotero.BetterBibTeX.formatter(citekeyFormat)
-      citekey = (new Formatter(Zotero.BetterBibTeX.toArray(item))).value
-      postfix = { n: -1, c: '' }
-      keys = (key.citekey for key in @keys.where((o) -> o.libraryID == libraryID && o.itemID != itemID && o.citekey.indexOf(citekey) == 0 && (o.citekey.length - citekey.length) in [0, 1]))
-      while (citekey + postfix.c) in keys
-        postfix.n++
-        postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
-
-      todo.citekey = citekey + postfix.c
-      todo.citekeyFormat = (if pinmode == 'manual' then null else citekeyFormat)
-
-    if cached
-      unless (todo.citekey == undefined || todo.citekey == cached.citekey) && (todo.citekeyFormat == undefined || todo.citekeyFormat == cached.citekeyFormat)
-        cached.citekey = todo.citekey
-        cached.citekeyFormat = todo.citekeyFormat
-        @keys.update(cached)
-    else
-      cached = {itemID: itemID, libraryID: libraryID, citekey: todo.citekey, citekeyFormat: todo.citekeyFormat}
-      @keys.insert(cached)
-
-    if pinmode in ['reset', 'manual']
-      item = Zotero.Items.get(item.itemID) unless item.getField || item.extra
-      extra = @extract(item)
-      switch pinmode
-        when 'reset'
-          if extra
-            item = Zotero.Items.get(item.itemID) if not item.getField
-            item.setField('extra', extra.extra)
-            item.save()
-
-        when 'manual'
-          unless extra?.__citekey__ == cached.citekey
-            extra = if extra then extra.extra else ''
-            item = Zotero.Items.get(item.itemID) if not item.getField
-            item.setField('extra', "#{extra} \nbibtex: #{cached.citekey}".trim())
-            item.save()
-
-    return cached
