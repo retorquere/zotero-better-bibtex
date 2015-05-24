@@ -8,7 +8,6 @@ Translator = new class
 require(':constants:')
 
 Translator.log = (msg...) ->
-  return unless @logging
   msg = for m in msg
     switch
       when (typeof m) in ['string', 'number'] then '' + m
