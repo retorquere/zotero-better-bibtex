@@ -289,8 +289,8 @@ Zotero.BetterBibTeX.keymanager = new class
       switch
         when key in ['$loki', 'meta']                                       then  # ignore
         when verify[key] == undefined                                       then  throw new Error("Unexpected field #{key} in #{typeof entry} #{JSON.stringify(entry)}")
-        when verify[key] && typeof value == 'number'                        then  # OK
-        when verify[key] && typeof value == 'string' && value.trim() != ''  then  # OK
+        when verify[key] && typeof value == 'number'                        then  delete verify[key]
+        when verify[key] && typeof value == 'string' && value.trim() != ''  then  delete verify[key]
         when verify[key] && !value                                          then  throw new Error("field #{key} of #{typeof entry} #{JSON.stringify(entry)} may not be empty")
         else                                                                      delete verify[key]
 

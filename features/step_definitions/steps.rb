@@ -229,11 +229,11 @@ Then /^the library (without collections )?should match '([^']+)'$/ do |nocollect
     lib['items'].each{|item| item['__citekey__'] = keys[item['itemID']] }
     lib.delete('keymanager')
   }
-  if found['keymanager']
+  if expected['keymanager']
     movekeys.call(found)
     movekeys.call(expected)
   else
-    expected.delete('keymanager')
+    found.delete('keymanager')
   end
   
   if nocollections
