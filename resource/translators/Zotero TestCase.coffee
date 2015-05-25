@@ -71,6 +71,7 @@ doExport = ->
       preferences: {}
       options: {}
     }
+    keymanager: Zotero.BetterBibTeX.keymanager.cache()
     collections: Translator.collections()
     items: []
   }

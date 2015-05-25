@@ -17,7 +17,7 @@ Zotero.BetterBibTeX.keymanager = new class
       journalAbbrev: 'r'
       extract: 'r'
       get: 'r'
-      keys: 'r'
+      cache: 'r'
     }
     for own key, value of @__exposedProps__
       @[key].__exposedProps__ = []
@@ -35,6 +35,16 @@ Zotero.BetterBibTeX.keymanager = new class
     @log(msg)
     for key in @keys.where((obj) -> true)
       @log('key:', @log.object(key))
+
+  cache: ->
+    cache = []
+    for key in @keys.where((obj) -> true)
+      key = JSON.parse(JSON.stringify(key))
+      # remove metadata
+      delete key.meta
+      delete key['$loki']
+      cache.push(key)
+    return cache
 
   load: ->
     # clean up keys for items that have gone missing

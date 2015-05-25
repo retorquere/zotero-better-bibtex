@@ -164,7 +164,10 @@ Zotero.BetterBibTeX.quitObserver =
     observerService = Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService)
     observerService.removeObserver(@, 'quit-application-requested')
 
-Zotero.BetterBibTeX.version = (version) -> version.split('.')[0]
+Zotero.BetterBibTeX.version = (version) ->
+  v = version.split('.').slice(0, 2).join('.')
+  @debug("full version: #{version}, canonical version: #{v}")
+  return v
 
 Zotero.BetterBibTeX.foreign_keys = (enabled) ->
   statement = Zotero.DB.getStatement("PRAGMA foreign_keys = #{if enabled then 'ON' else 'OFF'}", null, true)
