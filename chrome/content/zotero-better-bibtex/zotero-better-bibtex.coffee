@@ -33,7 +33,7 @@ Zotero.BetterBibTeX.log = (msg...) ->
       when m instanceof Error then "#{e}\n#{e.stack}"
       else JSON.stringify(m)
 
-  Zotero.debug("[better" + "-bibtex #{(new Date).toISOString()}] #{msg.join(' ')}")
+  Zotero.debug("[" + "better-bibtex] #{msg.join(' ')}")
   return
 
 Zotero.BetterBibTeX.log.object = (o) ->
@@ -541,9 +541,9 @@ Zotero.BetterBibTeX.init = ->
     Zotero.BetterBibTeX.log('failed to load serialization cache:', e)
     Zotero.Translate.ItemGetter::serialized = {}
 
-  if Zotero.Translate.ItemGetter::serialized.Zotero != ZOTERO_CONFIG.VERSION || Zotero.Translate.ItemGetter::serialized.BetterBibTeX != @version(@release)
+  if Zotero.Translate.ItemGetter::serialized.Zotero != ZOTERO_CONFIG.VERSION || @version(Zotero.Translate.ItemGetter::serialized.BetterBibTeX) != @version(@release)
     Zotero.BetterBibTeX.log("resetting serialization cache after upgrade from Zotero #{Zotero.Translate.ItemGetter::serialized.Zotero || 'initial install'} to #{ZOTERO_CONFIG.VERSION}, BBT {Zotero.Translate.ItemGetter::serialized.BetterBibTeX || 'initial install'} to #{@release}")
-    Zotero.Translate.ItemGetter::serialized = {Zotero: ZOTERO_CONFIG.VERSION, BetterBibTeX: @version(@release)}
+    Zotero.Translate.ItemGetter::serialized = {Zotero: ZOTERO_CONFIG.VERSION, BetterBibTeX: @release}
 
   Zotero.Translate.ItemGetter::_serialize = (item, isAttachmentID) ->
     if isAttachmentID

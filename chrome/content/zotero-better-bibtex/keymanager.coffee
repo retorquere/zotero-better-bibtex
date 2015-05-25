@@ -37,14 +37,7 @@ Zotero.BetterBibTeX.keymanager = new class
       @log('key:', @log.object(key))
 
   cache: ->
-    cache = []
-    for key in @keys.where((obj) -> true)
-      key = JSON.parse(JSON.stringify(key))
-      # remove metadata
-      delete key.meta
-      delete key['$loki']
-      cache.push(key)
-    return cache
+    return (@clone(key) for key in @keys.where((obj) -> true))
 
   load: ->
     # clean up keys for items that have gone missing
@@ -237,6 +230,12 @@ Zotero.BetterBibTeX.keymanager = new class
         else 'reference'
     return type not in ['note', 'attachment']
 
+  clone: (key) ->
+    clone = JSON.parse(JSON.stringify(key))
+    delete clone.meta
+    delete clone['$loki']
+    return clone
+
   get: (item, pinmode) ->
     if item._sandboxManager
       item = arguments[1]
@@ -257,7 +256,7 @@ Zotero.BetterBibTeX.keymanager = new class
 
     # if we have a cache hit which is pinned, or no pinning is requested, return it
     return cached if cached && (!pin || !cached.citekeyFormat)
-    return @set(item, @free(item), pin)
+    return @clone(@set(item, @free(item), pin))
 
   resolve: (citekeys, libraryID) ->
     try
