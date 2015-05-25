@@ -11,7 +11,7 @@
       "fancyURLs": false,
       "langID": "babel",
       "autoAbbrev": true,
-      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "pinCitekeys": "manual",
       "rawImports": false,
       "DOIandURL": "both",
@@ -19,42 +19,36 @@
     },
     "options": {
       "exportFileData": false,
-      "exportNotes": true,
-      "exportCollections": false
+      "exportNotes": true
     }
   },
-  "collections": [],
-  "items": [
+  "keymanager": [
     {
-      "itemID": 607,
-      "itemType": "webpage",
-      "url": "https://zotplus.github.io/better-bibtex/Support-Request-Guidelines.html",
-      "extra": "bibtex: ZotPlus",
-      "accessDate": "2015-05-24 19:37:46",
-      "title": "Support Request Guidelines - Better BibTeX",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "",
-          "lastName": "ZotPlus",
-          "fieldMode": ""
-        }
-      ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/home/whk/.zotero/zotero/qpj7bsud.default/zotero/storage/USJXZBAM/Support-Request-Guidelines.html",
-          "title": "Support Request Guidelines - Better BibTeX",
-          "mimeType": "text/html",
-          "url": "https://zotplus.github.io/better-bibtex/Support-Request-Guidelines.html"
-        }
-      ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "itemID": 5,
+      "libraryID": null,
+      "citekey": "ZotPlus",
+      "citekeyFormat": null
     },
     {
-      "itemID": 609,
+      "itemID": 3,
+      "libraryID": null,
+      "citekey": "ZotPlusa",
+      "citekeyFormat": null
+    }
+  ],
+  "collections": [
+    {
+      "name": "Bibtex key generation not unique #199",
+      "collections": [],
+      "items": [
+        3,
+        5
+      ]
+    }
+  ],
+  "items": [
+    {
+      "itemID": 5,
       "itemType": "webpage",
       "url": "https://github.com/ZotPlus/zotero-better-bibtex",
       "extra": "bibtex: ZotPlus",
@@ -73,7 +67,6 @@
       "notes": [],
       "attachments": [
         {
-          "path": "/home/whk/.zotero/zotero/qpj7bsud.default/zotero/storage/M4RPMVPF/zotero-better-bibtex.html",
           "title": "Snapshot",
           "mimeType": "text/html",
           "url": "https://github.com/ZotPlus/zotero-better-bibtex"
@@ -83,6 +76,33 @@
       "related": [],
       "seeAlso": [],
       "publicationTitle": "GitHub"
+    },
+    {
+      "itemID": 3,
+      "itemType": "webpage",
+      "url": "https://zotplus.github.io/better-bibtex/Support-Request-Guidelines.html",
+      "extra": "bibtex: ZotPlusa",
+      "accessDate": "2015-05-24 19:37:46",
+      "title": "Support Request Guidelines - Better BibTeX",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "",
+          "lastName": "ZotPlus",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [],
+      "attachments": [
+        {
+          "title": "Support Request Guidelines - Better BibTeX",
+          "mimeType": "text/html",
+          "url": "https://zotplus.github.io/better-bibtex/Support-Request-Guidelines.html"
+        }
+      ],
+      "tags": [],
+      "related": [],
+      "seeAlso": []
     }
   ]
 }

@@ -2,10 +2,14 @@
 Feature: Cache tests
 
 @keymanager
-Scenario Outline: Keymanager cache test
-  When I import <references> reference from 'cache/<file>.json'
-  Then the library should match 'cache/<file>.library.json'
-
-  Examples:
-  | file                                  | references  |
-  | Bibtex key generation not unique #199 | 4           |
+Scenario: Keymanager cache test
+  When I import 2 reference with 2 attachments from 'cache/Bibtex key generation not unique #199.json'
+  And I select the first item where title = 'Support Request Guidelines - Better BibTeX'
+  And I reset the citation keys
+  And I select the first item where title = 'ZotPlus/zotero-better-bibtex'
+  And I reset the citation keys
+  And I select the first item where title = 'ZotPlus/zotero-better-bibtex'
+  And I set the citation keys
+  And I select the first item where title = 'Support Request Guidelines - Better BibTeX'
+  And I set the citation keys
+  Then the library should match 'cache/Bibtex key generation not unique #199.library.json'

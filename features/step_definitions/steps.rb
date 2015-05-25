@@ -59,7 +59,7 @@ def loadZotero
   if ENV['CI'] != 'true'
     profile['extensions.zotero.debug.store'] = true
     profile['extensions.zotero.debug.log'] = true
-    profile['extensions.zotero.translators.better-bibtex.logging'] = true
+    profile['extensions.zotero.translators.better-bibtex.debug'] = true
   end
 
   profile['extensions.zotfile.automatic_renaming'] = 1
@@ -102,7 +102,7 @@ Before do |scenario|
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.testMode.timestamp', '2015-02-24 12:14:36 +0100')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.attachmentRelativePath', true)
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.autoExport', 'on-change')
-  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.logging', true) if ENV['CI'] != 'true'
+  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.debug', true) if ENV['CI'] != 'true'
   @selected = nil
   @expectedExport = nil
   @exportOptions = {}
@@ -219,6 +219,22 @@ Then /^the library (without collections )?should match '([^']+)'$/ do |nocollect
   expected = JSON.parse(open(expected).read)
 
   found = $Firefox.BetterBibTeX.library
+
+  movekeys = lambda{|lib|
+    keys = {}
+    lib['keymanager'].each{|key|
+      keys[key['itemID']] = key
+      key.delete('itemID')
+    }
+    lib['items'].each{|item| item['__citekey__'] = keys[item['itemID']] }
+    lib.delete('keymanager')
+  }
+  if found['keymanager']
+    movekeys.call(found)
+    movekeys.call(expected)
+  else
+    expected.delete('keymanager')
+  end
   
   if nocollections
     expected['collections'] = []
@@ -353,9 +369,8 @@ Then /^I remove the selected item$/ do
   $Firefox.BetterBibTeX.remove(@selected)
 end
 
-Then /^I generate a new citation key$/ do
-  expect(@selected).not_to be(nil)
-  $Firefox.BetterBibTeX.pinCiteKey(@selected)
+Then /^I (re)?set the citation keys?$/ do |action|
+  $Firefox.BetterBibTeX.selected("#{action}set")
 end
 
 Then /^the markdown citation for (.*) should be '(.*)'$/ do |keys, citation|

@@ -343,13 +343,8 @@ Zotero.BetterBibTeX.attachDatabase = ->
 
   if @pref.get('scanCitekeys')
     @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
-    patched = []
-    for row in Zotero.DB.query(@findKeysSQL) or []
-      patched.push(row.itemID)
-      @keymanager.set(row, @keymanager.extract({extra: row.extra}).__citekey__)
-    if patched.length > 0
-      for row in Zotero.DB.query("select * from betterbibtex.keys where citekeyFormat is null and itemID not in #{@SQLSet(patched)}")
-        @keymanager.remove(row)
+    @keymanager.reset()
+    @cache.reset()
     @pref.set('scanCitekeys', false)
 
   @keymanager.load()
@@ -362,7 +357,7 @@ Zotero.BetterBibTeX.attachDatabase = ->
     Zotero.DB.query('delete from betterbibtex.cache')
   @cache.load()
 
-Zotero.BetterBibTeX.findKeysSQL = "select i.itemID as itemID, idv.value as extra
+Zotero.BetterBibTeX.findKeysSQL = "select i.itemID as itemID, i.libraryID as libraryID, idv.value as extra
                   from items i
                   join itemData id on i.itemID = id.itemID
                   join itemDataValues idv on idv.valueID = id.valueID
@@ -542,7 +537,12 @@ Zotero.BetterBibTeX.init = ->
     Zotero.Translate.ItemGetter::serialized = {}
 
   if Zotero.Translate.ItemGetter::serialized.Zotero != ZOTERO_CONFIG.VERSION || @version(Zotero.Translate.ItemGetter::serialized.BetterBibTeX) != @version(@release)
-    Zotero.BetterBibTeX.log("resetting serialization cache after upgrade from Zotero #{Zotero.Translate.ItemGetter::serialized.Zotero || 'initial install'} to #{ZOTERO_CONFIG.VERSION}, BBT {Zotero.Translate.ItemGetter::serialized.BetterBibTeX || 'initial install'} to #{@release}")
+    Zotero.BetterBibTeX.log("
+      resetting serialization cache after upgrade from
+        Zotero #{Zotero.Translate.ItemGetter::serialized.Zotero || 'initial install'}
+          to #{ZOTERO_CONFIG.VERSION},
+        BBT #{Zotero.Translate.ItemGetter::serialized.BetterBibTeX || 'initial install'}
+          to #{@release}".replace(/\s+/, '').trim())
     Zotero.Translate.ItemGetter::serialized = {Zotero: ZOTERO_CONFIG.VERSION, BetterBibTeX: @release}
 
   Zotero.Translate.ItemGetter::_serialize = (item, isAttachmentID) ->
@@ -766,7 +766,7 @@ Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
 
 Zotero.BetterBibTeX.SQLSet = (values) -> '(' + ('' + v for v in values).join(', ') + ')'
 
-Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
+Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
   return unless type == 'item' && event in ['delete', 'trash', 'add', 'modify']
   ids = extraData if event == 'delete'
   return unless ids.length > 0
@@ -774,31 +774,21 @@ Zotero.BetterBibTeX.itemChanged = notify: (event, type, ids, extraData) ->
   for itemID in ids
     itemID = parseInt(itemID) unless typeof itemID == 'number'
     delete Zotero.Translate.ItemGetter::serialized[itemID]
-    Zotero.BetterBibTeX.cache.remove({itemID})
-    # this is safe -- either a pinned key is restored below, or it needs to be regenerated anyhow after change
-    Zotero.BetterBibTeX.keymanager.remove({itemID})
+    @cache.remove({itemID})
 
-  if event in ['add', 'modify']
-    for item in Zotero.DB.query("#{Zotero.BetterBibTeX.findKeysSQL} and i.itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}") or []
-      citekey = Zotero.BetterBibTeX.keymanager.extract(item).__citekey__
-      Zotero.BetterBibTeX.keymanager.set(item, citekey)
-      Zotero.BetterBibTeX.cache.remove({citekey})
-
-    for id in ids
-      Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'on-change')
+  @keymanager.scan(ids, 'change')
 
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
-  collections = Zotero.BetterBibTeX.withParentCollections(collections) unless collections.length == 0
-  for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{Zotero.BetterBibTeX.SQLSet(ids)}")
+  collections = @withParentCollections(collections) unless collections.length == 0
+  for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@SQLSet(ids)}")
     if libraryID
       collections.push("'library:#{libraryID}'")
     else
       collections.push("'library'")
   if collections.length > 0
-    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
-  Zotero.BetterBibTeX.auto.process('itemChanged')
-
-  return
+    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{@SQLSet(collections)}")
+  @auto.process('itemChanged')
+).bind(Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.withParentCollections = (collections) ->
   return collections unless Zotero.BetterBibTeX.auto.recursive()

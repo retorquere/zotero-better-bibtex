@@ -88,8 +88,6 @@ Zotero.BetterBibTeX.DebugBridge.methods.library = ->
   translator = Zotero.BetterBibTeX.getTranslator('Zotero TestCase')
   return JSON.parse(Zotero.BetterBibTeX.translate(translator, null, { 'Export collections': true, exportNotes: true, exportFileData: false }))
 
-Zotero.BetterBibTeX.DebugBridge.methods.getKeys = -> Zotero.BetterBibTeX.keymanager.keys()
-
 Zotero.BetterBibTeX.DebugBridge.methods.setPreference = (name, value) -> Zotero.Prefs.set(name, value)
 
 Zotero.BetterBibTeX.DebugBridge.methods.select = (attribute, value) ->
@@ -101,12 +99,18 @@ Zotero.BetterBibTeX.DebugBridge.methods.select = (attribute, value) ->
          join fields f on id.fieldID = f.fieldID
          where f.fieldName = '#{attribute}' and not i.itemID in (select itemID from deletedItems) and idv.value = ?"
 
-  return Zotero.DB.valueQuery(sql, [value])
+  id = Zotero.DB.valueQuery(sql, [value])
+  throw new Error("No item found with #{attribute} = '#{value}'") unless id
+  zoteroPane = Zotero.getActiveZoteroPane()
+  zoteroPane.selectItem(id, true)
+  return id
 
 Zotero.BetterBibTeX.DebugBridge.methods.remove = (id) -> Zotero.Items.trash([id])
 
-Zotero.BetterBibTeX.DebugBridge.methods.pinCiteKey = (id) ->
-  return Zotero.BetterBibTeX.keymanager.get({itemID: id}, 'manual').citekey
+Zotero.BetterBibTeX.DebugBridge.methods.selected = (action) ->
+  Zotero.BetterBibTeX.keymanager.selected(action)
+  zoteroPane = Zotero.getActiveZoteroPane()
+  return zoteroPane.getSelectedItems()
 
 Zotero.BetterBibTeX.DebugBridge.methods.autoExports = ->
   exports = []
