@@ -325,11 +325,19 @@ task :test, [:tag] => [XPI, :plugins] do |t, args|
 
   ok = true
   begin
-    if OS.mac?
-      sh "script -q -t 1 cucumuber.log cucumber --strict --no-color #{tag}"
+    rerun = File.file?('tmp/cucumber.rerun') && open('tmp/cucumber.rerun').read.strip != ''
+    if rerun
+      rerun = '@tmp/cucumber.rerun'
     else
-      sh "script -ec 'cucumber --strict --no-color #{tag}' cucumber.log"
+      rerun = "--format pretty --format rerun --out tmp/cucumber.rerun"
     end
+
+    if OS.mac?
+      sh "script -q -t 1 cucumuber.log cucumber #{rerun} --strict #{tag}"
+    else
+      sh "script -ec 'cucumber #{rerun} --strict #{tag}' cucumber.log"
+    end
+    sh "sed -re 's/\\x1b[^m]*m//g' cucumber.log | col -b | sponge cucumber.log"
   rescue => e
     ok = false
     raise e
