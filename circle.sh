@@ -15,7 +15,7 @@ case $1 in
         bundle exec cucumber --strict --tag ~@noci --tags @test-cluster-$CIRCLE_NODE_INDEX
         ;;
       *)
-        bundle exec cucumber --strict --tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2
+        bundle exec cucumber --strict --tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2
         ;;
     esac
     ;;

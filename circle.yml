@@ -12,6 +12,7 @@ test:
   override:
     - ./circle.sh test:
         parallel: true
+        timeout: 6000
 deployment:
   master:
     branch: master
