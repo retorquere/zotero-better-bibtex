@@ -133,9 +133,7 @@ Zotero.BetterBibTeX.keymanager = new class
     return @journalAbbrevs[item.publicationTitle]
 
   extract: (item, insitu) ->
-    if item._sandboxManager
-      item = arguments[1]
-      insitu = arguments[2]
+    [itemID, insitu] = Array.slice(arguments, 1, 3) if itemID._sandboxManager
 
     switch
       when item.getField
@@ -323,9 +321,7 @@ Zotero.BetterBibTeX.keymanager = new class
     return clone
 
   get: (item, pinmode) ->
-    if item._sandboxManager
-      item = arguments[1]
-      pinmode = arguments[2]
+    [item, pinmode] = Array.slice(arguments, 1, 3) if itemID._sandboxManager
 
     Zotero.BetterBibTeX.debug("keymanager.get: item=#{item.itemID}, pinmode=#{pinmode}")
 

@@ -98,9 +98,7 @@ Zotero.BetterBibTeX.cache = new class
     }
 
   fetch: (itemID, context) ->
-    if itemID._sandboxManager
-      itemID = arguments[1]
-      context = arguments[2]
+    [itemID, context] = Array.slice(arguments, 1, 3) if itemID._sandboxManager
 
     # file paths vary if exportFileData is on
     if context.exportFileData
@@ -114,11 +112,7 @@ Zotero.BetterBibTeX.cache = new class
     return cached
 
   store: (itemID, context, citekey, bibtex) ->
-    if itemID._sandboxManager
-      itemID = arguments[1]
-      context = arguments[2]
-      citekey = arguments[3]
-      bibtex = arguments[4]
+    [itemID, context, citekey, bibtex] = Array.slice(arguments, 1, 5) if itemID._sandboxManager
 
     # file paths vary if exportFileData is on
     if context.exportFileData
