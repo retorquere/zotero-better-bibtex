@@ -165,6 +165,7 @@ Zotero.BetterBibTeX.quitObserver =
     observerService.removeObserver(@, 'quit-application-requested')
 
 Zotero.BetterBibTeX.version = (version) ->
+  return '' unless version
   v = version.split('.').slice(0, 2).join('.')
   @debug("full version: #{version}, canonical version: #{v}")
   return v
@@ -528,7 +529,9 @@ Zotero.BetterBibTeX.init = ->
           to #{ZOTERO_CONFIG.VERSION},
         BBT #{Zotero.Translate.ItemGetter::serialized.BetterBibTeX || 'initial install'}
           to #{@release}".replace(/\s+/, '').trim())
-    Zotero.Translate.ItemGetter::serialized = {Zotero: ZOTERO_CONFIG.VERSION, BetterBibTeX: @release}
+    Zotero.Translate.ItemGetter::serialized = {}
+  Zotero.Translate.ItemGetter::serialized.Zotero = ZOTERO_CONFIG.VERSION
+  Zotero.Translate.ItemGetter::serialized.BetterBibTeX = @release
 
   Zotero.Translate.ItemGetter::_serialize = (item, isAttachmentID) ->
     if isAttachmentID
