@@ -212,7 +212,7 @@ Zotero.BetterBibTeX.attachDatabase = ->
   for check in [
     'SELECT itemID, citekey, citekeyFormat FROM betterbibtex.keys'
     'SELECT id, collection, path, exportCharset, exportNotes, preserveBibTeXVariables, translatorID, useJournalAbbreviation, exportedRecursively, status FROM betterbibtex.autoexport'
-    'SELECT itemID, exportCharset, exportCollections, exportFileData, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess FROM betterbibtex.cache'
+    'SELECT itemID, exportCharset, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess FROM betterbibtex.cache'
     ]
     continue if upgrade
     try
@@ -260,8 +260,6 @@ Zotero.BetterBibTeX.attachDatabase = ->
         itemID not null,
 
         exportCharset not null,
-        exportCollections default 'false' CHECK(exportCollections in ('true', 'false')),
-        exportFileData default 'false' CHECK(exportFileData in ('true', 'false')),
         exportNotes default 'false' CHECK(exportNotes in ('true', 'false')),
         getCollections default 'false' CHECK(getCollections in ('true', 'false')),
         preserveBibTeXVariables default 'false' CHECK(preserveBibTeXVariables in ('true', 'false')),
@@ -271,7 +269,7 @@ Zotero.BetterBibTeX.attachDatabase = ->
         citekey not null,
         bibtex not null,
         lastaccess not null default CURRENT_TIMESTAMP,
-        PRIMARY KEY (itemID, exportCharset, exportCollections, exportFileData, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation)
+        PRIMARY KEY (itemID, exportCharset, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation)
         )
       ")
 
@@ -439,7 +437,6 @@ Zotero.BetterBibTeX.init = ->
       Zotero.BetterBibTeX.debug('Captured auto-export:', @location.path, Zotero.BetterBibTeX.log.object(@_displayOptions))
 
       delete @_displayOptions.exportFileData
-      delete @_displayOptions['Export collections']
 
       progressWin = new Zotero.ProgressWindow()
       progressWin.changeHeadline('Auto-export')

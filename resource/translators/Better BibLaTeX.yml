@@ -13,6 +13,5 @@ displayOptions:
   exportNotes: false
   exportFileData: false
   useJournalAbbreviation: false
-  "Export collections": true
   "Preserve BibTeX variables": false
   "Keep updated": false

@@ -11,9 +11,8 @@ displayOptions:
   exportNotes: true
   exportFileData: false
   useJournalAbbreviation: false
-  "Export collections": true
-  "Keep updated": false
   "Preserve BibTeX variables": false
+  "Keep updated": false
 inRepository: true
 translatorType: 3
 browserSupport: gcsv

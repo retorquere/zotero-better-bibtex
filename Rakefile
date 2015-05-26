@@ -17,6 +17,7 @@ require 'rubygems/package'
 require 'zlib'
 require 'open3'
 require 'yaml'
+require 'washbullet'
 require 'rake/loaders/makefile'
 require 'selenium-webdriver'
 
@@ -322,10 +323,34 @@ task :test, [:tag] => [XPI, :plugins] do |t, args|
 
   puts "Tests running: #{tag}"
 
-  if OS.mac?
-    sh "script -q -t 1 cucumuber.log cucumber --strict --no-color #{tag}"
-  else
-    sh "script -ec 'cucumber --strict --no-color #{tag}' cucumber.log"
+  ok = true
+  begin
+    if OS.mac?
+      sh "script -q -t 1 cucumuber.log cucumber --strict --no-color #{tag}"
+    else
+      sh "script -ec 'cucumber --strict --no-color #{tag}' cucumber.log"
+    end
+  rescue => e
+    ok = false
+    raise e
+  ensure
+    if File.file?('.pushbullet') || ENV['PUSHBULLET_ACCESS_TOKEN'].to_s.strip != ''
+      access_token = ENV['PUSHBULLET_ACCESS_TOKEN'].to_s.strip
+      if access_token == ''
+        creds = YAML.load_file('.pushbullet')
+        access_token = creds['access_token']
+      end
+
+      title = ["Cucumber tests #{tag}".strip]
+      title << 'at Circle' if ENV['CI'] == 'true'
+      title << "have finished"
+      title << (ok ? 'green' : 'red')
+      client = Washbullet::Client.new(access_token)
+      title = title.join(' ')
+      body = title
+      client.push_note({receiver: :email, identifier: client.me.body['email'], params: { title: title, body: body }})
+      throw
+    end
   end
 end
 

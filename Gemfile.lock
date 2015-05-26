@@ -55,6 +55,7 @@ GEM
     launchy (2.4.3)
       addressable (~> 2.3)
     method_source (0.8.2)
+    mime-types (2.6.1)
     mini_portile (0.6.2)
     multi_json (1.11.0)
     multi_test (0.1.2)
@@ -75,7 +76,7 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
-    pusher-client (0.6.0)
+    pusher-client (0.6.2)
       json
       websocket (~> 1.0)
     rack (1.6.1)
@@ -116,6 +117,9 @@ GEM
     typhoeus (0.7.1)
       ethon (>= 0.7.1)
     unicode (0.4.4.2)
+    washbullet (0.4.0)
+      faraday (~> 0.9.0)
+      mime-types
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
@@ -143,5 +147,6 @@ DEPENDENCIES
   selenium-webdriver
   travis
   typhoeus
+  washbullet
   zip-zip
   zotplus-rakehelper

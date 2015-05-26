@@ -19,12 +19,10 @@ Zotero.BetterBibTeX.cache = new class
 
   load: ->
     @cache.flushChanges()
-    for item in Zotero.DB.query('select itemID, exportCharset, exportCollections, exportFileData, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex from betterbibtex.cache')
+    for item in Zotero.DB.query('select itemID, exportCharset, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex from betterbibtex.cache')
       @cache.insert({
         itemID: @integer(item.itemID)
         exportCharset: item.exportCharset
-        exportCollections: (item.exportCollections == 'true')
-        exportFileData: (item.exportFileData == 'true')
         exportNotes: (item.exportNotes == 'true')
         getCollections: (item.getCollections == 'true')
         preserveBibTeXVariables: (item.preserveBibTeXVariables == 'true')
@@ -58,20 +56,18 @@ Zotero.BetterBibTeX.cache = new class
 
     for change in @cache.getChanges()
       o = change.obj
-      key = [o.itemID, o.exportCharset, @bool(o.exportCollections), @bool(o.exportFileData), @bool(o.exportNotes), @bool(o.getCollections), @bool(o.preserveBibTeXVariables), o.translatorID, @bool(o.useJournalAbbreviation)]
+      key = [o.itemID, o.exportCharset, @bool(o.exportNotes), @bool(o.getCollections), @bool(o.preserveBibTeXVariables), o.translatorID, @bool(o.useJournalAbbreviation)]
       switch change.operation
         when 'I', 'U'
           Zotero.DB.query("insert or replace into betterbibtex.cache
-                            (itemID, exportCharset, exportCollections, exportFileData, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess)
+                            (itemID, exportCharset, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess)
                            values
-                            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)", key.concat([o.citekey, o.bibtex]))
+                            (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)", key.concat([o.citekey, o.bibtex]))
 
         when 'R'
           Zotero.DB.query("delete from betterbibtex.cache
                            where itemID = ?
                            and exportCharset = ?
-                           and exportCollections = ?
-                           and exportFileData = ?
                            and exportNotes = ?
                            and getCollections = ?
                            and preserveBibTeXVariables = ?
@@ -94,8 +90,6 @@ Zotero.BetterBibTeX.cache = new class
     return {
       itemID: @integer(itemID)
       exportCharset: (context.exportCharset || 'UTF-8').toUpperCase()
-      exportCollections: !!context.exportCollections
-      exportFileData: !!context.exportFileData
       exportNotes: !!context.exportNotes
       getCollections: !!context.getCollections
       preserveBibTeXVariables: !!context.preserveBibTeXVariables

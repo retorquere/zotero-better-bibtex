@@ -14,7 +14,7 @@ Zotero_BetterBibTeX_ErrorReport = new class
       details = window.arguments[0].wrappedJSObject
       if details.data
         translator = Zotero.BetterBibTeX.getTranslator('Zotero TestCase')
-        references = Zotero.BetterBibTeX.translate(translator, details, { exportCollections: false, exportNotes: true, exportFileData: false })
+        references = Zotero.BetterBibTeX.translate(translator, details, { exportNotes: true, exportFileData: false })
         document.getElementById('zotero-references').hidden = false
         document.getElementById('zotero-references').value = references
 

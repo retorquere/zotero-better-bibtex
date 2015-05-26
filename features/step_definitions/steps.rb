@@ -110,12 +110,14 @@ end
 
 After do |scenario|
   if ENV['CI'] != 'true'
-    open("#{scenario.name}.debug", 'w'){|f| f.write($Firefox.DebugBridge.log) } if scenario.source_tag_names.include?('@logcapture')
+    # stop on first failure outside CI
+    Cucumber.wants_to_quit = scenario.failed?
+
     filename = scenario.name.gsub(/[^0-9A-z.\-]/, '_')
-    if scenario.failed?
+    if scenario.failed? || scenario.source_tag_names.include?('@logcapture')
       @logcaptures ||= 0
       @logcaptures += 1
-      if @logcaptures <= 5
+      if @logcaptures <= 5 || scenario.source_tag_names.include?('@logcapture')
         open("#{filename}.debug", 'w'){|f| f.write($Firefox.DebugBridge.log) }
         open("#{filename}.log", 'w'){|f| f.write(browserLog) }
       end
@@ -124,9 +126,6 @@ After do |scenario|
     end
 
     $Firefox.BetterBibTeX.exportToFile('Zotero TestCase', "#{filename}.json") if scenario.source_tag_names.include?('@librarydump')
-
-    # `FAIL=FAST cucumber` to stop on first failure
-    Cucumber.wants_to_quit = (ENV['FAIL'] == 'fast') && scenario.failed?
   end
 end
 

@@ -45,7 +45,6 @@ Translator.initialize = ->
 
   for option in ['useJournalAbbreviation', 'exportPath', 'exportCharset', 'exportFileData', 'exportNotes']
     @[option] = Zotero.getOption(option)
-  @exportCollections = Zotero.getOption('Export collections')
   @preserveBibTeXVariables = Zotero.getOption('Preserve BibTeX variables')
   @caching = false if @exportFileData
 
@@ -90,8 +89,6 @@ Translator.sanitizeCollection = (coll) ->
   return sane
 
 Translator.collections = ->
-  return [] unless @exportCollections
-
   collections = []
   while collection = Zotero.nextCollection()
     collections.push(@sanitizeCollection(collection))
