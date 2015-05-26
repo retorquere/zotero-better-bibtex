@@ -18,6 +18,4 @@ script:
   - bundle exec cucumber --strict $TAG
 before_install:
 - npm update
-ignore_before_install:
-- sudo apt-get update
-- sudo apt-get install nodejs npm firefox
+- dpkg -l | grep firefox
