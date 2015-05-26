@@ -24,7 +24,7 @@ Scenario: Bibtex key regenerating issue when trashing items #117
   And I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json' as 'Second Import.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Bibtex key regenerating issue when trashing items #117.bib'
 
-@test-cluster-0 @110 @111
+@test-cluster-0 @110 @111 @molasses
 Scenario: two ISSN number are freezing browser #110 / Generating keys and export broken #111
   When I import 1 reference from 'export/two ISSN number are freezing browser #110.json'
   And I select the first item where publicationTitle = 'Genetics'
