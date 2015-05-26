@@ -357,21 +357,6 @@ Zotero.BetterBibTeX.attachDatabase = ->
     Zotero.DB.query('delete from betterbibtex.cache')
   @cache.load()
 
-Zotero.BetterBibTeX.findKeysSQL = "select i.itemID as itemID, i.libraryID as libraryID, idv.value as extra
-                  from items i
-                  join itemData id on i.itemID = id.itemID
-                  join itemDataValues idv on idv.valueID = id.valueID
-                  join fields f on id.fieldID = f.fieldID
-                  where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)
-                    and (idv.value like '%bibtex:%' or idv.value like '%biblatexcitekey[%' or idv.value like '%biblatexcitekey{%')"
-
-Zotero.BetterBibTeX.findExtra = "select idv.value as extra
-                  from items i
-                  join itemData id on i.itemID = id.itemID
-                  join itemDataValues idv on idv.valueID = id.valueID
-                  join fields f on id.fieldID = f.fieldID
-                  where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)"
-
 Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
@@ -696,12 +681,10 @@ Zotero.BetterBibTeX.itemAdded = {
       collection = Zotero.Collections.get(collectionID)
       continue unless collection
 
-      extra = Zotero.DB.valueQuery("#{Zotero.BetterBibTeX.findExtra} and i.itemID = ?", [itemID])
-      continue unless extra
-
       try
-        extra = JSON.parse(extra)
+        extra = JSON.parse(Zotero.Items.get(itemID).getField('extra').trim())
       catch error
+        Zotero.BetterBibTeX.debug('no AUX scanner info found on collection add', error)
         continue
 
       note = null
@@ -776,7 +759,7 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
     delete Zotero.Translate.ItemGetter::serialized[itemID]
     @cache.remove({itemID})
 
-  @keymanager.scan(ids, 'change')
+  @keymanager.scan(ids, event)
 
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
   collections = @withParentCollections(collections) unless collections.length == 0

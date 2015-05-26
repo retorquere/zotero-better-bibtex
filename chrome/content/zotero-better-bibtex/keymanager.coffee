@@ -24,6 +24,14 @@ Zotero.BetterBibTeX.keymanager = new class
       Zotero.BetterBibTeX.cache.remove({itemID: key.itemID})
     )
 
+    @findKeysSQL = "select i.itemID as itemID, i.libraryID as libraryID, idv.value as extra
+                    from items i
+                    join itemData id on i.itemID = id.itemID
+                    join itemDataValues idv on idv.valueID = id.valueID
+                    join fields f on id.fieldID = f.fieldID
+                    where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)
+                      and (idv.value like '%bibtex:%' or idv.value like '%biblatexcitekey[%' or idv.value like '%biblatexcitekey{%')"
+
     # three-letter month abbreviations. I assume these are the same ones that the
     # docs say are defined in some appendix of the LaTeX book. (I don't have the
     # LaTeX book.)
@@ -223,10 +231,15 @@ Zotero.BetterBibTeX.keymanager = new class
     return @verify(key)
 
   scan: (ids, reason) ->
+    if reason in ['delete', 'trash']
+      ids = (@integer(id) for id in ids || [])
+      @keys.removeWhere((o) -> o.itemID in ids)
+      return
+
     Zotero.BetterBibTeX.debug('keymanager.scan:', ids, reason)
     switch
       when !ids
-        items = Zotero.DB.query(Zotero.BetterBibTeX.findKeysSQL)
+        items = Zotero.DB.query(@findKeysSQL)
       when ids.length == 0
         items = []
       when ids.length == 1
@@ -258,12 +271,11 @@ Zotero.BetterBibTeX.keymanager = new class
 
     Zotero.BetterBibTeX.debug('keymanager.scan: pinned =', pinned)
 
-    if reason == 'change' && ids && ids.length > 0
-      for itemID in ids
-        continue if pinned['' + itemID]
-        Zotero.BetterBibTeX.debug('keymanager.scan: not pinned', itemID)
-        @remove({itemID}, true)
-        @get({itemID}, 'on-change')
+    for itemID in ids || []
+      continue if pinned['' + itemID]
+      Zotero.BetterBibTeX.debug('keymanager.scan: not pinned', itemID)
+      @remove({itemID}, true)
+      @get({itemID}, 'on-change')
 
   remove: (item, soft) ->
     Zotero.BetterBibTeX.debug("keymanager.remove: item=#{item.itemID}, soft=#{!!soft}")
@@ -279,7 +291,11 @@ Zotero.BetterBibTeX.keymanager = new class
         when 0 then 'note'
         when 14 then 'attachment'
         else 'reference'
-    return type not in ['note', 'attachment']
+    return false if type in ['note', 'attachment']
+    #item = Zotero.Items.get(item.itemID) unless item.getField
+    #return false unless item
+    #return !item.deleted
+    return true
 
   verify: (entry) ->
     return entry unless Zotero.BetterBibTeX.pref.get('debug') || Zotero.BetterBibTeX.pref.get('testMode')
