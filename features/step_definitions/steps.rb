@@ -96,7 +96,8 @@ at_exit do
 end
 
 Before do |scenario|
-  loadZotero $Firefox.BetterBibTeX.reset unless scenario.source_tag_names.include?('@noreset')
+  loadZotero
+  $Firefox.BetterBibTeX.reset unless scenario.source_tag_names.include?('@noreset')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.testMode', true)
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.testMode.timestamp', '2015-02-24 12:14:36 +0100')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.attachmentRelativePath', true)
@@ -105,6 +106,10 @@ Before do |scenario|
   @selected = nil
   @expectedExport = nil
   @exportOptions = {}
+end
+
+AfterStep do |scenario|
+  sleep 1 if ENV['CIRCLECI'] == 'true'
 end
 
 After do |scenario|
