@@ -103,7 +103,7 @@ GEM
       websocket (~> 1.0)
     slop (3.6.0)
     thread_safe (0.3.5)
-    travis (1.7.6)
+    travis (1.7.7)
       addressable (~> 2.3)
       backports
       faraday (~> 0.9)
