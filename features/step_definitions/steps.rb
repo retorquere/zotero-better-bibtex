@@ -108,10 +108,6 @@ Before do |scenario|
   @exportOptions = {}
 end
 
-AfterStep do |scenario|
-  sleep 1 if ENV['CIRCLECI'] == 'true' && scenario.source_tag_names.include?('@molasses')
-end
-
 After do |scenario|
   if ENV['CI'] != 'true'
     # stop on first failure outside CI
