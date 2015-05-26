@@ -424,17 +424,19 @@ Zotero.BetterBibTeX.init = ->
         @_items = Zotero.Items.getAll(false, @_group.libraryID)
 
       # regular behavior for non-BBT translators
-      return original.apply(this, arguments) unless Zotero.BetterBibTeX.translators[translatorID]
+      header = Zotero.BetterBibTeX.translators[translatorID]
+      return original.apply(this, arguments) unless header
 
-      # export path for relative exports
-      @_displayOptions.exportPath = @location.path.slice(0, -@location.leafName.length) if @location && typeof @location == 'object'
-
-      Zotero.BetterBibTeX.debug('export to', @location.path) if @location
+      if @location && typeof @location == 'object'
+        # export path for relative exports
+        @_displayOptions.exportPath = @location.path.slice(0, -@location.leafName.length)
+        path = @location.path
+        ext = ".#{header.target}"
+        path += ext unless path.slice(-ext.length).toLowerCase() == ext
+        Zotero.BetterBibTeX.debug('export to', path)
 
       # If no capture, we're done
-      return original.apply(this, arguments) unless @_displayOptions?['Keep updated']
-
-      Zotero.BetterBibTeX.debug('Captured auto-export:', @location.path, Zotero.BetterBibTeX.log.object(@_displayOptions))
+      return original.apply(this, arguments) unless @_displayOptions?['Keep updated'] && path
 
       delete @_displayOptions.exportFileData
 
@@ -463,7 +465,8 @@ Zotero.BetterBibTeX.init = ->
 
       if collection
         @_displayOptions.translatorID = translatorID
-        Zotero.BetterBibTeX.auto.add(collection, @location.path, @_displayOptions)
+        Zotero.BetterBibTeX.auto.add(collection, path, @_displayOptions)
+        Zotero.BetterBibTeX.debug('Captured auto-export:', path, Zotero.BetterBibTeX.log.object(@_displayOptions))
 
       return original.apply(this, arguments)
     )(Zotero.Translate.Export::translate)
