@@ -109,7 +109,7 @@ Before do |scenario|
 end
 
 AfterStep do |scenario|
-  sleep 1 if ENV['CIRCLECI'] == 'true'
+  sleep 2 if ENV['CIRCLECI'] == 'true'
 end
 
 After do |scenario|
