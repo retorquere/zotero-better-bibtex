@@ -11,14 +11,14 @@ function guru_meditation {
   uptime
   loadavg
   if [ "$(loadavg)" -gt "9" ]; then
-    echo "Too busy. Let's sleep on it"
-    sleep 60 # fully arbitrary
-    uptime
-    loadavg
-    if [ "$(loadavg)" -gt "9" ]; then
+#    echo "Too busy. Let's sleep on it"
+#    sleep 60 # fully arbitrary
+#    uptime
+#    loadavg
+#    if [ "$(loadavg)" -gt "9" ]; then
       echo "Still too busy. Better luck next time"
       exit 1
-    fi
+#    fi
   fi
 }
 
