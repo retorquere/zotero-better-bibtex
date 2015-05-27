@@ -2,6 +2,8 @@
 
 OTHERS=$1
 
+echo SHA1=$TRAVIS_COMMIT
+
 python travis_after_all.py
 export $(cat .to_export_back)
 if [ "$BUILD_LEADER" = "YES" ]; then
