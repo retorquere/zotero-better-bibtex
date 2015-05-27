@@ -50,6 +50,7 @@ def matrix_snapshot():
     """
     response = urllib2.build_opener().open("https://api.travis-ci.org/builds/{0}".format(build_id)).read()
     raw_json = json.loads(response)
+    logger.info(response)
     matrix_without_leader = [MatrixElement(element) for element in raw_json["matrix"]]
     return matrix_without_leader
 
