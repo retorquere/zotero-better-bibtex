@@ -23,5 +23,3 @@ after_success:
   - ./.travis.sh succeeded
 after_failure:
   - ./.travis.sh failed
-after_script:
-  - echo leader=$BUILD_LEADER status=$BUILD_AGGREGATE_STATUS
