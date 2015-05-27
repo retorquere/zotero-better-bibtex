@@ -18,11 +18,11 @@ if [ "$BUILD_LEADER" = "YES" ]; then
       echo "checkin: $CHECKIN"
       echo "release: $RELEASE"
       if [ "$CHECKIN" = "$RELEASE" ] ; then
-        sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .gitmodules
         git submodule update --init
         (cd www && git checkout master && git pull)
-        git config credential.helper "store --file=.git/credentials"
-        echo "https://${GITHUB_TOKEN}:@github.com" > .git/credentials
+        sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' www/.git/config
+        echo "https://${GITHUB_TOKEN}:@github.com" > www/.git/credentials
+        git config --global credential.helper "store --file=.git/credentials"
         git config --global user.name "retorquere"
         git config --global user.email "retorquere@ZotPlus.github.com"
         git config --global push.default matching
