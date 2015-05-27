@@ -11,14 +11,8 @@ function guru_meditation {
   uptime
   loadavg
   if [ "$(loadavg)" -gt "9" ]; then
-#    echo "Too busy. Let's sleep on it"
-#    sleep 60 # fully arbitrary
-#    uptime
-#    loadavg
-#    if [ "$(loadavg)" -gt "9" ]; then
-      echo "Still too busy. Better luck next time"
-      exit 1
-#    fi
+    echo "Too busy. Better luck next time"
+    exit 1
   fi
 }
 
@@ -28,7 +22,7 @@ case $1 in
     ;;
 
   test)
-    guru_meditation
+    uptime
 
     if [ "$CIRCLE_NODE_TOTAL" = "1" ]; then
       bundle exec cucumber --strict --tag ~@noci
