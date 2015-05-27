@@ -11,7 +11,6 @@ if [ "$BUILD_LEADER" = "YES" ]; then
     if [ "$OTHERS" = "succeeded" ]; then
       echo "All Succeeded! PUBLISHING..."
 
-      bundle update
       bundle exec rake
       XPI=`ls *.xpi`
       RELEASE="$TRAVIS_COMMIT release: $XPI"
