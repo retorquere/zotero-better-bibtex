@@ -39,6 +39,8 @@ case $1 in
     ;;
 
   deploy)
+    exit 0
+
     bundle exec rake
     XPI=`ls *.xpi`
     RELEASE="$CIRCLE_SHA1 release: $XPI"
