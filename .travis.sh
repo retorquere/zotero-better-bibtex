@@ -18,12 +18,13 @@ if [ "$BUILD_LEADER" = "YES" ]; then
       echo "checkin: $CHECKIN"
       echo "release: $RELEASE"
       if [ "$CHECKIN" = "$RELEASE" ] ; then
-        #sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .gitmodules
-        #sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .git/modules/www/config
-        #sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' www/.git/config
-        #echo "https://${GITHUB_TOKEN}:@github.com" > .git/credentials
-        #echo "https://${GITHUB_TOKEN}:@github.com" > www/.git/credentials
-        #git config --global credential.helper "store --file=.git/credentials"
+        sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+        sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .git/modules/www/config
+        sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' www/.git/config
+        echo "https://${GITHUB_TOKEN}:@github.com" > .git/credentials
+        echo "https://${GITHUB_TOKEN}:@github.com" > www/.git/credentials
+        git config --global credential.helper "store --file=.git/credentials"
+
         git submodule update --init
         (cd www && git checkout master && git pull)
         git config --global user.name "retorquere"
