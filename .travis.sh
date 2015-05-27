@@ -3,7 +3,8 @@
 set -e
 set -u
 
-if [ "$(travis_parallel_sentinel script)" = "deploy" ] ; then
+STATUS=`travis_parallel_sentinel script`
+if [ "$STATUS" = "deploy" ] ; then
   rake
   XPI=`ls *.xpi`
   RELEASE="$TRAVIS_COMMIT release: $XPI"
