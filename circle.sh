@@ -3,6 +3,8 @@
 set -e
 set -u
 
+echo "How busy am I?"
+uptime
 
 case $1 in
   dependencies)
