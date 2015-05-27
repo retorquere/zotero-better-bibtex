@@ -3,19 +3,6 @@
 set -e
 set -u
 
-function loadavg {
-  uptime | awk '{print $10}' | awk -F. '{print $1}'
-}
-
-function guru_meditation {
-  uptime
-  loadavg
-  if [ "$(loadavg)" -gt "9" ]; then
-    echo "Too busy. Better luck next time"
-    exit 1
-  fi
-}
-
 case $1 in
   dependencies)
     bundle exec rake bin/github-release plugins
@@ -39,11 +26,9 @@ case $1 in
     ;;
 
   deploy)
-    exit 0
-
     bundle exec rake
     XPI=`ls *.xpi`
-    RELEASE="$CIRCLE_SHA1 release: $XPI"
+    RELEASE="DISABLED-$CIRCLE_SHA1 release: $XPI"
     CHECKIN=`git log -n 1 --pretty=oneline`
     echo "checkin: $CHECKIN"
     echo "release: $RELEASE"
