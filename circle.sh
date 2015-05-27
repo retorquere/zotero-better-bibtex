@@ -10,14 +10,18 @@ case $1 in
     ;;
 
   test)
-    case $CIRCLE_NODE_INDEX in
-      [012])
-        bundle exec cucumber --strict --tag ~@noci --tags @test-cluster-$CIRCLE_NODE_INDEX
-        ;;
-      *)
-        bundle exec cucumber --strict --tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2
-        ;;
-    esac
+    if [ "$CIRCLE_NODE_TOTAL" = "1" ]; then
+      bundle exec cucumber --strict --tag ~@noci
+    else
+      case $CIRCLE_NODE_INDEX in
+        [012])
+          bundle exec cucumber --strict --tag ~@noci --tags @test-cluster-$CIRCLE_NODE_INDEX
+          ;;
+        *)
+          bundle exec cucumber --strict --tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2
+          ;;
+      esac
+    fi
     ;;
 
   deploy)

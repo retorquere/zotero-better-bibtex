@@ -109,7 +109,7 @@ Before do |scenario|
 end
 
 AfterStep do |scenario|
-  sleep 1 if ENV['CIRCLECI'] == 'true'
+  sleep 1 if ENV['CIRCLECI'] == 'true' && ENV['CIRCLE_NODE_TOTAL'].to_i > 1 
 end
 
 After do |scenario|
