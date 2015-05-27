@@ -13,10 +13,33 @@ env:
 - TAG="--tag @test-cluster-1 --tag ~@noci"
 - TAG="--tag @test-cluster-2 --tag ~@noci"
 - TAG="--tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2 --tag ~@noci"
-- TAG="--tag ~@noci"
 script:
+  - curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
   - bundle exec rake
   - bundle exec cucumber --strict $TAG
 before_install:
 - npm update
-- dpkg -l | grep firefox
+after_success:
+  - python travis_after_all.py
+  - export $(cat .to_export_back)
+  - |
+      if [ "$BUILD_LEADER" = "YES" ]; then
+        if [ "$BUILD_AGGREGATE_STATUS" = "others_succeeded" ]; then
+          echo "All Succeded! PUBLISHING..."
+        else
+          echo "Some Failed"
+        fi
+      fi
+after_failure:
+  - python travis_after_all.py
+  - export $(cat .to_export_back)
+  - |
+      if [ "$BUILD_LEADER" = "YES" ]; then
+        if [ "$BUILD_AGGREGATE_STATUS" = "others_failed" ]; then
+          echo "All Failed"
+        else
+          echo "Some Failed"
+        fi
+      fi
+after_script:
+  - echo leader=$BUILD_LEADER status=$BUILD_AGGREGATE_STATUS
