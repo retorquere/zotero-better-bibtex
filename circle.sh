@@ -7,18 +7,20 @@ function loadavg {
   uptime | awk '{print $10}' | awk -F. '{print $1}'
 }
 
-uptime
-loadavg
-if [ "$(loadavg)" -gt "9" ]; then
-  echo "Too busy. Let's sleep on it"
-  sleep 60 # fully arbitrary
+function guru_meditation {
   uptime
   loadavg
   if [ "$(loadavg)" -gt "9" ]; then
-    echo "Still too busy. Better luck next time"
-    exit 1
+    echo "Too busy. Let's sleep on it"
+    sleep 60 # fully arbitrary
+    uptime
+    loadavg
+    if [ "$(loadavg)" -gt "9" ]; then
+      echo "Still too busy. Better luck next time"
+      exit 1
+    fi
   fi
-fi
+}
 
 case $1 in
   dependencies)
@@ -26,6 +28,8 @@ case $1 in
     ;;
 
   test)
+    guru_meditation
+
     if [ "$CIRCLE_NODE_TOTAL" = "1" ]; then
       bundle exec cucumber --strict --tag ~@noci
     else
