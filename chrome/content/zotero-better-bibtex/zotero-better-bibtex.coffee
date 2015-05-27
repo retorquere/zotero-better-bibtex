@@ -197,6 +197,7 @@ Zotero.BetterBibTeX.attachDatabase = ->
 
   Zotero.DB.query("create table if not exists betterbibtex.schema (lock primary key default 'schema' check (lock='schema'), version not null)")
   Zotero.DB.query("insert or ignore into betterbibtex.schema (lock, version) values ('schema', '')")
+  Zotero.DB.query("update betterbibtex.schema set version = '' where not version like '%.%.%'")
 
   installed = @version(Zotero.DB.valueQuery("select version from betterbibtex.schema"))
   installing = @version(@release)
