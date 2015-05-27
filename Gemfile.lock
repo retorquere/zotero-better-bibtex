@@ -114,7 +114,7 @@ GEM
       pry (~> 0.9, < 0.10)
       pusher-client (~> 0.4)
       typhoeus (~> 0.6, >= 0.6.8)
-    travis_parallel_sentinel (0.1.10)
+    travis_parallel_sentinel (0.1.11)
     typhoeus (0.7.1)
       ethon (>= 0.7.1)
     unicode (0.4.4.2)
