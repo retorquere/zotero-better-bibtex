@@ -18,6 +18,8 @@ if [ "$BUILD_LEADER" = "YES" ]; then
       if [ "$CHECKIN" = "$RELEASE" ] ; then
         git submodule update --init
         (cd www && git checkout master && git pull)
+        git config credential.helper "store --file=.git/credentials"
+        echo "https://${GITHUB_TOKEN}:@github.com" > .git/credentials
         git config --global user.name "retorquere"
         git config --global user.email "retorquere@ZotPlus.github.com"
         git config --global push.default matching
