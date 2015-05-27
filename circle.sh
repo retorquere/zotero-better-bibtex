@@ -4,13 +4,18 @@ set -e
 set -u
 
 echo "How busy am I?"
+
 uptime
-
 LOADAVG=`uptime | awk '{print $10}'`
-
 if [ $(echo " $LOADAVG > 9" | bc) -eq 1 ] ; then
-  echo "Too busy. Failing fast, as it'll probably time out anyhow"
-  exit 1
+  echo "Too busy. Let's sleep on it"
+  sleep 60 # fully arbitrary
+  uptime
+  LOADAVG=`uptime | awk '{print $10}'`
+  if [ $(echo " $LOADAVG > 9" | bc) -eq 1 ] ; then
+    echo "Still too busy. Better luck next time"
+    exit 1
+  fi
 fi
 
 case $1 in
