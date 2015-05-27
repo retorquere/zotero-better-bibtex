@@ -16,6 +16,7 @@ if [ "$BUILD_LEADER" = "YES" ]; then
       echo "checkin: $CHECKIN"
       echo "release: $RELEASE"
       if [ "$CHECKIN" = "$RELEASE" ] ; then
+        sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .gitmodules
         git submodule update --init
         (cd www && git checkout master && git pull)
         git config credential.helper "store --file=.git/credentials"
