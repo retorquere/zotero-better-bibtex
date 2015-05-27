@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo 'no release management via travis... for now'
+exit
+
 OTHERS=$1
 
 python travis_after_all.py
