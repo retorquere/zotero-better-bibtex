@@ -20,10 +20,8 @@ if [ "$BUILD_LEADER" = "YES" ]; then
       if [ "$CHECKIN" = "$RELEASE" ] ; then
         sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .gitmodules
         sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .git/modules/www/config
-        sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' www/.git/config
-        echo "https://${GITHUB_TOKEN}:@github.com" > .git/credentials
-        echo "https://${GITHUB_TOKEN}:@github.com" > www/.git/credentials
-        git config --global credential.helper "store --file=.git/credentials"
+        echo "https://${GITHUB_TOKEN}:@github.com" > /tmp/credentials
+        git config --global credential.helper "store --file=/tmp/credentials"
 
         git submodule update --init
         (cd www && git checkout master && git pull)
