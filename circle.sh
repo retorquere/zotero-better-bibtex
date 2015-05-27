@@ -3,16 +3,18 @@
 set -e
 set -u
 
-echo "How busy am I?"
+function loadavg {
+  uptime | awk '{print $10}' | awk -F. '{print $1}'
+}
 
 uptime
-LOADAVG=`uptime | awk '{print $10}'`
-if [ $(echo " $LOADAVG > 9" | bc) -eq 1 ] ; then
+loadavg
+if [ "$(loadavg)" -gt "9" ]; then
   echo "Too busy. Let's sleep on it"
   sleep 60 # fully arbitrary
   uptime
-  LOADAVG=`uptime | awk '{print $10}'`
-  if [ $(echo " $LOADAVG > 9" | bc) -eq 1 ] ; then
+  loadavg
+  if [ "$(loadavg)" -gt "9" ]; then
     echo "Still too busy. Better luck next time"
     exit 1
   fi
