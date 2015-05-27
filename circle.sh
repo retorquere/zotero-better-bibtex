@@ -15,10 +15,22 @@ case $1 in
     else
       case $CIRCLE_NODE_INDEX in
         [012])
-          bundle exec cucumber --strict --tag ~@noci --tags @test-cluster-$CIRCLE_NODE_INDEX
+          if bundle exec cucumber --format pretty --format rerun --out tmp/cucumber.rerun --strict --tag ~@noci --tags @test-cluster-$CIRCLE_NODE_INDEX; then
+            :
+          elif bundle exec cucumber @tmp/cucumber.rerun --strict --tag ~@noci --tags @test-cluster-$CIRCLE_NODE_INDEX; then
+            :
+          else
+            bundle exec cucumber @tmp/cucumber.rerun --strict --tag ~@noci --tags @test-cluster-$CIRCLE_NODE_INDEX; then
+          fi
           ;;
         *)
-          bundle exec cucumber --strict --tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2
+          if bundle exec cucumber --format pretty --format rerun --out tmp/cucumber.rerun --strict --tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2
+            :
+          elif bundle exec cucumber @tmp/cucumber.rerun --strict --tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2
+            :
+          else
+            bundle exec cucumber @tmp/cucumber.rerun --strict --tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2
+          fi
           ;;
       esac
     fi
