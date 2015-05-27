@@ -14,7 +14,6 @@ env:
 - TAG="--tag @test-cluster-2 --tag ~@noci"
 - TAG="--tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2 --tag ~@noci"
 script:
-  - curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
   - bundle exec rake
   - bundle exec cucumber --strict $TAG
 before_install:
