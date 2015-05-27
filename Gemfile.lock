@@ -114,6 +114,7 @@ GEM
       pry (~> 0.9, < 0.10)
       pusher-client (~> 0.4)
       typhoeus (~> 0.6, >= 0.6.8)
+    travis_parallel_sentinel (0.1.4)
     typhoeus (0.7.1)
       ethon (>= 0.7.1)
     unicode (0.4.4.2)
@@ -146,6 +147,7 @@ DEPENDENCIES
   rubyzip (>= 1.0.0)
   selenium-webdriver
   travis
+  travis_parallel_sentinel
   typhoeus
   washbullet
   zip-zip

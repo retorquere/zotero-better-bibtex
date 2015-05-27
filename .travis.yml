@@ -16,12 +16,9 @@ env:
 script:
 - bundle exec rake
 - bundle exec cucumber --strict $TAG
+- bundle exec ./.travis-publish.sh
 before_install:
 - npm update
-after_success:
-- "./.travis.sh succeeded"
-after_failure:
-- "./.travis.sh failed"
 notifications:
   slack:
     secure: FrH2x+zMD/961jEEzvtwxdq8eKTddPDT98cFig7vFxKNrW6rs6ogPl9Mbq9KpxVq/a4Q7dmbri0JKn7hv94pch1fCBIOqeqrgbelbn3/MrhAHDIUU1jJCDDbvs2W5H8bEWgBwmZVEMjg/6yHwBKXFOUGwV3CAO1GMKhknQbCTi8=
