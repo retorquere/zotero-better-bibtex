@@ -6,6 +6,13 @@ set -u
 echo "How busy am I?"
 uptime
 
+LOADAVG=`uptime | awk '{print $10}'`
+
+if [ $(echo " $LOADAVG > 9" | bc) -eq 1 ] ; then
+  echo "Too busy. Failing fast, as it'll probably time out anyhow"
+  exit 1
+fi
+
 case $1 in
   dependencies)
     bundle exec rake bin/github-release plugins
