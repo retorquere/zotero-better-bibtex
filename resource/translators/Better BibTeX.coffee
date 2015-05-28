@@ -51,9 +51,9 @@ doExport = ->
 
     switch
       when item.itemType in ['bookSection', 'conferencePaper']
-        is_bibvar = Translator.preserveBibTeXVariables && item.publicationTitle.match(/^[a-z][a-z0-9_]*$/i)
+        is_bibvar = Translator.preserveBibTeXVariables && item.publicationTitle?.match(/^[a-z][a-z0-9_]*$/i)
         ref.add({ name: 'booktitle',  preserveCaps: true, value: item.publicationTitle, bare: is_bibvar, esc: if is_bibvar then 'raw' else null })
-      when Translator.preserveBibTeXVariables && item.publicationTitle.match(/^[a-z][a-z0-9_]*$/i)
+      when Translator.preserveBibTeXVariables && item.publicationTitle?.match(/^[a-z][a-z0-9_]*$/i)
         ref.add({ name: 'journal', value: item.publicationTitle, preserveCaps: true, bare: true, esc: 'raw' })
       else
         ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle, preserveCaps: true })

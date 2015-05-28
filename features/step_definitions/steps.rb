@@ -115,7 +115,7 @@ end
 After do |scenario|
   if ENV['CI'] != 'true'
     # stop on first failure outside CI
-    #Cucumber.wants_to_quit = scenario.failed?
+    Cucumber.wants_to_quit = scenario.failed?
 
     filename = scenario.name.gsub(/[^0-9A-z.\-]/, '_')
     if scenario.failed? || scenario.source_tag_names.include?('@logcapture')

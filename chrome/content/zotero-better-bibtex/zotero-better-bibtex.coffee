@@ -94,7 +94,7 @@ Zotero.BetterBibTeX.pref.observer = {
         Zotero.BetterBibTeX.keymanager.resetJournalAbbrevs()
 
       when 'debug'
-        @debugMode()
+        Zotero.BetterBibTeX.debugMode()
         return # don't drop the cache just for this
 
     # if any var changes, drop the cache and kick off all exports

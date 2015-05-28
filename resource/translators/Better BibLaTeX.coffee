@@ -356,7 +356,7 @@ doExport = ->
     ref.add({ name: (if isNaN(parseInt(item.issue)) then 'issue' else 'number'), value: item.issue })
 
     if item.publicationTitle
-      is_bibvar = Translator.preserveBibTeXVariables && item.publicationTitle.match(/^[a-z][a-z0-9_]*$/i)
+      is_bibvar = Translator.preserveBibTeXVariables && item.publicationTitle?.match(/^[a-z][a-z0-9_]*$/i)
       switch item.itemType
         when 'bookSection', 'conferencePaper', 'dictionaryEntry', 'encyclopediaArticle'
           ref.add({ name: 'booktitle', value: item.publicationTitle, preserveCaps: true, bare: is_bibvar, esc: if is_bibvar then 'raw' else null})
