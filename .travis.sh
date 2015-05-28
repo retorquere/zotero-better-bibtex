@@ -13,7 +13,9 @@ if [ "$CHECKIN" = "$RELEASE" ] ; then
   STATUS=`travis_parallel_sentinel script`
   if [ "$STATUS" = "deploy" ] ; then
     sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .gitmodules
-    sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .git/modules/www/config
+    if [ -f .git/modules/www/config ] ; then # how can this be absent?!
+      sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .git/modules/www/config
+    fi
     echo "https://${GITHUB_TOKEN}:@github.com" > /tmp/credentials
     git config --global credential.helper "store --file=/tmp/credentials"
   

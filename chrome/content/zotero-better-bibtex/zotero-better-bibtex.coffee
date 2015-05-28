@@ -434,7 +434,7 @@ Zotero.BetterBibTeX.init = ->
         path = @location.path
         ext = ".#{header.target}"
         path += ext unless path.slice(-ext.length).toLowerCase() == ext
-        Zotero.BetterBibTeX.debug('export to', path)
+        Zotero.BetterBibTeX.debug('export to', path, ext)
 
       # If no capture, we're done
       return original.apply(this, arguments) unless @_displayOptions?['Keep updated'] && path
