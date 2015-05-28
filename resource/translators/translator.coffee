@@ -305,6 +305,7 @@ Reference::esc_attachments = (f) ->
       mimetype: att.mimeType
     }
 
+    Translator.debug("save attachment: exportFileData=#{Translator.exportFileData}, defaultPath=#{att.defaultPath}, saveFile=#{typeof att.saveFile}/#{!!att.saveFile}")
     save = Translator.exportFileData and att.defaultPath and att.saveFile
     a.path = att.defaultPath if save
 

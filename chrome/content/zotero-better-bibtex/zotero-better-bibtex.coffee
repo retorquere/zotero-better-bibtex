@@ -480,6 +480,7 @@ Zotero.BetterBibTeX.init = ->
       # caching shortcut sentinels
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
+
       @_itemGetter._BetterBibTeX = Zotero.BetterBibTeX.translators[translatorID] if Zotero.BetterBibTeX.translators[translatorID]?.BetterBibTeX?.cache?.nextItem
       @_itemGetter._exportFileData = @_displayOptions.exportFileData
 
@@ -487,27 +488,26 @@ Zotero.BetterBibTeX.init = ->
     )(Zotero.Translate.Export::_prepareTranslation)
 
   # monkey-patch Zotero.Translate.ItemGetter::nextItem to fetch from pre-serialization cache.
-  # object serialization is the approx 80% of the work being done while translating!
+  # object serialization is approx 80% of the work being done while translating! Seriously!
   Zotero.Translate.ItemGetter::nextItem = ((original) ->
     return ->
       # don't mess with this unless I know it's in BBT
       return original.apply(@, arguments) unless @_BetterBibTeX
 
       while @_itemsLeft.length != 0
-        returnItem = @_itemsLeft.shift()
+        item = @_itemsLeft.shift()
         # export file data for single files
-        if returnItem.isAttachment()
+        if item.isAttachment()
           # an independent attachment
-          returnItemArray = @_serialize(returnItem)
-          return returnItemArray if returnItemArray
+          item = @_serialize(item)
+          return item if item
         else
-          returnItemArray = @_serialize(returnItem)
-          # get attachments, although only urls will be passed if exportFileData is off
-          returnItemArray.attachments = []
-          for attachmentID in returnItemArray.attachmentIDs
-            attachmentInfo = @_serialize(attachmentID, true) || @_serialize(Zotero.Items.get(attachmentID))
-            returnItemArray.attachments.push(attachmentInfo) if attachmentInfo
-          return returnItemArray
+          item = @_serialize(item)
+          item.attachments = []
+          for attachmentID in item.attachmentIDs
+            attachment = @_serialize(attachmentID, true) || @_serialize(Zotero.Items.get(attachmentID))
+            item.attachments.push(attachment) if attachment
+          return item
       return false
     )(Zotero.Translate.ItemGetter::nextItem)
 
@@ -533,18 +533,22 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Translate.ItemGetter::serialized.BetterBibTeX = @release
 
   Zotero.Translate.ItemGetter::_serialize = (item, isAttachmentID) ->
+    # no serialization for attachments when their data is exported
+    if @_exportFileData && (isAttachmentID || item.isAttachment())
+      Zotero.BetterBibTeX.log("not serializing attachment #{if isAttachmentID then item else item.itemID} when exporting file data")
+      return null if isAttachmentID
+      return @_attachmentToArray(item)
+
     if isAttachmentID
       itemID = (if typeof item == 'number' then item else parseInt(item))
       serialized = @serialized[itemID]
+
       if serialized?.itemType == 'attachment'
+        Zotero.BetterBibTeX.log("serialization cache hit for attachment #{item.itemID}")
         return JSON.parse(JSON.stringify(serialized))
       else
+        Zotero.BetterBibTeX.log("serialization cache miss for attachment #{item.itemID}")
         return null
-
-    # no serialization for attachments when their data is exported
-    if item.isAttachment() && @_exportFileData
-      Zotero.BetterBibTeX.log("serialization cache miss for #{item.itemID}")
-      return @_attachmentToArray(item)
 
     itemID = (if typeof item.itemID == 'number' then item.itemID else parseInt(item.itemID))
     serialized = @serialized[itemID]
