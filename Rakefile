@@ -338,9 +338,9 @@ task :test, [:tag] => [XPI, :plugins] do |t, args|
     end
 
     if OS.mac?
-      sh "script -q -t 1 cucumuber.log cucumber #{rerun} --strict #{tag}"
+      sh "script -q -t 1 cucumuber.log cucumber --require features #{rerun} --strict #{tag}"
     else
-      sh "script -ec 'cucumber #{rerun} --strict #{tag}' cucumber.log"
+      sh "script -ec 'cucumber --require features #{rerun} --strict #{tag}' cucumber.log"
     end
     sh "sed -re 's/\\x1b[^m]*m//g' cucumber.log | col -b | sponge cucumber.log"
   rescue => e
