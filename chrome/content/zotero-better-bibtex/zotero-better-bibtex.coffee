@@ -424,22 +424,21 @@ Zotero.BetterBibTeX.init = ->
         delete @_collection
         @_items = Zotero.Items.getAll(false, @_group.libraryID)
 
-      # regular behavior for non-BBT translators
+      # regular behavior for non-BBT translators, or if translating to string
       header = Zotero.BetterBibTeX.translators[translatorID]
-      return original.apply(this, arguments) unless header
+      return original.apply(this, arguments) unless header && @_displayOptions && @location?.path
 
-      if @location && typeof @location == 'object'
-        # export path for relative exports
-        @_displayOptions.exportPath = @location.path.slice(0, -@location.leafName.length)
-        path = @location.path
-        ext = ".#{header.target}"
-        path += ext unless path.slice(-ext.length).toLowerCase() == ext
-        Zotero.BetterBibTeX.debug('export to', path, ext)
+      if @_displayOptions.exportFileData # export directory selected
+        location = @location.clone()
+        location.append(location.leafName + '.' + header.target)
+      else
+        location = @location
+
+      Zotero.BetterBibTeX.debug('export to', location.path)
+      @_displayOptions.exportPath = location.parent.path
 
       # If no capture, we're done
-      return original.apply(this, arguments) unless @_displayOptions?['Keep updated'] && path
-
-      delete @_displayOptions.exportFileData
+      return original.apply(this, arguments) unless @_displayOptions?['Keep updated']
 
       progressWin = new Zotero.ProgressWindow()
       progressWin.changeHeadline('Auto-export')
@@ -466,8 +465,8 @@ Zotero.BetterBibTeX.init = ->
 
       if collection
         @_displayOptions.translatorID = translatorID
-        Zotero.BetterBibTeX.auto.add(collection, path, @_displayOptions)
-        Zotero.BetterBibTeX.debug('Captured auto-export:', path, Zotero.BetterBibTeX.log.object(@_displayOptions))
+        Zotero.BetterBibTeX.auto.add(collection, location.path, @_displayOptions)
+        Zotero.BetterBibTeX.debug('Captured auto-export:', location.path, Zotero.BetterBibTeX.log.object(@_displayOptions))
 
       return original.apply(this, arguments)
     )(Zotero.Translate.Export::translate)
