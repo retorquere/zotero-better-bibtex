@@ -96,6 +96,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                              | references |
+     | Export error for items without publicationTitle and "Preserve BibTeX variables" enabled #201 | 2 |
      | Be robust against misconfigured journal abbreviator #127                          | 1          |
      | Better BibLaTeX.001                                                               | 1          |
      | Better BibLaTeX.002                                                               | 2          |
