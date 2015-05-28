@@ -505,7 +505,7 @@ Zotero.BetterBibTeX.init = ->
           item = @_serialize(item)
           item.attachments = []
           for attachmentID in item.attachmentIDs
-            attachment = @_serialize(attachmentID, true) || @_serialize(Zotero.Items.get(attachmentID))
+            attachment = @_serialize(attachmentID, true)
             item.attachments.push(attachment) if attachment
           return item
       return false
@@ -535,33 +535,33 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Translate.ItemGetter::_serialize = (item, isAttachmentID) ->
     # no serialization for attachments when their data is exported
     if @_exportFileData && (isAttachmentID || item.isAttachment())
-      Zotero.BetterBibTeX.log("not serializing attachment #{if isAttachmentID then item else item.itemID} when exporting file data")
-      return null if isAttachmentID
+      Zotero.BetterBibTeX.debug("not serializing attachment #{if isAttachmentID then item else item.itemID} when exporting file data")
+      item = Zotero.Items.get(item) if isAttachmentID
+      return null unless item
       return @_attachmentToArray(item)
 
     if isAttachmentID
-      itemID = (if typeof item == 'number' then item else parseInt(item))
-      serialized = @serialized[itemID]
+      itemID = parseInt(item)
+      item = null
+    else
+      itemID = parseInt(item.itemID)
 
-      if serialized?.itemType == 'attachment'
-        Zotero.BetterBibTeX.log("serialization cache hit for attachment #{item.itemID}")
-        return JSON.parse(JSON.stringify(serialized))
-      else
-        Zotero.BetterBibTeX.log("serialization cache miss for attachment #{item.itemID}")
-        return null
+    if @serialized[itemID]
+      Zotero.BetterBibTeX.debug("serialization cache hit for #{itemID}")
+    else
+      Zotero.BetterBibTeX.debug("serialization cache miss for #{itemID}")
+      item ||= Zotero.Items.get(itemID)
+      @serialized[itemID] = (if item.isAttachment() then @_attachmentToArray(item) else @_itemToArray(item)) if item
+      switch
+        when !@serialized[itemID]
+          @serialized[itemID] = {itemID}
+        when @serialized[itemID].itemType in ['note', 'attachment']
+          @serialized[itemID].attachmentIDs = []
+        else
+          @serialized[itemID].attachmentIDs = item.getAttachments()
 
-    itemID = (if typeof item.itemID == 'number' then item.itemID else parseInt(item.itemID))
-    serialized = @serialized[itemID]
-    if !serialized
-      serialized = (if item.isAttachment() then @_attachmentToArray(item) else @_itemToArray(item))
-      if serialized
-        @serialized[itemID] = serialized
-        serialized.attachmentIDs = (if serialized.itemType == 'attachment' then null else item.getAttachments()) || []
-      else
-        serialized = @serialized[itemID] = {itemID, attachmentIDS: []}
-
-    if serialized.itemType
-      return JSON.parse(JSON.stringify(serialized))
+    if @serialized[itemID].itemType
+      return JSON.parse(JSON.stringify(@serialized[itemID]))
     else
       return null
 
