@@ -81,8 +81,8 @@ Zotero.BetterBibTeX.pref = {}
 Zotero.BetterBibTeX.pref.prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.zotero.translators.better-bibtex.')
 
 Zotero.BetterBibTeX.pref.observer = {
-  register: -> Zotero.BetterBibTeX.pref.prefs.addObserver('', this, false)
-  unregister: -> Zotero.BetterBibTeX.pref.prefs.removeObserver('', this)
+  register: -> Zotero.BetterBibTeX.pref.prefs.addObserver('', @, false)
+  unregister: -> Zotero.BetterBibTeX.pref.prefs.removeObserver('', @)
   observe: (subject, topic, data) ->
     switch data
       when 'citekeyFormat'
@@ -105,8 +105,8 @@ Zotero.BetterBibTeX.pref.observer = {
 }
 
 Zotero.BetterBibTeX.pref.ZoteroObserver = {
-  register: -> Zotero.Prefs.prefBranch.addObserver('', this, false)
-  unregister: -> Zotero.Prefs.prefBranch.removeObserver('', this)
+  register: -> Zotero.Prefs.prefBranch.addObserver('', @, false)
+  unregister: -> Zotero.Prefs.prefBranch.removeObserver('', @)
   observe: (subject, topic, data) ->
     switch data
       when 'recursiveCollections'
@@ -398,7 +398,7 @@ Zotero.BetterBibTeX.init = ->
   Zotero.ItemTreeView::getCellText = ((original) ->
     return (row, column) ->
       if column.id == 'zotero-items-column-extra' && Zotero.BetterBibTeX.pref.get('showCitekeys')
-        item = this._getItemAtRow(row)
+        item = @._getItemAtRow(row)
         if !(item?.ref) || item.ref.isAttachment() || item.ref.isNote()
           return ''
         else
@@ -406,7 +406,7 @@ Zotero.BetterBibTeX.init = ->
           return '' if key.citekey.match(/^zotero-(null|[0-9]+)-[0-9]+$/)
           return key.citekey + (if key.citekeyFormat then ' *' else '')
 
-      return original.apply(this, arguments)
+      return original.apply(@, arguments)
     )(Zotero.ItemTreeView::getCellText)
 
   # monkey-patch translate to capture export path and auto-export
@@ -416,7 +416,7 @@ Zotero.BetterBibTeX.init = ->
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
       Zotero.BetterBibTeX.debug('export: ', translatorID)
-      return original.apply(this, arguments) unless translatorID
+      return original.apply(@, arguments) unless translatorID
 
       # convert group into its library items
       if @_collection?.objectType == 'group'
@@ -426,19 +426,18 @@ Zotero.BetterBibTeX.init = ->
 
       # regular behavior for non-BBT translators, or if translating to string
       header = Zotero.BetterBibTeX.translators[translatorID]
-      return original.apply(this, arguments) unless header && @_displayOptions && @location?.path
+      return original.apply(@, arguments) unless header && @location?.path
 
-      if @_displayOptions.exportFileData # export directory selected
-        location = @location.clone()
-        location.append(location.leafName + '.' + header.target)
-      else
-        location = @location
+      if @_displayOptions
+        if @_displayOptions.exportFileData # export directory selected
+          @_displayOptions.exportPath = @location.path
+        else
+          @_displayOptions.exportPath = @location.parent.path
 
-      Zotero.BetterBibTeX.debug('export to', location.path)
-      @_displayOptions.exportPath = location.parent.path
+      Zotero.BetterBibTeX.debug("export to #{if @_displayOptions?.exportFileData then 'directory' else 'file'}", @location.path, 'using', @_displayOptions)
 
       # If no capture, we're done
-      return original.apply(this, arguments) unless @_displayOptions?['Keep updated']
+      return original.apply(@, arguments) unless @_displayOptions?['Keep updated'] && !@_displayOptions.exportFileData
 
       progressWin = new Zotero.ProgressWindow()
       progressWin.changeHeadline('Auto-export')
@@ -465,17 +464,17 @@ Zotero.BetterBibTeX.init = ->
 
       if collection
         @_displayOptions.translatorID = translatorID
-        Zotero.BetterBibTeX.auto.add(collection, location.path, @_displayOptions)
-        Zotero.BetterBibTeX.debug('Captured auto-export:', location.path, Zotero.BetterBibTeX.log.object(@_displayOptions))
+        Zotero.BetterBibTeX.auto.add(collection, @location.path, @_displayOptions)
+        Zotero.BetterBibTeX.debug('Captured auto-export:', @location.path, Zotero.BetterBibTeX.log.object(@_displayOptions))
 
-      return original.apply(this, arguments)
+      return original.apply(@, arguments)
     )(Zotero.Translate.Export::translate)
 
   # monkey-patch _prepareTranslation to add collections for group export
   # and notify itemgetter whether we're doing exportFileData
   Zotero.Translate.Export::_prepareTranslation = ((original) ->
     return ->
-      r = original.apply(this, arguments)
+      r = original.apply(@, arguments)
       @_itemGetter._collectionsLeft = @_group.getCollections() if @_group && @_translatorInfo?.configOptions?.getCollections
 
       # caching shortcut sentinels
@@ -492,7 +491,7 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Translate.ItemGetter::nextItem = ((original) ->
     return ->
       # don't mess with this unless I know it's in BBT
-      return original.apply(this, arguments) unless @_BetterBibTeX
+      return original.apply(@, arguments) unless @_BetterBibTeX
 
       while @_itemsLeft.length != 0
         returnItem = @_itemsLeft.shift()
@@ -580,14 +579,14 @@ Zotero.BetterBibTeX.init = ->
       menuItem = @document.getElementById('zotero-better-bibtex-collectionmenu-separator')
       menuItem.setAttribute('hidden', !(itemGroup.isLibrary(true) || itemGroup.isCollection()))
 
-      return original.apply(this, arguments)
+      return original.apply(@, arguments)
     )(zoteroPane.buildCollectionContextMenu)
 
   # monkey-patch zotfile wildcard table to add bibtex key
   if Zotero.ZotFile
     Zotero.ZotFile.wildcardTable = ((original) ->
       return (item) ->
-        table = original.apply(this, arguments)
+        table = original.apply(@, arguments)
         table['%b'] = Zotero.BetterBibTeX.keymanager.get(item).citekey unless item.isAttachment() || item.isNote()
         return table
       )(Zotero.ZotFile.wildcardTable)

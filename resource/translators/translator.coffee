@@ -27,6 +27,11 @@ Translator.log.object = (o) ->
 Translator.log.array = (a) ->
   return (v for v in a)
 
+Translator.debug_on = (msg...) ->
+  @log.apply(@, [ '[' + 'DEBUG' + ']' ].concat(msg))
+
+Translator.debug_off = (msg...) ->
+
 Translator.initialize = ->
   return if @initialized
   @initialized = true
@@ -71,6 +76,15 @@ Translator.initialize = ->
 
       for type in zotero
         @typeMap.Zotero2BibTeX[type] ?= bibtex[0]
+
+  if Zotero.getHiddenPref('better-bibtex.debug')
+    @debug = @debug_on
+    cfg = {}
+    for own k, v of @
+      cfg[k] = v unless typeof v == 'object'
+    @debug("Translator initialized: #{JSON.stringify(cfg)}")
+  else
+    @debug = @debug_off
 
 # The default collection structure passed is beyond screwed up.
 Translator.sanitizeCollection = (coll) ->
