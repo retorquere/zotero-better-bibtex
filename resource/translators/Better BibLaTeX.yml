@@ -15,3 +15,7 @@ displayOptions:
   useJournalAbbreviation: false
   "Preserve BibTeX variables": false
   "Keep updated": false
+BetterBibTeX:
+  cache:
+    nextItem: true
+    BibTeX: true

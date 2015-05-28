@@ -51,6 +51,11 @@ def expand(file, options={})
     if tbi =~ /\.js$/
       #puts "registering #{tbi.inspect}"
       result = all
+    elsif tbi == ':header:'
+      throw "No header information present" unless options[:header]
+      result = "Translator.header = #{options[:header].to_json}"
+      result += "\nTranslator.release = #{RELEASE.to_json}"
+      result += "\nTranslator.#{options[:header]['label'].gsub(/\s/, '')} = true"
     elsif tbi == ':constants:'
       throw "No header information present" unless options[:header]
       result = []
@@ -147,7 +152,7 @@ def makedepend
           IO.readlines(target).each{|line|
             next unless line =~ /^require\s*\(?\s*'([^'\n]+)'([^\n]*)/
             required = $1.strip
-            if required == ':constants:'
+            if %w{:constants: :header:}.include?(required)
               required = 'Rakefile'
             else
               required = File.join(File.dirname(target), required)
@@ -357,7 +362,6 @@ task :test, [:tag] => [XPI, :plugins] do |t, args|
       title = title.join(' ')
       body = title
       client.push_note({receiver: :email, identifier: client.me.body['email'], params: { title: title, body: body }})
-      throw
     end
   end
 end

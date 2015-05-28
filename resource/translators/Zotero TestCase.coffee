@@ -44,7 +44,7 @@ detectImport = ->
     Translator.log(e)
     return false
 
-  return data?.config?.id == Translator.translatorID && data.items
+  return data?.config?.id == Translator.header.translatorID && data.items
 
 doImport = ->
   json = ''
@@ -65,8 +65,8 @@ doExport = ->
   Translator.initialize()
   data = {
     config: {
-      id: Translator.translatorID
-      label: Translator.label
+      id: Translator.header.translatorID
+      label: Translator.header.label
       release: Translator.release
       preferences: {}
       options: {}

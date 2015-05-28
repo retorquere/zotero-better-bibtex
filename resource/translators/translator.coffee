@@ -5,7 +5,7 @@ Translator = new class
     @rawLaTag = '#LaTeX'
     @BibLaTeXDataFieldMap = Object.create(null)
 
-require(':constants:')
+require(':header:')
 
 Translator.log = (msg...) ->
   msg = for m in msg
@@ -16,7 +16,7 @@ Translator.log = (msg...) ->
       when m instanceof Error then "#{e}\n#{e.stack}"
       else JSON.stringify(m)
 
-  Zotero.debug("[better-bibtex:#{@label}] #{msg.join(' ')}")
+  Zotero.debug("[better-bibtex:#{@header.label}] #{msg.join(' ')}")
 
 Translator.log.object = (o) ->
   _o = {}
@@ -31,10 +31,12 @@ Translator.initialize = ->
   return if @initialized
   @initialized = true
 
+  @translatorID = @header.translatorID
+
   @testmode = Zotero.getHiddenPref('better-bibtex.testMode')
   @testmode_timestamp = Zotero.getHiddenPref('better-bibtex.testMode.timestamp') if @testmode
 
-  @caching = @BetterBibLaTeX || @BetterBibTeX
+  @caching = @header.BetterBibTeX?.cache?.BibTeX
 
   for own attr, f of @fieldMap or {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
@@ -240,7 +242,7 @@ Reference::esc_raw = (f) ->
   return f.value
 
 Reference::esc_verbatim = (f) ->
-  if Translator.label == 'Better BibTeX'
+  if Translator.BetterBibTeX
     href = ('' + f.value).replace(/([#\\%&{}])/g, '\\$1')
   else
     href = ('' + f.value).replace(/([\\%&{}])/g, '\\$1')

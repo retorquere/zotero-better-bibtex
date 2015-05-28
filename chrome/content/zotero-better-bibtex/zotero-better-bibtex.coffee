@@ -482,7 +482,7 @@ Zotero.BetterBibTeX.init = ->
       # caching shortcut sentinels
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
-      @_itemGetter._BetterBibTeX = Zotero.BetterBibTeX.translators[translatorID]
+      @_itemGetter._BetterBibTeX = Zotero.BetterBibTeX.translators[translatorID] if Zotero.BetterBibTeX.translators[translatorID]?.BetterBibTeX?.cache?.nextItem
       @_itemGetter._exportFileData = @_displayOptions.exportFileData
 
       return r
@@ -841,6 +841,7 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions) ->
 
 Zotero.BetterBibTeX.load = (translator) ->
   try
+    @debug('loading translator:', translator)
     header = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}on"))
     @removeTranslator(header)
     code = [
@@ -851,6 +852,11 @@ Zotero.BetterBibTeX.load = (translator) ->
     ].join("\n")
 
     @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
+
+    # remove BBT metadata -- Zotero doesn't like it
+    header = JSON.parse(JSON.stringify(header))
+    delete header.BetterBibTeX
+    @debug('translator header:', translator, header)
     Zotero.Translators.save(header, code)
   catch err
     @log("Loading #{translator} failed", err)
