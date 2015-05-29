@@ -793,7 +793,7 @@ Zotero.BetterBibTeX.displayOptions = (url) ->
 Zotero.BetterBibTeX.translate = (translator, items, displayOptions) ->
   throw 'null translator' unless translator
 
-  translation = new Zotero.Translate.Export
+  translation = new Zotero.Translate.Export()
 
   for own key, value of items
     continue unless value

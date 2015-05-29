@@ -102,7 +102,7 @@ Zotero.BetterBibTeX.keymanager = new class
     @keys.flushChanges()
 
   journalAbbrev: (item) ->
-    item = arguments[1] if item._sandboxManager # the sandbox inserts itself in call parameters
+    item = arguments[1] if arguments[0]._sandboxManager # the sandbox inserts itself in call parameters
 
     return item.journalAbbreviation if item.journalAbbreviation
     return unless item.publicationTitle
@@ -133,7 +133,7 @@ Zotero.BetterBibTeX.keymanager = new class
     return @journalAbbrevs[item.publicationTitle]
 
   extract: (item, insitu) ->
-    [item, insitu] = Array.slice(arguments, 1, 3) if item._sandboxManager
+    [item, insitu] = Array.slice(arguments, 1, 3) if arguments[0]._sandboxManager
 
     switch
       when item.getField
@@ -321,7 +321,7 @@ Zotero.BetterBibTeX.keymanager = new class
     return clone
 
   get: (item, pinmode) ->
-    [item, pinmode] = Array.slice(arguments, 1, 3) if item._sandboxManager
+    [item, pinmode] = Array.slice(arguments, 1, 3) if arguments[0]._sandboxManager
 
     Zotero.BetterBibTeX.debug("keymanager.get: item=#{item.itemID}, pinmode=#{pinmode}")
 

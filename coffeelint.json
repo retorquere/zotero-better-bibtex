@@ -13,11 +13,13 @@
       }
   },
 
+  "ensure_comprehensions": { "level": "error" },
+
   "cyclomatic_complexity": { "value": 10, "level": "ignore" },
 
   "duplicate_key": { "level": "error" },
 
-  "empty_constructor_needs_parens": { "level": "ignore" },
+  "empty_constructor_needs_parens": { "level": "error" },
 
   "indentation": { "value": 2, "level": "error" },
 

@@ -84,5 +84,6 @@ doExport = ->
 
   while item = Zotero.nextItem()
     data.items.push(scrub(item))
+  data.cache = Zotero.BetterBibTeX.cache.dump((item.itemID for item in data.items))
   Zotero.write(JSON.stringify(data, null, '  '))
   return

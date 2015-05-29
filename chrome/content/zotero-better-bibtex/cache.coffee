@@ -7,6 +7,7 @@ Zotero.BetterBibTeX.cache = new class
     @__exposedProps__ = {
       fetch: 'r'
       store: 'r'
+      dump: 'r'
     }
     for own key, value of @__exposedProps__
       @[key].__exposedProps__ = []
@@ -97,8 +98,20 @@ Zotero.BetterBibTeX.cache = new class
       useJournalAbbreviation: !!context.useJournalAbbreviation
     }
 
+  clone: (obj) ->
+    clone = JSON.parse(JSON.stringify(obj))
+    delete clone.meta
+    delete clone['$loki']
+    return clone
+
+  dump: (itemIDs) ->
+    itemIDs = arguments[1] if arguments[0]._sandboxManager
+    itemIDs = (parseInt(id) for id in itemIDs)
+    cache = (@clone(cached) for cached in @cache.where((o) -> o.itemID in itemIDs))
+    return cache
+
   fetch: (itemID, context) ->
-    [itemID, context] = Array.slice(arguments, 1, 3) if itemID._sandboxManager
+    [itemID, context] = Array.slice(arguments, 1, 3) if arguments[0]._sandboxManager
 
     # file paths vary if exportFileData is on
     if context.exportFileData
@@ -112,7 +125,7 @@ Zotero.BetterBibTeX.cache = new class
     return cached
 
   store: (itemID, context, citekey, bibtex) ->
-    [itemID, context, citekey, bibtex] = Array.slice(arguments, 1, 5) if itemID._sandboxManager
+    [itemID, context, citekey, bibtex] = Array.slice(arguments, 1, 5) if arguments[0]._sandboxManager
 
     # file paths vary if exportFileData is on
     if context.exportFileData
