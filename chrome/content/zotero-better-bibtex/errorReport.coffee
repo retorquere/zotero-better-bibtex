@@ -27,9 +27,7 @@ Zotero_BetterBibTeX_ErrorReport = new class
       continueButton.focus()
       str = Zotero.getString('errorReport.advanceMessage', continueButton.getAttribute('label')).replace('Zotero', 'ZotPlus')
       document.getElementById('zotero-advance-message').setAttribute('value', str)
-      return
     )
-    return
 
   sendErrorReport: ->
     wizard = document.getElementById('zotero-error-report')
@@ -71,15 +69,15 @@ Zotero_BetterBibTeX_ErrorReport = new class
       encrypt = new JSEncrypt()
       encrypt.setPublicKey(Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/error-reporting.pub.pem'))
       encrypted = encrypt.encrypt(report)
-      report = "http://zotplus.github.io/report.html##{encrypted}"
-      report = Zotero.File.getContentsFromURL("http://is.gd/create.php?format=simple&url=#{encodeURIComponent(report)}")
+      _public = "http://zotplus.github.io/report.html##{encrypted}"
+      _public = Zotero.File.getContentsFromURL("http://is.gd/create.php?format=simple&url=#{encodeURIComponent(_public)}")
+      _private = Zotero.File.getContentsFromURL("http://is.gd/create.php?format=simple&url=#{encodeURIComponent(report)}")
 
       wizard.advance()
       wizard.getButton('cancel').disabled = true
       wizard.canRewind = false
 
-      document.getElementById('zotero-report-id').setAttribute('value', report)
+      document.getElementById('zotero-report-id-public').setAttribute('value', _public)
+      document.getElementById('zotero-report-id-private').setAttribute('value', _private)
       document.getElementById('zotero-report-result').hidden = false
-      return
     )
-    return

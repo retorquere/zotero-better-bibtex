@@ -29,8 +29,12 @@
 	<wizardpage label=" ">
 		<description>&zotero.errorReport.submitted;</description>
 		<description id="zotero-report-result" hidden="true">
-			&zotero.errorReport.reportID;
-			<textbox id="zotero-report-id" class="plain" readonly="true"/>
+      <description>
+			  &zotero.better-bibtex.errorReport.reportID.public; <textbox id="zotero-report-id-public" class="plain" readonly="true"/>
+      </description>
+      <description>
+			  &zotero.better-bibtex.errorReport.reportID.private; <textbox id="zotero-report-id-private" class="plain" readonly="true"/>
+      </description>
 		</description>
 		<description>&zotero.better-bibtex.errorReport.postToGitHub;</description>
 		<description>&zotero.better-bibtex.errorReport.notReviewed;</description>

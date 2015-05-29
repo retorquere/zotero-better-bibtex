@@ -80,3 +80,6 @@
 
 <!ENTITY zotero.better-bibtex.preferences.debugOutputLogging "ZotPlus Debug Output">
 <!ENTITY zotero.better-bibtex.debug "ZotPlus extended debug logging. Restart Firefox/Zotero to activate, persists over reboots. Affects performance, so turn off when done.">
+
+<!ENTITY zotero.better-bibtex.errorReport.reportID.public "Public Report ID (obfuscated, you can post this in the bug tracker):">
+<!ENTITY zotero.better-bibtex.errorReport.reportID.private "Private Report ID (for yourself):">
