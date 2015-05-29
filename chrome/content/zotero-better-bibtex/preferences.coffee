@@ -100,7 +100,7 @@ Zotero.BetterBibTeX.pref.autoexport =
       when ae.collection == '' then ''
       when ae.collection == 'library' then Zotero.Libraries.getName() || ae.collection
       when m = /^library:([0-9]+)$/.exec(ae.collection) then Zotero.Libraries.getName(m[1]) || ae.collection
-      else Zotero.Collections.get(ae.collection)?.name || "collection:#{ae.collection}"
+      else @collectionPath(ae.collection) || "collection:#{ae.collection}"
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-collection', name)
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-target', ae.path)
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-translator', Zotero.BetterBibTeX.translatorName(ae.translatorID))
