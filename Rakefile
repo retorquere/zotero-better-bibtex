@@ -86,6 +86,7 @@ ZIPFILES = [
   'chrome/content/zotero-better-bibtex/exportOptions.xul',
   'chrome/content/zotero-better-bibtex/include.js',
   'chrome/content/zotero-better-bibtex/jsencrypt.min.js',
+  'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/overlay.xul',
   'chrome/content/zotero-better-bibtex/preferences.js',
   'chrome/content/zotero-better-bibtex/preferences.xul',
