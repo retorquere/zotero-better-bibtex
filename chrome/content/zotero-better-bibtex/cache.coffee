@@ -19,9 +19,9 @@ Zotero.BetterBibTeX.cache = new class
     return _v
 
   load: ->
-    if @pref.get('cacheReset')
+    if Zotero.BetterBibTeX.pref.get('cacheReset')
       @reset()
-      @pref.set('cacheReset', false)
+      Zotero.BetterBibTeX.pref.set('cacheReset', false)
 
     @cache.flushChanges()
     for item in Zotero.DB.query('select itemID, exportCharset, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex from betterbibtex.cache')
