@@ -19,6 +19,10 @@ Zotero.BetterBibTeX.cache = new class
     return _v
 
   load: ->
+    if @pref.get('cacheReset')
+      @reset()
+      @pref.set('cacheReset', false)
+
     @cache.flushChanges()
     for item in Zotero.DB.query('select itemID, exportCharset, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex from betterbibtex.cache')
       @cache.insert({
@@ -111,6 +115,7 @@ Zotero.BetterBibTeX.cache = new class
     return cache
 
   fetch: (itemID, context) ->
+    return unless Zotero.BetterBibTeX.pref.get('caching')
     [itemID, context] = Array.slice(arguments, 1, 3) if arguments[0]._sandboxManager
 
     # file paths vary if exportFileData is on
