@@ -17,6 +17,7 @@
       <preferences id="zotero-preferences-cite">
         <preference name="extensions.zotero.httpServer.enabled"                               id="pref-better-bibtex-server"                  type="bool"/>
         <preference name="extensions.zotero.recursiveCollections"                             id="pref-better-bibtex-recursive"               type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.DOIandURL"              id="pref-better-bibtex-doi-and-url"             type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.asciiBibLaTeX"          id="pref-better-bibtex-asciiBibLaTeX"           type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.asciiBibTeX"            id="pref-better-bibtex-asciiBibTeX"             type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.attachmentsNoMetadata"  id="pref-better-bibtex-attachments-nometadata"  type="bool"/>
@@ -24,7 +25,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.autoExport"             id="pref-better-bibtex-auto-export"             type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.citeCommand"            id="pref-better-bibtex-citecommand"             type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.citekeyFormat"          id="pref-better-bibtex-format"                  type="string"/>
-        <preference name="extensions.zotero.translators.better-bibtex.DOIandURL"              id="pref-better-bibtex-doi-and-url"             type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.debug"                  id="pref-better-bibtex-debug"                   type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.keyConflictPolicy"      id="pref-better-bibtex-citekey-conflict"        type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.langid"                 id="pref-better-bibtex-langid"                  type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.pinCitekeys"            id="pref-better-bibtex-pin-citekeys"            type="string"/>
@@ -41,6 +42,7 @@
           <tab label="&zotero.better-bibtex.prefs.import-export;"/>
           <tab label="&zotero.better-bibtex.prefs.journal-abbrev;"/>
           <tab id="better-bibtex-prefs-auto-export" label="&zotero.better-bibtex.prefs.auto-export;"/>
+          <tab label="&zotero.better-bibtex.prefs.debug;"/>
         </tabs>
 
         <tabpanels>
@@ -214,6 +216,12 @@
                 <button id="auto-export-mark" label="&zotero.better-bibtex.auto-export.mark;" oncommand="Zotero.BetterBibTeX.pref.autoexport.mark()"/>
               </hbox>
             </vbox>
+          </tabpanel>
+          <tabpanel orient="vertical"><!-- debug information -->
+            <hbox class="better-bibtex-prefs">
+              <checkbox label="&zotero.better-bibtex.debug;" preference="pref-better-bibtex-debug"/>
+              <button label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors()"/>
+            </hbox>
           </tabpanel>
         </tabpanels>
       </tabbox>

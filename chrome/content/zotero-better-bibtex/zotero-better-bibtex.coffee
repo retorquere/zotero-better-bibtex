@@ -290,14 +290,18 @@ Zotero.BetterBibTeX.attachDatabase = ->
     ### migrate data where needed ###
 
     if Zotero.DB.tableExists('betterbibtex."-keys-"')
+      Zotero.BetterBibTeX.debug('Migrate betterbibtex.keys')
       if Zotero.DB.columnsHash('betterbibtex."-keys-"').pinned
+        Zotero.BetterBibTeX.debug('Upgrading betterbibtex.keys')
         Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citekeyFormat)
                         select itemID, citekey, case when pinned = 1 then null else ? end from betterbibtex."-keys-"', [@pref.get('citekeyFormat')])
       else
+        Zotero.BetterBibTeX.debug('Copying betterbibtex.keys')
         Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citekeyFormat)
                         select itemID, citekey, citekeyFormat from betterbibtex."-keys-"')
 
     if Zotero.DB.tableExists('betterbibtex."-autoexport-"')
+      Zotero.BetterBibTeX.debug('Copying betterbibtex.autoexport')
       Zotero.DB.query('insert into betterbibtex.autoexport (
         collection,
         path,
