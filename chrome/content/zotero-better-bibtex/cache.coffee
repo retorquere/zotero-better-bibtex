@@ -164,14 +164,28 @@ Zotero.BetterBibTeX.auto = new class
     Zotero.DB.query("update betterbibtex.autoexport set status='pending'")
 
   process: (reason) ->
-    return if @running
+    Zotero.BetterBibTeX.debug("auto.process: started (#{reason})")
+
+    if @running
+      Zotero.BetterBibTeX.debug('auto.process: export already running')
+      return
+
     switch Zotero.BetterBibTeX.pref.get('autoExport')
-      when 'off'  then return
-      when 'idle' then return unless @idle
+      when 'off'
+        Zotero.BetterBibTeX.debug('auto.process: off')
+        return
+      when 'idle'
+        if !@idle
+          Zotero.BetterBibTeX.debug('auto.process: not idle')
+          return
 
     ae = Zotero.DB.rowQuery("select * from betterbibtex.autoexport ae where status == 'pending' limit 1")
-    return unless ae
-    @running = '' + ae.id
+    if ae
+      @running = '' + ae.id
+      Zotero.BetterBibTeX.debug('auto.process: starting', Zotero.BetterBibTeX.log.object(ae))
+    else
+      Zotero.BetterBibTeX.debug('auto.process: no pending jobs')
+      return
 
     translation = new Zotero.Translate.Export()
 
@@ -195,10 +209,10 @@ Zotero.BetterBibTeX.auto = new class
     })
 
     translation.setHandler('done', (obj, worked) ->
-      Zotero.DB.query('update betterbibtex.autoexport set status = ? where id = ?', [(if worked then 'done' else 'error'), Zotero.BetterBibTeX.auto.running])
+      status = (if worked then 'done' else 'error')
+      Zotero.BetterBibTeX.debug("auto.process: finished #{Zotero.BetterBibTeX.auto.running}: #{status}")
+      Zotero.DB.query('update betterbibtex.autoexport set status = ? where id = ?', [status, Zotero.BetterBibTeX.auto.running])
       Zotero.BetterBibTeX.auto.running = null
       Zotero.BetterBibTeX.auto.process(reason)
-      return
     )
     translation.translate()
-    return

@@ -34,7 +34,6 @@ Zotero.BetterBibTeX.log = (msg...) ->
       else JSON.stringify(m)
 
   Zotero.debug("[" + "better-bibtex] #{msg.join(' ')}")
-  return
 
 Zotero.BetterBibTeX.log.object = (o) ->
   _o = {}
@@ -51,7 +50,6 @@ Zotero.BetterBibTeX.flash = (title, body) ->
   progressWin.changeHeadline(title)
   progressWin.addLines((if Array.isArray(body) then body else body.split("\n")))
   progressWin.startCloseTimer()
-  return
 
 Zotero.BetterBibTeX.reportErrors = (details) ->
   pane = Zotero.getActiveZoteroPane()
@@ -74,7 +72,6 @@ Zotero.BetterBibTeX.reportErrors = (details) ->
   io = {wrappedJSObject: data}
   ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
   ww.openWindow(null, 'chrome://zotero-better-bibtex/content/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', io)
-  return
 
 Zotero.BetterBibTeX.pref = {}
 
@@ -100,8 +97,7 @@ Zotero.BetterBibTeX.pref.observer = {
     # if any var changes, drop the cache and kick off all exports
     Zotero.BetterBibTeX.cache.reset()
     Zotero.BetterBibTeX.auto.reset()
-    Zotero.BetterBibTeX.auto.process()
-    return
+    Zotero.BetterBibTeX.auto.process('preferences change')
 }
 
 Zotero.BetterBibTeX.pref.ZoteroObserver = {
@@ -113,8 +109,7 @@ Zotero.BetterBibTeX.pref.ZoteroObserver = {
         recursive = "#{!!Zotero.BetterBibTeX.auto.recursive()}"
         # libraries are always recursive
         Zotero.DB.execute("update betterbibtex.autoexport set exportedRecursively = ?, status = 'pending' where exportedRecursively <> ? and collection <> 'library'", [recursive, recursive])
-        Zotero.BetterBibTeX.auto.process('recursiveCollections')
-    return
+        Zotero.BetterBibTeX.auto.process("recursive export: #{recursive}")
 }
 
 Zotero.BetterBibTeX.pref.snapshot = ->
@@ -128,7 +123,6 @@ Zotero.BetterBibTeX.pref.stash = -> @stashed = @snapshot()
 Zotero.BetterBibTeX.pref.restore = ->
   for own key, value of @stashed ? {}
     @set(key, value)
-  return
 
 Zotero.BetterBibTeX.pref.set = (key, value) ->
   return Zotero.Prefs.set("translators.better-bibtex.#{key}", value)
@@ -152,7 +146,6 @@ Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
 
     when 'back'
       Zotero.BetterBibTeX.auto.idle = false
-  return
 
 Zotero.BetterBibTeX.quitObserver =
   observe: (subject, topic, data) ->
@@ -174,7 +167,6 @@ Zotero.BetterBibTeX.foreign_keys = (enabled) ->
   statement = Zotero.DB.getStatement("PRAGMA foreign_keys = #{if enabled then 'ON' else 'OFF'}", null, true)
   statement.executeStep()
   statement.finalize()
-  return
 
 Zotero.BetterBibTeX.SQLColumns = (table) ->
   statement = Zotero.DB.getStatement("pragma betterbibtex.table_info(#{table})", null, true)
@@ -628,17 +620,12 @@ Zotero.BetterBibTeX.init = ->
     onUninstalling: (addon, needsRestart) ->
       return unless addon.id == 'better-bibtex@iris-advies.com'
       Zotero.BetterBibTeX.removeTranslators()
-      return
 
     onOperationCancelled: (addon, needsRestart) ->
       return unless addon.id == 'better-bibtex@iris-advies.com'
-      if !(addon.pendingOperations & AddonManager.PENDING_UNINSTALL)
-        Zotero.BetterBibTeX.loadTranslators()
-      return
+      Zotero.BetterBibTeX.loadTranslators() unless addon.pendingOperations & AddonManager.PENDING_UNINSTALL
   }
   AddonManager.addAddonListener(uninstaller)
-
-  return
 
 Zotero.BetterBibTeX.loadTranslators = ->
   @load('Better BibTeX.js')
@@ -648,14 +635,12 @@ Zotero.BetterBibTeX.loadTranslators = ->
   @load('Zotero TestCase.js')
   @load('BibTeXAuxScanner.js')
   Zotero.Translators.init()
-  return
 
 Zotero.BetterBibTeX.removeTranslators = ->
   for own id, header of @translators
     @removeTranslator(header)
   @translators = Object.create(null)
   Zotero.Translators.init()
-  return
 
 Zotero.BetterBibTeX.removeTranslator = (header) ->
   try
@@ -665,93 +650,87 @@ Zotero.BetterBibTeX.removeTranslator = (header) ->
     destFile.remove(false)
   catch err
     @log("failed to remove #{header.label}:", err)
-  return
 
-Zotero.BetterBibTeX.itemAdded = {
-  notify: (event, type, collection_items) ->
-    collections = []
-    items = []
+Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
+  collections = []
+  items = []
 
-    # monitor items added to collection to find BibTeX AUX Scanner data. The scanner adds a dummy item whose 'extra'
-    # field has instructions on what to do after import
+  # monitor items added to collection to find BibTeX AUX Scanner data. The scanner adds a dummy item whose 'extra'
+  # field has instructions on what to do after import
 
-    return if collection_items.length == 0
+  return if collection_items.length == 0
 
-    for collection_item in collection_items
-      [collectionID, itemID] = collection_item.split('-')
-      collections.push(collectionID)
-      items.push(itemID)
+  for collection_item in collection_items
+    [collectionID, itemID] = collection_item.split('-')
+    collections.push(collectionID)
+    items.push(itemID)
 
-      # aux-scanner only triggers on add
-      continue unless event == 'add'
-      collection = Zotero.Collections.get(collectionID)
-      continue unless collection
+    # aux-scanner only triggers on add
+    continue unless event == 'add'
+    collection = Zotero.Collections.get(collectionID)
+    continue unless collection
 
-      try
-        extra = JSON.parse(Zotero.Items.get(itemID).getField('extra').trim())
-      catch error
-        Zotero.BetterBibTeX.debug('no AUX scanner info found on collection add', error)
-        continue
+    try
+      extra = JSON.parse(Zotero.Items.get(itemID).getField('extra').trim())
+    catch error
+      @debug('no AUX scanner info found on collection add', error)
+      continue
 
-      note = null
-      switch extra.translator
-        when 'ca65189f-8815-4afe-8c8b-8c7c15f0edca' # Better BibTeX
-          if extra.notimported && extra.notimported.length > 0
-            report = new Zotero.BetterBibTeX.HTMLNode('http://www.w3.org/1999/xhtml', 'html')
-            report.div(->
-              @p(-> @b('Better BibTeX could not import'))
-              @pre(extra.notimported)
-              return
+    note = null
+    switch extra.translator
+      when 'ca65189f-8815-4afe-8c8b-8c7c15f0edca' # Better BibTeX
+        if extra.notimported && extra.notimported.length > 0
+          report = new @HTMLNode('http://www.w3.org/1999/xhtml', 'html')
+          report.div(->
+            @p(-> @b('Better BibTeX could not import'))
+            @pre(extra.notimported)
+          )
+          note = report.serialize()
+
+      when '0af8f14d-9af7-43d9-a016-3c5df3426c98' # BibTeX AUX Scanner
+
+        missing = []
+        for citekey in extra.citations
+          id = @resolve(citekey, collection.libraryID)[0]
+          if id
+            collection.addItem(id)
+          else
+            missing.push(citekey)
+
+        if missing.length != 0
+          report = new @HTMLNode('http://www.w3.org/1999/xhtml', 'html')
+          report.div(->
+            @p(-> @b('BibTeX AUX scan'))
+            @p('Missing references:')
+            @ul(->
+              for citekey in missing
+                @li(citekey)
             )
-            note = report.serialize()
+          )
+          note = report.serialize()
 
-        when '0af8f14d-9af7-43d9-a016-3c5df3426c98' # BibTeX AUX Scanner
+    if note
+      Zotero.Items.trash([itemID])
+      item = new Zotero.Item('note')
+      item.libraryID = collection.libraryID
+      item.setNote(note)
+      item.save()
+      collection.addItem(item.id)
 
-          missing = []
-          for citekey in extra.citations
-            id = Zotero.BetterBibTeX.resolve(citekey, collection.libraryID)[0]
-            if id
-              collection.addItem(id)
-            else
-              missing.push(citekey)
-
-          if missing.length != 0
-            report = new Zotero.BetterBibTeX.HTMLNode('http://www.w3.org/1999/xhtml', 'html')
-            report.div(->
-              @p(-> @b('BibTeX AUX scan'))
-              @p('Missing references:')
-              @ul(->
-                for citekey in missing
-                  @li(citekey)
-                return
-              )
-              return
-            )
-            note = report.serialize()
-
-      if note
-        Zotero.Items.trash([itemID])
-        item = new Zotero.Item('note')
-        item.libraryID = collection.libraryID
-        item.setNote(note)
-        item.save()
-        collection.addItem(item.id)
-
-    collections = Zotero.BetterBibTeX.withParentCollections(collections) if collections.length != 0
-    for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{Zotero.BetterBibTeX.SQLSet(items)}")
-      if libraryID
-        collections.push("'library:#{libraryID}'")
-      else
-        collections.push("'library'")
-    if collections.length > 0
-      Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{Zotero.BetterBibTeX.SQLSet(collections)}")
-    Zotero.BetterBibTeX.auto.process('collectionChanged')
-    return
-}
+  collections = @withParentCollections(collections) if collections.length != 0
+  for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@SQLSet(items)}")
+    if libraryID
+      collections.push("'library:#{libraryID}'")
+    else
+      collections.push("'library'")
+  if collections.length > 0
+    collections = @SQLSet(collections)
+    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{collections}")
+    @auto.process("collection changed: #{collections}")
+).bind(Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
   Zotero.DB.query("delete from betterbibtex.autoexport where collection in #{Zotero.BetterBibTeX.SQLSet(extraData)}") if event == 'delete' && extraData.length > 0
-  return
 
 Zotero.BetterBibTeX.SQLSet = (values) -> '(' + ('' + v for v in values).join(', ') + ')'
 
@@ -775,8 +754,9 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
     else
       collections.push("'library'")
   if collections.length > 0
-    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{@SQLSet(collections)}")
-  @auto.process('itemChanged')
+    collections = @SQLSet(collections)
+    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{collections}")
+    @auto.process("items changed: #{collections}")
 ).bind(Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.withParentCollections = (collections) ->
@@ -862,7 +842,6 @@ Zotero.BetterBibTeX.load = (translator) ->
     Zotero.Translators.save(header, code)
   catch err
     @log("Loading #{translator} failed", err)
-  return
 
 Zotero.BetterBibTeX.getTranslator = (name) ->
   return @translators[name.replace(/\s/, '')].translatorID if @translators[name.replace(/\s/, '')]
@@ -914,7 +893,6 @@ Zotero.BetterBibTeX.exportGroup = ->
   exporter.collection = Zotero.Groups.get(itemGroup.ref.id)
   exporter.name = exporter.collection.name
   exporter.save()
-  return
 
 class Zotero.BetterBibTeX.XmlNode
   constructor: (@namespace, @root, @doc) ->
@@ -927,7 +905,6 @@ class Zotero.BetterBibTeX.XmlNode
   alias: (names) ->
     for name in names
       @Node::[name] = do (name) -> (v...) -> XmlNode::add.apply(@, [{"#{name}": v[0]}].concat(v.slice(1)))
-    return
 
   set: (node, attrs...) ->
     for attr in attrs
@@ -941,7 +918,6 @@ class Zotero.BetterBibTeX.XmlNode
 
           else
             node.setAttribute(name, '' + value)
-    return
 
   add: (content...) ->
     if typeof content[0] == 'object'
@@ -968,8 +944,6 @@ class Zotero.BetterBibTeX.XmlNode
 
         else
           @set(node, attrs)
-
-    return
 
 class Zotero.BetterBibTeX.HTMLNode extends Zotero.BetterBibTeX.XmlNode
   constructor: (@namespace, @root, @doc) ->
