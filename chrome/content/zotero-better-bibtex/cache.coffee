@@ -156,7 +156,7 @@ Zotero.BetterBibTeX.cache = new class
     record = @record(itemID, context)
     cached = @cache.findOne(record)
     @access.insert(record) if cached && !@access.findOne(record)
-    Zotero.BetterBibTeX.debug("cache fetch for #{itemID}", if cached then 'hit' else 'miss')
+    Zotero.BetterBibTeX.debug("cache fetch", (if cached then 'hit' else 'miss'), 'for', Zotero.BetterBibTeX.log.object(record))
     return cached
 
   store: (itemID, context, citekey, bibtex) ->
@@ -174,13 +174,12 @@ Zotero.BetterBibTeX.cache = new class
       cached.bibtex = bibtex
       cached.lastaccess = Date.now()
       @cache.update(cached)
-      Zotero.BetterBibTeX.debug("cache store for #{itemID}: replace")
     else
       record.citekey = citekey
       record.bibtex = bibtex
       record.lastaccess = Date.now()
       @cache.insert(record)
-      Zotero.BetterBibTeX.debug("cache store for #{itemID}: insert")
+    Zotero.BetterBibTeX.debug('cache', (if cached then 'replace' else 'insert'), 'for', Zotero.BetterBibTeX.log.object(record))
 
 Zotero.BetterBibTeX.auto = new class
   constructor: ->
