@@ -36,14 +36,6 @@ Zotero.BetterBibTeX.pref.display = (id, text) ->
   elt.value = text
   elt.setAttribute('tooltiptext', text) if text != ''
 
-Zotero.BetterBibTeX.pref.collectionPath = (id) ->
-  return '' unless id
-  coll = Zotero.Collections.get(id)
-  return '' unless coll
-
-  return @collectionPath(coll.parent) + '/' + coll.name if coll.parent
-  return coll.name
-
 Zotero.BetterBibTeX.pref.update = ->
   return unless Zotero.BetterBibTeX.initialized # ?!?!
 
@@ -69,7 +61,7 @@ Zotero.BetterBibTeX.pref.update = ->
   styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
 
   stylebox = document.getElementById('better-bibtex-abbrev-style')
-  refill = stylebox.children.length is 0
+  refill = stylebox.children.length == 0
   selectedStyle = Zotero.BetterBibTeX.pref.get('autoAbbrevStyle')
   selectedIndex = -1
   for style, i in styles
@@ -78,8 +70,8 @@ Zotero.BetterBibTeX.pref.update = ->
       itemNode.setAttribute('value', style.styleID)
       itemNode.setAttribute('label', style.title)
       stylebox.appendChild(itemNode)
-    if style.styleID is selectedStyle then selectedIndex = i
-  selectedIndex = 0 if selectedIndex is -1
+    if style.styleID == selectedStyle then selectedIndex = i
+  selectedIndex = 0 if selectedIndex == -1
   Zotero.BetterBibTeX.pref.styleChanged(selectedIndex)
 
   window.setTimeout((->
@@ -91,15 +83,17 @@ Zotero.BetterBibTeX.pref.update = ->
 
 Zotero.BetterBibTeX.pref.autoexport =
   selected: (index) ->
+    Zotero.BetterBibTeX.debug('pref.autoexport.selected:', index)
     exportbox = document.getElementById('better-bibtex-export-list')
     selectedItem = if (typeof index) == 'undefined' then exportbox.selectedItem else exportbox.getItemAtIndex(index)
 
-    document.getElementById('auto-export-remove').setAttribute('disabled', !!selectedItem)
-    document.getElementById('auto-export-mark').setAttribute('disabled', !!selectedItem)
+    document.getElementById('auto-export-remove').setAttribute('disabled', !selectedItem)
+    document.getElementById('auto-export-mark').setAttribute('disabled', !selectedItem)
 
     if selectedItem
       ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport where id = ?', [selectedItem.getAttribute('value')])
     ae ||= {status: '', collection: '', path: '', translatorID: '', exportCharset: '', useJournalAbbreviation: false, exportNotes: false, preserveBibTeXVariables: false }
+    Zotero.BetterBibTeX.debug('pref.autoexport.selected =', ae)
 
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-status', ae.status)
     name = switch
@@ -121,7 +115,7 @@ Zotero.BetterBibTeX.pref.autoexport =
     return unless selectedItem
     id = selectedItem.getAttribute('value')
     Zotero.DB.query('delete from betterbibtex.autoexport where id = ?', [id])
-    Zotero.BetterBibTeX.refresh(true)
+    @refresh(true)
 
   mark: ->
     exportlist = document.getElementById('better-bibtex-export-list')
@@ -132,12 +126,24 @@ Zotero.BetterBibTeX.pref.autoexport =
     selectedItem.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == id then 'running' else 'pending'}")
     @selected()
 
+  collectionPath: (id) ->
+    return '' unless id
+    coll = Zotero.Collections.get(id)
+    return '' unless coll
+
+    return @collectionPath(coll.parent) + '/' + coll.name if coll.parent
+    return coll.name
+
   refresh: (refill) ->
+    exportlist = document.getElementById('better-bibtex-export-list')
+    refill ||= ((1 for node in exportlist.children when node.nodeName == 'listitem').length == 0)
+    Zotero.BetterBibTeX.debug("pref.autoexport.refresh: refill=#{!!refill}")
+
     if refill
-      exportlist = document.getElementById('better-bibtex-export-list')
       exportlist.removeChild(node) for node in exportlist.children when node.nodeName == 'listitem'
 
       for ae in Zotero.DB.query("select * from betterbibtex.autoexport order by path")
+        Zotero.BetterBibTeX.debug('pref.autoexport.refresh: refill', Zotero.BetterBibTeX.log.object(ae))
         itemNode = document.createElement('listitem')
         itemNode.setAttribute('value', ae.id)
 
