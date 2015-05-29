@@ -39,6 +39,37 @@ Zotero.BetterBibTeX.cache = new class
     @cache.flushChanges()
     @access.flushChanges()
 
+  verify: (entry) ->
+    return entry unless Zotero.BetterBibTeX.pref.get('debug') || Zotero.BetterBibTeX.pref.get('testMode')
+
+    verify = {itemID: 1, exportCharset: 'x', exportNotes: true, getCollections: true, preserveBibTeXVariables: true, translatorID: 'x', useJournalAbbreviation: true }
+
+    for own key, value of entry
+      switch
+        when key in ['$loki', 'meta'] then # ignore
+
+        when verify[key] == undefined
+          throw new Error("Unexpected field #{key} in #{typeof entry} #{JSON.stringify(entry)}")
+
+        when verify[key] == null
+          delete verify[key]
+
+        when typeof verify[key] == 'string' && typeof value == 'string' && value.trim() != ''
+          delete verify[key]
+
+        when typeof verify[key] == 'number' && typeof value == 'number'
+          delete verify[key]
+
+        when typeof verify[key] == 'boolean' && typeof value == 'boolean'
+          delete verify[key]
+
+        else
+          throw new Error("field #{key} of #{typeof entry} #{JSON.stringify(entry)} is unexpected #{typeof value} #{value}")
+
+    verify = Object.keys(verify)
+    return entry if verify.length == 0
+    throw new Error("missing fields #{verify} in #{typeof entry} #{JSON.stringify(entry)}")
+
   remove: (what) ->
     what.itemID = @integer(what.itemID) unless what.itemID == undefined
     @cache.removeWhere(what)
@@ -91,8 +122,7 @@ Zotero.BetterBibTeX.cache = new class
     @access.flushChanges()
 
   record: (itemID, context) ->
-    throw new Error("No translator ID supplied in #{JSON.stringify(Object.keys(context))}") unless context.translatorID
-    return {
+    return @verify({
       itemID: @integer(itemID)
       exportCharset: (context.exportCharset || 'UTF-8').toUpperCase()
       exportNotes: !!context.exportNotes
@@ -100,7 +130,7 @@ Zotero.BetterBibTeX.cache = new class
       preserveBibTeXVariables: !!context.preserveBibTeXVariables
       translatorID: context.translatorID
       useJournalAbbreviation: !!context.useJournalAbbreviation
-    }
+    })
 
   clone: (obj) ->
     clone = JSON.parse(JSON.stringify(obj))
