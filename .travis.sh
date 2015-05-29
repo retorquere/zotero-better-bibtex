@@ -12,6 +12,7 @@ echo "release: $RELEASE"
 if [ "$CHECKIN" = "$RELEASE" ] ; then
   PUBLISHED=`ruby -e 'require "open-uri"; require "json"; puts JSON.parse(open("https://api.github.com/repos/ZotPlus/zotero-better-bibtex/releases/latest").read)["tag_name"]'`
   PUBLISHED="$TRAVIS_COMMIT release:zotero-better-bibtex-$PUBLISHED.xpi"
+  echo "published: $PUBLISHED"
   if [ "$PUBLISHED" = "$RELEASE" ] ; then
     echo "Why is Travis re-publishing my releases?"
   else
