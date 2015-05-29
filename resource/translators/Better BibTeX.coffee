@@ -157,7 +157,7 @@ doImport = ->
 
 JabRef = JabRef ? {}
 JabRef.importGroup = (group) ->
-  collection = new Zotero.Collection
+  collection = new Zotero.Collection()
   collection.type = 'collection'
   collection.name = group.name
   collection.children = ({type: 'item', id: key} for key in group.items)

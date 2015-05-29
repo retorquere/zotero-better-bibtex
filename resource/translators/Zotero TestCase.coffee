@@ -54,7 +54,7 @@ doImport = ->
   data = JSON.parse(json)
 
   for i in data.items
-    item = new Zotero.Item
+    item = new Zotero.Item()
     for own prop, value of i
       item[prop] = value
     for att in item.attachments || []
