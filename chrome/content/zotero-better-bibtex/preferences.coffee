@@ -24,7 +24,6 @@ Zotero.BetterBibTeX.pref.styleChanged = (index) ->
   selectedItem = if typeof index != 'undefined' then stylebox.getItemAtIndex(index) else stylebox.selectedItem
   styleID = selectedItem.getAttribute('value')
   Zotero.BetterBibTeX.pref.set('autoAbbrevStyle', styleID)
-  return
 
 Zotero.BetterBibTeX.pref.clone = (obj) ->
   clone = Object.create(null)
@@ -36,7 +35,6 @@ Zotero.BetterBibTeX.pref.display = (id, text) ->
   elt = document.getElementById(id)
   elt.value = text
   elt.setAttribute('tooltiptext', text) if text != ''
-  return
 
 Zotero.BetterBibTeX.pref.collectionPath = (id) ->
   return '' unless id
@@ -89,49 +87,23 @@ Zotero.BetterBibTeX.pref.update = ->
     stylebox.selectedIndex = selectedIndex
     return), 0)
 
-  exportlist = document.getElementById('better-bibtex-export-list')
-  refill = (1 for node in exportlist.children when node.nodeName == 'listitem').length is 0
-
-  selectedExport = -1
-  for ae in Zotero.DB.query("select * from betterbibtex.autoexport order by path")
-    selectedExport = 0
-    if refill
-      itemNode = document.createElement('listitem')
-      itemNode.setAttribute('value', ae.id)
-
-      name = switch
-        when ae.collection == 'library' then Zotero.Libraries.getName() || ae.collection
-        when m = /^library:([0-9]+)$/.exec(ae.collection) then Zotero.Libraries.getName(m[1]) || ae.collection
-        else Zotero.Collections.get(ae.collection)?.name || "collection:#{ae.collection}"
-
-      itemNode.setAttribute('label', "#{name} -> #{ae.path.replace(/^.*[\\\/]/, '')}")
-      itemNode.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == ae.id then 'running' else ae.status}")
-      itemNode.setAttribute('tooltiptext', "#{@collectionPath(ae.collection)} -> #{ae.path}")
-      exportlist.appendChild(itemNode)
-
-  if selectedExport >= 0
-    @autoexport.selected(selectedIndex)
-  else
-    document.getElementById('auto-export-remove').setAttribute('disabled', true)
-    document.getElementById('auto-export-mark').setAttribute('disabled', true)
-
-  #ca = document.getElementById('id-better-bibtex-preferences-cache-activity')
-  #ca.value = if Zotero.BetterBibTeX.pref.get('caching') then "+#{Zotero.BetterBibTeX.cache.stats.hits || 0}/-#{Zotero.BetterBibTeX.cache.stats.misses || 0}" else '-'
-
-  return
+  @autoexport.refresh()
 
 Zotero.BetterBibTeX.pref.autoexport =
   selected: (index) ->
     exportbox = document.getElementById('better-bibtex-export-list')
     selectedItem = if (typeof index) == 'undefined' then exportbox.selectedItem else exportbox.getItemAtIndex(index)
 
-    document.getElementById('auto-export-remove').setAttribute('disabled', false)
-    document.getElementById('auto-export-mark').setAttribute('disabled', false)
+    document.getElementById('auto-export-remove').setAttribute('disabled', !!selectedItem)
+    document.getElementById('auto-export-mark').setAttribute('disabled', !!selectedItem)
 
-    ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport where id = ?', [selectedItem.getAttribute('value')])
+    if selectedItem
+      ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport where id = ?', [selectedItem.getAttribute('value')])
+    ae ||= {status: '', collection: '', path: '', translatorID: '', exportCharset: '', useJournalAbbreviation: false, exportNotes: false, preserveBibTeXVariables: false }
 
     Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-status', ae.status)
     name = switch
+      when ae.collection == '' then ''
       when ae.collection == 'library' then Zotero.Libraries.getName() || ae.collection
       when m = /^library:([0-9]+)$/.exec(ae.collection) then Zotero.Libraries.getName(m[1]) || ae.collection
       else Zotero.Collections.get(ae.collection)?.name || "collection:#{ae.collection}"
@@ -142,7 +114,6 @@ Zotero.BetterBibTeX.pref.autoexport =
     document.getElementById('id-better-bibtex-preferences-auto-export-auto-abbrev').checked = (ae.useJournalAbbreviation == 'true')
     document.getElementById('id-better-bibtex-preferences-auto-export-notes').checked = (ae.exportNotes == 'true')
     document.getElementById('id-better-bibtex-preferences-auto-export-preserve-bibvars').checked = (ae.preserveBibTeXVariables == 'true')
-    return
 
   remove: ->
     exportlist = document.getElementById('better-bibtex-export-list')
@@ -150,9 +121,7 @@ Zotero.BetterBibTeX.pref.autoexport =
     return unless selectedItem
     id = selectedItem.getAttribute('value')
     Zotero.DB.query('delete from betterbibtex.autoexport where id = ?', [id])
-    exportlist.removeChild(node) for node in exportlist.children when node.nodeName == 'listitem'
-    Zotero.BetterBibTeX.pref.update()
-    return
+    Zotero.BetterBibTeX.refresh(true)
 
   mark: ->
     exportlist = document.getElementById('better-bibtex-export-list')
@@ -162,4 +131,27 @@ Zotero.BetterBibTeX.pref.autoexport =
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where id = ?", [id])
     selectedItem.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == id then 'running' else 'pending'}")
     @selected()
-    return
+
+  refresh: (refill) ->
+    if refill
+      exportlist = document.getElementById('better-bibtex-export-list')
+      exportlist.removeChild(node) for node in exportlist.children when node.nodeName == 'listitem'
+
+      for ae in Zotero.DB.query("select * from betterbibtex.autoexport order by path")
+        itemNode = document.createElement('listitem')
+        itemNode.setAttribute('value', ae.id)
+
+        name = switch
+          when ae.collection == 'library' then Zotero.Libraries.getName() || ae.collection
+          when m = /^library:([0-9]+)$/.exec(ae.collection) then Zotero.Libraries.getName(m[1]) || ae.collection
+          else Zotero.Collections.get(ae.collection)?.name || "collection:#{ae.collection}"
+
+        itemNode.setAttribute('label', "#{name} -> #{ae.path.replace(/^.*[\\\/]/, '')}")
+        itemNode.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == ae.id then 'running' else ae.status}")
+        itemNode.setAttribute('tooltiptext', "#{@collectionPath(ae.collection)} -> #{ae.path}")
+        exportlist.appendChild(itemNode)
+
+    @selected()
+
+    #ca = document.getElementById('id-better-bibtex-preferences-cache-activity')
+    #ca.value = if Zotero.BetterBibTeX.pref.get('caching') then "+#{Zotero.BetterBibTeX.cache.stats.hits || 0}/-#{Zotero.BetterBibTeX.cache.stats.misses || 0}" else '-'

@@ -156,7 +156,7 @@ Zotero.BetterBibTeX.cache = new class
     record = @record(itemID, context)
     cached = @cache.findOne(record)
     @access.insert(record) if cached && !@access.findOne(record)
-    Zotero.BetterBibTeX.debug("cache fetch", (if cached then 'hit' else 'miss'), 'for', Zotero.BetterBibTeX.log.object(record))
+    Zotero.BetterBibTeX.debug("cache fetch", (if cached then 'hit' else 'miss'), 'for', Zotero.BetterBibTeX.log.object(record), ':', cached)
     return cached
 
   store: (itemID, context, citekey, bibtex) ->
@@ -185,6 +185,13 @@ Zotero.BetterBibTeX.auto = new class
   constructor: ->
     @bool = Zotero.BetterBibTeX.cache.bool
 
+  refresh: ->
+    wm = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
+    enumerator = wm.getEnumerator('zotero:pref')
+    if enumerator.hasMoreElements()
+      win = enumerator.getNext()
+      win.Zotero.BetterBibTeX.pref.autoexport.refresh
+
   add: (collection, path, context) ->
     Zotero.BetterBibTeX.debug("auto-export set up for #{collection} to #{path}")
     Zotero.DB.query("insert or replace into betterbibtex.autoexport (collection, path, translatorID, exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation, exportedRecursively, status)
@@ -197,6 +204,7 @@ Zotero.BetterBibTeX.auto = new class
                 @bool(context.preserveBibTeXVariables),
                 @bool(context.useJournalAbbreviation),
                 @bool(@recursive())])
+    @refresh()
 
   recursive: ->
     try
@@ -206,9 +214,11 @@ Zotero.BetterBibTeX.auto = new class
 
   clear: ->
     Zotero.DB.query("delete from betterbibtex.autoexport")
+    @refresh()
 
   reset: ->
     Zotero.DB.query("update betterbibtex.autoexport set status='pending'")
+    @refresh()
 
   process: (reason) ->
     Zotero.BetterBibTeX.debug("auto.process: started (#{reason})")
@@ -233,6 +243,7 @@ Zotero.BetterBibTeX.auto = new class
     else
       Zotero.BetterBibTeX.debug('auto.process: no pending jobs')
       return
+    @refresh()
 
     translation = new Zotero.Translate.Export()
 
@@ -260,6 +271,7 @@ Zotero.BetterBibTeX.auto = new class
       Zotero.BetterBibTeX.debug("auto.process: finished #{Zotero.BetterBibTeX.auto.running}: #{status}")
       Zotero.DB.query('update betterbibtex.autoexport set status = ? where id = ?', [status, Zotero.BetterBibTeX.auto.running])
       Zotero.BetterBibTeX.auto.running = null
+      Zotero.BetterBibTeX.auto.refresh()
       Zotero.BetterBibTeX.auto.process(reason)
     )
     translation.translate()
