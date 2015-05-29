@@ -21,3 +21,6 @@ before_install:
 notifications:
   slack:
     secure: FrH2x+zMD/961jEEzvtwxdq8eKTddPDT98cFig7vFxKNrW6rs6ogPl9Mbq9KpxVq/a4Q7dmbri0JKn7hv94pch1fCBIOqeqrgbelbn3/MrhAHDIUU1jJCDDbvs2W5H8bEWgBwmZVEMjg/6yHwBKXFOUGwV3CAO1GMKhknQbCTi8=
+branches:
+  except:
+    - /^[0-9]+\.[0-9]+\.[0-9]+$/
