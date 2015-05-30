@@ -19,6 +19,7 @@ Zotero.BetterBibTeX.cache = new class
     return _v
 
   load: ->
+    Zotero.BetterBibTeX.debug('cache.load')
     if Zotero.BetterBibTeX.pref.get('cacheReset')
       @reset()
       Zotero.BetterBibTeX.pref.set('cacheReset', false)
@@ -72,6 +73,7 @@ Zotero.BetterBibTeX.cache = new class
 
   remove: (what) ->
     what.itemID = @integer(what.itemID) unless what.itemID == undefined
+    Zotero.BetterBibTeX.debug('cache.remove', what)
     @cache.removeWhere(what)
 
   reset: ->
@@ -150,21 +152,20 @@ Zotero.BetterBibTeX.cache = new class
 
     # file paths vary if exportFileData is on
     if context.exportFileData
-      Zotero.BetterBibTeX.debug("cache fetch for #{itemID} rejected as file data is being exported")
+      Zotero.BetterBibTeX.debug("cache.fetch for #{itemID} rejected as file data is being exported")
       return
 
     record = @record(itemID, context)
     cached = @cache.findOne(record)
     @access.insert(record) if cached && !@access.findOne(record)
-    Zotero.BetterBibTeX.debug("cache fetch", (if cached then 'hit' else 'miss'), 'for', Zotero.BetterBibTeX.log.object(record), ':', cached)
+    Zotero.BetterBibTeX.debug("cache.fetch", (if cached then 'hit' else 'miss'), 'for', Zotero.BetterBibTeX.log.object(record), ':', cached)
     return cached
 
   store: (itemID, context, citekey, bibtex) ->
     [itemID, context, citekey, bibtex] = Array.slice(arguments, 1, 5) if arguments[0]._sandboxManager
-
     # file paths vary if exportFileData is on
     if context.exportFileData
-      Zotero.BetterBibTeX.debug("cache store for #{itemID} rejected as file data is being exported")
+      Zotero.BetterBibTeX.debug("cache.store for #{itemID} rejected as file data is being exported")
       return
 
     record = @record(itemID, context)
@@ -179,7 +180,7 @@ Zotero.BetterBibTeX.cache = new class
       record.bibtex = bibtex
       record.lastaccess = Date.now()
       @cache.insert(record)
-    Zotero.BetterBibTeX.debug('cache', (if cached then 'replace' else 'insert'), 'for', Zotero.BetterBibTeX.log.object(record))
+    Zotero.BetterBibTeX.debug('cache.store', (if cached then 'replace' else 'insert'), 'for', Zotero.BetterBibTeX.log.object(record))
 
 Zotero.BetterBibTeX.auto = new class
   constructor: ->
