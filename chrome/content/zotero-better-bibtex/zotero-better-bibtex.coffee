@@ -4,18 +4,11 @@ Components.utils.import('resource://zotero/config.js')
 
 require('Formatter.js')
 
-loki.Collection::byExample = (template) ->
-  query = []
-  for own k, v of template
-    query.push({"#{k}": v})
-  Zotero.BetterBibTeX.debug('lokijs.byExample', template, '=>', query)
-  return {'$and': query}
-
 loki.Collection::findObject = (template) ->
-  return @findOne(@byExample(template))
+  return @findOne({'$and': ({"#{k}": v} for own k, v of template)})
 
 loki.Collection::findObjects = (template) ->
-  return @find(@byExample(template))
+  return @find({'$and': ({"#{k}": v} for own k, v of template)})
 
 Zotero.BetterBibTeX = {
   serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
