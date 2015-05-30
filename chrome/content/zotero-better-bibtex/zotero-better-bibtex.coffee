@@ -4,6 +4,19 @@ Components.utils.import('resource://zotero/config.js')
 
 require('Formatter.js')
 
+loki.Collection::byExample = (template) ->
+  query = []
+  for own k, v of template
+    query.push({"#{k}": v})
+  Zotero.BetterBibTeX.debug('lokijs.byExample', template, '=>', query)
+  return {'$and': query}
+
+loki.Collection::findObject = (template) ->
+  return @findOne(@byExample(template))
+
+loki.Collection::findObjects = (template) ->
+  return @find(@byExample(template))
+
 Zotero.BetterBibTeX = {
   serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
   document: Components.classes['@mozilla.org/xul/xul-document;1'].getService(Components.interfaces.nsIDOMDocument)

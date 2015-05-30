@@ -3,6 +3,11 @@ Zotero.BetterBibTeX.cache = new class
     @cache = Zotero.BetterBibTeX.Cache.addCollection('cache', {disableChangesApi: false})
     @access = Zotero.BetterBibTeX.Cache.addCollection('access', {disableChangesApi: false})
 
+    if Zotero.BetterBibTeX.pref.get('debug')
+      @cache.on('insert', (entry) -> Zotero.BetterBibTeX.debug('cache.loki insert', entry))
+      @cache.on('update', (entry) -> Zotero.BetterBibTeX.debug('cache.loki update', entry))
+      @cache.on('delete', (entry) -> Zotero.BetterBibTeX.debug('cache.loki delete', entry))
+
     @log = Zotero.BetterBibTeX.log
     @__exposedProps__ = {
       fetch: 'r'
@@ -20,9 +25,10 @@ Zotero.BetterBibTeX.cache = new class
 
   load: ->
     Zotero.BetterBibTeX.debug('cache.load')
-    if Zotero.BetterBibTeX.pref.get('cacheReset')
+    if Zotero.BetterBibTeX.pref.get('cacheReset') > 0
       @reset()
-      Zotero.BetterBibTeX.pref.set('cacheReset', false)
+      Zotero.BetterBibTeX.pref.set('cacheReset', Zotero.BetterBibTeX.pref.get('cacheReset')  - 1)
+      Zotero.BetterBibTeX.debug('cache.load forced reset', Zotero.BetterBibTeX.pref.get('cacheReset'), 'left')
 
     @cache.flushChanges()
     for item in Zotero.DB.query('select itemID, exportCharset, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex from betterbibtex.cache')
@@ -156,8 +162,9 @@ Zotero.BetterBibTeX.cache = new class
       return
 
     record = @record(itemID, context)
-    cached = @cache.findOne(record)
-    @access.insert(record) if cached && !@access.findOne(record)
+    cached = @cache.findObject(record)
+
+    @access.insert(record) if cached && !@access.findObject(record)
     Zotero.BetterBibTeX.debug("cache.fetch", (if cached then 'hit' else 'miss'), 'for', Zotero.BetterBibTeX.log.object(record), ':', cached)
     return cached
 
@@ -169,7 +176,7 @@ Zotero.BetterBibTeX.cache = new class
       return
 
     record = @record(itemID, context)
-    cached = @cache.findOne(record)
+    cached = @cache.findObject(record)
     if cached
       cached.citekey = citekey
       cached.bibtex = bibtex
