@@ -41,8 +41,6 @@ Translator.initialize = ->
   @testmode = Zotero.getHiddenPref('better-bibtex.testMode')
   @testmode_timestamp = Zotero.getHiddenPref('better-bibtex.testMode.timestamp') if @testmode
 
-  @caching = @header.BetterBibTeX?.cache?.BibTeX
-
   for own attr, f of @fieldMap or {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
@@ -53,7 +51,8 @@ Translator.initialize = ->
   for option in ['useJournalAbbreviation', 'exportPath', 'exportCharset', 'exportFileData', 'exportNotes']
     @[option] = Zotero.getOption(option)
   @preserveBibTeXVariables = Zotero.getOption('Preserve BibTeX variables')
-  @caching = false if @exportFileData
+
+  @caching = @header.BetterBibTeX?.cache?.BibTeX && !@exportFileData
 
   @unicode = switch
     when @BetterBibLaTeX then !Zotero.getHiddenPref('better-bibtex.asciiBibLaTeX')
