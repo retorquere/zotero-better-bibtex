@@ -124,7 +124,7 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.87)
+    zotplus-rakehelper (0.0.89)
       nokogiri
       rake
       rickshaw
