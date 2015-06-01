@@ -212,7 +212,7 @@ require 'zotplus-rakehelper'
 rule '.json' => '.yml' do |t|
   open(t.name, 'w'){|f|
     header = YAML::load_file(t.source)
-    header['lastUpdated'] = TIMESTAMP if File.dirname(t.source) =~ /\/translators\//
+    header['lastUpdated'] = TIMESTAMP if t.source =~ /\/translators\//
     f.write(JSON.pretty_generate(header))
   }
 end
