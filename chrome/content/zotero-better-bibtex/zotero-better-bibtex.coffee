@@ -249,9 +249,11 @@ Zotero.BetterBibTeX.attachDatabase = ->
     @pref.prefs.clearUserPref('brace-all')
 
     for table in tables
+      @debug('attachdatabase: backing up', table)
       Zotero.DB.query("alter table betterbibtex.#{table} rename to \"-#{table}-\"")
 
     ### clean slate ###
+
     Zotero.DB.query('create table betterbibtex.keys (itemID primary key, citekey not null, citekeyFormat)')
 
     Zotero.DB.query("
@@ -296,18 +298,20 @@ Zotero.BetterBibTeX.attachDatabase = ->
     ### migrate data where needed ###
 
     if Zotero.DB.tableExists('betterbibtex."-keys-"')
-      Zotero.BetterBibTeX.debug('Migrate betterbibtex.keys')
+      @debug('attachdatabase: migrating keys')
       if Zotero.DB.columnsHash('betterbibtex."-keys-"').pinned
+        @debug('attachdatabase: migrating old-sty;e keys')
         Zotero.BetterBibTeX.debug('Upgrading betterbibtex.keys')
         Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citekeyFormat)
                         select itemID, citekey, case when pinned = 1 then null else ? end from betterbibtex."-keys-"', [@pref.get('citekeyFormat')])
       else
+        @debug('attachdatabase: migrating keys')
         Zotero.BetterBibTeX.debug('Copying betterbibtex.keys')
         Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citekeyFormat)
                         select itemID, citekey, citekeyFormat from betterbibtex."-keys-"')
 
     if Zotero.DB.tableExists('betterbibtex."-autoexport-"')
-      Zotero.BetterBibTeX.debug('Copying betterbibtex.autoexport')
+      @debug('attachdatabase: migrating autoexport')
       Zotero.DB.query('insert into betterbibtex.autoexport (
         collection,
         path,
@@ -337,6 +341,7 @@ Zotero.BetterBibTeX.attachDatabase = ->
     ### cleanup ###
 
     for table in Zotero.DB.columnQuery("SELECT name FROM betterbibtex.sqlite_master WHERE type='table' AND name like '-%-'") || []
+      @debug('attachdatabase: deleting', table)
       Zotero.DB.query("drop table if exists betterbibtex.\"#{table}\"")
 
     Zotero.DB.commitTransaction() unless tip
