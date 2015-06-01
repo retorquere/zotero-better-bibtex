@@ -10,9 +10,10 @@
     "path": "resource/abbreviations/journal_abbreviations_ams.json"
   },
   {
-    "title": "Entrez journals abbreviations. Note: provides Medline (dotless) abbr. only.",
+    "title": "Entrez journals",
     "url": "https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_entrez.txt",
-    "path": "resource/abbreviations/journal_abbreviations_entrez.json"
+    "path": "resource/abbreviations/journal_abbreviations_entrez.json",
+    "comment": "provides Medline (dotless) abbr. only."
   },
   {
     "title": "Jabref default",
@@ -40,17 +41,18 @@
     "path": "resource/abbreviations/journal_abbreviations_mechanical.json"
   },
   {
-    "title": "Index Medicus. Note: provides Medline (dotless) abbr. only.",
+    "title": "Index Medicus",
     "url": "https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_medicus.txt",
-    "path": "resource/abbreviations/journal_abbreviations_medicus.json"
+    "path": "resource/abbreviations/journal_abbreviations_medicus.json",
+    "comment": "provides Medline (dotless) abbr. only."
   },
   {
-    "title": "Meteorology journals",
+    "title": "Meteorology",
     "url": "https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_meteorology.txt",
     "path": "resource/abbreviations/journal_abbreviations_meteorology.json"
   },
   {
-    "title": "Sociology journals",
+    "title": "Sociology",
     "url": "https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_sociology.txt",
     "path": "resource/abbreviations/journal_abbreviations_sociology.json"
   },

@@ -5,9 +5,10 @@
 - title: American Mathematical Society
   url: https://github.com/JabRef/reference-abbreviations/raw/master/journals/journal_abbreviations_ams.txt
   path: resource/abbreviations/journal_abbreviations_ams.json
-- title: 'Entrez journals abbreviations. Note: provides Medline (dotless) abbr. only.'
+- title: Entrez journals
   url: https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_entrez.txt
   path: resource/abbreviations/journal_abbreviations_entrez.json
+  comment: rovides Medline (dotless) abbr. only.
 - title: Jabref default
   url: https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_general.txt
   path: resource/abbreviations/journal_abbreviations_general.json
@@ -23,13 +24,14 @@
 - title: Mechanical and Biomechanical
   url: https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_mechanical.txt
   path: resource/abbreviations/journal_abbreviations_mechanical.json
-- title: 'Index Medicus. Note: provides Medline (dotless) abbr. only.'
+- title: Index Medicus
   url: https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_medicus.txt
   path: resource/abbreviations/journal_abbreviations_medicus.json
-- title: Meteorology journals
+  comment: provides Medline (dotless) abbr. only.
+- title: Meteorology
   url: https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_meteorology.txt
   path: resource/abbreviations/journal_abbreviations_meteorology.json
-- title: Sociology journals
+- title: Sociology
   url: https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_sociology.txt
   path: resource/abbreviations/journal_abbreviations_sociology.json
 - title: Astronomy
