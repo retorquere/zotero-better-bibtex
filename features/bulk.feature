@@ -10,6 +10,10 @@ Scenario: Minor bulk export cache testing
    Then the following library export should match 'export/Big whopping library.bib':
     | translator  | Better BibLaTeX |
     | benchmark   | true            |
+   When I set preference .caching to false
+   Then the following library export should match 'export/Big whopping library.bib':
+    | translator  | Better BibLaTeX |
+    | benchmark   | true            |
 
 @bwl @noci
 Scenario: Major bulk export cache testing
