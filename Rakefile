@@ -103,7 +103,7 @@ ABBREVS.each{|a|
           end
         }
       }
-      abbrevs = { default: { 'container-title': abbrevs } }
+      abbrevs = { default: { 'container-title' => abbrevs } }
       open(t.name, 'w'){|f| f.write(JSON.pretty_generate(abbrevs)) }
     end
   else
@@ -150,7 +150,7 @@ ABBREVS.each{|a|
           abbrevs[journal] = abbrev
         }
       }
-      abbrevs = { default: { 'container-title': abbrevs } }
+      abbrevs = { default: { 'container-title' => abbrevs } }
       open(t.name, 'w'){|f| f.write(JSON.pretty_generate(abbrevs)) }
     end
   end
@@ -224,7 +224,7 @@ def saveAbbrevs(abbrevs, file, jurisdiction='default')
     end
   }
   json = {}
-  json[jurisdiction] = { 'container-title': abbrevs }
+  json[jurisdiction] = { 'container-title' => abbrevs }
   open(file, 'w'){|f| f.write(JSON.pretty_generate(json)) }
 end
 
@@ -294,7 +294,7 @@ file 'resource/abbreviations/BioScience.json' => 'Rakefile' do |t|
     }
   }
   saveAbbrevs(abbrevs, t.name)
-  abbrevs = { default: { 'container-title': abbrevs } }
+  abbrevs = { default: { 'container-title' => abbrevs } }
 end
 
 rule '.json' => '.yml' do |t|
