@@ -20,6 +20,7 @@ require 'yaml'
 require 'washbullet'
 require 'rake/loaders/makefile'
 require 'selenium-webdriver'
+require 'rchardet'
 
 NODEBIN="node_modules/.bin"
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
@@ -79,6 +80,79 @@ def expand(file, options={})
   return src
 end
 
+ABBREVS = YAML.load_file('resource/abbreviations/lists.yml')
+ABBREVS.each{|a|
+  if File.basename(a['path']) == 'WOS.json'
+    file a['path'] => 'Rakefile' do |t|
+      tmp = "tmp/WOS.html"
+      abbrevs = {}
+      (('A'..'Z').to_a + ['0-9']).each{|list|
+        ZotPlus::RakeHelper.download(a['url'].sub('<>', list), tmp)
+        doc = Nokogiri::HTML(open(tmp))
+
+        dt = nil
+        doc.xpath("//*[name()='dt' or name()='dd']").each{|node|
+          next unless %w{dt dd}.include?(node.name)
+          node = node.dup
+          node.children.each{|c| c.unlink unless c.name == 'text'}
+          text = node.inner_text.strip
+          if node.name == 'dt'
+            dt = (text == '' ? nil : text.downcase)
+          elsif dt
+            abbrevs[dt] = text
+          end
+        }
+      }
+      open(t.name, 'w'){|f| f.write(JSON.pretty_generate(abbrevs)) }
+    end
+  else
+    file a['path'] => 'Rakefile' do |t|
+      tmp = "tmp/#{File.basename(t.name)}"
+      ZotPlus::RakeHelper.download(a['url'], tmp)
+
+      text = open(tmp).read
+      cd = CharDet.detect(text)
+      if !%w{ascii utf-8}.include?(cd['encoding'].downcase)
+        text = text.encode('utf-8', cd['encoding'])
+        open(tmp, 'w'){|f| f.write(text) }
+      end
+        
+      abbrevs = {}
+      IO.readlines(tmp).each{|line|
+        line.strip!
+        next if line[0] == '#'
+        next unless line =~ /=/
+        line = line.split('=', 2).collect{|t| t.strip}
+        next if line.length != 2
+        journal, abbrev = *line
+        journal.downcase!
+        abbrev.sub(/\s*;.*/, '')
+        next if journal == '' || abbrev == ''
+
+        terms = journal.split(/(\[[^\]]+\])/).reject{|t| t.strip == ''}.collect{|t|
+          if t[0] == '[' && t[-1] == ']'
+            OpenStruct.new(term: t[1..-2].downcase)
+          else
+            OpenStruct.new(term: t.downcase, required: true)
+          end
+        }
+
+        (1..2**terms.length).collect{|permutation|
+          (0..terms.length-1).collect{|term|
+            terms[term].required || ((1 << term) & permutation) != 0 ?  terms[term].term : nil
+          }.compact.join(' ').strip
+        }.collect{|name|
+          name.gsub!(/[^a-z]+/, ' ')
+          name.gsub!(/\s+/, ' ')
+          name.strip
+        }.uniq.each{|journal|
+          abbrevs[journal] = abbrev
+        }
+      }
+      open(t.name, 'w'){|f| f.write(JSON.pretty_generate(abbrevs)) }
+    end
+  end
+}
 ZIPFILES = [
   'chrome/content/zotero-better-bibtex/errorReport.js',
   'chrome/content/zotero-better-bibtex/errorReport.xul',
@@ -111,95 +185,13 @@ ZIPFILES = [
   'resource/translators/xregexp-all-min.js',
   'resource/translators/Zotero TestCase.js',
   'resource/translators/Zotero TestCase.json',
-] + Dir['chrome/skin/**/*.*']
+  'resource/abbreviations/lists.json'
+] + Dir['chrome/skin/**/*.*'] + ABBREVS.collect{|a| a['path']}
 
-def makedepend
-  scanning = ZIPFILES.dup
-  scanned = []
-  dependencies={}
-  while scanning.length > 0
-    target = scanning.pop
-    scanned << target
-
-    next if target == 'Rakefile'
-
-    sources = []
-    case File.extname(target)
-      when '.js'
-        %w{coffee pegcoffee}.each{|ext|
-          src = File.join(File.dirname(target), File.basename(target, File.extname(target)) + ".#{ext}")
-          sources << src if File.file?(src)
-        }
-        if File.file?(target)
-          IO.readlines(target).each{|line|
-            next unless line =~ /^require\s*\(?\s*'([^'\n]+)'/
-            required = $1.strip
-            if required == ':constants:'
-              required = 'Rakefile'
-            else
-              required = File.join(File.dirname(target), required)
-            end
-            scanning << required unless (scanned + scanning).include?(required)
-            sources << required
-          }
-        end
-
-      when '.json'
-        sources << File.join(File.dirname(target), File.basename(target, File.extname(target)) + '.yml')
-
-      when '.coffee'
-        if File.file?(target)
-          IO.readlines(target).each{|line|
-            next unless line =~ /^require\s*\(?\s*'([^'\n]+)'([^\n]*)/
-            required = $1.strip
-            if %w{:constants: :header:}.include?(required)
-              required = 'Rakefile'
-            else
-              required = File.join(File.dirname(target), required)
-            end
-            scanning << required unless (scanned + scanning).include?(required)
-            sources << required
-          }
-        end
-
-      when '.manifest', '.xul', '.rdf', '.dtd', '.properties', '.pem', '.svg', '.css', '.yml', '.pegcoffee'
-      else throw "Unexpected extension for #{target}"
-    end
-
-    sources.each{|source|
-      dependencies[source] ||= []
-      dependencies[source] << target
-      scanning << source unless (scanned + scanning).include?(source)
-    }
-  end
-
-  begin
-    done = true
-    dependencies.each_pair{|dependency, dependants|
-      dependants.each{|dep|
-        if File.extname(dep) == '.coffee'
-          done = false
-          dependants.delete(dep)
-          dependencies[dep].each{|d|
-            dependants << d
-          }
-        end
-      }
-    }
-  end until done
-
-  open('.depend.mf', 'w'){|dmf|
-    dependencies.each_pair{|dependency, dependants|
-      dmf.write("#{dependants.uniq.sort.collect{|d| d.shellescape }.join(' ')} : #{dependency.shellescape}\n")
-    }
-  }
-end
-makedepend
-import '.depend.mf'
 
 Dir['**/*.js'].reject{|f| f =~ /^(node_modules|www)\//}.each{|f| CLEAN.include(f)}
 CLEAN.include('tmp/**/*')
-CLEAN.include('resource/translators/*.json')
+CLEAN.include('resource/*/*.json')
 CLEAN.include('.depend.mf')
 CLEAN.include('resource/translators/latex_unicode_mapping.coffee')
 CLEAN.include('*.xpi')
@@ -220,7 +212,7 @@ require 'zotplus-rakehelper'
 rule '.json' => '.yml' do |t|
   open(t.name, 'w'){|f|
     header = YAML::load_file(t.source)
-    header['lastUpdated'] = TIMESTAMP
+    header['lastUpdated'] = TIMESTAMP if t.source =~ /\/translators\//
     f.write(JSON.pretty_generate(header))
   }
 end

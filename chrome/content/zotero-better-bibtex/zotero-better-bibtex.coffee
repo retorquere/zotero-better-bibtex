@@ -4,6 +4,12 @@ Components.utils.import('resource://zotero/config.js')
 
 require('Formatter.js')
 
+loki.Collection::findObject = (template) ->
+  return @findOne({'$and': ({"#{k}": v} for own k, v of template)})
+
+loki.Collection::findObjects = (template) ->
+  return @find({'$and': ({"#{k}": v} for own k, v of template)})
+
 Zotero.BetterBibTeX = {
   serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
   document: Components.classes['@mozilla.org/xul/xul-document;1'].getService(Components.interfaces.nsIDOMDocument)
@@ -168,20 +174,36 @@ Zotero.BetterBibTeX.foreign_keys = (enabled) ->
   statement.executeStep()
   statement.finalize()
 
-Zotero.BetterBibTeX.SQLColumns = (table) ->
-  statement = Zotero.DB.getStatement("pragma betterbibtex.table_info(#{table})", null, true)
+Zotero.BetterBibTeX.parseTable = (name) ->
+  name = name.split('.')
+  switch name.length
+    when 1
+      schema = ''
+      name = name[0]
+    when 2
+      schema = name[0] + '.'
+      name = name[1]
+  name = name.slice(1, -1) if name[0] == '"'
+  return {schema: schema, name: name}
+
+Zotero.BetterBibTeX.columnsHash = (name) ->
+  table = @parseTable(name)
+  statement = Zotero.DB.getStatement("pragma #{table.schema}table_info(\"#{table.name}\")", null, true)
 
   # Get name column
   for i in [0...statement.columnCount]
-    name = i if statement.getColumnName(i).toLowerCase() == 'name'
+    col = i if statement.getColumnName(i).toLowerCase() == 'name'
 
-  columns = null
+  columns = {}
   while statement.executeStep()
-    columns ||= {}
-    columns[Zotero.DB._getTypedValue(statement, name)] = true
+    columns[Zotero.DB._getTypedValue(statement, col)] = true
   statement.finalize()
 
   return columns
+
+Zotero.BetterBibTeX.tableExists = (name) ->
+  table = @parseTable(name)
+  return (Zotero.DB.valueQuery("SELECT count(*) FROM #{table.schema}sqlite_master WHERE type='table' and name=?", [table.name]) != 0)
 
 Zotero.BetterBibTeX.attachDatabase = ->
   db = Zotero.getZoteroDatabase('betterbibtex')
@@ -243,9 +265,11 @@ Zotero.BetterBibTeX.attachDatabase = ->
     @pref.prefs.clearUserPref('brace-all')
 
     for table in tables
+      @debug('attachdatabase: backing up', table)
       Zotero.DB.query("alter table betterbibtex.#{table} rename to \"-#{table}-\"")
 
     ### clean slate ###
+
     Zotero.DB.query('create table betterbibtex.keys (itemID primary key, citekey not null, citekeyFormat)')
 
     Zotero.DB.query("
@@ -289,19 +313,21 @@ Zotero.BetterBibTeX.attachDatabase = ->
 
     ### migrate data where needed ###
 
-    if Zotero.DB.tableExists('betterbibtex."-keys-"')
-      Zotero.BetterBibTeX.debug('Migrate betterbibtex.keys')
-      if Zotero.DB.columnsHash('betterbibtex."-keys-"').pinned
+    if @tableExists('betterbibtex."-keys-"')
+      @debug('attachdatabase: migrating keys')
+      if @columnsHash('betterbibtex."-keys-"').pinned
+        @debug('attachdatabase: migrating old-sty;e keys')
         Zotero.BetterBibTeX.debug('Upgrading betterbibtex.keys')
         Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citekeyFormat)
                         select itemID, citekey, case when pinned = 1 then null else ? end from betterbibtex."-keys-"', [@pref.get('citekeyFormat')])
       else
+        @debug('attachdatabase: migrating keys')
         Zotero.BetterBibTeX.debug('Copying betterbibtex.keys')
         Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citekeyFormat)
                         select itemID, citekey, citekeyFormat from betterbibtex."-keys-"')
 
-    if Zotero.DB.tableExists('betterbibtex."-autoexport-"')
-      Zotero.BetterBibTeX.debug('Copying betterbibtex.autoexport')
+    if @tableExists('betterbibtex."-autoexport-"')
+      @debug('attachdatabase: migrating autoexport')
       Zotero.DB.query('insert into betterbibtex.autoexport (
         collection,
         path,
@@ -331,6 +357,7 @@ Zotero.BetterBibTeX.attachDatabase = ->
     ### cleanup ###
 
     for table in Zotero.DB.columnQuery("SELECT name FROM betterbibtex.sqlite_master WHERE type='table' AND name like '-%-'") || []
+      @debug('attachdatabase: deleting', table)
       Zotero.DB.query("drop table if exists betterbibtex.\"#{table}\"")
 
     Zotero.DB.commitTransaction() unless tip

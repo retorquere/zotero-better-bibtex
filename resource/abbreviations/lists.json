@@ -1,0 +1,69 @@
+[
+  {
+    "title": "Web of Science",
+    "url": "https://images.webofknowledge.com/WOK46/help/WOS/<>_abrvjt.html",
+    "path": "resource/abbreviations/WOS.json"
+  },
+  {
+    "title": "American Mathematical Society",
+    "url": "https://github.com/JabRef/reference-abbreviations/raw/master/journals/journal_abbreviations_ams.txt",
+    "path": "resource/abbreviations/journal_abbreviations_ams.json"
+  },
+  {
+    "title": "Entrez journals",
+    "url": "https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_entrez.txt",
+    "path": "resource/abbreviations/journal_abbreviations_entrez.json",
+    "comment": "provides Medline (dotless) abbr. only."
+  },
+  {
+    "title": "Jabref default",
+    "url": "https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_general.txt",
+    "path": "resource/abbreviations/journal_abbreviations_general.json"
+  },
+  {
+    "title": "Geology and Physics",
+    "url": "https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_geology_physics.txt",
+    "path": "resource/abbreviations/journal_abbreviations_geology_physics.json"
+  },
+  {
+    "title": "IEEE",
+    "url": "https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_ieee.txt",
+    "path": "resource/abbreviations/journal_abbreviations_ieee.json"
+  },
+  {
+    "title": "Life Sciences",
+    "url": "https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_lifescience.txt",
+    "path": "resource/abbreviations/journal_abbreviations_lifescience.json"
+  },
+  {
+    "title": "Mechanical and Biomechanical",
+    "url": "https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_mechanical.txt",
+    "path": "resource/abbreviations/journal_abbreviations_mechanical.json"
+  },
+  {
+    "title": "Index Medicus",
+    "url": "https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_medicus.txt",
+    "path": "resource/abbreviations/journal_abbreviations_medicus.json",
+    "comment": "provides Medline (dotless) abbr. only."
+  },
+  {
+    "title": "Meteorology",
+    "url": "https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_meteorology.txt",
+    "path": "resource/abbreviations/journal_abbreviations_meteorology.json"
+  },
+  {
+    "title": "Sociology",
+    "url": "https://raw.githubusercontent.com/JabRef/reference-abbreviations/master/journals/journal_abbreviations_sociology.txt",
+    "path": "resource/abbreviations/journal_abbreviations_sociology.json"
+  },
+  {
+    "title": "Astronomy",
+    "url": "https://raw.githubusercontent.com/timstaley/jabref-astro-abbreviations/master/MNRAS_abbreviations.txt",
+    "path": "resource/abbreviations/MNRAS_abbreviations.json"
+  },
+  {
+    "title": "Economics journals as posted on the AEA website",
+    "url": "https://raw.githubusercontent.com/jrnold/jabref-econ-journal-abbrevs/master/aea-abbrevs.txt",
+    "path": "resource/abbreviations/aea-abbrevs.json"
+  }
+]

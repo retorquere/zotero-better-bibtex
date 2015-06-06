@@ -81,6 +81,7 @@ GEM
       websocket (~> 1.0)
     rack (1.6.1)
     rake (10.4.2)
+    rchardet (1.6.0)
     rickshaw (0.3.1)
     rspec (3.2.0)
       rspec-core (~> 3.2.0)
@@ -124,7 +125,7 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.87)
+    zotplus-rakehelper (0.0.90)
       nokogiri
       rake
       rickshaw
@@ -143,6 +144,7 @@ DEPENDENCIES
   nokogiri
   os
   rake
+  rchardet
   rspec
   rubyzip (>= 1.0.0)
   selenium-webdriver

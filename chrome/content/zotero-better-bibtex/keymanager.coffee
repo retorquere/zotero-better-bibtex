@@ -345,6 +345,10 @@ Zotero.BetterBibTeX.keymanager = new class
       libraryID = @integer(libraryID)
     catch
       libraryID = null
-    return (key.itemID for key in @keys.find({citekey: { '$in': citekeys }, libraryID: libraryID})) if Array.isArray(citekeys)
-    return (key.itemID for key in @keys.find({citekey: citekeys, libraryID: libraryID}))
+    Zotero.BetterBibTeX.debug('keymanager.resolve:', citekeys, libraryID)
+    if Array.isArray(citekeys)
+      ids = (key.itemID for key in @keys.where((o) -> o.citekey in citekeys && o.libraryID == libraryID))
+    else
+      ids = (key.itemID for key in @keys.findObjects({citekey: citekeys, libraryID}))
+    return ids
 

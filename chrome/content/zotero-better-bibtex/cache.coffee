@@ -3,6 +3,11 @@ Zotero.BetterBibTeX.cache = new class
     @cache = Zotero.BetterBibTeX.Cache.addCollection('cache', {disableChangesApi: false})
     @access = Zotero.BetterBibTeX.Cache.addCollection('access', {disableChangesApi: false})
 
+    if Zotero.BetterBibTeX.pref.get('debug')
+      @cache.on('insert', (entry) -> Zotero.BetterBibTeX.debug('cache.loki insert', entry))
+      @cache.on('update', (entry) -> Zotero.BetterBibTeX.debug('cache.loki update', entry))
+      @cache.on('delete', (entry) -> Zotero.BetterBibTeX.debug('cache.loki delete', entry))
+
     @log = Zotero.BetterBibTeX.log
     @__exposedProps__ = {
       fetch: 'r'
@@ -19,9 +24,11 @@ Zotero.BetterBibTeX.cache = new class
     return _v
 
   load: ->
-    if Zotero.BetterBibTeX.pref.get('cacheReset')
+    Zotero.BetterBibTeX.debug('cache.load')
+    if Zotero.BetterBibTeX.pref.get('cacheReset') > 0
       @reset()
-      Zotero.BetterBibTeX.pref.set('cacheReset', false)
+      Zotero.BetterBibTeX.pref.set('cacheReset', Zotero.BetterBibTeX.pref.get('cacheReset')  - 1)
+      Zotero.BetterBibTeX.debug('cache.load forced reset', Zotero.BetterBibTeX.pref.get('cacheReset'), 'left')
 
     @cache.flushChanges()
     for item in Zotero.DB.query('select itemID, exportCharset, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex from betterbibtex.cache')
@@ -72,6 +79,7 @@ Zotero.BetterBibTeX.cache = new class
 
   remove: (what) ->
     what.itemID = @integer(what.itemID) unless what.itemID == undefined
+    Zotero.BetterBibTeX.debug('cache.remove', what)
     @cache.removeWhere(what)
 
   reset: ->
@@ -150,25 +158,25 @@ Zotero.BetterBibTeX.cache = new class
 
     # file paths vary if exportFileData is on
     if context.exportFileData
-      Zotero.BetterBibTeX.debug("cache fetch for #{itemID} rejected as file data is being exported")
+      Zotero.BetterBibTeX.debug("cache.fetch for #{itemID} rejected as file data is being exported")
       return
 
     record = @record(itemID, context)
-    cached = @cache.findOne(record)
-    @access.insert(record) if cached && !@access.findOne(record)
-    Zotero.BetterBibTeX.debug("cache fetch", (if cached then 'hit' else 'miss'), 'for', Zotero.BetterBibTeX.log.object(record), ':', cached)
+    cached = @cache.findObject(record)
+
+    @access.insert(record) if cached && !@access.findObject(record)
+    Zotero.BetterBibTeX.debug("cache.fetch", (if cached then 'hit' else 'miss'), 'for', Zotero.BetterBibTeX.log.object(record), ':', cached)
     return cached
 
   store: (itemID, context, citekey, bibtex) ->
     [itemID, context, citekey, bibtex] = Array.slice(arguments, 1, 5) if arguments[0]._sandboxManager
-
     # file paths vary if exportFileData is on
     if context.exportFileData
-      Zotero.BetterBibTeX.debug("cache store for #{itemID} rejected as file data is being exported")
+      Zotero.BetterBibTeX.debug("cache.store for #{itemID} rejected as file data is being exported")
       return
 
     record = @record(itemID, context)
-    cached = @cache.findOne(record)
+    cached = @cache.findObject(record)
     if cached
       cached.citekey = citekey
       cached.bibtex = bibtex
@@ -179,7 +187,7 @@ Zotero.BetterBibTeX.cache = new class
       record.bibtex = bibtex
       record.lastaccess = Date.now()
       @cache.insert(record)
-    Zotero.BetterBibTeX.debug('cache', (if cached then 'replace' else 'insert'), 'for', Zotero.BetterBibTeX.log.object(record))
+    Zotero.BetterBibTeX.debug('cache.store', (if cached then 'replace' else 'insert'), 'for', Zotero.BetterBibTeX.log.object(record))
 
 Zotero.BetterBibTeX.auto = new class
   constructor: ->
