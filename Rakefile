@@ -103,6 +103,7 @@ ABBREVS.each{|a|
           end
         }
       }
+      abbrevs = { default: { 'container-title': abbrevs } }
       open(t.name, 'w'){|f| f.write(JSON.pretty_generate(abbrevs)) }
     end
   else
@@ -149,6 +150,7 @@ ABBREVS.each{|a|
           abbrevs[journal] = abbrev
         }
       }
+      abbrevs = { default: { 'container-title': abbrevs } }
       open(t.name, 'w'){|f| f.write(JSON.pretty_generate(abbrevs)) }
     end
   end
@@ -186,7 +188,7 @@ ZIPFILES = [
   'resource/translators/Zotero TestCase.js',
   'resource/translators/Zotero TestCase.json',
   'resource/abbreviations/lists.json'
-] + Dir['chrome/skin/**/*.*'] + ABBREVS.collect{|a| a['path']}
+] + Dir['chrome/skin/**/*.*'] # + ABBREVS.collect{|a| a['path']}
 
 
 Dir['**/*.js'].reject{|f| f =~ /^(node_modules|www)\//}.each{|f| CLEAN.include(f)}
@@ -208,6 +210,92 @@ class String
 end
 
 require 'zotplus-rakehelper'
+
+def saveAbbrevs(abbrevs, file, jurisdiction='default')
+  abbrevs.keys.each{|journal|
+    if journal == abbrevs[journal]
+      abbrevs.delete(journal)
+#    else
+#      dc = journal.downcase.gsub(/[^a-z]+/, ' ').gsub(/\s+/, ' ').strip # maybe not...
+#      if dc != journal
+#        abbrevs[dc] = abbrevs[journal]
+#        abbrevs.delete(journal)
+#      end
+    end
+  }
+  json = {}
+  json[jurisdiction] = { 'container-title': abbrevs }
+  open(file, 'w'){|f| f.write(JSON.pretty_generate(json)) }
+end
+
+file 'resource/abbreviations/CAplus.json' => 'Rakefile' do |t|
+  abbrevs = {}
+  doc = Nokogiri::HTML(open('http://www.cas.org/content/references/corejournals'))
+  doc.at('//table').xpath('.//tr').each_with_index{|abb, i|
+    next if i == 0
+    abb = abb.xpath('.//td').collect{|t| t.inner_text.strip}
+    next unless abb.length > 1
+    next if abb[0] == '' || abb[1] == ''
+    abbrevs[abb[0]] = abb[1]
+  }
+  saveAbbrevs(abbrevs, t.name)
+end
+
+file 'resource/abbreviations/J_Entrez.json' => 'Rakefile' do |t|
+  record = {}
+  abbrevs = {}
+  IO.readlines(open('ftp://ftp.ncbi.nih.gov/pubmed/J_Entrez.txt')).each{|line|
+    line.strip!
+    if line =~ /^-+$/
+      abbrevs[record['JournalTitle']] = record['MedAbbr'] if record['JournalTitle'] && record['MedAbbr']
+      abbrevs[record['JournalTitle']] = record['IsoAbbr'] if record['JournalTitle'] && record['IsoAbbr']
+      record = {}
+      next
+    end
+    line = line.split(':', 2).collect{|t| t.strip}
+    next if line.length != 2
+    next if line[0] == '' || line[1] == ''
+    record[line[0]] = line[1]
+  }
+  abbrevs[record['JournalTitle']] = record['MedAbbr'] if record['JournalTitle'] && record['MedAbbr']
+  abbrevs[record['JournalTitle']] = record['IsoAbbr'] if record['JournalTitle'] && record['IsoAbbr']
+  saveAbbrevs(abbrevs, t.name)
+end
+
+file 'resource/abbreviations/Science_and_Engineering.json' => 'Rakefile' do |t|
+  abbrevs = {}
+  jsonp = open('http://journal-abbreviations.library.ubc.ca/dump.php').read
+  jsonp.sub!(/^\(/, '')
+  jsonp.sub!(/\);/, '')
+  doc = Nokogiri::HTML(JSON.parse(jsonp)['html'])
+  doc.at('//table').xpath('.//tr').each{|tr|
+    tds = tr.xpath('.//td')
+    next if tds.length != 2
+    journal, abbr = *(tds.collect{|t| t.inner_text.strip})
+    next if journal == '' || abbr == ''
+    abbrevs[journal] = abbr
+  }
+  saveAbbrevs(abbrevs, t.name)
+end
+
+file 'resource/abbreviations/BioScience.json' => 'Rakefile' do |t|
+  abbrevs = {}
+  %w{a-b c-g h-j k-q r-z}.each{|list|
+    doc = Nokogiri::HTML(open("http://guides.lib.berkeley.edu/bioscience-journal-abbreviations/#{list}"))
+    doc.xpath('//table').each{|table|
+      table.xpath('.//tr').each_with_index{|tr, i|
+        next if i == 0
+        tds = tr.xpath('.//td')
+        next if tds.length != 2
+        journal, abbr = *(tds.collect{|t| t.inner_text.strip})
+        next if journal == '' || abbr == ''
+        abbrevs[journal] = abbr
+      }
+    }
+  }
+  saveAbbrevs(abbrevs, t.name)
+  abbrevs = { default: { 'container-title': abbrevs } }
+end
 
 rule '.json' => '.yml' do |t|
   open(t.name, 'w'){|f|
@@ -363,6 +451,10 @@ task :share => XPI do
   raise "No share folder" unless folder
   Dir["#{folder}/*.xpi"].each{|xpi| File.unlink(xpi)}
   FileUtils.cp(XPI, File.join(folder, XPI))
+end
+
+file 'resource/translators/org.js' do |t|
+  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/mooz/org-js/master/org.js', t.name)
 end
 
 file 'resource/translators/unicode.xml' do |t|
