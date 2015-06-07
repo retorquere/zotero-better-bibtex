@@ -305,6 +305,14 @@ rule '.json' => '.yml' do |t|
   }
 end
 
+rule '.js' => '.pegjs' do |t|
+  name = "tmp/#{File.basename(t.name)}"
+  source = "tmp/#{File.basename(t.source)}"
+  open(source, 'w'){|f| f.write(expand(open(t.source))) }
+  sh "#{NODEBIN}/pegjs -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{source} #{name}"
+  FileUtils.mv(name, t.name)
+end
+
 rule '.js' => '.pegcoffee' do |t|
   name = "tmp/#{File.basename(t.name)}"
   source = "tmp/#{File.basename(t.source)}"
