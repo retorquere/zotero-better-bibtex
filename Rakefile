@@ -187,7 +187,8 @@ ZIPFILES = [
   'resource/translators/Pandoc Citation.js',
   'resource/translators/Pandoc Citation.json',
   'resource/translators/xregexp-all-min.js',
-  'resource/translators/Zotero TestCase.js'
+  'resource/translators/Zotero TestCase.js',
+  'resource/translators/Zotero TestCase.json'
 ] + Dir['chrome/skin/**/*.*'] # + ABBREVS.collect{|a| a['path']}
 
 
