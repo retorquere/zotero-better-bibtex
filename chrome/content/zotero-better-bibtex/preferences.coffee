@@ -74,10 +74,11 @@ Zotero.BetterBibTeX.pref.update = ->
   selectedIndex = 0 if selectedIndex == -1
   Zotero.BetterBibTeX.pref.styleChanged(selectedIndex)
 
-  window.setTimeout((->
+  # oh FFS AMO!
+  amoShim = ->
     stylebox.ensureIndexIsVisible(selectedIndex)
     stylebox.selectedIndex = selectedIndex
-    return), 0)
+  window.setTimeout(amoShim, 0)
 
   @autoexport.refresh()
 
