@@ -161,6 +161,8 @@ ZIPFILES = [
   'chrome/content/zotero-better-bibtex/exportOptions.js',
   'chrome/content/zotero-better-bibtex/exportOptions.xul',
   'chrome/content/zotero-better-bibtex/include.js',
+  'chrome/content/zotero-better-bibtex/itemPane.js',
+  'chrome/content/zotero-better-bibtex/itemPane.xul',
   'chrome/content/zotero-better-bibtex/jsencrypt.min.js',
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/overlay.xul',
@@ -185,9 +187,7 @@ ZIPFILES = [
   'resource/translators/Pandoc Citation.js',
   'resource/translators/Pandoc Citation.json',
   'resource/translators/xregexp-all-min.js',
-  'resource/translators/Zotero TestCase.js',
-  'resource/translators/Zotero TestCase.json',
-  'resource/abbreviations/lists.json'
+  'resource/translators/Zotero TestCase.js'
 ] + Dir['chrome/skin/**/*.*'] # + ABBREVS.collect{|a| a['path']}
 
 

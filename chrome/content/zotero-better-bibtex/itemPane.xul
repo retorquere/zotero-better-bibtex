@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://zotero-better-bibtex/skin/itembox.css" type="text/css"?>
+<!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="itemPane.js" type="application/javascript"></script>
+
+  <vbox id="zotero-item-pane"><!-- anywhere, just needs to show up, will be moved later -->
+    <vbox class="better-bibtex-itembox-first-row" id="zotero-better-bibtex-item-first-row-label">
+      <label class="better-bibtex-itembox-citekey" value="&zotero.better-bibtex.citekey_column;:"/>
+    </vbox>
+    <vbox class="better-bibtex-itembox-first-row" id="zotero-better-bibtex-item-first-row-value">
+      <label class="better-bibtex-itembox-citekey" id="zotero-better-bibtex-itempane-citekey" value=""/>
+    </vbox>
+  </vbox>
+</overlay>
