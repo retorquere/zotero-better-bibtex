@@ -395,9 +395,6 @@ Zotero.BetterBibTeX.init = ->
   while not @release
     thread.processNextEvent(true)
 
-  # clean up junk
-  @removeTranslator({label: 'BibTeX Citation Keys', translatorID: '0a3d926d-467c-4162-acb6-45bded77edbb'})
-
   @attachDatabase()
   cfi = @pref.get('cacheFlushInterval')
   cfi = 1 if typeof cfi != 'number' || cfi < 1
@@ -668,6 +665,10 @@ Zotero.BetterBibTeX.loadTranslators = ->
   @load('Pandoc Citation.js')
   @load('Zotero TestCase.js')
   @load('BibTeXAuxScanner.js')
+
+  # clean up junk
+  @removeTranslator({label: 'BibTeX Citation Keys', translatorID: '0a3d926d-467c-4162-acb6-45bded77edbb'})
+
   Zotero.Translators.init()
 
 Zotero.BetterBibTeX.removeTranslators = ->
