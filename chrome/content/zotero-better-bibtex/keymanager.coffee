@@ -2,7 +2,7 @@ Zotero.BetterBibTeX.keymanager = new class
   constructor: ->
     @log = Zotero.BetterBibTeX.log
     @journalAbbrevs = Object.create(null)
-    @keys = Zotero.BetterBibTeX.Cache.addCollection('keys', {disableChangesApi: false})
+    @keys = Zotero.BetterBibTeX.Cache.addCollection('keys', {disableChangesApi: false, indices: 'itemID libraryID citekey citekeyFormat'.split(/\s+/) })
     @keys.on('insert', (key) ->
       Zotero.BetterBibTeX.debug('keymanager.loki insert', key)
       Zotero.BetterBibTeX.keymanager.verify(key)
@@ -56,13 +56,8 @@ Zotero.BetterBibTeX.keymanager = new class
     throw new Error("#{v} is not an integer-string") if isNaN(_v)
     return _v
 
-  report: (msg) ->
-    @log(msg)
-    for key in @keys.where((obj) -> true)
-      @log('key:', @log.object(key))
-
   cache: ->
-    return (@clone(key) for key in @keys.where((obj) -> true))
+    return (@clone(key) for key in @keys.find())
 
   load: ->
     # clean up keys for items that have gone missing

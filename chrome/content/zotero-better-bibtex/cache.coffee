@@ -1,7 +1,7 @@
 Zotero.BetterBibTeX.cache = new class
   constructor: ->
-    @cache = Zotero.BetterBibTeX.Cache.addCollection('cache', {disableChangesApi: false})
-    @access = Zotero.BetterBibTeX.Cache.addCollection('access', {disableChangesApi: false})
+    @cache = Zotero.BetterBibTeX.Cache.addCollection('cache', {disableChangesApi: false, indices: 'itemID exportCharset exportNotes getCollections preserveBibTeXVariables translatorID useJournalAbbreviation citekey'.split(/\s+/)})
+    @access = Zotero.BetterBibTeX.Cache.addCollection('access', {disableChangesApi: false, indices: 'itemID exportCharset exportNotes getCollections preserveBibTeXVariables translatorID useJournalAbbreviation'.split(/\s+/)})
 
     if Zotero.BetterBibTeX.pref.get('debug')
       @cache.on('insert', (entry) -> Zotero.BetterBibTeX.debug('cache.loki insert', entry))
