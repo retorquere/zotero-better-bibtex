@@ -6,7 +6,7 @@ cache:
 git:
   submodules: false
 rvm:
-- 2.1.3
+- 2.2
 env:
 - TAG="--tag @test-cluster-0 --tag ~@noci"
 - TAG="--tag @test-cluster-1 --tag ~@noci"
