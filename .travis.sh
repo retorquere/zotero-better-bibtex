@@ -10,12 +10,12 @@ CHECKIN=`git log -n 1 --pretty=oneline`
 echo "checkin: $CHECKIN"
 echo "release: $RELEASE"
 if [ "$CHECKIN" = "$RELEASE" ] ; then
-  PUBLISHED=`ruby -e 'require "open-uri"; require "json"; puts JSON.parse(open("https://api.github.com/repos/ZotPlus/zotero-better-bibtex/releases/latest").read)["tag_name"]'`
-  PUBLISHED="$TRAVIS_COMMIT release: zotero-better-bibtex-$PUBLISHED.xpi"
-  echo "published: $PUBLISHED"
-  if [ "$PUBLISHED" = "$RELEASE" ] ; then
-    echo "Why is Travis re-publishing my releases?"
-  else
+  #PUBLISHED=`ruby -e 'require "open-uri"; require "json"; puts JSON.parse(open("https://api.github.com/repos/ZotPlus/zotero-better-bibtex/releases/latest").read)["tag_name"]'`
+  #PUBLISHED="$TRAVIS_COMMIT release: zotero-better-bibtex-$PUBLISHED.xpi"
+  #echo "published: $PUBLISHED"
+  #if [ "$PUBLISHED" = "$RELEASE" ] ; then
+  #  echo "Why is Travis re-publishing my releases?"
+  #else
     STATUS=`travis_parallel_sentinel script`
     if [ "$STATUS" = "deploy" ] ; then
       sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .gitmodules
@@ -33,7 +33,7 @@ if [ "$CHECKIN" = "$RELEASE" ] ; then
       bundle exec rake deploy
       git checkout . # prevent travis release rebuilds?
     fi
-  fi
+  #fi
 else
   echo 'not a tagged release'
 fi
