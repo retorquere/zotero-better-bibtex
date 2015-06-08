@@ -20,6 +20,8 @@ ZoteroItemPane.viewItem = ((original) ->
   return (item, mode, index) ->
     original.apply(@, arguments)
     if index == 0 # details pane
-      label = document.getElementById('zotero-better-bibtex-itempane-citekey')
-      label.value = Zotero.BetterBibTeX.keymanager.get(item).citekey
+      citekey = Zotero.BetterBibTeX.keymanager.get(item)
+      display = document.getElementById('zotero-better-bibtex-itempane-citekey')
+      display.value = citekey.citekey
+      display.classList[if citekey.citekeyFormat then 'add' else 'remove']('citekey-dynamic')
   )(ZoteroItemPane.viewItem)

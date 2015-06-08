@@ -13,3 +13,7 @@
   -moz-margin-end: 5px !important;
   padding: 0 2px 0 2px;
 }
+
+.citekey-dynamic {
+  font-style: italic;
+}
