@@ -261,7 +261,7 @@ Then /^the library (without collections )?should match '([^']+)'$/ do |nocollect
       item['itemID'] = i
       item.delete('itemID')
       item['attachments'].each{|a| a.delete('path')} if item['attachments']
-      item['note'] = Nokogiri::HTML(item['note']).inner_text.strip if item['note']
+      item['note'] = Nokogiri::HTML(item['note']).inner_text.gsub(/[\s\n]+/, ' ').strip if item['note']
     }
     renum.call(library, newID, false)
     library.normalize!
