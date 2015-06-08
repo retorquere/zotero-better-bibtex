@@ -5,12 +5,10 @@
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script src="itemPane.js" type="application/javascript"></script>
 
-  <vbox id="zotero-item-pane"><!-- anywhere, just needs to show up, will be moved later -->
-    <vbox id="zotero-better-bibtex-item-first-row-label">
+  <vbox id="zotero-item-pane"><!-- anywhere, just needs to be present in the XML -->
+    <vbox id="zotero-better-bibtex-itempane-citekey-template" hidden="true">
       <label value="&zotero.better-bibtex.citekey_column;:"/>
-    </vbox>
-    <vbox id="zotero-better-bibtex-item-first-row-value">
-      <textbox id="zotero-better-bibtex-itempane-citekey" class="plain" readonly="true"/>
+      <textbox class="plain" readonly="true"/>
     </vbox>
   </vbox>
 </overlay>
