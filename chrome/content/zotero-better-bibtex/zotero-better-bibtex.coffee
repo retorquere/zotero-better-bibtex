@@ -208,10 +208,9 @@ Zotero.BetterBibTeX.columnsHash = (table) ->
   return columns
 
 Zotero.BetterBibTeX.copyTable = (source, target, ignore = []) -> # assumes tables have identical layout!
-
   ignore = [ignore] if typeof ignore == 'string'
 
-  columns = (column for column in @columnNames(source) when not column in ignore).join(', ')
+  columns = (column for column in @columnNames(source) when column not in ignore).join(', ')
   Zotero.DB.query("insert into #{target} (#{columns}) select #{columns} from #{source}")
 
 Zotero.BetterBibTeX.tableExists = (name, mustHaveData = false) ->
