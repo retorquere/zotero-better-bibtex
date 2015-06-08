@@ -718,7 +718,7 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
 
         missing = []
         for citekey in extra.citations
-          id = @resolve(citekey, collection.libraryID)[0]
+          id = @keymanager.resolve(citekey, collection.libraryID)[0]
           if id
             collection.addItem(id)
           else
