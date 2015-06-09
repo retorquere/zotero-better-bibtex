@@ -345,22 +345,22 @@
   
     '|condense': (value, sep) ->
       sep = '' if typeof sep == 'undefined'
-      return value.replace /\s/g, sep
+      return (value || '').replace(/\s/g, sep)
   
     '|abbr': (value) ->
-      return (word.substring(0, 1) for word in value.split(/\s+/)).join('')
+      return (word.substring(0, 1) for word in (value || '').split(/\s+/)).join('')
   
     '|lower': (value) ->
-      return value.toLowerCase()
+      return (value || '').toLowerCase()
   
     '|upper': (value) ->
-      return value.toUpperCase()
+      return (value || '').toUpperCase()
   
     '|skipwords': (value) ->
-      return (word for word in value.split(/\s+/) when @skipWords.indexOf(word.toLowerCase()) < 0).join(' ').trim()
+      return (word for word in (value || '').split(/\s+/) when @skipWords.indexOf(word.toLowerCase()) < 0).join(' ').trim()
   
     '|select': (value, start, n) ->
-      value = value.split(/\s+/)
+      value = (value || '').split(/\s+/)
       end = value.length
       start = 1 if typeof start == 'undefined'
       start = parseInt(start) - 1
@@ -368,17 +368,17 @@
       return value.slice(start, end).join ' '
   
     '|ascii': (value) ->
-      return value.replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim()
+      return (value || '').replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim()
   
     '|fold': (value) ->
-      return Zotero.Utilities.removeDiacritics(value).split(/\s+/).join(' ').trim()
+      return Zotero.Utilities.removeDiacritics(value || '').split(/\s+/).join(' ').trim()
   
     '|capitalize': (value) ->
-      return value.replace /((^|\s)[a-z])/g, (m) ->
+      return (value || '').replace /((^|\s)[a-z])/g, (m) ->
         m.toUpperCase()
   
     '|nopunct': (value) ->
-      return Zotero.Utilities.XRegExp.replace value, @punct, '', 'all'
+      return Zotero.Utilities.XRegExp.replace(value || '', @punct, '', 'all')
 }
 
 start

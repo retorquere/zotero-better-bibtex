@@ -186,24 +186,37 @@ Zotero.BetterBibTeX.parseTable = (name) ->
   name = name.slice(1, -1) if name[0] == '"'
   return {schema: schema, name: name}
 
-Zotero.BetterBibTeX.columnsHash = (name) ->
-  table = @parseTable(name)
+Zotero.BetterBibTeX.columnNames = (table) ->
+  table = @parseTable(table)
   statement = Zotero.DB.getStatement("pragma #{table.schema}table_info(\"#{table.name}\")", null, true)
 
   # Get name column
   for i in [0...statement.columnCount]
     col = i if statement.getColumnName(i).toLowerCase() == 'name'
 
-  columns = {}
+  columns = []
   while statement.executeStep()
-    columns[Zotero.DB._getTypedValue(statement, col)] = true
+    columns.push(Zotero.DB._getTypedValue(statement, col))
   statement.finalize()
 
   return columns
 
-Zotero.BetterBibTeX.tableExists = (name) ->
+Zotero.BetterBibTeX.columnsHash = (table) ->
+  columns = {}
+  for column in @columnNames(table)
+    columns[column] = true
+  return columns
+
+Zotero.BetterBibTeX.copyTable = (source, target, ignore = []) -> # assumes tables have identical layout!
+  ignore = [ignore] if typeof ignore == 'string'
+
+  columns = (column for column in @columnNames(source) when column not in ignore).join(', ')
+  Zotero.DB.query("insert into #{target} (#{columns}) select #{columns} from #{source}")
+
+Zotero.BetterBibTeX.tableExists = (name, mustHaveData = false) ->
   table = @parseTable(name)
-  return (Zotero.DB.valueQuery("SELECT count(*) FROM #{table.schema}sqlite_master WHERE type='table' and name=?", [table.name]) != 0)
+  exists = (Zotero.DB.valueQuery("SELECT count(*) FROM #{table.schema}sqlite_master WHERE type='table' and name=?", [table.name]) != 0)
+  return exists && (!mustHaveData || Zotero.DB.valueQuery("select count(*) from #{name}") != 0)
 
 Zotero.BetterBibTeX.attachDatabase = ->
   db = Zotero.getZoteroDatabase('betterbibtex')
@@ -313,46 +326,23 @@ Zotero.BetterBibTeX.attachDatabase = ->
 
     ### migrate data where needed ###
 
-    if @tableExists('betterbibtex."-keys-"')
+    if @tableExists('betterbibtex."-keys-"', true)
       @debug('attachdatabase: migrating keys')
       if @columnsHash('betterbibtex."-keys-"').pinned
-        @debug('attachdatabase: migrating old-sty;e keys')
+        @debug('attachdatabase: migrating old-style keys')
         Zotero.BetterBibTeX.debug('Upgrading betterbibtex.keys')
         Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citekeyFormat)
                         select itemID, citekey, case when pinned = 1 then null else ? end from betterbibtex."-keys-"', [@pref.get('citekeyFormat')])
       else
         @debug('attachdatabase: migrating keys')
-        Zotero.BetterBibTeX.debug('Copying betterbibtex.keys')
-        Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citekeyFormat)
-                        select itemID, citekey, citekeyFormat from betterbibtex."-keys-"')
+        @copyTable('betterbibtex."-keys-"', 'betterbibtex.keys')
 
-    if @tableExists('betterbibtex."-autoexport-"')
+    if @tableExists('betterbibtex."-autoexport-"', true)
       @debug('attachdatabase: migrating autoexport')
-      Zotero.DB.query('insert into betterbibtex.autoexport (
-        collection,
-        path,
-
-        exportCharset,
-        exportNotes,
-        preserveBibTeXVariables,
-        translatorID,
-        useJournalAbbreviation,
-
-        exportedRecursively,
-        status)
-      select
-        collection,
-        path,
-
-        exportCharset,
-        exportNotes,
-        preserveBibTeXVariables,
-        translatorID,
-        useJournalAbbreviation,
-
-        exportedRecursively,
-        status
-      from betterbibtex."-autoexport-"')
+      if @columnsHash('betterbibtex."-autoexport-"').context
+        # sorry my dear colleague, but this was a mess
+      else
+        @copyTable('betterbibtex."-autoexport-"', 'betterbibtex.autoexport', 'id')
 
     ### cleanup ###
 
@@ -667,7 +657,9 @@ Zotero.BetterBibTeX.loadTranslators = ->
   @load('BibTeXAuxScanner.js')
 
   # clean up junk
-  @removeTranslator({label: 'BibTeX Citation Keys', translatorID: '0a3d926d-467c-4162-acb6-45bded77edbb'})
+  try
+    @removeTranslator({label: 'BibTeX Citation Keys', translatorID: '0a3d926d-467c-4162-acb6-45bded77edbb'})
+  catch
 
   Zotero.Translators.init()
 
@@ -726,7 +718,7 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
 
         missing = []
         for citekey in extra.citations
-          id = @resolve(citekey, collection.libraryID)[0]
+          id = @keymanager.resolve(citekey, collection.libraryID)[0]
           if id
             collection.addItem(id)
           else

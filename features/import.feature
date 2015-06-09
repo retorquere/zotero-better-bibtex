@@ -1,6 +1,11 @@
 @test-cluster-2 @import
 Feature: Import
 
+@aux
+Scenario: AUX scanner
+  When I import 1 reference from 'import/Quine_and_Meaning.aux'
+  Then the library without collections should match 'import/Quine_and_Meaning.json'
+
 Scenario: Better BibTeX Import 2
   When I import 2 references from 'import/Better BibTeX.002.bib'
   Then the library without collections should match 'import/Better BibTeX.002.json'

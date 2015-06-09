@@ -55,11 +55,15 @@
                 <rows>
                   <row>
                     <label value="&zotero.better-bibtex.cite.command;"/>
-                    <textbox id="id-better-bibtex-preferences-citeCommand" preference="pref-better-bibtex-citecommand" onchange="Zotero.BetterBibTeX.pref.update();" onkeypress="setTimeout(Zotero.BetterBibTeX.pref.update, 1);"/>
+                    <textbox id="id-better-bibtex-preferences-citeCommand" preference="pref-better-bibtex-citecommand"
+                      onchange="Zotero.BetterBibTeX.pref.update();"
+                      onkeypress="setTimeout(function() { Zotero.BetterBibTeX.pref.update() }, 1);"/>
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.cite.format;"/>
-                    <textbox id="id-better-bibtex-preferences-citekeyFormat" preference="pref-better-bibtex-format" oninput="Zotero.BetterBibTeX.pref.update();" onkeypress="setTimeout(Zotero.BetterBibTeX.pref.update, 1);"/>
+                    <textbox id="id-better-bibtex-preferences-citekeyFormat" preference="pref-better-bibtex-format"
+                      oninput="Zotero.BetterBibTeX.pref.update();"
+                      onkeypress="setTimeout(function() { Zotero.BetterBibTeX.pref.update() }, 1);"/>
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.langid;"/>
@@ -101,7 +105,9 @@
                 <rows>
                   <row>
                     <label value="&zotero.better-bibtex.skipFields;"/>
-                    <textbox id="id-better-bibtex-preferences-skipFields" preference="pref-better-bibtex-skipFields" oninput="Zotero.BetterBibTeX.pref.update();" onkeypress="setTimeout(Zotero.BetterBibTeX.pref.update, 1);"/>
+                    <textbox id="id-better-bibtex-preferences-skipFields" preference="pref-better-bibtex-skipFields"
+                      oninput="Zotero.BetterBibTeX.pref.update();"
+                      onkeypress="setTimeout(function() { Zotero.BetterBibTeX.pref.update() }, 1);"/>
                   </row>
                   <row>
                     <checkbox label="&zotero.better-bibtex.ascii.BibTeX;" preference="pref-better-bibtex-asciiBibTeX"/>
