@@ -1,4 +1,4 @@
-class ParserSupport
+class BetterBibTeXParserSupport
   constructor: (options) ->
     @raw = options.raw
 

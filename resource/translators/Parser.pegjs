@@ -1,5 +1,5 @@
 {
-  bibtex = new BetterBibTexParser();
+  bibtex = new BetterBibTeXParserSupport();
 }
 
 start

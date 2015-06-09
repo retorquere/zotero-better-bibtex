@@ -646,6 +646,21 @@ Zotero.BetterBibTeX.init = ->
   }
   AddonManager.addAddonListener(uninstaller)
 
+Zotero.BetterBibTeX.createFile = (paths...) ->
+  f = Zotero.getZoteroDirectory()
+  throw new Error('no path specified') if paths.length == 0
+
+  paths.unshift('better-bibtex')
+  Zotero.BetterBibTeX.debug('createFile:', paths)
+
+  leaf = paths.pop()
+  for path in paths
+    f.append(path)
+    f.create(Components.interfaces.nsIFile.DIRECTORY_TYPE, 0o777) unless f.exists()
+  f.append(leaf)
+  f.create(Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 0o666) unless f.exists()
+  return f
+
 Zotero.BetterBibTeX.loadTranslators = ->
   @load('Better BibTeX')
   @load('Better BibLaTeX')
@@ -672,9 +687,9 @@ Zotero.BetterBibTeX.removeTranslator = (header) ->
     fileName = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)
     destFile = Zotero.getTranslatorsDirectory()
     destFile.append(fileName)
-    destFile.remove(false)
+    destFile.remove(false) if destFile.exists()
   catch err
-    @log("failed to remove #{header.label}:", err)
+    @debug("failed to remove #{header.label}:", err)
 
 Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
   collections = []
@@ -847,29 +862,28 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions) ->
   throw 'export failed'
 
 Zotero.BetterBibTeX.load = (translator) ->
-  try
-    @debug('loading translator:', translator)
-    header = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.json"))
-    @removeTranslator(header)
-    code = ([
-      # Zotero ships with a lobotomized version
-      Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/translators/xregexp-all-min.js')
-      Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/translators/json5.js')
-      Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/translators/translator.js')
-    ] + (Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{dep}.js") for dep in (header.dependencies || [])) + [
-      Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.header.js")
-      Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.js")
-    ]).join("\n")
+  @debug('loading translator:', translator)
+  header = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.json"))
+  @removeTranslator(header)
 
-    @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
+  sources = ['xregexp-all-min', 'json5', 'translator']
+  for dep in header.BetterBibTeX?.dependencies || []
+    sources.push(dep)
+  sources.push("#{translator}.header")
+  sources.push(translator)
+  @debug('loading translator:', translator, sources)
+  code = (Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{src}.js") for src in sources).join("\n")
+  js = @createFile('translators', "#{translator}.js")
+  Zotero.debug("Saving #{translator} to #{js.path}")
+  Zotero.File.putContents(js, code)
 
-    # remove BBT metadata -- Zotero doesn't like it
-    header = JSON.parse(JSON.stringify(header))
-    delete header.BetterBibTeX
-    @debug('translator header:', translator, header)
-    Zotero.Translators.save(header, code)
-  catch err
-    @log("Loading #{translator} failed", err)
+  @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
+
+  # remove BBT metadata -- Zotero doesn't like it
+  header = JSON.parse(JSON.stringify(header))
+  delete header.BetterBibTeX
+  @debug('translator header:', translator, header)
+  Zotero.Translators.save(header, code)
 
 Zotero.BetterBibTeX.getTranslator = (name) ->
   return @translators[name.replace(/\s/, '')].translatorID if @translators[name.replace(/\s/, '')]
