@@ -178,7 +178,7 @@
     {
       "itemID": 6,
       "itemType": "note",
-      "note": "<html xmlns=\"http://www.w3.org/1999/xhtml\"><div><p><b>Better BibTeX could not import</b></p><pre>@misc{emptyreference,\n  \n}\n</pre></div></html>",
+      "note": "<html xmlns=\"http://www.w3.org/1999/xhtml\"><div><p><b>Better BibTeX could not import</b></p> <pre>@misc{emptyreference,\n  \n}\n</pre></div></html>",
       "tags": [],
       "related": [],
       "creators": [],

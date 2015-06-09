@@ -723,6 +723,7 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
           report = new @HTMLNode('http://www.w3.org/1999/xhtml', 'html')
           report.div(->
             @p(-> @b('Better BibTeX could not import'))
+            @add(' ')
             @pre(extra.notimported)
           )
           note = report.serialize()
