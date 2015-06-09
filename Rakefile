@@ -25,61 +25,6 @@ require 'rchardet'
 NODEBIN="node_modules/.bin"
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
-LINTED=[]
-def expand(file, options={})
-  #puts "expanding #{file.path.gsub(/^\.\//, '').inspect}"
-  if File.extname(file.path) == '.coffee' && !LINTED.include?(file.path)
-    sh "#{NODEBIN}/coffeelint #{file.path.shellescape}"
-    LINTED << file.path
-  end
-
-  src = file.read
-  src.gsub!("$namespace$", options[:namespace]) if options[:namespace]
-  throw "No namespace expension performed on #{file.path} with #{options.inspect}" if src =~ /\$namespace\$/
-  options.delete(:namespace)
-  src.gsub!(/(^|\n)require\s*\(?\s*'([^'\n]+)'([^\n]*)/) {
-    all = $&
-    prefix = $1
-    tbi = $2.strip
-    namespace = $3
-
-    if namespace =~ /\s*,\s*'([^'\n]+)'/
-      namespace = $1
-    else
-      namespace = nil
-    end
-
-    if tbi =~ /\.js$/
-      #puts "registering #{tbi.inspect}"
-      result = all
-    elsif tbi == ':header:'
-      throw "No header information present" unless options[:header]
-      result = "Translator.header = #{options[:header].to_json}"
-      result += "\nTranslator.release = #{RELEASE.to_json}"
-      result += "\nTranslator.#{options[:header]['label'].gsub(/\s/, '')} = true"
-    elsif tbi == ':constants:'
-      throw "No header information present" unless options[:header]
-      result = []
-      result << "Translator.translatorID    = #{options[:header]['translatorID'].to_json}"
-      result << "Translator.label           = #{options[:header]['label'].to_json}"
-      result << "Translator.timestamp       = #{options[:header]['lastUpdated'].to_json}"
-      result << "Translator.release         = #{RELEASE.to_json}"
-      Dir['resource/translators/*.yml'].sort.each{|yml|
-        header = YAML.load_file(yml)
-        result << "Translator.#{header['label'].gsub(/\s/, '')} = true" if header['translatorID'] == options[:header]['translatorID']
-      }
-      result = result.join("\n")
-    else
-      #puts "including #{tbi.inspect}"
-      i = [File.join(File.dirname(file.path), tbi), File.join('include', tbi)].detect{|f| File.file?(f) }
-      throw "#{tbi} not found in #{file.path}" unless i
-      result = File.file?(i) ? expand(open(i), options.merge(namespace: namespace)) : ''
-    end
-    prefix + result
-  }
-  return src
-end
-
 ABBREVS = YAML.load_file('resource/abbreviations/lists.yml')
 ABBREVS.each{|a|
   if File.basename(a['path']) == 'WOS.json'
@@ -156,6 +101,10 @@ ABBREVS.each{|a|
   end
 }
 ZIPFILES = [
+  'chrome.manifest',
+  'chrome/content/zotero-better-bibtex/Formatter.js',
+  'chrome/content/zotero-better-bibtex/cache.js',
+  'chrome/content/zotero-better-bibtex/debug-bridge.js',
   'chrome/content/zotero-better-bibtex/errorReport.js',
   'chrome/content/zotero-better-bibtex/errorReport.xul',
   'chrome/content/zotero-better-bibtex/exportOptions.js',
@@ -164,31 +113,44 @@ ZIPFILES = [
   'chrome/content/zotero-better-bibtex/itemPane.js',
   'chrome/content/zotero-better-bibtex/itemPane.xul',
   'chrome/content/zotero-better-bibtex/jsencrypt.min.js',
+  'chrome/content/zotero-better-bibtex/keymanager.js',
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/overlay.xul',
   'chrome/content/zotero-better-bibtex/preferences.js',
   'chrome/content/zotero-better-bibtex/preferences.xul',
+  'chrome/content/zotero-better-bibtex/schomd.js',
+  'chrome/content/zotero-better-bibtex/web-endpoints.js',
   'chrome/content/zotero-better-bibtex/zotero-better-bibtex.js',
   'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
   'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.properties',
-  'chrome.manifest',
   'defaults/preferences/defaults.js',
   'install.rdf',
   'resource/error-reporting.pub.pem',
+  'resource/translators/Better BibLaTeX.header.js',
   'resource/translators/Better BibLaTeX.js',
   'resource/translators/Better BibLaTeX.json',
+  'resource/translators/Better BibTeX.header.js',
   'resource/translators/Better BibTeX.js',
   'resource/translators/Better BibTeX.json',
+  'resource/translators/BetterBibTeXParser.js',
+  'resource/translators/BibTeXAuxScanner.header.js',
   'resource/translators/BibTeXAuxScanner.js',
   'resource/translators/BibTeXAuxScanner.json',
-  'resource/translators/json5.js',
+  'resource/translators/BraceBalancer.js',
+  'resource/translators/LaTeX Citation.header.js',
   'resource/translators/LaTeX Citation.js',
   'resource/translators/LaTeX Citation.json',
+  'resource/translators/Pandoc Citation.header.js',
   'resource/translators/Pandoc Citation.js',
   'resource/translators/Pandoc Citation.json',
-  'resource/translators/xregexp-all-min.js',
+  'resource/translators/Zotero TestCase.header.js',
   'resource/translators/Zotero TestCase.js',
-  'resource/translators/Zotero TestCase.json'
+  'resource/translators/Zotero TestCase.json',
+  'resource/translators/json5.js',
+  'resource/translators/latex_unicode_mapping.js',
+  'resource/translators/translator.js',
+  'resource/translators/unicode_translator.js',
+  'resource/translators/xregexp-all-min.js',
 ] + Dir['chrome/skin/**/*.*'] # + ABBREVS.collect{|a| a['path']}
 
 
@@ -306,54 +268,28 @@ rule '.json' => '.yml' do |t|
   }
 end
 
+rule( /\.header\.js$/ => [ proc {|task_name| task_name.sub(/\.header\.js$/, '.yml') } ]) do |t|
+  header = YAML.load_file(t.source)
+  open(t.name, 'w'){|f|
+    f.write("
+      Translator.header = #{header.to_json};
+      Translator.release = #{RELEASE.to_json};
+      Translator.#{header['label'].gsub(/\s/, '')} = true;
+    ")
+  }
+end
+
 rule '.js' => '.pegjs' do |t|
-  name = "tmp/#{File.basename(t.name)}"
-  source = "tmp/#{File.basename(t.source)}"
-  open(source, 'w'){|f| f.write(expand(open(t.source))) }
-  sh "#{NODEBIN}/pegjs -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{source} #{name}"
-  FileUtils.mv(name, t.name)
+  sh "#{NODEBIN}/pegjs -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{t.source.shellescape} #{t.name.shellescape}"
 end
 
 rule '.js' => '.pegcoffee' do |t|
-  name = "tmp/#{File.basename(t.name)}"
-  source = "tmp/#{File.basename(t.source)}"
-  open(source, 'w'){|f| f.write(expand(open(t.source))) }
-  sh "#{NODEBIN}/pegjs --plugin pegjs-coffee-plugin -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{source} #{name}"
-  FileUtils.mv(name, t.name)
+  sh "#{NODEBIN}/pegjs --plugin pegjs-coffee-plugin -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{t.source} #{t.name}"
 end
 
 rule '.js' => '.coffee' do |t|
-  header = t.source.sub(/\.coffee$/, '.yml')
-  if File.file?(header)
-    header = YAML.load_file(header)
-    header['lastUpdated'] = TIMESTAMP
-  else
-    header = nil
-  end
-
-  comment = "# Comment for the generated javascript:\n###\n DO NOT EDIT/REVIEW! Edit/review the CoffeScript source instead\n###\n"
-  tmp = "tmp/#{File.basename(t.source)}"
-  open(tmp, 'w'){|f| f.write(comment + expand(open(t.source), header: header)) }
-  puts "Compiling #{t.source}"
-
-  compile = "#{NODEBIN}/coffee -bcp #{tmp.shellescape}"
-  output, status = Open3.capture2e(compile)
-  raise output if status.exitstatus != 0
-
-  # include javascript generated from pegjs
-  output.gsub!(/(^|\n)require\('([^'\n]+\.js)'\);[^\n]*/) {
-    tbi = $2.strip
-    puts "Importing javascript: #{tbi}"
-    tbi = File.join(File.dirname(t.source), tbi)
-    open(tbi).read
-  }
-
-  #output, status = Open3.capture2e('uglifyjs', stdin_data: output)
-  #raise output if status.exitstatus != 0
-
-  open(t.name, 'w') {|target|
-    target.write(output)
-  }
+  sh "#{NODEBIN}/coffeelint #{t.source.shellescape}"
+  sh "#{NODEBIN}/coffee -bc #{t.source.shellescape}"
 end
 
 task :keys, [:size] do |t, args|
@@ -612,6 +548,7 @@ file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translato
   l2u["\\href"] = '';
 
   cs = []
+  cs << "LaTeX = {} unless LaTeX"
   cs << "LaTeX.toLaTeX = { unicode: Object.create(null), ascii: Object.create(null) }"
   [:unicode, :ascii].each{|map|
     cs << "LaTeX.toLaTeX.#{map}.math ="

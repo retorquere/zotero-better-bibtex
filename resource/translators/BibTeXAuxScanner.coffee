@@ -1,5 +1,3 @@
-require('translator.coffee')
-
 detectImport = ->
   aux = ''
   while (str = Zotero.read(0x100000)) != false

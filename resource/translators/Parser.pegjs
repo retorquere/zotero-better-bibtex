@@ -1,7 +1,5 @@
 {
-require('ParserSupport.js');
-
-bibtex = new ParserSupport();
+  bibtex = new BetterBibTexParser();
 }
 
 start

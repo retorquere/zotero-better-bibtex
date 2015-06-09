@@ -1,5 +1,4 @@
-LaTeX = {}
-require('latex_unicode_mapping.coffee')
+LaTeX = {} unless LaTeX
 
 LaTeX.html = {
   sup: {prefix: '\\textsuperscript{', postfix: '}'}
@@ -28,8 +27,6 @@ LaTeX.emit = ->
       @latex += @acc.text
   @acc = { math: false, text: ''}
   return
-
-require('BraceBalancer.js')
 
 LaTeX.html2latex = (text) ->
   stack = []

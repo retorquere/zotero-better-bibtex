@@ -1,5 +1,3 @@
-require('translator.coffee')
-
 scrub = (item) ->
   delete item.__citekey__
   delete item.libraryID

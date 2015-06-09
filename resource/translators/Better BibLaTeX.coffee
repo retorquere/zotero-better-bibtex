@@ -1,6 +1,3 @@
-require('translator.coffee')
-require('unicode_translator.coffee')
-
 Translator.fieldMap = {
   # Zotero          BibTeX
   place:            { name: 'location', preserveCaps: true }

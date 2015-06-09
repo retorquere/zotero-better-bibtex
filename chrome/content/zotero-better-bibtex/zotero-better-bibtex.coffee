@@ -2,8 +2,6 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 Components.utils.import('resource://zotero/config.js')
 
-require('Formatter.js')
-
 loki.Collection::findObject = (template) ->
   return @findOne({'$and': ({"#{k}": v} for own k, v of template)})
 
@@ -649,12 +647,12 @@ Zotero.BetterBibTeX.init = ->
   AddonManager.addAddonListener(uninstaller)
 
 Zotero.BetterBibTeX.loadTranslators = ->
-  @load('Better BibTeX.js')
-  @load('Better BibLaTeX.js')
-  @load('LaTeX Citation.js')
-  @load('Pandoc Citation.js')
-  @load('Zotero TestCase.js')
-  @load('BibTeXAuxScanner.js')
+  @load('Better BibTeX')
+  @load('Better BibLaTeX')
+  @load('LaTeX Citation')
+  @load('Pandoc Citation')
+  @load('Zotero TestCase')
+  @load('BibTeXAuxScanner')
 
   # clean up junk
   try
@@ -851,14 +849,17 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions) ->
 Zotero.BetterBibTeX.load = (translator) ->
   try
     @debug('loading translator:', translator)
-    header = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}on"))
+    header = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.json"))
     @removeTranslator(header)
-    code = [
+    code = ([
       # Zotero ships with a lobotomized version
-      Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/translators/xregexp-all-min.js'),
-      Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/translators/json5.js'),
-      Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}")
-    ].join("\n")
+      Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/translators/xregexp-all-min.js')
+      Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/translators/json5.js')
+      Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/translators/translator.js')
+    ] + (Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{dep}.js") for dep in (header.dependencies || [])) + [
+      Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.header.js")
+      Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.js")
+    ]).join("\n")
 
     @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
 
@@ -980,9 +981,6 @@ class Zotero.BetterBibTeX.HTMLNode extends Zotero.BetterBibTeX.XmlNode
 
   HTMLNode::alias(['pre', 'b', 'p', 'div', 'ul', 'li'])
 
-require('preferences.coffee')
-require('keymanager.coffee')
-require('web-endpoints.coffee')
-require('schomd.coffee')
-require('debug-bridge.coffee')
-require('cache.coffee')
+
+
+

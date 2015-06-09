@@ -19,3 +19,7 @@ BetterBibTeX:
   cache:
     nextItem: true
     BibTeX: true
+  dependencies:
+    - unicode_translator
+    - latex_unicode_mapping
+    - BraceBalancer

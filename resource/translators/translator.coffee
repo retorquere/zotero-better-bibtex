@@ -5,8 +5,6 @@ Translator = new class
     @rawLaTag = '#LaTeX'
     @BibLaTeXDataFieldMap = Object.create(null)
 
-require(':header:')
-
 Translator.log = (msg...) ->
   msg = for m in msg
     switch

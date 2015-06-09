@@ -1,6 +1,3 @@
-require('translator.coffee')
-require('unicode_translator.coffee')
-
 Translator.fieldMap = {
   # Zotero      BibTeX
   place:            { name: 'address', preserveCaps: true, import: 'location' }
@@ -117,8 +114,6 @@ doExport = ->
   Zotero.write('\n')
   return
 
-require('Parser.js')
-
 detectImport = ->
   try
     input = Zotero.read(102400)
@@ -172,6 +167,7 @@ class ZoteroItem
     @type = Translator.typeMap.BibTeX2Zotero[Zotero.Utilities.trimInternal((bibtex.type || bibtex.__type__).toLowerCase())] || 'journalArticle'
     @item = new Zotero.Item(@type)
     @item.itemID = bibtex.__key__
+    @log("new reference: #{@item.itemID}")
     @biblatexdata = {}
     @item.notes.push({ note: ('The following fields were not imported:<br/>' + bibtex.__note__).trim(), tags: ['#BBT Import'] }) if bibtex.__note__
     @import(bibtex)
@@ -348,7 +344,7 @@ ZoteroItem::import = (bibtex) ->
     @item.proceedingsTitle = @item.publicationTitle
     delete @item.publicationTitle
 
-  @addToExtra('bibtex: ' + @item.itemID)
+  @addToExtra("bibtex: #{@item.itemID}")
 
   keys = Object.keys(@biblatexdata)
   if keys.length > 0

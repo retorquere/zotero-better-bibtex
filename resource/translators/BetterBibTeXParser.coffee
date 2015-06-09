@@ -2,7 +2,6 @@ class ParserSupport
   constructor: (options) ->
     @raw = options.raw
 
-    #@bibtex.
     @references = []
     @collections = []
     @strings = Object.create(null)
