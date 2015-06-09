@@ -3,7 +3,7 @@ Feature: Import
 
 @aux
 Scenario: AUX scanner
-  When I import 164 references from 'import/AUX scanner-pre.json'
+  When I import 157 references from 'import/AUX scanner-pre.json'
   And I import 1 reference from 'import/AUX scanner.aux'
   Then the library should match 'import/AUX scanner-post.json'
 
