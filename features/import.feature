@@ -5,8 +5,7 @@ Feature: Import
 Scenario: AUX scanner
   When I import 222 references from 'import/AUX scanner-pre.json'
   And I import 1 reference from 'import/AUX scanner.aux'
-  Then write the library to '/tmp/bib.json'
-  Then the library without collections should match 'import/AUX scanner-post.json'
+  Then the library should match 'import/AUX scanner-post.json'
 
 Scenario: Better BibTeX Import 2
   When I import 2 references from 'import/Better BibTeX.002.bib'

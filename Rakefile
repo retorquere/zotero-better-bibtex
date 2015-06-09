@@ -418,12 +418,16 @@ task :test, [:tag] => [XPI, :plugins] do |t, args|
       rerun = "--format pretty --format rerun --out tmp/cucumber.rerun"
     end
 
-    if OS.mac?
-      sh "script -q -t 1 cucumuber.log cucumber --strict #{tag}"
-    else
-      sh "script -ec 'cucumber --require features #{rerun} --strict #{tag}' cucumber.log"
+    begin
+      if OS.mac?
+        sh "script -q -t 1 cucumber.run cucumber --strict #{tag}"
+      else
+        sh "script -ec 'cucumber --require features #{rerun} --strict #{tag}' cucumber.run"
+      end
+    ensure
+      sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
+      sh "rm -f cucumber.run"
     end
-    sh "sed -re 's/\\x1b[^m]*m//g' cucumber.log | col -b | sponge cucumber.log"
   rescue => e
     ok = false
     raise e
@@ -463,19 +467,8 @@ file 'resource/translators/unicode.xml' do |t|
 end
 
 file 'chrome/content/zotero-better-bibtex/lokijs.js' => 'Rakefile' do |t|
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js', t.name)
-
-  #js = open(t.name).read
-  #open(t.name, 'w'){|f|
-    #f.puts("
-      #Zotero.BetterBibTeX.cache.stringify = (function () {
-        #module = {};
-        #require = function() { throw new Error('this is not commonJS'); }
-        ##{js}
-        #return module.exports;
-      #})();
-    #")
-  #}
+  #ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js', t.name)
+  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/techfort/LokiJS/master/src/lokijs.js', t.name)
 end
 
 file 'resource/translators/xregexp-all-min.js' do |t|

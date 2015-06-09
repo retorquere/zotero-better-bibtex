@@ -248,9 +248,7 @@ Then /^the library (without collections )?should match '([^']+)'$/ do |nocollect
   renum = lambda{|collection, idmap, items=true|
     collection.delete('id')
     collection['items'] = collection['items'].collect{|i| idmap[i] } if items
-    collection['collections'].each{|coll|
-      renum.call(coll, idmap)
-    }
+    collection['collections'].each{|coll| renum.call(coll, idmap) } if collection['collections']
   }
   [expected, found].each_with_index{|library, i|
     library.delete('config')

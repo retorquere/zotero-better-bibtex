@@ -70,15 +70,13 @@ Zotero.BetterBibTeX.schomd.init = ->
 Zotero.BetterBibTeX.schomd.items = (citekeys, {library} = {}) ->
   citekeys = [citekeys] unless Array.isArray(citekeys)
 
-  ids = []
-  keys = []
-  for key in citekeys
-    if typeof key == 'number'
-      ids.push(key)
-    else
-      keys.push(key)
-  return ids if keys.length == 0
-  return ids.concat(Zotero.BetterBibTeX.keymanager.resolve(keys))
+  keys = (key for key in citekeys when typeof key != 'number')
+  if keys.length == 0
+    resolved = {}
+  else
+    resolved = Zotero.BetterBibTeX.keymanager.resolve(keys, library)
+
+  return ((if typeof key == 'number' then key else resolved[key]) for key in citekeys)
 
 Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, library} = {}) ->
   items = @items(citekeys, {library: library})
