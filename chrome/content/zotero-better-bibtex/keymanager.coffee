@@ -336,14 +336,13 @@ Zotero.BetterBibTeX.keymanager = new class
     return @clone(cached)
 
   resolve: (citekeys, libraryID) ->
-    try
-      libraryID = @integer(libraryID)
-    catch
-      libraryID = null
+    libraryID = null if libraryID == undefined
+    libraryID = @integer(libraryID)
+    citekeys = [citekeys] unless Array.isArray(citekeys)
     Zotero.BetterBibTeX.debug('keymanager.resolve:', citekeys, libraryID)
-    if Array.isArray(citekeys)
-      ids = (key.itemID for key in @keys.where((o) -> o.citekey in citekeys && o.libraryID == libraryID))
-    else
-      ids = (key.itemID for key in @keys.findObjects({citekey: citekeys, libraryID}))
-    return ids
 
+    resolved = {}
+    for citekey in citekeys
+      Zotero.BetterBibTeX.debug('resolve:', {citekey, libraryID}, 'against', @keys.find())
+      resolved[citekey] = @keys.findObject({citekey, libraryID})
+    return resolved

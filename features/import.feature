@@ -1,6 +1,12 @@
 @test-cluster-2 @import
 Feature: Import
 
+@aux
+Scenario: AUX scanner
+  When I import 222 references from 'import/AUX scanner-pre.json'
+  And I import 1 reference from 'import/AUX scanner.aux'
+  Then the library should match 'import/AUX scanner-post.json'
+
 Scenario: Better BibTeX Import 2
   When I import 2 references from 'import/Better BibTeX.002.bib'
   Then the library without collections should match 'import/Better BibTeX.002.json'
@@ -45,9 +51,4 @@ Scenario Outline: Better BibTeX Import
 #Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #97
 #  When I import 915 reference with 42 attachments from 'import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib'
 #  Then the library should match 'import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json'
-
-@aux
-Scenario: AUX scanner
-  When I import 1 reference from 'import/Quine_and_Meaning.aux'
-  Then the library without collections should match 'import/Quine_and_Meaning.json'
 

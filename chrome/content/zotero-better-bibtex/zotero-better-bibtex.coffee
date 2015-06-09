@@ -2,11 +2,16 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 Components.utils.import('resource://zotero/config.js')
 
+loki.Collection::byExample = (template) ->
+  query = {'$and': ({"#{k}": v} for own k, v of template)}
+  Zotero.BetterBibTeX.debug('loki.Collection::byExample:', query)
+  return query
+
 loki.Collection::findObject = (template) ->
-  return @findOne({'$and': ({"#{k}": v} for own k, v of template)})
+  return @findOne(@byExample(template))
 
 loki.Collection::findObjects = (template) ->
-  return @find({'$and': ({"#{k}": v} for own k, v of template)})
+  return @find(@byExample(template))
 
 Zotero.BetterBibTeX = {
   serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
@@ -713,7 +718,7 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
     try
       extra = JSON.parse(Zotero.Items.get(itemID).getField('extra').trim())
     catch error
-      @debug('no AUX scanner info found on collection add', error)
+      @debug('no AUX scanner/import error info found on collection add')
       continue
 
     note = null
@@ -729,12 +734,10 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
           note = report.serialize()
 
       when '0af8f14d-9af7-43d9-a016-3c5df3426c98' # BibTeX AUX Scanner
-
         missing = []
-        for citekey in extra.citations
-          id = @keymanager.resolve(citekey, collection.libraryID)[0]
-          if id
-            collection.addItem(id)
+        for own citekey, found of @keymanager.resolve(extra.citations, collection.libraryID)
+          if found
+            collection.addItem(found.itemID)
           else
             missing.push(citekey)
 
