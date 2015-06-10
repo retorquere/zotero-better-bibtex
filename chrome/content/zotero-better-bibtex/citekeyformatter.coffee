@@ -216,6 +216,8 @@ class Zotero.BetterBibTeX.CitekeyFormatter
   methods:
     literal: (text) -> return text
 
+    property: (name) -> return @item[name] || @item[name[0].toLowerCase() + name.slice(1)]
+
     id: -> return @item.itemID
 
     key: -> return @item.key
