@@ -343,6 +343,5 @@ Zotero.BetterBibTeX.keymanager = new class
 
     resolved = {}
     for citekey in citekeys
-      Zotero.BetterBibTeX.debug('resolve:', {citekey, libraryID}, 'against', @keys.find())
       resolved[citekey] = @keys.findObject({citekey, libraryID})
     return resolved
