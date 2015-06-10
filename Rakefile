@@ -412,8 +412,7 @@ file 'resource/translators/unicode.xml' do |t|
 end
 
 file 'chrome/content/zotero-better-bibtex/lokijs.js' => 'Rakefile' do |t|
-  #ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js', t.name)
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/techfort/LokiJS/master/src/lokijs.js', t.name)
+  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js', t.name)
 end
 
 file 'resource/translators/xregexp-all-min.js' do |t|

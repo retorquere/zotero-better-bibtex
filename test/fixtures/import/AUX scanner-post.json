@@ -26,7 +26,9 @@
   "collections": [
     {
       "name": "AUX scanner",
-      "collections": [],
+      "collections": [
+
+      ],
       "items": [
         9,
         224
@@ -34,7 +36,9 @@
     },
     {
       "name": "AUX scanner-pre",
-      "collections": [],
+      "collections": [
+
+      ],
       "items": [
         1,
         2,
@@ -203,11 +207,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 2,
@@ -223,11 +234,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 3,
@@ -243,11 +261,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 4,
@@ -264,26 +289,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/5E5QDJKF/The Ontology of Cyberspace (Koepsell).pdf",
-          "title": "The Ontology of Cyberspace (Koepsell).pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        },
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/78UQCGRZ/The Ontology of Cyberspace, Law, Philosophy, and the Future of Intellectual.pdf",
-          "title": "The Ontology of Cyberspace, Law, Philosophy, and the Future of Intellectual.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
       "tags": [
         "orphaned"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 7,
@@ -301,11 +318,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 8,
@@ -326,11 +350,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 9,
@@ -347,11 +378,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 10,
@@ -369,18 +407,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/ZGGB89JB/Demystifying the right to exclude, Of property, inviolability, and automatic.pdf",
-          "title": "Demystifying the right to exclude, Of property, inviolability, and automatic.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Harvard Journal of Law and Public Policy"
     },
     {
@@ -410,18 +448,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/TCU7ZGDC/A Confucian View of Personhood and Bioethics (FAN-Ruiping & YU-Erika).pdf",
-          "title": "A Confucian View of Personhood and Bioethics (FAN-Ruiping & YU-Erika).pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 14,
@@ -440,18 +478,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/CN826X7U/MacLeod_2000_Nature and empire.pdf",
-          "title": "MacLeod_2000_Nature and empire.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 16,
@@ -486,20 +524,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/SXNA8DIA/Psillos_2002_Simply the Best.pdf",
-          "title": "Psillos_2002_Simply the Best.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
       "tags": [
         "IBE"
       ],
-      "related": [],
-      "seeAlso": [],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Computational Logic: Logic Programming and Beyond"
     },
     {
@@ -517,18 +553,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/NMDRMCW9/Verbeek_2005_What Things Do.pdf",
-          "title": "Verbeek_2005_What Things Do.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 20,
@@ -550,11 +586,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 21,
@@ -571,11 +614,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 22,
@@ -592,11 +642,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Human Dignity and Bioethics: Essays Commissioned by the President's Council on Bioethics"
     },
     {
@@ -619,11 +676,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 24,
@@ -646,8 +710,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
+      "notes": [
+
+      ],
       "tags": [
         "explanation",
         "idealization",
@@ -655,8 +720,12 @@
         "philosophy of science",
         "technology"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 25,
@@ -684,11 +753,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 26,
@@ -722,21 +798,20 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "title": "Bostrom_Ord_2006_The Reversal Test.pdf",
-          "mimeType": "application/pdf",
-          "url": "http://www.jstor.org/stable/pdfplus/10.1086%2F505233.pdf?acceptTC=true"
-        }
+      "notes": [
+
       ],
       "tags": [
         "ethics",
         "human enhancement",
         "status quo"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 28,
@@ -759,11 +834,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 29,
@@ -779,11 +861,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 30,
@@ -809,18 +898,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/6AQRE27Q/Ayer_Rhees_1954_Symposium.pdf",
-          "title": "Ayer_Rhees_1954_Symposium.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 32,
@@ -840,22 +929,20 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/WQJ8V2B8/Heidegger_1982_The Question Concerning Technology, and Other Essays.pdf",
-          "title": "Heidegger_1982_The Question Concerning Technology, and Other Essays.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
       "tags": [
         "philosophy",
         "science",
         "technology"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 34,
@@ -871,11 +958,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 35,
@@ -897,20 +991,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/CWWPEZJC/Searle-Social-Ontology.pdf",
-          "title": "Searle-Social-Ontology.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
       "tags": [
         "read"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 37,
@@ -927,11 +1019,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 38,
@@ -952,18 +1051,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/HBNC7TBB/Koopman_2011_Rorty's Linguistic Turn.pdf",
-          "title": "Koopman_2011_Rorty's Linguistic Turn.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 40,
@@ -982,18 +1081,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/KP6P4WSB/Kuhn_2012_The structure of scientific revolutions.pdf",
-          "title": "Kuhn_2012_The structure of scientific revolutions.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 42,
@@ -1013,11 +1112,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 43,
@@ -1033,11 +1139,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 44,
@@ -1072,18 +1185,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/PFADNM2I/Olsen et al_2008_New Waves in Philosophy of Technology.pdf",
-          "title": "Olsen et al_2008_New Waves in Philosophy of Technology.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 46,
@@ -1100,11 +1213,18 @@
           "fieldMode": 1
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 47,
@@ -1121,11 +1241,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 48,
@@ -1147,11 +1274,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 49,
@@ -1170,11 +1304,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 50,
@@ -1205,11 +1346,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 51,
@@ -1245,17 +1393,15 @@
       "notes": [
         "<p>Translation by Stambaugh, Joan</p>"
       ],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/PV6B3SF2/Heidegger et al_2010_Being and Time.pdf",
-          "title": "Heidegger et al_2010_Being and Time.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "tags": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 54,
@@ -1271,11 +1417,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 55,
@@ -1296,18 +1449,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/CSNS74BP/Fodor_1976_The Language of Thought.pdf",
-          "title": "Fodor_1976_The Language of Thought.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 57,
@@ -1322,11 +1475,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 58,
@@ -1342,11 +1502,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 59,
@@ -1378,18 +1545,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/FSSJH5IX/Leach et al_2009_Freedom imagined.pdf",
-          "title": "Leach et al_2009_Freedom imagined.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 61,
@@ -1405,11 +1572,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 62,
@@ -1426,11 +1600,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 63,
@@ -1449,11 +1630,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Metametaphysics: New Essays on the Foundations of Ontology"
     },
     {
@@ -1478,11 +1666,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "The Analytic Turn: Analysis in Early Analytic Philosophy and Phenomenology"
     },
     {
@@ -1501,11 +1696,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Free Software, Free Society: Selected Essays of Richard M. Stallman"
     },
     {
@@ -1525,11 +1727,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 67,
@@ -1548,11 +1757,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "InformationWeek"
     },
     {
@@ -1569,11 +1785,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 69,
@@ -1606,11 +1829,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 70,
@@ -1631,18 +1861,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/FJHM4XTP/Law_2004_Five Private Language Arguments.pdf",
-          "title": "Law_2004_Five Private Language Arguments.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 72,
@@ -1658,11 +1888,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 73,
@@ -1686,18 +1923,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/BFCQ8W4H/Social Movements and the Social Construction of Human Rights.pdf",
-          "title": "Social Movements and the Social Construction of Human Rights.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 75,
@@ -1720,18 +1957,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/UI4VRH92/Bostrom_2005_A history of transhumanist thought.pdf",
-          "title": "Bostrom_2005_A history of transhumanist thought.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 77,
@@ -1749,11 +1986,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Harvard Law Review"
     },
     {
@@ -1775,24 +2019,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/3CK59Q8A/Verbeek_2008_Cyborg intentionality.pdf",
-          "title": "Verbeek_2008_Cyborg intentionality.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        },
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/P8W2HXPM/Verbeek_2008_Cyborg intentionality.pdf",
-          "title": "Verbeek_2008_Cyborg intentionality.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 81,
@@ -1808,11 +2046,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 82,
@@ -1829,11 +2074,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Converging Technologies for Improving Human Performance"
     },
     {
@@ -1862,10 +2114,15 @@
       "notes": [
         "<p>Article: The Origin of the Work of Art</p>"
       ],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 85,
@@ -1883,11 +2140,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 86,
@@ -1910,20 +2174,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/RUE59UGK/Bostrom_Roache_2007_Ethical Issues in Human Enhancement.pdf",
-          "title": "Bostrom_Roache_2007_Ethical Issues in Human Enhancement.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
       "tags": [
         "orphaned"
       ],
-      "related": [],
-      "seeAlso": [],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "New Waves in Applied Ethics"
     },
     {
@@ -1940,11 +2202,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 89,
@@ -1967,11 +2236,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 90,
@@ -1991,8 +2267,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
+      "notes": [
+
+      ],
       "tags": [
         "Amazon Kindle",
         "Amazon.com Inc",
@@ -2013,8 +2290,12 @@
         "consumer electronics",
         "iPad"
       ],
-      "related": [],
-      "seeAlso": [],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Bits Blog"
     },
     {
@@ -2038,20 +2319,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/8FC6VJW7/Ladyman_2005_Wouldn't it be Lovely.pdf",
-          "title": "Ladyman_2005_Wouldn't it be Lovely.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
       "tags": [
         "loveliness"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 93,
@@ -2067,11 +2346,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 94,
@@ -2087,11 +2373,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 95,
@@ -2111,11 +2404,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 96,
@@ -2149,13 +2449,8 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "title": "SEP - Snapshot",
-          "mimeType": "text/html",
-          "url": "http://plato.stanford.edu/archives/sum2012/entries/private-language/"
-        }
+      "notes": [
+
       ],
       "tags": [
         "Russell, Bertrand",
@@ -2164,8 +2459,12 @@
         "other minds",
         "self-knowledge"
       ],
-      "related": [],
-      "seeAlso": [],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "The Stanford Encyclopedia of Philosophy"
     },
     {
@@ -2195,11 +2494,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 99,
@@ -2220,17 +2526,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "title": "Snapshot",
-          "mimeType": "text/html",
-          "url": "http://books.google.nl/books?hl=en&lr=&id=qS3pJL_BcdkC&oi=fnd&pg=PA1&dq=Technology+and+the+Character+of+Contemporary+Life++Albert+Borgmann&ots=TCoU2lKISE&sig=ag0Sp-0RFHjIjGPrb5pX6KN6i0w&redir_esc=y#v=onepage&q=Technology%20and%20the%20Character%20of%20Contemporary%20Life%20%20Albert%20Borgmann&f=false"
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 101,
@@ -2247,11 +2554,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 102,
@@ -2273,11 +2587,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 103,
@@ -2297,20 +2618,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/6FGIKDJ3/Dear_2008_The Intelligibility of Nature.pdf",
-          "title": "Dear_2008_The Intelligibility of Nature.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
       "tags": [
         "explanation"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 105,
@@ -2325,18 +2644,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/7U594VCR/Ten Paradoxes (Andrew Feenberg).pdf",
-          "title": "Ten Paradoxes (Andrew Feenberg).pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 107,
@@ -2368,18 +2687,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/PXWN84FI/Foucault et al_1997_Ethics.pdf",
-          "title": "Foucault et al_1997_Ethics.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 109,
@@ -2398,11 +2717,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 110,
@@ -2419,11 +2745,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 111,
@@ -2451,20 +2784,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/HI64JSBG/Ashooh_Tang_1999_Was the truth ever meant to explain much.pdf",
-          "title": "Ashooh_Tang_1999_Was the truth ever meant to explain much.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
       "tags": [
         "explanation"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 113,
@@ -2482,11 +2813,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 114,
@@ -2504,11 +2842,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Ontological Relativity and Other Essays"
     },
     {
@@ -2527,14 +2872,19 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
+      "notes": [
+
+      ],
       "tags": [
         "philosophy",
         "science"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 116,
@@ -2550,11 +2900,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 117,
@@ -2575,18 +2932,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/G6IWMFD6/Basalla_1967_The spread of western science.pdf",
-          "title": "Basalla_1967_The spread of western science.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 119,
@@ -2606,18 +2963,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/382W3JH6/Kripke_1982_Wittgenstein on Rules and Private Language.pdf",
-          "title": "Kripke_1982_Wittgenstein on Rules and Private Language.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 121,
@@ -2634,11 +2991,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 122,
@@ -2654,11 +3018,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 123,
@@ -2681,18 +3052,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/7BJVHEZ9/Koyre_1943_Galileo and Plato.pdf",
-          "title": "Koyre_1943_Galileo and Plato.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 125,
@@ -2708,11 +3079,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 126,
@@ -2734,11 +3112,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 127,
@@ -2758,11 +3143,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 128,
@@ -2772,12 +3164,21 @@
       "extra": "bibtex: 2011logicalpositivism\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT",
       "title": "Logical Positivism",
       "bookTitle": "Encyclopædia Britannica",
-      "creators": [],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "creators": [
+
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Encyclopædia Britannica"
     },
     {
@@ -2797,16 +3198,21 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
+      "notes": [
+
+      ],
       "tags": [
         "Stallman",
         "freesoftware",
         "fsf",
         "gnu"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 130,
@@ -2824,11 +3230,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 131,
@@ -2846,18 +3259,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/6PGJIMNC/The Grown and the Made (Habermas).pdf",
-          "title": "The Grown and the Made (Habermas).pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "The Future of Human Nature"
     },
     {
@@ -2877,26 +3290,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/FSW3CFCP/Meyer_2000_The Ethics of Free Software.pdf",
-          "title": "Meyer_2000_The Ethics of Free Software.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        },
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/TD8KIUAI/The Ethics of Free Software (Bertrand Meyer).pdf",
-          "title": "The Ethics of Free Software (Bertrand Meyer).pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
       "tags": [
         "orphaned"
       ],
-      "related": [],
-      "seeAlso": [],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Dr. Dobb's"
     },
     {
@@ -2915,11 +3320,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 137,
@@ -2937,11 +3349,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 138,
@@ -2961,18 +3380,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/J4TVFXZU/Human Rights as Social Construction.pdf",
-          "title": "Human Rights as Social Construction.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 140,
@@ -2995,11 +3414,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 141,
@@ -3016,11 +3442,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 142,
@@ -3037,11 +3470,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 143,
@@ -3057,11 +3497,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 144,
@@ -3078,11 +3525,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 145,
@@ -3116,11 +3570,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 146,
@@ -3143,11 +3604,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Converging Technologies for Improving Human Performance"
     },
     {
@@ -3179,11 +3647,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Death and Anti-Death, Volume 2: Two Hundred Years After Kant, Fifty Years After Turing"
     },
     {
@@ -3202,11 +3677,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 149,
@@ -3226,20 +3708,8 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/ZWTVXSER/Beauty In Science, A New Model Of The Role Of Aesthetic Evaluations In Science.pdf",
-          "title": "Beauty In Science, A New Model Of The Role Of Aesthetic Evaluations In Science.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        },
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/2XS6SUA3/Montano_2013_Beauty in science.pdf",
-          "title": "Montano_2013_Beauty in science.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
       "tags": [
         "aesthetics",
@@ -3249,8 +3719,12 @@
         "loveliness",
         "philosophy of science"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 152,
@@ -3269,11 +3743,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 153,
@@ -3296,11 +3777,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 154,
@@ -3317,11 +3805,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 155,
@@ -3337,11 +3832,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 156,
@@ -3357,11 +3859,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 157,
@@ -3389,13 +3898,8 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "title": "SEP - Snapshot",
-          "mimeType": "text/html",
-          "url": "http://plato.stanford.edu/archives/sum2011/entries/intellectual-property/"
-        }
+      "notes": [
+
       ],
       "tags": [
         "Hegel, Georg Wilhelm Friedrich",
@@ -3407,8 +3911,12 @@
         "property and ownership",
         "rights"
       ],
-      "related": [],
-      "seeAlso": [],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "The Stanford Encyclopedia of Philosophy"
     },
     {
@@ -3429,11 +3937,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 160,
@@ -3449,11 +3964,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 161,
@@ -3485,18 +4007,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/RAMPSET3/Kant et al_2002_Groundwork for the Metaphysics of Morals.pdf",
-          "title": "Kant et al_2002_Groundwork for the Metaphysics of Morals.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 163,
@@ -3513,11 +4035,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 164,
@@ -3533,11 +4062,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 165,
@@ -3559,10 +4095,15 @@
       "notes": [
         "<p>A Phenomenology of Technics</p>"
       ],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 167,
@@ -3580,11 +4121,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 168,
@@ -3601,11 +4149,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 169,
@@ -3625,32 +4180,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/68ITFGHP/tlp.pdf",
-          "title": "tlp.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        },
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/CTUC6XWZ/Wittgenstein_1922_Tractatus Logico-philosophicus.pdf",
-          "title": "Wittgenstein_1922_Tractatus Logico-philosophicus.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        },
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/XIMVZK29/Wittgenstein-Tractatus.pdf",
-          "title": "Wittgenstein-Tractatus.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
       "tags": [
         "orphaned"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 173,
@@ -3676,20 +4217,16 @@
         "<p><strong>Extracted Annotations (27 March 2014 12:44:51)</strong></p>\n<p><em>Some semanticists say that certain expressions <br />�· designate certain entities, and among these designated entities they in­<br />·<br />. elude not only concrete material things but also abstract entities, e.g., <br />properties as designated by predicates and propositions as designated by <br />· sentences.1 Others object strongly to this procedure as violating the basic <br />·principles of empiricism and leading back to a metaphysical ontology of <br />the Platonic kind. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">note on p.21</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"Some s/ma$Qicists say 0ha1; cert^in exp'essions �· designate certain entities, and among these designated entities they in · . elud; not only con.rete mat/(ial +wiFgs but also abstract en6ities, e.@., prop&lt;rt|es aN de igna#ed) b8; Jrid3ca)es and propoN}tio4s as eesignatef b9; 0C s/ntences.1 OtherN \"bjec5; stron@ly to this Krocedure a s violatinr thj basic ·prin8}ples of empirDcism and leadins back t o a metapxysic!l ontHlory of 3heA \\latonik3nd.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">Carnap 1950:21</a>)</p>\n<p><em>To be real in the scientifi c sense means to be an element of the system; . <br />hence this concept cannot be meaningfully applied to the system itself. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">note on p.22</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"T3U be Vea=v 5Bv the scientific AeE Kef means to \\e an1 &amp;lemtnt of 2he9 systemO M henae Qhi )1 cRMce\\w cannot be FeaM:N.,~ABy aOP?5%dn a L n x/e L@C tem' ;}oeA'.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">Carnap 1950:22</a>)</p>\n<p><em> Unfortunately, these philosophers have so far. <br />not given a formulation of their question in terms of the common scientifi c . <br />language. Therefore our judgment must be that they have not succeeded. <br />in giv ing to the external question and t o the possible answers any cognitive <br />content. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">note on p.24</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"U&amp;f+2&lt;E'a&gt;e!H,I t%es eR )^flosowhers ha v e I9Y far. ntt given a for'!l/t5on of t'eir ques?ios in OeH5JY :!Y @/e $o6mon &gt;cix8tific N lanXuage. TherPfore our judg'ent mus@ be3 t%a+ t0sy -]vt not JTcceeded.Y in g* v i# g t o t% e extOrnag que&gt;?ion and t 9 the ICZY/b7ej a?WheSXj an!$coX n i ti v o content.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">Carnap 1950:24</a>)</p>\n<!-- {\"zotfile\":{}} -->",
         "<p><strong>Extracted Annotations (vrijdag 14 februari 2014 21:20:26)</strong></p>\n<p><em>Some semanticists say that certain expressions <br />�· designate certain entities, and among these designated entities they in­<br />·<br />. elude not only concrete material things but also abstract entities, e.g., <br />properties as designated by predicates and propositions as designated by <br />· sentences.1 Others object strongly to this procedure as violating the basic <br />·principles of empiricism and leading back to a metaphysical ontology of <br />the Platonic kind. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">note on p.21</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"Some s/ma$Qicists say 0ha1; cert^in exp'essions �· designate certain entities, and among these designated entities they in · . elud; not only con.rete mat/(ial +wiFgs but also abstract en6ities, e.@., prop&lt;rt|es aN de igna#ed) b8; Jrid3ca)es and propoN}tio4s as eesignatef b9; 0C s/ntences.1 OtherN \"bjec5; stron@ly to this Krocedure a s violatinr thj basic ·prin8}ples of empirDcism and leadins back t o a metapxysic!l ontHlory of 3heA \\latonik3nd.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">Carnap 1950:21</a>)</p>\n<p><em>To be real in the scientifi c sense means to be an element of the system; . <br />hence this concept cannot be meaningfully applied to the system itself. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">note on p.22</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"T3U be Vea=v 5Bv the scientific AeE Kef means to \\e an1 &amp;lemtnt of 2he9 systemO M henae Qhi )1 cRMce\\w cannot be FeaM:N.,~ABy aOP?5%dn a L n x/e L@C tem' ;}oeA'.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">Carnap 1950:22</a>)</p>\n<p><em> Unfortunately, these philosophers have so far. <br />not given a formulation of their question in terms of the common scientifi c . <br />language. Therefore our judgment must be that they have not succeeded. <br />in giv ing to the external question and t o the possible answers any cognitive <br />content. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">note on p.24</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"U&amp;f+2&lt;E'a&gt;e!H,I t%es eR )^flosowhers ha v e I9Y far. ntt given a for'!l/t5on of t'eir ques?ios in OeH5JY :!Y @/e $o6mon &gt;cix8tific N lanXuage. TherPfore our judg'ent mus@ be3 t%a+ t0sy -]vt not JTcceeded.Y in g* v i# g t o t% e extOrnag que&gt;?ion and t 9 the ICZY/b7ej a?WheSXj an!$coX n i ti v o content.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">Carnap 1950:24</a>)</p>\n<!-- {\"zotfile\":{}} -->"
       ],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/DUEMXEG9/Carnap_1950_Empiricism, Semantics, and Ontology.pdf",
-          "title": "Carnap_1950_Empiricism, Semantics, and Ontology.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
-      ],
       "tags": [
         "meaning",
         "metaphysics"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 179,
@@ -3709,26 +4246,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/F4IUPVXC/Bostrom_2005_In defense of posthuman dignity.pdf",
-          "title": "Bostrom_2005_In defense of posthuman dignity.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        },
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/3XN65CSZ/In Defense of PostHuman Dignity (Nick Bostrom).pdf",
-          "title": "In Defense of PostHuman Dignity (Nick Bostrom).pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
       "tags": [
         "orphaned"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 182,
@@ -3749,14 +4278,8 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/MBZ2VB3T/Verbeek_2008_Obstetric Ultrasound and the Technological Mediation of Morality.pdf",
-          "title": "Verbeek_2008_Obstetric Ultrasound and the Technological Mediation of Morality.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
       "tags": [
         "Foucault",
@@ -3766,8 +4289,12 @@
         "postphenomenology",
         "ultrasound"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 184,
@@ -3789,11 +4316,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 185,
@@ -3813,21 +4347,19 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/XZRQWGRV/Raj_2000_18th-Century pacific voyages of discovery,.pdf",
-          "title": "Raj_2000_18th-Century pacific voyages of discovery,.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
       "tags": [
         "history of science",
         "technology"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 187,
@@ -3845,11 +4377,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 188,
@@ -3864,23 +4403,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "title": "A Framework for Thinking Ethically",
-          "mimeType": "text/html",
-          "url": "http://www.scu.edu/ethics/practicing/decision/framework.html"
-        },
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/5G8ZW279/A Framework for Thinking Ethically (Markkula Center for Applied Ethics).pdf",
-          "title": "A Framework for Thinking Ethically (Markkula Center for Applied Ethics).pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 191,
@@ -3901,19 +4435,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "title": "Google Books Link",
-          "mimeType": "text/html",
-          "url": "http://books.google.nl/books?id=2Obkf12vdnwC"
-        }
+      "notes": [
+
       ],
       "tags": [
         "Law / Reference"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 193,
@@ -3930,13 +4463,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
+      "notes": [
+
+      ],
       "tags": [
         "UDHR"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 194,
@@ -3952,17 +4490,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "title": "GNU Coding Standards",
-          "mimeType": "text/html",
-          "url": "http://www.gnu.org/prep/standards/standards.html"
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 196,
@@ -3992,11 +4531,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 197,
@@ -4016,18 +4562,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/C5XQQ496/Wood_2003_The Good Will.doc",
-          "title": "Wood_2003_The Good Will.doc",
-          "mimeType": "application/msword",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 199,
@@ -4048,18 +4594,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/RZGUS482/Lakhani_Wolf_2003_Why hackers do what they do.pdf",
-          "title": "Lakhani_Wolf_2003_Why hackers do what they do.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 201,
@@ -4086,17 +4632,15 @@
       "notes": [
         "<b>Extracted Annotations (zondag 20 oktober 2013 19:21:08)</b><p>\"The virtues are conventionally understood as dispositional states of character that can be regarded as excellent, insofar as they promote human flourishing.\" (<a href=\"zotero://open-pdf/0_252XGMIH/7\">Vallor 2011:257</a>)</p><p>\"I would like simply to outline two important moral virtues that arguably rely upon caregiving practices for their development: reciprocity and empathy.\" (<a href=\"zotero://open-pdf/0_252XGMIH/7\">Vallor 2011:257</a>)</p><p>\"4.1 Reciprocity\" (<a href=\"zotero://open-pdf/0_252XGMIH/7\">Vallor 2011:257</a>)</p><p>\"4.2 Empathy\" (<a href=\"zotero://open-pdf/0_252XGMIH/8\">Vallor 2011:258</a>)</p><p>\"the integration of emotion and reason in human persons\" (<a href=\"zotero://open-pdf/0_252XGMIH/8\">Vallor 2011:258</a>)</p><p>\"Empathy is an emotive/perceptual capacity to feel with another sentient being, to co-experience, in a significant way, the joys and sufferings of another.\" (<a href=\"zotero://open-pdf/0_252XGMIH/8\">Vallor 2011:258</a>)</p><p>\"For most of us, empathy is a quivering flame constantly vulnerable to being extinguished by apathy or cynicism,\" (<a href=\"zotero://open-pdf/0_252XGMIH/9\">Vallor 2011:259</a>)</p><p>\"Like virtue ethics, care ethics takes its orientation from the goods internal to practices rather than external moral criteria.\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"Rather than holding the virtues themselves to be ethical desiderata, care ethics takes virtue to be merely an outgrowth of the caring relation that is the primary ethical good.\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"“ This caring for self, for the ethical self, can emerge only from a caring for others ” (14)\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"Noddings identifies two central criteria for a genuinely caring commitment — namely, engrossment and motivational displacement (16). Engrossment is an orientation to the reality of the other, as opposed to my own reality.\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"Motivational displacement is the resultant feeling that “ I must do something ” (14),\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"(14), I must act to respond to the other ' s reality, “ to reduce the pain, to fill the need, to actualize the dream ” (14)\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"is also worth noting that on Noddings ' view, caring relations need to be reciprocal if caregivers are going to be sustained.\" (<a href=\"zotero://open-pdf/0_252XGMIH/11\">Vallor 2011:261</a>)</p>"
       ],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/D3QKQXEN/Carebots and Caregivers, Sustaining the Ethical Ideal of Care in the.pdf",
-          "title": "Carebots and Caregivers, Sustaining the Ethical Ideal of Care in the.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "tags": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 204,
@@ -4121,18 +4665,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/VWEIQCHK/van de Poel_Royakkers_2011_Ethics, Technology, and Engineering.pdf",
-          "title": "van de Poel_Royakkers_2011_Ethics, Technology, and Engineering.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 206,
@@ -4150,18 +4694,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/7B4IRI8B/Verbeek_2007_The Technological Mediation of Morality - A Post-Phenomenological Approach to.pdf",
-          "title": "Verbeek_2007_The Technological Mediation of Morality - A Post-Phenomenological Approach to.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "Workshop Moral Agency and Technical Artifacts, NIAS"
     },
     {
@@ -4182,18 +4726,18 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/63FSQ9UP/Gutting_2005_The Cambridge Companion to Foucault.pdf",
-          "title": "Gutting_2005_The Cambridge Companion to Foucault.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 210,
@@ -4217,112 +4761,119 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "The Stanford Encyclopedia of Philosophy"
     },
     {
       "itemID": 211,
       "itemType": "book",
       "title": "Moral Epistemology (Stanford Encyclopedia of Philosophy)",
-      "creators": [],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/MPQG7I8S/Moral Epistemology (Stanford Encyclopedia of Philosophy).pdf",
-          "title": "Moral Epistemology (Stanford Encyclopedia of Philosophy).pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "creators": [
+
+      ],
+      "notes": [
+
       ],
       "tags": [
         "orphaned"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 213,
       "itemType": "book",
       "title": "Groundwork for the Metaphysic of Morals (Bennett, Kant)",
-      "creators": [],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/KBS35QDB/Groundwork for the Metaphysic of Morals (Bennett, Kant).pdf",
-          "title": "Groundwork for the Metaphysic of Morals (Bennett, Kant).pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "creators": [
+
+      ],
+      "notes": [
+
       ],
       "tags": [
         "orphaned"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 215,
       "itemType": "book",
       "title": "Grounding for the Metaphysics of Morals (Kant)",
-      "creators": [],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/5DMVH52N/Grounding for the Metaphysics of Morals (Kant).pdf",
-          "title": "Grounding for the Metaphysics of Morals (Kant).pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "creators": [
+
+      ],
+      "notes": [
+
       ],
       "tags": [
         "orphaned"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 217,
       "itemType": "book",
       "title": "Kant's Grounding for the Metaphysics of Morals (UNC Philosophy)",
-      "creators": [],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/H9WW8N4W/Kant's Grounding for the Metaphysics of Morals (UNC Philosophy).pdf",
-          "title": "Kant's Grounding for the Metaphysics of Morals (UNC Philosophy).pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "creators": [
+
+      ],
+      "notes": [
+
       ],
       "tags": [
         "orphaned"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 219,
       "itemType": "book",
       "title": "Groundwork of the Metaphysic of Morals",
-      "creators": [],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/WS9S5NZA/Groundwork of the Metaphysic of Morals.pdf",
-          "title": "Groundwork of the Metaphysic of Morals.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "creators": [
+
+      ],
+      "notes": [
+
       ],
       "tags": [
         "orphaned"
       ],
-      "related": [],
-      "seeAlso": []
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 221,
@@ -4338,30 +4889,41 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
-        {
-          "path": "/var/folders/_j/mszyzjh93t5429r8nkpyq73w0000gn/T/webdriver-rb-profilecopy20150610-11637-126jupf/zotero/storage/CTFXGRVV/Uleman_2010_An introduction to Kant's moral philosophy.pdf",
-          "title": "Uleman_2010_An introduction to Kant's moral philosophy.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 224,
       "itemType": "note",
       "note": "<html xmlns=\"http://www.w3.org/1999/xhtml\"><div><p><b>BibTeX AUX scan</b></p><p>Missing references:</p><ul><li>carnap:meaning-and-synonymy</li><li>carnap:ontology</li><li>CarnapR:logss</li><li>dowden1979theory</li><li>duhem1991aim</li><li>field1980science</li><li>floridi:gettier</li><li>frege1980foundations</li><li>gettier:jtb</li><li>grice:defense-of-dogma</li><li>iep:carnap</li><li>kant:pure-reason</li><li>mcgrew:architectureofreason</li><li>prie:twod79</li><li>quine:carnap-logical-truth</li><li>quine:epistemology-naturalized</li><li>quine:indispensability</li><li>quine:twodogmas</li><li>quine:what-there-is</li><li>quine:wob</li><li>Quine1960-QUIWO</li><li>Quine1986-QUIPOL-2</li><li>Quine1987-QUIIOT</li><li>Schilpp1963-SCHTPO-38</li><li>searle:social-ontology</li><li>smyth:formsofintuition</li><li>soames2003philosophical</li><li>Vuillemin1979-VUIODA</li></ul></div></html>",
-      "tags": [],
-      "related": [],
-      "creators": [],
-      "notes": [],
-      "seeAlso": [],
-      "attachments": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "creators": [
+
+      ],
+      "notes": [
+
+      ],
+      "seeAlso": [
+
+      ]
     }
   ],
-  "cache": []
+  "cache": [
+
+  ]
 }

@@ -76,10 +76,10 @@ Zotero.BetterBibTeX.schomd.items = (citekeys, {library} = {}) ->
   else
     resolved = Zotero.BetterBibTeX.keymanager.resolve(keys, library)
 
-  return ((if typeof key == 'number' then key else resolved[key]) for key in citekeys)
+  return ((if typeof key == 'number' then key else resolved[key].itemID) for key in citekeys)
 
 Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, library} = {}) ->
-  items = @items(citekeys, {library: library})
+  items = (item for item in @items(citekeys, {library}) when item)
 
   return '' if items.length == 0
 
