@@ -148,8 +148,8 @@ Zotero.BetterBibTeX.keymanager = new class
     return item
 
   free: (item) ->
-    Formatter = Zotero.BetterBibTeX.formatter(Zotero.BetterBibTeX.pref.get('citekeyFormat'))
-    citekey = (new Formatter(Zotero.BetterBibTeX.toArray(item))).value
+    formatter = Zotero.BetterBibTeX.formatter(Zotero.BetterBibTeX.pref.get('citekeyFormat'))
+    citekey = formatter.format(item)
 
     libraryID = @integer(if item.libraryID == undefined then Zotero.DB.valueQuery('select libraryID from items where itemID = ?', [item.itemID]) else item.libraryID)
     itemID = @integer(item.itemID)

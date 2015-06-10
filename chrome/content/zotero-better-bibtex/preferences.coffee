@@ -46,7 +46,7 @@ Zotero.BetterBibTeX.pref.update = ->
   keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
 
   try
-    Zotero.BetterBibTeX.formatter(keyformat.value)
+    BetterBibTeXFormatter.parse(keyformat.value)
     keyformat.setAttribute('style', '')
     keyformat.setAttribute('tooltiptext', '')
   catch err

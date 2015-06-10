@@ -13,7 +13,9 @@ class BetterBibTeX.CitekeyFormatter
       BetterBibTeX.CitekeyFormatter::caseNotUpperTitle = Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g')
       BetterBibTeX.CitekeyFormatter::caseNotUpper = Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
 
-  format: (@item) ->
+  format: (item) ->
+    @item = Zotero.BetterBibTeX.serialized(item)
+
     for pattern in @patterns
       citekey = @clean(@concat(@pattern))
       return citekey if citekey != ''
