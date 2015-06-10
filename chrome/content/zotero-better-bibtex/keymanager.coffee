@@ -309,6 +309,7 @@ Zotero.BetterBibTeX.keymanager = new class
     throw new Error("missing fields #{verify} in #{typeof entry} #{JSON.stringify(entry)}")
 
   clone: (key) ->
+    return key if key in [undefined, null]
     clone = JSON.parse(JSON.stringify(key))
     delete clone.meta
     delete clone['$loki']
