@@ -159,16 +159,6 @@ Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
     when 'back'
       Zotero.BetterBibTeX.auto.idle = false
 
-Zotero.BetterBibTeX.quitObserver =
-  observe: (subject, topic, data) ->
-    @unregister() if topic == 'quit-application-requested'
-  register: ->
-    observerService = Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService)
-    observerService.addObserver(@, 'quit-application-requested', false)
-  unregister: ->
-    observerService = Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService)
-    observerService.removeObserver(@, 'quit-application-requested')
-
 Zotero.BetterBibTeX.version = (version) ->
   return '' unless version
   v = version.split('.').slice(0, 2).join('.')
@@ -375,6 +365,7 @@ Zotero.BetterBibTeX.attachDatabase = ->
   if mismatched.length > 0
     Zotero.DB.query('delete from betterbibtex.cache')
   @cache.load()
+  @serialized.load()
 
 Zotero.BetterBibTeX.init = ->
   return if @initialized
@@ -515,73 +506,19 @@ Zotero.BetterBibTeX.init = ->
 
       while @_itemsLeft.length != 0
         item = @_itemsLeft.shift()
-        # export file data for single files
-        if item.isAttachment()
-          # an independent attachment
-          item = @_serialize(item)
-          return item if item
-        else
-          item = @_serialize(item)
-          item.attachments = []
-          Zotero.BetterBibTeX.debug('Zotero.Translate.ItemGetter::nextItem:', item)
-          for attachmentID in item.attachmentIDs
-            attachment = @_serialize(attachmentID, true)
-            item.attachments.push(attachment) if attachment
-          return item
+        item = Zotero.BetterBibTeX.serialized.get.apply(@, [item, {exportFileData: @_exportFileData}])
+        continue unless item
+
+        return item if item.itemType == 'attachment'
+
+        item.attachments = []
+        Zotero.BetterBibTeX.debug('Zotero.Translate.ItemGetter::nextItem:', item)
+        for attachmentID in item.attachmentIDs
+          attachment = Zotero.BetterBibTeX.serialized.get.apply(@, [attachmentID, {attachmentID: true, exportFileData: @_exportFileData}])
+          item.attachments.push(attachment) if attachment
+        return item
       return false
     )(Zotero.Translate.ItemGetter::nextItem)
-
-  try
-    serialized = @serializationCacheFile()
-    @serializationCache = JSON.parse(Zotero.File.getContents(serialized))
-    Zotero.BetterBibTeX.log("serialization cache loaded: #{Object.keys(@serializationCache).length}")
-  catch e
-    Zotero.BetterBibTeX.log('failed to load serialization cache:', e)
-    @serializationCache = {}
-
-  if @serializationCache.Zotero != ZOTERO_CONFIG.VERSION || @version(@serializationCache.BetterBibTeX) != @version(@release)
-    Zotero.BetterBibTeX.log("
-      resetting serialization cache after upgrade from
-        Zotero #{@serializationCache.Zotero || 'initial install'}
-          to #{ZOTERO_CONFIG.VERSION},
-        BBT #{@serializationCache.BetterBibTeX || 'initial install'}
-          to #{@release}".replace(/\s+/, '').trim())
-    @serializationCache = {}
-  @serializationCache.Zotero = ZOTERO_CONFIG.VERSION
-  @serializationCache.BetterBibTeX = @release
-
-  Zotero.Translate.ItemGetter::_serialize = (item, isAttachmentID) ->
-    # no serialization for attachments when their data is exported
-    if @_exportFileData && (isAttachmentID || item.isAttachment())
-      Zotero.BetterBibTeX.debug("not serializing attachment #{if isAttachmentID then item else item.itemID} when exporting file data")
-      item = Zotero.Items.get(item) if isAttachmentID
-      return null unless item
-      return @_attachmentToArray(item)
-
-    if isAttachmentID
-      itemID = parseInt(item)
-      item = null
-    else
-      itemID = parseInt(item.itemID)
-
-    if Zotero.BetterBibTeX.serializationCache[itemID]
-      Zotero.BetterBibTeX.debug("serialization cache hit for #{itemID}")
-    else
-      Zotero.BetterBibTeX.debug("serialization cache miss for #{itemID}")
-      item ||= Zotero.Items.get(itemID)
-      Zotero.BetterBibTeX.serializationCache[itemID] = (if item.isAttachment() then @_attachmentToArray(item) else @_itemToArray(item)) if item
-      switch
-        when !Zotero.BetterBibTeX.serializationCache[itemID]
-          Zotero.BetterBibTeX.serializationCache[itemID] = {itemID}
-        when Zotero.BetterBibTeX.serializationCache[itemID].itemType in ['note', 'attachment']
-          Zotero.BetterBibTeX.serializationCache[itemID].attachmentIDs = []
-        else
-          Zotero.BetterBibTeX.serializationCache[itemID].attachmentIDs = item.getAttachments()
-
-    if Zotero.BetterBibTeX.serializationCache[itemID].itemType
-      return JSON.parse(JSON.stringify(Zotero.BetterBibTeX.serializationCache[itemID]))
-    else
-      return null
 
   # monkey-patch buildCollectionContextMenu to add group library export
   zoteroPane = Zotero.getActiveZoteroPane()
@@ -617,20 +554,13 @@ Zotero.BetterBibTeX.init = ->
 
   @pref.observer.register()
   @pref.ZoteroObserver.register()
-  @quitObserver.register()
   Zotero.addShutdownListener(->
     Zotero.BetterBibTeX.log('shutting down')
     Zotero.BetterBibTeX.cache.flush()
     Zotero.BetterBibTeX.keymanager.flush()
+    Zotero.BetterBibTeX.serialized.save()
 
     Zotero.BetterBibTeX.debugMode()
-
-    try
-      serialized = Zotero.BetterBibTeX.serializationCacheFile()
-      serialized.remove(false) if serialized.exists()
-      Zotero.File.putContents(serialized, JSON.stringify(Zotero.BetterBibTeX.serializationCache))
-    catch e
-      Zotero.BetterBibTeX.log('failed to save serialization cache:', e)
   )
 
   nids = []
@@ -666,22 +596,6 @@ Zotero.BetterBibTeX.createFile = (paths...) ->
   f.append(leaf)
   f.create(Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 0o666) unless f.exists()
   return f
-
-Zotero.BetterBibTeX.serialize = (item) ->
-  return item unless item.getField
-
-  throw new Error('do not serialize attachments') if item.isAttachment()
-  throw new Error('do not serialize notes') if item.isNote()
-
-  if !@serializationCache[item.itemID]
-    if item.isAttachment()
-      @serializationCache[item.itemID] = Zotero.Translate.ItemGetter::_attachmentToArray(item)
-    else
-      @serializationCache[item.itemID] = Zotero.Translate.ItemGetter::_itemToArray(item)
-  return @serializationCache[item.itemID]
-Zotero.BetterBibTeX.serializationCache = {}
-Zotero.BetterBibTeX.serializationCacheFile = ->
-  return @createFile('serialized-items.json')
 
 Zotero.BetterBibTeX.loadTranslators = ->
   @load('Better BibTeX')
@@ -802,7 +716,7 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
 
   for itemID in ids
     itemID = parseInt(itemID) unless typeof itemID == 'number'
-    delete Zotero.BetterBibTeX.serializationCache[itemID]
+    delete Zotero.BetterBibTeX.serialized.remove(itemID)
     @cache.remove({itemID})
 
   @keymanager.scan(ids, event)

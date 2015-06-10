@@ -39,10 +39,10 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.Collections.erase((coll.id for coll in Zotero.getCollections()))
   Zotero.Items.emptyTrash()
 
-  Zotero.BetterBibTeX.keymanager.reset()
   Zotero.BetterBibTeX.cache.reset()
+  Zotero.BetterBibTeX.serialized.reset()
   Zotero.BetterBibTeX.auto.clear()
-  Zotero.Translate.ItemGetter::serialized = Object.create(null)
+  Zotero.BetterBibTeX.keymanager.reset()
 
   return true if Zotero.DB.valueQuery('select count(*) from items') == 0
   err = JSON.stringify((item.toArray() for item in Zotero.BetterBibTeX.safeGetAll()))
@@ -89,6 +89,10 @@ Zotero.BetterBibTeX.DebugBridge.methods.library = ->
   return JSON.parse(Zotero.BetterBibTeX.translate(translator, null, { exportNotes: true, exportFileData: false }))
 
 Zotero.BetterBibTeX.DebugBridge.methods.setPreference = (name, value) -> Zotero.Prefs.set(name, value)
+
+Zotero.BetterBibTeX.DebugBridge.methods.keyManagerState = -> Zotero.BetterBibTeX.keymanager.keys.find()
+Zotero.BetterBibTeX.DebugBridge.methods.cacheState = -> Zotero.BetterBibTeX.cache.cache.find()
+Zotero.BetterBibTeX.DebugBridge.methods.serializedState = -> Zotero.BetterBibTeX.serialized.items
 
 Zotero.BetterBibTeX.DebugBridge.methods.select = (attribute, value) ->
   attribute = attribute.replace(/[^a-zA-Z]/, '')

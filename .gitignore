@@ -6,6 +6,7 @@
 *.status
 .bundle
 *.js
+*.js.map
 .depend.mf
 resource/translators/latex_unicode_mapping.coffee
 resource/translators/mathchar.pegcoffee

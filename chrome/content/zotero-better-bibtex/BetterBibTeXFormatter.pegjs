@@ -15,7 +15,7 @@ pattern
 
 callchain
   = '[' fcall:fcall ']'   { return fcall; }
-  / chars:[^\|\[\]]+      { return {method: 'literal', arguments: chars.join('')}; }
+  / chars:[^\|\[\]]+      { return {method: 'literal', arguments: [chars.join('')]}; }
 
 fcall
   = method:method filters:filter* { return [method].concat(filters); }

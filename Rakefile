@@ -103,8 +103,8 @@ ABBREVS.each{|a|
 ZIPFILES = [
   'chrome.manifest',
   'chrome/content/zotero-better-bibtex/BetterBibTeXFormatter.js',
-  'chrome/content/zotero-better-bibtex/citekeyformatter.js',
   'chrome/content/zotero-better-bibtex/cache.js',
+  'chrome/content/zotero-better-bibtex/citekeyformatter.js',
   'chrome/content/zotero-better-bibtex/debug-bridge.js',
   'chrome/content/zotero-better-bibtex/errorReport.js',
   'chrome/content/zotero-better-bibtex/errorReport.xul',
@@ -120,6 +120,7 @@ ZIPFILES = [
   'chrome/content/zotero-better-bibtex/preferences.js',
   'chrome/content/zotero-better-bibtex/preferences.xul',
   'chrome/content/zotero-better-bibtex/schomd.js',
+  'chrome/content/zotero-better-bibtex/serialized.js',
   'chrome/content/zotero-better-bibtex/web-endpoints.js',
   'chrome/content/zotero-better-bibtex/zotero-better-bibtex.js',
   'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
@@ -159,6 +160,7 @@ ZIPFILES = [
 Dir['**/*.js'].reject{|f| f =~ /^(node_modules|www)\//}.each{|f| CLEAN.include(f)}
 CLEAN.include('tmp/**/*')
 CLEAN.include('resource/*/*.json')
+CLEAN.include('resource/*/*.js.map')
 CLEAN.include('.depend.mf')
 CLEAN.include('resource/translators/latex_unicode_mapping.coffee')
 CLEAN.include('*.xpi')

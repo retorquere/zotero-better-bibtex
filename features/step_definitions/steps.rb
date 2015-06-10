@@ -90,6 +90,9 @@ def loadZotero
 
   Dir['*.debug'].each{|d| File.unlink(d) }
   Dir['*.status'].each{|d| File.unlink(d) }
+  Dir['*.keys'].each{|d| File.unlink(d) }
+  Dir['*.serialized'].each{|d| File.unlink(d) }
+  Dir['*.cache'].each{|d| File.unlink(d) }
   Dir['*.log'].each{|d| File.unlink(d) unless File.basename(d) == 'cucumber.log' }
 end
 at_exit do
@@ -119,18 +122,17 @@ After do |scenario|
     Cucumber.wants_to_quit = scenario.failed?
 
     filename = scenario.name.gsub(/[^0-9A-z.\-]/, '_')
-    if scenario.failed? || scenario.source_tag_names.include?('@logcapture')
-      @logcaptures ||= 0
-      @logcaptures += 1
-      if @logcaptures <= 5 || scenario.source_tag_names.include?('@logcapture')
-        open("#{filename}.debug", 'w'){|f| f.write($Firefox.DebugBridge.log) }
-        open("#{filename}.log", 'w'){|f| f.write(browserLog) }
-      end
 
-      #BetterBibTeX.exportToFile(@expectedExport.translator, File.join('/tmp', File.basename(@expectedExport.filename))) if @expectedExport
+    if scenario.failed? || scenario.source_tag_names.include?('@dumplogs')
+      open("#{filename}.debug", 'w'){|f| f.write($Firefox.DebugBridge.log) }
+      open("#{filename}.log", 'w'){|f| f.write(browserLog) }
     end
 
-    $Firefox.BetterBibTeX.exportToFile('Zotero TestCase', "#{filename}.json") if scenario.source_tag_names.include?('@librarydump')
+    open("#{filename}.keys", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.keyManagerState)) } if scenario.failed? || scenario.source_tag_names.include?('@dumpkeys')
+    open("#{filename}.cache", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.cacheState)) } if scenario.failed? || scenario.source_tag_names.include?('@dumpcache')
+    open("#{filename}.serialized", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.serializedState)) } if scenario.failed? || scenario.source_tag_names.include?('@dumpserialized')
+
+    $Firefox.BetterBibTeX.exportToFile('Zotero TestCase', "#{filename}.json") if scenario.source_tag_names.include?('@dumplibrary')
   end
 end
 

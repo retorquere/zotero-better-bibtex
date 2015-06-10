@@ -147,20 +147,21 @@ Zotero.BetterBibTeX.keymanager = new class
     delete item.__citekey__ if item.__citekey__ == ''
     return item
 
-  free: (item) ->
+  assign: (item, pin) ->
     formatter = Zotero.BetterBibTeX.formatter(Zotero.BetterBibTeX.pref.get('citekeyFormat'))
     citekey = formatter.format(item)
+    return null unless citekey
 
     libraryID = @integer(if item.libraryID == undefined then Zotero.DB.valueQuery('select libraryID from items where itemID = ?', [item.itemID]) else item.libraryID)
     itemID = @integer(item.itemID)
     in_use = (key.citekey for key in @keys.where((o) -> o.libraryID == libraryID && o.itemID != itemID && o.citekey.indexOf(citekey) == 0 && (o.citekey.length - citekey.length) in [0, 1]))
-    Zotero.BetterBibTeX.debug("keymanager.free: find free key default=#{citekey}, taken:", in_use)
+    Zotero.BetterBibTeX.debug("keymanager.assign: find free key for", item, "default=#{citekey}, taken:", in_use)
     postfix = { n: -1, c: '' }
     while (citekey + postfix.c) in in_use
       postfix.n++
       postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
 
-    return citekey + postfix.c
+    return @set(item, citekey + postfix.c, pin)
 
   selected: (action) ->
     throw new Error("Unexpected action #{action}") unless action in ['set', 'reset']
@@ -174,7 +175,7 @@ Zotero.BetterBibTeX.keymanager = new class
 
     if action == 'set'
       for item in items
-        @set(item, @free(item), true)
+        @assign(item, true)
 
   save: (item, citekey) ->
     # only save if no change
@@ -332,7 +333,7 @@ Zotero.BetterBibTeX.keymanager = new class
     cached = @keys.findOne({itemID: @integer(item.itemID)})
 
     # store new cache item if we have a miss or if a re-pin is requested
-    cached = @set(item, @free(item), pin) if !cached || (pin && cached.citekeyFormat)
+    cached = @assign(item, pin) if !cached || (pin && cached.citekeyFormat)
     return @clone(cached)
 
   resolve: (citekeys, libraryID) ->

@@ -13,8 +13,11 @@ class Zotero.BetterBibTeX.CitekeyFormatter
       Zotero.BetterBibTeX.CitekeyFormatter::caseNotUpperTitle = Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g')
       Zotero.BetterBibTeX.CitekeyFormatter::caseNotUpper = Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
 
-  format: (@item) ->
-    @item = Zotero.BetterBibTeX.serialize(@item) if @item.getField
+  format: (item) ->
+    @item = Zotero.BetterBibTeX.serialized.get(item)
+    return if @item.itemType in ['attachment', 'note']
+
+    Zotero.BetterBibTeX.debug('formatter.format: from', @item, 'using', @patterns)
 
     for pattern in @patterns
       citekey = @clean(@concat(pattern))
@@ -23,16 +26,16 @@ class Zotero.BetterBibTeX.CitekeyFormatter
 
   concat: (pattern) ->
     pattern = [pattern] unless Array.isArray(pattern)
-    result = ''
-    for part in pattern
-      result += @reduce(part)
-    return result
+    result = (@reduce(part) for part in pattern)
+    result = (part for part in result when part)
+    return result.join('').trim()
 
   reduce: (steps) ->
     steps = [steps] unless Array.isArray(steps)
     value = ''
 
     for step in steps
+      Zotero.BetterBibTeX.debug('formatter.reduce: from', @item, 'using', step)
       if step.method
         value = @methods[step.method].apply(@, step.arguments)
       else
@@ -169,51 +172,46 @@ class Zotero.BetterBibTeX.CitekeyFormatter
     return ('' + str).replace(/<\/?(sup|sub|i|b|p|span|br|break)\/?>/g, '').replace(/\s+/, ' ').trim()
 
   creators: (onlyEditors, withInitials) ->
+    Zotero.BetterBibTeX.debug('formatter.creators:', {onlyEditors, withInitials}, 'from', @item)
     return [] unless @item.creators?.length
-    kind = if onlyEditors then 'editors' else 'authors'
-    kind += '+initials' if withInitials
 
-    # because it gets set by the inheriting object!
-    if typeof @creators[kind] == 'undefined'
-      creators = {}
-      primaryCreatorType = Zotero.Utilities.getCreatorsForType(@item.itemType)[0]
-      for creator in @item.creators
-        name = @stripHTML(creator.lastName)
+    creators = {}
+    primaryCreatorType = Zotero.Utilities.getCreatorsForType(@item.itemType)[0]
+    for creator in @item.creators
+      continue if onlyEditors && creator.creatorType not in ['editor', 'seriesEditor']
 
-        if name != ''
-          if withInitials and creator.firstName
-            initials = Zotero.Utilities.XRegExp.replace(creator.firstName, @caseNotUpperTitle, '', 'all')
-            initials = Zotero.Utilities.removeDiacritics(initials)
-            initials = Zotero.Utilities.XRegExp.replace(initials, @caseNotUpper, '', 'all')
-            name += initials
-        else
-          name = @stripHTML(creator.firstName)
+      name = @stripHTML(creator.lastName)
 
-        continue if name == ''
-
-        switch creator.creatorType
-          when 'editor', 'seriesEditor'
-            creators.editors ||= []
-            creators.editors.push(name)
-
-          when 'translator'
-            creators.translators ||= []
-            creators.translators.push(name)
-
-          when primaryCreatorType
-            creators.authors ||= []
-            creators.authors.push(name)
-
-          else
-            creators.collaborators ||= []
-            creators.collaborators.push(name)
-
-      if onlyEditors
-        @creators[kind] = creators.editors || []
+      if name != ''
+        if withInitials and creator.firstName
+          initials = Zotero.Utilities.XRegExp.replace(creator.firstName, @caseNotUpperTitle, '', 'all')
+          initials = Zotero.Utilities.removeDiacritics(initials)
+          initials = Zotero.Utilities.XRegExp.replace(initials, @caseNotUpper, '', 'all')
+          name += initials
       else
-        @creators[kind] = creators.authors || creators.editors || creators.collaborators || creators.translators || []
+        name = @stripHTML(creator.firstName)
 
-    return @creators[kind]
+      continue if name == ''
+
+      switch creator.creatorType
+        when 'editor', 'seriesEditor'
+          creators.editors ||= []
+          creators.editors.push(name)
+
+        when 'translator'
+          creators.translators ||= []
+          creators.translators.push(name)
+
+        when primaryCreatorType
+          creators.authors ||= []
+          creators.authors.push(name)
+
+        else
+          creators.collaborators ||= []
+          creators.collaborators.push(name)
+
+    return creators.editors || [] if onlyEditors
+    return creators.authors || creators.editors || creators.collaborators || creators.translators || []
 
   methods:
     literal: (text) -> return text
