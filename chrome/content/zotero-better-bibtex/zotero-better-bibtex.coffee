@@ -141,7 +141,10 @@ Zotero.BetterBibTeX.pref.get = (key) ->
 
 Zotero.BetterBibTeX.formatter = (pattern) ->
   @formatters ||= Object.create(null)
-  @formatters[pattern] = new BetterBibTeX.CitekeyFormatter(BetterBibTeXFormatter.parse(pattern)) unless @formatters[pattern]
+  if !@formatters[pattern]
+    actions = BetterBibTeXFormatter.parse(pattern)
+    Zotero.BetterBibTeX.debug('formatter:', pattern, '=>', actions)
+    @formatters[pattern] = new Zotero.BetterBibTeX.CitekeyFormatter(actions)
   return @formatters[pattern]
 
 Zotero.BetterBibTeX.idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
@@ -520,6 +523,7 @@ Zotero.BetterBibTeX.init = ->
         else
           item = @_serialize(item)
           item.attachments = []
+          Zotero.BetterBibTeX.debug('Zotero.Translate.ItemGetter::nextItem:', item)
           for attachmentID in item.attachmentIDs
             attachment = @_serialize(attachmentID, true)
             item.attachments.push(attachment) if attachment
@@ -663,8 +667,12 @@ Zotero.BetterBibTeX.createFile = (paths...) ->
   f.create(Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 0o666) unless f.exists()
   return f
 
-Zotero.BetterBibTeX.serialized = (item) ->
+Zotero.BetterBibTeX.serialize = (item) ->
   return item unless item.getField
+
+  throw new Error('do not serialize attachments') if item.isAttachment()
+  throw new Error('do not serialize notes') if item.isNote()
+
   if !@serializationCache[item.itemID]
     if item.isAttachment()
       @serializationCache[item.itemID] = Zotero.Translate.ItemGetter::_attachmentToArray(item)
