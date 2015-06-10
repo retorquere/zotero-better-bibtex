@@ -132,6 +132,8 @@ ZIPFILES = [
   'resource/translators/Better BibTeX.header.js',
   'resource/translators/Better BibTeX.js',
   'resource/translators/Better BibTeX.json',
+  'resource/translators/BetterBibTeXParser.js',
+  'resource/translators/BetterBibTeXParserSupport.js',
   'resource/translators/BibTeXAuxScanner.header.js',
   'resource/translators/BibTeXAuxScanner.js',
   'resource/translators/BibTeXAuxScanner.json',
@@ -142,8 +144,6 @@ ZIPFILES = [
   'resource/translators/Pandoc Citation.header.js',
   'resource/translators/Pandoc Citation.js',
   'resource/translators/Pandoc Citation.json',
-  'resource/translators/Parser.js',
-  'resource/translators/ParserSupport.js',
   'resource/translators/Zotero TestCase.header.js',
   'resource/translators/Zotero TestCase.js',
   'resource/translators/Zotero TestCase.json',
@@ -281,7 +281,7 @@ rule( /\.header\.js$/ => [ proc {|task_name| task_name.sub(/\.header\.js$/, '.ym
 end
 
 rule '.js' => '.pegjs' do |t|
-  sh "#{NODEBIN}/pegjs -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{t.source.shellescape} #{t.name.shellescape}"
+  sh "#{NODEBIN}/pegjs -e #{File.basename(t.source, File.extname(t.source))} #{t.source.shellescape} #{t.name.shellescape}"
 end
 
 rule '.js' => '.pegcoffee' do |t|

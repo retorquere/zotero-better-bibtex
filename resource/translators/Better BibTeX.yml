@@ -24,5 +24,5 @@ BetterBibTeX:
     - unicode_translator
     - latex_unicode_mapping
     - BraceBalancer
+    - BetterBibTeXParserSupport
     - BetterBibTeXParser
-    - Parser

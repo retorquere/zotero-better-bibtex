@@ -876,9 +876,19 @@ Zotero.BetterBibTeX.load = (translator) ->
   sources.push("#{translator}.header")
   sources.push(translator)
   @debug('loading translator:', translator, sources)
-  code = (Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{src}.js") for src in sources).join("\n")
+  #code = (Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{src}.js") for src in sources).join("\n")
+  code = ''
+  for src in sources
+    @debug('loading translator:', translator, src)
+    try
+      code += Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{src}.js") + "\n"
+    catch err
+      @debug('loading', translator, 'failed:', err)
+      throw err
+
+  @debug('loading translator source:', translator, code.length)
   js = @createFile('translators', "#{translator}.js")
-  Zotero.debug("Saving #{translator} to #{js.path}")
+  @debug("Saving #{translator} to #{js.path}")
   Zotero.File.putContents(js, code)
 
   @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
