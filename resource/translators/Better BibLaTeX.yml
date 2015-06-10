@@ -22,4 +22,4 @@ BetterBibTeX:
   dependencies:
     - unicode_translator
     - latex_unicode_mapping
-    - BraceBalancer
+    - BetterBibTeXBraceBalancer
