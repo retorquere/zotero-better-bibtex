@@ -19,7 +19,6 @@
   "dependencies": {
     "coffee-script": "^1.9.1",
     "coffeelint": "^1.9.2",
-    "pegjs": "^0.8.0",
-    "pegjs-coffee-plugin": "^0.2.2"
+    "pegjs": "^0.8.0"
   }
 }

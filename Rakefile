@@ -102,7 +102,8 @@ ABBREVS.each{|a|
 }
 ZIPFILES = [
   'chrome.manifest',
-  'chrome/content/zotero-better-bibtex/Formatter.js',
+  'chrome/content/zotero-better-bibtex/BetterBibTeXFormatter.js',
+  'chrome/content/zotero-better-bibtex/citekeyformatter.js',
   'chrome/content/zotero-better-bibtex/cache.js',
   'chrome/content/zotero-better-bibtex/debug-bridge.js',
   'chrome/content/zotero-better-bibtex/errorReport.js',
@@ -282,10 +283,6 @@ end
 
 rule '.js' => '.pegjs' do |t|
   sh "#{NODEBIN}/pegjs -e #{File.basename(t.source, File.extname(t.source))} #{t.source.shellescape} #{t.name.shellescape}"
-end
-
-rule '.js' => '.pegcoffee' do |t|
-  sh "#{NODEBIN}/pegjs --plugin pegjs-coffee-plugin -e BetterBibTeX#{File.basename(t.source, File.extname(t.source))} #{t.source} #{t.name}"
 end
 
 rule '.js' => '.coffee' do |t|
