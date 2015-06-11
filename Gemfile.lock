@@ -57,7 +57,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.6.1)
     mini_portile (0.6.2)
-    multi_json (1.11.0)
+    multi_json (1.11.1)
     multi_test (0.1.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -125,7 +125,7 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.95)
+    zotplus-rakehelper (0.0.96)
       nokogiri
       rake
       rickshaw
