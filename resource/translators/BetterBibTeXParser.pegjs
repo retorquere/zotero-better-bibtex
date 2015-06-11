@@ -46,7 +46,7 @@ key
   = key:[^ \t\n\r=]+ { return bibtex.flatten(key) }
 
 value
-  = val:[^#"{} \t\n\r,]+ { val = bibtex.flatten(val); return bibtex.strings[value] || value }
+  = val:[^#"{} \t\n\r,]+ { val = bibtex.flatten(val); return bibtex.strings[val] || val; }
   / val:bracedvalue { return bibtex.flatten(val) }
   / _* "#" _* val:value { return val }
 
