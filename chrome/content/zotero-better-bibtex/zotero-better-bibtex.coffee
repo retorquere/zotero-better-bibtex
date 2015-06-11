@@ -142,9 +142,9 @@ Zotero.BetterBibTeX.pref.get = (key) ->
 Zotero.BetterBibTeX.formatter = (pattern) ->
   @formatters ||= Object.create(null)
   if !@formatters[pattern]
-    actions = BetterBibTeXFormatter.parse(pattern)
+    actions = BetterBibTeXPatternParser.parse(pattern)
     Zotero.BetterBibTeX.debug('formatter:', pattern, '=>', actions)
-    @formatters[pattern] = new Zotero.BetterBibTeX.CitekeyFormatter(actions)
+    @formatters[pattern] = new BetterBibTeXPatternFormatter(actions)
   return @formatters[pattern]
 
 Zotero.BetterBibTeX.idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)

@@ -6,7 +6,7 @@ if not Zotero.BetterBibTeX
 
   loader.loadSubScript('chrome://zotero-better-bibtex/content/zotero-better-bibtex.js')
 
-  for script in ['citekeyformatter', 'BetterBibTeXFormatter', 'preferences', 'keymanager', 'web-endpoints', 'schomd', 'debug-bridge', 'cache', 'serialized']
+  for script in ['BetterBibTeXPatternFormatter', 'BetterBibTeXPatternParser', 'preferences', 'keymanager', 'web-endpoints', 'schomd', 'debug-bridge', 'cache', 'serialized']
     loader.loadSubScript("chrome://zotero-better-bibtex/content/#{script}.js")
 
   window.addEventListener('load', (load = (event) ->

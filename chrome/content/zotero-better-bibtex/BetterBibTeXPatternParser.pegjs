@@ -25,7 +25,7 @@ method
   / prefix:('edtr' / 'editors') postfix:[\.a-zA-Z]* flag:flag? params:mparams?  { return method(prefix, name, flag, params, true); }
   / name:[\.a-zA-Z]+ flag:flag? params:mparams? {
       name = name.join('')
-      if (Zotero.BetterBibTeX.CitekeyFormatter.prototype.methods[name]) {
+      if (BetterBibTeXPatternFormatter.prototype.methods[name]) {
         return {method: name, arguments: params || []};
       } else {
         return {method: 'property', arguments: [name]};

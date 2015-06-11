@@ -6,6 +6,11 @@
 
 <overlay id="zotero-better-bibtex-preferences"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+	<!-- Include the main extension logic -->
+	<script src="chrome://zotero/content/include.js"/>
+	<script src="chrome://zotero-better-bibtex/content/include.js"/>
+	<script src="chrome://zotero-better-bibtex/content/preferences.js"/><!-- needs to be included every time anew to bind windows and document -->
 	
   <prefwindow id="zotero-prefs">
     <prefpane id="zotero-prefpane-better-bibtex"
@@ -233,9 +238,4 @@
       </tabbox>
     </prefpane>
   </prefwindow>
-
-	<!-- Include the main extension logic -->
-	<script src="chrome://zotero/content/include.js"/>
-	<script src="chrome://zotero-better-bibtex/content/include.js"/>
-	<script src="chrome://zotero-better-bibtex/content/preferences.js"/><!-- needs to be included every time anew to bind windows and document -->
 </overlay>

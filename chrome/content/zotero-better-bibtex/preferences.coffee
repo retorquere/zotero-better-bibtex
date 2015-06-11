@@ -45,13 +45,15 @@ Zotero.BetterBibTeX.pref.update = ->
 
   keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
 
+  parseerror = null
   try
-    BetterBibTeXFormatter.parse(keyformat.value)
-    keyformat.setAttribute('style', '')
-    keyformat.setAttribute('tooltiptext', '')
+    BetterBibTeXPatternParser.parse(keyformat.value)
   catch err
-    keyformat.setAttribute('style', 'color: red')
-    keyformat.setAttribute('tooltiptext', '' + err)
+    parseerror = err
+
+  Zotero.BetterBibTeX.debug('parsing format', keyformat.value, ':', !!parseerror)
+  keyformat.setAttribute('style', (if parseerror then 'color: red' else ''))
+  keyformat.setAttribute('tooltiptext', '' + (parseerror || ''))
 
   document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-change').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())
   document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-export').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())

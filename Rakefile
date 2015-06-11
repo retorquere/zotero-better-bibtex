@@ -102,9 +102,9 @@ ABBREVS.each{|a|
 }
 ZIPFILES = [
   'chrome.manifest',
-  'chrome/content/zotero-better-bibtex/BetterBibTeXFormatter.js',
+  'chrome/content/zotero-better-bibtex/BetterBibTeXPatternFormatter.js',
+  'chrome/content/zotero-better-bibtex/BetterBibTeXPatternParser.js',
   'chrome/content/zotero-better-bibtex/cache.js',
-  'chrome/content/zotero-better-bibtex/citekeyformatter.js',
   'chrome/content/zotero-better-bibtex/debug-bridge.js',
   'chrome/content/zotero-better-bibtex/errorReport.js',
   'chrome/content/zotero-better-bibtex/errorReport.xul',

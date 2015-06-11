@@ -1,17 +1,17 @@
-class Zotero.BetterBibTeX.CitekeyFormatter
+class BetterBibTeXPatternFormatter
   constructor: (@patterns) ->
-    if !Zotero.BetterBibTeX.CitekeyFormatter::unsafechars
+    if !BetterBibTeXPatternFormatter::unsafechars
       safechars = /[-:a-z0-9_!\$\*\+\.\/;\?\[\]]/g
       # not  "@',\#{}%
       unsafechars = '' + safechars
       unsafechars = unsafechars.substring(unsafechars.indexOf('/') + 1, unsafechars.lastIndexOf('/'))
       unsafechars = unsafechars.substring(0, 1) + '^' + unsafechars.substring(1, unsafechars.length)
-      Zotero.BetterBibTeX.CitekeyFormatter::unsafechars = new RegExp(unsafechars, 'ig')
+      BetterBibTeXPatternFormatter::unsafechars = new RegExp(unsafechars, 'ig')
 
-      Zotero.BetterBibTeX.CitekeyFormatter::punct = Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g')
+      BetterBibTeXPatternFormatter::punct = Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g')
 
-      Zotero.BetterBibTeX.CitekeyFormatter::caseNotUpperTitle = Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g')
-      Zotero.BetterBibTeX.CitekeyFormatter::caseNotUpper = Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
+      BetterBibTeXPatternFormatter::caseNotUpperTitle = Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g')
+      BetterBibTeXPatternFormatter::caseNotUpper = Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
