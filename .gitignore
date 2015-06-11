@@ -4,6 +4,8 @@
 *.debug
 *.cache
 *.status
+*.keys
+*.serialized
 .bundle
 *.js
 *.js.map

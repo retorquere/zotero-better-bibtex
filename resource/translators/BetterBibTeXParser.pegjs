@@ -21,7 +21,7 @@ identifier
   = chars:[a-zA-Z]+ { return bibtex.flatten(chars) }
 
 citekey
-  = str:[^,]+ { return bibtex.flatten(str) }
+  = chars:[^,]+ { return bibtex.flatten(chars) }
 
 field
   = _* key:attachmenttype _* '=' _* val:attachments _* (',' _*)? { return {key: 'file', type: 'file', value: bibtex.filterattachments(val || [], key)}; }
@@ -56,20 +56,20 @@ simplestring
   / _* "#" _* simplestring
 
 bracedvalue
-  = '{' &{ bibtex.quote('{}') } val:strings '}' &{ bibtex.quote() } { return val }
-  / '"' &{ bibtex.quote('"')  } val:strings '"' &{ bibtex.quote() } { return val }
+  = '{' &{ return bibtex.quote('{}') } val:strings '}' &{ return bibtex.quote() } { return val }
+  / '"' &{ return bibtex.quote('"')  } val:strings '"' &{ return bibtex.quote() } { return val }
 
 url
-  = '{' &{ bibtex.quote('{}') } val:urlchar* '}' &{ bibtex.quote() } { return bibtex.flatten(val) }
-  / '"' &{ bibtex.quote('"')  } val:urlchar* '"' &{ bibtex.quote() } { return bibtex.flatten(val) }
+  = '{' &{ return bibtex.quote('{}') } val:urlchar* '}' &{ return bibtex.quote() } { return bibtex.flatten(val) }
+  / '"' &{ return bibtex.quote('"')  } val:urlchar* '"' &{ return bibtex.quote() } { return bibtex.flatten(val) }
 
 strings
-  = &{ !bibtex.raw } strings:string*    { return strings }
-  / &{ bibtex.raw  } strings:raw*       { return strings }
+  = &{ return !bibtex.raw } strings:string*    { return strings }
+  / &{ return bibtex.raw  } strings:raw*       { return strings }
 
 raw
-  = &{ bibtex.braced } text:[^\\{}]+    { return text.join('') }
-  / &{ bibtex.quoted } text:[^\\"]+     { return text.join('') }
+  = &{ return bibtex.braced } text:[^\\{}]+    { return text.join('') }
+  / &{ return bibtex.quoted } text:[^\\"]+     { return text.join('') }
   / '\\' text:.                   { return "\\" + text }
   / '{' text:raw* '}'             { return new String('{' + text.join('') + '}') }
 
@@ -106,7 +106,7 @@ bracedparam
   = '{' text:string* '}'  { return bibtex.flatten(text) }
 
 quotedchar
-  = &{ bibtex.quoted } '"' { return '"' }
+  = &{ return bibtex.quoted } '"' { return '"' }
   / text:[#$%&_\^\[\]{}]  { return text }
 
 urlchar
@@ -114,8 +114,8 @@ urlchar
   / "\\" text:. { return text }
 
 plaintext
-  = &{ bibtex.quoted  } text:[^ "\t\n\r#$%&~_\^{}\[\]\\]+ { return bibtex.flatten(text) }
-  / &{ !bibtex.quoted } text:[^ \t\n\r#$%&~_\^{}\[\]\\]+  { return bibtex.flatten(text) }
+  = &{ return bibtex.quoted  } text:[^ "\t\n\r#$%&~_\^{}\[\]\\]+ { return bibtex.flatten(text) }
+  / &{ return !bibtex.quoted } text:[^ \t\n\r#$%&~_\^{}\[\]\\]+  { return bibtex.flatten(text) }
 
 attachmentlist
   = car:attachment cdr:attachmentcdr*  { return [car].concat(cdr || []) }

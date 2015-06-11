@@ -7,6 +7,7 @@ Scenario: AUX scanner
   And I import 1 reference from 'import/AUX scanner.aux'
   Then the library should match 'import/AUX scanner-post.json'
 
+@i1
 Scenario: Better BibTeX Import 2
   When I import 2 references from 'import/Better BibTeX.002.bib'
   Then the library without collections should match 'import/Better BibTeX.002.json'

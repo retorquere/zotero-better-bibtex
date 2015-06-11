@@ -801,11 +801,7 @@ Zotero.BetterBibTeX.load = (translator) ->
   header = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.json"))
   @removeTranslator(header)
 
-  sources = ['xregexp-all-min', 'json5', 'translator']
-  for dep in header.BetterBibTeX?.dependencies || []
-    sources.push(dep)
-  sources.push("#{translator}.header")
-  sources.push(translator)
+  sources = ['xregexp-all-min', 'json5', 'translator', "#{translator}.header", translator].concat(header.BetterBibTeX?.dependencies || [])
   @debug('loading translator:', translator, sources)
   #code = (Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{src}.js") for src in sources).join("\n")
   code = ''

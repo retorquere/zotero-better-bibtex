@@ -1,9 +1,4 @@
-Translator = new class
-  constructor: ->
-    @citekeys = Object.create(null)
-    @attachmentCounter = 0
-    @rawLaTag = '#LaTeX'
-    @BibLaTeXDataFieldMap = Object.create(null)
+Translator = {}
 
 Translator.log = (msg...) ->
   msg = for m in msg
@@ -28,11 +23,16 @@ Translator.log.array = (a) ->
 Translator.debug_on = (msg...) ->
   @log.apply(@, [ '[' + 'DEBUG' + ']' ].concat(msg))
 
-Translator.debug_off = (msg...) ->
+Translator.debug_off = ->
 
 Translator.initialize = ->
   return if @initialized
   @initialized = true
+
+  @citekeys = Object.create(null)
+  @attachmentCounter = 0
+  @rawLaTag = '#LaTeX'
+  @BibLaTeXDataFieldMap = Object.create(null)
 
   @translatorID = @header.translatorID
 

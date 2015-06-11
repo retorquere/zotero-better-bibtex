@@ -119,6 +119,7 @@ detectImport = ->
     input = Zotero.read(102400)
     Translator.log("BBT detect against #{input}")
     bib = BetterBibTeXParser.parse(input)
+    Translator.log("better-bibtex: detect: #{bib.references.length > 0}")
     return (bib.references.length > 0)
   catch e
     Translator.log("better-bibtex: detect failed: #{e}\n#{e.stack}")
@@ -167,7 +168,7 @@ class ZoteroItem
     @type = Translator.typeMap.BibTeX2Zotero[Zotero.Utilities.trimInternal((bibtex.type || bibtex.__type__).toLowerCase())] || 'journalArticle'
     @item = new Zotero.Item(@type)
     @item.itemID = bibtex.__key__
-    @log("new reference: #{@item.itemID}")
+    Translator.log("new reference: #{@item.itemID}")
     @biblatexdata = {}
     @item.notes.push({ note: ('The following fields were not imported:<br/>' + bibtex.__note__).trim(), tags: ['#BBT Import'] }) if bibtex.__note__
     @import(bibtex)
@@ -175,8 +176,6 @@ class ZoteroItem
       @item.tags ?= []
       @item.tags.push(Translator.rawLaTag)
     @item.complete()
-
-ZoteroItem::log = Translator.log
 
 ZoteroItem::keywordClean = (k) ->
   return k.replace(/^[\s{]+|[}\s]+$/g, '').trim()
