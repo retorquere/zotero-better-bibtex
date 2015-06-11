@@ -5,6 +5,7 @@
     if (!params) { params = []; }
     return {method: name, arguments: [editorsOnly, (flag === 'initials')].concat(params)};
   }
+  (Zotero.debug || console.log)('PatternParser loaded')
 }
 
 start

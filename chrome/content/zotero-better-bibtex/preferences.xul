@@ -10,6 +10,8 @@
 	<!-- Include the main extension logic -->
 	<script src="chrome://zotero/content/include.js"/>
 	<script src="chrome://zotero-better-bibtex/content/include.js"/>
+	<script src="chrome://zotero-better-bibtex/content/BetterBibTeXPatternFormatter.js"/>
+	<script src="chrome://zotero-better-bibtex/content/BetterBibTeXPatternParser.js"/>
 	<script src="chrome://zotero-better-bibtex/content/preferences.js"/><!-- needs to be included every time anew to bind windows and document -->
 	
   <prefwindow id="zotero-prefs">
@@ -17,7 +19,7 @@
             insertafter="zotero-prefpane-advanced"
             label="&zotero.better-bibtex.preferences.prefpane.better-bibtex;"
             image="chrome://zotero-better-bibtex/skin/bibtex.svg"
-            onpaneload="Zotero.BetterBibTeX.pref.update();"
+            onpaneload="BetterBibTeXPref.paneLoad();"
             >
       <preferences id="zotero-preferences-cite">
         <preference name="extensions.zotero.httpServer.enabled"                               id="pref-better-bibtex-server"                  type="bool"/>
@@ -61,14 +63,16 @@
                   <row>
                     <label value="&zotero.better-bibtex.cite.command;"/>
                     <textbox id="id-better-bibtex-preferences-citeCommand" preference="pref-better-bibtex-citecommand"
-                      onchange="Zotero.BetterBibTeX.pref.update();"
-                      onkeypress="setTimeout(function() { Zotero.BetterBibTeX.pref.update() }, 1);"/>
+                      onchange="BetterBibTeXPref.update();"
+                      onkeypress="setTimeout(function() { BetterBibTeXPref.update() }, 1);"/>
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.cite.format;"/>
                     <textbox id="id-better-bibtex-preferences-citekeyFormat" preference="pref-better-bibtex-format"
-                      oninput="Zotero.BetterBibTeX.pref.update();"
-                      onkeypress="setTimeout(function() { Zotero.BetterBibTeX.pref.update() }, 1);"/>
+                      onfocus="BetterBibTeXPref.saveCitekeyFormat();"
+                      onblur="BetterBibTeXPref.checkCitekeyFormat();"
+                      oninput="BetterBibTeXPref.update();"
+                      onkeypress="setTimeout(function() { BetterBibTeXPref.update() }, 1);"/>
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.langid;"/>
@@ -79,7 +83,7 @@
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.pin-citekeys;"/>
-                    <radiogroup id="id-better-bibtex-preferences-pin-citekeys" orient="vertical" preference="pref-better-bibtex-pin-citekeys" oncommand="Zotero.BetterBibTeX.pref.update();">
+                    <radiogroup id="id-better-bibtex-preferences-pin-citekeys" orient="vertical" preference="pref-better-bibtex-pin-citekeys" oncommand="BetterBibTeXPref.update();">
                       <radio id="id-better-bibtex-preferences-pin-citekeys-manual" label="&zotero.better-bibtex.pin-citekeys.manual;" value="manual"/>
                       <radio id="id-better-bibtex-preferences-pin-citekeys-on-change" label="&zotero.better-bibtex.pin-citekeys.on-change;" value="on-change"/>
                       <radio id="id-better-bibtex-preferences-pin-citekeys-on-export" label="&zotero.better-bibtex.pin-citekeys.on-export;" value="on-export"/>
@@ -87,7 +91,7 @@
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.pin-citekeys.key-conflict-policy;"/>
-                    <radiogroup id="id-better-bibtex-preferences-key-conflict-policy" orient="vertical" preference="pref-better-bibtex-citekey-conflict" oncommand="Zotero.BetterBibTeX.pref.update();">
+                    <radiogroup id="id-better-bibtex-preferences-key-conflict-policy" orient="vertical" preference="pref-better-bibtex-citekey-conflict" oncommand="BetterBibTeXPref.update();">
                       <radio id="id-better-bibtex-preferences-key-conflict-policy-change" label="&zotero.better-bibtex.pin-citekeys.key-conflict-policy.change;" value="change"/>
                       <radio id="id-better-bibtex-preferences-key-conflict-policy-keep" label="&zotero.better-bibtex.pin-citekeys.key-conflict-policy.keep;" value="keep"/>
                     </radiogroup>
@@ -111,8 +115,8 @@
                   <row>
                     <label value="&zotero.better-bibtex.skipFields;"/>
                     <textbox id="id-better-bibtex-preferences-skipFields" preference="pref-better-bibtex-skipFields"
-                      oninput="Zotero.BetterBibTeX.pref.update();"
-                      onkeypress="setTimeout(function() { Zotero.BetterBibTeX.pref.update() }, 1);"/>
+                      oninput="BetterBibTeXPref.update();"
+                      onkeypress="setTimeout(function() { BetterBibTeXPref.update() }, 1);"/>
                   </row>
                   <row>
                     <checkbox label="&zotero.better-bibtex.ascii.BibTeX;" preference="pref-better-bibtex-asciiBibTeX"/>
@@ -143,11 +147,13 @@
                     <checkbox label="&zotero.better-bibtex.attachmentsNoMetadata;" preference="pref-better-bibtex-attachments-nometadata"/>
                   </row>
                   <row>
-                    <checkbox id="id-better-bibtex-preferences-getCollections" label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive" oncommand="Zotero.BetterBibTeX.pref.update();"/>
+                    <checkbox id="id-better-bibtex-preferences-getCollections"
+                    label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive" oncommand="BetterBibTeXPref.update();"/>
                     <label id="id-zotero-better-bibtex-recursive-warning" hidden="true" style="color: red">&zotero.better-bibtex.recursive.warning;</label>
                   </row>
                   <row>
-                    <checkbox id="id-better-bibtex-preferences-server-enabled" label="&zotero.better-bibtex.server.enabled;" preference="pref-better-bibtex-server" oncommand="Zotero.BetterBibTeX.pref.update();"/>
+                    <checkbox id="id-better-bibtex-preferences-server-enabled"
+                    label="&zotero.better-bibtex.server.enabled;" preference="pref-better-bibtex-server" oncommand="BetterBibTeXPref.update();"/>
                     <label id="id-zotero-better-bibtex-server-warning" hidden="true" style="color: red">&zotero.better-bibtex.server.warning;</label>
                   </row>
                   <row>
@@ -164,7 +170,7 @@
             <vbox class="better-bibtex-prefs" flex="1">
                 <checkbox id="id-better-bibtex-preferences-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" preference="pref-better-bibtex-auto-abbrev"/>
                 <label>&zotero.better-bibtex.preferences.auto-abbrev.style;</label>
-                <listbox id="better-bibtex-abbrev-style" flex="1" onselect="Zotero.BetterBibTeX.pref.styleChanged()"/>
+                <listbox id="better-bibtex-abbrev-style" flex="1" onselect="BetterBibTeXPref.styleChanged()"/>
             </vbox>
           </tabpanel>
           <tabpanel orient="vertical"><!-- auto export -->
@@ -179,7 +185,7 @@
                 </radiogroup>
               </hbox>
               <hbox>
-                <listbox id="better-bibtex-export-list" flex="1" onselect="Zotero.BetterBibTeX.pref.autoexport.selected()">
+                <listbox id="better-bibtex-export-list" flex="1" onselect="BetterBibTeXAutoExportPref.selected()">
                   <listcols>
                     <listcol flex="1"/>
                   </listcols>
@@ -223,8 +229,8 @@
                 </groupbox>
               </hbox>
               <hbox>
-                <button id="auto-export-remove" label="&zotero.better-bibtex.auto-export.remove;" oncommand="Zotero.BetterBibTeX.pref.autoexport.remove()"/>
-                <button id="auto-export-mark" label="&zotero.better-bibtex.auto-export.mark;" oncommand="Zotero.BetterBibTeX.pref.autoexport.mark()"/>
+                <button id="auto-export-remove" label="&zotero.better-bibtex.auto-export.remove;" oncommand="BetterBibTeXAutoExportPref.remove()"/>
+                <button id="auto-export-mark" label="&zotero.better-bibtex.auto-export.mark;" oncommand="BetterBibTeXAutoExportPref.mark()"/>
               </hbox>
             </vbox>
           </tabpanel>

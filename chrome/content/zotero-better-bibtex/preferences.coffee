@@ -1,89 +1,112 @@
-Zotero.BetterBibTeX.pref.serverURL = (extension) ->
-  collectionsView = Zotero.getActiveZoteroPane()?.collectionsView
-  itemGroup = collectionsView?._getItemAtRow(collectionsView.selection?.currentIndex)
-  return unless itemGroup
+BetterBibTeXPref =
+  serverURL: (extension) ->
+    collectionsView = Zotero.getActiveZoteroPane()?.collectionsView
+    itemGroup = collectionsView?._getItemAtRow(collectionsView.selection?.currentIndex)
+    return unless itemGroup
 
-  try
-    serverPort = Zotero.Prefs.get('httpServer.port')
-  catch err
-    return
+    try
+      serverPort = Zotero.Prefs.get('httpServer.port')
+    catch err
+      return
 
-  if itemGroup.isCollection()
-    collection = collectionsView.getSelectedCollection()
-    url = "collection?/#{collection.libraryID or 0}/#{collection.key + extension}"
+    if itemGroup.isCollection()
+      collection = collectionsView.getSelectedCollection()
+      url = "collection?/#{collection.libraryID or 0}/#{collection.key + extension}"
 
-  if itemGroup.isLibrary(true)
-    libid = collectionsView.getSelectedLibraryID()
-    url = if libid then "library?/#{libid}/library#{extension}" else "library?library#{extension}"
-  if not url then return
+    if itemGroup.isLibrary(true)
+      libid = collectionsView.getSelectedLibraryID()
+      url = if libid then "library?/#{libid}/library#{extension}" else "library?library#{extension}"
+    if not url then return
 
-  return "http://localhost:#{serverPort}/better-bibtex/#{url}"
+    return "http://localhost:#{serverPort}/better-bibtex/#{url}"
 
-Zotero.BetterBibTeX.pref.styleChanged = (index) ->
-  stylebox = document.getElementById('better-bibtex-abbrev-style')
-  selectedItem = if typeof index != 'undefined' then stylebox.getItemAtIndex(index) else stylebox.selectedItem
-  styleID = selectedItem.getAttribute('value')
-  Zotero.BetterBibTeX.pref.set('autoAbbrevStyle', styleID)
+  paneLoad: ->
+    #window.addEventListener('load', (load = (event) ->
+    #  window.removeEventListener('load', load, false) #remove listener, no longer needed
+    BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.pref.get('citekeyFormat')
+    BetterBibTeXPref.update()
+    #  return
+    #), false)
 
-Zotero.BetterBibTeX.pref.clone = (obj) ->
-  clone = Object.create(null)
-  for own key, value of obj
-    clone[key] = value
-  return clone
+  saveCitekeyFormat: ->
+    BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.pref.get('citekeyFormat')
 
-Zotero.BetterBibTeX.pref.display = (id, text) ->
-  elt = document.getElementById(id)
-  elt.value = text
-  elt.setAttribute('tooltiptext', text) if text != ''
+  checkCitekeyFormat: ->
+    keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    try
+      BetterBibTeXPatternParser.parse(keyformat.value)
+    catch err
+      Zotero.BetterBibTeX.pref.set('citekeyFormat', BetterBibTeXPref.savedPattern || '[auth][year]')
 
-Zotero.BetterBibTeX.pref.update = ->
-  return unless Zotero.BetterBibTeX.initialized # ?!?!
+  paneUnload: ->
+    try
+      BetterBibTeXPatternParser.parse(Zotero.BetterBibTeX.pref.get('citekeyFormat'))
+    catch err
+      Zotero.BetterBibTeX.pref.set('citekeyFormat', BetterBibTeXPref.savedPattern)
 
-  serverCheckbox = document.getElementById('id-better-bibtex-preferences-server-enabled')
-  serverEnabled = serverCheckbox.checked
-  serverCheckbox.setAttribute('hidden', Zotero.isStandalone && serverEnabled)
+  styleChanged: (index) ->
+    stylebox = document.getElementById('better-bibtex-abbrev-style')
+    selectedItem = if typeof index != 'undefined' then stylebox.getItemAtIndex(index) else stylebox.selectedItem
+    styleID = selectedItem.getAttribute('value')
+    Zotero.BetterBibTeX.pref.set('autoAbbrevStyle', styleID)
 
-  keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+  clone: (obj) ->
+    clone = Object.create(null)
+    for own key, value of obj
+      clone[key] = value
+    return clone
 
-  parseerror = null
-  try
-    BetterBibTeXPatternParser.parse(keyformat.value)
-  catch err
-    parseerror = err
+  display: (id, text) ->
+    elt = document.getElementById(id)
+    elt.value = text
+    elt.setAttribute('tooltiptext', text) if text != ''
 
-  Zotero.BetterBibTeX.debug('parsing format', keyformat.value, ':', !!parseerror)
-  keyformat.setAttribute('style', (if parseerror then 'color: red' else ''))
-  keyformat.setAttribute('tooltiptext', '' + (parseerror || ''))
+  update: ->
+    serverCheckbox = document.getElementById('id-better-bibtex-preferences-server-enabled')
+    serverEnabled = serverCheckbox.checked
+    serverCheckbox.setAttribute('hidden', Zotero.isStandalone && serverEnabled)
 
-  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-change').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())
-  document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-export').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())
-  document.getElementById('id-zotero-better-bibtex-server-warning').setAttribute('hidden', serverEnabled)
-  document.getElementById('id-zotero-better-bibtex-recursive-warning').setAttribute('hidden', not document.getElementById('id-better-bibtex-preferences-getCollections').checked)
+    keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
 
-  styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
+    parseerror = null
+    try
+      BetterBibTeXPatternParser.parse(keyformat.value)
+    catch err
+      parseerror = err
 
-  stylebox = document.getElementById('better-bibtex-abbrev-style')
-  refill = stylebox.children.length == 0
-  selectedStyle = Zotero.BetterBibTeX.pref.get('autoAbbrevStyle')
-  selectedIndex = -1
-  for style, i in styles
-    if refill
-      itemNode = document.createElement('listitem')
-      itemNode.setAttribute('value', style.styleID)
-      itemNode.setAttribute('label', style.title)
-      stylebox.appendChild(itemNode)
-    if style.styleID == selectedStyle then selectedIndex = i
-  selectedIndex = 0 if selectedIndex == -1
-  Zotero.BetterBibTeX.pref.styleChanged(selectedIndex)
+    Zotero.BetterBibTeX.debug('parsing format', keyformat.value, ':', !!parseerror)
+    keyformat.setAttribute('style', (if parseerror then 'color: red' else ''))
+    keyformat.setAttribute('tooltiptext', '' + (parseerror || ''))
 
-  window.setTimeout((->
-    stylebox.ensureIndexIsVisible(selectedIndex)
-    stylebox.selectedIndex = selectedIndex
-    return), 0)
+    document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-change').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())
+    document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-export').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())
+    document.getElementById('id-zotero-better-bibtex-server-warning').setAttribute('hidden', serverEnabled)
+    document.getElementById('id-zotero-better-bibtex-recursive-warning').setAttribute('hidden', not document.getElementById('id-better-bibtex-preferences-getCollections').checked)
 
-  @autoexport.refresh()
+    styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
 
-Zotero.BetterBibTeX.pref.autoexport =
+    stylebox = document.getElementById('better-bibtex-abbrev-style')
+    refill = stylebox.children.length == 0
+    selectedStyle = Zotero.BetterBibTeX.pref.get('autoAbbrevStyle')
+    selectedIndex = -1
+    for style, i in styles
+      if refill
+        itemNode = document.createElement('listitem')
+        itemNode.setAttribute('value', style.styleID)
+        itemNode.setAttribute('label', style.title)
+        stylebox.appendChild(itemNode)
+      if style.styleID == selectedStyle then selectedIndex = i
+    selectedIndex = 0 if selectedIndex == -1
+    BetterBibTeXPref.styleChanged(selectedIndex)
+
+    window.setTimeout((->
+      stylebox.ensureIndexIsVisible(selectedIndex)
+      stylebox.selectedIndex = selectedIndex
+      return), 0)
+
+    BetterBibTeXAutoExportPref.refresh()
+
+BetterBibTeXAutoExportPref =
   selected: (index) ->
     Zotero.BetterBibTeX.debug('pref.autoexport.selected:', index)
     exportbox = document.getElementById('better-bibtex-export-list')
@@ -97,16 +120,16 @@ Zotero.BetterBibTeX.pref.autoexport =
     ae ||= {status: '', collection: '', path: '', translatorID: '', exportCharset: '', useJournalAbbreviation: false, exportNotes: false, preserveBibTeXVariables: false }
     Zotero.BetterBibTeX.debug('pref.autoexport.selected =', ae)
 
-    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-status', ae.status)
+    BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-status', ae.status)
     name = switch
       when ae.collection == '' then ''
       when ae.collection == 'library' then Zotero.Libraries.getName() || ae.collection
       when m = /^library:([0-9]+)$/.exec(ae.collection) then Zotero.Libraries.getName(m[1]) || ae.collection
       else @collectionPath(ae.collection) || "collection:#{ae.collection}"
-    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-collection', name)
-    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-target', ae.path)
-    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-translator', Zotero.BetterBibTeX.translatorName(ae.translatorID))
-    Zotero.BetterBibTeX.pref.display('id-better-bibtex-preferences-auto-export-charset', Zotero.BetterBibTeX.translatorName(ae.exportCharset))
+    BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-collection', name)
+    BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-target', ae.path)
+    BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-translator', Zotero.BetterBibTeX.translatorName(ae.translatorID))
+    BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-charset', Zotero.BetterBibTeX.translatorName(ae.exportCharset))
     document.getElementById('id-better-bibtex-preferences-auto-export-auto-abbrev').checked = (ae.useJournalAbbreviation == 'true')
     document.getElementById('id-better-bibtex-preferences-auto-export-notes').checked = (ae.exportNotes == 'true')
     document.getElementById('id-better-bibtex-preferences-auto-export-preserve-bibvars').checked = (ae.preserveBibTeXVariables == 'true')
