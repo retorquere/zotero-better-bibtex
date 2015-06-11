@@ -76,8 +76,8 @@ def loadZotero
   client.timeout = 6000 # seconds – default is 60
   $Firefox.browser = Selenium::WebDriver.for :firefox, :profile => profile, :http_client => client
   say "Firefox started"
-
   sleep 2
+
   say "Starting Zotero..."
   $Firefox.browser.navigate.to('chrome://zotero/content/tab.xul') # does this trigger the window load?
   say "Zotero started"
@@ -87,6 +87,7 @@ def loadZotero
   $Firefox.BetterBibTeX = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
   $Firefox.ScholarlyMarkdown = JSONRPCClient.new('http://localhost:23119/better-bibtex/schomd')
   $Firefox.BetterBibTeX.init
+  sleep 2
 
   Dir['*.debug'].each{|d| File.unlink(d) }
   Dir['*.status'].each{|d| File.unlink(d) }
