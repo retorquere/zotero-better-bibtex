@@ -9,10 +9,16 @@
 }
 
 start
-  = patterns:pattern+ { return patterns; }
+  = patterns:pattern+ {
+      parsed = [[]]
+      for pattern in patterns
+        parsed[parsed.length-1].push(pattern.pattern)
+        parsed.push([]) if pattern.marker == '>'
+      return parsed
+    }
 
 pattern
-  = callchain:callchain+ '|'? { return callchain; }
+  = callchain:callchain+ marker:[\|>]? { return {pattern: callchain, marker: marker}; }
 
 callchain
   = '[' fcall:fcall ']'   { return fcall; }
