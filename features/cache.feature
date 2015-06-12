@@ -1,5 +1,6 @@
 @test-cluster-3
 Feature: Cache tests
+  Given I set preference .citekeyFormat to [auth][year]
 
 @keymanager
 Scenario: Keymanager cache test

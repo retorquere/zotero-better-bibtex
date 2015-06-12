@@ -1,5 +1,6 @@
 @export
 Feature: Export
+  Given I set preference .citekeyFormat to [auth][year]
 
 #@163
 #Scenario: Preserve Bib variable names #163
