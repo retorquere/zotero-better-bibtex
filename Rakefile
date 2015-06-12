@@ -283,15 +283,6 @@ rule( /\.header\.js$/ => [ proc {|task_name| task_name.sub(/\.header\.js$/, '.ym
   }
 end
 
-rule '.js' => '.pegjs' do |t|
-  sh "#{NODEBIN}/pegjs -e #{File.basename(t.source, File.extname(t.source))} #{t.source.shellescape} #{t.name.shellescape}"
-end
-
-rule '.js' => '.coffee' do |t|
-  sh "#{NODEBIN}/coffeelint #{t.source.shellescape}"
-  sh "#{NODEBIN}/coffee -bc #{t.source.shellescape}"
-end
-
 task :keys, [:size] do |t, args|
   args[:size] ||= 1024
 
