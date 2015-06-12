@@ -1,5 +1,7 @@
 @test-cluster-2 @import
 Feature: Import
+
+Background:
   Given I set preference .citekeyFormat to [auth][year]
 
 @aux

@@ -1,5 +1,7 @@
 @test-cluster-3
 Feature: Bulk Export & Cache
+
+Background:
   Given I set preference .citekeyFormat to [auth][year]
 
 @bulk

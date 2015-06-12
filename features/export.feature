@@ -1,5 +1,7 @@
 @export
 Feature: Export
+
+Background:
   Given I set preference .citekeyFormat to [auth][year]
 
 #@163
