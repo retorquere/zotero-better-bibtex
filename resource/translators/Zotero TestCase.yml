@@ -10,7 +10,6 @@ configOptions:
 displayOptions: 
   exportNotes: true
   exportFileData: false
-  "Preserve BibTeX variables": false
 inRepository: true
 translatorType: 3
 browserSupport: gcsv

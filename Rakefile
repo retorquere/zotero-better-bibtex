@@ -22,7 +22,6 @@ require 'rake/loaders/makefile'
 require 'selenium-webdriver'
 require 'rchardet'
 
-NODEBIN="node_modules/.bin"
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
 ABBREVS = YAML.load_file('resource/abbreviations/lists.yml')
