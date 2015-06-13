@@ -83,11 +83,11 @@ def loadZotero
   say "Zotero started"
   #$headless.take_screenshot('/home/emile/zotero/zotero-better-bibtex/screenshot.png')
   $Firefox.DebugBridge = JSONRPCClient.new('http://localhost:23119/debug-bridge')
+  sleep 3
   $Firefox.DebugBridge.bootstrap('Zotero.BetterBibTeX')
   $Firefox.BetterBibTeX = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
   $Firefox.ScholarlyMarkdown = JSONRPCClient.new('http://localhost:23119/better-bibtex/schomd')
   $Firefox.BetterBibTeX.init
-  sleep 5
 
   Dir['*.debug'].each{|d| File.unlink(d) }
   Dir['*.status'].each{|d| File.unlink(d) }
