@@ -231,7 +231,7 @@ Then /^the library (without collections )?should match '([^']+)'$/ do |nocollect
 
   movekeys = lambda{|lib|
     keys = {}
-    lib['keymanager'].each{|key|
+    (lib['keymanager'] || []).each{|key|
       keys[key['itemID']] = key
       key.delete('itemID')
     }
