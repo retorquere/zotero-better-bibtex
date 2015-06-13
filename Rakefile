@@ -346,6 +346,7 @@ task :test, [:tag] => [XPI, :plugins] do |t, args|
     ensure
       sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
       sh "rm -f cucumber.run"
+      Dir["*.debug"].each{|dbug| sh "cut -c-200 < #{dbug.shellescape} > #{dbug.sub(/\.debug$/, '.dbg').shellescape}" }
     end
   rescue => e
     ok = false

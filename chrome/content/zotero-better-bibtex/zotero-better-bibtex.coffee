@@ -4,7 +4,6 @@ Components.utils.import('resource://zotero/config.js')
 
 loki.Collection::byExample = (template) ->
   query = {'$and': ({"#{k}": v} for own k, v of template)}
-  Zotero.BetterBibTeX.debug('loki.Collection::byExample:', query)
   return query
 
 loki.Collection::findObject = (template) ->
@@ -517,7 +516,6 @@ Zotero.BetterBibTeX.init = ->
         return item if item.itemType == 'attachment'
 
         item.attachments = []
-        Zotero.BetterBibTeX.debug('Zotero.Translate.ItemGetter::nextItem:', item)
         for attachmentID in item.attachmentIDs
           attachment = Zotero.BetterBibTeX.serialized.get.apply(@, [attachmentID, {attachmentID: true, exportFileData: @_exportFileData}])
           item.attachments.push(attachment) if attachment

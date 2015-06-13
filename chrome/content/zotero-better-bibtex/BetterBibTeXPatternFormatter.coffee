@@ -17,10 +17,7 @@ class BetterBibTeXPatternFormatter
     @item = Zotero.BetterBibTeX.serialized.get(item)
     return if @item.itemType in ['attachment', 'note']
 
-    Zotero.BetterBibTeX.debug('format: applying', @patterns[0], 'from', @patterns.length)
-
     for candidate in @patterns[0]
-      Zotero.BetterBibTeX.debug('format candidate', candidate)
       citekey = @clean(@concat(candidate))
       return citekey if citekey != ''
     return
@@ -28,8 +25,6 @@ class BetterBibTeXPatternFormatter
   alternates: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
     return if @item.itemType in ['attachment', 'note']
-
-    Zotero.BetterBibTeX.debug('alternates: applying', @patterns)
 
     citekeys = []
     for pattern in @patterns
@@ -41,13 +36,11 @@ class BetterBibTeXPatternFormatter
     return citekeys
 
   concat: (pattern) ->
-    Zotero.BetterBibTeX.debug('concat:', pattern)
     result = (@reduce(part) for part in pattern)
     result = (part for part in result when part)
     return result.join('').trim()
 
   reduce: (step) ->
-    Zotero.BetterBibTeX.debug('reduce:', step)
     value = @methods[step.method].apply(@, step.arguments)
     value = '' if value in [undefined, null]
 
@@ -188,7 +181,6 @@ class BetterBibTeXPatternFormatter
     return ('' + str).replace(/<\/?(sup|sub|i|b|p|span|br|break)\/?>/g, '').replace(/\s+/, ' ').trim()
 
   creators: (onlyEditors, withInitials) ->
-    Zotero.BetterBibTeX.debug('formatter.creators:', {onlyEditors, withInitials}, 'from', @item)
     return [] unless @item.creators?.length
 
     creators = {}

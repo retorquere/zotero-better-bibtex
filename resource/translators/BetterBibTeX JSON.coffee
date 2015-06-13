@@ -47,10 +47,12 @@ detectImport = ->
   try
     data = JSON.parse(json)
   catch e
-    Translator.log(e)
+    Translator.log('BetterBibTeX JSON.detect failed:', e)
     return false
 
-  return data?.config?.id == Translator.header.translatorID && data.items
+  match = data?.config?.id == Translator.header.translatorID && data.items
+  Translator.log('BetterBibTeX JSON.detect:', match)
+  return match
 
 doImport = ->
   json = ''

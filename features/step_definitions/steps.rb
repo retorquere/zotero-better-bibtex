@@ -44,7 +44,8 @@ def loadZotero
   return if $Firefox
   $Firefox = OpenStruct.new
 
-  profile = Selenium::WebDriver::Firefox::Profile.new(File.expand_path('test/fixtures/profiles/default'))
+  #profile = Selenium::WebDriver::Firefox::Profile.new(File.expand_path('test/fixtures/profiles/default'))
+  profile = Selenium::WebDriver::Firefox::Profile.new
 
   say "Installing plugins..."
   (Dir['*.xpi'] + Dir['test/fixtures/plugins/*.xpi']).each{|xpi|
@@ -90,6 +91,7 @@ def loadZotero
   $Firefox.BetterBibTeX.init
 
   Dir['*.debug'].each{|d| File.unlink(d) }
+  Dir['*.dbg'].each{|d| File.unlink(d) }
   Dir['*.status'].each{|d| File.unlink(d) }
   Dir['*.keys'].each{|d| File.unlink(d) }
   Dir['*.serialized'].each{|d| File.unlink(d) }
@@ -133,7 +135,7 @@ After do |scenario|
     open("#{filename}.cache", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.cacheState)) } if scenario.failed? || scenario.source_tag_names.include?('@dumpcache')
     open("#{filename}.serialized", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.serializedState)) } if scenario.failed? || scenario.source_tag_names.include?('@dumpserialized')
 
-    $Firefox.BetterBibTeX.exportToFile('Zotero TestCase', "#{filename}.json") if scenario.source_tag_names.include?('@dumplibrary')
+    $Firefox.BetterBibTeX.exportToFile('BetterBibTeX JSON', "#{filename}.json") if scenario.source_tag_names.include?('@dumplibrary')
   end
 end
 
@@ -167,7 +169,7 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
     if File.extname(filename) == '.json'
       data = JSON.parse(open(bib).read)
 
-      if data['config']['label'] == 'Zotero TestCase'
+      if data['config']['label'] == 'BetterBibTeX JSON'
         (data['config']['preferences'] || {}).each_pair{|key, value|
           $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.' + key, value)
         }
@@ -203,7 +205,7 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
 end
 
 Then /^write the library to '([^']+)'$/ do |filename|
-  $Firefox.BetterBibTeX.exportToFile('Zotero TestCase', filename)
+  $Firefox.BetterBibTeX.exportToFile('BetterBibTeX JSON', filename)
 end
 
 def normalize(o)

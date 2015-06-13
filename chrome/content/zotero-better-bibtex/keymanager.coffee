@@ -151,12 +151,12 @@ Zotero.BetterBibTeX.keymanager = new class
   assign: (item, pin) ->
     formatter = Zotero.BetterBibTeX.formatter(Zotero.BetterBibTeX.pref.get('citekeyFormat'))
     citekey = formatter.format(item)
+    citekey = "zotero-#{if item.libraryID in [undefined, null] then 'null' else item.libraryID}-#{item.itemID}" if citekey in [undefined, null, '']
     return null unless citekey
 
     libraryID = @integer(if item.libraryID == undefined then Zotero.DB.valueQuery('select libraryID from items where itemID = ?', [item.itemID]) else item.libraryID)
     itemID = @integer(item.itemID)
     in_use = (key.citekey for key in @keys.where((o) -> o.libraryID == libraryID && o.itemID != itemID && o.citekey.indexOf(citekey) == 0 && (o.citekey.length - citekey.length) in [0, 1]))
-    Zotero.BetterBibTeX.debug("keymanager.assign: find free key for", item, "default=#{citekey}, taken:", in_use)
     postfix = { n: -1, c: '' }
     while (citekey + postfix.c) in in_use
       postfix.n++
@@ -170,7 +170,6 @@ Zotero.BetterBibTeX.keymanager = new class
 
     zoteroPane = Zotero.getActiveZoteroPane()
     items = (item for item in zoteroPane.getSelectedItems() when !item.isAttachment() && !item.isNote())
-    Zotero.BetterBibTeX.debug("keymanager.selected(#{action}):", (item.itemID for item in items))
 
     for item in items
       @remove(item, action == 'set')
@@ -192,13 +191,10 @@ Zotero.BetterBibTeX.keymanager = new class
     extra = extra.extra
     extra += " \nbibtex: #{citekey}" if citekey
     extra = extra.trim()
-    Zotero.BetterBibTeX.debug("keymanager.save(#{item.itemID}, #{citekey})")
     item.setField('extra', extra)
     item.save()
 
   set: (item, citekey, pin) ->
-    Zotero.BetterBibTeX.debug("keymanager.set(item=#{item.itemID}, citekey=#{citekey}, pin=#{!!pin})")
-
     throw new Error('Cannot set empty cite key') if !citekey || citekey.trim() == ''
 
     # no keys for notes and attachments
@@ -232,7 +228,6 @@ Zotero.BetterBibTeX.keymanager = new class
       @keys.removeWhere((o) -> o.itemID in ids)
       return
 
-    Zotero.BetterBibTeX.debug('keymanager.scan:', ids, reason)
     switch
       when !ids
         items = Zotero.DB.query(@findKeysSQL)
@@ -265,17 +260,12 @@ Zotero.BetterBibTeX.keymanager = new class
 
       pinned['' + item.itemID] = cached.citekey
 
-    Zotero.BetterBibTeX.debug('keymanager.scan: pinned =', pinned)
-
     for itemID in ids || []
       continue if pinned['' + itemID]
-      Zotero.BetterBibTeX.debug('keymanager.scan: not pinned', itemID)
       @remove({itemID}, true)
       @get({itemID}, 'on-change')
 
   remove: (item, soft) ->
-    Zotero.BetterBibTeX.debug("keymanager.remove: item=#{item.itemID}, soft=#{!!soft}")
-
     @keys.removeWhere({itemID: @integer(item.itemID)})
     @save(item) unless soft # only use soft remove if you know a hard set follows!
 
@@ -322,8 +312,6 @@ Zotero.BetterBibTeX.keymanager = new class
   get: ->
     [item, pinmode] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
 
-    Zotero.BetterBibTeX.debug("keymanager.get: item=#{item.itemID}, pinmode=#{pinmode}")
-
     # no keys for notes and attachments
     return unless @eligible(item)
 
@@ -343,7 +331,6 @@ Zotero.BetterBibTeX.keymanager = new class
     libraryID = null if libraryID == undefined
     libraryID = @integer(libraryID)
     citekeys = [citekeys] unless Array.isArray(citekeys)
-    Zotero.BetterBibTeX.debug('keymanager.resolve:', citekeys, libraryID)
 
     resolved = {}
     for citekey in citekeys
