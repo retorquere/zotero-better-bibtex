@@ -33,9 +33,9 @@ scrub = (item) ->
   switch
     when !citekeys or citekeys.length == 0 then
     when citekeys.length == 1
-      item.citekey = citekeys[0]
+      item.__citekey__ = citekeys[0]
     else
-      item.citekeys = citekeys
+      item.__citekeys__ = citekeys
 
   return item
 
