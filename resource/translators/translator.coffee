@@ -43,12 +43,11 @@ Translator.initialize = ->
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
   @skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
-  for pref in ['usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata']
+  for pref in ['usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables']
     @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
 
   for option in ['useJournalAbbreviation', 'exportPath', 'exportCharset', 'exportFileData', 'exportNotes']
     @[option] = Zotero.getOption(option)
-  @preserveBibTeXVariables = Zotero.getOption('Preserve BibTeX variables')
 
   @caching = @header.BetterBibTeX?.cache?.BibTeX && !@exportFileData
 

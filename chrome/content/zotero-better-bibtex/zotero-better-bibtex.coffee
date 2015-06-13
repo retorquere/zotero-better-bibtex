@@ -215,6 +215,31 @@ Zotero.BetterBibTeX.tableExists = (name, mustHaveData = false) ->
   return exists && (!mustHaveData || Zotero.DB.valueQuery("select count(*) from #{name}") != 0)
 
 Zotero.BetterBibTeX.attachDatabase = ->
+  for key in @pref.prefs.getChildList('')
+    switch key
+      when 'auto-abbrev.style' then @pref.set('autoAbbrevStyle', @pref.get(key))
+      when 'auto-abbrev' then @pref.set('autoAbbrev', @pref.get(key))
+      when 'auto-export' then @pref.set('autoExport', @pref.get(key))
+      when 'citeKeyFormat' then @pref.set('citekeyFormat', @pref.get(key))
+      when 'doi-and-url' then @pref.set('DOIandURL', @pref.get(key))
+      when 'key-conflict-policy' then @pref.set('keyConflictPolicy', @pref.get(key))
+      when 'langid' then @pref.set('langID', @pref.get(key))
+      when 'pin-citekeys' then @pref.set('pinCitekeys', @pref.get(key))
+      when 'raw-imports' then @pref.set('rawImports', @pref.get(key))
+      when 'show-citekey' then @pref.set('showCitekeys', @pref.get(key))
+      when 'skipfields' then @pref.set('skipFields', @pref.get(key))
+      when 'useprefix' then @pref.set('usePrefix', @pref.get(key))
+      when 'unicode'
+        @pref.set('asciiBibTeX', (@pref.get(key) != 'always'))
+        @pref.set('asciiBibLaTeX', (@pref.get(key) == 'never'))
+      else continue
+    @pref.prefs.clearUserPref(key)
+  @pref.prefs.clearUserPref('brace-all')
+
+  try
+    translatorSettings = JSON.parse(Zotero.Prefs.get('export.translatorSettings'))
+    @pref.set('preserveBibTeXVariables', true) if translatorSettings['Preserve BibTeX variables']
+
   db = Zotero.getZoteroDatabase('betterbibtex')
   Zotero.DB.query('ATTACH ? AS betterbibtex', [db.path])
 
@@ -252,26 +277,6 @@ Zotero.BetterBibTeX.attachDatabase = ->
     Zotero.DB.beginTransaction() unless tip
 
     @pref.set('scanCitekeys', true)
-    for key in @pref.prefs.getChildList('')
-      switch key
-        when 'auto-abbrev.style' then @pref.set('autoAbbrevStyle', @pref.get(key))
-        when 'auto-abbrev' then @pref.set('autoAbbrev', @pref.get(key))
-        when 'auto-export' then @pref.set('autoExport', @pref.get(key))
-        when 'citeKeyFormat' then @pref.set('citekeyFormat', @pref.get(key))
-        when 'doi-and-url' then @pref.set('DOIandURL', @pref.get(key))
-        when 'key-conflict-policy' then @pref.set('keyConflictPolicy', @pref.get(key))
-        when 'langid' then @pref.set('langID', @pref.get(key))
-        when 'pin-citekeys' then @pref.set('pinCitekeys', @pref.get(key))
-        when 'raw-imports' then @pref.set('rawImports', @pref.get(key))
-        when 'show-citekey' then @pref.set('showCitekeys', @pref.get(key))
-        when 'skipfields' then @pref.set('skipFields', @pref.get(key))
-        when 'useprefix' then @pref.set('usePrefix', @pref.get(key))
-        when 'unicode'
-          @pref.set('asciiBibTeX', (@pref.get(key) != 'always'))
-          @pref.set('asciiBibLaTeX', (@pref.get(key) == 'never'))
-        else continue
-      @pref.prefs.clearUserPref(key)
-    @pref.prefs.clearUserPref('brace-all')
 
     for table in tables
       @debug('attachdatabase: backing up', table)

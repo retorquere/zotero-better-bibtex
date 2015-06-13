@@ -37,6 +37,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.langid"                 id="pref-better-bibtex-langid"                  type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.pinCitekeys"            id="pref-better-bibtex-pin-citekeys"            type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.preserveCaps"           id="pref-better-bibtex-preserveCaps"            type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.preserveBibTeXVariables" id="pref-better-bibtex-BibTeXVariables"        type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.rawImports"             id="pref-better-bibtex-raw-imports"             type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.scanCitekeys"           id="pref-better-bibtex-rescan-citekeys"         type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.showCitekeys"           id="pref-better-bibtex-show-citekey"            type="bool"/>
@@ -141,6 +142,10 @@
                     </radiogroup>
                   </row>
                   <row>
+                    <checkbox label="&zotero.better-bibtex.preserveBibTeXVariables;" preference="pref-better-bibtex-preserveBibTeXVariables"/>
+                    <label value="&zotero.better-bibtex.preserveBibTeXVariables.explain;"/>
+                  </row>
+                  <row>
                     <checkbox id="id-better-bibtex-preferences-useprefix" label="&zotero.better-bibtex.useprefix;" preference="pref-better-bibtex-useprefix"/>
                   </row>
                   <row>
@@ -225,7 +230,6 @@
                   </grid>
                   <checkbox id="id-better-bibtex-preferences-auto-export-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" disabled="true"/>
                   <checkbox id="id-better-bibtex-preferences-auto-export-notes" label="&zotero.better-bibtex.auto-export.notes;" disabled="true"/>
-                  <checkbox id="id-better-bibtex-preferences-auto-export-preserve-bibvars" label="&zotero.better-bibtex.auto-export.preserveBibTeXVariables;" disabled="true"/>
                 </groupbox>
               </hbox>
               <hbox>

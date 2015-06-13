@@ -74,9 +74,9 @@ doExport = ->
   }
 
   for pref in ['citekeyFormat', 'skipFields', 'usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'attachmentRelativePath', 'autoAbbrev',
-               'autoAbbrevStyle', 'unicode', 'pinCitekeys', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata']
+               'autoAbbrevStyle', 'unicode', 'pinCitekeys', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables']
     data.config.preferences[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
-  for option in ['useJournalAbbreviation', 'exportCharset', 'exportFileData', 'exportNotes', 'preserveBibTeXVariables']
+  for option in ['useJournalAbbreviation', 'exportCharset', 'exportFileData', 'exportNotes']
     data.config.options[option] = Zotero.getOption(option)
 
   while item = Zotero.nextItem()

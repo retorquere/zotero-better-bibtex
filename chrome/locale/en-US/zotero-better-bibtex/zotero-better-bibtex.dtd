@@ -83,3 +83,6 @@
 
 <!ENTITY zotero.better-bibtex.errorReport.reportID.public "Public Report ID (obfuscated, you can post this in the bug tracker):">
 <!ENTITY zotero.better-bibtex.errorReport.reportID.private "Private Report ID (for yourself):">
+
+<!ENTITY zotero.better-bibtex.preserveBibTeXVariables "Preserve BibTeX variables">
+<!ENTITY zotero.better-bibtex.preserveBibTeXVariables.explain "When enabled, single-word strings will be assumed to be extrenally-defined @string vars, and thus not surrounded by braces">
