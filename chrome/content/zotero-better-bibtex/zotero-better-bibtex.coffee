@@ -604,6 +604,7 @@ Zotero.BetterBibTeX.loadTranslators = ->
   @load('Pandoc Citation')
   @load('Zotero TestCase')
   @load('BibTeXAuxScanner')
+  @load('BibTeX Citekey Migration')
 
   # clean up junk
   try
@@ -870,17 +871,6 @@ Zotero.BetterBibTeX.exportGroup = ->
   exporter.collection = Zotero.Groups.get(itemGroup.ref.id)
   exporter.name = exporter.collection.name
   exporter.save()
-
-Zotero.BetterBibTeX.toCSV = (data) ->
-  csv = ''
-  for row in data
-    for cell, col in row
-      csv += ',' if col > 0
-      cell = (if cell == null then '' else cell.toString()).replace(/"/g, '""')
-      cell = '"' + cell + '"' if cell.search(/("|,|\n)/g) >= 0
-      csv += cell
-    csv += "\n"
-  return csv
 
 class Zotero.BetterBibTeX.XmlNode
   constructor: (@namespace, @root, @doc) ->

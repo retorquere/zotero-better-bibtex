@@ -17,29 +17,45 @@ class BetterBibTeXPatternFormatter
     @item = Zotero.BetterBibTeX.serialized.get(item)
     return if @item.itemType in ['attachment', 'note']
 
-    Zotero.BetterBibTeX.debug('formatter.format: from', @item, 'using', @patterns)
+    Zotero.BetterBibTeX.debug('format: applying', @patterns[0], 'from', @patterns.length)
 
-    for pattern in @patterns
-      citekey = @clean(@concat(pattern))
+    for candidate in @patterns[0]
+      Zotero.BetterBibTeX.debug('format candidate', candidate)
+      citekey = @clean(@concat(candidate))
       return citekey if citekey != ''
     return
 
+  alternates: (item) ->
+    @item = Zotero.BetterBibTeX.serialized.get(item)
+    return if @item.itemType in ['attachment', 'note']
+
+    Zotero.BetterBibTeX.debug('alternates: applying', @patterns)
+
+    citekeys = []
+    for pattern in @patterns
+      citekey = ''
+      for candidate in pattern
+        citekey = @clean(@concat(candidate))
+        break if citekey != ''
+      citekeys.push(citekey)
+    return citekeys
+
   concat: (pattern) ->
-    pattern = [pattern] unless Array.isArray(pattern)
+    Zotero.BetterBibTeX.debug('concat:', pattern)
     result = (@reduce(part) for part in pattern)
     result = (part for part in result when part)
     return result.join('').trim()
 
-  reduce: (steps) ->
-    steps = [steps] unless Array.isArray(steps)
-    value = ''
+  reduce: (step) ->
+    Zotero.BetterBibTeX.debug('reduce:', step)
+    value = @methods[step.method].apply(@, step.arguments)
+    value = '' if value in [undefined, null]
 
-    for step in steps
-      Zotero.BetterBibTeX.debug('formatter.reduce: from', @item, 'using', step)
-      if step.method
-        value = @methods[step.method].apply(@, step.arguments)
-      else
-        value = @filters[step.filter].apply(@, [value].concat(step.arguments))
+    return value unless step.filters
+
+    for filter in step.filters
+      value = @filters[filter.filter].apply(@, [value].concat(filter.arguments))
+      value = '' if value in [undefined, null]
     return value
 
   clean: (str) ->

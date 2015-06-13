@@ -22,7 +22,6 @@ require 'rake/loaders/makefile'
 require 'selenium-webdriver'
 require 'rchardet'
 
-NODEBIN="node_modules/.bin"
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
 ABBREVS = YAML.load_file('resource/abbreviations/lists.yml')
@@ -128,34 +127,19 @@ ZIPFILES = [
   'defaults/preferences/defaults.js',
   'install.rdf',
   'resource/error-reporting.pub.pem',
-  'resource/translators/Better BibLaTeX.header.js',
-  'resource/translators/Better BibLaTeX.js',
-  'resource/translators/Better BibLaTeX.json',
-  'resource/translators/Better BibTeX.header.js',
-  'resource/translators/Better BibTeX.js',
-  'resource/translators/Better BibTeX.json',
   'resource/translators/BetterBibTeXBraceBalancer.js',
   'resource/translators/BetterBibTeXParser.js',
   'resource/translators/BetterBibTeXParserSupport.js',
-  'resource/translators/BibTeXAuxScanner.header.js',
-  'resource/translators/BibTeXAuxScanner.js',
-  'resource/translators/BibTeXAuxScanner.json',
-  'resource/translators/LaTeX Citation.header.js',
-  'resource/translators/LaTeX Citation.js',
-  'resource/translators/LaTeX Citation.json',
-  'resource/translators/Pandoc Citation.header.js',
-  'resource/translators/Pandoc Citation.js',
-  'resource/translators/Pandoc Citation.json',
-  'resource/translators/Zotero TestCase.header.js',
-  'resource/translators/Zotero TestCase.js',
-  'resource/translators/Zotero TestCase.json',
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/translator.js',
   'resource/translators/unicode_translator.js',
   'resource/translators/xregexp-all-min.js',
-] + Dir['chrome/skin/**/*.*'] # + ABBREVS.collect{|a| a['path']}
-
+] + Dir['chrome/skin/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
+  root = File.dirname(tr)
+  stem = File.basename(tr, File.extname(tr))
+  %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
+}.flatten
 
 Dir['**/*.js'].reject{|f| f =~ /^(node_modules|www)\//}.each{|f| CLEAN.include(f)}
 CLEAN.include('tmp/**/*')

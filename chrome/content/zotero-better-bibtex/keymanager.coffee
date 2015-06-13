@@ -42,6 +42,7 @@ Zotero.BetterBibTeX.keymanager = new class
       journalAbbrev: 'r'
       extract: 'r'
       get: 'r'
+      alternates: 'r'
       cache: 'r'
     }
     for own key, value of @__exposedProps__
@@ -127,8 +128,8 @@ Zotero.BetterBibTeX.keymanager = new class
 
     return @journalAbbrevs[item.publicationTitle]
 
-  extract: (item, insitu) ->
-    [item, insitu] = Array.slice(arguments, 1, 3) if arguments[0]._sandboxManager
+  extract: ->
+    [item, insitu] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
 
     switch
       when item.getField
@@ -161,7 +162,8 @@ Zotero.BetterBibTeX.keymanager = new class
       postfix.n++
       postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
 
-    return @set(item, citekey + postfix.c, pin)
+    res = @set(item, citekey + postfix.c, pin)
+    return res
 
   selected: (action) ->
     throw new Error("Unexpected action #{action}") unless action in ['set', 'reset']
@@ -317,8 +319,14 @@ Zotero.BetterBibTeX.keymanager = new class
     @verify(clone)
     return clone
 
-  get: (item, pinmode) ->
-    [item, pinmode] = Array.slice(arguments, 1, 3) if arguments[0]._sandboxManager
+  alternates:
+    [item] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
+
+    formatter = Zotero.BetterBibTeX.formatter(Zotero.BetterBibTeX.pref.get('citekeyFormat'))
+    return formatter.alternates(item)
+
+  get: ->
+    [item, pinmode] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
 
     Zotero.BetterBibTeX.debug("keymanager.get: item=#{item.itemID}, pinmode=#{pinmode}")
 

@@ -10,22 +10,28 @@
 
 start
   = patterns:pattern+ {
-      parsed = [[]]
-      for pattern in patterns
-        parsed[parsed.length-1].push(pattern.pattern)
-        parsed.push([]) if pattern.marker == '>'
-      return parsed
+      var i, parsed, pattern;
+
+      parsed = [[]];
+
+      for (i = 0; i <  patterns.length; i++) {
+        pattern = patterns[i];
+        parsed[parsed.length - 1].push(pattern.pattern);
+        if (pattern.separator === '>') { parsed.push([]); }
+      }
+
+      return parsed;
     }
 
 pattern
-  = callchain:callchain+ marker:[\|>]? { return {pattern: callchain, marker: marker}; }
+  = callchain:callchain+ separator:[\|>]? { return {pattern: callchain, separator: separator}; }
 
 callchain
   = '[' fcall:fcall ']'   { return fcall; }
-  / chars:[^\|\[\]]+      { return {method: 'literal', arguments: [chars.join('')]}; }
+  / chars:[^\|>\[\]]+      { return {method: 'literal', arguments: [chars.join('')]}; }
 
 fcall
-  = method:method filters:filter* { return [method].concat(filters); }
+  = method:method filters:filter* { if (filters.length > 0) { method.filters = filters; } return method; }
 
 method
   = prefix:('auth' / 'authors') name:[\.a-zA-Z]* flag:flag? params:mparams?     { return method(prefix, name, flag, params, false); }

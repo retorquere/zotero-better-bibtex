@@ -1,0 +1,3 @@
+Zotero = {
+  BetterBibTeX: {}
+}
