@@ -87,7 +87,7 @@ def loadZotero
   $Firefox.BetterBibTeX = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
   $Firefox.ScholarlyMarkdown = JSONRPCClient.new('http://localhost:23119/better-bibtex/schomd')
   $Firefox.BetterBibTeX.init
-  sleep 3
+  sleep 5
 
   Dir['*.debug'].each{|d| File.unlink(d) }
   Dir['*.status'].each{|d| File.unlink(d) }
