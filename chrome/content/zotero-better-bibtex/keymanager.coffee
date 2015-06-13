@@ -45,7 +45,7 @@ Zotero.BetterBibTeX.keymanager = new class
       alternates: 'r'
       cache: 'r'
     }
-    for own key, value of @__exposedProps__
+    for own key of @__exposedProps__
       @[key].__exposedProps__ = []
 
     @embeddedKeyRE = /bibtex: *([^\s\r\n]+)/
@@ -319,12 +319,6 @@ Zotero.BetterBibTeX.keymanager = new class
     @verify(clone)
     return clone
 
-  alternates: ->
-    [item] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
-
-    formatter = Zotero.BetterBibTeX.formatter(Zotero.BetterBibTeX.pref.get('citekeyFormat'))
-    return formatter.alternates(item)
-
   get: ->
     [item, pinmode] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
 
@@ -355,3 +349,10 @@ Zotero.BetterBibTeX.keymanager = new class
     for citekey in citekeys
       resolved[citekey] = @keys.findObject({citekey, libraryID})
     return resolved
+
+  alternates: ->
+    [item] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
+
+    formatter = Zotero.BetterBibTeX.formatter(Zotero.BetterBibTeX.pref.get('citekeyFormat'))
+    return formatter.alternates(item)
+
