@@ -229,21 +229,8 @@ Then /^the library (without collections )?should match '([^']+)'$/ do |nocollect
 
   found = $Firefox.BetterBibTeX.library
 
-  movekeys = lambda{|lib|
-    keys = {}
-    (lib['keymanager'] || []).each{|key|
-      keys[key['itemID']] = key
-      key.delete('itemID')
-    }
-    lib['items'].each{|item| item['__citekey__'] = keys[item['itemID']] }
-    lib.delete('keymanager')
-  }
-  if expected['keymanager']
-    movekeys.call(found)
-    movekeys.call(expected)
-  else
-    found.delete('keymanager')
-  end
+  expected.delete('keymanager')
+  found.delete('keymanager')
   
   if nocollections
     expected['collections'] = []
@@ -265,8 +252,8 @@ Then /^the library (without collections )?should match '([^']+)'$/ do |nocollect
       item.delete('itemID')
       item['attachments'].each{|a| a.delete('path')} if item['attachments']
       item['note'] = Nokogiri::HTML(item['note']).inner_text.gsub(/[\s\n]+/, ' ').strip if item['note']
-      item.delete('citekey')
-      item.delete('citekeys')
+      item.delete('__citekey__')
+      item.delete('__citekeys__')
     }
     renum.call(library, newID, false)
     library.normalize!
