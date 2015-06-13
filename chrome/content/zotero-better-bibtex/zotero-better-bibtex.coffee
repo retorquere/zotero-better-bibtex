@@ -609,7 +609,6 @@ Zotero.BetterBibTeX.loadTranslators = ->
   @load('Pandoc Citation')
   @load('BetterBibTeX JSON')
   @load('BibTeXAuxScanner')
-  @load('BibTeX Citekey Migration')
 
   # clean up junk
   try
@@ -804,34 +803,34 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions) ->
   throw 'export failed'
 
 Zotero.BetterBibTeX.load = (translator) ->
-  @debug('loading translator:', translator)
+  @debug('translator.load:', translator)
   header = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.json"))
   @removeTranslator(header)
 
   sources = ['xregexp-all-min', 'json5', 'translator', "#{translator}.header", translator].concat(header.BetterBibTeX?.dependencies || [])
-  @debug('loading translator:', translator, sources)
-  #code = (Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{src}.js") for src in sources).join("\n")
   code = ''
   for src in sources
-    @debug('loading translator:', translator, src)
     try
       code += Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{src}.js") + "\n"
     catch err
-      @debug('loading', translator, 'failed:', err)
+      @debug('translator.load: source', src, 'for', translator, 'could not be loaded:', err)
       throw err
 
-  @debug('loading translator source:', translator, code.length)
-  js = @createFile('translators', "#{translator}.js")
-  @debug("Saving #{translator} to #{js.path}")
-  Zotero.File.putContents(js, code)
+  #js = @createFile('translators', "#{translator}.js")
+  #@debug("Saving #{translator} to #{js.path}")
+  #Zotero.File.putContents(js, code)
 
   @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
 
   # remove BBT metadata -- Zotero doesn't like it
   header = JSON.parse(JSON.stringify(header))
   delete header.BetterBibTeX
-  @debug('translator header:', translator, header)
-  Zotero.Translators.save(header, code)
+  @debug('Translator.load header:', translator, header)
+  try
+    Zotero.Translators.save(header, code)
+    @debug('translator.load', translator, 'succeeded')
+  catch err
+    @debug('translator.load', translator, 'failed:', err)
 
 Zotero.BetterBibTeX.getTranslator = (name) ->
   return @translators[name.replace(/\s/, '')].translatorID if @translators[name.replace(/\s/, '')]

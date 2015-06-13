@@ -4,9 +4,12 @@ Zotero.BetterBibTeX.serialized = new class
 
   load: ->
     try
-      items = Zotero.BetterBibTeX.createFile('serialized-items.json')
-      @items = JSON.parse(Zotero.File.getContents(serialized))
-      Zotero.debug("serialized.load: #{Object.keys(@items).length} items")
+      serialized = Zotero.BetterBibTeX.createFile('serialized-items.json')
+      if serialized.exists()
+        @items = JSON.parse(Zotero.File.getContents(serialized))
+        Zotero.debug("serialized.load: #{Object.keys(@items).length} items")
+      else
+        @items = {}
     catch e
       Zotero.debug("serialized.load failed: #{e}")
       @items = {}
