@@ -39,7 +39,9 @@
   "collections": [
     {
       "name": "Bibtex key generation not unique #199",
-      "collections": [],
+      "collections": [
+
+      ],
       "items": [
         3,
         5
@@ -64,7 +66,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "title": "Snapshot",
@@ -72,9 +76,15 @@
           "url": "https://github.com/ZotPlus/zotero-better-bibtex"
         }
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "GitHub"
     },
     {
@@ -92,7 +102,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "title": "Support Request Guidelines - Better BibTeX",
@@ -100,9 +112,16 @@
           "url": "https://zotplus.github.io/better-bibtex/Support-Request-Guidelines.html"
         }
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     }
-  ]
+  ],
+  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
 }

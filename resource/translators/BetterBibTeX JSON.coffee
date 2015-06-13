@@ -29,6 +29,14 @@ scrub = (item) ->
       when 'undefined'
         delete item[attr]
 
+  citekeys = Zotero.BetterBibTeX.keymanager.alternates(item)
+  switch
+    when !citekeys or citekeys.length == 0 then
+    when citekeys.length == 1
+      item.citekey = citekeys[0]
+    else
+      item.citekeys = citekeys
+
   return item
 
 detectImport = ->

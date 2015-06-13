@@ -132,7 +132,7 @@ BetterBibTeXAutoExportPref =
     BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-charset', Zotero.BetterBibTeX.translatorName(ae.exportCharset))
     document.getElementById('id-better-bibtex-preferences-auto-export-auto-abbrev').checked = (ae.useJournalAbbreviation == 'true')
     document.getElementById('id-better-bibtex-preferences-auto-export-notes').checked = (ae.exportNotes == 'true')
-    document.getElementById('id-better-bibtex-preferences-auto-export-preserve-bibvars').checked = (ae.preserveBibTeXVariables == 'true')
+    return
 
   remove: ->
     exportlist = document.getElementById('better-bibtex-export-list')

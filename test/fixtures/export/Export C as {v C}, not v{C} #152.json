@@ -9,7 +9,6 @@
       "attachmentRelativePath": false,
       "citekeyFormat": "[auth][year]",
       "skipFields": "note,language,file,urldate",
-      "preserveCaps": "inner",
       "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell"
     },
@@ -123,5 +122,6 @@
 
       ]
     }
-  ]
+  ],
+  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
 }

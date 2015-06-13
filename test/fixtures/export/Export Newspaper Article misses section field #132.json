@@ -9,7 +9,6 @@
       "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize]",
       "skipFields": "abstract,note",
       "usePrefix": false,
-      "attachmentRelativePath": false,
       "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard"
     },
@@ -68,5 +67,6 @@
 
       ]
     }
-  ]
+  ],
+  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
 }

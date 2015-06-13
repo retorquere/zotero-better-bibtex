@@ -27,9 +27,9 @@
       "pages": "71-80",
       "extra": "bibtex: Frit2",
       "itemID": 0,
-  "tags": [
-    "#LaTeX"
-  ]
+      "tags": [
+        "#LaTeX"
+      ]
     }
   ],
   "config": {
@@ -45,5 +45,6 @@
         0
       ]
     }
-  ]
+  ],
+  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
 }

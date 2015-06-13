@@ -607,14 +607,15 @@ Zotero.BetterBibTeX.loadTranslators = ->
   @load('Better BibLaTeX')
   @load('LaTeX Citation')
   @load('Pandoc Citation')
-  @load('Zotero TestCase')
+  @load('BetterBibTeX JSON')
   @load('BibTeXAuxScanner')
   @load('BibTeX Citekey Migration')
 
   # clean up junk
   try
     @removeTranslator({label: 'BibTeX Citation Keys', translatorID: '0a3d926d-467c-4162-acb6-45bded77edbb'})
-  catch
+  try
+    @removeTranslator({label: 'Zotero TestCase', translatorID: '82512813-9edb-471c-aebc-eeaaf40c6cf9'})
 
   Zotero.Translators.init()
 

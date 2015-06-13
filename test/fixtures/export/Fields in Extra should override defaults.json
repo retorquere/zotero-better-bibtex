@@ -22,7 +22,9 @@
       "exportNotes": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 1708,
@@ -43,13 +45,23 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
-      "attachments": [
+      "notes": [
+
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "attachments": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "MIT Technology Review"
     }
-  ]
+  ],
+  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
 }

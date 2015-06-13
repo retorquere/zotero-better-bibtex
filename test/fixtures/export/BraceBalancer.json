@@ -22,7 +22,9 @@
       "exportNotes": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 1586,
@@ -50,17 +52,25 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
+
       ],
       "tags": [
         "pleasure",
         "pleasure}",
         "relativism"
       ],
-      "related": [],
-      "seeAlso": [],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "The Stanford Encyclopedia of Philosophy"
     }
-  ]
+  ],
+  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
 }

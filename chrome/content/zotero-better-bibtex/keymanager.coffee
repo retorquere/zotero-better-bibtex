@@ -319,7 +319,7 @@ Zotero.BetterBibTeX.keymanager = new class
     @verify(clone)
     return clone
 
-  alternates:
+  alternates: ->
     [item] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
 
     formatter = Zotero.BetterBibTeX.formatter(Zotero.BetterBibTeX.pref.get('citekeyFormat'))

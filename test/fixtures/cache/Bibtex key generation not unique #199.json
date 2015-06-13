@@ -23,7 +23,9 @@
       "exportCollections": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 607,
@@ -40,7 +42,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "path": "/home/whk/.zotero/zotero/qpj7bsud.default/zotero/storage/USJXZBAM/Support-Request-Guidelines.html",
@@ -49,9 +53,15 @@
           "url": "https://zotplus.github.io/better-bibtex/Support-Request-Guidelines.html"
         }
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": []
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
     },
     {
       "itemID": 609,
@@ -70,7 +80,9 @@
           "fieldMode": ""
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "attachments": [
         {
           "path": "/home/whk/.zotero/zotero/qpj7bsud.default/zotero/storage/M4RPMVPF/zotero-better-bibtex.html",
@@ -79,10 +91,17 @@
           "url": "https://github.com/ZotPlus/zotero-better-bibtex"
         }
       ],
-      "tags": [],
-      "related": [],
-      "seeAlso": [],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "publicationTitle": "GitHub"
     }
-  ]
+  ],
+  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
 }
