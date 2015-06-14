@@ -2,11 +2,19 @@ if not Zotero.BetterBibTeX
   Zotero.debug('Loading BBT')
   loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader)
 
-  loader.loadSubScript('chrome://zotero-better-bibtex/content/lokijs.js')
-
-  loader.loadSubScript('chrome://zotero-better-bibtex/content/zotero-better-bibtex.js')
-
-  for script in ['BetterBibTeXPatternFormatter', 'BetterBibTeXPatternParser', 'preferences', 'keymanager', 'web-endpoints', 'schomd', 'debug-bridge', 'cache', 'serialized']
+  for script in " lokijs
+                  zotero-better-bibtex
+                  release
+                  BetterBibTeXPatternFormatter
+                  BetterBibTeXPatternParser
+                  preferences
+                  keymanager
+                  web-endpoints
+                  schomd
+                  debug-bridge
+                  cache
+                  serialized
+                  ".trim().split(/\s+/)
     loader.loadSubScript("chrome://zotero-better-bibtex/content/#{script}.js")
 
   window.addEventListener('load', (load = (event) ->

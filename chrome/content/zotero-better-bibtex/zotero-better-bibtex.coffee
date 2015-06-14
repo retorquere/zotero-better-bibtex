@@ -381,11 +381,6 @@ Zotero.BetterBibTeX.init = ->
   @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
   @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
 
-  AddonManager.getAddonByID('better-bibtex@iris-advies.com', (addon) -> Zotero.BetterBibTeX.release = addon.version)
-  thread = @threadManager.currentThread
-  while not @release
-    thread.processNextEvent(true)
-
   @attachDatabase()
   cfi = @pref.get('cacheFlushInterval')
   cfi = 1 if typeof cfi != 'number' || cfi < 1
