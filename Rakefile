@@ -118,7 +118,7 @@ ZIPFILES = Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src| s
 #  'chrome/content/zotero-better-bibtex/overlay.xul',
 #  'chrome/content/zotero-better-bibtex/preferences.js',
 #  'chrome/content/zotero-better-bibtex/preferences.xul',
-#  'chrome/content/zotero-better-bibtex/release.js',
+  'chrome/content/zotero-better-bibtex/release.js',
 #  'chrome/content/zotero-better-bibtex/schomd.js',
 #  'chrome/content/zotero-better-bibtex/serialized.js',
 #  'chrome/content/zotero-better-bibtex/test/results.xul',
