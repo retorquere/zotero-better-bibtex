@@ -8,6 +8,7 @@ Zotero.BetterBibTeX.keymanager = new class
       Zotero.BetterBibTeX.keymanager.verify(key)
 
       if !key.citekeyFormat && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
+        # removewhere will trigger 'delete' for the conflicts, which will take care of their cache dependents
         Zotero.BetterBibTeX.keymanager.keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
     )
     @keys.on('update', (key) ->
@@ -69,9 +70,9 @@ Zotero.BetterBibTeX.keymanager = new class
 
   reset: ->
     Zotero.DB.query('delete from betterbibtex.keys')
-    Zotero.BetterBibTeX.cache.reset()
     @journalAbbrevs = Object.create(null)
     @keys.removeDataOnly()
+    @keys.removeWhere((obj) -> true) # causes cache drop
     @keys.flushChanges()
     @scan()
 
@@ -79,8 +80,7 @@ Zotero.BetterBibTeX.keymanager = new class
     @journalAbbrevs = Object.create(null)
 
   clearDynamic: ->
-    citekeyFormat = Zotero.BetterBibTeX.pref.get('citekeyFormat')
-    @keys.removeWhere((obj) -> obj.citekeyFormat && obj.citekeyFormat != citekeyFormat)
+    @keys.removeWhere((obj) -> obj.citekeyFormat && obj.citekeyFormat != Zotero.BetterBibTeX.citekeyFormat)
 
   flush: ->
     tip = Zotero.DB.transactionInProgress()
@@ -149,8 +149,7 @@ Zotero.BetterBibTeX.keymanager = new class
     return item
 
   assign: (item, pin) ->
-    formatter = Zotero.BetterBibTeX.formatter(Zotero.BetterBibTeX.pref.get('citekeyFormat'))
-    citekey = formatter.format(item)
+    citekey = Zotero.BetterBibTeX.formatter.format(item)
     citekey = "zotero-#{if item.libraryID in [undefined, null] then 'null' else item.libraryID}-#{item.itemID}" if citekey in [undefined, null, '']
     return null unless citekey
 
@@ -205,7 +204,7 @@ Zotero.BetterBibTeX.keymanager = new class
     itemID = @integer(item.itemID)
     libraryID = @integer(item.libraryID)
 
-    citekeyFormat = if pin then null else Zotero.BetterBibTeX.pref.get('citekeyFormat')
+    citekeyFormat = if pin then null else Zotero.BetterBibTeX.citekeyFormat
     key = @keys.findOne({itemID})
     return @verify(key) if key && key.citekey == citekey && key.citekeyFormat == citekeyFormat
 
@@ -340,6 +339,5 @@ Zotero.BetterBibTeX.keymanager = new class
   alternates: ->
     [item] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
 
-    formatter = Zotero.BetterBibTeX.formatter(Zotero.BetterBibTeX.pref.get('citekeyFormat'))
-    return formatter.alternates(item)
+    return Zotero.BetterBibTeX.formatter.alternates(item)
 

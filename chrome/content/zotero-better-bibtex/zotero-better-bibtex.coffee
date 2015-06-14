@@ -91,7 +91,7 @@ Zotero.BetterBibTeX.pref.observer = {
   observe: (subject, topic, data) ->
     switch data
       when 'citekeyFormat'
-        Zotero.BetterBibTeX.keymanager.reset()
+        Zotero.BetterBibTeX.setCitekeyFormatter()
         # delete all dynamic keys that have a different citekeyformat (should be all)
         Zotero.BetterBibTeX.keymanager.clearDynamic()
 
@@ -138,13 +138,10 @@ Zotero.BetterBibTeX.pref.set = (key, value) ->
 Zotero.BetterBibTeX.pref.get = (key) ->
   return Zotero.Prefs.get("translators.better-bibtex.#{key}")
 
-Zotero.BetterBibTeX.formatter = (pattern) ->
-  @formatters ||= Object.create(null)
-  if !@formatters[pattern]
-    actions = BetterBibTeXPatternParser.parse(pattern)
-    Zotero.BetterBibTeX.debug('formatter:', pattern, '=>', actions)
-    @formatters[pattern] = new BetterBibTeXPatternFormatter(actions)
-  return @formatters[pattern]
+Zotero.BetterBibTeX.setCitekeyFormatter = ->
+  @citekeyPattern = @pref.get('citekeyFormat')
+  @citekeyFormat = @citekeyPattern.replace(/>.*/, '')
+  @formatter = new BetterBibTeXPatternFormatter(BetterBibTeXPatternParser.parse(@citekeyPattern))
 
 Zotero.BetterBibTeX.idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
@@ -332,7 +329,7 @@ Zotero.BetterBibTeX.attachDatabase = ->
         @debug('attachdatabase: migrating old-style keys')
         Zotero.BetterBibTeX.debug('Upgrading betterbibtex.keys')
         Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citekeyFormat)
-                        select itemID, citekey, case when pinned = 1 then null else ? end from betterbibtex."-keys-"', [@pref.get('citekeyFormat')])
+                        select itemID, citekey, case when pinned = 1 then null else ? end from betterbibtex."-keys-"', [@citekeyFormat])
       else
         @debug('attachdatabase: migrating keys')
         @copyTable('betterbibtex."-keys-"', 'betterbibtex.keys')
@@ -374,6 +371,8 @@ Zotero.BetterBibTeX.attachDatabase = ->
 Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
+
+  @setCitekeyFormatter()
 
   @debugMode()
 

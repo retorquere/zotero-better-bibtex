@@ -44,8 +44,7 @@ def loadZotero
   return if $Firefox
   $Firefox = OpenStruct.new
 
-  #profile = Selenium::WebDriver::Firefox::Profile.new(File.expand_path('test/fixtures/profiles/default'))
-  profile = Selenium::WebDriver::Firefox::Profile.new
+  profile = Selenium::WebDriver::Firefox::Profile.new(File.expand_path('test/fixtures/profiles/default'))
 
   say "Installing plugins..."
   (Dir['*.xpi'] + Dir['test/fixtures/plugins/*.xpi']).each{|xpi|
