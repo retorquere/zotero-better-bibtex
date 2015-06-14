@@ -118,6 +118,7 @@ ZIPFILES = [
   'chrome/content/zotero-better-bibtex/overlay.xul',
   'chrome/content/zotero-better-bibtex/preferences.js',
   'chrome/content/zotero-better-bibtex/preferences.xul',
+  'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/schomd.js',
   'chrome/content/zotero-better-bibtex/serialized.js',
   'chrome/content/zotero-better-bibtex/web-endpoints.js',
@@ -256,7 +257,14 @@ rule '.json' => '.yml' do |t|
   }
 end
 
-rule( /\.header\.js$/ => [ proc {|task_name| task_name.sub(/\.header\.js$/, '.yml') } ]) do |t|
+file 'chrome/content/zotero-better-bibtex/release.js' => 'install.rdf' do |t|
+  open(t.name, 'w') {|f| f.write("
+      Zotero.BetterBibTeX.release = #{RELEASE.to_json};
+    ")
+  }
+end
+
+rule( /\.header\.js$/ => [ proc {|task_name| ['install.rdf', task_name.sub(/\.header\.js$/, '.yml')] } ]) do |t|
   header = YAML.load_file(t.source)
   open(t.name, 'w'){|f|
     f.write("
