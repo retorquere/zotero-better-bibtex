@@ -372,6 +372,8 @@ Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
 
+  @testing = (Zotero.BetterBibTeX.pref.get('tests') != '')
+
   @setCitekeyFormatter()
 
   @debugMode()

@@ -283,7 +283,7 @@ Zotero.BetterBibTeX.keymanager = new class
     return true
 
   verify: (entry) ->
-    return entry unless Zotero.BetterBibTeX.pref.get('debug') || Zotero.BetterBibTeX.pref.get('testMode')
+    return entry unless Zotero.BetterBibTeX.pref.get('debug') || Zotero.BetterBibTeX.testing
 
     verify = {citekey: true, citekeyFormat: null, itemID: true, libraryID: null}
     for own key, value of entry

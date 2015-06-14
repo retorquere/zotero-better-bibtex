@@ -36,8 +36,8 @@ Translator.initialize = ->
 
   @translatorID = @header.translatorID
 
-  @testmode = Zotero.getHiddenPref('better-bibtex.testMode')
-  @testmode_timestamp = Zotero.getHiddenPref('better-bibtex.testMode.timestamp') if @testmode
+  @testing = Zotero.getHiddenPref('better-bibtex.tests') != ''
+  @testing_timestamp = Zotero.getHiddenPref('better-bibtex.test.timestamp') if @testing
 
   for own attr, f of @fieldMap or {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
@@ -96,7 +96,7 @@ Translator.sanitizeCollection = (coll) ->
       when 'collection' then sane.collections.push(@sanitizeCollection(c))
       else              throw "Unexpected collection member type '#{c.type}'"
 
-  sane.collections.sort( ( (a, b) -> a.name.localeCompare(b.name) ) ) if Translator.testmode
+  sane.collections.sort( ( (a, b) -> a.name.localeCompare(b.name) ) ) if Translator.testing
 
   return sane
 
@@ -150,7 +150,7 @@ JabRef.serialize = (arr, sep, wrap) ->
 JabRef.exportGroup = (collection, level) ->
   group = ["#{level} ExplicitGroup:#{collection.name}", 0]
   references = (Translator.citekeys[id] for id in collection.items)
-  references.sort() if Translator.testmode
+  references.sort() if Translator.testing
   group = group.concat(references)
   group.push('')
   group = @serialize(group, ';')
@@ -239,7 +239,7 @@ class Reference
       if f.name and not @has[f.name]
         @add(@field(f, @item[attr]))
 
-    @add({name: 'timestamp', value: Translator.testmode_timestamp || @item.dateModified || @item.dateAdded})
+    @add({name: 'timestamp', value: Translator.testing_timestamp || @item.dateModified || @item.dateAdded})
 
 Reference::log = Translator.log
 
@@ -283,7 +283,7 @@ Reference::esc_tags = (f) ->
   tags = (tag.tag for tag in f.value when tag.tag != Translator.rawLaTag)
 
   # sort tags for stable tests
-  tags.sort() if Translator.testmode
+  tags.sort() if Translator.testing
 
   f.value = tags
   f.sep = ','
@@ -314,7 +314,7 @@ Reference::esc_attachments = (f) ->
     switch
       when save
         att.saveFile(a.path)
-      when Translator.testmode
+      when Translator.testing
         Translator.attachmentCounter += 1
         a.path = "files/#{Translator.attachmentCounter}/#{att.localPath.replace(/.*[\/\\]/, '')}"
       when Translator.exportPath && att.localPath.indexOf(Translator.exportPath) == 0
@@ -326,7 +326,7 @@ Reference::esc_attachments = (f) ->
   return null if attachments.length == 0
 
   # sort attachments for stable tests
-  attachments.sort( ( (a, b) -> a.path.localeCompare(b.path) ) ) if Translator.testmode
+  attachments.sort( ( (a, b) -> a.path.localeCompare(b.path) ) ) if Translator.testing
 
   return (att.path.replace(/([\\{};])/g, "\\$1") for att in attachments).join(';') if Translator.attachmentsNoMetadata
   return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
@@ -413,7 +413,7 @@ Reference::complete = ->
         when 'url' then @fields.splice(doi[0], 1)
 
   # sort fields for stable tests
-  if Translator.testmode
+  if Translator.testing
     @fields.sort( ((a, b) ->
       _a = a.name
       _b = b.name

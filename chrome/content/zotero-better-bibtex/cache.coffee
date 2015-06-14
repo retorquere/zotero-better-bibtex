@@ -47,7 +47,7 @@ Zotero.BetterBibTeX.cache = new class
     @access.flushChanges()
 
   verify: (entry) ->
-    return entry unless Zotero.BetterBibTeX.pref.get('debug') || Zotero.BetterBibTeX.pref.get('testMode')
+    return entry unless Zotero.BetterBibTeX.pref.get('debug') || Zotero.BetterBibTeX.testing
 
     verify = {itemID: 1, exportCharset: 'x', exportNotes: true, getCollections: true, preserveBibTeXVariables: true, translatorID: 'x', useJournalAbbreviation: true }
 

@@ -347,9 +347,9 @@ ZoteroItem::import = (bibtex) ->
 
   keys = Object.keys(@biblatexdata)
   if keys.length > 0
-    keys.sort() if Translator.testmode
+    keys.sort() if Translator.testing
     biblatexdata = switch
-      when @biblatexdatajson && Translator.testmode
+      when @biblatexdatajson && Translator.testing
         'bibtex{' + (for k in keys
           o = {}
           o[k] = @biblatexdata[k]

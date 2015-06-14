@@ -104,8 +104,8 @@ end
 Before do |scenario|
   loadZotero
   $Firefox.BetterBibTeX.reset unless scenario.source_tag_names.include?('@noreset')
-  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.testMode', true)
-  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.testMode.timestamp', '2015-02-24 12:14:36 +0100')
+  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.tests', 'all')
+  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.test.timestamp', '2015-02-24 12:14:36 +0100')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.attachmentRelativePath', true)
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.autoExport', 'on-change')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.debug', true) if ENV['CI'] != 'true'
