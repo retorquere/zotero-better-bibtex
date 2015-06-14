@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<window id="better-bibtex-testresults" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<script language="javascript">
+//<![CDATA[
+  setInterval(function(){ 
+      var log = document.getElementById('zotero-better-bibitex-testresults-display');
+      if (!log) { return; }
+      if (!(Zotero && Zotero.BetterBibTeX && Zotero.BetterBibTeX.Test && Zotero.BetterBibTeX.Test.results)) { return; }
+      log.value = JSON.stringify(Zotero.BetterBibTeX.Test.results, null, 2);
+  }, 5000);
+//]]>
+</script>
+  <textbox id="zotero-better-bibitex-testresults-display" class="plain" readonly="true" multiline="true" flex="1"/>
+</window>

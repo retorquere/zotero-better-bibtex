@@ -121,6 +121,7 @@ ZIPFILES = [
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/schomd.js',
   'chrome/content/zotero-better-bibtex/serialized.js',
+  'chrome/content/zotero-better-bibtex/testresults.xul',
   'chrome/content/zotero-better-bibtex/web-endpoints.js',
   'chrome/content/zotero-better-bibtex/zotero-better-bibtex.js',
   'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
