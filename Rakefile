@@ -99,49 +99,49 @@ ABBREVS.each{|a|
     end
   end
 }
-ZIPFILES = [
+ZIPFILES = Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src| src.sub(/\.[^\.]+$/, '.js') } + Dir['chrome/**/*.xul'] + [
   'chrome.manifest',
-  'chrome/content/zotero-better-bibtex/BetterBibTeXPatternFormatter.js',
-  'chrome/content/zotero-better-bibtex/BetterBibTeXPatternParser.js',
-  'chrome/content/zotero-better-bibtex/cache.js',
-  'chrome/content/zotero-better-bibtex/debug-bridge.js',
-  'chrome/content/zotero-better-bibtex/errorReport.js',
-  'chrome/content/zotero-better-bibtex/errorReport.xul',
-  'chrome/content/zotero-better-bibtex/exportOptions.js',
-  'chrome/content/zotero-better-bibtex/exportOptions.xul',
-  'chrome/content/zotero-better-bibtex/include.js',
-  'chrome/content/zotero-better-bibtex/itemPane.js',
-  'chrome/content/zotero-better-bibtex/itemPane.xul',
+#  'chrome/content/zotero-better-bibtex/BetterBibTeXPatternFormatter.js',
+#  'chrome/content/zotero-better-bibtex/BetterBibTeXPatternParser.js',
+#  'chrome/content/zotero-better-bibtex/cache.js',
+#  'chrome/content/zotero-better-bibtex/debug-bridge.js',
+#  'chrome/content/zotero-better-bibtex/errorReport.js',
+#  'chrome/content/zotero-better-bibtex/errorReport.xul',
+#  'chrome/content/zotero-better-bibtex/exportOptions.js',
+#  'chrome/content/zotero-better-bibtex/exportOptions.xul',
+#  'chrome/content/zotero-better-bibtex/include.js',
+#  'chrome/content/zotero-better-bibtex/itemPane.js',
+#  'chrome/content/zotero-better-bibtex/itemPane.xul',
   'chrome/content/zotero-better-bibtex/jsencrypt.min.js',
-  'chrome/content/zotero-better-bibtex/keymanager.js',
+#  'chrome/content/zotero-better-bibtex/keymanager.js',
   'chrome/content/zotero-better-bibtex/lokijs.js',
-  'chrome/content/zotero-better-bibtex/overlay.xul',
-  'chrome/content/zotero-better-bibtex/preferences.js',
-  'chrome/content/zotero-better-bibtex/preferences.xul',
-  'chrome/content/zotero-better-bibtex/release.js',
-  'chrome/content/zotero-better-bibtex/schomd.js',
-  'chrome/content/zotero-better-bibtex/serialized.js',
-  'chrome/content/zotero-better-bibtex/testresults.xul',
-  'chrome/content/zotero-better-bibtex/web-endpoints.js',
-  'chrome/content/zotero-better-bibtex/zotero-better-bibtex.js',
-  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
-  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.properties',
-  'defaults/preferences/defaults.js',
+#  'chrome/content/zotero-better-bibtex/overlay.xul',
+#  'chrome/content/zotero-better-bibtex/preferences.js',
+#  'chrome/content/zotero-better-bibtex/preferences.xul',
+#  'chrome/content/zotero-better-bibtex/release.js',
+#  'chrome/content/zotero-better-bibtex/schomd.js',
+#  'chrome/content/zotero-better-bibtex/serialized.js',
+#  'chrome/content/zotero-better-bibtex/test/results.xul',
+#  'chrome/content/zotero-better-bibtex/web-endpoints.js',
+#  'chrome/content/zotero-better-bibtex/zotero-better-bibtex.js',
+#  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
+#  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.properties',
+#  'defaults/preferences/defaults.js',
   'install.rdf',
   'resource/error-reporting.pub.pem',
-  'resource/translators/BetterBibTeXBraceBalancer.js',
-  'resource/translators/BetterBibTeXParser.js',
-  'resource/translators/BetterBibTeXParserSupport.js',
+#  'resource/translators/BetterBibTeXBraceBalancer.js',
+#  'resource/translators/BetterBibTeXParser.js',
+#  'resource/translators/BetterBibTeXParserSupport.js',
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
-  'resource/translators/translator.js',
-  'resource/translators/unicode_translator.js',
+#  'resource/translators/translator.js',
+#  'resource/translators/unicode_translator.js',
   'resource/translators/xregexp-all-min.js',
-] + Dir['chrome/skin/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
+] + Dir['chrome/{skin,local}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
   root = File.dirname(tr)
   stem = File.basename(tr, File.extname(tr))
   %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
-}.flatten
+}.flatten.sort.uniq
 
 Dir['**/*.js'].reject{|f| f =~ /^(node_modules|www)\//}.each{|f| CLEAN.include(f)}
 CLEAN.include('tmp/**/*')
