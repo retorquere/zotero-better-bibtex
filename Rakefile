@@ -99,8 +99,22 @@ ABBREVS.each{|a|
     end
   end
 }
-ZIPFILES = Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src| src.sub(/\.[^\.]+$/, '.js') } + Dir['chrome/**/*.xul'] + [
+ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
+  src.sub(/\.[^\.]+$/, '.js')
+} + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
+  root = File.dirname(tr)
+  stem = File.basename(tr, File.extname(tr))
+  %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
+}.flatten + [
   'chrome.manifest',
+  'chrome/content/zotero-better-bibtex/jsencrypt.min.js',
+  'chrome/content/zotero-better-bibtex/lokijs.js',
+  'chrome/content/zotero-better-bibtex/release.js',
+  'install.rdf',
+  'resource/error-reporting.pub.pem',
+  'resource/translators/json5.js',
+  'resource/translators/latex_unicode_mapping.js',
+  'resource/translators/xregexp-all-min.js',
 #  'chrome/content/zotero-better-bibtex/BetterBibTeXPatternFormatter.js',
 #  'chrome/content/zotero-better-bibtex/BetterBibTeXPatternParser.js',
 #  'chrome/content/zotero-better-bibtex/cache.js',
@@ -112,13 +126,10 @@ ZIPFILES = Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src| s
 #  'chrome/content/zotero-better-bibtex/include.js',
 #  'chrome/content/zotero-better-bibtex/itemPane.js',
 #  'chrome/content/zotero-better-bibtex/itemPane.xul',
-  'chrome/content/zotero-better-bibtex/jsencrypt.min.js',
 #  'chrome/content/zotero-better-bibtex/keymanager.js',
-  'chrome/content/zotero-better-bibtex/lokijs.js',
 #  'chrome/content/zotero-better-bibtex/overlay.xul',
 #  'chrome/content/zotero-better-bibtex/preferences.js',
 #  'chrome/content/zotero-better-bibtex/preferences.xul',
-  'chrome/content/zotero-better-bibtex/release.js',
 #  'chrome/content/zotero-better-bibtex/schomd.js',
 #  'chrome/content/zotero-better-bibtex/serialized.js',
 #  'chrome/content/zotero-better-bibtex/test/results.xul',
@@ -127,23 +138,15 @@ ZIPFILES = Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src| s
 #  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd',
 #  'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.properties',
 #  'defaults/preferences/defaults.js',
-  'install.rdf',
-  'resource/error-reporting.pub.pem',
 #  'resource/translators/BetterBibTeXBraceBalancer.js',
 #  'resource/translators/BetterBibTeXParser.js',
 #  'resource/translators/BetterBibTeXParserSupport.js',
-  'resource/translators/json5.js',
-  'resource/translators/latex_unicode_mapping.js',
 #  'resource/translators/translator.js',
 #  'resource/translators/unicode_translator.js',
-  'resource/translators/xregexp-all-min.js',
-] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
-  root = File.dirname(tr)
-  stem = File.basename(tr, File.extname(tr))
-  %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
-}.flatten.sort.uniq
+]).sort.uniq
 
-Dir['**/*.js'].reject{|f| f =~ /^(node_modules|www)\//}.each{|f| CLEAN.include(f)}
+CLEAN.include('{resource,chrome,defaults}/**/*.js')
+CLEAN.include('chrome/content/zotero-better-bibtex/release.js')
 CLEAN.include('tmp/**/*')
 CLEAN.include('resource/*/*.json')
 CLEAN.include('resource/*/*.js.map')
@@ -153,6 +156,7 @@ CLEAN.include('*.xpi')
 CLEAN.include('*.log')
 CLEAN.include('*.cache')
 CLEAN.include('*.debug')
+CLEAN.include('*.dbg')
 
 FileUtils.mkdir_p 'tmp'
 
