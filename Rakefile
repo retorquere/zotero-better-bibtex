@@ -264,7 +264,7 @@ file 'chrome/content/zotero-better-bibtex/release.js' => 'install.rdf' do |t|
   }
 end
 
-rule( /\.header\.js$/ => [ proc {|task_name| ['install.rdf', task_name.sub(/\.header\.js$/, '.yml')] } ]) do |t|
+rule( /\.header\.js$/ => [ proc {|task_name| [task_name.sub(/\.header\.js$/, '.yml'), 'install.rdf'] } ]) do |t|
   header = YAML.load_file(t.source)
   open(t.name, 'w'){|f|
     f.write("
