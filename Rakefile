@@ -137,7 +137,7 @@ ZIPFILES = Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src| s
 #  'resource/translators/translator.js',
 #  'resource/translators/unicode_translator.js',
   'resource/translators/xregexp-all-min.js',
-] + Dir['chrome/{skin,local}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
+] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
   root = File.dirname(tr)
   stem = File.basename(tr, File.extname(tr))
   %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
