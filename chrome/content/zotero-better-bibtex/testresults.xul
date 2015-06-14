@@ -6,7 +6,7 @@
   setInterval(function(){ 
       var log = document.getElementById('zotero-better-bibitex-testresults-display');
       if (!log) { return; }
-      if (!(Zotero && Zotero.BetterBibTeX && Zotero.BetterBibTeX.Test && Zotero.BetterBibTeX.Test.results)) { return; }
+      if (typeof Zotero === 'undefined' || !(Zotero.BetterBibTeX && Zotero.BetterBibTeX.Test && Zotero.BetterBibTeX.Test.results)) { return; }
       log.value = JSON.stringify(Zotero.BetterBibTeX.Test.results, null, 2);
   }, 5000);
 //]]>
