@@ -46,6 +46,7 @@ Zotero.BetterBibTeX.log.array = (a) ->
 Zotero.BetterBibTeX.flash = (title, body) ->
   progressWin = new Zotero.ProgressWindow()
   progressWin.changeHeadline(title)
+  body = title unless body
   progressWin.addLines((if Array.isArray(body) then body else body.split("\n")))
   progressWin.startCloseTimer()
 
@@ -423,6 +424,7 @@ Zotero.BetterBibTeX.init = ->
         @_group = @_collection
         delete @_collection
         @_items = Zotero.Items.getAll(false, @_group.libraryID)
+        throw new Error('Cannot export empty group library') unless @_items
 
       # regular behavior for non-BBT translators, or if translating to string
       header = Zotero.BetterBibTeX.translators[translatorID]
@@ -864,9 +866,14 @@ Zotero.BetterBibTeX.exportGroup = ->
   itemGroup = zoteroPane.collectionsView._getItemAtRow(zoteroPane.collectionsView.selection.currentIndex)
   return unless itemGroup.isGroup()
 
+  group = Zotero.Groups.get(itemGroup.ref.id)
+  if !Zotero.Items.getAll(false, group.libraryID)
+    @flash('Cannot export empty group')
+    return
+
   exporter = new Zotero_File_Exporter()
-  exporter.collection = Zotero.Groups.get(itemGroup.ref.id)
-  exporter.name = exporter.collection.name
+  exporter.collection = group
+  exporter.name = group.name
   exporter.save()
 
 class Zotero.BetterBibTeX.XmlNode
