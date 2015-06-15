@@ -2,16 +2,6 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 Components.utils.import('resource://zotero/config.js')
 
-loki.Collection::byExample = (template) ->
-  query = {'$and': ({"#{k}": v} for own k, v of template)}
-  return query
-
-loki.Collection::findObject = (template) ->
-  return @findOne(@byExample(template))
-
-loki.Collection::findObjects = (template) ->
-  return @find(@byExample(template))
-
 Zotero.BetterBibTeX = {
   serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
   document: Components.classes['@mozilla.org/xul/xul-document;1'].getService(Components.interfaces.nsIDOMDocument)
@@ -372,7 +362,7 @@ Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
 
-  @testing = (Zotero.BetterBibTeX.pref.get('tests') != '')
+  @testing = (@pref.get('tests') != '')
 
   @setCitekeyFormatter()
 
@@ -580,6 +570,14 @@ Zotero.BetterBibTeX.init = ->
       Zotero.BetterBibTeX.loadTranslators() unless addon.pendingOperations & AddonManager.PENDING_UNINSTALL
   }
   AddonManager.addAddonListener(uninstaller)
+
+  if @testing
+    tests = @pref.get('tests')
+    @pref.set('tests', '')
+    try
+      loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader)
+      loader.loadSubScript("chrome://zotero-better-bibtex/content/test/include.js")
+      @Test.run(tests)
 
 Zotero.BetterBibTeX.createFile = (paths...) ->
   f = Zotero.getZoteroDirectory()

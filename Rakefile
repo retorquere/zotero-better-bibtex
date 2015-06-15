@@ -61,7 +61,7 @@ ABBREVS.each{|a|
         text = text.encode('utf-8', cd['encoding'])
         open(tmp, 'w'){|f| f.write(text) }
       end
-        
+
       abbrevs = {}
       IO.readlines(tmp).each{|line|
         line.strip!
@@ -110,6 +110,9 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/jsencrypt.min.js',
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
+  'chrome/content/zotero-better-bibtex/test/include.js',
+  'chrome/content/zotero-better-bibtex/test/mocha.js',
+  'chrome/content/zotero-better-bibtex/test/chai.js',
   'install.rdf',
   'resource/error-reporting.pub.pem',
   'resource/translators/json5.js',
@@ -183,6 +186,39 @@ def saveAbbrevs(abbrevs, file, jurisdiction='default')
   json = {}
   json[jurisdiction] = { 'container-title' => abbrevs }
   open(file, 'w'){|f| f.write(JSON.pretty_generate(json)) }
+end
+
+file 'chrome/content/zotero-better-bibtex/test/chai.js' => 'Rakefile' do |t|
+  ZotPlus::RakeHelper.download('http://chaijs.com/chai.js', t.name)
+end
+
+file 'chrome/content/zotero-better-bibtex/test/mocha.js' => 'Rakefile' do |t|
+  ZotPlus::RakeHelper.download('https://github.com/mochajs/mocha/archive/2.2.5.zip', 'tmp/mocha.zip')
+  Zip::File.open('tmp/mocha.zip'){|zip|
+    zip.each{|entry|
+      next unless File.dirname(entry.name).split('/').length == 1
+      next unless File.basename(entry.name) == 'mocha.js'
+      puts entry.name
+      open(t.name, 'w'){|f| f.write(entry.get_input_stream.read) }
+    }
+  }
+end
+
+file 'chrome/content/zotero-better-bibtex/test/include.coffee' => ['Rakefile'] + Dir['chrome/content/zotero-better-bibtex/test/*.coffee'].reject{|f| File.basename(f) == 'include.coffee' } do |t|
+  setup = ['chai', 'mocha', 'setup']
+  sources = t.sources.collect{|f| File.basename(f, File.extname(f)) }.uniq
+  sources.reject!{|f| (setup + ['Rakefile', File.basename(t.name, File.extname(t.name))]).include?(f) }
+  sources = setup + sources
+
+  inc = [
+    "if not Zotero.BetterBibTeX.Test",
+    "  loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader)",
+  ]
+
+  sources.each{|source|
+    inc << "  loader.loadSubScript('chrome://zotero-better-bibtex/content/test/#{source}.js')"
+  }
+  open(t.name, 'w'){|f| f.write(inc.join("\n") + "\n") }
 end
 
 file 'resource/abbreviations/CAplus.json' => 'Rakefile' do |t|
@@ -464,7 +500,7 @@ file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translato
     value = "{\\#{$1}#{$2}}" if value =~ /^\\(["^`\.'~]){([^}]+)}$/
     value = "{\\#{$1} #{$2}}" if value =~ /^\\([cuHv]){([^}]+)}$/
 
-    # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to 
+    # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to
     # \combinecommand{X}
     #raise value if value =~ /LECO/
 
@@ -479,7 +515,7 @@ file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translato
   l2u = { }
 
   mapping.each_pair{|key, repl|
-    # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to 
+    # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to
     # \combinecommand{X}
     #raise value if value =~ /LECO/
 
