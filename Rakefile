@@ -204,20 +204,28 @@ file 'chrome/content/zotero-better-bibtex/test/mocha.js' => 'Rakefile' do |t|
   }
 end
 
-file 'chrome/content/zotero-better-bibtex/test/include.coffee' => ['Rakefile'] + Dir['chrome/content/zotero-better-bibtex/test/*.coffee'].reject{|f| File.basename(f) == 'include.coffee' } do |t|
-  setup = ['chai', 'mocha', 'setup']
-  sources = t.sources.collect{|f| File.basename(f, File.extname(f)) }.uniq
-  sources.reject!{|f| (setup + ['Rakefile', File.basename(t.name, File.extname(t.name))]).include?(f) }
-  sources = setup + sources
+file 'chrome/content/zotero-better-bibtex/test/include.js' => ['Rakefile'] + Dir['chrome/content/zotero-better-bibtex/test/*.coffee'] do |t|
+  setup = %w{chai mocha setup}
+  tests = t.sources.collect{|f| File.basename(f, File.extname(f)) }.uniq
+  tests.reject!{|f| (setup + ['Rakefile', File.basename(t.name, File.extname(t.name))]).include?(f) }
 
   inc = [
-    "if not Zotero.BetterBibTeX.Test",
-    "  loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader)",
+    "if (! Zotero.BetterBibTeX.Test) {",
+    "  var loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader);",
   ]
 
-  sources.each{|source|
-    inc << "  loader.loadSubScript('chrome://zotero-better-bibtex/content/test/#{source}.js')"
+  setup.each{|source|
+    inc << "  loader.loadSubScript('chrome://zotero-better-bibtex/content/test/#{source}.js');"
   }
+  clusters = {}
+  tests.each{|test|
+    cluster = test.split('.')[0]
+    clusters[cluster] ||= []
+    clusters[cluster] << test
+  }
+  inc << "  Zotero.BetterBibTeX.Test.clusters = #{clusters.to_json};"
+  inc << "}"
+
   open(t.name, 'w'){|f| f.write(inc.join("\n") + "\n") }
 end
 

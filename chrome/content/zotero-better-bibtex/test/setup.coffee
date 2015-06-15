@@ -1,5 +1,19 @@
+assert = chai.assert
+expect = chai.expect
+chai.should()
+
 Zotero.BetterBibTeX.Test = new class
-  run: (tests) ->
+  run: (clusters) ->
+    mocha.setup({ui:'bdd', reporter:@Reporter})
+    loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader)
+
+    clusters = Object.keys(@clusters) if '*' in clusters
+    for cluster, tests of @clusters
+      continue unless cluster in clusters
+      for test in tests
+        loader.loadSubScript("chrome://zotero-better-bibtex/content/test/#{test}.js")
+
+    mocha.run()
 
   Reporter: class
     constructor: (runner) ->

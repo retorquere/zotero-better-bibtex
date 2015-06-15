@@ -577,7 +577,7 @@ Zotero.BetterBibTeX.init = ->
     try
       loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader)
       loader.loadSubScript("chrome://zotero-better-bibtex/content/test/include.js")
-      @Test.run(tests)
+      @Test.run(tests.trim().split(/\s+/))
 
 Zotero.BetterBibTeX.createFile = (paths...) ->
   f = Zotero.getZoteroDirectory()
