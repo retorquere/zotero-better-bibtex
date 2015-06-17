@@ -2,14 +2,11 @@
 Feature: Export
 
 Background:
-  Given I set preference .citekeyFormat to [auth][year]
 
-#@163
-#Scenario: Preserve Bib variable names #163
-#  When I import 1 reference from 'export/Preserve Bib variable names #163.json'
-#  Then a library export using 'Better BibLaTeX' should match 'export/Preserve Bib variable names #163.bib'
+  When I set preference .citekeyFormat to [auth][year]
 
-@test-cluster-0 @131
+@test-cluster-0
+@131
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json'
   And I set preference .DOIandURL to both
@@ -19,7 +16,8 @@ Scenario: Omit URL export when DOI present. #131
   And I set preference .DOIandURL to url
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-url.bib'
 
-@test-cluster-0 @117
+@test-cluster-0
+@117
 Scenario: Bibtex key regenerating issue when trashing items #117
   When I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json'
   And I select the first item where publicationTitle = 'Genetics'
@@ -27,33 +25,40 @@ Scenario: Bibtex key regenerating issue when trashing items #117
   And I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json' as 'Second Import.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Bibtex key regenerating issue when trashing items #117.bib'
 
-@test-cluster-0 @110 @111 @molasses
+@test-cluster-0
+@110
+@111
+@molasses
 Scenario: two ISSN number are freezing browser #110 / Generating keys and export broken #111
   When I import 1 reference from 'export/two ISSN number are freezing browser #110.json'
   And I select the first item where publicationTitle = 'Genetics'
   And I set the citation key
   Then a library export using 'Better BibLaTeX' should match 'export/two ISSN number are freezing browser #110.bib'
 
-@test-cluster-0 @85
+@test-cluster-0
+@85
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 reference with 1 attachment from 'export/Square brackets in Publication field (85).json'
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85).bib'
   And I set preference .citekeyFormat to [year]-updated
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85) after pattern change.bib'
 
-@test-cluster-0 @86
+@test-cluster-0
+@86
 Scenario: Include first name initial(s) in cite key generation pattern (86)
   When I import 1 reference with 1 attachment from 'export/Include first name initial(s) in cite key generation pattern (86).json'
    And I set preference .citekeyFormat to [auth+initials][year]
   Then a library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bib'
 
-@test-cluster-0 @pandoc
+@test-cluster-0
+@pandoc
 Scenario: Pandoc/LaTeX Citation Export
   When I import 1 reference with 1 attachment from 'export/Pandoc Citation.json'
   Then a library export using 'Pandoc Citation' should match 'export/Pandoc Citation.pandoc'
   And a library export using 'LaTeX Citation' should match 'export/Pandoc Citation.latex'
 
-@test-cluster-0 @journal-abbrev
+@test-cluster-0
+@journal-abbrev
 Scenario: Journal abbreviations
   When I set preferences:
     | .citekeyFormat    | [authors][year][journal]          |
@@ -65,7 +70,8 @@ Scenario: Journal abbreviations
     | translator             | Better BibTeX  |
     | useJournalAbbreviation | true           |
 
-@test-cluster-0 @81
+@test-cluster-0
+@81
 Scenario: Journal abbreviations exported in bibtex (81)
   When I set preferences:
     | .citekeyFormat          | [authors2][year][journal:nopunct] |
@@ -77,7 +83,8 @@ Scenario: Journal abbreviations exported in bibtex (81)
     | translator              | Better BibTeX  |
     | useJournalAbbreviation  | true           |
 
-@test-cluster-0 @bbt
+@test-cluster-0
+@bbt
 Scenario Outline: BibLaTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibTeX' should match 'export/<file>.bib'
@@ -92,7 +99,9 @@ Scenario Outline: BibLaTeX Export
      | Export C as {v C}, not v{C} #152                                                  | 3          |
      | Export of item to Better Bibtex fails for auth3_1 #98                             | 1          |
 
-@test-cluster-0 @bblt @bblt-0
+@test-cluster-0
+@bblt
+@bblt-0
 Scenario Outline: BibLaTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.bib'
@@ -112,7 +121,9 @@ Scenario Outline: BibLaTeX Export
      | BraceBalancer                                                                     | 1          |
      | Fields in Extra should override defaults                                          | 1          |
 
-@test-cluster-1 @bblt @bblt-1
+@test-cluster-1
+@bblt
+@bblt-1
 Scenario Outline: BibLaTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.bib'
@@ -150,7 +161,8 @@ Scenario Outline: BibLaTeX Export
      | underscores in URL fields should not be escaped #104                              | 1          |
      | Allow explicit field override                                                     | 1          |
 
-@test-cluster-0 @ae
+@test-cluster-0
+@ae
 Scenario: auto-export
   Given I import 3 references with 2 attachments from 'export/autoexport.json'
   Then a library export using 'Better BibLaTeX' should match 'export/autoexport.before.bib'
@@ -161,3 +173,9 @@ Scenario: auto-export
   And I remove the selected item
   And I wait 5 seconds, if I'm in CI
   Then 'tmp/autoexport.bib' should match 'export/autoexport.after.bib'
+
+#@163
+#Scenario: Preserve Bib variable names #163
+#  When I import 1 reference from 'export/Preserve Bib variable names #163.json'
+#  Then a library export using 'Better BibLaTeX' should match 'export/Preserve Bib variable names #163.bib'
+

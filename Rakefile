@@ -111,8 +111,6 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/test/include.js',
-  'chrome/content/zotero-better-bibtex/test/mocha.js',
-  'chrome/content/zotero-better-bibtex/test/chai.js',
   'install.rdf',
   'resource/error-reporting.pub.pem',
   'resource/translators/json5.js',
@@ -188,24 +186,34 @@ def saveAbbrevs(abbrevs, file, jurisdiction='default')
   open(file, 'w'){|f| f.write(JSON.pretty_generate(json)) }
 end
 
-file 'chrome/content/zotero-better-bibtex/test/chai.js' => 'Rakefile' do |t|
-  ZotPlus::RakeHelper.download('http://chaijs.com/chai.js', t.name)
-end
-
-file 'chrome/content/zotero-better-bibtex/test/mocha.js' => 'Rakefile' do |t|
-  ZotPlus::RakeHelper.download('https://github.com/mochajs/mocha/archive/2.2.5.zip', 'tmp/mocha.zip')
-  Zip::File.open('tmp/mocha.zip'){|zip|
-    zip.each{|entry|
-      next unless File.dirname(entry.name).split('/').length == 1
-      next unless File.basename(entry.name) == 'mocha.js'
-      puts entry.name
-      open(t.name, 'w'){|f| f.write(entry.get_input_stream.read) }
-    }
+DOWNLOADS = {
+  chrome: {
+    'test/bluebird.js'  => 'https://cdn.jsdelivr.net/bluebird/latest/bluebird.js',
+    'test/chai.js'      => 'http://chaijs.com/chai.js',
+    'test/yadda.js'     => 'https://raw.githubusercontent.com/acuminous/yadda/master/dist/yadda-0.11.5.js',
+    'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
+    'jsencrypt.min.js'  => 'https://raw.githubusercontent.com/travist/jsencrypt/master/bin/jsencrypt.min.js',
+  },
+  translators: {
+    'unicode.xml'         => 'http://www.w3.org/2003/entities/2007xml/unicode.xml',
+    'org.js'              => 'https://raw.githubusercontent.com/mooz/org-js/master/org.js',
+    'xregexp-all-min.js'  => 'http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all-min.js',
+    'json5.js'            => 'https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js',
   }
-end
+}
+DOWNLOADS[:chrome].each_pair{|file, url|
+  file "chrome/content/zotero-better-bibtex/#{file}" => 'Rakefile' do |t|
+    ZotPlus::RakeHelper.download(url, t.name)
+  end
+}
+DOWNLOADS[:translators].each_pair{|file, url|
+  file "resource/translators/#{file}" => 'Rakefile' do |t|
+    ZotPlus::RakeHelper.download(url, t.name)
+  end
+}
 
 file 'chrome/content/zotero-better-bibtex/test/include.js' => ['Rakefile'] + Dir['chrome/content/zotero-better-bibtex/test/*.coffee'] do |t|
-  setup = %w{chai mocha setup}
+  setup = %w{yadda setup}
   tests = t.sources.collect{|f| File.basename(f, File.extname(f)) }.uniq
   tests.reject!{|f| (setup + ['Rakefile', File.basename(t.name, File.extname(t.name))]).include?(f) }
 
@@ -396,9 +404,9 @@ task :test, [:tag] => [XPI, :plugins] do |t, args|
 
     begin
       if OS.mac?
-        sh "script -q -t 1 cucumber.run cucumber --strict #{tag}"
+        sh "script -q -t 1 cucumber.run cucumber --require features --strict #{tag} resource/tests"
       else
-        sh "script -ec 'cucumber --require features #{rerun} --strict #{tag}' cucumber.run"
+        sh "script -ec 'cucumber --require features --strict #{tag} resource/tests' cucumber.run"
       end
     ensure
       sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
@@ -433,30 +441,6 @@ task :share => XPI do
   raise "No share folder" unless folder
   Dir["#{folder}/*.xpi"].each{|xpi| File.unlink(xpi)}
   FileUtils.cp(XPI, File.join(folder, XPI))
-end
-
-file 'resource/translators/org.js' do |t|
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/mooz/org-js/master/org.js', t.name)
-end
-
-file 'resource/translators/unicode.xml' do |t|
-  ZotPlus::RakeHelper.download('http://www.w3.org/2003/entities/2007xml/unicode.xml', t.name)
-end
-
-file 'chrome/content/zotero-better-bibtex/lokijs.js' => 'Rakefile' do |t|
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js', t.name)
-end
-
-file 'resource/translators/xregexp-all-min.js' do |t|
-  ZotPlus::RakeHelper.download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all-min.js', t.name)
-end
-
-file 'resource/translators/json5.js' do |t|
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js', t.name)
-end
-
-file 'chrome/content/zotero-better-bibtex/jsencrypt.min.js' do |t|
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/travist/jsencrypt/master/bin/jsencrypt.min.js', t.name)
 end
 
 file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translators/unicode.xml', 'Rakefile'] do |t|
