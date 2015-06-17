@@ -198,7 +198,7 @@ Zotero.BetterBibTeX.auto = new class
     enumerator = wm.getEnumerator('zotero:pref')
     if enumerator.hasMoreElements()
       win = enumerator.getNext()
-      win.Zotero.BetterBibTeX.pref.autoexport.refresh(true)
+      win.BetterBibTeXAutoExportPref.refresh(true)
 
   add: (collection, path, context) ->
     Zotero.BetterBibTeX.debug("auto-export set up for #{collection} to #{path}")
