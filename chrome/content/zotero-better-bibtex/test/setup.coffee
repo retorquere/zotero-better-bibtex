@@ -1,63 +1,46 @@
-assert = chai.assert
-expect = chai.expect
-chai.should()
-
 Zotero.BetterBibTeX.Test = new class
-  run: (clusters) ->
-    mocha.setup({ui:'bdd', reporter:@Reporter})
-    loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader)
+  constructor:
+    @status = []
 
-    clusters = Object.keys(@clusters) if '*' in clusters
-    for cluster, tests of @clusters
-      continue unless cluster in clusters
-      for test in tests
-        loader.loadSubScript("chrome://zotero-better-bibtex/content/test/#{test}.js")
+  run: (tags) ->
+    @library = new @Library()
+    # Yadda = require('yadda')
+    scenarios = []
+    featureParser = new Yadda.parsers.FeatureParser()
+    for feature in Zotero.BetterBibTeX.Test.features
+      feature = Zotero.File.getContentsFromURL(feature)
+      scenarios = scenarios.concat(featureParser.parse(feature).scenarios)
 
-    mocha.run()
+    scenarios = (scenario for scenario in scenarios when @withTags(scenario, tags))
 
-  Reporter: class
-    constructor: (runner) ->
-      @indents = 0
-      @passed = 0
-      @failed = 0
+    @status = ({scenario, status: 'pending'} for scenario of scenarios)
+    for scenario, i in scenarios
+      Yadda.createInstance(@library).run(scenario.steps, (status) ->
+        if status == undefined
+          @status[i] = 'success'
+        else
+          @status[i] = 'fail'
+      )
 
-    for event in ['start', 'suite', 'suite end', 'pending', 'pass', 'fail', 'end']
-      runner.on(event, @[event].bind(@))
+  withTags: (scenario, tags) ->
+    for tag in tags
+      if tag[0] == '~'
+        return false if scenario.annotations.indexOf(tag.slice(1)) >= 0
+      else
+        return false if scenario.annotations.indexOf(tag) < 0
+    return true
 
-    start: ->
+  Library: class
+    constructor: ->
+      dictionary = (new Yadda.Dictionary())
+      wall = null
 
-    suite: (suite) ->
-      ++@indents
-      dump(indent() + suite.title + '\n')
-      return
+      return Yadda.localisation.English.library(dictionary).given('$NUM green bottles are standing on the wall', (number_of_bottles, next) =>
+        wall = new @Wall(number_of_bottles)
+        next()
+      ).when('$NUM green bottle accidentally falls', (number_of_falling_bottles) ->
+        wall.fall(number_of_falling_bottles)
+      ).then('there (?:are|are still) $NUM green bottles standing on the wall', (number_of_bottles) ->
+        throw new Error('oops') unless parseInt(number_of_bottles) != wall.bottles
+      )
 
-    'suite end': (suite) ->
-      --@indents
-      dump('\n') if 1 == indents
-      return
-
-    pending: (test) ->
-      # dump('\ud' + indent() + 'pending  -' + test.title + '\n')
-      return
-
-    pass: (test) ->
-      passed++
-      # msg = '\ud' + indent() + Mocha.reporters.Base.symbols.ok + ' ' + test.title
-      if 'fast' != test.speed
-        msg += ' (' + Math.round(test.duration) + ' ms)'
-      dump(msg + '\n')
-      return
-
-    fail: (test, err) ->
-      failed++
-      #dump '\ud' + indent() + Mocha.reporters.Base.symbols.err + ' ' + test.title + '\n' + indent() + '  ' + err.toString() + ' at\n' + indent() + '    ' + err.stack.replace('\n', '\n' + indent() + '    ', 'g')
-      return
-
-    end: ->
-      dump(passed + '/' + passed + failed + ' tests passed.\n')
-      quit(failed != 0)
-      return
-
-    indent: ->
-      #Array(indents).join('  ')
-      return

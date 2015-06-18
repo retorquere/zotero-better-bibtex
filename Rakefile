@@ -110,7 +110,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/jsencrypt.min.js',
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
-  'chrome/content/zotero-better-bibtex/test/include.js',
+  'chrome/content/zotero-better-bibtex/test/tests.js',
   'install.rdf',
   'resource/error-reporting.pub.pem',
   'resource/translators/json5.js',
@@ -212,29 +212,14 @@ DOWNLOADS[:translators].each_pair{|file, url|
   end
 }
 
-file 'chrome/content/zotero-better-bibtex/test/include.js' => ['Rakefile'] + Dir['chrome/content/zotero-better-bibtex/test/*.coffee'] do |t|
-  setup = %w{yadda setup}
-  tests = t.sources.collect{|f| File.basename(f, File.extname(f)) }.uniq
-  tests.reject!{|f| (setup + ['Rakefile', File.basename(t.name, File.extname(t.name))]).include?(f) }
-
-  inc = [
-    "if (! Zotero.BetterBibTeX.Test) {",
-    "  var loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader);",
-  ]
-
-  setup.each{|source|
-    inc << "  loader.loadSubScript('chrome://zotero-better-bibtex/content/test/#{source}.js');"
+file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['resource/tests/*.feature'] do |t|
+  features = t.sources.collect{|f| f.split('/')}.select{|f| f[0] == 'resource'}.collect{|f|
+    f[0] = 'resource://zotero-better-bibtex'
+    f.join('/')
   }
-  clusters = {}
-  tests.each{|test|
-    cluster = test.split('.')[0]
-    clusters[cluster] ||= []
-    clusters[cluster] << test
+  open(t.name, 'w'){|f|
+    f.write("Zotero.BetterBibTeX.Test.features = #{features.to_json};")
   }
-  inc << "  Zotero.BetterBibTeX.Test.clusters = #{clusters.to_json};"
-  inc << "}"
-
-  open(t.name, 'w'){|f| f.write(inc.join("\n") + "\n") }
 end
 
 file 'resource/abbreviations/CAplus.json' => 'Rakefile' do |t|
