@@ -27,8 +27,11 @@ Zotero.BetterBibTeX.serialized = new class
     @items = {}
 
   get: (item, options = {}) ->
+    Zotero.BetterBibTeX.debug('serialized.get:', item, options)
+
     # no serialization for attachments when their data is exported
     if options.exportFileData && (options.attachmentID || item.isAttachment())
+      Zotero.BetterBibTeX.debug('serialized.get: attachment + exportFileData')
       item = Zotero.Items.get(item) if options.attachmentID
       return null unless item
       return @_attachmentToArray(item)
@@ -59,6 +62,7 @@ Zotero.BetterBibTeX.serialized = new class
     items = Zotero.BetterBibTeX.serialized.items
 
     if !items[itemID]
+      Zotero.BetterBibTeX.debug('serialized.get: cache miss, getting item:', !!item)
       item ||= Zotero.Items.get(itemID)
       items[itemID] = (if item.isAttachment() then @_attachmentToArray(item) else @_itemToArray(item)) if item
       switch
@@ -72,6 +76,7 @@ Zotero.BetterBibTeX.serialized = new class
         else
           items[itemID].attachmentIDs = item.getAttachments()
 
+    Zotero.BetterBibTeX.debug('serialized.get:', items[itemID].itemType)
     return null if items[itemID].itemType == 'cache-miss'
     return items[itemID]
 

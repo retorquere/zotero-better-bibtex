@@ -247,21 +247,24 @@ Zotero.BetterBibTeX.auto = new class
     skip = {error: [], done: []}
     translation = null
     for ae in Zotero.DB.query("select * from betterbibtex.autoexport ae where status == 'pending'")
-      Zotero.BetterBibTeX.debug('auto.process: candidate', ae)
+      Zotero.BetterBibTeX.debug('auto.process: candidate', Zotero.BetterBibTeX.log.object(ae))
       path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
       path.initWithPath(ae.path)
 
       if !(path.exists() && path.isFile() && path.isWritable())
+        Zotero.BetterBibTeX.debug('auto.process: candidate path not writable', path.path)
         skip.error.push(ae.id)
         continue
 
       if !(path.parent.exists() && path.parent.isDirectory() && path.isWritable())
+        Zotero.BetterBibTeX.debug('auto.process: candidate path not writable', path.path)
         skip.error.push(ae.id)
         continue
 
       if m = /^library(:([0-9]+))?$/.exec(ae.collection)
-        items = Zotero.Items.get(false, m[2])
+        items = Zotero.Items.getAll(false, m[2])
         if !items || items.length == 0
+          Zotero.BetterBibTeX.debug('auto.process: empty library')
           skip.done.push(ae.id)
           continue
       else
@@ -269,7 +272,7 @@ Zotero.BetterBibTeX.auto = new class
 
       continue if translation
 
-      Zotero.BetterBibTeX.debug('auto.process: picked candidate', ae)
+      Zotero.BetterBibTeX.debug('auto.process: candidate picked:', Zotero.BetterBibTeX.log.object(ae))
       translation = new Zotero.Translate.Export()
 
       if items
