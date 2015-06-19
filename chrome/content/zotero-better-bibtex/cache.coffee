@@ -247,6 +247,7 @@ Zotero.BetterBibTeX.auto = new class
     skip = {error: [], done: []}
     translation = null
     for ae in Zotero.DB.query("select * from betterbibtex.autoexport ae where status == 'pending'")
+      Zotero.BetterBibTeX.debug('auto.process: candidate', ae)
       path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
       path.initWithPath(ae.path)
 
@@ -268,6 +269,7 @@ Zotero.BetterBibTeX.auto = new class
 
       continue if translation
 
+      Zotero.BetterBibTeX.debug('auto.process: picked candidate', ae)
       translation = new Zotero.Translate.Export()
 
       if items

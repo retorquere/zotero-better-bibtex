@@ -31,7 +31,7 @@ Zotero.BetterBibTeX.log = (msg...) ->
       when m instanceof Error then "#{e}\n#{e.stack}"
       else JSON.stringify(m)
 
-  Zotero.debug("[" + "better-bibtex] #{msg.join(' ')}")
+  Zotero.debug("[#{(new Date()).toUTCString()} " + "better-bibtex] #{msg.join(' ')}")
 
 Zotero.BetterBibTeX.log.object = (o) ->
   _o = {}
