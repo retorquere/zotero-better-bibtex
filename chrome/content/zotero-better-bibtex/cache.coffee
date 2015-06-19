@@ -244,35 +244,57 @@ Zotero.BetterBibTeX.auto = new class
           Zotero.BetterBibTeX.debug('auto.process: not idle')
           return
 
-    ae = Zotero.DB.rowQuery("select * from betterbibtex.autoexport ae where status == 'pending' limit 1")
-    if ae
+    skip = {error: [], done: []}
+    translation = null
+    for ae in Zotero.DB.query("select * from betterbibtex.autoexport ae where status == 'pending'")
+      path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
+      path.initWithPath(ae.path)
+
+      if !(path.exists() && path.isFile() && path.isWritable())
+        skip.error.push(ae.id)
+        continue
+
+      if !(path.parent.exists() && path.parent.isDirectory() && path.isWritable())
+        skip.error.push(ae.id)
+        continue
+
+      if m = /^library(:([0-9]+))?$/.exec(ae.collection)
+        items = Zotero.Items.get(false, m[2])
+        if items.length == 0
+          skip.done.push(ae.id)
+          continue
+      else
+        items = null
+
+      continue if translation
+
+      translation = new Zotero.Translate.Export()
+
+      if items
+        translation.setItems(items)
+      else
+        translation.setCollection(Zotero.Collections.get(ae.collection))
+
+      translation.setLocation(path)
+      translation.setTranslator(ae.translatorID)
+
+      translation.setDisplayOptions({
+        exportCharset: ae.exportCharset
+        exportNotes: (ae.exportNotes == 'true')
+        useJournalAbbreviation: (ae.useJournalAbbreviation == 'true')
+      })
       @running = '' + ae.id
-      Zotero.BetterBibTeX.debug('auto.process: starting', Zotero.BetterBibTeX.log.object(ae))
-    else
+
+    for own status, ae of skip
+      continue if ae.length == 0
+      Zotero.DB.query("update betterbibtex.autoexport set status = ? where id in #{Zotero.BetterBibTeX.SQLSet(ae)}", [status])
+
+    if !translation
       Zotero.BetterBibTeX.debug('auto.process: no pending jobs')
       return
+
+    Zotero.BetterBibTeX.debug('auto.process: starting', Zotero.BetterBibTeX.log.object(ae))
     @refresh()
-
-    translation = new Zotero.Translate.Export()
-
-    if m = /^library(:([0-9]+))?$/.exec(ae.collection)
-      items = Zotero.Items.get(false, m[2])
-      translation.setItems(items)
-
-    else
-      translation.setCollection(Zotero.Collections.get(ae.collection))
-
-    path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
-    path.initWithPath(ae.path)
-    translation.setLocation(path)
-    translation.setTranslator(ae.translatorID)
-
-    translation.setDisplayOptions({
-      exportCharset: ae.exportCharset
-      exportNotes: (ae.exportNotes == 'true')
-      'Preserve BibTeX Variables': (ae.preserveBibTeXVariables == 'true')
-      useJournalAbbreviation: (ae.useJournalAbbreviation == 'true')
-    })
 
     translation.setHandler('done', (obj, worked) ->
       status = (if worked then 'done' else 'error')
