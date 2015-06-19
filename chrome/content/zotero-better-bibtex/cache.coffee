@@ -261,7 +261,7 @@ Zotero.BetterBibTeX.auto = new class
 
       if m = /^library(:([0-9]+))?$/.exec(ae.collection)
         items = Zotero.Items.get(false, m[2])
-        if items.length == 0
+        if !items || items.length == 0
           skip.done.push(ae.id)
           continue
       else
