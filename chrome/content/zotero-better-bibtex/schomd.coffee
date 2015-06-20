@@ -43,11 +43,13 @@ Zotero.BetterBibTeX.schomd.init = ->
     '@quotes/false': false
 
     '@cite/entry': (state, str) ->
-      citekey = Zotero.BetterBibTeX.keymanager.get(state.registry.registry[@system_id].ref.id)
+      Zotero.BetterBibTeX.debug('markdown.@cite/entry:', state.registry.registry[@system_id].ref.id)
+      citekey = Zotero.BetterBibTeX.keymanager.get({itemID: state.registry.registry[@system_id].ref.id}).citekey
       return "[#{str}][@#{citekey}]"
 
     '@bibliography/entry': (state, str) ->
-      citekey = Zotero.BetterBibTeX.keymanager.get(state.registry.registry[@system_id].ref.id)
+      Zotero.BetterBibTeX.debug('markdown.@bibliography/entry:', state.registry.registry[@system_id].ref.id)
+      citekey = Zotero.BetterBibTeX.keymanager.get({itemID: state.registry.registry[@system_id].ref.id}).citekey
       return "[@#{citekey}]: ##{citekey} \"#{str.replace(/\\/g, '').replace(/"/g, "'")}\"\n<a name=\"#{citekey}\"></a>#{str}\n"
 
     '@display/block': (state, str) -> "\n\n#{str}\n\n"
