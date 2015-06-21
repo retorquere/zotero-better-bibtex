@@ -1,7 +1,7 @@
 Zotero.BetterBibTeX.cache = new class
   constructor: ->
-    @cache = Zotero.BetterBibTeX.Cache.addCollection('cache', {disableChangesApi: false, indices: 'itemID exportCharset exportNotes getCollections preserveBibTeXVariables translatorID useJournalAbbreviation citekey'.split(/\s+/)})
-    @access = Zotero.BetterBibTeX.Cache.addCollection('access', {disableChangesApi: false, indices: 'itemID exportCharset exportNotes getCollections preserveBibTeXVariables translatorID useJournalAbbreviation'.split(/\s+/)})
+    @cache = Zotero.BetterBibTeX.Cache.addCollection('cache', {disableChangesApi: false, indices: 'itemID exportCharset exportNotes getCollections translatorID useJournalAbbreviation citekey'.split(/\s+/)})
+    @access = Zotero.BetterBibTeX.Cache.addCollection('access', {disableChangesApi: false, indices: 'itemID exportCharset exportNotes getCollections translatorID useJournalAbbreviation'.split(/\s+/)})
 
     if Zotero.BetterBibTeX.pref.get('debug')
       @cache.on('insert', (entry) -> Zotero.BetterBibTeX.debug('cache.loki insert', entry))
@@ -31,13 +31,12 @@ Zotero.BetterBibTeX.cache = new class
       Zotero.BetterBibTeX.debug('cache.load forced reset', Zotero.BetterBibTeX.pref.get('cacheReset'), 'left')
 
     @cache.flushChanges()
-    for item in Zotero.DB.query('select itemID, exportCharset, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex from betterbibtex.cache')
+    for item in Zotero.DB.query('select itemID, exportCharset, exportNotes, getCollections, translatorID, useJournalAbbreviation, citekey, bibtex from betterbibtex.cache')
       @cache.insert({
         itemID: @integer(item.itemID)
         exportCharset: item.exportCharset
         exportNotes: (item.exportNotes == 'true')
         getCollections: (item.getCollections == 'true')
-        preserveBibTeXVariables: (item.preserveBibTeXVariables == 'true')
         translatorID: item.translatorID
         useJournalAbbreviation: (item.useJournalAbbreviation == 'true')
         citekey: item.citekey
@@ -49,7 +48,7 @@ Zotero.BetterBibTeX.cache = new class
   verify: (entry) ->
     return entry unless Zotero.BetterBibTeX.pref.get('debug') || Zotero.BetterBibTeX.testing
 
-    verify = {itemID: 1, exportCharset: 'x', exportNotes: true, getCollections: true, preserveBibTeXVariables: true, translatorID: 'x', useJournalAbbreviation: true }
+    verify = {itemID: 1, exportCharset: 'x', exportNotes: true, getCollections: true, translatorID: 'x', useJournalAbbreviation: true }
 
     for own key, value of entry
       switch
@@ -99,13 +98,13 @@ Zotero.BetterBibTeX.cache = new class
 
     for change in @cache.getChanges()
       o = change.obj
-      key = [o.itemID, o.exportCharset, @bool(o.exportNotes), @bool(o.getCollections), @bool(o.preserveBibTeXVariables), o.translatorID, @bool(o.useJournalAbbreviation)]
+      key = [o.itemID, o.exportCharset, @bool(o.exportNotes), @bool(o.getCollections), o.translatorID, @bool(o.useJournalAbbreviation)]
       switch change.operation
         when 'I', 'U'
           Zotero.DB.query("insert or replace into betterbibtex.cache
-                            (itemID, exportCharset, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess)
+                            (itemID, exportCharset, exportNotes, getCollections, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess)
                            values
-                            (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)", key.concat([o.citekey, o.bibtex]))
+                            (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)", key.concat([o.citekey, o.bibtex]))
 
         when 'R'
           Zotero.DB.query("delete from betterbibtex.cache
@@ -113,14 +112,13 @@ Zotero.BetterBibTeX.cache = new class
                            and exportCharset = ?
                            and exportNotes = ?
                            and getCollections = ?
-                           and preserveBibTeXVariables = ?
                            and translatorID = ?
                            and useJournalAbbreviation = ?", key)
 
     for change in @access.getChanges()
       o = change.obj
-      key = [o.itemID, o.translatorID, o.exportCharset, @bool(o.exportNotes), @bool(o.preserveBibTeXVariables), @bool(o.useJournalAbbreviation)]
-      Zotero.DB.query("update betterbibtex.cache set lastaccess = CURRENT_TIMESTAMP where itemID = ? and translatorID = ? and exportCharset = ?  and exportNotes = ? and preserveBibTeXVariables = ? and useJournalAbbreviation = ?", key)
+      key = [o.itemID, o.translatorID, o.exportCharset, @bool(o.exportNotes), @bool(o.useJournalAbbreviation)]
+      Zotero.DB.query("update betterbibtex.cache set lastaccess = CURRENT_TIMESTAMP where itemID = ? and translatorID = ? and exportCharset = ?  and exportNotes = ? and useJournalAbbreviation = ?", key)
 
     Zotero.DB.query("delete from betterbibtex.cache where lastaccess < datetime('now','-1 month')")
 
@@ -134,7 +132,6 @@ Zotero.BetterBibTeX.cache = new class
       exportCharset: (context.exportCharset || 'UTF-8').toUpperCase()
       exportNotes: !!context.exportNotes
       getCollections: !!context.getCollections
-      preserveBibTeXVariables: !!context.preserveBibTeXVariables
       translatorID: context.translatorID
       useJournalAbbreviation: !!context.useJournalAbbreviation
     })
@@ -202,14 +199,13 @@ Zotero.BetterBibTeX.auto = new class
 
   add: (collection, path, context) ->
     Zotero.BetterBibTeX.debug("auto-export set up for #{collection} to #{path}")
-    Zotero.DB.query("insert or replace into betterbibtex.autoexport (collection, path, translatorID, exportCharset, exportNotes, preserveBibTeXVariables, useJournalAbbreviation, exportedRecursively, status)
+    Zotero.DB.query("insert or replace into betterbibtex.autoexport (collection, path, translatorID, exportCharset, exportNotes, useJournalAbbreviation, exportedRecursively, status)
                values (?, ?, ?, ?, ?, ?, ?, ?, 'done')", [
                 collection,
                 path,
                 context.translatorID,
                 (context.exportCharset || 'UTF-8').toUpperCase(),
                 @bool(context.exportNotes),
-                @bool(context.preserveBibTeXVariables),
                 @bool(context.useJournalAbbreviation),
                 @bool(@recursive())])
     @refresh()

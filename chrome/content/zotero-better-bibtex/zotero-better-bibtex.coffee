@@ -247,8 +247,8 @@ Zotero.BetterBibTeX.attachDatabase = ->
   upgrade ||= tables.join(' + ') != 'autoexport + cache + keys'
   for check in [
     'SELECT itemID, citekey, citekeyFormat FROM betterbibtex.keys'
-    'SELECT id, collection, path, exportCharset, exportNotes, preserveBibTeXVariables, translatorID, useJournalAbbreviation, exportedRecursively, status FROM betterbibtex.autoexport'
-    'SELECT itemID, exportCharset, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess FROM betterbibtex.cache'
+    'SELECT id, collection, path, exportCharset, exportNotes, translatorID, useJournalAbbreviation, exportedRecursively, status FROM betterbibtex.autoexport'
+    'SELECT itemID, exportCharset, exportNotes, getCollections, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess FROM betterbibtex.cache'
     ]
     continue if upgrade
     try
@@ -280,14 +280,13 @@ Zotero.BetterBibTeX.attachDatabase = ->
         exportCharset not null,
         exportNotes default 'false' CHECK(exportNotes in ('true', 'false')),
         getCollections default 'false' CHECK(getCollections in ('true', 'false')),
-        preserveBibTeXVariables default 'false' CHECK(preserveBibTeXVariables in ('true', 'false')),
         translatorID not null,
         useJournalAbbreviation default 'false' CHECK(useJournalAbbreviation in ('true', 'false')),
 
         citekey not null,
         bibtex not null,
         lastaccess not null default CURRENT_TIMESTAMP,
-        PRIMARY KEY (itemID, exportCharset, exportNotes, getCollections, preserveBibTeXVariables, translatorID, useJournalAbbreviation)
+        PRIMARY KEY (itemID, exportCharset, exportNotes, getCollections, translatorID, useJournalAbbreviation)
         )
       ")
 
@@ -300,14 +299,13 @@ Zotero.BetterBibTeX.attachDatabase = ->
 
         exportCharset not null,
         exportNotes default 'false' CHECK(exportNotes in ('true', 'false')),
-        preserveBibTeXVariables default 'false' CHECK(preserveBibTeXVariables in ('true', 'false')),
         translatorID not null,
         useJournalAbbreviation default 'false' CHECK(useJournalAbbreviation in ('true', 'false')),
 
         exportedRecursively CHECK(exportedRecursively in ('true', 'false')),
         status CHECK(status in ('pending', 'error', 'done')),
 
-        UNIQUE (collection, exportCharset, exportNotes, preserveBibTeXVariables, translatorID, useJournalAbbreviation),
+        UNIQUE (collection, exportCharset, exportNotes, translatorID, useJournalAbbreviation),
         UNIQUE (path)
         )
       ")
