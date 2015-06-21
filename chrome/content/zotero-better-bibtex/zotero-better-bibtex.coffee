@@ -5,16 +5,8 @@ Components.utils.import('resource://zotero/config.js')
 Zotero.BetterBibTeX = {
   serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
   document: Components.classes['@mozilla.org/xul/xul-document;1'].getService(Components.interfaces.nsIDOMDocument)
-  fragmentParser: Components.classes['@mozilla.org/feed-unescapehtml;1'].getService(Components.interfaces.nsIScriptableUnescapeHTML)
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
-
-#HTMLParser = (aHTMLString) ->
-#  html = document.implementation.createDocument('http://www.w3.org/1999/xhtml', 'html', null)
-#  body = document.createElementNS('http://www.w3.org/1999/xhtml', 'body')
-#  html.documentElement.appendChild body
-#  body.appendChild Components.classes['@mozilla.org/feed-unescapehtml;1'].getService(Components.interfaces.nsIScriptableUnescapeHTML).parseFragment(aHTMLString, false, null, body)
-#  body
 
 Zotero.BetterBibTeX.debug_off = ->
 
@@ -388,11 +380,9 @@ Zotero.BetterBibTeX.init = ->
   setInterval((-> Zotero.BetterBibTeX.cache.flush(); Zotero.BetterBibTeX.keymanager.flush()), cfi * 1000 * 60)
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
-    __exposedProps__: {fragmentParser: 'r', document: 'r', keymanager: 'r', cache: 'r'}
+    __exposedProps__: {keymanager: 'r', cache: 'r'}
     keymanager: @keymanager
     cache: @cache
-    document: @document
-    fragmentParser: @fragmentParser
   }
 
   for own name, endpoint of @endpoints
@@ -445,6 +435,7 @@ Zotero.BetterBibTeX.init = ->
           @_displayOptions.exportPath = @location.path
         else
           @_displayOptions.exportPath = @location.parent.path
+        @_displayOptions.exportFilename = @location.leafName
 
       Zotero.BetterBibTeX.debug("export to #{if @_displayOptions?.exportFileData then 'directory' else 'file'}", @location.path, 'using', @_displayOptions)
 
@@ -613,6 +604,7 @@ Zotero.BetterBibTeX.loadTranslators = ->
   @load('Pandoc Citation')
   @load('BetterBibTeX JSON')
   @load('BibTeXAuxScanner')
+  @load('Collected Notes')
 
   # clean up junk
   try
@@ -807,12 +799,12 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions) ->
   throw 'export failed'
 
 Zotero.BetterBibTeX.load = (translator) ->
-  @debug('translator.load:', translator)
   header = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.json"))
   @removeTranslator(header)
 
   sources = ['xregexp-all-min', 'json5', 'translator', "#{translator}.header", translator].concat(header.BetterBibTeX?.dependencies || [])
-  code = ''
+  @debug('translator.load:', translator, 'from', sources)
+  code = "exports = void 0;\nmodule = void 0;\n"
   for src in sources
     try
       code += Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{src}.js") + "\n"
@@ -820,9 +812,10 @@ Zotero.BetterBibTeX.load = (translator) ->
       @debug('translator.load: source', src, 'for', translator, 'could not be loaded:', err)
       throw err
 
-  #js = @createFile('translators', "#{translator}.js")
-  #@debug("Saving #{translator} to #{js.path}")
-  #Zotero.File.putContents(js, code)
+  if @pref.get('debug')
+    js = @createFile('translators', "#{translator}.js")
+    @debug("Saving #{translator} to #{js.path}")
+    Zotero.File.putContents(js, code)
 
   @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
 

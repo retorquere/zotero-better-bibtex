@@ -106,14 +106,14 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   stem = File.basename(tr, File.extname(tr))
   %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
 }.flatten + [
-  'chrome.manifest',
   'chrome/content/zotero-better-bibtex/jsencrypt.min.js',
-  'chrome/content/zotero-better-bibtex/handlebars.js',
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/test/tests.js',
+  'chrome.manifest',
   'install.rdf',
   'resource/error-reporting.pub.pem',
+  'resource/translators/nunjucks.js',
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all-min.js',
@@ -194,7 +194,6 @@ DOWNLOADS = {
     'test/yadda.js'     => 'https://raw.githubusercontent.com/acuminous/yadda/master/dist/yadda-0.11.5.js',
     'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
     'jsencrypt.min.js'  => 'https://raw.githubusercontent.com/travist/jsencrypt/master/bin/jsencrypt.min.js',
-    'handlebars.js'     => 'http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v3.0.3.js',
   },
   translators: {
     #'unicode.xml'         => 'http://www.w3.org/2003/entities/2007xml/unicode.xml',
@@ -202,6 +201,7 @@ DOWNLOADS = {
     'org.js'              => 'https://raw.githubusercontent.com/mooz/org-js/master/org.js',
     'xregexp-all-min.js'  => 'http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all-min.js',
     'json5.js'            => 'https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js',
+    #'nunjucks.js'         => 'https://mozilla.github.io/nunjucks/files/nunjucks.js',
   }
 }
 DOWNLOADS[:chrome].each_pair{|file, url|
@@ -214,6 +214,12 @@ DOWNLOADS[:translators].each_pair{|file, url|
     ZotPlus::RakeHelper.download(url, t.name)
   end
 }
+
+file "resource/translators/nunjucks.js" => 'Rakefile' do |t|
+  ZotPlus::RakeHelper.download('https://mozilla.github.io/nunjucks/files/nunjucks.js', t.name)
+  code = open(t.name).read.gsub("typeof window === 'undefined' || window !== this", 'false').gsub("window.", "Translator.")
+  open(t.name, 'w'){|f| f.write(code) }
+end
 
 file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['resource/tests/*.feature'] do |t|
   features = t.sources.collect{|f| f.split('/')}.select{|f| f[0] == 'resource'}.collect{|f|

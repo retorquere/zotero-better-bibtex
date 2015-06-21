@@ -46,7 +46,7 @@ Translator.initialize = ->
   for pref in ['usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables']
     @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
 
-  for option in ['useJournalAbbreviation', 'exportPath', 'exportCharset', 'exportFileData', 'exportNotes']
+  for option in ['useJournalAbbreviation', 'exportPath', 'exportFilename', 'exportCharset', 'exportFileData', 'exportNotes']
     @[option] = Zotero.getOption(option)
 
   @caching = @header.BetterBibTeX?.cache?.BibTeX && !@exportFileData
