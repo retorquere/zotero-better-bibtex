@@ -5,6 +5,7 @@ Components.utils.import('resource://zotero/config.js')
 Zotero.BetterBibTeX = {
   serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
   document: Components.classes['@mozilla.org/xul/xul-document;1'].getService(Components.interfaces.nsIDOMDocument)
+  fragmentParser: Components.classes['@mozilla.org/feed-unescapehtml;1'].getService(Components.interfaces.nsIScriptableUnescapeHTML)
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
 
@@ -380,9 +381,11 @@ Zotero.BetterBibTeX.init = ->
   setInterval((-> Zotero.BetterBibTeX.cache.flush(); Zotero.BetterBibTeX.keymanager.flush()), cfi * 1000 * 60)
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
-    __exposedProps__: {keymanager: 'r', cache: 'r'}
+    __exposedProps__: {fragmentParser: 'r', document: 'r', keymanager: 'r', cache: 'r'}
     keymanager: @keymanager
     cache: @cache
+    document: @document
+    fragmentParser: @fragmentParser
   }
 
   for own name, endpoint of @endpoints
