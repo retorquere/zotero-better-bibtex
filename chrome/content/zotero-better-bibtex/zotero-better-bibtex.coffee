@@ -204,7 +204,7 @@ Zotero.BetterBibTeX.columnsHash = (table) ->
 Zotero.BetterBibTeX.copyTable = (source, target, ignore = []) -> # assumes tables have identical layout!
   ignore = [ignore] if typeof ignore == 'string'
 
-  columns = (column for column in @columnNames(source) when column not in ignore).join(', ')
+  columns = (column for column in @columnNames(target) when column not in ignore).join(', ')
   Zotero.DB.query("insert into #{target} (#{columns}) select #{columns} from #{source}")
 
 Zotero.BetterBibTeX.tableExists = (name, mustHaveData = false) ->
@@ -339,7 +339,7 @@ Zotero.BetterBibTeX.attachDatabase = ->
       if @columnsHash('betterbibtex."-autoexport-"').context
         # sorry my dear colleague, but this was a mess
       else
-        @copyTable('betterbibtex."-autoexport-"', 'betterbibtex.autoexport', ['id', 'preserveBibTeXVariables'])
+        @copyTable('betterbibtex."-autoexport-"', 'betterbibtex.autoexport', 'id')
 
     ### cleanup ###
 
