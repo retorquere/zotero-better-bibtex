@@ -83,9 +83,10 @@ Translator.initialize = ->
     @debug = @debug_off
 
   @collections = []
-  while collection = Zotero.nextCollection()
-    @debug('adding collection:', collection)
-    @collections.push(@sanitizeCollection(collection))
+  if Zotero.nextCollection
+    while collection = Zotero.nextCollection()
+      @debug('adding collection:', collection)
+      @collections.push(@sanitizeCollection(collection))
 
 # The default collection structure passed is beyond screwed up.
 Translator.sanitizeCollection = (coll) ->
