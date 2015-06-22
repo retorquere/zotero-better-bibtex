@@ -198,7 +198,7 @@ Zotero.BetterBibTeX.auto = new class
     items.sort()
     return if items == @search[parseInt(search.id)]
 
-    @search[pareInt(search.id)] = items
+    @search[parseInt(search.id)] = items
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection = ?", ["search:#{id}"])
 
   refresh: ->

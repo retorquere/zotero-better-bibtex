@@ -436,7 +436,7 @@ Zotero.BetterBibTeX.init = ->
       Zotero.BetterBibTeX.debug('export: ', translatorID)
       return original.apply(@, arguments) unless translatorID
 
-      # convert group into its library items
+      # convert group/search into its library items
       switch @_collection?.objectType
         when 'group'
           @_group = @_collection
