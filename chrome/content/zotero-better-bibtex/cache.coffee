@@ -263,7 +263,7 @@ Zotero.BetterBibTeX.auto = new class
           items = {}
 
         when m = /^library:([0-9]+)$/.exec(ae.collection)
-          items = {items: Zotero.Items.getAll(false, m[2])}
+          items = {items: Zotero.Items.getAll(false, m[1])}
           items.items = [] unless items.items
           if items.items.length == 0
             Zotero.BetterBibTeX.debug('auto.process: empty library')
