@@ -729,10 +729,16 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
       collections.push("'library:#{libraryID}'")
     else
       collections.push("'library'")
+
+  for ae in Zotero.DB.query("select collection from betterbibtex.autoexport where status = 'done' and collection like 'search:%'")
+    if @cache.search.update(ae.collection.replace('search:', ''))
+      collections.push("'#{ae.collection}'")
+
   if collections.length > 0
     collections = @SQLSet(collections)
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{collections}")
     @auto.process("items changed: #{collections}")
+
 ).bind(Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.withParentCollections = (collections) ->

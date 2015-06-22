@@ -2,7 +2,6 @@ Zotero.BetterBibTeX.cache = new class
   constructor: ->
     @cache = Zotero.BetterBibTeX.Cache.addCollection('cache', {disableChangesApi: false, indices: 'itemID exportCharset exportNotes getCollections translatorID useJournalAbbreviation citekey'.split(/\s+/)})
     @access = Zotero.BetterBibTeX.Cache.addCollection('access', {disableChangesApi: false, indices: 'itemID exportCharset exportNotes getCollections translatorID useJournalAbbreviation'.split(/\s+/)})
-
     if Zotero.BetterBibTeX.pref.get('debug')
       @cache.on('insert', (entry) -> Zotero.BetterBibTeX.debug('cache.loki insert', entry))
       @cache.on('update', (entry) -> Zotero.BetterBibTeX.debug('cache.loki update', entry))
@@ -185,6 +184,19 @@ Zotero.BetterBibTeX.cache = new class
       record.lastaccess = Date.now()
       @cache.insert(record)
     Zotero.BetterBibTeX.debug('cache.store', (if cached then 'replace' else 'insert'), 'for', Zotero.BetterBibTeX.log.object(record))
+
+Zotero.BetterBibTeX.search = new class
+  constructor:
+    @items = {}
+
+  update: (id) ->
+    search = Zotero.Searches.get(id)
+    return false unless search
+    items = (parseInt(itemID) for itemID in search.search())
+    items.sort()
+    return false if items == @items[search.id]
+    @items[search.id] = items
+    return true
 
 Zotero.BetterBibTeX.auto = new class
   constructor: ->
