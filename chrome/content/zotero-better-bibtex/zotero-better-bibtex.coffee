@@ -430,13 +430,13 @@ Zotero.BetterBibTeX.init = ->
 
       # convert group into its library items
       switch @_collection?.objectType
-        when 'group':
+        when 'group'
           @_group = @_collection
           @_items = Zotero.Items.getAll(false, @_group.libraryID)
           throw new Error('Cannot export empty group library') unless @_items
           delete @_collection
 
-        when 'saved-search':
+        when 'saved-search'
           @_saved_search = @_collection.search
           @_items = @_collection.items
           throw new Error('Cannot export empty group library') unless @_items
