@@ -462,6 +462,10 @@ Zotero.BetterBibTeX.init = ->
       progressWin.changeHeadline('Auto-export')
 
       switch
+        when @_saved_search # search export, already converted to its corresponding items above
+          progressWin.addLines(["Saved search #{@_saved_search.name} set up for auto-export"])
+          collection = "search:#{@_saved_search.id}"
+
         when @_group # group export, already converted to its corresponding items above
           progressWin.addLines(["Group #{@_group.name} set up for auto-export"])
           collection = "library:#{@_group.libraryID}"
@@ -475,7 +479,7 @@ Zotero.BetterBibTeX.init = ->
           collection = 'library'
 
         else
-          progressWin.addLines(['Auto-export only supported for groups, collections and libraries'])
+          progressWin.addLines(['Auto-export only supported for searches, groups, collections and libraries'])
           collection = null
 
       progressWin.show()
