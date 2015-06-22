@@ -1,6 +1,5 @@
-Zotero.BetterBibTeX.serialized = new class
-  constructor: ->
-    @items = {}
+Zotero.BetterBibTeX.serialized =
+  items: {}
 
   load: ->
     try
@@ -80,7 +79,7 @@ Zotero.BetterBibTeX.serialized = new class
     return null if items[itemID].itemType == 'cache-miss'
     return items[itemID]
 
-  save:
+  save: ->
     try
       serialized = Zotero.BetterBibTeX.createFile('serialized-items.json')
       serialized.remove(false) if serialized.exists()
@@ -88,5 +87,5 @@ Zotero.BetterBibTeX.serialized = new class
     catch e
       Zotero.debug("serialized.save failed: #{e}")
 
-Zotero.BetterBibTeX.serialized._attachmentToArray = Zotero.Translate.ItemGetter::_attachmentToArray
-Zotero.BetterBibTeX.serialized._itemToArray = Zotero.Translate.ItemGetter::_itemToArray
+  _attachmentToArray: Zotero.Translate.ItemGetter::_attachmentToArray
+  _itemToArray: Zotero.Translate.ItemGetter::_itemToArray
