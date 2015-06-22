@@ -114,6 +114,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'install.rdf',
   'resource/error-reporting.pub.pem',
   'resource/translators/nunjucks.js',
+  'resource/translators/htmlparser.js',
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all-min.js',
@@ -202,6 +203,7 @@ DOWNLOADS = {
     'xregexp-all-min.js'  => 'http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all-min.js',
     'json5.js'            => 'https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js',
     #'nunjucks.js'         => 'https://mozilla.github.io/nunjucks/files/nunjucks.js',
+    'htmlparser.js'       =>  'http://ejohn.org/files/htmlparser.js',
   }
 }
 DOWNLOADS[:chrome].each_pair{|file, url|
