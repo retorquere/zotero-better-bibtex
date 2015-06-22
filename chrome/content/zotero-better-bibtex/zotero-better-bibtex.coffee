@@ -429,11 +429,18 @@ Zotero.BetterBibTeX.init = ->
       return original.apply(@, arguments) unless translatorID
 
       # convert group into its library items
-      if @_collection?.objectType == 'group'
-        @_group = @_collection
-        delete @_collection
-        @_items = Zotero.Items.getAll(false, @_group.libraryID)
-        throw new Error('Cannot export empty group library') unless @_items
+      switch @_collection?.objectType
+        when 'group':
+          @_group = @_collection
+          @_items = Zotero.Items.getAll(false, @_group.libraryID)
+          throw new Error('Cannot export empty group library') unless @_items
+          delete @_collection
+
+        when 'saved-search':
+          @_saved_search = @_collection.search
+          @_items = @_collection.items
+          throw new Error('Cannot export empty group library') unless @_items
+          delete @_collection
 
       # regular behavior for non-BBT translators, or if translating to string
       header = Zotero.BetterBibTeX.translators[translatorID]

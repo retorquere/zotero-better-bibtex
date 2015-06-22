@@ -26,7 +26,11 @@ if !Zotero_File_Interface.BetterBibTeX
 
   Zotero_File_Interface.exportCollection = ((original) ->
     return ->
-      return original.apply(@, arguments)
-    )(Zotero_File_Interface.exportCollection)
+      return original.apply(@, arguments) if ZoteroPane_Local.getSelectedCollection() || !(search = ZoteroPane_Local.getSelectedSavedSearch())
 
-  Zotero_File_Exporter::
+      exporter = new Zotero_File_Exporter()
+      exporter.collection = {objectType: 'saved-search', search, items: ZoteroPane_Local.getSortedItems()}
+      throw new Error('No items to save') unless exporter.collection.items
+      exporter.name = search.name
+      exporter.save()
+    )(Zotero_File_Interface.exportCollection)
