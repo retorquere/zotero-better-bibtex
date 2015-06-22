@@ -200,7 +200,7 @@ Zotero.BetterBibTeX.auto = new class
   add: (collection, path, context) ->
     Zotero.BetterBibTeX.debug("auto-export set up for #{collection} to #{path}")
     Zotero.DB.query("insert or replace into betterbibtex.autoexport (collection, path, translatorID, exportCharset, exportNotes, useJournalAbbreviation, exportedRecursively, status)
-               values (?, ?, ?, ?, ?, ?, ?, ?, 'done')", [
+               values (?, ?, ?, ?, ?, ?, ?, 'done')", [
                 collection,
                 path,
                 context.translatorID,
