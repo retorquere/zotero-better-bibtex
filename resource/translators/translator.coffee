@@ -82,6 +82,10 @@ Translator.initialize = ->
   else
     @debug = @debug_off
 
+  @collections = []
+  while collection = Zotero.nextCollection()
+    @collections.push(@sanitizeCollection(collection))
+
 # The default collection structure passed is beyond screwed up.
 Translator.sanitizeCollection = (coll) ->
   sane = {
@@ -99,12 +103,6 @@ Translator.sanitizeCollection = (coll) ->
   sane.collections.sort( ( (a, b) -> a.name.localeCompare(b.name) ) ) if Translator.testing
 
   return sane
-
-Translator.collections = ->
-  collections = []
-  while collection = Zotero.nextCollection()
-    collections.push(@sanitizeCollection(collection))
-  return collections
 
 Translator.nextItem = ->
   @initialize()
@@ -126,19 +124,18 @@ Translator.nextItem = ->
   return null
 
 Translator.exportGroups = ->
-  collections = @collections()
-  return if collections.length == 0
+  return if @collections.length == 0
 
   Zotero.write('@comment{jabref-meta: groupsversion:3;}\n')
   Zotero.write('@comment{jabref-meta: groupstree:\n')
   Zotero.write('0 AllEntriesGroup:;\n')
 
+  @debug('exportGroups: getting groups')
   groups = []
-  for collection in collections
+  for collection in @collections
     groups = groups.concat(JabRef.exportGroup(collection, 1))
 
   Zotero.write(JabRef.serialize(groups, ';\n', true) + ';\n}\n')
-  return
 
 JabRef = {}
 

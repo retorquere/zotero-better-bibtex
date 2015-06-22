@@ -79,7 +79,7 @@ doExport = ->
       preferences: {}
       options: {}
     }
-    collections: Translator.collections()
+    collections: Translator.collections
     items: []
   }
 
