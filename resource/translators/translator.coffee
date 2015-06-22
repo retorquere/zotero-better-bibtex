@@ -84,6 +84,7 @@ Translator.initialize = ->
 
   @collections = []
   while collection = Zotero.nextCollection()
+    @debug('adding collection:', collection)
     @collections.push(@sanitizeCollection(collection))
 
 # The default collection structure passed is beyond screwed up.
@@ -124,6 +125,7 @@ Translator.nextItem = ->
   return null
 
 Translator.exportGroups = ->
+  @debug('exportGroups:', @collections)
   return if @collections.length == 0
 
   Zotero.write('@comment{jabref-meta: groupsversion:3;}\n')
@@ -134,6 +136,7 @@ Translator.exportGroups = ->
   groups = []
   for collection in @collections
     groups = groups.concat(JabRef.exportGroup(collection, 1))
+  @debug('exportGroups: serialize', groups)
 
   Zotero.write(JabRef.serialize(groups, ';\n', true) + ';\n}\n')
 

@@ -257,24 +257,33 @@ Zotero.BetterBibTeX.auto = new class
         skip.error.push(ae.id)
         continue
 
-      if m = /^library(:([0-9]+))?$/.exec(ae.collection)
-        items = Zotero.Items.getAll(false, m[2])
-        if !items || items.length == 0
-          Zotero.BetterBibTeX.debug('auto.process: empty library')
-          skip.done.push(ae.id)
-          continue
-      else
-        items = null
+      Zotero.BetterBibTeX.debug('auto export candidate collection:', ae.collection)
+      switch
+        when ae.collection == 'library'
+          items = {}
 
+        when m = /^library:([0-9]+)$/.exec(ae.collection)
+          items = {items: Zotero.Items.getAll(false, m[2])}
+          items.items = [] unless items.items
+          if items.items.length == 0
+            Zotero.BetterBibTeX.debug('auto.process: empty library')
+            skip.done.push(ae.id)
+
+        else
+          items = {collection: ae.collection}
+
+      continue if items.items && items.items.length == 0
       continue if translation
 
       Zotero.BetterBibTeX.debug('auto.process: candidate picked:', Zotero.BetterBibTeX.log.object(ae))
       translation = new Zotero.Translate.Export()
 
-      if items
-        translation.setItems(items)
-      else
-        translation.setCollection(Zotero.Collections.get(ae.collection))
+      if items.items
+        Zotero.BetterBibTeX.debug('starting auto-export from', items.length, 'items')
+        translation.setItems(items.items)
+      if items.collection
+        Zotero.BetterBibTeX.debug('starting auto-export from collection', items.collection)
+        translation.setCollection(Zotero.Collections.get(items.collection))
 
       translation.setLocation(path)
       translation.setTranslator(ae.translatorID)
