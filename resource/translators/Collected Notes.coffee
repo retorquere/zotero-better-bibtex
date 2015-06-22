@@ -12,6 +12,8 @@ class Report
       @data[0].items.push(item) unless @assigned[itemID]
 
   unpack: (collection, level) ->
+    return unless collection
+
     level = {level, title: collection.name, items: []}
     pos = @data.length
     @data.push(level)

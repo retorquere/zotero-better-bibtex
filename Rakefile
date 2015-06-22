@@ -203,7 +203,7 @@ DOWNLOADS = {
     'xregexp-all-min.js'  => 'http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all-min.js',
     'json5.js'            => 'https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js',
     #'nunjucks.js'         => 'https://mozilla.github.io/nunjucks/files/nunjucks.js',
-    'htmlparser.js'       =>  'http://ejohn.org/files/htmlparser.js',
+    'htmlparser.js'       => 'https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js',
   }
 }
 DOWNLOADS[:chrome].each_pair{|file, url|

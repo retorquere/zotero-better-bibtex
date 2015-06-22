@@ -328,7 +328,7 @@ Zotero.BetterBibTeX.attachDatabase = ->
       if @columnsHash('betterbibtex."-autoexport-"').context
         # sorry my dear colleague, but this was a mess
       else
-        @copyTable('betterbibtex."-autoexport-"', 'betterbibtex.autoexport', 'id')
+        @copyTable('betterbibtex."-autoexport-"', 'betterbibtex.autoexport', ['id', 'preserveBibTeXVariables'])
 
     ### cleanup ###
 
