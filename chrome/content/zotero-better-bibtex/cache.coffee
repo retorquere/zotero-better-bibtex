@@ -185,22 +185,21 @@ Zotero.BetterBibTeX.cache = new class
       @cache.insert(record)
     Zotero.BetterBibTeX.debug('cache.store', (if cached then 'replace' else 'insert'), 'for', Zotero.BetterBibTeX.log.object(record))
 
-Zotero.BetterBibTeX.search = new class
-  constructor:
-    @items = {}
-
-  update: (id) ->
-    search = Zotero.Searches.get(id)
-    return false unless search
-    items = (parseInt(itemID) for itemID in search.search())
-    items.sort()
-    return false if items == @items[search.id]
-    @items[search.id] = items
-    return true
-
 Zotero.BetterBibTeX.auto = new class
   constructor: ->
     @bool = Zotero.BetterBibTeX.cache.bool
+    @search = {}
+
+  markSearch: (id) ->
+    search = Zotero.Searches.get(id)
+    return false unless search
+
+    items = (parseInt(itemID) for itemID in search.search())
+    items.sort()
+    return if items == @search[parseInt(search.id)]
+
+    @search[pareInt(search.id)] = items
+    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection = ?", ["search:#{id}"])
 
   refresh: ->
     wm = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
@@ -274,8 +273,17 @@ Zotero.BetterBibTeX.auto = new class
         when ae.collection == 'library'
           items = {}
 
+        when m = /^search:([0-9]+)$/.exec(ae.collection)
+          # assumes that a markSearch will have executed the search and found the items
+          items = {items: @search[parseInt(m[1])] || []}
+          if items.items.length == 0
+            Zotero.BetterBibTeX.debug('auto.process: empty search')
+            skip.done.push(ae.id)
+          else
+            items.items = Zotero.Items.get(items.items)
+
         when m = /^library:([0-9]+)$/.exec(ae.collection)
-          items = {items: Zotero.Items.getAll(false, m[2])}
+          items = {items: Zotero.Items.getAll(false, m[1])}
           items.items = [] unless items.items
           if items.items.length == 0
             Zotero.BetterBibTeX.debug('auto.process: empty library')

@@ -401,6 +401,14 @@ Zotero.BetterBibTeX.init = ->
 
   @loadTranslators()
 
+  # monkey-patch Zotero.Search.prototype.save to trigger auto-exports
+  Zotero.Search::save = ((original) ->
+    return (fixGaps) ->
+      id = original.apply(@, arguments)
+      Zotero.BetterBibTeX.auto.markSearch(id)
+      return id
+    )(Zotero.Search::save)
+
   # monkey-patch Zotero.ItemTreeView::getCellText to replace the 'extra' column with the citekey
   # I wish I didn't have to hijack the extra field, but Zotero has checks in numerous places to make sure it only
   # displays 'genuine' Zotero fields, and monkey-patching around all of those got to be way too invasive (and thus
@@ -731,8 +739,7 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
       collections.push("'library'")
 
   for ae in Zotero.DB.query("select collection from betterbibtex.autoexport where status = 'done' and collection like 'search:%'")
-    if @cache.search.update(ae.collection.replace('search:', ''))
-      collections.push("'#{ae.collection}'")
+    @auto.markSearch(ae.collection.replace('search:', ''))
 
   if collections.length > 0
     collections = @SQLSet(collections)
