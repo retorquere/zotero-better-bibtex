@@ -38,16 +38,16 @@ Zotero.BetterBibTeX.keymanager = new class
     # LaTeX book.)
     @months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
-    @__exposedProps__ = {
-      months: 'r'
-      journalAbbrev: 'r'
-      extract: 'r'
-      get: 'r'
-      alternates: 'r'
-      cache: 'r'
-    }
-    for own key of @__exposedProps__
-      @[key].__exposedProps__ = []
+    #@__exposedProps__ = {
+    #  months: 'r'
+    #  journalAbbrev: 'r'
+    #  extract: 'r'
+    #  get: 'r'
+    #  alternates: 'r'
+    #  cache: 'r'
+    #}
+    #for own key of @__exposedProps__
+    #  @[key].__exposedProps__ = []
 
     @embeddedKeyRE = /bibtex: *([^\s\r\n]+)/
     @andersJohanssonKeyRE = /biblatexcitekey\[([^\]]+)\]/

@@ -8,13 +8,13 @@ Zotero.BetterBibTeX.cache = new class
       @cache.on('delete', (entry) -> Zotero.BetterBibTeX.debug('cache.loki delete', entry))
 
     @log = Zotero.BetterBibTeX.log
-    @__exposedProps__ = {
-      fetch: 'r'
-      store: 'r'
-      dump: 'r'
-    }
-    for own key, value of @__exposedProps__
-      @[key].__exposedProps__ = []
+    #@__exposedProps__ = {
+    #  fetch: 'r'
+    #  store: 'r'
+    #  dump: 'r'
+    #}
+    #for own key, value of @__exposedProps__
+    #  @[key].__exposedProps__ = []
 
   integer: (v) ->
     return v if typeof v == 'number'

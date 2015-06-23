@@ -395,9 +395,22 @@ Zotero.BetterBibTeX.init = ->
   setInterval((-> Zotero.BetterBibTeX.cache.flush(); Zotero.BetterBibTeX.keymanager.flush()), cfi * 1000 * 60)
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
-    __exposedProps__: {keymanager: 'r', cache: 'r'}
-    keymanager: @keymanager
-    cache: @cache
+    #__exposedProps__: {keymanager: 'r', cache: 'r'}
+    #keymanager: @keymanager
+    keymanager: {
+      months:         @keymanager.months
+      journalAbbrev:  @keymanager.journalAbbrev.bind(@keymanager)
+      extract:        @keymanager.extract.bind(@keymanager)
+      get:            @keymanager.get.bind(@keymanager)
+      alternates:     @keymanager.alternates.bind(@keymanager)
+      cache:          @keymanager.cache.bind(@keymanager)
+    }
+    #cache: @cache
+    cache: {
+      fetch:  @cache.fetch.bind(@cache)
+      store:  @cache.store.bind(@cache)
+      dump:   @cache.dump.bind(@cache)
+    }
   }
 
   for own name, endpoint of @endpoints
