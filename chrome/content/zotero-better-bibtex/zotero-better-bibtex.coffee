@@ -2,6 +2,12 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 Components.utils.import('resource://zotero/config.js')
 
+# not cool, recoll-firefox-extension
+if 'recoll_bind' in Object.keys(Function::)
+  recoll_bind = Function::recoll_bind
+  delete Function::recoll_bind
+  Object.defineProperty(Function::, 'recoll_bind', { value: recoll_bind, enumerable: false })
+
 Zotero.BetterBibTeX = {
   serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
   document: Components.classes['@mozilla.org/xul/xul-document;1'].getService(Components.interfaces.nsIDOMDocument)
