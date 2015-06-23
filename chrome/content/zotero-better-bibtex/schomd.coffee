@@ -10,7 +10,7 @@ Zotero.BetterBibTeX.schomd.init = ->
     #
     text_escape: (text) ->
       text = text.replace(/([-"\\`\*_{}\[\]\(\)#\+!])/g, "\\$1")
-      text = text.replace(/([0-9])\./g, "$1\\.")
+      text = text.replace(/(^|[\n])(\s*[0-9]+)\.(\s)/g, "$1\\.$2")
       text = text.replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "<sup>#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}</sup>"))
       return text
 
