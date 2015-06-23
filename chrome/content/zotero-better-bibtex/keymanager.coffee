@@ -55,7 +55,7 @@ Zotero.BetterBibTeX.keymanager = new class
   integer: (v) ->
     return v if typeof v == 'number' || v == null
     _v = parseInt(v)
-    throw new Error("#{v} is not an integer-string") if isNaN(_v)
+    throw new Error("#{typeof v} '#{v}' is not an integer-string") if isNaN(_v)
     return _v
 
   cache: ->

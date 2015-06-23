@@ -49,7 +49,10 @@ Zotero.BetterBibTeX.schomd.init = ->
 
     '@bibliography/entry': (state, str) ->
       Zotero.BetterBibTeX.debug('markdown.@bibliography/entry:', state.registry.registry[@system_id].ref.id)
-      citekey = Zotero.BetterBibTeX.keymanager.get({itemID: state.registry.registry[@system_id].ref.id}).citekey
+      try
+        citekey = Zotero.BetterBibTeX.keymanager.get({itemID: state.registry.registry[@system_id].ref.id}).citekey
+      catch
+        citekey = '??'
       return "[@#{citekey}]: ##{citekey} \"#{str.replace(/\\/g, '').replace(/"/g, "'")}\"\n<a name=\"#{citekey}\"></a>#{str}\n"
 
     '@display/block': (state, str) -> "\n\n#{str}\n\n"
@@ -78,7 +81,7 @@ Zotero.BetterBibTeX.schomd.items = (citekeys, {library} = {}) ->
   else
     resolved = Zotero.BetterBibTeX.keymanager.resolve(keys, library)
 
-  return ((if typeof key == 'number' then key else resolved[key].itemID) for key in citekeys)
+  return ((if typeof key == 'number' then key else resolved[key]?.itemID) for key in citekeys)
 
 Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, library} = {}) ->
   items = (item for item in @items(citekeys, {library}) when item)
@@ -89,8 +92,8 @@ Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, library} = {}) ->
   style = Zotero.Styles.get(url)
   cp = style.getCiteProc()
   cp.setOutputFormat('markdown')
-  cp.updateItems(items)
-  return (cp.appendCitationCluster({citationItems: [{id:item}], properties:{}}, true)[0][1] for item in items)
+  cp.updateItems((item for item in items when item))
+  return ((if item then cp.appendCitationCluster({citationItems: [{id:item}], properties:{}}, true)[0][1] else '??') for item in items)
 
 Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, library} = {}) ->
   items = @items(citekeys, {library: library})
@@ -100,7 +103,7 @@ Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, library} = {}) ->
   style = Zotero.Styles.get(url)
   cp = style.getCiteProc()
   cp.setOutputFormat('markdown')
-  cp.updateItems(items)
+  cp.updateItems((item for item in items when item))
   bib = cp.makeBibliography()
 
   return '' unless bib
