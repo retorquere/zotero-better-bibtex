@@ -344,10 +344,10 @@ Reference::esc_attachments = (f) ->
   return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
 
 Reference::preserveCaps = {
-  inner: new XRegExp("\\b\\p{Letter}+\\p{Uppercase_Letter}\\p{Letter}*", 'g')
-  all: new XRegExp("\\b\\p{Letter}*\\p{Uppercase_Letter}\\p{Letter}*", 'g')
+  inner: new YRegExp("\\b\\p{Letter}+\\p{Uppercase_Letter}\\p{Letter}*", 'g')
+  all: new YRegExp("\\b\\p{Letter}*\\p{Uppercase_Letter}\\p{Letter}*", 'g')
 }
-Reference::initialCapOnly = new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}+$")
+Reference::initialCapOnly = new YRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}+$")
 
 Reference::add = (field) ->
   return if Translator.skipFields.indexOf(field.name) >= 0
@@ -379,9 +379,9 @@ Reference::add = (field) ->
             else          0
           braced[i] = 0 if braced[i] < 0
 
-        value = XRegExp.replace(value, @preserveCaps[Translator.preserveCaps], (needle, pos, haystack) ->
+        value = YRegExp.replace(value, @preserveCaps[Translator.preserveCaps], (needle, pos, haystack) ->
           #return needle if needle.length < 2 # don't escape single-letter capitals
-          return needle if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, Reference::initialCapOnly)
+          return needle if pos == 0 && Translator.preserveCaps == 'all' && YRegExp.test(needle, Reference::initialCapOnly)
 
           c = 0
           for i in [pos - 1 .. 0] by -1

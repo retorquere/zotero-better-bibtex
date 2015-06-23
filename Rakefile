@@ -200,7 +200,7 @@ DOWNLOADS = {
     #'unicode.xml'         => 'http://www.w3.org/2003/entities/2007xml/unicode.xml',
     'unicode.xml'         => 'http://www.w3.org/Math/characters/unicode.xml',
     'org.js'              => 'https://raw.githubusercontent.com/mooz/org-js/master/org.js',
-    'xregexp-all-min.js'  => 'http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all-min.js',
+    #'xregexp-all-min.js'  => 'http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all-min.js',
     'json5.js'            => 'https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js',
     #'nunjucks.js'         => 'https://mozilla.github.io/nunjucks/files/nunjucks.js',
     'htmlparser.js'       => 'https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js',
@@ -216,6 +216,12 @@ DOWNLOADS[:translators].each_pair{|file, url|
     ZotPlus::RakeHelper.download(url, t.name)
   end
 }
+
+file "resource/translators/xregexp-all-min.js" => 'Rakefile' do |t|
+  ZotPlus::RakeHelper.download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all-min.js', t.name)
+  code = open(t.name).read.gsub('XRegExp', 'YRegExp')
+  open(t.name, 'w'){|f| f.write(code) }
+end
 
 file "resource/translators/nunjucks.js" => 'Rakefile' do |t|
   ZotPlus::RakeHelper.download('https://mozilla.github.io/nunjucks/files/nunjucks.js', t.name)
