@@ -401,6 +401,14 @@ Zotero.BetterBibTeX.init = ->
 
   @loadTranslators()
 
+  # monkey-patch Zotero.Search.prototype.save to trigger auto-exports
+  Zotero.Search::save = ((original) ->
+    return (fixGaps) ->
+      id = original.apply(@, arguments)
+      Zotero.BetterBibTeX.auto.markSearch(id)
+      return id
+    )(Zotero.Search::save)
+
   # monkey-patch Zotero.ItemTreeView::getCellText to replace the 'extra' column with the citekey
   # I wish I didn't have to hijack the extra field, but Zotero has checks in numerous places to make sure it only
   # displays 'genuine' Zotero fields, and monkey-patching around all of those got to be way too invasive (and thus
@@ -428,12 +436,19 @@ Zotero.BetterBibTeX.init = ->
       Zotero.BetterBibTeX.debug('export: ', translatorID)
       return original.apply(@, arguments) unless translatorID
 
-      # convert group into its library items
-      if @_collection?.objectType == 'group'
-        @_group = @_collection
-        delete @_collection
-        @_items = Zotero.Items.getAll(false, @_group.libraryID)
-        throw new Error('Cannot export empty group library') unless @_items
+      # convert group/search into its library items
+      switch @_collection?.objectType
+        when 'group'
+          @_group = @_collection
+          @_items = Zotero.Items.getAll(false, @_group.libraryID)
+          throw new Error('Cannot export empty group library') unless @_items
+          delete @_collection
+
+        when 'saved-search'
+          @_saved_search = @_collection.search
+          @_items = @_collection.items
+          throw new Error('Cannot export empty group library') unless @_items
+          delete @_collection
 
       # regular behavior for non-BBT translators, or if translating to string
       header = Zotero.BetterBibTeX.translators[translatorID]
@@ -455,6 +470,10 @@ Zotero.BetterBibTeX.init = ->
       progressWin.changeHeadline('Auto-export')
 
       switch
+        when @_saved_search # search export, already converted to its corresponding items above
+          progressWin.addLines(["Saved search #{@_saved_search.name} set up for auto-export"])
+          collection = "search:#{@_saved_search.id}"
+
         when @_group # group export, already converted to its corresponding items above
           progressWin.addLines(["Group #{@_group.name} set up for auto-export"])
           collection = "library:#{@_group.libraryID}"
@@ -468,7 +487,7 @@ Zotero.BetterBibTeX.init = ->
           collection = 'library'
 
         else
-          progressWin.addLines(['Auto-export only supported for groups, collections and libraries'])
+          progressWin.addLines(['Auto-export only supported for searches, groups, collections and libraries'])
           collection = null
 
       progressWin.show()
@@ -520,27 +539,6 @@ Zotero.BetterBibTeX.init = ->
         return item
       return false
     )(Zotero.Translate.ItemGetter::nextItem)
-
-  # monkey-patch buildCollectionContextMenu to add group library export
-  zoteroPane = Zotero.getActiveZoteroPane()
-  zoteroPane.buildCollectionContextMenu = ((original) ->
-    return ->
-      itemGroup = @collectionsView._getItemAtRow(@collectionsView.selection.currentIndex)
-
-      menuItem = @document.getElementById('zotero-better-bibtex-export-group')
-      menuItem.setAttribute('disabled', false)
-      menuItem.setAttribute('hidden', !itemGroup.isGroup())
-
-      for id in ['zotero-better-bibtex-show-export-url', 'zotero-better-bibtex-report-errors']
-        menuItem = @document.getElementById(id)
-        menuItem.setAttribute('disabled', false)
-        menuItem.setAttribute('hidden', !(itemGroup.isLibrary(true) || itemGroup.isCollection()))
-
-      menuItem = @document.getElementById('zotero-better-bibtex-collectionmenu-separator')
-      menuItem.setAttribute('hidden', !(itemGroup.isLibrary(true) || itemGroup.isCollection()))
-
-      return original.apply(@, arguments)
-    )(zoteroPane.buildCollectionContextMenu)
 
   # monkey-patch zotfile wildcard table to add bibtex key
   if Zotero.ZotFile
@@ -739,10 +737,15 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
       collections.push("'library:#{libraryID}'")
     else
       collections.push("'library'")
+
+  for ae in Zotero.DB.query("select collection from betterbibtex.autoexport where status = 'done' and collection like 'search:%'")
+    @auto.markSearch(ae.collection.replace('search:', ''))
+
   if collections.length > 0
     collections = @SQLSet(collections)
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{collections}")
     @auto.process("items changed: #{collections}")
+
 ).bind(Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.withParentCollections = (collections) ->

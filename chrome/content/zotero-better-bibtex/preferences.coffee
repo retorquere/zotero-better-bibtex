@@ -121,12 +121,7 @@ BetterBibTeXAutoExportPref =
     Zotero.BetterBibTeX.debug('pref.autoexport.selected =', ae)
 
     BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-status', ae.status)
-    name = switch
-      when ae.collection == '' then ''
-      when ae.collection == 'library' then Zotero.Libraries.getName() || ae.collection
-      when m = /^library:([0-9]+)$/.exec(ae.collection) then Zotero.Libraries.getName(m[1]) || ae.collection
-      else @collectionPath(ae.collection) || "collection:#{ae.collection}"
-    BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-collection', name)
+    BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-collection', "#{@exportType(ae.collection)}: #{@exportName(ae.collection)}")
     BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-target', ae.path)
     BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-translator', Zotero.BetterBibTeX.translatorName(ae.translatorID))
     BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-charset', Zotero.BetterBibTeX.translatorName(ae.exportCharset))
@@ -151,6 +146,24 @@ BetterBibTeXAutoExportPref =
     selectedItem.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == id then 'running' else 'pending'}")
     @selected()
 
+  exportType: (id) ->
+    return switch
+      when id == '' then ''
+      when id == 'library' then 'library'
+      when m = /^library:([0-9]+)$/.exec(id) then 'library'
+      when m = /^search:([0-9]+)$/.exec(id) then 'search'
+      else 'collection'
+
+  exportName: (id, full) ->
+    name = switch
+      when id == '' then ''
+      when id == 'library' then Zotero.Libraries.getName()
+      when m = /^library:([0-9]+)$/.exec(id) then Zotero.Libraries.getName(m[1])
+      when m = /^search:([0-9]+)$/.exec(id) then Zotero.Searches.get(m[1])?.name
+      when full then collectionPath(id)
+      else Zotero.Collections.get(id)?.name
+    return name || id
+
   collectionPath: (id) ->
     return '' unless id
     coll = Zotero.Collections.get(id)
@@ -172,14 +185,9 @@ BetterBibTeXAutoExportPref =
         itemNode = document.createElement('listitem')
         itemNode.setAttribute('value', ae.id)
 
-        name = switch
-          when ae.collection == 'library' then Zotero.Libraries.getName() || ae.collection
-          when m = /^library:([0-9]+)$/.exec(ae.collection) then Zotero.Libraries.getName(m[1]) || ae.collection
-          else Zotero.Collections.get(ae.collection)?.name || "collection:#{ae.collection}"
-
-        itemNode.setAttribute('label', "#{name} -> #{ae.path.replace(/^.*[\\\/]/, '')}")
+        itemNode.setAttribute('label', "#{@exportName(ae.collection)} -> #{ae.path.replace(/^.*[\\\/]/, '')}")
         itemNode.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == ae.id then 'running' else ae.status}")
-        itemNode.setAttribute('tooltiptext', "#{@collectionPath(ae.collection)} -> #{ae.path}")
+        itemNode.setAttribute('tooltiptext', "#{@exportType(ae.collection)}: #{@exportName(ae.collection, true)} -> #{ae.path}")
         exportlist.appendChild(itemNode)
 
     @selected()

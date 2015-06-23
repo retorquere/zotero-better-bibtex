@@ -2,7 +2,6 @@ Zotero.BetterBibTeX.cache = new class
   constructor: ->
     @cache = Zotero.BetterBibTeX.Cache.addCollection('cache', {disableChangesApi: false, indices: 'itemID exportCharset exportNotes getCollections translatorID useJournalAbbreviation citekey'.split(/\s+/)})
     @access = Zotero.BetterBibTeX.Cache.addCollection('access', {disableChangesApi: false, indices: 'itemID exportCharset exportNotes getCollections translatorID useJournalAbbreviation'.split(/\s+/)})
-
     if Zotero.BetterBibTeX.pref.get('debug')
       @cache.on('insert', (entry) -> Zotero.BetterBibTeX.debug('cache.loki insert', entry))
       @cache.on('update', (entry) -> Zotero.BetterBibTeX.debug('cache.loki update', entry))
@@ -189,6 +188,18 @@ Zotero.BetterBibTeX.cache = new class
 Zotero.BetterBibTeX.auto = new class
   constructor: ->
     @bool = Zotero.BetterBibTeX.cache.bool
+    @search = {}
+
+  markSearch: (id) ->
+    search = Zotero.Searches.get(id)
+    return false unless search
+
+    items = (parseInt(itemID) for itemID in search.search())
+    items.sort()
+    return if items == @search[parseInt(search.id)]
+
+    @search[parseInt(search.id)] = items
+    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection = ?", ["search:#{id}"])
 
   refresh: ->
     wm = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
@@ -261,6 +272,15 @@ Zotero.BetterBibTeX.auto = new class
       switch
         when ae.collection == 'library'
           items = {}
+
+        when m = /^search:([0-9]+)$/.exec(ae.collection)
+          # assumes that a markSearch will have executed the search and found the items
+          items = {items: @search[parseInt(m[1])] || []}
+          if items.items.length == 0
+            Zotero.BetterBibTeX.debug('auto.process: empty search')
+            skip.done.push(ae.id)
+          else
+            items.items = Zotero.Items.get(items.items)
 
         when m = /^library:([0-9]+)$/.exec(ae.collection)
           items = {items: Zotero.Items.getAll(false, m[1])}
