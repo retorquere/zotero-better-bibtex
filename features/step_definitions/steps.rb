@@ -371,7 +371,12 @@ end
 
 Then /^the markdown citation for (.*) should be '(.*)'$/ do |keys, citation|
   keys = keys.split(',').collect{|k| k.strip}
-  expect($Firefox.ScholarlyMarkdown.citation(keys)).to eq(JSON.parse(citation))
+  if citation == '""'
+    citation = ''
+  else
+    citation = JSON.parse(citation)
+  end
+  expect($Firefox.ScholarlyMarkdown.citation(keys)).to eq(citation)
 end
 
 Then /^the markdown bibliography for (.*) should be '(.*)'$/ do |keys, bibliography|
