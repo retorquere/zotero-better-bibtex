@@ -16,4 +16,4 @@ BetterBibTeX:
   cache:
     nextItem: true
   dependencies:
-    - nunjucks
+    - htmlparser

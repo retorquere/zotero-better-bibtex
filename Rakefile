@@ -113,7 +113,6 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome.manifest',
   'install.rdf',
   'resource/error-reporting.pub.pem',
-  'resource/translators/nunjucks.js',
   'resource/translators/htmlparser.js',
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
@@ -202,7 +201,6 @@ DOWNLOADS = {
     'org.js'              => 'https://raw.githubusercontent.com/mooz/org-js/master/org.js',
     'xregexp-all-min.js'  => 'http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all-min.js',
     'json5.js'            => 'https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js',
-    #'nunjucks.js'         => 'https://mozilla.github.io/nunjucks/files/nunjucks.js',
     'htmlparser.js'       => 'https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js',
   }
 }
@@ -216,12 +214,6 @@ DOWNLOADS[:translators].each_pair{|file, url|
     ZotPlus::RakeHelper.download(url, t.name)
   end
 }
-
-file "resource/translators/nunjucks.js" => 'Rakefile' do |t|
-  ZotPlus::RakeHelper.download('https://mozilla.github.io/nunjucks/files/nunjucks.js', t.name)
-  code = open(t.name).read.gsub("typeof window === 'undefined' || window !== this", 'false').gsub("window.", "Translator.")
-  open(t.name, 'w'){|f| f.write(code) }
-end
 
 file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['resource/tests/*.feature'] do |t|
   features = t.sources.collect{|f| f.split('/')}.select{|f| f[0] == 'resource'}.collect{|f|
