@@ -21,12 +21,19 @@ BetterBibTeXPref =
     return "http://localhost:#{serverPort}/better-bibtex/#{url}"
 
   paneLoad: ->
-    #window.addEventListener('load', (load = (event) ->
-    #  window.removeEventListener('load', load, false) #remove listener, no longer needed
+    Zotero.BetterBibTeX.debug('preferences.paneLoad:', Zotero.BetterBibTeX.disabled)
+    disabled = null
+    tabs = document.getElementById('better-bibtex-prefs-tabs')
+    for tab, i in tabs.getElementsByTagName('tab')
+      tab.setAttribute('hidden', !(if tab.id == 'better-bibtex-prefs-disabled' then Zotero.BetterBibTeX.disabled else !Zotero.BetterBibTeX.disabled))
+      disabled = i if tab.id == 'better-bibtex-prefs-disabled'
+
+    if Zotero.BetterBibTeX.disabled
+      document.getElementById('better-bibtex-prefs-tabpanels').selectedIndex = disabled
+      document.getElementById('zotero-better-bibtex-disabled-message').value = Zotero.BetterBibTeX.disabled
+
     BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.pref.get('citekeyFormat')
     BetterBibTeXPref.update()
-    #  return
-    #), false)
 
   saveCitekeyFormat: ->
     BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.pref.get('citekeyFormat')

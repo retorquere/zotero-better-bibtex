@@ -8,6 +8,7 @@
 <!ENTITY zotero.better-bibtex.reportErrors "Report ZotPlus Errors...">
 
 <!ENTITY zotero.better-bibtex.prefs.citation "Citation">
+<!ENTITY zotero.better-bibtex.prefs.disabled "Better BibTeX has been disabled">
 <!ENTITY zotero.better-bibtex.prefs.import-export "Import/Export">
 <!ENTITY zotero.better-bibtex.prefs.journal-abbrev "Journal abbreviations">
 <!ENTITY zotero.better-bibtex.prefs.debug "Debug information">

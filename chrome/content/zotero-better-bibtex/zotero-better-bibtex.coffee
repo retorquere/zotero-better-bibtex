@@ -2,12 +2,6 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 Components.utils.import('resource://zotero/config.js')
 
-# not cool, recoll-firefox-extension
-if 'recoll_bind' in Object.keys(Function::)
-  recoll_bind = Function::recoll_bind
-  delete Function::recoll_bind
-  Object.defineProperty(Function::, 'recoll_bind', { value: recoll_bind, enumerable: false })
-
 Zotero.BetterBibTeX = {
   serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
   document: Components.classes['@mozilla.org/xul/xul-document;1'].getService(Components.interfaces.nsIDOMDocument)
@@ -59,13 +53,36 @@ Zotero.BetterBibTeX.log.object = (o) ->
 Zotero.BetterBibTeX.log.array = (a) ->
   return @stringify((v for v in a))
 
+Zotero.BetterBibTeX.extensionConflicts = ->
+  AddonManager.getAddonByID('{359f0058-a6ca-443e-8dd8-09868141bebc}', (recoll) ->
+    version = recoll.version.split('.')
+    return if parseInt(version[0]) > 1
+    return if parseInt(version[1]) > 2
+    return if parseInt(version[2]) > 3
+    Zotero.BetterBibTeX.removeTranslators()
+    Zotero.BetterBibTeX.disabled = '''
+      Better BibTeX has been disabled because it has detected conflicting extension "recoll-firefox" 1.2.3 or
+      earlier. If have proposed a fix for recall-firefox at
+
+      https://sourceforge.net/p/recollfirefox/discussion/general/thread/a31d3c89/
+
+      Once that has been implemented, Better BibTeX will start up as usual.  Alternately, you can uninstall Recoll Firefox.
+
+      In the meantime, unfortunately, Better BibTeX and recoll-firefox cannot co-exist, and the previous workaround
+      Better BibTeX had in place conflicts with a Mozilla policy all Fireox extensions must soon comply with.
+    '''
+    Zotero.BetterBibTeX.flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
+  )
 
 Zotero.BetterBibTeX.flash = (title, body) ->
-  progressWin = new Zotero.ProgressWindow()
-  progressWin.changeHeadline(title)
-  body = title unless body
-  progressWin.addLines((if Array.isArray(body) then body else body.split("\n")))
-  progressWin.startCloseTimer()
+  Zotero.BetterBibTeX.debug('flash:', title)
+  pw = new Zotero.ProgressWindow()
+  pw.changeHeadline(title)
+  body ||= title
+  body = body.join("\n") if Array.isArray(body)
+  pw.addDescription(body)
+  pw.show()
+  pw.startCloseTimer(8000)
 
 Zotero.BetterBibTeX.reportErrors = (details) ->
   pane = Zotero.getActiveZoteroPane()
@@ -419,6 +436,7 @@ Zotero.BetterBibTeX.init = ->
     ep.prototype = endpoint
 
   @loadTranslators()
+  @extensionConflicts()
 
   # monkey-patch Zotero.Search.prototype.save to trigger auto-exports
   Zotero.Search::save = ((original) ->

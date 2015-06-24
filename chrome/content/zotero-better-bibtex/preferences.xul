@@ -45,15 +45,16 @@
         <preference name="extensions.zotero.translators.better-bibtex.useprefix"              id="pref-better-bibtex-useprefix"               type="bool"/>
       </preferences>
       <tabbox>
-        <tabs>
+        <tabs id="better-bibtex-prefs-tabs">
           <tab label="&zotero.better-bibtex.prefs.citation;"/>
           <tab label="&zotero.better-bibtex.prefs.import-export;"/>
           <tab label="&zotero.better-bibtex.prefs.journal-abbrev;"/>
           <tab id="better-bibtex-prefs-auto-export" label="&zotero.better-bibtex.prefs.auto-export;"/>
           <tab label="&zotero.better-bibtex.prefs.debug;"/>
+          <tab id="better-bibtex-prefs-disabled" label="&zotero.better-bibtex.prefs.disabled;"/>
         </tabs>
 
-        <tabpanels>
+        <tabpanels id="better-bibtex-prefs-tabpanels">
           <tabpanel orient="vertical"><!-- citation -->
               <grid class="better-bibtex-prefs" flex="1">
                 <columns>
@@ -243,6 +244,9 @@
               <checkbox label="&zotero.better-bibtex.debug;" preference="pref-better-bibtex-debug"/>
               <button label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors()"/>
             </hbox>
+          </tabpanel>
+          <tabpanel> <!-- disabled -->
+            <textbox flex="1" multiline="true" id="zotero-better-bibtex-disabled-message" class="plain" readonly="true"/>
           </tabpanel>
         </tabpanels>
       </tabbox>
