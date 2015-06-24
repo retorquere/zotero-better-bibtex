@@ -23,4 +23,3 @@ bin/github-release
 .ruby-version
 vendor
 .pushbullet
-s3/credentials.yml

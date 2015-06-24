@@ -21,6 +21,7 @@ require 'washbullet'
 require 'rake/loaders/makefile'
 require 'selenium-webdriver'
 require 'rchardet'
+require 'csv'
 require 'base64'
 require 'digest/sha1'
 
@@ -108,7 +109,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   stem = File.basename(tr, File.extname(tr))
   %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
 }.flatten + [
-  'chrome/content/zotero-better-bibtex/jsencrypt.min.js',
+  'chrome/content/zotero-better-bibtex/sha256.js',
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/test/tests.js',
@@ -195,7 +196,7 @@ DOWNLOADS = {
     'test/chai.js'      => 'http://chaijs.com/chai.js',
     'test/yadda.js'     => 'https://raw.githubusercontent.com/acuminous/yadda/master/dist/yadda-0.11.5.js',
     'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
-    'jsencrypt.min.js'  => 'https://raw.githubusercontent.com/travist/jsencrypt/master/bin/jsencrypt.min.js',
+    #'sha256.js'         => 'https://raw.githubusercontent.com/chrisveness/crypto/master/sha256.js'
   },
   translators: {
     #'unicode.xml'         => 'http://www.w3.org/2003/entities/2007xml/unicode.xml',
@@ -217,6 +218,24 @@ DOWNLOADS[:translators].each_pair{|file, url|
   end
 }
 
+file 'chrome/content/zotero-better-bibtex/sha256.js' => 'Rakefile' do |t|
+  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/chrisveness/crypto/master/sha256.js', t.name)
+  breaks = 0
+  code = IO.readlines(t.name).collect{|line|
+    line.sub!(/\r$/, '')
+    if line.strip.gsub(/\s/, '') == 'msg=msg.utf8Encode();'
+      "    msg = unescape( encodeURIComponent( msg ) );\n"
+    else
+      line
+    end
+  }.reject{|line|
+    breaks += 1 if line.strip.gsub(/\s/, '') =~ /^\/\*-*\*\/$/
+    breaks > 3
+  }
+
+  open(t.name, 'w'){|f| f.write(code.join('')) }
+end
+
 file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['resource/tests/*.feature'] do |t|
   features = t.sources.collect{|f| f.split('/')}.select{|f| f[0] == 'resource'}.collect{|f|
     f[0] = 'resource://zotero-better-bibtex'
@@ -227,23 +246,44 @@ file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['
   }
 end
 
-file 's3/index.html' => ['s3/policy.json', 's3/credentials.yml', 'Rakefile'] do |t|
-  html = Nokogiri::HTML(open(t.name))
-  creds = YAML.load_file(t.sources[1])
+file 'resource/logs/s3.json' => ['resource/logs/policy.json', 'tmp/credentials.csv', 'Rakefile'] do |t|
+  header = nil
+  data = nil
+  CSV.foreach(t.sources[1]) do |row|
+    if header.nil?
+      header = row.collect{|c| c.gsub(/\s/, '') }
+    else
+      data = row
+    end
+  end
+  creds = OpenStruct.new(Hash[*(header.zip(data).flatten)])
+
   policy = JSON.parse(open(t.sources[0]).read)
 
+  s3 = {}
+
   %w{Content-Type acl success_action_redirect}.each{|eq|
-    html.at("//input[@name='#{eq}']")['value'] = policy['conditions'].detect{|c| c.is_a?(Hash) && c[eq] }[eq]
+    s3[eq] = policy['conditions'].detect{|c| c.is_a?(Hash) && c[eq] }[eq]
   }
-  html.at('//input[@name="key"]')['value'] = policy['conditions'].detect{|c| c.is_a?(Array) && c[0,2] = ['starts-with', '$key']}[2] + '${filename}'
+  s3['key'] = policy['conditions'].detect{|c| c.is_a?(Array) && c[0,2] = ['starts-with', '$key']}[2] + '${filename}'
 
   policy = Base64.encode64(open(t.sources[0]).read).gsub("\n","")
-  signature = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'), creds['SecretAccessKey'], policy)).gsub("\n","")
+  signature = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), creds.SecretAccessKey, policy)).gsub("\n","")
 
-  html.at('//input[@name="AWSAccessKeyId"]')['value'] = creds['AccessKeyId']
-  html.at('//input[@name="policy"]')['value'] = policy
-  html.at('//input[@name="signature"]')['value'] = signature
+  s3['AWSAccessKeyId'] = creds.AccessKeyId
+  s3['policy'] = policy
+  s3['signature'] = signature
 
+  open(t.name, 'w'){|f| f.write(s3.to_json) }
+end
+
+file 'resource/logs/index.html' => 'resource/logs/s3.json' do |t|
+  html = Nokogiri::HTML(open(t.name))
+  data = JSON.parse(open(t.source).read)
+
+  data.each_pair{|k, v|
+    html.at("//input[@name='#{k}']")['value'] = v
+  }
   open(t.name, 'w'){|f| f.write(html.to_xhtml) }
 end
 
