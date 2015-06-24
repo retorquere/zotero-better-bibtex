@@ -21,6 +21,8 @@ require 'washbullet'
 require 'rake/loaders/makefile'
 require 'selenium-webdriver'
 require 'rchardet'
+require 'base64'
+require 'digest/sha1'
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -223,6 +225,26 @@ file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['
   open(t.name, 'w'){|f|
     f.write("Zotero.BetterBibTeX.Test.features = #{features.to_json};")
   }
+end
+
+file 's3/index.html' => ['s3/policy.json', 's3/credentials.yml', 'Rakefile'] do |t|
+  html = Nokogiri::HTML(open(t.name))
+  creds = YAML.load_file(t.sources[1])
+  policy = JSON.parse(open(t.sources[0]).read)
+
+  %w{Content-Type acl success_action_redirect}.each{|eq|
+    html.at("//input[@name='#{eq}']")['value'] = policy['conditions'].detect{|c| c.is_a?(Hash) && c[eq] }[eq]
+  }
+  html.at('//input[@name="key"]')['value'] = policy['conditions'].detect{|c| c.is_a?(Array) && c[0,2] = ['starts-with', '$key']}[2] + '${filename}'
+
+  policy = Base64.encode64(open(t.sources[0]).read).gsub("\n","")
+  signature = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'), creds['SecretAccessKey'], policy)).gsub("\n","")
+
+  html.at('//input[@name="AWSAccessKeyId"]')['value'] = creds['AccessKeyId']
+  html.at('//input[@name="policy"]')['value'] = policy
+  html.at('//input[@name="signature"]')['value'] = signature
+
+  open(t.name, 'w'){|f| f.write(html.to_xhtml) }
 end
 
 file 'resource/abbreviations/CAplus.json' => 'Rakefile' do |t|
