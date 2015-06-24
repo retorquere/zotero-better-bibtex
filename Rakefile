@@ -246,7 +246,28 @@ file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['
   }
 end
 
-file 'resource/logs/s3.json' => ['resource/logs/policy.json', 'tmp/credentials.csv', 'Rakefile'] do |t|
+file 'resource/logs/policy.json' => ['resource/logs/policy.yml', ENV['ZPAWS3'], 'Rakefile'] do |t|
+  header = nil
+  data = nil
+  CSV.foreach(t.sources[1]) do |row|
+    if header.nil?
+      header = row.collect{|c| c.gsub(/\s/, '') }
+    else
+      data = row
+    end
+  end
+  creds = OpenStruct.new(Hash[*(header.zip(data).flatten)])
+
+  policy = YAML.load_file(t.sources[0])
+  dateStamp = Time.now.strftime('%Y%m%d')
+  region = policy.delete('region')
+  service = policy.delete('service')
+  policy['x-amz-date'] = "#{dateStamp}T000000Z"
+  policy['x-amz-credential'] = "#{creds.AccessKeyId}/#{dateStamp}/#{region}/#{service}/aws4_request"
+  open(t.name, 'w'){|f| f.write(JSON.pretty_generate(policy)) }
+end
+
+file 'resource/logs/s3.json' => ['resource/logs/policy.json', ENV['ZPAWS3'], 'Rakefile'] do |t|
   header = nil
   data = nil
   CSV.foreach(t.sources[1]) do |row|
@@ -259,29 +280,41 @@ file 'resource/logs/s3.json' => ['resource/logs/policy.json', 'tmp/credentials.c
   creds = OpenStruct.new(Hash[*(header.zip(data).flatten)])
 
   policy = JSON.parse(open(t.sources[0]).read)
+  dateStamp, region, service = policy['x-amz-credential'].split('/')[1,3]
 
   s3 = {}
+  s3['x-amz-date'] = policy['x-amz-date']
+  s3['x-amz-credential'] = policy['x-amz-credential']
 
-  %w{Content-Type acl success_action_redirect}.each{|eq|
+  %w{Content-Type acl success_action_redirect bucket}.each{|eq|
     s3[eq] = policy['conditions'].detect{|c| c.is_a?(Hash) && c[eq] }[eq]
   }
+  s3['x-amz-meta-bucket'] = s3.delete('bucket')
   s3['key'] = policy['conditions'].detect{|c| c.is_a?(Array) && c[0,2] = ['starts-with', '$key']}[2] + '${filename}'
 
   policy = Base64.encode64(open(t.sources[0]).read).gsub("\n","")
-  signature = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), creds.SecretAccessKey, policy)).gsub("\n","")
 
-  s3['AWSAccessKeyId'] = creds.AccessKeyId
+  kDate    = OpenSSL::HMAC.digest('sha256', "AWS4" + creds.SecretAccessKey, dateStamp)
+  kRegion  = OpenSSL::HMAC.digest('sha256', kDate, region)
+  kService = OpenSSL::HMAC.digest('sha256', kRegion, service)
+  kSigning = OpenSSL::HMAC.digest('sha256', kService, 'aws4_request')
+
+  signature = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), kSigning, policy)).gsub("\n","")
+
   s3['policy'] = policy
-  s3['signature'] = signature
+  s3['x-amz-signature'] = signature
+  s3['x-amz-algorithm'] = 'AWS4-HMAC-SHA256'
 
-  open(t.name, 'w'){|f| f.write(s3.to_json) }
+  open(t.name, 'w'){|f| f.write(JSON.pretty_generate(s3)) }
 end
 
 file 'resource/logs/index.html' => 'resource/logs/s3.json' do |t|
   html = Nokogiri::HTML(open(t.name))
   data = JSON.parse(open(t.source).read)
 
+  html.at('//form')['action'] = "http://#{data['x-amz-meta-bucket']}.s3.amazonaws.com/"
   data.each_pair{|k, v|
+    next if k =~ /^x-amz-meta/
     html.at("//input[@name='#{k}']")['value'] = v
   }
   open(t.name, 'w'){|f| f.write(html.to_xhtml) }

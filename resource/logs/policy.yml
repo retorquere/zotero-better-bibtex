@@ -1,0 +1,15 @@
+---
+expiration: '2029-01-01T00:00:00Z'
+conditions:
+- bucket: zotplus-964ec2b7-379e-49a4-9c8a-edcb20db343f
+- - starts-with
+  - "$key"
+  - uploads/
+- acl: private
+- success_action_redirect: http://zotplus.github.io/submitted.html
+- Content-Type: text/plain
+- - content-length-range
+  - 0
+  - 1048576
+region: eu-central-1
+service: s3
