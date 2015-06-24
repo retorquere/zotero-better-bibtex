@@ -101,9 +101,6 @@
                   <row>
                     <checkbox id="id-better-bibtex-preferences-show-citekey" label="&zotero.better-bibtex.show-citekey;" preference="pref-better-bibtex-show-citekey"/>
                   </row>
-                  <row>
-                    <checkbox label="&zotero.better-bibtex.rescan-citekeys;" preference="pref-better-bibtex-rescan-citekeys"/>
-                  </row>
                 </rows>
               </grid>
           </tabpanel>
@@ -244,6 +241,7 @@
               <checkbox label="&zotero.better-bibtex.debug;" preference="pref-better-bibtex-debug"/>
               <button label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors()"/>
             </hbox>
+            <checkbox label="&zotero.better-bibtex.rescan-citekeys;" preference="pref-better-bibtex-rescan-citekeys"/>
           </tabpanel>
           <tabpanel> <!-- disabled -->
             <textbox flex="1" multiline="true" id="zotero-better-bibtex-disabled-message" class="plain" readonly="true"/>
