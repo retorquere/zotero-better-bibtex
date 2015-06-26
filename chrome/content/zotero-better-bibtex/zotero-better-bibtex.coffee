@@ -85,6 +85,36 @@ Zotero.BetterBibTeX.flash = (title, body) ->
   pw.show()
   pw.startCloseTimer(8000)
 
+Zotero.BetterBibTeX.reportErrors = (includeReferences) ->
+  pane = Zotero.getActiveZoteroPane()
+  data = {}
+
+  switch includeReferences
+    when 'collection'
+      collectionsView = pane?.collectionsView
+      itemGroup = collectionsView?._getItemAtRow(collectionsView.selection?.currentIndex)
+      switch itemGroup?.type
+        when 'collection'
+          weferences = {data: true, collection: collectionsView.getSelectedCollection() }
+        when 'library'
+          data = { data: true }
+        when 'group'
+          data = { data: true, collection: Zotero.Groups.get(collectionsView.getSelectedLibraryID()) }
+
+    when 'items'
+      data = { data: true, items: pane?.getSelectedItems() }
+
+  if data.data
+    @_translate(translator, data, { exportNotes: true, exportFileData: false }, (result) ->
+      params = {wrappedJSObject: {references: result}}
+      ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
+      ww.openWindow(null, 'chrome://zotero-better-bibtex/content/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', params)
+    )
+  else
+    params = {wrappedJSObject: {}}
+    ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
+    ww.openWindow(null, 'chrome://zotero-better-bibtex/content/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', params)
+
 Zotero.BetterBibTeX.pref = {}
 
 Zotero.BetterBibTeX.pref.prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.zotero.translators.better-bibtex.')
@@ -795,7 +825,23 @@ Zotero.BetterBibTeX.displayOptions = (url) ->
   return params if hasParams
   return null
 
+# TODO: move all translation to async
 Zotero.BetterBibTeX.translate = (translator, items, displayOptions) ->
+  status = {finished: false}
+
+  @_translate(translator, items, displayOptions, (result) ->
+    status.result = result
+    status.finished = true
+  )
+
+  thread = @threadManager.currentThread
+  while not status.finished
+    thread.processNextEvent(true)
+
+  return status.result if status.result || status.result == ''
+  throw 'export failed'
+
+Zotero.BetterBibTeX._translate = (translator, items, displayOptions, callback) ->
   throw 'null translator' unless translator
 
   translation = new Zotero.Translate.Export()
@@ -810,21 +856,13 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions) ->
   translation.setTranslator(translator)
   translation.setDisplayOptions(displayOptions)
 
-  status = {finished: false}
-
   translation.setHandler('done', (obj, success) ->
-    status.success = success
-    status.finished = true
-    status.data = obj.string if success
-    return)
+    if success
+      callback(obj.string)
+    else
+      callback()
+  )
   translation.translate()
-
-  thread = @threadManager.currentThread
-  while not status.finished
-    thread.processNextEvent(true)
-
-  return status.data if status.success
-  throw 'export failed'
 
 Zotero.BetterBibTeX.load = (translator) ->
   header = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.json"))

@@ -29,23 +29,18 @@ Zotero_BetterBibTeX_ErrorReport = new class
       "#{content}\r\n"
     ].join('')
 
-  init: ->
-    #pane = Zotero.getActiveZoteroPane()
-    #collectionsView = pane?.collectionsView
-    #switch
-    #  when (itemGroup = collectionsView?._getItemAtRow(collectionsView.selection?.currentIndex))
-    #  switch itemGroup?.type
-    #    when 'collection'
-    #      data = { data: true, collection: collectionsView.getSelectedCollection() }
-    #    when 'library'
-    #      data = { data: true }
-    #    when 'group'
-    #      data = { data: true, collection: Zotero.Groups.get(collectionsView.getSelectedLibraryID()) }
-    #
-    #when 'items'
-    #  data = { data: true, items: pane?.getSelectedItems() }
-    @references = null
+  errorLog: (limit) ->
+    @errors ||= Zotero.getErrors(true).join('\n')
 
+    log = @errors + "\n\n"
+    log += @info + "\n\n" if @info
+    if limit
+      log += Zotero.Debug.get(5000, 80)
+    else
+      log += Zotero.Debug.get()
+    return log
+
+  init: ->
     Zotero.debug('BBT.error.init')
     @key = "#{Zotero.Utilities.generateObjectKey()}-#{Zotero.Utilities.generateObjectKey()}"
     Zotero.debug("BBT.error.init: #{@key}")
@@ -58,23 +53,21 @@ Zotero_BetterBibTeX_ErrorReport = new class
     Zotero.debug("BBT.error.init: here we go")
 
     Zotero.getSystemInfo((info) =>
+      @info = info
+
       if document.getElementById('zotero-failure-message').hasChildNodes()
         textNode = document.getElementById('zotero-failure-message').firstChild
         document.getElementById('zotero-failure-message').removeChild(textNode)
       document.getElementById('zotero-failure-message').appendChild(document.createTextNode(Zotero.getString('errorReport.followingReportWillBeSubmitted')))
       Zotero.debug("BBT.error.init: message set")
 
-      if @references
-        translator = Zotero.BetterBibTeX.getTranslator('BetterBibTeX JSON')
-        references = Zotero.BetterBibTeX.translate(translator, details, { exportNotes: true, exportFileData: false })
+      params = window.arguments[0].wrappedJSObject
+      if params.references
         document.getElementById('zotero-references').hidden = false
-        document.getElementById('zotero-references').value = references
+        document.getElementById('zotero-references').value = params.references.substring(0, 5000)
         Zotero.debug("BBT.error.init: references set")
 
-      errorLog = Zotero.Debug.get() + ''
-      errorLog = Zotero.getErrors(true).join('\n').trim() if errorLog == ''
-      errorLog = Zotero.getString('errorReport.noErrorsLogged', Zotero.appName) if errorLog == ''
-      document.getElementById('zotero-error-message').value = errorLog + "\n\n" + info
+      document.getElementById('zotero-error-message').value = @errorLog(true)
       Zotero.debug("BBT.error.init: error log set")
 
       continueButton.disabled = false
@@ -116,13 +109,15 @@ Zotero_BetterBibTeX_ErrorReport = new class
     continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
-    @submit('errorlog.txt', document.getElementById('zotero-error-message').value, (request) =>
+    params = window.arguments[0].wrappedJSObject
+
+    @submit('errorlog.txt', @errorLog(), (request) =>
       Zotero.debug("BBT.error.send done: errorlog.txt")
       return unless @verify(request)
 
-      return @finished() unless @references
+      return @finished() unless params.references
 
-      @submit('references.json', document.getElementById('zotero-references').value, (request) =>
+      @submit('references.json', params.references, (request) =>
         Zotero.debug("BBT.error.send done: references.json")
         return unless @verify(request)
 
