@@ -269,7 +269,9 @@ file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'].compa
   date = Time.now.strftime('%Y%m%dT%H%M%SZ')
   shortDate = date.sub(/T.*/, '')
   credentials = [ creds.AccessKeyId, shortDate, region, service, requestType ].join('/')
-  
+
+  maxSize = 10 * 1024 * 1024 # 10 megabytes
+
   policy = Base64.encode64({
     'expiration' => (Time.now + (60*60*24*365*30)).strftime('%Y-%m-%dT%H:%M:%SZ'), # 30 years from now
     'conditions' => [
@@ -281,7 +283,7 @@ file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'].compa
       {'x-amz-credential' => credentials},
       {'x-amz-algorithm' => algorithm},
       {'x-amz-date' => date},
-      ['content-length-range', 0, 1048576],
+      ['content-length-range', 0, maxSize],
     ]
   }.to_json).gsub("\n","")
   
@@ -289,6 +291,7 @@ file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'].compa
   
   form = {
     action: "https://#{bucket}.#{service}-#{region}.amazonaws.com/",
+    maxSize: maxSize,
     fields: {
       key: '${filename}',
       'Content-Type': 'text/plain',

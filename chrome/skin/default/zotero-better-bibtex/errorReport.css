@@ -38,7 +38,7 @@ description {
 
 /* Submitted pane */
 
-#zotero-report-id, {
+#zotero-report-id {
 	color: red;
 	font-weight: bold;
 }

@@ -30,7 +30,7 @@
 		<description>&zotero.errorReport.submitted;</description>
 		<description id="zotero-report-result" hidden="true">
       <description>
-			  &zotero.better-bibtex.errorReport.reportID; <textbox id="zotero-report-id" class="plain" readonly="true"/>
+			  &zotero.better-bibtex.errorReport.reportID; <textbox flex="1" id="zotero-report-id" class="plain" readonly="true"/>
       </description>
 		</description>
 		<description>&zotero.better-bibtex.errorReport.postToGitHub;</description>

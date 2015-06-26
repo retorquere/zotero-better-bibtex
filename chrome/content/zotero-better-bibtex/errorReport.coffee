@@ -1,44 +1,27 @@
+Components.utils.importGlobalProperties(['Blob'])
+
 Zotero_BetterBibTeX_ErrorReport = new class
   constructor: ->
     @form = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/logs/s3.json"))
-    Zotero.debug("BBT.error.form: #{JSON.stringify(@form)}")
 
   submit: (filename, data, callback) ->
-    Zotero.debug("BBT.error.submit(#{filename}) (#{data.length}) to #{@form.action}")
+    fd = new FormData()
+    for own name, value of @form.fields
+      fd.append(name, value)
 
-    params = []
-    for own k, v of @form.fields
-      params.push(@param(k, v))
+    file = new Blob([data], { type: 'text/plain'})
+    fd.append('file', file, "#{@key}-#{filename}")
 
-    params.push(@file('file', filename, 'text/plain', data))
+    request = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance()
+    request.open('POST', @form.action, true)
 
-    boundary = Zotero.Utilities.randomString(32)
-    body = ("--#{boundary}\r\n#{p}" for p in params).join('') + "--#{boundary}--\r\n"
-
-    Zotero.HTTP.doPost(@form.action, body, callback, {'Content-type': "multipart/form-data; boundary=#{boundary}"})
-
-  param: (key, value) ->
-    return "Content-Disposition: form-data; name=\"#{encodeURIComponent(key)}\"\r\n\r\n#{value}\r\n"
-
-  file: (key, filename, mimetype, content) ->
-    return [
-      "Content-Disposition: form-data; name=\"#{encodeURIComponent(key)}\"; filename=\"#{encodeURIComponent(filename)}\"\r\n"
-      "Content-Transfer-Encoding: binary\r\n"
-      "Content-Type: #{mime_type}\r\n"
-      "\r\n"
-      "#{content}\r\n"
-    ].join('')
-
-  errorLog: (limit) ->
-    @errors ||= Zotero.getErrors(true).join('\n')
-
-    log = @errors + "\n\n"
-    log += @info + "\n\n" if @info
-    if limit
-      log += Zotero.Debug.get(5000, 80)
-    else
-      log += Zotero.Debug.get()
-    return log
+    request.onload = (e) ->
+      Zotero.debug("BBT.error.submit.onload: #{request.readystate}")
+      return unless request.readystate == 4
+        callback(request)
+    request.onerror = (e) ->
+      callback(request)
+    request.send(fd)
 
   init: ->
     Zotero.debug('BBT.error.init')
@@ -53,7 +36,13 @@ Zotero_BetterBibTeX_ErrorReport = new class
     Zotero.debug("BBT.error.init: here we go")
 
     Zotero.getSystemInfo((info) =>
-      @info = info
+      @errorLog = {
+        full: Zotero.getErrors(true).join('\n') + "\n\n" + info + "\n\n"
+      }
+      @errorLog.truncated = @errorLog.full
+      @errorLog.full += Zotero.Debug.get().slice(-1 * (@form.maxSize - @errorLog.full.length))
+      @errorLog.truncated += Zotero.Debug.get(5000, 80)
+      Zotero.Debug.clear() # because calling 'get' with a line limit messes up the log
 
       if document.getElementById('zotero-failure-message').hasChildNodes()
         textNode = document.getElementById('zotero-failure-message').firstChild
@@ -67,7 +56,7 @@ Zotero_BetterBibTeX_ErrorReport = new class
         document.getElementById('zotero-references').value = params.references.substring(0, 5000)
         Zotero.debug("BBT.error.init: references set")
 
-      document.getElementById('zotero-error-message').value = @errorLog(true)
+      document.getElementById('zotero-error-message').value = @errorLog.truncated
       Zotero.debug("BBT.error.init: error log set")
 
       continueButton.disabled = false
@@ -96,7 +85,7 @@ Zotero_BetterBibTeX_ErrorReport = new class
       when !request || !request.status || request.status > 1000
         ps.alert(null, Zotero.getString('general.error'), Zotero.getString('errorReport.noNetworkConnection') + ': ' + request?.status)
       when request.status != parseInt(@form.fields.success_action_status)
-        ps.alert(null, Zotero.getString('general.error'), Zotero.getString('errorReport.invalidResponseRepository'))
+        ps.alert(null, Zotero.getString('general.error'), Zotero.getString('errorReport.invalidResponseRepository') + ': ' + request.status + ': ' + request.responseText)
       else
         return true
 
@@ -111,7 +100,7 @@ Zotero_BetterBibTeX_ErrorReport = new class
 
     params = window.arguments[0].wrappedJSObject
 
-    @submit('errorlog.txt', @errorLog(), (request) =>
+    @submit('errorlog.txt', @errorLog.full, (request) =>
       Zotero.debug("BBT.error.send done: errorlog.txt")
       return unless @verify(request)
 

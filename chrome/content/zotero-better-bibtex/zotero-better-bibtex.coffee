@@ -86,16 +86,16 @@ Zotero.BetterBibTeX.flash = (title, body) ->
   pw.startCloseTimer(8000)
 
 Zotero.BetterBibTeX.reportErrors = (includeReferences) ->
-  pane = Zotero.getActiveZoteroPane()
   data = {}
 
   switch includeReferences
     when 'collection'
+      pane = Zotero.getActiveZoteroPane()
       collectionsView = pane?.collectionsView
       itemGroup = collectionsView?._getItemAtRow(collectionsView.selection?.currentIndex)
       switch itemGroup?.type
         when 'collection'
-          weferences = {data: true, collection: collectionsView.getSelectedCollection() }
+          data = {data: true, collection: collectionsView.getSelectedCollection() }
         when 'library'
           data = { data: true }
         when 'group'
@@ -105,7 +105,7 @@ Zotero.BetterBibTeX.reportErrors = (includeReferences) ->
       data = { data: true, items: pane?.getSelectedItems() }
 
   if data.data
-    @_translate(translator, data, { exportNotes: true, exportFileData: false }, (result) ->
+    @_translate(@translators.BetterBibTeXJSON.translatorID, data, { exportNotes: true, exportFileData: false }, (result) ->
       params = {wrappedJSObject: {references: result}}
       ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
       ww.openWindow(null, 'chrome://zotero-better-bibtex/content/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', params)
