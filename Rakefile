@@ -246,7 +246,7 @@ file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['
   }
 end
 
-file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'] do |t|
+file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'].compact do |t|
   algorithm = 'AWS4-HMAC-SHA256'
   service = 's3'
   requestType = 'aws4_request'
@@ -257,7 +257,7 @@ file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'] do |t
   
   header = nil
   data = nil
-  CSV.foreach(t.source) do |row|
+  CSV.foreach(ENV['ZOTPLUSAWSCREDENTIALS']) do |row|
     if header.nil?
       header = row.collect{|c| c.strip.gsub(/\s/, '') }
     else

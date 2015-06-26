@@ -1,5 +1,5 @@
 {
-  "action": "https://zotplus-964ec2b7-379e-49a4-9c8a-edcb20db343f.s3-eu-central-1.amazonaws.com",
+  "action": "http://zotplus-964ec2b7-379e-49a4-9c8a-edcb20db343f.s3-eu-central-1.amazonaws.com",
   "fields": {
     "key": "${filename}",
     "Content-Type": "text/plain",

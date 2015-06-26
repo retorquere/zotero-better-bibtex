@@ -1,10 +1,12 @@
+Components.utils.importGlobalProperties(['Blob'])
+
 Zotero_BetterBibTeX_ErrorReport = new class
   constructor: ->
     @form = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/logs/s3.json"))
     Zotero.debug("BBT.error.form: #{JSON.stringify(@form)}")
 
   submit: (filename, data, callback) ->
-    Zotero.debug("BBT.error.submit(#{filename})")
+    Zotero.debug("BBT.error.submit(#{filename}) (#{data.length}) to #{@form.action}")
     try
       fd = new FormData()
       for own name, value of @form.fields
@@ -82,13 +84,13 @@ Zotero_BetterBibTeX_ErrorReport = new class
 
     switch
       when !request || !request.status || request.status > 1000
-        ps.alert(null, Zotero.getString('general.error'), Zotero.getString('errorReport.noNetworkConnection'))
+        ps.alert(null, Zotero.getString('general.error'), Zotero.getString('errorReport.noNetworkConnection') + ': ' + request?.status)
       when request.status != parseInt(@form.fields.success_action_status)
         ps.alert(null, Zotero.getString('general.error'), Zotero.getString('errorReport.invalidResponseRepository'))
       else
         return true
 
-    wizard.rewind()
+    wizard.rewind() if wizard?.rewind
     return false
 
   sendErrorReport: ->
