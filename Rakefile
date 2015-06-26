@@ -151,7 +151,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
 CLEAN.include('chrome/content/zotero-better-bibtex/release.js')
 CLEAN.include('tmp/**/*')
-CLEAN.include('resource/*/*.json')
+CLEAN.include('resource/translators/*.json')
 CLEAN.include('resource/*/*.js.map')
 CLEAN.include('.depend.mf')
 CLEAN.include('resource/translators/latex_unicode_mapping.coffee')
