@@ -167,7 +167,7 @@ BetterBibTeXAutoExportPref =
       when id == 'library' then Zotero.Libraries.getName()
       when m = /^library:([0-9]+)$/.exec(id) then Zotero.Libraries.getName(m[1])
       when m = /^search:([0-9]+)$/.exec(id) then Zotero.Searches.get(m[1])?.name
-      when full then collectionPath(id)
+      when full then @collectionPath(id)
       else Zotero.Collections.get(id)?.name
     return name || id
 

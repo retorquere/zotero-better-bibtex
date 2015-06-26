@@ -85,28 +85,6 @@ Zotero.BetterBibTeX.flash = (title, body) ->
   pw.show()
   pw.startCloseTimer(8000)
 
-Zotero.BetterBibTeX.reportErrors = (details) ->
-  pane = Zotero.getActiveZoteroPane()
-  data = {}
-  switch details
-    when 'collection'
-      collectionsView = pane?.collectionsView
-      itemGroup = collectionsView?._getItemAtRow(collectionsView.selection?.currentIndex)
-      switch itemGroup?.type
-        when 'collection'
-          data = { data: true, collection: collectionsView.getSelectedCollection() }
-        when 'library'
-          data = { data: true }
-        when 'group'
-          data = { data: true, collection: Zotero.Groups.get(collectionsView.getSelectedLibraryID()) }
-
-    when 'items'
-      data = { data: true, items: pane?.getSelectedItems() }
-
-  io = {wrappedJSObject: data}
-  ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
-  ww.openWindow(null, 'chrome://zotero-better-bibtex/content/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', io)
-
 Zotero.BetterBibTeX.pref = {}
 
 Zotero.BetterBibTeX.pref.prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.zotero.translators.better-bibtex.')

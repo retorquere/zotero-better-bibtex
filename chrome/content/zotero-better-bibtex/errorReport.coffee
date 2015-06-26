@@ -1,5 +1,3 @@
-Components.utils.importGlobalProperties(['Blob'])
-
 Zotero_BetterBibTeX_ErrorReport = new class
   constructor: ->
     @form = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/logs/s3.json"))
@@ -7,64 +5,83 @@ Zotero_BetterBibTeX_ErrorReport = new class
 
   submit: (filename, data, callback) ->
     Zotero.debug("BBT.error.submit(#{filename}) (#{data.length}) to #{@form.action}")
-    try
-      fd = new FormData()
-      for own name, value of @form.fields
-        fd.append(name, value)
 
-      data = new Blob([data], { type: 'text/plain'})
-      fd.append('file', data, "#{@key}/#{filename}")
+    params = []
+    for own k, v of @form.fields
+      params.push(@param(k, v))
 
-      request = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance()
-      request.open('POST', @form.action, true)
+    params.push(@file('file', filename, 'text/plain', data))
 
-      request.onreadystatechange = (e) ->
-        Zotero.debug("BBT.error.submit.onreadystatechange: #{request.readystate}")
-        return unless request.readystate == 4
-        callback(request)
-      request.onerror = (e) ->
-        callback(request)
+    boundary = Zotero.Utilities.randomString(32)
+    body = ("--#{boundary}\r\n#{p}" for p in params).join('') + "--#{boundary}--\r\n"
 
-      request.setRequestHeader('Content-Type', 'multipart/form-data')
-      request.send(fd)
+    Zotero.HTTP.doPost(@form.action, body, callback, {'Content-type': "multipart/form-data; boundary=#{boundary}"})
 
-    catch err
-      Zotero.debug("BBT.error.submit: #{err.message}")
-      Zotero.debug("BBT.error.submit: #{err.stack}")
-      callback(false)
+  param: (key, value) ->
+    return "Content-Disposition: form-data; name=\"#{encodeURIComponent(key)}\"\r\n\r\n#{value}\r\n"
+
+  file: (key, filename, mimetype, content) ->
+    return [
+      "Content-Disposition: form-data; name=\"#{encodeURIComponent(key)}\"; filename=\"#{encodeURIComponent(filename)}\"\r\n"
+      "Content-Transfer-Encoding: binary\r\n"
+      "Content-Type: #{mime_type}\r\n"
+      "\r\n"
+      "#{content}\r\n"
+    ].join('')
 
   init: ->
+    #pane = Zotero.getActiveZoteroPane()
+    #collectionsView = pane?.collectionsView
+    #switch
+    #  when (itemGroup = collectionsView?._getItemAtRow(collectionsView.selection?.currentIndex))
+    #  switch itemGroup?.type
+    #    when 'collection'
+    #      data = { data: true, collection: collectionsView.getSelectedCollection() }
+    #    when 'library'
+    #      data = { data: true }
+    #    when 'group'
+    #      data = { data: true, collection: Zotero.Groups.get(collectionsView.getSelectedLibraryID()) }
+    #
+    #when 'items'
+    #  data = { data: true, items: pane?.getSelectedItems() }
+    @references = null
+
     Zotero.debug('BBT.error.init')
-    date = (new Date()).toISOString().replace(/T.*/, '').replace(/-/g, '')
-    @key = "#{date}-#{Zotero.Utilities.generateObjectKey()}"
+    @key = "#{Zotero.Utilities.generateObjectKey()}-#{Zotero.Utilities.generateObjectKey()}"
+    Zotero.debug("BBT.error.init: #{@key}")
 
     wizard = document.getElementById('zotero-error-report')
     continueButton = wizard.getButton('next')
     continueButton.disabled = true
     document.getElementById('zotero-references').hidden = true
 
-    Zotero.getSystemInfo((info) ->
+    Zotero.debug("BBT.error.init: here we go")
+
+    Zotero.getSystemInfo((info) =>
       if document.getElementById('zotero-failure-message').hasChildNodes()
         textNode = document.getElementById('zotero-failure-message').firstChild
         document.getElementById('zotero-failure-message').removeChild(textNode)
       document.getElementById('zotero-failure-message').appendChild(document.createTextNode(Zotero.getString('errorReport.followingReportWillBeSubmitted')))
+      Zotero.debug("BBT.error.init: message set")
 
-      details = window.arguments[0].wrappedJSObject
-      if details.data
+      if @references
         translator = Zotero.BetterBibTeX.getTranslator('BetterBibTeX JSON')
         references = Zotero.BetterBibTeX.translate(translator, details, { exportNotes: true, exportFileData: false })
         document.getElementById('zotero-references').hidden = false
         document.getElementById('zotero-references').value = references
+        Zotero.debug("BBT.error.init: references set")
 
-      errorLog = Zotero.File.getContentsFromURL('zotero://debug/').trim()
+      errorLog = Zotero.Debug.get() + ''
       errorLog = Zotero.getErrors(true).join('\n').trim() if errorLog == ''
       errorLog = Zotero.getString('errorReport.noErrorsLogged', Zotero.appName) if errorLog == ''
       document.getElementById('zotero-error-message').value = errorLog + "\n\n" + info
+      Zotero.debug("BBT.error.init: error log set")
 
       continueButton.disabled = false
       continueButton.focus()
       str = Zotero.getString('errorReport.advanceMessage', continueButton.getAttribute('label')).replace('Zotero', 'ZotPlus')
       document.getElementById('zotero-advance-message').setAttribute('value', str)
+      Zotero.debug("BBT.error.init: proceed")
     )
 
   finished: ->
@@ -99,13 +116,11 @@ Zotero_BetterBibTeX_ErrorReport = new class
     continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
-    details = window.arguments[0].wrappedJSObject
-
     @submit('errorlog.txt', document.getElementById('zotero-error-message').value, (request) =>
       Zotero.debug("BBT.error.send done: errorlog.txt")
       return unless @verify(request)
 
-      return @finished() unless details.data
+      return @finished() unless @references
 
       @submit('references.json', document.getElementById('zotero-references').value, (request) =>
         Zotero.debug("BBT.error.send done: references.json")

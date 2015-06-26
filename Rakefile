@@ -288,7 +288,7 @@ file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'].compa
   signingKey = ['AWS4' + creds.SecretAccessKey, shortDate, region, service, requestType].inject{|key, data| OpenSSL::HMAC.digest('sha256', key, data) } 
   
   form = {
-    action: "https://#{bucket}.#{service}-#{region}.amazonaws.com",
+    action: "https://#{bucket}.#{service}-#{region}.amazonaws.com/",
     fields: {
       key: '${filename}',
       'Content-Type': 'text/plain',
