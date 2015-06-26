@@ -447,6 +447,19 @@ Zotero.BetterBibTeX.init = ->
   @loadTranslators()
   @extensionConflicts()
 
+  # monkey-patch Zotero.Server.DataListener.prototype._headerFinished for async handling of web-translation requests
+  Zotero.Server.DataListener::_headerFinished = ((original) ->
+    return ->
+      header = @header.split(/\r?\n/)
+
+      req = header[0]?.exec(/^([A-Z]+) (.*)/)
+
+      return original.apply(@, arguments) unless req?[1]?.indexOf('/better-bibtex/') == 0
+
+      return original.apply(@, arguments)
+    )(Zotero.Server.DataListener::_headerFinished)
+
+
   # monkey-patch Zotero.Search.prototype.save to trigger auto-exports
   Zotero.Search::save = ((original) ->
     return (fixGaps) ->
