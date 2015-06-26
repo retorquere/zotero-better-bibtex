@@ -55,6 +55,7 @@ Zotero.BetterBibTeX.log.array = (a) ->
 
 Zotero.BetterBibTeX.extensionConflicts = ->
   AddonManager.getAddonByID('{359f0058-a6ca-443e-8dd8-09868141bebc}', (recoll) ->
+    return unless recoll
     version = recoll.version.split('.')
     return if parseInt(version[0]) > 1
     return if parseInt(version[1]) > 2

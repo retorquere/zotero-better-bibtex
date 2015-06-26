@@ -1,5 +1,41 @@
 Zotero_BetterBibTeX_ErrorReport = new class
+  constructor: ->
+    @form = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/logs/s3.json"))
+    Zotero.debug("BBT.error.form: #{JSON.stringify(@form)}")
+
+  submit: (filename, data, callback) ->
+    Zotero.debug("BBT.error.submit(#{filename})")
+    try
+      fd = new FormData()
+      for own name, value of @form.fields
+        fd.append(name, value)
+
+      data = new Blob([data], { type: 'text/plain'})
+      fd.append('file', data, "#{@key}/#{filename}")
+
+      request = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance()
+      request.open('POST', @form.action, true)
+
+      request.onreadystatechange = (e) ->
+        Zotero.debug("BBT.error.submit.onreadystatechange: #{request.readystate}")
+        return unless request.readystate == 4
+        callback(request)
+      request.onerror = (e) ->
+        callback(request)
+
+      request.setRequestHeader('Content-Type', 'multipart/form-data')
+      request.send(fd)
+
+    catch err
+      Zotero.debug("BBT.error.submit: #{err.message}")
+      Zotero.debug("BBT.error.submit: #{err.stack}")
+      callback(false)
+
   init: ->
+    Zotero.debug('BBT.error.init')
+    date = (new Date()).toISOString().replace(/T.*/, '').replace(/-/g, '')
+    @key = "#{date}-#{Zotero.Utilities.generateObjectKey()}"
+
     wizard = document.getElementById('zotero-error-report')
     continueButton = wizard.getButton('next')
     continueButton.disabled = true
@@ -29,55 +65,50 @@ Zotero_BetterBibTeX_ErrorReport = new class
       document.getElementById('zotero-advance-message').setAttribute('value', str)
     )
 
+  finished: ->
+    Zotero.debug("BBT.error.finished")
+    wizard = document.getElementById('zotero-error-report')
+    wizard.advance()
+    wizard.getButton('cancel').disabled = true
+    wizard.canRewind = false
+
+    document.getElementById('zotero-report-id').setAttribute('value', @key)
+    document.getElementById('zotero-report-result').hidden = false
+
+  verify: (request) ->
+    Zotero.debug("BBT.error.verify: #{request.status}")
+    wizard = document.getElementById('zotero-error-report')
+    ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
+
+    switch
+      when !request || !request.status || request.status > 1000
+        ps.alert(null, Zotero.getString('general.error'), Zotero.getString('errorReport.noNetworkConnection'))
+      when request.status != parseInt(@form.fields.success_action_status)
+        ps.alert(null, Zotero.getString('general.error'), Zotero.getString('errorReport.invalidResponseRepository'))
+      else
+        return true
+
+    wizard.rewind()
+    return false
+
   sendErrorReport: ->
+    Zotero.debug("BBT.error.send")
     wizard = document.getElementById('zotero-error-report')
     continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
-    errorData = {
-      public: false
-      files: {'errorlog.txt': {content: document.getElementById('zotero-error-message').value } }
-    }
-
     details = window.arguments[0].wrappedJSObject
-    errorData.files['references.json'] = {content: document.getElementById('zotero-references').value } if details.data
 
-    Zotero.HTTP.doPost('https://api.github.com/gists', JSON.stringify(errorData), (xmlhttp) ->
-      wizard = document.getElementById('zotero-error-report')
-      return  unless wizard
+    @submit('errorlog.txt', document.getElementById('zotero-error-message').value, (request) =>
+      Zotero.debug("BBT.error.send done: errorlog.txt")
+      return unless @verify(request)
 
-      ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
+      return @finished() unless details.data
 
-      if !xmlhttp.responseText
-        try
-          if xmlhttp.status > 1000
-            ps.alert(null, Zotero.getString('general.error'), Zotero.getString('errorReport.noNetworkConnection'))
-          else
-            ps.alert(null, Zotero.getString('general.error'), Zotero.getString('errorReport.invalidResponseRepository'))
-        catch e
-          ps.alert(null, Zotero.getString('general.error'), Zotero.getString('errorReport.repoCannotBeContacted'))
-        wizard.rewind()
-        return
+      @submit('references.json', document.getElementById('zotero-references').value, (request) =>
+        Zotero.debug("BBT.error.send done: references.json")
+        return unless @verify(request)
 
-      try
-        report = JSON.parse(xmlhttp.responseText).html_url
-      catch
-        ps.alert(null, Zotero.getString('general.error'), Zotero.getString('errorReport.invalidResponseRepository'))
-        wizard.rewind()
-        return
-
-      encrypt = new JSEncrypt()
-      encrypt.setPublicKey(Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/error-reporting.pub.pem'))
-      encrypted = encrypt.encrypt(report)
-      _public = "http://zotplus.github.io/report.html##{encrypted}"
-      _public = Zotero.File.getContentsFromURL("http://is.gd/create.php?format=simple&url=#{encodeURIComponent(_public)}")
-      _private = Zotero.File.getContentsFromURL("http://is.gd/create.php?format=simple&url=#{encodeURIComponent(report)}")
-
-      wizard.advance()
-      wizard.getButton('cancel').disabled = true
-      wizard.canRewind = false
-
-      document.getElementById('zotero-report-id-public').setAttribute('value', _public)
-      document.getElementById('zotero-report-id-private').setAttribute('value', _private)
-      document.getElementById('zotero-report-result').hidden = false
+        @finished()
+      )
     )

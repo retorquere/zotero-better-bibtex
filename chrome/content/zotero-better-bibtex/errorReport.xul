@@ -30,10 +30,7 @@
 		<description>&zotero.errorReport.submitted;</description>
 		<description id="zotero-report-result" hidden="true">
       <description>
-			  &zotero.better-bibtex.errorReport.reportID.public; <textbox id="zotero-report-id-public" class="plain" readonly="true"/>
-      </description>
-      <description>
-			  &zotero.better-bibtex.errorReport.reportID.private; <textbox id="zotero-report-id-private" class="plain" readonly="true"/>
+			  &zotero.better-bibtex.errorReport.reportID; <textbox id="zotero-report-id" class="plain" readonly="true"/>
       </description>
 		</description>
 		<description>&zotero.better-bibtex.errorReport.postToGitHub;</description>
@@ -43,6 +40,5 @@
   <!-- Include the main extension logic -->
   <script src="chrome://zotero/content/include.js"/>
   <script src="chrome://zotero-better-bibtex/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/jsencrypt.min.js"/>
   <script src="chrome://zotero-better-bibtex/content/errorReport.js"/><!-- needs to be included every time anew to bind windows and document -->
 </wizard>
