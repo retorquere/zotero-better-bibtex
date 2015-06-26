@@ -442,7 +442,7 @@ Zotero.BetterBibTeX.init = ->
   for own name, endpoint of @endpoints
     url = "/better-bibtex/#{name}"
     ep = Zotero.Server.Endpoints[url] = ->
-    ep.prototype = endpoint
+    ep:: = endpoint
 
   @loadTranslators()
   @extensionConflicts()
@@ -452,7 +452,7 @@ Zotero.BetterBibTeX.init = ->
     return ->
       header = @header.split(/\r?\n/)
 
-      req = header[0]?.exec(/^([A-Z]+) (.*)/)
+      req = header[0]?.match(/^([A-Z]+) (.+)/)
 
       return original.apply(@, arguments) unless req?[1]?.indexOf('/better-bibtex/') == 0
 
