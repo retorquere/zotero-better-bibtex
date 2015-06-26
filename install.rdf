@@ -11,17 +11,6 @@
 		<em:updateURL>https://zotplus.github.io/better-bibtex/update.rdf</em:updateURL>
 		<em:type>2</em:type> <!-- type=extension -->
 
-		<!-- Requires Zotero -->
-		<em:requires>
-			<Description>
-				<em:id>zotero@chnm.gmu.edu</em:id>
-				<em:name>Zotero</em:name>
-				<em:homepageURL>http://www.zotero.org</em:homepageURL>
-				<em:minVersion>3.0</em:minVersion>
-				<em:maxVersion>4.0.*</em:maxVersion>
-			</Description>
-		</em:requires>
-    
 		<!-- Requires Firefox or Zotero Standalone -->
 		<em:targetApplication>
 			<Description>
