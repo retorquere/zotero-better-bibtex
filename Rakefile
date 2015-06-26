@@ -23,7 +23,6 @@ require 'selenium-webdriver'
 require 'rchardet'
 require 'csv'
 require 'base64'
-require 'digest/sha1'
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -109,7 +108,6 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   stem = File.basename(tr, File.extname(tr))
   %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
 }.flatten + [
-  'chrome/content/zotero-better-bibtex/sha256.js',
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/test/tests.js',
@@ -196,7 +194,6 @@ DOWNLOADS = {
     'test/chai.js'      => 'http://chaijs.com/chai.js',
     'test/yadda.js'     => 'https://raw.githubusercontent.com/acuminous/yadda/master/dist/yadda-0.11.5.js',
     'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
-    #'sha256.js'         => 'https://raw.githubusercontent.com/chrisveness/crypto/master/sha256.js'
   },
   translators: {
     #'unicode.xml'         => 'http://www.w3.org/2003/entities/2007xml/unicode.xml',
@@ -217,24 +214,6 @@ DOWNLOADS[:translators].each_pair{|file, url|
     ZotPlus::RakeHelper.download(url, t.name)
   end
 }
-
-file 'chrome/content/zotero-better-bibtex/sha256.js' => 'Rakefile' do |t|
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/chrisveness/crypto/master/sha256.js', t.name)
-  breaks = 0
-  code = IO.readlines(t.name).collect{|line|
-    line.sub!(/\r$/, '')
-    if line.strip.gsub(/\s/, '') == 'msg=msg.utf8Encode();'
-      "    msg = unescape( encodeURIComponent( msg ) );\n"
-    else
-      line
-    end
-  }.reject{|line|
-    breaks += 1 if line.strip.gsub(/\s/, '') =~ /^\/\*-*\*\/$/
-    breaks > 3
-  }
-
-  open(t.name, 'w'){|f| f.write(code.join('')) }
-end
 
 file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['resource/tests/*.feature'] do |t|
   features = t.sources.collect{|f| f.split('/')}.select{|f| f[0] == 'resource'}.collect{|f|
