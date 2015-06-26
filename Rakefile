@@ -115,7 +115,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/test/tests.js',
   'chrome.manifest',
   'install.rdf',
-  'resource/error-reporting.pub.pem',
+  'resource/logs/s3.json',
   'resource/translators/htmlparser.js',
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
@@ -246,10 +246,18 @@ file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['
   }
 end
 
-file 'resource/logs/policy.json' => ['resource/logs/policy.yml', ENV['ZPAWS3'], 'Rakefile'] do |t|
+file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'] do |t|
+  algorithm = 'AWS4-HMAC-SHA256'
+  service = 's3'
+  requestType = 'aws4_request'
+  successStatus = '201'
+  bucket = 'zotplus-964ec2b7-379e-49a4-9c8a-edcb20db343f'
+  region = 'eu-central-1'
+  acl = 'private'
+  
   header = nil
   data = nil
-  CSV.foreach(t.sources[1]) do |row|
+  CSV.foreach(t.source) do |row|
     if header.nil?
       header = row.collect{|c| c.strip.gsub(/\s/, '') }
     else
@@ -257,65 +265,68 @@ file 'resource/logs/policy.json' => ['resource/logs/policy.yml', ENV['ZPAWS3'], 
     end
   end
   creds = OpenStruct.new(Hash[*(header.zip(data).flatten)])
-
-  policy = YAML.load_file(t.sources[0])
-  dateStamp = Time.now.strftime('%Y%m%d')
-  region = policy.delete('region')
-  service = policy.delete('service')
-  policy['conditions'] << {'x-amz-date' => "#{dateStamp}T000000Z"}
-  policy['conditions'] << {'x-amz-credential' => "#{creds.AccessKeyId}/#{dateStamp}/#{region}/#{service}/aws4_request"}
-  open(t.name, 'w'){|f| f.write(JSON.pretty_generate(policy)) }
-end
-
-file 'resource/logs/s3.json' => ['resource/logs/policy.json', ENV['ZPAWS3'], 'Rakefile'] do |t|
-  header = nil
-  data = nil
-  CSV.foreach(t.sources[1]) do |row|
-    if header.nil?
-      header = row.collect{|c| c.gsub(/\s/, '') }
-    else
-      data = row
-    end
-  end
-  creds = OpenStruct.new(Hash[*(header.zip(data).flatten)])
-
-  policy = JSON.parse(open(t.sources[0]).read)
-
-  s3 = {}
-  %w{Content-Type acl success_action_redirect bucket x-amz-date x-amz-credential}.each{|eq|
-    s3[eq] = policy['conditions'].detect{|c| c.is_a?(Hash) && c[eq] }[eq]
+  
+  date = Time.now.strftime('%Y%m%dT%H%M%SZ')
+  shortDate = date.sub(/T.*/, '')
+  credentials = [ creds.AccessKeyId, shortDate, region, service, requestType ].join('/')
+  
+  policy = Base64.encode64({
+    'expiration' => (Time.now + (60*60*24*365*30)).strftime('%Y-%m-%dT%H:%M:%SZ'), # 30 years from now
+    'conditions' => [
+      {'bucket' => bucket},
+      {'acl' => acl},
+      ['starts-with', '$key', ''],
+      ['starts-with', '$Content-Type', ''],
+      {'success_action_status' => successStatus},
+      {'x-amz-credential' => credentials},
+      {'x-amz-algorithm' => algorithm},
+      {'x-amz-date' => date},
+      ['content-length-range', 0, 1048576],
+    ]
+  }.to_json).gsub("\n","")
+  
+  signingKey = ['AWS4' + creds.SecretAccessKey, shortDate, region, service, requestType].inject{|key, data| OpenSSL::HMAC.digest('sha256', key, data) } 
+  
+  form = {
+    action: "https://#{bucket}.#{service}-#{region}.amazonaws.com",
+    fields: {
+      key: '${filename}',
+      'Content-Type': 'text/plain',
+      acl: acl,
+      success_action_status: successStatus,
+      policy: policy,
+      'x-amz-algorithm': algorithm,
+      'x-amz-credential': credentials,
+      'x-amz-date': date,
+      'x-amz-signature': OpenSSL::HMAC.hexdigest('sha256', signingKey, policy)
+    }
   }
-  s3['x-amz-meta-bucket'] = s3.delete('bucket')
-  s3['key'] = policy['conditions'].detect{|c| c.is_a?(Array) && c[0,2] = ['starts-with', '$key']}[2] + '${filename}'
 
-  dateStamp, region, service = s3['x-amz-credential'].split('/')[1,3]
-
-  policy = Base64.encode64(open(t.sources[0]).read).gsub("\n","")
-
-  kDate    = OpenSSL::HMAC.digest('sha256', "AWS4" + creds.SecretAccessKey, dateStamp)
-  kRegion  = OpenSSL::HMAC.digest('sha256', kDate, region)
-  kService = OpenSSL::HMAC.digest('sha256', kRegion, service)
-  kSigning = OpenSSL::HMAC.digest('sha256', kService, 'aws4_request')
-
-  signature = Base64.encode64(OpenSSL::HMAC.hexdigest('sha256', kSigning, policy)).gsub("\n","").gsub(/=+$/, '')
-
-  s3['policy'] = policy
-  s3['x-amz-signature'] = signature
-  s3['x-amz-algorithm'] = 'AWS4-HMAC-SHA256'
-
-  open(t.name, 'w'){|f| f.write(JSON.pretty_generate(s3)) }
+  open(t.name, 'w'){|f| f.write(JSON.pretty_generate(form)) }
 end
 
 file 'resource/logs/index.html' => 'resource/logs/s3.json' do |t|
-  html = Nokogiri::HTML(open(t.name))
-  data = JSON.parse(open(t.source).read)
+  form = OpenStruct.new(JSON.parse(open(t.source).read))
 
-  html.at('//form')['action'] = "http://#{data['x-amz-meta-bucket']}.s3.amazonaws.com/"
-  data.each_pair{|k, v|
-    next if k =~ /^x-amz-meta/
-    html.at("//input[@name='#{k}']")['value'] = v
-  }
-  open(t.name, 'w'){|f| f.write(html.to_xhtml) }
+  builder = Nokogiri::HTML::Builder.new do |doc|
+    doc.html {
+      doc.head {
+        doc.meta(charset: 'utf-8')
+        doc.title { doc.text 'Upload' }
+      }
+      doc.body {
+        doc.form(action: form.action, method: 'POST', enctype: "multipart/form-data") {
+          form.fields.each_pair{|name, value|
+            doc.input(type: 'hidden', name: name, value: value)
+          }
+          doc.input(type: 'file', name: 'file')
+          doc.input(type: 'submit', value: 'Save')
+        }
+      }
+    }
+  end
+
+  open(t.name, 'w'){|f| f.write(builder.to_html) }
 end
 
 file 'resource/abbreviations/CAplus.json' => 'Rakefile' do |t|
