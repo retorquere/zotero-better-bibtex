@@ -447,14 +447,13 @@ Zotero.BetterBibTeX.init = ->
   @loadTranslators()
   @extensionConflicts()
 
-  # monkey-patch Zotero.Server.DataListener.prototype._headerFinished for async handling of web-translation requests
-  Zotero.Server.DataListener::_headerFinished = ((original) ->
-    return ->
+  # monkey-patch Zotero.Server.DataListener.prototype._requestFinished for async handling of web api translation requests
+  Zotero.Server.DataListener::_requestFinished = ((original) ->
+    return (method, postData) ->
       try
-        return if Zotero.BetterBibTeX.DataListener_headerFinished.apply(@, arguments)
+        return if Zotero.BetterBibTeX.DataListener_requestFinished.apply(@, arguments)
       return original.apply(@, arguments)
-    )(Zotero.Server.DataListener::_headerFinished)
-
+    )(Zotero.Server.DataListener::_processEndpoint)
 
   # monkey-patch Zotero.Search.prototype.save to trigger auto-exports
   Zotero.Search::save = ((original) ->
@@ -644,8 +643,11 @@ Zotero.BetterBibTeX.init = ->
       loader.loadSubScript("chrome://zotero-better-bibtex/content/test/include.js")
       @Test.run(tests.trim().split(/\s+/))
 
+Zotero.BetterBibTeX.DataListener_processEndpoint = (method, postData) ->
+
 Zotero.BetterBibTeX.DataListener_headerFinished = ->
   return false unless Zotero.isServer
+  return false if @origin in ['https://www.zotero.org', 'http://www.zotero.org']
 
   header = @header.split(/\r?\n/)
 
@@ -661,7 +663,6 @@ Zotero.BetterBibTeX.DataListener_headerFinished = ->
   endpoint = Zotero.Server.Endpoints[path]
   return false unless endpoint?.async
   return false unless method in (endpoint.supportedMethods || [])
-  return false if @origin in ['https://www.zotero.org', 'http://www.zotero.org'] && !endpoint.permitBookmarklet
 
   headers = {}
   for line in header
@@ -669,6 +670,8 @@ Zotero.BetterBibTeX.DataListener_headerFinished = ->
     continue unless line.length == 2
     headers[line[0].toLowerCase()] = line[1]
   contentType = headers['content-type'].replace(/\s*;.*/, '')
+
+  return false if method == 'POST' && !headers['content-length']
 
   return false
 
