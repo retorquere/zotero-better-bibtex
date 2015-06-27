@@ -143,4 +143,4 @@ Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, library, displayOptions}
   Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items}, displayOptions, (result) ->
     deferred.resolve(result)
   )
-  return deferred
+  return deferred.promise

@@ -444,10 +444,21 @@ Zotero.BetterBibTeX.init = ->
   @loadTranslators()
   @extensionConflicts()
 
+  # monkey-patch Zotero.Server.DataListener.prototype._generateResponse for async handling
+  Zotero.Server.DataListener::_generateResponse = ((original) ->
+    return (status, contentType, promise) ->
+      try
+        Zotero.debug("Zotero.Server.DataListener::_generateResponse: handling #{typeof promise} promise? #{typeof promise?.then}")
+        return promise.then((body) => original.apply(@, [status, contentType, body])) if typeof promise?.then == 'function'
+
+      return original.apply(@, arguments)
+    )(Zotero.Server.DataListener::_generateResponse)
+
   # monkey-patch Zotero.Server.DataListener.prototype._requestFinished for async handling of web api translation requests
   Zotero.Server.DataListener::_requestFinished = ((original) ->
     return (promise) ->
       try
+        Zotero.debug("Zotero.Server.DataListener::_requestFinished: handling #{typeof promise} promise? #{typeof promise?.then}")
         if typeof promise?.then == 'function'
           if @_responseSent
             Zotero.debug("Request already finished; not sending another response")
@@ -455,6 +466,8 @@ Zotero.BetterBibTeX.init = ->
           @_responseSent = true
           promise.then((response) => original.apply(@, [response]))
           return
+      catch err
+        Zotero.debug("Zotero.Server.DataListener::_requestFinished: error handling promise: #{err.message}")
 
       return original.apply(@, arguments)
     )(Zotero.Server.DataListener::_requestFinished)

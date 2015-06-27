@@ -61,7 +61,9 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator, displayOpt
   Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), null, displayOptions || {}, (result) ->
     deferred.resolve(result)
   )
-  return deferred
+
+  Zotero.debug('exportToString: returning promise')
+  return deferred.promise
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, displayOptions, filename) ->
   translation = new Zotero.Translate.Export()
@@ -83,7 +85,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, displayOptio
   )
   translation.translate()
 
-  return deferred
+  return deferred.promise
 
 Zotero.BetterBibTeX.DebugBridge.methods.library = ->
   translator = Zotero.BetterBibTeX.getTranslator('BetterBibTeX JSON')
@@ -92,7 +94,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.library = ->
   Zotero.BetterBibTeX.translate(translator, null, { exportNotes: true, exportFileData: false }, (result) ->
     deferred.resolve(JSON.parse(result))
   )
-  return deferred
+  return deferred.promise
 
 Zotero.BetterBibTeX.DebugBridge.methods.setPreference = (name, value) -> Zotero.Prefs.set(name, value)
 

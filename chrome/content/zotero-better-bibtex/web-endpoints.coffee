@@ -42,7 +42,7 @@ Zotero.BetterBibTeX.endpoints.collection.init = (url, data, sendResponseCallback
     Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {collection: col}, Zotero.BetterBibTeX.displayOptions(url), (result) ->
       deferred.resolve(result)
     )
-    sendResponseCallback(200, 'text/plain', deferred)
+    sendResponseCallback(200, 'text/plain', deferred.promise)
 
   catch err
     Zotero.BetterBibTeX.log("Could not export bibliography '#{collection}", err)
@@ -82,7 +82,7 @@ Zotero.BetterBibTeX.endpoints.library.init = (url, data, sendResponseCallback) -
     Zotero.BetterBibTeX.translate(translator, {library: libid}, Zotero.BetterBibTeX.displayOptions(url), (result) ->
       deferred.resolve(result)
     )
-    sendResponseCallback(200, 'text/plain', deferred)
+    sendResponseCallback(200, 'text/plain', deferred.promise)
 
   catch err
     Zotero.BetterBibTeX.log("Could not export bibliography '#{library}'", err)
@@ -106,7 +106,7 @@ Zotero.BetterBibTeX.endpoints.selected.init = (url, data, sendResponseCallback) 
   Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: items}, Zotero.BetterBibTeX.displayOptions(url), (result) ->
     deferred.resolve(result)
   )
-  sendResponseCallback(200, 'text/plain', deferred)
+  sendResponseCallback(200, 'text/plain', deferred.promise)
 
 Zotero.BetterBibTeX.endpoints.schomd = { supportedMethods: ['POST'] }
 Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
