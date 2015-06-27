@@ -119,7 +119,7 @@ Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
     switch req.method
       when 'citation', 'bibliography', 'bibtex', 'search'
         result = Zotero.BetterBibTeX.schomd[req.method].apply(Zotero.BetterBibTeX.schomd, req.params)
-        if typeof result.result?.then == 'function'
+        if typeof result?.then == 'function'
           result = result.then((result) ->
             return JSON.stringify({
               jsonrpc: (if req.jsonrpc then req.jsonrpc else undefined)
