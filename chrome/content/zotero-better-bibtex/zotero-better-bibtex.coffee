@@ -450,12 +450,8 @@ Zotero.BetterBibTeX.init = ->
   # monkey-patch Zotero.Server.DataListener.prototype._headerFinished for async handling of web-translation requests
   Zotero.Server.DataListener::_headerFinished = ((original) ->
     return ->
-      header = @header.split(/\r?\n/)
-
-      req = header[0]?.match(/^([A-Z]+) (.+)/)
-
-      return original.apply(@, arguments) unless req?[1]?.indexOf('/better-bibtex/') == 0
-
+      try
+        return if Zotero.BetterBibTeX.DataListener_headerFinished.apply(@, arguments)
       return original.apply(@, arguments)
     )(Zotero.Server.DataListener::_headerFinished)
 
@@ -647,6 +643,34 @@ Zotero.BetterBibTeX.init = ->
       loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader)
       loader.loadSubScript("chrome://zotero-better-bibtex/content/test/include.js")
       @Test.run(tests.trim().split(/\s+/))
+
+Zotero.BetterBibTeX.DataListener_headerFinished = ->
+  return false unless Zotero.isServer
+
+  header = @header.split(/\r?\n/)
+
+  req = header.shift()?.match(/^([A-Z]+) (.+)( HTTP(\/1\.[10])?)?$/)
+  return false unless req && rec[0] && req[1]
+
+  method = req[0]
+  path = req[1].replace(/[#\?].*/, '')
+  query = req[1].replace(/.*\?/, '').replace(/#.*/, '') if req[1].indexOf('?') >= 0
+  fragment = req[1].replace(/.*\#/, '') if req[1].indexOf('#') >= 0
+
+  return false if path == ''
+  endpoint = Zotero.Server.Endpoints[path]
+  return false unless endpoint?.async
+  return false unless method in (endpoint.supportedMethods || [])
+  return false if @origin in ['https://www.zotero.org', 'http://www.zotero.org'] && !endpoint.permitBookmarklet
+
+  headers = {}
+  for line in header
+    line = line.split(/:\s*/, 2)
+    continue unless line.length == 2
+    headers[line[0].toLowerCase()] = line[1]
+  contentType = headers['content-type'].replace(/\s*;.*/, '')
+
+  return false
 
 Zotero.BetterBibTeX.createFile = (paths...) ->
   f = Zotero.getZoteroDirectory()
