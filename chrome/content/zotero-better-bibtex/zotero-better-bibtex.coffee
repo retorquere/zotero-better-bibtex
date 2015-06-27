@@ -449,11 +449,18 @@ Zotero.BetterBibTeX.init = ->
 
   # monkey-patch Zotero.Server.DataListener.prototype._requestFinished for async handling of web api translation requests
   Zotero.Server.DataListener::_requestFinished = ((original) ->
-    return (method, postData) ->
+    return (response) ->
       try
-        return if Zotero.BetterBibTeX.DataListener_requestFinished.apply(@, arguments)
+        if typeof response?.then == 'function'
+          if @_responseSent
+            Zotero.debug("Request already finished; not sending another response")
+            return
+          @_responseSent = true
+          response.then((txt) -> original.apply(@, [txt]))
+          return
+
       return original.apply(@, arguments)
-    )(Zotero.Server.DataListener::_processEndpoint)
+    )(Zotero.Server.DataListener::_requestFinished)
 
   # monkey-patch Zotero.Search.prototype.save to trigger auto-exports
   Zotero.Search::save = ((original) ->
@@ -642,38 +649,6 @@ Zotero.BetterBibTeX.init = ->
       loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader)
       loader.loadSubScript("chrome://zotero-better-bibtex/content/test/include.js")
       @Test.run(tests.trim().split(/\s+/))
-
-Zotero.BetterBibTeX.DataListener_processEndpoint = (method, postData) ->
-
-Zotero.BetterBibTeX.DataListener_headerFinished = ->
-  return false unless Zotero.isServer
-  return false if @origin in ['https://www.zotero.org', 'http://www.zotero.org']
-
-  header = @header.split(/\r?\n/)
-
-  req = header.shift()?.match(/^([A-Z]+) (.+)( HTTP(\/1\.[10])?)?$/)
-  return false unless req && rec[0] && req[1]
-
-  method = req[0]
-  path = req[1].replace(/[#\?].*/, '')
-  query = req[1].replace(/.*\?/, '').replace(/#.*/, '') if req[1].indexOf('?') >= 0
-  fragment = req[1].replace(/.*\#/, '') if req[1].indexOf('#') >= 0
-
-  return false if path == ''
-  endpoint = Zotero.Server.Endpoints[path]
-  return false unless endpoint?.async
-  return false unless method in (endpoint.supportedMethods || [])
-
-  headers = {}
-  for line in header
-    line = line.split(/:\s*/, 2)
-    continue unless line.length == 2
-    headers[line[0].toLowerCase()] = line[1]
-  contentType = headers['content-type'].replace(/\s*;.*/, '')
-
-  return false if method == 'POST' && !headers['content-length']
-
-  return false
 
 Zotero.BetterBibTeX.createFile = (paths...) ->
   f = Zotero.getZoteroDirectory()
