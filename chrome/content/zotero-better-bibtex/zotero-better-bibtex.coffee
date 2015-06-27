@@ -105,7 +105,7 @@ Zotero.BetterBibTeX.reportErrors = (includeReferences) ->
       data = { data: true, items: pane?.getSelectedItems() }
 
   if data.data
-    @_translate(@translators.BetterBibTeXJSON.translatorID, data, { exportNotes: true, exportFileData: false }, (result) ->
+    @translate(@translators.BetterBibTeXJSON.translatorID, data, { exportNotes: true, exportFileData: false }, (result) ->
       params = {wrappedJSObject: {references: result}}
       ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
       ww.openWindow(null, 'chrome://zotero-better-bibtex/content/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', params)
@@ -421,8 +421,6 @@ Zotero.BetterBibTeX.init = ->
   setInterval((-> Zotero.BetterBibTeX.cache.flush(); Zotero.BetterBibTeX.keymanager.flush()), cfi * 1000 * 60)
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
-    #__exposedProps__: {keymanager: 'r', cache: 'r'}
-    #keymanager: @keymanager
     keymanager: {
       months:         @keymanager.months
       journalAbbrev:  @keymanager.journalAbbrev.bind(@keymanager)
@@ -431,7 +429,6 @@ Zotero.BetterBibTeX.init = ->
       alternates:     @keymanager.alternates.bind(@keymanager)
       cache:          @keymanager.cache.bind(@keymanager)
     }
-    #cache: @cache
     cache: {
       fetch:  @cache.fetch.bind(@cache)
       store:  @cache.store.bind(@cache)
@@ -449,14 +446,14 @@ Zotero.BetterBibTeX.init = ->
 
   # monkey-patch Zotero.Server.DataListener.prototype._requestFinished for async handling of web api translation requests
   Zotero.Server.DataListener::_requestFinished = ((original) ->
-    return (response) ->
+    return (promise) ->
       try
-        if typeof response?.then == 'function'
+        if typeof promise?.then == 'function'
           if @_responseSent
             Zotero.debug("Request already finished; not sending another response")
             return
           @_responseSent = true
-          response.then((txt) -> original.apply(@, [txt]))
+          promise.then((response) => original.apply(@, [response]))
           return
 
       return original.apply(@, arguments)
@@ -840,23 +837,7 @@ Zotero.BetterBibTeX.displayOptions = (url) ->
   return params if hasParams
   return null
 
-# TODO: move all translation to async
-Zotero.BetterBibTeX.translate = (translator, items, displayOptions) ->
-  status = {finished: false}
-
-  @_translate(translator, items, displayOptions, (result) ->
-    status.result = result
-    status.finished = true
-  )
-
-  thread = @threadManager.currentThread
-  while not status.finished
-    thread.processNextEvent(true)
-
-  return status.result if status.result || status.result == ''
-  throw 'export failed'
-
-Zotero.BetterBibTeX._translate = (translator, items, displayOptions, callback) ->
+Zotero.BetterBibTeX.translate = (translator, items, displayOptions, callback) ->
   throw 'null translator' unless translator
 
   translation = new Zotero.Translate.Export()

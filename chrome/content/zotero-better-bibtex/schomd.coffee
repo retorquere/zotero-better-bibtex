@@ -130,26 +130,17 @@ Zotero.BetterBibTeX.schomd.search = (term) ->
       )
     } for item in Zotero.Items.get(results))
 
-Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, format, library, displayOptions} = {}) ->
+Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, library, displayOptions} = {}) ->
   items = @items(keys, {library: library})
-  #Zotero.Items.get doesn't like being passed an empty array
-  items = Zotero.Items.get(items) if items.length > 0
+
+  return '' if items.length == 0
+
+  items = Zotero.Items.get(items)
   translator ||= 'betterbiblatex'
-  format ||= 'json'
   displayOptions ||= {}
 
-  if format == 'json'
-    return (
-      {
-        id: item.id
-        library: item.libraryID
-        key: item.key
-        bibtex: Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: [item]}, displayOptions)
-      } for item in items
-    )
-
-
-  # translate doesn't like being passed an empty set of items
-  return Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: items}, displayOptions) if items.length != 0
-
-  return []
+  deferred = Q.defer()
+  Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items}, displayOptions, (result) ->
+    deferred.resolve(result)
+  )
+  return deferred

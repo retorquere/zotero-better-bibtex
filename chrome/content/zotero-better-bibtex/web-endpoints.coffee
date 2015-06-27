@@ -38,8 +38,11 @@ Zotero.BetterBibTeX.endpoints.collection.init = (url, data, sendResponseCallback
     col ||= Zotero.Collections.getByLibraryAndKey(libid, key)
     throw "#{collectionkey} not found" unless col
 
-    bibtex = Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {collection: col}, Zotero.BetterBibTeX.displayOptions(url))
-    sendResponseCallback(200, 'text/plain', bibtex)
+    deferred = Q.defer()
+    Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {collection: col}, Zotero.BetterBibTeX.displayOptions(url), (result) ->
+      deferred.resolve(result)
+    )
+    sendResponseCallback(200, 'text/plain', deferred)
 
   catch err
     Zotero.BetterBibTeX.log("Could not export bibliography '#{collection}", err)
@@ -75,7 +78,11 @@ Zotero.BetterBibTeX.endpoints.library.init = (url, data, sendResponseCallback) -
       sendResponseCallback(404, 'text/plain', "Could not export bibliography '#{library}': unsupported format #{format}")
       return
 
-    sendResponseCallback(200, 'text/plain', Zotero.BetterBibTeX.translate(translator, {library: libid}, Zotero.BetterBibTeX.displayOptions(url)))
+    deferred = Q.defer()
+    Zotero.BetterBibTeX.translate(translator, {library: libid}, Zotero.BetterBibTeX.displayOptions(url), (result) ->
+      deferred.resolve(result)
+    )
+    sendResponseCallback(200, 'text/plain', deferred)
 
   catch err
     Zotero.BetterBibTeX.log("Could not export bibliography '#{library}'", err)
@@ -94,35 +101,41 @@ Zotero.BetterBibTeX.endpoints.selected.init = (url, data, sendResponseCallback) 
 
   zoteroPane = Zotero.getActiveZoteroPane()
   items = Zotero.Items.get((item.id for item of zoteroPane.getSelectedItems()))
-  sendResponseCallback(200, 'text/plain', Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: items}, Zotero.BetterBibTeX.displayOptions(url)))
-  return
+
+  deferred = Q.defer()
+  Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: items}, Zotero.BetterBibTeX.displayOptions(url), (result) ->
+    deferred.resolve(result)
+  )
+  sendResponseCallback(200, 'text/plain', deferred)
 
 Zotero.BetterBibTeX.endpoints.schomd = { supportedMethods: ['POST'] }
 Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
-  data = JSON.parse(data)
+  req = JSON.parse(data)
   response = []
 
-  if Array.isArray(data)
-    batchRequest = true
-  else
-    data = [data]
-    batchRequest = false
+  throw new Error('batch requests are not supported') if Array.isArray(req)
 
-  for req in data
-    result = {}
-    result.jsonrpc = req.jsonrpc if req.jsonrpc
-    result.id = if req.id || (typeof req.id) == 'number' then req.id else null
+  try
+    switch req.method
+      when 'citation', 'bibliography', 'bibtex', 'search'
+        result = Zotero.BetterBibTeX.schomd[req.method].apply(Zotero.BetterBibTeX.schomd, req.params)
+        if typeof result.result?.then == 'function'
+          result = result.then((result) ->
+            return JSON.stringify({
+              jsonrpc: (if req.jsonrpc then req.jsonrpc else undefined)
+              id: (if req.id || (typeof req.id) == 'number' then req.id else null)
+              result
+            })
+          )
+        else
+          result = JSON.stringify({
+            jsonrpc: (if req.jsonrpc then req.jsonrpc else undefined)
+            id: (if req.id || (typeof req.id) == 'number' then req.id else null)
+            result
+          })
 
-    try
-      switch req.method
-        when 'citation', 'bibliography', 'bibtex', 'search'
-          result.result = Zotero.BetterBibTeX.schomd[req.method].apply(Zotero.BetterBibTeX.schomd, req.params)
+      else throw("Unsupported method '#{req.method}'")
+  catch err
+    result = JSON.stringify({jsonrpc: '2.0', error: {code: 5000, message: '' + err + "\n" + err.stack}, id: result.id})
 
-        else throw("Unsupported method '#{req.method}'")
-    catch err
-      result = {jsonrpc: '2.0', error: {code: 5000, message: '' + err + "\n" + err.stack}, id: result.id}
-
-    response.push(result)
-
-  response = response[0] unless batchRequest
-  return sendResponseCallback(200, 'application/json', JSON.stringify(response))
+  return sendResponseCallback(200, 'application/json', result)
