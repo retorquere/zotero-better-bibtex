@@ -453,6 +453,8 @@ Zotero.BetterBibTeX.init = ->
           return promise.then((body) =>
             throw new Error("Zotero.Server.DataListener::_generateResponse: circular promise!") if typeof body?.then == 'function'
             original.apply(@, [status, contentType, body])
+          ).catch((e) =>
+            original.apply(@, [500, 'text/plain', e.message])
           )
 
       return original.apply(@, arguments)
@@ -471,6 +473,8 @@ Zotero.BetterBibTeX.init = ->
           promise.then((response) =>
             throw new Error("Zotero.Server.DataListener::_requestFinished: circular promise!") if typeof response?.then == 'function'
             original.apply(@, [response])
+          ).catch((e) =>
+            original.apply(@, e.message)
           )
           return
       catch err
