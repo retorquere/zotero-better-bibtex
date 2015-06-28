@@ -56,12 +56,12 @@ simplestring
   / _* "#" _* simplestring
 
 bracedvalue
-  = '{' &{ return bibtex.quote('{}') } val:strings '}' &{ return bibtex.quote() } { return val }
-  / '"' &{ return bibtex.quote('"')  } val:strings '"' &{ return bibtex.quote() } { return val }
+  = '{' &{ return bibtex.quoteWith('{}') } val:strings '}' &{ return bibtex.quoteWith() } { return val }
+  / '"' &{ return bibtex.quoteWith('"')  } val:strings '"' &{ return bibtex.quoteWith() } { return val }
 
 url
-  = '{' &{ return bibtex.quote('{}') } val:urlchar* '}' &{ return bibtex.quote() } { return bibtex.flatten(val) }
-  / '"' &{ return bibtex.quote('"')  } val:urlchar* '"' &{ return bibtex.quote() } { return bibtex.flatten(val) }
+  = '{' &{ return bibtex.quoteWith('{}') } val:urlchar* '}' &{ return bibtex.quoteWith() } { return bibtex.flatten(val) }
+  / '"' &{ return bibtex.quoteWith('"')  } val:urlchar* '"' &{ return bibtex.quoteWith() } { return bibtex.flatten(val) }
 
 strings
   = &{ return !bibtex.raw } strings:string*    { return strings }

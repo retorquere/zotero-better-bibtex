@@ -8,7 +8,7 @@ class BetterBibTeXParserSupport
     @comments = []
     @errors = []
 
-  quote: (state) ->
+  quoteWith: (state) ->
     switch state
       when '"'
         @braced = false

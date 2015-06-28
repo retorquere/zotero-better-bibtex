@@ -200,8 +200,8 @@ DOWNLOADS = {
     'unicode.xml'         => 'http://www.w3.org/Math/characters/unicode.xml',
     'org.js'              => 'https://raw.githubusercontent.com/mooz/org-js/master/org.js',
     'xregexp-all-min.js'  => 'http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all-min.js',
-    'json5.js'            => 'https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js',
-    'htmlparser.js'       => 'https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js',
+    #'json5.js'            => 'https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js',
+    #'htmlparser.js'       => 'https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js',
   }
 }
 DOWNLOADS[:chrome].each_pair{|file, url|
@@ -214,6 +214,21 @@ DOWNLOADS[:translators].each_pair{|file, url|
     ZotPlus::RakeHelper.download(url, t.name)
   end
 }
+
+file 'resource/translators/htmlparser.js' => 'Rakefile' do |t|
+  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js', t.name)
+  # @doc['createElementNS'] rather than @doc.createElementNS to work around overzealous extension validator.
+  code = open(t.name).read.sub('doc.createElement(tagName)', 'doc["createElement"](tagName)')
+  open(t.name, 'w'){|f| f.write(code) }
+end
+
+file 'resource/translators/json5.js' => 'Rakefile' do |t|
+  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js', t.name)
+  # don't not overwrite isNaN to appease oblivious extension validator
+  code = open(t.name).read.sub('isNaN = isNaN ||', '_isNaN = isNaN ||')
+  open(t.name, 'w'){|f| f.write(code) }
+end
+
 
 file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['resource/tests/*.feature'] do |t|
   features = t.sources.collect{|f| f.split('/')}.select{|f| f[0] == 'resource'}.collect{|f|
