@@ -75,7 +75,10 @@ Translator.initialize = ->
     }
 
     for own bibtex, zotero of typeMap
-      bibtex = bibtex.trim().split(/\s+/)
+      # =online to fool the ridiculously stupid Mozilla code safety validator, as it thinks that any
+      # object property starting with 'on' on any kind of object installs an event handler on a DOM
+      # node
+      bibtex = bibtex.replace(/^=/, '').trim().split(/\s+/)
       zotero = zotero.trim().split(/\s+/)
 
       for type in bibtex
