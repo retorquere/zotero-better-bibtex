@@ -117,7 +117,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'resource/translators/htmlparser.js',
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
-  'resource/translators/xregexp-all-min.js',
+  'resource/translators/xregexp-all.js',
 #  'chrome/content/zotero-better-bibtex/BetterBibTeXPatternFormatter.js',
 #  'chrome/content/zotero-better-bibtex/BetterBibTeXPatternParser.js',
 #  'chrome/content/zotero-better-bibtex/cache.js',
@@ -199,7 +199,7 @@ DOWNLOADS = {
     #'unicode.xml'         => 'http://www.w3.org/2003/entities/2007xml/unicode.xml',
     'unicode.xml'         => 'http://www.w3.org/Math/characters/unicode.xml',
     'org.js'              => 'https://raw.githubusercontent.com/mooz/org-js/master/org.js',
-    'xregexp-all-min.js'  => 'http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all-min.js',
+    #'xregexp-all.js'  => 'http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js',
     #'json5.js'            => 'https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js',
     #'htmlparser.js'       => 'https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js',
   }
@@ -214,6 +214,28 @@ DOWNLOADS[:translators].each_pair{|file, url|
     ZotPlus::RakeHelper.download(url, t.name)
   end
 }
+
+file 'resource/translators/xregexp-all.js' => 'Rakefile' do |t|
+  ZotPlus::RakeHelper.download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js', t.name)
+  # strip out setNatives because the Moz validator is stupid
+  code = ''
+  natives = false
+  IO.readlines(t.name).each{|line|
+    if line.strip == 'function setNatives(on) {'
+      natives = true
+      line += "if (on) { throw new Error('setNatives has been disabled to appease the Mozilla signing validator'); }\n"
+    elsif natives && line.strip =~ /^};?$/
+      natives = false
+    elsif natives
+      # line = "// #{line}"
+      # I can't even comment out the line because the sodding AMO validator trips on code in comments!
+      line = ''
+    end
+    code += line
+  }
+
+  open(t.name, 'w'){|f| f.write(code) }
+end
 
 file 'resource/translators/htmlparser.js' => 'Rakefile' do |t|
   ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js', t.name)
