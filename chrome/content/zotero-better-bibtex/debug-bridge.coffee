@@ -56,12 +56,16 @@ Zotero.BetterBibTeX.DebugBridge.methods.import = (filename) ->
 
 Zotero.BetterBibTeX.DebugBridge.methods.librarySize = -> Zotero.DB.valueQuery('select count(*) from items i where not i.itemID in (select d.itemID from deletedItems d)')
 
-Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator, exportOptions) ->
-  translator = Zotero.BetterBibTeX.getTranslator(translator)
-  exportOptions ||= {}
-  return Zotero.BetterBibTeX.translate(translator, null, exportOptions)
+Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator, displayOptions) ->
+  deferred = Q.defer()
+  Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), null, displayOptions || {}, (result) ->
+    deferred.resolve(result)
+  )
 
-Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, exportOptions, filename) ->
+  Zotero.debug('exportToString: returning promise')
+  return deferred.promise
+
+Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, displayOptions, filename) ->
   translation = new Zotero.Translate.Export()
 
   file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile)
@@ -71,22 +75,26 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, exportOption
   translator = Zotero.BetterBibTeX.getTranslator(translator)
   translation.setTranslator(translator)
 
-  exportOptions ||= {}
-  exportOptions.exportFileData = false
-  translation.setDisplayOptions(exportOptions)
+  displayOptions ||= {}
+  displayOptions.exportFileData = false
+  translation.setDisplayOptions(displayOptions)
 
-  status = 'working'
-  translation.setHandler('done', (obj, worked) -> status = if worked then 'ok' else 'error')
+  deferred = Q.defer()
+  translation.setHandler('done', (obj, worked) ->
+    deferred.resolve(!!worked)
+  )
   translation.translate()
-  thread = Zotero.BetterBibTeX.threadManager.currentThread
-  while status == 'working'
-    thread.processNextEvent(true)
 
-  return (status == 'ok')
+  return deferred.promise
 
 Zotero.BetterBibTeX.DebugBridge.methods.library = ->
   translator = Zotero.BetterBibTeX.getTranslator('BetterBibTeX JSON')
-  return JSON.parse(Zotero.BetterBibTeX.translate(translator, null, { exportNotes: true, exportFileData: false }))
+
+  deferred = Q.defer()
+  Zotero.BetterBibTeX.translate(translator, null, { exportNotes: true, exportFileData: false }, (result) ->
+    deferred.resolve(JSON.parse(result))
+  )
+  return deferred.promise
 
 Zotero.BetterBibTeX.DebugBridge.methods.setPreference = (name, value) -> Zotero.Prefs.set(name, value)
 
