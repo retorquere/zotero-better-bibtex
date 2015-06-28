@@ -449,7 +449,11 @@ Zotero.BetterBibTeX.init = ->
     return (status, contentType, promise) ->
       try
         Zotero.debug("Zotero.Server.DataListener::_generateResponse: handling #{typeof promise} promise? #{typeof promise?.then}")
-        return promise.then((body) => original.apply(@, [status, contentType, body])) if typeof promise?.then == 'function'
+        if typeof promise?.then == 'function'
+          return promise.then((body) =>
+            throw new Error("Zotero.Server.DataListener::_generateResponse: circular promise!") if typeof body?.then == 'function'
+            original.apply(@, [status, contentType, body])
+          )
 
       return original.apply(@, arguments)
     )(Zotero.Server.DataListener::_generateResponse)
@@ -460,11 +464,14 @@ Zotero.BetterBibTeX.init = ->
       try
         Zotero.debug("Zotero.Server.DataListener::_requestFinished: handling #{typeof promise} promise? #{typeof promise?.then}")
         if typeof promise?.then == 'function'
-          if @_responseSent
-            Zotero.debug("Request already finished; not sending another response")
-            return
-          @_responseSent = true
-          promise.then((response) => original.apply(@, [response]))
+          #if @_responseSent
+          #  Zotero.debug("Request already finished; not sending another response")
+          #  return
+          #@_responseSent = true
+          promise.then((response) =>
+            throw new Error("Zotero.Server.DataListener::_requestFinished: circular promise!") if typeof response?.then == 'function'
+            original.apply(@, [response])
+          )
           return
       catch err
         Zotero.debug("Zotero.Server.DataListener::_requestFinished: error handling promise: #{err.message}")
