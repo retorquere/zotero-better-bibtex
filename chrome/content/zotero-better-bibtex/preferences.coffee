@@ -188,7 +188,7 @@ BetterBibTeXAutoExportPref =
     Zotero.BetterBibTeX.debug("pref.autoexport.refresh: refill=#{!!refill}")
 
     if refill
-      exportlist.removeChild(node) for node in exportlist.children when node.nodeName == 'listitem'
+      exportlist.removeChild(node) for node in exportlist.children when node?.nodeName == 'listitem'
 
       for ae in Zotero.DB.query("select * from betterbibtex.autoexport order by path")
         Zotero.BetterBibTeX.debug('pref.autoexport.refresh: refill', Zotero.BetterBibTeX.log.object(ae))
