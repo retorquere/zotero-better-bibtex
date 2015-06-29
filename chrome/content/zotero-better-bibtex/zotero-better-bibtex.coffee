@@ -466,10 +466,6 @@ Zotero.BetterBibTeX.init = ->
       try
         Zotero.debug("Zotero.Server.DataListener::_requestFinished: handling #{typeof promise} promise? #{typeof promise?.then}")
         if typeof promise?.then == 'function'
-          #if @_responseSent
-          #  Zotero.debug("Request already finished; not sending another response")
-          #  return
-          #@_responseSent = true
           promise.then((response) =>
             throw new Error("Zotero.Server.DataListener::_requestFinished: circular promise!") if typeof response?.then == 'function'
             original.apply(@, [response])
