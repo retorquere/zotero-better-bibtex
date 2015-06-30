@@ -110,7 +110,7 @@ Zotero.BetterBibTeX.keymanager = new class
       style = Zotero.Styles.get(styleID) # how can this be null?
 
       if style
-        cp = style.getCiteProc(true)
+        cp = style.getCiteProc(null, true)
 
         cp.setOutputFormat('html')
         cp.updateItems([item.itemID])
