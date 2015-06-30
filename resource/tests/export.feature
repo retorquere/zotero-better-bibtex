@@ -108,7 +108,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
-#     | Export mapping for reporter field #219                                                         | 1           |
+     | Export mapping for reporter field #219                                                         | 1           |
      | Export error for items without publicationTitle and "Preserve BibTeX variables" enabled #201   | 1           |
      | Be robust against misconfigured journal abbreviator #127                                       | 1           |
      | Better BibLaTeX.001                                                                            | 1           |

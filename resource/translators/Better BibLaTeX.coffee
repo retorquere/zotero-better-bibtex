@@ -355,6 +355,9 @@ doExport = ->
     ref.add({ name: 'number', value: item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number })
     ref.add({ name: (if isNaN(parseInt(item.issue)) then 'issue' else 'number'), value: item.issue })
 
+    if item.itemType == 'case'
+      ref.add({ name: 'journaltitle', value: item.reporter, preserveCaps: true, bare: is_bibvar, esc: if is_bibvar then 'raw' else null })
+
     if item.publicationTitle
       is_bibvar = Translator.preserveBibTeXVariables && item.publicationTitle.match(/^[a-z][a-z0-9_]*$/i)
       switch item.itemType
