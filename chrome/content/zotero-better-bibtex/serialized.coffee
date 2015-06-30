@@ -63,7 +63,10 @@ Zotero.BetterBibTeX.serialized =
     if !items[itemID]
       Zotero.BetterBibTeX.debug('serialized.get: cache miss, getting item:', !!item)
       item ||= Zotero.Items.get(itemID)
-      items[itemID] = (if item.isAttachment() then @_attachmentToArray(item) else @_itemToArray(item)) if item
+
+      # TODO: force legacy format to true until I switch over
+      items[itemID] = (if item.isAttachment() then @_attachmentToArray(item) else Zotero.Utilities.Internal.itemToExportFormat(item, true)) if item
+
       switch
         # the serialization yielded no object (why?), mark it as missing so we don't do this again
         when !items[itemID]

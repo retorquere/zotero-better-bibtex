@@ -74,6 +74,16 @@ Zotero.BetterBibTeX.extensionConflicts = ->
     '''
     Zotero.BetterBibTeX.flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
   )
+  AddonManager.getAddonByID('zotero@chnm.gmu.edu', (zotero) ->
+    zotero = {version: '0.0.0'} unless zotero
+    version = zotero.version.split('.')
+    return if parseInt(version[0]) > 4
+    return if parseInt(version[1]) > 0
+    return if parseInt(version[2]) > 26
+    Zotero.BetterBibTeX.removeTranslators()
+    Zotero.BetterBibTeX.disabled = 'Better BibTeX has been disabled because it did not find Zotero 4.0.27 or later.'
+    Zotero.BetterBibTeX.flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
+  )
 
 Zotero.BetterBibTeX.flash = (title, body) ->
   Zotero.BetterBibTeX.debug('flash:', title)
@@ -150,7 +160,7 @@ Zotero.BetterBibTeX.pref.ZoteroObserver = {
       when 'recursiveCollections'
         recursive = "#{!!Zotero.BetterBibTeX.auto.recursive()}"
         # libraries are always recursive
-        Zotero.DB.execute("update betterbibtex.autoexport set exportedRecursively = ?, status = 'pending' where exportedRecursively <> ? and collection <> 'library'", [recursive, recursive])
+        Zotero.DB.execute("update betterbibtex.autoexport set exportedRecursively = ?, status = 'pending' where exportedRecursively <> ? and collection not like 'library:%'", [recursive, recursive])
         Zotero.BetterBibTeX.auto.process("recursive export: #{recursive}")
 }
 
@@ -509,24 +519,15 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Translate.Export::translate = ((original) ->
     return ->
       # requested translator
+      Zotero.debug("Zotero.Translate.Export::translate: #{if @_export then Object.keys(@_export) else 'no @_export'}")
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
       Zotero.BetterBibTeX.debug('export: ', translatorID)
       return original.apply(@, arguments) unless translatorID
 
-      # convert group/search into its library items
-      switch @_collection?.objectType
-        when 'group'
-          @_group = @_collection
-          @_items = Zotero.Items.getAll(false, @_group.libraryID)
-          throw new Error('Cannot export empty group library') unless @_items
-          delete @_collection
-
-        when 'saved-search'
-          @_saved_search = @_collection.search
-          @_items = @_collection.items
-          throw new Error('Cannot export empty group library') unless @_items
-          delete @_collection
+      if @_export?.search
+        @_export.type = 'items'
+        throw new Error('Cannot export empty search') unless @_export.items
 
       # regular behavior for non-BBT translators, or if translating to string
       header = Zotero.BetterBibTeX.translators[translatorID]
@@ -544,47 +545,49 @@ Zotero.BetterBibTeX.init = ->
       # If no capture, we're done
       return original.apply(@, arguments) unless @_displayOptions?['Keep updated'] && !@_displayOptions.exportFileData
 
+      if !(@_export?.type in ['library', 'collection']) && !@_export?.search
+        Zotero.BetterBibTeX.flash('Auto-export only supported for searches, groups, collections and libraries')
+        return original.apply(@, arguments)
+
       progressWin = new Zotero.ProgressWindow()
       progressWin.changeHeadline('Auto-export')
 
       switch
-        when @_saved_search # search export, already converted to its corresponding items above
-          progressWin.addLines(["Saved search #{@_saved_search.name} set up for auto-export"])
-          collection = "search:#{@_saved_search.id}"
+        when @_export?.search
+          progressWin.addLines(["Saved search #{saved_search.name} set up for auto-export"])
+          to_export = "search:#{saved_search.id}"
 
-        when @_group # group export, already converted to its corresponding items above
-          progressWin.addLines(["Group #{@_group.name} set up for auto-export"])
-          collection = "library:#{@_group.libraryID}"
+        when @_export?.type == 'library'
+          try
+            name = Zotero.Libraries.getName(@_export.id)
+          catch
+            name = "library:#{@_export.id}"
+          progressWin.addLines(["#{name} set up for auto-export"])
+          to_export = "library:#{@_export.id}"
 
-        when @_collection?.id
-          progressWin.addLines(["Collection #{@_collection.name} set up for auto-export"])
-          collection = @_collection.id
-
-        when !@_items
-          progressWin.addLines(['Auto-export of full library'])
-          collection = 'library'
+        when @_export?.type == 'collection'
+          progressWin.addLines(["Collection #{@_export.collection.name} set up for auto-export"])
+          to_export = "library:#{@_export.collection.id}"
 
         else
           progressWin.addLines(['Auto-export only supported for searches, groups, collections and libraries'])
-          collection = null
+          to_export = null
 
       progressWin.show()
       progressWin.startCloseTimer()
 
-      if collection
+      if to_export
         @_displayOptions.translatorID = translatorID
-        Zotero.BetterBibTeX.auto.add(collection, @location.path, @_displayOptions)
+        Zotero.BetterBibTeX.auto.add(to_export, @location.path, @_displayOptions)
         Zotero.BetterBibTeX.debug('Captured auto-export:', @location.path, Zotero.BetterBibTeX.log.object(@_displayOptions))
 
       return original.apply(@, arguments)
     )(Zotero.Translate.Export::translate)
 
-  # monkey-patch _prepareTranslation to add collections for group export
-  # and notify itemgetter whether we're doing exportFileData
+  # monkey-patch _prepareTranslation to notify itemgetter whether we're doing exportFileData
   Zotero.Translate.Export::_prepareTranslation = ((original) ->
     return ->
       r = original.apply(@, arguments)
-      @_itemGetter._collectionsLeft = @_group.getCollections() if @_group && @_translatorInfo?.configOptions?.getCollections
 
       # caching shortcut sentinels
       translatorID = @translator?[0]
@@ -863,9 +866,8 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions, callback) ->
   translation = new Zotero.Translate.Export()
 
   for own key, value of items
-    continue unless value
     switch key
-      when 'library' then translation.setItems(Zotero.Items.getAll(true, value))
+      when 'library' then translation.setLibraryID(value)
       when 'items' then translation.setItems(value)
       when 'collection' then translation.setCollection(value)
 

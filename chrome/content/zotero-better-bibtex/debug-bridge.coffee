@@ -5,6 +5,9 @@ Zotero.BetterBibTeX.DebugBridge = {
 
 Zotero.BetterBibTeX.DebugBridge.methods.init = ->
   return if Zotero.BetterBibTeX.DebugBridge.initialized
+
+  Zotero.noUserInput = true
+
   Zotero.BetterBibTeX.DebugBridge.initialized = true
 
   # replacing Zotero.Items.getAll to get items sorted. With random order I can't really implement stable
@@ -58,7 +61,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.librarySize = -> Zotero.DB.valueQuery('s
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator, displayOptions) ->
   deferred = Q.defer()
-  Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), null, displayOptions || {}, (result) ->
+  Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {library: null}, displayOptions || {}, (result) ->
     deferred.resolve(result)
   )
 
@@ -91,7 +94,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.library = ->
   translator = Zotero.BetterBibTeX.getTranslator('BetterBibTeX JSON')
 
   deferred = Q.defer()
-  Zotero.BetterBibTeX.translate(translator, null, { exportNotes: true, exportFileData: false }, (result) ->
+  Zotero.BetterBibTeX.translate(translator, {library: null}, { exportNotes: true, exportFileData: false }, (result) ->
     deferred.resolve(JSON.parse(result))
   )
   return deferred.promise

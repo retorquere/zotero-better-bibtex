@@ -271,7 +271,7 @@ Zotero.BetterBibTeX.auto = new class
       Zotero.BetterBibTeX.debug('auto export candidate collection:', ae.collection)
       switch
         when ae.collection == 'library'
-          items = {}
+          items = {library: null}
 
         when m = /^search:([0-9]+)$/.exec(ae.collection)
           # assumes that a markSearch will have executed the search and found the items
@@ -283,11 +283,7 @@ Zotero.BetterBibTeX.auto = new class
             items.items = Zotero.Items.get(items.items)
 
         when m = /^library:([0-9]+)$/.exec(ae.collection)
-          items = {items: Zotero.Items.getAll(false, m[1])}
-          items.items = [] unless items.items
-          if items.items.length == 0
-            Zotero.BetterBibTeX.debug('auto.process: empty library')
-            skip.done.push(ae.id)
+          items = {library: parseInt(m[1])}
 
         else
           items = {collection: ae.collection}
