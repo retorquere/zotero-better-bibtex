@@ -416,10 +416,14 @@ doExport = ->
       }
 
       for creator in item.creators
-        if ('' + creator.firstName).trim() != '' and ('' + creator.lastName).trim() != ''
-          creatorString = creator.lastName + ', ' + creator.firstName
-        else
-          creatorString = new String(creator.lastName)
+        creatorString = (name for name in [creator.lastName, creator.firstName] when name && name.trim() != '')
+        switch creatorString.length
+          when 2
+            creatorString = creatorString.join(', ')
+          when 1
+            creatorString = new String(creatorString[0])
+          else
+            continue
 
         switch creator.creatorType
           when 'author', 'interviewer', 'director', 'programmer', 'artist', 'podcaster', 'presenter'
