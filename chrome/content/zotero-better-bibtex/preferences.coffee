@@ -124,7 +124,7 @@ BetterBibTeXAutoExportPref =
 
     if selectedItem
       ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport where id = ?', [selectedItem.getAttribute('value')])
-    ae ||= {status: '', collection: '', path: '', translatorID: '', exportCharset: '', useJournalAbbreviation: false, exportNotes: false, preserveBibTeXVariables: false }
+    ae ||= {status: '', collection: '', path: '', translatorID: '', exportCharset: '', useJournalAbbreviation: false, exportNotes: false }
     Zotero.BetterBibTeX.debug('pref.autoexport.selected =', ae)
 
     BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-status', ae.status)
