@@ -107,19 +107,20 @@ Scenario Outline: BibLaTeX Export
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.bib'
 
   Examples:
-     | file                                                                              | references |
-     | Export error for items without publicationTitle and "Preserve BibTeX variables" enabled #201 | 1 |
-     | Be robust against misconfigured journal abbreviator #127                          | 1          |
-     | Better BibLaTeX.001                                                               | 1          |
-     | Better BibLaTeX.002                                                               | 2          |
-     | Better BibLaTeX.003                                                               | 2          |
-     | Better BibLaTeX.004                                                               | 1          |
-     | Better BibLaTeX.005                                                               | 1          |
-     | Better BibLaTeX.006                                                               | 1          |
-     | Better BibLaTeX.007                                                               | 1          |
-     | Better BibLaTeX.009                                                               | 4          |
-     | BraceBalancer                                                                     | 1          |
-     | Fields in Extra should override defaults                                          | 1          |
+     | file                                                                                           | references  |
+     | Export mapping for reporter field #219                                                         | 1           |
+     | Export error for items without publicationTitle and "Preserve BibTeX variables" enabled #201   | 1           |
+     | Be robust against misconfigured journal abbreviator #127                                       | 1           |
+     | Better BibLaTeX.001                                                                            | 1           |
+     | Better BibLaTeX.002                                                                            | 2           |
+     | Better BibLaTeX.003                                                                            | 2           |
+     | Better BibLaTeX.004                                                                            | 1           |
+     | Better BibLaTeX.005                                                                            | 1           |
+     | Better BibLaTeX.006                                                                            | 1           |
+     | Better BibLaTeX.007                                                                            | 1           |
+     | Better BibLaTeX.009                                                                            | 4           |
+     | BraceBalancer                                                                                  | 1           |
+     | Fields in Extra should override defaults                                                       | 1           |
 
 @test-cluster-1
 @bblt
