@@ -9,6 +9,9 @@ scrub = (item) ->
   delete item.multi
   delete item.attachmentIDs
 
+  # TODO: temporary until I migrate to the 4.0.27 translator structure
+  delete item.collections
+
   for creator in item.creators or []
     delete creator.creatorID
     delete creator.multi
