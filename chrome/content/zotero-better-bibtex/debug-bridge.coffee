@@ -81,6 +81,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, displayOptio
   displayOptions ||= {}
   displayOptions.exportFileData = false
   translation.setDisplayOptions(displayOptions)
+  translation.setLibraryID(null)
 
   deferred = Q.defer()
   translation.setHandler('done', (obj, worked) ->

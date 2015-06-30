@@ -253,6 +253,9 @@ Zotero.BetterBibTeX.auto = new class
 
     skip = {error: [], done: []}
     translation = null
+    ae = (Zotero.BetterBibTeX.log.object(ae) for ae in Zotero.DB.query("select * from betterbibtex.autoexport"))
+    Zotero.BetterBibTeX.debug('auto-exports configured:', ae)
+
     for ae in Zotero.DB.query("select * from betterbibtex.autoexport ae where status == 'pending'")
       Zotero.BetterBibTeX.debug('auto.process: candidate', Zotero.BetterBibTeX.log.object(ae))
       path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
@@ -294,12 +297,17 @@ Zotero.BetterBibTeX.auto = new class
       Zotero.BetterBibTeX.debug('auto.process: candidate picked:', Zotero.BetterBibTeX.log.object(ae))
       translation = new Zotero.Translate.Export()
 
-      if items.items
-        Zotero.BetterBibTeX.debug('starting auto-export from', items.length, 'items')
-        translation.setItems(items.items)
-      if items.collection
-        Zotero.BetterBibTeX.debug('starting auto-export from collection', items.collection)
-        translation.setCollection(Zotero.Collections.get(items.collection))
+      for own k, v of items
+        switch k
+          when 'items'
+            Zotero.BetterBibTeX.debug('starting auto-export from', items.length, 'items')
+            translation.setItems(items.items)
+          when 'collection'
+            Zotero.BetterBibTeX.debug('starting auto-export from collection', items.collection)
+            translation.setCollection(Zotero.Collections.get(items.collection))
+          when 'library'
+            Zotero.BetterBibTeX.debug('starting auto-export from collection', items.collection)
+            translation.setLibraryID(items.library)
 
       translation.setLocation(path)
       translation.setTranslator(ae.translatorID)
@@ -319,7 +327,7 @@ Zotero.BetterBibTeX.auto = new class
       Zotero.BetterBibTeX.debug('auto.process: no pending jobs')
       return
 
-    Zotero.BetterBibTeX.debug('auto.process: starting', Zotero.BetterBibTeX.log.object(ae))
+    Zotero.BetterBibTeX.debug('auto.process: starting', Zotero.BetterBibTeX.log.object(items))
     @refresh()
 
     translation.setHandler('done', (obj, worked) ->

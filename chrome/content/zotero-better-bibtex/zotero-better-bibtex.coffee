@@ -540,7 +540,7 @@ Zotero.BetterBibTeX.init = ->
           @_displayOptions.exportPath = @location.parent.path
         @_displayOptions.exportFilename = @location.leafName
 
-      Zotero.BetterBibTeX.debug("export to #{if @_displayOptions?.exportFileData then 'directory' else 'file'}", @location.path, 'using', @_displayOptions)
+      Zotero.BetterBibTeX.debug("export '#{@_export.type}' to #{if @_displayOptions?.exportFileData then 'directory' else 'file'}", @location.path, 'using', @_displayOptions)
 
       # If no capture, we're done
       return original.apply(@, arguments) unless @_displayOptions?['Keep updated'] && !@_displayOptions.exportFileData
@@ -558,12 +558,12 @@ Zotero.BetterBibTeX.init = ->
           to_export = "search:#{saved_search.id}"
 
         when @_export?.type == 'library'
+          to_export = if @_export.id then "library:#{@_export.id}" else 'library'
           try
             name = Zotero.Libraries.getName(@_export.id)
           catch
-            name = "library:#{@_export.id}"
+            name = to_export
           progressWin.addLines(["#{name} set up for auto-export"])
-          to_export = "library:#{@_export.id}"
 
         when @_export?.type == 'collection'
           progressWin.addLines(["Collection #{@_export.collection.name} set up for auto-export"])
@@ -783,11 +783,12 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
       collection.addItem(item.id)
 
   collections = @withParentCollections(collections) if collections.length != 0
-  for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@SQLSet(items)}")
-    if libraryID
-      collections.push("'library:#{libraryID}'")
-    else
-      collections.push("'library'")
+  # collection changes do not affect the library
+  #for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@SQLSet(items)}")
+  #  if libraryID
+  #    collections.push("'library:#{libraryID}'")
+  #  else
+  #    collections.push("'library'")
   if collections.length > 0
     collections = @SQLSet(collections)
     Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{collections}")
