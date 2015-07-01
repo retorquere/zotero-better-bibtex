@@ -563,7 +563,7 @@ Zotero.BetterBibTeX.init = ->
 
         when @_export?.type == 'collection'
           progressWin.addLines(["Collection #{@_export.collection.name} set up for auto-export"])
-          to_export = "library:#{@_export.collection.id}"
+          to_export = "collection:#{@_export.collection.id}"
 
         else
           progressWin.addLines(['Auto-export only supported for searches, groups, collections and libraries'])
