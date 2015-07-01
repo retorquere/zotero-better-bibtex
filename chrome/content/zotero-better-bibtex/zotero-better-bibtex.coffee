@@ -56,7 +56,7 @@ Zotero.BetterBibTeX.log.array = (a) ->
 Zotero.BetterBibTeX.extensionConflicts = ->
   AddonManager.getAddonByID('{359f0058-a6ca-443e-8dd8-09868141bebc}', (recoll) ->
     return unless recoll
-    return if Services.vc.compare('1.2.3', recoll.version) > 0
+    return if Services.vc.compare(recoll.version, '1.2.3') > 0
     Zotero.BetterBibTeX.removeTranslators()
     Zotero.BetterBibTeX.disabled = '''
       Better BibTeX has been disabled because it has detected conflicting extension "recoll-firefox" 1.2.3 or
@@ -77,7 +77,7 @@ Zotero.BetterBibTeX.extensionConflicts = ->
       "You are on a custom Zotero build (#{ZOTERO_CONFIG.VERSION}).",
       'Feel free to submit error reports when things go wrong, I will do my best to address them, but the target will always be the latest officially released version of Zotero'
     )
-  if Services.vc.compare('4.0.27', ZOTERO_CONFIG.VERSION?.replace(/\.SOURCE$/, '') || '0.0.0') >= 0
+  if Services.vc.compare(ZOTERO_CONFIG.VERSION?.replace(/\.SOURCE$/, '') || '0.0.0', '4.0.27') < 0
     @removeTranslators()
     @disabled = "Better BibTeX has been disabled because it found Zotero #{ZOTERO_CONFIG.VERSION}, but requires 4.0.27 or later."
     @flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
