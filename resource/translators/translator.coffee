@@ -313,7 +313,7 @@ Reference::esc_attachments = (f) ->
     a = {
       title: att.title
       path: att.localPath
-      mimetype: att.mimeType
+      mimetype: att.mimeType || ''
     }
 
     Translator.debug("save attachment: exportFileData=#{Translator.exportFileData}, defaultPath=#{att.defaultPath}, saveFile=#{typeof att.saveFile}/#{!!att.saveFile}")
@@ -321,6 +321,8 @@ Reference::esc_attachments = (f) ->
     a.path = att.defaultPath if save
 
     continue unless a.path # amazon/googlebooks etc links show up as atachments without a path
+
+    a.title ||= att.path.replace(/.*[\\\/]/, '') || 'attachment'
 
     if a.path.match(/[{}]/) # latex really doesn't want you to do this.
       errors.push("BibTeX cannot handle file paths with braces: #{JSON.stringify(a.path)}")
