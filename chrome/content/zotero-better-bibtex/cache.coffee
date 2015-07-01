@@ -1,7 +1,13 @@
 Zotero.BetterBibTeX.cache = new class
   constructor: ->
-    @cache = Zotero.BetterBibTeX.Cache.addCollection('cache', {disableChangesApi: false, indices: 'itemID exportCharset exportNotes getCollections translatorID useJournalAbbreviation citekey'.split(/\s+/)})
-    @access = Zotero.BetterBibTeX.Cache.addCollection('access', {disableChangesApi: false, indices: 'itemID exportCharset exportNotes getCollections translatorID useJournalAbbreviation'.split(/\s+/)})
+    @cache = Zotero.BetterBibTeX.Cache.addCollection('cache', {
+      disableChangesApi: false
+      indices: 'itemID exportCharset exportNotes getCollections translatorID useJournalAbbreviation citekey'.split(/\s+/)
+    })
+    @access = Zotero.BetterBibTeX.Cache.addCollection('access', {
+      disableChangesApi: false
+      indices: 'itemID exportCharset exportNotes getCollections translatorID useJournalAbbreviation'.split(/\s+/)
+    })
     if Zotero.BetterBibTeX.pref.get('debug')
       @cache.on('insert', (entry) -> Zotero.BetterBibTeX.debug('cache.loki insert', entry))
       @cache.on('update', (entry) -> Zotero.BetterBibTeX.debug('cache.loki update', entry))
@@ -210,6 +216,10 @@ Zotero.BetterBibTeX.auto = new class
 
   add: (collection, path, context) ->
     Zotero.BetterBibTeX.debug("auto-export set up for #{collection} to #{path}")
+
+    # aren't unique constraints being enforced?
+    Zotero.DB.query('delete from betterbibtex.autoexport where path = ?', [path])
+
     Zotero.DB.query("insert or replace into betterbibtex.autoexport (collection, path, translatorID, exportCharset, exportNotes, useJournalAbbreviation, exportedRecursively, status)
                values (?, ?, ?, ?, ?, ?, ?, 'done')", [
                 collection,

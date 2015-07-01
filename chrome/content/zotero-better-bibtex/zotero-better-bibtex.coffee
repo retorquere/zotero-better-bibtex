@@ -355,7 +355,6 @@ Zotero.BetterBibTeX.attachDatabase = ->
         exportedRecursively CHECK(exportedRecursively in ('true', 'false')),
         status CHECK(status in ('pending', 'error', 'done')),
 
-        UNIQUE (collection, exportCharset, exportNotes, translatorID, useJournalAbbreviation),
         UNIQUE (path)
         )
       ")
