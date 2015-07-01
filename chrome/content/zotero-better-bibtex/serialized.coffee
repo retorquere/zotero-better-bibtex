@@ -91,4 +91,3 @@ Zotero.BetterBibTeX.serialized =
       Zotero.debug("serialized.save failed: #{e}")
 
   _attachmentToArray: Zotero.Translate.ItemGetter::_attachmentToArray
-  _itemToArray: Zotero.Translate.ItemGetter::_itemToArray
