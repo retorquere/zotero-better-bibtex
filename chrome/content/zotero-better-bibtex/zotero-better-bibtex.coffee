@@ -72,10 +72,15 @@ Zotero.BetterBibTeX.extensionConflicts = ->
     Zotero.BetterBibTeX.flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
   )
 
+  if ZOTERO_CONFIG.VERSION?.match(/\.SOURCE$/)
+    @flash(
+      "You are on a custom Zotero build (#{ZOTERO_CONFIG.VERSION}).",
+      'Feel free to submit error reports when things go wrong, I will do my best to address them, but the target will always be the latest officially released version of Zotero'
+    )
   if Services.vc.compare('4.0.27', ZOTERO_CONFIG.VERSION?.replace(/\.SOURCE$/, '') || '0.0.0') >= 0
-    Zotero.BetterBibTeX.removeTranslators()
-    Zotero.BetterBibTeX.disabled = "Better BibTeX has been disabled because it found Zotero #{ZOTERO_CONFIG.VERSION}, but requires 4.0.27 or later."
-    Zotero.BetterBibTeX.flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
+    @removeTranslators()
+    @disabled = "Better BibTeX has been disabled because it found Zotero #{ZOTERO_CONFIG.VERSION}, but requires 4.0.27 or later."
+    @flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
 
 Zotero.BetterBibTeX.flash = (title, body) ->
   Zotero.BetterBibTeX.debug('flash:', title)
