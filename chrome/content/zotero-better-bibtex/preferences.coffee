@@ -1,25 +1,4 @@
 BetterBibTeXPref =
-  serverURL: (extension) ->
-    collectionsView = Zotero.getActiveZoteroPane()?.collectionsView
-    itemGroup = collectionsView?._getItemAtRow(collectionsView.selection?.currentIndex)
-    return unless itemGroup
-
-    try
-      serverPort = Zotero.Prefs.get('httpServer.port')
-    catch err
-      return
-
-    if itemGroup.isCollection()
-      collection = collectionsView.getSelectedCollection()
-      url = "collection?/#{collection.libraryID or 0}/#{collection.key + extension}"
-
-    if itemGroup.isLibrary(true)
-      libid = collectionsView.getSelectedLibraryID()
-      url = if libid then "library?/#{libid}/library#{extension}" else "library?library#{extension}"
-    if not url then return
-
-    return "http://localhost:#{serverPort}/better-bibtex/#{url}"
-
   paneLoad: ->
     Zotero.BetterBibTeX.debug('preferences.paneLoad:', Zotero.BetterBibTeX.disabled)
     disabled = null
