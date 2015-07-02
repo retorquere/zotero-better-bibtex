@@ -1,5 +1,13 @@
 # Change Log
 
+## [0.14.5](https://github.com/ZotPlus/zotero-better-bibtex/tree/0.14.5) (2015-07-02)
+
+[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.14.4...0.14.5)
+
+**Fixed bugs:**
+
+- Automatic exports not kicked off for item changes [\#229](https://github.com/ZotPlus/zotero-better-bibtex/issues/229)
+
 ## [0.14.4](https://github.com/ZotPlus/zotero-better-bibtex/tree/0.14.4) (2015-07-02)
 
 [Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.14.3...0.14.4)
