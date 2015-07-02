@@ -780,6 +780,7 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
       collection.addItem(item.id)
 
   collections = @withParentCollections(collections) if collections.length != 0
+  collections = ("'collection:#{id}'" for id in collections)
   # collection changes do not affect the library
   #for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@SQLSet(items)}")
   #  if libraryID
@@ -811,6 +812,7 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
 
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
   collections = @withParentCollections(collections) unless collections.length == 0
+  collections = ("'collection:#{id}'" for id in collections)
   for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@SQLSet(ids)}")
     if libraryID
       collections.push("'library:#{libraryID}'")
