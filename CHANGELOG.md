@@ -151,14 +151,6 @@
 
 - Known problem: Auto-export overview doesn't update [\#203](https://github.com/ZotPlus/zotero-better-bibtex/issues/203)
 
-## [travis](https://github.com/ZotPlus/zotero-better-bibtex/tree/travis) (2015-05-29)
-
-[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.10.25...travis)
-
-**Closed issues:**
-
-- Cannot export pdf files from zotero collection [\#192](https://github.com/ZotPlus/zotero-better-bibtex/issues/192)
-
 ## [0.10.25](https://github.com/ZotPlus/zotero-better-bibtex/tree/0.10.25) (2015-05-28)
 
 [Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.10.24...0.10.25)
