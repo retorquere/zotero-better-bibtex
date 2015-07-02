@@ -157,7 +157,7 @@ Zotero.BetterBibTeX.pref.ZoteroObserver = {
       when 'recursiveCollections'
         recursive = "#{!!Zotero.BetterBibTeX.auto.recursive()}"
         # libraries are always recursive
-        Zotero.DB.execute("update betterbibtex.autoexport set exportedRecursively = ?, status = 'pending' where exportedRecursively <> ? and collection not like 'library:%'", [recursive, recursive])
+        Zotero.DB.query("update betterbibtex.autoexport set exportedRecursively = ?, status = 'pending' where exportedRecursively <> ? and collection not like 'library:%'", [recursive, recursive])
         Zotero.BetterBibTeX.auto.process("recursive export: #{recursive}")
 }
 
