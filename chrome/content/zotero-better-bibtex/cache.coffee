@@ -298,8 +298,12 @@ Zotero.BetterBibTeX.auto = new class
         when m = /^library:([0-9]+)$/.exec(ae.collection)
           items = {library: parseInt(m[1])}
 
-        else
-          items = {collection: ae.collection}
+        when m = /^collection:([0-9]+)$/.exec(ae.collection)
+          items = {collection: parseInt(m[1])}
+
+        else #??
+          Zotero.BetterBibTeX.debug('auto.process: unexpected collection id ', ae.collection)
+          skip.done.push(ae.id)
 
       continue if items.items && items.items.length == 0
       continue if translation

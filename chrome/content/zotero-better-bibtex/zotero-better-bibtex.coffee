@@ -288,6 +288,9 @@ Zotero.BetterBibTeX.attachDatabase = ->
   installing = @version(@release)
   Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', ?)", [@release])
 
+  Zotero.DB.query("update betterbibtex.autoexport set collection = (select 'library:' || libraryID from groups where 'group:' || groupID = collection) where collection like 'group:%'")
+  Zotero.DB.query("update betterbibtex.autoexport set collection = 'collection:' || collection where collection <> 'library' and collection not like '%:%'")
+
   upgrade = (installed != installing)
 
   for table in Zotero.DB.columnQuery("SELECT name FROM betterbibtex.sqlite_master WHERE type='table' AND name like '-%-'") || []
@@ -386,8 +389,6 @@ Zotero.BetterBibTeX.attachDatabase = ->
       Zotero.DB.query("drop table if exists betterbibtex.\"#{table}\"")
 
     Zotero.DB.commitTransaction() unless tip
-
-  Zotero.DB.query("update betterbibtex.autoexport set collection = (select 'library:' || libraryID from groups where 'group:' || groupID = collection) where collection like 'group:%'")
 
   if @pref.get('scanCitekeys')
     @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
@@ -924,9 +925,8 @@ Zotero.BetterBibTeX.getTranslator = (name) ->
   throw "No translator #{name}; available: #{JSON.stringify(translators)} from #{JSON.stringify(@translators)}"
 
 Zotero.BetterBibTeX.translatorName = (id) ->
-  for own translatorID, tr of @translators
-    return tr.label if translatorID == id
-  return "#{id}"
+  Zotero.BetterBibTeX.debug('translatorName:', id, 'from', Object.keys(@translators))
+  return @translators[id]?.label || "translator:#{id}"
 
 Zotero.BetterBibTeX.safeGetAll = ->
   try

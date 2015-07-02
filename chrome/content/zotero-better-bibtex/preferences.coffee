@@ -110,7 +110,7 @@ BetterBibTeXAutoExportPref =
     BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-collection', "#{@exportType(ae.collection)}: #{@exportName(ae.collection)}")
     BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-target', ae.path)
     BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-translator', Zotero.BetterBibTeX.translatorName(ae.translatorID))
-    BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-charset', Zotero.BetterBibTeX.translatorName(ae.exportCharset))
+    BetterBibTeXPref.display('id-better-bibtex-preferences-auto-export-charset', ae.exportCharset)
     document.getElementById('id-better-bibtex-preferences-auto-export-auto-abbrev').checked = (ae.useJournalAbbreviation == 'true')
     document.getElementById('id-better-bibtex-preferences-auto-export-notes').checked = (ae.exportNotes == 'true')
     return
@@ -136,9 +136,8 @@ BetterBibTeXAutoExportPref =
     return switch
       when id == '' then ''
       when id == 'library' then 'library'
-      when m = /^library:([0-9]+)$/.exec(id) then 'library'
-      when m = /^search:([0-9]+)$/.exec(id) then 'search'
-      else 'collection'
+      when m = /^(library|search|collection):[0-9]+$/.exec(id) then m[1]
+      else id
 
   exportName: (id, full) ->
     try
@@ -147,8 +146,7 @@ BetterBibTeXAutoExportPref =
         when id == 'library' then Zotero.Libraries.getName()
         when m = /^library:([0-9]+)$/.exec(id) then Zotero.Libraries.getName(m[1])
         when m = /^search:([0-9]+)$/.exec(id) then Zotero.Searches.get(m[1])?.name
-        when full then @collectionPath(id)
-        else Zotero.Collections.get(id)?.name
+        when m = /^collection:([0-9]+)$/.exec(id) then (if full then @collectionPath(m[1]) else Zotero.Collections.get(m[1])?.name)
       return name || id
     catch err
       return "not found: #{id}"
