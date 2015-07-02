@@ -776,11 +776,13 @@ task :changelog do
   keep = true
   changelog = IO.readlines('CHANGE.log').collect{|line|
     keep = false if line =~ /^## \[0\.14\.2\]/
-    keep ? line : null
-  }.compact + IO.readlines('CHANGELOG.md').collect{|line|
+    keep ? line : nil
+  }.compact
+  
+  changelog += IO.readlines('CHANGELOG.md').collect{|line|
     keep ||= line =~ /^## \[0\.14\.2\]/
-    keep ? line : null
-  }.join('')
+    keep ? line : nil
+  }.compact
 
-  open('CHANGELOG.md', 'w'){|f| f.write(changelog) }
+  open('CHANGELOG.md', 'w'){|f| f.write(changelog.join('')) }
 end

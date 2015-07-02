@@ -1,5 +1,13 @@
 # Change Log
 
+## [0.14.4](https://github.com/ZotPlus/zotero-better-bibtex/tree/0.14.4) (2015-07-02)
+
+[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.14.3...0.14.4)
+
+**Fixed bugs:**
+
+- Toggling recursive export stops automatic export [\#228](https://github.com/ZotPlus/zotero-better-bibtex/issues/228)
+
 ## [0.14.3](https://github.com/ZotPlus/zotero-better-bibtex/tree/0.14.3) (2015-07-02)
 
 [Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.14.2...0.14.3)
