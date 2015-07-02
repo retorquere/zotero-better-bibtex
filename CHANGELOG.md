@@ -1,5 +1,13 @@
 # Change Log
 
+## [0.14.3](https://github.com/ZotPlus/zotero-better-bibtex/tree/0.14.3) (2015-07-02)
+
+[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.14.2...0.14.3)
+
+**Fixed bugs:**
+
+- Collection name displayed as "collection:id" rather than actual name [\#227](https://github.com/ZotPlus/zotero-better-bibtex/issues/227)
+
 ## [0.14.2](https://github.com/ZotPlus/zotero-better-bibtex/tree/0.14.2) (2015-07-02)
 
 [Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.14.1...0.14.2)
