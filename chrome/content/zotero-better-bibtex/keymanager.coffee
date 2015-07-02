@@ -2,6 +2,8 @@ Zotero.BetterBibTeX.keymanager = new class
   constructor: ->
     @log = Zotero.BetterBibTeX.log
     @journalAbbrevs = Object.create(null)
+    @journalAbbrevsStore = {}
+
     @keys = Zotero.BetterBibTeX.Cache.addCollection('keys', {disableChangesApi: false, indices: 'itemID libraryID citekey citekeyFormat'.split(/\s+/) })
     @keys.on('insert', (key) ->
       Zotero.BetterBibTeX.debug('keymanager.loki insert', key)
@@ -101,32 +103,12 @@ Zotero.BetterBibTeX.keymanager = new class
     item = arguments[1] if arguments[0]._sandboxManager # the sandbox inserts itself in call parameters
 
     return item.journalAbbreviation if item.journalAbbreviation
-    return unless item.publicationTitle
+    key = item.publicationTitle || item.reporter || item.code
+    return unless key
     return unless Zotero.BetterBibTeX.pref.get('autoAbbrev')
 
-    if typeof @journalAbbrevs[item.publicationTitle] is 'undefined'
-      styleID = Zotero.BetterBibTeX.pref.get('autoAbbrevStyle')
-      styleID = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)[0].styleID if styleID is ''
-      style = Zotero.Styles.get(styleID) # how can this be null?
-
-      if style
-        cp = style.getCiteProc(null, true)
-
-        cp.setOutputFormat('html')
-        cp.updateItems([item.itemID])
-        cp.appendCitationCluster({ citationItems: [{id: item.itemID}], properties: {} } , true)
-        cp.makeBibliography()
-
-        abbrevs = cp
-        for p in ['transform', 'abbrevs', 'default', 'container-title']
-          abbrevs = abbrevs[p] if abbrevs
-
-        for own title,abbr of abbrevs or {}
-          @journalAbbrevs[title] = abbr
-
-      @journalAbbrevs[item.publicationTitle] ?= ''
-
-    return @journalAbbrevs[item.publicationTitle]
+    @journalAbbrevs[key] ?= Zotero.Cite.getAbbreviation(null, @journalAbbrevsStore, 'default', 'container-title', key)
+    return @journalAbbrevs[key]
 
   extract: ->
     [item, insitu] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
