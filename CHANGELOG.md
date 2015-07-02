@@ -307,12 +307,6 @@
 
 - Auto-export ignores ASCII-enforcement [\#179](https://github.com/ZotPlus/zotero-better-bibtex/issues/179)
 
-## [test-profiles](https://github.com/ZotPlus/zotero-better-bibtex/tree/test-profiles) (2015-04-19)
-
-[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.9.1...test-profiles)
-
-**Closed issues:**
-
 - Feature Request: Push Export [\#70](https://github.com/ZotPlus/zotero-better-bibtex/issues/70)
 
 ## [0.9.0](https://github.com/ZotPlus/zotero-better-bibtex/tree/0.9.0) (2015-04-18)
