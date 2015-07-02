@@ -769,3 +769,18 @@ task :jasmine do
   # Make sure to exit with code > 0 if there is a test failure
   #raise RuntimeError, 'Failure' unless status === 'success'
 end
+
+task :changelog do
+  sh "github_changelog_generator -u ZotPlus -p zotero-better-bibtex -o CHANGE.log"
+
+  keep = true
+  changelog = IO.readlines('CHANGE.log').collect{|line|
+    keep = false if line =~ /^## \[0\.14\.2\]/
+    keep ? line : null
+  }.compact + IO.readlines('CHANGELOG.md').collect{|line|
+    keep ||= line =~ /^## \[0\.14\.2\]/
+    keep ? line : null
+  }.join('')
+
+  open('CHANGELOG.md', 'w'){|f| f.write(changelog) }
+end
