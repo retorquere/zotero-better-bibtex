@@ -1,8 +1,7 @@
 Zotero.BetterBibTeX.keymanager = new class
   constructor: ->
     @log = Zotero.BetterBibTeX.log
-    @journalAbbrevs = Object.create(null)
-    @journalAbbrevsStore = {}
+    @resetJournalAbbrevs()
 
     @keys = Zotero.BetterBibTeX.Cache.addCollection('keys', {disableChangesApi: false, indices: 'itemID libraryID citekey citekeyFormat'.split(/\s+/) })
     @keys.on('insert', (key) ->
@@ -72,14 +71,29 @@ Zotero.BetterBibTeX.keymanager = new class
 
   reset: ->
     Zotero.DB.query('delete from betterbibtex.keys')
-    @journalAbbrevs = Object.create(null)
+    @resetJournalAbbrevs()
     @keys.removeDataOnly()
     @keys.removeWhere((obj) -> true) # causes cache drop
     @keys.flushChanges()
     @scan()
 
   resetJournalAbbrevs: ->
-    @journalAbbrevs = Object.create(null)
+    @journalAbbrevs = {
+      default: {
+        "container-title": { },
+        "collection-title": { },
+        "institution-entire": { },
+        "institution-part": { },
+        "nickname": { },
+        "number": { },
+        "title": { },
+        "place": { },
+        "hereinafter": { },
+        "classic": { },
+        "container-phrase": { },
+        "title-phrase": { }
+      }
+    }
 
   clearDynamic: ->
     @keys.removeWhere((obj) -> obj.citekeyFormat && obj.citekeyFormat != Zotero.BetterBibTeX.citekeyFormat)
@@ -107,8 +121,10 @@ Zotero.BetterBibTeX.keymanager = new class
     return unless key
     return unless Zotero.BetterBibTeX.pref.get('autoAbbrev')
 
-    @journalAbbrevs[key] ?= Zotero.Cite.getAbbreviation(null, @journalAbbrevsStore, 'default', 'container-title', key)
-    return @journalAbbrevs[key]
+    style = Zotero.BetterBibTeX.pref.get('autoAbbrevStyle') || (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)[0].styleID
+
+    @journalAbbrevs['default']?['container-title']?[key] || Zotero.Cite.getAbbreviation(style, @journalAbbrevs, 'default', 'container-title', key)
+    return @journalAbbrevs['default']?['container-title']?[key] || key
 
   extract: ->
     [item, insitu] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
