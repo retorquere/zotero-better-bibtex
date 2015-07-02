@@ -27,7 +27,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
-    ffi (1.9.9)
+    ffi (1.9.10)
     gh (0.14.0)
       addressable
       backports
@@ -125,7 +125,7 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.97)
+    zotplus-rakehelper (0.0.105)
       nokogiri
       rake
       rickshaw
