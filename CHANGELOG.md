@@ -1,5 +1,15 @@
 # Change Log
 
+## [0.14.6](https://github.com/ZotPlus/zotero-better-bibtex/tree/0.14.6) (2015-07-03)
+
+[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.14.5...0.14.6)
+
+**Fixed bugs:**
+
+- ZotPlus Error reporting doesn't work on Standalone [\#231](https://github.com/ZotPlus/zotero-better-bibtex/issues/231)
+
+- Translators not appearing in Zotero standalone on OS X 10.10 [\#230](https://github.com/ZotPlus/zotero-better-bibtex/issues/230)
+
 ## [0.14.5](https://github.com/ZotPlus/zotero-better-bibtex/tree/0.14.5) (2015-07-02)
 
 [Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.14.4...0.14.5)
