@@ -102,8 +102,10 @@ ABBREVS.each{|a|
   end
 }
 ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
-  src.sub(/\.[^\.]+$/, '.js')
-} + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
+  tgt = src.sub(/\.[^\.]+$/, '.js')
+  tgt = [tgt, src.sub(/\.[^\.]+$/, '.js.map')] if File.extname(src) == '.coffee'
+  tgt
+}.flatten + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
   root = File.dirname(tr)
   stem = File.basename(tr, File.extname(tr))
   %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
