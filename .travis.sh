@@ -31,7 +31,6 @@ if [ "$CHECKIN" = "$RELEASE" ] ; then
       git config --global user.email "retorquere@ZotPlus.github.com"
       git config --global push.default matching
       bundle exec rake deploy
-      git checkout . # prevent travis release rebuilds?
     fi
   #fi
 else

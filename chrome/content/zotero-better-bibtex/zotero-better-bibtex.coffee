@@ -73,9 +73,10 @@ Zotero.BetterBibTeX.extensionConflicts = ->
   )
 
   if ZOTERO_CONFIG.VERSION?.match(/\.SOURCE$/)
-    @flash(
-      "You are on a custom Zotero build (#{ZOTERO_CONFIG.VERSION}).",
-      'Feel free to submit error reports when things go wrong, I will do my best to address them, but the target will always be the latest officially released version of Zotero'
+    #@flash(
+    Zotero.logError(
+      "You are on a custom Zotero build (#{ZOTERO_CONFIG.VERSION}). " +
+      'Feel free to submit error reports for Better BibTeX when things go wrong, I will do my best to address them, but the target will always be the latest officially released version of Zotero'
     )
   if Services.vc.compare(ZOTERO_CONFIG.VERSION?.replace(/\.SOURCE$/, '') || '0.0.0', '4.0.27') < 0
     @removeTranslators()
@@ -288,8 +289,9 @@ Zotero.BetterBibTeX.attachDatabase = ->
   installing = @version(@release)
   Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', ?)", [@release])
 
-  Zotero.DB.query("update betterbibtex.autoexport set collection = (select 'library:' || libraryID from groups where 'group:' || groupID = collection) where collection like 'group:%'")
-  Zotero.DB.query("update betterbibtex.autoexport set collection = 'collection:' || collection where collection <> 'library' and collection not like '%:%'")
+  if @tableExists('betterbibtex.autoexport')
+    Zotero.DB.query("update betterbibtex.autoexport set collection = (select 'library:' || libraryID from groups where 'group:' || groupID = collection) where collection like 'group:%'")
+    Zotero.DB.query("update betterbibtex.autoexport set collection = 'collection:' || collection where collection <> 'library' and collection not like '%:%'")
 
   upgrade = (installed != installing)
 
