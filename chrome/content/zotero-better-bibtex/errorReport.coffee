@@ -1,4 +1,4 @@
-Components.utils.importGlobalProperties(['Blob'])
+# Components.utils.importGlobalProperties(['Blob'])
 
 Zotero_BetterBibTeX_ErrorReport = new class
   constructor: ->
