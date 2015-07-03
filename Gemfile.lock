@@ -37,6 +37,7 @@ GEM
       net-http-pipeline
     gherkin (2.12.2)
       multi_json (~> 1.3)
+    ghi (0.9.3)
     github_api (0.12.3)
       addressable (~> 2.3)
       descendants_tracker (~> 0.0.4)
@@ -125,7 +126,7 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.106)
+    zotplus-rakehelper (0.0.107)
       nokogiri
       rake
       rickshaw
@@ -139,6 +140,7 @@ DEPENDENCIES
   addressable
   bibtex-ruby
   cucumber
+  ghi
   github_api
   headless
   nokogiri
