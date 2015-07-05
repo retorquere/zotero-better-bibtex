@@ -1,15 +1,15 @@
 {
   "action": "https://zotplus-964ec2b7-379e-49a4-9c8a-edcb20db343f.s3-eu-central-1.amazonaws.com/",
-  "maxSize": 20971520,
+  "maxSize": 41943040,
   "fields": {
     "key": "${filename}",
     "Content-Type": "text/plain",
     "acl": "private",
     "success_action_status": "201",
-    "policy": "eyJleHBpcmF0aW9uIjoiMjA0NS0wNi0xOFQyMzo1NDo1MFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ6b3RwbHVzLTk2NGVjMmI3LTM3OWUtNDlhNC05YzhhLWVkY2IyMGRiMzQzZiJ9LHsiYWNsIjoicHJpdmF0ZSJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSx7InN1Y2Nlc3NfYWN0aW9uX3N0YXR1cyI6IjIwMSJ9LHsieC1hbXotY3JlZGVudGlhbCI6IkFLSUFJNEZINVFWV1BFNzJHRFVRLzIwMTUwNjI2L2V1LWNlbnRyYWwtMS9zMy9hd3M0X3JlcXVlc3QifSx7IngtYW16LWFsZ29yaXRobSI6IkFXUzQtSE1BQy1TSEEyNTYifSx7IngtYW16LWRhdGUiOiIyMDE1MDYyNlQyMzU0NTBaIn0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMCwyMDk3MTUyMF1dfQ==",
+    "policy": "eyJleHBpcmF0aW9uIjoiMjA0NS0wNi0yN1QxMzo0OTowOFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ6b3RwbHVzLTk2NGVjMmI3LTM3OWUtNDlhNC05YzhhLWVkY2IyMGRiMzQzZiJ9LHsiYWNsIjoicHJpdmF0ZSJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSx7InN1Y2Nlc3NfYWN0aW9uX3N0YXR1cyI6IjIwMSJ9LHsieC1hbXotY3JlZGVudGlhbCI6IkFLSUFJNEZINVFWV1BFNzJHRFVRLzIwMTUwNzA1L2V1LWNlbnRyYWwtMS9zMy9hd3M0X3JlcXVlc3QifSx7IngtYW16LWFsZ29yaXRobSI6IkFXUzQtSE1BQy1TSEEyNTYifSx7IngtYW16LWRhdGUiOiIyMDE1MDcwNVQxMzQ5MDhaIn0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMCw0MTk0MzA0MF1dfQ==",
     "x-amz-algorithm": "AWS4-HMAC-SHA256",
-    "x-amz-credential": "AKIAI4FH5QVWPE72GDUQ/20150626/eu-central-1/s3/aws4_request",
-    "x-amz-date": "20150626T235450Z",
-    "x-amz-signature": "29e1f28d702e305898eb5988596bc12a74a46bdf5de2279b1304ae129d3ac45b"
+    "x-amz-credential": "AKIAI4FH5QVWPE72GDUQ/20150705/eu-central-1/s3/aws4_request",
+    "x-amz-date": "20150705T134908Z",
+    "x-amz-signature": "abbf0dc49f0054f1ef5c35866659492c126d2fdd10ded9c43c665bcb14bc23fa"
   }
 }
