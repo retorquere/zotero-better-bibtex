@@ -13,6 +13,7 @@
 resource/translators/latex_unicode_mapping.coffee
 resource/translators/mathchar.pegcoffee
 resource/translators/*.json
+resource/logs/*.json
 resource/logs/*.html
 test/fixtures/plugins
 tmp

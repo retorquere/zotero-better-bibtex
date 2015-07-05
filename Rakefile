@@ -555,7 +555,8 @@ task :share => XPI do
   folder = ['~/Google Drive/Public', '~/GoogleDrive/Public' ].collect{|p| File.expand_path(p) }.detect{|p| File.directory?(p) }
   raise "No share folder" unless folder
   Dir["#{folder}/*.xpi"].each{|xpi| File.unlink(xpi)}
-  FileUtils.cp(XPI, File.join(folder, XPI))
+  xpi = File.basename(XPI, File.extname(XPI)) + '-' + TIMESTAMP.sub(' ', '@') + File.extname(XPI)
+  FileUtils.cp(XPI, File.join(folder, xpi))
 end
 
 file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translators/unicode.xml', 'Rakefile'] do |t|
