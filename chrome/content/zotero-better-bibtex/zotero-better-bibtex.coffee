@@ -187,6 +187,7 @@ Zotero.BetterBibTeX.setCitekeyFormatter = ->
 
 Zotero.BetterBibTeX.idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
+  Zotero.BetterBibTeX.debug("idle: #{topic}")
   switch topic
     when 'idle'
       Zotero.BetterBibTeX.cache.flush()

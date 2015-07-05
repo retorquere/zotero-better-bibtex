@@ -8,19 +8,13 @@ Zotero.BetterBibTeX.cache = new class
       disableChangesApi: false
       indices: 'itemID exportCharset exportNotes getCollections translatorID useJournalAbbreviation'.split(/\s+/)
     })
-    if Zotero.BetterBibTeX.pref.get('debug')
-      @cache.on('insert', (entry) -> Zotero.BetterBibTeX.debug('cache.loki insert', entry))
-      @cache.on('update', (entry) -> Zotero.BetterBibTeX.debug('cache.loki update', entry))
-      @cache.on('delete', (entry) -> Zotero.BetterBibTeX.debug('cache.loki delete', entry))
+
+    #if Zotero.BetterBibTeX.pref.get('debug')
+    #  @cache.on('insert', (entry) -> Zotero.BetterBibTeX.debug('cache.loki insert', entry))
+    #  @cache.on('update', (entry) -> Zotero.BetterBibTeX.debug('cache.loki update', entry))
+    #  @cache.on('delete', (entry) -> Zotero.BetterBibTeX.debug('cache.loki delete', entry))
 
     @log = Zotero.BetterBibTeX.log
-    #@__exposedProps__ = {
-    #  fetch: 'r'
-    #  store: 'r'
-    #  dump: 'r'
-    #}
-    #for own key, value of @__exposedProps__
-    #  @[key].__exposedProps__ = []
 
   integer: (v) ->
     return v if typeof v == 'number'
@@ -246,7 +240,7 @@ Zotero.BetterBibTeX.auto = new class
     @refresh()
 
   process: (reason) ->
-    Zotero.BetterBibTeX.debug("auto.process: started (#{reason})")
+    Zotero.BetterBibTeX.debug("auto.process: started (#{reason}), idle: #{@idle}")
 
     if @running
       Zotero.BetterBibTeX.debug('auto.process: export already running')

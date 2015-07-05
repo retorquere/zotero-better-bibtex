@@ -40,7 +40,11 @@ Zotero_BetterBibTeX_ErrorReport = new class
         full: Zotero.getErrors(true).join('\n') + "\n\n" + info + "\n\n"
       }
       @errorLog.truncated = @errorLog.full
-      @errorLog.full += Zotero.Debug.get().slice(-1 * (@form.maxSize - @errorLog.full.length))
+
+      maxSize = if @form.maxSize then (@form.maxSize - @errorLog.full.length) * 0.95 else null
+      debug = Zotero.Debug.get()
+      debug = debug.slice(-1 * maxSize) if maxSize && debug.length > maxSize
+      @errorLog.full += debug
       @errorLog.truncated += Zotero.Debug.get(5000, 80)
       Zotero.Debug.clear() # because calling 'get' with a line limit messes up the log
 

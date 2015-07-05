@@ -288,9 +288,10 @@ file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'].compa
   shortDate = date.sub(/T.*/, '')
   credentials = [ creds.AccessKeyId, shortDate, region, service, requestType ].join('/')
 
-  maxSize = 40 * 1024 * 1024 # 40 megabytes
+  maxSize = nil
+  maxSize = 20 * 1024 * 1024 # 20 megabytes
 
-  policy = Base64.encode64({
+  policy = {
     'expiration' => (Time.now + (60*60*24*365*30)).strftime('%Y-%m-%dT%H:%M:%SZ'), # 30 years from now
     'conditions' => [
       {'bucket' => bucket},
@@ -301,9 +302,10 @@ file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'].compa
       {'x-amz-credential' => credentials},
       {'x-amz-algorithm' => algorithm},
       {'x-amz-date' => date},
-      ['content-length-range', 0, maxSize],
     ]
-  }.to_json).gsub("\n","")
+  }
+  policy['conditions'] << ['content-length-range', 0, maxSize] if maxSize
+  policy = Base64.encode64(policy.to_json).gsub("\n","")
   
   signingKey = ['AWS4' + creds.SecretAccessKey, shortDate, region, service, requestType].inject{|key, data| OpenSSL::HMAC.digest('sha256', key, data) } 
   

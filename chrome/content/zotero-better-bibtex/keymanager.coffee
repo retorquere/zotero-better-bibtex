@@ -5,7 +5,7 @@ Zotero.BetterBibTeX.keymanager = new class
 
     @keys = Zotero.BetterBibTeX.Cache.addCollection('keys', {disableChangesApi: false, indices: 'itemID libraryID citekey citekeyFormat'.split(/\s+/) })
     @keys.on('insert', (key) ->
-      Zotero.BetterBibTeX.debug('keymanager.loki insert', key)
+      #Zotero.BetterBibTeX.debug('keymanager.loki insert', key)
       Zotero.BetterBibTeX.keymanager.verify(key)
 
       if !key.citekeyFormat && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
@@ -13,7 +13,7 @@ Zotero.BetterBibTeX.keymanager = new class
         Zotero.BetterBibTeX.keymanager.keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
     )
     @keys.on('update', (key) ->
-      Zotero.BetterBibTeX.debug('keymanager.loki update', key)
+      #Zotero.BetterBibTeX.debug('keymanager.loki update', key)
       Zotero.BetterBibTeX.keymanager.verify(key)
 
       if !key.citekeyFormat && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
@@ -22,7 +22,7 @@ Zotero.BetterBibTeX.keymanager = new class
       Zotero.BetterBibTeX.cache.remove({itemID: key.itemID})
     )
     @keys.on('delete', (key) ->
-      Zotero.BetterBibTeX.debug('keymanager.loki delete', key)
+      #Zotero.BetterBibTeX.debug('keymanager.loki delete', key)
       Zotero.BetterBibTeX.cache.remove({itemID: key.itemID})
     )
 
@@ -38,17 +38,6 @@ Zotero.BetterBibTeX.keymanager = new class
     # docs say are defined in some appendix of the LaTeX book. (I don't have the
     # LaTeX book.)
     @months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
-
-    #@__exposedProps__ = {
-    #  months: 'r'
-    #  journalAbbrev: 'r'
-    #  extract: 'r'
-    #  get: 'r'
-    #  alternates: 'r'
-    #  cache: 'r'
-    #}
-    #for own key of @__exposedProps__
-    #  @[key].__exposedProps__ = []
 
     @embeddedKeyRE = /bibtex: *([^\s\r\n]+)/
     @andersJohanssonKeyRE = /biblatexcitekey\[([^\]]+)\]/
