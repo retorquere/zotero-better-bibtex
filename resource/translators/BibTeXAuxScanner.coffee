@@ -21,6 +21,6 @@ doImport = ->
   item.title = Translator.header.label
   item.extra = JSON.stringify(data)
   item.complete()
-  Translator.log('::: imported', Translator.log.object(item))
+  Translator.log('::: imported', item)
   return
 
