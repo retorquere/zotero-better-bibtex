@@ -34,8 +34,12 @@ ZoteroItemPane.viewItem = ((original) ->
     original.apply(@, arguments)
     if index == 0 # details pane
       ZoteroItemPane.addCitekeyRow()
-      citekey = Zotero.BetterBibTeX.keymanager.get(item)
       display = document.getElementById('zotero-better-bibtex-itempane-citekey')
-      display.value = citekey.citekey
-      display.classList[if citekey.citekeyFormat then 'add' else 'remove']('citekey-dynamic')
+      citekey = Zotero.BetterBibTeX.keymanager.get(item)
+      if citekey
+        display.value = citekey.citekey
+        display.classList[if citekey.citekeyFormat then 'add' else 'remove']('citekey-dynamic')
+      else
+        display.value = ''
+        Zotero.BetterBibTeX.log("#{item.itemTypeID} has no citekey") unless citekey
   )(ZoteroItemPane.viewItem)

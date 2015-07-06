@@ -28,7 +28,16 @@ Zotero.BetterBibTeX.debugMode = ->
     @log = @log_off
 
 Zotero.BetterBibTeX.stringify = (obj, replacer, spaces, cycleReplacer) ->
-  return JSON.stringify(obj, @stringifier(replacer, cycleReplacer), spaces)
+  str = JSON.stringify(obj, @stringifier(replacer, cycleReplacer), spaces)
+  if Array.isArray(obj)
+    keys = Object.keys(obj)
+    if keys.length > 0
+      o = {}
+      for key in keys
+        continue if key.match(/^\d+$/)
+        o[key] = obj[key]
+      str += '+' + @stringify(o)
+  return str
 
 Zotero.BetterBibTeX.stringifier = (replacer, cycleReplacer) ->
   stack = []
