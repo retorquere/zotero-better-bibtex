@@ -8,6 +8,8 @@ Zotero.BetterBibTeX = {
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
 
+Components.utils.import("chrome://zotero-better-bibtex/content/bluebird.js", Zotero.BetterBibTeX)
+
 Zotero.BetterBibTeX.debug_off = ->
 Zotero.BetterBibTeX.debug = Zotero.BetterBibTeX.debug_on = (msg...) ->
   @_log.apply(@, [5].concat(msg))
@@ -887,12 +889,7 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions, callback) ->
   translation.setTranslator(translator)
   translation.setDisplayOptions(displayOptions)
 
-  translation.setHandler('done', (obj, success) ->
-    if success
-      callback(obj.string)
-    else
-      callback()
-  )
+  translation.setHandler('done', (obj, success) -> callback(!success, if success then obj?.string else null))
   translation.translate()
 
 Zotero.BetterBibTeX.load = (translator) ->

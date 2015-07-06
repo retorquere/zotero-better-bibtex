@@ -38,9 +38,12 @@ Zotero.BetterBibTeX.endpoints.collection.init = (url, data, sendResponseCallback
     col ||= Zotero.Collections.getByLibraryAndKey(libid, key)
     throw "#{collectionkey} not found" unless col
 
-    deferred = Q.defer()
-    Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {collection: col}, Zotero.BetterBibTeX.displayOptions(url), (result) ->
-      deferred.resolve(result)
+    deferred = Zotero.BetterBibTeX.Promise.pending()
+    Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {collection: col}, Zotero.BetterBibTeX.displayOptions(url), (err, result) ->
+      if err
+        deferred.reject(err)
+      else
+        deferred.fulfill(result)
     )
     sendResponseCallback(200, 'text/plain', deferred.promise)
 
@@ -78,9 +81,12 @@ Zotero.BetterBibTeX.endpoints.library.init = (url, data, sendResponseCallback) -
       sendResponseCallback(404, 'text/plain', "Could not export bibliography '#{library}': unsupported format #{format}")
       return
 
-    deferred = Q.defer()
-    Zotero.BetterBibTeX.translate(translator, {library: libid}, Zotero.BetterBibTeX.displayOptions(url), (result) ->
-      deferred.resolve(result)
+    deferred = Zotero.BetterBibTeX.Promise.pending()
+    Zotero.BetterBibTeX.translate(translator, {library: libid}, Zotero.BetterBibTeX.displayOptions(url), (err, result) ->
+      if err
+        deferred.reject(err)
+      else
+        deferred.fulfill(result)
     )
     sendResponseCallback(200, 'text/plain', deferred.promise)
 
@@ -102,9 +108,12 @@ Zotero.BetterBibTeX.endpoints.selected.init = (url, data, sendResponseCallback) 
   zoteroPane = Zotero.getActiveZoteroPane()
   items = Zotero.Items.get((item.id for item of zoteroPane.getSelectedItems()))
 
-  deferred = Q.defer()
-  Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: items}, Zotero.BetterBibTeX.displayOptions(url), (result) ->
-    deferred.resolve(result)
+  deferred = Zotero.BetterBibTeX.Promise.pending()
+  Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: items}, Zotero.BetterBibTeX.displayOptions(url), (err, result) ->
+    if err
+      deferred.reject(err)
+    else
+      deferred.fulfill(result)
   )
   sendResponseCallback(200, 'text/plain', deferred.promise)
 
