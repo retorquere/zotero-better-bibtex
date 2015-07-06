@@ -160,7 +160,7 @@ Zotero.BetterBibTeX.cache = new class
     cached = @cache.findObject(record)
 
     @access.insert(record) if cached && !@access.findObject(record)
-    Zotero.BetterBibTeX.debug("cache.fetch", (if cached then 'hit' else 'miss'), 'for', Zotero.BetterBibTeX.log.object(record), ':', cached)
+    Zotero.BetterBibTeX.debug("cache.fetch", (if cached then 'hit' else 'miss'), 'for', record, ':', cached)
     return cached
 
   store: ->
@@ -183,12 +183,15 @@ Zotero.BetterBibTeX.cache = new class
       record.bibtex = bibtex
       record.lastaccess = Date.now()
       @cache.insert(record)
-    Zotero.BetterBibTeX.debug('cache.store', (if cached then 'replace' else 'insert'), 'for', Zotero.BetterBibTeX.log.object(record))
+    Zotero.BetterBibTeX.debug('cache.store', (if cached then 'replace' else 'insert'), 'for', record)
 
 Zotero.BetterBibTeX.auto = new class
   constructor: ->
-    @bool = Zotero.BetterBibTeX.cache.bool
     @search = {}
+    @idle = false
+    Zotero.BetterBibTeX.debug('idle: auto-exporter initialized:', @)
+
+  bool: (v) -> if v then 'true' else 'false'
 
   markSearch: (id) ->
     search = Zotero.Searches.get(id)
@@ -257,11 +260,9 @@ Zotero.BetterBibTeX.auto = new class
 
     skip = {error: [], done: []}
     translation = null
-    ae = (Zotero.BetterBibTeX.log.object(ae) for ae in Zotero.DB.query("select * from betterbibtex.autoexport"))
-    Zotero.BetterBibTeX.debug('auto-exports configured:', ae)
 
     for ae in Zotero.DB.query("select * from betterbibtex.autoexport ae where status == 'pending'")
-      Zotero.BetterBibTeX.debug('auto.process: candidate', Zotero.BetterBibTeX.log.object(ae))
+      Zotero.BetterBibTeX.debug('auto.process: candidate', ae)
       path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
       path.initWithPath(ae.path)
 
@@ -302,7 +303,7 @@ Zotero.BetterBibTeX.auto = new class
       continue if items.items && items.items.length == 0
       continue if translation
 
-      Zotero.BetterBibTeX.debug('auto.process: candidate picked:', Zotero.BetterBibTeX.log.object(ae))
+      Zotero.BetterBibTeX.debug('auto.process: candidate picked:', ae)
       translation = new Zotero.Translate.Export()
 
       for own k, v of items
@@ -335,7 +336,7 @@ Zotero.BetterBibTeX.auto = new class
       Zotero.BetterBibTeX.debug('auto.process: no pending jobs')
       return
 
-    Zotero.BetterBibTeX.debug('auto.process: starting', Zotero.BetterBibTeX.log.object(items))
+    Zotero.BetterBibTeX.debug('auto.process: starting', items)
     @refresh()
 
     translation.setHandler('done', (obj, worked) ->

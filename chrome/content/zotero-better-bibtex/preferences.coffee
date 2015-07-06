@@ -168,7 +168,7 @@ BetterBibTeXAutoExportPref =
       exportlist.removeChild(node) for node in exportlist.children when node?.nodeName == 'listitem'
 
       for ae in Zotero.DB.query("select * from betterbibtex.autoexport order by path")
-        Zotero.BetterBibTeX.debug('pref.autoexport.refresh: refill', Zotero.BetterBibTeX.log.object(ae))
+        Zotero.BetterBibTeX.debug('pref.autoexport.refresh: refill', ae)
         itemNode = document.createElement('listitem')
         itemNode.setAttribute('value', ae.id)
 

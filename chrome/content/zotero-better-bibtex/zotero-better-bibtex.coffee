@@ -9,49 +9,27 @@ Zotero.BetterBibTeX = {
 }
 
 Zotero.BetterBibTeX.debug_off = ->
+Zotero.BetterBibTeX.debug = Zotero.BetterBibTeX.debug_on = (msg...) ->
+  @_log.apply(@, [5].concat(msg))
 
-Zotero.BetterBibTeX.debug_on = (msg...) ->
-  @log.apply(@, [ '[' + 'DEBUG' + ']' ].concat(msg))
+Zotero.BetterBibTeX.log_off = ->
+Zotero.BetterBibTeX.log = Zotero.BetterBibTeX.log_on = (msg...) ->
+  @_log.apply(@, [3].concat(msg))
 
 Zotero.BetterBibTeX.debugMode = ->
   if @pref.get('debug')
     Zotero.Debug.setStore(true)
     Zotero.Prefs.set('debug.store', true)
     @debug = @debug_on
+    @log = @log_on
     @flash('Debug mode active', 'Debug mode is active. This will affect performance.')
   else
     @debug = @debug_off
+    @log = @log_off
 
-Zotero.BetterBibTeX.log = (msg...) ->
-  msg = for m in msg
-    switch
-      when (typeof m) in ['string', 'number'] then '' + m
-      when Array.isArray(m) && Object.keys(m).length > 0 then @log.object(m)
-      when Array.isArray(m) then @log.array(m)
-      when typeof m == 'object' then @log.object(m)
-      when m instanceof Error and m.name then "#{m.name}: #{m.message} \n(#{m.fileName}, #{m.lineNumber})\n#{m.stack}"
-      when m instanceof Error then "#{e}\n#{e.stack}"
-      else JSON.stringify(m)
-
-  Zotero.debug("[#{(new Date()).toUTCString()} " + "better-bibtex] #{msg.join(' ')}")
-
-Zotero.BetterBibTeX.log.stringify = (o) ->
-  seen = []
-  return JSON.stringify(o, (key, val) ->
-    if val != null and typeof val == 'object'
-      return '<duplicate>' if seen.indexOf(val) >= 0
-      seen.push(val)
-    return val
-  )
-
-Zotero.BetterBibTeX.log.object = (o) ->
-  obj = {}
-  for k, v of o
-    obj[k] = v
-  return @stringify(obj)
-
-Zotero.BetterBibTeX.log.array = (a) ->
-  return @stringify((v for v in a))
+Zotero.BetterBibTeX._log = (level, msg...) ->
+  msg = ((if (typeof m) in ['boolean', 'string', 'number'] then '' + m else Zotero.Utilities.varDump(m)) for m in msg).join(' ')
+  Zotero.debug('[better' + '-' + 'bibtex] ' + msg, level)
 
 Zotero.BetterBibTeX.extensionConflicts = ->
   AddonManager.getAddonByID('{359f0058-a6ca-443e-8dd8-09868141bebc}', (recoll) ->
@@ -195,7 +173,7 @@ Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
       Zotero.BetterBibTeX.auto.idle = true
       Zotero.BetterBibTeX.auto.process('idle')
 
-    when 'back'
+    when 'back', 'active'
       Zotero.BetterBibTeX.auto.idle = false
 
 Zotero.BetterBibTeX.version = (version) ->
@@ -579,7 +557,7 @@ Zotero.BetterBibTeX.init = ->
       if to_export
         @_displayOptions.translatorID = translatorID
         Zotero.BetterBibTeX.auto.add(to_export, @location.path, @_displayOptions)
-        Zotero.BetterBibTeX.debug('Captured auto-export:', @location.path, Zotero.BetterBibTeX.log.object(@_displayOptions))
+        Zotero.BetterBibTeX.debug('Captured auto-export:', @location.path, @_displayOptions)
 
       return original.apply(@, arguments)
     )(Zotero.Translate.Export::translate)

@@ -1,40 +1,16 @@
 Translator = {}
 
-Translator.log = (msg...) ->
-  msg = for m in msg
-    switch
-      when (typeof m) in ['string', 'number'] then '' + m
-      when Array.isArray(m) && Object.keys(m).length > 0 then @log.object(m)
-      when Array.isArray(m) then @log.array(m)
-      when typeof m == 'object' then @log.object(m)
-      when m instanceof Error and m.name then "#{m.name}: #{m.message} \n(#{m.fileName}, #{m.lineNumber})\n#{m.stack}"
-      when m instanceof Error then "#{e}\n#{e.stack}"
-      else JSON.stringify(m)
-
-  Zotero.debug("[#{(new Date()).toUTCString()} " + "better-bibtex:#{@header.label}] #{msg.join(' ')}")
-
-Translator.log.stringify = (o) ->
-  seen = []
-  return JSON.stringify(o, (key, val) ->
-    if val != null and typeof val == 'object'
-      return '<duplicate>' if seen.indexOf(val) >= 0
-      seen.push(val)
-    return val
-  )
-
-Translator.log.object = (o) ->
-  obj = {}
-  for k, v of o
-    obj[k] = v
-  return @stringify(obj)
-
-Translator.log.array = (a) ->
-  return @stringify((v for v in a))
-
-Translator.debug_on = (msg...) ->
-  @log.apply(@, [ '[' + 'DEBUG' + ']' ].concat(msg))
-
 Translator.debug_off = ->
+Translator.debug = Translator.debug_on = (msg...) ->
+  @_log.apply(@, [5].concat(msg))
+
+Translator.log_off = ->
+Translator.log = Translator.log_on = (msg...) ->
+  @_log.apply(@, [3].concat(msg))
+
+Translator._log = (level, msg...) ->
+  msg = ((if (typeof m) in ['boolean', 'string', 'number'] then '' + m else Zotero.Utilities.varDump(m)) for m in msg).join(' ')
+  Zotero.debug('[better' + '-' + "bibtex:#{@header.label}] " + msg, level)
 
 Translator.initialize = ->
   return if @initialized
@@ -89,12 +65,14 @@ Translator.initialize = ->
 
   if Zotero.getHiddenPref('better-bibtex.debug')
     @debug = @debug_on
+    @log = @log_on
     cfg = {}
     for own k, v of @
       cfg[k] = v unless typeof v == 'object'
-    @debug("Translator initialized: #{JSON.stringify(cfg)}")
+    @debug("Translator initialized:", cfg)
   else
     @debug = @debug_off
+    @log = @log_off
 
   @collections = []
   if Zotero.nextCollection
