@@ -45,8 +45,12 @@ Zotero_BetterBibTeX_ErrorReport = new class
       debug = Zotero.Debug.get()
       debug = debug.slice(-1 * maxSize) if maxSize && debug.length > maxSize
       @errorLog.full += debug
-      @errorLog.truncated += Zotero.Debug.get(5000, 80)
-      Zotero.Debug.clear() # because calling 'get' with a line limit messes up the log
+
+      debug = debug.split("\n")
+      debug = debug.slice(0, 5000) # max 5k lines
+      debug = (Zotero.Utilities.ellipsize(line, 80, true) for line in debug) # trim lines
+      debug = debug.join("\n")
+      @errorLog.truncated += debug
 
       if document.getElementById('zotero-failure-message').hasChildNodes()
         textNode = document.getElementById('zotero-failure-message').firstChild
