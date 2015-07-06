@@ -105,7 +105,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.library = ->
     if err
       deferred.reject(err)
     else
-      deferred.fulfill(result)
+      deferred.fulfill(JSON.parse(result))
   )
   return deferred.promise
 
