@@ -28,9 +28,9 @@ Zotero.BetterBibTeX.debugMode = ->
     @log = @log_off
 
 Zotero.BetterBibTeX.stringify = (obj, replacer, spaces, cycleReplacer) ->
-  return JSON.stringify(obj, @serializer(replacer, cycleReplacer), spaces)
+  return JSON.stringify(obj, @stringifier(replacer, cycleReplacer), spaces)
 
-Zotero.BetterBibTeX.serializer = (replacer, cycleReplacer) ->
+Zotero.BetterBibTeX.stringifier = (replacer, cycleReplacer) ->
   stack = []
   keys = []
   if cycleReplacer == null

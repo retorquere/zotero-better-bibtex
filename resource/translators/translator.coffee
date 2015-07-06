@@ -9,9 +9,9 @@ Translator.log = Translator.log_on = (msg...) ->
   @_log.apply(@, [3].concat(msg))
 
 Translator.stringify = (obj, replacer, spaces, cycleReplacer) ->
-  return JSON.stringify(obj, @serializer(replacer, cycleReplacer), spaces)
+  return JSON.stringify(obj, @stringifier(replacer, cycleReplacer), spaces)
 
-Translator.serializer = (replacer, cycleReplacer) ->
+Translator.stringifier = (replacer, cycleReplacer) ->
   stack = []
   keys = []
   if cycleReplacer == null
