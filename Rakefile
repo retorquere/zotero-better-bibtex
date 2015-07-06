@@ -557,6 +557,7 @@ task :share => XPI do
   Dir["#{folder}/*.xpi"].each{|xpi| File.unlink(xpi)}
   xpi = File.basename(XPI, File.extname(XPI)) + '-' + TIMESTAMP.sub(' ', '@') + File.extname(XPI)
   FileUtils.cp(XPI, File.join(folder, xpi))
+  puts xpi
 end
 
 file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translators/unicode.xml', 'Rakefile'] do |t|
