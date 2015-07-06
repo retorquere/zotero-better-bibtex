@@ -110,6 +110,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   stem = File.basename(tr, File.extname(tr))
   %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
 }.flatten + [
+  'chrome/content/zotero-better-bibtex/bluebird.js',
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/test/tests.js',
@@ -196,6 +197,7 @@ DOWNLOADS = {
     'test/chai.js'      => 'http://chaijs.com/chai.js',
     'test/yadda.js'     => 'https://raw.githubusercontent.com/acuminous/yadda/master/dist/yadda-0.11.5.js',
     'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
+    'bluebird.js'       => 'https://raw.githubusercontent.com/zotero/zotero/master/resource/bluebird.js',
   },
   translators: {
     #'unicode.xml'         => 'http://www.w3.org/2003/entities/2007xml/unicode.xml',
