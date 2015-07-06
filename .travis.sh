@@ -10,6 +10,7 @@ CHECKIN=`git log -n 1 --pretty=oneline`
 echo "checkin: $CHECKIN"
 echo "release: $RELEASE"
 if [ "$CHECKIN" = "$RELEASE" ] ; then
+  export CHANGELOG_GITHUB_TOKEN=$GITHUB_TOKEN
   #PUBLISHED=`ruby -e 'require "open-uri"; require "json"; puts JSON.parse(open("https://api.github.com/repos/ZotPlus/zotero-better-bibtex/releases/latest").read)["tag_name"]'`
   #PUBLISHED="$TRAVIS_COMMIT release: zotero-better-bibtex-$PUBLISHED.xpi"
   #echo "published: $PUBLISHED"
