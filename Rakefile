@@ -284,7 +284,7 @@ file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'].compa
   end
   creds = OpenStruct.new(Hash[*(header.zip(data).flatten)])
   
-  date = Time.now.strftime('%Y%m%dT%H%M%SZ')
+  date = Time.now.strftime('%Y%m%dT000000Z')
   shortDate = date.sub(/T.*/, '')
   credentials = [ creds.AccessKeyId, shortDate, region, service, requestType ].join('/')
 
@@ -292,7 +292,7 @@ file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'].compa
   maxSize = nil
 
   policy = {
-    'expiration' => (Time.now + (60*60*24*365*30)).strftime('%Y-%m-%dT%H:%M:%SZ'), # 30 years from now
+    'expiration' => Time.new(2200).strftime('%Y-%m-%dT%H:%M:%SZ'),
     'conditions' => [
       {'bucket' => bucket},
       {'acl' => acl},
