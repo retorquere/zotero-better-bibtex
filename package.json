@@ -17,6 +17,7 @@
     "url": "https://github.com/ZotPlus/zotero-better-bibtex/issues"
   },
   "dependencies": {
+    "aws-sdk": "^2.1.36",
     "coffee-script": "^1.9.1",
     "coffeelint": "^1.9.2",
     "pegjs": "^0.8.0"

@@ -189,7 +189,7 @@ Zotero.BetterBibTeX.auto = new class
   constructor: ->
     @search = {}
     @idle = false
-    Zotero.BetterBibTeX.debug('idle: auto-exporter initialized:', @)
+    Zotero.debug('idle: auto-exporter initialized:')
 
   bool: (v) -> if v then 'true' else 'false'
 

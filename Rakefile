@@ -774,3 +774,26 @@ task :jasmine do
   # Make sure to exit with code > 0 if there is a test failure
   #raise RuntimeError, 'Failure' unless status === 'success'
 end
+
+task :logs, [:id] do |t, args|
+  if args[:id].to_s !~ /^[A-Z0-9]+-[A-Z0-9]+$/
+    sh "aws s3 ls s3://zotplus-964ec2b7-379e-49a4-9c8a-edcb20db343f"
+  else
+    sh "aws s3 cp s3://zotplus-964ec2b7-379e-49a4-9c8a-edcb20db343f/#{args[:id]}-errorlog.txt tmp/#{args[:id]}-errorlog.txt"
+    open("tmp/#{args[:id]}-errorlog-trimmed.txt", 'w'){|trimmed|
+      skipnext = false
+      IO.readlines("tmp/#{args[:id]}-errorlog.txt").each{|line|
+        if line =~ /^\(5\)/
+          skipnext = true
+        else
+          trimmed.write(line) unless skipnext && line.strip == ''
+          skipnext = false
+        end
+      }
+    }
+    begin
+      sh "aws s3 cp s3://zotplus-964ec2b7-379e-49a4-9c8a-edcb20db343f/#{args[:id]}-references.json tmp/#{args[:id]}-references.json"
+    rescue
+    end
+  end
+end

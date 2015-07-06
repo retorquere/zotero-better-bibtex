@@ -8,8 +8,31 @@ Translator.log_off = ->
 Translator.log = Translator.log_on = (msg...) ->
   @_log.apply(@, [3].concat(msg))
 
+Translator.stringify = (obj, replacer, spaces, cycleReplacer) ->
+  return JSON.stringify(obj, @serializer(replacer, cycleReplacer), spaces)
+
+Translator.serializer = (replacer, cycleReplacer) ->
+  stack = []
+  keys = []
+  if cycleReplacer == null
+    cycleReplacer = (key, value) ->
+      return '[Circular ~]' if stack[0] == value
+      return '[Circular ~.' + keys.slice(0, stack.indexOf(value)).join('.') + ']'
+
+  return (key, value) ->
+    if stack.length > 0
+      thisPos = stack.indexOf(this)
+      if ~thisPos then stack.splice(thisPos + 1) else stack.push(this)
+      if ~thisPos then keys.splice(thisPos, Infinity, key) else keys.push(key)
+      value = cycleReplacer.call(this, key, value) if ~stack.indexOf(value)
+    else
+      stack.push(value)
+
+    return value if replacer == null || replacer == undefined
+    return replacer.call(this, key, value)
+
 Translator._log = (level, msg...) ->
-  msg = ((if (typeof m) in ['boolean', 'string', 'number'] then '' + m else Zotero.Utilities.varDump(m)) for m in msg).join(' ')
+  msg = ((if (typeof m) in ['boolean', 'string', 'number'] then '' + m else Translator.stringify(m)) for m in msg).join(' ')
   Zotero.debug('[better' + '-' + "bibtex:#{@header.label}] " + msg, level)
 
 Translator.initialize = ->
