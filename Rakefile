@@ -110,12 +110,12 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   stem = File.basename(tr, File.extname(tr))
   %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
 }.flatten + [
-  'chrome/content/zotero-better-bibtex/bluebird.js',
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/test/tests.js',
   'chrome.manifest',
   'install.rdf',
+  'resource/bluebird.txt',
   'resource/logs/s3.json',
   'resource/translators/htmlparser.js',
   'resource/translators/json5.js',
@@ -192,31 +192,31 @@ def saveAbbrevs(abbrevs, file, jurisdiction='default')
 end
 
 DOWNLOADS = {
-  chrome: {
+  'chrome/content/zotero-better-bibtex' => {
     'test/bluebird.js'  => 'https://cdn.jsdelivr.net/bluebird/latest/bluebird.js',
     'test/chai.js'      => 'http://chaijs.com/chai.js',
     'test/yadda.js'     => 'https://raw.githubusercontent.com/acuminous/yadda/master/dist/yadda-0.11.5.js',
     'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
-    'bluebird.js'       => 'https://raw.githubusercontent.com/zotero/zotero/master/resource/bluebird.js',
   },
-  translators: {
+  'resource/translators/' => {
     #'unicode.xml'         => 'http://www.w3.org/2003/entities/2007xml/unicode.xml',
     'unicode.xml'         => 'http://www.w3.org/Math/characters/unicode.xml',
     'org.js'              => 'https://raw.githubusercontent.com/mooz/org-js/master/org.js',
     #'xregexp-all.js'  => 'http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js',
     #'json5.js'            => 'https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js',
     #'htmlparser.js'       => 'https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js',
+  },
+  'resource' => {
+    'bluebird.txt'       => 'https://raw.githubusercontent.com/zotero/zotero/master/resource/bluebird.js',
   }
+
 }
-DOWNLOADS[:chrome].each_pair{|file, url|
-  file "chrome/content/zotero-better-bibtex/#{file}" => 'Rakefile' do |t|
-    ZotPlus::RakeHelper.download(url, t.name)
-  end
-}
-DOWNLOADS[:translators].each_pair{|file, url|
-  file "resource/translators/#{file}" => 'Rakefile' do |t|
-    ZotPlus::RakeHelper.download(url, t.name)
-  end
+DOWNLOADS.each_pair{|dir, files|
+  files.each_pair{|file, url|
+    file "#{dir}/#{file}" => 'Rakefile' do |t|
+      ZotPlus::RakeHelper.download(url, t.name)
+    end
+  }
 }
 
 file 'resource/translators/xregexp-all.js' => 'Rakefile' do |t|

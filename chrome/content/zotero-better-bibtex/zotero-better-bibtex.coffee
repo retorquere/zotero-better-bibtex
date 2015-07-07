@@ -8,7 +8,7 @@ Zotero.BetterBibTeX = {
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
 
-Components.utils.import("chrome://zotero-better-bibtex/content/bluebird.js", Zotero.BetterBibTeX)
+Components.utils.import('resource://zotero-better-bibtex/bluebird.txt', Zotero) unless Zotero.Promise
 
 Zotero.BetterBibTeX.debug_off = ->
 Zotero.BetterBibTeX.debug = Zotero.BetterBibTeX.debug_on = (msg...) ->
