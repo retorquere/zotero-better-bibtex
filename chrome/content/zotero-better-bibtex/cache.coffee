@@ -22,7 +22,7 @@ Zotero.BetterBibTeX.cache = new class
     throw new Error("#{v} is not an integer-string") if isNaN(_v)
     return _v
 
-  load: Zotero.Promise.coroutine(->
+  load: ->
     Zotero.BetterBibTeX.debug('cache.load')
     if Zotero.BetterBibTeX.pref.get('cacheReset') > 0
       @reset()
@@ -43,7 +43,6 @@ Zotero.BetterBibTeX.cache = new class
       })
     @cache.flushChanges()
     @access.flushChanges()
-  )
 
   verify: (entry) ->
     return entry unless Zotero.BetterBibTeX.pref.get('debug') || Zotero.BetterBibTeX.testing
