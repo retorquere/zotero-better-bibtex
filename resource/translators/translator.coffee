@@ -149,6 +149,16 @@ Translator.nextItem = ->
 
   return null
 
+Translator.creator = (creator) ->
+  creatorString = (name for name in [creator.lastName, creator.firstName] when name && name.trim() != '')
+  switch creatorString.length
+    when 2
+      return creatorString.join(', ')
+    when 1
+      return new String(creatorString[0])
+    else
+      return null
+
 Translator.exportGroups = ->
   @debug('exportGroups:', @collections)
   return if @collections.length == 0

@@ -69,10 +69,8 @@ doExport = ->
       primaryCreatorType = Zotero.Utilities.getCreatorsForType(item.itemType)[0]
 
       for creator in item.creators
-        if ('' + creator.firstName).trim() != '' and ('' + creator.lastName).trim() != ''
-          creatorString = creator.lastName + ', ' + creator.firstName
-        else
-          creatorString = new String(creator.lastName)
+        creatorString = Translator.creator(creator)
+        continue unless creatorString
 
         switch creator.creatorType
           when 'editor', 'seriesEditor'   then editors.push(creatorString)
