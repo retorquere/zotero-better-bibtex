@@ -62,7 +62,7 @@ class BetterBibTeXPatternFormatter
   # LaTeX book.)
   months: [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
-  skipWords: [
+  defaultSkipWords: [
     'a'
     'aboard'
     'about'

@@ -8,6 +8,9 @@ Zotero.BetterBibTeX = {
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
 
+Zotero.BetterBibTeX.error = (msg...) ->
+  @_log.apply(@, [0].concat(msg))
+
 Zotero.BetterBibTeX.debug_off = ->
 Zotero.BetterBibTeX.debug = Zotero.BetterBibTeX.debug_on = (msg...) ->
   @_log.apply(@, [5].concat(msg))
@@ -29,6 +32,7 @@ Zotero.BetterBibTeX.debugMode = ->
 
 Zotero.BetterBibTeX.stringify = (obj, replacer, spaces, cycleReplacer) ->
   str = JSON.stringify(obj, @stringifier(replacer, cycleReplacer), spaces)
+
   if Array.isArray(obj)
     keys = Object.keys(obj)
     if keys.length > 0
@@ -60,8 +64,21 @@ Zotero.BetterBibTeX.stringifier = (replacer, cycleReplacer) ->
     return replacer.call(this, key, value)
 
 Zotero.BetterBibTeX._log = (level, msg...) ->
-  msg = ((if (typeof m) in ['boolean', 'string', 'number'] then '' + m else Zotero.BetterBibTeX.stringify(m)) for m in msg).join(' ')
-  Zotero.debug('[better' + '-' + 'bibtex] ' + msg, level)
+  str = []
+  for m in msg
+    switch
+      when (typeof m) in ['boolean', 'string', 'number']
+        str.push('' + m)
+      when m instanceof Error
+        str.push("<Exception: #{m.msg}#{if m.stack then '\n' + m.stack else ''}>")
+      else
+        str.push(Zotero.BetterBibTeX.stringify(m))
+  str = str.join(' ')
+
+  if level == 0
+    Zotero.logError(msg)
+  else
+    Zotero.debug('[better' + '-' + 'bibtex] ' + msg, level)
 
 Zotero.BetterBibTeX.extensionConflicts = ->
   AddonManager.getAddonByID('{359f0058-a6ca-443e-8dd8-09868141bebc}', (recoll) ->
@@ -427,6 +444,11 @@ Zotero.BetterBibTeX.init = ->
 
   @testing = (@pref.get('tests') != '')
 
+  try
+    BetterBibTeXPatternFormatter::skipWords = @pref.get('cacheFlushInterval').split(',')
+  catch err
+    Zotero.BetterBibTeX.error('could not read skipwords:', err)
+    BetterBibTeXPatternFormatter::skipWords = []
   @setCitekeyFormatter()
 
   @debugMode()
