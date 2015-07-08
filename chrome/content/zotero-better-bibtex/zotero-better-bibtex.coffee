@@ -445,7 +445,8 @@ Zotero.BetterBibTeX.init = ->
   @testing = (@pref.get('tests') != '')
 
   try
-    BetterBibTeXPatternFormatter::skipWords = @pref.get('cacheFlushInterval').split(',')
+    BetterBibTeXPatternFormatter::skipWords = @pref.get('skipWords').split(',')
+    Zotero.BetterBibTeX.debug('skipwords:', BetterBibTeXPatternFormatter::skipWords)
   catch err
     Zotero.BetterBibTeX.error('could not read skipwords:', err)
     BetterBibTeXPatternFormatter::skipWords = []
