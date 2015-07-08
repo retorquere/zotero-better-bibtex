@@ -1,3 +1,5 @@
+Components.utils.import("resource://zotero/config.js")
+
 if !ZoteroPane_Local.BetterBibTeX
   ZoteroPane_Local.BetterBibTeX = {
     serverURL: (extension) ->

@@ -106,9 +106,10 @@ Zotero.BetterBibTeX.flash = (title, body) ->
 Zotero.BetterBibTeX.reportErrors = (includeReferences) ->
   data = {}
 
+  pane = Zotero.getActiveZoteroPane()
+
   switch includeReferences
     when 'collection'
-      pane = Zotero.getActiveZoteroPane()
       collectionsView = pane?.collectionsView
       itemGroup = collectionsView?._getItemAtRow(collectionsView.selection?.currentIndex)
       switch itemGroup?.type
@@ -120,7 +121,7 @@ Zotero.BetterBibTeX.reportErrors = (includeReferences) ->
           data = { data: true, collection: Zotero.Groups.get(collectionsView.getSelectedLibraryID()) }
 
     when 'items'
-      data = { data: true, items: pane?.getSelectedItems() }
+      data = { data: true, items: pane.getSelectedItems() }
 
   if data.data
     @translate(@translators.BetterBibTeXJSON.translatorID, data, { exportNotes: true, exportFileData: false }, (result) ->

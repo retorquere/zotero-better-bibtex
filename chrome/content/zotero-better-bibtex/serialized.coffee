@@ -1,3 +1,5 @@
+Components.utils.import("resource://zotero/config.js")
+
 Zotero.BetterBibTeX.serialized =
   items: {}
 
