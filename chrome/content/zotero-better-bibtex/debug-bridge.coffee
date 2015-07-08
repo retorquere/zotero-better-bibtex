@@ -60,7 +60,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.import = (filename) ->
 Zotero.BetterBibTeX.DebugBridge.methods.librarySize = -> Zotero.DB.valueQuery('select count(*) from items i where not i.itemID in (select d.itemID from deletedItems d)')
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator, displayOptions) ->
-  deferred = Zotero.Promise.pending()
+  deferred = Q.defer()
   Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {library: null}, displayOptions || {}, (err, result) ->
     if err
       deferred.reject(err)
@@ -86,7 +86,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, displayOptio
   translation.setDisplayOptions(displayOptions)
   translation.setLibraryID(null)
 
-  deferred = Zotero.Promise.pending()
+  deferred = Q.defer()
   translation.setHandler('done', (obj, worked) ->
     if worked
       deferred.fulfill(true)
@@ -100,7 +100,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, displayOptio
 Zotero.BetterBibTeX.DebugBridge.methods.library = ->
   translator = Zotero.BetterBibTeX.getTranslator('BetterBibTeX JSON')
 
-  deferred = Zotero.Promise.pending()
+  deferred = Q.defer()
   Zotero.BetterBibTeX.translate(translator, {library: null}, { exportNotes: true, exportFileData: false }, (err, result) ->
     if err
       deferred.reject(err)

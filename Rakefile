@@ -115,7 +115,6 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/test/tests.js',
   'chrome.manifest',
   'install.rdf',
-  'resource/bluebird.txt',
   'resource/logs/s3.json',
   'resource/translators/htmlparser.js',
   'resource/translators/json5.js',
@@ -193,7 +192,6 @@ end
 
 DOWNLOADS = {
   'chrome/content/zotero-better-bibtex' => {
-    'test/bluebird.js'  => 'https://cdn.jsdelivr.net/bluebird/latest/bluebird.js',
     'test/chai.js'      => 'http://chaijs.com/chai.js',
     'test/yadda.js'     => 'https://raw.githubusercontent.com/acuminous/yadda/master/dist/yadda-0.11.5.js',
     'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
@@ -206,10 +204,6 @@ DOWNLOADS = {
     #'json5.js'            => 'https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js',
     #'htmlparser.js'       => 'https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js',
   },
-  'resource' => {
-    'bluebird.txt'       => 'https://raw.githubusercontent.com/zotero/zotero/master/resource/bluebird.js',
-  }
-
 }
 DOWNLOADS.each_pair{|dir, files|
   files.each_pair{|file, url|

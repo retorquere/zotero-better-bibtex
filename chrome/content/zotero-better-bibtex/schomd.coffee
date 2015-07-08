@@ -139,7 +139,7 @@ Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, library, displayOptions}
   translator ||= 'betterbiblatex'
   displayOptions ||= {}
 
-  deferred = Zotero.Promise.pending()
+  deferred = Q.defer()
   Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items}, displayOptions, (err, result) ->
     if err
       deferred.reject(err)
