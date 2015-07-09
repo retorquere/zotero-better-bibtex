@@ -16,10 +16,10 @@ case $1 in
     else
       case $CIRCLE_NODE_INDEX in
         [012])
-          bundle exec cucumber --strict --tag ~@noci --tags @test-cluster-$CIRCLE_NODE_INDEX
+          bundle exec cucumber --require features --strict --tag ~@noci --tags @test-cluster-$CIRCLE_NODE_INDEX resource/tests
           ;;
         *)
-          bundle exec cucumber --strict --tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2
+          bundle exec cucumber --require features --strict --tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2 resource/tests
           ;;
       esac
     fi
