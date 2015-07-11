@@ -33,47 +33,21 @@ class Report
 
     return notes
 
-class TagSoupParser
-  constructor: (html) ->
-    @html = ''
-
-    HTMLParser(html, @)
-
-  start: (tag, attrs, unary) ->
-    return if tag.toLowerCase() == 'script'
-
-    attributes = (" #{attr.name}='#{attr.escaped}'" for attr in attrs).join('')
-    @html += "<#{tag}#{attributes}#{(if unary then '/' else '')}>"
-
-  end: (tag) ->
-    return if tag.toLowerCase() == 'script'
-
-    @html += "</#{tag}>"
-
-  chars: (text) ->
-    @html += text
-
-  comment: (text) ->
-    @html += "<!--#{text}-->"
-
-clean = (html) ->
-  return (new TagSoupParser(html)).html
-
 doExport = ->
   report = new Report()
 
   html = ''
   for collection in report.data
-    html += "<div class='collection'>\n<h#{ collection.level }>#{ clean(collection.title) }</h#{ collection.level }>"
+    html += "<h#{ collection.level }>#{ HTMLtoXML(collection.title) }</h#{ collection.level }>"
     for item in collection.items
-      html += "<fieldset class='note'>\n"
-      if item.itemType == 'note'
-        html += "<div class='standalone'>\n#{ clean(item.note) }\n</div>\n"
-      else
-        html += "<legend>#{ clean(item.title) }\n</legend>\n"
-        for note in item.notes
-          html += "<div class='child'>\n#{ clean(note.note) }\n</div>\n"
-      html += "</fieldset>\n"
-    html += "</div>\n"
+      continue unless item.itemType == 'note'
+      html += '<div>' + HTMLtoXML(item.note) + '</div>'
 
-  Zotero.write(html)
+    for item in collection.items
+      continue if item.itemType == 'note'
+      html += "<h#{ collection.level + 1}>#{ HTMLtoXML(collection.title) }</h#{ collection.level + 1}>"
+
+      for note in item.notes
+        html += "<div>\n#{ HTMLtoXML(note.note) }\n</div>\n"
+
+  Zotero.write(LaTeX.html2latex(html))
