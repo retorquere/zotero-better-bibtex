@@ -1094,10 +1094,10 @@ Zotero.BetterBibTeX.pandoc = new class
       @searchpath = env.get('PATH').split((if Zotero.isWin then ';' else ':'))
     else
       @searchpath = []
-#
-#    @executable = 'pandoc'
-#    @executable += '.exe' if Zotero.isWin
-#
+
+    @executable = 'pandoc'
+    @executable += '.exe' if Zotero.isWin
+
 #    @pandoc = null
 #    for dir in @searchpath
 #      path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
