@@ -1102,7 +1102,7 @@ Zotero.BetterBibTeX.pandoc = new class
     for dir in @searchpath
       path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
       path.initWithPath(dir)
-      path.append(@executable)
+#      path.append(@executable)
 #      if path.exists()
 #        @pandoc = path.path
 #        break
