@@ -421,6 +421,15 @@ rule '.json' => '.yml' do |t|
   open(t.name, 'w'){|f|
     header = YAML::load_file(t.source)
     header['lastUpdated'] = TIMESTAMP if t.source =~ /\/translators\//
+
+    %w{translatorID label priority}.each{|field|
+      raise "Missing #{field} in #{t.source}" unless header[field]
+    }
+
+    if !header['translatorType'] || ((header['translatorType'] & 1) == 0 && (header['translatorType'] & 2) == 0) # not import or export
+      raise "Invalid translator type #{header['translatorType']} in #{t.source}"
+    end
+
     f.write(JSON.pretty_generate(header))
   }
 end
