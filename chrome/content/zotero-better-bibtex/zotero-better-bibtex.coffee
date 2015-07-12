@@ -1099,18 +1099,21 @@ Zotero.BetterBibTeX.pandoc = new class
     @executable += '.exe' if Zotero.isWin
 
     @pandoc = null
+    path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
     for dir in @searchpath
-      path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
-#      path.initWithPath(dir)
-#      path.append(@executable)
-#      if path.exists()
-#        @pandoc = path.path
-#        break
-#
-#  convert: (src, target) ->
-#    throw new Error("#{@executable} not found in #{JSON.stringify(@searchpath)}") unless @pandoc
-#    return
-#
-#    path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
-#    path.initWithPath(src)
-#    path.remove()
+      try
+        path.initWithPath(dir)
+        path.append(@executable)
+        if path.exists()
+          @pandoc = path.path
+          break
+      catch err
+        Zotero.BetterBibTeX.error('could not search path:', dir)
+
+  convert: (src, target) ->
+    throw new Error("#{@executable} not found in #{JSON.stringify(@searchpath)}") unless @pandoc
+    return
+
+    path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
+    path.initWithPath(src)
+    path.remove()
