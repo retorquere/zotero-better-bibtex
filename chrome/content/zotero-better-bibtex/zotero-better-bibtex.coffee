@@ -10,6 +10,8 @@ Zotero.BetterBibTeX = {
 
 Zotero.BetterBibTeX.error = (msg...) ->
   @_log.apply(@, [0].concat(msg))
+Zotero.BetterBibTeX.warn = (msg...) ->
+  @_log.apply(@, [1].concat(msg))
 
 Zotero.BetterBibTeX.debug_off = ->
 Zotero.BetterBibTeX.debug = Zotero.BetterBibTeX.debug_on = (msg...) ->
@@ -944,20 +946,18 @@ Zotero.BetterBibTeX.load = (translator) ->
     destFile = Zotero.getTranslatorsDirectory()
     destFile.append(fileName)
 
-    # JSON.stringify (FF 3.5.4 and up) has the benefit of indenting JSON
     metadataJSON = JSON.stringify(header, null, "\t")
 
     if translator and destFile.equals(translator.file) and destFile.exists()
-      msg = 'Overwriting translator with same filename \'' + fileName + '\''
-      Zotero.debug(msg, 1)
-      Zotero.debug(header, 1)
+      msg = "Overwriting translator with same filename '#{fileName}'"
+      Zotero.BetterBibTeX.warn(msg, , header)
       Components.utils.reportError(msg + ' in Zotero.BetterBibTeX.load()')
 
     translator.file.remove(false) if translator and translator.file.exists()
 
-    Zotero.debug 'Saving translator \'' + metadata.label + '\''
+    Zotero.BetterBibTeX.log("Saving translator '#{header.label}'"
 
-    Zotero.File.putContents(destFile, metadataJSON + '\n\n' + code)
+    Zotero.File.putContents(destFile, metadataJSON + "\n\n" + code)
 
     @debug('translator.load', translator, 'succeeded')
   catch err
