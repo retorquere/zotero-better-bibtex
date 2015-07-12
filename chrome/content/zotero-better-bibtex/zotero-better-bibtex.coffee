@@ -1086,8 +1086,8 @@ class Zotero.BetterBibTeX.HTMLNode extends Zotero.BetterBibTeX.XmlNode
 
   HTMLNode::alias(['pre', 'b', 'p', 'div', 'ul', 'li'])
 
-#Zotero.BetterBibTeX.pandoc = new class
-#  constructor: ->
+Zotero.BetterBibTeX.pandoc = new class
+  constructor: ->
 #    env = Components.classes["@mozilla.org/process/environment;1"].getService(Components.interfaces.nsIEnvironment)
 #
 #    if env.exists('PATH')
