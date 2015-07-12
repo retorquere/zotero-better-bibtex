@@ -1098,9 +1098,9 @@ Zotero.BetterBibTeX.pandoc = new class
     @executable = 'pandoc'
     @executable += '.exe' if Zotero.isWin
 
-#    @pandoc = null
-#    for dir in @searchpath
-#      path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
+    @pandoc = null
+    for dir in @searchpath
+      path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
 #      path.initWithPath(dir)
 #      path.append(@executable)
 #      if path.exists()
