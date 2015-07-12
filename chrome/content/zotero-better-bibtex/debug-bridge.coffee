@@ -5,10 +5,9 @@ Zotero.BetterBibTeX.DebugBridge = {
 
 Zotero.BetterBibTeX.DebugBridge.methods.init = ->
   return if Zotero.BetterBibTeX.DebugBridge.initialized
+  Zotero.BetterBibTeX.DebugBridge.initialized = true
 
   Zotero.noUserInput = true
-
-  Zotero.BetterBibTeX.DebugBridge.initialized = true
 
   # replacing Zotero.Items.getAll to get items sorted. With random order I can't really implement stable
   # testing.

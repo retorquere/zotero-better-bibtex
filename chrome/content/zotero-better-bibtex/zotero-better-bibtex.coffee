@@ -75,12 +75,13 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
         str.push("<Exception: #{m.msg}#{if m.stack then '\n' + m.stack else ''}>")
       else
         str.push(Zotero.BetterBibTeX.stringify(m))
+  str = (s for s in str when s != '')
   str = str.join(' ')
 
   if level == 0
     Zotero.logError(msg)
   else
-    Zotero.debug('[better' + '-' + 'bibtex] ' + msg, level)
+    Zotero.debug('[better' + '-' + 'bibtex] ' + str, level)
 
 Zotero.BetterBibTeX.extensionConflicts = ->
   AddonManager.getAddonByID('{359f0058-a6ca-443e-8dd8-09868141bebc}', (recoll) ->
@@ -948,14 +949,15 @@ Zotero.BetterBibTeX.load = (translator) ->
 
     metadataJSON = JSON.stringify(header, null, "\t")
 
-    if translator and destFile.equals(translator.file) and destFile.exists()
+    existing = Zotero.Translators.get(header.translatorID)
+    if existing and destFile.equals(existing.file) and destFile.exists()
       msg = "Overwriting translator with same filename '#{fileName}'"
-      Zotero.BetterBibTeX.warn(msg, , header)
+      Zotero.BetterBibTeX.warn(msg, header)
       Components.utils.reportError(msg + ' in Zotero.BetterBibTeX.load()')
 
-    translator.file.remove(false) if translator and translator.file.exists()
+    existing.file.remove(false) if existing and existing.file.exists()
 
-    Zotero.BetterBibTeX.log("Saving translator '#{header.label}'"
+    Zotero.BetterBibTeX.log("Saving translator '#{header.label}'")
 
     Zotero.File.putContents(destFile, metadataJSON + "\n\n" + code)
 
