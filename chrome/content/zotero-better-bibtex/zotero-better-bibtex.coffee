@@ -1088,8 +1088,8 @@ class Zotero.BetterBibTeX.HTMLNode extends Zotero.BetterBibTeX.XmlNode
 
 Zotero.BetterBibTeX.pandoc = new class
   constructor: ->
-#    env = Components.classes["@mozilla.org/process/environment;1"].getService(Components.interfaces.nsIEnvironment)
-#
+    env = Components.classes["@mozilla.org/process/environment;1"].getService(Components.interfaces.nsIEnvironment)
+
 #    if env.exists('PATH')
 #      @searchpath = env.get('PATH').split((if Zotero.isWin then ';' else ':'))
 #    else
