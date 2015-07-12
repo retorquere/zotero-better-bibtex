@@ -570,12 +570,24 @@ Zotero.BetterBibTeX.init = ->
       header = Zotero.BetterBibTeX.translators[translatorID]
       return original.apply(@, arguments) unless header && @location?.path
 
+      collectednotes = null
       if @_displayOptions
         if @_displayOptions.exportFileData # export directory selected
           @_displayOptions.exportPath = @location.path
         else
           @_displayOptions.exportPath = @location.parent.path
+          collectednotes = @location.path
         @_displayOptions.exportFilename = @location.leafName
+
+      if translatorID == Zotero.BetterBibTeX.translators.CollectedNotes.translatorID &&
+          collectednotes &&
+          Zotero.BetterBibTeX.pref.get('collectednotes.format') != 'html' &&
+          Zotero.BetterBibTeX.pandoc.pandoc
+        @setHandler('done', (obj, worked) ->
+          # is this after the file was written to disk?
+          if worked
+            Zotero.BetterBibTeX.pandoc.convert(collectednotes, collectednotes.replace(/\.html?$/i, '.tex'))
+        )
 
       Zotero.BetterBibTeX.debug("export '#{@_export.type}' to #{if @_displayOptions?.exportFileData then 'directory' else 'file'}", @location.path, 'using', @_displayOptions)
 
@@ -1087,8 +1099,8 @@ Zotero.BetterBibTeX.pandoc = new class
     @executable += '.exe' if Zotero.isWin
 
     @pandoc = null
-    path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
     for dir in @searchpath
+      path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
       path.initWithPath(dir)
       path.append(@executable)
       if path.exists()
