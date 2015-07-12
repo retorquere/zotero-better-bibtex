@@ -1086,31 +1086,31 @@ class Zotero.BetterBibTeX.HTMLNode extends Zotero.BetterBibTeX.XmlNode
 
   HTMLNode::alias(['pre', 'b', 'p', 'div', 'ul', 'li'])
 
-Zotero.BetterBibTeX.pandoc = new class
-  constructor: ->
-    env = Components.classes["@mozilla.org/process/environment;1"].getService(Components.interfaces.nsIEnvironment)
-
-    if env.exists('PATH')
-      @searchpath = env.get('PATH').split((if Zotero.isWin then ';' else ':'))
-    else
-      @searchpath = []
-
-    @executable = 'pandoc'
-    @executable += '.exe' if Zotero.isWin
-
-    @pandoc = null
-    for dir in @searchpath
-      path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
-      path.initWithPath(dir)
-      path.append(@executable)
-      if path.exists()
-        @pandoc = path.path
-        break
-
-  convert: (src, target) ->
-    throw new Error("#{@executable} not found in #{JSON.stringify(@searchpath)}") unless @pandoc
-    return
-
-    path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
-    path.initWithPath(src)
-    path.remove()
+#Zotero.BetterBibTeX.pandoc = new class
+#  constructor: ->
+#    env = Components.classes["@mozilla.org/process/environment;1"].getService(Components.interfaces.nsIEnvironment)
+#
+#    if env.exists('PATH')
+#      @searchpath = env.get('PATH').split((if Zotero.isWin then ';' else ':'))
+#    else
+#      @searchpath = []
+#
+#    @executable = 'pandoc'
+#    @executable += '.exe' if Zotero.isWin
+#
+#    @pandoc = null
+#    for dir in @searchpath
+#      path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
+#      path.initWithPath(dir)
+#      path.append(@executable)
+#      if path.exists()
+#        @pandoc = path.path
+#        break
+#
+#  convert: (src, target) ->
+#    throw new Error("#{@executable} not found in #{JSON.stringify(@searchpath)}") unless @pandoc
+#    return
+#
+#    path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
+#    path.initWithPath(src)
+#    path.remove()
