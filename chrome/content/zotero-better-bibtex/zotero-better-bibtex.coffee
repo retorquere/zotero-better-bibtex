@@ -940,7 +940,25 @@ Zotero.BetterBibTeX.load = (translator) ->
   delete header.BetterBibTeX
   @debug('Translator.load header:', translator, header)
   try
-    Zotero.Translators.save(header, code)
+    fileName = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)
+    destFile = Zotero.getTranslatorsDirectory()
+    destFile.append(fileName)
+
+    # JSON.stringify (FF 3.5.4 and up) has the benefit of indenting JSON
+    metadataJSON = JSON.stringify(header, null, "\t")
+
+    if translator and destFile.equals(translator.file) and destFile.exists()
+      msg = 'Overwriting translator with same filename \'' + fileName + '\''
+      Zotero.debug(msg, 1)
+      Zotero.debug(header, 1)
+      Components.utils.reportError(msg + ' in Zotero.BetterBibTeX.load()')
+
+    translator.file.remove(false) if translator and translator.file.exists()
+
+    Zotero.debug 'Saving translator \'' + metadata.label + '\''
+
+    Zotero.File.putContents(destFile, metadataJSON + '\n\n' + code)
+
     @debug('translator.load', translator, 'succeeded')
   catch err
     @debug('translator.load', translator, 'failed:', err)
