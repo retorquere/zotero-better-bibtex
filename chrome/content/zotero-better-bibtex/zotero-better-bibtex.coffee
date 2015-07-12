@@ -1090,10 +1090,10 @@ Zotero.BetterBibTeX.pandoc = new class
   constructor: ->
     env = Components.classes["@mozilla.org/process/environment;1"].getService(Components.interfaces.nsIEnvironment)
 
-#    if env.exists('PATH')
-#      @searchpath = env.get('PATH').split((if Zotero.isWin then ';' else ':'))
-#    else
-#      @searchpath = []
+    if env.exists('PATH')
+      @searchpath = env.get('PATH').split((if Zotero.isWin then ';' else ':'))
+    else
+      @searchpath = []
 #
 #    @executable = 'pandoc'
 #    @executable += '.exe' if Zotero.isWin
