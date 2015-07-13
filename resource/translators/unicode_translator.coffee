@@ -7,7 +7,7 @@ LaTeX.text2latex = (text) ->
 
 LaTeX.cleanHTML = (text) ->
   html = ''
-  for chunk, i in text.split(/(<\/?(?:i|b|sub|sup|pre)>)/i)
+  for chunk, i in text.split(/(<\/?(?:i|b|sub|sup|pre|span)[^>]*>)/i)
     if i % 2 == 0 # text
       html += chunk.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     else
