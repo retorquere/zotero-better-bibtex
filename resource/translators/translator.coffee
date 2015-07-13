@@ -208,7 +208,7 @@ class Reference
 
       extra = []
       for line in @item.extra.split("\n")
-        m = /^\s*(:original-date|LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\s*:\s*([\S]+)\s*$/i.exec(line)
+        m = /^\s*(LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\s*:\s*([\S]+)\s*$/i.exec(line)
         name = m?[1].toLowerCase()
         Translator.log("fixed field #{name} = #{m[2]}") if name
         switch name
@@ -262,7 +262,7 @@ class Reference
             fields.push({name: name, value: value})
 
       # fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/
-      @item.extra = @item.extra.replace(/{:([^:]+:\s*([^}]+)}/g, (m, field, value) ->
+      @item.extra = @item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, field, value) ->
         switch field.toLowerCase()
           when 'original-date'
             fields.push({ name: 'origdate', value: value })

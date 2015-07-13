@@ -534,6 +534,7 @@ task :share => XPI do
   Dir["#{folder}/*.xpi"].each{|xpi| File.unlink(xpi)}
   xpi = File.basename(XPI, File.extname(XPI)) + '-' + TIMESTAMP.sub(' ', '@') + File.extname(XPI)
   FileUtils.cp(XPI, File.join(folder, xpi))
+  puts 'https://zotplus.github.io/better-bibtex/#debug'
   puts xpi
 end
 
