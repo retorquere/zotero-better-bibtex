@@ -301,7 +301,7 @@ Reference::esc_verbatim = (f) ->
     href = ('' + f.value).replace(/([\\%&{}])/g, '\\$1')
   href = href.replace(/[^\x21-\x7E]/g, ((chr) -> '\\%' + ('00' + chr.charCodeAt(0).toString(16).slice(-2)))) if not Translator.unicode
 
-  return "\\href{#{href}}{#{LaTeX.html2latex(href)}}" if f.name == 'url' and Translator.fancyURLs
+  return "\\href{#{href}}{#{LaTeX.text2latex(href)}}" if f.name == 'url' and Translator.fancyURLs
   return href
 
 Reference::esc_doi = Reference::esc_verbatim
@@ -317,7 +317,7 @@ Reference::esc_latex = (f, raw) ->
 
   return f.value if raw
 
-  value = LaTeX.html2latex(f.value)
+  value = LaTeX.text2latex(f.value)
   value = new String("{#{value}}") if f.value instanceof String
   return value
 

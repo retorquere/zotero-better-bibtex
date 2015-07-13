@@ -20,7 +20,6 @@ BetterBibTeX:
     BibTeX: true
   dependencies:
     - htmlparser
-    - marked
     - unicode_translator
     - latex_unicode_mapping
     - BetterBibTeXBraceBalancer

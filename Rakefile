@@ -117,7 +117,6 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'install.rdf',
   'resource/logs/s3.json',
   'resource/translators/htmlparser.js',
-  'resource/translators/marked.js',
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',

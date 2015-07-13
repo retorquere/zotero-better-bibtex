@@ -1,11 +1,21 @@
 LaTeX = {} unless LaTeX
 
-LaTeX.html2latex = (text) ->
-  html = @marked(text)
-  latex = (new @HTML(html)).latex.trim()
-
+LaTeX.text2latex = (text) ->
+  latex = @html2latex(@cleanHTML(text))
   return BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
   return latex
+
+LaTeX.cleanHTML = (text) ->
+  html = ''
+  for chunk, i in text.split(/(<\/?(?:i|b|sub|sup|pre)>)/i)
+    if i % 2 == 0 # text
+      html += chunk.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    else
+      html += chunk
+  return html
+
+LaTeX.html2latex = (html, balancer) ->
+  return (new @HTML(html)).latex.trim()
 
 class LaTeX.HTML
   constructor: (html) ->
@@ -61,7 +71,7 @@ class LaTeX.HTML
     for own char, re of LaTeX.entities
       text = text.replace(re, char)
     text = text.replace(/&#([0-9]{1,3});/gi, (match, charcode) -> String.fromCharCode(parseInt(charcode)))
-    throw new Error ("Unresolved entities: #{text}") if text.match(/&[a-z]+;/i)
+    throw new Error("Unresolved entities: #{text}") if text.match(/&[a-z]+;/i)
 
     blocks = []
     for c in text
