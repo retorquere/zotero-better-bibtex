@@ -58,8 +58,11 @@ class LaTeX.HTML
           @smallcaps--
 
   chars: (text) ->
+    for own char, re of LaTeX.entities
+      text = text.replace(re, char)
     text = text.replace(/&#([0-9]{1,3});/gi, (match, charcode) -> String.fromCharCode(parseInt(charcode)))
-    text = text.replace(/&gt;/gi, '>').replace(/&lt;/gi, '<').replace(/&amp;/gi, '&')
+    throw new Error ("Unresolved entities: #{text}") if text.match(/&[a-z]+;/i)
+
     blocks = []
     for c in text
       math = @mapping.math[c]

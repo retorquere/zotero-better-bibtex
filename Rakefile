@@ -690,6 +690,19 @@ file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translato
 
   cs << ''
 
+  entities = {}
+  map.xpath('//character[entity]').each{|char|
+    char.xpath('.//entity').each{|entity|
+      if entity['set'] == 'predefined' || entity['set'].to_s =~ /^html/
+        id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
+        entities["&#{entity['id']};"] = id.pack('U' * id.size)
+      end
+    }
+  }
+  cs << "LaTeX.entities ="
+    entities.each_pair{|entity, char|
+      cs << "  #{char.to_json}: /#{entity}/gi"
+    }
   open(t.name, 'w'){|f| f.write(cs.join("\n")) }
 end
 
