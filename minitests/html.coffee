@@ -1,5 +1,5 @@
 html = '''
-  Contrary to <sup>popular</sup> <sub>belief</sub>, <i>Lorem</i> <b>Ipsum</b> <span>is</span> <span class="smallcaps">not</span> simply random text. It has roots
+  Contrary to <sup>popular</sup> <sub>belief</sub>, <i>Lorem</i> <b>Ipsum</b> <span>is</span> <span class="smallcaps">not</span> simply random text. It has roots, and i < 2
 '''
 
 class ToLaTeX
@@ -40,7 +40,9 @@ class ToLaTeX
 
   comment: (text) ->
 
-converter = new ToLaTeX()
-HTMLParser(html, converter)
+#converter = new ToLaTeX()
+#HTMLParser(html, converter)
 
-console.log(converter.latex)
+#console.log(converter.latex)
+
+console.log(MarkDown.marked(html))

@@ -1113,10 +1113,10 @@ Zotero.BetterBibTeX.pandoc = new class
   convert: (source, target) ->
     throw new Error("#{@executable} not found in #{JSON.stringify(@searchpath)}") unless @pandoc
 
-    pandoc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
-    pandoc.init(@pandoc)
-    args = [source, '-o', target]
-    try
-      pandoc.runw(true, args, args.length)
-    catch e
-      Zotero.BetterBibTeX.error('Error running pandoc:', e)
+#    pandoc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
+#    pandoc.init(@pandoc)
+#    args = [source, '-o', target]
+#    try
+#      pandoc.runw(true, args, args.length)
+#    catch e
+#      Zotero.BetterBibTeX.error('Error running pandoc:', e)
