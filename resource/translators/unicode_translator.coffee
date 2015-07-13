@@ -45,8 +45,8 @@ class LaTeX.HTML
 
       when 'span'
         smallcaps = false
-        for own attr, value of attrs
-          smallcaps ||= attr.toLowerCase() == 'style' && 'small-caps' in value.split(/\s+/)
+        for attr in attrs
+          smallcaps ||= attr.name.toLowerCase() == 'style' && 'small-caps' in attr.value.split(/\s+/)
         if smallcaps
           @smallcaps++
           @latex += '\\textsc{' if @smallcaps == 1
