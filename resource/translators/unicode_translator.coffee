@@ -73,6 +73,10 @@ class LaTeX.HTML
     text = text.replace(/&#([0-9]{1,3});/gi, (match, charcode) -> String.fromCharCode(parseInt(charcode)))
     throw new Error("Unresolved entities: #{text}") if text.match(/&[a-z]+;/i)
 
+    if @pre > 0
+      @latex += text
+      return
+
     blocks = []
     for c in text
       math = @mapping.math[c]
