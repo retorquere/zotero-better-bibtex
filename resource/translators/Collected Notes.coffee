@@ -1,7 +1,7 @@
 class Report
   constructor: ->
     @items = {}
-    @data = [{level:1, title: Zotero.getOption('exportFilename').replace(/\.html$/i, ''), items: []}]
+    @data = [{level:1, title: Zotero.getOption('exportFilename').replace(/\.tex$/i, ''), items: []}]
 
     while item = Zotero.nextItem()
       @items[item.itemID] = item if item.itemType == 'note' || item.notes?.length > 0

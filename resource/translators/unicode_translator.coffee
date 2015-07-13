@@ -15,7 +15,7 @@ LaTeX.cleanHTML = (text) ->
   return html
 
 LaTeX.html2latex = (html, balancer) ->
-  return (new @HTML(html)).latex.trim()
+  return (new @HTML(html)).latex.trim().replace(/\n\n\n+/g, "\n\n")
 
 class LaTeX.HTML
   constructor: (html) ->
@@ -33,12 +33,31 @@ class LaTeX.HTML
       return
 
     switch tag.toLowerCase()
-      when 'i'    then @latex += '\\emph{'
-      when 'sup'  then @latex += '\\textsuperscript{'
-      when 'sub'  then @latex += '\\textsubscript{'
-      when 'b'    then @latex += '\\textbf{'
-      when 'br'   then @latex += "\\\\\n"
-      when 'p'    then @latex += "\n\n"
+      when 'i'
+        @latex += '\\emph{'
+      when 'b'
+        @latex += '\\textbf{'
+
+      when 'sup'
+        @latex += '\\textsuperscript{'
+      when 'sub'
+        @latex += '\\textsubscript{'
+
+      when 'br'
+        @latex += "\\\\\n"
+
+      when 'p', 'div'
+        @latex += "\n\n"
+
+      when 'h1', 'h2', 'h3', 'h4'
+        @latex += "\n\n\\#{Array(parseInt(tag[1])).join('sub')}section{"
+
+      when 'ol'
+        @latex += "\n\n\\begin{enumerate}\n"
+      when 'ul'
+        @latex += "\n\n\\begin{itemize}\n"
+      when 'li'
+        @latex += "\n\\item "
 
       when 'pre'
         @pre++
@@ -56,8 +75,14 @@ class LaTeX.HTML
 
   end: (tag) ->
     switch tag.toLowerCase()
-      when 'i', 'sup', 'sub', 'b' then @latex += '}'
-      when 'p'    then @latex += "\n\n"
+      when 'i', 'sup', 'sub', 'b'
+        @latex += '}'
+
+      when 'h1', 'h2', 'h3', 'h4'
+        @latex += "}\n\n"
+
+      when 'p', 'div'
+        @latex += "\n\n"
 
       when 'pre'
         @pre--
