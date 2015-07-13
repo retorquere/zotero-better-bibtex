@@ -230,8 +230,6 @@ class Reference
               fields.push({ name: 'eprint', value: m[2] })
             else
               fields.push({ name: 'googlebooks', value: m[2] })
-          when ':original-date'
-            fields.push({ name: 'origdate', value: data[2] })
 
           else extra.push(line)
       @item.extra = extra.join("\n")
@@ -262,6 +260,14 @@ class Reference
           @item.extra = @item.extra.replace(prefix + data, '').trim()
           for name, value of json
             fields.push({name: name, value: value})
+
+      # fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/
+      @item.extra = @item.extra.replace(/{:([^:]+:\s*([^}]+)}/g, (m, field, value) ->
+        switch field.toLowerCase()
+          when 'original-date'
+            fields.push({ name: 'origdate', value: value })
+        return ''
+      )
 
       for field in fields
         if field.name == 'referencetype'
