@@ -208,7 +208,7 @@ class Reference
 
       extra = []
       for line in @item.extra.split("\n")
-        m = /^\s*(LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\s*:\s*([\S]+)\s*$/i.exec(line)
+        m = /^\s*(:original-date|LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\s*:\s*([\S]+)\s*$/i.exec(line)
         name = m?[1].toLowerCase()
         Translator.log("fixed field #{name} = #{m[2]}") if name
         switch name
@@ -230,6 +230,8 @@ class Reference
               fields.push({ name: 'eprint', value: m[2] })
             else
               fields.push({ name: 'googlebooks', value: m[2] })
+          when ':original-date'
+            fields.push({ name: 'origdate', value: data[2] })
 
           else extra.push(line)
       @item.extra = extra.join("\n")
