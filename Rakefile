@@ -189,10 +189,15 @@ DOWNLOADS.each_pair{|dir, files|
 
 file 'resource/translators/marked.js' => 'Rakefile' do |t|
   ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/chjj/marked/master/lib/marked.js', t.name)
-  code = "var MarkDown = {};\n"
+  code = "var LaTeX;
+
+  if (!LaTeX) {
+    LaTeX = {};
+  }
+  "
   IO.readlines(t.name).each{|line|
     line.gsub!(/module/, '__no_module__')
-    line.gsub!('this.marked', 'MarkDown.marked')
+    line.gsub!('this.marked', 'LaTeX.marked')
     code += line
   }
   open(t.name, 'w'){|f| f.write(code) }

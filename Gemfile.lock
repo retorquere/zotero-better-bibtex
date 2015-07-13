@@ -2,7 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.3.8)
-    backports (3.6.4)
+    backports (3.6.5)
     bibtex-ruby (4.0.14)
       latex-decode (~> 0.0)
     builder (3.2.2)

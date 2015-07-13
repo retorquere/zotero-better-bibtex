@@ -1,90 +1,76 @@
 LaTeX = {} unless LaTeX
 
-LaTeX.html = {
-  sup: {prefix: '\\textsuperscript{', postfix: '}'}
-  sub: {prefix: '\\textsubscript{', postfix: '}'}
-  i: {prefix: '\\emph{', postfix: '}'}
-  b: {prefix: '\\textbf{', postfix: '}'}
-  span: {prefix: '', postfix: ''}
-  smallcaps: {prefix: '\\textsc{', postfix: '}'}
-}
-
-LaTeX.re = {
-  pre: /^<pre>(.*?)<\/pre>?(.*)/i
-  br: /^<\/?(br|break|p)(\s[^>]*)?\/?>(.*)/i
-  open: /^<(sup|sub|i|b|span)(\s[^>]*)?>(.*)/i
-  close: /^<\/(sup|sub|i|b|span)(\s[^>]*)?>(.*)/i
-}
-
-LaTeX.emit = ->
-  if @acc.text != ''
-    if @acc.math
-      if @acc.text.match(/^{[^{}]*}$/)
-        @latex += "\\ensuremath#{@acc.text}"
-      else
-        @latex += "\\ensuremath{#{@acc.text}}"
-    else
-      @latex += @acc.text
-  @acc = { math: false, text: ''}
-  return
-
 LaTeX.html2latex = (text) ->
-  stack = []
-  mapping = (if Translator.unicode then @toLaTeX.unicode else @toLaTeX.ascii)
+  html = @marked(text)
+  latex = (new @HTML(html)).latex
 
-  @latex = ''
-  @acc = { math: false, text: ''}
+  return BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
+  return latex
 
-  while text.length > 0
-    switch
-      when m = text.match(@re.pre)
-        @emit()
+class LaTeX.HTML
+  constructor: (html) ->
+    @latex = ''
+    @smallcaps = 0
+    @pre = 0
+    @mapping = (if Translator.unicode then @toLaTeX.unicode else @toLaTeX.ascii)
 
-        @latex += m[1]
-        text = m[2]
+    HTMLParser(html, @)
 
-      when m = text.match(@re.br)
-        @emit()
+  start: (tag, attrs, unary) ->
+    if @pre > 0
+      attributes = (" #{attr.name}='#{attr.escaped}'" for attr in attrs).join('')
+      @latex += "<#{tag}#{attributes}#{(if unary then '/' else '')}>"
+      return
 
-        @latex += "\n\n"
-        text = m[3]
+    switch tag.toLowerCase()
+      when 'i'    then @latex += '\\emph{'
+      when 'sup'  then @latex += '\\textsuperscript{'
+      when 'sub'  then @latex += '\\textsubscript{'
+      when 'b'    then @latex += '\\textbf{'
+      when 'br'   then @latex += "\\\\\n"
+      when 'p'    then @latex += "\n\n"
 
-      when m = text.match(@re.open)
-        @emit()
+      when 'pre'
+        @pre++
 
-        tag = m[1].toLowerCase()
-        repl = (if tag == 'span' && m[2]?.toLowerCase().match(/small-caps/) then 'smallcaps' else tag)
-        stack.unshift({tag: tag, postfix: @html[repl].postfix})
-        @latex += @html[repl].prefix
-        text = m[3]
-
-      when m = text.match(@re.close)
-        @emit()
-
-        tag = m[1].toLowerCase()
-
-        while stack.length > 0
-          @latex += stack[0].postfix
-          break if stack.shift().tag == tag
-
-        text = m[3]
-
-      when mapping.math[text[0]]
-        @emit() unless @acc.math
-        @acc.math = true
-        @acc.text += mapping.math[text[0]]
-        text = text.substring(1)
+      when 'span'
+        smallcaps = false
+        for own attr, value of attrs
+          smallcaps ||= attr.toLowerCase() == 'style' && 'small-caps' in value.split(/\s+/)
+        if smallcaps
+          @smallcaps++
+          @latex += '\\textsc{' if @smallcaps == 1
 
       else
-        @emit() if @acc.math
-        @acc.math = false
-        @acc.text += mapping.text[text[0]] || text[0]
-        text = text.substring(1)
+        throw new Error("unexpected tag '#{tag}'")
 
-  @emit()
+  end: (tag) ->
+    switch tag.toLowerCase()
+      when 'i', 'sup', 'sub', 'b' then @latex += '}'
+      when 'p'    then @latex += "\n\n"
 
-  for tag in stack
-    @latex += tag.postfix
+      when 'pre'
+        @pre--
 
-  return BetterBibTeXBraceBalancer.parse(@latex) if @latex.indexOf("\\{") >= 0 || @latex.indexOf("\\textleftbrace") >= 0 || @latex.indexOf("\\}") >= 0 || @latex.indexOf("\\textrightbrace") >= 0
-  return @latex
+      when 'span'
+        if @smallcaps > 0
+          @latex += '}'
+          @smallcaps--
+
+  chars: (text) ->
+    text = text.replace(/&gt;/gi, '>').replace(/&lt;/gi, '<').replace(/&amp;/gi, '&')
+    blocks = []
+    for c in text
+      math = mapping.math[c]
+      blocks.unshift({math: !!math, text: ''}) if blocks.length == 0 || blocks[0].math != !!math
+      blocks[0].text += (math || @mapping.text[c] || c)
+    for block in blocks by -1
+      if block.math
+        if block.text.match(/^{[^{}]*}$/)
+          @latex += "\\ensuremath#{block.text}"
+        else
+          @latex += "\\ensuremath{#{block.text}}"
+      else
+        @latex += block.text
+
+  comment: (text) ->

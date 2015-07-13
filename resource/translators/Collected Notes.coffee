@@ -38,7 +38,7 @@ doExport = ->
 
   html = ''
   for collection in report.data
-    html += "<h#{ collection.level }>#{ collection.title }</h#{ collection.level }>\n"
+    html += "<h#{ collection.level }>#{ MarkDown.marked(collection.title) }</h#{ collection.level }>\n"
     for item in collection.items
       continue unless item.itemType == 'note'
       html += "<div>#{ item.note }</div>\n"
@@ -71,7 +71,7 @@ doExport = ->
 
       title = (str for str in [item.title || '', author] when str).join(' ')
 
-      html += "<h#{ collection.level + 1}>#{ title }</h#{ collection.level + 1}>\n"
+      html += "<h#{ collection.level + 1}>#{ MarkDown.marked(title) }</h#{ collection.level + 1}>\n"
 
       for note in item.notes
         html += "<div>#{ note.note }</div>\n"
