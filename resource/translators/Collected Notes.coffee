@@ -38,16 +38,42 @@ doExport = ->
 
   html = ''
   for collection in report.data
-    html += "<h#{ collection.level }>#{ HTMLtoXML(collection.title) }</h#{ collection.level }>"
+    html += "<h#{ collection.level }>#{ collection.title }</h#{ collection.level }>\n"
     for item in collection.items
       continue unless item.itemType == 'note'
-      html += '<div>' + HTMLtoXML(item.note) + '</div>'
+      html += "<div>#{ item.note }</div>\n"
 
     for item in collection.items
       continue if item.itemType == 'note'
-      html += "<h#{ collection.level + 1}>#{ HTMLtoXML(collection.title) }</h#{ collection.level + 1}>"
+      title = item.title
+
+      creators = (Translator.creator(creator) for creator in item.creators)
+      creators = (creator for creator in creators when creator)
+      if creators.length > 0
+        creators = creators.join(' and')
+      else
+        creators = null
+
+      if item.date
+        date = Zotero.Utilities.strToDate(item.date)
+        if typeof date.year == 'undefined'
+          date = item.date
+        else
+          date = Zotero.Utilities.strToISO(item.date)
+      else
+        date = null
+
+      author = (str for str in [creators, date] when str)
+      if author.length > 0
+        author = "(#{author.join(', ')})"
+      else
+        author = null
+
+      title = (str for str in [item.title || '', author] when str).join(' ')
+
+      html += "<h#{ collection.level + 1}>#{ title }</h#{ collection.level + 1}>\n"
 
       for note in item.notes
-        html += "<div>\n#{ HTMLtoXML(note.note) }\n</div>\n"
+        html += "<div>#{ note.note }</div>\n"
 
-  Zotero.write(LaTeX.html2latex(html))
+  Zotero.write(html)

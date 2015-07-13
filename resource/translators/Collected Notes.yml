@@ -16,4 +16,3 @@ BetterBibTeX:
   cache:
     nextItem: true
   dependencies:
-    - htmlparser

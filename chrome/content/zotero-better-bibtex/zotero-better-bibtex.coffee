@@ -570,23 +570,23 @@ Zotero.BetterBibTeX.init = ->
       header = Zotero.BetterBibTeX.translators[translatorID]
       return original.apply(@, arguments) unless header && @location?.path
 
-      collectednotes = null
+      collectednotes = {}
       if @_displayOptions
         if @_displayOptions.exportFileData # export directory selected
           @_displayOptions.exportPath = @location.path
         else
           @_displayOptions.exportPath = @location.parent.path
-          collectednotes = @location.path
+          collectednotes.path = @location.path
         @_displayOptions.exportFilename = @location.leafName
 
+      collectednotes.format = Zotero.BetterBibTeX.pref.get('collectednotes.format')
       if translatorID == Zotero.BetterBibTeX.translators.CollectedNotes.translatorID &&
-          collectednotes &&
-          Zotero.BetterBibTeX.pref.get('collectednotes.format') != 'html' &&
+          collectednotes.path &&
+          collectednotes.format != 'html' &&
           Zotero.BetterBibTeX.pandoc.pandoc
         @setHandler('done', (obj, worked) ->
           # is this after the file was written to disk?
-          if worked
-            Zotero.BetterBibTeX.pandoc.convert(collectednotes, collectednotes.replace(/\.html?$/i, '.tex'))
+          Zotero.BetterBibTeX.pandoc.convert(collectednotes.path, collectednotes.path.replace(/\.html?$/i, ".#{collectednotes.format}")) if worked
         )
 
       Zotero.BetterBibTeX.debug("export '#{@_export.type}' to #{if @_displayOptions?.exportFileData then 'directory' else 'file'}", @location.path, 'using', @_displayOptions)
@@ -1105,15 +1105,18 @@ Zotero.BetterBibTeX.pandoc = new class
         path.initWithPath(dir)
         path.append(@executable)
         if path.exists()
-          @pandoc = path.path
+          @pandoc = path
           break
       catch err
         Zotero.BetterBibTeX.error('could not search path:', dir)
 
-  convert: (src, target) ->
+  convert: (source, target) ->
     throw new Error("#{@executable} not found in #{JSON.stringify(@searchpath)}") unless @pandoc
-    return
 
-    path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
-    path.initWithPath(src)
-    path.remove()
+    pandoc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
+    pandoc.init(@pandoc)
+    args = [source, '-o', target]
+    try
+      pandoc.runw(true, args, args.length)
+    catch e
+      Zotero.BetterBibTeX.error('Error running pandoc:', e)

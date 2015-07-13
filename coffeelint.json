@@ -25,7 +25,7 @@
 
   "line_endings": { "level": "ignore", "value": "unix" },
 
-  "max_line_length": { "value": 300, "level": "warn", "limitComments": true },
+  "max_line_length": { "value": 600, "level": "warn", "limitComments": true },
 
   "missing_fat_arrows": { "level": "ignore" },
 
