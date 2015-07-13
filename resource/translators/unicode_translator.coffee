@@ -2,7 +2,7 @@ LaTeX = {} unless LaTeX
 
 LaTeX.html2latex = (text) ->
   html = @marked(text)
-  latex = (new @HTML(html)).latex
+  latex = (new @HTML(html)).latex.trim()
 
   return BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
   return latex
@@ -12,7 +12,7 @@ class LaTeX.HTML
     @latex = ''
     @smallcaps = 0
     @pre = 0
-    @mapping = (if Translator.unicode then @toLaTeX.unicode else @toLaTeX.ascii)
+    @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
 
     HTMLParser(html, @)
 
@@ -58,10 +58,11 @@ class LaTeX.HTML
           @smallcaps--
 
   chars: (text) ->
+    text = text.replace(/&#([0-9]{1,3});/gi, (match, charcode) -> String.fromCharCode(parseInt(charcode)))
     text = text.replace(/&gt;/gi, '>').replace(/&lt;/gi, '<').replace(/&amp;/gi, '&')
     blocks = []
     for c in text
-      math = mapping.math[c]
+      math = @mapping.math[c]
       blocks.unshift({math: !!math, text: ''}) if blocks.length == 0 || blocks[0].math != !!math
       blocks[0].text += (math || @mapping.text[c] || c)
     for block in blocks by -1
