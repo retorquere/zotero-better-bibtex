@@ -191,6 +191,9 @@ Zotero.BetterBibTeX.auto = new class
     @idle = false
     Zotero.debug('idle: auto-exporter initialized:')
 
+  status: (status) ->
+    return "#{status} (#{(new Date()).toISOString().replace('T', ' ')})"
+
   bool: (v) -> if v then 'true' else 'false'
 
   markSearch: (id) ->
@@ -202,7 +205,7 @@ Zotero.BetterBibTeX.auto = new class
     return if items == @search[parseInt(search.id)]
 
     @search[parseInt(search.id)] = items
-    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection = ?", ["search:#{id}"])
+    Zotero.DB.query("update betterbibtex.autoexport set status = ? where collection = ?", [@status('pending'), "search:#{id}"])
 
   refresh: ->
     wm = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
@@ -218,14 +221,16 @@ Zotero.BetterBibTeX.auto = new class
     Zotero.DB.query('delete from betterbibtex.autoexport where path = ?', [path])
 
     Zotero.DB.query("insert or replace into betterbibtex.autoexport (collection, path, translatorID, exportCharset, exportNotes, useJournalAbbreviation, exportedRecursively, status)
-               values (?, ?, ?, ?, ?, ?, ?, 'done')", [
+               values (?, ?, ?, ?, ?, ?, ?, ?)", [
                 collection,
                 path,
                 context.translatorID,
                 (context.exportCharset || 'UTF-8').toUpperCase(),
                 @bool(context.exportNotes),
                 @bool(context.useJournalAbbreviation),
-                @bool(@recursive())])
+                @bool(@recursive()),
+                @status('done')
+                ])
     @refresh()
 
   recursive: ->
@@ -239,7 +244,7 @@ Zotero.BetterBibTeX.auto = new class
     @refresh()
 
   reset: ->
-    Zotero.DB.query("update betterbibtex.autoexport set status='pending'")
+    Zotero.DB.query("update betterbibtex.autoexport set status=?", [@status('pending')])
     @refresh()
 
   process: (reason) ->
@@ -261,7 +266,7 @@ Zotero.BetterBibTeX.auto = new class
     skip = {error: [], done: []}
     translation = null
 
-    for ae in Zotero.DB.query("select * from betterbibtex.autoexport ae where status == 'pending'")
+    for ae in Zotero.DB.query("select * from betterbibtex.autoexport ae where status like 'pending%'")
       Zotero.BetterBibTeX.debug('auto.process: candidate', ae)
       path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
       path.initWithPath(ae.path)
@@ -330,7 +335,7 @@ Zotero.BetterBibTeX.auto = new class
 
     for own status, ae of skip
       continue if ae.length == 0
-      Zotero.DB.query("update betterbibtex.autoexport set status = ? where id in #{Zotero.BetterBibTeX.SQLSet(ae)}", [status])
+      Zotero.DB.query("update betterbibtex.autoexport set status = ? where id in #{Zotero.BetterBibTeX.SQLSet(ae)}", [@status(status)])
 
     if !translation
       Zotero.BetterBibTeX.debug('auto.process: no pending jobs')
@@ -340,7 +345,7 @@ Zotero.BetterBibTeX.auto = new class
     @refresh()
 
     translation.setHandler('done', (obj, worked) ->
-      status = (if worked then 'done' else 'error')
+      status = Zotero.BetterBibTeX.auto.status((if worked then 'done' else 'error'))
       Zotero.BetterBibTeX.debug("auto.process: finished #{Zotero.BetterBibTeX.auto.running}: #{status}")
       Zotero.DB.query('update betterbibtex.autoexport set status = ? where id = ?', [status, Zotero.BetterBibTeX.auto.running])
       Zotero.BetterBibTeX.auto.running = null

@@ -189,7 +189,7 @@ Zotero.BetterBibTeX.pref.ZoteroObserver = {
       when 'recursiveCollections'
         recursive = "#{!!Zotero.BetterBibTeX.auto.recursive()}"
         # libraries are always recursive
-        Zotero.DB.query("update betterbibtex.autoexport set exportedRecursively = ?, status = 'pending' where exportedRecursively <> ? and collection not like 'library:%'", [recursive, recursive])
+        Zotero.DB.query("update betterbibtex.autoexport set exportedRecursively = ?, status = ? where exportedRecursively <> ? and collection not like 'library:%'", [recursive, Zotero.BetterBibTeX.auto.status('pending'), recursive])
         Zotero.BetterBibTeX.auto.process("recursive export: #{recursive}")
 }
 
@@ -390,7 +390,6 @@ Zotero.BetterBibTeX.attachDatabase = ->
         useJournalAbbreviation default 'false' CHECK(useJournalAbbreviation in ('true', 'false')),
 
         exportedRecursively CHECK(exportedRecursively in ('true', 'false')),
-        status CHECK(status in ('pending', 'error', 'done')),
 
         UNIQUE (path)
         )
@@ -829,7 +828,7 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
   #    collections.push("'library'")
   if collections.length > 0
     collections = @SQLSet(collections)
-    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{collections}")
+    Zotero.DB.query("update betterbibtex.autoexport set status = ? where collection in #{collections}", [Zotero.BetterBibTeX.auto.status('pending')])
     @auto.process("collection changed: #{collections}")
 ).bind(Zotero.BetterBibTeX)
 
@@ -864,7 +863,7 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
 
   if collections.length > 0
     collections = @SQLSet(collections)
-    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where collection in #{collections}")
+    Zotero.DB.query("update betterbibtex.autoexport set status = ? where collection in #{collections}", [Zotero.BetterBibTeX.auto.status('pending')])
     @auto.process("items changed: #{collections}")
 
 ).bind(Zotero.BetterBibTeX)

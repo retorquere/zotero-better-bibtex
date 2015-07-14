@@ -128,7 +128,7 @@ BetterBibTeXAutoExportPref =
     selectedItem = exportlist.selectedItem
     return unless selectedItem
     id = selectedItem.getAttribute('value')
-    Zotero.DB.query("update betterbibtex.autoexport set status = 'pending' where id = ?", [id])
+    Zotero.DB.query("update betterbibtex.autoexport set status = ? where id = ?", [Zotero.BetterBibTeX.auto.status('pending'), id])
     selectedItem.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == id then 'running' else 'pending'}")
     @selected()
 
