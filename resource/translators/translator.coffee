@@ -152,10 +152,10 @@ Translator.nextItem = ->
     xrefs = item.relations?['dc:relation']
     if xrefs
       item.__xref__ = []
-      xrefs = [xref] unless Array.isArray(xref)
+      xrefs = [xrefs] unless Array.isArray(xrefs)
       for xref in xrefs
         m = xref.match(/^http:\/\/zotero.org\/users\/local\/[^\/]+\/items\/([A-Z0-9]+)$/i)
-        next unless m
+        continue unless m
         item.__xref__.push(Zotero.BetterBibTeX.keymanager.get({libraryID: item.libraryID, key: m[1]}, 'on-export').citekey)
       if item.__xref__.length == 0
         delete item.__xref__
