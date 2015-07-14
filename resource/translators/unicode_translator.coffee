@@ -52,7 +52,9 @@ class LaTeX.HTML
         @latex += '\\textsubscript{'
 
       when 'br'
-        @latex += "\\\\\n"
+        # line-breaks on empty line makes LaTeX sad
+        @latex += "\\\\" if @latex != '' && @latex[@latex.length - 1] != "\n"
+        @latex += "\n"
 
       when 'p', 'div'
         @latex += "\n\n"
