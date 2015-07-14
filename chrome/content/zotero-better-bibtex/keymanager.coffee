@@ -299,6 +299,10 @@ Zotero.BetterBibTeX.keymanager = new class
     [item, pinmode] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
 
     # no keys for notes and attachments
+
+    if typeof item.key != 'undefined' && typeof item.libraryID != 'undefined'
+      item = Zotero.Items.getByLibraryAndKey(item.libraryID, item.key)
+
     return unless @eligible(item)
 
     # pinmode can be:

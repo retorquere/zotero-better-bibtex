@@ -843,9 +843,9 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
   ids = extraData if event == 'delete'
   return unless ids.length > 0
 
-  for itemID in ids
+  for itemID in ids.concat(Zotero.DB.columnQuery("SELECT linkedItemID FROM itemSeeAlso WHERE itemID in #{@SQLSet(ids)}"))
     itemID = parseInt(itemID) unless typeof itemID == 'number'
-    delete Zotero.BetterBibTeX.serialized.remove(itemID)
+    @serialized.remove(itemID)
     @cache.remove({itemID})
 
   @keymanager.scan(ids, event)

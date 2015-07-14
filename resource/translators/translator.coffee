@@ -144,6 +144,20 @@ Translator.nextItem = ->
 
     Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
     item.__citekey__ ||= Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
+
+    xrefs = item.relations?['dc:relation']
+    if xrefs
+      item.__xref__ = []
+      xrefs = [xref] unless Array.isArray(xref)
+      for xref in xrefs
+        m = xref.match(/^http:\/\/zotero.org\/users\/local\/[^\/]+\/items\/([A-Z0-9]+)$/i)
+        next unless m
+        item.__xref__.push(Zotero.BetterBibTeX.keymanager.get({libraryID: item.libraryID, key: m[1]}, 'on-export').citekey)
+      if item.__xref__.length == 0
+        delete item.__xref__
+      else
+        item.__xref__ = item.__xref__.join(',')
+
     @citekeys[item.itemID] = item.__citekey__
     return item
 
@@ -273,6 +287,8 @@ class Reference
         if field.name == 'referencetype'
           @itemtype = field.value
           continue
+
+        field.esc = 'raw' if field.name == 'xref'
 
         field = @field(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
         field.noreplace = true
@@ -447,6 +463,7 @@ Reference::remove = (name) ->
 Reference::normalize = (typeof (''.normalize) == 'function')
 
 Reference::complete = ->
+  @add({name: 'xref', value: @item.__xref__, esc: 'raw'}) if !@has.xref && @item.__xref__
   @add({name: 'type', value: @itemtype}) if @fields.length == 0
 
   if Translator.DOIandURL != 'both'
