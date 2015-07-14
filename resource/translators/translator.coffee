@@ -67,7 +67,7 @@ Translator.initialize = ->
   if @verbatimDate == ''
     delete @verbatimDate
   else
-    @verbatimDate = new RegExp("^#{@verbatimDate}$", 'i')
+    @verbatimDate = new RegExp("^(#{@verbatimDate})$", 'i')
 
   for option in ['useJournalAbbreviation', 'exportPath', 'exportFilename', 'exportCharset', 'exportFileData', 'exportNotes']
     @[option] = Zotero.getOption(option)
