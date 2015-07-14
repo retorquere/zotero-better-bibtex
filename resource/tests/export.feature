@@ -131,6 +131,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                              | references |
+     | BBT export of square brackets in date #245 -- xref should not be escaped #246     | 5          |
      | Better BibLaTeX.stable-keys                                                       | 6          |
      | Better BibLaTeX.010                                                               | 2          |
      | Better BibLaTeX.011                                                               | 2          |
