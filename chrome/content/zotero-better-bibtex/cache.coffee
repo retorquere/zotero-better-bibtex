@@ -192,7 +192,7 @@ Zotero.BetterBibTeX.auto = new class
     Zotero.debug('idle: auto-exporter initialized:')
 
   status: (status) ->
-    return "#{status} (#{(new Date()).toISOString().replace('T', ' ').replace(/\..*/, '')})"
+    return "#{status} (#{(new Date()).toLocaleString()})"
 
   bool: (v) -> if v then 'true' else 'false'
 
