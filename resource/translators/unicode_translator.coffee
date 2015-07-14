@@ -54,7 +54,7 @@ class LaTeX.HTML
         @latex += "\n\n"
 
       when 'h1', 'h2', 'h3', 'h4'
-        @latex += "\n\n\\#{Array(parseInt(tag[1])).join('sub')}section{"
+        @latex += "\n\n\\#{(new Array(parseInt(tag.name[1]))).join('sub')}section{"
 
       when 'ol'
         @latex += "\n\n\\begin{enumerate}\n"
