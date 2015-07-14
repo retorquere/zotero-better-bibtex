@@ -144,8 +144,8 @@ Zotero.BetterBibTeX.reportErrors = (includeReferences) ->
       data = { data: true, items: pane.getSelectedItems() }
 
   if data.data
-    @translate(@translators.BetterBibTeXJSON.translatorID, data, { exportNotes: true, exportFileData: false }, (result) ->
-      params = {wrappedJSObject: {references: result}}
+    @translate(@translators.BetterBibTeXJSON.translatorID, data, { exportNotes: true, exportFileData: false }, (err, references) ->
+      params = {wrappedJSObject: {references: (if err then null else references)}}
       ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
       ww.openWindow(null, 'chrome://zotero-better-bibtex/content/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', params)
     )
