@@ -8,7 +8,7 @@ cd ..
 
 OFFLINE=true
 rm -f minitests/test.js
-echo "var Translator = {};" >> minitests/test.js
+echo "var Translator = {}, LaTeX = {};" >> minitests/test.js
 for src in resource/translators/latex_unicode_mapping.js  resource/translators/unicode_translator.js resource/translators/htmlparser.js minitests/html.js ; do
   rake $src
   cat $src >> minitests/test.js

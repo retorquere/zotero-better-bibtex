@@ -225,9 +225,14 @@ file 'resource/translators/xregexp-all.js' => 'Rakefile' do |t|
 end
 
 file 'resource/translators/htmlparser.js' => 'Rakefile' do |t|
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js', t.name)
+  #ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js', t.name)
+  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Munawwar/neutron-html5parser/master/htmlparser.js', t.name)
   # @doc['createElementNS'] rather than @doc.createElementNS to work around overzealous extension validator.
-  code = open(t.name).read.sub('doc.createElement(tagName)', 'doc["createElement"](tagName)')
+  code = open(t.name).read
+  code.sub!('doc.createElement(tagName)', 'doc["createElement"](tagName)')
+  code.sub!('}(this, function (window) {', '}(LaTeX, function (window) {')
+  code.sub!("if (typeof define === 'function' && define.amd) {", "if (typeof define === '_function' && define.amd) {")
+  code.sub!("} else if (typeof exports === 'object') {", "} else if (typeof exports === '_object') {")
   open(t.name, 'w'){|f| f.write(code) }
 end
 

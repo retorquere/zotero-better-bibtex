@@ -11,7 +11,13 @@ LaTeX.cleanHTML = (text) ->
     if i % 2 == 0 # text
       html += chunk.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     else
-      html += chunk
+      switch
+        when chunk.match(/^<pre/i)
+          html += '<![CDATA['
+        when chunk.match(/^<\/pre/i)
+          html += ']]>'
+        else
+          html += chunk
   return html
 
 LaTeX.html2latex = (html, balancer) ->
@@ -20,19 +26,17 @@ LaTeX.html2latex = (html, balancer) ->
 class LaTeX.HTML
   constructor: (html) ->
     @latex = ''
-    @smallcaps = 0
-    @pre = 0
+    @stack = []
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
 
-    HTMLParser(html, @)
+    LaTeX.HTMLtoDOM.Parser(html, @)
 
   start: (tag, attrs, unary) ->
-    if @pre > 0
-      attributes = (" #{attr.name}='#{attr.escaped}'" for attr in attrs).join('')
-      @latex += "<#{tag}#{attributes}#{(if unary then '/' else '')}>"
-      return
+    tag = {name: tag.toLowerCase(), attrs: ({name: att.name.toLowerCase(), value: att.value, escaped: att.escaped} for att in attrs)}
+    tag.smallcaps = tag.attrs.some((attr) -> attr.name == 'style' && 'small-caps' in attr.value.split(/\s+/))
+    @stack.unshift(tag) unless unary
 
-    switch tag.toLowerCase()
+    switch tag.name
       when 'i'
         @latex += '\\emph{'
       when 'b'
@@ -59,22 +63,18 @@ class LaTeX.HTML
       when 'li'
         @latex += "\n\\item "
 
-      when 'pre'
-        @pre++
-
       when 'span'
-        smallcaps = false
-        for attr in attrs
-          smallcaps ||= attr.name.toLowerCase() == 'style' && 'small-caps' in attr.value.split(/\s+/)
-        if smallcaps
-          @smallcaps++
-          @latex += '\\textsc{' if @smallcaps == 1
+        @latex += '\\textsc{' if tag.smallcaps
 
       else
         throw new Error("unexpected tag '#{tag}'")
 
   end: (tag) ->
-    switch tag.toLowerCase()
+    tag = tag.toLowerCase()
+
+    throw new Error("Unexpected close tag #{tag}") if tag != @stack[0].name
+
+    switch tag
       when 'i', 'sup', 'sub', 'b'
         @latex += '}'
 
@@ -84,23 +84,18 @@ class LaTeX.HTML
       when 'p', 'div'
         @latex += "\n\n"
 
-      when 'pre'
-        @pre--
-
       when 'span'
-        if @smallcaps > 0
-          @latex += '}'
-          @smallcaps--
+        @latex += '}' if @stack[0].smallcaps
+
+    @stack.shift()
+
+  cdata: (text) -> @chars(text)
 
   chars: (text) ->
     for own char, re of LaTeX.entities
       text = text.replace(re, char)
     text = text.replace(/&#([0-9]{1,3});/gi, (match, charcode) -> String.fromCharCode(parseInt(charcode)))
     throw new Error("Unresolved entities: #{text}") if text.match(/&[a-z]+;/i)
-
-    if @pre > 0
-      @latex += text
-      return
 
     blocks = []
     for c in text
