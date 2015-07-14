@@ -390,6 +390,7 @@ Zotero.BetterBibTeX.attachDatabase = ->
         useJournalAbbreviation default 'false' CHECK(useJournalAbbreviation in ('true', 'false')),
 
         exportedRecursively CHECK(exportedRecursively in ('true', 'false')),
+        status,
 
         UNIQUE (path)
         )
