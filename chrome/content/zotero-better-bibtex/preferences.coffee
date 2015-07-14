@@ -131,6 +131,7 @@ BetterBibTeXAutoExportPref =
     Zotero.DB.query("update betterbibtex.autoexport set status = ? where id = ?", [Zotero.BetterBibTeX.auto.status('pending'), id])
     selectedItem.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == id then 'running' else 'pending'}")
     @selected()
+    Zotero.BetterBibTeX.auto.process('marked')
 
   exportType: (id) ->
     return switch

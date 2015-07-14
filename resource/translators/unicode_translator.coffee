@@ -32,15 +32,19 @@ class LaTeX.HTML
     LaTeX.HTMLtoDOM.Parser(html, @)
 
   start: (tag, attrs, unary) ->
-    tag = {name: tag.toLowerCase(), attrs: ({name: att.name.toLowerCase(), value: att.value, escaped: att.escaped} for att in attrs)}
-    tag.smallcaps = tag.attrs.some((attr) -> attr.name == 'style' && 'small-caps' in attr.value.split(/\s+/))
+    tag = {name: tag, attrs: {}}
+    for attr in attrs
+      tag.attrs[attr.name.toLowerCase()] = attr.value
     @stack.unshift(tag) unless unary
 
     switch tag.name
-      when 'i'
+      when 'i', 'em'
         @latex += '\\emph{'
-      when 'b'
+      when 'b', 'strong'
         @latex += '\\textbf{'
+
+      when 'a'
+        @latex += "\\href{#{tag.attrs.href}}{" if tag.attrs.href?.length > 0
 
       when 'sup'
         @latex += '\\textsuperscript{'
@@ -64,19 +68,23 @@ class LaTeX.HTML
         @latex += "\n\\item "
 
       when 'span'
+        tag.smallcaps = 'small-caps' in (tag.attrs.style || '').split(/\s+/)
         @latex += '\\textsc{' if tag.smallcaps
 
       else
-        throw new Error("unexpected tag '#{tag}'")
+        throw new Error("unexpected tag '#{tag.name}'")
 
   end: (tag) ->
     tag = tag.toLowerCase()
 
-    throw new Error("Unexpected close tag #{tag}") if tag != @stack[0].name
+    throw new Error("Unexpected close tag #{tag}") unless tag == @stack[0]?.name
 
     switch tag
-      when 'i', 'sup', 'sub', 'b'
+      when 'i', 'em', 'sup', 'sub', 'b', 'strong'
         @latex += '}'
+
+      when 'a'
+        @latex += '}' if @stack[0].attrs.href?.length > 0
 
       when 'h1', 'h2', 'h3', 'h4'
         @latex += "}\n\n"
@@ -93,13 +101,16 @@ class LaTeX.HTML
     @latex += text
 
   chars: (text) ->
-    for own char, re of LaTeX.entities
-      text = text.replace(re, char)
-    text = text.replace(/&#([0-9]{1,3});/gi, (match, charcode) -> String.fromCharCode(parseInt(charcode)))
-    throw new Error("Unresolved entities: #{text}") if text.match(/&[a-z]+;/i)
+    txt = text.replace(/\&((#[0-9]{1,3})|[a-z]+);/gi, (match, entity, charcode) ->
+      return String.fromCharCode(parseInt(charcode.slice(1))) if charcode
+
+      char = LaTeX.entities[entity.toLowerCase()]
+      throw new Error("Unknown entity '#{match}' in '#{text}'") unless char
+      return char
+    )
 
     blocks = []
-    for c in text
+    for c in txt
       math = @mapping.math[c]
       blocks.unshift({math: !!math, text: ''}) if blocks.length == 0 || blocks[0].math != !!math
       blocks[0].text += (math || @mapping.text[c] || c)
