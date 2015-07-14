@@ -89,7 +89,8 @@ class LaTeX.HTML
 
     @stack.shift()
 
-  cdata: (text) -> @chars(text)
+  cdata: (text) ->
+    @latex += text
 
   chars: (text) ->
     for own char, re of LaTeX.entities
