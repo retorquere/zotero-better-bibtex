@@ -589,7 +589,7 @@ file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translato
     mathmode = (char['mode'] == 'math')
 
     case key
-      when '[', ']'
+      when '[' # , ']' # biber doesn't like it when I escape closing square brackets #245.1
         value = "{#{key}}"
         mathmode = false
       # TODO: replace '}' and '{' with textbrace(left|right) once the bug mentioned in
