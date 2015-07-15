@@ -23,6 +23,7 @@ require 'selenium-webdriver'
 require 'rchardet'
 require 'csv'
 require 'base64'
+require 'net/http/post/multipart'
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -561,13 +562,18 @@ task :test, [:tag] => [XPI, :plugins] do |t, args|
 end
 
 task :share => XPI do
-  folder = ['~/Google Drive/Public', '~/GoogleDrive/Public' ].collect{|p| File.expand_path(p) }.detect{|p| File.directory?(p) }
-  raise "No share folder" unless folder
-  Dir["#{folder}/*.xpi"].each{|xpi| File.unlink(xpi)}
-  xpi = File.basename(XPI, File.extname(XPI)) + '-' + TIMESTAMP.sub(' ', '@') + File.extname(XPI)
-  FileUtils.cp(XPI, File.join(folder, xpi))
-  puts 'https://zotplus.github.io/better-bibtex/#debug'
-  puts xpi
+  xpi = Dir['*.xpi'][0]
+  url = URI.parse('http://tempsend.com/send')
+  File.open(xpi) do |data|
+    req = Net::HTTP::Post::Multipart.new(url.path,
+      'file' => UploadIO.new(data, 'application/x-xpinstall', File.basename(xpi)),
+      'expire' => '604800'
+    )
+    res = Net::HTTP.start(url.host, url.port) do |http|
+      http.request(req)
+    end
+    puts "http://tempsend.com#{res['location']}"
+  end
 end
 
 file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translators/unicode.xml', 'Rakefile'] do |t|
