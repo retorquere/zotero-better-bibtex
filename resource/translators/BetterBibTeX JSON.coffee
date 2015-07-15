@@ -67,7 +67,7 @@ doImport = ->
   for i in data.items
     item = new Zotero.Item()
     for own prop, value of i
-      item[prop] = value unless prop == 'related' # TODO: figure out how to prevent keys being generated for related items before their parent
+      item[prop] = value
     for att in item.attachments || []
       delete att.path if att.url
     item.complete()
