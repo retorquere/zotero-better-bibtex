@@ -19,7 +19,7 @@ class BetterBibTeXPatternFormatter
 
     for candidate in @patterns[0]
       citekey = @clean(@concat(candidate))
-      return citekey if citekey != ''
+      return {citekey: citekey, postfix: candidate.postfix} if citekey != ''
     return
 
   alternates: (item) ->

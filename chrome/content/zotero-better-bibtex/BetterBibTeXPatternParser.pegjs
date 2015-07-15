@@ -24,11 +24,11 @@ start
     }
 
 pattern
-  = callchain:callchain+ separator:[\|>]? { return {pattern: callchain, separator: separator}; }
+  = callchain:callchain+ postfix:'[0]'? separator:[\|>]? { return {pattern: callchain, separator: separator, postfix: (postfix === '[0]' ? '0' : 'a')}; }
 
 callchain
   = '[' fcall:fcall ']'   { return fcall; }
-  / chars:[^\|>\[\]]+      { return {method: 'literal', arguments: [chars.join('')]}; }
+  / chars:[^\|>\[\]]+     { return {method: 'literal', arguments: [chars.join('')]}; }
 
 fcall
   = method:method filters:filter* { if (filters.length > 0) { method.filters = filters; } return method; }
