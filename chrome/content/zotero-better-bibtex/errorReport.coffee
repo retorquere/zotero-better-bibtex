@@ -52,10 +52,6 @@ Zotero_BetterBibTeX_ErrorReport = new class
       debug = debug.join("\n")
       @errorLog.truncated += debug
 
-      if document.getElementById('zotero-failure-message').hasChildNodes()
-        textNode = document.getElementById('zotero-failure-message').firstChild
-        document.getElementById('zotero-failure-message').removeChild(textNode)
-      document.getElementById('zotero-failure-message').appendChild(document.createTextNode(Zotero.getString('errorReport.followingReportWillBeSubmitted')))
       Zotero.debug("BBT.error.init: message set")
 
       params = window.arguments[0].wrappedJSObject

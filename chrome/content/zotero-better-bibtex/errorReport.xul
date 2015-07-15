@@ -11,31 +11,31 @@
 ]>
 
 <wizard xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-	id="zotero-error-report" title="&zotero.errorReport.title;"
-	width="550" height="450">
-	
-	<wizardpage onpageshow="Zotero_BetterBibTeX_ErrorReport.init()" label=" ">
-		<description id="zotero-failure-message"/>
-		<textbox id="zotero-error-message" class="plain" readonly="true" multiline="true" flex="1"/>
-		<textbox id="zotero-references" class="plain" readonly="true" multiline="true" flex="1"/>
-		<description id="zotero-unrelated-message">&zotero.general.note; &zotero.errorReport.unrelatedMessages;</description>
-		<description id="zotero-advance-message"/>
-	</wizardpage>
-	
-	<wizardpage onpageshow="Zotero_BetterBibTeX_ErrorReport.sendErrorReport()" label=" ">
-		<description>&zotero.errorReport.submissionInProgress;</description>
-	</wizardpage>
-	
-	<wizardpage label=" ">
-		<description>&zotero.errorReport.submitted;</description>
-		<description id="zotero-report-result" hidden="true">
+  id="zotero-error-report" title="&zotero.errorReport.title;"
+  width="550" height="450">
+
+  <wizardpage onpageshow="Zotero_BetterBibTeX_ErrorReport.init()" label=" ">
+    <description style="white-space: pre-wrap;" class="header">&zotero.better-bibtex.errorReport.review;</description>
+    <textbox id="zotero-error-message" class="plain" readonly="true" multiline="true" flex="1"/>
+    <textbox id="zotero-references" class="plain" readonly="true" multiline="true" flex="1"/>
+    <description id="zotero-unrelated-message">&zotero.general.note; &zotero.errorReport.unrelatedMessages;</description>
+    <description id="zotero-advance-message"/>
+  </wizardpage>
+
+  <wizardpage onpageshow="Zotero_BetterBibTeX_ErrorReport.sendErrorReport()" label=" ">
+    <description>&zotero.errorReport.submissionInProgress;</description>
+  </wizardpage>
+
+  <wizardpage label=" ">
+    <description>&zotero.errorReport.submitted;</description>
+    <description id="zotero-report-result" hidden="true">
       <description>
-			  &zotero.better-bibtex.errorReport.reportID; <textbox flex="1" id="zotero-report-id" class="plain" readonly="true"/>
+        &zotero.better-bibtex.errorReport.reportID; <textbox flex="1" id="zotero-report-id" class="plain" readonly="true"/>
       </description>
-		</description>
-		<description>&zotero.better-bibtex.errorReport.postToGitHub;</description>
-		<description>&zotero.better-bibtex.errorReport.notReviewed;</description>
-	</wizardpage>
+    </description>
+    <description>&zotero.better-bibtex.errorReport.postToGitHub;</description>
+    <description>&zotero.better-bibtex.errorReport.notReviewed;</description>
+  </wizardpage>
 
   <!-- Include the main extension logic -->
   <script src="chrome://zotero/content/include.js"/>

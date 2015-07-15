@@ -5,8 +5,6 @@
 <!ENTITY zotero.better-bibtex.citekey.clear "Clear BibTeX key">
 <!ENTITY zotero.better-bibtex.preferences.prefpane.better-bibtex "Better BibTeX">
 
-<!ENTITY zotero.better-bibtex.reportErrors "Report ZotPlus Errors...">
-
 <!ENTITY zotero.better-bibtex.prefs.citation "Citation">
 <!ENTITY zotero.better-bibtex.prefs.disabled "Better BibTeX has been disabled">
 <!ENTITY zotero.better-bibtex.prefs.import-export "Import/Export">
@@ -55,8 +53,13 @@
 <!ENTITY zotero.better-bibtex.doi-and-url.DOI "DOI">
 <!ENTITY zotero.better-bibtex.doi-and-url.URL "URL">
 
+<!ENTITY zotero.better-bibtex.reportErrors "Report ZotPlus Errors...">
+<!ENTITY zotero.better-bibtex.errorReport.review "The data below is about to submitted to ZotPlus for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
+
+If you are OK with sending this data, please click &quot;Continue&quot; and post the debug ID presented in the next screen in the issue tracker at https://github.com/ZotPlus/zotero-better-bibtex/issue">
 <!ENTITY zotero.better-bibtex.errorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/ZotPlus/zotero-better-bibtex/issues) with this Report ID, a description of the problem, and any steps necessary to reproduce it.">
 <!ENTITY zotero.better-bibtex.errorReport.notReviewed "Error reports can not reviewed unless referred to in the GitHub issue tracker.">
+<!ENTITY zotero.better-bibtex.errorReport.reportID "Report ID:">
 
 <!ENTITY zotero.better-bibtex.caching "Cache activity">
 
@@ -82,7 +85,6 @@
 <!ENTITY zotero.better-bibtex.preferences.debugOutputLogging "ZotPlus Debug Output">
 <!ENTITY zotero.better-bibtex.debug "ZotPlus extended debug logging. Restart Firefox/Zotero to activate, persists over reboots. Affects performance, so turn off when done.">
 
-<!ENTITY zotero.better-bibtex.errorReport.reportID "Report ID (post this in the issue tracker):">
 
 <!ENTITY zotero.better-bibtex.preserveBibTeXVariables "Preserve BibTeX variables">
 <!ENTITY zotero.better-bibtex.preserveBibTeXVariables.explain "When enabled, single-word strings will be assumed to be extrenally-defined @string vars, and thus not surrounded by braces">
