@@ -9,7 +9,7 @@ LaTeX.cleanHTML = (text) ->
   html = ''
   for chunk, i in text.split(/(<\/?(?:i|b|sub|sup|pre|span)[^>]*>)/i)
     if i % 2 == 0 # text
-      html += chunk.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      html += LaTeX.he.escape(chunk)
     else
       switch
         when chunk.match(/^<pre/i)
@@ -103,13 +103,9 @@ class LaTeX.HTML
     @latex += text
 
   chars: (text) ->
-    txt = text.replace(/\&((#[0-9]{1,3})|[a-z]+);/gi, (match, entity, charcode) ->
-      return String.fromCharCode(parseInt(charcode.slice(1))) if charcode
-
-      char = LaTeX.entities[entity.toLowerCase()]
-      throw new Error("Unknown entity '#{match}' in '#{text}'") unless char
-      return char
-    )
+    txt = LaTeX.he.decode(text)
+    if m = txt.match(/\&((#[0-9]{1,3})|[a-z]+);/gi)
+      throw new Error("Unknown entity '#{m[0]}' in '#{text}'")
 
     blocks = []
     for c in txt

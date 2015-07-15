@@ -120,6 +120,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',
+  'resource/translators/he.js',
 ]).sort.uniq
 
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
@@ -176,6 +177,7 @@ DOWNLOADS = {
     #'json5.js'            => 'https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js',
     #'htmlparser.js'       => 'https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js',
     #'marked.js'       => 'https://raw.githubusercontent.com/chjj/marked/master/lib/marked.js'
+    #'he.js'           => 'https://raw.githubusercontent.com/mathiasbynens/he/master/he.js'
   },
 }
 DOWNLOADS.each_pair{|dir, files|
@@ -188,12 +190,7 @@ DOWNLOADS.each_pair{|dir, files|
 
 file 'resource/translators/marked.js' => 'Rakefile' do |t|
   ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/chjj/marked/master/lib/marked.js', t.name)
-  code = "var LaTeX;
-
-  if (!LaTeX) {
-    LaTeX = {};
-  }
-  "
+  code = "var LaTeX; if (!LaTeX) { LaTeX = {}; }\n"
   IO.readlines(t.name).each{|line|
     line.gsub!(/module/, '__no_module__')
     line.gsub!('this.marked', 'LaTeX.marked')
@@ -220,6 +217,19 @@ file 'resource/translators/xregexp-all.js' => 'Rakefile' do |t|
     end
     code += line
   }
+
+  open(t.name, 'w'){|f| f.write(code) }
+end
+
+file 'resource/translators/he.js' => 'Rakefile' do |t|
+  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/mathiasbynens/he/master/he.js', t.name)
+
+  code = "var LaTeX; if (!LaTeX) { LaTeX = {}; }\n" + open(t.name).read
+  code.sub!("typeof exports == 'object'", "typeof exports == '_object'")
+  code.sub!("typeof module == 'object'", "typeof module == '_object'")
+  code.sub!("typeof global == 'object'", "typeof global == '_object'")
+  code.sub!("if (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal) {", "if (false) {")
+  code.sub!("\n}(this));", "\n}(LaTeX));")
 
   open(t.name, 'w'){|f| f.write(code) }
 end
