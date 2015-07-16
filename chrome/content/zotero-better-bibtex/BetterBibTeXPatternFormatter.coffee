@@ -18,8 +18,9 @@ class BetterBibTeXPatternFormatter
     return if @item.itemType in ['attachment', 'note']
 
     for candidate in @patterns[0]
+      delete @postfix
       citekey = @clean(@concat(candidate))
-      return {citekey: citekey, postfix: candidate.postfix} if citekey != ''
+      return {citekey: citekey, postfix: @postfix} if citekey != ''
     return
 
   alternates: (item) ->
@@ -117,6 +118,10 @@ class BetterBibTeXPatternFormatter
     return creators.authors || creators.editors || creators.collaborators || creators.translators || []
 
   methods:
+    '0': (text) ->
+      @postfix = '0'
+      return ''
+
     literal: (text) -> return text
 
     property: (name) -> return @item[name] || @item[name[0].toLowerCase() + name.slice(1)]

@@ -14,7 +14,7 @@ start
     }
 
 pattern
-  = callchain:callchain+ postfix:'[0]'? separator:[\|>]? { return {pattern: callchain, separator: separator, postfix: (postfix === '[0]' ? '0' : 'a')}; }
+  = callchain:callchain+ separator:[\|>]? { return {pattern: callchain, separator: separator}; }
 
 callchain
   = '[' fcall:fcall ']'   { return fcall; }
@@ -31,7 +31,7 @@ method
     if (!params) { params = []; }
     return {method: name, arguments: [editorsOnly, (flag === 'initials')].concat(params)};
   }
-  / name:[\.a-zA-Z]+ flag:flag? params:mparams? {
+  / name:[0\.a-zA-Z]+ flag:flag? params:mparams? {
       name = name.join('')
       if (BetterBibTeXPatternFormatter.prototype.methods[name]) {
         return {method: name, arguments: params || []};
