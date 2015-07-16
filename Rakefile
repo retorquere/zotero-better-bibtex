@@ -632,6 +632,8 @@ file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translato
     mapping[key] = OpenStruct.new({latex: value, math: mathmode})
   }
 
+  mapping['\\'] = OpenStruct.new({latex: "\\char`\\\\", math: false})
+
   u2l = {
     unicode: OpenStruct.new({ math: [], map: {} }),
     ascii: OpenStruct.new({ math: [], map: {} })
@@ -707,6 +709,7 @@ file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translato
   l2u.each_pair{|k, v|
   cs << "  #{k.inspect}: #{v.inspect}"
   }
+  cs << "  #{'\\textbackslash'.inspect}: #{'\\'.inspect}"
 
   cs << ''
 
