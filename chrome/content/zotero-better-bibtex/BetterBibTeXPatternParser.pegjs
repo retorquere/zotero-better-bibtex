@@ -1,13 +1,3 @@
-{
-  function method(prefix, name, flag, params, editorsOnly) {
-    if (editorsOnly) { prefix = (prefix === 'edtr') ? 'auth' : 'authors'; }
-    name = prefix + name.join('');
-    if (!params) { params = []; }
-    return {method: name, arguments: [editorsOnly, (flag === 'initials')].concat(params)};
-  }
-  (Zotero.debug || console.log)('PatternParser loaded')
-}
-
 start
   = patterns:pattern+ {
       var i, parsed, pattern;
@@ -34,8 +24,13 @@ fcall
   = method:method filters:filter* { if (filters.length > 0) { method.filters = filters; } return method; }
 
 method
-  = prefix:('auth' / 'authors') name:[\.a-zA-Z]* flag:flag? params:mparams?     { return method(prefix, name, flag, params, false); }
-  / prefix:('edtr' / 'editors') postfix:[\.a-zA-Z]* flag:flag? params:mparams?  { return method(prefix, name, flag, params, true); }
+  = prefix:('auth' / 'authors' / 'edtr' / 'editors' ) name:[\.a-zA-Z]* flag:flag? params:mparams? {
+    var editorsOnly = (prefix === 'edtr' || prefix === 'editors');
+    if (editorsOnly) { prefix = (prefix === 'edtr') ? 'auth' : 'authors'; }
+    name = prefix + name.join('');
+    if (!params) { params = []; }
+    return {method: name, arguments: [editorsOnly, (flag === 'initials')].concat(params)};
+  }
   / name:[\.a-zA-Z]+ flag:flag? params:mparams? {
       name = name.join('')
       if (BetterBibTeXPatternFormatter.prototype.methods[name]) {
