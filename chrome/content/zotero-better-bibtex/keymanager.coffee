@@ -147,7 +147,7 @@ Zotero.BetterBibTeX.keymanager = new class
     while (citekey + postfix.c) in in_use
       postfix.n++
       if postfixStyle == '0'
-        postfix.c = '' + postfix.n
+        postfix.c = '-' + (postfix.n + 1)
       else
         postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
 
