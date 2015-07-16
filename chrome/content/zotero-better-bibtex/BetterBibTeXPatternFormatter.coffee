@@ -15,13 +15,13 @@ class BetterBibTeXPatternFormatter
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
-    return if @item.itemType in ['attachment', 'note']
+    return {} if @item.itemType in ['attachment', 'note']
 
     for candidate in @patterns[0]
       delete @postfix
       citekey = @clean(@concat(candidate))
       return {citekey: citekey, postfix: @postfix} if citekey != ''
-    return
+    return {}
 
   alternates: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
