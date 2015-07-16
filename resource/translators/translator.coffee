@@ -149,18 +149,19 @@ Translator.nextItem = ->
     Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
     item.__citekey__ ||= Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
 
-    xrefs = item.relations?['dc:relation']
-    if xrefs
-      item.__xref__ = []
-      xrefs = [xrefs] unless Array.isArray(xrefs)
-      for xref in xrefs
-        m = xref.match(/^http:\/\/zotero.org\/users\/local\/[^\/]+\/items\/([A-Z0-9]+)$/i)
-        continue unless m
-        item.__xref__.push(Zotero.BetterBibTeX.keymanager.get({libraryID: item.libraryID, key: m[1]}, 'on-export').citekey)
-      if item.__xref__.length == 0
-        delete item.__xref__
-      else
-        item.__xref__ = item.__xref__.join(',')
+    # TODO: xref is unidirectional, Zotero relations are bidirectional
+    #xrefs = item.relations?['dc:relation']
+    #if xrefs
+    #  item.__xref__ = []
+    #  xrefs = [xrefs] unless Array.isArray(xrefs)
+    #  for xref in xrefs
+    #    m = xref.match(/^http:\/\/zotero.org\/users\/local\/[^\/]+\/items\/([A-Z0-9]+)$/i)
+    #    continue unless m
+    #    item.__xref__.push(Zotero.BetterBibTeX.keymanager.get({libraryID: item.libraryID, key: m[1]}, 'on-export').citekey)
+    #  if item.__xref__.length == 0
+    #    delete item.__xref__
+    #  else
+    #    item.__xref__ = item.__xref__.join(',')
 
     @citekeys[item.itemID] = item.__citekey__
     return item

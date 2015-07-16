@@ -136,7 +136,7 @@ Zotero.BetterBibTeX.keymanager = new class
     return item
 
   assign: (item, pin) ->
-    citekey = Zotero.BetterBibTeX.formatter.format(item)
+    {citekey, postfix: postfixStyle} = Zotero.BetterBibTeX.formatter.format(item)
     citekey = "zotero-#{if item.libraryID in [undefined, null] then 'null' else item.libraryID}-#{item.itemID}" if citekey in [undefined, null, '']
     return null unless citekey
 
@@ -146,7 +146,10 @@ Zotero.BetterBibTeX.keymanager = new class
     postfix = { n: -1, c: '' }
     while (citekey + postfix.c) in in_use
       postfix.n++
-      postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
+      if postfixStyle == '0'
+        postfix.c = '' + postfix.n
+      else
+        postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
 
     res = @set(item, citekey + postfix.c, pin)
     return res
