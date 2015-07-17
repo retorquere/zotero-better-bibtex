@@ -43,8 +43,8 @@
 <!ENTITY zotero.better-bibtex.preferences.auto-abbrev.style "Abbreviation style:">
 <!ENTITY zotero.better-bibtex.pin-citekeys "Auto-pin citation keys (requires sync to be off or auto):">
 <!ENTITY zotero.better-bibtex.pin-citekeys.manual "No">
-<!ENTITY zotero.better-bibtex.pin-citekeys.on-change "On item change">
-<!ENTITY zotero.better-bibtex.pin-citekeys.on-export "On item export">
+<!ENTITY zotero.better-bibtex.pin-citekeys.on-change "On item change. Note that this only affects references that have no pinned citation key -- after the initial pinning on creation or change, further changes will not be incorporated">
+<!ENTITY zotero.better-bibtex.pin-citekeys.on-export "On item export. Note that if you have auto-export set to 'on change', on-export auto-pinning is effectively the same as on-change auto-pinning.">
 <!ENTITY zotero.better-bibtex.pin-citekeys.key-conflict-policy "On conflict, non-pinned key should be">
 <!ENTITY zotero.better-bibtex.pin-citekeys.key-conflict-policy.change "changed (causes key changes)">
 <!ENTITY zotero.better-bibtex.pin-citekeys.key-conflict-policy.keep "kept (causes key duplicates)">
