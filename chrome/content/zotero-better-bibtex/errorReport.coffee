@@ -25,7 +25,7 @@ Zotero_BetterBibTeX_ErrorReport = new class
 
   init: ->
     Zotero.debug('BBT.error.init')
-    @key = "#{Zotero.Utilities.generateObjectKey()}-#{Zotero.Utilities.generateObjectKey()}"
+    @key = "#{(new Date()).toISOString().replace(/T.*/, '').replace(/-/g, '')}-#{Zotero.Utilities.generateObjectKey()}"
     Zotero.debug("BBT.error.init: #{@key}")
 
     wizard = document.getElementById('zotero-error-report')
