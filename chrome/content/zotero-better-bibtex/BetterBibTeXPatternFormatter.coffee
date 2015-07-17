@@ -268,12 +268,12 @@ class BetterBibTeXPatternFormatter
 
     prefix: (value, prefix) ->
       value ||= ''
-      value "#{prefix}#{value}" if value != '' && prefix
+      return "#{prefix}#{value}" if value != '' && prefix
       return value
 
     postfix: (value, postfix) ->
       value ||= ''
-      value += postfix if value != '' && postfix
+      return value + postfix if value != '' && postfix
       return value
 
     abbr: (value) ->
