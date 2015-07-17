@@ -9,7 +9,7 @@ LaTeX.cleanHTML = (text) ->
   html = ''
   for chunk, i in text.split(/(<\/?(?:i|b|sub|sup|pre|span)[^>]*>)/i)
     if i % 2 == 0 # text
-      html += LaTeX.he.escape(chunk)
+      html += LaTeX.he.escape(LaTeX.he.decode(chunk))
     else
       switch
         when chunk.match(/^<pre/i)
