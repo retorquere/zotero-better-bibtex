@@ -266,6 +266,16 @@ class BetterBibTeXPatternFormatter
       sep = '' if typeof sep == 'undefined'
       return (value || '').replace(/\s/g, sep)
 
+    prefix: (value, prefix) ->
+      value ||= ''
+      value "#{prefix}#{value}" if value != '' && prefix
+      return value
+
+    postfix: (value, postfix) ->
+      value ||= ''
+      value += postfix if value != '' && postfix
+      return value
+
     abbr: (value) ->
       return (word.substring(0, 1) for word in (value || '').split(/\s+/)).join('')
 
