@@ -104,8 +104,6 @@ class LaTeX.HTML
 
   chars: (text) ->
     txt = LaTeX.he.decode(text)
-    if m = txt.match(/\&((#[0-9]{1,3})|[a-z]+);/gi)
-      throw new Error("Unknown entity '#{m[0]}' in '#{text}'")
 
     blocks = []
     for c in txt
