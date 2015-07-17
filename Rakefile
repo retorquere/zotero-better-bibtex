@@ -632,7 +632,7 @@ file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translato
     mapping[key] = OpenStruct.new({latex: value, math: mathmode})
   }
 
-  mapping['\\'] = OpenStruct.new({latex: "\\char`\\\\", math: false})
+  mapping['\\'] = OpenStruct.new({latex: "\\backslash", math: true})
 
   u2l = {
     unicode: OpenStruct.new({ math: [], map: {} }),
