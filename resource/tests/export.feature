@@ -108,6 +108,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 10 |
      | Export mapping for reporter field #219                                                         | 1           |
      | Export error for items without publicationTitle and "Preserve BibTeX variables" enabled #201   | 1           |
      | Be robust against misconfigured journal abbreviator #127                                       | 1           |
