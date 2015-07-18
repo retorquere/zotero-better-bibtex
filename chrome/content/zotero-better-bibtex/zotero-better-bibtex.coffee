@@ -263,7 +263,7 @@ Zotero.BetterBibTeX.table_info = (table) ->
     values = (Zotero.DB._getTypedValue(statement, i) for i in [0...statement.columnCount])
     column = {}
     for name, i in fields
-      column[name] = value[i]
+      column[name] = values[i]
     columns[column.name] = column
   statement.finalize()
 
