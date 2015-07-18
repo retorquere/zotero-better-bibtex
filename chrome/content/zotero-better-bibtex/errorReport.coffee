@@ -37,6 +37,12 @@ Zotero_BetterBibTeX_ErrorReport = new class
     Zotero.debug("BBT.error.init: here we go")
 
     Zotero.getSystemInfo((info) =>
+      schema = {}
+      for table in Zotero.DB.columnQuery("SELECT name FROM betterbibtex.sqlite_master WHERE type='table' AND name <> 'schema' ORDER BY name") || []
+        schema[table] = Zotero.BetterBibTeX.table_info(table)
+      schema = "Better BibTeX schema #{Zotero.DB.valueQuery('select version from betterbibtex.schema') || '<new>'}: #{JSON.stringify(schema)}"
+      info += "\n\n#{schema}"
+
       @errorLog = {
         full: Zotero.getErrors(true).join('\n') + "\n\n" + info + "\n\n"
       }
