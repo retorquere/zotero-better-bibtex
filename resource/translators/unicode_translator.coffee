@@ -38,7 +38,7 @@ class LaTeX.HTML
     @stack.unshift(tag) unless unary
 
     switch tag.name
-      when 'i', 'em'
+      when 'i', 'em', 'italic'
         @latex += '\\emph{'
       when 'b', 'strong'
         @latex += '\\textbf{'
@@ -82,7 +82,7 @@ class LaTeX.HTML
     throw new Error("Unexpected close tag #{tag}") unless tag == @stack[0]?.name
 
     switch tag
-      when 'i', 'em', 'sup', 'sub', 'b', 'strong'
+      when 'i', 'italic', 'em', 'sup', 'sub', 'b', 'strong'
         @latex += '}'
 
       when 'a'

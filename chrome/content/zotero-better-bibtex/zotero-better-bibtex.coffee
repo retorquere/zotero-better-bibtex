@@ -252,26 +252,25 @@ Zotero.BetterBibTeX.parseTable = (name) ->
   name = name.slice(1, -1) if name[0] == '"'
   return {schema: schema, name: name}
 
-Zotero.BetterBibTeX.columnNames = (table) ->
+Zotero.BetterBibTeX.table_info = (table) ->
   table = @parseTable(table)
   statement = Zotero.DB.getStatement("pragma #{table.schema}table_info(\"#{table.name}\")", null, true)
 
-  # Get name column
-  for i in [0...statement.columnCount]
-    col = i if statement.getColumnName(i).toLowerCase() == 'name'
+  fields = (statement.getColumnName(i).toLowerCase() for i in [0...statement.columnCount])
 
-  columns = []
+  columns = {}
   while statement.executeStep()
-    columns.push(Zotero.DB._getTypedValue(statement, col))
+    values = (Zotero.DB._getTypedValue(statement, i) for i in [0...statement.columnCount])
+    column = {}
+    for name, i in fields
+      column[name] = value[i]
+    columns[column.name] = column
   statement.finalize()
 
   return columns
 
-Zotero.BetterBibTeX.columnsHash = (table) ->
-  columns = {}
-  for column in @columnNames(table)
-    columns[column] = true
-  return columns
+Zotero.BetterBibTeX.columnNames = (table) ->
+  return Object.keys(@table_info(table))
 
 Zotero.BetterBibTeX.copyTable = (source, target, ignore = []) -> # assumes tables have identical layout!
   ignore = [ignore] if typeof ignore == 'string'
@@ -319,9 +318,8 @@ Zotero.BetterBibTeX.attachDatabase = ->
 
   installed = @version(Zotero.DB.valueQuery("select version from betterbibtex.schema"))
   installing = @version(@release)
-  Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', ?)", [@release])
 
-  if @tableExists('betterbibtex.autoexport')
+  if @tableExists('betterbibtex.autoexport') && @table_info('betterbibtex.autoexport').collection
     Zotero.DB.query("update betterbibtex.autoexport set collection = (select 'library:' || libraryID from groups where 'group:' || groupID = collection) where collection like 'group:%'")
     Zotero.DB.query("update betterbibtex.autoexport set collection = 'collection:' || collection where collection <> 'library' and collection not like '%:%'")
 
@@ -400,7 +398,7 @@ Zotero.BetterBibTeX.attachDatabase = ->
 
     if @tableExists('betterbibtex."-keys-"', true)
       @debug('attachdatabase: migrating keys')
-      if @columnsHash('betterbibtex."-keys-"').pinned
+      if @table_info('betterbibtex."-keys-"').pinned
         @debug('attachdatabase: migrating old-style keys')
         Zotero.BetterBibTeX.debug('Upgrading betterbibtex.keys')
         Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citekeyFormat)
@@ -411,7 +409,7 @@ Zotero.BetterBibTeX.attachDatabase = ->
 
     if @tableExists('betterbibtex."-autoexport-"', true)
       @debug('attachdatabase: migrating autoexport')
-      if @columnsHash('betterbibtex."-autoexport-"').context
+      if @table_info('betterbibtex."-autoexport-"').context
         # sorry my dear colleague, but this was a mess
       else
         @copyTable('betterbibtex."-autoexport-"', 'betterbibtex.autoexport', 'id')
@@ -440,6 +438,8 @@ Zotero.BetterBibTeX.attachDatabase = ->
     Zotero.DB.query('delete from betterbibtex.cache')
   @cache.load()
   @serialized.load()
+
+  Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', ?)", [@release])
 
 Zotero.BetterBibTeX.init = ->
   return if @initialized
