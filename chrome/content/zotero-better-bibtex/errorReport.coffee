@@ -10,7 +10,7 @@ Zotero_BetterBibTeX_ErrorReport = new class
       fd.append(name, value)
 
     file = new Blob([data], { type: 'text/plain'})
-    fd.append('file', file, "#{@key}-#{filename}")
+    fd.append('file', file, "#{@timestamp}-#{@key}-#{filename}")
 
     request = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance()
     request.open('POST', @form.action, true)
@@ -25,7 +25,8 @@ Zotero_BetterBibTeX_ErrorReport = new class
 
   init: ->
     Zotero.debug('BBT.error.init')
-    @key = "#{(new Date()).toISOString().replace(/T.*/, '').replace(/-/g, '')}-#{Zotero.Utilities.generateObjectKey()}"
+    @key = Zotero.Utilities.generateObjectKey()
+    @timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
     Zotero.debug("BBT.error.init: #{@key}")
 
     wizard = document.getElementById('zotero-error-report')
