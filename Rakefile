@@ -561,6 +561,13 @@ task :test, [:tag] => [XPI, :plugins] do |t, args|
   end
 end
 
+task :debug => XPI do
+  xpi = Dir['*.xpi'][0]
+  dxpi = xpi.sub(/\.xpi$/, '-' + (0...8).map { (65 + rand(26)).chr }.join + '.xpi')
+  FileUtils.mv(xpi, dxpi)
+  puts dxpi
+end
+
 task :share => XPI do
   xpi = Dir['*.xpi'][0]
   url = URI.parse('http://tempsend.com/send')

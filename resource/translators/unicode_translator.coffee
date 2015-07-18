@@ -9,7 +9,7 @@ LaTeX.cleanHTML = (text) ->
   html = ''
   for chunk, i in text.split(/(<\/?(?:i|b|sub|sup|pre|span)[^>]*>)/i)
     if i % 2 == 0 # text
-      html += LaTeX.he.escape(LaTeX.he.decode(chunk))
+      html += LaTeX.he.escape(chunk)
     else
       switch
         when chunk.match(/^<pre/i)
@@ -20,7 +20,7 @@ LaTeX.cleanHTML = (text) ->
           html += chunk
   return html
 
-LaTeX.html2latex = (html, balancer) ->
+LaTeX.html2latex = (html) ->
   return (new @HTML(html)).latex.trim().replace(/\n\n\n+/g, "\n\n")
 
 class LaTeX.HTML
