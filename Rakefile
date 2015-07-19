@@ -303,6 +303,7 @@ file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'].compa
       {'x-amz-credential' => credentials},
       {'x-amz-algorithm' => algorithm},
       {'x-amz-date' => date},
+      {'x-amz-storage-class' => 'REDUCED_REDUNDANCY'},
     ]
   }
   policy['conditions'] << ['content-length-range', 0, maxSize] if maxSize
@@ -322,7 +323,8 @@ file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'].compa
       'x-amz-algorithm': algorithm,
       'x-amz-credential': credentials,
       'x-amz-date': date,
-      'x-amz-signature': OpenSSL::HMAC.hexdigest('sha256', signingKey, policy)
+      'x-amz-signature': OpenSSL::HMAC.hexdigest('sha256', signingKey, policy),
+      'x-amz-storage-class': 'REDUCED_REDUNDANCY',
     }
   }
 
