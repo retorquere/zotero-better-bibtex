@@ -36,13 +36,15 @@ Zotero.BetterBibTeX.stringify = (obj, replacer, spaces, cycleReplacer) ->
   str = JSON.stringify(obj, @stringifier(replacer, cycleReplacer), spaces)
 
   if Array.isArray(obj)
+    hybrid = false
     keys = Object.keys(obj)
     if keys.length > 0
       o = {}
       for key in keys
         continue if key.match(/^\d+$/)
         o[key] = obj[key]
-      str += '+' + @stringify(o)
+        hybrid = true
+      str += '+' + @stringify(o) if hybrid
   return str
 
 Zotero.BetterBibTeX.stringifier = (replacer, cycleReplacer) ->
@@ -562,8 +564,11 @@ Zotero.BetterBibTeX.init = ->
       Zotero.BetterBibTeX.debug('export: ', translatorID)
       return original.apply(@, arguments) unless translatorID
 
-      if @_export?.search
-        @_export.type = 'items'
+      # pick up sentinel from patched Zotero_File_Interface.exportCollection in zoteroPane.coffee
+      Zotero.BetterBibTeX.debug("Zotero.Translate.Export::translate is search:", @_export)
+      if @_export?.items?.search
+        saved_search = @_export.items.search
+        @_export.items = @_export.items.items
         throw new Error('Cannot export empty search') unless @_export.items
 
       # regular behavior for non-BBT translators, or if translating to string
@@ -577,12 +582,12 @@ Zotero.BetterBibTeX.init = ->
           @_displayOptions.exportPath = @location.parent.path
         @_displayOptions.exportFilename = @location.leafName
 
-      Zotero.BetterBibTeX.debug("export '#{@_export.type}' to #{if @_displayOptions?.exportFileData then 'directory' else 'file'}", @location.path, 'using', @_displayOptions)
+      Zotero.BetterBibTeX.debug("export", @_export, " to #{if @_displayOptions?.exportFileData then 'directory' else 'file'}", @location.path, 'using', @_displayOptions)
 
       # If no capture, we're done
       return original.apply(@, arguments) unless @_displayOptions?['Keep updated'] && !@_displayOptions.exportFileData
 
-      if !(@_export?.type in ['library', 'collection']) && !@_export?.search
+      if !(@_export?.type in ['library', 'collection']) && !saved_search
         Zotero.BetterBibTeX.flash('Auto-export only supported for searches, groups, collections and libraries')
         return original.apply(@, arguments)
 
@@ -590,7 +595,7 @@ Zotero.BetterBibTeX.init = ->
       progressWin.changeHeadline('Auto-export')
 
       switch
-        when @_export?.search
+        when saved_search
           progressWin.addLines(["Saved search #{saved_search.name} set up for auto-export"])
           to_export = "search:#{saved_search.id}"
 
