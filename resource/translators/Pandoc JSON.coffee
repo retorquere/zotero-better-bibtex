@@ -11,8 +11,13 @@ doExport = ->
         continue
 
     Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
-
+    fields = Translator.extractFields(item)
     json = Zotero.Utilities.itemToCSLJSON(item)
+
+    for field in fields
+      switch field.name
+        when 'origdate' then json['original-date'] = field.value
+
     citekey = json.id = Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
     json = JSON.stringify(json)
     Zotero.BetterBibTeX.cache.store(item.itemID, Translator.header, citekey, json) if caching
