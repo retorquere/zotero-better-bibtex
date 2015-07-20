@@ -19,7 +19,7 @@ doExport = ->
         json[name] = value
       else
         switch name
-          when 'PMCID', 'PMID'
+          when 'PMCID', 'PMID', 'DOI'
             json[name] = value
 
     citekey = json.id = Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
