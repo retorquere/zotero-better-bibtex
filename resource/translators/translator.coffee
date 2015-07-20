@@ -44,6 +44,76 @@ Translator._log = (level, msg...) ->
   msg = ((if (typeof m) in ['boolean', 'string', 'number'] then '' + m else Translator.stringify(m)) for m in msg).join(' ')
   Zotero.debug('[better' + '-' + "bibtex:#{@header.label}] " + msg, level)
 
+Translator.extractFields = (item) ->
+  return [] unless item.extra
+
+  fields = []
+
+  extra = []
+  for line in item.extra.split("\n")
+    m = /^\s*(LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\s*:\s*([\S]+)\s*$/i.exec(line)
+    name = m?[1].toLowerCase()
+    Translator.log("fixed field #{name} = #{m[2]}") if name
+    switch name
+      when 'mr'
+        fields.push({ name: 'mrnumber', value: m[2] })
+      when 'zbl'
+        fields.push({ name: 'zmnumber', value: m[2] })
+      when 'lccn', 'pmcid'
+        fields.push({ name: name, value: m[2] })
+      when 'pmid', 'arxiv', 'jstor', 'hdl'
+        if Translator.BetterBibLaTeX
+          fields.push({ name: 'eprinttype', value: m[1].toLowerCase() })
+          fields.push({ name: 'eprint', value: m[2] })
+        else
+          fields.push({ name: name, value: m[2] })
+      when 'googlebooksid'
+        if Translator.BetterBibLaTeX
+          fields.push({ name: 'eprinttype', value: 'googlebooks' })
+          fields.push({ name: 'eprint', value: m[2] })
+        else
+          fields.push({ name: 'googlebooks', value: m[2] })
+
+      else extra.push(line)
+  item.extra = extra.join("\n")
+
+  m = /(biblatexdata|bibtex|biblatex)\[([^\]]+)\]/.exec(item.extra)
+  if m
+    item.extra = item.extra.replace(m[0], '').trim()
+    for assignment in m[2].split(';')
+      data = assignment.match(/^([^=]+)=\s*(.*)/)
+      unless data
+        Zotero.debug("Not an assignment: #{assignment}")
+        continue
+
+      fields.push({ name: data[1], value: data[2] })
+
+  m = /(biblatexdata|bibtex|biblatex)({[\s\S]+})/.exec(item.extra)
+  if m
+    prefix = m[1]
+    data = m[2]
+    while data.indexOf('}') >= 0
+      try
+        json = JSON5.parse(data)
+      catch
+        json = null
+      break if json
+      data = data.replace(/[^}]*}$/, '')
+    if json
+      item.extra = item.extra.replace(prefix + data, '').trim()
+      for name, value of json
+        fields.push({name: name, value: value})
+
+  # fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/
+  item.extra = item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, field, value) ->
+    switch field.toLowerCase()
+      when 'original-date'
+        fields.push({ name: 'origdate', value: value })
+    return ''
+  )
+
+  return fields
+
 Translator.initialize = ->
   return if @initialized
   @initialized = true
@@ -222,72 +292,8 @@ class Reference
 
     @itemtype = Translator.typeMap.Zotero2BibTeX[@item.itemType] or 'misc'
 
-    if @item.extra
-      fields = []
-
-      extra = []
-      for line in @item.extra.split("\n")
-        m = /^\s*(LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\s*:\s*([\S]+)\s*$/i.exec(line)
-        name = m?[1].toLowerCase()
-        Translator.log("fixed field #{name} = #{m[2]}") if name
-        switch name
-          when 'mr'
-            fields.push({ name: 'mrnumber', value: m[2] })
-          when 'zbl'
-            fields.push({ name: 'zmnumber', value: m[2] })
-          when 'lccn', 'pmcid'
-            fields.push({ name: name, value: m[2] })
-          when 'pmid', 'arxiv', 'jstor', 'hdl'
-            if Translator.BetterBibLaTeX
-              fields.push({ name: 'eprinttype', value: m[1].toLowerCase() })
-              fields.push({ name: 'eprint', value: m[2] })
-            else
-              fields.push({ name: name, value: m[2] })
-          when 'googlebooksid'
-            if Translator.BetterBibLaTeX
-              fields.push({ name: 'eprinttype', value: 'googlebooks' })
-              fields.push({ name: 'eprint', value: m[2] })
-            else
-              fields.push({ name: 'googlebooks', value: m[2] })
-
-          else extra.push(line)
-      @item.extra = extra.join("\n")
-
-      m = /(biblatexdata|bibtex|biblatex)\[([^\]]+)\]/.exec(@item.extra)
-      if m
-        @item.extra = @item.extra.replace(m[0], '').trim()
-        for assignment in m[2].split(';')
-          data = assignment.match(/^([^=]+)=\s*(.*)/)
-          unless data
-            Zotero.debug("Not an assignment: #{assignment}")
-            continue
-
-          fields.push({ name: data[1], value: data[2] })
-
-      m = /(biblatexdata|bibtex|biblatex)({[\s\S]+})/.exec(@item.extra)
-      if m
-        prefix = m[1]
-        data = m[2]
-        while data.indexOf('}') >= 0
-          try
-            json = JSON5.parse(data)
-          catch
-            json = null
-          break if json
-          data = data.replace(/[^}]*}$/, '')
-        if json
-          @item.extra = @item.extra.replace(prefix + data, '').trim()
-          for name, value of json
-            fields.push({name: name, value: value})
-
-      # fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/
-      @item.extra = @item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, field, value) ->
-        switch field.toLowerCase()
-          when 'original-date'
-            fields.push({ name: 'origdate', value: value })
-        return ''
-      )
-
+    fields = Translator.extractFields(@item)
+    if fields.length != 0
       for field in fields
         if field.name == 'referencetype'
           @itemtype = field.value
