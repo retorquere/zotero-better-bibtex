@@ -54,7 +54,7 @@ Translator.extractFields = (item) ->
     if !m
       extra.push(line)
     else
-      fields[m[1]] = m[2]
+      fields[m[1]] = {value: m[2], format: 'key-value'}
   item.extra = extra.join("\n")
 
   m = /(biblatexdata|bibtex|biblatex)\[([^\]]+)\]/.exec(item.extra)
@@ -63,7 +63,7 @@ Translator.extractFields = (item) ->
     for assignment in m[2].split(';')
       data = assignment.match(/^([^=]+)=\s*(.*)/)
       if data
-        fields[data[1]] = data[2]
+        fields[data[1]] = {value: data[2], format: 'naive'}
       else
         Zotero.debug("Not an assignment: #{assignment}")
 
@@ -80,12 +80,12 @@ Translator.extractFields = (item) ->
       data = data.replace(/[^}]*}$/, '')
     if json
       item.extra = item.extra.replace(prefix + data, '').trim()
-      for name, value of json
-        fields[name] = value
+      for own name, value of json
+        fields[name] = {value, format: 'json' }
 
   # fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/
   item.extra = item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, name, value) ->
-    fields[name] = value
+    fields[name] = { value, format: 'csl' }
     return ''
   )
 
@@ -273,27 +273,27 @@ class Reference
     for own name, value of Translator.extractFields(@item)
       switch name.toLowerCase()
         when 'mr'
-          fields.push({ name: 'mrnumber', value })
+          fields.push({ name: 'mrnumber', value: value.value })
         when 'zbl'
-          fields.push({ name: 'zmnumber', value })
+          fields.push({ name: 'zmnumber', value: value.value })
         when 'lccn', 'pmcid'
-          fields.push({ name: name, value })
+          fields.push({ name: name, value: value.value })
         when 'pmid', 'arxiv', 'jstor', 'hdl'
           if Translator.BetterBibLaTeX
             fields.push({ name: 'eprinttype', value: name.toLowerCase() })
-            fields.push({ name: 'eprint', value })
+            fields.push({ name: 'eprint', value: value.value })
           else
-            fields.push({ name, value })
+            fields.push({ name, value: value.value })
         when 'googlebooksid'
           if Translator.BetterBibLaTeX
             fields.push({ name: 'eprinttype', value: 'googlebooks' })
-            fields.push({ name: 'eprint', value })
+            fields.push({ name: 'eprint', value: value.value })
           else
-            fields.push({ name: 'googlebooks', value })
+            fields.push({ name: 'googlebooks', value: value.value })
         when 'original-date'
-          fields.push({ name: 'origdate', value })
+          fields.push({ name: 'origdate', value: value.value })
         else
-          fields.push({ name, value })
+          fields.push({ name, value: value.value })
 
     for field in fields
       if field.name == 'referencetype'
