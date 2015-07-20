@@ -1,0 +1,16 @@
+translatorID: "f4b52ab0-f878-4556-85a0-c7aeedd09dfc"
+label: "Pandoc JSON"
+creator: "Emiliano heyns"
+target: json
+minVersion: "2.1.9"
+maxVersion: ""
+priority: 100
+displayOptions:
+  "Keep updated": false
+inRepository: true
+translatorType: 2
+browserSupport: gcsv
+BetterBibTeX:
+  cache:
+    nextItem: true
+    JSON: true

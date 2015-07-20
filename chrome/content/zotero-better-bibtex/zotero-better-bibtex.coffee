@@ -732,6 +732,7 @@ Zotero.BetterBibTeX.loadTranslators = ->
   @load('Better BibLaTeX')
   @load('LaTeX Citation')
   @load('Pandoc Citation')
+  @load('Pandoc JSON')
   @load('BetterBibTeX JSON')
   @load('BibTeXAuxScanner')
   @load('Collected Notes')
