@@ -14,9 +14,10 @@ doExport = ->
     fields = Translator.extractFields(item)
     json = Zotero.Utilities.itemToCSLJSON(item)
 
-    for field in fields
-      switch field.name
-        when 'origdate' then json['original-date'] = field.value
+    for name, value of fields
+      switch name
+        when 'original-date', 'PMID', 'PMCID'
+          json[name] = value
 
     citekey = json.id = Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
     json = JSON.stringify(json)
