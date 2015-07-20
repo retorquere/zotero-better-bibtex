@@ -271,7 +271,8 @@ class Reference
 
     fields = []
     for own name, value of Translator.extractFields(@item)
-      switch name.toLowerCase()
+      name = name.toLowerCase()
+      switch name
         when 'mr'
           fields.push({ name: 'mrnumber', value: value.value })
         when 'zbl'
