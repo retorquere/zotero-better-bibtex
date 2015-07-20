@@ -132,6 +132,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                              | references |
+     | Malformed HTML                                                                    | 1          |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246     | 5          |
      | Better BibLaTeX.stable-keys                                                       | 6          |
      | Better BibLaTeX.010                                                               | 2          |
@@ -157,7 +158,6 @@ Scenario Outline: BibLaTeX Export
      | German Umlaut "separated" by brackets #146                                        | 2          |
      | Hang on non-file attachment export #112 - URL export broken #114                  | 4          |
      | HTML Fragment separator escaped in url #140 #147                                  | 2          |
-     | Malformed HTML                                                                    | 1          |
      | Math parts in title #113                                                          | 1          |
      | References with multiple notes fail to export #174                                | 3          |
      | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105 | 1          |

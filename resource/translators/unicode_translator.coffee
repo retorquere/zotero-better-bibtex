@@ -7,7 +7,7 @@ LaTeX.text2latex = (text) ->
 
 LaTeX.cleanHTML = (text) ->
   html = ''
-  for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|span)(?:[\s][^>]*)?>)/i)
+  for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|span)(?:[^a-z][^>]*)?>)/i)
     if i % 2 == 0 # text
       html += LaTeX.he.escape(chunk)
     else
