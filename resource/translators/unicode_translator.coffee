@@ -7,17 +7,25 @@ LaTeX.text2latex = (text) ->
 
 LaTeX.cleanHTML = (text) ->
   html = ''
-  for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|span)(?:[^a-z][^>]*)?>)/i)
-    if i % 2 == 0 # text
-      html += LaTeX.he.escape(chunk)
-    else
-      switch
-        when chunk.match(/^<pre/i)
-          html += '<![CDATA['
-        when chunk.match(/^<\/pre/i)
-          html += ']]>'
-        else
-          html += chunk
+  cdata = false
+  for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|span)(?:[^>a-z][^>]*)?>)/i)
+    switch
+      when i % 2 == 0 # text
+        html += LaTeX.he.escape(chunk)
+
+      when chunk.match(/^<pre/i)
+        html += '<![CDATA['
+        cdata = true
+
+      when chunk.match(/^<\/pre/i)
+        html += ']]>'
+        cdata = false
+
+      else
+        html += chunk
+
+  html += ']]>' if cdata
+
   return html
 
 LaTeX.html2latex = (html) ->
