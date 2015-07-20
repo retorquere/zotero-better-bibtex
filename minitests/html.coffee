@@ -16,6 +16,9 @@ abstractNote = "In 2011 the international <are> development community committed 
 
 
 #abstractNote = "R&amp;D"
+
+
+abstractNote = "<italic>k</italic>-distribution"
 console.log("\nclean")
 console.log(LaTeX.cleanHTML(abstractNote))
 console.log("\nlatex")
