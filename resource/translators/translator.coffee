@@ -269,6 +269,7 @@ class Reference
 
     @itemtype = Translator.typeMap.Zotero2BibTeX[@item.itemType] or 'misc'
 
+    fields = []
     for own name, value of Translator.extractFields(@item)
       switch name.toLowerCase()
         when 'mr'
@@ -294,17 +295,16 @@ class Reference
         else
           fields.push({ name, value })
 
-  return fields
-      for field in fields
-        if field.name == 'referencetype'
-          @itemtype = field.value
-          continue
+    for field in fields
+      if field.name == 'referencetype'
+        @itemtype = field.value
+        continue
 
-        field.esc = 'raw' if field.name == 'xref'
+      field.esc = 'raw' if field.name == 'xref'
 
-        field = @field(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
-        field.noreplace = true
-        @add(field)
+      field = @field(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
+      field.noreplace = true
+      @add(field)
 
     for own attr, f of Translator.fieldMap or {}
       if f.name and not @has[f.name]
