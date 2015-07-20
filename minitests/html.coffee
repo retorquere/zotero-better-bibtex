@@ -1,7 +1,6 @@
 html = '''
   Contrary to <sup>popular</sup> <sub>belief</sub>, <i>Lorem</i> <b>Ipsum</b> <span>is</span> <span class="smallcaps">not</span> simply random text. It has roots, and i < 2
 '''
-html = "The physical volcanology of the 1600 eruption of Huaynaputina, with <pre>\\LaTeX</pre>!"
 html = "The physical: violent <span id='none'>volcanology</span> of <span>the</span> 1600 eruption of Huaynaputina, southern Peru"
 
 html = "Test of markupconversion: Italics, bold, superscript, subscript, and small caps: Mitochondrial <pre>DNA<sub>2</sub></pre> sequences suggest unexpected phylogenetic position of Corso-Sardinian grass snakes (<i>Natrix cetti</i>) and <b>do not</b> support their <span style=\"small-caps\">species status</span>, with notes on phylogeography and subspecies delineation of grass snakes."
@@ -19,7 +18,18 @@ abstractNote = "In 2011 the international <are> development community committed 
 
 
 abstractNote = "<italic>k</italic>-distribution"
+
+
+abstractNote = "P. M. S. \\ensuremath<span class='Hi'\\ensuremath>Hacker\\ensuremath</span\\ensuremath> 1. The ?confusion of psychology? On the concluding page of what is now called ?Part II? of the Investigations, Wittgenstein wrote.."
+title = "The physical volcanology of the 1600 eruption of Huaynaputina, with <pre>\\LaTeX</pre>!"
+
+html = title
+
+html = "The <i>physical</i> volcanology of the 1600 eruption of Huaynaputina, with <pre>\\LaTeX</pre>!"
+
 console.log("\nclean")
-console.log(LaTeX.cleanHTML(abstractNote))
+console.log(LaTeX.cleanHTML(html))
 console.log("\nlatex")
-console.log(LaTeX.text2latex(abstractNote))
+console.log(LaTeX.text2latex(html))
+
+console.log(html.split(/(<\/?(?:i|italic|b|sub|sup|pre|span)(?:[^>a-z][^>]*)?>)/i))
