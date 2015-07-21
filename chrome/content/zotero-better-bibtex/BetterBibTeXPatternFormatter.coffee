@@ -1,17 +1,10 @@
 class BetterBibTeXPatternFormatter
   constructor: (@patterns) ->
-    if !BetterBibTeXPatternFormatter::unsafechars
-      safechars = /[-:a-z0-9_!\$\*\+\.\/;\?\[\]]/g
-      # not  "@',\#{}%
-      unsafechars = '' + safechars
-      unsafechars = unsafechars.substring(unsafechars.indexOf('/') + 1, unsafechars.lastIndexOf('/'))
-      unsafechars = unsafechars.substring(0, 1) + '^' + unsafechars.substring(1, unsafechars.length)
-      BetterBibTeXPatternFormatter::unsafechars = new RegExp(unsafechars, 'ig')
 
-      BetterBibTeXPatternFormatter::punct = Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g')
-
-      BetterBibTeXPatternFormatter::caseNotUpperTitle = Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g')
-      BetterBibTeXPatternFormatter::caseNotUpper = Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
+  unsafechars: Zotero.Utilities.XRegExp('[^-\\p{L}0-9_!\$\*\+\.\/;\?\[\]]', 'g')
+  punct: Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g')
+  caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g')
+  caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
@@ -31,7 +24,7 @@ class BetterBibTeXPatternFormatter
     for pattern in @patterns
       citekey = ''
       for candidate in pattern
-        citekey = @clean(@concat(candidate))
+        citekey = @concat(candidate)
         break if citekey != ''
       citekeys.push(citekey)
     return citekeys
@@ -39,7 +32,7 @@ class BetterBibTeXPatternFormatter
   concat: (pattern) ->
     result = (@reduce(part) for part in pattern)
     result = (part for part in result when part)
-    return result.join('').replace(/\s/g, '').trim()
+    return @safechars(result.join('')).trim()
 
   reduce: (step) ->
     value = @methods[step.method].apply(@, step.arguments)
@@ -54,7 +47,10 @@ class BetterBibTeXPatternFormatter
     return value
 
   clean: (str) ->
-    Zotero.Utilities.removeDiacritics(str || '').replace(@unsafechars, '').trim()
+    @safechars(Zotero.Utilities.removeDiacritics(str || '')).trim()
+
+  safechars: (txt) ->
+    return Zotero.Utilities.XRegExp.replace(text, @unsafechars, '', 'all')
 
   words: (str) ->
     return (@clean(word) for word in @stripHTML(str).split(/[\+\.,-\/#!$%\^&\*;:{}=\-\s`~()]+/) when word != '')
