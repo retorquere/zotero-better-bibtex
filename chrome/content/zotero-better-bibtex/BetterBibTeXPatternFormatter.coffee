@@ -39,7 +39,7 @@ class BetterBibTeXPatternFormatter
   concat: (pattern) ->
     result = (@reduce(part) for part in pattern)
     result = (part for part in result when part)
-    return result.join('').trim()
+    return result.join('').replace(/\s/g, '').trim()
 
   reduce: (step) ->
     value = @methods[step.method].apply(@, step.arguments)
