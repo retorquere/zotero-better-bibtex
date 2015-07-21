@@ -1,7 +1,7 @@
 class BetterBibTeXPatternFormatter
   constructor: (@patterns) ->
 
-  unsafechars: Zotero.Utilities.XRegExp('[^-0-9_!\$\*\+\.\/;\?\[\]\\p{L}]', 'g')
+  unsafechars: Zotero.Utilities.XRegExp('[^-\\p{^L}0-9_!\$\*\+\.\/;\?\[\]]', 'g')
   punct: Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g')
   caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g')
   caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
@@ -50,8 +50,9 @@ class BetterBibTeXPatternFormatter
     return @safechars(Zotero.Utilities.removeDiacritics(str || '')).trim()
 
   safechars: (str) ->
-    # why does \\p{L} match whitespace?
-    return Zotero.Utilities.XRegExp.replace(str, @unsafechars, '', 'all').replace(/\s/g, '')
+    safe = Zotero.Utilities.XRegExp.replace(str, @unsafechars, '', 'all')
+    Zotero.BetterBibTeX.debug('safechars:', str, '->', safe, ':', @unsafechars)
+    return safe
 
   words: (str) ->
     return (@clean(word) for word in @stripHTML(str).split(/[\+\.,-\/#!$%\^&\*;:{}=\-\s`~()]+/) when word != '')
