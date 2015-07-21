@@ -19,7 +19,7 @@ class BetterBibTeXPatternFormatter
 
     for candidate in @patterns[0]
       delete @postfix
-      citekey = @clean(@concat(candidate))
+      citekey = @concat(candidate)
       return {citekey: citekey, postfix: @postfix} if citekey != ''
     return {}
 
@@ -44,6 +44,7 @@ class BetterBibTeXPatternFormatter
   reduce: (step) ->
     value = @methods[step.method].apply(@, step.arguments)
     value = '' if value in [undefined, null]
+    value = @clean(value) unless step.method == 'property'
 
     return value unless step.filters
 
