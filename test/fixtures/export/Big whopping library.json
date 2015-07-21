@@ -8,7 +8,7 @@
       "attachmentsNoMetadata": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "autoAbbrev": true,
-      "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize]",
+      "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize:fold]",
       "DOIandURL": "both",
       "fancyURLs": false,
       "preserveCaps": "inner",
