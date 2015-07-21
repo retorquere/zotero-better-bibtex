@@ -89,6 +89,8 @@ Translator.extractFields = (item) ->
     return ''
   )
 
+  item.extra = item.extra.trim()
+  delete item.extra if item.extra == ''
   return fields
 
 Translator.initialize = ->
