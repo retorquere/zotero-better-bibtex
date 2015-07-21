@@ -6,7 +6,7 @@
     "preferences": {
       "fancyURLs": false,
       "attachmentRelativePath": false,
-      "citekeyFormat": "[auth:nopunct][year][title:capitalize]",
+      "citekeyFormat": "[auth:nopunct][year]",
       "skipFields": "abstract,note",
       "usePrefix": false,
       "autoAbbrev": true,
