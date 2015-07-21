@@ -116,7 +116,7 @@ class BetterBibTeXPatternFormatter
           creators.collaborators.push(name)
 
     return creators.editors || [] if onlyEditors
-    return creators.authors || creators.editors || creators.collaborators || creators.translators || []
+    return creators.authors || creators.editors || creators.translators || creators.collaborators || []
 
   methods:
     '0': (text) ->
