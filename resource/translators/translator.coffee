@@ -50,7 +50,7 @@ Translator.extractFields = (item) ->
   fields = {}
   extra = []
   for line in item.extra.split("\n")
-    m = /^\s*(LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\s*:\s*([\S]+)\s*$/i.exec(line)
+    m = /^\s*(LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID|DOI)\s*:\s*([\S]+)\s*$/i.exec(line)
     if !m
       extra.push(line)
     else
