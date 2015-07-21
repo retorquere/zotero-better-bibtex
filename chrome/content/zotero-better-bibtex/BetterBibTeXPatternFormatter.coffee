@@ -49,8 +49,8 @@ class BetterBibTeXPatternFormatter
   clean: (str) ->
     @safechars(Zotero.Utilities.removeDiacritics(str || '')).trim()
 
-  safechars: (txt) ->
-    return Zotero.Utilities.XRegExp.replace(text, @unsafechars, '', 'all')
+  safechars: (str) ->
+    return Zotero.Utilities.XRegExp.replace(str, @unsafechars, '', 'all')
 
   words: (str) ->
     return (@clean(word) for word in @stripHTML(str).split(/[\+\.,-\/#!$%\^&\*;:{}=\-\s`~()]+/) when word != '')
