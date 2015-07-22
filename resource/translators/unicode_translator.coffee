@@ -37,7 +37,7 @@ class LaTeX.HTML
     @stack = []
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
 
-    LaTeX.HTMLtoDOM.Parser(html, @)
+    HTMLtoDOM.Parser(html, @)
 
   start: (tag, attrs, unary) ->
     tag = {name: tag, attrs: {}}
