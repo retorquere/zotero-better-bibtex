@@ -124,8 +124,7 @@ class BetterBibTeXPatternFormatter
 
     literal: (text) -> return text
 
-    property: (name) ->
-      value = @item[name] || @item[name[0].toLowerCase() + name.slice(1)]
+    property: (name) -> return @innerText(@item[name] || @item[name[0].toLowerCase() + name.slice(1)] || '')
 
     id: -> return @item.itemID
 

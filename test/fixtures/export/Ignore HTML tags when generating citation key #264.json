@@ -1,0 +1,382 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.0.19",
+    "preferences": {
+      "citekeyFormat": "[auth:fold:lower][Title:fold:nopunct:skipwords:select,1,1:lower:prefix,_][year:prefix,_][0]",
+      "skipWords": "a,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,das,de,del,der,des,despite,die,do,down,during,ein,eine,einem,einen,einer,eines,el,except,for,from,in,inside,into,is,l,la,las,le,les,like,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,while,with,within,without,yet,zu,zum",
+      "skipFields": "",
+      "usePrefix": false,
+      "preserveCaps": "inner",
+      "fancyURLs": false,
+      "langID": "babel",
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "pinCitekeys": "manual",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false,
+      "preserveBibTeXVariables": false
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false
+    }
+  },
+  "collections": [],
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "tags": [],
+      "relations": {},
+      "url": "https://journals.lib.unb.ca/index.php/flor/article/view/14263",
+      "volume": "15",
+      "pages": "145–165",
+      "publicationTitle": "Florilegium",
+      "date": "1998",
+      "accessDate": "2015-07-07",
+      "libraryCatalog": "journals.lib.unb.ca",
+      "title": "<i><span class=\"nocase\">Nodo unitatis et caritatis</span></i>: The Structure and Argument of Augustine's <i><span class=\"nocase\">De doctrina Christiana</span></i>",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Hannam",
+          "firstName": "Walter A."
+        }
+      ],
+      "attachments": [],
+      "notes": [],
+      "itemID": 4063,
+      "seeAlso": [],
+      "__citekey__": "hannam_ispan_1998"
+    }
+  ],
+  "keymanager": [
+    {
+      "itemID": 1,
+      "libraryID": null,
+      "citekey": "Adams2001",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 1566,
+      "libraryID": null,
+      "citekey": "KlimatilpasningKokkedal2012Projektkonkurrence",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 2387,
+      "libraryID": null,
+      "citekey": "KlimatilpasningKokkedal2012Projektkonkurrence",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3066,
+      "libraryID": null,
+      "citekey": "Serres2007Parasite",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3074,
+      "libraryID": null,
+      "citekey": "KlimatilpasningKokkedal2012Projektbeskrivelse",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3889,
+      "libraryID": null,
+      "citekey": "kartinyeri",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3890,
+      "libraryID": null,
+      "citekey": "atiyah-summers-1987",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3897,
+      "libraryID": null,
+      "citekey": "bergmann1964logic",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3901,
+      "libraryID": null,
+      "citekey": "yu2007confucian",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3904,
+      "libraryID": null,
+      "citekey": "verbeek2005things",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3914,
+      "libraryID": null,
+      "citekey": "ayerrhees1954symposium",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3915,
+      "libraryID": null,
+      "citekey": "heidegger1977question",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3925,
+      "libraryID": null,
+      "citekey": "Smyth1978",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3927,
+      "libraryID": null,
+      "citekey": "fodor1981mindbody",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3928,
+      "libraryID": null,
+      "citekey": "wittgenstein1975certainty",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3929,
+      "libraryID": null,
+      "citekey": "heidegger1996beingandtime",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3932,
+      "libraryID": null,
+      "citekey": "fodor1976language",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3935,
+      "libraryID": null,
+      "citekey": "leach2009freedom",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3936,
+      "libraryID": null,
+      "citekey": "descartes1641meditations",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3937,
+      "libraryID": null,
+      "citekey": "hacker1991appearance",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3941,
+      "libraryID": null,
+      "citekey": "wittgenstein1953PI",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3942,
+      "libraryID": null,
+      "citekey": "gage2009amazon",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3945,
+      "libraryID": null,
+      "citekey": "law20045pla",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3947,
+      "libraryID": null,
+      "citekey": "1999",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3948,
+      "libraryID": null,
+      "citekey": "bostrom2005history",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3959,
+      "libraryID": null,
+      "citekey": "bilton2010strain",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3964,
+      "libraryID": null,
+      "citekey": "sep-private-language",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3966,
+      "libraryID": null,
+      "citekey": "borgmann1987technology",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3975,
+      "libraryID": null,
+      "citekey": "mcginn1997routledge",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3977,
+      "libraryID": null,
+      "citekey": "popper1959logic",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3980,
+      "libraryID": null,
+      "citekey": "kripke1982wittgenstein",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3987,
+      "libraryID": null,
+      "citekey": "2011logicalpositivism",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3989,
+      "libraryID": null,
+      "citekey": "puhl1991meaningscepticism",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3990,
+      "libraryID": null,
+      "citekey": "habermas2005future",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3993,
+      "libraryID": null,
+      "citekey": "egidi1995wittgenstein",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3994,
+      "libraryID": null,
+      "citekey": "gregg2012human",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4004,
+      "libraryID": null,
+      "citekey": "montano2013beauty",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4007,
+      "libraryID": null,
+      "citekey": "bennet2008principles",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4010,
+      "libraryID": null,
+      "citekey": "sep-intellectual-property",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4011,
+      "libraryID": null,
+      "citekey": "ihde1990technology",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4016,
+      "libraryID": null,
+      "citekey": "kaplan2004readings",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4018,
+      "libraryID": null,
+      "citekey": "kenny2006wittgenstein",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4020,
+      "libraryID": null,
+      "citekey": "wittgenstein1921TLP",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4026,
+      "libraryID": null,
+      "citekey": "bostrom2005defense",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4038,
+      "libraryID": null,
+      "citekey": "vallor2011carebots",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4040,
+      "libraryID": null,
+      "citekey": "vandepoel2011ethicstechnologyengineering",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4051,
+      "libraryID": null,
+      "citekey": "CapEA11",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4052,
+      "libraryID": null,
+      "citekey": "CumEA14",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4054,
+      "libraryID": null,
+      "citekey": "TayEA11",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4056,
+      "libraryID": null,
+      "citekey": "hunt_meta_2005",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 3899,
+      "libraryID": null,
+      "citekey": "sheehan2010heidegger",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4058,
+      "libraryID": null,
+      "citekey": "Adams2001",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 4061,
+      "libraryID": null,
+      "citekey": "matsumoto_mersenne_1998",
+      "citekeyFormat": "[auth:fold:lower][Title:fold:nopunct:skipwords:select,1,1:lower:prefix,_][year:prefix,_][0]"
+    },
+    {
+      "itemID": 4063,
+      "libraryID": null,
+      "citekey": "hannam_ispan_1998",
+      "citekeyFormat": "[auth:fold:lower][Title:fold:nopunct:skipwords:select,1,1:lower:prefix,_][year:prefix,_][0]"
+    }
+  ],
+  "cache": []
+}

@@ -132,6 +132,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                              | references |
+     | Ignore HTML tags when generating citation key #264                                | 1          |
      | Better BibLaTeX.016                                                               | 1          |
      | Malformed HTML                                                                    | 1          |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246     | 5          |
