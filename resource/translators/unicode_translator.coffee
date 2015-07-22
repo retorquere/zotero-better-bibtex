@@ -126,5 +126,3 @@ class LaTeX.HTML
           @latex += "\\ensuremath{#{block.text}}"
       else
         @latex += block.text
-
-  comment: (text) ->

@@ -56,7 +56,7 @@ class BetterBibTeXPatternFormatter
     return safe
 
   words: (str) ->
-    return (@clean(word) for word in @stripHTML(str).split(/[\+\.,-\/#!$%\^&\*;:{}=\-\s`~()]+/) when word != '')
+    return (@clean(word) for word in @innerText(str).split(/[\+\.,-\/#!$%\^&\*;:{}=\-\s`~()]+/) when word != '')
 
   # three-letter month abbreviations. I assume these are the same ones that the
   # docs say are defined in some appendix of the LaTeX book. (i don't have the
@@ -73,8 +73,8 @@ class BetterBibTeXPatternFormatter
     return null if words.length == 0
     return words
 
-  stripHTML: (str) ->
-    return ('' + str).replace(/<\/?(sup|sub|i|b|p|span|br|break)\/?>/g, '').replace(/\s+/, ' ').trim()
+  innerText: (str) ->
+    return (new @HTML(str)).text.replace(/\s+/, ' ').trim()
 
   creators: (onlyEditors, withInitials) ->
     return [] unless @item.creators?.length
@@ -84,7 +84,7 @@ class BetterBibTeXPatternFormatter
     for creator in @item.creators
       continue if onlyEditors && creator.creatorType not in ['editor', 'seriesEditor']
 
-      name = @stripHTML(creator.lastName)
+      name = @innerText(creator.lastName)
 
       if name != ''
         if withInitials and creator.firstName
@@ -93,7 +93,7 @@ class BetterBibTeXPatternFormatter
           initials = Zotero.Utilities.XRegExp.replace(initials, @re.caseNotUpper, '', 'all')
           name += initials
       else
-        name = @stripHTML(creator.firstName)
+        name = @innerText(creator.firstName)
 
       continue if name == ''
 
@@ -124,7 +124,8 @@ class BetterBibTeXPatternFormatter
 
     literal: (text) -> return text
 
-    property: (name) -> return @item[name] || @item[name[0].toLowerCase() + name.slice(1)]
+    property: (name) ->
+      value = @item[name] || @item[name[0].toLowerCase() + name.slice(1)]
 
     id: -> return @item.itemID
 
@@ -308,3 +309,15 @@ class BetterBibTeXPatternFormatter
     nopunct: (value) ->
       return Zotero.Utilities.XRegExp.replace(value || '', @re.punct, '', 'all')
 
+  HTML: class
+    constructor: (html) ->
+      @text = ''
+      @HTMLtoDOM.Parser(html, @)
+
+    cdata: (text) ->
+      @text += text
+
+    chars: (text) ->
+      @text += text
+
+Components.utils.import('resource://zotero-better-bibtex/translators/htmlparser.js', BetterBibTeXPatternFormatter::HTML::)
