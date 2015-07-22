@@ -33,7 +33,7 @@ class BetterBibTeXPatternFormatter
   concat: (pattern) ->
     result = (@reduce(part) for part in pattern)
     result = (part for part in result when part)
-    return @safechars(result.join('')).trim()
+    return result.join('').trim()
 
   reduce: (step) ->
     value = @methods[step.method].apply(@, step.arguments)
