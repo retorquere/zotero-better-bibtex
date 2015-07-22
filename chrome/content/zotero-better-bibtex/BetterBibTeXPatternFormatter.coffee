@@ -3,6 +3,7 @@ class BetterBibTeXPatternFormatter
 
   re:
     unsafechars: Zotero.Utilities.XRegExp("[^-\\p{L}0-9_!$*+./;?\\[\\]]")
+    alphanum: Zotero.Utilities.XRegExp("[^\\p{L}\\p{N}]")
     punct: Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g')
     caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g')
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
@@ -33,7 +34,7 @@ class BetterBibTeXPatternFormatter
   concat: (pattern) ->
     result = (@reduce(part) for part in pattern)
     result = (part for part in result when part)
-    return result.join('').replace(/\s/, '')
+    return result.join('').replace(/[\s{},]/, '')
 
   reduce: (step) ->
     value = @methods[step.method].apply(@, step.arguments)
@@ -306,6 +307,9 @@ class BetterBibTeXPatternFormatter
 
     ascii: (value) ->
       return (value || '').replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim()
+
+    alphanum: (value) ->
+      return Zotero.Utilities.XRegExp.replace(value || '', @re.alphanum, '', 'all').split(/\s+/).join(' ').trim()
 
     fold: (value) ->
       return Zotero.BetterBibTeX.removeDiacritics(value || '').split(/\s+/).join(' ').trim()
