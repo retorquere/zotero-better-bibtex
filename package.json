@@ -18,8 +18,10 @@
   },
   "dependencies": {
     "aws-sdk": "^2.1.36",
+    "browserify": "^11.0.0",
     "coffee-script": "^1.9.1",
     "coffeelint": "^1.9.2",
+    "fold-to-ascii": "^2.0.2",
     "pegjs": "^0.8.0"
   }
 }

@@ -111,6 +111,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   stem = File.basename(tr, File.extname(tr))
   %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
 }.flatten + [
+  'chrome/content/zotero-better-bibtex/fold-to-ascii.js',
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/test/tests.js',
@@ -125,10 +126,9 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
 ]).sort.uniq
 
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
-CLEAN.include('chrome/content/zotero-better-bibtex/release.js')
+CLEAN.include('{resource,chrome,defaults}/**/*.js.map')
 CLEAN.include('tmp/**/*')
 CLEAN.include('resource/translators/*.json')
-CLEAN.include('resource/*/*.js.map')
 CLEAN.include('.depend.mf')
 CLEAN.include('resource/translators/latex_unicode_mapping.coffee')
 CLEAN.include('*.xpi')
@@ -136,6 +136,7 @@ CLEAN.include('*.log')
 CLEAN.include('*.cache')
 CLEAN.include('*.debug')
 CLEAN.include('*.dbg')
+CLEAN.include('*.tmp')
 
 FileUtils.mkdir_p 'tmp'
 
@@ -440,6 +441,13 @@ rule '.json' => '.yml' do |t|
 
     f.write(JSON.pretty_generate(header))
   }
+end
+
+file 'chrome/content/zotero-better-bibtex/fold-to-ascii.js' => 'Rakefile' do |t|
+  tmp = t.name + '.tmp'
+  open(tmp, 'w'){|f| f.puts "Zotero.BetterBibTeX.removeDiacritics = require('fold-to-ascii').fold;" }
+  sh "#{NODEBIN}/browserify #{tmp.shellescape} > #{t.name.shellescape}"
+  File.unlink(tmp)
 end
 
 file 'chrome/content/zotero-better-bibtex/release.js' => 'install.rdf' do |t|

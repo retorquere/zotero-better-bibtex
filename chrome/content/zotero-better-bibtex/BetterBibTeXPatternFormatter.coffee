@@ -48,7 +48,7 @@ class BetterBibTeXPatternFormatter
     return value
 
   clean: (str) ->
-    return @safechars(Zotero.Utilities.removeDiacritics(str || '')).trim()
+    return @safechars(Zotero.BetterBibTeX.removeDiacritics(str || '')).trim()
 
   safechars: (str) ->
     safe = Zotero.Utilities.XRegExp.replace(str, @re.unsafechars, '', 'all')
@@ -89,7 +89,7 @@ class BetterBibTeXPatternFormatter
       if name != ''
         if withInitials and creator.firstName
           initials = Zotero.Utilities.XRegExp.replace(creator.firstName, @re.caseNotUpperTitle, '', 'all')
-          initials = Zotero.Utilities.removeDiacritics(initials)
+          initials = Zotero.BetterBibTeX.removeDiacritics(initials)
           initials = Zotero.Utilities.XRegExp.replace(initials, @re.caseNotUpper, '', 'all')
           name += initials
       else
@@ -300,7 +300,7 @@ class BetterBibTeXPatternFormatter
       return (value || '').replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim()
 
     fold: (value) ->
-      return Zotero.Utilities.removeDiacritics(value || '').split(/\s+/).join(' ').trim()
+      return Zotero.BetterBibTeX.removeDiacritics(value || '').split(/\s+/).join(' ').trim()
 
     capitalize: (value) ->
       return (value || '').replace(/((^|\s)[a-z])/g, (m) -> m.toUpperCase())

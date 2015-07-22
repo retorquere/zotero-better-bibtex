@@ -4,6 +4,7 @@ if not Zotero.BetterBibTeX
 
   for script in " lokijs
                   zotero-better-bibtex
+                  fold-to-ascii
                   release
                   BetterBibTeXPatternFormatter
                   BetterBibTeXPatternParser

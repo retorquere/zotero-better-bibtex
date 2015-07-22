@@ -40,7 +40,7 @@ class LaTeX.HTML
     HTMLtoDOM.Parser(html, @)
 
   start: (tag, attrs, unary) ->
-    tag = {name: tag, attrs: {}}
+    tag = {name: tag.toLowerCase(), attrs: {}}
     for attr in attrs
       tag.attrs[attr.name.toLowerCase()] = attr.value
     @stack.unshift(tag) unless unary
