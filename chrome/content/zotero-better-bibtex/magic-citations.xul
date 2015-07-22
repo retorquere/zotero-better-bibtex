@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!DOCTYPE dialog SYSTEM "chrome://firesheep/locale/about.dtd">
+
+<dialog title="Zotero Citation" orient="vertical" autostretch="always" onload="sizeToContent()" buttons="cancel,accept" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <groupbox align="center" orient="horizontal">
+    <vbox>
+      <text value="Zotero Citation" style="font-weight: bold; font-size: x-large;"/>
+      <separator class="thin"/>
+    </vbox>
+  </groupbox>
+</dialog>

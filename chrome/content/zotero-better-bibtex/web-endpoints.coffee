@@ -154,3 +154,10 @@ Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
     result = JSON.stringify({jsonrpc: '2.0', error: {code: 5000, message: '' + err + "\n" + err.stack}, id: result.id})
 
   return sendResponseCallback(200, 'application/json', result)
+
+Zotero.BetterBibTeX.endpoints.magicCitations = { supportedMethods: ['GET'] }
+Zotero.BetterBibTeX.endpoints.magicCitations.init = (url, data, sendResponseCallback) ->
+  setTimeout((->
+    win = window.open("chrome://zotero-better-bibtex/content/magic-citations.xul", "Magic Citations", "modal,alwaysRaised,chrome,centerscreen")
+  ),100)
+  return sendResponseCallback(200, 'text/plain', 'OK')
