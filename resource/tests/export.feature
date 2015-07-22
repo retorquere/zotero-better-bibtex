@@ -108,6 +108,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Colon not allowed in citation key format #268                                                  | 3           |
      | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 10 |
      | Export mapping for reporter field #219                                                         | 1           |
      | Export error for items without publicationTitle and "Preserve BibTeX variables" enabled #201   | 1           |
