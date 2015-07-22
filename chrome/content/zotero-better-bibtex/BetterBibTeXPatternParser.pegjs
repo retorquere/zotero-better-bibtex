@@ -51,7 +51,13 @@ flag
 
 filter
   = ':(' def:[^)]+ ')'                { return {filter: 'ifempty', arguments: [def.join('')]}; }
-  / ':' name:[^:\],]+ params:fparam*  { return {filter: name.join(''), arguments: params}; }
+  / ':' name:[^:\],]+ params:fparam*  {
+      name = name.join('')
+      if (! BetterBibTeXPatternFormatter.prototype.filters[name]) {
+        throw new Error('invalid filter "' + name + '"');
+      }
+      return {filter: name, arguments: params};
+    }
 
 fparam
   = ',' param:[^,\]:]+                { return param.join('') }
