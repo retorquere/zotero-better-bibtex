@@ -112,6 +112,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
 }.flatten + [
   'chrome/content/zotero-better-bibtex/fold-to-ascii.js',
+  'chrome/content/zotero-better-bibtex/punycode.js',
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/test/tests.js',
@@ -446,6 +447,13 @@ end
 file 'chrome/content/zotero-better-bibtex/fold-to-ascii.js' => 'Rakefile' do |t|
   tmp = t.name + '.tmp'
   open(tmp, 'w'){|f| f.puts "Zotero.BetterBibTeX.removeDiacritics = require('fold-to-ascii').fold;" }
+  sh "#{NODEBIN}/browserify #{tmp.shellescape} > #{t.name.shellescape}"
+  File.unlink(tmp)
+end
+
+file 'chrome/content/zotero-better-bibtex/punycode.js' => 'Rakefile' do |t|
+  tmp = t.name + '.tmp'
+  open(tmp, 'w'){|f| f.puts "Zotero.BetterBibTeX.punycode = require('punycode');" }
   sh "#{NODEBIN}/browserify #{tmp.shellescape} > #{t.name.shellescape}"
   File.unlink(tmp)
 end

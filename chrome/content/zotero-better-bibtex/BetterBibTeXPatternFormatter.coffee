@@ -71,7 +71,7 @@ class BetterBibTeXPatternFormatter
 
     words = (word.replace(/[^ -~]/g, '') for word in words) if options.asciiOnly
     words = (word for word in words when word != '')
-    words = (word for word in words when @skipWords.indexOf(word.toLowerCase()) < 0) if options.skipWords
+    words = (word for word in words when @skipWords.indexOf(word.toLowerCase()) < 0 && Zotero.BetterBibTeX.punycode.ucs2.decode(word).length > 1) if options.skipWords
     return null if words.length == 0
     return words
 
