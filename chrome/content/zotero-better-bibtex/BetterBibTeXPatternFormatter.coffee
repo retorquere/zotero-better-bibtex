@@ -33,7 +33,7 @@ class BetterBibTeXPatternFormatter
   concat: (pattern) ->
     result = (@reduce(part) for part in pattern)
     result = (part for part in result when part)
-    return result.join('').trim()
+    return result.join('').replace(/\s/, '')
 
   reduce: (step) ->
     value = @methods[step.method].apply(@, step.arguments)
@@ -124,7 +124,15 @@ class BetterBibTeXPatternFormatter
 
     literal: (text) -> return text
 
-    property: (name) -> return @innerText(@item[name] || @item[name[0].toLowerCase() + name.slice(1)] || '')
+    property: (name) ->
+      if name.match(/^(Auth|Edtr|Editors)/)
+        [method, n, m] = name.split('_')
+        [method, withInitials] = method.split('+')
+        onlyEditors = (name[0] == 'E')
+        n = parseInt(n) if typeof n == 'string'
+        m = parseInt(m) if typeof m == 'string'
+        return @innerText(@methods[method.toLowerCase()](onlyEditors, withInitials, n, m))
+      return @innerText(@item[name] || @item[name[0].toLowerCase() + name.slice(1)] || '')
 
     id: -> return @item.itemID
 
