@@ -58,7 +58,7 @@ class BetterBibTeXPatternFormatter
     return safe
 
   words: (str) ->
-    return (@clean(word) for word in @innerText(str).split(/[\+\.,-\/#!$%\^&\*;:{}=\-\s`~()]+/) when word != '')
+    return (@clean(word) for word in Zotero.Utilities.XRegExp.matchChain(@innerText(str), [XRegExp("[\\p{Alphabetic}\\p{Nd}\\{Pc}\\p{M}]+", "g")]) when word != '')
 
   # three-letter month abbreviations. I assume these are the same ones that the
   # docs say are defined in some appendix of the LaTeX book. (i don't have the
