@@ -1,10 +1,11 @@
 class BetterBibTeXPatternFormatter
   constructor: (@patterns) ->
 
-  unsafechars: Zotero.Utilities.XRegExp('[^-\\p{^L}0-9_!\$\*\+\.\/;\?\[\]]', 'g')
-  punct: Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g')
-  caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g')
-  caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
+  re:
+    unsafechars: Zotero.Utilities.XRegExp("[^-\\p{L}0-9_!$*+./;?\\[\\]]")
+    punct: Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g')
+    caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g')
+    caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
@@ -50,8 +51,8 @@ class BetterBibTeXPatternFormatter
     return @safechars(Zotero.Utilities.removeDiacritics(str || '')).trim()
 
   safechars: (str) ->
-    safe = Zotero.Utilities.XRegExp.replace(str, @unsafechars, '', 'all')
-    Zotero.BetterBibTeX.debug('safechars:', str, '->', safe, ':', @unsafechars)
+    safe = Zotero.Utilities.XRegExp.replace(str, @re.unsafechars, '', 'all')
+    Zotero.BetterBibTeX.debug('safechars:', str, '->', safe, ':', @re.unsafechars)
     return safe
 
   words: (str) ->
@@ -87,9 +88,9 @@ class BetterBibTeXPatternFormatter
 
       if name != ''
         if withInitials and creator.firstName
-          initials = Zotero.Utilities.XRegExp.replace(creator.firstName, @caseNotUpperTitle, '', 'all')
+          initials = Zotero.Utilities.XRegExp.replace(creator.firstName, @re.caseNotUpperTitle, '', 'all')
           initials = Zotero.Utilities.removeDiacritics(initials)
-          initials = Zotero.Utilities.XRegExp.replace(initials, @caseNotUpper, '', 'all')
+          initials = Zotero.Utilities.XRegExp.replace(initials, @re.caseNotUpper, '', 'all')
           name += initials
       else
         name = @stripHTML(creator.firstName)
@@ -305,5 +306,5 @@ class BetterBibTeXPatternFormatter
       return (value || '').replace(/((^|\s)[a-z])/g, (m) -> m.toUpperCase())
 
     nopunct: (value) ->
-      return Zotero.Utilities.XRegExp.replace(value || '', @punct, '', 'all')
+      return Zotero.Utilities.XRegExp.replace(value || '', @re.punct, '', 'all')
 
