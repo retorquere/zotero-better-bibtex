@@ -40,7 +40,7 @@ class BetterBibTeXPatternFormatter
   reduce: (step) ->
     value = @methods[step.method].apply(@, step.arguments)
     value = '' if value in [undefined, null]
-    value = @clean(value) unless step.method in ['property', 'literal']
+    value = @clean(value) if step.scrub
 
     return value unless step.filters
 
@@ -127,13 +127,6 @@ class BetterBibTeXPatternFormatter
     literal: (text) -> return text
 
     property: (name) ->
-      if name.match(/^(Auth|Edtr|Editors)/)
-        [method, n, m] = name.split('_')
-        [method, withInitials] = method.split('+')
-        onlyEditors = (name[0] == 'E')
-        n = parseInt(n) if typeof n == 'string'
-        m = parseInt(m) if typeof m == 'string'
-        return @innerText(@methods[method.toLowerCase()](onlyEditors, withInitials, n, m))
       return @innerText(@item[name] || @item[name[0].toLowerCase() + name.slice(1)] || '')
 
     id: -> return @item.itemID

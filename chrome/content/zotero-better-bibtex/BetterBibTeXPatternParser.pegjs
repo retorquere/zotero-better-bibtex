@@ -18,25 +18,27 @@ pattern
 
 callchain
   = '[' fcall:fcall ']'   { return fcall; }
-  / chars:[^\|>\[\]]+     { return {method: 'literal', arguments: [chars.join('')]}; }
+  / chars:[^\|>\[\]]+     { return {method: 'literal', scrub: false, arguments: [chars.join('')]}; }
 
 fcall
   = method:method filters:filter* { if (filters.length > 0) { method.filters = filters; } return method; }
 
 method
-  = prefix:('auth' / 'authors' / 'edtr' / 'editors' ) name:[\.a-zA-Z]* flag:flag? params:mparams? {
+  = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') name:[\.a-zA-Z]* flag:flag? params:mparams? {
+    var scrub = (prefix[0] !== 'A' && prefix[0] !== 'E')
+    prefix = prefix.toLowerCase();
     var editorsOnly = (prefix === 'edtr' || prefix === 'editors');
     if (editorsOnly) { prefix = (prefix === 'edtr') ? 'auth' : 'authors'; }
     name = prefix + name.join('');
     if (!params) { params = []; }
-    return {method: name, arguments: [editorsOnly, (flag === 'initials')].concat(params)};
+    return {method: name, scrub: scrub, arguments: [editorsOnly, (flag === 'initials')].concat(params)};
   }
   / name:[0\.a-zA-Z]+ flag:flag? params:mparams? {
       name = name.join('')
       if (BetterBibTeXPatternFormatter.prototype.methods[name]) {
-        return {method: name, arguments: params || []};
+        return {method: name, scrub: true, arguments: params || []};
       } else {
-        return {method: 'property', arguments: [name]};
+        return {method: 'property', scrub: false, arguments: [name]};
       }
     }
 
