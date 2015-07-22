@@ -1,5 +1,6 @@
 class BetterBibTeXPatternFormatter
   constructor: (@patterns) ->
+    Zotero.BetterBibTeX.debug('formatter:', @pattern)
 
   re:
     unsafechars: Zotero.Utilities.XRegExp("[^-\\p{L}0-9_!$*+./;?\\[\\]]")
@@ -39,7 +40,7 @@ class BetterBibTeXPatternFormatter
   reduce: (step) ->
     value = @methods[step.method].apply(@, step.arguments)
     value = '' if value in [undefined, null]
-    value = @clean(value) unless step.method == 'property'
+    value = @clean(value) unless step.method in ['property', 'literal']
 
     return value unless step.filters
 
