@@ -8,6 +8,7 @@ class BetterBibTeXPatternFormatter
     punct: Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g')
     caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g')
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
+    word: Zotero.Utilities.XRegExp("[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+", 'g')
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
@@ -40,7 +41,7 @@ class BetterBibTeXPatternFormatter
   reduce: (step) ->
     value = @methods[step.method].apply(@, step.arguments)
     value = '' if value in [undefined, null]
-    value = @clean(value) unless step.method in ['property', 'literal']
+    value = @clean(value) if step.scrub
 
     return value unless step.filters
 
@@ -58,7 +59,7 @@ class BetterBibTeXPatternFormatter
     return safe
 
   words: (str) ->
-    return (@clean(word) for word in @innerText(str).split(/[\+\.,-\/#!$%\^&\*;:{}=\-\s`~()]+/) when word != '')
+    return (@clean(word) for word in Zotero.Utilities.XRegExp.matchChain(@innerText(str), [@re.word]) when word != '')
 
   # three-letter month abbreviations. I assume these are the same ones that the
   # docs say are defined in some appendix of the LaTeX book. (i don't have the
@@ -71,7 +72,7 @@ class BetterBibTeXPatternFormatter
 
     words = (word.replace(/[^ -~]/g, '') for word in words) if options.asciiOnly
     words = (word for word in words when word != '')
-    words = (word for word in words when @skipWords.indexOf(word.toLowerCase()) < 0) if options.skipWords
+    words = (word for word in words when @skipWords.indexOf(word.toLowerCase()) < 0 && Zotero.BetterBibTeX.punycode.ucs2.decode(word).length > 1) if options.skipWords
     return null if words.length == 0
     return words
 
@@ -127,13 +128,6 @@ class BetterBibTeXPatternFormatter
     literal: (text) -> return text
 
     property: (name) ->
-      if name.match(/^(Auth|Edtr|Editors)/)
-        [method, n, m] = name.split('_')
-        [method, withInitials] = method.split('+')
-        onlyEditors = (name[0] == 'E')
-        n = parseInt(n) if typeof n == 'string'
-        m = parseInt(m) if typeof m == 'string'
-        return @innerText(@methods[method.toLowerCase()](onlyEditors, withInitials, n, m))
       return @innerText(@item[name] || @item[name[0].toLowerCase() + name.slice(1)] || '')
 
     id: -> return @item.itemID
