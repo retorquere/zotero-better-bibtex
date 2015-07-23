@@ -58,6 +58,12 @@ Zotero.BetterBibTeX.keymanager = new class
     for row in Zotero.DB.query('select k.itemID, k.citekey, k.citekeyFormat, i.libraryID from betterbibtex.keys k join items i on k.itemID = i.itemID')
       @keys.insert({itemID: @integer(row.itemID), libraryID: row.libraryID, citekey: row.citekey, citekeyFormat: row.citekeyFormat})
 
+    # select non-note, non-attachment items that don't have a cached key, and generate one, to make sure the cache is
+    # complete. Should only run after first installation, as after that all new items or item changes will generate
+    # keys, but better safe than sorry.
+    for row in Zotero.DB.query('select itemID from items where itemType not in (0, 14) and itemID not in (select itemID from betterbibtex.keys)')
+      @get({itemID: row.itemID})
+
   reset: ->
     Zotero.DB.query('delete from betterbibtex.keys')
     @resetJournalAbbrevs()
