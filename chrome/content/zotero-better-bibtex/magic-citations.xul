@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-<!DOCTYPE dialog SYSTEM "chrome://firesheep/locale/about.dtd">
+<!DOCTYPE dialog SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
 
-<dialog title="Zotero Citation" orient="vertical" autostretch="always" onload="sizeToContent()" buttons="cancel,accept" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<dialog
+    onload="BetterBibTeX_MagicCitations.onLoad();"
+    ondialogaccept="return BetterBibTeX_MagicCitations.onAccept();"
+    title="Zotero Citation"
+    orient="vertical"
+    autostretch="always"
+    buttons="cancel,accept"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="chrome://zotero/content/include.js"/>
+  <script src="chrome://zotero-better-bibtex/content/include.js"/>
+  <script src="chrome://zotero-better-bibtex/content/magic-citations.js"/>
   <groupbox align="center" orient="horizontal">
     <vbox>
-      <text value="Zotero Citation" style="font-weight: bold; font-size: x-large;"/>
+      <textbox flex="1" id="zotero-better-bibtex-search-citation" class="plain"
+        onchange="BetterBibTeX_MagicCitations.refresh();"
+        onkeypress="setTimeout(function() { BetterBibTeX_MagicCitations.refresh()}, 1);"/>
       <separator class="thin"/>
+      <richlistbox flex="1" id="zotero-better-bibtex-found-citations">
+      </richlistbox>
     </vbox>
   </groupbox>
 </dialog>
