@@ -157,7 +157,7 @@ Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
 
 Zotero.BetterBibTeX.endpoints.magicCitations = { supportedMethods: ['GET'] }
 Zotero.BetterBibTeX.endpoints.magicCitations.init = (url, data, sendResponseCallback) ->
-  setTimeout((->
-    win = window.open("chrome://zotero-better-bibtex/content/magic-citations.xul", "Magic Citations", "modal,alwaysRaised,chrome,centerscreen")
-  ),100)
-  return sendResponseCallback(200, 'text/plain', 'OK')
+  deferred = Q.defer()
+  dialog = window.openDialog("chrome://zotero-better-bibtex/content/magic-citations.xul", "Magic Citations", "alwaysraised,chrome,centerscreen", deferred)
+  Zotero.Integration.activate(dialog)
+  sendResponseCallback(200, 'text/plain', deferred.promise)

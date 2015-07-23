@@ -4,7 +4,9 @@
 
 <dialog
     onload="BetterBibTeX_MagicCitations.onLoad();"
+    onbeforeunload="BetterBibTeX_MagicCitations.onClosing();"
     ondialogaccept="return BetterBibTeX_MagicCitations.onAccept();"
+    ondialogcancel="return BetterBibTeX_MagicCitations.onCancel();"
     title="Zotero Citation"
     orient="vertical"
     autostretch="always"
@@ -20,7 +22,7 @@
         onchange="BetterBibTeX_MagicCitations.refresh();"
         onkeypress="setTimeout(function() { BetterBibTeX_MagicCitations.refresh()}, 1);"/>
       <separator class="thin"/>
-      <richlistbox flex="1" id="zotero-better-bibtex-found-citations">
+      <richlistbox flex="1" seltype="multiple" id="zotero-better-bibtex-found-citations">
       </richlistbox>
     </vbox>
   </groupbox>
