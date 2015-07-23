@@ -8,6 +8,7 @@ class BetterBibTeXPatternFormatter
     punct: Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g')
     caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g')
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
+    word: Zotero.Utilities.XRegExp("[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+", 'g')
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
@@ -58,7 +59,7 @@ class BetterBibTeXPatternFormatter
     return safe
 
   words: (str) ->
-    return (@clean(word) for word in Zotero.Utilities.XRegExp.matchChain(@innerText(str), [Zotero.Utilities.XRegExp("[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+", "g")]) when word != '')
+    return (@clean(word) for word in Zotero.Utilities.XRegExp.matchChain(@innerText(str), [@re.word]) when word != '')
 
   # three-letter month abbreviations. I assume these are the same ones that the
   # docs say are defined in some appendix of the LaTeX book. (i don't have the
