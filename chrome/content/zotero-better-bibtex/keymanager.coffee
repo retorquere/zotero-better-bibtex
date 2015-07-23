@@ -61,7 +61,7 @@ Zotero.BetterBibTeX.keymanager = new class
     # select non-note, non-attachment items that don't have a cached key, and generate one, to make sure the cache is
     # complete. Should only run after first installation, as after that all new items or item changes will generate
     # keys, but better safe than sorry.
-    for row in Zotero.DB.query('select itemID from items where itemType not in (0, 14) and itemID not in (select itemID from betterbibtex.keys)')
+    for row in Zotero.DB.query('select itemID from items where itemTypeID not in (0, 14) and itemID not in (select itemID from betterbibtex.keys)')
       @get({itemID: row.itemID})
 
   reset: ->
