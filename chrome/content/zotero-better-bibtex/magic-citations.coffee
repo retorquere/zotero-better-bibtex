@@ -1,6 +1,6 @@
 BetterBibTeX_MagicCitations = new class
   onLoad: ->
-    @deferred = window.arguments[0]
+    @deferred = window.arguments[0].wrappedJSObject
     @result = ''
     search = document.getElementById('zotero-better-bibtex-search-citation')
     search.value = ''
@@ -31,10 +31,16 @@ BetterBibTeX_MagicCitations = new class
     value = search.value.toLowerCase()
     if value && value != ''
       # replace with proper search
-      items = (key for key in Zotero.BetterBibTeX.keymanager.keys.where((item) -> item.citekey.toLowerCase().indexOf(value) >= 0)).slice(0, 20)
-      for ref in items
-        html = Zotero.Cite.makeFormattedBibliographyOrCitationList(cslEngine, [Zotero.Items.get(ref.itemID)], 'html')
-        new @HTML(results, key.citekey, html)
+      s = new Zotero.Search()
+      value = value.replace(' & ', ' ', 'g').replace(' and ', ' ', 'g')
+      s.addCondition('quicksearch-titleCreatorYear', 'contains', value)
+      s.addCondition('itemType', 'isNot', 'attachment')
+      s.addCondition('itemType', 'isNot', 'note')
+      items = s.search()
+
+      for id in items
+        html = Zotero.Cite.makeFormattedBibliographyOrCitationList(cslEngine, [Zotero.Items.get(id)], 'html')
+        new @HTML(results, Zotero.BetterBibTeX.keymanager.get({itemID: id}).citekey, html)
     window.sizeToContent()
 
   HTML: class
