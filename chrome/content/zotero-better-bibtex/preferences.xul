@@ -190,16 +190,15 @@
               <hbox>
                 <tree id="better-bibtex-export-list" flex="1" seltype="single" hidecolumnpicker="true" height="400" editable="true" onkeypress="toggleShowField(this);" onmousedown="toggleShowField(this, event);">
                   <treecols>
-                    <treecol id="show" primary="true" type="checkbox" label="Show" editable="true" width="60"/>
+                    <treecol id="better-bibtex-preferences-auto-export-collection" label="&zotero.better-bibtex.auto-export.collection;" editable="false" flex="1" primary="true"/>
                     <treecol id="better-bibtex-preferences-auto-export-status" label="&zotero.better-bibtex.auto-export.status;" editable="false" flex="1"/>
-                    <treecol id="better-bibtex-preferences-auto-export-collection" label="&zotero.better-bibtex.auto-export.collection;" editable="false" flex="1"/>
                     <treecol id="better-bibtex-preferences-auto-export-target" label="&zotero.better-bibtex.auto-export.target;" editable="false" flex="1"/>
                     <treecol id="better-bibtex-preferences-auto-export-translator" label="&zotero.better-bibtex.auto-export.translator;" editable="false" flex="1"/>
                     <treecol id="better-bibtex-preferences-auto-export-charset" label="&zotero.better-bibtex.auto-export.charset;" editable="true" flex="1"/>
                     <treecol id="better-bibtex-preferences-auto-export-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" editable="false" flex="1"/>
                     <treecol id="better-bibtex-preferences-auto-export-notes" label="&zotero.better-bibtex.auto-export.notes;" editable="false" flex="1"/>
                   </treecols>
-                  <treechildren id="itemTypes"/>
+                  <treechildren id="better-bibtex-auto-exports"/>
                 </tree>
               </hbox>
               <hbox>
