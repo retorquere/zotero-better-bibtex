@@ -70,13 +70,15 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.better-bibtex.preferences.auto-export.config "Export Configuration">
 <!ENTITY zotero.better-bibtex.auto-export.status "Status">
 <!ENTITY zotero.better-bibtex.auto-export.charset "Character encoding">
-<!ENTITY zotero.better-bibtex.auto-export.notes "Notes">
+<!ENTITY zotero.better-bibtex.auto-export.notes "Export Notes">
+<!ENTITY zotero.better-bibtex.auto-export.auto-abbrev "Auto-abbreviate">
 <!ENTITY zotero.better-bibtex.auto-export.collection "Collection">
 <!ENTITY zotero.better-bibtex.auto-export.target "Output file">
 <!ENTITY zotero.better-bibtex.auto-export.translator "Translator">
 <!ENTITY zotero.better-bibtex.auto-export.preserveBibTeXVariables "Preserve BibTeX variables">
 <!ENTITY zotero.better-bibtex.auto-export.remove "Remove">
 <!ENTITY zotero.better-bibtex.auto-export.mark "Mark">
+<!ENTITY zotero.better-bibtex.auto-export.refresh "Refresh">
 <!ENTITY zotero.better-bibtex.auto-export.add "You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.">
 
 

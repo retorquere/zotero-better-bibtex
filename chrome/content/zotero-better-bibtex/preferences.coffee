@@ -95,19 +95,20 @@ BetterBibTeXPref =
 BetterBibTeXAutoExportPref =
   remove: ->
     exportlist = document.getElementById('better-bibtex-export-list')
-    selectedItem = exportlist.selectedItem
-    return unless selectedItem
-    id = selectedItem.getAttribute('value')
+    selected = exportlist.currentIndex
+    return if selected < 0
+
+    id = exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')
     Zotero.DB.query('delete from betterbibtex.autoexport where id = ?', [id])
-    @refresh(true)
+    @refresh()
 
   mark: ->
     exportlist = document.getElementById('better-bibtex-export-list')
-    selectedItem = exportlist.selectedItem
-    return unless selectedItem
-    id = selectedItem.getAttribute('value')
+    selected = exportlist.currentIndex
+    return if selected < 0
+
+    id = exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')
     Zotero.DB.query("update betterbibtex.autoexport set status = ? where id = ?", [Zotero.BetterBibTeX.auto.status('pending'), id])
-    selectedItem.setAttribute('class', "export-state-#{if Zotero.BetterBibTeX.auto.running == id then 'running' else 'pending'}")
     @refresh()
     Zotero.BetterBibTeX.auto.process('marked')
 
@@ -145,15 +146,17 @@ BetterBibTeXAutoExportPref =
     tree = new BetterBibTeXAutoExport('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', exportlist, document)
 
     for ae in Zotero.DB.query("select * from betterbibtex.autoexport order by path")
-      tree.treeitem({container: 'true', '': ->
+      ae.status = 'running' if Zotero.BetterBibTeX.auto.running == ae.id
+      tree.treeitem({autoexport: "#{ae.id}", container: 'true', '': ->
         @treerow(->
-          @treecell({editable: 'false', label: "#{@exportName(ae.collection)} -> #{ae.path.replace(/^.*[\\\/]/, '')}"})
+          @treecell({editable: 'false', label: "#{BetterBibTeXAutoExportPref.exportName(ae.collection)} -> #{ae.path.replace(/^.*[\\\/]/, '')}"})
+          @treecell({editable: 'false', label: ae.status})
         )
         @treechildren(->
-          @treeitem(->
+          @treeitem(autoexport: "#{ae.id}", '': ->
             @treerow(->
+              @treecell({editable: 'false', label: "#{BetterBibTeXAutoExportPref.exportType(ae.collection)}: #{BetterBibTeXAutoExportPref.exportName(ae.collection)}"})
               @treecell({editable: 'false', label: ae.status})
-              @treecell({editable: 'false', label: "#{@exportType(ae.collection)}: #{@exportName(ae.collection)}"})
               @treecell({editable: 'false', label: ae.path})
               @treecell({editable: 'false', label: Zotero.BetterBibTeX.translatorName(ae.translatorID)})
               @treecell({editable: 'false', label: ae.exportCharset})
@@ -163,8 +166,6 @@ BetterBibTeXAutoExportPref =
           )
         )
       })
-
-      # itemNode.setAttribute('value', ae.id)
 
 class BetterBibTeXAutoExport extends Zotero.BetterBibTeX.XmlNode
   constructor: (@namespace, @root, @doc) ->
