@@ -188,47 +188,19 @@
                 </radiogroup>
               </hbox>
               <hbox>
-                <listbox id="better-bibtex-export-list" flex="1" onselect="BetterBibTeXAutoExportPref.selected()">
-                  <listcols>
-                    <listcol flex="1"/>
-                  </listcols>
-                  <listhead>
-                    <listheader label="&zotero.better-bibtex.preferences.auto-export.config;"/>
-                  </listhead>
-                </listbox>
-                <groupbox flex="1">
-                  <caption label="&zotero.better-bibtex.preferences.auto-export.config;"/>
-                  <grid>
-                    <columns>
-                      <column/>
-                      <column flex="1"/>
-                    </columns>
-                    <rows>
-                      <row>
-                        <label value="&zotero.better-bibtex.auto-export.status;"/>
-                        <textbox id="id-better-bibtex-preferences-auto-export-status" disabled="true"/>
-                      </row>
-                      <row>
-                        <label value="&zotero.better-bibtex.auto-export.collection;"/>
-                        <textbox id="id-better-bibtex-preferences-auto-export-collection" disabled="true"/>
-                      </row>
-                      <row>
-                        <label value="&zotero.better-bibtex.auto-export.target;"/>
-                        <textbox id="id-better-bibtex-preferences-auto-export-target" disabled="true"/>
-                      </row>
-                      <row>
-                        <label value="&zotero.better-bibtex.auto-export.translator;"/>
-                        <textbox id="id-better-bibtex-preferences-auto-export-translator" disabled="true"/>
-                      </row>
-                      <row>
-                        <label value="&zotero.better-bibtex.auto-export.charset;"/>
-                        <textbox id="id-better-bibtex-preferences-auto-export-charset" disabled="true"/>
-                      </row>
-                    </rows>
-                  </grid>
-                  <checkbox id="id-better-bibtex-preferences-auto-export-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" disabled="true"/>
-                  <checkbox id="id-better-bibtex-preferences-auto-export-notes" label="&zotero.better-bibtex.auto-export.notes;" disabled="true"/>
-                </groupbox>
+                <tree id="better-bibtex-export-list" flex="1" seltype="single" hidecolumnpicker="true" height="400" editable="true" onkeypress="toggleShowField(this);" onmousedown="toggleShowField(this, event);">
+                  <treecols>
+                    <treecol id="show" primary="true" type="checkbox" label="Show" editable="true" width="60"/>
+                    <treecol id="better-bibtex-preferences-auto-export-status" label="&zotero.better-bibtex.auto-export.status;" editable="false" flex="1"/>
+                    <treecol id="better-bibtex-preferences-auto-export-collection" label="&zotero.better-bibtex.auto-export.collection;" editable="false" flex="1"/>
+                    <treecol id="better-bibtex-preferences-auto-export-target" label="&zotero.better-bibtex.auto-export.target;" editable="false" flex="1"/>
+                    <treecol id="better-bibtex-preferences-auto-export-translator" label="&zotero.better-bibtex.auto-export.translator;" editable="false" flex="1"/>
+                    <treecol id="better-bibtex-preferences-auto-export-charset" label="&zotero.better-bibtex.auto-export.charset;" editable="true" flex="1"/>
+                    <treecol id="better-bibtex-preferences-auto-export-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" editable="false" flex="1"/>
+                    <treecol id="better-bibtex-preferences-auto-export-notes" label="&zotero.better-bibtex.auto-export.notes;" editable="false" flex="1"/>
+                  </treecols>
+                  <treechildren id="itemTypes"/>
+                </tree>
               </hbox>
               <hbox>
                 <button id="auto-export-remove" label="&zotero.better-bibtex.auto-export.remove;" oncommand="BetterBibTeXAutoExportPref.remove()"/>
