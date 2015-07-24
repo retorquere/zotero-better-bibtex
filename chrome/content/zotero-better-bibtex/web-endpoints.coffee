@@ -155,15 +155,90 @@ Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
 
   return sendResponseCallback(200, 'application/json', result)
 
-Zotero.BetterBibTeX.endpoints.magicCitations = { supportedMethods: ['GET'] }
-Zotero.BetterBibTeX.endpoints.magicCitations.init = (url, data, sendResponseCallback) ->
-  #dialog = window.openDialog("chrome://zotero-better-bibtex/content/magic-citations.xul", "Magic Citations", "alwaysraised,chrome,centerscreen", deferred)
-  #Zotero.Integration.activate(dialog)
+Zotero.BetterBibTeX.endpoints.cayw = { supportedMethods: ['GET'] }
+Zotero.BetterBibTeX.endpoints.cayw.init = (url, data, sendResponseCallback) ->
+  #deferred = Q.defer()
+  #mode = if !Zotero.isMac && Zotero.Prefs.get('integration.keepAddCitationDialogRaised') then 'popup' else 'alwaysRaised'
+  #io = {wrappedJSObject: deferred}
+  #Zotero.Integration.displayDialog({cleanup: ->}, 'chrome://zotero-better-bibtex/content/cayw.xul', mode, io)
+
+  doc = new Zotero.BetterBibTeX.CAYW.Document()
 
   deferred = Q.defer()
 
-  mode = if !Zotero.isMac && Zotero.Prefs.get('integration.keepAddCitationDialogRaised') then 'popup' else 'alwaysRaised'
-  io = {wrappedJSObject: deferred}
-  Zotero.Integration.displayDialog({cleanup: ->}, 'chrome://zotero-better-bibtex/content/magic-citations.xul', mode, io)
+  io = new Zotero.BetterBibTeX.CAYW.CitationEditInterface(deferred, url.query || {})
+  if Zotero.Prefs.get('integration.useClassicAddCitationDialog')
+    Zotero.Integration.displayDialog(doc, 'chrome://zotero/content/integration/addCitationDialog.xul', 'alwaysRaised,resizable', io)
+  else
+    mode = if !Zotero.isMac and Zotero.Prefs.get('integration.keepAddCitationDialogRaised') then 'popup' else 'alwaysRaised'
+    Zotero.Integration.displayDialog(doc, 'chrome://zotero/content/integration/quickFormat.xul', mode, io)
 
   sendResponseCallback(200, 'text/plain', deferred.promise)
+
+Zotero.BetterBibTeX.CAYW = {}
+
+class Zotero.BetterBibTeX.CAYW.Document
+  constructor: ->
+    @fields = []
+
+  cleanup: ->
+  activate: ->
+  displayAlert: -> 0
+  cursorInField: -> null
+  convert: ->
+  setBibliographyStyle: ->
+
+  canInsertField: (fieldType) ->
+    Zotero.BetterBibTeX.debug('CAYW.Document.canInsertField:', fieldType)
+    return true
+
+  getDocumentData: -> ''
+
+  setDocumentData: (data) ->
+    Zotero.BetterBibTeX.debug('CAYW.Document.setDocumenData:', data)
+
+  insertField: (fieldType, noteType) ->
+    Zotero.BetterBibTeX.debug('CAYW.Document.insertField:', fieldType, noteType)
+    field = Zotero.BetterBibTeX.CAYW.Field(fieldType, noteType)
+    @fields.push(field)
+    return field
+
+  getFields: (fieldType) ->
+    return (field for field in @fields when field.fieldType == fieldType)
+
+  getFieldsAsync: (fieldType, observer) ->
+    throw new Error('CAYW.Document.getFieldsAsync')
+
+
+class Zotero.BetterBibTeX.CAYW.Field
+  constructor: (@fieldType, @noteType) ->
+
+  setCode: (@code) ->
+
+class Zotero.BetterBibTeX.CAYW.CitationEditInterface
+  constructor: (@deferred, config) ->
+    @citation = {citationItems:[], properties:{}}
+    @wrappedJSObject = @
+
+    @config = {
+      citeprefix: ''
+      citepostfix: ''
+      keyprefix: ''
+      keypostfix: ''
+      separator: ','
+    }
+
+    for own key of @config
+      @config[key] = config[key] if config[key]
+
+  getItems: -> Q.fcall(-> [])
+
+  accept: (progressCallback) ->
+    progressCallback.call(null, 100) if progressCallback
+    citation = []
+    for item in @citation.citationItems
+      cite = Zotero.BetterBibTeX.keymanager.get({itemID: item.id}, 'on-export').citekey
+      citation.push(@config.keyprefix + cite + @config.keypostfix)
+    citation = @config.citeprefix + citation.join(@config.separator) + @config.citepostfix
+    @deferred.fulfill(citation)
+    Zotero.Integration.currentWindow.close()
