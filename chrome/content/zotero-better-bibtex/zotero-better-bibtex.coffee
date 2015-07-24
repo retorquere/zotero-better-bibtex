@@ -1079,4 +1079,3 @@ class Zotero.BetterBibTeX.HTMLNode extends Zotero.BetterBibTeX.XmlNode
   Node: HTMLNode
 
   HTMLNode::alias(['pre', 'b', 'p', 'div', 'ul', 'li'])
-
