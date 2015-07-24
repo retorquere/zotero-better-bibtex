@@ -226,6 +226,7 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
       keyprefix: ''
       keypostfix: ''
       separator: ','
+      clipboard: false
     }
 
     for own key of @config
@@ -240,6 +241,6 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
       cite = Zotero.BetterBibTeX.keymanager.get({itemID: item.id}, 'on-export').citekey
       citation.push(@config.keyprefix + cite + @config.keypostfix)
     citation = @config.citeprefix + citation.join(@config.separator) + @config.citepostfix
-    Zotero.Utilities.Internal.copyTextToClipboard(citation)
+    Zotero.Utilities.Internal.copyTextToClipboard(citation) if @config.clipboard
     @deferred.fulfill(citation)
     Zotero.Integration.currentWindow.close()
