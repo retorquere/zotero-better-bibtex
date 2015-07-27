@@ -329,7 +329,7 @@ Reference::esc_verbatim = (f) ->
   if Translator.BetterBibTeX
     href = ('' + f.value).replace(/([#\\%&{}])/g, '\\$1')
   else
-    href = ('' + f.value).replace(/([\\%&{}])/g, '\\$1')
+    href = ('' + f.value).replace(/([\\{}])/g, '\\$1')
   href = href.replace(/[^\x21-\x7E]/g, ((chr) -> '\\%' + ('00' + chr.charCodeAt(0).toString(16).slice(-2)))) if not Translator.unicode
 
   return "\\href{#{href}}{#{LaTeX.text2latex(href)}}" if f.name == 'url' and Translator.fancyURLs
