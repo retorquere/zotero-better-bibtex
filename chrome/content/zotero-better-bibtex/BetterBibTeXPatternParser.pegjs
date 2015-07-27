@@ -60,4 +60,8 @@ filter
     }
 
 fparam
-  = ',' param:[^,\]:]+                { return param.join('') }
+  = ',' value:fparamtext+ { return value.join('') }
+
+fparamtext
+  = chars:[^,\\\]:]+  { return chars; }
+  / "\\" char:.       { return char;  }
