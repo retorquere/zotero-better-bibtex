@@ -188,7 +188,7 @@ Zotero.BetterBibTeX.keymanager = new class
     extra += " \nbibtex: #{citekey}" if citekey
     extra = extra.trim()
     item.setField('extra', extra)
-    item.save()
+    item.save({skipDateModifiedUpdate: true})
 
   set: (item, citekey, pin) ->
     throw new Error('Cannot set empty cite key') if !citekey || citekey.trim() == ''
