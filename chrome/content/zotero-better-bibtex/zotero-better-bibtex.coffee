@@ -348,7 +348,7 @@ Zotero.BetterBibTeX.attachDatabase = ->
     Zotero.DB.query("update betterbibtex.autoexport set collection = (select 'library:' || libraryID from groups where 'group:' || groupID = collection) where collection like 'group:%'")
     Zotero.DB.query("update betterbibtex.autoexport set collection = 'collection:' || collection where collection <> 'library' and collection not like '%:%'")
 
-  upgrade = (installed != installing)
+  upgrade = (installed != installing) || Services.vc.compare(@release, '1.2.1') <= 0
 
   for table in Zotero.DB.columnQuery("SELECT name FROM betterbibtex.sqlite_master WHERE type='table' AND name like '-%-'") || []
     Zotero.DB.query("drop table if exists betterbibtex.\"#{table}\"")

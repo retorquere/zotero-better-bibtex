@@ -271,43 +271,7 @@ class Reference
 
     @itemtype = Translator.typeMap.Zotero2BibTeX[@item.itemType] or 'misc'
 
-    fields = []
-    for own name, value of Translator.extractFields(@item)
-      name = name.toLowerCase()
-      switch name
-        when 'mr'
-          fields.push({ name: 'mrnumber', value: value.value })
-        when 'zbl'
-          fields.push({ name: 'zmnumber', value: value.value })
-        when 'lccn', 'pmcid'
-          fields.push({ name: name, value: value.value })
-        when 'pmid', 'arxiv', 'jstor', 'hdl'
-          if Translator.BetterBibLaTeX
-            fields.push({ name: 'eprinttype', value: name.toLowerCase() })
-            fields.push({ name: 'eprint', value: value.value })
-          else
-            fields.push({ name, value: value.value })
-        when 'googlebooksid'
-          if Translator.BetterBibLaTeX
-            fields.push({ name: 'eprinttype', value: 'googlebooks' })
-            fields.push({ name: 'eprint', value: value.value })
-          else
-            fields.push({ name: 'googlebooks', value: value.value })
-        when 'original-date'
-          fields.push({ name: 'origdate', value: value.value })
-        else
-          fields.push({ name, value: value.value })
-
-    for field in fields
-      if field.name == 'referencetype'
-        @itemtype = field.value
-        continue
-
-      field.esc = 'raw' if field.name == 'xref'
-
-      field = @field(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
-      field.noreplace = true
-      @add(field)
+    @override = Translator.extractFields(@item)
 
     for own attr, f of Translator.fieldMap or {}
       if f.name and not @has[f.name]
@@ -419,8 +383,6 @@ Reference::add = (field) ->
   return if typeof field.value == 'string' and field.value.trim() == ''
   return if Array.isArray(field.value) and field.value.length == 0
 
-  return if @has[field.name]?.noreplace
-
   @remove(field.name) if field.replace
   throw "duplicate field '#{field.name}' for #{@item.__citekey__}" if @has[field.name] && !field.allowDuplicates
 
@@ -488,6 +450,44 @@ Reference::complete = ->
       switch Translator.DOIandURL
         when 'doi' then @fields.splice(url[0], 1)
         when 'url' then @fields.splice(doi[0], 1)
+
+  fields = []
+  for own name, value of @override
+    name = name.toLowerCase()
+    switch name
+      when 'mr'
+        fields.push({ name: 'mrnumber', value: value.value })
+      when 'zbl'
+        fields.push({ name: 'zmnumber', value: value.value })
+      when 'lccn', 'pmcid'
+        fields.push({ name: name, value: value.value })
+      when 'pmid', 'arxiv', 'jstor', 'hdl'
+        if Translator.BetterBibLaTeX
+          fields.push({ name: 'eprinttype', value: name.toLowerCase() })
+          fields.push({ name: 'eprint', value: value.value })
+        else
+          fields.push({ name, value: value.value })
+      when 'googlebooksid'
+        if Translator.BetterBibLaTeX
+          fields.push({ name: 'eprinttype', value: 'googlebooks' })
+          fields.push({ name: 'eprint', value: value.value })
+        else
+          fields.push({ name: 'googlebooks', value: value.value })
+      when 'original-date'
+        fields.push({ name: 'origdate', value: value.value })
+      when 'xref'
+        fields.push({ name, value: value.value, esc: 'raw' })
+
+      when 'referencetype'
+        @itemtype = value.value
+
+      else
+        fields.push({ name, value: value.value })
+
+    for field in fields
+      field = @field(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
+      field.replace = true
+      @add(field)
 
   # sort fields for stable tests
   if Translator.testing

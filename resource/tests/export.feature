@@ -134,6 +134,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                              | references |
+     | referencetype= does not work #278                                                 | 2          |
      | Ignore HTML tags when generating citation key #264                                | 1          |
      | Better BibLaTeX.016                                                               | 1          |
      | Malformed HTML                                                                    | 1          |
