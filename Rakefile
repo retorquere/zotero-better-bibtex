@@ -24,6 +24,7 @@ require 'rchardet'
 require 'csv'
 require 'base64'
 require 'net/http/post/multipart'
+require 'httparty'
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -473,30 +474,6 @@ rule( /\.header\.js$/ => [ proc {|task_name| [task_name.sub(/\.header\.js$/, '.y
       Translator.release = #{RELEASE.to_json};
       Translator.#{header['label'].gsub(/\s/, '')} = true;
     ")
-  }
-end
-
-task :keys, [:size] do |t, args|
-  args[:size] ||= 1024
-
-  sh "openssl genrsa -out error-reporting.priv.pem #{args[:size]}"
-  sh "openssl rsa -pubout -in error-reporting.priv.pem -out resource/error-reporting.pub.pem"
-end
-
-task :newtest, [:kind, :name] do |t, args|
-  args[:name] =~ /#([0-9]+)/
-  tag = $1
-  open("features/#{args[:kind]}.feature", 'a') { |f|
-    f.puts("")
-    f.puts("@#{tag}") if tag
-    f.puts("Scenario: #{args[:name]}")
-    if args[:kind] == 'export'
-      f.puts("  When I import 1 reference from 'export/#{args[:name]}.json'")
-      f.puts("  Then a library export using 'Better BibLaTeX' should match 'export/#{args[:name]}.bib'")
-    else
-      f.puts("    When I import 1 reference from 'import/#{args[:name]}.bib'")
-      f.puts("    Then the library should match 'import/#{args[:name]}.json'")
-    end
   }
 end
 
