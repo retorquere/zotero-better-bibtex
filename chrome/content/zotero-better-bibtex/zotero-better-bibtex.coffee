@@ -213,10 +213,33 @@ Zotero.BetterBibTeX.pref.set = (key, value) ->
 Zotero.BetterBibTeX.pref.get = (key) ->
   return Zotero.Prefs.get("translators.better-bibtex.#{key}")
 
-Zotero.BetterBibTeX.setCitekeyFormatter = ->
-  @citekeyPattern = @pref.get('citekeyFormat')
-  @citekeyFormat = @citekeyPattern.replace(/>.*/, '')
-  @formatter = new BetterBibTeXPatternFormatter(BetterBibTeXPatternParser.parse(@citekeyPattern))
+Zotero.BetterBibTeX.setCitekeyFormatter = (enforce) ->
+  if enforce
+    attempts = ['get', 'reset']
+  else
+    attempts = ['get']
+
+  for attempt in attempts
+    if attempt == 'reset'
+      msg = "Malformed citation '#{@pref.get('citekeyFormat')}' found, resetting to default"
+      @flash(msg)
+      @error(msg)
+      @pref.clearUserPref('citekeyFormat')
+
+    try
+      citekeyPattern = @pref.get('citekeyFormat')
+      citekeyFormat = citekeyPattern.replace(/>.*/, '')
+      formatter = new BetterBibTeXPatternFormatter(BetterBibTeXPatternParser.parse(citekeyPattern))
+
+      @citekeyPattern = citekeyPattern
+      @citekeyFormat = citekeyFormat
+      @formatter = formatter
+      return
+    catch err
+      @error(err)
+
+  if enforce
+    @flash('Citation pattern reset failed! Please report an error to the Better BibTeX issue list.')
 
 Zotero.BetterBibTeX.idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
@@ -455,7 +478,7 @@ Zotero.BetterBibTeX.init = ->
   catch err
     Zotero.BetterBibTeX.error('could not read skipwords:', err)
     BetterBibTeXPatternFormatter::skipWords = []
-  @setCitekeyFormatter()
+  @setCitekeyFormatter(true)
 
   @debugMode()
 

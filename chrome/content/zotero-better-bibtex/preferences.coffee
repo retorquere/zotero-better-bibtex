@@ -22,7 +22,16 @@ BetterBibTeXPref =
     try
       BetterBibTeXPatternParser.parse(keyformat.value)
     catch err
-      Zotero.BetterBibTeX.pref.set('citekeyFormat', BetterBibTeXPref.savedPattern || '[auth][year]')
+      if BetterBibTeXPref.savedPattern
+        try
+          BetterBibTeXPatternParser.parse(BetterBibTeXPref.savedPattern)
+        catch
+          BetterBibTeXPref.savedPattern = null
+
+      if BetterBibTeXPref.savedPattern
+        Zotero.BetterBibTeX.pref.set('citekeyFormat', BetterBibTeXPref.savedPattern)
+      else
+        Zotero.BetterBibTeX.pref.clearUserPref('citekeyFormat')
 
   paneUnload: ->
     try
@@ -61,7 +70,7 @@ BetterBibTeXPref =
       parseerror = err
 
     Zotero.BetterBibTeX.debug('parsing format', keyformat.value, ':', !!parseerror)
-    keyformat.setAttribute('style', (if parseerror then 'color: red' else ''))
+    keyformat.setAttribute('style', (if parseerror then '-moz-appearance: none !important; background-color: DarkOrange' else ''))
     keyformat.setAttribute('tooltiptext', '' + (parseerror || ''))
 
     document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-change').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())
