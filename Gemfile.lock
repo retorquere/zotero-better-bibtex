@@ -129,7 +129,7 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.111)
+    zotplus-rakehelper (0.0.112)
       httparty
       nokogiri
       rake
