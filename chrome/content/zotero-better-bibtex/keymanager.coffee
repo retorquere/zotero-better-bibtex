@@ -167,6 +167,25 @@ Zotero.BetterBibTeX.keymanager = new class
     zoteroPane = Zotero.getActiveZoteroPane()
     items = (item for item in zoteroPane.getSelectedItems() when !item.isAttachment() && !item.isNote())
 
+    warn = Zotero.BetterBibTeX.pref.get('warnBulkModify')
+    Zotero.BetterBibTeX.debug('keymanager.selected:', items.length, 'selected, warn at', warn)
+    if warn > 0 && items.length > warn
+      ids = (parseInt(item.itemID) for item in items)
+
+      if action == 'set'
+        affected = items.length
+      else
+        affected = @keys.where((key) -> key.itemID in ids && !key.citekeyFormat).length
+
+      Zotero.BetterBibTeX.debug('keymanager.selected:', items.length, 'selected, warn at', warn, 'affected:', affected)
+      if affected > warn
+        params = { treshold: warn, response: null }
+        window.openDialog('chrome://zotero-better-bibtex/content/bulk-clear-confirm.xul', '', 'chrome,dialog,modal', params)
+        switch params.response
+          when 'ok'       then
+          when 'whatever' then Zotero.BetterBibTeX.pref.set('warnBulkModify', 0)
+          else            return
+
     for item in items
       @remove(item, action == 'set')
 

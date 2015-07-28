@@ -27,3 +27,4 @@ pref('extensions.zotero.translators.better-bibtex.skipWords', 'a,ab,aboard,about
 pref('extensions.zotero.translators.better-bibtex.tests', '')
 pref('extensions.zotero.translators.better-bibtex.usePrefix', false)
 pref('extensions.zotero.translators.better-bibtex.verbatimDate', "(\\[[0-9]+,*\\])|([0-9]{3,4}/[0-9]{3,4})")
+pref('extensions.zotero.translators.better-bibtex.warnBulkModify', 10)
