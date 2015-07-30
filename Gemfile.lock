@@ -101,7 +101,7 @@ GEM
       rspec-support (~> 3.3.0)
     rspec-support (3.3.0)
     rubyzip (1.1.7)
-    selenium-webdriver (2.46.2)
+    selenium-webdriver (2.47.0)
       childprocess (~> 0.5)
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
