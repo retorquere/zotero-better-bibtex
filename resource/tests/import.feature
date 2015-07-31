@@ -44,7 +44,7 @@ Scenario Outline: Better BibTeX Import
   | Better BibTeX.010                                                           | 2           |
   | Better BibTeX.011                                                           | 2           |
   | Better BibTeX.012                                                           | 1           |
-  | Better BibTeX.013                                                           | 2           |
+  | Better BibTeX.013                                                           | 4           |
   | Better BibTeX.014                                                           | 1           |
   | Better BibTeX.015                                                           | 3           |
   | Literal names                                                               | 1           |
