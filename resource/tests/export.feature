@@ -134,6 +134,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                              | references |
+     | bookSection is always converted to @inbook, never @incollection #282              | 1          |
      | referencetype= does not work #278                                                 | 2          |
      | Ignore HTML tags when generating citation key #264                                | 1          |
      | Better BibLaTeX.016                                                               | 1          |
