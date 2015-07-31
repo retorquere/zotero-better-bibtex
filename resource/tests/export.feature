@@ -133,41 +133,42 @@ Scenario Outline: BibLaTeX Export
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.bib'
 
   Examples:
-     | file                                                                              | references |
-     | bookSection is always converted to @inbook, never @incollection #282              | 1          |
-     | referencetype= does not work #278                                                 | 2          |
-     | Ignore HTML tags when generating citation key #264                                | 1          |
-     | Better BibLaTeX.016                                                               | 1          |
-     | Malformed HTML                                                                    | 1          |
-     | BBT export of square brackets in date #245 -- xref should not be escaped #246     | 5          |
-     | Better BibLaTeX.stable-keys                                                       | 6          |
-     | Better BibLaTeX.010                                                               | 2          |
-     | Better BibLaTeX.011                                                               | 2          |
-     | Better BibLaTeX.012                                                               | 2          |
-     | Better BibLaTeX.013                                                               | 1          |
-     | Better BibLaTeX.014                                                               | 1          |
-     | Better BibLaTeX.015                                                               | 1          |
-     | Better BibLaTeX.017                                                               | 1          |
-     | Better BibLaTeX.019                                                               | 1          |
-     | Better BibLaTeX.020                                                               | 1          |
-     | Better BibLaTeX.021                                                               | 2          |
-     | Better BibLaTeX.022                                                               | 1          |
-     | Better BibLaTeX.023                                                               | 1          |
-     | Better BibTeX does not use biblatex fields eprint and eprinttype #170             | 3          |
-     | Capitalisation in techreport titles #160                                          | 1          |
-     | DOI with underscores in extra field #108                                          | 1          |
-     | Export Forthcoming as Forthcoming                                             | 2          |
-     | Exporting of single-field author lacks braces #130                                | 2          |
-     | Export Newspaper Article misses section field #132                                | 2          |
-     | Extra semicolon in biblatexadata causes export failure #133                       | 2          |
-     | German Umlaut separated by brackets #146                                        | 2          |
-     | Hang on non-file attachment export #112 - URL export broken #114                  | 4          |
-     | HTML Fragment separator escaped in url #140 #147                                  | 2          |
-     | Math parts in title #113                                                          | 1          |
-     | References with multiple notes fail to export #174                                | 3          |
-     | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105 | 1          |
-     | underscores in URL fields should not be escaped #104                              | 1          |
-     | Allow explicit field override                                                     | 1          |
+     | file                                                                               | references  |
+     | typo stature-statute (zotero item type) #284                                       | 1           |
+     | bookSection is always converted to @inbook, never @incollection #282               | 1           |
+     | referencetype= does not work #278                                                  | 2           |
+     | Ignore HTML tags when generating citation key #264                                 | 1           |
+     | Better BibLaTeX.016                                                                | 1           |
+     | Malformed HTML                                                                     | 1           |
+     | BBT export of square brackets in date #245 -- xref should not be escaped #246      | 5           |
+     | Better BibLaTeX.stable-keys                                                        | 6           |
+     | Better BibLaTeX.010                                                                | 2           |
+     | Better BibLaTeX.011                                                                | 2           |
+     | Better BibLaTeX.012                                                                | 2           |
+     | Better BibLaTeX.013                                                                | 1           |
+     | Better BibLaTeX.014                                                                | 1           |
+     | Better BibLaTeX.015                                                                | 1           |
+     | Better BibLaTeX.017                                                                | 1           |
+     | Better BibLaTeX.019                                                                | 1           |
+     | Better BibLaTeX.020                                                                | 1           |
+     | Better BibLaTeX.021                                                                | 2           |
+     | Better BibLaTeX.022                                                                | 1           |
+     | Better BibLaTeX.023                                                                | 1           |
+     | Better BibTeX does not use biblatex fields eprint and eprinttype #170              | 3           |
+     | Capitalisation in techreport titles #160                                           | 1           |
+     | DOI with underscores in extra field #108                                           | 1           |
+     | Export Forthcoming as Forthcoming                                                  | 2           |
+     | Exporting of single-field author lacks braces #130                                 | 2           |
+     | Export Newspaper Article misses section field #132                                 | 2           |
+     | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
+     | German Umlaut separated by brackets #146                                           | 2           |
+     | Hang on non-file attachment export #112 - URL export broken #114                   | 4           |
+     | HTML Fragment separator escaped in url #140 #147                                   | 2           |
+     | Math parts in title #113                                                           | 1           |
+     | References with multiple notes fail to export #174                                 | 3           |
+     | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
+     | underscores in URL fields should not be escaped #104                               | 1           |
+     | Allow explicit field override                                                      | 1           |
 
 @test-cluster-0
 @ae
