@@ -301,7 +301,7 @@ class BetterBibTeXPatternFormatter
       return value.slice(start, end).join(' ')
 
     substring: (value, start, n) ->
-      return value.slice(start - 1, start - 1 + n)
+      return (value || '').slice(start - 1, start - 1 + n)
 
     ascii: (value) ->
       return (value || '').replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim()
