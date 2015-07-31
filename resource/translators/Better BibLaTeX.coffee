@@ -22,7 +22,7 @@ Translator.fieldMap = {
 Translator.typeMap = {
   # BibTeX                            Zotero
   'book booklet manual proceedings':  'book'
-  'inbook incollection':              'bookSection'
+  'incollection inbook':              'bookSection'
   'article misc':                     'journalArticle magazineArticle newspaperArticle'
   thesis:                             'thesis'
   letter:                             'email letter'
