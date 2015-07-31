@@ -7,33 +7,33 @@ Background:
 
 @test-cluster-0
 @131
-Scenario: Omit URL export when DOI present. #131
-  When I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json'
+Scenario: Omit URL export when DOI present. [131]
+  When I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. [131].json'
   And I set preference .DOIandURL to both
-  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.default.bib'
+  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. [131].default.bib'
   And I set preference .DOIandURL to doi
-  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-DOI.bib'
+  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. [131].prefer-DOI.bib'
   And I set preference .DOIandURL to url
-  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-url.bib'
+  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. [131].prefer-url.bib'
 
 @test-cluster-0
 @117
-Scenario: Bibtex key regenerating issue when trashing items #117
-  When I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json'
+Scenario: Bibtex key regenerating issue when trashing items [117]
+  When I import 1 reference from 'export/Bibtex key regenerating issue when trashing items [117].json'
   And I select the first item where publicationTitle = 'Genetics'
   And I remove the selected item
-  And I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json' as 'Second Import.json'
-  Then a library export using 'Better BibLaTeX' should match 'export/Bibtex key regenerating issue when trashing items #117.bib'
+  And I import 1 reference from 'export/Bibtex key regenerating issue when trashing items [117].json' as 'Second Import.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Bibtex key regenerating issue when trashing items [117].bib'
 
 @test-cluster-0
 @110
 @111
 @molasses
-Scenario: two ISSN number are freezing browser #110 / Generating keys and export broken #111
-  When I import 1 reference from 'export/two ISSN number are freezing browser #110.json'
+Scenario: two ISSN number are freezing browser [110] / Generating keys and export broken [111]
+  When I import 1 reference from 'export/two ISSN number are freezing browser [110].json'
   And I select the first item where publicationTitle = 'Genetics'
   And I set the citation key
-  Then a library export using 'Better BibLaTeX' should match 'export/two ISSN number are freezing browser #110.bib'
+  Then a library export using 'Better BibLaTeX' should match 'export/two ISSN number are freezing browser [110].bib'
 
 @test-cluster-0
 @85
@@ -91,13 +91,13 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                              | references |
-     | Empty bibtex: clause in extra gobbles whatever follows #99                        | 1          |
+     | Empty bibtex: clause in extra gobbles whatever follows [99]                        | 1          |
      | Better BibTeX.018                                                                 | 1          |
      | Better BibTeX.026                                                                 | 2          |
      | Better BibTeX.027                                                                 | 2          |
-     | capital delta breaks .bib output #141                                             | 1          |
-     | Export C as {v C}, not v{C} #152                                                  | 3          |
-     | Export of item to Better Bibtex fails for auth3_1 #98                             | 1          |
+     | capital delta breaks .bib output [141]                                             | 1          |
+     | Export C as {v C}, not v{C} [152]                                                  | 3          |
+     | Export of item to Better Bibtex fails for auth3_1 [98]                             | 1          |
 
 @test-cluster-0
 @bblt
@@ -108,12 +108,12 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
-     | Diacritics stripped from keys regardless of ascii or fold filters #266                         | 2           |
-     | Colon not allowed in citation key format #268                                                  | 3           |
-     | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 10 |
-     | Export mapping for reporter field #219                                                         | 1           |
-     | Export error for items without publicationTitle and "Preserve BibTeX variables" enabled #201   | 1           |
-     | Be robust against misconfigured journal abbreviator #127                                       | 1           |
+     | Diacritics stripped from keys regardless of ascii or fold filters [266]                         | 2           |
+     | Colon not allowed in citation key format [268]                                                  | 3           |
+     | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser [253] | 10 |
+     | Export mapping for reporter field [219]                                                         | 1           |
+     | Export error for items without publicationTitle and "Preserve BibTeX variables" enabled [201]   | 1           |
+     | Be robust against misconfigured journal abbreviator [127]                                       | 1           |
      | Better BibLaTeX.001                                                                            | 1           |
      | Better BibLaTeX.002                                                                            | 2           |
      | Better BibLaTeX.003                                                                            | 2           |
@@ -134,11 +134,11 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                              | references |
-     | referencetype= does not work #278                                                 | 2          |
-     | Ignore HTML tags when generating citation key #264                                | 1          |
+     | referencetype= does not work [278]                                                 | 2          |
+     | Ignore HTML tags when generating citation key [264]                                | 1          |
      | Better BibLaTeX.016                                                               | 1          |
      | Malformed HTML                                                                    | 1          |
-     | BBT export of square brackets in date #245 -- xref should not be escaped #246     | 5          |
+     | BBT export of square brackets in date [245] -- xref should not be escaped [246]     | 5          |
      | Better BibLaTeX.stable-keys                                                       | 6          |
      | Better BibLaTeX.010                                                               | 2          |
      | Better BibLaTeX.011                                                               | 2          |
@@ -152,20 +152,20 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.021                                                               | 2          |
      | Better BibLaTeX.022                                                               | 1          |
      | Better BibLaTeX.023                                                               | 1          |
-     | Better BibTeX does not use biblatex fields eprint and eprinttype #170             | 3          |
-     | Capitalisation in techreport titles #160                                          | 1          |
-     | DOI with underscores in extra field #108                                          | 1          |
+     | Better BibTeX does not use biblatex fields eprint and eprinttype [170]             | 3          |
+     | Capitalisation in techreport titles [160]                                          | 1          |
+     | DOI with underscores in extra field [108]                                          | 1          |
      | Export "Forthcoming" as "Forthcoming"                                             | 2          |
-     | Exporting of single-field author lacks braces #130                                | 2          |
-     | Export Newspaper Article misses section field #132                                | 2          |
-     | Extra semicolon in biblatexadata causes export failure #133                       | 2          |
-     | German Umlaut "separated" by brackets #146                                        | 2          |
-     | Hang on non-file attachment export #112 - URL export broken #114                  | 4          |
-     | HTML Fragment separator escaped in url #140 #147                                  | 2          |
-     | Math parts in title #113                                                          | 1          |
-     | References with multiple notes fail to export #174                                | 3          |
-     | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105 | 1          |
-     | underscores in URL fields should not be escaped #104                              | 1          |
+     | Exporting of single-field author lacks braces [130]                                | 2          |
+     | Export Newspaper Article misses section field [132]                                | 2          |
+     | Extra semicolon in biblatexadata causes export failure [133]                       | 2          |
+     | German Umlaut "separated" by brackets [146]                                        | 2          |
+     | Hang on non-file attachment export [112] - URL export broken [114]                  | 4          |
+     | HTML Fragment separator escaped in url [140] [147]                                  | 2          |
+     | Math parts in title [113]                                                          | 1          |
+     | References with multiple notes fail to export [174]                                | 3          |
+     | Shortjournal does not get exported to biblatex format [102] - biblatexcitekey [105] | 1          |
+     | underscores in URL fields should not be escaped [104]                              | 1          |
      | Allow explicit field override                                                     | 1          |
 
 @test-cluster-0
@@ -182,7 +182,7 @@ Scenario: auto-export
   Then 'tmp/autoexport.bib' should match 'export/autoexport.after.bib'
 
 #@163
-#Scenario: Preserve Bib variable names #163
-#  When I import 1 reference from 'export/Preserve Bib variable names #163.json'
-#  Then a library export using 'Better BibLaTeX' should match 'export/Preserve Bib variable names #163.bib'
+#Scenario: Preserve Bib variable names [163]
+#  When I import 1 reference from 'export/Preserve Bib variable names [163].json'
+#  Then a library export using 'Better BibLaTeX' should match 'export/Preserve Bib variable names [163].bib'
 
