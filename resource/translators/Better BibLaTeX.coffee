@@ -34,7 +34,7 @@ Translator.typeMap = {
   '=online':                          'blogPost forumPost webpage'
   inproceedings:                      'conferencePaper'
   report:                             'report'
-  legislation:                        'stature bill'
+  legislation:                        'statute bill'
   jurisdiction:                       'case hearing'
   patent:                             'patent'
   audio:                              'audioRecording podcast'
