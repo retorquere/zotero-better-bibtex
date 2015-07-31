@@ -91,7 +91,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                              | references |
-     | Empty bibtex: clause in extra gobbles whatever follows #99                        | 1          |
+     | Empty bibtex clause in extra gobbles whatever follows #99                        | 1          |
      | Better BibTeX.018                                                                 | 1          |
      | Better BibTeX.026                                                                 | 2          |
      | Better BibTeX.027                                                                 | 2          |
@@ -112,7 +112,7 @@ Scenario Outline: BibLaTeX Export
      | Colon not allowed in citation key format #268                                                  | 3           |
      | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 10 |
      | Export mapping for reporter field #219                                                         | 1           |
-     | Export error for items without publicationTitle and "Preserve BibTeX variables" enabled #201   | 1           |
+     | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201   | 1           |
      | Be robust against misconfigured journal abbreviator #127                                       | 1           |
      | Better BibLaTeX.001                                                                            | 1           |
      | Better BibLaTeX.002                                                                            | 2           |
@@ -155,11 +155,11 @@ Scenario Outline: BibLaTeX Export
      | Better BibTeX does not use biblatex fields eprint and eprinttype #170             | 3          |
      | Capitalisation in techreport titles #160                                          | 1          |
      | DOI with underscores in extra field #108                                          | 1          |
-     | Export "Forthcoming" as "Forthcoming"                                             | 2          |
+     | Export Forthcoming as Forthcoming                                             | 2          |
      | Exporting of single-field author lacks braces #130                                | 2          |
      | Export Newspaper Article misses section field #132                                | 2          |
      | Extra semicolon in biblatexadata causes export failure #133                       | 2          |
-     | German Umlaut "separated" by brackets #146                                        | 2          |
+     | German Umlaut separated by brackets #146                                        | 2          |
      | Hang on non-file attachment export #112 - URL export broken #114                  | 4          |
      | HTML Fragment separator escaped in url #140 #147                                  | 2          |
      | Math parts in title #113                                                          | 1          |
