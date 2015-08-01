@@ -490,7 +490,7 @@ Reference::complete = ->
       @add(field)
 
   # sort fields for stable tests
-  @fields.sort((a, b) -> ("#{a.name}=#{a.value}").localeCompare(("#{b.name}=#{b.value}"))) if Translator.testing
+  @fields.sort((a, b) -> ("#{a.name} = #{a.value}").localeCompare(("#{b.name} = #{b.value}"))) if Translator.testing
 
   ref = "@#{@itemtype}{#{@item.__citekey__},\n"
   ref += (field.bibtex for field in @fields).join(',\n')
