@@ -438,7 +438,7 @@ Zotero.BetterBibTeX.initDatabase = ->
   upgrade = Services.vc.compare(installed.split('.').slice(0, 2).join('.'), @release.split('.').slice(0, 2).join('.')) < 0
 
   # upgrade anything before specific release
-  upgrade ||= Services.vc.compare(installed, '1.2.1') <= 0
+  upgrade ||= Services.vc.compare(installed, '1.2.5') <= 0
 
   for check in [
     'SELECT itemID, citekey, citekeyFormat FROM betterbibtex.keys'
