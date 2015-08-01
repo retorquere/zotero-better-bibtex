@@ -422,6 +422,9 @@ Zotero.BetterBibTeX.upgradeDatabase = ->
     Zotero.DB.query("drop table if exists betterbibtex.\"#{table}\"")
 
   Zotero.DB.commitTransaction() unless tip
+
+  Zotero.DB.query("update betterbibtex.autoexport set status = ?", [Zotero.BetterBibTeX.auto.status('pending')])
+
   @flash('Better BibTeX: database updated', 'Database update finished')
 
 Zotero.BetterBibTeX.initDatabase = ->
@@ -438,7 +441,7 @@ Zotero.BetterBibTeX.initDatabase = ->
   upgrade = Services.vc.compare(installed.split('.').slice(0, 2).join('.'), @release.split('.').slice(0, 2).join('.')) < 0
 
   # upgrade anything before specific release
-  upgrade ||= Services.vc.compare(installed, '1.2.5') <= 0
+  upgrade ||= Services.vc.compare(installed, '1.2.6') <= 0
 
   for check in [
     'SELECT itemID, citekey, citekeyFormat FROM betterbibtex.keys'
