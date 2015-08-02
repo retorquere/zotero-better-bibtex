@@ -6,7 +6,7 @@ Background:
 
 @keymanager
 Scenario: Keymanager cache test
-  When I import 2 reference with 2 attachments from 'cache/Bibtex key generation not unique [199].json'
+  When I import 2 reference with 2 attachments from 'cache/Bibtex key generation not unique #199.json'
   And I select the first item where title = 'Support Request Guidelines - Better BibTeX'
   And I reset the citation keys
   And I select the first item where title = 'ZotPlus/zotero-better-bibtex'
@@ -15,4 +15,4 @@ Scenario: Keymanager cache test
   And I set the citation keys
   And I select the first item where title = 'Support Request Guidelines - Better BibTeX'
   And I set the citation keys
-  Then the library should match 'cache/Bibtex key generation not unique [199].library.json'
+  Then the library should match 'cache/Bibtex key generation not unique #199.library.json'
