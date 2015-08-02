@@ -100,6 +100,12 @@ Scenario Outline: BibLaTeX Export
      | Export of item to Better Bibtex fails for auth3_1 #98                             | 1          |
 
 @test-cluster-0
+Scenario Outline: Diacritics stripped from keys regardless of ascii or fold filters #266
+  Given I import 2 references from 'export/Diacritics stripped from keys regardless of ascii or fold filters #266.json'
+  When I set preference .citekeyFold to false
+  Then a library export using 'Better BibLaTeX' should match 'export/Diacritics stripped from keys regardless of ascii or fold filters #266.bib'
+
+@test-cluster-0
 @bblt
 @bblt-0
 Scenario Outline: BibLaTeX Export
@@ -108,7 +114,6 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
-     | Diacritics stripped from keys regardless of ascii or fold filters #266                         | 2           |
      | Colon not allowed in citation key format #268                                                  | 3           |
      | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 10 |
      | Export mapping for reporter field #219                                                         | 1           |
