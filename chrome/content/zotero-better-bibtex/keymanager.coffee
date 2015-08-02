@@ -92,7 +92,7 @@ Zotero.BetterBibTeX.keymanager = new class
     }
 
   clearDynamic: ->
-    @keys.removeWhere((obj) -> obj.citekeyFormat && obj.citekeyFormat != Zotero.BetterBibTeX.citekeyFormat)
+    @keys.removeWhere((obj) -> obj.citekeyFormat)
 
   flush: ->
     tip = Zotero.DB.transactionInProgress()

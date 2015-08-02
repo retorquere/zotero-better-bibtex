@@ -165,7 +165,7 @@ Zotero.BetterBibTeX.pref.observer = {
   unregister: -> Zotero.BetterBibTeX.pref.prefs.removeObserver('', @)
   observe: (subject, topic, data) ->
     switch data
-      when 'citekeyFormat'
+      when 'citekeyFormat', 'citekeyFold'
         Zotero.BetterBibTeX.setCitekeyFormatter()
         # delete all dynamic keys that have a different citekeyformat (should be all)
         Zotero.BetterBibTeX.keymanager.clearDynamic()
@@ -181,6 +181,7 @@ Zotero.BetterBibTeX.pref.observer = {
     Zotero.BetterBibTeX.cache.reset()
     Zotero.BetterBibTeX.auto.reset()
     Zotero.BetterBibTeX.auto.process('preferences change')
+    Zotero.BetterBibTeX.debug('preference change:', subject, topic, data)
 }
 
 Zotero.BetterBibTeX.pref.ZoteroObserver = {
@@ -229,7 +230,7 @@ Zotero.BetterBibTeX.setCitekeyFormatter = (enforce) ->
     try
       citekeyPattern = @pref.get('citekeyFormat')
       citekeyFormat = citekeyPattern.replace(/>.*/, '')
-      formatter = new BetterBibTeXPatternFormatter(BetterBibTeXPatternParser.parse(citekeyPattern))
+      formatter = new BetterBibTeXPatternFormatter(BetterBibTeXPatternParser.parse(citekeyPattern), @pref.get('citekeyFold'))
 
       @citekeyPattern = citekeyPattern
       @citekeyFormat = citekeyFormat
