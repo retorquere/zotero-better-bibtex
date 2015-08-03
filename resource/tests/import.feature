@@ -33,20 +33,20 @@ Scenario Outline: Better BibTeX Import
 
   Examples:
   | file                                                                        | references  |
-  | Better BibTeX.001                                                           | 2           |
+  | Better BibTeX.001                                                           | 1           |
   | Better BibTeX.003                                                           | 2           |
   | Better BibTeX.004                                                           | 1           |
   | Better BibTeX.005                                                           | 1           |
   | Better BibTeX.006                                                           | 1           |
   | Better BibTeX.007                                                           | 1           |
   | Better BibTeX.008                                                           | 1           |
-  | Better BibTeX.009                                                           | 5           |
-  | Better BibTeX.010                                                           | 2           |
-  | Better BibTeX.011                                                           | 2           |
+  | Better BibTeX.009                                                           | 3           |
+  | Better BibTeX.010                                                           | 1           |
+  | Better BibTeX.011                                                           | 1           |
   | Better BibTeX.012                                                           | 1           |
-  | Better BibTeX.013                                                           | 4           |
+  | Better BibTeX.013                                                           | 2           |
   | Better BibTeX.014                                                           | 1           |
-  | Better BibTeX.015                                                           | 3           |
+  | Better BibTeX.015                                                           | 2           |
   | Literal names                                                               | 1           |
   | Author splitter failure                                                     | 1           |
   | Failure to handle unparsed author names (92)                                | 1           |
