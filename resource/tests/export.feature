@@ -38,7 +38,7 @@ Scenario: two ISSN number are freezing browser #110 / Generating keys and export
 @test-cluster-0
 @85
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
-  When I import 2 references from 'export/Square brackets in Publication field (85).json'
+  When I import 1 references from 'export/Square brackets in Publication field (85).json'
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85).bib'
   And I set preference .citekeyFormat to [year]-updated
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85) after pattern change.bib'
@@ -144,11 +144,11 @@ Scenario Outline: BibLaTeX Export
      | file                                                                               | references  |
      | typo stature-statute (zotero item type) #284                                       | 1           |
      | bookSection is always converted to @inbook, never @incollection #282               | 1           |
-     | referencetype= does not work #278                                                  | 2           |
+     | referencetype= does not work #278                                                  | 1           |
      | Ignore HTML tags when generating citation key #264                                 | 1           |
      | Better BibLaTeX.016                                                                | 1           |
      | Malformed HTML                                                                     | 1           |
-     | BBT export of square brackets in date #245 -- xref should not be escaped #246      | 4           |
+     | BBT export of square brackets in date #245 -- xref should not be escaped #246      | 3           |
      | Better BibLaTeX.stable-keys                                                        | 6           |
      | Better BibLaTeX.010                                                                | 1           |
      | Better BibLaTeX.011                                                                | 1           |
@@ -169,11 +169,11 @@ Scenario Outline: BibLaTeX Export
      | Exporting of single-field author lacks braces #130                                 | 1           |
      | Export Newspaper Article misses section field #132                                 | 1           |
      | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
-     | German Umlaut separated by brackets #146                                           | 2           |
+     | German Umlaut separated by brackets #146                                           | 1           |
      | Hang on non-file attachment export #112 - URL export broken #114                   | 2           |
      | HTML Fragment separator escaped in url #140 #147                                   | 1           |
      | Math parts in title #113                                                           | 1           |
-     | References with multiple notes fail to export #174                                 | 3           |
+     | References with multiple notes fail to export #174                                 | 1           |
      | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
      | underscores in URL fields should not be escaped #104                               | 1           |
      | Allow explicit field override                                                      | 1           |

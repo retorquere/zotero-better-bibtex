@@ -6,7 +6,7 @@ Background:
 
 @aux
 Scenario: AUX scanner
-  When I import 157 references from 'import/AUX scanner-pre.json'
+  When I import 149 references from 'import/AUX scanner-pre.json'
   And I import 1 reference from 'import/AUX scanner.aux'
   Then the library should match 'import/AUX scanner-post.json'
 
@@ -40,13 +40,13 @@ Scenario Outline: Better BibTeX Import
   | Better BibTeX.006                                                           | 1           |
   | Better BibTeX.007                                                           | 1           |
   | Better BibTeX.008                                                           | 1           |
-  | Better BibTeX.009                                                           | 3           |
+  | Better BibTeX.009                                                           | 2           |
   | Better BibTeX.010                                                           | 1           |
   | Better BibTeX.011                                                           | 1           |
   | Better BibTeX.012                                                           | 1           |
   | Better BibTeX.013                                                           | 2           |
   | Better BibTeX.014                                                           | 1           |
-  | Better BibTeX.015                                                           | 2           |
+  | Better BibTeX.015                                                           | 1           |
   | Literal names                                                               | 1           |
   | Author splitter failure                                                     | 1           |
   | Failure to handle unparsed author names (92)                                | 1           |
