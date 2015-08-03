@@ -46,7 +46,7 @@ Scenario: Square brackets in Publication field (85), and non-pinned keys must ch
 @test-cluster-0
 @86
 Scenario: Include first name initial(s) in cite key generation pattern (86)
-  When I import 1 reference with 1 attachment from 'export/Include first name initial(s) in cite key generation pattern (86).json'
+  When I import 2 references from 'export/Include first name initial(s) in cite key generation pattern (86).json'
    And I set preference .citekeyFormat to [auth+initials][year]
   Then a library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bib'
 
@@ -90,19 +90,19 @@ Scenario Outline: BibLaTeX Export
   Then a library export using 'Better BibTeX' should match 'export/<file>.bib'
 
   Examples:
-     | file                                                                              | references |
-     | Empty bibtex clause in extra gobbles whatever follows #99                        | 1          |
-     | Better BibTeX.018                                                                 | 1          |
-     | Better BibTeX.026                                                                 | 2          |
-     | Better BibTeX.027                                                                 | 2          |
-     | capital delta breaks .bib output #141                                             | 1          |
-     | Export C as {v C}, not v{C} #152                                                  | 3          |
-     | Export of item to Better Bibtex fails for auth3_1 #98                             | 1          |
+     | file                                                                               | references |
+     | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
+     | Better BibTeX.018                                                                  | 1          |
+     | Better BibTeX.026                                                                  | 1          |
+     | Better BibTeX.027                                                                  | 1          |
+     | capital delta breaks .bib output #141                                              | 1          |
+     | Export C as {v C}, not v{C} #152                                                   | 2          |
+     | Export of item to Better Bibtex fails for auth3_1 #98                              | 1          |
 
 @test-cluster-0
 @266 @286
 Scenario: Diacritics stripped from keys regardless of ascii or fold filters #266
-  Given I import 2 references from 'export/Diacritics stripped from keys regardless of ascii or fold filters #266.json'
+  Given I import 1 reference from 'export/Diacritics stripped from keys regardless of ascii or fold filters #266.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Diacritics stripped from keys regardless of ascii or fold filters #266-fold.bib'
   When I set preference .citekeyFold to false
   Then a library export using 'Better BibLaTeX' should match 'export/Diacritics stripped from keys regardless of ascii or fold filters #266-nofold.bib'
@@ -116,8 +116,8 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
-     | Colon not allowed in citation key format #268                                                  | 3           |
-     | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 10 |
+     | Colon not allowed in citation key format #268                                                  | 2           |
+     | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | Export mapping for reporter field #219                                                         | 1           |
      | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201   | 1           |
      | Be robust against misconfigured journal abbreviator #127                                       | 1           |
@@ -128,7 +128,7 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.005                                                                            | 1           |
      | Better BibLaTeX.006                                                                            | 1           |
      | Better BibLaTeX.007                                                                            | 1           |
-     | Better BibLaTeX.009                                                                            | 4           |
+     | Better BibLaTeX.009                                                                            | 2           |
      | BraceBalancer                                                                                  | 1           |
      | Fields in Extra should override defaults                                                       | 1           |
 
