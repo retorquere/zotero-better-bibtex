@@ -38,7 +38,7 @@ Scenario: two ISSN number are freezing browser #110 / Generating keys and export
 @test-cluster-0
 @85
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
-  When I import 1 reference with 1 attachment from 'export/Square brackets in Publication field (85).json'
+  When I import 2 references from 'export/Square brackets in Publication field (85).json'
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85).bib'
   And I set preference .citekeyFormat to [year]-updated
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85) after pattern change.bib'

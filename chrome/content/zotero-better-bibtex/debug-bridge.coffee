@@ -56,7 +56,19 @@ Zotero.BetterBibTeX.DebugBridge.methods.import = (filename) ->
   Zotero_File_Interface.importFile(file)
   return true
 
-Zotero.BetterBibTeX.DebugBridge.methods.librarySize = -> Zotero.DB.valueQuery('select count(*) from items i where not i.itemID in (select d.itemID from deletedItems d)')
+Zotero.BetterBibTeX.DebugBridge.methods.librarySize = ->
+  refs = {
+    references: 0
+    notes: 0
+    attachments: 0
+  }
+  for count in Zotero.DB.query("
+          select count(*) as nr, case itemtypeID when 0 then 'notes' when 14 then 'attachments' else 'references' end as itemType
+          from items i
+          where not i.itemID in (select d.itemID from deletedItems d)
+          group by 2")
+    refs[count.itemType] = parseInt(count.nr)
+  return refs
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator, displayOptions) ->
   deferred = Q.defer()

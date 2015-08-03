@@ -176,22 +176,22 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
       end
     end
 
-    entries = OpenStruct.new({start: $Firefox.BetterBibTeX.librarySize})
-
+    # before import, should be empty
+    start = Time.now
+    state = [$Firefox.BetterBibTeX.librarySize]
     $Firefox.BetterBibTeX.import(bib)
 
-    start = Time.now
+    expected = references.to_i + (attachments.nil? ? 0 : attachments.to_i)
 
-    expected = references.to_i + attachments.to_i
-
-    while !entries.now || entries.now != entries.new
+    while state.size < 2 || state[-1].values.inject(:+) != state[-2].values.inject(:+)
       sleep 2
-      entries.now = entries.new || entries.start
-      entries.new = $Firefox.BetterBibTeX.librarySize
+      state << $Firefox.BetterBibTeX.librarySize
 
       elapsed = Time.now - start
       if elapsed > 5
-        processed = entries.new - entries.start
+        current = state[-1]['references'] + (attachments.nil? ? 0 : state[-1]['attachments'])
+        baseline = state[0]['references'] + (attachments.nil? ? 0 : state[0]['attachments'])
+        processed = current - baseline
         remaining = expected - processed
         speed = processed / elapsed
         timeleft = (Time.mktime(0)+((expected - processed) / speed)).strftime("%H:%M:%S")
@@ -199,7 +199,8 @@ When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)
       end
     end
 
-    expect(entries.now - entries.start).to eq(references.to_i + attachments.to_i)
+    expect("#{state[-1]['references'] - state[0]['references']} references").to eq("#{references} references")
+    expect("#{state[-1]['attachments'] - state[0]['attachments']} attachments").to eq("#{attachments} attachments") if attachments
   }
 end
 
