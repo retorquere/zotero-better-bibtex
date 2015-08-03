@@ -62,7 +62,7 @@ Zotero.BetterBibTeX.keymanager = new class
     # complete. Should only run after first installation, as after that all new items or item changes will generate
     # keys, but better safe than sorry.
     # TODO: this works locally but fails on Travis -- investigate later
-    #for row in Zotero.DB.query('select itemID from items where itemTypeID not in (0, 14) and itemID not in (select itemID from betterbibtex.keys)')
+    #for row in Zotero.DB.query('select itemID from items where itemTypeID not in (1, 14) and itemID not in (select itemID from betterbibtex.keys)')
     #  @get({itemID: row.itemID})
 
   reset: ->
@@ -289,7 +289,7 @@ Zotero.BetterBibTeX.keymanager = new class
     if !type
       item = Zotero.Items.get(item.itemID) unless item.itemTypeID
       type = switch item.itemTypeID
-        when 0 then 'note'
+        when 1 then 'note'
         when 14 then 'attachment'
         else 'reference'
     return false if type in ['note', 'attachment']
