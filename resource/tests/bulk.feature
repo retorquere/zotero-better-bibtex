@@ -6,7 +6,7 @@ Background:
 
 @bulk
 Scenario: Minor bulk export cache testing
-  When I import 1241 references with 581 attachments from 'export/Big whopping library.json'
+  When I import 1538 references with 581 attachments from 'export/Big whopping library.json'
    Then the following library export should match 'export/Big whopping library.bib':
     | translator  | Better BibLaTeX |
     | benchmark   | true            |
