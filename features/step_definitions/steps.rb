@@ -154,7 +154,26 @@ When /^I? ?reset the database to '([^']+)'$/ do |db|
   $Firefox.BetterBibTeX.reset(db)
 end
 
-When /^I import ([0-9]+) references? (with ([0-9]+) attachments? )?from '([^']+)'( as '([^']+)')?$/ do |references, dummy, attachments, filename, dummy2, aliased|
+When /^I import (.+) from '([^']+)'(?:(?: as )'([^']+)')?$/ do |items, filename, aliased|
+  references = nil
+  attachments = nil
+  #TODO: count notes
+  notes = nil
+  items.split(/\s+/).reject{|word| %{wwith and}.include?(word)}.each_slice(2).each{|tgt|
+    count, kind = *tgt
+    throw "Unexpected non-numeric value #{count.inspect}" unless count =~ /^[0-9]+$/
+
+    if kind =~ /^references?$/
+      references = count.to_i
+    elsif kind =~ /^notes?$/
+      notes = count.to_i
+    elsif kind =~ /^attachments?$/
+      attachments = count.to_i
+    else
+      throw "Unexpected item type #{kind.inspect}"
+    end
+  }
+
   bib = nil
   Dir.mktmpdir {|dir|
     bib = File.expand_path(File.join('test/fixtures', filename))
