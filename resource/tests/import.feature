@@ -7,7 +7,7 @@ Background:
 @aux
 Scenario: AUX scanner
   When I import 149 references from 'import/AUX scanner-pre.json'
-  And I import 1 reference from 'import/AUX scanner.aux'
+  And I import 0 references from 'import/AUX scanner.aux'
   Then the library should match 'import/AUX scanner-post.json'
 
 @i1

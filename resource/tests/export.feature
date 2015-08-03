@@ -46,7 +46,7 @@ Scenario: Square brackets in Publication field (85), and non-pinned keys must ch
 @test-cluster-0
 @86
 Scenario: Include first name initial(s) in cite key generation pattern (86)
-  When I import 2 references from 'export/Include first name initial(s) in cite key generation pattern (86).json'
+  When I import 1 reference from 'export/Include first name initial(s) in cite key generation pattern (86).json'
    And I set preference .citekeyFormat to [auth+initials][year]
   Then a library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bib'
 
@@ -96,7 +96,7 @@ Scenario Outline: BibLaTeX Export
      | Better BibTeX.026                                                                  | 1          |
      | Better BibTeX.027                                                                  | 1          |
      | capital delta breaks .bib output #141                                              | 1          |
-     | Export C as {v C}, not v{C} #152                                                   | 2          |
+     | Export C as {v C}, not v{C} #152                                                   | 1          |
      | Export of item to Better Bibtex fails for auth3_1 #98                              | 1          |
 
 @test-cluster-0
