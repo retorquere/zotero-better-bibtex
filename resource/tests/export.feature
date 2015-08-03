@@ -116,6 +116,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Book converted to mvbook #288                                                                  | 2		    |
      | Colon not allowed in citation key format #268                                                  | 3           |
      | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 10 |
      | Export mapping for reporter field #219                                                         | 1           |
