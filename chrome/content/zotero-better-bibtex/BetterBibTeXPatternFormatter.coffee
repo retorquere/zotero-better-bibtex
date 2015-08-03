@@ -1,6 +1,6 @@
 class BetterBibTeXPatternFormatter
-  constructor: (@patterns) ->
-    Zotero.BetterBibTeX.debug('formatter:', @pattern)
+  constructor: (@patterns, @fold) ->
+    Zotero.BetterBibTeX.debug('formatter:', @patterns, @fold)
 
   re:
     unsafechars: Zotero.Utilities.XRegExp("[^-\\p{L}0-9_!$*+./;?\\[\\]]")
@@ -36,7 +36,9 @@ class BetterBibTeXPatternFormatter
   concat: (pattern) ->
     result = (@reduce(part) for part in pattern)
     result = (part for part in result when part)
-    return result.join('').replace(/[\s{},]/, '')
+    result = result.join('').replace(/[\s{},]/, '')
+    result = Zotero.BetterBibTeX.removeDiacritics(result) if @fold
+    return result
 
   reduce: (step) ->
     value = @methods[step.method].apply(@, step.arguments)
@@ -54,9 +56,7 @@ class BetterBibTeXPatternFormatter
     return @safechars(Zotero.BetterBibTeX.removeDiacritics(str || '')).trim()
 
   safechars: (str) ->
-    safe = Zotero.Utilities.XRegExp.replace(str, @re.unsafechars, '', 'all')
-    Zotero.BetterBibTeX.debug('safechars:', str, '->', safe, ':', @re.unsafechars)
-    return safe
+    return Zotero.Utilities.XRegExp.replace(str, @re.unsafechars, '', 'all')
 
   words: (str) ->
     return (@clean(word) for word in Zotero.Utilities.XRegExp.matchChain(@innerText(str), [@re.word]) when word != '')

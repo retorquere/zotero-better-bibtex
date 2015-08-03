@@ -166,7 +166,7 @@ Zotero.BetterBibTeX.endpoints.cayw.init = (url, data, sendResponseCallback) ->
 
   deferred = Q.defer()
 
-  io = new Zotero.BetterBibTeX.CAYW.CitationEditInterface(deferred, url.query || {})
+  io = new Zotero.BetterBibTeX.CAYW.CitationEditInterface(deferred, url.query || {}, doc)
   if Zotero.Prefs.get('integration.useClassicAddCitationDialog')
     Zotero.Integration.displayDialog(doc, 'chrome://zotero/content/integration/addCitationDialog.xul', 'alwaysRaised,resizable', io)
   else
@@ -183,6 +183,14 @@ class Zotero.BetterBibTeX.CAYW.Document
 
   cleanup: ->
   activate: ->
+    wm = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
+    #ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
+    windows = wm.getEnumerator(null)
+    while windows.hasMoreElements()
+      win = windows.getNext().QueryInterface( Components.interfaces.nsIDOMChromeWindow )
+      #win = ww.getChromeForWindow(win)
+      win.minimize()
+
   displayAlert: -> 0
   cursorInField: -> null
   convert: ->
@@ -216,7 +224,7 @@ class Zotero.BetterBibTeX.CAYW.Field
   setCode: (@code) ->
 
 class Zotero.BetterBibTeX.CAYW.CitationEditInterface
-  constructor: (@deferred, config) ->
+  constructor: (@deferred, config, @doc) ->
     @citation = {citationItems:[], properties:{}}
     @wrappedJSObject = @
 
@@ -244,3 +252,5 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
     Zotero.Utilities.Internal.copyTextToClipboard(citation) if @config.clipboard
     @deferred.fulfill(citation)
     Zotero.Integration.currentWindow.close()
+
+    @doc.activate()

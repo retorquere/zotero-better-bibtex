@@ -92,7 +92,7 @@ Zotero.BetterBibTeX.keymanager = new class
     }
 
   clearDynamic: ->
-    @keys.removeWhere((obj) -> obj.citekeyFormat && obj.citekeyFormat != Zotero.BetterBibTeX.citekeyFormat)
+    @keys.removeWhere((obj) -> obj.citekeyFormat)
 
   flush: ->
     tip = Zotero.DB.transactionInProgress()
@@ -180,7 +180,7 @@ Zotero.BetterBibTeX.keymanager = new class
       Zotero.BetterBibTeX.debug('keymanager.selected:', items.length, 'selected, warn at', warn, 'affected:', affected)
       if affected > warn
         params = { treshold: warn, response: null }
-        window.openDialog('chrome://zotero-better-bibtex/content/bulk-clear-confirm.xul', '', 'chrome,dialog,modal', params)
+        window.openDialog('chrome://zotero-better-bibtex/content/bulk-clear-confirm.xul', '', 'chrome,dialog,centerscreen,modal', params)
         switch params.response
           when 'ok'       then
           when 'whatever' then Zotero.BetterBibTeX.pref.set('warnBulkModify', 0)

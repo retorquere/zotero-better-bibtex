@@ -165,7 +165,7 @@ Zotero.BetterBibTeX.pref.observer = {
   unregister: -> Zotero.BetterBibTeX.pref.prefs.removeObserver('', @)
   observe: (subject, topic, data) ->
     switch data
-      when 'citekeyFormat'
+      when 'citekeyFormat', 'citekeyFold'
         Zotero.BetterBibTeX.setCitekeyFormatter()
         # delete all dynamic keys that have a different citekeyformat (should be all)
         Zotero.BetterBibTeX.keymanager.clearDynamic()
@@ -181,6 +181,7 @@ Zotero.BetterBibTeX.pref.observer = {
     Zotero.BetterBibTeX.cache.reset()
     Zotero.BetterBibTeX.auto.reset()
     Zotero.BetterBibTeX.auto.process('preferences change')
+    Zotero.BetterBibTeX.debug('preference change:', subject, topic, data)
 }
 
 Zotero.BetterBibTeX.pref.ZoteroObserver = {
@@ -229,7 +230,7 @@ Zotero.BetterBibTeX.setCitekeyFormatter = (enforce) ->
     try
       citekeyPattern = @pref.get('citekeyFormat')
       citekeyFormat = citekeyPattern.replace(/>.*/, '')
-      formatter = new BetterBibTeXPatternFormatter(BetterBibTeXPatternParser.parse(citekeyPattern))
+      formatter = new BetterBibTeXPatternFormatter(BetterBibTeXPatternParser.parse(citekeyPattern), @pref.get('citekeyFold'))
 
       @citekeyPattern = citekeyPattern
       @citekeyFormat = citekeyFormat
@@ -422,6 +423,9 @@ Zotero.BetterBibTeX.upgradeDatabase = ->
     Zotero.DB.query("drop table if exists betterbibtex.\"#{table}\"")
 
   Zotero.DB.commitTransaction() unless tip
+
+  Zotero.DB.query("update betterbibtex.autoexport set status = ?", [Zotero.BetterBibTeX.auto.status('pending')])
+
   @flash('Better BibTeX: database updated', 'Database update finished')
 
 Zotero.BetterBibTeX.initDatabase = ->
@@ -434,11 +438,8 @@ Zotero.BetterBibTeX.initDatabase = ->
 
   installed = Zotero.DB.valueQuery("select version from betterbibtex.schema")
 
-  # always upgrade on major or minor change
-  upgrade = Services.vc.compare(installed.split('.').slice(0, 2).join('.'), @release.split('.').slice(0, 2).join('.')) < 0
-
-  # upgrade anything before specific release
-  upgrade ||= Services.vc.compare(installed, '1.2.1') <= 0
+  # always upgrade on version change
+  upgrade = Services.vc.compare(installed, @release) != 0
 
   for check in [
     'SELECT itemID, citekey, citekeyFormat FROM betterbibtex.keys'
