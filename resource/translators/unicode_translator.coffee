@@ -29,7 +29,9 @@ LaTeX.cleanHTML = (text) ->
   return html
 
 LaTeX.html2latex = (html) ->
-  return (new @HTML(html)).latex.trim().replace(/\n\n\n+/g, "\n\n")
+  latex = (new @HTML(html)).latex.trim()
+  latex = latex.replace(/(\\\\)+\s*\n\n/g, "\n\n")
+  latex = latex.replace(/\n\n\n+/g, "\n\n")
 
 class LaTeX.HTML
   constructor: (html) ->

@@ -27,9 +27,39 @@ html = title
 
 html = "The <i>physical</i> volcanology of the 1600 eruption of Huaynaputina, with <pre>\\LaTeX</pre>!"
 
-console.log("\nclean")
-console.log(LaTeX.cleanHTML(html))
-console.log("\nlatex")
-console.log(LaTeX.text2latex(html))
+html = """<div>What is willful ignorance? The following passage from the memoirs of the high-ranking Nazi Albert Speer is
+often quoted as a good illustration of it. Here Speer recounts an occasion where his trusted friend and colleague, Karl
+Hanke, after visiting a concentration camp (probably Auschwitz), reportedly advised him never to accept an invitation to
+inspect one under any circumstances.<br /><br />'I did not query him, I did not query Himmler, I did not query Hitler, I
+did not speak with personal friends. I did not investigate – for I did not want to know what was happening there …
+During those few seconds, while Hanke was warning me, the whole responsibility had become a reality again … For from
+that moment on, I was inescapably contaminated morally; from fear of discovering something which might have made me turn
+from my course, I had closed my eyes. This deliberate blindness outweighs whatever good I may have done or tried to do
+in the last period of the war … Because I failed at that time, I still feel, to this day, responsible for Auschwitz in a
+wholly personal sense' (Speer 1971).<br /><br /><br /><a name="more"></a>The suggestion here is that Speer was willfully
+ignorance of the fact that inmates were being exterminated in the concentration camps. This looks like an authentic
+example of willful ignorance, but what would a definition of it look like? In my paper I defend the following analysis
+of willful ignorance. A subject, S, is willfully ignorant that<span
+class="Apple-converted-space">&nbsp;</span><em>p</em><span class="Apple-converted-space">&nbsp;</span>(where
+‘<em>p</em>’ stands for a proposition) if and only if:<br /><br />1)<span
+class="Apple-converted-space">&nbsp;</span><em>p</em><span class="Apple-converted-space">&nbsp;</span>is true.<br /><br
+/>2) S has a warranted suspicion that<span class="Apple-converted-space">&nbsp;</span><em>p</em>.<br /><br />3) There
+are some actions, v, such that were S to do them, he would find out whether<span
+class="Apple-converted-space">&nbsp;</span><em>p</em>, or there are some actions, u, such that were S not to do them, he
+would find out whether<span class="Apple-converted-space">&nbsp;</span><em>p</em>, and S knows this.<br /><br />4)
+Neither doing v nor not doing u would be exorbitantly demanding for S, and also, v and u are not instances of act types
+that it would be exorbitantly demanding for S to consistently do/not do.<br /><br />5) S avoids ving, or S does u,
+because he does not want to know that<span class="Apple-converted-space">&nbsp;</span><em>p</em>.<br /><br />6) S should
+know that<span class="Apple-converted-space">&nbsp;</span><em>p</em>, or it is arguable that he should.<br /><br />The
+few philosophers who have discussed willful ignorance tend to assume that it is a kind of self-deception. I argue that
+willful ignorance and self-deception are distinct psychological kinds. I do this first by showing that none of the main
+theories of self-deception give any support to the idea that willful ignorance is a kind of self-deception. Furthermore,
+I give an argument that willful ignorance is not self-deception that is independent of these theories.<span
+class="Apple-converted-space">&nbsp;</span><br /><br />In brief, according to this argument if willful ignorance is a
+kind of self-deception, then it is a kind of deception. If it is a kind of deception, then it should display appropriate
+similarities to cases of ‘deception proper’, that is to say, cases of interpersonal deception or other-deception.
+Without such similarities, these could not help constitute a single kind, namely, deception. However, I try to show that
+there are no noteworthy similarities between willful ignorance and other-deception. Therefore, willful ignorance is not
+a kind of deception (hence it is not a kind of self-deception).</div>"""
 
-console.log(html.split(/(<\/?(?:i|italic|b|sub|sup|pre|span)(?:[^>a-z][^>]*)?>)/i))
+console.log(LaTeX.html2latex(html))

@@ -9,7 +9,10 @@ cd ..
 OFFLINE=true
 rm -f minitests/test.js
 echo "var Translator = {}, LaTeX = {};" >> minitests/test.js
-for src in resource/translators/he.js resource/translators/latex_unicode_mapping.js  resource/translators/unicode_translator.js resource/translators/htmlparser.js minitests/html.js ; do
+wget -O - https://raw.githubusercontent.com/Munawwar/neutron-html5parser/master/htmlparser.js | sed "s/'object'/'_object'/" | sed "s/root.HTMLtoDOM/Translator.HTMLtoDOM/" > minitests/htmlparser.js
+cat minitests/htmlparser.js >> minitests/test.js
+echo "var HTMLtoDOM = Translator.HTMLtoDOM;" >> minitests/test.js
+for src in resource/translators/he.js resource/translators/latex_unicode_mapping.js  resource/translators/unicode_translator.js minitests/html.js ; do
   rake $src
   cat $src >> minitests/test.js
 done
