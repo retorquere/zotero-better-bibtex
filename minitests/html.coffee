@@ -1,65 +1,79 @@
-html = '''
-  Contrary to <sup>popular</sup> <sub>belief</sub>, <i>Lorem</i> <b>Ipsum</b> <span>is</span> <span class="smallcaps">not</span> simply random text. It has roots, and i < 2
-'''
-html = "The physical: violent <span id='none'>volcanology</span> of <span>the</span> 1600 eruption of Huaynaputina, southern Peru"
-
-html = "Test of markupconversion: Italics, bold, superscript, subscript, and small caps: Mitochondrial <pre>DNA<sub>2</sub></pre> sequences suggest unexpected phylogenetic position of Corso-Sardinian grass snakes (<i>Natrix cetti</i>) and <b>do not</b> support their <span style=\"small-caps\">species status</span>, with notes on phylogeography and subspecies delineation of grass snakes."
-html = "The physical volcanology of the 1600 eruption of Huaynaputina, with <pre>\\LaTeX</pre>!"
-
-#console.log(LaTeX.cleanHTML(html))
-#console.log(LaTeX.html2latex(LaTeX.cleanHTML(html)))
-
-abstractNote = "In 2011 the international <are> development community committed to make development co-operation more effective to deliver better results for the world&#8217;s poor. At the mid-point between commitments endorsed in the High-Level Forum in Busan, Korea in 2011 and the 2015 target date of the Millennium Development Goals,&nbsp; this report takes stock of how far we have come and where urgent challenges lie. This report - a first snapshot of the state-of-play since Busan - reveals both successes and shortfalls. It draws on the ten indicators of the Global Partnership monitoring framework. Despite global economic turbulence, changing political landscapes and domestic budgetary pressure, commitment to effective development co-operation principles remains strong. Longstanding efforts to change the way that development co-operation is delivered are paying off. Past achievements on important aid effectiveness commitments that date back to 2005 have been sustained. Nevertheless, much more needs to be done to translate political commitments into concrete action. This report highlights where targeted efforts are needed to make further progress and to reach existing targets for more effective development co-operation by 2015."
-
-#abstractNote = "In 2011 the international <are> development community committed to make development co-operation more effective to deliver better results for the world’s poor. At the mid-point between commitments endorsed in the High-Level Forum in Busan, Korea in 2011 and the 2015 target date of the Millennium Development Goals,  this report takes stock of how far we have come and where urgent challenges lie. This report - a first snapshot of the state-of-play since Busan - reveals both successes and shortfalls. It draws on the ten indicators of the Global Partnership monitoring framework. Despite global economic turbulence, changing political landscapes and domestic budgetary pressure, commitment to effective development co-operation principles remains strong. Longstanding efforts to change the way that development co-operation is delivered are paying off. Past achievements on important aid effectiveness commitments that date back to 2005 have been sustained. Nevertheless, much more needs to be done to translate political commitments into concrete action. This report highlights where targeted efforts are needed to make further progress and to reach existing targets for more effective development co-operation by 2015."
-
-
-#abstractNote = "R&amp;D"
-
-
-abstractNote = "<italic>k</italic>-distribution"
-
-
-abstractNote = "P. M. S. \\ensuremath<span class='Hi'\\ensuremath>Hacker\\ensuremath</span\\ensuremath> 1. The ?confusion of psychology? On the concluding page of what is now called ?Part II? of the Investigations, Wittgenstein wrote.."
-title = "The physical volcanology of the 1600 eruption of Huaynaputina, with <pre>\\LaTeX</pre>!"
-
-html = title
-
-html = "The <i>physical</i> volcanology of the 1600 eruption of Huaynaputina, with <pre>\\LaTeX</pre>!"
-
-html = """<div>What is willful ignorance? The following passage from the memoirs of the high-ranking Nazi Albert Speer is
-often quoted as a good illustration of it. Here Speer recounts an occasion where his trusted friend and colleague, Karl
-Hanke, after visiting a concentration camp (probably Auschwitz), reportedly advised him never to accept an invitation to
-inspect one under any circumstances.<br /><br />'I did not query him, I did not query Himmler, I did not query Hitler, I
-did not speak with personal friends. I did not investigate – for I did not want to know what was happening there …
-During those few seconds, while Hanke was warning me, the whole responsibility had become a reality again … For from
-that moment on, I was inescapably contaminated morally; from fear of discovering something which might have made me turn
-from my course, I had closed my eyes. This deliberate blindness outweighs whatever good I may have done or tried to do
-in the last period of the war … Because I failed at that time, I still feel, to this day, responsible for Auschwitz in a
-wholly personal sense' (Speer 1971).<br /><br /><br /><a name="more"></a>The suggestion here is that Speer was willfully
-ignorance of the fact that inmates were being exterminated in the concentration camps. This looks like an authentic
-example of willful ignorance, but what would a definition of it look like? In my paper I defend the following analysis
-of willful ignorance. A subject, S, is willfully ignorant that<span
-class="Apple-converted-space">&nbsp;</span><em>p</em><span class="Apple-converted-space">&nbsp;</span>(where
-‘<em>p</em>’ stands for a proposition) if and only if:<br /><br />1)<span
-class="Apple-converted-space">&nbsp;</span><em>p</em><span class="Apple-converted-space">&nbsp;</span>is true.<br /><br
-/>2) S has a warranted suspicion that<span class="Apple-converted-space">&nbsp;</span><em>p</em>.<br /><br />3) There
-are some actions, v, such that were S to do them, he would find out whether<span
-class="Apple-converted-space">&nbsp;</span><em>p</em>, or there are some actions, u, such that were S not to do them, he
-would find out whether<span class="Apple-converted-space">&nbsp;</span><em>p</em>, and S knows this.<br /><br />4)
-Neither doing v nor not doing u would be exorbitantly demanding for S, and also, v and u are not instances of act types
-that it would be exorbitantly demanding for S to consistently do/not do.<br /><br />5) S avoids ving, or S does u,
-because he does not want to know that<span class="Apple-converted-space">&nbsp;</span><em>p</em>.<br /><br />6) S should
-know that<span class="Apple-converted-space">&nbsp;</span><em>p</em>, or it is arguable that he should.<br /><br />The
-few philosophers who have discussed willful ignorance tend to assume that it is a kind of self-deception. I argue that
-willful ignorance and self-deception are distinct psychological kinds. I do this first by showing that none of the main
-theories of self-deception give any support to the idea that willful ignorance is a kind of self-deception. Furthermore,
-I give an argument that willful ignorance is not self-deception that is independent of these theories.<span
-class="Apple-converted-space">&nbsp;</span><br /><br />In brief, according to this argument if willful ignorance is a
-kind of self-deception, then it is a kind of deception. If it is a kind of deception, then it should display appropriate
-similarities to cases of ‘deception proper’, that is to say, cases of interpersonal deception or other-deception.
-Without such similarities, these could not help constitute a single kind, namely, deception. However, I try to show that
-there are no noteworthy similarities between willful ignorance and other-deception. Therefore, willful ignorance is not
-a kind of deception (hence it is not a kind of self-deception).</div>"""
+html = """
+<p><span>When I first had a student tell me that she doesn’t believe in evolution I was at a loss of how to respond. To
+me, that sounded like someone telling me that she didn’t believe in gravity. It seemed both irrational and wrong.
+Experiences like this are common; we think that one’s actual belief can deviate from how one ought to believe. The
+dominant view among contemporary philosophers is that any belief formed against the evidence is impermissible. On such a
+view, which I call “evidentialism,” it is easy to diagnosis what is wrong with my student’s belief. I use the term
+“pragmatism” to refer to the view that some non-evidentially based beliefs are permissible. A central aim of this book
+is to defend pragmatism. One challenge to the pragmatist view I defend is to show how we can distinguish pernicious
+non-evidentially based beliefs from those that are permissible.<span
+class="Apple-converted-space">&nbsp;</span></span><br style="color: #ffffff; font-family: Georgia, Utopia, 'Palatino
+Linotype', Palatino, serif; font-size: 15.3999996185303px; font-style: normal; font-variant: normal; font-weight:
+normal; letter-spacing: normal; line-height: 21.5599994659424px; orphans: auto; text-align: start; text-indent: 0px;
+text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;
+background-color: #882222;" /><br style="color: #ffffff; font-family: Georgia, Utopia, 'Palatino Linotype', Palatino,
+serif; font-size: 15.3999996185303px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing:
+normal; line-height: 21.5599994659424px; orphans: auto; text-align: start; text-indent: 0px; text-transform: none;
+white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #882222;" /><a
+style="color: #ffffff; font-family: Georgia, Utopia, 'Palatino Linotype', Palatino, serif; font-size:
+15.3999996185303px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height:
+21.5599994659424px; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal;
+widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #882222;" name="more"></a><span
+style="color: #ffffff; font-family: Georgia, Utopia, 'Palatino Linotype', Palatino, serif; font-size:
+15.3999996185303px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height:
+21.5599994659424px; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal;
+widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color:
+#882222;">Most contemporary theorists think that to appeal to the norms of agency in thinking about how to believe is to
+make a category mistake. In believing we aim to gain truth or avoid falsehood, so when we believe for reasons that are
+opposed to these aims, we can be criticized for violating these norms. While there is some disagreement about the
+precise relationship between belief and truth, very few fundamentally question the view that beliefs require their own
+separate ethics. The central contention of this book is that they do not; that, instead the ethics of belief and action
+are unified. Nonetheless I think that in most cases, we should not deviate from evidentialist principles because
+following these principles leads us to truth and knowledge. I argue, however, that the value of truth and knowledge is
+instrumental; having true beliefs helps us achieve our goals, flourish, and be excellent human beings. It is thus
+possible that some beliefs can help us achieve these goals independently of their truth-value, or of their being
+evidentially based.<span class="Apple-converted-space">&nbsp;</span></span><br style="color: #ffffff; font-family:
+Georgia, Utopia, 'Palatino Linotype', Palatino, serif; font-size: 15.3999996185303px; font-style: normal; font-variant:
+normal; font-weight: normal; letter-spacing: normal; line-height: 21.5599994659424px; orphans: auto; text-align: start;
+text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width:
+0px; background-color: #882222;" /><br style="color: #ffffff; font-family: Georgia, Utopia, 'Palatino Linotype',
+Palatino, serif; font-size: 15.3999996185303px; font-style: normal; font-variant: normal; font-weight: normal;
+letter-spacing: normal; line-height: 21.5599994659424px; orphans: auto; text-align: start; text-indent: 0px;
+text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px;
+background-color: #882222;" /></p>
+<table class="tr-caption-container" style="padding: 8px; margin-bottom: 0.5em; position: relative; border: 1px solid
+transparent; box-shadow: rgba(0, 0, 0, 0.0980392) 1px 1px 5px; color: #ffffff; font-family: Georgia, Utopia, 'Palatino
+Linotype', Palatino, serif; font-size: 15.3999996185303px; font-style: normal; font-variant: normal; font-weight:
+normal; letter-spacing: normal; line-height: 21.5599994659424px; orphans: auto; text-indent: 0px; text-transform: none;
+white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; float: left; margin-right: 1em;
+text-align: left; background: #882222;" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td style="text-align: center;"><a style="text-decoration: none; color: #f1c232; clear: left; margin-bottom: 1em;
+margin-left: auto; margin-right: auto;"
+href="http://2.bp.blogspot.com/-4ApvglmDwR0/VVxtSFeNtPI/AAAAAAAAAxM/vfr4sDGYbTY/s1600/mccormick_miriam.jpg"><img
+style="border: none; position: relative; padding: 0px; box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 0px; background:
+transparent;" src="http://2.bp.blogspot.com/-4ApvglmDwR0/VVxtSFeNtPI/AAAAAAAAAxM/vfr4sDGYbTY/s1600/mccormick_miriam.jpg"
+border="0" alt="" /></a></td>
+</tr>
+<tr>
+<td class="tr-caption" style="font-size: 12.3199996948242px; text-align: center;">Miriam McCormick</td>
+</tr>
+</tbody>
+</table>
+<p><span style="color: #ffffff; font-family: Georgia, Utopia, 'Palatino Linotype', Palatino, serif; font-size:
+15.3999996185303px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height:
+21.5599994659424px; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal;
+widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important; float: none; background-color:
+#882222;">This book is divided into two main parts, “Doxastic Norms” and “Doxastic Responsibility.” In Part I, I review
+and critique a number of defenses of evidentialism before turning to my argument that the norms for belief are
+ultimately practical. Those who oppose this pragmatist conception of doxastic norms will point out that, given the
+involuntary nature of belief, we cannot believe for practical reasons. This is why a discussion of doxastic norms is
+intertwined with the issue of doxastic control and responsibility. Part II focuses on these issues; I argue that beliefs
+are products of our agency, something we have an active role in shaping and maintaining. The two parts of the book are
+two sides of the same coin. That the norms of agency apply to both belief and action demands that we can make sense of
+doxastic agency. And that we can exercise control in the doxastic realm naturally leads to the view that the same norms
+guide both action and belief.</span></p>
+"""
 
 console.log(LaTeX.html2latex(html))

@@ -66,7 +66,7 @@ class LaTeX.HTML
         @latex += "\\\\" if @latex != '' && @latex[@latex.length - 1] != "\n"
         @latex += "\n"
 
-      when 'p', 'div'
+      when 'p', 'div', 'table', 'tr'
         @latex += "\n\n"
 
       when 'h1', 'h2', 'h3', 'h4'
@@ -83,8 +83,13 @@ class LaTeX.HTML
         tag.smallcaps = 'small-caps' in (tag.attrs.style || '').split(/\s+/)
         @latex += '\\textsc{' if tag.smallcaps
 
+      when 'td', 'th'
+        @html += ' '
+
+      when 'tbody' then # ignore
+
       else
-        throw new Error("unexpected tag '#{tag.name}'")
+        Translator.debug("unexpected tag '#{tag.name}'")
 
   end: (tag) ->
     tag = tag.toLowerCase()
@@ -101,11 +106,14 @@ class LaTeX.HTML
       when 'h1', 'h2', 'h3', 'h4'
         @latex += "}\n\n"
 
-      when 'p', 'div'
+      when 'p', 'div', 'table', 'tr'
         @latex += "\n\n"
 
       when 'span'
         @latex += '}' if @stack[0].smallcaps
+
+      when 'td', 'th'
+        @html += ' '
 
     @stack.shift()
 
