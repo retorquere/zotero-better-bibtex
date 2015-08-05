@@ -115,6 +115,11 @@ class LaTeX.HTML
       when 'td', 'th'
         @html += ' '
 
+      when 'ol'
+        @latex += "\n\n\\end{enumerate}\n"
+      when 'ul'
+        @latex += "\n\n\\end{itemize}\n"
+
     @stack.shift()
 
   cdata: (text) ->
