@@ -36,7 +36,7 @@ class BetterBibTeXPatternFormatter
   concat: (pattern) ->
     result = (@reduce(part) for part in pattern)
     result = (part for part in result when part)
-    result = result.join('').replace(/[\s{},]/, '')
+    result = result.join('').replace(/[\s{},]/g, '')
     result = Zotero.BetterBibTeX.removeDiacritics(result) if @fold
     return result
 
