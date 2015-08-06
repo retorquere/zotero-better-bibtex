@@ -439,6 +439,13 @@ Reference::remove = (name) ->
 
 Reference::normalize = (typeof (''.normalize) == 'function')
 
+Reference::CSLtoBibTeX = {
+  'original-date': 'origdate'
+  'original-publisher': 'origpublisher'
+  'original-publisher-place': 'origlocation'
+  'original-title': 'origtitle'
+}
+
 Reference::complete = ->
   @add({name: 'xref', value: @item.__xref__, esc: 'raw'}) if !@has.xref && @item.__xref__
   @add({name: 'type', value: @itemtype}) if @fields.length == 0
@@ -454,6 +461,15 @@ Reference::complete = ->
   fields = []
   for own name, value of @override
     name = name.toLowerCase()
+
+    # CSL names are not in BibTeX format, so only add it if there's a mapping
+    if value.format == 'csl'
+      if @CSLtoBibTeX[name]
+        fields.push({ name: @CSLtoBibTeX[name], value: value.value })
+      else
+        Translator.debug('Unmapped CSL field', name, '=', value.value)
+      continue
+
     switch name
       when 'mr'
         fields.push({ name: 'mrnumber', value: value.value })
@@ -473,11 +489,10 @@ Reference::complete = ->
           fields.push({ name: 'eprint', value: value.value })
         else
           fields.push({ name: 'googlebooks', value: value.value })
-      when 'original-date'
-        fields.push({ name: 'origdate', value: value.value })
       when 'xref'
         fields.push({ name, value: value.value, esc: 'raw' })
 
+      # psuedo-var, sets the reference type
       when 'referencetype'
         @itemtype = value.value
 
