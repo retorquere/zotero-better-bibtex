@@ -272,6 +272,7 @@ class Reference
     @itemtype = Translator.typeMap.Zotero2BibTeX[@item.itemType] or 'misc'
 
     @override = Translator.extractFields(@item)
+    Translator.debug('extracted:', @override)
 
     for own attr, f of Translator.fieldMap or {}
       if f.name and not @has[f.name]
@@ -499,10 +500,10 @@ Reference::complete = ->
       else
         fields.push({ name, value: value.value })
 
-    for field in fields
-      field = @field(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
-      field.replace = true
-      @add(field)
+  for field in fields
+    field = @field(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
+    field.replace = true
+    @add(field)
 
   # sort fields for stable tests
   @fields.sort((a, b) -> ("#{a.name} = #{a.value}").localeCompare(("#{b.name} = #{b.value}"))) if Translator.testing
