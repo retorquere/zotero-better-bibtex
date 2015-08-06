@@ -142,6 +142,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | map csl-json variables #293                                                        | 1           |
      | typo stature-statute (zotero item type) #284                                       | 1           |
      | bookSection is always converted to @inbook, never @incollection #282               | 1           |
      | referencetype= does not work #278                                                  | 1           |

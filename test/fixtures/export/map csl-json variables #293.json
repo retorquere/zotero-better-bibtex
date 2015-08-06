@@ -1,0 +1,59 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "0.7.33",
+    "preferences": {
+      "attachmentRelativePath": false,
+      "attachmentsNoMetadata": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
+      "autoAbbrev": true,
+      "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize:fold:alphanum]",
+      "DOIandURL": "both",
+      "fancyURLs": false,
+      "preserveCaps": "inner",
+      "skipFields": "abstract,note,file"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false,
+      "Export collections": true
+    }
+  },
+  "items": [
+    {
+      "itemID": 647,
+      "itemType": "book",
+      "place": "København",
+      "publisher": "Akademisk Forlag",
+      "date": "2008",
+      "extra": "{:original-date: 2005}\n{:original-publisher: origpublisher}\n{:original-publisher-place: origlocation}\n{:original-title: origtitle}",
+      "title": "En ny sociologi for et nyt samfund. Introduktion til Aktør-Netværk-Teori",
+      "shortTitle": "En ny sociologi",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Bruno",
+          "lastName": "Latour",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "attachments": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    }
+  ],
+  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
+}
