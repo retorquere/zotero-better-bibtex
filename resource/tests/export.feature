@@ -91,6 +91,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references |
+     | Numbers confuse capital-preservation #295                                          | 1          |
      | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
      | Better BibTeX.018                                                                  | 1          |
      | Better BibTeX.026                                                                  | 1          |
