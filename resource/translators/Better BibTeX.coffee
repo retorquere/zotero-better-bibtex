@@ -36,6 +36,11 @@ Translator.typeMap = {
   misc:                               'letter interview film artwork webpage'
 }
 
+Translator.fieldEscape = {
+  url: 'verbatim'
+  doi: 'verbatim'
+}
+
 months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
 doExport = ->

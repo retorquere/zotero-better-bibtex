@@ -8,8 +8,8 @@ Translator.fieldMap = {
   rights:           { name: 'rights', preserveCaps: true }
   ISBN:             { name: 'isbn' }
   ISSN:             { name: 'issn' }
-  url:              { name: 'url', esc: 'url' }
-  DOI:              { name: 'doi', esc: 'doi' }
+  url:              { name: 'url' }
+  DOI:              { name: 'doi' }
   shortTitle:       { name: 'shorttitle', preserveCaps: true }
   abstractNote:     { name: 'abstract' }
   numberOfVolumes:  { name: 'volumes' }
@@ -43,6 +43,21 @@ Translator.typeMap = {
   unpublished:                        'manuscript presentation'
   inreference:                        'encyclopediaArticle dictionaryEntry'
   misc:                               'interview map instantMessage tvBroadcast radioBroadcast document'
+}
+
+Translator.fieldEscape = {
+  url: 'verbatim'
+  doi: 'verbatim'
+  eprint: 'verbatim'
+  eprintclass: 'verbatim'
+  crossref: 'raw'
+  xdata: 'raw'
+  xref: 'raw'
+  entrykey: 'raw'
+  childentrykey: 'raw'
+  verba: 'verbatim'
+  verbb: 'verbatim'
+  verbc: 'verbatim'
 }
 
 Language = new class
@@ -297,24 +312,24 @@ doExport = ->
 
     if m = item.publicationTitle?.match(/^arxiv:\s*([\S]+)/i)
       ref.add({ name: 'eprinttype', value: 'arxiv'})
-      ref.add({ name: 'eprint', value: m[1], esc: 'verbatim' })
+      ref.add({ name: 'eprint', value: m[1] })
       delete item.publicationTitle
 
     if m = item.url?.match(/^http:\/\/www.jstor.org\/stable\/([\S]+)$/i)
       ref.add({ name: 'eprinttype', value: 'jstor'})
-      ref.add({ name: 'eprint', value: m[1], esc: 'verbatim' })
+      ref.add({ name: 'eprint', value: m[1] })
       delete item.url
       ref.remove('url')
 
     if m = item.url?.match(/^http:\/\/books.google.com\/books?id=([\S]+)$/i)
       ref.add({ name: 'eprinttype', value: 'googlebooks'})
-      ref.add({ name: 'eprint', value: m[1], esc: 'verbatim' })
+      ref.add({ name: 'eprint', value: m[1] })
       delete item.url
       ref.remove('url')
 
     if m = item.url?.match(/^http:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i)
       ref.add({ name: 'eprinttype', value: 'pubmed'})
-      ref.add({ name: 'eprint', value: m[1], esc: 'verbatim' })
+      ref.add({ name: 'eprint', value: m[1] })
       delete item.url
       ref.remove('url')
 
@@ -322,7 +337,7 @@ doExport = ->
       if ref.has[eprinttype]
         if not ref.has.eprinttype
           ref.add({ name: 'eprinttype', value: eprinttype})
-          ref.add({ name: 'eprint', value: ref.has[eprinttype].value, esc: 'verbatim' })
+          ref.add({ name: 'eprint', value: ref.has[eprinttype].value })
         ref.remove(eprinttype)
 
     if item.archive and item.archiveLocation
@@ -330,7 +345,7 @@ doExport = ->
       switch item.archive.toLowerCase()
         when 'arxiv'
           ref.add({ name: 'eprinttype', value: 'arxiv' })           unless ref.has.eprinttype
-          ref.add({ name: 'eprintclass', value: item.callNumber, esc: 'verbatim' })
+          ref.add({ name: 'eprintclass', value: item.callNumber })
 
         when 'jstor'
           ref.add({ name: 'eprinttype', value: 'jstor' })           unless ref.has.eprinttype
@@ -348,7 +363,7 @@ doExport = ->
           archive = false
 
       if archive
-        ref.add({ name: 'eprint', value: item.archiveLocation, esc: 'verbatim' })    unless ref.has.eprint
+        ref.add({ name: 'eprint', value: item.archiveLocation })    unless ref.has.eprint
 
     ref.add({ name: 'options', value: 'useprefix' }) if Translator.usePrefix
 
