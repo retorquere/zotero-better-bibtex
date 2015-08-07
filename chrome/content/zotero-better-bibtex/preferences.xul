@@ -79,7 +79,7 @@
                       onkeypress="setTimeout(function() { BetterBibTeXPref.update() }, 1);"/>
                   </row>
                   <row>
-                    <checkbox label="&zotero.better-bibtex.citekey.fold;" preference="pref-better-bibtex-format"/>
+                    <checkbox label="&zotero.better-bibtex.citekey.fold;" preference="pref-better-bibtex-fold"/>
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.langid;"/>
