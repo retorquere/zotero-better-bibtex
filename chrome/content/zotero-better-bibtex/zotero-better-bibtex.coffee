@@ -230,6 +230,7 @@ Zotero.BetterBibTeX.setCitekeyFormatter = (enforce) ->
     try
       citekeyPattern = @pref.get('citekeyFormat')
       citekeyFormat = citekeyPattern.replace(/>.*/, '')
+      throw new Error("no variable parts found in citekey pattern '#{citekeyFormat}'") unless citekeyFormat.indexOf('[') >= 0
       formatter = new BetterBibTeXPatternFormatter(BetterBibTeXPatternParser.parse(citekeyPattern), @pref.get('citekeyFold'))
 
       @citekeyPattern = citekeyPattern
