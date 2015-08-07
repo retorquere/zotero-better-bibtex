@@ -213,7 +213,11 @@ When /^I import (.+) from '([^']+)'(?:(?: as )'([^']+)')?$/ do |items, filename,
         processed = current - baseline
         remaining = expected - processed
         speed = processed / elapsed
-        timeleft = (Time.mktime(0)+((expected - processed) / speed)).strftime("%H:%M:%S")
+        if speed == 0
+          timeleft = '??'
+        else
+          timeleft = (Time.mktime(0)+((expected - processed) / speed)).strftime("%H:%M:%S")
+        end
         say "Slow import (#{elapsed}): #{processed} entries @ #{speed.round(1)} entries/sec, #{timeleft} remaining"
       end
     end
