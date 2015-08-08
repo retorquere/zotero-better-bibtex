@@ -154,7 +154,7 @@ When /^I? ?reset the database to '(.+)'$/ do |db|
   $Firefox.BetterBibTeX.reset(db)
 end
 
-When /^I import (.+) from '(.+)'(?:(?: as )'(.+)')?$/ do |items, filename, aliased|
+When /^I import (.+) from '(.+?)'(?:(?: as )'(.+)')?$/ do |items, filename, aliased|
   references = nil
   attachments = nil
   #TODO: count notes
