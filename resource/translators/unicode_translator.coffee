@@ -8,7 +8,7 @@ LaTeX.text2latex = (text) ->
 LaTeX.cleanHTML = (text) ->
   html = ''
   cdata = false
-  for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|span)(?:[^>a-z][^>]*)?>)/i)
+  for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
     switch
       when i % 2 == 0 # text
         html += LaTeX.he.escape(chunk)
@@ -79,8 +79,8 @@ class LaTeX.HTML
       when 'li'
         @latex += "\n\\item "
 
-      when 'span'
-        tag.smallcaps = 'small-caps' in (tag.attrs.style || '').split(/\s+/)
+      when 'span', 'sc'
+        tag.smallcaps = tag.name == 'sc' || (tag.attrs.style || '').match(/small-caps/i)
         @latex += '\\textsc{' if tag.smallcaps
 
       when 'td', 'th'
@@ -109,7 +109,7 @@ class LaTeX.HTML
       when 'p', 'div', 'table', 'tr'
         @latex += "\n\n"
 
-      when 'span'
+      when 'span', 'sc'
         @latex += '}' if @stack[0].smallcaps
 
       when 'td', 'th'
