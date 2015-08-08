@@ -300,9 +300,6 @@ Reference::esc_verbatim = (f) ->
   return "\\href{#{href}}{#{LaTeX.text2latex(href)}}" if f.name == 'url' and Translator.fancyURLs
   return href
 
-Reference::esc_doi = Reference::esc_verbatim
-Reference::esc_url = Reference::esc_verbatim
-
 Reference::esc_latex = (f, raw) ->
   return f.value if typeof f.value == 'number'
   return null unless f.value
@@ -390,7 +387,8 @@ Reference::add = (field) ->
   if typeof field.value == 'number'
     value = field.value
   else
-    value = @["esc_#{field.esc || 'latex'}"](field, (if field.esc then false else @raw))
+    esc = field.esc || Translator.fieldEscape?[field.name] || 'latex'
+    value = @["esc_#{esc}"](field, (if field.esc then false else @raw))
 
     return null unless value
 

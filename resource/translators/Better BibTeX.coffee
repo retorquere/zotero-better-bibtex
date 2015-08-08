@@ -12,8 +12,8 @@ Translator.fieldMap = {
   ISSN:             { name: 'issn' }
   callNumber:       { name: 'lccn'}
   shortTitle:       { name: 'shorttitle', preserveCaps: true }
-  url:              { name: 'url', esc: 'url' }
-  DOI:              { name: 'doi', esc: 'doi' }
+  url:              { name: 'url' }
+  DOI:              { name: 'doi' }
   abstractNote:     { name: 'abstract' }
   country:          { name: 'nationality' }
   language:         { name: 'language' }
@@ -34,6 +34,11 @@ Translator.typeMap = {
   'inproceedings conference':         'conferencePaper'
   techreport:                         'report'
   misc:                               'letter interview film artwork webpage'
+}
+
+Translator.fieldEscape = {
+  url: 'verbatim'
+  doi: 'verbatim'
 }
 
 months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
