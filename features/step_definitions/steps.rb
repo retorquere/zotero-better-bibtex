@@ -150,11 +150,11 @@ end
 #  end
 #end
 
-When /^I? ?reset the database to '([^']+)'$/ do |db|
+When /^I? ?reset the database to '(.+)'$/ do |db|
   $Firefox.BetterBibTeX.reset(db)
 end
 
-When /^I import (.+) from '([^']+)'(?:(?: as )'([^']+)')?$/ do |items, filename, aliased|
+When /^I import (.+) from '(.+)'(?:(?: as )'(.+)')?$/ do |items, filename, aliased|
   references = nil
   attachments = nil
   #TODO: count notes
@@ -227,7 +227,7 @@ When /^I import (.+) from '([^']+)'(?:(?: as )'([^']+)')?$/ do |items, filename,
   }
 end
 
-Then /^write the library to '([^']+)'$/ do |filename|
+Then /^write the library to '(.+)'$/ do |filename|
   $Firefox.BetterBibTeX.exportToFile('BetterBibTeX JSON', filename)
 end
 
@@ -246,7 +246,7 @@ def normalize(o)
   end
 end
 
-Then /^the library (without collections )?should match '([^']+)'$/ do |nocollections, filename|
+Then /^the library (without collections )?should match '(.+)'$/ do |nocollections, filename|
   expected = File.expand_path(File.join('test/fixtures', filename))
   expected = JSON.parse(open(expected).read)
 
@@ -294,7 +294,7 @@ def preferenceValue(value)
   return value
 end
 
-Then(/^the following library export should match '([^']+)':$/) do |filename, table|
+Then(/^the following library export should match '(.+)':$/) do |filename, table|
   exportOptions = table.rows_hash
   exportOptions.each{ |_,str| preferenceValue(str) }
   exportOptions = @exportOptions.merge(exportOptions)
@@ -314,7 +314,7 @@ Then(/^the following library export should match '([^']+)':$/) do |filename, tab
   expect(found).to eq(expected)
 end
 
-Then(/^a library export using '([^']+)' should match '([^']+)'$/) do |translator, filename|
+Then(/^a library export using '(.+)' should match '(.+)'$/) do |translator, filename|
   found = $Firefox.BetterBibTeX.exportToString(translator, @exportOptions).strip
 
   @expectedExport = OpenStruct.new(filename: filename, translator: translator)
@@ -325,14 +325,14 @@ Then(/^a library export using '([^']+)' should match '([^']+)'$/) do |translator
   expect(found).to eq(expected)
 end
 
-Then(/^'([^']+)' should match '([^']+)'$/) do |found, expected|
+Then(/^'(.+)' should match '(.+)'$/) do |found, expected|
   found = open(File.expand_path(found)).read.strip
   expected = File.expand_path(File.join('test/fixtures', expected))
   expected = open(expected).read.strip
   expect(found).to eq(expected)
 end
 
-Then(/I? ?export the library to '([^']+)':$/) do |filename, table|
+Then(/I? ?export the library to '(.+)':$/) do |filename, table|
   exportOptions = table.rows_hash
   exportOptions.each{ |_,str| preferenceValue(str) }
   exportOptions = @exportOptions.merge(exportOptions)
@@ -366,21 +366,21 @@ Then /^show the (browser|Zotero) log$/ do |kind|
   say browserLog if kind == 'browser'
 end
 
-Then /^(write|append) the (browser|Zotero) log to '([^']+)'$/ do |action, kind, filename|
+Then /^(write|append) the (browser|Zotero) log to '(.+)'$/ do |action, kind, filename|
   open(filename, action[0]){|f| 
     f.write(kind == 'Zotero' ? $Firefox.DebugBridge.log : browserLog)
   }
 end
 
-Then /restore '([^']+)'$/ do |db|
+Then /restore '(.+)'$/ do |db|
   $Firefox.BetterBibTeX.restore(db)
 end
 
-Then /^save the query log to '([^']+)'$$/ do |filename|
+Then /^save the query log to '(.+)'$$/ do |filename|
   open(filename, 'w'){|f| f.write($Firefox.BetterBibTeX.sql.to_yaml) }
 end
 
-Then /^I select the first item where ([^\s]+) = '([^']+)'$/ do |attribute, value|
+Then /^I select the first item where ([^\s]+) = '(.+)'$/ do |attribute, value|
   @selected = $Firefox.BetterBibTeX.select(attribute, value)
   expect(@selected).not_to be(nil)
 end
