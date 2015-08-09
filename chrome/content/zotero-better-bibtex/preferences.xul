@@ -27,6 +27,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.DOIandURL"                id="pref-better-bibtex-doi-and-url"             type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.asciiBibLaTeX"            id="pref-better-bibtex-asciiBibLaTeX"           type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.asciiBibTeX"              id="pref-better-bibtex-asciiBibTeX"             type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.csquotes"                 id="pref-better-bibtex-csquotes"                type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.attachmentsNoMetadata"    id="pref-better-bibtex-attachments-nometadata"  type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.autoAbbrev"               id="pref-better-bibtex-auto-abbrev"             type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.autoExport"               id="pref-better-bibtex-auto-export"             type="string"/>
@@ -131,6 +132,9 @@
                   </row>
                   <row>
                     <checkbox label="&zotero.better-bibtex.ascii.BibLaTeX;" preference="pref-better-bibtex-asciiBibLaTeX"/>
+                  </row>
+                  <row>
+                    <checkbox label="&zotero.better-bibtex.csquotes;" preference="pref-better-bibtex-csquotes"/>
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.doi-and-url;"/>

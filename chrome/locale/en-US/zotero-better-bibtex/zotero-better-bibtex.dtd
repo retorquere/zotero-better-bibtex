@@ -95,3 +95,5 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.better-bibtex.bulkWarning.whatever "OK, and don't ask me again">
 <!ENTITY zotero.better-bibtex.bulkWarning.message "You are changing more than #{TRESHOLD} items in one go. Are you sure?">
 <!ENTITY zotero.better-bibtex.prefs.bulkWarning "Warn me when changing citation keys in bulk">
+
+<!ENTITY zotero.better-bibtex.csquotes "Replace left/right guillemets/double quotes with \\enquote{...} (requires csquotes)">

@@ -8,6 +8,13 @@ LaTeX.text2latex = (text) ->
 LaTeX.cleanHTML = (text) ->
   html = ''
   cdata = false
+
+  if Translator.csquotes
+    text = text.replace(/[«‹][\s\u00A0]?/g, '<span class="bbt-csquote">')
+    text = text.replace(/[\s\u00A0]?[»›]/g, '</span>')
+    text = text.replace(/“/g, '<span class="bbt-csquote">')
+    text = text.replace(/”/g, '</span>')
+
   for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
     switch
       when i % 2 == 0 # text
@@ -81,6 +88,8 @@ class LaTeX.HTML
 
       when 'span', 'sc'
         tag.smallcaps = tag.name == 'sc' || (tag.attrs.style || '').match(/small-caps/i)
+        tag.csquote = (tag.attrs.class || '').match(/bbt-csquote/i)
+        @latex += '\\enquote{' if tag.csquote
         @latex += '\\textsc{' if tag.smallcaps
 
       when 'td', 'th'
@@ -110,7 +119,7 @@ class LaTeX.HTML
         @latex += "\n\n"
 
       when 'span', 'sc'
-        @latex += '}' if @stack[0].smallcaps
+        @latex += '}' if @stack[0].smallcaps || @stack[0].csquote
 
       when 'td', 'th'
         @html += ' '
