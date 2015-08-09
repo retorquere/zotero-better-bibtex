@@ -12,8 +12,10 @@ LaTeX.cleanHTML = (text) ->
   if Translator.csquotes
     text = text.replace(/[«‹][\s\u00A0]?/g, '<span class="bbt-csquote">')
     text = text.replace(/[\s\u00A0]?[»›]/g, '</span>')
-    text = text.replace(/“/g, '<span class="bbt-csquote">')
-    text = text.replace(/”/g, '</span>')
+
+    # figure out how to do these safely -- so many quoting conventions...
+    # text = text.replace(/“/g, '<span class="bbt-csquote">')
+    # text = text.replace(/”/g, '</span>')
 
   for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
     switch
