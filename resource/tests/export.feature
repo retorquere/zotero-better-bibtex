@@ -117,8 +117,9 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | csquotes #300                                                                                  | 2           |
      | Spaces not stripped from citation keys #294                                                    | 1           |
-     | Book converted to mvbook #288                                                                  | 1            |
+     | Book converted to mvbook #288                                                                  | 1           |
      | Colon not allowed in citation key format #268                                                  | 1           |
      | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | Export mapping for reporter field #219                                                         | 1           |
