@@ -118,7 +118,7 @@ Scenario Outline: BibLaTeX Export
   Examples:
      | file                                                                                           | references  |
      | Spaces not stripped from citation keys #294                                                    | 1           |
-     | Book converted to mvbook #288                                                                  | 1		        |
+     | Book converted to mvbook #288                                                                  | 1            |
      | Colon not allowed in citation key format #268                                                  | 1           |
      | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | Export mapping for reporter field #219                                                         | 1           |
@@ -144,7 +144,8 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
-	 | don't escape entry key fields for #296											  | 1			|
+     | markup small-caps, superscript, italics #301                                       | 2           |
+     | don't escape entry key fields for #296                                             | 1           |
      | map csl-json variables #293                                                        | 2           |
      | typo stature-statute (zotero item type) #284                                       | 1           |
      | bookSection is always converted to @inbook, never @incollection #282               | 1           |
