@@ -117,7 +117,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
-     | csquotes #300                                                                                  | 2           |
+     | csquotes #302                                                                                  | 2           |
      | Spaces not stripped from citation keys #294                                                    | 1           |
      | Book converted to mvbook #288                                                                  | 1           |
      | Colon not allowed in citation key format #268                                                  | 1           |
