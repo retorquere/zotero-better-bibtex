@@ -469,6 +469,10 @@ Reference::complete = ->
         Translator.debug('Unmapped CSL field', name, '=', value.value)
       continue
 
+    if value.value.trim() == ''
+      @remove(name)
+      continue
+
     switch name
       when 'mr'
         fields.push({ name: 'mrnumber', value: value.value })
