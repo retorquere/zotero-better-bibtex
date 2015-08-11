@@ -145,6 +145,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | remove the field if the override is empty #303                                     | 1           |
      | markup small-caps, superscript, italics #301                                       | 2           |
      | don't escape entry key fields for #296                                             | 1           |
      | map csl-json variables #293                                                        | 2           |
