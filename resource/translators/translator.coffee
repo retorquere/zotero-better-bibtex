@@ -370,8 +370,8 @@ Reference::esc_attachments = (f) ->
   return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
 
 Reference::preserveCaps = {
-  inner:  new XRegExp("[^\\s\\p{Punctuation}]+\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*", 'g')
-  all:    new XRegExp("[^\\s\\p{Punctuation}]*\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*", 'g')
+  inner:  new XRegExp("(?=^|[\\s\\p{Punctuation}])[^\\s\\p{Punctuation}]+\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*", 'g')
+  all:    new XRegExp("(?=^|[\\s\\p{Punctuation}])[^\\s\\p{Punctuation}]*\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*", 'g')
 }
 Reference::initialCapOnly = new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}+$")
 
