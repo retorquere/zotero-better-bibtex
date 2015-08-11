@@ -469,7 +469,7 @@ Reference::complete = ->
         Translator.debug('Unmapped CSL field', name, '=', value.value)
       continue
 
-    if value.value.trim() == ''
+    if ((typeof value.value == 'string') && value.value.trim() == '')
       @remove(name)
       continue
 
