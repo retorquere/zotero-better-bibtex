@@ -1,7 +1,7 @@
 html = """
-<p><span>When I first had a student tell me that she doesn’t believe in evolution I was at a loss of how to respond. To
+<p><span>When I first had a « student » tell me that she doesn’t ‹ believe in evolution › I was at a loss of how to respond. To
 me, that sounded like someone telling me that she didn’t believe in gravity. It seemed both irrational and wrong.
-Experiences like this are common; we think that one’s actual belief can deviate from how one ought to believe. The
+Experiences like this are common; we think that one’s actual belief can deviate from how one “ought to believe”. The
 dominant view among contemporary philosophers is that any belief formed against the evidence is impermissible. On such a
 view, which I call “evidentialism,” it is easy to diagnosis what is wrong with my student’s belief. I use the term
 “pragmatism” to refer to the view that some non-evidentially based beliefs are permissible. A central aim of this book
@@ -76,4 +76,4 @@ doxastic agency. And that we can exercise control in the doxastic realm naturall
 guide both action and belief.</span></p>
 """
 
-console.log(LaTeX.html2latex(html))
+console.log(LaTeX.text2latex(html))

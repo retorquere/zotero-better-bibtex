@@ -111,7 +111,7 @@ Translator.initialize = ->
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
   @skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
-  for pref in ['usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'verbatimDate']
+  for pref in ['csquotes', 'usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'verbatimDate']
     @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
   if @verbatimDate == ''
     delete @verbatimDate
@@ -467,6 +467,10 @@ Reference::complete = ->
         fields.push({ name: @CSLtoBibTeX[name], value: value.value })
       else
         Translator.debug('Unmapped CSL field', name, '=', value.value)
+      continue
+
+    if ((typeof value.value == 'string') && value.value.trim() == '')
+      @remove(name)
       continue
 
     switch name

@@ -8,6 +8,18 @@ LaTeX.text2latex = (text) ->
 LaTeX.cleanHTML = (text) ->
   html = ''
   cdata = false
+
+  if Translator.csquotes.length > 0
+    open = ''
+    close = ''
+    for ch, i in Translator.csquotes
+      if i % 2 == 0 # open
+        open += ch
+      else
+        close += ch
+    text = text.replace(new RegExp("[#{open}][\\s\\u00A0]?", 'g'), '<span enquote="true">')
+    text = text.replace(new RegExp("[\\s\\u00A0]?[#{close}]", 'g'), '</span>')
+
   for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
     switch
       when i % 2 == 0 # text
@@ -81,6 +93,8 @@ class LaTeX.HTML
 
       when 'span', 'sc'
         tag.smallcaps = tag.name == 'sc' || (tag.attrs.style || '').match(/small-caps/i)
+        tag.enquote = (tag.attrs.enquote == 'true')
+        @latex += '\\enquote{' if tag.enquote
         @latex += '\\textsc{' if tag.smallcaps
 
       when 'td', 'th'
@@ -110,7 +124,7 @@ class LaTeX.HTML
         @latex += "\n\n"
 
       when 'span', 'sc'
-        @latex += '}' if @stack[0].smallcaps
+        @latex += '}' if @stack[0].smallcaps || @stack[0].enquote
 
       when 'td', 'th'
         @html += ' '

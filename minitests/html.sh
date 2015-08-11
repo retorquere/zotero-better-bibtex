@@ -8,7 +8,7 @@ cd ..
 
 OFFLINE=true
 rm -f minitests/test.js
-echo "var Translator = { debug: function(msg) { console.log(msg); }}, LaTeX = {};" >> minitests/test.js
+echo "var Translator = { csquotes: true, debug: function(msg) { console.log(msg); }}, LaTeX = {};" >> minitests/test.js
 wget -O - https://raw.githubusercontent.com/Munawwar/neutron-html5parser/master/htmlparser.js | sed "s/'object'/'_object'/" | sed "s/root.HTMLtoDOM/Translator.HTMLtoDOM/" > minitests/htmlparser.js
 cat minitests/htmlparser.js >> minitests/test.js
 echo "var HTMLtoDOM = Translator.HTMLtoDOM;" >> minitests/test.js
