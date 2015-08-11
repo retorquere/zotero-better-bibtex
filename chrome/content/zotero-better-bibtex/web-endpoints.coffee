@@ -259,11 +259,30 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
             citation.push("[##{citekey.citekey}][]")
         citation = citation.join('')
 
+      when 'pandoc'
+        for item in @citation.citationItems
+          citekey = Zotero.BetterBibTeX.keymanager.get({itemID: item.id}, 'on-export')
+          continue unless citekey
+          cite = ''
+          cite += "#{item.prefix} " if item.prefix
+          cite += '-' if item['suppress-author']
+          cite += "@#{citekey.citekey}
+          cite += ", #{item.locator}" if item.locator
+          cite += " #{item.suffix}" if item.suffix
+          citation.push(cite)
+        if citation.length == 0
+          citation = ''
+        else
+          citation = '[' + citation.join(';') + ']'
+
       else
         for item in @citation.citationItems
           cite = Zotero.BetterBibTeX.keymanager.get({itemID: item.id}, 'on-export').citekey
           citation.push(@config.keyprefix + cite + @config.keypostfix)
-        citation = @config.citeprefix + citation.join(@config.separator) + @config.citepostfix
+        if citation.length == 0
+          citation = ''
+        else
+          citation = @config.citeprefix + citation.join(@config.separator) + @config.citepostfix
 
     Zotero.Utilities.Internal.copyTextToClipboard(citation) if @config.clipboard
     @deferred.fulfill(citation)
