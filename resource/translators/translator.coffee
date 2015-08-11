@@ -272,7 +272,6 @@ class Reference
     @itemtype = Translator.typeMap.Zotero2BibTeX[@item.itemType] or 'misc'
 
     @override = Translator.extractFields(@item)
-    Translator.debug('extracted:', @override)
 
     for own attr, f of Translator.fieldMap or {}
       if f.name and not @has[f.name]
@@ -337,7 +336,6 @@ Reference::esc_attachments = (f) ->
       mimetype: att.mimeType || ''
     }
 
-    Translator.debug("save attachment: exportFileData=#{Translator.exportFileData}, defaultPath=#{att.defaultPath}, saveFile=#{typeof att.saveFile}/#{!!att.saveFile}")
     save = Translator.exportFileData and att.defaultPath and att.saveFile
     a.path = att.defaultPath if save
 
@@ -370,8 +368,8 @@ Reference::esc_attachments = (f) ->
   return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
 
 Reference::preserveCaps = {
-  inner:  new XRegExp("(?=^|[\\s\\p{Punctuation}])[^\\s\\p{Punctuation}]+\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*", 'g')
-  all:    new XRegExp("(?=^|[\\s\\p{Punctuation}])[^\\s\\p{Punctuation}]*\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*", 'g')
+  inner:  new XRegExp("(^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]+\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
+  all:    new XRegExp("(^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]*\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
 }
 Reference::initialCapOnly = new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}+$")
 
@@ -404,9 +402,11 @@ Reference::add = (field) ->
             else          0
           braced[i] = 0 if braced[i] < 0
 
-        value = XRegExp.replace(value, @preserveCaps[Translator.preserveCaps], (needle, pos, haystack) ->
-          #return needle if needle.length < 2 # don't escape single-letter capitals
-          return needle if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, Reference::initialCapOnly)
+        value = XRegExp.replace(value, @preserveCaps[Translator.preserveCaps], (match, boundary, needle, pos, haystack) ->
+          boundary ?= ''
+          pos += boundary.length
+          #return boundary + needle if needle.length < 2 # don't escape single-letter capitals
+          return boundary + needle if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, Reference::initialCapOnly)
 
           c = 0
           for i in [pos - 1 .. 0] by -1
@@ -414,10 +414,10 @@ Reference::add = (field) ->
               c++
             else
               break
-          return needle if c % 2 == 1 # don't enclose LaTeX command
+          return boundary + needle if c % 2 == 1 # don't enclose LaTeX command
 
-          return needle if braced[pos] > 0
-          return "{#{needle}}"
+          return boundary + needle if braced[pos] > 0
+          return "#{boundary}{#{needle}}"
         )
       value = "{#{value}}"
 

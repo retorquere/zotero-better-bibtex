@@ -26,7 +26,7 @@ Zotero.BetterBibTeX.cache = new class
     Zotero.BetterBibTeX.debug('cache.load')
     if Zotero.BetterBibTeX.pref.get('cacheReset') > 0
       @reset()
-      Zotero.BetterBibTeX.pref.set('cacheReset', Zotero.BetterBibTeX.pref.get('cacheReset')  - 1)
+      Zotero.BetterBibTeX.pref.set('cacheReset', Zotero.BetterBibTeX.pref.get('cacheReset') - 1)
       Zotero.BetterBibTeX.debug('cache.load forced reset', Zotero.BetterBibTeX.pref.get('cacheReset'), 'left')
 
     @cache.flushChanges()
