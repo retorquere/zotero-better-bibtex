@@ -297,7 +297,7 @@ file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'].compa
   maxSize = nil
 
   policy = {
-    'expiration' => Time.new(2200).strftime('%Y-%m-%dT%H:%M:%SZ'),
+    'expiration' => Time.new(2038).strftime('%Y-%m-%dT%H:%M:%SZ'),
     'conditions' => [
       {'bucket' => bucket},
       {'acl' => acl},
