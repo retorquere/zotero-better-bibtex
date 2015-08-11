@@ -235,6 +235,7 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
       keypostfix: ''
       separator: ','
       clipboard: false
+      format: ''
     }
 
     for own key of @config
@@ -245,10 +246,25 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
   accept: (progressCallback) ->
     progressCallback.call(null, 100) if progressCallback
     citation = []
-    for item in @citation.citationItems
-      cite = Zotero.BetterBibTeX.keymanager.get({itemID: item.id}, 'on-export').citekey
-      citation.push(@config.keyprefix + cite + @config.keypostfix)
-    citation = @config.citeprefix + citation.join(@config.separator) + @config.citepostfix
+
+    # {"citationItems":[{"id":"5","locator":"page","prefix":"prefix","suffix":"suffix","suppress-author":true}],"properties":{}}
+    switch @config.format
+      when 'mmd'
+        for item in @citation.citationItems
+          citekey = Zotero.BetterBibTeX.keymanager.get({itemID: item.id}, 'on-export')
+          continue unless citekey
+          if item.prefix
+            citation.push("[#{item.prefix}][##{citekey.citekey}]")
+          else
+            citation.push("[##{citekey.citekey}][]")
+        citation = citation.join('')
+
+      else
+        for item in @citation.citationItems
+          cite = Zotero.BetterBibTeX.keymanager.get({itemID: item.id}, 'on-export').citekey
+          citation.push(@config.keyprefix + cite + @config.keypostfix)
+        citation = @config.citeprefix + citation.join(@config.separator) + @config.citepostfix
+
     Zotero.Utilities.Internal.copyTextToClipboard(citation) if @config.clipboard
     @deferred.fulfill(citation)
     Zotero.Integration.currentWindow.close()
