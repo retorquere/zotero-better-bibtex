@@ -125,7 +125,6 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
-     | thesis zotero entries always create  bibtex entries #307                                       | 1           |
      | csquotes #302                                                                                  | 2           |
      | Spaces not stripped from citation keys #294                                                    | 1           |
      | Book converted to mvbook #288                                                                  | 1           |
