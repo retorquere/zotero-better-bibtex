@@ -411,11 +411,21 @@ doExport = ->
 
       when 'email'  then ref.add({ name: 'type', value: 'E-mail', replace: true })
 
-      else
-        if item.itemType == 'thesis' and (item.thesisType || 'phd').match(/ph\.?d/i)
-          ref.add({ name: 'type', value: 'phdthesis', replace: true })
+      when 'thesis'
+        switch (item.thesisType ||'').toLowerCase().trim()
+          when 'phdthesis' then ref.itemtype = 'phdthesis'
+          when 'mastersthesis' then ref.itemtype = 'mastersthesis'
+          else
+            ref.add({ name: 'type', value: item.thesisType, replace: true })
+
+      when 'report'
+        if (item.thesisType ||'').toLowerCase().trim() == 'techreport'
+          ref.itemtype = 'techreport'
         else
-          ref.add({ name: 'type', value: item.manuscriptType || item.thesisType || item.websiteType || item.presentationType || item.reportType || item.mapType, replace: true })
+          ref.add({ name: 'type', value: item.reportType, replace: true })
+
+      else
+        ref.add({ name: 'type', value: item.manuscriptType || item.websiteType || item.presentationType || item.mapType, replace: true })
 
     ref.add({ name: 'howpublished', value: item.presentationType || item.manuscriptType })
 
