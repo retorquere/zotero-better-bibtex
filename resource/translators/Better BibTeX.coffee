@@ -65,6 +65,8 @@ doExport = ->
       when 'report' then ref.add({ name: 'institution', value: item.publisher, preserveCaps: true })
       else               ref.add({ name: 'publisher', value: item.publisher, preserveCaps: true })
 
+    ref.itemtype = 'mastersthesis' if item.itemType == 'thesis' && (item.thesisType || '').toLowerCase().trim() == 'mastersthesis'
+
     if item.creators and item.creators.length
       # split creators into subcategories
       authors = []
