@@ -43,13 +43,14 @@ class BetterBibTeXPatternFormatter
   reduce: (step) ->
     value = @methods[step.method].apply(@, step.arguments)
     value = '' if value in [undefined, null]
-    value = @clean(value) if step.scrub
 
     return value unless step.filters
 
     for filter in step.filters
       value = @filters[filter.filter].apply(@, [value].concat(filter.arguments))
-      value = '' if value in [undefined, null]
+      value = '' unless value
+
+    value = @clean(value) if step.scrub
     return value
 
   clean: (str) ->
