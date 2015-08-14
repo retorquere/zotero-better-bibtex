@@ -412,20 +412,21 @@ doExport = ->
       when 'email'  then ref.add({ name: 'type', value: 'E-mail', replace: true })
 
       when 'thesis'
-        switch (item.thesisType || '').toLowerCase().trim()
-          when 'phdthesis' then ref.referencetype = 'phdthesis'
-          when 'mastersthesis' then ref.referencetype = 'mastersthesis'
-          else
-            ref.add({ name: 'type', value: item.thesisType, replace: true })
+        thesisType = (item.type || '').toLowerCase().trim()
+        if thesisType in ['phdthesis', 'mastersthesis']
+          ref.referencetype = thesisType
+          ref.remove('type')
+        else
+          ref.add({ name: 'type', value: item.type, replace: true })
 
       when 'report'
-        if (item.reportType || '').toLowerCase().trim() == 'techreport'
+        if (item.type || '').toLowerCase().trim() == 'techreport'
           ref.referencetype = 'techreport'
         else
-          ref.add({ name: 'type', value: item.reportType, replace: true })
+          ref.add({ name: 'type', value: item.type, replace: true })
 
       else
-        ref.add({ name: 'type', value: item.manuscriptType || item.thesisType || item.websiteType || item.presentationType || item.reportType || item.mapType, replace: true })
+        ref.add({ name: 'type', value: item.type, replace: true })
 
     ref.add({ name: 'howpublished', value: item.presentationType || item.manuscriptType })
 

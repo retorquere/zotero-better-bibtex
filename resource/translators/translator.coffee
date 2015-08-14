@@ -273,16 +273,18 @@ class Reference
 
     @override = Translator.extractFields(@item)
 
+    Translator.debug('item fields:', @item)
     for own attr, f of Translator.fieldMap or {}
-      if f.name and not @has[f.name]
-        @add(@field(f, @item[attr]))
+      @add(@field(f, @item[attr])) if f.name
+      Translator.debug('fields@fieldMap:', attr, @field(f, @item[attr]), (field.name for field in @fields)) if f.name
 
     @add({name: 'timestamp', value: Translator.testing_timestamp || @item.dateModified || @item.dateAdded})
 
 Reference::log = Translator.log
 
 Reference::field = (f, value) ->
-  clone = Object.create(f)
+  clone = JSON.parse(JSON.stringify(f))
+  #clone = Object.create(f)
   clone.value = value
   return clone
 
@@ -447,15 +449,14 @@ Reference::CSLtoBibTeX = {
 
 Reference::complete = ->
   @add({name: 'xref', value: @item.__xref__, esc: 'raw'}) if !@has.xref && @item.__xref__
-  @add({name: 'type', value: @referencetype}) if @fields.length == 0
+
+  Translator.debug('fields@complete:', (field.name for field in @fields))
 
   if Translator.DOIandURL != 'both'
-    doi = (i for field, i in @fields when field.name == 'doi')
-    url = (i for field, i in @fields when field.name == 'url')
-    if doi.length > 0 && url.length > 0
+    if @has.doi && @has.url
       switch Translator.DOIandURL
-        when 'doi' then @fields.splice(url[0], 1)
-        when 'url' then @fields.splice(doi[0], 1)
+        when 'doi' then @remove('url')
+        when 'url' then @remove('doi')
 
   fields = []
   for own name, value of @override
@@ -506,6 +507,8 @@ Reference::complete = ->
     field = @field(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
     field.replace = true
     @add(field)
+
+  @add({name: 'type', value: @referencetype}) if @fields.length == 0
 
   # sort fields for stable tests
   @fields.sort((a, b) -> ("#{a.name} = #{a.value}").localeCompare(("#{b.name} = #{b.value}"))) if Translator.testing

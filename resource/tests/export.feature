@@ -25,6 +25,13 @@ Scenario: Bibtex key regenerating issue when trashing items #117
   And I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json' as 'Second Import.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Bibtex key regenerating issue when trashing items #117.bib'
 
+@test-cluster-2
+@307
+Scenario: thesis zotero entries always create  bibtex entries #307
+  When I import 2 reference from 'export/thesis zotero entries always create  bibtex entries #307.json'
+  Then a library export using 'Better BibTeX' should match 'export/thesis zotero entries always create  bibtex entries #307.bibtex'
+  And a library export using 'Better BibLaTeX' should match 'export/thesis zotero entries always create  bibtex entries #307.biblatex'
+
 @test-cluster-0
 @110
 @111

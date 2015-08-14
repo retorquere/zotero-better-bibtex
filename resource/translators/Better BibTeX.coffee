@@ -1,5 +1,5 @@
 Translator.fieldMap = {
-  # Zotero      BibTeX
+  # Zotero          BibTeX
   place:            { name: 'address', preserveCaps: true, import: 'location' }
   section:          { name: 'chapter', preserveCaps: true }
   edition:          { name: 'edition', preserveCaps: true }
@@ -65,7 +65,11 @@ doExport = ->
       when 'report' then ref.add({ name: 'institution', value: item.publisher, preserveCaps: true })
       else               ref.add({ name: 'publisher', value: item.publisher, preserveCaps: true })
 
-    ref.referencetype = 'mastersthesis' if item.itemType == 'thesis' && (item.thesisType || '').toLowerCase().trim() == 'mastersthesis'
+    if item.itemType == 'thesis'
+      thesisType = (item.type || '').toLowerCase().trim()
+      if thesisType in ['mastersthesis', 'phdthesis']
+        ref.referencetype = thesisType
+        ref.remove('type')
 
     if item.creators and item.creators.length
       # split creators into subcategories
