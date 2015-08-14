@@ -269,7 +269,7 @@ class Reference
     @has = Object.create(null)
     @raw = ((tag.tag for tag in @item.tags when tag.tag == Translator.rawLaTag).length > 0)
 
-    @itemtype = Translator.typeMap.Zotero2BibTeX[@item.itemType] or 'misc'
+    @referencetype = Translator.typeMap.Zotero2BibTeX[@item.itemType] or 'misc'
 
     @override = Translator.extractFields(@item)
 
@@ -447,7 +447,7 @@ Reference::CSLtoBibTeX = {
 
 Reference::complete = ->
   @add({name: 'xref', value: @item.__xref__, esc: 'raw'}) if !@has.xref && @item.__xref__
-  @add({name: 'type', value: @itemtype}) if @fields.length == 0
+  @add({name: 'type', value: @referencetype}) if @fields.length == 0
 
   if Translator.DOIandURL != 'both'
     doi = (i for field, i in @fields when field.name == 'doi')
@@ -497,7 +497,7 @@ Reference::complete = ->
 
       # psuedo-var, sets the reference type
       when 'referencetype'
-        @itemtype = value.value
+        @referencetype = value.value
 
       else
         fields.push({ name, value: value.value })
@@ -510,7 +510,7 @@ Reference::complete = ->
   # sort fields for stable tests
   @fields.sort((a, b) -> ("#{a.name} = #{a.value}").localeCompare(("#{b.name} = #{b.value}"))) if Translator.testing
 
-  ref = "@#{@itemtype}{#{@item.__citekey__},\n"
+  ref = "@#{@referencetype}{#{@item.__citekey__},\n"
   ref += (field.bibtex for field in @fields).join(',\n')
   ref += '\n}\n\n'
   Zotero.write(ref)

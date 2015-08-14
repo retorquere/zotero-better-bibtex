@@ -306,9 +306,9 @@ doExport = ->
   while item = Translator.nextItem()
     ref = new Reference(item)
 
-    ref.itemtype = 'inbook' if item.itemType == 'bookSection' and ref.hasCreator('bookAuthor')
-    ref.itemtype = 'collection' if item.itemType == 'book' and not ref.hasCreator('author') and ref.hasCreator('editor')
-    ref.itemtype = 'mvbook' if ref.itemtype == 'book' and item.numberOfVolumes
+    ref.referencetype = 'inbook' if item.itemType == 'bookSection' and ref.hasCreator('bookAuthor')
+    ref.referencetype = 'collection' if item.itemType == 'book' and not ref.hasCreator('author') and ref.hasCreator('editor')
+    ref.referencetype = 'mvbook' if ref.itemtype == 'book' and item.numberOfVolumes
 
     if m = item.publicationTitle?.match(/^arxiv:\s*([\S]+)/i)
       ref.add({ name: 'eprinttype', value: 'arxiv'})
@@ -413,14 +413,14 @@ doExport = ->
 
       when 'thesis'
         switch (item.thesisType || '').toLowerCase().trim()
-          when 'phdthesis' then ref.itemtype = 'phdthesis'
-          when 'mastersthesis' then ref.itemtype = 'mastersthesis'
+          when 'phdthesis' then ref.referencetype = 'phdthesis'
+          when 'mastersthesis' then ref.referencetype = 'mastersthesis'
           else
             ref.add({ name: 'type', value: item.thesisType, replace: true })
 
       when 'report'
         if (item.reportType || '').toLowerCase().trim() == 'techreport'
-          ref.itemtype = 'techreport'
+          ref.referencetype = 'techreport'
         else
           ref.add({ name: 'type', value: item.reportType, replace: true })
 
