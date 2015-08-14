@@ -419,13 +419,13 @@ doExport = ->
             ref.add({ name: 'type', value: item.thesisType, replace: true })
 
       when 'report'
-        if (item.thesisType || '').toLowerCase().trim() == 'techreport'
+        if (item.reportType || '').toLowerCase().trim() == 'techreport'
           ref.itemtype = 'techreport'
         else
           ref.add({ name: 'type', value: item.reportType, replace: true })
 
       else
-        ref.add({ name: 'type', value: item.manuscriptType || item.websiteType || item.presentationType || item.mapType, replace: true })
+        ref.add({ name: 'type', value: item.manuscriptType || item.thesisType || item.websiteType || item.presentationType || item.reportType || item.mapType, replace: true })
 
     ref.add({ name: 'howpublished', value: item.presentationType || item.manuscriptType })
 
