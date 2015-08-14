@@ -308,7 +308,7 @@ doExport = ->
 
     ref.referencetype = 'inbook' if item.itemType == 'bookSection' and ref.hasCreator('bookAuthor')
     ref.referencetype = 'collection' if item.itemType == 'book' and not ref.hasCreator('author') and ref.hasCreator('editor')
-    ref.referencetype = 'mvbook' if ref.itemtype == 'book' and item.numberOfVolumes
+    ref.referencetype = 'mvbook' if ref.referencetype == 'book' and item.numberOfVolumes
 
     if m = item.publicationTitle?.match(/^arxiv:\s*([\S]+)/i)
       ref.add({ name: 'eprinttype', value: 'arxiv'})
