@@ -248,25 +248,28 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
     citation = []
 
     # {"citationItems":[{"id":"5","locator":"page","prefix":"prefix","suffix":"suffix","suppress-author":true}],"properties":{}}
+    items = []
+    for item in @citation.citationItems
+      citekey = Zotero.BetterBibTeX.keymanager.get({itemID: item.id}, 'on-export')
+      continue unless citekey
+      item.citekey = citekey.citekey
+      items.push(item)
+
     switch @config.format
       when 'mmd'
-        for item in @citation.citationItems
-          citekey = Zotero.BetterBibTeX.keymanager.get({itemID: item.id}, 'on-export')
-          continue unless citekey
+        for item in items
           if item.prefix
-            citation.push("[#{item.prefix}][##{citekey.citekey}]")
+            citation.push("[#{item.prefix}][##{item.citekey}]")
           else
-            citation.push("[##{citekey.citekey}][]")
+            citation.push("[##{item.citekey}][]")
         citation = citation.join('')
 
       when 'pandoc'
-        for item in @citation.citationItems
-          citekey = Zotero.BetterBibTeX.keymanager.get({itemID: item.id}, 'on-export')
-          continue unless citekey
+        for item in items
           cite = ''
           cite += "#{item.prefix} " if item.prefix
           cite += '-' if item['suppress-author']
-          cite += "@#{citekey.citekey}"
+          cite += "@#{item.citekey}"
           cite += ", #{item.locator}" if item.locator
           cite += " #{item.suffix}" if item.suffix
           citation.push(cite)
@@ -276,9 +279,8 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
           citation = '[' + citation.join(';') + ']'
 
       else
-        for item in @citation.citationItems
-          cite = Zotero.BetterBibTeX.keymanager.get({itemID: item.id}, 'on-export').citekey
-          citation.push(@config.keyprefix + cite + @config.keypostfix)
+        for item in items
+          citation.push(@config.keyprefix + item.citekey + @config.keypostfix)
         if citation.length == 0
           citation = ''
         else
