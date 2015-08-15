@@ -375,6 +375,9 @@ Reference::preserveCaps = {
 }
 Reference::initialCapOnly = new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}+$")
 
+Reference::isBibVar = (value) ->
+  return Translator.preserveBibTeXVariables && value.match(/^[a-z][a-z0-9_]*$/i)
+
 Reference::add = (field) ->
   return if Translator.skipFields.indexOf(field.name) >= 0
   return if typeof field.value != 'number' and not field.value
@@ -384,7 +387,7 @@ Reference::add = (field) ->
   @remove(field.name) if field.replace
   throw "duplicate field '#{field.name}' for #{@item.__citekey__}" if @has[field.name] && !field.allowDuplicates
 
-  if typeof field.value == 'number'
+  if typeof field.value == 'number' || (field.preserveBibTeXVariables && @isBibVar(field.value))
     value = field.value
   else
     esc = field.esc || Translator.fieldEscape?[field.name] || 'latex'

@@ -371,28 +371,27 @@ doExport = ->
     ref.add({ name: (if isNaN(parseInt(item.issue)) then 'issue' else 'number'), value: item.issue })
 
     if item.itemType == 'case'
-      ref.add({ name: 'journaltitle', value: item.reporter, preserveCaps: true, bare: is_bibvar, esc: if is_bibvar then 'raw' else null })
+      ref.add({ name: 'journaltitle', value: item.reporter, preserveCaps: true, preserveBibTeXVariables: true })
 
     if item.publicationTitle
-      is_bibvar = Translator.preserveBibTeXVariables && item.publicationTitle.match(/^[a-z][a-z0-9_]*$/i)
       switch item.itemType
         when 'bookSection', 'conferencePaper', 'dictionaryEntry', 'encyclopediaArticle'
-          ref.add({ name: 'booktitle', value: item.publicationTitle, preserveCaps: true, bare: is_bibvar, esc: if is_bibvar then 'raw' else null})
+          ref.add({ name: 'booktitle', value: item.publicationTitle, preserveBibTeXVariables: true, preserveCaps: true})
 
         when 'magazineArticle', 'newspaperArticle'
-          ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true, bare: is_bibvar, esc: if is_bibvar then 'raw' else null })
+          ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true, preserveBibTeXVariables: true})
           ref.add({ name: 'journalsubtitle', value: item.section, preserveCaps: true }) if item.itemType == 'newspaperArticle'
 
         when 'journalArticle'
-          if is_bibvar
-            ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true, bare: true, esc: 'raw' })
+          if ref.isBibVar(item.publicationTitle)
+            ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
           else
             abbr = Zotero.BetterBibTeX.keymanager.journalAbbrev(item)
             if Translator.useJournalAbbreviation and abbr
-              ref.add({ name: 'journal', value: abbr, preserveCaps: true })
+              ref.add({ name: 'journal', value: abbr, preserveBibTeXVariables: true, preserveCaps: true })
             else
               ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true })
-              ref.add({ name: 'shortjournal', value: abbr, preserveCaps: true })
+              ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true, preserveCaps: true })
 
     ref.add({ name: 'booktitle', value: item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, preserveCaps: true }) if not ref.has.booktitle
 

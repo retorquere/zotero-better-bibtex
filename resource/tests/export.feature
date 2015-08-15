@@ -125,6 +125,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | BibTeX variable support for journal titles. #309                                               | 1           |
      | condense in cite key format not working #308                                                   | 1           |
      | csquotes #302                                                                                  | 2           |
      | Spaces not stripped from citation keys #294                                                    | 1           |
