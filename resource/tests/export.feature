@@ -5,7 +5,7 @@ Background:
 
   When I set preference .citekeyFormat to [auth][year]
 
-@test-cluster-0
+@test-cluster-2
 @131
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json'
@@ -16,7 +16,7 @@ Scenario: Omit URL export when DOI present. #131
   And I set preference .DOIandURL to url
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-url.bib'
 
-@test-cluster-0
+@test-cluster-2
 @117
 Scenario: Bibtex key regenerating issue when trashing items #117
   When I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json'
@@ -32,7 +32,7 @@ Scenario: thesis zotero entries always create  bibtex entries #307
   Then a library export using 'Better BibTeX' should match 'export/thesis zotero entries always create  bibtex entries #307.bibtex'
   And a library export using 'Better BibLaTeX' should match 'export/thesis zotero entries always create  bibtex entries #307.biblatex'
 
-@test-cluster-0
+@test-cluster-2
 @110
 @111
 @molasses
@@ -42,7 +42,7 @@ Scenario: two ISSN number are freezing browser #110 / Generating keys and export
   And I set the citation key
   Then a library export using 'Better BibLaTeX' should match 'export/two ISSN number are freezing browser #110.bib'
 
-@test-cluster-0
+@test-cluster-2
 @85
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 references from 'export/Square brackets in Publication field (85).json'
@@ -50,21 +50,21 @@ Scenario: Square brackets in Publication field (85), and non-pinned keys must ch
   And I set preference .citekeyFormat to [year]-updated
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85) after pattern change.bib'
 
-@test-cluster-0
+@test-cluster-2
 @86
 Scenario: Include first name initial(s) in cite key generation pattern (86)
   When I import 1 reference from 'export/Include first name initial(s) in cite key generation pattern (86).json'
    And I set preference .citekeyFormat to [auth+initials][year]
   Then a library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bib'
 
-@test-cluster-0
+@test-cluster-2
 @pandoc
 Scenario: Pandoc/LaTeX Citation Export
   When I import 1 reference with 1 attachment from 'export/Pandoc Citation.json'
   Then a library export using 'Pandoc Citation' should match 'export/Pandoc Citation.pandoc'
   And a library export using 'LaTeX Citation' should match 'export/Pandoc Citation.latex'
 
-@test-cluster-0
+@test-cluster-2
 @journal-abbrev
 Scenario: Journal abbreviations
   When I set preferences:
@@ -77,7 +77,7 @@ Scenario: Journal abbreviations
     | translator             | Better BibTeX  |
     | useJournalAbbreviation | true           |
 
-@test-cluster-0
+@test-cluster-2
 @81
 Scenario: Journal abbreviations exported in bibtex (81)
   When I set preferences:
