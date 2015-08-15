@@ -125,6 +125,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | condense in cite key format not working #308                                                   | 1           |
      | csquotes #302                                                                                  | 2           |
      | Spaces not stripped from citation keys #294                                                    | 1           |
      | Book converted to mvbook #288                                                                  | 1           |
