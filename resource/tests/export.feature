@@ -125,6 +125,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | auth leaves punctuation in citation key #310                                                   | 1           |
      | BibTeX variable support for journal titles. #309                                               | 1           |
      | condense in cite key format not working #308                                                   | 1           |
      | csquotes #302                                                                                  | 2           |

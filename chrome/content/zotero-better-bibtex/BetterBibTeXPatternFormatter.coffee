@@ -42,15 +42,15 @@ class BetterBibTeXPatternFormatter
 
   reduce: (step) ->
     value = @methods[step.method].apply(@, step.arguments)
-    value = '' if value in [undefined, null]
+    Zotero.BetterBibTeX.debug('BetterBibTeXPatternFormatter.reduce:', step, value)
+    value = '' unless value
 
-    return value unless step.filters
-
-    for filter in step.filters
+    for filter in step.filters || []
       value = @filters[filter.filter].apply(@, [value].concat(filter.arguments))
       value = '' unless value
 
     value = @clean(value) if step.scrub
+    Zotero.BetterBibTeX.debug('BetterBibTeXPatternFormatter.reduce.scrub:', step, value)
     return value
 
   clean: (str) ->
