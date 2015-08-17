@@ -86,6 +86,23 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
     Zotero.debug('[better' + '-' + 'bibtex] ' + str, level)
 
 Zotero.BetterBibTeX.extensionConflicts = ->
+  AddonManager.getAddonByID('zutilo@www.wesailatdawn.com', (zutilo) ->
+    return unless zutilo
+    return if Services.vc.compare(zutilo.version, '1.2.10.1') > 0
+    Zotero.BetterBibTeX.removeTranslators()
+    Zotero.BetterBibTeX.disabled = '''
+      Better BibTeX has been disabled because it has detected conflicting extension "zutilo" 1.2.10.1 or
+      earlier. If have proposed a fix at
+
+      https://github.com/willsALMANJ/Zutilo/issues/42
+
+      Once that has been implemented, Better BibTeX will start up as usual.  Alternately, you can uninstall Zutilo.
+
+      In the meantime, unfortunately, Better BibTeX and recoll-firefox cannot co-exist.
+    '''
+    Zotero.BetterBibTeX.flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
+  )
+
   AddonManager.getAddonByID('{359f0058-a6ca-443e-8dd8-09868141bebc}', (recoll) ->
     return unless recoll
     return if Services.vc.compare(recoll.version, '1.2.3') > 0
