@@ -16,10 +16,36 @@
 
   <wizardpage onpageshow="Zotero_BetterBibTeX_ErrorReport.init()" label=" ">
     <description style="white-space: pre-wrap;" class="header">&zotero.better-bibtex.errorReport.review;</description>
-    <textbox id="zotero-error-message" class="plain" readonly="true" multiline="true" flex="1"/>
-    <textbox id="zotero-references" class="plain" readonly="true" multiline="true" flex="1"/>
-    <description id="zotero-unrelated-message">&zotero.general.note; &zotero.errorReport.unrelatedMessages;</description>
-    <description id="zotero-advance-message"/>
+    <tabbox flex="1">
+      <tabs>
+        <tab label="&zotero.errorReport.context;"/>
+        <tab label="&zotero.errorReport.errors;"/>
+        <tab label="&zotero.errorReport.log;"/>
+        <tab label="&zotero.errorReport.references;" id="betterbibtex.errorReport.references"/>
+      </tabs>
+
+      <tabpanels>
+        <tabpanel orient="vertical">
+          <checkbox oncommand="Zotero_BetterBibTeX_ErrorReport.selectReportPart();" id="zotero-error-include-context" label="&zotero.errorReport.include;" checked="true"/>
+          <textbox id="zotero-error-context" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
+        </tabpanel>
+        <tabpanel orient="vertical">
+          <checkbox oncommand="Zotero_BetterBibTeX_ErrorReport.selectReportPart();" id="zotero-error-include-errors" label="&zotero.errorReport.include;" checked="true"/>
+          <textbox id="zotero-error-errors" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
+        </tabpanel>
+        <tabpanel orient="vertical">
+          <checkbox oncommand="Zotero_BetterBibTeX_ErrorReport.selectReportPart();" id="zotero-error-include-log" label="&zotero.errorReport.include;" checked="true"/>
+          <textbox id="zotero-error-log" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
+        </tabpanel>
+        <tabpanel orient="vertical">
+          <checkbox oncommand="Zotero_BetterBibTeX_ErrorReport.selectReportPart();" id="zotero-error-include-references" label="&zotero.errorReport.include;" checked="true"/>
+          <textbox id="zotero-error-references" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
+        </tabpanel>
+      </tabpanels>
+    </tabbox>
+
+    <!-- description id="zotero-unrelated-message">&zotero.general.note; &zotero.errorReport.unrelatedMessages;</description>
+    <description id="zotero-advance-message"/ -->
   </wizardpage>
 
   <wizardpage onpageshow="Zotero_BetterBibTeX_ErrorReport.sendErrorReport()" label=" ">

@@ -1,4 +1,5 @@
 # Components.utils.importGlobalProperties(['Blob'])
+Components.utils.import('resource://zotero/config.js')
 
 Zotero_BetterBibTeX_ErrorReport = new class
   constructor: ->
@@ -16,7 +17,6 @@ Zotero_BetterBibTeX_ErrorReport = new class
     request.open('POST', @form.action, true)
 
     request.onload = (e) ->
-      Zotero.debug("BBT.error.submit.onload: #{request.readystate}")
       return unless request.readystate == 4
         callback(request)
     request.onerror = (e) ->
@@ -24,61 +24,59 @@ Zotero_BetterBibTeX_ErrorReport = new class
     request.send(fd)
 
   init: ->
-    Zotero.debug('BBT.error.init')
     @key = Zotero.Utilities.generateObjectKey()
     @timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
-    Zotero.debug("BBT.error.init: #{@key}")
 
     wizard = document.getElementById('zotero-error-report')
     continueButton = wizard.getButton('next')
     continueButton.disabled = true
-    document.getElementById('zotero-references').hidden = true
-
-    Zotero.debug("BBT.error.init: here we go")
+    document.getElementById('betterbibtex.errorReport.references').hidden = true
 
     Zotero.getSystemInfo((info) =>
       schema = {}
       for table in Zotero.DB.columnQuery("SELECT name FROM betterbibtex.sqlite_master WHERE type='table' AND name <> 'schema' ORDER BY name") || []
         schema[table] = Zotero.BetterBibTeX.table_info(table)
-      schema = "Better BibTeX schema #{Zotero.DB.valueQuery('select version from betterbibtex.schema') || '<new>'}: #{JSON.stringify(schema)}"
-      info += "\n\n#{schema}"
 
-      @errorLog = {
-        full: Zotero.getErrors(true).join('\n') + "\n\n" + info + "\n\n"
+      @errorlog = {
+        info: info
+        schema: "Better BibTeX schema #{Zotero.DB.valueQuery('select version from betterbibtex.schema') || '<new>'}: #{JSON.stringify(schema)}"
+        errors: Zotero.getErrors(true).join('\n')
+        full: Zotero.Debug.get()
       }
-      @errorLog.truncated = @errorLog.full
 
-      maxSize = if @form.maxSize then (@form.maxSize - @errorLog.full.length) * 0.95 else null
-      debug = Zotero.Debug.get()
-      debug = debug.slice(-1 * maxSize) if maxSize && debug.length > maxSize
-      @errorLog.full += debug
-
-      debug = debug.split("\n")
+      debug = @errorlog.full.split("\n")
       debug = debug.slice(0, 5000) # max 5k lines
       debug = (Zotero.Utilities.ellipsize(line, 80, true) for line in debug) # trim lines
       debug = debug.join("\n")
-      @errorLog.truncated += debug
-
-      Zotero.debug("BBT.error.init: message set")
+      @errorlog.truncated = debug
 
       params = window.arguments[0].wrappedJSObject
       if params.references
-        document.getElementById('zotero-references').hidden = false
-        document.getElementById('zotero-references').value = params.references.substring(0, 5000)
-        Zotero.debug("BBT.error.init: references set")
+        document.getElementById('betterbibtex.errorReport.references').hidden = false
+        document.getElementById('zotero-error-references').value = params.references.substring(0, 5000)
+      else
+        document.getElementById("zotero-error-include-references").checked = false
 
-      document.getElementById('zotero-error-message').value = @errorLog.truncated
-      Zotero.debug("BBT.error.init: error log set")
+      document.getElementById('zotero-error-context').value = info
+      document.getElementById('zotero-error-errors').value = @errorlog.errors
+      document.getElementById('zotero-error-log').value = @errorlog.truncated
 
       continueButton.disabled = false
       continueButton.focus()
-      str = Zotero.getString('errorReport.advanceMessage', continueButton.getAttribute('label')).replace('Zotero', 'ZotPlus')
-      document.getElementById('zotero-advance-message').setAttribute('value', str)
-      Zotero.debug("BBT.error.init: proceed")
     )
 
+  selectReportPart: ->
+    enabled = false
+    for part in ['context', 'errors', 'log', 'references']
+      continue unless document.getElementById("zotero-error-include-#{part}").checked
+      enabled = part
+      break
+    Zotero.BetterBibTeX.debug('selectReportPart:', enabled)
+    wizard = document.getElementById('zotero-error-report')
+    continueButton = wizard.getButton('next')
+    continueButton.disabled = !enabled
+
   finished: ->
-    Zotero.debug("BBT.error.finished")
     wizard = document.getElementById('zotero-error-report')
     wizard.advance()
     wizard.getButton('cancel').disabled = true
@@ -88,7 +86,6 @@ Zotero_BetterBibTeX_ErrorReport = new class
     document.getElementById('zotero-report-result').hidden = false
 
   verify: (request) ->
-    Zotero.debug("BBT.error.verify: #{request.status}")
     wizard = document.getElementById('zotero-error-report')
     ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
 
@@ -104,21 +101,29 @@ Zotero_BetterBibTeX_ErrorReport = new class
     return false
 
   sendErrorReport: ->
-    Zotero.debug("BBT.error.send")
     wizard = document.getElementById('zotero-error-report')
     continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
+    if !document.getElementById("zotero-error-include-context").checked
+      @errorlog.info = "Zotero: #{ZOTERO_CONFIG.VERSION}, Better BibTeX: #{Zotero.BetterBibTeX.release}"
+
+    if !document.getElementById("zotero-error-include-errors").checked
+      @errorlog.errors = null
+
+    if !document.getElementById("zotero-error-include-log").checked
+      @errorlog.full = null
+
+    errorlog = (part for part in [@errorlog.info, @errorlog.errors, @errorlog.schema, @errorlog.full] when part).join("\n\n")
+
     params = window.arguments[0].wrappedJSObject
 
-    @submit('errorlog.txt', @errorLog.full, (request) =>
-      Zotero.debug("BBT.error.send done: errorlog.txt")
+    @submit('errorlog.txt', errorlog, (request) =>
       return unless @verify(request)
 
-      return @finished() unless params.references
+      return @finished() unless params.references && document.getElementById("zotero-error-include-references").checked
 
       @submit('references.json', params.references, (request) =>
-        Zotero.debug("BBT.error.send done: references.json")
         return unless @verify(request)
 
         @finished()

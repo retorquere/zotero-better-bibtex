@@ -61,6 +61,11 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.better-bibtex.errorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/ZotPlus/zotero-better-bibtex/issues) with this Report ID, a description of the problem, and any steps necessary to reproduce it.">
 <!ENTITY zotero.better-bibtex.errorReport.notReviewed "Error reports can not reviewed unless referred to in the GitHub issue tracker.">
 <!ENTITY zotero.better-bibtex.errorReport.reportID "Report ID:">
+<!ENTITY zotero.errorReport.context "Application context">
+<!ENTITY zotero.errorReport.errors "Errors">
+<!ENTITY zotero.errorReport.log "Debug log">
+<!ENTITY zotero.errorReport.references "References">
+<!ENTITY zotero.errorReport.include "Include in error report">
 
 <!ENTITY zotero.better-bibtex.caching "Cache activity">
 
