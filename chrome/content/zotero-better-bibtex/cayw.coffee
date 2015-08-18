@@ -139,7 +139,8 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
           item.prefix ?= ''
           item.suffix ?= ''
           label = (part for part in [item.item.firstCreator, Zotero.Date.strToDate(item.item.getField('date')).year] when part).join(' ')
-          citation.push("{ #{item.prefix} | #{label} | #{locator} | #{item.suffix} | #{id} }")
+          label = "-#{label}" if item['suppress-author']
+          citation.push("{#{item.prefix}|#{label}|#{locator}|#{item.suffix}|#{id}}")
         citation = citation.join('')
 
       else
