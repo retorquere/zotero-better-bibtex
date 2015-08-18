@@ -66,31 +66,6 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
 
   getItems: -> Q.fcall(-> [])
 
-  scannableCiteLocator: {
-    article: "art."
-    chapter: "ch."
-    subchapter: "subch."
-    column: "col."
-    figure: "fig."
-    line: "l."
-    note: "n."
-    issue: "no."
-    opus: "op."
-    page: "p."
-    paragraph: "para."
-    subparagraph: "subpara."
-    part: "pt."
-    rule: "r."
-    section: "sec."
-    subsection: "subsec."
-    Section: "Sec."
-    'sub verbo': "sv."
-    schedule: "sch."
-    title: "tit."
-    verse: "vrs."
-    volume: "vol."
-  }
-
   accept: (progressCallback) ->
     progressCallback.call(null, 100) if progressCallback
     citation = []
@@ -146,6 +121,31 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
     return '[' + citation.join(';') + ']'
 
   'scannable-cite': (citations) ->
+    scannableCiteLocator: {
+      article: "art."
+      chapter: "ch."
+      subchapter: "subch."
+      column: "col."
+      figure: "fig."
+      line: "l."
+      note: "n."
+      issue: "no."
+      opus: "op."
+      page: "p."
+      paragraph: "para."
+      subparagraph: "subpara."
+      part: "pt."
+      rule: "r."
+      section: "sec."
+      subsection: "subsec."
+      Section: "Sec."
+      'sub verbo': "sv."
+      schedule: "sch."
+      title: "tit."
+      verse: "vrs."
+      volume: "vol."
+    }
+
     formatted = []
     for citation in citations
       item = Zotero.Items.get(citation.id)
@@ -155,7 +155,7 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
         when item.libraryID then "zg:#{item.libraryID}:#{item.key}"
         when Zotero.userID then "zu:#{Zotero.userID}:#{item.key}"
         else "zu:0:#{item.key}"
-      locator = if citation.locator then "#{@scannableCiteLocator[citation.label]} #{citation.locator}" else ''
+      locator = if citation.locator then "#{scannableCiteLocator[citation.label]} #{citation.locator}" else ''
       citation.prefix ?= ''
       citation.suffix ?= ''
 
