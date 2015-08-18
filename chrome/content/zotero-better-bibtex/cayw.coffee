@@ -131,7 +131,10 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
       when 'scannable-cite'
         for item in items
           item.item = Zotero.Items.get(item.id)
-          id = if item.item.libraryID then "zg:#{item.item.libraryID}:#{item.id}" else "zu:0:#{item.id}"
+          id = switch
+            when item.item.libraryID then "zg:#{item.item.libraryID}:#{item.item.key}"
+            when Zotero.userID then "zu:#{Zotero.userID}:#{item.item.key}"
+            else "zu:0:#{item.item.key}"
           locator = if item.locator then "#{@scannableCiteLocator[item.label]} #{item.locator}" else ''
           item.prefix ?= ''
           item.suffix ?= ''
