@@ -138,7 +138,17 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
           locator = if item.locator then "#{@scannableCiteLocator[item.label]} #{item.locator}" else ''
           item.prefix ?= ''
           item.suffix ?= ''
-          label = (part for part in [item.item.firstCreator, Zotero.Date.strToDate(item.item.getField('date')).year] when part).join(' ')
+
+          label = item.item.firstCreator
+          label ||= item.item.getField('shortTitle')
+          label ||= item.item.getField('title')
+
+          date = Zotero.Date.strToDate(item.item.getField('date')).year
+          date ||= item.item.getField('date')
+          date ||= 'no date'
+
+          label = "#{label} #{date}".trim()
+
           label = "-#{label}" if item['suppress-author']
           citation.push("{#{item.prefix}|#{label}|#{locator}|#{item.suffix}|#{id}}")
         citation = citation.join('')
