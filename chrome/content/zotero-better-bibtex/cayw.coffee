@@ -129,28 +129,30 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
           citation = '[' + citation.join(';') + ']'
 
       when 'scannable-cite'
-        for item in items
-          item.item = Zotero.Items.get(item.id)
+        for citation in items
+          item = Zotero.Items.get(citation.id)
+          isLegal = Zotero.ItemTypes.getName(item.itemTypeID) in [ 'bill' 'case' 'gazette' 'hearing' 'patent' 'regulation' 'statute' 'treaty' ]
+
           id = switch
-            when item.item.libraryID then "zg:#{item.item.libraryID}:#{item.item.key}"
-            when Zotero.userID then "zu:#{Zotero.userID}:#{item.item.key}"
-            else "zu:0:#{item.item.key}"
-          locator = if item.locator then "#{@scannableCiteLocator[item.label]} #{item.locator}" else ''
-          item.prefix ?= ''
-          item.suffix ?= ''
+            when item.libraryID then "zg:#{item.libraryID}:#{item.key}"
+            when Zotero.userID then "zu:#{Zotero.userID}:#{item.key}"
+            else "zu:0:#{item.key}"
+          locator = if citation.locator then "#{@scannableCiteLocator[citation.label]} #{citation.locator}" else ''
+          citation.prefix ?= ''
+          citation.suffix ?= ''
 
-          label = item.item.firstCreator
-          label ||= item.item.getField('shortTitle')
-          label ||= item.item.getField('title')
+          label = item.firstCreator
+          label ||= item.getField('shortTitle')
+          label ||= item.getField('title')
 
-          date = Zotero.Date.strToDate(item.item.getField('date')).year
-          date ||= item.item.getField('date')
+          date = Zotero.Date.strToDate(item.getField('date')).year
+          date ||= item.getField('date')
           date ||= 'no date'
 
           label = "#{label} #{date}".trim()
 
-          label = "-#{label}" if item['suppress-author']
-          citation.push("{#{item.prefix}|#{label}|#{locator}|#{item.suffix}|#{id}}")
+          label = "-#{label}" if citation['suppress-author']
+          citation.push("{#{citation.prefix}|#{label}|#{locator}|#{citation.suffix}|#{id}}")
         citation = citation.join('')
 
       else
