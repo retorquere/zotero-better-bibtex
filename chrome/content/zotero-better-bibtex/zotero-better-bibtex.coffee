@@ -96,8 +96,8 @@ Zotero.BetterBibTeX.extensionConflicts = ->
 
       https://github.com/willsALMANJ/Zutilo/issues/42
 
-      Once that has been implemented, Better BibTeX will start up as usual. In the meantime, beta7 from 
-      
+      Once that has been implemented, Better BibTeX will start up as usual. In the meantime, beta7 from
+
       https://addons.mozilla.org/en-US/firefox/addon/zutilo-utility-for-zotero/versions/
 
       should work; alternately, you can uninstall Zutilo.
