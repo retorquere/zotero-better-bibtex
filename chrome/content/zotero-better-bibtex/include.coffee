@@ -13,6 +13,7 @@ if not Zotero.BetterBibTeX
                   keymanager
                   web-endpoints
                   schomd
+                  cayw
                   debug-bridge
                   cache
                   serialized
