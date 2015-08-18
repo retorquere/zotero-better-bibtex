@@ -9,6 +9,7 @@ require 'yaml'
 require 'benchmark'
 require 'shellwords'
 require 'nokogiri'
+require 'mechanize'
 
 if !OS.mac?
   require 'headless'
@@ -66,9 +67,13 @@ def loadZotero
   profile['extensions.zotfile.automatic_renaming'] = 1
   profile['extensions.zotfile.watch_folder'] = false
 
+  profile['browser.download.manager.showWhenStarting'] = false
+  FileUtils.mkdir_p("/tmp/webdriver-downloads")
   profile['browser.download.dir'] = "/tmp/webdriver-downloads"
   profile['browser.download.folderList'] = 2
-  profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
+  profile['browser.helperApps.alwaysAsk.force'] = false
+  #profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
+  profile['browser.helperApps.neverAsk.saveToDisk'] = "application/octet-stream"
   profile['pdfjs.disabled'] = true
 
   say "Starting Firefox..."
@@ -408,4 +413,35 @@ Then /^the markdown bibliography for (.*) should be '(.*)'$/ do |keys, bibliogra
   found = $Firefox.ScholarlyMarkdown.bibliography(keys).gsub(/[\s\n]+/, ' ').strip
   expected = bibliography.gsub(/[\s\n]+/, ' ').strip
   expect(found).to eq(expected)
+end
+
+When /^I get a signed release$/ do
+  $Firefox.browser.navigate.to('https://addons.mozilla.org/en-US/firefox/users/login?to=%2Fen-US%2Ffirefox%2F')
+  wait = Selenium::WebDriver::Wait.new(:timeout => 15)
+  input = wait.until {
+    element = $Firefox.browser.find_element(:name, 'username')
+    element if element.displayed?
+  }
+  input.send_keys("emiliano.heyns@iris-advies.com")
+  input = wait.until {
+    element = $Firefox.browser.find_element(:name, 'password')
+    element if element.displayed?
+  }
+  input.send_keys(ENV['AMO_PASSWORD'])
+  $Firefox.browser.find_element(:id, 'login-submit').click
+  $Firefox.browser.navigate.to('https://addons.mozilla.org/en-US/developers/addon/zotero-better-biblatex/versions')
+  release = nil
+  xpi = nil
+  Dir['*.xpi'].each{|f| xpi = f }
+  release = xpi.gsub(/zotero-better-bibtex-/, '')
+  release.gsub!(/.xpi/, '')
+  $Firefox.browser.find_element(:partial_link_text, release).click
+  link = $Firefox.browser.find_element(:partial_link_text, 'fx.xpi')['href']
+
+  open("/tmp/#{xpi}", 'w'){|f|
+    js = "var req = new XMLHttpRequest(); req.open('GET', '#{link}', false); req.send(null); return req.responseText;"
+    js = "return (function(){ #{js} })()"
+    STDOUT.puts js
+    f.write($Firefox.browser.execute_script(js))
+  }
 end

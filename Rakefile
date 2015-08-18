@@ -557,6 +557,10 @@ task :test, [:tag] => [XPI, :plugins] do |t, args|
   end
 end
 
+task :sign do
+  sh "cucumber --require features --strict --tags @sign resource/tests"
+end
+
 task :debug => XPI do
   xpi = Dir['*.xpi'][0]
   dxpi = xpi.sub(/\.xpi$/, '-' + (0...8).map { (65 + rand(26)).chr }.join + '.xpi')
