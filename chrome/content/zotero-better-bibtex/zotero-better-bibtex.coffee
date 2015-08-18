@@ -96,9 +96,11 @@ Zotero.BetterBibTeX.extensionConflicts = ->
 
       https://github.com/willsALMANJ/Zutilo/issues/42
 
-      Once that has been implemented, Better BibTeX will start up as usual.  Alternately, you can uninstall Zutilo.
+      Once that has been implemented, Better BibTeX will start up as usual. In the meantime, beta7 from 
+      
+      https://addons.mozilla.org/en-US/firefox/addon/zutilo-utility-for-zotero/versions/
 
-      In the meantime, unfortunately, Better BibTeX and recoll-firefox cannot co-exist.
+      should work; alternately, you can uninstall Zutilo.
     '''
     Zotero.BetterBibTeX.flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
   )
