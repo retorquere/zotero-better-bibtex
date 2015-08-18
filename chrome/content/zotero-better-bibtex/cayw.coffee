@@ -97,74 +97,79 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
 
     # {"citationItems":[{"id":"5","locator":"page","prefix":"prefix","suffix":"suffix","suppress-author":true}],"properties":{}}
     # "label":"line","locator":"xx"
-    items = []
-    for item in @citation.citationItems
-      item.label = 'page' if !item.label && item.locator
-      citekey = Zotero.BetterBibTeX.keymanager.get({itemID: item.id}, 'on-export')
+    citations = []
+    for citation in @citation.citationItems
+      citation.label = 'page' if !citation.label && citation.locator
+      citekey = Zotero.BetterBibTeX.keymanager.get({itemID: citation.id}, 'on-export')
       continue unless citekey
-      item.citekey = citekey.citekey
-      items.push(item)
+      citation.citekey = citekey.citekey
+      citations.push(citation)
 
-    switch @config.format
-      when 'mmd'
-        for item in items
-          if item.prefix
-            citation.push("[#{item.prefix}][##{item.citekey}]")
-          else
-            citation.push("[##{item.citekey}][]")
-        citation = citation.join('')
-
-      when 'pandoc'
-        for item in items
-          cite = ''
-          cite += "#{item.prefix} " if item.prefix
-          cite += '-' if item['suppress-author']
-          cite += "@#{item.citekey}"
-          cite += ", #{item.label} #{item.locator}" if item.locator
-          cite += " #{item.suffix}" if item.suffix
-          citation.push(cite)
-        if citation.length == 0
-          citation = ''
-        else
-          citation = '[' + citation.join(';') + ']'
-
-      when 'scannable-cite'
-        for citation in items
-          item = Zotero.Items.get(citation.id)
-          isLegal = Zotero.ItemTypes.getName(item.itemTypeID) in [ 'bill' 'case' 'gazette' 'hearing' 'patent' 'regulation' 'statute' 'treaty' ]
-
-          id = switch
-            when item.libraryID then "zg:#{item.libraryID}:#{item.key}"
-            when Zotero.userID then "zu:#{Zotero.userID}:#{item.key}"
-            else "zu:0:#{item.key}"
-          locator = if citation.locator then "#{@scannableCiteLocator[citation.label]} #{citation.locator}" else ''
-          citation.prefix ?= ''
-          citation.suffix ?= ''
-
-          label = item.firstCreator
-          label ||= item.getField('shortTitle')
-          label ||= item.getField('title')
-
-          date = Zotero.Date.strToDate(item.getField('date')).year
-          date ||= item.getField('date')
-          date ||= 'no date'
-
-          label = "#{label} #{date}".trim()
-
-          label = "-#{label}" if citation['suppress-author']
-          citation.push("{#{citation.prefix}|#{label}|#{locator}|#{citation.suffix}|#{id}}")
-        citation = citation.join('')
-
+    if Zotero.BetterBibTeX.CAYW.Formatter[@config.format]
+      formatted = Zotero.BetterBibTeX.CAYW.Formatter[@config.format].call(null, citations)
+    else
+      formatted = []
+      for citation in citations
+        fromatted.push(@config.keyprefix + citation.citekey + @config.keypostfix)
+      if formatted.length == 0
+        formatted = ''
       else
-        for item in items
-          citation.push(@config.keyprefix + item.citekey + @config.keypostfix)
-        if citation.length == 0
-          citation = ''
-        else
-          citation = @config.citeprefix + citation.join(@config.separator) + @config.citepostfix
+        formatted = @config.citeprefix + formatted.join(@config.separator) + @config.citepostfix
 
-    Zotero.Utilities.Internal.copyTextToClipboard(citation) if @config.clipboard
-    @deferred.fulfill(citation)
+    Zotero.Utilities.Internal.copyTextToClipboard(formatted) if @config.clipboard
+    @deferred.fulfill(formatted)
     Zotero.Integration.currentWindow.close()
 
     @doc.activate()
+
+Zotero.BetterBibTeX.CAYW.Formatter = {
+  mmd: (citations) ->
+    formatted = []
+    for citation in citations
+      if citation.prefix
+        formatted.push("[#{citation.prefix}][##{citation.citekey}]")
+      else
+        formatted.push("[##{citation.citekey}][]")
+    return formatted.join('')
+
+  pandoc: (citations) ->
+    formatted = []
+    for citation in citations
+      cite = ''
+      cite += "#{citation.prefix} " if citation.prefix
+      cite += '-' if citation['suppress-author']
+      cite += "@#{citation.citekey}"
+      cite += ", #{citation.label} #{citation.locator}" if citation.locator
+      cite += " #{citation.suffix}" if citation.suffix
+      formatted.push(cite)
+    return '' if citation.length == 0
+    return '[' + citation.join(';') + ']'
+
+  'scannable-cite': (citations) ->
+    formatted = []
+    for citation in citations
+      item = Zotero.Items.get(citation.id)
+      isLegal = Zotero.ItemTypes.getName(item.itemTypeID) in [ 'bill', 'case', 'gazette', 'hearing', 'patent', 'regulation', 'statute', 'treaty' ]
+
+      id = switch
+        when item.libraryID then "zg:#{item.libraryID}:#{item.key}"
+        when Zotero.userID then "zu:#{Zotero.userID}:#{item.key}"
+        else "zu:0:#{item.key}"
+      locator = if citation.locator then "#{@scannableCiteLocator[citation.label]} #{citation.locator}" else ''
+      citation.prefix ?= ''
+      citation.suffix ?= ''
+
+      label = item.firstCreator
+      label ||= item.getField('shortTitle')
+      label ||= item.getField('title')
+
+      date = Zotero.Date.strToDate(item.getField('date')).year
+      date ||= item.getField('date')
+      date ||= 'no date'
+
+      label = "#{label} #{date}".trim()
+
+      label = "-#{label}" if citation['suppress-author']
+      formatted.push("{#{citation.prefix}|#{label}|#{locator}|#{citation.suffix}|#{id}}")
+    return formatted.join('')
+}
