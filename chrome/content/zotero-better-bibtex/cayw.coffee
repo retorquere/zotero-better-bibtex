@@ -85,7 +85,7 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
     else
       formatted = []
       for citation in citations
-        fromatted.push(@config.keyprefix + citation.citekey + @config.keypostfix)
+        formatted.push(@config.keyprefix + citation.citekey + @config.keypostfix)
       if formatted.length == 0
         formatted = ''
       else
@@ -146,6 +146,22 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       volume: "vol."
     }
 
+    class Mem
+      constructor: (@isLegal) ->
+        @lst = []
+
+      set: (str, punc, slug) ->
+        punc = '' unless punc
+        switch
+          when str        then @lst.push(str + punc)
+          when !@isLegal  then @lst.push(slug)
+
+      setlaw: (str, punc) ->
+        punc = '' unless punc
+        @lst.push(str + punc) if str && @isLegal
+
+      get: -> @lst.join(' ')
+
     formatted = []
     for citation in citations
       item = Zotero.Items.get(citation.id)
@@ -159,17 +175,32 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       citation.prefix ?= ''
       citation.suffix ?= ''
 
-      label = item.firstCreator
-      label ||= item.getField('shortTitle')
-      label ||= item.getField('title')
+      title = new Mem(isLegal)
+      title.set(item.firstCreator, ',', 'anon.')
 
-      date = Zotero.Date.strToDate(item.getField('date')).year
-      date ||= item.getField('date')
-      date ||= 'no date'
+      includeTitle = false
+      try # Prefs.get throws an error if the pref is not found
+        includeTitle = Zotero.Prefs.get('translators.ODFScan.includeTitle')
+      if includeTitle || !item.firstCreator
+        title.set(item.getField('shortTitle') || item.getField('title'), ',', '(no title)')
 
-      label = "#{label} #{date}".trim()
+      try
+        title.setlaw(item.getField('authority'), ',')
+      try
+        title.setlaw(item.getField('volume'))
+      try
+        title.setlaw(item.getField('reporter'))
+      title.setlaw(item.getField('pages'))
 
+      year = new Mem(isLegal)
+      try
+        year.setlaw(item.getField('court'), ',')
+      date = Zotero.Date.strToDate(item.getField('date'))
+      year.set((if date.year then date.year else item.getField('date')), '', 'no date')
+
+      label = (title.get() + ' ' + year.get()).trim()
       label = "-#{label}" if citation['suppress-author']
+
       formatted.push("{#{citation.prefix}|#{label}|#{locator}|#{citation.suffix}|#{id}}")
     return formatted.join('')
 }
