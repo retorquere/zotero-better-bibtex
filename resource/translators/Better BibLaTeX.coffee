@@ -463,7 +463,7 @@ doExport = ->
             creators.editora.push(creator)
 
       for own field, value of creators
-        ref.add({ name: field, value: value, sep: ' and ', enc: 'creators', preserveCaps: true })
+        ref.add({ name: field, value: value, enc: 'creators', preserveCaps: true })
 
       ref.add({ name: 'editoratype', value: 'collaborator' }) if creators.editora.length > 0
       ref.add({ name: 'editorbtype', value: 'redactor' }) if creators.editorb.length > 0

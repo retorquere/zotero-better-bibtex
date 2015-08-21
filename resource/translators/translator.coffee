@@ -263,10 +263,8 @@ class Reference
 
     @override = Translator.extractFields(@item)
 
-    Translator.debug('item fields:', @item)
     for own attr, f of Translator.fieldMap || {}
       @add(@field(f, @item[attr])) if f.name
-      Translator.debug('fields@fieldMap:', attr, @field(f, @item[attr]), (field.name for field in @fields)) if f.name
 
     @add({name: 'timestamp', value: Translator.testing_timestamp || @item.dateModified || @item.dateAdded})
 
@@ -313,32 +311,33 @@ Reference::enc_creators = (f) ->
         if name.family # && name.given
           # Don't parse if last name is quoted
           if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
-            name.family = name.family.slice(1, -1)
+            name.family = @enc_latex({value: new String(name.family.slice(1, -1))})
+
           else
             Zotero.BetterBibTeX.CSL.parseParticles(name)
 
             if name['non-dropping-particle']
-              name.family = '{' + LaTeX.text2latex((name['non-dropping-particle'] + ' ' + name.family).trim()) + '}'
+              name.family = @enc_latex({value: new String((name['non-dropping-particle'] + ' ' + name.family).trim())})
             else
-              name.family = LaTeX.text2latex(name.family).replace(/ and /g, ' {and} ')
+              name.family = @enc_latex({value: name.family}).replace(/ and /g, ' {and} ')
 
             if name['dropping-particle']
-              name.given = (name.given + ' ' + name['dropping-particle']).trim()
+              name.given = ((name.given || '') + ' ' + name['dropping-particle']).trim()
 
             # throw error to find these among the current tests
             throw new Error('enc_creators: ' + JSON.stringify(name)) if name['comma-suffix'] || name['comma-dropping-particle'] || name.suffix
 
         if name.given
-          name.given = LaTeX.text2latex(name.given).replace(/ and /g, ' {and} ')
+          name.given = @enc_latex({value: name.given}).replace(/ and /g, ' {and} ')
 
         name = (part for part in [name.family, name.given] when part).join(', ')
 
       when creator.name
-        name = '{' + LaTeX.text2latex(creator.name).replace(/ and /g, ' {and} ') + '}'
+        name = @enc_latex({value: new String(creator.name)})
 
     encoded.push(name)
 
-  return encoded.join(f.sep)
+  return encoded.join(' and ')
 
 Reference::enc_latex = (f, raw) ->
   return f.value if typeof f.value == 'number'
@@ -432,7 +431,7 @@ Reference::add = (field) ->
     enc = field.enc || Translator.fieldEncoding?[field.name] || 'latex'
     value = @["enc_#{enc}"](field, (if field.enc then false else @raw))
 
-    return null unless value
+    return unless value
 
     unless field.bare && !field.value.match(/\s/)
       if Translator.preserveCaps != 'no' && field.preserveCaps && !@raw
@@ -469,7 +468,6 @@ Reference::add = (field) ->
   field.bibtex = field.bibtex.normalize('NFKC') if @normalize
   @fields.push(field)
   @has[field.name] = field
-  return
 
 Reference::remove = (name) ->
   return unless @has[name]
@@ -491,8 +489,6 @@ Reference::CSLtoBibTeX = {
 
 Reference::complete = ->
   @add({name: 'xref', value: @item.__xref__, enc: 'raw'}) if !@has.xref && @item.__xref__
-
-  Translator.debug('fields@complete:', (field.name for field in @fields))
 
   if Translator.DOIandURL != 'both'
     if @has.doi && @has.url

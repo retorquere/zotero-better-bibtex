@@ -50,6 +50,11 @@ Scenario: Square brackets in Publication field (85), and non-pinned keys must ch
   And I set preference .citekeyFormat to [year]-updated
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85) after pattern change.bib'
 
+@313
+Scenario: (non-)dropping particle handling #313
+  When I import 1 reference from 'export/(non-)dropping particle handling #313.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/(non-)dropping particle handling #313.bib'
+
 @test-cluster-2
 @86
 Scenario: Include first name initial(s) in cite key generation pattern (86)
