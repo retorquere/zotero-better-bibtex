@@ -535,7 +535,7 @@ Zotero.BetterBibTeX.init = ->
       dump:   @cache.dump.bind(@cache)
     }
     CSL: {
-      parseParticles: (sandbox, name, normalizeApostrophe) -> CSL.parseParticles(name, normalizeApostrophe)
+      parseParticles: (sandbox, name, normalizeApostrophe) -> Zotero.CiteProc.CSL.parseParticles(name, normalizeApostrophe)
     }
   }
 

@@ -338,7 +338,7 @@ Reference::enc_creators = (f) ->
 
     encoded.push(name)
 
-  return encoded.join(sep)
+  return encoded.join(f.sep)
 
 Reference::enc_latex = (f, raw) ->
   return f.value if typeof f.value == 'number'
