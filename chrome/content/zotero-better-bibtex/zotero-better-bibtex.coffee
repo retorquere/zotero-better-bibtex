@@ -614,7 +614,6 @@ Zotero.BetterBibTeX.init = ->
       return original.apply(@, arguments) unless translatorID
 
       # pick up sentinel from patched Zotero_File_Interface.exportCollection in zoteroPane.coffee
-      Zotero.BetterBibTeX.debug("Zotero.Translate.Export::translate is search:", @_export)
       if @_export?.items?.search
         saved_search = @_export.items.search
         @_export.items = @_export.items.items
