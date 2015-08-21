@@ -36,7 +36,7 @@ Translator.typeMap = {
   misc:                               'letter interview film artwork webpage'
 }
 
-Translator.fieldEscape = {
+Translator.fieldEncoding = {
   url: 'verbatim'
   doi: 'verbatim'
 }
@@ -104,7 +104,7 @@ doExport = ->
         ref.add({ name: 'year', value: date.year })
 
     ref.add({ name: 'note', value: item.extra, allowDuplicates: true })
-    ref.add({ name: 'keywords', value: item.tags, esc: 'tags' })
+    ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
     if item.pages
       pages = item.pages
@@ -115,7 +115,7 @@ doExport = ->
       for note in item.notes
         ref.add({ name: 'annote', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true })
 
-    ref.add({ name: 'file', value: item.attachments, esc: 'attachments' })
+    ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
     ref.complete()
 
   Translator.exportGroups()

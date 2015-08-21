@@ -45,7 +45,7 @@ Translator.typeMap = {
   misc:                               'interview map instantMessage tvBroadcast radioBroadcast document'
 }
 
-Translator.fieldEscape = {
+Translator.fieldEncoding = {
   url: 'verbatim'
   doi: 'verbatim'
   eprint: 'verbatim'
@@ -493,13 +493,13 @@ doExport = ->
       ref.add({ name: 'langid', value: language })
 
     ref.add({ name: (if ref.has.note then 'annotation' else 'note'), value: item.extra, allowDuplicates: true })
-    ref.add({ name: 'keywords', value: item.tags, esc: 'tags' })
+    ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
     if item.notes and Translator.exportNotes
       for note in item.notes
         ref.add({ name: 'annotation', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true })
 
-    ref.add({ name: 'file', value: item.attachments, esc: 'attachments' })
+    ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
     ref.complete()
 
   Translator.exportGroups()
