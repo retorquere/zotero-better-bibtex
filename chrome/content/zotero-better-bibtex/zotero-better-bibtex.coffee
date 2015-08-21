@@ -548,7 +548,6 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Server.DataListener::_generateResponse = ((original) ->
     return (status, contentType, promise) ->
       try
-        Zotero.debug("Zotero.Server.DataListener::_generateResponse: handling #{typeof promise} promise? #{typeof promise?.then}")
         if typeof promise?.then == 'function'
           return promise.then((body) =>
             throw new Error("Zotero.Server.DataListener::_generateResponse: circular promise!") if typeof body?.then == 'function'
@@ -564,7 +563,6 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Server.DataListener::_requestFinished = ((original) ->
     return (promise) ->
       try
-        Zotero.debug("Zotero.Server.DataListener::_requestFinished: handling #{typeof promise} promise? #{typeof promise?.then}")
         if typeof promise?.then == 'function'
           promise.then((response) =>
             throw new Error("Zotero.Server.DataListener::_requestFinished: circular promise!") if typeof response?.then == 'function'
@@ -609,7 +607,7 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Translate.Export::translate = ((original) ->
     return ->
       # requested translator
-      Zotero.debug("Zotero.Translate.Export::translate: #{if @_export then Object.keys(@_export) else 'no @_export'}")
+      Zotero.BetterBibTeX.debug("Zotero.Translate.Export::translate: #{if @_export then Object.keys(@_export) else 'no @_export'}")
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
       Zotero.BetterBibTeX.debug('export: ', translatorID)

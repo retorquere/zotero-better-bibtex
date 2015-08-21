@@ -189,7 +189,7 @@ Zotero.BetterBibTeX.auto = new class
   constructor: ->
     @search = {}
     @idle = false
-    Zotero.debug('idle: auto-exporter initialized:')
+    Zotero.BetterBibTeX.debug('idle: auto-exporter initialized:')
 
   status: (status) ->
     return "#{status} (#{(new Date()).toLocaleString()})"

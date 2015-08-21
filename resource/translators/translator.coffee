@@ -65,7 +65,7 @@ Translator.extractFields = (item) ->
       if data
         fields[data[1]] = {value: data[2], format: 'naive'}
       else
-        Zotero.debug("Not an assignment: #{assignment}")
+        Translator.debug("Not an assignment: #{assignment}")
 
   m = /(biblatexdata|bibtex|biblatex)({[\s\S]+})/.exec(item.extra)
   if m
