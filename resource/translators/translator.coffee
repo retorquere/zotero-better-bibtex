@@ -325,8 +325,7 @@ Reference::enc_creators = (f) ->
             if name['dropping-particle']
               name.given = ((name.given || '') + ' ' + name['dropping-particle']).trim()
 
-            # throw error to find these among the current tests
-            throw new Error('enc_creators: ' + JSON.stringify(name)) if name['comma-suffix'] || name['comma-dropping-particle'] || name.suffix
+            Translator.debug('unhandled particla data: ', creator, '->', name) if name['comma-suffix'] || name['comma-dropping-particle'] || name.suffix
 
         if name.given
           name.given = @enc_latex({value: name.given}).replace(/ and /g, ' {and} ')
