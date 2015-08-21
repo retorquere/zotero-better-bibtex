@@ -36,12 +36,18 @@
       "publisher": "Routledge & Kegan Paul",
       "ISBN": "0-7100-3616-7",
       "date": "1963",
+      "extra": "bibtex: fixedkey",
       "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
       "language": "anglais",
       "title": "Norm and Action. A Logical Enquiry",
       "shortTitle": "Norm and Action",
       "numPages": "xviii+214",
       "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "de La Fontaine",
+          "firstName": "Jean"
+        },
         {
           "creatorType": "author",
           "lastName": "von Wright",

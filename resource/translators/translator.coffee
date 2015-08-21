@@ -315,6 +315,7 @@ Reference::enc_creators = (f) ->
 
           else
             Zotero.BetterBibTeX.CSL.parseParticles(name)
+            Translator.debug('particle parser:', creator, '=>', name)
 
             if name['non-dropping-particle']
               name.family = @enc_latex({value: new String((name['non-dropping-particle'] + ' ' + name.family).trim())})
