@@ -86,6 +86,21 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
     Zotero.debug('[better' + '-' + 'bibtex] ' + str, level)
 
 Zotero.BetterBibTeX.extensionConflicts = ->
+  AddonManager.getAddonByID('zoteromaps@zotero.org', (maps) ->
+    return unless maps
+    return if Services.vc.compare(zutilo.version, '1.0.10') > 0
+    Zotero.BetterBibTeX.removeTranslators()
+    Zotero.BetterBibTeX.disabled = '''
+      Better BibTeX has been disabled because it has detected conflicting extension "zotero-maps" 1.0.10 or
+      earlier. Unfortunately this plugin appears to be abandoned, and their issue tracker at
+
+      https://github.com/zotero/zotero-maps
+
+      is not enabled.
+    '''
+    Zotero.BetterBibTeX.flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
+  )
+
   AddonManager.getAddonByID('zutilo@www.wesailatdawn.com', (zutilo) ->
     return unless zutilo
     return if Services.vc.compare(zutilo.version, '1.2.10.1') > 0
