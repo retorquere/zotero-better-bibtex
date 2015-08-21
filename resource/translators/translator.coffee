@@ -301,6 +301,57 @@ Reference::esc_verbatim = (f) ->
   return "\\href{#{href}}{#{LaTeX.text2latex(href)}}" if f.name == 'url' and Translator.fancyURLs
   return href
 
+Reference::esc_creators = (f) ->
+  # family
+  # given
+  # dropping-particle
+  # non-dropping-particle
+  # comma-suffix?
+  # comma-dropping-particle?
+  # suffix?
+
+  return unless f.value
+
+  if Array.isArray(f.value)
+    sep = f.sep
+    names = f.value
+  else
+    sep = ''
+    names = [f.value]
+
+  return null if names.length == 0
+
+  escaped = []
+  for name in names
+
+    if creator.lastName or creator.firstName
+      nameObj =
+        family: creator.lastName or ''
+        given: creator.firstName or ''
+      # Parse name particles
+      # Replicate citeproc-js logic for what should be parsed so we don't
+      # break current behavior.
+      if nameObj.family and nameObj.given
+        # Don't parse if last name is quoted
+        if nameObj.family.length > 1 and nameObj.family.charAt(0) == '"' and nameObj.family.charAt(nameObj.family.length - 1) == '"'
+          nameObj.family = nameObj.family.substr(1, nameObj.family.length - 2)
+        else
+          Zotero.BetterBibTeX.CSL.parseParticles(nameObj, true)
+    else if creator.name
+      nameObj = 'literal': creator.name
+
+
+    if name.family
+      family = switch
+        when name['non-dropping-particle']
+          "{#{LaTeX.text2latex(name['non-dropping-particle'])} #{LaTeX.text2latex(name.family)}}"
+        when name['dropping-particle']
+          "#{LaTeX.text2latex(name['dropping-particle'])} {#{LaTeX.text2latex(name.family)}}"
+        else
+          LaTeX.text2latex(name.family)
+    escaped.push((part for part in [family, name.given] when part).join(', '))
+  return escaped.join(sep)
+  
 Reference::esc_latex = (f, raw) ->
   return f.value if typeof f.value == 'number'
   return null unless f.value
