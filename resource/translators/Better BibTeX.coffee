@@ -79,19 +79,16 @@ doExport = ->
       primaryCreatorType = Zotero.Utilities.getCreatorsForType(item.itemType)[0]
 
       for creator in item.creators
-        creatorString = Translator.creator(creator)
-        continue unless creatorString
-
         switch creator.creatorType
-          when 'editor', 'seriesEditor'   then editors.push(creatorString)
-          when 'translator'               then translators.push(creatorString)
-          when primaryCreatorType         then authors.push(creatorString)
-          else                                 collaborators.push(creatorString)
+          when 'editor', 'seriesEditor'   then editors.push(creator)
+          when 'translator'               then translators.push(creator)
+          when primaryCreatorType         then authors.push(creator)
+          else                                 collaborators.push(creator)
 
-      ref.add({ name: 'author', value: authors, sep: ' and ', preserveCaps: true })
-      ref.add({ name: 'editor', value: editors, sep: ' and ', preserveCaps: true })
-      ref.add({ name: 'translator', value: translators, sep: ' and ', preserveCaps: true })
-      ref.add({ name: 'collaborator', value: collaborators, sep: ' and ', preserveCaps: true })
+      ref.add({ name: 'author', value: authors, sep: ' and ', enc: 'creators', preserveCaps: true })
+      ref.add({ name: 'editor', value: editors, sep: ' and ', enc: 'creators', preserveCaps: true })
+      ref.add({ name: 'translator', value: translators, sep: ' and ', enc: 'creators', preserveCaps: true })
+      ref.add({ name: 'collaborator', value: collaborators, sep: ' and ', enc: 'creators', preserveCaps: true })
 
     if item.date
       date = Zotero.Utilities.strToDate(item.date)
