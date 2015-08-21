@@ -315,7 +315,7 @@ Reference::enc_creators = (f) ->
           if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
             name.family = name.family.slice(1, -1)
           else
-            Zotero.BetterBibTeX.CSL.parseParticles(name, true)
+            Zotero.BetterBibTeX.CSL.parseParticles(name)
 
             if name['non-dropping-particle']
               name.family = '{' + LaTeX.text2latex((name['non-dropping-particle'] + ' ' + name.family).trim()) + '}'
