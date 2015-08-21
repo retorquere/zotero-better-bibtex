@@ -331,6 +331,7 @@ Reference::enc_creators = (f) ->
         if name.given
           name.given = @enc_latex({value: name.given}).replace(/ and /g, ' {and} ')
 
+        # TODO: deal with commas in names
         name = (part for part in [name.family, name.given] when part).join(', ')
 
       when creator.name
