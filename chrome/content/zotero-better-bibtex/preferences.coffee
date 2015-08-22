@@ -101,6 +101,10 @@ BetterBibTeXPref =
 
     BetterBibTeXAutoExportPref.refresh()
 
+  cacheReset: ->
+    Zotero.BetterBibTeX.cache.reset()
+    Zotero.BetterBibTeX.serialized.reset()
+
 BetterBibTeXAutoExportPref =
   remove: ->
     exportlist = document.getElementById('better-bibtex-export-list')

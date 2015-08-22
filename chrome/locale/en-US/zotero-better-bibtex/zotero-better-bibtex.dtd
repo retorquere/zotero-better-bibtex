@@ -68,6 +68,7 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.errorReport.include "Include in error report">
 
 <!ENTITY zotero.better-bibtex.caching "Cache activity">
+<!ENTITY zotero.better-bibtex.resetCache "Reset cache">
 
 <!ENTITY zotero.better-bibtex.prefs.auto-export "Automatic Export">
 <!ENTITY zotero.better-bibtex.prefs.auto-export.off "Disabled">

@@ -504,8 +504,15 @@ Zotero.BetterBibTeX.initDatabase = ->
     Zotero.BetterBibTeX.log("export cache: citekey mismatch! #{m.itemID} cached=#{m.cached} key=#{m.citekey}")
   if mismatched.length > 0
     Zotero.DB.query('delete from betterbibtex.cache')
-  @cache.load()
-  @serialized.load()
+
+  if Zotero.BetterBibTeX.pref.get('cacheReset') > 0
+    @cache.reset()
+    @serialized.reset()
+    Zotero.BetterBibTeX.pref.set('cacheReset', Zotero.BetterBibTeX.pref.get('cacheReset') - 1)
+    Zotero.BetterBibTeX.debug('cache.load forced reset', Zotero.BetterBibTeX.pref.get('cacheReset'), 'left')
+  else
+    @cache.load()
+    @serialized.load()
 
   Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', ?)", [@release])
 
