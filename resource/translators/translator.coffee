@@ -289,7 +289,7 @@ Reference::enc_verbatim = (f) ->
   return "\\href{#{href}}{#{LaTeX.text2latex(href)}}" if f.name == 'url' && Translator.fancyURLs
   return href
 
-Reference::enc_creators = (f) ->
+Reference::enc_creators = (f, raw) ->
   # family
   # given
   # dropping-particle
@@ -300,9 +300,17 @@ Reference::enc_creators = (f) ->
 
   return null if f.value.length == 0
 
+  Translator.debug('enc_creators', f, 'raw:', raw)
+
   encoded = []
   for creator in f.value
     switch
+      when creator.lastName && creator.fieldMode == 1
+        name is if raw then "{#{creator.lastName}}" else @enc_latex({value: new String(creator.lastName)})
+
+      when raw
+        name = (part for part in [creator.lastName, creator.firstName] when part).join(', ')
+
       when creator.lastName || creator.firstName
         name = {family: creator.lastName || '', given: creator.firstName || ''}
         # Parse name particles
@@ -331,8 +339,8 @@ Reference::enc_creators = (f) ->
         # TODO: is this the best way to deal with commas?
         name = (part.replace(/,/g, '{,}') for part in [name.family, name.suffix, name.given] when part).join(', ')
 
-      when creator.name
-        name = @enc_latex({value: new String(creator.name)})
+      else
+        continue
 
     encoded.push(name)
 
@@ -428,7 +436,7 @@ Reference::add = (field) ->
     value = field.value
   else
     enc = field.enc || Translator.fieldEncoding?[field.name] || 'latex'
-    value = @["enc_#{enc}"](field, (if field.enc then false else @raw))
+    value = @["enc_#{enc}"](field, (if field.enc && field.enc != 'creators' then false else @raw))
 
     return unless value
 
