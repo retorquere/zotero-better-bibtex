@@ -1,4 +1,6 @@
 parse = (name) ->
+  name.given ?= name.firstName
+  name.family ?= name.lastName
   console.log("Name:   %j", name)
   CSL.parseParticles(name)
   console.log("Parsed: %j", name)
@@ -34,4 +36,8 @@ parse(
 parse(
   given: "Jens, Forstædernes Tænketank",
   family: "Kvorning",
+)
+parse(
+  "firstName": "E. V.",
+  "lastName": "de Castro",
 )
