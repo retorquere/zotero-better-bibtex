@@ -306,7 +306,7 @@ Reference::enc_creators = (f, raw) ->
   for creator in f.value
     switch
       when creator.lastName && creator.fieldMode == 1
-        name is if raw then "{#{creator.lastName}}" else @enc_latex({value: new String(creator.lastName)})
+        name = if raw then "{#{creator.lastName}}" else @enc_latex({value: new String(creator.lastName)})
 
       when raw
         name = (part for part in [creator.lastName, creator.firstName] when part).join(', ')
