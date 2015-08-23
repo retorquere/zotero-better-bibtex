@@ -130,6 +130,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Better BibLaTeX.004                                                                            | 1           |
      | auth leaves punctuation in citation key #310                                                   | 1           |
      | BibTeX variable support for journal titles. #309                                               | 1           |
      | condense in cite key format not working #308                                                   | 1           |
@@ -144,7 +145,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.001                                                                            | 1           |
      | Better BibLaTeX.002                                                                            | 2           |
      | Better BibLaTeX.003                                                                            | 2           |
-     | Better BibLaTeX.004                                                                            | 1           |
      | Better BibLaTeX.005                                                                            | 1           |
      | Better BibLaTeX.006                                                                            | 1           |
      | Better BibLaTeX.007                                                                            | 1           |
