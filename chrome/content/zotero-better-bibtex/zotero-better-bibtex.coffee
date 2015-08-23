@@ -86,9 +86,9 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
     Zotero.debug('[better' + '-' + 'bibtex] ' + str, level)
 
 Zotero.BetterBibTeX.extensionConflicts = ->
-  AddonManager.getAddonByID('zoteromaps@zotero.org', (maps) ->
-    return unless maps
-    return if Services.vc.compare(zutilo.version, '1.0.10') > 0
+  AddonManager.getAddonByID('zoteromaps@zotero.org', (extension) ->
+    return unless extension
+    return if Services.vc.compare(extension.version, '1.0.10') > 0
     Zotero.BetterBibTeX.removeTranslators()
     Zotero.BetterBibTeX.disabled = '''
       Better BibTeX has been disabled because it has detected conflicting extension "zotero-maps" 1.0.10 or
@@ -101,9 +101,9 @@ Zotero.BetterBibTeX.extensionConflicts = ->
     Zotero.BetterBibTeX.flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
   )
 
-  AddonManager.getAddonByID('zutilo@www.wesailatdawn.com', (zutilo) ->
-    return unless zutilo
-    return if Services.vc.compare(zutilo.version, '1.2.10.1') > 0
+  AddonManager.getAddonByID('zutilo@www.wesailatdawn.com', (extension) ->
+    return unless extension
+    return if Services.vc.compare(extension.version, '1.2.10.1') > 0
     Zotero.BetterBibTeX.removeTranslators()
     Zotero.BetterBibTeX.disabled = '''
       Better BibTeX has been disabled because it has detected conflicting extension "zutilo" 1.2.10.1 or
@@ -120,9 +120,9 @@ Zotero.BetterBibTeX.extensionConflicts = ->
     Zotero.BetterBibTeX.flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
   )
 
-  AddonManager.getAddonByID('{359f0058-a6ca-443e-8dd8-09868141bebc}', (recoll) ->
-    return unless recoll
-    return if Services.vc.compare(recoll.version, '1.2.3') > 0
+  AddonManager.getAddonByID('{359f0058-a6ca-443e-8dd8-09868141bebc}', (extension) ->
+    return unless extension
+    return if Services.vc.compare(extension.version, '1.2.3') > 0
     Zotero.BetterBibTeX.removeTranslators()
     Zotero.BetterBibTeX.disabled = '''
       Better BibTeX has been disabled because it has detected conflicting extension "recoll-firefox" 1.2.3 or
