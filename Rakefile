@@ -1,4 +1,5 @@
 require 'rake'
+require 'uri'
 require 'os'
 require 'rake/clean'
 require 'shellwords'
@@ -842,5 +843,71 @@ task :logs, [:id] do |t, args|
       sh "aws s3 cp s3://zotplus-964ec2b7-379e-49a4-9c8a-edcb20db343f/#{args[:id]}-references.json tmp/#{args[:id]}-references.json"
     rescue
     end
+  end
+end
+
+task :csltests do
+  source = 'test/fixtures/export/(non-)dropping particle handling #313.json'
+  testcase = JSON.parse(open(source).read)
+  template = testcase['items'].first
+  testcase['items'] = [template]
+
+  root = 'https://bitbucket.org/bdarcus/citeproc-test/src/tip/processor-tests/humans/'
+  seen = []
+  Tempfile.create('tests') do |tmp|
+    ZotPlus::RakeHelper.download(root, tmp.path)
+    tests = Nokogiri::HTML(open(tmp.path))
+    n = tests.css('td.filename a').length
+    tests.css('td.filename a').each_with_index{|test, i|
+      link = URI.join(root, test['href']).to_s.sub(/\?.*/, '').sub('/src/', '/raw/')
+
+      if open(link).read =~ />>=+ INPUT =+>>(.*)<<=+ INPUT =+<</im
+        test = JSON.parse($1)
+        creators = []
+        test.each{|ref|
+          %w{author editor container-author composer director interviewer recipient reviewed-author collection-editor %translator}.each{|creator|
+            creators << ref[creator] || []
+          }
+        }
+        creators.flatten!
+        creators.compact!
+        creators = creators.collect{|creator|
+          if creator['literal']
+            cr = {
+              lastName: creator['literal'],
+              fieldMode: 1
+            }
+          else
+            cr = {
+              creatorType: 'author',
+              lastName: [creator['dropping-particle'], creator['non-dropping-particle'], creator['family']].compact.join(' ').strip,
+              firstName: [creator['given'], creator['suffix']].compact.join(', '),
+            }
+            cr.delete(:firstName) if cr[:firstName] == ''
+            throw link if cr[:firstName] && creator['isInstitution'] == 'true'
+            cr[:fieldMode] = 1 if creator['isInstitution'] == 'true'
+          end
+          cr
+        }.select{|creator|
+          creator[:lastName] =~ /[^a-z]/i || creator[:firstName] =~ /[^a-z]/i
+        }
+        creators = creators - seen
+
+        seen << creators
+        seen.flatten!
+        seen.uniq!
+      else
+        creators = []
+      end
+      puts "#{i+1}/#{n}: #{creators.length}"
+
+      if creators.length > 0
+        template = JSON.parse(template.to_json)
+        template['creators'] = creators
+        template['extra'] = "bibtex: #{link.sub(/.*\//, '').sub(/\..*/, '')}"
+        testcase['items'] << template
+      end
+    }
+    open(source, 'w'){|f| f.write(JSON.pretty_generate(testcase)) }
   end
 end

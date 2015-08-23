@@ -25,12 +25,17 @@
       "exportNotes": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "book",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "series": "International Library of Philosophy and Scientific Method",
       "place": "Londres",
       "publisher": "Routledge & Kegan Paul",
@@ -51,7 +56,7 @@
         {
           "creatorType": "author",
           "lastName": "Humboldt",
-          "firstName" : "Alexander von"
+          "firstName": "Alexander von"
         },
         {
           "creatorType": "author",
@@ -74,10 +79,4037 @@
           "firstName": "Georg Henrik Explicit"
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 2066,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_ApostropheOnParticle",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "d' Jones",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_AsmJournals",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe Co."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_AuthorYear",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Family01",
+          "firstName": "Given01"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_ChicagoAuthorDateLooping",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Manstein",
+          "firstName": "Erich Von"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_ChineseCharactersFamilyOnlyPluralLabel",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "编者"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_DemoPageFullCiteCruftOnSubsequent",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Malone",
+          "firstName": "Nolan J."
+        },
+        {
+          "lastName": "U.S. Bureau of the Census",
+          "fieldMode": 1
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_DuplicateSpaces",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "D'Arcus",
+          "firstName": "Bruce"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_DuplicateSpaces3",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Family Name",
+          "firstName": "N"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_GreekStyleProblems",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Άγρας",
+          "firstName": "Τέλλος"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Σαββίδης",
+          "firstName": "Γ. Π."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Καρυωτάκης",
+          "firstName": "Κώστας"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_IeeePunctuation",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Zimbardo",
+          "firstName": "Philip G"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_MovePunctuationInsideQuotesForLocator",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Davis",
+          "firstName": "Jennifer J."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_ProcessorHang1",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Philpott",
+          "firstName": "S. M."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Arendt",
+          "firstName": "W. J."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Armbrecht",
+          "firstName": "I."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Bichier",
+          "firstName": "P."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Dietsch",
+          "firstName": "T. V."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Gordon",
+          "firstName": "C."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Greenberg",
+          "firstName": "R."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Perfecto",
+          "firstName": "I."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Reynoso-Santos",
+          "firstName": "R."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Soto-Pinto",
+          "firstName": "L."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Tejeda-Cruz",
+          "firstName": "C."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Williams-Linera",
+          "firstName": "G."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Valenzuela",
+          "firstName": "J."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Zolotoff",
+          "firstName": "J. M."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Philpott",
+          "firstName": "S. M."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Perfecto",
+          "firstName": "I."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Vandermeer",
+          "firstName": "J."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Philpott",
+          "firstName": "S. M."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Perfecto",
+          "firstName": "I."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Vandermeer",
+          "firstName": "J."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_TwoFullStops",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "author01",
+          "firstName": "author01"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_UndefinedInName",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "",
+          "firstName": "I Test J R"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_UndefinedInName2",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Kim",
+          "firstName": "B-X"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Kim",
+          "firstName": "A-Y"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_UnisaHarvardInitialization",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John Quiggly"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_YearSuffixInHarvard1",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "lastName": "Africa News",
+          "fieldMode": 1
+        },
+        {
+          "lastName": "Africa News",
+          "fieldMode": 1
+        },
+        {
+          "lastName": "Africa News",
+          "fieldMode": 1
+        },
+        {
+          "lastName": "Africa News",
+          "fieldMode": 1
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_disambiguate",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "FamilyA",
+          "firstName": "GivenA D."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "FamilyB",
+          "firstName": "GivenB P."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "FamilyA",
+          "firstName": "GivenA D."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "FamilyC",
+          "firstName": "GivenC1 GivenC2"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "FamilyB",
+          "firstName": "GivenB P"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: bugreports_parseName",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "van Happel",
+          "firstName": "Eduard"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "von Hoppel",
+          "firstName": "Gustav"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: decorations_AndTermUnaffectedByNameDecorations",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John, III"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van Roe",
+          "firstName": "Jane"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: disambiguate_BasedOnEtAlSubsequent",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Fröberg",
+          "firstName": "Lars"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Schileyko",
+          "firstName": "Anatoly A."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: disambiguate_ByCiteIncremental1",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Baines",
+          "firstName": "T. S."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Lightfoot",
+          "firstName": "H. W."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Benedettini",
+          "firstName": "O."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Kay",
+          "firstName": "J. M."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Baines",
+          "firstName": "T. S."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Lightfoot",
+          "firstName": "H. W."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Kay",
+          "firstName": "J. M."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Grubic",
+          "firstName": "T."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Jennions",
+          "firstName": "I."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Baines",
+          "firstName": "T. S."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: disambiguate_ByCiteIsDefault",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Hall",
+          "firstName": "Peter A"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Thelen",
+          "firstName": "Kathleen A"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Thelen",
+          "firstName": "Kathleen Ann"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: disambiguate_ByCiteTwoAuthorsSameCite",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Collier",
+          "firstName": "Ruth Berins"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: disambiguate_CitationLabelInData",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "von Dipheria",
+          "firstName": "Doug"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: disambiguate_DifferentSpacingInInitials",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "J. J."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "J.J."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: disambiguate_DisambiguateTrueAndYearSuffixOne",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Pollock",
+          "firstName": "Sir Frederick"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Pollock",
+          "firstName": "Sir Frederick"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: disambiguate_DisambiguationHang",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Johnson",
+          "firstName": "P B"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Johnson",
+          "firstName": "P B"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Johnson",
+          "firstName": "P B"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Johnson",
+          "firstName": "P B"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: disambiguate_FailWithYearSuffix",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Caritas Europa",
+          "fieldMode": 1
+        },
+        {
+          "creatorType": "author",
+          "lastName": "JRS-Europe",
+          "fieldMode": 1
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Caritas Europa",
+          "fieldMode": 1
+        },
+        {
+          "creatorType": "author",
+          "lastName": "JRS-Europe",
+          "fieldMode": 1
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: disambiguate_SetsOfNames",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Ely",
+          "firstName": "E W"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Ely",
+          "firstName": "E W"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Inouye",
+          "firstName": "Sharon K."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Bernard",
+          "firstName": "Gordon R."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Ely",
+          "firstName": "E W"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: disambiguate_YearCollapseWithInstitution",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Smith Co"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Smith Co"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Smith Co"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: display_AuthorAsHeading",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John Aloysius"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John Aloysius"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Roe",
+          "firstName": "Jane Henrietta"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Roe",
+          "firstName": "Jane Henrietta"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Roe",
+          "firstName": "Jane Henrietta"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: display_SecondFieldAlignMigratePunctuation",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Bennett",
+          "firstName": "Frank G., Jr."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: fullstyles_ABdNT",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Cole",
+          "firstName": "Steven J."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: group_ComplexNesting",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe Inc."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: group_SuppressWithEmptyNestedDateNode",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Author1",
+          "firstName": "One"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Author7",
+          "firstName": "Two"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Author3",
+          "firstName": "Three"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: integration_DuplicateItem",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "la Berge",
+          "firstName": "S. P"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Nagel",
+          "firstName": "L. E"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Dement",
+          "firstName": "W. C"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Zarcone",
+          "firstName": "V. P"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "la Berge",
+          "firstName": "S. P"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Nagel",
+          "firstName": "L. E"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Dement",
+          "firstName": "W. C"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Zarcone",
+          "firstName": "V. P"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: label_EditorTranslator1",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Иванов",
+          "firstName": "Иван Иванович"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Петров",
+          "firstName": "П.П."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Сидоров",
+          "firstName": "С.С."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Романов",
+          "firstName": "Р.Р."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: magic_CapitalizeFirstOccurringNameParticle",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "de Simone",
+          "firstName": "Samuel"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: magic_NameParticle",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "von Doe",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: magic_NameSuffixWithComma",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John,! Jr."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: magic_SubsequentAuthorSubstituteNotFooled",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Soltes",
+          "firstName": "Ori A."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_AllCapsInitialsUntouched",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "JH Hartcourt"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_ArticularNameAsSortOrder",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "James, III"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_ArticularShortFormCommaSuffix",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "James, Jr"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_ArticularWithComma",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "Jeffrey, Jr."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_AsianGlyphs",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "我妻",
+          "firstName": "栄"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_CelticClanName",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Smith",
+          "firstName": "Susan McMurphy"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_Delimiter",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Noakes Inc."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_FormattingOfParticles",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "van der Meer",
+          "firstName": "Gerard"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_GreekSimple",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Ράις",
+          "firstName": "Μυρτώ"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_HebrewAnd",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "תפוח"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "תפוז"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_HyphenatedFirstName",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Liu",
+          "firstName": "Hui-Xiao Li Yuan"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_HyphenatedNonDroppingParticle1",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "al-One",
+          "firstName": "Alan"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_Institution",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "lastName": "Multi-National United",
+          "fieldMode": 1
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_InstitutionDecoration",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "lastName": "São Paulo (Estado)",
+          "fieldMode": 1
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_LowercaseSurnameSuffix",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Chen",
+          "firstName": "Guo-ping"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_MixedFormatsInitialSortOrderAllWithDecorationsEtAl",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Чайковский",
+          "firstName": "Пётр Ильич"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van Winkle",
+          "firstName": "Rip"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Thucydides",
+          "firstName": "Carl, III"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_MixedFormatsInitialSortOrderFirstWithDecorationsEtAl",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Česnek",
+          "firstName": "Šťěpán"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Malíková",
+          "firstName": "Andrea"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_MultipleLiteral",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John J."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Alfred Benzon Foundation",
+          "fieldMode": 1
+        },
+        {
+          "creatorType": "author",
+          "lastName": "James Benson Foundation",
+          "fieldMode": 1
+        },
+        {
+          "creatorType": "author",
+          "lastName": "John Candy Foundation",
+          "fieldMode": 1
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_ParseNames",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "van der Vlist",
+          "firstName": "Eric"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van Gogh",
+          "firstName": "Vincent"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Humboldt",
+          "firstName": "Alexander von"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_ParsedCommaDelimitedDroppingParticleNormalOrderingWithAffixes",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Aubignac",
+          "firstName": "François Hédelin, abbé d'"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_ParsedDroppingParticleWithAffixes",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "La Fontaine",
+          "firstName": "Jean de"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_ParsedDroppingParticleWithApostrophe",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Aubignac",
+          "firstName": "François Hédelin d'"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_ParsedNonDroppingParticleWithAffixes",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "la Fontaine",
+          "firstName": "Jean de"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_ParsedNonDroppingParticleWithApostrophe",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "d'Aubignac",
+          "firstName": "François Hédelin"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_ParticleCaps1",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "van One",
+          "firstName": "Onename"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van Two",
+          "firstName": "Twoname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van Three",
+          "firstName": "Threename"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Van Four",
+          "firstName": "Fourname"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_ParticleCaps3",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "\"Van Dyke\"",
+          "firstName": "Dick"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_ParticleFormatting",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "de la Doe",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_ParticlesDemoteNonDroppingNever",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname al"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname dos"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname el"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Las Familyname",
+          "firstName": "Givenname de"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname lo"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname les"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname il"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "del Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname dela"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname della"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname dello"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Di Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Da Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Do Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Des Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Lou Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Pietro Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "de Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "La Familyname",
+          "firstName": "Givenname de"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname du"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname d'"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Le Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "La Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "L'Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Saint Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Sainte Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "St. Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Ste. Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van de Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van der Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van den Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "vander Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "v.d. Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "vd Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van het Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "ver Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname ten"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname ter"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname te"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname op de"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname in de"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname in 't"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname 't"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname in het"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname uit de"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname uit den"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname von"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname von der"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname von dem"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname von zu"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname v."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname v"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname vom"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname das"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname zum"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname zur"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname den"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname der"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname des"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Familyname",
+          "firstName": "Givenname auf den"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_PeriodAfterInitials",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John Jeeves"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_WesternArticularLowercase",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "van Doe",
+          "firstName": "Jacques"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: name_namepartAffixes",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "de La Fontaine",
+          "firstName": "Jean, III"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: nameattr_InitializeWithOnBibliographyInBibliography",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John-Lee"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: nameorder_Long",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "de la Martinière",
+          "firstName": "Gérard, III"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: position_IbidWithMultipleSoloCitesInBackref",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Álvarez",
+          "firstName": "Ajax"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: position_IbidWithSuffix",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Al-Khatib Organization"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: sort_ChangeInNameSort",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "\"De Quincey\"",
+          "firstName": "Alan"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: sort_ChicagoYearSuffix1",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Beijing Zoo"
+        },
+        {
+          "lastName": "Beijing Zoo",
+          "fieldMode": 1
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: sort_DropNameLabelInSort",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John Eamon"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John Egbert"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: sort_FamilyOnly",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "ANZ Group"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: sort_GroupedByAuthorstring",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Jones",
+          "firstName": "2005"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: sort_LeadingApostropheOnNameParticle",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Horvath",
+          "firstName": "Peter A.A. 't"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Horvath",
+          "firstName": "Peter A.B. in 't"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "'t Horvath",
+          "firstName": "Peter A.C."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "in 't Horvath",
+          "firstName": "Peter A.D."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: sort_NameParticleInNameSortFalse",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "di Noakes",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: sort_NameVariable",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "[F]linders",
+          "firstName": "Jacob"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: sort_SeparateAuthorsAndOthers",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John Barbitol"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: sort_VariousNameMacros1",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "Jane B."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John A."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John A."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Smith",
+          "firstName": "John A."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John A."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Bloggs",
+          "firstName": "Joe A."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: substitute_SuppressOrdinaryVariable",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John-boy"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "Jane-girl"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
       "__citekey__": "vonwright_norm_1963"
     }
   ]
