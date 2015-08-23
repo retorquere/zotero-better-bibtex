@@ -23,8 +23,8 @@ The Better BibTeX configuration pane can be found under the regular Zotero prefe
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.2.26/zotero-better-bibtex-1.2.26.xpi)
-(**1.2.26**).
+version](https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.2.27/zotero-better-bibtex-1.2.27.xpi)
+(**1.2.27**).
 If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
@@ -51,7 +51,9 @@ prefer fuzzy ones over missed ones.
 * sync citekey cleanly without abusing the "extra" field
 * faster journal abbreviator using the [LTWA](http://www.issn.org/services/online-services/access-to-the-ltwa/)
 
-Submission to Addons.Mozilla.Org is off the table -- AMO moves *much* to slow for my sometimes daily releases.
+BBT has traditionally not been hosted on addons.mozilla.org because the review process involved takes in the order of 10
+weeks -- a *little* too slow for my tastes. As of Firefox 42, addons.mozilla.org involvement is going to be mandatory,
+and miserable. I'm weighing my options.
 
 ## Known problems
 
@@ -66,7 +68,7 @@ or there are problems preventing me from implementing a fix.
 
   switch (window.location.hash.trim()) {
     case '#xpi':
-      window.location = 'https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.2.26/zotero-better-bibtex-1.2.26.xpi';
+      window.location = 'https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.2.27/zotero-better-bibtex-1.2.27.xpi';
       break;
     case '#debug':
       window.location = 'https://drive.google.com/a/iris-advies.com/folderview?id=0B8tW4NMPfEosfkFETUV0V2l0N3NHZHEyQk5SUm03TjZmS1RoVmlBTmdHclUtcTRzZ2VHclU&usp=drive_web#list';
