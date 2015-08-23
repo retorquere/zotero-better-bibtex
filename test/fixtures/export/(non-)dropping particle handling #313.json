@@ -45,8 +45,23 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "de La Fontaine",
-          "firstName": "Jean"
+          "lastName": "Aubignac",
+          "firstName": "François Hédelin, abbé d'"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Humboldt",
+          "firstName" : "Alexander von"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Gooding",
+          "firstName": "Cuba, Jr."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "La Fontaine",
+          "firstName": "Jean de"
         },
         {
           "creatorType": "author",

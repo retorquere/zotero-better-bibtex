@@ -323,15 +323,13 @@ Reference::enc_creators = (f) ->
               name.family = @enc_latex({value: name.family}).replace(/ and /g, ' {and} ')
 
             if name['dropping-particle']
-              name.given = ((name.given || '') + ' ' + name['dropping-particle']).trim()
-
-            Translator.debug('unhandled particla data: ', creator, '->', name) if name['comma-suffix'] || name['comma-dropping-particle'] || name.suffix
+              name.family = @enc_latex({value: name['dropping-particle']}).replace(/ and /g, ' {and} ') + ' ' + name.family
 
         if name.given
           name.given = @enc_latex({value: name.given}).replace(/ and /g, ' {and} ')
 
-        # TODO: deal with commas in names
-        name = (part for part in [name.family, name.given] when part).join(', ')
+        # TODO: is this the best way to deal with commas?
+        name = (part.replace(/,/g, '{,}') for part in [name.family, name.suffix, name.given] when part).join(', ')
 
       when creator.name
         name = @enc_latex({value: new String(creator.name)})
