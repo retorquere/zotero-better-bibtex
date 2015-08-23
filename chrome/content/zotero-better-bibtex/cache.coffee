@@ -24,10 +24,6 @@ Zotero.BetterBibTeX.cache = new class
 
   load: ->
     Zotero.BetterBibTeX.debug('cache.load')
-    if Zotero.BetterBibTeX.pref.get('cacheReset') > 0
-      @reset()
-      Zotero.BetterBibTeX.pref.set('cacheReset', Zotero.BetterBibTeX.pref.get('cacheReset') - 1)
-      Zotero.BetterBibTeX.debug('cache.load forced reset', Zotero.BetterBibTeX.pref.get('cacheReset'), 'left')
 
     @cache.flushChanges()
     for item in Zotero.DB.query('select itemID, exportCharset, exportNotes, getCollections, translatorID, useJournalAbbreviation, citekey, bibtex from betterbibtex.cache')
@@ -189,7 +185,7 @@ Zotero.BetterBibTeX.auto = new class
   constructor: ->
     @search = {}
     @idle = false
-    Zotero.debug('idle: auto-exporter initialized:')
+    Zotero.BetterBibTeX.debug('idle: auto-exporter initialized:')
 
   status: (status) ->
     return "#{status} (#{(new Date()).toLocaleString()})"

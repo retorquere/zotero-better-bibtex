@@ -86,6 +86,21 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
     Zotero.debug('[better' + '-' + 'bibtex] ' + str, level)
 
 Zotero.BetterBibTeX.extensionConflicts = ->
+  AddonManager.getAddonByID('zoteromaps@zotero.org', (maps) ->
+    return unless maps
+    return if Services.vc.compare(zutilo.version, '1.0.10') > 0
+    Zotero.BetterBibTeX.removeTranslators()
+    Zotero.BetterBibTeX.disabled = '''
+      Better BibTeX has been disabled because it has detected conflicting extension "zotero-maps" 1.0.10 or
+      earlier. Unfortunately this plugin appears to be abandoned, and their issue tracker at
+
+      https://github.com/zotero/zotero-maps
+
+      is not enabled.
+    '''
+    Zotero.BetterBibTeX.flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
+  )
+
   AddonManager.getAddonByID('zutilo@www.wesailatdawn.com', (zutilo) ->
     return unless zutilo
     return if Services.vc.compare(zutilo.version, '1.2.10.1') > 0
@@ -489,8 +504,15 @@ Zotero.BetterBibTeX.initDatabase = ->
     Zotero.BetterBibTeX.log("export cache: citekey mismatch! #{m.itemID} cached=#{m.cached} key=#{m.citekey}")
   if mismatched.length > 0
     Zotero.DB.query('delete from betterbibtex.cache')
-  @cache.load()
-  @serialized.load()
+
+  if Zotero.BetterBibTeX.pref.get('cacheReset') > 0
+    @cache.reset()
+    @serialized.reset()
+    Zotero.BetterBibTeX.pref.set('cacheReset', Zotero.BetterBibTeX.pref.get('cacheReset') - 1)
+    Zotero.BetterBibTeX.debug('cache.load forced reset', Zotero.BetterBibTeX.pref.get('cacheReset'), 'left')
+  else
+    @cache.load()
+    @serialized.load()
 
   Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', ?)", [@release])
 
@@ -551,7 +573,6 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Server.DataListener::_generateResponse = ((original) ->
     return (status, contentType, promise) ->
       try
-        Zotero.debug("Zotero.Server.DataListener::_generateResponse: handling #{typeof promise} promise? #{typeof promise?.then}")
         if typeof promise?.then == 'function'
           return promise.then((body) =>
             throw new Error("Zotero.Server.DataListener::_generateResponse: circular promise!") if typeof body?.then == 'function'
@@ -567,7 +588,6 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Server.DataListener::_requestFinished = ((original) ->
     return (promise) ->
       try
-        Zotero.debug("Zotero.Server.DataListener::_requestFinished: handling #{typeof promise} promise? #{typeof promise?.then}")
         if typeof promise?.then == 'function'
           promise.then((response) =>
             throw new Error("Zotero.Server.DataListener::_requestFinished: circular promise!") if typeof response?.then == 'function'
@@ -612,14 +632,13 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Translate.Export::translate = ((original) ->
     return ->
       # requested translator
-      Zotero.debug("Zotero.Translate.Export::translate: #{if @_export then Object.keys(@_export) else 'no @_export'}")
+      Zotero.BetterBibTeX.debug("Zotero.Translate.Export::translate: #{if @_export then Object.keys(@_export) else 'no @_export'}")
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
       Zotero.BetterBibTeX.debug('export: ', translatorID)
       return original.apply(@, arguments) unless translatorID
 
       # pick up sentinel from patched Zotero_File_Interface.exportCollection in zoteroPane.coffee
-      Zotero.BetterBibTeX.debug("Zotero.Translate.Export::translate is search:", @_export)
       if @_export?.items?.search
         saved_search = @_export.items.search
         @_export.items = @_export.items.items

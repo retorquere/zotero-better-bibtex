@@ -80,7 +80,6 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator, displayOpt
       deferred.fulfill(result)
   )
 
-  Zotero.debug('exportToString: returning promise')
   return deferred.promise
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, displayOptions, filename) ->

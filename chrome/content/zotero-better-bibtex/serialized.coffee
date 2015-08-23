@@ -8,11 +8,11 @@ Zotero.BetterBibTeX.serialized =
       serialized = Zotero.BetterBibTeX.createFile('serialized-items.json')
       if serialized.exists()
         @items = JSON.parse(Zotero.File.getContents(serialized))
-        Zotero.debug("serialized.load: #{Object.keys(@items).length} items")
+        Zotero.BetterBibTeX.debug("serialized.load: #{Object.keys(@items).length} items")
       else
         @items = {}
     catch e
-      Zotero.debug("serialized.load failed: #{e}")
+      Zotero.BetterBibTeX.debug("serialized.load failed: #{e}")
       @items = {}
 
     if @items.Zotero != ZOTERO_CONFIG.VERSION || Zotero.BetterBibTeX.version(@items.BetterBibTeX) != Zotero.BetterBibTeX.version(Zotero.BetterBibTeX.release)
@@ -24,7 +24,7 @@ Zotero.BetterBibTeX.serialized =
     delete @items[parseInt(itemID)]
 
   reset: ->
-    Zotero.debug("serialized.reset")
+    Zotero.BetterBibTeX.debug("serialized.reset")
     @items = {}
 
   get: (item, options = {}) ->
@@ -90,6 +90,6 @@ Zotero.BetterBibTeX.serialized =
       serialized.remove(false) if serialized.exists()
       Zotero.File.putContents(serialized, JSON.stringify(@items))
     catch e
-      Zotero.debug("serialized.save failed: #{e}")
+      Zotero.BetterBibTeX.debug("serialized.save failed: #{e}")
 
   _attachmentToArray: Zotero.Translate.ItemGetter::_attachmentToArray
