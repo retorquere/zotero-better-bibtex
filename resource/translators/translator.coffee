@@ -289,7 +289,10 @@ Reference::enc_verbatim = (f) ->
   return "\\href{#{href}}{#{LaTeX.text2latex(href)}}" if f.name == 'url' && Translator.fancyURLs
   return href
 
-Reference::particleSpacing = new XRegExp("[-\\s]$")
+Reference::particleSpacing =
+  atEnd: new XRegExp("[-\\s]$")
+  atStart: new XRegExp("^[-\\s]")
+
 Reference::enc_creators = (f, raw) ->
   # family
   # given
@@ -328,14 +331,17 @@ Reference::enc_creators = (f, raw) ->
             Translator.debug('particle parser:', creator, '=>', name)
 
             if name['non-dropping-particle']
-              name['non-dropping-particle'] += ' ' unless XRegExp.test(name['non-dropping-particle'], Reference::particleSpacing)
+              if ! XRegExp.test(name['non-dropping-particle'], Reference::particleSpacing.atEnd) && ! XRegExp.test(name.family, Reference::particleSpacing.atStart)
+                name['non-dropping-particle'] += ' '
               name.family = @enc_latex({value: new String((name['non-dropping-particle'] + name.family).trim())})
             else
               name.family = @enc_latex({value: name.family}).replace(/ and /g, ' {and} ')
 
             if name['dropping-particle']
-              name['dropping-particle'] += ' ' unless XRegExp.test(name['dropping-particle'], Reference::particleSpacing)
-              name.family = @enc_latex({value: name['dropping-particle']}).replace(/ and /g, ' {and} ') + name.family
+              particle = @enc_latex({value: name['dropping-particle']}).replace(/ and /g, ' {and} ')
+              if ! XRegExp.test(name['dropping-particle'], Reference::particleSpacing.atEnd) && ! XRegExp.test(name.family, Reference::particleSpacing.atStart)
+                particle += ' '
+              name.family = particle + name.family
 
         if name.given
           name.given = @enc_latex({value: name.given}).replace(/ and /g, ' {and} ')
