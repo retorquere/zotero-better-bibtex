@@ -88,7 +88,7 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
 Zotero.BetterBibTeX.extensionConflicts = ->
   AddonManager.getAddonByID('zoteromaps@zotero.org', (extension) ->
     return unless extension
-    return if Services.vc.compare(extension.version, '1.0.10') > 0
+    return if Services.vc.compare(extension.version, '1.0.10.1') > 0
     Zotero.BetterBibTeX.removeTranslators()
     Zotero.BetterBibTeX.disabled = '''
       Better BibTeX has been disabled because it has detected conflicting extension "zotero-maps" 1.0.10 or
