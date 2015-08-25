@@ -1,4 +1,27 @@
-Zotero.BetterBibTeX.CAYW = {}
+Zotero.BetterBibTeX.CAYW =
+  shortLocator:
+    article: "art."
+    chapter: "ch."
+    subchapter: "subch."
+    column: "col."
+    figure: "fig."
+    line: "l."
+    note: "n."
+    issue: "no."
+    opus: "op."
+    page: "p."
+    paragraph: "para."
+    subparagraph: "subpara."
+    part: "pt."
+    rule: "r."
+    section: "sec."
+    subsection: "subsec."
+    Section: "Sec."
+    'sub verbo': "sv."
+    schedule: "sch."
+    title: "tit."
+    verse: "vrs."
+    volume: "vol."
 
 class Zotero.BetterBibTeX.CAYW.Document
   constructor: ->
@@ -64,6 +87,10 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
     for own key of @config
       @config[key] = config[key] if config[key]
 
+    if @config.format.match(/^cite/)
+      @config.command = @config.format
+      @config.format = 'latex'
+
   getItems: -> Q.fcall(-> [])
 
   accept: (progressCallback) ->
@@ -81,7 +108,12 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
       citations.push(citation)
 
     if Zotero.BetterBibTeX.CAYW.Formatter[@config.format]
-      formatted = Zotero.BetterBibTeX.CAYW.Formatter[@config.format].call(null, citations)
+      try
+        formatted = Zotero.BetterBibTeX.CAYW.Formatter[@config.format].call(null, citations, @config)
+      catch err
+        Zotero.BetterBibTeX.error('cayw:', err)
+        alert('Could not format references: ' + err.msg)
+        formatted = ''
     else
       formatted = []
       for citation in citations
@@ -98,6 +130,45 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
     @doc.activate()
 
 Zotero.BetterBibTeX.CAYW.Formatter = {
+  latex: (citations, config) ->
+    config.command ||= 'cite'
+
+    return '' if citations.length == 0
+
+    state = {
+      prefix: 0
+      suffix: 0
+      'suppress-author': 0
+      locator: 0
+      label: 0
+    }
+    if citations.length > 1
+      for citation in citations
+        for own k of citation
+          state[k] ?= 0
+          state[k]++
+
+    if state.suffix == 0 && state.prefix == 0 && state.locator == 0 && state['suppress-author'] in [0, citations.length]
+      # simple case where everything can be put in a single cite
+      return "\\#{if citations[0]['suppress-author'] then 'citeyear' else config.command}{#{(citation.citekey for citation in citations).join(',')}}"
+
+    formatted = ''
+    for citation in citations
+      formatted += ' ' + citation.prefix + ' ' if citation.prefix
+      formatted += "\\"
+      formatted += if citation['suppress-author'] then 'citeyear' else config.command
+
+      switch
+        when citation.locator && citation.suffix
+          formatted += '[' + Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' ' + citation.locator + ', ' + citation.suffix + ']'
+        when citation.locator
+          formatted += '[' + Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' ' + citation.locator + ']'
+        when citation.suffix
+          formatted += '[' + citation.suffix + ']'
+      formatted += '{' + citation.citekey + '}'
+
+    return formatted.trim()
+
   mmd: (citations) ->
     formatted = []
     for citation in citations
@@ -121,30 +192,6 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
     return '[' + citation.join(';') + ']'
 
   'scannable-cite': (citations) ->
-    scannableCiteLocator: {
-      article: "art."
-      chapter: "ch."
-      subchapter: "subch."
-      column: "col."
-      figure: "fig."
-      line: "l."
-      note: "n."
-      issue: "no."
-      opus: "op."
-      page: "p."
-      paragraph: "para."
-      subparagraph: "subpara."
-      part: "pt."
-      rule: "r."
-      section: "sec."
-      subsection: "subsec."
-      Section: "Sec."
-      'sub verbo': "sv."
-      schedule: "sch."
-      title: "tit."
-      verse: "vrs."
-      volume: "vol."
-    }
 
     class Mem
       constructor: (@isLegal) ->
@@ -171,7 +218,7 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
         when item.libraryID then "zg:#{item.libraryID}:#{item.key}"
         when Zotero.userID then "zu:#{Zotero.userID}:#{item.key}"
         else "zu:0:#{item.key}"
-      locator = if citation.locator then "#{scannableCiteLocator[citation.label]} #{citation.locator}" else ''
+      locator = if citation.locator then "#{Zotero.BetterBibTeX.CAYW.shortLocator[citation.label]} #{citation.locator}" else ''
       citation.prefix ?= ''
       citation.suffix ?= ''
 
