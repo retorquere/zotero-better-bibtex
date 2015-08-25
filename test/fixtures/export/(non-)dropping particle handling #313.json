@@ -31,6 +31,18 @@
   "items": [
     {
       "itemType": "journalArticle",
+      "title": "(Aubignac) (François Hédelin abbé d')",
+      "extra": "bibtex: abbot0",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Aubignac",
+          "firstName": "François Hédelin abbé d'"
+        }
+      ]
+    },
+    {
+      "itemType": "journalArticle",
       "title": "(Aubignac) (François Hédelin, abbé d')",
       "extra": "bibtex: abbot1",
       "creators": [
