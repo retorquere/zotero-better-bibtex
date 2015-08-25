@@ -189,7 +189,7 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       cite += " #{citation.suffix}" if citation.suffix
       formatted.push(cite)
     return '' if citation.length == 0
-    return '[' + citation.join(';') + ']'
+    return '[' + formatted.join(';') + ']'
 
   'scannable-cite': (citations) ->
 
