@@ -36,7 +36,7 @@ Translator.typeMap = {
   misc:                               'letter interview film artwork webpage'
 }
 
-Translator.fieldEscape = {
+Translator.fieldEncoding = {
   url: 'verbatim'
   doi: 'verbatim'
 }
@@ -79,19 +79,16 @@ doExport = ->
       primaryCreatorType = Zotero.Utilities.getCreatorsForType(item.itemType)[0]
 
       for creator in item.creators
-        creatorString = Translator.creator(creator)
-        continue unless creatorString
-
         switch creator.creatorType
-          when 'editor', 'seriesEditor'   then editors.push(creatorString)
-          when 'translator'               then translators.push(creatorString)
-          when primaryCreatorType         then authors.push(creatorString)
-          else                                 collaborators.push(creatorString)
+          when 'editor', 'seriesEditor'   then editors.push(creator)
+          when 'translator'               then translators.push(creator)
+          when primaryCreatorType         then authors.push(creator)
+          else                                 collaborators.push(creator)
 
-      ref.add({ name: 'author', value: authors, sep: ' and ', preserveCaps: true })
-      ref.add({ name: 'editor', value: editors, sep: ' and ', preserveCaps: true })
-      ref.add({ name: 'translator', value: translators, sep: ' and ', preserveCaps: true })
-      ref.add({ name: 'collaborator', value: collaborators, sep: ' and ', preserveCaps: true })
+      ref.add({ name: 'author', value: authors, enc: 'creators', preserveCaps: true })
+      ref.add({ name: 'editor', value: editors, enc: 'creators', preserveCaps: true })
+      ref.add({ name: 'translator', value: translators, enc: 'creators', preserveCaps: true })
+      ref.add({ name: 'collaborator', value: collaborators, enc: 'creators', preserveCaps: true })
 
     if item.date
       date = Zotero.Utilities.strToDate(item.date)
@@ -104,7 +101,7 @@ doExport = ->
         ref.add({ name: 'year', value: date.year })
 
     ref.add({ name: 'note', value: item.extra, allowDuplicates: true })
-    ref.add({ name: 'keywords', value: item.tags, esc: 'tags' })
+    ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
     if item.pages
       pages = item.pages
@@ -115,7 +112,7 @@ doExport = ->
       for note in item.notes
         ref.add({ name: 'annote', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true })
 
-    ref.add({ name: 'file', value: item.attachments, esc: 'attachments' })
+    ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
     ref.complete()
 
   Translator.exportGroups()

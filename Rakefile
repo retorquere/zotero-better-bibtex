@@ -1,4 +1,5 @@
 require 'rake'
+require 'uri'
 require 'os'
 require 'rake/clean'
 require 'shellwords'
@@ -881,5 +882,77 @@ task :logs, [:id] do |t, args|
       sh "aws s3 cp s3://zotplus-964ec2b7-379e-49a4-9c8a-edcb20db343f/#{args[:id]}-references.json tmp/#{args[:id]}-references.json"
     rescue
     end
+  end
+end
+
+task :csltests do
+  source = 'test/fixtures/export/(non-)dropping particle handling #313.json'
+  testcase = JSON.parse(open(source).read)
+  testcase['items'] = testcase['items'].reject{|item| (item['tags'] || []).include?('imported') }
+
+  root = 'https://bitbucket.org/bdarcus/citeproc-test/src/tip/processor-tests/humans/'
+  seen = testcase['items'].first['creators'].dup
+  Tempfile.create('tests') do |tmp|
+    ZotPlus::RakeHelper.download(root, tmp.path)
+    tests = Nokogiri::HTML(open(tmp.path))
+    n = tests.css('td.filename a').length
+    tests.css('td.filename a').each_with_index{|test, i|
+      link = URI.join(root, test['href']).to_s.sub(/\?.*/, '').sub('/src/', '/raw/')
+
+      if open(link).read =~ />>=+ INPUT =+>>(.*)<<=+ INPUT =+<</im
+        test = JSON.parse($1)
+        creators = []
+        test.each{|ref|
+          %w{author editor container-author composer director interviewer recipient reviewed-author collection-editor %translator}.each{|creator|
+            creators << ref[creator] || []
+          }
+        }
+        creators.flatten!
+        creators.compact!
+        creators = creators.select{|creator|
+          (creator.keys & %w{literal dropping-particle non-dropping-particle suffix}).length != 0 || creator['family'] =~ /[^\p{Alnum}]/i
+        }.collect{|creator|
+          if creator['literal']
+            cr = {
+              lastName: creator['literal'],
+              fieldMode: 1
+            }
+          else
+            cr = {
+              creatorType: 'author',
+              lastName: [creator['dropping-particle'], creator['non-dropping-particle'], creator['family']].compact.join(' ').strip,
+              firstName: [creator['given'], creator['suffix']].compact.join(', '),
+            }
+            cr.delete(:firstName) if cr[:firstName] == ''
+            throw link if cr[:firstName] && creator['isInstitution'] == 'true'
+            cr[:fieldMode] = 1 if creator['isInstitution'] == 'true'
+          end
+
+          cr[:firstName] =  "François Hédelin, abbé d'" if cr[:firstName] =~ /^François Hédelin/
+
+          cr
+        }
+        creators = creators.uniq - seen
+
+        seen << creators
+        seen.flatten!
+        seen.uniq!
+      else
+        creators = []
+      end
+
+      if creators.length > 0
+        citekey = link.sub(/.*\//, '').sub(/\..*/, '')
+        testcase['items'] << {
+          itemType: 'journalArticle',
+          title: citekey,
+          creators: creators,
+          extra: "bibtex: #{citekey}",
+          tags: ['imported']
+        }
+      end
+      puts "#{i+1}/#{n}: #{creators.length} creators, #{testcase['items'].length} references"
+    }
+    open(source, 'w'){|f| f.write(JSON.pretty_generate(testcase)) }
   end
 end

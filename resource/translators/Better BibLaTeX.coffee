@@ -45,7 +45,7 @@ Translator.typeMap = {
   misc:                               'interview map instantMessage tvBroadcast radioBroadcast document'
 }
 
-Translator.fieldEscape = {
+Translator.fieldEncoding = {
   url: 'verbatim'
   doi: 'verbatim'
   eprint: 'verbatim'
@@ -444,29 +444,26 @@ doExport = ->
       }
 
       for creator in item.creators
-        creatorString = Translator.creator(creator)
-        continue unless creatorString
-
         switch creator.creatorType
           when 'author', 'interviewer', 'director', 'programmer', 'artist', 'podcaster', 'presenter'
-            creators.author.push(creatorString)
+            creators.author.push(creator)
           when 'bookAuthor'
-            creators.bookauthor.push(creatorString)
+            creators.bookauthor.push(creator)
           when 'commenter'
-            creators.commentator.push(creatorString)
+            creators.commentator.push(creator)
           when 'editor'
-            creators.editor.push(creatorString)
+            creators.editor.push(creator)
           when 'inventor'
-            creators.holder.push(creatorString)
+            creators.holder.push(creator)
           when 'translator'
-            creators.translator.push(creatorString)
+            creators.translator.push(creator)
           when 'seriesEditor'
-            creators.editorb.push(creatorString)
+            creators.editorb.push(creator)
           else
-            creators.editora.push(creatorString)
+            creators.editora.push(creator)
 
       for own field, value of creators
-        ref.add({ name: field, value: value, sep: ' and ', preserveCaps: true })
+        ref.add({ name: field, value: value, enc: 'creators', preserveCaps: true })
 
       ref.add({ name: 'editoratype', value: 'collaborator' }) if creators.editora.length > 0
       ref.add({ name: 'editorbtype', value: 'redactor' }) if creators.editorb.length > 0
@@ -493,13 +490,13 @@ doExport = ->
       ref.add({ name: 'langid', value: language })
 
     ref.add({ name: (if ref.has.note then 'annotation' else 'note'), value: item.extra, allowDuplicates: true })
-    ref.add({ name: 'keywords', value: item.tags, esc: 'tags' })
+    ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
     if item.notes and Translator.exportNotes
       for note in item.notes
         ref.add({ name: 'annotation', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true })
 
-    ref.add({ name: 'file', value: item.attachments, esc: 'attachments' })
+    ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
     ref.complete()
 
   Translator.exportGroups()

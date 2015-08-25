@@ -107,7 +107,7 @@ Translator.initialize = ->
   @testing = Zotero.getHiddenPref('better-bibtex.tests') != ''
   @testing_timestamp = Zotero.getHiddenPref('better-bibtex.test.timestamp') if @testing
 
-  for own attr, f of @fieldMap or {}
+  for own attr, f of @fieldMap || {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
   @skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
@@ -173,7 +173,7 @@ Translator.sanitizeCollection = (coll) ->
     items: []
   }
 
-  for c in coll.children or coll.descendents
+  for c in coll.children || coll.descendents
     switch c.type
       when 'item'       then sane.items.push(c.id)
       when 'collection' then sane.collections.push(@sanitizeCollection(c))
@@ -217,16 +217,6 @@ Translator.nextItem = ->
 
   return null
 
-Translator.creator = (creator) ->
-  creatorString = (name for name in [creator.lastName, creator.firstName] when name && name.trim() != '')
-  switch creatorString.length
-    when 2
-      return creatorString.join(', ')
-    when 1
-      return new String(creatorString[0])
-    else
-      return null
-
 Translator.exportGroups = ->
   @debug('exportGroups:', @collections)
   return if @collections.length == 0
@@ -269,14 +259,12 @@ class Reference
     @has = Object.create(null)
     @raw = ((tag.tag for tag in @item.tags when tag.tag == Translator.rawLaTag).length > 0)
 
-    @referencetype = Translator.typeMap.Zotero2BibTeX[@item.itemType] or 'misc'
+    @referencetype = Translator.typeMap.Zotero2BibTeX[@item.itemType] || 'misc'
 
     @override = Translator.extractFields(@item)
 
-    Translator.debug('item fields:', @item)
-    for own attr, f of Translator.fieldMap or {}
+    for own attr, f of Translator.fieldMap || {}
       @add(@field(f, @item[attr])) if f.name
-      Translator.debug('fields@fieldMap:', attr, @field(f, @item[attr]), (field.name for field in @fields)) if f.name
 
     @add({name: 'timestamp', value: Translator.testing_timestamp || @item.dateModified || @item.dateAdded})
 
@@ -288,26 +276,105 @@ Reference::field = (f, value) ->
   clone.value = value
   return clone
 
-Reference::esc_raw = (f) ->
+Reference::enc_raw = (f) ->
   return f.value
 
-Reference::esc_verbatim = (f) ->
+Reference::enc_verbatim = (f) ->
   if Translator.BetterBibTeX
     href = ('' + f.value).replace(/([#\\%&{}])/g, '\\$1')
   else
     href = ('' + f.value).replace(/([\\{}])/g, '\\$1')
   href = href.replace(/[^\x21-\x7E]/g, ((chr) -> '\\%' + ('00' + chr.charCodeAt(0).toString(16).slice(-2)))) if not Translator.unicode
 
-  return "\\href{#{href}}{#{LaTeX.text2latex(href)}}" if f.name == 'url' and Translator.fancyURLs
+  return "\\href{#{href}}{#{LaTeX.text2latex(href)}}" if f.name == 'url' && Translator.fancyURLs
   return href
 
-Reference::esc_latex = (f, raw) ->
+Reference::nonLetters = new XRegExp("[^\\p{Letter}]", 'g')
+Reference::punctuationAtEnd = new XRegExp("[\\p{Punctuation}]$")
+Reference::postfixedParticle = (particle) ->
+  return particle + ' ' if particle[particle.length - 1] == '.'
+  return particle if XRegExp.test(particle, @punctuationAtEnd)
+  return particle + ' '
+
+Reference::enc_creators = (f, raw) ->
+  # family
+  # given
+  # dropping-particle
+  # non-dropping-particle
+  # comma-suffix?
+  # comma-dropping-particle?
+  # suffix?
+
+  return null if f.value.length == 0
+
+  Translator.debug('enc_creators', f, 'raw:', raw)
+
+  encoded = []
+  for creator in f.value
+    switch
+      when creator.lastName && creator.fieldMode == 1
+        name = if raw then "{#{creator.lastName}}" else @enc_latex({value: new String(creator.lastName)})
+
+      when raw
+        name = [creator.lastName || '', creator.firstName || ''].join(', ')
+
+      when creator.lastName || creator.firstName
+        name = {family: creator.lastName || '', given: creator.firstName || ''}
+        # Parse name particles
+        # Replicate citeproc-js logic for what should be parsed so we don't
+        # break current behavior.
+        fallback = false
+
+        if name.family # && name.given
+          # Don't parse if last name is quoted
+          if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
+            name.family = @enc_latex({value: new String(name.family.slice(1, -1))})
+
+          else
+            Zotero.BetterBibTeX.CSL.parseParticles(name)
+
+            source = XRegExp.replace((creator.firstName || '') + (creator.lastName || ''), @nonLetters, '')
+            parsed = XRegExp.replace((part || '' for part in [name.given, name.family, name.suffix, name['non-dropping-particle'], name['dropping-particle']]).join(''), @nonLetters, '')
+            fallback = (source.length != parsed.length)
+
+            Translator.debug('particle parser: creator=', creator, "@#{source.length}=", source, 'name=', name, "@#{parsed.length}=", parsed, 'fallback:', fallback)
+
+            if name['non-dropping-particle']
+              name.family = @enc_latex({value: new String((@postfixedParticle(name['non-dropping-particle']) + name.family).trim())})
+            else
+              name.family = @enc_latex({value: name.family}).replace(/ and /g, ' {and} ')
+
+            if name['dropping-particle']
+              name.family = @postfixedParticle(@enc_latex({value: name['dropping-particle']}).replace(/ and /g, ' {and} ')) + name.family
+
+        if name.given
+          name.given = @enc_latex({value: name.given}).replace(/ and /g, ' {and} ')
+
+        if name.suffix
+          name = [name.family || '', name.suffix, name.given || '']
+        else
+          name = [name.family || '', name.given || '']
+        # TODO: is this the best way to deal with commas?
+        name = (part.replace(/,/g, '{,}') for part in name).join(', ')
+
+        if fallback
+          name = (part.replace(/,!/g, ',') for part in [creator.firstName + ' ' + creator.lastName] when part).join(' ')
+          name = @enc_latex({value: name}).replace(/ and /g, ' {and} ').replace(/,/g, '{,}')
+
+      else
+        continue
+
+    encoded.push(name.trim())
+
+  return encoded.join(' and ')
+
+Reference::enc_latex = (f, raw) ->
   return f.value if typeof f.value == 'number'
   return null unless f.value
 
   if Array.isArray(f.value)
     return null if f.value.length == 0
-    return (@esc_latex(@field(f, word), raw) for word in f.value).join(f.sep)
+    return (@enc_latex(@field(f, word), raw) for word in f.value).join(f.sep)
 
   return f.value if raw
 
@@ -315,8 +382,8 @@ Reference::esc_latex = (f, raw) ->
   value = new String("{#{value}}") if f.value instanceof String
   return value
 
-Reference::esc_tags = (f) ->
-  return null if not f.value or f.value.length == 0
+Reference::enc_tags = (f) ->
+  return null if not f.value || f.value.length == 0
   tags = (tag.tag for tag in f.value when tag.tag != Translator.rawLaTag)
 
   # sort tags for stable tests
@@ -324,10 +391,10 @@ Reference::esc_tags = (f) ->
 
   f.value = tags
   f.sep = ','
-  return @esc_latex(f)
+  return @enc_latex(f)
 
-Reference::esc_attachments = (f) ->
-  return null if not f.value or f.value.length == 0
+Reference::enc_attachments = (f) ->
+  return null if not f.value || f.value.length == 0
   attachments = []
   errors = []
 
@@ -338,7 +405,7 @@ Reference::esc_attachments = (f) ->
       mimetype: att.mimeType || ''
     }
 
-    save = Translator.exportFileData and att.defaultPath and att.saveFile
+    save = Translator.exportFileData && att.defaultPath && att.saveFile
     a.path = att.defaultPath if save
 
     continue unless a.path # amazon/googlebooks etc links show up as atachments without a path
@@ -380,9 +447,9 @@ Reference::isBibVar = (value) ->
 
 Reference::add = (field) ->
   return if Translator.skipFields.indexOf(field.name) >= 0
-  return if typeof field.value != 'number' and not field.value
-  return if typeof field.value == 'string' and field.value.trim() == ''
-  return if Array.isArray(field.value) and field.value.length == 0
+  return if typeof field.value != 'number' && not field.value
+  return if typeof field.value == 'string' && field.value.trim() == ''
+  return if Array.isArray(field.value) && field.value.length == 0
 
   @remove(field.name) if field.replace
   throw "duplicate field '#{field.name}' for #{@item.__citekey__}" if @has[field.name] && !field.allowDuplicates
@@ -390,10 +457,10 @@ Reference::add = (field) ->
   if typeof field.value == 'number' || (field.preserveBibTeXVariables && @isBibVar(field.value))
     value = field.value
   else
-    esc = field.esc || Translator.fieldEscape?[field.name] || 'latex'
-    value = @["esc_#{esc}"](field, (if field.esc then false else @raw))
+    enc = field.enc || Translator.fieldEncoding?[field.name] || 'latex'
+    value = @["enc_#{enc}"](field, (if field.enc && field.enc != 'creators' then false else @raw))
 
-    return null unless value
+    return unless value
 
     unless field.bare && !field.value.match(/\s/)
       if Translator.preserveCaps != 'no' && field.preserveCaps && !@raw
@@ -410,7 +477,7 @@ Reference::add = (field) ->
         value = XRegExp.replace(value, @preserveCaps[Translator.preserveCaps], (match, boundary, needle, pos, haystack) ->
           boundary ?= ''
           pos += boundary.length
-          #return boundary + needle if needle.length < 2 # don't escape single-letter capitals
+          return boundary + needle if needle.length < 2 # don't encode single-letter capitals
           return boundary + needle if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, Reference::initialCapOnly)
 
           c = 0
@@ -430,7 +497,6 @@ Reference::add = (field) ->
   field.bibtex = field.bibtex.normalize('NFKC') if @normalize
   @fields.push(field)
   @has[field.name] = field
-  return
 
 Reference::remove = (name) ->
   return unless @has[name]
@@ -451,9 +517,7 @@ Reference::CSLtoBibTeX = {
 }
 
 Reference::complete = ->
-  @add({name: 'xref', value: @item.__xref__, esc: 'raw'}) if !@has.xref && @item.__xref__
-
-  Translator.debug('fields@complete:', (field.name for field in @fields))
+  @add({name: 'xref', value: @item.__xref__, enc: 'raw'}) if !@has.xref && @item.__xref__
 
   if Translator.DOIandURL != 'both'
     if @has.doi && @has.url
@@ -497,7 +561,7 @@ Reference::complete = ->
         else
           fields.push({ name: 'googlebooks', value: value.value })
       when 'xref'
-        fields.push({ name, value: value.value, esc: 'raw' })
+        fields.push({ name, value: value.value, enc: 'raw' })
 
       # psuedo-var, sets the reference type
       when 'referencetype'
