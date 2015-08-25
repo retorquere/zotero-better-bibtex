@@ -322,6 +322,8 @@ Reference::enc_creators = (f, raw) ->
         # Parse name particles
         # Replicate citeproc-js logic for what should be parsed so we don't
         # break current behavior.
+        fallback = false
+
         if name.family # && name.given
           # Don't parse if last name is quoted
           if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
@@ -330,7 +332,12 @@ Reference::enc_creators = (f, raw) ->
           else
             Zotero.BetterBibTeX.CSL.parseParticles(name)
 
-            Translator.debug('particle parser:', creator, '=>', name)
+            source = ((creator.firstName || '') + (creator.lastName || '')).replace(/,!/g, ',').replace(/\s/g, '')
+            parsed = (part.replace(/,!/g, ',') for part in [name.given, name.family, name.suffix, name['non-dropping-particle'], name['dropping-particle']] when part).join('').replace(/\s/g, '')
+            parsed += ',' if name.suffix
+            fallback = (source.length != parsed.length)
+
+            Translator.debug('particle parser: creator=', creator, "@#{source.length}=", source, 'name=', name, "@#{parsed.length}=", parsed, 'fallback:', fallback)
 
             if name['non-dropping-particle']
               name.family = @enc_latex({value: new String((@postfixedParticle(name['non-dropping-particle']) + name.family).trim())})
@@ -349,6 +356,10 @@ Reference::enc_creators = (f, raw) ->
           name = [name.family || '', name.given || '']
         # TODO: is this the best way to deal with commas?
         name = (part.replace(/,/g, '{,}') for part in name).join(', ')
+
+        if fallback
+          name = (part.replace(/,!/g, ',').replace(/,/g, '{,}') for part in [creator.firstName + ' ' + creator.lastName] when part).join(' ')
+          name = @enc_latex({value: name}).replace(/ and /g, ' {and} ')
 
       else
         continue
