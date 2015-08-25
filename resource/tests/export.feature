@@ -52,7 +52,7 @@ Scenario: Square brackets in Publication field (85), and non-pinned keys must ch
 
 @313
 Scenario: (non-)dropping particle handling #313
-  When I import 57 references from 'export/(non-)dropping particle handling #313.json'
+  When I import 53 references from 'export/(non-)dropping particle handling #313.json'
   Then a library export using 'Better BibLaTeX' should match 'export/(non-)dropping particle handling #313.bib'
 
 @test-cluster-2

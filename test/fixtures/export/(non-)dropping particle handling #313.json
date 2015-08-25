@@ -28,7 +28,7 @@
   "collections": [
 
   ],
-  "items": [
+  "_items": [
     {
       "itemType": "journalArticle",
       "title": "(Aubignac) (François Hédelin abbé d')",
@@ -43,36 +43,12 @@
     },
     {
       "itemType": "journalArticle",
-      "title": "(Aubignac) (François Hédelin, abbé d')",
-      "extra": "bibtex: abbot1",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "Aubignac",
-          "firstName": "François Hédelin, abbé d'"
-        }
-      ]
-    },
-    {
-      "itemType": "journalArticle",
       "title": "(abbé d'Aubignac) (François Hédelin)",
       "extra": "bibtex: abbot2",
       "creators": [
         {
           "creatorType": "author",
           "lastName": "abbé d'Aubignac",
-          "firstName": "François Hédelin"
-        }
-      ]
-    },
-    {
-      "itemType": "journalArticle",
-      "title": "(abbé d' Aubignac) (François Hédelin)",
-      "extra": "bibtex: abbot3",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "abbé d' Aubignac",
           "firstName": "François Hédelin"
         }
       ]
@@ -98,6 +74,32 @@
           "creatorType": "author",
           "lastName": "d' Aubignac",
           "firstName": "François Hédelin, abbé"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "title": "(abbé d' Aubignac) (François Hédelin)",
+      "extra": "bibtex: abbot3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "abbé d' Aubignac",
+          "firstName": "François Hédelin"
+        }
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "(Aubignac) (François Hédelin, abbé d')",
+      "extra": "relies on paricleParser fallback detection\nbibtex: abbot1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Aubignac",
+          "firstName": "François Hédelin, abbé d'"
         }
       ]
     },
