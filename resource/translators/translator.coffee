@@ -315,7 +315,7 @@ Reference::enc_creators = (f, raw) ->
         name = if raw then "{#{creator.lastName}}" else @enc_latex({value: new String(creator.lastName)})
 
       when raw
-        name = (part for part in [creator.lastName, creator.firstName] when part).join(', ')
+        name = [creator.lastName || '', creator.firstName || ''].join(', ')
 
       when creator.lastName || creator.firstName
         name = {family: creator.lastName || '', given: creator.firstName || ''}
@@ -343,13 +343,17 @@ Reference::enc_creators = (f, raw) ->
         if name.given
           name.given = @enc_latex({value: name.given}).replace(/ and /g, ' {and} ')
 
+        if name.suffix
+          name = [name.family || '', name.suffix, name.given || '']
+        else
+          name = [name.family || '', name.given || '']
         # TODO: is this the best way to deal with commas?
-        name = (part.replace(/,/g, '{,}') for part in [name.family, name.suffix, name.given] when part).join(', ')
+        name = (part.replace(/,/g, '{,}') for part in name).join(', ')
 
       else
         continue
 
-    encoded.push(name)
+    encoded.push(name.trim())
 
   return encoded.join(' and ')
 

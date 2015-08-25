@@ -849,7 +849,7 @@ end
 task :csltests do
   source = 'test/fixtures/export/(non-)dropping particle handling #313.json'
   testcase = JSON.parse(open(source).read)
-  testcase['items'] = [testcase['items'].first]
+  testcase['items'] = testcase['items'].reject{|item| (item['tags'] || []).include?('imported') }
 
   root = 'https://bitbucket.org/bdarcus/citeproc-test/src/tip/processor-tests/humans/'
   seen = testcase['items'].first['creators'].dup
@@ -901,7 +901,6 @@ task :csltests do
       else
         creators = []
       end
-      puts "#{i+1}/#{n}: #{creators.length}"
 
       if creators.length > 0
         citekey = link.sub(/.*\//, '').sub(/\..*/, '')
@@ -909,9 +908,11 @@ task :csltests do
           itemType: 'journalArticle',
           title: citekey,
           creators: creators,
-          extra: "bibtex: #{citekey}"
+          extra: "bibtex: #{citekey}",
+          tags: ['imported']
         }
       end
+      puts "#{i+1}/#{n}: #{creators.length} creators, #{testcase['items'].length} references"
     }
     open(source, 'w'){|f| f.write(JSON.pretty_generate(testcase)) }
   end
