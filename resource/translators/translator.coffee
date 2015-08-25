@@ -289,6 +289,7 @@ Reference::enc_verbatim = (f) ->
   return "\\href{#{href}}{#{LaTeX.text2latex(href)}}" if f.name == 'url' && Translator.fancyURLs
   return href
 
+Reference::nonLetters = new XRegExp("[^\\p{Letter}]", 'g')
 Reference::punctuationAtEnd = new XRegExp("[\\p{Punctuation}]$")
 Reference::postfixedParticle = (particle) ->
   return particle + ' ' if particle[particle.length - 1] == '.'
@@ -332,9 +333,8 @@ Reference::enc_creators = (f, raw) ->
           else
             Zotero.BetterBibTeX.CSL.parseParticles(name)
 
-            source = ((creator.firstName || '') + (creator.lastName || '')).replace(/,!/g, ',').replace(/\s/g, '')
-            parsed = (part.replace(/,!/g, ',') for part in [name.given, name.family, name.suffix, name['non-dropping-particle'], name['dropping-particle']] when part).join('').replace(/\s/g, '')
-            parsed += ',' if name.suffix
+            source = XRegExp.replace((creator.firstName || '') + (creator.lastName || ''), @nonLetters, '')
+            parsed = XRegExp.replace((part || '' for part in [name.given, name.family, name.suffix, name['non-dropping-particle'], name['dropping-particle']]).join(''), @nonLetters, '')
             fallback = (source.length != parsed.length)
 
             Translator.debug('particle parser: creator=', creator, "@#{source.length}=", source, 'name=', name, "@#{parsed.length}=", parsed, 'fallback:', fallback)
