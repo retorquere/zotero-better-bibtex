@@ -358,8 +358,8 @@ Reference::enc_creators = (f, raw) ->
         name = (part.replace(/,/g, '{,}') for part in name).join(', ')
 
         if fallback
-          name = (part.replace(/,!/g, ',').replace(/,/g, '{,}') for part in [creator.firstName + ' ' + creator.lastName] when part).join(' ')
-          name = @enc_latex({value: name}).replace(/ and /g, ' {and} ')
+          name = (part.replace(/,!/g, ',') for part in [creator.firstName + ' ' + creator.lastName] when part).join(' ')
+          name = @enc_latex({value: name}).replace(/ and /g, ' {and} ').replace(/,/g, '{,}')
 
       else
         continue
