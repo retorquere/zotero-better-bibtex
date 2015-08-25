@@ -849,11 +849,10 @@ end
 task :csltests do
   source = 'test/fixtures/export/(non-)dropping particle handling #313.json'
   testcase = JSON.parse(open(source).read)
-  template = testcase['items'].first
-  testcase['items'] = [template]
+  testcase['items'] = [testcase['items'].first]
 
   root = 'https://bitbucket.org/bdarcus/citeproc-test/src/tip/processor-tests/humans/'
-  seen = []
+  seen = testcase['items'].first['creators'].dup
   Tempfile.create('tests') do |tmp|
     ZotPlus::RakeHelper.download(root, tmp.path)
     tests = Nokogiri::HTML(open(tmp.path))
@@ -871,7 +870,9 @@ task :csltests do
         }
         creators.flatten!
         creators.compact!
-        creators = creators.collect{|creator|
+        creators = creators.select{|creator|
+          (creator.keys & %w{literal dropping-particle non-dropping-particle suffix}).length != 0 || creator['family'] =~ /[^\p{Alnum}]/i
+        }.collect{|creator|
           if creator['literal']
             cr = {
               lastName: creator['literal'],
@@ -887,11 +888,12 @@ task :csltests do
             throw link if cr[:firstName] && creator['isInstitution'] == 'true'
             cr[:fieldMode] = 1 if creator['isInstitution'] == 'true'
           end
+
+          cr[:firstName] =  "François Hédelin, abbé d'" if cr[:firstName] =~ /^François Hédelin/
+
           cr
-        }.select{|creator|
-          creator[:lastName] =~ /[^a-z]/i || creator[:firstName] =~ /[^a-z]/i
         }
-        creators = creators - seen
+        creators = creators.uniq - seen
 
         seen << creators
         seen.flatten!
@@ -902,10 +904,13 @@ task :csltests do
       puts "#{i+1}/#{n}: #{creators.length}"
 
       if creators.length > 0
-        template = JSON.parse(template.to_json)
-        template['creators'] = creators
-        template['extra'] = "bibtex: #{link.sub(/.*\//, '').sub(/\..*/, '')}"
-        testcase['items'] << template
+        citekey = link.sub(/.*\//, '').sub(/\..*/, '')
+        testcase['items'] << {
+          itemType: 'journalArticle',
+          title: citekey,
+          creators: creators,
+          extra: "bibtex: #{citekey}"
+        }
       end
     }
     open(source, 'w'){|f| f.write(JSON.pretty_generate(testcase)) }
