@@ -23,8 +23,8 @@ The Better BibTeX configuration pane can be found under the regular Zotero prefe
 # Installation (one-time)
 
 After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.2.28/zotero-better-bibtex-1.2.28.xpi)
-(**1.2.28**).
+version](https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.2.29/zotero-better-bibtex-1.2.29.xpi)
+(**1.2.29**).
 If you are not prompted with a Firefox installation dialog then double-click the
 downloaded xpi; Firefox ought to start and present you with the installation dialog.
 
@@ -68,7 +68,7 @@ or there are problems preventing me from implementing a fix.
 
   switch (window.location.hash.trim()) {
     case '#xpi':
-      window.location = 'https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.2.28/zotero-better-bibtex-1.2.28.xpi';
+      window.location = 'https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.2.29/zotero-better-bibtex-1.2.29.xpi';
       break;
     case '#debug':
       window.location = 'https://drive.google.com/a/iris-advies.com/folderview?id=0B8tW4NMPfEosfkFETUV0V2l0N3NHZHEyQk5SUm03TjZmS1RoVmlBTmdHclUtcTRzZ2VHclU&usp=drive_web#list';
