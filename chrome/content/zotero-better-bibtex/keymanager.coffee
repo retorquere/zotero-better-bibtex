@@ -65,6 +65,14 @@ Zotero.BetterBibTeX.keymanager = new class
     #for row in Zotero.DB.query('select itemID from items where itemTypeID not in (1, 14) and itemID not in (select itemID from betterbibtex.keys)')
     #  @get({itemID: row.itemID})
 
+  prime: ->
+    sql = "select i.itemID as itemID from items i where itemTypeID not in (1, 14) and not i.itemID in (select itemID from deletedItems)"
+    assigned = (key.itemID for key in @keys.find())
+    sql += " and not i.itemID in #{Zotero.BetterBibTeX.SQLSet(assigned)}" if assigned.length > 0
+
+    for itemID in Zotero.DB.columnQuery(sql)
+      @get({itemID}, 'on-export')
+
   reset: ->
     Zotero.DB.query('delete from betterbibtex.keys')
     @resetJournalAbbrevs()
