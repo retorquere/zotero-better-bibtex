@@ -270,70 +270,8 @@ file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['
   }
 end
 
-file 'resource/logs/s3.json' => [ENV['ZOTPLUSAWSCREDENTIALS'], 'Rakefile'].compact do |t|
-  algorithm = 'AWS4-HMAC-SHA256'
-  service = 's3'
-  requestType = 'aws4_request'
-  successStatus = '201'
-  bucket = 'zotplus-964ec2b7-379e-49a4-9c8a-edcb20db343f'
-  region = 'eu-central-1'
-  acl = 'private'
-  
-  header = nil
-  data = nil
-  CSV.foreach(ENV['ZOTPLUSAWSCREDENTIALS']) do |row|
-    if header.nil?
-      header = row.collect{|c| c.strip.gsub(/\s/, '') }
-    else
-      data = row
-    end
-  end
-  creds = OpenStruct.new(Hash[*(header.zip(data).flatten)])
-  
-  date = Time.now.strftime('%Y%m%dT000000Z')
-  shortDate = date.sub(/T.*/, '')
-  credentials = [ creds.AccessKeyId, shortDate, region, service, requestType ].join('/')
-
-  maxSize = 20 * 1024 * 1024 # 20 megabytes
-  maxSize = nil
-
-  policy = {
-    'expiration' => Time.new(2038).strftime('%Y-%m-%dT%H:%M:%SZ'),
-    'conditions' => [
-      {'bucket' => bucket},
-      {'acl' => acl},
-      ['starts-with', '$key', ''],
-      ['starts-with', '$Content-Type', ''],
-      {'success_action_status' => successStatus},
-      {'x-amz-credential' => credentials},
-      {'x-amz-algorithm' => algorithm},
-      {'x-amz-date' => date},
-      {'x-amz-storage-class' => 'REDUCED_REDUNDANCY'},
-    ]
-  }
-  policy['conditions'] << ['content-length-range', 0, maxSize] if maxSize
-  policy = Base64.encode64(policy.to_json).gsub("\n","")
-  
-  signingKey = ['AWS4' + creds.SecretAccessKey, shortDate, region, service, requestType].inject{|key, data| OpenSSL::HMAC.digest('sha256', key, data) } 
-  
-  form = {
-    action: "https://#{bucket}.#{service}-#{region}.amazonaws.com/",
-    maxSize: maxSize,
-    fields: {
-      key: '${filename}',
-      'Content-Type': 'text/plain',
-      acl: acl,
-      success_action_status: successStatus,
-      policy: policy,
-      'x-amz-algorithm': algorithm,
-      'x-amz-credential': credentials,
-      'x-amz-date': date,
-      'x-amz-signature': OpenSSL::HMAC.hexdigest('sha256', signingKey, policy),
-      'x-amz-storage-class': 'REDUCED_REDUNDANCY',
-    }
-  }
-
-  open(t.name, 'w'){|f| f.write(JSON.pretty_generate(form)) }
+file 'resource/logs/s3.json' => ['resource/logs/s3.js', 'install.rdf'] do |t|
+  sh "node resource/logs/s3.js"
 end
 
 file 'resource/logs/index.html' => 'resource/logs/s3.json' do |t|
