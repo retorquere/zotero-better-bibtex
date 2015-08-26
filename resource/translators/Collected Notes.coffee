@@ -41,10 +41,14 @@ class Report
   note: (item) ->
     @html += "<div>#{ item.note }</div>\n"
 
+  creator: (cr) ->
+    return '' unless cr.firstName || cr.lastName
+    return (name for name in [cr.lastName, cr.firstName] when name).join(', ')
+
   itemWithNotes: (item, level) ->
     title = item.title
 
-    creators = (Translator.creator(creator) for creator in item.creators)
+    creators = (@creator(creator) for creator in item.creators)
     creators = (creator for creator in creators when creator)
     if creators.length > 0
       creators = creators.join(' and')
@@ -78,7 +82,7 @@ class Report
     @collections.push(collection)
 
     notes = false
-    for id in collection.items
+    for id in collection.items || []
       continue unless @items[id]
       @itemInCollection[id] = true
       notes = true
@@ -86,11 +90,12 @@ class Report
       for coll in @collections
         coll.notes = true
 
-    for coll in collection.collections
+    for coll in collection.collections || []
       mark(coll)
 
     @collections.pop()
 
 doExport = ->
+  Translator.initialize()
   report = new Report()
   Zotero.write(LaTeX.html2latex(report.html))
