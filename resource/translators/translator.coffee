@@ -509,13 +509,16 @@ Reference::remove = (name) ->
 
 Reference::normalize = (typeof (''.normalize) == 'function')
 
-Reference::CSLtoBibTeX = {
-  'original-date': 'origdate'
-  'original-publisher': 'origpublisher'
-  'original-publisher-place': 'origlocation'
-  'original-title': 'origtitle'
-  'authority': 'institution'
-}
+Reference::CSLtoBibTeX = (variable) ->
+  switch variable
+    when 'original-date' then return 'origdate'
+    when 'original-publisher' then return 'origpublisher'
+    when 'original-publisher-place' then return 'origlocation'
+    when 'original-title' then return 'origtitle'
+    when 'authority' then return 'institution'
+    when 'container-title'
+      switch @referencetype
+        when 'article', 'jurisdiction'. 'legislation' then return 'journaltitle'
 
 Reference::complete = ->
   @add({name: 'xref', value: @item.__xref__, enc: 'raw'}) if !@has.xref && @item.__xref__
@@ -532,8 +535,9 @@ Reference::complete = ->
 
     # CSL names are not in BibTeX format, so only add it if there's a mapping
     if value.format == 'csl'
-      if @CSLtoBibTeX[name]
-        fields.push({ name: @CSLtoBibTeX[name], value: value.value })
+      remapped = @CSLtoBibTeX(name)
+      if remapped
+        fields.push({ name: remapped, value: value.value })
       else
         Translator.debug('Unmapped CSL field', name, '=', value.value)
       continue
