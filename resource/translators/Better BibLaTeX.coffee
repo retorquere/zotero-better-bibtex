@@ -402,6 +402,9 @@ doExport = ->
       when 'report', 'thesis'
         ref.add({ name: 'institution', value: item.publisher, preserveCaps: true })
 
+      when 'case', 'hearing'
+        ref.add({ name: 'institution', value: item.court, preserveCaps: true })
+
       else
         ref.add({ name: 'publisher', value: item.publisher, preserveCaps: true })
 

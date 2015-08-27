@@ -130,6 +130,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | @jurisdiction; map court,authority to institution #326                                         | 1           |
      | Better BibLaTeX.004                                                                            | 1           |
      | auth leaves punctuation in citation key #310                                                   | 1           |
      | BibTeX variable support for journal titles. #309                                               | 1           |
