@@ -477,7 +477,7 @@ Reference::add = (field) ->
         value = XRegExp.replace(value, @preserveCaps[Translator.preserveCaps], (match, boundary, needle, pos, haystack) ->
           boundary ?= ''
           pos += boundary.length
-          return boundary + needle if needle.length < 2 # don't encode single-letter capitals
+          #return boundary + needle if needle.length < 2 # don't encode single-letter capitals
           return boundary + needle if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, Reference::initialCapOnly)
 
           c = 0
