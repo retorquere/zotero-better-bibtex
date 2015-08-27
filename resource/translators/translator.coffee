@@ -514,6 +514,7 @@ Reference::CSLtoBibTeX = {
   'original-publisher': 'origpublisher'
   'original-publisher-place': 'origlocation'
   'original-title': 'origtitle'
+  'authority': 'institution'
 }
 
 Reference::complete = ->
