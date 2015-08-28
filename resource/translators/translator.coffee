@@ -384,7 +384,7 @@ Reference::enc_latex = (f, raw) ->
 
 Reference::enc_tags = (f) ->
   tags = (tag.tag for tag in f.value || [] when tag?.tag && tag.tag != Translator.rawLaTag)
-  return null tags.length == 0
+  return null if tags.length == 0
 
   # sort tags for stable tests
   tags.sort() if Translator.testing
