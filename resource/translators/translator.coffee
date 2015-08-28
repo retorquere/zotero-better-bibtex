@@ -389,7 +389,7 @@ Reference::enc_tags = (f) ->
   # sort tags for stable tests
   tags.sort() if Translator.testing
 
-  tags = ((if Translator.BetterBibTeX then tag.replace(/([#\\%&{}])/g, '\\$1') else tag.replace(/([#%\\{}])/g, '\\$1')).replace(/,/g, '{,}') for tag in tag)
+  tags = ((if Translator.BetterBibTeX then tag.replace(/([#\\%&{}])/g, '\\$1') else tag.replace(/([#%\\{}])/g, '\\$1')).replace(/,/g, '{,}') for tag in tags)
   return tags.join(',')
 
 Reference::enc_attachments = (f) ->
