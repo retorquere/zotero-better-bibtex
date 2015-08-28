@@ -1,6 +1,13 @@
 AwsS3Form = require('aws-s3-form')
 fs = require('fs')
 
+if !process.env.ZOTPLUSAWSKEY || !process.env.ZOTPLUSAWSSECRET
+  throw new Error('no AWS credentials') if !process.env.ZOTPLUSAWSCREDENTIALS
+
+  for data in require('babyparse').parse(fs.readFileSync(process.env.ZOTPLUSAWSCREDENTIALS, 'utf8'), {header: true}).data
+    process.env.ZOTPLUSAWSKEY ||= data['Access Key Id']
+    process.env.ZOTPLUSAWSSECRET ||= data['Secret Access Key']
+
 formGen = new AwsS3Form(
   accessKeyId: process.env.ZOTPLUSAWSKEY
   secretAccessKey: process.env.ZOTPLUSAWSSECRET

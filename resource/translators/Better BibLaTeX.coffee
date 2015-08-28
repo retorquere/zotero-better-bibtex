@@ -370,8 +370,11 @@ doExport = ->
     ref.add({ name: 'number', value: item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number })
     ref.add({ name: (if isNaN(parseInt(item.issue)) then 'issue' else 'number'), value: item.issue })
 
-    if item.itemType == 'case'
-      ref.add({ name: 'journaltitle', value: item.reporter, preserveCaps: true, preserveBibTeXVariables: true })
+    switch item.itemType
+      when 'case', 'gazette'
+        ref.add({ name: 'journaltitle', value: item.reporter, preserveCaps: true, preserveBibTeXVariables: true })
+      when 'statute'
+        ref.add({ name: 'journaltitle', value: item.code, preserveCaps: true, preserveBibTeXVariables: true })
 
     if item.publicationTitle
       switch item.itemType

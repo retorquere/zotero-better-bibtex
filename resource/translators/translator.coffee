@@ -518,7 +518,7 @@ Reference::CSLtoBibTeX = (variable) ->
     when 'authority' then return 'institution'
     when 'container-title'
       switch @referencetype
-        when 'article', 'jurisdiction'. 'legislation' then return 'journaltitle'
+        when 'article', 'jurisdiction', 'legislation' then return 'journaltitle'
 
 Reference::complete = ->
   @add({name: 'xref', value: @item.__xref__, enc: 'raw'}) if !@has.xref && @item.__xref__
