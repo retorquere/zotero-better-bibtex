@@ -399,7 +399,7 @@ Reference::enc_tags = (f) ->
     tag = tag.replace(/,/g, ';')
 
     # verbatim fields require balanced braces -- please just don't use braces in your tags
-    tag = tag.replace(/{/g, '('),replace(/}/g, ')') if tag != BetterBibTeXBraceBalancer.parse(tag)
+    tag = tag.replace(/{/g, '(').replace(/}/g, ')') if tag != BetterBibTeXBraceBalancer.parse(tag)
     tag
 
   return tags.join(',')
