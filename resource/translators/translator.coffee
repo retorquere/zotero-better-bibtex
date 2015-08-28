@@ -389,8 +389,19 @@ Reference::enc_tags = (f) ->
   # sort tags for stable tests
   tags.sort() if Translator.testing
 
-  # the , -> ; is unfortunate, but I see no other way
-  tags = ((if Translator.BetterBibTeX then tag.replace(/([#\\%&{}])/g, '\\$1') else tag.replace(/([#%\\{}])/g, '\\$1')).replace(/,/g, ';') for tag in tags)
+  tags = for tag in tags
+    if Translator.BetterBibTeX
+      tag = tag.replace(/([#\\%&])/g, '\\$1')
+    else
+      tag = tag.replace(/([#%\\])/g, '\\$1')
+
+    # the , -> ; is unfortunate, but I see no other way
+    tag = tag.replace(/,/g, ';')
+
+    # verbatim fields require balanced braces -- please just don't use braces in your tags
+    tag = tag.replace(/{/g, '('),replace(/}/g, ')') if tag != BetterBibTeXBraceBalancer.parse(tag)
+    tag
+
   return tags.join(',')
 
 Reference::enc_attachments = (f) ->
