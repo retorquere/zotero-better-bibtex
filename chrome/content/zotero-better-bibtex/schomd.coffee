@@ -73,6 +73,7 @@ Zotero.BetterBibTeX.schomd.init = ->
   return
 
 Zotero.BetterBibTeX.schomd.items = (citekeys, {library} = {}) ->
+  library = null unless library
   citekeys = [citekeys] unless Array.isArray(citekeys)
 
   keys = (key for key in citekeys when typeof key != 'number')

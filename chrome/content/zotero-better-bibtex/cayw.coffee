@@ -250,4 +250,10 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
 
       formatted.push("{#{citation.prefix}|#{label}|#{locator}|#{citation.suffix}|#{id}}")
     return formatted.join('')
+
+  'atom-zotero-citations': (citations, options) ->
+    citekeys = (citation.citekey for citation in citations)
+    label = Zotero.BetterBibTeX.schomd.citation(citekeys, options || {})
+    citekeys = ("@#{citekey}" for citekey in citekeys).join(',')
+    return "[#{label}][#{citekeys}]"
 }
