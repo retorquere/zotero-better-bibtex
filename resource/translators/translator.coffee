@@ -281,13 +281,13 @@ Reference::enc_raw = (f) ->
 
 Reference::enc_verbatim = (f) ->
   if Translator.BetterBibTeX
-    href = ('' + f.value).replace(/([#\\%&{}])/g, '\\$1')
+    value = ('' + f.value).replace(/([#\\%&{}])/g, '\\$1')
   else
-    href = ('' + f.value).replace(/([\\{}])/g, '\\$1')
-  href = href.replace(/[^\x21-\x7E]/g, ((chr) -> '\\%' + ('00' + chr.charCodeAt(0).toString(16).slice(-2)))) if not Translator.unicode
+    value = ('' + f.value).replace(/([\\{}])/g, '\\$1')
+  value = value.replace(/[^\x21-\x7E]/g, ((chr) -> '\\%' + ('00' + chr.charCodeAt(0).toString(16).slice(-2)))) if not Translator.unicode
 
-  return "\\href{#{href}}{#{LaTeX.text2latex(href)}}" if f.name == 'url' && Translator.fancyURLs
-  return href
+  return "\\href{#{value}}{#{LaTeX.text2latex(value)}}" if f.name == 'url' && Translator.fancyURLs
+  return value
 
 Reference::nonLetters = new XRegExp("[^\\p{Letter}]", 'g')
 Reference::punctuationAtEnd = new XRegExp("[\\p{Punctuation}]$")
@@ -383,15 +383,14 @@ Reference::enc_latex = (f, raw) ->
   return value
 
 Reference::enc_tags = (f) ->
-  return null if not f.value || f.value.length == 0
-  tags = (tag.tag for tag in f.value when tag.tag != Translator.rawLaTag)
+  tags = (tag.tag for tag in f.value || [] when tag?.tag && tag.tag != Translator.rawLaTag)
+  return null tags.length == 0
 
   # sort tags for stable tests
   tags.sort() if Translator.testing
 
-  f.value = tags
-  f.sep = ','
-  return @enc_latex(f)
+  tags = ((if Translator.BetterBibTeX then tag.replace(/([#\\%&{}])/g, '\\$1') else tag.replace(/([#%\\{}])/g, '\\$1')).replace(/,/g, '{,}') for tag in tag)
+  return tags.join(',')
 
 Reference::enc_attachments = (f) ->
   return null if not f.value || f.value.length == 0
