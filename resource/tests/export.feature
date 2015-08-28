@@ -130,6 +130,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | BraceBalancer                                                                                  | 1           |
      | @legislation; map code,container-title to journaltitle #327                                    | 1           |
      | @jurisdiction; map court,authority to institution #326                                         | 1           |
      | Better BibLaTeX.004                                                                            | 1           |
@@ -151,7 +152,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.006                                                                            | 1           |
      | Better BibLaTeX.007                                                                            | 1           |
      | Better BibLaTeX.009                                                                            | 2           |
-     | BraceBalancer                                                                                  | 1           |
      | Fields in Extra should override defaults                                                       | 1           |
 
 @test-cluster-1
