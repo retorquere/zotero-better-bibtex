@@ -251,9 +251,17 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       formatted.push("{#{citation.prefix}|#{label}|#{locator}|#{citation.suffix}|#{id}}")
     return formatted.join('')
 
-  'atom-zotero-citations': (citations, options) ->
+  'atom-zotero-citations': (citations, options = {}) ->
     citekeys = (citation.citekey for citation in citations)
-    label = Zotero.BetterBibTeX.schomd.citation(citekeys, options || {})
+
+    items = (item for item in Zotero.BetterBibTeX.schmd.items(citekeys, options) when item)
+    url = "http://www.zotero.org/styles/#{options.style ? 'apa'}"
+    style = Zotero.Styles.get(url)
+    cp = style.getCiteProc()
+    cp.setOutputFormat('markdown')
+    cp.updateItems((item for item in items when item))
+    label = cp.appendCitationCluster({citationItems: ({id:item} for item in items), properties:{}}, true)[0][1]
+
     citekeys = ("@#{citekey}" for citekey in citekeys).join(',')
     return "[#{label}][#{citekeys}]"
 }
