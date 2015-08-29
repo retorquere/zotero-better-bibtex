@@ -563,25 +563,26 @@ Reference::complete = ->
       @remove(name)
       continue
 
+    raw = (value.format in ['navie', 'json'])
     switch name
       when 'mr'
-        fields.push({ name: 'mrnumber', value: value.value })
+        fields.push({ name: 'mrnumber', value: value.value, raw: raw })
       when 'zbl'
-        fields.push({ name: 'zmnumber', value: value.value })
+        fields.push({ name: 'zmnumber', value: value.value, raw: raw })
       when 'lccn', 'pmcid'
-        fields.push({ name: name, value: value.value })
+        fields.push({ name: name, value: value.value, raw: raw })
       when 'pmid', 'arxiv', 'jstor', 'hdl'
         if Translator.BetterBibLaTeX
           fields.push({ name: 'eprinttype', value: name.toLowerCase() })
-          fields.push({ name: 'eprint', value: value.value })
+          fields.push({ name: 'eprint', value: value.value, raw: raw })
         else
-          fields.push({ name, value: value.value })
+          fields.push({ name, value: value.value, raw: raw })
       when 'googlebooksid'
         if Translator.BetterBibLaTeX
           fields.push({ name: 'eprinttype', value: 'googlebooks' })
-          fields.push({ name: 'eprint', value: value.value })
+          fields.push({ name: 'eprint', value: value.value, raw: raw })
         else
-          fields.push({ name: 'googlebooks', value: value.value })
+          fields.push({ name: 'googlebooks', value: value.value, raw: raw })
       when 'xref'
         fields.push({ name, value: value.value, enc: 'raw' })
 
@@ -590,7 +591,7 @@ Reference::complete = ->
         @referencetype = value.value
 
       else
-        fields.push({ name, value: value.value })
+        fields.push({ name, value: value.value, raw: raw })
 
   for field in fields
     field = @field(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
