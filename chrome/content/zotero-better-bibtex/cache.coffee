@@ -346,7 +346,7 @@ Zotero.BetterBibTeX.auto = new class
       Zotero.BetterBibTeX.debug('auto.process: no pending jobs')
       return
 
-    Zotero.BetterBibTeX.debug('auto.process: starting', ea)
+    Zotero.BetterBibTeX.debug('auto.process: starting', ae)
     @refresh()
 
     translation.setHandler('done', (obj, worked) ->
