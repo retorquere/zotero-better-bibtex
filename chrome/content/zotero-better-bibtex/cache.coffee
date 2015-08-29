@@ -250,23 +250,19 @@ Zotero.BetterBibTeX.auto = new class
       Zotero.BetterBibTeX.debug('auto.process: export already running')
       return
 
+    switch Zotero.BetterBibTeX.pref.get('autoExport')
+      when 'off'
+        Zotero.BetterBibTeX.debug('auto.process: off')
+        return
+      when 'idle'
+        if !@idle
+          Zotero.BetterBibTeX.debug('auto.process: not idle')
+          return
+
     skip = {error: [], done: []}
     translation = null
 
-    if reason == 'force'
-      condition = "status like 'force%'"
-    else
-      condition = "status like 'force%' or status like 'pending%' order by status"
-      switch Zotero.BetterBibTeX.pref.get('autoExport')
-        when 'off'
-          Zotero.BetterBibTeX.debug('auto.process: off')
-          return
-        when 'idle'
-          if !@idle
-            Zotero.BetterBibTeX.debug('auto.process: not idle')
-            return
-
-    for ae in Zotero.DB.query("select * from betterbibtex.autoexport ae where #{condition}")
+    for ae in Zotero.DB.query("select * from betterbibtex.autoexport ae where status like 'pending%'")
       Zotero.BetterBibTeX.debug('auto.process: candidate', ae)
       path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
       path.initWithPath(ae.path)
