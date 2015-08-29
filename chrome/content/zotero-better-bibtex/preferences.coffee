@@ -121,9 +121,9 @@ BetterBibTeXAutoExportPref =
     return if selected < 0
 
     id = exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')
-    Zotero.DB.query("update betterbibtex.autoexport set status = ? where id = ?", [Zotero.BetterBibTeX.auto.status('pending'), id])
+    Zotero.DB.query("update betterbibtex.autoexport set status = ? where id = ?", [Zotero.BetterBibTeX.auto.status('force'), id])
     @refresh()
-    Zotero.BetterBibTeX.auto.process('marked')
+    Zotero.BetterBibTeX.auto.process('force')
 
   exportType: (id) ->
     return switch
