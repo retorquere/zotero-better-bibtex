@@ -243,6 +243,73 @@ Zotero.BetterBibTeX.auto = new class
     Zotero.DB.query("update betterbibtex.autoexport set status=?", [@status('pending')])
     @refresh()
 
+  prepare: (ae) ->
+    Zotero.BetterBibTeX.debug('auto.prepare: candidate', ae)
+    path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
+    path.initWithPath(ae.path)
+
+    if !(path.exists() && path.isFile() && path.isWritable())
+      Zotero.DB.query("update betterbibtex.autoexport set status = ? where id = ?", [@status('error'), ae.id])
+      msg = "auto.prepare: candidate path '#{path.path}' exists but is not writable"
+      Zotero.BetterBibTeX.debug(msg)
+      throw new Error(msg)
+
+    if !(path.parent.exists() && path.parent.isDirectory() && path.isWritable())
+      Zotero.DB.query("update betterbibtex.autoexport set status = ? where id = ?", [@status('error'), ae.id])
+      msg = "auto.prepare: parent of candidate path '#{path.path}' exists but is not writable"
+      Zotero.BetterBibTeX.debug(msg)
+      throw new Error(msg)
+
+    switch
+      when ae.collection == 'library'
+        items = {library: null}
+
+      when m = /^search:([0-9]+)$/.exec(ae.collection)
+        # assumes that a markSearch will have executed the search and found the items
+        items = {items: @search[parseInt(m[1])] || []}
+        if items.items.length == 0
+          Zotero.BetterBibTeX.debug('auto.process: empty search')
+          return null
+        else
+          items.items = Zotero.Items.get(items.items)
+
+      when m = /^library:([0-9]+)$/.exec(ae.collection)
+        items = {library: parseInt(m[1])}
+
+      when m = /^collection:([0-9]+)$/.exec(ae.collection)
+        items = {collection: parseInt(m[1])}
+
+      else #??
+        Zotero.BetterBibTeX.debug('auto.process: unexpected collection id ', ae.collection)
+        return null
+
+    return null if items.items && items.items.length == 0
+
+    translation = new Zotero.Translate.Export()
+
+    for own k, v of items
+      switch k
+        when 'items'
+          Zotero.BetterBibTeX.debug('preparing auto-export from', items.length, 'items')
+          translation.setItems(items.items)
+        when 'collection'
+          Zotero.BetterBibTeX.debug('preparing auto-export from collection', items.collection)
+          translation.setCollection(Zotero.Collections.get(items.collection))
+        when 'library'
+          Zotero.BetterBibTeX.debug('preparing auto-export from collection', items.collection)
+          translation.setLibraryID(items.library)
+
+    translation.setLocation(path)
+    translation.setTranslator(ae.translatorID)
+
+    translation.setDisplayOptions({
+      exportCharset: ae.exportCharset
+      exportNotes: (ae.exportNotes == 'true')
+      useJournalAbbreviation: (ae.useJournalAbbreviation == 'true')
+    })
+
+    return translation
+
   process: (reason) ->
     Zotero.BetterBibTeX.debug("auto.process: started (#{reason}), idle: #{@idle}")
 
@@ -263,81 +330,23 @@ Zotero.BetterBibTeX.auto = new class
     translation = null
 
     for ae in Zotero.DB.query("select * from betterbibtex.autoexport ae where status like 'pending%'")
-      Zotero.BetterBibTeX.debug('auto.process: candidate', ae)
-      path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
-      path.initWithPath(ae.path)
-
-      if !(path.exists() && path.isFile() && path.isWritable())
-        Zotero.BetterBibTeX.debug('auto.process: candidate path not writable', path.path)
-        skip.error.push(ae.id)
+      break if translation
+      try
+        translation = @prepare(ae)
+      catch err
+        Zotero.BetterBibTeX.debug('auto.process:', err)
         continue
 
-      if !(path.parent.exists() && path.parent.isDirectory() && path.isWritable())
-        Zotero.BetterBibTeX.debug('auto.process: candidate path not writable', path.path)
-        skip.error.push(ae.id)
-        continue
+      if !translation
+        Zotero.DB.query("update betterbibtex.autoexport set status = ? where id = ?", [@status('done'), ae.id])
 
-      Zotero.BetterBibTeX.debug('auto export candidate collection:', ae.collection)
-      switch
-        when ae.collection == 'library'
-          items = {library: null}
-
-        when m = /^search:([0-9]+)$/.exec(ae.collection)
-          # assumes that a markSearch will have executed the search and found the items
-          items = {items: @search[parseInt(m[1])] || []}
-          if items.items.length == 0
-            Zotero.BetterBibTeX.debug('auto.process: empty search')
-            skip.done.push(ae.id)
-          else
-            items.items = Zotero.Items.get(items.items)
-
-        when m = /^library:([0-9]+)$/.exec(ae.collection)
-          items = {library: parseInt(m[1])}
-
-        when m = /^collection:([0-9]+)$/.exec(ae.collection)
-          items = {collection: parseInt(m[1])}
-
-        else #??
-          Zotero.BetterBibTeX.debug('auto.process: unexpected collection id ', ae.collection)
-          skip.done.push(ae.id)
-
-      continue if items.items && items.items.length == 0
-      continue if translation
-
-      Zotero.BetterBibTeX.debug('auto.process: candidate picked:', ae)
-      translation = new Zotero.Translate.Export()
-
-      for own k, v of items
-        switch k
-          when 'items'
-            Zotero.BetterBibTeX.debug('starting auto-export from', items.length, 'items')
-            translation.setItems(items.items)
-          when 'collection'
-            Zotero.BetterBibTeX.debug('starting auto-export from collection', items.collection)
-            translation.setCollection(Zotero.Collections.get(items.collection))
-          when 'library'
-            Zotero.BetterBibTeX.debug('starting auto-export from collection', items.collection)
-            translation.setLibraryID(items.library)
-
-      translation.setLocation(path)
-      translation.setTranslator(ae.translatorID)
-
-      translation.setDisplayOptions({
-        exportCharset: ae.exportCharset
-        exportNotes: (ae.exportNotes == 'true')
-        useJournalAbbreviation: (ae.useJournalAbbreviation == 'true')
-      })
+    if translation
       @running = '' + ae.id
-
-    for own status, ae of skip
-      continue if ae.length == 0
-      Zotero.DB.query("update betterbibtex.autoexport set status = ? where id in #{Zotero.BetterBibTeX.SQLSet(ae)}", [@status(status)])
-
-    if !translation
+    else
       Zotero.BetterBibTeX.debug('auto.process: no pending jobs')
       return
 
-    Zotero.BetterBibTeX.debug('auto.process: starting', items)
+    Zotero.BetterBibTeX.debug('auto.process: starting', ea)
     @refresh()
 
     translation.setHandler('done', (obj, worked) ->

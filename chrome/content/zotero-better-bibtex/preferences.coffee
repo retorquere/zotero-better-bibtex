@@ -121,9 +121,25 @@ BetterBibTeXAutoExportPref =
     return if selected < 0
 
     id = exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')
-    Zotero.DB.query("update betterbibtex.autoexport set status = ? where id = ?", [Zotero.BetterBibTeX.auto.status('pending'), id])
-    @refresh()
-    Zotero.BetterBibTeX.auto.process('marked')
+
+    ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport ae where id = ?', [id])
+    return unless ae
+    try
+      translation = Zotero.BetterBibTeX.auto.prepare(ae)
+    catch
+      return
+
+    if !translation
+      Zotero.DB.query('update betterbibtex.autoexport set status = ? where id = ?', [Zotero.BetterBibTeX.auto.status('done'), ae.id])
+      return
+
+    translation.setHandler('done', (obj, worked) ->
+      status = Zotero.BetterBibTeX.auto.status((if worked then 'done' else 'error'))
+      Zotero.BetterBibTeX.debug("auto.force: finished #{ae.id}: #{status}")
+      Zotero.DB.query('update betterbibtex.autoexport set status = ? where id = ?', [status, ae.id])
+      Zotero.BetterBibTeX.auto.refresh()
+    )
+    translation.translate()
 
   exportType: (id) ->
     return switch
