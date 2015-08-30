@@ -170,7 +170,9 @@ BetterBibTeXAutoExportPref =
 
   refresh: (refill) ->
     exportlist = document.getElementById('better-bibtex-auto-exports')
-    exportlist.removeChild(node) for node in exportlist.children
+    for node in exportlist.children
+      try
+        exportlist.removeChild(node)
 
     tree = new BetterBibTeXAutoExport('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', exportlist, document)
 
