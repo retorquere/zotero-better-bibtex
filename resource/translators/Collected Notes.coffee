@@ -98,4 +98,11 @@ class Report
 doExport = ->
   Translator.initialize()
   report = new Report()
-  Zotero.write(LaTeX.html2latex(report.html))
+
+  switch Zotero.getHiddenPref('collectedNotes)
+    when 'html'
+      Zotero.write(report.html)
+    when 'md'
+      Zotero.write((new MarkDown.HTML(report.html)).md)
+    else
+      Zotero.write(LaTeX.html2latex(report.html))

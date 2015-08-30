@@ -808,7 +808,7 @@ Zotero.BetterBibTeX.loadTranslators = ->
   @load('Pandoc JSON')
   @load('BetterBibTeX JSON')
   @load('BibTeXAuxScanner')
-  @load('Collected Notes')
+  @load('Collected Notes', @pref.get('collectedNotes'))
 
   # clean up junk
   try
@@ -996,9 +996,11 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions, callback) ->
   translation.setHandler('done', (obj, success) -> callback(!success, if success then obj?.string else null))
   translation.translate()
 
-Zotero.BetterBibTeX.load = (translator) ->
+Zotero.BetterBibTeX.load = (translator, target) ->
   header = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.json"))
   @removeTranslator(header)
+
+  header.target = target if target
 
   sources = ['xregexp-all', 'json5', 'translator', "#{translator}.header", translator].concat(header.BetterBibTeX?.dependencies || [])
   @debug('translator.load:', translator, 'from', sources)
