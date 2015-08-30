@@ -2,11 +2,15 @@ AwsS3Form = require('aws-s3-form')
 fs = require('fs')
 
 if !process.env.ZOTPLUSAWSKEY || !process.env.ZOTPLUSAWSSECRET
-  throw new Error('no AWS credentials') if !process.env.ZOTPLUSAWSCREDENTIALS
+  if process.env.TRAVIS_PULL_REQUEST
+    process.env.ZOTPLUSAWSKEY = process.env.ZOTPLUSAWSSECRET = "travis-pull-request-#{process.env.TRAVIS_PULL_REQUEST}"
+  else
+    for data in require('babyparse').parse(fs.readFileSync(process.env.ZOTPLUSAWSCREDENTIALS, 'utf8'), {header: true}).data
+      process.env.ZOTPLUSAWSKEY ||= data['Access Key Id']
+      process.env.ZOTPLUSAWSSECRET ||= data['Secret Access Key']
 
-  for data in require('babyparse').parse(fs.readFileSync(process.env.ZOTPLUSAWSCREDENTIALS, 'utf8'), {header: true}).data
-    process.env.ZOTPLUSAWSKEY ||= data['Access Key Id']
-    process.env.ZOTPLUSAWSSECRET ||= data['Secret Access Key']
+if !process.env.ZOTPLUSAWSKEY || !process.env.ZOTPLUSAWSSECRET
+  throw new Error('No AWS signing credentials present')
 
 formGen = new AwsS3Form(
   accessKeyId: process.env.ZOTPLUSAWSKEY
