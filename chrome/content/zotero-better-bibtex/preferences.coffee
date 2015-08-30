@@ -170,31 +170,22 @@ BetterBibTeXAutoExportPref =
 
   refresh: ->
     exportlist = document.getElementById('better-bibtex-auto-exports')
-    for node in exportlist.children
-      try
-        exportlist.removeChild(node)
+    while exportlist.firstChild
+      exportlist.removeChild(exportlist.firstChild)
 
     tree = new BetterBibTeXAutoExport('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', exportlist, document)
 
     for ae in Zotero.DB.query("select * from betterbibtex.autoexport order by path")
       ae.status = 'running' if Zotero.BetterBibTeX.auto.running == ae.id
-      tree.treeitem({autoexport: "#{ae.id}", container: 'true', '': ->
+      tree.treeitem({autoexport: "#{ae.id}", '': ->
         @treerow(->
-          @treecell({editable: 'false', label: "#{BetterBibTeXAutoExportPref.exportName(ae.collection)} -> #{ae.path.replace(/^.*[\\\/]/, '')}"})
+          @treecell({editable: 'false', label: "#{BetterBibTeXAutoExportPref.exportType(ae.collection)}: #{BetterBibTeXAutoExportPref.exportName(ae.collection)}"})
           @treecell({editable: 'false', label: ae.status})
-        )
-        @treechildren(->
-          @treeitem(autoexport: "#{ae.id}", '': ->
-            @treerow(->
-              @treecell({editable: 'false', label: "#{BetterBibTeXAutoExportPref.exportType(ae.collection)}: #{BetterBibTeXAutoExportPref.exportName(ae.collection)}"})
-              @treecell({editable: 'false', label: ae.status})
-              @treecell({editable: 'false', label: ae.path})
-              @treecell({editable: 'false', label: Zotero.BetterBibTeX.translatorName(ae.translatorID)})
-              @treecell({editable: 'false', label: ae.exportCharset})
-              @treecell({editable: 'false', label: ae.useJournalAbbreviation})
-              @treecell({editable: 'false', label: ae.exportNotes})
-            )
-          )
+          @treecell({editable: 'false', label: ae.path})
+          @treecell({editable: 'false', label: Zotero.BetterBibTeX.translatorName(ae.translatorID)})
+          @treecell({editable: 'false', label: ae.exportCharset})
+          @treecell({editable: 'false', label: ae.useJournalAbbreviation})
+          @treecell({editable: 'false', label: ae.exportNotes})
         )
       })
 
