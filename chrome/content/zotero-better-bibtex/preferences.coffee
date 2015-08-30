@@ -168,9 +168,11 @@ BetterBibTeXAutoExportPref =
     return @collectionPath(coll.parent) + '/' + coll.name if coll.parent
     return coll.name
 
-  refresh: (refill) ->
+  refresh: ->
     exportlist = document.getElementById('better-bibtex-auto-exports')
-    exportlist.removeChild(node) for node in exportlist.children
+    for node in exportlist.children
+      try
+        exportlist.removeChild(node)
 
     tree = new BetterBibTeXAutoExport('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', exportlist, document)
 
