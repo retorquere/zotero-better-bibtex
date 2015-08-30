@@ -99,7 +99,7 @@ doExport = ->
   Translator.initialize()
   report = new Report()
 
-  switch Zotero.getHiddenPref('collectedNotes)
+  switch Zotero.getHiddenPref('collectedNotes')
     when 'html'
       Zotero.write(report.html)
     when 'md'
