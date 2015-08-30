@@ -559,15 +559,18 @@ Reference::complete = ->
       @referencetype = value.value
       continue
 
+    Translator.debug('override:', name, value)
+
     switch value.format
       # CSL names are not in BibTeX format, so only add it if there's a mapping
       when 'csl'
         remapped = @CSLtoBibTeX(name)
         if remapped
           name = remapped
+          Translator.debug('CSL override:', name, value)
         else
           Translator.debug('Unmapped CSL field', name, '=', value.value)
-        continue
+          continue
 
       when 'key-value'
         switch name
@@ -597,13 +600,21 @@ Reference::complete = ->
         continue
 
       when 'naive'
-        value.value = value.value.replace(/%([a-z]+)/ig, (m, fieldname) => return @has[fieldname]?.value || '')
+        value.value = value.value.replace(/%([a-z]+)/ig, (m, fieldname) =>
+          return @has[fieldname] if @has[fieldname]
+
+          fieldName = fieldname[0].toLowerCase() + fieldname.slice(1)
+          if @item[fieldname] || @item[fieldName]
+            raw = false
+            return @item[fieldname] || @item[fieldName]
+
+          return ''
+        )
 
     if (typeof value.value == 'string') && value.value.trim() == ''
       @remove(name)
-      continue
-
-    fields.push({ name: name, value: value.value, raw: raw })
+    else
+      fields.push({ name: name, value: value.value, raw: raw })
 
   for name in Translator.skipFields
     @remove(name)
