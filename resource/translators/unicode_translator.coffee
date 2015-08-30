@@ -67,6 +67,7 @@ class LaTeX.HTML
         @latex += '\\textbf{'
 
       when 'a'
+        # zotero://open-pdf/0_5P2KA4XM/7 is actually a reference.
         @latex += "\\href{#{tag.attrs.href}}{" if tag.attrs.href?.length > 0
 
       when 'sup'
