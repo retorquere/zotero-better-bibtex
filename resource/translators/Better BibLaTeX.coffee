@@ -46,7 +46,7 @@ Translator.typeMap = {
 }
 
 Translator.fieldEncoding = {
-  url: 'verbatim'
+  url: 'url'
   doi: 'verbatim'
   eprint: 'verbatim'
   eprintclass: 'verbatim'

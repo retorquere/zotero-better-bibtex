@@ -279,6 +279,11 @@ Reference::field = (f, value) ->
 Reference::enc_raw = (f) ->
   return f.value
 
+Reference::enc_url = (f) ->
+  value = @enc_verbatim(f)
+  return "\\href{#{value}}{#{LaTeX.text2latex(value)}}" if Translator.fancyURLs
+  return value
+
 Reference::enc_verbatim = (f) ->
   if Translator.BetterBibTeX
     value = ('' + f.value).replace(/([#\\%&{}])/g, '\\$1')
@@ -286,7 +291,6 @@ Reference::enc_verbatim = (f) ->
     value = ('' + f.value).replace(/([\\{}])/g, '\\$1')
   value = value.replace(/[^\x21-\x7E]/g, ((chr) -> '\\%' + ('00' + chr.charCodeAt(0).toString(16).slice(-2)))) if not Translator.unicode
 
-  return "\\href{#{value}}{#{LaTeX.text2latex(value)}}" if f.name == 'url' && Translator.fancyURLs
   return value
 
 Reference::nonLetters = new XRegExp("[^\\p{Letter}]", 'g')
