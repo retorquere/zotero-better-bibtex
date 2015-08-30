@@ -467,7 +467,6 @@ Reference::isBibVar = (value) ->
   return Translator.preserveBibTeXVariables && value.match(/^[a-z][a-z0-9_]*$/i)
 
 Reference::add = (field) ->
-  return if Translator.skipFields.indexOf(field.name) >= 0
   return if typeof field.value != 'number' && not field.value
   return if typeof field.value == 'string' && field.value.trim() == ''
   return if Array.isArray(field.value) && field.value.length == 0
@@ -542,7 +541,7 @@ Reference::CSLtoBibTeX = (variable) ->
         when 'article', 'jurisdiction', 'legislation' then return 'journaltitle'
 
 Reference::complete = ->
-  @add({name: 'xref', value: @item.__xref__, enc: 'raw'}) if !@has.xref && @item.__xref__
+  #@add({name: 'xref', value: @item.__xref__, enc: 'raw'}) if !@has.xref && @item.__xref__
 
   if Translator.DOIandURL != 'both'
     if @has.doi && @has.url
@@ -552,50 +551,62 @@ Reference::complete = ->
 
   fields = []
   for own name, value of @override
+    raw = (value.format in ['naive', 'json'])
     name = name.toLowerCase()
 
-    # CSL names are not in BibTeX format, so only add it if there's a mapping
-    if value.format == 'csl'
-      remapped = @CSLtoBibTeX(name)
-      if remapped
-        fields.push({ name: remapped, value: value.value })
-      else
-        Translator.debug('Unmapped CSL field', name, '=', value.value)
+    # psuedo-var, sets the reference type
+    if name == 'referencetype'
+      @referencetype = value.value
       continue
 
-    if ((typeof value.value == 'string') && value.value.trim() == '')
+    switch value.format
+      # CSL names are not in BibTeX format, so only add it if there's a mapping
+      when 'csl'
+        remapped = @CSLtoBibTeX(name)
+        if remapped
+          name = remapped
+        else
+          Translator.debug('Unmapped CSL field', name, '=', value.value)
+        continue
+
+      when 'key-value'
+        switch name
+          when 'mr'
+            fields.push({ name: 'mrnumber', value: value.value, raw: raw })
+          when 'zbl'
+            fields.push({ name: 'zmnumber', value: value.value, raw: raw })
+          when 'lccn', 'pmcid'
+            fields.push({ name: name, value: value.value, raw: raw })
+          when 'pmid', 'arxiv', 'jstor', 'hdl'
+            if Translator.BetterBibLaTeX
+              fields.push({ name: 'eprinttype', value: name.toLowerCase() })
+              fields.push({ name: 'eprint', value: value.value, raw: raw })
+            else
+              fields.push({ name, value: value.value, raw: raw })
+          when 'googlebooksid'
+            if Translator.BetterBibLaTeX
+              fields.push({ name: 'eprinttype', value: 'googlebooks' })
+              fields.push({ name: 'eprint', value: value.value, raw: raw })
+            else
+              fields.push({ name: 'googlebooks', value: value.value, raw: raw })
+          when 'xref'
+            fields.push({ name, value: value.value, enc: 'raw' })
+
+          else
+            fields.push({ name, value: value.value, raw: raw })
+        continue
+
+      when 'naive'
+        value.value = value.value.replace(/%([a-z]+)/ig, (m, fieldname) => return @has[fieldname]?.value || '')
+
+    if (typeof value.value == 'string') && value.value.trim() == ''
       @remove(name)
       continue
 
-    raw = (value.format in ['navie', 'json'])
-    switch name
-      when 'mr'
-        fields.push({ name: 'mrnumber', value: value.value, raw: raw })
-      when 'zbl'
-        fields.push({ name: 'zmnumber', value: value.value, raw: raw })
-      when 'lccn', 'pmcid'
-        fields.push({ name: name, value: value.value, raw: raw })
-      when 'pmid', 'arxiv', 'jstor', 'hdl'
-        if Translator.BetterBibLaTeX
-          fields.push({ name: 'eprinttype', value: name.toLowerCase() })
-          fields.push({ name: 'eprint', value: value.value, raw: raw })
-        else
-          fields.push({ name, value: value.value, raw: raw })
-      when 'googlebooksid'
-        if Translator.BetterBibLaTeX
-          fields.push({ name: 'eprinttype', value: 'googlebooks' })
-          fields.push({ name: 'eprint', value: value.value, raw: raw })
-        else
-          fields.push({ name: 'googlebooks', value: value.value, raw: raw })
-      when 'xref'
-        fields.push({ name, value: value.value, enc: 'raw' })
+    fields.push({ name: name, value: value.value, raw: raw })
 
-      # psuedo-var, sets the reference type
-      when 'referencetype'
-        @referencetype = value.value
-
-      else
-        fields.push({ name, value: value.value, raw: raw })
+  for name in Translator.skipFields
+    @remove(name)
 
   for field in fields
     field = @field(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
