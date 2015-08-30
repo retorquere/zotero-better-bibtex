@@ -163,10 +163,10 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | map csl-json variables #293                                                        | 2           |
      | remove the field if the override is empty #303                                     | 1           |
      | markup small-caps, superscript, italics #301                                       | 2           |
      | don't escape entry key fields for #296                                             | 1           |
-     | map csl-json variables #293                                                        | 2           |
      | typo stature-statute (zotero item type) #284                                       | 1           |
      | bookSection is always converted to @inbook, never @incollection #282               | 1           |
      | referencetype= does not work #278                                                  | 1           |
