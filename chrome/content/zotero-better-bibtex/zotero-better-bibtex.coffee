@@ -89,23 +89,22 @@ Zotero.BetterBibTeX.extensionConflicts = ->
   AddonManager.getAddonByID('zoteromaps@zotero.org', (extension) ->
     return unless extension
     return if Services.vc.compare(extension.version, '1.0.10.1') > 0
-    Zotero.BetterBibTeX.removeTranslators()
-    Zotero.BetterBibTeX.disabled = '''
+
+    Zotero.BetterBibTeX.disable('''
       Better BibTeX has been disabled because it has detected conflicting extension "zotero-maps" 1.0.10 or
       earlier. Unfortunately this plugin appears to be abandoned, and their issue tracker at
 
       https://github.com/zotero/zotero-maps
 
       is not enabled.
-    '''
-    Zotero.BetterBibTeX.flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
+    ''')
   )
 
   AddonManager.getAddonByID('zutilo@www.wesailatdawn.com', (extension) ->
     return unless extension
     return if Services.vc.compare(extension.version, '1.2.10.1') > 0
-    Zotero.BetterBibTeX.removeTranslators()
-    Zotero.BetterBibTeX.disabled = '''
+
+    Zotero.BetterBibTeX.disable('''
       Better BibTeX has been disabled because it has detected conflicting extension "zutilo" 1.2.10.1 or
       earlier. If have proposed a fix at
 
@@ -116,15 +115,14 @@ Zotero.BetterBibTeX.extensionConflicts = ->
       https://addons.mozilla.org/en-US/firefox/addon/zutilo-utility-for-zotero/versions/
 
       should work; alternately, you can uninstall Zutilo.
-    '''
-    Zotero.BetterBibTeX.flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
+    ''')
   )
 
   AddonManager.getAddonByID('{359f0058-a6ca-443e-8dd8-09868141bebc}', (extension) ->
     return unless extension
     return if Services.vc.compare(extension.version, '1.2.3') > 0
-    Zotero.BetterBibTeX.removeTranslators()
-    Zotero.BetterBibTeX.disabled = '''
+
+    Zotero.BetterBibTeX.disable( '''
       Better BibTeX has been disabled because it has detected conflicting extension "recoll-firefox" 1.2.3 or
       earlier. If have proposed a fix for recall-firefox at
 
@@ -134,20 +132,21 @@ Zotero.BetterBibTeX.extensionConflicts = ->
 
       In the meantime, unfortunately, Better BibTeX and recoll-firefox cannot co-exist, and the previous workaround
       Better BibTeX had in place conflicts with a Mozilla policy all Fireox extensions must soon comply with.
-    '''
-    Zotero.BetterBibTeX.flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
+    ''')
   )
 
   if ZOTERO_CONFIG.VERSION?.match(/\.SOURCE$/)
-    #@flash(
-    Zotero.logError(
+    @flash(
       "You are on a custom Zotero build (#{ZOTERO_CONFIG.VERSION}). " +
       'Feel free to submit error reports for Better BibTeX when things go wrong, I will do my best to address them, but the target will always be the latest officially released version of Zotero'
     )
-  if Services.vc.compare(ZOTERO_CONFIG.VERSION?.replace(/\.SOURCE$/, '') || '0.0.0', '4.0.27') < 0
-    @removeTranslators()
-    @disabled = "Better BibTeX has been disabled because it found Zotero #{ZOTERO_CONFIG.VERSION}, but requires 4.0.27 or later."
-    @flash('Better BibTeX has been disabled', Zotero.BetterBibTeX.disabled)
+  if Services.vc.compare(ZOTERO_CONFIG.VERSION?.replace(/\.SOURCE$/, '') || '0.0.0', '4.0.28') < 0
+    @disable("Better BibTeX has been disabled because it found Zotero #{ZOTERO_CONFIG.VERSION}, but requires 4.0.28 or later.")
+
+Zotero.BetterBibTeX.disable = (message) ->
+  @removeTranslators()
+  @disabled = message
+  @flash('Better BibTeX has been disabled', message)
 
 Zotero.BetterBibTeX.flash = (title, body) ->
   Zotero.BetterBibTeX.debug('flash:', title)
