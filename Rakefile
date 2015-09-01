@@ -26,6 +26,7 @@ require 'csv'
 require 'base64'
 require 'net/http/post/multipart'
 require 'httparty'
+require_relative 'amo-sign'
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -496,47 +497,9 @@ task :test, [:tag] => [XPI, :plugins] do |t, args|
   end
 end
 
-task :sign do
-  release = nil
-  xpi = nil
-  Dir['*.xpi'].each{|f| xpi = f }
-  release = xpi.gsub(/zotero-better-bibtex-/, '')
-  release.gsub!(/.xpi/, '')
-
-  release = '1.2.23'
-  xpi = "zotero-better-bibtex-#{release}.xpi"
-
-  driver = Selenium::WebDriver.for :firefox
-
-  driver.navigate.to('https://addons.mozilla.org/en-US/firefox/users/login?to=%2Fen-US%2Ffirefox%2F')
-  wait = Selenium::WebDriver::Wait.new(:timeout => 15)
-  input = wait.until {
-    element = driver.find_element(:name, 'username')
-    element if element.displayed?
-  }
-  input.send_keys("emiliano.heyns@iris-advies.com")
-  input = wait.until {
-    element = driver.find_element(:name, 'password')
-    element if element.displayed?
-  }
-  input.send_keys(ENV['AMO_PASSWORD'])
-  driver.find_element(:id, 'login-submit').click
-
-  wait.until { driver.find_element(:class, 'account') }
-
-  driver.navigate.to('https://addons.mozilla.org/en-US/developers/addon/zotero-better-biblatex/versions')
-
-  driver.find_element(:partial_link_text, release).click
-
-  wait.until { driver.find_element(:id, 'file-list') }
-
-  link = driver.find_element(:partial_link_text, "#{release}-fx.xpi")
-
-  session = "sessionid=#{driver.manage.cookie_named('sessionid')[:value]}".shellescape
-  signed = "signed-#{xpi}".shellescape
-  sh "curl -L -o #{signed} --cookie #{session} #{link.attribute("href").shellescape}"
-
-  driver.quit
+task :sign => XPI do
+  signer = AMOSigner.new('zotero-better-biblatex', 'emiliano.heyns@iris-advies.com', ENV['AMO_PASSWORD'])
+  signer.sign(XPI, XPI.sub(/\.xpi/, '') + '-signed.xpi')
 end
 
 task :debug => XPI do
