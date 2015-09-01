@@ -24,11 +24,13 @@ Zotero.BetterBibTeX.CAYW =
     volume: "vol."
 
 class Zotero.BetterBibTeX.CAYW.Document
-  constructor: ->
+  constructor: (@config) ->
     @fields = []
 
   cleanup: ->
   activate: ->
+    return unless @config.minimize
+
     wm = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
     #ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
     windows = wm.getEnumerator(null)
@@ -62,7 +64,6 @@ class Zotero.BetterBibTeX.CAYW.Document
 
   getFieldsAsync: (fieldType, observer) ->
     throw new Error('CAYW.Document.getFieldsAsync')
-
 
 class Zotero.BetterBibTeX.CAYW.Field
   constructor: (@fieldType, @noteType) ->

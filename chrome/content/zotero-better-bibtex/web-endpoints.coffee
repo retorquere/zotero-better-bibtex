@@ -160,7 +160,7 @@ Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
 
 Zotero.BetterBibTeX.endpoints.cayw = { supportedMethods: ['GET'] }
 Zotero.BetterBibTeX.endpoints.cayw.init = (url, data, sendResponseCallback) ->
-  doc = new Zotero.BetterBibTeX.CAYW.Document()
+  doc = new Zotero.BetterBibTeX.CAYW.Document(url.query || {})
 
   deferred = Q.defer()
 
