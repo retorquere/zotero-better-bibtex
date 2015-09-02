@@ -464,7 +464,7 @@ Reference::preserveCaps = {
 Reference::initialCapOnly = new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}+$")
 
 Reference::isBibVar = (value) ->
-  return Translator.preserveBibTeXVariables && value.match(/^[a-z][a-z0-9_]*$/i)
+  return value && Translator.preserveBibTeXVariables && value.match(/^[a-z][a-z0-9_]*$/i)
 
 Reference::add = (field) ->
   return if typeof field.value != 'number' && not field.value

@@ -95,6 +95,15 @@ Scenario: Journal abbreviations exported in bibtex (81)
     | translator              | Better BibTeX  |
     | useJournalAbbreviation  | true           |
 
+@other
+Scenario Outline: BibLaTeX Export
+  Given I import <references> references from 'export/<file>.json'
+  Then a library export using 'Better BibTeX' should match 'export/<file>.bib'
+
+  Examples:
+     | file                                                                               | references |
+     | preserve BibTeX Variables does not check for null values while escaping #337       | 1          |
+
 @test-cluster-0
 @bbt
 Scenario Outline: BibLaTeX Export
