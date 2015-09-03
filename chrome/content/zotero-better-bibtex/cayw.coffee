@@ -80,7 +80,7 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
       citepostfix: ''
       keyprefix: ''
       keypostfix: ''
-      separator: ','
+      separator: ';'
       clipboard: false
       format: ''
     }
