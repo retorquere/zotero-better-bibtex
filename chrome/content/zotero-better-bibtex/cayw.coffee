@@ -126,7 +126,8 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
 
     Zotero.Utilities.Internal.copyTextToClipboard(formatted) if @config.clipboard
     @deferred.fulfill(formatted)
-    Zotero.Integration.currentWindow.close()
+
+    Zotero.Integration.currentWindow.close() unless Zotero.BetterBibTeX.pref.get('tests')
 
     @doc.activate()
 
@@ -186,7 +187,7 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       cite += "#{citation.prefix} " if citation.prefix
       cite += '-' if citation['suppress-author']
       cite += "@#{citation.citekey}"
-      cite += ", #{citation.label} #{citation.locator}" if citation.locator
+      cite += ", #{Zotero.BetterBibTeX.CAYW.shortLocator[citation.label]} #{citation.locator}" if citation.locator
       cite += " #{citation.suffix}" if citation.suffix
       formatted.push(cite)
     return '' if formatted.length == 0
@@ -215,10 +216,11 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       item = Zotero.Items.get(citation.id)
       isLegal = Zotero.ItemTypes.getName(item.itemTypeID) in [ 'bill', 'case', 'gazette', 'hearing', 'patent', 'regulation', 'statute', 'treaty' ]
 
+      key = if Zotero.BetterBibTeX.pref.get('tests') then 'ITEMKEY' else item.key
       id = switch
-        when item.libraryID then "zg:#{item.libraryID}:#{item.key}"
-        when Zotero.userID then "zu:#{Zotero.userID}:#{item.key}"
-        else "zu:0:#{item.key}"
+        when item.libraryID then "zg:#{item.libraryID}:#{key}"
+        when Zotero.userID then "zu:#{Zotero.userID}:#{key}"
+        else "zu:0:#{key}"
       locator = if citation.locator then "#{Zotero.BetterBibTeX.CAYW.shortLocator[citation.label]} #{citation.locator}" else ''
       citation.prefix ?= ''
       citation.suffix ?= ''

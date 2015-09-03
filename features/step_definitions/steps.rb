@@ -418,11 +418,11 @@ Then /^the markdown bibliography for (.*) should be '(.*)'$/ do |keys, bibliogra
   expect(found).to eq(expected)
 end
 
-When(/^I pick (.+) for CAYW$/) do |title|
+When(/^I pick '(.+)' for CAYW$/) do |title|
   @caywPicks << {'id' => $Firefox.BetterBibTeX.find('title', title)}
 end
 
-When(/^I pick (.+) for CAYW:$/) do |title, properties|
+When(/^I pick '(.+)' for CAYW:$/) do |title, table|
   pick = {}
   pick = table.rows_hash
   pick.keys.each{|k| pick[k] = preferenceValue(pick[k]) }
@@ -430,7 +430,12 @@ When(/^I pick (.+) for CAYW:$/) do |title, properties|
   @caywPicks << pick
 end
 
-Then(/^the picks for (.+) should be (.*)$/) do |format, expected|
+Then(/^the picks for (.+) should be '(.*)'$/) do |format, expected|
   found = $Firefox.BetterBibTeX.cayw(@caywPicks, format)
   expect(found).to eq(expected)
+end
+
+Then(/^the picks for (.+) should match \/(.*)\/$/) do |format, regexp|
+  found = $Firefox.BetterBibTeX.cayw(@caywPicks, format)
+  expect(found).to match(/#{regexp}/)
 end

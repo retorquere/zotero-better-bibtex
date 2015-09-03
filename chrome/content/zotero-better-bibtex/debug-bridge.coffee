@@ -167,4 +167,4 @@ Zotero.BetterBibTeX.DebugBridge.methods.cayw = (picks, format) ->
   picker.citation = {citationItems: picks, properties: {}}
   picker.accept()
 
-  sendResponseCallback(200, 'text/plain', deferred.promise)
+  return deferred.promise
