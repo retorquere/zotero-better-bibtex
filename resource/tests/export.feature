@@ -29,9 +29,9 @@ Scenario: Bibtex key regenerating issue when trashing items #117
 Scenario Outline: CAYW picker
   When I import 2 references from 'export/Bibtex key regenerating issue when trashing items #117.json'
   And I pick Genetics for CAYW:
-    | page | 1
+    | page | 1 |
   And I pick Genomics for CAYW:
-    | chapter | 1
+    | chapter | 1 |
   Then the picks for pandoc should be x
 
 @test-cluster-2
