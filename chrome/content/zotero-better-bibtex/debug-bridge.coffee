@@ -126,7 +126,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.keyManagerState = -> Zotero.BetterBibTeX
 Zotero.BetterBibTeX.DebugBridge.methods.cacheState = -> Zotero.BetterBibTeX.cache.cache.find()
 Zotero.BetterBibTeX.DebugBridge.methods.serializedState = -> Zotero.BetterBibTeX.serialized.items
 
-Zotero.BetterBibTeX.DebugBridge.methods.select = (attribute, value) ->
+Zotero.BetterBibTeX.DebugBridge.methods.find = (attribute, value, select) ->
   attribute = attribute.replace(/[^a-zA-Z]/, '')
   sql = "select i.itemID as itemID
          from items i
@@ -137,8 +137,9 @@ Zotero.BetterBibTeX.DebugBridge.methods.select = (attribute, value) ->
 
   id = Zotero.DB.valueQuery(sql, [value])
   throw new Error("No item found with #{attribute} = '#{value}'") unless id
-  zoteroPane = Zotero.getActiveZoteroPane()
-  zoteroPane.selectItem(id, true)
+  if select
+    zoteroPane = Zotero.getActiveZoteroPane()
+    zoteroPane.selectItem(id, true)
   return id
 
 Zotero.BetterBibTeX.DebugBridge.methods.remove = (id) -> Zotero.Items.trash([id])
@@ -156,3 +157,14 @@ Zotero.BetterBibTeX.DebugBridge.methods.autoExports = ->
       ae[k] = v
     exports.push(ae)
   return exports
+
+Zotero.BetterBibTeX.DebugBridge.methods.cayw = (picks, format) ->
+  doc = new Zotero.BetterBibTeX.CAYW.Document({format})
+
+  deferred = Q.defer()
+
+  picker = new Zotero.BetterBibTeX.CAYW.CitationEditInterface(deferred, {format}, doc)
+  picker.citation = {citationItems: picks, properties: {}}
+  picker.accept()
+
+  sendResponseCallback(200, 'text/plain', deferred.promise)

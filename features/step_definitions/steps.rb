@@ -117,6 +117,8 @@ Before do |scenario|
   @selected = nil
   @expectedExport = nil
   @exportOptions = {}
+  #@caywPicks = [{"id":"5","locator":"page","prefix":"prefix","suffix":"suffix","suppress-author":true}]
+  @caywPicks = []
 end
 
 AfterStep do |scenario|
@@ -386,7 +388,8 @@ Then /^save the query log to '(.+)'$$/ do |filename|
 end
 
 Then /^I select the first item where ([^\s]+) = '(.+)'$/ do |attribute, value|
-  @selected = $Firefox.BetterBibTeX.select(attribute, value)
+  howmany = -1 if howmany == 'the first'
+  @selected = $Firefox.BetterBibTeX.find(attribute, value, true)
   expect(@selected).not_to be(nil)
 end
 
@@ -412,5 +415,22 @@ Then /^the markdown bibliography for (.*) should be '(.*)'$/ do |keys, bibliogra
   keys = keys.split(',').collect{|k| k.strip}
   found = $Firefox.ScholarlyMarkdown.bibliography(keys).gsub(/[\s\n]+/, ' ').strip
   expected = bibliography.gsub(/[\s\n]+/, ' ').strip
+  expect(found).to eq(expected)
+end
+
+When(/^I pick (.+) for CAYW$/) do |title|
+  @caywPicks << {'id' => $Firefox.BetterBibTeX.find('title', title)}
+end
+
+When(/^I pick (.+) for CAYW:$/) do |title, properties|
+  pick = {}
+  pick = table.rows_hash
+  pick.keys.each{|k| pick[k] = preferenceValue(pick[k]) }
+  pick['id'] = $Firefox.BetterBibTeX.find('title', title)
+  @caywPicks << pick
+end
+
+Then(/^the picks for (.+) should be (.*)$/) do |format, expected|
+  found = $Firefox.BetterBibTeX.cayw(@caywPicks, format)
   expect(found).to eq(expected)
 end

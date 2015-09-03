@@ -25,6 +25,15 @@ Scenario: Bibtex key regenerating issue when trashing items #117
   And I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json' as 'Second Import.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Bibtex key regenerating issue when trashing items #117.bib'
 
+@cayw
+Scenario Outline: CAYW picker
+  When I import 2 references from 'export/Bibtex key regenerating issue when trashing items #117.json'
+  And I pick Genetics for CAYW:
+    | page | 1
+  And I pick Genomics for CAYW:
+    | chapter | 1
+  Then the picks for pandoc should be x
+
 @test-cluster-2
 @307
 Scenario: thesis zotero entries always create  bibtex entries #307
