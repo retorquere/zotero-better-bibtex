@@ -182,11 +182,12 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
   pandoc: (citations) ->
     formatted = []
     for citation in citations
+      locator = if citation.locator then "#{Zotero.BetterBibTeX.CAYW.shortLocator[citation.label]} #{citation.locator}" else ''
       cite = ''
       cite += "#{citation.prefix} " if citation.prefix
       cite += '-' if citation['suppress-author']
       cite += "@#{citation.citekey}"
-      cite += ", #{citation.label} #{citation.locator}" if citation.locator
+      cite += ", #{locator}"
       cite += " #{citation.suffix}" if citation.suffix
       formatted.push(cite)
     return '' if formatted.length == 0
