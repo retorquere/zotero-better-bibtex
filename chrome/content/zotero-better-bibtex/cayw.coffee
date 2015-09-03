@@ -102,7 +102,7 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
     # "label":"line","locator":"xx"
     citations = []
     for citation in @citation.citationItems
-      citation.label = 'p.' if !citation.label && citation.locator
+      citation.label = 'page' if !citation.label && citation.locator
       citekey = Zotero.BetterBibTeX.keymanager.get({itemID: citation.id}, 'on-export')
       continue unless citekey
       citation.citekey = citekey.citekey
@@ -182,11 +182,12 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
   pandoc: (citations) ->
     formatted = []
     for citation in citations
+      locator = if citation.locator then "#{Zotero.BetterBibTeX.CAYW.shortLocator[citation.label]} #{citation.locator}" else ''
       cite = ''
       cite += "#{citation.prefix} " if citation.prefix
       cite += '-' if citation['suppress-author']
       cite += "@#{citation.citekey}"
-      cite += " #{citation.locator}" if citation.locator
+      cite += ", #{locator}"
       cite += " #{citation.suffix}" if citation.suffix
       formatted.push(cite)
     return '' if formatted.length == 0
