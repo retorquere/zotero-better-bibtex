@@ -26,7 +26,7 @@ Scenario: Bibtex key regenerating issue when trashing items #117
   Then a library export using 'Better BibLaTeX' should match 'export/Bibtex key regenerating issue when trashing items #117.bib'
 
 @cayw
-Scenario Outline: CAYW picker
+Scenario: CAYW picker
   When I import 2 references from 'export/Bibtex key regenerating issue when trashing items #117.json'
   And I pick Genetics for CAYW:
     | page | 1 |
