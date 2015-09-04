@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <script src="http://nathansuniversity.com/js/jquery-1.7.1.min.js"></script>
+    <script src="./eval.js"></script>
+    <script src="./parser.js"></script>
+  </head>
+  <body>
+    <textarea id="input" style="width:800px; height:300px;">
+    (+ 1 2)
+    </textarea>
+    <input id="submitbutton" type="button" value="Run" />
+    <div id="console" style="border:solid 1px;">
+      <p>This is where output goes.</p>
+    </div>
+    <script>
+      // Utility function to log messages
+      var log_console = function(msg) {
+        $('#console').append('<p>' + msg + '</p>');
+      };
+      // After page load
+      $(function() {
+        $('#submitbutton').click(function() {
+          var user_text = $('#input').val();
+          $('#console').html(''); // clear console
+          log_console('Your input was: "' + user_text + '"');
+          try {
+            var parsed = SCHEEM.parse(user_text);
+            log_console('Parsed: ' + JSON.stringify(parsed));
+            try {
+              var result = evalScheem(parsed, {});
+              log_console('Result: ' + JSON.stringify(result));
+            }
+            catch(e) {
+              log_console('Eval Error: ' + e);
+            }
+          }
+          catch(e) {
+            log_console('Parse Error: ' + e);
+          }
+        });
+      });
+    </script>      
+  </body>
+</html>
+
+  

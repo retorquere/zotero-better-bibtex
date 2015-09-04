@@ -297,7 +297,7 @@ def preferenceValue(value)
   return true if value == 'true'
   return false if value == 'false'
   return Integer(value) if value =~ /^[0-9]+$/
-  return value[1..-1] if value =~ /^'[^']+'$/
+  return value[1..-2] if value =~ /^'[^']+'$/
   return value
 end
 
@@ -354,12 +354,20 @@ end
 When(/^I set preferences:$/) do |table|
   table.rows_hash.each_pair{ |name, value|
     name = "translators.better-bibtex#{name}" if name[0] == '.'
-    $Firefox.BetterBibTeX.setPreference(name, preferenceValue(value))
+    value = preferenceValue(value)
+    STDOUT.puts "pref: #{name.inspect} -> #{value.inspect}"
+    value = open(File.expand_path(File.join('test/fixtures', value))).read if name == 'translators.better-bibtex.postscript'
+    $Firefox.BetterBibTeX.setPreference(name, value)
   }
 end
-When(/^I set preference (.*) to (.*)$/) do |name, value|
+When(/^I set preference ([^\s]+) to (.*)$/) do |name, value|
   name = "translators.better-bibtex#{name}" if name[0] == '.'
-  $Firefox.BetterBibTeX.setPreference(name, preferenceValue(value))
+  value = preferenceValue(value)
+  if name == 'translators.better-bibtex.postscript'
+    value = File.expand_path(File.join('test/fixtures', value))
+    value = open(value).read
+  end
+  $Firefox.BetterBibTeX.setPreference(name, value)
 end
 
 Then /^I? ?wait ([0-9]+) seconds?(.*)/ do |secs, comment|

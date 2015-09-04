@@ -111,7 +111,7 @@ Translator.initialize = ->
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
   @skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
-  for pref in ['csquotes', 'usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'verbatimDate']
+  for pref in ['postscript', 'csquotes', 'usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'verbatimDate']
     @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
   if @verbatimDate == ''
     delete @verbatimDate
@@ -217,6 +217,7 @@ Translator.nextItem = ->
 
   return null
 
+
 Translator.exportGroups = ->
   @debug('exportGroups:', @collections)
   return if @collections.length == 0
@@ -264,15 +265,15 @@ class Reference
     @override = Translator.extractFields(@item)
 
     for own attr, f of Translator.fieldMap || {}
-      @add(@field(f, @item[attr])) if f.name
+      @add(@clone(f, @item[attr])) if f.name
 
     @add({name: 'timestamp', value: Translator.testing_timestamp || @item.dateModified || @item.dateAdded})
 
 Reference::log = Translator.log
 
-Reference::field = (f, value) ->
+Reference::clone = (f, value) ->
   clone = JSON.parse(JSON.stringify(f))
-  #clone = Object.create(f)
+  delete clone.bibtex
   clone.value = value
   return clone
 
@@ -285,13 +286,7 @@ Reference::enc_url = (f) ->
   return value
 
 Reference::enc_verbatim = (f) ->
-  if Translator.BetterBibTeX
-    value = ('' + f.value).replace(/([#\\%&{}])/g, '\\$1')
-  else
-    value = ('' + f.value).replace(/([\\{}])/g, '\\$1')
-  value = value.replace(/[^\x21-\x7E]/g, ((chr) -> '\\%' + ('00' + chr.charCodeAt(0).toString(16).slice(-2)))) if not Translator.unicode
-
-  return value
+  return @toVerbatim(f.value)
 
 Reference::nonLetters = new XRegExp("[^\\p{Letter}]", 'g')
 Reference::punctuationAtEnd = new XRegExp("[\\p{Punctuation}]$")
@@ -378,7 +373,7 @@ Reference::enc_latex = (f, raw) ->
 
   if Array.isArray(f.value)
     return null if f.value.length == 0
-    return (@enc_latex(@field(f, word), raw) for word in f.value).join(f.sep)
+    return (@enc_latex(@clone(f, word), raw) for word in f.value).join(f.sep)
 
   return f.value if raw
 
@@ -467,65 +462,66 @@ Reference::isBibVar = (value) ->
   return value && Translator.preserveBibTeXVariables && value.match(/^[a-z][a-z0-9_]*$/i)
 
 Reference::add = (field) ->
-  return if typeof field.value != 'number' && not field.value
-  return if typeof field.value == 'string' && field.value.trim() == ''
-  return if Array.isArray(field.value) && field.value.length == 0
+  if ! field.bibtex
+    return if typeof field.value != 'number' && not field.value
+    return if typeof field.value == 'string' && field.value.trim() == ''
+    return if Array.isArray(field.value) && field.value.length == 0
 
   @remove(field.name) if field.replace
   throw "duplicate field '#{field.name}' for #{@item.__citekey__}" if @has[field.name] && !field.allowDuplicates
 
-  if typeof field.value == 'number' || (field.preserveBibTeXVariables && @isBibVar(field.value))
-    value = field.value
-  else
-    enc = field.enc || Translator.fieldEncoding?[field.name] || 'latex'
-    value = @["enc_#{enc}"](field, (if field.enc && field.enc != 'creators' then false else @raw))
+  if ! field.bibtex
+    if typeof field.value == 'number' || (field.preserveBibTeXVariables && @isBibVar(field.value))
+      value = field.value
+    else
+      enc = field.enc || Translator.fieldEncoding?[field.name] || 'latex'
+      value = @["enc_#{enc}"](field, (if field.enc && field.enc != 'creators' then false else @raw))
 
-    return unless value
+      return unless value
 
-    unless field.bare && !field.value.match(/\s/)
-      if Translator.preserveCaps != 'no' && field.preserveCaps && !@raw
-        braced = []
-        scan = value.replace(/\\./, '..')
-        for i in [0...value.length]
-          braced[i] = (braced[i - 1] || 0)
-          braced[i] += switch scan[i]
-            when '{' then 1
-            when '}' then -1
-            else          0
-          braced[i] = 0 if braced[i] < 0
+      unless field.bare && !field.value.match(/\s/)
+        if Translator.preserveCaps != 'no' && field.preserveCaps && !@raw
+          braced = []
+          scan = value.replace(/\\./, '..')
+          for i in [0...value.length]
+            braced[i] = (braced[i - 1] || 0)
+            braced[i] += switch scan[i]
+              when '{' then 1
+              when '}' then -1
+              else          0
+            braced[i] = 0 if braced[i] < 0
 
-        value = XRegExp.replace(value, @preserveCaps[Translator.preserveCaps], (match, boundary, needle, pos, haystack) ->
-          boundary ?= ''
-          pos += boundary.length
-          #return boundary + needle if needle.length < 2 # don't encode single-letter capitals
-          return boundary + needle if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, Reference::initialCapOnly)
+          value = XRegExp.replace(value, @preserveCaps[Translator.preserveCaps], (match, boundary, needle, pos, haystack) ->
+            boundary ?= ''
+            pos += boundary.length
+            #return boundary + needle if needle.length < 2 # don't encode single-letter capitals
+            return boundary + needle if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, Reference::initialCapOnly)
 
-          c = 0
-          for i in [pos - 1 .. 0] by -1
-            if haystack[i] == '\\'
-              c++
-            else
-              break
-          return boundary + needle if c % 2 == 1 # don't enclose LaTeX command
+            c = 0
+            for i in [pos - 1 .. 0] by -1
+              if haystack[i] == '\\'
+                c++
+              else
+                break
+            return boundary + needle if c % 2 == 1 # don't enclose LaTeX command
 
-          return boundary + needle if braced[pos] > 0
-          return "#{boundary}{#{needle}}"
-        )
-      value = "{#{value}}"
+            return boundary + needle if braced[pos] > 0
+            return "#{boundary}{#{needle}}"
+          )
+        value = "{#{value}}"
 
-  field.bibtex = "  #{field.name} = #{value}"
+    field.bibtex = "#{value}"
+
   field.bibtex = field.bibtex.normalize('NFKC') if @normalize
   @fields.push(field)
   @has[field.name] = field
 
 Reference::remove = (name) ->
   return unless @has[name]
+  removed = @has[name]
   delete @has[name]
-  for field, i in @fields
-    if field.name == name
-      @fields.splice(i, 1)
-      return
-  return
+  @fields = (field for field in @fields when field.name != name)
+  return removed
 
 Reference::normalize = (typeof (''.normalize) == 'function')
 
@@ -539,6 +535,8 @@ Reference::CSLtoBibTeX = (variable) ->
     when 'container-title'
       switch @referencetype
         when 'article', 'jurisdiction', 'legislation' then return 'journaltitle'
+
+Reference::postscript = ->
 
 Reference::complete = ->
   #@add({name: 'xref', value: @item.__xref__, enc: 'raw'}) if !@has.xref && @item.__xref__
@@ -599,39 +597,51 @@ Reference::complete = ->
             fields.push({ name, value: value.value, raw: raw })
         continue
 
-      when 'naive'
-        value.value = value.value.replace(/%([a-z]+)/ig, (m, fieldname) =>
-          return @has[fieldname] if @has[fieldname]
-
-          fieldName = fieldname[0].toLowerCase() + fieldname.slice(1)
-          if @item[fieldname] || @item[fieldName]
-            raw = false
-            return @item[fieldname] || @item[fieldName]
-
-          return ''
-        )
-
-    if (typeof value.value == 'string') && value.value.trim() == ''
-      @remove(name)
-    else
-      fields.push({ name: name, value: value.value, raw: raw })
+    fields.push({ name: name, value: value.value, raw: raw })
 
   for name in Translator.skipFields
     @remove(name)
 
   for field in fields
-    field = @field(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
+    name = field.name.split('.')
+    if name.length > 1
+      Translator.debug('override: per-reftype', name)
+      continue unless @referencetype == name[0]
+      field.name = name[1]
+
+    Translator.debug('override: try', field)
+
+    if (typeof field.value == 'string') && field.value.trim() == ''
+      Translator.debug('override: scrub', field)
+      @remove(field.name)
+      continue
+
+    Translator.debug('override: add', field)
+    field = @clone(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
     field.replace = true
     @add(field)
 
   @add({name: 'type', value: @referencetype}) if @fields.length == 0
 
+  try
+    @postscript()
+  catch err
+    Translator.debug('postscript error:', err.message)
+
   # sort fields for stable tests
   @fields.sort((a, b) -> ("#{a.name} = #{a.value}").localeCompare(("#{b.name} = #{b.value}"))) if Translator.testing
 
   ref = "@#{@referencetype}{#{@item.__citekey__},\n"
-  ref += (field.bibtex for field in @fields).join(',\n')
+  ref += ("  #{field.name} = #{field.bibtex}" for field in @fields).join(',\n')
   ref += '\n}\n\n'
   Zotero.write(ref)
 
   Zotero.BetterBibTeX.cache.store(@item.itemID, Translator, @item.__citekey__, ref) if Translator.caching
+
+Reference::toVerbatim = (text) ->
+  if Translator.BetterBibTeX
+    value = ('' + text).replace(/([#\\%&{}])/g, '\\$1')
+  else
+    value = ('' + text).replace(/([\\{}])/g, '\\$1')
+  value = value.replace(/[^\x21-\x7E]/g, ((chr) -> '\\%' + ('00' + chr.charCodeAt(0).toString(16).slice(-2)))) if not Translator.unicode
+  return value

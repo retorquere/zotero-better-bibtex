@@ -118,6 +118,12 @@ Scenario Outline: BibLaTeX Export
      | file                                                                               | references |
      | preserve BibTeX Variables does not check for null values while escaping #337       | 1          |
 
+@postscript
+Scenario: Post script
+  Given I import 3 references from 'export/Export web page to misc type with notes and howpublished custom fields #329.json'
+  And I set preference .postscript to 'export/Export web page to misc type with notes and howpublished custom fields #329.js'
+  Then a library export using 'Better BibTeX' should match 'export/Export web page to misc type with notes and howpublished custom fields #329.bib'
+
 @test-cluster-0
 @bbt
 Scenario Outline: BibLaTeX Export
@@ -186,8 +192,9 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
-     | map csl-json variables #293                                                        | 2           |
      | remove the field if the override is empty #303                                     | 1           |
+     | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
+     | map csl-json variables #293                                                        | 2           |
      | markup small-caps, superscript, italics #301                                       | 2           |
      | don't escape entry key fields for #296                                             | 1           |
      | typo stature-statute (zotero item type) #284                                       | 1           |
@@ -216,7 +223,6 @@ Scenario Outline: BibLaTeX Export
      | Export Forthcoming as Forthcoming                                                  | 1           |
      | Exporting of single-field author lacks braces #130                                 | 1           |
      | Export Newspaper Article misses section field #132                                 | 1           |
-     | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
      | German Umlaut separated by brackets #146                                           | 1           |
      | Hang on non-file attachment export #112 - URL export broken #114                   | 2           |
      | HTML Fragment separator escaped in url #140 #147                                   | 1           |

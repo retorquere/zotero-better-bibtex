@@ -107,7 +107,6 @@ ABBREVS.each{|a|
 }
 ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   tgt = src.sub(/\.[^\.]+$/, '.js')
-  tgt = [tgt, src.sub(/\.[^\.]+$/, '.js.map')] if File.extname(src) == '.coffee'
   tgt
 }.flatten + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
   root = File.dirname(tr)
@@ -182,7 +181,6 @@ DOWNLOADS = {
     #'xregexp-all.js'  => 'http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js',
     #'json5.js'            => 'https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js',
     #'htmlparser.js'       => 'https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js',
-    #'marked.js'       => 'https://raw.githubusercontent.com/chjj/marked/master/lib/marked.js'
     #'he.js'           => 'https://raw.githubusercontent.com/mathiasbynens/he/master/he.js'
   },
 }
@@ -194,15 +192,12 @@ DOWNLOADS.each_pair{|dir, files|
   }
 }
 
-file 'resource/translators/marked.js' => 'Rakefile' do |t|
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/chjj/marked/master/lib/marked.js', t.name)
-  code = "var LaTeX; if (!LaTeX) { LaTeX = {}; }\n"
-  IO.readlines(t.name).each{|line|
-    line.gsub!(/module/, '__no_module__')
-    line.gsub!('this.marked', 'LaTeX.marked')
-    code += line
-  }
-  open(t.name, 'w'){|f| f.write(code) }
+file 'resource/translators/js-interpreter.js' => 'Rakefile' do |t|
+  Tempfile.create('jsi') do |js|
+    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/NeilFraser/JS-Interpreter/master/interpreter.js', js.path)
+    code = "var Interpreter = (function() { window = {}; #{open(js.path).read} return Interpreter;})();"
+    open(t.name, 'w'){|f| f.write(code) }
+  end
 end
 
 file 'resource/translators/xregexp-all.js' => 'Rakefile' do |t|
@@ -385,18 +380,30 @@ rule '.json' => '.yml' do |t|
   }
 end
 
+def browserify(code, target)
+  Tempfile.create(['browserify', '.js'], File.dirname(target)) do |caller|
+    Tempfile.create(['browserify', '.js'], File.dirname(target)) do |output|
+      open(caller.path, 'w'){|f| f.puts code }
+      sh "#{NODEBIN}/browserify #{caller.path.shellescape} > #{output.path.shellescape}"
+      FileUtils.cp(output.path, target)
+    end
+  end
+end
+
+file 'resource/translators/marked.js' => 'Rakefile' do |t|
+  browserify("var LaTeX; if (!LaTeX) { LaTeX = {}; }; LaTeX.marked=require('marked');", t.name)
+end
+
+file 'resource/translators/acorn.js' => 'Rakefile' do |t|
+  browserify("acorn = require('../../node_modules/acorn/dist/acorn_csp');", t.name)
+end
+
 file 'chrome/content/zotero-better-bibtex/fold-to-ascii.js' => 'Rakefile' do |t|
-  tmp = t.name + '.tmp'
-  open(tmp, 'w'){|f| f.puts "Zotero.BetterBibTeX.removeDiacritics = require('fold-to-ascii').fold;" }
-  sh "#{NODEBIN}/browserify #{tmp.shellescape} > #{t.name.shellescape}"
-  File.unlink(tmp)
+  browserify("Zotero.BetterBibTeX.removeDiacritics = require('fold-to-ascii').fold;", t.name)
 end
 
 file 'chrome/content/zotero-better-bibtex/punycode.js' => 'Rakefile' do |t|
-  tmp = t.name + '.tmp'
-  open(tmp, 'w'){|f| f.puts "Zotero.BetterBibTeX.punycode = require('punycode');" }
-  sh "#{NODEBIN}/browserify #{tmp.shellescape} > #{t.name.shellescape}"
-  File.unlink(tmp)
+  browserify("Zotero.BetterBibTeX.punycode = require('punycode');", t.name)
 end
 
 file 'chrome/content/zotero-better-bibtex/release.js' => 'install.rdf' do |t|
@@ -441,7 +448,7 @@ task :validate => XPI do
   sh "docker run --rm -v #{dir}:/xpi marceloandrader/amo-validator /xpi/#{xpi} -v -t extension --selfhosted"
 end
 
-task :test, [:tag] => [XPI, :plugins] do |t, args|
+task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
   tag = "@#{args[:tag]}".sub(/^@@/, '@')
 
   if tag == '@'

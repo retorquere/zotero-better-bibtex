@@ -148,7 +148,7 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.112)
+    zotplus-rakehelper (0.0.114)
       httparty
       nokogiri
       rake
@@ -181,3 +181,6 @@ DEPENDENCIES
   washbullet
   zip-zip
   zotplus-rakehelper
+
+BUNDLED WITH
+   1.10.6

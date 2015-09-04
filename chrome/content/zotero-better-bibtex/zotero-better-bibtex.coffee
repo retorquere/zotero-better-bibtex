@@ -799,15 +799,31 @@ Zotero.BetterBibTeX.createFile = (paths...) ->
   f.create(Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 0o666) unless f.exists()
   return f
 
+Zotero.BetterBibTeX.postscript = """
+Translator.initialize = (function(original) {
+  return function() {
+    if (this.initialized) {
+      return;
+    }
+    original.apply(this, arguments);
+    try {
+      return Reference.prototype.postscript = new Function(Translator.postscript);
+    } catch (err) {
+      return Translator.debug('postscript failed to compile:', err, Translator.postscript);
+    }
+  };
+})(Translator.initialize);
+"""
+
 Zotero.BetterBibTeX.loadTranslators = ->
-  @load('Better BibTeX')
-  @load('Better BibLaTeX')
+  @load('Better BibTeX', {postscript: @postscript})
+  @load('Better BibLaTeX', {postscript: @postscript})
   @load('LaTeX Citation')
   @load('Pandoc Citation')
   @load('Pandoc JSON')
   @load('BetterBibTeX JSON')
   @load('BibTeXAuxScanner')
-  @load('Collected Notes', @pref.get('collectedNotes'))
+  @load('Collected Notes', {target: @pref.get('collectedNotes')})
 
   # clean up junk
   try
@@ -995,21 +1011,28 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions, callback) ->
   translation.setHandler('done', (obj, success) -> callback(!success, if success then obj?.string else null))
   translation.translate()
 
-Zotero.BetterBibTeX.load = (translator, target) ->
-  header = JSON.parse(Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.json"))
+Zotero.BetterBibTeX.getContentsFromURL = (url) ->
+  try
+    return Zotero.File.getContentsFromURL(url)
+  catch err
+    throw new Error("Failed to load #{url}: #{err.msg}")
+
+Zotero.BetterBibTeX.load = (translator, options = {}) ->
+  header = JSON.parse(Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.json"))
   @removeTranslator(header)
 
-  header.target = target if target
+  header.target = options.target if options.target
 
   sources = ['xregexp-all', 'json5', 'translator', "#{translator}.header", translator].concat(header.BetterBibTeX?.dependencies || [])
   @debug('translator.load:', translator, 'from', sources)
-  code = "exports = void 0;\nmodule = void 0;\n"
+  code = "exports = undefined;\nmodule = undefined;\n"
   for src in sources
     try
-      code += Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/translators/#{src}.js") + "\n"
+      code += Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/#{src}.js") + "\n"
     catch err
       @debug('translator.load: source', src, 'for', translator, 'could not be loaded:', err)
       throw err
+  code += options.postscript if options.postscript
 
   if @pref.get('debug')
     js = @createFile('translators', "#{translator}.js")
