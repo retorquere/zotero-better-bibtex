@@ -3,6 +3,7 @@ Feature: Cache tests
 
 Background:
   Given I set preference .citekeyFormat to [auth][year]
+  And I set preference .jabrefGroups to false
 
 @keymanager
 Scenario: Keymanager cache test

@@ -20,6 +20,8 @@ BetterBibTeX:
     nextItem: true
     BibTeX: true
   dependencies:
+    - xregexp-all
+    - reference
     - unicode_translator
     - he
     - htmlparser

@@ -2,14 +2,15 @@
 Feature: Export
 
 Background:
-
   When I set preference .citekeyFormat to [auth][year]
+  And I set preference .jabrefGroups to false
 
 @test-cluster-2
 @131
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json'
   And I set preference .DOIandURL to both
+  And I set preference .jabrefGroups to true
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.default.bib'
   And I set preference .DOIandURL to doi
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-DOI.bib'

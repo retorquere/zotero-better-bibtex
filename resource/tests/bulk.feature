@@ -3,6 +3,7 @@ Feature: Bulk Export & Cache
 
 Background:
   Given I set preference .citekeyFormat to [auth][year]
+  And I set preference .jabrefGroups to false
 
 @bulk
 Scenario: Minor bulk export cache testing

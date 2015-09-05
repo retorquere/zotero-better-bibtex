@@ -3,6 +3,7 @@ Feature: Import
 
 Background:
   Given I set preference .citekeyFormat to [auth][year]
+  And I set preference .jabrefGroups to false
 
 @aux
 Scenario: AUX scanner

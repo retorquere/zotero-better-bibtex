@@ -32,3 +32,4 @@ pref('extensions.zotero.translators.better-bibtex.verbatimDate', "(\\[[0-9]+,*\\
 pref('extensions.zotero.translators.better-bibtex.warnBulkModify', 10)
 pref('extensions.zotero.translators.better-bibtex.collectedNotes', 'tex')
 pref('extensions.zotero.translators.better-bibtex.postscript', '')
+pref('extensions.zotero.translators.better-bibtex.jabrefGroups', true)

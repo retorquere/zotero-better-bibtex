@@ -299,8 +299,6 @@ Language.lookup = (langcode) ->
 
   return @cache[langcode]
 
-Reference::hasCreator = (type) -> (@item.creators || []).some((creator) -> creator.creatorType == type)
-
 doExport = ->
   Zotero.write('\n')
   while item = Translator.nextItem()
