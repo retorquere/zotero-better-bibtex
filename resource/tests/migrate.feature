@@ -1,5 +1,9 @@
 Feature: Key migration
 
+Background:
+  When I set preference .jabrefGroups to false
+
+
 @keymigration
 Scenario: Key match test
   When I import 2 reference from 'export/key migration.json'
