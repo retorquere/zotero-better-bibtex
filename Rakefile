@@ -865,9 +865,10 @@ task :csltests do
   end
 end
 
-file 'www/better-bibtex/scripting.md' => ['resource/translators/reference.coffee'] do |t|
+#file 'www/better-bibtex/scripting.md' => ['resource/translators/reference.coffee'] do |t|
+file 'wiki/Scripting.md' => ['resource/translators/reference.coffee'] do |t|
   sh "markdox --output #{t.name.shellescape} #{t.sources.collect{|s| s.shellescape}.join(' ')}"
-  index = open(t.name).read
-  index = "---\ntitle: Scripting\n---\n" + index
-  open(t.name, 'w'){|f| f.write(index) }
+  #index = open(t.name).read
+  #index = "---\ntitle: Scripting\n---\n" + index
+  #open(t.name, 'w'){|f| f.write(index) }
 end
