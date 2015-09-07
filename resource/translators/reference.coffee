@@ -66,11 +66,11 @@ class Reference
   # Encode to LaTeX url
   #
   # @param {field} field to encode
-  # @return {String} field.value encoded as verbatim LaTeX string (minimal escaping). If preference `fancyURLs` is on, wraps return value in `\href{string}{string}`
+  # @return {String} field.value encoded as verbatim LaTeX string (minimal escaping). If preference `fancyURLs` is on, wraps return value in `\url{string}`
   ###
   enc_url: (f) ->
     value = @enc_verbatim(f)
-    return "\\href{#{value}}{#{LaTeX.text2latex(value)}}" if Translator.fancyURLs
+    return "\\url{#{value}}" if Translator.fancyURLs
     return value
 
   ###
