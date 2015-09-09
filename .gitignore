@@ -11,8 +11,6 @@
 *.js.map
 *.tmp
 .depend.mf
-resource/translators/latex_unicode_mapping.coffee
-resource/translators/mathchar.pegcoffee
 resource/translators/*.json
 resource/logs/*.html
 resource/logs/*.json
