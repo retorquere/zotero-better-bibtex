@@ -124,7 +124,7 @@ Translator.initialize = ->
   @caching = @header.BetterBibTeX?.cache?.BibTeX && !@exportFileData
 
   @unicode = switch
-    when @BetterBibLaTeX then !Zotero.getHiddenPref('better-bibtex.asciiBibLaTeX')
+    when @BetterBibLaTeX || @CollectedNotes then !Zotero.getHiddenPref('better-bibtex.asciiBibLaTeX')
     when @BetterBibTeX then !Zotero.getHiddenPref('better-bibtex.asciiBibTeX')
     else true
 
