@@ -26,7 +26,7 @@ class UnicodeConverter
       unicode = {math: '', text: ''}
       done = {}
       @chars.each_pair{|char, latex|
-        next unless char =~ /^[\x20-\x7E]$/ # an ascii character that needs translation? Probably a TeX special character
+        next unless char =~ /^[\x20-\x7E]$/ || latex.latex == ' ' || char == ' ' || char == '\u00A0' # an ascii character that needs translation? Probably a TeX special character
         char = "\\\\" if char == '\\'
         next if done[char]
         done[char] = true
@@ -104,7 +104,10 @@ class UnicodeConverter
         @chars[char].latex = soll if @chars[char].latex == ist
       }
 
-      @chars[char].latex = ' ' if @chars[char].latex == '~'
+      if @chars[char].latex == '~' || @chars[char].latex == ' ' || @chars[char].char =~ /u00A0'/
+        @chars[char].latex = ' '
+        @chars[char].math = false
+      end
     }
   end
 
