@@ -14,1617 +14,1619 @@ LaTeX.toLaTeX.unicode.text =
   '{': "\\{"
   '}': "\\}"
   '~': "{\\textasciitilde}"
+  '[': "{[}"
 LaTeX.toLaTeX.ascii.math =
   '<': "<"
   '>': ">"
   '\\': "\\backslash"
-  '\u000AC': "{\\lnot}"
-  '\u000AD': "\\-"
-  '\u000B1': "{\\pm}"
-  '\u000B2': "{^2}"
-  '\u000B3': "{^3}"
-  '\u000B5': "\\mathrm{\\mu}"
-  '\u000B7': "{\\cdot}"
-  '\u000B9': "{^1}"
-  '\u000F7': "{\\div}"
-  '\u00127': "{\\Elzxh}"
-  '\u00192': "f"
-  '\u001AA': "{\\eth}"
-  '\u00250': "{\\Elztrna}"
-  '\u00252': "{\\Elztrnsa}"
-  '\u00254': "{\\Elzopeno}"
-  '\u00256': "{\\Elzrtld}"
-  '\u00259': "{\\Elzschwa}"
-  '\u0025B': "{\\varepsilon}"
-  '\u00263': "{\\Elzpgamma}"
-  '\u00264': "{\\Elzpbgam}"
-  '\u00265': "{\\Elztrnh}"
-  '\u0026C': "{\\Elzbtdl}"
-  '\u0026D': "{\\Elzrtll}"
-  '\u0026F': "{\\Elztrnm}"
-  '\u00270': "{\\Elztrnmlr}"
-  '\u00271': "{\\Elzltlmr}"
-  '\u00273': "{\\Elzrtln}"
-  '\u00277': "{\\Elzclomeg}"
-  '\u00279': "{\\Elztrnr}"
-  '\u0027A': "{\\Elztrnrl}"
-  '\u0027B': "{\\Elzrttrnr}"
-  '\u0027C': "{\\Elzrl}"
-  '\u0027D': "{\\Elzrtlr}"
-  '\u0027E': "{\\Elzfhr}"
-  '\u00282': "{\\Elzrtls}"
-  '\u00283': "{\\Elzesh}"
-  '\u00287': "{\\Elztrnt}"
-  '\u00288': "{\\Elzrtlt}"
-  '\u0028A': "{\\Elzpupsil}"
-  '\u0028B': "{\\Elzpscrv}"
-  '\u0028C': "{\\Elzinvv}"
-  '\u0028D': "{\\Elzinvw}"
-  '\u0028E': "{\\Elztrny}"
-  '\u00290': "{\\Elzrtlz}"
-  '\u00292': "{\\Elzyogh}"
-  '\u00294': "{\\Elzglst}"
-  '\u00295': "{\\Elzreglst}"
-  '\u00296': "{\\Elzinglst}"
-  '\u002A4': "{\\Elzdyogh}"
-  '\u002A7': "{\\Elztesh}"
-  '\u002C8': "{\\Elzverts}"
-  '\u002CC': "{\\Elzverti}"
-  '\u002D0': "{\\Elzlmrk}"
-  '\u002D1': "{\\Elzhlmrk}"
-  '\u002D2': "{\\Elzsbrhr}"
-  '\u002D3': "{\\Elzsblhr}"
-  '\u002D4': "{\\Elzrais}"
-  '\u002D5': "{\\Elzlow}"
-  '\u00321': "{\\Elzpalh}"
-  '\u0032A': "{\\Elzsbbrg}"
-  '\u0038E': "\\mathrm{'Y}"
-  '\u0038F': "\\mathrm{'\\Omega}"
-  '\u00390': "\\acute{\\ddot{\\iota}}"
-  '\u00391': "{\\Alpha}"
-  '\u00392': "{\\Beta}"
-  '\u00393': "{\\Gamma}"
-  '\u00394': "{\\Delta}"
-  '\u00395': "{\\Epsilon}"
-  '\u00396': "{\\Zeta}"
-  '\u00397': "{\\Eta}"
-  '\u00398': "{\\Theta}"
-  '\u00399': "{\\Iota}"
-  '\u0039A': "{\\Kappa}"
-  '\u0039B': "{\\Lambda}"
-  '\u0039C': "M"
-  '\u0039D': "N"
-  '\u0039E': "{\\Xi}"
-  '\u0039F': "O"
-  '\u003A0': "{\\Pi}"
-  '\u003A1': "{\\Rho}"
-  '\u003A3': "{\\Sigma}"
-  '\u003A4': "{\\Tau}"
-  '\u003A5': "{\\Upsilon}"
-  '\u003A6': "{\\Phi}"
-  '\u003A7': "{\\Chi}"
-  '\u003A8': "{\\Psi}"
-  '\u003A9': "{\\Omega}"
-  '\u003AA': "\\mathrm{\\ddot{I}}"
-  '\u003AB': "\\mathrm{\\ddot{Y}}"
-  '\u003AD': "\\acute{\\epsilon}"
-  '\u003AE': "\\acute{\\eta}"
-  '\u003AF': "\\acute{\\iota}"
-  '\u003B0': "\\acute{\\ddot{\\upsilon}}"
-  '\u003B1': "{\\alpha}"
-  '\u003B2': "{\\beta}"
-  '\u003B3': "{\\gamma}"
-  '\u003B4': "{\\delta}"
-  '\u003B5': "{\\epsilon}"
-  '\u003B6': "{\\zeta}"
-  '\u003B7': "{\\eta}"
-  '\u003B9': "{\\iota}"
-  '\u003BA': "{\\kappa}"
-  '\u003BB': "{\\lambda}"
-  '\u003BC': "{\\mu}"
-  '\u003BD': "{\\nu}"
-  '\u003BE': "{\\xi}"
-  '\u003BF': "o"
-  '\u003C0': "{\\pi}"
-  '\u003C1': "{\\rho}"
-  '\u003C2': "{\\varsigma}"
-  '\u003C3': "{\\sigma}"
-  '\u003C4': "{\\tau}"
-  '\u003C5': "{\\upsilon}"
-  '\u003C6': "{\\varphi}"
-  '\u003C7': "{\\chi}"
-  '\u003C8': "{\\psi}"
-  '\u003C9': "{\\omega}"
-  '\u003CA': "\\ddot{\\iota}"
-  '\u003CB': "\\ddot{\\upsilon}"
-  '\u003CD': "\\acute{\\upsilon}"
-  '\u003CE': "\\acute{\\omega}"
-  '\u003D2': "{\\Upsilon}"
-  '\u003D5': "{\\phi}"
-  '\u003D6': "{\\varpi}"
-  '\u003DA': "{\\Stigma}"
-  '\u003DC': "{\\Digamma}"
-  '\u003DD': "{\\digamma}"
-  '\u003DE': "{\\Koppa}"
-  '\u003E0': "{\\Sampi}"
-  '\u003F0': "{\\varkappa}"
-  '\u003F1': "{\\varrho}"
-  '\u003F6': "{\\backepsilon}"
-  '\u0200A': "{\\mkern1mu}"
-  '\u02016': "{\\Vert}"
-  '\u0201B': "{\\Elzreapos}"
-  '\u02032': "{'}"
-  '\u02033': "{''}"
-  '\u02034': "{'''}"
-  '\u02035': "{\\backprime}"
-  '\u02057': "''''"
-  '\u020DB': "{\\dddot}"
-  '\u020DC': "{\\ddddot}"
-  '\u02102': "\\mathbb{C}"
-  '\u0210B': "\\mathscr{H}"
-  '\u0210C': "\\mathfrak{H}"
-  '\u0210D': "\\mathbb{H}"
-  '\u0210F': "{\\hslash}"
-  '\u02110': "\\mathscr{I}"
-  '\u02111': "\\mathfrak{I}"
-  '\u02112': "\\mathscr{L}"
-  '\u02113': "\\mathscr{l}"
-  '\u02115': "\\mathbb{N}"
-  '\u02118': "{\\wp}"
-  '\u02119': "\\mathbb{P}"
-  '\u0211A': "\\mathbb{Q}"
-  '\u0211B': "\\mathscr{R}"
-  '\u0211C': "\\mathfrak{R}"
-  '\u0211D': "\\mathbb{R}"
-  '\u0211E': "{\\Elzxrat}"
-  '\u02124': "\\mathbb{Z}"
-  '\u02126': "{\\Omega}"
-  '\u02127': "{\\mho}"
-  '\u02128': "\\mathfrak{Z}"
-  '\u02129': "\\ElsevierGlyph{2129}"
-  '\u0212C': "\\mathscr{B}"
-  '\u0212D': "\\mathfrak{C}"
-  '\u0212F': "\\mathscr{e}"
-  '\u02130': "\\mathscr{E}"
-  '\u02131': "\\mathscr{F}"
-  '\u02133': "\\mathscr{M}"
-  '\u02134': "\\mathscr{o}"
-  '\u02135': "{\\aleph}"
-  '\u02136': "{\\beth}"
-  '\u02137': "{\\gimel}"
-  '\u02138': "{\\daleth}"
-  '\u02153': "\\textfrac{1}{3}"
-  '\u02154': "\\textfrac{2}{3}"
-  '\u02155': "\\textfrac{1}{5}"
-  '\u02156': "\\textfrac{2}{5}"
-  '\u02157': "\\textfrac{3}{5}"
-  '\u02158': "\\textfrac{4}{5}"
-  '\u02159': "\\textfrac{1}{6}"
-  '\u0215A': "\\textfrac{5}{6}"
-  '\u0215B': "\\textfrac{1}{8}"
-  '\u0215C': "\\textfrac{3}{8}"
-  '\u0215D': "\\textfrac{5}{8}"
-  '\u0215E': "\\textfrac{7}{8}"
-  '\u02190': "{\\leftarrow}"
-  '\u02191': "{\\uparrow}"
-  '\u02192': "{\\rightarrow}"
-  '\u02193': "{\\downarrow}"
-  '\u02194': "{\\leftrightarrow}"
-  '\u02195': "{\\updownarrow}"
-  '\u02196': "{\\nwarrow}"
-  '\u02197': "{\\nearrow}"
-  '\u02198': "{\\searrow}"
-  '\u02199': "{\\swarrow}"
-  '\u0219A': "{\\nleftarrow}"
-  '\u0219B': "{\\nrightarrow}"
-  '\u0219C': "{\\arrowwaveright}"
-  '\u0219D': "{\\arrowwaveright}"
-  '\u0219E': "{\\twoheadleftarrow}"
-  '\u021A0': "{\\twoheadrightarrow}"
-  '\u021A2': "{\\leftarrowtail}"
-  '\u021A3': "{\\rightarrowtail}"
-  '\u021A6': "{\\mapsto}"
-  '\u021A9': "{\\hookleftarrow}"
-  '\u021AA': "{\\hookrightarrow}"
-  '\u021AB': "{\\looparrowleft}"
-  '\u021AC': "{\\looparrowright}"
-  '\u021AD': "{\\leftrightsquigarrow}"
-  '\u021AE': "{\\nleftrightarrow}"
-  '\u021B0': "{\\Lsh}"
-  '\u021B1': "{\\Rsh}"
-  '\u021B3': "\\ElsevierGlyph{21B3}"
-  '\u021B6': "{\\curvearrowleft}"
-  '\u021B7': "{\\curvearrowright}"
-  '\u021BA': "{\\circlearrowleft}"
-  '\u021BB': "{\\circlearrowright}"
-  '\u021BC': "{\\leftharpoonup}"
-  '\u021BD': "{\\leftharpoondown}"
-  '\u021BE': "{\\upharpoonright}"
-  '\u021BF': "{\\upharpoonleft}"
-  '\u021C0': "{\\rightharpoonup}"
-  '\u021C1': "{\\rightharpoondown}"
-  '\u021C2': "{\\downharpoonright}"
-  '\u021C3': "{\\downharpoonleft}"
-  '\u021C4': "{\\rightleftarrows}"
-  '\u021C5': "{\\dblarrowupdown}"
-  '\u021C6': "{\\leftrightarrows}"
-  '\u021C7': "{\\leftleftarrows}"
-  '\u021C8': "{\\upuparrows}"
-  '\u021C9': "{\\rightrightarrows}"
-  '\u021CA': "{\\downdownarrows}"
-  '\u021CB': "{\\leftrightharpoons}"
-  '\u021CC': "{\\rightleftharpoons}"
-  '\u021CD': "{\\nLeftarrow}"
-  '\u021CE': "{\\nLeftrightarrow}"
-  '\u021CF': "{\\nRightarrow}"
-  '\u021D0': "{\\Leftarrow}"
-  '\u021D1': "{\\Uparrow}"
-  '\u021D2': "{\\Rightarrow}"
-  '\u021D3': "{\\Downarrow}"
-  '\u021D4': "{\\Leftrightarrow}"
-  '\u021D5': "{\\Updownarrow}"
-  '\u021DA': "{\\Lleftarrow}"
-  '\u021DB': "{\\Rrightarrow}"
-  '\u021DD': "{\\rightsquigarrow}"
-  '\u021F5': "{\\DownArrowUpArrow}"
-  '\u02200': "{\\forall}"
-  '\u02201': "{\\complement}"
-  '\u02202': "{\\partial}"
-  '\u02203': "{\\exists}"
-  '\u02204': "{\\nexists}"
-  '\u02205': "{\\varnothing}"
-  '\u02207': "{\\nabla}"
-  '\u02208': "{\\in}"
-  '\u02209': "{\\not\\in}"
-  '\u0220B': "{\\ni}"
-  '\u0220C': "{\\not\\ni}"
-  '\u0220F': "{\\prod}"
-  '\u02210': "{\\coprod}"
-  '\u02211': "{\\sum}"
-  '\u02213': "{\\mp}"
-  '\u02214': "{\\dotplus}"
-  '\u02216': "{\\setminus}"
-  '\u02217': "{_\\ast}"
-  '\u02218': "{\\circ}"
-  '\u02219': "{\\bullet}"
-  '\u0221A': "{\\surd}"
-  '\u0221D': "{\\propto}"
-  '\u0221E': "{\\infty}"
-  '\u0221F': "{\\rightangle}"
-  '\u02220': "{\\angle}"
-  '\u02221': "{\\measuredangle}"
-  '\u02222': "{\\sphericalangle}"
-  '\u02223': "{\\mid}"
-  '\u02224': "{\\nmid}"
-  '\u02225': "{\\parallel}"
-  '\u02226': "{\\nparallel}"
-  '\u02227': "{\\wedge}"
-  '\u02228': "{\\vee}"
-  '\u02229': "{\\cap}"
-  '\u0222A': "{\\cup}"
-  '\u0222B': "{\\int}"
-  '\u0222C': "{\\int\\!\\int}"
-  '\u0222D': "{\\int\\!\\int\\!\\int}"
-  '\u0222E': "{\\oint}"
-  '\u0222F': "{\\surfintegral}"
-  '\u02230': "{\\volintegral}"
-  '\u02231': "{\\clwintegral}"
-  '\u02232': "\\ElsevierGlyph{2232}"
-  '\u02233': "\\ElsevierGlyph{2233}"
-  '\u02234': "{\\therefore}"
-  '\u02235': "{\\because}"
-  '\u02237': "{\\Colon}"
-  '\u02238': "\\ElsevierGlyph{2238}"
-  '\u0223A': "\\mathbin{{:}\\!\\!{-}\\!\\!{:}}"
-  '\u0223B': "{\\homothetic}"
-  '\u0223C': "{\\sim}"
-  '\u0223D': "{\\backsim}"
-  '\u0223E': "{\\lazysinv}"
-  '\u02240': "{\\wr}"
-  '\u02241': "{\\not\\sim}"
-  '\u02242': "\\ElsevierGlyph{2242}"
-  '\u02243': "{\\simeq}"
-  '\u02244': "{\\not\\simeq}"
-  '\u02245': "{\\cong}"
-  '\u02246': "{\\approxnotequal}"
-  '\u02247': "{\\not\\cong}"
-  '\u02248': "{\\approx}"
-  '\u02249': "{\\not\\approx}"
-  '\u0224A': "{\\approxeq}"
-  '\u0224B': "{\\tildetrpl}"
-  '\u0224C': "{\\allequal}"
-  '\u0224D': "{\\asymp}"
-  '\u0224E': "{\\Bumpeq}"
-  '\u0224F': "{\\bumpeq}"
-  '\u02250': "{\\doteq}"
-  '\u02251': "{\\doteqdot}"
-  '\u02252': "{\\fallingdotseq}"
-  '\u02253': "{\\risingdotseq}"
-  '\u02255': "=:"
-  '\u02256': "{\\eqcirc}"
-  '\u02257': "{\\circeq}"
-  '\u02259': "{\\estimates}"
-  '\u0225A': "\\ElsevierGlyph{225A}"
-  '\u0225B': "{\\starequal}"
-  '\u0225C': "{\\triangleq}"
-  '\u0225F': "\\ElsevierGlyph{225F}"
-  '\u02260': "\\not ="
-  '\u02261': "{\\equiv}"
-  '\u02262': "{\\not\\equiv}"
-  '\u02264': "{\\leq}"
-  '\u02265': "{\\geq}"
-  '\u02266': "{\\leqq}"
-  '\u02267': "{\\geqq}"
-  '\u02268': "{\\lneqq}"
-  '\u02269': "{\\gneqq}"
-  '\u0226A': "{\\ll}"
-  '\u0226B': "{\\gg}"
-  '\u0226C': "{\\between}"
-  '\u0226D': "{\\not\\kern-0.3em\\times}"
-  '\u0226E': "\\not<"
-  '\u0226F': "\\not>"
-  '\u02270': "{\\not\\leq}"
-  '\u02271': "{\\not\\geq}"
-  '\u02272': "{\\lessequivlnt}"
-  '\u02273': "{\\greaterequivlnt}"
-  '\u02274': "\\ElsevierGlyph{2274}"
-  '\u02275': "\\ElsevierGlyph{2275}"
-  '\u02276': "{\\lessgtr}"
-  '\u02277': "{\\gtrless}"
-  '\u02278': "{\\notlessgreater}"
-  '\u02279': "{\\notgreaterless}"
-  '\u0227A': "{\\prec}"
-  '\u0227B': "{\\succ}"
-  '\u0227C': "{\\preccurlyeq}"
-  '\u0227D': "{\\succcurlyeq}"
-  '\u0227E': "{\\precapprox}"
-  '\u0227F': "{\\succapprox}"
-  '\u02280': "{\\not\\prec}"
-  '\u02281': "{\\not\\succ}"
-  '\u02282': "{\\subset}"
-  '\u02283': "{\\supset}"
-  '\u02284': "{\\not\\subset}"
-  '\u02285': "{\\not\\supset}"
-  '\u02286': "{\\subseteq}"
-  '\u02287': "{\\supseteq}"
-  '\u02288': "{\\not\\subseteq}"
-  '\u02289': "{\\not\\supseteq}"
-  '\u0228A': "{\\subsetneq}"
-  '\u0228B': "{\\supsetneq}"
-  '\u0228E': "{\\uplus}"
-  '\u0228F': "{\\sqsubset}"
-  '\u02290': "{\\sqsupset}"
-  '\u02291': "{\\sqsubseteq}"
-  '\u02292': "{\\sqsupseteq}"
-  '\u02293': "{\\sqcap}"
-  '\u02294': "{\\sqcup}"
-  '\u02295': "{\\oplus}"
-  '\u02296': "{\\ominus}"
-  '\u02297': "{\\otimes}"
-  '\u02298': "{\\oslash}"
-  '\u02299': "{\\odot}"
-  '\u0229A': "{\\circledcirc}"
-  '\u0229B': "{\\circledast}"
-  '\u0229D': "{\\circleddash}"
-  '\u0229E': "{\\boxplus}"
-  '\u0229F': "{\\boxminus}"
-  '\u022A0': "{\\boxtimes}"
-  '\u022A1': "{\\boxdot}"
-  '\u022A2': "{\\vdash}"
-  '\u022A3': "{\\dashv}"
-  '\u022A4': "{\\top}"
-  '\u022A5': "{\\perp}"
-  '\u022A7': "{\\truestate}"
-  '\u022A8': "{\\forcesextra}"
-  '\u022A9': "{\\Vdash}"
-  '\u022AA': "{\\Vvdash}"
-  '\u022AB': "{\\VDash}"
-  '\u022AC': "{\\nvdash}"
-  '\u022AD': "{\\nvDash}"
-  '\u022AE': "{\\nVdash}"
-  '\u022AF': "{\\nVDash}"
-  '\u022B2': "{\\vartriangleleft}"
-  '\u022B3': "{\\vartriangleright}"
-  '\u022B4': "{\\trianglelefteq}"
-  '\u022B5': "{\\trianglerighteq}"
-  '\u022B6': "{\\original}"
-  '\u022B7': "{\\image}"
-  '\u022B8': "{\\multimap}"
-  '\u022B9': "{\\hermitconjmatrix}"
-  '\u022BA': "{\\intercal}"
-  '\u022BB': "{\\veebar}"
-  '\u022BE': "{\\rightanglearc}"
-  '\u022C0': "\\ElsevierGlyph{22C0}"
-  '\u022C1': "\\ElsevierGlyph{22C1}"
-  '\u022C2': "{\\bigcap}"
-  '\u022C3': "{\\bigcup}"
-  '\u022C4': "{\\diamond}"
-  '\u022C5': "{\\cdot}"
-  '\u022C6': "{\\star}"
-  '\u022C7': "{\\divideontimes}"
-  '\u022C8': "{\\bowtie}"
-  '\u022C9': "{\\ltimes}"
-  '\u022CA': "{\\rtimes}"
-  '\u022CB': "{\\leftthreetimes}"
-  '\u022CC': "{\\rightthreetimes}"
-  '\u022CD': "{\\backsimeq}"
-  '\u022CE': "{\\curlyvee}"
-  '\u022CF': "{\\curlywedge}"
-  '\u022D0': "{\\Subset}"
-  '\u022D1': "{\\Supset}"
-  '\u022D2': "{\\Cap}"
-  '\u022D3': "{\\Cup}"
-  '\u022D4': "{\\pitchfork}"
-  '\u022D6': "{\\lessdot}"
-  '\u022D7': "{\\gtrdot}"
-  '\u022D8': "{\\verymuchless}"
-  '\u022D9': "{\\verymuchgreater}"
-  '\u022DA': "{\\lesseqgtr}"
-  '\u022DB': "{\\gtreqless}"
-  '\u022DE': "{\\curlyeqprec}"
-  '\u022DF': "{\\curlyeqsucc}"
-  '\u022E2': "{\\not\\sqsubseteq}"
-  '\u022E3': "{\\not\\sqsupseteq}"
-  '\u022E5': "{\\Elzsqspne}"
-  '\u022E6': "{\\lnsim}"
-  '\u022E7': "{\\gnsim}"
-  '\u022E8': "{\\precedesnotsimilar}"
-  '\u022E9': "{\\succnsim}"
-  '\u022EA': "{\\ntriangleleft}"
-  '\u022EB': "{\\ntriangleright}"
-  '\u022EC': "{\\ntrianglelefteq}"
-  '\u022ED': "{\\ntrianglerighteq}"
-  '\u022EE': "{\\vdots}"
-  '\u022EF': "{\\cdots}"
-  '\u022F0': "{\\upslopeellipsis}"
-  '\u022F1': "{\\downslopeellipsis}"
-  '\u02306': "{\\perspcorrespond}"
-  '\u02308': "{\\lceil}"
-  '\u02309': "{\\rceil}"
-  '\u0230A': "{\\lfloor}"
-  '\u0230B': "{\\rfloor}"
-  '\u02315': "{\\recorder}"
-  '\u02316': "\\mathchar\"2208"
-  '\u0231C': "{\\ulcorner}"
-  '\u0231D': "{\\urcorner}"
-  '\u0231E': "{\\llcorner}"
-  '\u0231F': "{\\lrcorner}"
-  '\u02322': "{\\frown}"
-  '\u02323': "{\\smile}"
-  '\u0233D': "\\ElsevierGlyph{E838}"
-  '\u023A3': "{\\Elzdlcorn}"
-  '\u023B0': "{\\lmoustache}"
-  '\u023B1': "{\\rmoustache}"
-  '\u024C8': "{\\circledS}"
-  '\u02506': "{\\Elzdshfnc}"
-  '\u02519': "{\\Elzsqfnw}"
-  '\u02571': "{\\diagup}"
-  '\u025A1': "{\\square}"
-  '\u025AA': "{\\blacksquare}"
-  '\u025AD': "\\fbox{~~}"
-  '\u025AF': "{\\Elzvrecto}"
-  '\u025B1': "\\ElsevierGlyph{E381}"
-  '\u025B3': "{\\bigtriangleup}"
-  '\u025B4': "{\\blacktriangle}"
-  '\u025B5': "{\\vartriangle}"
-  '\u025B8': "{\\blacktriangleright}"
-  '\u025B9': "{\\triangleright}"
-  '\u025BD': "{\\bigtriangledown}"
-  '\u025BE': "{\\blacktriangledown}"
-  '\u025BF': "{\\triangledown}"
-  '\u025C2': "{\\blacktriangleleft}"
-  '\u025C3': "{\\triangleleft}"
-  '\u025CA': "{\\lozenge}"
-  '\u025CB': "{\\bigcirc}"
-  '\u025D0': "{\\Elzcirfl}"
-  '\u025D1': "{\\Elzcirfr}"
-  '\u025D2': "{\\Elzcirfb}"
-  '\u025D8': "{\\Elzrvbull}"
-  '\u025E7': "{\\Elzsqfl}"
-  '\u025E8': "{\\Elzsqfr}"
-  '\u025EA': "{\\Elzsqfse}"
-  '\u025EF': "{\\bigcirc}"
-  '\u02662': "{\\diamond}"
-  '\u0266D': "{\\flat}"
-  '\u0266E': "{\\natural}"
-  '\u0266F': "{\\sharp}"
-  '\u027F5': "{\\longleftarrow}"
-  '\u027F6': "{\\longrightarrow}"
-  '\u027F7': "{\\longleftrightarrow}"
-  '\u027F8': "{\\Longleftarrow}"
-  '\u027F9': "{\\Longrightarrow}"
-  '\u027FA': "{\\Longleftrightarrow}"
-  '\u027FC': "{\\longmapsto}"
-  '\u027FF': "\\sim\\joinrel\\leadsto"
-  '\u02905': "\\ElsevierGlyph{E212}"
-  '\u02912': "{\\UpArrowBar}"
-  '\u02913': "{\\DownArrowBar}"
-  '\u02923': "\\ElsevierGlyph{E20C}"
-  '\u02924': "\\ElsevierGlyph{E20D}"
-  '\u02925': "\\ElsevierGlyph{E20B}"
-  '\u02926': "\\ElsevierGlyph{E20A}"
-  '\u02927': "\\ElsevierGlyph{E211}"
-  '\u02928': "\\ElsevierGlyph{E20E}"
-  '\u02929': "\\ElsevierGlyph{E20F}"
-  '\u0292A': "\\ElsevierGlyph{E210}"
-  '\u02933': "\\ElsevierGlyph{E21C}"
-  '\u02936': "\\ElsevierGlyph{E21A}"
-  '\u02937': "\\ElsevierGlyph{E219}"
-  '\u02940': "{\\Elolarr}"
-  '\u02941': "{\\Elorarr}"
-  '\u02942': "{\\ElzRlarr}"
-  '\u02944': "{\\ElzrLarr}"
-  '\u02947': "{\\Elzrarrx}"
-  '\u0294E': "{\\LeftRightVector}"
-  '\u0294F': "{\\RightUpDownVector}"
-  '\u02950': "{\\DownLeftRightVector}"
-  '\u02951': "{\\LeftUpDownVector}"
-  '\u02952': "{\\LeftVectorBar}"
-  '\u02953': "{\\RightVectorBar}"
-  '\u02954': "{\\RightUpVectorBar}"
-  '\u02955': "{\\RightDownVectorBar}"
-  '\u02956': "{\\DownLeftVectorBar}"
-  '\u02957': "{\\DownRightVectorBar}"
-  '\u02958': "{\\LeftUpVectorBar}"
-  '\u02959': "{\\LeftDownVectorBar}"
-  '\u0295A': "{\\LeftTeeVector}"
-  '\u0295B': "{\\RightTeeVector}"
-  '\u0295C': "{\\RightUpTeeVector}"
-  '\u0295D': "{\\RightDownTeeVector}"
-  '\u0295E': "{\\DownLeftTeeVector}"
-  '\u0295F': "{\\DownRightTeeVector}"
-  '\u02960': "{\\LeftUpTeeVector}"
-  '\u02961': "{\\LeftDownTeeVector}"
-  '\u0296E': "{\\UpEquilibrium}"
-  '\u0296F': "{\\ReverseUpEquilibrium}"
-  '\u02970': "{\\RoundImplies}"
-  '\u0297C': "\\ElsevierGlyph{E214}"
-  '\u0297D': "\\ElsevierGlyph{E215}"
-  '\u02980': "{\\Elztfnc}"
-  '\u02985': "\\ElsevierGlyph{3018}"
-  '\u02986': "{\\Elroang}"
-  '\u02993': "<\\kern-0.58em("
-  '\u02994': "\\ElsevierGlyph{E291}"
-  '\u02999': "{\\Elzddfnc}"
-  '\u0299C': "{\\Angle}"
-  '\u029A0': "{\\Elzlpargt}"
-  '\u029B5': "\\ElsevierGlyph{E260}"
-  '\u029B6': "\\ElsevierGlyph{E61B}"
-  '\u029CA': "{\\ElzLap}"
-  '\u029CB': "{\\Elzdefas}"
-  '\u029CF': "{\\LeftTriangleBar}"
-  '\u029D0': "{\\RightTriangleBar}"
-  '\u029DC': "\\ElsevierGlyph{E372}"
-  '\u029EB': "{\\blacklozenge}"
-  '\u029F4': "{\\RuleDelayed}"
-  '\u02A04': "{\\Elxuplus}"
-  '\u02A05': "{\\ElzThr}"
-  '\u02A06': "{\\Elxsqcup}"
-  '\u02A07': "{\\ElzInf}"
-  '\u02A08': "{\\ElzSup}"
-  '\u02A0D': "{\\ElzCint}"
-  '\u02A0F': "{\\clockoint}"
-  '\u02A10': "\\ElsevierGlyph{E395}"
-  '\u02A16': "{\\sqrint}"
-  '\u02A25': "\\ElsevierGlyph{E25A}"
-  '\u02A2A': "\\ElsevierGlyph{E25B}"
-  '\u02A2D': "\\ElsevierGlyph{E25C}"
-  '\u02A2E': "\\ElsevierGlyph{E25D}"
-  '\u02A2F': "{\\ElzTimes}"
-  '\u02A34': "\\ElsevierGlyph{E25E}"
-  '\u02A35': "\\ElsevierGlyph{E25E}"
-  '\u02A3C': "\\ElsevierGlyph{E259}"
-  '\u02A3F': "{\\amalg}"
-  '\u02A53': "{\\ElzAnd}"
-  '\u02A54': "{\\ElzOr}"
-  '\u02A55': "\\ElsevierGlyph{E36E}"
-  '\u02A56': "{\\ElOr}"
-  '\u02A5E': "{\\perspcorrespond}"
-  '\u02A5F': "{\\Elzminhat}"
-  '\u02A63': "\\ElsevierGlyph{225A}"
-  '\u02A6E': "\\stackrel{*}{=}"
-  '\u02A75': "{\\Equal}"
-  '\u02A7D': "{\\leqslant}"
-  '\u02A7E': "{\\geqslant}"
-  '\u02A85': "{\\lessapprox}"
-  '\u02A86': "{\\gtrapprox}"
-  '\u02A87': "{\\lneq}"
-  '\u02A88': "{\\gneq}"
-  '\u02A89': "{\\lnapprox}"
-  '\u02A8A': "{\\gnapprox}"
-  '\u02A8B': "{\\lesseqqgtr}"
-  '\u02A8C': "{\\gtreqqless}"
-  '\u02A95': "{\\eqslantless}"
-  '\u02A96': "{\\eqslantgtr}"
-  '\u02A9D': "\\Pisymbol{ppi020}{117}"
-  '\u02A9E': "\\Pisymbol{ppi020}{105}"
-  '\u02AA1': "{\\NestedLessLess}"
-  '\u02AA2': "{\\NestedGreaterGreater}"
-  '\u02AAF': "{\\preceq}"
-  '\u02AB0': "{\\succeq}"
-  '\u02AB5': "{\\precneqq}"
-  '\u02AB6': "{\\succneqq}"
-  '\u02AB7': "{\\precapprox}"
-  '\u02AB8': "{\\succapprox}"
-  '\u02AB9': "{\\precnapprox}"
-  '\u02ABA': "{\\succnapprox}"
-  '\u02AC5': "{\\subseteqq}"
-  '\u02AC6': "{\\supseteqq}"
-  '\u02ACB': "{\\subsetneqq}"
-  '\u02ACC': "{\\supsetneqq}"
-  '\u02AEB': "\\ElsevierGlyph{E30D}"
-  '\u02AF6': "{\\Elztdcol}"
-  '\u02AFD': "{{/}\\!\\!{/}}"
-  '\u0300A': "\\ElsevierGlyph{300A}"
-  '\u0300B': "\\ElsevierGlyph{300B}"
-  '\u03018': "\\ElsevierGlyph{3018}"
-  '\u03019': "\\ElsevierGlyph{3019}"
-  '\u0301A': "{\\openbracketleft}"
-  '\u0301B': "{\\openbracketright}"
-  '\u1D400': "\\mathbf{A}"
-  '\u1D401': "\\mathbf{B}"
-  '\u1D402': "\\mathbf{C}"
-  '\u1D403': "\\mathbf{D}"
-  '\u1D404': "\\mathbf{E}"
-  '\u1D405': "\\mathbf{F}"
-  '\u1D406': "\\mathbf{G}"
-  '\u1D407': "\\mathbf{H}"
-  '\u1D408': "\\mathbf{I}"
-  '\u1D409': "\\mathbf{J}"
-  '\u1D40A': "\\mathbf{K}"
-  '\u1D40B': "\\mathbf{L}"
-  '\u1D40C': "\\mathbf{M}"
-  '\u1D40D': "\\mathbf{N}"
-  '\u1D40E': "\\mathbf{O}"
-  '\u1D40F': "\\mathbf{P}"
-  '\u1D410': "\\mathbf{Q}"
-  '\u1D411': "\\mathbf{R}"
-  '\u1D412': "\\mathbf{S}"
-  '\u1D413': "\\mathbf{T}"
-  '\u1D414': "\\mathbf{U}"
-  '\u1D415': "\\mathbf{V}"
-  '\u1D416': "\\mathbf{W}"
-  '\u1D417': "\\mathbf{X}"
-  '\u1D418': "\\mathbf{Y}"
-  '\u1D419': "\\mathbf{Z}"
-  '\u1D41A': "\\mathbf{a}"
-  '\u1D41B': "\\mathbf{b}"
-  '\u1D41C': "\\mathbf{c}"
-  '\u1D41D': "\\mathbf{d}"
-  '\u1D41E': "\\mathbf{e}"
-  '\u1D41F': "\\mathbf{f}"
-  '\u1D420': "\\mathbf{g}"
-  '\u1D421': "\\mathbf{h}"
-  '\u1D422': "\\mathbf{i}"
-  '\u1D423': "\\mathbf{j}"
-  '\u1D424': "\\mathbf{k}"
-  '\u1D425': "\\mathbf{l}"
-  '\u1D426': "\\mathbf{m}"
-  '\u1D427': "\\mathbf{n}"
-  '\u1D428': "\\mathbf{o}"
-  '\u1D429': "\\mathbf{p}"
-  '\u1D42A': "\\mathbf{q}"
-  '\u1D42B': "\\mathbf{r}"
-  '\u1D42C': "\\mathbf{s}"
-  '\u1D42D': "\\mathbf{t}"
-  '\u1D42E': "\\mathbf{u}"
-  '\u1D42F': "\\mathbf{v}"
-  '\u1D430': "\\mathbf{w}"
-  '\u1D431': "\\mathbf{x}"
-  '\u1D432': "\\mathbf{y}"
-  '\u1D433': "\\mathbf{z}"
-  '\u1D434': "\\mathsl{A}"
-  '\u1D435': "\\mathsl{B}"
-  '\u1D436': "\\mathsl{C}"
-  '\u1D437': "\\mathsl{D}"
-  '\u1D438': "\\mathsl{E}"
-  '\u1D439': "\\mathsl{F}"
-  '\u1D43A': "\\mathsl{G}"
-  '\u1D43B': "\\mathsl{H}"
-  '\u1D43C': "\\mathsl{I}"
-  '\u1D43D': "\\mathsl{J}"
-  '\u1D43E': "\\mathsl{K}"
-  '\u1D43F': "\\mathsl{L}"
-  '\u1D440': "\\mathsl{M}"
-  '\u1D441': "\\mathsl{N}"
-  '\u1D442': "\\mathsl{O}"
-  '\u1D443': "\\mathsl{P}"
-  '\u1D444': "\\mathsl{Q}"
-  '\u1D445': "\\mathsl{R}"
-  '\u1D446': "\\mathsl{S}"
-  '\u1D447': "\\mathsl{T}"
-  '\u1D448': "\\mathsl{U}"
-  '\u1D449': "\\mathsl{V}"
-  '\u1D44A': "\\mathsl{W}"
-  '\u1D44B': "\\mathsl{X}"
-  '\u1D44C': "\\mathsl{Y}"
-  '\u1D44D': "\\mathsl{Z}"
-  '\u1D44E': "\\mathsl{a}"
-  '\u1D44F': "\\mathsl{b}"
-  '\u1D450': "\\mathsl{c}"
-  '\u1D451': "\\mathsl{d}"
-  '\u1D452': "\\mathsl{e}"
-  '\u1D453': "\\mathsl{f}"
-  '\u1D454': "\\mathsl{g}"
-  '\u1D456': "\\mathsl{i}"
-  '\u1D457': "\\mathsl{j}"
-  '\u1D458': "\\mathsl{k}"
-  '\u1D459': "\\mathsl{l}"
-  '\u1D45A': "\\mathsl{m}"
-  '\u1D45B': "\\mathsl{n}"
-  '\u1D45C': "\\mathsl{o}"
-  '\u1D45D': "\\mathsl{p}"
-  '\u1D45E': "\\mathsl{q}"
-  '\u1D45F': "\\mathsl{r}"
-  '\u1D460': "\\mathsl{s}"
-  '\u1D461': "\\mathsl{t}"
-  '\u1D462': "\\mathsl{u}"
-  '\u1D463': "\\mathsl{v}"
-  '\u1D464': "\\mathsl{w}"
-  '\u1D465': "\\mathsl{x}"
-  '\u1D466': "\\mathsl{y}"
-  '\u1D467': "\\mathsl{z}"
-  '\u1D468': "\\mathbit{A}"
-  '\u1D469': "\\mathbit{B}"
-  '\u1D46A': "\\mathbit{C}"
-  '\u1D46B': "\\mathbit{D}"
-  '\u1D46C': "\\mathbit{E}"
-  '\u1D46D': "\\mathbit{F}"
-  '\u1D46E': "\\mathbit{G}"
-  '\u1D46F': "\\mathbit{H}"
-  '\u1D470': "\\mathbit{I}"
-  '\u1D471': "\\mathbit{J}"
-  '\u1D472': "\\mathbit{K}"
-  '\u1D473': "\\mathbit{L}"
-  '\u1D474': "\\mathbit{M}"
-  '\u1D475': "\\mathbit{N}"
-  '\u1D476': "\\mathbit{O}"
-  '\u1D477': "\\mathbit{P}"
-  '\u1D478': "\\mathbit{Q}"
-  '\u1D479': "\\mathbit{R}"
-  '\u1D47A': "\\mathbit{S}"
-  '\u1D47B': "\\mathbit{T}"
-  '\u1D47C': "\\mathbit{U}"
-  '\u1D47D': "\\mathbit{V}"
-  '\u1D47E': "\\mathbit{W}"
-  '\u1D47F': "\\mathbit{X}"
-  '\u1D480': "\\mathbit{Y}"
-  '\u1D481': "\\mathbit{Z}"
-  '\u1D482': "\\mathbit{a}"
-  '\u1D483': "\\mathbit{b}"
-  '\u1D484': "\\mathbit{c}"
-  '\u1D485': "\\mathbit{d}"
-  '\u1D486': "\\mathbit{e}"
-  '\u1D487': "\\mathbit{f}"
-  '\u1D488': "\\mathbit{g}"
-  '\u1D489': "\\mathbit{h}"
-  '\u1D48A': "\\mathbit{i}"
-  '\u1D48B': "\\mathbit{j}"
-  '\u1D48C': "\\mathbit{k}"
-  '\u1D48D': "\\mathbit{l}"
-  '\u1D48E': "\\mathbit{m}"
-  '\u1D48F': "\\mathbit{n}"
-  '\u1D490': "\\mathbit{o}"
-  '\u1D491': "\\mathbit{p}"
-  '\u1D492': "\\mathbit{q}"
-  '\u1D493': "\\mathbit{r}"
-  '\u1D494': "\\mathbit{s}"
-  '\u1D495': "\\mathbit{t}"
-  '\u1D496': "\\mathbit{u}"
-  '\u1D497': "\\mathbit{v}"
-  '\u1D498': "\\mathbit{w}"
-  '\u1D499': "\\mathbit{x}"
-  '\u1D49A': "\\mathbit{y}"
-  '\u1D49B': "\\mathbit{z}"
-  '\u1D49C': "\\mathscr{A}"
-  '\u1D49E': "\\mathscr{C}"
-  '\u1D49F': "\\mathscr{D}"
-  '\u1D4A2': "\\mathscr{G}"
-  '\u1D4A5': "\\mathscr{J}"
-  '\u1D4A6': "\\mathscr{K}"
-  '\u1D4A9': "\\mathscr{N}"
-  '\u1D4AA': "\\mathscr{O}"
-  '\u1D4AB': "\\mathscr{P}"
-  '\u1D4AC': "\\mathscr{Q}"
-  '\u1D4AE': "\\mathscr{S}"
-  '\u1D4AF': "\\mathscr{T}"
-  '\u1D4B0': "\\mathscr{U}"
-  '\u1D4B1': "\\mathscr{V}"
-  '\u1D4B2': "\\mathscr{W}"
-  '\u1D4B3': "\\mathscr{X}"
-  '\u1D4B4': "\\mathscr{Y}"
-  '\u1D4B5': "\\mathscr{Z}"
-  '\u1D4B6': "\\mathscr{a}"
-  '\u1D4B7': "\\mathscr{b}"
-  '\u1D4B8': "\\mathscr{c}"
-  '\u1D4B9': "\\mathscr{d}"
-  '\u1D4BB': "\\mathscr{f}"
-  '\u1D4BD': "\\mathscr{h}"
-  '\u1D4BE': "\\mathscr{i}"
-  '\u1D4BF': "\\mathscr{j}"
-  '\u1D4C0': "\\mathscr{k}"
-  '\u1D4C1': "\\mathscr{l}"
-  '\u1D4C2': "\\mathscr{m}"
-  '\u1D4C3': "\\mathscr{n}"
-  '\u1D4C5': "\\mathscr{p}"
-  '\u1D4C6': "\\mathscr{q}"
-  '\u1D4C7': "\\mathscr{r}"
-  '\u1D4C8': "\\mathscr{s}"
-  '\u1D4C9': "\\mathscr{t}"
-  '\u1D4CA': "\\mathscr{u}"
-  '\u1D4CB': "\\mathscr{v}"
-  '\u1D4CC': "\\mathscr{w}"
-  '\u1D4CD': "\\mathscr{x}"
-  '\u1D4CE': "\\mathscr{y}"
-  '\u1D4CF': "\\mathscr{z}"
-  '\u1D4D0': "\\mathmit{A}"
-  '\u1D4D1': "\\mathmit{B}"
-  '\u1D4D2': "\\mathmit{C}"
-  '\u1D4D3': "\\mathmit{D}"
-  '\u1D4D4': "\\mathmit{E}"
-  '\u1D4D5': "\\mathmit{F}"
-  '\u1D4D6': "\\mathmit{G}"
-  '\u1D4D7': "\\mathmit{H}"
-  '\u1D4D8': "\\mathmit{I}"
-  '\u1D4D9': "\\mathmit{J}"
-  '\u1D4DA': "\\mathmit{K}"
-  '\u1D4DB': "\\mathmit{L}"
-  '\u1D4DC': "\\mathmit{M}"
-  '\u1D4DD': "\\mathmit{N}"
-  '\u1D4DE': "\\mathmit{O}"
-  '\u1D4DF': "\\mathmit{P}"
-  '\u1D4E0': "\\mathmit{Q}"
-  '\u1D4E1': "\\mathmit{R}"
-  '\u1D4E2': "\\mathmit{S}"
-  '\u1D4E3': "\\mathmit{T}"
-  '\u1D4E4': "\\mathmit{U}"
-  '\u1D4E5': "\\mathmit{V}"
-  '\u1D4E6': "\\mathmit{W}"
-  '\u1D4E7': "\\mathmit{X}"
-  '\u1D4E8': "\\mathmit{Y}"
-  '\u1D4E9': "\\mathmit{Z}"
-  '\u1D4EA': "\\mathmit{a}"
-  '\u1D4EB': "\\mathmit{b}"
-  '\u1D4EC': "\\mathmit{c}"
-  '\u1D4ED': "\\mathmit{d}"
-  '\u1D4EE': "\\mathmit{e}"
-  '\u1D4EF': "\\mathmit{f}"
-  '\u1D4F0': "\\mathmit{g}"
-  '\u1D4F1': "\\mathmit{h}"
-  '\u1D4F2': "\\mathmit{i}"
-  '\u1D4F3': "\\mathmit{j}"
-  '\u1D4F4': "\\mathmit{k}"
-  '\u1D4F5': "\\mathmit{l}"
-  '\u1D4F6': "\\mathmit{m}"
-  '\u1D4F7': "\\mathmit{n}"
-  '\u1D4F8': "\\mathmit{o}"
-  '\u1D4F9': "\\mathmit{p}"
-  '\u1D4FA': "\\mathmit{q}"
-  '\u1D4FB': "\\mathmit{r}"
-  '\u1D4FC': "\\mathmit{s}"
-  '\u1D4FD': "\\mathmit{t}"
-  '\u1D4FE': "\\mathmit{u}"
-  '\u1D4FF': "\\mathmit{v}"
-  '\u1D500': "\\mathmit{w}"
-  '\u1D501': "\\mathmit{x}"
-  '\u1D502': "\\mathmit{y}"
-  '\u1D503': "\\mathmit{z}"
-  '\u1D504': "\\mathfrak{A}"
-  '\u1D505': "\\mathfrak{B}"
-  '\u1D507': "\\mathfrak{D}"
-  '\u1D508': "\\mathfrak{E}"
-  '\u1D509': "\\mathfrak{F}"
-  '\u1D50A': "\\mathfrak{G}"
-  '\u1D50D': "\\mathfrak{J}"
-  '\u1D50E': "\\mathfrak{K}"
-  '\u1D50F': "\\mathfrak{L}"
-  '\u1D510': "\\mathfrak{M}"
-  '\u1D511': "\\mathfrak{N}"
-  '\u1D512': "\\mathfrak{O}"
-  '\u1D513': "\\mathfrak{P}"
-  '\u1D514': "\\mathfrak{Q}"
-  '\u1D516': "\\mathfrak{S}"
-  '\u1D517': "\\mathfrak{T}"
-  '\u1D518': "\\mathfrak{U}"
-  '\u1D519': "\\mathfrak{V}"
-  '\u1D51A': "\\mathfrak{W}"
-  '\u1D51B': "\\mathfrak{X}"
-  '\u1D51C': "\\mathfrak{Y}"
-  '\u1D51E': "\\mathfrak{a}"
-  '\u1D51F': "\\mathfrak{b}"
-  '\u1D520': "\\mathfrak{c}"
-  '\u1D521': "\\mathfrak{d}"
-  '\u1D522': "\\mathfrak{e}"
-  '\u1D523': "\\mathfrak{f}"
-  '\u1D524': "\\mathfrak{g}"
-  '\u1D525': "\\mathfrak{h}"
-  '\u1D526': "\\mathfrak{i}"
-  '\u1D527': "\\mathfrak{j}"
-  '\u1D528': "\\mathfrak{k}"
-  '\u1D529': "\\mathfrak{l}"
-  '\u1D52A': "\\mathfrak{m}"
-  '\u1D52B': "\\mathfrak{n}"
-  '\u1D52C': "\\mathfrak{o}"
-  '\u1D52D': "\\mathfrak{p}"
-  '\u1D52E': "\\mathfrak{q}"
-  '\u1D52F': "\\mathfrak{r}"
-  '\u1D530': "\\mathfrak{s}"
-  '\u1D531': "\\mathfrak{t}"
-  '\u1D532': "\\mathfrak{u}"
-  '\u1D533': "\\mathfrak{v}"
-  '\u1D534': "\\mathfrak{w}"
-  '\u1D535': "\\mathfrak{x}"
-  '\u1D536': "\\mathfrak{y}"
-  '\u1D537': "\\mathfrak{z}"
-  '\u1D538': "\\mathbb{A}"
-  '\u1D539': "\\mathbb{B}"
-  '\u1D53B': "\\mathbb{D}"
-  '\u1D53C': "\\mathbb{E}"
-  '\u1D53D': "\\mathbb{F}"
-  '\u1D53E': "\\mathbb{G}"
-  '\u1D540': "\\mathbb{I}"
-  '\u1D541': "\\mathbb{J}"
-  '\u1D542': "\\mathbb{K}"
-  '\u1D543': "\\mathbb{L}"
-  '\u1D544': "\\mathbb{M}"
-  '\u1D546': "\\mathbb{O}"
-  '\u1D54A': "\\mathbb{S}"
-  '\u1D54B': "\\mathbb{T}"
-  '\u1D54C': "\\mathbb{U}"
-  '\u1D54D': "\\mathbb{V}"
-  '\u1D54E': "\\mathbb{W}"
-  '\u1D54F': "\\mathbb{X}"
-  '\u1D550': "\\mathbb{Y}"
-  '\u1D552': "\\mathbb{a}"
-  '\u1D553': "\\mathbb{b}"
-  '\u1D554': "\\mathbb{c}"
-  '\u1D555': "\\mathbb{d}"
-  '\u1D556': "\\mathbb{e}"
-  '\u1D557': "\\mathbb{f}"
-  '\u1D558': "\\mathbb{g}"
-  '\u1D559': "\\mathbb{h}"
-  '\u1D55A': "\\mathbb{i}"
-  '\u1D55B': "\\mathbb{j}"
-  '\u1D55C': "\\mathbb{k}"
-  '\u1D55D': "\\mathbb{l}"
-  '\u1D55E': "\\mathbb{m}"
-  '\u1D55F': "\\mathbb{n}"
-  '\u1D560': "\\mathbb{o}"
-  '\u1D561': "\\mathbb{p}"
-  '\u1D562': "\\mathbb{q}"
-  '\u1D563': "\\mathbb{r}"
-  '\u1D564': "\\mathbb{s}"
-  '\u1D565': "\\mathbb{t}"
-  '\u1D566': "\\mathbb{u}"
-  '\u1D567': "\\mathbb{v}"
-  '\u1D568': "\\mathbb{w}"
-  '\u1D569': "\\mathbb{x}"
-  '\u1D56A': "\\mathbb{y}"
-  '\u1D56B': "\\mathbb{z}"
-  '\u1D56C': "\\mathslbb{A}"
-  '\u1D56D': "\\mathslbb{B}"
-  '\u1D56E': "\\mathslbb{C}"
-  '\u1D56F': "\\mathslbb{D}"
-  '\u1D570': "\\mathslbb{E}"
-  '\u1D571': "\\mathslbb{F}"
-  '\u1D572': "\\mathslbb{G}"
-  '\u1D573': "\\mathslbb{H}"
-  '\u1D574': "\\mathslbb{I}"
-  '\u1D575': "\\mathslbb{J}"
-  '\u1D576': "\\mathslbb{K}"
-  '\u1D577': "\\mathslbb{L}"
-  '\u1D578': "\\mathslbb{M}"
-  '\u1D579': "\\mathslbb{N}"
-  '\u1D57A': "\\mathslbb{O}"
-  '\u1D57B': "\\mathslbb{P}"
-  '\u1D57C': "\\mathslbb{Q}"
-  '\u1D57D': "\\mathslbb{R}"
-  '\u1D57E': "\\mathslbb{S}"
-  '\u1D57F': "\\mathslbb{T}"
-  '\u1D580': "\\mathslbb{U}"
-  '\u1D581': "\\mathslbb{V}"
-  '\u1D582': "\\mathslbb{W}"
-  '\u1D583': "\\mathslbb{X}"
-  '\u1D584': "\\mathslbb{Y}"
-  '\u1D585': "\\mathslbb{Z}"
-  '\u1D586': "\\mathslbb{a}"
-  '\u1D587': "\\mathslbb{b}"
-  '\u1D588': "\\mathslbb{c}"
-  '\u1D589': "\\mathslbb{d}"
-  '\u1D58A': "\\mathslbb{e}"
-  '\u1D58B': "\\mathslbb{f}"
-  '\u1D58C': "\\mathslbb{g}"
-  '\u1D58D': "\\mathslbb{h}"
-  '\u1D58E': "\\mathslbb{i}"
-  '\u1D58F': "\\mathslbb{j}"
-  '\u1D590': "\\mathslbb{k}"
-  '\u1D591': "\\mathslbb{l}"
-  '\u1D592': "\\mathslbb{m}"
-  '\u1D593': "\\mathslbb{n}"
-  '\u1D594': "\\mathslbb{o}"
-  '\u1D595': "\\mathslbb{p}"
-  '\u1D596': "\\mathslbb{q}"
-  '\u1D597': "\\mathslbb{r}"
-  '\u1D598': "\\mathslbb{s}"
-  '\u1D599': "\\mathslbb{t}"
-  '\u1D59A': "\\mathslbb{u}"
-  '\u1D59B': "\\mathslbb{v}"
-  '\u1D59C': "\\mathslbb{w}"
-  '\u1D59D': "\\mathslbb{x}"
-  '\u1D59E': "\\mathslbb{y}"
-  '\u1D59F': "\\mathslbb{z}"
-  '\u1D5A0': "\\mathsf{A}"
-  '\u1D5A1': "\\mathsf{B}"
-  '\u1D5A2': "\\mathsf{C}"
-  '\u1D5A3': "\\mathsf{D}"
-  '\u1D5A4': "\\mathsf{E}"
-  '\u1D5A5': "\\mathsf{F}"
-  '\u1D5A6': "\\mathsf{G}"
-  '\u1D5A7': "\\mathsf{H}"
-  '\u1D5A8': "\\mathsf{I}"
-  '\u1D5A9': "\\mathsf{J}"
-  '\u1D5AA': "\\mathsf{K}"
-  '\u1D5AB': "\\mathsf{L}"
-  '\u1D5AC': "\\mathsf{M}"
-  '\u1D5AD': "\\mathsf{N}"
-  '\u1D5AE': "\\mathsf{O}"
-  '\u1D5AF': "\\mathsf{P}"
-  '\u1D5B0': "\\mathsf{Q}"
-  '\u1D5B1': "\\mathsf{R}"
-  '\u1D5B2': "\\mathsf{S}"
-  '\u1D5B3': "\\mathsf{T}"
-  '\u1D5B4': "\\mathsf{U}"
-  '\u1D5B5': "\\mathsf{V}"
-  '\u1D5B6': "\\mathsf{W}"
-  '\u1D5B7': "\\mathsf{X}"
-  '\u1D5B8': "\\mathsf{Y}"
-  '\u1D5B9': "\\mathsf{Z}"
-  '\u1D5BA': "\\mathsf{a}"
-  '\u1D5BB': "\\mathsf{b}"
-  '\u1D5BC': "\\mathsf{c}"
-  '\u1D5BD': "\\mathsf{d}"
-  '\u1D5BE': "\\mathsf{e}"
-  '\u1D5BF': "\\mathsf{f}"
-  '\u1D5C0': "\\mathsf{g}"
-  '\u1D5C1': "\\mathsf{h}"
-  '\u1D5C2': "\\mathsf{i}"
-  '\u1D5C3': "\\mathsf{j}"
-  '\u1D5C4': "\\mathsf{k}"
-  '\u1D5C5': "\\mathsf{l}"
-  '\u1D5C6': "\\mathsf{m}"
-  '\u1D5C7': "\\mathsf{n}"
-  '\u1D5C8': "\\mathsf{o}"
-  '\u1D5C9': "\\mathsf{p}"
-  '\u1D5CA': "\\mathsf{q}"
-  '\u1D5CB': "\\mathsf{r}"
-  '\u1D5CC': "\\mathsf{s}"
-  '\u1D5CD': "\\mathsf{t}"
-  '\u1D5CE': "\\mathsf{u}"
-  '\u1D5CF': "\\mathsf{v}"
-  '\u1D5D0': "\\mathsf{w}"
-  '\u1D5D1': "\\mathsf{x}"
-  '\u1D5D2': "\\mathsf{y}"
-  '\u1D5D3': "\\mathsf{z}"
-  '\u1D5D4': "\\mathsfbf{A}"
-  '\u1D5D5': "\\mathsfbf{B}"
-  '\u1D5D6': "\\mathsfbf{C}"
-  '\u1D5D7': "\\mathsfbf{D}"
-  '\u1D5D8': "\\mathsfbf{E}"
-  '\u1D5D9': "\\mathsfbf{F}"
-  '\u1D5DA': "\\mathsfbf{G}"
-  '\u1D5DB': "\\mathsfbf{H}"
-  '\u1D5DC': "\\mathsfbf{I}"
-  '\u1D5DD': "\\mathsfbf{J}"
-  '\u1D5DE': "\\mathsfbf{K}"
-  '\u1D5DF': "\\mathsfbf{L}"
-  '\u1D5E0': "\\mathsfbf{M}"
-  '\u1D5E1': "\\mathsfbf{N}"
-  '\u1D5E2': "\\mathsfbf{O}"
-  '\u1D5E3': "\\mathsfbf{P}"
-  '\u1D5E4': "\\mathsfbf{Q}"
-  '\u1D5E5': "\\mathsfbf{R}"
-  '\u1D5E6': "\\mathsfbf{S}"
-  '\u1D5E7': "\\mathsfbf{T}"
-  '\u1D5E8': "\\mathsfbf{U}"
-  '\u1D5E9': "\\mathsfbf{V}"
-  '\u1D5EA': "\\mathsfbf{W}"
-  '\u1D5EB': "\\mathsfbf{X}"
-  '\u1D5EC': "\\mathsfbf{Y}"
-  '\u1D5ED': "\\mathsfbf{Z}"
-  '\u1D5EE': "\\mathsfbf{a}"
-  '\u1D5EF': "\\mathsfbf{b}"
-  '\u1D5F0': "\\mathsfbf{c}"
-  '\u1D5F1': "\\mathsfbf{d}"
-  '\u1D5F2': "\\mathsfbf{e}"
-  '\u1D5F3': "\\mathsfbf{f}"
-  '\u1D5F4': "\\mathsfbf{g}"
-  '\u1D5F5': "\\mathsfbf{h}"
-  '\u1D5F6': "\\mathsfbf{i}"
-  '\u1D5F7': "\\mathsfbf{j}"
-  '\u1D5F8': "\\mathsfbf{k}"
-  '\u1D5F9': "\\mathsfbf{l}"
-  '\u1D5FA': "\\mathsfbf{m}"
-  '\u1D5FB': "\\mathsfbf{n}"
-  '\u1D5FC': "\\mathsfbf{o}"
-  '\u1D5FD': "\\mathsfbf{p}"
-  '\u1D5FE': "\\mathsfbf{q}"
-  '\u1D5FF': "\\mathsfbf{r}"
-  '\u1D600': "\\mathsfbf{s}"
-  '\u1D601': "\\mathsfbf{t}"
-  '\u1D602': "\\mathsfbf{u}"
-  '\u1D603': "\\mathsfbf{v}"
-  '\u1D604': "\\mathsfbf{w}"
-  '\u1D605': "\\mathsfbf{x}"
-  '\u1D606': "\\mathsfbf{y}"
-  '\u1D607': "\\mathsfbf{z}"
-  '\u1D608': "\\mathsfsl{A}"
-  '\u1D609': "\\mathsfsl{B}"
-  '\u1D60A': "\\mathsfsl{C}"
-  '\u1D60B': "\\mathsfsl{D}"
-  '\u1D60C': "\\mathsfsl{E}"
-  '\u1D60D': "\\mathsfsl{F}"
-  '\u1D60E': "\\mathsfsl{G}"
-  '\u1D60F': "\\mathsfsl{H}"
-  '\u1D610': "\\mathsfsl{I}"
-  '\u1D611': "\\mathsfsl{J}"
-  '\u1D612': "\\mathsfsl{K}"
-  '\u1D613': "\\mathsfsl{L}"
-  '\u1D614': "\\mathsfsl{M}"
-  '\u1D615': "\\mathsfsl{N}"
-  '\u1D616': "\\mathsfsl{O}"
-  '\u1D617': "\\mathsfsl{P}"
-  '\u1D618': "\\mathsfsl{Q}"
-  '\u1D619': "\\mathsfsl{R}"
-  '\u1D61A': "\\mathsfsl{S}"
-  '\u1D61B': "\\mathsfsl{T}"
-  '\u1D61C': "\\mathsfsl{U}"
-  '\u1D61D': "\\mathsfsl{V}"
-  '\u1D61E': "\\mathsfsl{W}"
-  '\u1D61F': "\\mathsfsl{X}"
-  '\u1D620': "\\mathsfsl{Y}"
-  '\u1D621': "\\mathsfsl{Z}"
-  '\u1D622': "\\mathsfsl{a}"
-  '\u1D623': "\\mathsfsl{b}"
-  '\u1D624': "\\mathsfsl{c}"
-  '\u1D625': "\\mathsfsl{d}"
-  '\u1D626': "\\mathsfsl{e}"
-  '\u1D627': "\\mathsfsl{f}"
-  '\u1D628': "\\mathsfsl{g}"
-  '\u1D629': "\\mathsfsl{h}"
-  '\u1D62A': "\\mathsfsl{i}"
-  '\u1D62B': "\\mathsfsl{j}"
-  '\u1D62C': "\\mathsfsl{k}"
-  '\u1D62D': "\\mathsfsl{l}"
-  '\u1D62E': "\\mathsfsl{m}"
-  '\u1D62F': "\\mathsfsl{n}"
-  '\u1D630': "\\mathsfsl{o}"
-  '\u1D631': "\\mathsfsl{p}"
-  '\u1D632': "\\mathsfsl{q}"
-  '\u1D633': "\\mathsfsl{r}"
-  '\u1D634': "\\mathsfsl{s}"
-  '\u1D635': "\\mathsfsl{t}"
-  '\u1D636': "\\mathsfsl{u}"
-  '\u1D637': "\\mathsfsl{v}"
-  '\u1D638': "\\mathsfsl{w}"
-  '\u1D639': "\\mathsfsl{x}"
-  '\u1D63A': "\\mathsfsl{y}"
-  '\u1D63B': "\\mathsfsl{z}"
-  '\u1D63C': "\\mathsfbfsl{A}"
-  '\u1D63D': "\\mathsfbfsl{B}"
-  '\u1D63E': "\\mathsfbfsl{C}"
-  '\u1D63F': "\\mathsfbfsl{D}"
-  '\u1D640': "\\mathsfbfsl{E}"
-  '\u1D641': "\\mathsfbfsl{F}"
-  '\u1D642': "\\mathsfbfsl{G}"
-  '\u1D643': "\\mathsfbfsl{H}"
-  '\u1D644': "\\mathsfbfsl{I}"
-  '\u1D645': "\\mathsfbfsl{J}"
-  '\u1D646': "\\mathsfbfsl{K}"
-  '\u1D647': "\\mathsfbfsl{L}"
-  '\u1D648': "\\mathsfbfsl{M}"
-  '\u1D649': "\\mathsfbfsl{N}"
-  '\u1D64A': "\\mathsfbfsl{O}"
-  '\u1D64B': "\\mathsfbfsl{P}"
-  '\u1D64C': "\\mathsfbfsl{Q}"
-  '\u1D64D': "\\mathsfbfsl{R}"
-  '\u1D64E': "\\mathsfbfsl{S}"
-  '\u1D64F': "\\mathsfbfsl{T}"
-  '\u1D650': "\\mathsfbfsl{U}"
-  '\u1D651': "\\mathsfbfsl{V}"
-  '\u1D652': "\\mathsfbfsl{W}"
-  '\u1D653': "\\mathsfbfsl{X}"
-  '\u1D654': "\\mathsfbfsl{Y}"
-  '\u1D655': "\\mathsfbfsl{Z}"
-  '\u1D656': "\\mathsfbfsl{a}"
-  '\u1D657': "\\mathsfbfsl{b}"
-  '\u1D658': "\\mathsfbfsl{c}"
-  '\u1D659': "\\mathsfbfsl{d}"
-  '\u1D65A': "\\mathsfbfsl{e}"
-  '\u1D65B': "\\mathsfbfsl{f}"
-  '\u1D65C': "\\mathsfbfsl{g}"
-  '\u1D65D': "\\mathsfbfsl{h}"
-  '\u1D65E': "\\mathsfbfsl{i}"
-  '\u1D65F': "\\mathsfbfsl{j}"
-  '\u1D660': "\\mathsfbfsl{k}"
-  '\u1D661': "\\mathsfbfsl{l}"
-  '\u1D662': "\\mathsfbfsl{m}"
-  '\u1D663': "\\mathsfbfsl{n}"
-  '\u1D664': "\\mathsfbfsl{o}"
-  '\u1D665': "\\mathsfbfsl{p}"
-  '\u1D666': "\\mathsfbfsl{q}"
-  '\u1D667': "\\mathsfbfsl{r}"
-  '\u1D668': "\\mathsfbfsl{s}"
-  '\u1D669': "\\mathsfbfsl{t}"
-  '\u1D66A': "\\mathsfbfsl{u}"
-  '\u1D66B': "\\mathsfbfsl{v}"
-  '\u1D66C': "\\mathsfbfsl{w}"
-  '\u1D66D': "\\mathsfbfsl{x}"
-  '\u1D66E': "\\mathsfbfsl{y}"
-  '\u1D66F': "\\mathsfbfsl{z}"
-  '\u1D670': "\\mathtt{A}"
-  '\u1D671': "\\mathtt{B}"
-  '\u1D672': "\\mathtt{C}"
-  '\u1D673': "\\mathtt{D}"
-  '\u1D674': "\\mathtt{E}"
-  '\u1D675': "\\mathtt{F}"
-  '\u1D676': "\\mathtt{G}"
-  '\u1D677': "\\mathtt{H}"
-  '\u1D678': "\\mathtt{I}"
-  '\u1D679': "\\mathtt{J}"
-  '\u1D67A': "\\mathtt{K}"
-  '\u1D67B': "\\mathtt{L}"
-  '\u1D67C': "\\mathtt{M}"
-  '\u1D67D': "\\mathtt{N}"
-  '\u1D67E': "\\mathtt{O}"
-  '\u1D67F': "\\mathtt{P}"
-  '\u1D680': "\\mathtt{Q}"
-  '\u1D681': "\\mathtt{R}"
-  '\u1D682': "\\mathtt{S}"
-  '\u1D683': "\\mathtt{T}"
-  '\u1D684': "\\mathtt{U}"
-  '\u1D685': "\\mathtt{V}"
-  '\u1D686': "\\mathtt{W}"
-  '\u1D687': "\\mathtt{X}"
-  '\u1D688': "\\mathtt{Y}"
-  '\u1D689': "\\mathtt{Z}"
-  '\u1D68A': "\\mathtt{a}"
-  '\u1D68B': "\\mathtt{b}"
-  '\u1D68C': "\\mathtt{c}"
-  '\u1D68D': "\\mathtt{d}"
-  '\u1D68E': "\\mathtt{e}"
-  '\u1D68F': "\\mathtt{f}"
-  '\u1D690': "\\mathtt{g}"
-  '\u1D691': "\\mathtt{h}"
-  '\u1D692': "\\mathtt{i}"
-  '\u1D693': "\\mathtt{j}"
-  '\u1D694': "\\mathtt{k}"
-  '\u1D695': "\\mathtt{l}"
-  '\u1D696': "\\mathtt{m}"
-  '\u1D697': "\\mathtt{n}"
-  '\u1D698': "\\mathtt{o}"
-  '\u1D699': "\\mathtt{p}"
-  '\u1D69A': "\\mathtt{q}"
-  '\u1D69B': "\\mathtt{r}"
-  '\u1D69C': "\\mathtt{s}"
-  '\u1D69D': "\\mathtt{t}"
-  '\u1D69E': "\\mathtt{u}"
-  '\u1D69F': "\\mathtt{v}"
-  '\u1D6A0': "\\mathtt{w}"
-  '\u1D6A1': "\\mathtt{x}"
-  '\u1D6A2': "\\mathtt{y}"
-  '\u1D6A3': "\\mathtt{z}"
-  '\u1D6A8': "\\mathbf{\\Alpha}"
-  '\u1D6A9': "\\mathbf{\\Beta}"
-  '\u1D6AA': "\\mathbf{\\Gamma}"
-  '\u1D6AB': "\\mathbf{\\Delta}"
-  '\u1D6AC': "\\mathbf{\\Epsilon}"
-  '\u1D6AD': "\\mathbf{\\Zeta}"
-  '\u1D6AE': "\\mathbf{\\Eta}"
-  '\u1D6AF': "\\mathbf{\\Theta}"
-  '\u1D6B0': "\\mathbf{\\Iota}"
-  '\u1D6B1': "\\mathbf{\\Kappa}"
-  '\u1D6B2': "\\mathbf{\\Lambda}"
-  '\u1D6B3': "M"
-  '\u1D6B4': "N"
-  '\u1D6B5': "\\mathbf{\\Xi}"
-  '\u1D6B6': "O"
-  '\u1D6B7': "\\mathbf{\\Pi}"
-  '\u1D6B8': "\\mathbf{\\Rho}"
-  '\u1D6BA': "\\mathbf{\\Sigma}"
-  '\u1D6BB': "\\mathbf{\\Tau}"
-  '\u1D6BC': "\\mathbf{\\Upsilon}"
-  '\u1D6BD': "\\mathbf{\\Phi}"
-  '\u1D6BE': "\\mathbf{\\Chi}"
-  '\u1D6BF': "\\mathbf{\\Psi}"
-  '\u1D6C0': "\\mathbf{\\Omega}"
-  '\u1D6C1': "\\mathbf{\\nabla}"
-  '\u1D6C2': "\\mathbf{\\Alpha}"
-  '\u1D6C3': "\\mathbf{\\Beta}"
-  '\u1D6C4': "\\mathbf{\\Gamma}"
-  '\u1D6C5': "\\mathbf{\\Delta}"
-  '\u1D6C6': "\\mathbf{\\Epsilon}"
-  '\u1D6C7': "\\mathbf{\\Zeta}"
-  '\u1D6C8': "\\mathbf{\\Eta}"
-  '\u1D6C9': "\\mathbf{\\theta}"
-  '\u1D6CA': "\\mathbf{\\Iota}"
-  '\u1D6CB': "\\mathbf{\\Kappa}"
-  '\u1D6CC': "\\mathbf{\\Lambda}"
-  '\u1D6CD': "M"
-  '\u1D6CE': "N"
-  '\u1D6CF': "\\mathbf{\\Xi}"
-  '\u1D6D0': "O"
-  '\u1D6D1': "\\mathbf{\\Pi}"
-  '\u1D6D2': "\\mathbf{\\Rho}"
-  '\u1D6D3': "\\mathbf{\\varsigma}"
-  '\u1D6D4': "\\mathbf{\\Sigma}"
-  '\u1D6D5': "\\mathbf{\\Tau}"
-  '\u1D6D6': "\\mathbf{\\Upsilon}"
-  '\u1D6D7': "\\mathbf{\\Phi}"
-  '\u1D6D8': "\\mathbf{\\Chi}"
-  '\u1D6D9': "\\mathbf{\\Psi}"
-  '\u1D6DA': "\\mathbf{\\Omega}"
-  '\u1D6DB': "{\\partial}"
-  '\u1D6DC': "\\in"
-  '\u1D6E2': "\\mathsl{\\Alpha}"
-  '\u1D6E3': "\\mathsl{\\Beta}"
-  '\u1D6E4': "\\mathsl{\\Gamma}"
-  '\u1D6E5': "\\mathsl{\\Delta}"
-  '\u1D6E6': "\\mathsl{\\Epsilon}"
-  '\u1D6E7': "\\mathsl{\\Zeta}"
-  '\u1D6E8': "\\mathsl{\\Eta}"
-  '\u1D6E9': "\\mathsl{\\Theta}"
-  '\u1D6EA': "\\mathsl{\\Iota}"
-  '\u1D6EB': "\\mathsl{\\Kappa}"
-  '\u1D6EC': "\\mathsl{\\Lambda}"
-  '\u1D6ED': "M"
-  '\u1D6EE': "N"
-  '\u1D6EF': "\\mathsl{\\Xi}"
-  '\u1D6F0': "O"
-  '\u1D6F1': "\\mathsl{\\Pi}"
-  '\u1D6F2': "\\mathsl{\\Rho}"
-  '\u1D6F4': "\\mathsl{\\Sigma}"
-  '\u1D6F5': "\\mathsl{\\Tau}"
-  '\u1D6F6': "\\mathsl{\\Upsilon}"
-  '\u1D6F7': "\\mathsl{\\Phi}"
-  '\u1D6F8': "\\mathsl{\\Chi}"
-  '\u1D6F9': "\\mathsl{\\Psi}"
-  '\u1D6FA': "\\mathsl{\\Omega}"
-  '\u1D6FB': "\\mathsl{\\nabla}"
-  '\u1D6FC': "\\mathsl{\\Alpha}"
-  '\u1D6FD': "\\mathsl{\\Beta}"
-  '\u1D6FE': "\\mathsl{\\Gamma}"
-  '\u1D6FF': "\\mathsl{\\Delta}"
-  '\u1D700': "\\mathsl{\\Epsilon}"
-  '\u1D701': "\\mathsl{\\Zeta}"
-  '\u1D702': "\\mathsl{\\Eta}"
-  '\u1D703': "\\mathsl{\\Theta}"
-  '\u1D704': "\\mathsl{\\Iota}"
-  '\u1D705': "\\mathsl{\\Kappa}"
-  '\u1D706': "\\mathsl{\\Lambda}"
-  '\u1D707': "M"
-  '\u1D708': "N"
-  '\u1D709': "\\mathsl{\\Xi}"
-  '\u1D70A': "O"
-  '\u1D70B': "\\mathsl{\\Pi}"
-  '\u1D70C': "\\mathsl{\\Rho}"
-  '\u1D70D': "\\mathsl{\\varsigma}"
-  '\u1D70E': "\\mathsl{\\Sigma}"
-  '\u1D70F': "\\mathsl{\\Tau}"
-  '\u1D710': "\\mathsl{\\Upsilon}"
-  '\u1D711': "\\mathsl{\\Phi}"
-  '\u1D712': "\\mathsl{\\Chi}"
-  '\u1D713': "\\mathsl{\\Psi}"
-  '\u1D714': "\\mathsl{\\Omega}"
-  '\u1D715': "{\\partial}"
-  '\u1D716': "\\in"
-  '\u1D71C': "\\mathbit{\\Alpha}"
-  '\u1D71D': "\\mathbit{\\Beta}"
-  '\u1D71E': "\\mathbit{\\Gamma}"
-  '\u1D71F': "\\mathbit{\\Delta}"
-  '\u1D720': "\\mathbit{\\Epsilon}"
-  '\u1D721': "\\mathbit{\\Zeta}"
-  '\u1D722': "\\mathbit{\\Eta}"
-  '\u1D723': "\\mathbit{\\Theta}"
-  '\u1D724': "\\mathbit{\\Iota}"
-  '\u1D725': "\\mathbit{\\Kappa}"
-  '\u1D726': "\\mathbit{\\Lambda}"
-  '\u1D727': "M"
-  '\u1D728': "N"
-  '\u1D729': "\\mathbit{\\Xi}"
-  '\u1D72A': "O"
-  '\u1D72B': "\\mathbit{\\Pi}"
-  '\u1D72C': "\\mathbit{\\Rho}"
-  '\u1D72E': "\\mathbit{\\Sigma}"
-  '\u1D72F': "\\mathbit{\\Tau}"
-  '\u1D730': "\\mathbit{\\Upsilon}"
-  '\u1D731': "\\mathbit{\\Phi}"
-  '\u1D732': "\\mathbit{\\Chi}"
-  '\u1D733': "\\mathbit{\\Psi}"
-  '\u1D734': "\\mathbit{\\Omega}"
-  '\u1D735': "\\mathbit{\\nabla}"
-  '\u1D736': "\\mathbit{\\Alpha}"
-  '\u1D737': "\\mathbit{\\Beta}"
-  '\u1D738': "\\mathbit{\\Gamma}"
-  '\u1D739': "\\mathbit{\\Delta}"
-  '\u1D73A': "\\mathbit{\\Epsilon}"
-  '\u1D73B': "\\mathbit{\\Zeta}"
-  '\u1D73C': "\\mathbit{\\Eta}"
-  '\u1D73D': "\\mathbit{\\Theta}"
-  '\u1D73E': "\\mathbit{\\Iota}"
-  '\u1D73F': "\\mathbit{\\Kappa}"
-  '\u1D740': "\\mathbit{\\Lambda}"
-  '\u1D741': "M"
-  '\u1D742': "N"
-  '\u1D743': "\\mathbit{\\Xi}"
-  '\u1D744': "O"
-  '\u1D745': "\\mathbit{\\Pi}"
-  '\u1D746': "\\mathbit{\\Rho}"
-  '\u1D747': "\\mathbit{\\varsigma}"
-  '\u1D748': "\\mathbit{\\Sigma}"
-  '\u1D749': "\\mathbit{\\Tau}"
-  '\u1D74A': "\\mathbit{\\Upsilon}"
-  '\u1D74B': "\\mathbit{\\Phi}"
-  '\u1D74C': "\\mathbit{\\Chi}"
-  '\u1D74D': "\\mathbit{\\Psi}"
-  '\u1D74E': "\\mathbit{\\Omega}"
-  '\u1D74F': "{\\partial}"
-  '\u1D750': "\\in"
-  '\u1D756': "\\mathsfbf{\\Alpha}"
-  '\u1D757': "\\mathsfbf{\\Beta}"
-  '\u1D758': "\\mathsfbf{\\Gamma}"
-  '\u1D759': "\\mathsfbf{\\Delta}"
-  '\u1D75A': "\\mathsfbf{\\Epsilon}"
-  '\u1D75B': "\\mathsfbf{\\Zeta}"
-  '\u1D75C': "\\mathsfbf{\\Eta}"
-  '\u1D75D': "\\mathsfbf{\\Theta}"
-  '\u1D75E': "\\mathsfbf{\\Iota}"
-  '\u1D75F': "\\mathsfbf{\\Kappa}"
-  '\u1D760': "\\mathsfbf{\\Lambda}"
-  '\u1D761': "M"
-  '\u1D762': "N"
-  '\u1D763': "\\mathsfbf{\\Xi}"
-  '\u1D764': "O"
-  '\u1D765': "\\mathsfbf{\\Pi}"
-  '\u1D766': "\\mathsfbf{\\Rho}"
-  '\u1D768': "\\mathsfbf{\\Sigma}"
-  '\u1D769': "\\mathsfbf{\\Tau}"
-  '\u1D76A': "\\mathsfbf{\\Upsilon}"
-  '\u1D76B': "\\mathsfbf{\\Phi}"
-  '\u1D76C': "\\mathsfbf{\\Chi}"
-  '\u1D76D': "\\mathsfbf{\\Psi}"
-  '\u1D76E': "\\mathsfbf{\\Omega}"
-  '\u1D76F': "\\mathsfbf{\\nabla}"
-  '\u1D770': "\\mathsfbf{\\Alpha}"
-  '\u1D771': "\\mathsfbf{\\Beta}"
-  '\u1D772': "\\mathsfbf{\\Gamma}"
-  '\u1D773': "\\mathsfbf{\\Delta}"
-  '\u1D774': "\\mathsfbf{\\Epsilon}"
-  '\u1D775': "\\mathsfbf{\\Zeta}"
-  '\u1D776': "\\mathsfbf{\\Eta}"
-  '\u1D777': "\\mathsfbf{\\Theta}"
-  '\u1D778': "\\mathsfbf{\\Iota}"
-  '\u1D779': "\\mathsfbf{\\Kappa}"
-  '\u1D77A': "\\mathsfbf{\\Lambda}"
-  '\u1D77B': "M"
-  '\u1D77C': "N"
-  '\u1D77D': "\\mathsfbf{\\Xi}"
-  '\u1D77E': "O"
-  '\u1D77F': "\\mathsfbf{\\Pi}"
-  '\u1D780': "\\mathsfbf{\\Rho}"
-  '\u1D781': "\\mathsfbf{\\varsigma}"
-  '\u1D782': "\\mathsfbf{\\Sigma}"
-  '\u1D783': "\\mathsfbf{\\Tau}"
-  '\u1D784': "\\mathsfbf{\\Upsilon}"
-  '\u1D785': "\\mathsfbf{\\Phi}"
-  '\u1D786': "\\mathsfbf{\\Chi}"
-  '\u1D787': "\\mathsfbf{\\Psi}"
-  '\u1D788': "\\mathsfbf{\\Omega}"
-  '\u1D789': "{\\partial}"
-  '\u1D78A': "\\in"
-  '\u1D790': "\\mathsfbfsl{\\Alpha}"
-  '\u1D791': "\\mathsfbfsl{\\Beta}"
-  '\u1D792': "\\mathsfbfsl{\\Gamma}"
-  '\u1D793': "\\mathsfbfsl{\\Delta}"
-  '\u1D794': "\\mathsfbfsl{\\Epsilon}"
-  '\u1D795': "\\mathsfbfsl{\\Zeta}"
-  '\u1D796': "\\mathsfbfsl{\\Eta}"
-  '\u1D797': "\\mathsfbfsl{\\vartheta}"
-  '\u1D798': "\\mathsfbfsl{\\Iota}"
-  '\u1D799': "\\mathsfbfsl{\\Kappa}"
-  '\u1D79A': "\\mathsfbfsl{\\Lambda}"
-  '\u1D79B': "M"
-  '\u1D79C': "N"
-  '\u1D79D': "\\mathsfbfsl{\\Xi}"
-  '\u1D79E': "O"
-  '\u1D79F': "\\mathsfbfsl{\\Pi}"
-  '\u1D7A0': "\\mathsfbfsl{\\Rho}"
-  '\u1D7A2': "\\mathsfbfsl{\\Sigma}"
-  '\u1D7A3': "\\mathsfbfsl{\\Tau}"
-  '\u1D7A4': "\\mathsfbfsl{\\Upsilon}"
-  '\u1D7A5': "\\mathsfbfsl{\\Phi}"
-  '\u1D7A6': "\\mathsfbfsl{\\Chi}"
-  '\u1D7A7': "\\mathsfbfsl{\\Psi}"
-  '\u1D7A8': "\\mathsfbfsl{\\Omega}"
-  '\u1D7A9': "\\mathsfbfsl{\\nabla}"
-  '\u1D7AA': "\\mathsfbfsl{\\Alpha}"
-  '\u1D7AB': "\\mathsfbfsl{\\Beta}"
-  '\u1D7AC': "\\mathsfbfsl{\\Gamma}"
-  '\u1D7AD': "\\mathsfbfsl{\\Delta}"
-  '\u1D7AE': "\\mathsfbfsl{\\Epsilon}"
-  '\u1D7AF': "\\mathsfbfsl{\\Zeta}"
-  '\u1D7B0': "\\mathsfbfsl{\\Eta}"
-  '\u1D7B1': "\\mathsfbfsl{\\vartheta}"
-  '\u1D7B2': "\\mathsfbfsl{\\Iota}"
-  '\u1D7B3': "\\mathsfbfsl{\\Kappa}"
-  '\u1D7B4': "\\mathsfbfsl{\\Lambda}"
-  '\u1D7B5': "M"
-  '\u1D7B6': "N"
-  '\u1D7B7': "\\mathsfbfsl{\\Xi}"
-  '\u1D7B8': "O"
-  '\u1D7B9': "\\mathsfbfsl{\\Pi}"
-  '\u1D7BA': "\\mathsfbfsl{\\Rho}"
-  '\u1D7BB': "\\mathsfbfsl{\\varsigma}"
-  '\u1D7BC': "\\mathsfbfsl{\\Sigma}"
-  '\u1D7BD': "\\mathsfbfsl{\\Tau}"
-  '\u1D7BE': "\\mathsfbfsl{\\Upsilon}"
-  '\u1D7BF': "\\mathsfbfsl{\\Phi}"
-  '\u1D7C0': "\\mathsfbfsl{\\Chi}"
-  '\u1D7C1': "\\mathsfbfsl{\\Psi}"
-  '\u1D7C2': "\\mathsfbfsl{\\Omega}"
-  '\u1D7C3': "{\\partial}"
-  '\u1D7C4': "\\in"
-  '\u1D7CE': "\\mathbf{0}"
-  '\u1D7CF': "\\mathbf{1}"
-  '\u1D7D0': "\\mathbf{2}"
-  '\u1D7D1': "\\mathbf{3}"
-  '\u1D7D2': "\\mathbf{4}"
-  '\u1D7D3': "\\mathbf{5}"
-  '\u1D7D4': "\\mathbf{6}"
-  '\u1D7D5': "\\mathbf{7}"
-  '\u1D7D6': "\\mathbf{8}"
-  '\u1D7D7': "\\mathbf{9}"
-  '\u1D7D8': "\\mathbb{0}"
-  '\u1D7D9': "\\mathbb{1}"
-  '\u1D7DA': "\\mathbb{2}"
-  '\u1D7DB': "\\mathbb{3}"
-  '\u1D7DC': "\\mathbb{4}"
-  '\u1D7DD': "\\mathbb{5}"
-  '\u1D7DE': "\\mathbb{6}"
-  '\u1D7DF': "\\mathbb{7}"
-  '\u1D7E0': "\\mathbb{8}"
-  '\u1D7E1': "\\mathbb{9}"
-  '\u1D7E2': "\\mathsf{0}"
-  '\u1D7E3': "\\mathsf{1}"
-  '\u1D7E4': "\\mathsf{2}"
-  '\u1D7E5': "\\mathsf{3}"
-  '\u1D7E6': "\\mathsf{4}"
-  '\u1D7E7': "\\mathsf{5}"
-  '\u1D7E8': "\\mathsf{6}"
-  '\u1D7E9': "\\mathsf{7}"
-  '\u1D7EA': "\\mathsf{8}"
-  '\u1D7EB': "\\mathsf{9}"
-  '\u1D7EC': "\\mathsfbf{0}"
-  '\u1D7ED': "\\mathsfbf{1}"
-  '\u1D7EE': "\\mathsfbf{2}"
-  '\u1D7EF': "\\mathsfbf{3}"
-  '\u1D7F0': "\\mathsfbf{4}"
-  '\u1D7F1': "\\mathsfbf{5}"
-  '\u1D7F2': "\\mathsfbf{6}"
-  '\u1D7F3': "\\mathsfbf{7}"
-  '\u1D7F4': "\\mathsfbf{8}"
-  '\u1D7F5': "\\mathsfbf{9}"
-  '\u1D7F6': "\\mathtt{0}"
-  '\u1D7F7': "\\mathtt{1}"
-  '\u1D7F8': "\\mathtt{2}"
-  '\u1D7F9': "\\mathtt{3}"
-  '\u1D7FA': "\\mathtt{4}"
-  '\u1D7FB': "\\mathtt{5}"
-  '\u1D7FC': "\\mathtt{6}"
-  '\u1D7FD': "\\mathtt{7}"
-  '\u1D7FE': "\\mathtt{8}"
-  '\u1D7FF': "\\mathtt{9}"
-  '\u02329': "{\\langle}"
-  '\u0232A': "{\\rangle}"
+  '\u00A0': " "
+  '\u00AC': "{\\lnot}"
+  '\u00AD': "\\-"
+  '\u00B1': "{\\pm}"
+  '\u00B2': "{^2}"
+  '\u00B3': "{^3}"
+  '\u00B5': "\\mathrm{\\mu}"
+  '\u00B7': "{\\cdot}"
+  '\u00B9': "{^1}"
+  '\u00F7': "{\\div}"
+  '\u0127': "{\\Elzxh}"
+  '\u0192': "f"
+  '\u01AA': "{\\eth}"
+  '\u0250': "{\\Elztrna}"
+  '\u0252': "{\\Elztrnsa}"
+  '\u0254': "{\\Elzopeno}"
+  '\u0256': "{\\Elzrtld}"
+  '\u0259': "{\\Elzschwa}"
+  '\u025B': "{\\varepsilon}"
+  '\u0263': "{\\Elzpgamma}"
+  '\u0264': "{\\Elzpbgam}"
+  '\u0265': "{\\Elztrnh}"
+  '\u026C': "{\\Elzbtdl}"
+  '\u026D': "{\\Elzrtll}"
+  '\u026F': "{\\Elztrnm}"
+  '\u0270': "{\\Elztrnmlr}"
+  '\u0271': "{\\Elzltlmr}"
+  '\u0273': "{\\Elzrtln}"
+  '\u0277': "{\\Elzclomeg}"
+  '\u0279': "{\\Elztrnr}"
+  '\u027A': "{\\Elztrnrl}"
+  '\u027B': "{\\Elzrttrnr}"
+  '\u027C': "{\\Elzrl}"
+  '\u027D': "{\\Elzrtlr}"
+  '\u027E': "{\\Elzfhr}"
+  '\u0282': "{\\Elzrtls}"
+  '\u0283': "{\\Elzesh}"
+  '\u0287': "{\\Elztrnt}"
+  '\u0288': "{\\Elzrtlt}"
+  '\u028A': "{\\Elzpupsil}"
+  '\u028B': "{\\Elzpscrv}"
+  '\u028C': "{\\Elzinvv}"
+  '\u028D': "{\\Elzinvw}"
+  '\u028E': "{\\Elztrny}"
+  '\u0290': "{\\Elzrtlz}"
+  '\u0292': "{\\Elzyogh}"
+  '\u0294': "{\\Elzglst}"
+  '\u0295': "{\\Elzreglst}"
+  '\u0296': "{\\Elzinglst}"
+  '\u02A4': "{\\Elzdyogh}"
+  '\u02A7': "{\\Elztesh}"
+  '\u02C8': "{\\Elzverts}"
+  '\u02CC': "{\\Elzverti}"
+  '\u02D0': "{\\Elzlmrk}"
+  '\u02D1': "{\\Elzhlmrk}"
+  '\u02D2': "{\\Elzsbrhr}"
+  '\u02D3': "{\\Elzsblhr}"
+  '\u02D4': "{\\Elzrais}"
+  '\u02D5': "{\\Elzlow}"
+  '\u0321': "{\\Elzpalh}"
+  '\u032A': "{\\Elzsbbrg}"
+  '\u038E': "\\mathrm{'Y}"
+  '\u038F': "\\mathrm{'\\Omega}"
+  '\u0390': "\\acute{\\ddot{\\iota}}"
+  '\u0391': "{\\Alpha}"
+  '\u0392': "{\\Beta}"
+  '\u0393': "{\\Gamma}"
+  '\u0394': "{\\Delta}"
+  '\u0395': "{\\Epsilon}"
+  '\u0396': "{\\Zeta}"
+  '\u0397': "{\\Eta}"
+  '\u0398': "{\\Theta}"
+  '\u0399': "{\\Iota}"
+  '\u039A': "{\\Kappa}"
+  '\u039B': "{\\Lambda}"
+  '\u039C': "M"
+  '\u039D': "N"
+  '\u039E': "{\\Xi}"
+  '\u039F': "O"
+  '\u03A0': "{\\Pi}"
+  '\u03A1': "{\\Rho}"
+  '\u03A3': "{\\Sigma}"
+  '\u03A4': "{\\Tau}"
+  '\u03A5': "{\\Upsilon}"
+  '\u03A6': "{\\Phi}"
+  '\u03A7': "{\\Chi}"
+  '\u03A8': "{\\Psi}"
+  '\u03A9': "{\\Omega}"
+  '\u03AA': "\\mathrm{\\ddot{I}}"
+  '\u03AB': "\\mathrm{\\ddot{Y}}"
+  '\u03AD': "\\acute{\\epsilon}"
+  '\u03AE': "\\acute{\\eta}"
+  '\u03AF': "\\acute{\\iota}"
+  '\u03B0': "\\acute{\\ddot{\\upsilon}}"
+  '\u03B1': "{\\alpha}"
+  '\u03B2': "{\\beta}"
+  '\u03B3': "{\\gamma}"
+  '\u03B4': "{\\delta}"
+  '\u03B5': "{\\epsilon}"
+  '\u03B6': "{\\zeta}"
+  '\u03B7': "{\\eta}"
+  '\u03B9': "{\\iota}"
+  '\u03BA': "{\\kappa}"
+  '\u03BB': "{\\lambda}"
+  '\u03BC': "{\\mu}"
+  '\u03BD': "{\\nu}"
+  '\u03BE': "{\\xi}"
+  '\u03BF': "o"
+  '\u03C0': "{\\pi}"
+  '\u03C1': "{\\rho}"
+  '\u03C2': "{\\varsigma}"
+  '\u03C3': "{\\sigma}"
+  '\u03C4': "{\\tau}"
+  '\u03C5': "{\\upsilon}"
+  '\u03C6': "{\\varphi}"
+  '\u03C7': "{\\chi}"
+  '\u03C8': "{\\psi}"
+  '\u03C9': "{\\omega}"
+  '\u03CA': "\\ddot{\\iota}"
+  '\u03CB': "\\ddot{\\upsilon}"
+  '\u03CD': "\\acute{\\upsilon}"
+  '\u03CE': "\\acute{\\omega}"
+  '\u03D2': "{\\Upsilon}"
+  '\u03D5': "{\\phi}"
+  '\u03D6': "{\\varpi}"
+  '\u03DA': "{\\Stigma}"
+  '\u03DC': "{\\Digamma}"
+  '\u03DD': "{\\digamma}"
+  '\u03DE': "{\\Koppa}"
+  '\u03E0': "{\\Sampi}"
+  '\u03F0': "{\\varkappa}"
+  '\u03F1': "{\\varrho}"
+  '\u03F6': "{\\backepsilon}"
+  '\u200A': "{\\mkern1mu}"
+  '\u2016': "{\\Vert}"
+  '\u201B': "{\\Elzreapos}"
+  '\u2032': "{'}"
+  '\u2033': "{''}"
+  '\u2034': "{'''}"
+  '\u2035': "{\\backprime}"
+  '\u2057': "''''"
+  '\u20DB': "{\\dddot}"
+  '\u20DC': "{\\ddddot}"
+  '\u2102': "\\mathbb{C}"
+  '\u210B': "\\mathscr{H}"
+  '\u210C': "\\mathfrak{H}"
+  '\u210D': "\\mathbb{H}"
+  '\u210F': "{\\hslash}"
+  '\u2110': "\\mathscr{I}"
+  '\u2111': "\\mathfrak{I}"
+  '\u2112': "\\mathscr{L}"
+  '\u2113': "\\mathscr{l}"
+  '\u2115': "\\mathbb{N}"
+  '\u2118': "{\\wp}"
+  '\u2119': "\\mathbb{P}"
+  '\u211A': "\\mathbb{Q}"
+  '\u211B': "\\mathscr{R}"
+  '\u211C': "\\mathfrak{R}"
+  '\u211D': "\\mathbb{R}"
+  '\u211E': "{\\Elzxrat}"
+  '\u2124': "\\mathbb{Z}"
+  '\u2126': "{\\Omega}"
+  '\u2127': "{\\mho}"
+  '\u2128': "\\mathfrak{Z}"
+  '\u2129': "\\ElsevierGlyph{2129}"
+  '\u212C': "\\mathscr{B}"
+  '\u212D': "\\mathfrak{C}"
+  '\u212F': "\\mathscr{e}"
+  '\u2130': "\\mathscr{E}"
+  '\u2131': "\\mathscr{F}"
+  '\u2133': "\\mathscr{M}"
+  '\u2134': "\\mathscr{o}"
+  '\u2135': "{\\aleph}"
+  '\u2136': "{\\beth}"
+  '\u2137': "{\\gimel}"
+  '\u2138': "{\\daleth}"
+  '\u2153': "\\textfrac{1}{3}"
+  '\u2154': "\\textfrac{2}{3}"
+  '\u2155': "\\textfrac{1}{5}"
+  '\u2156': "\\textfrac{2}{5}"
+  '\u2157': "\\textfrac{3}{5}"
+  '\u2158': "\\textfrac{4}{5}"
+  '\u2159': "\\textfrac{1}{6}"
+  '\u215A': "\\textfrac{5}{6}"
+  '\u215B': "\\textfrac{1}{8}"
+  '\u215C': "\\textfrac{3}{8}"
+  '\u215D': "\\textfrac{5}{8}"
+  '\u215E': "\\textfrac{7}{8}"
+  '\u2190': "{\\leftarrow}"
+  '\u2191': "{\\uparrow}"
+  '\u2192': "{\\rightarrow}"
+  '\u2193': "{\\downarrow}"
+  '\u2194': "{\\leftrightarrow}"
+  '\u2195': "{\\updownarrow}"
+  '\u2196': "{\\nwarrow}"
+  '\u2197': "{\\nearrow}"
+  '\u2198': "{\\searrow}"
+  '\u2199': "{\\swarrow}"
+  '\u219A': "{\\nleftarrow}"
+  '\u219B': "{\\nrightarrow}"
+  '\u219C': "{\\arrowwaveright}"
+  '\u219D': "{\\arrowwaveright}"
+  '\u219E': "{\\twoheadleftarrow}"
+  '\u21A0': "{\\twoheadrightarrow}"
+  '\u21A2': "{\\leftarrowtail}"
+  '\u21A3': "{\\rightarrowtail}"
+  '\u21A6': "{\\mapsto}"
+  '\u21A9': "{\\hookleftarrow}"
+  '\u21AA': "{\\hookrightarrow}"
+  '\u21AB': "{\\looparrowleft}"
+  '\u21AC': "{\\looparrowright}"
+  '\u21AD': "{\\leftrightsquigarrow}"
+  '\u21AE': "{\\nleftrightarrow}"
+  '\u21B0': "{\\Lsh}"
+  '\u21B1': "{\\Rsh}"
+  '\u21B3': "\\ElsevierGlyph{21B3}"
+  '\u21B6': "{\\curvearrowleft}"
+  '\u21B7': "{\\curvearrowright}"
+  '\u21BA': "{\\circlearrowleft}"
+  '\u21BB': "{\\circlearrowright}"
+  '\u21BC': "{\\leftharpoonup}"
+  '\u21BD': "{\\leftharpoondown}"
+  '\u21BE': "{\\upharpoonright}"
+  '\u21BF': "{\\upharpoonleft}"
+  '\u21C0': "{\\rightharpoonup}"
+  '\u21C1': "{\\rightharpoondown}"
+  '\u21C2': "{\\downharpoonright}"
+  '\u21C3': "{\\downharpoonleft}"
+  '\u21C4': "{\\rightleftarrows}"
+  '\u21C5': "{\\dblarrowupdown}"
+  '\u21C6': "{\\leftrightarrows}"
+  '\u21C7': "{\\leftleftarrows}"
+  '\u21C8': "{\\upuparrows}"
+  '\u21C9': "{\\rightrightarrows}"
+  '\u21CA': "{\\downdownarrows}"
+  '\u21CB': "{\\leftrightharpoons}"
+  '\u21CC': "{\\rightleftharpoons}"
+  '\u21CD': "{\\nLeftarrow}"
+  '\u21CE': "{\\nLeftrightarrow}"
+  '\u21CF': "{\\nRightarrow}"
+  '\u21D0': "{\\Leftarrow}"
+  '\u21D1': "{\\Uparrow}"
+  '\u21D2': "{\\Rightarrow}"
+  '\u21D3': "{\\Downarrow}"
+  '\u21D4': "{\\Leftrightarrow}"
+  '\u21D5': "{\\Updownarrow}"
+  '\u21DA': "{\\Lleftarrow}"
+  '\u21DB': "{\\Rrightarrow}"
+  '\u21DD': "{\\rightsquigarrow}"
+  '\u21F5': "{\\DownArrowUpArrow}"
+  '\u2200': "{\\forall}"
+  '\u2201': "{\\complement}"
+  '\u2202': "{\\partial}"
+  '\u2203': "{\\exists}"
+  '\u2204': "{\\nexists}"
+  '\u2205': "{\\varnothing}"
+  '\u2207': "{\\nabla}"
+  '\u2208': "{\\in}"
+  '\u2209': "{\\not\\in}"
+  '\u220B': "{\\ni}"
+  '\u220C': "{\\not\\ni}"
+  '\u220F': "{\\prod}"
+  '\u2210': "{\\coprod}"
+  '\u2211': "{\\sum}"
+  '\u2213': "{\\mp}"
+  '\u2214': "{\\dotplus}"
+  '\u2216': "{\\setminus}"
+  '\u2217': "{_\\ast}"
+  '\u2218': "{\\circ}"
+  '\u2219': "{\\bullet}"
+  '\u221A': "{\\surd}"
+  '\u221D': "{\\propto}"
+  '\u221E': "{\\infty}"
+  '\u221F': "{\\rightangle}"
+  '\u2220': "{\\angle}"
+  '\u2221': "{\\measuredangle}"
+  '\u2222': "{\\sphericalangle}"
+  '\u2223': "{\\mid}"
+  '\u2224': "{\\nmid}"
+  '\u2225': "{\\parallel}"
+  '\u2226': "{\\nparallel}"
+  '\u2227': "{\\wedge}"
+  '\u2228': "{\\vee}"
+  '\u2229': "{\\cap}"
+  '\u222A': "{\\cup}"
+  '\u222B': "{\\int}"
+  '\u222C': "{\\int\\!\\int}"
+  '\u222D': "{\\int\\!\\int\\!\\int}"
+  '\u222E': "{\\oint}"
+  '\u222F': "{\\surfintegral}"
+  '\u2230': "{\\volintegral}"
+  '\u2231': "{\\clwintegral}"
+  '\u2232': "\\ElsevierGlyph{2232}"
+  '\u2233': "\\ElsevierGlyph{2233}"
+  '\u2234': "{\\therefore}"
+  '\u2235': "{\\because}"
+  '\u2237': "{\\Colon}"
+  '\u2238': "\\ElsevierGlyph{2238}"
+  '\u223A': "\\mathbin{{:}\\!\\!{-}\\!\\!{:}}"
+  '\u223B': "{\\homothetic}"
+  '\u223C': "{\\sim}"
+  '\u223D': "{\\backsim}"
+  '\u223E': "{\\lazysinv}"
+  '\u2240': "{\\wr}"
+  '\u2241': "{\\not\\sim}"
+  '\u2242': "\\ElsevierGlyph{2242}"
+  '\u2243': "{\\simeq}"
+  '\u2244': "{\\not\\simeq}"
+  '\u2245': "{\\cong}"
+  '\u2246': "{\\approxnotequal}"
+  '\u2247': "{\\not\\cong}"
+  '\u2248': "{\\approx}"
+  '\u2249': "{\\not\\approx}"
+  '\u224A': "{\\approxeq}"
+  '\u224B': "{\\tildetrpl}"
+  '\u224C': "{\\allequal}"
+  '\u224D': "{\\asymp}"
+  '\u224E': "{\\Bumpeq}"
+  '\u224F': "{\\bumpeq}"
+  '\u2250': "{\\doteq}"
+  '\u2251': "{\\doteqdot}"
+  '\u2252': "{\\fallingdotseq}"
+  '\u2253': "{\\risingdotseq}"
+  '\u2255': "=:"
+  '\u2256': "{\\eqcirc}"
+  '\u2257': "{\\circeq}"
+  '\u2259': "{\\estimates}"
+  '\u225A': "\\ElsevierGlyph{225A}"
+  '\u225B': "{\\starequal}"
+  '\u225C': "{\\triangleq}"
+  '\u225F': "\\ElsevierGlyph{225F}"
+  '\u2260': "\\not ="
+  '\u2261': "{\\equiv}"
+  '\u2262': "{\\not\\equiv}"
+  '\u2264': "{\\leq}"
+  '\u2265': "{\\geq}"
+  '\u2266': "{\\leqq}"
+  '\u2267': "{\\geqq}"
+  '\u2268': "{\\lneqq}"
+  '\u2269': "{\\gneqq}"
+  '\u226A': "{\\ll}"
+  '\u226B': "{\\gg}"
+  '\u226C': "{\\between}"
+  '\u226D': "{\\not\\kern-0.3em\\times}"
+  '\u226E': "\\not<"
+  '\u226F': "\\not>"
+  '\u2270': "{\\not\\leq}"
+  '\u2271': "{\\not\\geq}"
+  '\u2272': "{\\lessequivlnt}"
+  '\u2273': "{\\greaterequivlnt}"
+  '\u2274': "\\ElsevierGlyph{2274}"
+  '\u2275': "\\ElsevierGlyph{2275}"
+  '\u2276': "{\\lessgtr}"
+  '\u2277': "{\\gtrless}"
+  '\u2278': "{\\notlessgreater}"
+  '\u2279': "{\\notgreaterless}"
+  '\u227A': "{\\prec}"
+  '\u227B': "{\\succ}"
+  '\u227C': "{\\preccurlyeq}"
+  '\u227D': "{\\succcurlyeq}"
+  '\u227E': "{\\precapprox}"
+  '\u227F': "{\\succapprox}"
+  '\u2280': "{\\not\\prec}"
+  '\u2281': "{\\not\\succ}"
+  '\u2282': "{\\subset}"
+  '\u2283': "{\\supset}"
+  '\u2284': "{\\not\\subset}"
+  '\u2285': "{\\not\\supset}"
+  '\u2286': "{\\subseteq}"
+  '\u2287': "{\\supseteq}"
+  '\u2288': "{\\not\\subseteq}"
+  '\u2289': "{\\not\\supseteq}"
+  '\u228A': "{\\subsetneq}"
+  '\u228B': "{\\supsetneq}"
+  '\u228E': "{\\uplus}"
+  '\u228F': "{\\sqsubset}"
+  '\u2290': "{\\sqsupset}"
+  '\u2291': "{\\sqsubseteq}"
+  '\u2292': "{\\sqsupseteq}"
+  '\u2293': "{\\sqcap}"
+  '\u2294': "{\\sqcup}"
+  '\u2295': "{\\oplus}"
+  '\u2296': "{\\ominus}"
+  '\u2297': "{\\otimes}"
+  '\u2298': "{\\oslash}"
+  '\u2299': "{\\odot}"
+  '\u229A': "{\\circledcirc}"
+  '\u229B': "{\\circledast}"
+  '\u229D': "{\\circleddash}"
+  '\u229E': "{\\boxplus}"
+  '\u229F': "{\\boxminus}"
+  '\u22A0': "{\\boxtimes}"
+  '\u22A1': "{\\boxdot}"
+  '\u22A2': "{\\vdash}"
+  '\u22A3': "{\\dashv}"
+  '\u22A4': "{\\top}"
+  '\u22A5': "{\\perp}"
+  '\u22A7': "{\\truestate}"
+  '\u22A8': "{\\forcesextra}"
+  '\u22A9': "{\\Vdash}"
+  '\u22AA': "{\\Vvdash}"
+  '\u22AB': "{\\VDash}"
+  '\u22AC': "{\\nvdash}"
+  '\u22AD': "{\\nvDash}"
+  '\u22AE': "{\\nVdash}"
+  '\u22AF': "{\\nVDash}"
+  '\u22B2': "{\\vartriangleleft}"
+  '\u22B3': "{\\vartriangleright}"
+  '\u22B4': "{\\trianglelefteq}"
+  '\u22B5': "{\\trianglerighteq}"
+  '\u22B6': "{\\original}"
+  '\u22B7': "{\\image}"
+  '\u22B8': "{\\multimap}"
+  '\u22B9': "{\\hermitconjmatrix}"
+  '\u22BA': "{\\intercal}"
+  '\u22BB': "{\\veebar}"
+  '\u22BE': "{\\rightanglearc}"
+  '\u22C0': "\\ElsevierGlyph{22C0}"
+  '\u22C1': "\\ElsevierGlyph{22C1}"
+  '\u22C2': "{\\bigcap}"
+  '\u22C3': "{\\bigcup}"
+  '\u22C4': "{\\diamond}"
+  '\u22C5': "{\\cdot}"
+  '\u22C6': "{\\star}"
+  '\u22C7': "{\\divideontimes}"
+  '\u22C8': "{\\bowtie}"
+  '\u22C9': "{\\ltimes}"
+  '\u22CA': "{\\rtimes}"
+  '\u22CB': "{\\leftthreetimes}"
+  '\u22CC': "{\\rightthreetimes}"
+  '\u22CD': "{\\backsimeq}"
+  '\u22CE': "{\\curlyvee}"
+  '\u22CF': "{\\curlywedge}"
+  '\u22D0': "{\\Subset}"
+  '\u22D1': "{\\Supset}"
+  '\u22D2': "{\\Cap}"
+  '\u22D3': "{\\Cup}"
+  '\u22D4': "{\\pitchfork}"
+  '\u22D6': "{\\lessdot}"
+  '\u22D7': "{\\gtrdot}"
+  '\u22D8': "{\\verymuchless}"
+  '\u22D9': "{\\verymuchgreater}"
+  '\u22DA': "{\\lesseqgtr}"
+  '\u22DB': "{\\gtreqless}"
+  '\u22DE': "{\\curlyeqprec}"
+  '\u22DF': "{\\curlyeqsucc}"
+  '\u22E2': "{\\not\\sqsubseteq}"
+  '\u22E3': "{\\not\\sqsupseteq}"
+  '\u22E5': "{\\Elzsqspne}"
+  '\u22E6': "{\\lnsim}"
+  '\u22E7': "{\\gnsim}"
+  '\u22E8': "{\\precedesnotsimilar}"
+  '\u22E9': "{\\succnsim}"
+  '\u22EA': "{\\ntriangleleft}"
+  '\u22EB': "{\\ntriangleright}"
+  '\u22EC': "{\\ntrianglelefteq}"
+  '\u22ED': "{\\ntrianglerighteq}"
+  '\u22EE': "{\\vdots}"
+  '\u22EF': "{\\cdots}"
+  '\u22F0': "{\\upslopeellipsis}"
+  '\u22F1': "{\\downslopeellipsis}"
+  '\u2306': "{\\perspcorrespond}"
+  '\u2308': "{\\lceil}"
+  '\u2309': "{\\rceil}"
+  '\u230A': "{\\lfloor}"
+  '\u230B': "{\\rfloor}"
+  '\u2315': "{\\recorder}"
+  '\u2316': "\\mathchar\"2208"
+  '\u231C': "{\\ulcorner}"
+  '\u231D': "{\\urcorner}"
+  '\u231E': "{\\llcorner}"
+  '\u231F': "{\\lrcorner}"
+  '\u2322': "{\\frown}"
+  '\u2323': "{\\smile}"
+  '\u233D': "\\ElsevierGlyph{E838}"
+  '\u23A3': "{\\Elzdlcorn}"
+  '\u23B0': "{\\lmoustache}"
+  '\u23B1': "{\\rmoustache}"
+  '\u24C8': "{\\circledS}"
+  '\u2506': "{\\Elzdshfnc}"
+  '\u2519': "{\\Elzsqfnw}"
+  '\u2571': "{\\diagup}"
+  '\u25A1': "{\\square}"
+  '\u25AA': "{\\blacksquare}"
+  '\u25AD': "\\fbox{~~}"
+  '\u25AF': "{\\Elzvrecto}"
+  '\u25B1': "\\ElsevierGlyph{E381}"
+  '\u25B3': "{\\bigtriangleup}"
+  '\u25B4': "{\\blacktriangle}"
+  '\u25B5': "{\\vartriangle}"
+  '\u25B8': "{\\blacktriangleright}"
+  '\u25B9': "{\\triangleright}"
+  '\u25BD': "{\\bigtriangledown}"
+  '\u25BE': "{\\blacktriangledown}"
+  '\u25BF': "{\\triangledown}"
+  '\u25C2': "{\\blacktriangleleft}"
+  '\u25C3': "{\\triangleleft}"
+  '\u25CA': "{\\lozenge}"
+  '\u25CB': "{\\bigcirc}"
+  '\u25D0': "{\\Elzcirfl}"
+  '\u25D1': "{\\Elzcirfr}"
+  '\u25D2': "{\\Elzcirfb}"
+  '\u25D8': "{\\Elzrvbull}"
+  '\u25E7': "{\\Elzsqfl}"
+  '\u25E8': "{\\Elzsqfr}"
+  '\u25EA': "{\\Elzsqfse}"
+  '\u25EF': "{\\bigcirc}"
+  '\u2662': "{\\diamond}"
+  '\u266D': "{\\flat}"
+  '\u266E': "{\\natural}"
+  '\u266F': "{\\sharp}"
+  '\u27F5': "{\\longleftarrow}"
+  '\u27F6': "{\\longrightarrow}"
+  '\u27F7': "{\\longleftrightarrow}"
+  '\u27F8': "{\\Longleftarrow}"
+  '\u27F9': "{\\Longrightarrow}"
+  '\u27FA': "{\\Longleftrightarrow}"
+  '\u27FC': "{\\longmapsto}"
+  '\u27FF': "\\sim\\joinrel\\leadsto"
+  '\u2905': "\\ElsevierGlyph{E212}"
+  '\u2912': "{\\UpArrowBar}"
+  '\u2913': "{\\DownArrowBar}"
+  '\u2923': "\\ElsevierGlyph{E20C}"
+  '\u2924': "\\ElsevierGlyph{E20D}"
+  '\u2925': "\\ElsevierGlyph{E20B}"
+  '\u2926': "\\ElsevierGlyph{E20A}"
+  '\u2927': "\\ElsevierGlyph{E211}"
+  '\u2928': "\\ElsevierGlyph{E20E}"
+  '\u2929': "\\ElsevierGlyph{E20F}"
+  '\u292A': "\\ElsevierGlyph{E210}"
+  '\u2933': "\\ElsevierGlyph{E21C}"
+  '\u2936': "\\ElsevierGlyph{E21A}"
+  '\u2937': "\\ElsevierGlyph{E219}"
+  '\u2940': "{\\Elolarr}"
+  '\u2941': "{\\Elorarr}"
+  '\u2942': "{\\ElzRlarr}"
+  '\u2944': "{\\ElzrLarr}"
+  '\u2947': "{\\Elzrarrx}"
+  '\u294E': "{\\LeftRightVector}"
+  '\u294F': "{\\RightUpDownVector}"
+  '\u2950': "{\\DownLeftRightVector}"
+  '\u2951': "{\\LeftUpDownVector}"
+  '\u2952': "{\\LeftVectorBar}"
+  '\u2953': "{\\RightVectorBar}"
+  '\u2954': "{\\RightUpVectorBar}"
+  '\u2955': "{\\RightDownVectorBar}"
+  '\u2956': "{\\DownLeftVectorBar}"
+  '\u2957': "{\\DownRightVectorBar}"
+  '\u2958': "{\\LeftUpVectorBar}"
+  '\u2959': "{\\LeftDownVectorBar}"
+  '\u295A': "{\\LeftTeeVector}"
+  '\u295B': "{\\RightTeeVector}"
+  '\u295C': "{\\RightUpTeeVector}"
+  '\u295D': "{\\RightDownTeeVector}"
+  '\u295E': "{\\DownLeftTeeVector}"
+  '\u295F': "{\\DownRightTeeVector}"
+  '\u2960': "{\\LeftUpTeeVector}"
+  '\u2961': "{\\LeftDownTeeVector}"
+  '\u296E': "{\\UpEquilibrium}"
+  '\u296F': "{\\ReverseUpEquilibrium}"
+  '\u2970': "{\\RoundImplies}"
+  '\u297C': "\\ElsevierGlyph{E214}"
+  '\u297D': "\\ElsevierGlyph{E215}"
+  '\u2980': "{\\Elztfnc}"
+  '\u2985': "\\ElsevierGlyph{3018}"
+  '\u2986': "{\\Elroang}"
+  '\u2993': "<\\kern-0.58em("
+  '\u2994': "\\ElsevierGlyph{E291}"
+  '\u2999': "{\\Elzddfnc}"
+  '\u299C': "{\\Angle}"
+  '\u29A0': "{\\Elzlpargt}"
+  '\u29B5': "\\ElsevierGlyph{E260}"
+  '\u29B6': "\\ElsevierGlyph{E61B}"
+  '\u29CA': "{\\ElzLap}"
+  '\u29CB': "{\\Elzdefas}"
+  '\u29CF': "{\\LeftTriangleBar}"
+  '\u29D0': "{\\RightTriangleBar}"
+  '\u29DC': "\\ElsevierGlyph{E372}"
+  '\u29EB': "{\\blacklozenge}"
+  '\u29F4': "{\\RuleDelayed}"
+  '\u2A04': "{\\Elxuplus}"
+  '\u2A05': "{\\ElzThr}"
+  '\u2A06': "{\\Elxsqcup}"
+  '\u2A07': "{\\ElzInf}"
+  '\u2A08': "{\\ElzSup}"
+  '\u2A0D': "{\\ElzCint}"
+  '\u2A0F': "{\\clockoint}"
+  '\u2A10': "\\ElsevierGlyph{E395}"
+  '\u2A16': "{\\sqrint}"
+  '\u2A25': "\\ElsevierGlyph{E25A}"
+  '\u2A2A': "\\ElsevierGlyph{E25B}"
+  '\u2A2D': "\\ElsevierGlyph{E25C}"
+  '\u2A2E': "\\ElsevierGlyph{E25D}"
+  '\u2A2F': "{\\ElzTimes}"
+  '\u2A34': "\\ElsevierGlyph{E25E}"
+  '\u2A35': "\\ElsevierGlyph{E25E}"
+  '\u2A3C': "\\ElsevierGlyph{E259}"
+  '\u2A3F': "{\\amalg}"
+  '\u2A53': "{\\ElzAnd}"
+  '\u2A54': "{\\ElzOr}"
+  '\u2A55': "\\ElsevierGlyph{E36E}"
+  '\u2A56': "{\\ElOr}"
+  '\u2A5E': "{\\perspcorrespond}"
+  '\u2A5F': "{\\Elzminhat}"
+  '\u2A63': "\\ElsevierGlyph{225A}"
+  '\u2A6E': "\\stackrel{*}{=}"
+  '\u2A75': "{\\Equal}"
+  '\u2A7D': "{\\leqslant}"
+  '\u2A7E': "{\\geqslant}"
+  '\u2A85': "{\\lessapprox}"
+  '\u2A86': "{\\gtrapprox}"
+  '\u2A87': "{\\lneq}"
+  '\u2A88': "{\\gneq}"
+  '\u2A89': "{\\lnapprox}"
+  '\u2A8A': "{\\gnapprox}"
+  '\u2A8B': "{\\lesseqqgtr}"
+  '\u2A8C': "{\\gtreqqless}"
+  '\u2A95': "{\\eqslantless}"
+  '\u2A96': "{\\eqslantgtr}"
+  '\u2A9D': "\\Pisymbol{ppi020}{117}"
+  '\u2A9E': "\\Pisymbol{ppi020}{105}"
+  '\u2AA1': "{\\NestedLessLess}"
+  '\u2AA2': "{\\NestedGreaterGreater}"
+  '\u2AAF': "{\\preceq}"
+  '\u2AB0': "{\\succeq}"
+  '\u2AB5': "{\\precneqq}"
+  '\u2AB6': "{\\succneqq}"
+  '\u2AB7': "{\\precapprox}"
+  '\u2AB8': "{\\succapprox}"
+  '\u2AB9': "{\\precnapprox}"
+  '\u2ABA': "{\\succnapprox}"
+  '\u2AC5': "{\\subseteqq}"
+  '\u2AC6': "{\\supseteqq}"
+  '\u2ACB': "{\\subsetneqq}"
+  '\u2ACC': "{\\supsetneqq}"
+  '\u2AEB': "\\ElsevierGlyph{E30D}"
+  '\u2AF6': "{\\Elztdcol}"
+  '\u2AFD': "{{/}\\!\\!{/}}"
+  '\u300A': "\\ElsevierGlyph{300A}"
+  '\u300B': "\\ElsevierGlyph{300B}"
+  '\u3018': "\\ElsevierGlyph{3018}"
+  '\u3019': "\\ElsevierGlyph{3019}"
+  '\u301A': "{\\openbracketleft}"
+  '\u301B': "{\\openbracketright}"
+  '\ud835\udc00': "\\mathbf{A}"
+  '\ud835\udc01': "\\mathbf{B}"
+  '\ud835\udc02': "\\mathbf{C}"
+  '\ud835\udc03': "\\mathbf{D}"
+  '\ud835\udc04': "\\mathbf{E}"
+  '\ud835\udc05': "\\mathbf{F}"
+  '\ud835\udc06': "\\mathbf{G}"
+  '\ud835\udc07': "\\mathbf{H}"
+  '\ud835\udc08': "\\mathbf{I}"
+  '\ud835\udc09': "\\mathbf{J}"
+  '\ud835\udc0a': "\\mathbf{K}"
+  '\ud835\udc0b': "\\mathbf{L}"
+  '\ud835\udc0c': "\\mathbf{M}"
+  '\ud835\udc0d': "\\mathbf{N}"
+  '\ud835\udc0e': "\\mathbf{O}"
+  '\ud835\udc0f': "\\mathbf{P}"
+  '\ud835\udc10': "\\mathbf{Q}"
+  '\ud835\udc11': "\\mathbf{R}"
+  '\ud835\udc12': "\\mathbf{S}"
+  '\ud835\udc13': "\\mathbf{T}"
+  '\ud835\udc14': "\\mathbf{U}"
+  '\ud835\udc15': "\\mathbf{V}"
+  '\ud835\udc16': "\\mathbf{W}"
+  '\ud835\udc17': "\\mathbf{X}"
+  '\ud835\udc18': "\\mathbf{Y}"
+  '\ud835\udc19': "\\mathbf{Z}"
+  '\ud835\udc1a': "\\mathbf{a}"
+  '\ud835\udc1b': "\\mathbf{b}"
+  '\ud835\udc1c': "\\mathbf{c}"
+  '\ud835\udc1d': "\\mathbf{d}"
+  '\ud835\udc1e': "\\mathbf{e}"
+  '\ud835\udc1f': "\\mathbf{f}"
+  '\ud835\udc20': "\\mathbf{g}"
+  '\ud835\udc21': "\\mathbf{h}"
+  '\ud835\udc22': "\\mathbf{i}"
+  '\ud835\udc23': "\\mathbf{j}"
+  '\ud835\udc24': "\\mathbf{k}"
+  '\ud835\udc25': "\\mathbf{l}"
+  '\ud835\udc26': "\\mathbf{m}"
+  '\ud835\udc27': "\\mathbf{n}"
+  '\ud835\udc28': "\\mathbf{o}"
+  '\ud835\udc29': "\\mathbf{p}"
+  '\ud835\udc2a': "\\mathbf{q}"
+  '\ud835\udc2b': "\\mathbf{r}"
+  '\ud835\udc2c': "\\mathbf{s}"
+  '\ud835\udc2d': "\\mathbf{t}"
+  '\ud835\udc2e': "\\mathbf{u}"
+  '\ud835\udc2f': "\\mathbf{v}"
+  '\ud835\udc30': "\\mathbf{w}"
+  '\ud835\udc31': "\\mathbf{x}"
+  '\ud835\udc32': "\\mathbf{y}"
+  '\ud835\udc33': "\\mathbf{z}"
+  '\ud835\udc34': "\\mathsl{A}"
+  '\ud835\udc35': "\\mathsl{B}"
+  '\ud835\udc36': "\\mathsl{C}"
+  '\ud835\udc37': "\\mathsl{D}"
+  '\ud835\udc38': "\\mathsl{E}"
+  '\ud835\udc39': "\\mathsl{F}"
+  '\ud835\udc3a': "\\mathsl{G}"
+  '\ud835\udc3b': "\\mathsl{H}"
+  '\ud835\udc3c': "\\mathsl{I}"
+  '\ud835\udc3d': "\\mathsl{J}"
+  '\ud835\udc3e': "\\mathsl{K}"
+  '\ud835\udc3f': "\\mathsl{L}"
+  '\ud835\udc40': "\\mathsl{M}"
+  '\ud835\udc41': "\\mathsl{N}"
+  '\ud835\udc42': "\\mathsl{O}"
+  '\ud835\udc43': "\\mathsl{P}"
+  '\ud835\udc44': "\\mathsl{Q}"
+  '\ud835\udc45': "\\mathsl{R}"
+  '\ud835\udc46': "\\mathsl{S}"
+  '\ud835\udc47': "\\mathsl{T}"
+  '\ud835\udc48': "\\mathsl{U}"
+  '\ud835\udc49': "\\mathsl{V}"
+  '\ud835\udc4a': "\\mathsl{W}"
+  '\ud835\udc4b': "\\mathsl{X}"
+  '\ud835\udc4c': "\\mathsl{Y}"
+  '\ud835\udc4d': "\\mathsl{Z}"
+  '\ud835\udc4e': "\\mathsl{a}"
+  '\ud835\udc4f': "\\mathsl{b}"
+  '\ud835\udc50': "\\mathsl{c}"
+  '\ud835\udc51': "\\mathsl{d}"
+  '\ud835\udc52': "\\mathsl{e}"
+  '\ud835\udc53': "\\mathsl{f}"
+  '\ud835\udc54': "\\mathsl{g}"
+  '\ud835\udc56': "\\mathsl{i}"
+  '\ud835\udc57': "\\mathsl{j}"
+  '\ud835\udc58': "\\mathsl{k}"
+  '\ud835\udc59': "\\mathsl{l}"
+  '\ud835\udc5a': "\\mathsl{m}"
+  '\ud835\udc5b': "\\mathsl{n}"
+  '\ud835\udc5c': "\\mathsl{o}"
+  '\ud835\udc5d': "\\mathsl{p}"
+  '\ud835\udc5e': "\\mathsl{q}"
+  '\ud835\udc5f': "\\mathsl{r}"
+  '\ud835\udc60': "\\mathsl{s}"
+  '\ud835\udc61': "\\mathsl{t}"
+  '\ud835\udc62': "\\mathsl{u}"
+  '\ud835\udc63': "\\mathsl{v}"
+  '\ud835\udc64': "\\mathsl{w}"
+  '\ud835\udc65': "\\mathsl{x}"
+  '\ud835\udc66': "\\mathsl{y}"
+  '\ud835\udc67': "\\mathsl{z}"
+  '\ud835\udc68': "\\mathbit{A}"
+  '\ud835\udc69': "\\mathbit{B}"
+  '\ud835\udc6a': "\\mathbit{C}"
+  '\ud835\udc6b': "\\mathbit{D}"
+  '\ud835\udc6c': "\\mathbit{E}"
+  '\ud835\udc6d': "\\mathbit{F}"
+  '\ud835\udc6e': "\\mathbit{G}"
+  '\ud835\udc6f': "\\mathbit{H}"
+  '\ud835\udc70': "\\mathbit{I}"
+  '\ud835\udc71': "\\mathbit{J}"
+  '\ud835\udc72': "\\mathbit{K}"
+  '\ud835\udc73': "\\mathbit{L}"
+  '\ud835\udc74': "\\mathbit{M}"
+  '\ud835\udc75': "\\mathbit{N}"
+  '\ud835\udc76': "\\mathbit{O}"
+  '\ud835\udc77': "\\mathbit{P}"
+  '\ud835\udc78': "\\mathbit{Q}"
+  '\ud835\udc79': "\\mathbit{R}"
+  '\ud835\udc7a': "\\mathbit{S}"
+  '\ud835\udc7b': "\\mathbit{T}"
+  '\ud835\udc7c': "\\mathbit{U}"
+  '\ud835\udc7d': "\\mathbit{V}"
+  '\ud835\udc7e': "\\mathbit{W}"
+  '\ud835\udc7f': "\\mathbit{X}"
+  '\ud835\udc80': "\\mathbit{Y}"
+  '\ud835\udc81': "\\mathbit{Z}"
+  '\ud835\udc82': "\\mathbit{a}"
+  '\ud835\udc83': "\\mathbit{b}"
+  '\ud835\udc84': "\\mathbit{c}"
+  '\ud835\udc85': "\\mathbit{d}"
+  '\ud835\udc86': "\\mathbit{e}"
+  '\ud835\udc87': "\\mathbit{f}"
+  '\ud835\udc88': "\\mathbit{g}"
+  '\ud835\udc89': "\\mathbit{h}"
+  '\ud835\udc8a': "\\mathbit{i}"
+  '\ud835\udc8b': "\\mathbit{j}"
+  '\ud835\udc8c': "\\mathbit{k}"
+  '\ud835\udc8d': "\\mathbit{l}"
+  '\ud835\udc8e': "\\mathbit{m}"
+  '\ud835\udc8f': "\\mathbit{n}"
+  '\ud835\udc90': "\\mathbit{o}"
+  '\ud835\udc91': "\\mathbit{p}"
+  '\ud835\udc92': "\\mathbit{q}"
+  '\ud835\udc93': "\\mathbit{r}"
+  '\ud835\udc94': "\\mathbit{s}"
+  '\ud835\udc95': "\\mathbit{t}"
+  '\ud835\udc96': "\\mathbit{u}"
+  '\ud835\udc97': "\\mathbit{v}"
+  '\ud835\udc98': "\\mathbit{w}"
+  '\ud835\udc99': "\\mathbit{x}"
+  '\ud835\udc9a': "\\mathbit{y}"
+  '\ud835\udc9b': "\\mathbit{z}"
+  '\ud835\udc9c': "\\mathscr{A}"
+  '\ud835\udc9e': "\\mathscr{C}"
+  '\ud835\udc9f': "\\mathscr{D}"
+  '\ud835\udca2': "\\mathscr{G}"
+  '\ud835\udca5': "\\mathscr{J}"
+  '\ud835\udca6': "\\mathscr{K}"
+  '\ud835\udca9': "\\mathscr{N}"
+  '\ud835\udcaa': "\\mathscr{O}"
+  '\ud835\udcab': "\\mathscr{P}"
+  '\ud835\udcac': "\\mathscr{Q}"
+  '\ud835\udcae': "\\mathscr{S}"
+  '\ud835\udcaf': "\\mathscr{T}"
+  '\ud835\udcb0': "\\mathscr{U}"
+  '\ud835\udcb1': "\\mathscr{V}"
+  '\ud835\udcb2': "\\mathscr{W}"
+  '\ud835\udcb3': "\\mathscr{X}"
+  '\ud835\udcb4': "\\mathscr{Y}"
+  '\ud835\udcb5': "\\mathscr{Z}"
+  '\ud835\udcb6': "\\mathscr{a}"
+  '\ud835\udcb7': "\\mathscr{b}"
+  '\ud835\udcb8': "\\mathscr{c}"
+  '\ud835\udcb9': "\\mathscr{d}"
+  '\ud835\udcbb': "\\mathscr{f}"
+  '\ud835\udcbd': "\\mathscr{h}"
+  '\ud835\udcbe': "\\mathscr{i}"
+  '\ud835\udcbf': "\\mathscr{j}"
+  '\ud835\udcc0': "\\mathscr{k}"
+  '\ud835\udcc1': "\\mathscr{l}"
+  '\ud835\udcc2': "\\mathscr{m}"
+  '\ud835\udcc3': "\\mathscr{n}"
+  '\ud835\udcc5': "\\mathscr{p}"
+  '\ud835\udcc6': "\\mathscr{q}"
+  '\ud835\udcc7': "\\mathscr{r}"
+  '\ud835\udcc8': "\\mathscr{s}"
+  '\ud835\udcc9': "\\mathscr{t}"
+  '\ud835\udcca': "\\mathscr{u}"
+  '\ud835\udccb': "\\mathscr{v}"
+  '\ud835\udccc': "\\mathscr{w}"
+  '\ud835\udccd': "\\mathscr{x}"
+  '\ud835\udcce': "\\mathscr{y}"
+  '\ud835\udccf': "\\mathscr{z}"
+  '\ud835\udcd0': "\\mathmit{A}"
+  '\ud835\udcd1': "\\mathmit{B}"
+  '\ud835\udcd2': "\\mathmit{C}"
+  '\ud835\udcd3': "\\mathmit{D}"
+  '\ud835\udcd4': "\\mathmit{E}"
+  '\ud835\udcd5': "\\mathmit{F}"
+  '\ud835\udcd6': "\\mathmit{G}"
+  '\ud835\udcd7': "\\mathmit{H}"
+  '\ud835\udcd8': "\\mathmit{I}"
+  '\ud835\udcd9': "\\mathmit{J}"
+  '\ud835\udcda': "\\mathmit{K}"
+  '\ud835\udcdb': "\\mathmit{L}"
+  '\ud835\udcdc': "\\mathmit{M}"
+  '\ud835\udcdd': "\\mathmit{N}"
+  '\ud835\udcde': "\\mathmit{O}"
+  '\ud835\udcdf': "\\mathmit{P}"
+  '\ud835\udce0': "\\mathmit{Q}"
+  '\ud835\udce1': "\\mathmit{R}"
+  '\ud835\udce2': "\\mathmit{S}"
+  '\ud835\udce3': "\\mathmit{T}"
+  '\ud835\udce4': "\\mathmit{U}"
+  '\ud835\udce5': "\\mathmit{V}"
+  '\ud835\udce6': "\\mathmit{W}"
+  '\ud835\udce7': "\\mathmit{X}"
+  '\ud835\udce8': "\\mathmit{Y}"
+  '\ud835\udce9': "\\mathmit{Z}"
+  '\ud835\udcea': "\\mathmit{a}"
+  '\ud835\udceb': "\\mathmit{b}"
+  '\ud835\udcec': "\\mathmit{c}"
+  '\ud835\udced': "\\mathmit{d}"
+  '\ud835\udcee': "\\mathmit{e}"
+  '\ud835\udcef': "\\mathmit{f}"
+  '\ud835\udcf0': "\\mathmit{g}"
+  '\ud835\udcf1': "\\mathmit{h}"
+  '\ud835\udcf2': "\\mathmit{i}"
+  '\ud835\udcf3': "\\mathmit{j}"
+  '\ud835\udcf4': "\\mathmit{k}"
+  '\ud835\udcf5': "\\mathmit{l}"
+  '\ud835\udcf6': "\\mathmit{m}"
+  '\ud835\udcf7': "\\mathmit{n}"
+  '\ud835\udcf8': "\\mathmit{o}"
+  '\ud835\udcf9': "\\mathmit{p}"
+  '\ud835\udcfa': "\\mathmit{q}"
+  '\ud835\udcfb': "\\mathmit{r}"
+  '\ud835\udcfc': "\\mathmit{s}"
+  '\ud835\udcfd': "\\mathmit{t}"
+  '\ud835\udcfe': "\\mathmit{u}"
+  '\ud835\udcff': "\\mathmit{v}"
+  '\ud835\udd00': "\\mathmit{w}"
+  '\ud835\udd01': "\\mathmit{x}"
+  '\ud835\udd02': "\\mathmit{y}"
+  '\ud835\udd03': "\\mathmit{z}"
+  '\ud835\udd04': "\\mathfrak{A}"
+  '\ud835\udd05': "\\mathfrak{B}"
+  '\ud835\udd07': "\\mathfrak{D}"
+  '\ud835\udd08': "\\mathfrak{E}"
+  '\ud835\udd09': "\\mathfrak{F}"
+  '\ud835\udd0a': "\\mathfrak{G}"
+  '\ud835\udd0d': "\\mathfrak{J}"
+  '\ud835\udd0e': "\\mathfrak{K}"
+  '\ud835\udd0f': "\\mathfrak{L}"
+  '\ud835\udd10': "\\mathfrak{M}"
+  '\ud835\udd11': "\\mathfrak{N}"
+  '\ud835\udd12': "\\mathfrak{O}"
+  '\ud835\udd13': "\\mathfrak{P}"
+  '\ud835\udd14': "\\mathfrak{Q}"
+  '\ud835\udd16': "\\mathfrak{S}"
+  '\ud835\udd17': "\\mathfrak{T}"
+  '\ud835\udd18': "\\mathfrak{U}"
+  '\ud835\udd19': "\\mathfrak{V}"
+  '\ud835\udd1a': "\\mathfrak{W}"
+  '\ud835\udd1b': "\\mathfrak{X}"
+  '\ud835\udd1c': "\\mathfrak{Y}"
+  '\ud835\udd1e': "\\mathfrak{a}"
+  '\ud835\udd1f': "\\mathfrak{b}"
+  '\ud835\udd20': "\\mathfrak{c}"
+  '\ud835\udd21': "\\mathfrak{d}"
+  '\ud835\udd22': "\\mathfrak{e}"
+  '\ud835\udd23': "\\mathfrak{f}"
+  '\ud835\udd24': "\\mathfrak{g}"
+  '\ud835\udd25': "\\mathfrak{h}"
+  '\ud835\udd26': "\\mathfrak{i}"
+  '\ud835\udd27': "\\mathfrak{j}"
+  '\ud835\udd28': "\\mathfrak{k}"
+  '\ud835\udd29': "\\mathfrak{l}"
+  '\ud835\udd2a': "\\mathfrak{m}"
+  '\ud835\udd2b': "\\mathfrak{n}"
+  '\ud835\udd2c': "\\mathfrak{o}"
+  '\ud835\udd2d': "\\mathfrak{p}"
+  '\ud835\udd2e': "\\mathfrak{q}"
+  '\ud835\udd2f': "\\mathfrak{r}"
+  '\ud835\udd30': "\\mathfrak{s}"
+  '\ud835\udd31': "\\mathfrak{t}"
+  '\ud835\udd32': "\\mathfrak{u}"
+  '\ud835\udd33': "\\mathfrak{v}"
+  '\ud835\udd34': "\\mathfrak{w}"
+  '\ud835\udd35': "\\mathfrak{x}"
+  '\ud835\udd36': "\\mathfrak{y}"
+  '\ud835\udd37': "\\mathfrak{z}"
+  '\ud835\udd38': "\\mathbb{A}"
+  '\ud835\udd39': "\\mathbb{B}"
+  '\ud835\udd3b': "\\mathbb{D}"
+  '\ud835\udd3c': "\\mathbb{E}"
+  '\ud835\udd3d': "\\mathbb{F}"
+  '\ud835\udd3e': "\\mathbb{G}"
+  '\ud835\udd40': "\\mathbb{I}"
+  '\ud835\udd41': "\\mathbb{J}"
+  '\ud835\udd42': "\\mathbb{K}"
+  '\ud835\udd43': "\\mathbb{L}"
+  '\ud835\udd44': "\\mathbb{M}"
+  '\ud835\udd46': "\\mathbb{O}"
+  '\ud835\udd4a': "\\mathbb{S}"
+  '\ud835\udd4b': "\\mathbb{T}"
+  '\ud835\udd4c': "\\mathbb{U}"
+  '\ud835\udd4d': "\\mathbb{V}"
+  '\ud835\udd4e': "\\mathbb{W}"
+  '\ud835\udd4f': "\\mathbb{X}"
+  '\ud835\udd50': "\\mathbb{Y}"
+  '\ud835\udd52': "\\mathbb{a}"
+  '\ud835\udd53': "\\mathbb{b}"
+  '\ud835\udd54': "\\mathbb{c}"
+  '\ud835\udd55': "\\mathbb{d}"
+  '\ud835\udd56': "\\mathbb{e}"
+  '\ud835\udd57': "\\mathbb{f}"
+  '\ud835\udd58': "\\mathbb{g}"
+  '\ud835\udd59': "\\mathbb{h}"
+  '\ud835\udd5a': "\\mathbb{i}"
+  '\ud835\udd5b': "\\mathbb{j}"
+  '\ud835\udd5c': "\\mathbb{k}"
+  '\ud835\udd5d': "\\mathbb{l}"
+  '\ud835\udd5e': "\\mathbb{m}"
+  '\ud835\udd5f': "\\mathbb{n}"
+  '\ud835\udd60': "\\mathbb{o}"
+  '\ud835\udd61': "\\mathbb{p}"
+  '\ud835\udd62': "\\mathbb{q}"
+  '\ud835\udd63': "\\mathbb{r}"
+  '\ud835\udd64': "\\mathbb{s}"
+  '\ud835\udd65': "\\mathbb{t}"
+  '\ud835\udd66': "\\mathbb{u}"
+  '\ud835\udd67': "\\mathbb{v}"
+  '\ud835\udd68': "\\mathbb{w}"
+  '\ud835\udd69': "\\mathbb{x}"
+  '\ud835\udd6a': "\\mathbb{y}"
+  '\ud835\udd6b': "\\mathbb{z}"
+  '\ud835\udd6c': "\\mathslbb{A}"
+  '\ud835\udd6d': "\\mathslbb{B}"
+  '\ud835\udd6e': "\\mathslbb{C}"
+  '\ud835\udd6f': "\\mathslbb{D}"
+  '\ud835\udd70': "\\mathslbb{E}"
+  '\ud835\udd71': "\\mathslbb{F}"
+  '\ud835\udd72': "\\mathslbb{G}"
+  '\ud835\udd73': "\\mathslbb{H}"
+  '\ud835\udd74': "\\mathslbb{I}"
+  '\ud835\udd75': "\\mathslbb{J}"
+  '\ud835\udd76': "\\mathslbb{K}"
+  '\ud835\udd77': "\\mathslbb{L}"
+  '\ud835\udd78': "\\mathslbb{M}"
+  '\ud835\udd79': "\\mathslbb{N}"
+  '\ud835\udd7a': "\\mathslbb{O}"
+  '\ud835\udd7b': "\\mathslbb{P}"
+  '\ud835\udd7c': "\\mathslbb{Q}"
+  '\ud835\udd7d': "\\mathslbb{R}"
+  '\ud835\udd7e': "\\mathslbb{S}"
+  '\ud835\udd7f': "\\mathslbb{T}"
+  '\ud835\udd80': "\\mathslbb{U}"
+  '\ud835\udd81': "\\mathslbb{V}"
+  '\ud835\udd82': "\\mathslbb{W}"
+  '\ud835\udd83': "\\mathslbb{X}"
+  '\ud835\udd84': "\\mathslbb{Y}"
+  '\ud835\udd85': "\\mathslbb{Z}"
+  '\ud835\udd86': "\\mathslbb{a}"
+  '\ud835\udd87': "\\mathslbb{b}"
+  '\ud835\udd88': "\\mathslbb{c}"
+  '\ud835\udd89': "\\mathslbb{d}"
+  '\ud835\udd8a': "\\mathslbb{e}"
+  '\ud835\udd8b': "\\mathslbb{f}"
+  '\ud835\udd8c': "\\mathslbb{g}"
+  '\ud835\udd8d': "\\mathslbb{h}"
+  '\ud835\udd8e': "\\mathslbb{i}"
+  '\ud835\udd8f': "\\mathslbb{j}"
+  '\ud835\udd90': "\\mathslbb{k}"
+  '\ud835\udd91': "\\mathslbb{l}"
+  '\ud835\udd92': "\\mathslbb{m}"
+  '\ud835\udd93': "\\mathslbb{n}"
+  '\ud835\udd94': "\\mathslbb{o}"
+  '\ud835\udd95': "\\mathslbb{p}"
+  '\ud835\udd96': "\\mathslbb{q}"
+  '\ud835\udd97': "\\mathslbb{r}"
+  '\ud835\udd98': "\\mathslbb{s}"
+  '\ud835\udd99': "\\mathslbb{t}"
+  '\ud835\udd9a': "\\mathslbb{u}"
+  '\ud835\udd9b': "\\mathslbb{v}"
+  '\ud835\udd9c': "\\mathslbb{w}"
+  '\ud835\udd9d': "\\mathslbb{x}"
+  '\ud835\udd9e': "\\mathslbb{y}"
+  '\ud835\udd9f': "\\mathslbb{z}"
+  '\ud835\udda0': "\\mathsf{A}"
+  '\ud835\udda1': "\\mathsf{B}"
+  '\ud835\udda2': "\\mathsf{C}"
+  '\ud835\udda3': "\\mathsf{D}"
+  '\ud835\udda4': "\\mathsf{E}"
+  '\ud835\udda5': "\\mathsf{F}"
+  '\ud835\udda6': "\\mathsf{G}"
+  '\ud835\udda7': "\\mathsf{H}"
+  '\ud835\udda8': "\\mathsf{I}"
+  '\ud835\udda9': "\\mathsf{J}"
+  '\ud835\uddaa': "\\mathsf{K}"
+  '\ud835\uddab': "\\mathsf{L}"
+  '\ud835\uddac': "\\mathsf{M}"
+  '\ud835\uddad': "\\mathsf{N}"
+  '\ud835\uddae': "\\mathsf{O}"
+  '\ud835\uddaf': "\\mathsf{P}"
+  '\ud835\uddb0': "\\mathsf{Q}"
+  '\ud835\uddb1': "\\mathsf{R}"
+  '\ud835\uddb2': "\\mathsf{S}"
+  '\ud835\uddb3': "\\mathsf{T}"
+  '\ud835\uddb4': "\\mathsf{U}"
+  '\ud835\uddb5': "\\mathsf{V}"
+  '\ud835\uddb6': "\\mathsf{W}"
+  '\ud835\uddb7': "\\mathsf{X}"
+  '\ud835\uddb8': "\\mathsf{Y}"
+  '\ud835\uddb9': "\\mathsf{Z}"
+  '\ud835\uddba': "\\mathsf{a}"
+  '\ud835\uddbb': "\\mathsf{b}"
+  '\ud835\uddbc': "\\mathsf{c}"
+  '\ud835\uddbd': "\\mathsf{d}"
+  '\ud835\uddbe': "\\mathsf{e}"
+  '\ud835\uddbf': "\\mathsf{f}"
+  '\ud835\uddc0': "\\mathsf{g}"
+  '\ud835\uddc1': "\\mathsf{h}"
+  '\ud835\uddc2': "\\mathsf{i}"
+  '\ud835\uddc3': "\\mathsf{j}"
+  '\ud835\uddc4': "\\mathsf{k}"
+  '\ud835\uddc5': "\\mathsf{l}"
+  '\ud835\uddc6': "\\mathsf{m}"
+  '\ud835\uddc7': "\\mathsf{n}"
+  '\ud835\uddc8': "\\mathsf{o}"
+  '\ud835\uddc9': "\\mathsf{p}"
+  '\ud835\uddca': "\\mathsf{q}"
+  '\ud835\uddcb': "\\mathsf{r}"
+  '\ud835\uddcc': "\\mathsf{s}"
+  '\ud835\uddcd': "\\mathsf{t}"
+  '\ud835\uddce': "\\mathsf{u}"
+  '\ud835\uddcf': "\\mathsf{v}"
+  '\ud835\uddd0': "\\mathsf{w}"
+  '\ud835\uddd1': "\\mathsf{x}"
+  '\ud835\uddd2': "\\mathsf{y}"
+  '\ud835\uddd3': "\\mathsf{z}"
+  '\ud835\uddd4': "\\mathsfbf{A}"
+  '\ud835\uddd5': "\\mathsfbf{B}"
+  '\ud835\uddd6': "\\mathsfbf{C}"
+  '\ud835\uddd7': "\\mathsfbf{D}"
+  '\ud835\uddd8': "\\mathsfbf{E}"
+  '\ud835\uddd9': "\\mathsfbf{F}"
+  '\ud835\uddda': "\\mathsfbf{G}"
+  '\ud835\udddb': "\\mathsfbf{H}"
+  '\ud835\udddc': "\\mathsfbf{I}"
+  '\ud835\udddd': "\\mathsfbf{J}"
+  '\ud835\uddde': "\\mathsfbf{K}"
+  '\ud835\udddf': "\\mathsfbf{L}"
+  '\ud835\udde0': "\\mathsfbf{M}"
+  '\ud835\udde1': "\\mathsfbf{N}"
+  '\ud835\udde2': "\\mathsfbf{O}"
+  '\ud835\udde3': "\\mathsfbf{P}"
+  '\ud835\udde4': "\\mathsfbf{Q}"
+  '\ud835\udde5': "\\mathsfbf{R}"
+  '\ud835\udde6': "\\mathsfbf{S}"
+  '\ud835\udde7': "\\mathsfbf{T}"
+  '\ud835\udde8': "\\mathsfbf{U}"
+  '\ud835\udde9': "\\mathsfbf{V}"
+  '\ud835\uddea': "\\mathsfbf{W}"
+  '\ud835\uddeb': "\\mathsfbf{X}"
+  '\ud835\uddec': "\\mathsfbf{Y}"
+  '\ud835\udded': "\\mathsfbf{Z}"
+  '\ud835\uddee': "\\mathsfbf{a}"
+  '\ud835\uddef': "\\mathsfbf{b}"
+  '\ud835\uddf0': "\\mathsfbf{c}"
+  '\ud835\uddf1': "\\mathsfbf{d}"
+  '\ud835\uddf2': "\\mathsfbf{e}"
+  '\ud835\uddf3': "\\mathsfbf{f}"
+  '\ud835\uddf4': "\\mathsfbf{g}"
+  '\ud835\uddf5': "\\mathsfbf{h}"
+  '\ud835\uddf6': "\\mathsfbf{i}"
+  '\ud835\uddf7': "\\mathsfbf{j}"
+  '\ud835\uddf8': "\\mathsfbf{k}"
+  '\ud835\uddf9': "\\mathsfbf{l}"
+  '\ud835\uddfa': "\\mathsfbf{m}"
+  '\ud835\uddfb': "\\mathsfbf{n}"
+  '\ud835\uddfc': "\\mathsfbf{o}"
+  '\ud835\uddfd': "\\mathsfbf{p}"
+  '\ud835\uddfe': "\\mathsfbf{q}"
+  '\ud835\uddff': "\\mathsfbf{r}"
+  '\ud835\ude00': "\\mathsfbf{s}"
+  '\ud835\ude01': "\\mathsfbf{t}"
+  '\ud835\ude02': "\\mathsfbf{u}"
+  '\ud835\ude03': "\\mathsfbf{v}"
+  '\ud835\ude04': "\\mathsfbf{w}"
+  '\ud835\ude05': "\\mathsfbf{x}"
+  '\ud835\ude06': "\\mathsfbf{y}"
+  '\ud835\ude07': "\\mathsfbf{z}"
+  '\ud835\ude08': "\\mathsfsl{A}"
+  '\ud835\ude09': "\\mathsfsl{B}"
+  '\ud835\ude0a': "\\mathsfsl{C}"
+  '\ud835\ude0b': "\\mathsfsl{D}"
+  '\ud835\ude0c': "\\mathsfsl{E}"
+  '\ud835\ude0d': "\\mathsfsl{F}"
+  '\ud835\ude0e': "\\mathsfsl{G}"
+  '\ud835\ude0f': "\\mathsfsl{H}"
+  '\ud835\ude10': "\\mathsfsl{I}"
+  '\ud835\ude11': "\\mathsfsl{J}"
+  '\ud835\ude12': "\\mathsfsl{K}"
+  '\ud835\ude13': "\\mathsfsl{L}"
+  '\ud835\ude14': "\\mathsfsl{M}"
+  '\ud835\ude15': "\\mathsfsl{N}"
+  '\ud835\ude16': "\\mathsfsl{O}"
+  '\ud835\ude17': "\\mathsfsl{P}"
+  '\ud835\ude18': "\\mathsfsl{Q}"
+  '\ud835\ude19': "\\mathsfsl{R}"
+  '\ud835\ude1a': "\\mathsfsl{S}"
+  '\ud835\ude1b': "\\mathsfsl{T}"
+  '\ud835\ude1c': "\\mathsfsl{U}"
+  '\ud835\ude1d': "\\mathsfsl{V}"
+  '\ud835\ude1e': "\\mathsfsl{W}"
+  '\ud835\ude1f': "\\mathsfsl{X}"
+  '\ud835\ude20': "\\mathsfsl{Y}"
+  '\ud835\ude21': "\\mathsfsl{Z}"
+  '\ud835\ude22': "\\mathsfsl{a}"
+  '\ud835\ude23': "\\mathsfsl{b}"
+  '\ud835\ude24': "\\mathsfsl{c}"
+  '\ud835\ude25': "\\mathsfsl{d}"
+  '\ud835\ude26': "\\mathsfsl{e}"
+  '\ud835\ude27': "\\mathsfsl{f}"
+  '\ud835\ude28': "\\mathsfsl{g}"
+  '\ud835\ude29': "\\mathsfsl{h}"
+  '\ud835\ude2a': "\\mathsfsl{i}"
+  '\ud835\ude2b': "\\mathsfsl{j}"
+  '\ud835\ude2c': "\\mathsfsl{k}"
+  '\ud835\ude2d': "\\mathsfsl{l}"
+  '\ud835\ude2e': "\\mathsfsl{m}"
+  '\ud835\ude2f': "\\mathsfsl{n}"
+  '\ud835\ude30': "\\mathsfsl{o}"
+  '\ud835\ude31': "\\mathsfsl{p}"
+  '\ud835\ude32': "\\mathsfsl{q}"
+  '\ud835\ude33': "\\mathsfsl{r}"
+  '\ud835\ude34': "\\mathsfsl{s}"
+  '\ud835\ude35': "\\mathsfsl{t}"
+  '\ud835\ude36': "\\mathsfsl{u}"
+  '\ud835\ude37': "\\mathsfsl{v}"
+  '\ud835\ude38': "\\mathsfsl{w}"
+  '\ud835\ude39': "\\mathsfsl{x}"
+  '\ud835\ude3a': "\\mathsfsl{y}"
+  '\ud835\ude3b': "\\mathsfsl{z}"
+  '\ud835\ude3c': "\\mathsfbfsl{A}"
+  '\ud835\ude3d': "\\mathsfbfsl{B}"
+  '\ud835\ude3e': "\\mathsfbfsl{C}"
+  '\ud835\ude3f': "\\mathsfbfsl{D}"
+  '\ud835\ude40': "\\mathsfbfsl{E}"
+  '\ud835\ude41': "\\mathsfbfsl{F}"
+  '\ud835\ude42': "\\mathsfbfsl{G}"
+  '\ud835\ude43': "\\mathsfbfsl{H}"
+  '\ud835\ude44': "\\mathsfbfsl{I}"
+  '\ud835\ude45': "\\mathsfbfsl{J}"
+  '\ud835\ude46': "\\mathsfbfsl{K}"
+  '\ud835\ude47': "\\mathsfbfsl{L}"
+  '\ud835\ude48': "\\mathsfbfsl{M}"
+  '\ud835\ude49': "\\mathsfbfsl{N}"
+  '\ud835\ude4a': "\\mathsfbfsl{O}"
+  '\ud835\ude4b': "\\mathsfbfsl{P}"
+  '\ud835\ude4c': "\\mathsfbfsl{Q}"
+  '\ud835\ude4d': "\\mathsfbfsl{R}"
+  '\ud835\ude4e': "\\mathsfbfsl{S}"
+  '\ud835\ude4f': "\\mathsfbfsl{T}"
+  '\ud835\ude50': "\\mathsfbfsl{U}"
+  '\ud835\ude51': "\\mathsfbfsl{V}"
+  '\ud835\ude52': "\\mathsfbfsl{W}"
+  '\ud835\ude53': "\\mathsfbfsl{X}"
+  '\ud835\ude54': "\\mathsfbfsl{Y}"
+  '\ud835\ude55': "\\mathsfbfsl{Z}"
+  '\ud835\ude56': "\\mathsfbfsl{a}"
+  '\ud835\ude57': "\\mathsfbfsl{b}"
+  '\ud835\ude58': "\\mathsfbfsl{c}"
+  '\ud835\ude59': "\\mathsfbfsl{d}"
+  '\ud835\ude5a': "\\mathsfbfsl{e}"
+  '\ud835\ude5b': "\\mathsfbfsl{f}"
+  '\ud835\ude5c': "\\mathsfbfsl{g}"
+  '\ud835\ude5d': "\\mathsfbfsl{h}"
+  '\ud835\ude5e': "\\mathsfbfsl{i}"
+  '\ud835\ude5f': "\\mathsfbfsl{j}"
+  '\ud835\ude60': "\\mathsfbfsl{k}"
+  '\ud835\ude61': "\\mathsfbfsl{l}"
+  '\ud835\ude62': "\\mathsfbfsl{m}"
+  '\ud835\ude63': "\\mathsfbfsl{n}"
+  '\ud835\ude64': "\\mathsfbfsl{o}"
+  '\ud835\ude65': "\\mathsfbfsl{p}"
+  '\ud835\ude66': "\\mathsfbfsl{q}"
+  '\ud835\ude67': "\\mathsfbfsl{r}"
+  '\ud835\ude68': "\\mathsfbfsl{s}"
+  '\ud835\ude69': "\\mathsfbfsl{t}"
+  '\ud835\ude6a': "\\mathsfbfsl{u}"
+  '\ud835\ude6b': "\\mathsfbfsl{v}"
+  '\ud835\ude6c': "\\mathsfbfsl{w}"
+  '\ud835\ude6d': "\\mathsfbfsl{x}"
+  '\ud835\ude6e': "\\mathsfbfsl{y}"
+  '\ud835\ude6f': "\\mathsfbfsl{z}"
+  '\ud835\ude70': "\\mathtt{A}"
+  '\ud835\ude71': "\\mathtt{B}"
+  '\ud835\ude72': "\\mathtt{C}"
+  '\ud835\ude73': "\\mathtt{D}"
+  '\ud835\ude74': "\\mathtt{E}"
+  '\ud835\ude75': "\\mathtt{F}"
+  '\ud835\ude76': "\\mathtt{G}"
+  '\ud835\ude77': "\\mathtt{H}"
+  '\ud835\ude78': "\\mathtt{I}"
+  '\ud835\ude79': "\\mathtt{J}"
+  '\ud835\ude7a': "\\mathtt{K}"
+  '\ud835\ude7b': "\\mathtt{L}"
+  '\ud835\ude7c': "\\mathtt{M}"
+  '\ud835\ude7d': "\\mathtt{N}"
+  '\ud835\ude7e': "\\mathtt{O}"
+  '\ud835\ude7f': "\\mathtt{P}"
+  '\ud835\ude80': "\\mathtt{Q}"
+  '\ud835\ude81': "\\mathtt{R}"
+  '\ud835\ude82': "\\mathtt{S}"
+  '\ud835\ude83': "\\mathtt{T}"
+  '\ud835\ude84': "\\mathtt{U}"
+  '\ud835\ude85': "\\mathtt{V}"
+  '\ud835\ude86': "\\mathtt{W}"
+  '\ud835\ude87': "\\mathtt{X}"
+  '\ud835\ude88': "\\mathtt{Y}"
+  '\ud835\ude89': "\\mathtt{Z}"
+  '\ud835\ude8a': "\\mathtt{a}"
+  '\ud835\ude8b': "\\mathtt{b}"
+  '\ud835\ude8c': "\\mathtt{c}"
+  '\ud835\ude8d': "\\mathtt{d}"
+  '\ud835\ude8e': "\\mathtt{e}"
+  '\ud835\ude8f': "\\mathtt{f}"
+  '\ud835\ude90': "\\mathtt{g}"
+  '\ud835\ude91': "\\mathtt{h}"
+  '\ud835\ude92': "\\mathtt{i}"
+  '\ud835\ude93': "\\mathtt{j}"
+  '\ud835\ude94': "\\mathtt{k}"
+  '\ud835\ude95': "\\mathtt{l}"
+  '\ud835\ude96': "\\mathtt{m}"
+  '\ud835\ude97': "\\mathtt{n}"
+  '\ud835\ude98': "\\mathtt{o}"
+  '\ud835\ude99': "\\mathtt{p}"
+  '\ud835\ude9a': "\\mathtt{q}"
+  '\ud835\ude9b': "\\mathtt{r}"
+  '\ud835\ude9c': "\\mathtt{s}"
+  '\ud835\ude9d': "\\mathtt{t}"
+  '\ud835\ude9e': "\\mathtt{u}"
+  '\ud835\ude9f': "\\mathtt{v}"
+  '\ud835\udea0': "\\mathtt{w}"
+  '\ud835\udea1': "\\mathtt{x}"
+  '\ud835\udea2': "\\mathtt{y}"
+  '\ud835\udea3': "\\mathtt{z}"
+  '\ud835\udea8': "\\mathbf{\\Alpha}"
+  '\ud835\udea9': "\\mathbf{\\Beta}"
+  '\ud835\udeaa': "\\mathbf{\\Gamma}"
+  '\ud835\udeab': "\\mathbf{\\Delta}"
+  '\ud835\udeac': "\\mathbf{\\Epsilon}"
+  '\ud835\udead': "\\mathbf{\\Zeta}"
+  '\ud835\udeae': "\\mathbf{\\Eta}"
+  '\ud835\udeaf': "\\mathbf{\\Theta}"
+  '\ud835\udeb0': "\\mathbf{\\Iota}"
+  '\ud835\udeb1': "\\mathbf{\\Kappa}"
+  '\ud835\udeb2': "\\mathbf{\\Lambda}"
+  '\ud835\udeb3': "M"
+  '\ud835\udeb4': "N"
+  '\ud835\udeb5': "\\mathbf{\\Xi}"
+  '\ud835\udeb6': "O"
+  '\ud835\udeb7': "\\mathbf{\\Pi}"
+  '\ud835\udeb8': "\\mathbf{\\Rho}"
+  '\ud835\udeba': "\\mathbf{\\Sigma}"
+  '\ud835\udebb': "\\mathbf{\\Tau}"
+  '\ud835\udebc': "\\mathbf{\\Upsilon}"
+  '\ud835\udebd': "\\mathbf{\\Phi}"
+  '\ud835\udebe': "\\mathbf{\\Chi}"
+  '\ud835\udebf': "\\mathbf{\\Psi}"
+  '\ud835\udec0': "\\mathbf{\\Omega}"
+  '\ud835\udec1': "\\mathbf{\\nabla}"
+  '\ud835\udec2': "\\mathbf{\\Alpha}"
+  '\ud835\udec3': "\\mathbf{\\Beta}"
+  '\ud835\udec4': "\\mathbf{\\Gamma}"
+  '\ud835\udec5': "\\mathbf{\\Delta}"
+  '\ud835\udec6': "\\mathbf{\\Epsilon}"
+  '\ud835\udec7': "\\mathbf{\\Zeta}"
+  '\ud835\udec8': "\\mathbf{\\Eta}"
+  '\ud835\udec9': "\\mathbf{\\theta}"
+  '\ud835\udeca': "\\mathbf{\\Iota}"
+  '\ud835\udecb': "\\mathbf{\\Kappa}"
+  '\ud835\udecc': "\\mathbf{\\Lambda}"
+  '\ud835\udecd': "M"
+  '\ud835\udece': "N"
+  '\ud835\udecf': "\\mathbf{\\Xi}"
+  '\ud835\uded0': "O"
+  '\ud835\uded1': "\\mathbf{\\Pi}"
+  '\ud835\uded2': "\\mathbf{\\Rho}"
+  '\ud835\uded3': "\\mathbf{\\varsigma}"
+  '\ud835\uded4': "\\mathbf{\\Sigma}"
+  '\ud835\uded5': "\\mathbf{\\Tau}"
+  '\ud835\uded6': "\\mathbf{\\Upsilon}"
+  '\ud835\uded7': "\\mathbf{\\Phi}"
+  '\ud835\uded8': "\\mathbf{\\Chi}"
+  '\ud835\uded9': "\\mathbf{\\Psi}"
+  '\ud835\udeda': "\\mathbf{\\Omega}"
+  '\ud835\udedb': "{\\partial}"
+  '\ud835\udedc': "\\in"
+  '\ud835\udee2': "\\mathsl{\\Alpha}"
+  '\ud835\udee3': "\\mathsl{\\Beta}"
+  '\ud835\udee4': "\\mathsl{\\Gamma}"
+  '\ud835\udee5': "\\mathsl{\\Delta}"
+  '\ud835\udee6': "\\mathsl{\\Epsilon}"
+  '\ud835\udee7': "\\mathsl{\\Zeta}"
+  '\ud835\udee8': "\\mathsl{\\Eta}"
+  '\ud835\udee9': "\\mathsl{\\Theta}"
+  '\ud835\udeea': "\\mathsl{\\Iota}"
+  '\ud835\udeeb': "\\mathsl{\\Kappa}"
+  '\ud835\udeec': "\\mathsl{\\Lambda}"
+  '\ud835\udeed': "M"
+  '\ud835\udeee': "N"
+  '\ud835\udeef': "\\mathsl{\\Xi}"
+  '\ud835\udef0': "O"
+  '\ud835\udef1': "\\mathsl{\\Pi}"
+  '\ud835\udef2': "\\mathsl{\\Rho}"
+  '\ud835\udef4': "\\mathsl{\\Sigma}"
+  '\ud835\udef5': "\\mathsl{\\Tau}"
+  '\ud835\udef6': "\\mathsl{\\Upsilon}"
+  '\ud835\udef7': "\\mathsl{\\Phi}"
+  '\ud835\udef8': "\\mathsl{\\Chi}"
+  '\ud835\udef9': "\\mathsl{\\Psi}"
+  '\ud835\udefa': "\\mathsl{\\Omega}"
+  '\ud835\udefb': "\\mathsl{\\nabla}"
+  '\ud835\udefc': "\\mathsl{\\Alpha}"
+  '\ud835\udefd': "\\mathsl{\\Beta}"
+  '\ud835\udefe': "\\mathsl{\\Gamma}"
+  '\ud835\udeff': "\\mathsl{\\Delta}"
+  '\ud835\udf00': "\\mathsl{\\Epsilon}"
+  '\ud835\udf01': "\\mathsl{\\Zeta}"
+  '\ud835\udf02': "\\mathsl{\\Eta}"
+  '\ud835\udf03': "\\mathsl{\\Theta}"
+  '\ud835\udf04': "\\mathsl{\\Iota}"
+  '\ud835\udf05': "\\mathsl{\\Kappa}"
+  '\ud835\udf06': "\\mathsl{\\Lambda}"
+  '\ud835\udf07': "M"
+  '\ud835\udf08': "N"
+  '\ud835\udf09': "\\mathsl{\\Xi}"
+  '\ud835\udf0a': "O"
+  '\ud835\udf0b': "\\mathsl{\\Pi}"
+  '\ud835\udf0c': "\\mathsl{\\Rho}"
+  '\ud835\udf0d': "\\mathsl{\\varsigma}"
+  '\ud835\udf0e': "\\mathsl{\\Sigma}"
+  '\ud835\udf0f': "\\mathsl{\\Tau}"
+  '\ud835\udf10': "\\mathsl{\\Upsilon}"
+  '\ud835\udf11': "\\mathsl{\\Phi}"
+  '\ud835\udf12': "\\mathsl{\\Chi}"
+  '\ud835\udf13': "\\mathsl{\\Psi}"
+  '\ud835\udf14': "\\mathsl{\\Omega}"
+  '\ud835\udf15': "{\\partial}"
+  '\ud835\udf16': "\\in"
+  '\ud835\udf1c': "\\mathbit{\\Alpha}"
+  '\ud835\udf1d': "\\mathbit{\\Beta}"
+  '\ud835\udf1e': "\\mathbit{\\Gamma}"
+  '\ud835\udf1f': "\\mathbit{\\Delta}"
+  '\ud835\udf20': "\\mathbit{\\Epsilon}"
+  '\ud835\udf21': "\\mathbit{\\Zeta}"
+  '\ud835\udf22': "\\mathbit{\\Eta}"
+  '\ud835\udf23': "\\mathbit{\\Theta}"
+  '\ud835\udf24': "\\mathbit{\\Iota}"
+  '\ud835\udf25': "\\mathbit{\\Kappa}"
+  '\ud835\udf26': "\\mathbit{\\Lambda}"
+  '\ud835\udf27': "M"
+  '\ud835\udf28': "N"
+  '\ud835\udf29': "\\mathbit{\\Xi}"
+  '\ud835\udf2a': "O"
+  '\ud835\udf2b': "\\mathbit{\\Pi}"
+  '\ud835\udf2c': "\\mathbit{\\Rho}"
+  '\ud835\udf2e': "\\mathbit{\\Sigma}"
+  '\ud835\udf2f': "\\mathbit{\\Tau}"
+  '\ud835\udf30': "\\mathbit{\\Upsilon}"
+  '\ud835\udf31': "\\mathbit{\\Phi}"
+  '\ud835\udf32': "\\mathbit{\\Chi}"
+  '\ud835\udf33': "\\mathbit{\\Psi}"
+  '\ud835\udf34': "\\mathbit{\\Omega}"
+  '\ud835\udf35': "\\mathbit{\\nabla}"
+  '\ud835\udf36': "\\mathbit{\\Alpha}"
+  '\ud835\udf37': "\\mathbit{\\Beta}"
+  '\ud835\udf38': "\\mathbit{\\Gamma}"
+  '\ud835\udf39': "\\mathbit{\\Delta}"
+  '\ud835\udf3a': "\\mathbit{\\Epsilon}"
+  '\ud835\udf3b': "\\mathbit{\\Zeta}"
+  '\ud835\udf3c': "\\mathbit{\\Eta}"
+  '\ud835\udf3d': "\\mathbit{\\Theta}"
+  '\ud835\udf3e': "\\mathbit{\\Iota}"
+  '\ud835\udf3f': "\\mathbit{\\Kappa}"
+  '\ud835\udf40': "\\mathbit{\\Lambda}"
+  '\ud835\udf41': "M"
+  '\ud835\udf42': "N"
+  '\ud835\udf43': "\\mathbit{\\Xi}"
+  '\ud835\udf44': "O"
+  '\ud835\udf45': "\\mathbit{\\Pi}"
+  '\ud835\udf46': "\\mathbit{\\Rho}"
+  '\ud835\udf47': "\\mathbit{\\varsigma}"
+  '\ud835\udf48': "\\mathbit{\\Sigma}"
+  '\ud835\udf49': "\\mathbit{\\Tau}"
+  '\ud835\udf4a': "\\mathbit{\\Upsilon}"
+  '\ud835\udf4b': "\\mathbit{\\Phi}"
+  '\ud835\udf4c': "\\mathbit{\\Chi}"
+  '\ud835\udf4d': "\\mathbit{\\Psi}"
+  '\ud835\udf4e': "\\mathbit{\\Omega}"
+  '\ud835\udf4f': "{\\partial}"
+  '\ud835\udf50': "\\in"
+  '\ud835\udf56': "\\mathsfbf{\\Alpha}"
+  '\ud835\udf57': "\\mathsfbf{\\Beta}"
+  '\ud835\udf58': "\\mathsfbf{\\Gamma}"
+  '\ud835\udf59': "\\mathsfbf{\\Delta}"
+  '\ud835\udf5a': "\\mathsfbf{\\Epsilon}"
+  '\ud835\udf5b': "\\mathsfbf{\\Zeta}"
+  '\ud835\udf5c': "\\mathsfbf{\\Eta}"
+  '\ud835\udf5d': "\\mathsfbf{\\Theta}"
+  '\ud835\udf5e': "\\mathsfbf{\\Iota}"
+  '\ud835\udf5f': "\\mathsfbf{\\Kappa}"
+  '\ud835\udf60': "\\mathsfbf{\\Lambda}"
+  '\ud835\udf61': "M"
+  '\ud835\udf62': "N"
+  '\ud835\udf63': "\\mathsfbf{\\Xi}"
+  '\ud835\udf64': "O"
+  '\ud835\udf65': "\\mathsfbf{\\Pi}"
+  '\ud835\udf66': "\\mathsfbf{\\Rho}"
+  '\ud835\udf68': "\\mathsfbf{\\Sigma}"
+  '\ud835\udf69': "\\mathsfbf{\\Tau}"
+  '\ud835\udf6a': "\\mathsfbf{\\Upsilon}"
+  '\ud835\udf6b': "\\mathsfbf{\\Phi}"
+  '\ud835\udf6c': "\\mathsfbf{\\Chi}"
+  '\ud835\udf6d': "\\mathsfbf{\\Psi}"
+  '\ud835\udf6e': "\\mathsfbf{\\Omega}"
+  '\ud835\udf6f': "\\mathsfbf{\\nabla}"
+  '\ud835\udf70': "\\mathsfbf{\\Alpha}"
+  '\ud835\udf71': "\\mathsfbf{\\Beta}"
+  '\ud835\udf72': "\\mathsfbf{\\Gamma}"
+  '\ud835\udf73': "\\mathsfbf{\\Delta}"
+  '\ud835\udf74': "\\mathsfbf{\\Epsilon}"
+  '\ud835\udf75': "\\mathsfbf{\\Zeta}"
+  '\ud835\udf76': "\\mathsfbf{\\Eta}"
+  '\ud835\udf77': "\\mathsfbf{\\Theta}"
+  '\ud835\udf78': "\\mathsfbf{\\Iota}"
+  '\ud835\udf79': "\\mathsfbf{\\Kappa}"
+  '\ud835\udf7a': "\\mathsfbf{\\Lambda}"
+  '\ud835\udf7b': "M"
+  '\ud835\udf7c': "N"
+  '\ud835\udf7d': "\\mathsfbf{\\Xi}"
+  '\ud835\udf7e': "O"
+  '\ud835\udf7f': "\\mathsfbf{\\Pi}"
+  '\ud835\udf80': "\\mathsfbf{\\Rho}"
+  '\ud835\udf81': "\\mathsfbf{\\varsigma}"
+  '\ud835\udf82': "\\mathsfbf{\\Sigma}"
+  '\ud835\udf83': "\\mathsfbf{\\Tau}"
+  '\ud835\udf84': "\\mathsfbf{\\Upsilon}"
+  '\ud835\udf85': "\\mathsfbf{\\Phi}"
+  '\ud835\udf86': "\\mathsfbf{\\Chi}"
+  '\ud835\udf87': "\\mathsfbf{\\Psi}"
+  '\ud835\udf88': "\\mathsfbf{\\Omega}"
+  '\ud835\udf89': "{\\partial}"
+  '\ud835\udf8a': "\\in"
+  '\ud835\udf90': "\\mathsfbfsl{\\Alpha}"
+  '\ud835\udf91': "\\mathsfbfsl{\\Beta}"
+  '\ud835\udf92': "\\mathsfbfsl{\\Gamma}"
+  '\ud835\udf93': "\\mathsfbfsl{\\Delta}"
+  '\ud835\udf94': "\\mathsfbfsl{\\Epsilon}"
+  '\ud835\udf95': "\\mathsfbfsl{\\Zeta}"
+  '\ud835\udf96': "\\mathsfbfsl{\\Eta}"
+  '\ud835\udf97': "\\mathsfbfsl{\\vartheta}"
+  '\ud835\udf98': "\\mathsfbfsl{\\Iota}"
+  '\ud835\udf99': "\\mathsfbfsl{\\Kappa}"
+  '\ud835\udf9a': "\\mathsfbfsl{\\Lambda}"
+  '\ud835\udf9b': "M"
+  '\ud835\udf9c': "N"
+  '\ud835\udf9d': "\\mathsfbfsl{\\Xi}"
+  '\ud835\udf9e': "O"
+  '\ud835\udf9f': "\\mathsfbfsl{\\Pi}"
+  '\ud835\udfa0': "\\mathsfbfsl{\\Rho}"
+  '\ud835\udfa2': "\\mathsfbfsl{\\Sigma}"
+  '\ud835\udfa3': "\\mathsfbfsl{\\Tau}"
+  '\ud835\udfa4': "\\mathsfbfsl{\\Upsilon}"
+  '\ud835\udfa5': "\\mathsfbfsl{\\Phi}"
+  '\ud835\udfa6': "\\mathsfbfsl{\\Chi}"
+  '\ud835\udfa7': "\\mathsfbfsl{\\Psi}"
+  '\ud835\udfa8': "\\mathsfbfsl{\\Omega}"
+  '\ud835\udfa9': "\\mathsfbfsl{\\nabla}"
+  '\ud835\udfaa': "\\mathsfbfsl{\\Alpha}"
+  '\ud835\udfab': "\\mathsfbfsl{\\Beta}"
+  '\ud835\udfac': "\\mathsfbfsl{\\Gamma}"
+  '\ud835\udfad': "\\mathsfbfsl{\\Delta}"
+  '\ud835\udfae': "\\mathsfbfsl{\\Epsilon}"
+  '\ud835\udfaf': "\\mathsfbfsl{\\Zeta}"
+  '\ud835\udfb0': "\\mathsfbfsl{\\Eta}"
+  '\ud835\udfb1': "\\mathsfbfsl{\\vartheta}"
+  '\ud835\udfb2': "\\mathsfbfsl{\\Iota}"
+  '\ud835\udfb3': "\\mathsfbfsl{\\Kappa}"
+  '\ud835\udfb4': "\\mathsfbfsl{\\Lambda}"
+  '\ud835\udfb5': "M"
+  '\ud835\udfb6': "N"
+  '\ud835\udfb7': "\\mathsfbfsl{\\Xi}"
+  '\ud835\udfb8': "O"
+  '\ud835\udfb9': "\\mathsfbfsl{\\Pi}"
+  '\ud835\udfba': "\\mathsfbfsl{\\Rho}"
+  '\ud835\udfbb': "\\mathsfbfsl{\\varsigma}"
+  '\ud835\udfbc': "\\mathsfbfsl{\\Sigma}"
+  '\ud835\udfbd': "\\mathsfbfsl{\\Tau}"
+  '\ud835\udfbe': "\\mathsfbfsl{\\Upsilon}"
+  '\ud835\udfbf': "\\mathsfbfsl{\\Phi}"
+  '\ud835\udfc0': "\\mathsfbfsl{\\Chi}"
+  '\ud835\udfc1': "\\mathsfbfsl{\\Psi}"
+  '\ud835\udfc2': "\\mathsfbfsl{\\Omega}"
+  '\ud835\udfc3': "{\\partial}"
+  '\ud835\udfc4': "\\in"
+  '\ud835\udfce': "\\mathbf{0}"
+  '\ud835\udfcf': "\\mathbf{1}"
+  '\ud835\udfd0': "\\mathbf{2}"
+  '\ud835\udfd1': "\\mathbf{3}"
+  '\ud835\udfd2': "\\mathbf{4}"
+  '\ud835\udfd3': "\\mathbf{5}"
+  '\ud835\udfd4': "\\mathbf{6}"
+  '\ud835\udfd5': "\\mathbf{7}"
+  '\ud835\udfd6': "\\mathbf{8}"
+  '\ud835\udfd7': "\\mathbf{9}"
+  '\ud835\udfd8': "\\mathbb{0}"
+  '\ud835\udfd9': "\\mathbb{1}"
+  '\ud835\udfda': "\\mathbb{2}"
+  '\ud835\udfdb': "\\mathbb{3}"
+  '\ud835\udfdc': "\\mathbb{4}"
+  '\ud835\udfdd': "\\mathbb{5}"
+  '\ud835\udfde': "\\mathbb{6}"
+  '\ud835\udfdf': "\\mathbb{7}"
+  '\ud835\udfe0': "\\mathbb{8}"
+  '\ud835\udfe1': "\\mathbb{9}"
+  '\ud835\udfe2': "\\mathsf{0}"
+  '\ud835\udfe3': "\\mathsf{1}"
+  '\ud835\udfe4': "\\mathsf{2}"
+  '\ud835\udfe5': "\\mathsf{3}"
+  '\ud835\udfe6': "\\mathsf{4}"
+  '\ud835\udfe7': "\\mathsf{5}"
+  '\ud835\udfe8': "\\mathsf{6}"
+  '\ud835\udfe9': "\\mathsf{7}"
+  '\ud835\udfea': "\\mathsf{8}"
+  '\ud835\udfeb': "\\mathsf{9}"
+  '\ud835\udfec': "\\mathsfbf{0}"
+  '\ud835\udfed': "\\mathsfbf{1}"
+  '\ud835\udfee': "\\mathsfbf{2}"
+  '\ud835\udfef': "\\mathsfbf{3}"
+  '\ud835\udff0': "\\mathsfbf{4}"
+  '\ud835\udff1': "\\mathsfbf{5}"
+  '\ud835\udff2': "\\mathsfbf{6}"
+  '\ud835\udff3': "\\mathsfbf{7}"
+  '\ud835\udff4': "\\mathsfbf{8}"
+  '\ud835\udff5': "\\mathsfbf{9}"
+  '\ud835\udff6': "\\mathtt{0}"
+  '\ud835\udff7': "\\mathtt{1}"
+  '\ud835\udff8': "\\mathtt{2}"
+  '\ud835\udff9': "\\mathtt{3}"
+  '\ud835\udffa': "\\mathtt{4}"
+  '\ud835\udffb': "\\mathtt{5}"
+  '\ud835\udffc': "\\mathtt{6}"
+  '\ud835\udffd': "\\mathtt{7}"
+  '\ud835\udffe': "\\mathtt{8}"
+  '\ud835\udfff': "\\mathtt{9}"
+  '\u2329': "{\\langle}"
+  '\u232A': "{\\rangle}"
 LaTeX.toLaTeX.ascii.text =
   '#': "\\#"
   '$': "{\\textdollar}"
@@ -1635,768 +1637,765 @@ LaTeX.toLaTeX.ascii.text =
   '{': "\\{"
   '}': "\\}"
   '~': "{\\textasciitilde}"
-  '\u000A0': " "
-  '\u000A1': "{\\textexclamdown}"
-  '\u000A2': "{\\textcent}"
-  '\u000A3': "{\\textsterling}"
-  '\u000A4': "{\\textcurrency}"
-  '\u000A5': "{\\textyen}"
-  '\u000A6': "{\\textbrokenbar}"
-  '\u000A7': "{\\textsection}"
-  '\u000A8': "{\\textasciidieresis}"
-  '\u000A9': "{\\textcopyright}"
-  '\u000AA': "{\\textordfeminine}"
-  '\u000AB': "{\\guillemotleft}"
-  '\u000AE': "{\\textregistered}"
-  '\u000AF': "{\\textasciimacron}"
-  '\u000B0': "{\\textdegree}"
-  '\u000B4': "{\\textasciiacute}"
-  '\u000B6': "{\\textparagraph}"
-  '\u000B8': "\\c{}"
-  '\u000BA': "{\\textordmasculine}"
-  '\u000BB': "{\\guillemotright}"
-  '\u000BC': "{\\textonequarter}"
-  '\u000BD': "{\\textonehalf}"
-  '\u000BE': "{\\textthreequarters}"
-  '\u000BF': "{\\textquestiondown}"
-  '\u000C0': "{\\`A}"
-  '\u000C1': "{\\'A}"
-  '\u000C2': "{\\^A}"
-  '\u000C3': "{\\~A}"
-  '\u000C4': "{\\\"A}"
-  '\u000C5': "{\\AA}"
-  '\u000C6': "{\\AE}"
-  '\u000C7': "{\\c C}"
-  '\u000C8': "{\\`E}"
-  '\u000C9': "{\\'E}"
-  '\u000CA': "{\\^E}"
-  '\u000CB': "{\\\"E}"
-  '\u000CC': "{\\`I}"
-  '\u000CD': "{\\'I}"
-  '\u000CE': "{\\^I}"
-  '\u000CF': "{\\\"I}"
-  '\u000D0': "{\\DH}"
-  '\u000D1': "{\\~N}"
-  '\u000D2': "{\\`O}"
-  '\u000D3': "{\\'O}"
-  '\u000D4': "{\\^O}"
-  '\u000D5': "{\\~O}"
-  '\u000D6': "{\\\"O}"
-  '\u000D7': "{\\texttimes}"
-  '\u000D8': "{\\O}"
-  '\u000D9': "{\\`U}"
-  '\u000DA': "{\\'U}"
-  '\u000DB': "{\\^U}"
-  '\u000DC': "{\\\"U}"
-  '\u000DD': "{\\'Y}"
-  '\u000DE': "{\\TH}"
-  '\u000DF': "{\\ss}"
-  '\u000E0': "{\\`a}"
-  '\u000E1': "{\\'a}"
-  '\u000E2': "{\\^a}"
-  '\u000E3': "{\\~a}"
-  '\u000E4': "{\\\"a}"
-  '\u000E5': "{\\aa}"
-  '\u000E6': "{\\ae}"
-  '\u000E7': "{\\c c}"
-  '\u000E8': "{\\`e}"
-  '\u000E9': "{\\'e}"
-  '\u000EA': "{\\^e}"
-  '\u000EB': "{\\\"e}"
-  '\u000EC': "{\\`\\i}"
-  '\u000ED': "{\\'\\i}"
-  '\u000EE': "{\\^\\i}"
-  '\u000EF': "{\\\"\\i}"
-  '\u000F0': "{\\dh}"
-  '\u000F1': "{\\~n}"
-  '\u000F2': "{\\`o}"
-  '\u000F3': "{\\'o}"
-  '\u000F4': "{\\^o}"
-  '\u000F5': "{\\~o}"
-  '\u000F6': "{\\\"o}"
-  '\u000F8': "{\\o}"
-  '\u000F9': "{\\`u}"
-  '\u000FA': "{\\'u}"
-  '\u000FB': "{\\^u}"
-  '\u000FC': "{\\\"u}"
-  '\u000FD': "{\\'y}"
-  '\u000FE': "{\\th}"
-  '\u000FF': "{\\\"y}"
-  '\u00100': "\\={A}"
-  '\u00101': "\\={a}"
-  '\u00102': "{\\u A}"
-  '\u00103': "{\\u a}"
-  '\u00104': "\\k{A}"
-  '\u00105': "\\k{a}"
-  '\u00106': "{\\'C}"
-  '\u00107': "{\\'c}"
-  '\u00108': "{\\^C}"
-  '\u00109': "{\\^c}"
-  '\u0010A': "{\\.C}"
-  '\u0010B': "{\\.c}"
-  '\u0010C': "{\\v C}"
-  '\u0010D': "{\\v c}"
-  '\u0010E': "{\\v D}"
-  '\u0010F': "{\\v d}"
-  '\u00110': "{\\DJ}"
-  '\u00111': "{\\dj}"
-  '\u00112': "\\={E}"
-  '\u00113': "\\={e}"
-  '\u00114': "{\\u E}"
-  '\u00115': "{\\u e}"
-  '\u00116': "{\\.E}"
-  '\u00117': "{\\.e}"
-  '\u00118': "\\k{E}"
-  '\u00119': "\\k{e}"
-  '\u0011A': "{\\v E}"
-  '\u0011B': "{\\v e}"
-  '\u0011C': "{\\^G}"
-  '\u0011D': "{\\^g}"
-  '\u0011E': "{\\u G}"
-  '\u0011F': "{\\u g}"
-  '\u00120': "{\\.G}"
-  '\u00121': "{\\.g}"
-  '\u00122': "{\\c G}"
-  '\u00123': "{\\c g}"
-  '\u00124': "{\\^H}"
-  '\u00125': "{\\^h}"
-  '\u00126': "{\\fontencoding{LELA}\\selectfont\\char40}"
-  '\u00128': "{\\~I}"
-  '\u00129': "{\\~\\i}"
-  '\u0012A': "\\={I}"
-  '\u0012B': "\\={\\i}"
-  '\u0012C': "{\\u I}"
-  '\u0012D': "{\\u \\i}"
-  '\u0012E': "\\k{I}"
-  '\u0012F': "\\k{i}"
-  '\u00130': "{\\.I}"
-  '\u00131': "{\\i}"
-  '\u00132': "IJ"
-  '\u00133': "ij"
-  '\u00134': "{\\^J}"
-  '\u00135': "{\\^\\j}"
-  '\u00136': "{\\c K}"
-  '\u00137': "{\\c k}"
-  '\u00138': "{\\fontencoding{LELA}\\selectfont\\char91}"
-  '\u00139': "{\\'L}"
-  '\u0013A': "{\\'l}"
-  '\u0013B': "{\\c L}"
-  '\u0013C': "{\\c l}"
-  '\u0013D': "{\\v L}"
-  '\u0013E': "{\\v l}"
-  '\u0013F': "{\\fontencoding{LELA}\\selectfont\\char201}"
-  '\u00140': "{\\fontencoding{LELA}\\selectfont\\char202}"
-  '\u00141': "{\\L}"
-  '\u00142': "{\\l}"
-  '\u00143': "{\\'N}"
-  '\u00144': "{\\'n}"
-  '\u00145': "{\\c N}"
-  '\u00146': "{\\c n}"
-  '\u00147': "{\\v N}"
-  '\u00148': "{\\v n}"
-  '\u00149': "'n"
-  '\u0014A': "{\\NG}"
-  '\u0014B': "{\\ng}"
-  '\u0014C': "\\={O}"
-  '\u0014D': "\\={o}"
-  '\u0014E': "{\\u O}"
-  '\u0014F': "{\\u o}"
-  '\u00150': "{\\H O}"
-  '\u00151': "{\\H o}"
-  '\u00152': "{\\OE}"
-  '\u00153': "{\\oe}"
-  '\u00154': "{\\'R}"
-  '\u00155': "{\\'r}"
-  '\u00156': "{\\c R}"
-  '\u00157': "{\\c r}"
-  '\u00158': "{\\v R}"
-  '\u00159': "{\\v r}"
-  '\u0015A': "{\\'S}"
-  '\u0015B': "{\\'s}"
-  '\u0015C': "{\\^S}"
-  '\u0015D': "{\\^s}"
-  '\u0015E': "{\\c S}"
-  '\u0015F': "{\\c s}"
-  '\u00160': "{\\v S}"
-  '\u00161': "{\\v s}"
-  '\u00162': "{\\c T}"
-  '\u00163': "{\\c t}"
-  '\u00164': "{\\v T}"
-  '\u00165': "{\\v t}"
-  '\u00166': "{\\fontencoding{LELA}\\selectfont\\char47}"
-  '\u00167': "{\\fontencoding{LELA}\\selectfont\\char63}"
-  '\u00168': "{\\~U}"
-  '\u00169': "{\\~u}"
-  '\u0016A': "\\={U}"
-  '\u0016B': "\\={u}"
-  '\u0016C': "{\\u U}"
-  '\u0016D': "{\\u u}"
-  '\u0016E': "\\r{U}"
-  '\u0016F': "\\r{u}"
-  '\u00170': "{\\H U}"
-  '\u00171': "{\\H u}"
-  '\u00172': "\\k{U}"
-  '\u00173': "\\k{u}"
-  '\u00174': "{\\^W}"
-  '\u00175': "{\\^w}"
-  '\u00176': "{\\^Y}"
-  '\u00177': "{\\^y}"
-  '\u00178': "{\\\"Y}"
-  '\u00179': "{\\'Z}"
-  '\u0017A': "{\\'z}"
-  '\u0017B': "{\\.Z}"
-  '\u0017C': "{\\.z}"
-  '\u0017D': "{\\v Z}"
-  '\u0017E': "{\\v z}"
-  '\u00195': "{\\texthvlig}"
-  '\u0019E': "{\\textnrleg}"
-  '\u001BA': "{\\fontencoding{LELA}\\selectfont\\char195}"
-  '\u001C2': "{\\textdoublepipe}"
-  '\u001F5': "{\\'g}"
-  '\u00258': "{\\fontencoding{LEIP}\\selectfont\\char61}"
-  '\u00261': "g"
-  '\u00272': "{\\Elzltln}"
-  '\u00278': "{\\textphi}"
-  '\u0027F': "{\\fontencoding{LEIP}\\selectfont\\char202}"
-  '\u0029E': "{\\textturnk}"
-  '\u002BC': "'"
-  '\u002C7': "{\\textasciicaron}"
-  '\u002D8': "{\\textasciibreve}"
-  '\u002D9': "{\\textperiodcentered}"
-  '\u002DA': "\\r{}"
-  '\u002DB': "\\k{}"
-  '\u002DC': "{\\texttildelow}"
-  '\u002DD': "\\H{}"
-  '\u002E5': "\\tone{55}"
-  '\u002E6': "\\tone{44}"
-  '\u002E7': "\\tone{33}"
-  '\u002E8': "\\tone{22}"
-  '\u002E9': "\\tone{11}"
-  '\u00300': "\\`"
-  '\u00301': "\\'"
-  '\u00302': "\\^"
-  '\u00303': "\\~"
-  '\u00304': "\\="
-  '\u00306': "\\u"
-  '\u00307': "\\."
-  '\u00308': "\\\""
-  '\u0030A': "\\r"
-  '\u0030B': "\\H"
-  '\u0030C': "\\v"
-  '\u0030F': "\\cyrchar\\C"
-  '\u00311': "{\\fontencoding{LECO}\\selectfont\\char177}"
-  '\u00318': "{\\fontencoding{LECO}\\selectfont\\char184}"
-  '\u00319': "{\\fontencoding{LECO}\\selectfont\\char185}"
-  '\u00322': "{\\Elzrh}"
-  '\u00327': "\\c"
-  '\u00328': "\\k"
-  '\u0032B': "{\\fontencoding{LECO}\\selectfont\\char203}"
-  '\u0032F': "{\\fontencoding{LECO}\\selectfont\\char207}"
-  '\u00335': "{\\Elzxl}"
-  '\u00336': "{\\Elzbar}"
-  '\u00337': "{\\fontencoding{LECO}\\selectfont\\char215}"
-  '\u00338': "{\\fontencoding{LECO}\\selectfont\\char216}"
-  '\u0033A': "{\\fontencoding{LECO}\\selectfont\\char218}"
-  '\u0033B': "{\\fontencoding{LECO}\\selectfont\\char219}"
-  '\u0033C': "{\\fontencoding{LECO}\\selectfont\\char220}"
-  '\u0033D': "{\\fontencoding{LECO}\\selectfont\\char221}"
-  '\u00361': "{\\fontencoding{LECO}\\selectfont\\char225}"
-  '\u00386': "{\\'A}"
-  '\u00388': "{\\'E}"
-  '\u00389': "{\\'H}"
-  '\u0038A': "\\'{}{I}"
-  '\u0038C': "\\'{}O"
-  '\u003AC': "{\\'$\\alpha$}"
-  '\u003B8': "{\\texttheta}"
-  '\u003CC': "{\\'o}"
-  '\u003D0': "\\Pisymbol{ppi022}{87}"
-  '\u003D1': "{\\textvartheta}"
-  '\u003F4': "{\\textTheta}"
-  '\u00401': "{\\cyrchar\\CYRYO}"
-  '\u00402': "{\\cyrchar\\CYRDJE}"
-  '\u00403': "\\cyrchar{\\'\\CYRG}"
-  '\u00404': "{\\cyrchar\\CYRIE}"
-  '\u00405': "{\\cyrchar\\CYRDZE}"
-  '\u00406': "{\\cyrchar\\CYRII}"
-  '\u00407': "{\\cyrchar\\CYRYI}"
-  '\u00408': "{\\cyrchar\\CYRJE}"
-  '\u00409': "{\\cyrchar\\CYRLJE}"
-  '\u0040A': "{\\cyrchar\\CYRNJE}"
-  '\u0040B': "{\\cyrchar\\CYRTSHE}"
-  '\u0040C': "\\cyrchar{\\'\\CYRK}"
-  '\u0040E': "{\\cyrchar\\CYRUSHRT}"
-  '\u0040F': "{\\cyrchar\\CYRDZHE}"
-  '\u00410': "{\\cyrchar\\CYRA}"
-  '\u00411': "{\\cyrchar\\CYRB}"
-  '\u00412': "{\\cyrchar\\CYRV}"
-  '\u00413': "{\\cyrchar\\CYRG}"
-  '\u00414': "{\\cyrchar\\CYRD}"
-  '\u00415': "{\\cyrchar\\CYRE}"
-  '\u00416': "{\\cyrchar\\CYRZH}"
-  '\u00417': "{\\cyrchar\\CYRZ}"
-  '\u00418': "{\\cyrchar\\CYRI}"
-  '\u00419': "{\\cyrchar\\CYRISHRT}"
-  '\u0041A': "{\\cyrchar\\CYRK}"
-  '\u0041B': "{\\cyrchar\\CYRL}"
-  '\u0041C': "{\\cyrchar\\CYRM}"
-  '\u0041D': "{\\cyrchar\\CYRN}"
-  '\u0041E': "{\\cyrchar\\CYRO}"
-  '\u0041F': "{\\cyrchar\\CYRP}"
-  '\u00420': "{\\cyrchar\\CYRR}"
-  '\u00421': "{\\cyrchar\\CYRS}"
-  '\u00422': "{\\cyrchar\\CYRT}"
-  '\u00423': "{\\cyrchar\\CYRU}"
-  '\u00424': "{\\cyrchar\\CYRF}"
-  '\u00425': "{\\cyrchar\\CYRH}"
-  '\u00426': "{\\cyrchar\\CYRC}"
-  '\u00427': "{\\cyrchar\\CYRCH}"
-  '\u00428': "{\\cyrchar\\CYRSH}"
-  '\u00429': "{\\cyrchar\\CYRSHCH}"
-  '\u0042A': "{\\cyrchar\\CYRHRDSN}"
-  '\u0042B': "{\\cyrchar\\CYRERY}"
-  '\u0042C': "{\\cyrchar\\CYRSFTSN}"
-  '\u0042D': "{\\cyrchar\\CYREREV}"
-  '\u0042E': "{\\cyrchar\\CYRYU}"
-  '\u0042F': "{\\cyrchar\\CYRYA}"
-  '\u00430': "{\\cyrchar\\cyra}"
-  '\u00431': "{\\cyrchar\\cyrb}"
-  '\u00432': "{\\cyrchar\\cyrv}"
-  '\u00433': "{\\cyrchar\\cyrg}"
-  '\u00434': "{\\cyrchar\\cyrd}"
-  '\u00435': "{\\cyrchar\\cyre}"
-  '\u00436': "{\\cyrchar\\cyrzh}"
-  '\u00437': "{\\cyrchar\\cyrz}"
-  '\u00438': "{\\cyrchar\\cyri}"
-  '\u00439': "{\\cyrchar\\cyrishrt}"
-  '\u0043A': "{\\cyrchar\\cyrk}"
-  '\u0043B': "{\\cyrchar\\cyrl}"
-  '\u0043C': "{\\cyrchar\\cyrm}"
-  '\u0043D': "{\\cyrchar\\cyrn}"
-  '\u0043E': "{\\cyrchar\\cyro}"
-  '\u0043F': "{\\cyrchar\\cyrp}"
-  '\u00440': "{\\cyrchar\\cyrr}"
-  '\u00441': "{\\cyrchar\\cyrs}"
-  '\u00442': "{\\cyrchar\\cyrt}"
-  '\u00443': "{\\cyrchar\\cyru}"
-  '\u00444': "{\\cyrchar\\cyrf}"
-  '\u00445': "{\\cyrchar\\cyrh}"
-  '\u00446': "{\\cyrchar\\cyrc}"
-  '\u00447': "{\\cyrchar\\cyrch}"
-  '\u00448': "{\\cyrchar\\cyrsh}"
-  '\u00449': "{\\cyrchar\\cyrshch}"
-  '\u0044A': "{\\cyrchar\\cyrhrdsn}"
-  '\u0044B': "{\\cyrchar\\cyrery}"
-  '\u0044C': "{\\cyrchar\\cyrsftsn}"
-  '\u0044D': "{\\cyrchar\\cyrerev}"
-  '\u0044E': "{\\cyrchar\\cyryu}"
-  '\u0044F': "{\\cyrchar\\cyrya}"
-  '\u00451': "{\\cyrchar\\cyryo}"
-  '\u00452': "{\\cyrchar\\cyrdje}"
-  '\u00453': "\\cyrchar{\\'\\cyrg}"
-  '\u00454': "{\\cyrchar\\cyrie}"
-  '\u00455': "{\\cyrchar\\cyrdze}"
-  '\u00456': "{\\cyrchar\\cyrii}"
-  '\u00457': "{\\cyrchar\\cyryi}"
-  '\u00458': "{\\cyrchar\\cyrje}"
-  '\u00459': "{\\cyrchar\\cyrlje}"
-  '\u0045A': "{\\cyrchar\\cyrnje}"
-  '\u0045B': "{\\cyrchar\\cyrtshe}"
-  '\u0045C': "\\cyrchar{\\'\\cyrk}"
-  '\u0045E': "{\\cyrchar\\cyrushrt}"
-  '\u0045F': "{\\cyrchar\\cyrdzhe}"
-  '\u00460': "{\\cyrchar\\CYROMEGA}"
-  '\u00461': "{\\cyrchar\\cyromega}"
-  '\u00462': "{\\cyrchar\\CYRYAT}"
-  '\u00464': "{\\cyrchar\\CYRIOTE}"
-  '\u00465': "{\\cyrchar\\cyriote}"
-  '\u00466': "{\\cyrchar\\CYRLYUS}"
-  '\u00467': "{\\cyrchar\\cyrlyus}"
-  '\u00468': "{\\cyrchar\\CYRIOTLYUS}"
-  '\u00469': "{\\cyrchar\\cyriotlyus}"
-  '\u0046A': "{\\cyrchar\\CYRBYUS}"
-  '\u0046C': "{\\cyrchar\\CYRIOTBYUS}"
-  '\u0046D': "{\\cyrchar\\cyriotbyus}"
-  '\u0046E': "{\\cyrchar\\CYRKSI}"
-  '\u0046F': "{\\cyrchar\\cyrksi}"
-  '\u00470': "{\\cyrchar\\CYRPSI}"
-  '\u00471': "{\\cyrchar\\cyrpsi}"
-  '\u00472': "{\\cyrchar\\CYRFITA}"
-  '\u00474': "{\\cyrchar\\CYRIZH}"
-  '\u00478': "{\\cyrchar\\CYRUK}"
-  '\u00479': "{\\cyrchar\\cyruk}"
-  '\u0047A': "{\\cyrchar\\CYROMEGARND}"
-  '\u0047B': "{\\cyrchar\\cyromegarnd}"
-  '\u0047C': "{\\cyrchar\\CYROMEGATITLO}"
-  '\u0047D': "{\\cyrchar\\cyromegatitlo}"
-  '\u0047E': "{\\cyrchar\\CYROT}"
-  '\u0047F': "{\\cyrchar\\cyrot}"
-  '\u00480': "{\\cyrchar\\CYRKOPPA}"
-  '\u00481': "{\\cyrchar\\cyrkoppa}"
-  '\u00482': "{\\cyrchar\\cyrthousands}"
-  '\u00488': "{\\cyrchar\\cyrhundredthousands}"
-  '\u00489': "{\\cyrchar\\cyrmillions}"
-  '\u0048C': "{\\cyrchar\\CYRSEMISFTSN}"
-  '\u0048D': "{\\cyrchar\\cyrsemisftsn}"
-  '\u0048E': "{\\cyrchar\\CYRRTICK}"
-  '\u0048F': "{\\cyrchar\\cyrrtick}"
-  '\u00490': "{\\cyrchar\\CYRGUP}"
-  '\u00491': "{\\cyrchar\\cyrgup}"
-  '\u00492': "{\\cyrchar\\CYRGHCRS}"
-  '\u00493': "{\\cyrchar\\cyrghcrs}"
-  '\u00494': "{\\cyrchar\\CYRGHK}"
-  '\u00495': "{\\cyrchar\\cyrghk}"
-  '\u00496': "{\\cyrchar\\CYRZHDSC}"
-  '\u00497': "{\\cyrchar\\cyrzhdsc}"
-  '\u00498': "{\\cyrchar\\CYRZDSC}"
-  '\u00499': "{\\cyrchar\\cyrzdsc}"
-  '\u0049A': "{\\cyrchar\\CYRKDSC}"
-  '\u0049B': "{\\cyrchar\\cyrkdsc}"
-  '\u0049C': "{\\cyrchar\\CYRKVCRS}"
-  '\u0049D': "{\\cyrchar\\cyrkvcrs}"
-  '\u0049E': "{\\cyrchar\\CYRKHCRS}"
-  '\u0049F': "{\\cyrchar\\cyrkhcrs}"
-  '\u004A0': "{\\cyrchar\\CYRKBEAK}"
-  '\u004A1': "{\\cyrchar\\cyrkbeak}"
-  '\u004A2': "{\\cyrchar\\CYRNDSC}"
-  '\u004A3': "{\\cyrchar\\cyrndsc}"
-  '\u004A4': "{\\cyrchar\\CYRNG}"
-  '\u004A5': "{\\cyrchar\\cyrng}"
-  '\u004A6': "{\\cyrchar\\CYRPHK}"
-  '\u004A7': "{\\cyrchar\\cyrphk}"
-  '\u004A8': "{\\cyrchar\\CYRABHHA}"
-  '\u004A9': "{\\cyrchar\\cyrabhha}"
-  '\u004AA': "{\\cyrchar\\CYRSDSC}"
-  '\u004AB': "{\\cyrchar\\cyrsdsc}"
-  '\u004AC': "{\\cyrchar\\CYRTDSC}"
-  '\u004AD': "{\\cyrchar\\cyrtdsc}"
-  '\u004AE': "{\\cyrchar\\CYRY}"
-  '\u004AF': "{\\cyrchar\\cyry}"
-  '\u004B0': "{\\cyrchar\\CYRYHCRS}"
-  '\u004B1': "{\\cyrchar\\cyryhcrs}"
-  '\u004B2': "{\\cyrchar\\CYRHDSC}"
-  '\u004B3': "{\\cyrchar\\cyrhdsc}"
-  '\u004B4': "{\\cyrchar\\CYRTETSE}"
-  '\u004B5': "{\\cyrchar\\cyrtetse}"
-  '\u004B6': "{\\cyrchar\\CYRCHRDSC}"
-  '\u004B7': "{\\cyrchar\\cyrchrdsc}"
-  '\u004B8': "{\\cyrchar\\CYRCHVCRS}"
-  '\u004B9': "{\\cyrchar\\cyrchvcrs}"
-  '\u004BA': "{\\cyrchar\\CYRSHHA}"
-  '\u004BB': "{\\cyrchar\\cyrshha}"
-  '\u004BC': "{\\cyrchar\\CYRABHCH}"
-  '\u004BD': "{\\cyrchar\\cyrabhch}"
-  '\u004BE': "{\\cyrchar\\CYRABHCHDSC}"
-  '\u004BF': "{\\cyrchar\\cyrabhchdsc}"
-  '\u004C0': "{\\cyrchar\\CYRpalochka}"
-  '\u004C3': "{\\cyrchar\\CYRKHK}"
-  '\u004C4': "{\\cyrchar\\cyrkhk}"
-  '\u004C7': "{\\cyrchar\\CYRNHK}"
-  '\u004C8': "{\\cyrchar\\cyrnhk}"
-  '\u004CB': "{\\cyrchar\\CYRCHLDSC}"
-  '\u004CC': "{\\cyrchar\\cyrchldsc}"
-  '\u004D4': "{\\cyrchar\\CYRAE}"
-  '\u004D5': "{\\cyrchar\\cyrae}"
-  '\u004D8': "{\\cyrchar\\CYRSCHWA}"
-  '\u004D9': "{\\cyrchar\\cyrschwa}"
-  '\u004E0': "{\\cyrchar\\CYRABHDZE}"
-  '\u004E1': "{\\cyrchar\\cyrabhdze}"
-  '\u004E8': "{\\cyrchar\\CYROTLD}"
-  '\u004E9': "{\\cyrchar\\cyrotld}"
-  '\u02002': "\\hspace{0.6em}"
-  '\u02003': "\\hspace{1em}"
-  '\u02004': "\\hspace{0.33em}"
-  '\u02005': "\\hspace{0.25em}"
-  '\u02006': "\\hspace{0.166em}"
-  '\u02007': "\\hphantom{0}"
-  '\u02008': "\\hphantom{,}"
-  '\u02009': "\\hspace{0.167em}"
-  '\u02010': "-"
-  '\u02013': "{\\textendash}"
-  '\u02014': "{\\textemdash}"
-  '\u02015': "\\rule{1em}{1pt}"
-  '\u02018': "`"
-  '\u02019': "'"
-  '\u0201A': ","
-  '\u0201C': "{\\textquotedblleft}"
-  '\u0201D': "{\\textquotedblright}"
-  '\u0201E': ",,"
-  '\u02020': "{\\textdagger}"
-  '\u02021': "{\\textdaggerdbl}"
-  '\u02022': "{\\textbullet}"
-  '\u02024': "."
-  '\u02025': ".."
-  '\u02026': "{\\ldots}"
-  '\u02030': "{\\textperthousand}"
-  '\u02031': "{\\textpertenthousand}"
-  '\u02039': "{\\guilsinglleft}"
-  '\u0203A': "{\\guilsinglright}"
-  '\u0205F': "{\\mkern4mu}"
-  '\u02060': "{\\nolinebreak}"
-  '\u020A7': "\\ensuremath{\\Elzpes}"
-  '\u020AC': "{\\mbox{\\texteuro}}"
-  '\u0210A': "\\mathscr{g}"
-  '\u02116': "{\\cyrchar\\textnumero}"
-  '\u02122': "{\\texttrademark}"
-  '\u0212B': "{\\AA}"
-  '\u02212': "-"
-  '\u02254': ":="
-  '\u02305': "{\\barwedge}"
-  '\u02423': "{\\textvisiblespace}"
-  '\u02460': "\\ding{172}"
-  '\u02461': "\\ding{173}"
-  '\u02462': "\\ding{174}"
-  '\u02463': "\\ding{175}"
-  '\u02464': "\\ding{176}"
-  '\u02465': "\\ding{177}"
-  '\u02466': "\\ding{178}"
-  '\u02467': "\\ding{179}"
-  '\u02468': "\\ding{180}"
-  '\u02469': "\\ding{181}"
-  '\u025A0': "\\ding{110}"
-  '\u025B2': "\\ding{115}"
-  '\u025BC': "\\ding{116}"
-  '\u025C6': "\\ding{117}"
-  '\u025CF': "\\ding{108}"
-  '\u025D7': "\\ding{119}"
-  '\u02605': "\\ding{72}"
-  '\u02606': "\\ding{73}"
-  '\u0260E': "\\ding{37}"
-  '\u0261B': "\\ding{42}"
-  '\u0261E': "\\ding{43}"
-  '\u0263E': "{\\rightmoon}"
-  '\u0263F': "{\\mercury}"
-  '\u02640': "{\\venus}"
-  '\u02642': "{\\male}"
-  '\u02643': "{\\jupiter}"
-  '\u02644': "{\\saturn}"
-  '\u02645': "{\\uranus}"
-  '\u02646': "{\\neptune}"
-  '\u02647': "{\\pluto}"
-  '\u02648': "{\\aries}"
-  '\u02649': "{\\taurus}"
-  '\u0264A': "{\\gemini}"
-  '\u0264B': "{\\cancer}"
-  '\u0264C': "{\\leo}"
-  '\u0264D': "{\\virgo}"
-  '\u0264E': "{\\libra}"
-  '\u0264F': "{\\scorpio}"
-  '\u02650': "{\\sagittarius}"
-  '\u02651': "{\\capricornus}"
-  '\u02652': "{\\aquarius}"
-  '\u02653': "{\\pisces}"
-  '\u02660': "\\ding{171}"
-  '\u02663': "\\ding{168}"
-  '\u02665': "\\ding{170}"
-  '\u02666': "\\ding{169}"
-  '\u02669': "{\\quarternote}"
-  '\u0266A': "{\\eighthnote}"
-  '\u02701': "\\ding{33}"
-  '\u02702': "\\ding{34}"
-  '\u02703': "\\ding{35}"
-  '\u02704': "\\ding{36}"
-  '\u02706': "\\ding{38}"
-  '\u02707': "\\ding{39}"
-  '\u02708': "\\ding{40}"
-  '\u02709': "\\ding{41}"
-  '\u0270C': "\\ding{44}"
-  '\u0270D': "\\ding{45}"
-  '\u0270E': "\\ding{46}"
-  '\u0270F': "\\ding{47}"
-  '\u02710': "\\ding{48}"
-  '\u02711': "\\ding{49}"
-  '\u02712': "\\ding{50}"
-  '\u02713': "\\ding{51}"
-  '\u02714': "\\ding{52}"
-  '\u02715': "\\ding{53}"
-  '\u02716': "\\ding{54}"
-  '\u02717': "\\ding{55}"
-  '\u02718': "\\ding{56}"
-  '\u02719': "\\ding{57}"
-  '\u0271A': "\\ding{58}"
-  '\u0271B': "\\ding{59}"
-  '\u0271C': "\\ding{60}"
-  '\u0271D': "\\ding{61}"
-  '\u0271E': "\\ding{62}"
-  '\u0271F': "\\ding{63}"
-  '\u02720': "\\ding{64}"
-  '\u02721': "\\ding{65}"
-  '\u02722': "\\ding{66}"
-  '\u02723': "\\ding{67}"
-  '\u02724': "\\ding{68}"
-  '\u02725': "\\ding{69}"
-  '\u02726': "\\ding{70}"
-  '\u02727': "\\ding{71}"
-  '\u02729': "\\ding{73}"
-  '\u0272A': "\\ding{74}"
-  '\u0272B': "\\ding{75}"
-  '\u0272C': "\\ding{76}"
-  '\u0272D': "\\ding{77}"
-  '\u0272E': "\\ding{78}"
-  '\u0272F': "\\ding{79}"
-  '\u02730': "\\ding{80}"
-  '\u02731': "\\ding{81}"
-  '\u02732': "\\ding{82}"
-  '\u02733': "\\ding{83}"
-  '\u02734': "\\ding{84}"
-  '\u02735': "\\ding{85}"
-  '\u02736': "\\ding{86}"
-  '\u02737': "\\ding{87}"
-  '\u02738': "\\ding{88}"
-  '\u02739': "\\ding{89}"
-  '\u0273A': "\\ding{90}"
-  '\u0273B': "\\ding{91}"
-  '\u0273C': "\\ding{92}"
-  '\u0273D': "\\ding{93}"
-  '\u0273E': "\\ding{94}"
-  '\u0273F': "\\ding{95}"
-  '\u02740': "\\ding{96}"
-  '\u02741': "\\ding{97}"
-  '\u02742': "\\ding{98}"
-  '\u02743': "\\ding{99}"
-  '\u02744': "\\ding{100}"
-  '\u02745': "\\ding{101}"
-  '\u02746': "\\ding{102}"
-  '\u02747': "\\ding{103}"
-  '\u02748': "\\ding{104}"
-  '\u02749': "\\ding{105}"
-  '\u0274A': "\\ding{106}"
-  '\u0274B': "\\ding{107}"
-  '\u0274D': "\\ding{109}"
-  '\u0274F': "\\ding{111}"
-  '\u02750': "\\ding{112}"
-  '\u02751': "\\ding{113}"
-  '\u02752': "\\ding{114}"
-  '\u02756': "\\ding{118}"
-  '\u02758': "\\ding{120}"
-  '\u02759': "\\ding{121}"
-  '\u0275A': "\\ding{122}"
-  '\u0275B': "\\ding{123}"
-  '\u0275C': "\\ding{124}"
-  '\u0275D': "\\ding{125}"
-  '\u0275E': "\\ding{126}"
-  '\u02761': "\\ding{161}"
-  '\u02762': "\\ding{162}"
-  '\u02763': "\\ding{163}"
-  '\u02764': "\\ding{164}"
-  '\u02765': "\\ding{165}"
-  '\u02766': "\\ding{166}"
-  '\u02767': "\\ding{167}"
-  '\u02776': "\\ding{182}"
-  '\u02777': "\\ding{183}"
-  '\u02778': "\\ding{184}"
-  '\u02779': "\\ding{185}"
-  '\u0277A': "\\ding{186}"
-  '\u0277B': "\\ding{187}"
-  '\u0277C': "\\ding{188}"
-  '\u0277D': "\\ding{189}"
-  '\u0277E': "\\ding{190}"
-  '\u0277F': "\\ding{191}"
-  '\u02780': "\\ding{192}"
-  '\u02781': "\\ding{193}"
-  '\u02782': "\\ding{194}"
-  '\u02783': "\\ding{195}"
-  '\u02784': "\\ding{196}"
-  '\u02785': "\\ding{197}"
-  '\u02786': "\\ding{198}"
-  '\u02787': "\\ding{199}"
-  '\u02788': "\\ding{200}"
-  '\u02789': "\\ding{201}"
-  '\u0278A': "\\ding{202}"
-  '\u0278B': "\\ding{203}"
-  '\u0278C': "\\ding{204}"
-  '\u0278D': "\\ding{205}"
-  '\u0278E': "\\ding{206}"
-  '\u0278F': "\\ding{207}"
-  '\u02790': "\\ding{208}"
-  '\u02791': "\\ding{209}"
-  '\u02792': "\\ding{210}"
-  '\u02793': "\\ding{211}"
-  '\u02794': "\\ding{212}"
-  '\u02798': "\\ding{216}"
-  '\u02799': "\\ding{217}"
-  '\u0279A': "\\ding{218}"
-  '\u0279B': "\\ding{219}"
-  '\u0279C': "\\ding{220}"
-  '\u0279D': "\\ding{221}"
-  '\u0279E': "\\ding{222}"
-  '\u0279F': "\\ding{223}"
-  '\u027A0': "\\ding{224}"
-  '\u027A1': "\\ding{225}"
-  '\u027A2': "\\ding{226}"
-  '\u027A3': "\\ding{227}"
-  '\u027A4': "\\ding{228}"
-  '\u027A5': "\\ding{229}"
-  '\u027A6': "\\ding{230}"
-  '\u027A7': "\\ding{231}"
-  '\u027A8': "\\ding{232}"
-  '\u027A9': "\\ding{233}"
-  '\u027AA': "\\ding{234}"
-  '\u027AB': "\\ding{235}"
-  '\u027AC': "\\ding{236}"
-  '\u027AD': "\\ding{237}"
-  '\u027AE': "\\ding{238}"
-  '\u027AF': "\\ding{239}"
-  '\u027B1': "\\ding{241}"
-  '\u027B2': "\\ding{242}"
-  '\u027B3': "\\ding{243}"
-  '\u027B4': "\\ding{244}"
-  '\u027B5': "\\ding{245}"
-  '\u027B6': "\\ding{246}"
-  '\u027B7': "\\ding{247}"
-  '\u027B8': "\\ding{248}"
-  '\u027B9': "\\ding{249}"
-  '\u027BA': "\\ding{250}"
-  '\u027BB': "\\ding{251}"
-  '\u027BC': "\\ding{252}"
-  '\u027BD': "\\ding{253}"
-  '\u027BE': "\\ding{254}"
-  '\u027E8': "{\\langle}"
-  '\u027E9': "{\\rangle}"
-  '\u0FB00': "ff"
-  '\u0FB01': "fi"
-  '\u0FB02': "fl"
-  '\u0FB03': "ffi"
-  '\u0FB04': "ffl"
-  '\u1D6B9': "\\mathbf{\\vartheta}"
-  '\u1D6DD': "\\mathbf{\\vartheta}"
-  '\u1D6DE': "\\mathbf{\\varkappa}"
-  '\u1D6DF': "\\mathbf{\\phi}"
-  '\u1D6E0': "\\mathbf{\\varrho}"
-  '\u1D6E1': "\\mathbf{\\varpi}"
-  '\u1D6F3': "\\mathsl{\\vartheta}"
-  '\u1D717': "\\mathsl{\\vartheta}"
-  '\u1D718': "\\mathsl{\\varkappa}"
-  '\u1D719': "\\mathsl{\\phi}"
-  '\u1D71A': "\\mathsl{\\varrho}"
-  '\u1D71B': "\\mathsl{\\varpi}"
-  '\u1D72D': "\\mathbit{O}"
-  '\u1D751': "\\mathbit{\\vartheta}"
-  '\u1D752': "\\mathbit{\\varkappa}"
-  '\u1D753': "\\mathbit{\\phi}"
-  '\u1D754': "\\mathbit{\\varrho}"
-  '\u1D755': "\\mathbit{\\varpi}"
-  '\u1D767': "\\mathsfbf{\\vartheta}"
-  '\u1D78B': "\\mathsfbf{\\vartheta}"
-  '\u1D78C': "\\mathsfbf{\\varkappa}"
-  '\u1D78D': "\\mathsfbf{\\phi}"
-  '\u1D78E': "\\mathsfbf{\\varrho}"
-  '\u1D78F': "\\mathsfbf{\\varpi}"
-  '\u1D7A1': "\\mathsfbfsl{\\vartheta}"
-  '\u1D7C5': "\\mathsfbfsl{\\vartheta}"
-  '\u1D7C6': "\\mathsfbfsl{\\varkappa}"
-  '\u1D7C7': "\\mathsfbfsl{\\phi}"
-  '\u1D7C8': "\\mathsfbfsl{\\varrho}"
-  '\u1D7C9': "\\mathsfbfsl{\\varpi}"
-  '&': "\\&"
+  '\u00A1': "{\\textexclamdown}"
+  '\u00A2': "{\\textcent}"
+  '\u00A3': "{\\textsterling}"
+  '\u00A4': "{\\textcurrency}"
+  '\u00A5': "{\\textyen}"
+  '\u00A6': "{\\textbrokenbar}"
+  '\u00A7': "{\\textsection}"
+  '\u00A8': "{\\textasciidieresis}"
+  '\u00A9': "{\\textcopyright}"
+  '\u00AA': "{\\textordfeminine}"
+  '\u00AB': "{\\guillemotleft}"
+  '\u00AE': "{\\textregistered}"
+  '\u00AF': "{\\textasciimacron}"
+  '\u00B0': "{\\textdegree}"
+  '\u00B4': "{\\textasciiacute}"
+  '\u00B6': "{\\textparagraph}"
+  '\u00B8': "\\c{}"
+  '\u00BA': "{\\textordmasculine}"
+  '\u00BB': "{\\guillemotright}"
+  '\u00BC': "{\\textonequarter}"
+  '\u00BD': "{\\textonehalf}"
+  '\u00BE': "{\\textthreequarters}"
+  '\u00BF': "{\\textquestiondown}"
+  '\u00C0': "{\\`A}"
+  '\u00C1': "{\\'A}"
+  '\u00C2': "{\\^A}"
+  '\u00C3': "{\\~A}"
+  '\u00C4': "{\\\"A}"
+  '\u00C5': "{\\AA}"
+  '\u00C6': "{\\AE}"
+  '\u00C7': "{\\c C}"
+  '\u00C8': "{\\`E}"
+  '\u00C9': "{\\'E}"
+  '\u00CA': "{\\^E}"
+  '\u00CB': "{\\\"E}"
+  '\u00CC': "{\\`I}"
+  '\u00CD': "{\\'I}"
+  '\u00CE': "{\\^I}"
+  '\u00CF': "{\\\"I}"
+  '\u00D0': "{\\DH}"
+  '\u00D1': "{\\~N}"
+  '\u00D2': "{\\`O}"
+  '\u00D3': "{\\'O}"
+  '\u00D4': "{\\^O}"
+  '\u00D5': "{\\~O}"
+  '\u00D6': "{\\\"O}"
+  '\u00D7': "{\\texttimes}"
+  '\u00D8': "{\\O}"
+  '\u00D9': "{\\`U}"
+  '\u00DA': "{\\'U}"
+  '\u00DB': "{\\^U}"
+  '\u00DC': "{\\\"U}"
+  '\u00DD': "{\\'Y}"
+  '\u00DE': "{\\TH}"
+  '\u00DF': "{\\ss}"
+  '\u00E0': "{\\`a}"
+  '\u00E1': "{\\'a}"
+  '\u00E2': "{\\^a}"
+  '\u00E3': "{\\~a}"
+  '\u00E4': "{\\\"a}"
+  '\u00E5': "{\\aa}"
+  '\u00E6': "{\\ae}"
+  '\u00E7': "{\\c c}"
+  '\u00E8': "{\\`e}"
+  '\u00E9': "{\\'e}"
+  '\u00EA': "{\\^e}"
+  '\u00EB': "{\\\"e}"
+  '\u00EC': "{\\`\\i}"
+  '\u00ED': "{\\'\\i}"
+  '\u00EE': "{\\^\\i}"
+  '\u00EF': "{\\\"\\i}"
+  '\u00F0': "{\\dh}"
+  '\u00F1': "{\\~n}"
+  '\u00F2': "{\\`o}"
+  '\u00F3': "{\\'o}"
+  '\u00F4': "{\\^o}"
+  '\u00F5': "{\\~o}"
+  '\u00F6': "{\\\"o}"
+  '\u00F8': "{\\o}"
+  '\u00F9': "{\\`u}"
+  '\u00FA': "{\\'u}"
+  '\u00FB': "{\\^u}"
+  '\u00FC': "{\\\"u}"
+  '\u00FD': "{\\'y}"
+  '\u00FE': "{\\th}"
+  '\u00FF': "{\\\"y}"
+  '\u0100': "\\={A}"
+  '\u0101': "\\={a}"
+  '\u0102': "{\\u A}"
+  '\u0103': "{\\u a}"
+  '\u0104': "\\k{A}"
+  '\u0105': "\\k{a}"
+  '\u0106': "{\\'C}"
+  '\u0107': "{\\'c}"
+  '\u0108': "{\\^C}"
+  '\u0109': "{\\^c}"
+  '\u010A': "{\\.C}"
+  '\u010B': "{\\.c}"
+  '\u010C': "{\\v C}"
+  '\u010D': "{\\v c}"
+  '\u010E': "{\\v D}"
+  '\u010F': "{\\v d}"
+  '\u0110': "{\\DJ}"
+  '\u0111': "{\\dj}"
+  '\u0112': "\\={E}"
+  '\u0113': "\\={e}"
+  '\u0114': "{\\u E}"
+  '\u0115': "{\\u e}"
+  '\u0116': "{\\.E}"
+  '\u0117': "{\\.e}"
+  '\u0118': "\\k{E}"
+  '\u0119': "\\k{e}"
+  '\u011A': "{\\v E}"
+  '\u011B': "{\\v e}"
+  '\u011C': "{\\^G}"
+  '\u011D': "{\\^g}"
+  '\u011E': "{\\u G}"
+  '\u011F': "{\\u g}"
+  '\u0120': "{\\.G}"
+  '\u0121': "{\\.g}"
+  '\u0122': "{\\c G}"
+  '\u0123': "{\\c g}"
+  '\u0124': "{\\^H}"
+  '\u0125': "{\\^h}"
+  '\u0126': "{\\fontencoding{LELA}\\selectfont\\char40}"
+  '\u0128': "{\\~I}"
+  '\u0129': "{\\~\\i}"
+  '\u012A': "\\={I}"
+  '\u012B': "\\={\\i}"
+  '\u012C': "{\\u I}"
+  '\u012D': "{\\u \\i}"
+  '\u012E': "\\k{I}"
+  '\u012F': "\\k{i}"
+  '\u0130': "{\\.I}"
+  '\u0131': "{\\i}"
+  '\u0132': "IJ"
+  '\u0133': "ij"
+  '\u0134': "{\\^J}"
+  '\u0135': "{\\^\\j}"
+  '\u0136': "{\\c K}"
+  '\u0137': "{\\c k}"
+  '\u0138': "{\\fontencoding{LELA}\\selectfont\\char91}"
+  '\u0139': "{\\'L}"
+  '\u013A': "{\\'l}"
+  '\u013B': "{\\c L}"
+  '\u013C': "{\\c l}"
+  '\u013D': "{\\v L}"
+  '\u013E': "{\\v l}"
+  '\u013F': "{\\fontencoding{LELA}\\selectfont\\char201}"
+  '\u0140': "{\\fontencoding{LELA}\\selectfont\\char202}"
+  '\u0141': "{\\L}"
+  '\u0142': "{\\l}"
+  '\u0143': "{\\'N}"
+  '\u0144': "{\\'n}"
+  '\u0145': "{\\c N}"
+  '\u0146': "{\\c n}"
+  '\u0147': "{\\v N}"
+  '\u0148': "{\\v n}"
+  '\u0149': "'n"
+  '\u014A': "{\\NG}"
+  '\u014B': "{\\ng}"
+  '\u014C': "\\={O}"
+  '\u014D': "\\={o}"
+  '\u014E': "{\\u O}"
+  '\u014F': "{\\u o}"
+  '\u0150': "{\\H O}"
+  '\u0151': "{\\H o}"
+  '\u0152': "{\\OE}"
+  '\u0153': "{\\oe}"
+  '\u0154': "{\\'R}"
+  '\u0155': "{\\'r}"
+  '\u0156': "{\\c R}"
+  '\u0157': "{\\c r}"
+  '\u0158': "{\\v R}"
+  '\u0159': "{\\v r}"
+  '\u015A': "{\\'S}"
+  '\u015B': "{\\'s}"
+  '\u015C': "{\\^S}"
+  '\u015D': "{\\^s}"
+  '\u015E': "{\\c S}"
+  '\u015F': "{\\c s}"
+  '\u0160': "{\\v S}"
+  '\u0161': "{\\v s}"
+  '\u0162': "{\\c T}"
+  '\u0163': "{\\c t}"
+  '\u0164': "{\\v T}"
+  '\u0165': "{\\v t}"
+  '\u0166': "{\\fontencoding{LELA}\\selectfont\\char47}"
+  '\u0167': "{\\fontencoding{LELA}\\selectfont\\char63}"
+  '\u0168': "{\\~U}"
+  '\u0169': "{\\~u}"
+  '\u016A': "\\={U}"
+  '\u016B': "\\={u}"
+  '\u016C': "{\\u U}"
+  '\u016D': "{\\u u}"
+  '\u016E': "\\r{U}"
+  '\u016F': "\\r{u}"
+  '\u0170': "{\\H U}"
+  '\u0171': "{\\H u}"
+  '\u0172': "\\k{U}"
+  '\u0173': "\\k{u}"
+  '\u0174': "{\\^W}"
+  '\u0175': "{\\^w}"
+  '\u0176': "{\\^Y}"
+  '\u0177': "{\\^y}"
+  '\u0178': "{\\\"Y}"
+  '\u0179': "{\\'Z}"
+  '\u017A': "{\\'z}"
+  '\u017B': "{\\.Z}"
+  '\u017C': "{\\.z}"
+  '\u017D': "{\\v Z}"
+  '\u017E': "{\\v z}"
+  '\u0195': "{\\texthvlig}"
+  '\u019E': "{\\textnrleg}"
+  '\u01BA': "{\\fontencoding{LELA}\\selectfont\\char195}"
+  '\u01C2': "{\\textdoublepipe}"
+  '\u01F5': "{\\'g}"
+  '\u0258': "{\\fontencoding{LEIP}\\selectfont\\char61}"
+  '\u0261': "g"
+  '\u0272': "{\\Elzltln}"
+  '\u0278': "{\\textphi}"
+  '\u027F': "{\\fontencoding{LEIP}\\selectfont\\char202}"
+  '\u029E': "{\\textturnk}"
+  '\u02BC': "'"
+  '\u02C7': "{\\textasciicaron}"
+  '\u02D8': "{\\textasciibreve}"
+  '\u02D9': "{\\textperiodcentered}"
+  '\u02DA': "\\r{}"
+  '\u02DB': "\\k{}"
+  '\u02DC': "{\\texttildelow}"
+  '\u02DD': "\\H{}"
+  '\u02E5': "\\tone{55}"
+  '\u02E6': "\\tone{44}"
+  '\u02E7': "\\tone{33}"
+  '\u02E8': "\\tone{22}"
+  '\u02E9': "\\tone{11}"
+  '\u0300': "\\`"
+  '\u0301': "\\'"
+  '\u0302': "\\^"
+  '\u0303': "\\~"
+  '\u0304': "\\="
+  '\u0306': "\\u"
+  '\u0307': "\\."
+  '\u0308': "\\\""
+  '\u030A': "\\r"
+  '\u030B': "\\H"
+  '\u030C': "\\v"
+  '\u030F': "\\cyrchar\\C"
+  '\u0311': "{\\fontencoding{LECO}\\selectfont\\char177}"
+  '\u0318': "{\\fontencoding{LECO}\\selectfont\\char184}"
+  '\u0319': "{\\fontencoding{LECO}\\selectfont\\char185}"
+  '\u0322': "{\\Elzrh}"
+  '\u0327': "\\c"
+  '\u0328': "\\k"
+  '\u032B': "{\\fontencoding{LECO}\\selectfont\\char203}"
+  '\u032F': "{\\fontencoding{LECO}\\selectfont\\char207}"
+  '\u0335': "{\\Elzxl}"
+  '\u0336': "{\\Elzbar}"
+  '\u0337': "{\\fontencoding{LECO}\\selectfont\\char215}"
+  '\u0338': "{\\fontencoding{LECO}\\selectfont\\char216}"
+  '\u033A': "{\\fontencoding{LECO}\\selectfont\\char218}"
+  '\u033B': "{\\fontencoding{LECO}\\selectfont\\char219}"
+  '\u033C': "{\\fontencoding{LECO}\\selectfont\\char220}"
+  '\u033D': "{\\fontencoding{LECO}\\selectfont\\char221}"
+  '\u0361': "{\\fontencoding{LECO}\\selectfont\\char225}"
+  '\u0386': "{\\'A}"
+  '\u0388': "{\\'E}"
+  '\u0389': "{\\'H}"
+  '\u038A': "\\'{}{I}"
+  '\u038C': "\\'{}O"
+  '\u03AC': "{\\'$\\alpha$}"
+  '\u03B8': "{\\texttheta}"
+  '\u03CC': "{\\'o}"
+  '\u03D0': "\\Pisymbol{ppi022}{87}"
+  '\u03D1': "{\\textvartheta}"
+  '\u03F4': "{\\textTheta}"
+  '\u0401': "{\\cyrchar\\CYRYO}"
+  '\u0402': "{\\cyrchar\\CYRDJE}"
+  '\u0403': "\\cyrchar{\\'\\CYRG}"
+  '\u0404': "{\\cyrchar\\CYRIE}"
+  '\u0405': "{\\cyrchar\\CYRDZE}"
+  '\u0406': "{\\cyrchar\\CYRII}"
+  '\u0407': "{\\cyrchar\\CYRYI}"
+  '\u0408': "{\\cyrchar\\CYRJE}"
+  '\u0409': "{\\cyrchar\\CYRLJE}"
+  '\u040A': "{\\cyrchar\\CYRNJE}"
+  '\u040B': "{\\cyrchar\\CYRTSHE}"
+  '\u040C': "\\cyrchar{\\'\\CYRK}"
+  '\u040E': "{\\cyrchar\\CYRUSHRT}"
+  '\u040F': "{\\cyrchar\\CYRDZHE}"
+  '\u0410': "{\\cyrchar\\CYRA}"
+  '\u0411': "{\\cyrchar\\CYRB}"
+  '\u0412': "{\\cyrchar\\CYRV}"
+  '\u0413': "{\\cyrchar\\CYRG}"
+  '\u0414': "{\\cyrchar\\CYRD}"
+  '\u0415': "{\\cyrchar\\CYRE}"
+  '\u0416': "{\\cyrchar\\CYRZH}"
+  '\u0417': "{\\cyrchar\\CYRZ}"
+  '\u0418': "{\\cyrchar\\CYRI}"
+  '\u0419': "{\\cyrchar\\CYRISHRT}"
+  '\u041A': "{\\cyrchar\\CYRK}"
+  '\u041B': "{\\cyrchar\\CYRL}"
+  '\u041C': "{\\cyrchar\\CYRM}"
+  '\u041D': "{\\cyrchar\\CYRN}"
+  '\u041E': "{\\cyrchar\\CYRO}"
+  '\u041F': "{\\cyrchar\\CYRP}"
+  '\u0420': "{\\cyrchar\\CYRR}"
+  '\u0421': "{\\cyrchar\\CYRS}"
+  '\u0422': "{\\cyrchar\\CYRT}"
+  '\u0423': "{\\cyrchar\\CYRU}"
+  '\u0424': "{\\cyrchar\\CYRF}"
+  '\u0425': "{\\cyrchar\\CYRH}"
+  '\u0426': "{\\cyrchar\\CYRC}"
+  '\u0427': "{\\cyrchar\\CYRCH}"
+  '\u0428': "{\\cyrchar\\CYRSH}"
+  '\u0429': "{\\cyrchar\\CYRSHCH}"
+  '\u042A': "{\\cyrchar\\CYRHRDSN}"
+  '\u042B': "{\\cyrchar\\CYRERY}"
+  '\u042C': "{\\cyrchar\\CYRSFTSN}"
+  '\u042D': "{\\cyrchar\\CYREREV}"
+  '\u042E': "{\\cyrchar\\CYRYU}"
+  '\u042F': "{\\cyrchar\\CYRYA}"
+  '\u0430': "{\\cyrchar\\cyra}"
+  '\u0431': "{\\cyrchar\\cyrb}"
+  '\u0432': "{\\cyrchar\\cyrv}"
+  '\u0433': "{\\cyrchar\\cyrg}"
+  '\u0434': "{\\cyrchar\\cyrd}"
+  '\u0435': "{\\cyrchar\\cyre}"
+  '\u0436': "{\\cyrchar\\cyrzh}"
+  '\u0437': "{\\cyrchar\\cyrz}"
+  '\u0438': "{\\cyrchar\\cyri}"
+  '\u0439': "{\\cyrchar\\cyrishrt}"
+  '\u043A': "{\\cyrchar\\cyrk}"
+  '\u043B': "{\\cyrchar\\cyrl}"
+  '\u043C': "{\\cyrchar\\cyrm}"
+  '\u043D': "{\\cyrchar\\cyrn}"
+  '\u043E': "{\\cyrchar\\cyro}"
+  '\u043F': "{\\cyrchar\\cyrp}"
+  '\u0440': "{\\cyrchar\\cyrr}"
+  '\u0441': "{\\cyrchar\\cyrs}"
+  '\u0442': "{\\cyrchar\\cyrt}"
+  '\u0443': "{\\cyrchar\\cyru}"
+  '\u0444': "{\\cyrchar\\cyrf}"
+  '\u0445': "{\\cyrchar\\cyrh}"
+  '\u0446': "{\\cyrchar\\cyrc}"
+  '\u0447': "{\\cyrchar\\cyrch}"
+  '\u0448': "{\\cyrchar\\cyrsh}"
+  '\u0449': "{\\cyrchar\\cyrshch}"
+  '\u044A': "{\\cyrchar\\cyrhrdsn}"
+  '\u044B': "{\\cyrchar\\cyrery}"
+  '\u044C': "{\\cyrchar\\cyrsftsn}"
+  '\u044D': "{\\cyrchar\\cyrerev}"
+  '\u044E': "{\\cyrchar\\cyryu}"
+  '\u044F': "{\\cyrchar\\cyrya}"
+  '\u0451': "{\\cyrchar\\cyryo}"
+  '\u0452': "{\\cyrchar\\cyrdje}"
+  '\u0453': "\\cyrchar{\\'\\cyrg}"
+  '\u0454': "{\\cyrchar\\cyrie}"
+  '\u0455': "{\\cyrchar\\cyrdze}"
+  '\u0456': "{\\cyrchar\\cyrii}"
+  '\u0457': "{\\cyrchar\\cyryi}"
+  '\u0458': "{\\cyrchar\\cyrje}"
+  '\u0459': "{\\cyrchar\\cyrlje}"
+  '\u045A': "{\\cyrchar\\cyrnje}"
+  '\u045B': "{\\cyrchar\\cyrtshe}"
+  '\u045C': "\\cyrchar{\\'\\cyrk}"
+  '\u045E': "{\\cyrchar\\cyrushrt}"
+  '\u045F': "{\\cyrchar\\cyrdzhe}"
+  '\u0460': "{\\cyrchar\\CYROMEGA}"
+  '\u0461': "{\\cyrchar\\cyromega}"
+  '\u0462': "{\\cyrchar\\CYRYAT}"
+  '\u0464': "{\\cyrchar\\CYRIOTE}"
+  '\u0465': "{\\cyrchar\\cyriote}"
+  '\u0466': "{\\cyrchar\\CYRLYUS}"
+  '\u0467': "{\\cyrchar\\cyrlyus}"
+  '\u0468': "{\\cyrchar\\CYRIOTLYUS}"
+  '\u0469': "{\\cyrchar\\cyriotlyus}"
+  '\u046A': "{\\cyrchar\\CYRBYUS}"
+  '\u046C': "{\\cyrchar\\CYRIOTBYUS}"
+  '\u046D': "{\\cyrchar\\cyriotbyus}"
+  '\u046E': "{\\cyrchar\\CYRKSI}"
+  '\u046F': "{\\cyrchar\\cyrksi}"
+  '\u0470': "{\\cyrchar\\CYRPSI}"
+  '\u0471': "{\\cyrchar\\cyrpsi}"
+  '\u0472': "{\\cyrchar\\CYRFITA}"
+  '\u0474': "{\\cyrchar\\CYRIZH}"
+  '\u0478': "{\\cyrchar\\CYRUK}"
+  '\u0479': "{\\cyrchar\\cyruk}"
+  '\u047A': "{\\cyrchar\\CYROMEGARND}"
+  '\u047B': "{\\cyrchar\\cyromegarnd}"
+  '\u047C': "{\\cyrchar\\CYROMEGATITLO}"
+  '\u047D': "{\\cyrchar\\cyromegatitlo}"
+  '\u047E': "{\\cyrchar\\CYROT}"
+  '\u047F': "{\\cyrchar\\cyrot}"
+  '\u0480': "{\\cyrchar\\CYRKOPPA}"
+  '\u0481': "{\\cyrchar\\cyrkoppa}"
+  '\u0482': "{\\cyrchar\\cyrthousands}"
+  '\u0488': "{\\cyrchar\\cyrhundredthousands}"
+  '\u0489': "{\\cyrchar\\cyrmillions}"
+  '\u048C': "{\\cyrchar\\CYRSEMISFTSN}"
+  '\u048D': "{\\cyrchar\\cyrsemisftsn}"
+  '\u048E': "{\\cyrchar\\CYRRTICK}"
+  '\u048F': "{\\cyrchar\\cyrrtick}"
+  '\u0490': "{\\cyrchar\\CYRGUP}"
+  '\u0491': "{\\cyrchar\\cyrgup}"
+  '\u0492': "{\\cyrchar\\CYRGHCRS}"
+  '\u0493': "{\\cyrchar\\cyrghcrs}"
+  '\u0494': "{\\cyrchar\\CYRGHK}"
+  '\u0495': "{\\cyrchar\\cyrghk}"
+  '\u0496': "{\\cyrchar\\CYRZHDSC}"
+  '\u0497': "{\\cyrchar\\cyrzhdsc}"
+  '\u0498': "{\\cyrchar\\CYRZDSC}"
+  '\u0499': "{\\cyrchar\\cyrzdsc}"
+  '\u049A': "{\\cyrchar\\CYRKDSC}"
+  '\u049B': "{\\cyrchar\\cyrkdsc}"
+  '\u049C': "{\\cyrchar\\CYRKVCRS}"
+  '\u049D': "{\\cyrchar\\cyrkvcrs}"
+  '\u049E': "{\\cyrchar\\CYRKHCRS}"
+  '\u049F': "{\\cyrchar\\cyrkhcrs}"
+  '\u04A0': "{\\cyrchar\\CYRKBEAK}"
+  '\u04A1': "{\\cyrchar\\cyrkbeak}"
+  '\u04A2': "{\\cyrchar\\CYRNDSC}"
+  '\u04A3': "{\\cyrchar\\cyrndsc}"
+  '\u04A4': "{\\cyrchar\\CYRNG}"
+  '\u04A5': "{\\cyrchar\\cyrng}"
+  '\u04A6': "{\\cyrchar\\CYRPHK}"
+  '\u04A7': "{\\cyrchar\\cyrphk}"
+  '\u04A8': "{\\cyrchar\\CYRABHHA}"
+  '\u04A9': "{\\cyrchar\\cyrabhha}"
+  '\u04AA': "{\\cyrchar\\CYRSDSC}"
+  '\u04AB': "{\\cyrchar\\cyrsdsc}"
+  '\u04AC': "{\\cyrchar\\CYRTDSC}"
+  '\u04AD': "{\\cyrchar\\cyrtdsc}"
+  '\u04AE': "{\\cyrchar\\CYRY}"
+  '\u04AF': "{\\cyrchar\\cyry}"
+  '\u04B0': "{\\cyrchar\\CYRYHCRS}"
+  '\u04B1': "{\\cyrchar\\cyryhcrs}"
+  '\u04B2': "{\\cyrchar\\CYRHDSC}"
+  '\u04B3': "{\\cyrchar\\cyrhdsc}"
+  '\u04B4': "{\\cyrchar\\CYRTETSE}"
+  '\u04B5': "{\\cyrchar\\cyrtetse}"
+  '\u04B6': "{\\cyrchar\\CYRCHRDSC}"
+  '\u04B7': "{\\cyrchar\\cyrchrdsc}"
+  '\u04B8': "{\\cyrchar\\CYRCHVCRS}"
+  '\u04B9': "{\\cyrchar\\cyrchvcrs}"
+  '\u04BA': "{\\cyrchar\\CYRSHHA}"
+  '\u04BB': "{\\cyrchar\\cyrshha}"
+  '\u04BC': "{\\cyrchar\\CYRABHCH}"
+  '\u04BD': "{\\cyrchar\\cyrabhch}"
+  '\u04BE': "{\\cyrchar\\CYRABHCHDSC}"
+  '\u04BF': "{\\cyrchar\\cyrabhchdsc}"
+  '\u04C0': "{\\cyrchar\\CYRpalochka}"
+  '\u04C3': "{\\cyrchar\\CYRKHK}"
+  '\u04C4': "{\\cyrchar\\cyrkhk}"
+  '\u04C7': "{\\cyrchar\\CYRNHK}"
+  '\u04C8': "{\\cyrchar\\cyrnhk}"
+  '\u04CB': "{\\cyrchar\\CYRCHLDSC}"
+  '\u04CC': "{\\cyrchar\\cyrchldsc}"
+  '\u04D4': "{\\cyrchar\\CYRAE}"
+  '\u04D5': "{\\cyrchar\\cyrae}"
+  '\u04D8': "{\\cyrchar\\CYRSCHWA}"
+  '\u04D9': "{\\cyrchar\\cyrschwa}"
+  '\u04E0': "{\\cyrchar\\CYRABHDZE}"
+  '\u04E1': "{\\cyrchar\\cyrabhdze}"
+  '\u04E8': "{\\cyrchar\\CYROTLD}"
+  '\u04E9': "{\\cyrchar\\cyrotld}"
+  '\u2002': "\\hspace{0.6em}"
+  '\u2003': "\\hspace{1em}"
+  '\u2004': "\\hspace{0.33em}"
+  '\u2005': "\\hspace{0.25em}"
+  '\u2006': "\\hspace{0.166em}"
+  '\u2007': "\\hphantom{0}"
+  '\u2008': "\\hphantom{,}"
+  '\u2009': "\\hspace{0.167em}"
+  '\u2010': "-"
+  '\u2013': "{\\textendash}"
+  '\u2014': "{\\textemdash}"
+  '\u2015': "\\rule{1em}{1pt}"
+  '\u2018': "`"
+  '\u2019': "'"
+  '\u201A': ","
+  '\u201C': "{\\textquotedblleft}"
+  '\u201D': "{\\textquotedblright}"
+  '\u201E': ",,"
+  '\u2020': "{\\textdagger}"
+  '\u2021': "{\\textdaggerdbl}"
+  '\u2022': "{\\textbullet}"
+  '\u2024': "."
+  '\u2025': ".."
+  '\u2026': "{\\ldots}"
+  '\u2030': "{\\textperthousand}"
+  '\u2031': "{\\textpertenthousand}"
+  '\u2039': "{\\guilsinglleft}"
+  '\u203A': "{\\guilsinglright}"
+  '\u205F': "{\\mkern4mu}"
+  '\u2060': "{\\nolinebreak}"
+  '\u20A7': "\\ensuremath{\\Elzpes}"
+  '\u20AC': "{\\mbox{\\texteuro}}"
+  '\u210A': "\\mathscr{g}"
+  '\u2116': "{\\cyrchar\\textnumero}"
+  '\u2122': "{\\texttrademark}"
+  '\u212B': "{\\AA}"
+  '\u2212': "-"
+  '\u2254': ":="
+  '\u2305': "{\\barwedge}"
+  '\u2423': "{\\textvisiblespace}"
+  '\u2460': "\\ding{172}"
+  '\u2461': "\\ding{173}"
+  '\u2462': "\\ding{174}"
+  '\u2463': "\\ding{175}"
+  '\u2464': "\\ding{176}"
+  '\u2465': "\\ding{177}"
+  '\u2466': "\\ding{178}"
+  '\u2467': "\\ding{179}"
+  '\u2468': "\\ding{180}"
+  '\u2469': "\\ding{181}"
+  '\u25A0': "\\ding{110}"
+  '\u25B2': "\\ding{115}"
+  '\u25BC': "\\ding{116}"
+  '\u25C6': "\\ding{117}"
+  '\u25CF': "\\ding{108}"
+  '\u25D7': "\\ding{119}"
+  '\u2605': "\\ding{72}"
+  '\u2606': "\\ding{73}"
+  '\u260E': "\\ding{37}"
+  '\u261B': "\\ding{42}"
+  '\u261E': "\\ding{43}"
+  '\u263E': "{\\rightmoon}"
+  '\u263F': "{\\mercury}"
+  '\u2640': "{\\venus}"
+  '\u2642': "{\\male}"
+  '\u2643': "{\\jupiter}"
+  '\u2644': "{\\saturn}"
+  '\u2645': "{\\uranus}"
+  '\u2646': "{\\neptune}"
+  '\u2647': "{\\pluto}"
+  '\u2648': "{\\aries}"
+  '\u2649': "{\\taurus}"
+  '\u264A': "{\\gemini}"
+  '\u264B': "{\\cancer}"
+  '\u264C': "{\\leo}"
+  '\u264D': "{\\virgo}"
+  '\u264E': "{\\libra}"
+  '\u264F': "{\\scorpio}"
+  '\u2650': "{\\sagittarius}"
+  '\u2651': "{\\capricornus}"
+  '\u2652': "{\\aquarius}"
+  '\u2653': "{\\pisces}"
+  '\u2660': "\\ding{171}"
+  '\u2663': "\\ding{168}"
+  '\u2665': "\\ding{170}"
+  '\u2666': "\\ding{169}"
+  '\u2669': "{\\quarternote}"
+  '\u266A': "{\\eighthnote}"
+  '\u2701': "\\ding{33}"
+  '\u2702': "\\ding{34}"
+  '\u2703': "\\ding{35}"
+  '\u2704': "\\ding{36}"
+  '\u2706': "\\ding{38}"
+  '\u2707': "\\ding{39}"
+  '\u2708': "\\ding{40}"
+  '\u2709': "\\ding{41}"
+  '\u270C': "\\ding{44}"
+  '\u270D': "\\ding{45}"
+  '\u270E': "\\ding{46}"
+  '\u270F': "\\ding{47}"
+  '\u2710': "\\ding{48}"
+  '\u2711': "\\ding{49}"
+  '\u2712': "\\ding{50}"
+  '\u2713': "\\ding{51}"
+  '\u2714': "\\ding{52}"
+  '\u2715': "\\ding{53}"
+  '\u2716': "\\ding{54}"
+  '\u2717': "\\ding{55}"
+  '\u2718': "\\ding{56}"
+  '\u2719': "\\ding{57}"
+  '\u271A': "\\ding{58}"
+  '\u271B': "\\ding{59}"
+  '\u271C': "\\ding{60}"
+  '\u271D': "\\ding{61}"
+  '\u271E': "\\ding{62}"
+  '\u271F': "\\ding{63}"
+  '\u2720': "\\ding{64}"
+  '\u2721': "\\ding{65}"
+  '\u2722': "\\ding{66}"
+  '\u2723': "\\ding{67}"
+  '\u2724': "\\ding{68}"
+  '\u2725': "\\ding{69}"
+  '\u2726': "\\ding{70}"
+  '\u2727': "\\ding{71}"
+  '\u2729': "\\ding{73}"
+  '\u272A': "\\ding{74}"
+  '\u272B': "\\ding{75}"
+  '\u272C': "\\ding{76}"
+  '\u272D': "\\ding{77}"
+  '\u272E': "\\ding{78}"
+  '\u272F': "\\ding{79}"
+  '\u2730': "\\ding{80}"
+  '\u2731': "\\ding{81}"
+  '\u2732': "\\ding{82}"
+  '\u2733': "\\ding{83}"
+  '\u2734': "\\ding{84}"
+  '\u2735': "\\ding{85}"
+  '\u2736': "\\ding{86}"
+  '\u2737': "\\ding{87}"
+  '\u2738': "\\ding{88}"
+  '\u2739': "\\ding{89}"
+  '\u273A': "\\ding{90}"
+  '\u273B': "\\ding{91}"
+  '\u273C': "\\ding{92}"
+  '\u273D': "\\ding{93}"
+  '\u273E': "\\ding{94}"
+  '\u273F': "\\ding{95}"
+  '\u2740': "\\ding{96}"
+  '\u2741': "\\ding{97}"
+  '\u2742': "\\ding{98}"
+  '\u2743': "\\ding{99}"
+  '\u2744': "\\ding{100}"
+  '\u2745': "\\ding{101}"
+  '\u2746': "\\ding{102}"
+  '\u2747': "\\ding{103}"
+  '\u2748': "\\ding{104}"
+  '\u2749': "\\ding{105}"
+  '\u274A': "\\ding{106}"
+  '\u274B': "\\ding{107}"
+  '\u274D': "\\ding{109}"
+  '\u274F': "\\ding{111}"
+  '\u2750': "\\ding{112}"
+  '\u2751': "\\ding{113}"
+  '\u2752': "\\ding{114}"
+  '\u2756': "\\ding{118}"
+  '\u2758': "\\ding{120}"
+  '\u2759': "\\ding{121}"
+  '\u275A': "\\ding{122}"
+  '\u275B': "\\ding{123}"
+  '\u275C': "\\ding{124}"
+  '\u275D': "\\ding{125}"
+  '\u275E': "\\ding{126}"
+  '\u2761': "\\ding{161}"
+  '\u2762': "\\ding{162}"
+  '\u2763': "\\ding{163}"
+  '\u2764': "\\ding{164}"
+  '\u2765': "\\ding{165}"
+  '\u2766': "\\ding{166}"
+  '\u2767': "\\ding{167}"
+  '\u2776': "\\ding{182}"
+  '\u2777': "\\ding{183}"
+  '\u2778': "\\ding{184}"
+  '\u2779': "\\ding{185}"
+  '\u277A': "\\ding{186}"
+  '\u277B': "\\ding{187}"
+  '\u277C': "\\ding{188}"
+  '\u277D': "\\ding{189}"
+  '\u277E': "\\ding{190}"
+  '\u277F': "\\ding{191}"
+  '\u2780': "\\ding{192}"
+  '\u2781': "\\ding{193}"
+  '\u2782': "\\ding{194}"
+  '\u2783': "\\ding{195}"
+  '\u2784': "\\ding{196}"
+  '\u2785': "\\ding{197}"
+  '\u2786': "\\ding{198}"
+  '\u2787': "\\ding{199}"
+  '\u2788': "\\ding{200}"
+  '\u2789': "\\ding{201}"
+  '\u278A': "\\ding{202}"
+  '\u278B': "\\ding{203}"
+  '\u278C': "\\ding{204}"
+  '\u278D': "\\ding{205}"
+  '\u278E': "\\ding{206}"
+  '\u278F': "\\ding{207}"
+  '\u2790': "\\ding{208}"
+  '\u2791': "\\ding{209}"
+  '\u2792': "\\ding{210}"
+  '\u2793': "\\ding{211}"
+  '\u2794': "\\ding{212}"
+  '\u2798': "\\ding{216}"
+  '\u2799': "\\ding{217}"
+  '\u279A': "\\ding{218}"
+  '\u279B': "\\ding{219}"
+  '\u279C': "\\ding{220}"
+  '\u279D': "\\ding{221}"
+  '\u279E': "\\ding{222}"
+  '\u279F': "\\ding{223}"
+  '\u27A0': "\\ding{224}"
+  '\u27A1': "\\ding{225}"
+  '\u27A2': "\\ding{226}"
+  '\u27A3': "\\ding{227}"
+  '\u27A4': "\\ding{228}"
+  '\u27A5': "\\ding{229}"
+  '\u27A6': "\\ding{230}"
+  '\u27A7': "\\ding{231}"
+  '\u27A8': "\\ding{232}"
+  '\u27A9': "\\ding{233}"
+  '\u27AA': "\\ding{234}"
+  '\u27AB': "\\ding{235}"
+  '\u27AC': "\\ding{236}"
+  '\u27AD': "\\ding{237}"
+  '\u27AE': "\\ding{238}"
+  '\u27AF': "\\ding{239}"
+  '\u27B1': "\\ding{241}"
+  '\u27B2': "\\ding{242}"
+  '\u27B3': "\\ding{243}"
+  '\u27B4': "\\ding{244}"
+  '\u27B5': "\\ding{245}"
+  '\u27B6': "\\ding{246}"
+  '\u27B7': "\\ding{247}"
+  '\u27B8': "\\ding{248}"
+  '\u27B9': "\\ding{249}"
+  '\u27BA': "\\ding{250}"
+  '\u27BB': "\\ding{251}"
+  '\u27BC': "\\ding{252}"
+  '\u27BD': "\\ding{253}"
+  '\u27BE': "\\ding{254}"
+  '\u27E8': "{\\langle}"
+  '\u27E9': "{\\rangle}"
+  '\uFB00': "ff"
+  '\uFB01': "fi"
+  '\uFB02': "fl"
+  '\uFB03': "ffi"
+  '\uFB04': "ffl"
+  '\ud835\udeb9': "\\mathbf{\\vartheta}"
+  '\ud835\udedd': "\\mathbf{\\vartheta}"
+  '\ud835\udede': "\\mathbf{\\varkappa}"
+  '\ud835\udedf': "\\mathbf{\\phi}"
+  '\ud835\udee0': "\\mathbf{\\varrho}"
+  '\ud835\udee1': "\\mathbf{\\varpi}"
+  '\ud835\udef3': "\\mathsl{\\vartheta}"
+  '\ud835\udf17': "\\mathsl{\\vartheta}"
+  '\ud835\udf18': "\\mathsl{\\varkappa}"
+  '\ud835\udf19': "\\mathsl{\\phi}"
+  '\ud835\udf1a': "\\mathsl{\\varrho}"
+  '\ud835\udf1b': "\\mathsl{\\varpi}"
+  '\ud835\udf2d': "\\mathbit{O}"
+  '\ud835\udf51': "\\mathbit{\\vartheta}"
+  '\ud835\udf52': "\\mathbit{\\varkappa}"
+  '\ud835\udf53': "\\mathbit{\\phi}"
+  '\ud835\udf54': "\\mathbit{\\varrho}"
+  '\ud835\udf55': "\\mathbit{\\varpi}"
+  '\ud835\udf67': "\\mathsfbf{\\vartheta}"
+  '\ud835\udf8b': "\\mathsfbf{\\vartheta}"
+  '\ud835\udf8c': "\\mathsfbf{\\varkappa}"
+  '\ud835\udf8d': "\\mathsfbf{\\phi}"
+  '\ud835\udf8e': "\\mathsfbf{\\varrho}"
+  '\ud835\udf8f': "\\mathsfbf{\\varpi}"
+  '\ud835\udfa1': "\\mathsfbfsl{\\vartheta}"
+  '\ud835\udfc5': "\\mathsfbfsl{\\vartheta}"
+  '\ud835\udfc6': "\\mathsfbfsl{\\varkappa}"
+  '\ud835\udfc7': "\\mathsfbfsl{\\phi}"
+  '\ud835\udfc8': "\\mathsfbfsl{\\varrho}"
+  '\ud835\udfc9': "\\mathsfbfsl{\\varpi}"
   '\uFFFD': "\\dbend"
+  '[': "{[}"
 LaTeX.toUnicode =
   "\\#": '#'
   "{\\textdollar}": '$'
   "\\textdollar ": '$'
   "\\%": '%'
   "\\&": '&'
-  "<": '<'
-  ">": '>'
   "\\backslash": '\\'
   "\\^{}": '^'
   "\\_": '_'
@@ -2404,3146 +2403,2987 @@ LaTeX.toUnicode =
   "\\}": '}'
   "{\\textasciitilde}": '~'
   "\\textasciitilde ": '~'
-  " ": '\u000A0'
-  "{\\textexclamdown}": '\u000A1'
-  "\\textexclamdown ": '\u000A1'
-  "{\\textcent}": '\u000A2'
-  "\\textcent ": '\u000A2'
-  "{\\textsterling}": '\u000A3'
-  "\\textsterling ": '\u000A3'
-  "{\\textcurrency}": '\u000A4'
-  "\\textcurrency ": '\u000A4'
-  "{\\textyen}": '\u000A5'
-  "\\textyen ": '\u000A5'
-  "{\\textbrokenbar}": '\u000A6'
-  "\\textbrokenbar ": '\u000A6'
-  "{\\textsection}": '\u000A7'
-  "\\textsection ": '\u000A7'
-  "{\\textasciidieresis}": '\u000A8'
-  "\\textasciidieresis ": '\u000A8'
-  "{\\textcopyright}": '\u000A9'
-  "\\textcopyright ": '\u000A9'
-  "{\\textordfeminine}": '\u000AA'
-  "\\textordfeminine ": '\u000AA'
-  "{\\guillemotleft}": '\u000AB'
-  "\\guillemotleft ": '\u000AB'
-  "{\\lnot}": '\u000AC'
-  "\\lnot ": '\u000AC'
-  "\\-": '\u000AD'
-  "{\\textregistered}": '\u000AE'
-  "\\textregistered ": '\u000AE'
-  "{\\textasciimacron}": '\u000AF'
-  "\\textasciimacron ": '\u000AF'
-  "{\\textdegree}": '\u000B0'
-  "\\textdegree ": '\u000B0'
-  "{\\pm}": '\u000B1'
-  "\\pm ": '\u000B1'
-  "{^2}": '\u000B2'
-  "{^3}": '\u000B3'
-  "{\\textasciiacute}": '\u000B4'
-  "\\textasciiacute ": '\u000B4'
-  "\\mathrm{\\mu}": '\u000B5'
-  "{\\textparagraph}": '\u000B6'
-  "\\textparagraph ": '\u000B6'
-  "{\\cdot}": '\u000B7'
-  "\\cdot ": '\u000B7'
-  "\\c{}": '\u000B8'
-  "{^1}": '\u000B9'
-  "{\\textordmasculine}": '\u000BA'
-  "\\textordmasculine ": '\u000BA'
-  "{\\guillemotright}": '\u000BB'
-  "\\guillemotright ": '\u000BB'
-  "{\\textonequarter}": '\u000BC'
-  "\\textonequarter ": '\u000BC'
-  "{\\textonehalf}": '\u000BD'
-  "\\textonehalf ": '\u000BD'
-  "{\\textthreequarters}": '\u000BE'
-  "\\textthreequarters ": '\u000BE'
-  "{\\textquestiondown}": '\u000BF'
-  "\\textquestiondown ": '\u000BF'
-  "{\\`A}": '\u000C0'
-  "{\\'A}": '\u000C1'
-  "{\\^A}": '\u000C2'
-  "{\\~A}": '\u000C3'
-  "{\\\"A}": '\u000C4'
-  "{\\AA}": '\u000C5'
-  "\\AA ": '\u000C5'
-  "{\\AE}": '\u000C6'
-  "\\AE ": '\u000C6'
-  "{\\c C}": '\u000C7'
-  "{\\`E}": '\u000C8'
-  "{\\'E}": '\u000C9'
-  "{\\^E}": '\u000CA'
-  "{\\\"E}": '\u000CB'
-  "{\\`I}": '\u000CC'
-  "{\\'I}": '\u000CD'
-  "{\\^I}": '\u000CE'
-  "{\\\"I}": '\u000CF'
-  "{\\DH}": '\u000D0'
-  "\\DH ": '\u000D0'
-  "{\\~N}": '\u000D1'
-  "{\\`O}": '\u000D2'
-  "{\\'O}": '\u000D3'
-  "{\\^O}": '\u000D4'
-  "{\\~O}": '\u000D5'
-  "{\\\"O}": '\u000D6'
-  "{\\texttimes}": '\u000D7'
-  "\\texttimes ": '\u000D7'
-  "{\\O}": '\u000D8'
-  "\\O ": '\u000D8'
-  "{\\`U}": '\u000D9'
-  "{\\'U}": '\u000DA'
-  "{\\^U}": '\u000DB'
-  "{\\\"U}": '\u000DC'
-  "{\\'Y}": '\u000DD'
-  "{\\TH}": '\u000DE'
-  "\\TH ": '\u000DE'
-  "{\\ss}": '\u000DF'
-  "\\ss ": '\u000DF'
-  "{\\`a}": '\u000E0'
-  "{\\'a}": '\u000E1'
-  "{\\^a}": '\u000E2'
-  "{\\~a}": '\u000E3'
-  "{\\\"a}": '\u000E4'
-  "{\\aa}": '\u000E5'
-  "\\aa ": '\u000E5'
-  "{\\ae}": '\u000E6'
-  "\\ae ": '\u000E6'
-  "{\\c c}": '\u000E7'
-  "{\\`e}": '\u000E8'
-  "{\\'e}": '\u000E9'
-  "{\\^e}": '\u000EA'
-  "{\\\"e}": '\u000EB'
-  "{\\`\\i}": '\u000EC'
-  "{\\'\\i}": '\u000ED'
-  "{\\^\\i}": '\u000EE'
-  "{\\\"\\i}": '\u000EF'
-  "{\\dh}": '\u000F0'
-  "\\dh ": '\u000F0'
-  "{\\~n}": '\u000F1'
-  "{\\`o}": '\u000F2'
-  "{\\'o}": '\u000F3'
-  "{\\^o}": '\u000F4'
-  "{\\~o}": '\u000F5'
-  "{\\\"o}": '\u000F6'
-  "{\\div}": '\u000F7'
-  "\\div ": '\u000F7'
-  "{\\o}": '\u000F8'
-  "\\o ": '\u000F8'
-  "{\\`u}": '\u000F9'
-  "{\\'u}": '\u000FA'
-  "{\\^u}": '\u000FB'
-  "{\\\"u}": '\u000FC'
-  "{\\'y}": '\u000FD'
-  "{\\th}": '\u000FE'
-  "\\th ": '\u000FE'
-  "{\\\"y}": '\u000FF'
-  "\\={A}": '\u00100'
-  "\\=A": '\u00100'
-  "\\={a}": '\u00101'
-  "\\=a": '\u00101'
-  "{\\u A}": '\u00102'
-  "{\\u a}": '\u00103'
-  "\\k{A}": '\u00104'
-  "\\k{a}": '\u00105'
-  "{\\'C}": '\u00106'
-  "{\\'c}": '\u00107'
-  "{\\^C}": '\u00108'
-  "{\\^c}": '\u00109'
-  "{\\.C}": '\u0010A'
-  "{\\.c}": '\u0010B'
-  "{\\v C}": '\u0010C'
-  "{\\v c}": '\u0010D'
-  "{\\v D}": '\u0010E'
-  "{\\v d}": '\u0010F'
-  "{\\DJ}": '\u00110'
-  "\\DJ ": '\u00110'
-  "{\\dj}": '\u00111'
-  "\\dj ": '\u00111'
-  "\\={E}": '\u00112'
-  "\\=E": '\u00112'
-  "\\={e}": '\u00113'
-  "\\=e": '\u00113'
-  "{\\u E}": '\u00114'
-  "{\\u e}": '\u00115'
-  "{\\.E}": '\u00116'
-  "{\\.e}": '\u00117'
-  "\\k{E}": '\u00118'
-  "\\k{e}": '\u00119'
-  "{\\v E}": '\u0011A'
-  "{\\v e}": '\u0011B'
-  "{\\^G}": '\u0011C'
-  "{\\^g}": '\u0011D'
-  "{\\u G}": '\u0011E'
-  "{\\u g}": '\u0011F'
-  "{\\.G}": '\u00120'
-  "{\\.g}": '\u00121'
-  "{\\c G}": '\u00122'
-  "{\\c g}": '\u00123'
-  "{\\^H}": '\u00124'
-  "{\\^h}": '\u00125'
-  "{\\fontencoding{LELA}\\selectfont\\char40}": '\u00126'
-  "{\\Elzxh}": '\u00127'
-  "\\Elzxh ": '\u00127'
-  "{\\~I}": '\u00128'
-  "{\\~\\i}": '\u00129'
-  "\\={I}": '\u0012A'
-  "\\=I": '\u0012A'
-  "\\={\\i}": '\u0012B'
-  "{\\u I}": '\u0012C'
-  "{\\u \\i}": '\u0012D'
-  "\\k{I}": '\u0012E'
-  "\\k{i}": '\u0012F'
-  "{\\.I}": '\u00130'
-  "{\\i}": '\u00131'
-  "\\i ": '\u00131'
-  "{\\^J}": '\u00134'
-  "{\\^\\j}": '\u00135'
-  "{\\c K}": '\u00136'
-  "{\\c k}": '\u00137'
-  "{\\fontencoding{LELA}\\selectfont\\char91}": '\u00138'
-  "{\\'L}": '\u00139'
-  "{\\'l}": '\u0013A'
-  "{\\c L}": '\u0013B'
-  "{\\c l}": '\u0013C'
-  "{\\v L}": '\u0013D'
-  "{\\v l}": '\u0013E'
-  "{\\fontencoding{LELA}\\selectfont\\char201}": '\u0013F'
-  "{\\fontencoding{LELA}\\selectfont\\char202}": '\u00140'
-  "{\\L}": '\u00141'
-  "\\L ": '\u00141'
-  "{\\l}": '\u00142'
-  "\\l ": '\u00142'
-  "{\\'N}": '\u00143'
-  "{\\'n}": '\u00144'
-  "{\\c N}": '\u00145'
-  "{\\c n}": '\u00146'
-  "{\\v N}": '\u00147'
-  "{\\v n}": '\u00148'
-  "'n": '\u00149'
-  "{\\NG}": '\u0014A'
-  "\\NG ": '\u0014A'
-  "{\\ng}": '\u0014B'
-  "\\ng ": '\u0014B'
-  "\\={O}": '\u0014C'
-  "\\=O": '\u0014C'
-  "\\={o}": '\u0014D'
-  "\\=o": '\u0014D'
-  "{\\u O}": '\u0014E'
-  "{\\u o}": '\u0014F'
-  "{\\H O}": '\u00150'
-  "{\\H o}": '\u00151'
-  "{\\OE}": '\u00152'
-  "\\OE ": '\u00152'
-  "{\\oe}": '\u00153'
-  "\\oe ": '\u00153'
-  "{\\'R}": '\u00154'
-  "{\\'r}": '\u00155'
-  "{\\c R}": '\u00156'
-  "{\\c r}": '\u00157'
-  "{\\v R}": '\u00158'
-  "{\\v r}": '\u00159'
-  "{\\'S}": '\u0015A'
-  "{\\'s}": '\u0015B'
-  "{\\^S}": '\u0015C'
-  "{\\^s}": '\u0015D'
-  "{\\c S}": '\u0015E'
-  "{\\c s}": '\u0015F'
-  "{\\v S}": '\u00160'
-  "{\\v s}": '\u00161'
-  "{\\c T}": '\u00162'
-  "{\\c t}": '\u00163'
-  "{\\v T}": '\u00164'
-  "{\\v t}": '\u00165'
-  "{\\fontencoding{LELA}\\selectfont\\char47}": '\u00166'
-  "{\\fontencoding{LELA}\\selectfont\\char63}": '\u00167'
-  "{\\~U}": '\u00168'
-  "{\\~u}": '\u00169'
-  "\\={U}": '\u0016A'
-  "\\=U": '\u0016A'
-  "\\={u}": '\u0016B'
-  "\\=u": '\u0016B'
-  "{\\u U}": '\u0016C'
-  "{\\u u}": '\u0016D'
-  "\\r{U}": '\u0016E'
-  "\\r{u}": '\u0016F'
-  "{\\H U}": '\u00170'
-  "{\\H u}": '\u00171'
-  "\\k{U}": '\u00172'
-  "\\k{u}": '\u00173'
-  "{\\^W}": '\u00174'
-  "{\\^w}": '\u00175'
-  "{\\^Y}": '\u00176'
-  "{\\^y}": '\u00177'
-  "{\\\"Y}": '\u00178'
-  "{\\'Z}": '\u00179'
-  "{\\'z}": '\u0017A'
-  "{\\.Z}": '\u0017B'
-  "{\\.z}": '\u0017C'
-  "{\\v Z}": '\u0017D'
-  "{\\v z}": '\u0017E'
-  "{\\texthvlig}": '\u00195'
-  "\\texthvlig ": '\u00195'
-  "{\\textnrleg}": '\u0019E'
-  "\\textnrleg ": '\u0019E'
-  "{\\eth}": '\u001AA'
-  "\\eth ": '\u001AA'
-  "{\\fontencoding{LELA}\\selectfont\\char195}": '\u001BA'
-  "{\\textdoublepipe}": '\u001C2'
-  "\\textdoublepipe ": '\u001C2'
-  "{\\'g}": '\u001F5'
-  "{\\Elztrna}": '\u00250'
-  "\\Elztrna ": '\u00250'
-  "{\\Elztrnsa}": '\u00252'
-  "\\Elztrnsa ": '\u00252'
-  "{\\Elzopeno}": '\u00254'
-  "\\Elzopeno ": '\u00254'
-  "{\\Elzrtld}": '\u00256'
-  "\\Elzrtld ": '\u00256'
-  "{\\fontencoding{LEIP}\\selectfont\\char61}": '\u00258'
-  "{\\Elzschwa}": '\u00259'
-  "\\Elzschwa ": '\u00259'
-  "{\\varepsilon}": '\u0025B'
-  "\\varepsilon ": '\u0025B'
-  "{\\Elzpgamma}": '\u00263'
-  "\\Elzpgamma ": '\u00263'
-  "{\\Elzpbgam}": '\u00264'
-  "\\Elzpbgam ": '\u00264'
-  "{\\Elztrnh}": '\u00265'
-  "\\Elztrnh ": '\u00265'
-  "{\\Elzbtdl}": '\u0026C'
-  "\\Elzbtdl ": '\u0026C'
-  "{\\Elzrtll}": '\u0026D'
-  "\\Elzrtll ": '\u0026D'
-  "{\\Elztrnm}": '\u0026F'
-  "\\Elztrnm ": '\u0026F'
-  "{\\Elztrnmlr}": '\u00270'
-  "\\Elztrnmlr ": '\u00270'
-  "{\\Elzltlmr}": '\u00271'
-  "\\Elzltlmr ": '\u00271'
-  "{\\Elzltln}": '\u00272'
-  "\\Elzltln ": '\u00272'
-  "{\\Elzrtln}": '\u00273'
-  "\\Elzrtln ": '\u00273'
-  "{\\Elzclomeg}": '\u00277'
-  "\\Elzclomeg ": '\u00277'
-  "{\\textphi}": '\u00278'
-  "\\textphi ": '\u00278'
-  "{\\Elztrnr}": '\u00279'
-  "\\Elztrnr ": '\u00279'
-  "{\\Elztrnrl}": '\u0027A'
-  "\\Elztrnrl ": '\u0027A'
-  "{\\Elzrttrnr}": '\u0027B'
-  "\\Elzrttrnr ": '\u0027B'
-  "{\\Elzrl}": '\u0027C'
-  "\\Elzrl ": '\u0027C'
-  "{\\Elzrtlr}": '\u0027D'
-  "\\Elzrtlr ": '\u0027D'
-  "{\\Elzfhr}": '\u0027E'
-  "\\Elzfhr ": '\u0027E'
-  "{\\fontencoding{LEIP}\\selectfont\\char202}": '\u0027F'
-  "{\\Elzrtls}": '\u00282'
-  "\\Elzrtls ": '\u00282'
-  "{\\Elzesh}": '\u00283'
-  "\\Elzesh ": '\u00283'
-  "{\\Elztrnt}": '\u00287'
-  "\\Elztrnt ": '\u00287'
-  "{\\Elzrtlt}": '\u00288'
-  "\\Elzrtlt ": '\u00288'
-  "{\\Elzpupsil}": '\u0028A'
-  "\\Elzpupsil ": '\u0028A'
-  "{\\Elzpscrv}": '\u0028B'
-  "\\Elzpscrv ": '\u0028B'
-  "{\\Elzinvv}": '\u0028C'
-  "\\Elzinvv ": '\u0028C'
-  "{\\Elzinvw}": '\u0028D'
-  "\\Elzinvw ": '\u0028D'
-  "{\\Elztrny}": '\u0028E'
-  "\\Elztrny ": '\u0028E'
-  "{\\Elzrtlz}": '\u00290'
-  "\\Elzrtlz ": '\u00290'
-  "{\\Elzyogh}": '\u00292'
-  "\\Elzyogh ": '\u00292'
-  "{\\Elzglst}": '\u00294'
-  "\\Elzglst ": '\u00294'
-  "{\\Elzreglst}": '\u00295'
-  "\\Elzreglst ": '\u00295'
-  "{\\Elzinglst}": '\u00296'
-  "\\Elzinglst ": '\u00296'
-  "{\\textturnk}": '\u0029E'
-  "\\textturnk ": '\u0029E'
-  "{\\Elzdyogh}": '\u002A4'
-  "\\Elzdyogh ": '\u002A4'
-  "{\\Elztesh}": '\u002A7'
-  "\\Elztesh ": '\u002A7'
-  "'": '\u002BC'
-  "{\\textasciicaron}": '\u002C7'
-  "\\textasciicaron ": '\u002C7'
-  "{\\Elzverts}": '\u002C8'
-  "\\Elzverts ": '\u002C8'
-  "{\\Elzverti}": '\u002CC'
-  "\\Elzverti ": '\u002CC'
-  "{\\Elzlmrk}": '\u002D0'
-  "\\Elzlmrk ": '\u002D0'
-  "{\\Elzhlmrk}": '\u002D1'
-  "\\Elzhlmrk ": '\u002D1'
-  "{\\Elzsbrhr}": '\u002D2'
-  "\\Elzsbrhr ": '\u002D2'
-  "{\\Elzsblhr}": '\u002D3'
-  "\\Elzsblhr ": '\u002D3'
-  "{\\Elzrais}": '\u002D4'
-  "\\Elzrais ": '\u002D4'
-  "{\\Elzlow}": '\u002D5'
-  "\\Elzlow ": '\u002D5'
-  "{\\textasciibreve}": '\u002D8'
-  "\\textasciibreve ": '\u002D8'
-  "{\\textperiodcentered}": '\u002D9'
-  "\\textperiodcentered ": '\u002D9'
-  "\\r{}": '\u002DA'
-  "\\k{}": '\u002DB'
-  "{\\texttildelow}": '\u002DC'
-  "\\texttildelow ": '\u002DC'
-  "\\H{}": '\u002DD'
-  "\\tone{55}": '\u002E5'
-  "\\tone{44}": '\u002E6'
-  "\\tone{33}": '\u002E7'
-  "\\tone{22}": '\u002E8'
-  "\\tone{11}": '\u002E9'
-  "\\`": '\u00300'
-  "\\'": '\u00301'
-  "\\^": '\u00302'
-  "\\~": '\u00303'
-  "\\=": '\u00304'
-  "\\u": '\u00306'
-  "\\.": '\u00307'
-  "\\\"": '\u00308'
-  "\\r": '\u0030A'
-  "\\H": '\u0030B'
-  "\\v": '\u0030C'
-  "\\cyrchar\\C": '\u0030F'
-  "{\\fontencoding{LECO}\\selectfont\\char177}": '\u00311'
-  "{\\fontencoding{LECO}\\selectfont\\char184}": '\u00318'
-  "{\\fontencoding{LECO}\\selectfont\\char185}": '\u00319'
-  "{\\Elzpalh}": '\u00321'
-  "\\Elzpalh ": '\u00321'
-  "{\\Elzrh}": '\u00322'
-  "\\Elzrh ": '\u00322'
-  "\\c": '\u00327'
-  "\\k": '\u00328'
-  "{\\Elzsbbrg}": '\u0032A'
-  "\\Elzsbbrg ": '\u0032A'
-  "{\\fontencoding{LECO}\\selectfont\\char203}": '\u0032B'
-  "{\\fontencoding{LECO}\\selectfont\\char207}": '\u0032F'
-  "{\\Elzxl}": '\u00335'
-  "\\Elzxl ": '\u00335'
-  "{\\Elzbar}": '\u00336'
-  "\\Elzbar ": '\u00336'
-  "{\\fontencoding{LECO}\\selectfont\\char215}": '\u00337'
-  "{\\fontencoding{LECO}\\selectfont\\char216}": '\u00338'
-  "{\\fontencoding{LECO}\\selectfont\\char218}": '\u0033A'
-  "{\\fontencoding{LECO}\\selectfont\\char219}": '\u0033B'
-  "{\\fontencoding{LECO}\\selectfont\\char220}": '\u0033C'
-  "{\\fontencoding{LECO}\\selectfont\\char221}": '\u0033D'
-  "{\\fontencoding{LECO}\\selectfont\\char225}": '\u00361'
-  "{\\'A}": '\u00386'
-  "{\\'E}": '\u00388'
-  "{\\'H}": '\u00389'
-  "\\'{}{I}": '\u0038A'
-  "\\'{}O": '\u0038C'
-  "\\mathrm{'Y}": '\u0038E'
-  "\\mathrm{'\\Omega}": '\u0038F'
-  "\\acute{\\ddot{\\iota}}": '\u00390'
-  "{\\Alpha}": '\u00391'
-  "\\Alpha ": '\u00391'
-  "{\\Beta}": '\u00392'
-  "\\Beta ": '\u00392'
-  "{\\Gamma}": '\u00393'
-  "\\Gamma ": '\u00393'
-  "{\\Delta}": '\u00394'
-  "\\Delta ": '\u00394'
-  "{\\Epsilon}": '\u00395'
-  "\\Epsilon ": '\u00395'
-  "{\\Zeta}": '\u00396'
-  "\\Zeta ": '\u00396'
-  "{\\Eta}": '\u00397'
-  "\\Eta ": '\u00397'
-  "{\\Theta}": '\u00398'
-  "\\Theta ": '\u00398'
-  "{\\Iota}": '\u00399'
-  "\\Iota ": '\u00399'
-  "{\\Kappa}": '\u0039A'
-  "\\Kappa ": '\u0039A'
-  "{\\Lambda}": '\u0039B'
-  "\\Lambda ": '\u0039B'
-  "{\\Xi}": '\u0039E'
-  "\\Xi ": '\u0039E'
-  "{\\Pi}": '\u003A0'
-  "\\Pi ": '\u003A0'
-  "{\\Rho}": '\u003A1'
-  "\\Rho ": '\u003A1'
-  "{\\Sigma}": '\u003A3'
-  "\\Sigma ": '\u003A3'
-  "{\\Tau}": '\u003A4'
-  "\\Tau ": '\u003A4'
-  "{\\Upsilon}": '\u003A5'
-  "\\Upsilon ": '\u003A5'
-  "{\\Phi}": '\u003A6'
-  "\\Phi ": '\u003A6'
-  "{\\Chi}": '\u003A7'
-  "\\Chi ": '\u003A7'
-  "{\\Psi}": '\u003A8'
-  "\\Psi ": '\u003A8'
-  "{\\Omega}": '\u003A9'
-  "\\Omega ": '\u003A9'
-  "\\mathrm{\\ddot{I}}": '\u003AA'
-  "\\mathrm{\\ddot{Y}}": '\u003AB'
-  "{\\'$\\alpha$}": '\u003AC'
-  "\\acute{\\epsilon}": '\u003AD'
-  "\\acute{\\eta}": '\u003AE'
-  "\\acute{\\iota}": '\u003AF'
-  "\\acute{\\ddot{\\upsilon}}": '\u003B0'
-  "{\\alpha}": '\u003B1'
-  "\\alpha ": '\u003B1'
-  "{\\beta}": '\u003B2'
-  "\\beta ": '\u003B2'
-  "{\\gamma}": '\u003B3'
-  "\\gamma ": '\u003B3'
-  "{\\delta}": '\u003B4'
-  "\\delta ": '\u003B4'
-  "{\\epsilon}": '\u003B5'
-  "\\epsilon ": '\u003B5'
-  "{\\zeta}": '\u003B6'
-  "\\zeta ": '\u003B6'
-  "{\\eta}": '\u003B7'
-  "\\eta ": '\u003B7'
-  "{\\texttheta}": '\u003B8'
-  "\\texttheta ": '\u003B8'
-  "{\\iota}": '\u003B9'
-  "\\iota ": '\u003B9'
-  "{\\kappa}": '\u003BA'
-  "\\kappa ": '\u003BA'
-  "{\\lambda}": '\u003BB'
-  "\\lambda ": '\u003BB'
-  "{\\mu}": '\u003BC'
-  "\\mu ": '\u003BC'
-  "{\\nu}": '\u003BD'
-  "\\nu ": '\u003BD'
-  "{\\xi}": '\u003BE'
-  "\\xi ": '\u003BE'
-  "{\\pi}": '\u003C0'
-  "\\pi ": '\u003C0'
-  "{\\rho}": '\u003C1'
-  "\\rho ": '\u003C1'
-  "{\\varsigma}": '\u003C2'
-  "\\varsigma ": '\u003C2'
-  "{\\sigma}": '\u003C3'
-  "\\sigma ": '\u003C3'
-  "{\\tau}": '\u003C4'
-  "\\tau ": '\u003C4'
-  "{\\upsilon}": '\u003C5'
-  "\\upsilon ": '\u003C5'
-  "{\\varphi}": '\u003C6'
-  "\\varphi ": '\u003C6'
-  "{\\chi}": '\u003C7'
-  "\\chi ": '\u003C7'
-  "{\\psi}": '\u003C8'
-  "\\psi ": '\u003C8'
-  "{\\omega}": '\u003C9'
-  "\\omega ": '\u003C9'
-  "\\ddot{\\iota}": '\u003CA'
-  "\\ddot{\\upsilon}": '\u003CB'
-  "{\\'o}": '\u003CC'
-  "\\acute{\\upsilon}": '\u003CD'
-  "\\acute{\\omega}": '\u003CE'
-  "\\Pisymbol{ppi022}{87}": '\u003D0'
-  "{\\textvartheta}": '\u003D1'
-  "\\textvartheta ": '\u003D1'
-  "{\\Upsilon}": '\u003D2'
-  "\\Upsilon ": '\u003D2'
-  "{\\phi}": '\u003D5'
-  "\\phi ": '\u003D5'
-  "{\\varpi}": '\u003D6'
-  "\\varpi ": '\u003D6'
-  "{\\Stigma}": '\u003DA'
-  "\\Stigma ": '\u003DA'
-  "{\\Digamma}": '\u003DC'
-  "\\Digamma ": '\u003DC'
-  "{\\digamma}": '\u003DD'
-  "\\digamma ": '\u003DD'
-  "{\\Koppa}": '\u003DE'
-  "\\Koppa ": '\u003DE'
-  "{\\Sampi}": '\u003E0'
-  "\\Sampi ": '\u003E0'
-  "{\\varkappa}": '\u003F0'
-  "\\varkappa ": '\u003F0'
-  "{\\varrho}": '\u003F1'
-  "\\varrho ": '\u003F1'
-  "{\\textTheta}": '\u003F4'
-  "\\textTheta ": '\u003F4'
-  "{\\backepsilon}": '\u003F6'
-  "\\backepsilon ": '\u003F6'
-  "{\\cyrchar\\CYRYO}": '\u00401'
-  "\\cyrchar\\CYRYO ": '\u00401'
-  "{\\cyrchar\\CYRDJE}": '\u00402'
-  "\\cyrchar\\CYRDJE ": '\u00402'
-  "\\cyrchar{\\'\\CYRG}": '\u00403'
-  "{\\cyrchar\\CYRIE}": '\u00404'
-  "\\cyrchar\\CYRIE ": '\u00404'
-  "{\\cyrchar\\CYRDZE}": '\u00405'
-  "\\cyrchar\\CYRDZE ": '\u00405'
-  "{\\cyrchar\\CYRII}": '\u00406'
-  "\\cyrchar\\CYRII ": '\u00406'
-  "{\\cyrchar\\CYRYI}": '\u00407'
-  "\\cyrchar\\CYRYI ": '\u00407'
-  "{\\cyrchar\\CYRJE}": '\u00408'
-  "\\cyrchar\\CYRJE ": '\u00408'
-  "{\\cyrchar\\CYRLJE}": '\u00409'
-  "\\cyrchar\\CYRLJE ": '\u00409'
-  "{\\cyrchar\\CYRNJE}": '\u0040A'
-  "\\cyrchar\\CYRNJE ": '\u0040A'
-  "{\\cyrchar\\CYRTSHE}": '\u0040B'
-  "\\cyrchar\\CYRTSHE ": '\u0040B'
-  "\\cyrchar{\\'\\CYRK}": '\u0040C'
-  "{\\cyrchar\\CYRUSHRT}": '\u0040E'
-  "\\cyrchar\\CYRUSHRT ": '\u0040E'
-  "{\\cyrchar\\CYRDZHE}": '\u0040F'
-  "\\cyrchar\\CYRDZHE ": '\u0040F'
-  "{\\cyrchar\\CYRA}": '\u00410'
-  "\\cyrchar\\CYRA ": '\u00410'
-  "{\\cyrchar\\CYRB}": '\u00411'
-  "\\cyrchar\\CYRB ": '\u00411'
-  "{\\cyrchar\\CYRV}": '\u00412'
-  "\\cyrchar\\CYRV ": '\u00412'
-  "{\\cyrchar\\CYRG}": '\u00413'
-  "\\cyrchar\\CYRG ": '\u00413'
-  "{\\cyrchar\\CYRD}": '\u00414'
-  "\\cyrchar\\CYRD ": '\u00414'
-  "{\\cyrchar\\CYRE}": '\u00415'
-  "\\cyrchar\\CYRE ": '\u00415'
-  "{\\cyrchar\\CYRZH}": '\u00416'
-  "\\cyrchar\\CYRZH ": '\u00416'
-  "{\\cyrchar\\CYRZ}": '\u00417'
-  "\\cyrchar\\CYRZ ": '\u00417'
-  "{\\cyrchar\\CYRI}": '\u00418'
-  "\\cyrchar\\CYRI ": '\u00418'
-  "{\\cyrchar\\CYRISHRT}": '\u00419'
-  "\\cyrchar\\CYRISHRT ": '\u00419'
-  "{\\cyrchar\\CYRK}": '\u0041A'
-  "\\cyrchar\\CYRK ": '\u0041A'
-  "{\\cyrchar\\CYRL}": '\u0041B'
-  "\\cyrchar\\CYRL ": '\u0041B'
-  "{\\cyrchar\\CYRM}": '\u0041C'
-  "\\cyrchar\\CYRM ": '\u0041C'
-  "{\\cyrchar\\CYRN}": '\u0041D'
-  "\\cyrchar\\CYRN ": '\u0041D'
-  "{\\cyrchar\\CYRO}": '\u0041E'
-  "\\cyrchar\\CYRO ": '\u0041E'
-  "{\\cyrchar\\CYRP}": '\u0041F'
-  "\\cyrchar\\CYRP ": '\u0041F'
-  "{\\cyrchar\\CYRR}": '\u00420'
-  "\\cyrchar\\CYRR ": '\u00420'
-  "{\\cyrchar\\CYRS}": '\u00421'
-  "\\cyrchar\\CYRS ": '\u00421'
-  "{\\cyrchar\\CYRT}": '\u00422'
-  "\\cyrchar\\CYRT ": '\u00422'
-  "{\\cyrchar\\CYRU}": '\u00423'
-  "\\cyrchar\\CYRU ": '\u00423'
-  "{\\cyrchar\\CYRF}": '\u00424'
-  "\\cyrchar\\CYRF ": '\u00424'
-  "{\\cyrchar\\CYRH}": '\u00425'
-  "\\cyrchar\\CYRH ": '\u00425'
-  "{\\cyrchar\\CYRC}": '\u00426'
-  "\\cyrchar\\CYRC ": '\u00426'
-  "{\\cyrchar\\CYRCH}": '\u00427'
-  "\\cyrchar\\CYRCH ": '\u00427'
-  "{\\cyrchar\\CYRSH}": '\u00428'
-  "\\cyrchar\\CYRSH ": '\u00428'
-  "{\\cyrchar\\CYRSHCH}": '\u00429'
-  "\\cyrchar\\CYRSHCH ": '\u00429'
-  "{\\cyrchar\\CYRHRDSN}": '\u0042A'
-  "\\cyrchar\\CYRHRDSN ": '\u0042A'
-  "{\\cyrchar\\CYRERY}": '\u0042B'
-  "\\cyrchar\\CYRERY ": '\u0042B'
-  "{\\cyrchar\\CYRSFTSN}": '\u0042C'
-  "\\cyrchar\\CYRSFTSN ": '\u0042C'
-  "{\\cyrchar\\CYREREV}": '\u0042D'
-  "\\cyrchar\\CYREREV ": '\u0042D'
-  "{\\cyrchar\\CYRYU}": '\u0042E'
-  "\\cyrchar\\CYRYU ": '\u0042E'
-  "{\\cyrchar\\CYRYA}": '\u0042F'
-  "\\cyrchar\\CYRYA ": '\u0042F'
-  "{\\cyrchar\\cyra}": '\u00430'
-  "\\cyrchar\\cyra ": '\u00430'
-  "{\\cyrchar\\cyrb}": '\u00431'
-  "\\cyrchar\\cyrb ": '\u00431'
-  "{\\cyrchar\\cyrv}": '\u00432'
-  "\\cyrchar\\cyrv ": '\u00432'
-  "{\\cyrchar\\cyrg}": '\u00433'
-  "\\cyrchar\\cyrg ": '\u00433'
-  "{\\cyrchar\\cyrd}": '\u00434'
-  "\\cyrchar\\cyrd ": '\u00434'
-  "{\\cyrchar\\cyre}": '\u00435'
-  "\\cyrchar\\cyre ": '\u00435'
-  "{\\cyrchar\\cyrzh}": '\u00436'
-  "\\cyrchar\\cyrzh ": '\u00436'
-  "{\\cyrchar\\cyrz}": '\u00437'
-  "\\cyrchar\\cyrz ": '\u00437'
-  "{\\cyrchar\\cyri}": '\u00438'
-  "\\cyrchar\\cyri ": '\u00438'
-  "{\\cyrchar\\cyrishrt}": '\u00439'
-  "\\cyrchar\\cyrishrt ": '\u00439'
-  "{\\cyrchar\\cyrk}": '\u0043A'
-  "\\cyrchar\\cyrk ": '\u0043A'
-  "{\\cyrchar\\cyrl}": '\u0043B'
-  "\\cyrchar\\cyrl ": '\u0043B'
-  "{\\cyrchar\\cyrm}": '\u0043C'
-  "\\cyrchar\\cyrm ": '\u0043C'
-  "{\\cyrchar\\cyrn}": '\u0043D'
-  "\\cyrchar\\cyrn ": '\u0043D'
-  "{\\cyrchar\\cyro}": '\u0043E'
-  "\\cyrchar\\cyro ": '\u0043E'
-  "{\\cyrchar\\cyrp}": '\u0043F'
-  "\\cyrchar\\cyrp ": '\u0043F'
-  "{\\cyrchar\\cyrr}": '\u00440'
-  "\\cyrchar\\cyrr ": '\u00440'
-  "{\\cyrchar\\cyrs}": '\u00441'
-  "\\cyrchar\\cyrs ": '\u00441'
-  "{\\cyrchar\\cyrt}": '\u00442'
-  "\\cyrchar\\cyrt ": '\u00442'
-  "{\\cyrchar\\cyru}": '\u00443'
-  "\\cyrchar\\cyru ": '\u00443'
-  "{\\cyrchar\\cyrf}": '\u00444'
-  "\\cyrchar\\cyrf ": '\u00444'
-  "{\\cyrchar\\cyrh}": '\u00445'
-  "\\cyrchar\\cyrh ": '\u00445'
-  "{\\cyrchar\\cyrc}": '\u00446'
-  "\\cyrchar\\cyrc ": '\u00446'
-  "{\\cyrchar\\cyrch}": '\u00447'
-  "\\cyrchar\\cyrch ": '\u00447'
-  "{\\cyrchar\\cyrsh}": '\u00448'
-  "\\cyrchar\\cyrsh ": '\u00448'
-  "{\\cyrchar\\cyrshch}": '\u00449'
-  "\\cyrchar\\cyrshch ": '\u00449'
-  "{\\cyrchar\\cyrhrdsn}": '\u0044A'
-  "\\cyrchar\\cyrhrdsn ": '\u0044A'
-  "{\\cyrchar\\cyrery}": '\u0044B'
-  "\\cyrchar\\cyrery ": '\u0044B'
-  "{\\cyrchar\\cyrsftsn}": '\u0044C'
-  "\\cyrchar\\cyrsftsn ": '\u0044C'
-  "{\\cyrchar\\cyrerev}": '\u0044D'
-  "\\cyrchar\\cyrerev ": '\u0044D'
-  "{\\cyrchar\\cyryu}": '\u0044E'
-  "\\cyrchar\\cyryu ": '\u0044E'
-  "{\\cyrchar\\cyrya}": '\u0044F'
-  "\\cyrchar\\cyrya ": '\u0044F'
-  "{\\cyrchar\\cyryo}": '\u00451'
-  "\\cyrchar\\cyryo ": '\u00451'
-  "{\\cyrchar\\cyrdje}": '\u00452'
-  "\\cyrchar\\cyrdje ": '\u00452'
-  "\\cyrchar{\\'\\cyrg}": '\u00453'
-  "{\\cyrchar\\cyrie}": '\u00454'
-  "\\cyrchar\\cyrie ": '\u00454'
-  "{\\cyrchar\\cyrdze}": '\u00455'
-  "\\cyrchar\\cyrdze ": '\u00455'
-  "{\\cyrchar\\cyrii}": '\u00456'
-  "\\cyrchar\\cyrii ": '\u00456'
-  "{\\cyrchar\\cyryi}": '\u00457'
-  "\\cyrchar\\cyryi ": '\u00457'
-  "{\\cyrchar\\cyrje}": '\u00458'
-  "\\cyrchar\\cyrje ": '\u00458'
-  "{\\cyrchar\\cyrlje}": '\u00459'
-  "\\cyrchar\\cyrlje ": '\u00459'
-  "{\\cyrchar\\cyrnje}": '\u0045A'
-  "\\cyrchar\\cyrnje ": '\u0045A'
-  "{\\cyrchar\\cyrtshe}": '\u0045B'
-  "\\cyrchar\\cyrtshe ": '\u0045B'
-  "\\cyrchar{\\'\\cyrk}": '\u0045C'
-  "{\\cyrchar\\cyrushrt}": '\u0045E'
-  "\\cyrchar\\cyrushrt ": '\u0045E'
-  "{\\cyrchar\\cyrdzhe}": '\u0045F'
-  "\\cyrchar\\cyrdzhe ": '\u0045F'
-  "{\\cyrchar\\CYROMEGA}": '\u00460'
-  "\\cyrchar\\CYROMEGA ": '\u00460'
-  "{\\cyrchar\\cyromega}": '\u00461'
-  "\\cyrchar\\cyromega ": '\u00461'
-  "{\\cyrchar\\CYRYAT}": '\u00462'
-  "\\cyrchar\\CYRYAT ": '\u00462'
-  "{\\cyrchar\\CYRIOTE}": '\u00464'
-  "\\cyrchar\\CYRIOTE ": '\u00464'
-  "{\\cyrchar\\cyriote}": '\u00465'
-  "\\cyrchar\\cyriote ": '\u00465'
-  "{\\cyrchar\\CYRLYUS}": '\u00466'
-  "\\cyrchar\\CYRLYUS ": '\u00466'
-  "{\\cyrchar\\cyrlyus}": '\u00467'
-  "\\cyrchar\\cyrlyus ": '\u00467'
-  "{\\cyrchar\\CYRIOTLYUS}": '\u00468'
-  "\\cyrchar\\CYRIOTLYUS ": '\u00468'
-  "{\\cyrchar\\cyriotlyus}": '\u00469'
-  "\\cyrchar\\cyriotlyus ": '\u00469'
-  "{\\cyrchar\\CYRBYUS}": '\u0046A'
-  "\\cyrchar\\CYRBYUS ": '\u0046A'
-  "{\\cyrchar\\CYRIOTBYUS}": '\u0046C'
-  "\\cyrchar\\CYRIOTBYUS ": '\u0046C'
-  "{\\cyrchar\\cyriotbyus}": '\u0046D'
-  "\\cyrchar\\cyriotbyus ": '\u0046D'
-  "{\\cyrchar\\CYRKSI}": '\u0046E'
-  "\\cyrchar\\CYRKSI ": '\u0046E'
-  "{\\cyrchar\\cyrksi}": '\u0046F'
-  "\\cyrchar\\cyrksi ": '\u0046F'
-  "{\\cyrchar\\CYRPSI}": '\u00470'
-  "\\cyrchar\\CYRPSI ": '\u00470'
-  "{\\cyrchar\\cyrpsi}": '\u00471'
-  "\\cyrchar\\cyrpsi ": '\u00471'
-  "{\\cyrchar\\CYRFITA}": '\u00472'
-  "\\cyrchar\\CYRFITA ": '\u00472'
-  "{\\cyrchar\\CYRIZH}": '\u00474'
-  "\\cyrchar\\CYRIZH ": '\u00474'
-  "{\\cyrchar\\CYRUK}": '\u00478'
-  "\\cyrchar\\CYRUK ": '\u00478'
-  "{\\cyrchar\\cyruk}": '\u00479'
-  "\\cyrchar\\cyruk ": '\u00479'
-  "{\\cyrchar\\CYROMEGARND}": '\u0047A'
-  "\\cyrchar\\CYROMEGARND ": '\u0047A'
-  "{\\cyrchar\\cyromegarnd}": '\u0047B'
-  "\\cyrchar\\cyromegarnd ": '\u0047B'
-  "{\\cyrchar\\CYROMEGATITLO}": '\u0047C'
-  "\\cyrchar\\CYROMEGATITLO ": '\u0047C'
-  "{\\cyrchar\\cyromegatitlo}": '\u0047D'
-  "\\cyrchar\\cyromegatitlo ": '\u0047D'
-  "{\\cyrchar\\CYROT}": '\u0047E'
-  "\\cyrchar\\CYROT ": '\u0047E'
-  "{\\cyrchar\\cyrot}": '\u0047F'
-  "\\cyrchar\\cyrot ": '\u0047F'
-  "{\\cyrchar\\CYRKOPPA}": '\u00480'
-  "\\cyrchar\\CYRKOPPA ": '\u00480'
-  "{\\cyrchar\\cyrkoppa}": '\u00481'
-  "\\cyrchar\\cyrkoppa ": '\u00481'
-  "{\\cyrchar\\cyrthousands}": '\u00482'
-  "\\cyrchar\\cyrthousands ": '\u00482'
-  "{\\cyrchar\\cyrhundredthousands}": '\u00488'
-  "\\cyrchar\\cyrhundredthousands ": '\u00488'
-  "{\\cyrchar\\cyrmillions}": '\u00489'
-  "\\cyrchar\\cyrmillions ": '\u00489'
-  "{\\cyrchar\\CYRSEMISFTSN}": '\u0048C'
-  "\\cyrchar\\CYRSEMISFTSN ": '\u0048C'
-  "{\\cyrchar\\cyrsemisftsn}": '\u0048D'
-  "\\cyrchar\\cyrsemisftsn ": '\u0048D'
-  "{\\cyrchar\\CYRRTICK}": '\u0048E'
-  "\\cyrchar\\CYRRTICK ": '\u0048E'
-  "{\\cyrchar\\cyrrtick}": '\u0048F'
-  "\\cyrchar\\cyrrtick ": '\u0048F'
-  "{\\cyrchar\\CYRGUP}": '\u00490'
-  "\\cyrchar\\CYRGUP ": '\u00490'
-  "{\\cyrchar\\cyrgup}": '\u00491'
-  "\\cyrchar\\cyrgup ": '\u00491'
-  "{\\cyrchar\\CYRGHCRS}": '\u00492'
-  "\\cyrchar\\CYRGHCRS ": '\u00492'
-  "{\\cyrchar\\cyrghcrs}": '\u00493'
-  "\\cyrchar\\cyrghcrs ": '\u00493'
-  "{\\cyrchar\\CYRGHK}": '\u00494'
-  "\\cyrchar\\CYRGHK ": '\u00494'
-  "{\\cyrchar\\cyrghk}": '\u00495'
-  "\\cyrchar\\cyrghk ": '\u00495'
-  "{\\cyrchar\\CYRZHDSC}": '\u00496'
-  "\\cyrchar\\CYRZHDSC ": '\u00496'
-  "{\\cyrchar\\cyrzhdsc}": '\u00497'
-  "\\cyrchar\\cyrzhdsc ": '\u00497'
-  "{\\cyrchar\\CYRZDSC}": '\u00498'
-  "\\cyrchar\\CYRZDSC ": '\u00498'
-  "{\\cyrchar\\cyrzdsc}": '\u00499'
-  "\\cyrchar\\cyrzdsc ": '\u00499'
-  "{\\cyrchar\\CYRKDSC}": '\u0049A'
-  "\\cyrchar\\CYRKDSC ": '\u0049A'
-  "{\\cyrchar\\cyrkdsc}": '\u0049B'
-  "\\cyrchar\\cyrkdsc ": '\u0049B'
-  "{\\cyrchar\\CYRKVCRS}": '\u0049C'
-  "\\cyrchar\\CYRKVCRS ": '\u0049C'
-  "{\\cyrchar\\cyrkvcrs}": '\u0049D'
-  "\\cyrchar\\cyrkvcrs ": '\u0049D'
-  "{\\cyrchar\\CYRKHCRS}": '\u0049E'
-  "\\cyrchar\\CYRKHCRS ": '\u0049E'
-  "{\\cyrchar\\cyrkhcrs}": '\u0049F'
-  "\\cyrchar\\cyrkhcrs ": '\u0049F'
-  "{\\cyrchar\\CYRKBEAK}": '\u004A0'
-  "\\cyrchar\\CYRKBEAK ": '\u004A0'
-  "{\\cyrchar\\cyrkbeak}": '\u004A1'
-  "\\cyrchar\\cyrkbeak ": '\u004A1'
-  "{\\cyrchar\\CYRNDSC}": '\u004A2'
-  "\\cyrchar\\CYRNDSC ": '\u004A2'
-  "{\\cyrchar\\cyrndsc}": '\u004A3'
-  "\\cyrchar\\cyrndsc ": '\u004A3'
-  "{\\cyrchar\\CYRNG}": '\u004A4'
-  "\\cyrchar\\CYRNG ": '\u004A4'
-  "{\\cyrchar\\cyrng}": '\u004A5'
-  "\\cyrchar\\cyrng ": '\u004A5'
-  "{\\cyrchar\\CYRPHK}": '\u004A6'
-  "\\cyrchar\\CYRPHK ": '\u004A6'
-  "{\\cyrchar\\cyrphk}": '\u004A7'
-  "\\cyrchar\\cyrphk ": '\u004A7'
-  "{\\cyrchar\\CYRABHHA}": '\u004A8'
-  "\\cyrchar\\CYRABHHA ": '\u004A8'
-  "{\\cyrchar\\cyrabhha}": '\u004A9'
-  "\\cyrchar\\cyrabhha ": '\u004A9'
-  "{\\cyrchar\\CYRSDSC}": '\u004AA'
-  "\\cyrchar\\CYRSDSC ": '\u004AA'
-  "{\\cyrchar\\cyrsdsc}": '\u004AB'
-  "\\cyrchar\\cyrsdsc ": '\u004AB'
-  "{\\cyrchar\\CYRTDSC}": '\u004AC'
-  "\\cyrchar\\CYRTDSC ": '\u004AC'
-  "{\\cyrchar\\cyrtdsc}": '\u004AD'
-  "\\cyrchar\\cyrtdsc ": '\u004AD'
-  "{\\cyrchar\\CYRY}": '\u004AE'
-  "\\cyrchar\\CYRY ": '\u004AE'
-  "{\\cyrchar\\cyry}": '\u004AF'
-  "\\cyrchar\\cyry ": '\u004AF'
-  "{\\cyrchar\\CYRYHCRS}": '\u004B0'
-  "\\cyrchar\\CYRYHCRS ": '\u004B0'
-  "{\\cyrchar\\cyryhcrs}": '\u004B1'
-  "\\cyrchar\\cyryhcrs ": '\u004B1'
-  "{\\cyrchar\\CYRHDSC}": '\u004B2'
-  "\\cyrchar\\CYRHDSC ": '\u004B2'
-  "{\\cyrchar\\cyrhdsc}": '\u004B3'
-  "\\cyrchar\\cyrhdsc ": '\u004B3'
-  "{\\cyrchar\\CYRTETSE}": '\u004B4'
-  "\\cyrchar\\CYRTETSE ": '\u004B4'
-  "{\\cyrchar\\cyrtetse}": '\u004B5'
-  "\\cyrchar\\cyrtetse ": '\u004B5'
-  "{\\cyrchar\\CYRCHRDSC}": '\u004B6'
-  "\\cyrchar\\CYRCHRDSC ": '\u004B6'
-  "{\\cyrchar\\cyrchrdsc}": '\u004B7'
-  "\\cyrchar\\cyrchrdsc ": '\u004B7'
-  "{\\cyrchar\\CYRCHVCRS}": '\u004B8'
-  "\\cyrchar\\CYRCHVCRS ": '\u004B8'
-  "{\\cyrchar\\cyrchvcrs}": '\u004B9'
-  "\\cyrchar\\cyrchvcrs ": '\u004B9'
-  "{\\cyrchar\\CYRSHHA}": '\u004BA'
-  "\\cyrchar\\CYRSHHA ": '\u004BA'
-  "{\\cyrchar\\cyrshha}": '\u004BB'
-  "\\cyrchar\\cyrshha ": '\u004BB'
-  "{\\cyrchar\\CYRABHCH}": '\u004BC'
-  "\\cyrchar\\CYRABHCH ": '\u004BC'
-  "{\\cyrchar\\cyrabhch}": '\u004BD'
-  "\\cyrchar\\cyrabhch ": '\u004BD'
-  "{\\cyrchar\\CYRABHCHDSC}": '\u004BE'
-  "\\cyrchar\\CYRABHCHDSC ": '\u004BE'
-  "{\\cyrchar\\cyrabhchdsc}": '\u004BF'
-  "\\cyrchar\\cyrabhchdsc ": '\u004BF'
-  "{\\cyrchar\\CYRpalochka}": '\u004C0'
-  "\\cyrchar\\CYRpalochka ": '\u004C0'
-  "{\\cyrchar\\CYRKHK}": '\u004C3'
-  "\\cyrchar\\CYRKHK ": '\u004C3'
-  "{\\cyrchar\\cyrkhk}": '\u004C4'
-  "\\cyrchar\\cyrkhk ": '\u004C4'
-  "{\\cyrchar\\CYRNHK}": '\u004C7'
-  "\\cyrchar\\CYRNHK ": '\u004C7'
-  "{\\cyrchar\\cyrnhk}": '\u004C8'
-  "\\cyrchar\\cyrnhk ": '\u004C8'
-  "{\\cyrchar\\CYRCHLDSC}": '\u004CB'
-  "\\cyrchar\\CYRCHLDSC ": '\u004CB'
-  "{\\cyrchar\\cyrchldsc}": '\u004CC'
-  "\\cyrchar\\cyrchldsc ": '\u004CC'
-  "{\\cyrchar\\CYRAE}": '\u004D4'
-  "\\cyrchar\\CYRAE ": '\u004D4'
-  "{\\cyrchar\\cyrae}": '\u004D5'
-  "\\cyrchar\\cyrae ": '\u004D5'
-  "{\\cyrchar\\CYRSCHWA}": '\u004D8'
-  "\\cyrchar\\CYRSCHWA ": '\u004D8'
-  "{\\cyrchar\\cyrschwa}": '\u004D9'
-  "\\cyrchar\\cyrschwa ": '\u004D9'
-  "{\\cyrchar\\CYRABHDZE}": '\u004E0'
-  "\\cyrchar\\CYRABHDZE ": '\u004E0'
-  "{\\cyrchar\\cyrabhdze}": '\u004E1'
-  "\\cyrchar\\cyrabhdze ": '\u004E1'
-  "{\\cyrchar\\CYROTLD}": '\u004E8'
-  "\\cyrchar\\CYROTLD ": '\u004E8'
-  "{\\cyrchar\\cyrotld}": '\u004E9'
-  "\\cyrchar\\cyrotld ": '\u004E9'
-  "\\hspace{0.6em}": '\u02002'
-  "\\hspace{1em}": '\u02003'
-  "\\hspace{0.33em}": '\u02004'
-  "\\hspace{0.25em}": '\u02005'
-  "\\hspace{0.166em}": '\u02006'
-  "\\hphantom{0}": '\u02007'
-  "\\hphantom{,}": '\u02008'
-  "\\hspace{0.167em}": '\u02009'
-  "{\\mkern1mu}": '\u0200A'
-  "\\mkern1mu ": '\u0200A'
-  "-": '\u02010'
-  "{\\textendash}": '\u02013'
-  "\\textendash ": '\u02013'
-  "{\\textemdash}": '\u02014'
-  "\\textemdash ": '\u02014'
-  "\\rule{1em}{1pt}": '\u02015'
-  "{\\Vert}": '\u02016'
-  "\\Vert ": '\u02016'
-  "`": '\u02018'
-  "'": '\u02019'
-  ",": '\u0201A'
-  "{\\Elzreapos}": '\u0201B'
-  "\\Elzreapos ": '\u0201B'
-  "{\\textquotedblleft}": '\u0201C'
-  "\\textquotedblleft ": '\u0201C'
-  "{\\textquotedblright}": '\u0201D'
-  "\\textquotedblright ": '\u0201D'
-  ",,": '\u0201E'
-  "{\\textdagger}": '\u02020'
-  "\\textdagger ": '\u02020'
-  "{\\textdaggerdbl}": '\u02021'
-  "\\textdaggerdbl ": '\u02021'
-  "{\\textbullet}": '\u02022'
-  "\\textbullet ": '\u02022'
-  ".": '\u02024'
-  "..": '\u02025'
-  "{\\ldots}": '\u02026'
-  "\\ldots ": '\u02026'
-  "{\\textperthousand}": '\u02030'
-  "\\textperthousand ": '\u02030'
-  "{\\textpertenthousand}": '\u02031'
-  "\\textpertenthousand ": '\u02031'
-  "{'}": '\u02032'
-  "{''}": '\u02033'
-  "{'''}": '\u02034'
-  "{\\backprime}": '\u02035'
-  "\\backprime ": '\u02035'
-  "{\\guilsinglleft}": '\u02039'
-  "\\guilsinglleft ": '\u02039'
-  "{\\guilsinglright}": '\u0203A'
-  "\\guilsinglright ": '\u0203A'
-  "''''": '\u02057'
-  "{\\mkern4mu}": '\u0205F'
-  "\\mkern4mu ": '\u0205F'
-  "{\\nolinebreak}": '\u02060'
-  "\\nolinebreak ": '\u02060'
-  "\\ensuremath{\\Elzpes}": '\u020A7'
-  "{\\mbox{\\texteuro}}": '\u020AC'
-  "\\mbox{\\texteuro} ": '\u020AC'
-  "{\\dddot}": '\u020DB'
-  "\\dddot ": '\u020DB'
-  "{\\ddddot}": '\u020DC'
-  "\\ddddot ": '\u020DC'
-  "\\mathbb{C}": '\u02102'
-  "\\mathscr{g}": '\u0210A'
-  "\\mathscr{H}": '\u0210B'
-  "\\mathfrak{H}": '\u0210C'
-  "\\mathbb{H}": '\u0210D'
-  "{\\hslash}": '\u0210F'
-  "\\hslash ": '\u0210F'
-  "\\mathscr{I}": '\u02110'
-  "\\mathfrak{I}": '\u02111'
-  "\\mathscr{L}": '\u02112'
-  "\\mathscr{l}": '\u02113'
-  "\\mathbb{N}": '\u02115'
-  "{\\cyrchar\\textnumero}": '\u02116'
-  "\\cyrchar\\textnumero ": '\u02116'
-  "{\\wp}": '\u02118'
-  "\\wp ": '\u02118'
-  "\\mathbb{P}": '\u02119'
-  "\\mathbb{Q}": '\u0211A'
-  "\\mathscr{R}": '\u0211B'
-  "\\mathfrak{R}": '\u0211C'
-  "\\mathbb{R}": '\u0211D'
-  "{\\Elzxrat}": '\u0211E'
-  "\\Elzxrat ": '\u0211E'
-  "{\\texttrademark}": '\u02122'
-  "\\texttrademark ": '\u02122'
-  "\\mathbb{Z}": '\u02124'
-  "{\\Omega}": '\u02126'
-  "\\Omega ": '\u02126'
-  "{\\mho}": '\u02127'
-  "\\mho ": '\u02127'
-  "\\mathfrak{Z}": '\u02128'
-  "\\ElsevierGlyph{2129}": '\u02129'
-  "{\\AA}": '\u0212B'
-  "\\AA ": '\u0212B'
-  "\\mathscr{B}": '\u0212C'
-  "\\mathfrak{C}": '\u0212D'
-  "\\mathscr{e}": '\u0212F'
-  "\\mathscr{E}": '\u02130'
-  "\\mathscr{F}": '\u02131'
-  "\\mathscr{M}": '\u02133'
-  "\\mathscr{o}": '\u02134'
-  "{\\aleph}": '\u02135'
-  "\\aleph ": '\u02135'
-  "{\\beth}": '\u02136'
-  "\\beth ": '\u02136'
-  "{\\gimel}": '\u02137'
-  "\\gimel ": '\u02137'
-  "{\\daleth}": '\u02138'
-  "\\daleth ": '\u02138'
-  "\\textfrac{1}{3}": '\u02153'
-  "\\textfrac{2}{3}": '\u02154'
-  "\\textfrac{1}{5}": '\u02155'
-  "\\textfrac{2}{5}": '\u02156'
-  "\\textfrac{3}{5}": '\u02157'
-  "\\textfrac{4}{5}": '\u02158'
-  "\\textfrac{1}{6}": '\u02159'
-  "\\textfrac{5}{6}": '\u0215A'
-  "\\textfrac{1}{8}": '\u0215B'
-  "\\textfrac{3}{8}": '\u0215C'
-  "\\textfrac{5}{8}": '\u0215D'
-  "\\textfrac{7}{8}": '\u0215E'
-  "{\\leftarrow}": '\u02190'
-  "\\leftarrow ": '\u02190'
-  "{\\uparrow}": '\u02191'
-  "\\uparrow ": '\u02191'
-  "{\\rightarrow}": '\u02192'
-  "\\rightarrow ": '\u02192'
-  "{\\downarrow}": '\u02193'
-  "\\downarrow ": '\u02193'
-  "{\\leftrightarrow}": '\u02194'
-  "\\leftrightarrow ": '\u02194'
-  "{\\updownarrow}": '\u02195'
-  "\\updownarrow ": '\u02195'
-  "{\\nwarrow}": '\u02196'
-  "\\nwarrow ": '\u02196'
-  "{\\nearrow}": '\u02197'
-  "\\nearrow ": '\u02197'
-  "{\\searrow}": '\u02198'
-  "\\searrow ": '\u02198'
-  "{\\swarrow}": '\u02199'
-  "\\swarrow ": '\u02199'
-  "{\\nleftarrow}": '\u0219A'
-  "\\nleftarrow ": '\u0219A'
-  "{\\nrightarrow}": '\u0219B'
-  "\\nrightarrow ": '\u0219B'
-  "{\\arrowwaveright}": '\u0219C'
-  "\\arrowwaveright ": '\u0219C'
-  "{\\arrowwaveright}": '\u0219D'
-  "\\arrowwaveright ": '\u0219D'
-  "{\\twoheadleftarrow}": '\u0219E'
-  "\\twoheadleftarrow ": '\u0219E'
-  "{\\twoheadrightarrow}": '\u021A0'
-  "\\twoheadrightarrow ": '\u021A0'
-  "{\\leftarrowtail}": '\u021A2'
-  "\\leftarrowtail ": '\u021A2'
-  "{\\rightarrowtail}": '\u021A3'
-  "\\rightarrowtail ": '\u021A3'
-  "{\\mapsto}": '\u021A6'
-  "\\mapsto ": '\u021A6'
-  "{\\hookleftarrow}": '\u021A9'
-  "\\hookleftarrow ": '\u021A9'
-  "{\\hookrightarrow}": '\u021AA'
-  "\\hookrightarrow ": '\u021AA'
-  "{\\looparrowleft}": '\u021AB'
-  "\\looparrowleft ": '\u021AB'
-  "{\\looparrowright}": '\u021AC'
-  "\\looparrowright ": '\u021AC'
-  "{\\leftrightsquigarrow}": '\u021AD'
-  "\\leftrightsquigarrow ": '\u021AD'
-  "{\\nleftrightarrow}": '\u021AE'
-  "\\nleftrightarrow ": '\u021AE'
-  "{\\Lsh}": '\u021B0'
-  "\\Lsh ": '\u021B0'
-  "{\\Rsh}": '\u021B1'
-  "\\Rsh ": '\u021B1'
-  "\\ElsevierGlyph{21B3}": '\u021B3'
-  "{\\curvearrowleft}": '\u021B6'
-  "\\curvearrowleft ": '\u021B6'
-  "{\\curvearrowright}": '\u021B7'
-  "\\curvearrowright ": '\u021B7'
-  "{\\circlearrowleft}": '\u021BA'
-  "\\circlearrowleft ": '\u021BA'
-  "{\\circlearrowright}": '\u021BB'
-  "\\circlearrowright ": '\u021BB'
-  "{\\leftharpoonup}": '\u021BC'
-  "\\leftharpoonup ": '\u021BC'
-  "{\\leftharpoondown}": '\u021BD'
-  "\\leftharpoondown ": '\u021BD'
-  "{\\upharpoonright}": '\u021BE'
-  "\\upharpoonright ": '\u021BE'
-  "{\\upharpoonleft}": '\u021BF'
-  "\\upharpoonleft ": '\u021BF'
-  "{\\rightharpoonup}": '\u021C0'
-  "\\rightharpoonup ": '\u021C0'
-  "{\\rightharpoondown}": '\u021C1'
-  "\\rightharpoondown ": '\u021C1'
-  "{\\downharpoonright}": '\u021C2'
-  "\\downharpoonright ": '\u021C2'
-  "{\\downharpoonleft}": '\u021C3'
-  "\\downharpoonleft ": '\u021C3'
-  "{\\rightleftarrows}": '\u021C4'
-  "\\rightleftarrows ": '\u021C4'
-  "{\\dblarrowupdown}": '\u021C5'
-  "\\dblarrowupdown ": '\u021C5'
-  "{\\leftrightarrows}": '\u021C6'
-  "\\leftrightarrows ": '\u021C6'
-  "{\\leftleftarrows}": '\u021C7'
-  "\\leftleftarrows ": '\u021C7'
-  "{\\upuparrows}": '\u021C8'
-  "\\upuparrows ": '\u021C8'
-  "{\\rightrightarrows}": '\u021C9'
-  "\\rightrightarrows ": '\u021C9'
-  "{\\downdownarrows}": '\u021CA'
-  "\\downdownarrows ": '\u021CA'
-  "{\\leftrightharpoons}": '\u021CB'
-  "\\leftrightharpoons ": '\u021CB'
-  "{\\rightleftharpoons}": '\u021CC'
-  "\\rightleftharpoons ": '\u021CC'
-  "{\\nLeftarrow}": '\u021CD'
-  "\\nLeftarrow ": '\u021CD'
-  "{\\nLeftrightarrow}": '\u021CE'
-  "\\nLeftrightarrow ": '\u021CE'
-  "{\\nRightarrow}": '\u021CF'
-  "\\nRightarrow ": '\u021CF'
-  "{\\Leftarrow}": '\u021D0'
-  "\\Leftarrow ": '\u021D0'
-  "{\\Uparrow}": '\u021D1'
-  "\\Uparrow ": '\u021D1'
-  "{\\Rightarrow}": '\u021D2'
-  "\\Rightarrow ": '\u021D2'
-  "{\\Downarrow}": '\u021D3'
-  "\\Downarrow ": '\u021D3'
-  "{\\Leftrightarrow}": '\u021D4'
-  "\\Leftrightarrow ": '\u021D4'
-  "{\\Updownarrow}": '\u021D5'
-  "\\Updownarrow ": '\u021D5'
-  "{\\Lleftarrow}": '\u021DA'
-  "\\Lleftarrow ": '\u021DA'
-  "{\\Rrightarrow}": '\u021DB'
-  "\\Rrightarrow ": '\u021DB'
-  "{\\rightsquigarrow}": '\u021DD'
-  "\\rightsquigarrow ": '\u021DD'
-  "{\\DownArrowUpArrow}": '\u021F5'
-  "\\DownArrowUpArrow ": '\u021F5'
-  "{\\forall}": '\u02200'
-  "\\forall ": '\u02200'
-  "{\\complement}": '\u02201'
-  "\\complement ": '\u02201'
-  "{\\partial}": '\u02202'
-  "\\partial ": '\u02202'
-  "{\\exists}": '\u02203'
-  "\\exists ": '\u02203'
-  "{\\nexists}": '\u02204'
-  "\\nexists ": '\u02204'
-  "{\\varnothing}": '\u02205'
-  "\\varnothing ": '\u02205'
-  "{\\nabla}": '\u02207'
-  "\\nabla ": '\u02207'
-  "{\\in}": '\u02208'
-  "\\in ": '\u02208'
-  "{\\not\\in}": '\u02209'
-  "\\not\\in ": '\u02209'
-  "{\\ni}": '\u0220B'
-  "\\ni ": '\u0220B'
-  "{\\not\\ni}": '\u0220C'
-  "\\not\\ni ": '\u0220C'
-  "{\\prod}": '\u0220F'
-  "\\prod ": '\u0220F'
-  "{\\coprod}": '\u02210'
-  "\\coprod ": '\u02210'
-  "{\\sum}": '\u02211'
-  "\\sum ": '\u02211'
-  "-": '\u02212'
-  "{\\mp}": '\u02213'
-  "\\mp ": '\u02213'
-  "{\\dotplus}": '\u02214'
-  "\\dotplus ": '\u02214'
-  "{\\setminus}": '\u02216'
-  "\\setminus ": '\u02216'
-  "{_\\ast}": '\u02217'
-  "{\\circ}": '\u02218'
-  "\\circ ": '\u02218'
-  "{\\bullet}": '\u02219'
-  "\\bullet ": '\u02219'
-  "{\\surd}": '\u0221A'
-  "\\surd ": '\u0221A'
-  "{\\propto}": '\u0221D'
-  "\\propto ": '\u0221D'
-  "{\\infty}": '\u0221E'
-  "\\infty ": '\u0221E'
-  "{\\rightangle}": '\u0221F'
-  "\\rightangle ": '\u0221F'
-  "{\\angle}": '\u02220'
-  "\\angle ": '\u02220'
-  "{\\measuredangle}": '\u02221'
-  "\\measuredangle ": '\u02221'
-  "{\\sphericalangle}": '\u02222'
-  "\\sphericalangle ": '\u02222'
-  "{\\mid}": '\u02223'
-  "\\mid ": '\u02223'
-  "{\\nmid}": '\u02224'
-  "\\nmid ": '\u02224'
-  "{\\parallel}": '\u02225'
-  "\\parallel ": '\u02225'
-  "{\\nparallel}": '\u02226'
-  "\\nparallel ": '\u02226'
-  "{\\wedge}": '\u02227'
-  "\\wedge ": '\u02227'
-  "{\\vee}": '\u02228'
-  "\\vee ": '\u02228'
-  "{\\cap}": '\u02229'
-  "\\cap ": '\u02229'
-  "{\\cup}": '\u0222A'
-  "\\cup ": '\u0222A'
-  "{\\int}": '\u0222B'
-  "\\int ": '\u0222B'
-  "{\\int\\!\\int}": '\u0222C'
-  "\\int\\!\\int ": '\u0222C'
-  "{\\int\\!\\int\\!\\int}": '\u0222D'
-  "\\int\\!\\int\\!\\int ": '\u0222D'
-  "{\\oint}": '\u0222E'
-  "\\oint ": '\u0222E'
-  "{\\surfintegral}": '\u0222F'
-  "\\surfintegral ": '\u0222F'
-  "{\\volintegral}": '\u02230'
-  "\\volintegral ": '\u02230'
-  "{\\clwintegral}": '\u02231'
-  "\\clwintegral ": '\u02231'
-  "\\ElsevierGlyph{2232}": '\u02232'
-  "\\ElsevierGlyph{2233}": '\u02233'
-  "{\\therefore}": '\u02234'
-  "\\therefore ": '\u02234'
-  "{\\because}": '\u02235'
-  "\\because ": '\u02235'
-  "{\\Colon}": '\u02237'
-  "\\Colon ": '\u02237'
-  "\\ElsevierGlyph{2238}": '\u02238'
-  "\\mathbin{{:}\\!\\!{-}\\!\\!{:}}": '\u0223A'
-  "{\\homothetic}": '\u0223B'
-  "\\homothetic ": '\u0223B'
-  "{\\sim}": '\u0223C'
-  "\\sim ": '\u0223C'
-  "{\\backsim}": '\u0223D'
-  "\\backsim ": '\u0223D'
-  "{\\lazysinv}": '\u0223E'
-  "\\lazysinv ": '\u0223E'
-  "{\\wr}": '\u02240'
-  "\\wr ": '\u02240'
-  "{\\not\\sim}": '\u02241'
-  "\\not\\sim ": '\u02241'
-  "\\ElsevierGlyph{2242}": '\u02242'
-  "{\\simeq}": '\u02243'
-  "\\simeq ": '\u02243'
-  "{\\not\\simeq}": '\u02244'
-  "\\not\\simeq ": '\u02244'
-  "{\\cong}": '\u02245'
-  "\\cong ": '\u02245'
-  "{\\approxnotequal}": '\u02246'
-  "\\approxnotequal ": '\u02246'
-  "{\\not\\cong}": '\u02247'
-  "\\not\\cong ": '\u02247'
-  "{\\approx}": '\u02248'
-  "\\approx ": '\u02248'
-  "{\\not\\approx}": '\u02249'
-  "\\not\\approx ": '\u02249'
-  "{\\approxeq}": '\u0224A'
-  "\\approxeq ": '\u0224A'
-  "{\\tildetrpl}": '\u0224B'
-  "\\tildetrpl ": '\u0224B'
-  "{\\allequal}": '\u0224C'
-  "\\allequal ": '\u0224C'
-  "{\\asymp}": '\u0224D'
-  "\\asymp ": '\u0224D'
-  "{\\Bumpeq}": '\u0224E'
-  "\\Bumpeq ": '\u0224E'
-  "{\\bumpeq}": '\u0224F'
-  "\\bumpeq ": '\u0224F'
-  "{\\doteq}": '\u02250'
-  "\\doteq ": '\u02250'
-  "{\\doteqdot}": '\u02251'
-  "\\doteqdot ": '\u02251'
-  "{\\fallingdotseq}": '\u02252'
-  "\\fallingdotseq ": '\u02252'
-  "{\\risingdotseq}": '\u02253'
-  "\\risingdotseq ": '\u02253'
-  ":=": '\u02254'
-  "=:": '\u02255'
-  "{\\eqcirc}": '\u02256'
-  "\\eqcirc ": '\u02256'
-  "{\\circeq}": '\u02257'
-  "\\circeq ": '\u02257'
-  "{\\estimates}": '\u02259'
-  "\\estimates ": '\u02259'
-  "\\ElsevierGlyph{225A}": '\u0225A'
-  "{\\starequal}": '\u0225B'
-  "\\starequal ": '\u0225B'
-  "{\\triangleq}": '\u0225C'
-  "\\triangleq ": '\u0225C'
-  "\\ElsevierGlyph{225F}": '\u0225F'
-  "\\not =": '\u02260'
-  "{\\equiv}": '\u02261'
-  "\\equiv ": '\u02261'
-  "{\\not\\equiv}": '\u02262'
-  "\\not\\equiv ": '\u02262'
-  "{\\leq}": '\u02264'
-  "\\leq ": '\u02264'
-  "{\\geq}": '\u02265'
-  "\\geq ": '\u02265'
-  "{\\leqq}": '\u02266'
-  "\\leqq ": '\u02266'
-  "{\\geqq}": '\u02267'
-  "\\geqq ": '\u02267'
-  "{\\lneqq}": '\u02268'
-  "\\lneqq ": '\u02268'
-  "{\\gneqq}": '\u02269'
-  "\\gneqq ": '\u02269'
-  "{\\ll}": '\u0226A'
-  "\\ll ": '\u0226A'
-  "{\\gg}": '\u0226B'
-  "\\gg ": '\u0226B'
-  "{\\between}": '\u0226C'
-  "\\between ": '\u0226C'
-  "{\\not\\kern-0.3em\\times}": '\u0226D'
-  "\\not\\kern-0.3em\\times ": '\u0226D'
-  "\\not<": '\u0226E'
-  "\\not>": '\u0226F'
-  "{\\not\\leq}": '\u02270'
-  "\\not\\leq ": '\u02270'
-  "{\\not\\geq}": '\u02271'
-  "\\not\\geq ": '\u02271'
-  "{\\lessequivlnt}": '\u02272'
-  "\\lessequivlnt ": '\u02272'
-  "{\\greaterequivlnt}": '\u02273'
-  "\\greaterequivlnt ": '\u02273'
-  "\\ElsevierGlyph{2274}": '\u02274'
-  "\\ElsevierGlyph{2275}": '\u02275'
-  "{\\lessgtr}": '\u02276'
-  "\\lessgtr ": '\u02276'
-  "{\\gtrless}": '\u02277'
-  "\\gtrless ": '\u02277'
-  "{\\notlessgreater}": '\u02278'
-  "\\notlessgreater ": '\u02278'
-  "{\\notgreaterless}": '\u02279'
-  "\\notgreaterless ": '\u02279'
-  "{\\prec}": '\u0227A'
-  "\\prec ": '\u0227A'
-  "{\\succ}": '\u0227B'
-  "\\succ ": '\u0227B'
-  "{\\preccurlyeq}": '\u0227C'
-  "\\preccurlyeq ": '\u0227C'
-  "{\\succcurlyeq}": '\u0227D'
-  "\\succcurlyeq ": '\u0227D'
-  "{\\precapprox}": '\u0227E'
-  "\\precapprox ": '\u0227E'
-  "{\\succapprox}": '\u0227F'
-  "\\succapprox ": '\u0227F'
-  "{\\not\\prec}": '\u02280'
-  "\\not\\prec ": '\u02280'
-  "{\\not\\succ}": '\u02281'
-  "\\not\\succ ": '\u02281'
-  "{\\subset}": '\u02282'
-  "\\subset ": '\u02282'
-  "{\\supset}": '\u02283'
-  "\\supset ": '\u02283'
-  "{\\not\\subset}": '\u02284'
-  "\\not\\subset ": '\u02284'
-  "{\\not\\supset}": '\u02285'
-  "\\not\\supset ": '\u02285'
-  "{\\subseteq}": '\u02286'
-  "\\subseteq ": '\u02286'
-  "{\\supseteq}": '\u02287'
-  "\\supseteq ": '\u02287'
-  "{\\not\\subseteq}": '\u02288'
-  "\\not\\subseteq ": '\u02288'
-  "{\\not\\supseteq}": '\u02289'
-  "\\not\\supseteq ": '\u02289'
-  "{\\subsetneq}": '\u0228A'
-  "\\subsetneq ": '\u0228A'
-  "{\\supsetneq}": '\u0228B'
-  "\\supsetneq ": '\u0228B'
-  "{\\uplus}": '\u0228E'
-  "\\uplus ": '\u0228E'
-  "{\\sqsubset}": '\u0228F'
-  "\\sqsubset ": '\u0228F'
-  "{\\sqsupset}": '\u02290'
-  "\\sqsupset ": '\u02290'
-  "{\\sqsubseteq}": '\u02291'
-  "\\sqsubseteq ": '\u02291'
-  "{\\sqsupseteq}": '\u02292'
-  "\\sqsupseteq ": '\u02292'
-  "{\\sqcap}": '\u02293'
-  "\\sqcap ": '\u02293'
-  "{\\sqcup}": '\u02294'
-  "\\sqcup ": '\u02294'
-  "{\\oplus}": '\u02295'
-  "\\oplus ": '\u02295'
-  "{\\ominus}": '\u02296'
-  "\\ominus ": '\u02296'
-  "{\\otimes}": '\u02297'
-  "\\otimes ": '\u02297'
-  "{\\oslash}": '\u02298'
-  "\\oslash ": '\u02298'
-  "{\\odot}": '\u02299'
-  "\\odot ": '\u02299'
-  "{\\circledcirc}": '\u0229A'
-  "\\circledcirc ": '\u0229A'
-  "{\\circledast}": '\u0229B'
-  "\\circledast ": '\u0229B'
-  "{\\circleddash}": '\u0229D'
-  "\\circleddash ": '\u0229D'
-  "{\\boxplus}": '\u0229E'
-  "\\boxplus ": '\u0229E'
-  "{\\boxminus}": '\u0229F'
-  "\\boxminus ": '\u0229F'
-  "{\\boxtimes}": '\u022A0'
-  "\\boxtimes ": '\u022A0'
-  "{\\boxdot}": '\u022A1'
-  "\\boxdot ": '\u022A1'
-  "{\\vdash}": '\u022A2'
-  "\\vdash ": '\u022A2'
-  "{\\dashv}": '\u022A3'
-  "\\dashv ": '\u022A3'
-  "{\\top}": '\u022A4'
-  "\\top ": '\u022A4'
-  "{\\perp}": '\u022A5'
-  "\\perp ": '\u022A5'
-  "{\\truestate}": '\u022A7'
-  "\\truestate ": '\u022A7'
-  "{\\forcesextra}": '\u022A8'
-  "\\forcesextra ": '\u022A8'
-  "{\\Vdash}": '\u022A9'
-  "\\Vdash ": '\u022A9'
-  "{\\Vvdash}": '\u022AA'
-  "\\Vvdash ": '\u022AA'
-  "{\\VDash}": '\u022AB'
-  "\\VDash ": '\u022AB'
-  "{\\nvdash}": '\u022AC'
-  "\\nvdash ": '\u022AC'
-  "{\\nvDash}": '\u022AD'
-  "\\nvDash ": '\u022AD'
-  "{\\nVdash}": '\u022AE'
-  "\\nVdash ": '\u022AE'
-  "{\\nVDash}": '\u022AF'
-  "\\nVDash ": '\u022AF'
-  "{\\vartriangleleft}": '\u022B2'
-  "\\vartriangleleft ": '\u022B2'
-  "{\\vartriangleright}": '\u022B3'
-  "\\vartriangleright ": '\u022B3'
-  "{\\trianglelefteq}": '\u022B4'
-  "\\trianglelefteq ": '\u022B4'
-  "{\\trianglerighteq}": '\u022B5'
-  "\\trianglerighteq ": '\u022B5'
-  "{\\original}": '\u022B6'
-  "\\original ": '\u022B6'
-  "{\\image}": '\u022B7'
-  "\\image ": '\u022B7'
-  "{\\multimap}": '\u022B8'
-  "\\multimap ": '\u022B8'
-  "{\\hermitconjmatrix}": '\u022B9'
-  "\\hermitconjmatrix ": '\u022B9'
-  "{\\intercal}": '\u022BA'
-  "\\intercal ": '\u022BA'
-  "{\\veebar}": '\u022BB'
-  "\\veebar ": '\u022BB'
-  "{\\rightanglearc}": '\u022BE'
-  "\\rightanglearc ": '\u022BE'
-  "\\ElsevierGlyph{22C0}": '\u022C0'
-  "\\ElsevierGlyph{22C1}": '\u022C1'
-  "{\\bigcap}": '\u022C2'
-  "\\bigcap ": '\u022C2'
-  "{\\bigcup}": '\u022C3'
-  "\\bigcup ": '\u022C3'
-  "{\\diamond}": '\u022C4'
-  "\\diamond ": '\u022C4'
-  "{\\cdot}": '\u022C5'
-  "\\cdot ": '\u022C5'
-  "{\\star}": '\u022C6'
-  "\\star ": '\u022C6'
-  "{\\divideontimes}": '\u022C7'
-  "\\divideontimes ": '\u022C7'
-  "{\\bowtie}": '\u022C8'
-  "\\bowtie ": '\u022C8'
-  "{\\ltimes}": '\u022C9'
-  "\\ltimes ": '\u022C9'
-  "{\\rtimes}": '\u022CA'
-  "\\rtimes ": '\u022CA'
-  "{\\leftthreetimes}": '\u022CB'
-  "\\leftthreetimes ": '\u022CB'
-  "{\\rightthreetimes}": '\u022CC'
-  "\\rightthreetimes ": '\u022CC'
-  "{\\backsimeq}": '\u022CD'
-  "\\backsimeq ": '\u022CD'
-  "{\\curlyvee}": '\u022CE'
-  "\\curlyvee ": '\u022CE'
-  "{\\curlywedge}": '\u022CF'
-  "\\curlywedge ": '\u022CF'
-  "{\\Subset}": '\u022D0'
-  "\\Subset ": '\u022D0'
-  "{\\Supset}": '\u022D1'
-  "\\Supset ": '\u022D1'
-  "{\\Cap}": '\u022D2'
-  "\\Cap ": '\u022D2'
-  "{\\Cup}": '\u022D3'
-  "\\Cup ": '\u022D3'
-  "{\\pitchfork}": '\u022D4'
-  "\\pitchfork ": '\u022D4'
-  "{\\lessdot}": '\u022D6'
-  "\\lessdot ": '\u022D6'
-  "{\\gtrdot}": '\u022D7'
-  "\\gtrdot ": '\u022D7'
-  "{\\verymuchless}": '\u022D8'
-  "\\verymuchless ": '\u022D8'
-  "{\\verymuchgreater}": '\u022D9'
-  "\\verymuchgreater ": '\u022D9'
-  "{\\lesseqgtr}": '\u022DA'
-  "\\lesseqgtr ": '\u022DA'
-  "{\\gtreqless}": '\u022DB'
-  "\\gtreqless ": '\u022DB'
-  "{\\curlyeqprec}": '\u022DE'
-  "\\curlyeqprec ": '\u022DE'
-  "{\\curlyeqsucc}": '\u022DF'
-  "\\curlyeqsucc ": '\u022DF'
-  "{\\not\\sqsubseteq}": '\u022E2'
-  "\\not\\sqsubseteq ": '\u022E2'
-  "{\\not\\sqsupseteq}": '\u022E3'
-  "\\not\\sqsupseteq ": '\u022E3'
-  "{\\Elzsqspne}": '\u022E5'
-  "\\Elzsqspne ": '\u022E5'
-  "{\\lnsim}": '\u022E6'
-  "\\lnsim ": '\u022E6'
-  "{\\gnsim}": '\u022E7'
-  "\\gnsim ": '\u022E7'
-  "{\\precedesnotsimilar}": '\u022E8'
-  "\\precedesnotsimilar ": '\u022E8'
-  "{\\succnsim}": '\u022E9'
-  "\\succnsim ": '\u022E9'
-  "{\\ntriangleleft}": '\u022EA'
-  "\\ntriangleleft ": '\u022EA'
-  "{\\ntriangleright}": '\u022EB'
-  "\\ntriangleright ": '\u022EB'
-  "{\\ntrianglelefteq}": '\u022EC'
-  "\\ntrianglelefteq ": '\u022EC'
-  "{\\ntrianglerighteq}": '\u022ED'
-  "\\ntrianglerighteq ": '\u022ED'
-  "{\\vdots}": '\u022EE'
-  "\\vdots ": '\u022EE'
-  "{\\cdots}": '\u022EF'
-  "\\cdots ": '\u022EF'
-  "{\\upslopeellipsis}": '\u022F0'
-  "\\upslopeellipsis ": '\u022F0'
-  "{\\downslopeellipsis}": '\u022F1'
-  "\\downslopeellipsis ": '\u022F1'
-  "{\\barwedge}": '\u02305'
-  "\\barwedge ": '\u02305'
-  "{\\perspcorrespond}": '\u02306'
-  "\\perspcorrespond ": '\u02306'
-  "{\\lceil}": '\u02308'
-  "\\lceil ": '\u02308'
-  "{\\rceil}": '\u02309'
-  "\\rceil ": '\u02309'
-  "{\\lfloor}": '\u0230A'
-  "\\lfloor ": '\u0230A'
-  "{\\rfloor}": '\u0230B'
-  "\\rfloor ": '\u0230B'
-  "{\\recorder}": '\u02315'
-  "\\recorder ": '\u02315'
-  "\\mathchar\"2208": '\u02316'
-  "{\\ulcorner}": '\u0231C'
-  "\\ulcorner ": '\u0231C'
-  "{\\urcorner}": '\u0231D'
-  "\\urcorner ": '\u0231D'
-  "{\\llcorner}": '\u0231E'
-  "\\llcorner ": '\u0231E'
-  "{\\lrcorner}": '\u0231F'
-  "\\lrcorner ": '\u0231F'
-  "{\\frown}": '\u02322'
-  "\\frown ": '\u02322'
-  "{\\smile}": '\u02323'
-  "\\smile ": '\u02323'
-  "\\ElsevierGlyph{E838}": '\u0233D'
-  "{\\Elzdlcorn}": '\u023A3'
-  "\\Elzdlcorn ": '\u023A3'
-  "{\\lmoustache}": '\u023B0'
-  "\\lmoustache ": '\u023B0'
-  "{\\rmoustache}": '\u023B1'
-  "\\rmoustache ": '\u023B1'
-  "{\\textvisiblespace}": '\u02423'
-  "\\textvisiblespace ": '\u02423'
-  "\\ding{172}": '\u02460'
-  "\\ding{173}": '\u02461'
-  "\\ding{174}": '\u02462'
-  "\\ding{175}": '\u02463'
-  "\\ding{176}": '\u02464'
-  "\\ding{177}": '\u02465'
-  "\\ding{178}": '\u02466'
-  "\\ding{179}": '\u02467'
-  "\\ding{180}": '\u02468'
-  "\\ding{181}": '\u02469'
-  "{\\circledS}": '\u024C8'
-  "\\circledS ": '\u024C8'
-  "{\\Elzdshfnc}": '\u02506'
-  "\\Elzdshfnc ": '\u02506'
-  "{\\Elzsqfnw}": '\u02519'
-  "\\Elzsqfnw ": '\u02519'
-  "{\\diagup}": '\u02571'
-  "\\diagup ": '\u02571'
-  "\\ding{110}": '\u025A0'
-  "{\\square}": '\u025A1'
-  "\\square ": '\u025A1'
-  "{\\blacksquare}": '\u025AA'
-  "\\blacksquare ": '\u025AA'
-  "\\fbox{~~}": '\u025AD'
-  "{\\Elzvrecto}": '\u025AF'
-  "\\Elzvrecto ": '\u025AF'
-  "\\ElsevierGlyph{E381}": '\u025B1'
-  "\\ding{115}": '\u025B2'
-  "{\\bigtriangleup}": '\u025B3'
-  "\\bigtriangleup ": '\u025B3'
-  "{\\blacktriangle}": '\u025B4'
-  "\\blacktriangle ": '\u025B4'
-  "{\\vartriangle}": '\u025B5'
-  "\\vartriangle ": '\u025B5'
-  "{\\blacktriangleright}": '\u025B8'
-  "\\blacktriangleright ": '\u025B8'
-  "{\\triangleright}": '\u025B9'
-  "\\triangleright ": '\u025B9'
-  "\\ding{116}": '\u025BC'
-  "{\\bigtriangledown}": '\u025BD'
-  "\\bigtriangledown ": '\u025BD'
-  "{\\blacktriangledown}": '\u025BE'
-  "\\blacktriangledown ": '\u025BE'
-  "{\\triangledown}": '\u025BF'
-  "\\triangledown ": '\u025BF'
-  "{\\blacktriangleleft}": '\u025C2'
-  "\\blacktriangleleft ": '\u025C2'
-  "{\\triangleleft}": '\u025C3'
-  "\\triangleleft ": '\u025C3'
-  "\\ding{117}": '\u025C6'
-  "{\\lozenge}": '\u025CA'
-  "\\lozenge ": '\u025CA'
-  "{\\bigcirc}": '\u025CB'
-  "\\bigcirc ": '\u025CB'
-  "\\ding{108}": '\u025CF'
-  "{\\Elzcirfl}": '\u025D0'
-  "\\Elzcirfl ": '\u025D0'
-  "{\\Elzcirfr}": '\u025D1'
-  "\\Elzcirfr ": '\u025D1'
-  "{\\Elzcirfb}": '\u025D2'
-  "\\Elzcirfb ": '\u025D2'
-  "\\ding{119}": '\u025D7'
-  "{\\Elzrvbull}": '\u025D8'
-  "\\Elzrvbull ": '\u025D8'
-  "{\\Elzsqfl}": '\u025E7'
-  "\\Elzsqfl ": '\u025E7'
-  "{\\Elzsqfr}": '\u025E8'
-  "\\Elzsqfr ": '\u025E8'
-  "{\\Elzsqfse}": '\u025EA'
-  "\\Elzsqfse ": '\u025EA'
-  "{\\bigcirc}": '\u025EF'
-  "\\bigcirc ": '\u025EF'
-  "\\ding{72}": '\u02605'
-  "\\ding{73}": '\u02606'
-  "\\ding{37}": '\u0260E'
-  "\\ding{42}": '\u0261B'
-  "\\ding{43}": '\u0261E'
-  "{\\rightmoon}": '\u0263E'
-  "\\rightmoon ": '\u0263E'
-  "{\\mercury}": '\u0263F'
-  "\\mercury ": '\u0263F'
-  "{\\venus}": '\u02640'
-  "\\venus ": '\u02640'
-  "{\\male}": '\u02642'
-  "\\male ": '\u02642'
-  "{\\jupiter}": '\u02643'
-  "\\jupiter ": '\u02643'
-  "{\\saturn}": '\u02644'
-  "\\saturn ": '\u02644'
-  "{\\uranus}": '\u02645'
-  "\\uranus ": '\u02645'
-  "{\\neptune}": '\u02646'
-  "\\neptune ": '\u02646'
-  "{\\pluto}": '\u02647'
-  "\\pluto ": '\u02647'
-  "{\\aries}": '\u02648'
-  "\\aries ": '\u02648'
-  "{\\taurus}": '\u02649'
-  "\\taurus ": '\u02649'
-  "{\\gemini}": '\u0264A'
-  "\\gemini ": '\u0264A'
-  "{\\cancer}": '\u0264B'
-  "\\cancer ": '\u0264B'
-  "{\\leo}": '\u0264C'
-  "\\leo ": '\u0264C'
-  "{\\virgo}": '\u0264D'
-  "\\virgo ": '\u0264D'
-  "{\\libra}": '\u0264E'
-  "\\libra ": '\u0264E'
-  "{\\scorpio}": '\u0264F'
-  "\\scorpio ": '\u0264F'
-  "{\\sagittarius}": '\u02650'
-  "\\sagittarius ": '\u02650'
-  "{\\capricornus}": '\u02651'
-  "\\capricornus ": '\u02651'
-  "{\\aquarius}": '\u02652'
-  "\\aquarius ": '\u02652'
-  "{\\pisces}": '\u02653'
-  "\\pisces ": '\u02653'
-  "\\ding{171}": '\u02660'
-  "{\\diamond}": '\u02662'
-  "\\diamond ": '\u02662'
-  "\\ding{168}": '\u02663'
-  "\\ding{170}": '\u02665'
-  "\\ding{169}": '\u02666'
-  "{\\quarternote}": '\u02669'
-  "\\quarternote ": '\u02669'
-  "{\\eighthnote}": '\u0266A'
-  "\\eighthnote ": '\u0266A'
-  "{\\flat}": '\u0266D'
-  "\\flat ": '\u0266D'
-  "{\\natural}": '\u0266E'
-  "\\natural ": '\u0266E'
-  "{\\sharp}": '\u0266F'
-  "\\sharp ": '\u0266F'
-  "\\ding{33}": '\u02701'
-  "\\ding{34}": '\u02702'
-  "\\ding{35}": '\u02703'
-  "\\ding{36}": '\u02704'
-  "\\ding{38}": '\u02706'
-  "\\ding{39}": '\u02707'
-  "\\ding{40}": '\u02708'
-  "\\ding{41}": '\u02709'
-  "\\ding{44}": '\u0270C'
-  "\\ding{45}": '\u0270D'
-  "\\ding{46}": '\u0270E'
-  "\\ding{47}": '\u0270F'
-  "\\ding{48}": '\u02710'
-  "\\ding{49}": '\u02711'
-  "\\ding{50}": '\u02712'
-  "\\ding{51}": '\u02713'
-  "\\ding{52}": '\u02714'
-  "\\ding{53}": '\u02715'
-  "\\ding{54}": '\u02716'
-  "\\ding{55}": '\u02717'
-  "\\ding{56}": '\u02718'
-  "\\ding{57}": '\u02719'
-  "\\ding{58}": '\u0271A'
-  "\\ding{59}": '\u0271B'
-  "\\ding{60}": '\u0271C'
-  "\\ding{61}": '\u0271D'
-  "\\ding{62}": '\u0271E'
-  "\\ding{63}": '\u0271F'
-  "\\ding{64}": '\u02720'
-  "\\ding{65}": '\u02721'
-  "\\ding{66}": '\u02722'
-  "\\ding{67}": '\u02723'
-  "\\ding{68}": '\u02724'
-  "\\ding{69}": '\u02725'
-  "\\ding{70}": '\u02726'
-  "\\ding{71}": '\u02727'
-  "\\ding{73}": '\u02729'
-  "\\ding{74}": '\u0272A'
-  "\\ding{75}": '\u0272B'
-  "\\ding{76}": '\u0272C'
-  "\\ding{77}": '\u0272D'
-  "\\ding{78}": '\u0272E'
-  "\\ding{79}": '\u0272F'
-  "\\ding{80}": '\u02730'
-  "\\ding{81}": '\u02731'
-  "\\ding{82}": '\u02732'
-  "\\ding{83}": '\u02733'
-  "\\ding{84}": '\u02734'
-  "\\ding{85}": '\u02735'
-  "\\ding{86}": '\u02736'
-  "\\ding{87}": '\u02737'
-  "\\ding{88}": '\u02738'
-  "\\ding{89}": '\u02739'
-  "\\ding{90}": '\u0273A'
-  "\\ding{91}": '\u0273B'
-  "\\ding{92}": '\u0273C'
-  "\\ding{93}": '\u0273D'
-  "\\ding{94}": '\u0273E'
-  "\\ding{95}": '\u0273F'
-  "\\ding{96}": '\u02740'
-  "\\ding{97}": '\u02741'
-  "\\ding{98}": '\u02742'
-  "\\ding{99}": '\u02743'
-  "\\ding{100}": '\u02744'
-  "\\ding{101}": '\u02745'
-  "\\ding{102}": '\u02746'
-  "\\ding{103}": '\u02747'
-  "\\ding{104}": '\u02748'
-  "\\ding{105}": '\u02749'
-  "\\ding{106}": '\u0274A'
-  "\\ding{107}": '\u0274B'
-  "\\ding{109}": '\u0274D'
-  "\\ding{111}": '\u0274F'
-  "\\ding{112}": '\u02750'
-  "\\ding{113}": '\u02751'
-  "\\ding{114}": '\u02752'
-  "\\ding{118}": '\u02756'
-  "\\ding{120}": '\u02758'
-  "\\ding{121}": '\u02759'
-  "\\ding{122}": '\u0275A'
-  "\\ding{123}": '\u0275B'
-  "\\ding{124}": '\u0275C'
-  "\\ding{125}": '\u0275D'
-  "\\ding{126}": '\u0275E'
-  "\\ding{161}": '\u02761'
-  "\\ding{162}": '\u02762'
-  "\\ding{163}": '\u02763'
-  "\\ding{164}": '\u02764'
-  "\\ding{165}": '\u02765'
-  "\\ding{166}": '\u02766'
-  "\\ding{167}": '\u02767'
-  "\\ding{182}": '\u02776'
-  "\\ding{183}": '\u02777'
-  "\\ding{184}": '\u02778'
-  "\\ding{185}": '\u02779'
-  "\\ding{186}": '\u0277A'
-  "\\ding{187}": '\u0277B'
-  "\\ding{188}": '\u0277C'
-  "\\ding{189}": '\u0277D'
-  "\\ding{190}": '\u0277E'
-  "\\ding{191}": '\u0277F'
-  "\\ding{192}": '\u02780'
-  "\\ding{193}": '\u02781'
-  "\\ding{194}": '\u02782'
-  "\\ding{195}": '\u02783'
-  "\\ding{196}": '\u02784'
-  "\\ding{197}": '\u02785'
-  "\\ding{198}": '\u02786'
-  "\\ding{199}": '\u02787'
-  "\\ding{200}": '\u02788'
-  "\\ding{201}": '\u02789'
-  "\\ding{202}": '\u0278A'
-  "\\ding{203}": '\u0278B'
-  "\\ding{204}": '\u0278C'
-  "\\ding{205}": '\u0278D'
-  "\\ding{206}": '\u0278E'
-  "\\ding{207}": '\u0278F'
-  "\\ding{208}": '\u02790'
-  "\\ding{209}": '\u02791'
-  "\\ding{210}": '\u02792'
-  "\\ding{211}": '\u02793'
-  "\\ding{212}": '\u02794'
-  "\\ding{216}": '\u02798'
-  "\\ding{217}": '\u02799'
-  "\\ding{218}": '\u0279A'
-  "\\ding{219}": '\u0279B'
-  "\\ding{220}": '\u0279C'
-  "\\ding{221}": '\u0279D'
-  "\\ding{222}": '\u0279E'
-  "\\ding{223}": '\u0279F'
-  "\\ding{224}": '\u027A0'
-  "\\ding{225}": '\u027A1'
-  "\\ding{226}": '\u027A2'
-  "\\ding{227}": '\u027A3'
-  "\\ding{228}": '\u027A4'
-  "\\ding{229}": '\u027A5'
-  "\\ding{230}": '\u027A6'
-  "\\ding{231}": '\u027A7'
-  "\\ding{232}": '\u027A8'
-  "\\ding{233}": '\u027A9'
-  "\\ding{234}": '\u027AA'
-  "\\ding{235}": '\u027AB'
-  "\\ding{236}": '\u027AC'
-  "\\ding{237}": '\u027AD'
-  "\\ding{238}": '\u027AE'
-  "\\ding{239}": '\u027AF'
-  "\\ding{241}": '\u027B1'
-  "\\ding{242}": '\u027B2'
-  "\\ding{243}": '\u027B3'
-  "\\ding{244}": '\u027B4'
-  "\\ding{245}": '\u027B5'
-  "\\ding{246}": '\u027B6'
-  "\\ding{247}": '\u027B7'
-  "\\ding{248}": '\u027B8'
-  "\\ding{249}": '\u027B9'
-  "\\ding{250}": '\u027BA'
-  "\\ding{251}": '\u027BB'
-  "\\ding{252}": '\u027BC'
-  "\\ding{253}": '\u027BD'
-  "\\ding{254}": '\u027BE'
-  "{\\langle}": '\u027E8'
-  "\\langle ": '\u027E8'
-  "{\\rangle}": '\u027E9'
-  "\\rangle ": '\u027E9'
-  "{\\longleftarrow}": '\u027F5'
-  "\\longleftarrow ": '\u027F5'
-  "{\\longrightarrow}": '\u027F6'
-  "\\longrightarrow ": '\u027F6'
-  "{\\longleftrightarrow}": '\u027F7'
-  "\\longleftrightarrow ": '\u027F7'
-  "{\\Longleftarrow}": '\u027F8'
-  "\\Longleftarrow ": '\u027F8'
-  "{\\Longrightarrow}": '\u027F9'
-  "\\Longrightarrow ": '\u027F9'
-  "{\\Longleftrightarrow}": '\u027FA'
-  "\\Longleftrightarrow ": '\u027FA'
-  "{\\longmapsto}": '\u027FC'
-  "\\longmapsto ": '\u027FC'
-  "\\sim\\joinrel\\leadsto": '\u027FF'
-  "\\ElsevierGlyph{E212}": '\u02905'
-  "{\\UpArrowBar}": '\u02912'
-  "\\UpArrowBar ": '\u02912'
-  "{\\DownArrowBar}": '\u02913'
-  "\\DownArrowBar ": '\u02913'
-  "\\ElsevierGlyph{E20C}": '\u02923'
-  "\\ElsevierGlyph{E20D}": '\u02924'
-  "\\ElsevierGlyph{E20B}": '\u02925'
-  "\\ElsevierGlyph{E20A}": '\u02926'
-  "\\ElsevierGlyph{E211}": '\u02927'
-  "\\ElsevierGlyph{E20E}": '\u02928'
-  "\\ElsevierGlyph{E20F}": '\u02929'
-  "\\ElsevierGlyph{E210}": '\u0292A'
-  "\\ElsevierGlyph{E21C}": '\u02933'
-  "\\ElsevierGlyph{E21A}": '\u02936'
-  "\\ElsevierGlyph{E219}": '\u02937'
-  "{\\Elolarr}": '\u02940'
-  "\\Elolarr ": '\u02940'
-  "{\\Elorarr}": '\u02941'
-  "\\Elorarr ": '\u02941'
-  "{\\ElzRlarr}": '\u02942'
-  "\\ElzRlarr ": '\u02942'
-  "{\\ElzrLarr}": '\u02944'
-  "\\ElzrLarr ": '\u02944'
-  "{\\Elzrarrx}": '\u02947'
-  "\\Elzrarrx ": '\u02947'
-  "{\\LeftRightVector}": '\u0294E'
-  "\\LeftRightVector ": '\u0294E'
-  "{\\RightUpDownVector}": '\u0294F'
-  "\\RightUpDownVector ": '\u0294F'
-  "{\\DownLeftRightVector}": '\u02950'
-  "\\DownLeftRightVector ": '\u02950'
-  "{\\LeftUpDownVector}": '\u02951'
-  "\\LeftUpDownVector ": '\u02951'
-  "{\\LeftVectorBar}": '\u02952'
-  "\\LeftVectorBar ": '\u02952'
-  "{\\RightVectorBar}": '\u02953'
-  "\\RightVectorBar ": '\u02953'
-  "{\\RightUpVectorBar}": '\u02954'
-  "\\RightUpVectorBar ": '\u02954'
-  "{\\RightDownVectorBar}": '\u02955'
-  "\\RightDownVectorBar ": '\u02955'
-  "{\\DownLeftVectorBar}": '\u02956'
-  "\\DownLeftVectorBar ": '\u02956'
-  "{\\DownRightVectorBar}": '\u02957'
-  "\\DownRightVectorBar ": '\u02957'
-  "{\\LeftUpVectorBar}": '\u02958'
-  "\\LeftUpVectorBar ": '\u02958'
-  "{\\LeftDownVectorBar}": '\u02959'
-  "\\LeftDownVectorBar ": '\u02959'
-  "{\\LeftTeeVector}": '\u0295A'
-  "\\LeftTeeVector ": '\u0295A'
-  "{\\RightTeeVector}": '\u0295B'
-  "\\RightTeeVector ": '\u0295B'
-  "{\\RightUpTeeVector}": '\u0295C'
-  "\\RightUpTeeVector ": '\u0295C'
-  "{\\RightDownTeeVector}": '\u0295D'
-  "\\RightDownTeeVector ": '\u0295D'
-  "{\\DownLeftTeeVector}": '\u0295E'
-  "\\DownLeftTeeVector ": '\u0295E'
-  "{\\DownRightTeeVector}": '\u0295F'
-  "\\DownRightTeeVector ": '\u0295F'
-  "{\\LeftUpTeeVector}": '\u02960'
-  "\\LeftUpTeeVector ": '\u02960'
-  "{\\LeftDownTeeVector}": '\u02961'
-  "\\LeftDownTeeVector ": '\u02961'
-  "{\\UpEquilibrium}": '\u0296E'
-  "\\UpEquilibrium ": '\u0296E'
-  "{\\ReverseUpEquilibrium}": '\u0296F'
-  "\\ReverseUpEquilibrium ": '\u0296F'
-  "{\\RoundImplies}": '\u02970'
-  "\\RoundImplies ": '\u02970'
-  "\\ElsevierGlyph{E214}": '\u0297C'
-  "\\ElsevierGlyph{E215}": '\u0297D'
-  "{\\Elztfnc}": '\u02980'
-  "\\Elztfnc ": '\u02980'
-  "\\ElsevierGlyph{3018}": '\u02985'
-  "{\\Elroang}": '\u02986'
-  "\\Elroang ": '\u02986'
-  "<\\kern-0.58em(": '\u02993'
-  "\\ElsevierGlyph{E291}": '\u02994'
-  "{\\Elzddfnc}": '\u02999'
-  "\\Elzddfnc ": '\u02999'
-  "{\\Angle}": '\u0299C'
-  "\\Angle ": '\u0299C'
-  "{\\Elzlpargt}": '\u029A0'
-  "\\Elzlpargt ": '\u029A0'
-  "\\ElsevierGlyph{E260}": '\u029B5'
-  "\\ElsevierGlyph{E61B}": '\u029B6'
-  "{\\ElzLap}": '\u029CA'
-  "\\ElzLap ": '\u029CA'
-  "{\\Elzdefas}": '\u029CB'
-  "\\Elzdefas ": '\u029CB'
-  "{\\LeftTriangleBar}": '\u029CF'
-  "\\LeftTriangleBar ": '\u029CF'
-  "{\\RightTriangleBar}": '\u029D0'
-  "\\RightTriangleBar ": '\u029D0'
-  "\\ElsevierGlyph{E372}": '\u029DC'
-  "{\\blacklozenge}": '\u029EB'
-  "\\blacklozenge ": '\u029EB'
-  "{\\RuleDelayed}": '\u029F4'
-  "\\RuleDelayed ": '\u029F4'
-  "{\\Elxuplus}": '\u02A04'
-  "\\Elxuplus ": '\u02A04'
-  "{\\ElzThr}": '\u02A05'
-  "\\ElzThr ": '\u02A05'
-  "{\\Elxsqcup}": '\u02A06'
-  "\\Elxsqcup ": '\u02A06'
-  "{\\ElzInf}": '\u02A07'
-  "\\ElzInf ": '\u02A07'
-  "{\\ElzSup}": '\u02A08'
-  "\\ElzSup ": '\u02A08'
-  "{\\ElzCint}": '\u02A0D'
-  "\\ElzCint ": '\u02A0D'
-  "{\\clockoint}": '\u02A0F'
-  "\\clockoint ": '\u02A0F'
-  "\\ElsevierGlyph{E395}": '\u02A10'
-  "{\\sqrint}": '\u02A16'
-  "\\sqrint ": '\u02A16'
-  "\\ElsevierGlyph{E25A}": '\u02A25'
-  "\\ElsevierGlyph{E25B}": '\u02A2A'
-  "\\ElsevierGlyph{E25C}": '\u02A2D'
-  "\\ElsevierGlyph{E25D}": '\u02A2E'
-  "{\\ElzTimes}": '\u02A2F'
-  "\\ElzTimes ": '\u02A2F'
-  "\\ElsevierGlyph{E25E}": '\u02A34'
-  "\\ElsevierGlyph{E25E}": '\u02A35'
-  "\\ElsevierGlyph{E259}": '\u02A3C'
-  "{\\amalg}": '\u02A3F'
-  "\\amalg ": '\u02A3F'
-  "{\\ElzAnd}": '\u02A53'
-  "\\ElzAnd ": '\u02A53'
-  "{\\ElzOr}": '\u02A54'
-  "\\ElzOr ": '\u02A54'
-  "\\ElsevierGlyph{E36E}": '\u02A55'
-  "{\\ElOr}": '\u02A56'
-  "\\ElOr ": '\u02A56'
-  "{\\perspcorrespond}": '\u02A5E'
-  "\\perspcorrespond ": '\u02A5E'
-  "{\\Elzminhat}": '\u02A5F'
-  "\\Elzminhat ": '\u02A5F'
-  "\\ElsevierGlyph{225A}": '\u02A63'
-  "\\stackrel{*}{=}": '\u02A6E'
-  "{\\Equal}": '\u02A75'
-  "\\Equal ": '\u02A75'
-  "{\\leqslant}": '\u02A7D'
-  "\\leqslant ": '\u02A7D'
-  "{\\geqslant}": '\u02A7E'
-  "\\geqslant ": '\u02A7E'
-  "{\\lessapprox}": '\u02A85'
-  "\\lessapprox ": '\u02A85'
-  "{\\gtrapprox}": '\u02A86'
-  "\\gtrapprox ": '\u02A86'
-  "{\\lneq}": '\u02A87'
-  "\\lneq ": '\u02A87'
-  "{\\gneq}": '\u02A88'
-  "\\gneq ": '\u02A88'
-  "{\\lnapprox}": '\u02A89'
-  "\\lnapprox ": '\u02A89'
-  "{\\gnapprox}": '\u02A8A'
-  "\\gnapprox ": '\u02A8A'
-  "{\\lesseqqgtr}": '\u02A8B'
-  "\\lesseqqgtr ": '\u02A8B'
-  "{\\gtreqqless}": '\u02A8C'
-  "\\gtreqqless ": '\u02A8C'
-  "{\\eqslantless}": '\u02A95'
-  "\\eqslantless ": '\u02A95'
-  "{\\eqslantgtr}": '\u02A96'
-  "\\eqslantgtr ": '\u02A96'
-  "\\Pisymbol{ppi020}{117}": '\u02A9D'
-  "\\Pisymbol{ppi020}{105}": '\u02A9E'
-  "{\\NestedLessLess}": '\u02AA1'
-  "\\NestedLessLess ": '\u02AA1'
-  "{\\NestedGreaterGreater}": '\u02AA2'
-  "\\NestedGreaterGreater ": '\u02AA2'
-  "{\\preceq}": '\u02AAF'
-  "\\preceq ": '\u02AAF'
-  "{\\succeq}": '\u02AB0'
-  "\\succeq ": '\u02AB0'
-  "{\\precneqq}": '\u02AB5'
-  "\\precneqq ": '\u02AB5'
-  "{\\succneqq}": '\u02AB6'
-  "\\succneqq ": '\u02AB6'
-  "{\\precapprox}": '\u02AB7'
-  "\\precapprox ": '\u02AB7'
-  "{\\succapprox}": '\u02AB8'
-  "\\succapprox ": '\u02AB8'
-  "{\\precnapprox}": '\u02AB9'
-  "\\precnapprox ": '\u02AB9'
-  "{\\succnapprox}": '\u02ABA'
-  "\\succnapprox ": '\u02ABA'
-  "{\\subseteqq}": '\u02AC5'
-  "\\subseteqq ": '\u02AC5'
-  "{\\supseteqq}": '\u02AC6'
-  "\\supseteqq ": '\u02AC6'
-  "{\\subsetneqq}": '\u02ACB'
-  "\\subsetneqq ": '\u02ACB'
-  "{\\supsetneqq}": '\u02ACC'
-  "\\supsetneqq ": '\u02ACC'
-  "\\ElsevierGlyph{E30D}": '\u02AEB'
-  "{\\Elztdcol}": '\u02AF6'
-  "\\Elztdcol ": '\u02AF6'
-  "{{/}\\!\\!{/}}": '\u02AFD'
-  "\\ElsevierGlyph{300A}": '\u0300A'
-  "\\ElsevierGlyph{300B}": '\u0300B'
-  "\\ElsevierGlyph{3018}": '\u03018'
-  "\\ElsevierGlyph{3019}": '\u03019'
-  "{\\openbracketleft}": '\u0301A'
-  "\\openbracketleft ": '\u0301A'
-  "{\\openbracketright}": '\u0301B'
-  "\\openbracketright ": '\u0301B'
-  "\\mathbf{A}": '\u1D400'
-  "\\mathbf{B}": '\u1D401'
-  "\\mathbf{C}": '\u1D402'
-  "\\mathbf{D}": '\u1D403'
-  "\\mathbf{E}": '\u1D404'
-  "\\mathbf{F}": '\u1D405'
-  "\\mathbf{G}": '\u1D406'
-  "\\mathbf{H}": '\u1D407'
-  "\\mathbf{I}": '\u1D408'
-  "\\mathbf{J}": '\u1D409'
-  "\\mathbf{K}": '\u1D40A'
-  "\\mathbf{L}": '\u1D40B'
-  "\\mathbf{M}": '\u1D40C'
-  "\\mathbf{N}": '\u1D40D'
-  "\\mathbf{O}": '\u1D40E'
-  "\\mathbf{P}": '\u1D40F'
-  "\\mathbf{Q}": '\u1D410'
-  "\\mathbf{R}": '\u1D411'
-  "\\mathbf{S}": '\u1D412'
-  "\\mathbf{T}": '\u1D413'
-  "\\mathbf{U}": '\u1D414'
-  "\\mathbf{V}": '\u1D415'
-  "\\mathbf{W}": '\u1D416'
-  "\\mathbf{X}": '\u1D417'
-  "\\mathbf{Y}": '\u1D418'
-  "\\mathbf{Z}": '\u1D419'
-  "\\mathbf{a}": '\u1D41A'
-  "\\mathbf{b}": '\u1D41B'
-  "\\mathbf{c}": '\u1D41C'
-  "\\mathbf{d}": '\u1D41D'
-  "\\mathbf{e}": '\u1D41E'
-  "\\mathbf{f}": '\u1D41F'
-  "\\mathbf{g}": '\u1D420'
-  "\\mathbf{h}": '\u1D421'
-  "\\mathbf{i}": '\u1D422'
-  "\\mathbf{j}": '\u1D423'
-  "\\mathbf{k}": '\u1D424'
-  "\\mathbf{l}": '\u1D425'
-  "\\mathbf{m}": '\u1D426'
-  "\\mathbf{n}": '\u1D427'
-  "\\mathbf{o}": '\u1D428'
-  "\\mathbf{p}": '\u1D429'
-  "\\mathbf{q}": '\u1D42A'
-  "\\mathbf{r}": '\u1D42B'
-  "\\mathbf{s}": '\u1D42C'
-  "\\mathbf{t}": '\u1D42D'
-  "\\mathbf{u}": '\u1D42E'
-  "\\mathbf{v}": '\u1D42F'
-  "\\mathbf{w}": '\u1D430'
-  "\\mathbf{x}": '\u1D431'
-  "\\mathbf{y}": '\u1D432'
-  "\\mathbf{z}": '\u1D433'
-  "\\mathsl{A}": '\u1D434'
-  "\\mathsl{B}": '\u1D435'
-  "\\mathsl{C}": '\u1D436'
-  "\\mathsl{D}": '\u1D437'
-  "\\mathsl{E}": '\u1D438'
-  "\\mathsl{F}": '\u1D439'
-  "\\mathsl{G}": '\u1D43A'
-  "\\mathsl{H}": '\u1D43B'
-  "\\mathsl{I}": '\u1D43C'
-  "\\mathsl{J}": '\u1D43D'
-  "\\mathsl{K}": '\u1D43E'
-  "\\mathsl{L}": '\u1D43F'
-  "\\mathsl{M}": '\u1D440'
-  "\\mathsl{N}": '\u1D441'
-  "\\mathsl{O}": '\u1D442'
-  "\\mathsl{P}": '\u1D443'
-  "\\mathsl{Q}": '\u1D444'
-  "\\mathsl{R}": '\u1D445'
-  "\\mathsl{S}": '\u1D446'
-  "\\mathsl{T}": '\u1D447'
-  "\\mathsl{U}": '\u1D448'
-  "\\mathsl{V}": '\u1D449'
-  "\\mathsl{W}": '\u1D44A'
-  "\\mathsl{X}": '\u1D44B'
-  "\\mathsl{Y}": '\u1D44C'
-  "\\mathsl{Z}": '\u1D44D'
-  "\\mathsl{a}": '\u1D44E'
-  "\\mathsl{b}": '\u1D44F'
-  "\\mathsl{c}": '\u1D450'
-  "\\mathsl{d}": '\u1D451'
-  "\\mathsl{e}": '\u1D452'
-  "\\mathsl{f}": '\u1D453'
-  "\\mathsl{g}": '\u1D454'
-  "\\mathsl{i}": '\u1D456'
-  "\\mathsl{j}": '\u1D457'
-  "\\mathsl{k}": '\u1D458'
-  "\\mathsl{l}": '\u1D459'
-  "\\mathsl{m}": '\u1D45A'
-  "\\mathsl{n}": '\u1D45B'
-  "\\mathsl{o}": '\u1D45C'
-  "\\mathsl{p}": '\u1D45D'
-  "\\mathsl{q}": '\u1D45E'
-  "\\mathsl{r}": '\u1D45F'
-  "\\mathsl{s}": '\u1D460'
-  "\\mathsl{t}": '\u1D461'
-  "\\mathsl{u}": '\u1D462'
-  "\\mathsl{v}": '\u1D463'
-  "\\mathsl{w}": '\u1D464'
-  "\\mathsl{x}": '\u1D465'
-  "\\mathsl{y}": '\u1D466'
-  "\\mathsl{z}": '\u1D467'
-  "\\mathbit{A}": '\u1D468'
-  "\\mathbit{B}": '\u1D469'
-  "\\mathbit{C}": '\u1D46A'
-  "\\mathbit{D}": '\u1D46B'
-  "\\mathbit{E}": '\u1D46C'
-  "\\mathbit{F}": '\u1D46D'
-  "\\mathbit{G}": '\u1D46E'
-  "\\mathbit{H}": '\u1D46F'
-  "\\mathbit{I}": '\u1D470'
-  "\\mathbit{J}": '\u1D471'
-  "\\mathbit{K}": '\u1D472'
-  "\\mathbit{L}": '\u1D473'
-  "\\mathbit{M}": '\u1D474'
-  "\\mathbit{N}": '\u1D475'
-  "\\mathbit{O}": '\u1D476'
-  "\\mathbit{P}": '\u1D477'
-  "\\mathbit{Q}": '\u1D478'
-  "\\mathbit{R}": '\u1D479'
-  "\\mathbit{S}": '\u1D47A'
-  "\\mathbit{T}": '\u1D47B'
-  "\\mathbit{U}": '\u1D47C'
-  "\\mathbit{V}": '\u1D47D'
-  "\\mathbit{W}": '\u1D47E'
-  "\\mathbit{X}": '\u1D47F'
-  "\\mathbit{Y}": '\u1D480'
-  "\\mathbit{Z}": '\u1D481'
-  "\\mathbit{a}": '\u1D482'
-  "\\mathbit{b}": '\u1D483'
-  "\\mathbit{c}": '\u1D484'
-  "\\mathbit{d}": '\u1D485'
-  "\\mathbit{e}": '\u1D486'
-  "\\mathbit{f}": '\u1D487'
-  "\\mathbit{g}": '\u1D488'
-  "\\mathbit{h}": '\u1D489'
-  "\\mathbit{i}": '\u1D48A'
-  "\\mathbit{j}": '\u1D48B'
-  "\\mathbit{k}": '\u1D48C'
-  "\\mathbit{l}": '\u1D48D'
-  "\\mathbit{m}": '\u1D48E'
-  "\\mathbit{n}": '\u1D48F'
-  "\\mathbit{o}": '\u1D490'
-  "\\mathbit{p}": '\u1D491'
-  "\\mathbit{q}": '\u1D492'
-  "\\mathbit{r}": '\u1D493'
-  "\\mathbit{s}": '\u1D494'
-  "\\mathbit{t}": '\u1D495'
-  "\\mathbit{u}": '\u1D496'
-  "\\mathbit{v}": '\u1D497'
-  "\\mathbit{w}": '\u1D498'
-  "\\mathbit{x}": '\u1D499'
-  "\\mathbit{y}": '\u1D49A'
-  "\\mathbit{z}": '\u1D49B'
-  "\\mathscr{A}": '\u1D49C'
-  "\\mathscr{C}": '\u1D49E'
-  "\\mathscr{D}": '\u1D49F'
-  "\\mathscr{G}": '\u1D4A2'
-  "\\mathscr{J}": '\u1D4A5'
-  "\\mathscr{K}": '\u1D4A6'
-  "\\mathscr{N}": '\u1D4A9'
-  "\\mathscr{O}": '\u1D4AA'
-  "\\mathscr{P}": '\u1D4AB'
-  "\\mathscr{Q}": '\u1D4AC'
-  "\\mathscr{S}": '\u1D4AE'
-  "\\mathscr{T}": '\u1D4AF'
-  "\\mathscr{U}": '\u1D4B0'
-  "\\mathscr{V}": '\u1D4B1'
-  "\\mathscr{W}": '\u1D4B2'
-  "\\mathscr{X}": '\u1D4B3'
-  "\\mathscr{Y}": '\u1D4B4'
-  "\\mathscr{Z}": '\u1D4B5'
-  "\\mathscr{a}": '\u1D4B6'
-  "\\mathscr{b}": '\u1D4B7'
-  "\\mathscr{c}": '\u1D4B8'
-  "\\mathscr{d}": '\u1D4B9'
-  "\\mathscr{f}": '\u1D4BB'
-  "\\mathscr{h}": '\u1D4BD'
-  "\\mathscr{i}": '\u1D4BE'
-  "\\mathscr{j}": '\u1D4BF'
-  "\\mathscr{k}": '\u1D4C0'
-  "\\mathscr{l}": '\u1D4C1'
-  "\\mathscr{m}": '\u1D4C2'
-  "\\mathscr{n}": '\u1D4C3'
-  "\\mathscr{p}": '\u1D4C5'
-  "\\mathscr{q}": '\u1D4C6'
-  "\\mathscr{r}": '\u1D4C7'
-  "\\mathscr{s}": '\u1D4C8'
-  "\\mathscr{t}": '\u1D4C9'
-  "\\mathscr{u}": '\u1D4CA'
-  "\\mathscr{v}": '\u1D4CB'
-  "\\mathscr{w}": '\u1D4CC'
-  "\\mathscr{x}": '\u1D4CD'
-  "\\mathscr{y}": '\u1D4CE'
-  "\\mathscr{z}": '\u1D4CF'
-  "\\mathmit{A}": '\u1D4D0'
-  "\\mathmit{B}": '\u1D4D1'
-  "\\mathmit{C}": '\u1D4D2'
-  "\\mathmit{D}": '\u1D4D3'
-  "\\mathmit{E}": '\u1D4D4'
-  "\\mathmit{F}": '\u1D4D5'
-  "\\mathmit{G}": '\u1D4D6'
-  "\\mathmit{H}": '\u1D4D7'
-  "\\mathmit{I}": '\u1D4D8'
-  "\\mathmit{J}": '\u1D4D9'
-  "\\mathmit{K}": '\u1D4DA'
-  "\\mathmit{L}": '\u1D4DB'
-  "\\mathmit{M}": '\u1D4DC'
-  "\\mathmit{N}": '\u1D4DD'
-  "\\mathmit{O}": '\u1D4DE'
-  "\\mathmit{P}": '\u1D4DF'
-  "\\mathmit{Q}": '\u1D4E0'
-  "\\mathmit{R}": '\u1D4E1'
-  "\\mathmit{S}": '\u1D4E2'
-  "\\mathmit{T}": '\u1D4E3'
-  "\\mathmit{U}": '\u1D4E4'
-  "\\mathmit{V}": '\u1D4E5'
-  "\\mathmit{W}": '\u1D4E6'
-  "\\mathmit{X}": '\u1D4E7'
-  "\\mathmit{Y}": '\u1D4E8'
-  "\\mathmit{Z}": '\u1D4E9'
-  "\\mathmit{a}": '\u1D4EA'
-  "\\mathmit{b}": '\u1D4EB'
-  "\\mathmit{c}": '\u1D4EC'
-  "\\mathmit{d}": '\u1D4ED'
-  "\\mathmit{e}": '\u1D4EE'
-  "\\mathmit{f}": '\u1D4EF'
-  "\\mathmit{g}": '\u1D4F0'
-  "\\mathmit{h}": '\u1D4F1'
-  "\\mathmit{i}": '\u1D4F2'
-  "\\mathmit{j}": '\u1D4F3'
-  "\\mathmit{k}": '\u1D4F4'
-  "\\mathmit{l}": '\u1D4F5'
-  "\\mathmit{m}": '\u1D4F6'
-  "\\mathmit{n}": '\u1D4F7'
-  "\\mathmit{o}": '\u1D4F8'
-  "\\mathmit{p}": '\u1D4F9'
-  "\\mathmit{q}": '\u1D4FA'
-  "\\mathmit{r}": '\u1D4FB'
-  "\\mathmit{s}": '\u1D4FC'
-  "\\mathmit{t}": '\u1D4FD'
-  "\\mathmit{u}": '\u1D4FE'
-  "\\mathmit{v}": '\u1D4FF'
-  "\\mathmit{w}": '\u1D500'
-  "\\mathmit{x}": '\u1D501'
-  "\\mathmit{y}": '\u1D502'
-  "\\mathmit{z}": '\u1D503'
-  "\\mathfrak{A}": '\u1D504'
-  "\\mathfrak{B}": '\u1D505'
-  "\\mathfrak{D}": '\u1D507'
-  "\\mathfrak{E}": '\u1D508'
-  "\\mathfrak{F}": '\u1D509'
-  "\\mathfrak{G}": '\u1D50A'
-  "\\mathfrak{J}": '\u1D50D'
-  "\\mathfrak{K}": '\u1D50E'
-  "\\mathfrak{L}": '\u1D50F'
-  "\\mathfrak{M}": '\u1D510'
-  "\\mathfrak{N}": '\u1D511'
-  "\\mathfrak{O}": '\u1D512'
-  "\\mathfrak{P}": '\u1D513'
-  "\\mathfrak{Q}": '\u1D514'
-  "\\mathfrak{S}": '\u1D516'
-  "\\mathfrak{T}": '\u1D517'
-  "\\mathfrak{U}": '\u1D518'
-  "\\mathfrak{V}": '\u1D519'
-  "\\mathfrak{W}": '\u1D51A'
-  "\\mathfrak{X}": '\u1D51B'
-  "\\mathfrak{Y}": '\u1D51C'
-  "\\mathfrak{a}": '\u1D51E'
-  "\\mathfrak{b}": '\u1D51F'
-  "\\mathfrak{c}": '\u1D520'
-  "\\mathfrak{d}": '\u1D521'
-  "\\mathfrak{e}": '\u1D522'
-  "\\mathfrak{f}": '\u1D523'
-  "\\mathfrak{g}": '\u1D524'
-  "\\mathfrak{h}": '\u1D525'
-  "\\mathfrak{i}": '\u1D526'
-  "\\mathfrak{j}": '\u1D527'
-  "\\mathfrak{k}": '\u1D528'
-  "\\mathfrak{l}": '\u1D529'
-  "\\mathfrak{m}": '\u1D52A'
-  "\\mathfrak{n}": '\u1D52B'
-  "\\mathfrak{o}": '\u1D52C'
-  "\\mathfrak{p}": '\u1D52D'
-  "\\mathfrak{q}": '\u1D52E'
-  "\\mathfrak{r}": '\u1D52F'
-  "\\mathfrak{s}": '\u1D530'
-  "\\mathfrak{t}": '\u1D531'
-  "\\mathfrak{u}": '\u1D532'
-  "\\mathfrak{v}": '\u1D533'
-  "\\mathfrak{w}": '\u1D534'
-  "\\mathfrak{x}": '\u1D535'
-  "\\mathfrak{y}": '\u1D536'
-  "\\mathfrak{z}": '\u1D537'
-  "\\mathbb{A}": '\u1D538'
-  "\\mathbb{B}": '\u1D539'
-  "\\mathbb{D}": '\u1D53B'
-  "\\mathbb{E}": '\u1D53C'
-  "\\mathbb{F}": '\u1D53D'
-  "\\mathbb{G}": '\u1D53E'
-  "\\mathbb{I}": '\u1D540'
-  "\\mathbb{J}": '\u1D541'
-  "\\mathbb{K}": '\u1D542'
-  "\\mathbb{L}": '\u1D543'
-  "\\mathbb{M}": '\u1D544'
-  "\\mathbb{O}": '\u1D546'
-  "\\mathbb{S}": '\u1D54A'
-  "\\mathbb{T}": '\u1D54B'
-  "\\mathbb{U}": '\u1D54C'
-  "\\mathbb{V}": '\u1D54D'
-  "\\mathbb{W}": '\u1D54E'
-  "\\mathbb{X}": '\u1D54F'
-  "\\mathbb{Y}": '\u1D550'
-  "\\mathbb{a}": '\u1D552'
-  "\\mathbb{b}": '\u1D553'
-  "\\mathbb{c}": '\u1D554'
-  "\\mathbb{d}": '\u1D555'
-  "\\mathbb{e}": '\u1D556'
-  "\\mathbb{f}": '\u1D557'
-  "\\mathbb{g}": '\u1D558'
-  "\\mathbb{h}": '\u1D559'
-  "\\mathbb{i}": '\u1D55A'
-  "\\mathbb{j}": '\u1D55B'
-  "\\mathbb{k}": '\u1D55C'
-  "\\mathbb{l}": '\u1D55D'
-  "\\mathbb{m}": '\u1D55E'
-  "\\mathbb{n}": '\u1D55F'
-  "\\mathbb{o}": '\u1D560'
-  "\\mathbb{p}": '\u1D561'
-  "\\mathbb{q}": '\u1D562'
-  "\\mathbb{r}": '\u1D563'
-  "\\mathbb{s}": '\u1D564'
-  "\\mathbb{t}": '\u1D565'
-  "\\mathbb{u}": '\u1D566'
-  "\\mathbb{v}": '\u1D567'
-  "\\mathbb{w}": '\u1D568'
-  "\\mathbb{x}": '\u1D569'
-  "\\mathbb{y}": '\u1D56A'
-  "\\mathbb{z}": '\u1D56B'
-  "\\mathslbb{A}": '\u1D56C'
-  "\\mathslbb{B}": '\u1D56D'
-  "\\mathslbb{C}": '\u1D56E'
-  "\\mathslbb{D}": '\u1D56F'
-  "\\mathslbb{E}": '\u1D570'
-  "\\mathslbb{F}": '\u1D571'
-  "\\mathslbb{G}": '\u1D572'
-  "\\mathslbb{H}": '\u1D573'
-  "\\mathslbb{I}": '\u1D574'
-  "\\mathslbb{J}": '\u1D575'
-  "\\mathslbb{K}": '\u1D576'
-  "\\mathslbb{L}": '\u1D577'
-  "\\mathslbb{M}": '\u1D578'
-  "\\mathslbb{N}": '\u1D579'
-  "\\mathslbb{O}": '\u1D57A'
-  "\\mathslbb{P}": '\u1D57B'
-  "\\mathslbb{Q}": '\u1D57C'
-  "\\mathslbb{R}": '\u1D57D'
-  "\\mathslbb{S}": '\u1D57E'
-  "\\mathslbb{T}": '\u1D57F'
-  "\\mathslbb{U}": '\u1D580'
-  "\\mathslbb{V}": '\u1D581'
-  "\\mathslbb{W}": '\u1D582'
-  "\\mathslbb{X}": '\u1D583'
-  "\\mathslbb{Y}": '\u1D584'
-  "\\mathslbb{Z}": '\u1D585'
-  "\\mathslbb{a}": '\u1D586'
-  "\\mathslbb{b}": '\u1D587'
-  "\\mathslbb{c}": '\u1D588'
-  "\\mathslbb{d}": '\u1D589'
-  "\\mathslbb{e}": '\u1D58A'
-  "\\mathslbb{f}": '\u1D58B'
-  "\\mathslbb{g}": '\u1D58C'
-  "\\mathslbb{h}": '\u1D58D'
-  "\\mathslbb{i}": '\u1D58E'
-  "\\mathslbb{j}": '\u1D58F'
-  "\\mathslbb{k}": '\u1D590'
-  "\\mathslbb{l}": '\u1D591'
-  "\\mathslbb{m}": '\u1D592'
-  "\\mathslbb{n}": '\u1D593'
-  "\\mathslbb{o}": '\u1D594'
-  "\\mathslbb{p}": '\u1D595'
-  "\\mathslbb{q}": '\u1D596'
-  "\\mathslbb{r}": '\u1D597'
-  "\\mathslbb{s}": '\u1D598'
-  "\\mathslbb{t}": '\u1D599'
-  "\\mathslbb{u}": '\u1D59A'
-  "\\mathslbb{v}": '\u1D59B'
-  "\\mathslbb{w}": '\u1D59C'
-  "\\mathslbb{x}": '\u1D59D'
-  "\\mathslbb{y}": '\u1D59E'
-  "\\mathslbb{z}": '\u1D59F'
-  "\\mathsf{A}": '\u1D5A0'
-  "\\mathsf{B}": '\u1D5A1'
-  "\\mathsf{C}": '\u1D5A2'
-  "\\mathsf{D}": '\u1D5A3'
-  "\\mathsf{E}": '\u1D5A4'
-  "\\mathsf{F}": '\u1D5A5'
-  "\\mathsf{G}": '\u1D5A6'
-  "\\mathsf{H}": '\u1D5A7'
-  "\\mathsf{I}": '\u1D5A8'
-  "\\mathsf{J}": '\u1D5A9'
-  "\\mathsf{K}": '\u1D5AA'
-  "\\mathsf{L}": '\u1D5AB'
-  "\\mathsf{M}": '\u1D5AC'
-  "\\mathsf{N}": '\u1D5AD'
-  "\\mathsf{O}": '\u1D5AE'
-  "\\mathsf{P}": '\u1D5AF'
-  "\\mathsf{Q}": '\u1D5B0'
-  "\\mathsf{R}": '\u1D5B1'
-  "\\mathsf{S}": '\u1D5B2'
-  "\\mathsf{T}": '\u1D5B3'
-  "\\mathsf{U}": '\u1D5B4'
-  "\\mathsf{V}": '\u1D5B5'
-  "\\mathsf{W}": '\u1D5B6'
-  "\\mathsf{X}": '\u1D5B7'
-  "\\mathsf{Y}": '\u1D5B8'
-  "\\mathsf{Z}": '\u1D5B9'
-  "\\mathsf{a}": '\u1D5BA'
-  "\\mathsf{b}": '\u1D5BB'
-  "\\mathsf{c}": '\u1D5BC'
-  "\\mathsf{d}": '\u1D5BD'
-  "\\mathsf{e}": '\u1D5BE'
-  "\\mathsf{f}": '\u1D5BF'
-  "\\mathsf{g}": '\u1D5C0'
-  "\\mathsf{h}": '\u1D5C1'
-  "\\mathsf{i}": '\u1D5C2'
-  "\\mathsf{j}": '\u1D5C3'
-  "\\mathsf{k}": '\u1D5C4'
-  "\\mathsf{l}": '\u1D5C5'
-  "\\mathsf{m}": '\u1D5C6'
-  "\\mathsf{n}": '\u1D5C7'
-  "\\mathsf{o}": '\u1D5C8'
-  "\\mathsf{p}": '\u1D5C9'
-  "\\mathsf{q}": '\u1D5CA'
-  "\\mathsf{r}": '\u1D5CB'
-  "\\mathsf{s}": '\u1D5CC'
-  "\\mathsf{t}": '\u1D5CD'
-  "\\mathsf{u}": '\u1D5CE'
-  "\\mathsf{v}": '\u1D5CF'
-  "\\mathsf{w}": '\u1D5D0'
-  "\\mathsf{x}": '\u1D5D1'
-  "\\mathsf{y}": '\u1D5D2'
-  "\\mathsf{z}": '\u1D5D3'
-  "\\mathsfbf{A}": '\u1D5D4'
-  "\\mathsfbf{B}": '\u1D5D5'
-  "\\mathsfbf{C}": '\u1D5D6'
-  "\\mathsfbf{D}": '\u1D5D7'
-  "\\mathsfbf{E}": '\u1D5D8'
-  "\\mathsfbf{F}": '\u1D5D9'
-  "\\mathsfbf{G}": '\u1D5DA'
-  "\\mathsfbf{H}": '\u1D5DB'
-  "\\mathsfbf{I}": '\u1D5DC'
-  "\\mathsfbf{J}": '\u1D5DD'
-  "\\mathsfbf{K}": '\u1D5DE'
-  "\\mathsfbf{L}": '\u1D5DF'
-  "\\mathsfbf{M}": '\u1D5E0'
-  "\\mathsfbf{N}": '\u1D5E1'
-  "\\mathsfbf{O}": '\u1D5E2'
-  "\\mathsfbf{P}": '\u1D5E3'
-  "\\mathsfbf{Q}": '\u1D5E4'
-  "\\mathsfbf{R}": '\u1D5E5'
-  "\\mathsfbf{S}": '\u1D5E6'
-  "\\mathsfbf{T}": '\u1D5E7'
-  "\\mathsfbf{U}": '\u1D5E8'
-  "\\mathsfbf{V}": '\u1D5E9'
-  "\\mathsfbf{W}": '\u1D5EA'
-  "\\mathsfbf{X}": '\u1D5EB'
-  "\\mathsfbf{Y}": '\u1D5EC'
-  "\\mathsfbf{Z}": '\u1D5ED'
-  "\\mathsfbf{a}": '\u1D5EE'
-  "\\mathsfbf{b}": '\u1D5EF'
-  "\\mathsfbf{c}": '\u1D5F0'
-  "\\mathsfbf{d}": '\u1D5F1'
-  "\\mathsfbf{e}": '\u1D5F2'
-  "\\mathsfbf{f}": '\u1D5F3'
-  "\\mathsfbf{g}": '\u1D5F4'
-  "\\mathsfbf{h}": '\u1D5F5'
-  "\\mathsfbf{i}": '\u1D5F6'
-  "\\mathsfbf{j}": '\u1D5F7'
-  "\\mathsfbf{k}": '\u1D5F8'
-  "\\mathsfbf{l}": '\u1D5F9'
-  "\\mathsfbf{m}": '\u1D5FA'
-  "\\mathsfbf{n}": '\u1D5FB'
-  "\\mathsfbf{o}": '\u1D5FC'
-  "\\mathsfbf{p}": '\u1D5FD'
-  "\\mathsfbf{q}": '\u1D5FE'
-  "\\mathsfbf{r}": '\u1D5FF'
-  "\\mathsfbf{s}": '\u1D600'
-  "\\mathsfbf{t}": '\u1D601'
-  "\\mathsfbf{u}": '\u1D602'
-  "\\mathsfbf{v}": '\u1D603'
-  "\\mathsfbf{w}": '\u1D604'
-  "\\mathsfbf{x}": '\u1D605'
-  "\\mathsfbf{y}": '\u1D606'
-  "\\mathsfbf{z}": '\u1D607'
-  "\\mathsfsl{A}": '\u1D608'
-  "\\mathsfsl{B}": '\u1D609'
-  "\\mathsfsl{C}": '\u1D60A'
-  "\\mathsfsl{D}": '\u1D60B'
-  "\\mathsfsl{E}": '\u1D60C'
-  "\\mathsfsl{F}": '\u1D60D'
-  "\\mathsfsl{G}": '\u1D60E'
-  "\\mathsfsl{H}": '\u1D60F'
-  "\\mathsfsl{I}": '\u1D610'
-  "\\mathsfsl{J}": '\u1D611'
-  "\\mathsfsl{K}": '\u1D612'
-  "\\mathsfsl{L}": '\u1D613'
-  "\\mathsfsl{M}": '\u1D614'
-  "\\mathsfsl{N}": '\u1D615'
-  "\\mathsfsl{O}": '\u1D616'
-  "\\mathsfsl{P}": '\u1D617'
-  "\\mathsfsl{Q}": '\u1D618'
-  "\\mathsfsl{R}": '\u1D619'
-  "\\mathsfsl{S}": '\u1D61A'
-  "\\mathsfsl{T}": '\u1D61B'
-  "\\mathsfsl{U}": '\u1D61C'
-  "\\mathsfsl{V}": '\u1D61D'
-  "\\mathsfsl{W}": '\u1D61E'
-  "\\mathsfsl{X}": '\u1D61F'
-  "\\mathsfsl{Y}": '\u1D620'
-  "\\mathsfsl{Z}": '\u1D621'
-  "\\mathsfsl{a}": '\u1D622'
-  "\\mathsfsl{b}": '\u1D623'
-  "\\mathsfsl{c}": '\u1D624'
-  "\\mathsfsl{d}": '\u1D625'
-  "\\mathsfsl{e}": '\u1D626'
-  "\\mathsfsl{f}": '\u1D627'
-  "\\mathsfsl{g}": '\u1D628'
-  "\\mathsfsl{h}": '\u1D629'
-  "\\mathsfsl{i}": '\u1D62A'
-  "\\mathsfsl{j}": '\u1D62B'
-  "\\mathsfsl{k}": '\u1D62C'
-  "\\mathsfsl{l}": '\u1D62D'
-  "\\mathsfsl{m}": '\u1D62E'
-  "\\mathsfsl{n}": '\u1D62F'
-  "\\mathsfsl{o}": '\u1D630'
-  "\\mathsfsl{p}": '\u1D631'
-  "\\mathsfsl{q}": '\u1D632'
-  "\\mathsfsl{r}": '\u1D633'
-  "\\mathsfsl{s}": '\u1D634'
-  "\\mathsfsl{t}": '\u1D635'
-  "\\mathsfsl{u}": '\u1D636'
-  "\\mathsfsl{v}": '\u1D637'
-  "\\mathsfsl{w}": '\u1D638'
-  "\\mathsfsl{x}": '\u1D639'
-  "\\mathsfsl{y}": '\u1D63A'
-  "\\mathsfsl{z}": '\u1D63B'
-  "\\mathsfbfsl{A}": '\u1D63C'
-  "\\mathsfbfsl{B}": '\u1D63D'
-  "\\mathsfbfsl{C}": '\u1D63E'
-  "\\mathsfbfsl{D}": '\u1D63F'
-  "\\mathsfbfsl{E}": '\u1D640'
-  "\\mathsfbfsl{F}": '\u1D641'
-  "\\mathsfbfsl{G}": '\u1D642'
-  "\\mathsfbfsl{H}": '\u1D643'
-  "\\mathsfbfsl{I}": '\u1D644'
-  "\\mathsfbfsl{J}": '\u1D645'
-  "\\mathsfbfsl{K}": '\u1D646'
-  "\\mathsfbfsl{L}": '\u1D647'
-  "\\mathsfbfsl{M}": '\u1D648'
-  "\\mathsfbfsl{N}": '\u1D649'
-  "\\mathsfbfsl{O}": '\u1D64A'
-  "\\mathsfbfsl{P}": '\u1D64B'
-  "\\mathsfbfsl{Q}": '\u1D64C'
-  "\\mathsfbfsl{R}": '\u1D64D'
-  "\\mathsfbfsl{S}": '\u1D64E'
-  "\\mathsfbfsl{T}": '\u1D64F'
-  "\\mathsfbfsl{U}": '\u1D650'
-  "\\mathsfbfsl{V}": '\u1D651'
-  "\\mathsfbfsl{W}": '\u1D652'
-  "\\mathsfbfsl{X}": '\u1D653'
-  "\\mathsfbfsl{Y}": '\u1D654'
-  "\\mathsfbfsl{Z}": '\u1D655'
-  "\\mathsfbfsl{a}": '\u1D656'
-  "\\mathsfbfsl{b}": '\u1D657'
-  "\\mathsfbfsl{c}": '\u1D658'
-  "\\mathsfbfsl{d}": '\u1D659'
-  "\\mathsfbfsl{e}": '\u1D65A'
-  "\\mathsfbfsl{f}": '\u1D65B'
-  "\\mathsfbfsl{g}": '\u1D65C'
-  "\\mathsfbfsl{h}": '\u1D65D'
-  "\\mathsfbfsl{i}": '\u1D65E'
-  "\\mathsfbfsl{j}": '\u1D65F'
-  "\\mathsfbfsl{k}": '\u1D660'
-  "\\mathsfbfsl{l}": '\u1D661'
-  "\\mathsfbfsl{m}": '\u1D662'
-  "\\mathsfbfsl{n}": '\u1D663'
-  "\\mathsfbfsl{o}": '\u1D664'
-  "\\mathsfbfsl{p}": '\u1D665'
-  "\\mathsfbfsl{q}": '\u1D666'
-  "\\mathsfbfsl{r}": '\u1D667'
-  "\\mathsfbfsl{s}": '\u1D668'
-  "\\mathsfbfsl{t}": '\u1D669'
-  "\\mathsfbfsl{u}": '\u1D66A'
-  "\\mathsfbfsl{v}": '\u1D66B'
-  "\\mathsfbfsl{w}": '\u1D66C'
-  "\\mathsfbfsl{x}": '\u1D66D'
-  "\\mathsfbfsl{y}": '\u1D66E'
-  "\\mathsfbfsl{z}": '\u1D66F'
-  "\\mathtt{A}": '\u1D670'
-  "\\mathtt{B}": '\u1D671'
-  "\\mathtt{C}": '\u1D672'
-  "\\mathtt{D}": '\u1D673'
-  "\\mathtt{E}": '\u1D674'
-  "\\mathtt{F}": '\u1D675'
-  "\\mathtt{G}": '\u1D676'
-  "\\mathtt{H}": '\u1D677'
-  "\\mathtt{I}": '\u1D678'
-  "\\mathtt{J}": '\u1D679'
-  "\\mathtt{K}": '\u1D67A'
-  "\\mathtt{L}": '\u1D67B'
-  "\\mathtt{M}": '\u1D67C'
-  "\\mathtt{N}": '\u1D67D'
-  "\\mathtt{O}": '\u1D67E'
-  "\\mathtt{P}": '\u1D67F'
-  "\\mathtt{Q}": '\u1D680'
-  "\\mathtt{R}": '\u1D681'
-  "\\mathtt{S}": '\u1D682'
-  "\\mathtt{T}": '\u1D683'
-  "\\mathtt{U}": '\u1D684'
-  "\\mathtt{V}": '\u1D685'
-  "\\mathtt{W}": '\u1D686'
-  "\\mathtt{X}": '\u1D687'
-  "\\mathtt{Y}": '\u1D688'
-  "\\mathtt{Z}": '\u1D689'
-  "\\mathtt{a}": '\u1D68A'
-  "\\mathtt{b}": '\u1D68B'
-  "\\mathtt{c}": '\u1D68C'
-  "\\mathtt{d}": '\u1D68D'
-  "\\mathtt{e}": '\u1D68E'
-  "\\mathtt{f}": '\u1D68F'
-  "\\mathtt{g}": '\u1D690'
-  "\\mathtt{h}": '\u1D691'
-  "\\mathtt{i}": '\u1D692'
-  "\\mathtt{j}": '\u1D693'
-  "\\mathtt{k}": '\u1D694'
-  "\\mathtt{l}": '\u1D695'
-  "\\mathtt{m}": '\u1D696'
-  "\\mathtt{n}": '\u1D697'
-  "\\mathtt{o}": '\u1D698'
-  "\\mathtt{p}": '\u1D699'
-  "\\mathtt{q}": '\u1D69A'
-  "\\mathtt{r}": '\u1D69B'
-  "\\mathtt{s}": '\u1D69C'
-  "\\mathtt{t}": '\u1D69D'
-  "\\mathtt{u}": '\u1D69E'
-  "\\mathtt{v}": '\u1D69F'
-  "\\mathtt{w}": '\u1D6A0'
-  "\\mathtt{x}": '\u1D6A1'
-  "\\mathtt{y}": '\u1D6A2'
-  "\\mathtt{z}": '\u1D6A3'
-  "\\mathbf{\\Alpha}": '\u1D6A8'
-  "\\mathbf{\\Beta}": '\u1D6A9'
-  "\\mathbf{\\Gamma}": '\u1D6AA'
-  "\\mathbf{\\Delta}": '\u1D6AB'
-  "\\mathbf{\\Epsilon}": '\u1D6AC'
-  "\\mathbf{\\Zeta}": '\u1D6AD'
-  "\\mathbf{\\Eta}": '\u1D6AE'
-  "\\mathbf{\\Theta}": '\u1D6AF'
-  "\\mathbf{\\Iota}": '\u1D6B0'
-  "\\mathbf{\\Kappa}": '\u1D6B1'
-  "\\mathbf{\\Lambda}": '\u1D6B2'
-  "\\mathbf{\\Xi}": '\u1D6B5'
-  "\\mathbf{\\Pi}": '\u1D6B7'
-  "\\mathbf{\\Rho}": '\u1D6B8'
-  "\\mathbf{\\vartheta}": '\u1D6B9'
-  "\\mathbf{\\Sigma}": '\u1D6BA'
-  "\\mathbf{\\Tau}": '\u1D6BB'
-  "\\mathbf{\\Upsilon}": '\u1D6BC'
-  "\\mathbf{\\Phi}": '\u1D6BD'
-  "\\mathbf{\\Chi}": '\u1D6BE'
-  "\\mathbf{\\Psi}": '\u1D6BF'
-  "\\mathbf{\\Omega}": '\u1D6C0'
-  "\\mathbf{\\nabla}": '\u1D6C1'
-  "\\mathbf{\\Alpha}": '\u1D6C2'
-  "\\mathbf{\\Beta}": '\u1D6C3'
-  "\\mathbf{\\Gamma}": '\u1D6C4'
-  "\\mathbf{\\Delta}": '\u1D6C5'
-  "\\mathbf{\\Epsilon}": '\u1D6C6'
-  "\\mathbf{\\Zeta}": '\u1D6C7'
-  "\\mathbf{\\Eta}": '\u1D6C8'
-  "\\mathbf{\\theta}": '\u1D6C9'
-  "\\mathbf{\\Iota}": '\u1D6CA'
-  "\\mathbf{\\Kappa}": '\u1D6CB'
-  "\\mathbf{\\Lambda}": '\u1D6CC'
-  "\\mathbf{\\Xi}": '\u1D6CF'
-  "\\mathbf{\\Pi}": '\u1D6D1'
-  "\\mathbf{\\Rho}": '\u1D6D2'
-  "\\mathbf{\\varsigma}": '\u1D6D3'
-  "\\mathbf{\\Sigma}": '\u1D6D4'
-  "\\mathbf{\\Tau}": '\u1D6D5'
-  "\\mathbf{\\Upsilon}": '\u1D6D6'
-  "\\mathbf{\\Phi}": '\u1D6D7'
-  "\\mathbf{\\Chi}": '\u1D6D8'
-  "\\mathbf{\\Psi}": '\u1D6D9'
-  "\\mathbf{\\Omega}": '\u1D6DA'
-  "{\\partial}": '\u1D6DB'
-  "\\partial ": '\u1D6DB'
-  "\\in": '\u1D6DC'
-  "\\mathbf{\\vartheta}": '\u1D6DD'
-  "\\mathbf{\\varkappa}": '\u1D6DE'
-  "\\mathbf{\\phi}": '\u1D6DF'
-  "\\mathbf{\\varrho}": '\u1D6E0'
-  "\\mathbf{\\varpi}": '\u1D6E1'
-  "\\mathsl{\\Alpha}": '\u1D6E2'
-  "\\mathsl{\\Beta}": '\u1D6E3'
-  "\\mathsl{\\Gamma}": '\u1D6E4'
-  "\\mathsl{\\Delta}": '\u1D6E5'
-  "\\mathsl{\\Epsilon}": '\u1D6E6'
-  "\\mathsl{\\Zeta}": '\u1D6E7'
-  "\\mathsl{\\Eta}": '\u1D6E8'
-  "\\mathsl{\\Theta}": '\u1D6E9'
-  "\\mathsl{\\Iota}": '\u1D6EA'
-  "\\mathsl{\\Kappa}": '\u1D6EB'
-  "\\mathsl{\\Lambda}": '\u1D6EC'
-  "\\mathsl{\\Xi}": '\u1D6EF'
-  "\\mathsl{\\Pi}": '\u1D6F1'
-  "\\mathsl{\\Rho}": '\u1D6F2'
-  "\\mathsl{\\vartheta}": '\u1D6F3'
-  "\\mathsl{\\Sigma}": '\u1D6F4'
-  "\\mathsl{\\Tau}": '\u1D6F5'
-  "\\mathsl{\\Upsilon}": '\u1D6F6'
-  "\\mathsl{\\Phi}": '\u1D6F7'
-  "\\mathsl{\\Chi}": '\u1D6F8'
-  "\\mathsl{\\Psi}": '\u1D6F9'
-  "\\mathsl{\\Omega}": '\u1D6FA'
-  "\\mathsl{\\nabla}": '\u1D6FB'
-  "\\mathsl{\\Alpha}": '\u1D6FC'
-  "\\mathsl{\\Beta}": '\u1D6FD'
-  "\\mathsl{\\Gamma}": '\u1D6FE'
-  "\\mathsl{\\Delta}": '\u1D6FF'
-  "\\mathsl{\\Epsilon}": '\u1D700'
-  "\\mathsl{\\Zeta}": '\u1D701'
-  "\\mathsl{\\Eta}": '\u1D702'
-  "\\mathsl{\\Theta}": '\u1D703'
-  "\\mathsl{\\Iota}": '\u1D704'
-  "\\mathsl{\\Kappa}": '\u1D705'
-  "\\mathsl{\\Lambda}": '\u1D706'
-  "\\mathsl{\\Xi}": '\u1D709'
-  "\\mathsl{\\Pi}": '\u1D70B'
-  "\\mathsl{\\Rho}": '\u1D70C'
-  "\\mathsl{\\varsigma}": '\u1D70D'
-  "\\mathsl{\\Sigma}": '\u1D70E'
-  "\\mathsl{\\Tau}": '\u1D70F'
-  "\\mathsl{\\Upsilon}": '\u1D710'
-  "\\mathsl{\\Phi}": '\u1D711'
-  "\\mathsl{\\Chi}": '\u1D712'
-  "\\mathsl{\\Psi}": '\u1D713'
-  "\\mathsl{\\Omega}": '\u1D714'
-  "{\\partial}": '\u1D715'
-  "\\partial ": '\u1D715'
-  "\\in": '\u1D716'
-  "\\mathsl{\\vartheta}": '\u1D717'
-  "\\mathsl{\\varkappa}": '\u1D718'
-  "\\mathsl{\\phi}": '\u1D719'
-  "\\mathsl{\\varrho}": '\u1D71A'
-  "\\mathsl{\\varpi}": '\u1D71B'
-  "\\mathbit{\\Alpha}": '\u1D71C'
-  "\\mathbit{\\Beta}": '\u1D71D'
-  "\\mathbit{\\Gamma}": '\u1D71E'
-  "\\mathbit{\\Delta}": '\u1D71F'
-  "\\mathbit{\\Epsilon}": '\u1D720'
-  "\\mathbit{\\Zeta}": '\u1D721'
-  "\\mathbit{\\Eta}": '\u1D722'
-  "\\mathbit{\\Theta}": '\u1D723'
-  "\\mathbit{\\Iota}": '\u1D724'
-  "\\mathbit{\\Kappa}": '\u1D725'
-  "\\mathbit{\\Lambda}": '\u1D726'
-  "\\mathbit{\\Xi}": '\u1D729'
-  "\\mathbit{\\Pi}": '\u1D72B'
-  "\\mathbit{\\Rho}": '\u1D72C'
-  "\\mathbit{O}": '\u1D72D'
-  "\\mathbit{\\Sigma}": '\u1D72E'
-  "\\mathbit{\\Tau}": '\u1D72F'
-  "\\mathbit{\\Upsilon}": '\u1D730'
-  "\\mathbit{\\Phi}": '\u1D731'
-  "\\mathbit{\\Chi}": '\u1D732'
-  "\\mathbit{\\Psi}": '\u1D733'
-  "\\mathbit{\\Omega}": '\u1D734'
-  "\\mathbit{\\nabla}": '\u1D735'
-  "\\mathbit{\\Alpha}": '\u1D736'
-  "\\mathbit{\\Beta}": '\u1D737'
-  "\\mathbit{\\Gamma}": '\u1D738'
-  "\\mathbit{\\Delta}": '\u1D739'
-  "\\mathbit{\\Epsilon}": '\u1D73A'
-  "\\mathbit{\\Zeta}": '\u1D73B'
-  "\\mathbit{\\Eta}": '\u1D73C'
-  "\\mathbit{\\Theta}": '\u1D73D'
-  "\\mathbit{\\Iota}": '\u1D73E'
-  "\\mathbit{\\Kappa}": '\u1D73F'
-  "\\mathbit{\\Lambda}": '\u1D740'
-  "\\mathbit{\\Xi}": '\u1D743'
-  "\\mathbit{\\Pi}": '\u1D745'
-  "\\mathbit{\\Rho}": '\u1D746'
-  "\\mathbit{\\varsigma}": '\u1D747'
-  "\\mathbit{\\Sigma}": '\u1D748'
-  "\\mathbit{\\Tau}": '\u1D749'
-  "\\mathbit{\\Upsilon}": '\u1D74A'
-  "\\mathbit{\\Phi}": '\u1D74B'
-  "\\mathbit{\\Chi}": '\u1D74C'
-  "\\mathbit{\\Psi}": '\u1D74D'
-  "\\mathbit{\\Omega}": '\u1D74E'
-  "{\\partial}": '\u1D74F'
-  "\\partial ": '\u1D74F'
-  "\\in": '\u1D750'
-  "\\mathbit{\\vartheta}": '\u1D751'
-  "\\mathbit{\\varkappa}": '\u1D752'
-  "\\mathbit{\\phi}": '\u1D753'
-  "\\mathbit{\\varrho}": '\u1D754'
-  "\\mathbit{\\varpi}": '\u1D755'
-  "\\mathsfbf{\\Alpha}": '\u1D756'
-  "\\mathsfbf{\\Beta}": '\u1D757'
-  "\\mathsfbf{\\Gamma}": '\u1D758'
-  "\\mathsfbf{\\Delta}": '\u1D759'
-  "\\mathsfbf{\\Epsilon}": '\u1D75A'
-  "\\mathsfbf{\\Zeta}": '\u1D75B'
-  "\\mathsfbf{\\Eta}": '\u1D75C'
-  "\\mathsfbf{\\Theta}": '\u1D75D'
-  "\\mathsfbf{\\Iota}": '\u1D75E'
-  "\\mathsfbf{\\Kappa}": '\u1D75F'
-  "\\mathsfbf{\\Lambda}": '\u1D760'
-  "\\mathsfbf{\\Xi}": '\u1D763'
-  "\\mathsfbf{\\Pi}": '\u1D765'
-  "\\mathsfbf{\\Rho}": '\u1D766'
-  "\\mathsfbf{\\vartheta}": '\u1D767'
-  "\\mathsfbf{\\Sigma}": '\u1D768'
-  "\\mathsfbf{\\Tau}": '\u1D769'
-  "\\mathsfbf{\\Upsilon}": '\u1D76A'
-  "\\mathsfbf{\\Phi}": '\u1D76B'
-  "\\mathsfbf{\\Chi}": '\u1D76C'
-  "\\mathsfbf{\\Psi}": '\u1D76D'
-  "\\mathsfbf{\\Omega}": '\u1D76E'
-  "\\mathsfbf{\\nabla}": '\u1D76F'
-  "\\mathsfbf{\\Alpha}": '\u1D770'
-  "\\mathsfbf{\\Beta}": '\u1D771'
-  "\\mathsfbf{\\Gamma}": '\u1D772'
-  "\\mathsfbf{\\Delta}": '\u1D773'
-  "\\mathsfbf{\\Epsilon}": '\u1D774'
-  "\\mathsfbf{\\Zeta}": '\u1D775'
-  "\\mathsfbf{\\Eta}": '\u1D776'
-  "\\mathsfbf{\\Theta}": '\u1D777'
-  "\\mathsfbf{\\Iota}": '\u1D778'
-  "\\mathsfbf{\\Kappa}": '\u1D779'
-  "\\mathsfbf{\\Lambda}": '\u1D77A'
-  "\\mathsfbf{\\Xi}": '\u1D77D'
-  "\\mathsfbf{\\Pi}": '\u1D77F'
-  "\\mathsfbf{\\Rho}": '\u1D780'
-  "\\mathsfbf{\\varsigma}": '\u1D781'
-  "\\mathsfbf{\\Sigma}": '\u1D782'
-  "\\mathsfbf{\\Tau}": '\u1D783'
-  "\\mathsfbf{\\Upsilon}": '\u1D784'
-  "\\mathsfbf{\\Phi}": '\u1D785'
-  "\\mathsfbf{\\Chi}": '\u1D786'
-  "\\mathsfbf{\\Psi}": '\u1D787'
-  "\\mathsfbf{\\Omega}": '\u1D788'
-  "{\\partial}": '\u1D789'
-  "\\partial ": '\u1D789'
-  "\\in": '\u1D78A'
-  "\\mathsfbf{\\vartheta}": '\u1D78B'
-  "\\mathsfbf{\\varkappa}": '\u1D78C'
-  "\\mathsfbf{\\phi}": '\u1D78D'
-  "\\mathsfbf{\\varrho}": '\u1D78E'
-  "\\mathsfbf{\\varpi}": '\u1D78F'
-  "\\mathsfbfsl{\\Alpha}": '\u1D790'
-  "\\mathsfbfsl{\\Beta}": '\u1D791'
-  "\\mathsfbfsl{\\Gamma}": '\u1D792'
-  "\\mathsfbfsl{\\Delta}": '\u1D793'
-  "\\mathsfbfsl{\\Epsilon}": '\u1D794'
-  "\\mathsfbfsl{\\Zeta}": '\u1D795'
-  "\\mathsfbfsl{\\Eta}": '\u1D796'
-  "\\mathsfbfsl{\\vartheta}": '\u1D797'
-  "\\mathsfbfsl{\\Iota}": '\u1D798'
-  "\\mathsfbfsl{\\Kappa}": '\u1D799'
-  "\\mathsfbfsl{\\Lambda}": '\u1D79A'
-  "\\mathsfbfsl{\\Xi}": '\u1D79D'
-  "\\mathsfbfsl{\\Pi}": '\u1D79F'
-  "\\mathsfbfsl{\\Rho}": '\u1D7A0'
-  "\\mathsfbfsl{\\vartheta}": '\u1D7A1'
-  "\\mathsfbfsl{\\Sigma}": '\u1D7A2'
-  "\\mathsfbfsl{\\Tau}": '\u1D7A3'
-  "\\mathsfbfsl{\\Upsilon}": '\u1D7A4'
-  "\\mathsfbfsl{\\Phi}": '\u1D7A5'
-  "\\mathsfbfsl{\\Chi}": '\u1D7A6'
-  "\\mathsfbfsl{\\Psi}": '\u1D7A7'
-  "\\mathsfbfsl{\\Omega}": '\u1D7A8'
-  "\\mathsfbfsl{\\nabla}": '\u1D7A9'
-  "\\mathsfbfsl{\\Alpha}": '\u1D7AA'
-  "\\mathsfbfsl{\\Beta}": '\u1D7AB'
-  "\\mathsfbfsl{\\Gamma}": '\u1D7AC'
-  "\\mathsfbfsl{\\Delta}": '\u1D7AD'
-  "\\mathsfbfsl{\\Epsilon}": '\u1D7AE'
-  "\\mathsfbfsl{\\Zeta}": '\u1D7AF'
-  "\\mathsfbfsl{\\Eta}": '\u1D7B0'
-  "\\mathsfbfsl{\\vartheta}": '\u1D7B1'
-  "\\mathsfbfsl{\\Iota}": '\u1D7B2'
-  "\\mathsfbfsl{\\Kappa}": '\u1D7B3'
-  "\\mathsfbfsl{\\Lambda}": '\u1D7B4'
-  "\\mathsfbfsl{\\Xi}": '\u1D7B7'
-  "\\mathsfbfsl{\\Pi}": '\u1D7B9'
-  "\\mathsfbfsl{\\Rho}": '\u1D7BA'
-  "\\mathsfbfsl{\\varsigma}": '\u1D7BB'
-  "\\mathsfbfsl{\\Sigma}": '\u1D7BC'
-  "\\mathsfbfsl{\\Tau}": '\u1D7BD'
-  "\\mathsfbfsl{\\Upsilon}": '\u1D7BE'
-  "\\mathsfbfsl{\\Phi}": '\u1D7BF'
-  "\\mathsfbfsl{\\Chi}": '\u1D7C0'
-  "\\mathsfbfsl{\\Psi}": '\u1D7C1'
-  "\\mathsfbfsl{\\Omega}": '\u1D7C2'
-  "{\\partial}": '\u1D7C3'
-  "\\partial ": '\u1D7C3'
-  "\\in": '\u1D7C4'
-  "\\mathsfbfsl{\\vartheta}": '\u1D7C5'
-  "\\mathsfbfsl{\\varkappa}": '\u1D7C6'
-  "\\mathsfbfsl{\\phi}": '\u1D7C7'
-  "\\mathsfbfsl{\\varrho}": '\u1D7C8'
-  "\\mathsfbfsl{\\varpi}": '\u1D7C9'
-  "\\mathbf{0}": '\u1D7CE'
-  "\\mathbf{1}": '\u1D7CF'
-  "\\mathbf{2}": '\u1D7D0'
-  "\\mathbf{3}": '\u1D7D1'
-  "\\mathbf{4}": '\u1D7D2'
-  "\\mathbf{5}": '\u1D7D3'
-  "\\mathbf{6}": '\u1D7D4'
-  "\\mathbf{7}": '\u1D7D5'
-  "\\mathbf{8}": '\u1D7D6'
-  "\\mathbf{9}": '\u1D7D7'
-  "\\mathbb{0}": '\u1D7D8'
-  "\\mathbb{1}": '\u1D7D9'
-  "\\mathbb{2}": '\u1D7DA'
-  "\\mathbb{3}": '\u1D7DB'
-  "\\mathbb{4}": '\u1D7DC'
-  "\\mathbb{5}": '\u1D7DD'
-  "\\mathbb{6}": '\u1D7DE'
-  "\\mathbb{7}": '\u1D7DF'
-  "\\mathbb{8}": '\u1D7E0'
-  "\\mathbb{9}": '\u1D7E1'
-  "\\mathsf{0}": '\u1D7E2'
-  "\\mathsf{1}": '\u1D7E3'
-  "\\mathsf{2}": '\u1D7E4'
-  "\\mathsf{3}": '\u1D7E5'
-  "\\mathsf{4}": '\u1D7E6'
-  "\\mathsf{5}": '\u1D7E7'
-  "\\mathsf{6}": '\u1D7E8'
-  "\\mathsf{7}": '\u1D7E9'
-  "\\mathsf{8}": '\u1D7EA'
-  "\\mathsf{9}": '\u1D7EB'
-  "\\mathsfbf{0}": '\u1D7EC'
-  "\\mathsfbf{1}": '\u1D7ED'
-  "\\mathsfbf{2}": '\u1D7EE'
-  "\\mathsfbf{3}": '\u1D7EF'
-  "\\mathsfbf{4}": '\u1D7F0'
-  "\\mathsfbf{5}": '\u1D7F1'
-  "\\mathsfbf{6}": '\u1D7F2'
-  "\\mathsfbf{7}": '\u1D7F3'
-  "\\mathsfbf{8}": '\u1D7F4'
-  "\\mathsfbf{9}": '\u1D7F5'
-  "\\mathtt{0}": '\u1D7F6'
-  "\\mathtt{1}": '\u1D7F7'
-  "\\mathtt{2}": '\u1D7F8'
-  "\\mathtt{3}": '\u1D7F9'
-  "\\mathtt{4}": '\u1D7FA'
-  "\\mathtt{5}": '\u1D7FB'
-  "\\mathtt{6}": '\u1D7FC'
-  "\\mathtt{7}": '\u1D7FD'
-  "\\mathtt{8}": '\u1D7FE'
-  "\\mathtt{9}": '\u1D7FF'
-  "{\\langle}": '\u02329'
-  "\\langle ": '\u02329'
-  "{\\rangle}": '\u0232A'
-  "\\rangle ": '\u0232A'
-  "\\&": '&'
+  "{\\textexclamdown}": '\u00A1'
+  "\\textexclamdown ": '\u00A1'
+  "{\\textcent}": '\u00A2'
+  "\\textcent ": '\u00A2'
+  "{\\textsterling}": '\u00A3'
+  "\\textsterling ": '\u00A3'
+  "{\\textcurrency}": '\u00A4'
+  "\\textcurrency ": '\u00A4'
+  "{\\textyen}": '\u00A5'
+  "\\textyen ": '\u00A5'
+  "{\\textbrokenbar}": '\u00A6'
+  "\\textbrokenbar ": '\u00A6'
+  "{\\textsection}": '\u00A7'
+  "\\textsection ": '\u00A7'
+  "{\\textasciidieresis}": '\u00A8'
+  "\\textasciidieresis ": '\u00A8'
+  "{\\textcopyright}": '\u00A9'
+  "\\textcopyright ": '\u00A9'
+  "{\\textordfeminine}": '\u00AA'
+  "\\textordfeminine ": '\u00AA'
+  "{\\guillemotleft}": '\u00AB'
+  "\\guillemotleft ": '\u00AB'
+  "{\\lnot}": '\u00AC'
+  "\\lnot ": '\u00AC'
+  "\\-": '\u00AD'
+  "{\\textregistered}": '\u00AE'
+  "\\textregistered ": '\u00AE'
+  "{\\textasciimacron}": '\u00AF'
+  "\\textasciimacron ": '\u00AF'
+  "{\\textdegree}": '\u00B0'
+  "\\textdegree ": '\u00B0'
+  "{\\pm}": '\u00B1'
+  "\\pm ": '\u00B1'
+  "{^2}": '\u00B2'
+  "{^3}": '\u00B3'
+  "{\\textasciiacute}": '\u00B4'
+  "\\textasciiacute ": '\u00B4'
+  "\\mathrm{\\mu}": '\u00B5'
+  "{\\textparagraph}": '\u00B6'
+  "\\textparagraph ": '\u00B6'
+  "{\\cdot}": '\u00B7'
+  "\\cdot ": '\u00B7'
+  "\\c{}": '\u00B8'
+  "{^1}": '\u00B9'
+  "{\\textordmasculine}": '\u00BA'
+  "\\textordmasculine ": '\u00BA'
+  "{\\guillemotright}": '\u00BB'
+  "\\guillemotright ": '\u00BB'
+  "{\\textonequarter}": '\u00BC'
+  "\\textonequarter ": '\u00BC'
+  "{\\textonehalf}": '\u00BD'
+  "\\textonehalf ": '\u00BD'
+  "{\\textthreequarters}": '\u00BE'
+  "\\textthreequarters ": '\u00BE'
+  "{\\textquestiondown}": '\u00BF'
+  "\\textquestiondown ": '\u00BF'
+  "{\\`A}": '\u00C0'
+  "{\\'A}": '\u00C1'
+  "{\\^A}": '\u00C2'
+  "{\\~A}": '\u00C3'
+  "{\\\"A}": '\u00C4'
+  "{\\AA}": '\u00C5'
+  "\\AA ": '\u00C5'
+  "{\\AE}": '\u00C6'
+  "\\AE ": '\u00C6'
+  "{\\c C}": '\u00C7'
+  "{\\`E}": '\u00C8'
+  "{\\'E}": '\u00C9'
+  "{\\^E}": '\u00CA'
+  "{\\\"E}": '\u00CB'
+  "{\\`I}": '\u00CC'
+  "{\\'I}": '\u00CD'
+  "{\\^I}": '\u00CE'
+  "{\\\"I}": '\u00CF'
+  "{\\DH}": '\u00D0'
+  "\\DH ": '\u00D0'
+  "{\\~N}": '\u00D1'
+  "{\\`O}": '\u00D2'
+  "{\\'O}": '\u00D3'
+  "{\\^O}": '\u00D4'
+  "{\\~O}": '\u00D5'
+  "{\\\"O}": '\u00D6'
+  "{\\texttimes}": '\u00D7'
+  "\\texttimes ": '\u00D7'
+  "{\\O}": '\u00D8'
+  "\\O ": '\u00D8'
+  "{\\`U}": '\u00D9'
+  "{\\'U}": '\u00DA'
+  "{\\^U}": '\u00DB'
+  "{\\\"U}": '\u00DC'
+  "{\\'Y}": '\u00DD'
+  "{\\TH}": '\u00DE'
+  "\\TH ": '\u00DE'
+  "{\\ss}": '\u00DF'
+  "\\ss ": '\u00DF'
+  "{\\`a}": '\u00E0'
+  "{\\'a}": '\u00E1'
+  "{\\^a}": '\u00E2'
+  "{\\~a}": '\u00E3'
+  "{\\\"a}": '\u00E4'
+  "{\\aa}": '\u00E5'
+  "\\aa ": '\u00E5'
+  "{\\ae}": '\u00E6'
+  "\\ae ": '\u00E6'
+  "{\\c c}": '\u00E7'
+  "{\\`e}": '\u00E8'
+  "{\\'e}": '\u00E9'
+  "{\\^e}": '\u00EA'
+  "{\\\"e}": '\u00EB'
+  "{\\`\\i}": '\u00EC'
+  "{\\'\\i}": '\u00ED'
+  "{\\^\\i}": '\u00EE'
+  "{\\\"\\i}": '\u00EF'
+  "{\\dh}": '\u00F0'
+  "\\dh ": '\u00F0'
+  "{\\~n}": '\u00F1'
+  "{\\`o}": '\u00F2'
+  "{\\'o}": '\u00F3'
+  "{\\^o}": '\u00F4'
+  "{\\~o}": '\u00F5'
+  "{\\\"o}": '\u00F6'
+  "{\\div}": '\u00F7'
+  "\\div ": '\u00F7'
+  "{\\o}": '\u00F8'
+  "\\o ": '\u00F8'
+  "{\\`u}": '\u00F9'
+  "{\\'u}": '\u00FA'
+  "{\\^u}": '\u00FB'
+  "{\\\"u}": '\u00FC'
+  "{\\'y}": '\u00FD'
+  "{\\th}": '\u00FE'
+  "\\th ": '\u00FE'
+  "{\\\"y}": '\u00FF'
+  "\\={A}": '\u0100'
+  "\\=A": '\u0100'
+  "\\={a}": '\u0101'
+  "\\=a": '\u0101'
+  "{\\u A}": '\u0102'
+  "{\\u a}": '\u0103'
+  "\\k{A}": '\u0104'
+  "\\k{a}": '\u0105'
+  "{\\'C}": '\u0106'
+  "{\\'c}": '\u0107'
+  "{\\^C}": '\u0108'
+  "{\\^c}": '\u0109'
+  "{\\.C}": '\u010A'
+  "{\\.c}": '\u010B'
+  "{\\v C}": '\u010C'
+  "{\\v c}": '\u010D'
+  "{\\v D}": '\u010E'
+  "{\\v d}": '\u010F'
+  "{\\DJ}": '\u0110'
+  "\\DJ ": '\u0110'
+  "{\\dj}": '\u0111'
+  "\\dj ": '\u0111'
+  "\\={E}": '\u0112'
+  "\\=E": '\u0112'
+  "\\={e}": '\u0113'
+  "\\=e": '\u0113'
+  "{\\u E}": '\u0114'
+  "{\\u e}": '\u0115'
+  "{\\.E}": '\u0116'
+  "{\\.e}": '\u0117'
+  "\\k{E}": '\u0118'
+  "\\k{e}": '\u0119'
+  "{\\v E}": '\u011A'
+  "{\\v e}": '\u011B'
+  "{\\^G}": '\u011C'
+  "{\\^g}": '\u011D'
+  "{\\u G}": '\u011E'
+  "{\\u g}": '\u011F'
+  "{\\.G}": '\u0120'
+  "{\\.g}": '\u0121'
+  "{\\c G}": '\u0122'
+  "{\\c g}": '\u0123'
+  "{\\^H}": '\u0124'
+  "{\\^h}": '\u0125'
+  "{\\fontencoding{LELA}\\selectfont\\char40}": '\u0126'
+  "{\\Elzxh}": '\u0127'
+  "\\Elzxh ": '\u0127'
+  "{\\~I}": '\u0128'
+  "{\\~\\i}": '\u0129'
+  "\\={I}": '\u012A'
+  "\\=I": '\u012A'
+  "\\={\\i}": '\u012B'
+  "{\\u I}": '\u012C'
+  "{\\u \\i}": '\u012D'
+  "\\k{I}": '\u012E'
+  "\\k{i}": '\u012F'
+  "{\\.I}": '\u0130'
+  "{\\i}": '\u0131'
+  "\\i ": '\u0131'
+  "{\\^J}": '\u0134'
+  "{\\^\\j}": '\u0135'
+  "{\\c K}": '\u0136'
+  "{\\c k}": '\u0137'
+  "{\\fontencoding{LELA}\\selectfont\\char91}": '\u0138'
+  "{\\'L}": '\u0139'
+  "{\\'l}": '\u013A'
+  "{\\c L}": '\u013B'
+  "{\\c l}": '\u013C'
+  "{\\v L}": '\u013D'
+  "{\\v l}": '\u013E'
+  "{\\fontencoding{LELA}\\selectfont\\char201}": '\u013F'
+  "{\\fontencoding{LELA}\\selectfont\\char202}": '\u0140'
+  "{\\L}": '\u0141'
+  "\\L ": '\u0141'
+  "{\\l}": '\u0142'
+  "\\l ": '\u0142'
+  "{\\'N}": '\u0143'
+  "{\\'n}": '\u0144'
+  "{\\c N}": '\u0145'
+  "{\\c n}": '\u0146'
+  "{\\v N}": '\u0147'
+  "{\\v n}": '\u0148'
+  "'n": '\u0149'
+  "{\\NG}": '\u014A'
+  "\\NG ": '\u014A'
+  "{\\ng}": '\u014B'
+  "\\ng ": '\u014B'
+  "\\={O}": '\u014C'
+  "\\=O": '\u014C'
+  "\\={o}": '\u014D'
+  "\\=o": '\u014D'
+  "{\\u O}": '\u014E'
+  "{\\u o}": '\u014F'
+  "{\\H O}": '\u0150'
+  "{\\H o}": '\u0151'
+  "{\\OE}": '\u0152'
+  "\\OE ": '\u0152'
+  "{\\oe}": '\u0153'
+  "\\oe ": '\u0153'
+  "{\\'R}": '\u0154'
+  "{\\'r}": '\u0155'
+  "{\\c R}": '\u0156'
+  "{\\c r}": '\u0157'
+  "{\\v R}": '\u0158'
+  "{\\v r}": '\u0159'
+  "{\\'S}": '\u015A'
+  "{\\'s}": '\u015B'
+  "{\\^S}": '\u015C'
+  "{\\^s}": '\u015D'
+  "{\\c S}": '\u015E'
+  "{\\c s}": '\u015F'
+  "{\\v S}": '\u0160'
+  "{\\v s}": '\u0161'
+  "{\\c T}": '\u0162'
+  "{\\c t}": '\u0163'
+  "{\\v T}": '\u0164'
+  "{\\v t}": '\u0165'
+  "{\\fontencoding{LELA}\\selectfont\\char47}": '\u0166'
+  "{\\fontencoding{LELA}\\selectfont\\char63}": '\u0167'
+  "{\\~U}": '\u0168'
+  "{\\~u}": '\u0169'
+  "\\={U}": '\u016A'
+  "\\=U": '\u016A'
+  "\\={u}": '\u016B'
+  "\\=u": '\u016B'
+  "{\\u U}": '\u016C'
+  "{\\u u}": '\u016D'
+  "\\r{U}": '\u016E'
+  "\\r{u}": '\u016F'
+  "{\\H U}": '\u0170'
+  "{\\H u}": '\u0171'
+  "\\k{U}": '\u0172'
+  "\\k{u}": '\u0173'
+  "{\\^W}": '\u0174'
+  "{\\^w}": '\u0175'
+  "{\\^Y}": '\u0176'
+  "{\\^y}": '\u0177'
+  "{\\\"Y}": '\u0178'
+  "{\\'Z}": '\u0179'
+  "{\\'z}": '\u017A'
+  "{\\.Z}": '\u017B'
+  "{\\.z}": '\u017C'
+  "{\\v Z}": '\u017D'
+  "{\\v z}": '\u017E'
+  "{\\texthvlig}": '\u0195'
+  "\\texthvlig ": '\u0195'
+  "{\\textnrleg}": '\u019E'
+  "\\textnrleg ": '\u019E'
+  "{\\eth}": '\u01AA'
+  "\\eth ": '\u01AA'
+  "{\\fontencoding{LELA}\\selectfont\\char195}": '\u01BA'
+  "{\\textdoublepipe}": '\u01C2'
+  "\\textdoublepipe ": '\u01C2'
+  "{\\'g}": '\u01F5'
+  "{\\Elztrna}": '\u0250'
+  "\\Elztrna ": '\u0250'
+  "{\\Elztrnsa}": '\u0252'
+  "\\Elztrnsa ": '\u0252'
+  "{\\Elzopeno}": '\u0254'
+  "\\Elzopeno ": '\u0254'
+  "{\\Elzrtld}": '\u0256'
+  "\\Elzrtld ": '\u0256'
+  "{\\fontencoding{LEIP}\\selectfont\\char61}": '\u0258'
+  "{\\Elzschwa}": '\u0259'
+  "\\Elzschwa ": '\u0259'
+  "{\\varepsilon}": '\u025B'
+  "\\varepsilon ": '\u025B'
+  "{\\Elzpgamma}": '\u0263'
+  "\\Elzpgamma ": '\u0263'
+  "{\\Elzpbgam}": '\u0264'
+  "\\Elzpbgam ": '\u0264'
+  "{\\Elztrnh}": '\u0265'
+  "\\Elztrnh ": '\u0265'
+  "{\\Elzbtdl}": '\u026C'
+  "\\Elzbtdl ": '\u026C'
+  "{\\Elzrtll}": '\u026D'
+  "\\Elzrtll ": '\u026D'
+  "{\\Elztrnm}": '\u026F'
+  "\\Elztrnm ": '\u026F'
+  "{\\Elztrnmlr}": '\u0270'
+  "\\Elztrnmlr ": '\u0270'
+  "{\\Elzltlmr}": '\u0271'
+  "\\Elzltlmr ": '\u0271'
+  "{\\Elzltln}": '\u0272'
+  "\\Elzltln ": '\u0272'
+  "{\\Elzrtln}": '\u0273'
+  "\\Elzrtln ": '\u0273'
+  "{\\Elzclomeg}": '\u0277'
+  "\\Elzclomeg ": '\u0277'
+  "{\\textphi}": '\u0278'
+  "\\textphi ": '\u0278'
+  "{\\Elztrnr}": '\u0279'
+  "\\Elztrnr ": '\u0279'
+  "{\\Elztrnrl}": '\u027A'
+  "\\Elztrnrl ": '\u027A'
+  "{\\Elzrttrnr}": '\u027B'
+  "\\Elzrttrnr ": '\u027B'
+  "{\\Elzrl}": '\u027C'
+  "\\Elzrl ": '\u027C'
+  "{\\Elzrtlr}": '\u027D'
+  "\\Elzrtlr ": '\u027D'
+  "{\\Elzfhr}": '\u027E'
+  "\\Elzfhr ": '\u027E'
+  "{\\fontencoding{LEIP}\\selectfont\\char202}": '\u027F'
+  "{\\Elzrtls}": '\u0282'
+  "\\Elzrtls ": '\u0282'
+  "{\\Elzesh}": '\u0283'
+  "\\Elzesh ": '\u0283'
+  "{\\Elztrnt}": '\u0287'
+  "\\Elztrnt ": '\u0287'
+  "{\\Elzrtlt}": '\u0288'
+  "\\Elzrtlt ": '\u0288'
+  "{\\Elzpupsil}": '\u028A'
+  "\\Elzpupsil ": '\u028A'
+  "{\\Elzpscrv}": '\u028B'
+  "\\Elzpscrv ": '\u028B'
+  "{\\Elzinvv}": '\u028C'
+  "\\Elzinvv ": '\u028C'
+  "{\\Elzinvw}": '\u028D'
+  "\\Elzinvw ": '\u028D'
+  "{\\Elztrny}": '\u028E'
+  "\\Elztrny ": '\u028E'
+  "{\\Elzrtlz}": '\u0290'
+  "\\Elzrtlz ": '\u0290'
+  "{\\Elzyogh}": '\u0292'
+  "\\Elzyogh ": '\u0292'
+  "{\\Elzglst}": '\u0294'
+  "\\Elzglst ": '\u0294'
+  "{\\Elzreglst}": '\u0295'
+  "\\Elzreglst ": '\u0295'
+  "{\\Elzinglst}": '\u0296'
+  "\\Elzinglst ": '\u0296'
+  "{\\textturnk}": '\u029E'
+  "\\textturnk ": '\u029E'
+  "{\\Elzdyogh}": '\u02A4'
+  "\\Elzdyogh ": '\u02A4'
+  "{\\Elztesh}": '\u02A7'
+  "\\Elztesh ": '\u02A7'
+  "'": '\u02BC'
+  "{\\textasciicaron}": '\u02C7'
+  "\\textasciicaron ": '\u02C7'
+  "{\\Elzverts}": '\u02C8'
+  "\\Elzverts ": '\u02C8'
+  "{\\Elzverti}": '\u02CC'
+  "\\Elzverti ": '\u02CC'
+  "{\\Elzlmrk}": '\u02D0'
+  "\\Elzlmrk ": '\u02D0'
+  "{\\Elzhlmrk}": '\u02D1'
+  "\\Elzhlmrk ": '\u02D1'
+  "{\\Elzsbrhr}": '\u02D2'
+  "\\Elzsbrhr ": '\u02D2'
+  "{\\Elzsblhr}": '\u02D3'
+  "\\Elzsblhr ": '\u02D3'
+  "{\\Elzrais}": '\u02D4'
+  "\\Elzrais ": '\u02D4'
+  "{\\Elzlow}": '\u02D5'
+  "\\Elzlow ": '\u02D5'
+  "{\\textasciibreve}": '\u02D8'
+  "\\textasciibreve ": '\u02D8'
+  "{\\textperiodcentered}": '\u02D9'
+  "\\textperiodcentered ": '\u02D9'
+  "\\r{}": '\u02DA'
+  "\\k{}": '\u02DB'
+  "{\\texttildelow}": '\u02DC'
+  "\\texttildelow ": '\u02DC'
+  "\\H{}": '\u02DD'
+  "\\tone{55}": '\u02E5'
+  "\\tone{44}": '\u02E6'
+  "\\tone{33}": '\u02E7'
+  "\\tone{22}": '\u02E8'
+  "\\tone{11}": '\u02E9'
+  "\\`": '\u0300'
+  "\\'": '\u0301'
+  "\\^": '\u0302'
+  "\\~": '\u0303'
+  "\\=": '\u0304'
+  "\\u": '\u0306'
+  "\\.": '\u0307'
+  "\\\"": '\u0308'
+  "\\r": '\u030A'
+  "\\H": '\u030B'
+  "\\v": '\u030C'
+  "\\cyrchar\\C": '\u030F'
+  "{\\fontencoding{LECO}\\selectfont\\char177}": '\u0311'
+  "{\\fontencoding{LECO}\\selectfont\\char184}": '\u0318'
+  "{\\fontencoding{LECO}\\selectfont\\char185}": '\u0319'
+  "{\\Elzpalh}": '\u0321'
+  "\\Elzpalh ": '\u0321'
+  "{\\Elzrh}": '\u0322'
+  "\\Elzrh ": '\u0322'
+  "\\c": '\u0327'
+  "\\k": '\u0328'
+  "{\\Elzsbbrg}": '\u032A'
+  "\\Elzsbbrg ": '\u032A'
+  "{\\fontencoding{LECO}\\selectfont\\char203}": '\u032B'
+  "{\\fontencoding{LECO}\\selectfont\\char207}": '\u032F'
+  "{\\Elzxl}": '\u0335'
+  "\\Elzxl ": '\u0335'
+  "{\\Elzbar}": '\u0336'
+  "\\Elzbar ": '\u0336'
+  "{\\fontencoding{LECO}\\selectfont\\char215}": '\u0337'
+  "{\\fontencoding{LECO}\\selectfont\\char216}": '\u0338'
+  "{\\fontencoding{LECO}\\selectfont\\char218}": '\u033A'
+  "{\\fontencoding{LECO}\\selectfont\\char219}": '\u033B'
+  "{\\fontencoding{LECO}\\selectfont\\char220}": '\u033C'
+  "{\\fontencoding{LECO}\\selectfont\\char221}": '\u033D'
+  "{\\fontencoding{LECO}\\selectfont\\char225}": '\u0361'
+  "{\\'H}": '\u0389'
+  "\\'{}{I}": '\u038A'
+  "\\'{}O": '\u038C'
+  "\\mathrm{'Y}": '\u038E'
+  "\\mathrm{'\\Omega}": '\u038F'
+  "\\acute{\\ddot{\\iota}}": '\u0390'
+  "{\\Alpha}": '\u0391'
+  "\\Alpha ": '\u0391'
+  "{\\Beta}": '\u0392'
+  "\\Beta ": '\u0392'
+  "{\\Gamma}": '\u0393'
+  "\\Gamma ": '\u0393'
+  "{\\Delta}": '\u0394'
+  "\\Delta ": '\u0394'
+  "{\\Epsilon}": '\u0395'
+  "\\Epsilon ": '\u0395'
+  "{\\Zeta}": '\u0396'
+  "\\Zeta ": '\u0396'
+  "{\\Eta}": '\u0397'
+  "\\Eta ": '\u0397'
+  "{\\Theta}": '\u0398'
+  "\\Theta ": '\u0398'
+  "{\\Iota}": '\u0399'
+  "\\Iota ": '\u0399'
+  "{\\Kappa}": '\u039A'
+  "\\Kappa ": '\u039A'
+  "{\\Lambda}": '\u039B'
+  "\\Lambda ": '\u039B'
+  "{\\Xi}": '\u039E'
+  "\\Xi ": '\u039E'
+  "{\\Pi}": '\u03A0'
+  "\\Pi ": '\u03A0'
+  "{\\Rho}": '\u03A1'
+  "\\Rho ": '\u03A1'
+  "{\\Sigma}": '\u03A3'
+  "\\Sigma ": '\u03A3'
+  "{\\Tau}": '\u03A4'
+  "\\Tau ": '\u03A4'
+  "{\\Upsilon}": '\u03A5'
+  "\\Upsilon ": '\u03A5'
+  "{\\Phi}": '\u03A6'
+  "\\Phi ": '\u03A6'
+  "{\\Chi}": '\u03A7'
+  "\\Chi ": '\u03A7'
+  "{\\Psi}": '\u03A8'
+  "\\Psi ": '\u03A8'
+  "{\\Omega}": '\u03A9'
+  "\\Omega ": '\u03A9'
+  "\\mathrm{\\ddot{I}}": '\u03AA'
+  "\\mathrm{\\ddot{Y}}": '\u03AB'
+  "{\\'$\\alpha$}": '\u03AC'
+  "\\acute{\\epsilon}": '\u03AD'
+  "\\acute{\\eta}": '\u03AE'
+  "\\acute{\\iota}": '\u03AF'
+  "\\acute{\\ddot{\\upsilon}}": '\u03B0'
+  "{\\alpha}": '\u03B1'
+  "\\alpha ": '\u03B1'
+  "{\\beta}": '\u03B2'
+  "\\beta ": '\u03B2'
+  "{\\gamma}": '\u03B3'
+  "\\gamma ": '\u03B3'
+  "{\\delta}": '\u03B4'
+  "\\delta ": '\u03B4'
+  "{\\epsilon}": '\u03B5'
+  "\\epsilon ": '\u03B5'
+  "{\\zeta}": '\u03B6'
+  "\\zeta ": '\u03B6'
+  "{\\eta}": '\u03B7'
+  "\\eta ": '\u03B7'
+  "{\\texttheta}": '\u03B8'
+  "\\texttheta ": '\u03B8'
+  "{\\iota}": '\u03B9'
+  "\\iota ": '\u03B9'
+  "{\\kappa}": '\u03BA'
+  "\\kappa ": '\u03BA'
+  "{\\lambda}": '\u03BB'
+  "\\lambda ": '\u03BB'
+  "{\\mu}": '\u03BC'
+  "\\mu ": '\u03BC'
+  "{\\nu}": '\u03BD'
+  "\\nu ": '\u03BD'
+  "{\\xi}": '\u03BE'
+  "\\xi ": '\u03BE'
+  "{\\pi}": '\u03C0'
+  "\\pi ": '\u03C0'
+  "{\\rho}": '\u03C1'
+  "\\rho ": '\u03C1'
+  "{\\varsigma}": '\u03C2'
+  "\\varsigma ": '\u03C2'
+  "{\\sigma}": '\u03C3'
+  "\\sigma ": '\u03C3'
+  "{\\tau}": '\u03C4'
+  "\\tau ": '\u03C4'
+  "{\\upsilon}": '\u03C5'
+  "\\upsilon ": '\u03C5'
+  "{\\varphi}": '\u03C6'
+  "\\varphi ": '\u03C6'
+  "{\\chi}": '\u03C7'
+  "\\chi ": '\u03C7'
+  "{\\psi}": '\u03C8'
+  "\\psi ": '\u03C8'
+  "{\\omega}": '\u03C9'
+  "\\omega ": '\u03C9'
+  "\\ddot{\\iota}": '\u03CA'
+  "\\ddot{\\upsilon}": '\u03CB'
+  "\\acute{\\upsilon}": '\u03CD'
+  "\\acute{\\omega}": '\u03CE'
+  "\\Pisymbol{ppi022}{87}": '\u03D0'
+  "{\\textvartheta}": '\u03D1'
+  "\\textvartheta ": '\u03D1'
+  "{\\phi}": '\u03D5'
+  "\\phi ": '\u03D5'
+  "{\\varpi}": '\u03D6'
+  "\\varpi ": '\u03D6'
+  "{\\Stigma}": '\u03DA'
+  "\\Stigma ": '\u03DA'
+  "{\\Digamma}": '\u03DC'
+  "\\Digamma ": '\u03DC'
+  "{\\digamma}": '\u03DD'
+  "\\digamma ": '\u03DD'
+  "{\\Koppa}": '\u03DE'
+  "\\Koppa ": '\u03DE'
+  "{\\Sampi}": '\u03E0'
+  "\\Sampi ": '\u03E0'
+  "{\\varkappa}": '\u03F0'
+  "\\varkappa ": '\u03F0'
+  "{\\varrho}": '\u03F1'
+  "\\varrho ": '\u03F1'
+  "{\\textTheta}": '\u03F4'
+  "\\textTheta ": '\u03F4'
+  "{\\backepsilon}": '\u03F6'
+  "\\backepsilon ": '\u03F6'
+  "{\\cyrchar\\CYRYO}": '\u0401'
+  "\\cyrchar\\CYRYO ": '\u0401'
+  "{\\cyrchar\\CYRDJE}": '\u0402'
+  "\\cyrchar\\CYRDJE ": '\u0402'
+  "\\cyrchar{\\'\\CYRG}": '\u0403'
+  "{\\cyrchar\\CYRIE}": '\u0404'
+  "\\cyrchar\\CYRIE ": '\u0404'
+  "{\\cyrchar\\CYRDZE}": '\u0405'
+  "\\cyrchar\\CYRDZE ": '\u0405'
+  "{\\cyrchar\\CYRII}": '\u0406'
+  "\\cyrchar\\CYRII ": '\u0406'
+  "{\\cyrchar\\CYRYI}": '\u0407'
+  "\\cyrchar\\CYRYI ": '\u0407'
+  "{\\cyrchar\\CYRJE}": '\u0408'
+  "\\cyrchar\\CYRJE ": '\u0408'
+  "{\\cyrchar\\CYRLJE}": '\u0409'
+  "\\cyrchar\\CYRLJE ": '\u0409'
+  "{\\cyrchar\\CYRNJE}": '\u040A'
+  "\\cyrchar\\CYRNJE ": '\u040A'
+  "{\\cyrchar\\CYRTSHE}": '\u040B'
+  "\\cyrchar\\CYRTSHE ": '\u040B'
+  "\\cyrchar{\\'\\CYRK}": '\u040C'
+  "{\\cyrchar\\CYRUSHRT}": '\u040E'
+  "\\cyrchar\\CYRUSHRT ": '\u040E'
+  "{\\cyrchar\\CYRDZHE}": '\u040F'
+  "\\cyrchar\\CYRDZHE ": '\u040F'
+  "{\\cyrchar\\CYRA}": '\u0410'
+  "\\cyrchar\\CYRA ": '\u0410'
+  "{\\cyrchar\\CYRB}": '\u0411'
+  "\\cyrchar\\CYRB ": '\u0411'
+  "{\\cyrchar\\CYRV}": '\u0412'
+  "\\cyrchar\\CYRV ": '\u0412'
+  "{\\cyrchar\\CYRG}": '\u0413'
+  "\\cyrchar\\CYRG ": '\u0413'
+  "{\\cyrchar\\CYRD}": '\u0414'
+  "\\cyrchar\\CYRD ": '\u0414'
+  "{\\cyrchar\\CYRE}": '\u0415'
+  "\\cyrchar\\CYRE ": '\u0415'
+  "{\\cyrchar\\CYRZH}": '\u0416'
+  "\\cyrchar\\CYRZH ": '\u0416'
+  "{\\cyrchar\\CYRZ}": '\u0417'
+  "\\cyrchar\\CYRZ ": '\u0417'
+  "{\\cyrchar\\CYRI}": '\u0418'
+  "\\cyrchar\\CYRI ": '\u0418'
+  "{\\cyrchar\\CYRISHRT}": '\u0419'
+  "\\cyrchar\\CYRISHRT ": '\u0419'
+  "{\\cyrchar\\CYRK}": '\u041A'
+  "\\cyrchar\\CYRK ": '\u041A'
+  "{\\cyrchar\\CYRL}": '\u041B'
+  "\\cyrchar\\CYRL ": '\u041B'
+  "{\\cyrchar\\CYRM}": '\u041C'
+  "\\cyrchar\\CYRM ": '\u041C'
+  "{\\cyrchar\\CYRN}": '\u041D'
+  "\\cyrchar\\CYRN ": '\u041D'
+  "{\\cyrchar\\CYRO}": '\u041E'
+  "\\cyrchar\\CYRO ": '\u041E'
+  "{\\cyrchar\\CYRP}": '\u041F'
+  "\\cyrchar\\CYRP ": '\u041F'
+  "{\\cyrchar\\CYRR}": '\u0420'
+  "\\cyrchar\\CYRR ": '\u0420'
+  "{\\cyrchar\\CYRS}": '\u0421'
+  "\\cyrchar\\CYRS ": '\u0421'
+  "{\\cyrchar\\CYRT}": '\u0422'
+  "\\cyrchar\\CYRT ": '\u0422'
+  "{\\cyrchar\\CYRU}": '\u0423'
+  "\\cyrchar\\CYRU ": '\u0423'
+  "{\\cyrchar\\CYRF}": '\u0424'
+  "\\cyrchar\\CYRF ": '\u0424'
+  "{\\cyrchar\\CYRH}": '\u0425'
+  "\\cyrchar\\CYRH ": '\u0425'
+  "{\\cyrchar\\CYRC}": '\u0426'
+  "\\cyrchar\\CYRC ": '\u0426'
+  "{\\cyrchar\\CYRCH}": '\u0427'
+  "\\cyrchar\\CYRCH ": '\u0427'
+  "{\\cyrchar\\CYRSH}": '\u0428'
+  "\\cyrchar\\CYRSH ": '\u0428'
+  "{\\cyrchar\\CYRSHCH}": '\u0429'
+  "\\cyrchar\\CYRSHCH ": '\u0429'
+  "{\\cyrchar\\CYRHRDSN}": '\u042A'
+  "\\cyrchar\\CYRHRDSN ": '\u042A'
+  "{\\cyrchar\\CYRERY}": '\u042B'
+  "\\cyrchar\\CYRERY ": '\u042B'
+  "{\\cyrchar\\CYRSFTSN}": '\u042C'
+  "\\cyrchar\\CYRSFTSN ": '\u042C'
+  "{\\cyrchar\\CYREREV}": '\u042D'
+  "\\cyrchar\\CYREREV ": '\u042D'
+  "{\\cyrchar\\CYRYU}": '\u042E'
+  "\\cyrchar\\CYRYU ": '\u042E'
+  "{\\cyrchar\\CYRYA}": '\u042F'
+  "\\cyrchar\\CYRYA ": '\u042F'
+  "{\\cyrchar\\cyra}": '\u0430'
+  "\\cyrchar\\cyra ": '\u0430'
+  "{\\cyrchar\\cyrb}": '\u0431'
+  "\\cyrchar\\cyrb ": '\u0431'
+  "{\\cyrchar\\cyrv}": '\u0432'
+  "\\cyrchar\\cyrv ": '\u0432'
+  "{\\cyrchar\\cyrg}": '\u0433'
+  "\\cyrchar\\cyrg ": '\u0433'
+  "{\\cyrchar\\cyrd}": '\u0434'
+  "\\cyrchar\\cyrd ": '\u0434'
+  "{\\cyrchar\\cyre}": '\u0435'
+  "\\cyrchar\\cyre ": '\u0435'
+  "{\\cyrchar\\cyrzh}": '\u0436'
+  "\\cyrchar\\cyrzh ": '\u0436'
+  "{\\cyrchar\\cyrz}": '\u0437'
+  "\\cyrchar\\cyrz ": '\u0437'
+  "{\\cyrchar\\cyri}": '\u0438'
+  "\\cyrchar\\cyri ": '\u0438'
+  "{\\cyrchar\\cyrishrt}": '\u0439'
+  "\\cyrchar\\cyrishrt ": '\u0439'
+  "{\\cyrchar\\cyrk}": '\u043A'
+  "\\cyrchar\\cyrk ": '\u043A'
+  "{\\cyrchar\\cyrl}": '\u043B'
+  "\\cyrchar\\cyrl ": '\u043B'
+  "{\\cyrchar\\cyrm}": '\u043C'
+  "\\cyrchar\\cyrm ": '\u043C'
+  "{\\cyrchar\\cyrn}": '\u043D'
+  "\\cyrchar\\cyrn ": '\u043D'
+  "{\\cyrchar\\cyro}": '\u043E'
+  "\\cyrchar\\cyro ": '\u043E'
+  "{\\cyrchar\\cyrp}": '\u043F'
+  "\\cyrchar\\cyrp ": '\u043F'
+  "{\\cyrchar\\cyrr}": '\u0440'
+  "\\cyrchar\\cyrr ": '\u0440'
+  "{\\cyrchar\\cyrs}": '\u0441'
+  "\\cyrchar\\cyrs ": '\u0441'
+  "{\\cyrchar\\cyrt}": '\u0442'
+  "\\cyrchar\\cyrt ": '\u0442'
+  "{\\cyrchar\\cyru}": '\u0443'
+  "\\cyrchar\\cyru ": '\u0443'
+  "{\\cyrchar\\cyrf}": '\u0444'
+  "\\cyrchar\\cyrf ": '\u0444'
+  "{\\cyrchar\\cyrh}": '\u0445'
+  "\\cyrchar\\cyrh ": '\u0445'
+  "{\\cyrchar\\cyrc}": '\u0446'
+  "\\cyrchar\\cyrc ": '\u0446'
+  "{\\cyrchar\\cyrch}": '\u0447'
+  "\\cyrchar\\cyrch ": '\u0447'
+  "{\\cyrchar\\cyrsh}": '\u0448'
+  "\\cyrchar\\cyrsh ": '\u0448'
+  "{\\cyrchar\\cyrshch}": '\u0449'
+  "\\cyrchar\\cyrshch ": '\u0449'
+  "{\\cyrchar\\cyrhrdsn}": '\u044A'
+  "\\cyrchar\\cyrhrdsn ": '\u044A'
+  "{\\cyrchar\\cyrery}": '\u044B'
+  "\\cyrchar\\cyrery ": '\u044B'
+  "{\\cyrchar\\cyrsftsn}": '\u044C'
+  "\\cyrchar\\cyrsftsn ": '\u044C'
+  "{\\cyrchar\\cyrerev}": '\u044D'
+  "\\cyrchar\\cyrerev ": '\u044D'
+  "{\\cyrchar\\cyryu}": '\u044E'
+  "\\cyrchar\\cyryu ": '\u044E'
+  "{\\cyrchar\\cyrya}": '\u044F'
+  "\\cyrchar\\cyrya ": '\u044F'
+  "{\\cyrchar\\cyryo}": '\u0451'
+  "\\cyrchar\\cyryo ": '\u0451'
+  "{\\cyrchar\\cyrdje}": '\u0452'
+  "\\cyrchar\\cyrdje ": '\u0452'
+  "\\cyrchar{\\'\\cyrg}": '\u0453'
+  "{\\cyrchar\\cyrie}": '\u0454'
+  "\\cyrchar\\cyrie ": '\u0454'
+  "{\\cyrchar\\cyrdze}": '\u0455'
+  "\\cyrchar\\cyrdze ": '\u0455'
+  "{\\cyrchar\\cyrii}": '\u0456'
+  "\\cyrchar\\cyrii ": '\u0456'
+  "{\\cyrchar\\cyryi}": '\u0457'
+  "\\cyrchar\\cyryi ": '\u0457'
+  "{\\cyrchar\\cyrje}": '\u0458'
+  "\\cyrchar\\cyrje ": '\u0458'
+  "{\\cyrchar\\cyrlje}": '\u0459'
+  "\\cyrchar\\cyrlje ": '\u0459'
+  "{\\cyrchar\\cyrnje}": '\u045A'
+  "\\cyrchar\\cyrnje ": '\u045A'
+  "{\\cyrchar\\cyrtshe}": '\u045B'
+  "\\cyrchar\\cyrtshe ": '\u045B'
+  "\\cyrchar{\\'\\cyrk}": '\u045C'
+  "{\\cyrchar\\cyrushrt}": '\u045E'
+  "\\cyrchar\\cyrushrt ": '\u045E'
+  "{\\cyrchar\\cyrdzhe}": '\u045F'
+  "\\cyrchar\\cyrdzhe ": '\u045F'
+  "{\\cyrchar\\CYROMEGA}": '\u0460'
+  "\\cyrchar\\CYROMEGA ": '\u0460'
+  "{\\cyrchar\\cyromega}": '\u0461'
+  "\\cyrchar\\cyromega ": '\u0461'
+  "{\\cyrchar\\CYRYAT}": '\u0462'
+  "\\cyrchar\\CYRYAT ": '\u0462'
+  "{\\cyrchar\\CYRIOTE}": '\u0464'
+  "\\cyrchar\\CYRIOTE ": '\u0464'
+  "{\\cyrchar\\cyriote}": '\u0465'
+  "\\cyrchar\\cyriote ": '\u0465'
+  "{\\cyrchar\\CYRLYUS}": '\u0466'
+  "\\cyrchar\\CYRLYUS ": '\u0466'
+  "{\\cyrchar\\cyrlyus}": '\u0467'
+  "\\cyrchar\\cyrlyus ": '\u0467'
+  "{\\cyrchar\\CYRIOTLYUS}": '\u0468'
+  "\\cyrchar\\CYRIOTLYUS ": '\u0468'
+  "{\\cyrchar\\cyriotlyus}": '\u0469'
+  "\\cyrchar\\cyriotlyus ": '\u0469'
+  "{\\cyrchar\\CYRBYUS}": '\u046A'
+  "\\cyrchar\\CYRBYUS ": '\u046A'
+  "{\\cyrchar\\CYRIOTBYUS}": '\u046C'
+  "\\cyrchar\\CYRIOTBYUS ": '\u046C'
+  "{\\cyrchar\\cyriotbyus}": '\u046D'
+  "\\cyrchar\\cyriotbyus ": '\u046D'
+  "{\\cyrchar\\CYRKSI}": '\u046E'
+  "\\cyrchar\\CYRKSI ": '\u046E'
+  "{\\cyrchar\\cyrksi}": '\u046F'
+  "\\cyrchar\\cyrksi ": '\u046F'
+  "{\\cyrchar\\CYRPSI}": '\u0470'
+  "\\cyrchar\\CYRPSI ": '\u0470'
+  "{\\cyrchar\\cyrpsi}": '\u0471'
+  "\\cyrchar\\cyrpsi ": '\u0471'
+  "{\\cyrchar\\CYRFITA}": '\u0472'
+  "\\cyrchar\\CYRFITA ": '\u0472'
+  "{\\cyrchar\\CYRIZH}": '\u0474'
+  "\\cyrchar\\CYRIZH ": '\u0474'
+  "{\\cyrchar\\CYRUK}": '\u0478'
+  "\\cyrchar\\CYRUK ": '\u0478'
+  "{\\cyrchar\\cyruk}": '\u0479'
+  "\\cyrchar\\cyruk ": '\u0479'
+  "{\\cyrchar\\CYROMEGARND}": '\u047A'
+  "\\cyrchar\\CYROMEGARND ": '\u047A'
+  "{\\cyrchar\\cyromegarnd}": '\u047B'
+  "\\cyrchar\\cyromegarnd ": '\u047B'
+  "{\\cyrchar\\CYROMEGATITLO}": '\u047C'
+  "\\cyrchar\\CYROMEGATITLO ": '\u047C'
+  "{\\cyrchar\\cyromegatitlo}": '\u047D'
+  "\\cyrchar\\cyromegatitlo ": '\u047D'
+  "{\\cyrchar\\CYROT}": '\u047E'
+  "\\cyrchar\\CYROT ": '\u047E'
+  "{\\cyrchar\\cyrot}": '\u047F'
+  "\\cyrchar\\cyrot ": '\u047F'
+  "{\\cyrchar\\CYRKOPPA}": '\u0480'
+  "\\cyrchar\\CYRKOPPA ": '\u0480'
+  "{\\cyrchar\\cyrkoppa}": '\u0481'
+  "\\cyrchar\\cyrkoppa ": '\u0481'
+  "{\\cyrchar\\cyrthousands}": '\u0482'
+  "\\cyrchar\\cyrthousands ": '\u0482'
+  "{\\cyrchar\\cyrhundredthousands}": '\u0488'
+  "\\cyrchar\\cyrhundredthousands ": '\u0488'
+  "{\\cyrchar\\cyrmillions}": '\u0489'
+  "\\cyrchar\\cyrmillions ": '\u0489'
+  "{\\cyrchar\\CYRSEMISFTSN}": '\u048C'
+  "\\cyrchar\\CYRSEMISFTSN ": '\u048C'
+  "{\\cyrchar\\cyrsemisftsn}": '\u048D'
+  "\\cyrchar\\cyrsemisftsn ": '\u048D'
+  "{\\cyrchar\\CYRRTICK}": '\u048E'
+  "\\cyrchar\\CYRRTICK ": '\u048E'
+  "{\\cyrchar\\cyrrtick}": '\u048F'
+  "\\cyrchar\\cyrrtick ": '\u048F'
+  "{\\cyrchar\\CYRGUP}": '\u0490'
+  "\\cyrchar\\CYRGUP ": '\u0490'
+  "{\\cyrchar\\cyrgup}": '\u0491'
+  "\\cyrchar\\cyrgup ": '\u0491'
+  "{\\cyrchar\\CYRGHCRS}": '\u0492'
+  "\\cyrchar\\CYRGHCRS ": '\u0492'
+  "{\\cyrchar\\cyrghcrs}": '\u0493'
+  "\\cyrchar\\cyrghcrs ": '\u0493'
+  "{\\cyrchar\\CYRGHK}": '\u0494'
+  "\\cyrchar\\CYRGHK ": '\u0494'
+  "{\\cyrchar\\cyrghk}": '\u0495'
+  "\\cyrchar\\cyrghk ": '\u0495'
+  "{\\cyrchar\\CYRZHDSC}": '\u0496'
+  "\\cyrchar\\CYRZHDSC ": '\u0496'
+  "{\\cyrchar\\cyrzhdsc}": '\u0497'
+  "\\cyrchar\\cyrzhdsc ": '\u0497'
+  "{\\cyrchar\\CYRZDSC}": '\u0498'
+  "\\cyrchar\\CYRZDSC ": '\u0498'
+  "{\\cyrchar\\cyrzdsc}": '\u0499'
+  "\\cyrchar\\cyrzdsc ": '\u0499'
+  "{\\cyrchar\\CYRKDSC}": '\u049A'
+  "\\cyrchar\\CYRKDSC ": '\u049A'
+  "{\\cyrchar\\cyrkdsc}": '\u049B'
+  "\\cyrchar\\cyrkdsc ": '\u049B'
+  "{\\cyrchar\\CYRKVCRS}": '\u049C'
+  "\\cyrchar\\CYRKVCRS ": '\u049C'
+  "{\\cyrchar\\cyrkvcrs}": '\u049D'
+  "\\cyrchar\\cyrkvcrs ": '\u049D'
+  "{\\cyrchar\\CYRKHCRS}": '\u049E'
+  "\\cyrchar\\CYRKHCRS ": '\u049E'
+  "{\\cyrchar\\cyrkhcrs}": '\u049F'
+  "\\cyrchar\\cyrkhcrs ": '\u049F'
+  "{\\cyrchar\\CYRKBEAK}": '\u04A0'
+  "\\cyrchar\\CYRKBEAK ": '\u04A0'
+  "{\\cyrchar\\cyrkbeak}": '\u04A1'
+  "\\cyrchar\\cyrkbeak ": '\u04A1'
+  "{\\cyrchar\\CYRNDSC}": '\u04A2'
+  "\\cyrchar\\CYRNDSC ": '\u04A2'
+  "{\\cyrchar\\cyrndsc}": '\u04A3'
+  "\\cyrchar\\cyrndsc ": '\u04A3'
+  "{\\cyrchar\\CYRNG}": '\u04A4'
+  "\\cyrchar\\CYRNG ": '\u04A4'
+  "{\\cyrchar\\cyrng}": '\u04A5'
+  "\\cyrchar\\cyrng ": '\u04A5'
+  "{\\cyrchar\\CYRPHK}": '\u04A6'
+  "\\cyrchar\\CYRPHK ": '\u04A6'
+  "{\\cyrchar\\cyrphk}": '\u04A7'
+  "\\cyrchar\\cyrphk ": '\u04A7'
+  "{\\cyrchar\\CYRABHHA}": '\u04A8'
+  "\\cyrchar\\CYRABHHA ": '\u04A8'
+  "{\\cyrchar\\cyrabhha}": '\u04A9'
+  "\\cyrchar\\cyrabhha ": '\u04A9'
+  "{\\cyrchar\\CYRSDSC}": '\u04AA'
+  "\\cyrchar\\CYRSDSC ": '\u04AA'
+  "{\\cyrchar\\cyrsdsc}": '\u04AB'
+  "\\cyrchar\\cyrsdsc ": '\u04AB'
+  "{\\cyrchar\\CYRTDSC}": '\u04AC'
+  "\\cyrchar\\CYRTDSC ": '\u04AC'
+  "{\\cyrchar\\cyrtdsc}": '\u04AD'
+  "\\cyrchar\\cyrtdsc ": '\u04AD'
+  "{\\cyrchar\\CYRY}": '\u04AE'
+  "\\cyrchar\\CYRY ": '\u04AE'
+  "{\\cyrchar\\cyry}": '\u04AF'
+  "\\cyrchar\\cyry ": '\u04AF'
+  "{\\cyrchar\\CYRYHCRS}": '\u04B0'
+  "\\cyrchar\\CYRYHCRS ": '\u04B0'
+  "{\\cyrchar\\cyryhcrs}": '\u04B1'
+  "\\cyrchar\\cyryhcrs ": '\u04B1'
+  "{\\cyrchar\\CYRHDSC}": '\u04B2'
+  "\\cyrchar\\CYRHDSC ": '\u04B2'
+  "{\\cyrchar\\cyrhdsc}": '\u04B3'
+  "\\cyrchar\\cyrhdsc ": '\u04B3'
+  "{\\cyrchar\\CYRTETSE}": '\u04B4'
+  "\\cyrchar\\CYRTETSE ": '\u04B4'
+  "{\\cyrchar\\cyrtetse}": '\u04B5'
+  "\\cyrchar\\cyrtetse ": '\u04B5'
+  "{\\cyrchar\\CYRCHRDSC}": '\u04B6'
+  "\\cyrchar\\CYRCHRDSC ": '\u04B6'
+  "{\\cyrchar\\cyrchrdsc}": '\u04B7'
+  "\\cyrchar\\cyrchrdsc ": '\u04B7'
+  "{\\cyrchar\\CYRCHVCRS}": '\u04B8'
+  "\\cyrchar\\CYRCHVCRS ": '\u04B8'
+  "{\\cyrchar\\cyrchvcrs}": '\u04B9'
+  "\\cyrchar\\cyrchvcrs ": '\u04B9'
+  "{\\cyrchar\\CYRSHHA}": '\u04BA'
+  "\\cyrchar\\CYRSHHA ": '\u04BA'
+  "{\\cyrchar\\cyrshha}": '\u04BB'
+  "\\cyrchar\\cyrshha ": '\u04BB'
+  "{\\cyrchar\\CYRABHCH}": '\u04BC'
+  "\\cyrchar\\CYRABHCH ": '\u04BC'
+  "{\\cyrchar\\cyrabhch}": '\u04BD'
+  "\\cyrchar\\cyrabhch ": '\u04BD'
+  "{\\cyrchar\\CYRABHCHDSC}": '\u04BE'
+  "\\cyrchar\\CYRABHCHDSC ": '\u04BE'
+  "{\\cyrchar\\cyrabhchdsc}": '\u04BF'
+  "\\cyrchar\\cyrabhchdsc ": '\u04BF'
+  "{\\cyrchar\\CYRpalochka}": '\u04C0'
+  "\\cyrchar\\CYRpalochka ": '\u04C0'
+  "{\\cyrchar\\CYRKHK}": '\u04C3'
+  "\\cyrchar\\CYRKHK ": '\u04C3'
+  "{\\cyrchar\\cyrkhk}": '\u04C4'
+  "\\cyrchar\\cyrkhk ": '\u04C4'
+  "{\\cyrchar\\CYRNHK}": '\u04C7'
+  "\\cyrchar\\CYRNHK ": '\u04C7'
+  "{\\cyrchar\\cyrnhk}": '\u04C8'
+  "\\cyrchar\\cyrnhk ": '\u04C8'
+  "{\\cyrchar\\CYRCHLDSC}": '\u04CB'
+  "\\cyrchar\\CYRCHLDSC ": '\u04CB'
+  "{\\cyrchar\\cyrchldsc}": '\u04CC'
+  "\\cyrchar\\cyrchldsc ": '\u04CC'
+  "{\\cyrchar\\CYRAE}": '\u04D4'
+  "\\cyrchar\\CYRAE ": '\u04D4'
+  "{\\cyrchar\\cyrae}": '\u04D5'
+  "\\cyrchar\\cyrae ": '\u04D5'
+  "{\\cyrchar\\CYRSCHWA}": '\u04D8'
+  "\\cyrchar\\CYRSCHWA ": '\u04D8'
+  "{\\cyrchar\\cyrschwa}": '\u04D9'
+  "\\cyrchar\\cyrschwa ": '\u04D9'
+  "{\\cyrchar\\CYRABHDZE}": '\u04E0'
+  "\\cyrchar\\CYRABHDZE ": '\u04E0'
+  "{\\cyrchar\\cyrabhdze}": '\u04E1'
+  "\\cyrchar\\cyrabhdze ": '\u04E1'
+  "{\\cyrchar\\CYROTLD}": '\u04E8'
+  "\\cyrchar\\CYROTLD ": '\u04E8'
+  "{\\cyrchar\\cyrotld}": '\u04E9'
+  "\\cyrchar\\cyrotld ": '\u04E9'
+  "\\hspace{0.6em}": '\u2002'
+  "\\hspace{1em}": '\u2003'
+  "\\hspace{0.33em}": '\u2004'
+  "\\hspace{0.25em}": '\u2005'
+  "\\hspace{0.166em}": '\u2006'
+  "\\hphantom{0}": '\u2007'
+  "\\hphantom{,}": '\u2008'
+  "\\hspace{0.167em}": '\u2009'
+  "{\\mkern1mu}": '\u200A'
+  "\\mkern1mu ": '\u200A'
+  "-": '\u2010'
+  "{\\textendash}": '\u2013'
+  "\\textendash ": '\u2013'
+  "{\\textemdash}": '\u2014'
+  "\\textemdash ": '\u2014'
+  "\\rule{1em}{1pt}": '\u2015'
+  "{\\Vert}": '\u2016'
+  "\\Vert ": '\u2016'
+  "`": '\u2018'
+  ",": '\u201A'
+  "{\\Elzreapos}": '\u201B'
+  "\\Elzreapos ": '\u201B'
+  "{\\textquotedblleft}": '\u201C'
+  "\\textquotedblleft ": '\u201C'
+  "{\\textquotedblright}": '\u201D'
+  "\\textquotedblright ": '\u201D'
+  ",,": '\u201E'
+  "{\\textdagger}": '\u2020'
+  "\\textdagger ": '\u2020'
+  "{\\textdaggerdbl}": '\u2021'
+  "\\textdaggerdbl ": '\u2021'
+  "{\\textbullet}": '\u2022'
+  "\\textbullet ": '\u2022'
+  ".": '\u2024'
+  "..": '\u2025'
+  "{\\ldots}": '\u2026'
+  "\\ldots ": '\u2026'
+  "{\\textperthousand}": '\u2030'
+  "\\textperthousand ": '\u2030'
+  "{\\textpertenthousand}": '\u2031'
+  "\\textpertenthousand ": '\u2031'
+  "{'}": '\u2032'
+  "{''}": '\u2033'
+  "{'''}": '\u2034'
+  "{\\backprime}": '\u2035'
+  "\\backprime ": '\u2035'
+  "{\\guilsinglleft}": '\u2039'
+  "\\guilsinglleft ": '\u2039'
+  "{\\guilsinglright}": '\u203A'
+  "\\guilsinglright ": '\u203A'
+  "''''": '\u2057'
+  "{\\mkern4mu}": '\u205F'
+  "\\mkern4mu ": '\u205F'
+  "{\\nolinebreak}": '\u2060'
+  "\\nolinebreak ": '\u2060'
+  "\\ensuremath{\\Elzpes}": '\u20A7'
+  "{\\mbox{\\texteuro}}": '\u20AC'
+  "\\mbox{\\texteuro} ": '\u20AC'
+  "{\\dddot}": '\u20DB'
+  "\\dddot ": '\u20DB'
+  "{\\ddddot}": '\u20DC'
+  "\\ddddot ": '\u20DC'
+  "\\mathbb{C}": '\u2102'
+  "\\mathscr{g}": '\u210A'
+  "\\mathscr{H}": '\u210B'
+  "\\mathfrak{H}": '\u210C'
+  "\\mathbb{H}": '\u210D'
+  "{\\hslash}": '\u210F'
+  "\\hslash ": '\u210F'
+  "\\mathscr{I}": '\u2110'
+  "\\mathfrak{I}": '\u2111'
+  "\\mathscr{L}": '\u2112'
+  "\\mathscr{l}": '\u2113'
+  "\\mathbb{N}": '\u2115'
+  "{\\cyrchar\\textnumero}": '\u2116'
+  "\\cyrchar\\textnumero ": '\u2116'
+  "{\\wp}": '\u2118'
+  "\\wp ": '\u2118'
+  "\\mathbb{P}": '\u2119'
+  "\\mathbb{Q}": '\u211A'
+  "\\mathscr{R}": '\u211B'
+  "\\mathfrak{R}": '\u211C'
+  "\\mathbb{R}": '\u211D'
+  "{\\Elzxrat}": '\u211E'
+  "\\Elzxrat ": '\u211E'
+  "{\\texttrademark}": '\u2122'
+  "\\texttrademark ": '\u2122'
+  "\\mathbb{Z}": '\u2124'
+  "{\\mho}": '\u2127'
+  "\\mho ": '\u2127'
+  "\\mathfrak{Z}": '\u2128'
+  "\\ElsevierGlyph{2129}": '\u2129'
+  "\\mathscr{B}": '\u212C'
+  "\\mathfrak{C}": '\u212D'
+  "\\mathscr{e}": '\u212F'
+  "\\mathscr{E}": '\u2130'
+  "\\mathscr{F}": '\u2131'
+  "\\mathscr{M}": '\u2133'
+  "\\mathscr{o}": '\u2134'
+  "{\\aleph}": '\u2135'
+  "\\aleph ": '\u2135'
+  "{\\beth}": '\u2136'
+  "\\beth ": '\u2136'
+  "{\\gimel}": '\u2137'
+  "\\gimel ": '\u2137'
+  "{\\daleth}": '\u2138'
+  "\\daleth ": '\u2138'
+  "\\textfrac{1}{3}": '\u2153'
+  "\\textfrac{2}{3}": '\u2154'
+  "\\textfrac{1}{5}": '\u2155'
+  "\\textfrac{2}{5}": '\u2156'
+  "\\textfrac{3}{5}": '\u2157'
+  "\\textfrac{4}{5}": '\u2158'
+  "\\textfrac{1}{6}": '\u2159'
+  "\\textfrac{5}{6}": '\u215A'
+  "\\textfrac{1}{8}": '\u215B'
+  "\\textfrac{3}{8}": '\u215C'
+  "\\textfrac{5}{8}": '\u215D'
+  "\\textfrac{7}{8}": '\u215E'
+  "{\\leftarrow}": '\u2190'
+  "\\leftarrow ": '\u2190'
+  "{\\uparrow}": '\u2191'
+  "\\uparrow ": '\u2191'
+  "{\\rightarrow}": '\u2192'
+  "\\rightarrow ": '\u2192'
+  "{\\downarrow}": '\u2193'
+  "\\downarrow ": '\u2193'
+  "{\\leftrightarrow}": '\u2194'
+  "\\leftrightarrow ": '\u2194'
+  "{\\updownarrow}": '\u2195'
+  "\\updownarrow ": '\u2195'
+  "{\\nwarrow}": '\u2196'
+  "\\nwarrow ": '\u2196'
+  "{\\nearrow}": '\u2197'
+  "\\nearrow ": '\u2197'
+  "{\\searrow}": '\u2198'
+  "\\searrow ": '\u2198'
+  "{\\swarrow}": '\u2199'
+  "\\swarrow ": '\u2199'
+  "{\\nleftarrow}": '\u219A'
+  "\\nleftarrow ": '\u219A'
+  "{\\nrightarrow}": '\u219B'
+  "\\nrightarrow ": '\u219B'
+  "{\\arrowwaveright}": '\u219C'
+  "\\arrowwaveright ": '\u219C'
+  "{\\twoheadleftarrow}": '\u219E'
+  "\\twoheadleftarrow ": '\u219E'
+  "{\\twoheadrightarrow}": '\u21A0'
+  "\\twoheadrightarrow ": '\u21A0'
+  "{\\leftarrowtail}": '\u21A2'
+  "\\leftarrowtail ": '\u21A2'
+  "{\\rightarrowtail}": '\u21A3'
+  "\\rightarrowtail ": '\u21A3'
+  "{\\mapsto}": '\u21A6'
+  "\\mapsto ": '\u21A6'
+  "{\\hookleftarrow}": '\u21A9'
+  "\\hookleftarrow ": '\u21A9'
+  "{\\hookrightarrow}": '\u21AA'
+  "\\hookrightarrow ": '\u21AA'
+  "{\\looparrowleft}": '\u21AB'
+  "\\looparrowleft ": '\u21AB'
+  "{\\looparrowright}": '\u21AC'
+  "\\looparrowright ": '\u21AC'
+  "{\\leftrightsquigarrow}": '\u21AD'
+  "\\leftrightsquigarrow ": '\u21AD'
+  "{\\nleftrightarrow}": '\u21AE'
+  "\\nleftrightarrow ": '\u21AE'
+  "{\\Lsh}": '\u21B0'
+  "\\Lsh ": '\u21B0'
+  "{\\Rsh}": '\u21B1'
+  "\\Rsh ": '\u21B1'
+  "\\ElsevierGlyph{21B3}": '\u21B3'
+  "{\\curvearrowleft}": '\u21B6'
+  "\\curvearrowleft ": '\u21B6'
+  "{\\curvearrowright}": '\u21B7'
+  "\\curvearrowright ": '\u21B7'
+  "{\\circlearrowleft}": '\u21BA'
+  "\\circlearrowleft ": '\u21BA'
+  "{\\circlearrowright}": '\u21BB'
+  "\\circlearrowright ": '\u21BB'
+  "{\\leftharpoonup}": '\u21BC'
+  "\\leftharpoonup ": '\u21BC'
+  "{\\leftharpoondown}": '\u21BD'
+  "\\leftharpoondown ": '\u21BD'
+  "{\\upharpoonright}": '\u21BE'
+  "\\upharpoonright ": '\u21BE'
+  "{\\upharpoonleft}": '\u21BF'
+  "\\upharpoonleft ": '\u21BF'
+  "{\\rightharpoonup}": '\u21C0'
+  "\\rightharpoonup ": '\u21C0'
+  "{\\rightharpoondown}": '\u21C1'
+  "\\rightharpoondown ": '\u21C1'
+  "{\\downharpoonright}": '\u21C2'
+  "\\downharpoonright ": '\u21C2'
+  "{\\downharpoonleft}": '\u21C3'
+  "\\downharpoonleft ": '\u21C3'
+  "{\\rightleftarrows}": '\u21C4'
+  "\\rightleftarrows ": '\u21C4'
+  "{\\dblarrowupdown}": '\u21C5'
+  "\\dblarrowupdown ": '\u21C5'
+  "{\\leftrightarrows}": '\u21C6'
+  "\\leftrightarrows ": '\u21C6'
+  "{\\leftleftarrows}": '\u21C7'
+  "\\leftleftarrows ": '\u21C7'
+  "{\\upuparrows}": '\u21C8'
+  "\\upuparrows ": '\u21C8'
+  "{\\rightrightarrows}": '\u21C9'
+  "\\rightrightarrows ": '\u21C9'
+  "{\\downdownarrows}": '\u21CA'
+  "\\downdownarrows ": '\u21CA'
+  "{\\leftrightharpoons}": '\u21CB'
+  "\\leftrightharpoons ": '\u21CB'
+  "{\\rightleftharpoons}": '\u21CC'
+  "\\rightleftharpoons ": '\u21CC'
+  "{\\nLeftarrow}": '\u21CD'
+  "\\nLeftarrow ": '\u21CD'
+  "{\\nLeftrightarrow}": '\u21CE'
+  "\\nLeftrightarrow ": '\u21CE'
+  "{\\nRightarrow}": '\u21CF'
+  "\\nRightarrow ": '\u21CF'
+  "{\\Leftarrow}": '\u21D0'
+  "\\Leftarrow ": '\u21D0'
+  "{\\Uparrow}": '\u21D1'
+  "\\Uparrow ": '\u21D1'
+  "{\\Rightarrow}": '\u21D2'
+  "\\Rightarrow ": '\u21D2'
+  "{\\Downarrow}": '\u21D3'
+  "\\Downarrow ": '\u21D3'
+  "{\\Leftrightarrow}": '\u21D4'
+  "\\Leftrightarrow ": '\u21D4'
+  "{\\Updownarrow}": '\u21D5'
+  "\\Updownarrow ": '\u21D5'
+  "{\\Lleftarrow}": '\u21DA'
+  "\\Lleftarrow ": '\u21DA'
+  "{\\Rrightarrow}": '\u21DB'
+  "\\Rrightarrow ": '\u21DB'
+  "{\\rightsquigarrow}": '\u21DD'
+  "\\rightsquigarrow ": '\u21DD'
+  "{\\DownArrowUpArrow}": '\u21F5'
+  "\\DownArrowUpArrow ": '\u21F5'
+  "{\\forall}": '\u2200'
+  "\\forall ": '\u2200'
+  "{\\complement}": '\u2201'
+  "\\complement ": '\u2201'
+  "{\\partial}": '\u2202'
+  "\\partial ": '\u2202'
+  "{\\exists}": '\u2203'
+  "\\exists ": '\u2203'
+  "{\\nexists}": '\u2204'
+  "\\nexists ": '\u2204'
+  "{\\varnothing}": '\u2205'
+  "\\varnothing ": '\u2205'
+  "{\\nabla}": '\u2207'
+  "\\nabla ": '\u2207'
+  "{\\in}": '\u2208'
+  "\\in ": '\u2208'
+  "{\\not\\in}": '\u2209'
+  "\\not\\in ": '\u2209'
+  "{\\ni}": '\u220B'
+  "\\ni ": '\u220B'
+  "{\\not\\ni}": '\u220C'
+  "\\not\\ni ": '\u220C'
+  "{\\prod}": '\u220F'
+  "\\prod ": '\u220F'
+  "{\\coprod}": '\u2210'
+  "\\coprod ": '\u2210'
+  "{\\sum}": '\u2211'
+  "\\sum ": '\u2211'
+  "{\\mp}": '\u2213'
+  "\\mp ": '\u2213'
+  "{\\dotplus}": '\u2214'
+  "\\dotplus ": '\u2214'
+  "{\\setminus}": '\u2216'
+  "\\setminus ": '\u2216'
+  "{_\\ast}": '\u2217'
+  "{\\circ}": '\u2218'
+  "\\circ ": '\u2218'
+  "{\\bullet}": '\u2219'
+  "\\bullet ": '\u2219'
+  "{\\surd}": '\u221A'
+  "\\surd ": '\u221A'
+  "{\\propto}": '\u221D'
+  "\\propto ": '\u221D'
+  "{\\infty}": '\u221E'
+  "\\infty ": '\u221E'
+  "{\\rightangle}": '\u221F'
+  "\\rightangle ": '\u221F'
+  "{\\angle}": '\u2220'
+  "\\angle ": '\u2220'
+  "{\\measuredangle}": '\u2221'
+  "\\measuredangle ": '\u2221'
+  "{\\sphericalangle}": '\u2222'
+  "\\sphericalangle ": '\u2222'
+  "{\\mid}": '\u2223'
+  "\\mid ": '\u2223'
+  "{\\nmid}": '\u2224'
+  "\\nmid ": '\u2224'
+  "{\\parallel}": '\u2225'
+  "\\parallel ": '\u2225'
+  "{\\nparallel}": '\u2226'
+  "\\nparallel ": '\u2226'
+  "{\\wedge}": '\u2227'
+  "\\wedge ": '\u2227'
+  "{\\vee}": '\u2228'
+  "\\vee ": '\u2228'
+  "{\\cap}": '\u2229'
+  "\\cap ": '\u2229'
+  "{\\cup}": '\u222A'
+  "\\cup ": '\u222A'
+  "{\\int}": '\u222B'
+  "\\int ": '\u222B'
+  "{\\int\\!\\int}": '\u222C'
+  "\\int\\!\\int ": '\u222C'
+  "{\\int\\!\\int\\!\\int}": '\u222D'
+  "\\int\\!\\int\\!\\int ": '\u222D'
+  "{\\oint}": '\u222E'
+  "\\oint ": '\u222E'
+  "{\\surfintegral}": '\u222F'
+  "\\surfintegral ": '\u222F'
+  "{\\volintegral}": '\u2230'
+  "\\volintegral ": '\u2230'
+  "{\\clwintegral}": '\u2231'
+  "\\clwintegral ": '\u2231'
+  "\\ElsevierGlyph{2232}": '\u2232'
+  "\\ElsevierGlyph{2233}": '\u2233'
+  "{\\therefore}": '\u2234'
+  "\\therefore ": '\u2234'
+  "{\\because}": '\u2235'
+  "\\because ": '\u2235'
+  "{\\Colon}": '\u2237'
+  "\\Colon ": '\u2237'
+  "\\ElsevierGlyph{2238}": '\u2238'
+  "\\mathbin{{:}\\!\\!{-}\\!\\!{:}}": '\u223A'
+  "{\\homothetic}": '\u223B'
+  "\\homothetic ": '\u223B'
+  "{\\sim}": '\u223C'
+  "\\sim ": '\u223C'
+  "{\\backsim}": '\u223D'
+  "\\backsim ": '\u223D'
+  "{\\lazysinv}": '\u223E'
+  "\\lazysinv ": '\u223E'
+  "{\\wr}": '\u2240'
+  "\\wr ": '\u2240'
+  "{\\not\\sim}": '\u2241'
+  "\\not\\sim ": '\u2241'
+  "\\ElsevierGlyph{2242}": '\u2242'
+  "{\\simeq}": '\u2243'
+  "\\simeq ": '\u2243'
+  "{\\not\\simeq}": '\u2244'
+  "\\not\\simeq ": '\u2244'
+  "{\\cong}": '\u2245'
+  "\\cong ": '\u2245'
+  "{\\approxnotequal}": '\u2246'
+  "\\approxnotequal ": '\u2246'
+  "{\\not\\cong}": '\u2247'
+  "\\not\\cong ": '\u2247'
+  "{\\approx}": '\u2248'
+  "\\approx ": '\u2248'
+  "{\\not\\approx}": '\u2249'
+  "\\not\\approx ": '\u2249'
+  "{\\approxeq}": '\u224A'
+  "\\approxeq ": '\u224A'
+  "{\\tildetrpl}": '\u224B'
+  "\\tildetrpl ": '\u224B'
+  "{\\allequal}": '\u224C'
+  "\\allequal ": '\u224C'
+  "{\\asymp}": '\u224D'
+  "\\asymp ": '\u224D'
+  "{\\Bumpeq}": '\u224E'
+  "\\Bumpeq ": '\u224E'
+  "{\\bumpeq}": '\u224F'
+  "\\bumpeq ": '\u224F'
+  "{\\doteq}": '\u2250'
+  "\\doteq ": '\u2250'
+  "{\\doteqdot}": '\u2251'
+  "\\doteqdot ": '\u2251'
+  "{\\fallingdotseq}": '\u2252'
+  "\\fallingdotseq ": '\u2252'
+  "{\\risingdotseq}": '\u2253'
+  "\\risingdotseq ": '\u2253'
+  ":=": '\u2254'
+  "=:": '\u2255'
+  "{\\eqcirc}": '\u2256'
+  "\\eqcirc ": '\u2256'
+  "{\\circeq}": '\u2257'
+  "\\circeq ": '\u2257'
+  "{\\estimates}": '\u2259'
+  "\\estimates ": '\u2259'
+  "\\ElsevierGlyph{225A}": '\u225A'
+  "{\\starequal}": '\u225B'
+  "\\starequal ": '\u225B'
+  "{\\triangleq}": '\u225C'
+  "\\triangleq ": '\u225C'
+  "\\ElsevierGlyph{225F}": '\u225F'
+  "\\not =": '\u2260'
+  "{\\equiv}": '\u2261'
+  "\\equiv ": '\u2261'
+  "{\\not\\equiv}": '\u2262'
+  "\\not\\equiv ": '\u2262'
+  "{\\leq}": '\u2264'
+  "\\leq ": '\u2264'
+  "{\\geq}": '\u2265'
+  "\\geq ": '\u2265'
+  "{\\leqq}": '\u2266'
+  "\\leqq ": '\u2266'
+  "{\\geqq}": '\u2267'
+  "\\geqq ": '\u2267'
+  "{\\lneqq}": '\u2268'
+  "\\lneqq ": '\u2268'
+  "{\\gneqq}": '\u2269'
+  "\\gneqq ": '\u2269'
+  "{\\ll}": '\u226A'
+  "\\ll ": '\u226A'
+  "{\\gg}": '\u226B'
+  "\\gg ": '\u226B'
+  "{\\between}": '\u226C'
+  "\\between ": '\u226C'
+  "{\\not\\kern-0.3em\\times}": '\u226D'
+  "\\not\\kern-0.3em\\times ": '\u226D'
+  "\\not<": '\u226E'
+  "\\not>": '\u226F'
+  "{\\not\\leq}": '\u2270'
+  "\\not\\leq ": '\u2270'
+  "{\\not\\geq}": '\u2271'
+  "\\not\\geq ": '\u2271'
+  "{\\lessequivlnt}": '\u2272'
+  "\\lessequivlnt ": '\u2272'
+  "{\\greaterequivlnt}": '\u2273'
+  "\\greaterequivlnt ": '\u2273'
+  "\\ElsevierGlyph{2274}": '\u2274'
+  "\\ElsevierGlyph{2275}": '\u2275'
+  "{\\lessgtr}": '\u2276'
+  "\\lessgtr ": '\u2276'
+  "{\\gtrless}": '\u2277'
+  "\\gtrless ": '\u2277'
+  "{\\notlessgreater}": '\u2278'
+  "\\notlessgreater ": '\u2278'
+  "{\\notgreaterless}": '\u2279'
+  "\\notgreaterless ": '\u2279'
+  "{\\prec}": '\u227A'
+  "\\prec ": '\u227A'
+  "{\\succ}": '\u227B'
+  "\\succ ": '\u227B'
+  "{\\preccurlyeq}": '\u227C'
+  "\\preccurlyeq ": '\u227C'
+  "{\\succcurlyeq}": '\u227D'
+  "\\succcurlyeq ": '\u227D'
+  "{\\precapprox}": '\u227E'
+  "\\precapprox ": '\u227E'
+  "{\\succapprox}": '\u227F'
+  "\\succapprox ": '\u227F'
+  "{\\not\\prec}": '\u2280'
+  "\\not\\prec ": '\u2280'
+  "{\\not\\succ}": '\u2281'
+  "\\not\\succ ": '\u2281'
+  "{\\subset}": '\u2282'
+  "\\subset ": '\u2282'
+  "{\\supset}": '\u2283'
+  "\\supset ": '\u2283'
+  "{\\not\\subset}": '\u2284'
+  "\\not\\subset ": '\u2284'
+  "{\\not\\supset}": '\u2285'
+  "\\not\\supset ": '\u2285'
+  "{\\subseteq}": '\u2286'
+  "\\subseteq ": '\u2286'
+  "{\\supseteq}": '\u2287'
+  "\\supseteq ": '\u2287'
+  "{\\not\\subseteq}": '\u2288'
+  "\\not\\subseteq ": '\u2288'
+  "{\\not\\supseteq}": '\u2289'
+  "\\not\\supseteq ": '\u2289'
+  "{\\subsetneq}": '\u228A'
+  "\\subsetneq ": '\u228A'
+  "{\\supsetneq}": '\u228B'
+  "\\supsetneq ": '\u228B'
+  "{\\uplus}": '\u228E'
+  "\\uplus ": '\u228E'
+  "{\\sqsubset}": '\u228F'
+  "\\sqsubset ": '\u228F'
+  "{\\sqsupset}": '\u2290'
+  "\\sqsupset ": '\u2290'
+  "{\\sqsubseteq}": '\u2291'
+  "\\sqsubseteq ": '\u2291'
+  "{\\sqsupseteq}": '\u2292'
+  "\\sqsupseteq ": '\u2292'
+  "{\\sqcap}": '\u2293'
+  "\\sqcap ": '\u2293'
+  "{\\sqcup}": '\u2294'
+  "\\sqcup ": '\u2294'
+  "{\\oplus}": '\u2295'
+  "\\oplus ": '\u2295'
+  "{\\ominus}": '\u2296'
+  "\\ominus ": '\u2296'
+  "{\\otimes}": '\u2297'
+  "\\otimes ": '\u2297'
+  "{\\oslash}": '\u2298'
+  "\\oslash ": '\u2298'
+  "{\\odot}": '\u2299'
+  "\\odot ": '\u2299'
+  "{\\circledcirc}": '\u229A'
+  "\\circledcirc ": '\u229A'
+  "{\\circledast}": '\u229B'
+  "\\circledast ": '\u229B'
+  "{\\circleddash}": '\u229D'
+  "\\circleddash ": '\u229D'
+  "{\\boxplus}": '\u229E'
+  "\\boxplus ": '\u229E'
+  "{\\boxminus}": '\u229F'
+  "\\boxminus ": '\u229F'
+  "{\\boxtimes}": '\u22A0'
+  "\\boxtimes ": '\u22A0'
+  "{\\boxdot}": '\u22A1'
+  "\\boxdot ": '\u22A1'
+  "{\\vdash}": '\u22A2'
+  "\\vdash ": '\u22A2'
+  "{\\dashv}": '\u22A3'
+  "\\dashv ": '\u22A3'
+  "{\\top}": '\u22A4'
+  "\\top ": '\u22A4'
+  "{\\perp}": '\u22A5'
+  "\\perp ": '\u22A5'
+  "{\\truestate}": '\u22A7'
+  "\\truestate ": '\u22A7'
+  "{\\forcesextra}": '\u22A8'
+  "\\forcesextra ": '\u22A8'
+  "{\\Vdash}": '\u22A9'
+  "\\Vdash ": '\u22A9'
+  "{\\Vvdash}": '\u22AA'
+  "\\Vvdash ": '\u22AA'
+  "{\\VDash}": '\u22AB'
+  "\\VDash ": '\u22AB'
+  "{\\nvdash}": '\u22AC'
+  "\\nvdash ": '\u22AC'
+  "{\\nvDash}": '\u22AD'
+  "\\nvDash ": '\u22AD'
+  "{\\nVdash}": '\u22AE'
+  "\\nVdash ": '\u22AE'
+  "{\\nVDash}": '\u22AF'
+  "\\nVDash ": '\u22AF'
+  "{\\vartriangleleft}": '\u22B2'
+  "\\vartriangleleft ": '\u22B2'
+  "{\\vartriangleright}": '\u22B3'
+  "\\vartriangleright ": '\u22B3'
+  "{\\trianglelefteq}": '\u22B4'
+  "\\trianglelefteq ": '\u22B4'
+  "{\\trianglerighteq}": '\u22B5'
+  "\\trianglerighteq ": '\u22B5'
+  "{\\original}": '\u22B6'
+  "\\original ": '\u22B6'
+  "{\\image}": '\u22B7'
+  "\\image ": '\u22B7'
+  "{\\multimap}": '\u22B8'
+  "\\multimap ": '\u22B8'
+  "{\\hermitconjmatrix}": '\u22B9'
+  "\\hermitconjmatrix ": '\u22B9'
+  "{\\intercal}": '\u22BA'
+  "\\intercal ": '\u22BA'
+  "{\\veebar}": '\u22BB'
+  "\\veebar ": '\u22BB'
+  "{\\rightanglearc}": '\u22BE'
+  "\\rightanglearc ": '\u22BE'
+  "\\ElsevierGlyph{22C0}": '\u22C0'
+  "\\ElsevierGlyph{22C1}": '\u22C1'
+  "{\\bigcap}": '\u22C2'
+  "\\bigcap ": '\u22C2'
+  "{\\bigcup}": '\u22C3'
+  "\\bigcup ": '\u22C3'
+  "{\\diamond}": '\u22C4'
+  "\\diamond ": '\u22C4'
+  "{\\star}": '\u22C6'
+  "\\star ": '\u22C6'
+  "{\\divideontimes}": '\u22C7'
+  "\\divideontimes ": '\u22C7'
+  "{\\bowtie}": '\u22C8'
+  "\\bowtie ": '\u22C8'
+  "{\\ltimes}": '\u22C9'
+  "\\ltimes ": '\u22C9'
+  "{\\rtimes}": '\u22CA'
+  "\\rtimes ": '\u22CA'
+  "{\\leftthreetimes}": '\u22CB'
+  "\\leftthreetimes ": '\u22CB'
+  "{\\rightthreetimes}": '\u22CC'
+  "\\rightthreetimes ": '\u22CC'
+  "{\\backsimeq}": '\u22CD'
+  "\\backsimeq ": '\u22CD'
+  "{\\curlyvee}": '\u22CE'
+  "\\curlyvee ": '\u22CE'
+  "{\\curlywedge}": '\u22CF'
+  "\\curlywedge ": '\u22CF'
+  "{\\Subset}": '\u22D0'
+  "\\Subset ": '\u22D0'
+  "{\\Supset}": '\u22D1'
+  "\\Supset ": '\u22D1'
+  "{\\Cap}": '\u22D2'
+  "\\Cap ": '\u22D2'
+  "{\\Cup}": '\u22D3'
+  "\\Cup ": '\u22D3'
+  "{\\pitchfork}": '\u22D4'
+  "\\pitchfork ": '\u22D4'
+  "{\\lessdot}": '\u22D6'
+  "\\lessdot ": '\u22D6'
+  "{\\gtrdot}": '\u22D7'
+  "\\gtrdot ": '\u22D7'
+  "{\\verymuchless}": '\u22D8'
+  "\\verymuchless ": '\u22D8'
+  "{\\verymuchgreater}": '\u22D9'
+  "\\verymuchgreater ": '\u22D9'
+  "{\\lesseqgtr}": '\u22DA'
+  "\\lesseqgtr ": '\u22DA'
+  "{\\gtreqless}": '\u22DB'
+  "\\gtreqless ": '\u22DB'
+  "{\\curlyeqprec}": '\u22DE'
+  "\\curlyeqprec ": '\u22DE'
+  "{\\curlyeqsucc}": '\u22DF'
+  "\\curlyeqsucc ": '\u22DF'
+  "{\\not\\sqsubseteq}": '\u22E2'
+  "\\not\\sqsubseteq ": '\u22E2'
+  "{\\not\\sqsupseteq}": '\u22E3'
+  "\\not\\sqsupseteq ": '\u22E3'
+  "{\\Elzsqspne}": '\u22E5'
+  "\\Elzsqspne ": '\u22E5'
+  "{\\lnsim}": '\u22E6'
+  "\\lnsim ": '\u22E6'
+  "{\\gnsim}": '\u22E7'
+  "\\gnsim ": '\u22E7'
+  "{\\precedesnotsimilar}": '\u22E8'
+  "\\precedesnotsimilar ": '\u22E8'
+  "{\\succnsim}": '\u22E9'
+  "\\succnsim ": '\u22E9'
+  "{\\ntriangleleft}": '\u22EA'
+  "\\ntriangleleft ": '\u22EA'
+  "{\\ntriangleright}": '\u22EB'
+  "\\ntriangleright ": '\u22EB'
+  "{\\ntrianglelefteq}": '\u22EC'
+  "\\ntrianglelefteq ": '\u22EC'
+  "{\\ntrianglerighteq}": '\u22ED'
+  "\\ntrianglerighteq ": '\u22ED'
+  "{\\vdots}": '\u22EE'
+  "\\vdots ": '\u22EE'
+  "{\\cdots}": '\u22EF'
+  "\\cdots ": '\u22EF'
+  "{\\upslopeellipsis}": '\u22F0'
+  "\\upslopeellipsis ": '\u22F0'
+  "{\\downslopeellipsis}": '\u22F1'
+  "\\downslopeellipsis ": '\u22F1'
+  "{\\barwedge}": '\u2305'
+  "\\barwedge ": '\u2305'
+  "{\\perspcorrespond}": '\u2306'
+  "\\perspcorrespond ": '\u2306'
+  "{\\lceil}": '\u2308'
+  "\\lceil ": '\u2308'
+  "{\\rceil}": '\u2309'
+  "\\rceil ": '\u2309'
+  "{\\lfloor}": '\u230A'
+  "\\lfloor ": '\u230A'
+  "{\\rfloor}": '\u230B'
+  "\\rfloor ": '\u230B'
+  "{\\recorder}": '\u2315'
+  "\\recorder ": '\u2315'
+  "\\mathchar\"2208": '\u2316'
+  "{\\ulcorner}": '\u231C'
+  "\\ulcorner ": '\u231C'
+  "{\\urcorner}": '\u231D'
+  "\\urcorner ": '\u231D'
+  "{\\llcorner}": '\u231E'
+  "\\llcorner ": '\u231E'
+  "{\\lrcorner}": '\u231F'
+  "\\lrcorner ": '\u231F'
+  "{\\frown}": '\u2322'
+  "\\frown ": '\u2322'
+  "{\\smile}": '\u2323'
+  "\\smile ": '\u2323'
+  "\\ElsevierGlyph{E838}": '\u233D'
+  "{\\Elzdlcorn}": '\u23A3'
+  "\\Elzdlcorn ": '\u23A3'
+  "{\\lmoustache}": '\u23B0'
+  "\\lmoustache ": '\u23B0'
+  "{\\rmoustache}": '\u23B1'
+  "\\rmoustache ": '\u23B1'
+  "{\\textvisiblespace}": '\u2423'
+  "\\textvisiblespace ": '\u2423'
+  "\\ding{172}": '\u2460'
+  "\\ding{173}": '\u2461'
+  "\\ding{174}": '\u2462'
+  "\\ding{175}": '\u2463'
+  "\\ding{176}": '\u2464'
+  "\\ding{177}": '\u2465'
+  "\\ding{178}": '\u2466'
+  "\\ding{179}": '\u2467'
+  "\\ding{180}": '\u2468'
+  "\\ding{181}": '\u2469'
+  "{\\circledS}": '\u24C8'
+  "\\circledS ": '\u24C8'
+  "{\\Elzdshfnc}": '\u2506'
+  "\\Elzdshfnc ": '\u2506'
+  "{\\Elzsqfnw}": '\u2519'
+  "\\Elzsqfnw ": '\u2519'
+  "{\\diagup}": '\u2571'
+  "\\diagup ": '\u2571'
+  "\\ding{110}": '\u25A0'
+  "{\\square}": '\u25A1'
+  "\\square ": '\u25A1'
+  "{\\blacksquare}": '\u25AA'
+  "\\blacksquare ": '\u25AA'
+  "\\fbox{~~}": '\u25AD'
+  "{\\Elzvrecto}": '\u25AF'
+  "\\Elzvrecto ": '\u25AF'
+  "\\ElsevierGlyph{E381}": '\u25B1'
+  "\\ding{115}": '\u25B2'
+  "{\\bigtriangleup}": '\u25B3'
+  "\\bigtriangleup ": '\u25B3'
+  "{\\blacktriangle}": '\u25B4'
+  "\\blacktriangle ": '\u25B4'
+  "{\\vartriangle}": '\u25B5'
+  "\\vartriangle ": '\u25B5'
+  "{\\blacktriangleright}": '\u25B8'
+  "\\blacktriangleright ": '\u25B8'
+  "{\\triangleright}": '\u25B9'
+  "\\triangleright ": '\u25B9'
+  "\\ding{116}": '\u25BC'
+  "{\\bigtriangledown}": '\u25BD'
+  "\\bigtriangledown ": '\u25BD'
+  "{\\blacktriangledown}": '\u25BE'
+  "\\blacktriangledown ": '\u25BE'
+  "{\\triangledown}": '\u25BF'
+  "\\triangledown ": '\u25BF'
+  "{\\blacktriangleleft}": '\u25C2'
+  "\\blacktriangleleft ": '\u25C2'
+  "{\\triangleleft}": '\u25C3'
+  "\\triangleleft ": '\u25C3'
+  "\\ding{117}": '\u25C6'
+  "{\\lozenge}": '\u25CA'
+  "\\lozenge ": '\u25CA'
+  "{\\bigcirc}": '\u25CB'
+  "\\bigcirc ": '\u25CB'
+  "\\ding{108}": '\u25CF'
+  "{\\Elzcirfl}": '\u25D0'
+  "\\Elzcirfl ": '\u25D0'
+  "{\\Elzcirfr}": '\u25D1'
+  "\\Elzcirfr ": '\u25D1'
+  "{\\Elzcirfb}": '\u25D2'
+  "\\Elzcirfb ": '\u25D2'
+  "\\ding{119}": '\u25D7'
+  "{\\Elzrvbull}": '\u25D8'
+  "\\Elzrvbull ": '\u25D8'
+  "{\\Elzsqfl}": '\u25E7'
+  "\\Elzsqfl ": '\u25E7'
+  "{\\Elzsqfr}": '\u25E8'
+  "\\Elzsqfr ": '\u25E8'
+  "{\\Elzsqfse}": '\u25EA'
+  "\\Elzsqfse ": '\u25EA'
+  "\\ding{72}": '\u2605'
+  "\\ding{73}": '\u2606'
+  "\\ding{37}": '\u260E'
+  "\\ding{42}": '\u261B'
+  "\\ding{43}": '\u261E'
+  "{\\rightmoon}": '\u263E'
+  "\\rightmoon ": '\u263E'
+  "{\\mercury}": '\u263F'
+  "\\mercury ": '\u263F'
+  "{\\venus}": '\u2640'
+  "\\venus ": '\u2640'
+  "{\\male}": '\u2642'
+  "\\male ": '\u2642'
+  "{\\jupiter}": '\u2643'
+  "\\jupiter ": '\u2643'
+  "{\\saturn}": '\u2644'
+  "\\saturn ": '\u2644'
+  "{\\uranus}": '\u2645'
+  "\\uranus ": '\u2645'
+  "{\\neptune}": '\u2646'
+  "\\neptune ": '\u2646'
+  "{\\pluto}": '\u2647'
+  "\\pluto ": '\u2647'
+  "{\\aries}": '\u2648'
+  "\\aries ": '\u2648'
+  "{\\taurus}": '\u2649'
+  "\\taurus ": '\u2649'
+  "{\\gemini}": '\u264A'
+  "\\gemini ": '\u264A'
+  "{\\cancer}": '\u264B'
+  "\\cancer ": '\u264B'
+  "{\\leo}": '\u264C'
+  "\\leo ": '\u264C'
+  "{\\virgo}": '\u264D'
+  "\\virgo ": '\u264D'
+  "{\\libra}": '\u264E'
+  "\\libra ": '\u264E'
+  "{\\scorpio}": '\u264F'
+  "\\scorpio ": '\u264F'
+  "{\\sagittarius}": '\u2650'
+  "\\sagittarius ": '\u2650'
+  "{\\capricornus}": '\u2651'
+  "\\capricornus ": '\u2651'
+  "{\\aquarius}": '\u2652'
+  "\\aquarius ": '\u2652'
+  "{\\pisces}": '\u2653'
+  "\\pisces ": '\u2653'
+  "\\ding{171}": '\u2660'
+  "\\ding{168}": '\u2663'
+  "\\ding{170}": '\u2665'
+  "\\ding{169}": '\u2666'
+  "{\\quarternote}": '\u2669'
+  "\\quarternote ": '\u2669'
+  "{\\eighthnote}": '\u266A'
+  "\\eighthnote ": '\u266A'
+  "{\\flat}": '\u266D'
+  "\\flat ": '\u266D'
+  "{\\natural}": '\u266E'
+  "\\natural ": '\u266E'
+  "{\\sharp}": '\u266F'
+  "\\sharp ": '\u266F'
+  "\\ding{33}": '\u2701'
+  "\\ding{34}": '\u2702'
+  "\\ding{35}": '\u2703'
+  "\\ding{36}": '\u2704'
+  "\\ding{38}": '\u2706'
+  "\\ding{39}": '\u2707'
+  "\\ding{40}": '\u2708'
+  "\\ding{41}": '\u2709'
+  "\\ding{44}": '\u270C'
+  "\\ding{45}": '\u270D'
+  "\\ding{46}": '\u270E'
+  "\\ding{47}": '\u270F'
+  "\\ding{48}": '\u2710'
+  "\\ding{49}": '\u2711'
+  "\\ding{50}": '\u2712'
+  "\\ding{51}": '\u2713'
+  "\\ding{52}": '\u2714'
+  "\\ding{53}": '\u2715'
+  "\\ding{54}": '\u2716'
+  "\\ding{55}": '\u2717'
+  "\\ding{56}": '\u2718'
+  "\\ding{57}": '\u2719'
+  "\\ding{58}": '\u271A'
+  "\\ding{59}": '\u271B'
+  "\\ding{60}": '\u271C'
+  "\\ding{61}": '\u271D'
+  "\\ding{62}": '\u271E'
+  "\\ding{63}": '\u271F'
+  "\\ding{64}": '\u2720'
+  "\\ding{65}": '\u2721'
+  "\\ding{66}": '\u2722'
+  "\\ding{67}": '\u2723'
+  "\\ding{68}": '\u2724'
+  "\\ding{69}": '\u2725'
+  "\\ding{70}": '\u2726'
+  "\\ding{71}": '\u2727'
+  "\\ding{74}": '\u272A'
+  "\\ding{75}": '\u272B'
+  "\\ding{76}": '\u272C'
+  "\\ding{77}": '\u272D'
+  "\\ding{78}": '\u272E'
+  "\\ding{79}": '\u272F'
+  "\\ding{80}": '\u2730'
+  "\\ding{81}": '\u2731'
+  "\\ding{82}": '\u2732'
+  "\\ding{83}": '\u2733'
+  "\\ding{84}": '\u2734'
+  "\\ding{85}": '\u2735'
+  "\\ding{86}": '\u2736'
+  "\\ding{87}": '\u2737'
+  "\\ding{88}": '\u2738'
+  "\\ding{89}": '\u2739'
+  "\\ding{90}": '\u273A'
+  "\\ding{91}": '\u273B'
+  "\\ding{92}": '\u273C'
+  "\\ding{93}": '\u273D'
+  "\\ding{94}": '\u273E'
+  "\\ding{95}": '\u273F'
+  "\\ding{96}": '\u2740'
+  "\\ding{97}": '\u2741'
+  "\\ding{98}": '\u2742'
+  "\\ding{99}": '\u2743'
+  "\\ding{100}": '\u2744'
+  "\\ding{101}": '\u2745'
+  "\\ding{102}": '\u2746'
+  "\\ding{103}": '\u2747'
+  "\\ding{104}": '\u2748'
+  "\\ding{105}": '\u2749'
+  "\\ding{106}": '\u274A'
+  "\\ding{107}": '\u274B'
+  "\\ding{109}": '\u274D'
+  "\\ding{111}": '\u274F'
+  "\\ding{112}": '\u2750'
+  "\\ding{113}": '\u2751'
+  "\\ding{114}": '\u2752'
+  "\\ding{118}": '\u2756'
+  "\\ding{120}": '\u2758'
+  "\\ding{121}": '\u2759'
+  "\\ding{122}": '\u275A'
+  "\\ding{123}": '\u275B'
+  "\\ding{124}": '\u275C'
+  "\\ding{125}": '\u275D'
+  "\\ding{126}": '\u275E'
+  "\\ding{161}": '\u2761'
+  "\\ding{162}": '\u2762'
+  "\\ding{163}": '\u2763'
+  "\\ding{164}": '\u2764'
+  "\\ding{165}": '\u2765'
+  "\\ding{166}": '\u2766'
+  "\\ding{167}": '\u2767'
+  "\\ding{182}": '\u2776'
+  "\\ding{183}": '\u2777'
+  "\\ding{184}": '\u2778'
+  "\\ding{185}": '\u2779'
+  "\\ding{186}": '\u277A'
+  "\\ding{187}": '\u277B'
+  "\\ding{188}": '\u277C'
+  "\\ding{189}": '\u277D'
+  "\\ding{190}": '\u277E'
+  "\\ding{191}": '\u277F'
+  "\\ding{192}": '\u2780'
+  "\\ding{193}": '\u2781'
+  "\\ding{194}": '\u2782'
+  "\\ding{195}": '\u2783'
+  "\\ding{196}": '\u2784'
+  "\\ding{197}": '\u2785'
+  "\\ding{198}": '\u2786'
+  "\\ding{199}": '\u2787'
+  "\\ding{200}": '\u2788'
+  "\\ding{201}": '\u2789'
+  "\\ding{202}": '\u278A'
+  "\\ding{203}": '\u278B'
+  "\\ding{204}": '\u278C'
+  "\\ding{205}": '\u278D'
+  "\\ding{206}": '\u278E'
+  "\\ding{207}": '\u278F'
+  "\\ding{208}": '\u2790'
+  "\\ding{209}": '\u2791'
+  "\\ding{210}": '\u2792'
+  "\\ding{211}": '\u2793'
+  "\\ding{212}": '\u2794'
+  "\\ding{216}": '\u2798'
+  "\\ding{217}": '\u2799'
+  "\\ding{218}": '\u279A'
+  "\\ding{219}": '\u279B'
+  "\\ding{220}": '\u279C'
+  "\\ding{221}": '\u279D'
+  "\\ding{222}": '\u279E'
+  "\\ding{223}": '\u279F'
+  "\\ding{224}": '\u27A0'
+  "\\ding{225}": '\u27A1'
+  "\\ding{226}": '\u27A2'
+  "\\ding{227}": '\u27A3'
+  "\\ding{228}": '\u27A4'
+  "\\ding{229}": '\u27A5'
+  "\\ding{230}": '\u27A6'
+  "\\ding{231}": '\u27A7'
+  "\\ding{232}": '\u27A8'
+  "\\ding{233}": '\u27A9'
+  "\\ding{234}": '\u27AA'
+  "\\ding{235}": '\u27AB'
+  "\\ding{236}": '\u27AC'
+  "\\ding{237}": '\u27AD'
+  "\\ding{238}": '\u27AE'
+  "\\ding{239}": '\u27AF'
+  "\\ding{241}": '\u27B1'
+  "\\ding{242}": '\u27B2'
+  "\\ding{243}": '\u27B3'
+  "\\ding{244}": '\u27B4'
+  "\\ding{245}": '\u27B5'
+  "\\ding{246}": '\u27B6'
+  "\\ding{247}": '\u27B7'
+  "\\ding{248}": '\u27B8'
+  "\\ding{249}": '\u27B9'
+  "\\ding{250}": '\u27BA'
+  "\\ding{251}": '\u27BB'
+  "\\ding{252}": '\u27BC'
+  "\\ding{253}": '\u27BD'
+  "\\ding{254}": '\u27BE'
+  "{\\langle}": '\u27E8'
+  "\\langle ": '\u27E8'
+  "{\\rangle}": '\u27E9'
+  "\\rangle ": '\u27E9'
+  "{\\longleftarrow}": '\u27F5'
+  "\\longleftarrow ": '\u27F5'
+  "{\\longrightarrow}": '\u27F6'
+  "\\longrightarrow ": '\u27F6'
+  "{\\longleftrightarrow}": '\u27F7'
+  "\\longleftrightarrow ": '\u27F7'
+  "{\\Longleftarrow}": '\u27F8'
+  "\\Longleftarrow ": '\u27F8'
+  "{\\Longrightarrow}": '\u27F9'
+  "\\Longrightarrow ": '\u27F9'
+  "{\\Longleftrightarrow}": '\u27FA'
+  "\\Longleftrightarrow ": '\u27FA'
+  "{\\longmapsto}": '\u27FC'
+  "\\longmapsto ": '\u27FC'
+  "\\sim\\joinrel\\leadsto": '\u27FF'
+  "\\ElsevierGlyph{E212}": '\u2905'
+  "{\\UpArrowBar}": '\u2912'
+  "\\UpArrowBar ": '\u2912'
+  "{\\DownArrowBar}": '\u2913'
+  "\\DownArrowBar ": '\u2913'
+  "\\ElsevierGlyph{E20C}": '\u2923'
+  "\\ElsevierGlyph{E20D}": '\u2924'
+  "\\ElsevierGlyph{E20B}": '\u2925'
+  "\\ElsevierGlyph{E20A}": '\u2926'
+  "\\ElsevierGlyph{E211}": '\u2927'
+  "\\ElsevierGlyph{E20E}": '\u2928'
+  "\\ElsevierGlyph{E20F}": '\u2929'
+  "\\ElsevierGlyph{E210}": '\u292A'
+  "\\ElsevierGlyph{E21C}": '\u2933'
+  "\\ElsevierGlyph{E21A}": '\u2936'
+  "\\ElsevierGlyph{E219}": '\u2937'
+  "{\\Elolarr}": '\u2940'
+  "\\Elolarr ": '\u2940'
+  "{\\Elorarr}": '\u2941'
+  "\\Elorarr ": '\u2941'
+  "{\\ElzRlarr}": '\u2942'
+  "\\ElzRlarr ": '\u2942'
+  "{\\ElzrLarr}": '\u2944'
+  "\\ElzrLarr ": '\u2944'
+  "{\\Elzrarrx}": '\u2947'
+  "\\Elzrarrx ": '\u2947'
+  "{\\LeftRightVector}": '\u294E'
+  "\\LeftRightVector ": '\u294E'
+  "{\\RightUpDownVector}": '\u294F'
+  "\\RightUpDownVector ": '\u294F'
+  "{\\DownLeftRightVector}": '\u2950'
+  "\\DownLeftRightVector ": '\u2950'
+  "{\\LeftUpDownVector}": '\u2951'
+  "\\LeftUpDownVector ": '\u2951'
+  "{\\LeftVectorBar}": '\u2952'
+  "\\LeftVectorBar ": '\u2952'
+  "{\\RightVectorBar}": '\u2953'
+  "\\RightVectorBar ": '\u2953'
+  "{\\RightUpVectorBar}": '\u2954'
+  "\\RightUpVectorBar ": '\u2954'
+  "{\\RightDownVectorBar}": '\u2955'
+  "\\RightDownVectorBar ": '\u2955'
+  "{\\DownLeftVectorBar}": '\u2956'
+  "\\DownLeftVectorBar ": '\u2956'
+  "{\\DownRightVectorBar}": '\u2957'
+  "\\DownRightVectorBar ": '\u2957'
+  "{\\LeftUpVectorBar}": '\u2958'
+  "\\LeftUpVectorBar ": '\u2958'
+  "{\\LeftDownVectorBar}": '\u2959'
+  "\\LeftDownVectorBar ": '\u2959'
+  "{\\LeftTeeVector}": '\u295A'
+  "\\LeftTeeVector ": '\u295A'
+  "{\\RightTeeVector}": '\u295B'
+  "\\RightTeeVector ": '\u295B'
+  "{\\RightUpTeeVector}": '\u295C'
+  "\\RightUpTeeVector ": '\u295C'
+  "{\\RightDownTeeVector}": '\u295D'
+  "\\RightDownTeeVector ": '\u295D'
+  "{\\DownLeftTeeVector}": '\u295E'
+  "\\DownLeftTeeVector ": '\u295E'
+  "{\\DownRightTeeVector}": '\u295F'
+  "\\DownRightTeeVector ": '\u295F'
+  "{\\LeftUpTeeVector}": '\u2960'
+  "\\LeftUpTeeVector ": '\u2960'
+  "{\\LeftDownTeeVector}": '\u2961'
+  "\\LeftDownTeeVector ": '\u2961'
+  "{\\UpEquilibrium}": '\u296E'
+  "\\UpEquilibrium ": '\u296E'
+  "{\\ReverseUpEquilibrium}": '\u296F'
+  "\\ReverseUpEquilibrium ": '\u296F'
+  "{\\RoundImplies}": '\u2970'
+  "\\RoundImplies ": '\u2970'
+  "\\ElsevierGlyph{E214}": '\u297C'
+  "\\ElsevierGlyph{E215}": '\u297D'
+  "{\\Elztfnc}": '\u2980'
+  "\\Elztfnc ": '\u2980'
+  "\\ElsevierGlyph{3018}": '\u2985'
+  "{\\Elroang}": '\u2986'
+  "\\Elroang ": '\u2986'
+  "<\\kern-0.58em(": '\u2993'
+  "\\ElsevierGlyph{E291}": '\u2994'
+  "{\\Elzddfnc}": '\u2999'
+  "\\Elzddfnc ": '\u2999'
+  "{\\Angle}": '\u299C'
+  "\\Angle ": '\u299C'
+  "{\\Elzlpargt}": '\u29A0'
+  "\\Elzlpargt ": '\u29A0'
+  "\\ElsevierGlyph{E260}": '\u29B5'
+  "\\ElsevierGlyph{E61B}": '\u29B6'
+  "{\\ElzLap}": '\u29CA'
+  "\\ElzLap ": '\u29CA'
+  "{\\Elzdefas}": '\u29CB'
+  "\\Elzdefas ": '\u29CB'
+  "{\\LeftTriangleBar}": '\u29CF'
+  "\\LeftTriangleBar ": '\u29CF'
+  "{\\RightTriangleBar}": '\u29D0'
+  "\\RightTriangleBar ": '\u29D0'
+  "\\ElsevierGlyph{E372}": '\u29DC'
+  "{\\blacklozenge}": '\u29EB'
+  "\\blacklozenge ": '\u29EB'
+  "{\\RuleDelayed}": '\u29F4'
+  "\\RuleDelayed ": '\u29F4'
+  "{\\Elxuplus}": '\u2A04'
+  "\\Elxuplus ": '\u2A04'
+  "{\\ElzThr}": '\u2A05'
+  "\\ElzThr ": '\u2A05'
+  "{\\Elxsqcup}": '\u2A06'
+  "\\Elxsqcup ": '\u2A06'
+  "{\\ElzInf}": '\u2A07'
+  "\\ElzInf ": '\u2A07'
+  "{\\ElzSup}": '\u2A08'
+  "\\ElzSup ": '\u2A08'
+  "{\\ElzCint}": '\u2A0D'
+  "\\ElzCint ": '\u2A0D'
+  "{\\clockoint}": '\u2A0F'
+  "\\clockoint ": '\u2A0F'
+  "\\ElsevierGlyph{E395}": '\u2A10'
+  "{\\sqrint}": '\u2A16'
+  "\\sqrint ": '\u2A16'
+  "\\ElsevierGlyph{E25A}": '\u2A25'
+  "\\ElsevierGlyph{E25B}": '\u2A2A'
+  "\\ElsevierGlyph{E25C}": '\u2A2D'
+  "\\ElsevierGlyph{E25D}": '\u2A2E'
+  "{\\ElzTimes}": '\u2A2F'
+  "\\ElzTimes ": '\u2A2F'
+  "\\ElsevierGlyph{E25E}": '\u2A34'
+  "\\ElsevierGlyph{E259}": '\u2A3C'
+  "{\\amalg}": '\u2A3F'
+  "\\amalg ": '\u2A3F'
+  "{\\ElzAnd}": '\u2A53'
+  "\\ElzAnd ": '\u2A53'
+  "{\\ElzOr}": '\u2A54'
+  "\\ElzOr ": '\u2A54'
+  "\\ElsevierGlyph{E36E}": '\u2A55'
+  "{\\ElOr}": '\u2A56'
+  "\\ElOr ": '\u2A56'
+  "{\\Elzminhat}": '\u2A5F'
+  "\\Elzminhat ": '\u2A5F'
+  "\\stackrel{*}{=}": '\u2A6E'
+  "{\\Equal}": '\u2A75'
+  "\\Equal ": '\u2A75'
+  "{\\leqslant}": '\u2A7D'
+  "\\leqslant ": '\u2A7D'
+  "{\\geqslant}": '\u2A7E'
+  "\\geqslant ": '\u2A7E'
+  "{\\lessapprox}": '\u2A85'
+  "\\lessapprox ": '\u2A85'
+  "{\\gtrapprox}": '\u2A86'
+  "\\gtrapprox ": '\u2A86'
+  "{\\lneq}": '\u2A87'
+  "\\lneq ": '\u2A87'
+  "{\\gneq}": '\u2A88'
+  "\\gneq ": '\u2A88'
+  "{\\lnapprox}": '\u2A89'
+  "\\lnapprox ": '\u2A89'
+  "{\\gnapprox}": '\u2A8A'
+  "\\gnapprox ": '\u2A8A'
+  "{\\lesseqqgtr}": '\u2A8B'
+  "\\lesseqqgtr ": '\u2A8B'
+  "{\\gtreqqless}": '\u2A8C'
+  "\\gtreqqless ": '\u2A8C'
+  "{\\eqslantless}": '\u2A95'
+  "\\eqslantless ": '\u2A95'
+  "{\\eqslantgtr}": '\u2A96'
+  "\\eqslantgtr ": '\u2A96'
+  "\\Pisymbol{ppi020}{117}": '\u2A9D'
+  "\\Pisymbol{ppi020}{105}": '\u2A9E'
+  "{\\NestedLessLess}": '\u2AA1'
+  "\\NestedLessLess ": '\u2AA1'
+  "{\\NestedGreaterGreater}": '\u2AA2'
+  "\\NestedGreaterGreater ": '\u2AA2'
+  "{\\preceq}": '\u2AAF'
+  "\\preceq ": '\u2AAF'
+  "{\\succeq}": '\u2AB0'
+  "\\succeq ": '\u2AB0'
+  "{\\precneqq}": '\u2AB5'
+  "\\precneqq ": '\u2AB5'
+  "{\\succneqq}": '\u2AB6'
+  "\\succneqq ": '\u2AB6'
+  "{\\precnapprox}": '\u2AB9'
+  "\\precnapprox ": '\u2AB9'
+  "{\\succnapprox}": '\u2ABA'
+  "\\succnapprox ": '\u2ABA'
+  "{\\subseteqq}": '\u2AC5'
+  "\\subseteqq ": '\u2AC5'
+  "{\\supseteqq}": '\u2AC6'
+  "\\supseteqq ": '\u2AC6'
+  "{\\subsetneqq}": '\u2ACB'
+  "\\subsetneqq ": '\u2ACB'
+  "{\\supsetneqq}": '\u2ACC'
+  "\\supsetneqq ": '\u2ACC'
+  "\\ElsevierGlyph{E30D}": '\u2AEB'
+  "{\\Elztdcol}": '\u2AF6'
+  "\\Elztdcol ": '\u2AF6'
+  "{{/}\\!\\!{/}}": '\u2AFD'
+  "\\ElsevierGlyph{300A}": '\u300A'
+  "\\ElsevierGlyph{300B}": '\u300B'
+  "\\ElsevierGlyph{3019}": '\u3019'
+  "{\\openbracketleft}": '\u301A'
+  "\\openbracketleft ": '\u301A'
+  "{\\openbracketright}": '\u301B'
+  "\\openbracketright ": '\u301B'
+  "\\mathbf{A}": '\ud835\udc00'
+  "\\mathbf{B}": '\ud835\udc01'
+  "\\mathbf{C}": '\ud835\udc02'
+  "\\mathbf{D}": '\ud835\udc03'
+  "\\mathbf{E}": '\ud835\udc04'
+  "\\mathbf{F}": '\ud835\udc05'
+  "\\mathbf{G}": '\ud835\udc06'
+  "\\mathbf{H}": '\ud835\udc07'
+  "\\mathbf{I}": '\ud835\udc08'
+  "\\mathbf{J}": '\ud835\udc09'
+  "\\mathbf{K}": '\ud835\udc0a'
+  "\\mathbf{L}": '\ud835\udc0b'
+  "\\mathbf{M}": '\ud835\udc0c'
+  "\\mathbf{N}": '\ud835\udc0d'
+  "\\mathbf{O}": '\ud835\udc0e'
+  "\\mathbf{P}": '\ud835\udc0f'
+  "\\mathbf{Q}": '\ud835\udc10'
+  "\\mathbf{R}": '\ud835\udc11'
+  "\\mathbf{S}": '\ud835\udc12'
+  "\\mathbf{T}": '\ud835\udc13'
+  "\\mathbf{U}": '\ud835\udc14'
+  "\\mathbf{V}": '\ud835\udc15'
+  "\\mathbf{W}": '\ud835\udc16'
+  "\\mathbf{X}": '\ud835\udc17'
+  "\\mathbf{Y}": '\ud835\udc18'
+  "\\mathbf{Z}": '\ud835\udc19'
+  "\\mathbf{a}": '\ud835\udc1a'
+  "\\mathbf{b}": '\ud835\udc1b'
+  "\\mathbf{c}": '\ud835\udc1c'
+  "\\mathbf{d}": '\ud835\udc1d'
+  "\\mathbf{e}": '\ud835\udc1e'
+  "\\mathbf{f}": '\ud835\udc1f'
+  "\\mathbf{g}": '\ud835\udc20'
+  "\\mathbf{h}": '\ud835\udc21'
+  "\\mathbf{i}": '\ud835\udc22'
+  "\\mathbf{j}": '\ud835\udc23'
+  "\\mathbf{k}": '\ud835\udc24'
+  "\\mathbf{l}": '\ud835\udc25'
+  "\\mathbf{m}": '\ud835\udc26'
+  "\\mathbf{n}": '\ud835\udc27'
+  "\\mathbf{o}": '\ud835\udc28'
+  "\\mathbf{p}": '\ud835\udc29'
+  "\\mathbf{q}": '\ud835\udc2a'
+  "\\mathbf{r}": '\ud835\udc2b'
+  "\\mathbf{s}": '\ud835\udc2c'
+  "\\mathbf{t}": '\ud835\udc2d'
+  "\\mathbf{u}": '\ud835\udc2e'
+  "\\mathbf{v}": '\ud835\udc2f'
+  "\\mathbf{w}": '\ud835\udc30'
+  "\\mathbf{x}": '\ud835\udc31'
+  "\\mathbf{y}": '\ud835\udc32'
+  "\\mathbf{z}": '\ud835\udc33'
+  "\\mathsl{A}": '\ud835\udc34'
+  "\\mathsl{B}": '\ud835\udc35'
+  "\\mathsl{C}": '\ud835\udc36'
+  "\\mathsl{D}": '\ud835\udc37'
+  "\\mathsl{E}": '\ud835\udc38'
+  "\\mathsl{F}": '\ud835\udc39'
+  "\\mathsl{G}": '\ud835\udc3a'
+  "\\mathsl{H}": '\ud835\udc3b'
+  "\\mathsl{I}": '\ud835\udc3c'
+  "\\mathsl{J}": '\ud835\udc3d'
+  "\\mathsl{K}": '\ud835\udc3e'
+  "\\mathsl{L}": '\ud835\udc3f'
+  "\\mathsl{M}": '\ud835\udc40'
+  "\\mathsl{N}": '\ud835\udc41'
+  "\\mathsl{O}": '\ud835\udc42'
+  "\\mathsl{P}": '\ud835\udc43'
+  "\\mathsl{Q}": '\ud835\udc44'
+  "\\mathsl{R}": '\ud835\udc45'
+  "\\mathsl{S}": '\ud835\udc46'
+  "\\mathsl{T}": '\ud835\udc47'
+  "\\mathsl{U}": '\ud835\udc48'
+  "\\mathsl{V}": '\ud835\udc49'
+  "\\mathsl{W}": '\ud835\udc4a'
+  "\\mathsl{X}": '\ud835\udc4b'
+  "\\mathsl{Y}": '\ud835\udc4c'
+  "\\mathsl{Z}": '\ud835\udc4d'
+  "\\mathsl{a}": '\ud835\udc4e'
+  "\\mathsl{b}": '\ud835\udc4f'
+  "\\mathsl{c}": '\ud835\udc50'
+  "\\mathsl{d}": '\ud835\udc51'
+  "\\mathsl{e}": '\ud835\udc52'
+  "\\mathsl{f}": '\ud835\udc53'
+  "\\mathsl{g}": '\ud835\udc54'
+  "\\mathsl{i}": '\ud835\udc56'
+  "\\mathsl{j}": '\ud835\udc57'
+  "\\mathsl{k}": '\ud835\udc58'
+  "\\mathsl{l}": '\ud835\udc59'
+  "\\mathsl{m}": '\ud835\udc5a'
+  "\\mathsl{n}": '\ud835\udc5b'
+  "\\mathsl{o}": '\ud835\udc5c'
+  "\\mathsl{p}": '\ud835\udc5d'
+  "\\mathsl{q}": '\ud835\udc5e'
+  "\\mathsl{r}": '\ud835\udc5f'
+  "\\mathsl{s}": '\ud835\udc60'
+  "\\mathsl{t}": '\ud835\udc61'
+  "\\mathsl{u}": '\ud835\udc62'
+  "\\mathsl{v}": '\ud835\udc63'
+  "\\mathsl{w}": '\ud835\udc64'
+  "\\mathsl{x}": '\ud835\udc65'
+  "\\mathsl{y}": '\ud835\udc66'
+  "\\mathsl{z}": '\ud835\udc67'
+  "\\mathbit{A}": '\ud835\udc68'
+  "\\mathbit{B}": '\ud835\udc69'
+  "\\mathbit{C}": '\ud835\udc6a'
+  "\\mathbit{D}": '\ud835\udc6b'
+  "\\mathbit{E}": '\ud835\udc6c'
+  "\\mathbit{F}": '\ud835\udc6d'
+  "\\mathbit{G}": '\ud835\udc6e'
+  "\\mathbit{H}": '\ud835\udc6f'
+  "\\mathbit{I}": '\ud835\udc70'
+  "\\mathbit{J}": '\ud835\udc71'
+  "\\mathbit{K}": '\ud835\udc72'
+  "\\mathbit{L}": '\ud835\udc73'
+  "\\mathbit{M}": '\ud835\udc74'
+  "\\mathbit{N}": '\ud835\udc75'
+  "\\mathbit{O}": '\ud835\udc76'
+  "\\mathbit{P}": '\ud835\udc77'
+  "\\mathbit{Q}": '\ud835\udc78'
+  "\\mathbit{R}": '\ud835\udc79'
+  "\\mathbit{S}": '\ud835\udc7a'
+  "\\mathbit{T}": '\ud835\udc7b'
+  "\\mathbit{U}": '\ud835\udc7c'
+  "\\mathbit{V}": '\ud835\udc7d'
+  "\\mathbit{W}": '\ud835\udc7e'
+  "\\mathbit{X}": '\ud835\udc7f'
+  "\\mathbit{Y}": '\ud835\udc80'
+  "\\mathbit{Z}": '\ud835\udc81'
+  "\\mathbit{a}": '\ud835\udc82'
+  "\\mathbit{b}": '\ud835\udc83'
+  "\\mathbit{c}": '\ud835\udc84'
+  "\\mathbit{d}": '\ud835\udc85'
+  "\\mathbit{e}": '\ud835\udc86'
+  "\\mathbit{f}": '\ud835\udc87'
+  "\\mathbit{g}": '\ud835\udc88'
+  "\\mathbit{h}": '\ud835\udc89'
+  "\\mathbit{i}": '\ud835\udc8a'
+  "\\mathbit{j}": '\ud835\udc8b'
+  "\\mathbit{k}": '\ud835\udc8c'
+  "\\mathbit{l}": '\ud835\udc8d'
+  "\\mathbit{m}": '\ud835\udc8e'
+  "\\mathbit{n}": '\ud835\udc8f'
+  "\\mathbit{o}": '\ud835\udc90'
+  "\\mathbit{p}": '\ud835\udc91'
+  "\\mathbit{q}": '\ud835\udc92'
+  "\\mathbit{r}": '\ud835\udc93'
+  "\\mathbit{s}": '\ud835\udc94'
+  "\\mathbit{t}": '\ud835\udc95'
+  "\\mathbit{u}": '\ud835\udc96'
+  "\\mathbit{v}": '\ud835\udc97'
+  "\\mathbit{w}": '\ud835\udc98'
+  "\\mathbit{x}": '\ud835\udc99'
+  "\\mathbit{y}": '\ud835\udc9a'
+  "\\mathbit{z}": '\ud835\udc9b'
+  "\\mathscr{A}": '\ud835\udc9c'
+  "\\mathscr{C}": '\ud835\udc9e'
+  "\\mathscr{D}": '\ud835\udc9f'
+  "\\mathscr{G}": '\ud835\udca2'
+  "\\mathscr{J}": '\ud835\udca5'
+  "\\mathscr{K}": '\ud835\udca6'
+  "\\mathscr{N}": '\ud835\udca9'
+  "\\mathscr{O}": '\ud835\udcaa'
+  "\\mathscr{P}": '\ud835\udcab'
+  "\\mathscr{Q}": '\ud835\udcac'
+  "\\mathscr{S}": '\ud835\udcae'
+  "\\mathscr{T}": '\ud835\udcaf'
+  "\\mathscr{U}": '\ud835\udcb0'
+  "\\mathscr{V}": '\ud835\udcb1'
+  "\\mathscr{W}": '\ud835\udcb2'
+  "\\mathscr{X}": '\ud835\udcb3'
+  "\\mathscr{Y}": '\ud835\udcb4'
+  "\\mathscr{Z}": '\ud835\udcb5'
+  "\\mathscr{a}": '\ud835\udcb6'
+  "\\mathscr{b}": '\ud835\udcb7'
+  "\\mathscr{c}": '\ud835\udcb8'
+  "\\mathscr{d}": '\ud835\udcb9'
+  "\\mathscr{f}": '\ud835\udcbb'
+  "\\mathscr{h}": '\ud835\udcbd'
+  "\\mathscr{i}": '\ud835\udcbe'
+  "\\mathscr{j}": '\ud835\udcbf'
+  "\\mathscr{k}": '\ud835\udcc0'
+  "\\mathscr{m}": '\ud835\udcc2'
+  "\\mathscr{n}": '\ud835\udcc3'
+  "\\mathscr{p}": '\ud835\udcc5'
+  "\\mathscr{q}": '\ud835\udcc6'
+  "\\mathscr{r}": '\ud835\udcc7'
+  "\\mathscr{s}": '\ud835\udcc8'
+  "\\mathscr{t}": '\ud835\udcc9'
+  "\\mathscr{u}": '\ud835\udcca'
+  "\\mathscr{v}": '\ud835\udccb'
+  "\\mathscr{w}": '\ud835\udccc'
+  "\\mathscr{x}": '\ud835\udccd'
+  "\\mathscr{y}": '\ud835\udcce'
+  "\\mathscr{z}": '\ud835\udccf'
+  "\\mathmit{A}": '\ud835\udcd0'
+  "\\mathmit{B}": '\ud835\udcd1'
+  "\\mathmit{C}": '\ud835\udcd2'
+  "\\mathmit{D}": '\ud835\udcd3'
+  "\\mathmit{E}": '\ud835\udcd4'
+  "\\mathmit{F}": '\ud835\udcd5'
+  "\\mathmit{G}": '\ud835\udcd6'
+  "\\mathmit{H}": '\ud835\udcd7'
+  "\\mathmit{I}": '\ud835\udcd8'
+  "\\mathmit{J}": '\ud835\udcd9'
+  "\\mathmit{K}": '\ud835\udcda'
+  "\\mathmit{L}": '\ud835\udcdb'
+  "\\mathmit{M}": '\ud835\udcdc'
+  "\\mathmit{N}": '\ud835\udcdd'
+  "\\mathmit{O}": '\ud835\udcde'
+  "\\mathmit{P}": '\ud835\udcdf'
+  "\\mathmit{Q}": '\ud835\udce0'
+  "\\mathmit{R}": '\ud835\udce1'
+  "\\mathmit{S}": '\ud835\udce2'
+  "\\mathmit{T}": '\ud835\udce3'
+  "\\mathmit{U}": '\ud835\udce4'
+  "\\mathmit{V}": '\ud835\udce5'
+  "\\mathmit{W}": '\ud835\udce6'
+  "\\mathmit{X}": '\ud835\udce7'
+  "\\mathmit{Y}": '\ud835\udce8'
+  "\\mathmit{Z}": '\ud835\udce9'
+  "\\mathmit{a}": '\ud835\udcea'
+  "\\mathmit{b}": '\ud835\udceb'
+  "\\mathmit{c}": '\ud835\udcec'
+  "\\mathmit{d}": '\ud835\udced'
+  "\\mathmit{e}": '\ud835\udcee'
+  "\\mathmit{f}": '\ud835\udcef'
+  "\\mathmit{g}": '\ud835\udcf0'
+  "\\mathmit{h}": '\ud835\udcf1'
+  "\\mathmit{i}": '\ud835\udcf2'
+  "\\mathmit{j}": '\ud835\udcf3'
+  "\\mathmit{k}": '\ud835\udcf4'
+  "\\mathmit{l}": '\ud835\udcf5'
+  "\\mathmit{m}": '\ud835\udcf6'
+  "\\mathmit{n}": '\ud835\udcf7'
+  "\\mathmit{o}": '\ud835\udcf8'
+  "\\mathmit{p}": '\ud835\udcf9'
+  "\\mathmit{q}": '\ud835\udcfa'
+  "\\mathmit{r}": '\ud835\udcfb'
+  "\\mathmit{s}": '\ud835\udcfc'
+  "\\mathmit{t}": '\ud835\udcfd'
+  "\\mathmit{u}": '\ud835\udcfe'
+  "\\mathmit{v}": '\ud835\udcff'
+  "\\mathmit{w}": '\ud835\udd00'
+  "\\mathmit{x}": '\ud835\udd01'
+  "\\mathmit{y}": '\ud835\udd02'
+  "\\mathmit{z}": '\ud835\udd03'
+  "\\mathfrak{A}": '\ud835\udd04'
+  "\\mathfrak{B}": '\ud835\udd05'
+  "\\mathfrak{D}": '\ud835\udd07'
+  "\\mathfrak{E}": '\ud835\udd08'
+  "\\mathfrak{F}": '\ud835\udd09'
+  "\\mathfrak{G}": '\ud835\udd0a'
+  "\\mathfrak{J}": '\ud835\udd0d'
+  "\\mathfrak{K}": '\ud835\udd0e'
+  "\\mathfrak{L}": '\ud835\udd0f'
+  "\\mathfrak{M}": '\ud835\udd10'
+  "\\mathfrak{N}": '\ud835\udd11'
+  "\\mathfrak{O}": '\ud835\udd12'
+  "\\mathfrak{P}": '\ud835\udd13'
+  "\\mathfrak{Q}": '\ud835\udd14'
+  "\\mathfrak{S}": '\ud835\udd16'
+  "\\mathfrak{T}": '\ud835\udd17'
+  "\\mathfrak{U}": '\ud835\udd18'
+  "\\mathfrak{V}": '\ud835\udd19'
+  "\\mathfrak{W}": '\ud835\udd1a'
+  "\\mathfrak{X}": '\ud835\udd1b'
+  "\\mathfrak{Y}": '\ud835\udd1c'
+  "\\mathfrak{a}": '\ud835\udd1e'
+  "\\mathfrak{b}": '\ud835\udd1f'
+  "\\mathfrak{c}": '\ud835\udd20'
+  "\\mathfrak{d}": '\ud835\udd21'
+  "\\mathfrak{e}": '\ud835\udd22'
+  "\\mathfrak{f}": '\ud835\udd23'
+  "\\mathfrak{g}": '\ud835\udd24'
+  "\\mathfrak{h}": '\ud835\udd25'
+  "\\mathfrak{i}": '\ud835\udd26'
+  "\\mathfrak{j}": '\ud835\udd27'
+  "\\mathfrak{k}": '\ud835\udd28'
+  "\\mathfrak{l}": '\ud835\udd29'
+  "\\mathfrak{m}": '\ud835\udd2a'
+  "\\mathfrak{n}": '\ud835\udd2b'
+  "\\mathfrak{o}": '\ud835\udd2c'
+  "\\mathfrak{p}": '\ud835\udd2d'
+  "\\mathfrak{q}": '\ud835\udd2e'
+  "\\mathfrak{r}": '\ud835\udd2f'
+  "\\mathfrak{s}": '\ud835\udd30'
+  "\\mathfrak{t}": '\ud835\udd31'
+  "\\mathfrak{u}": '\ud835\udd32'
+  "\\mathfrak{v}": '\ud835\udd33'
+  "\\mathfrak{w}": '\ud835\udd34'
+  "\\mathfrak{x}": '\ud835\udd35'
+  "\\mathfrak{y}": '\ud835\udd36'
+  "\\mathfrak{z}": '\ud835\udd37'
+  "\\mathbb{A}": '\ud835\udd38'
+  "\\mathbb{B}": '\ud835\udd39'
+  "\\mathbb{D}": '\ud835\udd3b'
+  "\\mathbb{E}": '\ud835\udd3c'
+  "\\mathbb{F}": '\ud835\udd3d'
+  "\\mathbb{G}": '\ud835\udd3e'
+  "\\mathbb{I}": '\ud835\udd40'
+  "\\mathbb{J}": '\ud835\udd41'
+  "\\mathbb{K}": '\ud835\udd42'
+  "\\mathbb{L}": '\ud835\udd43'
+  "\\mathbb{M}": '\ud835\udd44'
+  "\\mathbb{O}": '\ud835\udd46'
+  "\\mathbb{S}": '\ud835\udd4a'
+  "\\mathbb{T}": '\ud835\udd4b'
+  "\\mathbb{U}": '\ud835\udd4c'
+  "\\mathbb{V}": '\ud835\udd4d'
+  "\\mathbb{W}": '\ud835\udd4e'
+  "\\mathbb{X}": '\ud835\udd4f'
+  "\\mathbb{Y}": '\ud835\udd50'
+  "\\mathbb{a}": '\ud835\udd52'
+  "\\mathbb{b}": '\ud835\udd53'
+  "\\mathbb{c}": '\ud835\udd54'
+  "\\mathbb{d}": '\ud835\udd55'
+  "\\mathbb{e}": '\ud835\udd56'
+  "\\mathbb{f}": '\ud835\udd57'
+  "\\mathbb{g}": '\ud835\udd58'
+  "\\mathbb{h}": '\ud835\udd59'
+  "\\mathbb{i}": '\ud835\udd5a'
+  "\\mathbb{j}": '\ud835\udd5b'
+  "\\mathbb{k}": '\ud835\udd5c'
+  "\\mathbb{l}": '\ud835\udd5d'
+  "\\mathbb{m}": '\ud835\udd5e'
+  "\\mathbb{n}": '\ud835\udd5f'
+  "\\mathbb{o}": '\ud835\udd60'
+  "\\mathbb{p}": '\ud835\udd61'
+  "\\mathbb{q}": '\ud835\udd62'
+  "\\mathbb{r}": '\ud835\udd63'
+  "\\mathbb{s}": '\ud835\udd64'
+  "\\mathbb{t}": '\ud835\udd65'
+  "\\mathbb{u}": '\ud835\udd66'
+  "\\mathbb{v}": '\ud835\udd67'
+  "\\mathbb{w}": '\ud835\udd68'
+  "\\mathbb{x}": '\ud835\udd69'
+  "\\mathbb{y}": '\ud835\udd6a'
+  "\\mathbb{z}": '\ud835\udd6b'
+  "\\mathslbb{A}": '\ud835\udd6c'
+  "\\mathslbb{B}": '\ud835\udd6d'
+  "\\mathslbb{C}": '\ud835\udd6e'
+  "\\mathslbb{D}": '\ud835\udd6f'
+  "\\mathslbb{E}": '\ud835\udd70'
+  "\\mathslbb{F}": '\ud835\udd71'
+  "\\mathslbb{G}": '\ud835\udd72'
+  "\\mathslbb{H}": '\ud835\udd73'
+  "\\mathslbb{I}": '\ud835\udd74'
+  "\\mathslbb{J}": '\ud835\udd75'
+  "\\mathslbb{K}": '\ud835\udd76'
+  "\\mathslbb{L}": '\ud835\udd77'
+  "\\mathslbb{M}": '\ud835\udd78'
+  "\\mathslbb{N}": '\ud835\udd79'
+  "\\mathslbb{O}": '\ud835\udd7a'
+  "\\mathslbb{P}": '\ud835\udd7b'
+  "\\mathslbb{Q}": '\ud835\udd7c'
+  "\\mathslbb{R}": '\ud835\udd7d'
+  "\\mathslbb{S}": '\ud835\udd7e'
+  "\\mathslbb{T}": '\ud835\udd7f'
+  "\\mathslbb{U}": '\ud835\udd80'
+  "\\mathslbb{V}": '\ud835\udd81'
+  "\\mathslbb{W}": '\ud835\udd82'
+  "\\mathslbb{X}": '\ud835\udd83'
+  "\\mathslbb{Y}": '\ud835\udd84'
+  "\\mathslbb{Z}": '\ud835\udd85'
+  "\\mathslbb{a}": '\ud835\udd86'
+  "\\mathslbb{b}": '\ud835\udd87'
+  "\\mathslbb{c}": '\ud835\udd88'
+  "\\mathslbb{d}": '\ud835\udd89'
+  "\\mathslbb{e}": '\ud835\udd8a'
+  "\\mathslbb{f}": '\ud835\udd8b'
+  "\\mathslbb{g}": '\ud835\udd8c'
+  "\\mathslbb{h}": '\ud835\udd8d'
+  "\\mathslbb{i}": '\ud835\udd8e'
+  "\\mathslbb{j}": '\ud835\udd8f'
+  "\\mathslbb{k}": '\ud835\udd90'
+  "\\mathslbb{l}": '\ud835\udd91'
+  "\\mathslbb{m}": '\ud835\udd92'
+  "\\mathslbb{n}": '\ud835\udd93'
+  "\\mathslbb{o}": '\ud835\udd94'
+  "\\mathslbb{p}": '\ud835\udd95'
+  "\\mathslbb{q}": '\ud835\udd96'
+  "\\mathslbb{r}": '\ud835\udd97'
+  "\\mathslbb{s}": '\ud835\udd98'
+  "\\mathslbb{t}": '\ud835\udd99'
+  "\\mathslbb{u}": '\ud835\udd9a'
+  "\\mathslbb{v}": '\ud835\udd9b'
+  "\\mathslbb{w}": '\ud835\udd9c'
+  "\\mathslbb{x}": '\ud835\udd9d'
+  "\\mathslbb{y}": '\ud835\udd9e'
+  "\\mathslbb{z}": '\ud835\udd9f'
+  "\\mathsf{A}": '\ud835\udda0'
+  "\\mathsf{B}": '\ud835\udda1'
+  "\\mathsf{C}": '\ud835\udda2'
+  "\\mathsf{D}": '\ud835\udda3'
+  "\\mathsf{E}": '\ud835\udda4'
+  "\\mathsf{F}": '\ud835\udda5'
+  "\\mathsf{G}": '\ud835\udda6'
+  "\\mathsf{H}": '\ud835\udda7'
+  "\\mathsf{I}": '\ud835\udda8'
+  "\\mathsf{J}": '\ud835\udda9'
+  "\\mathsf{K}": '\ud835\uddaa'
+  "\\mathsf{L}": '\ud835\uddab'
+  "\\mathsf{M}": '\ud835\uddac'
+  "\\mathsf{N}": '\ud835\uddad'
+  "\\mathsf{O}": '\ud835\uddae'
+  "\\mathsf{P}": '\ud835\uddaf'
+  "\\mathsf{Q}": '\ud835\uddb0'
+  "\\mathsf{R}": '\ud835\uddb1'
+  "\\mathsf{S}": '\ud835\uddb2'
+  "\\mathsf{T}": '\ud835\uddb3'
+  "\\mathsf{U}": '\ud835\uddb4'
+  "\\mathsf{V}": '\ud835\uddb5'
+  "\\mathsf{W}": '\ud835\uddb6'
+  "\\mathsf{X}": '\ud835\uddb7'
+  "\\mathsf{Y}": '\ud835\uddb8'
+  "\\mathsf{Z}": '\ud835\uddb9'
+  "\\mathsf{a}": '\ud835\uddba'
+  "\\mathsf{b}": '\ud835\uddbb'
+  "\\mathsf{c}": '\ud835\uddbc'
+  "\\mathsf{d}": '\ud835\uddbd'
+  "\\mathsf{e}": '\ud835\uddbe'
+  "\\mathsf{f}": '\ud835\uddbf'
+  "\\mathsf{g}": '\ud835\uddc0'
+  "\\mathsf{h}": '\ud835\uddc1'
+  "\\mathsf{i}": '\ud835\uddc2'
+  "\\mathsf{j}": '\ud835\uddc3'
+  "\\mathsf{k}": '\ud835\uddc4'
+  "\\mathsf{l}": '\ud835\uddc5'
+  "\\mathsf{m}": '\ud835\uddc6'
+  "\\mathsf{n}": '\ud835\uddc7'
+  "\\mathsf{o}": '\ud835\uddc8'
+  "\\mathsf{p}": '\ud835\uddc9'
+  "\\mathsf{q}": '\ud835\uddca'
+  "\\mathsf{r}": '\ud835\uddcb'
+  "\\mathsf{s}": '\ud835\uddcc'
+  "\\mathsf{t}": '\ud835\uddcd'
+  "\\mathsf{u}": '\ud835\uddce'
+  "\\mathsf{v}": '\ud835\uddcf'
+  "\\mathsf{w}": '\ud835\uddd0'
+  "\\mathsf{x}": '\ud835\uddd1'
+  "\\mathsf{y}": '\ud835\uddd2'
+  "\\mathsf{z}": '\ud835\uddd3'
+  "\\mathsfbf{A}": '\ud835\uddd4'
+  "\\mathsfbf{B}": '\ud835\uddd5'
+  "\\mathsfbf{C}": '\ud835\uddd6'
+  "\\mathsfbf{D}": '\ud835\uddd7'
+  "\\mathsfbf{E}": '\ud835\uddd8'
+  "\\mathsfbf{F}": '\ud835\uddd9'
+  "\\mathsfbf{G}": '\ud835\uddda'
+  "\\mathsfbf{H}": '\ud835\udddb'
+  "\\mathsfbf{I}": '\ud835\udddc'
+  "\\mathsfbf{J}": '\ud835\udddd'
+  "\\mathsfbf{K}": '\ud835\uddde'
+  "\\mathsfbf{L}": '\ud835\udddf'
+  "\\mathsfbf{M}": '\ud835\udde0'
+  "\\mathsfbf{N}": '\ud835\udde1'
+  "\\mathsfbf{O}": '\ud835\udde2'
+  "\\mathsfbf{P}": '\ud835\udde3'
+  "\\mathsfbf{Q}": '\ud835\udde4'
+  "\\mathsfbf{R}": '\ud835\udde5'
+  "\\mathsfbf{S}": '\ud835\udde6'
+  "\\mathsfbf{T}": '\ud835\udde7'
+  "\\mathsfbf{U}": '\ud835\udde8'
+  "\\mathsfbf{V}": '\ud835\udde9'
+  "\\mathsfbf{W}": '\ud835\uddea'
+  "\\mathsfbf{X}": '\ud835\uddeb'
+  "\\mathsfbf{Y}": '\ud835\uddec'
+  "\\mathsfbf{Z}": '\ud835\udded'
+  "\\mathsfbf{a}": '\ud835\uddee'
+  "\\mathsfbf{b}": '\ud835\uddef'
+  "\\mathsfbf{c}": '\ud835\uddf0'
+  "\\mathsfbf{d}": '\ud835\uddf1'
+  "\\mathsfbf{e}": '\ud835\uddf2'
+  "\\mathsfbf{f}": '\ud835\uddf3'
+  "\\mathsfbf{g}": '\ud835\uddf4'
+  "\\mathsfbf{h}": '\ud835\uddf5'
+  "\\mathsfbf{i}": '\ud835\uddf6'
+  "\\mathsfbf{j}": '\ud835\uddf7'
+  "\\mathsfbf{k}": '\ud835\uddf8'
+  "\\mathsfbf{l}": '\ud835\uddf9'
+  "\\mathsfbf{m}": '\ud835\uddfa'
+  "\\mathsfbf{n}": '\ud835\uddfb'
+  "\\mathsfbf{o}": '\ud835\uddfc'
+  "\\mathsfbf{p}": '\ud835\uddfd'
+  "\\mathsfbf{q}": '\ud835\uddfe'
+  "\\mathsfbf{r}": '\ud835\uddff'
+  "\\mathsfbf{s}": '\ud835\ude00'
+  "\\mathsfbf{t}": '\ud835\ude01'
+  "\\mathsfbf{u}": '\ud835\ude02'
+  "\\mathsfbf{v}": '\ud835\ude03'
+  "\\mathsfbf{w}": '\ud835\ude04'
+  "\\mathsfbf{x}": '\ud835\ude05'
+  "\\mathsfbf{y}": '\ud835\ude06'
+  "\\mathsfbf{z}": '\ud835\ude07'
+  "\\mathsfsl{A}": '\ud835\ude08'
+  "\\mathsfsl{B}": '\ud835\ude09'
+  "\\mathsfsl{C}": '\ud835\ude0a'
+  "\\mathsfsl{D}": '\ud835\ude0b'
+  "\\mathsfsl{E}": '\ud835\ude0c'
+  "\\mathsfsl{F}": '\ud835\ude0d'
+  "\\mathsfsl{G}": '\ud835\ude0e'
+  "\\mathsfsl{H}": '\ud835\ude0f'
+  "\\mathsfsl{I}": '\ud835\ude10'
+  "\\mathsfsl{J}": '\ud835\ude11'
+  "\\mathsfsl{K}": '\ud835\ude12'
+  "\\mathsfsl{L}": '\ud835\ude13'
+  "\\mathsfsl{M}": '\ud835\ude14'
+  "\\mathsfsl{N}": '\ud835\ude15'
+  "\\mathsfsl{O}": '\ud835\ude16'
+  "\\mathsfsl{P}": '\ud835\ude17'
+  "\\mathsfsl{Q}": '\ud835\ude18'
+  "\\mathsfsl{R}": '\ud835\ude19'
+  "\\mathsfsl{S}": '\ud835\ude1a'
+  "\\mathsfsl{T}": '\ud835\ude1b'
+  "\\mathsfsl{U}": '\ud835\ude1c'
+  "\\mathsfsl{V}": '\ud835\ude1d'
+  "\\mathsfsl{W}": '\ud835\ude1e'
+  "\\mathsfsl{X}": '\ud835\ude1f'
+  "\\mathsfsl{Y}": '\ud835\ude20'
+  "\\mathsfsl{Z}": '\ud835\ude21'
+  "\\mathsfsl{a}": '\ud835\ude22'
+  "\\mathsfsl{b}": '\ud835\ude23'
+  "\\mathsfsl{c}": '\ud835\ude24'
+  "\\mathsfsl{d}": '\ud835\ude25'
+  "\\mathsfsl{e}": '\ud835\ude26'
+  "\\mathsfsl{f}": '\ud835\ude27'
+  "\\mathsfsl{g}": '\ud835\ude28'
+  "\\mathsfsl{h}": '\ud835\ude29'
+  "\\mathsfsl{i}": '\ud835\ude2a'
+  "\\mathsfsl{j}": '\ud835\ude2b'
+  "\\mathsfsl{k}": '\ud835\ude2c'
+  "\\mathsfsl{l}": '\ud835\ude2d'
+  "\\mathsfsl{m}": '\ud835\ude2e'
+  "\\mathsfsl{n}": '\ud835\ude2f'
+  "\\mathsfsl{o}": '\ud835\ude30'
+  "\\mathsfsl{p}": '\ud835\ude31'
+  "\\mathsfsl{q}": '\ud835\ude32'
+  "\\mathsfsl{r}": '\ud835\ude33'
+  "\\mathsfsl{s}": '\ud835\ude34'
+  "\\mathsfsl{t}": '\ud835\ude35'
+  "\\mathsfsl{u}": '\ud835\ude36'
+  "\\mathsfsl{v}": '\ud835\ude37'
+  "\\mathsfsl{w}": '\ud835\ude38'
+  "\\mathsfsl{x}": '\ud835\ude39'
+  "\\mathsfsl{y}": '\ud835\ude3a'
+  "\\mathsfsl{z}": '\ud835\ude3b'
+  "\\mathsfbfsl{A}": '\ud835\ude3c'
+  "\\mathsfbfsl{B}": '\ud835\ude3d'
+  "\\mathsfbfsl{C}": '\ud835\ude3e'
+  "\\mathsfbfsl{D}": '\ud835\ude3f'
+  "\\mathsfbfsl{E}": '\ud835\ude40'
+  "\\mathsfbfsl{F}": '\ud835\ude41'
+  "\\mathsfbfsl{G}": '\ud835\ude42'
+  "\\mathsfbfsl{H}": '\ud835\ude43'
+  "\\mathsfbfsl{I}": '\ud835\ude44'
+  "\\mathsfbfsl{J}": '\ud835\ude45'
+  "\\mathsfbfsl{K}": '\ud835\ude46'
+  "\\mathsfbfsl{L}": '\ud835\ude47'
+  "\\mathsfbfsl{M}": '\ud835\ude48'
+  "\\mathsfbfsl{N}": '\ud835\ude49'
+  "\\mathsfbfsl{O}": '\ud835\ude4a'
+  "\\mathsfbfsl{P}": '\ud835\ude4b'
+  "\\mathsfbfsl{Q}": '\ud835\ude4c'
+  "\\mathsfbfsl{R}": '\ud835\ude4d'
+  "\\mathsfbfsl{S}": '\ud835\ude4e'
+  "\\mathsfbfsl{T}": '\ud835\ude4f'
+  "\\mathsfbfsl{U}": '\ud835\ude50'
+  "\\mathsfbfsl{V}": '\ud835\ude51'
+  "\\mathsfbfsl{W}": '\ud835\ude52'
+  "\\mathsfbfsl{X}": '\ud835\ude53'
+  "\\mathsfbfsl{Y}": '\ud835\ude54'
+  "\\mathsfbfsl{Z}": '\ud835\ude55'
+  "\\mathsfbfsl{a}": '\ud835\ude56'
+  "\\mathsfbfsl{b}": '\ud835\ude57'
+  "\\mathsfbfsl{c}": '\ud835\ude58'
+  "\\mathsfbfsl{d}": '\ud835\ude59'
+  "\\mathsfbfsl{e}": '\ud835\ude5a'
+  "\\mathsfbfsl{f}": '\ud835\ude5b'
+  "\\mathsfbfsl{g}": '\ud835\ude5c'
+  "\\mathsfbfsl{h}": '\ud835\ude5d'
+  "\\mathsfbfsl{i}": '\ud835\ude5e'
+  "\\mathsfbfsl{j}": '\ud835\ude5f'
+  "\\mathsfbfsl{k}": '\ud835\ude60'
+  "\\mathsfbfsl{l}": '\ud835\ude61'
+  "\\mathsfbfsl{m}": '\ud835\ude62'
+  "\\mathsfbfsl{n}": '\ud835\ude63'
+  "\\mathsfbfsl{o}": '\ud835\ude64'
+  "\\mathsfbfsl{p}": '\ud835\ude65'
+  "\\mathsfbfsl{q}": '\ud835\ude66'
+  "\\mathsfbfsl{r}": '\ud835\ude67'
+  "\\mathsfbfsl{s}": '\ud835\ude68'
+  "\\mathsfbfsl{t}": '\ud835\ude69'
+  "\\mathsfbfsl{u}": '\ud835\ude6a'
+  "\\mathsfbfsl{v}": '\ud835\ude6b'
+  "\\mathsfbfsl{w}": '\ud835\ude6c'
+  "\\mathsfbfsl{x}": '\ud835\ude6d'
+  "\\mathsfbfsl{y}": '\ud835\ude6e'
+  "\\mathsfbfsl{z}": '\ud835\ude6f'
+  "\\mathtt{A}": '\ud835\ude70'
+  "\\mathtt{B}": '\ud835\ude71'
+  "\\mathtt{C}": '\ud835\ude72'
+  "\\mathtt{D}": '\ud835\ude73'
+  "\\mathtt{E}": '\ud835\ude74'
+  "\\mathtt{F}": '\ud835\ude75'
+  "\\mathtt{G}": '\ud835\ude76'
+  "\\mathtt{H}": '\ud835\ude77'
+  "\\mathtt{I}": '\ud835\ude78'
+  "\\mathtt{J}": '\ud835\ude79'
+  "\\mathtt{K}": '\ud835\ude7a'
+  "\\mathtt{L}": '\ud835\ude7b'
+  "\\mathtt{M}": '\ud835\ude7c'
+  "\\mathtt{N}": '\ud835\ude7d'
+  "\\mathtt{O}": '\ud835\ude7e'
+  "\\mathtt{P}": '\ud835\ude7f'
+  "\\mathtt{Q}": '\ud835\ude80'
+  "\\mathtt{R}": '\ud835\ude81'
+  "\\mathtt{S}": '\ud835\ude82'
+  "\\mathtt{T}": '\ud835\ude83'
+  "\\mathtt{U}": '\ud835\ude84'
+  "\\mathtt{V}": '\ud835\ude85'
+  "\\mathtt{W}": '\ud835\ude86'
+  "\\mathtt{X}": '\ud835\ude87'
+  "\\mathtt{Y}": '\ud835\ude88'
+  "\\mathtt{Z}": '\ud835\ude89'
+  "\\mathtt{a}": '\ud835\ude8a'
+  "\\mathtt{b}": '\ud835\ude8b'
+  "\\mathtt{c}": '\ud835\ude8c'
+  "\\mathtt{d}": '\ud835\ude8d'
+  "\\mathtt{e}": '\ud835\ude8e'
+  "\\mathtt{f}": '\ud835\ude8f'
+  "\\mathtt{g}": '\ud835\ude90'
+  "\\mathtt{h}": '\ud835\ude91'
+  "\\mathtt{i}": '\ud835\ude92'
+  "\\mathtt{j}": '\ud835\ude93'
+  "\\mathtt{k}": '\ud835\ude94'
+  "\\mathtt{l}": '\ud835\ude95'
+  "\\mathtt{m}": '\ud835\ude96'
+  "\\mathtt{n}": '\ud835\ude97'
+  "\\mathtt{o}": '\ud835\ude98'
+  "\\mathtt{p}": '\ud835\ude99'
+  "\\mathtt{q}": '\ud835\ude9a'
+  "\\mathtt{r}": '\ud835\ude9b'
+  "\\mathtt{s}": '\ud835\ude9c'
+  "\\mathtt{t}": '\ud835\ude9d'
+  "\\mathtt{u}": '\ud835\ude9e'
+  "\\mathtt{v}": '\ud835\ude9f'
+  "\\mathtt{w}": '\ud835\udea0'
+  "\\mathtt{x}": '\ud835\udea1'
+  "\\mathtt{y}": '\ud835\udea2'
+  "\\mathtt{z}": '\ud835\udea3'
+  "\\mathbf{\\Alpha}": '\ud835\udea8'
+  "\\mathbf{\\Beta}": '\ud835\udea9'
+  "\\mathbf{\\Gamma}": '\ud835\udeaa'
+  "\\mathbf{\\Delta}": '\ud835\udeab'
+  "\\mathbf{\\Epsilon}": '\ud835\udeac'
+  "\\mathbf{\\Zeta}": '\ud835\udead'
+  "\\mathbf{\\Eta}": '\ud835\udeae'
+  "\\mathbf{\\Theta}": '\ud835\udeaf'
+  "\\mathbf{\\Iota}": '\ud835\udeb0'
+  "\\mathbf{\\Kappa}": '\ud835\udeb1'
+  "\\mathbf{\\Lambda}": '\ud835\udeb2'
+  "\\mathbf{\\Xi}": '\ud835\udeb5'
+  "\\mathbf{\\Pi}": '\ud835\udeb7'
+  "\\mathbf{\\Rho}": '\ud835\udeb8'
+  "\\mathbf{\\vartheta}": '\ud835\udeb9'
+  "\\mathbf{\\Sigma}": '\ud835\udeba'
+  "\\mathbf{\\Tau}": '\ud835\udebb'
+  "\\mathbf{\\Upsilon}": '\ud835\udebc'
+  "\\mathbf{\\Phi}": '\ud835\udebd'
+  "\\mathbf{\\Chi}": '\ud835\udebe'
+  "\\mathbf{\\Psi}": '\ud835\udebf'
+  "\\mathbf{\\Omega}": '\ud835\udec0'
+  "\\mathbf{\\nabla}": '\ud835\udec1'
+  "\\mathbf{\\theta}": '\ud835\udec9'
+  "\\mathbf{\\varsigma}": '\ud835\uded3'
+  "\\in": '\ud835\udedc'
+  "\\mathbf{\\varkappa}": '\ud835\udede'
+  "\\mathbf{\\phi}": '\ud835\udedf'
+  "\\mathbf{\\varrho}": '\ud835\udee0'
+  "\\mathbf{\\varpi}": '\ud835\udee1'
+  "\\mathsl{\\Alpha}": '\ud835\udee2'
+  "\\mathsl{\\Beta}": '\ud835\udee3'
+  "\\mathsl{\\Gamma}": '\ud835\udee4'
+  "\\mathsl{\\Delta}": '\ud835\udee5'
+  "\\mathsl{\\Epsilon}": '\ud835\udee6'
+  "\\mathsl{\\Zeta}": '\ud835\udee7'
+  "\\mathsl{\\Eta}": '\ud835\udee8'
+  "\\mathsl{\\Theta}": '\ud835\udee9'
+  "\\mathsl{\\Iota}": '\ud835\udeea'
+  "\\mathsl{\\Kappa}": '\ud835\udeeb'
+  "\\mathsl{\\Lambda}": '\ud835\udeec'
+  "\\mathsl{\\Xi}": '\ud835\udeef'
+  "\\mathsl{\\Pi}": '\ud835\udef1'
+  "\\mathsl{\\Rho}": '\ud835\udef2'
+  "\\mathsl{\\vartheta}": '\ud835\udef3'
+  "\\mathsl{\\Sigma}": '\ud835\udef4'
+  "\\mathsl{\\Tau}": '\ud835\udef5'
+  "\\mathsl{\\Upsilon}": '\ud835\udef6'
+  "\\mathsl{\\Phi}": '\ud835\udef7'
+  "\\mathsl{\\Chi}": '\ud835\udef8'
+  "\\mathsl{\\Psi}": '\ud835\udef9'
+  "\\mathsl{\\Omega}": '\ud835\udefa'
+  "\\mathsl{\\nabla}": '\ud835\udefb'
+  "\\mathsl{\\varsigma}": '\ud835\udf0d'
+  "\\mathsl{\\varkappa}": '\ud835\udf18'
+  "\\mathsl{\\phi}": '\ud835\udf19'
+  "\\mathsl{\\varrho}": '\ud835\udf1a'
+  "\\mathsl{\\varpi}": '\ud835\udf1b'
+  "\\mathbit{\\Alpha}": '\ud835\udf1c'
+  "\\mathbit{\\Beta}": '\ud835\udf1d'
+  "\\mathbit{\\Gamma}": '\ud835\udf1e'
+  "\\mathbit{\\Delta}": '\ud835\udf1f'
+  "\\mathbit{\\Epsilon}": '\ud835\udf20'
+  "\\mathbit{\\Zeta}": '\ud835\udf21'
+  "\\mathbit{\\Eta}": '\ud835\udf22'
+  "\\mathbit{\\Theta}": '\ud835\udf23'
+  "\\mathbit{\\Iota}": '\ud835\udf24'
+  "\\mathbit{\\Kappa}": '\ud835\udf25'
+  "\\mathbit{\\Lambda}": '\ud835\udf26'
+  "\\mathbit{\\Xi}": '\ud835\udf29'
+  "\\mathbit{\\Pi}": '\ud835\udf2b'
+  "\\mathbit{\\Rho}": '\ud835\udf2c'
+  "\\mathbit{\\Sigma}": '\ud835\udf2e'
+  "\\mathbit{\\Tau}": '\ud835\udf2f'
+  "\\mathbit{\\Upsilon}": '\ud835\udf30'
+  "\\mathbit{\\Phi}": '\ud835\udf31'
+  "\\mathbit{\\Chi}": '\ud835\udf32'
+  "\\mathbit{\\Psi}": '\ud835\udf33'
+  "\\mathbit{\\Omega}": '\ud835\udf34'
+  "\\mathbit{\\nabla}": '\ud835\udf35'
+  "\\mathbit{\\varsigma}": '\ud835\udf47'
+  "\\mathbit{\\vartheta}": '\ud835\udf51'
+  "\\mathbit{\\varkappa}": '\ud835\udf52'
+  "\\mathbit{\\phi}": '\ud835\udf53'
+  "\\mathbit{\\varrho}": '\ud835\udf54'
+  "\\mathbit{\\varpi}": '\ud835\udf55'
+  "\\mathsfbf{\\Alpha}": '\ud835\udf56'
+  "\\mathsfbf{\\Beta}": '\ud835\udf57'
+  "\\mathsfbf{\\Gamma}": '\ud835\udf58'
+  "\\mathsfbf{\\Delta}": '\ud835\udf59'
+  "\\mathsfbf{\\Epsilon}": '\ud835\udf5a'
+  "\\mathsfbf{\\Zeta}": '\ud835\udf5b'
+  "\\mathsfbf{\\Eta}": '\ud835\udf5c'
+  "\\mathsfbf{\\Theta}": '\ud835\udf5d'
+  "\\mathsfbf{\\Iota}": '\ud835\udf5e'
+  "\\mathsfbf{\\Kappa}": '\ud835\udf5f'
+  "\\mathsfbf{\\Lambda}": '\ud835\udf60'
+  "\\mathsfbf{\\Xi}": '\ud835\udf63'
+  "\\mathsfbf{\\Pi}": '\ud835\udf65'
+  "\\mathsfbf{\\Rho}": '\ud835\udf66'
+  "\\mathsfbf{\\vartheta}": '\ud835\udf67'
+  "\\mathsfbf{\\Sigma}": '\ud835\udf68'
+  "\\mathsfbf{\\Tau}": '\ud835\udf69'
+  "\\mathsfbf{\\Upsilon}": '\ud835\udf6a'
+  "\\mathsfbf{\\Phi}": '\ud835\udf6b'
+  "\\mathsfbf{\\Chi}": '\ud835\udf6c'
+  "\\mathsfbf{\\Psi}": '\ud835\udf6d'
+  "\\mathsfbf{\\Omega}": '\ud835\udf6e'
+  "\\mathsfbf{\\nabla}": '\ud835\udf6f'
+  "\\mathsfbf{\\varsigma}": '\ud835\udf81'
+  "\\mathsfbf{\\varkappa}": '\ud835\udf8c'
+  "\\mathsfbf{\\phi}": '\ud835\udf8d'
+  "\\mathsfbf{\\varrho}": '\ud835\udf8e'
+  "\\mathsfbf{\\varpi}": '\ud835\udf8f'
+  "\\mathsfbfsl{\\Alpha}": '\ud835\udf90'
+  "\\mathsfbfsl{\\Beta}": '\ud835\udf91'
+  "\\mathsfbfsl{\\Gamma}": '\ud835\udf92'
+  "\\mathsfbfsl{\\Delta}": '\ud835\udf93'
+  "\\mathsfbfsl{\\Epsilon}": '\ud835\udf94'
+  "\\mathsfbfsl{\\Zeta}": '\ud835\udf95'
+  "\\mathsfbfsl{\\Eta}": '\ud835\udf96'
+  "\\mathsfbfsl{\\vartheta}": '\ud835\udf97'
+  "\\mathsfbfsl{\\Iota}": '\ud835\udf98'
+  "\\mathsfbfsl{\\Kappa}": '\ud835\udf99'
+  "\\mathsfbfsl{\\Lambda}": '\ud835\udf9a'
+  "\\mathsfbfsl{\\Xi}": '\ud835\udf9d'
+  "\\mathsfbfsl{\\Pi}": '\ud835\udf9f'
+  "\\mathsfbfsl{\\Rho}": '\ud835\udfa0'
+  "\\mathsfbfsl{\\Sigma}": '\ud835\udfa2'
+  "\\mathsfbfsl{\\Tau}": '\ud835\udfa3'
+  "\\mathsfbfsl{\\Upsilon}": '\ud835\udfa4'
+  "\\mathsfbfsl{\\Phi}": '\ud835\udfa5'
+  "\\mathsfbfsl{\\Chi}": '\ud835\udfa6'
+  "\\mathsfbfsl{\\Psi}": '\ud835\udfa7'
+  "\\mathsfbfsl{\\Omega}": '\ud835\udfa8'
+  "\\mathsfbfsl{\\nabla}": '\ud835\udfa9'
+  "\\mathsfbfsl{\\varsigma}": '\ud835\udfbb'
+  "\\mathsfbfsl{\\varkappa}": '\ud835\udfc6'
+  "\\mathsfbfsl{\\phi}": '\ud835\udfc7'
+  "\\mathsfbfsl{\\varrho}": '\ud835\udfc8'
+  "\\mathsfbfsl{\\varpi}": '\ud835\udfc9'
+  "\\mathbf{0}": '\ud835\udfce'
+  "\\mathbf{1}": '\ud835\udfcf'
+  "\\mathbf{2}": '\ud835\udfd0'
+  "\\mathbf{3}": '\ud835\udfd1'
+  "\\mathbf{4}": '\ud835\udfd2'
+  "\\mathbf{5}": '\ud835\udfd3'
+  "\\mathbf{6}": '\ud835\udfd4'
+  "\\mathbf{7}": '\ud835\udfd5'
+  "\\mathbf{8}": '\ud835\udfd6'
+  "\\mathbf{9}": '\ud835\udfd7'
+  "\\mathbb{0}": '\ud835\udfd8'
+  "\\mathbb{1}": '\ud835\udfd9'
+  "\\mathbb{2}": '\ud835\udfda'
+  "\\mathbb{3}": '\ud835\udfdb'
+  "\\mathbb{4}": '\ud835\udfdc'
+  "\\mathbb{5}": '\ud835\udfdd'
+  "\\mathbb{6}": '\ud835\udfde'
+  "\\mathbb{7}": '\ud835\udfdf'
+  "\\mathbb{8}": '\ud835\udfe0'
+  "\\mathbb{9}": '\ud835\udfe1'
+  "\\mathsf{0}": '\ud835\udfe2'
+  "\\mathsf{1}": '\ud835\udfe3'
+  "\\mathsf{2}": '\ud835\udfe4'
+  "\\mathsf{3}": '\ud835\udfe5'
+  "\\mathsf{4}": '\ud835\udfe6'
+  "\\mathsf{5}": '\ud835\udfe7'
+  "\\mathsf{6}": '\ud835\udfe8'
+  "\\mathsf{7}": '\ud835\udfe9'
+  "\\mathsf{8}": '\ud835\udfea'
+  "\\mathsf{9}": '\ud835\udfeb'
+  "\\mathsfbf{0}": '\ud835\udfec'
+  "\\mathsfbf{1}": '\ud835\udfed'
+  "\\mathsfbf{2}": '\ud835\udfee'
+  "\\mathsfbf{3}": '\ud835\udfef'
+  "\\mathsfbf{4}": '\ud835\udff0'
+  "\\mathsfbf{5}": '\ud835\udff1'
+  "\\mathsfbf{6}": '\ud835\udff2'
+  "\\mathsfbf{7}": '\ud835\udff3'
+  "\\mathsfbf{8}": '\ud835\udff4'
+  "\\mathsfbf{9}": '\ud835\udff5'
+  "\\mathtt{0}": '\ud835\udff6'
+  "\\mathtt{1}": '\ud835\udff7'
+  "\\mathtt{2}": '\ud835\udff8'
+  "\\mathtt{3}": '\ud835\udff9'
+  "\\mathtt{4}": '\ud835\udffa'
+  "\\mathtt{5}": '\ud835\udffb'
+  "\\mathtt{6}": '\ud835\udffc'
+  "\\mathtt{7}": '\ud835\udffd'
+  "\\mathtt{8}": '\ud835\udffe'
+  "\\mathtt{9}": '\ud835\udfff'
   "\\dbend": '\uFFFD'
+  "{[}": '['

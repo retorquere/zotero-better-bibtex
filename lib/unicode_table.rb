@@ -3,10 +3,12 @@
 require 'nokogiri'
 require 'ostruct'
 require 'open-uri'
+require 'yaml'
 
 class UnicodeConverter
   def initialize
     @chars = {}
+    @lowmask = ('1' * 10).to_i(2)
 
     read('http://www.w3.org/2003/entities/2007xml/unicode.xml')
     read('http://www.w3.org/Math/characters/unicode.xml')
@@ -22,10 +24,12 @@ class UnicodeConverter
       f.puts "LaTeX.toLaTeX = { unicode: Object.create(null), ascii: Object.create(null) }"
 
       unicode = {math: '', text: ''}
-
+      done = {}
       @chars.each_pair{|char, latex|
         next unless char =~ /^[\x20-\x7E]$/ # an ascii character that needs translation? Probably a TeX special character
         char = "\\\\" if char == '\\'
+        next if done[char]
+        done[char] = true
         unicode[latex.math ? :math : :text] << "  '#{char}': #{latex.latex[0].inspect}\n"
       }
       f.puts "LaTeX.toLaTeX.unicode.math ="
@@ -34,6 +38,7 @@ class UnicodeConverter
       f.puts unicode[:text]
 
       ascii = {math: '', text: ''}
+      done = {}
       @chars.each_pair{|char, latex|
         if char == '\\'
           char = "'\\\\'"
@@ -42,6 +47,8 @@ class UnicodeConverter
         else
           char = latex.char
         end
+        next if done[char]
+        done[char] = true
         ascii[latex.math ? :math : :text] << "  #{char}: #{latex.latex[0].inspect}\n"
       }
       f.puts "LaTeX.toLaTeX.ascii.math ="
@@ -49,6 +56,7 @@ class UnicodeConverter
       f.puts "LaTeX.toLaTeX.ascii.text ="
       f.puts ascii[:text]
 
+      done = {}
       f.puts "LaTeX.toUnicode ="
       @chars.each_pair{|char, latex|
         if char == '\\'
@@ -59,7 +67,10 @@ class UnicodeConverter
           char = latex.char
         end
         latex.latex.each{|ltx|
-          next if ltx =~ /^[a-z]+$/i
+          next if ltx =~ /^[a-z]+$/i || ltx.strip == ''
+          next if ltx == char.sub(/^'/, '').sub(/'$/, '')
+          next if done[ltx]
+          done[ltx] = true
           f.puts "  #{ltx.inspect}: #{char}"
         }
       }
@@ -70,6 +81,17 @@ class UnicodeConverter
     @chars['&'.inspect] = OpenStruct.new({latex: "\\&", char: "'&'", math: false})
     @chars['\uFFFD'] = OpenStruct.new({latex: "\\dbend", char: "'\\uFFFD'", math: false})
     @chars["\\"] = OpenStruct.new({latex: "\\backslash", char: "'\\\\'", math: true})
+
+    # biber doesn't like it when I escape closing square brackets #245.1, so only opening bracket
+    @chars['['] = OpenStruct.new({latex: '{[}', char: "'['", math: false})
+
+    # TODO: replace '}' and '{' with textbrace(left|right) once the bug mentioned in
+    # http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754
+    # is widely enough distributed
+    ['_', '}', '{'].each{|char|
+      @chars[char] = OpenStruct.new({latex: "\\" + char, char: "'#{char}'", math: false})
+    }
+    @chars['\u00A0'] = OpenStruct.new({latex: ' ', char: "'\\u00A0'", math: false})
 
     @chars.keys.each{|char|
       { "\\textdollar"        => "\\$",
@@ -82,21 +104,7 @@ class UnicodeConverter
         @chars[char].latex = soll if @chars[char].latex == ist
       }
 
-      case char
-        when '[' # , ']' # biber doesn't like it when I escape closing square brackets #245.1
-          @chars[char].latex = "{#{char}}"
-          @chars[char].math = false
-
-        # TODO: replace '}' and '{' with textbrace(left|right) once the bug mentioned in
-        # http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754
-        # is widely enough distributed
-        when '_', '}', '{'
-          @chars[char].latex = "\\" + char
-          @chars[char].math = false
-        when "\u00A0"
-          @chars[char].latex = ' '
-          @chars[char].math = false
-      end
+      @chars[char].latex = ' ' if @chars[char].latex == '~'
     }
   end
 
@@ -157,7 +165,17 @@ class UnicodeConverter
 
       latex = "{\\#{$1}#{$2}}" if latex =~ /^\\(["^`\.'~]){([^}]+)}$/
       latex = "{\\#{$1} #{$2}}" if latex =~ /^\\([cuHv]){([^}]+)}$/
-      @chars[chr] = OpenStruct.new({latex: latex , char: "'\\" + char['id'].upcase.sub(/^U/, 'u') + "'", math: math})
+
+      id = char['id']
+      if id =~ /^u0/i
+        id = [id.upcase.sub(/^u0/i, '')]
+      else
+        cp = id.sub(/^u/i, '').to_i(16) - 0x10000
+        id = [(cp >> 10) + 0xD800, (@lowmask & cp) + 0xDC00].collect{|n| n.to_s(16)}
+      end
+      id = "'" + id.collect{|cp| "\\u" + cp}.join('') + "'"
+
+      @chars[chr] = OpenStruct.new({latex: latex , char: id, math: math})
     }
   end
 
