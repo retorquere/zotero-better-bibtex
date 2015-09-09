@@ -27,6 +27,7 @@ require 'base64'
 require 'net/http/post/multipart'
 require 'httparty'
 require_relative 'amo-sign'
+require_relative 'lib/unicode_table'
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -132,8 +133,8 @@ CLEAN.include('{resource,chrome,defaults}/**/*.js')
 CLEAN.include('{resource,chrome,defaults}/**/*.js.map')
 CLEAN.include('tmp/**/*')
 CLEAN.include('resource/translators/*.json')
-CLEAN.include('.depend.mf')
 CLEAN.include('resource/translators/latex_unicode_mapping.coffee')
+CLEAN.include('.depend.mf')
 CLEAN.include('*.xpi')
 CLEAN.include('*.log')
 CLEAN.include('*.cache')
@@ -531,164 +532,8 @@ task :share => XPI do
   end
 end
 
-file 'resource/translators/latex_unicode_mapping.coffee' => ['resource/translators/unicode.xml', 'Rakefile'] do |t|
-  map = Nokogiri::XML(open(t.source))
-
-  map.at('//charlist') << "
-    <character id='U0026' dec='38' mode='text' type='punctuation'><latex>\\&</latex></character>
-    <character id='UFFFD' dec='239-191-189' mode='text' type='punctuation'><latex>\\dbend</latex></character>
-  "
-
-  {
-    "\\textdollar"        => "\\$",
-    "\\textquotedblleft"  => "``",
-    "\\textquotedblright" => "''",
-    "\\textasciigrave"    => "`",
-    "\\textquotesingle"   => "'",
-    "\\space"             => ' '
-  }.each_pair{|ist, soll|
-    nodes = map.xpath(".//latex[normalize-space(text())='#{ist}']")
-    next unless nodes
-    nodes.each{|node| node.content = soll }
-  }
-
-  mapping = {}
-  map.xpath('//character[@dec and latex]').each{|char|
-    id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
-    key = id.pack('U' * id.size)
-    value = char.at('.//latex').inner_text
-    mathmode = (char['mode'] == 'math')
-
-    case key
-      when '[' # , ']' # biber doesn't like it when I escape closing square brackets #245.1
-        value = "{#{key}}"
-        mathmode = false
-      # TODO: replace '}' and '{' with textbrace(left|right) once the bug mentioned in
-      # http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754
-      # is widely enough distributed
-      when '_', '}', '{'
-        value = "\\" + key
-        mathmode = false
-      when "\u00A0"
-        value = ' '
-        mathmode = false
-    end
-
-    next if key =~ /^[\x20-\x7E]$/ && ! %w{# $ % & ~ _ ^ { } [ ] > < \\}.include?(key)
-    next if key == value && !mathmode
-
-    value = "{\\#{$1}#{$2}}" if value =~ /^\\(["^`\.'~]){([^}]+)}$/
-    value = "{\\#{$1} #{$2}}" if value =~ /^\\([cuHv]){([^}]+)}$/
-
-    # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to
-    # \combinecommand{X}
-    #raise value if value =~ /LECO/
-
-    mapping[key] = OpenStruct.new({latex: value, math: mathmode})
-  }
-
-  mapping['\\'] = OpenStruct.new({latex: "\\backslash", math: true})
-
-  u2l = {
-    unicode: OpenStruct.new({ math: [], map: {} }),
-    ascii: OpenStruct.new({ math: [], map: {} })
-  }
-
-  l2u = { }
-
-  mapping.each_pair{|key, repl|
-    # need to figure something out for this. This has the form X<combining char>, which needs to be transformed to
-    # \combinecommand{X}
-    #raise value if value =~ /LECO/
-
-    latex = [repl.latex]
-    case repl.latex
-      when /^(\\[a-z][^\s]*)\s$/i, /^(\\[^a-z])\s$/i  # '\ss ', '\& ' => '{\\s}', '{\&}'
-        latex << "{#{$1}}"
-      when /^(\\[^a-z]){(.)}$/                       # '\"{a}' => '\"a'
-        latex << "#{$1}#{$2}"
-      when /^(\\[^a-z])(.)\s*$/                       # '\"a " => '\"{a}'
-        latex << "#{$1}{#{$2}}"
-      when /^{(\\[.]+)}$/                             # '{....}' '.... '
-        latex << "#{$1} "
-    end
-
-    # prefered option is braces-over-traling-space because of miktex bug that doesn't ignore spaces after commands
-    latex.sort!{|a, b|
-      nsa = !(a =~ /\s$/)
-      nsb = !(a =~ /\s$/)
-      ba = a.gsub(/[^{]/, '')
-      bb = b.gsub(/[^{]/, '')
-      if nsa == nsb
-        bb <=> ba
-      elsif nsa
-        -1
-      elsif nsb
-        1
-      else
-        a <=> b
-      end
-    }
-
-    if key =~ /^[\x20-\x7E]$/ # an ascii character that needs translation? Probably a TeX special character
-      u2l[:unicode].map[key] = latex[0]
-      u2l[:unicode].math << key if repl.math
-    end
-
-    u2l[:ascii].map[key] = latex[0]
-    u2l[:ascii].math << key if repl.math
-
-    latex.each{|ltx|
-      l2u[ltx] = key if ltx =~ /\\/
-    }
-  }
-
-  l2u["\\url"] = '';
-  l2u["\\href"] = '';
-
-  cs = []
-  cs << "LaTeX = {} unless LaTeX"
-  cs << "LaTeX.toLaTeX = { unicode: Object.create(null), ascii: Object.create(null) }"
-  [:unicode, :ascii].each{|map|
-    cs << "LaTeX.toLaTeX.#{map}.math ="
-    u2l[map].map.each_pair{|k, v|
-    cs << "  #{k.inspect}: #{v.inspect}" if u2l[map].math.include?(k)
-    }
-    cs << "LaTeX.toLaTeX.#{map}.text ="
-    u2l[map].map.each_pair{|k, v|
-    cs << "  #{k.inspect}: #{v.inspect}" unless u2l[map].math.include?(k)
-    }
-  }
-
-  cs << 'LaTeX.toUnicode ='
-  l2u.each_pair{|k, v|
-  cs << "  #{k.inspect}: #{v.inspect}"
-  }
-  cs << "  #{'\\textbackslash'.inspect}: #{'\\'.inspect}"
-
-  cs << ''
-
-  entities = {}
-  map.xpath('//character[entity]').each{|char|
-    char.xpath('.//entity').each{|entity|
-      if entity['set'] == 'predefined' || entity['set'].to_s =~ /^html/
-        name = entity['id'].downcase
-
-        id = char['dec'].to_s.split('-').collect{|i| Integer(i)}
-        ch = id.pack('U' * id.size)
-
-        throw "No character for #{name}" if ch.length == 0
-
-        entities[name] = ch
-      end
-    }
-  }
-  cs << "LaTeX.entities ="
-  entities.each_pair{|name, char|
-    cs << "  #{name}: #{char.to_json}"
-  }
-
-  open(t.name, 'w'){|f| f.write(cs.join("\n")) }
+file 'resource/translators/latex_unicode_mapping.coffee' => 'lib/unicode_table.rb' do |t|
+  UnicodeConverter.new.save(t.name)
 end
 
 task :markfailing do

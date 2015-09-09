@@ -145,7 +145,7 @@ class LaTeX.HTML
     txt = LaTeX.he.decode(text)
 
     blocks = []
-    for c in txt
+    for c in XRegExp.split(txt, '')
       math = @mapping.math[c]
       blocks.unshift({math: !!math, text: ''}) if blocks.length == 0 || blocks[0].math != !!math
       blocks[0].text += (math || @mapping.text[c] || c)

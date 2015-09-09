@@ -16,6 +16,7 @@ BetterBibTeX:
   cache:
     nextItem: true
   dependencies:
+    - xregexp-all
     - unicode_translator
     - he
     - htmlparser
