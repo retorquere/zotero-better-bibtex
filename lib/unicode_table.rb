@@ -33,7 +33,7 @@ class UnicodeConverter
     cs = File.expand_path(cs)
     open(cs, 'w'){|f|
       f.puts "LaTeX = {} unless LaTeX"
-      f.puts "LaTeX.toLaTeX = { unicode: Object.create(null), ascii: Object.create(null) }"
+      f.puts "LaTeX.toLaTeX = { unicode: {}, ascii: {} }"
 
       unicode = {math: '', text: ''}
       done = {}

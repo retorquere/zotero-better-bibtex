@@ -1,5 +1,5 @@
 LaTeX = {} unless LaTeX
-LaTeX.toLaTeX = { unicode: Object.create(null), ascii: Object.create(null) }
+LaTeX.toLaTeX = { unicode: {}, ascii: {} }
 LaTeX.toLaTeX.unicode.math =
   '<': "<"
   '>': ">"
