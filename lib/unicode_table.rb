@@ -33,7 +33,7 @@ class UnicodeConverter
     cs = File.expand_path(cs)
     open(cs, 'w'){|f|
       f.puts "LaTeX = {} unless LaTeX"
-      f.puts "LaTeX.toLaTeX = { unicode: Object.create(null), ascii: Object.create(null) }"
+      f.puts "LaTeX.toLaTeX ="
 
       unicode = {math: '', text: ''}
       done = {}
@@ -41,11 +41,12 @@ class UnicodeConverter
         next unless (charcode >= 0x20 && charcode <= 0x7E) || charcode == 0x00A0 || latex.latex == ' ' || charcode == ' '.ord # an ascii character that needs translation? Probably a TeX special character
         next if done[charcode]
         done[charcode] = true
-        unicode[latex.math ? :math : :text] << "  #{char(charcode)}: #{latex.latex[0].inspect}\n"
+        unicode[latex.math ? :math : :text] << "      #{char(charcode)}: #{latex.latex[0].inspect}\n"
       }
-      f.puts "LaTeX.toLaTeX.unicode.math ="
+      f.puts "  unicode:"
+      f.puts "    math:"
       f.puts unicode[:math]
-      f.puts "LaTeX.toLaTeX.unicode.text ="
+      f.puts "    text:"
       f.puts unicode[:text]
 
       ascii = {math: '', text: ''}
@@ -53,22 +54,23 @@ class UnicodeConverter
       @chars.sort.map{|charcode, latex|
         next if done[charcode]
         done[charcode] = true
-        ascii[latex.math ? :math : :text] << "  #{char(charcode)}: #{latex.latex[0].inspect}\n"
+        ascii[latex.math ? :math : :text] << "      #{char(charcode)}: #{latex.latex[0].inspect}\n"
       }
-      f.puts "LaTeX.toLaTeX.ascii.math ="
+      f.puts "  ascii:"
+      f.puts "    math:"
       f.puts ascii[:math]
-      f.puts "LaTeX.toLaTeX.ascii.text ="
+      f.puts "    text:"
       f.puts ascii[:text]
 
       done = {}
-      f.puts "LaTeX.toUnicode ="
+      f.puts "  toUnicode:"
       @chars.sort.map{|charcode, latex|
         latex.latex.each{|ltx|
           next if ltx =~ /^[a-z]+$/i || ltx.strip == ''
           next if charcode < 256 && ltx == charcode.chr
           next if done[ltx]
           done[ltx] = true
-          f.puts "  #{ltx.inspect}: #{char(charcode)}"
+          f.puts "    #{ltx.inspect}: #{char(charcode)}"
         }
       }
     }
