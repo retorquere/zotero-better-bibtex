@@ -8,20 +8,22 @@ class Report
     @collections = []
     @mark(Translator.collections)
 
-    @html = ''
-    @html += "<h1>#{ LaTeX.cleanHTML(Zotero.getOption('exportFilename').replace(/\.tex$/i, ''))  }</h1>\n"
+    title = LaTeX.he.encode(Zotero.getOption('exportFilename').replace(/\.[^\.]*$/i, ''))
+
+    @html = "<html><head><title>#{title}</title></head><body>"
     notes = []
     for own id, item of @items
       continue if @itemInCollection[id]
       notes.push(item)
     @notes(notes, 1)
 
-    @walk(Translator.collections, 2)
+    @walk(Translator.collections, 1)
+    @html += '</body></html>'
 
   walk: (collection, level) ->
     return unless collection?.notes
 
-    @html += "<h#{ level }>#{ LaTeX.cleanHTML(collection.name) }</h#{ level }>\n"
+    @html += "<h#{ level }>#{ LaTeX.he.encode(collection.name) }</h#{ level }>\n"
     notes = (@items[id] for id in collection.items when @items[id])
     @notes(notes, level)
 
@@ -72,7 +74,7 @@ class Report
 
     title = (str for str in [item.title || '', author] when str).join(' ')
 
-    @html += "<h#{ level + 1}>#{ LaTeX.cleanHTML(title) }</h#{ level + 1}>\n"
+    @html += "<h#{ level + 1}>#{ LaTeX.he.encode(title) }</h#{ level + 1}>\n"
 
     for note in item.notes
       @html += "<div>#{ note.note }</div>\n"
@@ -99,10 +101,4 @@ doExport = ->
   Translator.initialize()
   report = new Report()
 
-  switch Zotero.getHiddenPref('collectedNotes')
-    when 'html'
-      Zotero.write(report.html)
-    when 'md'
-      Zotero.write((new MarkDown.HTML(report.html)).md)
-    else
-      Zotero.write(LaTeX.html2latex(report.html))
+  Zotero.write(report.html)
