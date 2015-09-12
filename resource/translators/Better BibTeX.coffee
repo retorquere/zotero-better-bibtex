@@ -243,8 +243,10 @@ ZoteroItem::import = (bibtex) ->
       when 'author', 'editor', 'translator'
         for creator in value
           continues unless creator
+          Translator.debug('creator:', creator)
           if typeof creator == 'string'
             creator = Zotero.Utilities.cleanAuthor(creator, field, false)
+            creator.fieldMode = 1 if creator.lastName && !creator.firstName
           else
             creator.creatorType = field
           @item.creators.push(creator)
