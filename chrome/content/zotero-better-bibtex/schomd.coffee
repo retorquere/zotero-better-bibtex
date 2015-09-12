@@ -44,15 +44,14 @@ Zotero.BetterBibTeX.schomd.init = ->
 
     '@cite/entry': (state, str) ->
       Zotero.BetterBibTeX.debug('markdown.@cite/entry:', state.registry.registry[@system_id].ref.id)
-      citekey = Zotero.BetterBibTeX.keymanager.get({itemID: state.registry.registry[@system_id].ref.id}).citekey
-      return "[#{str}][@#{citekey}]"
+      return str || ''
 
     '@bibliography/entry': (state, str) ->
       Zotero.BetterBibTeX.debug('markdown.@bibliography/entry:', state.registry.registry[@system_id].ref.id)
       try
         citekey = Zotero.BetterBibTeX.keymanager.get({itemID: state.registry.registry[@system_id].ref.id}).citekey
       catch
-        citekey = '??'
+        citekey = '@@'
       return "[@#{citekey}]: ##{citekey} \"#{str.replace(/\\/g, '').replace(/"/g, "'")}\"\n<a name=\"#{citekey}\"></a>#{str}\n"
 
     '@display/block': (state, str) -> "\n\n#{str}\n\n"
@@ -72,39 +71,45 @@ Zotero.BetterBibTeX.schomd.init = ->
   }
   return
 
-Zotero.BetterBibTeX.schomd.items = (citekeys, {library} = {}) ->
-  library = null unless library
+Zotero.BetterBibTeX.schomd.itemIDs = (citekeys, {libraryID} = {}) ->
+  libraryID ||= null
   citekeys = [citekeys] unless Array.isArray(citekeys)
 
   keys = (key for key in citekeys when typeof key != 'number')
   if keys.length == 0
     resolved = {}
   else
-    resolved = Zotero.BetterBibTeX.keymanager.resolve(keys, library)
+    resolved = Zotero.BetterBibTeX.keymanager.resolve(keys, {libraryID})
 
-  return ((if typeof key == 'number' then key else resolved[key]?.itemID) for key in citekeys)
+  return ((if typeof key == 'number' then key else resolved[key]?.itemID || null) for key in citekeys)
 
-Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, library} = {}) ->
-  items = (item for item in @items(citekeys, {library}) when item)
+Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, libraryID} = {}) ->
+  itemIDs = (item for item in @itemIDs(citekeys, {libraryID}) when item)
 
-  return '' if items.length == 0
+  Zotero.BetterBibTeX.debug('schomd.citation', {citekeys, style, libraryID}, '->', itemIDs)
+
+  return '' if itemIDs.length == 0
 
   url = "http://www.zotero.org/styles/#{style ? 'apa'}"
   style = Zotero.Styles.get(url)
   cp = style.getCiteProc()
   cp.setOutputFormat('markdown')
-  cp.updateItems((item for item in items when item))
-  return ((if item then cp.appendCitationCluster({citationItems: [{id:item}], properties:{}}, true)[0][1] else '??') for item in items)
+  cp.updateItems(itemIDs)
 
-Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, library} = {}) ->
-  items = @items(citekeys, {library: library})
-  return '' if items.length == 0
+  citation = cp.appendCitationCluster({citationItems: ({id:itemID} for itemID in itemIDs), properties:{}}, true)
+  Zotero.BetterBibTeX.debug('schomd.citation:', citekeys, '->', JSON.stringify(citation))
+  citation = citation[0][1]
+  return citation
 
-  url = "http://www.zotero.org/styles/#{stylename ? 'apa'}"
+Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, libraryID} = {}) ->
+  itemIDs = @itemIDs(citekeys, {libraryID})
+  return '' if itemIDs.length == 0
+
+  url = "http://www.zotero.org/styles/#{style ? 'apa'}"
   style = Zotero.Styles.get(url)
   cp = style.getCiteProc()
   cp.setOutputFormat('markdown')
-  cp.updateItems((item for item in items when item))
+  cp.updateItems((item for item in itemIDs when item))
   bib = cp.makeBibliography()
 
   return '' unless bib
@@ -131,8 +136,8 @@ Zotero.BetterBibTeX.schomd.search = (term) ->
       )
     } for item in Zotero.Items.get(results))
 
-Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, library, displayOptions} = {}) ->
-  items = @items(keys, {library: library})
+Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, libraryID, displayOptions} = {}) ->
+  itemIDs = @itemIDs(keys, {libraryID})
 
   return '' if items.length == 0
 

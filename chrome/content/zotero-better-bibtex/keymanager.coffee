@@ -353,9 +353,9 @@ Zotero.BetterBibTeX.keymanager = new class
     cached = @assign(item, pin) if !cached || (pin && cached.citekeyFormat)
     return @clone(cached)
 
-  resolve: (citekeys, libraryID) ->
-    libraryID = null if libraryID == undefined
-    libraryID = @integer(libraryID)
+  resolve: (citekeys, options = {}) ->
+    options.libraryID = null if options.libraryID == undefined
+    libraryID = @integer(options.libraryID)
     citekeys = [citekeys] unless Array.isArray(citekeys)
 
     resolved = {}

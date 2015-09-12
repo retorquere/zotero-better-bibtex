@@ -154,7 +154,7 @@ Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
 
       else throw("Unsupported method '#{req.method}'")
   catch err
-    result = JSON.stringify({jsonrpc: '2.0', error: {code: 5000, message: '' + err + "\n" + err.stack}, id: result.id})
+    result = JSON.stringify({jsonrpc: '2.0', error: {code: 5000, message: '' + err + "\n" + err.stack}, id: null})
 
   return sendResponseCallback(200, 'application/json', result)
 
