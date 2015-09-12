@@ -1,7 +1,7 @@
 translatorID: "be78e3e1-c0b7-4bb6-affb-2d0bc1c19958"
 label: "Collected Notes"
 creator: "Emiliano heyns"
-target: tex
+target: html
 minVersion: "2.1.9"
 maxVersion: ""
 priority: 100
@@ -16,8 +16,4 @@ BetterBibTeX:
   cache:
     nextItem: true
   dependencies:
-    - xregexp-all
-    - unicode_translator
     - he
-    - htmlparser
-    - latex_unicode_mapping
