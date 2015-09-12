@@ -18,9 +18,8 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "others",
-          "fieldMode": ""
+          "fieldMode": 1,
+          "lastName": "others"
         },
         {
           "creatorType": "editor",
