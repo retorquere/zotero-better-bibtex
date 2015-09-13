@@ -15,9 +15,9 @@ Scenario: AUX scanner
 Scenario: Better BibTeX Import 2
   When I import 2 references from 'import/Better BibTeX.002.bib'
   Then the library without collections should match 'import/Better BibTeX.002.json'
-  And the markdown citation for Torre2008 should be '["\\(Torre & Verducci, 2008\\)"]'
+  And the markdown citation for Torre2008 should be '\(Torre & Verducci, 2008\)'
   And the markdown bibliography for Torre2008 should be '[@Torre2008]: #Torre2008 "Torre, J., & Verducci, T. (2008).  _The Yankee Years_. Doubleday." <a name="Torre2008"></a>Torre, J., & Verducci, T. \(2008\). _The Yankee Years_.  Doubleday.'
-  And the markdown citation for orre2008 should be '""'
+  And the markdown citation for orre2008 should be ''
   And the markdown bibliography for orre2008 should be ''
 
 @i2
@@ -34,6 +34,7 @@ Scenario Outline: Better BibTeX Import
 
   Examples:
   | file                                                                        | references  |
+  | Failure to handle unparsed author names (92)                                | 1           |
   | Better BibTeX.001                                                           | 1           |
   | Better BibTeX.003                                                           | 2           |
   | Better BibTeX.004                                                           | 1           |
@@ -50,7 +51,6 @@ Scenario Outline: Better BibTeX Import
   | Better BibTeX.015                                                           | 1           |
   | Literal names                                                               | 1           |
   | Author splitter failure                                                     | 1           |
-  | Failure to handle unparsed author names (92)                                | 1           |
   | Problem when importing BibTeX entries with square brackets #94              | 1           |
   | Problem when importing BibTeX entries with percent sign #95 or preamble #96 | 1           |
   | Import fails to perform @String substitutions #154                          | 1           |

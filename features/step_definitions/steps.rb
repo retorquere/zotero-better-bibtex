@@ -409,13 +409,8 @@ Then /^I (re)?set the citation keys?$/ do |action|
   $Firefox.BetterBibTeX.selected("#{action}set")
 end
 
-Then /^the markdown citation for (.*) should be '(.*)'$/ do |keys, citation|
+Then /^the markdown citation for ([^\s]*) should be '(.*)'$/ do |keys, citation|
   keys = keys.split(',').collect{|k| k.strip}
-  if citation == '""'
-    citation = ''
-  else
-    citation = JSON.parse(citation)
-  end
   expect($Firefox.ScholarlyMarkdown.citation(keys)).to eq(citation)
 end
 
