@@ -83,6 +83,29 @@ Zotero.BetterBibTeX.schomd.itemIDs = (citekeys, {libraryID} = {}) ->
 
   return ((if typeof key == 'number' then key else resolved[key]?.itemID || null) for key in citekeys)
 
+Zotero.BetterBibTeX.schomd.citations = (citekeys, {style, libraryID} = {}) ->
+  url = "http://www.zotero.org/styles/#{style ? 'apa'}"
+  style = Zotero.Styles.get(url)
+  cp = style.getCiteProc()
+  cp.setOutputFormat('markdown')
+
+  clusters = []
+  itemIDs = []
+  for cluster in citekeys
+    clusterIDs = (item for item in @itemIDs(cluster, {libraryID}) when item)
+    itemIDs = itemIDs.concat(clusterIDs)
+    clusters.push(({id:itemID} for itemID in clusterIDs))
+  cp.updateItems(itemIDs)
+
+  citations = []
+  for cluster in clusters
+    if cluster.length == 0
+      citations.push(null)
+    else
+      citations.push(cp.appendCitationCluster({citationItems: cluster, properties:{}}, true)[0][1] || null)
+
+  return citations
+
 Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, libraryID} = {}) ->
   itemIDs = (item for item in @itemIDs(citekeys, {libraryID}) when item)
 
