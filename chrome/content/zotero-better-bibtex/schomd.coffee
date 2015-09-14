@@ -93,6 +93,10 @@ Zotero.BetterBibTeX.schomd.citations = (citekeys, {style, libraryID} = {}) ->
   itemIDs = []
   for cluster in citekeys
     clusterIDs = (item for item in @itemIDs(cluster, {libraryID}) when item)
+
+    # the caller can't detect a key has not been resolved unless I refuse to resolve the whole cluster
+    clusterIDs = [] unless clusterIDs.length == cluster.length
+
     itemIDs = itemIDs.concat(clusterIDs)
     clusters.push(({id:itemID} for itemID in clusterIDs))
   cp.updateItems(itemIDs)
