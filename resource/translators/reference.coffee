@@ -124,6 +124,13 @@ class Reference
             else
               Zotero.BetterBibTeX.CSL.parseParticles(name)
 
+              # temporary workaround for https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping
+              if name['non-dropping-particle'] and !name['dropping-particle']
+                if (new RegExp("\\s#{name['non-dropping-particle']}(\\s|$)")).test(creator.firstName)
+                  if !(new RegExp("\\s#{name['non-dropping-particle']}(\\s|$)")).test(creator.lastName)
+                    name['dropping-particle'] = name['non-dropping-particle']
+                    delete name['non-dropping-particle']
+
               source = XRegExp.replace((creator.firstName || '') + (creator.lastName || ''), @nonLetters, '')
               parsed = XRegExp.replace((part || '' for part in [name.given, name.family, name.suffix, name['non-dropping-particle'], name['dropping-particle']]).join(''), @nonLetters, '')
               fallback = (source.length != parsed.length)
