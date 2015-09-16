@@ -763,6 +763,15 @@ Zotero.BetterBibTeX.init = ->
   nids.push(Zotero.Notifier.registerObserver(@itemAdded, ['collection-item']))
   window.addEventListener('unload', ((e) -> Zotero.Notifier.unregisterObserver(id) for id in nids), false)
 
+  Zotero.addReloadListener(->
+    return if !Zotero.initialized || Zotero.isConnector
+
+    # should I re-open the DB connection here?
+  )
+  Zotero.addBeforeReloadListener((newMode) ->
+    Zotero.BetterBibTeX.disable('Zotero is in connector mode') if newMode == "connector"
+  )
+
   @idleService.addIdleObserver(@idleObserver, @pref.get('autoExportIdleWait'))
 
   uninstaller = {
