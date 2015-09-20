@@ -257,7 +257,7 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
   'atom-zotero-citations': (citations, options = {}) ->
     citekeys = (citation.citekey for citation in citations)
 
-    items = (item for item in Zotero.BetterBibTeX.schmd.items(citekeys, options) when item)
+    items = (item for item in Zotero.BetterBibTeX.schomd.items(citekeys, options) when item)
     url = "http://www.zotero.org/styles/#{options.style ? 'apa'}"
     style = Zotero.Styles.get(url)
     cp = style.getCiteProc()
