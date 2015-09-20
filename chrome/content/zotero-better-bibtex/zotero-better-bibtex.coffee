@@ -475,11 +475,12 @@ Zotero.BetterBibTeX.initDatabase = ->
   # always upgrade on version change
   upgrade = Services.vc.compare(installed, @release) != 0
 
-  for check in [
+  schemas = [
     'SELECT itemID, citekey, citekeyFormat FROM betterbibtex.keys'
     'SELECT id, collection, path, exportCharset, exportNotes, translatorID, useJournalAbbreviation, exportedRecursively, status FROM betterbibtex.autoexport'
     'SELECT itemID, exportCharset, exportNotes, getCollections, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess FROM betterbibtex.cache'
-    ]
+  ]
+  for check in schemas
     try
       Zotero.DB.query(check + ' LIMIT 1')
     catch e
