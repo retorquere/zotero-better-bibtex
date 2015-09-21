@@ -22,6 +22,7 @@ BetterBibTeX:
   dependencies:
     - xregexp-all
     - reference
+    - util_name_particles
     - unicode_translator
     - he
     - htmlparser
