@@ -476,7 +476,7 @@ doExport = ->
 
     if item.date
       if Translator.verbatimDate.test(item.date) || typeof Zotero.Utilities.strToDate(item.date).year == 'undefined'
-        ref.add({ name: 'date', value: item.date, preserveCaps: true })
+        ref.add({ name: 'year', value: item.date, preserveCaps: true })
       else
         ref.add({ name: 'date', value: Zotero.Utilities.strToISO(item.date) })
 
