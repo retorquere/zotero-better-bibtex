@@ -44,7 +44,7 @@ Translator._log = (level, msg...) ->
   msg = ((if (typeof m) in ['boolean', 'string', 'number'] then '' + m else Translator.stringify(m)) for m in msg).join(' ')
   Zotero.debug('[better' + '-' + "bibtex:#{@header.label}] " + msg, level)
 
-Translator.extractFields = (item, options = {}) ->
+Translator.extractFields = (item) ->
   return {} unless item.extra
 
   fields = {}
@@ -83,12 +83,11 @@ Translator.extractFields = (item, options = {}) ->
       for own name, value of json
         fields[name] = {value, format: 'json' }
 
-  if options.csl || options.csl == undefined
-    # fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/
-    item.extra = item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, name, value) ->
-      fields[name] = { value, format: 'csl' }
-      return ''
-    )
+  # fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/
+  item.extra = item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, name, value) ->
+    fields[name] = { value, format: 'csl' }
+    return ''
+  )
 
   item.extra = item.extra.trim()
   delete item.extra if item.extra == ''
