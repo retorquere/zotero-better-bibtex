@@ -1,4 +1,9 @@
 parseDate = (date) ->
+  date = date.trim()
+
+  # open-ended date as per http://gsl-nagoya-u.net/http/pub/citeproc-doc.html#dates
+  return [0, 0] if date == ''
+
   date = Zotero.Utilities.strToDate(date)
 
   date.year = parseInt(date.year) if date.year
