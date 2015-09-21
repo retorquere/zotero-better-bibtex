@@ -122,7 +122,8 @@ class Reference
               name.family = @enc_latex({value: new String(name.family.slice(1, -1))})
 
             else
-              Zotero.BetterBibTeX.CSL.parseParticles(name)
+              #Zotero.BetterBibTeX.CSL.parseParticles(name)
+              CSL.parseParticles(name)
 
               # temporary workaround for https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping
               if name['non-dropping-particle'] and !name['dropping-particle']

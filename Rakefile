@@ -127,6 +127,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',
   'resource/translators/he.js',
+  'resource/translators/util_name_particles.js',
 ]).sort.uniq
 
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
@@ -193,11 +194,13 @@ DOWNLOADS.each_pair{|dir, files|
   }
 }
 
-file 'resource/translators/js-interpreter.js' => 'Rakefile' do |t|
-  Tempfile.create('jsi') do |js|
-    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/NeilFraser/JS-Interpreter/master/interpreter.js', js.path)
-    code = "var Interpreter = (function() { window = {}; #{open(js.path).read} return Interpreter;})();"
-    open(t.name, 'w'){|f| f.write(code) }
+file 'resource/translators/util_name_particles.js' => 'Rakefile' do |t|
+  Tempfile.create('pp') do |js|
+    ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/src/util_name_particles.js', js.path)
+    open(t.name, 'w'){|f|
+      f.puts('var CSL; if (!CSL) { CSL = {}; }')
+      f.write(open(js.path).read)
+    }
   end
 end
 
