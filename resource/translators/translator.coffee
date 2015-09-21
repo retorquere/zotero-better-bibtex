@@ -44,6 +44,56 @@ Translator._log = (level, msg...) ->
   msg = ((if (typeof m) in ['boolean', 'string', 'number'] then '' + m else Translator.stringify(m)) for m in msg).join(' ')
   Zotero.debug('[better' + '-' + "bibtex:#{@header.label}] " + msg, level)
 
+Translator.EDTFl0 = (date) ->
+  return null unless typeof date == 'string'
+  date = date.replace(/\s/g, '')
+  return [0, 0] if date == ''
+
+  yearsign = 1
+  if date[0] == '-'
+    yearsign = -1
+    date = date.slice(1)
+
+  date = date.split('-')
+  return null unless date.length in [1,2,3]
+  date = (d.replace(/^0+/, '') for d in date)
+  date = (if d == '' then 0 else parseInt(d) for d in date)
+  return null if date.findIndex(isNaN) >= 0
+  return null if date[1] > 12 || date[2] > 31
+
+  date[0] *= yearsign
+  return date
+
+Translator.date = (date) ->
+  dateparts = date.replace(/\s/g, '').split('/')
+  if dateparts.length == 2
+    dateparts = [@EDTFl0(dateparts[0]), @EDTFl0(dateparts[1])]
+    return {dateparts: dateparts} if dateparts[0] && dateparts[1]
+
+  dateparts = @EDTFl0(date.replace(/\s/g, ''))
+  return {dateparts: dateparts} if dateparts
+
+  return {literal: date} if date.indexOf('[') >= 0
+
+  try
+    throw 'literal' if date.indexOf('[') >= 0
+
+    parsed = Zotero.Utilities.strToDate(date)
+    throw 'no year' unless parsed.year
+    throw 'day but no month' if parsed.day && !parsed.month
+
+    parsed.year = parseInt(parsed.year, 10) if parsed.year
+    parsed.month = parseInt(parsed.month, 10) if parsed.month
+    parsed.day = parseInt(parsed.month, 10) if parsed.day
+
+    throw 'malformed year' if isNaN(parsed.year)
+    throw 'malformed month' if parsed.month && isNan(parsed.month)
+    throw 'malformed day' if parsed.day && isNan(parsed.day)
+
+    return {dateparts: (d for d in [parsed.year, parsed.month, parsed.day] when d)}
+
+  return {literal: date}
+
 Translator.extractFields = (item) ->
   return {} unless item.extra
 

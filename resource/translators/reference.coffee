@@ -63,6 +63,32 @@ class Reference
     return f.value
 
   ###
+  # Encode to date
+  #
+  # @param {field} field to encode
+  # @return {String} unmodified `field.value`
+  ###
+  enc_date: (f) ->
+    return null unless f.value
+
+    if f.value.literal
+      return '{\\bibstring{nodate}}' if f.value.literal == 'n.d.'
+      return @enc_latex({value: f.value.literal})
+
+    return null unless date['date-parts']
+
+    date['date-parts'] = [date['date-parts']] unless Array.isArray(date['date-parts'])
+    dateparts = []
+    for datepart in date['date-parts']
+      if datepart.length == 2 && datepart[0] == 0 && datepart[1] == 0
+        datepart = ''
+      else
+        datepart = ('' + d for d in datepart).join('-')
+      dateparts.push(datepart)
+
+    return @enc_latex({value: dateparts.join('/')})
+
+  ###
   # Encode to LaTeX url
   #
   # @param {field} field to encode

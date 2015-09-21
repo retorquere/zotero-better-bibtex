@@ -559,6 +559,7 @@ Zotero.BetterBibTeX.init = ->
     CSL: {
       parseParticles: (sandbox, name, normalizeApostrophe) -> Zotero.CiteProc.CSL.parseParticles(name, normalizeApostrophe)
     }
+    locale: Zotero.locale
   }
 
   for own name, endpoint of @endpoints

@@ -1,17 +1,3 @@
-parseDate = (date) ->
-  date = date.trim()
-
-  # open-ended date as per http://gsl-nagoya-u.net/http/pub/citeproc-doc.html#dates
-  return [0, 0] if date == ''
-
-  date = Zotero.Utilities.strToDate(date)
-
-  date.year = parseInt(date.year) if date.year
-  return null if typeof date.year != 'number'
-  return [date.year] if !date.month && typeof date.month != 'number'
-  return [date.year, date.month + 1] if !date.day && typeof date.day != 'number'
-  return [date.year, date.month + 1, date.day]
-
 doExport = ->
   caching = Translator.header.BetterBibTeX?.cache?.JSON
 
@@ -31,17 +17,7 @@ doExport = ->
     for name, value of fields
       switch
         when value.format == 'csl' && name in ['issued', 'accessed']
-          dates = value.value.split('/')
-          cslDates = (parseDate(date) for date in dates)
-          cslDates = (date for date in cslDates when date)
-
-          switch
-            when cslDates.length not in [1, 2] || cslDates.length != dates.length
-              json[name] = {literal: value.value}
-            when cslDates.length == 1
-              json[name] = {'date-parts': cslDates[0]}
-            else
-              json[name] = {'date-parts': cslDates}
+          json[name] = Translator.date(value.value)
 
         when value.format == 'csl'
           json[name] = value.value

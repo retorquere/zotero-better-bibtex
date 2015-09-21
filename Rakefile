@@ -382,17 +382,30 @@ rule '.json' => '.yml' do |t|
 end
 
 def browserify(code, target)
+  prefix, code = code.split("\n", 2)
+  code, prefix = prefix, code unless code
+  prefix = prefix ? prefix + "\n" : ''
   Tempfile.create(['browserify', '.js'], File.dirname(target)) do |caller|
     Tempfile.create(['browserify', '.js'], File.dirname(target)) do |output|
       open(caller.path, 'w'){|f| f.puts code }
       sh "#{NODEBIN}/browserify #{caller.path.shellescape} > #{output.path.shellescape}"
-      FileUtils.cp(output.path, target)
+      open(target, 'w') {|f|
+        f.write(prefix)
+        f.write(open(output.path).read)
+      }
     end
   end
 end
 
+file 'resource/translators/moment.js' => 'Rakefile' do |t|
+  Tempfile.create(['moment', '.js']) do |tmp|
+    ZotPlus::RakeHelper.download('http://momentjs.com/downloads/moment-with-locales.js', tmp.path)
+    browserify("var Translator; if (!Translator) { Translator = {}; };\nTranslator.moment=require(#{tmp.path.to_json});", t.name)
+  end
+end
+
 file 'resource/translators/marked.js' => 'Rakefile' do |t|
-  browserify("var LaTeX; if (!LaTeX) { LaTeX = {}; }; LaTeX.marked=require('marked');", t.name)
+  browserify("var LaTeX; if (!LaTeX) { LaTeX = {}; };\nLaTeX.marked=require('marked');", t.name)
 end
 
 file 'resource/translators/acorn.js' => 'Rakefile' do |t|
