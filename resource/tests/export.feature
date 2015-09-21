@@ -83,6 +83,7 @@ Scenario: Pandoc/LaTeX Citation Export
   When I import 1 reference with 1 attachment from 'export/Pandoc Citation.json'
   Then a library export using 'Pandoc Citation' should match 'export/Pandoc Citation.pandoc'
   And a library export using 'LaTeX Citation' should match 'export/Pandoc Citation.latex'
+  And a library export using 'Pandoc JSON' should match 'export/Pandoc Citation.csl.json'
 
 @test-cluster-2
 @journal-abbrev

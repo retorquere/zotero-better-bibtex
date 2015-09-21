@@ -11,7 +11,7 @@ doExport = ->
         continue
 
     Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
-    fields = Translator.extractFields(item)
+    fields = Translator.extractFields(item, {csl: false})
     json = Zotero.Utilities.itemToCSLJSON(item)
 
     for name, value of fields
