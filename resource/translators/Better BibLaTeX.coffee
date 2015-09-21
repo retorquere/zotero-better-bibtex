@@ -475,6 +475,8 @@ doExport = ->
     ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate && item.url
 
     if item.date
+      Translator.moment.locale(item.language || Zotero.BetterBibTeX.locale)
+      Translator.debug('locale:', item.language || Zotero.BetterBibTeX.locale)
       date = Translator.date(item.date)
       Translator.debug('date:', date)
       ref.add({ name: (if date.literal then 'year' else 'date'), value: date, preserveCaps: true, enc: 'date' })

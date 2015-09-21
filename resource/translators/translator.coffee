@@ -49,18 +49,13 @@ Translator.EDTFl0 = (date) ->
   date = date.replace(/\s/g, '')
   return [0, 0] if date == ''
 
+  return unless date.match(/^-?[0-9]{1,4}(-[0-9]{1,2}(-[0-9]{1,2})?)?$/)
   yearsign = 1
   if date[0] == '-'
     yearsign = -1
     date = date.slice(1)
 
-  date = date.split('-')
-  return null unless date.length in [1,2,3]
-  date = (d.replace(/^0+/, '') for d in date)
-  date = (if d == '' then 0 else parseInt(d) for d in date)
-  return null if date.findIndex(isNaN) >= 0
-  return null if date[1] > 12 || date[2] > 31
-
+  date = (parseInt(d) for d in date.split('-'))
   date[0] *= yearsign
   return date
 
@@ -75,26 +70,22 @@ Translator.date = (date) ->
 
   return {literal: date} if date.indexOf('[') >= 0
 
-  try
-    throw 'literal' if date.indexOf('[') >= 0
+  #parsed = Zotero.Utilities.strToDate(date)
+  parsed = Translator.moment(date)
 
-    parsed = Zotero.Utilities.strToDate(date)
-    throw 'no year' unless parsed.year
-    throw 'day but no month' if parsed.day && !parsed.month
+  Translator.debug('parsed:', date, '=>', parsed)
+  return {literal: date} unless parsed.year
+  return {literal: date} if parsed.day && !parsed.month
 
-    parsed.year = parseInt(parsed.year, 10) if parsed.year
-    parsed.month = parseInt(parsed.month, 10) + 1 if parsed.month
-    parsed.day = parseInt(parsed.day, 10) if parsed.day
+  parsed.year = parseInt(parsed.year, 10) if parsed.year
+  parsed.month = parseInt(parsed.month, 10) + 1 if parsed.month
+  parsed.day = parseInt(parsed.day, 10) if parsed.day
 
-    throw 'malformed year' if isNaN(parsed.year)
-    throw 'malformed month' if parsed.month && isNaN(parsed.month)
-    throw 'malformed day' if parsed.day && isNaN(parsed.day)
+  return {literal: date} if isNaN(parsed.year)
+  return {literal: date} if parsed.month && isNaN(parsed.month)
+  return {literal: date} if parsed.day && isNaN(parsed.day)
 
-    return {'date-parts': (d for d in [parsed.year, parsed.month, parsed.day] when d)}
-  catch err
-    Translator.debug('date parser:', err.message)
-
-  return {literal: date}
+  return {'date-parts': (d for d in [parsed.year, parsed.month, parsed.day] when d)}
 
 Translator.extractFields = (item) ->
   return {} unless item.extra

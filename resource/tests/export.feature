@@ -195,12 +195,12 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | typo stature-statute (zotero item type) #284                                       | 1           |
      | remove the field if the override is empty #303                                     | 1           |
      | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
      | map csl-json variables #293                                                        | 2           |
      | markup small-caps, superscript, italics #301                                       | 2           |
      | don't escape entry key fields for #296                                             | 1           |
-     | typo stature-statute (zotero item type) #284                                       | 1           |
      | bookSection is always converted to @inbook, never @incollection #282               | 1           |
      | referencetype= does not work #278                                                  | 1           |
      | Ignore HTML tags when generating citation key #264                                 | 1           |
