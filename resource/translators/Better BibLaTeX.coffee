@@ -476,10 +476,8 @@ doExport = ->
 
     if item.date
       date = Translator.date(item.date)
-      if date.literal
-        ref.add({ name: 'year', value: date, preserveCaps: true })
-      else
-        ref.add({ name: 'date', value: date})
+      Translator.debug('date:', date)
+      ref.add({ name: (if date.literal then 'year' else 'date'), value: date, preserveCaps: true, enc: 'date' })
 
     ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )}) if item.pages
 

@@ -68,10 +68,10 @@ Translator.date = (date) ->
   dateparts = date.replace(/\s/g, '').split('/')
   if dateparts.length == 2
     dateparts = [@EDTFl0(dateparts[0]), @EDTFl0(dateparts[1])]
-    return {dateparts: dateparts} if dateparts[0] && dateparts[1]
+    return {'date-parts': dateparts} if dateparts[0] && dateparts[1]
 
   dateparts = @EDTFl0(date.replace(/\s/g, ''))
-  return {dateparts: dateparts} if dateparts
+  return {'date-parts': dateparts} if dateparts
 
   return {literal: date} if date.indexOf('[') >= 0
 
@@ -90,7 +90,7 @@ Translator.date = (date) ->
     throw 'malformed month' if parsed.month && isNan(parsed.month)
     throw 'malformed day' if parsed.day && isNan(parsed.day)
 
-    return {dateparts: (d for d in [parsed.year, parsed.month, parsed.day] when d)}
+    return {'date-parts': (d for d in [parsed.year, parsed.month, parsed.day] when d)}
 
   return {literal: date}
 

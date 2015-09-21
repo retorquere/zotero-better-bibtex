@@ -73,17 +73,19 @@ class Reference
 
     if f.value.literal
       return '{\\bibstring{nodate}}' if f.value.literal == 'n.d.'
-      return @enc_latex({value: f.value.literal})
+      return @enc_latex(@clone(f, f.value.literal))
 
-    return null unless date['date-parts']
+    return null unless f.value['date-parts']
+    value = f.value['date-parts']
+    return null unless value.length > 0
 
-    date['date-parts'] = [date['date-parts']] unless Array.isArray(date['date-parts'])
+    value = [value] unless Array.isArray(value[0])
     dateparts = []
-    for datepart in date['date-parts']
+    for datepart in value
       if datepart.length == 2 && datepart[0] == 0 && datepart[1] == 0
         datepart = ''
       else
-        datepart = ('' + d for d in datepart).join('-')
+        datepart = ("#{d}" for d in datepart).join('-')
       dateparts.push(datepart)
 
     return @enc_latex({value: dateparts.join('/')})
