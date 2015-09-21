@@ -257,14 +257,15 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
   'atom-zotero-citations': (citations, options = {}) ->
     citekeys = (citation.citekey for citation in citations)
 
-    items = (item for item in Zotero.BetterBibTeX.schmd.items(citekeys, options) when item)
+    itemIDs = (item for item in Zotero.BetterBibTeX.schomd.itemIDs(citekeys, options) when item)
     url = "http://www.zotero.org/styles/#{options.style ? 'apa'}"
     style = Zotero.Styles.get(url)
     cp = style.getCiteProc()
     cp.setOutputFormat('markdown')
-    cp.updateItems((item for item in items when item))
-    label = cp.appendCitationCluster({citationItems: ({id:item} for item in items), properties:{}}, true)[0][1]
+    cp.updateItems(itemIDs)
+    label = cp.appendCitationCluster({citationItems: ({id:itemID} for itemID in itemIDs), properties:{}}, true)[0][1]
 
-    citekeys = ("@#{citekey}" for citekey in citekeys).join(',')
-    return "[#{label}][#{citekeys}]"
+    prefix = if citekeys.length == 1 && citekeys[0].toLowerCase() == citekeys[0] then '@' else '#'
+    citekeys = ("#{prefix}#{citekey}" for citekey in citekeys).join(',')
+    return "[#{label}](#{citekeys})"
 }

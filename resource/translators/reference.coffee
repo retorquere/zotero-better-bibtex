@@ -354,6 +354,7 @@ class Reference
       when 'original-publisher-place' then return 'origlocation'
       when 'original-title' then return 'origtitle'
       when 'authority' then return 'institution'
+      when 'issued' then return 'date'
       when 'container-title'
         switch @referencetype
           when 'article', 'jurisdiction', 'legislation' then return 'journaltitle'

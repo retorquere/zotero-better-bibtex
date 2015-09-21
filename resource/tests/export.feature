@@ -160,6 +160,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
      | BraceBalancer                                                                                  | 1           |
      | @legislation; map code,container-title to journaltitle #327                                    | 1           |
      | @jurisdiction; map court,authority to institution #326                                         | 1           |

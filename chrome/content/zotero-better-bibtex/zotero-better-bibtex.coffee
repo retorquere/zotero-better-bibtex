@@ -475,17 +475,18 @@ Zotero.BetterBibTeX.initDatabase = ->
   # always upgrade on version change
   upgrade = Services.vc.compare(installed, @release) != 0
 
-  for check in [
+  schemas = [
     'SELECT itemID, citekey, citekeyFormat FROM betterbibtex.keys'
     'SELECT id, collection, path, exportCharset, exportNotes, translatorID, useJournalAbbreviation, exportedRecursively, status FROM betterbibtex.autoexport'
     'SELECT itemID, exportCharset, exportNotes, getCollections, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess FROM betterbibtex.cache'
-    ]
-    continue if upgrade
+  ]
+  for check in schemas
     try
       Zotero.DB.query(check + ' LIMIT 1')
     catch e
       @log('Unexpected schema:', check, e)
       upgrade = true
+      continue
 
   @upgradeDatabase() if upgrade
 
@@ -990,7 +991,7 @@ Zotero.BetterBibTeX.displayOptions = (url) ->
       params[key] = url.query[key]
       params[key] = [ 'y', 'yes', 'true' ].indexOf(params[key].toLowerCase()) >= 0 if isBool
       hasParams = true
-    catch
+
   return params if hasParams
   return null
 
