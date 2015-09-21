@@ -83,14 +83,16 @@ Translator.date = (date) ->
     throw 'day but no month' if parsed.day && !parsed.month
 
     parsed.year = parseInt(parsed.year, 10) if parsed.year
-    parsed.month = parseInt(parsed.month, 10) if parsed.month
-    parsed.day = parseInt(parsed.month, 10) if parsed.day
+    parsed.month = parseInt(parsed.month, 10) + 1 if parsed.month
+    parsed.day = parseInt(parsed.day, 10) if parsed.day
 
     throw 'malformed year' if isNaN(parsed.year)
-    throw 'malformed month' if parsed.month && isNan(parsed.month)
-    throw 'malformed day' if parsed.day && isNan(parsed.day)
+    throw 'malformed month' if parsed.month && isNaN(parsed.month)
+    throw 'malformed day' if parsed.day && isNaN(parsed.day)
 
     return {'date-parts': (d for d in [parsed.year, parsed.month, parsed.day] when d)}
+  catch err
+    Translator.debug('date parser:', err.message)
 
   return {literal: date}
 

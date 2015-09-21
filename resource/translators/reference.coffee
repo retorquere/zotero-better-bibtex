@@ -85,7 +85,7 @@ class Reference
       if datepart.length == 2 && datepart[0] == 0 && datepart[1] == 0
         datepart = ''
       else
-        datepart = ("#{d}" for d in datepart).join('-')
+        datepart = ((if d < 10 then "0#{d}" else "#{d}") for d in datepart).join('-')
       dateparts.push(datepart)
 
     return @enc_latex({value: dateparts.join('/')})
