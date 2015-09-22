@@ -35,13 +35,19 @@ Zotero.BetterBibTeX.debugMode = ->
 Zotero.BetterBibTeX.parseDate = (date, locale) ->
   @dateLocales ?= {}
   if !@dateLocales[locale]
-    for lc, strings of @DateJS.CultureStrings
+    llocale = locale.toLowerCase()
+    for lc, strings of @CultureStrings
+      if lc.replace(/-.*/, '') == locale
+        @dateLocales[locale] = lc
+        break
+
       for key in ['name', 'englishName', 'nativeName']
-        @dateLocales[locale] = lc if strings[key].toLowerCase() == locale.toLowerCase()
+        @dateLocales[locale] = lc if llocale == strings[key].toLowerCase()
       break if @dateLocales[locale]
+
     @dateLocales[locale] ||= 'en-US'
 
-  @DateJS.i18n.setLanguage(@dateLocales[locale])
+  # TODO fiddle with 'part' here
   return @DateJS.parse(date)
 
 Zotero.BetterBibTeX.stringify = (obj, replacer, spaces, cycleReplacer) ->

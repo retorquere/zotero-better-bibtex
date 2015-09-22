@@ -400,30 +400,26 @@ end
 
 file 'chrome/content/zotero-better-bibtex/datejs.js' => ['Rakefile', 'package.json'] do |t|
   macros = open('sjs/date.sjs').read + "\n"
-  code = "
-    Zotero.BetterBibTeX.DateJS = Date;
-  "
-  modules = %w{core/i18n core/core core/core-prototypes core/format_parser core/parsing_operators core/parsing_grammar core/parser}
-  Dir['node_modules/datejs/src/i18n/*.js'].each{|locale|
-    modules << "i18n/" + File.basename(locale, File.extname(locale))
-  }
-  modules.each{|name|
-    puts name
-    src = "node_modules/datejs/src/#{name}.js"
-    Tempfile.create(['input', '.js']) do |input|
-      Tempfile.create(['output', '.js']) do |output|
-        open(input.path, 'w'){|f|
-          f.write(macros)
-          f.write(open(src).read)
-        }
-        sh "#{NODEBIN}/sjs -o #{output.path.shellescape} #{input.path.shellescape}"
-        code += open(output.path).read
-      end
-    end
-  }
-
+  #modules = %w{core/i18n core/core core/core-prototypes core/format_parser core/parsing_operators core/parsing_grammar core/parser}
+#  modules.each{|name|
+#    puts name
+#    src = "node_modules/datejs/src/#{name}.js"
+#    Tempfile.create(['input', '.js']) do |input|
+#      Tempfile.create(['output', '.js']) do |output|
+#        open(input.path, 'w'){|f|
+#          f.write(macros)
+#          f.write(open(src).read)
+#        }
+#        sh "#{NODEBIN}/sjs -o #{output.path.shellescape} #{input.path.shellescape}"
+#        code += open(output.path).read
+#      end
+#    end
+#  }
   open(t.name, 'w'){|f|
-    f.write(code)
+    Dir['node_modules/datejs/src/i18n/*.js'].each{|locale|
+      puts locale
+      f.write(open(locale).read.gsub('Date.CultureStrings', 'Zotero.BetterBibTeX.CultureStrings'))
+    }
   }
 end
 
