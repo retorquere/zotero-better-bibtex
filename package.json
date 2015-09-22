@@ -23,7 +23,6 @@
     "browserify": "^11.0.0",
     "coffee-script": "^1.9.1",
     "coffeelint": "^1.9.2",
-    "datejs": "^1.0.0-rc3",
     "fold-to-ascii": "^2.0.2",
     "he": "^0.5.0",
     "marked": "^0.3.5",

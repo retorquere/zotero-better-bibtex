@@ -89,9 +89,9 @@ Zotero.BetterBibTeX.parseDate = (dateish, locale) ->
     for k, v of @CSLLocales[locale]
       date = date.replace(v, k)
 
-    parsed = Zotero.Utilities.strToDate(date)
+    parsed = Zotero.Date.strToDate(date)
 
-    Translator.debug('parsed:', date, '=>', parsed)
+    Zotero.BetterBibTeX.debug('parsed:', date, '=>', parsed)
     break unless parsed.year
     break if parsed.day && !parsed.month
 
