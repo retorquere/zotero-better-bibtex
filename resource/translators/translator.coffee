@@ -110,16 +110,17 @@ Translator.initialize = ->
   for own attr, f of @fieldMap || {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
-  @skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
+  @options = {}
+  @options.skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
   for pref in ['jabrefGroups', 'postscript', 'csquotes', 'usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'verbatimDate']
-    @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
-  if @verbatimDate == ''
-    delete @verbatimDate
-  else
-    @verbatimDate = new RegExp("^(#{@verbatimDate})$", 'i')
+    @options[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
+  @verbatimDateRE = new RegExp("^(#{@options.verbatimDate})$", 'i') if @options.verbatimDate
+  for own k, v of @options
+    @[k] = v
 
+  @preferences = {}
   for option in ['useJournalAbbreviation', 'exportPath', 'exportFilename', 'exportCharset', 'exportFileData', 'exportNotes']
-    @[option] = Zotero.getOption(option)
+    @preferences[option] = @[option] = Zotero.getOption(option)
 
   @caching = @header.BetterBibTeX?.cache?.BibTeX && !@exportFileData
 
