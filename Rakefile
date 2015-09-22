@@ -402,7 +402,6 @@ end
 file 'chrome/content/zotero-better-bibtex/datejs.js' => ['Rakefile', 'package.json'] do |t|
   open(t.name, 'w'){|f|
     Dir['node_modules/datejs/src/i18n/*.js'].each{|locale|
-      puts locale
       f.write(open(locale).read.gsub('Date.CultureStrings', 'Zotero.BetterBibTeX.CultureStrings'))
     }
   }
