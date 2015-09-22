@@ -32,6 +32,18 @@ Zotero.BetterBibTeX.debugMode = ->
     @debug = @debug_off
     @log = @log_off
 
+Zotero.BetterBibTeX.parseDate = (date, locale) ->
+  @dateLocales ?= {}
+  if !@dateLocales[locale]
+    for lc, strings of @DateJS.CultureStrings
+      for key in ['name', 'englishName', 'nativeName']
+        @dateLocales[locale] = lc if strings[key].toLowerCase() == locale.toLowerCase()
+      break if @dateLocales[locale]
+    @dateLocales[locale] ||= 'en-US'
+
+  @DateJS.i18n.setLanguage(@dateLocales[locale])
+  return @DateJS.parse(date)
+
 Zotero.BetterBibTeX.stringify = (obj, replacer, spaces, cycleReplacer) ->
   str = JSON.stringify(obj, @stringifier(replacer, cycleReplacer), spaces)
 
@@ -1025,7 +1037,7 @@ Zotero.BetterBibTeX.load = (translator, options = {}) ->
 
   header.target = options.target if options.target
 
-  sources = ['json5', 'translator', 'moment', "#{translator}.header", translator].concat(header.BetterBibTeX?.dependencies || [])
+  sources = ['json5', 'translator', "#{translator}.header", translator].concat(header.BetterBibTeX?.dependencies || [])
   @debug('translator.load:', translator, 'from', sources)
   code = "exports = undefined;\nmodule = undefined;\n"
   for src in sources

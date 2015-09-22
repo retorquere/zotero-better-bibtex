@@ -119,6 +119,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/test/tests.js',
+  'chrome/content/zotero-better-bibtex/datejs.js',
   'chrome.manifest',
   'install.rdf',
   'resource/logs/s3.json',
@@ -127,7 +128,6 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',
   'resource/translators/he.js',
-  'resource/translators/moment.js',
 ]).sort.uniq
 
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
@@ -395,6 +395,50 @@ def browserify(code, target)
         f.write(open(output.path).read)
       }
     end
+  end
+end
+
+file 'chrome/content/zotero-better-bibtex/datejs.js' => ['Rakefile', 'package.json'] do |t|
+  macros = open('sjs/date.sjs').read + "\n"
+  code = "
+    Zotero.BetterBibTeX.DateJS = Date;
+  "
+  modules = %w{core/i18n core/core core/core-prototypes core/format_parser core/parsing_operators core/parsing_grammar core/parser}
+  Dir['node_modules/datejs/src/i18n/*.js'].each{|locale|
+    modules << "i18n/" + File.basename(locale, File.extname(locale))
+  }
+  modules.each{|name|
+    puts name
+    src = "node_modules/datejs/src/#{name}.js"
+    Tempfile.create(['input', '.js']) do |input|
+      Tempfile.create(['output', '.js']) do |output|
+        open(input.path, 'w'){|f|
+          f.write(macros)
+          f.write(open(src).read)
+        }
+        sh "#{NODEBIN}/sjs -o #{output.path.shellescape} #{input.path.shellescape}"
+        code += open(output.path).read
+      end
+    end
+  }
+
+  open(t.name, 'w'){|f|
+    f.write(code)
+  }
+end
+
+file 'resource/translators/langs.js' => 'Rakefile' do |t|
+  Tempfile.create(['langs', '.js']) do |tmp|
+    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/adlawson/nodejs-langs/master/data.json', tmp.path)
+    langs = JSON.parse(open(tmp.path).read)
+    langs.each{|lang|
+      lang.keys.each{|k|
+        lang[k] = lang[k].downcase
+      }
+    }
+    open(t.name, 'w') {|f|
+      f.write("Translator.languages = { locales: {}, langs: #{langs.to_json} };")
+    }
   end
 end
 

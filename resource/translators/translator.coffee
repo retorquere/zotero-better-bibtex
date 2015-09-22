@@ -20,6 +20,17 @@ Translator.stringify = (obj, replacer, spaces, cycleReplacer) ->
       str += '+' + @stringify(o)
   return str
 
+Translator.locale = (language) ->
+  if !@languages.locales[language]
+    ll = language.toLowerCase()
+    for locale in @languages.langs
+      for k, v of locale
+        @languages.locales[language] = locale[1] if ll == v
+      break if @languages.locales[language]
+    @languages.locales[language] ||= language
+
+  return @languages.locales[language]
+
 Translator.stringifier = (replacer, cycleReplacer) ->
   stack = []
   keys = []
@@ -49,23 +60,36 @@ Translator.EDTFl0 = (date) ->
   date = date.replace(/\s/g, '')
   return [0, 0] if date == ''
 
-  return unless date.match(/^-?[0-9]{1,4}(-[0-9]{1,2}(-[0-9]{1,2})?)?$/)
-  yearsign = 1
-  if date[0] == '-'
-    yearsign = -1
-    date = date.slice(1)
+  switch
+    when date.match(/^-?[0-9]{1,4}([-/\.][0-9]{1,2}([-/\.][0-9]{1,2})?)?$/)
+      date = date.split(/[-/\.]/)
+      yearsign = 1
+      if date[0] == '-'
+        yearsign = -1
+        date = date.slice(1)
 
-  date = (parseInt(d) for d in date.split('-'))
+    when date.match(/^([0-9]{1,2}[-/\.])?[0-9]{1,2}[-/\.][0-9]{1,4}?$/)
+      date = date.split(/[-/\.]/)
+      date.reverse()
+      yearsign = 1
+
+    else
+      return
+
+  date = (parseInt(d) for d in date)
   date[0] *= yearsign
+  [date[1], date[2]] = [date[2], date[1]] if date.length == 3 && date[1] > 12
   return date
 
 Translator.date = (date) ->
-  dateparts = date.replace(/\s/g, '').split('/')
+  compact = date.replace(/\s/g, '')
+  dateparts = compact.split('/')
+  dateparts = compact.split('_') unless dateparts.length == 2
   if dateparts.length == 2
     dateparts = [@EDTFl0(dateparts[0]), @EDTFl0(dateparts[1])]
     return {'date-parts': dateparts} if dateparts[0] && dateparts[1]
 
-  dateparts = @EDTFl0(date.replace(/\s/g, ''))
+  dateparts = @EDTFl0(date)
   return {'date-parts': dateparts} if dateparts
 
   return {literal: date} if date.indexOf('[') >= 0
