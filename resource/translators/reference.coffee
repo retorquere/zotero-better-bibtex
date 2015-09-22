@@ -248,8 +248,8 @@ class Reference
 
     # sort attachments for stable tests, and to make non-snapshots the default for JabRef to open (#355)
     attachments.sort((a, b) ->
-      return -1 if a.mimetype == 'text/html' && b.mimetype != 'text/html'
-      return 1  if b.mimetype == 'text/html' && a.mimetype != 'text/html'
+      return 1  if a.mimetype == 'text/html' && b.mimetype != 'text/html'
+      return -1 if b.mimetype == 'text/html' && a.mimetype != 'text/html'
       return a.path.localeCompare(b.path)
     )
 
