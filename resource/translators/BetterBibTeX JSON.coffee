@@ -79,37 +79,12 @@ doExport = ->
       id: Translator.header.translatorID
       label: Translator.header.label
       release: Translator.release
-      preferences: {}
-      options: {}
+      preferences: Translator.preferences
+      options: Translator.options
     }
     collections: Translator.collections
     items: []
   }
-
-  prefs = [
-    'postscript'
-    'csquotes'
-    'citekeyFormat'
-    'skipWords'
-    'skipFields'
-    'usePrefix'
-    'preserveCaps'
-    'fancyURLs'
-    'langID'
-    'attachmentRelativePath'
-    'autoAbbrev',
-    'autoAbbrevStyle'
-    'unicode'
-    'pinCitekeys'
-    'rawImports'
-    'DOIandURL'
-    'attachmentsNoMetadata'
-    'preserveBibTeXVariables'
-  ]
-  for pref in prefs
-    data.config.preferences[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
-  for option in ['useJournalAbbreviation', 'exportCharset', 'exportFileData', 'exportNotes']
-    data.config.options[option] = Zotero.getOption(option)
 
   while item = Zotero.nextItem()
     data.items.push(scrub(item))

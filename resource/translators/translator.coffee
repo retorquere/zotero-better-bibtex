@@ -94,8 +94,7 @@ Translator.date = (date) ->
 
   return {literal: date} if date.indexOf('[') >= 0
 
-  #parsed = Zotero.Utilities.strToDate(date)
-  parsed = Translator.moment(date)
+  parsed = Zotero.Utilities.strToDate(date)
 
   Translator.debug('parsed:', date, '=>', parsed)
   return {literal: date} unless parsed.year
@@ -111,17 +110,95 @@ Translator.date = (date) ->
 
   return {'date-parts': (d for d in [parsed.year, parsed.month, parsed.day] when d)}
 
+# http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
+Translator.CSLVariables = [
+  #'abstract'
+  #'annote'
+  'archive'
+  'archive_location'
+  'archive-place'
+  'authority'
+  'call-number'
+  #'citation-label'
+  #'citation-number'
+  'collection-title'
+  'container-title'
+  'container-title-short'
+  'dimensions'
+  'DOI'
+  'event'
+  'event-place'
+  #'first-reference-note-number'
+  'genre'
+  'ISBN'
+  'ISSN'
+  'jurisdiction'
+  'keyword'
+  'locator'
+  'medium'
+  #'note'
+  'original-publisher'
+  'original-publisher-place'
+  'original-title'
+  'page'
+  'page-first'
+  'PMCID'
+  'PMID'
+  'publisher'
+  'publisher-place'
+  'references'
+  'reviewed-title'
+  'scale'
+  'section'
+  'source'
+  'status'
+  'title'
+  'title-short'
+  'URL'
+  'version'
+  'volume-title'
+  'year-suffix'
+  'chapter-number'
+  'collection-number'
+  'edition'
+  'issue'
+  'number'
+  'number-of-pages'
+  'number-of-volumes'
+  'volume'
+  'accessed'
+  'container'
+  'event-date'
+  'issued'
+  'original-date'
+  'submitted'
+  #'author'
+  #'collection-editor'
+  #'composer'
+  #'container-author'
+  #'director'
+  #'editor'
+  #'editorial-director'
+  #'illustrator'
+  #'interviewer'
+  #'original-author'
+  #'recipient'
+  #'reviewed-author'
+  #'translator'
+]
+
 Translator.extractFields = (item) ->
   return {} unless item.extra
 
   fields = {}
   extra = []
+  re = new RegExp("^\\s*(#{@CSLVariables.join('|')}|LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\\s*:\\s*([\\S]+)\\s*$", 'i')
   for line in item.extra.split("\n")
-    m = /^\s*(LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID|DOI)\s*:\s*([\S]+)\s*$/i.exec(line)
+    m = re.exec(line)
     if !m
       extra.push(line)
     else
-      fields[m[1]] = {value: m[2], format: 'key-value'}
+      fields[m[1]] = {value: m[2], format: if m[2] in @CSLVariables then 'csl' else 'key-value'}
   item.extra = extra.join("\n")
 
   m = /(biblatexdata|bibtex|biblatex)\[([^\]]+)\]/.exec(item.extra)
@@ -177,16 +254,17 @@ Translator.initialize = ->
   for own attr, f of @fieldMap || {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
-  @skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
+  @options = {}
+  @options.skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
   for pref in ['jabrefGroups', 'postscript', 'csquotes', 'usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'verbatimDate']
-    @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
-  if @verbatimDate == ''
-    delete @verbatimDate
-  else
-    @verbatimDate = new RegExp("^(#{@verbatimDate})$", 'i')
+    @options[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
+  @verbatimDateRE = new RegExp("^(#{@options.verbatimDate})$", 'i') if @options.verbatimDate
+  for own k, v of @options
+    @[k] = v
 
+  @preferences = {}
   for option in ['useJournalAbbreviation', 'exportPath', 'exportFilename', 'exportCharset', 'exportFileData', 'exportNotes']
-    @[option] = Zotero.getOption(option)
+    @preferences[option] = @[option] = Zotero.getOption(option)
 
   @caching = @header.BetterBibTeX?.cache?.BibTeX && !@exportFileData
 
