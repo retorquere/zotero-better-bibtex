@@ -90,6 +90,7 @@ Translator.CSLVariables = [
   'title-short'
   'URL'
   'version'
+  'volume-title'
   'year-suffix'
   'chapter-number'
   'collection-number'

@@ -15,7 +15,7 @@ class BetterBibTeXPatternFormatter
 
     return {} if @item.itemType in ['attachment', 'note']
 
-    if item.date
+    if @item.date
       dates = @item.date.split('/')
       dates = @item.date.split('_') unless dates.length == 2
       @date = if dates.length == 2 then dates[0] else @item.date
