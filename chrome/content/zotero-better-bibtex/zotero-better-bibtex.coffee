@@ -84,9 +84,9 @@ Zotero.BetterBibTeX.parseDate = (dateish, locale) ->
       dateparts.push([0, 0])
       continue
 
-    @CultureStrings[locale] = @CultureStrings[locale.toLowerCase()] || @CultureStrings.en if !@CultureStrings[locale]
+    @CSLLocales[locale] = @CSLLocales[locale.toLowerCase()] || @CSLLocales.en if !@CSLLocales[locale]
 
-    for k, v of @CultureStrings[locale]
+    for k, v of @CSLLocales[locale]
       date = date.replace(v, k)
 
     parsed = Zotero.Utilities.strToDate(date)
