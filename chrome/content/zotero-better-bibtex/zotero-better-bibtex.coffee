@@ -43,7 +43,7 @@ Zotero.BetterBibTeX.parseDate = (dateish, locale) ->
   compact = dateish.replace(/\s/g, '')
   for sep in ['/', '_']
     range = compact.split(sep)
-    if range.length == 2
+    if range.length in [1, 2]
       dateparts = []
       for date in range
         switch
@@ -51,14 +51,14 @@ Zotero.BetterBibTeX.parseDate = (dateish, locale) ->
             dateparts.push([0, 0])
             continue
 
-          when date.match(/^-?[0-9]{1,4}([-/\.][0-9]{1,2}([-/\.][0-9]{1,2})?)?$/)
+          when date.match(/^-?[0-9]{3,4}([-/\.][0-9]{1,2}([-/\.][0-9]{1,2})?)?$/)
             yearsign = 1
             if date[0] == '-'
               yearsign = -1
               date = date.slice(1)
             date = date.split(/[-/\.]/)
 
-          when date.match(/^([0-9]{1,2}[-/\.])?[0-9]{1,2}[-/\.][0-9]{1,4}?$/)
+          when date.match(/^([0-9]{1,2}[-/\.])?[0-9]{1,2}[-/\.][0-9]{3,4}?$/)
             date = date.split(/[-/\.]/)
             date.reverse()
             yearsign = 1
@@ -71,6 +71,7 @@ Zotero.BetterBibTeX.parseDate = (dateish, locale) ->
         [date[1], date[2]] = [date[2], date[1]] if date.length == 3 && date[1] > 12
         dateparts.push(date)
 
+      dateparts = dateparts[0] if dateparts.length == 1
       return {'date-parts': dateparts} if dateparts[0] && dateparts[1]
 
   range = dateish.split('_')
