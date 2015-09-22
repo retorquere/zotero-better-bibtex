@@ -87,10 +87,7 @@ Zotero.BetterBibTeX.parseDate = (dateish, locale) ->
     @CultureStrings[locale] = @CultureStrings[locale.toLowerCase()] || @CultureStrings.en if !@CultureStrings[locale]
 
     for k, v of @CultureStrings[locale]
-      if k == 'weekdays'
-        date = date.replace(v, '')
-      else
-        date = date.replace(v, k)
+      date = date.replace(v, k)
 
     parsed = Zotero.Utilities.strToDate(date)
 

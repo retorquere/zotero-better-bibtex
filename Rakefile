@@ -119,8 +119,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/test/tests.js',
-  'chrome/content/zotero-better-bibtex/datejs.js',
-  'chrome/content/zotero-better-bibtex/culture_strings.js',
+  'chrome/content/zotero-better-bibtex/csl-locales.js',
   'chrome.manifest',
   'install.rdf',
   'resource/logs/s3.json',
@@ -399,34 +398,25 @@ def browserify(code, target)
   end
 end
 
-file 'chrome/content/zotero-better-bibtex/datejs.js' => ['Rakefile', 'package.json'] do |t|
+file 'chrome/content/zotero-better-bibtex/csl-locales.coffee' => ['Rakefile', 'csl-locales/locales.json'] + Dir['csl-locales/*.xml'] do |t|
   open(t.name, 'w'){|f|
-    Dir['node_modules/datejs/src/i18n/*.js'].each{|locale|
-      f.write(open(locale).read.gsub('Date.CultureStrings', 'Zotero.BetterBibTeX.CultureStrings'))
-    }
-  }
-end
+    f.puts('Zotero.BetterBibTeX.CSLLocales = {}')
 
-file 'resource/translators/langs.js' => 'Rakefile' do |t|
-  Tempfile.create(['langs', '.js']) do |tmp|
-    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/adlawson/nodejs-langs/master/data.json', tmp.path)
-    langs = JSON.parse(open(tmp.path).read)
-    langs.each{|lang|
-      lang.keys.each{|k|
-        lang[k] = lang[k].downcase
+    locales = JSON.parse(open('csl-locales/locales.json').read)
+
+    locales['primary-dialects'].each_pair{|short, full|
+      names = ([short, full] + locales['language-names'][full]).compact.uniq.collect{|name| "Zotero.BetterBibTeX.CSLLocales[#{name.downcase.sub(/\s*\(.*/, '').inspect}]" }.join(' = ')
+      f.puts("#{names} =")
+
+      locale = Nokogiri::XML(open("csl-locales/locales-#{full}.xml"))
+      locale.remove_namespaces!
+      1.upto(12).each{|month|
+        month = month.to_s.rjust(2, '0')
+        names = locale.xpath("//term[@name='month-#{month}']").collect{|m| m.inner_text}
+        f.puts "  #{month.inspect}: /\\b(#{names.join('|')})\\b/i"
       }
     }
-    open(t.name, 'w') {|f|
-      f.write("Translator.languages = { locales: {}, langs: #{langs.to_json} };")
-    }
-  end
-end
-
-file 'resource/translators/moment.js' => 'Rakefile' do |t|
-  Tempfile.create(['moment', '.js']) do |tmp|
-    ZotPlus::RakeHelper.download('http://momentjs.com/downloads/moment-with-locales.js', tmp.path)
-    browserify("var Translator; if (!Translator) { Translator = {}; };\nTranslator.moment=require(#{tmp.path.to_json});", t.name)
-  end
+  }
 end
 
 file 'resource/translators/marked.js' => 'Rakefile' do |t|
