@@ -44,17 +44,94 @@ Translator._log = (level, msg...) ->
   msg = ((if (typeof m) in ['boolean', 'string', 'number'] then '' + m else Translator.stringify(m)) for m in msg).join(' ')
   Zotero.debug('[better' + '-' + "bibtex:#{@header.label}] " + msg, level)
 
+# http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
+Translator.CSLVariables = [
+  #'abstract'
+  #'annote'
+  'archive'
+  'archive_location'
+  'archive-place'
+  'authority'
+  'call-number'
+  #'citation-label'
+  #'citation-number'
+  'collection-title'
+  'container-title'
+  'container-title-short'
+  'dimensions'
+  'DOI'
+  'event'
+  'event-place'
+  #'first-reference-note-number'
+  'genre'
+  'ISBN'
+  'ISSN'
+  'jurisdiction'
+  'keyword'
+  'locator'
+  'medium'
+  #'note'
+  'original-publisher'
+  'original-publisher-place'
+  'original-title'
+  'page'
+  'page-first'
+  'PMCID'
+  'PMID'
+  'publisher'
+  'publisher-place'
+  'references'
+  'reviewed-title'
+  'scale'
+  'section'
+  'source'
+  'status'
+  'title'
+  'title-short'
+  'URL'
+  'version'
+  'year-suffix'
+  'chapter-number'
+  'collection-number'
+  'edition'
+  'issue'
+  'number'
+  'number-of-pages'
+  'number-of-volumes'
+  'volume'
+  'accessed'
+  'container'
+  'event-date'
+  'issued'
+  'original-date'
+  'submitted'
+  #'author'
+  #'collection-editor'
+  #'composer'
+  #'container-author'
+  #'director'
+  #'editor'
+  #'editorial-director'
+  #'illustrator'
+  #'interviewer'
+  #'original-author'
+  #'recipient'
+  #'reviewed-author'
+  #'translator'
+]
+
 Translator.extractFields = (item) ->
   return {} unless item.extra
 
   fields = {}
   extra = []
+  re = new RegExp("^\\s*(#{@CSLVariables.join('|')}|LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\\s*:\\s*([\\S]+)\\s*$", 'i')
   for line in item.extra.split("\n")
-    m = /^\s*(LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID|DOI)\s*:\s*([\S]+)\s*$/i.exec(line)
+    m = re.exec(line)
     if !m
       extra.push(line)
     else
-      fields[m[1]] = {value: m[2], format: 'key-value'}
+      fields[m[1]] = {value: m[2], format: if m[2] in @CSLVariables then 'csl' else 'key-value'}
   item.extra = extra.join("\n")
 
   m = /(biblatexdata|bibtex|biblatex)\[([^\]]+)\]/.exec(item.extra)
