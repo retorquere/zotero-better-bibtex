@@ -246,8 +246,12 @@ class Reference
     f.errors = errors if errors.length != 0
     return null if attachments.length == 0
 
-    # sort attachments for stable tests
-    attachments.sort( ( (a, b) -> a.path.localeCompare(b.path) ) ) if Translator.testing
+    # sort attachments for stable tests, and to make non-snapshots the default for JabRef to open (#355)
+    attachments.sort((a, b) ->
+      return -1 if a.mimetype == 'text/html' && b.mimetype != 'text/html'
+      return 1  if b.mimetype == 'text/html' && a.mimetype != 'text/html'
+      return a.path.localeCompare(b.path)
+    )
 
     return (att.path.replace(/([\\{};])/g, "\\$1") for att in attachments).join(';') if Translator.attachmentsNoMetadata
     return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
