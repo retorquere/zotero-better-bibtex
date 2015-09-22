@@ -16,9 +16,9 @@ class BetterBibTeXPatternFormatter
     return {} if @item.itemType in ['attachment', 'note']
 
     if @item.date
-      dates = @item.date.split('/')
-      dates = @item.date.split('_') unless dates.length == 2
-      @date = if dates.length == 2 then dates[0] else @item.date
+      date = Zotero.BetterBibTeX.parseDate(@item.date, @item.language || Zotero.locale)['date-parts']
+      date = date[0] if date && Array.isArray(date[0])
+      [@year, @month] = date if date
 
     for candidate in @patterns[0]
       delete @postfix
@@ -246,24 +246,17 @@ class BetterBibTeXPatternFormatter
       words.slice(0, 1).join('')
 
     shortyear: ->
-      return '' unless @date
-      date = Zotero.Date.strToDate(@date)
-      return '' if typeof date.year == 'undefined'
-      year = date.year % 100
+      return '' unless @year
+      year = @year % 100
       return "0#{year}"  if year < 10
       return '' + year
 
     year: ->
-      return '' unless @date
-      date = Zotero.Date.strToDate(@date)
-      return @date if typeof date.year == 'undefined'
-      return date.year
+      return @year || ''
 
     month: ->
-      return '' unless @date
-      date = Zotero.Date.strToDate(@date)
-      return '' if typeof date.year == 'undefined'
-      return @months[date.month] ? ''
+      return '' unless @month
+      return @months[@month - 1] ? ''
 
     title: ->
       return @titleWords(@item.title).join('')

@@ -32,16 +32,91 @@ Zotero.BetterBibTeX.debugMode = ->
     @debug = @debug_off
     @log = @log_off
 
-Zotero.BetterBibTeX.parseDate = (date, locale) ->
-  @CultureStrings[locale] = @CultureStrings[locale.toLowerCase()] || @CultureStrings.en if !@CultureStrings[locale]
+Zotero.BetterBibTeX.parseDate = (dateish, locale) ->
+  return unless typeof dateish == 'string'
+  dateish = dateish.trim()
+  return null unless dateish
 
-  for k, v of @CultureStrings[locale]
-    if k == 'weekdays'
-      date = date.replace(v, '')
+  return {literal: dateish} if dateish.indexOf('[') >= 0 || dateish in ['/', '_']
+
+  # try EDTF date range
+  compact = dateish.replace(/\s/g, '')
+  for sep in ['/', '_']
+    range = compact.split(sep)
+    if range.length == 2
+      dateparts = []
+      for date in range
+        switch
+          when date == ''
+            dateparts.push([0, 0])
+            continue
+
+          when date.match(/^-?[0-9]{1,4}([-/\.][0-9]{1,2}([-/\.][0-9]{1,2})?)?$/)
+            yearsign = 1
+            if date[0] == '-'
+              yearsign = -1
+              date = date.slice(1)
+            date = date.split(/[-/\.]/)
+
+          when date.match(/^([0-9]{1,2}[-/\.])?[0-9]{1,2}[-/\.][0-9]{1,4}?$/)
+            date = date.split(/[-/\.]/)
+            date.reverse()
+            yearsign = 1
+
+          else
+            continue
+
+        date = (parseInt(d) for d in date)
+        date[0] *= yearsign
+        [date[1], date[2]] = [date[2], date[1]] if date.length == 3 && date[1] > 12
+        dateparts.push(date)
+
+      return {'date-parts': dateparts} if dateparts[0] && dateparts[1]
+
+  range = dateish.split('_')
+  range = [dateish] unless range.length in [1,2]
+
+  dateparts = []
+  for date in range
+    date = date.trim()
+    if date == ''
+      dateparts.push([0, 0])
+      continue
+
+    @CultureStrings[locale] = @CultureStrings[locale.toLowerCase()] || @CultureStrings.en if !@CultureStrings[locale]
+
+    for k, v of @CultureStrings[locale]
+      if k == 'weekdays'
+        date = date.replace(v, '')
+      else
+        date = date.replace(v, k)
+
+    parsed = Zotero.Utilities.strToDate(date)
+
+    Translator.debug('parsed:', date, '=>', parsed)
+    break unless parsed.year
+    break if parsed.day && !parsed.month
+
+    parsed.year = parseInt(parsed.year, 10) if parsed.year
+    break if isNaN(parsed.year)
+
+    parsed.month = parseInt(parsed.month, 10) + 1 if parsed.month
+    break if parsed.month && isNaN(parsed.month)
+
+    parsed.day = parseInt(parsed.day, 10) if parsed.day
+    break if parsed.day && isNaN(parsed.day)
+
+    dateparts.push((d for d in [parsed.year, parsed.month, parsed.day] when d))
+
+  switch
+    when range.length != dateparts.length
+      return {literal: dateish}
+
+    when dateparts.length == 1
+      return {'date-parts': dateparts[0] }
+
     else
-      date = date.replace(v, k)
-
-  return Zotero.Date.strToDate(date)
+      return {'date-parts': dateparts }
 
 Zotero.BetterBibTeX.stringify = (obj, replacer, spaces, cycleReplacer) ->
   str = JSON.stringify(obj, @stringifier(replacer, cycleReplacer), spaces)
