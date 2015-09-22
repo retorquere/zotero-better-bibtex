@@ -4,6 +4,7 @@ if not Zotero.BetterBibTeX
   for script in " lokijs
                   zotero-better-bibtex
                   datejs
+                  culture_strings
                   fold-to-ascii
                   punycode
                   release

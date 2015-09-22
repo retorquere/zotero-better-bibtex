@@ -33,22 +33,15 @@ Zotero.BetterBibTeX.debugMode = ->
     @log = @log_off
 
 Zotero.BetterBibTeX.parseDate = (date, locale) ->
-  @dateLocales ?= {}
-  if !@dateLocales[locale]
-    llocale = locale.toLowerCase()
-    for lc, strings of @CultureStrings
-      if lc.replace(/-.*/, '') == locale
-        @dateLocales[locale] = lc
-        break
+  @CultureStrings[locale] = @CultureStrings[locale.toLowerCase()] || @CultureStrings.en if !@CultureStrings[locale]
 
-      for key in ['name', 'englishName', 'nativeName']
-        @dateLocales[locale] = lc if llocale == strings[key].toLowerCase()
-      break if @dateLocales[locale]
+  for k, v of @CultureStrings[locale]
+    if k == 'weekdays'
+      date = date.replace(v, '')
+    else
+      date = date.replace(v, k)
 
-    @dateLocales[locale] ||= 'en-US'
-
-  # TODO fiddle with 'part' here
-  return @DateJS.parse(date)
+  return Zotero.Date.strToDate(date)
 
 Zotero.BetterBibTeX.stringify = (obj, replacer, spaces, cycleReplacer) ->
   str = JSON.stringify(obj, @stringifier(replacer, cycleReplacer), spaces)
