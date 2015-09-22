@@ -3,6 +3,8 @@ sudo: false
 cache:
 - apt
 - bundler
+git:
+  submodules: false
 rvm:
 - 2.2
 env:
