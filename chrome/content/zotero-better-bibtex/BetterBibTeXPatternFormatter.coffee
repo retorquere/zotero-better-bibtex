@@ -12,7 +12,13 @@ class BetterBibTeXPatternFormatter
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
+
     return {} if @item.itemType in ['attachment', 'note']
+
+    if item.date
+      dates = @item.date.split('/')
+      dates = @item.date.split('_') unless dates.length == 2
+      @date = if dates.length == 2 then dates[0] else @item.date
 
     for candidate in @patterns[0]
       delete @postfix
@@ -240,22 +246,22 @@ class BetterBibTeXPatternFormatter
       words.slice(0, 1).join('')
 
     shortyear: ->
-      return '' unless @item.date
-      date = Zotero.Date.strToDate(@item.date)
+      return '' unless @date
+      date = Zotero.Date.strToDate(@date)
       return '' if typeof date.year == 'undefined'
       year = date.year % 100
       return "0#{year}"  if year < 10
       return '' + year
 
     year: ->
-      return '' unless @item.date
-      date = Zotero.Date.strToDate(@item.date)
-      return @item.date if typeof date.year == 'undefined'
+      return '' unless @date
+      date = Zotero.Date.strToDate(@date)
+      return @date if typeof date.year == 'undefined'
       return date.year
 
     month: ->
-      return '' unless @item.date
-      date = Zotero.Date.strToDate(@item.date)
+      return '' unless @date
+      date = Zotero.Date.strToDate(@date)
       return '' if typeof date.year == 'undefined'
       return @months[date.month] ? ''
 
