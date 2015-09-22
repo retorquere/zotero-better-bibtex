@@ -125,16 +125,11 @@ class Reference
               #Zotero.BetterBibTeX.CSL.parseParticles(name)
               CSL.parseParticles(name)
 
-              # temporary workaround for https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping
-              if name['non-dropping-particle'] and !name['dropping-particle']
-                if (new RegExp("\\s#{name['non-dropping-particle']}(\\s|$)")).test(creator.firstName)
-                  if !(new RegExp("\\s#{name['non-dropping-particle']}(\\s|$)")).test(creator.lastName)
-                    name['dropping-particle'] = name['non-dropping-particle']
-                    delete name['non-dropping-particle']
-
               source = XRegExp.replace((creator.firstName || '') + (creator.lastName || ''), @nonLetters, '')
               parsed = XRegExp.replace((part || '' for part in [name.given, name.family, name.suffix, name['non-dropping-particle'], name['dropping-particle']]).join(''), @nonLetters, '')
-              fallback = (source.length != parsed.length)
+
+              # Can we handle the abbot now?
+              # fallback = (source.length != parsed.length)
 
               Translator.debug('particle parser: creator=', creator, "@#{source.length}=", source, 'name=', name, "@#{parsed.length}=", parsed, 'fallback:', fallback)
 
@@ -156,9 +151,9 @@ class Reference
           # TODO: is this the best way to deal with commas?
           name = (part.replace(/,/g, '{,}') for part in name).join(', ')
 
-          if fallback
-            name = (part.replace(/,!/g, ',') for part in [creator.firstName + ' ' + creator.lastName] when part).join(' ')
-            name = @enc_latex({value: name}).replace(/ and /g, ' {and} ').replace(/,/g, '{,}')
+          #if fallback
+          #  name = (part.replace(/,!/g, ',') for part in [creator.firstName + ' ' + creator.lastName] when part).join(' ')
+          #  name = @enc_latex({value: name}).replace(/ and /g, ' {and} ').replace(/,/g, '{,}')
 
         else
           continue
