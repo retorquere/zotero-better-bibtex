@@ -475,7 +475,7 @@ doExport = ->
     ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate && item.url
 
     if item.date
-      if Translator.verbatimDate.test(item.date) || typeof Zotero.Utilities.strToDate(item.date).year == 'undefined'
+      if Translator.verbatimDateRE?.test(item.date) || typeof Zotero.Utilities.strToDate(item.date).year == 'undefined'
         ref.add({ name: 'date', value: item.date, preserveCaps: true })
       else
         ref.add({ name: 'date', value: Zotero.Utilities.strToISO(item.date) })

@@ -92,7 +92,7 @@ doExport = ->
 
     if item.date
       date = Zotero.Utilities.strToDate(item.date)
-      if Translator.verbatimDate.test(item.date) || typeof date.year == 'undefined'
+      if Translator.verbatimDateRE?.test(item.date) || typeof date.year == 'undefined'
         ref.add({ name: 'year', value: item.date, preserveCaps: true })
       else
         if typeof date.month == 'number'
