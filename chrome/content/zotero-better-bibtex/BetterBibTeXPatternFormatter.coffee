@@ -16,7 +16,7 @@ class BetterBibTeXPatternFormatter
     return {} if @item.itemType in ['attachment', 'note']
 
     if @item.date
-      date = Zotero.BetterBibTeX.parseDate(@item.date, @item.language || Zotero.locale)['date-parts']
+      date = Zotero.BetterBibTeX.parseDate(@item.date, @item.language)['date-parts']
       date = date[0] if date && Array.isArray(date[0])
       [@year, @month] = date if date
 

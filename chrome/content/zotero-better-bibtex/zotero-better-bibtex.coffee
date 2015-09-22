@@ -76,6 +76,7 @@ Zotero.BetterBibTeX.parseDate = (dateish, locale) ->
   range = dateish.split('_')
   range = [dateish] unless range.length in [1,2]
 
+  locale ||= Zotero.locale
   dateparts = []
   for date in range
     date = date.trim()
@@ -644,8 +645,8 @@ Zotero.BetterBibTeX.init = ->
     }
     CSL: {
       parseParticles: (sandbox, name, normalizeApostrophe) -> Zotero.CiteProc.CSL.parseParticles(name, normalizeApostrophe)
+      parseDate: (sandbox, date, locale) -> Zotero.BetterBibTeX.parseDate(date, locale)
     }
-    locale: Zotero.locale
   }
 
   for own name, endpoint of @endpoints

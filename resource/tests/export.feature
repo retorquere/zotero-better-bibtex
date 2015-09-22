@@ -195,6 +195,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Normalize date ranges in citekeys #356                                             | 1           |
      | typo stature-statute (zotero item type) #284                                       | 1           |
      | remove the field if the override is empty #303                                     | 1           |
      | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
