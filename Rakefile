@@ -398,7 +398,7 @@ def browserify(code, target)
   end
 end
 
-file 'chrome/content/zotero-better-bibtex/csl-locales.coffee' => 'Rakefile' do |t|
+file 'chrome/content/zotero-better-bibtex/csl-locales.coffee' => ['Rakefile'] + Dir['csl-locales/*.xml'] + Dir['csl-locales/*.json'] do |t|
   open(t.name, 'w'){|f|
     f.puts('Zotero.BetterBibTeX.CSLLocales = {}')
 
