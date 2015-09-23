@@ -342,6 +342,7 @@ class DateField
     parsed = Zotero.BetterBibTeX.parseDateToObject(date)
 
     return parsed if parsed.literal
+    return {literal: date} if parsed.month && parsed.month > 12 # there's a season in there somewhere
 
     @cruft ?= new XRegExp("[^\\p{Letter}\\p{Number}]+", 'g')
     shape = date
