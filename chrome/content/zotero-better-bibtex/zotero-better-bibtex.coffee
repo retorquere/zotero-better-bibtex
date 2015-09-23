@@ -8,8 +8,6 @@ Zotero.BetterBibTeX = {
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
 
-Components.utils.import('resource://zotero-better-bibtex/lib/csl-dateparser.js', Zotero.BetterBibTeX)
-
 Zotero.BetterBibTeX.error = (msg...) ->
   @_log.apply(@, [0].concat(msg))
 Zotero.BetterBibTeX.warn = (msg...) ->
@@ -562,7 +560,15 @@ Zotero.BetterBibTeX.init = ->
       parseParticles: (sandbox, name, normalizeApostrophe) -> Zotero.CiteProc.CSL.parseParticles(name, normalizeApostrophe)
     }
     parseDateToObject: (sandbox, date) -> Zotero.BetterBibTeX.DateParser.parseDateToObject(date)
-    parseDateToArray: (sandbox, date) -> Zotero.BetterBibTeX.DateParser.parseDateToArray(date)
+    parseDateToArray: (sandbox, date) ->
+      parsed = Zotero.BetterBibTeX.DateParser.parseDateToObject(date)
+      Zotero.BetterBibTeX.DateParser.convertDateObjectToArray(parsed)
+      if Array.isArray(parsed['date-parts'])
+        if Array.isArray(parsed['date-parts'][0])
+          parsed['date-parts'] = (((if isNaN(parseInt(d)) then d else parseInt(d)) for d in datepart) for datepart in parsed['date-parts'])
+        else
+          parsed['date-parts'] = ((if isNaN(parseInt(d)) then d else parseInt(d)) for d in parsed['date-parts'])
+      return parsed
   }
 
   for own name, endpoint of @endpoints

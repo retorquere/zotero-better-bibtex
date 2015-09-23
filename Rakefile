@@ -120,10 +120,10 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/test/tests.js',
   'chrome/content/zotero-better-bibtex/csl-months.js',
+  'chrome/content/zotero-better-bibtex/juris-m-dateparser.js',
   'chrome.manifest',
   'install.rdf',
   'resource/logs/s3.json',
-  'resource/lib/csl-dateparser.js',
   'resource/translators/htmlparser.js',
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
@@ -238,15 +238,12 @@ file 'resource/translators/he.js' => 'Rakefile' do |t|
   open(t.name, 'w'){|f| f.write(code) }
 end
 
-file 'resource/lib/csl-dateparser.js' => 'Rakefile' do |t|
+file 'chrome/content/zotero-better-bibtex/juris-m-dateparser.js' => 'Rakefile' do |t|
   FileUtils.mkdir_p(File.dirname(t.name))
   Tempfile.create('dateparser') do |tmp|
     ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Juris-M/zotero/jurism/chrome/content/zotero/xpcom/dateparser.js', tmp.path)
     open(t.name, 'w'){|f|
-      f.puts("var Zotero; if (!Zotero) { Zotero = {}; }")
-      f.puts(open(tmp.path).read)
-      f.puts('var DateParser = Zotero.DateParser;')
-      f.puts("this.EXPORTED_SYMBOLS = ['DateParser'];")
+      f.write(open(tmp.path).read.gsub('Zotero.DateParser', 'Zotero.BetterBibTeX.DateParser'))
     }
   end
 end

@@ -17,7 +17,7 @@ doExport = ->
     for name, value of fields
       switch
         when value.format == 'csl' && name in ['issued', 'accessed']
-          json[name] = Translator.BetterBibTeX.parseDateToArray(value.value)
+          json[name] = Zotero.BetterBibTeX.parseDateToArray(value.value)
 
         when value.format == 'csl'
           json[name] = value.value
