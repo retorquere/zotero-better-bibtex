@@ -195,6 +195,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Better BibLaTeX.021                                                                | 1           |
      | Normalize date ranges in citekeys #356                                             | 3           |
      | typo stature-statute (zotero item type) #284                                       | 1           |
      | remove the field if the override is empty #303                                     | 1           |
@@ -218,7 +219,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.017                                                                | 1           |
      | Better BibLaTeX.019                                                                | 1           |
      | Better BibLaTeX.020                                                                | 1           |
-     | Better BibLaTeX.021                                                                | 1           |
      | Better BibLaTeX.022                                                                | 1           |
      | Better BibLaTeX.023                                                                | 1           |
      | Better BibTeX does not use biblatex fields eprint and eprinttype #170              | 1           |

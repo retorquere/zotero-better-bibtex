@@ -304,12 +304,12 @@ DateField =
     date = date.trim()
     return {empty: true} if date == ''
 
-    # Juris-M doesn't recognize d/m/y
-    if m = date.match(/^([0-9]{1,2})?[-\/]([0-9]{1,2})[-\/]([0-9]{3,4})$/)
+    # Juris-M doesn't recognize d?/m/y
+    if m = date.match(/^(([0-9]{1,2})[-\/])?([0-9]{1,2})[-\/]([0-9]{3,4})$/)
       Translator.debug('parsed:', m)
       return {
-        year: parseInt(m[3])
-        month: parseInt(m[2])
+        year: parseInt(m[4])
+        month: parseInt(m[3])
         day: parseInt(m[1]) || undefined
       }
 
