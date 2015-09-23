@@ -119,10 +119,11 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/test/tests.js',
-  'chrome/content/zotero-better-bibtex/csl-locales.js',
+  'chrome/content/zotero-better-bibtex/csl-months.js',
   'chrome.manifest',
   'install.rdf',
   'resource/logs/s3.json',
+  'resource/lib/csl-dateparser.js',
   'resource/translators/htmlparser.js',
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
@@ -235,6 +236,19 @@ file 'resource/translators/he.js' => 'Rakefile' do |t|
   code.sub!("\n}(this));", "\n}(LaTeX));")
 
   open(t.name, 'w'){|f| f.write(code) }
+end
+
+file 'resource/lib/csl-dateparser.js' => 'Rakefile' do |t|
+  FileUtils.mkdir_p(File.dirname(t.name))
+  Tempfile.create('dateparser') do |tmp|
+    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Juris-M/zotero/jurism/chrome/content/zotero/xpcom/dateparser.js', tmp.path)
+    open(t.name, 'w'){|f|
+      f.puts("var Zotero; if (!Zotero) { Zotero = {}; }")
+      f.puts(open(tmp.path).read)
+      f.puts('var DateParser = Zotero.DateParser;')
+      f.puts("this.EXPORTED_SYMBOLS = ['DateParser'];")
+    }
+  end
 end
 
 file 'resource/translators/htmlparser.js' => 'Rakefile' do |t|
@@ -383,6 +397,7 @@ rule '.json' => '.yml' do |t|
 end
 
 def browserify(code, target)
+  puts "\nbrowserify #{target}"
   prefix, code = code.split("\n", 2)
   code, prefix = prefix, code unless code
   prefix = prefix ? prefix + "\n" : ''
@@ -398,23 +413,19 @@ def browserify(code, target)
   end
 end
 
-file 'chrome/content/zotero-better-bibtex/csl-locales.coffee' => ['Rakefile'] + Dir['csl-locales/*.xml'] + Dir['csl-locales/*.json'] do |t|
+file 'chrome/content/zotero-better-bibtex/csl-months.coffee' => ['Rakefile'] + Dir['csl-locales/*.xml'] + Dir['csl-locales/*.json'] do |t|
   open(t.name, 'w'){|f|
-    f.puts('Zotero.BetterBibTeX.CSLLocales = {}')
+    f.puts('Zotero.BetterBibTeX.CSLMonths = {}')
 
     locales = JSON.parse(open('csl-locales/locales.json').read)
 
     locales['primary-dialects'].each_pair{|short, full|
-      names = ([short, full] + locales['language-names'][full]).compact.uniq.collect{|name| "Zotero.BetterBibTeX.CSLLocales[#{name.downcase.sub(/\s*\(.*/, '').inspect}]" }.join(' = ')
-      f.puts("#{names} =")
-
       locale = Nokogiri::XML(open("csl-locales/locales-#{full}.xml"))
       locale.remove_namespaces!
-      1.upto(12).each{|month|
-        month = month.to_s.rjust(2, '0')
-        names = locale.xpath("//term[@name='month-#{month}']").collect{|m| m.inner_text}
-        f.puts "  #{month.inspect}: /\\b(#{names.join('|')})\\b/i"
-      }
+      months = 1.upto(12).collect{|month| locale.at("//term[@name='month-#{month.to_s.rjust(2, '0')}' and not(@form)]").inner_text.downcase }
+      seasons = 1.upto(4).collect{|season| locale.at("//term[@name='season-#{season.to_s.rjust(2, '0')}']").inner_text.downcase }
+
+      f.puts("Zotero.BetterBibTeX.CSLMonths[#{full.inspect}] = #{(months + seasons).inspect}")
     }
   }
 end

@@ -55,61 +55,6 @@ Translator._log = (level, msg...) ->
   msg = ((if (typeof m) in ['boolean', 'string', 'number'] then '' + m else Translator.stringify(m)) for m in msg).join(' ')
   Zotero.debug('[better' + '-' + "bibtex:#{@header.label}] " + msg, level)
 
-Translator.EDTFl0 = (date) ->
-  return null unless typeof date == 'string'
-  date = date.replace(/\s/g, '')
-  return [0, 0] if date == ''
-
-  switch
-    when date.match(/^-?[0-9]{1,4}([-/\.][0-9]{1,2}([-/\.][0-9]{1,2})?)?$/)
-      date = date.split(/[-/\.]/)
-      yearsign = 1
-      if date[0] == '-'
-        yearsign = -1
-        date = date.slice(1)
-
-    when date.match(/^([0-9]{1,2}[-/\.])?[0-9]{1,2}[-/\.][0-9]{1,4}?$/)
-      date = date.split(/[-/\.]/)
-      date.reverse()
-      yearsign = 1
-
-    else
-      return
-
-  date = (parseInt(d) for d in date)
-  date[0] *= yearsign
-  [date[1], date[2]] = [date[2], date[1]] if date.length == 3 && date[1] > 12
-  return date
-
-Translator.date = (date) ->
-  compact = date.replace(/\s/g, '')
-  dateparts = compact.split('/')
-  dateparts = compact.split('_') unless dateparts.length == 2
-  if dateparts.length == 2
-    dateparts = [@EDTFl0(dateparts[0]), @EDTFl0(dateparts[1])]
-    return {'date-parts': dateparts} if dateparts[0] && dateparts[1]
-
-  dateparts = @EDTFl0(date)
-  return {'date-parts': dateparts} if dateparts
-
-  return {literal: date} if date.indexOf('[') >= 0
-
-  parsed = Zotero.Utilities.strToDate(date)
-
-  Translator.debug('parsed:', date, '=>', parsed)
-  return {literal: date} unless parsed.year
-  return {literal: date} if parsed.day && !parsed.month
-
-  parsed.year = parseInt(parsed.year, 10) if parsed.year
-  parsed.month = parseInt(parsed.month, 10) + 1 if parsed.month
-  parsed.day = parseInt(parsed.day, 10) if parsed.day
-
-  return {literal: date} if isNaN(parsed.year)
-  return {literal: date} if parsed.month && isNaN(parsed.month)
-  return {literal: date} if parsed.day && isNaN(parsed.day)
-
-  return {'date-parts': (d for d in [parsed.year, parsed.month, parsed.day] when d)}
-
 # http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
 Translator.CSLVariables = [
   #'abstract'

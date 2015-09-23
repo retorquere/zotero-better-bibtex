@@ -16,20 +16,19 @@ class BetterBibTeXPatternFormatter
     return {} if @item.itemType in ['attachment', 'note']
 
     if @item.date
-      date = Zotero.BetterBibTeX.parseDate(@item.date, @item.language)
+      date = Zotero.BetterBibTeX.DateParser.parseDateToObject(@item.date)
       Zotero.BetterBibTeX.debug('item date:', date)
-      switch
-        when date?['literal']
+      if date
+        if date.literal
           date = Zotero.Date.strToDate(@item.date)
           @year = parseInt(date.year)
           delete @year if isNaN(@year)
           @month = parseInt(date.month)
           delete @month if isNaN(@month)
 
-        when date?['date-parts']
-          date = date['date-parts']
-          date = date[0] if date && Array.isArray(date[0])
-          [@year, @month] = date
+        else
+          @year = date.year
+          @month = date.month
 
     for candidate in @patterns[0]
       delete @postfix

@@ -8,6 +8,8 @@ Zotero.BetterBibTeX = {
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
 
+Components.utils.import('resource://zotero-better-bibtex/lib/csl-dateparser.js', Zotero.BetterBibTeX)
+
 Zotero.BetterBibTeX.error = (msg...) ->
   @_log.apply(@, [0].concat(msg))
 Zotero.BetterBibTeX.warn = (msg...) ->
@@ -31,91 +33,6 @@ Zotero.BetterBibTeX.debugMode = ->
   else
     @debug = @debug_off
     @log = @log_off
-
-Zotero.BetterBibTeX.parseDate = (dateish, locale) ->
-  return unless typeof dateish == 'string'
-  dateish = dateish.trim()
-  return null unless dateish
-
-  return {literal: dateish} if dateish.indexOf('[') >= 0 || dateish in ['/', '_']
-
-  # try EDTF date range
-  compact = dateish.replace(/\s/g, '')
-  for sep in ['/', '_']
-    range = compact.split(sep)
-    if range.length in [1, 2]
-      dateparts = []
-      for date in range
-        switch
-          when date == ''
-            dateparts.push([0, 0])
-            continue
-
-          when date.match(/^-?[0-9]{3,4}([-/\.][0-9]{1,2}([-/\.][0-9]{1,2})?)?$/)
-            yearsign = 1
-            if date[0] == '-'
-              yearsign = -1
-              date = date.slice(1)
-            date = date.split(/[-/\.]/)
-
-          when date.match(/^([0-9]{1,2}[-/\.])?[0-9]{1,2}[-/\.][0-9]{3,4}?$/)
-            date = date.split(/[-/\.]/)
-            date.reverse()
-            yearsign = 1
-
-          else
-            continue
-
-        date = (parseInt(d) for d in date)
-        date[0] *= yearsign
-        [date[1], date[2]] = [date[2], date[1]] if date.length == 3 && date[1] > 12
-        dateparts.push(date)
-
-      dateparts = dateparts[0] if dateparts.length == 1
-      return {'date-parts': dateparts} if dateparts[0] && dateparts[1]
-
-  range = dateish.split('_')
-  range = [dateish] unless range.length in [1,2]
-
-  locale ||= Zotero.locale
-  dateparts = []
-  for date in range
-    date = date.trim()
-    if date == ''
-      dateparts.push([0, 0])
-      continue
-
-    @CSLLocales[locale] = @CSLLocales[locale.toLowerCase()] || @CSLLocales.en if !@CSLLocales[locale]
-
-    for k, v of @CSLLocales[locale]
-      date = date.replace(v, k)
-
-    parsed = Zotero.Date.strToDate(date)
-
-    Zotero.BetterBibTeX.debug('parsed:', date, '=>', parsed)
-    break unless parsed.year
-    break if parsed.day && !parsed.month
-
-    parsed.year = parseInt(parsed.year, 10) if parsed.year
-    break if isNaN(parsed.year)
-
-    parsed.month = parseInt(parsed.month, 10) + 1 if parsed.month
-    break if parsed.month && isNaN(parsed.month)
-
-    parsed.day = parseInt(parsed.day, 10) if parsed.day
-    break if parsed.day && isNaN(parsed.day)
-
-    dateparts.push((d for d in [parsed.year, parsed.month, parsed.day] when d))
-
-  switch
-    when range.length != dateparts.length
-      return {literal: dateish}
-
-    when dateparts.length == 1
-      return {'date-parts': dateparts[0] }
-
-    else
-      return {'date-parts': dateparts }
 
 Zotero.BetterBibTeX.stringify = (obj, replacer, spaces, cycleReplacer) ->
   str = JSON.stringify(obj, @stringifier(replacer, cycleReplacer), spaces)
@@ -643,8 +560,9 @@ Zotero.BetterBibTeX.init = ->
     }
     CSL: {
       parseParticles: (sandbox, name, normalizeApostrophe) -> Zotero.CiteProc.CSL.parseParticles(name, normalizeApostrophe)
-      parseDate: (sandbox, date, locale) -> Zotero.BetterBibTeX.parseDate(date, locale)
     }
+    parseDateToObject: (sandbox, date) -> Zotero.BetterBibTeX.DateParser.parseDateToObject(date)
+    parseDateToArray: (sandbox, date) -> Zotero.BetterBibTeX.DateParser.parseDateToArray(date)
   }
 
   for own name, endpoint of @endpoints
@@ -654,6 +572,9 @@ Zotero.BetterBibTeX.init = ->
 
   @loadTranslators()
   @extensionConflicts()
+
+  for k, months of Zotero.BetterBibTeX.CSLMonths
+    Zotero.BetterBibTeX.DateParser.addDateParserMonths(months)
 
   # monkey-patch Zotero.Server.DataListener.prototype._generateResponse for async handling
   Zotero.Server.DataListener::_generateResponse = ((original) ->

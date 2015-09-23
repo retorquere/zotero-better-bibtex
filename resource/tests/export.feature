@@ -161,6 +161,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
      | BraceBalancer                                                                                  | 1           |
      | @legislation; map code,container-title to journaltitle #327                                    | 1           |
@@ -173,7 +174,6 @@ Scenario Outline: BibLaTeX Export
      | Spaces not stripped from citation keys #294                                                    | 1           |
      | Book converted to mvbook #288                                                                  | 1           |
      | Colon not allowed in citation key format #268                                                  | 1           |
-     | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | Export mapping for reporter field #219                                                         | 1           |
      | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201     | 1           |
      | Be robust against misconfigured journal abbreviator #127                                       | 1           |
