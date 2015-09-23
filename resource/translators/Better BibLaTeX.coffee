@@ -307,19 +307,30 @@ DateField =
     # Juris-M doesn't recognize d?/m/y
     if m = date.match(/^(([0-9]{1,2})[-\/])?([0-9]{1,2})[-\/]([0-9]{3,4})$/)
       Translator.debug('parsed:', m)
+      # TODO: swap month/day for USAnians
       return {
         year: parseInt(m[4])
         month: parseInt(m[3])
         day: parseInt(m[1]) || undefined
       }
 
+    if m = date.match(/^([0-9]{3,4})[-\/]([0-9]{1,2})([-\/]?([0-9]{1,2}))?$/)
+      Translator.debug('parsed:', m)
+      # this is basically EDTF-0, so no swapping here
+      return {
+        year: parseInt(m[1])
+        month: parseInt(m[2])
+        day: parseInt(m[4]) || undefined
+      }
+
     parsed = Zotero.BetterBibTeX.parseDateToObject(date)
 
     return parsed if parsed.literal
 
+    @cruft ?= new XRegExp("[^\\p{Letter}\\p{Number}]+", 'g')
     shape = date
     shape = shape.slice(1) if shape[0] == '-'
-    shape = XRegExp.replace(shape.trim(), "[^\\p{Letter}\\p{Number}]+", ' ', 'all')
+    shape = XRegExp.replace(shape.trim(), @cruft, ' ', 'all')
     shape = shape.split(' ')
 
     fields = 0

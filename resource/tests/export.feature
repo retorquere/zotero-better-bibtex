@@ -195,6 +195,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Math parts in title #113                                                           | 1           |
      | Better BibLaTeX.021                                                                | 1           |
      | Normalize date ranges in citekeys #356                                             | 3           |
      | typo stature-statute (zotero item type) #284                                       | 1           |
@@ -230,7 +231,6 @@ Scenario Outline: BibLaTeX Export
      | German Umlaut separated by brackets #146                                           | 1           |
      | Hang on non-file attachment export #112 - URL export broken #114                   | 2           |
      | HTML Fragment separator escaped in url #140 #147                                   | 1           |
-     | Math parts in title #113                                                           | 1           |
      | References with multiple notes fail to export #174                                 | 1           |
      | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
      | underscores in URL fields should not be escaped #104                               | 1           |
