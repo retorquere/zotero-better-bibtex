@@ -12,6 +12,8 @@ class BetterBibTeXPatternFormatter
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
+    delete @year
+    delete @month
 
     return {} if @item.itemType in ['attachment', 'note']
 
