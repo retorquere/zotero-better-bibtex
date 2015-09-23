@@ -10,7 +10,7 @@ Zotero.BetterBibTeX = {
 
 Zotero.BetterBibTeX.parseDateToObject = (date) ->
   return null unless date
-  return {literal: date} if date.indexof('[') >= 0
+  return {literal: date} if date.indexOf('[') >= 0
   return Zotero.BetterBibTeX.DateParser.parseDateToObject(date)
 
 Zotero.BetterBibTeX.error = (msg...) ->
