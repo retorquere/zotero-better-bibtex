@@ -301,7 +301,15 @@ Language.lookup = (langcode) ->
 
 class DateField
   constructor: (date, locale, @formatted, @literal) ->
-    @dateorder = Translator.Locales.dateorder[if locale then locale.toLowerCase() || Zotero.BetterBibTeX.locale] || Translator.Locales.dateorder['en-gb']
+    if locale
+      locale = locale.toLowerCase()
+      @dateorder = Translator.Locales.dateorder[locale]
+      if !@dateorder
+        for k, v of Translator.Locales.dateorder
+          if k.slice(0, locale.length) == locale
+            @dateorder = Translator.Locales.dateorder[locale] = v
+            break
+    @dateorder ||= Translator.Locales.dateorder[Zotero.BetterBibTeX.locale]
     @field = @makefield(date)
 
   parse: (date) ->
