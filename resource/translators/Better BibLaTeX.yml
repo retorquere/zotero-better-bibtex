@@ -21,6 +21,7 @@ BetterBibTeX:
   dependencies:
     - xregexp-all
     - reference
+    - csl-dateorder
     - unicode_translator
     - he
     - htmlparser

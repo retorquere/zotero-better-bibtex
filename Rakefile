@@ -129,6 +129,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',
   'resource/translators/he.js',
+  'resource/translators/csl-dateorder.js',
 ]).sort.uniq
 
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
@@ -416,13 +417,38 @@ file 'chrome/content/zotero-better-bibtex/csl-months.coffee' => ['Rakefile'] + D
 
     locales = JSON.parse(open('csl-locales/locales.json').read)
 
-    locales['primary-dialects'].each_pair{|short, full|
+    locales['language-names'].keys.sort.reverse.each{|full|
       locale = Nokogiri::XML(open("csl-locales/locales-#{full}.xml"))
       locale.remove_namespaces!
       months = 1.upto(12).collect{|month| locale.at("//term[@name='month-#{month.to_s.rjust(2, '0')}' and not(@form)]").inner_text.downcase }
       seasons = 1.upto(4).collect{|season| locale.at("//term[@name='season-#{season.to_s.rjust(2, '0')}']").inner_text.downcase }
 
       f.puts("Zotero.BetterBibTeX.CSLMonths[#{full.inspect}] = #{(months + seasons).inspect}")
+    }
+  }
+end
+
+file 'resource/translators/csl-dateorder.coffee' => ['Rakefile'] + Dir['csl-locales/*.xml'] + Dir['csl-locales/*.json'] do |t|
+  open(t.name, 'w'){|f|
+    f.puts('Translator.Locales = { dateorder: {} }')
+
+    locales = JSON.parse(open('csl-locales/locales.json').read)
+    short = locales['primary-dialects'].invert
+
+    locales['language-names'].keys.sort.reverse.each{|full|
+      names = locales['language-names'][full]
+      names << full
+      names << short[full]
+      names.compact!
+      names = names.collect{|name| name.downcase.sub(/\s*\(.*/, '')}
+      names.uniq!
+      names.sort!
+      names = names.collect{|name| "Translator.Locales.dateorder[#{name.inspect}]" }.join(' = ')
+
+      locale = Nokogiri::XML(open("csl-locales/locales-#{full}.xml"))
+      locale.remove_namespaces!
+      order = locale.xpath('//date[@form="numeric"]/date-part').collect{|d| d['name'][0]}.join('')
+      f.puts("#{names} = #{order.inspect}")
     }
   }
 end

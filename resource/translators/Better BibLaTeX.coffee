@@ -299,7 +299,11 @@ Language.lookup = (langcode) ->
 
   return @cache[langcode]
 
-DateField =
+class DateField
+  constructor: (date, locale, @formatted, @literal) ->
+    @dateorder = Translator.Locales.dateorder[if locale then locale.toLowerCase() || Zotero.BetterBibTeX.locale] || Translator.Locales.dateorder['en-gb']
+    @field = @makefield(date)
+
   parse: (date) ->
     date = date.trim()
     return {empty: true} if date == ''
@@ -312,9 +316,7 @@ DateField =
         month: parseInt(m[3])
         day: parseInt(m[1]) || undefined
       }
-      # swap month/day for USAnians
-      # just a heuristic, look at locales later
-      if m[4] == '/' || (parsed.month && parsed.day && parsed.month > 12)
+      if @dateorder == 'mdy' || (parsed.month && parsed.day && parsed.month > 12)
         [parsed.month, parsed.day] = [parsed.day, parsed.month]
       return parsed
 
@@ -325,7 +327,7 @@ DateField =
         month: parseInt(m[3])
         day: parseInt(m[5]) || undefined
       }
-      if m[2] == '/' || (parsed.month && parsed.day && parsed.month > 12)
+      if @dateorder == 'mdy' || (parsed.month && parsed.day && parsed.month > 12)
         [parsed.month, parsed.day] = [parsed.day, parsed.month]
       return parsed
 
@@ -359,7 +361,7 @@ DateField =
     return "#{v.year}-#{@pad(v.month, '00')}" if v.year && v.month
     return v.year
 
-  field: (date) ->
+  makefield: (date) ->
     return {} unless date
 
     date = date.trim()
@@ -377,13 +379,13 @@ DateField =
 
       continue if range[0].literal || range[1].literal
 
-      return {name: 'date', value: @format(range[0]) + '/' + @format(range[1])}
+      return {name: @formatted, value: @format(range[0]) + '/' + @format(range[1])}
 
     parsed = @parse(date)
     Translator.debug('parsed:', {date, parsed})
 
-    return { name: 'year', value: date, preserveCaps: true } if parsed.literal
-    return { name: 'date', value: @format(parsed) }
+    return { name: @literal, value: date, preserveCaps: true } if parsed.literal
+    return { name: @formatted, value: @format(parsed) }
 
 doExport = ->
   Zotero.write('\n')
@@ -560,7 +562,7 @@ doExport = ->
 
     ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate && item.url
 
-    ref.add(DateField.field(item.date))
+    ref.add((new DateField(item.date, item.language, 'date', 'year')).field)
 
     ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )}) if item.pages
 

@@ -564,6 +564,7 @@ Zotero.BetterBibTeX.init = ->
     CSL: {
       parseParticles: (sandbox, name, normalizeApostrophe) -> Zotero.CiteProc.CSL.parseParticles(name, normalizeApostrophe)
     }
+    locale: Zotero.locale
     parseDateToObject: (sandbox, date) -> Zotero.BetterBibTeX.parseDateToObject(date)
     parseDateToArray: (sandbox, date) ->
       parsed = Zotero.BetterBibTeX.parseDateToObject(date)
