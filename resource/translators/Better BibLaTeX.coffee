@@ -299,6 +299,75 @@ Language.lookup = (langcode) ->
 
   return @cache[langcode]
 
+DateField =
+  parse: (date) ->
+    date = date.trim()
+    return {empty: true} if date == ''
+
+    # Juris-M doesn't recognize d/m/y
+    if m = date.match(/^([0-9]{1,2})?[-\/]([0-9]{1,2})[-\/]([0-9]{3,4})$/)
+      Translator.debug('parsed:', m)
+      return {
+        year: parseInt(m[3])
+        month: parseInt(m[2])
+        day: parseInt(m[1]) || undefined
+      }
+
+    parsed = Zotero.BetterBibTeX.parseDateToObject(date)
+
+    return parsed if parsed.literal
+
+    shape = date
+    shape = shape.slice(1) if shape[0] == '-'
+    shape = XRegExp.replace(shape.trim(), "[^\\p{Letter}\\p{Number}]+", ' ', 'all')
+    shape = shape.split(' ')
+
+    fields = 0
+    fields += 1 if parsed.year
+    fields += 1 if parsed.month
+    fields += 1 if parsed.day
+
+    Translator.debug('parsed date:', {date, shape, fields, parsed})
+    return parsed if fields == 3 || shape.length == fields
+
+    return {literal: date}
+
+  pad: (v, pad) ->
+    return v if v.length >= pad.length
+    return (pad + v).slice(-pad.length)
+
+  format: (v) ->
+    return '' if v.empty
+    return "#{v.year}-#{@pad(v.month, '00')}-#{@pad(v.day, '00')}" if v.year && v.month && v.day
+    return "#{v.year}-#{@pad(v.month, '00')}" if v.year && v.month
+    return v.year
+
+  field: (date) ->
+    return {} unless date
+
+    date = date.trim()
+
+    for sep in ['/', '-', '_']
+      continue if date == sep
+
+      range = date.split(sep)
+      continue unless range.length == 2
+
+      range = [
+        @parse(range[0])
+        @parse(range[1])
+      ]
+
+      continue if range[0].literal || range[1].literal
+
+      return {name: 'date', value: @format(range[0]) + '/' + @format(range[1])}
+
+    parsed = @parse(date)
+    Translator.debug('parsed:', {date, parsed})
+
+    return { name: 'year', value: date, preserveCaps: true } if parsed.literal
+    return { name: 'date', value: @format(parsed) }
+
 doExport = ->
   Zotero.write('\n')
   while item = Translator.nextItem()
@@ -474,9 +543,7 @@ doExport = ->
 
     ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate && item.url
 
-    if item.date
-      date = Zotero.BetterBibTeX.parseDateToObject(item.date)
-      ref.add({ name: (if date.literal then 'year' else 'date'), value: date, enc: 'date', preserveCaps: true })
+    ref.add(DateField.field(item.date))
 
     ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )}) if item.pages
 
