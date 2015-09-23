@@ -586,6 +586,9 @@ Zotero.BetterBibTeX.init = ->
   @extensionConflicts()
 
   for k, months of Zotero.BetterBibTeX.CSLMonths
+    # https://github.com/Juris-M/zotero/issues/9
+    continue if k == 'tr-TR'
+
     Zotero.BetterBibTeX.DateParser.addDateParserMonths(months)
 
   # monkey-patch Zotero.Server.DataListener.prototype._generateResponse for async handling

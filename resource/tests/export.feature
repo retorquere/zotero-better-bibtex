@@ -196,8 +196,8 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
-     | Normalize date ranges in citekeys #356                                             | 3           |
      | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
+     | Normalize date ranges in citekeys #356                                             | 3           |
      | Math parts in title #113                                                           | 1           |
      | Better BibLaTeX.021                                                                | 1           |
      | typo stature-statute (zotero item type) #284                                       | 1           |
