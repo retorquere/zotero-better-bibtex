@@ -305,23 +305,29 @@ DateField =
     return {empty: true} if date == ''
 
     # Juris-M doesn't recognize d?/m/y
-    if m = date.match(/^(([0-9]{1,2})[-\/])?([0-9]{1,2})[-\/]([0-9]{3,4})$/)
+    if m = date.match(/^(([0-9]{1,2})[-\/])?([0-9]{1,2})([-\/])([0-9]{3,4})$/)
       Translator.debug('parsed:', m)
-      # TODO: swap month/day for USAnians
-      return {
-        year: parseInt(m[4])
+      parsed = {
+        year: parseInt(m[5])
         month: parseInt(m[3])
         day: parseInt(m[1]) || undefined
       }
+      # swap month/day for USAnians
+      # just a heuristic, look at locales later
+      if m[4] == '/' || (parsed.month && parsed.day && parsed.month > 12)
+        [parsed.month, parsed.day] = [parsed.day, parsed.month]
+      return parsed
 
-    if m = date.match(/^([0-9]{3,4})[-\/]([0-9]{1,2})([-\/]?([0-9]{1,2}))?$/)
+    if m = date.match(/^([0-9]{3,4})([-\/])([0-9]{1,2})([-\/]?([0-9]{1,2}))?$/)
       Translator.debug('parsed:', m)
-      # this is basically EDTF-0, so no swapping here
-      return {
+      parsed = {
         year: parseInt(m[1])
-        month: parseInt(m[2])
-        day: parseInt(m[4]) || undefined
+        month: parseInt(m[3])
+        day: parseInt(m[5]) || undefined
       }
+      if m[2] == '/' || (parsed.month && parsed.day && parsed.month > 12)
+        [parsed.month, parsed.day] = [parsed.day, parsed.month]
+      return parsed
 
     parsed = Zotero.BetterBibTeX.parseDateToObject(date)
 

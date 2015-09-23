@@ -189,15 +189,17 @@ Scenario Outline: BibLaTeX Export
 @test-cluster-1
 @bblt
 @bblt-1
+@failing
 Scenario Outline: BibLaTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.bib'
 
   Examples:
      | file                                                                               | references  |
+     | Normalize date ranges in citekeys #356                                             | 3           |
+     | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
      | Math parts in title #113                                                           | 1           |
      | Better BibLaTeX.021                                                                | 1           |
-     | Normalize date ranges in citekeys #356                                             | 3           |
      | typo stature-statute (zotero item type) #284                                       | 1           |
      | remove the field if the override is empty #303                                     | 1           |
      | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
@@ -232,7 +234,6 @@ Scenario Outline: BibLaTeX Export
      | Hang on non-file attachment export #112 - URL export broken #114                   | 2           |
      | HTML Fragment separator escaped in url #140 #147                                   | 1           |
      | References with multiple notes fail to export #174                                 | 1           |
-     | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
      | underscores in URL fields should not be escaped #104                               | 1           |
      | Allow explicit field override                                                      | 1           |
 
