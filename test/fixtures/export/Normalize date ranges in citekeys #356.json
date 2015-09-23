@@ -60,8 +60,71 @@
       "attachments": [],
       "notes": [],
       "itemID": 3,
-      "seeAlso": [],
-      "__citekey__": "descartes_oeuvres_1897"
+      "seeAlso": []
+    },
+    {
+      "itemType": "book",
+      "tags": [],
+      "relations": {},
+      "place": "Paris",
+      "publisher": "Cerf",
+      "date": "1897-1913",
+      "numberOfVolumes": "13",
+      "language": "fr-FR",
+      "title": "Œuvres de Descartes",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Descartes",
+          "firstName": "René"
+        },
+        {
+          "creatorType": "editor",
+          "lastName": "Adam",
+          "firstName": "Charles"
+        },
+        {
+          "creatorType": "editor",
+          "lastName": "Tannery",
+          "firstName": "Paul"
+        }
+      ],
+      "attachments": [],
+      "notes": [],
+      "itemID": 3,
+      "seeAlso": []
+    },
+    {
+      "itemType": "book",
+      "tags": [],
+      "relations": {},
+      "place": "Paris",
+      "publisher": "Cerf",
+      "date": "1897_1913",
+      "numberOfVolumes": "13",
+      "language": "fr-FR",
+      "title": "Œuvres de Descartes",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Descartes",
+          "firstName": "René"
+        },
+        {
+          "creatorType": "editor",
+          "lastName": "Adam",
+          "firstName": "Charles"
+        },
+        {
+          "creatorType": "editor",
+          "lastName": "Tannery",
+          "firstName": "Paul"
+        }
+      ],
+      "attachments": [],
+      "notes": [],
+      "itemID": 3,
+      "seeAlso": []
     }
   ]
 }
