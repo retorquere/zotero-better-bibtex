@@ -417,7 +417,7 @@ file 'chrome/content/zotero-better-bibtex/csl-months.coffee' => ['Rakefile'] + D
 
     locales = JSON.parse(open('csl-locales/locales.json').read)
 
-    locales['language-names'].keys.sort.reverse.each{|full|
+    locales['language-names'].keys.sort.each{|full|
       locale = Nokogiri::XML(open("csl-locales/locales-#{full}.xml"))
       locale.remove_namespaces!
       months = 1.upto(12).collect{|month| locale.at("//term[@name='month-#{month.to_s.rjust(2, '0')}' and not(@form)]").inner_text.downcase }
@@ -433,16 +433,21 @@ file 'resource/translators/csl-dateorder.coffee' => ['Rakefile'] + Dir['csl-loca
     f.puts('Translator.Locales = { dateorder: {} }')
 
     locales = JSON.parse(open('csl-locales/locales.json').read)
+    locales['primary-dialects']['en'] = 'en-GB'
     short = locales['primary-dialects'].invert
 
-    locales['language-names'].keys.sort.reverse.each{|full|
-      names = locales['language-names'][full]
-      names << full
+    locales['language-names'].keys.sort.each{|full|
+      names = [full]
       names << short[full]
+      if full == 'en-US'
+        names << 'american'
+      else
+        names << locales['language-names'][full]
+      end
+      names.flatten!
       names.compact!
       names = names.collect{|name| name.downcase.sub(/\s*\(.*/, '')}
       names.uniq!
-      names.sort!
       names = names.collect{|name| "Translator.Locales.dateorder[#{name.inspect}]" }.join(' = ')
 
       locale = Nokogiri::XML(open("csl-locales/locales-#{full}.xml"))
