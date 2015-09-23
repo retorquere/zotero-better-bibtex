@@ -8,6 +8,11 @@ Zotero.BetterBibTeX = {
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
 
+Zotero.BetterBibTeX.parseDateToObject = (date) ->
+  return null unless date
+  return {literal: date} if date.indexof('[') >= 0
+  return Zotero.BetterBibTeX.DateParser.parseDateToObject(date)
+
 Zotero.BetterBibTeX.error = (msg...) ->
   @_log.apply(@, [0].concat(msg))
 Zotero.BetterBibTeX.warn = (msg...) ->
@@ -559,9 +564,9 @@ Zotero.BetterBibTeX.init = ->
     CSL: {
       parseParticles: (sandbox, name, normalizeApostrophe) -> Zotero.CiteProc.CSL.parseParticles(name, normalizeApostrophe)
     }
-    parseDateToObject: (sandbox, date) -> Zotero.BetterBibTeX.DateParser.parseDateToObject(date)
+    parseDateToObject: (sandbox, date) -> Zotero.BetterBibTeX.parseDateToObject(date)
     parseDateToArray: (sandbox, date) ->
-      parsed = Zotero.BetterBibTeX.DateParser.parseDateToObject(date)
+      parsed = Zotero.BetterBibTeX.parseDateToObject(date)
       Zotero.BetterBibTeX.DateParser.convertDateObjectToArray(parsed)
       if Array.isArray(parsed['date-parts'])
         if Array.isArray(parsed['date-parts'][0])

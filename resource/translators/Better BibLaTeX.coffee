@@ -475,10 +475,8 @@ doExport = ->
     ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate && item.url
 
     if item.date
-      if Translator.verbatimDateRE?.test(item.date) || typeof Zotero.Utilities.strToDate(item.date).year == 'undefined'
-        ref.add({ name: 'date', value: item.date, preserveCaps: true })
-      else
-        ref.add({ name: 'date', value: Zotero.Utilities.strToISO(item.date) })
+      date = Zotero.BetterBibTeX.parseDateToObject(item.date)
+      ref.add({ name: (if date.literal then 'year' else 'date'), value: date, enc: 'date', preserveCaps: true })
 
     ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )}) if item.pages
 

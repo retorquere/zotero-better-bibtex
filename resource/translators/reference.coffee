@@ -68,27 +68,35 @@ class Reference
   # @param {field} field to encode
   # @return {String} unmodified `field.value`
   ###
+  isodate: (v, suffix = '') ->
+    year = v["year#{suffix}"]
+    return null unless year
+
+    month = v["month#{suffix}"]
+    month = "0#{month}".slice(-2) if month
+    day = v["day#{suffix}"]
+    day = "0#{day}".slice(-2) if day
+
+    date = '' + year
+    if month
+      date += "-#{month}"
+      date += "-#{day}" if day
+    return date
+
   enc_date: (f) ->
     return null unless f.value
 
     if f.value.literal
-      return '{\\bibstring{nodate}}' if f.value.literal == 'n.d.'
+      return '\\bibstring{nodate}' if f.value.literal == 'n.d.'
       return @enc_latex(@clone(f, f.value.literal))
 
-    return null unless f.value['date-parts']
-    value = f.value['date-parts']
-    return null unless value.length > 0
+    date = @isodate(f.value)
+    return null unless date
 
-    value = [value] unless Array.isArray(value[0])
-    dateparts = []
-    for datepart in value
-      if datepart.length == 2 && datepart[0] == 0 && datepart[1] == 0
-        datepart = ''
-      else
-        datepart = ((if d < 10 then "0#{d}" else "#{d}") for d in datepart).join('-')
-      dateparts.push(datepart)
+    enddate = @isodate(f.value, '_end')
+    date += "/#{enddate}" if enddate
 
-    return @enc_latex({value: dateparts.join('/')})
+    return @enc_latex({value: date})
 
   ###
   # Encode to LaTeX url
