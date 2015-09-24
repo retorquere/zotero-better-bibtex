@@ -1,28 +1,29 @@
-translatorID: "f895aa0d-f28e-47fe-b247-2ea77c6ed583"
+---
+translatorID: f895aa0d-f28e-47fe-b247-2ea77c6ed583
 translatorType: 2
-label: "Better BibLaTeX"
-creator: "Simon Kornblith, Richard Karnesky, Anders Johansson and Emiliano Heyns"
+label: Better BibLaTeX
+creator: Simon Kornblith, Richard Karnesky, Anders Johansson and Emiliano Heyns
 target: bib
-minVersion: "2.1.9"
-maxVersion: null
+minVersion: 4.0.27
+maxVersion: ''
 priority: 50
 inRepository: true
-configOptions: 
+configOptions:
   getCollections: true
-displayOptions: 
+displayOptions:
   exportNotes: false
   exportFileData: false
   useJournalAbbreviation: false
-  "Keep updated": false
+  Keep updated: false
 BetterBibTeX:
   cache:
     nextItem: true
     BibTeX: true
   dependencies:
-    - xregexp-all
-    - reference
-    - unicode_translator
-    - he
-    - htmlparser
-    - latex_unicode_mapping
-    - BetterBibTeXBraceBalancer
+  - xregexp-all
+  - reference
+  - unicode_translator
+  - he
+  - htmlparser
+  - latex_unicode_mapping
+  - BetterBibTeXBraceBalancer

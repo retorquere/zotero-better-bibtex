@@ -67,7 +67,7 @@ Zotero.BetterBibTeX.serialized =
       item ||= Zotero.Items.get(itemID)
 
       # TODO: force legacy format to true until I switch over
-      items[itemID] = (if item.isAttachment() then @_attachmentToArray(item) else Zotero.Utilities.Internal.itemToExportFormat(item, true)) if item
+      items[itemID] = (if item.isAttachment() then @_attachmentToArray(item) else Zotero.Utilities.Internal.itemToExportFormat(item)) if item
 
       switch
         # the serialization yielded no object (why?), mark it as missing so we don't do this again
