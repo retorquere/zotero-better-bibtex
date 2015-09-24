@@ -134,8 +134,6 @@ class Reference
   enc_creators: (f, raw) ->
     return null if f.value.length == 0
 
-    Translator.debug('enc_creators', f, 'raw:', raw)
-
     encoded = []
     for creator in f.value
       switch
@@ -163,8 +161,6 @@ class Reference
               source = XRegExp.replace((creator.firstName || '') + (creator.lastName || ''), @nonLetters, '')
               parsed = XRegExp.replace((part || '' for part in [name.given, name.family, name.suffix, name['non-dropping-particle'], name['dropping-particle']]).join(''), @nonLetters, '')
               fallback = (source.length != parsed.length)
-
-              Translator.debug('particle parser: creator=', creator, "@#{source.length}=", source, 'name=', name, "@#{parsed.length}=", parsed, 'fallback:', fallback)
 
               if name['non-dropping-particle']
                 name.family = @enc_latex({value: new String((@postfixedParticle(name['non-dropping-particle']) + name.family).trim())})
@@ -411,8 +407,6 @@ class Reference
       if name == 'referencetype'
         @referencetype = value.value
         continue
-
-      Translator.debug('override:', name, value)
 
       switch value.format
         # CSL names are not in BibTeX format, so only add it if there's a mapping
