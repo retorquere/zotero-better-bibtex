@@ -13,7 +13,7 @@ Translator.fieldMap = {
   shortTitle:       { name: 'shorttitle', preserveCaps: true }
   abstractNote:     { name: 'abstract' }
   numberOfVolumes:  { name: 'volumes' }
-  version:          { name: 'version' }
+  versionNumber:    { name: 'version' }
   conferenceName:   { name: 'eventtitle', preserveCaps: true }
   numPages:         { name: 'pagetotal' }
   type:             { name: 'type', preserveCaps: true }
