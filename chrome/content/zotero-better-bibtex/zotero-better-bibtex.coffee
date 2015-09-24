@@ -27,7 +27,7 @@ class Zotero.BetterBibTeX.DateParser
         found = locale
       else
         for k, v of Zotero.BetterBibTeX.Locales.dateorder
-          if k.slice(0, locale.length) == locale
+          if k == locale || k.slice(0, locale.length) == locale
             found = k
             @dateorder = Zotero.BetterBibTeX.Locales.dateorder[options.locale] = v
             break
@@ -40,7 +40,7 @@ class Zotero.BetterBibTeX.DateParser
 
     @dateorder ||= Zotero.BetterBibTeX.Locales.dateorder[@zoteroLocale]
 
-    Zotero.BetterBibTeX.debug('date parser locale:', {order: @dateorder, given: options.locale, found: found, fallback: fallback, zotero: Zotero.locale})
+    Zotero.BetterBibTeX.debug('date parser locale:', {order: @dateorder, given: options.locale, found, fallback, zotero: @zoteroLocale})
     @date = @parse(date)
 
   swapMonth: (date, dateorder) ->
@@ -716,11 +716,10 @@ Zotero.BetterBibTeX.init = ->
   @loadTranslators()
   @extensionConflicts()
 
-  for k, months of Zotero.BetterBibTeX.CSLMonths
+  for k, months of Zotero.BetterBibTeX.Locales.months
     # https://github.com/Juris-M/zotero/issues/9
     continue if k == 'tr-TR'
-
-    Zotero.BetterBibTeX.DateParser.addDateParserMonths(months)
+    Zotero.BetterBibTeX.JurisMDateParser.addDateParserMonths(months)
 
   # monkey-patch Zotero.Server.DataListener.prototype._generateResponse for async handling
   Zotero.Server.DataListener::_generateResponse = ((original) ->

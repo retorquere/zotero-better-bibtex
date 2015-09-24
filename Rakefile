@@ -410,6 +410,21 @@ def browserify(code, target)
   end
 end
 
+def utf16literal(str)
+  str = str.split(//).collect{|c|
+    o = c.ord
+    if o >= 0x20 && o <= 0x7E
+      c
+    elsif o > 0xFFFF
+      h = ((o - 0x10000) / 0x400).floor + 0xD800
+      l - ((o - 0x10000) % 0x400) + oxDC00
+      "\\u#{h.to_s(16).rjust(4, '0')}\\u#{l.to_s(16).rjust(4, '0')}"
+    else
+      "\\u#{o.to_s(16).rjust(4, '0')}"
+    end
+  }.join('')
+  return "'" + str + "'"
+end
 file 'chrome/content/zotero-better-bibtex/csl-localedata.coffee' => ['Rakefile'] + Dir['csl-locales/*.xml'] + Dir['csl-locales/*.json'] do |t|
   open(t.name, 'w'){|f|
     f.puts('Zotero.BetterBibTeX.Locales = { months: {}, dateorder: {}}')
@@ -419,18 +434,18 @@ file 'chrome/content/zotero-better-bibtex/csl-localedata.coffee' => ['Rakefile']
     short = locales['primary-dialects'].invert
 
     locales['language-names'].keys.sort.each{|full|
-      names = [full]
-      names << short[full]
+      names = ["'#{full.downcase}'"]
+      names << "'#{short[full].downcase}'" if short[full]
       if full == 'en-US'
-        names << 'american'
+        names << "'american'"
       else
-        names << locales['language-names'][full]
+        locales['language-names'][full].each{|name|
+          names << utf16literal(name.downcase)
+          names << utf16literal(name.sub(/\s\(.*/, '').downcase)
+        }
       end
-      names.flatten!
-      names.compact!
-      names = names.collect{|name| name.downcase.sub(/\s*\(.*/, '')}
       names.uniq!
-      names = names.collect{|name| "Zotero.BetterBibTeX.Locales.dateorder[#{name.inspect}]" }.join(' = ')
+      names = names.collect{|name| "Zotero.BetterBibTeX.Locales.dateorder[#{name}]" }.join(' = ')
 
       locale = Nokogiri::XML(open("csl-locales/locales-#{full}.xml"))
       locale.remove_namespaces!
@@ -440,7 +455,9 @@ file 'chrome/content/zotero-better-bibtex/csl-localedata.coffee' => ['Rakefile']
       months = 1.upto(12).collect{|month| locale.at("//term[@name='month-#{month.to_s.rjust(2, '0')}' and not(@form)]").inner_text.downcase }
       seasons = 1.upto(4).collect{|season| locale.at("//term[@name='season-#{season.to_s.rjust(2, '0')}']").inner_text.downcase }
 
-      f.puts("Zotero.BetterBibTeX.Locales.months[#{full.inspect}] = #{(months + seasons).inspect}")
+      months = '[' + (months + seasons).collect{|name| utf16literal(name) }.join(', ') + ']'
+
+      f.puts("Zotero.BetterBibTeX.Locales.months[#{full.inspect}] = #{months}")
     }
   }
 end

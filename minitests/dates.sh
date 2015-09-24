@@ -14,7 +14,7 @@ if ! [ -f minitests/dateparser.js ]; then
   curl -o minitests/dateparser.js https://raw.githubusercontent.com/Juris-M/zotero/jurism/chrome/content/zotero/xpcom/dateparser.js
 fi
 cat minitests/dateparser.js >> minitests/test.js
-for src in chrome/content/zotero-better-bibtex/csl-months.js resource/translators/xregexp-all.js minitests/dates.js ; do
+for src in chrome/content/zotero-better-bibtex/csl-localedata.js resource/translators/xregexp-all.js minitests/dates.js ; do
   rake $src
   cat $src >> minitests/test.js
 done

@@ -197,11 +197,11 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | typo stature-statute (zotero item type) #284                                       | 1           |
      | Normalize date ranges in citekeys #356                                             | 3           |
      | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
      | Math parts in title #113                                                           | 1           |
      | Better BibLaTeX.021                                                                | 1           |
-     | typo stature-statute (zotero item type) #284                                       | 1           |
      | remove the field if the override is empty #303                                     | 1           |
      | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
      | map csl-json variables #293                                                        | 2           |
