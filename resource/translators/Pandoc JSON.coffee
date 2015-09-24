@@ -15,12 +15,15 @@ doExport = ->
     json = Zotero.Utilities.itemToCSLJSON(item)
 
     for name, value of fields
-      if value.format == 'csl'
-        json[name] = value.value
-      else
-        switch name
-          when 'PMCID', 'PMID', 'DOI'
-            json[name] = value.value
+      switch
+        when value.format == 'csl' && name in ['issued', 'accessed']
+          json[name] = Zotero.BetterBibTeX.parseDateToArray(value.value)
+
+        when value.format == 'csl'
+          json[name] = value.value
+
+        when name in ['PMCID', 'PMID', 'DOI']
+          json[name] = value.value
 
     citekey = json.id = Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
     json = JSON.stringify(json)

@@ -12,7 +12,25 @@ class BetterBibTeXPatternFormatter
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
+    delete @year
+    delete @month
+
     return {} if @item.itemType in ['attachment', 'note']
+
+    if @item.date
+      date = Zotero.BetterBibTeX.DateParser::parseDateToObject(@item.date, {locale: @item.language, verbatimDetection: false})
+      Zotero.BetterBibTeX.debug('item date:', date)
+      if date
+        if date.literal
+          date = Zotero.Date.strToDate(@item.date)
+          @year = parseInt(date.year)
+          delete @year if isNaN(@year)
+          @month = parseInt(date.month)
+          delete @month if isNaN(@month)
+
+        else
+          @year = date.year
+          @month = date.month
 
     for candidate in @patterns[0]
       delete @postfix
@@ -240,24 +258,17 @@ class BetterBibTeXPatternFormatter
       words.slice(0, 1).join('')
 
     shortyear: ->
-      return '' unless @item.date
-      date = Zotero.Date.strToDate(@item.date)
-      return '' if typeof date.year == 'undefined'
-      year = date.year % 100
+      return '' unless @year
+      year = @year % 100
       return "0#{year}"  if year < 10
       return '' + year
 
     year: ->
-      return '' unless @item.date
-      date = Zotero.Date.strToDate(@item.date)
-      return @item.date if typeof date.year == 'undefined'
-      return date.year
+      return @year || ''
 
     month: ->
-      return '' unless @item.date
-      date = Zotero.Date.strToDate(@item.date)
-      return '' if typeof date.year == 'undefined'
-      return @months[date.month] ? ''
+      return '' unless @month
+      return @months[@month - 1] ? ''
 
     title: ->
       return @titleWords(@item.title).join('')

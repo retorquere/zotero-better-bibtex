@@ -39,7 +39,7 @@
           "creatorType": "author"
         }
       ],
-      "extra": "bibtex: Adams2001",
+      "extra": "bibtex: Adams2001\n{:issued:2014-12-31/2015-01-01}",
       "tags": [
         "Vulcanian eruptions",
         "breadcrust",

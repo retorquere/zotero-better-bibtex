@@ -119,6 +119,8 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/test/tests.js',
+  'chrome/content/zotero-better-bibtex/csl-localedata.js',
+  'chrome/content/zotero-better-bibtex/juris-m-dateparser.js',
   'chrome.manifest',
   'install.rdf',
   'resource/logs/s3.json',
@@ -240,6 +242,16 @@ file 'resource/translators/he.js' => 'Rakefile' do |t|
   code.sub!("\n}(this));", "\n}(LaTeX));")
 
   open(t.name, 'w'){|f| f.write(code) }
+end
+
+file 'chrome/content/zotero-better-bibtex/juris-m-dateparser.js' => 'Rakefile' do |t|
+  FileUtils.mkdir_p(File.dirname(t.name))
+  Tempfile.create('dateparser') do |tmp|
+    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Juris-M/zotero/jurism/chrome/content/zotero/xpcom/dateparser.js', tmp.path)
+    open(t.name, 'w'){|f|
+      f.write(open(tmp.path).read.gsub('Zotero.DateParser', 'Zotero.BetterBibTeX.JurisMDateParser'))
+    }
+  end
 end
 
 file 'resource/translators/htmlparser.js' => 'Rakefile' do |t|
@@ -388,17 +400,76 @@ rule '.json' => '.yml' do |t|
 end
 
 def browserify(code, target)
+  puts "\nbrowserify #{target}"
+  prefix, code = code.split("\n", 2)
+  code, prefix = prefix, code unless code
+  prefix = prefix ? prefix + "\n" : ''
   Tempfile.create(['browserify', '.js'], File.dirname(target)) do |caller|
     Tempfile.create(['browserify', '.js'], File.dirname(target)) do |output|
       open(caller.path, 'w'){|f| f.puts code }
       sh "#{NODEBIN}/browserify #{caller.path.shellescape} > #{output.path.shellescape}"
-      FileUtils.cp(output.path, target)
+      open(target, 'w') {|f|
+        f.write(prefix)
+        f.write(open(output.path).read)
+      }
     end
   end
 end
 
+def utf16literal(str)
+  str = str.split(//).collect{|c|
+    o = c.ord
+    if o >= 0x20 && o <= 0x7E
+      c
+    elsif o > 0xFFFF
+      h = ((o - 0x10000) / 0x400).floor + 0xD800
+      l - ((o - 0x10000) % 0x400) + oxDC00
+      "\\u#{h.to_s(16).rjust(4, '0')}\\u#{l.to_s(16).rjust(4, '0')}"
+    else
+      "\\u#{o.to_s(16).rjust(4, '0')}"
+    end
+  }.join('')
+  return "'" + str + "'"
+end
+file 'chrome/content/zotero-better-bibtex/csl-localedata.coffee' => ['Rakefile'] + Dir['csl-locales/*.xml'] + Dir['csl-locales/*.json'] do |t|
+  open(t.name, 'w'){|f|
+    f.puts('Zotero.BetterBibTeX.Locales = { months: {}, dateorder: {}}')
+
+    locales = JSON.parse(open('csl-locales/locales.json').read)
+    locales['primary-dialects']['en'] = 'en-GB'
+    short = locales['primary-dialects'].invert
+
+    locales['language-names'].keys.sort.each{|full|
+      names = ["'#{full.downcase}'"]
+      names << "'#{short[full].downcase}'" if short[full]
+      if full == 'en-US'
+        names << "'american'"
+      else
+        locales['language-names'][full].each{|name|
+          names << utf16literal(name.downcase)
+          names << utf16literal(name.sub(/\s\(.*/, '').downcase)
+        }
+      end
+      names.uniq!
+      names = names.collect{|name| "Zotero.BetterBibTeX.Locales.dateorder[#{name}]" }.join(' = ')
+
+      locale = Nokogiri::XML(open("csl-locales/locales-#{full}.xml"))
+      locale.remove_namespaces!
+      order = locale.xpath('//date[@form="numeric"]/date-part').collect{|d| d['name'][0]}.join('')
+      f.puts("#{names} = #{order.inspect}")
+
+      months = 1.upto(12).collect{|month| locale.at("//term[@name='month-#{month.to_s.rjust(2, '0')}' and not(@form)]").inner_text.downcase }
+      seasons = 1.upto(4).collect{|season| locale.at("//term[@name='season-#{season.to_s.rjust(2, '0')}']").inner_text.downcase }
+
+      months = '[' + (months + seasons).collect{|name| utf16literal(name) }.join(', ') + ']'
+
+      f.puts("Zotero.BetterBibTeX.Locales.months[#{full.inspect}] = #{months}")
+    }
+  }
+end
+
 file 'resource/translators/marked.js' => 'Rakefile' do |t|
-  browserify("var LaTeX; if (!LaTeX) { LaTeX = {}; }; LaTeX.marked=require('marked');", t.name)
+  browserify("var LaTeX; if (!LaTeX) { LaTeX = {}; };\nLaTeX.marked=require('marked');", t.name)
 end
 
 file 'resource/translators/acorn.js' => 'Rakefile' do |t|

@@ -39,8 +39,8 @@ Zotero.BetterBibTeX.keymanager = new class
     # LaTeX book.)
     @months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
-    @embeddedKeyRE = /bibtex: *([^\s\r\n]+)/
-    @andersJohanssonKeyRE = /biblatexcitekey\[([^\]]+)\]/
+    @embeddedKeyRE = /\bbibtex: *([^\s\r\n]+)/
+    @andersJohanssonKeyRE = /\bbiblatexcitekey\[([^\]]+)\]/
 
   integer: (v) ->
     return v if typeof v == 'number' || v == null
@@ -138,7 +138,7 @@ Zotero.BetterBibTeX.keymanager = new class
         throw("#{insitu}: cannot extract in-situ for real items") if insitu
         item = {itemID: item.id, extra: item.getField('extra')}
       when !insitu
-        item = {itemID: item?.itemID, extra: item.extra.slice(0)}
+        item = {itemID: item.itemID, extra: item.extra.slice(0)}
 
     return item unless item.extra
 

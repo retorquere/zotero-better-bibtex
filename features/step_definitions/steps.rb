@@ -328,7 +328,12 @@ Then(/^a library export using '(.+)' should match '(.+)'$/) do |translator, file
 
   expected = File.expand_path(File.join('test/fixtures', filename))
   expected = open(expected).read.strip
-  open("tmp/#{File.basename(filename)}", 'w'){|f| f.write(found)} if found != expected
+
+  if File.extname(filename) == '.json'
+    found = JSON.parse(found)
+    expected = JSON.parse(expected)
+  end
+
   expect(found).to eq(expected)
 end
 

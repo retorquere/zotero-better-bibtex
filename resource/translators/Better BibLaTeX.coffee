@@ -299,6 +299,40 @@ Language.lookup = (langcode) ->
 
   return @cache[langcode]
 
+class DateField
+  constructor: (date, locale, formatted, literal) ->
+    parsed = Zotero.BetterBibTeX.parseDateToObject(date, locale)
+
+    switch
+      when !parsed
+        @field = {}
+
+      when parsed.literal
+        @field = { name: literal, value: date, preserveCaps: true }
+
+      when (parsed.year || parsed.empty) && (parsed.year_end || parsed.empty_end)
+        @field = { name: formatted, value: @format(parsed) + '/' + @format(parsed, '_end') }
+
+      when parsed.year
+        @field = { name: formatted, value: @format(parsed) }
+
+      else
+        @field = {}
+
+  pad: (v, pad) ->
+    return v if v.length >= pad.length
+    return (pad + v).slice(-pad.length)
+
+  format: (v, suffix = '') ->
+    _v = {}
+    for f in ['empty', 'year', 'month', 'day']
+      _v[f] = v["#{f}#{suffix}"]
+
+    return '' if _v.empty
+    return "#{_v.year}-#{@pad(_v.month, '00')}-#{@pad(_v.day, '00')}" if _v.year && _v.month && _v.day
+    return "#{_v.year}-#{@pad(_v.month, '00')}" if _v.year && _v.month
+    return _v.year
+
 doExport = ->
   Zotero.write('\n')
   while item = Translator.nextItem()
@@ -474,11 +508,7 @@ doExport = ->
 
     ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate && item.url
 
-    if item.date
-      if Translator.verbatimDateRE?.test(item.date) || typeof Zotero.Utilities.strToDate(item.date).year == 'undefined'
-        ref.add({ name: 'date', value: item.date, preserveCaps: true })
-      else
-        ref.add({ name: 'date', value: Zotero.Utilities.strToISO(item.date) })
+    ref.add((new DateField(item.date, item.language, 'date', 'year')).field)
 
     ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )}) if item.pages
 

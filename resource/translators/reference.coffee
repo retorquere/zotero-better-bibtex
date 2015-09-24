@@ -63,6 +63,42 @@ class Reference
     return f.value
 
   ###
+  # Encode to date
+  #
+  # @param {field} field to encode
+  # @return {String} unmodified `field.value`
+  ###
+  isodate: (v, suffix = '') ->
+    year = v["year#{suffix}"]
+    return null unless year
+
+    month = v["month#{suffix}"]
+    month = "0#{month}".slice(-2) if month
+    day = v["day#{suffix}"]
+    day = "0#{day}".slice(-2) if day
+
+    date = '' + year
+    if month
+      date += "-#{month}"
+      date += "-#{day}" if day
+    return date
+
+  enc_date: (f) ->
+    return null unless f.value
+
+    if f.value.literal
+      return '\\bibstring{nodate}' if f.value.literal == 'n.d.'
+      return @enc_latex(@clone(f, f.value.literal))
+
+    date = @isodate(f.value)
+    return null unless date
+
+    enddate = @isodate(f.value, '_end')
+    date += "/#{enddate}" if enddate
+
+    return @enc_latex({value: date})
+
+  ###
   # Encode to LaTeX url
   #
   # @param {field} field to encode
@@ -249,8 +285,12 @@ class Reference
     f.errors = errors if errors.length != 0
     return null if attachments.length == 0
 
-    # sort attachments for stable tests
-    attachments.sort( ( (a, b) -> a.path.localeCompare(b.path) ) ) if Translator.testing
+    # sort attachments for stable tests, and to make non-snapshots the default for JabRef to open (#355)
+    attachments.sort((a, b) ->
+      return 1  if a.mimetype == 'text/html' && b.mimetype != 'text/html'
+      return -1 if b.mimetype == 'text/html' && a.mimetype != 'text/html'
+      return a.path.localeCompare(b.path)
+    )
 
     return (att.path.replace(/([\\{};])/g, "\\$1") for att in attachments).join(';') if Translator.attachmentsNoMetadata
     return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')

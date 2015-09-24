@@ -4,6 +4,7 @@ Feature: Export
 Background:
   When I set preference .citekeyFormat to [auth][year]
   And I set preference .jabrefGroups to false
+  And I set preference .defaultDateParserLocale to en-GB
 
 @test-cluster-2
 @131
@@ -83,6 +84,7 @@ Scenario: Pandoc/LaTeX Citation Export
   When I import 1 reference with 1 attachment from 'export/Pandoc Citation.json'
   Then a library export using 'Pandoc Citation' should match 'export/Pandoc Citation.pandoc'
   And a library export using 'LaTeX Citation' should match 'export/Pandoc Citation.latex'
+  And a library export using 'Pandoc JSON' should match 'export/Pandoc Citation.csl.json'
 
 @test-cluster-2
 @journal-abbrev
@@ -160,6 +162,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
      | BraceBalancer                                                                                  | 1           |
      | @legislation; map code,container-title to journaltitle #327                                    | 1           |
@@ -172,7 +175,6 @@ Scenario Outline: BibLaTeX Export
      | Spaces not stripped from citation keys #294                                                    | 1           |
      | Book converted to mvbook #288                                                                  | 1           |
      | Colon not allowed in citation key format #268                                                  | 1           |
-     | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | Export mapping for reporter field #219                                                         | 1           |
      | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201     | 1           |
      | Be robust against misconfigured journal abbreviator #127                                       | 1           |
@@ -188,18 +190,23 @@ Scenario Outline: BibLaTeX Export
 @test-cluster-1
 @bblt
 @bblt-1
+@failing
 Scenario Outline: BibLaTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.bib'
 
   Examples:
      | file                                                                               | references  |
+     | typo stature-statute (zotero item type) #284                                       | 1           |
+     | Normalize date ranges in citekeys #356                                             | 3           |
+     | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
+     | Math parts in title #113                                                           | 1           |
+     | Better BibLaTeX.021                                                                | 1           |
      | remove the field if the override is empty #303                                     | 1           |
      | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
      | map csl-json variables #293                                                        | 2           |
      | markup small-caps, superscript, italics #301                                       | 2           |
      | don't escape entry key fields for #296                                             | 1           |
-     | typo stature-statute (zotero item type) #284                                       | 1           |
      | bookSection is always converted to @inbook, never @incollection #282               | 1           |
      | referencetype= does not work #278                                                  | 1           |
      | Ignore HTML tags when generating citation key #264                                 | 1           |
@@ -216,7 +223,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.017                                                                | 1           |
      | Better BibLaTeX.019                                                                | 1           |
      | Better BibLaTeX.020                                                                | 1           |
-     | Better BibLaTeX.021                                                                | 1           |
      | Better BibLaTeX.022                                                                | 1           |
      | Better BibLaTeX.023                                                                | 1           |
      | Better BibTeX does not use biblatex fields eprint and eprinttype #170              | 1           |
@@ -228,9 +234,7 @@ Scenario Outline: BibLaTeX Export
      | German Umlaut separated by brackets #146                                           | 1           |
      | Hang on non-file attachment export #112 - URL export broken #114                   | 2           |
      | HTML Fragment separator escaped in url #140 #147                                   | 1           |
-     | Math parts in title #113                                                           | 1           |
      | References with multiple notes fail to export #174                                 | 1           |
-     | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
      | underscores in URL fields should not be escaped #104                               | 1           |
      | Allow explicit field override                                                      | 1           |
 

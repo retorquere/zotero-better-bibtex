@@ -4,3 +4,6 @@
 [submodule "wiki"]
 	path = wiki
 	url = https://github.com/ZotPlus/zotero-better-bibtex.wiki.git
+[submodule "csl-locales"]
+	path = csl-locales
+	url = https://github.com/citation-style-language/locales.git

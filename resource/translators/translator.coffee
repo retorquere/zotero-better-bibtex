@@ -20,6 +20,17 @@ Translator.stringify = (obj, replacer, spaces, cycleReplacer) ->
       str += '+' + @stringify(o)
   return str
 
+Translator.locale = (language) ->
+  if !@languages.locales[language]
+    ll = language.toLowerCase()
+    for locale in @languages.langs
+      for k, v of locale
+        @languages.locales[language] = locale[1] if ll == v
+      break if @languages.locales[language]
+    @languages.locales[language] ||= language
+
+  return @languages.locales[language]
+
 Translator.stringifier = (replacer, cycleReplacer) ->
   stack = []
   keys = []
@@ -90,6 +101,7 @@ Translator.CSLVariables = [
   'title-short'
   'URL'
   'version'
+  'volume-title'
   'year-suffix'
   'chapter-number'
   'collection-number'
