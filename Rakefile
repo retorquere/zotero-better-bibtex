@@ -129,7 +129,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',
   'resource/translators/he.js',
-  'resource/translators/util_name_particles.js',
+  'resource/translators/csl-util_name_particles.js',
 ]).sort.uniq
 
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
@@ -196,14 +196,14 @@ DOWNLOADS.each_pair{|dir, files|
   }
 }
 
-file 'resource/translators/util_name_particles.js' => 'Rakefile' do |t|
+file 'resource/translators/csl-util_name_particles.js' => 'Rakefile' do |t|
   Tempfile.create('pp') do |js|
     ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/src/util_name_particles.js', js.path)
     open(t.name, 'w'){|f|
       f.puts('var CSL; if (!CSL) { CSL = {}; }')
       code = open(js.path).read
       # workaround for https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping
-      code.sub!('} else if (!name["dropping-particle"] && nameObj.given) {', '} else if (!nameObj["dropping-particle"] && nameObj.given) {')
+      #code.sub!('} else if (!name["dropping-particle"] && nameObj.given) {', '} else if (!nameObj["dropping-particle"] && nameObj.given) {')
       f.write(code)
     }
   end
