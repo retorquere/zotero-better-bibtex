@@ -8,10 +8,134 @@ Zotero.BetterBibTeX = {
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
 
-Zotero.BetterBibTeX.parseDateToObject = (date) ->
-  return null unless date
-  return {literal: date} if date.indexOf('[') >= 0
-  return Zotero.BetterBibTeX.DateParser.parseDateToObject(date)
+class Zotero.BetterBibTeX.DateParser
+  parseDateToObject: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).date
+
+  constructor: (date, options = {}) ->
+    return unless date
+
+    if options.verbatimDetection && date.indexOf('[') >= 0
+      @date = {literal: date}
+      return
+
+    if options.locale
+      locale = options.locale.toLowerCase()
+      @dateorder = Zotero.BetterBibTeX.Locales.dateorder[locale]
+      if @dateorder
+        found = locale
+      else
+        for k, v of Zotero.BetterBibTeX.Locales.dateorder
+          if k.slice(0, locale.length) == locale
+            found = k
+            @dateorder = Zotero.BetterBibTeX.Locales.dateorder[options.locale] = v
+            break
+
+    if !@dateorder
+      fallback = Zotero.BetterBibTeX.pref.get('defaultDateParserLocale')
+      @dateorder = Zotero.BetterBibTeX.Locales.dateorder[fallback]
+      @dateorder ||= Zotero.BetterBibTeX.Locales.dateorder[Zotero.locale]
+
+    Zotero.BetterBibTeX.debug('date parser locale:', {given: options.locale, found: found, fallback: fallback, zotero: Zotero.locale})
+    @date = @parse(date)
+
+  swapMonth: (date) ->
+    return unless date.day && date.month
+
+    switch
+      when @dateorder == 'mdy' && date.day <= 12 then
+      when date.month > 12 then
+      else return
+    [date.month, date.day] = [date.day, date.month]
+
+  cruft: new Zotero.Utilities.XRegExp("[^\\p{Letter}\\p{Number}]+", 'g')
+  parsedate: (date) ->
+    date = date.trim()
+    return {empty: true} if date == ''
+
+    # Juris-M doesn't recognize d?/m/y
+    if m = date.match(/^(([0-9]{1,2})[-\/])?([0-9]{1,2})([-\/])([0-9]{3,4})$/)
+      Zotero.BetterBibTeX.debug('parsed:', m)
+      parsed = {
+        year: parseInt(m[5])
+        month: parseInt(m[3])
+        day: parseInt(m[1]) || undefined
+      }
+      @swapMonth(parsed)
+      return parsed
+
+    if m = date.match(/^([0-9]{3,4})([-\/])([0-9]{1,2})([-\/]?([0-9]{1,2}))?$/)
+      Zotero.BetterBibTeX.debug('parsed:', m)
+      parsed = {
+        year: parseInt(m[1])
+        month: parseInt(m[3])
+        day: parseInt(m[5]) || undefined
+      }
+      @swapMonth(parsed)
+      return parsed
+
+    parsed = Zotero.BetterBibTeX.JurisMDateParser.parseDateToObject(date)
+
+    return parsed if parsed.literal
+    return {literal: date} if parsed.month && parsed.month > 12 # there's a season in there somewhere
+
+    shape = date
+    shape = shape.slice(1) if shape[0] == '-'
+    shape = Zotero.Utilities.XRegExp.replace(shape.trim(), @cruft, ' ', 'all')
+    shape = shape.split(' ')
+
+    fields = 0
+    fields += 1 if parsed.year
+    fields += 1 if parsed.month
+    fields += 1 if parsed.day
+
+    Zotero.BetterBibTeX.debug('parsed date:', {date, shape, fields, parsed})
+    return parsed if fields == 3 || shape.length == fields
+
+    return {literal: date}
+
+  makeobj: (range) ->
+    if Array.isArray(range)
+      obj = {
+        year: range[0].year
+        month: range[0].month
+        day: range[0].day
+
+        year_end: range[1].year
+        month_end: range[1].month
+        day_end: range[1].day
+      }
+
+  parse: (date) ->
+    return {} unless date
+
+    date = date.trim()
+
+    for sep in ['/', '-', '_']
+      continue if date == sep
+
+      range = date.split(sep)
+      continue unless range.length == 2
+
+      range = [
+        @parsedate(range[0])
+        @parsedate(range[1])
+      ]
+
+      continue if range[0].literal || range[1].literal
+
+      return {
+        empty: range[0].empty
+        year: range[0].year
+        month: range[0].month
+        day: range[0].day
+
+        empty_end: range[1].empty
+        year_end: range[1].year
+        month_end: range[1].month
+        day_end: range[1].day
+      }
+
+    return @parsedate(date)
 
 Zotero.BetterBibTeX.error = (msg...) ->
   @_log.apply(@, [0].concat(msg))
@@ -564,11 +688,10 @@ Zotero.BetterBibTeX.init = ->
     CSL: {
       parseParticles: (sandbox, name, normalizeApostrophe) -> Zotero.CiteProc.CSL.parseParticles(name, normalizeApostrophe)
     }
-    locale: Zotero.locale
-    parseDateToObject: (sandbox, date) -> Zotero.BetterBibTeX.parseDateToObject(date)
-    parseDateToArray: (sandbox, date) ->
-      parsed = Zotero.BetterBibTeX.parseDateToObject(date)
-      Zotero.BetterBibTeX.DateParser.convertDateObjectToArray(parsed)
+    parseDateToObject: (sandbox, date, locale) -> Zotero.BetterBibTeX.DateParser::parseDateToObject(date, {locale, verbatimDetection: true})
+    parseDateToArray: (sandbox, date, locale) ->
+      parsed = Zotero.BetterBibTeX.DateParser::parseDateToObject(date, {locale, verbatimDetection: true})
+      Zotero.BetterBibTeX.JurisMDateParser.convertDateObjectToArray(parsed)
       if Array.isArray(parsed['date-parts'])
         if Array.isArray(parsed['date-parts'][0])
           parsed['date-parts'] = (((if isNaN(parseInt(d)) then d else parseInt(d)) for d in datepart) for datepart in parsed['date-parts'])

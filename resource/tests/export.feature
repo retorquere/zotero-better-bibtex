@@ -4,6 +4,7 @@ Feature: Export
 Background:
   When I set preference .citekeyFormat to [auth][year]
   And I set preference .jabrefGroups to false
+  And I set preference .defaultDateParserLocale to en-GB
 
 @test-cluster-2
 @131
@@ -196,8 +197,8 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
-     | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
      | Normalize date ranges in citekeys #356                                             | 3           |
+     | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
      | Math parts in title #113                                                           | 1           |
      | Better BibLaTeX.021                                                                | 1           |
      | typo stature-statute (zotero item type) #284                                       | 1           |

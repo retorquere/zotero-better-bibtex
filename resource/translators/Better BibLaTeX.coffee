@@ -300,101 +300,38 @@ Language.lookup = (langcode) ->
   return @cache[langcode]
 
 class DateField
-  constructor: (date, locale, @formatted, @literal) ->
-    if locale
-      locale = locale.toLowerCase()
-      @dateorder = Translator.Locales.dateorder[locale]
-      if !@dateorder
-        for k, v of Translator.Locales.dateorder
-          if k.slice(0, locale.length) == locale
-            @dateorder = Translator.Locales.dateorder[locale] = v
-            break
-    @dateorder ||= Translator.Locales.dateorder[Zotero.BetterBibTeX.locale]
-    @field = @makefield(date)
+  constructor: (date, locale, formatted, literal) ->
+    parsed = Zotero.BetterBibTeX.parseDateToObject(date, locale)
 
-  parse: (date) ->
-    date = date.trim()
-    return {empty: true} if date == ''
+    switch
+      when !parsed
+        @field = {}
 
-    # Juris-M doesn't recognize d?/m/y
-    if m = date.match(/^(([0-9]{1,2})[-\/])?([0-9]{1,2})([-\/])([0-9]{3,4})$/)
-      Translator.debug('parsed:', m)
-      parsed = {
-        year: parseInt(m[5])
-        month: parseInt(m[3])
-        day: parseInt(m[1]) || undefined
-      }
-      if @dateorder == 'mdy' || (parsed.month && parsed.day && parsed.month > 12)
-        [parsed.month, parsed.day] = [parsed.day, parsed.month]
-      return parsed
+      when parsed.literal
+        @field = { name: literal, value: date, preserveCaps: true }
 
-    if m = date.match(/^([0-9]{3,4})([-\/])([0-9]{1,2})([-\/]?([0-9]{1,2}))?$/)
-      Translator.debug('parsed:', m)
-      parsed = {
-        year: parseInt(m[1])
-        month: parseInt(m[3])
-        day: parseInt(m[5]) || undefined
-      }
-      if @dateorder == 'mdy' || (parsed.month && parsed.day && parsed.month > 12)
-        [parsed.month, parsed.day] = [parsed.day, parsed.month]
-      return parsed
+      when (parsed.year || parsed.empty) && (parsed.year_end || parsed.empty_end)
+        @field = { name: formatted, value: @format(parsed) + '/' + @format(parsed, '_end') }
 
-    parsed = Zotero.BetterBibTeX.parseDateToObject(date)
+      when parsed.year
+        @field = { name: formatted, value: @format(parsed) }
 
-    return parsed if parsed.literal
-    return {literal: date} if parsed.month && parsed.month > 12 # there's a season in there somewhere
-
-    @cruft ?= new XRegExp("[^\\p{Letter}\\p{Number}]+", 'g')
-    shape = date
-    shape = shape.slice(1) if shape[0] == '-'
-    shape = XRegExp.replace(shape.trim(), @cruft, ' ', 'all')
-    shape = shape.split(' ')
-
-    fields = 0
-    fields += 1 if parsed.year
-    fields += 1 if parsed.month
-    fields += 1 if parsed.day
-
-    Translator.debug('parsed date:', {date, shape, fields, parsed})
-    return parsed if fields == 3 || shape.length == fields
-
-    return {literal: date}
+      else
+        @field = {}
 
   pad: (v, pad) ->
     return v if v.length >= pad.length
     return (pad + v).slice(-pad.length)
 
-  format: (v) ->
-    return '' if v.empty
-    return "#{v.year}-#{@pad(v.month, '00')}-#{@pad(v.day, '00')}" if v.year && v.month && v.day
-    return "#{v.year}-#{@pad(v.month, '00')}" if v.year && v.month
-    return v.year
+  format: (v, suffix = '') ->
+    _v = {}
+    for f in ['empty', 'year', 'month', 'day']
+      _v[f] = v["#{f}#{suffix}"]
 
-  makefield: (date) ->
-    return {} unless date
-
-    date = date.trim()
-
-    for sep in ['/', '-', '_']
-      continue if date == sep
-
-      range = date.split(sep)
-      continue unless range.length == 2
-
-      range = [
-        @parse(range[0])
-        @parse(range[1])
-      ]
-
-      continue if range[0].literal || range[1].literal
-
-      return {name: @formatted, value: @format(range[0]) + '/' + @format(range[1])}
-
-    parsed = @parse(date)
-    Translator.debug('parsed:', {date, parsed})
-
-    return { name: @literal, value: date, preserveCaps: true } if parsed.literal
-    return { name: @formatted, value: @format(parsed) }
+    return '' if _v.empty
+    return "#{_v.year}-#{@pad(_v.month, '00')}-#{@pad(_v.day, '00')}" if _v.year && _v.month && _v.day
+    return "#{_v.year}-#{@pad(_v.month, '00')}" if _v.year && _v.month
+    return _v.year
 
 doExport = ->
   Zotero.write('\n')

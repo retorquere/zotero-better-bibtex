@@ -3,7 +3,7 @@ if not Zotero.BetterBibTeX
 
   for script in " lokijs
                   zotero-better-bibtex
-                  csl-months
+                  csl-localedata
                   juris-m-dateparser
                   fold-to-ascii
                   punycode
