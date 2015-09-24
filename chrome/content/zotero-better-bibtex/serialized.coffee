@@ -1,5 +1,15 @@
 Components.utils.import("resource://zotero/config.js")
 
+Zotero.BetterBibTeX.itemToExportFormat = (item) ->
+  json = Zotero.Utilities.Internal.itemToExportFormat(item)
+
+  if !json.itemID
+    if item.libraryID && item.libraryID != '0'
+      json.itemID = Zotero.DB.valueQuery('select ROWID from items where libraryID is NULL and key = ?', [item.key])
+    else
+      json.itemID = Zotero.DB.valueQuery('select ROWID from items where libraryID = ? and key = ?', [item.libraryID, item.key])
+  return json
+
 Zotero.BetterBibTeX.serialized =
   items: {}
 
@@ -67,7 +77,7 @@ Zotero.BetterBibTeX.serialized =
       item ||= Zotero.Items.get(itemID)
 
       # TODO: force legacy format to true until I switch over
-      items[itemID] = (if item.isAttachment() then @_attachmentToArray(item) else Zotero.Utilities.Internal.itemToExportFormat(item)) if item
+      items[itemID] = (if item.isAttachment() then @_attachmentToArray(item) else Zotero.BetterBibTeX.itemToExportFormat(item)) if item
 
       switch
         # the serialization yielded no object (why?), mark it as missing so we don't do this again
