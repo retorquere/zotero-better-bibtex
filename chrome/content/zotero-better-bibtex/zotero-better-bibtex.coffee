@@ -12,6 +12,8 @@ class Zotero.BetterBibTeX.DateParser
   parseDateToObject: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).date
 
   constructor: (date, options = {}) ->
+    @zoteroLocale ?= Zotero.locale.toLowerCase()
+
     return unless date
 
     if options.verbatimDetection && date.indexOf('[') >= 0
@@ -33,19 +35,24 @@ class Zotero.BetterBibTeX.DateParser
     if !@dateorder
       fallback = Zotero.BetterBibTeX.pref.get('defaultDateParserLocale')
       @dateorder = Zotero.BetterBibTeX.Locales.dateorder[fallback]
-      @dateorder ||= Zotero.BetterBibTeX.Locales.dateorder[Zotero.locale]
+      if !@dateorder
+        @dateorder = Zotero.BetterBibTeX.Locales.dateorder[fallback] = Zotero.BetterBibTeX.Locales.dateorder[fallback.trim().toLowerCase()]
 
-    Zotero.BetterBibTeX.debug('date parser locale:', {given: options.locale, found: found, fallback: fallback, zotero: Zotero.locale})
+    @dateorder ||= Zotero.BetterBibTeX.Locales.dateorder[@zoteroLocale]
+
+    Zotero.BetterBibTeX.debug('date parser locale:', {order: @dateorder, given: options.locale, found: found, fallback: fallback, zotero: Zotero.locale})
     @date = @parse(date)
 
-  swapMonth: (date) ->
+  swapMonth: (date, dateorder) ->
+    Zotero.BetterBibTeX.debug('swapMonth:', {date, order: @dateorder})
     return unless date.day && date.month
 
     switch
-      when @dateorder == 'mdy' && date.day <= 12 then
+      when @dateorder && @dateorder == dateorder && date.day <= 12 then
       when date.month > 12 then
       else return
     [date.month, date.day] = [date.day, date.month]
+    Zotero.BetterBibTeX.debug('swapMonth: swapped to', date)
 
   cruft: new Zotero.Utilities.XRegExp("[^\\p{Letter}\\p{Number}]+", 'g')
   parsedate: (date) ->
@@ -53,23 +60,24 @@ class Zotero.BetterBibTeX.DateParser
     return {empty: true} if date == ''
 
     # Juris-M doesn't recognize d?/m/y
-    if m = date.match(/^(([0-9]{1,2})[-\/])?([0-9]{1,2})([-\/])([0-9]{3,4})$/)
+    if m = date.match(/^(([0-9]{1,2})[-\s\/])?([0-9]{1,2})[-\s\/]([0-9]{3,4})$/)
       Zotero.BetterBibTeX.debug('parsed:', m)
       parsed = {
-        year: parseInt(m[5])
+        year: parseInt(m[4])
         month: parseInt(m[3])
         day: parseInt(m[1]) || undefined
       }
-      @swapMonth(parsed)
+      @swapMonth(parsed, 'mdy')
       return parsed
 
-    if m = date.match(/^([0-9]{3,4})([-\/])([0-9]{1,2})([-\/]?([0-9]{1,2}))?$/)
+    if m = date.match(/^([0-9]{3,4})[-\s\/]([0-9]{1,2})([-\s\/]([0-9]{1,2}))?$/)
       Zotero.BetterBibTeX.debug('parsed:', m)
       parsed = {
         year: parseInt(m[1])
-        month: parseInt(m[3])
-        day: parseInt(m[5]) || undefined
+        month: parseInt(m[2])
+        day: parseInt(m[4]) || undefined
       }
+      # only swap to repair -- assume yyyy-nn-nn == EDTF-0
       @swapMonth(parsed)
       return parsed
 
