@@ -49,7 +49,7 @@ doExport = ->
     ref = new Reference(item)
 
     ref.add({ name: 'number', value: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber })
-    ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*\d+:\d+:\d+/, '') })
+    ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
     switch
       when item.itemType in ['bookSection', 'conferencePaper']
