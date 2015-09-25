@@ -121,8 +121,9 @@ class Reference
   nonLetters: new XRegExp("[^\\p{Letter}]", 'g')
   punctuationAtEnd: new XRegExp("[\\p{Punctuation}]$")
   postfixedParticle: (particle) ->
-    return particle + ' ' if particle[particle.length - 1] == '.'
-    return particle if XRegExp.test(particle, @punctuationAtEnd)
+    lastchar = particle[particle.length - 1]
+    return particle + ' ' if lastchar == '.'
+    return particle if XRegExp.test(particle, @punctuationAtEnd) || lastchar == ' '
     return particle + ' '
 
   ###
@@ -159,7 +160,11 @@ class Reference
             else
               #Zotero.BetterBibTeX.CSL.parseParticles(name)
               CSL.parseParticles(name)
+              CSL.parseParticles(name) # twice to work around https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping
               Translator.debug('particle-parser: parsed to', name)
+
+              @juniorcomma ||= name.suffix
+              @useprefix ||= name['non-dropping-particle']
 
               source = XRegExp.replace((creator.firstName || '') + (creator.lastName || ''), @nonLetters, '')
               parsed = XRegExp.replace((part || '' for part in [name.given, name.family, name.suffix, name['non-dropping-particle'], name['dropping-particle']]).join(''), @nonLetters, '')
@@ -168,7 +173,9 @@ class Reference
               # fallback = (source.length != parsed.length)
 
               if name['non-dropping-particle']
-                name.family = @enc_latex({value: new String((@postfixedParticle(name['non-dropping-particle']) + name.family).trim())})
+                name.family = (@postfixedParticle(name['non-dropping-particle']) + name.family).trim()
+                name.family = new String(name.family) if Translator.BetterBibTeX
+                name.family = @enc_latex({value: name.family})
               else
                 name.family = @enc_latex({value: name.family}).replace(/ and /g, ' {and} ')
 

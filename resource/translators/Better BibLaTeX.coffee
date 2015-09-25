@@ -397,8 +397,6 @@ doExport = ->
       if archive
         ref.add({ name: 'eprint', value: item.archiveLocation })    unless ref.has.eprint
 
-    ref.add({ name: 'options', value: 'useprefix' }) if Translator.usePrefix
-
     ref.add({ name: 'number', value: item.docketNumber || item.publicLawNumber || item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number })
     ref.add({ name: (if isNaN(parseInt(item.issue)) then 'issue' else 'number'), value: item.issue })
 
@@ -534,6 +532,11 @@ doExport = ->
     if item.notes and Translator.exportNotes
       for note in item.notes
         ref.add({ name: 'annotation', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true })
+
+    if Translator.usePrefix && ref.useprefix
+      value = 'useprefix'
+      value += ',juniorcomma' if ref.juniorcomma
+      ref.add({ name: 'options', value })
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
     ref.complete()
