@@ -12,6 +12,7 @@ class BetterBibTeXPatternFormatter
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
+    Zotero.BetterBibTeX.debug('formatter: fetched', @item, 'for', item)
     delete @year
     delete @month
 
@@ -106,7 +107,7 @@ class BetterBibTeXPatternFormatter
     for creator in @item.creators
       continue if onlyEditors && creator.creatorType not in ['editor', 'seriesEditor']
 
-      name = @innerText(creator.lastName)
+      name = @innerText(creator.name || creator.lastName)
 
       if name != ''
         if withInitials and creator.firstName

@@ -13,7 +13,7 @@ Translator.fieldMap = {
   shortTitle:       { name: 'shorttitle', preserveCaps: true }
   abstractNote:     { name: 'abstract' }
   numberOfVolumes:  { name: 'volumes' }
-  version:          { name: 'version' }
+  versionNumber:    { name: 'version' }
   conferenceName:   { name: 'eventtitle', preserveCaps: true }
   numPages:         { name: 'pagetotal' }
   type:             { name: 'type', preserveCaps: true }
@@ -399,7 +399,7 @@ doExport = ->
 
     ref.add({ name: 'options', value: 'useprefix' }) if Translator.usePrefix
 
-    ref.add({ name: 'number', value: item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number })
+    ref.add({ name: 'number', value: item.docketNumber || item.publicLawNumber || item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number })
     ref.add({ name: (if isNaN(parseInt(item.issue)) then 'issue' else 'number'), value: item.issue })
 
     switch item.itemType
@@ -411,7 +411,7 @@ doExport = ->
     if item.publicationTitle
       switch item.itemType
         when 'bookSection', 'conferencePaper', 'dictionaryEntry', 'encyclopediaArticle'
-          ref.add({ name: 'booktitle', value: item.publicationTitle, preserveBibTeXVariables: true, preserveCaps: true})
+          ref.add({ name: 'booktitle', value: item.bookTitle || item.publicationTitle, preserveBibTeXVariables: true, preserveCaps: true})
 
         when 'magazineArticle', 'newspaperArticle'
           ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true, preserveBibTeXVariables: true})
@@ -428,14 +428,14 @@ doExport = ->
               ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true })
               ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true, preserveCaps: true })
 
-    ref.add({ name: 'booktitle', value: item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, preserveCaps: true }) if not ref.has.booktitle
+    ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, preserveCaps: true }) if not ref.has.booktitle
 
     ref.add({ name: 'titleaddon', value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, preserveCaps: true })
     ref.add({ name: 'series', value: item.seriesTitle || item.series, preserveCaps: true })
 
     switch item.itemType
       when 'report', 'thesis'
-        ref.add({ name: 'institution', value: item.publisher, preserveCaps: true })
+        ref.add({ name: 'institution', value: item.institution || item.publisher, preserveCaps: true })
 
       when 'case', 'hearing'
         ref.add({ name: 'institution', value: item.court, preserveCaps: true })
@@ -449,12 +449,11 @@ doExport = ->
       when 'email'  then ref.add({ name: 'type', value: 'E-mail', replace: true })
 
       when 'thesis'
-        thesisType = (item.type || '').toLowerCase().trim()
-        if thesisType in ['phdthesis', 'mastersthesis']
-          ref.referencetype = thesisType
+        if item.thesisType in ['phdthesis', 'mastersthesis']
+          ref.referencetype = item.thesisType
           ref.remove('type')
         else
-          ref.add({ name: 'type', value: item.type, replace: true })
+          ref.add({ name: 'type', value: item.thesisType, replace: true })
 
       when 'report'
         if (item.type || '').toLowerCase().trim() == 'techreport'
@@ -510,7 +509,13 @@ doExport = ->
 
     ref.add((new DateField(item.date, item.language, 'date', 'year')).field)
 
-    ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )}) if item.pages
+    switch
+      when item.pages
+        ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )})
+      when item.firstPage && item.lastPage
+        ref.add({ name: 'pages', value: "#{item.firstPage}--#{item.lastPage}" })
+      when item.firstPage
+        ref.add({ name: 'pages', value: "#{item.firstPage}" })
 
     if item.language
       langlc = item.language.toLowerCase()

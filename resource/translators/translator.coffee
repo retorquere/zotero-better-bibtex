@@ -211,7 +211,7 @@ Translator.initialize = ->
   for option in ['useJournalAbbreviation', 'exportPath', 'exportFilename', 'exportCharset', 'exportFileData', 'exportNotes']
     @preferences[option] = @[option] = Zotero.getOption(option)
 
-  @caching = @header.BetterBibTeX?.cache?.BibTeX && !@exportFileData
+  @caching = @header.BetterBibTeX?.caching && !@exportFileData
 
   @unicode = switch
     when @BetterBibLaTeX || @CollectedNotes then !Zotero.getHiddenPref('better-bibtex.asciiBibLaTeX')

@@ -134,18 +134,17 @@ class Reference
   enc_creators: (f, raw) ->
     return null if f.value.length == 0
 
-    Translator.debug('enc_creators', f, 'raw:', raw)
-
     encoded = []
     for creator in f.value
       switch
-        when creator.lastName && creator.fieldMode == 1
-          name = if raw then "{#{creator.lastName}}" else @enc_latex({value: new String(creator.lastName)})
+        when creator.name || (creator.lastName && creator.fieldMode == 1)
+          name = if raw then "{#{creator.name || creator.lastName}}" else @enc_latex({value: new String(creator.name || creator.lastName)})
 
         when raw
           name = [creator.lastName || '', creator.firstName || ''].join(', ')
 
         when creator.lastName || creator.firstName
+          Translator.debug('particle-parser:', creator)
           name = {family: creator.lastName || '', given: creator.firstName || ''}
           # Parse name particles
           # Replicate citeproc-js logic for what should be parsed so we don't
@@ -160,14 +159,13 @@ class Reference
             else
               #Zotero.BetterBibTeX.CSL.parseParticles(name)
               CSL.parseParticles(name)
+              Translator.debug('particle-parser: parsed to', name)
 
               source = XRegExp.replace((creator.firstName || '') + (creator.lastName || ''), @nonLetters, '')
               parsed = XRegExp.replace((part || '' for part in [name.given, name.family, name.suffix, name['non-dropping-particle'], name['dropping-particle']]).join(''), @nonLetters, '')
 
               # Can we handle the abbot now?
               # fallback = (source.length != parsed.length)
-
-              Translator.debug('particle parser: creator=', creator, "@#{source.length}=", source, 'name=', name, "@#{parsed.length}=", parsed, 'fallback:', fallback)
 
               if name['non-dropping-particle']
                 name.family = @enc_latex({value: new String((@postfixedParticle(name['non-dropping-particle']) + name.family).trim())})
@@ -270,6 +268,8 @@ class Reference
       if a.path.match(/[{}]/) # latex really doesn't want you to do this.
         errors.push("BibTeX cannot handle file paths with braces: #{JSON.stringify(a.path)}")
         continue
+
+      a.mimetype = 'application/pdf' if !a.mimetype && a.path.slice(-4).toLowerCase() == '.pdf'
 
       switch
         when save
@@ -414,8 +414,6 @@ class Reference
       if name == 'referencetype'
         @referencetype = value.value
         continue
-
-      Translator.debug('override:', name, value)
 
       switch value.format
         # CSL names are not in BibTeX format, so only add it if there's a mapping

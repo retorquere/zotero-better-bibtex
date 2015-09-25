@@ -1,32 +1,31 @@
-translatorID: "ca65189f-8815-4afe-8c8b-8c7c15f0edca"
-label: "Better BibTeX"
-creator: "Simon Kornblith, Richard Karnesky and Emiliano heyns"
+---
+translatorID: ca65189f-8815-4afe-8c8b-8c7c15f0edca
+label: Better BibTeX
+creator: Simon Kornblith, Richard Karnesky and Emiliano heyns
 target: bib
-minVersion: "2.1.9"
-maxVersion: ""
+minVersion: 4.0.27
+maxVersion: ''
 priority: 199
-configOptions: 
+configOptions:
   getCollections: true
-displayOptions: 
+displayOptions:
   exportNotes: true
   exportFileData: false
   useJournalAbbreviation: false
-  "Keep updated": false
+  Keep updated: false
 inRepository: true
 translatorType: 3
 browserSupport: gcsv
 BetterBibTeX:
-  cache:
-    nextItem: true
-    BibTeX: true
+  caching: true
   dependencies:
-    - xregexp-all
-    - reference
-    - csl-util_name_particles
-    - unicode_translator
-    - he
-    - htmlparser
-    - latex_unicode_mapping
-    - BetterBibTeXBraceBalancer
-    - BetterBibTeXParserSupport
-    - BetterBibTeXParser
+  - xregexp-all
+  - reference
+  - csl-util_name_particles
+  - unicode_translator
+  - he
+  - htmlparser
+  - latex_unicode_mapping
+  - BetterBibTeXBraceBalancer
+  - BetterBibTeXParserSupport
+  - BetterBibTeXParser

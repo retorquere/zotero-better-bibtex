@@ -49,7 +49,7 @@ doExport = ->
     ref = new Reference(item)
 
     ref.add({ name: 'number', value: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber })
-    ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*\d+:\d+:\d+/, '') })
+    ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
     switch
       when item.itemType in ['bookSection', 'conferencePaper']
@@ -64,11 +64,9 @@ doExport = ->
       when 'report' then ref.add({ name: 'institution', value: item.publisher, preserveCaps: true })
       else               ref.add({ name: 'publisher', value: item.publisher, preserveCaps: true })
 
-    if item.itemType == 'thesis'
-      thesisType = (item.type || '').toLowerCase().trim()
-      if thesisType in ['mastersthesis', 'phdthesis']
-        ref.referencetype = thesisType
-        ref.remove('type')
+    if item.itemType == 'thesis' && item.thesisType in ['mastersthesis', 'phdthesis']
+      ref.referencetype = item.thesisType
+      ref.remove('type')
 
     if item.creators and item.creators.length
       # split creators into subcategories
@@ -218,7 +216,10 @@ ZoteroItem::import = (bibtex) ->
       continue
 
     switch field
-      when '__note__', '__key__', '__type__', 'type', 'added-at', 'timestamp' then continue
+      when '__note__', '__key__', 'type', 'added-at', 'timestamp' then continue
+
+      when '__type__'
+        @item.thesisType = bibtex.__type__ if bibtex.__type__ in [ 'phdthesis', 'mastersthesis' ]
 
       when 'subtitle'
         @item.title = '' unless @item.title
@@ -243,7 +244,6 @@ ZoteroItem::import = (bibtex) ->
       when 'author', 'editor', 'translator'
         for creator in value
           continues unless creator
-          Translator.debug('creator:', creator)
           if typeof creator == 'string'
             creator = Zotero.Utilities.cleanAuthor(creator, field, false)
             creator.fieldMode = 1 if creator.lastName && !creator.firstName

@@ -66,11 +66,6 @@ Scenario: Square brackets in Publication field (85), and non-pinned keys must ch
   And I set preference .citekeyFormat to [year]-updated
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85) after pattern change.bib'
 
-@313
-Scenario: (non-)dropping particle handling #313
-  When I import 53 references from 'export/(non-)dropping particle handling #313.json'
-  Then a library export using 'Better BibLaTeX' should match 'export/(non-)dropping particle handling #313.bib'
-
 @test-cluster-2
 @86
 Scenario: Include first name initial(s) in cite key generation pattern (86)
@@ -162,11 +157,11 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | @jurisdiction; map court,authority to institution #326                                         | 1           |
+     | @legislation; map code,container-title to journaltitle #327                                    | 1           |
+     | BraceBalancer                                                                                  | 1           |
      | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
-     | BraceBalancer                                                                                  | 1           |
-     | @legislation; map code,container-title to journaltitle #327                                    | 1           |
-     | @jurisdiction; map court,authority to institution #326                                         | 1           |
      | Better BibLaTeX.004                                                                            | 1           |
      | auth leaves punctuation in citation key #310                                                   | 1           |
      | BibTeX variable support for journal titles. #309                                               | 1           |
@@ -197,6 +192,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Capitalisation in techreport titles #160                                           | 1           |
      | typo stature-statute (zotero item type) #284                                       | 1           |
      | Normalize date ranges in citekeys #356                                             | 3           |
      | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
@@ -226,7 +222,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.022                                                                | 1           |
      | Better BibLaTeX.023                                                                | 1           |
      | Better BibTeX does not use biblatex fields eprint and eprinttype #170              | 1           |
-     | Capitalisation in techreport titles #160                                           | 1           |
      | DOI with underscores in extra field #108                                           | 1           |
      | Export Forthcoming as Forthcoming                                                  | 1           |
      | Exporting of single-field author lacks braces #130                                 | 1           |
@@ -256,3 +251,7 @@ Scenario: auto-export
 #  When I import 1 reference from 'export/Preserve Bib variable names #163.json'
 #  Then a library export using 'Better BibLaTeX' should match 'export/Preserve Bib variable names #163.bib'
 
+@313
+Scenario: (non-)dropping particle handling #313
+  When I import 53 references from 'export/(non-)dropping particle handling #313.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/(non-)dropping particle handling #313.bib'
