@@ -22,13 +22,20 @@ The Better BibTeX configuration pane can be found under the regular Zotero prefe
 
 # Installation (one-time)
 
-After installation, the plugin will auto-update to newer releases. Install by downloading the [latest
-version](https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.4.6/zotero-better-bibtex-1.4.6.xpi)
-(**1.4.6**).
-If you are not prompted with a Firefox installation dialog then double-click the
-downloaded xpi; Firefox ought to start and present you with the installation dialog.
+After installation, the plugin will auto-update to newer releases, so installation is a one-time procedure. You can
+install BBT in ***either*** Standalone or Firefox; installing Zotero in both puts Zotero Standalone and Zotero Firefox in
+what is called "connector mode", which is currently [not
+supported](https://github.com/ZotPlus/zotero-better-bibtex/issues/143). Or, to be fully exact, you can have it installed
+in both, but running both at the same time will have BBT break at indeterminate occasions. Recoverable, but not fun.
 
-For standalone Zotero, do the following:
+Start by downloading the [latest version](https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.4.7/zotero-better-bibtex-1.4.7.xpi) (**1.4.7**), and then
+
+## BBT for Zotero Firefox
+
+If you downloaded BBT from Firefox you will usually be prompted with an installation dialog; if not, or if you
+downloaded using another browser, double-click the downloaded xpi; Firefox ought to start and present you with the installation dialog.
+
+## BBT for Zotero Standalone
 
 1. In the main menu go to Tools > Add-ons
 2. Select 'Extensions'
@@ -68,7 +75,7 @@ or there are problems preventing me from implementing a fix.
 
   switch (window.location.hash.trim()) {
     case '#xpi':
-      window.location = 'https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.4.6/zotero-better-bibtex-1.4.6.xpi';
+      window.location = 'https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.4.7/zotero-better-bibtex-1.4.7.xpi';
       break;
     case '#debug':
       window.location = 'https://drive.google.com/a/iris-advies.com/folderview?id=0B8tW4NMPfEosfkFETUV0V2l0N3NHZHEyQk5SUm03TjZmS1RoVmlBTmdHclUtcTRzZ2VHclU&usp=drive_web#list';
