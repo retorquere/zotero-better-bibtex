@@ -433,7 +433,7 @@ doExport = ->
 
     switch item.itemType
       when 'report', 'thesis'
-        ref.add({ name: 'institution', value: item.institution || item.publisher, preserveCaps: true })
+        ref.add({ name: 'institution', value: item.institution || item.publisher || item.university, preserveCaps: true })
 
       when 'case', 'hearing'
         ref.add({ name: 'institution', value: item.court, preserveCaps: true })
@@ -447,8 +447,9 @@ doExport = ->
       when 'email'  then ref.add({ name: 'type', value: 'E-mail', replace: true })
 
       when 'thesis'
-        if item.thesisType in ['phdthesis', 'mastersthesis']
-          ref.referencetype = item.thesisType
+        thesistype = item.thesisType?.toLowerCase()
+        if thesistype in ['phdthesis', 'mastersthesis']
+          ref.referencetype = thesistype
           ref.remove('type')
         else
           ref.add({ name: 'type', value: item.thesisType, replace: true })
@@ -460,7 +461,7 @@ doExport = ->
           ref.add({ name: 'type', value: item.type, replace: true })
 
       else
-        ref.add({ name: 'type', value: item.type, replace: true })
+        ref.add({ name: 'type', value: item.type || item.websiteType || item.manuscriptType, replace: true })
 
     ref.add({ name: 'howpublished', value: item.presentationType || item.manuscriptType })
 
