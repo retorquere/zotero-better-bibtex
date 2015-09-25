@@ -137,8 +137,8 @@ class Reference
     encoded = []
     for creator in f.value
       switch
-        when creator.lastName && creator.fieldMode == 1
-          name = if raw then "{#{creator.lastName}}" else @enc_latex({value: new String(creator.lastName)})
+        when creator.name || (creator.lastName && creator.fieldMode == 1)
+          name = if raw then "{#{creator.name || creator.lastName}}" else @enc_latex({value: new String(creator.name || creator.lastName)})
 
         when raw
           name = [creator.lastName || '', creator.firstName || ''].join(', ')
@@ -265,6 +265,8 @@ class Reference
       if a.path.match(/[{}]/) # latex really doesn't want you to do this.
         errors.push("BibTeX cannot handle file paths with braces: #{JSON.stringify(a.path)}")
         continue
+
+      a.mimetype = 'application/pdf' if !a.mimetype && a.path.slice(-4).toLowerCase() == '.pdf'
 
       switch
         when save

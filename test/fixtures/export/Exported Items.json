@@ -1,0 +1,19 @@
+[
+	{
+		"id": "http://zotero.org/users/local/1UzoZgNM/items/EERUZX64",
+		"type": "book",
+		"title": "A testbook",
+		"author": [
+			{
+				"literal": "United Nations"
+			}
+		],
+		"issued": {
+			"date-parts": [
+				[
+					"2015"
+				]
+			]
+		}
+	}
+]

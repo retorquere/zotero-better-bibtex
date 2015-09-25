@@ -360,7 +360,6 @@ When(/^I set preferences:$/) do |table|
   table.rows_hash.each_pair{ |name, value|
     name = "translators.better-bibtex#{name}" if name[0] == '.'
     value = preferenceValue(value)
-    STDOUT.puts "pref: #{name.inspect} -> #{value.inspect}"
     value = open(File.expand_path(File.join('test/fixtures', value))).read if name == 'translators.better-bibtex.postscript'
     $Firefox.BetterBibTeX.setPreference(name, value)
   }

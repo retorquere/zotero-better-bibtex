@@ -7,6 +7,10 @@ Zotero.BetterBibTeX.serialized = new class
     item.itemID = itemID || Zotero.URI.getURIItem(item.uri)?.id if !item.itemID && item.uri
     item.itemID = parseInt(item.itemID) if item.itemID
 
+    item.title ?= item.nameOfAct || item.caseName
+    item.date ?= item.dateEnacted || item.dateDecided
+    item.volume ?= item.reporterVolume
+
     return item
 
   constructor: ->
@@ -127,7 +131,7 @@ Zotero.BetterBibTeX.serialized = new class
           cached.attachmentIDs = item.getAttachments()
       cache.insert(cached)
 
-    Zotero.BetterBibTeX.debug('serialized.get:', cached.itemType)
+    Zotero.BetterBibTeX.debug('serialized.get:', cached)
     return null if cached.itemType == 'cache-miss'
     return cached
 
