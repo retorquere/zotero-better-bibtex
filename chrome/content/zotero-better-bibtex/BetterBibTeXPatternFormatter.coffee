@@ -12,6 +12,7 @@ class BetterBibTeXPatternFormatter
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
+    Zotero.BetterBibTeX.debug('formatter: fetched', @item, 'for', item)
     delete @year
     delete @month
 

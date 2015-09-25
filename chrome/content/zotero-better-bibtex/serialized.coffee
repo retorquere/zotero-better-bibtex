@@ -53,7 +53,7 @@ Zotero.BetterBibTeX.serialized = new class
       Zotero.BetterBibTeX.debug("serialized.loadDatabase failed: #{e}")
 
   remove: (itemID) ->
-    item = @cache.find({itemID: parseInt(itemID)})
+    item = @cache.findOne({itemID: parseInt(itemID)})
     @cache.remove(item) if item
 
   get: (item, options = {}) ->
@@ -80,24 +80,25 @@ Zotero.BetterBibTeX.serialized = new class
       when item.itemType == 'cache-miss'
         return null
 
-      # assume serialized object passed
-      when item.itemType && item.itemID
+      # assume fixed-up serialized object passed
+      when item.itemType && item.itemID && item.uri
         return item
 
       else
-        item = null
         switch
           when item.itemID
-            query = {itemID: parseInt(item.id)}
+            query = {itemID: parseInt(item.itemID)}
           when item.uri
             query = {uri: item.uri}
           else
             throw new Error('cannot construct query from ' + JSON.stringify(item))
+        item = null
 
     # we may be called as a method on itemGetter
     cache = Zotero.BetterBibTeX.serialized.cache
 
-    cached = cache.find(query)
+    cached = cache.findOne(query)
+    Zotero.BetterBibTeX.debug('serialized.get:', {query, cached})
     if !cached
       Zotero.BetterBibTeX.debug('serialized.get: cache miss, getting item:', {query, item: !!item})
       item = switch
