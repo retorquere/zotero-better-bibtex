@@ -43,7 +43,6 @@
         <preference name="extensions.zotero.translators.better-bibtex.scanCitekeys"             id="pref-better-bibtex-rescan-citekeys"         type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.showCitekeys"             id="pref-better-bibtex-show-citekey"            type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.skipFields"               id="pref-better-bibtex-skipFields"              type="string"/>
-        <preference name="extensions.zotero.translators.better-bibtex.useprefix"                id="pref-better-bibtex-useprefix"               type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.warnBulkModify"           id="pref-better-bibtex-bulkWarning"             type="int"/>
       </preferences>
       <tabbox>
@@ -151,9 +150,6 @@
                   <row>
                     <checkbox label="&zotero.better-bibtex.preserveBibTeXVariables;" preference="pref-better-bibtex-preserveBibTeXVariables"/>
                     <label value="&zotero.better-bibtex.preserveBibTeXVariables.explain;"/>
-                  </row>
-                  <row>
-                    <checkbox id="id-better-bibtex-preferences-useprefix" label="&zotero.better-bibtex.useprefix;" preference="pref-better-bibtex-useprefix"/>
                   </row>
                   <row>
                     <checkbox label="&zotero.better-bibtex.attachmentsNoMetadata;" preference="pref-better-bibtex-attachments-nometadata"/>

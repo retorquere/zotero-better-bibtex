@@ -201,7 +201,7 @@ Translator.initialize = ->
 
   @options = {}
   @options.skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
-  for pref in ['jabrefGroups', 'postscript', 'csquotes', 'usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'verbatimDate']
+  for pref in ['jabrefGroups', 'postscript', 'csquotes', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'verbatimDate']
     @options[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
   @verbatimDateRE = new RegExp("^(#{@options.verbatimDate})$", 'i') if @options.verbatimDate
   for own k, v of @options

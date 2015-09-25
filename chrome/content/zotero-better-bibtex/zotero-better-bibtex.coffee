@@ -496,13 +496,14 @@ Zotero.BetterBibTeX.upgradeDatabase = ->
       when 'raw-imports' then @pref.set('rawImports', @pref.get(key))
       when 'show-citekey' then @pref.set('showCitekeys', @pref.get(key))
       when 'skipfields' then @pref.set('skipFields', @pref.get(key))
-      when 'useprefix' then @pref.set('usePrefix', @pref.get(key))
       when 'unicode'
         @pref.set('asciiBibTeX', (@pref.get(key) != 'always'))
         @pref.set('asciiBibLaTeX', (@pref.get(key) == 'never'))
       else continue
     @pref.prefs.clearUserPref(key)
   @pref.prefs.clearUserPref('brace-all')
+  @pref.prefs.clearUserPref('usePrefix')
+  @pref.prefs.clearUserPref('useprefix')
 
   try
     translatorSettings = JSON.parse(Zotero.Prefs.get('export.translatorSettings'))

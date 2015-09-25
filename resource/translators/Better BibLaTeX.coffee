@@ -533,10 +533,7 @@ doExport = ->
       for note in item.notes
         ref.add({ name: 'annotation', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true })
 
-    if Translator.usePrefix && ref.useprefix
-      value = 'useprefix'
-      value += ',juniorcomma' if ref.juniorcomma
-      ref.add({ name: 'options', value })
+    ref.add({ name: 'options', value: (option for option in ['useprefix', 'juniorcomma'] when ref[option]).join(',') })
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
     ref.complete()
