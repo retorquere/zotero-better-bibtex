@@ -144,6 +144,7 @@ class Reference
           name = [creator.lastName || '', creator.firstName || ''].join(', ')
 
         when creator.lastName || creator.firstName
+          Translator.debug('particle-parser:', creator)
           name = {family: creator.lastName || '', given: creator.firstName || ''}
           # Parse name particles
           # Replicate citeproc-js logic for what should be parsed so we don't
@@ -157,6 +158,7 @@ class Reference
 
             else
               Zotero.BetterBibTeX.CSL.parseParticles(name)
+              Translator.debug('particle-parser: parsed to', name)
 
               source = XRegExp.replace((creator.firstName || '') + (creator.lastName || ''), @nonLetters, '')
               parsed = XRegExp.replace((part || '' for part in [name.given, name.family, name.suffix, name['non-dropping-particle'], name['dropping-particle']]).join(''), @nonLetters, '')

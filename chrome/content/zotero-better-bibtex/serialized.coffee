@@ -1,41 +1,60 @@
 Components.utils.import("resource://zotero/config.js")
 
-Zotero.BetterBibTeX.itemToExportFormat = (item) ->
-  json = Zotero.Utilities.Internal.itemToExportFormat(item)
+Zotero.BetterBibTeX.serialized = new class
+  fixup: (item, itemID) ->
+    Zotero.BetterBibTeX.debug('trying to fix:', item) if !item.itemID
 
-  if !json.itemID
-    if item.libraryID && item.libraryID != '0'
-      json.itemID = Zotero.DB.valueQuery('select ROWID from items where libraryID is NULL and key = ?', [item.key])
-    else
-      json.itemID = Zotero.DB.valueQuery('select ROWID from items where libraryID = ? and key = ?', [item.libraryID, item.key])
-  return json
+    item.itemID = itemID || Zotero.URI.getURIItem(item.uri)?.id if !item.itemID && item.uri
+    item.itemID = parseInt(item.itemID) if item.itemID
 
-Zotero.BetterBibTeX.serialized =
-  items: {}
+    return item
+
+  constructor: ->
+    @db = new loki('serialized', {adapter: @, env: 'BROWSER'})
+    @reset()
+
+  reset: ->
+    @db.removeCollection('metadata')
+    @db.removeCollection('serialized')
+    @cache = @db.addCollection('serialized', { indices: ['itemID', 'uri'] })
+
+  save: ->
+    @db.removeCollection('metadata')
+    metadata = @db.addCollection('metadata')
+    metadata.insert({Zotero: ZOTERO_CONFIG.VERSION, BetterBibTeX: Zotero.BetterBibTeX.release})
+    @db.save()
+
+  saveDatabase: (name, serialized) ->
+    try
+      store = Zotero.BetterBibTeX.createFile('serialized-items.json')
+      store.remove(false) if store.exists()
+      Zotero.File.putContents(store, serialized)
+    catch e
+      Zotero.BetterBibTeX.debug("serialized.saveDatabase failed: #{e}")
 
   load: ->
     try
-      serialized = Zotero.BetterBibTeX.createFile('serialized-items.json')
-      if serialized.exists()
-        @items = JSON.parse(Zotero.File.getContents(serialized))
-        Zotero.BetterBibTeX.debug("serialized.load: #{Object.keys(@items).length} items")
-      else
-        @items = {}
+      @db.loadDatabase()
     catch e
-      Zotero.BetterBibTeX.debug("serialized.load failed: #{e}")
-      @items = {}
-
-    if @items.Zotero != ZOTERO_CONFIG.VERSION || Zotero.BetterBibTeX.version(@items.BetterBibTeX) != Zotero.BetterBibTeX.version(Zotero.BetterBibTeX.release)
+      Zotero.BetterBibTeX.debug("serialized.loadDatabase failed: #{e}")
       @reset()
-    @items.Zotero = ZOTERO_CONFIG.VERSION
-    @items.BetterBibTeX = Zotero.BetterBibTeX.release
+      return
+
+    metadata = @db.getCollection('metadata')
+    return if metadata?.data[0]?.Zotero == ZOTERO_CONFIG.VERSION && metadata.data[0].BetterBibTeX == Zotero.BetterBibTeX.release
+    @reset()
+
+  loadDatabase: (name) ->
+    try
+      serialized = Zotero.BetterBibTeX.createFile('serialized-items.json')
+      return '' unless serialized.exists()
+      return Zotero.File.getContents(serialized)
+    catch e
+      Zotero.BetterBibTeX.debug("serialized.loadDatabase failed: #{e}")
 
   remove: (itemID) ->
-    delete @items[parseInt(itemID)]
-
-  reset: ->
-    Zotero.BetterBibTeX.debug("serialized.reset")
-    @items = {}
+    item = @cache.find({itemID: parseInt(itemID)})
+    @cache.remove(item) if item
 
   get: (item, options = {}) ->
     Zotero.BetterBibTeX.debug('serialized.get:', item, options)
@@ -50,56 +69,65 @@ Zotero.BetterBibTeX.serialized =
     switch
       # attachment ID
       when options.attachmentID
-        itemID = parseInt(item)
+        query = {itemID: parseInt(item)}
         item = null
 
       # Zotero object
       when item.getField
-        itemID = parseInt(item.itemID)
+        query = {itemID: parseInt(item.id)}
 
       # cached miss
       when item.itemType == 'cache-miss'
         return null
 
       # assume serialized object passed
-      when item.itemType
+      when item.itemType && item.itemID
         return item
 
       else
-        itemID = parseInt(item.itemID)
         item = null
+        switch
+          when item.itemID
+            query = {itemID: parseInt(item.id)}
+          when item.uri
+            query = {uri: item.uri}
+          else
+            throw new Error('cannot construct query from ' + JSON.stringify(item))
 
     # we may be called as a method on itemGetter
-    items = Zotero.BetterBibTeX.serialized.items
+    cache = Zotero.BetterBibTeX.serialized.cache
 
-    if !items[itemID]
-      Zotero.BetterBibTeX.debug('serialized.get: cache miss, getting item:', !!item)
-      item ||= Zotero.Items.get(itemID)
+    cached = cache.find(query)
+    if !cached
+      Zotero.BetterBibTeX.debug('serialized.get: cache miss, getting item:', {query, item: !!item})
+      item = switch
+        when item         then  item
+        when query.itemID then  Zotero.Items.get(query.itemID)
+        when query.uri    then  Zotero.URI.this.getURIItem(query.uri)
+        else                    throw new error('Cannot get object from query ' + JSON.stringify(query))
 
-      # TODO: force legacy format to true until I switch over
-      items[itemID] = (if item.isAttachment() then @_attachmentToArray(item) else Zotero.BetterBibTeX.itemToExportFormat(item)) if item
+      if item
+        if item.isAttachment()
+          cached = @_attachmentToArray(item)
+        else
+          cached = Zotero.Utilities.Internal.itemToExportFormat(item)
+
+      cached = Zotero.BetterBibTeX.serialized.fixup(cached, item.id) if cached
 
       switch
         # the serialization yielded no object (why?), mark it as missing so we don't do this again
-        when !items[itemID]
-          items[itemID] = {itemType: 'cache-miss'}
+        when !cached
+          cached = {itemType: 'cache-miss'}
 
-        when items[itemID].itemType in ['note', 'attachment']
-          items[itemID].attachmentIDs = []
+        when cached.itemType in ['note', 'attachment']
+          cached.attachmentIDs = []
 
         else
-          items[itemID].attachmentIDs = item.getAttachments()
+          cached.attachmentIDs = item.getAttachments()
+      cache.insert(cached)
 
-    Zotero.BetterBibTeX.debug('serialized.get:', items[itemID].itemType)
-    return null if items[itemID].itemType == 'cache-miss'
-    return items[itemID]
-
-  save: ->
-    try
-      serialized = Zotero.BetterBibTeX.createFile('serialized-items.json')
-      serialized.remove(false) if serialized.exists()
-      Zotero.File.putContents(serialized, JSON.stringify(@items))
-    catch e
-      Zotero.BetterBibTeX.debug("serialized.save failed: #{e}")
+    Zotero.BetterBibTeX.debug('serialized.get:', cached.itemType)
+    return null if cached.itemType == 'cache-miss'
+    return cached
 
   _attachmentToArray: Zotero.Translate.ItemGetter::_attachmentToArray

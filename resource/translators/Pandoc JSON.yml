@@ -12,6 +12,4 @@ inRepository: true
 translatorType: 2
 browserSupport: gcsv
 BetterBibTeX:
-  cache:
-    nextItem: true
-    JSON: true
+  caching: true

@@ -860,7 +860,7 @@ Zotero.BetterBibTeX.init = ->
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
 
-      @_itemGetter._BetterBibTeX = Zotero.BetterBibTeX.translators[translatorID] if Zotero.BetterBibTeX.translators[translatorID]?.BetterBibTeX?.cache?.nextItem
+      @_itemGetter._BetterBibTeX = Zotero.BetterBibTeX.translators[translatorID]
       @_itemGetter._exportFileData = @_displayOptions.exportFileData
 
       return r
@@ -872,6 +872,7 @@ Zotero.BetterBibTeX.init = ->
     return ->
       # don't mess with this unless I know it's in BBT
       return original.apply(@, arguments) unless @_BetterBibTeX
+      return Zotero.BetterBibTeX.serialized.fixup(original.apply(@, arguments)) if !@_BetterBibTeX.caching
 
       while @_itemsLeft.length != 0
         item = @_itemsLeft.shift()
@@ -1173,8 +1174,6 @@ Zotero.BetterBibTeX.getContentsFromURL = (url) ->
 Zotero.BetterBibTeX.load = (translator, options = {}) ->
   header = JSON.parse(Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.json"))
   @removeTranslator(header)
-
-  header.target = options.target if options.target
 
   sources = ['json5', 'translator', "#{translator}.header", translator].concat(header.BetterBibTeX?.dependencies || [])
   @debug('translator.load:', translator, 'from', sources)

@@ -14,7 +14,6 @@ inRepository: true
 translatorType: 2
 browserSupport: gcsv
 BetterBibTeX:
-  cache:
-    nextItem: true
+  caching: true
   dependencies:
   - he
