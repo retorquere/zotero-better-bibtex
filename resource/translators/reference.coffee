@@ -123,7 +123,7 @@ class Reference
   postfixedParticle: (particle) ->
     lastchar = particle[particle.length - 1]
     return particle + ' ' if lastchar == '.'
-    return particle if XRegExp.test(particle, @punctuationAtEnd) || lastchar == ' '
+    return particle if lastchar == ' ' || XRegExp.test(particle, @punctuationAtEnd)
     return particle + ' '
 
   ###
@@ -132,6 +132,9 @@ class Reference
   # @param {field} field to encode. The 'value' must be an array of Zotero-serialized `creator` objects.
   # @return {String} field.value encoded as author-style value
   ###
+  creator_esc_separators: (name) ->
+    return ((if i % 2 == 0 then n else new String(n)) for n, i in name.split(/( and |,)/i))
+
   enc_creators: (f, raw) ->
     return null if f.value.length == 0
 
@@ -147,54 +150,42 @@ class Reference
         when creator.lastName || creator.firstName
           Translator.debug('particle-parser:', creator)
           name = {family: creator.lastName || '', given: creator.firstName || ''}
-          # Parse name particles
-          # Replicate citeproc-js logic for what should be parsed so we don't
-          # break current behavior.
-          fallback = false
 
-          if name.family # && name.given
-            # Don't parse if last name is quoted
-            if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
-              name.family = @enc_latex({value: new String(name.family.slice(1, -1))})
+          CSL.parseParticles(name)
+          CSL.parseParticles(name) # twice to work around https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping
+          Translator.debug('particle-parser: parsed to', name)
 
+          if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
+            family = [new String(name.family.slice(1, -1))]
+          else
+            family = @creator_esc_separators(name.family)
+
+          @juniorcomma ||= (name.suffix || '') in ['sr', 'sr.', 'jr', 'jr.']
+
+          if name['non-dropping-particle']
+            @useprefix = true
+            ndp = @postfixedParticle(name['non-dropping-particle'])
+            if Translator.BetterBibTeX
+              family = [new String(ndp + name.family)]
             else
-              #Zotero.BetterBibTeX.CSL.parseParticles(name)
-              CSL.parseParticles(name)
-              CSL.parseParticles(name) # twice to work around https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping
-              Translator.debug('particle-parser: parsed to', name)
+              family = @creator_esc_separators(ndp).concat(family)
 
-              @juniorcomma ||= name.suffix
-              @useprefix ||= name['non-dropping-particle']
-
-              source = XRegExp.replace((creator.firstName || '') + (creator.lastName || ''), @nonLetters, '')
-              parsed = XRegExp.replace((part || '' for part in [name.given, name.family, name.suffix, name['non-dropping-particle'], name['dropping-particle']]).join(''), @nonLetters, '')
-
-              # Can we handle the abbot now?
-              # fallback = (source.length != parsed.length)
-
-              if name['non-dropping-particle']
-                name.family = (@postfixedParticle(name['non-dropping-particle']) + name.family).trim()
-                name.family = new String(name.family) if Translator.BetterBibTeX
-                name.family = @enc_latex({value: name.family})
-              else
-                name.family = @enc_latex({value: name.family}).replace(/ and /g, ' {and} ')
-
-              if name['dropping-particle']
-                name.family = @postfixedParticle(@enc_latex({value: name['dropping-particle']}).replace(/ and /g, ' {and} ')) + name.family
+          if name['dropping-particle']
+            family = @creator_esc_separators(@postfixedParticle(name['dropping-particle'])).concat(family)
 
           if name.given
-            name.given = @enc_latex({value: name.given}).replace(/ and /g, ' {and} ')
+            given = @creator_esc_separators(name.given)
+          else
+            given = []
 
           if name.suffix
-            name = [name.family || '', name.suffix, name.given || '']
+            suffix = [', '].concat(@creator_esc_separators(name.suffix))
           else
-            name = [name.family || '', name.given || '']
-          # TODO: is this the best way to deal with commas?
-          name = (part.replace(/,/g, '{,}') for part in name).join(', ')
+            suffix = []
 
-          #if fallback
-          #  name = (part.replace(/,!/g, ',') for part in [creator.firstName + ' ' + creator.lastName] when part).join(' ')
-          #  name = @enc_latex({value: name}).replace(/ and /g, ' {and} ').replace(/,/g, '{,}')
+          name = family.concat(suffix, [', '], given)
+          Translator.debug('constructed name:', name)
+          name = @enc_latex({ value: name, sep: ''})
 
         else
           continue
@@ -217,11 +208,11 @@ class Reference
 
     if Array.isArray(f.value)
       return null if f.value.length == 0
-      return (@enc_latex(@clone(f, word), raw) for word in f.value).join(f.sep)
+      return (@enc_latex(@clone(f, word), raw) for word in f.value).join(f.sep || '')
 
     return f.value if raw
 
-    value = LaTeX.text2latex(f.value)
+    value = LaTeX.text2latex(f.value) + (if f.value[f.value.length - 1] == ' ' then ' ' else '')
     value = new String("{#{value}}") if f.value instanceof String
     return value
 
