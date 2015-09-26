@@ -12,6 +12,34 @@ Components.utils.import('resource://zotero-better-bibtex/translators/csl-util_na
 
 class Zotero.BetterBibTeX.DateParser
   parseDateToObject: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).date
+  parseDateToArray: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).array()
+
+  toArray: (suffix = '') ->
+    date = {}
+    for d in ['year', 'month', 'day', 'empty']
+      date[d] = @date["#{d}#{suffix}"]
+
+    Zotero.BetterBibTeX.debug('CSL: arraydate', {parsed: @, date, suffix})
+
+    return [ 0, 0 ] if date.empty
+
+    return null unless date.year
+
+    arr = [ date.year ]
+    if date.month
+      arr.push(date.month)
+      arr.push(date.day) if date.day
+    return arr
+
+  array: ->
+    date1 = @toArray()
+    return null unless date1
+
+    date2 = @toArray('_end')
+
+    return {'date-parts': [date1, date2]} if date2
+
+    return {'date-parts': date1 }
 
   constructor: (date, options = {}) ->
     @zoteroLocale ?= Zotero.locale.toLowerCase()
@@ -703,15 +731,7 @@ Zotero.BetterBibTeX.init = ->
         Zotero.BetterBibTeX.CSL.parseParticles(name)
     }
     parseDateToObject: (sandbox, date, locale) -> Zotero.BetterBibTeX.DateParser::parseDateToObject(date, {locale, verbatimDetection: true})
-    parseDateToArray: (sandbox, date, locale) ->
-      parsed = Zotero.BetterBibTeX.DateParser::parseDateToObject(date, {locale, verbatimDetection: true})
-      Zotero.BetterBibTeX.JurisMDateParser.convertDateObjectToArray(parsed)
-      if Array.isArray(parsed['date-parts'])
-        if Array.isArray(parsed['date-parts'][0])
-          parsed['date-parts'] = (((if isNaN(parseInt(d)) then d else parseInt(d)) for d in datepart) for datepart in parsed['date-parts'])
-        else
-          parsed['date-parts'] = ((if isNaN(parseInt(d)) then d else parseInt(d)) for d in parsed['date-parts'])
-      return parsed
+    parseDateToArray: (sandbox, date, locale) -> Zotero.BetterBibTeX.DateParser::parseDateToArray(date, {locale, verbatimDetection: true})
   }
 
   for own name, endpoint of @endpoints
