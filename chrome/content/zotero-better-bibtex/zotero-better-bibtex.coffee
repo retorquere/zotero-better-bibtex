@@ -872,8 +872,7 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Translate.ItemGetter::nextItem = ((original) ->
     return ->
       # don't mess with this unless I know it's in BBT
-      return original.apply(@, arguments) unless @_BetterBibTeX
-      return Zotero.BetterBibTeX.serialized.fixup(original.apply(@, arguments)) if !@_BetterBibTeX.caching
+      return original.apply(@, arguments) unless @_BetterBibTeX?.caching
 
       while @_itemsLeft.length != 0
         item = @_itemsLeft.shift()

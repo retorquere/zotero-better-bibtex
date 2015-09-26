@@ -1,11 +1,9 @@
 Components.utils.import("resource://zotero/config.js")
 
 Zotero.BetterBibTeX.serialized = new class
-  fixup: (item, itemID) ->
-    Zotero.BetterBibTeX.debug('trying to fix:', item) if !item.itemID
-
-    item.itemID = itemID || Zotero.URI.getURIItem(item.uri)?.id if !item.itemID && item.uri
-    item.itemID = parseInt(item.itemID) if item.itemID
+  itemToExportFormat: (zoteroItem) ->
+    item = Zotero.Utilities.Internal.itemToExportFormat(zoteroItem)
+    item.itemID = parseInt(zoteroItem.id)
 
     switch item.itemType
       when 'artwork'
@@ -110,7 +108,7 @@ Zotero.BetterBibTeX.serialized = new class
 
   saveDatabase: (name, serialized) ->
     try
-      store = Zotero.BetterBibTeX.createFile('serialized-items.json')
+      store = Zotero.BetterBibTeX.createFile('serialized.json')
       store.remove(false) if store.exists()
       Zotero.File.putContents(store, serialized)
     catch e
@@ -130,7 +128,7 @@ Zotero.BetterBibTeX.serialized = new class
 
   loadDatabase: (name) ->
     try
-      serialized = Zotero.BetterBibTeX.createFile('serialized-items.json')
+      serialized = Zotero.BetterBibTeX.createFile('serialized.json')
       return '' unless serialized.exists()
       return Zotero.File.getContents(serialized)
     catch e
@@ -195,9 +193,7 @@ Zotero.BetterBibTeX.serialized = new class
         if item.isAttachment()
           cached = @_attachmentToArray(item)
         else
-          cached = Zotero.Utilities.Internal.itemToExportFormat(item)
-
-      cached = Zotero.BetterBibTeX.serialized.fixup(cached, item.id) if cached
+          cached = Zotero.BetterBibTeX.serialized.itemToExportFormat(item)
 
       switch
         # the serialization yielded no object (why?), mark it as missing so we don't do this again
