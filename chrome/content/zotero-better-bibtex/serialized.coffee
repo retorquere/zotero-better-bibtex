@@ -118,6 +118,7 @@ Zotero.BetterBibTeX.serialized = new class
     @reset()
 
   reset: ->
+    Zotero.BetterBibTeX.debug('serialized.reset')
     @db.removeCollection('metadata')
     @db.removeCollection('serialized')
     @cache = @db.addCollection('serialized', { indices: ['itemID', 'uri'] })
@@ -137,7 +138,25 @@ Zotero.BetterBibTeX.serialized = new class
       return
 
     metadata = @db.getCollection('metadata')
-    return if metadata?.data[0]?.Zotero == ZOTERO_CONFIG.VERSION && metadata.data[0].BetterBibTeX == Zotero.BetterBibTeX.release
+    @cache = @db.getCollection('serialized')
+
+    switch
+      when !@cache
+        Zotero.BetterBibTeX.debug('serialized.load: no cache collection')
+
+      when !metadata
+        Zotero.BetterBibTeX.debug('serialized.load: no metadata')
+
+      when metadata.data[0].Zotero != ZOTERO_CONFIG.VERSION
+        Zotero.BetterBibTeX.debug('serialized.load: serialized data found for', {Zotero: metadata.data[0].Zotero}, 'expected', {Zotero: ZOTERO_CONFIG.VERSION})
+
+      when metadata.data[0].BetterBibTeX != Zotero.BetterBibTeX.release
+        Zotero.BetterBibTeX.debug('serialized.load: serialized data found for', {BetterBibTeX: metadata.data[0].BetterBibTeX}, 'expected', {BetterBibTeX: Zotero.BetterBibTeX.release})
+
+      else
+        Zotero.BetterBibTeX.debug('serialized.load: loaded', @cache.data.length, 'items')
+        return
+
     @reset()
 
   remove: (itemID) ->
