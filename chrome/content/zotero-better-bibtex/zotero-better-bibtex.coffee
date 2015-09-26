@@ -872,21 +872,20 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Translate.ItemGetter::nextItem = ((original) ->
     return ->
       # don't mess with this unless I know it's in BBT
-      return original.apply(@, arguments) unless @_BetterBibTeX
-      return Zotero.BetterBibTeX.serialized.fixup(original.apply(@, arguments)) if !@_BetterBibTeX.caching
+      return original.apply(@, arguments) if @legacy || !@_BetterBibTeX
+
+      if @_exportFileData
+        id = @itemsLeft[0]?.id
+        item = original.apply(@, arguments)
+        Zotero.BetterBibTeX.serialized.fixup(item, id) if item
+        return item
 
       while @_itemsLeft.length != 0
-        item = @_itemsLeft.shift()
-        item = Zotero.BetterBibTeX.serialized.get.apply(@, [item, {exportFileData: @_exportFileData}])
+        item = Zotero.BetterBibTeX.serialized.get(@_itemsLeft.shift())
         continue unless item
 
-        return item if item.itemType == 'attachment'
-
-        item.attachments = []
-        for attachmentID in item.attachmentIDs
-          attachment = Zotero.BetterBibTeX.serialized.get.apply(@, [attachmentID, {attachmentID: true, exportFileData: @_exportFileData}])
-          item.attachments.push(attachment) if attachment
         return item
+
       return false
     )(Zotero.Translate.ItemGetter::nextItem)
 

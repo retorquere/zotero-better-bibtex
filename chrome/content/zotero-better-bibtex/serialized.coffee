@@ -4,8 +4,8 @@ Zotero.BetterBibTeX.serialized = new class
   fixup: (item, itemID) ->
     Zotero.BetterBibTeX.debug('trying to fix:', item) if !item.itemID
 
-    item.itemID = itemID || Zotero.URI.getURIItem(item.uri)?.id if !item.itemID && item.uri
-    item.itemID = parseInt(item.itemID) if item.itemID
+    item.itemID ?= itemID
+    item.itemID = parseInt(item.itemID)
 
     switch item.itemType
       when 'artwork'
@@ -140,79 +140,38 @@ Zotero.BetterBibTeX.serialized = new class
     item = @cache.findOne({itemID: parseInt(itemID)})
     @cache.remove(item) if item
 
-  get: (item, options = {}) ->
-    Zotero.BetterBibTeX.debug('serialized.get:', item, options)
+  get: (zoteroItem) ->
+    Zotero.BetterBibTeX.debug('serialized.get:', zoteroItem)
 
-    # no serialization for attachments when their data is exported
-    if options.exportFileData && (options.attachmentID || item.isAttachment())
-      Zotero.BetterBibTeX.debug('serialized.get: attachment + exportFileData')
-      item = Zotero.Items.get(item) if options.attachmentID
-      return null unless item
-      return @_attachmentToArray(item)
+    # we may be passed a serialized item
+    return zoteroItem if zoteroItem.itemType && zoteroItem.itemID && zoteroItem.uri
 
-    switch
-      # attachment ID
-      when options.attachmentID
-        query = {itemID: parseInt(item)}
-        item = null
+    itemID = parseInt(zoteroItem.id || zoteroItem.itemID)
 
-      # Zotero object
-      when item.getField
-        query = {itemID: parseInt(item.id)}
+    item = @cache.findOne({itemID})
+    if item
+      return null if item.itemType == 'cache-miss'
+      item.attachments = (@get({itemID: id}) for id in item.attachmentIDs) unless item.itemType in ['note', 'attachment']
+      return item
 
-      # cached miss
-      when item.itemType == 'cache-miss'
-        return null
+    Zotero.BetterBibTeX.debug('serialize:', {itemID, isAttachment: typeof zoteroItem.isAttachment, zoteroItem})
+    zoteroItem = Zotero.Items.get(itemID) unless typeof zoteroItem.isAttachment == 'function'
 
-      # assume fixed-up serialized object passed
-      when item.itemType && item.itemID && item.uri
-        return item
+    if zoteroItem.isAttachment()
+      item = Zotero.Translate.ItemGetter::_attachmentToArray(zoteroItem)
+    else
+      item = Zotero.Utilities.Internal.itemToExportFormat(zoteroItem)
 
-      else
-        switch
-          when item.itemID
-            query = {itemID: parseInt(item.itemID)}
-          when item.uri
-            query = {uri: item.uri}
-          else
-            throw new Error('cannot construct query from ' + JSON.stringify(item))
-        item = null
+    if !item
+      cached.insert({itemID, itemType: 'cache-miss'})
+      return null
 
-    # we may be called as a method on itemGetter
-    cache = Zotero.BetterBibTeX.serialized.cache
+    if item.itemType in ['note', 'attachment']
+      item.attachments = []
+    else
+      @fixup(item, itemID)
+      item.attachmentIDs = zoteroItem.getAttachments() || []
+      item.attachments = (@get({itemID: id}) for id in item.attachmentIDs) unless item.itemType in ['note', 'attachment']
 
-    cached = cache.findOne(query)
-    Zotero.BetterBibTeX.debug('serialized.get:', {query, cached})
-    if !cached
-      Zotero.BetterBibTeX.debug('serialized.get: cache miss, getting item:', {query, item: !!item})
-      item = switch
-        when item         then  item
-        when query.itemID then  Zotero.Items.get(query.itemID)
-        when query.uri    then  Zotero.URI.this.getURIItem(query.uri)
-        else                    throw new error('Cannot get object from query ' + JSON.stringify(query))
-
-      if item
-        if item.isAttachment()
-          cached = @_attachmentToArray(item)
-        else
-          cached = Zotero.Utilities.Internal.itemToExportFormat(item)
-
-      cached = Zotero.BetterBibTeX.serialized.fixup(cached, item.id) if cached
-
-      switch
-        # the serialization yielded no object (why?), mark it as missing so we don't do this again
-        when !cached
-          cached = {itemType: 'cache-miss'}
-
-        when cached.itemType in ['note', 'attachment']
-          cached.attachmentIDs = []
-
-        else
-          cached.attachmentIDs = item.getAttachments()
-      cache.insert(cached)
-
-    Zotero.BetterBibTeX.debug('serialized.get:', cached)
-    return null if cached.itemType == 'cache-miss'
-    return cached
-
-  _attachmentToArray: Zotero.Translate.ItemGetter::_attachmentToArray
+    @cache.insert(item)
+    return item
