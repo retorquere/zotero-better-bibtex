@@ -199,7 +199,7 @@ file 'resource/translators/csl-util_name_particles.js' => 'Rakefile' do |t|
   Tempfile.create('pp') do |js|
     ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/src/util_name_particles.js', js.path)
     open(t.name, 'w'){|f|
-      f.puts('var CSL; if (!CSL) { CSL = {}; }')
+      f.puts("var CSL; if (!CSL) { CSL = {}; }; this.EXPORTED_SYMBOLS = ['CSL'];")
       code = open(js.path).read
       # workaround for https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping
       #code.sub!('} else if (!name["dropping-particle"] && nameObj.given) {', '} else if (!nameObj["dropping-particle"] && nameObj.given) {')

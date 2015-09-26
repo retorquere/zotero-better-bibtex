@@ -143,7 +143,7 @@ Translator.extractFields = (item) ->
     if !m
       extra.push(line)
     else
-      fields[m[1]] = {value: m[2], format: if m[2] in @CSLVariables then 'csl' else 'key-value'}
+      fields[m[1]] = {value: m[2], format: if m[1] in @CSLVariables then 'csl' else 'key-value'}
   item.extra = extra.join("\n")
 
   m = /(biblatexdata|bibtex|biblatex)\[([^\]]+)\]/.exec(item.extra)

@@ -20,7 +20,6 @@ BetterBibTeX:
   dependencies:
   - xregexp-all
   - reference
-  - csl-util_name_particles
   - unicode_translator
   - he
   - htmlparser

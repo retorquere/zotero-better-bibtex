@@ -151,8 +151,7 @@ class Reference
           Translator.debug('particle-parser:', creator)
           name = {family: creator.lastName || '', given: creator.firstName || ''}
 
-          CSL.parseParticles(name)
-          CSL.parseParticles(name) # twice to work around https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping
+          Zotero.BetterBibTeX.CSL.parseParticles(name)
           Translator.debug('particle-parser: parsed to', name)
 
           if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
