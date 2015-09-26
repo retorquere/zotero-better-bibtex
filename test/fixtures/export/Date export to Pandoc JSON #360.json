@@ -1,0 +1,50 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.4.7",
+    "preferences": {
+      "exportFileData": false,
+      "exportNotes": true
+    },
+    "options": {
+      "skipFields": [
+        ""
+      ],
+      "jabrefGroups": true,
+      "postscript": "",
+      "csquotes": "",
+      "preserveCaps": "inner",
+      "fancyURLs": false,
+      "langID": "babel",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false,
+      "preserveBibTeXVariables": false,
+      "verbatimDate": "(\\[[0-9]+,*\\])|([0-9]{3,4}/[0-9]{3,4})"
+    }
+  },
+  "collections": [],
+  "items": [
+    {
+      "itemType": "manuscript",
+      "tags": [],
+      "relations": {},
+      "date": "2014-12-31/2015-01-01",
+      "extra": "original-date: 1777-07-27/1888-08-28",
+      "title": "A manuscript",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [],
+      "notes": [],
+      "itemID": 8,
+      "seeAlso": [],
+      "__citekey__": "doe_manuscript_2014"
+    }
+  ]
+}

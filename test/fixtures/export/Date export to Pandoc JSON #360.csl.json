@@ -1,0 +1,11 @@
+[
+   {
+      "author" : [ { "given" : "John", "family" : "Doe" } ],
+      "title" : "A manuscript",
+      "issued" : { "date-parts" : [ [ 2014, 12, 31 ], [ 2015, 1, 1 ] ] },
+      "original-date" : { "date-parts" : [ [ 1777, 7, 27 ], [ 1888, 8, 28 ] ] },
+      "id" : "Doe2014",
+      "type" : "manuscript"
+   }
+]
+
