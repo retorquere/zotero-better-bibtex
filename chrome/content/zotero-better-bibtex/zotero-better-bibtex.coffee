@@ -158,13 +158,13 @@ Zotero.BetterBibTeX.log_off = ->
 Zotero.BetterBibTeX.log = Zotero.BetterBibTeX.log_on = (msg...) ->
   @_log.apply(@, [3].concat(msg))
 
-Zotero.BetterBibTeX.debugMode = ->
+Zotero.BetterBibTeX.debugMode = (silent) ->
   if @pref.get('debug')
     Zotero.Debug.setStore(true)
     Zotero.Prefs.set('debug.store', true)
     @debug = @debug_on
     @log = @log_on
-    @flash('Debug mode active', 'Debug mode is active. This will affect performance.')
+    @flash('Debug mode active', 'Debug mode is active. This will affect performance.') unless silent
   else
     @debug = @debug_off
     @log = @log_off
@@ -908,7 +908,8 @@ Zotero.BetterBibTeX.init = ->
     Zotero.BetterBibTeX.keymanager.flush()
     Zotero.BetterBibTeX.serialized.save()
 
-    Zotero.BetterBibTeX.debugMode()
+    Zotero.BetterBibTeX.debugMode(true)
+    return
   )
 
   nids = []

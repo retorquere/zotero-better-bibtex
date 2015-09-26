@@ -1,6 +1,26 @@
 Components.utils.import("resource://zotero/config.js")
 
 Zotero.BetterBibTeX.serialized = new class
+  lokiAdapter:
+    saveDatabase: (name, serialized, callback) ->
+      try
+        store = Zotero.BetterBibTeX.createFile('serialized-items.json')
+        store.remove(false) if store.exists()
+        Zotero.File.putContents(store, serialized)
+      catch e
+        Zotero.BetterBibTeX.debug("serialized.saveDatabase failed: #{e}")
+      callback(true)
+
+    loadDatabase: (name, callback) ->
+      data = null
+      try
+        serialized = Zotero.BetterBibTeX.createFile('serialized-items.json')
+        data = Zotero.File.getContents(serialized) if serialized.exists()
+      catch e
+        Zotero.BetterBibTeX.debug("serialized.loadDatabase failed: #{e}")
+        data = null
+      callback(data)
+
   fixup: (item, itemID) ->
     Zotero.BetterBibTeX.debug('trying to fix:', item) if !item.itemID
 
@@ -94,7 +114,7 @@ Zotero.BetterBibTeX.serialized = new class
     return item
 
   constructor: ->
-    @db = new loki('serialized', {adapter: @, env: 'BROWSER'})
+    @db = new loki('serialized', {adapter: @lokiAdapter, env: 'BROWSER'})
     @reset()
 
   reset: ->
@@ -108,14 +128,6 @@ Zotero.BetterBibTeX.serialized = new class
     metadata.insert({Zotero: ZOTERO_CONFIG.VERSION, BetterBibTeX: Zotero.BetterBibTeX.release})
     @db.save()
 
-  saveDatabase: (name, serialized) ->
-    try
-      store = Zotero.BetterBibTeX.createFile('serialized-items.json')
-      store.remove(false) if store.exists()
-      Zotero.File.putContents(store, serialized)
-    catch e
-      Zotero.BetterBibTeX.debug("serialized.saveDatabase failed: #{e}")
-
   load: ->
     try
       @db.loadDatabase()
@@ -127,14 +139,6 @@ Zotero.BetterBibTeX.serialized = new class
     metadata = @db.getCollection('metadata')
     return if metadata?.data[0]?.Zotero == ZOTERO_CONFIG.VERSION && metadata.data[0].BetterBibTeX == Zotero.BetterBibTeX.release
     @reset()
-
-  loadDatabase: (name) ->
-    try
-      serialized = Zotero.BetterBibTeX.createFile('serialized-items.json')
-      return '' unless serialized.exists()
-      return Zotero.File.getContents(serialized)
-    catch e
-      Zotero.BetterBibTeX.debug("serialized.loadDatabase failed: #{e}")
 
   remove: (itemID) ->
     item = @cache.findOne({itemID: parseInt(itemID)})
