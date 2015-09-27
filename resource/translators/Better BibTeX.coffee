@@ -90,8 +90,8 @@ doExport = ->
 
     if item.date
       date = Zotero.BetterBibTeX.parseDateToObject(item.date, item.language)
-      if date.literal
-        ref.add({ name: 'year', value: date.literal, preserveCaps: true })
+      if date.literal || date.year_end
+        ref.add({ name: 'year', value: item.date, preserveCaps: true })
       else
         ref.add({ name: 'month', value: months[date.month - 1], bare: true }) if date.month
         ref.add({ name: 'year', value: date.year })
