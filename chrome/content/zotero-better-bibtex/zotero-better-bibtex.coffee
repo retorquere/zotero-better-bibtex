@@ -39,7 +39,7 @@ class Zotero.BetterBibTeX.DateParser
 
     return {'date-parts': [date1, date2]} if date2
 
-    return {'date-parts': date1 }
+    return {'date-parts': [date1] }
 
   constructor: (date, options = {}) ->
     @zoteroLocale ?= Zotero.locale.toLowerCase()
@@ -899,6 +899,9 @@ Zotero.BetterBibTeX.init = ->
       # don't mess with this unless I know it's in BBT
       return original.apply(@, arguments) if @legacy || !@_BetterBibTeX
 
+      # If I wanted to access serialized items when exporting file data, I'd have to pass "@" to serialized.get
+      # and call attachmentToArray.call(itemGetter, ...) there rather than ::attachmentToArray(...) so attachmentToArray would have access to
+      # @_exportFileDirectory
       if @_exportFileData
         id = @itemsLeft[0]?.id
         item = original.apply(@, arguments)

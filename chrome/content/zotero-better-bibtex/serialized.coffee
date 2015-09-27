@@ -170,31 +170,30 @@ Zotero.BetterBibTeX.serialized = new class
     return zoteroItem if zoteroItem.itemType && zoteroItem.itemID && zoteroItem.uri
 
     itemID = parseInt(zoteroItem.id || zoteroItem.itemID)
-
     item = @cache.findOne({itemID})
-    if item
-      return null if item.itemType == 'cache-miss'
-      item.attachments = (@get({itemID: id}) for id in item.attachmentIDs) unless item.itemType in ['note', 'attachment']
-      return item
-
-    Zotero.BetterBibTeX.debug('serialize:', {itemID, isAttachment: typeof zoteroItem.isAttachment, zoteroItem})
-    zoteroItem = Zotero.Items.get(itemID) unless typeof zoteroItem.isAttachment == 'function'
-
-    if zoteroItem.isAttachment()
-      item = Zotero.Translate.ItemGetter::_attachmentToArray(zoteroItem)
-    else
-      item = Zotero.Utilities.Internal.itemToExportFormat(zoteroItem)
 
     if !item
-      cached.insert({itemID, itemType: 'cache-miss'})
-      return null
+      Zotero.BetterBibTeX.debug('serialize:', {itemID, isAttachment: typeof zoteroItem.isAttachment, zoteroItem})
+      zoteroItem = Zotero.Items.get(itemID) unless typeof zoteroItem.isAttachment == 'function'
 
-    if item.itemType in ['note', 'attachment']
-      item.attachments = []
-    else
-      @fixup(item, itemID)
-      item.attachmentIDs = zoteroItem.getAttachments() || []
-      item.attachments = (@get({itemID: id}) for id in item.attachmentIDs) unless item.itemType in ['note', 'attachment']
+      if zoteroItem.isAttachment()
+        item = Zotero.Translate.ItemGetter::_attachmentToArray(zoteroItem)
+      else
+        item = Zotero.Utilities.Internal.itemToExportFormat(zoteroItem)
 
-    @cache.insert(item)
-    return item
+      switch
+        when !item
+          item = {itemID, itemType: 'cache-miss'}
+
+        when item.itemType in ['note', 'attachment']
+          item.attachmentIDs = []
+
+        else
+          @fixup(item, itemID)
+          item.attachmentIDs = zoteroItem.getAttachments() || []
+
+      @cache.insert(item)
+
+    return null if item.itemType == 'cache-miss'
+    item.attachments = (@get({itemID: id}) for id in item.attachmentIDs) unless item.itemType in ['note', 'attachment']
+    return JSON.parse(JSON.stringify(item))
