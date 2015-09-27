@@ -94,7 +94,7 @@ class Zotero.BetterBibTeX.DateParser
     if m = date.match(/^(([0-9]{1,2})[-\s\/])?([0-9]{1,2})[-\s\/]([0-9]{3,4})(\?)?(~)?$/)
       Zotero.BetterBibTeX.debug('parsed:', m)
       parsed = {
-        year: parseInt(m[4])
+        year: m[4]
         month: parseInt(m[3])
         day: parseInt(m[1]) || undefined
         uncertain: (m[5] == '?')
@@ -106,7 +106,7 @@ class Zotero.BetterBibTeX.DateParser
     if m = date.match(/^([0-9]{3,4})[-\s\/]([0-9]{1,2})([-\s\/]([0-9]{1,2}))?(\?)?(~)?$/)
       Zotero.BetterBibTeX.debug('parsed:', m)
       parsed = {
-        year: parseInt(m[1])
+        year: m[1]
         month: parseInt(m[2])
         day: parseInt(m[4]) || undefined
         uncertain: (m[5] == '?')
@@ -130,6 +130,9 @@ class Zotero.BetterBibTeX.DateParser
     fields += 1 if parsed.year
     fields += 1 if parsed.month
     fields += 1 if parsed.day
+
+    # this makes sure a test against 'year' also works for year 0
+    parsed.year = '' + parsed.year if typeof parsed.year == 'number'
 
     Zotero.BetterBibTeX.debug('parsed date:', {date, shape, fields, parsed})
     return parsed if fields == 3 || shape.length == fields
