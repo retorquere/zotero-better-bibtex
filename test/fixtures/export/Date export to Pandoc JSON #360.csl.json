@@ -18,7 +18,8 @@
       "id" : "Doe",
       "type" : "book",
       "container" : { "date-parts" : [ [ 1700, 1, 1 ], [ 1700, 12, 31 ] ] },
-      "author" : [ { "family" : "Doe", "given" : "John" } ]
+      "author" : [ { "family" : "Doe", "given" : "John" } ],
+      "accessed": { "literal": "13th cent" }
    },
    {
       "issued" : { "date-parts" : [ [ 2014, 12, 31 ], [ 0 ] ] },

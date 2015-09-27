@@ -34,7 +34,7 @@ class Zotero.BetterBibTeX.DateParser
 
   array: ->
     date1 = @toArray()
-    return null unless date1
+    return {literal: @source} unless date1
 
     date2 = @toArray('_end')
 
@@ -42,13 +42,13 @@ class Zotero.BetterBibTeX.DateParser
     array.circa = true if @date.circa || @date.circa_end
     return array
 
-  constructor: (date, options = {}) ->
+  constructor: (@source, options = {}) ->
     @zoteroLocale ?= Zotero.locale.toLowerCase()
 
-    return unless date
+    return unless @source
 
-    if options.verbatimDetection && date.indexOf('[') >= 0
-      @date = {literal: date}
+    if options.verbatimDetection && @source.indexOf('[') >= 0
+      @date = {literal: @source}
       return
 
     if options.locale
@@ -72,7 +72,7 @@ class Zotero.BetterBibTeX.DateParser
     @dateorder ||= Zotero.BetterBibTeX.Locales.dateorder[@zoteroLocale]
 
     Zotero.BetterBibTeX.debug('date parser locale:', {order: @dateorder, given: options.locale, found, fallback, zotero: @zoteroLocale})
-    @date = @parse(date)
+    @date = @parse()
 
   swapMonth: (date, dateorder) ->
     Zotero.BetterBibTeX.debug('swapMonth:', {date, order: @dateorder})
@@ -136,10 +136,10 @@ class Zotero.BetterBibTeX.DateParser
 
     return {literal: date}
 
-  parse: (date) ->
-    return {} unless date
+  parse: ->
+    return {} unless @source
 
-    date = date.trim()
+    date = @source.trim()
 
     for sep in ['--', '/', '-', '_']
       continue if date == sep

@@ -132,18 +132,18 @@ Translator.CSLVariables = [
   #'translator'
 ]
 
+Translator.extractFieldsKVRE = new RegExp("^\\s*(#{Translator.CSLVariables.join('|')}|LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\\s*:\\s*(.+)\\s*$", 'i')
 Translator.extractFields = (item) ->
   return {} unless item.extra
 
   fields = {}
   extra = []
-  re = new RegExp("^\\s*(#{@CSLVariables.join('|')}|LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\\s*:\\s*([\\S]+)\\s*$", 'i')
   for line in item.extra.split("\n")
-    m = re.exec(line)
+    m = Translator.extractFieldsKVRE.exec(line)
     if !m
       extra.push(line)
     else
-      fields[m[1]] = {value: m[2], format: if m[1] in @CSLVariables then 'csl' else 'key-value'}
+      fields[m[1]] = {value: m[2].trim(), format: if m[1] in @CSLVariables then 'csl' else 'key-value'}
   item.extra = extra.join("\n")
 
   m = /(biblatexdata|bibtex|biblatex)\[([^\]]+)\]/.exec(item.extra)
