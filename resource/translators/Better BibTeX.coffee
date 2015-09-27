@@ -89,13 +89,11 @@ doExport = ->
       ref.add({ name: 'collaborator', value: collaborators, enc: 'creators', preserveCaps: true })
 
     if item.date
-      date = Zotero.Utilities.strToDate(item.date)
-      if Translator.verbatimDateRE?.test(item.date) || typeof date.year == 'undefined'
-        ref.add({ name: 'year', value: item.date, preserveCaps: true })
+      date = Zotero.BetterBibTeX.parseDateToObject(item.date, item.language)
+      if date.literal
+        ref.add({ name: 'year', value: date.literal, preserveCaps: true })
       else
-        if typeof date.month == 'number'
-          ref.add({ name: 'month', value: months[date.month], bare: true })
-
+        ref.add({ name: 'month', value: months[date.month - 1], bare: true }) if date.month
         ref.add({ name: 'year', value: date.year })
 
     ref.add({ name: 'note', value: item.extra, allowDuplicates: true })
