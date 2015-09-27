@@ -30,7 +30,7 @@
       "tags": [],
       "relations": {},
       "date": "2014-12-31/2015-01-01",
-      "extra": "accessed: ~2014-12-31\noriginal-date: 1777-07-27/1888-08-28\ncontainer: 1777-07-27\nevent-date: 1888-08-28\nsubmitted:1999-09-29/",
+      "extra": "accessed: 2014-12-31~\noriginal-date: 1777-07-27/1888-08-28\ncontainer: 1777-07-27\nevent-date: 1888-08-28\nsubmitted:1999-09-29/",
       "title": "A manuscript",
       "creators": [
         {
@@ -49,7 +49,7 @@
       "itemType": "book",
       "tags": [],
       "relations": {},
-      "extra": "container: 1700-01-01/1700-12-31\nevent-date: 1800-01-01/1800-12-31\nsubmitted: 1900-01-01/1900-12-31",
+      "extra": "container: 1700-01-01_1700-12-31\nevent-date: 1800-01-01--1800-12-31\nsubmitted: 1900-01-01/1900-12-31",
       "title": "container, event-date, and submitted test",
       "creators": [
         {

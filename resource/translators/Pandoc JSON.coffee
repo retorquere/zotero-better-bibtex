@@ -16,17 +16,14 @@ doExport = ->
 
     json.issued = Zotero.BetterBibTeX.parseDateToArray(item.date) if json.issued && item.date
 
-    Translator.debug('CSL:', {fields})
     for name, value of fields
-      switch
-        when value.format == 'csl' && name in ['original-date', 'issued', 'accessed']
-          json[name] = Zotero.BetterBibTeX.parseDateToArray(value.value)
+      continue unless value.format == 'csl'
 
-        when value.format == 'csl'
-          json[name] = value.value
+      if name in ['container', 'event-date', 'submitted', 'original-date', 'issued', 'accessed']
+        json[name] = Zotero.BetterBibTeX.parseDateToArray(value.value)
 
-        when name in ['PMCID', 'PMID', 'DOI']
-          json[name] = value.value
+      else
+        json[name] = value.value
 
     citekey = json.id = Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
     Translator.debug('CSL: export', json)

@@ -21,7 +21,8 @@ class Zotero.BetterBibTeX.DateParser
 
     Zotero.BetterBibTeX.debug('CSL: arraydate', {parsed: @, date, suffix})
 
-    return [ 0, 0 ] if date.empty
+    # [ 0 ] instead if [0, 0]; see https://github.com/ZotPlus/zotero-better-bibtex/issues/360#issuecomment-143540469
+    return [ 0 ] if date.empty
 
     return null unless date.year
 
@@ -37,9 +38,9 @@ class Zotero.BetterBibTeX.DateParser
 
     date2 = @toArray('_end')
 
-    return {'date-parts': [date1, date2]} if date2
-
-    return {'date-parts': [date1] }
+    array = {'date-parts': (if date2 then [date1, date2] else [date1])}
+    array.circa = true if @date.circa || @date.circa_end
+    return array
 
   constructor: (date, options = {}) ->
     @zoteroLocale ?= Zotero.locale.toLowerCase()
@@ -90,22 +91,26 @@ class Zotero.BetterBibTeX.DateParser
     return {empty: true} if date == ''
 
     # Juris-M doesn't recognize d?/m/y
-    if m = date.match(/^(([0-9]{1,2})[-\s\/])?([0-9]{1,2})[-\s\/]([0-9]{3,4})$/)
+    if m = date.match(/^(([0-9]{1,2})[-\s\/])?([0-9]{1,2})[-\s\/]([0-9]{3,4})(\?)?(~)?$/)
       Zotero.BetterBibTeX.debug('parsed:', m)
       parsed = {
         year: parseInt(m[4])
         month: parseInt(m[3])
         day: parseInt(m[1]) || undefined
+        uncertain: (m[5] == '?')
+        circa: (m[6] == '~')
       }
       @swapMonth(parsed, 'mdy')
       return parsed
 
-    if m = date.match(/^([0-9]{3,4})[-\s\/]([0-9]{1,2})([-\s\/]([0-9]{1,2}))?$/)
+    if m = date.match(/^([0-9]{3,4})[-\s\/]([0-9]{1,2})([-\s\/]([0-9]{1,2}))?(\?)?(~)?$/)
       Zotero.BetterBibTeX.debug('parsed:', m)
       parsed = {
         year: parseInt(m[1])
         month: parseInt(m[2])
         day: parseInt(m[4]) || undefined
+        uncertain: (m[5] == '?')
+        circa: (m[6] == '~')
       }
       # only swap to repair -- assume yyyy-nn-nn == EDTF-0
       @swapMonth(parsed)
@@ -131,18 +136,6 @@ class Zotero.BetterBibTeX.DateParser
 
     return {literal: date}
 
-  makeobj: (range) ->
-    if Array.isArray(range)
-      obj = {
-        year: range[0].year
-        month: range[0].month
-        day: range[0].day
-
-        year_end: range[1].year
-        month_end: range[1].month
-        day_end: range[1].day
-      }
-
   parse: (date) ->
     return {} unless date
 
@@ -166,11 +159,13 @@ class Zotero.BetterBibTeX.DateParser
         year: range[0].year
         month: range[0].month
         day: range[0].day
+        circa: range[0].circa
 
         empty_end: range[1].empty
         year_end: range[1].year
         month_end: range[1].month
         day_end: range[1].day
+        circa_end: range[1].circa
       }
 
     return @parsedate(date)
