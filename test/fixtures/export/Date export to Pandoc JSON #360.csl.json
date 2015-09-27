@@ -5,7 +5,31 @@
       "issued" : { "date-parts" : [ [ 2014, 12, 31 ], [ 2015, 1, 1 ] ] },
       "original-date" : { "date-parts" : [ [ 1777, 7, 27 ], [ 1888, 8, 28 ] ] },
       "id" : "Doe2014",
-      "type" : "manuscript"
+      "type" : "manuscript",
+      "container": {"date-parts": [[1777, 7, 27]]},
+      "event-date": {"date-parts": [[1888, 8, 28]]},
+      "submitted": {"date-parts": [[1999, 9, 29], [0]]},
+      "accessed": {"date-parts": [[2014, 12, 31]], "circa": true}
+   },
+   {
+      "title" : "container, event-date, and submitted test",
+      "event-date" : { "date-parts" : [ [ 1800, 1, 1 ], [ 1800, 12, 31 ] ] },
+      "submitted" : { "date-parts" : [ [ 1900, 1, 1 ], [ 1900, 12, 31 ] ] },
+      "id" : "Doe",
+      "type" : "book",
+      "container" : { "date-parts" : [ [ 1700, 1, 1 ], [ 1700, 12, 31 ] ] },
+      "author" : [ { "family" : "Doe", "given" : "John" } ]
+   },
+   {
+      "issued" : { "date-parts" : [ [ 2014, 12, 31 ], [ 0 ] ] },
+      "title" : "open-ended date range test",
+      "author" : [ { "given" : "John", "family" : "Doe" } ], "type" : "book", "id" : "Doe2014a"
+   },
+   {
+      "issued" : { "date-parts" : [ [ 2014, 12, 31 ] ] },
+      "title" : "single date test",
+      "author" : [ { "family" : "Doe", "given" : "John" } ],
+      "id" : "Doe2014b",
+      "type" : "book"
    }
 ]
-

@@ -148,7 +148,7 @@ class Zotero.BetterBibTeX.DateParser
 
     date = date.trim()
 
-    for sep in ['/', '-', '_']
+    for sep in ['--', '/', '-', '_']
       continue if date == sep
 
       range = date.split(sep)
@@ -534,6 +534,7 @@ Zotero.BetterBibTeX.upgradeDatabase = ->
   @pref.prefs.clearUserPref('brace-all')
   @pref.prefs.clearUserPref('usePrefix')
   @pref.prefs.clearUserPref('useprefix')
+  @pref.prefs.clearUserPref('verbatimDate')
 
   try
     translatorSettings = JSON.parse(Zotero.Prefs.get('export.translatorSettings'))
