@@ -94,7 +94,7 @@ doExport = ->
         ref.add({ name: 'year', value: item.date, preserveCaps: true })
       else
         ref.add({ name: 'month', value: months[date.month - 1], bare: true }) if date.month
-        ref.add({ name: 'year', value: date.year })
+        ref.add({ name: 'year', value: '' + date.year })
 
     ref.add({ name: 'note', value: item.extra, allowDuplicates: true })
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
