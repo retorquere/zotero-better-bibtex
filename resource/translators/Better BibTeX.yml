@@ -17,7 +17,6 @@ inRepository: true
 translatorType: 3
 browserSupport: gcsv
 BetterBibTeX:
-  caching: true
   dependencies:
   - xregexp-all
   - reference

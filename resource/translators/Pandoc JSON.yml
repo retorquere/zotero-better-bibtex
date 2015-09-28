@@ -11,5 +11,3 @@ displayOptions:
 inRepository: true
 translatorType: 2
 browserSupport: gcsv
-BetterBibTeX:
-  caching: true

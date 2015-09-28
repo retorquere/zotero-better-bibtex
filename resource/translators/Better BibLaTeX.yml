@@ -16,7 +16,6 @@ displayOptions:
   useJournalAbbreviation: false
   Keep updated: false
 BetterBibTeX:
-  caching: true
   dependencies:
   - xregexp-all
   - reference

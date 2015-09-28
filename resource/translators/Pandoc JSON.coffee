@@ -1,6 +1,4 @@
 doExport = ->
-  caching = Translator.header.BetterBibTeX?.cache?.JSON
-
   items = []
   while item = Zotero.nextItem()
     continue if item.itemType == 'note' || item.itemType == 'attachment'
