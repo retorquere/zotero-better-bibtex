@@ -43,6 +43,7 @@ class Zotero.BetterBibTeX.DateParser
     return array
 
   constructor: (@source, options = {}) ->
+    @source = @source.trim() if @source
     @zoteroLocale ?= Zotero.locale.toLowerCase()
 
     return unless @source
@@ -87,64 +88,81 @@ class Zotero.BetterBibTeX.DateParser
 
   cruft: new Zotero.Utilities.XRegExp("[^\\p{Letter}\\p{Number}]+", 'g')
   parsedate: (date) ->
+    Zotero.BetterBibTeX.debug('parsing:', date)
     date = date.trim()
     return {empty: true} if date == ''
 
+    if m = date.match(/^(-)?([0-9]{3,4})(\?)?(~)?$/)
+      Zotero.BetterBibTeX.debug('parsing: year', {date, m})
+      year = parseInt(m[2])
+      if year == 0
+        year = -1
+      else
+        year = -1 * (year + 1) if m[1] == '-'
+      return {
+        year
+        uncertain: (if m[3] == '?' then true else undefined)
+        circa: (if m[4] == '?' then true else undefined)
+      }
+
     # Juris-M doesn't recognize d?/m/y
     if m = date.match(/^(([0-9]{1,2})[-\s\/])?([0-9]{1,2})[-\s\/]([0-9]{3,4})(\?)?(~)?$/)
-      Zotero.BetterBibTeX.debug('parsed:', m)
+      Zotero.BetterBibTeX.debug('parsing: d/m/y', {date, m})
       parsed = {
-        year: m[4]
+        year: parseInt(m[4])
         month: parseInt(m[3])
         day: parseInt(m[1]) || undefined
-        uncertain: (m[5] == '?')
-        circa: (m[6] == '~')
+        uncertain: (if m[5] == '?' then true else undefined)
+        circa: (if m[6] == '~' then true else undefined)
       }
       @swapMonth(parsed, 'mdy')
       return parsed
 
-    if m = date.match(/^([0-9]{3,4})[-\s\/]([0-9]{1,2})([-\s\/]([0-9]{1,2}))?(\?)?(~)?$/)
-      Zotero.BetterBibTeX.debug('parsed:', m)
+    if m = date.match(/^(-)?([0-9]{3,4})[-\s\/]([0-9]{1,2})([-\s\/]([0-9]{1,2}))?(\?)?(~)?$/)
+      Zotero.BetterBibTeX.debug('parsing: y/d/m', {date, m})
+      year = parseInt(m[2])
+      if year == 0
+        year = -1
+      else
+        year = -1 * (year + 1) if m[1] == '-'
       parsed = {
-        year: m[1]
-        month: parseInt(m[2])
-        day: parseInt(m[4]) || undefined
-        uncertain: (m[5] == '?')
-        circa: (m[6] == '~')
+        year
+        month: parseInt(m[3])
+        day: parseInt(m[5]) || undefined
+        uncertain: (if m[6] == '?' then true else undefined)
+        circa: (if m[7] == '~' then true else undefined)
       }
       # only swap to repair -- assume yyyy-nn-nn == EDTF-0
       @swapMonth(parsed)
       return parsed
 
     parsed = Zotero.BetterBibTeX.JurisMDateParser.parseDateToObject(date)
+    for k, v of parsed
+      switch
+        when v == 'NaN' then  parsed[k] = undefined
+        when v && v.match(/^-?[0-9]+$/) then parsed[k] = parseInt(v)
+    Zotero.BetterBibTeX.debug('parsing: juris-m', {parsed})
 
-    return parsed if parsed.literal
-    return {literal: date} if parsed.month && parsed.month > 12 # there's a season in there somewhere
+    return null if parsed.literal
+    return null if parsed.month && parsed.month > 12 # there's a season in there somewhere
 
     shape = date
     shape = shape.slice(1) if shape[0] == '-'
     shape = Zotero.Utilities.XRegExp.replace(shape.trim(), @cruft, ' ', 'all')
     shape = shape.split(' ')
 
-    fields = 0
-    fields += 1 if parsed.year
-    fields += 1 if parsed.month
-    fields += 1 if parsed.day
+    fields = (if parsed.year then 1 else 0) + (if parsed.month then 1 else 0) + (if parsed.day then 1 else 0)
 
     Zotero.BetterBibTeX.debug('parsed date:', {date, shape, fields, parsed})
     return parsed if fields == 3 || shape.length == fields
 
-    return {literal: date}
+    return null
 
-  parse: ->
-    return {} unless @source
+  parserange: (separators) ->
+    for sep in separators
+      continue if @source == sep
 
-    date = @source.trim()
-
-    for sep in ['--', '/', '-', '_']
-      continue if date == sep
-
-      range = date.split(sep)
+      range = @source.split(sep)
       continue unless range.length == 2
 
       range = [
@@ -152,7 +170,7 @@ class Zotero.BetterBibTeX.DateParser
         @parsedate(range[1])
       ]
 
-      continue if range[0].literal || range[1].literal
+      continue unless range[0] && range[1]
 
       return {
         empty: range[0].empty
@@ -168,7 +186,25 @@ class Zotero.BetterBibTeX.DateParser
         circa_end: range[1].circa
       }
 
-    return @parsedate(date)
+    return null
+
+  parse: ->
+    return {} if !@source || @source in ['--', '/', '-', '_']
+
+    # -- and _ are always ranges
+    candidate = @parserange(['--', '_'])
+
+    # if no range was found, try to parse the whole input as a single date
+    candidate ||= @parsedate(@source)
+    Zotero.BetterBibTeX.debug('parsing: 2nd try', {candidate})
+
+    # if that didn't find anything, try more ambiguous range splitters
+    candidate ||= @parserange(['/', '-'])
+
+    # if that didn't yield anything, assume literal
+    candidate ||= {literal: @source}
+
+    return candidate
 
 Zotero.BetterBibTeX.error = (msg...) ->
   @_log.apply(@, [0].concat(msg))

@@ -321,6 +321,21 @@ Then(/^the following library export should match '(.+)':$/) do |filename, table|
   expect(found).to eq(expected)
 end
 
+def sort_object(o)
+  return o unless o
+
+  return o.collect{|m| sort_object(m)} if o.is_a?(Array)
+  
+  if o.is_a?(Hash)
+    h = {}
+    o.keys.sort.each{|k|
+      h[k] = sort_object(o[k])
+    }
+    return h
+  end
+
+  return o
+end
 Then(/^a library export using '(.+)' should match '(.+)'$/) do |translator, filename|
   found = $Firefox.BetterBibTeX.exportToString(translator, @exportOptions).strip
 
@@ -330,8 +345,10 @@ Then(/^a library export using '(.+)' should match '(.+)'$/) do |translator, file
   expected = open(expected).read.strip
 
   if File.extname(filename) == '.json'
-    found = JSON.parse(found)
-    expected = JSON.parse(expected)
+    found = sort_object(JSON.parse(found))
+    found = JSON.pretty_generate(found)
+    expected = sort_object(JSON.parse(expected))
+    expected = JSON.pretty_generate(expected)
   end
 
   expect(found).to eq(expected)

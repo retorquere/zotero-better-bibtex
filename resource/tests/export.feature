@@ -75,7 +75,7 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
 
 @pandoc
 Scenario: Date export to Pandoc JSON #360
-  When I import 4 references from 'export/Date export to Pandoc JSON #360.json'
+  When I import 6 references from 'export/Date export to Pandoc JSON #360.json'
   And a library export using 'Pandoc JSON' should match 'export/Date export to Pandoc JSON #360.csl.json'
 
 @test-cluster-2
