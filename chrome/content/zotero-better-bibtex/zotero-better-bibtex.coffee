@@ -92,17 +92,12 @@ class Zotero.BetterBibTeX.DateParser
     date = date.trim()
     return {empty: true} if date == ''
 
-    if m = date.match(/^(-)?([0-9]{3,4})(\?)?(~)?$/)
+    if m = date.match(/^(-?[0-9]{3,4})(\?)?(~)?$/)
       Zotero.BetterBibTeX.debug('parsing: year', {date, m})
-      year = parseInt(m[2])
-      if year == 0
-        year = -1
-      else
-        year = -1 * (year + 1) if m[1] == '-'
       return {
-        year
-        uncertain: (if m[3] == '?' then true else undefined)
-        circa: (if m[4] == '?' then true else undefined)
+        year: @year(m[1])
+        uncertain: (if m[2] == '?' then true else undefined)
+        circa: (if m[3] == '?' then true else undefined)
       }
 
     # Juris-M doesn't recognize d?/m/y
@@ -118,19 +113,14 @@ class Zotero.BetterBibTeX.DateParser
       @swapMonth(parsed, 'mdy')
       return parsed
 
-    if m = date.match(/^(-)?([0-9]{3,4})[-\s\/]([0-9]{1,2})([-\s\/]([0-9]{1,2}))?(\?)?(~)?$/)
+    if m = date.match(/^(-?[0-9]{3,4})[-\s\/]([0-9]{1,2})([-\s\/]([0-9]{1,2}))?(\?)?(~)?$/)
       Zotero.BetterBibTeX.debug('parsing: y/d/m', {date, m})
-      year = parseInt(m[2])
-      if year == 0
-        year = -1
-      else
-        year = -1 * (year + 1) if m[1] == '-'
       parsed = {
-        year
-        month: parseInt(m[3])
-        day: parseInt(m[5]) || undefined
-        uncertain: (if m[6] == '?' then true else undefined)
-        circa: (if m[7] == '~' then true else undefined)
+        year: @year(m[1])
+        month: parseInt(m[2])
+        day: parseInt(m[4]) || undefined
+        uncertain: (if m[5] == '?' then true else undefined)
+        circa: (if m[6] == '~' then true else undefined)
       }
       # only swap to repair -- assume yyyy-nn-nn == EDTF-0
       @swapMonth(parsed)
@@ -161,6 +151,8 @@ class Zotero.BetterBibTeX.DateParser
   parserange: (separators) ->
     for sep in separators
       continue if @source == sep
+      # too hard to distinguish from negative year
+      continue if sep == '-' && @source.match(/^-[0-9]{3,4}$/)
 
       range = @source.split(sep)
       continue unless range.length == 2
@@ -188,18 +180,18 @@ class Zotero.BetterBibTeX.DateParser
 
     return null
 
-  parse: ->
-    return {} if !@source || @source in ['--', '/', '-', '_']
+  year: (y) ->
+    y = parseInt(y)
+    y -= 1 if y <= 0
+    return y
 
-    # -- and _ are always ranges
-    candidate = @parserange(['--', '_'])
+  parse: ->
+    return {} if !@source || @source in ['--', '/', '_']
+
+    candidate = @parserange(['--', '_', '/', '-'])
 
     # if no range was found, try to parse the whole input as a single date
     candidate ||= @parsedate(@source)
-    Zotero.BetterBibTeX.debug('parsing: 2nd try', {candidate})
-
-    # if that didn't find anything, try more ambiguous range splitters
-    candidate ||= @parserange(['/', '-'])
 
     # if that didn't yield anything, assume literal
     candidate ||= {literal: @source}
