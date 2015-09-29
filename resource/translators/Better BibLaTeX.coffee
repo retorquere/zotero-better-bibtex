@@ -331,7 +331,7 @@ class DateField
     return '' if _v.empty
     return "#{_v.year}-#{@pad(_v.month, '00')}-#{@pad(_v.day, '00')}" if _v.year && _v.month && _v.day
     return "#{_v.year}-#{@pad(_v.month, '00')}" if _v.year && _v.month
-    return _v.year
+    return '' + _v.year
 
 doExport = ->
   Zotero.write('\n')
