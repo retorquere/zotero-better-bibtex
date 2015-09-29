@@ -130,7 +130,7 @@ class Zotero.BetterBibTeX.DateParser
     for k, v of parsed
       switch
         when v == 'NaN' then  parsed[k] = undefined
-        when v && v.match(/^-?[0-9]+$/) then parsed[k] = parseInt(v)
+        when typeof v == 'string' && v.match(/^-?[0-9]+$/) then parsed[k] = parseInt(v)
     Zotero.BetterBibTeX.debug('parsing: juris-m', {parsed})
 
     return null if parsed.literal
