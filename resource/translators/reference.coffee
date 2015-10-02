@@ -29,7 +29,7 @@ class Reference
   constructor: (@item) ->
     @fields = []
     @has = Object.create(null)
-    @raw = ((tag.tag for tag in @item.tags when tag.tag == Translator.rawLaTag).length > 0)
+    @raw = (Translator.rawLaTag in @item.tags)
 
     @referencetype = Translator.typeMap.Zotero2BibTeX[@item.itemType] || 'misc'
 
@@ -216,7 +216,7 @@ class Reference
     return value
 
   enc_tags: (f) ->
-    tags = (tag.tag for tag in f.value || [] when tag?.tag && tag.tag != Translator.rawLaTag)
+    tags = (tag for tag in f.value || [] when tag && tag != Translator.rawLaTag)
     return null if tags.length == 0
 
     # sort tags for stable tests

@@ -27,6 +27,8 @@ Zotero.BetterBibTeX.serialized = new class
     item.itemID ?= itemID
     item.itemID = parseInt(item.itemID)
 
+    item.tags = ((if typeof tag == 'object' then tag.tag else tag) for tag in item.tags)
+
     switch item.itemType
       when 'artwork'
         item.medium ?= item.artworkMedium
