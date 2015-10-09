@@ -57,79 +57,79 @@ Translator._log = (level, msg...) ->
 
 # http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
 Translator.CSLVariables = {
-  #'abstract':                    'string'
-  #'annote':                      'string'
-  archive:                        'string'
-  'archive_location':             'string'
-  'archive-place':                'string'
-  authority:                      'string'
-  'call-number':                  'string'
-  #'citation-label':              'string'
-  #'citation-number':             'string'
-  'collection-title':             'string'
-  'container-title':              'string'
-  'container-title-short':        'string'
-  dimensions:                     'string'
-  DOI:                            'string'
-  event:                          'string'
-  'event-place':                  'string'
-  #'first-reference-note-number': 'string'
-  genre:                          'string'
-  ISBN:                           'string'
-  ISSN:                           'string'
-  jurisdiction:                   'string'
-  keyword:                        'string'
-  locator:                        'string'
-  medium:                         'string'
-  #'note':                        'string'
-  'original-publisher':           'string'
-  'original-publisher-place':     'string'
-  'original-title':               'string'
-  page:                           'string'
-  'page-first':                   'string'
-  PMCID:                          'string'
-  PMID:                           'string'
-  publisher:                      'string'
-  'publisher-place':              'string'
-  references:                     'string'
-  'reviewed-title':               'string'
-  scale:                          'string'
-  section:                        'string'
-  source:                         'string'
-  status:                         'string'
-  title:                          'string'
-  'title-short':                  'string'
-  URL:                            'string'
-  version:                        'string'
-  'volume-title':                 'string'
-  'year-suffix':                  'string'
-  'chapter-number':               'string'
-  'collection-number':            'string'
-  edition:                        'string'
-  issue:                          'string'
-  number:                         'string'
-  'number-of-pages':              'string'
-  'number-of-volumes':            'string'
-  volume:                         'string'
-  accessed:                       'date'
-  container:                      'date'
-  'event-date':                   'date'
-  issued:                         'date'
-  'original-date':                'date'
-  submitted:                      'date'
-  author:                         'creator'
-  'collection-editor':            'creator'
-  composer:                       'creator'
-  'container-author':             'creator'
-  director:                       'creator'
-  editor:                         'creator'
-  'editorial-director':           'creator'
-  illustrator:                    'creator'
-  interviewer:                    'creator'
-  'original-author':              'creator'
-  recipient:                      'creator'
-  'reviewed-author':              'creator'
-  translator:                     'creator'
+  #'abstract':                    { type: 'string' }
+  #'annote':                      { type: 'string' }
+  archive:                        { type: 'string' }
+  'archive_location':             { type: 'string' }
+  'archive-place':                { type: 'string' }
+  authority:                      { type: 'string', BibLaTeX: 'institution' }
+  'call-number':                  { type: 'string' }
+  #'citation-label':              { type: 'string' }
+  #'citation-number':             { type: 'string' }
+  'collection-title':             { type: 'string' }
+  'container-title':              { type: 'string', BibLaTeX: 'journaltitle' }
+  'container-title-short':        { type: 'string' }
+  dimensions:                     { type: 'string' }
+  DOI:                            { type: 'string' }
+  event:                          { type: 'string' }
+  'event-place':                  { type: 'string' }
+  #'first-reference-note-number': { type: 'string' }
+  genre:                          { type: 'string' }
+  ISBN:                           { type: 'string' }
+  ISSN:                           { type: 'string' }
+  jurisdiction:                   { type: 'string' }
+  keyword:                        { type: 'string' }
+  locator:                        { type: 'string' }
+  medium:                         { type: 'string' }
+  #'note':                        { type: 'string' }
+  'original-publisher':           { type: 'string', BibLaTeX: 'origpublisher' }
+  'original-publisher-place':     { type: 'string', BibLaTeX: 'origlocation' }
+  'original-title':               { type: 'string', BibLaTeX: 'origtitle' }
+  page:                           { type: 'string' }
+  'page-first':                   { type: 'string' }
+  PMCID:                          { type: 'string' }
+  PMID:                           { type: 'string' }
+  publisher:                      { type: 'string' }
+  'publisher-place':              { type: 'string' }
+  references:                     { type: 'string' }
+  'reviewed-title':               { type: 'string' }
+  scale:                          { type: 'string' }
+  section:                        { type: 'string' }
+  source:                         { type: 'string' }
+  status:                         { type: 'string' }
+  title:                          { type: 'string' }
+  'title-short':                  { type: 'string' }
+  URL:                            { type: 'string' }
+  version:                        { type: 'string' }
+  'volume-title':                 { type: 'string' }
+  'year-suffix':                  { type: 'string' }
+  'chapter-number':               { type: 'string' }
+  'collection-number':            { type: 'string' }
+  edition:                        { type: 'string' }
+  issue:                          { type: 'string' }
+  number:                         { type: 'string' }
+  'number-of-pages':              { type: 'string' }
+  'number-of-volumes':            { type: 'string' }
+  volume:                         { type: 'string' }
+  accessed:                       { type: 'date' }
+  container:                      { type: 'date' }
+  'event-date':                   { type: 'date' }
+  issued:                         { type: 'date', BibLaTeX: 'date' }
+  'original-date':                { type: 'date', BibLaTeX: 'origdate'}
+  submitted:                      { type: 'date' }
+  author:                         { type: 'creator' }
+  'collection-editor':            { type: 'creator' }
+  composer:                       { type: 'creator' }
+  'container-author':             { type: 'creator' }
+  director:                       { type: 'creator' }
+  editor:                         { type: 'creator' }
+  'editorial-director':           { type: 'creator' }
+  illustrator:                    { type: 'creator' }
+  interviewer:                    { type: 'creator' }
+  'original-author':              { type: 'creator' }
+  recipient:                      { type: 'creator' }
+  'reviewed-author':              { type: 'creator' }
+  translator:                     { type: 'creator' }
 }
 
 Translator.extractFieldsKVRE = new RegExp("^\\s*(#{Object.keys(Translator.CSLVariables).join('|')}|LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\\s*:\\s*(.+)\\s*$", 'i')
@@ -137,14 +137,6 @@ Translator.extractFields = (item) ->
   return {} unless item.extra
 
   fields = {}
-  extra = []
-  for line in item.extra.split("\n")
-    m = Translator.extractFieldsKVRE.exec(line)
-    if !m
-      extra.push(line)
-    else
-      fields[m[1]] = {value: m[2].trim(), format: if @CSLVariables[m[1]] then 'csl' else 'key-value'}
-  item.extra = extra.join("\n")
 
   m = /(biblatexdata|bibtex|biblatex)\[([^\]]+)\]/.exec(item.extra)
   if m
@@ -177,6 +169,15 @@ Translator.extractFields = (item) ->
     fields[name] = { value, format: 'csl' }
     return ''
   )
+
+  extra = []
+  for line in item.extra.split("\n")
+    m = Translator.extractFieldsKVRE.exec(line)
+    if !m
+      extra.push(line)
+    else
+      fields[m[1]] = {value: m[2].trim(), format: if @CSLVariables[m[1]] then 'csl' else 'key-value'}
+  item.extra = extra.join("\n")
 
   item.extra = item.extra.trim()
   delete item.extra if item.extra == ''

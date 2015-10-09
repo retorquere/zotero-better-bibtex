@@ -379,18 +379,6 @@ class Reference
 
   normalize: (typeof (''.normalize) == 'function')
 
-  CSLtoBibTeX: (variable) ->
-    switch variable
-      when 'original-date' then return 'origdate'
-      when 'original-publisher' then return 'origpublisher'
-      when 'original-publisher-place' then return 'origlocation'
-      when 'original-title' then return 'origtitle'
-      when 'authority' then return 'institution'
-      when 'issued' then return 'date'
-      when 'container-title'
-        switch @referencetype
-          when 'article', 'jurisdiction', 'legislation' then return 'journaltitle'
-
   postscript: ->
 
   complete: ->
@@ -407,6 +395,8 @@ class Reference
       raw = (value.format in ['naive', 'json'])
       name = name.toLowerCase()
 
+      Translator.debug('override:', {name, value})
+
       # psuedo-var, sets the reference type
       if name == 'referencetype'
         @referencetype = value.value
@@ -418,7 +408,8 @@ class Reference
       switch value.format
         # CSL names are not in BibTeX format, so only add it if there's a mapping
         when 'csl'
-          remapped = @CSLtoBibTeX(name)
+          remapped = Translator.CSLVariables[name]?[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
+          remapped = remapped.call(@, name) if typeof remapped == 'function'
           if remapped
             name = remapped
             Translator.debug('CSL override:', name, value)
@@ -426,7 +417,7 @@ class Reference
             Translator.debug('Unmapped CSL field', name, '=', value.value)
             continue
 
-        when 'key-value'
+        when 'key-value', 'naive', 'json'
           switch name
             when 'mr'
               fields.push({ name: 'mrnumber', value: value.value, raw: raw })
@@ -451,10 +442,6 @@ class Reference
 
             else
               fields.push({ name, value: value.value, raw: raw })
-          continue
-
-        when 'json', 'naive'
-          fields.push({ name, value: value.value, raw: raw })
           continue
 
       fields.push({ name: name, value: value.value, raw: raw })
