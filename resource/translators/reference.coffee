@@ -152,6 +152,7 @@ class Reference
           name = {family: creator.lastName || '', given: creator.firstName || ''}
 
           Zotero.BetterBibTeX.CSL.parseParticles(name)
+          Zotero.BetterBibTeX.CSL.parseParticles(name)
           Translator.debug('particle-parser: parsed to', name)
 
           if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
@@ -391,6 +392,7 @@ class Reference
           when 'url' then @remove('doi')
 
     fields = []
+    creators = {}
     for own name, value of @override
       raw = (value.format in ['naive', 'json'])
       name = name.toLowerCase()
@@ -411,10 +413,20 @@ class Reference
         remapped = cslvar?[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
         remapped = remapped.call(@, name) if typeof remapped == 'function'
 
-        # will have to do fancy stuff for cslvar.type != 'string'
         if remapped
           Translator.debug('CSL override:', name, remapped, value)
-          fields.push({ name: remapped, value: value.value, raw: raw })
+          if cslvar.type == 'creator'
+            creator = value.value.split(/\s*\|\|\s*/)
+            if creator.length in [1, 2]
+              creator = {lastName: creator[0] || '', firstName: creator[1] || ''}
+            else
+              creator = {lastName: value.value || '', firstName: ''}
+            creators[remapped] ||= []
+            creators[remapped].push(creator)
+
+          else
+            fields.push({ name: remapped, value: value.value, enc: cslvar.type, raw: raw })
+
         else
           Translator.debug('Unmapped CSL field', name, '=', value.value)
 
@@ -443,6 +455,9 @@ class Reference
 
           else
             fields.push({ name, value: value.value, raw: raw })
+
+    for name, creators of creators
+      fields.push({name: name, value: creators})
 
     for name in Translator.skipFields
       @remove(name)
