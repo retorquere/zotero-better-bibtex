@@ -460,7 +460,7 @@ class Reference
             fields.push({ name, value: value.value, raw: raw })
 
     for name, creators of creators
-      fields.push({name: name, value: creators})
+      fields.push({name: name, value: creators, enc: 'creators'})
 
     for name in Translator.skipFields
       @remove(name)

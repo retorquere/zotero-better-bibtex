@@ -117,12 +117,12 @@ Translator.CSLVariables = {
   issued:                         { type: 'date', BibLaTeX: 'date' }
   'original-date':                { type: 'date', BibLaTeX: 'origdate'}
   submitted:                      { type: 'date' }
-  author:                         { type: 'creator' }
+  author:                         { type: 'creator', BibLaTeX: 'author' }
   'collection-editor':            { type: 'creator' }
   composer:                       { type: 'creator' }
   'container-author':             { type: 'creator' }
-  director:                       { type: 'creator' }
-  editor:                         { type: 'creator' }
+  director:                       { type: 'creator', BibLaTeX: 'director' }
+  editor:                         { type: 'creator', BibLaTeX: 'editor' }
   'editorial-director':           { type: 'creator' }
   illustrator:                    { type: 'creator' }
   interviewer:                    { type: 'creator' }

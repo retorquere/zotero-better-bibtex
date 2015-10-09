@@ -30,6 +30,11 @@ doExport = ->
         else
           json[name] = value.value
 
+    # ham-fisted workaround for #365
+    if json.type == 'motion_picture' && json.author
+      json.director = json.author
+      delete json.author
+
     citekey = json.id = Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
     json = JSON.stringify(json)
     Zotero.BetterBibTeX.cache.store(item.itemID, Translator.header, citekey, json)
