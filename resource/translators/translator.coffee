@@ -56,7 +56,7 @@ Translator._log = (level, msg...) ->
   Zotero.debug('[better' + '-' + "bibtex:#{@header.label}] " + msg, level)
 
 # http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
-Translator.CSLVariables = [
+Translator.CSLVariables = {
   #'abstract':                    'string'
   #'annote':                      'string'
   archive:                        'string'
@@ -130,7 +130,7 @@ Translator.CSLVariables = [
   recipient:                      'creator'
   'reviewed-author':              'creator'
   translator:                     'creator'
-]
+}
 
 Translator.extractFieldsKVRE = new RegExp("^\\s*(#{Object.keys(Translator.CSLVariables).join('|')}|LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\\s*:\\s*(.+)\\s*$", 'i')
 Translator.extractFields = (item) ->
