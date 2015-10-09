@@ -453,6 +453,10 @@ class Reference
               fields.push({ name, value: value.value, raw: raw })
           continue
 
+        when 'json', 'naive'
+          fields.push({ name, value: value.value, raw: raw })
+          continue
+
       fields.push({ name: name, value: value.value, raw: raw })
 
     for name in Translator.skipFields
