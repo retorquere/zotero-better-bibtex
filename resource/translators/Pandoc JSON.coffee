@@ -12,11 +12,23 @@ doExport = ->
     for name, value of fields
       continue unless value.format == 'csl'
 
-      if name in ['container', 'event-date', 'submitted', 'original-date', 'issued', 'accessed']
-        json[name] = Zotero.BetterBibTeX.parseDateToArray(value.value)
+      switch Translator.CSLVariables[name]
+        when 'date'
+          json[name] = Zotero.BetterBibTeX.parseDateToArray(value.value)
 
-      else
-        json[name] = value.value
+        when 'creator'
+          creator = value.value.split(/\s*\|\|\s*/)
+          if creator.length in [1, 2]
+            creator = {family: creator[0] || '', given: creator[1] || ''}
+          else
+            creator = {family: value.value || '', given: ''}
+
+          Zotero.BetterBibTeX.CSL.parseParticles(creator)
+          Zotero.BetterBibTeX.CSL.parseParticles(creator)
+          json[name] = creator
+
+        else
+          json[name] = value.value
 
     citekey = json.id = Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
     json = JSON.stringify(json)
