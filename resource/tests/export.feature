@@ -74,6 +74,12 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
   Then a library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bib'
 
 @pandoc
+Scenario: Export of creator-type fields from embedded CSL variables #365
+  When I import 2 references from 'export/Export of creator-type fields from embedded CSL variables #365.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Export of creator-type fields from embedded CSL variables #365.bib'
+  And a library export using 'Pandoc JSON' should match 'export/Export of creator-type fields from embedded CSL variables #365.csl.json'
+
+@pandoc
 Scenario: Date export to Pandoc JSON #360
   When I import 6 references from 'export/Date export to Pandoc JSON #360.json'
   And a library export using 'Pandoc JSON' should match 'export/Date export to Pandoc JSON #360.csl.json'

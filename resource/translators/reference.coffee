@@ -419,13 +419,8 @@ class Reference
         if remapped
           Translator.debug('CSL override:', name, remapped, value)
           if cslvar.type == 'creator'
-            creator = value.value.split(/\s*\|\|\s*/)
-            if creator.length in [1, 2]
-              creator = {lastName: creator[0] || '', firstName: creator[1] || ''}
-            else
-              creator = {lastName: value.value || '', firstName: ''}
             creators[remapped] ||= []
-            creators[remapped].push(creator)
+            creators[remapped].push(value.value)
 
           else
             fields.push({ name: remapped, value: value.value, enc: cslvar.type, raw: raw })
@@ -459,6 +454,7 @@ class Reference
           else
             fields.push({ name, value: value.value, raw: raw })
 
+    Translator.debug('override: creators', {creators})
     for name, creators of creators
       fields.push({name: name, value: creators, enc: 'creators'})
 

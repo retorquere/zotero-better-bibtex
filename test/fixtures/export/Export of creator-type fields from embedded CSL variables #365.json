@@ -1,0 +1,83 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.5.3",
+    "preferences": {
+      "exportFileData": false,
+      "exportNotes": true
+    },
+    "options": {
+      "skipFields": [
+        ""
+      ],
+      "jabrefGroups": true,
+      "postscript": "",
+      "csquotes": "",
+      "preserveCaps": "inner",
+      "fancyURLs": false,
+      "langID": "babel",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false,
+      "preserveBibTeXVariables": false
+    }
+  },
+  "collections": [],
+  "items": [
+    {
+      "itemType": "film",
+      "tags": [],
+      "relations": {},
+      "date": "2015",
+      "distributor": "The Distributor",
+      "extra": "publisher-place: US/GB",
+      "title": "A film",
+      "creators": [
+        {
+          "creatorType": "director",
+          "lastName": "Doe",
+          "firstName": "John"
+        },
+        {
+          "creatorType": "director",
+          "lastName": "Roe",
+          "firstName": "Rob"
+        }
+      ],
+      "attachments": [],
+      "notes": [],
+      "itemID": 16,
+      "publisher": "The Distributor",
+      "seeAlso": [],
+      "__citekey__": "doe_film_2015"
+    },
+    {
+      "itemType": "report",
+      "tags": [],
+      "relations": {},
+      "place": "Place",
+      "date": "2015",
+      "extra": "editor: Editrix||Emma\neditor: Editor||Ed\n{:X-author: Doe||John}",
+      "institution": "Institution",
+      "reportType": "working paper",
+      "reportNumber": "77",
+      "title": "A report",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Author",
+          "firstName": "Ann"
+        }
+      ],
+      "attachments": [],
+      "notes": [],
+      "itemID": 15,
+      "publisher": "Institution",
+      "type": "working paper",
+      "number": "77",
+      "seeAlso": [],
+      "__citekey__": "author_report_2015"
+    }
+  ]
+}

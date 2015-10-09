@@ -17,15 +17,14 @@ doExport = ->
           json[name] = Zotero.BetterBibTeX.parseDateToArray(value.value)
 
         when 'creator'
-          creator = value.value.split(/\s*\|\|\s*/)
-          if creator.length in [1, 2]
-            creator = {family: creator[0] || '', given: creator[1] || ''}
-          else
-            creator = {family: value.value || '', given: ''}
+          creators = []
+          for creator in value.value
+            creator = {family: creator.lastName || '', given: family.firstName || ''}
+            Zotero.BetterBibTeX.CSL.parseParticles(creator)
+            Zotero.BetterBibTeX.CSL.parseParticles(creator)
+            creators.push(creator)
 
-          Zotero.BetterBibTeX.CSL.parseParticles(creator)
-          Zotero.BetterBibTeX.CSL.parseParticles(creator)
-          json[name] = creator
+          json[name] = creators
 
         else
           json[name] = value.value

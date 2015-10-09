@@ -132,6 +132,15 @@ Translator.CSLVariables = {
   translator:                     { type: 'creator' }
 }
 
+Translator.CSLCreator = (value) ->
+  creator = value.split(/\s*\|\|\s*/)
+  if creator.length in [1, 2]
+    creator = {lastName: creator[0] || '', firstName: creator[1] || ''}
+  else
+    creator = {lastName: value.value || '', firstName: ''}
+
+  return creator
+
 Translator.extractFieldsKVRE = new RegExp("^\\s*(#{Object.keys(Translator.CSLVariables).join('|')}|LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\\s*:\\s*(.+)\\s*$", 'i')
 Translator.extractFields = (item) ->
   return {} unless item.extra
@@ -166,17 +175,31 @@ Translator.extractFields = (item) ->
 
   # fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/
   item.extra = item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, name, value) ->
-    fields[name] = { value, format: 'csl' }
+    cslvar = Translator.CSLVariables[name]
+    return '' unless cslvar
+
+    if cslvar.type == 'creator'
+      fields[name] = {value: [], format: 'csl'} unless Array.isArray(fields[name]?.value)
+      fields[name].value.push(@CSLCreator(value))
+    else
+      fields[name] = { value, format: 'csl' }
+
     return ''
   )
 
   extra = []
   for line in item.extra.split("\n")
     m = Translator.extractFieldsKVRE.exec(line)
-    if !m
-      extra.push(line)
-    else
-      fields[m[1]] = {value: m[2].trim(), format: if @CSLVariables[m[1]] then 'csl' else 'key-value'}
+    switch
+      when !m
+        extra.push(line)
+      when @CSLVariables[m[1]].type == 'creator'
+        fields[m[1]] = {value: [], format: 'csl'} unless Array.isArray(fields[m[1]]?.value)
+        fields[m[1]].value.push(@CSLCreator(m[2].trim()))
+      when @CSLVariables[m[1]]
+        fields[m[1]] = {value: m[2].trim(), format: 'csl'}
+      else
+        fields[m[1]] = {value: m[2].trim(), format: 'key-value'}
   item.extra = extra.join("\n")
 
   item.extra = item.extra.trim()
