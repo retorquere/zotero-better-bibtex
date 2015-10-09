@@ -405,46 +405,44 @@ class Reference
       # these are handled just like 'arxiv' and 'lccn', respectively
       value.format = 'key-value' if name in ['pmid', 'pmcid']
 
-      switch value.format
+      if value.format == 'csl'
         # CSL names are not in BibTeX format, so only add it if there's a mapping
-        when 'csl'
-          remapped = Translator.CSLVariables[name]?[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
-          remapped = remapped.call(@, name) if typeof remapped == 'function'
-          if remapped
-            name = remapped
-            Translator.debug('CSL override:', name, value)
-          else
-            Translator.debug('Unmapped CSL field', name, '=', value.value)
-            continue
+        cslvar = Translator.CSLVariables[name]
+        remapped = cslvar?[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
+        remapped = remapped.call(@, name) if typeof remapped == 'function'
 
-        when 'key-value', 'naive', 'json'
-          switch name
-            when 'mr'
-              fields.push({ name: 'mrnumber', value: value.value, raw: raw })
-            when 'zbl'
-              fields.push({ name: 'zmnumber', value: value.value, raw: raw })
-            when 'lccn', 'pmcid'
-              fields.push({ name: name, value: value.value, raw: raw })
-            when 'pmid', 'arxiv', 'jstor', 'hdl'
-              if Translator.BetterBibLaTeX
-                fields.push({ name: 'eprinttype', value: name.toLowerCase() })
-                fields.push({ name: 'eprint', value: value.value, raw: raw })
-              else
-                fields.push({ name, value: value.value, raw: raw })
-            when 'googlebooksid'
-              if Translator.BetterBibLaTeX
-                fields.push({ name: 'eprinttype', value: 'googlebooks' })
-                fields.push({ name: 'eprint', value: value.value, raw: raw })
-              else
-                fields.push({ name: 'googlebooks', value: value.value, raw: raw })
-            when 'xref'
-              fields.push({ name, value: value.value, enc: 'raw' })
+        # will have to do fancy stuff for cslvar.type != 'string'
+        if remapped
+          Translator.debug('CSL override:', name, remapped, value)
+          fields.push({ name: remapped, value: value.value, raw: raw })
+        else
+          Translator.debug('Unmapped CSL field', name, '=', value.value)
 
+      else
+        switch name
+          when 'mr'
+            fields.push({ name: 'mrnumber', value: value.value, raw: raw })
+          when 'zbl'
+            fields.push({ name: 'zmnumber', value: value.value, raw: raw })
+          when 'lccn', 'pmcid'
+            fields.push({ name: name, value: value.value, raw: raw })
+          when 'pmid', 'arxiv', 'jstor', 'hdl'
+            if Translator.BetterBibLaTeX
+              fields.push({ name: 'eprinttype', value: name.toLowerCase() })
+              fields.push({ name: 'eprint', value: value.value, raw: raw })
             else
               fields.push({ name, value: value.value, raw: raw })
-          continue
+          when 'googlebooksid'
+            if Translator.BetterBibLaTeX
+              fields.push({ name: 'eprinttype', value: 'googlebooks' })
+              fields.push({ name: 'eprint', value: value.value, raw: raw })
+            else
+              fields.push({ name: 'googlebooks', value: value.value, raw: raw })
+          when 'xref'
+            fields.push({ name, value: value.value, enc: 'raw' })
 
-      fields.push({ name: name, value: value.value, raw: raw })
+          else
+            fields.push({ name, value: value.value, raw: raw })
 
     for name in Translator.skipFields
       @remove(name)

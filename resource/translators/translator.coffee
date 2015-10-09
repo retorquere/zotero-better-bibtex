@@ -57,60 +57,60 @@ Translator._log = (level, msg...) ->
 
 # http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
 Translator.CSLVariables = {
-  #'abstract':                    { type: 'string' }
-  #'annote':                      { type: 'string' }
-  archive:                        { type: 'string' }
-  'archive_location':             { type: 'string' }
-  'archive-place':                { type: 'string' }
-  authority:                      { type: 'string', BibLaTeX: 'institution' }
-  'call-number':                  { type: 'string' }
-  #'citation-label':              { type: 'string' }
-  #'citation-number':             { type: 'string' }
-  'collection-title':             { type: 'string' }
-  'container-title':              { type: 'string', BibLaTeX: 'journaltitle' }
-  'container-title-short':        { type: 'string' }
-  dimensions:                     { type: 'string' }
-  DOI:                            { type: 'string' }
-  event:                          { type: 'string' }
-  'event-place':                  { type: 'string' }
-  #'first-reference-note-number': { type: 'string' }
-  genre:                          { type: 'string' }
-  ISBN:                           { type: 'string' }
-  ISSN:                           { type: 'string' }
-  jurisdiction:                   { type: 'string' }
-  keyword:                        { type: 'string' }
-  locator:                        { type: 'string' }
-  medium:                         { type: 'string' }
-  #'note':                        { type: 'string' }
-  'original-publisher':           { type: 'string', BibLaTeX: 'origpublisher' }
-  'original-publisher-place':     { type: 'string', BibLaTeX: 'origlocation' }
-  'original-title':               { type: 'string', BibLaTeX: 'origtitle' }
-  page:                           { type: 'string' }
-  'page-first':                   { type: 'string' }
-  PMCID:                          { type: 'string' }
-  PMID:                           { type: 'string' }
-  publisher:                      { type: 'string' }
-  'publisher-place':              { type: 'string' }
-  references:                     { type: 'string' }
-  'reviewed-title':               { type: 'string' }
-  scale:                          { type: 'string' }
-  section:                        { type: 'string' }
-  source:                         { type: 'string' }
-  status:                         { type: 'string' }
-  title:                          { type: 'string' }
-  'title-short':                  { type: 'string' }
-  URL:                            { type: 'string' }
-  version:                        { type: 'string' }
-  'volume-title':                 { type: 'string' }
-  'year-suffix':                  { type: 'string' }
-  'chapter-number':               { type: 'string' }
-  'collection-number':            { type: 'string' }
-  edition:                        { type: 'string' }
-  issue:                          { type: 'string' }
-  number:                         { type: 'string' }
-  'number-of-pages':              { type: 'string' }
-  'number-of-volumes':            { type: 'string' }
-  volume:                         { type: 'string' }
+  #'abstract':                    {}
+  #'annote':                      {}
+  archive:                        {}
+  'archive_location':             {}
+  'archive-place':                {}
+  authority:                      { BibLaTeX: 'institution' }
+  'call-number':                  {}
+  #'citation-label':              {}
+  #'citation-number':             {}
+  'collection-title':             {}
+  'container-title':              { BibLaTeX: 'journaltitle' }
+  'container-title-short':        {}
+  dimensions:                     {}
+  DOI:                            {}
+  event:                          {}
+  'event-place':                  {}
+  #'first-reference-note-number': {}
+  genre:                          {}
+  ISBN:                           {}
+  ISSN:                           {}
+  jurisdiction:                   {}
+  keyword:                        {}
+  locator:                        {}
+  medium:                         {}
+  #'note':                        {}
+  'original-publisher':           { BibLaTeX: 'origpublisher' }
+  'original-publisher-place':     { BibLaTeX: 'origlocation' }
+  'original-title':               { BibLaTeX: 'origtitle' }
+  page:                           {}
+  'page-first':                   {}
+  PMCID:                          {}
+  PMID:                           {}
+  publisher:                      {}
+  'publisher-place':              {}
+  references:                     {}
+  'reviewed-title':               {}
+  scale:                          {}
+  section:                        {}
+  source:                         {}
+  status:                         {}
+  title:                          {}
+  'title-short':                  {}
+  URL:                            {}
+  version:                        {}
+  'volume-title':                 {}
+  'year-suffix':                  {}
+  'chapter-number':               {}
+  'collection-number':            {}
+  edition:                        {}
+  issue:                          {}
+  number:                         {}
+  'number-of-pages':              {}
+  'number-of-volumes':            {}
+  volume:                         {}
   accessed:                       { type: 'date' }
   container:                      { type: 'date' }
   'event-date':                   { type: 'date' }
