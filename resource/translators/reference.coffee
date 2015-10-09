@@ -86,14 +86,17 @@ class Reference
   enc_date: (f) ->
     return null unless f.value
 
-    if f.value.literal
-      return '\\bibstring{nodate}' if f.value.literal == 'n.d.'
-      return @enc_latex(@clone(f, f.value.literal))
+    value = f.value
+    value = Zotero.BetterBibTeX.parseDateToObject(value, @item.language) if typeof f.value == 'string'
 
-    date = @isodate(f.value)
+    if value.literal
+      return '\\bibstring{nodate}' if value.literal == 'n.d.'
+      return @enc_latex(@clone(f, value.literal))
+
+    date = @isodate(value)
     return null unless date
 
-    enddate = @isodate(f.value, '_end')
+    enddate = @isodate(value, '_end')
     date += "/#{enddate}" if enddate
 
     return @enc_latex({value: date})
@@ -476,10 +479,12 @@ class Reference
         @remove(field.name)
         continue
 
-      Translator.debug('override: add', field)
       field = @clone(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
       field.replace = true
+      Translator.debug('override: add', field)
       @add(field)
+
+    Translator.debug('override: done', @fields)
 
     @add({name: 'type', value: @referencetype}) if @fields.length == 0
 
