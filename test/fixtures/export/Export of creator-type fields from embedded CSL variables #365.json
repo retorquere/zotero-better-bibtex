@@ -78,6 +78,26 @@
       "number": "77",
       "seeAlso": [],
       "__citekey__": "author_report_2015"
+    },
+    {
+      "itemType": "tvBroadcast",
+      "tags": [],
+      "relations": {},
+      "date": "1964",
+      "title": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
+      "shortTitle": "Dr. Strangelove",
+      "creators": [
+        {
+          "creatorType": "director",
+          "lastName": "Kubrick",
+          "firstName": "Stanley"
+        }
+      ],
+      "attachments": [],
+      "notes": [],
+      "itemID": 2,
+      "seeAlso": [],
+      "__citekey__": "Kubrick1964"
     }
   ]
 }

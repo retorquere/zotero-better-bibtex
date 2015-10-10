@@ -30,7 +30,7 @@ doExport = ->
           json[name] = value.value
 
     # ham-fisted workaround for #365
-    if json.type == 'motion_picture' && json.author
+    if json.type in [ 'motion_picture', 'broadcast'] && json.author
       json.director = json.author
       delete json.author
 
