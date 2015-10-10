@@ -395,12 +395,9 @@ class Reference
           when 'url' then @remove('doi')
 
     fields = []
-    creators = {}
     for own name, value of @override
       raw = (value.format in ['naive', 'json'])
       name = name.toLowerCase()
-
-      Translator.debug('override:', {name, value})
 
       # psuedo-var, sets the reference type
       if name == 'referencetype'
@@ -417,13 +414,7 @@ class Reference
         remapped = remapped.call(@, name) if typeof remapped == 'function'
 
         if remapped
-          Translator.debug('CSL override:', name, remapped, value)
-          if cslvar.type == 'creator'
-            creators[remapped] ||= []
-            creators[remapped].push(value.value)
-
-          else
-            fields.push({ name: remapped, value: value.value, enc: cslvar.type, raw: raw })
+          fields.push({ name: remapped, value: value.value, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type), raw: raw })
 
         else
           Translator.debug('Unmapped CSL field', name, '=', value.value)
@@ -454,33 +445,22 @@ class Reference
           else
             fields.push({ name, value: value.value, raw: raw })
 
-    Translator.debug('override: creators', {creators})
-    for name, creators of creators
-      fields.push({name: name, value: creators, enc: 'creators'})
-
     for name in Translator.skipFields
       @remove(name)
 
     for field in fields
       name = field.name.split('.')
       if name.length > 1
-        Translator.debug('override: per-reftype', name)
         continue unless @referencetype == name[0]
         field.name = name[1]
 
-      Translator.debug('override: try', field)
-
       if (typeof field.value == 'string') && field.value.trim() == ''
-        Translator.debug('override: scrub', field)
         @remove(field.name)
         continue
 
       field = @clone(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
       field.replace = true
-      Translator.debug('override: add', field)
       @add(field)
-
-    Translator.debug('override: done', @fields)
 
     @add({name: 'type', value: @referencetype}) if @fields.length == 0
 

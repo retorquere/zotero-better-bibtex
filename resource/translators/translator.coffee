@@ -134,12 +134,10 @@ Translator.CSLVariables = {
 
 Translator.CSLCreator = (value) ->
   creator = value.split(/\s*\|\|\s*/)
-  if creator.length in [1, 2]
-    creator = {lastName: creator[0] || '', firstName: creator[1] || ''}
+  if creator.length == 2
+    return {lastName: creator[0] || '', firstName: creator[1] || ''}
   else
-    creator = {lastName: value.value || '', firstName: ''}
-
-  return creator
+    return {name: value}
 
 Translator.extractFieldsKVRE = new RegExp("^\\s*(#{Object.keys(Translator.CSLVariables).join('|')}|LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID)\\s*:\\s*(.+)\\s*$", 'i')
 Translator.extractFields = (item) ->

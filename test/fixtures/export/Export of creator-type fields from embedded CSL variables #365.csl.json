@@ -1,0 +1,24 @@
+[
+  {
+    "director": [ { "family": "Doe", "given": "John" }, { "family": "Roe", "given": "Rob" } ],
+    "id": "Doe2015",
+    "issued": { "date-parts": [ [ 2015 ] ] },
+    "publisher": "The Distributor",
+    "publisher-place": "US/GB",
+    "title": "A film",
+    "type": "motion_picture"
+  },
+  {
+    "author": [ { "family": "Author", "given": "Ann" } ],
+    "editor": [ { "family": "Editrix", "given": "Emma" }, { "family": "Editor", "given": "Ed" } ],
+    "event-place": "Place",
+    "genre": "working paper",
+    "id": "Author2015",
+    "issued": { "date-parts": [ [ 2015 ] ] },
+    "number": "77",
+    "publisher": "Institution",
+    "publisher-place": "Place",
+    "title": "A report",
+    "type": "report"
+  }
+]
