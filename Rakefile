@@ -121,6 +121,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/test/tests.js',
   'chrome/content/zotero-better-bibtex/csl-localedata.js',
   'chrome/content/zotero-better-bibtex/juris-m-dateparser.js',
+  'chrome/content/zotero-better-bibtex/csl-util_name_particles.js',
   'chrome.manifest',
   'install.rdf',
   'resource/logs/s3.json',
@@ -129,7 +130,6 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',
   'resource/translators/he.js',
-  'resource/translators/csl-util_name_particles.js',
 ]).sort.uniq
 
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
@@ -178,13 +178,8 @@ DOWNLOADS = {
     'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
   },
   'resource/translators' => {
-    #'unicode.xml'         => 'http://www.w3.org/2003/entities/2007xml/unicode.xml',
     'unicode.xml'         => 'http://www.w3.org/Math/characters/unicode.xml',
     'org.js'              => 'https://raw.githubusercontent.com/mooz/org-js/master/org.js',
-    #'xregexp-all.js'  => 'http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js',
-    #'json5.js'            => 'https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js',
-    #'htmlparser.js'       => 'https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js',
-    #'he.js'           => 'https://raw.githubusercontent.com/mathiasbynens/he/master/he.js'
   },
 }
 DOWNLOADS.each_pair{|dir, files|
@@ -195,82 +190,52 @@ DOWNLOADS.each_pair{|dir, files|
   }
 }
 
-file 'resource/translators/csl-util_name_particles.js' => 'Rakefile' do |t|
-  Tempfile.create('pp') do |js|
-    ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/src/util_name_particles.js', js.path)
-    open(t.name, 'w'){|f|
-      f.puts("var CSL; if (!CSL) { CSL = {}; }; this.EXPORTED_SYMBOLS = ['CSL'];")
-      code = open(js.path).read
-      # workaround for https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping
-      #code.sub!('} else if (!name["dropping-particle"] && nameObj.given) {', '} else if (!nameObj["dropping-particle"] && nameObj.given) {')
-      f.write(code)
-    }
+file 'chrome/content/zotero-better-bibtex/csl-util_name_particles.js' => 'Rakefile' do |t|
+  Tempfile.create('grasp+.js'.split('+')) do |tmp|
+    ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/src/util_name_particles.js', tmp.path)
+    sh "#{NODEBIN}/grasp -e 'CSL.ParticleList = function () { _$ } ();' --replace '' #{tmp.path.shellescape}
+        | #{NODEBIN}/grasp '#CSL' --replace 'Zotero.BetterBibTeX'
+        > #{t.name.shellescape}".gsub("\n", ' ')
   end
 end
 
 file 'resource/translators/xregexp-all.js' => 'Rakefile' do |t|
   ZotPlus::RakeHelper.download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js', t.name)
   # strip out setNatives because the Moz validator is stupid
-  code = ''
-  natives = false
-  IO.readlines(t.name).each{|line|
-    if line.strip == 'function setNatives(on) {'
-      natives = true
-      line += "if (on) { throw new Error('setNatives has been disabled to appease the Mozilla signing validator'); }\n"
-    elsif natives && line.strip =~ /^};?$/
-      natives = false
-    elsif natives
-      # line = "// #{line}"
-      # I can't even comment out the line because the sodding AMO validator trips on code in comments!
-      line = ''
-    end
-    code += line
-  }
-
-  open(t.name, 'w'){|f| f.write(code) }
+  sh "#{NODEBIN}/grasp -i 'func-dec! #setNatives' --replace 'function setNatives(on) { if (on) { throw new Error(\"setNatives not supported in Firefox extension\"); } }' #{t.name}"
 end
 
 file 'resource/translators/he.js' => 'Rakefile' do |t|
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/mathiasbynens/he/master/he.js', t.name)
-
-  code = "var LaTeX; if (!LaTeX) { LaTeX = {}; }\n" + open(t.name).read
-  code.sub!("typeof exports == 'object'", "typeof exports == '_object'")
-  code.sub!("typeof module == 'object'", "typeof module == '_object'")
-  code.sub!("typeof global == 'object'", "typeof global == '_object'")
-  code.sub!("if (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal) {", "if (false) {")
-  code.sub!("\n}(this));", "\n}(LaTeX));")
-
-  open(t.name, 'w'){|f| f.write(code) }
-end
-
-file 'chrome/content/zotero-better-bibtex/juris-m-dateparser.js' => 'Rakefile' do |t|
-  FileUtils.mkdir_p(File.dirname(t.name))
-  Tempfile.create('dateparser') do |tmp|
-    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Juris-M/zotero/jurism/chrome/content/zotero/xpcom/dateparser.js', tmp.path)
-    open(t.name, 'w'){|f|
-      f.write(open(tmp.path).read.gsub('Zotero.DateParser', 'Zotero.BetterBibTeX.JurisMDateParser'))
-    }
+  Tempfile.create('grasp+.js'.split('+')) do |tmp|
+    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/mathiasbynens/he/master/he.js', tmp.path)
+    sh "#{NODEBIN}/grasp '#exports' --replace '__exports' #{tmp.path.shellescape}
+        | #{NODEBIN}/grasp '#module' --replace '__module'
+        | #{NODEBIN}/grasp '#global' --replace '__global'
+        | #{NODEBIN}/grasp '#define' --replace '__define'
+        | #{NODEBIN}/grasp -e 'root.he = he' --replace 'LaTeX.he = he'
+        > #{t.name.shellescape}".gsub("\n", ' ')
   end
 end
 
+file 'chrome/content/zotero-better-bibtex/juris-m-dateparser.js' => 'Rakefile' do |t|
+  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Juris-M/zotero/jurism/chrome/content/zotero/xpcom/dateparser.js', t.name)
+  sh "#{NODEBIN}/grasp -i -e 'Zotero.DateParser' --replace 'Zotero.BetterBibTeX.JurisMDateParser' #{t.name.shellescape}"
+end
+
 file 'resource/translators/htmlparser.js' => 'Rakefile' do |t|
-  #ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js', t.name)
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Munawwar/neutron-html5parser/master/htmlparser.js', t.name)
-  # @doc['createElementNS'] rather than @doc.createElementNS to work around overzealous extension validator.
-  code = "var LaTeX; if (!LaTeX) { LaTeX = {}; }; this.EXPORTED_SYMBOLS = ['HTMLtoDOM'];\n"
-  code += open(t.name).read
-  code.sub!('doc.createElement(tagName)', 'doc["createElement"](tagName)')
-  code.sub!('}(this, function (window) {', '}(this, function (window) {')
-  code.sub!("if (typeof define === 'function' && define.amd) {", "if (typeof define === '_function' && define.amd) {")
-  code.sub!("} else if (typeof exports === 'object') {", "} else if (typeof exports === '_object') {")
-  open(t.name, 'w'){|f| f.write(code) }
+  Tempfile.create('grasp+.js'.split('+')) do |tmp|
+    #ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js', t.name)
+    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Munawwar/neutron-html5parser/master/htmlparser.js', tmp.path)
+    sh "#{NODEBIN}/grasp '#exports' --replace '__exports' #{tmp.path.shellescape}
+        | #{NODEBIN}/grasp '#define' --replace '__define'
+        | #{NODEBIN}/grasp -e 'doc.createElement(tagName)' --replace 'doc[\"createElement\"](tagName)'
+        > #{t.name.shellescape}".gsub("\n", ' ')
+    sh "echo 'this.EXPORTED_SYMBOLS = [\"HTMLtoDOM\"];' >> #{t.name.shellescape}"
+  end
 end
 
 file 'resource/translators/json5.js' => 'Rakefile' do |t|
   ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js', t.name)
-  # don't not overwrite isNaN to appease oblivious extension validator
-  code = open(t.name).read.sub('isNaN = isNaN ||', '_isNaN = isNaN ||')
-  open(t.name, 'w'){|f| f.write(code) }
 end
 
 
@@ -553,45 +518,42 @@ task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{
 
   puts "Tests running: #{tag}"
 
-  ok = true
-  begin
-    rerun = File.file?('tmp/cucumber.rerun') && open('tmp/cucumber.rerun').read.strip != ''
-    if rerun
-      rerun = '@tmp/cucumber.rerun'
-    else
-      rerun = "--format pretty --format rerun --out tmp/cucumber.rerun"
-    end
-
+  if ENV['CI'] == 'true'
+    sh "cucumber --require features --strict #{tag} resource/tests"
+  else
+    ok = true
     begin
-      if OS.mac?
-        sh "script -q -t 1 cucumber.run cucumber --require features --strict #{tag} resource/tests"
-      else
-        sh "script -ec 'cucumber --require features --strict #{tag} resource/tests' cucumber.run"
+      begin
+        if OS.mac?
+          sh "script -q -t 1 cucumber.run cucumber --require features --strict #{tag} resource/tests"
+        else
+          sh "script -ec 'cucumber --require features --strict #{tag} resource/tests' cucumber.run"
+        end
+      ensure
+        sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
+        sh "rm -f cucumber.run"
+        Dir["*.debug"].each{|dbug| sh "cut -c-200 < #{dbug.shellescape} > #{dbug.sub(/\.debug$/, '.dbg').shellescape}" }
       end
+    rescue => e
+      ok = false
+      raise e
     ensure
-      sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
-      sh "rm -f cucumber.run"
-      Dir["*.debug"].each{|dbug| sh "cut -c-200 < #{dbug.shellescape} > #{dbug.sub(/\.debug$/, '.dbg').shellescape}" }
-    end
-  rescue => e
-    ok = false
-    raise e
-  ensure
-    if File.file?('.pushbullet') || ENV['PUSHBULLET_ACCESS_TOKEN'].to_s.strip != ''
-      access_token = ENV['PUSHBULLET_ACCESS_TOKEN'].to_s.strip
-      if access_token == ''
-        creds = YAML.load_file('.pushbullet')
-        access_token = creds['access_token']
+      if File.file?('.pushbullet') || ENV['PUSHBULLET_ACCESS_TOKEN'].to_s.strip != ''
+        access_token = ENV['PUSHBULLET_ACCESS_TOKEN'].to_s.strip
+        if access_token == ''
+          creds = YAML.load_file('.pushbullet')
+          access_token = creds['access_token']
+        end
+  
+        title = ["Cucumber tests #{tag}".strip]
+        title << 'at Circle' if ENV['CI'] == 'true'
+        title << "have finished"
+        title << (ok ? 'green' : 'red')
+        client = Washbullet::Client.new(access_token)
+        title = title.join(' ')
+        body = title
+        client.push_note({receiver: :email, identifier: client.me.body['email'], params: { title: title, body: body }})
       end
-
-      title = ["Cucumber tests #{tag}".strip]
-      title << 'at Circle' if ENV['CI'] == 'true'
-      title << "have finished"
-      title << (ok ? 'green' : 'red')
-      client = Washbullet::Client.new(access_token)
-      title = title.join(' ')
-      body = title
-      client.push_note({receiver: :email, identifier: client.me.body['email'], params: { title: title, body: body }})
     end
   end
 end

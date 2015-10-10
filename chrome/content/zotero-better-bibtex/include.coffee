@@ -18,6 +18,7 @@ if not Zotero.BetterBibTeX
                   debug-bridge
                   cache
                   serialized
+                  csl-util_name_particles
                   ".trim().split(/\s+/)
     loader.loadSubScript("chrome://zotero-better-bibtex/content/#{script}.js")
 

@@ -8,8 +8,6 @@ Zotero.BetterBibTeX = {
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
 
-Components.utils.import('resource://zotero-better-bibtex/translators/csl-util_name_particles.js', Zotero.BetterBibTeX)
-
 class Zotero.BetterBibTeX.DateParser
   parseDateToObject: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).date
   parseDateToArray: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).array()
@@ -751,8 +749,8 @@ Zotero.BetterBibTeX.init = ->
     CSL: {
       parseParticles: (sandbox, name) ->
         # twice to work around https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping
-        Zotero.BetterBibTeX.CSL.parseParticles(name)
-        Zotero.BetterBibTeX.CSL.parseParticles(name)
+        Zotero.BetterBibTeX.parseParticles(name)
+        Zotero.BetterBibTeX.parseParticles(name)
     }
     parseDateToObject: (sandbox, date, locale) -> Zotero.BetterBibTeX.DateParser::parseDateToObject(date, {locale, verbatimDetection: true})
     parseDateToArray: (sandbox, date, locale) -> Zotero.BetterBibTeX.DateParser::parseDateToArray(date, {locale, verbatimDetection: true})
