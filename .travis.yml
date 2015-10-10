@@ -23,4 +23,4 @@ branches:
   except:
     - /^[0-9]+\.[0-9]+\.[0-9]+$/
 addons:
-  firefox: "41.0"
+  firefox: latest
