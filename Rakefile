@@ -518,45 +518,42 @@ task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{
 
   puts "Tests running: #{tag}"
 
-  ok = true
-  begin
-    rerun = File.file?('tmp/cucumber.rerun') && open('tmp/cucumber.rerun').read.strip != ''
-    if rerun
-      rerun = '@tmp/cucumber.rerun'
-    else
-      rerun = "--format pretty --format rerun --out tmp/cucumber.rerun"
-    end
-
+  if ENV['CI'] == 'true'
+    sh "cucumber --require features --strict #{tag} resource/tests"
+  else
+    ok = true
     begin
-      if OS.mac?
-        sh "script -q -t 1 cucumber.run cucumber --require features --strict #{tag} resource/tests"
-      else
-        sh "script -ec 'cucumber --require features --strict #{tag} resource/tests' cucumber.run"
+      begin
+        if OS.mac?
+          sh "script -q -t 1 cucumber.run cucumber --require features --strict #{tag} resource/tests"
+        else
+          sh "script -ec 'cucumber --require features --strict #{tag} resource/tests' cucumber.run"
+        end
+      ensure
+        sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
+        sh "rm -f cucumber.run"
+        Dir["*.debug"].each{|dbug| sh "cut -c-200 < #{dbug.shellescape} > #{dbug.sub(/\.debug$/, '.dbg').shellescape}" }
       end
+    rescue => e
+      ok = false
+      raise e
     ensure
-      sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
-      sh "rm -f cucumber.run"
-      Dir["*.debug"].each{|dbug| sh "cut -c-200 < #{dbug.shellescape} > #{dbug.sub(/\.debug$/, '.dbg').shellescape}" }
-    end
-  rescue => e
-    ok = false
-    raise e
-  ensure
-    if File.file?('.pushbullet') || ENV['PUSHBULLET_ACCESS_TOKEN'].to_s.strip != ''
-      access_token = ENV['PUSHBULLET_ACCESS_TOKEN'].to_s.strip
-      if access_token == ''
-        creds = YAML.load_file('.pushbullet')
-        access_token = creds['access_token']
+      if File.file?('.pushbullet') || ENV['PUSHBULLET_ACCESS_TOKEN'].to_s.strip != ''
+        access_token = ENV['PUSHBULLET_ACCESS_TOKEN'].to_s.strip
+        if access_token == ''
+          creds = YAML.load_file('.pushbullet')
+          access_token = creds['access_token']
+        end
+  
+        title = ["Cucumber tests #{tag}".strip]
+        title << 'at Circle' if ENV['CI'] == 'true'
+        title << "have finished"
+        title << (ok ? 'green' : 'red')
+        client = Washbullet::Client.new(access_token)
+        title = title.join(' ')
+        body = title
+        client.push_note({receiver: :email, identifier: client.me.body['email'], params: { title: title, body: body }})
       end
-
-      title = ["Cucumber tests #{tag}".strip]
-      title << 'at Circle' if ENV['CI'] == 'true'
-      title << "have finished"
-      title << (ok ? 'green' : 'red')
-      client = Washbullet::Client.new(access_token)
-      title = title.join(' ')
-      body = title
-      client.push_note({receiver: :email, identifier: client.me.body['email'], params: { title: title, body: body }})
     end
   end
 end
