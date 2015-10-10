@@ -121,6 +121,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/test/tests.js',
   'chrome/content/zotero-better-bibtex/csl-localedata.js',
   'chrome/content/zotero-better-bibtex/juris-m-dateparser.js',
+  'chrome/content/zotero-better-bibtex/csl-util_name_particles.js',
   'chrome.manifest',
   'install.rdf',
   'resource/logs/s3.json',
@@ -129,7 +130,6 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',
   'resource/translators/he.js',
-  'resource/translators/csl-util_name_particles.js',
 ]).sort.uniq
 
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
@@ -178,13 +178,8 @@ DOWNLOADS = {
     'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
   },
   'resource/translators' => {
-    #'unicode.xml'         => 'http://www.w3.org/2003/entities/2007xml/unicode.xml',
     'unicode.xml'         => 'http://www.w3.org/Math/characters/unicode.xml',
     'org.js'              => 'https://raw.githubusercontent.com/mooz/org-js/master/org.js',
-    #'xregexp-all.js'  => 'http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js',
-    #'json5.js'            => 'https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js',
-    #'htmlparser.js'       => 'https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js',
-    #'he.js'           => 'https://raw.githubusercontent.com/mathiasbynens/he/master/he.js'
   },
 }
 DOWNLOADS.each_pair{|dir, files|
@@ -195,62 +190,36 @@ DOWNLOADS.each_pair{|dir, files|
   }
 }
 
-file 'resource/translators/csl-util_name_particles.js' => 'Rakefile' do |t|
-  Tempfile.create('pp') do |js|
-    ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/src/util_name_particles.js', js.path)
-    open(t.name, 'w'){|f|
-      f.puts("var CSL; if (!CSL) { CSL = {}; }; this.EXPORTED_SYMBOLS = ['CSL'];")
-      code = open(js.path).read
-      # workaround for https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping
-      #code.sub!('} else if (!name["dropping-particle"] && nameObj.given) {', '} else if (!nameObj["dropping-particle"] && nameObj.given) {')
-      f.write(code)
-    }
+file 'chrome/content/zotero-better-bibtex/csl-util_name_particles.js' => 'Rakefile' do |t|
+  Tempfile.create('grasp+.js'.split('+')) do |tmp|
+    ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/src/util_name_particles.js', tmp.path)
+    sh "#{NODEBIN}/grasp -e 'CSL.ParticleList = function () { _$ } ();' --replace '' #{tmp.path.shellescape}
+        | #{NODEBIN}/grasp '#CSL' --replace 'Zotero.BetterBibTeX'
+        > #{t.name.shellescape}".gsub("\n", ' ')
   end
 end
 
 file 'resource/translators/xregexp-all.js' => 'Rakefile' do |t|
   ZotPlus::RakeHelper.download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js', t.name)
   # strip out setNatives because the Moz validator is stupid
-  code = ''
-  natives = false
-  IO.readlines(t.name).each{|line|
-    if line.strip == 'function setNatives(on) {'
-      natives = true
-      line += "if (on) { throw new Error('setNatives has been disabled to appease the Mozilla signing validator'); }\n"
-    elsif natives && line.strip =~ /^};?$/
-      natives = false
-    elsif natives
-      # line = "// #{line}"
-      # I can't even comment out the line because the sodding AMO validator trips on code in comments!
-      line = ''
-    end
-    code += line
-  }
-
-  open(t.name, 'w'){|f| f.write(code) }
+  sh "#{NODEBIN}/grasp -i 'func-dec! #setNatives' --replace 'function setNatives(on) { if (on) { throw new Error(\"setNatives not supported in Firefox extension\"); } }' #{t.name}"
 end
 
 file 'resource/translators/he.js' => 'Rakefile' do |t|
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/mathiasbynens/he/master/he.js', t.name)
-
-  code = "var LaTeX; if (!LaTeX) { LaTeX = {}; }\n" + open(t.name).read
-  code.sub!("typeof exports == 'object'", "typeof exports == '_object'")
-  code.sub!("typeof module == 'object'", "typeof module == '_object'")
-  code.sub!("typeof global == 'object'", "typeof global == '_object'")
-  code.sub!("if (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal) {", "if (false) {")
-  code.sub!("\n}(this));", "\n}(LaTeX));")
-
-  open(t.name, 'w'){|f| f.write(code) }
+  Tempfile.create('grasp+.js'.split('+')) do |tmp|
+    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/mathiasbynens/he/master/he.js', tmp.path)
+    sh "#{NODEBIN}/grasp '#exports' --replace '__exports' #{tmp.path.shellescape}
+        | #{NODEBIN}/grasp '#module' --replace '__module'
+        | #{NODEBIN}/grasp '#global' --replace '__global'
+        | #{NODEBIN}/grasp '#define' --replace '__define'
+        | #{NODEBIN}/grasp -e 'root.he = he' --replace 'LaTeX.he = he'
+        > #{t.name.shellescape}".gsub("\n", ' ')
+  end
 end
 
 file 'chrome/content/zotero-better-bibtex/juris-m-dateparser.js' => 'Rakefile' do |t|
-  FileUtils.mkdir_p(File.dirname(t.name))
-  Tempfile.create('dateparser') do |tmp|
-    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Juris-M/zotero/jurism/chrome/content/zotero/xpcom/dateparser.js', tmp.path)
-    open(t.name, 'w'){|f|
-      f.write(open(tmp.path).read.gsub('Zotero.DateParser', 'Zotero.BetterBibTeX.JurisMDateParser'))
-    }
-  end
+  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Juris-M/zotero/jurism/chrome/content/zotero/xpcom/dateparser.js', t.name)
+  sh "#{NODEBIN}/grasp -i -e 'Zotero.DateParser' --replace 'Zotero.BetterBibTeX.JurisMDateParser' #{t.name.shellescape}"
 end
 
 file 'resource/translators/htmlparser.js' => 'Rakefile' do |t|
