@@ -499,7 +499,7 @@ task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{
     if cluster == '*'
       tag = "--tag ~@noci"
     elsif cluster =~ /^[0-9]$/ && cluster.to_i < (clusters - 1)
-      tag = "--tag ~@noci --tags @test-cluster-#{cluster}"
+      tag = "--tag ~@noci --tag @test-cluster-#{cluster}"
     else
       tag = "--tag ~@noci " + (0..clusters - 2).collect{|n| "--tag ~@test-cluster-#{n}" }.join(' ')
     end
@@ -512,7 +512,7 @@ task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{
     elsif tag == '@all'
       tag = ''
     else
-      tag = "--tags #{tag}"
+      tag = "--tag #{tag}"
     end
   end
 
