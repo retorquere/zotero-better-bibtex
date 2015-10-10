@@ -12,16 +12,9 @@ case $1 in
     uptime
 
     if [ "$CIRCLE_NODE_TOTAL" = "1" ]; then
-      bundle exec cucumber --strict --tag ~@noci
+      bundle exec rake test[ci-cluster-*]
     else
-      case $CIRCLE_NODE_INDEX in
-        [012])
-          bundle exec cucumber --require features --strict --tag ~@noci --tags @test-cluster-$CIRCLE_NODE_INDEX resource/tests
-          ;;
-        *)
-          bundle exec cucumber --require features --strict --tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1 --tag ~@test-cluster-2 resource/tests
-          ;;
-      esac
+      bundle exec rake test[ci-cluster-$CIRCLE_NODE_INDEX]
     fi
     ;;
 
