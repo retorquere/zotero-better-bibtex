@@ -223,23 +223,19 @@ file 'chrome/content/zotero-better-bibtex/juris-m-dateparser.js' => 'Rakefile' d
 end
 
 file 'resource/translators/htmlparser.js' => 'Rakefile' do |t|
-  #ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js', t.name)
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Munawwar/neutron-html5parser/master/htmlparser.js', t.name)
-  # @doc['createElementNS'] rather than @doc.createElementNS to work around overzealous extension validator.
-  code = "var LaTeX; if (!LaTeX) { LaTeX = {}; }; this.EXPORTED_SYMBOLS = ['HTMLtoDOM'];\n"
-  code += open(t.name).read
-  code.sub!('doc.createElement(tagName)', 'doc["createElement"](tagName)')
-  code.sub!('}(this, function (window) {', '}(this, function (window) {')
-  code.sub!("if (typeof define === 'function' && define.amd) {", "if (typeof define === '_function' && define.amd) {")
-  code.sub!("} else if (typeof exports === 'object') {", "} else if (typeof exports === '_object') {")
-  open(t.name, 'w'){|f| f.write(code) }
+  Tempfile.create('grasp+.js'.split('+')) do |tmp|
+    #ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js', t.name)
+    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Munawwar/neutron-html5parser/master/htmlparser.js', tmp.path)
+    sh "#{NODEBIN}/grasp '#exports' --replace '__exports' #{tmp.path.shellescape}
+        | #{NODEBIN}/grasp '#define' --replace '__define'
+        | #{NODEBIN}/grasp -e 'doc.createElement(tagName)' --replace 'doc[\"createElement\"](tagName)'
+        > #{t.name.shellescape}".gsub("\n", ' ')
+    sh "echo 'this.EXPORTED_SYMBOLS = [\"HTMLtoDOM\"];' >> #{t.name.shellescape}"
+  end
 end
 
 file 'resource/translators/json5.js' => 'Rakefile' do |t|
   ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js', t.name)
-  # don't not overwrite isNaN to appease oblivious extension validator
-  code = open(t.name).read.sub('isNaN = isNaN ||', '_isNaN = isNaN ||')
-  open(t.name, 'w'){|f| f.write(code) }
 end
 
 
