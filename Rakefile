@@ -526,14 +526,29 @@ task :validate => XPI do
 end
 
 task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
-  tag = "@#{args[:tag]}".sub(/^@@/, '@')
+  tag = ''
 
-  if tag == '@'
-    tag = "--tag ~@noci"
-  elsif tag == '@all'
-    tag = ''
+  if args[:tag] =~ /ci-cluster-(.*)/
+    clusters = 4
+    cluster = $1
+    if cluster == '*'
+      tag = "--tag ~@noci"
+    elsif cluster =~ /^[0-9]$/ && cluster.to_i < (clusters - 1)
+      tag = "--tag ~@noci --tags @test-cluster-#{cluster}"
+    else
+      tag = "--tag ~@noci " + (0..clusters - 2).collect{|n| "--tag ~@test-cluster-#{n}" }.join(' ')
+    end
+
   else
-    tag = "--tags #{tag}"
+    tag = "@#{args[:tag]}".sub(/^@@/, '@')
+
+    if tag == '@'
+      tag = "--tag ~@noci"
+    elsif tag == '@all'
+      tag = ''
+    else
+      tag = "--tags #{tag}"
+    end
   end
 
   puts "Tests running: #{tag}"
