@@ -191,7 +191,7 @@ Translator.extractFields = (item) ->
     switch
       when !m
         extra.push(line)
-      when @CSLVariables[m[1]].type == 'creator'
+      when @CSLVariables[m[1]]?.type == 'creator'
         fields[m[1]] = {value: [], format: 'csl'} unless Array.isArray(fields[m[1]]?.value)
         fields[m[1]].value.push(@CSLCreator(m[2].trim()))
       when @CSLVariables[m[1]]

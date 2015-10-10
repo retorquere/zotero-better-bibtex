@@ -141,6 +141,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references |
+     | Export C as {v C}, not v{C} #152                                                   | 1          |
      | Better BibTeX.018                                                                  | 1          |
      | Underscores break capital-preservation #300                                        | 1          |
      | Numbers confuse capital-preservation #295                                          | 1          |
@@ -148,7 +149,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibTeX.026                                                                  | 1          |
      | Better BibTeX.027                                                                  | 1          |
      | capital delta breaks .bib output #141                                              | 1          |
-     | Export C as {v C}, not v{C} #152                                                   | 1          |
      | Export of item to Better Bibtex fails for auth3_1 #98                              | 1          |
 
 @test-cluster-0
@@ -196,13 +196,13 @@ Scenario Outline: BibLaTeX Export
 @test-cluster-1
 @bblt
 @bblt-1
-@failing
 Scenario Outline: BibLaTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.bib'
 
   Examples:
      | file                                                                               | references  |
+     | Better BibTeX does not use biblatex fields eprint and eprinttype #170              | 1           |
      | Capitalisation in techreport titles #160                                           | 1           |
      | typo stature-statute (zotero item type) #284                                       | 1           |
      | Normalize date ranges in citekeys #356                                             | 3           |
@@ -232,7 +232,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.020                                                                | 1           |
      | Better BibLaTeX.022                                                                | 1           |
      | Better BibLaTeX.023                                                                | 1           |
-     | Better BibTeX does not use biblatex fields eprint and eprinttype #170              | 1           |
      | DOI with underscores in extra field #108                                           | 1           |
      | Export Forthcoming as Forthcoming                                                  | 1           |
      | Exporting of single-field author lacks braces #130                                 | 1           |
