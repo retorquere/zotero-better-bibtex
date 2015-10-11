@@ -223,6 +223,7 @@ file 'chrome/content/zotero-better-bibtex/juris-m-dateparser.js' => 'Rakefile' d
 end
 
 file 'resource/translators/htmlparser.js' => 'Rakefile' do |t|
+  # fudge createElement because the Moz validator is stupid
   Tempfile.create('grasp+.js'.split('+')) do |tmp|
     #ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js', t.name)
     ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Munawwar/neutron-html5parser/master/htmlparser.js', tmp.path)
