@@ -5,6 +5,7 @@ Background:
   When I set preference .citekeyFormat to [auth][year]
   And I set preference .jabrefGroups to false
   And I set preference .defaultDateParserLocale to en-GB
+  And I set preference .preserveCaps to inner
 
 @test-cluster-2
 @131
