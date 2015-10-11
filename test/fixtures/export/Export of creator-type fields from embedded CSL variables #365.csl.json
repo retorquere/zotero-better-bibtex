@@ -29,4 +29,37 @@
     "title": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
     "type": "broadcast"
   }
+  {
+    "container-title": "Friends",
+    "dimensions": "22 min",
+    "director": [ { "family": "Mancuso", "given": "Gail" } ],
+    "event-place": "US",
+    "id": "friends:leia:tv",
+    "issued": { "date-parts": [ [ 1996, 9, 16 ] ] },
+    "language": "en-US",
+    "number": "1",
+    "publisher": "NBC",
+    "publisher-place": "US",
+    "title": "The one with the Princess Leia fantasy",
+    "type": "broadcast",
+    "volume": "3"
+  },
+  {
+    "container-title": "Friends",
+    "dimensions": "22 min",
+    "director": [ { "family": "Mancuso", "given": "Gail" } ],
+    "event-place": "US",
+    "id": "friends:leia:dvd",
+    "issued": { "date-parts": [ [ 2003 ] ] },
+    "language": "en-US",
+    "medium": "DVD",
+    "number": "1",
+    "original-date": { "date-parts": [ [ 1996, 9, 16 ] ] },
+    "original-publisher": "NBC",
+    "publisher": "Warner Home Video",
+    "publisher-place": "US",
+    "title": "The one with the Princess Leia fantasy",
+    "type": "motion_picture",
+    "volume": "3"
+  }
 ]
