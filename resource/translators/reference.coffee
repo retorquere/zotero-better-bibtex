@@ -410,7 +410,7 @@ class Reference
         # CSL names are not in BibTeX format, so only add it if there's a mapping
         cslvar = Translator.CSLVariables[name]
         remapped = cslvar?[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
-        remapped = remapped.call(@, name) if typeof remapped == 'function'
+        remapped = remapped.call(@) if typeof remapped == 'function'
 
         if remapped
           fields.push({ name: remapped, value: value.value, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type), raw: raw })

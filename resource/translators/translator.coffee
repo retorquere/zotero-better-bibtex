@@ -67,7 +67,7 @@ Translator.CSLVariables = {
   #'citation-label':              {}
   #'citation-number':             {}
   'collection-title':             {}
-  'container-title':              { BibLaTeX: 'journaltitle' }
+  'container-title':              { BibLaTeX: -> (if @referencetype == 'video' then 'booktitle' else 'journaltitle') }
   'container-title-short':        {}
   dimensions:                     {}
   DOI:                            {}
@@ -172,7 +172,7 @@ Translator.extractFields = (item) ->
         fields[name] = {value, format: 'json' }
 
   # fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/
-  item.extra = item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, name, value) ->
+  item.extra = item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, name, value) =>
     cslvar = Translator.CSLVariables[name]
     return '' unless cslvar
 
