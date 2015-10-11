@@ -58,7 +58,7 @@
       "relations": {},
       "place": "Place",
       "date": "2015",
-      "extra": "editor: Editrix||Emma\neditor: Editor||Ed\n{:X-author: Doe||John}",
+      "extra": "editor: Editrix||Emma\neditor: Editor||Ed\n{:X-genre: xxx}",
       "institution": "Institution",
       "reportType": "working paper",
       "reportNumber": "77",
