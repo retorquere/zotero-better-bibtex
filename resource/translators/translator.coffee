@@ -110,7 +110,7 @@ Translator.CSLVariables = {
   number:                         {}
   'number-of-pages':              {}
   'number-of-volumes':            {}
-  volume:                         {}
+  volume:                         { BibLaTeX: 'volume' }
   accessed:                       { type: 'date' }
   container:                      { type: 'date' }
   'event-date':                   { type: 'date' }
