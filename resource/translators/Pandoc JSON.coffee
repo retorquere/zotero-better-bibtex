@@ -21,7 +21,6 @@ doExport = ->
           for creator in value.value
             creator = {family: creator.lastName || '', given: creator.firstName || ''}
             Zotero.BetterBibTeX.CSL.parseParticles(creator)
-            Zotero.BetterBibTeX.CSL.parseParticles(creator)
             creators.push(creator)
 
           json[name] = creators

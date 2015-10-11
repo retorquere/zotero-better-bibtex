@@ -155,7 +155,6 @@ class Reference
           name = {family: creator.lastName || '', given: creator.firstName || ''}
 
           Zotero.BetterBibTeX.CSL.parseParticles(name)
-          Zotero.BetterBibTeX.CSL.parseParticles(name)
           Translator.debug('particle-parser: parsed to', name)
 
           if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
