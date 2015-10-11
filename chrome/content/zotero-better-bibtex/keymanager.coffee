@@ -128,7 +128,7 @@ Zotero.BetterBibTeX.keymanager = new class
     @journalAbbrevs['default']?['container-title']?[key] || Zotero.Cite.getAbbreviation(style, @journalAbbrevs, 'default', 'container-title', key)
     return @journalAbbrevs['default']?['container-title']?[key] || key
 
-  extract: (insitu) ->
+  extract: (item, insitu) ->
     switch
       when item.getField
         throw("#{insitu}: cannot extract in-situ for real items") if insitu
