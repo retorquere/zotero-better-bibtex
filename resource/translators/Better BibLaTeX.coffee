@@ -37,12 +37,12 @@ Translator.typeMap = {
   legislation:                        'statute bill'
   jurisdiction:                       'case hearing'
   patent:                             'patent'
-  audio:                              'audioRecording podcast'
-  video:                              'videoRecording'
+  audio:                              'audioRecording podcast radioBroadcast'
+  video:                              'videoRecording tvBroadcast'
   software:                           'computerProgram'
   unpublished:                        'manuscript presentation'
   inreference:                        'encyclopediaArticle dictionaryEntry'
-  misc:                               'interview map instantMessage tvBroadcast radioBroadcast document'
+  misc:                               'interview map instantMessage document'
 }
 
 Translator.fieldEncoding = {
