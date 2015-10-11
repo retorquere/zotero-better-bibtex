@@ -477,9 +477,11 @@ doExport = ->
         editorb: []
         holder: []
         translator: []
+        scriptwriter: []
       }
 
       for creator in item.creators
+        Translator.debug('director:', {creatorType: creator.creatorType})
         switch creator.creatorType
           when 'author', 'interviewer', 'director', 'programmer', 'artist', 'podcaster', 'presenter'
             creators.author.push(creator)
@@ -495,6 +497,14 @@ doExport = ->
             creators.translator.push(creator)
           when 'seriesEditor'
             creators.editorb.push(creator)
+          when 'scriptwriter'
+            Translator.debug('director:', {creatorType: creator.creatorType, referencetype: ref.referencetype})
+            # 365.something
+            if ref.referencetype == 'video'
+              creators.scriptwriter.push(creator)
+            else
+              creators.editora.push(creator)
+
           else
             creators.editora.push(creator)
 
@@ -539,11 +549,6 @@ doExport = ->
     ref.add({ name: 'options', value: 'useprefix' }) if ref.useprefix
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
-
-    # 365.something
-    if ref.referencetype == 'video' && ref.has.editora && ref.has.editoratype.value == 'collaborator'
-      ref.has.editora.name = 'scriptwriter'
-      ref.remove('editoratype')
 
     ref.complete()
 
