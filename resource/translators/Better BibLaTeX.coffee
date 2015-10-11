@@ -478,12 +478,18 @@ doExport = ->
         holder: []
         translator: []
         scriptwriter: []
+        director: []
       }
 
       for creator in item.creators
-        Translator.debug('director:', {creatorType: creator.creatorType})
         switch creator.creatorType
-          when 'author', 'interviewer', 'director', 'programmer', 'artist', 'podcaster', 'presenter'
+          when 'director'
+            # 365.something
+            if ref.referencetype in ['video', 'movie']
+              creators.director.push(creator)
+            else
+              creators.author.push(creator)
+          when 'author', 'interviewer', 'programmer', 'artist', 'podcaster', 'presenter'
             creators.author.push(creator)
           when 'bookAuthor'
             creators.bookauthor.push(creator)
@@ -498,9 +504,8 @@ doExport = ->
           when 'seriesEditor'
             creators.editorb.push(creator)
           when 'scriptwriter'
-            Translator.debug('director:', {creatorType: creator.creatorType, referencetype: ref.referencetype})
             # 365.something
-            if ref.referencetype == 'video'
+            if ref.referencetype in ['video', 'movie']
               creators.scriptwriter.push(creator)
             else
               creators.editora.push(creator)
