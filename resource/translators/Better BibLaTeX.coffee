@@ -539,6 +539,12 @@ doExport = ->
     ref.add({ name: 'options', value: 'useprefix' }) if ref.useprefix
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
+
+    # 365.something
+    if ref.referencetype == 'video' && ref.has.editora && ref.has.editoratype.value == 'collaborator'
+      ref.has.editora.name = 'scriptwriter'
+      ref.remove('editoratype')
+
     ref.complete()
 
   Translator.exportGroups()
