@@ -118,8 +118,6 @@ Zotero.BetterBibTeX.keymanager = new class
     @keys.flushChanges()
 
   journalAbbrev: (item) ->
-    item = arguments[1] if arguments[0]._sandboxManager # the sandbox inserts itself in call parameters
-
     return item.journalAbbreviation if item.journalAbbreviation
     key = item.publicationTitle || item.reporter || item.code
     return unless key
@@ -130,9 +128,7 @@ Zotero.BetterBibTeX.keymanager = new class
     @journalAbbrevs['default']?['container-title']?[key] || Zotero.Cite.getAbbreviation(style, @journalAbbrevs, 'default', 'container-title', key)
     return @journalAbbrevs['default']?['container-title']?[key] || key
 
-  extract: ->
-    [item, insitu] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
-
+  extract: (item, insitu) ->
     switch
       when item.getField
         throw("#{insitu}: cannot extract in-situ for real items") if insitu
@@ -332,9 +328,7 @@ Zotero.BetterBibTeX.keymanager = new class
     @verify(clone)
     return clone
 
-  get: ->
-    [item, pinmode] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
-
+  get: (item, pinmode) ->
     if (typeof item.itemID == 'undefined') && (typeof item.key != 'undefined') && (typeof item.libraryID != 'undefined')
       item = Zotero.Items.getByLibraryAndKey(item.libraryID, item.key)
 
@@ -363,8 +357,6 @@ Zotero.BetterBibTeX.keymanager = new class
       resolved[citekey] = @keys.findObject({citekey, libraryID})
     return resolved
 
-  alternates: ->
-    [item] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
-
+  alternates: (item) ->
     return Zotero.BetterBibTeX.formatter.alternates(item)
 

@@ -735,16 +735,16 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     keymanager: {
       months:         @keymanager.months
-      journalAbbrev:  @keymanager.journalAbbrev.bind(@keymanager)
-      extract:        @keymanager.extract.bind(@keymanager)
-      get:            @keymanager.get.bind(@keymanager)
-      alternates:     @keymanager.alternates.bind(@keymanager)
-      cache:          @keymanager.cache.bind(@keymanager)
+      journalAbbrev:  (sandbox, params...) => @keymanager.journalAbbrev.apply(@keymanager, params)
+      extract:        (sandbox, params...) => @keymanager.extract.apply(@keymanager, params)
+      get:            (sandbox, params...) => @keymanager.get.apply(@keymanager, params)
+      alternates:     (sandbox, params...) => @keymanager.alternates.apply(@keymanager, params)
+      cache:          (sandbox, params...) => @keymanager.cache.apply(@keymanager, params)
     }
     cache: {
-      fetch:  @cache.fetch.bind(@cache)
-      store:  @cache.store.bind(@cache)
-      dump:   @cache.dump.bind(@cache)
+      fetch:  (sandbox, params...) => @cache.fetch.apply(@cache, params)
+      store:  (sandbox, params...) => @cache.store.apply(@cache, params)
+      dump:   (sandbox, params...) => @cache.dump.apply(@cache, params)
     }
     CSL: {
       parseParticles: (sandbox, name) ->

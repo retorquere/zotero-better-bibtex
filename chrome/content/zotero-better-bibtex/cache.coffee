@@ -138,14 +138,12 @@ Zotero.BetterBibTeX.cache = new class
     return clone
 
   dump: (itemIDs) ->
-    itemIDs = arguments[1] if arguments[0]._sandboxManager
     itemIDs = (parseInt(id) for id in itemIDs)
     cache = (@clone(cached) for cached in @cache.where((o) -> o.itemID in itemIDs))
     return cache
 
-  fetch: ->
+  fetch: (itemID, context) ->
     return unless Zotero.BetterBibTeX.pref.get('caching')
-    [itemID, context] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
 
     # file paths vary if exportFileData is on
     if context.exportFileData
@@ -159,9 +157,7 @@ Zotero.BetterBibTeX.cache = new class
     Zotero.BetterBibTeX.debug("cache.fetch", (if cached then 'hit' else 'miss'), 'for', record, ':', cached)
     return cached
 
-  store: ->
-    [itemID, context, citekey, bibtex] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
-
+  store: (itemID, context, citekey, bibtex) ->
     # file paths vary if exportFileData is on
     if context.exportFileData
       Zotero.BetterBibTeX.debug("cache.store for #{itemID} rejected as file data is being exported")
