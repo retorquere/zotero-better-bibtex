@@ -142,7 +142,7 @@
       "network": "NBC",
       "language": "en-US",
       "episodeNumber": "1",
-      "title": "The one with the Princess Leia fantasy",
+      "title": "The one with the Princess Leia fantasy (TV)",
       "programTitle": "Friends",
       "creators": [
         {
@@ -183,14 +183,14 @@
       "relations": {
       },
       "volume": "3",
-      "place": "US",
+      "place": "USA",
       "date": "2003",
       "extra": "bibtex: friends:leia:dvd\ncontainer-title: Friends\nnumber: 1\noriginal-publisher: NBC\noriginal-date: 1996-09-16",
       "videoRecordingFormat": "DVD",
       "studio": "Warner Home Video",
       "runningTime": "22 min",
       "language": "en-US",
-      "title": "The one with the Princess Leia fantasy",
+      "title": "The one with the Princess Leia fantasy (DVD)",
       "creators": [
         {
           "creatorType": "director",

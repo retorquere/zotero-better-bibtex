@@ -107,7 +107,7 @@ Translator.CSLVariables = {
   'collection-number':            {}
   edition:                        {}
   issue:                          {}
-  number:                         {}
+  number:                         { BibLaTeX: 'number' }
   'number-of-pages':              {}
   'number-of-volumes':            {}
   volume:                         { BibLaTeX: 'volume' }
@@ -202,6 +202,7 @@ Translator.extractFields = (item) ->
 
   item.extra = item.extra.trim()
   delete item.extra if item.extra == ''
+
   return fields
 
 Translator.initialize = ->

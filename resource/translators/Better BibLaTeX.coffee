@@ -428,7 +428,7 @@ doExport = ->
 
     ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, preserveCaps: true }) if not ref.has.booktitle
 
-    ref.add({ name: 'titleaddon', value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, preserveCaps: true })
+    ref.add({ name: (if ref.referencetype in ['movie', 'video'] then 'booktitle' else 'titleaddon'), value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, preserveCaps: true })
     ref.add({ name: 'series', value: item.seriesTitle || item.series, preserveCaps: true })
 
     switch item.itemType
