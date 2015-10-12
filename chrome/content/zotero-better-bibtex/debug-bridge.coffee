@@ -95,7 +95,11 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, displayOptio
   file.initWithPath(filename)
   translation.setLocation(file)
 
-  translator = Zotero.BetterBibTeX.getTranslator(translator)
+  if translator.substring(0,3) == 'id:'
+    translator = translator.slice(3)
+  else
+    translator = Zotero.BetterBibTeX.getTranslator(translator)
+
   translation.setTranslator(translator)
 
   displayOptions ||= {}
