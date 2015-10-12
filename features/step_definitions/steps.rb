@@ -260,7 +260,9 @@ Then /^the library (without collections )?should match '(.+)'$/ do |nocollection
   found = $Firefox.BetterBibTeX.library
 
   expected.delete('keymanager')
+  expected.delete('cache')
   found.delete('keymanager')
+  found.delete('cache')
   
   if nocollections
     expected['collections'] = []
