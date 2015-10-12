@@ -216,7 +216,18 @@ Zotero.BetterBibTeX.debugMode = (silent) ->
     @debug = @debug_on
     @log = @log_on
     @flash('Debug mode active', 'Debug mode is active. This will affect performance.') unless silent
+
+    clearInterval(Zotero.BetterBibTeX.debugInterval) if Zotero.BetterBibTeX.debugInterval
+    Zotero.BetterBibTeX.debugInterval = setInterval(->
+      Zotero.BetterBibTeX.cacheHistory ||= []
+      Zotero.BetterBibTeX.cacheHistory.push({
+        serialized: Zotero.BetterBibTeX.serialized.stats
+        cache: Zotero.BetterBibTeX.cache.stats
+      })
+    , 1000)
   else
+    clearInterval(Zotero.BetterBibTeX.debugInterval) if Zotero.BetterBibTeX.debugInterval
+    delete Zotero.BetterBibTeX.cacheHistory
     @debug = @debug_off
     @log = @log_off
 
@@ -745,7 +756,7 @@ Zotero.BetterBibTeX.init = ->
       fetch:  (sandbox, params...) => @cache.fetch.apply(@cache, params)
       store:  (sandbox, params...) => @cache.store.apply(@cache, params)
       dump:   (sandbox, params...) => @cache.dump.apply(@cache, params)
-      stats:  (sandbox)            -> {input: Zotero.BetterBibTeX.serialized.stats, output: Zotero.BetterBibTeX.cache.stats }
+      stats:  (sandbox)            -> {history: Zotero.BetterBibTeX.cacheHistory, serialized: Zotero.BetterBibTeX.serialized.stats, cache: Zotero.BetterBibTeX.cache.stats }
     }
     CSL: {
       parseParticles: (sandbox, name) ->
