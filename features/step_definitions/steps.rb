@@ -323,6 +323,10 @@ Then(/^the following library export should match '(.+)':$/) do |filename, table|
   expect(found).to eq(expected)
 end
 
+Then(/show the cache activity/) do
+  puts $Firefox.BetterBibTeX.cacheStats.inspect
+end
+
 def sort_object(o)
   return o unless o
 

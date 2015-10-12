@@ -118,17 +118,17 @@ Zotero.BetterBibTeX.serialized = new class
   constructor: ->
     @db = new loki('serialized', {adapter: @lokiAdapter, env: 'BROWSER'})
     @reset()
-    @stats = {
-      clear: 0
-      hit: 0
-      miss: 0
-    }
 
   reset: ->
     Zotero.BetterBibTeX.debug('serialized.reset')
     @db.removeCollection('metadata')
     @db.removeCollection('serialized')
     @cache = @db.addCollection('serialized', { indices: ['itemID', 'uri'] })
+    @stats = {
+      clear: 0
+      hit: 0
+      miss: 0
+    }
 
   save: ->
     @db.removeCollection('metadata')
@@ -177,7 +177,8 @@ Zotero.BetterBibTeX.serialized = new class
     # we may be passed a serialized item
     return zoteroItem if zoteroItem.itemType && zoteroItem.itemID && zoteroItem.uri
 
-    itemID = parseInt(zoteroItem.id || zoteroItem.itemID)
+    itemID = parseInt(if zoteroItem.getField then zoteroItem.id else zoteroItem.itemID)
+    Zotero.BetterBibTeX.debug('serialized.get::', itemID, zoteroItem)
     item = @cache.findOne({itemID})
 
     if item
@@ -197,6 +198,7 @@ Zotero.BetterBibTeX.serialized = new class
           item = {itemID, itemType: 'cache-miss'}
 
         when item.itemType in ['note', 'attachment']
+          @fixup(item, itemID)
           item.attachmentIDs = []
 
         else

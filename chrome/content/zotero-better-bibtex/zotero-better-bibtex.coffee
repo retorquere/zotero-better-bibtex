@@ -221,6 +221,7 @@ Zotero.BetterBibTeX.debugMode = (silent) ->
     Zotero.BetterBibTeX.debugInterval = setInterval(->
       Zotero.BetterBibTeX.cacheHistory ||= []
       Zotero.BetterBibTeX.cacheHistory.push({
+        timestamp: Date.now()
         serialized: Zotero.BetterBibTeX.serialized.stats
         cache: Zotero.BetterBibTeX.cache.stats
       })

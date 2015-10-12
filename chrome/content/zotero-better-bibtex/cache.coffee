@@ -1,10 +1,5 @@
 Zotero.BetterBibTeX.cache = new class
   constructor: ->
-    @stats = {
-      hit: 0
-      miss: 0
-      clear: 0
-    }
     @cache = Zotero.BetterBibTeX.Cache.addCollection('cache', {
       disableChangesApi: false
       indices: 'itemID exportCharset exportNotes getCollections translatorID useJournalAbbreviation citekey'.split(/\s+/)
@@ -88,6 +83,11 @@ Zotero.BetterBibTeX.cache = new class
     @cache.flushChanges()
     @access.removeDataOnly()
     @access.flushChanges()
+    @stats = {
+      hit: 0
+      miss: 0
+      clear: 0
+    }
 
   bool: (v) -> if v then 'true' else 'false'
 

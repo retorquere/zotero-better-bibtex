@@ -62,7 +62,7 @@ BetterBibTeXPref =
     serverCheckbox.setAttribute('hidden', Zotero.isStandalone && serverEnabled)
 
     keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-    document.getElementById('id-better-bibtex-preferences-cache-activity').value = JSON.stringify({input: Zotero.BetterBibTeX.serialized.stats, output: Zotero.BetterBibTeX.cache.stats })
+    document.getElementById('id-better-bibtex-preferences-cache-activity').value = JSON.stringify({serialized: Zotero.BetterBibTeX.serialized.stats, cache: Zotero.BetterBibTeX.cache.stats })
 
     parseerror = null
     try
