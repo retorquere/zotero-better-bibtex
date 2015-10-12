@@ -456,13 +456,13 @@ file 'chrome/content/zotero-better-bibtex/release.js' => 'install.rdf' do |t|
   }
 end
 
-rule( /\.header\.js$/ => [ proc {|task_name| [task_name.sub(/\.header\.js$/, '.yml'), 'install.rdf'] } ]) do |t|
+rule( /\.header\.js$/ => [ proc {|task_name| [task_name.sub(/\.header\.js$/, '.yml'), 'Rakefile', 'install.rdf'] } ]) do |t|
   header = YAML.load_file(t.source)
   open(t.name, 'w'){|f|
     f.write("
       Translator.header = #{header.to_json};
       Translator.release = #{RELEASE.to_json};
-      Translator.#{header['label'].gsub(/\s/, '')} = true;
+      Translator.#{header['label'].gsub(/[^a-z]/i, '')} = true;
     ")
   }
 end
