@@ -1021,11 +1021,14 @@ Translator.initialize = (function(original) {
 """
 
 Zotero.BetterBibTeX.loadTranslators = ->
+  try
+    @removeTranslator({label: 'Pandoc JSON', translatorID: 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'})
+
   @load('Better BibTeX', {postscript: @postscript})
   @load('Better BibLaTeX', {postscript: @postscript})
   @load('LaTeX Citation')
   @load('Pandoc Citation')
-  @load('Pandoc JSON')
+  @load('Better CSL-JSON')
   @load('BetterBibTeX JSON')
   @load('BibTeXAuxScanner')
   @load('Collected Notes', {target: @pref.get('collectedNotes')})

@@ -1,6 +1,6 @@
 ---
 translatorID: f4b52ab0-f878-4556-85a0-c7aeedd09dfc
-label: Pandoc JSON
+label: Better CSL-JSON
 creator: Emiliano heyns
 target: json
 minVersion: 4.0.27
