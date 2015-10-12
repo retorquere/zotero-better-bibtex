@@ -84,6 +84,9 @@ doExport = ->
     }
     collections: Translator.collections
     items: []
+    cache: {
+      activity: Zotero.BetterBibTeX.cache.stats()
+    }
   }
 
   while item = Zotero.nextItem()
@@ -91,7 +94,7 @@ doExport = ->
 
   if Zotero.getHiddenPref('better-bibtex.debug')
     data.keymanager = Zotero.BetterBibTeX.keymanager.cache()
-    data.cache = Zotero.BetterBibTeX.cache.dump((item.itemID for item in data.items))
+    data.cache.items = Zotero.BetterBibTeX.cache.dump((item.itemID for item in data.items))
 
   Zotero.write(JSON.stringify(data, null, '  '))
   return

@@ -20,6 +20,9 @@ Scenario: Minor bulk export cache testing
    Then the following library export should match 'export/Big whopping library.bib':
     | translator  | Better BibLaTeX |
     | benchmark   | true            |
+   Then the following library export should match 'export/Big whopping library.stock.bib':
+    | translator  | id:b6e39b57-8942-4d11-8259-342c46ce395f |
+    | benchmark   | true                                    |
 
 @bwl @noci
 Scenario: Major bulk export cache testing

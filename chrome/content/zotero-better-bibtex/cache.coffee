@@ -1,5 +1,10 @@
 Zotero.BetterBibTeX.cache = new class
   constructor: ->
+    @stats = {
+      hit: 0
+      miss: 0
+      clear: 0
+    }
     @cache = Zotero.BetterBibTeX.Cache.addCollection('cache', {
       disableChangesApi: false
       indices: 'itemID exportCharset exportNotes getCollections translatorID useJournalAbbreviation citekey'.split(/\s+/)
@@ -72,6 +77,7 @@ Zotero.BetterBibTeX.cache = new class
     throw new Error("missing fields #{verify} in #{typeof entry} #{JSON.stringify(entry)}")
 
   remove: (what) ->
+    @stats.clear++
     what.itemID = @integer(what.itemID) unless what.itemID == undefined
     @cache.removeWhere(what)
 
@@ -155,6 +161,11 @@ Zotero.BetterBibTeX.cache = new class
 
     @access.insert(record) if cached && !@access.findObject(record)
     Zotero.BetterBibTeX.debug("cache.fetch", (if cached then 'hit' else 'miss'), 'for', record, ':', cached)
+
+    if cached
+      @stats.hit++
+    else
+      @stats.miss++
     return cached
 
   store: (itemID, context, citekey, bibtex) ->

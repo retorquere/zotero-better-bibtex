@@ -118,6 +118,11 @@ Zotero.BetterBibTeX.serialized = new class
   constructor: ->
     @db = new loki('serialized', {adapter: @lokiAdapter, env: 'BROWSER'})
     @reset()
+    @stats = {
+      clear: 0
+      hit: 0
+      miss: 0
+    }
 
   reset: ->
     Zotero.BetterBibTeX.debug('serialized.reset')
@@ -162,6 +167,7 @@ Zotero.BetterBibTeX.serialized = new class
     @reset()
 
   remove: (itemID) ->
+    @stats.clear++
     item = @cache.findOne({itemID: parseInt(itemID)})
     @cache.remove(item) if item
 
@@ -174,7 +180,10 @@ Zotero.BetterBibTeX.serialized = new class
     itemID = parseInt(zoteroItem.id || zoteroItem.itemID)
     item = @cache.findOne({itemID})
 
-    if !item
+    if item
+      @stats.hit++
+    else
+      @stats.miss++
       Zotero.BetterBibTeX.debug('serialize:', {itemID, isAttachment: typeof zoteroItem.isAttachment, zoteroItem})
       zoteroItem = Zotero.Items.get(itemID) unless typeof zoteroItem.isAttachment == 'function'
 

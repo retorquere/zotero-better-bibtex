@@ -73,7 +73,13 @@ Zotero.BetterBibTeX.DebugBridge.methods.librarySize = ->
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator, displayOptions) ->
   deferred = Q.defer()
-  Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {library: null}, displayOptions || {}, (err, result) ->
+
+  if translator.substring(0,3) == 'id:'
+    translator = translator.slice(3)
+  else
+    translator = Zotero.BetterBibTeX.getTranslator(translator)
+
+  Zotero.BetterBibTeX.translate(translator, {library: null}, displayOptions || {}, (err, result) ->
     if err
       deferred.reject(err)
     else
