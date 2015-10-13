@@ -28,10 +28,15 @@ doExport = ->
         else
           json[name] = value.value
 
+    swap = {
+      # shortTitle: 'title-short'
+      # journalAbbreviation: 'container-title-short'
+    }
     # ham-fisted workaround for #365
-    if json.type in [ 'motion_picture', 'broadcast'] && json.author
-      json.director = json.author
-      delete json.author
+    swap.author = 'director' if json.type in [ 'motion_picture', 'broadcast']
+
+    for k, v of swap
+      [json[k], json[v]] = [json[v], json[k]]
 
     citekey = json.id = Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
     json = JSON.stringify(json)
