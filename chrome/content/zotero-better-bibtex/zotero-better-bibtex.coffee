@@ -663,6 +663,7 @@ Zotero.BetterBibTeX.upgradeDatabase = ->
   Zotero.DB.query("update betterbibtex.autoexport set status = ?", [Zotero.BetterBibTeX.auto.status('pending')])
 
   @flash('Better BibTeX: database updated', 'Database update finished')
+  @flash('Better BibTeX: cache has been reset', 'Cache has been reset due to a version upgrade. First exports after upgrade will be slower than usual')
 
 Zotero.BetterBibTeX.initDatabase = ->
   db = Zotero.getZoteroDatabase('betterbibtex')
