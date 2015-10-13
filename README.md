@@ -1,7 +1,7 @@
-# Better Bib(La)TeX (BBT) for Zotero [![Build Status](https://travis-ci.org/ZotPlus/zotero-better-bibtex.svg?branch=master)](https://travis-ci.org/ZotPlus/zotero-better-bibtex)
+# Better BibTeX (BBT) for Zotero [![Build Status](https://travis-ci.org/ZotPlus/zotero-better-bibtex.svg?branch=master)](https://travis-ci.org/ZotPlus/zotero-better-bibtex)
 
-This extension aims to make Zotero effective for us LaTeX holdouts. At its core, it behaves like any Zotero
-import/export module; anywhere you can export or import bibliography items in Zotero, you'll find Better Bib(La)TeX
+This extension aims to make Zotero effective for us text-based authoring holdouts; currently, that translates to the
+LaTeX/Markdown crowd. At its core, it behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero, you'll find Better Bib(La)TeX/CSL JSON
 listed as one of the choices. If nothing else, you could keep your existing workflow as-is, and just enjoy the emproved
 LaTeX &lt;-&gt; unicode translation on im-and export. Over and above this improvement, it will give you
 
@@ -28,7 +28,7 @@ what is called "connector mode", which is currently [not
 supported](https://github.com/ZotPlus/zotero-better-bibtex/issues/143). Or, to be fully exact, you can have it installed
 in both, but running both at the same time will have BBT break at indeterminate occasions. Recoverable, but not fun.
 
-Start by downloading the [latest version](https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.5.7/zotero-better-bibtex-1.5.7.xpi) (**1.5.7**), and then
+Start by downloading the [latest version](https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.5.8/zotero-better-bibtex-1.5.8.xpi) (**1.5.8**), and then
 
 ## BBT for Zotero Firefox
 
@@ -75,7 +75,7 @@ or there are problems preventing me from implementing a fix.
 
   switch (window.location.hash.trim()) {
     case '#xpi':
-      window.location = 'https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.5.7/zotero-better-bibtex-1.5.7.xpi';
+      window.location = 'https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.5.8/zotero-better-bibtex-1.5.8.xpi';
       break;
     case '#debug':
       window.location = 'https://drive.google.com/a/iris-advies.com/folderview?id=0B8tW4NMPfEosfkFETUV0V2l0N3NHZHEyQk5SUm03TjZmS1RoVmlBTmdHclUtcTRzZ2VHclU&usp=drive_web#list';
