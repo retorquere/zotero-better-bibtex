@@ -75,6 +75,12 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
   Then a library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bib'
 
 @pandoc
+@372
+Scenario: BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372
+  When I import 1 reference from 'export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.json'
+  Then a library export using 'Better CSL JSON' should match 'export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.csl.json'
+
+@pandoc
 @365
 Scenario: Export of creator-type fields from embedded CSL variables #365
   When I import 6 references from 'export/Export of creator-type fields from embedded CSL variables #365.json'

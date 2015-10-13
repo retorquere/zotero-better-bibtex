@@ -29,8 +29,8 @@ doExport = ->
           json[name] = value.value
 
     swap = {
-      # shortTitle: 'title-short'
-      # journalAbbreviation: 'container-title-short'
+      shortTitle: 'title-short'
+      journalAbbreviation: 'container-title-short'
     }
     # ham-fisted workaround for #365
     swap.author = 'director' if json.type in [ 'motion_picture', 'broadcast']
