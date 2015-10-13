@@ -25,7 +25,7 @@
     "director": [ { "family": "Kubrick", "given": "Stanley" } ],
     "id": "Kubrick1964",
     "issued": { "date-parts": [ [ 1964 ] ] },
-    "shortTitle": "Dr. Strangelove",
+    "title-short": "Dr. Strangelove",
     "title": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
     "type": "broadcast"
   },
