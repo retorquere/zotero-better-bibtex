@@ -15,7 +15,11 @@ Zotero.BetterBibTeX.cache = new class
     #  @cache.on('delete', (entry) -> Zotero.BetterBibTeX.debug('cache.loki delete', entry))
 
     @log = Zotero.BetterBibTeX.log
-    @reset()
+    @stats = {
+      hit: 0
+      miss: 0
+      clear: 0
+    }
 
   integer: (v) ->
     return v if typeof v == 'number'
