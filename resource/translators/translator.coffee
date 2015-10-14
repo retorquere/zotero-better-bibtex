@@ -224,7 +224,7 @@ Translator.initialize = ->
 
   @options = {}
   @options.skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
-  for pref in ['jabrefGroups', 'postscript', 'csquotes', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables']
+  for pref in ['jabrefGroups', 'postscript', 'csquotes', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'asciiBibLaTeX', 'asciiBibTeX']
     @options[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
   for own k, v of @options
     @[k] = v
@@ -236,8 +236,8 @@ Translator.initialize = ->
   @caching = !@exportFileData
 
   @unicode = switch
-    when @BetterBibLaTeX || @CollectedNotes then !Zotero.getHiddenPref('better-bibtex.asciiBibLaTeX')
-    when @BetterBibTeX then !Zotero.getHiddenPref('better-bibtex.asciiBibTeX')
+    when @BetterBibLaTeX || @CollectedNotes then !@asciiBibLaTeX
+    when @BetterBibTeX then !@asciiBibTeX
     else true
 
   if @typeMap
