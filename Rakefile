@@ -221,7 +221,6 @@ end
 file 'chrome/content/zotero-better-bibtex/juris-m-dateparser.js' => 'Rakefile' do |t|
   ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Juris-M/zotero/jurism/chrome/content/zotero/xpcom/dateparser.js', t.name)
   sh "#{NODEBIN}/grasp -i -e 'Zotero.DateParser' --replace 'Zotero.BetterBibTeX.JurisMDateParser' #{t.name.shellescape}"
-  File.rewrite(t.name){|str| str.gsub('[a-zA-Z]+', '[^\-\/\~\?0-9]+') }
 end
 
 file 'resource/translators/htmlparser.js' => 'Rakefile' do |t|
