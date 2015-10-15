@@ -176,6 +176,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Non-ascii in dates is not matched by date parser #376                                          | 1           |
      | @jurisdiction; map court,authority to institution #326                                         | 1           |
      | @legislation; map code,container-title to journaltitle #327                                    | 1           |
      | BraceBalancer                                                                                  | 1           |
