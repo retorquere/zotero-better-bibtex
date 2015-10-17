@@ -122,7 +122,7 @@ Language = new class
         'meyalu'
       ]
       is: 'icelandic'
-      it$$: 'italian'
+      it: 'italian'
       ja: 'japanese'
       kn: 'kannada'
       la: 'latin'
