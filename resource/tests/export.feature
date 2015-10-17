@@ -211,6 +211,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | biblatex; Language tag xx is exported, xx-XX is not #380                           | 1           |
      | Better BibTeX does not use biblatex fields eprint and eprinttype #170              | 1           |
      | Capitalisation in techreport titles #160                                           | 1           |
      | typo stature-statute (zotero item type) #284                                       | 1           |
