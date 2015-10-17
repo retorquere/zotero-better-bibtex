@@ -95,7 +95,7 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 
 
 <!ENTITY zotero.better-bibtex.preserveBibTeXVariables "Preserve BibTeX variables">
-<!ENTITY zotero.better-bibtex.preserveBibTeXVariables.explain "When enabled, single-word strings will be assumed to be extrenally-defined @string vars, and thus not surrounded by braces">
+<!ENTITY zotero.better-bibtex.preserveBibTeXVariables.explain "When enabled, single-word strings will be assumed to be externally-defined @string vars, and thus not surrounded by braces">
 
 <!ENTITY zotero.better-bibtex.bulkWarning.whatever "OK, and don't ask me again">
 <!ENTITY zotero.better-bibtex.bulkWarning.message "You are changing more than #{TRESHOLD} items in one go. Are you sure?">

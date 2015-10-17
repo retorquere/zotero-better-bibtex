@@ -67,7 +67,13 @@ Translator.CSLVariables = {
   #'citation-label':              {}
   #'citation-number':             {}
   'collection-title':             {}
-  'container-title':              { BibLaTeX: -> (if @referencetype == 'video' then 'booktitle' else 'journaltitle') }
+  'container-title':
+    BibLaTeX: ->
+      switch @item.itemType
+        when 'film', 'tvBroadcast', 'videoRecording' then 'booktitle'
+        when 'bookSection' then 'maintitle'
+        else 'journaltitle'
+
   'container-title-short':        {}
   dimensions:                     {}
   DOI:                            {}
@@ -97,11 +103,17 @@ Translator.CSLVariables = {
   section:                        {}
   source:                         {}
   status:                         {}
-  title:                          {}
+  title:                          { BibLaTeX: -> (if @referencetype == 'book' then 'maintitle' else null) }
   'title-short':                  {}
   URL:                            {}
   version:                        {}
-  'volume-title':                 {}
+  'volume-title':
+    BibLaTeX: ->
+      switch @item.itemType
+        when 'book' then 'title'
+        when 'bookSection' then 'booktitle'
+        else null
+
   'year-suffix':                  {}
   'chapter-number':               {}
   'collection-number':            {}
