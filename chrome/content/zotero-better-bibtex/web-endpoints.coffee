@@ -176,3 +176,69 @@ Zotero.BetterBibTeX.endpoints.cayw.init = (url, data, sendResponseCallback) ->
     Zotero.Integration.displayDialog(doc, 'chrome://zotero/content/integration/quickFormat.xul', mode, io)
 
   sendResponseCallback(200, 'text/plain', deferred.promise)
+
+Zotero.BetterBibTeX.endpoints.cacheActivity =
+  supportedMethods: ['GET']
+  init: (url, data, sendResponseCallback) ->
+    timestamp = (date) ->
+      date = [date.getHours(), date.getMinutes(), date.getSeconds()]
+      date = (('0' + dp).slice(-2) for dp in date)
+      return date.join(':')
+    history = ({timestamp: timestamp(dp.timestamp), serialized: dp.serialized, cache: dp.cache} for dp in Zotero.BetterBibTeX.cacheHistory)
+    page = """
+      <html>
+        <head>
+          <title>Cache activity</title>
+          <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+          <script>
+            var cacheHistory = #{JSON.stringify(history, null, 2)};
+            google.load('visualization', '1', {packages: ['corechart', 'bar']});
+            google.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+              var data = new google.visualization.DataTable();
+              data.addColumn('string', 'timestamp');
+              data.addColumn('number', 'Serialized: Hits');
+              data.addColumn('number', 'Serialized: Misses');
+              data.addColumn('number', 'Serialized: Clears');
+              data.addColumn('number', 'Cache: Hits');
+              data.addColumn('number', 'Cache: Misses');
+              data.addColumn('number', 'Cache: Clears');
+
+              var datapoints = [];
+              var datapoint;
+              var prev = {
+                serialized: { clear: 0, hit: 0, miss: 0 },
+                cache: { hit: 0, miss: 0, clear: 0 }
+              };
+              for (var i = 0; i < cacheHistory.length; i++) {
+                datapoint = cacheHistory[i];
+                console.log(datapoint);
+                datapoints.push([
+                  datapoint.timestamp,
+                  datapoint.serialized.hit - prev.serialized.hit,
+                  datapoint.serialized.miss - prev.serialized.miss,
+                  datapoint.serialized.clear - prev.serialized.clear,
+                  datapoint.cache.hit - prev.cache.hit,
+                  datapoint.cache.miss - prev.cache.miss,
+                  datapoint.cache.clear - prev.cache.clear
+                ]);
+                prev = datapoint;
+              }
+
+              data.addRows(datapoints);
+
+              var options = { };
+
+              var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+
+              chart.draw(data, options);
+            };
+          </script>
+        </head>
+        <body>
+          <div style="height: 100%" id="chart_div"></div>
+        </body>
+      </html>
+    """
+    return sendResponseCallback(200, 'text/html', page)

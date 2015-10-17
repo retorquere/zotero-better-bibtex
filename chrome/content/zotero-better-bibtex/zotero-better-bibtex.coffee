@@ -221,11 +221,11 @@ Zotero.BetterBibTeX.debugMode = (silent) ->
     Zotero.BetterBibTeX.debugInterval = setInterval(->
       Zotero.BetterBibTeX.cacheHistory ||= []
       Zotero.BetterBibTeX.cacheHistory.push({
-        timestamp: Date.now()
+        timestamp: new Date()
         serialized: Zotero.BetterBibTeX.serialized.stats
         cache: Zotero.BetterBibTeX.cache.stats
       })
-    , 1000)
+    , 10000)
   else
     clearInterval(Zotero.BetterBibTeX.debugInterval) if Zotero.BetterBibTeX.debugInterval
     delete Zotero.BetterBibTeX.cacheHistory
