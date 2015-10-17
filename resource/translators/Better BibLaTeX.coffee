@@ -406,9 +406,6 @@ doExport = ->
       when 'statute'
         ref.add({ name: 'journaltitle', value: item.code, preserveCaps: true, preserveBibTeXVariables: true })
 
-    if item.itemType in ['book', 'bookSection']
-      ref.add({ name: 'maintitle', value: item.bookTitle, preserveBibTeXVariables: true, preserveCaps: true})
-
     if item.publicationTitle
       switch item.itemType
         when 'bookSection', 'conferencePaper', 'dictionaryEntry', 'encyclopediaArticle'
