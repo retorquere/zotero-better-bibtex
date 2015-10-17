@@ -1,11 +1,11 @@
 Translator.fieldMap = {
   # Zotero          BibTeX
-  place:            { name: 'location' }
-  chapter:          { name: 'chapter' }
-  edition:          { name: 'edition' }
+  place:            { name: 'location', preserveCaps: true }
+  chapter:          { name: 'chapter', preserveCaps: true }
+  edition:          { name: 'edition', preserveCaps: true }
   title:            { name: 'title', preserveCaps: true }
-  volume:           { name: 'volume' }
-  rights:           { name: 'rights' }
+  volume:           { name: 'volume', preserveCaps: true }
+  rights:           { name: 'rights', preserveCaps: true }
   ISBN:             { name: 'isbn' }
   ISSN:             { name: 'issn' }
   url:              { name: 'url' }
@@ -421,25 +421,25 @@ doExport = ->
           else
             abbr = Zotero.BetterBibTeX.keymanager.journalAbbrev(item)
             if Translator.useJournalAbbreviation and abbr
-              ref.add({ name: 'journal', value: abbr, preserveBibTeXVariables: true })
+              ref.add({ name: 'journal', value: abbr, preserveBibTeXVariables: true, preserveCaps: true })
             else
               ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true })
-              ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true })
+              ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true, preserveCaps: true })
 
     ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, preserveCaps: true }) if not ref.has.booktitle
 
     ref.add({ name: (if ref.referencetype in ['movie', 'video'] then 'booktitle' else 'titleaddon'), value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, preserveCaps: true })
-    ref.add({ name: 'series', value: item.seriesTitle || item.series })
+    ref.add({ name: 'series', value: item.seriesTitle || item.series, preserveCaps: true })
 
     switch item.itemType
       when 'report', 'thesis'
-        ref.add({ name: 'institution', value: item.institution || item.publisher || item.university })
+        ref.add({ name: 'institution', value: item.institution || item.publisher || item.university, preserveCaps: true })
 
       when 'case', 'hearing'
-        ref.add({ name: 'institution', value: item.court })
+        ref.add({ name: 'institution', value: item.court, preserveCaps: true })
 
       else
-        ref.add({ name: 'publisher', value: item.publisher })
+        ref.add({ name: 'publisher', value: item.publisher, preserveCaps: true })
 
     switch item.itemType
       when 'letter' then ref.add({ name: 'type', value: item.letterType || 'Letter', replace: true })
@@ -514,7 +514,7 @@ doExport = ->
             creators.editora.push(creator)
 
       for own field, value of creators
-        ref.add({ name: field, value: value, enc: 'creators' })
+        ref.add({ name: field, value: value, enc: 'creators', preserveCaps: true })
 
       ref.add({ name: 'editoratype', value: 'collaborator' }) if creators.editora.length > 0
       ref.add({ name: 'editorbtype', value: 'redactor' }) if creators.editorb.length > 0
