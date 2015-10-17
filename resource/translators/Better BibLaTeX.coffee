@@ -534,6 +534,7 @@ doExport = ->
     if item.language
       langlc = item.language.toLowerCase()
       language = Language.babelMap[langlc.replace(/[^a-z0-9]/, '_')]
+      language ||= Language.babelMap[langlc.replace(/-[a-z]+$/i, '').replace(/[^a-z0-9]/, '_')]
       if language
         language = language[0]
       else
