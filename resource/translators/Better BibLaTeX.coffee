@@ -16,7 +16,7 @@ Translator.fieldMap = {
   versionNumber:    { name: 'version' }
   conferenceName:   { name: 'eventtitle', preserveCaps: true }
   numPages:         { name: 'pagetotal' }
-  type:             { name: 'type', preserveCaps: true }
+  type:             { name: 'type' }
 }
 
 Translator.typeMap = {
@@ -308,7 +308,7 @@ class DateField
         @field = {}
 
       when parsed.literal
-        @field = { name: literal, value: date, preserveCaps: true }
+        @field = { name: literal, value: date }
 
       when (parsed.year || parsed.empty) && (parsed.year_end || parsed.empty_end)
         @field = { name: formatted, value: @format(parsed) + '/' + @format(parsed, '_end') }
