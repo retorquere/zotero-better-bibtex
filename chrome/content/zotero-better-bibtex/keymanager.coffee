@@ -55,7 +55,7 @@ Zotero.BetterBibTeX.keymanager = new class
     # clean up keys for items that have gone missing
     Zotero.DB.query('delete from betterbibtex.keys where not itemID in (select itemID from items)')
 
-    for row in Zotero.DB.query('select k.itemID, k.citekey, k.citekeyFormat, k.libraryID from betterbibtex.keys')
+    for row in Zotero.DB.query('select itemID, citekey, citekeyFormat, libraryID from betterbibtex.keys')
       @keys.insert({itemID: @integer(row.itemID), libraryID: row.libraryID, citekey: row.citekey, citekeyFormat: row.citekeyFormat})
 
     # select non-note, non-attachment items that don't have a cached key, and generate one, to make sure the cache is
