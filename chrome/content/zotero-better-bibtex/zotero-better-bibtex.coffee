@@ -594,7 +594,7 @@ Zotero.BetterBibTeX.upgradeDatabase = ->
 
   ### clean slate ###
 
-  Zotero.DB.query('create table betterbibtex.keys (itemID primary key, citekey not null, citekeyFormat)')
+  Zotero.DB.query('create table betterbibtex.keys (itemID primary key, libraryID, citekey not null, citekeyFormat)')
 
   Zotero.DB.query("
     create table betterbibtex.cache (
@@ -643,7 +643,8 @@ Zotero.BetterBibTeX.upgradeDatabase = ->
                       select itemID, citekey, case when pinned = 1 then null else ? end from betterbibtex."-keys-"', [@citekeyFormat])
     else
       @debug('initDatabase: migrating keys')
-      @copyTable('betterbibtex."-keys-"', 'betterbibtex.keys')
+      Zotero.DB.query('insert into betterbibtex.keys (itemID, libraryID, citekey, citekeyFormat)
+                       select k.itemID, i.libraryID, k.citekey, k.citekeyFormat from betterbibtex."-keys-" k join items i on k.itemID = i.itemID')
 
   if @tableExists('betterbibtex."-autoexport-"', true)
     @debug('initDatabase: migrating autoexport')
@@ -679,7 +680,7 @@ Zotero.BetterBibTeX.initDatabase = ->
   upgrade = Services.vc.compare(installed, @release) != 0
 
   schemas = [
-    'SELECT itemID, citekey, citekeyFormat FROM betterbibtex.keys'
+    'SELECT itemID, libraryID, citekey, citekeyFormat FROM betterbibtex.keys'
     'SELECT id, collection, path, exportCharset, exportNotes, translatorID, useJournalAbbreviation, exportedRecursively, status FROM betterbibtex.autoexport'
     'SELECT itemID, exportCharset, exportNotes, getCollections, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess FROM betterbibtex.cache'
   ]
@@ -702,11 +703,11 @@ Zotero.BetterBibTeX.initDatabase = ->
   @keymanager.load()
   @keymanager.clearDynamic()
 
-  mismatched = Zotero.DB.query('select c.itemID, c.citekey as cached, k.citekey from betterbibtex.cache c join betterbibtex.keys k on c.itemID = k.itemID and c.citekey <> k.citekey') || []
-  for m in mismatched
-    Zotero.BetterBibTeX.log("export cache: citekey mismatch! #{m.itemID} cached=#{m.cached} key=#{m.citekey}")
-  if mismatched.length > 0
-    Zotero.DB.query('delete from betterbibtex.cache')
+  #mismatched = Zotero.DB.query('select c.itemID, c.citekey as cached, k.citekey from betterbibtex.cache c join betterbibtex.keys k on c.itemID = k.itemID and c.citekey <> k.citekey') || []
+  #for m in mismatched
+  #  Zotero.BetterBibTeX.log("export cache: citekey mismatch! #{m.itemID} cached=#{m.cached} key=#{m.citekey}")
+  #if mismatched.length > 0
+  #  Zotero.DB.query('delete from betterbibtex.cache')
 
   if Zotero.BetterBibTeX.pref.get('cacheReset') > 0
     @cache.reset()
