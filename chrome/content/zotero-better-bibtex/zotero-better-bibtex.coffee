@@ -546,6 +546,9 @@ Zotero.BetterBibTeX.tableExists = (name, mustHaveData = false) ->
 Zotero.BetterBibTeX.upgradeDatabase = ->
   @flash('Better BibTeX: updating database', 'Updating database, this could take a while')
 
+  db = Zotero.getZoteroDatabase('betterbibtexcache')
+  db.remove() if db.exists()
+
   for key in @pref.prefs.getChildList('')
     switch key
       when 'auto-abbrev.style' then @pref.set('autoAbbrevStyle', @pref.get(key))
