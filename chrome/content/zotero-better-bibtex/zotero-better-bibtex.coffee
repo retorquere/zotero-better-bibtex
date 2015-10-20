@@ -485,8 +485,7 @@ Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
   Zotero.BetterBibTeX.debug("idle: #{topic}")
   switch topic
     when 'idle'
-      Zotero.BetterBibTeX.cache.flush()
-      Zotero.BetterBibTeX.keymanager.flush()
+      Zotero.BetterBibTeX.DB.save()
       Zotero.BetterBibTeX.auto.idle = true
       Zotero.BetterBibTeX.auto.process('idle')
 
@@ -778,10 +777,7 @@ Zotero.BetterBibTeX.init = ->
   @pref.ZoteroObserver.register()
   Zotero.addShutdownListener(->
     Zotero.BetterBibTeX.log('shutting down')
-    Zotero.BetterBibTeX.cache.flush()
-    Zotero.BetterBibTeX.keymanager.flush()
-    Zotero.BetterBibTeX.serialized.save()
-
+    Zotero.BetterBibTeX.DB.save(true)
     Zotero.BetterBibTeX.debugMode(true)
     return
   )

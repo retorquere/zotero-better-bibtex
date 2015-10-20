@@ -18,9 +18,11 @@ if not Zotero.BetterBibTeX
                   cayw
                   debug-bridge
                   cache
+                  autoexport
                   serialized
                   csl-util_name_particles
                   ".trim().split(/\s+/)
+    Zotero.debug('BBT: ' + script)
     loader.loadSubScript("chrome://zotero-better-bibtex/content/#{script}.js")
 
   window.addEventListener('load', (load = (event) ->

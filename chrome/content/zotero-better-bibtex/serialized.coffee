@@ -168,8 +168,7 @@ Zotero.BetterBibTeX.serialized = new class
 
   remove: (itemID) ->
     @stats.clear++
-    item = @cache.findOne({itemID: parseInt(itemID)})
-    @cache.remove(item) if item
+    @cache.removeWhere({itemID: parseInt(itemID)})
 
   get: (zoteroItem) ->
     Zotero.BetterBibTeX.debug('serialized.get:', zoteroItem)

@@ -1,5 +1,7 @@
+Zotero.BetterBibTeX.debug('DB: load')
 Zotero.BetterBibTeX.DB = new class
   constructor: ->
+    Zotero.BetterBibTeX.debug('DB: init')
     @db = new loki('betterbibtex.db', {
       autosave: true
       autosaveInterval: 10000
@@ -55,18 +57,20 @@ Zotero.BetterBibTeX.DB = new class
       if !key.citekeyFormat && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
         @keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
 
-      @cache.remove({itemID: key.itemID})
+      @cache.removeWhere({itemID: key.itemID})
     )
     @keys.on('delete', (key) =>
-      @remove({itemID: key.itemID})
+      @removeWhere({itemID: key.itemID})
     )
+
+    Zotero.BetterBibTeX.debug('DB: ready')
 
     idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
     idleService.addIdleObserver({observe: (subject, topic, data) => @save() if topic == 'idle'}, 5)
 
   touch: (itemID) ->
-    @cache.remove({itemID})
-    @serialized.remove({itemID})
+    @cache.removeWhere({itemID})
+    @serialized.removeWhere({itemID})
     @keys.removeWhere((o) -> o.itemID == itemID && o.citekeyFormat)
 
   save: (force) ->
@@ -85,7 +89,7 @@ Zotero.BetterBibTeX.DB = new class
     saveDatabase: (name, serialized, callback) ->
       file = Zotero.getZoteroDirectory()
       file.append("#{name}.json")
-      stream = FileUtils.openAtomicFileOutputStream(@file(), FileUtils.MODE_WRONLY | FileUtils.MODE_CREATE | FileUtils.MODE_TRUNCATE)
+      stream = FileUtils.openAtomicFileOutputStream(file, FileUtils.MODE_WRONLY | FileUtils.MODE_CREATE | FileUtils.MODE_TRUNCATE)
       stream.write(serialized, serialized.length)
       stream.close()
       callback(true)
@@ -139,7 +143,7 @@ Zotero.BetterBibTeX.DB = new class
 
     migrate: ->
       db = Zotero.getZoteroDatabase('betterbibtexcache')
-      db.remove() if db.exists()
+      db.remove(true) if db.exists()
 
       db = Zotero.getZoteroDatabase('betterbibtex')
       return unless db.exists()
@@ -168,9 +172,6 @@ Zotero.BetterBibTeX.DB = new class
             status: 'pending'
           })
 
-      @keymanager.load()
-      @keymanager.clearDynamic()
-
       if @tableExists('betterbibtex.keys')
         Zotero.BetterBibTeX.DB.keys.removeDataOnly()
         pinned = @table_info('betterbibtex.autoexport').pinned
@@ -192,5 +193,5 @@ Zotero.BetterBibTeX.DB = new class
 
       db.moveTo(null, 'betterbibtex.sqlite.bak')
 
-      @flash('Better BibTeX: database updated', 'Database update finished')
-      @flash('Better BibTeX: cache has been reset', 'Cache has been reset due to a version upgrade. First exports after upgrade will be slower than usual')
+      Zotero.BetterBibTeX.flash('Better BibTeX: database updated', 'Database update finished')
+      Zotero.BetterBibTeX.flash('Better BibTeX: cache has been reset', 'Cache has been reset due to a version upgrade. First exports after upgrade will be slower than usual')
