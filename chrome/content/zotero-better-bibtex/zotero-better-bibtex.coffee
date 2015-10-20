@@ -423,9 +423,13 @@ Zotero.BetterBibTeX.pref.ZoteroObserver = {
   observe: (subject, topic, data) ->
     switch data
       when 'recursiveCollections'
-        recursive = "#{!!Zotero.BetterBibTeX.auto.recursive()}"
+        recursive = !!Zotero.BetterBibTeX.auto.recursive()
+
         # libraries are always recursive
-        Zotero.DB.query("update betterbibtex.autoexport set exportedRecursively = ?, status = ? where exportedRecursively <> ? and collection not like 'library:%'", [recursive, Zotero.BetterBibTeX.auto.status('pending'), recursive])
+        for ae in Zotero.BetterBibTeX.DB.autoexport.where((o) -> !o.exportedRecursively == recursive && o.collection.indexOf('library:') != 0)
+          ae.exportedRecursively = recursive
+          Zotero.BetterBibTeX.auto.mark(ae, 'pending')
+
         Zotero.BetterBibTeX.auto.process("recursive export: #{recursive}")
 }
 
@@ -495,59 +499,10 @@ Zotero.BetterBibTeX.version = (version) ->
   @debug("full version: #{version}, canonical version: #{v}")
   return v
 
-Zotero.BetterBibTeX.foreign_keys = (enabled) ->
-  statement = Zotero.DB.getStatement("PRAGMA foreign_keys = #{if enabled then 'ON' else 'OFF'}", null, true)
-  statement.executeStep()
-  statement.finalize()
+Zotero.BetterBibTeX.migrateData = ->
+  @DB.SQLite.migrate()
 
-Zotero.BetterBibTeX.parseTable = (name) ->
-  name = name.split('.')
-  switch name.length
-    when 1
-      schema = ''
-      name = name[0]
-    when 2
-      schema = name[0] + '.'
-      name = name[1]
-  name = name.slice(1, -1) if name[0] == '"'
-  return {schema: schema, name: name}
-
-Zotero.BetterBibTeX.table_info = (table) ->
-  table = @parseTable(table)
-  statement = Zotero.DB.getStatement("pragma #{table.schema}table_info(\"#{table.name}\")", null, true)
-
-  fields = (statement.getColumnName(i).toLowerCase() for i in [0...statement.columnCount])
-
-  columns = {}
-  while statement.executeStep()
-    values = (Zotero.DB._getTypedValue(statement, i) for i in [0...statement.columnCount])
-    column = {}
-    for name, i in fields
-      column[name] = values[i]
-    columns[column.name] = column
-  statement.finalize()
-
-  return columns
-
-Zotero.BetterBibTeX.columnNames = (table) ->
-  return Object.keys(@table_info(table))
-
-Zotero.BetterBibTeX.copyTable = (source, target, ignore = []) -> # assumes tables have identical layout!
-  ignore = [ignore] if typeof ignore == 'string'
-
-  columns = (column for column in @columnNames(target) when column not in ignore).join(', ')
-  Zotero.DB.query("insert into #{target} (#{columns}) select #{columns} from #{source}")
-
-Zotero.BetterBibTeX.tableExists = (name, mustHaveData = false) ->
-  table = @parseTable(name)
-  exists = (Zotero.DB.valueQuery("SELECT count(*) FROM #{table.schema}sqlite_master WHERE type='table' and name=?", [table.name]) != 0)
-  return exists && (!mustHaveData || Zotero.DB.valueQuery("select count(*) from #{name}") != 0)
-
-Zotero.BetterBibTeX.upgradeDatabase = ->
-  @flash('Better BibTeX: updating database', 'Updating database, this could take a while')
-
-  db = Zotero.getZoteroDatabase('betterbibtexcache')
-  db.remove() if db.exists()
+  return unless @DB.upgradeNeeded
 
   for key in @pref.prefs.getChildList('')
     switch key
@@ -572,157 +527,6 @@ Zotero.BetterBibTeX.upgradeDatabase = ->
   @pref.prefs.clearUserPref('useprefix')
   @pref.prefs.clearUserPref('verbatimDate')
 
-  try
-    translatorSettings = JSON.parse(Zotero.Prefs.get('export.translatorSettings'))
-    @pref.set('preserveBibTeXVariables', true) if translatorSettings['Preserve BibTeX variables']
-
-  # cleanup any junk
-  for table in Zotero.DB.columnQuery("SELECT name FROM betterbibtex.sqlite_master WHERE type='table' AND name like '-%-'") || []
-    Zotero.DB.query("drop table if exists betterbibtex.\"#{table}\"")
-
-  tables = Zotero.DB.columnQuery("SELECT name FROM betterbibtex.sqlite_master WHERE type='table' AND name <> 'schema' ORDER BY name") || []
-
-  if @tableExists('betterbibtex.autoexport') && @table_info('betterbibtex.autoexport').collection
-    Zotero.DB.query("update betterbibtex.autoexport set collection = (select 'library:' || libraryID from groups where 'group:' || groupID = collection) where collection like 'group:%'")
-    Zotero.DB.query("update betterbibtex.autoexport set collection = 'collection:' || collection where collection <> 'library' and collection not like '%:%'")
-
-  tip = Zotero.DB.transactionInProgress()
-  Zotero.DB.beginTransaction() unless tip
-
-  @pref.set('scanCitekeys', true)
-
-  for table in tables
-    @debug('initDatabase: backing up', table)
-    Zotero.DB.query("alter table betterbibtex.#{table} rename to \"-#{table}-\"")
-
-  ### clean slate ###
-
-  Zotero.DB.query('create table betterbibtex.keys (itemID primary key, libraryID, citekey not null, citekeyFormat)')
-
-  Zotero.DB.query("
-    create table betterbibtex.cache (
-      itemID not null,
-
-      exportCharset not null,
-      exportNotes default 'false' CHECK(exportNotes in ('true', 'false')),
-      getCollections default 'false' CHECK(getCollections in ('true', 'false')),
-      translatorID not null,
-      useJournalAbbreviation default 'false' CHECK(useJournalAbbreviation in ('true', 'false')),
-
-      citekey not null,
-      bibtex not null,
-      lastaccess not null default CURRENT_TIMESTAMP,
-      PRIMARY KEY (itemID, exportCharset, exportNotes, getCollections, translatorID, useJournalAbbreviation)
-      )
-    ")
-
-  Zotero.DB.query("
-    create table betterbibtex.autoexport (
-      id INTEGER PRIMARY KEY NOT NULL DEFAULT NULL,
-
-      collection not null,
-      path not null,
-
-      exportCharset not null,
-      exportNotes default 'false' CHECK(exportNotes in ('true', 'false')),
-      translatorID not null,
-      useJournalAbbreviation default 'false' CHECK(useJournalAbbreviation in ('true', 'false')),
-
-      exportedRecursively CHECK(exportedRecursively in ('true', 'false')),
-      status,
-
-      UNIQUE (path)
-      )
-    ")
-
-  ### migrate data where needed ###
-
-  if @tableExists('betterbibtex."-keys-"', true)
-    @debug('initDatabase: migrating keys')
-    if @table_info('betterbibtex."-keys-"').pinned
-      @debug('initDatabase: migrating old-style keys')
-      Zotero.BetterBibTeX.debug('Upgrading betterbibtex.keys')
-      Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citekeyFormat)
-                      select itemID, citekey, case when pinned = 1 then null else ? end from betterbibtex."-keys-"', [@citekeyFormat])
-    else
-      @debug('initDatabase: migrating keys')
-      Zotero.DB.query('insert into betterbibtex.keys (itemID, libraryID, citekey, citekeyFormat)
-                       select k.itemID, i.libraryID, k.citekey, k.citekeyFormat from betterbibtex."-keys-" k join items i on k.itemID = i.itemID')
-
-  if @tableExists('betterbibtex."-autoexport-"', true)
-    @debug('initDatabase: migrating autoexport')
-    if @table_info('betterbibtex."-autoexport-"').context
-      # sorry my dear colleague, but this was a mess
-    else
-      @copyTable('betterbibtex."-autoexport-"', 'betterbibtex.autoexport', 'id')
-
-  ### cleanup ###
-
-  for table in Zotero.DB.columnQuery("SELECT name FROM betterbibtex.sqlite_master WHERE type='table' AND name like '-%-'") || []
-    @debug('initDatabase: deleting', table)
-    Zotero.DB.query("drop table if exists betterbibtex.\"#{table}\"")
-
-  Zotero.DB.commitTransaction() unless tip
-
-  Zotero.DB.query("update betterbibtex.autoexport set status = ?", [Zotero.BetterBibTeX.auto.status('pending')])
-
-  @flash('Better BibTeX: database updated', 'Database update finished')
-  @flash('Better BibTeX: cache has been reset', 'Cache has been reset due to a version upgrade. First exports after upgrade will be slower than usual')
-
-Zotero.BetterBibTeX.initDatabase = ->
-  db = Zotero.getZoteroDatabase('betterbibtex')
-  Zotero.DB.query('ATTACH ? AS betterbibtex', [db.path])
-
-  Zotero.DB.query("create table if not exists betterbibtex.schema (lock primary key default 'schema' check (lock='schema'), version not null)")
-  Zotero.DB.query("insert or ignore into betterbibtex.schema (lock, version) values ('schema', '')")
-  Zotero.DB.query("update betterbibtex.schema set version = '' where not version like '%.%.%'")
-
-  installed = Zotero.DB.valueQuery("select version from betterbibtex.schema")
-
-  # always upgrade on version change
-  upgrade = Services.vc.compare(installed, @release) != 0
-
-  schemas = [
-    'SELECT itemID, libraryID, citekey, citekeyFormat FROM betterbibtex.keys'
-    'SELECT id, collection, path, exportCharset, exportNotes, translatorID, useJournalAbbreviation, exportedRecursively, status FROM betterbibtex.autoexport'
-    'SELECT itemID, exportCharset, exportNotes, getCollections, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess FROM betterbibtex.cache'
-  ]
-  for check in schemas
-    try
-      Zotero.DB.query(check + ' LIMIT 1')
-    catch e
-      @log('Unexpected schema:', check, e)
-      upgrade = true
-      continue
-
-  @upgradeDatabase() if upgrade
-
-  if @pref.get('scanCitekeys')
-    @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
-    @keymanager.reset()
-    @cache.reset()
-    @pref.set('scanCitekeys', false)
-
-  @keymanager.load()
-  @keymanager.clearDynamic()
-
-  #mismatched = Zotero.DB.query('select c.itemID, c.citekey as cached, k.citekey from betterbibtex.cache c join betterbibtex.keys k on c.itemID = k.itemID and c.citekey <> k.citekey') || []
-  #for m in mismatched
-  #  Zotero.BetterBibTeX.log("export cache: citekey mismatch! #{m.itemID} cached=#{m.cached} key=#{m.citekey}")
-  #if mismatched.length > 0
-  #  Zotero.DB.query('delete from betterbibtex.cache')
-
-  if Zotero.BetterBibTeX.pref.get('cacheReset') > 0
-    @cache.reset()
-    @serialized.reset()
-    Zotero.BetterBibTeX.pref.set('cacheReset', Zotero.BetterBibTeX.pref.get('cacheReset') - 1)
-    Zotero.BetterBibTeX.debug('cache.load forced reset', Zotero.BetterBibTeX.pref.get('cacheReset'), 'left')
-  else
-    @cache.load()
-    @serialized.load()
-
-  Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', ?)", [@release])
-
 Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
@@ -743,11 +547,13 @@ Zotero.BetterBibTeX.init = ->
   @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
   @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
 
-  @initDatabase()
-  cfi = @pref.get('cacheFlushInterval')
-  cfi = 1 if typeof cfi != 'number' || cfi < 1
-  cfi = 5 if cfi > 5
-  setInterval((-> Zotero.BetterBibTeX.cache.flush(); Zotero.BetterBibTeX.keymanager.flush()), cfi * 1000 * 60)
+  @migrateData()
+
+  if @pref.get('scanCitekeys')
+    @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
+    @keymanager.reset()
+    @cache.reset()
+    @pref.set('scanCitekeys', false)
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     keymanager: {
@@ -1143,50 +949,43 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
 
   collections = @withParentCollections(collections) if collections.length != 0
   collections = ("'collection:#{id}'" for id in collections)
-  # collection changes do not affect the library
-  #for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@SQLSet(items)}")
-  #  if libraryID
-  #    collections.push("'library:#{libraryID}'")
-  #  else
-  #    collections.push("'library'")
   if collections.length > 0
-    collections = @SQLSet(collections)
-    Zotero.DB.query("update betterbibtex.autoexport set status = ? where collection in #{collections}", [Zotero.BetterBibTeX.auto.status('pending')])
+    for ae in @DB.autoexport.where((o) -> o.collection in collections)
+      @auto.mark(ae, 'pending')
     @auto.process("collection changed: #{collections}")
 ).bind(Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
-  Zotero.DB.query("delete from betterbibtex.autoexport where collection in #{Zotero.BetterBibTeX.SQLSet(extraData)}") if event == 'delete' && extraData.length > 0
-
-Zotero.BetterBibTeX.SQLSet = (values) -> '(' + ('' + v for v in values).join(', ') + ')'
+  return unless event == 'delete' && extraData.length > 0
+  extraData = ("collection:#{id}" for id in extraData)
+  @DB.autoexport.removeWhere((o) -> o.collection in extraData)
 
 Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
   return unless type == 'item' && event in ['delete', 'trash', 'add', 'modify']
   ids = extraData if event == 'delete'
   return unless ids.length > 0
 
-  for itemID in ids.concat(Zotero.DB.columnQuery("SELECT linkedItemID FROM itemSeeAlso WHERE itemID in #{@SQLSet(ids)}"))
+  for itemID in ids.concat(Zotero.DB.columnQuery("SELECT linkedItemID FROM itemSeeAlso WHERE itemID in #{@DB.SQLite.Set(ids)}"))
     itemID = parseInt(itemID) unless typeof itemID == 'number'
-    @serialized.remove(itemID)
-    @cache.remove({itemID})
+    @DB.touch(itemID)
 
   @keymanager.scan(ids, event)
 
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
   collections = @withParentCollections(collections) unless collections.length == 0
   collections = ("'collection:#{id}'" for id in collections)
-  for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@SQLSet(ids)}")
+  for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@DB.SQLite.Set(ids)}")
     if libraryID
       collections.push("'library:#{libraryID}'")
     else
       collections.push("'library'")
 
-  for ae in Zotero.DB.query("select collection from betterbibtex.autoexport where status = 'done' and collection like 'search:%'")
+  for ae in @DB.autoexport.where((o) -> o.collection.indexOf('search:') == 0)
     @auto.markSearch(ae.collection.replace('search:', ''))
 
   if collections.length > 0
-    collections = @SQLSet(collections)
-    Zotero.DB.query("update betterbibtex.autoexport set status = ? where collection in #{collections}", [Zotero.BetterBibTeX.auto.status('pending')])
+    for ae in @DB.autoexport.where((o) -> o.collection in collections)
+      @auto.mark(ae, 'pending')
     @auto.process("items changed: #{collections}")
 
 ).bind(Zotero.BetterBibTeX)
@@ -1199,7 +998,7 @@ Zotero.BetterBibTeX.withParentCollections = (collections) ->
     with recursive recursivecollections as (
       select collectionID, parentCollectionID
       from collections
-      where collectionID in #{Zotero.BetterBibTeX.SQLSet(collections)}
+      where collectionID in #{Zotero.BetterBibTeX.DB.SQLite.Set(collections)}
 
       union all
 

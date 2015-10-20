@@ -33,13 +33,8 @@ Zotero_BetterBibTeX_ErrorReport = new class
     document.getElementById('betterbibtex.errorReport.references').hidden = true
 
     Zotero.getSystemInfo((info) =>
-      schema = {}
-      for table in Zotero.DB.columnQuery("SELECT name FROM betterbibtex.sqlite_master WHERE type='table' AND name <> 'schema' ORDER BY name") || []
-        schema[table] = Zotero.BetterBibTeX.table_info(table)
-
       @errorlog = {
         info: info
-        schema: "Better BibTeX schema #{Zotero.DB.valueQuery('select version from betterbibtex.schema') || '<new>'}: #{JSON.stringify(schema)}"
         errors: Zotero.getErrors(true).join('\n')
         full: Zotero.Debug.get()
       }
@@ -114,7 +109,7 @@ Zotero_BetterBibTeX_ErrorReport = new class
     if !document.getElementById("zotero-error-include-log").checked
       @errorlog.full = null
 
-    errorlog = (part for part in [@errorlog.info, @errorlog.errors, @errorlog.schema, @errorlog.full] when part).join("\n\n")
+    errorlog = (part for part in [@errorlog.info, @errorlog.errors, @errorlog.full] when part).join("\n\n")
 
     params = window.arguments[0].wrappedJSObject
 

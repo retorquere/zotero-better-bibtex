@@ -113,7 +113,7 @@ BetterBibTeXAutoExportPref =
     return if selected < 0
 
     id = exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')
-    Zotero.DB.query('delete from betterbibtex.autoexport where id = ?', [id])
+    Zotero.BetterBibTeX.DB.autoexport.remove(id)
     @refresh()
 
   mark: ->
@@ -123,7 +123,7 @@ BetterBibTeXAutoExportPref =
 
     id = exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')
 
-    ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport ae where id = ?', [id])
+    ae = Zotero.BetterBibTeX.DB.autoexport.get(id)
     return unless ae
     try
       translation = Zotero.BetterBibTeX.auto.prepare(ae)
@@ -131,13 +131,11 @@ BetterBibTeXAutoExportPref =
       return
 
     if !translation
-      Zotero.DB.query('update betterbibtex.autoexport set status = ? where id = ?', [Zotero.BetterBibTeX.auto.status('done'), ae.id])
+      Zotero.BetterBibTeX.auto.mark(ae, 'done')
       return
 
     translation.setHandler('done', (obj, worked) ->
-      status = Zotero.BetterBibTeX.auto.status((if worked then 'done' else 'error'))
-      Zotero.BetterBibTeX.debug("auto.force: finished #{ae.id}: #{status}")
-      Zotero.DB.query('update betterbibtex.autoexport set status = ? where id = ?', [status, ae.id])
+      Zotero.BetterBibTeX.auto.mark(ae, (if worked then 'done' else 'error'))
       Zotero.BetterBibTeX.auto.refresh()
     )
     translation.translate()
@@ -176,17 +174,17 @@ BetterBibTeXAutoExportPref =
 
     tree = new BetterBibTeXAutoExport('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', exportlist, document)
 
-    for ae in Zotero.DB.query("select * from betterbibtex.autoexport order by path")
-      ae.status = 'running' if Zotero.BetterBibTeX.auto.running == ae.id
-      tree.treeitem({autoexport: "#{ae.id}", '': ->
+    for ae in Zotero.BetterBibTeX.DB.autoexport.chain().simplesort('path').data()
+      status = if Zotero.BetterBibTeX.auto.running == ae.id then 'running' else "#{ae.status} (#{ae.updated})"
+      tree.treeitem({autoexport: "#{ae['$loki']}", '': ->
         @treerow(->
           @treecell({editable: 'false', label: "#{BetterBibTeXAutoExportPref.exportType(ae.collection)}: #{BetterBibTeXAutoExportPref.exportName(ae.collection)}"})
-          @treecell({editable: 'false', label: ae.status})
+          @treecell({editable: 'false', label: status})
           @treecell({editable: 'false', label: ae.path})
           @treecell({editable: 'false', label: Zotero.BetterBibTeX.translatorName(ae.translatorID)})
           @treecell({editable: 'false', label: ae.exportCharset})
-          @treecell({editable: 'false', label: ae.useJournalAbbreviation})
-          @treecell({editable: 'false', label: ae.exportNotes})
+          @treecell({editable: 'false', label: '' + ae.useJournalAbbreviation})
+          @treecell({editable: 'false', label: '' + ae.exportNotes})
         )
       })
 

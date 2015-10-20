@@ -162,11 +162,6 @@ Zotero.BetterBibTeX.DebugBridge.methods.selected = (action) ->
 
 Zotero.BetterBibTeX.DebugBridge.methods.autoExports = ->
   exports = []
-  for e in Zotero.DB.query('select * from betterbibtex.autoexport')
-    ae = {}
-    for own k, v of e
-      ae[k] = v
-    exports.push(ae)
   return exports
 
 Zotero.BetterBibTeX.DebugBridge.methods.cayw = (picks, format) ->
