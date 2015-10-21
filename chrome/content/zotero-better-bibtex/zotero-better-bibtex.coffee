@@ -778,7 +778,7 @@ Zotero.BetterBibTeX.init = ->
   Zotero.addShutdownListener(->
     Zotero.BetterBibTeX.log('shutting down')
     Zotero.BetterBibTeX.DB.save(true)
-    Zotero.BetterBibTeX.debugMode(true)
+    Zotero.BetterBibTeX.debugMode('silent')
     return
   )
 
@@ -821,7 +821,6 @@ Zotero.BetterBibTeX.createFile = (paths...) ->
     f.append(path)
     f.create(Components.interfaces.nsIFile.DIRECTORY_TYPE, 0o777) unless f.exists()
   f.append(leaf)
-  f.create(Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 0o666) unless f.exists()
   return f
 
 Zotero.BetterBibTeX.postscript = """

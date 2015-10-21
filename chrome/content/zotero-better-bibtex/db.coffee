@@ -1,27 +1,37 @@
-Zotero.BetterBibTeX.debug('DB: load')
 Zotero.BetterBibTeX.DB = new class
   constructor: ->
-    Zotero.BetterBibTeX.debug('DB: init')
-    @db = new loki('betterbibtex.db', {
-      autosave: true
-      autosaveInterval: 10000
-      adapter: @adapter
-      env: 'BROWSER'
-    })
+    # split to speed up auto-saves
+    @db = {
+      main: new loki('db.json', {
+        autosave: true
+        autosaveInterval: 10000
+        adapter: @adapter
+        env: 'BROWSER'
+      })
+      volatile: new loki('cache.json', {
+        adapter: @adapter
+        env: 'BROWSER'
+      })
+    }
 
-    @db.loadDatabase()
+    @db.main.loadDatabase()
+    @db.volatile.loadDatabase()
 
-    if !@db.getCollection('cache')
-      @cache = @db.addCollection('cache', { indices: ['itemID', 'exportCharset', 'exportNotes', 'getCollections', 'translatorID', 'useJournalAbbreviation', 'citekey'] })
+    # this ensures that if the volatile DB hasn't been saved, it is destroyed and will be rebuilt.
+    volatile = Zotero.BetterBibTeX.createFile(@db.volatile.filename)
+    volatile.remove(true) if volatile.exists()
 
-    if !@db.getCollection('serialized')
-      @serialized = @db.addCollection('serialized', { indices: ['itemID', 'uri'] })
+    @cache = @db.volatile.getCollection('cache')
+    @cache ||= @db.volatile.addCollection('cache', { indices: ['itemID', 'exportCharset', 'exportNotes', 'getCollections', 'translatorID', 'useJournalAbbreviation', 'citekey'] })
 
-    if !@db.getCollection('keys')
-      @keys = @db.addCollection('keys', {indices: ['itemID', 'libraryID', 'citekey', 'citekeyFormat']})
+    @serialized = @db.volatile.getCollection('serialized')
+    @serialized ||= @db.volatile.addCollection('serialized', { indices: ['itemID', 'uri'] })
 
-    if !@db.getCollection('autoexport')
-      @autoexport = @db.addCollection('autoexport', {indices: ['collection', 'path', 'exportCharset', 'exportNotes', 'translatorID', 'useJournalAbbreviation', 'exportedRecursively']})
+    @keys = @db.main.getCollection('keys')
+    @keys ||= @db.main.addCollection('keys', {indices: ['itemID', 'libraryID', 'citekey', 'citekeyFormat']})
+
+    @autoexport = @db.main.getCollection('autoexport')
+    @autoexport ||= @db.main.addCollection('autoexport', {indices: ['collection', 'path', 'exportCharset', 'exportNotes', 'translatorID', 'useJournalAbbreviation', 'exportedRecursively']})
 
     # # in case I need to update the indices:
     # #
@@ -35,7 +45,7 @@ Zotero.BetterBibTeX.DB = new class
     # # add unique index
     # coll.ensureUniqueIndex("userId")
 
-    metadata = @db.getCollection('metadata')
+    metadata = @db.main.getCollection('metadata')
     @upgradeNeeded = !metadata || !metadata[0] ||
       metadata.data[0].Zotero != ZOTERO_CONFIG.VERSION ||
       metadata.data[0].BetterBibTeX != Zotero.BetterBibTeX.release
@@ -73,30 +83,27 @@ Zotero.BetterBibTeX.DB = new class
     @serialized.removeWhere({itemID})
     @keys.removeWhere((o) -> o.itemID == itemID && o.citekeyFormat)
 
-  save: (force) ->
-    return unless force || @db.autosaveDirty()
+  save: (all) ->
+    if all || @db.main.autosaveDirty()
+      @db.main.removeCollection('metadata')
+      metadata = @db.main.addCollection('metadata')
+      metadata.insert({Zotero: ZOTERO_CONFIG.VERSION, BetterBibTeX: Zotero.BetterBibTeX.release})
 
-    @db.removeCollection('metadata')
-    metadata = @db.addCollection('metadata')
-    metadata.insert({Zotero: ZOTERO_CONFIG.VERSION, BetterBibTeX: Zotero.BetterBibTeX.release})
+      @db.main.save((err) -> throw(err) if (err))
+      @db.main.autosaveClearFlags()
 
-    @db.save((err) ->
-      throw(err) if (err)
-    )
-    @db.autosaveClearFlags()
+    @db.volatile.save((err) -> throw(err) if (err)) if all
 
   adapter:
     saveDatabase: (name, serialized, callback) ->
-      file = Zotero.getZoteroDirectory()
-      file.append("#{name}.json")
+      file = Zotero.BetterBibTeX.createFile(name)
       stream = FileUtils.openAtomicFileOutputStream(file, FileUtils.MODE_WRONLY | FileUtils.MODE_CREATE | FileUtils.MODE_TRUNCATE)
       stream.write(serialized, serialized.length)
       stream.close()
       callback(true)
 
     loadDatabase: (name, callback) ->
-      file = Zotero.getZoteroDirectory()
-      file.append("#{name}.json")
+      file = Zotero.BetterBibTeX.createFile(name)
       if file.exists()
         callback(Zotero.File.getContents(file))
       else
@@ -143,6 +150,9 @@ Zotero.BetterBibTeX.DB = new class
 
     migrate: ->
       db = Zotero.getZoteroDatabase('betterbibtexcache')
+      db.remove(true) if db.exists()
+
+      db = Zotero.BetterBibTeX.createFile('serialized-items.json')
       db.remove(true) if db.exists()
 
       db = Zotero.getZoteroDatabase('betterbibtex')

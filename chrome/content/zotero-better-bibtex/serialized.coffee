@@ -1,26 +1,6 @@
 Components.utils.import("resource://zotero/config.js")
 
 Zotero.BetterBibTeX.serialized = new class
-  lokiAdapter:
-    saveDatabase: (name, serialized, callback) ->
-      try
-        store = Zotero.BetterBibTeX.createFile('serialized-items.json')
-        store.remove(false) if store.exists()
-        Zotero.File.putContents(store, serialized)
-      catch e
-        Zotero.BetterBibTeX.debug("serialized.saveDatabase failed: #{e}")
-      callback(true)
-
-    loadDatabase: (name, callback) ->
-      data = null
-      try
-        serialized = Zotero.BetterBibTeX.createFile('serialized-items.json')
-        data = Zotero.File.getContents(serialized) if serialized.exists()
-      catch e
-        Zotero.BetterBibTeX.debug("serialized.loadDatabase failed: #{e}")
-        data = null
-      callback(data)
-
   fixup: (item, itemID) ->
     Zotero.BetterBibTeX.debug('trying to fix:', item) if !item.itemID
 
@@ -116,59 +96,21 @@ Zotero.BetterBibTeX.serialized = new class
     return item
 
   constructor: ->
-    @db = new loki('serialized', {adapter: @lokiAdapter, env: 'BROWSER'})
+    @db = Zotero.BetterBibTeX.DB
     @reset()
 
   reset: ->
     Zotero.BetterBibTeX.debug('serialized.reset')
-    @db.removeCollection('metadata')
-    @db.removeCollection('serialized')
-    @cache = @db.addCollection('serialized', { indices: ['itemID', 'uri'] })
+    @db.serialized.removeDataOnly()
     @stats = {
       clear: 0
       hit: 0
       miss: 0
     }
 
-  save: ->
-    @db.removeCollection('metadata')
-    metadata = @db.addCollection('metadata')
-    metadata.insert({Zotero: ZOTERO_CONFIG.VERSION, BetterBibTeX: Zotero.BetterBibTeX.release})
-    @db.save()
-
-  load: ->
-    try
-      @db.loadDatabase()
-    catch e
-      Zotero.BetterBibTeX.debug("serialized.loadDatabase failed: #{e}")
-      @reset()
-      return
-
-    metadata = @db.getCollection('metadata')
-    @cache = @db.getCollection('serialized')
-
-    switch
-      when !@cache
-        Zotero.BetterBibTeX.debug('serialized.load: no cache collection')
-
-      when !metadata
-        Zotero.BetterBibTeX.debug('serialized.load: no metadata')
-
-      when metadata.data[0].Zotero != ZOTERO_CONFIG.VERSION
-        Zotero.BetterBibTeX.debug('serialized.load: serialized data found for', {Zotero: metadata.data[0].Zotero}, 'expected', {Zotero: ZOTERO_CONFIG.VERSION})
-
-      when metadata.data[0].BetterBibTeX != Zotero.BetterBibTeX.release
-        Zotero.BetterBibTeX.debug('serialized.load: serialized data found for', {BetterBibTeX: metadata.data[0].BetterBibTeX}, 'expected', {BetterBibTeX: Zotero.BetterBibTeX.release})
-
-      else
-        Zotero.BetterBibTeX.debug('serialized.load: loaded', @cache.data.length, 'items')
-        return
-
-    @reset()
-
   remove: (itemID) ->
     @stats.clear++
-    @cache.removeWhere({itemID: parseInt(itemID)})
+    @db.serialized.removeWhere({itemID: parseInt(itemID)})
 
   get: (zoteroItem) ->
     Zotero.BetterBibTeX.debug('serialized.get:', zoteroItem)
@@ -178,7 +120,7 @@ Zotero.BetterBibTeX.serialized = new class
 
     itemID = parseInt(if zoteroItem.getField then zoteroItem.id else zoteroItem.itemID)
     Zotero.BetterBibTeX.debug('serialized.get::', itemID, zoteroItem)
-    item = @cache.findOne({itemID})
+    item = @db.serialized.findOne({itemID})
 
     if item
       @stats.hit++
@@ -204,7 +146,7 @@ Zotero.BetterBibTeX.serialized = new class
           @fixup(item, itemID)
           item.attachmentIDs = zoteroItem.getAttachments() || []
 
-      @cache.insert(item)
+      @db.serialized.insert(item)
 
     return null if item.itemType == 'cache-miss'
     item.attachments = (@get({itemID: id}) for id in item.attachmentIDs) unless item.itemType in ['note', 'attachment']
