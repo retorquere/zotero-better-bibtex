@@ -3,7 +3,6 @@ Zotero.BetterBibTeX.auto = new class
     @db = Zotero.BetterBibTeX.DB
     @search = {}
     @idle = false
-    Zotero.BetterBibTeX.debug('idle: auto-exporter initialized:')
 
   mark: (ae, status) ->
     Zotero.BetterBibTeX.debug('mark:', {ae, status})

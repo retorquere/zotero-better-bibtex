@@ -105,7 +105,11 @@ Zotero.BetterBibTeX.DB = new class
       @db.main.save((err) -> throw(err) if (err))
       @db.main.autosaveClearFlags()
 
-    @db.volatile.save((err) -> throw(err) if (err)) if all
+    if all
+      cutoff = Date.now()
+      cutoff.setDate(now.getDate() - 30)
+      @cache.removeWhere((o) -> o.accessed < cutoff)
+      @db.volatile.save((err) -> throw(err) if (err))
 
   adapter:
     saveDatabase: (name, serialized, callback) ->

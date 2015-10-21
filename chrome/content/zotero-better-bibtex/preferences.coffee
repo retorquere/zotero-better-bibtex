@@ -1,6 +1,5 @@
 BetterBibTeXPref =
   paneLoad: ->
-    Zotero.BetterBibTeX.debug('preferences.paneLoad:', Zotero.BetterBibTeX.disabled)
     disabled = null
     tabs = document.getElementById('better-bibtex-prefs-tabs')
     for tab, i in tabs.getElementsByTagName('tab')

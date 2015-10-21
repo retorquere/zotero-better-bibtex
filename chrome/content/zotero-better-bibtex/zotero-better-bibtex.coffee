@@ -17,8 +17,6 @@ class Zotero.BetterBibTeX.DateParser
     for d in ['year', 'month', 'day', 'empty']
       date[d] = @date["#{d}#{suffix}"]
 
-    Zotero.BetterBibTeX.debug('CSL: arraydate', {parsed: @, date, suffix})
-
     # [ 0 ] instead if [0, 0]; see https://github.com/ZotPlus/zotero-better-bibtex/issues/360#issuecomment-143540469
     return [ 0 ] if date.empty
 
@@ -70,11 +68,9 @@ class Zotero.BetterBibTeX.DateParser
 
     @dateorder ||= Zotero.BetterBibTeX.Locales.dateorder[@zoteroLocale]
 
-    Zotero.BetterBibTeX.debug('date parser locale:', {order: @dateorder, given: options.locale, found, fallback, zotero: @zoteroLocale})
     @date = @parse()
 
   swapMonth: (date, dateorder) ->
-    Zotero.BetterBibTeX.debug('swapMonth:', {date, order: @dateorder})
     return unless date.day && date.month
 
     switch
@@ -82,16 +78,13 @@ class Zotero.BetterBibTeX.DateParser
       when date.month > 12 then
       else return
     [date.month, date.day] = [date.day, date.month]
-    Zotero.BetterBibTeX.debug('swapMonth: swapped to', date)
 
   cruft: new Zotero.Utilities.XRegExp("[^\\p{Letter}\\p{Number}]+", 'g')
   parsedate: (date) ->
-    Zotero.BetterBibTeX.debug('parsing:', date)
     date = date.trim()
     return {empty: true} if date == ''
 
     if m = date.match(/^(-?[0-9]{3,4})(\?)?(~)?$/)
-      Zotero.BetterBibTeX.debug('parsing: year', {date, m})
       return {
         year: @year(m[1])
         uncertain: (if m[2] == '?' then true else undefined)
@@ -100,7 +93,6 @@ class Zotero.BetterBibTeX.DateParser
 
     # Juris-M doesn't recognize d?/m/y
     if m = date.match(/^(([0-9]{1,2})[-\s\/])?([0-9]{1,2})[-\s\/]([0-9]{3,4})(\?)?(~)?$/)
-      Zotero.BetterBibTeX.debug('parsing: d/m/y', {date, m})
       parsed = {
         year: parseInt(m[4])
         month: parseInt(m[3])
@@ -112,7 +104,6 @@ class Zotero.BetterBibTeX.DateParser
       return parsed
 
     if m = date.match(/^(-?[0-9]{3,4})[-\s\/]([0-9]{1,2})([-\s\/]([0-9]{1,2}))?(\?)?(~)?$/)
-      Zotero.BetterBibTeX.debug('parsing: y/d/m', {date, m})
       parsed = {
         year: @year(m[1])
         month: parseInt(m[2])
@@ -129,7 +120,6 @@ class Zotero.BetterBibTeX.DateParser
       switch
         when v == 'NaN' then  parsed[k] = undefined
         when typeof v == 'string' && v.match(/^-?[0-9]+$/) then parsed[k] = parseInt(v)
-    Zotero.BetterBibTeX.debug('parsing: juris-m', {parsed})
 
     return null if parsed.literal
     return null if parsed.month && parsed.month > 12 # there's a season in there somewhere
@@ -141,7 +131,6 @@ class Zotero.BetterBibTeX.DateParser
 
     fields = (if parsed.year then 1 else 0) + (if parsed.month then 1 else 0) + (if parsed.day then 1 else 0)
 
-    Zotero.BetterBibTeX.debug('parsed date:', {date, shape, fields, parsed})
     return parsed if fields == 3 || shape.length == fields
 
     return null

@@ -2,7 +2,6 @@ Components.utils.import("resource://zotero/config.js")
 
 Zotero.BetterBibTeX.serialized = new class
   fixup: (item, itemID) ->
-    Zotero.BetterBibTeX.debug('trying to fix:', item) if !item.itemID
 
     item.itemID ?= itemID
     item.itemID = parseInt(item.itemID)
@@ -100,7 +99,6 @@ Zotero.BetterBibTeX.serialized = new class
     @reset()
 
   reset: ->
-    Zotero.BetterBibTeX.debug('serialized.reset')
     @db.serialized.removeDataOnly()
     @stats = {
       clear: 0
@@ -113,20 +111,17 @@ Zotero.BetterBibTeX.serialized = new class
     @db.serialized.removeWhere({itemID: parseInt(itemID)})
 
   get: (zoteroItem) ->
-    Zotero.BetterBibTeX.debug('serialized.get:', zoteroItem)
 
     # we may be passed a serialized item
     return zoteroItem if zoteroItem.itemType && zoteroItem.itemID && zoteroItem.uri
 
     itemID = parseInt(if zoteroItem.getField then zoteroItem.id else zoteroItem.itemID)
-    Zotero.BetterBibTeX.debug('serialized.get::', itemID, zoteroItem)
     item = @db.serialized.findOne({itemID})
 
     if item
       @stats.hit++
     else
       @stats.miss++
-      Zotero.BetterBibTeX.debug('serialize:', {itemID, isAttachment: typeof zoteroItem.isAttachment, zoteroItem})
       zoteroItem = Zotero.Items.get(itemID) unless typeof zoteroItem.isAttachment == 'function'
 
       if zoteroItem.isAttachment()

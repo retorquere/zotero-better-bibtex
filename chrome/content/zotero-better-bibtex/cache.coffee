@@ -84,7 +84,6 @@ Zotero.BetterBibTeX.cache = new class
 
     # file paths vary if exportFileData is on
     if context.exportFileData
-      Zotero.BetterBibTeX.debug("cache.fetch for #{itemID} rejected as file data is being exported")
       return
 
     record = @record(itemID, context)
@@ -97,14 +96,11 @@ Zotero.BetterBibTeX.cache = new class
     else
       @stats.miss++
 
-    Zotero.BetterBibTeX.debug("cache.fetch", (if cached then 'hit' else 'miss'), 'for', record, ':', cached)
-
     return cached
 
   store: (itemID, context, citekey, bibtex) ->
     # file paths vary if exportFileData is on
     if context.exportFileData
-      Zotero.BetterBibTeX.debug("cache.store for #{itemID} rejected as file data is being exported")
       return
 
     record = @record(itemID, context)
@@ -112,11 +108,10 @@ Zotero.BetterBibTeX.cache = new class
     if cached
       cached.citekey = citekey
       cached.bibtex = bibtex
-      cached.lastaccess = Date.now()
+      cached.accessed = Date.now()
       @db.cache.update(cached)
     else
       record.citekey = citekey
       record.bibtex = bibtex
-      record.lastaccess = Date.now()
+      record.accessed = Date.now()
       @db.cache.insert(record)
-    Zotero.BetterBibTeX.debug('cache.store', (if cached then 'replace' else 'insert'), 'for', record)
