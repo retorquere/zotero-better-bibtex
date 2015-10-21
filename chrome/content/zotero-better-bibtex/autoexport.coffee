@@ -6,9 +6,10 @@ Zotero.BetterBibTeX.auto = new class
     Zotero.BetterBibTeX.debug('idle: auto-exporter initialized:')
 
   mark: (ae, status) ->
+    Zotero.BetterBibTeX.debug('mark:', {ae, status})
     ae.updated = (new Date()).toLocaleString()
     ae.status = status
-    Zotero.BetterBibTeX.DB.autoexport.update(ae)
+    @db.autoexport.update(ae)
 
   markSearch: (id) ->
     search = Zotero.Searches.get(id)
@@ -115,7 +116,7 @@ Zotero.BetterBibTeX.auto = new class
           Zotero.BetterBibTeX.debug('preparing auto-export from collection', items.collection)
           translation.setCollection(Zotero.Collections.get(items.collection))
         when 'library'
-          Zotero.BetterBibTeX.debug('preparing auto-export from collection', items.collection)
+          Zotero.BetterBibTeX.debug('preparing auto-export from library', items.library)
           translation.setLibraryID(items.library)
 
     translation.setLocation(path)
@@ -123,8 +124,8 @@ Zotero.BetterBibTeX.auto = new class
 
     translation.setDisplayOptions({
       exportCharset: ae.exportCharset
-      exportNotes: (ae.exportNotes == 'true')
-      useJournalAbbreviation: (ae.useJournalAbbreviation == 'true')
+      exportNotes: ae.exportNotes
+      useJournalAbbreviation: ae.useJournalAbbreviation
     })
 
     return translation

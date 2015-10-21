@@ -385,8 +385,6 @@ class Reference
   postscript: ->
 
   complete: ->
-    #@add({name: 'xref', value: @item.__xref__, enc: 'raw'}) if !@has.xref && @item.__xref__
-
     if Translator.DOIandURL != 'both'
       if @has.doi && @has.url
         switch Translator.DOIandURL

@@ -78,7 +78,20 @@ Zotero.BetterBibTeX.DB = new class
     idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
     idleService.addIdleObserver({observe: (subject, topic, data) => @save() if topic == 'idle'}, 5)
 
+    Zotero.Notifier.registerObserver(
+      notify: (event, type, ids, extraData) ->
+        return unless event in ['delete', 'trash', 'modify']
+        ids = extraData if event == 'delete'
+        return unless ids.length > 0
+
+        for itemID in ids
+          Zotero.BetterBibTeX.debug('touch:', {event, itemID})
+          itemID = parseInt(itemID) unless typeof itemID == 'number'
+          Zotero.BetterBibTeX.DB.touch(itemID)
+    , ['item'])
+
   touch: (itemID) ->
+    Zotero.BetterBibTeX.debug('touch:', itemID)
     @cache.removeWhere({itemID})
     @serialized.removeWhere({itemID})
     @keys.removeWhere((o) -> o.itemID == itemID && o.citekeyFormat)

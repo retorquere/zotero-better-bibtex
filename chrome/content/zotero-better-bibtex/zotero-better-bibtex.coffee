@@ -485,7 +485,6 @@ Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
   Zotero.BetterBibTeX.debug("idle: #{topic}")
   switch topic
     when 'idle'
-      Zotero.BetterBibTeX.DB.save()
       Zotero.BetterBibTeX.auto.idle = true
       Zotero.BetterBibTeX.auto.process('idle')
 
@@ -960,25 +959,22 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
   ids = extraData if event == 'delete'
   return unless ids.length > 0
 
-  for itemID in ids.concat(Zotero.DB.columnQuery("SELECT linkedItemID FROM itemSeeAlso WHERE itemID in #{@DB.SQLite.Set(ids)}"))
-    itemID = parseInt(itemID) unless typeof itemID == 'number'
-    @DB.touch(itemID)
-
   @keymanager.scan(ids, event)
 
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
   collections = @withParentCollections(collections) unless collections.length == 0
-  collections = ("'collection:#{id}'" for id in collections)
+  collections = ("collection:#{id}" for id in collections)
   for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@DB.SQLite.Set(ids)}")
     if libraryID
-      collections.push("'library:#{libraryID}'")
+      collections.push("library:#{libraryID}")
     else
-      collections.push("'library'")
+      collections.push('library')
 
   for ae in @DB.autoexport.where((o) -> o.collection.indexOf('search:') == 0)
     @auto.markSearch(ae.collection.replace('search:', ''))
 
   if collections.length > 0
+    Zotero.BetterBibTeX.debug('mark:', collections)
     for ae in @DB.autoexport.where((o) -> o.collection in collections)
       @auto.mark(ae, 'pending')
     @auto.process("items changed: #{collections}")
