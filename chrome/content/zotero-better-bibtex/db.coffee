@@ -1,4 +1,8 @@
+Components.utils.import('resource://gre/modules/Services.jsm')
+
 Zotero.BetterBibTeX.DB = new class
+  cacheVersion: '1.5.11'
+
   constructor: ->
     # split to speed up auto-saves
     @db = {
@@ -51,12 +55,15 @@ Zotero.BetterBibTeX.DB = new class
       metadata.data[0].BetterBibTeX != Zotero.BetterBibTeX.release
 
     cacheReset = Zotero.BetterBibTeX.pref.get('cacheReset')
-    if @upgradeNeeded || cacheReset > 0
+    cacheVersion = metadata?.data?[0]?.BetterBibTeX || '0.0.0'
+    if cacheReset || Services.vc.compare(cacheVersion, @cacheVersion) < 0
       @serialized.removeDataOnly()
       @cache.removeDataOnly()
       if cacheReset > 0
         Zotero.BetterBibTeX.pref.set('cacheReset', cacheReset - 1)
         Zotero.BetterBibTeX.debug('cache.load forced reset', cacheReset - 1, 'left')
+      else
+        Zotero.BetterBibTeX.debug('cache.load reset after upgrade from', cacheVersion, 'to', Zotero.BetterBibTeX.release)
 
     @keys.on('insert', (key) =>
       if !key.citekeyFormat && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
