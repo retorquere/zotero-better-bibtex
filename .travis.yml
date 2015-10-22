@@ -12,7 +12,6 @@ env:
 - TESTS=ci-cluster-1
 - TESTS=ci-cluster-2
 - TESTS=ci-cluster-3
-- TESTS=bwl
 script:
 - echo $PATH
 - bundle exec rake test[$TESTS]
