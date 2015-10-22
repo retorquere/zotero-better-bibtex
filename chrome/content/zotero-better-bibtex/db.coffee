@@ -96,7 +96,10 @@ Zotero.BetterBibTeX.DB = new class
     @serialized.removeWhere({itemID})
     @keys.removeWhere((o) -> o.itemID == itemID && o.citekeyFormat)
 
+  cacheExpiry: 1000 * 60 * 60 * 24 * 30
+
   save: (all) ->
+    Zotero.BetterBibTeX.debug('DB.save:', {all})
     if all || @db.main.autosaveDirty()
       @db.main.removeCollection('metadata')
       metadata = @db.main.addCollection('metadata')
@@ -106,25 +109,26 @@ Zotero.BetterBibTeX.DB = new class
       @db.main.autosaveClearFlags()
 
     if all
-      cutoff = Date.now()
-      cutoff.setDate(now.getDate() - 30)
-      @cache.removeWhere((o) -> o.accessed < cutoff)
+      @cache.removeWhere((o) => o.accessed < @cacheExpiry)
       @db.volatile.save((err) -> throw(err) if (err))
 
   adapter:
     saveDatabase: (name, serialized, callback) ->
       file = Zotero.BetterBibTeX.createFile(name)
-      stream = FileUtils.openAtomicFileOutputStream(file, FileUtils.MODE_WRONLY | FileUtils.MODE_CREATE | FileUtils.MODE_TRUNCATE)
-      stream.write(serialized, serialized.length)
-      stream.close()
+
+      Zotero.File.putContents(file, serialized)
+
       callback(true)
+      Zotero.BetterBibTeX.debug('DB.saveDatabase:', {name, file: file.path})
 
     loadDatabase: (name, callback) ->
       file = Zotero.BetterBibTeX.createFile(name)
+      Zotero.BetterBibTeX.debug('DB.loadDatabase:', {name, file: file.path})
       if file.exists()
         callback(Zotero.File.getContents(file))
       else
         callback(null)
+      Zotero.BetterBibTeX.debug('DB.loadDatabase: done', {name, file: file.path})
 
   SQLite:
     parseTable: (name) ->
@@ -170,7 +174,27 @@ Zotero.BetterBibTeX.DB = new class
       db.remove(true) if db.exists()
 
       db = Zotero.BetterBibTeX.createFile('serialized-items.json')
-      db.remove(true) if db.exists()
+      if db.exists()
+        @serialized.removeDataOnly()
+        try
+          serialized = JSON.parse(Zotero.File.getContents(db))
+        catch
+          serialized = {}
+
+        if Array.isArray(serialized.data)
+          Zotero.BetterBibTeX.debug('DB.migrate: serialized')
+          migrated = 0
+          for item in serialized.data
+            migrated += 1
+            delete item.meta
+            delete item['$loki']
+            for attachment in item.attachments || []
+              delete attachment.meta
+              delete attachment['$loki']
+            @serialized.insert(item)
+          Zotero.BetterBibTeX.debug('DB.migrate: serialized=', migrated)
+
+        db.remove(true)
 
       db = Zotero.getZoteroDatabase('betterbibtex')
       return unless db.exists()
@@ -181,13 +205,16 @@ Zotero.BetterBibTeX.DB = new class
 
       # the context stuff was a mess
       if @tableExists('betterbibtex.autoexport') && !@table_info('betterbibtex.autoexport').context
+        Zotero.BetterBibTeX.debug('DB.migrate: autoexport')
         Zotero.BetterBibTeX.DB.autoexport.removeDataOnly()
 
         if @table_info('betterbibtex.autoexport').collection
           Zotero.DB.query("update betterbibtex.autoexport set collection = (select 'library:' || libraryID from groups where 'group:' || groupID = collection) where collection like 'group:%'")
           Zotero.DB.query("update betterbibtex.autoexport set collection = 'collection:' || collection where collection <> 'library' and collection not like '%:%'")
 
+        migrated = 0
         for row in Zotero.DB.query('select * from betterbibtex.autoexport')
+          migrated += 1
           Zotero.BetterBibTeX.DB.autoexport.insert({
             collection: row.collection
             path: row.path
@@ -198,27 +225,64 @@ Zotero.BetterBibTeX.DB = new class
             exportedRecursively: (row.exportedRecursively == 'true')
             status: 'pending'
           })
+        Zotero.BetterBibTeX.debug('DB.migrate: autoexport=', migrated)
+
+      if @tableExists('betterbibtex.cache')
+        Zotero.BetterBibTeX.debug('DB.migrate: cache')
+        Zotero.BetterBibTeX.DB.cache.removeDataOnly()
+
+        migrated = 0
+        for row in Zotero.DB.query('select * from betterbibtex.cache')
+          row.itemID = parseInt(row.itemID)
+          continue unless typeof row.itemID == 'number'
+
+          continue unless row.exportCharset
+          continue unless row.exportNotes in ['true', 'false']
+          continue unless row.getCollections in ['true', 'false']
+          continue unless row.translatroID
+          continue unless row.useJournalAbbreviation in ['true', 'false']
+          continue unless row.citekey
+          continue unless row.bibtex
+
+          migrated += 1
+          Zotero.BetterBibTeX.DB.cacheautoexport.insert({
+            itemID: row.itemID
+            exportCharset: row.exportCharset
+            exportNotes: (row.exportNotes == 'true')
+            getCollections: (row.getCollections == 'true')
+            translatroID: row.translatroID
+            useJournalAbbreviation: (row.useJournalAbbreviation == 'true')
+            citekey: row.citekey
+            bibtex: row.bibtex
+            accessed: Date.now()
+          })
+        Zotero.BetterBibTeX.debug('DB.migrate: cache=', migrated)
 
       if @tableExists('betterbibtex.keys')
+        Zotero.BetterBibTeX.debug('DB.migrate: keys')
         Zotero.BetterBibTeX.DB.keys.removeDataOnly()
         pinned = @table_info('betterbibtex.autoexport').pinned
 
+        migrated = 0
         for row in Zotero.DB.query('select k.*, i.libraryID from betterbibtex.keys k join items i on k.itemID = i.itemID')
-          if pinned
-            continue unless row.pinned == 1
-          else
-            continue if row.citekeyFormat
+          continue if pinned && row.pinned != 1
+          migrated += 1
+
+          row.citekeyFormat = null unless row.citekeyFormat
 
           Zotero.BetterBibTeX.DB.keys.insert({
             itemID: parseInt(row.itemID)
             citekey: row.citekey
-            citekeyFormat: null
+            citekeyFormat: row.citekeyFormat
             libraryID: row.libraryID
           })
+        Zotero.BetterBibTeX.debug('DB.migrate: keys=', migrated)
 
       Zotero.DB.query('DETACH betterbibtex')
 
       db.moveTo(null, 'betterbibtex.sqlite.bak')
+
+      Zotero.BetterBibTeX.DB.save(true)
 
       Zotero.BetterBibTeX.flash('Better BibTeX: database updated', 'Database update finished')
       Zotero.BetterBibTeX.flash('Better BibTeX: cache has been reset', 'Cache has been reset due to a version upgrade. First exports after upgrade will be slower than usual')
