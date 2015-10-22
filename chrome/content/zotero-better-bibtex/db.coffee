@@ -182,24 +182,28 @@ Zotero.BetterBibTeX.DB = new class
 
       db = Zotero.BetterBibTeX.createFile('serialized-items.json')
       if db.exists()
-        @serialized.removeDataOnly()
+        Zotero.BetterBibTeX.DB.serialized.removeDataOnly()
         try
           serialized = JSON.parse(Zotero.File.getContents(db))
         catch
           serialized = {}
 
-        if Array.isArray(serialized.data)
+        serialized = (coll.data for coll in serialized.collections || [] when coll.name == 'serialized')[0]
+
+        if Array.isArray(serialized)
           Zotero.BetterBibTeX.debug('DB.migrate: serialized')
           migrated = 0
-          for item in serialized.data
+          for item in serialized
             migrated += 1
             delete item.meta
             delete item['$loki']
             for attachment in item.attachments || []
               delete attachment.meta
               delete attachment['$loki']
-            @serialized.insert(item)
+            Zotero.BetterBibTeX.DB.serialized.insert(item)
           Zotero.BetterBibTeX.debug('DB.migrate: serialized=', migrated)
+        else
+          Zotero.BetterBibTeX.debug('DB.migrate: serialized: no data')
 
         db.remove(true)
 
@@ -240,29 +244,19 @@ Zotero.BetterBibTeX.DB = new class
 
         migrated = 0
         for row in Zotero.DB.query('select * from betterbibtex.cache')
-          row.itemID = parseInt(row.itemID)
-          continue unless typeof row.itemID == 'number'
-
-          continue unless row.exportCharset
-          continue unless row.exportNotes in ['true', 'false']
-          continue unless row.getCollections in ['true', 'false']
-          continue unless row.translatroID
-          continue unless row.useJournalAbbreviation in ['true', 'false']
-          continue unless row.citekey
-          continue unless row.bibtex
-
           migrated += 1
-          Zotero.BetterBibTeX.DB.cacheautoexport.insert({
-            itemID: row.itemID
+          Zotero.BetterBibTeX.DB.cache.insert({
+            itemID: parseInt(row.itemID)
             exportCharset: row.exportCharset
             exportNotes: (row.exportNotes == 'true')
             getCollections: (row.getCollections == 'true')
-            translatroID: row.translatroID
+            translatorID: row.translatorID
             useJournalAbbreviation: (row.useJournalAbbreviation == 'true')
             citekey: row.citekey
             bibtex: row.bibtex
             accessed: Date.now()
           })
+
         Zotero.BetterBibTeX.debug('DB.migrate: cache=', migrated)
 
       if @tableExists('betterbibtex.keys')
