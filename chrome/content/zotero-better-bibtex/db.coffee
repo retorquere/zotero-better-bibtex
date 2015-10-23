@@ -18,6 +18,10 @@ Zotero.BetterBibTeX.DB = new class
       })
     }
 
+    db = Zotero.BetterBibTeX.createFile('serialized-items.json')
+    keepCache = db.exists()
+    db.moveTo(null, @db.volatile.filename) if keepCache
+
     @db.main.loadDatabase()
     @db.volatile.loadDatabase()
 
@@ -56,7 +60,7 @@ Zotero.BetterBibTeX.DB = new class
 
     cacheReset = Zotero.BetterBibTeX.pref.get('cacheReset')
     cacheVersion = metadata?.data?[0]?.BetterBibTeX || '0.0.0'
-    if cacheReset || Services.vc.compare(cacheVersion, @cacheVersion) < 0
+    if cacheReset || (!keepCache && Services.vc.compare(cacheVersion, @cacheVersion) < 0)
       @serialized.removeDataOnly()
       @cache.removeDataOnly()
       if cacheReset > 0
@@ -180,32 +184,8 @@ Zotero.BetterBibTeX.DB = new class
       db = Zotero.getZoteroDatabase('betterbibtexcache')
       db.remove(true) if db.exists()
 
-      db = Zotero.BetterBibTeX.createFile('serialized-items.json')
-      if db.exists()
-        Zotero.BetterBibTeX.DB.serialized.removeDataOnly()
-        try
-          serialized = JSON.parse(Zotero.File.getContents(db))
-        catch
-          serialized = {}
-
-        serialized = (coll.data for coll in serialized.collections || [] when coll.name == 'serialized')[0]
-
-        if Array.isArray(serialized)
-          Zotero.BetterBibTeX.debug('DB.migrate: serialized')
-          migrated = 0
-          for item in serialized
-            migrated += 1
-            delete item.meta
-            delete item['$loki']
-            for attachment in item.attachments || []
-              delete attachment.meta
-              delete attachment['$loki']
-            Zotero.BetterBibTeX.DB.serialized.insert(item)
-          Zotero.BetterBibTeX.debug('DB.migrate: serialized=', migrated)
-        else
-          Zotero.BetterBibTeX.debug('DB.migrate: serialized: no data')
-
-        db.remove(true)
+      db = Zotero.BetterBibTeX.createFile('better-bibtex-serialized-items.json')
+      db.remove(true) if db.exists()
 
       db = Zotero.getZoteroDatabase('betterbibtex')
       return unless db.exists()
