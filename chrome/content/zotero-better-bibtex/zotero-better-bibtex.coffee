@@ -207,16 +207,20 @@ Zotero.BetterBibTeX.debugMode = (silent) ->
     @flash('Debug mode active', 'Debug mode is active. This will affect performance.') unless silent
 
     clearInterval(Zotero.BetterBibTeX.debugInterval) if Zotero.BetterBibTeX.debugInterval
-    Zotero.BetterBibTeX.debugInterval = setInterval(->
-      Zotero.BetterBibTeX.cacheHistory ||= []
-      Zotero.BetterBibTeX.cacheHistory.push({
-        timestamp: new Date()
-        serialized: Zotero.BetterBibTeX.serialized.stats
-        cache: Zotero.BetterBibTeX.cache.stats
-      })
-    , 10000)
+    try
+      Zotero.BetterBibTeX.debugInterval = setInterval(->
+        Zotero.BetterBibTeX.cacheHistory ||= []
+        Zotero.BetterBibTeX.cacheHistory.push({
+          timestamp: new Date()
+          serialized: Zotero.BetterBibTeX.serialized.stats
+          cache: Zotero.BetterBibTeX.cache.stats
+        })
+      , 10000)
+    catch
+      delete Zotero.BetterBibTeX.debugInterval
   else
     clearInterval(Zotero.BetterBibTeX.debugInterval) if Zotero.BetterBibTeX.debugInterval
+    delete Zotero.BetterBibTeX.debugInterval
     delete Zotero.BetterBibTeX.cacheHistory
     @debug = @debug_off
     @log = @log_off

@@ -96,9 +96,14 @@ Zotero.BetterBibTeX.serialized = new class
 
   constructor: ->
     @db = Zotero.BetterBibTeX.DB
-    @reset()
+    @stats = {
+      clear: 0
+      hit: 0
+      miss: 0
+    }
 
   reset: ->
+    Zotero.BetterBibTeX.debug('serialized.reset')
     @db.serialized.removeDataOnly()
     @stats = {
       clear: 0
@@ -107,11 +112,11 @@ Zotero.BetterBibTeX.serialized = new class
     }
 
   remove: (itemID) ->
+    Zotero.BetterBibTeX.debug('serialized.remove:', {itemID})
     @stats.clear++
     @db.serialized.removeWhere({itemID: parseInt(itemID)})
 
   get: (zoteroItem) ->
-
     # we may be passed a serialized item
     return zoteroItem if zoteroItem.itemType && zoteroItem.itemID && zoteroItem.uri
 
@@ -119,8 +124,10 @@ Zotero.BetterBibTeX.serialized = new class
     item = @db.serialized.findOne({itemID})
 
     if item
+      Zotero.BetterBibTeX.debug('serialized: hit')
       @stats.hit++
     else
+      Zotero.BetterBibTeX.debug('serialized: miss')
       @stats.miss++
       zoteroItem = Zotero.Items.get(itemID) unless typeof zoteroItem.isAttachment == 'function'
 

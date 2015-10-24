@@ -289,6 +289,13 @@ Translator.initialize = ->
       @debug('adding collection:', collection)
       @collections.push(@sanitizeCollection(collection))
 
+  @context = {
+    exportCharset: (@exportCharset || 'UTF-8').toUpperCase()
+    exportNotes: !!@exportNotes
+    translatorID: @translatorID
+    useJournalAbbreviation: !!@useJournalAbbreviation
+  }
+
 # The default collection structure passed is beyond screwed up.
 Translator.sanitizeCollection = (coll) ->
   sane = {
@@ -313,8 +320,9 @@ Translator.nextItem = ->
   while item = Zotero.nextItem()
     continue if item.itemType == 'note' || item.itemType == 'attachment'
     if @caching
-      cached = Zotero.BetterBibTeX.cache.fetch(item.itemID, Translator)
+      cached = Zotero.BetterBibTeX.cache.fetch(item.itemID, @context)
       if cached?.citekey
+        Translator.debug('nextItem: cached')
         @citekeys[item.itemID] = cached.citekey
         Zotero.write(cached.bibtex)
         continue
@@ -323,6 +331,7 @@ Translator.nextItem = ->
     item.__citekey__ ||= Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
 
     @citekeys[item.itemID] = item.__citekey__
+    Translator.debug('nextItem: serialized')
     return item
 
   return null

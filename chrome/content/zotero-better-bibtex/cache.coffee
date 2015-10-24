@@ -16,7 +16,7 @@ Zotero.BetterBibTeX.cache = new class
   verify: (entry) ->
     return entry unless Zotero.BetterBibTeX.pref.get('debug') || Zotero.BetterBibTeX.testing
 
-    verify = {itemID: 1, exportCharset: 'x', exportNotes: true, getCollections: true, translatorID: 'x', useJournalAbbreviation: true }
+    verify = {itemID: 1, exportCharset: 'x', exportNotes: true, translatorID: 'x', useJournalAbbreviation: true }
 
     for own key, value of entry
       switch
@@ -63,7 +63,6 @@ Zotero.BetterBibTeX.cache = new class
       itemID: @integer(itemID)
       exportCharset: (context.exportCharset || 'UTF-8').toUpperCase()
       exportNotes: !!context.exportNotes
-      getCollections: !!context.getCollections
       translatorID: context.translatorID
       useJournalAbbreviation: !!context.useJournalAbbreviation
     })
@@ -80,21 +79,28 @@ Zotero.BetterBibTeX.cache = new class
     return cache
 
   fetch: (itemID, context) ->
-    return unless Zotero.BetterBibTeX.pref.get('caching')
+    Zotero.BetterBibTeX.debug('cache.fetch:', {itemID, context})
+    #return unless Zotero.BetterBibTeX.pref.get('caching')
 
     # file paths vary if exportFileData is on
-    if context.exportFileData
-      return
+    return if context.exportFileData
 
-    record = @record(itemID, context)
-    cached = @db.cache.findObject(record)
+    cached = @db.cache.findOne({'$and': [
+      { itemID: @integer(itemID) }
+      { exportCharset: context.exportCharset }
+      { exportNotes: context.exportNotes }
+      { translatorID: context.translatorID }
+      { useJournalAbbreviation: context.useJournalAbbreviation }
+    ]})
 
     if cached
       cached.accessed = Date.now()
-      @db.cache.update(cached)
+      # @db.cache.update(cached)
       @stats.hit++
+      Zotero.BetterBibTeX.debug('cache.fetch: hit')
     else
       @stats.miss++
+      Zotero.BetterBibTeX.debug('cache.fetch: miss')
 
     return cached
 
@@ -109,7 +115,7 @@ Zotero.BetterBibTeX.cache = new class
       cached.citekey = citekey
       cached.bibtex = bibtex
       cached.accessed = Date.now()
-      @db.cache.update(cached)
+      # @db.cache.update(cached)
     else
       record.citekey = citekey
       record.bibtex = bibtex

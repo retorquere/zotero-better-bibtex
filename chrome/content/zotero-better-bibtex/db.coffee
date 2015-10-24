@@ -2,6 +2,7 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 
 Zotero.BetterBibTeX.DB = new class
   cacheVersion: '1.5.11'
+  cacheExpiry: Date.now() - (1000 * 60 * 60 * 24 * 30)
 
   constructor: ->
     # split to speed up auto-saves
@@ -25,18 +26,37 @@ Zotero.BetterBibTeX.DB = new class
     @db.main.loadDatabase()
     @db.volatile.loadDatabase()
 
-    # this ensures that if the volatile DB hasn't been saved, it is destroyed and will be rebuilt.
+    @metadata = @db.main.getCollection('metadata')
+    @metadata ||= @db.main.addCollection('metadata')
+    @metadata = @metadata.findOne()
+    @metadata ||= {}
+    @metadata.Zotero ||= '0.0.0'
+    @metadata.BetterBibTeX ||= '0.0.0'
+    @metadata.cacheReap ||= Date.now()
+
+    # this ensures that if the volatile DB hasn't been saved in the previous session, it is destroyed and will be rebuilt.
     volatile = Zotero.BetterBibTeX.createFile(@db.volatile.filename)
-    volatile.remove(true) if volatile.exists()
+    volatile.moveTo(null, @db.volatile.filename + '.bak') if volatile.exists()
 
     @cache = @db.volatile.getCollection('cache')
-    @cache ||= @db.volatile.addCollection('cache', { indices: ['itemID', 'exportCharset', 'exportNotes', 'getCollections', 'translatorID', 'useJournalAbbreviation', 'citekey'] })
+    @cache ||= @db.volatile.addCollection('cache', { indices: ['itemID'] })
+    delete @cache.binaryIndices.getCollections
+    delete @cache.binaryIndices.exportCharset
+    delete @cache.binaryIndices.exportNotes
+    delete @cache.binaryIndices.translatorID
+    delete @cache.binaryIndices.useJournalAbbreviation
+
+    if @metadata.cacheReap < @cacheExpiry
+      Zotero.BetterBibTeX.flash('purging obsolete cache items')
+      @metadata.cacheReap = Date.now()
+      @cache.removeWhere((o) => (o.accessed || 0) < @cacheExpiry)
+      Zotero.BetterBibTeX.flash('purging finished')
 
     @serialized = @db.volatile.getCollection('serialized')
     @serialized ||= @db.volatile.addCollection('serialized', { indices: ['itemID', 'uri'] })
 
     @keys = @db.main.getCollection('keys')
-    @keys ||= @db.main.addCollection('keys', {indices: ['itemID', 'libraryID', 'citekey', 'citekeyFormat']})
+    @keys ||= @db.main.addCollection('keys', {indices: ['itemID', 'libraryID', 'citekey']})
 
     @autoexport = @db.main.getCollection('autoexport')
     @autoexport ||= @db.main.addCollection('autoexport', {indices: ['collection', 'path', 'exportCharset', 'exportNotes', 'translatorID', 'useJournalAbbreviation', 'exportedRecursively']})
@@ -53,21 +73,17 @@ Zotero.BetterBibTeX.DB = new class
     # # add unique index
     # coll.ensureUniqueIndex("userId")
 
-    metadata = @db.main.getCollection('metadata')
-    @upgradeNeeded = !metadata || !metadata[0] ||
-      metadata.data[0].Zotero != ZOTERO_CONFIG.VERSION ||
-      metadata.data[0].BetterBibTeX != Zotero.BetterBibTeX.release
+    @upgradeNeeded = @metadata.Zotero != ZOTERO_CONFIG.VERSION || metadata.BetterBibTeX != Zotero.BetterBibTeX.release
 
     cacheReset = Zotero.BetterBibTeX.pref.get('cacheReset')
-    cacheVersion = metadata?.data?[0]?.BetterBibTeX || '0.0.0'
-    if cacheReset || (!keepCache && Services.vc.compare(cacheVersion, @cacheVersion) < 0)
+    if cacheReset || (!keepCache && Services.vc.compare(@metadata.BetterBibTeX, @cacheVersion) < 0)
       @serialized.removeDataOnly()
       @cache.removeDataOnly()
       if cacheReset > 0
         Zotero.BetterBibTeX.pref.set('cacheReset', cacheReset - 1)
         Zotero.BetterBibTeX.debug('cache.load forced reset', cacheReset - 1, 'left')
       else
-        Zotero.BetterBibTeX.debug('cache.load reset after upgrade from', cacheVersion, 'to', Zotero.BetterBibTeX.release)
+        Zotero.BetterBibTeX.debug('cache.load reset after upgrade from', @metadata.BetterBibTeX, 'to', Zotero.BetterBibTeX.release)
 
     @keys.on('insert', (key) =>
       if !key.citekeyFormat && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
@@ -85,6 +101,7 @@ Zotero.BetterBibTeX.DB = new class
     )
 
     Zotero.BetterBibTeX.debug('DB: ready')
+    Zotero.BetterBibTeX.debug('DB: ready.serialized:', {n: @serialized.data.length})
 
     idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
     idleService.addIdleObserver({observe: (subject, topic, data) => @save() if topic == 'idle'}, 5)
@@ -107,21 +124,20 @@ Zotero.BetterBibTeX.DB = new class
     @serialized.removeWhere({itemID})
     @keys.removeWhere((o) -> o.itemID == itemID && o.citekeyFormat)
 
-  cacheExpiry: 1000 * 60 * 60 * 24 * 30
-
   save: (all) ->
     Zotero.BetterBibTeX.debug('DB.save:', {all})
     if all || @db.main.autosaveDirty()
+      @metadata.Zotero = ZOTERO_CONFIG.VERSION
+      @metadata.BetterBibTeX = Zotero.BetterBibTeX.release
+
       @db.main.removeCollection('metadata')
       metadata = @db.main.addCollection('metadata')
-      metadata.insert({Zotero: ZOTERO_CONFIG.VERSION, BetterBibTeX: Zotero.BetterBibTeX.release})
+      metadata.insert(@metadata)
 
       @db.main.save((err) -> throw(err) if (err))
       @db.main.autosaveClearFlags()
 
-    if all
-      @cache.removeWhere((o) => o.accessed < @cacheExpiry)
-      @db.volatile.save((err) -> throw(err) if (err))
+    @db.volatile.save((err) -> throw(err) if (err)) if all
 
   adapter:
     saveDatabase: (name, serialized, callback) ->
@@ -229,7 +245,6 @@ Zotero.BetterBibTeX.DB = new class
             itemID: parseInt(row.itemID)
             exportCharset: row.exportCharset
             exportNotes: (row.exportNotes == 'true')
-            getCollections: (row.getCollections == 'true')
             translatorID: row.translatorID
             useJournalAbbreviation: (row.useJournalAbbreviation == 'true')
             citekey: row.citekey

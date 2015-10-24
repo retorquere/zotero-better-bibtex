@@ -114,6 +114,9 @@ Before do |scenario|
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.attachmentRelativePath', true)
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.autoExport', 'on-change')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.debug', true) if ENV['CI'] != 'true'
+
+  @cacheStats = $Firefox.BetterBibTeX.cacheStats
+
   @selected = nil
   @expectedExport = nil
   @exportOptions = {}
@@ -301,6 +304,17 @@ def preferenceValue(value)
   return Integer(value) if value =~ /^[0-9]+$/
   return value[1..-2] if value =~ /^'[^']+'$/
   return value
+end
+
+Then(/^there should have been the following cache activity:$/) do |table|
+  cacheStats = $Firefox.BetterBibTeX.cacheStats
+
+  table.hashes.each{|stat|
+    stat = OpenStruct.new(stat)
+    expect(cacheStats[stat.cache][stat.measure] - @cacheStats[stat.cache][stat.measure]).to eq(stat.value.to_i)
+  }
+
+  @cacheStats = cacheStats
 end
 
 Then(/^the following library export should match '(.+)':$/) do |filename, table|
