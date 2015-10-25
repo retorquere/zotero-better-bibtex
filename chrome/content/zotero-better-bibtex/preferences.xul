@@ -5,7 +5,8 @@
 <!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
 
 <overlay id="zotero-better-bibtex-preferences"
-  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  xmlns:html="http://www.w3.org/1999/xhtml">
 
   <!-- Include the main extension logic -->
   <script src="chrome://zotero/content/include.js"/>
@@ -222,10 +223,9 @@
             </hbox>
             <checkbox label="&zotero.better-bibtex.rescan-citekeys;" preference="pref-better-bibtex-rescan-citekeys"/>
             <button label="&zotero.better-bibtex.resetCache;" oncommand="BetterBibTeXPref.cacheReset()"/>
-            <hbox>
-              <label value="&zotero.better-bibtex.caching;"/>
-              <textbox id="id-better-bibtex-preferences-cache-activity" flex="1" class="plain" readonly="true"/>
-            </hbox>
+            <description flex="1">
+              <html:a target="_blank" href="http://localhost:23119/better-bibtex/cacheActivity">&zotero.better-bibtex.caching;</html:a>
+            </description>
           </tabpanel>
           <tabpanel> <!-- disabled -->
             <textbox flex="1" multiline="true" id="zotero-better-bibtex-disabled-message" class="plain" readonly="true"/>

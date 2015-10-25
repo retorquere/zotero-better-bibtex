@@ -4,7 +4,6 @@ Zotero.BetterBibTeX.keymanager = new class
     @log = Zotero.BetterBibTeX.log
     @resetJournalAbbrevs()
 
-
   # three-letter month abbreviations. I assume these are the same ones that the
   # docs say are defined in some appendix of the LaTeX book. (I don't have the
   # LaTeX book.)

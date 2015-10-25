@@ -28,10 +28,10 @@ Zotero.BetterBibTeX.DB = new class
 
     @metadata = @db.main.getCollection('metadata')
     @metadata ||= @db.main.addCollection('metadata')
-    @metadata = @metadata.findOne()
+    @metadata = @metadata.chain().data()[0]
     @metadata ||= {}
-    @metadata.Zotero ||= '0.0.0'
-    @metadata.BetterBibTeX ||= '0.0.0'
+    delete @metadata.$loki
+    delete @metadata.meta
     @metadata.cacheReap ||= Date.now()
 
     # this ensures that if the volatile DB hasn't been saved in the previous session, it is destroyed and will be rebuilt.
@@ -45,12 +45,7 @@ Zotero.BetterBibTeX.DB = new class
     delete @cache.binaryIndices.exportNotes
     delete @cache.binaryIndices.translatorID
     delete @cache.binaryIndices.useJournalAbbreviation
-
-    if @metadata.cacheReap < @cacheExpiry
-      Zotero.BetterBibTeX.flash('purging obsolete cache items')
-      @metadata.cacheReap = Date.now()
-      @cache.removeWhere((o) => (o.accessed || 0) < @cacheExpiry)
-      Zotero.BetterBibTeX.flash('purging finished')
+    @cacheAccess = {}
 
     @serialized = @db.volatile.getCollection('serialized')
     @serialized ||= @db.volatile.addCollection('serialized', { indices: ['itemID', 'uri'] })
@@ -73,10 +68,11 @@ Zotero.BetterBibTeX.DB = new class
     # # add unique index
     # coll.ensureUniqueIndex("userId")
 
-    @upgradeNeeded = @metadata.Zotero != ZOTERO_CONFIG.VERSION || metadata.BetterBibTeX != Zotero.BetterBibTeX.release
+    @upgradeNeeded = @metadata.Zotero != ZOTERO_CONFIG.VERSION || @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
 
     cacheReset = Zotero.BetterBibTeX.pref.get('cacheReset')
-    if cacheReset || (!keepCache && Services.vc.compare(@metadata.BetterBibTeX, @cacheVersion) < 0)
+    if cacheReset || (!keepCache && @metadata.BetterBibTeX && Services.vc.compare(@metadata.BetterBibTeX, @cacheVersion) < 0)
+      Zotero.BetterBibTeX.debug('db.reset:', {cacheReset, keepCache, BetterBibTeX: @metadata.BetterBibTeX, cacheVersion: @cacheVersion})
       @serialized.removeDataOnly()
       @cache.removeDataOnly()
       if cacheReset > 0
@@ -101,7 +97,7 @@ Zotero.BetterBibTeX.DB = new class
     )
 
     Zotero.BetterBibTeX.debug('DB: ready')
-    Zotero.BetterBibTeX.debug('DB: ready.serialized:', {n: @serialized.data.length})
+    Zotero.BetterBibTeX.debug('DB: ready.serialized:', {n: @serialized.chain().data().length})
 
     idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
     idleService.addIdleObserver({observe: (subject, topic, data) => @save() if topic == 'idle'}, 5)
@@ -125,19 +121,47 @@ Zotero.BetterBibTeX.DB = new class
     @keys.removeWhere((o) -> o.itemID == itemID && o.citekeyFormat)
 
   save: (all) ->
-    Zotero.BetterBibTeX.debug('DB.save:', {all})
+    Zotero.BetterBibTeX.debug('DB.save:', {all, serialized: @serialized.chain().data().length})
+
+    if all
+      try
+        for id, timestamp of @cacheAccess
+          item = @cache.get(id)
+          next unless item
+          item.accessed = timestamp
+          @cache.update(item)
+        if @metadata.cacheReap < @cacheExpiry
+          @metadata.cacheReap = Date.now()
+          @cache.removeWhere((o) => (o.accessed || 0) < @cacheExpiry)
+      catch err
+        Zotero.BetterBibTeX.error('error purging cache:', err)
+
+      try
+        @db.volatile.save((err) ->
+          if err
+            Zotero.BetterBibTeX.error('error saving cache:', err)
+            throw(err)
+        )
+      catch err
+        Zotero.BetterBibTeX.error('error saving cache:', err)
+
     if all || @db.main.autosaveDirty()
-      @metadata.Zotero = ZOTERO_CONFIG.VERSION
-      @metadata.BetterBibTeX = Zotero.BetterBibTeX.release
+      try
+        @metadata.Zotero = ZOTERO_CONFIG.VERSION
+        @metadata.BetterBibTeX = Zotero.BetterBibTeX.release
 
-      @db.main.removeCollection('metadata')
-      metadata = @db.main.addCollection('metadata')
-      metadata.insert(@metadata)
+        @db.main.removeCollection('metadata')
+        metadata = @db.main.addCollection('metadata')
+        metadata.insert(@metadata)
+      catch err
+        Zotero.BetterBibTeX.error('error updating DB metadata:', err)
 
-      @db.main.save((err) -> throw(err) if (err))
+      @db.main.save((err) ->
+        if err
+          Zotero.BetterBibTeX.error('error saving DB:', err)
+          throw(err)
+      )
       @db.main.autosaveClearFlags()
-
-    @db.volatile.save((err) -> throw(err) if (err)) if all
 
   adapter:
     saveDatabase: (name, serialized, callback) ->

@@ -198,23 +198,33 @@ Zotero.BetterBibTeX.log_off = ->
 Zotero.BetterBibTeX.log = Zotero.BetterBibTeX.log_on = (msg...) ->
   @_log.apply(@, [3].concat(msg))
 
-Zotero.BetterBibTeX.debugMode = (silent) ->
+Zotero.BetterBibTeX.addCacheHistory = ->
+  Zotero.BetterBibTeX.cacheHistory ||= []
+  Zotero.BetterBibTeX.cacheHistory = Zotero.BetterBibTeX.cacheHistory.slice(-40)
+  Zotero.BetterBibTeX.cacheHistory.push({
+    timestamp: new Date()
+    serialized:
+      hit: Zotero.BetterBibTeX.serialized.stats.hit
+      miss: Zotero.BetterBibTeX.serialized.stats.miss
+      clear: Zotero.BetterBibTeX.serialized.stats.clear
+    cache:
+      hit: Zotero.BetterBibTeX.cache.stats.hit
+      miss: Zotero.BetterBibTeX.cache.stats.miss
+      clear: Zotero.BetterBibTeX.cache.stats.clear
+  })
+
+Zotero.BetterBibTeX.debugMode = ->
   if @pref.get('debug')
     Zotero.Debug.setStore(true)
     Zotero.Prefs.set('debug.store', true)
     @debug = @debug_on
     @log = @log_on
-    @flash('Debug mode active', 'Debug mode is active. This will affect performance.') unless silent
+    @flash('Debug mode active', 'Debug mode is active. This will affect performance.')
 
     clearInterval(Zotero.BetterBibTeX.debugInterval) if Zotero.BetterBibTeX.debugInterval
     try
       Zotero.BetterBibTeX.debugInterval = setInterval(->
-        Zotero.BetterBibTeX.cacheHistory ||= []
-        Zotero.BetterBibTeX.cacheHistory.push({
-          timestamp: new Date()
-          serialized: Zotero.BetterBibTeX.serialized.stats
-          cache: Zotero.BetterBibTeX.cache.stats
-        })
+        Zotero.BetterBibTeX.addCacheHistory()
       , 10000)
     catch
       delete Zotero.BetterBibTeX.debugInterval
@@ -274,7 +284,7 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
   str = str.join(' ')
 
   if level == 0
-    Zotero.logError(msg)
+    Zotero.logError('[better' + '-' + 'bibtex] ' + str)
   else
     Zotero.debug('[better' + '-' + 'bibtex] ' + str, level)
 
@@ -342,14 +352,17 @@ Zotero.BetterBibTeX.disable = (message) ->
   @flash('Better BibTeX has been disabled', message)
 
 Zotero.BetterBibTeX.flash = (title, body) ->
-  Zotero.BetterBibTeX.debug('flash:', title)
-  pw = new Zotero.ProgressWindow()
-  pw.changeHeadline(title)
-  body ||= title
-  body = body.join("\n") if Array.isArray(body)
-  pw.addDescription(body)
-  pw.show()
-  pw.startCloseTimer(8000)
+  try
+    Zotero.BetterBibTeX.debug('flash:', title)
+    pw = new Zotero.ProgressWindow()
+    pw.changeHeadline(title)
+    body ||= title
+    body = body.join("\n") if Array.isArray(body)
+    pw.addDescription(body)
+    pw.show()
+    pw.startCloseTimer(8000)
+  catch err
+    Zotero.BetterBibTeX.error('@flash failed:', {title, body}, err)
 
 Zotero.BetterBibTeX.reportErrors = (includeReferences) ->
   data = {}
@@ -404,7 +417,7 @@ Zotero.BetterBibTeX.pref.observer = {
         return # don't drop the cache just for this
 
     # if any var changes, drop the cache and kick off all exports
-    Zotero.BetterBibTeX.cache.reset()
+    Zotero.BetterBibTeX.cache.reset("pref change: #{data}")
     Zotero.BetterBibTeX.auto.reset()
     Zotero.BetterBibTeX.auto.process('preferences change')
     Zotero.BetterBibTeX.debug('preference change:', subject, topic, data)
@@ -542,8 +555,8 @@ Zotero.BetterBibTeX.init = ->
 
   if @pref.get('scanCitekeys')
     @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
+    @cache.reset('scanCitekeys')
     @keymanager.reset()
-    @cache.reset()
     @pref.set('scanCitekeys', false)
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
@@ -770,7 +783,7 @@ Zotero.BetterBibTeX.init = ->
   Zotero.addShutdownListener(->
     Zotero.BetterBibTeX.log('shutting down')
     Zotero.BetterBibTeX.DB.save(true)
-    Zotero.BetterBibTeX.debugMode('silent')
+    Zotero.BetterBibTeX.debugMode()
     return
   )
 

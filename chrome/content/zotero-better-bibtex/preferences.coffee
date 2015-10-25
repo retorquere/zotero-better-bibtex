@@ -61,7 +61,6 @@ BetterBibTeXPref =
     serverCheckbox.setAttribute('hidden', Zotero.isStandalone && serverEnabled)
 
     keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-    document.getElementById('id-better-bibtex-preferences-cache-activity').value = JSON.stringify({serialized: Zotero.BetterBibTeX.serialized.stats, cache: Zotero.BetterBibTeX.cache.stats })
 
     parseerror = null
     try
@@ -102,8 +101,8 @@ BetterBibTeXPref =
     BetterBibTeXAutoExportPref.refresh()
 
   cacheReset: ->
-    Zotero.BetterBibTeX.cache.reset()
-    Zotero.BetterBibTeX.serialized.reset()
+    Zotero.BetterBibTeX.cache.reset('user request')
+    Zotero.BetterBibTeX.serialized.reset('user request')
 
 BetterBibTeXAutoExportPref =
   remove: ->

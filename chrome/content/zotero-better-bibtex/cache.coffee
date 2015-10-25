@@ -49,8 +49,8 @@ Zotero.BetterBibTeX.cache = new class
     what.itemID = @integer(what.itemID) unless what.itemID == undefined
     @db.cache.removeWhere(what)
 
-  reset: ->
-    Zotero.BetterBibTeX.log("export cache: reset")
+  reset: (reason) ->
+    Zotero.BetterBibTeX.debug('cache.reset:', new Error(reason))
     @db.cache.removeDataOnly()
     @stats = {
       hit: 0
@@ -94,8 +94,7 @@ Zotero.BetterBibTeX.cache = new class
     ]})
 
     if cached
-      cached.accessed = Date.now()
-      # @db.cache.update(cached)
+      @db.cacheAccess[cached.$loki] = Date.now()
       @stats.hit++
       Zotero.BetterBibTeX.debug('cache.fetch: hit')
     else
@@ -115,7 +114,7 @@ Zotero.BetterBibTeX.cache = new class
       cached.citekey = citekey
       cached.bibtex = bibtex
       cached.accessed = Date.now()
-      # @db.cache.update(cached)
+      @db.cache.update(cached)
     else
       record.citekey = citekey
       record.bibtex = bibtex

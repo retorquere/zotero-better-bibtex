@@ -102,8 +102,8 @@ Zotero.BetterBibTeX.serialized = new class
       miss: 0
     }
 
-  reset: ->
-    Zotero.BetterBibTeX.debug('serialized.reset')
+  reset: (reason) ->
+    Zotero.BetterBibTeX.debug('serialized.reset:', new Error(reason))
     @db.serialized.removeDataOnly()
     @stats = {
       clear: 0

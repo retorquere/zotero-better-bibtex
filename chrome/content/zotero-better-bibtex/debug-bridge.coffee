@@ -41,8 +41,8 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.Collections.erase((coll.id for coll in Zotero.getCollections()))
   Zotero.Items.emptyTrash()
 
-  Zotero.BetterBibTeX.cache.reset()
-  Zotero.BetterBibTeX.serialized.reset()
+  Zotero.BetterBibTeX.cache.reset('debugbridge.reset')
+  Zotero.BetterBibTeX.serialized.reset('debugbridge.reset')
   Zotero.BetterBibTeX.auto.clear()
   Zotero.BetterBibTeX.keymanager.reset()
 
