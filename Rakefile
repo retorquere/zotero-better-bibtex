@@ -131,7 +131,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',
   'resource/translators/he.js',
-  'resource/reports/cacheActivity.html',
+  'resource/reports/cacheActivity.txt',
 ]).sort.uniq
 
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
@@ -191,6 +191,12 @@ DOWNLOADS.each_pair{|dir, files|
     end
   }
 }
+
+# stupid AMO validator thinks HTML-loaded javascripts are harmful. If that were true, you have bigger problems than this
+# people.
+file 'resource/reports/cacheActivity.txt' => 'resource/reports/cacheActivity.html' do |t|
+  FileUtils.cp(t.source, t.name)
+end
 
 file 'chrome/content/zotero-better-bibtex/csl-util_name_particles.js' => 'Rakefile' do |t|
   Tempfile.create('grasp+.js'.split('+')) do |tmp|
