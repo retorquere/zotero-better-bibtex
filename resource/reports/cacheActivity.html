@@ -29,29 +29,33 @@
 
         } else {
           console.log('dummy data');
-          drawChart([
-              [ 'timestamp', 'Serialized: Hits', 'Serialized: Misses', 'Serialized: Clears', 'Cache: Hits', 'Cache: Misses', 'Cache: Clears' ],
-              [ '0:0:0', 0, 0, 0, 0, 0, 0 ],
-              [ '1:1:1', 1, 1, 1, 1, 1, 1 ],
-              [ '4:4:4', 4, 4, 4, 4, 4, 4 ],
-              [ '9:9:9', 9, 9, 9, 9, 9, 9 ],
-              [ '16:16:16', 16, 16, 16, 16, 16, 16 ],
-              [ '25:25:25', 25, 25, 25, 25, 25, 25 ],
-              [ '36:36:36', 36, 36, 36, 36, 36, 36 ],
-              [ '49:49:49', 49, 49, 49, 49, 49, 49 ],
-              [ '64:64:64', 64, 64, 64, 64, 64, 64 ],
-              [ '81:81:81', 81, 81, 81, 81, 81, 81 ],
-              [ '100:100:100', 100, 100, 100, 100, 100, 100 ]
-          ]);
+          var acc = [0, 0, 0, 0, 0, 0];
+          drawChart(Array.apply(null, Array(10 + parseInt(Math.random() * 100))).map(function(n, i) {
+            acc = acc.map(function(n) {
+              return n + parseInt(Math.random() * 100);
+            });
+            return [ 't' + i ].concat(acc);
+          }));
         }
       }
 
       function drawChart(cacheHistory) {
-        var data = google.visualization.arrayToDataTable(cacheHistory);
+        var data = google.visualization.arrayToDataTable([
+            [ 'timestamp', 'Serialized: Hits', 'Serialized: Misses', 'Serialized: Clears', 'Cache: Hits', 'Cache: Misses', 'Cache: Clears' ]
+          ].concat(cacheHistory));
 
-        var options = { isStacked: true };
+        var options = {
+          isStacked: true,
+          seriesType: 'bars',
+          hAxis: {showTextEvery: parseInt(cacheHistory.length / 20)},
+          series: {
+            3: {type: 'area'},
+            4: {type: 'area'},
+            5: {type: 'area'}
+          }
+        };
 
-        var chart = new google.visualization.SteppedAreaChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
 
         chart.draw(data, options);
       };

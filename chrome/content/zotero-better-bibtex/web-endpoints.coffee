@@ -193,8 +193,6 @@ Zotero.BetterBibTeX.endpoints.cacheActivity =
       date = [date.getHours(), date.getMinutes(), date.getSeconds()]
       date = (('0' + dp).slice(-2) for dp in date)
       return date.join(':')
-    data = [[ 'timestamp', 'Serialized: Hits', 'Serialized: Misses', 'Serialized: Clears', 'Cache: Hits', 'Cache: Misses', 'Cache: Clears' ]].concat(
-      ([timestamp(dp.timestamp), dp.serialized.hit, dp.serialized.miss, dp.serialized.clear, dp.cache.hit, dp.cache.miss, dp.cache.clear] for dp in Zotero.BetterBibTeX.cacheHistory)
-    )
+    data = ([timestamp(dp.timestamp), dp.serialized.hit, dp.serialized.miss, dp.serialized.clear, dp.cache.hit, dp.cache.miss, dp.cache.clear] for dp in Zotero.BetterBibTeX.cacheHistory)
 
     return sendResponseCallback(200, 'application/json', JSON.stringify(data))
