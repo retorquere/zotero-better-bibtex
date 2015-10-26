@@ -200,7 +200,6 @@ Zotero.BetterBibTeX.log = Zotero.BetterBibTeX.log_on = (msg...) ->
 
 Zotero.BetterBibTeX.addCacheHistory = ->
   Zotero.BetterBibTeX.cacheHistory ||= []
-  Zotero.BetterBibTeX.cacheHistory = Zotero.BetterBibTeX.cacheHistory.slice(-40)
   Zotero.BetterBibTeX.cacheHistory.push({
     timestamp: new Date()
     serialized:

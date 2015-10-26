@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <title>Cache activity</title>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script>
+      google.load('visualization', '1', {packages: ['corechart', 'bar']});
+
+      google.setOnLoadCallback(loadData);
+
+      function loadData() {
+        if (location.search) {
+          var url = location.search.slice(1);
+          console.log('live data from ' + url);
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", url, true);
+          xhr.onload = function (e) {
+            if (xhr.readyState === 4) {
+              if (xhr.status === 200) {
+                drawChart(JSON.parse(xhr.responseText));
+              } else {
+                console.error(xhr.statusText);
+              }
+            }
+          };
+          xhr.onerror = function (e) {
+            console.error(xhr.statusText);
+          };
+          xhr.send(null);
+
+        } else {
+          console.log('dummy data');
+          drawChart([
+              [ 'timestamp', 'Serialized: Hits', 'Serialized: Misses', 'Serialized: Clears', 'Cache: Hits', 'Cache: Misses', 'Cache: Clears' ],
+              [ '0:0:0', 0, 0, 0, 0, 0, 0 ],
+              [ '1:1:1', 1, 1, 1, 1, 1, 1 ],
+              [ '4:4:4', 4, 4, 4, 4, 4, 4 ],
+              [ '9:9:9', 9, 9, 9, 9, 9, 9 ],
+              [ '16:16:16', 16, 16, 16, 16, 16, 16 ],
+              [ '25:25:25', 25, 25, 25, 25, 25, 25 ],
+              [ '36:36:36', 36, 36, 36, 36, 36, 36 ],
+              [ '49:49:49', 49, 49, 49, 49, 49, 49 ],
+              [ '64:64:64', 64, 64, 64, 64, 64, 64 ],
+              [ '81:81:81', 81, 81, 81, 81, 81, 81 ],
+              [ '100:100:100', 100, 100, 100, 100, 100, 100 ]
+          ]);
+        }
+      }
+
+      function drawChart(cacheHistory) {
+        var data = google.visualization.arrayToDataTable(cacheHistory);
+
+        var options = { isStacked: true };
+
+        var chart = new google.visualization.SteppedAreaChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+      };
+    </script>
+  </head>
+  <body>
+    <div style="height: 100%" id="chart_div"></div>
+  </body>
+</html>
