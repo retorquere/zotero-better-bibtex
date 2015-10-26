@@ -57,8 +57,11 @@ BetterBibTeXPref =
 
   update: ->
     serverCheckbox = document.getElementById('id-better-bibtex-preferences-server-enabled')
-    serverEnabled = serverCheckbox.checked
+    serverEnabled = !!serverCheckbox.checked
     serverCheckbox.setAttribute('hidden', Zotero.isStandalone && serverEnabled)
+
+    for state in ['enabled', 'disabled']
+      document.getElementById("better-bibtex-preferences-cacheActivity-#{state}").setAttribute('hidden', serverEnabled == (state == 'disabled'))
 
     keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
 
