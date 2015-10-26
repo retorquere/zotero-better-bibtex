@@ -223,6 +223,7 @@ file 'chrome/content/zotero-better-bibtex/juris-m-dateparser.js' => 'Rakefile' d
   sh "#{NODEBIN}/grasp -i -e 'Zotero.DateParser' --replace 'Zotero.BetterBibTeX.JurisMDateParser' #{t.name.shellescape}"
 end
 
+# use https://developer.mozilla.org/en-US/docs/Web/API/DOMParser
 file 'resource/translators/htmlparser.js' => 'Rakefile' do |t|
   # fudge createElement because the Moz validator is stupid
   Tempfile.create('grasp+.js'.split('+')) do |tmp|

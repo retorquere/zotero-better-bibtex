@@ -184,7 +184,8 @@ Zotero.BetterBibTeX.endpoints.cacheActivity =
       date = [date.getHours(), date.getMinutes(), date.getSeconds()]
       date = (('0' + dp).slice(-2) for dp in date)
       return date.join(':')
-    history = ({timestamp: timestamp(dp.timestamp), serialized: dp.serialized, cache: dp.cache} for dp in Zotero.BetterBibTeX.cacheHistory)
+    Zotero.BetterBibTeX.addCacheHistory()
+    history = ({ timestamp: timestamp(dp.timestamp), serialized: dp.serialized, cache: dp.cache } for dp in Zotero.BetterBibTeX.cacheHistory)
     page = """
       <html>
         <head>

@@ -1,3 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
-/Applications/Firefox.app/Contents/MacOS/firefox-bin --ZoteroDebug
+if [[ `uname` == 'Linux' ]]; then
+  firefox --ZoteroDebug
+else
+  /Applications/Firefox.app/Contents/MacOS/firefox-bin --ZoteroDebug
+fi
+

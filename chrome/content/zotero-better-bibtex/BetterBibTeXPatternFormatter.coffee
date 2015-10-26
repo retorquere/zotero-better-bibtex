@@ -12,7 +12,6 @@ class BetterBibTeXPatternFormatter
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
-    Zotero.BetterBibTeX.debug('formatter: fetched', @item, 'for', item)
     delete @year
     delete @month
 
@@ -20,7 +19,6 @@ class BetterBibTeXPatternFormatter
 
     if @item.date
       date = Zotero.BetterBibTeX.DateParser::parseDateToObject(@item.date, {locale: @item.language, verbatimDetection: false})
-      Zotero.BetterBibTeX.debug('item date:', date)
       if date
         if date.literal
           date = Zotero.Date.strToDate(@item.date)
@@ -61,7 +59,6 @@ class BetterBibTeXPatternFormatter
 
   reduce: (step) ->
     value = @methods[step.method].apply(@, step.arguments)
-    Zotero.BetterBibTeX.debug('BetterBibTeXPatternFormatter.reduce:', step, value)
     value = '' unless value
 
     for filter in step.filters || []
@@ -69,7 +66,6 @@ class BetterBibTeXPatternFormatter
       value = '' unless value
 
     value = @clean(value) if step.scrub
-    Zotero.BetterBibTeX.debug('BetterBibTeXPatternFormatter.reduce.scrub:', step, value)
     return value
 
   clean: (str) ->

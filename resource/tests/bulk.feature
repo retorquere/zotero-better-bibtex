@@ -28,6 +28,8 @@ Scenario: Major bulk export cache testing
    Then the following library export should match 'export/Really Big whopping library.bib':
     | translator  | Better BibLaTeX |
     | benchmark   | true            |
+   Then show the cache activity
    Then the following library export should match 'export/Really Big whopping library.bib':
     | translator  | Better BibLaTeX |
     | benchmark   | true            |
+   Then show the cache activity

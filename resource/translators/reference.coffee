@@ -151,11 +151,9 @@ class Reference
           name = [creator.lastName || '', creator.firstName || ''].join(', ')
 
         when creator.lastName || creator.firstName
-          Translator.debug('particle-parser:', creator)
           name = {family: creator.lastName || '', given: creator.firstName || ''}
 
           Zotero.BetterBibTeX.CSL.parseParticles(name)
-          Translator.debug('particle-parser: parsed to', name)
 
           if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
             family = [new String(name.family.slice(1, -1))]
@@ -186,7 +184,6 @@ class Reference
             suffix = []
 
           name = family.concat(suffix, [', '], given)
-          Translator.debug('constructed name:', name)
           name = @enc_latex({ value: name, sep: ''})
 
         else
@@ -385,8 +382,6 @@ class Reference
   postscript: ->
 
   complete: ->
-    #@add({name: 'xref', value: @item.__xref__, enc: 'raw'}) if !@has.xref && @item.__xref__
-
     if Translator.DOIandURL != 'both'
       if @has.doi && @has.url
         switch Translator.DOIandURL

@@ -41,8 +41,8 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.Collections.erase((coll.id for coll in Zotero.getCollections()))
   Zotero.Items.emptyTrash()
 
-  Zotero.BetterBibTeX.cache.reset()
-  Zotero.BetterBibTeX.serialized.reset()
+  Zotero.BetterBibTeX.cache.reset('debugbridge.reset')
+  Zotero.BetterBibTeX.serialized.reset('debugbridge.reset')
   Zotero.BetterBibTeX.auto.clear()
   Zotero.BetterBibTeX.keymanager.reset()
 
@@ -132,8 +132,8 @@ Zotero.BetterBibTeX.DebugBridge.methods.library = ->
 
 Zotero.BetterBibTeX.DebugBridge.methods.setPreference = (name, value) -> Zotero.Prefs.set(name, value)
 
-Zotero.BetterBibTeX.DebugBridge.methods.keyManagerState = -> Zotero.BetterBibTeX.keymanager.keys.find()
-Zotero.BetterBibTeX.DebugBridge.methods.cacheState = -> Zotero.BetterBibTeX.cache.cache.find()
+Zotero.BetterBibTeX.DebugBridge.methods.keyManagerState = -> Zotero.BetterBibTeX.DB.keys.find()
+Zotero.BetterBibTeX.DebugBridge.methods.cacheState = -> Zotero.BetterBibTeX.DB.cache.find()
 Zotero.BetterBibTeX.DebugBridge.methods.serializedState = -> Zotero.BetterBibTeX.serialized.items
 Zotero.BetterBibTeX.DebugBridge.methods.cacheStats = -> {serialized: Zotero.BetterBibTeX.serialized.stats, cache: Zotero.BetterBibTeX.cache.stats }
 
@@ -162,11 +162,6 @@ Zotero.BetterBibTeX.DebugBridge.methods.selected = (action) ->
 
 Zotero.BetterBibTeX.DebugBridge.methods.autoExports = ->
   exports = []
-  for e in Zotero.DB.query('select * from betterbibtex.autoexport')
-    ae = {}
-    for own k, v of e
-      ae[k] = v
-    exports.push(ae)
   return exports
 
 Zotero.BetterBibTeX.DebugBridge.methods.cayw = (picks, format) ->
