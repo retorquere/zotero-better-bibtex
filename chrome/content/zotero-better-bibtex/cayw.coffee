@@ -124,12 +124,17 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
       else
         formatted = @config.citeprefix + formatted.join(@config.separator) + @config.citepostfix
 
-    Zotero.Utilities.Internal.copyTextToClipboard(formatted) if @config.clipboard
-    @deferred.fulfill(formatted)
+    if typeof formatted == 'string'
+      resolve = formatted
+      formatted = Q.defer()
 
-    Zotero.Integration.currentWindow.close() unless Zotero.BetterBibTeX.pref.get('tests')
-
-    @doc.activate()
+    formatted.then((res) =>
+      Zotero.Utilities.Internal.copyTextToClipboard(res) if @config.clipboard
+      @deferred.fulfill(res)
+      Zotero.Integration.currentWindow.close() unless Zotero.BetterBibTeX.pref.get('tests')
+      @doc.activate()
+    )
+    formatted.resolve(resolve) if typeof resolve == 'string'
 
 Zotero.BetterBibTeX.CAYW.Formatter = {
   latex: (citations, config) ->
@@ -268,4 +273,16 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
     prefix = if citekeys.length == 1 && citekeys[0].toLowerCase() == citekeys[0] then '@' else '#'
     citekeys = ("#{prefix}#{citekey}" for citekey in citekeys).join(',')
     return "[#{label}](#{citekeys})"
+
+  bibtex: (citations, options = {}) ->
+    items = Zotero.Items.get((citation.id for citation of citations))
+
+    deferred = Q.defer()
+    Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator('bibtex'), {items: items}, {}, (err, result) ->
+      if err
+        deferred.reject(err)
+      else
+        deferred.fulfill(result)
+    )
+    return deferred.promise
 }
