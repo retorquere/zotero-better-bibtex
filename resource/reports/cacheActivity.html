@@ -30,7 +30,7 @@
         } else {
           console.log('dummy data');
           var acc = [0, 0, 0, 0, 0, 0];
-          drawChart(Array.apply(null, Array(10 + parseInt(Math.random() * 100))).map(function(n, i) {
+          drawChart(Array.apply(null, Array(50 + parseInt(Math.random() * 200))).map(function(n, i) {
             acc = acc.map(function(n) {
               return n + parseInt(Math.random() * 100);
             });
@@ -39,7 +39,18 @@
         }
       }
 
+      function nth(a, n) {
+        var len = a.length,out = [], i = 0;
+        while (i < len) {
+          var size = Math.ceil((len - i) / n--);
+          out.push(a[i]);
+          i += size;
+        }
+        return out;
+      }
+
       function drawChart(cacheHistory) {
+        cacheHistory = nth(cacheHistory, 100);
         var data = google.visualization.arrayToDataTable([
             [ 'timestamp', 'Serialized: Hits', 'Serialized: Misses', 'Serialized: Clears', 'Cache: Hits', 'Cache: Misses', 'Cache: Clears' ]
           ].concat(cacheHistory));
