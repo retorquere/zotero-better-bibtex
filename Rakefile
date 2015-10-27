@@ -131,6 +131,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',
   'resource/translators/he.js',
+  'resource/reports/cacheActivity.txt',
 ]).sort.uniq
 
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
@@ -191,6 +192,12 @@ DOWNLOADS.each_pair{|dir, files|
   }
 }
 
+# stupid AMO validator thinks HTML-loaded javascripts are harmful. If that were true, you have bigger problems than this
+# people.
+file 'resource/reports/cacheActivity.txt' => 'resource/reports/cacheActivity.html' do |t|
+  FileUtils.cp(t.source, t.name)
+end
+
 file 'chrome/content/zotero-better-bibtex/csl-util_name_particles.js' => 'Rakefile' do |t|
   Tempfile.create('grasp+.js'.split('+')) do |tmp|
     ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/src/util_name_particles.js', tmp.path)
@@ -223,6 +230,7 @@ file 'chrome/content/zotero-better-bibtex/juris-m-dateparser.js' => 'Rakefile' d
   sh "#{NODEBIN}/grasp -i -e 'Zotero.DateParser' --replace 'Zotero.BetterBibTeX.JurisMDateParser' #{t.name.shellescape}"
 end
 
+# use https://developer.mozilla.org/en-US/docs/Web/API/DOMParser
 file 'resource/translators/htmlparser.js' => 'Rakefile' do |t|
   # fudge createElement because the Moz validator is stupid
   Tempfile.create('grasp+.js'.split('+')) do |tmp|

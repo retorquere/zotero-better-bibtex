@@ -75,18 +75,15 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
     @citation = {citationItems:[], properties:{}}
     @wrappedJSObject = @
 
-    @config = {
-      citeprefix: ''
-      citepostfix: ''
-      keyprefix: ''
-      keypostfix: ''
-      separator: ','
-      clipboard: false
-      format: ''
-    }
-
-    for own key of @config
-      @config[key] = config[key] if config[key]
+    @config = JSON.parse(JSON.stringify(config))
+    @config.citeprefix ||= ''
+    @config.citeprefix ||= ''
+    @config.citepostfix ||= ''
+    @config.keyprefix ||= ''
+    @config.keypostfix ||= ''
+    @config.separator ||= ','
+    @config.clipboard ||= false
+    @config.format ||= ''
 
     if @config.format.match(/^cite/)
       @config.command = @config.format
@@ -124,12 +121,20 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
       else
         formatted = @config.citeprefix + formatted.join(@config.separator) + @config.citepostfix
 
-    Zotero.Utilities.Internal.copyTextToClipboard(formatted) if @config.clipboard
-    @deferred.fulfill(formatted)
+    Zotero.BetterBibTeX.debug('formatted-type:', typeof formatted)
+    if typeof formatted == 'string'
+      resolve = formatted
+      deferred = Q.defer()
+      formatted = deferred.promise
+    Zotero.BetterBibTeX.debug('formatted-type:*', typeof formatted)
 
-    Zotero.Integration.currentWindow.close() unless Zotero.BetterBibTeX.pref.get('tests')
-
-    @doc.activate()
+    formatted.then((res) =>
+      Zotero.Utilities.Internal.copyTextToClipboard(res) if @config.clipboard
+      @deferred.fulfill(res)
+      Zotero.Integration.currentWindow.close() unless Zotero.BetterBibTeX.pref.get('tests')
+      @doc.activate()
+    )
+    deferred.resolve(resolve) if typeof resolve == 'string'
 
 Zotero.BetterBibTeX.CAYW.Formatter = {
   latex: (citations, config) ->
@@ -268,4 +273,25 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
     prefix = if citekeys.length == 1 && citekeys[0].toLowerCase() == citekeys[0] then '@' else '#'
     citekeys = ("#{prefix}#{citekey}" for citekey in citekeys).join(',')
     return "[#{label}](#{citekeys})"
+
+  translate: (citations, options = {}) ->
+    items = Zotero.Items.get((citation.id for citation in citations))
+
+    translator = options.translator || 'biblatex'
+    translator = Zotero.BetterBibTeX.getTranslator(translator) || translator
+    Zotero.BetterBibTeX.debug('cayw.translate:', {requested: options, got: translator})
+
+    exportOptions = {
+      exportNotes: (options.exportNotes || '').toLowerCase() in ['yes', 'y', 'true']
+      useJournalAbbreviation: (options.useJournalAbbreviation || '').toLowerCase() in ['yes', 'y', 'true']
+    }
+
+    deferred = Q.defer()
+    Zotero.BetterBibTeX.translate(translator, {items: items}, exportOptions, (err, result) ->
+      if err
+        deferred.reject(err)
+      else
+        deferred.fulfill(result)
+    )
+    return deferred.promise
 }

@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <title>Cache activity</title>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script>
+      google.load('visualization', '1', {packages: ['corechart', 'bar']});
+
+      google.setOnLoadCallback(loadData);
+
+      function loadData() {
+        if (location.search) {
+          var url = location.search.slice(1);
+          console.log('live data from ' + url);
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", url, true);
+          xhr.onload = function (e) {
+            if (xhr.readyState === 4) {
+              if (xhr.status === 200) {
+                drawChart(JSON.parse(xhr.responseText));
+              } else {
+                console.error(xhr.statusText);
+              }
+            }
+          };
+          xhr.onerror = function (e) {
+            console.error(xhr.statusText);
+          };
+          xhr.send(null);
+
+        } else {
+          console.log('dummy data');
+          var acc = [0, 0, 0, 0, 0, 0];
+          drawChart(Array.apply(null, Array(10 + parseInt(Math.random() * 100))).map(function(n, i) {
+            acc = acc.map(function(n) {
+              return n + parseInt(Math.random() * 100);
+            });
+            return [ 't' + i ].concat(acc);
+          }));
+        }
+      }
+
+      function drawChart(cacheHistory) {
+        var data = google.visualization.arrayToDataTable([
+            [ 'timestamp', 'Serialized: Hits', 'Serialized: Misses', 'Serialized: Clears', 'Cache: Hits', 'Cache: Misses', 'Cache: Clears' ]
+          ].concat(cacheHistory));
+
+        var options = {
+          isStacked: true,
+          seriesType: 'bars',
+          hAxis: {showTextEvery: parseInt(cacheHistory.length / 20)},
+          series: {
+            3: {type: 'area'},
+            4: {type: 'area'},
+            5: {type: 'area'}
+          }
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+      };
+    </script>
+  </head>
+  <body>
+    <div style="height: 100%" id="chart_div"></div>
+  </body>
+</html>
