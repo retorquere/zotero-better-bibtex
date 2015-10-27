@@ -124,9 +124,12 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
       else
         formatted = @config.citeprefix + formatted.join(@config.separator) + @config.citepostfix
 
+    Zotero.BetterBibTeX.debug('formatted-type:', typeof formatted)
     if typeof formatted == 'string'
       resolve = formatted
-      formatted = Q.defer()
+      deferred = Q.defer()
+      formatted = deferred.promise
+    Zotero.BetterBibTeX.debug('formatted-type:*', typeof formatted)
 
     formatted.then((res) =>
       Zotero.Utilities.Internal.copyTextToClipboard(res) if @config.clipboard
@@ -134,7 +137,7 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
       Zotero.Integration.currentWindow.close() unless Zotero.BetterBibTeX.pref.get('tests')
       @doc.activate()
     )
-    formatted.resolve(resolve) if typeof resolve == 'string'
+    deferred.resolve(resolve) if typeof resolve == 'string'
 
 Zotero.BetterBibTeX.CAYW.Formatter = {
   latex: (citations, config) ->
