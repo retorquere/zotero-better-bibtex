@@ -114,7 +114,7 @@ BetterBibTeXAutoExportPref =
     return if selected < 0
 
     id = exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')
-    Zotero.BetterBibTeX.DB.autoexport.remove(id)
+    Zotero.BetterBibTeX.DB.autoexport.remove(parseInt(id))
     @refresh()
 
   mark: ->
