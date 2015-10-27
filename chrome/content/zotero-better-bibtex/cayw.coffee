@@ -75,18 +75,15 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
     @citation = {citationItems:[], properties:{}}
     @wrappedJSObject = @
 
-    @config = {
-      citeprefix: ''
-      citepostfix: ''
-      keyprefix: ''
-      keypostfix: ''
-      separator: ','
-      clipboard: false
-      format: ''
-    }
-
-    for own key of @config
-      @config[key] = config[key] if config[key]
+    @config = JSON.parse(JSON.stringify(config))
+    @config.citeprefix ||= ''
+    @config.citeprefix ||= ''
+    @config.citepostfix ||= ''
+    @config.keyprefix ||= ''
+    @config.keypostfix ||= ''
+    @config.separator ||= ','
+    @config.clipboard ||= false
+    @config.format ||= ''
 
     if @config.format.match(/^cite/)
       @config.command = @config.format
@@ -277,11 +274,20 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
     citekeys = ("#{prefix}#{citekey}" for citekey in citekeys).join(',')
     return "[#{label}](#{citekeys})"
 
-  bibtex: (citations, options = {}) ->
-    items = Zotero.Items.get((citation.id for citation of citations))
+  translate: (citations, options = {}) ->
+    items = Zotero.Items.get((citation.id for citation in citations))
+
+    translator = options.translator || 'biblatex'
+    translator = Zotero.BetterBibTeX.getTranslator(translator) || translator
+    Zotero.BetterBibTeX.debug('cayw.translate:', {requested: options, got: translator})
+
+    exportOptions = {
+      exportNotes: (options.exportNotes || '').toLowerCase() in ['yes', 'y', 'true']
+      useJournalAbbreviation: (options.useJournalAbbreviation || '').toLowerCase() in ['yes', 'y', 'true']
+    }
 
     deferred = Q.defer()
-    Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator('bibtex'), {items: items}, {}, (err, result) ->
+    Zotero.BetterBibTeX.translate(translator, {items: items}, exportOptions, (err, result) ->
       if err
         deferred.reject(err)
       else
