@@ -31,15 +31,16 @@
           console.log('dummy data');
           var acc = [0, 0, 0, 0, 0, 0];
           drawChart(Array.apply(null, Array(50 + parseInt(Math.random() * 200))).map(function(n, i) {
-            acc = acc.map(function(n) {
-              return n + parseInt(Math.random() * 100);
+            acc = acc.map(function(v, col) {
+              if (col == 2 || col == 5) { return v; }
+              return v + parseInt(Math.random() * 100);
             });
             return [ 't' + i ].concat(acc);
           }));
         }
       }
 
-      function nth(a, n) {
+      function compress(a, n) {
         var len = a.length,out = [], i = 0;
         while (i < len) {
           var size = Math.ceil((len - i) / n--);
@@ -50,20 +51,48 @@
       }
 
       function drawChart(cacheHistory) {
-        cacheHistory = nth(cacheHistory, 100);
-        var data = google.visualization.arrayToDataTable([
-            [ 'timestamp', 'Serialized: Hits', 'Serialized: Misses', 'Serialized: Clears', 'Cache: Hits', 'Cache: Misses', 'Cache: Clears' ]
-          ].concat(cacheHistory));
+        // compress to 100 datapoint
+        cacheHistory = compress(cacheHistory, 100);
+
+        // remove empty data series
+        var remove = [];
+        ['header', 'Serialized: Hits', 'Serialized: Misses', 'Serialized: Clears', 'Cache: Hits', 'Cache: Misses', 'Cache: Clears'].forEach(function(name, col) {
+          if (col == 0 || cacheHistory.find(function(row) { return row[col] != 0; })) { return ; }
+          remove.unshift(col);
+        });
+
+        if (remove.length == 6) {
+          document.getElementById('chart_div').innerHTML = 'No cache activity';
+          return;
+        }
+
+        var types = [ null, null, null, null, 'area', 'area', 'area' ];
+        remove.forEach(function(col) {
+          types.splice(col, 1);
+        });
+        var series = {}
+        types.forEach(function(type, n) {
+          if (type) {
+            series[n - 1] = {type: type};
+          }
+        });
+        console.log(types);
+        console.log(series);
+
+        cacheHistory = [[ 'timestamp', 'Serialized: Hits', 'Serialized: Misses', 'Serialized: Clears', 'Cache: Hits', 'Cache: Misses', 'Cache: Clears' ]].concat(cacheHistory);
+        cacheHistory.forEach(function(row) {
+          remove.forEach(function(col) {
+            row.splice(col, 1);
+          });
+        });
+
+        var data = google.visualization.arrayToDataTable(cacheHistory);
 
         var options = {
           isStacked: true,
           seriesType: 'bars',
           hAxis: {showTextEvery: parseInt(cacheHistory.length / 20)},
-          series: {
-            3: {type: 'area'},
-            4: {type: 'area'},
-            5: {type: 'area'}
-          }
+          series: series
         };
 
         var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
