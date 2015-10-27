@@ -556,6 +556,26 @@ doExport = ->
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
+    # pre-process overrides for #381
+    for own name, value of ref.override
+      continue unless value.format == 'csl'
+
+      switch
+        when name == 'volume-title' && ref.item.itemType == 'book' && ref.has.title
+          ref.add({name: 'maintitle', value: value.value, preserveCaps: true })
+          [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]
+          [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
+
+        when  name == 'volume-title' && ref.item.itemType == 'bookSection' && ref.has.booktitle
+          ref.add({name: 'maintitle', value: value.value, preserveCaps: true })
+          [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]
+          [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]
+
+        else
+          continue
+
+      delete ref.override[name]
+
     ref.complete()
 
   Translator.exportGroups()
