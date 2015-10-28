@@ -129,6 +129,7 @@ class Reference
     return ' '
 
   _enc_creators_quote_separators: (field, value) ->
+    Translator.debug('_enc_creators_quote_separators:', {field, value})
     if Translator.BetterBibTeX && field == 'family'
       return ((if i % 2 == 0 then n else new String(n)) for n, i in value.split(/(\s+[aA][nN][dD]\s+|,|\s+[a-z]\b)/))
     else
@@ -159,9 +160,10 @@ class Reference
           parsed = JSON.parse(JSON.stringify(name))
 
           @useprefix ||= !!name['non-dropping-particle']
-          @juniorcomma ||= (f.juniorcomma && creator.lastName && creator.lastName.indexOf('!,') >= 0)
+          @juniorcomma ||= (f.juniorcomma && name['comma-suffix'])
 
           for k, v of name
+            continue unless typeof v == 'string'
             if v.length > 1 && v[0] == '"' && v[v.length - 1] == '"'
               name[k] = @enc_latex({ value: v.slice(1, -1) })
             else
