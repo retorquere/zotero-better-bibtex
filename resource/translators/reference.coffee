@@ -164,14 +164,14 @@ class Reference
 
           if name['non-dropping-particle']
             @useprefix = true
-            ndp = @postfixedParticle(name['non-dropping-particle'])
+            ndp = name['non-dropping-particle']
             if Translator.BetterBibTeX
               family = [new String(ndp + name.family)]
             else
               family = @creator_esc_separators(ndp).concat(family)
 
           if name['dropping-particle']
-            family = @creator_esc_separators(@postfixedParticle(name['dropping-particle'])).concat(family)
+            family = @creator_esc_separators(name['dropping-particle']).concat(family)
 
           if name.given
             given = @creator_esc_separators(name.given)
@@ -211,7 +211,7 @@ class Reference
 
     return f.value if raw
 
-    value = LaTeX.text2latex(f.value) + (if f.value[f.value.length - 1] == ' ' then ' ' else '')
+    value = LaTeX.text2latex(f.value)
     value = new String("{#{value}}") if f.value instanceof String
     return value
 

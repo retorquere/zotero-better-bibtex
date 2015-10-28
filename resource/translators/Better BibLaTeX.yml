@@ -21,6 +21,5 @@ BetterBibTeX:
   - reference
   - unicode_translator
   - he
-  - htmlparser
   - latex_unicode_mapping
   - BetterBibTeXBraceBalancer

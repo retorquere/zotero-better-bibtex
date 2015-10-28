@@ -126,7 +126,6 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome.manifest',
   'install.rdf',
   'resource/logs/s3.json',
-  'resource/translators/htmlparser.js',
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',
@@ -230,24 +229,9 @@ file 'chrome/content/zotero-better-bibtex/juris-m-dateparser.js' => 'Rakefile' d
   sh "#{NODEBIN}/grasp -i -e 'Zotero.DateParser' --replace 'Zotero.BetterBibTeX.JurisMDateParser' #{t.name.shellescape}"
 end
 
-# use https://developer.mozilla.org/en-US/docs/Web/API/DOMParser
-file 'resource/translators/htmlparser.js' => 'Rakefile' do |t|
-  # fudge createElement because the Moz validator is stupid
-  Tempfile.create('grasp+.js'.split('+')) do |tmp|
-    #ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js', t.name)
-    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Munawwar/neutron-html5parser/master/htmlparser.js', tmp.path)
-    sh "#{NODEBIN}/grasp '#exports' --replace '__exports' #{tmp.path.shellescape}
-        | #{NODEBIN}/grasp '#define' --replace '__define'
-        | #{NODEBIN}/grasp -e 'doc.createElement(tagName)' --replace 'doc[\"createElement\"](tagName)'
-        > #{t.name.shellescape}".gsub("\n", ' ')
-    sh "echo 'this.EXPORTED_SYMBOLS = [\"HTMLtoDOM\"];' >> #{t.name.shellescape}"
-  end
-end
-
 file 'resource/translators/json5.js' => 'Rakefile' do |t|
   ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js', t.name)
 end
-
 
 file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['resource/tests/*.feature'] do |t|
   features = t.sources.collect{|f| f.split('/')}.select{|f| f[0] == 'resource'}.collect{|f|

@@ -93,7 +93,7 @@ class BetterBibTeXPatternFormatter
     return words
 
   innerText: (str) ->
-    return (new @HTML(str)).text.replace(/\s+/, ' ').trim()
+    Zotero.BetterBibTeX.HTMLParser.DOMParser.parseFromString(str, 'text/html').textContent
 
   creators: (onlyEditors, withInitials) ->
     return [] unless @item.creators?.length
@@ -337,5 +337,3 @@ class BetterBibTeXPatternFormatter
 
     chars: (text) ->
       @text += text
-
-Components.utils.import('resource://zotero-better-bibtex/translators/htmlparser.js', BetterBibTeXPatternFormatter::HTML::)
