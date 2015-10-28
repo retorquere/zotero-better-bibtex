@@ -100,7 +100,7 @@ class LaTeX.HTML
       when 'td', 'th'
         @latex += ' '
 
-      when 'tbody' then # ignore
+      when 'tbody', '#document', 'html', 'head', 'body' then # ignore
 
       else
         Translator.debug("unexpected tag '#{tag.name}'")

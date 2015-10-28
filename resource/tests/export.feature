@@ -176,6 +176,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | condense in cite key format not working #308                                                   | 1           |
      | Better BibLaTeX.004                                                                            | 1           |
      | Better BibLaTeX.007                                                                            | 1           |
      | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
@@ -186,7 +187,6 @@ Scenario Outline: BibLaTeX Export
      | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
      | auth leaves punctuation in citation key #310                                                   | 1           |
      | BibTeX variable support for journal titles. #309                                               | 1           |
-     | condense in cite key format not working #308                                                   | 1           |
      | csquotes #302                                                                                  | 2           |
      | Spaces not stripped from citation keys #294                                                    | 1           |
      | Book converted to mvbook #288                                                                  | 1           |

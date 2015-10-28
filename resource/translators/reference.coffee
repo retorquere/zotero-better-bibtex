@@ -158,8 +158,8 @@ class Reference
 
           parsed = JSON.parse(JSON.stringify(name))
 
-          @useprefix = !!name['non-dropping-particle']
-          @juniorcomma ||= (name.suffix || '') in ['sr', 'sr.', 'jr', 'jr.']
+          @useprefix ||= !!name['non-dropping-particle']
+          @juniorcomma ||= (f.juniorcomma && creator.lastName && creator.lastName.indexOf('!,') >= 0)
 
           for k, v of name
             if v.length > 1 && v[0] == '"' && v[v.length - 1] == '"'
