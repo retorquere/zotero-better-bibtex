@@ -129,7 +129,6 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',
-  'resource/translators/he.js',
   'resource/reports/cacheActivity.txt',
 ]).sort.uniq
 
@@ -210,18 +209,6 @@ file 'resource/translators/xregexp-all.js' => 'Rakefile' do |t|
   ZotPlus::RakeHelper.download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js', t.name)
   # strip out setNatives because the Moz validator is stupid
   sh "#{NODEBIN}/grasp -i 'func-dec! #setNatives' --replace 'function setNatives(on) { if (on) { throw new Error(\"setNatives not supported in Firefox extension\"); } }' #{t.name}"
-end
-
-file 'resource/translators/he.js' => 'Rakefile' do |t|
-  Tempfile.create('grasp+.js'.split('+')) do |tmp|
-    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/mathiasbynens/he/master/he.js', tmp.path)
-    sh "#{NODEBIN}/grasp '#exports' --replace '__exports' #{tmp.path.shellescape}
-        | #{NODEBIN}/grasp '#module' --replace '__module'
-        | #{NODEBIN}/grasp '#global' --replace '__global'
-        | #{NODEBIN}/grasp '#define' --replace '__define'
-        | #{NODEBIN}/grasp -e 'root.he = he' --replace 'LaTeX.he = he'
-        > #{t.name.shellescape}".gsub("\n", ' ')
-  end
 end
 
 file 'chrome/content/zotero-better-bibtex/juris-m-dateparser.js' => 'Rakefile' do |t|

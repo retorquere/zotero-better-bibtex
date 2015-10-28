@@ -23,7 +23,7 @@ LaTeX.cleanHTML = (text) ->
   for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
     switch
       when i % 2 == 0 # text
-        html += LaTeX.he.escape(chunk)
+        html += Translator.HTMLEncode(chunk)
 
       when chunk.match(/^<pre/i)
         html += '<![CDATA['
@@ -37,6 +37,8 @@ LaTeX.cleanHTML = (text) ->
         html += chunk
 
   html += ']]>' if cdata
+
+  Translator.debug('cleanHTML:', {text, html})
 
   return html
 
@@ -62,7 +64,6 @@ class LaTeX.HTML
     switch tag.name
       when 'i', 'em', 'italic'
         @latex += '\\emph{'
-        @latex += '}'
 
       when 'b', 'strong'
         @latex += '\\textbf{'
@@ -139,10 +140,8 @@ class LaTeX.HTML
     @latex += text
 
   chars: (text) ->
-    txt = LaTeX.he.decode(text)
-
     blocks = []
-    for c in XRegExp.split(txt, '')
+    for c in XRegExp.split(text, '')
       math = @mapping.math[c]
       blocks.unshift({math: !!math, text: ''}) if blocks.length == 0 || blocks[0].math != !!math
       blocks[0].text += (math || @mapping.text[c] || c)

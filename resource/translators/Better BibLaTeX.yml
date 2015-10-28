@@ -20,6 +20,5 @@ BetterBibTeX:
   - xregexp-all
   - reference
   - unicode_translator
-  - he
   - latex_unicode_mapping
   - BetterBibTeXBraceBalancer

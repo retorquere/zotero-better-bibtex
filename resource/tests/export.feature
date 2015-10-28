@@ -176,11 +176,12 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Better BibLaTeX.007                                                                            | 1           |
+     | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | Non-ascii in dates is not matched by date parser #376                                          | 1           |
      | @jurisdiction; map court,authority to institution #326                                         | 1           |
      | @legislation; map code,container-title to journaltitle #327                                    | 1           |
      | BraceBalancer                                                                                  | 1           |
-     | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
      | Better BibLaTeX.004                                                                            | 1           |
      | auth leaves punctuation in citation key #310                                                   | 1           |
@@ -198,7 +199,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.003                                                                            | 2           |
      | Better BibLaTeX.005                                                                            | 1           |
      | Better BibLaTeX.006                                                                            | 1           |
-     | Better BibLaTeX.007                                                                            | 1           |
      | Better BibLaTeX.009                                                                            | 2           |
      | Fields in Extra should override defaults                                                       | 1           |
 

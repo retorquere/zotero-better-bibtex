@@ -8,7 +8,7 @@ class Report
     @collections = []
     @mark(Translator.collections)
 
-    title = LaTeX.he.encode(Zotero.getOption('exportFilename').replace(/\.[^\.]*$/i, ''))
+    title = Translator.HTMLEncode(Zotero.getOption('exportFilename').replace(/\.[^\.]*$/i, ''))
 
     @html = "<html><head><title>#{title}</title></head><body>"
     notes = []
@@ -23,7 +23,7 @@ class Report
   walk: (collection, level) ->
     return unless collection?.notes
 
-    @html += "<h#{ level }>#{ LaTeX.he.encode(collection.name) }</h#{ level }>\n"
+    @html += "<h#{ level }>#{ Translator.HTMLEncode(collection.name) }</h#{ level }>\n"
     notes = (@items[id] for id in collection.items when @items[id])
     @notes(notes, level)
 
@@ -74,7 +74,7 @@ class Report
 
     title = (str for str in [item.title || '', author] when str).join(' ')
 
-    @html += "<h#{ level + 1}>#{ LaTeX.he.encode(title) }</h#{ level + 1}>\n"
+    @html += "<h#{ level + 1}>#{ Translator.HTMLEncode(title) }</h#{ level + 1}>\n"
 
     for note in item.notes
       @html += "<div>#{ note.note }</div>\n"

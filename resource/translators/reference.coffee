@@ -164,14 +164,14 @@ class Reference
 
           if name['non-dropping-particle']
             @useprefix = true
-            ndp = name['non-dropping-particle']
+            ndp = @postfixedParticle(name['non-dropping-particle'])
             if Translator.BetterBibTeX
               family = [new String(ndp + name.family)]
             else
               family = @creator_esc_separators(ndp).concat(family)
 
           if name['dropping-particle']
-            family = @creator_esc_separators(name['dropping-particle']).concat(family)
+            family = @creator_esc_separators(@postfixedParticle(name['dropping-particle'])).concat(family)
 
           if name.given
             given = @creator_esc_separators(name.given)
