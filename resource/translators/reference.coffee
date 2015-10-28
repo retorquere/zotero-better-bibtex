@@ -129,15 +129,14 @@ class Reference
     return particle if lastchar == ' ' || XRegExp.test(particle, @punctuationAtEnd)
     return particle + ' '
 
+  _enc_creators_quote_separators: (name) ->
+    return ((if i % 2 == 0 then n else new String(n)) for n, i in name.split(/(\s+and\s+|,)/i))
   ###
   # Encode creators to author-style field
   #
   # @param {field} field to encode. The 'value' must be an array of Zotero-serialized `creator` objects.
   # @return {String} field.value encoded as author-style value
   ###
-  creator_esc_separators: (name) ->
-    return ((if i % 2 == 0 then n else new String(n)) for n, i in name.split(/( and |,)/i))
-
   enc_creators: (f, raw) ->
     return null if f.value.length == 0
 
@@ -154,6 +153,19 @@ class Reference
           name = {family: creator.lastName || '', given: creator.firstName || ''}
 
           Zotero.BetterBibTeX.CSL.parseParticles(name)
+
+          @useprefix = !!name['non-dropping-particle']
+          @juniorcomma ||= (name.suffix || '') in ['sr', 'sr.', 'jr', 'jr.']
+
+          for k, v of name
+            if v.length > 1 && v[0] == '"' && v[v.length - 1] == '"'
+              name[k] = @enc_latex({ value: v.slice(1, -1) })
+            else
+              name[k] = @enc_latex({ value: @_enc_creators_quote_separators(_name), sep: ' '})
+
+          family = @_enc_creators_unquote(name.family)
+          if family instanceof String
+            family
 
           if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
             family = [new String(name.family.slice(1, -1))]
