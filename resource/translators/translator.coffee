@@ -8,6 +8,9 @@ Translator.log_off = ->
 Translator.log = Translator.log_on = (msg...) ->
   @_log.apply(@, [3].concat(msg))
 
+Translator.HTMLEncode = (text) ->
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+
 Translator.stringify = (obj, replacer, spaces, cycleReplacer) ->
   str = JSON.stringify(obj, @stringifier(replacer, cycleReplacer), spaces)
   if Array.isArray(obj)

@@ -223,7 +223,7 @@ class Reference
 
     return f.value if raw
 
-    value = LaTeX.text2latex(f.value) + (if f.value[f.value.length - 1] == ' ' then ' ' else '')
+    value = LaTeX.text2latex(f.value)
     value = new String("{#{value}}") if f.value instanceof String
     return value
 

@@ -8,6 +8,45 @@ Zotero.BetterBibTeX = {
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
 
+Zotero.BetterBibTeX.HTMLParser = new class
+  DOMParser: Components.classes["@mozilla.org/xmlextras/domparser;1"].createInstance(Components.interfaces.nsIDOMParser)
+  ELEMENT_NODE:                 1
+  TEXT_NODE:                    3
+  CDATA_SECTION_NODE:           4
+  PROCESSING_INSTRUCTION_NODE:  7
+  COMMENT_NODE:                 8
+  DOCUMENT_NODE:                9
+  DOCUMENT_TYPE_NODE:           10
+  DOCUMENT_FRAGMENT_NODE:       11
+
+  text: (html) ->
+    doc = @DOMParser.parseFromString("<span>#{html}</span>", 'text/html')
+    doc = doc.documentElement if doc.nodeType == @DOCUMENT_NODE
+    txt = doc.textContent
+    Zotero.BetterBibTeX.debug('html2text:', {html, txt})
+    return txt
+
+  parse: (html) ->
+    return @walk(@DOMParser.parseFromString("<span>#{html}</span>", 'text/html'))
+
+  walk: (node, json) ->
+    tag = {name: node.nodeName.toLowerCase(), attrs: {}, children: []}
+
+    if node.nodeType in [@TEXT_NODE, @CDATA_SECTION_NODE]
+      tag.text = node.textContent
+    else
+      if node.nodeType == @ELEMENT_NODE && node.hasAttributes()
+        for attr in node.attributes
+          tag.attrs[attr.name] = attr.value
+      if node.childNodes
+        for child in [0 ... node.childNodes.length]
+          @walk(node.childNodes.item(child), tag)
+
+    return tag unless json
+
+    json.children.push(tag)
+    return json
+
 class Zotero.BetterBibTeX.DateParser
   parseDateToObject: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).date
   parseDateToArray: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).array()
@@ -581,6 +620,7 @@ Zotero.BetterBibTeX.init = ->
     }
     parseDateToObject: (sandbox, date, locale) -> Zotero.BetterBibTeX.DateParser::parseDateToObject(date, {locale, verbatimDetection: true})
     parseDateToArray: (sandbox, date, locale) -> Zotero.BetterBibTeX.DateParser::parseDateToArray(date, {locale, verbatimDetection: true})
+    HTMLParser: (sandbox, html) -> Zotero.BetterBibTeX.HTMLParser.parse(html)
   }
 
   for own name, endpoint of @endpoints
