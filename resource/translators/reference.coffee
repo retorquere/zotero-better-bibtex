@@ -168,7 +168,7 @@ class Reference
               name[k] = @enc_latex({ value: @_enc_creators_quote_separators(k, v), sep: ' '})
 
           for particle in ['non-dropping-particle', 'dropping-particle']
-            name[particle] += _enc_creators_postfix_particle(parsed[particle]) if parsed[particle]
+            name[particle] += @_enc_creators_postfix_particle(parsed[particle]) if parsed[particle]
 
           latex = ''
           latex += name['dropping-particle'] if name['dropping-particle']

@@ -176,6 +176,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Better BibLaTeX.004                                                                            | 1           |
      | Better BibLaTeX.007                                                                            | 1           |
      | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | Non-ascii in dates is not matched by date parser #376                                          | 1           |
@@ -183,7 +184,6 @@ Scenario Outline: BibLaTeX Export
      | @legislation; map code,container-title to journaltitle #327                                    | 1           |
      | BraceBalancer                                                                                  | 1           |
      | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
-     | Better BibLaTeX.004                                                                            | 1           |
      | auth leaves punctuation in citation key #310                                                   | 1           |
      | BibTeX variable support for journal titles. #309                                               | 1           |
      | condense in cite key format not working #308                                                   | 1           |
