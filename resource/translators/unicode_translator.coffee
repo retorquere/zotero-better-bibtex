@@ -20,23 +20,12 @@ LaTeX.cleanHTML = (text) ->
     text = text.replace(new RegExp("[#{open}][\\s\\u00A0]?", 'g'), '<span enquote="true">')
     text = text.replace(new RegExp("[\\s\\u00A0]?[#{close}]", 'g'), '</span>')
 
+  text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) -> "<pre>#{Translator.HTMLEncode(pre)}</pre>")
   for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
-    switch
-      when i % 2 == 0 # text
-        html += Translator.HTMLEncode(chunk)
-
-      when chunk.match(/^<pre/i)
-        html += '<![CDATA['
-        cdata = true
-
-      when chunk.match(/^<\/pre/i)
-        html += ']]>'
-        cdata = false
-
-      else
-        html += chunk
-
-  html += ']]>' if cdata
+    if i % 2 == 0 # text
+      html += Translator.HTMLEncode(chunk)
+    else
+      html += chunk
 
   Translator.debug('cleanHTML:', {text, html})
 
@@ -52,14 +41,21 @@ class LaTeX.HTML
   constructor: (html) ->
     @latex = ''
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
+    @stack = []
 
     @walk(Zotero.BetterBibTeX.HTMLParser(html))
 
   walk: (tag) ->
     return unless tag
 
-    return @chars(tag.text) if tag.name == '#text'
-    return @cdata(tag.text) if tag.name == '#cdata-section'
+    if tag.name == '#text'
+      if @stack[0]?.name == 'pre'
+        @latex += tag.text
+      else
+        @chars(tag.text)
+      return
+
+    @stack.unshift(tag)
 
     switch tag.name
       when 'i', 'em', 'italic'
@@ -136,8 +132,7 @@ class LaTeX.HTML
       when 'ul'
         @latex += "\n\n\\end{itemize}\n"
 
-  cdata: (text) ->
-    @latex += text
+    @stack.shift()
 
   chars: (text) ->
     blocks = []

@@ -211,6 +211,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Better BibLaTeX.019                                                                | 1           |
      | biblatex; Language tag xx is exported, xx-XX is not #380                           | 1           |
      | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |
      | Better BibTeX does not use biblatex fields eprint and eprinttype #170              | 1           |
@@ -239,7 +240,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.014                                                                | 1           |
      | Better BibLaTeX.015                                                                | 1           |
      | Better BibLaTeX.017                                                                | 1           |
-     | Better BibLaTeX.019                                                                | 1           |
      | Better BibLaTeX.020                                                                | 1           |
      | Better BibLaTeX.022                                                                | 1           |
      | Better BibLaTeX.023                                                                | 1           |
