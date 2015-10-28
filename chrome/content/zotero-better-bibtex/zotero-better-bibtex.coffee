@@ -19,6 +19,13 @@ Zotero.BetterBibTeX.HTMLParser = new class
   DOCUMENT_TYPE_NODE:           10
   DOCUMENT_FRAGMENT_NODE:       11
 
+  text: (html) ->
+    doc = @DOMParser.parseFromString("<span>#{html}</span>", 'text/html')
+    doc = doc.documentElement if doc.nodeType == @DOCUMENT_NODE
+    txt = doc.textContent
+    Zotero.BetterBibTeX.debug('html2text:', {html, txt})
+    return txt
+
   parse: (html) ->
     return @walk(@DOMParser.parseFromString("<span>#{html}</span>", 'text/html'))
 
@@ -28,12 +35,11 @@ Zotero.BetterBibTeX.HTMLParser = new class
     if node.nodeType in [@TEXT_NODE, @CDATA_SECTION_NODE]
       tag.text = node.textContent
     else
-      Zotero.BetterBibTeX.debug('node type:', node.nodeType)
       if node.nodeType == @ELEMENT_NODE && node.hasAttributes()
         for attr in node.attributes
-          tags.attrs[attr.name] = attr.value
+          tag.attrs[attr.name] = attr.value
       if node.childNodes
-        for child in [0... node.childNodes.length]
+        for child in [0 ... node.childNodes.length]
           @walk(node.childNodes.item(child), tag)
 
     return tag unless json

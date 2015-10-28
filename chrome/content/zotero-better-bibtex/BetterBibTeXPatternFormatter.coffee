@@ -93,7 +93,7 @@ class BetterBibTeXPatternFormatter
     return words
 
   innerText: (str) ->
-    Zotero.BetterBibTeX.HTMLParser.DOMParser.parseFromString(str, 'text/html').textContent
+    return Zotero.BetterBibTeX.HTMLParser.text(str)
 
   creators: (onlyEditors, withInitials) ->
     return [] unless @item.creators?.length
