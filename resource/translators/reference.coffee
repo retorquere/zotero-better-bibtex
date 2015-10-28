@@ -123,14 +123,16 @@ class Reference
 
   nonLetters: new XRegExp("[^\\p{Letter}]", 'g')
   punctuationAtEnd: new XRegExp("[\\p{Punctuation}]$")
-  postfixedParticle: (particle) ->
-    lastchar = particle[particle.length - 1]
-    return particle + ' ' if lastchar == '.'
-    return particle if lastchar == ' ' || XRegExp.test(particle, @punctuationAtEnd)
-    return particle + ' '
+  _enc_creators_postfix_particle: (particle) ->
+    return '' if particle[particle.length - 1] == ' '
+    return "\\relax " if XRegExp.test(particle, @punctuationAtEnd)
+    return ' '
 
-  _enc_creators_quote_separators: (name) ->
-    return ((if i % 2 == 0 then n else new String(n)) for n, i in name.split(/(\s+and\s+|,)/i))
+  _enc_creators_quote_separators: (field, value) ->
+    if Translator.BetterBibTeX && field == 'family'
+      return ((if i % 2 == 0 then n else new String(n)) for n, i in value.split(/(\s+[aA][nN][dD]\s+|,|\s+[a-z]\b)/))
+    else
+      return ((if i % 2 == 0 then n else new String(n)) for n, i in value.split(/(\s+and\s+|,)/i))
   ###
   # Encode creators to author-style field
   #
@@ -154,6 +156,8 @@ class Reference
 
           Zotero.BetterBibTeX.CSL.parseParticles(name)
 
+          parsed = JSON.parse(JSON.stringify(name))
+
           @useprefix = !!name['non-dropping-particle']
           @juniorcomma ||= (name.suffix || '') in ['sr', 'sr.', 'jr', 'jr.']
 
@@ -161,42 +165,19 @@ class Reference
             if v.length > 1 && v[0] == '"' && v[v.length - 1] == '"'
               name[k] = @enc_latex({ value: v.slice(1, -1) })
             else
-              name[k] = @enc_latex({ value: @_enc_creators_quote_separators(_name), sep: ' '})
+              name[k] = @enc_latex({ value: @_enc_creators_quote_separators(k, v), sep: ' '})
 
-          family = @_enc_creators_unquote(name.family)
-          if family instanceof String
-            family
+          for particle in ['non-dropping-particle', 'dropping-particle']
+            name[particle] += _enc_creators_postfix_particle(parsed[particle]) if parsed[particle]
 
-          if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
-            family = [new String(name.family.slice(1, -1))]
-          else
-            family = @creator_esc_separators(name.family)
+          latex = ''
+          latex += name['dropping-particle'] if name['dropping-particle']
+          latex += name['non-dropping-particle'] if name['non-dropping-particle']
+          latex += name.family if name.family
+          latex += ", #{name.suffix}" if name.suffix
+          latex += ", #{name.given}" if name.given
 
-          @juniorcomma ||= (name.suffix || '') in ['sr', 'sr.', 'jr', 'jr.']
-
-          if name['non-dropping-particle']
-            @useprefix = true
-            ndp = @postfixedParticle(name['non-dropping-particle'])
-            if Translator.BetterBibTeX
-              family = [new String(ndp + name.family)]
-            else
-              family = @creator_esc_separators(ndp).concat(family)
-
-          if name['dropping-particle']
-            family = @creator_esc_separators(@postfixedParticle(name['dropping-particle'])).concat(family)
-
-          if name.given
-            given = @creator_esc_separators(name.given)
-          else
-            given = []
-
-          if name.suffix
-            suffix = [', '].concat(@creator_esc_separators(name.suffix))
-          else
-            suffix = []
-
-          name = family.concat(suffix, [', '], given)
-          name = @enc_latex({ value: name, sep: ''})
+          name = latex
 
         else
           continue
