@@ -53,8 +53,8 @@
 <!ENTITY zotero.better-bibtex.doi-and-url.DOI "DOI">
 <!ENTITY zotero.better-bibtex.doi-and-url.URL "URL">
 
-<!ENTITY zotero.better-bibtex.reportErrors "Report ZotPlus Errors...">
-<!ENTITY zotero.better-bibtex.errorReport.review "The data below is about to submitted to ZotPlus for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
+<!ENTITY zotero.better-bibtex.reportErrors "Report Better BibTeX Errors...">
+<!ENTITY zotero.better-bibtex.errorReport.review "The data below is about to submitted to Better BibTeX for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
 
 If you are OK with sending this data, please click &quot;Continue&quot; and post the debug ID presented in the next screen in the issue tracker at https://github.com/ZotPlus/zotero-better-bibtex/issue">
 <!ENTITY zotero.better-bibtex.errorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/ZotPlus/zotero-better-bibtex/issues) with this Report ID, a description of the problem, and any steps necessary to reproduce it.">
@@ -91,8 +91,8 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 
 <!ENTITY zotero.better-bibtex.rescan-citekeys "Re-scan pinned citekeys after restart">
 
-<!ENTITY zotero.better-bibtex.preferences.debugOutputLogging "ZotPlus Debug Output">
-<!ENTITY zotero.better-bibtex.debug "ZotPlus extended debug logging. Restart Firefox/Zotero to activate, persists over reboots. Affects performance, so turn off when done.">
+<!ENTITY zotero.better-bibtex.preferences.debugOutputLogging "Better BibTeX Debug Output">
+<!ENTITY zotero.better-bibtex.debug "Better BibTeX extended debug logging. Restart Firefox/Zotero to activate, persists over reboots. Affects performance, so turn off when done.">
 
 
 <!ENTITY zotero.better-bibtex.preserveBibTeXVariables "Preserve BibTeX variables">
