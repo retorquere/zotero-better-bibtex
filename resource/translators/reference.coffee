@@ -170,7 +170,7 @@ class Reference
             switch
               when v.length > 1 && v[0] == '"' && v[v.length - 1] == '"'
                 name[k] = @enc_latex({ value: v.slice(1, -1) })
-              when k in ['family', 'given'] && v.indexOf(' ') > 0
+              when k == 'family' && v.indexOf(' ') > 0
                 name[k] = @enc_latex({ value: v })
               else
                 name[k] = @enc_latex({ value: @_enc_creators_quote_separators(k, v), sep: ' '})
