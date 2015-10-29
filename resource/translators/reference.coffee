@@ -127,7 +127,7 @@ class Reference
     lastchar = particle[particle.length - 1]
     return '' if lastchar == ' '
     return ' ' if lastchar == '.' && Translator.BetterBibLaTeX
-    if RegExp.test(particle, @punctuationAtEnd)
+    if XRegExp.test(particle, @punctuationAtEnd)
       return "\\relax " if Translator.BetterBibTeX
       return ''
     return ' '
