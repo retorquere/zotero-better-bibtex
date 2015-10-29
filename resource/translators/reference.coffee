@@ -125,13 +125,12 @@ class Reference
   punctuationAtEnd: new XRegExp("[\\p{Punctuation}]$")
   _enc_creators_postfix_particle: (particle) ->
     return '' if particle[particle.length - 1] == ' '
-    return "\\relax " if XRegExp.test(particle, @punctuationAtEnd)
+    return "\\relax " if Translator.BetterBibTeX && XRegExp.test(particle, @punctuationAtEnd)
     return ' '
 
   _enc_creators_quote_separators: (field, value) ->
-    Translator.debug('_enc_creators_quote_separators:', {field, value})
     if Translator.BetterBibTeX && field == 'family'
-      return ((if i % 2 == 0 then n else new String(n)) for n, i in value.split(/(\s+[aA][nN][dD]\s+|,|\s+[a-z]\b)/))
+      return ((if i % 2 == 0 then n else new String(n)) for n, i in value.split(/(\s+[aA][nN][dD]\s+|,|\s+[a-z]+\b)/))
     else
       return ((if i % 2 == 0 then n else new String(n)) for n, i in value.split(/(\s+and\s+|,)/i))
   ###
@@ -164,10 +163,13 @@ class Reference
 
           for k, v of name
             continue unless typeof v == 'string'
-            if v.length > 1 && v[0] == '"' && v[v.length - 1] == '"'
-              name[k] = @enc_latex({ value: v.slice(1, -1) })
-            else
-              name[k] = @enc_latex({ value: @_enc_creators_quote_separators(k, v), sep: ' '})
+            switch
+              when v.length > 1 && v[0] == '"' && v[v.length - 1] == '"'
+                name[k] = @enc_latex({ value: v.slice(1, -1) })
+              when k in ['family', 'given'] && v.indexOf(' ') > 0
+                name[k] = @enc_latex({ value: v })
+              else
+                name[k] = @enc_latex({ value: @_enc_creators_quote_separators(k, v), sep: ' '})
 
           for particle in ['non-dropping-particle', 'dropping-particle']
             name[particle] += @_enc_creators_postfix_particle(parsed[particle]) if parsed[particle]
