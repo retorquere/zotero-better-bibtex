@@ -53,6 +53,8 @@ def loadZotero
     profile.add_extension(xpi)
   }
 
+  profile['xpinstall.signatures.required'] = false
+
   profile['extensions.zotero.showIn'] = 2
   profile['extensions.zotero.httpServer.enabled'] = true
   profile['dom.max_chrome_script_run_time'] = 6000

@@ -122,13 +122,17 @@ BetterBibTeXAutoExportPref =
     selected = exportlist.currentIndex
     return if selected < 0
 
-    id = exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')
+    id = parseInt(exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport'))
 
     ae = Zotero.BetterBibTeX.DB.autoexport.get(id)
-    return unless ae
+    if !ae
+      Zotero.BetterBibTeX.debug('No autoexport', id)
+      return
+
     try
       translation = Zotero.BetterBibTeX.auto.prepare(ae)
-    catch
+    catch err
+      Zotero.BetterBibTeX.debug('failed to prepare', ae, err.message)
       return
 
     if !translation
@@ -176,7 +180,8 @@ BetterBibTeXAutoExportPref =
     tree = new BetterBibTeXAutoExport('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', exportlist, document)
 
     for ae in Zotero.BetterBibTeX.DB.autoexport.chain().simplesort('path').data()
-      status = if Zotero.BetterBibTeX.auto.running == ae.id then 'running' else "#{ae.status} (#{ae.updated})"
+      Zotero.BetterBibTeX.debug('refresh:', {id: ae.$loki, status: ae.status, running: Zotero.BetterBibTeX.auto.running})
+      status = if Zotero.BetterBibTeX.auto.running == ae.$loki then 'running' else "#{ae.status} (#{ae.updated})"
       tree.treeitem({autoexport: "#{ae['$loki']}", '': ->
         @treerow(->
           @treecell({editable: 'false', label: "#{BetterBibTeXAutoExportPref.exportType(ae.collection)}: #{BetterBibTeXAutoExportPref.exportName(ae.collection)}"})

@@ -169,7 +169,7 @@ Zotero.BetterBibTeX.DB = new class
 
       Zotero.File.putContents(file, serialized)
 
-      callback(true)
+      callback()
       Zotero.BetterBibTeX.debug('DB.saveDatabase:', {name, file: file.path})
 
     loadDatabase: (name, callback) ->
