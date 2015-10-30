@@ -67,16 +67,16 @@ Zotero.BetterBibTeX.auto = new class
     path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
     path.initWithPath(ae.path)
 
-    if path.exists() && !(path.isFile() && path.isWritable())
-      msg = "auto.prepare: candidate path '#{ae.path}' exists but is not writable"
-      Zotero.BetterBibTeX.debug(msg)
+    if !(path.exists() && path.isFile() && path.isWritable())
       @mark(ae, 'error')
+      msg = "auto.prepare: candidate path '#{path.path}' exists but is not writable"
+      Zotero.BetterBibTeX.debug(msg)
       throw new Error(msg)
 
-    if !(path.parent.exists() && path.parent.isDirectory() && path.parent.isWritable())
-      msg = "auto.prepare: parent of candidate path '#{ae.path}' exists but is not writable"
-      Zotero.BetterBibTeX.debug(msg)
+    if !(path.parent.exists() && path.parent.isDirectory() && path.isWritable())
       @mark(ae, 'error')
+      msg = "auto.prepare: parent of candidate path '#{path.path}' exists but is not writable"
+      Zotero.BetterBibTeX.debug(msg)
       throw new Error(msg)
 
     switch
@@ -102,9 +102,7 @@ Zotero.BetterBibTeX.auto = new class
         Zotero.BetterBibTeX.debug('auto.process: unexpected collection id ', ae.collection)
         return null
 
-    if items.items && items.items.length == 0
-      Zotero.BetterBibTeX.debug('auto.prepare: candidate ', ae.path, ' has no items')
-      return null
+    return null if items.items && items.items.length == 0
 
     translation = new Zotero.Translate.Export()
 
@@ -151,6 +149,7 @@ Zotero.BetterBibTeX.auto = new class
     translation = null
 
     for ae in @db.autoexport.findObjects({status: 'pending'})
+      break if translation
       try
         translation = @prepare(ae)
       catch err
@@ -159,11 +158,9 @@ Zotero.BetterBibTeX.auto = new class
 
       if !translation
         @mark(ae, 'done')
-      else
-        break
 
     if translation
-      @running = '' + ae.$loki
+      @running = '' + ae.id
     else
       Zotero.BetterBibTeX.debug('auto.process: no pending jobs')
       return
@@ -172,7 +169,7 @@ Zotero.BetterBibTeX.auto = new class
     @refresh()
 
     translation.setHandler('done', (obj, worked) =>
-      status = (if worked then 'done' else 'error')
+      status = Zotero.BetterBibTeX.auto.status((if worked then 'done' else 'error'))
       Zotero.BetterBibTeX.debug("auto.process: finished #{Zotero.BetterBibTeX.auto.running}: #{status}")
       @mark(ae, status)
       Zotero.BetterBibTeX.auto.running = null
