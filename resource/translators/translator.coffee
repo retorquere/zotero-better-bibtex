@@ -239,7 +239,7 @@ Translator.initialize = ->
 
   @options = {}
   @options.skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
-  for pref in ['jabrefGroups', 'postscript', 'csquotes', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'asciiBibLaTeX', 'asciiBibTeX']
+  for pref in ['citekeyFormat', 'jabrefGroups', 'postscript', 'csquotes', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'asciiBibLaTeX', 'asciiBibTeX']
     @options[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
   for own k, v of @options
     @[k] = v
