@@ -124,12 +124,8 @@ class Reference
   nonLetters: new XRegExp("[^\\p{Letter}]", 'g')
   punctuationAtEnd: new XRegExp("[\\p{Punctuation}]$")
   _enc_creators_postfix_particle: (particle) ->
-    lastchar = particle[particle.length - 1]
-    return '' if lastchar == ' '
-    return ' ' if lastchar in ['.', '-'] && Translator.BetterBibLaTeX
-    if XRegExp.test(particle, @punctuationAtEnd)
-      return "\\relax " if Translator.BetterBibTeX
-      return ''
+    return '' if particle[particle.length - 1] == ' '
+    return "\\relax " if Translator.BetterBibTeX && XRegExp.test(particle, @punctuationAtEnd)
     return ' '
 
   _enc_creators_quote_separators: (field, value) ->
