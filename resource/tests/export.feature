@@ -168,7 +168,7 @@ Scenario: Diacritics stripped from keys regardless of ascii or fold filters #266
   Then a library export using 'Better BibLaTeX' should match 'export/Diacritics stripped from keys regardless of ascii or fold filters #266-nofold.bib'
 
 @384
-Scenario : Do not caps-protect name fields #384
+Scenario: Do not caps-protect name fields #384
   Given I import 40 references from 'export/Do not caps-protect name fields #384.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Do not caps-protect name fields #384.biblatex'
   And a library export using 'Better BibTeX' should match 'export/Do not caps-protect name fields #384.bibtex'
