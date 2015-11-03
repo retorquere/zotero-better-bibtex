@@ -123,6 +123,7 @@ class Reference
 
   nonLetters: new XRegExp("[^\\p{Letter}]", 'g')
   punctuationAtEnd: new XRegExp("[\\p{Punctuation}]$")
+  startsWithLowercase: new XRegExp("^[\\p{Ll}]")
   _enc_creators_postfix_particle: (particle) ->
     return '' if particle[particle.length - 1] == ' '
     return "\\relax " if Translator.BetterBibTeX && XRegExp.test(particle, @punctuationAtEnd)
@@ -166,7 +167,7 @@ class Reference
             switch
               when v.length > 1 && v[0] == '"' && v[v.length - 1] == '"'
                 name[k] = @enc_latex({ value: new String(v.slice(1, -1)) })
-              when k == 'family' && v.indexOf(' ') > 0
+              when k == 'family' && XRegExp.test(v, @startsWithLowercase)
                 name[k] = @enc_latex({ value: new String(v) })
               else
                 name[k] = @enc_latex({ value: @_enc_creators_quote_separators(k, v), sep: ' '})
