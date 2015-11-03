@@ -552,7 +552,7 @@ doExport = ->
 
     # 'juniorcomma' needs more thought, it isn't for *all* suffixes you want this. Or even at all.
     #ref.add({ name: 'options', value: (option for option in ['useprefix', 'juniorcomma'] when ref[option]).join(',') })
-    ref.add({ name: 'options', value: 'useprefix' }) if ref.useprefix
+    ref.add({ name: 'options', value: 'useprefix=true' }) if ref.useprefix
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
