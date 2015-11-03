@@ -237,14 +237,14 @@ Translator.initialize = ->
   for own attr, f of @fieldMap || {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
-  @options = {}
+  @preferences = {}
   for pref in ['citekeyFormat', 'skipFields', 'jabrefGroups', 'postscript', 'csquotes', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'asciiBibLaTeX', 'asciiBibTeX']
-    @options[pref] = @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
+    @preferences[pref] = @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
   @skipFields = (field.trim() for field in (@skipFields || '').split(',') when field.trim())
 
-  @preferences = {}
+  @options = {}
   for option in ['useJournalAbbreviation', 'exportPath', 'exportFilename', 'exportCharset', 'exportFileData', 'exportNotes']
-    @preferences[option] = @[option] = Zotero.getOption(option)
+    @options[option] = @[option] = Zotero.getOption(option)
 
   @caching = !@exportFileData
 
