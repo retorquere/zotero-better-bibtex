@@ -20,7 +20,7 @@ Translator.fieldMap = {
   assignee:         { name: 'assignee' }
   issue:            { import: 'issue' }
   publicationTitle: { import: 'booktitle' }
-  publisher:        { import: [ 'school', 'institution', 'publisher' ] }
+  publisher:        { import: [ 'school', 'institution', 'publisher' ], enc: 'literal' }
 }
 
 Translator.typeMap = {
