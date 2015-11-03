@@ -9,9 +9,7 @@
       "citekeyFormat": "[auth:lower]"
     },
     "options": {
-      "skipFields": [
-        ""
-      ],
+      "skipFields": [ "timestamp" ],
       "jabrefGroups": true,
       "postscript": "",
       "csquotes": "",
