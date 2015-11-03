@@ -131,7 +131,7 @@ class Reference
 
   _enc_creators_quote_separators: (field, value) ->
     if Translator.BetterBibTeX && field == 'family'
-      return ((if i % 2 == 0 then n else new String(n)) for n, i in value.split(/(\s+[aA][nN][dD]\s+|,|\s+[a-z]+\b)/))
+      return ((if i % 2 == 0 then n else new String(n)) for n, i in value.split(/(\s+[aA][nN][dD]\s+|,|\s+[a-z]+(?:$|\s))/))
     else
       return ((if i % 2 == 0 then n else new String(n)) for n, i in value.split(/(\s+and\s+|,)/i))
   ###
