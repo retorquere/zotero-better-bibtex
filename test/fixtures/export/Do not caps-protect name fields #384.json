@@ -10,7 +10,7 @@
     "preferences": {
       "citekeyFormat": "[auth:lower]",
       "skipFields": "timestamp",
-      "jabrefGroups": true,
+      "jabrefGroups": false,
       "postscript": "",
       "csquotes": "",
       "preserveCaps": "all",
