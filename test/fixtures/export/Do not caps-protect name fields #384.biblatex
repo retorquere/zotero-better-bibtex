@@ -70,7 +70,7 @@
 }
 
 @book{marcusaurelius,
-  author = {{Marcus Aurelius},}
+  author = {{Marcus Aurelius}}
 }
 
 @book{dumas,
@@ -148,11 +148,11 @@
 }
 
 @book{este,
-  author = {d' Este, Beatrice}
+  author = {d’ Este, Beatrice}
 }
 
 @book{medici,
-  author = {de' Medici, Lorenzo}
+  author = {de’ Medici, Lorenzo}
 }
 
 @book{al-hakim,
