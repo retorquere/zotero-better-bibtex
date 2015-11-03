@@ -172,6 +172,9 @@ class Reference
     for particle in ['non-dropping-particle', 'dropping-particle']
       name[particle] += @_enc_creators_postfix_particle(name[particle]) if name[particle]
 
+    if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
+      name.family = name.family.slice(1, -1)
+
     latex = [new String((part for part in [name['dropping-particle'], name['non-dropping-particle'], name.family] when part).join(''))]
     latex.push(name.suffix) if name.suffix
     latex.push(name.given) if name.given
