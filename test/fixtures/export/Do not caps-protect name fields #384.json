@@ -1,0 +1,1088 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.6.3",
+    "preferences": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "citekeyFormat": "[auth:lower]"
+    },
+    "options": {
+      "skipFields": [
+        ""
+      ],
+      "jabrefGroups": true,
+      "postscript": "",
+      "csquotes": "",
+      "preserveCaps": "all",
+      "fancyURLs": false,
+      "langID": "babel",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false,
+      "preserveBibTeXVariables": false,
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "van Gogh",
+          "firstName": "Vincent"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 316,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vangogh"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Humboldt",
+          "firstName": "Alexander von"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 296,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "humboldt"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Beauvoir",
+          "firstName": "Simone de"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 281,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "beauvoir"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "\"de Gaulle\"",
+          "firstName": "Charles"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 288,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "degaulle"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "King",
+          "firstName": "Martin Luther, Jr."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 297,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "king"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Stevenson",
+          "firstName": "Adlai E.,! III"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 314,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "stevenson"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "National Aeronautics and Space Administration"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 306,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "nationalaeronauticsandspaceadministration"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "boven d'Eert",
+          "firstName": "Christianus"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 282,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "bovendeert"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "'s-Gravesande",
+          "firstName": "Goverdus"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 311,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "s-gravesande"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "De Quincey",
+          "firstName": "Thomas"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 292,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "dequincey"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Ortega y Gasset",
+          "firstName": "José"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 307,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "ortegaygasset"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "D’Amato",
+          "firstName": "Alfonse"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 285,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "damato"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Sadat",
+          "firstName": "Anwar el-"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 309,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "sadat"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "La Follette",
+          "firstName": "Robert M., Sr."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 298,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "lafollette"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "de la Mare",
+          "firstName": "Walter"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 290,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "delamare"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "DeGette",
+          "firstName": "Diana"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 289,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "degette"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Saunders",
+          "firstName": "John Bertrand de Cusance Morant"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 310,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "saunders"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Marcus Aurelius"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 303,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "marcusaurelius"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Dumas",
+          "firstName": "Alexandre, père"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 293,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "dumas"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Van Rensselaer",
+          "firstName": "Stephen"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 318,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vanrensselaer"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "L’Enfant",
+          "firstName": "Pierre-Charles"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 301,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "lenfant"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "\"van Gulik\"",
+          "firstName": "Robert"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 317,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vangulik"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Sackville-West",
+          "firstName": "Victoria"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 308,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "sackville-west"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Vaughan Williams",
+          "firstName": "Ralph"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 319,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vaughanwilliams"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Mies van der Rohe",
+          "firstName": "Ludwig"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 305,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "miesvanderrohe"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "d’Alembert",
+          "firstName": "Jean le Rond"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 284,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "dalembert"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Tocqueville",
+          "firstName": "Alexis de"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 315,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "tocqueville"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "La Fontaine",
+          "firstName": "Jean de"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 299,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "lafontaine"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "La Salle",
+          "firstName": "René-Robert Cavelier de"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 300,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "lasalle"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "du Puy de Clinchamps",
+          "firstName": "Philippe"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 294,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "dupuydeclinchamps"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Stein",
+          "firstName": "Heinrich Friedrich Karl vom und zum"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 313,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "stein"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Silva",
+          "firstName": "Agostinho da"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 312,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "silva"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "da Gama",
+          "firstName": "Vasco"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 283,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "dagama"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "D’Annunzio",
+          "firstName": "Gabriele"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 286,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "dannunzio"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Da Ponte",
+          "firstName": "Lorenzo"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 287,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "daponte"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Della Robbia",
+          "firstName": "Luca"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 291,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "dellarobbia"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Este",
+          "firstName": "Beatrice d’"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 295,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "este"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Medici",
+          "firstName": "Lorenzo de’​"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 304,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "medici"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "al-Hakim",
+          "firstName": "Tawfiq"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 280,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "al-hakim"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Le Vayer",
+          "firstName": "François de La Mothe"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 302,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "levayer"
+    }
+  ],
+  "cache": {
+    "activity": {
+      "serialized": {
+        "clear": 0,
+        "hit": 0,
+        "miss": 40
+      },
+      "cache": {
+        "hit": 0,
+        "miss": 0,
+        "clear": 0
+      }
+    }
+  }
+}
