@@ -32,81 +32,90 @@ require_relative 'lib/unicode_table'
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
-ABBREVS = YAML.load_file('resource/abbreviations/lists.yml')
-ABBREVS.each{|a|
-  if File.basename(a['path']) == 'WOS.json'
-    file a['path'] => 'Rakefile' do |t|
-      tmp = "tmp/WOS.html"
-      abbrevs = {}
-      (('A'..'Z').to_a + ['0-9']).each{|list|
-        ZotPlus::RakeHelper.download(a['url'].sub('<>', list), tmp)
-        doc = Nokogiri::HTML(open(tmp))
-
-        dt = nil
-        doc.xpath("//*[name()='dt' or name()='dd']").each{|node|
-          next unless %w{dt dd}.include?(node.name)
-          node = node.dup
-          node.children.each{|c| c.unlink unless c.name == 'text'}
-          text = node.inner_text.strip
-          if node.name == 'dt'
-            dt = (text == '' ? nil : text.downcase)
-          elsif dt
-            abbrevs[dt] = text
-          end
-        }
-      }
-      abbrevs = { default: { 'container-title' => abbrevs } }
-      open(t.name, 'w'){|f| f.write(JSON.pretty_generate(abbrevs)) }
-    end
-  else
-    file a['path'] => 'Rakefile' do |t|
-      tmp = "tmp/#{File.basename(t.name)}"
-      ZotPlus::RakeHelper.download(a['url'], tmp)
-
-      text = open(tmp).read
-      cd = CharDet.detect(text)
-      if !%w{ascii utf-8}.include?(cd['encoding'].downcase)
-        text = text.encode('utf-8', cd['encoding'])
-        open(tmp, 'w'){|f| f.write(text) }
-      end
-
-      abbrevs = {}
-      IO.readlines(tmp).each{|line|
-        line.strip!
-        next if line[0] == '#'
-        next unless line =~ /=/
-        line = line.split('=', 2).collect{|t| t.strip}
-        next if line.length != 2
-        journal, abbrev = *line
-        journal.downcase!
-        abbrev.sub(/\s*;.*/, '')
-        next if journal == '' || abbrev == ''
-
-        terms = journal.split(/(\[[^\]]+\])/).reject{|t| t.strip == ''}.collect{|t|
-          if t[0] == '[' && t[-1] == ']'
-            OpenStruct.new(term: t[1..-2].downcase)
-          else
-            OpenStruct.new(term: t.downcase, required: true)
-          end
-        }
-
-        (1..2**terms.length).collect{|permutation|
-          (0..terms.length-1).collect{|term|
-            terms[term].required || ((1 << term) & permutation) != 0 ?  terms[term].term : nil
-          }.compact.join(' ').strip
-        }.collect{|name|
-          name.gsub!(/[^a-z]+/, ' ')
-          name.gsub!(/\s+/, ' ')
-          name.strip
-        }.uniq.each{|journal|
-          abbrevs[journal] = abbrev
-        }
-      }
-      abbrevs = { default: { 'container-title' => abbrevs } }
-      open(t.name, 'w'){|f| f.write(JSON.pretty_generate(abbrevs)) }
-    end
+def cleanly(f)
+  begin
+    yield
+  rescue
+    FileUtils.rm_f(f)
+    raise
   end
-}
+end
+
+#ABBREVS = YAML.load_file('resource/abbreviations/lists.yml')
+#ABBREVS.each{|a|
+#  if File.basename(a['path']) == 'WOS.json'
+#    file a['path'] => 'Rakefile' do |t|
+#      tmp = "tmp/WOS.html"
+#      abbrevs = {}
+#      (('A'..'Z').to_a + ['0-9']).each{|list|
+#        ZotPlus::RakeHelper.download(a['url'].sub('<>', list), tmp)
+#        doc = Nokogiri::HTML(open(tmp))
+#
+#        dt = nil
+#        doc.xpath("//*[name()='dt' or name()='dd']").each{|node|
+#          next unless %w{dt dd}.include?(node.name)
+#          node = node.dup
+#          node.children.each{|c| c.unlink unless c.name == 'text'}
+#          text = node.inner_text.strip
+#          if node.name == 'dt'
+#            dt = (text == '' ? nil : text.downcase)
+#          elsif dt
+#            abbrevs[dt] = text
+#          end
+#        }
+#      }
+#      abbrevs = { default: { 'container-title' => abbrevs } }
+#      open(t.name, 'w'){|f| f.write(JSON.pretty_generate(abbrevs)) }
+#    end
+#  else
+#    file a['path'] => 'Rakefile' do |t|
+#      tmp = "tmp/#{File.basename(t.name)}"
+#      ZotPlus::RakeHelper.download(a['url'], tmp)
+#
+#      text = open(tmp).read
+#      cd = CharDet.detect(text)
+#      if !%w{ascii utf-8}.include?(cd['encoding'].downcase)
+#        text = text.encode('utf-8', cd['encoding'])
+#        open(tmp, 'w'){|f| f.write(text) }
+#      end
+#
+#      abbrevs = {}
+#      IO.readlines(tmp).each{|line|
+#        line.strip!
+#        next if line[0] == '#'
+#        next unless line =~ /=/
+#        line = line.split('=', 2).collect{|t| t.strip}
+#        next if line.length != 2
+#        journal, abbrev = *line
+#        journal.downcase!
+#        abbrev.sub(/\s*;.*/, '')
+#        next if journal == '' || abbrev == ''
+#
+#        terms = journal.split(/(\[[^\]]+\])/).reject{|t| t.strip == ''}.collect{|t|
+#          if t[0] == '[' && t[-1] == ']'
+#            OpenStruct.new(term: t[1..-2].downcase)
+#          else
+#            OpenStruct.new(term: t.downcase, required: true)
+#          end
+#        }
+#
+#        (1..2**terms.length).collect{|permutation|
+#          (0..terms.length-1).collect{|term|
+#            terms[term].required || ((1 << term) & permutation) != 0 ?  terms[term].term : nil
+#          }.compact.join(' ').strip
+#        }.collect{|name|
+#          name.gsub!(/[^a-z]+/, ' ')
+#          name.gsub!(/\s+/, ' ')
+#          name.strip
+#        }.uniq.each{|journal|
+#          abbrevs[journal] = abbrev
+#        }
+#      }
+#      abbrevs = { default: { 'container-title' => abbrevs } }
+#      open(t.name, 'w'){|f| f.write(JSON.pretty_generate(abbrevs)) }
+#    end
+#  end
+#}
 ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   tgt = src.sub(/\.[^\.]+$/, '.js')
   tgt
@@ -197,23 +206,27 @@ file 'resource/reports/cacheActivity.txt' => 'resource/reports/cacheActivity.htm
 end
 
 file 'chrome/content/zotero-better-bibtex/csl-util_name_particles.js' => 'Rakefile' do |t|
-  Tempfile.create('grasp+.js'.split('+')) do |tmp|
-    ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/src/util_name_particles.js', tmp.path)
-    sh "#{NODEBIN}/grasp -e 'CSL.ParticleList = function () { _$ } ();' --replace '' #{tmp.path.shellescape}
-        | #{NODEBIN}/grasp '#CSL' --replace 'Zotero.BetterBibTeX'
-        > #{t.name.shellescape}".gsub("\n", ' ')
+  cleanly(t.name) do
+    ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/src/util_name_particles.js', t.name)
+    sh "#{NODEBIN}/grasp -i -e 'CSL.ParticleList = function () { _$ } ();' --replace '' #{t.name.shellescape}"
+    sh "#{NODEBIN}/grasp -i '#CSL' --replace 'Zotero.BetterBibTeX' #{t.name.shellescape}"
   end
 end
 
 file 'resource/translators/xregexp-all.js' => 'Rakefile' do |t|
-  ZotPlus::RakeHelper.download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js', t.name)
-  # strip out setNatives because the Moz validator is stupid
-  sh "#{NODEBIN}/grasp -i 'func-dec! #setNatives' --replace 'function setNatives(on) { if (on) { throw new Error(\"setNatives not supported in Firefox extension\"); } }' #{t.name}"
+  cleanly(t.name) do
+    ZotPlus::RakeHelper.download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js', t.name)
+    # strip out setNatives because the Moz validator is stupid
+    sh "#{NODEBIN}/grasp -i 'func-dec! #setNatives' --replace 'function setNatives(on) { if (on) { throw new Error(\"setNatives not supported in Firefox extension\"); } }' #{t.name}"
+  end
 end
 
 file 'chrome/content/zotero-better-bibtex/juris-m-dateparser.js' => 'Rakefile' do |t|
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Juris-M/zotero/jurism/chrome/content/zotero/xpcom/dateparser.js', t.name)
-  sh "#{NODEBIN}/grasp -i -e 'Zotero.DateParser' --replace 'Zotero.BetterBibTeX.JurisMDateParser' #{t.name.shellescape}"
+  cleanly(t.name) do
+    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Juris-M/zotero/jurism/chrome/content/zotero/xpcom/dateparser.js', t.name)
+    sh "#{NODEBIN}/grasp -i -e 'Zotero.DateParser' --replace 'Zotero.BetterBibTeX.JurisMDateParser' #{t.name.shellescape}"
+    sh "#{NODEBIN}/grasp -i -e 'txt.match(jiymatcher)' --replace 'txt.match(jiymatcher) || []' #{t.name.shellescape}"
+  end
 end
 
 file 'resource/translators/json5.js' => 'Rakefile' do |t|
