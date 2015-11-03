@@ -83,10 +83,10 @@ doExport = ->
           when primaryCreatorType         then authors.push(creator)
           else                                 collaborators.push(creator)
 
-      ref.add({ name: 'author', value: authors, enc: 'creators', preserveCaps: true })
-      ref.add({ name: 'editor', value: editors, enc: 'creators', preserveCaps: true })
-      ref.add({ name: 'translator', value: translators, enc: 'creators', preserveCaps: true })
-      ref.add({ name: 'collaborator', value: collaborators, enc: 'creators', preserveCaps: true })
+      ref.add({ name: 'author', value: authors, enc: 'creators' })
+      ref.add({ name: 'editor', value: editors, enc: 'creators' })
+      ref.add({ name: 'translator', value: translators, enc: 'creators' })
+      ref.add({ name: 'collaborator', value: collaborators, enc: 'creators' })
 
     if item.date
       date = Zotero.BetterBibTeX.parseDateToObject(item.date, item.language)
