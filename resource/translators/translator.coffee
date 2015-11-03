@@ -245,7 +245,7 @@ Translator.initialize = ->
     @[k] = v
 
   @preferences = {}
-  for option in ['useJournalAbbreviation', 'exportPath', 'exportFilename', 'exportCharset', 'exportFileData', 'exportNotes']
+  for option in ['citekeyFormat', 'useJournalAbbreviation', 'exportPath', 'exportFilename', 'exportCharset', 'exportFileData', 'exportNotes']
     @preferences[option] = @[option] = Zotero.getOption(option)
 
   @caching = !@exportFileData

@@ -179,6 +179,7 @@ Scenario Outline: BibLaTeX Export
      | Do not caps-protect name fields #384                                                           | 40          |
      | condense in cite key format not working #308                                                   | 1           |
      | Better BibLaTeX.004                                                                            | 1           |
+     | Oriental dates trip up date parser #389                                                        | 1           |
      | Better BibLaTeX.007                                                                            | 1           |
      | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | Non-ascii in dates is not matched by date parser #376                                          | 1           |
