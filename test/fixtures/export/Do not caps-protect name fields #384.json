@@ -404,7 +404,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "de la Mare",
+          "lastName": "\"de la Mare\"",
           "firstName": "Walter"
         }
       ],
@@ -872,7 +872,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "da Gama",
+          "lastName": "\"da Gama\"",
           "firstName": "Vasco"
         }
       ],

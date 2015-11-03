@@ -183,7 +183,7 @@ class Reference
           latex += name['non-dropping-particle'] if name['non-dropping-particle']
           latex += name.family if name.family
           latex += ", #{name.suffix}" if name.suffix
-          latex += ", #{name.given}" if name.given
+          latex += ", #{name.given || ''}"
 
           name = latex
 
