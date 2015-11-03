@@ -79,7 +79,7 @@ class UnicodeConverter
     @chars[0xFFFD] = OpenStruct.new({latex: "\\dbend", math: false})
     @chars[0x00A0] = OpenStruct.new({latex: ' ', math: false})
     @chars["\\".ord] = OpenStruct.new({latex: "\\backslash", math: true})
-    @chars[0x200B] = OpenStruct.new({latex: "\\hspace{0pt}", math: false})
+    @chars[0x200B] = OpenStruct.new({latex: "\\hspace{0pt}", math: false}) # or \mbox?
 
     # biber doesn't like it when I escape closing square brackets #245.1, so only opening bracket
     @chars['['.ord] = OpenStruct.new({latex: '{[}', math: false})
