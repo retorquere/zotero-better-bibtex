@@ -580,7 +580,9 @@ task :share => XPI do
 end
 
 file 'resource/translators/latex_unicode_mapping.coffee' => 'lib/unicode_table.rb' do |t|
-  UnicodeConverter.new.save(t.name)
+  cleanly(t.name) do
+    UnicodeConverter.new.save(t.name)
+  end
 end
 
 task :markfailing do

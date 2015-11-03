@@ -16,7 +16,6 @@ LaTeX.toLaTeX.unicode.text =
   '}': "\\}"
   '~': "{\\textasciitilde}"
   '\u00A0': " "
-  '\u200B': "\\mbox{}"
 LaTeX.toLaTeX.ascii.math =
   '<': "<"
   '>': ">"
