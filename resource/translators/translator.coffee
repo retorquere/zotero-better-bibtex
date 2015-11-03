@@ -238,14 +238,12 @@ Translator.initialize = ->
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
   @options = {}
-  @options.skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
-  for pref in ['citekeyFormat', 'jabrefGroups', 'postscript', 'csquotes', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'asciiBibLaTeX', 'asciiBibTeX']
-    @options[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
-  for own k, v of @options
-    @[k] = v
+  for pref in ['citekeyFormat', 'skipFields', 'jabrefGroups', 'postscript', 'csquotes', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'asciiBibLaTeX', 'asciiBibTeX']
+    @options[pref] = @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
+  @skipFields = (field.trim() for field in (@skipFields || '').split(',') when field.trim())
 
   @preferences = {}
-  for option in ['citekeyFormat', 'useJournalAbbreviation', 'exportPath', 'exportFilename', 'exportCharset', 'exportFileData', 'exportNotes']
+  for option in ['useJournalAbbreviation', 'exportPath', 'exportFilename', 'exportCharset', 'exportFileData', 'exportNotes']
     @preferences[option] = @[option] = Zotero.getOption(option)
 
   @caching = !@exportFileData
