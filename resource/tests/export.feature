@@ -176,6 +176,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Oriental dates trip up date parser #389                                                        | 1           |
      | Better BibLaTeX.007                                                                            | 1           |
      | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | Non-ascii in dates is not matched by date parser #376                                          | 1           |
