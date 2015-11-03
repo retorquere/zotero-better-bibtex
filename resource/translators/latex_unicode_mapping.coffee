@@ -16,6 +16,7 @@ LaTeX.toLaTeX.unicode.text =
   '}': "\\}"
   '~': "{\\textasciitilde}"
   '\u00A0': " "
+  '\u200B': "\\mbox{}"
 LaTeX.toLaTeX.ascii.math =
   '<': "<"
   '>': ">"
@@ -2113,7 +2114,7 @@ LaTeX.toLaTeX.ascii.text =
   '\u2007': "\\hphantom{0}"
   '\u2008': "\\hphantom{,}"
   '\u2009': "\\hspace{0.167em}"
-  '\u200B': "\\hspace{0pt}"
+  '\u200B': "\\mbox{}"
   '\u2010': "-"
   '\u2013': "{\\textendash}"
   '\u2014': "{\\textemdash}"
@@ -3364,7 +3365,7 @@ LaTeX.toUnicode =
   "\\hspace{0.167em}": '\u2009'
   "{\\mkern1mu}": '\u200A'
   "\\mkern1mu ": '\u200A'
-  "\\hspace{0pt}": '\u200B'
+  "\\mbox{}": '\u200B'
   "-": '\u2010'
   "{\\textendash}": '\u2013'
   "\\textendash ": '\u2013'

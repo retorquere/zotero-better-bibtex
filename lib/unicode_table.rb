@@ -38,7 +38,7 @@ class UnicodeConverter
       unicode = {math: '', text: ''}
       done = {}
       @chars.sort.map{|charcode, latex|
-        next unless (charcode >= 0x20 && charcode <= 0x7E) || charcode == 0x00A0 || latex.latex == ' ' || charcode == ' '.ord # an ascii character that needs translation? Probably a TeX special character
+        next unless (latex.force || charcode >= 0x20 && charcode <= 0x7E) || charcode == 0x00A0 || latex.latex == ' ' || charcode == ' '.ord # an ascii character that needs translation? Probably a TeX special character
         next if done[charcode]
         done[charcode] = true
         unicode[latex.math ? :math : :text] << "  #{char(charcode)}: #{latex.latex[0].inspect}\n"
@@ -79,7 +79,7 @@ class UnicodeConverter
     @chars[0xFFFD] = OpenStruct.new({latex: "\\dbend", math: false})
     @chars[0x00A0] = OpenStruct.new({latex: ' ', math: false})
     @chars["\\".ord] = OpenStruct.new({latex: "\\backslash", math: true})
-    @chars[0x200B] = OpenStruct.new({latex: "\\mbox{}", math: false})
+    @chars[0x200B] = OpenStruct.new({latex: "\\mbox{}", math: false, force: true})
 
     # biber doesn't like it when I escape closing square brackets #245.1, so only opening bracket
     @chars['['.ord] = OpenStruct.new({latex: '{[}', math: false})
