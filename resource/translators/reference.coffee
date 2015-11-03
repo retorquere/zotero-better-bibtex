@@ -126,7 +126,7 @@ class Reference
   _enc_creators_postfix_particle: (particle) ->
     lastchar = particle[particle.length - 1]
     return '' if lastchar == ' '
-    return ' ' if lastchar == '.' && Translator.BetterBibLaTeX
+    return ' ' if lastchar in ['.', '-'] && Translator.BetterBibLaTeX
     if XRegExp.test(particle, @punctuationAtEnd)
       return "\\relax " if Translator.BetterBibTeX
       return ''
