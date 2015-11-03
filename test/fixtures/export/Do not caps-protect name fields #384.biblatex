@@ -1,5 +1,6 @@
 @book{vangogh,
-  author = {{van Gogh}, Vincent}
+  author = {van Gogh, Vincent},
+  options = {useprefix=true}
 }
 
 @book{humboldt,
@@ -27,11 +28,13 @@
 }
 
 @book{bovendeert,
-  author = {{boven d'Eert}, Christianus}
+  author = {boven d' Eert, Christianus},
+  options = {useprefix=true}
 }
 
 @book{s-gravesande,
-  author = {'s-Gravesande, Goverdus}
+  author = {'s- Gravesande, Goverdus},
+  options = {useprefix=true}
 }
 
 @book{dequincey,
@@ -47,7 +50,7 @@
 }
 
 @book{sadat,
-  author = {el-Sadat, Anwar}
+  author = {el- Sadat, Anwar}
 }
 
 @book{lafollette,
@@ -99,7 +102,8 @@
 }
 
 @book{dalembert,
-  author = {d’Alembert, Jean le Rond}
+  author = {d’ Alembert, Jean le Rond},
+  options = {useprefix=true}
 }
 
 @book{tocqueville,
@@ -115,7 +119,8 @@
 }
 
 @book{dupuydeclinchamps,
-  author = {{du Puy de Clinchamps}, Philippe}
+  author = {du Puy de Clinchamps, Philippe},
+  options = {useprefix=true}
 }
 
 @book{stein,
@@ -151,7 +156,8 @@
 }
 
 @book{al-hakim,
-  author = {al-Hakim, Tawfiq}
+  author = {al- Hakim, Tawfiq},
+  options = {useprefix=true}
 }
 
 @book{levayer,
