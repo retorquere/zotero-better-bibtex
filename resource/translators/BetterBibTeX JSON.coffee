@@ -85,7 +85,8 @@ doExport = ->
     collections: Translator.collections
     items: []
     cache: {
-      activity: Zotero.BetterBibTeX.cache.stats()
+      # no idea why tis doesn't work anymore. The security manager won't let me call toJSON on this anymore
+      # activity: Zotero.BetterBibTeX.cache.stats()
     }
   }
 
