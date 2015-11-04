@@ -5,8 +5,8 @@
     "release": "1.6.5",
     "preferences": {
       "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
-      "skipFields": "",
-      "jabrefGroups": true,
+      "skipFields": "timestamp",
+      "jabrefGroups": false,
       "postscript": "",
       "csquotes": "",
       "preserveCaps": "all",

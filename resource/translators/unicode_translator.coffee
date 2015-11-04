@@ -6,17 +6,17 @@ LaTeX.text2latex = (text, options = {}) ->
   return latex
 
 LaTeX.preserveCaps =
-  inner:  new XRegExp("(?:^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]+\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
-  all:    new XRegExp("(?:^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]*\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
-  initialCapOnly: new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}+$")
+  inner:  new XRegExp("(^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]+\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
+  all:    new XRegExp("(^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]*\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
+  initialCapOnly: new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}*$")
 
-  preserve: (value, start) ->
+  preserve: (value) ->
     return value if Translator.preserveCaps == 'no'
-    return XRegExp.replace(value, @[Translator.preserveCaps], (match, needle, pos) =>
-      if start == 0 && pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, @initialCapOnly)
-        return needle
+    return XRegExp.replace(value, @[Translator.preserveCaps], (match, boundary, needle, pos) =>
+      if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, @initialCapOnly)
+        return boundary + needle
       else
-        return "<span class=\"nocase\">#{needle}</span>"
+        return "#{boundary}<span class=\"nocase\">#{needle}</span>"
     )
 
 LaTeX.cleanHTML = (text, options) ->
@@ -35,9 +35,9 @@ LaTeX.cleanHTML = (text, options) ->
     text = text.replace(new RegExp("[\\s\\u00A0]?[#{close}]", 'g'), '</span>')
 
   text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) -> "<pre>#{Translator.HTMLEncode(pre)}</pre>")
+  text = LaTeX.preserveCaps.preserve(text) if options.preserveCaps
   for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
     if i % 2 == 0 # text
-      chunk = LaTeX.preserveCaps.preserve(chunk, i) if options.preserveCaps
       html += Translator.HTMLEncode(chunk)
     else
       html += chunk

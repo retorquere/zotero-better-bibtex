@@ -173,6 +173,11 @@ Scenario: Do not caps-protect name fields #384
   Then a library export using 'Better BibLaTeX' should match 'export/Do not caps-protect name fields #384.biblatex'
   And a library export using 'Better BibTeX' should match 'export/Do not caps-protect name fields #384.bibtex'
 
+@383
+Scenario: Capitalize all title-fields for language en #383
+  Given I import 8 references from 'export/Capitalize all title-fields for language en #383.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Capitalize all title-fields for language en #383.bib'
+
 @test-cluster-0
 @bblt
 @bblt-0
@@ -218,7 +223,6 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
-     | Capitalize all title-fields for language en #383                                   | 5           |
      | Do not caps-protect literal lists #391                                             | 3           |
      | Better BibLaTeX.019                                                                | 1           |
      | biblatex; Language tag xx is exported, xx-XX is not #380                           | 1           |
