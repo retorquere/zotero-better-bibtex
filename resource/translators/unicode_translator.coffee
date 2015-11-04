@@ -31,14 +31,14 @@ LaTeX.cleanHTML = (text) ->
 
   return html
 
-LaTeX.html2latex = (html) ->
-  latex = (new @HTML(html)).latex
+LaTeX.html2latex = (html, options) ->
+  latex = (new @HTML(html, options)).latex
   latex = latex.replace(/(\\\\)+\s*\n\n/g, "\n\n")
   latex = latex.replace(/\n\n\n+/g, "\n\n")
   return latex
 
 class LaTeX.HTML
-  constructor: (html) ->
+  constructor: (html, @options = {}) ->
     @latex = ''
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
     @state = {}
