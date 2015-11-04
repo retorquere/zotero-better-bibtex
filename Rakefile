@@ -778,6 +778,8 @@ task :logs2s3 do
   end
 
   logs = Dir['*.debug'] + Dir['*.log']
+  logs = [] if ENV['CI'] == 'true' && ENV['LOGS2S3'] != 'true'
+
   if (ENV['TRAVIS_PULL_REQUEST'] || 'false') != 'false'
     puts "Logs 2 S3: Not logging pull requests"
   elsif !key || !secret
