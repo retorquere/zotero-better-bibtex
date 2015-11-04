@@ -24,3 +24,7 @@ branches:
     - /^[0-9]+\.[0-9]+\.[0-9]+$/
 addons:
   firefox: latest
+  artifacts:
+    paths:
+      $(ls *.debug | tr "\n" ":")
+  s3_region: "eu-central-1"

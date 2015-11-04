@@ -1,6 +1,6 @@
 Translator.fieldMap = {
   # Zotero          BibTeX
-  place:            { name: 'location', preserveCaps: true }
+  place:            { name: 'location', enc: 'literal' }
   chapter:          { name: 'chapter', preserveCaps: true }
   edition:          { name: 'edition', preserveCaps: true }
   title:            { name: 'title', preserveCaps: true }
@@ -433,13 +433,13 @@ doExport = ->
 
     switch item.itemType
       when 'report', 'thesis'
-        ref.add({ name: 'institution', value: item.institution || item.publisher || item.university, preserveCaps: true })
+        ref.add({ name: 'institution', value: item.institution || item.publisher || item.university, enc: 'literal' })
 
       when 'case', 'hearing'
-        ref.add({ name: 'institution', value: item.court, preserveCaps: true })
+        ref.add({ name: 'institution', value: item.court, enc: 'literal' })
 
       else
-        ref.add({ name: 'publisher', value: item.publisher, preserveCaps: true })
+        ref.add({ name: 'publisher', value: item.publisher, enc: 'literal' })
 
     switch item.itemType
       when 'letter' then ref.add({ name: 'type', value: item.letterType || 'Letter', replace: true })

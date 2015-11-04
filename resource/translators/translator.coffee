@@ -91,8 +91,8 @@ Translator.CSLVariables = {
   locator:                        {}
   medium:                         {}
   #'note':                        {}
-  'original-publisher':           { BibLaTeX: 'origpublisher' }
-  'original-publisher-place':     { BibLaTeX: 'origlocation' }
+  'original-publisher':           { BibLaTeX: 'origpublisher', type: 'literal' }
+  'original-publisher-place':     { BibLaTeX: 'origlocation', type: 'literal' }
   'original-title':               { BibLaTeX: 'origtitle' }
   page:                           {}
   'page-first':                   {}

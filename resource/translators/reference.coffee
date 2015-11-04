@@ -219,6 +219,17 @@ class Reference
     return encoded.join(' and ')
 
   ###
+  # Encode text to LaTeX literal list (double-braced)
+  #
+  # This encoding supports simple HTML markup.
+  #
+  # @param {field} field to encode.
+  # @return {String} field.value encoded as author-style value
+  ###
+  enc_literal: (f, raw) ->
+    return @enc_latex({value: new String(f.value)}, raw)
+
+  ###
   # Encode text to LaTeX
   #
   # This encoding supports simple HTML markup.

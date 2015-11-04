@@ -20,7 +20,7 @@ Translator.fieldMap = {
   assignee:         { name: 'assignee' }
   issue:            { import: 'issue' }
   publicationTitle: { import: 'booktitle' }
-  publisher:        { import: [ 'school', 'institution', 'publisher' ] }
+  publisher:        { import: [ 'school', 'institution', 'publisher' ], enc: 'literal' }
 }
 
 Translator.typeMap = {
@@ -62,7 +62,7 @@ doExport = ->
     switch item.itemType
       when 'thesis' then ref.add({ name: 'school', value: item.publisher, preserveCaps: true })
       when 'report' then ref.add({ name: 'institution', value: item.publisher, preserveCaps: true })
-      else               ref.add({ name: 'publisher', value: item.publisher, preserveCaps: true })
+      else               ref.add({ name: 'publisher', value: item.publisher, enc: 'literal' })
 
     if item.itemType == 'thesis' && item.thesisType in ['mastersthesis', 'phdthesis']
       ref.referencetype = item.thesisType
