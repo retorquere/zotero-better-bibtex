@@ -787,7 +787,7 @@ task :logs2s3 do
   else
     prefix = [ENV['TRAVIS_BRANCH'], ENV['TRAVIS_JOB_NUMBER']].select{|x| x}.join('-')
     prefix += '-' if prefix != ''
-    s3 = Aws::S3::Resource.new(region: 'eu-central-1')
+    s3 = Aws::S3::Resource.new(region: 'eu-central-1', credentials: Aws::Credentials.new(key, secret))
     bucket = s3.bucket('zotplus-964ec2b7-379e-49a4-9c8a-edcb20db343f')
     logs.each{|log|
       puts "Logs 2 S3: #{log}"
