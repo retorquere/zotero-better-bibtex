@@ -14,7 +14,7 @@ LaTeX.preserveCaps =
       if pos == 0 && XRegExp.test(needle, @initialCapOnly)
         return boundary + needle
       else
-        return "#{boundary}<span class='nocase'>#{needle}</span>"
+        return "#{boundary}<span class=\"nocase\">#{needle}</span><!-- nocase:end -->"
     )
 
 LaTeX.cleanHTML = (text, options) ->
@@ -33,7 +33,13 @@ LaTeX.cleanHTML = (text, options) ->
     text = text.replace(new RegExp("[\\s\\u00A0]?[#{close}]", 'g'), '</span>')
 
   text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) -> "<pre>#{Translator.HTMLEncode(pre)}</pre>")
-  text = LaTeX.preserveCaps.preserve(text) if options.preserveCaps
+  if options.preserveCaps
+    text = LaTeX.preserveCaps.preserve(text)
+    while true
+      txt = text.replace('</span><!-- nocase:end --> <span class="nocase">', ' ')
+      break if txt == text
+      text = txt
+    text = text.replace(/<!-- nocase:end -->/g, '')
   for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
     if i % 2 == 0 # text
       html += Translator.HTMLEncode(chunk)

@@ -46,7 +46,7 @@ class Reference
         else
           delete @language
 
-      @english = @language in ['american', 'english', 'british']
+      @english = @language in ['american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'USenglish', 'UKenglish']
 
     @referencetype = Translator.typeMap.Zotero2BibTeX[@item.itemType] || 'misc'
 
