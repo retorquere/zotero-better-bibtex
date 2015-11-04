@@ -115,7 +115,7 @@ Before do |scenario|
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.test.timestamp', '2015-02-24 12:14:36 +0100')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.attachmentRelativePath', true)
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.autoExport', 'on-change')
-  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.debug', true) if ENV['CI'] != 'true'
+  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.debug', true)
 
   @cacheStats = $Firefox.BetterBibTeX.cacheStats
 
@@ -131,18 +131,17 @@ AfterStep do |scenario|
 end
 
 After do |scenario|
+  filename = scenario.name.gsub(/[^0-9A-z.\-]/, '_')
+
+  if scenario.failed? || (ENV['CI'] != 'true' && scenario.source_tag_names.include?('@dumplogs'))
+    open("#{filename}.debug", 'w'){|f| f.write($Firefox.DebugBridge.log) }
+    open("#{filename}.log", 'w'){|f| f.write(browserLog) }
+  end
+
   if ENV['CI'] != 'true'
-    # stop on first failure outside CI
     Cucumber.wants_to_quit = scenario.failed?
 
-    filename = scenario.name.gsub(/[^0-9A-z.\-]/, '_')
-
-    if scenario.failed? || scenario.source_tag_names.include?('@dumplogs')
-      open("#{filename}.debug", 'w'){|f| f.write($Firefox.DebugBridge.log) }
-      open("#{filename}.log", 'w'){|f| f.write(browserLog) }
-    end
-
-    open("#{filename}.keys", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.keyManagerState)) } if scenario.failed? || scenario.source_tag_names.include?('@dumpkeys')
+    open("#{filename}.keys", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.keyManagerState)) } if scenario.failed? && scenario.source_tag_names.include?('@dumpkeys')
     open("#{filename}.cache", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.cacheState)) } if scenario.failed? || scenario.source_tag_names.include?('@dumpcache')
     open("#{filename}.serialized", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.serializedState)) } if scenario.failed? || scenario.source_tag_names.include?('@dumpserialized')
 

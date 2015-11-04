@@ -531,16 +531,20 @@ task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{
 
   puts "Tests running: #{tag}"
 
-  begin
-    if OS.mac?
-      sh "script -q -t 1 cucumber.run cucumber --require features --strict #{tag} resource/tests"
-    else
-      sh "script -ec 'cucumber --require features --strict #{tag} resource/tests' cucumber.run"
+
+  if ENV['CI'] == 'true'
+    sh "cucumber --require features --strict #{tag} resource/tests"
+  else
+    begin
+      if OS.mac?
+        sh "script -q -t 1 cucumber.run cucumber --require features --strict #{tag} resource/tests"
+      else
+        sh "script -ec 'cucumber --require features --strict #{tag} resource/tests' cucumber.run"
+      end
+    ensure
+      sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
+      sh "rm -f cucumber.run"
     end
-  ensure
-    sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
-    sh "rm -f cucumber.run"
-    Dir["*.debug"].each{|dbug| sh "cut -c-200 < #{dbug.shellescape} > #{dbug.sub(/\.debug$/, '.dbg').shellescape}" }
   end
 end
 
@@ -773,7 +777,7 @@ task :logs2s3 do
     end
   end
 
-  logs = Dir['*.debug']
+  logs = Dir['*.debug'] + Dir['*.log']
   if (ENV['TRAVIS_PULL_REQUEST'] || 'false') != 'false'
     puts "Logs 2 S3: Not logging pull requests"
   elsif !key || !secret
