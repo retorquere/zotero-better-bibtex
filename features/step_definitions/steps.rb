@@ -450,6 +450,7 @@ end
 
 Then /^I (re)?set the citation keys?$/ do |action|
   $Firefox.BetterBibTeX.selected("#{action}set")
+  sleep 2
 end
 
 Then /^the markdown citation for ([^\s]*) should be '(.*)'$/ do |keys, citation|
