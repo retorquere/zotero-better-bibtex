@@ -182,7 +182,6 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
-     | Do not caps-protect name fields #384                                                           | 40          |
      | condense in cite key format not working #308                                                   | 1           |
      | Better BibLaTeX.004                                                                            | 1           |
      | Oriental dates trip up date parser #389                                                        | 1           |
