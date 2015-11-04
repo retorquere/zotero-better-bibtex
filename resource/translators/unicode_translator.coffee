@@ -6,14 +6,12 @@ LaTeX.text2latex = (text, options = {}) ->
   return latex
 
 LaTeX.preserveCaps =
-  inner:  new XRegExp("(^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]+\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
-  all:    new XRegExp("(^|[^\\p{Letter}])([\\p{Letter}]*\\p{Uppercase_Letter}[\\p{Letter}]*)", 'g')
+  words:    new XRegExp("(^|[^\\p{Letter}])([\\p{Letter}]*\\p{Uppercase_Letter}[\\p{Letter}]*)", 'g')
   initialCapOnly: new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}*$")
 
   preserve: (value) ->
-    return value if Translator.preserveCaps == 'no'
-    return XRegExp.replace(value, @[Translator.preserveCaps], (match, boundary, needle, pos) =>
-      if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, @initialCapOnly)
+    return XRegExp.replace(value, @words, (match, boundary, needle, pos) =>
+      if pos == 0 && && XRegExp.test(needle, @initialCapOnly)
         return boundary + needle
       else
         return "#{boundary}<span class='nocase'>#{needle}</span>"
