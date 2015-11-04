@@ -34,7 +34,7 @@ class Reference
     if !@item.language
       @english = true
     else
-      langlc = item.language.toLowerCase()
+      langlc = @item.language.toLowerCase()
       @language = Language.babelMap[langlc.replace(/[^a-z0-9]/, '_')]
       @language ||= Language.babelMap[langlc.replace(/-[a-z]+$/i, '').replace(/[^a-z0-9]/, '_')]
       if @language

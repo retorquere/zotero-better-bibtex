@@ -5,7 +5,6 @@ Background:
   Given I set preference .citekeyFormat to [auth][year]
   And I set preference .jabrefGroups to false
   And I set preference .defaultDateParserLocale to en-US
-  And I set preference .preserveCaps to inner
 
 @bulk
 Scenario: Minor bulk export cache testing
