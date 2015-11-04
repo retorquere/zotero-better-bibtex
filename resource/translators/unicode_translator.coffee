@@ -10,13 +10,13 @@ LaTeX.preserveCaps =
   all:    new XRegExp("(?:^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]*\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
   initialCapOnly: new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}+$")
 
-  preserve: (value) ->
+  preserve: (value, start) ->
     return value if Translator.preserveCaps == 'no'
     return XRegExp.replace(value, @[Translator.preserveCaps], (match, needle, pos) =>
-      if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, @initialCapOnly)
+      if start == 0 && pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, @initialCapOnly)
         return needle
       else
-        return "<span preservecaps=\"true\">#{needle}</span>"
+        return "<span class=\"nocase\">#{needle}</span>"
     )
 
 LaTeX.cleanHTML = (text, options) ->
@@ -37,7 +37,7 @@ LaTeX.cleanHTML = (text, options) ->
   text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) -> "<pre>#{Translator.HTMLEncode(pre)}</pre>")
   for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
     if i % 2 == 0 # text
-      chunk = LaTeX.preserveCaps.preserve(chunk) if options.preserveCaps
+      chunk = LaTeX.preserveCaps.preserve(chunk, i) if options.preserveCaps
       html += Translator.HTMLEncode(chunk)
     else
       html += chunk
@@ -117,7 +117,7 @@ class LaTeX.HTML
       when 'span', 'sc'
         tag.smallcaps = tag.name == 'sc' || (tag.attrs.style || '').match(/small-caps/i)
         tag.enquote = (tag.attrs.enquote == 'true')
-        tag.preserveCaps = (tag.attrs.preserveCaps == 'true' && !(tag.enquote || tag.smallcaps))
+        tag.preserveCaps = tag.class.nocase && !(tag.enquote || tag.smallcaps) && !@stack.find((t) -> t.braced)
         @latex += '\\enquote{' if tag.enquote
         @latex += '\\textsc{' if tag.smallcaps
         @latex += '{' if tag.preserveCaps

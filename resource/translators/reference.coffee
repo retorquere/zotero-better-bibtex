@@ -247,7 +247,7 @@ class Reference
 
     return f.value if raw
 
-    value = LaTeX.text2latex(f.value)
+    value = LaTeX.text2latex(f.value, f)
     value = new String("{#{value}}") if f.value instanceof String
     return value
 
@@ -328,12 +328,6 @@ class Reference
     return (att.path.replace(/([\\{};])/g, "\\$1") for att in attachments).join(';') if Translator.attachmentsNoMetadata
     return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
 
-  preserveCaps: {
-    inner:  new XRegExp("(^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]+\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
-    all:    new XRegExp("(^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]*\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
-  }
-  initialCapOnly: new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}+$")
-
   isBibVar: (value) ->
     return value && Translator.preserveBibTeXVariables && value.match(/^[a-z][a-z0-9_]*$/i)
 
@@ -363,36 +357,7 @@ class Reference
 
         return unless value
 
-        unless field.bare && !field.value.match(/\s/)
-          if Translator.preserveCaps != 'no' && field.preserveCaps && !@raw
-            braced = []
-            scan = value.replace(/\\./, '..')
-            for i in [0...value.length]
-              braced[i] = (braced[i - 1] || 0)
-              braced[i] += switch scan[i]
-                when '{' then 1
-                when '}' then -1
-                else          0
-              braced[i] = 0 if braced[i] < 0
-
-            value = XRegExp.replace(value, @preserveCaps[Translator.preserveCaps], (match, boundary, needle, pos, haystack) ->
-              boundary ?= ''
-              pos += boundary.length
-              #return boundary + needle if needle.length < 2 # don't encode single-letter capitals
-              return boundary + needle if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, Reference::initialCapOnly)
-
-              c = 0
-              for i in [pos - 1 .. 0] by -1
-                if haystack[i] == '\\'
-                  c++
-                else
-                  break
-              return boundary + needle if c % 2 == 1 # don't enclose LaTeX command
-
-              return boundary + needle if braced[pos] > 0
-              return "#{boundary}{#{needle}}"
-            )
-          value = "{#{value}}"
+        value = "{#{value}}" unless field.bare && !field.value.match(/\s/)
 
       field.bibtex = "#{value}"
 

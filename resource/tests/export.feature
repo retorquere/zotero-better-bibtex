@@ -218,6 +218,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Capitalize all title-fields for language en #383                                   | 5           |
      | Do not caps-protect literal lists #391                                             | 3           |
      | Better BibLaTeX.019                                                                | 1           |
      | biblatex; Language tag xx is exported, xx-XX is not #380                           | 1           |
