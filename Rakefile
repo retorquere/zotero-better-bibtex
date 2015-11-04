@@ -531,16 +531,20 @@ task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{
 
   puts "Tests running: #{tag}"
 
-  begin
-    if OS.mac?
-      sh "script -q -t 1 cucumber.run cucumber --require features --strict #{tag} resource/tests"
-    else
-      sh "script -ec 'cucumber --require features --strict #{tag} resource/tests' cucumber.run"
+
+  if ENV['CI'] == 'true'
+    sh "cucumber --require features --strict #{tag} resource/tests"
+  else
+    begin
+      if OS.mac?
+        sh "script -q -t 1 cucumber.run cucumber --require features --strict #{tag} resource/tests"
+      else
+        sh "script -ec 'cucumber --require features --strict #{tag} resource/tests' cucumber.run"
+      end
+    ensure
+      sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
+      sh "rm -f cucumber.run"
     end
-  ensure
-    sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
-    sh "rm -f cucumber.run"
-    Dir["*.debug"].each{|dbug| sh "cut -c-200 < #{dbug.shellescape} > #{dbug.sub(/\.debug$/, '.dbg').shellescape}" }
   end
 end
 
@@ -773,7 +777,9 @@ task :logs2s3 do
     end
   end
 
-  logs = Dir['*.debug']
+  logs = Dir['*.debug'] + Dir['*.log']
+  logs = [] if ENV['CI'] == 'true' && ENV['LOGS2S3'] != 'true'
+
   if (ENV['TRAVIS_PULL_REQUEST'] || 'false') != 'false'
     puts "Logs 2 S3: Not logging pull requests"
   elsif !key || !secret
@@ -783,7 +789,7 @@ task :logs2s3 do
   else
     prefix = [ENV['TRAVIS_BRANCH'], ENV['TRAVIS_JOB_NUMBER']].select{|x| x}.join('-')
     prefix += '-' if prefix != ''
-    s3 = Aws::S3::Resource.new(region: 'eu-central-1')
+    s3 = Aws::S3::Resource.new(region: 'eu-central-1', credentials: Aws::Credentials.new(key, secret))
     bucket = s3.bucket('zotplus-964ec2b7-379e-49a4-9c8a-edcb20db343f')
     logs.each{|log|
       puts "Logs 2 S3: #{log}"

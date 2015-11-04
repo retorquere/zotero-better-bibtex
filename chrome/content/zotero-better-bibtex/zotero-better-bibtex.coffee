@@ -615,7 +615,7 @@ Zotero.BetterBibTeX.init = ->
       fetch:  (sandbox, params...) => @cache.fetch.apply(@cache, params)
       store:  (sandbox, params...) => @cache.store.apply(@cache, params)
       dump:   (sandbox, params...) => @cache.dump.apply(@cache, params)
-      stats:  (sandbox)            -> {history: Zotero.BetterBibTeX.cacheHistory, serialized: Zotero.BetterBibTeX.serialized.stats, cache: Zotero.BetterBibTeX.cache.stats }
+      stats:  (sandbox)            -> Zotero.BetterBibTeX.cacheHistory
     }
     CSL: {
       parseParticles: (sandbox, name) ->
