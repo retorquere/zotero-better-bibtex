@@ -12,10 +12,11 @@ env:
 - TESTS=ci-cluster-1
 - TESTS=ci-cluster-2
 - TESTS=ci-cluster-3
-- TESTS=384
 script:
 - echo $PATH
 - bundle exec rake test[$TESTS]
+- pwd
+- ls *.debug | tr "\n" ":"
 - bundle exec ./.travis.sh publish
 before_install:
 - npm update
