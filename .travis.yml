@@ -25,6 +25,7 @@ branches:
 addons:
   firefox: latest
   artifacts:
+    debug: true
     paths:
       $(ls *.debug | tr "\n" ":")
   s3_region: "eu-central-1"
