@@ -1,3 +1,4 @@
+require 'aws-sdk'
 require 'rake'
 require 'uri'
 require 'os'
@@ -765,4 +766,38 @@ file 'wiki/Scripting.md' => ['resource/translators/reference.coffee'] do |t|
   #index = open(t.name).read
   #index = "---\ntitle: Scripting\n---\n" + index
   #open(t.name, 'w'){|f| f.write(index) }
+end
+
+task :logs2s3 do
+  key = ENV['ZOTPLUSAWSKEY']
+  secret = ENV['ZOTPLUSAWSSECRET']
+  credentials = ENV['ZOTPLUSAWSCREDENTIALS']
+
+  if !key || !secret && credentials && File.exist?(credentials)
+    CSV.foreach(credentials, headers: true) do |row|
+      next unless row['Access Key Id'] && row['Secret Access Key']
+      next if row['Access Key Id'].strip == '' || row['Secret Access Key'].strip == ''
+      key = row['Access Key Id']
+      secret = row['Secret Access Key']
+    end
+  end
+
+  logs = Dir['*.debug']
+  if (ENV['TRAVIS_PULL_REQUEST'] || 'false') != 'false'
+    puts "Logs 2 S3: Not logging pull requests"
+  elsif !key || !secret
+    puts "Logs 2 S3: No credentials"
+  elsif logs.size == 0
+    puts "Logs 2 S3: Nothing to do"
+  else
+    prefix = [ENV['TRAVIS_BRANCH'], ENV['TRAVIS_JOB_NUMBER']].select{|x| x}.join('-')
+    prefix += '-' if prefix != ''
+    s3 = Aws::S3::Resource.new(region: 'eu-central-1')
+    bucket = s3.bucket('zotplus-964ec2b7-379e-49a4-9c8a-edcb20db343f')
+    logs.each{|log|
+      puts "Logs 2 S3: #{log}"
+      obj = bucket.object("#{prefix}#{log}")
+      obj.upload_file(File.expand_path(log))
+    }
+  end
 end
