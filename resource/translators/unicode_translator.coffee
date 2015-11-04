@@ -1,11 +1,25 @@
 LaTeX = {} unless LaTeX
 
-LaTeX.text2latex = (text) ->
-  latex = @html2latex(@cleanHTML(text))
+LaTeX.text2latex = (text, options = {}) ->
+  latex = @html2latex(@cleanHTML(text, options), options)
   return BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
   return latex
 
-LaTeX.cleanHTML = (text) ->
+LaTeX.preserveCaps =
+  inner:  new XRegExp("(?:^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]+\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
+  all:    new XRegExp("(?:^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]*\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
+  initialCapOnly: new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}+$")
+
+  preserve: (value) ->
+    return value if Translator.preserveCaps == 'no'
+    return XRegExp.replace(value, @[Translator.preserveCaps], (match, needle, pos) =>
+      if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, @initialCapOnly)
+        return needle
+      else
+        return "<span preservecaps=\"true\">#{needle}</span>"
+    )
+
+LaTeX.cleanHTML = (text, options) ->
   html = ''
   cdata = false
 
@@ -23,6 +37,7 @@ LaTeX.cleanHTML = (text) ->
   text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) -> "<pre>#{Translator.HTMLEncode(pre)}</pre>")
   for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
     if i % 2 == 0 # text
+      chunk = LaTeX.preserveCaps.preserve(chunk) if options.preserveCaps
       html += Translator.HTMLEncode(chunk)
     else
       html += chunk
@@ -41,7 +56,7 @@ class LaTeX.HTML
   constructor: (html, @options = {}) ->
     @latex = ''
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
-    @state = {}
+    @stack = []
 
     @walk(Zotero.BetterBibTeX.HTMLParser(html))
 
@@ -49,29 +64,36 @@ class LaTeX.HTML
     return unless tag
 
     if tag.name == '#text'
-      if (@state.pre || 0) > 0
+      if @stack[0]?.name == 'pre'
         @latex += tag.text
       else
         @chars(tag.text)
       return
 
-    @state[tag.name] = (@state[tag.name] || 0) + 1
+    @stack.unshift(tag)
 
     switch tag.name
       when 'i', 'em', 'italic'
         @latex += '\\emph{'
+        tag.braced = true
 
       when 'b', 'strong'
         @latex += '\\textbf{'
+        tag.braced = true
 
       when 'a'
         # zotero://open-pdf/0_5P2KA4XM/7 is actually a reference.
-        @latex += "\\href{#{tag.attrs.href}}{" if tag.attrs.href?.length > 0
+        if tag.attrs.href?.length > 0
+          @latex += "\\href{#{tag.attrs.href}}{"
+          tag.braced = true
 
       when 'sup'
         @latex += '\\textsuperscript{'
+        tag.braced = true
+
       when 'sub'
         @latex += '\\textsubscript{'
+        tag.braced = true
 
       when 'br'
         # line-breaks on empty line makes LaTeX sad
@@ -83,6 +105,7 @@ class LaTeX.HTML
 
       when 'h1', 'h2', 'h3', 'h4'
         @latex += "\n\n\\#{(new Array(parseInt(tag.name[1]))).join('sub')}section{"
+        tag.braced = true
 
       when 'ol'
         @latex += "\n\n\\begin{enumerate}\n"
@@ -94,8 +117,11 @@ class LaTeX.HTML
       when 'span', 'sc'
         tag.smallcaps = tag.name == 'sc' || (tag.attrs.style || '').match(/small-caps/i)
         tag.enquote = (tag.attrs.enquote == 'true')
+        tag.preserveCaps = (tag.attrs.preserveCaps == 'true' && !(tag.enquote || tag.smallcaps))
         @latex += '\\enquote{' if tag.enquote
         @latex += '\\textsc{' if tag.smallcaps
+        @latex += '{' if tag.preserveCaps
+        tag.braced = tag.preserveCaps || tag.enquote || tag.smallcaps
 
       when 'td', 'th'
         @latex += ' '
@@ -122,7 +148,7 @@ class LaTeX.HTML
         @latex += "\n\n"
 
       when 'span', 'sc'
-        @latex += '}' if tag.smallcaps || tag.enquote
+        @latex += '}' if tag.smallcaps || tag.enquote || tag.preserveCaps
 
       when 'td', 'th'
         @latex += ' '
@@ -132,9 +158,11 @@ class LaTeX.HTML
       when 'ul'
         @latex += "\n\n\\end{itemize}\n"
 
-    @state[tag.name] -= 1
+    @stack.shift()
 
   chars: (text) ->
+    # TODO: capitalization voodoo
+    capitalize = !@stack.find((tag) -> tag.preserveCaps)
     blocks = []
     for c in XRegExp.split(text, '')
       math = @mapping.math[c]
