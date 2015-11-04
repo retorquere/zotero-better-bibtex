@@ -129,10 +129,10 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/punycode.js',
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
-  'chrome/content/zotero-better-bibtex/test/tests.js',
   'chrome/content/zotero-better-bibtex/csl-localedata.js',
   'chrome/content/zotero-better-bibtex/juris-m-dateparser.js',
   'chrome/content/zotero-better-bibtex/csl-util_name_particles.js',
+  'chrome/content/zotero-better-bibtex/cacheVersion.js',
   'chrome.manifest',
   'install.rdf',
   'resource/logs/s3.json',
@@ -204,6 +204,24 @@ DOWNLOADS.each_pair{|dir, files|
 # people.
 file 'resource/reports/cacheActivity.txt' => 'resource/reports/cacheActivity.html' do |t|
   FileUtils.cp(t.source, t.name)
+end
+
+file 'chrome/content/zotero-better-bibtex/cacheVersion.coffee' => Dir['test/fixtures/export/*'] do |t|
+  drop = {}
+  release = nil
+  IO.popen('git log --name-status').readlines.each{|line|
+    if line =~ /^ +release: *zotero-better-bibtex-([\.0-9]+).xpi/
+      release = $1
+    elsif line =~ /^M\ttest\/fixtures\/export\//
+      drop[release] = true if release
+    end
+  }
+
+  drop = drop.keys.sort{|a, b| Gem::Version.new(a) <=> Gem::Version.new(b)}.reverse
+
+  open(t.name, 'w'){|f|
+    f.puts("Zotero.BetterBibTeX.cacheVersion = #{drop[0].inspect}")
+  }
 end
 
 file 'chrome/content/zotero-better-bibtex/csl-util_name_particles.js' => 'Rakefile' do |t|

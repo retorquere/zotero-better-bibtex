@@ -1,7 +1,6 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 Zotero.BetterBibTeX.DB = new class
-  cacheVersion: '1.5.11'
   cacheExpiry: Date.now() - (1000 * 60 * 60 * 24 * 30)
 
   constructor: ->
@@ -71,8 +70,8 @@ Zotero.BetterBibTeX.DB = new class
     @upgradeNeeded = @metadata.Zotero != ZOTERO_CONFIG.VERSION || @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
 
     cacheReset = Zotero.BetterBibTeX.pref.get('cacheReset')
-    if cacheReset || (!keepCache && @metadata.BetterBibTeX && Services.vc.compare(@metadata.BetterBibTeX, @cacheVersion) < 0)
-      Zotero.BetterBibTeX.debug('db.reset:', {cacheReset, keepCache, BetterBibTeX: @metadata.BetterBibTeX, cacheVersion: @cacheVersion})
+    if cacheReset || (!keepCache && @metadata.BetterBibTeX && Services.vc.compare(@metadata.BetterBibTeX, Zotero.BetterBibTeX.cacheVersion) < 0)
+      Zotero.BetterBibTeX.debug('db.reset:', {cacheReset, keepCache, BetterBibTeX: @metadata.BetterBibTeX, cacheVersion: Zotero.BetterBibTeX.cacheVersion})
       @serialized.removeDataOnly()
       @cache.removeDataOnly()
       if cacheReset > 0
