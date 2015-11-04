@@ -41,7 +41,7 @@ class LaTeX.HTML
   constructor: (html) ->
     @latex = ''
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
-    @stack = []
+    @state = {}
 
     @walk(Zotero.BetterBibTeX.HTMLParser(html))
 
@@ -49,13 +49,13 @@ class LaTeX.HTML
     return unless tag
 
     if tag.name == '#text'
-      if @stack[0]?.name == 'pre'
+      if (@state.pre || 0) > 0
         @latex += tag.text
       else
         @chars(tag.text)
       return
 
-    @stack.unshift(tag)
+    @state[tag.name] = (@state[tag.name] || 0) + 1
 
     switch tag.name
       when 'i', 'em', 'italic'
@@ -132,7 +132,7 @@ class LaTeX.HTML
       when 'ul'
         @latex += "\n\n\\end{itemize}\n"
 
-    @stack.shift()
+    @state[tag.name] -= 1
 
   chars: (text) ->
     blocks = []
