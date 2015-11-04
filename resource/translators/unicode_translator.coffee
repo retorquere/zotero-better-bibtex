@@ -7,7 +7,7 @@ LaTeX.text2latex = (text, options = {}) ->
 
 LaTeX.preserveCaps =
   inner:  new XRegExp("(^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]+\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
-  all:    new XRegExp("(^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]*\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
+  all:    new XRegExp("(^|[^\\p{Letter}])([\\p{Letter}]*\\p{Uppercase_Letter}[\\p{Letter}]*)", 'g')
   initialCapOnly: new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}*$")
 
   preserve: (value) ->
@@ -16,7 +16,7 @@ LaTeX.preserveCaps =
       if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, @initialCapOnly)
         return boundary + needle
       else
-        return "#{boundary}<span class=\"nocase\">#{needle}</span>"
+        return "#{boundary}<span class='nocase'>#{needle}</span>"
     )
 
 LaTeX.cleanHTML = (text, options) ->
@@ -41,8 +41,6 @@ LaTeX.cleanHTML = (text, options) ->
       html += Translator.HTMLEncode(chunk)
     else
       html += chunk
-
-  Translator.debug('cleanHTML:', {text, html})
 
   return html
 
@@ -160,9 +158,25 @@ class LaTeX.HTML
 
     @stack.shift()
 
+  # https://github.com/gouch/to-title-case/blob/master/to-title-case.js
+  smallWords: /^(a|an|and|as|at|but|by|en|for|from|if|in|nor|of|on|or|per|the|to|vs?\.?|via|with)$/i
+  toTitleCase: (str) ->
+    str.replace(/[A-Za-z0-9\u00C0-\u00FF]+[^\s-]*/g, (match, index, title) =>
+      if (@latex != '' || index > 0) &&
+        index + match.length != title.length &&
+        match.search(@smallWords) > -1 &&
+        title.charAt(index - 2) != ':' &&
+        (title.charAt(index + match.length) != '-' || title.charAt(index - 1) == '-') &&
+        title.charAt(index - 1).search(/[^\s-]/) < 0
+          return match.toLowerCase()
+
+      if match.substr(1).search(/[A-Z]|\../) > -1
+        return match
+      return match.charAt(0).toUpperCase() + match.substr(1)
+    )
+
   chars: (text) ->
-    # TODO: capitalization voodoo
-    capitalize = !@stack.find((tag) -> tag.preserveCaps)
+    text = @toTitleCase(text) if @options.titleCase && !@stack.find((tag) -> tag.preserveCaps)
     blocks = []
     for c in XRegExp.split(text, '')
       math = @mapping.math[c]

@@ -3,7 +3,7 @@ Translator.fieldMap = {
   place:            { name: 'location', enc: 'literal' }
   chapter:          { name: 'chapter', preserveCaps: true }
   edition:          { name: 'edition', preserveCaps: true }
-  title:            { name: 'title', preserveCaps: true }
+  title:            { name: 'title', titleCase: true, preserveCaps: true }
   volume:           { name: 'volume', preserveCaps: true }
   rights:           { name: 'rights', preserveCaps: true }
   ISBN:             { name: 'isbn' }
@@ -397,6 +397,24 @@ doExport = ->
       if archive
         ref.add({ name: 'eprint', value: item.archiveLocation })    unless ref.has.eprint
 
+    if !item.language
+      ref.english = true
+    else
+      langlc = item.language.toLowerCase()
+      language = Language.babelMap[langlc.replace(/[^a-z0-9]/, '_')]
+      language ||= Language.babelMap[langlc.replace(/-[a-z]+$/i, '').replace(/[^a-z0-9]/, '_')]
+      if language
+        language = language[0]
+      else
+        sim = Language.lookup(langlc)
+        if sim[0].sim >= 0.9
+          language = sim[0].lang
+        else
+          language = null
+
+      ref.english = language in ['american', 'english', 'british']
+      ref.add({ name: 'langid', value: language })
+
     ref.add({ name: 'number', value: item.docketNumber || item.publicLawNumber || item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number })
     ref.add({ name: (if isNaN(parseInt(item.issue)) then 'issue' else 'number'), value: item.issue })
 
@@ -530,18 +548,6 @@ doExport = ->
         ref.add({ name: 'pages', value: "#{item.firstPage}--#{item.lastPage}" })
       when item.firstPage
         ref.add({ name: 'pages', value: "#{item.firstPage}" })
-
-    if item.language
-      langlc = item.language.toLowerCase()
-      language = Language.babelMap[langlc.replace(/[^a-z0-9]/, '_')]
-      language ||= Language.babelMap[langlc.replace(/-[a-z]+$/i, '').replace(/[^a-z0-9]/, '_')]
-      if language
-        language = language[0]
-      else
-        sim = Language.lookup(langlc)
-        if sim[0].sim >= 0.9 then language = sim[0].lang else language = null
-
-      ref.add({ name: 'langid', value: language })
 
     ref.add({ name: (if ref.has.note then 'annotation' else 'note'), value: item.extra, allowDuplicates: true })
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })

@@ -35,11 +35,6 @@ class Reference
 
     @override = Translator.extractFields(@item)
 
-    for own attr, f of Translator.fieldMap || {}
-      @add(@clone(f, @item[attr])) if f.name
-
-    @add({name: 'timestamp', value: Translator.testing_timestamp || @item.dateModified || @item.dateAdded})
-
   ###
   # Return a copy of the given `field` with a new value
   #
@@ -247,7 +242,7 @@ class Reference
 
     return f.value if raw
 
-    value = LaTeX.text2latex(f.value, f)
+    value = LaTeX.text2latex(f.value, {preserveCaps: f.preserveCaps && @english, titleCase: f.titleCase && @english})
     value = new String("{#{value}}") if f.value instanceof String
     return value
 
@@ -383,6 +378,11 @@ class Reference
   postscript: ->
 
   complete: ->
+    for own attr, f of Translator.fieldMap || {}
+      @add(@clone(f, @item[attr])) if f.name
+
+    @add({name: 'timestamp', value: Translator.testing_timestamp || @item.dateModified || @item.dateAdded})
+
     if Translator.DOIandURL != 'both'
       if @has.doi && @has.url
         switch Translator.DOIandURL

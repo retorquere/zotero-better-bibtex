@@ -122,7 +122,7 @@
       "itemType": "book",
       "tags": [],
       "relations": {},
-      "abstractNote": "Zotero’s “Language” field empty, so “en” is assumed.",
+      "abstractNote": "Zotero’s “Language” field empty, so “en-US” is assumed.",
       "title": "Some remarks on <span class=\"nocase\">’t Hooft’s</span> S-matrix for black holes",
       "creators": [],
       "attachments": [],
