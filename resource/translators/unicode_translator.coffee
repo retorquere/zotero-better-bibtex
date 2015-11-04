@@ -11,7 +11,7 @@ LaTeX.preserveCaps =
 
   preserve: (value) ->
     return XRegExp.replace(value, @words, (match, boundary, needle, pos) =>
-      if pos == 0 && && XRegExp.test(needle, @initialCapOnly)
+      if pos == 0 && XRegExp.test(needle, @initialCapOnly)
         return boundary + needle
       else
         return "#{boundary}<span class='nocase'>#{needle}</span>"
