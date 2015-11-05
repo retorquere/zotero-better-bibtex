@@ -219,6 +219,7 @@ file 'chrome/content/zotero-better-bibtex/cacheVersion.coffee' => Dir['test/fixt
 
   drop = drop.keys.sort{|a, b| Gem::Version.new(a) <=> Gem::Version.new(b)}.reverse
 
+  STDERR.puts("cacheVersions: #{drop.inspect}")
   open(t.name, 'w'){|f|
     f.puts("Zotero.BetterBibTeX.cacheVersion = #{drop[0].inspect}")
   }

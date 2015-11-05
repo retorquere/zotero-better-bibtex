@@ -9,6 +9,7 @@ rvm:
 - 2.2
 env:
 - TESTS=383
+xenv:
 - TESTS=ci-cluster-0
 - TESTS=ci-cluster-1
 - TESTS=ci-cluster-2
