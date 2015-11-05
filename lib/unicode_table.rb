@@ -102,7 +102,7 @@ class UnicodeConverter
         @chars[charcode].latex = soll if @chars[charcode].latex == ist
       }
 
-      if @chars[charcode].latex == '~' || @chars[charcode].latex == ' '
+      if @chars[charcode].latex == ' ' # || @chars[charcode].latex == '~'
         @chars[charcode].latex = ' '
         @chars[charcode].math = false
       end
