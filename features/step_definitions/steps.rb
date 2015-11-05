@@ -11,7 +11,7 @@ require 'shellwords'
 require 'nokogiri'
 require 'mechanize'
 
-$DEBUG=true
+#$DEBUG=true
 
 if !OS.mac?
   require 'headless'
