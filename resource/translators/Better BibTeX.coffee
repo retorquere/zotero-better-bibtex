@@ -5,7 +5,7 @@ Translator.fieldMap = {
   edition:          { name: 'edition', preserveCaps: true }
   type:             { name: 'type', preserveCaps: true }
   series:           { name: 'series', preserveCaps: true }
-  title:            { name: 'title', preserveCaps: true }
+  title:            { name: 'title', titleCase: true, preserveCaps: true }
   volume:           { name: 'volume', preserveCaps: true }
   rights:           { name: 'copyright',  preserveCaps: true }
   ISBN:             { name: 'isbn' }
