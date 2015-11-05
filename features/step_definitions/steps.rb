@@ -11,6 +11,8 @@ require 'shellwords'
 require 'nokogiri'
 require 'mechanize'
 
+$DEBUG=true
+
 if !OS.mac?
   require 'headless'
   $headless ||= false
@@ -46,6 +48,7 @@ def loadZotero
   $Firefox = OpenStruct.new
 
   profile = Selenium::WebDriver::Firefox::Profile.new(File.expand_path('test/fixtures/profiles/default'))
+  profile.log_file = File.expand_path(File.join(File.dirname(__FILE__), '../../firefox-console.log'))
 
   say "Installing plugins..."
   (Dir['*.xpi'] + Dir['test/fixtures/plugins/*.xpi']).each{|xpi|
@@ -53,30 +56,33 @@ def loadZotero
     profile.add_extension(xpi)
   }
 
-  profile['xpinstall.signatures.required'] = false
-
-  profile['extensions.zotero.showIn'] = 2
-  profile['extensions.zotero.httpServer.enabled'] = true
-  profile['dom.max_chrome_script_run_time'] = 6000
-  profile['browser.shell.checkDefaultBrowser'] = false
-
-  if ENV['CI'] != 'true'
-    profile['extensions.zotero.debug.store'] = true
-    profile['extensions.zotero.debug.log'] = true
-    profile['extensions.zotero.translators.better-bibtex.debug'] = true
-  end
-
-  profile['extensions.zotfile.automatic_renaming'] = 1
-  profile['extensions.zotfile.watch_folder'] = false
-
-  profile['browser.download.manager.showWhenStarting'] = false
   FileUtils.mkdir_p("/tmp/webdriver-downloads")
+
   profile['browser.download.dir'] = "/tmp/webdriver-downloads"
   profile['browser.download.folderList'] = 2
+  profile['browser.download.manager.showWhenStarting'] = false
   profile['browser.helperApps.alwaysAsk.force'] = false
-  #profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
   profile['browser.helperApps.neverAsk.saveToDisk'] = "application/octet-stream"
+  #profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
+  profile['browser.shell.checkDefaultBrowser'] = false
+  profile['browser.uitour.enabled'] = false
+  profile['dom.max_chrome_script_run_time'] = 6000
+  profile['extensions.autoDisableScopes'] = 0
+  profile['extensions.zotero.backup.numBackups'] = 0
+  #profile['extensions.zotero.debug.level'] = $DEBUG_LEVEL
+  profile['extensions.zotero.debug.log'] = true
+  profile['extensions.zotero.debug.store'] = true
+  profile['extensions.zotero.debug.time'] = true
+  profile['extensions.zotero.firstRun2'] = false
+  profile['extensions.zotero.firstRunGuidance'] = false
+  profile['extensions.zotero.httpServer.enabled'] = true
+  profile['extensions.zotero.reportTranslationFailure'] = false
+  profile['extensions.zotero.showIn'] = 2
+  profile['extensions.zotero.translators.better-bibtex.debug'] = true
+  profile['extensions.zotfile.automatic_renaming'] = 1
+  profile['extensions.zotfile.watch_folder'] = false
   profile['pdfjs.disabled'] = true
+  profile['xpinstall.signatures.required'] = false
 
   say "Starting Firefox..."
   client = Selenium::WebDriver::Remote::Http::Default.new
