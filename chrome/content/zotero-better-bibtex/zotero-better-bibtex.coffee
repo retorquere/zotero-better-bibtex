@@ -8,20 +8,21 @@ Zotero.BetterBibTeX = {
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
 
-Zotero.BetterBibTeX.titleCase = {
-  state: {
-    opt: { lang: 'en' }
-    locale: {
-      en: {
-        opts: {
-          'skip-words': Zotero.CiteProc.CSL.SKIP_WORDS
-          'leading-noise-words': 'a,an,the'
+try
+  Zotero.BetterBibTeX.titleCase = {
+    state: {
+      opt: { lang: 'en' }
+      locale: {
+        en: {
+          opts: {
+            'skip-words': Zotero.CiteProc.CSL.SKIP_WORDS
+            'leading-noise-words': 'a,an,the'
+          }
         }
       }
     }
   }
-}
-Zotero.BetterBibTeX.titleCase.state.locale.en.opts['skip-words-regexp'] = new RegExp('(?:(?:[?!:]*\\s+|-|^)(?:' + Zotero.BetterBibTeX.titleCase.state.locale.en.opts['skip-words'].slice().join('|') + ')(?=[!?:]*\\s+|-|$))', 'g')
+  Zotero.BetterBibTeX.titleCase.state.locale.en.opts['skip-words-regexp'] = new RegExp('(?:(?:[?!:]*\\s+|-|^)(?:' + Zotero.BetterBibTeX.titleCase.state.locale.en.opts['skip-words'].slice().join('|') + ')(?=[!?:]*\\s+|-|$))', 'g')
 
 Zotero.BetterBibTeX.HTMLParser = new class
   DOMParser: Components.classes["@mozilla.org/xmlextras/domparser;1"].createInstance(Components.interfaces.nsIDOMParser)
@@ -637,7 +638,8 @@ Zotero.BetterBibTeX.init = ->
         # twice to work around https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping
         Zotero.BetterBibTeX.parseParticles(name)
         Zotero.BetterBibTeX.parseParticles(name)
-      titleCase: (sandbox, string) -> Zotero.CiteProc.CSL.Output.Formatters.title(Zotero.BetterBibTeX.titleCase.state, string)
+      #titleCase: (sandbox, string) -> Zotero.CiteProc.CSL.Output.Formatters.title(Zotero.BetterBibTeX.titleCase.state, string)
+      titleCase: (sandbox, string) -> string
     }
     parseDateToObject: (sandbox, date, locale) -> Zotero.BetterBibTeX.DateParser::parseDateToObject(date, {locale, verbatimDetection: true})
     parseDateToArray: (sandbox, date, locale) -> Zotero.BetterBibTeX.DateParser::parseDateToArray(date, {locale, verbatimDetection: true})
