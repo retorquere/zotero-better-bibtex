@@ -10,7 +10,7 @@ Translator.fieldMap = {
   ISSN:             { name: 'issn' }
   url:              { name: 'url' }
   DOI:              { name: 'doi' }
-  shortTitle:       { name: 'shorttitle', preserveCaps: true }
+  shortTitle:       { name: 'shorttitle', titleCase: true, preserveCaps: true }
   abstractNote:     { name: 'abstract' }
   numberOfVolumes:  { name: 'volumes' }
   versionNumber:    { name: 'version' }
@@ -172,7 +172,7 @@ doExport = ->
     if item.publicationTitle
       switch item.itemType
         when 'bookSection', 'conferencePaper', 'dictionaryEntry', 'encyclopediaArticle'
-          ref.add({ name: 'booktitle', value: item.bookTitle || item.publicationTitle, preserveBibTeXVariables: true, preserveCaps: true})
+          ref.add({ name: 'booktitle', value: item.bookTitle || item.publicationTitle, preserveBibTeXVariables: true, titleCase: true, preserveCaps: true})
 
         when 'magazineArticle', 'newspaperArticle'
           ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true, preserveBibTeXVariables: true})
@@ -189,9 +189,14 @@ doExport = ->
               ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true })
               ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true, preserveCaps: true })
 
-    ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, preserveCaps: true }) if not ref.has.booktitle
+    ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, titleCase: true, preserveCaps: true }) if not ref.has.booktitle
 
-    ref.add({ name: (if ref.referencetype in ['movie', 'video'] then 'booktitle' else 'titleaddon'), value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, preserveCaps: true })
+    ref.add({
+      name: (if ref.referencetype in ['movie', 'video'] then 'booktitle' else 'titleaddon')
+      value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle
+      preserveCaps: ref.referencetype in ['movie', 'video']
+      titleCase: ref.referencetype in ['movie', 'video']
+    })
     ref.add({ name: 'series', value: item.seriesTitle || item.series, preserveCaps: true })
 
     switch item.itemType
@@ -313,12 +318,12 @@ doExport = ->
 
       switch
         when name == 'volume-title' && ref.item.itemType == 'book' && ref.has.title
-          ref.add({name: 'maintitle', value: value.value, preserveCaps: true })
+          ref.add({name: 'maintitle', value: value.value, titleCase: true, preserveCaps: true })
           [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]
           [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
 
         when  name == 'volume-title' && ref.item.itemType == 'bookSection' && ref.has.booktitle
-          ref.add({name: 'maintitle', value: value.value, preserveCaps: true })
+          ref.add({name: 'maintitle', value: value.value, titleCase: true, preserveCaps: true })
           [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]
           [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]
 

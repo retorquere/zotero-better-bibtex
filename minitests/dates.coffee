@@ -17,21 +17,12 @@
 #console.log(Zotero.DateParser.parseDateToObject("15 juin 2009"))
 #console.log(Zotero.DateParser.parseDateToObject("März 1, 2008"))
 
-re = new XRegExp("""(
-          # word with embedded punctuation
-          ((?<boundary2>^|[^'\\p{N}\\p{L}])   (?<word2>[\\p{L}\\p{N}]+'[\\p{L}\\p{N}]+))
-          |
-          ((?<boundary2>^|[^-\\p{N}\\p{L}])   (?<word2>[\\p{L}\\p{N}]+[-\\p{L}\\p{N}]+[\\p{L}\\p{N}]))
+re = new XRegExp("(?<!^|[^\\p{N}\\p{L}])([\\p{L}\\p{N}]*\\p{Lu}[\\p{L}\\p{N}]*)", 'gx')
 
-          |
-          # simple word
-          ((?<boundary1>^|[^\\p{N}\\p{L}])    (?<word1>[\\p{L}\\p{N}]*\\p{Lu}[\\p{L}\\p{N}]*))
-        )""", 'gx')
-
-str = "Computational Models of Non-Cooperative Dialogue"
+str = "Wisdom: A Metaheuristic (pragmatic) to <i>Orchestrate</i> Mind and Virtue toward Excellence."
 str = XRegExp.replace(str, re, (match) ->
-  console.log(typeof match.word1 + ': ' + JSON.stringify({word: match.word1}))
-  console.log(typeof match.word2 + ': ' + JSON.stringify({word: match.word2}))
-  console.log(typeof match.word3 + ': ' + JSON.stringify({word: match.word3}))
-  return 'xx'
+  console.log('-----')
+  for arg in arguments
+    console.log(JSON.stringify(arg))
+  return match
 )

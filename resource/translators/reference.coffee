@@ -422,11 +422,12 @@ class Reference
       if value.format == 'csl'
         # CSL names are not in BibTeX format, so only add it if there's a mapping
         cslvar = Translator.CSLVariables[name]
-        remapped = cslvar?[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
-        remapped = remapped.call(@) if typeof remapped == 'function'
+        name = cslvar[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
+        name = name.call(@) if typeof name == 'function'
+        titleCase = preserveCaps = name in ['title', 'shorttitle', 'origtitle', 'booktitle', 'maintitle']
 
-        if remapped
-          fields.push({ name: remapped, value: value.value, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type), raw: raw })
+        if name
+          fields.push({ name, value: value.value, titleCase, preserveCaps, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type), raw })
 
         else
           Translator.debug('Unmapped CSL field', name, '=', value.value)
