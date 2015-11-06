@@ -1,10 +1,10 @@
-locales = Object.keys(Zotero.BetterBibTeX.Locales.months)
-console.log('' + locales.length + ' locales')
-locales.sort()
-for locale, i in locales
-  continue if locale == 'tr-TR'
-  #continue unless locale == 'fr-FR'
-  Zotero.DateParser.addDateParserMonths(Zotero.BetterBibTeX.Locales.months[locale])
+#locales = Object.keys(Zotero.BetterBibTeX.Locales.months)
+#console.log('' + locales.length + ' locales')
+#locales.sort()
+#for locale, i in locales
+#  continue if locale == 'tr-TR'
+#  #continue unless locale == 'fr-FR'
+#  Zotero.DateParser.addDateParserMonths(Zotero.BetterBibTeX.Locales.months[locale])
 
 #console.log(Zotero.DateParser.parseDateToArray('2014-12-31/2015-01-01'))
 #console.log(Zotero.DateParser.parseDateToObject('2014-12-31/2015-01-01'))
@@ -15,4 +15,22 @@ for locale, i in locales
 #console.log(Zotero.DateParser.parseDateToObject("September 20, 2006"))
 #console.log(Zotero.DateParser.parseDateToObject("Autumn 2001"))
 #console.log(Zotero.DateParser.parseDateToObject("15 juin 2009"))
-console.log(Zotero.DateParser.parseDateToObject("März 1, 2008"))
+#console.log(Zotero.DateParser.parseDateToObject("März 1, 2008"))
+
+re = new XRegExp("""(
+          # simple word
+          ((?<boundary1>^|[^\\p{N}\\p{L}])  [\\p{L}\\p{N}]*\\p{Lu}[\\p{L}\\p{N}]*)
+          |
+          # word with embedded punctuation
+          ((?<boundary2>^|[^'\\p{N}\\p{L}])  [\\p{L}\\p{N}]*(\\p{Lu}'|'\\p{Lu})[\\p{L}\\p{N}]+)
+          |
+          ((?<boundary3>^|[^-\\p{N}\\p{L}])  [\\p{L}\\p{N}]*(\\p{Lu}-|-\\p{Lu})[\\p{L}\\p{N}]+)
+        )""", 'gx')
+
+str = "Please Put Apple-pie at Arny's"
+str = XRegExp.replace(str, re, (match) ->
+  console.log(typeof match.boundary1 + ': ' + JSON.stringify({boundary: match.boundary1}))
+  console.log(typeof match.boundary2 + ': ' + JSON.stringify({boundary: match.boundary2}))
+  console.log(typeof match.boundary3 + ': ' + JSON.stringify({boundary: match.boundary3}))
+  return 'xx'
+)

@@ -6,15 +6,31 @@ LaTeX.text2latex = (text, options = {}) ->
   return latex
 
 LaTeX.preserveCaps =
-  words:    new XRegExp("(^|[^\\p{Letter}])([\\p{Letter}]*\\p{Uppercase_Letter}[\\p{Letter}]*)", 'g')
+  words: new XRegExp("""(
+          # simple word
+          ((?<boundary1>^|[^\\p{N}\\p{L}])    (?<word1>[\\p{L}\\p{N}]*\\p{Lu}[\\p{L}\\p{N}]*))
+          |
+
+          # word with embedded punctuation
+          ((?<boundary2>^|[^'\\p{N}\\p{L}])   (?<word2>[\\p{L}\\p{N}]*(\\p{Lu}'|'\\p{Lu})[\\p{L}\\p{N}]+))
+          |
+          ((?<boundary3>^|[^-\\p{N}\\p{L}])   (?<word3>[\\p{L}\\p{N}]*(\\p{Lu}-|-\\p{Lu})[-\\p{L}\\p{N}]+))
+        )""", 'gx')
   initialCapOnly: new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}*$")
 
   preserve: (value) ->
-    return XRegExp.replace(value, @words, (match, boundary, needle, pos) =>
-      if pos == 0 && XRegExp.test(needle, @initialCapOnly)
-        return boundary + needle
+    return XRegExp.replace(value, @words, (match, matches...) =>
+      pos = matches[matches.length - 2]
+      for i in [1, 2, 3]
+        boundary = match["boundary#{i}"]
+        word = match["word#{i}"]
+        break if typeof boundary == 'string'
+      Translator.debug('preserve:', {boundary, word, pos})
+
+      if pos == 0 && XRegExp.test(word, @initialCapOnly)
+        return boundary + word
       else
-        return "#{boundary}<span class=\"nocase\">#{needle}</span><!-- nocase:end -->"
+        return "#{boundary}<span class=\"nocase\">#{word}</span><!-- nocase:end -->"
     )
 
 LaTeX.cleanHTML = (text, options) ->

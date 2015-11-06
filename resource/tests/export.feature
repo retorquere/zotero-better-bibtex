@@ -148,9 +148,9 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references |
+     | Underscores break capital-preservation #300                                        | 1          |
      | Export C as {v C}, not v{C} #152                                                   | 1          |
      | Better BibTeX.018                                                                  | 1          |
-     | Underscores break capital-preservation #300                                        | 1          |
      | Numbers confuse capital-preservation #295                                          | 1          |
      | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
      | Better BibTeX.026                                                                  | 1          |

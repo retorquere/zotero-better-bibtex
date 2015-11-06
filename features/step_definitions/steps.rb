@@ -137,6 +137,8 @@ AfterStep do |scenario|
 end
 
 After do |scenario|
+  Cucumber.wants_to_quit = scenario.failed? && ENV['CI'] != 'true'
+
   filename = scenario.name.gsub(/[^0-9A-z.\-]/, '_')
 
   if scenario.failed? || (ENV['CI'] != 'true' && scenario.source_tag_names.include?('@dumplogs'))
@@ -145,8 +147,6 @@ After do |scenario|
   end
 
   if ENV['CI'] != 'true'
-    Cucumber.wants_to_quit = scenario.failed?
-
     open("#{filename}.keys", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.keyManagerState)) } if scenario.failed? && scenario.source_tag_names.include?('@dumpkeys')
     open("#{filename}.cache", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.cacheState)) } if scenario.failed? || scenario.source_tag_names.include?('@dumpcache')
     open("#{filename}.serialized", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.serializedState)) } if scenario.failed? || scenario.source_tag_names.include?('@dumpserialized')
