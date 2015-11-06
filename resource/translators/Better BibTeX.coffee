@@ -1,17 +1,17 @@
 Translator.fieldMap = {
   # Zotero          BibTeX
-  place:            { name: 'address', preserveCaps: true, import: 'location' }
-  section:          { name: 'chapter', preserveCaps: true }
-  edition:          { name: 'edition', preserveCaps: true }
-  type:             { name: 'type', preserveCaps: true }
-  series:           { name: 'series', preserveCaps: true }
-  title:            { name: 'title', titleCase: true, preserveCaps: true }
-  volume:           { name: 'volume', preserveCaps: true }
-  rights:           { name: 'copyright',  preserveCaps: true }
+  place:            { name: 'address', import: 'location' }
+  section:          { name: 'chapter' }
+  edition:          { name: 'edition' }
+  type:             { name: 'type' }
+  series:           { name: 'series' }
+  title:            { name: 'title', autoCase: true }
+  volume:           { name: 'volume' }
+  rights:           { name: 'copyright' }
   ISBN:             { name: 'isbn' }
   ISSN:             { name: 'issn' }
   callNumber:       { name: 'lccn'}
-  shortTitle:       { name: 'shorttitle', preserveCaps: true }
+  shortTitle:       { name: 'shorttitle', autoCase: true }
   url:              { name: 'url' }
   DOI:              { name: 'doi' }
   abstractNote:     { name: 'abstract' }
@@ -53,15 +53,15 @@ doExport = ->
 
     switch
       when item.itemType in ['bookSection', 'conferencePaper']
-        ref.add({ name: 'booktitle',  preserveCaps: true, value: item.publicationTitle, preserveBibTeXVariables: true })
+        ref.add({ name: 'booktitle',  autoCase: true, value: item.publicationTitle, preserveBibTeXVariables: true })
       when ref.isBibVar(item.publicationTitle)
         ref.add({ name: 'journal', value: item.publicationTitle, preserveBibTeXVariables: true })
       else
-        ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle, preserveCaps: true, preserveBibTeXVariables: true })
+        ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle, preserveBibTeXVariables: true })
 
     switch item.itemType
-      when 'thesis' then ref.add({ name: 'school', value: item.publisher, preserveCaps: true })
-      when 'report' then ref.add({ name: 'institution', value: item.publisher, preserveCaps: true })
+      when 'thesis' then ref.add({ name: 'school', value: item.publisher })
+      when 'report' then ref.add({ name: 'institution', value: item.publisher })
       else               ref.add({ name: 'publisher', value: item.publisher, enc: 'literal' })
 
     if item.itemType == 'thesis' && item.thesisType in ['mastersthesis', 'phdthesis']
@@ -91,7 +91,7 @@ doExport = ->
     if item.date
       date = Zotero.BetterBibTeX.parseDateToObject(item.date, item.language)
       if date.literal || date.year_end
-        ref.add({ name: 'year', value: item.date, preserveCaps: true })
+        ref.add({ name: 'year', value: item.date })
       else
         ref.add({ name: 'month', value: months[date.month - 1], bare: true }) if date.month
         ref.add({ name: 'year', value: '' + date.year })

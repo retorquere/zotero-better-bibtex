@@ -3,7 +3,7 @@
 #
 # The global Translator object allows access to the current configuration of the translator
 #
-# @param {enum} preserveCaps whether capitals should be preserved by bracing then with {}. Values: none, all, inner
+# @param {enum} titleCase whether titles should be title-cased
 # @param {boolean} fancyURLs set to true when BBT will generate \url{..} around the urls
 ###
 
@@ -264,7 +264,7 @@ class Reference
 
     return f.value if raw
 
-    value = LaTeX.text2latex(f.value, {preserveCaps: f.preserveCaps && @english, titleCase: f.titleCase && @english})
+    value = LaTeX.text2latex(f.value, {autoCase: f.autoCase && @english})
     value = new String("{#{value}}") if f.value instanceof String
     return value
 
@@ -424,10 +424,10 @@ class Reference
         cslvar = Translator.CSLVariables[name]
         name = cslvar[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
         name = name.call(@) if typeof name == 'function'
-        titleCase = preserveCaps = name in ['title', 'shorttitle', 'origtitle', 'booktitle', 'maintitle']
+        autoCase = name in ['title', 'shorttitle', 'origtitle', 'booktitle', 'maintitle']
 
         if name
-          fields.push({ name, value: value.value, titleCase, preserveCaps, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type), raw })
+          fields.push({ name, value: value.value, autoCase, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type), raw })
 
         else
           Translator.debug('Unmapped CSL field', name, '=', value.value)

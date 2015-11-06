@@ -1,20 +1,20 @@
 Translator.fieldMap = {
   # Zotero          BibTeX
   place:            { name: 'location', enc: 'literal' }
-  chapter:          { name: 'chapter', preserveCaps: true }
-  edition:          { name: 'edition', preserveCaps: true }
-  title:            { name: 'title', titleCase: true, preserveCaps: true }
-  volume:           { name: 'volume', preserveCaps: true }
-  rights:           { name: 'rights', preserveCaps: true }
+  chapter:          { name: 'chapter' }
+  edition:          { name: 'edition' }
+  title:            { name: 'title', autoCase: true }
+  volume:           { name: 'volume' }
+  rights:           { name: 'rights' }
   ISBN:             { name: 'isbn' }
   ISSN:             { name: 'issn' }
   url:              { name: 'url' }
   DOI:              { name: 'doi' }
-  shortTitle:       { name: 'shorttitle', titleCase: true, preserveCaps: true }
+  shortTitle:       { name: 'shorttitle', autoCase: true }
   abstractNote:     { name: 'abstract' }
   numberOfVolumes:  { name: 'volumes' }
   versionNumber:    { name: 'version' }
-  conferenceName:   { name: 'eventtitle', preserveCaps: true }
+  conferenceName:   { name: 'eventtitle' }
   numPages:         { name: 'pagetotal' }
   type:             { name: 'type' }
 }
@@ -165,39 +165,38 @@ doExport = ->
 
     switch item.itemType
       when 'case', 'gazette'
-        ref.add({ name: 'journaltitle', value: item.reporter, preserveCaps: true, preserveBibTeXVariables: true })
+        ref.add({ name: 'journaltitle', value: item.reporter, preserveBibTeXVariables: true })
       when 'statute'
-        ref.add({ name: 'journaltitle', value: item.code, preserveCaps: true, preserveBibTeXVariables: true })
+        ref.add({ name: 'journaltitle', value: item.code, preserveBibTeXVariables: true })
 
     if item.publicationTitle
       switch item.itemType
         when 'bookSection', 'conferencePaper', 'dictionaryEntry', 'encyclopediaArticle'
-          ref.add({ name: 'booktitle', value: item.bookTitle || item.publicationTitle, preserveBibTeXVariables: true, titleCase: true, preserveCaps: true})
+          ref.add({ name: 'booktitle', value: item.bookTitle || item.publicationTitle, preserveBibTeXVariables: true, autoCase: true})
 
         when 'magazineArticle', 'newspaperArticle'
-          ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true, preserveBibTeXVariables: true})
-          ref.add({ name: 'journalsubtitle', value: item.section, preserveCaps: true }) if item.itemType == 'newspaperArticle'
+          ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true})
+          ref.add({ name: 'journalsubtitle', value: item.section }) if item.itemType == 'newspaperArticle'
 
         when 'journalArticle'
           if ref.isBibVar(item.publicationTitle)
-            ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
+            ref.add({ name: 'journaltitle', value: item.publicationTitle })
           else
             abbr = Zotero.BetterBibTeX.keymanager.journalAbbrev(item)
             if Translator.useJournalAbbreviation and abbr
-              ref.add({ name: 'journal', value: abbr, preserveBibTeXVariables: true, preserveCaps: true })
+              ref.add({ name: 'journal', value: abbr, preserveBibTeXVariables: true })
             else
-              ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true })
-              ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true, preserveCaps: true })
+              ref.add({ name: 'journaltitle', value: item.publicationTitle })
+              ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true })
 
-    ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, titleCase: true, preserveCaps: true }) if not ref.has.booktitle
+    ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, autoCase: true }) if not ref.has.booktitle
 
     ref.add({
       name: (if ref.referencetype in ['movie', 'video'] then 'booktitle' else 'titleaddon')
       value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle
-      preserveCaps: ref.referencetype in ['movie', 'video']
-      titleCase: ref.referencetype in ['movie', 'video']
+      autoCase: ref.referencetype in ['movie', 'video']
     })
-    ref.add({ name: 'series', value: item.seriesTitle || item.series, preserveCaps: true })
+    ref.add({ name: 'series', value: item.seriesTitle || item.series })
 
     switch item.itemType
       when 'report', 'thesis'
@@ -318,12 +317,12 @@ doExport = ->
 
       switch
         when name == 'volume-title' && ref.item.itemType == 'book' && ref.has.title
-          ref.add({name: 'maintitle', value: value.value, titleCase: true, preserveCaps: true })
+          ref.add({name: 'maintitle', value: value.value, autoCase: true })
           [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]
           [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
 
         when  name == 'volume-title' && ref.item.itemType == 'bookSection' && ref.has.booktitle
-          ref.add({name: 'maintitle', value: value.value, titleCase: true, preserveCaps: true })
+          ref.add({name: 'maintitle', value: value.value, autoCase: true })
           [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]
           [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]
 

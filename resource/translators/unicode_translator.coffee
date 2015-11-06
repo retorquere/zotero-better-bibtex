@@ -49,7 +49,7 @@ LaTeX.cleanHTML = (text, options) ->
     text = text.replace(new RegExp("[\\s\\u00A0]?[#{close}]", 'g'), '</span>')
 
   text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) -> "<pre>#{Translator.HTMLEncode(pre)}</pre>")
-  if options.preserveCaps
+  if options.autoCase
     text = LaTeX.preserveCaps.preserve(text)
     while true
       txt = text.replace('</span><!-- nocase:end --> <span class="nocase">', ' ')
@@ -179,7 +179,7 @@ class LaTeX.HTML
     @stack.shift()
 
   chars: (text) ->
-    if Translator.titleCase && @options.titleCase && !@stack.find((tag) -> tag.preserveCaps)
+    if Translator.titleCase && @options.autoCase && !@stack.find((tag) -> tag.preserveCaps)
       # dupe the titlecaser into handling partial sentences, would change embedded 'the' to 'The' at the start of a
       # partial otherwise
       prefix = if @latex == '' then '' else '$ '
