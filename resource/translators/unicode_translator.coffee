@@ -26,7 +26,6 @@ LaTeX.preserveCaps =
         boundary = match["boundary#{i}"]
         word = match["word#{i}"]
         break if typeof boundary == 'string'
-      Translator.debug('preserve:', {boundary, word, pos})
       if !XRegExp.test(word, @hasCapital) || (pos == 0 && XRegExp.test(word, @initialCapOnly))
         return boundary + word
       else
@@ -183,7 +182,11 @@ class LaTeX.HTML
       # dupe the titlecaser into handling partial sentences, would change embedded 'the' to 'The' at the start of a
       # partial otherwise
       prefix = if @latex == '' then '' else '$ '
-      text = Zotero.BetterBibTeX.CSL.titleCase(prefix + text).slice(prefix.length)
+      cased = ''
+      for chunk in text.split(/([\(\)])/)
+        cased += Zotero.BetterBibTeX.CSL.titleCase(prefix + chunk).slice(prefix.length)
+        prefix = '$ '
+      text = cased
 
     blocks = []
     for c in XRegExp.split(text, '')
