@@ -6,17 +6,18 @@ LaTeX.text2latex = (text, options = {}) ->
   return latex
 
 LaTeX.preserveCaps =
+  hasCapital: new XRegExp('\\p{Lu}')
   words: new XRegExp("""(
-          # simple word
-          ((?<boundary1>^|[^\\p{N}\\p{L}])    (?<word1>[\\p{L}\\p{N}]*\\p{Lu}[\\p{L}\\p{N}]*))
-          |
-
           # word with embedded punctuation
-          ((?<boundary2>^|[^'\\p{N}\\p{L}])   (?<word2>[\\p{L}\\p{N}]*(\\p{Lu}'|'\\p{Lu})[\\p{L}\\p{N}]+))
+          ((?<boundary1>^|[^'\\p{N}\\p{L}])   (?<word1>[\\p{L}\\p{N}]+'[\\p{L}\\p{N}]+))
           |
-          ((?<boundary3>^|[^-\\p{N}\\p{L}])   (?<word3>[\\p{L}\\p{N}]*(\\p{Lu}-|-\\p{Lu})[-\\p{L}\\p{N}]+))
+          ((?<boundary2>^|[^-\\p{N}\\p{L}])   (?<word2>[\\p{L}\\p{N}]+[-\\p{L}\\p{N}]+[\\p{L}\\p{N}]))
+
+          |
+          # simple word
+          ((?<boundary3>^|[^\\p{N}\\p{L}])    (?<word3>[\\p{L}\\p{N}]*\\p{Lu}[\\p{L}\\p{N}]*))
         )""", 'gx')
-  initialCapOnly: new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}*$")
+  initialCapOnly: new XRegExp("^\\p{Lu}\\p{Ll}*$")
 
   preserve: (value) ->
     return XRegExp.replace(value, @words, (match, matches...) =>
@@ -26,8 +27,7 @@ LaTeX.preserveCaps =
         word = match["word#{i}"]
         break if typeof boundary == 'string'
       Translator.debug('preserve:', {boundary, word, pos})
-
-      if pos == 0 && XRegExp.test(word, @initialCapOnly)
+      if !XRegExp.test(word, @hasCapital) || (pos == 0 && XRegExp.test(word, @initialCapOnly))
         return boundary + word
       else
         return "#{boundary}<span class=\"nocase\">#{word}</span><!-- nocase:end -->"
@@ -179,7 +179,12 @@ class LaTeX.HTML
     @stack.shift()
 
   chars: (text) ->
-    text = Zotero.BetterBibTeX.CSL.titleCase(text) if @options.titleCase && !@stack.find((tag) -> tag.preserveCaps)
+    if Translator.titleCase && @options.titleCase && !@stack.find((tag) -> tag.preserveCaps)
+      # dupe the titlecaser into handling partial sentences, would change embedded 'the' to 'The' at the start of a
+      # partial otherwise
+      prefix = if @latex == '' then '' else '$ '
+      text = Zotero.BetterBibTeX.CSL.titleCase(prefix + text).slice(prefix.length)
+
     blocks = []
     for c in XRegExp.split(text, '')
       math = @mapping.math[c]

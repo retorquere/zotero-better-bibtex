@@ -4,6 +4,7 @@ Feature: Export
 Background:
   When I set preference .citekeyFormat to [auth][year]
   And I set preference .jabrefGroups to false
+  And I set preference .titleCase to true
   And I set preference .defaultDateParserLocale to en-GB
 
 @test-cluster-2
@@ -148,12 +149,12 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references |
+     | Better BibTeX.026                                                                  | 1          |
      | Underscores break capital-preservation #300                                        | 1          |
      | Export C as {v C}, not v{C} #152                                                   | 1          |
      | Better BibTeX.018                                                                  | 1          |
      | Numbers confuse capital-preservation #295                                          | 1          |
      | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
-     | Better BibTeX.026                                                                  | 1          |
      | Better BibTeX.027                                                                  | 1          |
      | capital delta breaks .bib output #141                                              | 1          |
      | Export of item to Better Bibtex fails for auth3_1 #98                              | 1          |

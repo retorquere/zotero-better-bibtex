@@ -18,19 +18,20 @@
 #console.log(Zotero.DateParser.parseDateToObject("März 1, 2008"))
 
 re = new XRegExp("""(
-          # simple word
-          ((?<boundary1>^|[^\\p{N}\\p{L}])  [\\p{L}\\p{N}]*\\p{Lu}[\\p{L}\\p{N}]*)
-          |
           # word with embedded punctuation
-          ((?<boundary2>^|[^'\\p{N}\\p{L}])  [\\p{L}\\p{N}]*(\\p{Lu}'|'\\p{Lu})[\\p{L}\\p{N}]+)
+          ((?<boundary2>^|[^'\\p{N}\\p{L}])   (?<word2>[\\p{L}\\p{N}]+'[\\p{L}\\p{N}]+))
           |
-          ((?<boundary3>^|[^-\\p{N}\\p{L}])  [\\p{L}\\p{N}]*(\\p{Lu}-|-\\p{Lu})[\\p{L}\\p{N}]+)
+          ((?<boundary2>^|[^-\\p{N}\\p{L}])   (?<word2>[\\p{L}\\p{N}]+[-\\p{L}\\p{N}]+[\\p{L}\\p{N}]))
+
+          |
+          # simple word
+          ((?<boundary1>^|[^\\p{N}\\p{L}])    (?<word1>[\\p{L}\\p{N}]*\\p{Lu}[\\p{L}\\p{N}]*))
         )""", 'gx')
 
-str = "Please Put Apple-pie at Arny's"
+str = "Computational Models of Non-Cooperative Dialogue"
 str = XRegExp.replace(str, re, (match) ->
-  console.log(typeof match.boundary1 + ': ' + JSON.stringify({boundary: match.boundary1}))
-  console.log(typeof match.boundary2 + ': ' + JSON.stringify({boundary: match.boundary2}))
-  console.log(typeof match.boundary3 + ': ' + JSON.stringify({boundary: match.boundary3}))
+  console.log(typeof match.word1 + ': ' + JSON.stringify({word: match.word1}))
+  console.log(typeof match.word2 + ': ' + JSON.stringify({word: match.word2}))
+  console.log(typeof match.word3 + ': ' + JSON.stringify({word: match.word3}))
   return 'xx'
 )
