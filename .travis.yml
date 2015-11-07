@@ -3,6 +3,7 @@ sudo: false
 cache:
 - apt
 - bundler
+- npm
 git:
   submodules: false
 rvm:

@@ -5,7 +5,7 @@ LaTeX.text2latex = (text, options = {}) ->
   return BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
   return latex
 
-LaTeX.preserveCaps =
+LaTeX.preserveCase =
   hasCapital: new XRegExp('\\p{Lu}')
   words: new XRegExp("""(
           # word with embedded punctuation
@@ -49,7 +49,7 @@ LaTeX.cleanHTML = (text, options) ->
 
   text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) -> "<pre>#{Translator.HTMLEncode(pre)}</pre>")
   if options.autoCase
-    text = LaTeX.preserveCaps.preserve(text)
+    text = LaTeX.preserveCase.preserve(text)
     while true
       txt = text.replace('</span><!-- nocase:end --> <span class="nocase">', ' ')
       break if txt == text
@@ -128,8 +128,9 @@ class LaTeX.HTML
       when 'span', 'sc'
         tag.smallcaps = tag.name == 'sc' || (tag.attrs.style || '').match(/small-caps/i)
         tag.enquote = (tag.attrs.enquote == 'true')
+        tag.preserveCase = tag.class.nocase && !@stack.find((tag) -> tag.preserveCase)
 
-        @latex += '{{' if tag.class.nocase
+        @latex += '{{' if tag.preserveCase
         @latex += '\\enquote{' if tag.enquote
         @latex += '\\textsc{' if tag.smallcaps
 
@@ -160,7 +161,7 @@ class LaTeX.HTML
       when 'span', 'sc'
         @latex += '}' if tag.smallcaps
         @latex += '}' if tag.enquote
-        @latex += '}}' if tag.class.nocase
+        @latex += '}}' if tag.preserveCase
 
       when 'td', 'th'
         @latex += ' '
@@ -172,19 +173,21 @@ class LaTeX.HTML
 
     @stack.shift()
 
-  chars: (text) ->
-    if Translator.titleCase && @options.autoCase && !@stack.find((tag) -> tag.class.nocase)
-      # dupe the titlecaser into handling partial sentences, would change embedded 'the' to 'The' at the start of a
-      # partial otherwise
-      prefix = if @latex == '' then '' else '$ '
-      cased = ''
-      for chunk in text.split(/([\(\)])/)
-        cased += Zotero.BetterBibTeX.CSL.titleCase(prefix + chunk).slice(prefix.length)
-        prefix = '$ '
-      text = cased
+  titleCase: (text) ->
+    return text unless Translator.titleCase && @options.autoCase && !@stack.find((tag) -> tag.class.nocase)
 
+    # dupe the titlecaser into handling partial sentences, would change embedded 'the' to 'The' at the start of a
+    # partial otherwise
+    prefix = if @latex == '' then '' else '$ '
+    cased = ''
+    for chunk in text.split(/([\(\)])/)
+      cased += Zotero.BetterBibTeX.CSL.titleCase(prefix + chunk).slice(prefix.length)
+      prefix = '$ '
+    return cased
+
+  chars: (text) ->
     blocks = []
-    for c in XRegExp.split(text, '')
+    for c in XRegExp.split(@titleCase(text), '')
       math = @mapping.math[c]
       blocks.unshift({math: !!math, text: ''}) if blocks.length == 0 || blocks[0].math != !!math
       blocks[0].text += (math || @mapping.text[c] || c)
