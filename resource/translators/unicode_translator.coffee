@@ -91,7 +91,8 @@ class LaTeX.HTML
 
     switch tag.name
       when 'i', 'em', 'italic'
-        @latex += '\\emph{'
+        # if we don't double-brace, \emph prevents BibTeX to properly re-case titles. BibTeX is really odd.
+        @latex += '{\\emph{'
 
       when 'b', 'strong'
         @latex += '\\textbf{'
@@ -146,7 +147,10 @@ class LaTeX.HTML
       @walk(child)
 
     switch tag.name
-      when 'i', 'italic', 'em', 'sup', 'sub', 'b', 'strong'
+      when 'i', 'italic', 'em'
+        @latex += '}}'
+
+      when 'sup', 'sub', 'b', 'strong'
         @latex += '}'
 
       when 'a'
