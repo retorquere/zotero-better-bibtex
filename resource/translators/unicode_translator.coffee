@@ -91,7 +91,7 @@ class LaTeX.HTML
 
     switch tag.name
       when 'i', 'em', 'italic'
-        @latex += '\\emph{'
+        @latex += '{\\emph{'
 
       when 'b', 'strong'
         @latex += '\\textbf{'
@@ -147,7 +147,7 @@ class LaTeX.HTML
 
     switch tag.name
       when 'i', 'italic', 'em', 'sup', 'sub', 'b', 'strong'
-        @latex += '}'
+        @latex += '}}'
 
       when 'a'
         @latex += '}' if tag.attrs.href?.length > 0
