@@ -8,7 +8,8 @@
       "attachmentRelativePath": false,
       "usePrefix": true,
       "autoAbbrev": true,
-      "autoAbbrevStyle": "http://www.zotero.org/styles/nature"
+      "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
+      "titleCase": true
     },
     "options": {
       "exportFileData": false,

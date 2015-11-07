@@ -4,7 +4,6 @@ Feature: Bulk Export & Cache
 Background:
   Given I set preference .citekeyFormat to [auth][year]
   And I set preference .jabrefGroups to false
-  And I set preference .titleCase to true
   And I set preference .defaultDateParserLocale to en-US
 
 @bulk

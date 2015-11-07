@@ -4,7 +4,9 @@
     "label": "BetterBibTeX JSON",
     "preferences": {
       "brace-all": true,
-      "fancyURLs": false
+      "fancyURLs": false,
+      "titleCase": true
+
     },
     "options": {
       "exportFileData": false,

@@ -7,6 +7,8 @@ Zotero.BetterBibTeX.DebugBridge.methods.init = ->
   return if Zotero.BetterBibTeX.DebugBridge.initialized
   Zotero.BetterBibTeX.DebugBridge.initialized = true
 
+  Zotero.getActiveZoteroPane().show()
+
   Zotero.noUserInput = true
 
   # replacing Zotero.Items.getAll to get items sorted. With random order I can't really implement stable
@@ -148,10 +150,22 @@ Zotero.BetterBibTeX.DebugBridge.methods.find = (attribute, value, select) ->
 
   id = Zotero.DB.valueQuery(sql, [value])
   throw new Error("No item found with #{attribute} = '#{value}'") unless id
-  if select
+
+  id = parseInt(id)
+  return id unless select
+
+  for attempt in [1..10]
+    Zotero.BetterBibTeX.debug("select: #{id}, attempt #{attempt}")
     zoteroPane = Zotero.getActiveZoteroPane()
-    zoteroPane.selectItem(id, true)
-  return id
+    zoteroPane.show()
+    continue unless zoteroPane.selectItem(id, true)
+
+    selected = (parseInt(i) for i in zoteroPane.getSelectedItems(true))
+    return id if selected.length == 1 && id == selected[0]
+    Zotero.BetterBibTeX.debug("select: expected #{JSON.stringify([id])}, got #{JSON.stringify(selected)}")
+
+  throw new Error("failed to select #{id}")
+
 
 Zotero.BetterBibTeX.DebugBridge.methods.remove = (id) -> Zotero.Items.trash([id])
 

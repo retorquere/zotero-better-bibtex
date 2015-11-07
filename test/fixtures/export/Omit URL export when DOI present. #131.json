@@ -10,6 +10,7 @@
       "skipfields": "Accessed",
       "usePrefix": false,
       "autoAbbrev": true,
+      "titleCase": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/american-medical-association"
     },
     "options": {

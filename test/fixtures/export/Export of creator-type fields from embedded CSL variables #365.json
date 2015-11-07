@@ -5,7 +5,8 @@
     "release": "1.5.3",
     "preferences": {
       "exportFileData": false,
-      "exportNotes": true
+      "exportNotes": true,
+      "titleCase": true
     },
     "options": {
       "skipFields": [
@@ -107,7 +108,7 @@
       "relations": {
       },
       "date": "1964",
-      "title": "Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb",
+      "title": "Dr. Strangelove or: how I learned to stop worrying and love the bomb",
       "shortTitle": "Dr. Strangelove",
       "creators": [
         {

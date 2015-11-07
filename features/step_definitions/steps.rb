@@ -10,6 +10,7 @@ require 'benchmark'
 require 'shellwords'
 require 'nokogiri'
 require 'mechanize'
+require 'open-uri'
 
 #$DEBUG=true
 
@@ -70,6 +71,7 @@ def loadZotero
   profile['extensions.autoDisableScopes'] = 0
   profile['extensions.zotero.backup.numBackups'] = 0
   #profile['extensions.zotero.debug.level'] = $DEBUG_LEVEL
+  profile['extensions.zotero.showIn'] = 2 # show in tab
   profile['extensions.zotero.debug.log'] = true
   profile['extensions.zotero.debug.store'] = true
   profile['extensions.zotero.debug.time'] = true
@@ -94,6 +96,7 @@ def loadZotero
   say "Starting Zotero..."
   $Firefox.browser.navigate.to('chrome://zotero/content/tab.xul') # does this trigger the window load?
   say "Zotero started"
+
   #$headless.take_screenshot('/home/emile/zotero/zotero-better-bibtex/screenshot.png')
   $Firefox.DebugBridge = JSONRPCClient.new('http://localhost:23119/debug-bridge')
   sleep 3
@@ -101,6 +104,7 @@ def loadZotero
   $Firefox.BetterBibTeX = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
   $Firefox.ScholarlyMarkdown = JSONRPCClient.new('http://localhost:23119/better-bibtex/schomd')
   $Firefox.BetterBibTeX.init
+  say "Zotero started"
 
   Dir['*.debug'].each{|d| File.unlink(d) }
   Dir['*.dbg'].each{|d| File.unlink(d) }
@@ -444,9 +448,9 @@ Then /^save the query log to '(.+)'$$/ do |filename|
 end
 
 Then /^I select the first item where ([^\s]+) = '(.+)'$/ do |attribute, value|
-  howmany = -1 if howmany == 'the first'
   @selected = $Firefox.BetterBibTeX.find(attribute, value, true)
   expect(@selected).not_to be(nil)
+  sleep 3
 end
 
 Then /^I remove the selected item$/ do
@@ -454,8 +458,9 @@ Then /^I remove the selected item$/ do
 end
 
 Then /^I (re)?set the citation keys?$/ do |action|
+  sleep 3
   $Firefox.BetterBibTeX.selected("#{action}set")
-  sleep 2
+  sleep 3
 end
 
 Then /^the markdown citation for ([^\s]*) should be '(.*)'$/ do |keys, citation|

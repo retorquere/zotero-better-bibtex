@@ -6,7 +6,8 @@
     "preferences": {
       "usePrefix": true,
       "fancyURLs": false,
-      "attachmentRelativePath": false
+      "attachmentRelativePath": false,
+      "titleCase": true
     },
     "options": {
       "exportFileData": false,

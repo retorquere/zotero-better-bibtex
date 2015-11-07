@@ -9,7 +9,7 @@ LaTeX.preserveCase =
   hasCapital: new XRegExp('\\p{Lu}')
   words: new XRegExp("""(
           # word with embedded punctuation
-          ((?<boundary1>^|[^'\\p{N}\\p{L}])   (?<word1>[\\p{L}\\p{N}]+'[\\p{L}\\p{N}]+))
+          ((?<boundary1>^|[^'’\\p{N}\\p{L}])   (?<word1>[\\p{L}\\p{N}]+['’][\\p{L}\\p{N}]+))
           |
           ((?<boundary2>^|[^-\\p{N}\\p{L}])   (?<word2>[\\p{L}\\p{N}]+[-\\p{L}\\p{N}]+[\\p{L}\\p{N}]))
 
@@ -74,6 +74,7 @@ class LaTeX.HTML
     @latex = ''
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
     @stack = []
+    @preserveCase = 0
 
     @walk(Zotero.BetterBibTeX.HTMLParser(html))
 
@@ -91,10 +92,11 @@ class LaTeX.HTML
 
     switch tag.name
       when 'i', 'em', 'italic'
-        # if we don't double-brace, \emph prevents BibTeX to properly re-case titles. BibTeX is really odd.
-        @latex += '{\\emph{'
+        @latex += '{' unless @preserveCase
+        @latex += '\\emph{'
 
       when 'b', 'strong'
+        @latex += '{' unless @preserveCase
         @latex += '\\textbf{'
 
       when 'a'
@@ -103,9 +105,11 @@ class LaTeX.HTML
           @latex += "\\href{#{tag.attrs.href}}{"
 
       when 'sup'
+        @latex += '{' unless @preserveCase
         @latex += '\\textsuperscript{'
 
       when 'sub'
+        @latex += '{' unless @preserveCase
         @latex += '\\textsubscript{'
 
       when 'br'
@@ -129,9 +133,12 @@ class LaTeX.HTML
       when 'span', 'sc'
         tag.smallcaps = tag.name == 'sc' || (tag.attrs.style || '').match(/small-caps/i)
         tag.enquote = (tag.attrs.enquote == 'true')
-        tag.preserveCase = tag.class.nocase && !@stack.find((tag) -> tag.preserveCase)
 
-        @latex += '{{' if tag.preserveCase
+        @preserveCase += 1 if tag.class.nocase
+
+        @latex += '{{' if tag.class.nocase && @preserveCase == 1
+
+        @latex += '{' if !@preserveCase && (tag.enquote || tag.smallcaps)
         @latex += '\\enquote{' if tag.enquote
         @latex += '\\textsc{' if tag.smallcaps
 
@@ -148,10 +155,12 @@ class LaTeX.HTML
 
     switch tag.name
       when 'i', 'italic', 'em'
-        @latex += '}}'
+        @latex += '}'
+        @latex += '}' unless @preserveCase
 
       when 'sup', 'sub', 'b', 'strong'
         @latex += '}'
+        @latex += '}' unless @preserveCase
 
       when 'a'
         @latex += '}' if tag.attrs.href?.length > 0
@@ -165,7 +174,11 @@ class LaTeX.HTML
       when 'span', 'sc'
         @latex += '}' if tag.smallcaps
         @latex += '}' if tag.enquote
-        @latex += '}}' if tag.preserveCase
+        @latex += '{' if !@preserveCase && (tag.smallcaps || tag.enquote)
+
+        @latex += '}}' if tag.class.nocase && @preserveCase == 1
+
+        @preserveCase -= 1 if tag.class.nocase
 
       when 'td', 'th'
         @latex += ' '
@@ -178,7 +191,7 @@ class LaTeX.HTML
     @stack.shift()
 
   titleCase: (text) ->
-    return text unless Translator.titleCase && @options.autoCase && !@stack.find((tag) -> tag.class.nocase)
+    return text unless Translator.titleCase && @options.autoCase && !@preserveCase
 
     # dupe the titlecaser into handling partial sentences, would change embedded 'the' to 'The' at the start of a
     # partial otherwise

@@ -9,7 +9,7 @@
       "jabrefGroups": false,
       "postscript": "",
       "csquotes": "",
-      "preserveCaps": "all",
+      "titleCase": true,
       "fancyURLs": false,
       "langID": "babel",
       "rawImports": false,
