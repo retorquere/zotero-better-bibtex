@@ -181,12 +181,29 @@ Scenario: Capitalize all title-fields for language en #383
 @test-cluster-0
 @bblt
 @bblt-0
+@127
+@201
+@219
+@253
+@268
+@288
+@294
+@302
+@308
+@309
+@310
+@326
+@327
+@351
+@376
+@389
 Scenario Outline: BibLaTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.bib'
 
   Examples:
      | file                                                                                           | references  |
+     | BibTeX variable support for journal titles. #309                                               | 1           |
      | condense in cite key format not working #308                                                   | 1           |
      | Better BibLaTeX.004                                                                            | 1           |
      | Oriental dates trip up date parser #389                                                        | 1           |
@@ -198,7 +215,6 @@ Scenario Outline: BibLaTeX Export
      | BraceBalancer                                                                                  | 1           |
      | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
      | auth leaves punctuation in citation key #310                                                   | 1           |
-     | BibTeX variable support for journal titles. #309                                               | 1           |
      | csquotes #302                                                                                  | 2           |
      | Spaces not stripped from citation keys #294                                                    | 1           |
      | Book converted to mvbook #288                                                                  | 1           |

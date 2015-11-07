@@ -180,13 +180,13 @@ doExport = ->
 
         when 'journalArticle'
           if ref.isBibVar(item.publicationTitle)
-            ref.add({ name: 'journaltitle', value: item.publicationTitle })
+            ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
           else
             abbr = Zotero.BetterBibTeX.keymanager.journalAbbrev(item)
             if Translator.useJournalAbbreviation and abbr
               ref.add({ name: 'journal', value: abbr, preserveBibTeXVariables: true })
             else
-              ref.add({ name: 'journaltitle', value: item.publicationTitle })
+              ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
               ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true })
 
     ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, autoCase: true }) if not ref.has.booktitle

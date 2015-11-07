@@ -92,25 +92,20 @@ class LaTeX.HTML
     switch tag.name
       when 'i', 'em', 'italic'
         @latex += '\\emph{'
-        tag.braced = true
 
       when 'b', 'strong'
         @latex += '\\textbf{'
-        tag.braced = true
 
       when 'a'
         # zotero://open-pdf/0_5P2KA4XM/7 is actually a reference.
         if tag.attrs.href?.length > 0
           @latex += "\\href{#{tag.attrs.href}}{"
-          tag.braced = true
 
       when 'sup'
         @latex += '\\textsuperscript{'
-        tag.braced = true
 
       when 'sub'
         @latex += '\\textsubscript{'
-        tag.braced = true
 
       when 'br'
         # line-breaks on empty line makes LaTeX sad
@@ -122,7 +117,6 @@ class LaTeX.HTML
 
       when 'h1', 'h2', 'h3', 'h4'
         @latex += "\n\n\\#{(new Array(parseInt(tag.name[1]))).join('sub')}section{"
-        tag.braced = true
 
       when 'ol'
         @latex += "\n\n\\begin{enumerate}\n"
@@ -134,11 +128,10 @@ class LaTeX.HTML
       when 'span', 'sc'
         tag.smallcaps = tag.name == 'sc' || (tag.attrs.style || '').match(/small-caps/i)
         tag.enquote = (tag.attrs.enquote == 'true')
-        tag.preserveCaps = tag.class.nocase && !(tag.enquote || tag.smallcaps) && !@stack.find((t) -> t.braced)
+
+        @latex += '{{' if tag.class.nocase
         @latex += '\\enquote{' if tag.enquote
         @latex += '\\textsc{' if tag.smallcaps
-        @latex += '{' if tag.preserveCaps
-        tag.braced = tag.preserveCaps || tag.enquote || tag.smallcaps
 
       when 'td', 'th'
         @latex += ' '
@@ -165,7 +158,9 @@ class LaTeX.HTML
         @latex += "\n\n"
 
       when 'span', 'sc'
-        @latex += '}' if tag.smallcaps || tag.enquote || tag.preserveCaps
+        @latex += '}' if tag.smallcaps
+        @latex += '}' if tag.enquote
+        @latex += '}}' if tag.class.nocase
 
       when 'td', 'th'
         @latex += ' '
@@ -178,7 +173,7 @@ class LaTeX.HTML
     @stack.shift()
 
   chars: (text) ->
-    if Translator.titleCase && @options.autoCase && !@stack.find((tag) -> tag.preserveCaps)
+    if Translator.titleCase && @options.autoCase && !@stack.find((tag) -> tag.class.nocase)
       # dupe the titlecaser into handling partial sentences, would change embedded 'the' to 'The' at the start of a
       # partial otherwise
       prefix = if @latex == '' then '' else '$ '

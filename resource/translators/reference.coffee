@@ -345,9 +345,9 @@ class Reference
     return (att.path.replace(/([\\{};])/g, "\\$1") for att in attachments).join(';') if Translator.attachmentsNoMetadata
     return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
 
+  isBibVarRE: /^[a-z][a-z0-9_]*$/i
   isBibVar: (value) ->
-    return value && Translator.preserveBibTeXVariables && value.match(/^[a-z][a-z0-9_]*$/i)
-
+    return Translator.preserveBibTeXVariables && value && typeof value == 'string' && @isBibVarRE.test(value)
   ###
   # Add a field to the reference field set
   #
@@ -366,6 +366,11 @@ class Reference
     throw "duplicate field '#{field.name}' for #{@item.__citekey__}" if @has[field.name] && !field.allowDuplicates
 
     if ! field.bibtex
+      Translator.debug('add:', {
+        field
+        preserve: Translator.preserveBibTeXVariables
+        match: @isBibVar(field.value)
+      })
       if typeof field.value == 'number' || (field.preserveBibTeXVariables && @isBibVar(field.value))
         value = field.value
       else
