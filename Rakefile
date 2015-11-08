@@ -130,7 +130,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/csl-localedata.js',
-  'chrome/content/zotero-better-bibtex/juris-m-dateparser.js',
+  'chrome/content/zotero-better-bibtex/csl-dateparser.js',
   'chrome/content/zotero-better-bibtex/csl-util_name_particles.js',
   'chrome/content/zotero-better-bibtex/cacheVersion.js',
   'chrome.manifest',
@@ -241,11 +241,10 @@ file 'resource/translators/xregexp-all.js' => 'Rakefile' do |t|
   end
 end
 
-file 'chrome/content/zotero-better-bibtex/juris-m-dateparser.js' => 'Rakefile' do |t|
+file 'chrome/content/zotero-better-bibtex/csl-dateparser.js' => 'Rakefile' do |t|
   cleanly(t.name) do
-    ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/Juris-M/zotero/jurism/chrome/content/zotero/xpcom/dateparser.js', t.name)
-    sh "#{NODEBIN}/grasp -i -e 'Zotero.DateParser' --replace 'Zotero.BetterBibTeX.JurisMDateParser' #{t.name.shellescape}"
-    sh "#{NODEBIN}/grasp -i -e 'txt.match(jiymatcher)' --replace 'txt.match(jiymatcher) || []' #{t.name.shellescape}"
+    ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/src/util_dateparser.js', t.name)
+    sh "#{NODEBIN}/grasp -i -e 'CSL.DateParser' --replace 'Zotero.BetterBibTeX.CSLDateParser' #{t.name.shellescape}"
   end
 end
 

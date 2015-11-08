@@ -6,7 +6,7 @@ if not Zotero.BetterBibTeX
                   cacheVersion
                   db
                   csl-localedata
-                  juris-m-dateparser
+                  csl-dateparser
                   fold-to-ascii
                   punycode
                   release

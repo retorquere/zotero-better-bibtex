@@ -150,7 +150,7 @@ class Zotero.BetterBibTeX.DateParser
         circa: (if m[3] == '?' then true else undefined)
       }
 
-    # Juris-M doesn't recognize d?/m/y
+    # CSL dateparser doesn't recognize d?/m/y
     if m = date.match(/^(([0-9]{1,2})[-\s\/])?([0-9]{1,2})[-\s\/]([0-9]{3,4})(\?)?(~)?$/)
       parsed = {
         year: parseInt(m[4])
@@ -174,7 +174,7 @@ class Zotero.BetterBibTeX.DateParser
       @swapMonth(parsed)
       return parsed
 
-    parsed = Zotero.BetterBibTeX.JurisMDateParser.parseDateToObject(date)
+    parsed = Zotero.BetterBibTeX.CSLDateParser.parseDateToObject(date)
     for k, v of parsed
       switch
         when v == 'NaN' then  parsed[k] = undefined
@@ -653,9 +653,7 @@ Zotero.BetterBibTeX.init = ->
   @extensionConflicts()
 
   for k, months of Zotero.BetterBibTeX.Locales.months
-    # https://github.com/Juris-M/zotero/issues/9
-    continue if k == 'tr-TR'
-    Zotero.BetterBibTeX.JurisMDateParser.addDateParserMonths(months)
+    Zotero.BetterBibTeX.CSLDateParser.addDateParserMonths(months)
 
   # monkey-patch Zotero.Server.DataListener.prototype._generateResponse for async handling
   Zotero.Server.DataListener::_generateResponse = ((original) ->
