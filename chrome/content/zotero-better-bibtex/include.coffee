@@ -6,7 +6,6 @@ if not Zotero.BetterBibTeX
                   cacheVersion
                   db
                   csl-localedata
-                  csl-dateparser
                   fold-to-ascii
                   punycode
                   release
@@ -21,7 +20,6 @@ if not Zotero.BetterBibTeX
                   cache
                   autoexport
                   serialized
-                  csl-util_name_particles
                   ".trim().split(/\s+/)
     Zotero.debug('BBT: ' + script)
     loader.loadSubScript("chrome://zotero-better-bibtex/content/#{script}.js")

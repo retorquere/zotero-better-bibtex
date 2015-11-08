@@ -130,12 +130,11 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/csl-localedata.js',
-  'chrome/content/zotero-better-bibtex/csl-dateparser.js',
-  'chrome/content/zotero-better-bibtex/csl-util_name_particles.js',
   'chrome/content/zotero-better-bibtex/cacheVersion.js',
   'chrome.manifest',
   'install.rdf',
   'resource/logs/s3.json',
+  'resource/citeproc.js',
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',
@@ -225,11 +224,14 @@ file 'chrome/content/zotero-better-bibtex/cacheVersion.coffee' => Dir['test/fixt
   }
 end
 
-file 'chrome/content/zotero-better-bibtex/csl-util_name_particles.js' => 'Rakefile' do |t|
+file 'resource/citeproc.js' => 'Rakefile' do |t|
   cleanly(t.name) do
-    ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/src/util_name_particles.js', t.name)
-    sh "#{NODEBIN}/grasp -i -e 'CSL.ParticleList = function () { _$ } ();' --replace '' #{t.name.shellescape}"
-    sh "#{NODEBIN}/grasp -i '#CSL' --replace 'Zotero.BetterBibTeX' #{t.name.shellescape}"
+    ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/citeproc.js', t.name)
+    sh "#{NODEBIN}/grasp -i -e 'thedate[DATE_PARTS_ALL[i]]' --replace 'thedate[CSL.DATE_PARTS_ALL[i]]' #{t.name.shellescape}"
+    sh "#{NODEBIN}/grasp -i -e 'if (!Array.indexOf) { _$ }' --replace '' #{t.name.shellescape}"
+    File.rewrite(t.name){|src|
+      open('https://raw.githubusercontent.com/zotero/zotero/4.0/chrome/content/zotero/xpcom/citeproc-prereqs.js').read + src + "\nvar EXPORTED_SYMBOLS = ['CSL'];\n"
+    }
   end
 end
 
@@ -238,16 +240,6 @@ file 'resource/translators/xregexp-all.js' => 'Rakefile' do |t|
     ZotPlus::RakeHelper.download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js', t.name)
     # strip out setNatives because the Moz validator is stupid
     sh "#{NODEBIN}/grasp -i 'func-dec! #setNatives' --replace 'function setNatives(on) { if (on) { throw new Error(\"setNatives not supported in Firefox extension\"); } }' #{t.name}"
-  end
-end
-
-file 'chrome/content/zotero-better-bibtex/csl-dateparser.js' => 'Rakefile' do |t|
-  cleanly(t.name) do
-    ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/src/util_dateparser.js', t.name)
-    sh "#{NODEBIN}/grasp -i -e 'CSL.debug' --replace 'Zotero.debug' #{t.name.shellescape}"
-    sh "#{NODEBIN}/grasp -i -e 'CSL.DateParser' --replace 'Zotero.BetterBibTeX.CSLDateParser' #{t.name.shellescape}"
-    sh "#{NODEBIN}/grasp -i -e 'thedate[DATE_PARTS_ALL[i]]' --replace 'thedate[CSL.DATE_PARTS_ALL[i]]' #{t.name.shellescape}"
-    sh "#{NODEBIN}/grasp -i -e 'CSL.DATE_PARTS_ALL' --replace 'Zotero.CiteProc.CSL.DATE_PARTS_ALL' #{t.name.shellescape}"
   end
 end
 

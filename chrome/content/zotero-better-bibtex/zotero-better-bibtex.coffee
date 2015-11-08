@@ -7,6 +7,7 @@ Zotero.BetterBibTeX = {
   document: Components.classes['@mozilla.org/xul/xul-document;1'].getService(Components.interfaces.nsIDOMDocument)
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
+Components.utils.import('resource://zotero-better-bibtex/citeproc.js', Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.titleCase = {
   state: {
@@ -14,7 +15,7 @@ Zotero.BetterBibTeX.titleCase = {
     locale: {
       en: {
         opts: {
-          'skip-words': Zotero.CiteProc.CSL.SKIP_WORDS.concat(['with', 'their', 'using', 'do', 'not'])
+          'skip-words': Zotero.BetterBibTeX.CSL.SKIP_WORDS.concat(['with', 'their', 'using', 'do', 'not'])
           'leading-noise-words': 'a,an,the'
         }
       }
@@ -177,7 +178,7 @@ class Zotero.BetterBibTeX.DateParser
       @swapMonth(parsed)
       return parsed
 
-    parsed = Zotero.BetterBibTeX.CSLDateParser.parseDateToObject(date)
+    parsed = Zotero.BetterBibTeX.CSL.DateParser.parseDateToObject(date)
     for k, v of parsed
       switch
         when v == 'NaN' then  parsed[k] = undefined
@@ -638,13 +639,13 @@ Zotero.BetterBibTeX.init = ->
     CSL: {
       parseParticles: (sandbox, name) ->
         # twice to work around https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping
-        Zotero.BetterBibTeX.parseParticles(name)
-        Zotero.BetterBibTeX.parseParticles(name)
+        Zotero.BetterBibTeX.CSL.parseParticles(name)
+        Zotero.BetterBibTeX.CSL.parseParticles(name)
       titleCase: (sandbox, string) ->
         # TODO: workaround for https://bitbucket.org/fbennett/citeproc-js/issues/187/title-case-formatter-does-not-title-case
         string = string.replace(/\(/g, "(\x02 ")
         string = string.replace(/\)/g, " \x03)")
-        string = Zotero.CiteProc.CSL.Output.Formatters.title(Zotero.BetterBibTeX.titleCase.state, string)
+        string = Zotero.BetterBibTeX.CSL.Output.Formatters.title(Zotero.BetterBibTeX.titleCase.state, string)
         string = string.replace(/\x02 /g, '')
         string = string.replace(/ \x03/g, '')
         return string
@@ -663,7 +664,7 @@ Zotero.BetterBibTeX.init = ->
   @extensionConflicts()
 
   for k, months of Zotero.BetterBibTeX.Locales.months
-    Zotero.BetterBibTeX.CSLDateParser.addDateParserMonths(months)
+    Zotero.BetterBibTeX.CSL.DateParser.addDateParserMonths(months)
 
   # monkey-patch Zotero.Server.DataListener.prototype._generateResponse for async handling
   Zotero.Server.DataListener::_generateResponse = ((original) ->
