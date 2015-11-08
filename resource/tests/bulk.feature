@@ -9,16 +9,16 @@ Background:
 
 @bulk
 Scenario: Minor bulk export cache testing
-  When I import 1241 references with 284 attachments from 'export/Big whopping library.json'
-   Then the following library export should match 'export/Big whopping library.bib':
+  When I import 1241 references with 284 attachments from 'export/Bulk performance test.json'
+   Then the following library export should match 'export/Bulk performance test.bib':
     | translator  | Better BibLaTeX |
     | benchmark   | true            |
    Then show the cache activity
-   Then the following library export should match 'export/Big whopping library.bib':
+   Then the following library export should match 'export/Bulk performance test.bib':
     | translator  | Better BibLaTeX |
     | benchmark   | true            |
    Then show the cache activity
-   Then the following library export should match 'export/Big whopping library.stock.bib':
+   Then the following library export should match 'export/Bulk performance test.stock.bib':
     | translator  | id:b6e39b57-8942-4d11-8259-342c46ce395f |
     | benchmark   | true            |
 
