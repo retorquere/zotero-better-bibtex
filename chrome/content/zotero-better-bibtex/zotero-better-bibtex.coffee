@@ -640,7 +640,14 @@ Zotero.BetterBibTeX.init = ->
         # twice to work around https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping
         Zotero.BetterBibTeX.parseParticles(name)
         Zotero.BetterBibTeX.parseParticles(name)
-      titleCase: (sandbox, string) -> Zotero.CiteProc.CSL.Output.Formatters.title(Zotero.BetterBibTeX.titleCase.state, string)
+      titleCase: (sandbox, string) ->
+        # TODO: workaround for https://bitbucket.org/fbennett/citeproc-js/issues/187/title-case-formatter-does-not-title-case
+        string = string.replace(/\(/g, "(\x02 ")
+        string = string.replace(/\)/g, " \x03)")
+        string = Zotero.CiteProc.CSL.Output.Formatters.title(Zotero.BetterBibTeX.titleCase.state, string)
+        string = string.replace(/\x02 /g, '')
+        string = string.replace(/ \x03/g, '')
+        return string
     }
     parseDateToObject: (sandbox, date, locale) -> Zotero.BetterBibTeX.DateParser::parseDateToObject(date, {locale, verbatimDetection: true})
     parseDateToArray: (sandbox, date, locale) -> Zotero.BetterBibTeX.DateParser::parseDateToArray(date, {locale, verbatimDetection: true})
