@@ -244,7 +244,10 @@ end
 file 'chrome/content/zotero-better-bibtex/csl-dateparser.js' => 'Rakefile' do |t|
   cleanly(t.name) do
     ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/src/util_dateparser.js', t.name)
+    sh "#{NODEBIN}/grasp -i -e 'CSL.debug' --replace 'Zotero.debug' #{t.name.shellescape}"
     sh "#{NODEBIN}/grasp -i -e 'CSL.DateParser' --replace 'Zotero.BetterBibTeX.CSLDateParser' #{t.name.shellescape}"
+    sh "#{NODEBIN}/grasp -i -e 'thedate[DATE_PARTS_ALL[i]]' --replace 'thedate[CSL.DATE_PARTS_ALL[i]]' #{t.name.shellescape}"
+    sh "#{NODEBIN}/grasp -i -e 'CSL.DATE_PARTS_ALL' --replace 'Zotero.CiteProc.CSL.DATE_PARTS_ALL' #{t.name.shellescape}"
   end
 end
 
