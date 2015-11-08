@@ -143,6 +143,9 @@ class Zotero.BetterBibTeX.DateParser
     date = date.trim()
     return {empty: true} if date == ''
 
+    # TODO: https://bitbucket.org/fbennett/citeproc-js/issues/189/8-juli-2011-parsed-as-literal
+    date = date.replace(/^([0-9]+)\.\s+([a-z])/i, '$1 $2')
+
     if m = date.match(/^(-?[0-9]{3,4})(\?)?(~)?$/)
       return {
         year: @year(m[1])
