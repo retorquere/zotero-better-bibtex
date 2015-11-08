@@ -4,6 +4,7 @@ Feature: Export
 Background:
   When I set preference .citekeyFormat to [auth][year]
   And I set preference .jabrefGroups to false
+  And I set preference .titleCase to true
   And I set preference .defaultDateParserLocale to en-GB
 
 @test-cluster-2

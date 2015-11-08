@@ -92,11 +92,11 @@ class LaTeX.HTML
 
     switch tag.name
       when 'i', 'em', 'italic'
-        @latex += '{' unless @preserveCase
+        @latex += '{' if @options.autoCase && !@preserveCase
         @latex += '\\emph{'
 
       when 'b', 'strong'
-        @latex += '{' unless @preserveCase
+        @latex += '{' if @options.autoCase && !@preserveCase
         @latex += '\\textbf{'
 
       when 'a'
@@ -105,11 +105,11 @@ class LaTeX.HTML
           @latex += "\\href{#{tag.attrs.href}}{"
 
       when 'sup'
-        @latex += '{' unless @preserveCase
+        @latex += '{' if @options.autoCase && !@preserveCase
         @latex += '\\textsuperscript{'
 
       when 'sub'
-        @latex += '{' unless @preserveCase
+        @latex += '{' if @options.autoCase && !@preserveCase
         @latex += '\\textsubscript{'
 
       when 'br'
@@ -138,7 +138,7 @@ class LaTeX.HTML
 
         @latex += '{{' if tag.class.nocase && @preserveCase == 1
 
-        @latex += '{' if !@preserveCase && (tag.enquote || tag.smallcaps)
+        @latex += '{' if @options.autoCase && !@preserveCase && (tag.enquote || tag.smallcaps)
         @latex += '\\enquote{' if tag.enquote
         @latex += '\\textsc{' if tag.smallcaps
 
@@ -156,11 +156,11 @@ class LaTeX.HTML
     switch tag.name
       when 'i', 'italic', 'em'
         @latex += '}'
-        @latex += '}' unless @preserveCase
+        @latex += '}' if @options.autoCase && !@preserveCase
 
       when 'sup', 'sub', 'b', 'strong'
         @latex += '}'
-        @latex += '}' unless @preserveCase
+        @latex += '}' if @options.autoCase && !@preserveCase
 
       when 'a'
         @latex += '}' if tag.attrs.href?.length > 0
@@ -174,9 +174,9 @@ class LaTeX.HTML
       when 'span', 'sc'
         @latex += '}' if tag.smallcaps
         @latex += '}' if tag.enquote
-        @latex += '{' if !@preserveCase && (tag.smallcaps || tag.enquote)
+        @latex += '{' if @options.autoCase && !@preserveCase && (tag.smallcaps || tag.enquote)
 
-        @latex += '}}' if tag.class.nocase && @preserveCase == 1
+        @latex += '}}' if tag.class.nocase && @options.autoCase && @preserveCase == 1
 
         @preserveCase -= 1 if tag.class.nocase
 
