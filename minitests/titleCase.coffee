@@ -29,6 +29,5 @@ makeRegExp = (lst) ->
 
 state.locale[state.opt.lang].opts["skip-words-regexp"] = makeRegExp(state.locale[state.opt.lang].opts["skip-words"])
 
-#console.log(CSL.Output.Formatters.title(state, "Wisdom: A <i>metaheuristic</i> pragmatic ( pragmatic ) to Orchestrate Mind and Virtue toward Excellence."))
-console.log(CSL.Output.Formatters.title(state, "pragmatic"))
+console.log(CSL.Output.Formatters.title(state, "Wisdom: A <i>metaheuristic</i> pragmatic ( pragmatic ) to <pre class=\"nocase\">orchestrate</pre>Mind and Virtue toward Excellence."))
 

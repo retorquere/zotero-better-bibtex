@@ -54,11 +54,16 @@ LaTeX.cleanHTML = (text, options) ->
       break if txt == text
       text = txt
     text = text.replace(/<!-- nocase:end -->/g, '')
+
   text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) ->
     pre = pre.replace(/<span class="nocase">|<\/span><!-- nocase:end -->/g, '')
     pre = Translator.HTMLEncode(pre)
-    return"<pre>#{pre}</pre>"
+    return"<pre class=\"nocase\">#{pre}</pre>"
   )
+
+  if options.autoCase && Translator.titleCase
+    text = Zotero.BetterBibTeX.CSL.titleCase(text)
+
   for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
     if i % 2 == 0 # text
       html += Translator.HTMLEncode(chunk)
@@ -194,21 +199,9 @@ class LaTeX.HTML
 
     @stack.shift()
 
-  titleCase: (text) ->
-    return text unless Translator.titleCase && @options.autoCase && !@preserveCase
-
-    # dupe the titlecaser into handling partial sentences, would change embedded 'the' to 'The' at the start of a
-    # partial otherwise
-    prefix = if @latex == '' then '' else '$ '
-    cased = ''
-    for chunk in text.split(/([\(\)])/)
-      cased += Zotero.BetterBibTeX.CSL.titleCase(prefix + chunk).slice(prefix.length)
-      prefix = '$ '
-    return cased
-
   chars: (text) ->
     blocks = []
-    for c in XRegExp.split(@titleCase(text), '')
+    for c in XRegExp.split(text, '')
       math = @mapping.math[c]
       blocks.unshift({math: !!math, text: ''}) if blocks.length == 0 || blocks[0].math != !!math
       blocks[0].text += (math || @mapping.text[c] || c)
