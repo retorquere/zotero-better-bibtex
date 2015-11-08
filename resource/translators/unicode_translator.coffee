@@ -47,7 +47,6 @@ LaTeX.cleanHTML = (text, options) ->
     text = text.replace(new RegExp("[#{open}][\\s\\u00A0]?", 'g'), '<span enquote="true">')
     text = text.replace(new RegExp("[\\s\\u00A0]?[#{close}]", 'g'), '</span>')
 
-  text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) -> "<pre>#{Translator.HTMLEncode(pre)}</pre>")
   if options.autoCase
     text = LaTeX.preserveCase.preserve(text)
     while true
@@ -55,6 +54,11 @@ LaTeX.cleanHTML = (text, options) ->
       break if txt == text
       text = txt
     text = text.replace(/<!-- nocase:end -->/g, '')
+  text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) ->
+    pre = pre.replace(/<span class="nocase">|<\/span><!-- nocase:end -->/g, '')
+    pre = Translator.HTMLEncode(pre)
+    return"<pre>#{pre}</pre>"
+  )
   for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
     if i % 2 == 0 # text
       html += Translator.HTMLEncode(chunk)
