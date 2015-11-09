@@ -17,7 +17,7 @@ LaTeX.preserveCase =
           # simple word
           ((?<boundary3>^|[^\\p{N}\\p{L}])    (?<word3>[\\p{L}\\p{N}]*\\p{Lu}[\\p{L}\\p{N}]*))
         )""", 'gx')
-  initialCapOnly: new XRegExp("^\\p{Lu}\\p{Ll}*$")
+  initialCapOnly: new XRegExp("^\\p{Lu}[-'’\\p{N}\\p{Ll}]*$")
 
   preserve: (value) ->
     return XRegExp.replace(value, @words, (match, matches...) =>
@@ -26,6 +26,7 @@ LaTeX.preserveCase =
         boundary = match["boundary#{i}"]
         word = match["word#{i}"]
         break if typeof boundary == 'string'
+      Translator.debug("tx: #{pos} @ #{word}")
       if !XRegExp.test(word, @hasCapital) || (pos == 0 && XRegExp.test(word, @initialCapOnly))
         return boundary + word
       else

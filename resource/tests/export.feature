@@ -239,6 +239,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Better BibLaTeX.stable-keys                                                        | 6           |
      | Better BibLaTeX.019                                                                | 1           |
      | Do not caps-protect literal lists #391                                             | 3           |
      | biblatex; Language tag xx is exported, xx-XX is not #380                           | 1           |
@@ -261,7 +262,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.016                                                                | 1           |
      | Malformed HTML                                                                     | 1           |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246      | 3           |
-     | Better BibLaTeX.stable-keys                                                        | 6           |
      | Better BibLaTeX.010                                                                | 1           |
      | Better BibLaTeX.011                                                                | 1           |
      | Better BibLaTeX.012                                                                | 1           |
