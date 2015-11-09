@@ -149,6 +149,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references |
+     | capital delta breaks .bib output #141                                              | 1          |
      | Better BibTeX.027                                                                  | 1          |
      | Better BibTeX.026                                                                  | 1          |
      | Underscores break capital-preservation #300                                        | 1          |
@@ -156,7 +157,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibTeX.018                                                                  | 1          |
      | Numbers confuse capital-preservation #295                                          | 1          |
      | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
-     | capital delta breaks .bib output #141                                              | 1          |
      | Export of item to Better Bibtex fails for auth3_1 #98                              | 1          |
 
 @test-cluster-0

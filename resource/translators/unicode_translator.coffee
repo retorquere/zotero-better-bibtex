@@ -32,6 +32,22 @@ LaTeX.preserveCase =
         return "#{boundary}<span class=\"nocase\">#{word}</span><!-- nocase:end -->"
     )
 
+LaTeX.toTitleCase = (string) ->
+  smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|vs?\.?|via)$/i
+
+  return string.replace(/[A-Za-z0-9\u00C0-\u00FF]+[^\s-]*/g, (match, index, title) ->
+    if index > 0 and
+      index + match.length != title.length and
+      match.search(smallWords) > -1 and
+      title.charAt(index - 2) != ':' and
+      (title.charAt(index + match.length) != '-' or title.charAt(index - 1) == '-') and
+      title.charAt(index - 1).search(/[^\s-]/) < 0
+        return match.toLowerCase()
+
+    return match if match.substr(1).search(/[A-Z]|\../) > -1
+    return match.charAt(0).toUpperCase() + match.substr(1)
+  )
+
 LaTeX.cleanHTML = (text, options) ->
   html = ''
   cdata = false
@@ -62,7 +78,9 @@ LaTeX.cleanHTML = (text, options) ->
   )
 
   if options.autoCase && Translator.titleCase
+    text = text.replace(/\(/g, "(\x02 ").replace(/\)/g, " \x03)")
     text = Zotero.BetterBibTeX.CSL.titleCase(text)
+    text = text.replace(/\x02 /g, '').replace(/ \x03/g, '')
 
   for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
     if i % 2 == 0 # text
