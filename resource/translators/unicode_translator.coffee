@@ -69,18 +69,25 @@ LaTeX.cleanHTML = (text, options) ->
       txt = text.replace('</span><!-- nocase:end --> <span class="nocase">', ' ')
       break if txt == text
       text = txt
-    text = text.replace(/<!-- nocase:end -->/g, '')
 
   text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) ->
-    pre = pre.replace(/<span class="nocase">|<\/span><!-- nocase:end -->/g, '')
+    Translator.debug('pre stx:', match)
+    if options.autoCase
+      pre = pre.replace(/<span class="nocase">|<\/span><!-- nocase:end -->/g, '')
     pre = Translator.HTMLEncode(pre)
+    Translator.debug('pre etx:', pre)
     return"<pre class=\"nocase\">#{pre}</pre>"
   )
 
+  if options.autoCase
+    text = text.replace(/<!-- nocase:end -->/g, '')
+
   if options.autoCase && Translator.titleCase
+    Translator.debug('titleCase stx:', text)
     text = text.replace(/\(/g, "(\x02 ").replace(/\)/g, " \x03)")
     text = Zotero.BetterBibTeX.CSL.titleCase(text)
     text = text.replace(/\x02 /g, '').replace(/ \x03/g, '')
+    Translator.debug('titleCase etx:', text)
 
   for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
     if i % 2 == 0 # text

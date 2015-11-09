@@ -239,8 +239,8 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
-     | Do not caps-protect literal lists #391                                             | 3           |
      | Better BibLaTeX.019                                                                | 1           |
+     | Do not caps-protect literal lists #391                                             | 3           |
      | biblatex; Language tag xx is exported, xx-XX is not #380                           | 1           |
      | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |
      | Better BibTeX does not use biblatex fields eprint and eprinttype #170              | 1           |
