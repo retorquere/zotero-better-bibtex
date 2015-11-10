@@ -1,8 +1,10 @@
 LaTeX = {} unless LaTeX
 
 LaTeX.text2latex = (text, options = {}) ->
+  Translator.debug('LaTeX.text2latex:', {text, options})
   latex = @html2latex(@cleanHTML(text, options), options)
-  return BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
+  latex = BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
+  Translator.debug('     .text2latex:', {text, options})
   return latex
 
 LaTeX.preserveCase =
@@ -26,7 +28,6 @@ LaTeX.preserveCase =
         boundary = match["boundary#{i}"]
         word = match["word#{i}"]
         break if typeof boundary == 'string'
-      Translator.debug("tx: #{pos} @ #{word}")
       if !XRegExp.test(word, @hasCapital) || (pos == 0 && XRegExp.test(word, @initialCapOnly))
         return boundary + word
       else
@@ -72,11 +73,9 @@ LaTeX.cleanHTML = (text, options) ->
       text = txt
 
   text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) ->
-    Translator.debug('pre stx:', match)
     if options.autoCase
       pre = pre.replace(/<span class="nocase">|<\/span><!-- nocase:end -->/g, '')
     pre = Translator.HTMLEncode(pre)
-    Translator.debug('pre etx:', pre)
     return"<pre class=\"nocase\">#{pre}</pre>"
   )
 
@@ -84,11 +83,9 @@ LaTeX.cleanHTML = (text, options) ->
     text = text.replace(/<!-- nocase:end -->/g, '')
 
   if options.autoCase && Translator.titleCase
-    Translator.debug('titleCase stx:', text)
     text = text.replace(/\(/g, "(\x02 ").replace(/\)/g, " \x03)")
     text = Zotero.BetterBibTeX.CSL.titleCase(text)
     text = text.replace(/\x02 /g, '').replace(/ \x03/g, '')
-    Translator.debug('titleCase etx:', text)
 
   for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
     if i % 2 == 0 # text
