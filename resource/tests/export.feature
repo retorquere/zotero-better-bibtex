@@ -288,9 +288,6 @@ Scenario Outline: BibLaTeX Export
 Scenario: auto-export
   Given I import 3 references with 2 attachments from 'export/autoexport.json'
   Then a library export using 'Better BibLaTeX' should match 'export/autoexport.before.bib'
-  And I export the library to 'tmp/autoexport.bib':
-    | translator    | Better BibLaTeX |
-    | Keep updated  | true            |
   When I select the first item where publisher = 'IEEE'
   And I remove the selected item
   And I wait 5 seconds, if I'm in CI

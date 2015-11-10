@@ -11,13 +11,13 @@ LaTeX.preserveCase =
           # word with embedded punctuation
           ((?<boundary1>^|[^'’\\p{N}\\p{L}])   (?<word1>[\\p{L}\\p{N}]+['’][\\p{L}\\p{N}]+))
           |
-          ((?<boundary2>^|[^-\\p{N}\\p{L}])   (?<word2>[\\p{L}\\p{N}]+[-\\p{L}\\p{N}]+[\\p{L}\\p{N}]))
+          ((?<boundary2>^|[^-–\\p{N}\\p{L}])   (?<word2>[\\p{L}\\p{N}]+[-–\\p{L}\\p{N}]+[\\p{L}\\p{N}]))
 
           |
           # simple word
           ((?<boundary3>^|[^\\p{N}\\p{L}])    (?<word3>[\\p{L}\\p{N}]*\\p{Lu}[\\p{L}\\p{N}]*))
         )""", 'gx')
-  initialCapOnly: new XRegExp("^\\p{Lu}[-'’\\p{N}\\p{Ll}]*$")
+  initialCapOnly: new XRegExp("^\\p{Lu}[^\\p{Lu}]*$")
 
   preserve: (value) ->
     return XRegExp.replace(value, @words, (match, matches...) =>
