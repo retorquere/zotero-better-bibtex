@@ -9,30 +9,76 @@ LaTeX.text2latex = (text, options = {}) ->
 
 LaTeX.preserveCase =
   hasCapital: new XRegExp('\\p{Lu}')
-  words: new XRegExp("""(
-          # word with embedded punctuation
-          ((?<boundary1>^|[^'’\\p{N}\\p{L}])   (?<word1>[\\p{L}\\p{N}]+['’][\\p{L}\\p{N}]+))
-          |
-          ((?<boundary2>^|[^-–\\p{N}\\p{L}])   (?<word2>[\\p{L}\\p{N}]+[-–\\p{L}\\p{N}]+[\\p{L}\\p{N}]))
-
-          |
-          # simple word
-          ((?<boundary3>^|[^\\p{N}\\p{L}])    (?<word3>[\\p{L}\\p{N}]*\\p{Lu}[\\p{L}\\p{N}]*))
-        )""", 'gx')
+  words: new XRegExp("""((?<boundary>^|[^\\p{N}\\p{L}])    (?<word>[\\p{L}\\p{N}]*\\p{Lu}[\\p{L}\\p{N}]*))""", 'gx')
   initialCapOnly: new XRegExp("^\\p{Lu}[^\\p{Lu}]*$")
 
-  preserve: (value) ->
+  _preserve: (value) ->
     return XRegExp.replace(value, @words, (match, matches...) =>
       pos = matches[matches.length - 2]
-      for i in [1, 2, 3]
-        boundary = match["boundary#{i}"]
-        word = match["word#{i}"]
-        break if typeof boundary == 'string'
-      if !XRegExp.test(word, @hasCapital) || (pos == 0 && XRegExp.test(word, @initialCapOnly))
-        return boundary + word
+      if !XRegExp.test(match.word, @hasCapital) || (pos == 0 && XRegExp.test(match.word, @initialCapOnly))
+        return match.boundary + match.word
       else
-        return "#{boundary}<span class=\"nocase\">#{word}</span><!-- nocase:end -->"
+        return "#{match.boundary}<span class=\"nocase\">#{match.word}</span><!-- nocase:end -->"
     )
+
+  L: XRegExp('^\\p{L}')
+  Lu: XRegExp('^\\p{Lu}')
+  N: XRegExp('^\\p{N}')
+  preserve: (str) ->
+    words = []
+    i = 0
+    while i < str.length
+      code = str.charCodeAt(i)
+
+      if code < 0xD800 or code > 0xDFFF
+        chr = str.charAt(i)
+
+      else
+        chr = str.charAt(i) + str.charAt(i + 1)
+        i++
+      i++
+
+      switch chr
+        when '<'
+          inNode = true
+        when '>'
+          inNode = false
+
+      if inNode
+        lu = l = word = false
+      else
+        lu = @Lu.test(chr)
+        l = lu || @L.test(chr)
+        word = !!(l || @N.test(chr))
+
+      switch
+        when words.length == 0
+          words = [{
+            str: chr
+            initialCap: lu
+            otherCap: false
+            word
+          }]
+        when word == words[0].word
+          words[0].str += chr
+          words[0].otherCap = lu
+        else
+          words.unshift({
+            str: chr
+            initialCap: lu
+            otherCap: false
+            word
+          })
+
+    words.reverse()
+    str = ''
+    for word, i in words
+      if word.word && (word.initialCap || word.otherCap) && !(i == 0 && word.initialCap && !word.otherCap)
+        str += "<span class=\"nocase\">#{word.str}</span>"
+      else
+        str += word.str
+
+    return str
 
 LaTeX.toTitleCase = (string) ->
   smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|vs?\.?|via)$/i
@@ -66,26 +112,34 @@ LaTeX.cleanHTML = (text, options) ->
     text = text.replace(new RegExp("[\\s\\u00A0]?[#{close}]", 'g'), '</span>')
 
   if options.autoCase
+    Translator.debug(':autoCase.preserve')
     text = LaTeX.preserveCase.preserve(text)
     while true
       txt = text.replace('</span><!-- nocase:end --> <span class="nocase">', ' ')
       break if txt == text
       text = txt
+    Translator.debug(':autoCase.preserve done')
 
   text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) ->
     if options.autoCase
+      Translator.debug(':autoCase.pre-protect')
       pre = pre.replace(/<span class="nocase">|<\/span><!-- nocase:end -->/g, '')
+      Translator.debug(':autoCase.pre-protect done')
     pre = Translator.HTMLEncode(pre)
     return"<pre class=\"nocase\">#{pre}</pre>"
   )
 
   if options.autoCase
+    Translator.debug(':autoCase.preserve cleanup')
     text = text.replace(/<!-- nocase:end -->/g, '')
+    Translator.debug(':autoCase.preserve cleanup done')
 
   if options.autoCase && Translator.titleCase
+    Translator.debug(':autoCase.titleCase')
     text = text.replace(/\(/g, "(\x02 ").replace(/\)/g, " \x03)")
     text = Zotero.BetterBibTeX.CSL.titleCase(text)
     text = text.replace(/\x02 /g, '').replace(/ \x03/g, '')
+    Translator.debug(':autoCase.titleCase done')
 
   for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
     if i % 2 == 0 # text
