@@ -2,7 +2,7 @@ L = XRegExp('^\\p{L}')
 Lu = XRegExp('^\\p{Lu}')
 N = XRegExp('^\\p{N}')
 
-str = "<i>Salmonella</i> in Pork (SALINPORK): Pre-harvest and Harvest Control Options Based on Epidemiologic, Diagnostic and Economic Research: Final Report"
+str = "bugreports_parseName"
 
 preserveCase =
   hasCapital: new XRegExp('\\p{Lu}')
@@ -57,7 +57,7 @@ breaker = (str) ->
         }]
       when word == words[0].word
         words[0].str += chr
-        words[0].otherCap = lu
+        words[0].otherCap ||= lu
       else
         words.unshift({
           str: chr

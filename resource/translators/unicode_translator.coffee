@@ -59,7 +59,7 @@ LaTeX.preserveCase =
           }]
         when word == words[0].word
           words[0].str += chr
-          words[0].otherCap = lu
+          words[0].otherCap ||= lu
         else
           words.unshift({
             str: chr
@@ -133,7 +133,7 @@ LaTeX.cleanHTML = (text, options) ->
 
   if options.autoCase
     while true
-      txt = text.replace(/<\/span><!-- nocase:end -->([- ])<span class="nocase">/, "$1")
+      txt = text.replace(/<\/span><!-- nocase:end -->([-– ])<span class="nocase">/, "$1")
       break if txt == text
       text = txt
     text = text.replace(/<!-- nocase:end -->/g, '')
