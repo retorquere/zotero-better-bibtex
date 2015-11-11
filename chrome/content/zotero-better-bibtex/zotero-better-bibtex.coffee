@@ -51,6 +51,7 @@ Zotero.BetterBibTeX.HTMLParser = new class
     if node.nodeType in [@TEXT_NODE, @CDATA_SECTION_NODE]
       tag.text = node.textContent
     else
+      tag.text = node.text if tag.name == 'script'
       if node.nodeType == @ELEMENT_NODE && node.hasAttributes()
         for attr in node.attributes
           tag.attrs[attr.name] = attr.value

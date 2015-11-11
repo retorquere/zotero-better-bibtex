@@ -239,11 +239,11 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Better BibLaTeX.019                                                                | 1           |
      | Exporting of single-field author lacks braces #130                                 | 1           |
      | Capitalisation in techreport titles #160                                           | 1           |
      | Better BibLaTeX.011                                                                | 1           |
      | Better BibLaTeX.stable-keys                                                        | 6           |
-     | Better BibLaTeX.019                                                                | 1           |
      | Do not caps-protect literal lists #391                                             | 3           |
      | biblatex; Language tag xx is exported, xx-XX is not #380                           | 1           |
      | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |

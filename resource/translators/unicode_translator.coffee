@@ -1,10 +1,8 @@
 LaTeX = {} unless LaTeX
 
 LaTeX.text2latex = (text, options = {}) ->
-  Translator.debug('LaTeX.text2latex:', {text, options})
   latex = @html2latex(@cleanHTML(text, options), options)
   latex = BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
-  Translator.debug('     .text2latex:', {text, options})
   return latex
 
 LaTeX.preserveCase =
@@ -74,7 +72,7 @@ LaTeX.preserveCase =
     str = ''
     for word, i in words
       if word.word && (word.initialCap || word.otherCap) && !(i == 0 && word.initialCap && !word.otherCap)
-        str += "<span class=\"nocase\">#{word.str}</span>"
+        str += "<span class=\"nocase\">#{word.str}</span><!-- nocase:end -->"
       else
         str += word.str
 
@@ -111,43 +109,41 @@ LaTeX.cleanHTML = (text, options) ->
     text = text.replace(new RegExp("[#{open}][\\s\\u00A0]?", 'g'), '<span enquote="true">')
     text = text.replace(new RegExp("[\\s\\u00A0]?[#{close}]", 'g'), '</span>')
 
-  if options.autoCase
-    Translator.debug(':autoCase.preserve')
-    text = LaTeX.preserveCase.preserve(text)
-    while true
-      txt = text.replace('</span><!-- nocase:end --> <span class="nocase">', ' ')
-      break if txt == text
-      text = txt
-    Translator.debug(':autoCase.preserve done')
-
+  pres = []
   text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) ->
-    if options.autoCase
-      Translator.debug(':autoCase.pre-protect')
-      pre = pre.replace(/<span class="nocase">|<\/span><!-- nocase:end -->/g, '')
-      Translator.debug(':autoCase.pre-protect done')
-    pre = Translator.HTMLEncode(pre)
-    return"<pre class=\"nocase\">#{pre}</pre>"
+    pres.push(pre)
+    return "\x02#{pres.length}\x03"
   )
 
+  html = ''
+  for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|sc|span)(?:[^>a-z][^>]*)?>)/i)
+    if i % 2 == 0 # text
+      if options.autoCase
+        html += LaTeX.preserveCase.preserve(Translator.HTMLEncode(chunk))
+      else
+        html += Translator.HTMLEncode(chunk)
+    else
+      html += chunk
+  text = html
+
+  if pres.length
+    text = text.replace(/\x02([0-9]+)\x03/g, (match, pre) ->
+      return "<script>#{pres[parseInt(pre)-1]}</script>"
+    )
+
   if options.autoCase
-    Translator.debug(':autoCase.preserve cleanup')
+    while true
+      txt = text.replace(/<\/span><!-- nocase:end -->([- ])<span class="nocase">/, "$1")
+      break if txt == text
+      text = txt
     text = text.replace(/<!-- nocase:end -->/g, '')
-    Translator.debug(':autoCase.preserve cleanup done')
 
   if options.autoCase && Translator.titleCase
-    Translator.debug(':autoCase.titleCase')
     text = text.replace(/\(/g, "(\x02 ").replace(/\)/g, " \x03)")
     text = Zotero.BetterBibTeX.CSL.titleCase(text)
     text = text.replace(/\x02 /g, '').replace(/ \x03/g, '')
-    Translator.debug(':autoCase.titleCase done')
 
-  for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
-    if i % 2 == 0 # text
-      html += Translator.HTMLEncode(chunk)
-    else
-      html += chunk
-
-  return html
+  return text
 
 LaTeX.html2latex = (html, options) ->
   latex = (new @HTML(html, options)).latex
@@ -167,12 +163,13 @@ class LaTeX.HTML
   walk: (tag) ->
     return unless tag
 
-    if tag.name == '#text'
-      if @stack[0]?.name == 'pre'
-        @latex += tag.text
-      else
+    switch tag.name
+      when '#text'
         @chars(tag.text)
-      return
+        return
+      when 'script'
+        @latex += tag.text
+        return
 
     @stack.unshift(tag)
 
