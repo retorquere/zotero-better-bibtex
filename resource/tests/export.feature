@@ -239,9 +239,9 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Capitalisation in techreport titles #160                                           | 1           |
      | Better BibLaTeX.019                                                                | 1           |
      | Exporting of single-field author lacks braces #130                                 | 1           |
-     | Capitalisation in techreport titles #160                                           | 1           |
      | Better BibLaTeX.011                                                                | 1           |
      | Better BibLaTeX.stable-keys                                                        | 6           |
      | Do not caps-protect literal lists #391                                             | 3           |

@@ -2,12 +2,7 @@ L = XRegExp('^\\p{L}')
 Lu = XRegExp('^\\p{Lu}')
 N = XRegExp('^\\p{N}')
 
-str = _str = 'A \uD87E\uDC04 Z'
-# We could also use a non-BMP character directly
-for i in [0..1000]
-  str += _str
-str = "a <span class=\"nocase\">'Social' History</span> of <span class=\"nocase\">Knowledge's Revisited</span>"
-
+str = "<i>Salmonella</i> in Pork (SALINPORK): Pre-harvest and Harvest Control Options Based on Epidemiologic, Diagnostic and Economic Research: Final Report"
 
 preserveCase =
   hasCapital: new XRegExp('\\p{Lu}')
@@ -72,6 +67,7 @@ breaker = (str) ->
         })
 
   words.reverse()
+  console.log(words)
   _str = ''
   for word, i in words
     if word.word && (word.initialCap || word.otherCap) && !(i == 0 && word.initialCap && !word.otherCap)
@@ -90,5 +86,5 @@ console.timeEnd('xregexp')
 
 console.time('breaker')
 for attempt in [0..attempts]
-  breaker(str)
+  console.log(breaker(str))
 console.timeEnd('breaker')
