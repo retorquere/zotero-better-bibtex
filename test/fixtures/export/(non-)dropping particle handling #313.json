@@ -31,7 +31,7 @@
   "_items": [
     {
       "itemType": "journalArticle",
-      "title": "(Aubignac) (François Hédelin abbé d')",
+      "title": "<span class=\"nocase\">(Aubignac) (François Hédelin abbé d')</span>",
       "extra": "bibtex: abbot0",
       "creators": [
         {
@@ -43,7 +43,7 @@
     },
     {
       "itemType": "journalArticle",
-      "title": "(abbé d'Aubignac) (François Hédelin)",
+      "title": "<span class=\"nocase\">(abbé d'Aubignac) (François Hédelin)</span>",
       "extra": "bibtex: abbot2",
       "creators": [
         {
@@ -55,7 +55,7 @@
     },
     {
       "itemType": "journalArticle",
-      "title": "(d'Aubignac) (François Hédelin, abbé)",
+      "title": "<span class=\"nocase\">(d'Aubignac) (François Hédelin, abbé)</span>",
       "extra": "bibtex: abbot4",
       "creators": [
         {
@@ -67,7 +67,7 @@
     },
     {
       "itemType": "journalArticle",
-      "title": "(d' Aubignac) (François Hédelin, abbé)",
+      "title": "<span class=\"nocase\">(d' Aubignac) (François Hédelin, abbé)</span>",
       "extra": "bibtex: abbot5",
       "creators": [
         {
@@ -81,7 +81,7 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "title": "(abbé d' Aubignac) (François Hédelin)",
+      "title": "<span class=\"nocase\">(abbé d' Aubignac) (François Hédelin)</span>",
       "extra": "bibtex: abbot3",
       "creators": [
         {
@@ -93,7 +93,7 @@
     },
     {
       "itemType": "journalArticle",
-      "title": "(Aubignac) (François Hédelin, abbé d')",
+      "title": "<span class=\"nocase\">(Aubignac) (François Hédelin, abbé d')</span>",
       "extra": "relies on paricleParser fallback detection\nbibtex: abbot1",
       "creators": [
         {

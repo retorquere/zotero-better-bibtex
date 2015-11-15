@@ -149,6 +149,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references |
+     | capital delta breaks .bib output #141                                              | 1          |
      | Better BibTeX.027                                                                  | 1          |
      | Better BibTeX.026                                                                  | 1          |
      | Underscores break capital-preservation #300                                        | 1          |
@@ -156,7 +157,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibTeX.018                                                                  | 1          |
      | Numbers confuse capital-preservation #295                                          | 1          |
      | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
-     | capital delta breaks .bib output #141                                              | 1          |
      | Export of item to Better Bibtex fails for auth3_1 #98                              | 1          |
 
 @test-cluster-0
@@ -239,12 +239,15 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
-     | Do not caps-protect literal lists #391                                             | 3           |
+     | Capitalisation in techreport titles #160                                           | 1           |
      | Better BibLaTeX.019                                                                | 1           |
+     | Exporting of single-field author lacks braces #130                                 | 1           |
+     | Better BibLaTeX.011                                                                | 1           |
+     | Better BibLaTeX.stable-keys                                                        | 6           |
+     | Do not caps-protect literal lists #391                                             | 3           |
      | biblatex; Language tag xx is exported, xx-XX is not #380                           | 1           |
      | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |
      | Better BibTeX does not use biblatex fields eprint and eprinttype #170              | 1           |
-     | Capitalisation in techreport titles #160                                           | 1           |
      | typo stature-statute (zotero item type) #284                                       | 1           |
      | Normalize date ranges in citekeys #356                                             | 3           |
      | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
@@ -261,9 +264,7 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.016                                                                | 1           |
      | Malformed HTML                                                                     | 1           |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246      | 3           |
-     | Better BibLaTeX.stable-keys                                                        | 6           |
      | Better BibLaTeX.010                                                                | 1           |
-     | Better BibLaTeX.011                                                                | 1           |
      | Better BibLaTeX.012                                                                | 1           |
      | Better BibLaTeX.013                                                                | 1           |
      | Better BibLaTeX.014                                                                | 1           |
@@ -274,7 +275,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.023                                                                | 1           |
      | DOI with underscores in extra field #108                                           | 1           |
      | Export Forthcoming as Forthcoming                                                  | 1           |
-     | Exporting of single-field author lacks braces #130                                 | 1           |
      | Export Newspaper Article misses section field #132                                 | 1           |
      | German Umlaut separated by brackets #146                                           | 1           |
      | Hang on non-file attachment export #112 - URL export broken #114                   | 2           |

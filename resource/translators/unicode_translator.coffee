@@ -2,35 +2,97 @@ LaTeX = {} unless LaTeX
 
 LaTeX.text2latex = (text, options = {}) ->
   latex = @html2latex(@cleanHTML(text, options), options)
-  return BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
+  latex = BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
   return latex
 
 LaTeX.preserveCase =
   hasCapital: new XRegExp('\\p{Lu}')
-  words: new XRegExp("""(
-          # word with embedded punctuation
-          ((?<boundary1>^|[^'’\\p{N}\\p{L}])   (?<word1>[\\p{L}\\p{N}]+['’][\\p{L}\\p{N}]+))
-          |
-          ((?<boundary2>^|[^-\\p{N}\\p{L}])   (?<word2>[\\p{L}\\p{N}]+[-\\p{L}\\p{N}]+[\\p{L}\\p{N}]))
+  words: new XRegExp("""((?<boundary>^|[^\\p{N}\\p{L}])    (?<word>[\\p{L}\\p{N}]*\\p{Lu}[\\p{L}\\p{N}]*))""", 'gx')
+  initialCapOnly: new XRegExp("^\\p{Lu}[^\\p{Lu}]*$")
 
-          |
-          # simple word
-          ((?<boundary3>^|[^\\p{N}\\p{L}])    (?<word3>[\\p{L}\\p{N}]*\\p{Lu}[\\p{L}\\p{N}]*))
-        )""", 'gx')
-  initialCapOnly: new XRegExp("^\\p{Lu}\\p{Ll}*$")
-
-  preserve: (value) ->
+  _preserve: (value) ->
     return XRegExp.replace(value, @words, (match, matches...) =>
       pos = matches[matches.length - 2]
-      for i in [1, 2, 3]
-        boundary = match["boundary#{i}"]
-        word = match["word#{i}"]
-        break if typeof boundary == 'string'
-      if !XRegExp.test(word, @hasCapital) || (pos == 0 && XRegExp.test(word, @initialCapOnly))
-        return boundary + word
+      if !XRegExp.test(match.word, @hasCapital) || (pos == 0 && XRegExp.test(match.word, @initialCapOnly))
+        return match.boundary + match.word
       else
-        return "#{boundary}<span class=\"nocase\">#{word}</span><!-- nocase:end -->"
+        return "#{match.boundary}<span class=\"nocase\">#{match.word}</span><!-- nocase:end -->"
     )
+
+  L: XRegExp('^\\p{L}')
+  Lu: XRegExp('^\\p{Lu}')
+  N: XRegExp('^\\p{N}')
+  preserve: (str) ->
+    words = []
+    i = 0
+    while i < str.length
+      code = str.charCodeAt(i)
+
+      if code < 0xD800 or code > 0xDFFF
+        chr = str.charAt(i)
+
+      else
+        chr = str.charAt(i) + str.charAt(i + 1)
+        i++
+      i++
+
+      switch chr
+        when '<'
+          inNode = true
+        when '>'
+          inNode = false
+
+      if inNode
+        lu = l = word = false
+      else
+        lu = @Lu.test(chr)
+        l = lu || @L.test(chr)
+        word = !!(l || @N.test(chr))
+
+      switch
+        when words.length == 0
+          words = [{
+            str: chr
+            initialCap: lu
+            otherCap: false
+            word
+          }]
+        when word == words[0].word
+          words[0].str += chr
+          words[0].otherCap ||= lu
+        else
+          words.unshift({
+            str: chr
+            initialCap: lu
+            otherCap: false
+            word
+          })
+
+    words.reverse()
+    str = ''
+    for word, i in words
+      if word.word && (word.initialCap || word.otherCap) && !(i == 0 && word.initialCap && !word.otherCap)
+        str += "<span class=\"nocase\">#{word.str}</span><!-- nocase:end -->"
+      else
+        str += word.str
+
+    return str
+
+LaTeX.toTitleCase = (string) ->
+  smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|vs?\.?|via)$/i
+
+  return string.replace(/[A-Za-z0-9\u00C0-\u00FF]+[^\s-]*/g, (match, index, title) ->
+    if index > 0 and
+      index + match.length != title.length and
+      match.search(smallWords) > -1 and
+      title.charAt(index - 2) != ':' and
+      (title.charAt(index + match.length) != '-' or title.charAt(index - 1) == '-') and
+      title.charAt(index - 1).search(/[^\s-]/) < 0
+        return match.toLowerCase()
+
+    return match if match.substr(1).search(/[A-Z]|\../) > -1
+    return match.charAt(0).toUpperCase() + match.substr(1)
+  )
 
 LaTeX.cleanHTML = (text, options) ->
   html = ''
@@ -47,30 +109,41 @@ LaTeX.cleanHTML = (text, options) ->
     text = text.replace(new RegExp("[#{open}][\\s\\u00A0]?", 'g'), '<span enquote="true">')
     text = text.replace(new RegExp("[\\s\\u00A0]?[#{close}]", 'g'), '</span>')
 
+  pres = []
+  text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) ->
+    pres.push(pre)
+    return "\x02#{pres.length}\x03"
+  )
+
+  html = ''
+  for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|sc|span)(?:[^>a-z][^>]*)?>)/i)
+    if i % 2 == 0 # text
+      if options.autoCase
+        html += LaTeX.preserveCase.preserve(Translator.HTMLEncode(chunk))
+      else
+        html += Translator.HTMLEncode(chunk)
+    else
+      html += chunk
+  text = html
+
+  if pres.length
+    text = text.replace(/\x02([0-9]+)\x03/g, (match, pre) ->
+      return "<script>#{pres[parseInt(pre)-1]}</script>"
+    )
+
   if options.autoCase
-    text = LaTeX.preserveCase.preserve(text)
     while true
-      txt = text.replace('</span><!-- nocase:end --> <span class="nocase">', ' ')
+      txt = text.replace(/<\/span><!-- nocase:end -->([-– ])<span class="nocase">/, "$1")
       break if txt == text
       text = txt
     text = text.replace(/<!-- nocase:end -->/g, '')
 
-  text = text.replace(/<pre[^>]*>(.*?)<\/pre[^>]*>/g, (match, pre) ->
-    pre = pre.replace(/<span class="nocase">|<\/span><!-- nocase:end -->/g, '')
-    pre = Translator.HTMLEncode(pre)
-    return"<pre class=\"nocase\">#{pre}</pre>"
-  )
-
   if options.autoCase && Translator.titleCase
+    text = text.replace(/\(/g, "(\x02 ").replace(/\)/g, " \x03)")
     text = Zotero.BetterBibTeX.CSL.titleCase(text)
+    text = text.replace(/\x02 /g, '').replace(/ \x03/g, '')
 
-  for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
-    if i % 2 == 0 # text
-      html += Translator.HTMLEncode(chunk)
-    else
-      html += chunk
-
-  return html
+  return text
 
 LaTeX.html2latex = (html, options) ->
   latex = (new @HTML(html, options)).latex
@@ -90,12 +163,13 @@ class LaTeX.HTML
   walk: (tag) ->
     return unless tag
 
-    if tag.name == '#text'
-      if @stack[0]?.name == 'pre'
-        @latex += tag.text
-      else
+    switch tag.name
+      when '#text'
         @chars(tag.text)
-      return
+        return
+      when 'script'
+        @latex += tag.text
+        return
 
     @stack.unshift(tag)
 
