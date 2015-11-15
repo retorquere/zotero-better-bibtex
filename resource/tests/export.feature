@@ -239,6 +239,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Malformed HTML                                                                     | 1           |
      | Capitalisation in techreport titles #160                                           | 1           |
      | Better BibLaTeX.019                                                                | 1           |
      | Exporting of single-field author lacks braces #130                                 | 1           |
@@ -262,7 +263,6 @@ Scenario Outline: BibLaTeX Export
      | referencetype= does not work #278                                                  | 1           |
      | Ignore HTML tags when generating citation key #264                                 | 1           |
      | Better BibLaTeX.016                                                                | 1           |
-     | Malformed HTML                                                                     | 1           |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246      | 3           |
      | Better BibLaTeX.010                                                                | 1           |
      | Better BibLaTeX.012                                                                | 1           |

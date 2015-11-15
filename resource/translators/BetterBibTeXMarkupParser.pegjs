@@ -19,7 +19,7 @@ chunk
   / &{ return state.pre } char:.                                                            { pre[pre.length - 1] += char; return ''; }
   / '<span class="nocase">'                                                                 { state.nocase = true; return '<span class="nocase">'; }
   / '</span>'                                                                               { state.nocase = false; return '</span>'; }
-  / "<" close:"\/"? tag:markup params:(_ [^>]*)? ">"                                        { return '<' + (close ? '/' : '') + tag + (params ?  params[0].join('') + params[1].join('') : '') + '>' }
+  / "<" close:"\/"? tag:markup attrs:attributes? ">"                                        { return '<' + (close ? '/' : '') + tag + (attrs ? attrs : '') + '>' }
   / "&"                                                                                     { return '&amp;' }
   / "<"                                                                                     { return '&lt;' }
   / ">"                                                                                     { return '&gt;' }
@@ -37,7 +37,9 @@ markup
   / "sc"i
   / "span"i
 
-_ = w:[ \t\n\r\u00A0]+
+_ = w:[ \t\n\r\u00A0]+  { return w.join(''); }
+
+attributes = ws:_ attrs:['"a-zA-Z]+ { return ws + attrs.join('') }
 
 leadingProtectedWords
   = word:leadingProtectedWord others:moreProtectedWord*          { return '<span class="nocase">' + word + others.join('') + '</span>'; }
