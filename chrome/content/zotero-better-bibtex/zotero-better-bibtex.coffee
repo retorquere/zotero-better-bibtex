@@ -1126,11 +1126,6 @@ Zotero.BetterBibTeX.load = (translator, options = {}) ->
       throw err
   code += options.postscript if options.postscript
 
-  if @pref.get('debug')
-    js = @createFile('translators', "#{translator}.js")
-    @debug("Saving #{translator} to #{js.path}")
-    Zotero.File.putContents(js, code)
-
   @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
 
   # remove BBT metadata -- Zotero doesn't like it
