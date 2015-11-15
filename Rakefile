@@ -230,7 +230,14 @@ file 'resource/citeproc.js' => 'Rakefile' do |t|
     sh "#{NODEBIN}/grasp -i -e 'thedate[DATE_PARTS_ALL[i]]' --replace 'thedate[CSL.DATE_PARTS_ALL[i]]' #{t.name.shellescape}"
     sh "#{NODEBIN}/grasp -i -e 'if (!Array.indexOf) { _$ }' --replace '' #{t.name.shellescape}"
     File.rewrite(t.name){|src|
-      open('https://raw.githubusercontent.com/zotero/zotero/4.0/chrome/content/zotero/xpcom/citeproc-prereqs.js').read + src + "\nvar EXPORTED_SYMBOLS = ['CSL'];\n"
+      patched = StringIO.new(src).readlines.collect{|line|
+        if line.strip == 'if (!m1split[i-1].match(/[:\\?\\!]\\s*$/)) {'
+          line.sub(/if.*{/, 'if (i > 0 && !m1split[i-1].match(/[:\\?\\!]\\s*$/)) {')
+        else
+          line
+        end
+      }.join('')
+      open('https://raw.githubusercontent.com/zotero/zotero/4.0/chrome/content/zotero/xpcom/citeproc-prereqs.js').read + patched + "\nvar EXPORTED_SYMBOLS = ['CSL'];\n"
     }
   end
 end
