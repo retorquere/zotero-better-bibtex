@@ -203,10 +203,10 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Better BibLaTeX.009                                                                            | 2           |
      | Better BibLaTeX.003                                                                            | 2           |
      | Better BibLaTeX.005                                                                            | 1           |
      | Better BibLaTeX.006                                                                            | 1           |
-     | Better BibLaTeX.009                                                                            | 2           |
      | Fields in Extra should override defaults                                                       | 1           |
      | BibTeX variable support for journal titles. #309                                               | 1           |
      | condense in cite key format not working #308                                                   | 1           |

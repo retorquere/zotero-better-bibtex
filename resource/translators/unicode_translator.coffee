@@ -22,7 +22,9 @@ LaTeX.toTitleCase = (string) ->
   )
 
 LaTeX.cleanHTML = (text, options) ->
+  Translator.debug('LaTeX.cleanHTML:', {text, options})
   {html, pre} = BetterBibTeXMarkupParser.parse(text, {preserveCaps: options.autoCase, csquotes: Translator.csquotes})
+  Translator.debug('LaTeX.cleanHTML:', {html, pre})
 
   if options.autoCase && Translator.titleCase
     html = Zotero.BetterBibTeX.CSL.titleCase(html)

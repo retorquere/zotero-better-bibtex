@@ -10,7 +10,8 @@
 }
 
 start
-  = chunks:chunk* { return {html: chunks.join(''), pre: pre}; }
+  = &{return options.preserveCaps} words:leadingProtectedWords chunks:chunk* { return {html: words + chunks.join(''), pre: pre}; }
+  / chunks:chunk* { return {html: chunks.join(''), pre: pre}; }
 
 chunk
   = "<" "pre"i (_ [^>]*)? ">"                                                               { state.pre = true; pre.push(''); return '\x02' + (pre.length - 1); }
@@ -37,6 +38,13 @@ markup
   / "span"i
 
 _ = w:[ \t\n\r\u00A0]+
+
+leadingProtectedWords
+  = word:leadingProtectedWord others:moreProtectedWord*          { return '<span class="nocase">' + word + others.join('') + '</span>'; }
+
+leadingProtectedWord
+  = pre:NonLu+ lu:Lu post:WordChar*         { return pre.join('') + lu + post.join('') }
+  / lu1:Lu pre:NonLu* lu2:Lu post:WordChar* { return lu1 + pre.join('') + lu2 + post.join('') }
 
 protectedWords
   = word:protectedWord others:moreProtectedWord*          { return word.boundary + '<span class="nocase">' + word.word + others.join('') + '</span>'; }
