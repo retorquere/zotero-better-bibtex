@@ -241,6 +241,13 @@ Translator.initialize = ->
   for pref in ['citekeyFormat', 'skipFields', 'jabrefGroups', 'postscript', 'csquotes', 'titleCase', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'asciiBibLaTeX', 'asciiBibTeX']
     @preferences[pref] = @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
   @skipFields = (field.trim() for field in (@skipFields || '').split(',') when field.trim())
+  if @csquotes
+    @csquotes = { open: '', close: '' }
+    for ch, i in Translator.preferences.csquotes
+      if i % 2 == 0 # open
+        @csquotes.open += ch
+      else
+        @csquotes.close += ch
 
   @options = {}
   for option in ['useJournalAbbreviation', 'exportPath', 'exportFilename', 'exportCharset', 'exportFileData', 'exportNotes']
