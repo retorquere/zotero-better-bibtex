@@ -39,7 +39,7 @@ markup
 
 _ = w:[ \t\n\r\u00A0]+  { return w.join(''); }
 
-attributes = ws:_ attrs:[= \t\n\r'"a-zA-Z]+ { return ws + attrs.join('') }
+attributes = ws:_ attrs:[-= \t\n\r'"a-zA-Z]+ { return ws + attrs.join('') }
 
 leadingProtectedWords
   = word:leadingProtectedWord others:moreProtectedWord*          { return '<span class="nocase">' + word + others.join('') + '</span>'; }
