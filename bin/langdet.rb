@@ -9,11 +9,7 @@ data['items'].each{|item|
 
   ld = CLD.detect_language(item['title'])
 
-  if ld[:code] == 'en'
-    item.delete('language')
-  else
-    item['language'] = ld[:code]
-  end
+  item['language'] = ld[:code] if ld[:code] != 'en'
 }
 
 open(ARGV[0], 'w'){|f|
