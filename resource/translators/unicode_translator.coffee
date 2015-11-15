@@ -8,6 +8,13 @@ LaTeX.text2latex = (text, options = {}) ->
 LaTeX.toTitleCase = (string) ->
   smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|vs?\.?|via)$/i
 
+  # Force a word to lowercase if all of the following apply
+  # 1. It is not the first word of the sentence, as smallwords at the start should be uppercased
+  # 2. It is not the last word of the sentence (similar)
+  # 3. It is a smallWord
+  # 4. There is not a ':' two positions before the word (indicates subtitle)
+  # 5. There is either not a dash immediately after the word, or there is a dash immediately preceding the word
+  # 6. There is a space or a dash before the word
   return string.replace(/[A-Za-z0-9\u00C0-\u00FF]+[^\s-]*/g, (match, index, title) ->
     if index > 0 and
       index + match.length != title.length and
@@ -17,7 +24,11 @@ LaTeX.toTitleCase = (string) ->
       title.charAt(index - 1).search(/[^\s-]/) < 0
         return match.toLowerCase()
 
+    # leave a word alone if it has an uppercase letter at the second position,
+    # or the second character is a period followed by anything
     return match if match.substr(1).search(/[A-Z]|\../) > -1
+
+    # uppercase
     return match.charAt(0).toUpperCase() + match.substr(1)
   )
 
