@@ -7,6 +7,8 @@
     pre: false,
     nocase: false
   };
+
+  // input.charAt(peg$currPos)
 }
 
 start

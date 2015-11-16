@@ -15,6 +15,7 @@ LaTeX.toTitleCase = (string) ->
   # 4. There is not a ':' two positions before the word (indicates subtitle)
   # 5. There is either not a dash immediately after the word, or there is a dash immediately preceding the word
   # 6. There is a space or a dash before the word
+  # [0-9a-z\xD7\xDF-\xFF] = -Lu
   return string.replace(/[A-Za-z0-9\u00C0-\u00FF]+[^\s-]*/g, (match, index, title) ->
     if index > 0 and
       index + match.length != title.length and
