@@ -220,7 +220,6 @@ Scenario Outline: BibLaTeX Export
      | BraceBalancer                                                                                  | 1           |
      | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
      | auth leaves punctuation in citation key #310                                                   | 1           |
-     | csquotes #302                                                                                  | 2           |
      | Spaces not stripped from citation keys #294                                                    | 1           |
      | Book converted to mvbook #288                                                                  | 1           |
      | Colon not allowed in citation key format #268                                                  | 1           |
@@ -229,6 +228,7 @@ Scenario Outline: BibLaTeX Export
      | Be robust against misconfigured journal abbreviator #127                                       | 1           |
      | Better BibLaTeX.001                                                                            | 1           |
      | Better BibLaTeX.002                                                                            | 2           |
+     | csquotes #302                                                                                  | 2           |
 
 @test-cluster-1
 @bblt
