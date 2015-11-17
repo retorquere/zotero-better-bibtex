@@ -9,26 +9,45 @@
   };
 
   // input.charAt(peg$currPos)
+
+  var plain = {
+    text: '',
+    output: 0,
+    unprotected: {}
+  };
+  function add(html, text, mark) {
+    if (!options.titleCase) { return html; }
+
+    if (mark && !state.nocase) {
+      for (var i = 0; i < text.length; i++) {
+        plain.unprotected[plain.output + i] = plain.text.length + i;
+      }
+    }
+    if (text) { plain.text += text; }
+    plain.output += html.length;
+
+    return html;
+  }
 }
 
 start
-  = &{return options.preserveCaps} words:leadingProtectedWords chunks:chunk* { return {html: words + chunks.join(''), pre: pre}; }
-  / chunks:chunk* { return {html: chunks.join(''), pre: pre}; }
+  = &{return options.preserveCaps} words:leadingProtectedWords chunks:chunk* { return {html: words + chunks.join(''), plain: plain}; }
+  / chunks:chunk* { return {html: chunks.join(''), plain: plain}; }
 
 chunk
-  = "<" "pre"i (_ [^>]*)? ">"                                                               { state.pre = true; pre.push(''); return '\x02' + (pre.length - 1); }
-  / "</pre>"i                                                                               { state.pre = false; return '\x03'; }
-  / &{ return state.pre } char:.                                                            { pre[pre.length - 1] += char; return ''; }
-  / '<span class="nocase">'                                                                 { state.nocase = true; return '<span class="nocase">'; }
-  / '</span>'                                                                               { state.nocase = false; return '</span>'; }
-  / "<" close:"\/"? tag:markup attrs:attributes? ">"                                        { return '<' + (close ? '/' : '') + tag + (attrs ? attrs : '') + '>' }
-  / "&"                                                                                     { return '&amp;' }
-  / "<"                                                                                     { return '&lt;' }
-  / ">"                                                                                     { return '&gt;' }
-  / &{return options.preserveCaps && !state.nocase} words:protectedWords                    { return words; }
-  / &{return options.csquotes} char:. &{return options.csquotes.open.indexOf(char) >= 0} _  { return '<span enquote="true">'; }
-  / &{return options.csquotes} _ char:. &{return options.csquotes.close.indexOf(char) >= 0} { return '</span>'; }
-  / char:.                                                                                  { return char }
+  = "<" "pre"i (_ [^>]*)? ">"                                                                   { state.pre = true; return add('<script>'); }
+  / "</pre>"i                                                                                   { state.pre = false; return add('</script>'); }
+  / &{ return state.pre } char:.                                                                { return add(char, char); }
+  / '<span class="nocase">'                                                                     { state.nocase = true; return add('<span class="nocase">'); }
+  / '</span>'                                                                                   { state.nocase = false; return add('</span>'); }
+  / "<" close:"\/"? tag:markup attrs:attributes? ">"                                            { return add('<' + (close ? '/' : '') + tag + (attrs ? attrs : '') + '>'); }
+  / "&"                                                                                         { return add('&amp;', '&') }
+  / "<"                                                                                         { return add('&lt;', '<') }
+  / ">"                                                                                         { return add('&gt;', '>') }
+  / &{return options.preserveCaps && !state.nocase} words:protectedWords                        { return words; }
+  / &{return options.csquotes} char:. &{return options.csquotes.open.indexOf(char) >= 0} ws:_   { return add('<span enquote="true">', char + ws); }
+  / &{return options.csquotes} ws:_ char:. &{return options.csquotes.close.indexOf(char) >= 0}  { return add('</span>', ws + char); }
+  / char:.                                                                                      { return add(char, char, true); }
 
 markup
   = "i"i
@@ -44,14 +63,14 @@ _ = w:[ \t\n\r\u00A0]+  { return w.join(''); }
 attributes = ws:_ attrs:[-= \t\n\r'"a-zA-Z]+ { return ws + attrs.join('') }
 
 leadingProtectedWords
-  = word:leadingProtectedWord others:moreProtectedWord*          { return '<span class="nocase">' + word + others.join('') + '</span>'; }
+  = word:leadingProtectedWord others:moreProtectedWord*          { var text = word + others.join(''); return add('<span class="nocase">' + text + '</span>', text); }
 
 leadingProtectedWord
   = pre:NonLu+ lu:Lu post:WordChar*         { return pre.join('') + lu + post.join('') }
   / lu1:Lu pre:NonLu* lu2:Lu post:WordChar* { return lu1 + pre.join('') + lu2 + post.join('') }
 
 protectedWords
-  = word:protectedWord others:moreProtectedWord*          { return word.boundary + '<span class="nocase">' + word.word + others.join('') + '</span>'; }
+  = word:protectedWord others:moreProtectedWord*          { var text = word.word + others.join(''); return add(word.boundary, word.boundary, true) + add('<span class="nocase">' + text + '</span>', text); }
   
 protectedWord
   = !WordChar boundary:. pre:NonLu* lu:Lu post:WordChar*  { return {boundary: boundary, word: pre.join('') + lu + post.join('') } }

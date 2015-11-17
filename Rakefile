@@ -28,7 +28,6 @@ require 'base64'
 require 'net/http/post/multipart'
 require 'httparty'
 require 'facets'
-require_relative 'amo-sign'
 require_relative 'lib/unicode_table'
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
@@ -551,8 +550,8 @@ task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{
 end
 
 task :sign => XPI do
-  signer = AMOSigner.new('zotero-better-biblatex', 'emiliano.heyns@iris-advies.com', ENV['AMO_PASSWORD'])
-  signer.sign(XPI, XPI.sub(/\.xpi/, '') + '-signed.xpi')
+  # https://olympia.readthedocs.org/en/latest/topics/api/signing.html
+  # curl "https://addons.mozilla.org/api/v3/addons/zotero-better-bibtex/versions/#{VERSION}/" -XPUT --form XPI -H 'Authorization: JWT <jwt-token>'
 end
 
 task :debug => XPI do

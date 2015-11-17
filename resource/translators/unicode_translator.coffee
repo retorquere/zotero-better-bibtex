@@ -34,15 +34,17 @@ LaTeX.toTitleCase = (string) ->
   )
 
 LaTeX.cleanHTML = (text, options) ->
-  {html, pre} = BetterBibTeXMarkupParser.parse(text, {preserveCaps: options.autoCase, csquotes: Translator.csquotes})
+  {html, plain} = BetterBibTeXMarkupParser.parse(text, {titleCase: Translator.titleCase, preserveCaps: options.autoCase, csquotes: Translator.csquotes})
 
   if options.autoCase && Translator.titleCase
-    html = Zotero.BetterBibTeX.CSL.titleCase(html)
-
-  if pre.length
-    html = html.replace(/\x02([0-9]+)\x03/g, (match, n) ->
-      return "<script>#{pre[parseInt(n)]}</script>"
-    )
+    titleCased = Zotero.BetterBibTeX.CSL.titleCase(plain.text)
+    _html = ''
+    for c, i in html
+      if plain.unprotected[i] != undefined
+        _html += titleCased[plain.unprotected[i]]
+      else
+        _html += c
+    html = _html
 
   return html
 

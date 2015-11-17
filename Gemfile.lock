@@ -2,17 +2,17 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.3.8)
-    aws-sdk (2.1.35)
-      aws-sdk-resources (= 2.1.35)
-    aws-sdk-core (2.1.35)
+    aws-sdk (2.2.0)
+      aws-sdk-resources (= 2.2.0)
+    aws-sdk-core (2.2.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.1.35)
-      aws-sdk-core (= 2.1.35)
+    aws-sdk-resources (2.2.0)
+      aws-sdk-core (= 2.2.0)
     backports (3.6.7)
     bibtex-ruby (4.0.16)
       latex-decode (~> 0.0)
     builder (3.2.2)
-    childprocess (0.5.7)
+    childprocess (0.5.8)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.0)
     cucumber (2.1.0)
@@ -109,19 +109,19 @@ GEM
     rake (10.4.2)
     rchardet (1.6.1)
     rickshaw (0.3.1)
-    rspec (3.3.0)
-      rspec-core (~> 3.3.0)
-      rspec-expectations (~> 3.3.0)
-      rspec-mocks (~> 3.3.0)
-    rspec-core (3.3.2)
-      rspec-support (~> 3.3.0)
-    rspec-expectations (3.3.1)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+    rspec-core (3.4.0)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.3.0)
-    rspec-mocks (3.3.2)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.3.0)
-    rspec-support (3.3.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.0)
     rubyzip (1.1.7)
     selenium-webdriver (2.48.1)
       childprocess (~> 0.5)
@@ -175,6 +175,7 @@ DEPENDENCIES
   ghi
   github_api
   headless
+  jwt
   mechanize
   multipart-post
   nokogiri
