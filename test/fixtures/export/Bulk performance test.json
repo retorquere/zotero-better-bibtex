@@ -18513,6 +18513,7 @@
       "itemID": 729,
       "itemType": "manuscript",
       "date": "2006",
+      "language": "da",
       "title": "Den sproglige vending - en introduktion",
       "creators": [
         {
@@ -32872,6 +32873,7 @@
       "place": "Paris",
       "publisher": "Fondation Vuitton",
       "date": "2014",
+      "language": "fr",
       "title": "Anti-Zoom. In Contact, catalogue de l'exposition d'Olafur Eliasson",
       "creators": [
         {
@@ -37255,8 +37257,8 @@
       "accessDate": "2014-09-30 18:41:21",
       "libraryCatalog": "ant.sagepub.com.ep.fjernadgang.kb.dk",
       "abstractNote": "In this article, I introduce an anthropological approach to time and temporality which suggests that anticipatory actions are not always guided by futures separated from the present through a linear chronology. Whereas time is conventionally understood as a chronological series of succeeding moments, I argue that different temporalities might converge to create durations which cannot be gauged using a linear scale. I consequently explore anticipatory action as it pertains to durational time. As I will show, when temporal succession is discontinuous, linearity may be turned around so that (assumed) effects are revealed to be causes. Rather than functioning as the dominant temporal trope, linear sequentiality thus emerges as an effect of reversible time. I build my argument from an ethnographical examination of house-building practices in peri-urban areas of Maputo, Mozambique. According to house-builders, they build houses which will never be completed. Still, by pre-figuring the end-point as a likely failure, anticipatory action is turned inwards through a series of internal reversals. House-building is guided by seemingly incompatible social principles and through a series of temporal reversals, these tensions are momentarily resolved.",
-      "title": "Futures within: Reversible time and house-building in Maputo, Mozambique",
-      "shortTitle": "Futures within",
+      "title": "Futures <span class=\"nocase\">Within</span>: Reversible time and house-building in Maputo, Mozambique",
+      "shortTitle": "Futures <span class=\"nocase\">Within</span>",
       "creators": [
         {
           "creatorType": "author",
