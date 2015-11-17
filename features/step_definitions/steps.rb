@@ -56,6 +56,7 @@ def loadZotero
   profile['xpinstall.signatures.required'] = false
 
   profile['extensions.zotero.showIn'] = 2
+  profile['extensions.zotero.translators.better-bibtex.confirmCacheReset'] = false
   profile['extensions.zotero.httpServer.enabled'] = true
   profile['dom.max_chrome_script_run_time'] = 6000
   profile['browser.shell.checkDefaultBrowser'] = false
