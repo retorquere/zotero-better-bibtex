@@ -15,7 +15,7 @@ Zotero.BetterBibTeX.titleCase = {
     locale: {
       en: {
         opts: {
-          'skip-words': Zotero.BetterBibTeX.CSL.SKIP_WORDS.concat(['with', 'their', 'using', 'do', 'not'])
+          'skip-words': Zotero.BetterBibTeX.CSL.SKIP_WORDS
           'leading-noise-words': 'a,an,the'
         }
       }

@@ -6,7 +6,8 @@ LaTeX.text2latex = (text, options = {}) ->
   return latex
 
 LaTeX.toTitleCase = (string) ->
-  smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|vs?\.?|via)$/i
+  smallWords =
+  /^(a|about|after|against|among|an|and|around|as|at|before|between|beyond|but|by|de|en|for|from|if|in|into|near|nor|of|on|or|out|over|per|since|than|the|their|through|to|towards?|via|vs?\.?|yet)$/
 
   # Force a word to lowercase if all of the following apply
   # 1. It is not the first word of the sentence, as smallwords at the start should be uppercased
@@ -23,7 +24,7 @@ LaTeX.toTitleCase = (string) ->
       title.charAt(index - 2) != ':' and
       (title.charAt(index + match.length) != '-' or title.charAt(index - 1) == '-') and
       title.charAt(index - 1).search(/[^\s-]/) < 0
-        return match.toLowerCase()
+        return match #.toLowerCase()
 
     # leave a word alone if it has an uppercase letter at the second position,
     # or the second character is a period followed by anything
@@ -34,10 +35,12 @@ LaTeX.toTitleCase = (string) ->
   )
 
 LaTeX.cleanHTML = (text, options) ->
-  {html, plain} = BetterBibTeXMarkupParser.parse(text, {titleCase: Translator.titleCase, preserveCaps: options.autoCase, csquotes: Translator.csquotes})
+  {html, plain} = BetterBibTeXMarkupParser.parse(text, {titleCase: options.autoCase && Translator.titleCase, preserveCaps: options.autoCase, csquotes: Translator.csquotes})
 
   if options.autoCase && Translator.titleCase
+    Translator.debug('TITLECASE:>', plain.text)
     titleCased = Zotero.BetterBibTeX.CSL.titleCase(plain.text)
+    Translator.debug('TITLECASE:<', titleCased)
     _html = ''
     for c, i in html
       if plain.unprotected[i] != undefined

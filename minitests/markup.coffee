@@ -24,4 +24,3 @@ for text in input
   console.log('H: ' + html)
   console.log('P: ' + plain.text)
   console.log('C: ' + titleCase(html, titlecased, plain.unprotected))
-  break
