@@ -135,7 +135,6 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/cacheVersion.js',
   'chrome.manifest',
   'install.rdf',
-  'resource/logs/s3.json',
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',
@@ -262,34 +261,6 @@ file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['
   open(t.name, 'w'){|f|
     f.write("Zotero.BetterBibTeX.Test.features = #{features.to_json};")
   }
-end
-
-file 'resource/logs/s3.json' => ['resource/logs/s3.js', 'install.rdf'] do |t|
-  sh "node resource/logs/s3.js"
-end
-
-file 'resource/logs/index.html' => 'resource/logs/s3.json' do |t|
-  form = OpenStruct.new(JSON.parse(open(t.source).read))
-
-  builder = Nokogiri::HTML::Builder.new do |doc|
-    doc.html {
-      doc.head {
-        doc.meta(charset: 'utf-8')
-        doc.title { doc.text 'Upload' }
-      }
-      doc.body {
-        doc.form(action: form.action, method: 'POST', enctype: "multipart/form-data") {
-          form.fields.each_pair{|name, value|
-            doc.input(type: 'hidden', name: name, value: value)
-          }
-          doc.input(type: 'file', name: 'file')
-          doc.input(type: 'submit', value: 'Save')
-        }
-      }
-    }
-  end
-
-  open(t.name, 'w'){|f| f.write(builder.to_html) }
 end
 
 file 'resource/abbreviations/CAplus.json' => 'Rakefile' do |t|
