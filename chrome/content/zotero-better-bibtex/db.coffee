@@ -70,13 +70,28 @@ Zotero.BetterBibTeX.DB = new class
     @upgradeNeeded = @metadata.Zotero != ZOTERO_CONFIG.VERSION || @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
 
     cacheReset = Zotero.BetterBibTeX.pref.get('cacheReset')
-    if cacheReset || (!keepCache && @metadata.BetterBibTeX && Services.vc.compare(@metadata.BetterBibTeX, Zotero.BetterBibTeX.cacheVersion) < 0)
-      Zotero.BetterBibTeX.debug('db.reset:', {cacheReset, keepCache, BetterBibTeX: @metadata.BetterBibTeX, cacheVersion: Zotero.BetterBibTeX.cacheVersion})
+    if !cacheReset
+      cacheReset = !keepCache && @metadata.BetterBibTeX && Services.vc.compare(@metadata.BetterBibTeX, Zotero.BetterBibTeX.release) < 0
+      # the 3000 is arbitrary. I just assume if you have less than 3k actually cached, you will be more annoyed by being
+      # asked about the cache than about it being regenerated.
+      if cacheReset && Zotero.BetterBibTeX.pref.get('confirmCacheReset') && (@cache.chain().data().length > 3000 || @serialized.chain().data().length > 3000)
+        cacheReset = confirm([
+          'You have upgraded BetterBibTeX. This usually means output generation for Bib(La)TeX has changed.'
+          'If you want this change to be applied immediately, you can clear the BibTeX cache. If you have a large library, first (auto)export will be slower than usual'
+          'If you are in principle satisfied with the output you had, you can just have Better BibTeX replenish the cache as items are changed or added'
+          ''
+          'Do you want to reset the BibTeX cache now?'
+        ].join("\n"))
+
+    if cacheReset
+      Zotero.BetterBibTeX.debug('db.reset:', {cacheReset, keepCache, db: @metadata.BetterBibTeX, release: Zotero.BetterBibTeX.release})
       @serialized.removeDataOnly()
       @cache.removeDataOnly()
-      if cacheReset > 0
-        Zotero.BetterBibTeX.pref.set('cacheReset', cacheReset - 1)
-        Zotero.BetterBibTeX.debug('cache.load forced reset', cacheReset - 1, 'left')
+      if typeof cacheReset == 'number'
+        cacheReset = cacheReset - 1
+        cacheReset = 0 if cacheReset < 0
+        Zotero.BetterBibTeX.pref.set('cacheReset', cacheReset)
+        Zotero.BetterBibTeX.debug('cache.load forced reset', cacheReset, 'left')
       else
         Zotero.BetterBibTeX.debug('cache.load reset after upgrade from', @metadata.BetterBibTeX, 'to', Zotero.BetterBibTeX.release)
 

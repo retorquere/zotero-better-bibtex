@@ -57,6 +57,24 @@ def loadZotero
     profile.add_extension(xpi)
   }
 
+  profile['xpinstall.signatures.required'] = false
+
+  profile['extensions.zotero.showIn'] = 2
+  profile['extensions.zotero.translators.better-bibtex.confirmCacheReset'] = false
+  profile['extensions.zotero.httpServer.enabled'] = true
+  profile['dom.max_chrome_script_run_time'] = 6000
+  profile['browser.shell.checkDefaultBrowser'] = false
+
+  if ENV['CI'] != 'true'
+    profile['extensions.zotero.debug.store'] = true
+    profile['extensions.zotero.debug.log'] = true
+    profile['extensions.zotero.translators.better-bibtex.debug'] = true
+  end
+
+  profile['extensions.zotfile.automatic_renaming'] = 1
+  profile['extensions.zotfile.watch_folder'] = false
+
+  profile['browser.download.manager.showWhenStarting'] = false
   FileUtils.mkdir_p("/tmp/webdriver-downloads")
 
   profile['browser.download.dir'] = "/tmp/webdriver-downloads"

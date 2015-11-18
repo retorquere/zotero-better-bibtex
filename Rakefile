@@ -129,11 +129,9 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/csl-localedata.js',
-  'chrome/content/zotero-better-bibtex/cacheVersion.js',
+  'resource/citeproc.js',
   'chrome.manifest',
   'install.rdf',
-  'resource/logs/s3.json',
-  'resource/citeproc.js',
   'resource/translators/json5.js',
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',
@@ -204,25 +202,6 @@ file 'resource/reports/cacheActivity.txt' => 'resource/reports/cacheActivity.htm
   FileUtils.cp(t.source, t.name)
 end
 
-file 'chrome/content/zotero-better-bibtex/cacheVersion.coffee' => Dir['test/fixtures/export/*'] do |t|
-  drop = {}
-  release = nil
-  IO.popen('git log --name-status').readlines.each{|line|
-    if line =~ /^ +release: *zotero-better-bibtex-([\.0-9]+).xpi/
-      release = $1
-    elsif line =~ /^M\ttest\/fixtures\/export\//
-      drop[release] = true if release
-    end
-  }
-
-  drop = drop.keys.sort{|a, b| Gem::Version.new(a) <=> Gem::Version.new(b)}.reverse
-
-  STDERR.puts("cacheVersions: #{drop.inspect}")
-  open(t.name, 'w'){|f|
-    f.puts("Zotero.BetterBibTeX.cacheVersion = #{drop[0].inspect}")
-  }
-end
-
 file 'resource/citeproc.js' => 'Rakefile' do |t|
   cleanly(t.name) do
     ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/citeproc.js', t.name)
@@ -261,34 +240,6 @@ file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['
   open(t.name, 'w'){|f|
     f.write("Zotero.BetterBibTeX.Test.features = #{features.to_json};")
   }
-end
-
-file 'resource/logs/s3.json' => ['resource/logs/s3.js', 'install.rdf'] do |t|
-  sh "node resource/logs/s3.js"
-end
-
-file 'resource/logs/index.html' => 'resource/logs/s3.json' do |t|
-  form = OpenStruct.new(JSON.parse(open(t.source).read))
-
-  builder = Nokogiri::HTML::Builder.new do |doc|
-    doc.html {
-      doc.head {
-        doc.meta(charset: 'utf-8')
-        doc.title { doc.text 'Upload' }
-      }
-      doc.body {
-        doc.form(action: form.action, method: 'POST', enctype: "multipart/form-data") {
-          form.fields.each_pair{|name, value|
-            doc.input(type: 'hidden', name: name, value: value)
-          }
-          doc.input(type: 'file', name: 'file')
-          doc.input(type: 'submit', value: 'Save')
-        }
-      }
-    }
-  end
-
-  open(t.name, 'w'){|f| f.write(builder.to_html) }
 end
 
 file 'resource/abbreviations/CAplus.json' => 'Rakefile' do |t|
@@ -765,37 +716,32 @@ file 'wiki/Scripting.md' => ['resource/translators/reference.coffee'] do |t|
 end
 
 task :logs2s3 do
-  key = ENV['ZOTPLUSAWSKEY']
-  secret = ENV['ZOTPLUSAWSSECRET']
-  credentials = ENV['ZOTPLUSAWSCREDENTIALS']
-
-  if !key || !secret && credentials && File.exist?(credentials)
-    CSV.foreach(credentials, headers: true) do |row|
-      next unless row['Access Key Id'] && row['Secret Access Key']
-      next if row['Access Key Id'].strip == '' || row['Secret Access Key'].strip == ''
-      key = row['Access Key Id']
-      secret = row['Secret Access Key']
-    end
-  end
-
   logs = Dir['*.debug'] + Dir['*.log']
   logs = [] if ENV['CI'] == 'true' && ENV['LOGS2S3'] != 'true'
 
   if (ENV['TRAVIS_PULL_REQUEST'] || 'false') != 'false'
     puts "Logs 2 S3: Not logging pull requests"
-  elsif !key || !secret
-    puts "Logs 2 S3: No credentials"
   elsif logs.size == 0
     puts "Logs 2 S3: Nothing to do"
   else
     prefix = [ENV['TRAVIS_BRANCH'], ENV['TRAVIS_JOB_NUMBER']].select{|x| x}.join('-')
     prefix += '-' if prefix != ''
-    s3 = Aws::S3::Resource.new(region: 'eu-central-1', credentials: Aws::Credentials.new(key, secret))
-    bucket = s3.bucket('zotplus-964ec2b7-379e-49a4-9c8a-edcb20db343f')
+
+    form = JSON.parse(open('https://zotplus.github.io/s3.json').read)
+    url = URI.parse(form['action'])
+    path = url.path
+    path = '/' if path == ''
+    params = form['fields']
+
     logs.each{|log|
       puts "Logs 2 S3: #{log}"
-      obj = bucket.object("#{prefix}#{log}")
-      obj.upload_file(File.expand_path(log))
+      params[form['filefield']] = UploadIO.new(File.expand_path(log), 'text/plain', "#{prefix}#{log}")
+      req = Net::HTTP::Post::Multipart.new(path, params)
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true if url.scheme == 'https'
+      res = http.start do |http|
+        http.request(req)
+      end
     }
   end
 end
