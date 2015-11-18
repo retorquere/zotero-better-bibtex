@@ -1001,26 +1001,30 @@ Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
   @DB.autoexport.removeWhere((o) -> o.collection in extraData)
 
 Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
+  Zotero.BetterBibTeX.debug('itemChanged: event=', event, 'ids=', ids, 'extraData=', extraData)
+
   return unless type == 'item' && event in ['delete', 'trash', 'add', 'modify']
   ids = extraData if event == 'delete'
   return unless ids.length > 0
 
-  items = []
   parents = []
   for item in Zotero.Items.get(ids)
     if item.isAttachment() || item.isNote()
       parent = item.getSource()
-      parents.push(parent.id) if parent
-    else
-      items.push(item.id)
-  ids = items
+      parents.push(parent) if parent
 
   @keymanager.scan(ids, event) if ids.length > 0
   @keymanager.scan(parents, 'modify') if parents.length > 0
+  Zotero.BetterBibTeX.debug('itemChanged: event=', event, 'ids=', ids, 'parents=', parents)
 
-  ids = ids.concat(parents)
+  ids = (parseInt(id) for id in ids.concat(parents))
+  ids = ids.filter((v, i, arr) -> arr.indexOf(v) == i)
 
   return unless ids.length > 0
+
+  for id in ids
+    @serialized.remove(id)
+    @cache.remove({itemID: id})
 
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
   collections = @withParentCollections(collections) unless collections.length == 0
