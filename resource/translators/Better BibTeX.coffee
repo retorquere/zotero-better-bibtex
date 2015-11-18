@@ -12,7 +12,7 @@ Translator.fieldMap = {
   ISSN:             { name: 'issn' }
   callNumber:       { name: 'lccn'}
   shortTitle:       { name: 'shorttitle', preserveCaps: true }
-  url:              { name: 'url' }
+  url:              { name: 'howpublished', import: 'url' }
   DOI:              { name: 'doi' }
   abstractNote:     { name: 'abstract' }
   country:          { name: 'nationality' }
