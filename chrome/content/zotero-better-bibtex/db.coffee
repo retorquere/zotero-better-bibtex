@@ -71,10 +71,12 @@ Zotero.BetterBibTeX.DB = new class
 
     cacheReset = Zotero.BetterBibTeX.pref.get('cacheReset')
     if !cacheReset
-      cacheReset = !keepCache && @metadata.BetterBibTeX && Services.vc.compare(@metadata.BetterBibTeX, Zotero.BetterBibTeX.cacheVersion) < 0
-      if cacheReset && Zotero.BetterBibTeX.pref.get('confirmCacheReset')
+      cacheReset = !keepCache && @metadata.BetterBibTeX && Services.vc.compare(@metadata.BetterBibTeX, Zotero.BetterBibTeX.release) < 0
+      # the 3000 is arbitrary. I just assume if you have less than 3k actually cached, you will be more annoyed by being
+      # asked about the cache than about it being regenerated.
+      if cacheReset && Zotero.BetterBibTeX.pref.get('confirmCacheReset') && (@cache.chain().data().length > 3000 || @serialized.chain().data().length > 3000)
         cacheReset = confirm([
-          'Output generation for Bib(La)TeX has changed.'
+          'You have upgraded BetterBibTeX. This usually means output generation for Bib(La)TeX has changed.'
           'If you want this change to be applied immediately, you can clear the BibTeX cache. If you have a large library, first (auto)export will be slower than usual'
           'If you are in principle satisfied with the output you had, you can just have Better BibTeX replenish the cache as items are changed or added'
           ''
@@ -82,7 +84,7 @@ Zotero.BetterBibTeX.DB = new class
         ].join("\n"))
 
     if cacheReset
-      Zotero.BetterBibTeX.debug('db.reset:', {cacheReset, keepCache, BetterBibTeX: @metadata.BetterBibTeX, cacheVersion: Zotero.BetterBibTeX.cacheVersion})
+      Zotero.BetterBibTeX.debug('db.reset:', {cacheReset, keepCache, db: @metadata.BetterBibTeX, release: Zotero.BetterBibTeX.release})
       @serialized.removeDataOnly()
       @cache.removeDataOnly()
       if typeof cacheReset == 'number'
