@@ -14,7 +14,7 @@ pref('extensions.zotero.translators.better-bibtex.citekeyFormat', '[auth:lower][
 pref('extensions.zotero.translators.better-bibtex.citekeyFold', true)
 pref('extensions.zotero.translators.better-bibtex.debug', false)
 pref('extensions.zotero.translators.better-bibtex.DOIandURL', 'both')
-pref('extensions.zotero.translators.better-bibtex.fancyURLs', false)
+pref('extensions.zotero.translators.better-bibtex.bibtexURLs', false)
 pref('extensions.zotero.translators.better-bibtex.csquotes', '')
 pref('extensions.zotero.translators.better-bibtex.keyConflictPolicy', 'keep')
 pref('extensions.zotero.translators.better-bibtex.langID', 'babel')

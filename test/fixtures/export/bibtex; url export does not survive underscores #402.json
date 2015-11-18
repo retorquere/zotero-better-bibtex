@@ -10,7 +10,7 @@
       "postscript": "",
       "csquotes": "",
       "preserveCaps": "all",
-      "fancyURLs": false,
+      "bibtexURLs": true,
       "langID": "babel",
       "rawImports": false,
       "DOIandURL": "doi",

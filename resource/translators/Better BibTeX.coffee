@@ -12,7 +12,6 @@ Translator.fieldMap = {
   ISSN:             { name: 'issn' }
   callNumber:       { name: 'lccn'}
   shortTitle:       { name: 'shorttitle', preserveCaps: true }
-  url:              { name: 'howpublished', import: 'url' }
   DOI:              { name: 'doi' }
   abstractNote:     { name: 'abstract' }
   country:          { name: 'nationality' }
@@ -50,6 +49,7 @@ doExport = ->
 
     ref.add({ name: 'number', value: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
+    ref.add({ name: 'howpublished', value: item.url, enc: 'url'}) if Translator.bibtexURLs
 
     switch
       when item.itemType in ['bookSection', 'conferencePaper']
@@ -291,8 +291,10 @@ ZoteroItem::import = (bibtex) ->
       when 'note'
         @addToExtra(value)
 
-      when 'howpublished'
-        if /^(https?:\/\/|mailto:)/i.test(value)
+      when 'url', 'howpublished'
+        if m = /^(\\url{)(https?:\/\/|mailto:)}$/.match(value)
+          @item.url = m[2]
+        else if field == 'url' || /^(https?:\/\/|mailto:)/i.test(value)
           @item.url = value
         else
           @addToExtraData(field, value)

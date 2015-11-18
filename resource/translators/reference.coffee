@@ -4,7 +4,7 @@
 # The global Translator object allows access to the current configuration of the translator
 #
 # @param {enum} preserveCaps whether capitals should be preserved by bracing then with {}. Values: none, all, inner
-# @param {boolean} fancyURLs set to true when BBT will generate \url{..} around the urls
+# @param {boolean} bibtexURLs set to true when BBT will generate \url{..} around the urls for BibTeX
 ###
 
 ###
@@ -105,11 +105,11 @@ class Reference
   # Encode to LaTeX url
   #
   # @param {field} field to encode
-  # @return {String} field.value encoded as verbatim LaTeX string (minimal escaping). If preference `fancyURLs` is on, wraps return value in `\url{string}`
+  # @return {String} field.value encoded as verbatim LaTeX string (minimal escaping). If in Better BibTeX, wraps return value in `\url{string}`
   ###
   enc_url: (f) ->
     value = @enc_verbatim(f)
-    if Translator.fancyURLs || Translator.BetterBibTeX
+    if Translator.BetterBibTeX
       return "\\url{#{@enc_verbatim(f)}}"
     else
       return value

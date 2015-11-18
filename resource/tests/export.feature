@@ -6,6 +6,7 @@ Background:
   And I set preference .jabrefGroups to false
   And I set preference .defaultDateParserLocale to en-GB
   And I set preference .preserveCaps to inner
+  And I set preference .bibtexURLs to true
 
 @test-cluster-2
 @131
