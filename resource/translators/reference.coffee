@@ -109,8 +109,13 @@ class Reference
   ###
   enc_url: (f) ->
     value = @enc_verbatim(f)
-    return "\\url{#{value}}" if Translator.fancyURLs
-    return value
+    switch
+      when Translator.fancyURLs
+        return "\\url{#{@enc_verbatim(f)}}"
+      when Translator.BetterBibTeX
+        return @enc_latex(f)
+      else
+        return @enc_verbatim(f)
 
   ###
   # Encode to verbatim LaTeX
