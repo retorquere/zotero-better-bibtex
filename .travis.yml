@@ -14,7 +14,6 @@ env:
 - TESTS=ci-cluster-2
 - TESTS=ci-cluster-3
 script:
-- git fetch --unshallow
 - bundle exec rake test[$TESTS]
 - bundle exec rake logs2s3
 - bundle exec ./.travis.sh publish
