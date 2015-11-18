@@ -1018,7 +1018,7 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
   @keymanager.scan(ids, event) if ids.length > 0
   @keymanager.scan(parents, 'modify') if parents.length > 0
 
-  ids = ids.concat(parent)
+  ids = ids.concat(parents)
 
   return unless ids.length > 0
 
