@@ -176,7 +176,6 @@ DEPENDENCIES
   github_api
   headless
   mechanize
-  multipart-post
   nokogiri
   os
   rake
