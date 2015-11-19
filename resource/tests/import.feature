@@ -36,6 +36,7 @@ Scenario Outline: Better BibTeX Import
 
   Examples:
   | file                                                                        | references  |
+  | Better BibTeX.008                                                           | 1           |
   | Failure to handle unparsed author names (92)                                | 1           |
   | Better BibTeX.001                                                           | 1           |
   | Better BibTeX.003                                                           | 2           |
@@ -43,7 +44,6 @@ Scenario Outline: Better BibTeX Import
   | Better BibTeX.005                                                           | 1           |
   | Better BibTeX.006                                                           | 1           |
   | Better BibTeX.007                                                           | 1           |
-  | Better BibTeX.008                                                           | 1           |
   | Better BibTeX.009                                                           | 2           |
   | Better BibTeX.010                                                           | 1           |
   | Better BibTeX.011                                                           | 1           |

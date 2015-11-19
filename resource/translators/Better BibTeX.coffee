@@ -297,7 +297,7 @@ ZoteroItem::import = (bibtex) ->
         @addToExtra(value)
 
       when 'url', 'howpublished'
-        if m = /^(\\url{)(https?:\/\/|mailto:)}$/.match(value)
+        if m = value.match(/^(\\url{)(https?:\/\/|mailto:)}$/i)
           @item.url = m[2]
         else if field == 'url' || /^(https?:\/\/|mailto:)/i.test(value)
           @item.url = value
