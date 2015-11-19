@@ -1203,7 +1203,7 @@ class Zotero.BetterBibTeX.XmlNode
     if typeof content[0] == 'object'
       for own name, attrs of content[0]
         continue if name == ''
-        # @doc['createElementNS'] rather than @doc.createElementNS to work around overzealous extension validator.
+        # @doc['createElementNS'] rather than @doc.createElementNS because someone thinks there's a relevant difference
         node = @doc['createElementNS'](@namespace, name)
         @root.appendChild(node)
         content = [attrs].concat(content.slice(1))

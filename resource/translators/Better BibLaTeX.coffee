@@ -28,8 +28,7 @@ Translator.typeMap = {
   letter:                             'email letter'
   movie:                              'film'
   artwork:                            'artwork'
-  # =online to fool the ridiculously stupid Mozilla code safety validator, as it thinks that any
-  # object property starting with 'on' on any kind of object installs an event handler on a DOM
+  # =online because someone thinks that any object property starting with 'on' on any kind of object installs an event handler on a DOM
   # node
   '=online':                          'blogPost forumPost webpage'
   inproceedings:                      'conferencePaper'
