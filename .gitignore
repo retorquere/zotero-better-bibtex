@@ -12,8 +12,6 @@
 *.tmp
 .depend.mf
 resource/translators/*.json
-resource/logs/*.html
-resource/logs/*.json
 test/fixtures/plugins
 tmp
 update.rdf
