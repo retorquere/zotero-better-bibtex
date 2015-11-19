@@ -186,7 +186,7 @@ Zotero.BetterBibTeX.endpoints.cacheActivity =
       dataURL = null
 
     if dataURL
-      # stupid AMO validator thinks HTML-loaded javascripts are harmful. If that were true, you have bigger problems than this
+      # someone thinks HTML-loaded javascripts are harmful. If that were true, you have bigger problems than this
       # people.
       return sendResponseCallback(200, 'text/html', Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/reports/cacheActivity.txt'))
 

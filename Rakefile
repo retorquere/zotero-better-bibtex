@@ -198,7 +198,7 @@ DOWNLOADS.each_pair{|dir, files|
   }
 }
 
-# stupid AMO validator thinks HTML-loaded javascripts are harmful. If that were true, you have bigger problems than this
+# someone thinks HTML-loaded javascripts are harmful. If that were true, you have bigger problems than this
 # people.
 file 'resource/reports/cacheActivity.txt' => 'resource/reports/cacheActivity.html' do |t|
   FileUtils.cp(t.source, t.name)
@@ -215,7 +215,7 @@ end
 file 'resource/translators/xregexp-all.js' => 'Rakefile' do |t|
   cleanly(t.name) do
     ZotPlus::RakeHelper.download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js', t.name)
-    # strip out setNatives because the Moz validator is stupid
+    # strip out setNatives because someone doesn't like it
     sh "#{NODEBIN}/grasp -i 'func-dec! #setNatives' --replace 'function setNatives(on) { if (on) { throw new Error(\"setNatives not supported in Firefox extension\"); } }' #{t.name}"
   end
 end
@@ -449,12 +449,6 @@ task :amo => XPI do
       end
     end
   end
-end
-
-task :validate => XPI do
-  dir = File.expand_path(File.dirname(XPI)).shellescape
-  xpi = File.basename(XPI).shellescape
-  sh "docker run --rm -v #{dir}:/xpi marceloandrader/amo-validator /xpi/#{xpi} -v -t extension --selfhosted"
 end
 
 task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
