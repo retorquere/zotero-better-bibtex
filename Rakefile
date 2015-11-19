@@ -28,7 +28,6 @@ require 'base64'
 require 'net/http/post/multipart'
 require 'httparty'
 require 'facets'
-require_relative 'amo-sign'
 require_relative 'lib/unicode_table'
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
