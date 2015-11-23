@@ -93,7 +93,7 @@ Zotero.BetterBibTeX.keymanager = new class
     return item
 
   alphabet: (String.fromCharCode('a'.charCodeAt() + n) for n in [0...26])
-  postfix = (n) ->
+  postfix: (n) ->
     return '' if n == 0
     n -= 1
     postfix = ''
