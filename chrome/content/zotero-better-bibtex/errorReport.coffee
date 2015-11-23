@@ -88,7 +88,7 @@ Zotero_BetterBibTeX_ErrorReport = new class
       when !request || !request.status || request.status > 1000
         ps.alert(null, Zotero.getString('general.error'), Zotero.getString('errorReport.noNetworkConnection') + ': ' + request?.status)
       when request.status != parseInt(@form.fields.success_action_status)
-        ps.alert(null, Zotero.getString('general.error'), Zotero.getString('errorReport.invalidResponseRepository') + ': ' + request.status + ': ' + request.responseText)
+        ps.alert(null, Zotero.getString('general.error'), Zotero.getString('errorReport.invalidResponseRepository') + ": #{request.status}, expected #{@form.fields.success_action_status}\n#{request.responseText}")
       else
         return true
 
