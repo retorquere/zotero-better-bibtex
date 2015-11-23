@@ -99,7 +99,7 @@ Zotero.BetterBibTeX.keymanager = new class
     postfix = ''
     while n >= 0
       postfix = @alphabet[n % 26] + postfix
-      n = parseInt(n/26) - 1
+      n = parseInt(n / 26) - 1
     return postfix
 
   assign: (item, pin) ->
