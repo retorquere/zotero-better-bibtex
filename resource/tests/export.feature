@@ -6,6 +6,7 @@ Background:
   And I set preference .jabrefGroups to false
   And I set preference .titleCase to true
   And I set preference .defaultDateParserLocale to en-GB
+  And I set preference .bibtexURLs to true
 
 @test-cluster-2
 @131
@@ -45,9 +46,15 @@ Scenario: CAYW picker
 @test-cluster-2
 @307
 Scenario: thesis zotero entries always create  bibtex entries #307
-  When I import 2 reference from 'export/thesis zotero entries always create  bibtex entries #307.json'
+  When I import 2 references from 'export/thesis zotero entries always create  bibtex entries #307.json'
   Then a library export using 'Better BibTeX' should match 'export/thesis zotero entries always create  bibtex entries #307.bibtex'
   And a library export using 'Better BibLaTeX' should match 'export/thesis zotero entries always create  bibtex entries #307.biblatex'
+
+@402
+Scenario: bibtex; url export does not survive underscores #402
+  When I import 1 reference from 'export/bibtex; url export does not survive underscores #402.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/bibtex; url export does not survive underscores #402.biblatex'
+  And a library export using 'Better BibTeX' should match 'export/bibtex; url export does not survive underscores #402.bibtex'
 
 @test-cluster-2
 @110

@@ -113,7 +113,7 @@ GEM
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
       rspec-mocks (~> 3.4.0)
-    rspec-core (3.4.0)
+    rspec-core (3.4.1)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -155,7 +155,7 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.114)
+    zotplus-rakehelper (0.0.115)
       httparty
       nokogiri
       rake
@@ -177,7 +177,6 @@ DEPENDENCIES
   headless
   jwt
   mechanize
-  multipart-post
   nokogiri
   os
   rake

@@ -238,7 +238,7 @@ Translator.initialize = ->
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
   @preferences = {}
-  for pref in ['citekeyFormat', 'skipFields', 'jabrefGroups', 'postscript', 'csquotes', 'titleCase', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'asciiBibLaTeX', 'asciiBibTeX']
+  for pref in ['citekeyFormat', 'skipFields', 'jabrefGroups', 'postscript', 'csquotes', 'titleCase', 'bibtexURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'asciiBibLaTeX', 'asciiBibTeX']
     @preferences[pref] = @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
   @skipFields = (field.trim() for field in (@skipFields || '').split(',') when field.trim())
   if @csquotes
@@ -268,8 +268,7 @@ Translator.initialize = ->
     }
 
     for own bibtex, zotero of typeMap
-      # =online to fool the ridiculously stupid Mozilla code safety validator, as it thinks that any
-      # object property starting with 'on' on any kind of object installs an event handler on a DOM
+      # =online because someone assumes that any property starting with 'on' on any kind of object installs an event handler on a DOM
       # node
       bibtex = bibtex.replace(/^=/, '').trim().split(/\s+/)
       zotero = zotero.trim().split(/\s+/)

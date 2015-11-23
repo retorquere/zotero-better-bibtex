@@ -1031,11 +1031,30 @@ Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
   @DB.autoexport.removeWhere((o) -> o.collection in extraData)
 
 Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
+  Zotero.BetterBibTeX.debug('itemChanged: event=', event, 'ids=', ids, 'extraData=', extraData)
+
   return unless type == 'item' && event in ['delete', 'trash', 'add', 'modify']
   ids = extraData if event == 'delete'
   return unless ids.length > 0
 
-  @keymanager.scan(ids, event)
+  parents = []
+  for item in Zotero.Items.get(ids)
+    if item.isAttachment() || item.isNote()
+      parent = item.getSource()
+      parents.push(parent) if parent
+
+  @keymanager.scan(ids, event) if ids.length > 0
+  @keymanager.scan(parents, 'modify') if parents.length > 0
+  Zotero.BetterBibTeX.debug('itemChanged: event=', event, 'ids=', ids, 'parents=', parents)
+
+  ids = (parseInt(id) for id in ids.concat(parents))
+  ids = ids.filter((v, i, arr) -> arr.indexOf(v) == i)
+
+  return unless ids.length > 0
+
+  for id in ids
+    @serialized.remove(id)
+    @cache.remove({itemID: id})
 
   collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
   collections = @withParentCollections(collections) unless collections.length == 0
@@ -1233,7 +1252,7 @@ class Zotero.BetterBibTeX.XmlNode
     if typeof content[0] == 'object'
       for own name, attrs of content[0]
         continue if name == ''
-        # @doc['createElementNS'] rather than @doc.createElementNS to work around overzealous extension validator.
+        # @doc['createElementNS'] rather than @doc.createElementNS because someone thinks there's a relevant difference
         node = @doc['createElementNS'](@namespace, name)
         @root.appendChild(node)
         content = [attrs].concat(content.slice(1))
