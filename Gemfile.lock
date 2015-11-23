@@ -177,6 +177,7 @@ DEPENDENCIES
   headless
   jwt
   mechanize
+  multipart-post
   nokogiri
   os
   rake
