@@ -92,6 +92,16 @@ Zotero.BetterBibTeX.keymanager = new class
     delete item.__citekey__ if item.__citekey__ == ''
     return item
 
+  alphabet: (String.fromCharCode('a'.charCodeAt() + n) for n in [0...26])
+  postfix: (n) ->
+    return '' if n == 0
+    n -= 1
+    postfix = ''
+    while n >= 0
+      postfix = @alphabet[n % 26] + postfix
+      n = parseInt(n / 26) - 1
+    return postfix
+
   assign: (item, pin) ->
     {citekey, postfix: postfixStyle} = Zotero.BetterBibTeX.formatter.format(item)
     citekey = "zotero-#{if item.libraryID in [undefined, null] then 'null' else item.libraryID}-#{item.itemID}" if citekey in [undefined, null, '']
@@ -100,13 +110,13 @@ Zotero.BetterBibTeX.keymanager = new class
     libraryID = @integer(if item.libraryID == undefined then Zotero.DB.valueQuery('select libraryID from items where itemID = ?', [item.itemID]) else item.libraryID)
     itemID = @integer(item.itemID)
     in_use = (key.citekey for key in @db.keys.where((o) -> o.libraryID == libraryID && o.itemID != itemID && o.citekey.indexOf(citekey) == 0))
-    postfix = { n: -1, c: '' }
+    postfix = { n: 0, c: '' }
     while (citekey + postfix.c) in in_use
       postfix.n++
       if postfixStyle == '0'
-        postfix.c = '-' + (postfix.n + 1)
+        postfix.c = "-#{postfix.n}"
       else
-        postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
+        postfix.c = @postfix(postfix.n)
 
     res = @set(item, citekey + postfix.c, pin)
     return res
