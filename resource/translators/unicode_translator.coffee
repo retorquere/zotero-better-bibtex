@@ -20,7 +20,7 @@ LaTeX.titleCase = (string) ->
       match.search(Translator.titleCaseLowerCase) == 0 and
       title.charAt(index - 2) != ':' and
       (title.charAt(index + match.length) != '-' or title.charAt(index - 1) == '-') and
-      title.charAt(index - 1).search(/[^\s-]/) < 0
+      title.charAt(index - 1).search(/[^"'(\s-]/) < 0
         Translator.debug('titleCase: LC', match)
         return match #.toLowerCase()
 
