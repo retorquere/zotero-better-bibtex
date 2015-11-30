@@ -5,10 +5,7 @@ LaTeX.text2latex = (text, options = {}) ->
   latex = BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
   return latex
 
-LaTeX.toTitleCase = (string) ->
-  smallWords =
-  /^(a|about|after|against|among|an|and|around|as|at|before|between|beyond|but|by|de|en|for|from|if|in|into|near|nor|of|on|or|out|over|per|since|than|the|their|through|to|towards?|via|vs?\.?|yet)$/
-
+LaTeX.titleCase = (string) ->
   # Force a word to lowercase if all of the following apply
   # 1. It is not the first word of the sentence, as smallwords at the start should be uppercased
   # 2. It is not the last word of the sentence (similar)
@@ -20,17 +17,25 @@ LaTeX.toTitleCase = (string) ->
   return string.replace(/[A-Za-z0-9\u00C0-\u00FF]+[^\s-]*/g, (match, index, title) ->
     if index > 0 and
       index + match.length != title.length and
-      match.search(smallWords) > -1 and
+      match.search(Translator.titleCaseLowerCase) == 0 and
       title.charAt(index - 2) != ':' and
       (title.charAt(index + match.length) != '-' or title.charAt(index - 1) == '-') and
       title.charAt(index - 1).search(/[^\s-]/) < 0
+        Translator.debug('titleCase: LC', match)
         return match #.toLowerCase()
+
+    if match.search(Translator.titleCaseUpperCase) == 0
+      Translator.debug('titleCase: UC', match)
+      return match #.toUpperCase()
 
     # leave a word alone if it has an uppercase letter at the second position,
     # or the second character is a period followed by anything
-    return match if match.substr(1).search(/[A-Z]|\../) > -1
+    if match.substr(1).search(/[A-Z]|\../) > -1
+      Translator.debug('titleCase: NC', match)
+      return match
 
     # uppercase
+    Translator.debug('titleCase: TC', match)
     return match.charAt(0).toUpperCase() + match.substr(1)
   )
 
@@ -39,7 +44,8 @@ LaTeX.cleanHTML = (text, options) ->
 
   if options.autoCase && Translator.titleCase
     Translator.debug('TITLECASE:>', plain.text)
-    titleCased = Zotero.BetterBibTeX.CSL.titleCase(plain.text)
+    #titleCased = Zotero.BetterBibTeX.CSL.titleCase(plain.text)
+    titleCased = @titleCase(plain.text)
     Translator.debug('TITLECASE:<', titleCased)
     _html = ''
     for c, i in html

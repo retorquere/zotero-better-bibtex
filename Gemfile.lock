@@ -2,12 +2,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.3.8)
-    aws-sdk (2.2.0)
-      aws-sdk-resources (= 2.2.0)
-    aws-sdk-core (2.2.0)
+    aws-sdk (2.2.3)
+      aws-sdk-resources (= 2.2.3)
+    aws-sdk-core (2.2.3)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.0)
-      aws-sdk-core (= 2.2.0)
+    aws-sdk-resources (2.2.3)
+      aws-sdk-core (= 2.2.3)
     backports (3.6.7)
     bibtex-ruby (4.0.16)
       latex-decode (~> 0.0)
@@ -46,7 +46,7 @@ GEM
       net-http-pipeline
     gherkin3 (3.1.2)
     ghi (1.0.3)
-    github_api (0.12.4)
+    github_api (0.13.0)
       addressable (~> 2.3)
       descendants_tracker (~> 0.0.4)
       faraday (~> 0.8, < 0.10)
@@ -57,6 +57,10 @@ GEM
     hashie (3.4.3)
     headless (2.2.0)
     highline (1.7.8)
+    httmultiparty (0.3.16)
+      httparty (>= 0.7.3)
+      mimemagic
+      multipart-post
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     httparty (0.13.7)
@@ -79,8 +83,10 @@ GEM
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (>= 0.0.9, < 0.2)
     method_source (0.8.2)
-    mime-types (2.6.2)
-    mini_portile (0.6.2)
+    mime-types (2.99)
+    mime-types-data (3.2015.1120)
+    mimemagic (0.3.0)
+    mini_portile2 (2.0.0)
     multi_json (1.11.2)
     multi_test (0.1.2)
     multi_xml (0.5.5)
@@ -88,8 +94,8 @@ GEM
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
     net-http-pipeline (1.0.1)
-    nokogiri (1.6.6.3)
-      mini_portile (~> 0.6.0)
+    nokogiri (1.6.7)
+      mini_portile2 (~> 2.0.0.rc2)
     ntlm-http (0.1.1)
     oauth2 (1.0.0)
       faraday (>= 0.8, < 0.10)
@@ -121,7 +127,7 @@ GEM
     rspec-mocks (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
-    rspec-support (3.4.0)
+    rspec-support (3.4.1)
     rubyzip (1.1.7)
     selenium-webdriver (2.48.1)
       childprocess (~> 0.5)
@@ -175,9 +181,9 @@ DEPENDENCIES
   ghi
   github_api
   headless
+  httmultiparty
   jwt
   mechanize
-  multipart-post
   nokogiri
   os
   rake
