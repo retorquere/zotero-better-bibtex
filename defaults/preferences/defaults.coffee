@@ -176,6 +176,7 @@ pref('extensions.zotero.translators.better-bibtex.titleCaseLowerCase', "
   such
   as
   _that_
+  their
   of
   up
   to
