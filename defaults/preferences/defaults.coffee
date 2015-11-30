@@ -175,7 +175,7 @@ pref('extensions.zotero.translators.better-bibtex.titleCaseLowerCase', "
   of
   such
   as
-  that
+  _that_
   of
   up
   to
