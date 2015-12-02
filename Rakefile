@@ -522,10 +522,10 @@ file SIGNED => XPI do
 
   status = {}
   (0..1000).each{|attempt|
-    puts "waiting for signing..."
     sleep 1
     status = JSON.parse(RestClient.get(url, { 'Authorization' => "JWT #{token.call}"} ).to_s)
     break if status['files'].length > 0 && status['files'][0]['signed']
+    puts "waiting for signing #{attempt}: #{status.inspect}"
   }
 
   raise "Unexpected response: #{status['files'].inspect}" if !status['files'] || status['files'].length != 1
