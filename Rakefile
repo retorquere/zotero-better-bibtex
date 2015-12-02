@@ -518,8 +518,12 @@ file SIGNED => XPI do
 
   url = "https://addons.mozilla.org/api/v3/addons/#{ID}/versions/#{RELEASE}/"
 
-  puts "Submit #{XPI} to #{url} for signing"
-  RestClient.put(url, {upload: File.new(XPI)}, { 'Authorization' => "JWT #{token.call}", 'Content-Type' => 'multipart/form-data' })
+  begin
+    puts "Submit #{XPI} to #{url} for signing"
+    RestClient.put(url, {upload: File.new(XPI)}, { 'Authorization' => "JWT #{token.call}", 'Content-Type' => 'multipart/form-data' })
+  rescue => e # just ignore if 409
+    puts e.inspect
+  end
 
   status = {}
   wait = Time.now.to_i
