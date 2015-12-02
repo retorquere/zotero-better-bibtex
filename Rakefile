@@ -523,11 +523,13 @@ file SIGNED => XPI do
 
   status = {}
   wait = Time.now.to_i
-  (0..100).each{|attempt|
-    sleep 20 # usually signed at 17
-    puts "attempt #{attempt + 1} after #{Time.now.to_i - wait}s"
+  (1..100).each{|attempt|
+    sleep 10
     status = JSON.parse(RestClient.get(url, { 'Authorization' => "JWT #{token.call}"} ).to_s)
-    break if status['files'].length > 0 && status['files'][0]['signed']
+    files = (status['files'] || []).length
+    signed = (files > 0 ? status['files'][0]['signed'] : false)
+    puts "attempt #{attempt} after #{Time.now.to_i - wait}s, #{files} files, signed: #{signed}"
+    break if signed
   }
 
   raise "Unexpected response: #{status['files'].inspect}" if !status['files'] || status['files'].length != 1 || !status['files'][0]['download_url']
