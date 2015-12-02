@@ -518,6 +518,7 @@ file SIGNED => XPI do
 
   url = "https://addons.mozilla.org/api/v3/addons/#{ID}/versions/#{RELEASE}/"
 
+  puts "Submit #{XPI} to #{url} for signing"
   RestClient.put(url, {upload: File.new(XPI)}, { 'Authorization' => "JWT #{token.call}", 'Content-Type' => 'multipart/form-data' })
 
   status = {}
@@ -525,12 +526,13 @@ file SIGNED => XPI do
     sleep 1
     status = JSON.parse(RestClient.get(url, { 'Authorization' => "JWT #{token.call}"} ).to_s)
     break if status['files'].length > 0 && status['files'][0]['signed']
-    puts "waiting for signing #{attempt}: #{status.inspect}"
+    puts "\nwaiting for signing #{attempt}: #{status.inspect}"
   }
 
-  raise "Unexpected response: #{status['files'].inspect}" if !status['files'] || status['files'].length != 1
+  raise "Unexpected response: #{status['files'].inspect}" if !status['files'] || status['files'].length != 1 || !status['files'][0]['download_url']
   raise "Not signed: #{status['files'][0].inspect}" unless status['files'][0]['signed']
 
+  puts "\ngetting signed XPI from #{status['files'][0]['download_url']}"
   File.open(SIGNED, 'wb'){|f|
     f.write(RestClient.get(status['files'][0]['download_url'], { 'Authorization' => "JWT #{token.call}"} ).body)
   }
