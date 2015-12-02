@@ -28,6 +28,9 @@ require 'base64'
 require 'net/http/post/multipart'
 require 'httparty'
 require 'facets'
+require 'jwt'
+require 'securerandom'
+require 'rest-client'
 require_relative 'lib/unicode_table'
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
@@ -449,7 +452,10 @@ task :amo => XPI do
   end
 end
 
-task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
+task :test, [:tag] => [SIGNED, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
+  # this is a hack
+  FileUtils.cp(SIGNED, XPI)
+
   tag = ''
 
   if args[:tag] =~ /ci-cluster-(.*)/
@@ -494,9 +500,40 @@ task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{
   end
 end
 
-task :sign => XPI do
-  # https://olympia.readthedocs.org/en/latest/topics/api/signing.html
-  # curl "https://addons.mozilla.org/api/v3/addons/zotero-better-bibtex/versions/#{VERSION}/" -XPUT --form XPI -H 'Authorization: JWT <jwt-token>'
+task :sign => SIGNED do
+  # this too is a hack
+  FileUtils.mv(SIGNED, XPI)
+end
+
+file SIGNED => XPI do
+  token = lambda {
+    payload = {
+      jti: SecureRandom.base64,
+      iss: ENV['MOZJWTissuer'],
+      iat: Time.now.utc.to_i,
+      exp: Time.now.utc.to_i + 60,
+    }
+    return JWT.encode(payload, ENV['MOZJWTsecret'], 'HS256')
+  }
+
+  url = "https://addons.mozilla.org/api/v3/addons/#{ID}/versions/#{RELEASE}/"
+
+  RestClient.put(url, {upload: File.new(XPI)}, { 'Authorization' => "JWT #{token.call}", 'Content-Type' => 'multipart/form-data' })
+
+  status = {}
+  (0..1000).each{|attempt|
+    puts "waiting for signing..."
+    sleep 1
+    status = JSON.parse(RestClient.get(url, { 'Authorization' => "JWT #{token.call}"} ).to_s)
+    break if status['files'].length > 0 && status['files'][0]['signed']
+  }
+
+  raise "Unexpected response: #{status['files'].inspect}" if !status['files'] || status['files'].length != 1
+  raise "Not signed: #{status['files'][0].inspect}" unless status['files'][0]['signed']
+
+  File.open(SIGNED, 'wb'){|f|
+    f.write(RestClient.get(status['files'][0]['download_url'], { 'Authorization' => "JWT #{token.call}"} ).body)
+  }
 end
 
 task :debug => XPI do
@@ -506,12 +543,13 @@ task :debug => XPI do
   puts dxpi
 end
 
-task :share => XPI do
-  xpi = Dir['*.xpi'][0]
+task :share => SIGNED do |t|
+  raise "I can only share debug builds" unless ENV['DEBUGBUILD'] == "true"
+
   url = URI.parse('http://tempsend.com/send')
-  File.open(xpi) do |data|
+  File.open(t.source) do |data|
     req = Net::HTTP::Post::Multipart.new(url.path,
-      'file' => UploadIO.new(data, 'application/x-xpinstall', File.basename(xpi)),
+      'file' => UploadIO.new(data, 'application/x-xpinstall', File.basename(XPI)),
       'expire' => '604800'
     )
     res = Net::HTTP.start(url.host, url.port) do |http|

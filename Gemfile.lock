@@ -57,10 +57,6 @@ GEM
     hashie (3.4.3)
     headless (2.2.0)
     highline (1.7.8)
-    httmultiparty (0.3.16)
-      httparty (>= 0.7.3)
-      mimemagic
-      multipart-post
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     httparty (0.13.7)
@@ -85,7 +81,6 @@ GEM
     method_source (0.8.2)
     mime-types (2.99)
     mime-types-data (3.2015.1120)
-    mimemagic (0.3.0)
     mini_portile2 (2.0.0)
     multi_json (1.11.2)
     multi_test (0.1.2)
@@ -94,6 +89,7 @@ GEM
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
     net-http-pipeline (1.0.1)
+    netrc (0.11.0)
     nokogiri (1.6.7)
       mini_portile2 (~> 2.0.0.rc2)
     ntlm-http (0.1.1)
@@ -114,6 +110,10 @@ GEM
     rack (1.6.4)
     rake (10.4.2)
     rchardet (1.6.1)
+    rest-client (1.8.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rickshaw (0.3.1)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
@@ -161,7 +161,7 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.115)
+    zotplus-rakehelper (0.0.118)
       httparty
       nokogiri
       rake
@@ -181,13 +181,13 @@ DEPENDENCIES
   ghi
   github_api
   headless
-  httmultiparty
   jwt
   mechanize
   nokogiri
   os
   rake
   rchardet
+  rest-client
   rspec
   rubyzip (>= 1.0.0)
   selenium-webdriver
