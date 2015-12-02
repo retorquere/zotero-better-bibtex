@@ -220,6 +220,8 @@ file 'resource/citeproc.js' => 'Rakefile' do |t|
       }.join('')
       open('https://raw.githubusercontent.com/zotero/zotero/4.0/chrome/content/zotero/xpcom/citeproc-prereqs.js').read + patched + "\nvar EXPORTED_SYMBOLS = ['CSL'];\n"
     }
+    sh "#{NODEBIN}/grasp -i -e 'xmldata.open($a, $b, $c);' --replace 'xmldata.dontopen({{a}}, {{b}}, {{c}});' #{t.name.shellescape}"
+    sh "#{NODEBIN}/grasp -i -e 'doc.createElement' --replace 'doc.dontcreateElement' #{t.name.shellescape}"
   end
 end
 
