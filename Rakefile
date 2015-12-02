@@ -524,7 +524,7 @@ file SIGNED => XPI do
   status = {}
   wait = Time.now.to_i
   (0..100).each{|attempt|
-    sleep [attemp + 1, 10].min # simple backoff
+    sleep [attempt + 1, 10].min # simple backoff
     status = JSON.parse(RestClient.get(url, { 'Authorization' => "JWT #{token.call}"} ).to_s)
     break if status['files'].length > 0 && status['files'][0]['signed']
     puts "#{attempt} @ #{Time.now.to_i - wait}"
