@@ -9,10 +9,10 @@ git:
 rvm:
 - 2.2
 env:
-- TESTS=ci-cluster-0
-- TESTS=ci-cluster-1
-- TESTS=ci-cluster-2
-- TESTS=ci-cluster-3
+- DEBUGBUILD=true TESTS=ci-cluster-0
+- DEBUGBUILD=true TESTS=ci-cluster-1
+- DEBUGBUILD=true TESTS=ci-cluster-2
+- DEBUGBUILD=true TESTS=ci-cluster-3
 script:
 - bundle exec rake test[$TESTS]
 - bundle exec rake logs2s3
