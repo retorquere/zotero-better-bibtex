@@ -522,11 +522,12 @@ file SIGNED => XPI do
   RestClient.put(url, {upload: File.new(XPI)}, { 'Authorization' => "JWT #{token.call}", 'Content-Type' => 'multipart/form-data' })
 
   status = {}
-  (0..1000).each{|attempt|
-    sleep 1
+  wait = Time.now.to_i
+  (0..100).each{|attempt|
+    sleep [attemp + 1, 10].min # simple backoff
     status = JSON.parse(RestClient.get(url, { 'Authorization' => "JWT #{token.call}"} ).to_s)
     break if status['files'].length > 0 && status['files'][0]['signed']
-    puts "."
+    puts "#{attempt} @ #{Time.now.to_i - wait}"
   }
 
   raise "Unexpected response: #{status['files'].inspect}" if !status['files'] || status['files'].length != 1 || !status['files'][0]['download_url']
