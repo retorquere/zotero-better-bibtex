@@ -452,7 +452,10 @@ task :amo => XPI do
   end
 end
 
-task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
+task :test, [:tag] => [SIGNED, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
+  # this is a hack
+  FileUtils.cp(SIGNED, XPI)
+
   tag = ''
 
   if args[:tag] =~ /ci-cluster-(.*)/
