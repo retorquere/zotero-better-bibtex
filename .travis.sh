@@ -3,7 +3,7 @@
 set -e
 set -u
 
-rake sign
+DEBUGBUILD=false rake sign
 XPI=`ls *.xpi`
 RELEASE="$TRAVIS_COMMIT release: $XPI"
 CHECKIN=`git log -n 1 --pretty=oneline`
