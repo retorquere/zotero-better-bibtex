@@ -2,12 +2,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.3.8)
-    aws-sdk (2.2.3)
-      aws-sdk-resources (= 2.2.3)
-    aws-sdk-core (2.2.3)
+    aws-sdk (2.2.4)
+      aws-sdk-resources (= 2.2.4)
+    aws-sdk-core (2.2.4)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.3)
-      aws-sdk-core (= 2.2.3)
+    aws-sdk-resources (2.2.4)
+      aws-sdk-core (= 2.2.4)
     backports (3.6.7)
     bibtex-ruby (4.0.16)
       latex-decode (~> 0.0)
@@ -80,6 +80,7 @@ GEM
       webrobots (>= 0.0.9, < 0.2)
     method_source (0.8.2)
     mime-types (2.99)
+    mime-types-data (3.2015.1120)
     mini_portile2 (2.0.0)
     multi_json (1.11.2)
     multi_test (0.1.2)
@@ -160,7 +161,7 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.120)
+    zotplus-rakehelper (0.0.121)
       httparty
       nokogiri
       rake
@@ -196,6 +197,3 @@ DEPENDENCIES
   washbullet
   zip-zip
   zotplus-rakehelper
-
-BUNDLED WITH
-   1.10.6

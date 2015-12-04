@@ -540,8 +540,8 @@ file SIGNED => XPI do
   begin
     puts "Submit #{XPI} to #{url} for signing"
     RestClient.put(url, {upload: File.new(XPI)}, { 'Authorization' => "JWT #{token.call}", 'Content-Type' => 'multipart/form-data' })
-  rescue => e # just ignore if 409
-    puts "#{e.class}: #{e.inspect}"
+  rescue => RestClient::Conflict
+    puts "#{XPI} already signed"
   end
 
   status = {}
