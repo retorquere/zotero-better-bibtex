@@ -3,7 +3,7 @@
 set -e
 set -u
 
-echo DEBUGBUILD=false
+export DEBUGBUILD=false
 
 rake
 XPI=`ls *.xpi`
