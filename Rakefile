@@ -506,63 +506,6 @@ task :sign => SIGNED do
   puts "after signing: #{Dir['*.xpi'].inspect}"
 end
 
-file SIGNED => XPI do
-  token = lambda {
-    payload = {
-      jti: SecureRandom.base64,
-      iss: ENV['MOZJWTissuer'],
-      iat: Time.now.utc.to_i,
-      exp: Time.now.utc.to_i + 60,
-    }
-    return JWT.encode(payload, ENV['MOZJWTsecret'], 'HS256')
-  }
-
-  duration = lambda{|secs|
-    secs = secs.to_i
-    mins  = secs / 60
-    hours = mins / 60
-    days  = hours / 24
-
-    if days > 0
-      "#{days} days and #{hours % 24} hours"
-    elsif hours > 0
-      "#{hours} hours and #{mins % 60} minutes"
-    elsif mins > 0
-      "#{mins} minutes and #{secs % 60} seconds"
-    elsif secs >= 0
-      "#{secs} seconds"
-    end
-  }
-
-  url = "https://addons.mozilla.org/api/v3/addons/#{ID}/versions/#{RELEASE}/"
-
-  begin
-    puts "Submit #{XPI} to #{url} for signing"
-    RestClient.put(url, {upload: File.new(XPI)}, { 'Authorization' => "JWT #{token.call}", 'Content-Type' => 'multipart/form-data' })
-  rescue => RestClient::Conflict
-    puts "#{XPI} already signed"
-  end
-
-  status = {}
-  wait = Time.now.to_i
-  (1..100).each{|attempt|
-    sleep 10
-    status = JSON.parse(RestClient.get(url, { 'Authorization' => "JWT #{token.call}"} ).to_s)
-    files = (status['files'] || []).length
-    signed = (files > 0 ? status['files'][0]['signed'] : false)
-    puts "attempt #{attempt} after #{duration.call(Time.now.to_i - wait)}, #{files} files, signed: #{signed}"
-    break if signed
-  }
-
-  raise "Unexpected response: #{status['files'].inspect}" if !status['files'] || status['files'].length != 1 || !status['files'][0]['download_url']
-  raise "Not signed: #{status['files'][0].inspect}" unless status['files'][0]['signed']
-
-  puts "\ngetting signed XPI from #{status['files'][0]['download_url']}"
-  File.open(SIGNED, 'wb'){|f|
-    f.write(RestClient.get(status['files'][0]['download_url'], { 'Authorization' => "JWT #{token.call}"} ).body)
-  }
-end
-
 task :debug => XPI do
   xpi = Dir['*.xpi'][0]
   dxpi = xpi.sub(/\.xpi$/, '-' + (0...8).map { (65 + rand(26)).chr }.join + '.xpi')
