@@ -220,6 +220,8 @@ file 'resource/citeproc.js' => 'Rakefile' do |t|
       }.join('')
       open('https://raw.githubusercontent.com/zotero/zotero/4.0/chrome/content/zotero/xpcom/citeproc-prereqs.js').read + patched + "\nvar EXPORTED_SYMBOLS = ['CSL'];\n"
     }
+    sh "#{NODEBIN}/grasp -i -e 'xmldata.open($a, $b, $c);' --replace 'xmldata.dontopen({{a}}, {{b}}, {{c}});' #{t.name.shellescape}"
+    sh "#{NODEBIN}/grasp -i -e 'doc.createElement' --replace 'doc.dontcreateElement' #{t.name.shellescape}"
   end
 end
 
@@ -518,8 +520,12 @@ file SIGNED => XPI do
 
   url = "https://addons.mozilla.org/api/v3/addons/#{ID}/versions/#{RELEASE}/"
 
-  puts "Submit #{XPI} to #{url} for signing"
-  RestClient.put(url, {upload: File.new(XPI)}, { 'Authorization' => "JWT #{token.call}", 'Content-Type' => 'multipart/form-data' })
+  begin
+    puts "Submit #{XPI} to #{url} for signing"
+    RestClient.put(url, {upload: File.new(XPI)}, { 'Authorization' => "JWT #{token.call}", 'Content-Type' => 'multipart/form-data' })
+  rescue => e # just ignore if 409
+    puts e.inspect
+  end
 
   status = {}
   wait = Time.now.to_i
