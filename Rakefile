@@ -503,48 +503,7 @@ task :test, [:tag] => [SIGNED, :plugins] + Dir['test/fixtures/*/*.coffee'].colle
 end
 
 task :sign => SIGNED do
-  # this too is a hack
-  FileUtils.mv(SIGNED, XPI)
-end
-
-file SIGNED => XPI do
-  token = lambda {
-    payload = {
-      jti: SecureRandom.base64,
-      iss: ENV['MOZJWTissuer'],
-      iat: Time.now.utc.to_i,
-      exp: Time.now.utc.to_i + 60,
-    }
-    return JWT.encode(payload, ENV['MOZJWTsecret'], 'HS256')
-  }
-
-  url = "https://addons.mozilla.org/api/v3/addons/#{ID}/versions/#{RELEASE}/"
-
-  begin
-    puts "Submit #{XPI} to #{url} for signing"
-    RestClient.put(url, {upload: File.new(XPI)}, { 'Authorization' => "JWT #{token.call}", 'Content-Type' => 'multipart/form-data' })
-  rescue => e # just ignore if 409
-    puts e.inspect
-  end
-
-  status = {}
-  wait = Time.now.to_i
-  (1..100).each{|attempt|
-    sleep 10
-    status = JSON.parse(RestClient.get(url, { 'Authorization' => "JWT #{token.call}"} ).to_s)
-    files = (status['files'] || []).length
-    signed = (files > 0 ? status['files'][0]['signed'] : false)
-    puts "attempt #{attempt} after #{Time.now.to_i - wait}s, #{files} files, signed: #{signed}"
-    break if signed
-  }
-
-  raise "Unexpected response: #{status['files'].inspect}" if !status['files'] || status['files'].length != 1 || !status['files'][0]['download_url']
-  raise "Not signed: #{status['files'][0].inspect}" unless status['files'][0]['signed']
-
-  puts "\ngetting signed XPI from #{status['files'][0]['download_url']}"
-  File.open(SIGNED, 'wb'){|f|
-    f.write(RestClient.get(status['files'][0]['download_url'], { 'Authorization' => "JWT #{token.call}"} ).body)
-  }
+  puts "after signing: #{Dir['*.xpi'].inspect}"
 end
 
 task :debug => XPI do

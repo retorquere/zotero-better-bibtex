@@ -156,7 +156,7 @@ class Zotero.BetterBibTeX.DateParser
       }
 
     # CSL dateparser doesn't recognize d?/m/y
-    if m = date.match(/^(([0-9]{1,2})[-\s\/])?([0-9]{1,2})[-\s\/]([0-9]{3,4})(\?)?(~)?$/)
+    if m = date.match(/^(([0-9]{1,2})[-\.\s\/])?([0-9]{1,2})[-\.\s\/]([0-9]{3,4})(\?)?(~)?$/)
       parsed = {
         year: parseInt(m[4])
         month: parseInt(m[3])

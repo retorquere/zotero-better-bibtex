@@ -3,8 +3,14 @@
 set -e
 set -u
 
-DEBUGBUILD=false rake
+export DEBUGBUILD=false
+
+rake
 XPI=`ls *.xpi`
+
+# force re-signing later
+rm -f $XPI
+
 RELEASE="$TRAVIS_COMMIT release: $XPI"
 CHECKIN=`git log -n 1 --pretty=oneline`
 echo "checkin: $CHECKIN"
@@ -19,7 +25,8 @@ if [ "$CHECKIN" = "$RELEASE" ] ; then
   #else
     STATUS=`travis_parallel_sentinel script`
     if [ "$STATUS" = "deploy" ] ; then
-      DEBUGBUILD=false rake sign
+      rake sign
+
       sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .gitmodules
       if [ -f .git/modules/www/config ] ; then # how can this be absent?!
         sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .git/modules/www/config

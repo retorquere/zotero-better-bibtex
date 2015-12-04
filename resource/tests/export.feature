@@ -210,13 +210,14 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Colon in bibtex key #405                                                                       | 1           |
+     | condense in cite key format not working #308                                                   | 1           |
      | Better BibLaTeX.009                                                                            | 2           |
      | Better BibLaTeX.003                                                                            | 2           |
      | Better BibLaTeX.005                                                                            | 1           |
      | Better BibLaTeX.006                                                                            | 1           |
      | Fields in Extra should override defaults                                                       | 1           |
      | BibTeX variable support for journal titles. #309                                               | 1           |
-     | condense in cite key format not working #308                                                   | 1           |
      | Better BibLaTeX.004                                                                            | 1           |
      | Oriental dates trip up date parser #389                                                        | 1           |
      | Better BibLaTeX.007                                                                            | 1           |
@@ -246,6 +247,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | date and year are switched #406                                                    | 1           |
      | Malformed HTML                                                                     | 1           |
      | Capitalisation in techreport titles #160                                           | 1           |
      | Better BibLaTeX.019                                                                | 1           |
