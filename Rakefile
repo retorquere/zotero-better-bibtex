@@ -541,7 +541,7 @@ file SIGNED => XPI do
     puts "Submit #{XPI} to #{url} for signing"
     RestClient.put(url, {upload: File.new(XPI)}, { 'Authorization' => "JWT #{token.call}", 'Content-Type' => 'multipart/form-data' })
   rescue => e # just ignore if 409
-    puts e.inspect
+    puts "#{e.class}: #{e.inspect}"
   end
 
   status = {}
