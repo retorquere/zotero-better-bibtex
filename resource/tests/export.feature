@@ -247,6 +247,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | date and year are switched #406                                                    | 1           |
      | Malformed HTML                                                                     | 1           |
      | Capitalisation in techreport titles #160                                           | 1           |
      | Better BibLaTeX.019                                                                | 1           |

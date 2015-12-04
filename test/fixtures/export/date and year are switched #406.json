@@ -1,0 +1,54 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.6.6",
+    "preferences": {
+      "citekeyFormat": "[auth:lower]_[veryshorttitle:lower]_[year]",
+      "skipFields": "",
+      "jabrefGroups": false,
+      "postscript": "",
+      "csquotes": "",
+      "preserveCaps": "no",
+      "fancyURLs": false,
+      "langID": "babel",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false,
+      "preserveBibTeXVariables": false,
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections": [],
+  "items": [
+    {
+      "itemType": "book",
+      "tags": [],
+      "relations": {},
+      "edition": "2",
+      "publisher": "Prentice Hall",
+      "ISBN": "978-0-13-014400-3",
+      "date": "22.08.2000",
+      "title": "Introduction to Graph Theory",
+      "numPages": "470",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "West",
+          "firstName": "Douglas Brent"
+        }
+      ],
+      "attachments": [],
+      "notes": [],
+      "itemID": 60,
+      "seeAlso": [],
+      "__citekey__": "west_introduction_"
+    }
+  ],
+  "cache": {}
+}
