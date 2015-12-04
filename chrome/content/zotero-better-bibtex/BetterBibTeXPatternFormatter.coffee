@@ -60,12 +60,12 @@ class BetterBibTeXPatternFormatter
   reduce: (step) ->
     value = @methods[step.method].apply(@, step.arguments)
     value = '' unless value
+    value = @clean(value) if step.scrub
 
     for filter in step.filters || []
       value = @filters[filter.filter].apply(@, [value].concat(filter.arguments))
       value = '' unless value
 
-    value = @clean(value) if step.scrub
     return value
 
   clean: (str) ->

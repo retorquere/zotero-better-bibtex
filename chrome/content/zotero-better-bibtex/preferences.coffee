@@ -71,7 +71,7 @@ BetterBibTeXPref =
     catch err
       parseerror = err
 
-    Zotero.BetterBibTeX.debug('parsing format', keyformat.value, ':', !!parseerror)
+    Zotero.BetterBibTeX.debug('parsing format', keyformat.value, ':', !parseerror)
     keyformat.setAttribute('style', (if parseerror then '-moz-appearance: none !important; background-color: DarkOrange' else ''))
     keyformat.setAttribute('tooltiptext', '' + (parseerror || ''))
 
