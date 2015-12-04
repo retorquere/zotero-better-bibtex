@@ -503,10 +503,6 @@ task :test, [:tag] => [SIGNED, :plugins] + Dir['test/fixtures/*/*.coffee'].colle
 end
 
 task :sign => SIGNED do
-  # this too is a hack
-  unsigned = XPI.replace(/\.xpi$/, '') + '-unsigned.xpi'
-  FileUtils.mv(XPI, unsigned)
-  FileUtils.mv(SIGNED, XPI)
   puts "after signing: #{Dir['*.xpi'].inspect}"
 end
 

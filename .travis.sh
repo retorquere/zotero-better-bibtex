@@ -27,9 +27,6 @@ if [ "$CHECKIN" = "$RELEASE" ] ; then
     if [ "$STATUS" = "deploy" ] ; then
       rake sign
 
-      ls *.xpi
-      exit
-
       sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .gitmodules
       if [ -f .git/modules/www/config ] ; then # how can this be absent?!
         sed -i.bak -e 's/git@github.com:/https:\/\/github.com\//' .git/modules/www/config
