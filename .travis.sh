@@ -7,6 +7,10 @@ export DEBUGBUILD=false
 
 rake
 XPI=`ls *.xpi`
+
+# force re-signing later
+rm -f $XPI
+
 RELEASE="$TRAVIS_COMMIT release: $XPI"
 CHECKIN=`git log -n 1 --pretty=oneline`
 echo "checkin: $CHECKIN"
