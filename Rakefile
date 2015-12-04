@@ -518,6 +518,23 @@ file SIGNED => XPI do
     return JWT.encode(payload, ENV['MOZJWTsecret'], 'HS256')
   }
 
+  duration = lambda{|secs|
+    secs = secs.to_i
+    mins  = secs / 60
+    hours = mins / 60
+    days  = hours / 24
+
+    if days > 0
+      "#{days} days and #{hours % 24} hours"
+    elsif hours > 0
+      "#{hours} hours and #{mins % 60} minutes"
+    elsif mins > 0
+      "#{mins} minutes and #{secs % 60} seconds"
+    elsif secs >= 0
+      "#{secs} seconds"
+    end
+  }
+
   url = "https://addons.mozilla.org/api/v3/addons/#{ID}/versions/#{RELEASE}/"
 
   begin
@@ -534,7 +551,7 @@ file SIGNED => XPI do
     status = JSON.parse(RestClient.get(url, { 'Authorization' => "JWT #{token.call}"} ).to_s)
     files = (status['files'] || []).length
     signed = (files > 0 ? status['files'][0]['signed'] : false)
-    puts "attempt #{attempt} after #{Time.now.to_i - wait}s, #{files} files, signed: #{signed}"
+    puts "attempt #{attempt} after #{lambda.call(Time.now.to_i - wait)}s, #{files} files, signed: #{signed}"
     break if signed
   }
 
