@@ -551,7 +551,7 @@ file SIGNED => XPI do
     status = JSON.parse(RestClient.get(url, { 'Authorization' => "JWT #{token.call}"} ).to_s)
     files = (status['files'] || []).length
     signed = (files > 0 ? status['files'][0]['signed'] : false)
-    puts "attempt #{attempt} after #{lambda.call(Time.now.to_i - wait)}s, #{files} files, signed: #{signed}"
+    puts "attempt #{attempt} after #{duration.call(Time.now.to_i - wait)}, #{files} files, signed: #{signed}"
     break if signed
   }
 
