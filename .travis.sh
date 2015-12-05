@@ -5,6 +5,7 @@ set -u
 
 export DEBUGBUILD=false
 
+rake clean
 rake
 XPI=`ls *.xpi`
 
