@@ -167,7 +167,7 @@ class Zotero.BetterBibTeX.DateParser
       @swapMonth(parsed, 'mdy')
       return parsed
 
-    if m = date.match(/^(-?[0-9]{3,4})[-\s\/]([0-9]{1,2})([-\s\/]([0-9]{1,2}))?(\?)?(~)?$/)
+    if m = date.match(/^(-?[0-9]{3,4})[-\.\s\/]([0-9]{1,2})([-\.\s\/]([0-9]{1,2}))?(\?)?(~)?$/)
       parsed = {
         year: @year(m[1])
         month: parseInt(m[2])
