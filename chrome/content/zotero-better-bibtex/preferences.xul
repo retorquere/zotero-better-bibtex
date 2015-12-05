@@ -13,7 +13,6 @@
   <script src="chrome://zotero-better-bibtex/content/include.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeXPatternFormatter.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeXPatternParser.js"/>
-  <script src="chrome://zotero-better-bibtex/content/preferences.js"/><!-- needs to be included every time anew to bind windows and document -->
 
   <prefwindow id="zotero-prefs">
     <prefpane id="zotero-prefpane-better-bibtex"
@@ -226,4 +225,6 @@
       </tabbox>
     </prefpane>
   </prefwindow>
+
+  <script src="chrome://zotero-better-bibtex/content/preferences.js"/><!-- needs to be included every time anew to bind windows and document -->
 </overlay>

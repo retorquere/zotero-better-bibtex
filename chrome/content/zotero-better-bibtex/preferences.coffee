@@ -13,6 +13,13 @@ BetterBibTeXPref =
     BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.pref.get('citekeyFormat')
     BetterBibTeXPref.update()
 
+    Zotero.BetterBibTeX.debug('prefs pane loaded:', document.location.hash)
+    if document.location.hash == '#better-bibtex'
+      # runs into the 'TypeError: aId is undefined' problem for some reason.
+      setTimeout((->
+        document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex'))
+      ), 500)
+
   saveCitekeyFormat: ->
     BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.pref.get('citekeyFormat')
 
