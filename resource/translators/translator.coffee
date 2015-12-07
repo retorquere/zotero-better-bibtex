@@ -194,7 +194,7 @@ Translator.extractFields = (item) ->
   # fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/
   item.extra = item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, name, value) =>
     cslvar = Translator.CSLVariable(name)
-    return m unless cslvar
+    return '' unless cslvar
 
     if cslvar.type == 'creator'
       fields[cslvar.name] = {value: [], format: 'csl'} unless Array.isArray(fields[name]?.value)
