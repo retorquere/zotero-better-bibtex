@@ -431,11 +431,11 @@ class Reference
         # CSL names are not in BibTeX format, so only add it if there's a mapping
         cslvar = Translator.CSLVariables[name]
         mapped = cslvar[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
-        mapped = mapped.call(@) if typeof name == 'function'
+        mapped = mapped.call(@) if typeof mapped == 'function'
         autoCase = name in ['title', 'shorttitle', 'origtitle', 'booktitle', 'maintitle']
 
         if mapped
-          fields.push({ name: mapped, value: value.value, autoCase, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type), raw })
+          fields.push({ name: mapped, value: value.value, autoCase, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type) })
 
         else
           Translator.debug('Unmapped CSL field', name, '=', value.value)

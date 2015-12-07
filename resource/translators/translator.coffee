@@ -99,7 +99,7 @@ Translator.CSLVariables = {
   PMCID:                          {}
   PMID:                           {}
   publisher:                      {}
-  'publisher-place':              {}
+  'publisher-place':              { BibLaTeX: 'location', type: 'literal' }
   references:                     {}
   'reviewed-title':               {}
   scale:                          {}
@@ -150,12 +150,7 @@ for name, v of Translator.CSLVariables
   v.name = name
 
 Translator.CSLVariable = (name) ->
-  return @CSLVariables[name] if @CSLVariables[name]
-  name = name.toLowerCase()
-  return @CSLVariables[name] if @CSLVariables[name]
-  name = name.toUpperCase()
-  return @CSLVariables[name] if @CSLVariables[name]
-  return null
+  return @CSLVariables[name] || @CSLVariables[name.toLowerCase()] || @CSLVariables[name.toUpperCase()]
 
 Translator.CSLCreator = (value) ->
   creator = value.split(/\s*\|\|\s*/)
@@ -221,7 +216,7 @@ Translator.extractFields = (item) ->
       when !cslvar
         fields[m[1].toLowerCase()] = {value: m[2].trim(), format: 'key-value'}
       when cslvar.type == 'creator'
-        fields[cslvar.name] = {value: [], format: 'csl'} unless Array.isArray(fields[cslvar.name].value)
+        fields[cslvar.name] = {value: [], format: 'csl'} unless Array.isArray(fields[cslvar.name]?.value)
         fields[cslvar.name].value.push(@CSLCreator(m[2].trim()))
       else
         fields[cslvar.name] = {value: m[2].trim(), format: 'csl'}
