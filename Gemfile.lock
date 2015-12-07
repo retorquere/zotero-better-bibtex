@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.3.8)
+    addressable (2.4.0)
     aws-sdk (2.2.4)
       aws-sdk-resources (= 2.2.4)
     aws-sdk-core (2.2.4)
@@ -157,7 +157,7 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.125)
+    zotplus-rakehelper (0.0.129)
       nokogiri
       rake
       rest-client

@@ -4,6 +4,7 @@ Zotero.BetterBibTeX.DB = new class
   cacheExpiry: Date.now() - (1000 * 60 * 60 * 24 * 30)
 
   constructor: ->
+    Zotero.debug('DB.initialize')
     # split to speed up auto-saves
     @db = {
       main: new loki('db.json', {
@@ -70,8 +71,10 @@ Zotero.BetterBibTeX.DB = new class
     @upgradeNeeded = @metadata.Zotero != ZOTERO_CONFIG.VERSION || @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
 
     cacheReset = Zotero.BetterBibTeX.pref.get('cacheReset')
-    if !cacheReset
-      cacheReset = !keepCache && @metadata.BetterBibTeX && Services.vc.compare(@metadata.BetterBibTeX, Zotero.BetterBibTeX.release) < 0
+    Zotero.debug('DB.initialize, cache reset: ' + JSON.stringify({cacheReset, keepCache, metadata: @metadata, release: Zotero.BetterBibTeX.release}))
+
+    if !cacheReset && !keepCache
+      cacheReset = !@metadata.BetterBibTeX || @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
       # the 3000 is arbitrary. I just assume if you have less than 3k actually cached, you will be more annoyed by being
       # asked about the cache than about it being regenerated.
       if cacheReset && Zotero.BetterBibTeX.pref.get('confirmCacheReset') && (@cache.chain().data().length > 3000 || @serialized.chain().data().length > 3000)
@@ -84,16 +87,15 @@ Zotero.BetterBibTeX.DB = new class
         ].join("\n"))
 
     if cacheReset
-      Zotero.BetterBibTeX.debug('db.reset:', {cacheReset, keepCache, db: @metadata.BetterBibTeX, release: Zotero.BetterBibTeX.release})
       @serialized.removeDataOnly()
       @cache.removeDataOnly()
       if typeof cacheReset == 'number'
         cacheReset = cacheReset - 1
         cacheReset = 0 if cacheReset < 0
         Zotero.BetterBibTeX.pref.set('cacheReset', cacheReset)
-        Zotero.BetterBibTeX.debug('cache.load forced reset', cacheReset, 'left')
+        Zotero.debug('DB.initialize, cache.load forced reset, ' + cacheReset + 'left')
       else
-        Zotero.BetterBibTeX.debug('cache.load reset after upgrade from', @metadata.BetterBibTeX, 'to', Zotero.BetterBibTeX.release)
+        Zotero.debug("DB.initialize, cache.load reset after upgrade from #{@metadata.BetterBibTeX} to #{Zotero.BetterBibTeX.release}")
 
     @keys.on('insert', (key) =>
       if !key.citekeyFormat && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
@@ -110,8 +112,8 @@ Zotero.BetterBibTeX.DB = new class
       @removeWhere({itemID: key.itemID})
     )
 
-    Zotero.BetterBibTeX.debug('DB: ready')
-    Zotero.BetterBibTeX.debug('DB: ready.serialized:', {n: @serialized.chain().data().length})
+    Zotero.debug('DB.initialize: ready')
+    Zotero.debug("DB.initialize: ready.serialized: #{@serialized.chain().data().length}")
 
     idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
     idleService.addIdleObserver({observe: (subject, topic, data) => @save() if topic == 'idle'}, 5)

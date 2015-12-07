@@ -3,11 +3,11 @@ if not Zotero.BetterBibTeX
 
   for script in " lokijs
                   zotero-better-bibtex
+                  release
                   db
                   csl-localedata
                   fold-to-ascii
                   punycode
-                  release
                   BetterBibTeXPatternFormatter
                   BetterBibTeXPatternParser
                   preferences

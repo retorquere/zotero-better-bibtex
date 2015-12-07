@@ -247,6 +247,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | CSL variables only recognized when in lowercase #408                               | 1           |
      | date and year are switched #406                                                    | 4           |
      | Malformed HTML                                                                     | 1           |
      | Capitalisation in techreport titles #160                                           | 1           |

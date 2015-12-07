@@ -139,6 +139,7 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'resource/translators/xregexp-all.js',
   'resource/reports/cacheActivity.txt',
 ]).sort.uniq
+File.unlink('chrome/content/zotero-better-bibtex/release.js') if File.file?('chrome/content/zotero-better-bibtex/release.js')
 
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
 CLEAN.include('{resource,chrome,defaults}/**/*.js.map')
@@ -714,6 +715,14 @@ file 'wiki/Scripting.md' => ['resource/translators/reference.coffee'] do |t|
   #index = open(t.name).read
   #index = "---\ntitle: Scripting\n---\n" + index
   #open(t.name, 'w'){|f| f.write(index) }
+end
+
+task :install => XPI do
+  if OS.mac?
+    sh "open #{XPI}"
+  else
+    sh "xdg-open #{XPI}"
+  end
 end
 
 task :logs2s3 do

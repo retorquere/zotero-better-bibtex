@@ -66,7 +66,7 @@ Translator.CSLVariables = {
   'archive_location':             {}
   'archive-place':                {}
   authority:                      { BibLaTeX: 'institution' }
-  'call-number':                  {}
+  'call-number':                  { BibTeX: 'lccn' }
   #'citation-label':              {}
   #'citation-number':             {}
   'collection-title':             {}
@@ -79,13 +79,13 @@ Translator.CSLVariables = {
 
   'container-title-short':        {}
   dimensions:                     {}
-  DOI:                            {}
+  DOI:                            { BibTeX: 'doi', BibLaTeX: 'doi' }
   event:                          {}
   'event-place':                  {}
   #'first-reference-note-number': {}
   genre:                          {}
-  ISBN:                           {}
-  ISSN:                           {}
+  ISBN:                           { BibTeX: 'isbn', BibLaTeX: 'isbn' }
+  ISSN:                           { BibTeX: 'issn', BibLaTeX: 'issn' }
   jurisdiction:                   {}
   keyword:                        {}
   locator:                        {}
@@ -146,6 +146,16 @@ Translator.CSLVariables = {
   'reviewed-author':              { type: 'creator' }
   translator:                     { type: 'creator' }
 }
+for name, v of Translator.CSLVariables
+  v.name = name
+
+Translator.CSLVariable = (name) ->
+  return @CSLVariables[name] if @CSLVariables[name]
+  name = name.toLowerCase()
+  return @CSLVariables[name] if @CSLVariables[name]
+  name = name.toUpperCase()
+  return @CSLVariables[name] if @CSLVariables[name]
+  return null
 
 Translator.CSLCreator = (value) ->
   creator = value.split(/\s*\|\|\s*/)
@@ -166,7 +176,7 @@ Translator.extractFields = (item) ->
     for assignment in m[2].split(';')
       data = assignment.match(/^([^=]+)=\s*(.*)/)
       if data
-        fields[data[1]] = {value: data[2], format: 'naive'}
+        fields[data[1].toLowerCase()] = {value: data[2], format: 'naive'}
       else
         Translator.debug("Not an assignment: #{assignment}")
 
@@ -184,18 +194,18 @@ Translator.extractFields = (item) ->
     if json
       item.extra = item.extra.replace(prefix + data, '').trim()
       for own name, value of json
-        fields[name] = {value, format: 'json' }
+        fields[name.toLowerCase()] = {value, format: 'json' }
 
   # fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/
   item.extra = item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, name, value) =>
-    cslvar = Translator.CSLVariables[name]
-    return '' unless cslvar
+    cslvar = Translator.CSLVariable(name)
+    return m unless cslvar
 
     if cslvar.type == 'creator'
-      fields[name] = {value: [], format: 'csl'} unless Array.isArray(fields[name]?.value)
-      fields[name].value.push(@CSLCreator(value))
+      fields[cslvar.name] = {value: [], format: 'csl'} unless Array.isArray(fields[name]?.value)
+      fields[cslvar.name].value.push(@CSLCreator(value))
     else
-      fields[name] = { value, format: 'csl' }
+      fields[cslvar.name] = { value, format: 'csl' }
 
     return ''
   )
@@ -203,16 +213,18 @@ Translator.extractFields = (item) ->
   extra = []
   for line in item.extra.split("\n")
     m = Translator.extractFieldsKVRE.exec(line)
+    cslvar = if m then @CSLVariable(m[1]) else null
+
     switch
       when !m
         extra.push(line)
-      when @CSLVariables[m[1]]?.type == 'creator'
-        fields[m[1]] = {value: [], format: 'csl'} unless Array.isArray(fields[m[1]]?.value)
-        fields[m[1]].value.push(@CSLCreator(m[2].trim()))
-      when @CSLVariables[m[1]]
-        fields[m[1]] = {value: m[2].trim(), format: 'csl'}
+      when !cslvar
+        fields[m[1].toLowerCase()] = {value: m[2].trim(), format: 'key-value'}
+      when cslvar.type == 'creator'
+        fields[cslvar.name] = {value: [], format: 'csl'} unless Array.isArray(fields[cslvar.name].value)
+        fields[cslvar.name].value.push(@CSLCreator(m[2].trim()))
       else
-        fields[m[1]] = {value: m[2].trim(), format: 'key-value'}
+        fields[cslvar.name] = {value: m[2].trim(), format: 'csl'}
   item.extra = extra.join("\n")
 
   item.extra = item.extra.trim()

@@ -416,7 +416,6 @@ class Reference
     fields = []
     for own name, value of @override
       raw = (value.format in ['naive', 'json'])
-      name = name.toLowerCase()
 
       # psuedo-var, sets the reference type
       if name == 'referencetype'
@@ -429,12 +428,12 @@ class Reference
       if value.format == 'csl'
         # CSL names are not in BibTeX format, so only add it if there's a mapping
         cslvar = Translator.CSLVariables[name]
-        name = cslvar[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
-        name = name.call(@) if typeof name == 'function'
+        mapped = cslvar[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
+        mapped = mapped.call(@) if typeof name == 'function'
         autoCase = name in ['title', 'shorttitle', 'origtitle', 'booktitle', 'maintitle']
 
-        if name
-          fields.push({ name, value: value.value, autoCase, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type), raw })
+        if mapped
+          fields.push({ name: mapped, value: value.value, autoCase, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type), raw })
 
         else
           Translator.debug('Unmapped CSL field', name, '=', value.value)
