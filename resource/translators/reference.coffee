@@ -423,7 +423,9 @@ class Reference
         continue
 
       # these are handled just like 'arxiv' and 'lccn', respectively
-      value.format = 'key-value' if name in ['pmid', 'pmcid']
+      if name in ['PMID', 'PMCID']
+        value.format = 'key-value'
+        name = name.toLowerCase()
 
       if value.format == 'csl'
         # CSL names are not in BibTeX format, so only add it if there's a mapping
