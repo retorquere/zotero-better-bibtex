@@ -8,7 +8,7 @@ export DEBUGBUILD=false
 XPI=`rake xpi`
 
 # force re-signing later
-rm -f $XPI
+rm -f *.xpi
 
 RELEASE="$TRAVIS_COMMIT release: $XPI"
 CHECKIN=`git log -n 1 --pretty=oneline`
