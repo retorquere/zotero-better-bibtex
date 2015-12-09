@@ -210,6 +210,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Book sections have book title for journal in citekey #409                                      | 1           |
      | Colon in bibtex key #405                                                                       | 1           |
      | condense in cite key format not working #308                                                   | 1           |
      | Better BibLaTeX.009                                                                            | 2           |
