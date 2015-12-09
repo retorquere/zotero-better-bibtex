@@ -5,9 +5,7 @@ set -u
 
 export DEBUGBUILD=false
 
-rake clean
-rake
-XPI=`ls *.xpi`
+XPI=`rake xpi`
 
 # force re-signing later
 rm -f $XPI
