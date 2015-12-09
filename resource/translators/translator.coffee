@@ -244,27 +244,7 @@ Translator.initialize = ->
   for own attr, f of @fieldMap || {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
-  preferenceKeys = [
-    'asciiBibLaTeX'
-    'asciiBibTeX'
-    'attachmentsNoMetadata'
-    'bibtexURLs'
-    'citekeyFormat'
-    'csquotes'
-    'DOIandURL'
-    'jabrefGroups'
-    'langID'
-    'postscript'
-    'preserveBibTeXVariables'
-    'rawImports'
-    'skipFields'
-    'titleCase'
-    'titleCaseLowerCase'
-    'titleCaseUpperCase'
-  ]
-
-  @preferences = {}
-  for pref in preferenceKeys
+  for pref in Object.keys(@preferences)
     @preferences[pref] = @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
 
   @titleCaseLowerCase = new RegExp('^(' + (word.replace(/\./g, '\\.') for word in @titleCaseLowerCase.split(/\s+/) when word).join('|') + ')$', 'i')
