@@ -9,7 +9,7 @@ GEM
     aws-sdk-resources (2.2.5)
       aws-sdk-core (= 2.2.5)
     backports (3.6.7)
-    bibtex-ruby (4.0.16)
+    bibtex-ruby (4.1.0)
       latex-decode (~> 0.0)
     builder (3.2.2)
     childprocess (0.5.8)
@@ -158,7 +158,7 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.130)
+    zotplus-rakehelper (0.0.131)
       nokogiri
       rake
       rest-client
