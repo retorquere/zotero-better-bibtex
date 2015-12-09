@@ -19,6 +19,8 @@ editors/processors, I'm pragmatic about implementing what works.
 # Configuration
 
 The Better BibTeX configuration pane can be found under the regular Zotero preferences pane, tab 'Better Bib(La)TeX'.
+You can get also there by pasting [this link](https://zotplus.github.io/better-bibtex/chrome://zotero/content/preferences/preferences.xul#better-bibtex) in
+Firefox. Clicking the link won't work, sorry.
 
 # Installation (one-time)
 
@@ -28,7 +30,7 @@ what is called "connector mode", which is currently [not
 supported](https://github.com/ZotPlus/zotero-better-bibtex/issues/143). Or, to be fully exact, you can have it installed
 in both, but running both at the same time will have BBT break at indeterminate occasions. Recoverable, but not fun.
 
-Start by downloading the [latest version](https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.6.15/zotero-better-bibtex-1.6.15.xpi) (**1.6.15**), and then
+Start by downloading the [latest version](https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.6.16/zotero-better-bibtex-1.6.16.xpi) (**1.6.16**), and then
 
 ## BBT for Zotero Firefox
 
@@ -75,7 +77,7 @@ or there are problems preventing me from implementing a fix.
 
   switch (window.location.hash.trim()) {
     case '#xpi':
-      window.location = 'https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.6.15/zotero-better-bibtex-1.6.15.xpi';
+      window.location = 'https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.6.16/zotero-better-bibtex-1.6.16.xpi';
       break;
     case '#debug':
       window.location = 'https://drive.google.com/a/iris-advies.com/folderview?id=0B8tW4NMPfEosfkFETUV0V2l0N3NHZHEyQk5SUm03TjZmS1RoVmlBTmdHclUtcTRzZ2VHclU&usp=drive_web#list';
