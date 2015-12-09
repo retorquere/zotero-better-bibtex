@@ -118,7 +118,7 @@ end
 #    end
 #  end
 #}
-ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
+ZIPFILES = (Dir['{chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   tgt = src.sub(/\.[^\.]+$/, '.js')
   tgt
 }.flatten + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
@@ -131,10 +131,12 @@ ZIPFILES = (Dir['{defaults,chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/csl-localedata.js',
+  'defaults/preferences/defaults.js',
   'resource/citeproc.js',
   'chrome.manifest',
   'install.rdf',
   'resource/translators/json5.js',
+  'resource/translators/preferences.js',
   'resource/translators/latex_unicode_mapping.js',
   'resource/translators/xregexp-all.js',
   'resource/reports/cacheActivity.txt',
@@ -198,6 +200,22 @@ DOWNLOADS.each_pair{|dir, files|
     end
   }
 }
+
+file 'defaults/preferences/defaults.js' => ['defaults/preferences/defaults.yml', 'Rakefile'] do |t|
+  prefs = YAML::load_file(t.source)
+  open(t.name, 'w'){|f|
+    prefs.each_pair{|k, v|
+      k = "extensions.zotero.translators.better-bibtex.#{k}"
+      f.puts("pref(#{k.to_json}, #{v.to_json});")
+    }
+  }
+end
+
+file 'resource/translators/preferences.js' => ['defaults/preferences/defaults.yml', 'Rakefile'] do |t|
+  open(t.name, 'w'){|f|
+    f.puts("Translator.preferences = #{JSON.pretty_generate(YAML::load_file(t.source))}")
+  }
+end
 
 # someone thinks HTML-loaded javascripts are harmful. If that were true, you have bigger problems than this
 # people.
