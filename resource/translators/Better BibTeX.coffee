@@ -50,10 +50,11 @@ doExport = ->
     ref.add({ name: 'number', value: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
+    Translator.debug('urls:', {setting: Translator.bibtexURLs})
     switch Translator.bibtexURLs
       when 'url'
         ref.add({ name: 'url', value: item.url, enc: 'verbatim'})
-      when 'note'
+      when 'note', 'true' # that's what you get when you change pref type
         ref.add({ name: (if ref.referencetype in ['misc', 'booklet'] then 'howpublished' else 'note'), allowDuplicates: true, value: item.url, enc: 'url'})
 
     switch
