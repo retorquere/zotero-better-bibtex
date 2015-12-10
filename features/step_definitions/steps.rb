@@ -228,6 +228,7 @@ When /^I import (.+) from '(.+?)'(?:(?: as )'(.+)')?$/ do |items, filename, alia
 
       if data['config']['label'] == 'BetterBibTeX JSON'
         (data['config']['preferences'] || {}).each_pair{|key, value|
+          next if %w{tests test.timestamp attachmentRelativePath autoExport debug}.include?(key)
           $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.' + key, value)
         }
         @exportOptions = data['config']['options'] || {}
