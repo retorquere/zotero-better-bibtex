@@ -32,6 +32,7 @@ warnBulkModify: 10
 postscript: ''
 jabrefGroups: true
 defaultDateParserLocale: ''
+parseParticles: true
 titleCase: false
 titleCaseLowerCase: about above across afore after against along alongside amid amidst
   among amongst anenst apropos apud around as aside astride at athwart atop barring

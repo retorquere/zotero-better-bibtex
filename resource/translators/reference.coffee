@@ -217,7 +217,7 @@ class Reference
         when raw
           name = [creator.lastName || '', creator.firstName || ''].join(', ')
 
-        when creator.lastName || creator.firstName
+        when Translator.parseParticles && (creator.lastName || creator.firstName)
           name = {family: creator.lastName || '', given: creator.firstName || ''}
 
           Zotero.BetterBibTeX.CSL.parseParticles(name)
@@ -229,6 +229,12 @@ class Reference
             name = @_enc_creators_bibtex(name)
           else
             name = @_enc_creators_biblatex(name)
+
+        when creator.lastName || creator.firstName
+          name = []
+          name.push(new String(creator.lastName)) if creator.lastName
+          name.push(creator.firstName) if creator.firstName
+          name = @enc_latex({value: name, sep: ', '})
 
         else
           continue
