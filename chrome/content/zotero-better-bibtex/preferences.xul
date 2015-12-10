@@ -41,6 +41,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.rawImports"               id="pref-better-bibtex-raw-imports"             type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.scanCitekeys"             id="pref-better-bibtex-rescan-citekeys"         type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.showCitekeys"             id="pref-better-bibtex-show-citekey"            type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.parseParticles"           id="pref-better-bibtex-parseParticles"          type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.skipFields"               id="pref-better-bibtex-skipFields"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.warnBulkModify"           id="pref-better-bibtex-bulkWarning"             type="int"/>
       </preferences>
@@ -103,6 +104,9 @@
                   </row>
                   <row>
                     <checkbox id="id-better-bibtex-preferences-show-citekey" label="&zotero.better-bibtex.show-citekey;" preference="pref-better-bibtex-show-citekey"/>
+                  </row>
+                  <row>
+                    <checkbox label="&zotero.better-bibtex.parseParticles;" preference="pref-better-bibtex-parseParticles"/>
                   </row>
                   <row>
                     <label value="&zotero.better-bibtex.prefs.bulkWarning;"/>

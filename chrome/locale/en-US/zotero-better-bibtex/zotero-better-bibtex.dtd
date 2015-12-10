@@ -12,6 +12,7 @@
 <!ENTITY zotero.better-bibtex.prefs.debug "Debug">
 
 <!ENTITY zotero.better-bibtex.show-citekey "Show citekey instead of 'extra' field in reference list (requires restart)">
+<!ENTITY zotero.better-bibtex.parseParticles "Move name-particles (de, von, ...) to the family name">
 
 <!ENTITY zotero.better-bibtex.restart-required "Restart Required">
 <!ENTITY zotero.better-bibtex.preferences.recursive "Export collections recursively">
