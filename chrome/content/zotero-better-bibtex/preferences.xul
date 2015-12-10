@@ -42,6 +42,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.scanCitekeys"             id="pref-better-bibtex-rescan-citekeys"         type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.showCitekeys"             id="pref-better-bibtex-show-citekey"            type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.skipFields"               id="pref-better-bibtex-skipFields"              type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.bibtexURLs"               id="pref-better-bibtex-bibtexURLs"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.warnBulkModify"           id="pref-better-bibtex-bulkWarning"             type="int"/>
       </preferences>
       <tabbox>
@@ -80,12 +81,20 @@
                     <checkbox label="&zotero.better-bibtex.citekey.fold;" preference="pref-better-bibtex-fold"/>
                   </row>
                   <row>
+                    <label value="&zotero.better-bibtex.bibtexURLs;"/>
+                    <radiogroup preference="pref-better-bibtex-bibtexURLs" orient="horizontal">
+                      <radio label="&zotero.better-bibtex.bibtexURLs.off;" value="off"/>
+                      <radio label="&zotero.better-bibtex.bibtexURLs.note;" value="note"/>
+                      <radio label="&zotero.better-bibtex.bibtexURLs.url;" value="url"/>
+                    </radiogroup>
+                  </row>
+                  <!-- row>
                     <label value="&zotero.better-bibtex.langid;"/>
                     <radiogroup id="id-better-bibtex-preferences-langid" orient="vertical" preference="pref-better-bibtex-langid">
                       <radio id="id-better-bibtex-preferences-langid-babel" label="&zotero.better-bibtex.langid.babel;" value="babel"/>
                       <radio id="id-better-bibtex-preferences-langid-polyglossia" label="&zotero.better-bibtex.langid.polyglossia;" value="polyglossia"/>
                     </radiogroup>
-                  </row>
+                  </row -->
                   <row>
                     <label value="&zotero.better-bibtex.pin-citekeys;"/>
                     <radiogroup id="id-better-bibtex-preferences-pin-citekeys" orient="vertical" preference="pref-better-bibtex-pin-citekeys" oncommand="BetterBibTeXPref.update();">

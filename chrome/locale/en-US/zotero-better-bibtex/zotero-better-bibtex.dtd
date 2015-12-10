@@ -28,8 +28,10 @@
 <!ENTITY zotero.better-bibtex.recursive.warning "Enabling recursive export also causes Zotero to display collection content recursively">
 <!ENTITY zotero.better-bibtex.ascii.BibTeX "Export BibTeX as ASCII">
 <!ENTITY zotero.better-bibtex.ascii.BibLaTeX "Export BibLaTeX as ASCII">
-<!ENTITY zotero.better-bibtex.fancyURLs "Clickable URLs">
-<!ENTITY zotero.better-bibtex.fancyURLs.warning "Wraps urls in a \href field -- not supported by all bibliography processors!">
+<!ENTITY zotero.better-bibtex.bibtexURLs "Add URLs to BibTeX export (BibTeX does not natively support them)">
+<!ENTITY zotero.better-bibtex.bibtexURLs.off "no">
+<!ENTITY zotero.better-bibtex.bibtexURLs.note "in a note field">
+<!ENTITY zotero.better-bibtex.bibtexURLs.url "in an url field">
 <!ENTITY zotero.better-bibtex.format-unique-warning "Caution: the default guarantees that each attachment has a unique filename. If you change the default, make sure the resulting filenames remain unique!">
 <!ENTITY zotero.better-bibtex.preserveCaps "Preserve capitalization">
 <!ENTITY zotero.better-bibtex.preserveCaps.no "No">
