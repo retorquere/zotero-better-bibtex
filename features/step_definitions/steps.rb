@@ -36,8 +36,6 @@ def say(msg)
   STDOUT.puts msg
 end
 
-Dir['*.xpi'].each{|xpi| File.unlink(xpi)}
-cmd('rake')
 cmd('rake plugins')
 
 def download(url, path)
