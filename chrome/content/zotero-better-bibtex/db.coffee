@@ -101,6 +101,7 @@ Zotero.BetterBibTeX.DB = new class
       if !key.citekeyFormat && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
         # removewhere will trigger 'delete' for the conflicts, which will take care of their cache dependents
         @keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
+      @cache.removeWhere({itemID: key.itemID})
     )
     @keys.on('update', (key) =>
       if !key.citekeyFormat && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
@@ -109,7 +110,8 @@ Zotero.BetterBibTeX.DB = new class
       @cache.removeWhere({itemID: key.itemID})
     )
     @keys.on('delete', (key) =>
-      @removeWhere({itemID: key.itemID})
+      @keys.removeWhere({itemID: key.itemID})
+      @cache.removeWhere({itemID: key.itemID})
     )
 
     Zotero.debug('DB.initialize: ready')
