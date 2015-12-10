@@ -52,7 +52,7 @@ doExport = ->
 
     switch Translator.bibtexURLs
       when 'url'
-        ref.add({ name: 'url', value: item.url, enc: 'url'})
+        ref.add({ name: 'url', value: item.url, enc: 'verbatim'})
       when 'note'
         ref.add({ name: (if ref.referencetype in ['misc', 'booklet'] then 'howpublished' else 'note'), allowDuplicates: true, value: item.url, enc: 'url'})
 
