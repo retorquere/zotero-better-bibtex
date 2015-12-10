@@ -587,6 +587,10 @@ Zotero.BetterBibTeX.migrateData = ->
       when 'unicode'
         @pref.set('asciiBibTeX', (@pref.get(key) != 'always'))
         @pref.set('asciiBibLaTeX', (@pref.get(key) == 'never'))
+      when 'bibtexURLs'
+        v = @pref.get(key)
+        v = true if v == 'true'
+        @pref.set(key, (if v then 'note' else 'off')) if typeof v == 'boolean'
       else continue
     @pref.prefs.clearUserPref(key)
   @pref.prefs.clearUserPref('brace-all')

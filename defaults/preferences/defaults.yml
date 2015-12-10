@@ -15,7 +15,7 @@ citekeyFormat: "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alpha
 citekeyFold: true
 debug: false
 DOIandURL: both
-bibtexURLs: false
+bibtexURLs: 'off'
 csquotes: ''
 keyConflictPolicy: keep
 langID: babel
