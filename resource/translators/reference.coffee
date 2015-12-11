@@ -205,6 +205,7 @@ class Reference
   # @param {field} field to encode. The 'value' must be an array of Zotero-serialized `creator` objects.
   # @return {String} field.value encoded as author-style value
   ###
+  _enc_creators_relax_marker: '\u0097'
   enc_creators: (f, raw) ->
     return null if f.value.length == 0
 
@@ -222,6 +223,9 @@ class Reference
 
           Zotero.BetterBibTeX.CSL.parseParticles(name)
 
+          if name.given && name.given.indexOf(@_enc_creators_relax_marker) >= 0 # zero-width space
+            name.given = '<span class="relax">' + name.given.replace(@_enc_creators_relax_marker, '</span>')
+
           @useprefix ||= !!name['non-dropping-particle']
           @juniorcomma ||= (f.juniorcomma && name['comma-suffix'])
 
@@ -233,7 +237,11 @@ class Reference
         when creator.lastName || creator.firstName
           name = []
           name.push(new String(creator.lastName)) if creator.lastName
-          name.push(creator.firstName) if creator.firstName
+          if creator.firstName
+            if creator.firstName.indexOf(@_enc_creators_relax_marker) >= 0 # zero-width space
+              creator.firstName = '<span class="relax">' + creator.firstName.replace(@_enc_creators_relax_marker, '</span>')
+            name.push(creator.firstName)
+
           name = @enc_latex({value: name, sep: ', '})
 
         else

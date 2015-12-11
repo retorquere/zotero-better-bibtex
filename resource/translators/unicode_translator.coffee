@@ -128,14 +128,16 @@ class LaTeX.HTML
       when 'span', 'sc'
         tag.smallcaps = tag.name == 'sc' || (tag.attrs.style || '').match(/small-caps/i)
         tag.enquote = (tag.attrs.enquote == 'true')
+        tag.relax = tag.class.relax
 
         @preserveCase += 1 if tag.class.nocase
 
         @latex += '{{' if tag.class.nocase && @preserveCase == 1
 
-        @latex += '{' if @options.autoCase && !@preserveCase && (tag.enquote || tag.smallcaps)
+        @latex += '{' if @options.autoCase && !@preserveCase && (tag.relax || tag.enquote || tag.smallcaps)
         @latex += '\\enquote{' if tag.enquote
         @latex += '\\textsc{' if tag.smallcaps
+        @latex += '{\\relax ' if tag.relax
 
       when 'td', 'th'
         @latex += ' '
@@ -169,7 +171,8 @@ class LaTeX.HTML
       when 'span', 'sc'
         @latex += '}' if tag.smallcaps
         @latex += '}' if tag.enquote
-        @latex += '{' if @options.autoCase && !@preserveCase && (tag.smallcaps || tag.enquote)
+        @latex += '}' if tag.relax
+        @latex += '}' if @options.autoCase && !@preserveCase && (tag.relax || tag.smallcaps || tag.enquote)
 
         @latex += '}}' if tag.class.nocase && @options.autoCase && @preserveCase == 1
 
