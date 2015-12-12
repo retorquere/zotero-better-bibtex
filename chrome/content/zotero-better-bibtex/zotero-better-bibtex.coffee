@@ -718,11 +718,21 @@ Zotero.BetterBibTeX.init = ->
   # fragile)
   Zotero.ItemTreeView::getCellText = ((original) ->
     return (row, column) ->
-      if column.id == 'zotero-items-column-extra' && Zotero.BetterBibTeX.pref.get('showCitekeys')
-        item = @._getItemAtRow(row)
-        if !(item?.ref) || item.ref.isAttachment() || item.ref.isNote()
-          return ''
-        else
+      switch
+        when column.id == 'zotero-items-column-callNumber' && Zotero.BetterBibTeX.pref.get('showItemIDs')
+          type = 'itemid'
+        when column.id == 'zotero-items-column-extra' && Zotero.BetterBibTeX.pref.get('showCitekeys')
+          type = 'citekey'
+      item = @._getItemAtRow(row) if type
+
+      return original.apply(@, arguments) unless item
+      return '' if !item.ref || item.ref.isAttachment() || item.ref.isNote()
+
+      switch type
+        when 'itemid'
+          return ('\u2003\u2003\u2003\u2003\u2003\u2003' + item.id).slice(-6)
+
+        when 'citekey'
           key = Zotero.BetterBibTeX.keymanager.get({itemID: item.id})
           return '' if key.citekey.match(/^zotero-(null|[0-9]+)-[0-9]+$/)
           return key.citekey + (if key.citekeyFormat then ' *' else '')
