@@ -128,6 +128,7 @@ Zotero.BetterBibTeX.keymanager = new class
 
     zoteroPane = Zotero.getActiveZoteroPane()
     items = (item for item in zoteroPane.getSelectedItems() when !item.isAttachment() && !item.isNote())
+    items.sort((a, b) -> a.dateAdded.localeCompare(b.dateAdded))
 
     warn = Zotero.BetterBibTeX.pref.get('warnBulkModify')
     if warn > 0 && items.length > warn
