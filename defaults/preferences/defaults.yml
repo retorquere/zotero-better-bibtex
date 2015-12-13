@@ -8,7 +8,7 @@ autoExport: idle
 autoExportIdleWait: 10
 cacheFlushInterval: 5
 cacheReset: 0
-confirmCacheReset: true
+confirmCacheResetSize: 1000
 caching: true
 citeCommand: cite
 citekeyFormat: "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]"

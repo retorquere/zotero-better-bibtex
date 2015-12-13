@@ -597,6 +597,7 @@ Zotero.BetterBibTeX.migrateData = ->
   @pref.prefs.clearUserPref('usePrefix')
   @pref.prefs.clearUserPref('useprefix')
   @pref.prefs.clearUserPref('verbatimDate')
+  @pref.prefs.clearUserPref('confirmCacheResetSize')
 
 Zotero.BetterBibTeX.init = ->
   return if @initialized
