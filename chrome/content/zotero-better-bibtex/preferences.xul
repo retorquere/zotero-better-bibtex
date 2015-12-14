@@ -232,6 +232,7 @@
               <html:a target="_blank" href="http://localhost:23119/better-bibtex/cacheActivity?http://localhost:23119/better-bibtex/cacheActivity">&zotero.better-bibtex.cacheActivity;</html:a>
             </description>
             <label id="better-bibtex-preferences-cacheActivity-disabled" value="&zotero.better-bibtex.cacheActivity.disabled;"/>
+            <!-- button id="better-bibtex-preferences-zombies" label="" oncommand="Zotero.BetterBibTeX.DB.purge()"/ -->
           </tabpanel>
           <tabpanel> <!-- disabled -->
             <textbox flex="1" multiline="true" id="zotero-better-bibtex-disabled-message" class="plain" readonly="true"/>

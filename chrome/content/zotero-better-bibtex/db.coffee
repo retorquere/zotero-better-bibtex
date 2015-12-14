@@ -135,7 +135,7 @@ Zotero.BetterBibTeX.DB = new class
     , ['item'])
 
   purge: ->
-    itemIDs = Zotero.DB.query('select itemID from items except select itemID from deletedItems')
+    itemIDs = Zotero.DB.columnQuery('select itemID from items except select itemID from deletedItems')
     itemIDs = (parseInt(id) for id in itemIDs)
     @keys.removeWhere((o) -> o.itemID not in itemIDs)
     @cache.removeWhere((o) -> o.itemID not in itemIDs)
