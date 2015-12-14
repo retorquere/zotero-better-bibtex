@@ -134,6 +134,13 @@ Zotero.BetterBibTeX.DB = new class
           Zotero.BetterBibTeX.DB.touch(itemID)
     , ['item'])
 
+  purge: ->
+    itemIDs = Zotero.DB.query('select itemID from items except select itemID from deletedItems')
+    itemIDs = (parseInt(id) for id in itemIDs)
+    @keys.removeWhere((o) -> o.itemID not in itemIDs)
+    @cache.removeWhere((o) -> o.itemID not in itemIDs)
+    @serialized.removeWhere((o) -> o.itemID not in itemIDs)
+
   touch: (itemID) ->
     Zotero.BetterBibTeX.debug('touch:', itemID)
     @cache.removeWhere({itemID})

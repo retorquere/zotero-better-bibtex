@@ -620,6 +620,7 @@ Zotero.BetterBibTeX.init = ->
   @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
 
   @migrateData()
+  @DB.purge()
 
   if @pref.get('scanCitekeys')
     @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
