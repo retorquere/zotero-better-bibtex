@@ -52,18 +52,18 @@ Zotero.BetterBibTeX.auto = new class
     collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
     collections = @withParentCollections(collections) unless collections.length == 0
     collections = ("collection:#{id}" for id in collections)
-    for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@DB.SQLite.Set(ids)}")
+    for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@db.SQLite.Set(ids)}")
       if libraryID
         collections.push("library:#{libraryID}")
       else
         collections.push('library')
 
-    for ae in @DB.autoexport.where((o) -> o.collection.indexOf('search:') == 0)
+    for ae in @db.autoexport.where((o) -> o.collection.indexOf('search:') == 0)
       @markSearch(ae.collection.replace('search:', ''))
 
     if collections.length > 0
       Zotero.BetterBibTeX.debug('mark:', collections)
-      for ae in @DB.autoexport.where((o) -> o.collection in collections)
+      for ae in @db.autoexport.where((o) -> o.collection in collections)
         @mark(ae, 'pending')
 
   withParentCollections: (collections) ->
