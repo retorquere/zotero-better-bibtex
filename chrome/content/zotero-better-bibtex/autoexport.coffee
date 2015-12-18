@@ -47,6 +47,7 @@ Zotero.BetterBibTeX.auto = new class
       useJournalAbbreviation: !!context.useJournalAbbreviation
       exportedRecursively: @recursive()
       status: 'done'
+      updated: (new Date()).toLocaleString()
     })
     @refresh()
 
