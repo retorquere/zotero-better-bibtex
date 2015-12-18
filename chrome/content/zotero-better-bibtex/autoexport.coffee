@@ -48,6 +48,41 @@ Zotero.BetterBibTeX.auto = new class
     })
     @refresh()
 
+  markIDs: (ids) ->
+    collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
+    collections = @withParentCollections(collections) unless collections.length == 0
+    collections = ("collection:#{id}" for id in collections)
+    for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@db.SQLite.Set(ids)}")
+      if libraryID
+        collections.push("library:#{libraryID}")
+      else
+        collections.push('library')
+
+    for ae in @db.autoexport.where((o) -> o.collection.indexOf('search:') == 0)
+      @markSearch(ae.collection.replace('search:', ''))
+
+    if collections.length > 0
+      Zotero.BetterBibTeX.debug('mark:', collections)
+      for ae in @db.autoexport.where((o) -> o.collection in collections)
+        @mark(ae, 'pending')
+
+  withParentCollections: (collections) ->
+    return collections unless @recursive()
+    return collections if collections.length == 0
+
+    return Zotero.DB.columnQuery("
+      with recursive recursivecollections as (
+        select collectionID, parentCollectionID
+        from collections
+        where collectionID in #{Zotero.BetterBibTeX.DB.SQLite.Set(collections)}
+
+        union all
+
+        select p.collectionID, p.parentCollectionID
+        from collections p
+        join recursivecollections as c on c.parentCollectionID = p.collectionID
+      ) select distinct collectionID from recursivecollections")
+
   recursive: ->
     try
       return Zotero.Prefs.get('recursiveCollections')
