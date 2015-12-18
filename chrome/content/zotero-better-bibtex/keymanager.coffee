@@ -195,8 +195,6 @@ Zotero.BetterBibTeX.keymanager = new class
 
     @save(item, citekey) if pin
 
-    Zotero.BetterBibTeX.auto.markIDs([itemID])
-
     return @verify(key)
 
   scan: (ids, reason) ->
