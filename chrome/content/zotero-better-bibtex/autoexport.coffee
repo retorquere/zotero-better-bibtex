@@ -15,7 +15,7 @@ Zotero.BetterBibTeX.auto = new class
     ae.status = status
     @db.autoexport.update(ae)
 
-    @schedule(options.reason || 'no reason provided') if status == 'pending'
+    @schedule(reason || 'no reason provided') if status == 'pending'
 
   markSearch: (id, reason) ->
     search = Zotero.Searches.get(id)
@@ -174,7 +174,7 @@ Zotero.BetterBibTeX.auto = new class
 
     return translation
 
-  shedule: (reason) ->
+  schedule: (reason) ->
     Zotero.BetterBibTeX.debug('auto.schedule:', reason)
     clearTimeout(@scheduled) if @scheduled
     @scheduled = setTimeout((=>
