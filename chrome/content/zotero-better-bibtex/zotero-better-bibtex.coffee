@@ -1033,7 +1033,7 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
       item.save()
       collection.addItem(item.id)
 
-  collections = @withParentCollections(collections) if collections.length != 0
+  collections = @auto.withParentCollections(collections) if collections.length != 0
   collections = ("'collection:#{id}'" for id in collections)
   if collections.length > 0
     for ae in @DB.autoexport.where((o) -> o.collection in collections)
@@ -1072,42 +1072,8 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
     @serialized.remove(id)
     @cache.remove({itemID: id})
 
-  collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
-  collections = @withParentCollections(collections) unless collections.length == 0
-  collections = ("collection:#{id}" for id in collections)
-  for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@DB.SQLite.Set(ids)}")
-    if libraryID
-      collections.push("library:#{libraryID}")
-    else
-      collections.push('library')
-
-  for ae in @DB.autoexport.where((o) -> o.collection.indexOf('search:') == 0)
-    @auto.markSearch(ae.collection.replace('search:', ''))
-
-  if collections.length > 0
-    Zotero.BetterBibTeX.debug('mark:', collections)
-    for ae in @DB.autoexport.where((o) -> o.collection in collections)
-      @auto.mark(ae, 'pending')
-    @auto.process("items changed: #{collections}")
-
+  @auto.markIDs(ids)
 ).bind(Zotero.BetterBibTeX)
-
-Zotero.BetterBibTeX.withParentCollections = (collections) ->
-  return collections unless Zotero.BetterBibTeX.auto.recursive()
-  return collections if collections.length == 0
-
-  return Zotero.DB.columnQuery("
-    with recursive recursivecollections as (
-      select collectionID, parentCollectionID
-      from collections
-      where collectionID in #{Zotero.BetterBibTeX.DB.SQLite.Set(collections)}
-
-      union all
-
-      select p.collectionID, p.parentCollectionID
-      from collections p
-      join recursivecollections as c on c.parentCollectionID = p.collectionID
-    ) select distinct collectionID from recursivecollections")
 
 Zotero.BetterBibTeX.displayOptions = (url) ->
   params = {}
