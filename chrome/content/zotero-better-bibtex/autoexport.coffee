@@ -9,15 +9,15 @@ Zotero.BetterBibTeX.auto = new class
         ae.status = 'pending'
         @db.autoexport.update(ae)
 
-  mark: (ae, status, options = {}) ->
+  mark: (ae, status, reason) ->
     Zotero.BetterBibTeX.debug('mark:', {ae, status})
     ae.updated = (new Date()).toLocaleString()
     ae.status = status
     @db.autoexport.update(ae)
 
-    @process(options.reason || 'no reason provided') if status == 'pending' && !options.defer
+    @schedule(options.reason || 'no reason provided') if status == 'pending'
 
-  markSearch: (id, options) ->
+  markSearch: (id, reason) ->
     search = Zotero.Searches.get(id)
     return false unless search
 
@@ -28,7 +28,7 @@ Zotero.BetterBibTeX.auto = new class
     @search[parseInt(search.id)] = items
 
     ae = @db.autoexport.findObject({collection: "search:#{id}"})
-    @mark(ae, 'pending', options) if ae
+    @mark(ae, 'pending', reason) if ae
 
   refresh: ->
     wm = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
@@ -67,14 +67,12 @@ Zotero.BetterBibTeX.auto = new class
         collections.push('library')
 
     for ae in @db.autoexport.where((o) -> o.collection.indexOf('search:') == 0)
-      @markSearch(ae.collection.replace('search:', ''), {defer: true, reason: "#{reason}, assume search might be updated"})
+      @markSearch(ae.collection.replace('search:', ''), "#{reason}, assume search might be updated")
 
     if collections.length > 0
-      Zotero.BetterBibTeX.debug('marking:', collections)
+      Zotero.BetterBibTeX.debug('marking:', collections, 'from', (o.collection for o in @db.autoexport.data))
       for ae in @db.autoexport.where((o) -> o.collection in collections)
-        @mark(ae, 'pending', {defer: true, reason})
-
-    @process(reason)
+        @mark(ae, 'pending', reason)
 
   withParentCollections: (collections) ->
     return collections unless @recursive()
@@ -103,10 +101,9 @@ Zotero.BetterBibTeX.auto = new class
     @refresh()
 
   reset: ->
-    for ae in @db.autoexport.chain().data()
-      @mark(ae, 'pending', {defer: true, reason: 'reset'})
+    for ae in @db.autoexport.data
+      @mark(ae, 'pending', reason)
     @refresh()
-    @process('reset')
 
   prepare: (ae) ->
     Zotero.BetterBibTeX.debug('auto.prepare: candidate', ae)
@@ -176,6 +173,14 @@ Zotero.BetterBibTeX.auto = new class
     })
 
     return translation
+
+  shedule: (reason) ->
+    Zotero.BetterBibTeX.debug('auto.schedule:', reason)
+    clearTimeout(@scheduled) if @scheduled
+    @scheduled = setTimeout((=>
+      @scheduled = null
+      @process(reason)
+    ), 1000)
 
   process: (reason) ->
     Zotero.BetterBibTeX.debug("auto.process: started (#{reason}), idle: #{@idle}")

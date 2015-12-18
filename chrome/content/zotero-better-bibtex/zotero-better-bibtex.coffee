@@ -496,9 +496,7 @@ Zotero.BetterBibTeX.pref.ZoteroObserver = {
         # libraries are always recursive
         for ae in Zotero.BetterBibTeX.DB.autoexport.where((o) -> !o.exportedRecursively == recursive && o.collection.indexOf('library:') != 0)
           ae.exportedRecursively = recursive
-          Zotero.BetterBibTeX.auto.mark(ae, 'pending', {defer: true, reason: "recursive export: #{recursive}"})
-
-        Zotero.BetterBibTeX.auto.process("recursive export: #{recursive}")
+          Zotero.BetterBibTeX.auto.mark(ae, 'pending', "recursive export: #{recursive}")
 }
 
 Zotero.BetterBibTeX.pref.snapshot = ->
@@ -554,7 +552,7 @@ Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
   switch topic
     when 'idle'
       Zotero.BetterBibTeX.auto.idle = true
-      Zotero.BetterBibTeX.auto.process('idle')
+      Zotero.BetterBibTeX.auto.schedule('idle')
 
     when 'back', 'active'
       Zotero.BetterBibTeX.auto.idle = false
@@ -709,7 +707,7 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Search::save = ((original) ->
     return (fixGaps) ->
       id = original.apply(@, arguments)
-      Zotero.BetterBibTeX.auto.markSearch(id, {reason: 'search updated'})
+      Zotero.BetterBibTeX.auto.markSearch(id, 'search updated')
       return id
     )(Zotero.Search::save)
 
@@ -1036,8 +1034,7 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
   collections = ("collection:#{id}" for id in collections)
   if collections.length > 0
     for ae in @DB.autoexport.where((o) -> o.collection in collections)
-      @auto.mark(ae, 'pending', {defer: true, reason: "collection changed: #{collections}"})
-    @auto.process("collection changed: #{collections}")
+      @auto.mark(ae, 'pending', "collection changed: #{collections}")
 ).bind(Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->

@@ -28,7 +28,7 @@ Zotero.BetterBibTeX.DB = new class
 
     @metadata = @db.main.getCollection('metadata')
     @metadata ||= @db.main.addCollection('metadata')
-    @metadata = @metadata.chain().data()[0]
+    @metadata = @metadata.data[0]
     @metadata ||= {}
     delete @metadata.$loki
     delete @metadata.meta
@@ -79,11 +79,11 @@ Zotero.BetterBibTeX.DB = new class
 
     if !cacheReset && !keepCache
       cacheReset = @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
-      if cacheReset && confirmCacheResetSize && (@cache.chain().data().length > confirmCacheResetSize || @serialized.chain().data().length > confirmCacheResetSize)
+      if cacheReset && confirmCacheResetSize && (@cache.data.length > confirmCacheResetSize || @serialized.data.length > confirmCacheResetSize)
         cacheReset = Services.prompt.confirm(null, 'Drop Better BibTeX cache?', [
           'You have upgraded BetterBibTeX. This usually means output generation for Bib(La)TeX has changed, and it is recommended to clear the cache in order for these changes to take effect.'
 
-          "Since you have a large library, with #{Math.max(@cache.chain().data().length, @serialized.chain().data().length)} entries cached, this may lead to a slow first (auto)export as the cache is refilled."
+          "Since you have a large library, with #{Math.max(@cache.data.length, @serialized.data.length)} entries cached, this may lead to a slow first (auto)export as the cache is refilled."
 
           "If you don't care about the changes introduced in #{Zotero.BetterBibTeX.release}, and you want to keep your old cache, you may consider skipping this step."
 
@@ -121,7 +121,7 @@ Zotero.BetterBibTeX.DB = new class
     )
 
     Zotero.debug('DB.initialize: ready')
-    Zotero.debug("DB.initialize: ready.serialized: #{@serialized.chain().data().length}")
+    Zotero.debug("DB.initialize: ready.serialized: #{@serialized.data.length}")
 
     idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
     idleService.addIdleObserver({observe: (subject, topic, data) => @save() if topic == 'idle'}, 5)
@@ -152,7 +152,7 @@ Zotero.BetterBibTeX.DB = new class
     @keys.removeWhere((o) -> o.itemID == itemID && o.citekeyFormat)
 
   save: (all) ->
-    Zotero.BetterBibTeX.debug('DB.save:', {all, serialized: @serialized.chain().data().length})
+    Zotero.BetterBibTeX.debug('DB.save:', {all, serialized: @serialized.data.length})
 
     if all
       try
