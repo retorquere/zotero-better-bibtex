@@ -4,6 +4,11 @@ Zotero.BetterBibTeX.auto = new class
     @search = {}
     @idle = false
 
+    for ae in @db.autoexport.data
+      if ae.status == 'running'
+        ae.status = 'pending'
+        @db.autoexport.update(ae)
+
   mark: (ae, status, options = {}) ->
     Zotero.BetterBibTeX.debug('mark:', {ae, status})
     ae.updated = (new Date()).toLocaleString()
@@ -210,12 +215,17 @@ Zotero.BetterBibTeX.auto = new class
       return
 
     Zotero.BetterBibTeX.debug('auto.process: starting', ae)
+    @mark(ae, 'running')
     @refresh()
 
     translation.setHandler('done', (obj, worked) =>
-      status = (if worked then 'done' else 'error')
-      Zotero.BetterBibTeX.debug("auto.process: finished #{Zotero.BetterBibTeX.auto.running}: #{status}")
-      @mark(ae, status)
+      running = @db.autoexport.get(ae.$loki)
+      if running.status == 'running' # could have been re-marked for export before this one was done
+        status = (if worked then 'done' else 'error')
+        Zotero.BetterBibTeX.debug("auto.process: finished #{Zotero.BetterBibTeX.auto.running}: #{status}")
+        @mark(ae, status)
+      else
+        Zotero.BetterBibTeX.debug("auto.process: #{ae.$loki} re-marked for export")
       Zotero.BetterBibTeX.auto.running = null
       Zotero.BetterBibTeX.auto.refresh()
       Zotero.BetterBibTeX.auto.process(reason)

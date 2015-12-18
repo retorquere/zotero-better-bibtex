@@ -189,8 +189,8 @@ BetterBibTeXAutoExportPref =
     tree = new BetterBibTeXAutoExport('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', exportlist, document)
 
     for ae in Zotero.BetterBibTeX.DB.autoexport.chain().simplesort('path').data()
-      Zotero.BetterBibTeX.debug('refresh:', {id: ae.$loki, status: ae.status, running: Zotero.BetterBibTeX.auto.running})
-      status = if Zotero.BetterBibTeX.auto.running == ae.$loki then 'running' else "#{ae.status} (#{ae.updated})"
+      Zotero.BetterBibTeX.debug('refresh:', {id: ae.$loki, status: ae.status})
+      status = "#{ae.status} (#{ae.updated})"
       tree.treeitem({autoexport: "#{ae['$loki']}", '': ->
         @treerow(->
           @treecell({editable: 'false', label: "#{BetterBibTeXAutoExportPref.exportType(ae.collection)}: #{BetterBibTeXAutoExportPref.exportName(ae.collection)}"})
