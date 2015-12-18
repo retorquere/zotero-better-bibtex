@@ -1034,7 +1034,7 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
       collection.addItem(item.id)
 
   collections = @auto.withParentCollections(collections) if collections.length != 0
-  collections = ("'collection:#{id}'" for id in collections)
+  collections = ("collection:#{id}" for id in collections)
   if collections.length > 0
     for ae in @DB.autoexport.where((o) -> o.collection in collections)
       @auto.mark(ae, 'pending')
