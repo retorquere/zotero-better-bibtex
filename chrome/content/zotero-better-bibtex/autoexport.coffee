@@ -4,13 +4,15 @@ Zotero.BetterBibTeX.auto = new class
     @search = {}
     @idle = false
 
-  mark: (ae, status) ->
+  mark: (ae, status, options = {}) ->
     Zotero.BetterBibTeX.debug('mark:', {ae, status})
     ae.updated = (new Date()).toLocaleString()
     ae.status = status
     @db.autoexport.update(ae)
 
-  markSearch: (id) ->
+    @process(options.reason || 'no reason provided') if status == 'pending' && !options.defer
+
+  markSearch: (id, options) ->
     search = Zotero.Searches.get(id)
     return false unless search
 
@@ -21,7 +23,7 @@ Zotero.BetterBibTeX.auto = new class
     @search[parseInt(search.id)] = items
 
     ae = @db.autoexport.findObject({collection: "search:#{id}"})
-    @mark(ae, 'pending') if ae
+    @mark(ae, 'pending', options) if ae
 
   refresh: ->
     wm = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
@@ -48,7 +50,7 @@ Zotero.BetterBibTeX.auto = new class
     })
     @refresh()
 
-  markIDs: (ids) ->
+  markIDs: (ids, reason) ->
     collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
     collections = @withParentCollections(collections) unless collections.length == 0
     collections = ("collection:#{id}" for id in collections)
@@ -59,12 +61,14 @@ Zotero.BetterBibTeX.auto = new class
         collections.push('library')
 
     for ae in @db.autoexport.where((o) -> o.collection.indexOf('search:') == 0)
-      @markSearch(ae.collection.replace('search:', ''))
+      @markSearch(ae.collection.replace('search:', ''), {defer: true, reason: "#{reason}, assume search might be updated"})
 
     if collections.length > 0
-      Zotero.BetterBibTeX.debug('mark:', collections)
+      Zotero.BetterBibTeX.debug('marking:', collections)
       for ae in @db.autoexport.where((o) -> o.collection in collections)
-        @mark(ae, 'pending')
+        @mark(ae, 'pending', {defer: true, reason})
+
+    @process(reason)
 
   withParentCollections: (collections) ->
     return collections unless @recursive()
@@ -94,8 +98,9 @@ Zotero.BetterBibTeX.auto = new class
 
   reset: ->
     for ae in @db.autoexport.chain().data()
-      @mark(ae, 'pending')
+      @mark(ae, 'pending', {defer: true, reason: 'reset'})
     @refresh()
+    @process('reset')
 
   prepare: (ae) ->
     Zotero.BetterBibTeX.debug('auto.prepare: candidate', ae)
@@ -122,7 +127,7 @@ Zotero.BetterBibTeX.auto = new class
         # assumes that a markSearch will have executed the search and found the items
         items = {items: @search[parseInt(m[1])] || []}
         if items.items.length == 0
-          Zotero.BetterBibTeX.debug('auto.process: empty search')
+          Zotero.BetterBibTeX.debug('auto.prepare: empty search')
           return null
         else
           items.items = Zotero.Items.get(items.items)
@@ -134,7 +139,7 @@ Zotero.BetterBibTeX.auto = new class
         items = {collection: parseInt(m[1])}
 
       else #??
-        Zotero.BetterBibTeX.debug('auto.process: unexpected collection id ', ae.collection)
+        Zotero.BetterBibTeX.debug('auto.prepare: unexpected collection id ', ae.collection)
         return null
 
     if items.items && items.items.length == 0

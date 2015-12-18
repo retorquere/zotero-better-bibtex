@@ -481,8 +481,7 @@ Zotero.BetterBibTeX.pref.observer = {
 
     # if any var changes, drop the cache and kick off all exports
     Zotero.BetterBibTeX.cache.reset("pref change: #{data}")
-    Zotero.BetterBibTeX.auto.reset()
-    Zotero.BetterBibTeX.auto.process('preferences change')
+    Zotero.BetterBibTeX.auto.reset('preferences change')
     Zotero.BetterBibTeX.debug('preference change:', subject, topic, data)
 }
 
@@ -497,7 +496,7 @@ Zotero.BetterBibTeX.pref.ZoteroObserver = {
         # libraries are always recursive
         for ae in Zotero.BetterBibTeX.DB.autoexport.where((o) -> !o.exportedRecursively == recursive && o.collection.indexOf('library:') != 0)
           ae.exportedRecursively = recursive
-          Zotero.BetterBibTeX.auto.mark(ae, 'pending')
+          Zotero.BetterBibTeX.auto.mark(ae, 'pending', {defer: true, reason: "recursive export: #{recursive}"})
 
         Zotero.BetterBibTeX.auto.process("recursive export: #{recursive}")
 }
@@ -710,7 +709,7 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Search::save = ((original) ->
     return (fixGaps) ->
       id = original.apply(@, arguments)
-      Zotero.BetterBibTeX.auto.markSearch(id)
+      Zotero.BetterBibTeX.auto.markSearch(id, {reason: 'search updated'})
       return id
     )(Zotero.Search::save)
 
@@ -1037,7 +1036,7 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
   collections = ("collection:#{id}" for id in collections)
   if collections.length > 0
     for ae in @DB.autoexport.where((o) -> o.collection in collections)
-      @auto.mark(ae, 'pending')
+      @auto.mark(ae, 'pending', {defer: true, reason: "collection changed: #{collections}"})
     @auto.process("collection changed: #{collections}")
 ).bind(Zotero.BetterBibTeX)
 
@@ -1072,7 +1071,7 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
     @serialized.remove(id)
     @cache.remove({itemID: id})
 
-  @auto.markIDs(ids)
+  @auto.markIDs(ids, 'itemChanged')
 ).bind(Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.displayOptions = (url) ->

@@ -195,7 +195,7 @@ Zotero.BetterBibTeX.keymanager = new class
 
     @save(item, citekey) if pin
 
-    Zotero.BetterBibTeX.auto.markIDs([itemID])
+    Zotero.BetterBibTeX.auto.markIDs([itemID], 'citekey changed')
 
     return @verify(key)
 
