@@ -6,7 +6,7 @@ exit if (ENV['TRAVIS_PULL_REQUEST'] || 'false') != 'false'
 raise "ZOTPLUSAWSKEY not set" unless ENV['ZOTPLUSAWSKEY']
 raise "ZOTPLUSAWSSECRET not set" unless ENV['ZOTPLUSAWSSECRET']
 
-s3 = Aws::S3::Resource.new(region: 'eu-central-1', credentials: Aws::Credentials.new(key, secret))
+s3 = Aws::S3::Resource.new(region: 'eu-central-1', credentials: Aws::Credentials.new(ENV['ZOTPLUSAWSKEY'], ENV['ZOTPLUSAWSSECRET']))
 bucket = s3.bucket('zotplus-builds')
 
 Dir['*.xpi'].each{|xpi|
