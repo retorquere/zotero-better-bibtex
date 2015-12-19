@@ -966,6 +966,7 @@ Zotero.BetterBibTeX.removeTranslator = (header) ->
     @debug("failed to remove #{header.label}:", err)
 
 Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
+  Zotero.BetterBibTeX.debug('itemAdded:', {event, type, collection_items})
   collections = []
   items = []
 
@@ -986,8 +987,8 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
 
     try
       extra = JSON.parse(Zotero.Items.get(itemID).getField('extra').trim())
+      @debug('AUX scanner/import error info found on collection add')
     catch error
-      @debug('no AUX scanner/import error info found on collection add')
       continue
 
     note = null
@@ -1032,9 +1033,10 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
 
   collections = @auto.withParentCollections(collections) if collections.length != 0
   collections = ("collection:#{id}" for id in collections)
+  Zotero.BetterBibTeX.debug('marking:', collections, 'from', (o.collection for o in @DB.autoexport.data))
   if collections.length > 0
     for ae in @DB.autoexport.where((o) -> o.collection in collections)
-      @auto.mark(ae, 'pending', "collection changed: #{collections}")
+      @auto.mark(ae, 'pending', "itemAdded: #{collections}")
 ).bind(Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
@@ -1043,7 +1045,7 @@ Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
   @DB.autoexport.removeWhere((o) -> o.collection in extraData)
 
 Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
-  Zotero.BetterBibTeX.debug('itemChanged: event=', event, 'ids=', ids, 'extraData=', extraData)
+  Zotero.BetterBibTeX.debug('itemChanged:', {event, type, ids, extraData})
 
   return unless type == 'item' && event in ['delete', 'trash', 'add', 'modify']
   ids = extraData if event == 'delete'
@@ -1057,10 +1059,10 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
 
   @keymanager.scan(ids, event) if ids.length > 0
   @keymanager.scan(parents, 'modify') if parents.length > 0
-  Zotero.BetterBibTeX.debug('itemChanged: event=', event, 'ids=', ids, 'parents=', parents)
 
   ids = (parseInt(id) for id in ids.concat(parents))
   ids = ids.filter((v, i, arr) -> arr.indexOf(v) == i)
+  Zotero.BetterBibTeX.debug('itemChanged including parents:', {event, ids, parents})
 
   return unless ids.length > 0
 
