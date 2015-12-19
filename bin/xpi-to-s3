@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'aws-sdk'
+
+exit if (ENV['TRAVIS_PULL_REQUEST'] || 'false') != 'false'
+raise "ZOTPLUSAWSKEY not set" unless ENV['ZOTPLUSAWSKEY']
+raise "ZOTPLUSAWSSECRET not set" unless ENV['ZOTPLUSAWSSECRET']
+
+s3 = Aws::S3::Resource.new(region: 'eu-central-1', credentials: Aws::Credentials.new(key, secret))
+bucket = s3.bucket('zotplus-builds')
+
+Dir['*.xpi'].each{|xpi|
+  puts "uploading #{xpi} to zotplus-builds"
+  obj = bucket.object('key')
+  obj.upload_file(xpi)
+}

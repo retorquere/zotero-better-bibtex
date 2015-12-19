@@ -515,15 +515,6 @@ task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{
       sh "rm -f cucumber.run"
     end
   end
-
-  key = ENV['ZOTPLUSAWSKEY']
-  secret = ENV['ZOTPLUSAWSSECRET']
-  if key && secret && (ENV['TRAVIS_PULL_REQUEST'] || 'false') != 'false' && (ENV['TRAVIS_JOB_NUMBER'] || '') =~ /\.1$/
-    s3 = Aws::S3::Resource.new(region: 'eu-central-1', credentials: Aws::Credentials.new(key, secret))
-    bucket = s3.bucket('zotplus-builds')
-    obj = bucket.object('key')
-    obj.upload_file(XPI)
-  end
 end
 
 task :debug => XPI do
