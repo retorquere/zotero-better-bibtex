@@ -11,6 +11,6 @@ bucket = s3.bucket('zotplus-builds')
 
 Dir['*.xpi'].each{|xpi|
   puts "uploading #{xpi} to zotplus-builds"
-  obj = bucket.object('key')
+  obj = bucket.object(File.basename(xpi))
   obj.upload_file(xpi)
 }
