@@ -10,7 +10,7 @@ s3 = Aws::S3::Resource.new(region: 'eu-central-1', credentials: Aws::Credentials
 bucket = s3.bucket('zotplus-builds')
 
 Dir['*.xpi'].each{|xpi|
-  puts "uploading #{xpi} to zotplus-builds"
+  puts "uploading #{xpi} to https://s3.eu-central-1.amazonaws.com/zotplus-builds/#{File.basename(xpi)}"
   obj = bucket.object(File.basename(xpi))
   obj.upload_file(xpi)
 }
