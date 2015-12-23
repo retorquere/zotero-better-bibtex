@@ -35,8 +35,6 @@ def say(msg)
   STDOUT.puts msg
 end
 
-cmd('rake plugins')
-
 def download(url, path)
   cmd "curl -L -s -S -o #{path.shellescape} #{url.shellescape}"
 end
