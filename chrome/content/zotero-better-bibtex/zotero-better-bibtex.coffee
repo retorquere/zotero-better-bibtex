@@ -836,7 +836,7 @@ Zotero.BetterBibTeX.init = ->
       # and call attachmentToArray.call(itemGetter, ...) there rather than ::attachmentToArray(...) so attachmentToArray would have access to
       # @_exportFileDirectory
       if @_exportFileData
-        id = @itemsLeft[0]?.id
+        id = @_itemsLeft[0]?.id
         item = original.apply(@, arguments)
         Zotero.BetterBibTeX.serialized.fixup(item, id) if item
         return item

@@ -27,8 +27,6 @@ require 'csv'
 require 'base64'
 require 'net/http/post/multipart'
 require 'facets'
-require 'jwt'
-require 'securerandom'
 require 'rest-client'
 require_relative 'lib/unicode_table'
 
