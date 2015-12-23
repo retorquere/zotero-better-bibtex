@@ -32,7 +32,6 @@ end
 
 STDOUT.sync = true unless ENV['CI'] == 'true'
 def say(msg)
-  return if ENV['CI'] == 'true'
   STDOUT.puts msg
 end
 

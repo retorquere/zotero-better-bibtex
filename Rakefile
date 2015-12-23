@@ -499,14 +499,15 @@ task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{
   puts "Tests running: #{tag}"
 
 
+  cucumber = "cucumber --require features --strict #{tag} resource/tests"
   if ENV['CI'] == 'true'
-    sh "cucumber --require features --strict #{tag} resource/tests"
+    sh cucumber
   else
     begin
       if OS.mac?
-        sh "script -q -t 1 cucumber.run cucumber --require features --strict #{tag} resource/tests"
+        sh "script -q -t 1 cucumber.run #{cucumber}"
       else
-        sh "script -ec 'cucumber --require features --strict #{tag} resource/tests' cucumber.run"
+        sh "script -ec '#{cucumber}' cucumber.run"
       end
     ensure
       sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
