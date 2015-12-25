@@ -177,10 +177,9 @@ Zotero.BetterBibTeX.auto = new class
   schedule: (reason) ->
     Zotero.BetterBibTeX.debug('auto.schedule:', reason)
     clearTimeout(@scheduled) if @scheduled
-    @scheduled = setTimeout((=>
-      @scheduled = null
-      @process(reason)
-    ), 1000)
+    @scheduled = setTimeout(->
+      Zotero.BetterBibTeX.auto.scheduled = null; Zotero.BetterBibTeX.auto.process(reason)
+    , 1000)
 
   process: (reason) ->
     Zotero.BetterBibTeX.debug("auto.process: started (#{reason}), idle: #{@idle}")
