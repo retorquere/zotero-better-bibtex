@@ -30,7 +30,7 @@ what is called "connector mode", which is currently [not
 supported](https://github.com/ZotPlus/zotero-better-bibtex/issues/143). Or, to be fully exact, you can have it installed
 in both, but running both at the same time will have BBT break at indeterminate occasions. Recoverable, but not fun.
 
-Start by downloading the [latest version](https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.6.23/zotero-better-bibtex-1.6.23.xpi) (**1.6.23**), and then
+Start by downloading the [latest version](https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.6.24/zotero-better-bibtex-1.6.24.xpi) (**1.6.24**), and then
 
 ## BBT for Zotero Firefox
 
@@ -77,7 +77,7 @@ or there are problems preventing me from implementing a fix.
 
   switch (window.location.hash.trim()) {
     case '#xpi':
-      window.location = 'https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.6.23/zotero-better-bibtex-1.6.23.xpi';
+      window.location = 'https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.6.24/zotero-better-bibtex-1.6.24.xpi';
       break;
     case '#debug':
       window.location = 'https://drive.google.com/a/iris-advies.com/folderview?id=0B8tW4NMPfEosfkFETUV0V2l0N3NHZHEyQk5SUm03TjZmS1RoVmlBTmdHclUtcTRzZ2VHclU&usp=drive_web#list';
