@@ -33,8 +33,8 @@ if [ "$CHECKIN" = "$RELEASE" ] ; then
   git config --global push.default matching
   bundle exec rake deploy
 else
-  STATUS=`! travis_parallel_sentinel script`
-  if [ $? -ne 0 || "$STATUS" != "deploy" ] ; then
+  STATUS=`travis_parallel_sentinel script || true`
+  if [ "$STATUS" != "deploy" ] ; then
     exit
   fi
 
