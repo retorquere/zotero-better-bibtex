@@ -50,7 +50,7 @@ Scenario: CAYW picker
     | locator | 1 |
   Then the picks for pandoc should be '[@bentley_academic_2011, p. 1; @pollard_bicycle_2007, ch. 1]'
   And the picks for mmd should be '[#bentley_academic_2011][][#pollard_bicycle_2007][]'
-  And the picks for latex should be '\cite[p. 1]{bentley_academic_2011}\cite[ch. 1]{pollard_bicycle_2007}'
+  And the picks for latex should be '\cite[1]{bentley_academic_2011}\cite[ch. 1]{pollard_bicycle_2007}'
   And the picks for scannable-cite should be '{|Abram, 2014|p. 1||zu:0:ITEMKEY}{|Pollard and Bray, 2007|ch. 1||zu:0:ITEMKEY}'
 
 @test-cluster-2

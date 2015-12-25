@@ -3,11 +3,6 @@
 set -e
 set -u
 
-STATUS=`travis_parallel_sentinel script`
-if [ "$STATUS" != "deploy" ] ; then
-  exit
-fi
-
 DEBUGBUILD=false XPI=`rake xpi`
 
 RELEASE="$TRAVIS_COMMIT release: $XPI"
@@ -15,6 +10,11 @@ CHECKIN=`git log -n 1 --pretty=oneline`
 echo "checkin: $CHECKIN"
 echo "release: $RELEASE"
 if [ "$CHECKIN" = "$RELEASE" ] ; then
+  STATUS=`travis_parallel_sentinel script`
+  if [ "$STATUS" != "deploy" ] ; then
+    exit
+  fi
+
   export CHANGELOG_GITHUB_TOKEN="$GITHUB_TOKEN"
   rm -f *.xpi
   DEBUGBUILD=false rake
@@ -33,5 +33,10 @@ if [ "$CHECKIN" = "$RELEASE" ] ; then
   git config --global push.default matching
   bundle exec rake deploy
 else
+  STATUS=`! travis_parallel_sentinel script`
+  if [ $? -ne 0 || "$STATUS" != "deploy" ] ; then
+    exit
+  fi
+
   ./bin/xpi-to-s3
 fi
