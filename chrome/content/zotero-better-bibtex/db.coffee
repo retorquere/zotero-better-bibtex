@@ -81,19 +81,23 @@ Zotero.BetterBibTeX.DB = new class
       cacheReset = @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
       if cacheReset && confirmCacheResetSize && (@cache.data.length > confirmCacheResetSize || @serialized.data.length > confirmCacheResetSize)
         prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(Components.interfaces.nsIPromptService)
-        # return value is index of button clicked, so make "keep" button zero (falsish)
-        cacheReset = prompts.confirmEx(
+        cacheReset = 0 == prompts.confirmEx(
           null,
-          'Drop Better BibTeX cache?', [
-            'You have upgraded BetterBibTeX. This usually means output generation for Bib(La)TeX has changed, and it is recommended to clear the cache in order for these changes to take effect.'
-            "Since you have a large library, with #{Math.max(@cache.data.length, @serialized.data.length)} entries cached, this may lead to a slow first (auto)export as the cache is refilled."
-            "If you don't care about the changes introduced in #{Zotero.BetterBibTeX.release}, and you want to keep your old cache, you may consider skipping this step."
-            'If you opt NOT to clear the cache, and you experience unexpected output at some point in the future, please first clear the cache from the preferences before reporting an issue'
-            'Do you want to reset the BibTeX cache now (recommended)?'
-          ].join(" \n\n"),
-          prompts.BUTTON_POS_0 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_POS_1 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_POS_1_DEFAULT + prompts.BUTTON_DELAY_ENABLE,
-          "Keep My Current Cache",
-          "Reset My Cache"
+          'Clear Better BibTeX cache?',
+          """
+            You have upgraded BetterBibTeX. This usually means output generation for Bib(La)TeX has changed, and it is recommended to clear the cache in order for these changes to take effect.
+
+            Since you have a large library, with #{Math.max(@cache.data.length, @serialized.data.length)} entries cached, this may lead to a slow first (auto)export as the cache is refilled.
+
+            If you don't care about the changes introduced in #{Zotero.BetterBibTeX.release}, and you want to keep your old cache, you may consider skipping this step.
+
+            If you opt NOT to clear the cache, and you experience unexpected output at some point in the future, please first clear the cache from the preferences before reporting an issue
+
+            Do you want to clear the BibTeX cache now?
+          """,
+          prompts.BUTTON_POS_0 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_POS_1 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_DELAY_ENABLE,
+          'Clear cache (recommended)',
+          "I know what I'm Doing. Keep the cache"
         )
 
     if cacheReset
