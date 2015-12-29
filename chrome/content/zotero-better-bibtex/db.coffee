@@ -5,7 +5,7 @@ Zotero.BetterBibTeX.DB = new class
 
   constructor: ->
     Zotero.debug('DB.initialize')
-    # split to speed up auto-saves
+    ### split to speed up auto-saves ###
     @db = {
       main: new loki('db.json', {
         autosave: true
@@ -34,7 +34,7 @@ Zotero.BetterBibTeX.DB = new class
     delete @metadata.meta
     @metadata.cacheReap ||= Date.now()
 
-    # this ensures that if the volatile DB hasn't been saved in the previous session, it is destroyed and will be rebuilt.
+    ### this ensures that if the volatile DB hasn't been saved in the previous session, it is destroyed and will be rebuilt. ###
     volatile = Zotero.BetterBibTeX.createFile(@db.volatile.filename)
     volatile.moveTo(null, @db.volatile.filename + '.bak') if volatile.exists()
 
@@ -73,15 +73,23 @@ Zotero.BetterBibTeX.DB = new class
     cacheReset = Zotero.BetterBibTeX.pref.get('cacheReset')
     Zotero.debug('DB.initialize, cache reset: ' + JSON.stringify({cacheReset, keepCache, metadata: @metadata, release: Zotero.BetterBibTeX.release}))
 
-    # The default is arbitrarily set at 1000. I just assume if you have less than that actually cached, you will be more annoyed by being
-    # asked about the cache than about it being regenerated.
-    confirmCacheResetSize = Zotero.BetterBibTeX.pref.get('confirmCacheResetSize')
-
     if !cacheReset && !keepCache
       cacheReset = @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
-      if cacheReset && confirmCacheResetSize && (@cache.data.length > confirmCacheResetSize || @serialized.data.length > confirmCacheResetSize)
+
+      ###
+      # The default is arbitrarily set at 1000. I just assume if you have less than that actually cached, you will be more annoyed by being
+      # asked about the cache than about it being regenerated.
+      ###
+      confirmCacheResetSize = Zotero.BetterBibTeX.pref.get('confirmCacheResetSize')
+
+      if cacheReset && confirmCacheResetSize && Math.max(@cache.data.length, @serialized.data.length) > confirmCacheResetSize
         prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(Components.interfaces.nsIPromptService)
-        cacheReset = 0 == prompts.confirmEx(
+        ###
+        # 1 is magic (https://bugzilla.mozilla.org/show_bug.cgi?id=345067)
+        # if you abort the window, I will assume you want the cache dropped. Keeping the cache should be a confirmed
+        # choice.
+        ###
+        cacheReset = 1 == prompts.confirmEx(
           null,
           'Clear Better BibTeX cache?',
           """
@@ -95,9 +103,9 @@ Zotero.BetterBibTeX.DB = new class
 
             Do you want to clear the BibTeX cache now?
           """,
-          prompts.BUTTON_POS_0 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_POS_1 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_DELAY_ENABLE,
-          'Clear cache (recommended)',
-          "I know what I'm Doing. Keep the cache"
+          prompts.BUTTON_POS_1_DEFAULT + prompts.BUTTON_POS_0 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_POS_1 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_DELAY_ENABLE,
+          "I know what I'm Doing. Keep the cache",
+          'Clear cache (recommended)'
         )
 
     if cacheReset
@@ -113,7 +121,7 @@ Zotero.BetterBibTeX.DB = new class
 
     @keys.on('insert', (key) =>
       if !key.citekeyFormat && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
-        # removewhere will trigger 'delete' for the conflicts, which will take care of their cache dependents
+        ### removewhere will trigger 'delete' for the conflicts, which will take care of their cache dependents ###
         @keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
       @cache.removeWhere({itemID: key.itemID})
     )
@@ -273,7 +281,6 @@ Zotero.BetterBibTeX.DB = new class
 
       Zotero.DB.query('ATTACH ? AS betterbibtex', [db.path])
 
-      # the context stuff was a mess
       if @tableExists('betterbibtex.autoexport') && !@table_info('betterbibtex.autoexport').context
         Zotero.BetterBibTeX.debug('DB.migrate: autoexport')
         Zotero.BetterBibTeX.DB.autoexport.removeDataOnly()

@@ -32,7 +32,7 @@ doExport = ->
       shortTitle: 'title-short'
       journalAbbreviation: 'container-title-short'
     }
-    # ham-fisted workaround for #365
+    ### ham-fisted workaround for #365 ###
     swap.author = 'director' if json.type in [ 'motion_picture', 'broadcast']
 
     for k, v of swap

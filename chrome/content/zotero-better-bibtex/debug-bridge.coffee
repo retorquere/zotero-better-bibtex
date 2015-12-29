@@ -11,8 +11,10 @@ Zotero.BetterBibTeX.DebugBridge.methods.init = ->
 
   Zotero.noUserInput = true
 
-  # replacing Zotero.Items.getAll to get items sorted. With random order I can't really implement stable
-  # testing.
+  ###
+    replacing Zotero.Items.getAll to get items sorted. With random order I can't really implement stable
+    testing.
+  ###
   Zotero.Items.getAll = (onlyTopLevel, libraryID, includeDeleted) ->
     sql = 'SELECT A.itemID FROM items A'
     if onlyTopLevel
@@ -38,8 +40,11 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
     Zotero.BetterBibTeX.pref.prefs.clearUserPref(key)
 
   Zotero.Items.erase((item.id for item in Zotero.BetterBibTeX.safeGetAll()))
-  for item in Zotero.BetterBibTeX.safeGetAll() # notes don't get erased in bulk?!
+
+  ### notes don't get erased in bulk?! ###
+  for item in Zotero.BetterBibTeX.safeGetAll()
     item.erase()
+
   Zotero.Collections.erase((coll.id for coll in Zotero.getCollections()))
   Zotero.Items.emptyTrash()
 

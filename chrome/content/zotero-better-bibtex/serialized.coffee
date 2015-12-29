@@ -117,7 +117,7 @@ Zotero.BetterBibTeX.serialized = new class
     @db.serialized.removeWhere({itemID: parseInt(itemID)})
 
   get: (zoteroItem) ->
-    # we may be passed a serialized item
+    ### we may be passed a serialized item ###
     return zoteroItem if zoteroItem.itemType && zoteroItem.itemID && zoteroItem.uri
 
     itemID = parseInt(if zoteroItem.getField then zoteroItem.id else zoteroItem.itemID)

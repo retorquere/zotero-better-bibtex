@@ -65,14 +65,16 @@ class BetterBibTeXParserSupport
 
   Creators: new class
     reduce: (result, fragment) ->
-      # for the first item, return the item
+      ### for the first item, return the item ###
       return [fragment] if result.length == 0
 
+      ###
       # if either the last element of the result so far of the new string to be added is a literal, push it onto the
       # result (don't smush literals)
+      ###
       return result.concat(fragment) if (result[result.length - 1] instanceof String) || (fragment instanceof String)
 
-      # regular strings -- add to tail
+      ### regular strings -- add to tail ###
       result[result.length - 1] += fragment
       return result
 
@@ -88,29 +90,32 @@ class BetterBibTeXParserSupport
 
       for fragment in fragments
         if fragment instanceof String
-          # literals always form a new substring
+          ### literals always form a new substring ###
           @push(groups, fragment)
 
         else
-          # split on separator and push resulting substrings
+          ### split on separator and push resulting substrings ###
           for splinter, i in fragment.split(sep)
+            ###
             # first word is before the separator, so it is appended to the previous chunk
             # all other words start a new entry
+            ###
             @push(groups, splinter, i > 0)
 
-      # compact regular strings in groups
+      ### compact regular strings in groups ###
       groups = (@compact(group) for group in groups)
 
-      for group in groups # 'trim' the groups
+      ### 'trim' the groups ###
+      for group in groups
         continue if group.length == 0
 
-        # remove whitespace at the start of the group
+        ### remove whitespace at the start of the group ###
         if typeof group[0] == 'string'
           group[0] = group[0].replace(/^\s+/g, '')
           group.shift() if group[0] == ''
         continue if group.length == 0
 
-        # remove whitespace at the end of the group
+        ### remove whitespace at the end of the group ###
         last = group.length - 1
         if typeof group[last] == 'string'
           group[last] = group[last].replace(/\s+$/g, '')
@@ -128,17 +133,22 @@ class BetterBibTeXParserSupport
         when 0
           return null
 
-        when 1 # single string, no commas
-          if name[0].length == 1 and (name[0][0] instanceof String) # single literal
+        when 1
+          ### single string, no commas ###
+          if name[0].length == 1 and (name[0][0] instanceof String)
+            ### single literal ###
             return { lastName: "" + name[0][0], fieldMode: 1 }
 
-          # single string, no commas
-          return @join(name[0]) # this will be cleaned up by zotero utils laters
+          ### single string, no commas ###
+          ### this will be cleaned up by zotero utils later ###
+          return @join(name[0])
 
-        when 2 # last name, first name
+        when 2
+          ### last name, first name ###
           return { lastName: @join(name[0]), firstName: @join(name[1]) }
 
-        else # assumed middle item is something like Jr.
+        else
+          ### assumed middle item is something like Jr. ###
           firstName = @join(name.pop())
           lastName = (@join(n) for n in name).join(', ')
 
@@ -157,7 +167,7 @@ class BetterBibTeXParserSupport
       }
 
       for field in fields
-        # safe since we're only dealing with strings, not numbers
+        ### safe since we're only dealing with strings, not numbers ###
         continue unless field.value && field.value != ''
 
         switch field.type
@@ -169,7 +179,8 @@ class BetterBibTeXParserSupport
             ref[field.key] = field.value if field.value.length > 0
 
           else
-            if ref[field.key] # duplicate fields are not supposed to occur I think
+            if ref[field.key]
+              ### duplicate fields are not supposed to occur I think ###
               note = if ref.__note__ then ref.__note__ + "<br/>\n" else ''
               ref.__note__ = note + field.key + "=" + field.value
             else
@@ -197,7 +208,6 @@ class BetterBibTeXParserSupport
     return param
 
   attachment: (parts) ->
-    # do not re-use varnames as pegcoffee blanks them out!
     parts = (v.trim() for v in parts || [])
 
     switch parts.length
@@ -240,10 +250,12 @@ class BetterBibTeXParserSupport
         switch intersection
           #when "0" # independent
 
-          when "1" # intersection
+          when "1"
+            ### intersection ###
             collection.items = collection.items.filter(bibtex.intersect, levels[group.level - 1].items)
 
-          when "2" # union
+          when "2"
+            ### union ###
             collection.items = bibtex.unique(levels[group.level - 1].items.concat(collection.items))
 
     @collections = @collections.concat(collections)

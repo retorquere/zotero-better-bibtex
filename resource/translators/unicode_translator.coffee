@@ -6,6 +6,7 @@ LaTeX.text2latex = (text, options = {}) ->
   return latex
 
 LaTeX.titleCase = (string) ->
+  ###
   # Force a word to lowercase if all of the following apply
   # 1. It is not the first word of the sentence, as smallwords at the start should be uppercased
   # 2. It is not the last word of the sentence (similar)
@@ -14,6 +15,7 @@ LaTeX.titleCase = (string) ->
   # 5. There is either not a dash immediately after the word, or there is a dash immediately preceding the word
   # 6. There is a space or a dash before the word
   # [0-9a-z\xD7\xDF-\xFF] = -Lu
+  ###
   return string.replace(/[A-Za-z0-9\u00C0-\u00FF]+[^\s-]*/g, (match, index, title) ->
     if index > 0 and
       index + match.length != title.length and
@@ -28,13 +30,15 @@ LaTeX.titleCase = (string) ->
       Translator.debug('titleCase: UC', match)
       return match #.toUpperCase()
 
+    ###
     # leave a word alone if it has an uppercase letter at the second position,
     # or the second character is a period followed by anything
+    ###
     if match.substr(1).search(/[A-Z]|\../) > -1
       Translator.debug('titleCase: NC', match)
       return match
 
-    # uppercase
+    ### uppercase ###
     Translator.debug('titleCase: TC', match)
     return match.charAt(0).toUpperCase() + match.substr(1)
   )
@@ -95,7 +99,7 @@ class LaTeX.HTML
         @latex += '\\textbf{'
 
       when 'a'
-        # zotero://open-pdf/0_5P2KA4XM/7 is actually a reference.
+        ### zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. ###
         if tag.attrs.href?.length > 0
           @latex += "\\href{#{tag.attrs.href}}{"
 
@@ -108,7 +112,7 @@ class LaTeX.HTML
         @latex += '\\textsubscript{'
 
       when 'br'
-        # line-breaks on empty line makes LaTeX sad
+        ### line-breaks on empty line makes LaTeX sad ###
         @latex += "\\\\" if @latex != '' && @latex[@latex.length - 1] != "\n"
         @latex += "\n"
 

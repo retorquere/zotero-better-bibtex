@@ -24,7 +24,7 @@ if !ZoteroPane_Local.BetterBibTeX
       return "http://localhost:#{serverPort}/better-bibtex/#{url}"
   }
 
-  # monkey-patch buildCollectionContextMenu to add group library export
+  ### monkey-patch buildCollectionContextMenu to add group library export ###
   ZoteroPane_Local.buildCollectionContextMenu = ((original) ->
     return ->
       zv = ZOTERO_CONFIG.VERSION.split('.')

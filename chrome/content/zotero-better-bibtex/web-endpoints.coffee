@@ -20,7 +20,8 @@ Zotero.BetterBibTeX.endpoints.collection.init = (url, data, sendResponseCallback
     path = path.join('.')
     path = "/0/#{path}" if path.charAt(0) != '/'
     path = path.split('/')
-    path.shift() # removes empty field before first '/'
+    ### removes empty field before first '/' ###
+    path.shift()
 
     libid = parseInt(path.shift())
     throw "Not a valid library ID: #{collectionkey}" if isNaN(libid)
@@ -127,7 +128,7 @@ Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
   try
     switch req.method
       when 'citations', 'citation', 'bibliography', 'bibtex', 'search'
-        # the schomd methods search by citekey -- the cache needs to be fully primed for this to work
+        ### the schomd methods search by citekey -- the cache needs to be fully primed for this to work ###
         Zotero.BetterBibTeX.keymanager.prime()
 
         result = Zotero.BetterBibTeX.schomd[req.method].apply(Zotero.BetterBibTeX.schomd, req.params)

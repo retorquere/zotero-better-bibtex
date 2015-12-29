@@ -158,7 +158,7 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
 
       Zotero.BetterBibTeX.debug('citations:', {citations, state})
       if state.suffix == 0 && state.prefix == 0 && state.locator == 0 && state['suppress-author'] in [0, citations.length]
-        # simple case where everything can be put in a single cite
+        ### simple case where everything can be put in a single cite ###
         return "\\#{if citations[0]['suppress-author'] then 'citeyear' else config.command}{#{(citation.citekey for citation in citations).join(',')}}"
 
     formatted = ''
@@ -239,7 +239,8 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       title.set(item.firstCreator, ',', 'anon.')
 
       includeTitle = false
-      try # Prefs.get throws an error if the pref is not found
+      ### Prefs.get throws an error if the pref is not found ###
+      try
         includeTitle = Zotero.Prefs.get('translators.ODFScan.includeTitle')
       if includeTitle || !item.firstCreator
         title.set(item.getField('shortTitle') || item.getField('title'), ',', '(no title)')

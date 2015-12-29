@@ -4,9 +4,11 @@ Zotero.BetterBibTeX.keymanager = new class
     @log = Zotero.BetterBibTeX.log
     @resetJournalAbbrevs()
 
-  # three-letter month abbreviations. I assume these are the same ones that the
-  # docs say are defined in some appendix of the LaTeX book. (I don't have the
-  # LaTeX book.)
+  ###
+  three-letter month abbreviations. I assume these are the same ones that the
+  docs say are defined in some appendix of the LaTeX book. (I don't have the
+  LaTeX book.)
+  ###
   months: [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
   embeddedKeyRE: /\bbibtex: *([^\s\r\n]+)/
@@ -155,7 +157,7 @@ Zotero.BetterBibTeX.keymanager = new class
         @assign(item, true)
 
   save: (item, citekey) ->
-    # only save if no change
+    ### only save if no change ###
     item = Zotero.Items.get(item.itemID) unless item.getField
 
     extra = @extract(item)
@@ -172,7 +174,7 @@ Zotero.BetterBibTeX.keymanager = new class
   set: (item, citekey, pin) ->
     throw new Error('Cannot set empty cite key') if !citekey || citekey.trim() == ''
 
-    # no keys for notes and attachments
+    ### no keys for notes and attachments ###
     return unless @eligible(item)
 
     item = Zotero.Items.get(item.itemID) unless item.getField
@@ -290,18 +292,20 @@ Zotero.BetterBibTeX.keymanager = new class
     if (typeof item.itemID == 'undefined') && (typeof item.key != 'undefined') && (typeof item.libraryID != 'undefined')
       item = Zotero.Items.getByLibraryAndKey(item.libraryID, item.key)
 
-    # no keys for notes and attachments
+    ### no keys for notes and attachments ###
     return unless @eligible(item)
 
-    # pinmode can be:
-    #  on-change: generate and pin if pinCitekeys is on-change, 'null' behavior if not
-    #  on-export: generate and pin if pinCitekeys is on-export, 'null' behavior if not
-    #  null: fetch -> generate -> return
+    ###
+    pinmode can be:
+    * on-change: generate and pin if pinCitekeys is on-change, 'null' behavior if not
+    * on-export: generate and pin if pinCitekeys is on-export, 'null' behavior if not
+    * null: fetch -> generate -> return
+    ###
 
     pin = (pinmode == Zotero.BetterBibTeX.pref.get('pinCitekeys'))
     cached = @db.keys.findOne({itemID: @integer(item.itemID)})
 
-    # store new cache item if we have a miss or if a re-pin is requested
+    ### store new cache item if we have a miss or if a re-pin is requested ###
     cached = @assign(item, pin) if !cached || (pin && cached.citekeyFormat)
     return @clone(cached)
 

@@ -77,9 +77,11 @@ class BetterBibTeXPatternFormatter
   words: (str) ->
     return (@clean(word) for word in Zotero.Utilities.XRegExp.matchChain(@innerText(str), [@re.word]) when word != '')
 
+  ###
   # three-letter month abbreviations. I assume these are the same ones that the
   # docs say are defined in some appendix of the LaTeX book. (i don't have the
   # LaTeX book.)
+  ###
   months: [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
   titleWords: (title, options = {}) ->

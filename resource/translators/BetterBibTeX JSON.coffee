@@ -9,7 +9,6 @@ scrub = (item) ->
   delete item.multi
   delete item.attachmentIDs
 
-  # TODO: temporary until I migrate to the 4.0.27 translator structure
   delete item.collections
 
   for creator in item.creators or []
@@ -85,7 +84,7 @@ doExport = ->
     collections: Translator.collections
     items: []
     cache: {
-      # no idea why tis doesn't work anymore. The security manager won't let me call toJSON on this anymore
+      # no idea why this doesn't work anymore. The security manager won't let me call toJSON on this anymore
       # activity: Zotero.BetterBibTeX.cache.stats()
     }
   }

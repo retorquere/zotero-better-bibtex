@@ -75,7 +75,7 @@ doExport = ->
       ref.remove('type')
 
     if item.creators and item.creators.length
-      # split creators into subcategories
+      ### split creators into subcategories ###
       authors = []
       editors = []
       translators = []
@@ -273,7 +273,8 @@ ZoteroItem::import = (bibtex) ->
           value += ' '
 
         if @item.date
-          if value.indexOf(@item.date) >= 0 # value contains year and more
+          if value.indexOf(@item.date) >= 0
+            ### value contains year and more ###
             @item.date = value
           else
             @item.date = value + @item.date
@@ -321,7 +322,7 @@ ZoteroItem::import = (bibtex) ->
           @item.attachments.push(att)
 
       when 'eprint', 'eprinttype'
-        # Support for IDs exported by BibLaTeX
+        ### Support for IDs exported by BibLaTeX ###
         @item["_#{field}"] = value
 
         if @item._eprint && @item._eprinttype

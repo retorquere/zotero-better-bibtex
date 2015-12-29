@@ -40,7 +40,6 @@ Zotero.BetterBibTeX.auto = new class
   add: (collection, path, context) ->
     Zotero.BetterBibTeX.debug("auto-export set up for #{collection} to #{path}")
 
-    # aren't unique constraints being enforced?
     @db.autoexport.removeWhere({path})
 
     @db.autoexport.insert({
@@ -127,7 +126,7 @@ Zotero.BetterBibTeX.auto = new class
         items = {library: null}
 
       when m = /^search:([0-9]+)$/.exec(ae.collection)
-        # assumes that a markSearch will have executed the search and found the items
+        ### assumes that a markSearch will have executed the search and found the items ###
         items = {items: @search[parseInt(m[1])] || []}
         if items.items.length == 0
           Zotero.BetterBibTeX.debug('auto.prepare: empty search')
@@ -224,7 +223,9 @@ Zotero.BetterBibTeX.auto = new class
 
     translation.setHandler('done', (obj, worked) =>
       running = @db.autoexport.get(ae.$loki)
-      if running.status == 'running' # could have been re-marked for export before this one was done
+
+      ### could have been re-marked for export before this one was done ###
+      if running.status == 'running'
         status = (if worked then 'done' else 'error')
         Zotero.BetterBibTeX.debug("auto.process: finished #{Zotero.BetterBibTeX.auto.running}: #{status}")
         @mark(ae, status)

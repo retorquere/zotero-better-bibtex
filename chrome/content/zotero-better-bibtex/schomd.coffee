@@ -2,12 +2,12 @@ Zotero.BetterBibTeX.schomd = {}
 
 Zotero.BetterBibTeX.schomd.init = ->
   Zotero.CiteProc.CSL.Output.Formats.markdown = {
-    #
+    ###
     # text_escape: Format-specific function for escaping text destined
     # for output.  Takes the text to be escaped as sole argument.  Function
     # will be run only once across each portion of text to be escaped, it
     # need not be idempotent.
-    #
+    ###
     text_escape: (text) ->
       text = text.replace(/([-"\\`\*_{}\[\]\(\)#\+!])/g, "\\$1")
       text = text.replace(/(^|[\n])(\s*[0-9]+)\.(\s)/g, "$1\\.$2")
@@ -94,7 +94,7 @@ Zotero.BetterBibTeX.schomd.citations = (citekeys, {style, libraryID} = {}) ->
   for cluster in citekeys
     clusterIDs = (item for item in @itemIDs(cluster, {libraryID}) when item)
 
-    # the caller can't detect a key has not been resolved unless I refuse to resolve the whole cluster
+    ### the caller can't detect a key has not been resolved unless I refuse to resolve the whole cluster ###
     clusterIDs = [] unless clusterIDs.length == cluster.length
 
     itemIDs = itemIDs.concat(clusterIDs)
