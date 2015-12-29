@@ -45,7 +45,7 @@ GEM
       net-http-persistent (>= 2.7)
       net-http-pipeline
     gherkin3 (3.1.2)
-    ghi (1.0.3)
+    ghi (1.0.4)
     github_api (0.13.1)
       addressable (~> 2.4.0)
       descendants_tracker (~> 0.0.4)

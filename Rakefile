@@ -341,9 +341,9 @@ rule '.json' => '.yml' do |t|
       raise "Missing #{field} in #{t.source}" unless header[field]
     }
 
-    if !header['translatorType'] || ((header['translatorType'] & 1) == 0 && (header['translatorType'] & 2) == 0) # not import or export
-      raise "Invalid translator type #{header['translatorType']} in #{t.source}"
-    end
+    #if !header['translatorType'] || ((header['translatorType'] & 1) == 0 && (header['translatorType'] & 2) == 0) # not import or export
+    #  raise "Invalid translator type #{header['translatorType']} in #{t.source}"
+    #end
 
     f.write(JSON.pretty_generate(header))
   }
@@ -770,3 +770,59 @@ task :xpi do
   puts XPI
 end
 
+task :doc do
+  preferences = {}
+  defaults = {}
+
+  YAML::load_file('defaults/preferences/defaults.yml').each_pair{|pref, default|
+    preferences["extensions.zotero.translators.better-bibtex.#{pref}"] = 'Hidden'
+    defaults["extensions.zotero.translators.better-bibtex.#{pref}"] = default
+  }
+
+  settings = Nokogiri::XML(open('chrome/content/zotero-better-bibtex/preferences.xul'))
+  settings.remove_namespaces!
+
+  panels = [
+    'Citation',
+    'Import/Export',
+    'Journal abbreviations',
+    'Automatic Export',
+    'Debug'
+  ]
+  settings.xpath('//tabpanel').each_with_index{|panel, panelnr|
+    panel.xpath('.//*[@preference]').each{|pref|
+      name = settings.at("//preference[@id='#{pref['preference']}']")['name']
+      preferences[name] = panels[panelnr]
+    }
+  }
+
+  documented = {}
+
+  section = nil
+  IO.readlines('www/better-bibtex/configuration.md').each{|line|
+    line.strip!
+    if line =~ /^# /
+      section = line.sub(/^#/, '').strip
+      next
+    end
+
+    if line =~ /^### .* <!-- (.*) -->/
+      pref = $1.strip
+      documented[pref] = section
+    end
+  }
+
+  documented.keys.each{|pref|
+    if !preferences[pref]
+      puts "Documented obsolete preference #{documented[pref]} / #{pref}"
+    elsif preferences[pref] != documented[pref]
+      puts "#{pref} documented in #{documented[pref]} but visible in #{preferences[pref]}"
+    end
+  }
+  preferences.keys.each{|pref|
+    if !documented[pref]
+      heading = "## #{pref.sub(/.*\./, '')} <!-- #{pref} -->"
+      puts "Undocumented preference #{preferences[pref]} / #{heading} (#{defaults[pref]})"
+    end
+  }
+end

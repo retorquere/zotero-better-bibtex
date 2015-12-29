@@ -19,7 +19,6 @@ bibtexURLs: 'off'
 csquotes: ''
 keyConflictPolicy: keep
 langID: babel
-logging: false
 pinCitekeys: manual
 preserveBibTeXVariables: false
 rawImports: false
