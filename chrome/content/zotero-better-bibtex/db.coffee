@@ -80,17 +80,25 @@ Zotero.BetterBibTeX.DB = new class
     if !cacheReset && !keepCache
       cacheReset = @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
       if cacheReset && confirmCacheResetSize && (@cache.data.length > confirmCacheResetSize || @serialized.data.length > confirmCacheResetSize)
-        cacheReset = Services.prompt.confirm(null, 'Drop Better BibTeX cache?', [
-          'You have upgraded BetterBibTeX. This usually means output generation for Bib(La)TeX has changed, and it is recommended to clear the cache in order for these changes to take effect.'
+        flagsForCacheResetDialog = prompts.BUTTON_POS_0 * prompts.BUTTON_TITLE_IS_STRING +
+                                   prompts.BUTTON_POS_1 * prompts.BUTTON_TITLE_IS_STRING
+        cacheReset = Services.prompt.confirm(
+          null,
+          'Drop Better BibTeX cache?',
+          [
+            'You have upgraded BetterBibTeX. This usually means output generation for Bib(La)TeX has changed, and it is recommended to clear the cache in order for these changes to take effect.'
 
-          "Since you have a large library, with #{Math.max(@cache.data.length, @serialized.data.length)} entries cached, this may lead to a slow first (auto)export as the cache is refilled."
+            "Since you have a large library, with #{Math.max(@cache.data.length, @serialized.data.length)} entries cached, this may lead to a slow first (auto)export as the cache is refilled."
 
-          "If you don't care about the changes introduced in #{Zotero.BetterBibTeX.release}, and you want to keep your old cache, you may consider skipping this step."
+            "If you don't care about the changes introduced in #{Zotero.BetterBibTeX.release}, and you want to keep your old cache, you may consider skipping this step."
 
-          'If you opt NOT to clear the cache, and you experience unexpected output at some point in the future, please first clear the cache from the preferences before reporting an issue'
+            'If you opt NOT to clear the cache, and you experience unexpected output at some point in the future, please first clear the cache from the preferences before reporting an issue'
 
-          'Do you want to reset the BibTeX cache now (recommended)?'
-        ].join(" \n\n"))
+            'Do you want to reset the BibTeX cache now (recommended)?'].join(" \n\n"),
+          flagsForCacheResetDialog,
+          "Reset My Cache",
+          "Keep My Current Cache"
+        )
 
     if cacheReset
       @serialized.removeDataOnly()
