@@ -1,6 +1,7 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
-Components.utils.import('resource://zotero/config.js')
+
+Components.utils.import('resource://zotero/config.js') unless ZOTERO_CONFIG?
 
 Zotero.BetterBibTeX = {
   serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
