@@ -101,7 +101,7 @@ Zotero.BetterBibTeX.auto = new class
 
   reset: ->
     for ae in @db.autoexport.data
-      @mark(ae, 'pending', reason)
+      @mark(ae, 'pending', 'reset')
     @refresh()
 
   prepare: (ae) ->
