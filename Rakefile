@@ -381,6 +381,8 @@ def utf16literal(str)
   }.join('')
   return "'" + str + "'"
 end
+
+# Keep this as coffeescript rather than JS so Travis doesn't have to check out the csl-locales repo (sort of a cache)
 file 'chrome/content/zotero-better-bibtex/csl-localedata.coffee' => ['Rakefile'] + Dir['csl-locales/*.xml'] + Dir['csl-locales/*.json'] do |t|
   open(t.name, 'w'){|f|
     f.puts('Zotero.BetterBibTeX.Locales = { months: {}, dateorder: {}}')
