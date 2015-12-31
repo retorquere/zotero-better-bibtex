@@ -381,9 +381,9 @@ def utf16literal(str)
   }.join('')
   return "'" + str + "'"
 end
-file 'chrome/content/zotero-better-bibtex/csl-localedata.js' => ['Rakefile'] + Dir['csl-locales/*.xml'] + Dir['csl-locales/*.json'] do |t|
+file 'chrome/content/zotero-better-bibtex/csl-localedata.coffee' => ['Rakefile'] + Dir['csl-locales/*.xml'] + Dir['csl-locales/*.json'] do |t|
   open(t.name, 'w'){|f|
-    f.puts('Zotero.BetterBibTeX.Locales = { months: {}, dateorder: {}};')
+    f.puts('Zotero.BetterBibTeX.Locales = { months: {}, dateorder: {}}')
 
     locales = JSON.parse(open('csl-locales/locales.json').read)
     locales['primary-dialects']['en'] = 'en-GB'
@@ -406,14 +406,14 @@ file 'chrome/content/zotero-better-bibtex/csl-localedata.js' => ['Rakefile'] + D
       locale = Nokogiri::XML(open("csl-locales/locales-#{full}.xml"))
       locale.remove_namespaces!
       order = locale.xpath('//date[@form="numeric"]/date-part').collect{|d| d['name'][0]}.join('')
-      f.puts("#{names} = #{order.inspect};")
+      f.puts("#{names} = #{order.inspect}")
 
       months = 1.upto(12).collect{|month| locale.at("//term[@name='month-#{month.to_s.rjust(2, '0')}' and not(@form)]").inner_text.downcase }
       seasons = 1.upto(4).collect{|season| locale.at("//term[@name='season-#{season.to_s.rjust(2, '0')}']").inner_text.downcase }
 
       months = '[' + (months + seasons).collect{|name| utf16literal(name) }.join(', ') + ']'
 
-      f.puts("Zotero.BetterBibTeX.Locales.months[#{full.inspect}] = #{months};")
+      f.puts("Zotero.BetterBibTeX.Locales.months[#{full.inspect}] = #{months}")
     }
   }
 end
