@@ -1,3 +1,5 @@
+Components.utils.import('resource://gre/modules/Services.jsm')
+
 Zotero.BetterBibTeX.keymanager = new class
   constructor: ->
     @db = Zotero.BetterBibTeX.DB
@@ -36,8 +38,19 @@ Zotero.BetterBibTeX.keymanager = new class
     assigned = (key.itemID for key in @db.keys.find())
     sql += " and not i.itemID in #{Zotero.BetterBibTeX.DB.SQLite.Set(assigned)}" if assigned.length > 0
 
-    for itemID in Zotero.DB.columnQuery(sql)
+    items = Zotero.DB.columnQuery(sql)
+    if items.length > 100
+      return unless Services.prompt.confirm(null, 'Filling citation key cache', """
+          You have requested a scan over all citation keys, but have #{items.length} references for which the citation key must still be calculated.
+          This might take a long time, and Zotero will freeze while it's calculating them.
+          If you click 'Cancel' now, the scan will only occur over the citation keys you happen to have in place.
+
+          Do you wish to proceed calculating all citation keys now?
+      """)
+
+    for itemID in items
       @get({itemID}, 'on-export')
+    return
 
   reset: ->
     @resetJournalAbbrevs()
