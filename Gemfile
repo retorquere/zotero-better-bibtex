@@ -22,7 +22,6 @@ gem 'rubyzip', '>= 1.0.0' # will load new rubyzip version
 gem 'zip-zip' # will load compatibility for old rubyzip API.
 gem 'typhoeus'
 gem 'zotplus-rakehelper'
-gem 'github_api'
 gem 'travis'
 gem 'washbullet'
 gem 'travis_parallel_sentinel'
@@ -33,4 +32,3 @@ gem 'facets'
 gem 'aws-sdk', '~> 2'
 gem 'jwt'
 gem 'rest-client'
-gem 'github_api'

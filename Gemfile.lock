@@ -156,7 +156,8 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.135)
+    zotplus-rakehelper (0.0.136)
+      github_api
       nokogiri
       rake
       rest-client
@@ -174,7 +175,6 @@ DEPENDENCIES
   cucumber
   facets
   ghi
-  github_api
   headless
   jwt
   mechanize
