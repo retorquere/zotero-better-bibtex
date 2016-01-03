@@ -156,7 +156,7 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.138)
+    zotplus-rakehelper (0.0.140)
       github_api
       nokogiri
       rake
