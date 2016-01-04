@@ -116,10 +116,15 @@ end
 #    end
 #  end
 #}
+SKIP = ['Notre Dame Philosophical Reviews']
 ZIPFILES = (Dir['{chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   tgt = src.sub(/\.[^\.]+$/, '.js')
   tgt
-}.flatten + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
+}.flatten.reject{|tr|
+  SKIP.include?(File.basename(tr, File.extname(tr)))
+} + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].reject{|tr|
+  SKIP.include?(File.basename(tr, File.extname(tr)))
+}.collect{|tr|
   root = File.dirname(tr)
   stem = File.basename(tr, File.extname(tr))
   %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
@@ -827,4 +832,16 @@ task :doc do
       puts "Undocumented preference #{preferences[pref]} / #{heading} (#{defaults[pref]})"
     end
   }
+end
+
+task :changelog do
+  #issues = Github::Client::Issues.new user: 'Zotplus', repo: 'zotero-better-bibtex'
+  tags = `git log --date-order --tags --simplify-by-decoration --pretty=format:'%ai%x09%D%x09%h' | grep tag:`
+  tags = tags.split(/\n/).collect{|tag|
+    date, tag, hash = *(tag.split(/\t/))
+    date = Date.parse(date)
+    tag = tag.split(/,\s*/).collect{|t| t.sub(/^tag:\s*/, '')}.select{|t| t =~ /^[\.0-9]+$/}[0]
+    [date, hash, tag]
+  }.select{|tag| tag[2]}
+  puts tags.inspect
 end

@@ -56,6 +56,8 @@ doExport = ->
         ref.add({ name: 'url', value: item.url, enc: 'verbatim'})
       when 'note', 'true' # that's what you get when you change pref type
         ref.add({ name: (if ref.referencetype in ['misc', 'booklet'] then 'howpublished' else 'note'), allowDuplicates: true, value: item.url, enc: 'url'})
+      else
+        ref.add({ name: 'howpublished', allowDuplicates: true, value: item.url, enc: 'url'}) if item.itemType == 'webpage'
 
     switch
       when item.itemType in ['bookSection', 'conferencePaper']
