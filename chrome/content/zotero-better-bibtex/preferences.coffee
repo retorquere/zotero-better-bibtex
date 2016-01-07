@@ -10,12 +10,14 @@ BetterBibTeXPref =
       document.getElementById('better-bibtex-prefs-tabpanels').selectedIndex = disabled
       document.getElementById('zotero-better-bibtex-disabled-message').value = Zotero.BetterBibTeX.disabled
 
+    # document.getElementById('better-bibtex-preferences-zombies').setAttribute('label', "Purge zombies: #{JSON.stringify(Zotero.BetterBibTeX.DB.zombies())}")
+
     BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.pref.get('citekeyFormat')
     BetterBibTeXPref.update()
 
     Zotero.BetterBibTeX.debug('prefs pane loaded:', document.location.hash)
     if document.location.hash == '#better-bibtex'
-      # runs into the 'TypeError: aId is undefined' problem for some reason.
+      ### runs into the 'TypeError: aId is undefined' problem for some reason. ###
       setTimeout((->
         document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex'))
       ), 500)
@@ -187,8 +189,8 @@ BetterBibTeXAutoExportPref =
     tree = new BetterBibTeXAutoExport('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', exportlist, document)
 
     for ae in Zotero.BetterBibTeX.DB.autoexport.chain().simplesort('path').data()
-      Zotero.BetterBibTeX.debug('refresh:', {id: ae.$loki, status: ae.status, running: Zotero.BetterBibTeX.auto.running})
-      status = if Zotero.BetterBibTeX.auto.running == ae.$loki then 'running' else "#{ae.status} (#{ae.updated})"
+      Zotero.BetterBibTeX.debug('refresh:', {id: ae.$loki, status: ae.status})
+      status = "#{ae.status} (#{ae.updated})"
       tree.treeitem({autoexport: "#{ae['$loki']}", '': ->
         @treerow(->
           @treecell({editable: 'false', label: "#{BetterBibTeXAutoExportPref.exportType(ae.collection)}: #{BetterBibTeXAutoExportPref.exportName(ae.collection)}"})

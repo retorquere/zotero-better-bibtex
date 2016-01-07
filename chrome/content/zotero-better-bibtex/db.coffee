@@ -5,7 +5,7 @@ Zotero.BetterBibTeX.DB = new class
 
   constructor: ->
     Zotero.debug('DB.initialize')
-    # split to speed up auto-saves
+    ### split to speed up auto-saves ###
     @db = {
       main: new loki('db.json', {
         autosave: true
@@ -28,13 +28,13 @@ Zotero.BetterBibTeX.DB = new class
 
     @metadata = @db.main.getCollection('metadata')
     @metadata ||= @db.main.addCollection('metadata')
-    @metadata = @metadata.chain().data()[0]
+    @metadata = @metadata.data[0]
     @metadata ||= {}
     delete @metadata.$loki
     delete @metadata.meta
     @metadata.cacheReap ||= Date.now()
 
-    # this ensures that if the volatile DB hasn't been saved in the previous session, it is destroyed and will be rebuilt.
+    ### this ensures that if the volatile DB hasn't been saved in the previous session, it is destroyed and will be rebuilt. ###
     volatile = Zotero.BetterBibTeX.createFile(@db.volatile.filename)
     volatile.moveTo(null, @db.volatile.filename + '.bak') if volatile.exists()
 
@@ -74,17 +74,39 @@ Zotero.BetterBibTeX.DB = new class
     Zotero.debug('DB.initialize, cache reset: ' + JSON.stringify({cacheReset, keepCache, metadata: @metadata, release: Zotero.BetterBibTeX.release}))
 
     if !cacheReset && !keepCache
-      cacheReset = !@metadata.BetterBibTeX || @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
-      # the 3000 is arbitrary. I just assume if you have less than 3k actually cached, you will be more annoyed by being
+      cacheReset = @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
+
+      ###
+      # The default is arbitrarily set at 1000. I just assume if you have less than that actually cached, you will be more annoyed by being
       # asked about the cache than about it being regenerated.
-      if cacheReset && Zotero.BetterBibTeX.pref.get('confirmCacheReset') && (@cache.chain().data().length > 3000 || @serialized.chain().data().length > 3000)
-        cacheReset = confirm([
-          'You have upgraded BetterBibTeX. This usually means output generation for Bib(La)TeX has changed.'
-          'If you want this change to be applied immediately, you can clear the BibTeX cache. If you have a large library, first (auto)export will be slower than usual'
-          'If you are in principle satisfied with the output you had, you can just have Better BibTeX replenish the cache as items are changed or added'
-          ''
-          'Do you want to reset the BibTeX cache now?'
-        ].join("\n"))
+      ###
+      confirmCacheResetSize = Zotero.BetterBibTeX.pref.get('confirmCacheResetSize')
+
+      if cacheReset && confirmCacheResetSize && Math.max(@cache.data.length, @serialized.data.length) > confirmCacheResetSize
+        prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(Components.interfaces.nsIPromptService)
+        ###
+        # 1 is magic (https://bugzilla.mozilla.org/show_bug.cgi?id=345067)
+        # if you abort the window, I will assume you want the cache dropped. Keeping the cache should be a confirmed
+        # choice.
+        ###
+        cacheReset = 1 == prompts.confirmEx(
+          null,
+          'Clear Better BibTeX cache?',
+          """
+            You have upgraded BetterBibTeX. This usually means output generation for Bib(La)TeX has changed, and it is recommended to clear the cache in order for these changes to take effect.
+
+            Since you have a large library, with #{Math.max(@cache.data.length, @serialized.data.length)} entries cached, this may lead to a slow first (auto)export as the cache is refilled.
+
+            If you don't care about the changes introduced in #{Zotero.BetterBibTeX.release}, and you want to keep your old cache, you may consider skipping this step.
+
+            If you opt NOT to clear the cache, and you experience unexpected output at some point in the future, please first clear the cache from the preferences before reporting an issue
+
+            Do you want to clear the BibTeX cache now?
+          """,
+          prompts.BUTTON_POS_1_DEFAULT + prompts.BUTTON_POS_0 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_POS_1 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_DELAY_ENABLE,
+          "I know what I'm Doing. Keep the cache",
+          'Clear cache (recommended)'
+        )
 
     if cacheReset
       @serialized.removeDataOnly()
@@ -99,7 +121,7 @@ Zotero.BetterBibTeX.DB = new class
 
     @keys.on('insert', (key) =>
       if !key.citekeyFormat && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
-        # removewhere will trigger 'delete' for the conflicts, which will take care of their cache dependents
+        ### removewhere will trigger 'delete' for the conflicts, which will take care of their cache dependents ###
         @keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
       @cache.removeWhere({itemID: key.itemID})
     )
@@ -115,7 +137,7 @@ Zotero.BetterBibTeX.DB = new class
     )
 
     Zotero.debug('DB.initialize: ready')
-    Zotero.debug("DB.initialize: ready.serialized: #{@serialized.chain().data().length}")
+    Zotero.debug("DB.initialize: ready.serialized: #{@serialized.data.length}")
 
     idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
     idleService.addIdleObserver({observe: (subject, topic, data) => @save() if topic == 'idle'}, 5)
@@ -132,6 +154,13 @@ Zotero.BetterBibTeX.DB = new class
           Zotero.BetterBibTeX.DB.touch(itemID)
     , ['item'])
 
+  purge: ->
+    itemIDs = Zotero.DB.columnQuery('select itemID from items except select itemID from deletedItems')
+    itemIDs = (parseInt(id) for id in itemIDs)
+    @keys.removeWhere((o) -> o.itemID not in itemIDs)
+    @cache.removeWhere((o) -> o.itemID not in itemIDs)
+    @serialized.removeWhere((o) -> o.itemID not in itemIDs)
+
   touch: (itemID) ->
     Zotero.BetterBibTeX.debug('touch:', itemID)
     @cache.removeWhere({itemID})
@@ -139,7 +168,7 @@ Zotero.BetterBibTeX.DB = new class
     @keys.removeWhere((o) -> o.itemID == itemID && o.citekeyFormat)
 
   save: (all) ->
-    Zotero.BetterBibTeX.debug('DB.save:', {all, serialized: @serialized.chain().data().length})
+    Zotero.BetterBibTeX.debug('DB.save:', {all, serialized: @serialized.data.length})
 
     if all
       try
@@ -252,7 +281,6 @@ Zotero.BetterBibTeX.DB = new class
 
       Zotero.DB.query('ATTACH ? AS betterbibtex', [db.path])
 
-      # the context stuff was a mess
       if @tableExists('betterbibtex.autoexport') && !@table_info('betterbibtex.autoexport').context
         Zotero.BetterBibTeX.debug('DB.migrate: autoexport')
         Zotero.BetterBibTeX.DB.autoexport.removeDataOnly()

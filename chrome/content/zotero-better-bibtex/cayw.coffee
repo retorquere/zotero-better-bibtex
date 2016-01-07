@@ -142,22 +142,24 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
 
     return '' if citations.length == 0
 
-    state = {
-      prefix: 0
-      suffix: 0
-      'suppress-author': 0
-      locator: 0
-      label: 0
-    }
     if citations.length > 1
+      state = {
+        prefix: 0
+        suffix: 0
+        'suppress-author': 0
+        locator: 0
+        label: 0
+      }
+
       for citation in citations
         for own k of citation
           state[k] ?= 0
           state[k]++
 
-    if state.suffix == 0 && state.prefix == 0 && state.locator == 0 && state['suppress-author'] in [0, citations.length]
-      # simple case where everything can be put in a single cite
-      return "\\#{if citations[0]['suppress-author'] then 'citeyear' else config.command}{#{(citation.citekey for citation in citations).join(',')}}"
+      Zotero.BetterBibTeX.debug('citations:', {citations, state})
+      if state.suffix == 0 && state.prefix == 0 && state.locator == 0 && state['suppress-author'] in [0, citations.length]
+        ### simple case where everything can be put in a single cite ###
+        return "\\#{if citations[0]['suppress-author'] then 'citeyear' else config.command}{#{(citation.citekey for citation in citations).join(',')}}"
 
     formatted = ''
     for citation in citations
@@ -165,13 +167,16 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       formatted += "\\"
       formatted += if citation['suppress-author'] then 'citeyear' else config.command
 
+      Zotero.BetterBibTeX.debug('citation:', citation)
       switch
         when citation.locator && citation.suffix
-          formatted += '[' + Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' ' + citation.locator + ', ' + citation.suffix + ']'
+          label = if citation.label == 'page' then '' else Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' '
+          formatted += "[#{label}#{citation.locator}, #{citation.suffix}]"
         when citation.locator
-          formatted += '[' + Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' ' + citation.locator + ']'
+          label = if citation.label == 'page' then '' else Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' '
+          formatted += "[#{label}#{citation.locator}]"
         when citation.suffix
-          formatted += '[' + citation.suffix + ']'
+          formatted += "[#{citation.suffix}]"
       formatted += '{' + citation.citekey + '}'
 
     return formatted.trim()
@@ -196,7 +201,7 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       cite += " #{citation.suffix}" if citation.suffix
       formatted.push(cite)
     return '' if formatted.length == 0
-    return '[' + formatted.join(';') + ']'
+    return '[' + formatted.join('; ') + ']'
 
   'scannable-cite': (citations) ->
 
@@ -234,7 +239,8 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       title.set(item.firstCreator, ',', 'anon.')
 
       includeTitle = false
-      try # Prefs.get throws an error if the pref is not found
+      ### Prefs.get throws an error if the pref is not found ###
+      try
         includeTitle = Zotero.Prefs.get('translators.ODFScan.includeTitle')
       if includeTitle || !item.firstCreator
         title.set(item.getField('shortTitle') || item.getField('title'), ',', '(no title)')

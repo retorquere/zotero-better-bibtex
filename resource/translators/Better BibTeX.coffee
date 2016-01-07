@@ -56,6 +56,8 @@ doExport = ->
         ref.add({ name: 'url', value: item.url, enc: 'verbatim'})
       when 'note', 'true' # that's what you get when you change pref type
         ref.add({ name: (if ref.referencetype in ['misc', 'booklet'] then 'howpublished' else 'note'), allowDuplicates: true, value: item.url, enc: 'url'})
+      else
+        ref.add({ name: 'howpublished', allowDuplicates: true, value: item.url, enc: 'url'}) if item.itemType == 'webpage'
 
     switch
       when item.itemType in ['bookSection', 'conferencePaper']
@@ -75,7 +77,7 @@ doExport = ->
       ref.remove('type')
 
     if item.creators and item.creators.length
-      # split creators into subcategories
+      ### split creators into subcategories ###
       authors = []
       editors = []
       translators = []
@@ -273,7 +275,8 @@ ZoteroItem::import = (bibtex) ->
           value += ' '
 
         if @item.date
-          if value.indexOf(@item.date) >= 0 # value contains year and more
+          if value.indexOf(@item.date) >= 0
+            ### value contains year and more ###
             @item.date = value
           else
             @item.date = value + @item.date
@@ -321,7 +324,7 @@ ZoteroItem::import = (bibtex) ->
           @item.attachments.push(att)
 
       when 'eprint', 'eprinttype'
-        # Support for IDs exported by BibLaTeX
+        ### Support for IDs exported by BibLaTeX ###
         @item["_#{field}"] = value
 
         if @item._eprint && @item._eprinttype

@@ -32,11 +32,8 @@ end
 
 STDOUT.sync = true unless ENV['CI'] == 'true'
 def say(msg)
-  return if ENV['CI'] == 'true'
   STDOUT.puts msg
 end
-
-cmd('rake plugins')
 
 def download(url, path)
   cmd "curl -L -s -S -o #{path.shellescape} #{url.shellescape}"
@@ -58,7 +55,7 @@ def loadZotero
   profile['xpinstall.signatures.required'] = false
 
   profile['extensions.zotero.showIn'] = 2
-  profile['extensions.zotero.translators.better-bibtex.confirmCacheReset'] = false
+  profile['extensions.zotero.translators.better-bibtex.confirmCacheResetSize'] = 0
   profile['extensions.zotero.httpServer.enabled'] = true
   profile['dom.max_chrome_script_run_time'] = 6000
   profile['browser.shell.checkDefaultBrowser'] = false
@@ -137,6 +134,7 @@ end
 Before do |scenario|
   loadZotero
   $Firefox.BetterBibTeX.reset unless scenario.source_tag_names.include?('@noreset')
+  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.confirmCacheResetSize', 0)
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.tests', 'all')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.test.timestamp', '2015-02-24 12:14:36 +0100')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.attachmentRelativePath', true)
@@ -226,7 +224,7 @@ When /^I import (.+) from '(.+?)'(?:(?: as )'(.+)')?$/ do |items, filename, alia
 
       if data['config']['label'] == 'BetterBibTeX JSON'
         (data['config']['preferences'] || {}).each_pair{|key, value|
-          next if %w{tests test.timestamp attachmentRelativePath autoExport debug}.include?(key)
+          next if %w{confirmCacheResetSize tests test.timestamp attachmentRelativePath autoExport debug}.include?(key)
           $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.' + key, value)
         }
         @exportOptions = data['config']['options'] || {}

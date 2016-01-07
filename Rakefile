@@ -27,8 +27,6 @@ require 'csv'
 require 'base64'
 require 'net/http/post/multipart'
 require 'facets'
-require 'jwt'
-require 'securerandom'
 require 'rest-client'
 require_relative 'lib/unicode_table'
 
@@ -118,10 +116,15 @@ end
 #    end
 #  end
 #}
+SKIP = ['Notre Dame Philosophical Reviews']
 ZIPFILES = (Dir['{chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   tgt = src.sub(/\.[^\.]+$/, '.js')
   tgt
-}.flatten + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
+}.flatten.reject{|tr|
+  SKIP.include?(File.basename(tr, File.extname(tr)))
+} + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].reject{|tr|
+  SKIP.include?(File.basename(tr, File.extname(tr)))
+}.collect{|tr|
   root = File.dirname(tr)
   stem = File.basename(tr, File.extname(tr))
   %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
@@ -343,9 +346,9 @@ rule '.json' => '.yml' do |t|
       raise "Missing #{field} in #{t.source}" unless header[field]
     }
 
-    if !header['translatorType'] || ((header['translatorType'] & 1) == 0 && (header['translatorType'] & 2) == 0) # not import or export
-      raise "Invalid translator type #{header['translatorType']} in #{t.source}"
-    end
+    #if !header['translatorType'] || ((header['translatorType'] & 1) == 0 && (header['translatorType'] & 2) == 0) # not import or export
+    #  raise "Invalid translator type #{header['translatorType']} in #{t.source}"
+    #end
 
     f.write(JSON.pretty_generate(header))
   }
@@ -383,6 +386,8 @@ def utf16literal(str)
   }.join('')
   return "'" + str + "'"
 end
+
+# Keep this as coffeescript rather than JS so Travis doesn't have to check out the csl-locales repo (sort of a cache)
 file 'chrome/content/zotero-better-bibtex/csl-localedata.coffee' => ['Rakefile'] + Dir['csl-locales/*.xml'] + Dir['csl-locales/*.json'] do |t|
   open(t.name, 'w'){|f|
     f.puts('Zotero.BetterBibTeX.Locales = { months: {}, dateorder: {}}')
@@ -472,10 +477,7 @@ task :amo => XPI do
   end
 end
 
-task :test, [:tag] => [SIGNED, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
-  # this is a hack
-  FileUtils.cp(SIGNED, XPI)
-
+task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
   tag = ''
 
   if args[:tag] =~ /ci-cluster-(.*)/
@@ -504,24 +506,21 @@ task :test, [:tag] => [SIGNED, :plugins] + Dir['test/fixtures/*/*.coffee'].colle
   puts "Tests running: #{tag}"
 
 
+  cucumber = "cucumber --require features --strict #{tag} resource/tests"
   if ENV['CI'] == 'true'
-    sh "cucumber --require features --strict #{tag} resource/tests"
+    sh cucumber
   else
     begin
       if OS.mac?
-        sh "script -q -t 1 cucumber.run cucumber --require features --strict #{tag} resource/tests"
+        sh "script -q -t 1 cucumber.run #{cucumber}"
       else
-        sh "script -ec 'cucumber --require features --strict #{tag} resource/tests' cucumber.run"
+        sh "script -ec '#{cucumber}' cucumber.run"
       end
     ensure
       sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
       sh "rm -f cucumber.run"
     end
   end
-end
-
-task :sign => SIGNED do
-  puts "after signing: #{Dir['*.xpi'].inspect}"
 end
 
 task :debug => XPI do
@@ -531,7 +530,7 @@ task :debug => XPI do
   puts dxpi
 end
 
-task :share => SIGNED do |t|
+task :share => XPI do |t|
   raise "I can only share debug builds" unless ENV['DEBUGBUILD'] == "true"
 
   url = URI.parse('http://tempsend.com/send')
@@ -778,3 +777,71 @@ task :xpi do
   puts XPI
 end
 
+task :doc do
+  preferences = {}
+  defaults = {}
+
+  YAML::load_file('defaults/preferences/defaults.yml').each_pair{|pref, default|
+    preferences["extensions.zotero.translators.better-bibtex.#{pref}"] = 'Hidden'
+    defaults["extensions.zotero.translators.better-bibtex.#{pref}"] = default
+  }
+
+  settings = Nokogiri::XML(open('chrome/content/zotero-better-bibtex/preferences.xul'))
+  settings.remove_namespaces!
+
+  panels = [
+    'Citation',
+    'Import/Export',
+    'Journal abbreviations',
+    'Automatic Export',
+    'Debug'
+  ]
+  settings.xpath('//tabpanel').each_with_index{|panel, panelnr|
+    panel.xpath('.//*[@preference]').each{|pref|
+      name = settings.at("//preference[@id='#{pref['preference']}']")['name']
+      preferences[name] = panels[panelnr]
+    }
+  }
+
+  documented = {}
+
+  section = nil
+  IO.readlines('www/better-bibtex/configuration.md').each{|line|
+    line.strip!
+    if line =~ /^# /
+      section = line.sub(/^#/, '').strip
+      next
+    end
+
+    if line =~ /^### .* <!-- (.*) -->/
+      pref = $1.strip
+      documented[pref] = section
+    end
+  }
+
+  documented.keys.each{|pref|
+    if !preferences[pref]
+      puts "Documented obsolete preference #{documented[pref]} / #{pref}"
+    elsif preferences[pref] != documented[pref]
+      puts "#{pref} documented in #{documented[pref]} but visible in #{preferences[pref]}"
+    end
+  }
+  preferences.keys.each{|pref|
+    if !documented[pref]
+      heading = "## #{pref.sub(/.*\./, '')} <!-- #{pref} -->"
+      puts "Undocumented preference #{preferences[pref]} / #{heading} (#{defaults[pref]})"
+    end
+  }
+end
+
+task :changelog do
+  #issues = Github::Client::Issues.new user: 'Zotplus', repo: 'zotero-better-bibtex'
+  tags = `git log --date-order --tags --simplify-by-decoration --pretty=format:'%ai%x09%D%x09%h' | grep tag:`
+  tags = tags.split(/\n/).collect{|tag|
+    date, tag, hash = *(tag.split(/\t/))
+    date = Date.parse(date)
+    tag = tag.split(/,\s*/).collect{|t| t.sub(/^tag:\s*/, '')}.select{|t| t =~ /^[\.0-9]+$/}[0]
+    [date, hash, tag]
+  }.select{|tag| tag[2]}
+  puts tags.inspect
+end

@@ -41,6 +41,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.rawImports"               id="pref-better-bibtex-raw-imports"             type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.scanCitekeys"             id="pref-better-bibtex-rescan-citekeys"         type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.showCitekeys"             id="pref-better-bibtex-show-citekey"            type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.showItemIDs"              id="pref-better-bibtex-show-item-ids"           type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.parseParticles"           id="pref-better-bibtex-parseParticles"          type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.skipFields"               id="pref-better-bibtex-skipFields"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.bibtexURLs"               id="pref-better-bibtex-bibtexURLs"              type="string"/>
@@ -224,12 +225,14 @@
               <checkbox label="&zotero.better-bibtex.debug;" preference="pref-better-bibtex-debug"/>
               <button label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors()"/>
             </hbox>
+            <checkbox label="&zotero.better-bibtex.show-item-id;" preference="pref-better-bibtex-show-item-ids"/>
             <checkbox label="&zotero.better-bibtex.rescan-citekeys;" preference="pref-better-bibtex-rescan-citekeys"/>
             <button label="&zotero.better-bibtex.resetCache;" oncommand="BetterBibTeXPref.cacheReset()"/>
             <description id="better-bibtex-preferences-cacheActivity-enabled" flex="1">
               <html:a target="_blank" href="http://localhost:23119/better-bibtex/cacheActivity?http://localhost:23119/better-bibtex/cacheActivity">&zotero.better-bibtex.cacheActivity;</html:a>
             </description>
             <label id="better-bibtex-preferences-cacheActivity-disabled" value="&zotero.better-bibtex.cacheActivity.disabled;"/>
+            <!-- button id="better-bibtex-preferences-zombies" label="" oncommand="Zotero.BetterBibTeX.DB.purge()"/ -->
           </tabpanel>
           <tabpanel> <!-- disabled -->
             <textbox flex="1" multiline="true" id="zotero-better-bibtex-disabled-message" class="plain" readonly="true"/>

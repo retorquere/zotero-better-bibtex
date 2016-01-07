@@ -119,7 +119,7 @@
 }
 
 @book{dupuydeclinchamps,
-  author = {du Puy de Clinchamps, Philippe},
+  author = {du Puy de Clinchamps, {\relax Ph}ilippe},
   options = {useprefix=true}
 }
 

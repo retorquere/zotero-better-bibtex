@@ -58,7 +58,7 @@ Translator._log = (level, msg...) ->
   msg = ((if (typeof m) in ['boolean', 'string', 'number'] then '' + m else Translator.stringify(m)) for m in msg).join(' ')
   Zotero.debug('[better' + '-' + "bibtex:#{@header.label}] " + msg, level)
 
-# http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
+### http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables ###
 Translator.CSLVariables = {
   #'abstract':                    {}
   #'annote':                      {}
@@ -191,7 +191,7 @@ Translator.extractFields = (item) ->
       for own name, value of json
         fields[name.toLowerCase()] = {value, format: 'json' }
 
-  # fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/
+  ### fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/ ###
   item.extra = item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, name, value) =>
     cslvar = Translator.CSLVariable(name)
     return '' unless cslvar

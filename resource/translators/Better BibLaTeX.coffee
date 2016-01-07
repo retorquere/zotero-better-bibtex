@@ -304,13 +304,15 @@ doExport = ->
       for note in item.notes
         ref.add({ name: 'annotation', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true })
 
+    ###
     # 'juniorcomma' needs more thought, it isn't for *all* suffixes you want this. Or even at all.
     #ref.add({ name: 'options', value: (option for option in ['useprefix', 'juniorcomma'] when ref[option]).join(',') })
+    ###
     ref.add({ name: 'options', value: 'useprefix=true' }) if ref.useprefix
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
-    # pre-process overrides for #381
+    ### pre-process overrides for #381 ###
     for own name, value of ref.override
       continue unless value.format == 'csl'
 

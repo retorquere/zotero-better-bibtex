@@ -82,7 +82,7 @@ Zotero.BetterBibTeX.cache = new class
     Zotero.BetterBibTeX.debug('cache.fetch:', {itemID, context})
     #return unless Zotero.BetterBibTeX.pref.get('caching')
 
-    # file paths vary if exportFileData is on
+    ### file paths vary if exportFileData is on ###
     return if context.exportFileData
 
     cached = @db.cache.findOne({'$and': [
@@ -104,7 +104,7 @@ Zotero.BetterBibTeX.cache = new class
     return cached
 
   store: (itemID, context, citekey, bibtex) ->
-    # file paths vary if exportFileData is on
+    ### file paths vary if exportFileData is on ###
     if context.exportFileData
       return
 
