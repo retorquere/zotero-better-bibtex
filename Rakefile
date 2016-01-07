@@ -773,10 +773,6 @@ task :logs2s3 do
   end
 end
 
-task :xpi do
-  puts XPI
-end
-
 task :doc do
   preferences = {}
   defaults = {}
