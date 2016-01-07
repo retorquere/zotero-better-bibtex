@@ -1142,9 +1142,9 @@ Zotero.BetterBibTeX.load = (translator, options = {}) ->
   @removeTranslator(header)
 
   try
-    code += Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/install/#{translator}.js")
+    code = Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/install/#{translator}.js")
   catch err
-    @debug('translator.load: source', src, 'for', translator, 'could not be loaded:', err)
+    @debug('translator.load: ', translator, 'could not be loaded:', err)
     throw err
   code += "\n\n#{options.postscript}" if options.postscript
 
@@ -1167,6 +1167,7 @@ Zotero.BetterBibTeX.load = (translator, options = {}) ->
     Zotero.File.putContents(destFile, code)
 
     @debug('translator.load', translator, 'succeeded')
+    #Zotero.BetterBibTeX.debug(Zotero.File.getContents(destFile))
 
     @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
   catch err
