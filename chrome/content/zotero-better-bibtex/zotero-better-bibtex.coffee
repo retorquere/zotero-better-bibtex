@@ -424,6 +424,7 @@ Zotero.BetterBibTeX.disableInConnector = (isConnector) ->
 Zotero.BetterBibTeX.disable = (message) ->
   @removeTranslators()
   @disabled = message
+  @debug('Better BibTeX has been disabled:', message)
   @flash('Better BibTeX has been disabled', message)
 
 Zotero.BetterBibTeX.flash = (title, body) ->
@@ -887,7 +888,10 @@ Zotero.BetterBibTeX.init = ->
     Zotero.BetterBibTeX.debugMode()
     return
   )
-  Zotero.getActiveZoteroPane().addBeforeReloadListener((mode) => @disableInConnector(mode == 'connector'))
+  Zotero.getActiveZoteroPane().addBeforeReloadListener((mode) =>
+    @debug('before reload:', {mode})
+    @disableInConnector(mode == 'connector')
+  )
 
   nids = []
   nids.push(Zotero.Notifier.registerObserver(@itemChanged, ['item']))
