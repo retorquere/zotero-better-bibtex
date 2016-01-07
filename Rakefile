@@ -116,18 +116,14 @@ end
 #    end
 #  end
 #}
-SKIP = ['Notre Dame Philosophical Reviews']
-ZIPFILES = (Dir['{chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
+ZIPFILES = (Dir['chrome/**/*.{coffee,pegjs}'].collect{|src|
   tgt = src.sub(/\.[^\.]+$/, '.js')
   tgt
-}.flatten.reject{|tr|
-  SKIP.include?(File.basename(tr, File.extname(tr)))
-} + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].reject{|tr|
-  SKIP.include?(File.basename(tr, File.extname(tr)))
-}.collect{|tr|
-  root = File.dirname(tr)
-  stem = File.basename(tr, File.extname(tr))
-  %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
+} + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
+  [
+    File.join(File.dirname(tr), 'install', File.basename(tr, File.extname(tr)) + '.js'),
+    File.join(File.dirname(tr), File.basename(tr, File.extname(tr)) + '.json')
+  ]
 }.flatten + [
   'chrome/content/zotero-better-bibtex/fold-to-ascii.js',
   'chrome/content/zotero-better-bibtex/punycode.js',
@@ -138,12 +134,9 @@ ZIPFILES = (Dir['{chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   'resource/citeproc.js',
   'chrome.manifest',
   'install.rdf',
-  'resource/translators/json5.js',
-  'resource/translators/preferences.js',
-  'resource/translators/latex_unicode_mapping.js',
-  'resource/translators/xregexp-all.js',
   'resource/reports/cacheActivity.txt',
 ]).sort.uniq
+
 File.unlink('chrome/content/zotero-better-bibtex/release.js') if File.file?('chrome/content/zotero-better-bibtex/release.js')
 
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
@@ -447,6 +440,30 @@ file 'chrome/content/zotero-better-bibtex/release.js' => 'install.rdf' do |t|
     ")
   }
 end
+
+Dir['resource/translators/*.yml'].each{|metadata|
+  translator = File.basename(metadata, File.extname(metadata))
+
+  sources = ['json5', 'translator', 'preferences', "#{translator}.header", translator]
+  header = YAML.load_file(metadata)
+  dependencies = header['BetterBibTeX']['dependencies'] if header['BetterBibTeX']
+  dependencies ||= []
+  sources += dependencies
+
+  sources = sources.collect{|src| "resource/translators/#{src}.js"}
+
+  file "resource/translators/install/#{translator}.js" => sources + ['Rakefile'] do |t|
+    header.delete('BetterBibTeX')
+    FileUtils.mkdir_p(File.dirname(t.name))
+    open(t.name, 'w'){|f|
+      f.puts(JSON.pretty_generate(header))
+      sources.each{|src|
+        f.puts("\n// SOURCE: #{src}")
+        f.puts(open(src).read)
+      }
+    }
+  end
+}
 
 rule( /\.header\.js$/ => [ proc {|task_name| [task_name.sub(/\.header\.js$/, '.yml'), 'Rakefile', 'install.rdf'] } ]) do |t|
   header = YAML.load_file(t.source)
@@ -759,6 +776,8 @@ task :logs2s3 do
     path = url.path
     path = '/' if path == ''
     params = form['fields']
+
+    logs += Dir['resource/translators/install/*.js']
 
     logs.each{|log|
       puts "Logs 2 S3: #{log}"

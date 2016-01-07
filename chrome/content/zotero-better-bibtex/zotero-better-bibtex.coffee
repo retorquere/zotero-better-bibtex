@@ -1141,29 +1141,18 @@ Zotero.BetterBibTeX.load = (translator, options = {}) ->
   header = JSON.parse(Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.json"))
   @removeTranslator(header)
 
-  sources = ['json5', 'translator', 'preferences', "#{translator}.header", translator].concat(header.BetterBibTeX?.dependencies || [])
-  @debug('translator.load:', translator, 'from', sources)
-  code = "exports = undefined;\nmodule = undefined;\n"
-  for src in sources
-    try
-      code += Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/#{src}.js") + "\n"
-    catch err
-      @debug('translator.load: source', src, 'for', translator, 'could not be loaded:', err)
-      throw err
-  code += options.postscript if options.postscript
+  try
+    code += Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/install/#{translator}.js")
+  catch err
+    @debug('translator.load: source', src, 'for', translator, 'could not be loaded:', err)
+    throw err
+  code += "\n\n#{options.postscript}" if options.postscript
 
-  @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
-
-  ### remove BBT metadata -- Zotero doesn't like it ###
-  header = JSON.parse(JSON.stringify(header))
-  delete header.BetterBibTeX
   @debug('Translator.load header:', translator, header)
   try
     fileName = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)
     destFile = Zotero.getTranslatorsDirectory()
     destFile.append(fileName)
-
-    metadataJSON = JSON.stringify(header, null, "\t")
 
     existing = Zotero.Translators.get(header.translatorID)
     if existing and destFile.equals(existing.file) and destFile.exists()
@@ -1175,9 +1164,11 @@ Zotero.BetterBibTeX.load = (translator, options = {}) ->
 
     Zotero.BetterBibTeX.log("Saving translator '#{header.label}'")
 
-    Zotero.File.putContents(destFile, metadataJSON + "\n\n" + code)
+    Zotero.File.putContents(destFile, code)
 
     @debug('translator.load', translator, 'succeeded')
+
+    @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
   catch err
     @debug('translator.load', translator, 'failed:', err)
 
