@@ -441,6 +441,14 @@ file 'chrome/content/zotero-better-bibtex/release.js' => 'install.rdf' do |t|
   }
 end
 
+def sort_hash(h)
+  {}.tap do |h2|
+    h.sort.each do |k,v|
+      h2[k] = v.is_a?(Hash) ? sort_hash(v) : v
+    end
+  end
+end
+
 Dir['resource/translators/*.yml'].each{|metadata|
   translator = File.basename(metadata, File.extname(metadata))
 
@@ -454,6 +462,8 @@ Dir['resource/translators/*.yml'].each{|metadata|
 
   file "resource/translators/install/#{translator}.js" => sources + ['Rakefile'] do |t|
     header.delete('BetterBibTeX')
+    # workaround for https://github.com/zotero/zotero/issues/894
+    sort_hash(header)
     FileUtils.mkdir_p(File.dirname(t.name))
     open(t.name, 'w'){|f|
       f.puts(JSON.pretty_generate(header))
