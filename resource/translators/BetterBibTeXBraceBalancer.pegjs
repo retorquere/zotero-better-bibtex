@@ -1,7 +1,7 @@
 {
   // pegjs doesn't tolerate unbalanced braces in the parser text
-  lbrace = '{'
-  rbrace = '}'
+  var lbrace = '{';
+  var rbrace = '}';
 }
 
 start

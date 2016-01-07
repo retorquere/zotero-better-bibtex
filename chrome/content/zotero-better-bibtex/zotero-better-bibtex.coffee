@@ -412,14 +412,14 @@ Zotero.BetterBibTeX.extensionConflicts = ->
   if Services.vc.compare(ZOTERO_CONFIG.VERSION?.replace(/\.SOURCE$/, '') || '0.0.0', '4.0.28') < 0
     @disable("Better BibTeX has been disabled because it found Zotero #{ZOTERO_CONFIG.VERSION}, but requires 4.0.28 or later.")
 
-  ## @disableInConnector(Zotero.isConnector)
+  @disableInConnector(Zotero.isConnector)
 
-## Zotero.BetterBibTeX.disableInConnector = (isConnector) ->
-##   return unless isConnector
-##   @disable("""
-##     You are running Zotero in connector mode (running Zotero Firefox and Zotero Standalone simultaneously.
-##     This is not supported by Better BibTeX; see https://github.com/ZotPlus/zotero-better-bibtex/issues/143
-##   """)
+Zotero.BetterBibTeX.disableInConnector = (isConnector) ->
+  return unless isConnector
+  @disable("""
+    You are running Zotero in connector mode (running Zotero Firefox and Zotero Standalone simultaneously.
+    This is not supported by Better BibTeX; see https://github.com/ZotPlus/zotero-better-bibtex/issues/143
+  """)
 
 Zotero.BetterBibTeX.disable = (message) ->
   @removeTranslators()
@@ -888,10 +888,10 @@ Zotero.BetterBibTeX.init = ->
     Zotero.BetterBibTeX.debugMode()
     return
   )
-  #Zotero.getActiveZoteroPane().addBeforeReloadListener((mode) =>
-  #  @debug('before reload:', {mode})
-  #  @disableInConnector(mode == 'connector')
-  #)
+  Zotero.getActiveZoteroPane().addBeforeReloadListener((mode) =>
+    @debug('before reload:', {mode})
+    @disableInConnector(mode == 'connector')
+  )
 
   nids = []
   nids.push(Zotero.Notifier.registerObserver(@itemChanged, ['item']))
