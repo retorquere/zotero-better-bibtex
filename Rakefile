@@ -745,10 +745,11 @@ end
 task :logs2s3 do
   logs = Dir['*.debug'] + Dir['*.log']
   logs = [] if ENV['CI'] == 'true' && ENV['LOGS2S3'] != 'true'
+  logs = [] if (ENV['TRAVIS_PULL_REQUEST'] || 'false') != 'false'
 
-  if (ENV['TRAVIS_PULL_REQUEST'] || 'false') != 'false'
-    puts "Logs 2 S3: Not logging pull requests"
-  elsif logs.size == 0
+  logs = logs.reject{|log| File.zero?(log) }
+
+  if logs.size == 0
     puts "Logs 2 S3: Nothing to do"
   else
     prefix = [ENV['TRAVIS_BRANCH'], ENV['TRAVIS_JOB_NUMBER']].select{|x| x}.join('-')
