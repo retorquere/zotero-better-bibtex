@@ -1134,37 +1134,37 @@ Zotero.BetterBibTeX.getContentsFromURL = (url) ->
   catch err
     throw new Error("Failed to load #{url}: #{err.msg}")
 
-Zotero.BetterBibTeX.load = (header) ->
-  @removeTranslator(header)
+Zotero.BetterBibTeX.load = (translator) ->
+  @removeTranslator(translator)
 
   try
-    code = Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/install/#{translator}.js")
+    code = Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/install/#{translator.label}.js")
   catch err
     @debug('translator.load: ', translator, 'could not be loaded:', err)
     throw err
-  code += "\n\n#{@postscript}" if header.BetterBibTeX?.postscript
+  code += "\n\n#{@postscript}" if translator.BetterBibTeX?.postscript
 
-  @debug('Translator.load header:', translator, header)
+  @debug('Translator.load header:', translator)
   try
-    fileName = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)
+    fileName = Zotero.Translators.getFileNameFromLabel(translator.label, translator.translatorID)
     destFile = Zotero.getTranslatorsDirectory()
     destFile.append(fileName)
 
-    existing = Zotero.Translators.get(header.translatorID)
+    existing = Zotero.Translators.get(translator.translatorID)
     if existing and destFile.equals(existing.file) and destFile.exists()
       msg = "Overwriting translator with same filename '#{fileName}'"
-      Zotero.BetterBibTeX.warn(msg, header)
+      Zotero.BetterBibTeX.warn(msg, translator)
       Components.utils.reportError(msg + ' in Zotero.BetterBibTeX.load()')
 
     existing.file.remove(false) if existing and existing.file.exists()
 
-    Zotero.BetterBibTeX.log("Saving translator '#{header.label}'")
+    Zotero.BetterBibTeX.log("Saving translator '#{translator.label}'")
 
     Zotero.File.putContents(destFile, code)
 
     @debug('translator.load', translator, 'succeeded')
 
-    @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
+    @translators[translator.translatorID] = @translators[translator.label.replace(/\s/, '')] = translator
   catch err
     @debug('translator.load', translator, 'failed:', err)
 
