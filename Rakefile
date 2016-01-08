@@ -41,6 +41,17 @@ def cleanly(f)
   end
 end
 
+class String
+  def shellescape
+    Shellwords.escape(self)
+  end
+end
+
+def download(url, file)
+  puts "Downloading #{url} to #{file}..."
+  sh "curl #{url.shellescape} -o #{file.shellescape}"
+end
+
 #ABBREVS = YAML.load_file('resource/abbreviations/lists.yml')
 #ABBREVS.each{|a|
 #  if File.basename(a['path']) == 'WOS.json'
@@ -153,12 +164,6 @@ CLEAN.include('*.tmp')
 
 FileUtils.mkdir_p 'tmp'
 
-class String
-  def shellescape
-    Shellwords.escape(self)
-  end
-end
-
 require 'zotplus-rakehelper'
 
 def saveAbbrevs(abbrevs, file, jurisdiction='default')
@@ -180,8 +185,8 @@ end
 
 DOWNLOADS = {
   'chrome/content/zotero-better-bibtex' => {
-    'test/chai.js'      => 'http://chaijs.com/chai.js',
-    'test/yadda.js'     => 'https://raw.githubusercontent.com/acuminous/yadda/master/dist/yadda-0.11.5.js',
+    #'test/chai.js'      => 'http://chaijs.com/chai.js',
+    #'test/yadda.js'     => 'https://raw.githubusercontent.com/acuminous/yadda/master/dist/yadda-0.11.5.js',
     'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
   },
   'resource/translators' => {
@@ -192,7 +197,7 @@ DOWNLOADS = {
 DOWNLOADS.each_pair{|dir, files|
   files.each_pair{|file, url|
     file "#{dir}/#{file}" => 'Rakefile' do |t|
-      ZotPlus::RakeHelper.download(url, t.name)
+      download(url, t.name)
     end
   }
 }
@@ -221,7 +226,7 @@ end
 
 file 'resource/citeproc.js' => 'Rakefile' do |t|
   cleanly(t.name) do
-    ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/citeproc.js', t.name)
+    download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/citeproc.js', t.name)
     sh "#{NODEBIN}/grasp -i -e 'thedate[DATE_PARTS_ALL[i]]' --replace 'thedate[CSL.DATE_PARTS_ALL[i]]' #{t.name.shellescape}"
     sh "#{NODEBIN}/grasp -i -e 'if (!Array.indexOf) { _$ }' --replace '' #{t.name.shellescape}"
     File.rewrite(t.name){|src|
@@ -241,14 +246,14 @@ end
 
 file 'resource/translators/xregexp-all.js' => 'Rakefile' do |t|
   cleanly(t.name) do
-    ZotPlus::RakeHelper.download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js', t.name)
+    download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js', t.name)
     # strip out setNatives because someone doesn't like it
     sh "#{NODEBIN}/grasp -i 'func-dec! #setNatives' --replace 'function setNatives(on) { if (on) { throw new Error(\"setNatives not supported in Firefox extension\"); } }' #{t.name}"
   end
 end
 
 file 'resource/translators/json5.js' => 'Rakefile' do |t|
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js', t.name)
+  download('https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js', t.name)
 end
 
 file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['resource/tests/*.feature'] do |t|
@@ -689,7 +694,7 @@ task :csltests do
   root = 'https://bitbucket.org/bdarcus/citeproc-test/src/tip/processor-tests/humans/'
   seen = testcase['items'].first['creators'].dup
   Tempfile.create('tests') do |tmp|
-    ZotPlus::RakeHelper.download(root, tmp.path)
+    download(root, tmp.path)
     tests = Nokogiri::HTML(open(tmp.path))
     n = tests.css('td.filename a').length
     tests.css('td.filename a').each_with_index{|test, i|
