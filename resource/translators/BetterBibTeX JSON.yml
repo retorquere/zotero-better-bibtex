@@ -5,12 +5,12 @@ creator: Emiliano Heyns
 target: json
 minVersion: "3.0b3"
 maxVersion: ''
-priority: 100
 configOptions:
   getCollections: true
 displayOptions:
   exportNotes: true
   exportFileData: false
-inRepository: true
 translatorType: 3
 browserSupport: gcsv
+priority: 100
+inRepository: true

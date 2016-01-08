@@ -5,12 +5,12 @@ creator: Emiliano heyns
 target: html
 minVersion: 4.0.27
 maxVersion: ''
-priority: 100
 configOptions:
   getCollections: true
 displayOptions:
   Keep updated: false
-inRepository: true
 translatorType: 2
 browserSupport: gcsv
 BetterBibTeX:
+priority: 100
+inRepository: true
