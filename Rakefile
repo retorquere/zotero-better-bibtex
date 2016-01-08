@@ -193,6 +193,7 @@ DOWNLOADS = {
   'resource/translators' => {
     'unicode.xml'         => 'http://www.w3.org/Math/characters/unicode.xml',
     'org.js'              => 'https://raw.githubusercontent.com/mooz/org-js/master/org.js',
+    'js-yaml.js'          => 'https://raw.githubusercontent.com/nodeca/js-yaml/master/dist/js-yaml.js',
   },
 }
 DOWNLOADS.each_pair{|dir, files|
