@@ -338,7 +338,6 @@ end
 rule '.json' => '.yml' do |t|
   open(t.name, 'w'){|f|
     header = YAML::load_file(t.source)
-    header['lastUpdated'] = TIMESTAMP if t.source =~ /\/translators\//
 
     %w{translatorID label priority}.each{|field|
       raise "Missing #{field} in #{t.source}" unless header[field]
@@ -459,6 +458,7 @@ Dir['resource/translators/*.yml'].each{|metadata|
 
   file "resource/translators/install/#{translator}.js" => sources + ['Rakefile'] do |t|
     header.delete('BetterBibTeX')
+    header['lastUpdated'] = TIMESTAMP
     FileUtils.mkdir_p(File.dirname(t.name))
     open(t.name, 'w'){|f|
       f.puts(JSON.pretty_generate(header))
