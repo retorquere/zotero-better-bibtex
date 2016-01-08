@@ -1,3 +1,3 @@
 serialize = (csl) -> YAML.safeDump([csl], {skipInvalid: true})
 
-flush = (items) -> "---\n" + items.join("\n") + "..."
+flush = (items) -> "---\nreferences:\n" + items.join("\n") + "..."
