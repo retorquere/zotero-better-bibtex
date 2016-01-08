@@ -193,7 +193,6 @@ DOWNLOADS = {
   'resource/translators' => {
     'unicode.xml'         => 'http://www.w3.org/Math/characters/unicode.xml',
     'org.js'              => 'https://raw.githubusercontent.com/mooz/org-js/master/org.js',
-    'js-yaml.js'          => 'https://raw.githubusercontent.com/nodeca/js-yaml/master/dist/js-yaml.js',
   },
 }
 DOWNLOADS.each_pair{|dir, files|
@@ -429,6 +428,10 @@ file 'chrome/content/zotero-better-bibtex/csl-localedata.coffee' => ['Rakefile']
       f.puts("Zotero.BetterBibTeX.Locales.months[#{full.inspect}] = #{months}")
     }
   }
+end
+
+file 'resource/translators/yaml.js' => 'Rakefile' do |t|
+  browserify("var YAML;\nYAML = require('js-yaml');", t.name)
 end
 
 file 'resource/translators/marked.js' => 'Rakefile' do |t|

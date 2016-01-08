@@ -110,12 +110,13 @@ Scenario: Date export to Better CSL-JSON #360
   And a library export using 'Better CSL JSON' should match 'export/Date export to Better CSL-JSON #360.csl.json'
 
 @test-cluster-2
-@pandoc
+@pandoc @432
 Scenario: Pandoc/LaTeX Citation Export
   When I import 1 reference with 1 attachment from 'export/Pandoc Citation.json'
   Then a library export using 'Pandoc Citation' should match 'export/Pandoc Citation.pandoc'
   And a library export using 'LaTeX Citation' should match 'export/Pandoc Citation.latex'
   And a library export using 'Better CSL JSON' should match 'export/Pandoc Citation.csl.json'
+  And a library export using 'Better CSL JSON' should match 'export/Pandoc Citation.csl.yml'
 
 @test-cluster-2
 @journal-abbrev

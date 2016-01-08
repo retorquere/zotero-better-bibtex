@@ -1,8 +1,8 @@
 ---
-translatorID: f4b52ab0-f878-4556-85a0-c7aeedd09dfc
-label: Better CSL JSON
+translatorID: 0f238e69-043e-4882-93bf-342de007de19
+label: Better CSL YAML
 creator: Emiliano heyns
-target: json
+target: yml
 minVersion: 4.0.27
 maxVersion: ''
 displayOptions:
@@ -12,5 +12,6 @@ browserSupport: gcsv
 BetterBibTeX:
   dependencies:
   - betterCSL
+  - yaml
 priority: 100
 inRepository: true
