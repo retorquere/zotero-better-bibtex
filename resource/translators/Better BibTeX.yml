@@ -24,5 +24,6 @@ BetterBibTeX:
   - BetterBibTeXBraceBalancer
   - BetterBibTeXParserSupport
   - BetterBibTeXParser
+  postscript: true
 priority: 199
 inRepository: true

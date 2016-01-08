@@ -141,6 +141,7 @@ ZIPFILES = (Dir['chrome/**/*.{coffee,pegjs}'].collect{|src|
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/csl-localedata.js',
+  'chrome/content/zotero-better-bibtex/translators.js',
   'defaults/preferences/defaults.js',
   'resource/citeproc.js',
   'chrome.manifest',
@@ -201,6 +202,13 @@ DOWNLOADS.each_pair{|dir, files|
     end
   }
 }
+
+file 'chrome/content/zotero-better-bibtex/translators.js' => Dir['resource/translators/*.yml'] + ['Rakefile'] do |t|
+  translators = Dir['resource/translators/*.yml'].collect{|header| header = YAML::load_file(header) }
+  open(t.name, 'w') {|f|
+    f.puts("Zotero.BetterBibTeX.Translators = #{JSON.pretty_generate(translators)};")
+  }
+end
 
 file 'defaults/preferences/defaults.js' => ['defaults/preferences/defaults.yml', 'Rakefile'] do |t|
   prefs = YAML::load_file(t.source)

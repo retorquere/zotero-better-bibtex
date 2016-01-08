@@ -956,14 +956,8 @@ Zotero.BetterBibTeX.loadTranslators = ->
   try
     @removeTranslator({label: 'Better CSL-JSON', translatorID: 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'})
 
-  @load('Better BibTeX', {postscript: @postscript})
-  @load('Better BibLaTeX', {postscript: @postscript})
-  @load('LaTeX Citation')
-  @load('Pandoc Citation')
-  @load('Better CSL JSON')
-  @load('BetterBibTeX JSON')
-  @load('BibTeXAuxScanner')
-  @load('Collected Notes', {target: @pref.get('collectedNotes')})
+  for translator in @Translators
+    @load(translator)
 
   ### clean up junk ###
   try
@@ -974,9 +968,9 @@ Zotero.BetterBibTeX.loadTranslators = ->
   Zotero.Translators.init()
 
 Zotero.BetterBibTeX.removeTranslators = ->
-  for own id, header of @translators
-    @removeTranslator(header)
-  @translators = Object.create(null)
+  for translator in @Translators
+    @removeTranslator(translator)
+  @translators = {}
   Zotero.Translators.init()
 
 Zotero.BetterBibTeX.removeTranslator = (header) ->
@@ -985,6 +979,9 @@ Zotero.BetterBibTeX.removeTranslator = (header) ->
     destFile = Zotero.getTranslatorsDirectory()
     destFile.append(fileName)
     destFile.remove(false) if destFile.exists()
+
+    delete @translators[header.translatorID]
+    delete @translators[header.label.replace(/\s/, '')]
   catch err
     @debug("failed to remove #{header.label}:", err)
 
@@ -1137,8 +1134,7 @@ Zotero.BetterBibTeX.getContentsFromURL = (url) ->
   catch err
     throw new Error("Failed to load #{url}: #{err.msg}")
 
-Zotero.BetterBibTeX.load = (translator, options = {}) ->
-  header = JSON.parse(Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.json"))
+Zotero.BetterBibTeX.load = (header) ->
   @removeTranslator(header)
 
   try
@@ -1146,7 +1142,7 @@ Zotero.BetterBibTeX.load = (translator, options = {}) ->
   catch err
     @debug('translator.load: ', translator, 'could not be loaded:', err)
     throw err
-  code += "\n\n#{options.postscript}" if options.postscript
+  code += "\n\n#{@postscript}" if header.BetterBibTeX?.postscript
 
   @debug('Translator.load header:', translator, header)
   try
@@ -1167,7 +1163,6 @@ Zotero.BetterBibTeX.load = (translator, options = {}) ->
     Zotero.File.putContents(destFile, code)
 
     @debug('translator.load', translator, 'succeeded')
-    #Zotero.BetterBibTeX.debug(Zotero.File.getContents(destFile))
 
     @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
   catch err

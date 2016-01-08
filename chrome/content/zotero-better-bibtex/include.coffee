@@ -3,6 +3,7 @@ if not Zotero.BetterBibTeX
 
   for script in " lokijs
                   zotero-better-bibtex
+                  translators
                   release
                   db
                   csl-localedata
