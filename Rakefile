@@ -41,6 +41,17 @@ def cleanly(f)
   end
 end
 
+class String
+  def shellescape
+    Shellwords.escape(self)
+  end
+end
+
+def download(url, file)
+  puts "Downloading #{url} to #{file}..."
+  sh "curl #{url.shellescape} -o #{file.shellescape}"
+end
+
 #ABBREVS = YAML.load_file('resource/abbreviations/lists.yml')
 #ABBREVS.each{|a|
 #  if File.basename(a['path']) == 'WOS.json'
@@ -116,29 +127,28 @@ end
 #    end
 #  end
 #}
-ZIPFILES = (Dir['{chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
+ZIPFILES = (Dir['chrome/**/*.{coffee,pegjs}'].collect{|src|
   tgt = src.sub(/\.[^\.]+$/, '.js')
   tgt
-}.flatten + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
-  root = File.dirname(tr)
-  stem = File.basename(tr, File.extname(tr))
-  %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }
+} + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
+  [
+    File.join(File.dirname(tr), 'install', File.basename(tr, File.extname(tr)) + '.js'),
+    File.join(File.dirname(tr), File.basename(tr, File.extname(tr)) + '.json')
+  ]
 }.flatten + [
   'chrome/content/zotero-better-bibtex/fold-to-ascii.js',
   'chrome/content/zotero-better-bibtex/punycode.js',
   'chrome/content/zotero-better-bibtex/lokijs.js',
   'chrome/content/zotero-better-bibtex/release.js',
   'chrome/content/zotero-better-bibtex/csl-localedata.js',
+  'chrome/content/zotero-better-bibtex/translators.js',
   'defaults/preferences/defaults.js',
   'resource/citeproc.js',
   'chrome.manifest',
   'install.rdf',
-  'resource/translators/json5.js',
-  'resource/translators/preferences.js',
-  'resource/translators/latex_unicode_mapping.js',
-  'resource/translators/xregexp-all.js',
   'resource/reports/cacheActivity.txt',
 ]).sort.uniq
+
 File.unlink('chrome/content/zotero-better-bibtex/release.js') if File.file?('chrome/content/zotero-better-bibtex/release.js')
 
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
@@ -154,12 +164,6 @@ CLEAN.include('*.dbg')
 CLEAN.include('*.tmp')
 
 FileUtils.mkdir_p 'tmp'
-
-class String
-  def shellescape
-    Shellwords.escape(self)
-  end
-end
 
 require 'zotplus-rakehelper'
 
@@ -182,8 +186,8 @@ end
 
 DOWNLOADS = {
   'chrome/content/zotero-better-bibtex' => {
-    'test/chai.js'      => 'http://chaijs.com/chai.js',
-    'test/yadda.js'     => 'https://raw.githubusercontent.com/acuminous/yadda/master/dist/yadda-0.11.5.js',
+    #'test/chai.js'      => 'http://chaijs.com/chai.js',
+    #'test/yadda.js'     => 'https://raw.githubusercontent.com/acuminous/yadda/master/dist/yadda-0.11.5.js',
     'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
   },
   'resource/translators' => {
@@ -194,10 +198,17 @@ DOWNLOADS = {
 DOWNLOADS.each_pair{|dir, files|
   files.each_pair{|file, url|
     file "#{dir}/#{file}" => 'Rakefile' do |t|
-      ZotPlus::RakeHelper.download(url, t.name)
+      download(url, t.name)
     end
   }
 }
+
+file 'chrome/content/zotero-better-bibtex/translators.js' => Dir['resource/translators/*.yml'] + ['Rakefile'] do |t|
+  translators = Dir['resource/translators/*.yml'].collect{|header| header = YAML::load_file(header) }
+  open(t.name, 'w') {|f|
+    f.puts("Zotero.BetterBibTeX.Translators = #{JSON.pretty_generate(translators)};")
+  }
+end
 
 file 'defaults/preferences/defaults.js' => ['defaults/preferences/defaults.yml', 'Rakefile'] do |t|
   prefs = YAML::load_file(t.source)
@@ -223,7 +234,7 @@ end
 
 file 'resource/citeproc.js' => 'Rakefile' do |t|
   cleanly(t.name) do
-    ZotPlus::RakeHelper.download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/citeproc.js', t.name)
+    download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/citeproc.js', t.name)
     sh "#{NODEBIN}/grasp -i -e 'thedate[DATE_PARTS_ALL[i]]' --replace 'thedate[CSL.DATE_PARTS_ALL[i]]' #{t.name.shellescape}"
     sh "#{NODEBIN}/grasp -i -e 'if (!Array.indexOf) { _$ }' --replace '' #{t.name.shellescape}"
     File.rewrite(t.name){|src|
@@ -243,14 +254,14 @@ end
 
 file 'resource/translators/xregexp-all.js' => 'Rakefile' do |t|
   cleanly(t.name) do
-    ZotPlus::RakeHelper.download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js', t.name)
+    download('http://cdnjs.cloudflare.com/ajax/libs/xregexp/2.0.0/xregexp-all.js', t.name)
     # strip out setNatives because someone doesn't like it
     sh "#{NODEBIN}/grasp -i 'func-dec! #setNatives' --replace 'function setNatives(on) { if (on) { throw new Error(\"setNatives not supported in Firefox extension\"); } }' #{t.name}"
   end
 end
 
 file 'resource/translators/json5.js' => 'Rakefile' do |t|
-  ZotPlus::RakeHelper.download('https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js', t.name)
+  download('https://raw.githubusercontent.com/aseemk/json5/master/lib/json5.js', t.name)
 end
 
 file 'chrome/content/zotero-better-bibtex/test/tests.js' => ['Rakefile'] + Dir['resource/tests/*.feature'] do |t|
@@ -335,7 +346,6 @@ end
 rule '.json' => '.yml' do |t|
   open(t.name, 'w'){|f|
     header = YAML::load_file(t.source)
-    header['lastUpdated'] = TIMESTAMP if t.source =~ /\/translators\//
 
     %w{translatorID label priority}.each{|field|
       raise "Missing #{field} in #{t.source}" unless header[field]
@@ -420,6 +430,10 @@ file 'chrome/content/zotero-better-bibtex/csl-localedata.coffee' => ['Rakefile']
   }
 end
 
+file 'resource/translators/yaml.js' => 'Rakefile' do |t|
+  browserify("var YAML;\nYAML = require('js-yaml');", t.name)
+end
+
 file 'resource/translators/marked.js' => 'Rakefile' do |t|
   browserify("var LaTeX; if (!LaTeX) { LaTeX = {}; };\nLaTeX.marked=require('marked');", t.name)
 end
@@ -442,6 +456,31 @@ file 'chrome/content/zotero-better-bibtex/release.js' => 'install.rdf' do |t|
     ")
   }
 end
+
+Dir['resource/translators/*.yml'].each{|metadata|
+  translator = File.basename(metadata, File.extname(metadata))
+
+  sources = ['json5', 'translator', 'preferences', "#{translator}.header", translator]
+  header = YAML.load_file(metadata)
+  dependencies = header['BetterBibTeX']['dependencies'] if header['BetterBibTeX']
+  dependencies ||= []
+  sources += dependencies
+
+  sources = sources.collect{|src| "resource/translators/#{src}.js"}
+
+  file "resource/translators/install/#{translator}.js" => sources + ['Rakefile'] do |t|
+    header.delete('BetterBibTeX')
+    header['lastUpdated'] = TIMESTAMP
+    FileUtils.mkdir_p(File.dirname(t.name))
+    open(t.name, 'w'){|f|
+      f.puts(JSON.pretty_generate(header))
+      sources.each{|src|
+        f.puts("\n// SOURCE: #{src}")
+        f.puts(open(src).read)
+      }
+    }
+  end
+}
 
 rule( /\.header\.js$/ => [ proc {|task_name| [task_name.sub(/\.header\.js$/, '.yml'), 'Rakefile', 'install.rdf'] } ]) do |t|
   header = YAML.load_file(t.source)
@@ -657,7 +696,7 @@ task :csltests do
   root = 'https://bitbucket.org/bdarcus/citeproc-test/src/tip/processor-tests/humans/'
   seen = testcase['items'].first['creators'].dup
   Tempfile.create('tests') do |tmp|
-    ZotPlus::RakeHelper.download(root, tmp.path)
+    download(root, tmp.path)
     tests = Nokogiri::HTML(open(tmp.path))
     n = tests.css('td.filename a').length
     tests.css('td.filename a').each_with_index{|test, i|
@@ -740,10 +779,11 @@ end
 task :logs2s3 do
   logs = Dir['*.debug'] + Dir['*.log']
   logs = [] if ENV['CI'] == 'true' && ENV['LOGS2S3'] != 'true'
+  logs = [] if (ENV['TRAVIS_PULL_REQUEST'] || 'false') != 'false'
 
-  if (ENV['TRAVIS_PULL_REQUEST'] || 'false') != 'false'
-    puts "Logs 2 S3: Not logging pull requests"
-  elsif logs.size == 0
+  logs = logs.reject{|log| File.zero?(log) }
+
+  if logs.size == 0
     puts "Logs 2 S3: Nothing to do"
   else
     prefix = [ENV['TRAVIS_BRANCH'], ENV['TRAVIS_JOB_NUMBER']].select{|x| x}.join('-')
@@ -754,6 +794,8 @@ task :logs2s3 do
     path = url.path
     path = '/' if path == ''
     params = form['fields']
+
+    logs += Dir['resource/translators/install/*.js']
 
     logs.each{|log|
       puts "Logs 2 S3: #{log}"
@@ -766,10 +808,6 @@ task :logs2s3 do
       end
     }
   end
-end
-
-task :xpi do
-  puts XPI
 end
 
 task :doc do

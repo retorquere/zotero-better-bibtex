@@ -1,16 +1,17 @@
 ---
-translatorID: be78e3e1-c0b7-4bb6-affb-2d0bc1c19958
-label: Collected Notes
+translatorID: 0f238e69-043e-4882-93bf-342de007de19
+label: Better CSL YAML
 creator: Emiliano heyns
-target: html
+target: yaml
 minVersion: 4.0.27
 maxVersion: ''
-configOptions:
-  getCollections: true
 displayOptions:
   Keep updated: false
 translatorType: 2
 browserSupport: gcsv
 BetterBibTeX:
+  dependencies:
+  - betterCSL
+  - yaml
 priority: 100
 inRepository: true

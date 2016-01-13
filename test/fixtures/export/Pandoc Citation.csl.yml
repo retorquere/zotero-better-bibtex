@@ -1,0 +1,32 @@
+---
+references:
+- id: Adams2001
+  type: article-journal
+  title: 'The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru'
+  container-title: Bulletin of Volcanology
+  page: 493-518
+  volume: '62'
+  author:
+    - family: Adams
+      given: Nancy K
+    - family: DeSilva
+      given: Shanaka L
+    - family: Self
+      given: Steven
+    - family: Salas
+      given: Guido
+    - family: Schubring
+      given: Steven
+    - family: Permenter
+      given: Jason L
+    - family: Arbesman
+      given: Kendra
+  issued:
+    date-parts:
+      - - 2014
+        - 12
+        - 31
+      - - 2015
+        - 1
+        - 1
+...

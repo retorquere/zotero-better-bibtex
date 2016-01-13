@@ -5,7 +5,6 @@ creator: Simon Kornblith, Richard Karnesky and Emiliano heyns
 target: bib
 minVersion: 4.0.27
 maxVersion: ''
-priority: 199
 configOptions:
   getCollections: true
 displayOptions:
@@ -13,7 +12,6 @@ displayOptions:
   exportFileData: false
   useJournalAbbreviation: false
   Keep updated: false
-inRepository: true
 translatorType: 3
 browserSupport: gcsv
 BetterBibTeX:
@@ -26,3 +24,6 @@ BetterBibTeX:
   - BetterBibTeXBraceBalancer
   - BetterBibTeXParserSupport
   - BetterBibTeXParser
+  postscript: true
+priority: 199
+inRepository: true

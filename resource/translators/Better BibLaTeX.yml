@@ -6,8 +6,6 @@ creator: Simon Kornblith, Richard Karnesky, Anders Johansson and Emiliano Heyns
 target: bib
 minVersion: 4.0.27
 maxVersion: ''
-priority: 50
-inRepository: true
 configOptions:
   getCollections: true
 displayOptions:
@@ -23,3 +21,6 @@ BetterBibTeX:
   - unicode_translator
   - latex_unicode_mapping
   - BetterBibTeXBraceBalancer
+  postscript: true
+priority: 50
+inRepository: true

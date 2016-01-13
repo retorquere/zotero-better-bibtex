@@ -5,10 +5,10 @@ creator: Erik Hetzner & Emiliano heyns
 target: bib
 minVersion: 4.0.27
 maxVersion: ''
-priority: 100
 configOptions:
   getCollections: true
 displayOptions: 
-inRepository: true
 translatorType: 2
 browserSupport: gcsv
+priority: 100
+inRepository: true

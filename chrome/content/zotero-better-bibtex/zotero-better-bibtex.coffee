@@ -412,9 +412,19 @@ Zotero.BetterBibTeX.extensionConflicts = ->
   if Services.vc.compare(ZOTERO_CONFIG.VERSION?.replace(/\.SOURCE$/, '') || '0.0.0', '4.0.28') < 0
     @disable("Better BibTeX has been disabled because it found Zotero #{ZOTERO_CONFIG.VERSION}, but requires 4.0.28 or later.")
 
+  @disableInConnector(Zotero.isConnector)
+
+Zotero.BetterBibTeX.disableInConnector = (isConnector) ->
+  return unless isConnector
+  @disable("""
+    You are running Zotero in connector mode (running Zotero Firefox and Zotero Standalone simultaneously.
+    This is not supported by Better BibTeX; see https://github.com/ZotPlus/zotero-better-bibtex/issues/143
+  """)
+
 Zotero.BetterBibTeX.disable = (message) ->
   @removeTranslators()
   @disabled = message
+  @debug('Better BibTeX has been disabled:', message)
   @flash('Better BibTeX has been disabled', message)
 
 Zotero.BetterBibTeX.flash = (title, body) ->
@@ -878,6 +888,10 @@ Zotero.BetterBibTeX.init = ->
     Zotero.BetterBibTeX.debugMode()
     return
   )
+  Zotero.getActiveZoteroPane().addBeforeReloadListener((mode) =>
+    @debug('before reload:', {mode})
+    @disableInConnector(mode == 'connector')
+  )
 
   nids = []
   nids.push(Zotero.Notifier.registerObserver(@itemChanged, ['item']))
@@ -942,14 +956,8 @@ Zotero.BetterBibTeX.loadTranslators = ->
   try
     @removeTranslator({label: 'Better CSL-JSON', translatorID: 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'})
 
-  @load('Better BibTeX', {postscript: @postscript})
-  @load('Better BibLaTeX', {postscript: @postscript})
-  @load('LaTeX Citation')
-  @load('Pandoc Citation')
-  @load('Better CSL JSON')
-  @load('BetterBibTeX JSON')
-  @load('BibTeXAuxScanner')
-  @load('Collected Notes', {target: @pref.get('collectedNotes')})
+  for translator in @Translators
+    @load(translator)
 
   ### clean up junk ###
   try
@@ -960,9 +968,9 @@ Zotero.BetterBibTeX.loadTranslators = ->
   Zotero.Translators.init()
 
 Zotero.BetterBibTeX.removeTranslators = ->
-  for own id, header of @translators
-    @removeTranslator(header)
-  @translators = Object.create(null)
+  for translator in @Translators
+    @removeTranslator(translator)
+  @translators = {}
   Zotero.Translators.init()
 
 Zotero.BetterBibTeX.removeTranslator = (header) ->
@@ -971,6 +979,9 @@ Zotero.BetterBibTeX.removeTranslator = (header) ->
     destFile = Zotero.getTranslatorsDirectory()
     destFile.append(fileName)
     destFile.remove(false) if destFile.exists()
+
+    delete @translators[header.translatorID]
+    delete @translators[header.label.replace(/\s/, '')]
   catch err
     @debug("failed to remove #{header.label}:", err)
 
@@ -1123,47 +1134,37 @@ Zotero.BetterBibTeX.getContentsFromURL = (url) ->
   catch err
     throw new Error("Failed to load #{url}: #{err.msg}")
 
-Zotero.BetterBibTeX.load = (translator, options = {}) ->
-  header = JSON.parse(Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.json"))
-  @removeTranslator(header)
+Zotero.BetterBibTeX.load = (translator) ->
+  @removeTranslator(translator)
 
-  sources = ['json5', 'translator', 'preferences', "#{translator}.header", translator].concat(header.BetterBibTeX?.dependencies || [])
-  @debug('translator.load:', translator, 'from', sources)
-  code = "exports = undefined;\nmodule = undefined;\n"
-  for src in sources
-    try
-      code += Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/#{src}.js") + "\n"
-    catch err
-      @debug('translator.load: source', src, 'for', translator, 'could not be loaded:', err)
-      throw err
-  code += options.postscript if options.postscript
-
-  @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
-
-  ### remove BBT metadata -- Zotero doesn't like it ###
-  header = JSON.parse(JSON.stringify(header))
-  delete header.BetterBibTeX
-  @debug('Translator.load header:', translator, header)
   try
-    fileName = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)
+    code = Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/install/#{translator.label}.js")
+  catch err
+    @debug('translator.load: ', translator, 'could not be loaded:', err)
+    throw err
+  code += "\n\n#{@postscript}" if translator.BetterBibTeX?.postscript
+
+  @debug('Translator.load header:', translator)
+  try
+    fileName = Zotero.Translators.getFileNameFromLabel(translator.label, translator.translatorID)
     destFile = Zotero.getTranslatorsDirectory()
     destFile.append(fileName)
 
-    metadataJSON = JSON.stringify(header, null, "\t")
-
-    existing = Zotero.Translators.get(header.translatorID)
+    existing = Zotero.Translators.get(translator.translatorID)
     if existing and destFile.equals(existing.file) and destFile.exists()
       msg = "Overwriting translator with same filename '#{fileName}'"
-      Zotero.BetterBibTeX.warn(msg, header)
+      Zotero.BetterBibTeX.warn(msg, translator)
       Components.utils.reportError(msg + ' in Zotero.BetterBibTeX.load()')
 
     existing.file.remove(false) if existing and existing.file.exists()
 
-    Zotero.BetterBibTeX.log("Saving translator '#{header.label}'")
+    Zotero.BetterBibTeX.log("Saving translator '#{translator.label}'")
 
-    Zotero.File.putContents(destFile, metadataJSON + "\n\n" + code)
+    Zotero.File.putContents(destFile, code)
 
     @debug('translator.load', translator, 'succeeded')
+
+    @translators[translator.translatorID] = @translators[translator.label.replace(/\s/, '')] = translator
   catch err
     @debug('translator.load', translator, 'failed:', err)
 
