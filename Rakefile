@@ -116,15 +116,10 @@ end
 #    end
 #  end
 #}
-SKIP = ['Notre Dame Philosophical Reviews']
 ZIPFILES = (Dir['{chrome,resource}/**/*.{coffee,pegjs}'].collect{|src|
   tgt = src.sub(/\.[^\.]+$/, '.js')
   tgt
-}.flatten.reject{|tr|
-  SKIP.include?(File.basename(tr, File.extname(tr)))
-} + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].reject{|tr|
-  SKIP.include?(File.basename(tr, File.extname(tr)))
-}.collect{|tr|
+}.flatten + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
   root = File.dirname(tr)
   stem = File.basename(tr, File.extname(tr))
   %w{header.js js json}.collect{|ext| "#{root}/#{stem}.#{ext}" }

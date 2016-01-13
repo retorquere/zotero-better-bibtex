@@ -266,6 +266,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Export Forthcoming as Forthcoming                                                  | 1           |
      | CSL variables only recognized when in lowercase #408                               | 1           |
      | date and year are switched #406                                                    | 4           |
      | Malformed HTML                                                                     | 1           |
@@ -303,7 +304,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.022                                                                | 1           |
      | Better BibLaTeX.023                                                                | 1           |
      | DOI with underscores in extra field #108                                           | 1           |
-     | Export Forthcoming as Forthcoming                                                  | 1           |
      | Export Newspaper Article misses section field #132                                 | 1           |
      | German Umlaut separated by brackets #146                                           | 1           |
      | Hang on non-file attachment export #112 - URL export broken #114                   | 2           |
