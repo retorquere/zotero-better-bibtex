@@ -390,7 +390,7 @@ class Reference
       if typeof field.value == 'number' || (field.preserveBibTeXVariables && @isBibVar(field.value))
         value = field.value
       else
-        enc = field.enc || Translator.fieldEncoding?[field.name] || 'latex'
+        enc = field.enc || Translator.fieldEncoding[field.name] || 'latex'
         value = @["enc_#{enc}"](field, (if field.enc && field.enc != 'creators' then false else @raw))
 
         return unless value

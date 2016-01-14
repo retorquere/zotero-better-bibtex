@@ -1,6 +1,7 @@
 LaTeX = {} unless LaTeX
 
 LaTeX.text2latex = (text, options = {}) ->
+  options.preserveCase ||= options.autoCase
   latex = @html2latex(@cleanHTML(text, options), options)
   latex = BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
   return latex
@@ -44,7 +45,8 @@ LaTeX.titleCase = (string) ->
   )
 
 LaTeX.cleanHTML = (text, options) ->
-  {html, plain} = BetterBibTeXMarkupParser.parse(text, {titleCase: options.autoCase && Translator.titleCase, preserveCaps: options.autoCase, csquotes: Translator.csquotes})
+  options.preserveCase ||= options.autoCase
+  {html, plain} = BetterBibTeXMarkupParser.parse(text, {titleCase: options.autoCase && Translator.titleCase, preserveCase: options.preserveCase, csquotes: Translator.csquotes})
 
   if options.autoCase && Translator.titleCase
     Translator.debug('TITLECASE:>', plain.text)
@@ -62,6 +64,8 @@ LaTeX.cleanHTML = (text, options) ->
   return html
 
 LaTeX.html2latex = (html, options) ->
+  options.preserveCase ||= options.autoCase
+
   latex = (new @HTML(html, options)).latex
   latex = latex.replace(/(\\\\)+\s*\n\n/g, "\n\n")
   latex = latex.replace(/\n\n\n+/g, "\n\n")
@@ -69,6 +73,7 @@ LaTeX.html2latex = (html, options) ->
 
 class LaTeX.HTML
   constructor: (html, @options = {}) ->
+    @options.preserveCase ||= @options.autoCase
     @latex = ''
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
     @stack = []
@@ -91,11 +96,11 @@ class LaTeX.HTML
 
     switch tag.name
       when 'i', 'em', 'italic'
-        @latex += '{' if @options.autoCase && !@preserveCase
+        @latex += '{' if @options.preserveCase && !@preserveCase
         @latex += '\\emph{'
 
       when 'b', 'strong'
-        @latex += '{' if @options.autoCase && !@preserveCase
+        @latex += '{' if @options.preserveCase && !@preserveCase
         @latex += '\\textbf{'
 
       when 'a'
@@ -104,11 +109,11 @@ class LaTeX.HTML
           @latex += "\\href{#{tag.attrs.href}}{"
 
       when 'sup'
-        @latex += '{' if @options.autoCase && !@preserveCase
+        @latex += '{' if @options.preserveCase && !@preserveCase
         @latex += '\\textsuperscript{'
 
       when 'sub'
-        @latex += '{' if @options.autoCase && !@preserveCase
+        @latex += '{' if @options.preserveCase && !@preserveCase
         @latex += '\\textsubscript{'
 
       when 'br'
@@ -138,7 +143,7 @@ class LaTeX.HTML
 
         @latex += '{{' if tag.class.nocase && @preserveCase == 1
 
-        @latex += '{' if @options.autoCase && !@preserveCase && (tag.relax || tag.enquote || tag.smallcaps)
+        @latex += '{' if @options.preserveCase && !@preserveCase && (tag.relax || tag.enquote || tag.smallcaps)
         @latex += '\\enquote{' if tag.enquote
         @latex += '\\textsc{' if tag.smallcaps
         @latex += '{\\relax ' if tag.relax
@@ -157,11 +162,11 @@ class LaTeX.HTML
     switch tag.name
       when 'i', 'italic', 'em'
         @latex += '}'
-        @latex += '}' if @options.autoCase && !@preserveCase
+        @latex += '}' if @options.preserveCase && !@preserveCase
 
       when 'sup', 'sub', 'b', 'strong'
         @latex += '}'
-        @latex += '}' if @options.autoCase && !@preserveCase
+        @latex += '}' if @options.preserveCase && !@preserveCase
 
       when 'a'
         @latex += '}' if tag.attrs.href?.length > 0
@@ -176,9 +181,9 @@ class LaTeX.HTML
         @latex += '}' if tag.smallcaps
         @latex += '}' if tag.enquote
         @latex += '}' if tag.relax
-        @latex += '}' if @options.autoCase && !@preserveCase && (tag.relax || tag.smallcaps || tag.enquote)
+        @latex += '}' if @options.preserveCase && !@preserveCase && (tag.relax || tag.smallcaps || tag.enquote)
 
-        @latex += '}}' if tag.class.nocase && @options.autoCase && @preserveCase == 1
+        @latex += '}}' if tag.class.nocase && @options.preserveCase && @preserveCase == 1
 
         @preserveCase -= 1 if tag.class.nocase
 

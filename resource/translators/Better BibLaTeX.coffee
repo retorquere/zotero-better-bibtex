@@ -208,9 +208,9 @@ doExport = ->
         ref.add({ name: 'publisher', value: item.publisher, enc: 'literal' })
 
     switch item.itemType
-      when 'letter' then ref.add({ name: 'type', value: item.letterType || 'Letter', replace: true })
+      when 'letter' then ref.add({ name: 'type', value: item.letterType || 'Letter', preserveCase: true, replace: true })
 
-      when 'email'  then ref.add({ name: 'type', value: 'E-mail', replace: true })
+      when 'email'  then ref.add({ name: 'type', value: 'E-mail', preserveCase: true, replace: true })
 
       when 'thesis'
         thesistype = item.thesisType?.toLowerCase()
@@ -218,16 +218,16 @@ doExport = ->
           ref.referencetype = thesistype
           ref.remove('type')
         else
-          ref.add({ name: 'type', value: item.thesisType, replace: true })
+          ref.add({ name: 'type', value: item.thesisType, preserveCase: true, replace: true })
 
       when 'report'
         if (item.type || '').toLowerCase().trim() == 'techreport'
           ref.referencetype = 'techreport'
         else
-          ref.add({ name: 'type', value: item.type, replace: true })
+          ref.add({ name: 'type', value: item.type, preserveCase: true, replace: true })
 
       else
-        ref.add({ name: 'type', value: item.type || item.websiteType || item.manuscriptType, replace: true })
+        ref.add({ name: 'type', value: item.type || item.websiteType || item.manuscriptType, preserveCase: true, replace: true })
 
     ref.add({ name: 'howpublished', value: item.presentationType || item.manuscriptType })
 

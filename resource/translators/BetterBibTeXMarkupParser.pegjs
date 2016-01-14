@@ -31,7 +31,7 @@
 }
 
 start
-  = &{return options.preserveCaps} words:leadingProtectedWords chunks:chunk* { return {html: words + chunks.join(''), plain: plain}; }
+  = &{return options.preserveCase} words:leadingProtectedWords chunks:chunk* { return {html: words + chunks.join(''), plain: plain}; }
   / chunks:chunk* { return {html: chunks.join(''), plain: plain}; }
 
 chunk
@@ -44,7 +44,7 @@ chunk
   / "&"                                                                                         { return add('&amp;', '&') }
   / "<"                                                                                         { return add('&lt;', '<') }
   / ">"                                                                                         { return add('&gt;', '>') }
-  / &{return options.preserveCaps && !state.nocase} words:protectedWords                        { return words; }
+  / &{return options.preserveCase && !state.nocase} words:protectedWords                        { return words; }
   / &{return options.csquotes} char:. &{return options.csquotes.open.indexOf(char) >= 0} ws:_   { return add('<span enquote="true">', char + ws); }
   / &{return options.csquotes} ws:_ char:. &{return options.csquotes.close.indexOf(char) >= 0}  { return add('</span>', ws + char); }
   / char:.                                                                                      { return add(char, char, true); }
