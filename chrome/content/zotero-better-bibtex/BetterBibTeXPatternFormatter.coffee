@@ -22,8 +22,11 @@ class BetterBibTeXPatternFormatter
       if date
         if date.literal
           date = Zotero.Date.strToDate(@item.date)
+
           @year = parseInt(date.year)
           delete @year if isNaN(@year)
+          @year ?= @item.date
+
           @month = parseInt(date.month)
           delete @month if isNaN(@month)
 
