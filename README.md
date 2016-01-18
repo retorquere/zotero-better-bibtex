@@ -2,7 +2,7 @@
 
 This extension aims to make Zotero effective for us text-based authoring holdouts; currently, that translates to the
 LaTeX/Markdown crowd. At its core, it behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero, you'll find Better Bib(La)TeX/CSL JSON
-listed as one of the choices. If nothing else, you could keep your existing workflow as-is, and just enjoy the emproved
+listed as one of the choices. If nothing else, you could keep your existing workflow as-is, and just enjoy the improved
 LaTeX &lt;-&gt; unicode translation on im-and export. Over and above this improvement, it will give you
 
 * Stable, configurable [citation keys](https://zotplus.github.io/better-bibtex/citation-keys.html)
