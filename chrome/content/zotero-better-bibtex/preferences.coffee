@@ -10,6 +10,7 @@ BetterBibTeXPref =
       document.getElementById('better-bibtex-prefs-tabpanels').selectedIndex = disabled
       document.getElementById('zotero-better-bibtex-disabled-message').value = Zotero.BetterBibTeX.disabled
 
+    document.getElementById('better-bibtex-preferences-cache-stats').value = "#{Math.max(Zotero.BetterBibTeX.DB.cache.data.length, Zotero.BetterBibTeX.DB.serialized.data.length)} in cache"
     # document.getElementById('better-bibtex-preferences-zombies').setAttribute('label', "Purge zombies: #{JSON.stringify(Zotero.BetterBibTeX.DB.zombies())}")
 
     BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.pref.get('citekeyFormat')
