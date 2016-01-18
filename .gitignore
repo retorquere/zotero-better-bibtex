@@ -8,6 +8,7 @@
 *.serialized
 .bundle
 *.js
+*.translator
 *.js.map
 *.tmp
 .depend.mf

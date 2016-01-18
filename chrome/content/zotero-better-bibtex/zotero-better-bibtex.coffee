@@ -1138,7 +1138,7 @@ Zotero.BetterBibTeX.load = (translator) ->
   @removeTranslator(translator)
 
   try
-    code = Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/install/#{translator.label}.js")
+    code = Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator.label}.translator")
   catch err
     @debug('translator.load: ', translator, 'could not be loaded:', err)
     throw err

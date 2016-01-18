@@ -132,7 +132,7 @@ ZIPFILES = (Dir['chrome/**/*.{coffee,pegjs}'].collect{|src|
   tgt
 } + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
   [
-    File.join(File.dirname(tr), 'install', File.basename(tr, File.extname(tr)) + '.js'),
+    File.join(File.dirname(tr), File.basename(tr, File.extname(tr)) + '.translator'),
     File.join(File.dirname(tr), File.basename(tr, File.extname(tr)) + '.json')
   ]
 }.flatten + [
@@ -152,6 +152,7 @@ ZIPFILES = (Dir['chrome/**/*.{coffee,pegjs}'].collect{|src|
 File.unlink('chrome/content/zotero-better-bibtex/release.js') if File.file?('chrome/content/zotero-better-bibtex/release.js')
 
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
+CLEAN.include('{resource,chrome,defaults}/**/*.translator')
 CLEAN.include('{resource,chrome,defaults}/**/*.js.map')
 CLEAN.include('tmp/**/*')
 CLEAN.include('resource/translators/*.json')
@@ -468,7 +469,7 @@ Dir['resource/translators/*.yml'].each{|metadata|
 
   sources = sources.collect{|src| "resource/translators/#{src}.js"}
 
-  file "resource/translators/install/#{translator}.js" => sources + ['Rakefile'] do |t|
+  file "resource/translators/#{translator}.translator" => sources + ['Rakefile'] do |t|
     header.delete('BetterBibTeX')
     header['lastUpdated'] = TIMESTAMP
     FileUtils.mkdir_p(File.dirname(t.name))
