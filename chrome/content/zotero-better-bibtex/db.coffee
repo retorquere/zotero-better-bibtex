@@ -105,7 +105,10 @@ Zotero.BetterBibTeX.DB = new class
           """,
           prompts.BUTTON_POS_1_DEFAULT + prompts.BUTTON_POS_0 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_POS_1 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_DELAY_ENABLE,
           "I know what I'm Doing. Keep the cache",
-          'Clear cache (recommended)'
+          'Clear cache (recommended)',
+          '',
+          null,
+          {value: false}
         )
 
     if cacheReset
