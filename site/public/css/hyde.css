@@ -90,7 +90,7 @@ html {
 .sidebar-nav-item {
   display: block;
   line-height: 1.75;
-  text-indent: -5em; padding-left: 5em;
+  text-indent: -1em; padding-left: 1em;
 }
 a.sidebar-nav-item:hover,
 a.sidebar-nav-item:focus {

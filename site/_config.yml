@@ -7,9 +7,9 @@ permalink:        pretty
 relative_permalinks: true
 
 # Setup
-title:            Hyde
-tagline:          'A Jekyll theme'
-description:      'A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.'
+title:            "Zotero: Better BibTeX"
+#tagline:          'Making Zotero all it can be for us LaTeX holdouts'
+description:          'Making Zotero all it can be for us LaTeX holdouts'
 url:              http://hyde.getpoole.com
 baseurl:          http://zotplus.github.io/zotero-better-bibtex/
 
