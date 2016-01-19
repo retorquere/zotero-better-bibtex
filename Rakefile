@@ -892,6 +892,12 @@ task :pages do
     "[#{title}](#{url})"
   }
   open('README.md', 'w'){|f| f.write(md) }
-  sh "git subtree push --prefix site/ origin gh-pages"
+  update = Nokogiri::XML(open('site/update.rdf'))
+  update.at('//em:version').content = RELEASE
+  update.xpath('//em:updateLink').each{|link| link.content = "https://github.com/ZotPlus/zotero-#{EXTENSION}/releases/download/#{RELEASE}/zotero-#{EXTENSION}-#{RELEASE}.xpi" }
+  open('site/update.rdf', 'w'){|f| update.write_xml_to f }
+  #sh "git add site"
+  #sh "git commit -m 'site #{RELEASE}'"
+  #sh "git subtree push --prefix site/ origin gh-pages"
 end
 
