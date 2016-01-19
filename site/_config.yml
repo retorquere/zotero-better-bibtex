@@ -8,6 +8,8 @@ baseurl: "" #important: start with /
 url: "http://zotplus.github.io/zotero-better-bibtex"
 defaults:
   -
+    scope:
+      path: "" # an empty string here means all files in the project
     values:
       layout: "default"
 
