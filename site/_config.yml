@@ -1,67 +1,30 @@
-### GENERAL SETTINGS ###
+# Dependencies
+markdown:         redcarpet
+highlighter:      pygments
 
-# Site settings
-title: "Zotero: Better BibTeX"
-description: "Better BibTeX support for Zotero"
-baseurl: "http://zotplus.github.io/zotero-better-bibtex"
+# Permalinks
+permalink:        pretty
+relative_permalinks: true
+
+# Setup
+title:            Hyde
+tagline:          'A Jekyll theme'
+description:      'A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.'
+url:              http://hyde.getpoole.com
+baseurl:          /
+
+author:
+  name:           'Mark Otto'
+  url:            https://twitter.com/mdo
+
+paginate:         5
+
+github:
+  repo:           https://github.com/poole/hyde
+
 defaults:
   -
     scope:
       path: "" # an empty string here means all files in the project
     values:
-      layout: "about"
-
-# Build settings
-markdown: kramdown
-permalink: /:categories/:title
-excerpt_separator: <!--more--> #use this in posts to define how long the excerpt of the post (that is shown on the Blog page) is
-
-colors:  #in hex code if not noted else
-  primary: "#00b3fe" #"#F70031" 
-  primary_rgb: "0,179,254" #"247,0,49" #rgb of the primary. Needed in some places for the transparency effect.  
-  secondary: "#384452" #"#33004D"
-  link: "#428bca"
-  link_hover: "#01b2fe"
-  footer_heading: "#ffffff"
-  footer_content: "#bfc9d3"
-  
-  
-### CONTACT SETTINGS ###
-
-# Social networks usernames. Many more available: google-plus, flickr, linkedin, etc). Shown in footer.
-social:
-  - title: google-plus
-    url:
-    
-# Postal address (add as many lines as necessary). Shown in footer and on Contact page.
-#address:
-#  - lines: 
-#    - Some Ave, 987,
-#    - 23890, New York,
-#    - United States.
-email: emiliano.heyns@iris-advies.com
-tel: #+34 8493-4893
-
-
-### GENERAL DATA FOR VARIOUS LOCATIONS ###
-    
-# Members information. Shown on About page.
-members:
-  - name: Emiliano Heyns
-    position: Dev
-    text: LaTeX forever!
-    img: team01.jpg
-    social:
-      - title: envelope #use for email address
-        url: mailto:emiliano.heyns@iris-advies.com
-      - title: google-plus
-        url: 
-    
-# Short text about your company. Shown in footer on every page and also separately on Home and Contact page.
-about: "Make Zotero useful for us LaTeX holdouts. Now get off my lawn!"
-
-# Testimonial content. Shown on Home and About page. 
-#testimonial:
-#    message: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
-#    author: Marcel Newman
-#    position: WEB DESIGNER - BLACKTIE.CO
+      layout: "page"
