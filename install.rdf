@@ -9,7 +9,7 @@
     <em:homepageURL>https://zotplus.github.io/better-bibtex/</em:homepageURL>
     <em:creator>Emiliano Heyns</em:creator>
     <em:iconURL>chrome://zotero-better-bibtex/skin/better-bibtex.svg</em:iconURL>
-    <em:updateURL>https://github.com/ZotPlus/zotero-better-bibtex/releases/download/update.rdf/update.rdf</em:updateURL>
+    <em:updateURL>https://zotplus.github.io/zotero-better-bibtex/update.rdf</em:updateURL>
     <em:type>2</em:type> <!-- type=extension -->
     <em:optionsURL>chrome://zotero/content/preferences/preferences.xul#better-bibtex</em:optionsURL>
 
