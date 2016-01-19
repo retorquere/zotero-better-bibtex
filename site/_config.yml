@@ -13,7 +13,7 @@ highlighter:      pygments
 permalink: /:categories/:title
 
 # Setup
-title:            "Zotero: Better BibTeX"
+title:            "Better BibTeX"
 #tagline:          'Making Zotero all it can be for us LaTeX holdouts'
 description:          'Making Zotero all it can be for us LaTeX holdouts'
 baseurl:          http://zotplus.github.io/zotero-better-bibtex
@@ -27,6 +27,9 @@ paginate:         5
 github:
   repo:           https://github.com/ZotPlus/zotero-better-bibtex/
   release:        https://github.com/ZotPlus/zotero-better-bibtex/releases/latest
+travis:
+  build: https://travis-ci.org/ZotPlus/zotero-better-bibtex
+  status: https://travis-ci.org/ZotPlus/zotero-better-bibtex.svg?branch=master
 
 defaults:
   -

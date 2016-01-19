@@ -1,5 +1,5 @@
 ---
-title: Better BibTeX (BBT) for Zotero [![Build Status](https://travis-ci.org/ZotPlus/zotero-better-bibtex.svg?branch=master)](https://travis-ci.org/ZotPlus/zotero-better-bibtex)
+title: Better BibTeX (BBT) for Zotero
 nav: Home
 layout: default
 ---
