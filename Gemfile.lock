@@ -40,6 +40,7 @@ GEM
     faraday_middleware (0.10.0)
       faraday (>= 0.7.4, < 0.10)
     ffi (1.9.10)
+    front_matter_parser (0.0.4)
     gh (0.14.0)
       addressable
       backports
@@ -152,7 +153,8 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.143)
+    zotplus-rakehelper (0.0.144)
+      front_matter_parser
       github_api
       nokogiri
       rake
@@ -170,6 +172,7 @@ DEPENDENCIES
   bibtex-ruby
   cucumber
   facets
+  front_matter_parser
   ghi
   headless
   jwt

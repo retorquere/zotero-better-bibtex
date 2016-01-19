@@ -28,6 +28,7 @@ require 'base64'
 require 'net/http/post/multipart'
 require 'facets'
 require 'rest-client'
+require 'front_matter_parser'
 require_relative 'lib/unicode_table'
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
@@ -882,8 +883,8 @@ end
 
 task :pages do
   config = YAML.load_file('site/_config.yml')
-  md = open('site/index.md').read
-  md.sub!(/^---(.|\n)+---\n/, '') # remove yaml header
+  readme = FrontMatterParser.parse_file('site/index.md')
+  md = readme.content
   md.gsub!(/\[([^!\]]+)\]\(([^\)]+)\)/) {
     title = $1
     url = $2
@@ -891,13 +892,14 @@ task :pages do
     url = "#{config['baseurl']}#{url}" unless url =~ /^https?:/
     "[#{title}](#{url})"
   }
+  md = "# #{readme['title']} [![Build Status](#{config['travis']['status']})](#{config['travis']['build']})\n\n#{md.strip}"
   open('README.md', 'w'){|f| f.write(md) }
   update = Nokogiri::XML(open('site/update.rdf'))
   update.at('//em:version').content = RELEASE
   update.xpath('//em:updateLink').each{|link| link.content = "https://github.com/ZotPlus/zotero-#{EXTENSION}/releases/download/#{RELEASE}/zotero-#{EXTENSION}-#{RELEASE}.xpi" }
   open('site/update.rdf', 'w'){|f| update.write_xml_to f }
-  sh "git add site"
-  sh "git commit -m 'site #{RELEASE}'"
-  sh "git subtree push --prefix site/ origin gh-pages"
+  #sh "git add site"
+  #sh "git commit -m 'site #{RELEASE}'"
+  #sh "git subtree push --prefix site/ origin gh-pages"
 end
 
