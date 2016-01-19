@@ -6,6 +6,10 @@ description: "Better BibTeX support for Zotero"
 analytics: #Google analytics code in the format XX-nnnnnnnn-n
 baseurl: "" #important: start with /
 url: "http://zotplus.github.io/zotero-better-bibtex"
+defaults:
+  -
+    values:
+      layout: "default"
 
 # Build settings
 markdown: kramdown
