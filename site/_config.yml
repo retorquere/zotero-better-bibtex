@@ -4,8 +4,7 @@
 title: "Zotero: Better BibTeX"
 description: "Better BibTeX support for Zotero"
 analytics: #Google analytics code in the format XX-nnnnnnnn-n
-baseurl: "" #important: start with /
-url: "http://zotplus.github.io/zotero-better-bibtex"
+baseurl: "http://zotplus.github.io/zotero-better-bibtex"
 defaults:
   -
     scope:

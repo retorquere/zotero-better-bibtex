@@ -76,34 +76,3 @@ or there are problems preventing me from implementing a fix.
   you're coming from JabRef, please verify in JabRef using file-database properties that your bibliography is saved in
   utf-8 format before importing.
 
-<script type="text/javascript">
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.overrideMimeType('text/xml');
-  xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-      var version = xmlhttp.responseXML.getElementsByTagNameNS('http://www.mozilla.org/2004/em-rdf#', 'version');
-      if (version.length === 0) { return; }
-      version = version[0].textContent;
-
-      var download = 'https://github.com/ZotPlus/zotero-better-bibtex/releases/download/' + version + '/zotero-better-bibtex-' + version + '.xpi';
-      if (window.location.hash.trim() == '#xpi') {
-        window.location = download;
-        return;
-      }
-
-      [].forEach.call(document.getElementsByClassName('version'), function(element) {
-        switch (element.nodeName.toLowerCase()) {
-          case 'a':
-            element.setAttribute('href', download);
-            break;
-          case 'span':
-            element.textContent = version;
-            break;
-        }
-      });
-    }
-  };
-  // xmlhttp.open('GET', 'https://github.com/ZotPlus/zotero-better-bibtex/releases/download/update.rdf/update.rdf' , true);
-  xmlhttp.open('GET', 'https://crossorigin.me/https://github.com/ZotPlus/zotero-better-bibtex/releases/download/update.rdf/update.rdf' , true);
-  xmlhttp.send();
-</script>
