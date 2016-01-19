@@ -10,13 +10,15 @@ library, but you can read about what is involved [here](performance.html).
 
 # Citation
 
-### Citation command <!-- extensions.zotero.translators.better-bibtex.citeCommand -->
+<!-- extensions.zotero.translators.better-bibtex.citeCommand -->
+### Citation command
 
 Used for drag-and-drop citations. In the Zotero "Export" pane, choose, "LaTeX Citation" as the default export format for
 quick copy, then set the desired LaTeX citation command here. If you set this to `citep`, drag-and-drop citations will
 yield `\citep{key1,key2,...}`
 
-### Citation key format <!-- extensions.zotero.translators.better-bibtex.citekeyFormat -->
+<!-- extensions.zotero.translators.better-bibtex.citekeyFormat -->
+### Citation key format
 
 Set the pattern used to generate citation keys. The format of the keys is documented [here](citation-keys.html).
 
