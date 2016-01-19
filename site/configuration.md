@@ -48,8 +48,17 @@ regardless of what your reference says.
 You can have Better BibTeX do this pinning for you automatically. This behavior is off by default, but you can have it
 automatically pin the key after the first change to the reference (this generally means at reference creation), or at
 export (and auto-exports count as exports). This is mainly useful to do if you share your library, to make sure you and
-your co-authors have the same keys. Please note that "on change" does not mean that the reference will be re-pinned on
-change. Once pinned, no more changes are made to your keys by Better BibTeX itself.
+your co-authors have the same keys, or if you work from multiple workstations. Please note that "on change" does not
+mean that the reference will be re-pinned on change. Once pinned, no more changes are made to your keys by Better BibTeX
+itself.
+
+**Note**: This option requires webdav/zotero sync to be off, or automatic. If you don't sync your references/attachments,
+it's considered off. If you have syncing set up but not on automatic, this option will be greyed out. Each pinned key
+change (or clearing of a pinned key) means a change to the reference, and that means the item will be synced if you have
+that set up. Bulk key changes causing bulk reference changes (which can easily happen if you have on-export and you
+export your full library) could overwhelm the Zotero sync service if presented all at once; automatic syncing
+ameliorates that problem. Not doing this would risk sync being permanently impossible, as the Zotero server will
+kick you out if a sync takes too long.
 
 ### Key conflict policy ("On conflict, non-pinned key should be...")
 <!-- extensions.zotero.translators.better-bibtex.keyConflictPolicy -->
