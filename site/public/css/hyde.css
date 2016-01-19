@@ -90,7 +90,7 @@ html {
 .sidebar-nav-item {
   display: block;
   /* line-height: 1.5; */
-  font-size: 1rem;
+  font-size: 0.8rem;
   text-indent: -1em; padding-left: 1em;
 }
 a.sidebar-nav-item:hover,
