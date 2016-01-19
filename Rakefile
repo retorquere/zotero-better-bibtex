@@ -879,3 +879,19 @@ task :changelog do
   }.select{|tag| tag[2]}
   puts tags.inspect
 end
+
+task :pages do
+  config = YAML.load_file('site/_config.yml')
+  md = open('site/index.md').read
+  md.sub!(/^---(.|\n)+---\n/, '') # remove yaml header
+  md.gsub!(/\[([^!\]]+)\]\(([^\)]+)\)/) {
+    title = $1
+    url = $2
+    url = "/#{url}" unless url =~ /^https?:/ || url =~ /^\//
+    url = "#{config['url']}#{url}" unless url =~ /^https?:/
+    "[#{title}](#{url})"
+  }
+  open('README.md', 'w'){|f| f.write(md) }
+  sh "git subtree push --prefix site/ origin gh-pages"
+end
+
