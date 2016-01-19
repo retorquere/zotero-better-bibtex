@@ -25,7 +25,8 @@ author:
 paginate:         5
 
 github:
-  repo:           https://github.com/poole/hyde
+  repo:           https://github.com/ZotPlus/zotero-better-bibtex/
+  release:        https://github.com/ZotPlus/zotero-better-bibtex/releases/latest
 
 defaults:
   -
