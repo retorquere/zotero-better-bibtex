@@ -429,3 +429,7 @@ a.pagination-item:hover {
     border-bottom-right-radius: 4px;
   }
 }
+
+.copyright {
+  font-size: 0.3rem;
+}
