@@ -2,8 +2,6 @@
 title: Performance
 ---
 
-# Performance
-
 The Better BibTeX exporters are a lot slower than the standard Zotero Bib(La)TeX exporters. If you have a small library,
 you will not likely notice this, but if you have several thousand references, and you are in the habit of exporting
 substantial parts of your library, or you use [Markdown citation scanning](https://atom.io/packages/zotero-citations),

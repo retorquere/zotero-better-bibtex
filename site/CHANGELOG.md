@@ -1,7 +1,6 @@
 ---
-title: Change log
+title: Changelog
 ---
-# Change Log
 
 ## [1.6.32](https://github.com/ZotPlus/zotero-better-bibtex/tree/1.6.32) (2016-01-19)
 [Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/1.6.31...1.6.32)

@@ -1,7 +1,6 @@
 ---
-title: Niceties
+title: Other Niceties
 ---
-# Other niceties
 
 * [Cite as you Write](cayw.html) for text-based editors such as Vi (or emacs, if you swing that way), and several others
 * Integration with **[Report Customizer](citation-keys.html)**

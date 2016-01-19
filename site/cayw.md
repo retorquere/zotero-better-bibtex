@@ -1,7 +1,7 @@
 ---
-title: Cite As You Write
+title: Cite as you Write for text-based editors
+nav: Cite As You Write
 ---
-# Cite as you Write for text-based editors
 
 Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author
 of your favorite editor for Zotero integration! This is hot off the press, so there *will* be bugs. 

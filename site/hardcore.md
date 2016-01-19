@@ -1,7 +1,7 @@
 ---
 title: "Going hardcore; Zotero as a BibTeX manager"
+nav: Going hardcore
 ---
-# Going hardcore: Zotero as a BibTeX manager
 
 If you'd really just rather hand-code your LaTeX constructs, BBT makes that possible:
 

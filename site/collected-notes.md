@@ -1,7 +1,6 @@
 ---
 title: Collected Notes
 ---
-# Collected Notes
 
 Better BibTeX includes an exporter called "Collected notes". This exporter will export just notes -- standalone notes
 and notes attached to references -- to LaTeX. It supports simple formatting to match the rich-text facilities of Zotero;

@@ -1,8 +1,8 @@
 ---
-title: Better BibTeX
+title: Better BibTeX (BBT) for Zotero [![Build Status](https://travis-ci.org/ZotPlus/zotero-better-bibtex.svg?branch=master)](https://travis-ci.org/ZotPlus/zotero-better-bibtex)
+nav: Home
 layout: default
 ---
-# Better BibTeX (BBT) for Zotero [![Build Status](https://travis-ci.org/ZotPlus/zotero-better-bibtex.svg?branch=master)](https://travis-ci.org/ZotPlus/zotero-better-bibtex)
 
 This extension aims to make Zotero effective for us text-based authoring holdouts; currently, that translates to the
 LaTeX/Markdown crowd. At its core, it behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero, you'll find Better Bib(La)TeX/CSL JSON
