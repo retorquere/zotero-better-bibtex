@@ -2,18 +2,19 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.4.0)
-    aws-sdk (2.2.11)
-      aws-sdk-resources (= 2.2.11)
-    aws-sdk-core (2.2.11)
+    aws-sdk (2.2.12)
+      aws-sdk-resources (= 2.2.12)
+    aws-sdk-core (2.2.12)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.11)
-      aws-sdk-core (= 2.2.11)
+    aws-sdk-resources (2.2.12)
+      aws-sdk-core (= 2.2.12)
     backports (3.6.7)
     bibtex-ruby (4.1.2)
       latex-decode (~> 0.0)
     builder (3.2.2)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
+    colorize (0.7.7)
     cucumber (2.3.0)
       builder (>= 2.1.2)
       cucumber-core (~> 1.4.0)
@@ -57,6 +58,9 @@ GEM
       hashie (>= 3.4)
       multi_json (>= 1.7.5, < 2.0)
       oauth2
+    github_changelog_generator (1.10.1)
+      colorize (~> 0.7)
+      github_api (~> 0.12)
     hashie (3.4.3)
     headless (2.2.0)
     highline (1.7.8)
@@ -153,7 +157,7 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.144)
+    zotplus-rakehelper (0.0.147)
       front_matter_parser
       github_api
       nokogiri
@@ -174,6 +178,7 @@ DEPENDENCIES
   facets
   front_matter_parser
   ghi
+  github_changelog_generator
   headless
   jwt
   mechanize

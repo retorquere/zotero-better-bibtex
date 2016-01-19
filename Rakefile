@@ -870,36 +870,32 @@ task :doc do
 end
 
 task :changelog do
-  #issues = Github::Client::Issues.new user: 'Zotplus', repo: 'zotero-better-bibtex'
-  tags = `git log --date-order --tags --simplify-by-decoration --pretty=format:'%ai%x09%D%x09%h' | grep tag:`
-  tags = tags.split(/\n/).collect{|tag|
-    date, tag, hash = *(tag.split(/\t/))
-    date = Date.parse(date)
-    tag = tag.split(/,\s*/).collect{|t| t.sub(/^tag:\s*/, '')}.select{|t| t =~ /^[\.0-9]+$/}[0]
-    [date, hash, tag]
-  }.select{|tag| tag[2]}
-  puts tags.inspect
-end
+  sh "git pull"
 
-task :pages do
-  config = YAML.load_file('site/_config.yml')
-  readme = FrontMatterParser.parse_file('site/index.md')
-  md = readme.content
-  md.gsub!(/\[([^!\]]+)\]\(([^\)]+)\)/) {
-    title = $1
-    url = $2
-    url = "/#{url}" unless url =~ /^https?:/ || url =~ /^\//
-    url = "#{config['baseurl']}#{url}" unless url =~ /^https?:/
-    "[#{title}](#{url})"
-  }
-  md = "# #{readme['title']} [![Build Status](#{config['travis']['status']})](#{config['travis']['build']})\n\n#{md.strip}"
-  open('README.md', 'w'){|f| f.write(md) }
-  update = Nokogiri::XML(open('site/update.rdf'))
-  update.at('//em:version').content = RELEASE
-  update.xpath('//em:updateLink').each{|link| link.content = "https://github.com/ZotPlus/zotero-#{EXTENSION}/releases/download/#{RELEASE}/zotero-#{EXTENSION}-#{RELEASE}.xpi" }
-  open('site/update.rdf', 'w'){|f| update.write_xml_to f }
-  #sh "git add site"
-  #sh "git commit -m 'site #{RELEASE}'"
-  #sh "git subtree push --prefix site/ origin gh-pages"
-end
+  Tempfile.create(['changelog', '.md'], 'tmp') do |tmp|
+    versions = {}
+    version = nil
+    sh "github_changelog_generator -u ZotPlus -p zotero-better-bibtex -o #{Shellwords.escape(tmp.path)}"
+    IO.readlines(tmp.path).each{|line|
+      if line =~ /^## \[([^\]]+)\]/
+        version = $1
+        versions[version] = 0
+        next
+      end
+      versions[version] += 1 if line =~ /^- /
+    }
+    skip = versions.keys.select{|v| versions[v] == 0}
 
+    if skip.length > 0
+      skip = "--exclude-tags " + skip.join(',')
+    else
+      skip = ''
+    end
+    sh "github_changelog_generator -u ZotPlus -p zotero-better-bibtex #{skip} -o #{Shellwords.escape(tmp.path)}"
+
+    open('site/CHANGELOG.md', 'w'){|f|
+      f.write("---\ntitle: Changelog\n---\n")
+      f << open(tmp.path).read
+    }
+  end
+end

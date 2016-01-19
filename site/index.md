@@ -23,7 +23,8 @@ editors/processors, I'm pragmatic about implementing what works.
 # Configuration
 
 The Better BibTeX configuration pane can be found under the regular Zotero preferences pane, tab 'Better Bib(La)TeX'.
-You can get also there by clicking the Better BibTeX "Preferences" button in the addons pane.
+You can get also there by clicking the Better BibTeX "Preferences" button in the addons pane. A full explanation of all
+available preferences can be found [here](configuration.html).
 
 # Installation (one-time)
 

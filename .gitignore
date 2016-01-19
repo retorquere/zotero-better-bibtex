@@ -15,7 +15,6 @@
 resource/translators/*.json
 test/fixtures/plugins
 tmp
-update.rdf
 *.xpi
 *.log
 node_modules
