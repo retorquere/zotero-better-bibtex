@@ -3,8 +3,7 @@ markdown:         redcarpet
 highlighter:      pygments
 
 # Permalinks
-permalink:        pretty
-relative_permalinks: true
+permalink: /:categories/:title
 
 # Setup
 title:            "Zotero: Better BibTeX"
