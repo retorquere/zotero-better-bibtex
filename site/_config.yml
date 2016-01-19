@@ -1,5 +1,8 @@
 # Dependencies
 markdown:         redcarpet
+redcarpet:
+  # enable auto ids for redcarpet
+  extensions:    ["with_toc_data"]
 highlighter:      pygments
 
 # Permalinks
