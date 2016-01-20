@@ -163,9 +163,9 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
 
     formatted = ''
     for citation in citations
-      formatted += ' ' + citation.prefix + ' ' if citation.prefix
       formatted += "\\"
       formatted += if citation['suppress-author'] then 'citeyear' else config.command
+      formatted += '[' + citation.prefix + ']' if citation.prefix
 
       Zotero.BetterBibTeX.debug('citation:', citation)
       switch
@@ -177,6 +177,8 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
           formatted += "[#{label}#{citation.locator}]"
         when citation.suffix
           formatted += "[#{citation.suffix}]"
+        when citation.prefix
+          formatted += '[]'
       formatted += '{' + citation.citekey + '}'
 
     return formatted.trim()
