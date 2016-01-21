@@ -1,0 +1,19 @@
+h2 {
+  position: relative;
+  z-index: 1;
+}
+
+h2.fixed {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 0;
+
+  background: black;
+  color: white;
+}
+
+h2.fixed.absolute {
+  position: absolute;
+}

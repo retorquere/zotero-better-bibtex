@@ -25,13 +25,13 @@ You can also
 * Drag and drop LaTeX citations to your favorite LaTeX editor
 * Show both pinned (fixed) citation keys and dynamically generated ones in the reference list view
 
-# Set your own, fixed citation keys
+## Set your own, fixed citation keys
 
 You can fix the citation key for a reference by adding the text "bibtex: [your citekey]" (sans quotes) anywhere in the
 "extra" field of the reference, or by using biblatexcitekey\[my_key\]. You can generate a fixed citation key by
 selecting references, right-clicking, and selecting "Generate BibTeX key".
 
-# Drag and drop/hotkey citations
+## Drag and drop/hotkey citations
 
 You can drag and drop citations into your LaTeX editor, and it will add a proper \cite{citekey}. The actual command is
 configurable by setting the config option in the BBT preferences (see below). Do not include the leading backslash. This
@@ -41,13 +41,13 @@ Citation". If you want Markdown citations, choose "Pandoc Citations".
 If you want even more convenience (and you're on Windows), install [AutoHotKey](http://www.autohotkey.com/), modify the
 [Zotero sample macro](https://raw.github.com/ZotPlus/zotero-better-bibtex/master/FastCite.ahk), and add it to your AutoHotKey.ahk. If you use this macro unmodified, when you select one or more entries in Zotero, it will copy them, bring TeXMaker to the forground, and paste your citation at the cursor. Caution: this macro does *not* check that you are in Zotero when you activate it, nor that TeXMaker is actually running.
 
-# Find duplicate keys through integration with [Report Customizer](/report-customizer/)
+## Find duplicate keys through integration with [Report Customizer](/report-customizer/)
 
 The plugin will generate BibTeX comments to show whether a key conflicts and with which entry. BBT integrates with
 [Zotero: Report Customizer](/report-customizer/) to display the BibTeX key plus any
 conflicts between them in the zotero report.
 
-# Configurable citekey generator
+## Configurable citekey generator
 
 BBT also implements a new citekey generator for those entries that don't have one set explicitly; the formatter follows
 the [JabRef key formatting syntax](http://jabref.sourceforge.net/help/LabelPatterns.php) in the Better BibTeX
@@ -110,11 +110,11 @@ for *Zotero* native fields (case sensitive!) not Bib(La)TeX native fields. The p
 | Title                | University           | Url                  | Version              |
 | VideoRecordingFormat | Volume               | WebsiteTitle         | WebsiteType          |
 
-## Advanced usage
+### Advanced usage
 
 BBT adds a few fields, flags and filter functions that JabRef (perhaps wisely) doesn't. These are:
 
-### Functions
+#### Functions
 
 - `auth`, `authIni`, `edtr`, ... and all the author-related fields that mimic the JabRef equivalents also have
   capitalized versions (so `Auth`, `AuthIni`, `Edtr`, ...) which follow the same algorithm but do not have any cleaning
@@ -127,11 +127,11 @@ BBT adds a few fields, flags and filter functions that JabRef (perhaps wisely) d
 - `0`: a pseudo-function that sets the citekey disambiguation postfix to numeric (-1, -2, etc, like the standard Zotero
   Bib(La)TeX translators do) rather than alphabetic (a, b, c). Does not add any text to the citekey otherwise.
 
-### Flags
+#### Flags
 
 - `+initials` adds initials to any author name function. Specify using e.g. [auth+initials]
 
-### Filters
+#### Filters
 
 - `nopunct`: removes punctuation
 - `condense`: this replaces spaces in the value passed in. You can specify what to replace it with by adding it as a
@@ -159,7 +159,7 @@ BBT adds a few fields, flags and filter functions that JabRef (perhaps wisely) d
 whitespace and thereby make these filter functions sort of useless. You will in general want to use the fields from the
 table above, which give you the values from Zotero without any changes.
 
-# Generation of stable keys, and syncing
+## Generation of stable keys, and syncing
 
 Better BibTeX versions after 0.6.8 generate stable citation keys across your entire library. These stable keys come in
 two flavors:

@@ -8,7 +8,7 @@ have hidden preferences). The defaults should just work, but here's an attempt t
 **Making any change here will drop your entire export cache.** This is usually not a problem unless you have a really large
 library, but you can read about what is involved [here](performance.html).
 
-# Citation
+## Citation
 
 ### Citation command
 <!-- extensions.zotero.translators.better-bibtex.citeCommand -->
@@ -93,7 +93,7 @@ For those who are curious about what the "Clear/Generate BibTeX key" right-click
 are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing all your citation
 keys at once.
 
-# Import/Export
+## Import/Export
 
 ### Fields to omit from export
 <!-- extensions.zotero.translators.better-bibtex.skipFields -->
@@ -152,7 +152,7 @@ Enables [hardcore](hardcore.html) mode. You like Zotero in some ways, but really
 you enable this, any BibTeX files you import will retain all the latex commands they have, and marks the entry to be
 exported without any translation.
 
-# Journal abbreviations
+## Journal abbreviations
 
 ### Automatically abbreviate journal titles
 <!-- extensions.zotero.translators.better-bibtex.autoAbbrev -->
@@ -165,7 +165,7 @@ style selected in the list below the checkbox.
 
 Select the style for auto-abbreviation.
 
-# Automatic Export
+## Automatic Export
 
 ### Automatic Export
 <!-- extensions.zotero.translators.better-bibtex.autoExport -->
@@ -177,7 +177,7 @@ Determines when [automatic exports](pull-export.html) are kicked off:
 * **When Idle**: export marked collections when your computer is idle. You mostly want this if your computer is
   performance-constrained (aka slow)
 
-# Debug
+## Debug
 
 ### Extended debug logging
 <!-- extensions.zotero.translators.better-bibtex.debug -->
@@ -199,7 +199,7 @@ in the `extra` field of your reference. I haven't seen this in ages, but enablin
 Zotero will force a re-scan to find them. This sows down startup tremendously if you have a big library. The checkbox
 will automatically clear after restart.
 
-# Hidden
+## Hidden
 
 These preferences can be changed in `about:config` only. Some of these are here because the feature is still in
 progress, but there's generally very little reason to change these.
