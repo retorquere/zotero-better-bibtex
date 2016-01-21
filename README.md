@@ -5,10 +5,10 @@ LaTeX/Markdown crowd. At its core, it behaves like any Zotero import/export modu
 listed as one of the choices. If nothing else, you could keep your existing workflow as-is, and just enjoy the improved
 LaTeX &lt;-&gt; unicode translation on im-and export. Over and above this improvement, it will give you
 
-* Stable, configurable [citation keys](http://zotplus.github.io/zotero-better-bibtex/citation-keys.html)
-* No more [Unicode problems](http://zotplus.github.io/zotero-better-bibtex/unicode.html)
-* A way to go [whole-hog](http://zotplus.github.io/zotero-better-bibtex/hardcore.html) for BibTeX
-* Other [niceties](http://zotplus.github.io/zotero-better-bibtex/niceties.html)
+* Stable, configurable [citation keys](https://zotplus.github.io/zotero-better-bibtex/citation-keys.html)
+* No more [Unicode problems](https://zotplus.github.io/zotero-better-bibtex/unicode.html)
+* A way to go [whole-hog](https://zotplus.github.io/zotero-better-bibtex/hardcore.html) for BibTeX
+* Other [niceties](https://zotplus.github.io/zotero-better-bibtex/niceties.html)
 
 BBT works from [BibTeXing](http://ctan.cs.uu.nl/biblio/bibtex/base/btxdoc.pdf) and [Tame the
 BeaST](http://www.lsv.ens-cachan.fr/~markey/BibTeX/doc/ttb_en.pdf) for BibTeX, and
@@ -20,7 +20,7 @@ editors/processors, I'm pragmatic about implementing what works.
 
 The Better BibTeX configuration pane can be found under the regular Zotero preferences pane, tab 'Better Bib(La)TeX'.
 You can get also there by clicking the Better BibTeX "Preferences" button in the addons pane. A full explanation of all
-available preferences can be found [here](http://zotplus.github.io/zotero-better-bibtex/configuration.html).
+available preferences can be found [here](https://zotplus.github.io/zotero-better-bibtex/configuration.html).
 
 # Installation (one-time)
 
@@ -48,7 +48,7 @@ downloaded using another browser, double-click the downloaded xpi; Firefox ought
 # Got problems? We got fixes!
 
 If you have any questions on the use of the plugin, please do not hesitate to file a GitHub issue to ask for help. If
-you're reporting a bug in the plugin, please take a moment to glance through the [Support Request Guidelines](http://zotplus.github.io/zotero-better-bibtex/support.html); it will
+you're reporting a bug in the plugin, please take a moment to glance through the [Support Request Guidelines](https://zotplus.github.io/zotero-better-bibtex/support.html); it will
 make sure I get your problem fixed as quick as possible. Clear bug reports commonly have time-to-fix of 10 minutes. The
 guidelines are very detailed, perhaps to the point of being off-putting, but please do not fret; these guidelines
 simply express my ideal bug submission. I of course prefer very clearly documented issue reports over fuzzy ones, but I
