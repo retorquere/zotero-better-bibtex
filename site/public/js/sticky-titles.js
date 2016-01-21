@@ -33,7 +33,7 @@ var stickyHeaders = (function() {
       var $thisSticky = $(this),
           $stickyPosition = $thisSticky.data('originalPosition');
 
-      if ($stickyPosition <= $window.scrollTop()) {        
+      if ($stickyPosition <= $window.scrollTop() - 20) {        
         
         var $nextSticky = $stickies.eq(i + 1),
             $nextStickyPosition = $nextSticky.data('originalPosition') - $thisSticky.data('originalHeight');
