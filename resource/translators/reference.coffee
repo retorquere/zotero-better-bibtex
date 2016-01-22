@@ -195,7 +195,12 @@ class Reference
       name.family = name.family.slice(1, -1)
 
     ###
-      http://chat.stackexchange.com/rooms/34705/discussion-between-retorquere-and-egreg
+      TODO: http://chat.stackexchange.com/rooms/34705/discussion-between-retorquere-and-egreg
+
+      My advice is never using the alpha style; it's a relic of the past, when numbering citations was very difficult
+      because one didn't know the full citation list when writing a paper. In order to have the bibliography in
+      alphabetical order, such tricks were devised. The alternative was listing the citation in order of appearance.
+      Your document gains nothing with something like XYZ88 as citation key.
 
       The “van” problem should be left to the bibliographic style. Some styles consider “van” as part of the name, some
       don't. In any case, you'll have a kludge, mostly unportable. However, if you want van Gogh to be realized as vGo
@@ -203,7 +208,7 @@ class Reference
     ###
 
     latex = (part for part in [name['dropping-particle'], name['non-dropping-particle'], name.family] when part).join('')
-    latex = new String(latex) if latex.indexOf(' ') > 0
+    latex = new String(latex) if latex.indexOf(' ') > 0 || latex.indexOf(',') >= 0
     latex = [latex]
     latex.push(name.suffix) if name.suffix
     latex.push(name.given) if name.given
