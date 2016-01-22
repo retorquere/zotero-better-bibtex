@@ -42,7 +42,7 @@ else
     <%= CITATIONS %>
 
     \\bibliographystyle{alpha}
-    \\bibliography{\jobname}
+    \\bibliography{\\jobname}
     \\end{document}
   """
 end
