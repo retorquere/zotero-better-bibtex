@@ -9,3 +9,8 @@ find ../test/fixtures/export -name "*.bib*tex" | while read bib
 do
   ./compile.sh "$bib"
 done
+
+echo
+echo
+echo "-----------------------------"
+echo "All OK!"
