@@ -2,29 +2,14 @@
 
 require 'erb'
 
-BULK=[
-  'Really Big whopping library.biblatex',
-  'Bulk performance test.biblatex',
-  'Bulk performance test.stock.biblatex',
-].include?File.basename(ARGV[0])
-
-if BULK
-  BIBLIOGRAPHY="""
-    @inproceedings{bulk,
-      author = {Bulk},
-      booktitle = {Bulk}
-  """
-  CITEKEYS=['bulk']
-else
-  BIBLIOGRAPHY=open(ARGV[0]).read
-  CITEKEYS=IO.readlines(ARGV[0]).collect{|line|
-      if line.strip =~ /^@.*{(.*),$/
-        $1
-      else
-        nil
-      end
-  }.compact
-end
+BIBLIOGRAPHY=open(ARGV[0]).read
+CITEKEYS=IO.readlines(ARGV[0]).collect{|line|
+  if line.strip =~ /^@.*{(.*),$/
+    $1
+  else
+    nil
+  end
+}.compact
 
 if File.extname(ARGV[0]) == '.biblatex'
   CITATIONS=CITEKEYS.collect{|key| "\\citet{#{key}}"}.join("\n\n")

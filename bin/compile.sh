@@ -28,6 +28,6 @@ fi
 if [ "$2" = "verbose" ]; then
   latexmk $LATEXMKOPTIONS -halt-on-error mwe.tex
 else
-  latexmk $LATEXMKOPTIONS -halt-on-error mwe.tex > /dev/null
+  latexmk $LATEXMKOPTIONS -silent -halt-on-error mwe.tex > /dev/null
 fi
 #rubber -q mwe.tex
