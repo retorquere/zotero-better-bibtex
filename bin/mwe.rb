@@ -23,6 +23,7 @@ if File.extname(ARGV[0]) == '.biblatex'
     <%= BIBLIOGRAPHY %>
     \\end{filecontents*}
     \\addbibresource{\\jobname}
+
     \\begin{document}
     <%= CITATIONS %>
 
@@ -38,10 +39,11 @@ else
     \\begin{filecontents*}{\\jobname.bib}
     <%= BIBLIOGRAPHY %>
     \\end{filecontents*}
+    \\bibliographystyle{apalike}
+
     \\begin{document}
     <%= CITATIONS %>
 
-    \\bibliographystyle{alpha}
     \\bibliography{\\jobname}
     \\end{document}
   """

@@ -194,6 +194,14 @@ class Reference
     if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
       name.family = name.family.slice(1, -1)
 
+    ###
+      http://chat.stackexchange.com/rooms/34705/discussion-between-retorquere-and-egreg
+
+      The “van” problem should be left to the bibliographic style. Some styles consider “van” as part of the name, some
+      don't. In any case, you'll have a kludge, mostly unportable. However, if you want van Gogh to be realized as vGo
+      in the label, use {\relax van} Gogh or something like this.
+    ###
+
     latex = (part for part in [name['dropping-particle'], name['non-dropping-particle'], name.family] when part).join('')
     latex = new String(latex) if latex.indexOf(' ') > 0
     latex = [latex]
