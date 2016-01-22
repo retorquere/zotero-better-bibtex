@@ -194,7 +194,9 @@ class Reference
     if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
       name.family = name.family.slice(1, -1)
 
-    latex = [new String((part for part in [name['dropping-particle'], name['non-dropping-particle'], name.family] when part).join(''))]
+    latex = (part for part in [name['dropping-particle'], name['non-dropping-particle'], name.family] when part).join('')
+    latex = new String(latex) if latex.indexOf(' ') > 0
+    latex = [latex]
     latex.push(name.suffix) if name.suffix
     latex.push(name.given) if name.given
     return @enc_latex({value: latex, sep: ', '})
