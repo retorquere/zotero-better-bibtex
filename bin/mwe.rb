@@ -31,7 +31,8 @@ if File.extname(ARGV[0]) == '.biblatex'
   TEMPLATE="""
     \\documentclass{article}
     \\usepackage{filecontents}
-    \\usepackage[utf8]{inputenc}
+    %\\usepackage[utf8]{inputenc}
+    %\\usepackage{textcomp}
     \\usepackage[backend=biber,style=authoryear-icomp,natbib=true,url=false,doi=true,eprint=false]{biblatex}
     \\begin{filecontents*}{\\jobname.bib}
     <%= BIBLIOGRAPHY %>

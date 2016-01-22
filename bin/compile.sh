@@ -15,5 +15,19 @@ trap "rm -rf $MYTMPDIR" EXIT
 
 cd "$MYTMPDIR"
 "$DIR/mwe.rb" "$BIB" 
-latexmk -silent mwe.tex
+
+filename=$(basename "$1")
+extension="${filename##*.}"
+
+if [ "$extension" = "biblatex" ]; then
+  LATEXMKOPTIONS="-xelatex"
+else
+  LATEXMKOPTIONS=""
+fi
+
+if [ "$2" = "verbose" ]; then
+  latexmk $LATEXMKOPTIONS -halt-on-error mwe.tex
+else
+  latexmk $LATEXMKOPTIONS -halt-on-error mwe.tex > /dev/null
+fi
 #rubber -q mwe.tex
