@@ -8,8 +8,7 @@ Background:
   And I set preference .defaultDateParserLocale to en-GB
   And I set preference .bibtexURLs to 'note'
 
-@test-cluster-2
-@131
+@131 @test-cluster-2
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json'
   And I set preference .DOIandURL to both
@@ -20,16 +19,13 @@ Scenario: Omit URL export when DOI present. #131
   And I set preference .DOIandURL to url
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-url.biblatex'
 
-@test-cluster-3
-@438
-@bbt
+@438 @bbt @test-cluster-3
 Scenario: BibTeX name escaping has a million inconsistencies #438
   When I import 2 references from 'export/BibTeX name escaping has a million inconsistencies #438.json'
   And I set preference .relaxAuthors to true
   Then a library export using 'Better BibTeX' should match 'export/BibTeX name escaping has a million inconsistencies #438.bibtex'
 
-@test-cluster-2
-@117
+@117 @test-cluster-2
 Scenario: Bibtex key regenerating issue when trashing items #117
   When I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json'
   And I select the first item where publicationTitle = 'Genetics'
@@ -61,7 +57,7 @@ Scenario: CAYW picker
   And the picks for latex should be '\cite[1]{bentley_academic_2011}\cite[ch. 1]{pollard_bicycle_2007}'
   And the picks for scannable-cite should be '{|Abram, 2014|p. 1||zu:0:ITEMKEY}{|Pollard and Bray, 2007|ch. 1||zu:0:ITEMKEY}'
 
-@test-cluster-2 @307 @bbt
+@307 @bbt @test-cluster-2
 Scenario: thesis zotero entries always create  bibtex entries #307
   When I import 2 references from 'export/thesis zotero entries always create  bibtex entries #307.json'
   Then a library export using 'Better BibTeX' should match 'export/thesis zotero entries always create  bibtex entries #307.bibtex'
@@ -73,49 +69,43 @@ Scenario: bibtex; url export does not survive underscores #402
   Then a library export using 'Better BibLaTeX' should match 'export/bibtex; url export does not survive underscores #402.biblatex'
   And a library export using 'Better BibTeX' should match 'export/bibtex; url export does not survive underscores #402.bibtex'
 
-@test-cluster-2
-@110
-@111
-@molasses
+@110 @111 @test-cluster-2
 Scenario: two ISSN number are freezing browser #110 / Generating keys and export broken #111
   When I import 1 reference from 'export/two ISSN number are freezing browser #110.json'
   And I select the first item where publicationTitle = 'Genetics'
   And I set the citation key
   Then a library export using 'Better BibLaTeX' should match 'export/two ISSN number are freezing browser #110.biblatex'
 
-@test-cluster-2 @85 @bbt
+@85 @bbt @test-cluster-2
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 references from 'export/Square brackets in Publication field (85).json'
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85).bibtex'
   And I set preference .citekeyFormat to [year]-updated
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85) after pattern change.bibtex'
 
-@test-cluster-2 @86 @bbt
+@86 @bbt @test-cluster-2
 Scenario: Include first name initial(s) in cite key generation pattern (86)
   When I import 1 reference from 'export/Include first name initial(s) in cite key generation pattern (86).json'
    And I set preference .citekeyFormat to [auth+initials][year]
   Then a library export using 'Better BibTeX' should match 'export/Include first name initial(s) in cite key generation pattern (86).bibtex'
 
-@pandoc
-@372
+@372 @pandoc
 Scenario: BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372
   When I import 1 reference from 'export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.json'
   Then a library export using 'Better CSL JSON' should match 'export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.csl.json'
 
-@pandoc
-@365
+@365 @pandoc
 Scenario: Export of creator-type fields from embedded CSL variables #365
   When I import 6 references from 'export/Export of creator-type fields from embedded CSL variables #365.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Export of creator-type fields from embedded CSL variables #365.biblatex'
   And a library export using 'Better CSL JSON' should match 'export/Export of creator-type fields from embedded CSL variables #365.csl.json'
 
-@pandoc
+@360 @pandoc
 Scenario: Date export to Better CSL-JSON #360
   When I import 6 references from 'export/Date export to Better CSL-JSON #360.json'
   And a library export using 'Better CSL JSON' should match 'export/Date export to Better CSL-JSON #360.csl.json'
 
-@test-cluster-2
-@pandoc @432
+@432 @pandoc @test-cluster-2
 Scenario: Pandoc/LaTeX Citation Export
   When I import 1 reference with 1 attachment from 'export/Pandoc Citation.json'
   Then a library export using 'Pandoc Citation' should match 'export/Pandoc Citation.pandoc'
@@ -123,7 +113,7 @@ Scenario: Pandoc/LaTeX Citation Export
   And a library export using 'Better CSL JSON' should match 'export/Pandoc Citation.csl.json'
   And a library export using 'Better CSL YAML' should match 'export/Pandoc Citation.csl.yml'
 
-@test-cluster-2 @journal-abbrev @bbt
+@journal-abbrev @bbt @test-cluster-2
 Scenario: Journal abbreviations
   When I set preferences:
     | .citekeyFormat    | [authors][year][journal]          |
@@ -179,8 +169,7 @@ Scenario Outline: BibLaTeX Export
      | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
      | Export of item to Better Bibtex fails for auth3_1 #98                              | 1          |
 
-@test-cluster-0
-@266 @286
+@266 @286 @bblt @test-cluster-0
 Scenario: Diacritics stripped from keys regardless of ascii or fold filters #266
   Given I import 1 reference from 'export/Diacritics stripped from keys regardless of ascii or fold filters #266.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Diacritics stripped from keys regardless of ascii or fold filters #266-fold.biblatex'
@@ -193,12 +182,12 @@ Scenario: Do not caps-protect name fields #384
   Then a library export using 'Better BibLaTeX' should match 'export/Do not caps-protect name fields #384.biblatex'
   And a library export using 'Better BibTeX' should match 'export/Do not caps-protect name fields #384.bibtex'
 
-@383
+@383 @bblt
 Scenario: Capitalize all title-fields for language en #383
   Given I import 8 references from 'export/Capitalize all title-fields for language en #383.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Capitalize all title-fields for language en #383.biblatex'
 
-@411 @test-cluster-1
+@411 @bblt @test-cluster-1
 Scenario: Sorting and optional particle handling #411
   Given I import 2 references from 'export/Sorting and optional particle handling #411.json'
   And I set preference .parseParticles to true
@@ -206,25 +195,7 @@ Scenario: Sorting and optional particle handling #411
   When I set preference .parseParticles to false
   Then a library export using 'Better BibLaTeX' should match 'export/Sorting and optional particle handling #411.off.biblatex'
 
-@test-cluster-0
-@bblt
-@bblt-0
-@127
-@201
-@219
-@253
-@268
-@288
-@294
-@302
-@308
-@309
-@310
-@326
-@327
-@351
-@376
-@389
+@127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @test-cluster-0
 Scenario Outline: BibLaTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
@@ -260,9 +231,7 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.002                                                                            | 2           |
      | csquotes #302                                                                                  | 2           |
 
-@test-cluster-1
-@bblt
-@bblt-1
+@bblt-1 @bblt @test-cluster-1
 Scenario Outline: BibLaTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
@@ -316,8 +285,7 @@ Scenario Outline: BibLaTeX Export
      | underscores in URL fields should not be escaped #104                               | 1           |
      | Allow explicit field override                                                      | 1           |
 
-@test-cluster-0
-@ae
+@ae @test-cluster-0
 Scenario: auto-export
   Given I import 3 references with 2 attachments from 'export/autoexport.json'
   Then a library export using 'Better BibLaTeX' should match 'export/autoexport.before.biblatex'
@@ -334,7 +302,7 @@ Scenario: auto-export
 #  When I import 1 reference from 'export/Preserve Bib variable names #163.json'
 #  Then a library export using 'Better BibLaTeX' should match 'export/Preserve Bib variable names #163.biblatex'
 
-@313
+@313 @bblt
 Scenario: (non-)dropping particle handling #313
   When I import 53 references from 'export/(non-)dropping particle handling #313.json'
   Then a library export using 'Better BibLaTeX' should match 'export/(non-)dropping particle handling #313.biblatex'
