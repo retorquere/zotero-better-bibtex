@@ -141,7 +141,36 @@ class BetterBibTeXPatternFormatter
     return creators.editors || [] if onlyEditors
     return creators.authors || creators.editors || creators.translators || creators.collaborators || []
 
+  zotero:
+    numberRe: /^[0-9]+/
+    citeKeyTitleBannedRe: /\b(a|an|the|some|from|on|in|to|of|do|with|der|die|das|ein|eine|einer|eines|einem|einen|un|une|la|le|l\'|el|las|los|al|uno|una|unos|unas|de|des|del|d\')(\s+|\b)|(<\/?(i|b|sup|sub|sc|span style=\"small-caps\"|span)>)/g
+    citeKeyConversionsRe: /%([a-zA-Z])/
+    citeKeyCleanRe: /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+/g
+
   methods:
+    zotero: ->
+      @postfix = '0'
+      key = ''
+
+      if @item.creators and @item.creators[0] and @item.creators[0].lastName
+        key += @item.creators[0].lastName.toLowerCase().replace(RegExp(' ', 'g'), '_').replace(/,/g, '')
+
+      key += '_'
+
+      if @item.title
+        key += @item.title.toLowerCase().replace(@zotero.citeKeyTitleBannedRe, '').split(/\s+/g)[0]
+
+      key += '_'
+
+      year = '????'
+      if @item.date
+        date = Zotero.Utilities.strToDate(@item.date)
+        year = date.year if date.year and @zotero.numberRe.test(date.year)
+      key += year
+
+      key = Zotero.Utilities.removeDiacritics(key.toLowerCase(), true)
+      return key.replace(@zotero.citeKeyCleanRe, '')
+
     '0': (text) ->
       @postfix = '0'
       return ''
