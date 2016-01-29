@@ -23,12 +23,17 @@
       "preserveBibTeXVariables": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "volume": "76",
       "issue": "1",
       "pages": "19-35",
@@ -46,25 +51,17 @@
           "firstName": "Hope A."
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 259,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "olson_codes_2006"
     }
-  ],
-  "cache": {
-    "activity": {
-      "serialized": {
-        "clear": 0,
-        "hit": 1,
-        "miss": 1
-      },
-      "cache": {
-        "hit": 0,
-        "miss": 0,
-        "clear": 0
-      }
-    }
-  }
+  ]
 }

@@ -24,49 +24,35 @@
       "exportNotes": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "url": "http://www.patanalyse.com/sample-analysis.html",
       "extra": "bibtex: zotero-1855286-1414",
       "accessDate": "2014-10-18",
       "title": "Patent Landscape analysis: sample from S40RTS",
-      "creators": [],
-      "attachments": [],
-      "notes": [],
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 5,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": ":patent"
-    }
-  ],
-  "keymanager": [
-    {
-      "itemID": 3,
-      "libraryID": null,
-      "citekey": "ea",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 5,
-      "libraryID": null,
-      "citekey": "zotero-1855286-1414",
-      "citekeyFormat": null
-    }
-  ],
-  "cache": [
-    {
-      "itemID": 5,
-      "exportCharset": "UTF-8",
-      "exportNotes": false,
-      "getCollections": false,
-      "translatorID": "ca65189f-8815-4afe-8c8b-8c7c15f0edca",
-      "useJournalAbbreviation": false,
-      "citekey": "zotero-1855286-1414",
-      "bibtex": "@article{zotero-1855286-1414,\n  title = {Patent {Landscape} analysis: sample from {S40RTS}},\n  url = {http://www.patanalyse.com/sample-analysis.html},\n  timestamp = {2015-08-07 21:10:45},\n  urldate = {2014-10-18}\n}\n\n",
-      "lastaccess": 1438981938565
     }
   ]
 }

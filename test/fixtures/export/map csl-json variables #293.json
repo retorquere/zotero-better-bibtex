@@ -60,8 +60,11 @@
     },
     {
       "itemType": "book",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "series": "Bibliothèque Dalloz",
       "edition": "2",
       "place": "Paris",
@@ -91,12 +94,17 @@
           "firstName": "Charles"
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 4325,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "kelsen_democratie_2004"
     }
-  ],
-  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
+  ]
 }

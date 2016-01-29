@@ -22,12 +22,17 @@
       "asciiBibTeX": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "book",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "series": "Oxford classical texts",
       "volume": "4",
       "place": "Oxford",
@@ -48,16 +53,25 @@
           "firstName": "John"
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 276,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "plato_opera_1902"
     },
     {
       "itemType": "bookSection",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "series": "Oxford classical texts",
       "volume": "4",
       "place": "Oxford",
@@ -80,26 +94,18 @@
           "firstName": "John"
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 277,
       "publicationTitle": "Opera",
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "plato_republic_1902"
     }
-  ],
-  "cache": {
-    "activity": {
-      "serialized": {
-        "clear": 32,
-        "hit": 2,
-        "miss": 16
-      },
-      "cache": {
-        "hit": 0,
-        "miss": 1,
-        "clear": 45
-      }
-    }
-  }
+  ]
 }

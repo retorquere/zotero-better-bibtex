@@ -1068,19 +1068,5 @@
       ],
       "__citekey__": "levayer"
     }
-  ],
-  "cache": {
-    "activity": {
-      "serialized": {
-        "clear": 0,
-        "hit": 0,
-        "miss": 40
-      },
-      "cache": {
-        "hit": 0,
-        "miss": 0,
-        "clear": 0
-      }
-    }
-  }
+  ]
 }

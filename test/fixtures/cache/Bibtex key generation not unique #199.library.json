@@ -22,20 +22,6 @@
       "exportNotes": true
     }
   },
-  "keymanager": [
-    {
-      "itemID": 5,
-      "libraryID": null,
-      "citekey": "ZotPlus",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 3,
-      "libraryID": null,
-      "citekey": "ZotPlusa",
-      "citekeyFormat": null
-    }
-  ],
   "collections": [
     {
       "name": "Bibtex key generation not unique #199",
@@ -122,6 +108,5 @@
 
       ]
     }
-  ],
-  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
+  ]
 }

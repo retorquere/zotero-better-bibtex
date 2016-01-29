@@ -11,7 +11,7 @@ cacheReset: 0
 confirmCacheResetSize: 1000
 caching: true
 citeCommand: cite
-citekeyFormat: "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]"
+citekeyFormat: "[zotero]"
 citekeyFold: true
 debug: false
 DOIandURL: both

@@ -111,7 +111,7 @@ class BetterBibTeXPatternFormatter
       name = @innerText(creator.name || creator.lastName)
 
       if name != ''
-        if withInitials and creator.firstName
+        if withInitials && creator.firstName
           initials = Zotero.Utilities.XRegExp.replace(creator.firstName, @re.caseNotUpperTitle, '', 'all')
           initials = Zotero.BetterBibTeX.removeDiacritics(initials)
           initials = Zotero.Utilities.XRegExp.replace(initials, @re.caseNotUpper, '', 'all')
@@ -152,8 +152,8 @@ class BetterBibTeXPatternFormatter
       @postfix = '0'
       key = ''
 
-      if @item.creators and @item.creators[0] and @item.creators[0].lastName
-        key += @item.creators[0].lastName.toLowerCase().replace(RegExp(' ', 'g'), '_').replace(/,/g, '')
+      if @item.creators && @item.creators[0] && (@item.creators[0].lastName || @item.creators[0].name)
+        key += (@item.creators[0].lastName || @item.creators[0].name).toLowerCase().replace(RegExp(' ', 'g'), '_').replace(/,/g, '')
 
       key += '_'
 
@@ -164,8 +164,8 @@ class BetterBibTeXPatternFormatter
 
       year = '????'
       if @item.date
-        date = Zotero.Utilities.strToDate(@item.date)
-        year = date.year if date.year and @zotero.numberRe.test(date.year)
+        date = Zotero.Date.strToDate(@item.date)
+        year = date.year if date.year && @zotero.numberRe.test(date.year)
       key += year
 
       key = Zotero.Utilities.removeDiacritics(key.toLowerCase(), true)
@@ -188,7 +188,7 @@ class BetterBibTeXPatternFormatter
       authors = @creators(onlyEditors, withInitials)
       return ''  unless authors
       author = authors[m || 0]
-      author = author.substring(0, n)  if author and n
+      author = author.substring(0, n)  if author && n
       return author ? ''
 
     authorLast: (onlyEditors, withInitials) ->

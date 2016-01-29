@@ -137,13 +137,14 @@ Scenario: Journal abbreviations exported in bibtex (81)
     | translator              | Better BibTeX  |
     | useJournalAbbreviation  | true           |
 
-@bbt @other
-Scenario Outline: BibLaTeX Export
+@439 @bbt @other
+Scenario Outline: BibTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibTeX' should match 'export/<file>.bibtex'
 
   Examples:
      | file                                                                               | references |
+     | Replicate Zotero key algorithm #439                                                | 3          |
      | preserve BibTeX Variables does not check for null values while escaping #337       | 1          |
 
 @postscript @bbt
@@ -153,7 +154,7 @@ Scenario: Post script
   Then a library export using 'Better BibTeX' should match 'export/Export web page to misc type with notes and howpublished custom fields #329.bibtex'
 
 @bbt @test-cluster-0
-Scenario Outline: BibLaTeX Export
+Scenario Outline: BibTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibTeX' should match 'export/<file>.bibtex'
 

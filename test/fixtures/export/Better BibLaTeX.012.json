@@ -65,6 +65,5 @@
     "preferences": {
       "citekeyFormat": "[DOI]+[Title:fold:ascii:skipwords:select,1,4:condense,_]"
     }
-  },
-  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
+  }
 }

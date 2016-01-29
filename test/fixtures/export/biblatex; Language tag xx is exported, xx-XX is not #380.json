@@ -25,12 +25,17 @@
       "asciiBibTeX": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "volume": "56",
       "issue": "2",
       "pages": "110-113",
@@ -47,25 +52,17 @@
           "firstName": "Leo"
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 275,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "spitzer_poele_1941"
     }
-  ],
-  "cache": {
-    "activity": {
-      "serialized": {
-        "clear": 16,
-        "hit": 1,
-        "miss": 8
-      },
-      "cache": {
-        "hit": 0,
-        "miss": 1,
-        "clear": 23
-      }
-    }
-  }
+  ]
 }

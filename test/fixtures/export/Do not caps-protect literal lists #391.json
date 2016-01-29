@@ -24,64 +24,85 @@
       "citekeyFormat": "[title:lower]"
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "book",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "place": "Trinidad and Tobago",
       "publisher": "Miller, Smith and Jones",
       "extra": "original-publisher-place: Saint Kitts and Nevis\noriginal-publisher: Doe and Company",
       "title": "Publisher",
-      "creators": [],
-      "attachments": [],
-      "notes": [],
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 321,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "_publisher"
     },
     {
       "itemType": "report",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "institution": "Office of Information Management and Communications",
       "title": "Institution",
-      "creators": [],
-      "attachments": [],
-      "notes": [],
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 320,
       "publisher": "Office of Information Management and Communications",
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "_institution"
     },
     {
       "itemType": "thesis",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "university": "University of Saint Kitts and Nevis",
       "title": "University",
-      "creators": [],
-      "attachments": [],
-      "notes": [],
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 322,
       "publisher": "University of Saint Kitts and Nevis",
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "_university"
     }
-  ],
-  "cache": {
-    "activity": {
-      "serialized": {
-        "clear": 0,
-        "hit": 0,
-        "miss": 1
-      },
-      "cache": {
-        "hit": 0,
-        "miss": 0,
-        "clear": 0
-      }
-    }
-  }
+  ]
 }

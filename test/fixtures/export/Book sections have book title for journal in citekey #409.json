@@ -26,7 +26,9 @@
       "exportNotes": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "bookSection",
@@ -36,7 +38,8 @@
         "Latin literature",
         "Rome"
       ],
-      "relations": {},
+      "relations": {
+      },
       "series": "Collection Latomus",
       "place": "Bruxelles",
       "publisher": "Latomus",
@@ -68,12 +71,15 @@
           "mimeType": "application/pdf"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 18810,
       "publicationTitle": "Studies in Latin literature and Roman history",
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "Orlin2015StudLatLitRomanHist"
     }
-  ],
-  "cache": {}
+  ]
 }

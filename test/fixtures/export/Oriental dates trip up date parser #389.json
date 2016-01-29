@@ -25,12 +25,17 @@
       "asciiBibTeX": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "url": "http://ao.osa.org/abstract.cfm?URI=ao-15-4-1040",
       "volume": "15",
       "issue": "4",
@@ -69,24 +74,14 @@
           "url": "http://www.opticsinfobase.org/ao/abstract.cfm?uri=ao-15-4-1040"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 844,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "Sammut"
     }
-  ],
-  "cache": {
-    "activity": {
-      "serialized": {
-        "clear": 0,
-        "hit": 9,
-        "miss": 6
-      },
-      "cache": {
-        "hit": 0,
-        "miss": 2,
-        "clear": 0
-      }
-    }
-  }
+  ]
 }

@@ -25,12 +25,17 @@
       "exportNotes": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "url": "http://link.springer.com/10.1007/s00276-014-1305-7",
       "publicationTitle": "Surgical and Radiologic Anatomy",
       "ISSN": "1279-8517",
@@ -61,19 +66,14 @@
           "url": "http://www.ncbi.nlm.nih.gov/pubmed/24828123"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 1,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "VlčekVácha2014HistoryLatin"
     }
-  ],
-  "keymanager": [
-    {
-      "itemID": 1,
-      "libraryID": null,
-      "citekey": "VlčekVácha2014HistoryLatin",
-      "citekeyFormat": "[Authors:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize:fold:alphanum]"
-    }
-  ],
-  "cache": []
+  ]
 }

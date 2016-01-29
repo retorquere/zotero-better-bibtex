@@ -28,56 +28,6 @@
   "collections": [
 
   ],
-  "_items": [
-    {
-      "itemType": "journalArticle",
-      "title": "<span class=\"nocase\">(Aubignac) (François Hédelin abbé d')</span>",
-      "extra": "bibtex: abbot0",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "Aubignac",
-          "firstName": "François Hédelin abbé d'"
-        }
-      ]
-    },
-    {
-      "itemType": "journalArticle",
-      "title": "<span class=\"nocase\">(abbé d'Aubignac) (François Hédelin)</span>",
-      "extra": "bibtex: abbot2",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "abbé d'Aubignac",
-          "firstName": "François Hédelin"
-        }
-      ]
-    },
-    {
-      "itemType": "journalArticle",
-      "title": "<span class=\"nocase\">(d'Aubignac) (François Hédelin, abbé)</span>",
-      "extra": "bibtex: abbot4",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "d'Aubignac",
-          "firstName": "François Hédelin, abbé"
-        }
-      ]
-    },
-    {
-      "itemType": "journalArticle",
-      "title": "<span class=\"nocase\">(d' Aubignac) (François Hédelin, abbé)</span>",
-      "extra": "bibtex: abbot5",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "d' Aubignac",
-          "firstName": "François Hédelin, abbé"
-        }
-      ]
-    }
-  ],
   "items": [
     {
       "itemType": "journalArticle",

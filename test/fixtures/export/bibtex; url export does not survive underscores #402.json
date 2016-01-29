@@ -26,14 +26,17 @@
       "exportNotes": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "conferencePaper",
       "tags": [
         "NonPerRev"
       ],
-      "relations": {},
+      "relations": {
+      },
       "url": "http://www.fa2014.agh.edu.pl/fa2014_cd/",
       "place": "Krakow",
       "date": "September 2014",
@@ -75,25 +78,15 @@
           "mimeType": "application/pdf"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 10653,
       "publicationTitle": "7th Forum Acusticum",
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "EmmerJaens"
     }
-  ],
-  "cache": {
-    "activity": {
-      "serialized": {
-        "clear": 0,
-        "hit": 0,
-        "miss": 0
-      },
-      "cache": {
-        "hit": 0,
-        "miss": 0,
-        "clear": 0
-      }
-    }
-  }
+  ]
 }
