@@ -1,11 +1,10 @@
 # Dependencies
 markdown:         kramdown
 redcarpet:
-  # enable auto ids for redcarpet
   extensions:    ["with_toc_data"]
 kramdown:
-  # Disable auto-generated ID's for headings
   auto_ids: true
+  input: GFM
 
 highlighter:      pygments
 
