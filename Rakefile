@@ -30,6 +30,7 @@ require 'facets'
 require 'rest-client'
 require 'front_matter_parser'
 require_relative 'lib/unicode_table'
+require 'github_changelog_generator'
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -870,35 +871,4 @@ task :doc do
       puts "Undocumented preference #{preferences[pref]} / #{heading} (#{defaults[pref]})"
     end
   }
-end
-
-task :changelog do
-  sh "git pull"
-
-  Tempfile.create(['changelog', '.md'], 'tmp') do |tmp|
-    versions = {}
-    version = nil
-    sh "github_changelog_generator -u ZotPlus -p zotero-better-bibtex -o #{Shellwords.escape(tmp.path)}"
-    IO.readlines(tmp.path).each{|line|
-      if line =~ /^## \[([^\]]+)\]/
-        version = $1
-        versions[version] = 0
-        next
-      end
-      versions[version] += 1 if line =~ /^- /
-    }
-    skip = versions.keys.select{|v| versions[v] == 0}
-
-    if skip.length > 0
-      skip = "--exclude-tags " + skip.join(',')
-    else
-      skip = ''
-    end
-    sh "github_changelog_generator -u ZotPlus -p zotero-better-bibtex #{skip} -o #{Shellwords.escape(tmp.path)}"
-
-    open('site/CHANGELOG.md', 'w'){|f|
-      f.write("---\ntitle: Changelog\n---\n")
-      f << open(tmp.path).read
-    }
-  end
 end
