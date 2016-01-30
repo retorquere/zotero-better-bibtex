@@ -66,7 +66,7 @@ GEM
       domain_name (~> 0.5)
     jmespath (1.1.3)
     json (1.8.3)
-    jwt (1.5.2)
+    jwt (1.5.1)
     latex-decode (0.2.2)
       unicode (~> 0.4)
     launchy (2.4.3)
@@ -93,12 +93,12 @@ GEM
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     ntlm-http (0.1.1)
-    oauth2 (1.0.0)
+    oauth2 (1.1.0)
       faraday (>= 0.8, < 0.10)
-      jwt (~> 1.0)
+      jwt (~> 1.0, < 1.5.2)
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
-      rack (~> 1.2)
+      rack (>= 1.2, < 3)
     os (0.9.6)
     pusher-client (0.6.2)
       json
@@ -154,7 +154,7 @@ GEM
     websocket (1.2.2)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.150)
+    zotplus-rakehelper (0.0.152)
       front_matter_parser
       github_api
       nokogiri
