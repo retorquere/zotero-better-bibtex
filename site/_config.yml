@@ -5,6 +5,7 @@ redcarpet:
 kramdown:
   auto_ids: true
   input: GFM
+  hard_wrap: false
 
 highlighter:      pygments
 
