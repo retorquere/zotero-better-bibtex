@@ -165,20 +165,21 @@ Translator.extractFields = (item) ->
 
   fields = {}
 
-  m = /(biblatexdata|bibtex|biblatex)\[([^\]]+)\]/.exec(item.extra)
+  m = /(biblatexdata|bibtex|biblatex)(\*)?\[([^\]]+)\]/.exec(item.extra)
   if m
     item.extra = item.extra.replace(m[0], '').trim()
-    for assignment in m[2].split(';')
+    for assignment in m[3].split(';')
       data = assignment.match(/^([^=]+)=\s*(.*)/)
       if data
-        fields[data[1].toLowerCase()] = {value: data[2], format: 'naive'}
+        fields[data[1].toLowerCase()] = {value: data[2], format: 'naive', raw: !m[2]}
       else
         Translator.debug("Not an assignment: #{assignment}")
 
-  m = /(biblatexdata|bibtex|biblatex)({[\s\S]+})/.exec(item.extra)
+  m = /(biblatexdata|bibtex|biblatex)(\*)?({[\s\S]+})/.exec(item.extra)
   if m
     prefix = m[1]
-    data = m[2]
+    raw = !m[2]
+    data = m[3]
     while data.indexOf('}') >= 0
       try
         json = JSON5.parse(data)
@@ -189,7 +190,7 @@ Translator.extractFields = (item) ->
     if json
       item.extra = item.extra.replace(prefix + data, '').trim()
       for own name, value of json
-        fields[name.toLowerCase()] = {value, format: 'json' }
+        fields[name.toLowerCase()] = {value, format: 'json', raw }
 
   ### fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/ ###
   item.extra = item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, name, value) =>

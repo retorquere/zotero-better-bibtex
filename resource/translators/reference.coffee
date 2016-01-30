@@ -446,8 +446,6 @@ class Reference
 
     fields = []
     for own name, value of @override
-      raw = (value.format in ['naive', 'json'])
-
       # psuedo-var, sets the reference type
       if name == 'referencetype'
         @referencetype = value.value
@@ -474,29 +472,29 @@ class Reference
       else
         switch name
           when 'mr'
-            fields.push({ name: 'mrnumber', value: value.value, raw })
+            fields.push({ name: 'mrnumber', value: value.value, raw: value.raw })
           when 'zbl'
-            fields.push({ name: 'zmnumber', value: value.value, raw })
+            fields.push({ name: 'zmnumber', value: value.value, raw: value.raw })
           when 'lccn', 'pmcid'
-            fields.push({ name: name, value: value.value, raw })
+            fields.push({ name: name, value: value.value, raw: value.raw })
           when 'pmid', 'arxiv', 'jstor', 'hdl'
             if Translator.BetterBibLaTeX
               fields.push({ name: 'eprinttype', value: name.toLowerCase() })
-              fields.push({ name: 'eprint', value: value.value, raw })
+              fields.push({ name: 'eprint', value: value.value, raw: value.raw })
             else
-              fields.push({ name, value: value.value, raw })
+              fields.push({ name, value: value.value, raw: value.raw })
           when 'googlebooksid'
             if Translator.BetterBibLaTeX
               fields.push({ name: 'eprinttype', value: 'googlebooks' })
-              fields.push({ name: 'eprint', value: value.value, raw })
+              fields.push({ name: 'eprint', value: value.value, raw: value.raw })
             else
-              fields.push({ name: 'googlebooks', value: value.value, raw })
+              fields.push({ name: 'googlebooks', value: value.value, raw: value.raw })
           when 'xref'
-            fields.push({ name, value: value.value, enc: 'raw' })
+            fields.push({ name, value: value.value, raw: value.raw })
 
           else
-            Translator.debug('fields.push', { name, value: value.value, raw })
-            fields.push({ name, value: value.value, raw })
+            Translator.debug('fields.push', { name, value: value.value, raw: value.raw })
+            fields.push({ name, value: value.value, raw: value.raw })
 
     for name in Translator.skipFields
       @remove(name)
