@@ -8,6 +8,129 @@ Background:
   And I set preference .defaultDateParserLocale to en-GB
   And I set preference .bibtexURLs to 'note'
 
+### BibLaTeX cookie-cutter ###
+
+@127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @test-cluster-0
+Scenario Outline: BibLaTeX Export
+  Given I import <references> references from 'export/<file>.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
+
+  Examples:
+     | file                                                                                           | references  |
+     | Book sections have book title for journal in citekey #409                                      | 1           |
+     | Colon in bibtex key #405                                                                       | 1           |
+     | Oriental dates trip up date parser #389                                                        | 1           |
+     | Non-ascii in dates is not matched by date parser #376                                          | 1           |
+     | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
+     | @legislation; map code,container-title to journaltitle #327                                    | 1           |
+     | @jurisdiction; map court,authority to institution #326                                         | 1           |
+     | auth leaves punctuation in citation key #310                                                   | 1           |
+     | BibTeX variable support for journal titles. #309                                               | 1           |
+     | condense in cite key format not working #308                                                   | 1           |
+     | csquotes #302                                                                                  | 2           |
+     | Spaces not stripped from citation keys #294                                                    | 1           |
+     | Book converted to mvbook #288                                                                  | 1           |
+     | Colon not allowed in citation key format #268                                                  | 1           |
+     | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
+     | Export mapping for reporter field #219                                                         | 1           |
+     | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201     | 1           |
+     | Be robust against misconfigured journal abbreviator #127                                       | 1           |
+     | Better BibLaTeX.009                                                                            | 2           |
+     | Better BibLaTeX.007                                                                            | 1           |
+     | Better BibLaTeX.006                                                                            | 1           |
+     | Better BibLaTeX.005                                                                            | 1           |
+     | Better BibLaTeX.004                                                                            | 1           |
+     | Better BibLaTeX.003                                                                            | 2           |
+     | Better BibLaTeX.002                                                                            | 2           |
+     | Better BibLaTeX.001                                                                            | 1           |
+     | Fields in Extra should override defaults                                                       | 1           |
+     | BraceBalancer                                                                                  | 1           |
+
+@bblt-1 @bblt @test-cluster-1
+Scenario Outline: BibLaTeX Export
+  Given I import <references> references from 'export/<file>.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
+
+  Examples:
+     | file                                                                               | references  |
+     | biblatex export of phdthesis does not case-protect -type- #435                     | 1           |
+     | CSL variables only recognized when in lowercase #408                               | 1           |
+     | date and year are switched #406                                                    | 4           |
+     | Do not caps-protect literal lists #391                                             | 3           |
+     | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |
+     | biblatex; Language tag xx is exported, xx-XX is not #380                           | 1           |
+     | Normalize date ranges in citekeys #356                                             | 3           |
+     | remove the field if the override is empty #303                                     | 1           |
+     | markup small-caps, superscript, italics #301                                       | 2           |
+     | don't escape entry key fields for #296                                             | 1           |
+     | map csl-json variables #293                                                        | 2           |
+     | typo stature-statute (zotero item type) #284                                       | 1           |
+     | bookSection is always converted to @inbook, never @incollection #282               | 1           |
+     | referencetype= does not work #278                                                  | 1           |
+     | Ignore HTML tags when generating citation key #264                                 | 1           |
+     | BBT export of square brackets in date #245 -- xref should not be escaped #246      | 3           |
+     | References with multiple notes fail to export #174                                 | 1           |
+     | Better BibTeX does not use biblatex fields eprint and eprinttype #170              | 1           |
+     | Capitalisation in techreport titles #160                                           | 1           |
+     | German Umlaut separated by brackets #146                                           | 1           |
+     | HTML Fragment separator escaped in url #140 #147                                   | 1           |
+     | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
+     | Export Newspaper Article misses section field #132                                 | 1           |
+     | Exporting of single-field author lacks braces #130                                 | 1           |
+     | Math parts in title #113                                                           | 1           |
+     | Hang on non-file attachment export #112 - URL export broken #114                   | 2           |
+     | DOI with underscores in extra field #108                                           | 1           |
+     | underscores in URL fields should not be escaped #104                               | 1           |
+     | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
+     | Better BibLaTeX.023                                                                | 1           |
+     | Better BibLaTeX.022                                                                | 1           |
+     | Better BibLaTeX.021                                                                | 1           |
+     | Better BibLaTeX.020                                                                | 1           |
+     | Better BibLaTeX.019                                                                | 1           |
+     | Better BibLaTeX.017                                                                | 1           |
+     | Better BibLaTeX.016                                                                | 1           |
+     | Better BibLaTeX.015                                                                | 1           |
+     | Better BibLaTeX.014                                                                | 1           |
+     | Better BibLaTeX.013                                                                | 1           |
+     | Better BibLaTeX.012                                                                | 1           |
+     | Better BibLaTeX.011                                                                | 1           |
+     | Better BibLaTeX.010                                                                | 1           |
+     | Export Forthcoming as Forthcoming                                                  | 1           |
+     | Malformed HTML                                                                     | 1           |
+     | Better BibLaTeX.stable-keys                                                        | 6           |
+     | Allow explicit field override                                                      | 1           |
+
+### BibTeX cookie-cutter ###
+
+@441 @439 @bbt @other
+Scenario Outline: BibTeX Export
+  Given I import <references> references from 'export/<file>.json'
+  Then a library export using 'Better BibTeX' should match 'export/<file>.bibtex'
+
+  Examples:
+     | file                                                                               | references |
+     | custom fields should be exported as-is #441                                        | 1          |
+     | Replicate Zotero key algorithm #439                                                | 3          |
+     | preserve BibTeX Variables does not check for null values while escaping #337       | 1          |
+
+@bbt @test-cluster-0
+Scenario Outline: BibTeX Export
+  Given I import <references> references from 'export/<file>.json'
+  Then a library export using 'Better BibTeX' should match 'export/<file>.bibtex'
+
+  Examples:
+     | file                                                                               | references |
+     | Underscores break capital-preservation #300                                        | 1          |
+     | Numbers confuse capital-preservation #295                                          | 1          |
+     | Export C as {v C}, not v{C} #152                                                   | 1          |
+     | capital delta breaks .bib output #141                                              | 1          |
+     | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
+     | Export of item to Better Bibtex fails for auth3_1 #98                              | 1          |
+     | Better BibTeX.027                                                                  | 1          |
+     | Better BibTeX.026                                                                  | 1          |
+     | Better BibTeX.018                                                                  | 1          |
+
+### Other ###
 @131 @test-cluster-2
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json'
@@ -137,38 +260,11 @@ Scenario: Journal abbreviations exported in bibtex (81)
     | translator              | Better BibTeX  |
     | useJournalAbbreviation  | true           |
 
-@439 @bbt @other
-Scenario Outline: BibTeX Export
-  Given I import <references> references from 'export/<file>.json'
-  Then a library export using 'Better BibTeX' should match 'export/<file>.bibtex'
-
-  Examples:
-     | file                                                                               | references |
-     | Replicate Zotero key algorithm #439                                                | 3          |
-     | preserve BibTeX Variables does not check for null values while escaping #337       | 1          |
-
 @postscript @bbt
 Scenario: Post script
   Given I import 3 references from 'export/Export web page to misc type with notes and howpublished custom fields #329.json'
   And I set preference .postscript to 'export/Export web page to misc type with notes and howpublished custom fields #329.js'
   Then a library export using 'Better BibTeX' should match 'export/Export web page to misc type with notes and howpublished custom fields #329.bibtex'
-
-@bbt @test-cluster-0
-Scenario Outline: BibTeX Export
-  Given I import <references> references from 'export/<file>.json'
-  Then a library export using 'Better BibTeX' should match 'export/<file>.bibtex'
-
-  Examples:
-     | file                                                                               | references |
-     | capital delta breaks .bib output #141                                              | 1          |
-     | Better BibTeX.027                                                                  | 1          |
-     | Better BibTeX.026                                                                  | 1          |
-     | Underscores break capital-preservation #300                                        | 1          |
-     | Export C as {v C}, not v{C} #152                                                   | 1          |
-     | Better BibTeX.018                                                                  | 1          |
-     | Numbers confuse capital-preservation #295                                          | 1          |
-     | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
-     | Export of item to Better Bibtex fails for auth3_1 #98                              | 1          |
 
 @266 @286 @bblt @test-cluster-0
 Scenario: Diacritics stripped from keys regardless of ascii or fold filters #266
@@ -195,96 +291,6 @@ Scenario: Sorting and optional particle handling #411
   Then a library export using 'Better BibLaTeX' should match 'export/Sorting and optional particle handling #411.on.biblatex'
   When I set preference .parseParticles to false
   Then a library export using 'Better BibLaTeX' should match 'export/Sorting and optional particle handling #411.off.biblatex'
-
-@127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @test-cluster-0
-Scenario Outline: BibLaTeX Export
-  Given I import <references> references from 'export/<file>.json'
-  Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
-
-  Examples:
-     | file                                                                                           | references  |
-     | Book sections have book title for journal in citekey #409                                      | 1           |
-     | Colon in bibtex key #405                                                                       | 1           |
-     | condense in cite key format not working #308                                                   | 1           |
-     | Better BibLaTeX.009                                                                            | 2           |
-     | Better BibLaTeX.003                                                                            | 2           |
-     | Better BibLaTeX.005                                                                            | 1           |
-     | Better BibLaTeX.006                                                                            | 1           |
-     | Fields in Extra should override defaults                                                       | 1           |
-     | BibTeX variable support for journal titles. #309                                               | 1           |
-     | Better BibLaTeX.004                                                                            | 1           |
-     | Oriental dates trip up date parser #389                                                        | 1           |
-     | Better BibLaTeX.007                                                                            | 1           |
-     | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
-     | Non-ascii in dates is not matched by date parser #376                                          | 1           |
-     | @jurisdiction; map court,authority to institution #326                                         | 1           |
-     | @legislation; map code,container-title to journaltitle #327                                    | 1           |
-     | BraceBalancer                                                                                  | 1           |
-     | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
-     | auth leaves punctuation in citation key #310                                                   | 1           |
-     | Spaces not stripped from citation keys #294                                                    | 1           |
-     | Book converted to mvbook #288                                                                  | 1           |
-     | Colon not allowed in citation key format #268                                                  | 1           |
-     | Export mapping for reporter field #219                                                         | 1           |
-     | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201     | 1           |
-     | Be robust against misconfigured journal abbreviator #127                                       | 1           |
-     | Better BibLaTeX.001                                                                            | 1           |
-     | Better BibLaTeX.002                                                                            | 2           |
-     | csquotes #302                                                                                  | 2           |
-
-@bblt-1 @bblt @test-cluster-1
-Scenario Outline: BibLaTeX Export
-  Given I import <references> references from 'export/<file>.json'
-  Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
-
-  Examples:
-     | file                                                                               | references  |
-     | biblatex export of phdthesis does not case-protect -type- #435                     | 1           |
-     | Export Forthcoming as Forthcoming                                                  | 1           |
-     | CSL variables only recognized when in lowercase #408                               | 1           |
-     | date and year are switched #406                                                    | 4           |
-     | Malformed HTML                                                                     | 1           |
-     | Capitalisation in techreport titles #160                                           | 1           |
-     | Better BibLaTeX.019                                                                | 1           |
-     | Exporting of single-field author lacks braces #130                                 | 1           |
-     | Better BibLaTeX.011                                                                | 1           |
-     | Better BibLaTeX.stable-keys                                                        | 6           |
-     | Do not caps-protect literal lists #391                                             | 3           |
-     | biblatex; Language tag xx is exported, xx-XX is not #380                           | 1           |
-     | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |
-     | Better BibTeX does not use biblatex fields eprint and eprinttype #170              | 1           |
-     | typo stature-statute (zotero item type) #284                                       | 1           |
-     | Normalize date ranges in citekeys #356                                             | 3           |
-     | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
-     | Math parts in title #113                                                           | 1           |
-     | Better BibLaTeX.021                                                                | 1           |
-     | remove the field if the override is empty #303                                     | 1           |
-     | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
-     | map csl-json variables #293                                                        | 2           |
-     | markup small-caps, superscript, italics #301                                       | 2           |
-     | don't escape entry key fields for #296                                             | 1           |
-     | bookSection is always converted to @inbook, never @incollection #282               | 1           |
-     | referencetype= does not work #278                                                  | 1           |
-     | Ignore HTML tags when generating citation key #264                                 | 1           |
-     | Better BibLaTeX.016                                                                | 1           |
-     | BBT export of square brackets in date #245 -- xref should not be escaped #246      | 3           |
-     | Better BibLaTeX.010                                                                | 1           |
-     | Better BibLaTeX.012                                                                | 1           |
-     | Better BibLaTeX.013                                                                | 1           |
-     | Better BibLaTeX.014                                                                | 1           |
-     | Better BibLaTeX.015                                                                | 1           |
-     | Better BibLaTeX.017                                                                | 1           |
-     | Better BibLaTeX.020                                                                | 1           |
-     | Better BibLaTeX.022                                                                | 1           |
-     | Better BibLaTeX.023                                                                | 1           |
-     | DOI with underscores in extra field #108                                           | 1           |
-     | Export Newspaper Article misses section field #132                                 | 1           |
-     | German Umlaut separated by brackets #146                                           | 1           |
-     | Hang on non-file attachment export #112 - URL export broken #114                   | 2           |
-     | HTML Fragment separator escaped in url #140 #147                                   | 1           |
-     | References with multiple notes fail to export #174                                 | 1           |
-     | underscores in URL fields should not be escaped #104                               | 1           |
-     | Allow explicit field override                                                      | 1           |
 
 @ae @test-cluster-0
 Scenario: auto-export

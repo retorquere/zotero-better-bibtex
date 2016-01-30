@@ -274,8 +274,8 @@ class Reference
   # @param {field} field to encode.
   # @return {String} field.value encoded as author-style value
   ###
-  enc_literal: (f, raw) ->
-    return @enc_latex({value: new String(f.value)}, raw)
+  enc_literal: (f) ->
+    return @enc_latex({value: new String(f.value)})
 
   ###
   # Encode text to LaTeX
@@ -286,6 +286,7 @@ class Reference
   # @return {String} field.value encoded as author-style value
   ###
   enc_latex: (f, raw) ->
+    Translator.debug('enc_latex:', {f, raw})
     return f.value if typeof f.value == 'number'
     return null unless f.value
 
@@ -293,7 +294,7 @@ class Reference
       return null if f.value.length == 0
       return (@enc_latex(@clone(f, word), raw) for word in f.value).join(f.sep || '')
 
-    return f.value if raw
+    return f.value if f.raw || raw
 
     value = LaTeX.text2latex(f.value, {preserveCase: f.preserveCase, autoCase: f.autoCase && @english})
     value = new String("{#{value}}") if f.value instanceof String
@@ -406,7 +407,7 @@ class Reference
         value = field.value
       else
         enc = field.enc || Translator.fieldEncoding[field.name] || 'latex'
-        value = @["enc_#{enc}"](field, (if field.enc && field.enc != 'creators' then false else @raw))
+        value = @["enc_#{enc}"](field, @raw)
 
         return unless value
 
@@ -417,6 +418,7 @@ class Reference
     field.bibtex = field.bibtex.normalize('NFKC') if @normalize
     @fields.push(field)
     @has[field.name] = field
+    Translator.debug('added:', field)
 
   ###
   # Remove a field from the reference field set
@@ -464,7 +466,7 @@ class Reference
         autoCase = name in ['title', 'shorttitle', 'origtitle', 'booktitle', 'maintitle']
 
         if mapped
-          fields.push({ name: mapped, value: value.value, autoCase, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type) })
+          fields.push({ name: mapped, value: value.value, autoCase, raw: false, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type) })
 
         else
           Translator.debug('Unmapped CSL field', name, '=', value.value)
@@ -472,28 +474,29 @@ class Reference
       else
         switch name
           when 'mr'
-            fields.push({ name: 'mrnumber', value: value.value, raw: raw })
+            fields.push({ name: 'mrnumber', value: value.value, raw })
           when 'zbl'
-            fields.push({ name: 'zmnumber', value: value.value, raw: raw })
+            fields.push({ name: 'zmnumber', value: value.value, raw })
           when 'lccn', 'pmcid'
-            fields.push({ name: name, value: value.value, raw: raw })
+            fields.push({ name: name, value: value.value, raw })
           when 'pmid', 'arxiv', 'jstor', 'hdl'
             if Translator.BetterBibLaTeX
               fields.push({ name: 'eprinttype', value: name.toLowerCase() })
-              fields.push({ name: 'eprint', value: value.value, raw: raw })
+              fields.push({ name: 'eprint', value: value.value, raw })
             else
-              fields.push({ name, value: value.value, raw: raw })
+              fields.push({ name, value: value.value, raw })
           when 'googlebooksid'
             if Translator.BetterBibLaTeX
               fields.push({ name: 'eprinttype', value: 'googlebooks' })
-              fields.push({ name: 'eprint', value: value.value, raw: raw })
+              fields.push({ name: 'eprint', value: value.value, raw })
             else
-              fields.push({ name: 'googlebooks', value: value.value, raw: raw })
+              fields.push({ name: 'googlebooks', value: value.value, raw })
           when 'xref'
             fields.push({ name, value: value.value, enc: 'raw' })
 
           else
-            fields.push({ name, value: value.value, raw: raw })
+            Translator.debug('fields.push', { name, value: value.value, raw })
+            fields.push({ name, value: value.value, raw })
 
     for name in Translator.skipFields
       @remove(name)
