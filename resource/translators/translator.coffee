@@ -177,7 +177,7 @@ Translator.extractFields = (item) ->
 
   m = /(biblatexdata|bibtex|biblatex)(\*)?({[\s\S]+})/.exec(item.extra)
   if m
-    prefix = m[1]
+    prefix = m[1] + (m[2] || '')
     raw = !m[2]
     data = m[3]
     while data.indexOf('}') >= 0

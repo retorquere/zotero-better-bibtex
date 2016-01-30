@@ -516,6 +516,7 @@ end
 task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
   tag = ''
 
+  features = 'resource/tests'
   if args[:tag] =~ /ci-cluster-(.*)/
     clusters = 4
     cluster = $1
@@ -526,6 +527,9 @@ task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{
     else
       tag = "--tag ~@noci " + (0..clusters - 2).collect{|n| "--tag ~@test-cluster-#{n}" }.join(' ')
     end
+
+  elsif args[:tag] =~ /^([a-z]):([0-9]+)$/
+    features = Dir["resource/tests/#{$1}*.feature"][0] + ":#{$2}"
 
   else
     tag = "@#{args[:tag]}".sub(/^@@/, '@')
@@ -539,10 +543,9 @@ task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{
     end
   end
 
-  puts "Tests running: #{tag}"
 
-
-  cucumber = "cucumber --require features --strict #{tag} resource/tests"
+  cucumber = "cucumber --require features --strict #{tag} #{features}"
+  puts "Tests running: #{cucumber}"
   if ENV['CI'] == 'true'
     sh cucumber
   else
