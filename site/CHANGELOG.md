@@ -1,6 +1,20 @@
 ---
 title: Changelog
 ---
+# Change Log
+
+## [1.6.34](https://github.com/ZotPlus/zotero-better-bibtex/tree/1.6.34) (2016-01-30)
+[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/1.6.32...1.6.34)
+
+**Implemented enhancements:**
+
+- Suggestion: Rephrase configuration options and/or add link to the docs [\#433](https://github.com/ZotPlus/zotero-better-bibtex/issues/433)
+
+**Fixed bugs:**
+
+- custom fields should be exported as-is [\#441](https://github.com/ZotPlus/zotero-better-bibtex/issues/441)
+- BibTeX name escaping has a million inconsistencies [\#438](https://github.com/ZotPlus/zotero-better-bibtex/issues/438)
+- Dead link in README.md [\#436](https://github.com/ZotPlus/zotero-better-bibtex/issues/436)
 
 ## [1.6.32](https://github.com/ZotPlus/zotero-better-bibtex/tree/1.6.32) (2016-01-19)
 [Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/1.6.31...1.6.32)
