@@ -1,0 +1,65 @@
+#!/usr/bin/env ruby
+
+require 'aws-sdk'
+require 'nokogiri'
+
+raise "ZOTPLUSAWSKEY not set" unless ENV['ZOTPLUSAWSKEY']
+raise "ZOTPLUSAWSSECRET not set" unless ENV['ZOTPLUSAWSSECRET']
+
+s3 = Aws::S3::Resource.new(region: 'eu-central-1', credentials: Aws::Credentials.new(ENV['ZOTPLUSAWSKEY'], ENV['ZOTPLUSAWSSECRET']))
+bucket = s3.bucket('zotplus-release')
+website = bucket.website
+
+EXTENSION='better-bibtex'
+RELEASE='1.7'
+
+rules = []
+
+website.routing_rules.each{|rule|
+  next if rule.condition.key_prefix_equals.to_s =~ /^#{EXTENSION}/
+  rules << {
+    condition: {
+      key_prefix_equals: rule.condition.key_prefix_equals
+    },
+    redirect: {
+      host_name: rule.redirect.host_name,
+      http_redirect_code: '301',
+      protocol: rule.redirect.protocol,
+      replace_key_prefix_with: rule.redirect.replace_key_prefix_with
+    }
+  }
+}
+rules << {
+  condition: {
+    key_prefix_equals: "#{EXTENSION}.rdf"
+  },
+  redirect: {
+    host_name: 'github.com',
+    http_redirect_code: '301',
+    protocol: 'https',
+    replace_key_prefix_with: "https://github.com/ZotPlus/zotero-better-bibtex/releases/download/#{RELEASE}/update.rdf"
+  }
+}
+rules << {
+  condition: {
+    key_prefix_equals: "#{EXTENSION}.xpi"
+  },
+  redirect: {
+    host_name: 'github.com',
+    http_redirect_code: '301',
+    protocol: 'https',
+    replace_key_prefix_with: "https://github.com/ZotPlus/zotero-better-bibtex/releases/download/#{RELEASE}/#{EXTENSION}-#{RELEASE}.xpi"
+  }
+}
+
+website.put({
+  website_configuration: { # required
+    error_document: {
+      key: "500.html", # required
+    },
+    index_document: {
+      suffix: "index.html", # required
+    },
+    routing_rules: rules
+  }
+})

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+rake resource/translators/Notre\ Dame\ Philosophical\ Reviews.js
+cat resource/translators/Notre\ Dame\ Philosophical\ Reviews.js | xclip -selection c
+rake resource/translators/Notre\ Dame\ Philosophical\ Reviews.json
+
+cat resource/translators/Notre\ Dame\ Philosophical\ Reviews.json > ~/.mozilla/firefox/zerkpjav.default/zotero/translators/Notre\ Dame\ Philosophical\ Reviews.js
+echo >> ~/.mozilla/firefox/zerkpjav.default/zotero/translators/Notre\ Dame\ Philosophical\ Reviews.js
+echo >> ~/.mozilla/firefox/zerkpjav.default/zotero/translators/Notre\ Dame\ Philosophical\ Reviews.js
+cat resource/translators/Notre\ Dame\ Philosophical\ Reviews.js \
+  | sed 's/testCases =/var testCases =/' \
+  | sed 's/\( \(BEGIN\|END\) TEST CASES \)/*\1*/' \
+  | sed 's/^\];$/]/' \
+  >> ~/.mozilla/firefox/zerkpjav.default/zotero/translators/Notre\ Dame\ Philosophical\ Reviews.js
+
+cat ~/.mozilla/firefox/zerkpjav.default/zotero/translators/Notre\ Dame\ Philosophical\ Reviews.js | xclip -selection c
+cp ~/.mozilla/firefox/zerkpjav.default/zotero/translators/Notre\ Dame\ Philosophical\ Reviews.js ~/zotero/translators
+
