@@ -143,13 +143,13 @@ this setting controls both what Zotero shows and what is exported for nested col
 <!-- extensions.zotero.httpServer.enabled -->
 
 Enables the Zotero-embedded web server. If you have Zotero standalone, it is always on, and this preference will not be
-shown. This option enabled [cite as you write](cayw.html) and [pull export](pull-export.html).
+shown. This option enables [cite as you write](cayw.html) and [pull export](pull-export.html).
 
 ### Retain LaTeX markup on BibTeX import
 <!-- extensions.zotero.translators.better-bibtex.rawImports -->
 
 Enables [hardcore](hardcore.html) mode. You like Zotero in some ways, but really just want it to be a BibTeX manager. If
-you enable this, any BibTeX files you import will retain all the latex commands they have, and marks the entry to be
+you enable this, any BibTeX files you import will retain all the LaTeX commands they have, and marks the entry to be
 exported without any translation.
 
 ## Journal abbreviations
@@ -196,7 +196,7 @@ the internal reference ID instead of the call number field. Only useful for debu
 
 There have been occasions where Better BibTeX seemed to ignore keys you have specified manually by having `bibtex: <whatever>`
 in the `extra` field of your reference. I haven't seen this in ages, but enabling this and then restarting
-Zotero will force a re-scan to find them. This sows down startup tremendously if you have a big library. The checkbox
+Zotero will force a re-scan to find them. This slows down startup tremendously if you have a big library. The checkbox
 will automatically clear after restart.
 
 ## Hidden
@@ -253,7 +253,7 @@ list of words to skip in title when generating citation keys
 ### tests
 <!-- extensions.zotero.translators.better-bibtex.tests -->
 
-Unit tests to run 
+Unit tests to run
 
 ### postscript
 <!-- extensions.zotero.translators.better-bibtex.postscript -->
@@ -288,4 +288,3 @@ List of words to keep lowercase when applying title casing
 <!-- extensions.zotero.translators.better-bibtex.titleCaseUpperCase -->
 
 List of words to keep uppercase when applying title casing
-
