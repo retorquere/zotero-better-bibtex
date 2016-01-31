@@ -158,7 +158,7 @@ two flavors:
 
 The pinned keys show up in the 'extra' field of your references, and sync across libraries. The citation key is shown in
 the details pane of the reference, and in the `extra` column of the references list if you have enabled it in the BBT
-preferences. In the details pane, soft keys are displayed in italics; in the references list, soft keys have an asterix
+preferences. In the details pane, soft keys are displayed in italics; in the references list, soft keys have an asterisk
 after the key. The soft keys **do not sync**, but they're present in a separate
 database so partial exports will know to generate keys not already in use (even if that is a 'soft' use), and so these
 soft keys will reliably survive restarts of Zotero.

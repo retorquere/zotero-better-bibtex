@@ -17,7 +17,7 @@ this will always be slow. This is also why you cannot set up auto-exports with f
 
 ### TL;DR
 
-There's a more technical explanation below, but the TL;DR version is that you want to have a filled cached. If you want
+There's a more technical explanation below, but the TL;DR version is that you want to have a filled cache. If you want
 to get it over with, export your entire library (once, no need to tick 'Keep Updated') using the 'Better BibTeX' format
 and go grab coffee (or lunch, depending on the size of your library). After that, things should be *much* better.
 
