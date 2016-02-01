@@ -93,7 +93,7 @@ for *Zotero* native fields (case sensitive!) not Bib(La)TeX native fields. The p
 | PublicLawNumber      | Publisher            | References           | Related              |
 | Reporter             | ReporterVolume       | ReportNumber         | ReportType           |
 | Rights               | RunningTime          | Scale                | Section              |
-| Series               | SeriesNumber         | SeriesTeXt           | SeriesTitle          |
+| Series               | SeriesNumber         | SeriesText           | SeriesTitle          |
 | Session              | ShortTitle           | Source               | Studio               |
 | Subject              | System               | Tags                 | ThesisType           |
 | Title                | University           | Url                  | Version              |

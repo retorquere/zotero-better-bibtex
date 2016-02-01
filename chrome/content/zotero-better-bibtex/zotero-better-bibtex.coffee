@@ -539,10 +539,10 @@ Zotero.BetterBibTeX.setCitekeyFormatter = (enforce) ->
 
   for attempt in attempts
     if attempt == 'reset'
-      msg = "Malformed citation '#{@pref.get('citekeyFormat')}' found, resetting to default"
+      msg = "Malformed citation pattern '#{@pref.get('citekeyFormat')}', resetting to default"
       @flash(msg)
       @error(msg)
-      @pref.clearUserPref('citekeyFormat')
+      @pref.prefs.clearUserPref('citekeyFormat')
 
     try
       citekeyPattern = @pref.get('citekeyFormat')
@@ -555,7 +555,7 @@ Zotero.BetterBibTeX.setCitekeyFormatter = (enforce) ->
       @formatter = formatter
       return
     catch err
-      @error(err)
+      @error('Error parsing citekey pattern', {citekeyPattern, citekeyFormat}, err)
 
   if enforce
     @flash('Citation pattern reset failed! Please report an error to the Better BibTeX issue list.')

@@ -61,18 +61,12 @@ class BetterBibTeXPatternFormatter
     return result
 
   reduce: (step) ->
-    method = @methods[step.method]
-    if typeof method != 'function'
-      Zotero.BetterBibTeX.debug('unsupported citation key function', step)
-      return ''
-
-    value = method.apply(@, step.arguments)
-    value = '' unless value
+    Zotero.BetterBibTeX.debug('reduce:', typeof step.method, step)
+    value = step.method.apply(@, step.arguments) || ''
     value = @clean(value) if step.scrub
 
-    for filter in step.filters || []
-      value = @filters[filter.filter].apply(@, [value].concat(filter.arguments))
-      value = '' unless value
+    for filter in step.filters
+      value = @filters[filter.filter].apply(@, [value].concat(filter.arguments)) || ''
 
     return value
 
