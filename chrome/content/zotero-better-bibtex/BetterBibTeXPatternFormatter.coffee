@@ -61,7 +61,12 @@ class BetterBibTeXPatternFormatter
     return result
 
   reduce: (step) ->
-    value = @methods[step.method].apply(@, step.arguments)
+    method = @methods[step.method]
+    if typeof method != 'function'
+      Zotero.BetterBibTeX.debug('unsupported reduction:', step)
+      return ''
+
+    value = method.apply(@, step.arguments)
     value = '' unless value
     value = @clean(value) if step.scrub
 
