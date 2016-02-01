@@ -63,7 +63,7 @@ class BetterBibTeXPatternFormatter
   reduce: (step) ->
     method = @methods[step.method]
     if typeof method != 'function'
-      Zotero.BetterBibTeX.debug('unsupported reduction:', step)
+      Zotero.BetterBibTeX.debug('unsupported citation key function', step)
       return ''
 
     value = method.apply(@, step.arguments)
