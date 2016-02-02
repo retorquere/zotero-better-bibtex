@@ -57,6 +57,53 @@
       "title": "The physical volcanology of the 1600 eruption of <b>Huaynaputina</b>, southern Peru",
       "volume": "62",
       "date": "2001"
+    },
+    {
+      "itemType": "journalArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://dx.doi.org/10.1484/J.SE.2.303788",
+      "volume": "34",
+      "pages": "5-32",
+      "publicationTitle": "Sacris Erudiri",
+      "date": "1994",
+      "DOI": "10.1484/J.SE.2.303788",
+      "accessDate": "2014-10-02 00:07:46",
+      "libraryCatalog": "MetaPress",
+      "language": "German",
+      "title": "Skizze zur Auslegungsgeschichte der Bücher <i>Prouerbia</i> und <i>Ecclesiastes</i> in der abendländischen Kirche",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Berndt",
+          "firstName": "Rainer"
+        }
+      ],
+      "attachments": [
+        {
+          "path": "/Users/Andrew/Library/Application Support/Zotero/Profiles/muvdg23m.default/zotero/storage/6K3REIPN/Berndt - 1994 - Skizze zur Auslegungsgeschichte der Bücher Prouerb.pdf",
+          "title": "MetaPress Full Text PDF",
+          "mimeType": "application/pdf",
+          "url": "http://brepols.metapress.com.myaccess.library.utoronto.ca/content/h38158wr4wx74p82/fulltext.pdf"
+        },
+        {
+          "path": "/Users/Andrew/Library/Application Support/Zotero/Profiles/muvdg23m.default/zotero/storage/SZDCF5C9/H38158WR4WX74P82.html",
+          "title": "MetaPress Snapshot",
+          "mimeType": "text/html",
+          "url": "http://brepols.metapress.com/content/H38158WR4WX74P82"
+        }
+      ],
+      "notes": [
+
+      ],
+      "itemID": 5451,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "berndt:skizze"
     }
   ],
   "config": {
