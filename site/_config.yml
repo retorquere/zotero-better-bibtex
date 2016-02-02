@@ -7,7 +7,7 @@ kramdown:
   input: GFM
   hard_wrap: false
 
-highlighter:      pygments
+highlighter:      rouge
 
 # Permalinks
 permalink: /:categories/:title
