@@ -1,7 +1,25 @@
 ---
-title: Changelog
+title: "Change Log"
 ---
-# Change Log
+## [1.6.36](https://github.com/ZotPlus/zotero-better-bibtex/tree/1.6.36) (2016-02-03)
+[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/1.6.35...1.6.36)
+
+**Implemented enhancements:**
+
+- Export formatting as Markdown in CSL YAML [\#447](https://github.com/ZotPlus/zotero-better-bibtex/issues/447)
+- Disambiguation of bibtex keys [\#444](https://github.com/ZotPlus/zotero-better-bibtex/issues/444)
+- Replicate Zotero key algorithm [\#439](https://github.com/ZotPlus/zotero-better-bibtex/issues/439)
+
+## [1.6.35](https://github.com/ZotPlus/zotero-better-bibtex/tree/1.6.35) (2016-02-01)
+[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/1.6.34...1.6.35)
+
+**Fixed bugs:**
+
+- Unsupported key patterns break export [\#446](https://github.com/ZotPlus/zotero-better-bibtex/issues/446)
+
+**Merged pull requests:**
+
+- Fix typos [\#445](https://github.com/ZotPlus/zotero-better-bibtex/pull/445) ([edwinksl](https://github.com/edwinksl))
 
 ## [1.6.34](https://github.com/ZotPlus/zotero-better-bibtex/tree/1.6.34) (2016-01-30)
 [Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/1.6.32...1.6.34)
@@ -985,14 +1003,14 @@ title: Changelog
 - export cache picks random version among bib\(la\)tex formats [\#205](https://github.com/ZotPlus/zotero-better-bibtex/issues/205)
 
 ## [0.11.0](https://github.com/ZotPlus/zotero-better-bibtex/tree/0.11.0) (2015-05-29)
-[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/travis...0.11.0)
+[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.10.27...0.11.0)
 
 **Fixed bugs:**
 
 - Known problem: Auto-export overview doesn't update [\#203](https://github.com/ZotPlus/zotero-better-bibtex/issues/203)
 
-## [travis](https://github.com/ZotPlus/zotero-better-bibtex/tree/travis) (2015-05-29)
-[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.10.25...travis)
+## [0.10.27](https://github.com/ZotPlus/zotero-better-bibtex/tree/0.10.27) (2015-05-29)
+[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.10.25...0.10.27)
 
 **Fixed bugs:**
 
@@ -1113,14 +1131,14 @@ title: Changelog
 - autosave not working [\#181](https://github.com/ZotPlus/zotero-better-bibtex/issues/181)
 
 ## [0.9.14](https://github.com/ZotPlus/zotero-better-bibtex/tree/0.9.14) (2015-04-28)
-[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/test-profiles...0.9.14)
+[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.9.2...0.9.14)
 
 **Fixed bugs:**
 
 - Auto-export ignores ASCII-enforcement [\#179](https://github.com/ZotPlus/zotero-better-bibtex/issues/179)
 
-## [test-profiles](https://github.com/ZotPlus/zotero-better-bibtex/tree/test-profiles) (2015-04-19)
-[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.9.0...test-profiles)
+## [0.9.2](https://github.com/ZotPlus/zotero-better-bibtex/tree/0.9.2) (2015-04-19)
+[Full Changelog](https://github.com/ZotPlus/zotero-better-bibtex/compare/0.9.0...0.9.2)
 
 **Closed issues:**
 
@@ -1147,145 +1165,6 @@ title: Changelog
 
 - Link broken: Install by downloading the latest version \(0.8.21\). [\#176](https://github.com/ZotPlus/zotero-better-bibtex/issues/176)
 
-## [0.8.21](https://github.com/ZotPlus/zotero-better-bibtex/tree/0.8.21) (2015-04-05)
-**Implemented enhancements:**
-
-- Mimicing Zotero's citation scheme [\#173](https://github.com/ZotPlus/zotero-better-bibtex/issues/173)
-- Clickable URLs again [\#169](https://github.com/ZotPlus/zotero-better-bibtex/issues/169)
-- performance during pull export degraded after last upgrade [\#161](https://github.com/ZotPlus/zotero-better-bibtex/issues/161)
-- Capitalisation in techreport titles  [\#160](https://github.com/ZotPlus/zotero-better-bibtex/issues/160)
-- Capitalization preservation also for single-letter words [\#155](https://github.com/ZotPlus/zotero-better-bibtex/issues/155)
-- Import fails to perform @String substitutions [\#154](https://github.com/ZotPlus/zotero-better-bibtex/issues/154)
-- Export Č as {\v C}, not \v{C}  [\#152](https://github.com/ZotPlus/zotero-better-bibtex/issues/152)
-- Icon is too big in Zotero preferences \(on OSX\) [\#151](https://github.com/ZotPlus/zotero-better-bibtex/issues/151)
-- Specify custom reference type [\#147](https://github.com/ZotPlus/zotero-better-bibtex/issues/147)
-- Export PMID, PMCID fields [\#144](https://github.com/ZotPlus/zotero-better-bibtex/issues/144)
-- bib timestamp [\#142](https://github.com/ZotPlus/zotero-better-bibtex/issues/142)
-- Extra ';' in biblatexadata causes export failure [\#133](https://github.com/ZotPlus/zotero-better-bibtex/issues/133)
-- Export Newspaper Article misses section field [\#132](https://github.com/ZotPlus/zotero-better-bibtex/issues/132)
-- Omit URL export when DOI present. [\#131](https://github.com/ZotPlus/zotero-better-bibtex/issues/131)
-- BibTex cite key column in overview? [\#123](https://github.com/ZotPlus/zotero-better-bibtex/issues/123)
-- Scan cited items \(AUX scanner\) [\#118](https://github.com/ZotPlus/zotero-better-bibtex/issues/118)
-- Math parts in title [\#113](https://github.com/ZotPlus/zotero-better-bibtex/issues/113)
-- Generating keys and export broken [\#111](https://github.com/ZotPlus/zotero-better-bibtex/issues/111)
-- option to mantain the braces and special commands in titles or all fields [\#100](https://github.com/ZotPlus/zotero-better-bibtex/issues/100)
-- Importing BibTeX entries with percent sign [\#95](https://github.com/ZotPlus/zotero-better-bibtex/issues/95)
-- Remove BBT translators when uninstalling BBT [\#93](https://github.com/ZotPlus/zotero-better-bibtex/issues/93)
-- Drag and drop citations for Pandoc [\#91](https://github.com/ZotPlus/zotero-better-bibtex/issues/91)
-- Ignore/Remove last character if it is a punctuation [\#90](https://github.com/ZotPlus/zotero-better-bibtex/issues/90)
-- Import bibtex db from JabRef 2.10 [\#89](https://github.com/ZotPlus/zotero-better-bibtex/issues/89)
-- Include first name initial\(s\) in cite key generation pattern [\#86](https://github.com/ZotPlus/zotero-better-bibtex/issues/86)
-- Prob with cite-keys when used with Eratosthenes [\#83](https://github.com/ZotPlus/zotero-better-bibtex/issues/83)
-- Journal abbreviations exported in bibtex [\#81](https://github.com/ZotPlus/zotero-better-bibtex/issues/81)
-- Better Bibtex key generator; add "journal" as a supported field [\#80](https://github.com/ZotPlus/zotero-better-bibtex/issues/80)
-- German umlaut in author name [\#69](https://github.com/ZotPlus/zotero-better-bibtex/issues/69)
-- More cite key options? [\#61](https://github.com/ZotPlus/zotero-better-bibtex/issues/61)
-- Make more fields optional [\#60](https://github.com/ZotPlus/zotero-better-bibtex/issues/60)
-- language v. langid for better biblatex export [\#56](https://github.com/ZotPlus/zotero-better-bibtex/issues/56)
-- Missing standard bibtex field [\#52](https://github.com/ZotPlus/zotero-better-bibtex/issues/52)
-- export JabRef groups [\#45](https://github.com/ZotPlus/zotero-better-bibtex/issues/45)
-- Ability to control exportNotes and other settings in translators [\#40](https://github.com/ZotPlus/zotero-better-bibtex/issues/40)
-- Many field markers not working in Better Biblatex's key format [\#38](https://github.com/ZotPlus/zotero-better-bibtex/issues/38)
-- No "and" in AUTHOR field when multiple authors [\#33](https://github.com/ZotPlus/zotero-better-bibtex/issues/33)
-- inconsistent key generator between jabref  and zotero-better-bibtex [\#31](https://github.com/ZotPlus/zotero-better-bibtex/issues/31)
-- Using special fields of BibLaTeX not available in Zotero [\#30](https://github.com/ZotPlus/zotero-better-bibtex/issues/30)
-- Double brackets for authors if single field [\#20](https://github.com/ZotPlus/zotero-better-bibtex/issues/20)
-- Underscores or other ‘glue’ in citation key format [\#15](https://github.com/ZotPlus/zotero-better-bibtex/issues/15)
-- Encoding of library when accessed by http [\#13](https://github.com/ZotPlus/zotero-better-bibtex/issues/13)
-- weird journal field with BibTeX export and abbreviations [\#9](https://github.com/ZotPlus/zotero-better-bibtex/issues/9)
-- ensuremath [\#8](https://github.com/ZotPlus/zotero-better-bibtex/issues/8)
-- Babelbib interaction with month field of generated bibliography [\#5](https://github.com/ZotPlus/zotero-better-bibtex/issues/5)
-
-**Fixed bugs:**
-
-- References with multiple notes fail to export [\#174](https://github.com/ZotPlus/zotero-better-bibtex/issues/174)
-- better-bibtex does not use biblatex fields eprint and eprinttype [\#170](https://github.com/ZotPlus/zotero-better-bibtex/issues/170)
-- Force re-scan of keys on upgrade [\#166](https://github.com/ZotPlus/zotero-better-bibtex/issues/166)
-- Generating a new BibTeX key deletes other info \(PMIC, PMCID\) stored in extra field [\#165](https://github.com/ZotPlus/zotero-better-bibtex/issues/165)
-- Citation key cache does not update on reference change [\#164](https://github.com/ZotPlus/zotero-better-bibtex/issues/164)
-- Malformed prefs window on Mac [\#159](https://github.com/ZotPlus/zotero-better-bibtex/issues/159)
-- AUX scanner doesn't work for group libraries [\#158](https://github.com/ZotPlus/zotero-better-bibtex/issues/158)
-- Group Library key and personal library key conflicts [\#157](https://github.com/ZotPlus/zotero-better-bibtex/issues/157)
-- Group Library Pinned keys [\#156](https://github.com/ZotPlus/zotero-better-bibtex/issues/156)
-- Getting exports mixed up [\#153](https://github.com/ZotPlus/zotero-better-bibtex/issues/153)
-- German Umlaut "separated" by brackets [\#146](https://github.com/ZotPlus/zotero-better-bibtex/issues/146)
-- capital delta breaks .bib output [\#141](https://github.com/ZotPlus/zotero-better-bibtex/issues/141)
-- HTML Fragment separator escaped in url [\#140](https://github.com/ZotPlus/zotero-better-bibtex/issues/140)
-- spans without attributes break export [\#139](https://github.com/ZotPlus/zotero-better-bibtex/issues/139)
-- Exporting of single-field author lacks braces [\#130](https://github.com/ZotPlus/zotero-better-bibtex/issues/130)
-- Export via localhost URL not working for group libraries anymore [\#129](https://github.com/ZotPlus/zotero-better-bibtex/issues/129)
-- Be robust against misconfigured journal abbreviator/html parser failure [\#127](https://github.com/ZotPlus/zotero-better-bibtex/issues/127)
-- "Biblatex URL" doesn´t show up [\#125](https://github.com/ZotPlus/zotero-better-bibtex/issues/125)
-- Bibtex key regenerating issue when trashing items [\#117](https://github.com/ZotPlus/zotero-better-bibtex/issues/117)
-- Biblatex-exporter prints to year-field [\#116](https://github.com/ZotPlus/zotero-better-bibtex/issues/116)
-- URL export broken for fancy urls [\#114](https://github.com/ZotPlus/zotero-better-bibtex/issues/114)
-- Hang on non-file attachment export [\#112](https://github.com/ZotPlus/zotero-better-bibtex/issues/112)
-- two ISSN number are freezing browser [\#110](https://github.com/ZotPlus/zotero-better-bibtex/issues/110)
-- DOI with underscores in extra field [\#108](https://github.com/ZotPlus/zotero-better-bibtex/issues/108)
-- `biblatexcitekey\[my\_key\]` does not seem to work -- `bibtex:` does [\#105](https://github.com/ZotPlus/zotero-better-bibtex/issues/105)
-- underscores in URL fields should not be escaped [\#104](https://github.com/ZotPlus/zotero-better-bibtex/issues/104)
-- Shortjournal does not get exported to biblatex format [\#102](https://github.com/ZotPlus/zotero-better-bibtex/issues/102)
-- biber error on generated biblatex file [\#99](https://github.com/ZotPlus/zotero-better-bibtex/issues/99)
-- Export of item to Better Bibtex fails for auth3\_1 [\#98](https://github.com/ZotPlus/zotero-better-bibtex/issues/98)
-- Mantain the JabRef group and subgroup structure when importing a BibTeX db [\#97](https://github.com/ZotPlus/zotero-better-bibtex/issues/97)
-- @PREAMBLE directive not removed during import [\#96](https://github.com/ZotPlus/zotero-better-bibtex/issues/96)
-- Importing BibTeX entries with square brackets [\#94](https://github.com/ZotPlus/zotero-better-bibtex/issues/94)
-- Error when importing a BibTeX InCollection record [\#92](https://github.com/ZotPlus/zotero-better-bibtex/issues/92)
-- Fixed citation keys messed up my library [\#88](https://github.com/ZotPlus/zotero-better-bibtex/issues/88)
-- Clean Extra field handling for "Generate BibTex key" [\#87](https://github.com/ZotPlus/zotero-better-bibtex/issues/87)
-- Don't escape right square brackets [\#85](https://github.com/ZotPlus/zotero-better-bibtex/issues/85)
-- periods between author names in \[authors\] [\#82](https://github.com/ZotPlus/zotero-better-bibtex/issues/82)
-- Generate unique static bibtex label [\#79](https://github.com/ZotPlus/zotero-better-bibtex/issues/79)
-- Syntax \[field:\(fallback-string\)\] bugged? [\#78](https://github.com/ZotPlus/zotero-better-bibtex/issues/78)
-- Showstopper: citation keys change! [\#76](https://github.com/ZotPlus/zotero-better-bibtex/issues/76)
-- Export stops at amazon/googlebooks link [\#75](https://github.com/ZotPlus/zotero-better-bibtex/issues/75)
-- Dashes ignored in cite key [\#74](https://github.com/ZotPlus/zotero-better-bibtex/issues/74)
-- { in filename makes Bibdesk and Bibtex cry [\#72](https://github.com/ZotPlus/zotero-better-bibtex/issues/72)
-- Special characters in DOI [\#66](https://github.com/ZotPlus/zotero-better-bibtex/issues/66)
-- Spaces in author names are not filtered out. [\#64](https://github.com/ZotPlus/zotero-better-bibtex/issues/64)
-- html tags are not filtered out in \[shorttitle\] [\#63](https://github.com/ZotPlus/zotero-better-bibtex/issues/63)
-- shorttitle behaves differently in version 0.5.15 [\#62](https://github.com/ZotPlus/zotero-better-bibtex/issues/62)
-- Don't alter the Function prototype -- bad things happen. [\#58](https://github.com/ZotPlus/zotero-better-bibtex/issues/58)
-- Problem with forced citekey generation [\#57](https://github.com/ZotPlus/zotero-better-bibtex/issues/57)
-- Change in Pandoc Citation behavior [\#55](https://github.com/ZotPlus/zotero-better-bibtex/issues/55)
-- \<i\>work\</i\> Closing tag ignored [\#47](https://github.com/ZotPlus/zotero-better-bibtex/issues/47)
-- \[authorsN\] and \[auth.etal\] field markers not working [\#44](https://github.com/ZotPlus/zotero-better-bibtex/issues/44)
-- Error when importing with better bibtex [\#43](https://github.com/ZotPlus/zotero-better-bibtex/issues/43)
-- "show biblatex url" doesn't work on main library/collection [\#41](https://github.com/ZotPlus/zotero-better-bibtex/issues/41)
-- No "Bib\(La\)TeX citations" translater available [\#39](https://github.com/ZotPlus/zotero-better-bibtex/issues/39)
-- Better Biblatex exports some fields twice [\#37](https://github.com/ZotPlus/zotero-better-bibtex/issues/37)
-- Non-numeric dates not exporting in Biblatex [\#36](https://github.com/ZotPlus/zotero-better-bibtex/issues/36)
-- Title field not being exported [\#35](https://github.com/ZotPlus/zotero-better-bibtex/issues/35)
-- doi field wrapped in second pair of {} [\#34](https://github.com/ZotPlus/zotero-better-bibtex/issues/34)
-- No "and" in AUTHOR field when multiple authors [\#33](https://github.com/ZotPlus/zotero-better-bibtex/issues/33)
-- ReferenceError: item not defined [\#26](https://github.com/ZotPlus/zotero-better-bibtex/issues/26)
-- Javascript "An error occurred while trying to export the selected file" [\#25](https://github.com/ZotPlus/zotero-better-bibtex/issues/25)
-- Configurable citekey generator [\#24](https://github.com/ZotPlus/zotero-better-bibtex/issues/24)
-- Export with notes & files fails [\#21](https://github.com/ZotPlus/zotero-better-bibtex/issues/21)
-- Export fails with v0.19 [\#19](https://github.com/ZotPlus/zotero-better-bibtex/issues/19)
-- Proper URL encoding for bibtex [\#18](https://github.com/ZotPlus/zotero-better-bibtex/issues/18)
-- BibTeX key is not generated when positon have a translator field set [\#12](https://github.com/ZotPlus/zotero-better-bibtex/issues/12)
-- JavaScript Error on export [\#11](https://github.com/ZotPlus/zotero-better-bibtex/issues/11)
-- breaks bibtex import in Zotero [\#7](https://github.com/ZotPlus/zotero-better-bibtex/issues/7)
-- Bug in authorLast [\#3](https://github.com/ZotPlus/zotero-better-bibtex/issues/3)
-- Ambiguous keys [\#2](https://github.com/ZotPlus/zotero-better-bibtex/issues/2)
-
-**Merged pull requests:**
-
-- Preserve Bib variable names [\#163](https://github.com/ZotPlus/zotero-better-bibtex/pull/163) ([nalt](https://github.com/nalt))
-- Wrapped call to @items inside Zotero.Items.get; Made 2nd argument option... [\#138](https://github.com/ZotPlus/zotero-better-bibtex/pull/138) ([baig](https://github.com/baig))
-- Fixed indentation in schomd.search [\#136](https://github.com/ZotPlus/zotero-better-bibtex/pull/136) ([baig](https://github.com/baig))
-- Search [\#135](https://github.com/ZotPlus/zotero-better-bibtex/pull/135) ([baig](https://github.com/baig))
-- Add 'les', 'zu', 'zum' to skipwords. [\#103](https://github.com/ZotPlus/zotero-better-bibtex/pull/103) ([adunning](https://github.com/adunning))
-- Update download link in README.md [\#68](https://github.com/ZotPlus/zotero-better-bibtex/pull/68) ([PhilLab](https://github.com/PhilLab))
-- Permit HTTP export of group libraries [\#65](https://github.com/ZotPlus/zotero-better-bibtex/pull/65) ([abrasive](https://github.com/abrasive))
-- Minor language fix in README [\#17](https://github.com/ZotPlus/zotero-better-bibtex/pull/17) ([kachkaev](https://github.com/kachkaev))
-- More detailed installation instruction in README [\#16](https://github.com/ZotPlus/zotero-better-bibtex/pull/16) ([kachkaev](https://github.com/kachkaev))
-- \_veryshorttitle should return 1 word instead of 3 [\#14](https://github.com/ZotPlus/zotero-better-bibtex/pull/14) ([kachkaev](https://github.com/kachkaev))
-- Fix: shortyear could expand to single digit [\#10](https://github.com/ZotPlus/zotero-better-bibtex/pull/10) ([rrutledge](https://github.com/rrutledge))
-- Removed trailing comma from entries. [\#6](https://github.com/ZotPlus/zotero-better-bibtex/pull/6) ([sdietzel](https://github.com/sdietzel))
-- Fix problem with url field encoding [\#1](https://github.com/ZotPlus/zotero-better-bibtex/pull/1) ([santtu](https://github.com/santtu))
 
 
-
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Change Log was automatically generated by a monkey-patched [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
