@@ -34,9 +34,12 @@ class HTML
       when 'sub'
         @markdown += '~'
 
-      when 'span', 'sc'
-        tag.smallcaps = tag.name == 'sc' || (tag.attrs.style || '').match(/small-caps/i)
-        @markdown += '<span style="font-variant:small-caps;">' if tag.smallcaps
+      when 'sc'
+        @markdown += '<span style="font-variant:small-caps;">'
+        tag.attrs.style = "font-variant:small-caps;"
+
+      when 'span'
+        @markdown += "<span#{(" #{k}=\"#{v}\"" for k, v of tag.attrs).join('')}>" if Object.keys(tag.attrs).length > 0
 
       when 'tbody', '#document', 'html', 'head', 'body' then # ignore
 
@@ -50,11 +53,20 @@ class HTML
       when 'i', 'italic', 'em'
         @markdown += '*'
 
-      when 'sup', 'sub', 'b', 'strong'
+      when 'b', 'strong'
         @markdown += '**'
+
+      when 'sup'
+        @markdown += '^'
+
+      when 'sub'
+        @markdown += '~'
 
       when 'a'
         @markdown += "](#{tag.attrs.href})" if tag.attrs.href?.length > 0
 
-      when 'span', 'sc'
-        @markdown += '<span>' if tag.smallcaps
+      when 'sc'
+        @markdown += '</span>'
+
+      when 'span'
+        @markdown += '</span>' if Object.keys(tag.attrs).length > 0

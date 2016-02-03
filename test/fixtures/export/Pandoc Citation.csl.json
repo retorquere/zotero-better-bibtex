@@ -71,5 +71,52 @@
     "title": "Skizze zur Auslegungsgeschichte der Bücher <i>Prouerbia</i> und <i>Ecclesiastes</i> in der abendländischen Kirche",
     "type": "article-journal",
     "volume": "34"
+  },
+  {
+    "URL": "https://archive.org/details/gospelaccording00goog",
+    "accessed": {
+      "date-parts": [ [ "2014", 4, 29 ] ]
+    },
+    "collection-number": "1",
+    "collection-title": "Old-Latin Biblical Texts",
+    "editor": [
+      {
+        "family": "Wordsworth",
+        "given": "John"
+      }
+    ],
+    "event-place": "Oxford",
+    "id": "Wordsworth1883",
+    "issued": {
+      "date-parts": [ [ 1883 ] ]
+    },
+    "language": "English",
+    "number-of-pages": "139",
+    "publisher": "Clarendon Press",
+    "publisher-place": "Oxford",
+    "source": "Internet Archive",
+    "title": "The Gospel according to St. Matthew, from the St. Germain ms. (g<sub>1</sub>), now numbered Lat. 11553 in the National Library at Paris",
+    "title-short": "The Gospel according to St. Matthew",
+    "type": "book"
+  },
+  {
+    "author": [
+      {
+        "family": "Dunning",
+        "given": "Andrew N.J."
+      }
+    ],
+    "collection-number": "33",
+    "collection-title": "Toronto Medieval Latin Texts",
+    "event-place": "Toronto",
+    "id": "Dunning2016",
+    "issued": {
+      "date-parts": [ [ 2016 ] ]
+    },
+    "publisher": "Pontifical Institute of Mediaeval Studies",
+    "publisher-place": "Toronto",
+    "title": "Samuel Presbiter: Notes from the school of William de Montibus. <span class=\"nocase\">Collecta ex diuersis auditis in scola magistri Willelmi de Monte</span>",
+    "title-short": "Notes from the school of William de Montibus",
+    "type": "book"
   }
 ]

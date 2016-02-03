@@ -104,6 +104,77 @@
 
       ],
       "__citekey__": "berndt:skizze"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+        "Vulgate"
+      ],
+      "relations": {
+      },
+      "url": "https://archive.org/details/gospelaccording00goog",
+      "series": "Old-Latin Biblical Texts",
+      "place": "Oxford",
+      "publisher": "Clarendon Press",
+      "date": "1883",
+      "accessDate": "2014-04-29 13:50:49",
+      "seriesNumber": "1",
+      "libraryCatalog": "Internet Archive",
+      "language": "English",
+      "title": "The Gospel according to St. Matthew, from the St. Germain ms. (g<sub>1</sub>), now numbered Lat. 11553 in the National Library at Paris",
+      "shortTitle": "The Gospel according to St. Matthew",
+      "numPages": "139",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "lastName": "Wordsworth",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 947,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "wordsworth:gospel"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "Toronto Medieval Latin Texts",
+      "place": "Toronto",
+      "publisher": "Pontifical Institute of Mediaeval Studies",
+      "date": "2016",
+      "seriesNumber": "33",
+      "title": "Samuel Presbiter: Notes from the school of William de Montibus. <span class=\"nocase\">Collecta ex diuersis auditis in scola magistri Willelmi de Monte</span>",
+      "shortTitle": "Notes from the school of William de Montibus",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Dunning",
+          "firstName": "Andrew N.J."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 5725,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "dunning:samuel"
     }
   ],
   "config": {
