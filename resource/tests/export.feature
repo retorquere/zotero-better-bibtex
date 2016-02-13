@@ -228,9 +228,9 @@ Scenario: Date export to Better CSL-JSON #360
   When I import 6 references from 'export/Date export to Better CSL-JSON #360.json'
   And a library export using 'Better CSL JSON' should match 'export/Date export to Better CSL-JSON #360.csl.json'
 
-@432 @pandoc @test-cluster-2
+@432 @447 @pandoc @test-cluster-2
 Scenario: Pandoc/LaTeX Citation Export
-  When I import 1 reference with 1 attachment from 'export/Pandoc Citation.json'
+  When I import 4 references with 3 attachments from 'export/Pandoc Citation.json'
   Then a library export using 'Pandoc Citation' should match 'export/Pandoc Citation.pandoc'
   And a library export using 'LaTeX Citation' should match 'export/Pandoc Citation.latex'
   And a library export using 'Better CSL JSON' should match 'export/Pandoc Citation.csl.json'

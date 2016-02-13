@@ -23,12 +23,12 @@ Through the configuration pane of BBT you can customize the BibTeX file that wil
 * Scan your AUX files to get a list of references specifically for your article (and incidentally list missing
   references) by importing it.
 
-BBT http export uses the general Zotero HTTP facility; please note that disabling this will disable ALL http
-facilities in zotero -- including the non-Firefox plugins provided by Zotero.
+BBT http export uses the general Zotero HTTP facility; please note that disabling this will disable ALL HTTP
+facilities in Zotero -- including the non-Firefox plugins provided by Zotero.
 
 # Add your own BibLaTeX fields
 
-You can add any field you like by using something like 
+You can add any field you like by using something like
 
 ```
 bibtex[origdate=1856;origtitle=An Old Title]
@@ -81,7 +81,7 @@ You got customized. It doesn't yet have a GUI, but as this really is a bit on th
 without for now.
 
 If you go into `about:config` you will find a preference `extensions.zotero.translators.better-bibtex.postscript`, which
-is empty by default. In this, preference, you can paste a javascript string which will be executed for each reference
+is empty by default. In this preference, you can paste a JavaScript string which will be executed for each reference
 generated in the Bib(La)TeX exporter. In this code, you have access to the reference just before it will be written out
 and cached. The documentation-in-progress for the script environment can be found
 [here](https://github.com/ZotPlus/zotero-better-bibtex/wiki/Scripting); there are also [examples on the wiki](https://github.com/ZotPlus/zotero-better-bibtex/wiki/Scripting-examples); feel free to add your own.
