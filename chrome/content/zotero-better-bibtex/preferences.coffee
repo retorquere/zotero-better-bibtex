@@ -88,7 +88,6 @@ BetterBibTeXPref =
     document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-change').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())
     document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-export').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())
     document.getElementById('id-zotero-better-bibtex-server-warning').setAttribute('hidden', serverEnabled)
-    document.getElementById('id-zotero-better-bibtex-recursive-warning').setAttribute('hidden', not document.getElementById('id-better-bibtex-preferences-getCollections').checked)
 
     styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
 

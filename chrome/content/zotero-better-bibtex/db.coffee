@@ -54,7 +54,7 @@ Zotero.BetterBibTeX.DB = new class
     @keys ||= @db.main.addCollection('keys', {indices: ['itemID', 'libraryID', 'citekey']})
 
     @autoexport = @db.main.getCollection('autoexport')
-    @autoexport ||= @db.main.addCollection('autoexport', {indices: ['collection', 'path', 'exportCharset', 'exportNotes', 'translatorID', 'useJournalAbbreviation', 'exportedRecursively']})
+    @autoexport ||= @db.main.addCollection('autoexport', {indices: ['collection', 'path', 'exportCharset', 'exportNotes', 'translatorID', 'useJournalAbbreviation']})
 
     # # in case I need to update the indices:
     # #
@@ -302,7 +302,6 @@ Zotero.BetterBibTeX.DB = new class
             exportNotes: (row.exportNotes == 'true')
             translatorID: row.translatorID
             useJournalAbbreviation: (row.useJournalAbbreviation == 'true')
-            exportedRecursively: (row.exportedRecursively == 'true')
             status: 'pending'
           })
         Zotero.BetterBibTeX.debug('DB.migrate: autoexport=', migrated)

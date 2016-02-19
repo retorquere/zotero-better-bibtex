@@ -162,9 +162,7 @@
                     <checkbox label="&zotero.better-bibtex.attachmentsNoMetadata;" preference="pref-better-bibtex-attachments-nometadata"/>
                   </row>
                   <row>
-                    <checkbox id="id-better-bibtex-preferences-getCollections"
-                    label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive" oncommand="BetterBibTeXPref.update();"/>
-                    <label id="id-zotero-better-bibtex-recursive-warning" hidden="true" style="color: red">&zotero.better-bibtex.recursive.warning;</label>
+                    <checkbox id="id-better-bibtex-preferences-getCollections" label="&zotero.better-bibtex.preferences.recursive;" preference="pref-better-bibtex-recursive"/>
                   </row>
                   <row>
                     <checkbox id="id-better-bibtex-preferences-server-enabled"

@@ -11,7 +11,7 @@ module GitHubChangelogGenerator
       fetch_issues_and_pr
 
       log = "#{@options[:header]}\n\n"
-      log = {'title' => @options[:header]} + "---\n"
+      log = {'title' => @options[:header]}.to_yaml + "---\n"
 
       if @options[:unreleased_only]
         log += generate_log_between_tags(filtered_tags[0], nil)
@@ -68,4 +68,5 @@ gcg = GitHubChangelogGenerator::ChangelogGenerator.new
 gcg.options[:user] = 'ZotPlus'
 gcg.options[:project] = 'zotero-better-bibtex'
 gcg.options[:output] = 'site/CHANGELOG.md'
+gcg.options[:exclude_tags] = ['update.rdf', 'travis', 'current', 'test-profiles']
 gcg.run
