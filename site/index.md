@@ -52,7 +52,7 @@ downloaded using another browser, double-click the downloaded xpi; Firefox ought
 # Got problems? We got fixes!
 
 If you have any questions on the use of the plugin, please do not hesitate to file a GitHub issue to ask for help. If
-you're reporting a bug in the plugin, please take a moment to glance through the [Support Request Guidelines](/support.html); it will
+you're reporting a bug in the plugin, please take a moment to glance through the [Support Request Guidelines](support.html); it will
 make sure I get your problem fixed as quick as possible. Clear bug reports commonly have time-to-fix of 10 minutes. The
 guidelines are very detailed, perhaps to the point of being off-putting, but please do not fret; these guidelines
 simply express my ideal bug submission. I of course prefer very clearly documented issue reports over fuzzy ones, but I
