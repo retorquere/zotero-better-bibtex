@@ -221,6 +221,7 @@ Zotero.BetterBibTeX.DB = new class
 
       callback()
       Zotero.BetterBibTeX.debug('DB.saveDatabase:', {name, file: file.path})
+      return
 
     loadDatabase: (name, callback) ->
       file = Zotero.BetterBibTeX.createFile(name)
@@ -230,6 +231,7 @@ Zotero.BetterBibTeX.DB = new class
       else
         callback(null)
       Zotero.BetterBibTeX.debug('DB.loadDatabase: done', {name, file: file.path})
+      return
 
   SQLite:
     parseTable: (name) ->
