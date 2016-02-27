@@ -191,7 +191,7 @@ DOWNLOADS = {
   'chrome/content/zotero-better-bibtex' => {
     #'test/chai.js'      => 'http://chaijs.com/chai.js',
     #'test/yadda.js'     => 'https://raw.githubusercontent.com/acuminous/yadda/master/dist/yadda-0.11.5.js',
-    #'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
+    'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
   },
   'resource/translators' => {
     'unicode.xml'         => 'http://www.w3.org/Math/characters/unicode.xml',
@@ -206,22 +206,22 @@ DOWNLOADS.each_pair{|dir, files|
   }
 }
 
-file 'chrome/content/zotero-better-bibtex/lokijs.js' => 'Rakefile' do |t|
-  cleanly(t.name) do
-    Tempfile.create('lokijs') do |tmp|
-      download('https://github.com/techfort/LokiJS/archive/v1.3.11.zip', tmp.path)
-      Zip::File.open(tmp.path) do |zip|
-        # Handle entries one by one
-        zip.each do |entry|
-          next unless entry.name =~ /\/build\/lokijs.min.js$/
-          File.unlink(t.name) if File.file?(t.name)
-          puts "Extracting #{entry.name}"
-          entry.extract(t.name)
-        end
-      end
-    end
-  end
-end
+#file 'chrome/content/zotero-better-bibtex/lokijs.js' => 'Rakefile' do |t|
+#  cleanly(t.name) do
+#    Tempfile.create('lokijs') do |tmp|
+#      download('https://github.com/techfort/LokiJS/archive/v1.3.11.zip', tmp.path)
+#      Zip::File.open(tmp.path) do |zip|
+#        # Handle entries one by one
+#        zip.each do |entry|
+#          next unless entry.name =~ /\/build\/lokijs.min.js$/
+#          File.unlink(t.name) if File.file?(t.name)
+#          puts "Extracting #{entry.name}"
+#          entry.extract(t.name)
+#        end
+#      end
+#    end
+#  end
+#end
 
 file 'chrome/content/zotero-better-bibtex/translators.js' => Dir['resource/translators/*.yml'] + ['Rakefile'] do |t|
   translators = Dir['resource/translators/*.yml'].collect{|header| header = YAML::load_file(header) }

@@ -12,8 +12,7 @@ Background:
 
 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @test-cluster-0
 Scenario Outline: BibLaTeX Export
-  Given I import <references> references from 'export/<file>.json'
-  And I set preference .autoAbbrev to true
+  And I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
 
   Examples:
@@ -49,8 +48,7 @@ Scenario Outline: BibLaTeX Export
 
 @bblt-1 @bblt @test-cluster-1
 Scenario Outline: BibLaTeX Export
-  Given I import <references> references from 'export/<file>.json'
-  And I set preference .autoAbbrev to true
+  And I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
 
   Examples:
@@ -240,24 +238,24 @@ Scenario: Pandoc/LaTeX Citation Export
 
 @journal-abbrev @bbt @test-cluster-2
 Scenario: Journal abbreviations
-  When I set preferences:
+  Given I import 1 reference with 1 attachment from 'export/Better BibTeX.029.json'
+  And I set preferences:
     | .citekeyFormat    | [authors][year][journal]          |
     | .autoAbbrev       | true                              |
     | .autoAbbrevStyle  | http://www.zotero.org/styles/cell |
     | .pinCitekeys      | on-export                         |
-   And I import 1 reference with 1 attachment from 'export/Better BibTeX.029.json'
   Then the following library export should match 'export/Better BibTeX.029.bibtex':
     | translator             | Better BibTeX  |
     | useJournalAbbreviation | true           |
 
 @81 @bbt @test-cluster-2
 Scenario: Journal abbreviations exported in bibtex (81)
-  When I set preferences:
+  Given I import 1 reference from 'export/Journal abbreviations exported in bibtex (81).json'
+  And I set preferences:
     | .citekeyFormat          | [authors2][year][journal:nopunct] |
     | .autoAbbrev             | true                              |
     | .autoAbbrevStyle        | http://www.zotero.org/styles/cell |
     | .pinCitekeys            | on-export                         |
-   And I import 1 reference from 'export/Journal abbreviations exported in bibtex (81).json'
   Then the following library export should match 'export/Journal abbreviations exported in bibtex (81).bibtex':
     | translator              | Better BibTeX  |
     | useJournalAbbreviation  | true           |
