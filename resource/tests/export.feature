@@ -13,6 +13,7 @@ Background:
 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @test-cluster-0
 Scenario Outline: BibLaTeX Export
   Given I import <references> references from 'export/<file>.json'
+  And I set preference .autoAbbrev to true
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
 
   Examples:
@@ -49,6 +50,7 @@ Scenario Outline: BibLaTeX Export
 @bblt-1 @bblt @test-cluster-1
 Scenario Outline: BibLaTeX Export
   Given I import <references> references from 'export/<file>.json'
+  And I set preference .autoAbbrev to true
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
 
   Examples:
