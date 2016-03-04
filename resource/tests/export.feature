@@ -266,6 +266,12 @@ Scenario: Post script
   And I set preference .postscript to 'export/Export web page to misc type with notes and howpublished custom fields #329.js'
   Then a library export using 'Better BibTeX' should match 'export/Export web page to misc type with notes and howpublished custom fields #329.bibtex'
 
+@456
+Scenario: Ignoring upper cases in German titles #456
+  Given I import 2 references from 'export/Ignoring upper cases in German titles #456.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Ignoring upper cases in German titles #456.biblatex'
+  And a library export using 'Better BibTeX' should match 'export/Ignoring upper cases in German titles #456.bibtex'
+
 @266 @286 @bblt @test-cluster-0
 Scenario: Diacritics stripped from keys regardless of ascii or fold filters #266
   Given I import 1 reference from 'export/Diacritics stripped from keys regardless of ascii or fold filters #266.json'

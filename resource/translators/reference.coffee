@@ -296,7 +296,7 @@ class Reference
 
     return f.value if f.raw || raw
 
-    value = LaTeX.text2latex(f.value, {preserveCase: f.preserveCase, autoCase: f.autoCase && @english})
+    value = LaTeX.text2latex(f.value, {preserveCase: f.preserveCase || f.autoCase, autoCase: f.autoCase && @english})
     value = new String("{#{value}}") if f.value instanceof String
     return value
 
