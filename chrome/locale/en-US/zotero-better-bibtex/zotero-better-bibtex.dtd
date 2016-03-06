@@ -16,7 +16,7 @@
 <!ENTITY zotero.better-bibtex.parseParticles "Move name-particles (de, von, ...) to the family name">
 
 <!ENTITY zotero.better-bibtex.restart-required "Restart Required">
-<!ENTITY zotero.better-bibtex.preferences.recursive "Export collections recursively">
+<!ENTITY zotero.better-bibtex.preferences.recursive "Display subcollections recursively">
 <!ENTITY zotero.better-bibtex.cite.command "Citation command">
 <!ENTITY zotero.better-bibtex.skipFields "Fields to omit from export (comma-separated)">
 <!ENTITY zotero.better-bibtex.cite.format "Citation key format">
@@ -27,7 +27,6 @@
 <!ENTITY zotero.better-bibtex.server.disabled "Export by HTTP disabled">
 <!ENTITY zotero.better-bibtex.server.address "Bibliography export at ">
 <!ENTITY zotero.better-bibtex.server.warning "BibTeX http export uses the general Zotero HTTP facility; please note that disabling this will disable ALL http facilities in zotero -- including the non-Firefox plugins">
-<!ENTITY zotero.better-bibtex.recursive.warning "Enabling recursive export also causes Zotero to display collection content recursively">
 <!ENTITY zotero.better-bibtex.ascii.BibTeX "Export BibTeX as ASCII">
 <!ENTITY zotero.better-bibtex.ascii.BibLaTeX "Export BibLaTeX as ASCII">
 <!ENTITY zotero.better-bibtex.bibtexURLs "Add URLs to BibTeX export (BibTeX does not natively support them)">

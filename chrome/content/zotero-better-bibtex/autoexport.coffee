@@ -49,7 +49,6 @@ Zotero.BetterBibTeX.auto = new class
       exportCharset: (context.exportCharset || 'UTF-8').toUpperCase()
       exportNotes: !!context.exportNotes
       useJournalAbbreviation: !!context.useJournalAbbreviation
-      exportedRecursively: @recursive()
       status: 'done'
       updated: (new Date()).toLocaleString()
     })
@@ -74,7 +73,6 @@ Zotero.BetterBibTeX.auto = new class
         @mark(ae, 'pending', reason)
 
   withParentCollections: (collections) ->
-    return collections unless @recursive()
     return collections if collections.length == 0
 
     return Zotero.DB.columnQuery("
@@ -89,11 +87,6 @@ Zotero.BetterBibTeX.auto = new class
         from collections p
         join recursivecollections as c on c.parentCollectionID = p.collectionID
       ) select distinct collectionID from recursivecollections")
-
-  recursive: ->
-    try
-      return Zotero.Prefs.get('recursiveCollections')
-    return false
 
   clear: ->
     @db.autoexport.removeDataOnly()

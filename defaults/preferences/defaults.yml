@@ -3,7 +3,7 @@ asciiBibLaTeX: false
 asciiBibTeX: true
 attachmentsNoMetadata: false
 autoAbbrevStyle: ''
-autoAbbrev: true
+autoAbbrev: false
 autoExport: idle
 autoExportIdleWait: 10
 cacheFlushInterval: 5

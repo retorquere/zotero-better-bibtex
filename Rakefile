@@ -51,7 +51,7 @@ end
 
 def download(url, file)
   puts "Downloading #{url} to #{file}..."
-  sh "curl #{url.shellescape} -o #{file.shellescape}"
+  sh "curl -L #{url.shellescape} -o #{file.shellescape}"
 end
 
 #ABBREVS = YAML.load_file('resource/abbreviations/lists.yml')
@@ -205,6 +205,23 @@ DOWNLOADS.each_pair{|dir, files|
     end
   }
 }
+
+#file 'chrome/content/zotero-better-bibtex/lokijs.js' => 'Rakefile' do |t|
+#  cleanly(t.name) do
+#    Tempfile.create('lokijs') do |tmp|
+#      download('https://github.com/techfort/LokiJS/archive/v1.3.11.zip', tmp.path)
+#      Zip::File.open(tmp.path) do |zip|
+#        # Handle entries one by one
+#        zip.each do |entry|
+#          next unless entry.name =~ /\/build\/lokijs.min.js$/
+#          File.unlink(t.name) if File.file?(t.name)
+#          puts "Extracting #{entry.name}"
+#          entry.extract(t.name)
+#        end
+#      end
+#    end
+#  end
+#end
 
 file 'chrome/content/zotero-better-bibtex/translators.js' => Dir['resource/translators/*.yml'] + ['Rakefile'] do |t|
   translators = Dir['resource/translators/*.yml'].collect{|header| header = YAML::load_file(header) }

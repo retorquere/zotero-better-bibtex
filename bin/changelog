@@ -71,4 +71,5 @@ gcg = GitHubChangelogGenerator::ChangelogGenerator.new
 gcg.options[:user] = 'ZotPlus'
 gcg.options[:project] = 'zotero-better-bibtex'
 gcg.options[:output] = 'site/CHANGELOG.md'
+gcg.options[:exclude_tags] = ['update.rdf', 'travis', 'current', 'test-profiles']
 gcg.run

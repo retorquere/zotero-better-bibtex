@@ -499,20 +499,6 @@ Zotero.BetterBibTeX.pref.observer = {
     Zotero.BetterBibTeX.debug('preference change:', subject, topic, data)
 }
 
-Zotero.BetterBibTeX.pref.ZoteroObserver = {
-  register: -> Zotero.Prefs.prefBranch.addObserver('', @, false)
-  unregister: -> Zotero.Prefs.prefBranch.removeObserver('', @)
-  observe: (subject, topic, data) ->
-    switch data
-      when 'recursiveCollections'
-        recursive = !!Zotero.BetterBibTeX.auto.recursive()
-
-        ### libraries are always recursive ###
-        for ae in Zotero.BetterBibTeX.DB.autoexport.where((o) -> !o.exportedRecursively == recursive && o.collection.indexOf('library:') != 0)
-          ae.exportedRecursively = recursive
-          Zotero.BetterBibTeX.auto.mark(ae, 'pending', "recursive export: #{recursive}")
-}
-
 Zotero.BetterBibTeX.pref.snapshot = ->
   stash = Object.create(null)
   for key in @prefs.getChildList('')
@@ -881,7 +867,6 @@ Zotero.BetterBibTeX.init = ->
   @schomd.init()
 
   @pref.observer.register()
-  @pref.ZoteroObserver.register()
   Zotero.addShutdownListener(->
     Zotero.BetterBibTeX.log('shutting down')
     Zotero.BetterBibTeX.DB.save(true)
