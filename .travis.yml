@@ -14,6 +14,9 @@ env:
 - DEBUGBUILD=-travis-$TRAVIS_BUILD_NUMBER TESTS=ci-cluster-2
 - DEBUGBUILD=-travis-$TRAVIS_BUILD_NUMBER TESTS=ci-cluster-3
 script:
+- gem install bundler
+- bundle install
+- npm install
 - bundle exec rake test[$TESTS]
 - bundle exec rake logs2s3
 - bundle exec ./.travis.sh publish
