@@ -3,7 +3,7 @@ serialize = (csl) ->
     csl[k] = (new @HTML(v)).markdown if typeof v == 'string' && v.indexOf('<') >= 0
   YAML.safeDump([csl], {skipInvalid: true})
 
-flush = (items) -> "---\nreferences:\n" + items.join("\n") + "..."
+flush = (items) -> "---\nreferences:\n" + items.join("\n") + "...\n"
 
 class HTML
   constructor: (html) ->
