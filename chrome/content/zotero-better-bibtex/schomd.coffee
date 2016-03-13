@@ -9,6 +9,7 @@ Zotero.BetterBibTeX.schomd.init = ->
     # need not be idempotent.
     ###
     text_escape: (text) ->
+      text = '' unless text?
       text = text.replace(/([-"\\`\*_{}\[\]\(\)#\+!])/g, "\\$1")
       text = text.replace(/(^|[\n])(\s*[0-9]+)\.(\s)/g, "$1\\.$2")
       text = text.replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "<sup>#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}</sup>"))
@@ -69,6 +70,79 @@ Zotero.BetterBibTeX.schomd.init = ->
 
     "@quotes/false": false
   }
+
+  Zotero.CiteProc.CSL.Output.Formats.bbl = {
+    ###
+    # text_escape: Format-specific function for escaping text destined
+    # for output.  Takes the text to be escaped as sole argument.  Function
+    # will be run only once across each portion of text to be escaped, it
+    # need not be idempotent.
+    ###
+    # 29\raise0.5ex\hbox{th}
+    # \usepackage{xltxtra}, \textsuperscript{} \textsubscript{}
+    text_escape: (text) ->
+      text = '' unless text?
+      text = text.replace(/(\. )/g, ".\\ ")
+      text = text.replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "{\\textsuperscript{#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}}}"))
+      return text
+    # Todo: how to compute the width? I'm arbitrarily setting it to 4
+    # digits for now.
+    bibstart: '\\begin{thebibliography}{9999}\n\n'
+    bibend: '\\end{thebibliography}\n'
+    '@font-style/italic': '\\textit{%%STRING%%}'
+    '@font-style/oblique':'\\textsl{%%STRING%%}'
+    '@font-style/normal': false
+    '@font-variant/small-caps': '\\textsc{%%STRING%%}'
+    '@passthrough/true': Zotero.CiteProc.CSL.Output.Formatters.passthrough
+    '@font-variant/normal': false
+    '@font-weight/bold': '\\textbf{%%STRING%%}'
+    '@font-weight/normal': false
+    '@font-weight/light': false
+    '@text-decoration/none': false
+    '@text-decoration/underline': false
+    '@vertical-align/sup': '\\textsuperscript{%%STRING%%}'
+    '@vertical-align/sub': '\\textsubscript{%%STRING%%}'
+    '@vertical-align/baseline': false
+    '@strip-periods/true': Zotero.CiteProc.CSL.Output.Formatters.passthrough
+    '@strip-periods/false': Zotero.CiteProc.CSL.Output.Formatters.passthrough
+    '@quotes/true': (state, str) ->
+      return '``' unless str?
+      return '``' + str + '\'\''
+
+    '@quotes/inner': (state, str) ->
+      return '’'  unless str?
+      return state.getTerm('open-inner-quote') + str + state.getTerm('close-inner-quote')
+
+    '@quotes/false': false
+
+    '@cite/entry': (state, str) ->
+      Zotero.BetterBibTeX.debug('bbl.@cite/entry:', state.registry.registry[@system_id].ref.id)
+      return str || ''
+
+    '@bibliography/entry': (state, str) ->
+      Zotero.BetterBibTeX.debug('bbl.@bibliography/entry:', state.registry.registry[@system_id].ref.id)
+      try
+        citekey = Zotero.BetterBibTeX.keymanager.get({itemID: state.registry.registry[@system_id].ref.id}).citekey
+      catch
+        citekey = '@@'
+      return "\\bibitem{#{citekey}}\n#{str}\n\n"
+
+    '@display/block': (state, str) -> "\n\\newblock #{str}\n"
+
+    '@display/left-margin': (state, str) -> str
+
+    '@display/right-inline': (state, str) -> str
+
+    '@display/indent': (state, str) -> "\n\\quad #{str}"
+
+    '@showid/true': (state, str, cslid) -> "((showid:#{str}))"
+
+    # May be TeXmacs specific, but can define macros.
+    '@URL/true': (state, str) -> "\\href{#{str}}"
+    '@DOI/true': (state, str) -> "\\hlink{#{str}}{http://dx.doi.org/#{str}}"
+
+    "@quotes/false": false
+  }
   return
 
 Zotero.BetterBibTeX.schomd.itemIDs = (citekeys, {libraryID} = {}) ->
@@ -117,8 +191,10 @@ Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, libraryID} = {}) ->
 
   return '' if itemIDs.length == 0
 
-  url = "http://www.zotero.org/styles/#{style ? 'apa'}"
-  style = Zotero.Styles.get(url)
+  urlstyle = "#{style ? 'apa'}"
+  style = Zotero.Styles.get("http://www.zotero.org/styles/#{urlstyle}")
+  style = Zotero.Styles.get("http://juris-m.github.io/styles/#{urlstyle}") unless style != false
+  style = Zotero.Styles.get("#{urlstyle}") unless style != false
   cp = style.getCiteProc()
   cp.setOutputFormat('markdown')
   cp.updateItems(itemIDs)
@@ -132,10 +208,44 @@ Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, libraryID} = {}) ->
   itemIDs = @itemIDs(citekeys, {libraryID})
   return '' if itemIDs.length == 0
 
-  url = "http://www.zotero.org/styles/#{style ? 'apa'}"
-  style = Zotero.Styles.get(url)
+  urlstyle = "#{style ? 'apa'}"
+  style = Zotero.Styles.get("http://www.zotero.org/styles/#{urlstyle}")
+  style = Zotero.Styles.get("http://juris-m.github.io/styles/#{urlstyle}") unless style != false
+  style = Zotero.Styles.get("#{urlstyle}") unless style != false
   cp = style.getCiteProc()
   cp.setOutputFormat('markdown')
+  cp.updateItems((item for item in itemIDs when item))
+  bib = cp.makeBibliography()
+
+  return '' unless bib
+  return bib[0].bibstart + bib[1].join("") + bib[0].bibend
+
+Zotero.BetterBibTeX.schomd.bibliographyhtml = (citekeys, {style, libraryID} = {}) ->
+  itemIDs = @itemIDs(citekeys, {libraryID})
+  return '' if itemIDs.length == 0
+
+  urlstyle = "#{style ? 'apa'}"
+  style = Zotero.Styles.get("http://www.zotero.org/styles/#{urlstyle}")
+  style = Zotero.Styles.get("http://juris-m.github.io/styles/#{urlstyle}") unless style != false
+  style = Zotero.Styles.get("#{urlstyle}") unless style != false
+  cp = style.getCiteProc()
+  cp.setOutputFormat('html')
+  cp.updateItems((item for item in itemIDs when item))
+  bib = cp.makeBibliography()
+
+  return '' unless bib
+  return bib[0].bibstart + bib[1].join("") + bib[0].bibend
+
+Zotero.BetterBibTeX.schomd.bibliographybbl = (citekeys, {style, libraryID} = {}) ->
+  itemIDs = @itemIDs(citekeys, {libraryID})
+  return '' if itemIDs.length == 0
+
+  urlstyle = "#{style ? 'apa'}"
+  style = Zotero.Styles.get("http://www.zotero.org/styles/#{urlstyle}")
+  style = Zotero.Styles.get("http://juris-m.github.io/styles/#{urlstyle}") unless style != false
+  style = Zotero.Styles.get("#{urlstyle}") unless style != false
+  cp = style.getCiteProc()
+  cp.setOutputFormat('bbl')
   cp.updateItems((item for item in itemIDs when item))
   bib = cp.makeBibliography()
 
