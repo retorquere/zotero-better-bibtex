@@ -483,10 +483,16 @@ Then /^the markdown citation for ([^\s]*) should be '(.*)'$/ do |keys, citation|
   expect($Firefox.ScholarlyMarkdown.citation(keys)).to eq(citation)
 end
 
-Then /^the markdown bibliography for (.*) should be '(.*)'$/ do |keys, bibliography|
+Then /^the (markdown|html|bbl) bibliography for (.*) should be '(.*)'$/ do |type, keys, bibliography|
   keys = keys.split(',').collect{|k| k.strip}
-  found = $Firefox.ScholarlyMarkdown.bibliography(keys).gsub(/[\s\n]+/, ' ').strip
-  expected = bibliography.gsub(/[\s\n]+/, ' ').strip
+  found = case type
+    when 'markdown' then $Firefox.ScholarlyMarkdown.bibliography(keys).gsub(/[\s\n]+/, ' ')
+    when 'html' then $Firefox.ScholarlyMarkdown.bibliographyhtml(keys)
+    when 'bbl' then $Firefox.ScholarlyMarkdown.bibliographybbl(keys)
+  end
+  found.strip!
+  expected = bibliography.gsub(/[\s\n]+/, ' ') if type == 'markdown'
+  expected.strip!
   expect(found).to eq(expected)
 end
 
