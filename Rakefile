@@ -30,7 +30,7 @@ require 'facets'
 require 'rest-client'
 require 'front_matter_parser'
 require_relative 'lib/unicode_table'
-require 'github_changelog_generator'
+#require 'github_changelog_generator'
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
