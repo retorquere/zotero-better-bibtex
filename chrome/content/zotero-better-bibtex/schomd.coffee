@@ -184,6 +184,12 @@ Zotero.BetterBibTeX.schomd.citations = (citekeys, {style, libraryID} = {}) ->
 
   return citations
 
+Zotero.BetterBibTeX.schomd.getStyle = (id = 'apa') ->
+  style = Zotero.Styles.get("http://www.zotero.org/styles/#{id}")
+  style ||= Zotero.Styles.get("http://juris-m.github.io/styles/#{id}")
+  style ||= Zotero.Styles.get(id)
+  return style
+
 Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, libraryID} = {}) ->
   itemIDs = (item for item in @itemIDs(citekeys, {libraryID}) when item)
 
@@ -191,10 +197,7 @@ Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, libraryID} = {}) ->
 
   return '' if itemIDs.length == 0
 
-  styleurl = "#{style ? 'apa'}"
-  style = Zotero.Styles.get("http://www.zotero.org/styles/#{styleurl}")
-  style = Zotero.Styles.get("http://juris-m.github.io/styles/#{styleurl}") unless style != false
-  style = Zotero.Styles.get("#{styleurl}") unless style != false
+  style = @getStyle(style)
   cp = style.getCiteProc()
   cp.setOutputFormat('markdown')
   cp.updateItems(itemIDs)
@@ -208,10 +211,7 @@ Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, libraryID} = {}) ->
   itemIDs = @itemIDs(citekeys, {libraryID})
   return '' if itemIDs.length == 0
 
-  styleurl = "#{style ? 'apa'}"
-  style = Zotero.Styles.get("http://www.zotero.org/styles/#{styleurl}")
-  style = Zotero.Styles.get("http://juris-m.github.io/styles/#{styleurl}") unless style != false
-  style = Zotero.Styles.get("#{styleurl}") unless style != false
+  style = @getStyle(style)
   cp = style.getCiteProc()
   cp.setOutputFormat('markdown')
   cp.updateItems((item for item in itemIDs when item))
@@ -224,10 +224,7 @@ Zotero.BetterBibTeX.schomd.bibliographyhtml = (citekeys, {style, libraryID} = {}
   itemIDs = @itemIDs(citekeys, {libraryID})
   return '' if itemIDs.length == 0
 
-  styleurl = "#{style ? 'apa'}"
-  style = Zotero.Styles.get("http://www.zotero.org/styles/#{styleurl}")
-  style = Zotero.Styles.get("http://juris-m.github.io/styles/#{styleurl}") unless style != false
-  style = Zotero.Styles.get("#{styleurl}") unless style != false
+  style = @getStyle(style)
   cp = style.getCiteProc()
   cp.setOutputFormat('html')
   cp.updateItems((item for item in itemIDs when item))
@@ -240,10 +237,7 @@ Zotero.BetterBibTeX.schomd.bibliographybbl = (citekeys, {style, libraryID} = {})
   itemIDs = @itemIDs(citekeys, {libraryID})
   return '' if itemIDs.length == 0
 
-  styleurl = "#{style ? 'apa'}"
-  style = Zotero.Styles.get("http://www.zotero.org/styles/#{styleurl}")
-  style = Zotero.Styles.get("http://juris-m.github.io/styles/#{styleurl}") unless style != false
-  style = Zotero.Styles.get("#{styleurl}") unless style != false
+  style = @getStyle(style)
   cp = style.getCiteProc()
   cp.setOutputFormat('bbl')
   cp.updateItems((item for item in itemIDs when item))
