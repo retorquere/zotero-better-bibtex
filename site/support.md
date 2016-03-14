@@ -2,7 +2,7 @@
 title: Support
 ---
 
-# Getting support for Better BibTeX plugins
+# Getting support for Better BibTeX
 
 Before all else, ***thank you for taking the time for submitting an issue***, and I'm sorry that I've probably
 interrupted your flow.
@@ -58,3 +58,31 @@ issue; you cannot call it up later (although you can just do it again). Still, i
 
 If you have a problem, right-clicking on a reference that exhibits the problem and selecting `Report Better BibTeX Error` will send me a ready-to-use
 testcase, including your currents settings.
+
+# Going it your own -- building BBT
+
+I really don't like JavaScript. I know it's not too bad a language, but it's much more verbose than I'd like it to be,
+there's no list comprehensions, iterating over lists or arrays is much more effort than it should be, you name it. Then
+there's the whole async/promises bandwagon which I think is just a mistake engineered to perfection, necessitated by the
+single-threadedness of JavaScript. Fine and all, but some things are just simply single-threaded (such as my build
+scripts) and I don't need that kind of hassle.
+
+To avoid dealing with JavaScript, the bulk of the code is written in CoffeeScript. That language has its own problems,
+but I prefer those to JavaScript's. Some of the code is generated, and that code generation is generally done using Ruby
+-- much of that code lives inside the Rakefile that builds the XPI. Additionally, Zotero translators must be wholly
+self-contained, and for code-reuse reasons, the translators are assembled from their constituent parts during the build.
+It's a glorious mess. All of this makes it impossible to run BBT straight from the repository, or to just zip the repo
+and expect it to install.
+
+If this doesn't scare you, install ruby (at least 2.2) and node.js, then run
+
+```
+npm install
+gem install bundler
+bundle install
+```
+
+after which you can run `rake` to build the XPI. It will download various JavaScript libraries, generate some
+CoffeeScript files, convert all CoffeeScript files to JavaScript, and finally zip the whole up to create a XPI. It will also
+attempt to sign the plugin -- surprise, won't work, since you don't have my credentials. The resulting plugin can be
+installed in any version of Firefox that still allows unsigned plugins, or Zotero standalone.

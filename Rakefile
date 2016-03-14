@@ -30,7 +30,7 @@ require 'facets'
 require 'rest-client'
 require 'front_matter_parser'
 require_relative 'lib/unicode_table'
-require 'github_changelog_generator'
+#require 'github_changelog_generator'
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -862,14 +862,14 @@ task :doc do
   documented = {}
 
   section = nil
-  IO.readlines('www/better-bibtex/configuration.md').each{|line|
+  IO.readlines('site/configuration.md').each{|line|
     line.strip!
-    if line =~ /^# /
-      section = line.sub(/^#/, '').strip
+    if line =~ /^## /
+      section = line.sub(/^##/, '').strip
       next
     end
 
-    if line =~ /^### .* <!-- (.*) -->/
+    if line =~ /^<!-- (.*) -->/
       pref = $1.strip
       documented[pref] = section
     end

@@ -127,7 +127,7 @@ Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
 
   try
     switch req.method
-      when 'citations', 'citation', 'bibliography', 'bibtex', 'search'
+      when 'citations', 'citation', 'bibliography', 'bibliographyhtml', 'bibliographybbl', 'bibtex', 'search'
         ### the schomd methods search by citekey -- the cache needs to be fully primed for this to work ###
         Zotero.BetterBibTeX.keymanager.prime()
 
