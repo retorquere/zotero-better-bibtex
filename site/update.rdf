@@ -5,13 +5,13 @@
       <RDF:Seq>
         <RDF:li>
           <RDF:Description>
-            <em:version>1.6.36</em:version>
+            <em:version>1.6.37</em:version>
             <em:targetApplication>
               <RDF:Description>
                 <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
                 <em:minVersion>17.0</em:minVersion>
                 <em:maxVersion>43.*</em:maxVersion>
-                <em:updateLink>https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.6.36/zotero-better-bibtex-1.6.36.xpi</em:updateLink>
+                <em:updateLink>https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.6.37/zotero-better-bibtex-1.6.37.xpi</em:updateLink>
                 <em:updateInfoURL>https://zotplus.github.io/zotero-better-bibtex/CHANGELOG.html</em:updateInfoURL>
               </RDF:Description>
             </em:targetApplication>
@@ -20,7 +20,7 @@
                 <em:id>zotero@chnm.gmu.edu</em:id>
                 <em:minVersion/>
                 <em:maxVersion/>
-                <em:updateLink>https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.6.36/zotero-better-bibtex-1.6.36.xpi</em:updateLink>
+                <em:updateLink>https://github.com/ZotPlus/zotero-better-bibtex/releases/download/1.6.37/zotero-better-bibtex-1.6.37.xpi</em:updateLink>
                 <em:updateInfoURL>https://zotplus.github.io/zotero-better-bibtex/CHANGELOG.html</em:updateInfoURL>
               </RDF:Description>
             </em:targetApplication>
