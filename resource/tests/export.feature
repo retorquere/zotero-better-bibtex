@@ -17,6 +17,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | arxive files are not correctly exported #460                                                   | 1           |
      | Book sections have book title for journal in citekey #409                                      | 1           |
      | Colon in bibtex key #405                                                                       | 1           |
      | Oriental dates trip up date parser #389                                                        | 1           |
