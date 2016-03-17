@@ -109,17 +109,21 @@ doExport = ->
       ref.add({ name: 'eprinttype', value: 'arxiv'})
       ref.add({ name: 'eprint', value: m[1] })
       ref.add({ name: 'primaryClass', value: m[3]})
+      item.arXiv = item.publicationTitle
       delete item.publicationTitle
 
     # arXiv:arch-ive/YYMMNNNv# or arXiv:arch-ive/YYMMNNNv# [category]
     else if m = item.publicationTitle?.match(/^arxiv:([a-z]+-[a-z]+)\/([0-9]{7})(v[0-9]+)?\s+\[(.*)\]$/i)
       ref.add({ name: 'eprinttype', value: 'arxiv' })
       ref.add({ name: 'eprint', value: "#{m[1]}/#{m[2]}" })
+      item.arXiv = item.publicationTitle
+      delete item.publicationTitle
 
     else if m = item.publicationTitle?.match(/^arxiv:\s*([\S]+)/i)
       ref.add({ name: 'eprinttype', value: 'arxiv'})
       ref.add({ name: 'eprint', value: m[1] })
-      #delete item.publicationTitle
+      item.arXiv = item.publicationTitle
+      delete item.publicationTitle
 
     if m = item.url?.match(/^http:\/\/www.jstor.org\/stable\/([\S]+)$/i)
       ref.add({ name: 'eprinttype', value: 'jstor'})
