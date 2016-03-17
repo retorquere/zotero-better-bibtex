@@ -17,7 +17,6 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
-     | arxive files are not correctly exported #460                                                   | 1           |
      | Book sections have book title for journal in citekey #409                                      | 1           |
      | Colon in bibtex key #405                                                                       | 1           |
      | Oriental dates trip up date parser #389                                                        | 1           |
@@ -266,6 +265,12 @@ Scenario: Post script
   Given I import 3 references from 'export/Export web page to misc type with notes and howpublished custom fields #329.json'
   And I set preference .postscript to 'export/Export web page to misc type with notes and howpublished custom fields #329.js'
   Then a library export using 'Better BibTeX' should match 'export/Export web page to misc type with notes and howpublished custom fields #329.bibtex'
+
+@460
+Scenario: arxive files are not correctly exported #460
+  Given I import 1 references from 'export/arxive files are not correctly exported #460.json'
+  And I set preference .postscript to 'export/arxive files are not correctly exported #460.js'
+  Then a library export using 'Better BibLaTeX' should match 'export/arxive files are not correctly exported #460.biblatex'
 
 @456
 Scenario: Ignoring upper cases in German titles #456
