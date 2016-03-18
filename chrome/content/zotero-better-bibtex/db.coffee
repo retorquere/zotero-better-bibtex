@@ -9,7 +9,7 @@ Zotero.BetterBibTeX.DB = new class
 
     db = Zotero.getZoteroDatabase('betterbibtex-lokijs')
     Zotero.DB.query('ATTACH ? AS betterbibtex', [db.path])
-    Zotero.DB.query('CREATE TABLE IF NOT EXISTS lokijs (name PRIMARY KEY, data)')
+    Zotero.DB.query('CREATE TABLE IF NOT EXISTS betterbibtex.lokijs (name PRIMARY KEY, data)')
 
     @db = {
       main: new loki('db.json', {
@@ -220,7 +220,7 @@ Zotero.BetterBibTeX.DB = new class
 
   adapter:
     saveDatabase: (name, serialized, callback) ->
-      Zotero.DB.query("INSERT OR REPLACE INTO betterbibtex.lokijs (name, data)", [name, serialized])
+      Zotero.DB.query("INSERT OR REPLACE INTO betterbibtex.lokijs (name, data) VALUES (?, ?)", [name, serialized])
       callback()
       return
 
