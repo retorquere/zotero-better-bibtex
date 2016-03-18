@@ -229,7 +229,7 @@ Zotero.BetterBibTeX.DB = new class
       if file.exists()
         Zotero.BetterBibTeX.debug('DB.loadDatabase:', {name, file: file.path})
         callback(Zotero.File.getContents(file))
-        file.remove(null)
+        file.moveTo(null, name + '.bak')
         return
 
       data = Zotero.DB.valueQuery("SELECT data FROM betterbibtex.lokijs WHERE name=?", [name])
