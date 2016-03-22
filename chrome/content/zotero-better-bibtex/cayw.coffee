@@ -202,7 +202,6 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       cite += ", #{Zotero.BetterBibTeX.CAYW.shortLocator[citation.label]} #{citation.locator}" if citation.locator
       cite += " #{citation.suffix}" if citation.suffix
       formatted.push(cite)
-    return '' if formatted.length == 0
     return formatted.join('; ')
 
   'scannable-cite': (citations) ->
