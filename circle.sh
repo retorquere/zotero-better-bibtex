@@ -5,7 +5,6 @@ set -u
 
 case $1 in
   dependencies)
-    bundle exec rake bin/github-release plugins
     ;;
 
   test)

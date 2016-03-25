@@ -2,8 +2,6 @@ machine:
   ruby:
     version: "2.2"
 dependencies:
-  post:
-    - ./circle.sh dependencies
   cache_directories:
     - bin
     - test/fixtures/profiles
