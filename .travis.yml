@@ -24,7 +24,7 @@ branches:
 addons:
   firefox: "45.0"
 after_success:
-  - python travis_after_all.py https://api.travis-ci.com
+  - python travis_after_all.py https://api.travis-ci.org
   - export $(cat .to_export_back)
   - |
       if [ "$BUILD_LEADER" = "YES" ]; then
