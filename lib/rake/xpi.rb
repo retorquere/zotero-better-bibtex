@@ -76,27 +76,29 @@ module Rake
       end
 
       def update_rdf(link)
-        install = Nokogiri::XML(open('install.rdf'))
+        _id = self.id
+        _release = self.release
+        _changelog = self.changelog
 
         update = Nokogiri::XML::Builder.new { |xml|
           xml.RDF('xmlns:RDF'=>'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'xmlns:em' =>
           'http://www.mozilla.org/2004/em-rdf#') {
             xml.parent.namespace = xml.parent.namespace_definitions.find{|ns|ns.prefix=='RDF'}
-            xml['RDF'].Description(about: "urn:mozilla:extension:#{XPI.id}") {
+            xml['RDF'].Description(about: "urn:mozilla:extension:#{_id}") {
               xml['em'].updates {
                 xml['RDF'].Seq {
                   xml['RDF'].li {
                     xml['RDF'].Description {
-                      xml['em'].version { xml.text XPI.release }
+                      xml['em'].version { xml.text _release }
 
-                      install_rdf.xpath('//em:targetApplication/Description').each{|target|
+                      Nokogiri::XML(open('install.rdf')).xpath('//em:targetApplication/Description').each{|target|
                         xml['em'].targetApplication {
                           xml['RDF'].Description {
                             xml['em'].id { xml.text target.at('./em:id').inner_text }
                             xml['em'].minVersion { xml.text target.at('./em:minVersion').inner_text }
                             xml['em'].maxVersion { xml.text target.at('./em:maxVersion').inner_text }
                             xml['em'].updateLink { xml.text link }
-                            xml['em'].updateInfoURL { xml.text XPI.changelog }
+                            xml['em'].updateInfoURL { xml.text _changelog }
                           }
                         }
                       }
