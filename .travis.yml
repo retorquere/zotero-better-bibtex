@@ -9,18 +9,43 @@ git:
 rvm:
 - 2.2
 env:
-- DEBUGBUILD=-travis-$TRAVIS_BUILD_NUMBER TESTS=ci-cluster-0
-- DEBUGBUILD=-travis-$TRAVIS_BUILD_NUMBER TESTS=ci-cluster-1
-- DEBUGBUILD=-travis-$TRAVIS_BUILD_NUMBER TESTS=ci-cluster-2
-- DEBUGBUILD=-travis-$TRAVIS_BUILD_NUMBER TESTS=ci-cluster-3
+- TESTS=ci-cluster-0
+- TESTS=ci-cluster-1
+- TESTS=ci-cluster-2
+- TESTS=ci-cluster-3
 script:
+- curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
 - bundle exec rake test[$TESTS]
-- bundle exec rake logs2s3
-- bundle exec ./.travis.sh publish
 before_install:
 - npm update
 branches:
   except:
     - /^[0-9]+\.[0-9]+\.[0-9]+$/
 addons:
-  firefox: "43.0"
+  firefox: "45.0"
+after_success:
+  - python travis_after_all.py https://api.travis-ci.com
+  - export $(cat .to_export_back)
+  - |
+      if [ "$BUILD_LEADER" = "YES" ]; then
+        if [ "$BUILD_AGGREGATE_STATUS" = "others_succeeded" ]; then
+          echo "All jobs succeeded! PUBLISHING..."
+          rake clean
+          rake publish
+        else
+          echo "Some jobs failed"
+        fi
+      fi
+after_failure:
+  - python travis_after_all.py https://api.travis-ci.com
+  - export $(cat .to_export_back)
+  - |
+      if [ "$BUILD_LEADER" = "YES" ]; then
+        if [ "$BUILD_AGGREGATE_STATUS" = "others_failed" ]; then
+          echo "All jobs failed"
+        else
+          echo "Some jobs failed"
+        fi
+      fi
+after_script:
+  - echo leader=$BUILD_LEADER status=$BUILD_AGGREGATE_STATUS
