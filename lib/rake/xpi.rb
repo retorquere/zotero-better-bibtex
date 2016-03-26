@@ -32,7 +32,7 @@ module Rake
       end
 
       def xpi
-        return File.basename(@config.xpi) + '-' + self.version + '.xpi'
+        return File.basename(@config.xpi, File.extname(@config.xpi)) + '-' + self.version + '.xpi'
       end
 
       def bump(level=nil)
