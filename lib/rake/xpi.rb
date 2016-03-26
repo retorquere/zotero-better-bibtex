@@ -161,7 +161,8 @@ module Rake
                   content_type: 'application/rdf+xml',
                   x_bintray_package: @config.bintray.package,
                   x_bintray_version: self.version,
-                  x_bintray_publish: '1'
+                  x_bintray_publish: '1',
+                  x_bintray_override: '1'
                 )
               }
               #client['file_metadata'][@config.bintray.user][@config.bintray.repo][@config.bintray.package][self.version][self.xpi].put('{ "list_in_downloads":true }')
