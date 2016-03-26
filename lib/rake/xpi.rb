@@ -91,7 +91,7 @@ module Rake
                     xml['RDF'].Description {
                       xml['em'].version { xml.text _release }
 
-                      Nokogiri::XML(open('install.rdf')).xpath('//em:targetApplication/Description').each{|target|
+                      Nokogiri::XML(open('install.rdf')).xpath('//em:targetApplication/xmlns:Description').each{|target|
                         xml['em'].targetApplication {
                           xml['RDF'].Description {
                             xml['em'].id { xml.text target.at('./em:id').inner_text }
@@ -109,6 +109,7 @@ module Rake
             }
           }
         }
+        STDERR.puts update.to_xml
 
         Tempfile.create('update_rdf') do |tmp|
           tmp.write(update.to_xml)
@@ -163,7 +164,7 @@ module Rake
                   x_bintray_publish: '1'
                 )
               }
-              client['file_metadata'][@config.bintray.user][@config.bintray.repo][@config.bintray.package][self.version][self.xpi].put('{ "list_in_downloads":true }')
+              #client['file_metadata'][@config.bintray.user][@config.bintray.repo][@config.bintray.package][self.version][self.xpi].put('{ "list_in_downloads":true }')
             end
           end
 
