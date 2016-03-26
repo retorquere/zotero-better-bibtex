@@ -109,8 +109,6 @@ module Rake
             }
           }
         }
-        STDERR.puts update.to_xml
-
         Tempfile.create('update_rdf') do |tmp|
           tmp.write(update.to_xml)
           tmp.close
@@ -157,6 +155,8 @@ module Rake
 
             if deploy
               update_rdf("https://bintray.com/artifact/download/#{@config.bintray.organization}/#{@config.bintray.repo}/#{@config.bintray.package}/#{self.version}/#{self.xpi}"){|update|
+                STDERR.puts open(update).read
+
                 content[@config.bintray.package]['update.rdf'].put(File.new(update),
                   content_type: 'application/rdf+xml',
                   x_bintray_package: @config.bintray.package,
