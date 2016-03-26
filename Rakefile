@@ -30,9 +30,9 @@ require 'facets'
 require 'rest-client'
 require 'front_matter_parser'
 require_relative 'lib/unicode_table'
-#require 'github_changelog_generator'
+require_relative 'lib/rake/xpi'
 
-TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
+#require 'github_changelog_generator'
 
 def cleanly(f)
   begin
@@ -40,12 +40,6 @@ def cleanly(f)
   rescue
     FileUtils.rm_f(f)
     raise
-  end
-end
-
-class String
-  def shellescape
-    Shellwords.escape(self)
   end
 end
 
@@ -167,8 +161,6 @@ CLEAN.include('*.dbg')
 CLEAN.include('*.tmp')
 
 FileUtils.mkdir_p 'tmp'
-
-require 'zotplus-rakehelper'
 
 def saveAbbrevs(abbrevs, file, jurisdiction='default')
   abbrevs.keys.each{|journal|
@@ -477,6 +469,7 @@ file 'chrome/content/zotero-better-bibtex/release.js' => 'install.rdf' do |t|
   }
 end
 
+TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 Dir['resource/translators/*.yml'].each{|metadata|
   translator = File.basename(metadata, File.extname(metadata))
 

@@ -108,6 +108,7 @@ GEM
     rack (1.6.4)
     rake (11.1.1)
     rchardet (1.6.1)
+    recursive-open-struct (1.0.1)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
@@ -185,6 +186,7 @@ DEPENDENCIES
   os
   rake
   rchardet
+  recursive-open-struct
   rest-client
   rspec
   rubyzip (>= 1.0.0)
