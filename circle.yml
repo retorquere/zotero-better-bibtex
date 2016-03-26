@@ -14,4 +14,4 @@ deployment:
   master:
     branch: master
     commands:
-      - ./circle.sh deploy
+      - bundle exec rake publish

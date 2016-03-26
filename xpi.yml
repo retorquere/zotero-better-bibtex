@@ -1,14 +1,16 @@
 ---
 bintray:
   organization: retorquere
-  repository: xpi
+  repo: xpi
   package: better-bibtex
+  user: retorquere
+  secret: BINTRAYSECRET
 amo:
   issuer: MOZJWTissuer
   secret: MOZJWTsecret
 xpi: zotero-better-bibtex.xpi
 changelog: https://zotplus.github.io/zotero-better-bibtex/CHANGELOG.html
-sources:
+files:
 - chrome.manifest
 - chrome/content/zotero-better-bibtex/BetterBibTeXPatternFormatter.js
 - chrome/content/zotero-better-bibtex/BetterBibTeXPatternParser.js

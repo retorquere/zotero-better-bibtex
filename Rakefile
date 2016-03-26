@@ -464,7 +464,7 @@ end
 
 file 'chrome/content/zotero-better-bibtex/release.js' => 'install.rdf' do |t|
   open(t.name, 'w') {|f| f.write("
-      Zotero.BetterBibTeX.release = #{RELEASE.to_json};
+      Zotero.BetterBibTeX.release = #{XPI.version.to_json};
     ")
   }
 end
@@ -500,7 +500,7 @@ rule( /\.header\.js$/ => [ proc {|task_name| [task_name.sub(/\.header\.js$/, '.y
   open(t.name, 'w'){|f|
     f.write("
       Translator.header = #{header.to_json};
-      Translator.release = #{RELEASE.to_json};
+      Translator.release = #{XPI.version.to_json};
       Translator.#{header['label'].gsub(/[^a-z]/i, '')} = true;
     ")
   }
