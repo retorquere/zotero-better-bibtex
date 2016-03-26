@@ -123,27 +123,40 @@ end
 #    end
 #  end
 #}
-ZIPFILES = (Dir['chrome/**/*.{coffee,pegjs}'].collect{|src|
-  tgt = src.sub(/\.[^\.]+$/, '.js')
-  tgt
-} + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
-  [
-    File.join(File.dirname(tr), File.basename(tr, File.extname(tr)) + '.translator'),
-    File.join(File.dirname(tr), File.basename(tr, File.extname(tr)) + '.json')
-  ]
-}.flatten + [
-  'chrome/content/zotero-better-bibtex/fold-to-ascii.js',
-  'chrome/content/zotero-better-bibtex/punycode.js',
-  'chrome/content/zotero-better-bibtex/lokijs.js',
-  'chrome/content/zotero-better-bibtex/release.js',
-  'chrome/content/zotero-better-bibtex/csl-localedata.js',
-  'chrome/content/zotero-better-bibtex/translators.js',
-  'defaults/preferences/defaults.js',
-  'resource/citeproc.js',
-  'chrome.manifest',
-  'install.rdf',
-  'resource/reports/cacheActivity.txt',
-]).sort.uniq
+
+task :gather do
+  found = (Dir['chrome/**/*.{coffee,pegjs}'].collect{|src|
+    tgt = src.sub(/\.[^\.]+$/, '.js')
+    tgt
+  } + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
+    [
+      File.join(File.dirname(tr), File.basename(tr, File.extname(tr)) + '.translator'),
+      File.join(File.dirname(tr), File.basename(tr, File.extname(tr)) + '.json')
+    ]
+  }.flatten + [
+    'chrome/content/zotero-better-bibtex/fold-to-ascii.js',
+    'chrome/content/zotero-better-bibtex/punycode.js',
+    'chrome/content/zotero-better-bibtex/lokijs.js',
+    'chrome/content/zotero-better-bibtex/release.js',
+    'chrome/content/zotero-better-bibtex/csl-localedata.js',
+    'chrome/content/zotero-better-bibtex/translators.js',
+    'defaults/preferences/defaults.js',
+    'resource/citeproc.js',
+    'chrome.manifest',
+    'install.rdf',
+    'resource/reports/cacheActivity.txt',
+  ]).sort.uniq
+
+  expected = XPI.files.sort
+
+  if expected == found
+    STDERR.puts "All accounted for"
+  else
+    STDERR.puts "Missing: #{expected - found}" if (expected - found).length > 0
+    STDERR.puts "New #{found - expected}" if (found - expected).length > 0
+  end
+end
+
 
 File.unlink('chrome/content/zotero-better-bibtex/release.js') if File.file?('chrome/content/zotero-better-bibtex/release.js')
 
@@ -524,7 +537,9 @@ task :amo => XPI.xpi do
   end
 end
 
-task :test, [:tag] => [XPI.xpi, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
+task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
+  XPI.getxpis
+
   tag = ''
 
   features = 'resource/tests'

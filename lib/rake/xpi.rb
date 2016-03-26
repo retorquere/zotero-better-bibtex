@@ -19,6 +19,8 @@ require 'socket'
 module Rake
   module XPI
     class Config
+      include Rake::DSL
+
       def initialize()
         @config = RecursiveOpenStruct.new(YAML::load_file('xpi.yml'), recurse_over_arrays: true)
         @timestamp = Time.now.to_i.to_s
@@ -109,7 +111,7 @@ module Rake
 
       def download(url, file)
         puts "Downloading #{url} to #{file}..."
-        ::sh "curl -L #{url.shellescape} -o #{file.shellescape}"
+        sh "curl -L #{url.shellescape} -o #{file.shellescape}"
       end
 
       def release_message
@@ -128,15 +130,16 @@ module Rake
         STDERR.puts "  release   = #{releasemsg}"
 
         deploy = (commitmsg == releasemsg) && self.version == self.release
+        deploy = true
 
         if @config.bintray && @config.bintray.user && @config.bintray.secret
           secret = ENV[@config.bintray.secret]
           if secret
             STDERR.puts "Deploying #{self.release} (#{commit}) to Bintray"
-            client = RestClient::Resource.new('https://api.bintray.com/content', @config.bintray.user, secret)
-            client = client[@config.bintray.user][@config.bintray.repo]
+            client = RestClient::Resource.new('https://api.bintray.com', @config.bintray.user, secret)
+            content = client['content'][@config.bintray.user][@config.bintray.repo]
 
-            client[@config.bintray.package][self.version][self.xpi].put(File.new(self.xpi),
+            content[@config.bintray.package][self.version][self.xpi].put(File.new(self.xpi),
               content_type: 'application/x-xpinstall',
               x_bintray_package: @config.bintray.package,
               x_bintray_version: self.version,
@@ -145,13 +148,14 @@ module Rake
 
             if deploy
               update_rdf("https://bintray.com/artifact/download/#{@config.bintray.organization}/#{@config.bintray.repo}/#{@config.bintray.package}/#{self.version}/#{self.xpi}"){|update|
-                client[@config.bintray.package]['update.rdf'].put(File.new(update),
+                content[@config.bintray.package]['update.rdf'].put(File.new(update),
                   content_type: 'application/rdf+xml',
                   x_bintray_package: @config.bintray.package,
                   x_bintray_version: self.version,
                   x_bintray_publish: '1'
                 )
               }
+              client['file_metadata'][@config.bintray.user][@config.bintray.repo][@config.bintray.package][self.version][self.xpi].put('{ "list_in_downloads":true }')
             end
           end
 
@@ -256,6 +260,84 @@ module Rake
           f.write(RestClient.get(status['files'][0]['download_url'], { 'Authorization' => "JWT #{token.call}"} ).body)
         }
       end
+
+      def getxpis
+        return if ENV['OFFLINE'].to_s.downcase == 'true'
+        puts @config.test.to_h.inspect
+        return unless @config.test && @config.test.xpis && @config.test.xpis.install
+
+        dir = File.expand_path(@config.test.xpis.install)
+        FileUtils.mkdir_p(dir)
+        installed = Dir["#{dir}/*.xpi"].collect{|f| File.basename(f) }
+
+        sources = (@config.test.xpis.download || []).collect{|s| resolvexpi(s) }
+
+        (installed - sources.collect{|s| s.xpi}).each{|xpi|
+          STDERR.puts "Removing #{xpi}"
+          File.unlink("#{dir}/#{xpi}")
+        }
+        sources.reject{|s| installed.include?(s.xpi) && s.url !~ /^file:/ }.each{|s|
+          # https://github.com/zotero/zotero/zipball/master for zotero master
+          if s.xpi =~ /(.*)-master-.*.xpi$/
+            src = $1
+            tgt = "#{dir}/#{s.xpi}"
+            STDERR.puts "Zipping #{s.xpi} to #{tgt}"
+            Dir.chdir(src){|path|
+              Zip::File.open(tgt, 'w') do |zipfile|
+                Dir["**/*"].sort.each{|file|
+                  zipfile.add(file, file)
+                }
+              end
+            }
+          else
+            STDERR.puts "Downloading #{s.xpi}"
+            download(s.url, "#{dir}/#{s.xpi}")
+          end
+        }
+      end
+
+      def resolvexpi(source)
+        STDERR.puts "Resolving #{source}"
+
+        xpi = nil
+
+        if source =~ /update\.rdf$/
+          update_rdf = Nokogiri::XML(open(source))
+          update_rdf.remove_namespaces!
+          url = update_rdf.at('//updateLink').inner_text
+        elsif source =~ /^https:\/\/addons\.mozilla\.org\//
+          page = open(source).read
+          page = Nokogiri::HTML(page)
+          url = page.at_css('p.install-button').at_css('a')['href']
+
+          url = URI.join(source, url ).to_s if url !~ /^http/
+
+          return resolvexpi(url) if url =~ /\/contribute\/roadblock\//
+
+          # AMO uses redirects, so I can't write the file to the final name just yet
+          final_uri = nil
+          open(url) do |h|
+            final_uri = h.base_uri
+          end
+          url = final_uri.to_s
+        elsif source =~ /^https:\/\/github\.com\/zotero\/([^\/]+)\/zipball\/master$/
+          url = source
+          src = $1
+          Dir.chdir(src) {
+            rev = `git log -n 1 --pretty=format:"%h"`
+            xpi = "#{src}-master-#{rev}.xpi"
+          }
+        elsif source =~ /^file:/ || source =~ /\.xpi(\?|$)/
+          url = source
+        else
+          throw "Unsupported XPI source #{source}"
+        end
+
+        xpi ||= url.sub(/.*\//, '').sub(/\?.*$/, '')
+        STDERR.puts "Resolved to #{url}"
+        return OpenStruct.new(url: url, xpi: xpi)
+      end
+
     end
   end
 end
@@ -322,108 +404,6 @@ task :bump, :level do |t, args|
   sh "git tag #{XPI.release.shellescape}"
 end
 
-task :plugins do |t, args|
-  if File.file?('features/plugins.yml')
-    plugins = YAML.load_file('features/plugins.yml')
-  else
-    plugins = []
-  end
-  plugins = plugins['verify'] || [] if plugins.is_a?(Hash)
-  plugins << 'https://zotplus.github.io/debug-bridge/update.rdf'
-
-  if ENV['ZOTEROMASTER'] == 'true'
-    plugins << 'https://github.com/zotero/zotero/zipball/master'
-  else
-    plugins << 'https://www.zotero.org/download/update.rdf'
-  end
-  plugins.uniq!
-  ZotPlus::RakeHelper.getxpis(plugins, 'test/fixtures/plugins')
-end
-
 task :publish => XPI.xpi do
   XPI.publish
-end
-
-module ZotPlus
-  class RakeHelper
-
-    def self.geturl(url)
-      return open(url).read
-      #OpenURI::HTTPError
-    end
-
-    def self.resolvexpi(source)
-      STDERR.puts "Resolving #{source}"
-
-      xpi = nil
-
-      if source =~ /update\.rdf$/
-        update_rdf = Nokogiri::XML(self.geturl(source))
-        update_rdf.remove_namespaces!
-        url = update_rdf.at('//updateLink').inner_text
-      elsif source =~ /^https:\/\/addons\.mozilla\.org\//
-        page = self.geturl(source)
-        page = Nokogiri::HTML(page)
-        url = page.at_css('p.install-button').at_css('a')['href']
-
-        url = URI.join(source, url ).to_s if url !~ /^http/
-
-        return self.resolvexpi(url) if url =~ /\/contribute\/roadblock\//
-
-        # AMO uses redirects, so I can't write the file to the final name just yet
-        final_uri = nil
-        open(url) do |h|
-          final_uri = h.base_uri
-        end
-        url = final_uri.to_s
-      elsif source =~ /^https:\/\/github\.com\/zotero\/([^\/]+)\/zipball\/master$/
-        url = source
-        src = $1
-        Dir.chdir(src) {
-          rev = `git log -n 1 --pretty=format:"%h"`
-          xpi = "#{src}-master-#{rev}.xpi"
-        }
-      elsif source =~ /^file:/ || source =~ /\.xpi(\?|$)/
-        url = source
-      else
-        throw "Unsupported XPI source #{source}"
-      end
-
-      xpi ||= url.sub(/.*\//, '').sub(/\?.*$/, '')
-      STDERR.puts "Resolved to #{url}"
-      return OpenStruct.new(url: url, xpi: xpi)
-    end
-
-    def self.getxpis(sources, dir)
-      return if ENV['OFFLINE'].to_s.downcase == 'true'
-
-      dir = File.expand_path(dir)
-      FileUtils.mkdir_p(dir)
-      installed = Dir["#{dir}/*.xpi"].collect{|f| File.basename(f) }
-
-      sources = sources.collect{|s| self.resolvexpi(s) }
-
-      (installed - sources.collect{|s| s.xpi}).each{|xpi|
-        STDERR.puts "Removing #{xpi}"
-        File.unlink("#{dir}/#{xpi}")
-      }
-      sources.reject{|s| installed.include?(s.xpi) && s.url !~ /^file:/ }.each{|s|
-        if s.xpi =~ /(.*)-master-.*.xpi$/
-          src = $1
-          tgt = "#{dir}/#{s.xpi}"
-          STDERR.puts "Zipping #{s.xpi} to #{tgt}"
-          Dir.chdir(src){|path|
-            Zip::File.open(tgt, 'w') do |zipfile|
-              Dir["**/*"].sort.each{|file|
-                zipfile.add(file, file)
-              }
-            end
-          }
-        else
-          STDERR.puts "Downloading #{s.xpi}"
-          download(s.url, "#{dir}/#{s.xpi}")
-        end
-      }
-    end
-  end
 end

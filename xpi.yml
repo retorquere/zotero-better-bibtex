@@ -8,6 +8,12 @@ bintray:
 amo:
   issuer: MOZJWTissuer
   secret: MOZJWTsecret
+test:
+  xpis:
+    download:
+    - https://zotplus.github.io/debug-bridge/update.rdf
+    - https://www.zotero.org/download/update.rdf
+    install: test/fixtures/plugins
 xpi: zotero-better-bibtex.xpi
 changelog: https://zotplus.github.io/zotero-better-bibtex/CHANGELOG.html
 files:
