@@ -109,7 +109,7 @@ module Rake
 
       def download(url, file)
         puts "Downloading #{url} to #{file}..."
-        sh "curl -L #{url.shellescape} -o #{file.shellescape}"
+        ::sh "curl -L #{url.shellescape} -o #{file.shellescape}"
       end
 
       def release_message
@@ -134,13 +134,23 @@ module Rake
           if secret
             STDERR.puts "Deploying #{self.release} (#{commit}) to Bintray"
             client = RestClient::Resource.new('https://api.bintray.com/content', @config.bintray.user, secret)
-            client = client[@config.bintray.user][@config.bintray.repo][@config.bintray.package][self.version]
+            client = client[@config.bintray.user][@config.bintray.repo]
 
-            client[@config.bintray.package][self.version][self.xpi].put(File.new(self.xpi), content_type: 'application/x-xpinstall')
+            client[@config.bintray.package][self.version][self.xpi].put(File.new(self.xpi),
+              content_type: 'application/x-xpinstall',
+              x_bintray_package: @config.bintray.package,
+              x_bintray_version: self.version,
+              x_bintray_publish: '1'
+            )
 
             if deploy
               update_rdf("https://bintray.com/artifact/download/#{@config.bintray.organization}/#{@config.bintray.repo}/#{@config.bintray.package}/#{self.version}/#{self.xpi}"){|update|
-                client[@config.bintray.package]['update.rdf'].put(File.new(update), content_type: 'application/rdf+xml')
+                client[@config.bintray.package]['update.rdf'].put(File.new(update),
+                  content_type: 'application/rdf+xml',
+                  x_bintray_package: @config.bintray.package,
+                  x_bintray_version: self.version,
+                  x_bintray_publish: '1'
+                )
               }
             end
           end
