@@ -15,4 +15,5 @@ deployment:
   master:
     branch: circle
     commands:
-      - bundle exec rake clean && - bundle exec rake publish
+      - bundle exec rake clean
+      - bundle exec rake publish
