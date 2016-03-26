@@ -8,6 +8,7 @@ case $1 in
     ;;
 
   test)
+    dpkg -l | grep firefox
     if [ "$CIRCLE_NODE_TOTAL" = "1" ]; then
       bundle exec rake test[ci-cluster-*]
     else
