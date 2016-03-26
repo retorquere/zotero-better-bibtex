@@ -2,6 +2,8 @@ machine:
   ruby:
     version: "2.2"
 dependencies:
+  pre:
+    - sudo apt-get update && sudo apt-get install libpango1.0-0 && sudo apt-get install firefox
   cache_directories:
     - test/fixtures/profiles
     - test/fixtures/plugins
