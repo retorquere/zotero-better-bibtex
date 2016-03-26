@@ -2,10 +2,7 @@ machine:
   ruby:
     version: "2.2"
 dependencies:
-  override:
-    - sudo apt-get update && sudo apt-get install libpango1.0-0 && sudo apt-get install firefox
   cache_directories:
-    - bin
     - test/fixtures/profiles
     - test/fixtures/plugins
 test:
