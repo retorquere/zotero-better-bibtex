@@ -26,8 +26,13 @@ module Rake
         @timestamp = Time.now.to_i.to_s
 
         @config.to_h.keys.each{|key|
+          next if key.to_s == 'xpi'
           self.class.send(:define_method, key) { @config[key] }
         }
+      end
+
+      def xpi
+        return File.basename(@config.xpi) + '-' + self.version + '.xpi'
       end
 
       def bump(level=nil)
@@ -57,6 +62,7 @@ module Rake
         end
         open('install.rdf', 'w'){|f| f.write(doc.to_xml)}
       end
+
       def version
         if ENV['RELEASE'] == 'true'
           return release
@@ -129,7 +135,7 @@ module Rake
         STDERR.puts "  committed = #{commitmsg}"
         STDERR.puts "  release   = #{releasemsg}"
 
-        deploy = (commitmsg == releasemsg) && self.version == self.release
+        deploy = (commitmsg == releasemsg) && self.version == self.release && ENV['RELEASE'] == 'true'
         deploy = true
 
         if @config.bintray && @config.bintray.user && @config.bintray.secret
@@ -197,6 +203,7 @@ module Rake
       end
 
       def sign
+        return if ENV['SIGN'] == 'false'
         return unless @config.amo && @config.amo.issuer && @config.amo.secret
         issuer = ENV[@config.amo.issuer]
         secret = ENV[@config.amo.secret]
@@ -263,7 +270,6 @@ module Rake
 
       def getxpis
         return if ENV['OFFLINE'].to_s.downcase == 'true'
-        puts @config.test.to_h.inspect
         return unless @config.test && @config.test.xpis && @config.test.xpis.install
 
         dir = File.expand_path(@config.test.xpis.install)
