@@ -506,11 +506,11 @@ rule( /\.header\.js$/ => [ proc {|task_name| [task_name.sub(/\.header\.js$/, '.y
   }
 end
 
-task :amo => XPI do
-  amo = XPI.sub(/\.xpi$/, '-amo.xpi')
+task :amo => XPI.xpi do
+  amo = XPI.xpi.sub(/\.xpi$/, '-amo.xpi')
 
   Zip::File.open(amo, 'w') do |tgt|
-    Zip::File.open(XPI) do |src|
+    Zip::File.open(XPI.xpi) do |src|
       src.each do |entry|
         data = entry.get_input_stream.read
         if entry.name == 'install.rdf'
@@ -524,7 +524,7 @@ task :amo => XPI do
   end
 end
 
-task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
+task :test, [:tag] => [XPI.xpi, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
   tag = ''
 
   features = 'resource/tests'
@@ -573,20 +573,20 @@ task :test, [:tag] => [XPI, :plugins] + Dir['test/fixtures/*/*.coffee'].collect{
   end
 end
 
-task :debug => XPI do
+task :debug => XPI.xpi do
   xpi = Dir['*.xpi'][0]
   dxpi = xpi.sub(/\.xpi$/, '-' + (0...8).map { (65 + rand(26)).chr }.join + '.xpi')
   FileUtils.mv(xpi, dxpi)
   puts dxpi
 end
 
-task :share => XPI do |t|
+task :share => XPI.xpi do |t|
   raise "I can only share debug builds" unless ENV['DEBUGBUILD'] == "true"
 
   url = URI.parse('http://tempsend.com/send')
   File.open(t.source) do |data|
     req = Net::HTTP::Post::Multipart.new(url.path,
-      'file' => UploadIO.new(data, 'application/x-xpinstall', File.basename(XPI)),
+      'file' => UploadIO.new(data, 'application/x-xpinstall', File.basename(t.name)),
       'expire' => '604800'
     )
     res = Net::HTTP.start(url.host, url.port) do |http|
@@ -784,11 +784,11 @@ file 'wiki/Scripting.md' => ['resource/translators/reference.coffee'] do |t|
   #open(t.name, 'w'){|f| f.write(index) }
 end
 
-task :install => XPI do
+task :install => XPI.xpi do
   if OS.mac?
-    sh "open #{XPI}"
+    sh "open #{XPI.xpi}"
   else
-    sh "xdg-open #{XPI}"
+    sh "xdg-open #{XPI.xpi}"
   end
 end
 
