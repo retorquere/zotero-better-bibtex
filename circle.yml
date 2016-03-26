@@ -13,6 +13,6 @@ test:
         parallel: true
 deployment:
   master:
-    xbranch: master
+    branch: circle
     commands:
       - bundle exec rake publish
