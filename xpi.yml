@@ -8,6 +8,12 @@ bintray:
 amo:
   issuer: MOZJWTissuer
   secret: MOZJWTsecret
+s3:
+  id: ZOTPLUSAWSKEY
+  secret: ZOTPLUSAWSSECRET
+  bucket: zotplus-builds-test
+  prefix: better-bibtex
+  region: eu-central-1
 test:
   xpis:
     download:

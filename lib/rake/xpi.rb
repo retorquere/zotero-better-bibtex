@@ -1,6 +1,6 @@
+require 'aws-sdk'
 require 'fileutils'
 require 'front_matter_parser'
-require 'github_api'
 require 'jwt'
 require 'nokogiri'
 require 'open-uri'
@@ -10,11 +10,11 @@ require 'recursive-open-struct'
 require 'rest-client'
 require 'rickshaw'
 require 'securerandom'
+require 'socket'
 require 'tempfile'
 require 'uri'
 require 'yaml'
 require 'zip'
-require 'socket'
 
 module Rake
   module XPI
@@ -26,13 +26,11 @@ module Rake
         @timestamp = Time.now.to_i.to_s
 
         @config.to_h.keys.each{|key|
-          next if key.to_s == 'xpi'
           self.class.send(:define_method, key) { @config[key] }
         }
       end
-
-      def xpi
-        return File.basename(@config.xpi, File.extname(@config.xpi)) + '-' + self.version + '.xpi'
+      def versioned_xpi
+        return File.basename(self.xpi, File.extname(self.xpi)) + '-' + self.version + File.extname(self.xpi)
       end
 
       def bump(level=nil)
@@ -55,16 +53,11 @@ module Rake
       def release=(rel)
         doc = Nokogiri::XML(File.open('install.rdf'))
         doc.at('//em:version').inner_text = rel
-        if XPI.bintray
-          doc.at('//em:updateURL').content = "https://bintray.com/artifact/download/#{XPI.bintray.organization}/#{XPI.bintray.repo}/#{XPI.bintray.package}/update.rdf"
-        elsif XPI.github
-          doc.at('//em:updateURL').content = "https://github.com/#{XPI.github.user}/#{XPI.github.repo}/releases/download/update.rdf/update.rdf"
-        end
         open('install.rdf', 'w'){|f| f.write(doc.to_xml)}
       end
 
       def version
-        if ENV['RELEASE'] == 'true'
+        if release_build?
           return release
         elsif ENV['TRAVIS_BUILD_NUMBER']
           return release + "-travis-#{ENV['TRAVIS_BUILD_NUMBER']}"
@@ -125,85 +118,103 @@ module Rake
         return "release: #{self.xpi} #{self.release}"
       end
 
+      def release_build?
+        if @release_build.nil?
+          commitmsg = `git log -n 1 --pretty=oneline`.strip
+          commit = %w{CIRCLE_SHA1 TRAVIS_COMMIT}.collect{|key| ENV[key]}.compact.first
+          commit ||= 'local'
+
+          releasemsg = "#{commit} #{release_message}"
+
+          STDERR.puts "#{self.release}"
+          STDERR.puts "  committed = #{commitmsg}"
+          STDERR.puts "  release   = #{releasemsg}"
+
+          @release_build = (commitmsg == releasemsg)
+        end
+
+        return @release_build
+      end
+
       def publish
-        commitmsg = `git log -n 1 --pretty=oneline`.strip
-        commit = %w{CIRCLE_SHA1 TRAVIS_COMMIT}.collect{|key| ENV[key]}.compact.first
-        commit ||= 'local'
+        return if publish_s3
+        #return if publish_github
+      end
 
-        releasemsg = "#{commit} #{release_message}"
+      def publish_s3
+        return false unless @config.s3 && @config.s3.id && @config.s3.secret
+        id = ENV[@config.s3.id]
+        secret = ENV[@config.s3.secret]
+        return false unless id && secret
 
-        STDERR.puts "#{self.version}"
-        STDERR.puts "  committed = #{commitmsg}"
-        STDERR.puts "  release   = #{releasemsg}"
+        s3 = Aws::S3::Resource.new(region: @config.s3.region, credentials: Aws::Credentials.new(id, secret))
+        bucket = s3.bucket(@config.s3.bucket)
 
-        deploy = (commitmsg == releasemsg) && self.version == self.release && ENV['RELEASE'] == 'true'
-        deploy = true
+        obj = bucket.object("#{release_build? ? @config.s3.prefix : 'builds'}/#{self.versioned_xpi}")
+        obj.upload_file(self.xpi, content_type: 'application/x-xpinstall')
+        if release_build?
+          update_rdf("https://s3.#{@config.s3.region}.amazonaws.com/#{@config.s3.bucket}/#{@config.s3.prefix}/#{self.versioned_xpi}"){|update|
+            obj = bucket.object("#{@config.s3.prefix}/update.rdf")
+            obj.upload_file(update, content_type: 'application/rdf+xml')
+          }
+        end
+        return true
+      end
 
-        if @config.bintray && @config.bintray.user && @config.bintray.secret
-          secret = ENV[@config.bintray.secret]
-          if secret
-            STDERR.puts "Deploying #{self.release} (#{commit}) to Bintray"
-            client = RestClient::Resource.new('https://api.bintray.com', @config.bintray.user, secret)
-            content = client['content'][@config.bintray.user][@config.bintray.repo]
+      def publish_github
+        return false unless @config.github && @config.github.user && @config.github.token
+        token = ENV[@config.github.token]
+        return false unless token
 
-            content[@config.bintray.package][self.version][self.xpi].put(File.new(self.xpi),
-              content_type: 'application/x-xpinstall',
-              x_bintray_package: @config.bintray.package,
-              x_bintray_version: self.version,
-              x_bintray_publish: '1'
-            )
+        STDERR.puts "Deploying #{self.release} to Github"
 
-            if deploy
-              update_rdf("https://bintray.com/artifact/download/#{@config.bintray.organization}/#{@config.bintray.repo}/#{@config.bintray.package}/#{self.version}/#{self.xpi}"){|update|
-                STDERR.puts open(update).read
+        github = Github.new({oauth_token: token})
+        releases = github.repos.releases
+        latest = 'latest'
 
-                content[@config.bintray.package]['update.rdf'].put(File.new(update),
-                  content_type: 'application/rdf+xml',
-                  x_bintray_package: @config.bintray.package,
-                  x_bintray_version: self.version,
-                  x_bintray_publish: '1',
-                  x_bintray_override: '1'
-                )
-              }
-              #client['file_metadata'][@config.bintray.user][@config.bintray.repo][@config.bintray.package][self.version][self.xpi].put('{ "list_in_downloads":true }')
-            end
-          end
-
-        elsif @config.github && @config.github.user && @config.github.token
-          token = ENV[@config.github.token]
-          if deploy && token
-            STDERR.puts "Deploying #{self.release} (#{commit}) to Github"
-            github = Github.new({oauth_token: token})
-
-            # create release and upload assets
-            release = github.repos.releases.create(@config.github.user, @config.github.repo, {
-              tag_name: self.release,
-              name: self.release,
-              body: self.release
+        # make way
+        if release_build?
+          release = releases.list(@config.github.user, @config.github.repo).detect{|rel| rel.name == latest }
+          if release
+            releases.edit(@config.github.user, @config.github.repo, release.id, {
+              tag_name: release.tag_name,
+              target_commitish: release.target_commitish,
+              name: release.tag_name,
+              body: release.body,
+              draft: release.draft,
+              prerelease: release.prerelease
             })
-
-            github.repos.releases.assets.upload(@config.github.user, @config.github.repo, release.id, self.xpi, {
-              name: self.xpi,
-              content_type: 'application/x-xpinstall'
-            })
-
-            # point update.rdf to the right place
-            release = github.repos.releases.list(@config.github.user, @config.github.repo).detect{|rel| rel.name == 'update.rdf' }
-
-            ## Remove any existing assets
-            github.repos.releases.assets.list(@config.github.user, @config.github.repo, release.id){ |asset|
-              github.repos.releases.assets.delete(@config.github.user, @config.github.repo, asset.id)
-            }
-
-            update_rdf("https://github.com/#{@config.github.user}/#{@config.github.repo}/releases/download/#{self.release}/#{self.xpi}"){|update|
-              # add update.rdf
-              github.repos.releases.assets.upload(@config.github.user, @config.github.repo, release.id, update, {
-                name: 'update.rdf',
-                content_type: 'application/rdf+xml'
-              })
-            }
           end
         end
+
+        # create release and upload assets
+        release = releases.create(@config.github.user, @config.github.repo, {
+          tag_name: self.release,
+          name: (release_build? ? latest : self.release),
+          body: self.release,
+          prerelease: !release_build?
+        })
+
+        releases.assets.upload(@config.github.user, @config.github.repo, release.id, self.xpi, {
+          name: self.versioned_xpi,
+          content_type: 'application/x-xpinstall'
+        })
+
+        ### Remove any existing assets
+        #github.repos.releases.assets.list(@config.github.user, @config.github.repo, release.id){ |asset|
+        #  github.repos.releases.assets.delete(@config.github.user, @config.github.repo, asset.id)
+        #}
+
+        if release_build?
+          update_rdf("https://github.com/#{@config.github.user}/#{@config.github.repo}/releases/download/#{latest}/#{self.versioned_xpi}"){|update|
+            releases.assets.upload(@config.github.user, @config.github.repo, release.id, update, {
+              name: 'update.rdf',
+              content_type: 'application/rdf+xml'
+            })
+          }
+        end
+
+        return true
       end
 
       def sign
@@ -244,8 +255,12 @@ module Rake
 
         wait = nil
         begin
-          puts "Submit #{self.xpi} to #{url} for signing"
-          RestClient.put(url, {upload: File.new(self.xpi)}, { 'Authorization' => "JWT #{token.call}", 'Content-Type' => 'multipart/form-data' })
+          Dir.mktmpdir{|dir|
+            tmp = File.join(dir, self.versioned_xpi)
+            FileUtils.cp(self.xpi, tmp)
+            puts "Submit #{tmp} to #{url} for signing"
+            RestClient.put(url, {upload: File.new(tmp)}, { 'Authorization' => "JWT #{token.call}", 'Content-Type' => 'multipart/form-data' })
+          }
           wait = Time.now.to_i
           sleep 10
         rescue RestClient::Conflict
@@ -368,14 +383,6 @@ file XPI.xpi => XPI.files do |t|
       when 'install.rdf'
         install_rdf = Nokogiri::XML(File.open(src))
         install_rdf.at('//em:version').content = XPI.version
-
-        if XPI.bintray
-          install_rdf.at('//em:updateURL').content = "https://bintray.com/artifact/download/#{XPI.bintray.organization}/#{XPI.bintray.repo}/#{XPI.bintray.package}/update.rdf"
-        elsif XPI.github
-          install_rdf.at('//em:updateURL').content = "https://github.com/#{XPI.github.user}/#{XPI.github.repo}/releases/download/update.rdf/update.rdf"
-        else
-          raise "No deployment platform specified"
-        end
         zipfile.get_output_stream(src){|f| install_rdf.write_xml_to f }
       else
         zipfile.add(src, src)
@@ -412,6 +419,48 @@ task :bump, :level do |t, args|
   sh "git add install.rdf"
   sh "git commit -m #{XPI.release_message.shellescape}"
   sh "git tag #{XPI.release.shellescape}"
+end
+
+task :bucket, [:uploader, :id, :secret] do |t, args|
+  id = args[:id] || ENV[XPI.s3.id]
+  secret = args[:secret] || ENV[XPI.s3.secret]
+  uploader = args[:uploader]
+
+  s3 = Aws::S3::Resource.new(region: XPI.s3.region, credentials: Aws::Credentials.new(id, secret))
+  bucket = s3.bucket(XPI.s3.bucket)
+  bucket.create() unless bucket.exists?
+
+  bucket.policy.put(policy: {
+    "Version": "2012-10-17",
+    "Id": "XPI downloads",
+    "Statement": [
+      {
+        "Sid": "Stmt1435253907295",
+        "Effect": "Allow",
+        "Principal": { "AWS": uploader },
+        "Action": "s3:*",
+        "Resource": "arn:aws:s3:::#{XPI.s3.bucket}/*"
+      },
+      {
+        "Sid": "PublicRead",
+        "Effect": "Allow",
+        "Principal": "*",
+        "Action": "s3:GetObject",
+        "Resource": "arn:aws:s3:::#{XPI.s3.bucket}/*"
+      }
+    ]
+  }.to_json)
+
+  bucket.lifecycle.put(lifecycle_configuration: {
+    rules: [
+      {
+        status: "Enabled",
+        prefix: "builds/",
+        expiration: { days: 7 },
+        id: "cleanup-build"
+      }
+    ]
+  })
 end
 
 task :publish => XPI.xpi do
