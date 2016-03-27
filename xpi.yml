@@ -1,6 +1,5 @@
 ---
 bintray:
-  organization: retorquere
   repo: xpi
   package: better-bibtex
   user: retorquere
