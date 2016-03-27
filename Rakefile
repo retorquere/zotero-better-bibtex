@@ -152,8 +152,8 @@ task :gather do
   if expected == found
     STDERR.puts "All accounted for"
   else
-    STDERR.puts "Missing: #{expected - found}" if (expected - found).length > 0
-    STDERR.puts "New #{found - expected}" if (found - expected).length > 0
+    STDERR.puts "Intended for publishing, but no source:  #{expected - found}" if (expected - found).length > 0
+    STDERR.puts "Not published: #{found - expected}" if (found - expected).length > 0
   end
 end
 
