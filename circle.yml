@@ -12,7 +12,8 @@ test:
     - ./circle.sh test:
         parallel: true
 deployment:
-  master:
+  all:
+    branch: /.*/
     commands:
       - bundle exec rake clean
       - bundle exec rake publish
