@@ -102,9 +102,27 @@ doExport = ->
     ref.referencetype = 'collection' if item.itemType == 'book' and not ref.hasCreator('author') and ref.hasCreator('editor')
     ref.referencetype = 'mvbook' if ref.referencetype == 'book' and item.numberOfVolumes
 
-    if m = item.publicationTitle?.match(/^arxiv:\s*([\S]+)/i)
+    # arXiv:0707.3168 [hep-th]
+    # arXiv:YYMM.NNNNv# [category]
+    if m = item.publicationTitle?.match(/^arxiv:([0-9]{4}\.[0-9]{4})(v[0-9]+)?\s+\[(.*)\]$/i)
+      ref.add({ name: 'archivePrefix', value: 'arXiv'} )
       ref.add({ name: 'eprinttype', value: 'arxiv'})
       ref.add({ name: 'eprint', value: m[1] })
+      ref.add({ name: 'primaryClass', value: m[3]})
+      item.arXiv = item.publicationTitle
+      delete item.publicationTitle
+
+    # arXiv:arch-ive/YYMMNNNv# or arXiv:arch-ive/YYMMNNNv# [category]
+    else if m = item.publicationTitle?.match(/^arxiv:([a-z]+-[a-z]+)\/([0-9]{7})(v[0-9]+)?\s+\[(.*)\]$/i)
+      ref.add({ name: 'eprinttype', value: 'arxiv' })
+      ref.add({ name: 'eprint', value: "#{m[1]}/#{m[2]}" })
+      item.arXiv = item.publicationTitle
+      delete item.publicationTitle
+
+    else if m = item.publicationTitle?.match(/^arxiv:\s*([\S]+)/i)
+      ref.add({ name: 'eprinttype', value: 'arxiv'})
+      ref.add({ name: 'eprint', value: m[1] })
+      item.arXiv = item.publicationTitle
       delete item.publicationTitle
 
     if m = item.url?.match(/^http:\/\/www.jstor.org\/stable\/([\S]+)$/i)
@@ -184,6 +202,9 @@ doExport = ->
             abbr = Zotero.BetterBibTeX.keymanager.journalAbbrev(item)
             if Translator.useJournalAbbreviation && abbr
               ref.add({ name: 'journal', value: abbr, preserveBibTeXVariables: true })
+            else if Translator.BetterBibLaTeX && item.publicationTitle.match(/arxiv:/i)
+              ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true, preserveCase: false })
+              ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true })
             else
               ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
               ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true })

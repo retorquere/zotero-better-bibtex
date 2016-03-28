@@ -6,6 +6,11 @@ Zotero.BetterBibTeX.DB = new class
   constructor: ->
     Zotero.debug('DB.initialize')
     ### split to speed up auto-saves ###
+
+    db = Zotero.getZoteroDatabase('betterbibtex-lokijs')
+    Zotero.DB.query('ATTACH ? AS betterbibtex', [db.path])
+    Zotero.DB.query('CREATE TABLE IF NOT EXISTS betterbibtex.lokijs (name PRIMARY KEY, data)')
+
     @db = {
       main: new loki('db.json', {
         autosave: true
@@ -215,22 +220,24 @@ Zotero.BetterBibTeX.DB = new class
 
   adapter:
     saveDatabase: (name, serialized, callback) ->
-      file = Zotero.BetterBibTeX.createFile(name)
-
-      Zotero.File.putContents(file, serialized)
-
+      Zotero.DB.query("INSERT OR REPLACE INTO betterbibtex.lokijs (name, data) VALUES (?, ?)", [name, serialized])
       callback()
-      Zotero.BetterBibTeX.debug('DB.saveDatabase:', {name, file: file.path})
       return
 
     loadDatabase: (name, callback) ->
       file = Zotero.BetterBibTeX.createFile(name)
-      Zotero.BetterBibTeX.debug('DB.loadDatabase:', {name, file: file.path})
       if file.exists()
+        Zotero.BetterBibTeX.debug('DB.loadDatabase:', {name, file: file.path})
         callback(Zotero.File.getContents(file))
-      else
-        callback(null)
-      Zotero.BetterBibTeX.debug('DB.loadDatabase: done', {name, file: file.path})
+        file.moveTo(null, name + '.bak')
+        return
+
+      data = Zotero.DB.valueQuery("SELECT data FROM betterbibtex.lokijs WHERE name=?", [name])
+      if data
+        callback(data)
+        return
+
+      callback(null)
       return
 
   SQLite:
@@ -284,18 +291,18 @@ Zotero.BetterBibTeX.DB = new class
 
       Zotero.BetterBibTeX.flash('Better BibTeX: updating database', 'Updating database, this could take a while')
 
-      Zotero.DB.query('ATTACH ? AS betterbibtex', [db.path])
+      Zotero.DB.query('ATTACH ? AS betterbibtexmigration', [db.path])
 
-      if @tableExists('betterbibtex.autoexport') && !@table_info('betterbibtex.autoexport').context
+      if @tableExists('betterbibtexmigration.autoexport') && !@table_info('betterbibtexmigration.autoexport').context
         Zotero.BetterBibTeX.debug('DB.migrate: autoexport')
         Zotero.BetterBibTeX.DB.autoexport.removeDataOnly()
 
-        if @table_info('betterbibtex.autoexport').collection
-          Zotero.DB.query("update betterbibtex.autoexport set collection = (select 'library:' || libraryID from groups where 'group:' || groupID = collection) where collection like 'group:%'")
-          Zotero.DB.query("update betterbibtex.autoexport set collection = 'collection:' || collection where collection <> 'library' and collection not like '%:%'")
+        if @table_info('betterbibtexmigration.autoexport').collection
+          Zotero.DB.query("update betterbibtexmigration.autoexport set collection = (select 'library:' || libraryID from groups where 'group:' || groupID = collection) where collection like 'group:%'")
+          Zotero.DB.query("update betterbibtexmigration.autoexport set collection = 'collection:' || collection where collection <> 'library' and collection not like '%:%'")
 
         migrated = 0
-        for row in Zotero.DB.query('select * from betterbibtex.autoexport')
+        for row in Zotero.DB.query('select * from betterbibtexmigration.autoexport')
           migrated += 1
           Zotero.BetterBibTeX.DB.autoexport.insert({
             collection: row.collection
@@ -308,12 +315,12 @@ Zotero.BetterBibTeX.DB = new class
           })
         Zotero.BetterBibTeX.debug('DB.migrate: autoexport=', migrated)
 
-      if @tableExists('betterbibtex.cache')
+      if @tableExists('betterbibtexmigration.cache')
         Zotero.BetterBibTeX.debug('DB.migrate: cache')
         Zotero.BetterBibTeX.DB.cache.removeDataOnly()
 
         migrated = 0
-        for row in Zotero.DB.query('select * from betterbibtex.cache')
+        for row in Zotero.DB.query('select * from betterbibtexmigration.cache')
           migrated += 1
           Zotero.BetterBibTeX.DB.cache.insert({
             itemID: parseInt(row.itemID)
@@ -328,13 +335,13 @@ Zotero.BetterBibTeX.DB = new class
 
         Zotero.BetterBibTeX.debug('DB.migrate: cache=', migrated)
 
-      if @tableExists('betterbibtex.keys')
+      if @tableExists('betterbibtexmigration.keys')
         Zotero.BetterBibTeX.debug('DB.migrate: keys')
         Zotero.BetterBibTeX.DB.keys.removeDataOnly()
-        pinned = @table_info('betterbibtex.autoexport').pinned
+        pinned = @table_info('betterbibtexmigration.autoexport').pinned
 
         migrated = 0
-        for row in Zotero.DB.query('select k.*, i.libraryID from betterbibtex.keys k join items i on k.itemID = i.itemID')
+        for row in Zotero.DB.query('select k.*, i.libraryID from betterbibtexmigration.keys k join items i on k.itemID = i.itemID')
           continue if pinned && row.pinned != 1
           migrated += 1
 
@@ -348,7 +355,7 @@ Zotero.BetterBibTeX.DB = new class
           })
         Zotero.BetterBibTeX.debug('DB.migrate: keys=', migrated)
 
-      Zotero.DB.query('DETACH betterbibtex')
+      Zotero.DB.query('DETACH betterbibtexmigration')
 
       db.moveTo(null, 'betterbibtex.sqlite.bak')
 

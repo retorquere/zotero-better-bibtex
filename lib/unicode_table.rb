@@ -82,7 +82,7 @@ class UnicodeConverter
     @chars[0x200B] = OpenStruct.new({latex: "\\mbox{}", math: false})
 
     # biber doesn't like it when I escape closing square brackets #245.1, so only opening bracket
-    @chars['['.ord] = OpenStruct.new({latex: '{[}', math: false})
+    #@chars['['.ord] = OpenStruct.new({latex: '{[}', math: false})
 
     # TODO: replace '}' and '{' with textbrace(left|right) once the bug mentioned in
     # http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754

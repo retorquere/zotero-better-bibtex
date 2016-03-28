@@ -175,7 +175,7 @@ Scenario: CAYW picker
   And I pick 'A bicycle made for two? The integration of scientific techniques into archaeological interpretation' for CAYW:
     | label | chapter |
     | locator | 1 |
-  Then the picks for pandoc should be '[@bentley_academic_2011, p. 1; @pollard_bicycle_2007, ch. 1]'
+  Then the picks for pandoc should be '@bentley_academic_2011, p. 1; @pollard_bicycle_2007, ch. 1'
   And the picks for mmd should be '[#bentley_academic_2011][][#pollard_bicycle_2007][]'
   And the picks for latex should be '\cite[1]{bentley_academic_2011}\cite[ch. 1]{pollard_bicycle_2007}'
   And the picks for scannable-cite should be '{|Abram, 2014|p. 1||zu:0:ITEMKEY}{|Pollard and Bray, 2007|ch. 1||zu:0:ITEMKEY}'
@@ -265,6 +265,12 @@ Scenario: Post script
   Given I import 3 references from 'export/Export web page to misc type with notes and howpublished custom fields #329.json'
   And I set preference .postscript to 'export/Export web page to misc type with notes and howpublished custom fields #329.js'
   Then a library export using 'Better BibTeX' should match 'export/Export web page to misc type with notes and howpublished custom fields #329.bibtex'
+
+@460
+Scenario: arxive files are not correctly exported #460
+  Given I import 1 references from 'export/arxive files are not correctly exported #460.json'
+  And I set preference .postscript to 'export/arxive files are not correctly exported #460.js'
+  Then a library export using 'Better BibLaTeX' should match 'export/arxive files are not correctly exported #460.biblatex'
 
 @456
 Scenario: Ignoring upper cases in German titles #456

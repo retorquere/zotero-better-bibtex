@@ -270,9 +270,9 @@ Zotero.BetterBibTeX.schomd.search = (term) ->
 Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, libraryID, displayOptions} = {}) ->
   itemIDs = @itemIDs(keys, {libraryID})
 
-  return '' if items.length == 0
+  return '' if itemIDs.length == 0
 
-  items = Zotero.Items.get(items)
+  items = Zotero.Items.get(itemIDs)
   translator ||= 'betterbiblatex'
   displayOptions ||= {}
 
