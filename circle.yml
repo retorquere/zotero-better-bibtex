@@ -9,7 +9,7 @@ dependencies:
     - test/fixtures/plugins
 test:
   override:
-    - ./circle.sh test:
+    - sudo apt-get update && sudo apt-get install libpango1.0-0 && sudo apt-get install firefox && bundle exec rake test[ci-cluster-$CIRCLE_NODE_INDEX]:
         parallel: true
 deployment:
   all:
