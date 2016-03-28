@@ -1,4 +1,8 @@
 ---
+sourceforge:
+  project: zotero-better-bibtex
+  user: retorquere
+  key: SOURCEFORGEAPIKEY
 bintray:
   repo: xpi
   package: better-bibtex

@@ -29,8 +29,8 @@ module Rake
           self.class.send(:define_method, key) { @config[key] }
         }
       end
-      def versioned_xpi
-        return File.basename(self.xpi, File.extname(self.xpi)) + '-' + self.version + File.extname(self.xpi)
+      def versioned_xpi(v=nil)
+        return File.basename(self.xpi, File.extname(self.xpi)) + '-' + (v || self.version) + File.extname(self.xpi)
       end
 
       def bump(level=nil)

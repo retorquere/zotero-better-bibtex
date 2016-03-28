@@ -87,6 +87,9 @@ GEM
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
     net-http-pipeline (1.0.1)
+    net-sftp (2.1.2)
+      net-ssh (>= 2.6.5)
+    net-ssh (3.1.1)
     netrc (0.11.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
@@ -106,7 +109,7 @@ GEM
       posix-spawn (~> 0.3.6)
       yajl-ruby (~> 1.2.0)
     rack (1.6.4)
-    rake (11.1.1)
+    rake (11.1.2)
     rchardet (1.6.1)
     recursive-open-struct (1.0.1)
     rest-client (1.8.0)
@@ -182,6 +185,7 @@ DEPENDENCIES
   headless
   jwt
   mechanize
+  net-sftp
   nokogiri
   os
   rake
