@@ -120,6 +120,9 @@ module Rake
 
       def release_build?
         if @release_build.nil?
+          ENV['TRAVIS_BRANCH'] = ('pull-request-' + ENV['TRAVIS_PULL_REQUEST']) if (ENV['TRAVIS_PULL_REQUEST'] || 'false') != 'false'
+          ENV['CIRCLE_BRANCH'] = ('pull-request-' + ENV['CI_PULL_REQUESTS']) if (ENV['CI_PULL_REQUESTS'] || '') != ''
+          branch = %w{CIRCLE_BRANCH TRAVIS_BRANCH}.collect{|key| ENV[key]}.compact.first
           commitmsg = `git log -n 1 --pretty=oneline`.strip
           commit = %w{CIRCLE_SHA1 TRAVIS_COMMIT}.collect{|key| ENV[key]}.compact.first
           commit ||= 'local'
@@ -130,7 +133,7 @@ module Rake
           STDERR.puts "  committed = #{commitmsg}"
           STDERR.puts "  release   = #{releasemsg}"
 
-          @release_build = (commitmsg == releasemsg)
+          @release_build = (commitmsg == releasemsg && branch == 'master')
         end
 
         return @release_build

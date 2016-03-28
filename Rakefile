@@ -158,8 +158,16 @@ task :gather do
   end
 end
 
+lambda {
+  js = "Zotero.BetterBibTeX.release = #{XPI.version.to_json};"
+  file = 'chrome/content/zotero-better-bibtex/release.js'
+  if !File.file?(file) || open(file).read.strip != js.strip
+    STDERR.puts "updating #{file} to #{js}"
+    open(file, 'w') {|f| f.puts(js) }
+  end
+}.call
 
-File.unlink('chrome/content/zotero-better-bibtex/release.js') if File.file?('chrome/content/zotero-better-bibtex/release.js')
+TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
 CLEAN.include('{resource,chrome,defaults}/**/*.js')
 CLEAN.include('{resource,chrome,defaults}/**/*.translator')
@@ -476,14 +484,6 @@ file 'chrome/content/zotero-better-bibtex/punycode.js' => 'Rakefile' do |t|
   browserify("Zotero.BetterBibTeX.punycode = require('punycode');", t.name)
 end
 
-file 'chrome/content/zotero-better-bibtex/release.js' => 'install.rdf' do |t|
-  open(t.name, 'w') {|f| f.write("
-      Zotero.BetterBibTeX.release = #{XPI.version.to_json};
-    ")
-  }
-end
-
-TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 Dir['resource/translators/*.yml'].each{|metadata|
   translator = File.basename(metadata, File.extname(metadata))
 
