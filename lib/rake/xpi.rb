@@ -344,5 +344,6 @@ task :bump, :level do |t, args|
 end
 
 task :publish => XPI.xpi do
-  XPI.publish
+  STDERR.puts "Publishing #{XPI.versioned_xpi}"
+  STDERR.puts "Published to " + XPI.publish
 end

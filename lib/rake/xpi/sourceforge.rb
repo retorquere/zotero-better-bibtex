@@ -10,6 +10,7 @@ module Rake
       def publish
         raise "Sourceforge publishing not configured" unless @config.sourceforge && @config.sourceforge.project && @config.sourceforge.user && @config.sourceforge.key
 
+        STDERR.puts "Publishing #{self.versioned_xpi} to sourceforge"
 
         builds = 'builds'
         download = "http://downloads.sourceforge.net/project/#{@config.sourceforge.project}/#{self.release_build? ? self.release : builds}/#{self.versioned_xpi}"
