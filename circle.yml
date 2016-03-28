@@ -13,7 +13,7 @@ test:
         parallel: true
 deployment:
   master:
-    branch: circle
+    branch: master
     commands:
       - bundle exec rake clean
       - bundle exec rake publish
