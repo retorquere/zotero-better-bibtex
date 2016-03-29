@@ -127,7 +127,6 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    rickshaw (0.3.1)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -171,15 +170,6 @@ GEM
     yajl-ruby (1.2.1)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
-    zotplus-rakehelper (0.0.157)
-      front_matter_parser
-      github_api
-      nokogiri
-      rake
-      rest-client
-      rickshaw
-      rubyzip (>= 1.0.0)
-      typhoeus
 
 PLATFORMS
   ruby
@@ -213,7 +203,6 @@ DEPENDENCIES
   typhoeus
   washbullet
   zip-zip
-  zotplus-rakehelper
 
 BUNDLED WITH
    1.11.2

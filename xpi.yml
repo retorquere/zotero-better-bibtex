@@ -1,6 +1,6 @@
 ---
 github:
-  user: Zotplus
+  user: retorquere
   token: GITHUB_TOKEN
   repo: zotero-better-bibtex
 sourceforge:
@@ -28,7 +28,7 @@ test:
     - https://www.zotero.org/download/update.rdf
     install: test/fixtures/plugins
 xpi: zotero-better-bibtex.xpi
-changelog: https://zotplus.github.io/zotero-better-bibtex/CHANGELOG.html
+changelog: https://retorquere.github.io/zotero-better-bibtex/CHANGELOG.html
 files:
 - chrome.manifest
 - chrome/content/zotero-better-bibtex/BetterBibTeXPatternFormatter.js

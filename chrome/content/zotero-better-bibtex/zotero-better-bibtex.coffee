@@ -79,7 +79,7 @@ class Zotero.BetterBibTeX.DateParser
     for d in ['year', 'month', 'day', 'empty']
       date[d] = @date["#{d}#{suffix}"]
 
-    ### [ 0 ] instead if [0, 0]; see https://github.com/ZotPlus/zotero-better-bibtex/issues/360#issuecomment-143540469 ###
+    ### [ 0 ] instead if [0, 0]; see https://github.com/retorquere/zotero-better-bibtex/issues/360#issuecomment-143540469 ###
     return [ 0 ] if date.empty
 
     return null unless date.year
@@ -418,7 +418,7 @@ Zotero.BetterBibTeX.disableInConnector = (isConnector) ->
   return unless isConnector
   @disable("""
     You are running Zotero in connector mode (running Zotero Firefox and Zotero Standalone simultaneously.
-    This is not supported by Better BibTeX; see https://github.com/ZotPlus/zotero-better-bibtex/issues/143
+    This is not supported by Better BibTeX; see https://github.com/retorquere/zotero-better-bibtex/issues/143
   """)
 
 Zotero.BetterBibTeX.disable = (message) ->
