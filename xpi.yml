@@ -1,4 +1,8 @@
 ---
+github:
+  user: Zotplus
+  token: GITHUB_TOKEN
+  repo: zotero-better-bibtex
 sourceforge:
   project: zotero-better-bibtex
   user: retorquere

@@ -57,14 +57,16 @@ module Rake
       end
 
       def version
+        b = "-#{branch}"
+        b = '' if b == '-master'
         if release_build?
           return release
         elsif ENV['TRAVIS_BUILD_NUMBER']
-          return release + "-travis-#{ENV['TRAVIS_BUILD_NUMBER']}"
+          return release + "-travis#{b}-#{ENV['TRAVIS_BUILD_NUMBER']}"
         elsif ENV['CIRCLE_BUILD_NUM']
-          return release + "-circle-#{ENV['CIRCLE_BUILD_NUM']}"
+          return release + "-circle#{b}-#{ENV['CIRCLE_BUILD_NUM']}"
         else
-          return release + "-#{Socket.gethostname}-#{@timestamp}"
+          return release + "-#{Socket.gethostname}#{b}-#{@timestamp}"
         end
       end
 
@@ -118,11 +120,29 @@ module Rake
         return "release: #{self.xpi} #{self.release}"
       end
 
+      def pull_request
+        return ENV['TRAVIS_PULL_REQUEST'] if (ENV['TRAVIS_PULL_REQUEST'] || 'false') != 'false'
+        return ENV['CI_PULL_REQUESTS'] if (ENV['CI_PULL_REQUESTS'] || '') != ''
+        return nil
+      end
+
+      def branch
+        if @branch.nil?
+          if pull_request
+            @branch = 'pull-request-' + pull_request
+          elsif ENV['TRAVIS_BRANCH']
+            @branch = ENV['TRAVIS_BRANCH']
+          elsif ENV['CIRCLE_BRANCH']
+            @branch = ENV['CIRCLE_BRANCH']
+          else
+            @branch = `git rev-parse --abbrev-ref HEAD`.strip
+          end
+        end
+        return @branch
+      end
+
       def release_build?
         if @release_build.nil?
-          ENV['TRAVIS_BRANCH'] = ('pull-request-' + ENV['TRAVIS_PULL_REQUEST']) if (ENV['TRAVIS_PULL_REQUEST'] || 'false') != 'false'
-          ENV['CIRCLE_BRANCH'] = ('pull-request-' + ENV['CI_PULL_REQUESTS']) if (ENV['CI_PULL_REQUESTS'] || '') != ''
-          branch = %w{CIRCLE_BRANCH TRAVIS_BRANCH}.collect{|key| ENV[key]}.compact.first
           commitmsg = `git log -n 1 --pretty=oneline`.strip
           commit = %w{CIRCLE_SHA1 TRAVIS_COMMIT}.collect{|key| ENV[key]}.compact.first
           commit ||= 'local'
@@ -344,6 +364,8 @@ task :bump, :level do |t, args|
 end
 
 task :publish => XPI.xpi do
-  STDERR.puts "Publishing #{XPI.versioned_xpi}"
-  STDERR.puts "Published to " + XPI.publish
+  if !XPI.pull_request
+    STDERR.puts "Publishing #{XPI.versioned_xpi}"
+    STDERR.puts "Published to " + XPI.publish
+  end
 end

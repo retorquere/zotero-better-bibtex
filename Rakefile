@@ -31,7 +31,7 @@ require 'rest-client'
 require 'front_matter_parser'
 require_relative 'lib/unicode_table'
 require_relative 'lib/rake/xpi'
-require_relative 'lib/rake/xpi/sourceforge'
+require_relative 'lib/rake/xpi/github'
 
 #require 'github_changelog_generator'
 

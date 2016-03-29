@@ -182,6 +182,7 @@ DEPENDENCIES
   front_matter_parser
   ghi
   git
+  github_api
   headless
   jwt
   mechanize
