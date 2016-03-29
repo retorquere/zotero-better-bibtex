@@ -110,6 +110,17 @@ GEM
       yajl-ruby (~> 1.2.0)
     rack (1.6.4)
     rake (11.1.2)
+    rake-xpi (0.0.6)
+      aws-sdk
+      github_api
+      jwt
+      multipart-post
+      nokogiri
+      rake
+      recursive-open-struct
+      rest-client
+      rubyzip (>= 1.0.0)
+      zip-zip
     rchardet (1.6.1)
     recursive-open-struct (1.0.1)
     rest-client (1.8.0)
@@ -190,6 +201,7 @@ DEPENDENCIES
   nokogiri
   os
   rake
+  rake-xpi
   rchardet
   recursive-open-struct
   rest-client
@@ -204,4 +216,4 @@ DEPENDENCIES
   zotplus-rakehelper
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
