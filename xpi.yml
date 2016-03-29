@@ -24,7 +24,7 @@ s3:
 test:
   xpis:
     download:
-    - https://zotplus.github.io/debug-bridge/update.rdf
+    - https://github.com/retorquere/zotero-debug-bridge/releases/download/update.rdf/update.rdf
     - https://www.zotero.org/download/update.rdf
     install: test/fixtures/plugins
 xpi: zotero-better-bibtex.xpi
