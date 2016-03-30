@@ -16,10 +16,16 @@ amo:
   issuer: MOZJWTissuer
   secret: MOZJWTsecret
 s3:
-  id: ZOTPLUSAWSKEY
-  secret: ZOTPLUSAWSSECRET
+  id: AWSAccessKeyId
+  secret: AWSSecretAccessKey
   bucket: zotplus-builds-test
   prefix: better-bibtex
+  region: eu-central-1
+errorreports:
+  key: AWSAccessKeyId
+  secret: AWSSecretAccessKey
+  username: AWSUserName
+  bucket: better-bibtex-error-reports-62200312
   region: eu-central-1
 test:
   xpis:

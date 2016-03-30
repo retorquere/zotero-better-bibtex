@@ -79,6 +79,7 @@ GEM
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (>= 0.0.9, < 0.2)
     mime-types (2.99.1)
+    mime-types-data (3.2016.0221)
     mini_portile2 (2.0.0)
     multi_json (1.11.2)
     multi_test (0.1.2)
@@ -110,7 +111,7 @@ GEM
       yajl-ruby (~> 1.2.0)
     rack (1.6.4)
     rake (11.1.2)
-    rake-xpi (0.0.8)
+    rake-xpi (0.0.9)
       aws-sdk
       github_api
       jwt
@@ -203,6 +204,3 @@ DEPENDENCIES
   typhoeus
   washbullet
   zip-zip
-
-BUNDLED WITH
-   1.11.2
