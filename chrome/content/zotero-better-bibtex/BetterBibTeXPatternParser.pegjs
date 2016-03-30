@@ -25,21 +25,25 @@ fcall
 
 method
   = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') name:[\.a-zA-Z]* flag:flag? params:mparams? {
-    var scrub = (prefix[0] !== 'A' && prefix[0] !== 'E')
-    prefix = prefix.toLowerCase();
-    var editorsOnly = (prefix === 'edtr' || prefix === 'editors');
-    if (editorsOnly) { prefix = (prefix === 'edtr') ? 'auth' : 'authors'; }
-    name = prefix + name.join('');
-    if (!params) { params = []; }
+      var scrub = (prefix[0] !== 'A' && prefix[0] !== 'E')
+      prefix = prefix.toLowerCase();
+      var editorsOnly = (prefix === 'edtr' || prefix === 'editors');
+      if (editorsOnly) { prefix = (prefix === 'edtr') ? 'auth' : 'authors'; }
+      name = prefix + name.join('');
+      if (!params) { params = []; }
 
-    var method = BetterBibTeXPatternFormatter.prototype.methods[name];
-    if (typeof method === 'function') {
-      return {method: method, scrub: scrub, arguments: [editorsOnly, (flag === 'initials')].concat(params)};
-    } else {
-      Zotero.BetterBibTeX.debug('invalid pattern:', name, 'method:', typeof method);
-      throw new Error('invalid pattern "' + name + '"');
+      var method = BetterBibTeXPatternFormatter.prototype.methods[name];
+      if (typeof method === 'function') {
+        return {method: method, scrub: scrub, arguments: [editorsOnly, (flag === 'initials')].concat(params)};
+      } else {
+        Zotero.BetterBibTeX.debug('invalid pattern:', name, 'method:', typeof method);
+        throw new Error('invalid pattern "' + name + '"');
+      }
     }
-  }
+  / '>' chars:[0-9]+ {
+      var method = BetterBibTeXPatternFormatter.prototype.methods['>'];
+      return {method: method, scrub: false, arguments: [parseInt(char)]};
+    }
   / name:[0\.a-zA-Z]+ flag:flag? params:mparams? {
       name = name.join('')
       var method = BetterBibTeXPatternFormatter.prototype.methods[name];

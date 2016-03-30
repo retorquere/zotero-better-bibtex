@@ -54,15 +54,24 @@ class BetterBibTeXPatternFormatter
     return citekeys
 
   concat: (pattern) ->
-    result = (@reduce(part) for part in pattern)
-    result = (part for part in result when part)
-    result = result.join('').replace(/[\s{},]/g, '')
+    result = ''
+    for part in pattern
+      part = @evaluate(part)
+      continue unless part
+      if typeof(part) == 'function'
+        break unless part.call(key)
+      else
+        result += part.replace(/[\s{},]/g, '')
+
     result = Zotero.BetterBibTeX.removeDiacritics(result) if @fold
     return result
 
-  reduce: (step) ->
-    Zotero.BetterBibTeX.debug('reduce:', typeof step.method, step)
+  evaluate (step) ->
+    Zotero.BetterBibTeX.debug('evaluate', typeof step.method, step)
+
     value = step.method.apply(@, step.arguments) || ''
+    return value if typeof(value) == 'function'
+
     value = @clean(value) if step.scrub
 
     for filter in step.filters
@@ -175,6 +184,9 @@ class BetterBibTeXPatternFormatter
       return ''
 
     literal: (text) -> return text
+
+    '>': (chars) ->
+      return (text) -> (text && text.length > chars)
 
     property: (name) ->
       return @innerText(@item[name] || @item[name[0].toLowerCase() + name.slice(1)] || '')
