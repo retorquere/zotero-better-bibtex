@@ -111,7 +111,7 @@ GEM
       yajl-ruby (~> 1.2.0)
     rack (1.6.4)
     rake (11.1.2)
-    rake-xpi (0.0.9)
+    rake-xpi (0.0.10)
       aws-sdk
       github_api
       jwt

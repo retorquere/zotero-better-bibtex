@@ -162,7 +162,7 @@ lambda {
   js = "Zotero.BetterBibTeX.release = #{XPI.version.to_json};"
   file = 'chrome/content/zotero-better-bibtex/release.js'
   if !File.file?(file) || open(file).read.strip != js.strip
-    STDERR.puts "updating #{file} to #{js}"
+    STDERR.puts "updating #{file} to #{js}" unless ENV['VERBOSE'] == 'false'
     open(file, 'w') {|f| f.puts(js) }
   end
 }.call
