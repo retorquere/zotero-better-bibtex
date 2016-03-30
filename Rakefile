@@ -901,10 +901,14 @@ end
 
 task :s3form do
   user = OpenStruct.new({
-    key: ENV[XPI.errorreports.key],
-    secret: ENV[XPI.errorreports.secret],
-    username: ENV[XPI.errorreports.username]
+    key: XPI.errorreports.key,
+    secret: XPI.errorreports.secret,
+    username: XPI.errorreports.username
   })
+  user.each_pair{|k, v|
+    raise "S3: #{k} not configured" unless v.to_s.strip != '' && ENV[v].to_s.strip != ''
+    user[k] = ENV[v]
+  }
 
   s3 = Aws::S3::Resource.new(region: XPI.errorreports.region, credentials: Aws::Credentials.new(user.key, user.secret))
   bucket = s3.bucket(XPI.errorreports.bucket)
