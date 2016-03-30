@@ -11,6 +11,7 @@ GEM
     backports (3.6.8)
     bibtex-ruby (4.3.0)
       latex-decode (~> 0.0)
+    blockenspiel (0.5.0)
     builder (3.2.2)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
@@ -111,7 +112,7 @@ GEM
       yajl-ruby (~> 1.2.0)
     rack (1.6.4)
     rake (11.1.2)
-    rake-xpi (0.0.10)
+    rake-xpi (0.0.11)
       aws-sdk
       github_api
       jwt
@@ -121,6 +122,7 @@ GEM
       recursive-open-struct
       rest-client
       rubyzip (>= 1.0.0)
+      versionomy
       zip-zip
     rchardet (1.6.1)
     recursive-open-struct (1.0.1)
@@ -163,6 +165,8 @@ GEM
       unf_ext
     unf_ext (0.0.7.2)
     unicode (0.4.4.2)
+    versionomy (0.5.0)
+      blockenspiel (~> 0.5)
     washbullet (0.4.0)
       faraday (~> 0.9.0)
       mime-types
