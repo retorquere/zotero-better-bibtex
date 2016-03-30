@@ -42,7 +42,7 @@ method
     }
   / '>' chars:[0-9]+ {
       var method = BetterBibTeXPatternFormatter.prototype.methods['>'];
-      return {method: method, scrub: false, arguments: [parseInt(char)]};
+      return {method: method, scrub: false, arguments: [parseInt(chars)]};
     }
   / name:[0\.a-zA-Z]+ flag:flag? params:mparams? {
       name = name.join('')

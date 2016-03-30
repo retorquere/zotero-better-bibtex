@@ -59,7 +59,7 @@ class BetterBibTeXPatternFormatter
       part = @evaluate(part)
       continue unless part
       if typeof(part) == 'function'
-        break unless part.call(key)
+        return '' unless part.call(null, result)
       else
         result += part.replace(/[\s{},]/g, '')
 
