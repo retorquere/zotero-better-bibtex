@@ -3,7 +3,7 @@ Components.utils.import('resource://zotero/config.js')
 
 Zotero_BetterBibTeX_ErrorReport = new class
   constructor: ->
-    @form = JSON.parse(Zotero.File.getContentsFromURL("https://zotplus.github.io/s3.json"))
+    @form = JSON.parse(Zotero.File.getContentsFromURL('https://github.com/retorquere/zotero-better-bibtex/releases/download/update.rdf/error-report.json'))
 
   submit: (filename, data, callback) ->
     fd = new FormData()

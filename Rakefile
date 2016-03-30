@@ -1,37 +1,37 @@
 require 'aws-sdk'
-require 'rake'
-require 'uri'
-require 'os'
-require 'rake/clean'
-require 'shellwords'
-require 'nokogiri'
-require 'openssl'
-require 'net/http'
-require 'json'
-require 'fileutils'
-require 'typhoeus'
-require 'time'
-require 'date'
-require 'pp'
-require 'zip'
-require 'tempfile'
-require 'rubygems/package'
-require 'zlib'
-require 'open3'
-require 'yaml'
-require 'washbullet'
-require 'rake/loaders/makefile'
-require 'selenium-webdriver'
-require 'rchardet'
-require 'csv'
 require 'base64'
-require 'net/http/post/multipart'
+require 'csv'
+require 'date'
 require 'facets'
-require 'rest-client'
+require 'fileutils'
 require 'front_matter_parser'
-require_relative 'lib/unicode_table'
+require 'json'
+require 'net/http'
+require 'net/http/post/multipart'
+require 'nokogiri'
+require 'open3'
+require 'openssl'
+require 'os'
+require 'pp'
+require 'rake'
+require 'rake/clean'
+require 'rake/loaders/makefile'
 require 'rake/xpi'
 require 'rake/xpi/github'
+require 'rchardet'
+require 'rest-client'
+require 'rubygems/package'
+require 'selenium-webdriver'
+require 'shellwords'
+require 'tempfile'
+require 'time'
+require 'typhoeus'
+require 'uri'
+require 'washbullet'
+require 'yaml'
+require 'zip'
+require 'zlib'
+require_relative 'lib/unicode_table'
 
 #require 'github_changelog_generator'
 
@@ -162,7 +162,7 @@ lambda {
   js = "Zotero.BetterBibTeX.release = #{XPI.version.to_json};"
   file = 'chrome/content/zotero-better-bibtex/release.js'
   if !File.file?(file) || open(file).read.strip != js.strip
-    STDERR.puts "updating #{file} to #{js}"
+    STDERR.puts "updating #{file} to #{js}" unless ENV['VERBOSE'] == 'false'
     open(file, 'w') {|f| f.puts(js) }
   end
 }.call
@@ -897,4 +897,62 @@ task :doc do
       puts "Undocumented preference #{preferences[pref]} / #{heading} (#{defaults[pref]})"
     end
   }
+end
+
+task :s3form do
+  user = OpenStruct.new({
+    key: XPI.errorreports.key,
+    secret: XPI.errorreports.secret,
+    username: XPI.errorreports.username
+  })
+  user.each_pair{|k, v|
+    raise "S3: #{k} not configured" unless v.to_s.strip != '' && ENV[v].to_s.strip != ''
+    user[k] = ENV[v]
+  }
+
+  s3 = Aws::S3::Resource.new(region: XPI.errorreports.region, credentials: Aws::Credentials.new(user.key, user.secret))
+  bucket = s3.bucket(XPI.errorreports.bucket)
+  obj = bucket.object('KeyName')
+  expires = Time.now + (6*24*60*60) # 6 days from now
+  post = bucket.presigned_post({
+    signature_expiration: expires,
+    acl: 'private',
+    key: '${filename}',
+    success_action_status: '204'
+  })
+
+  form = {
+    action: post.url.to_s,
+    filefield: 'file',
+    fields: post.fields
+  }
+  Tempfile.create('error-report.json') do |tmp|
+    tmp.puts(JSON.pretty_generate(form))
+    tmp.close
+    XPI.add_asset('update.rdf', false, 'error-report.json', tmp.path, 'application/json')
+  end
+
+  builder = Nokogiri::HTML::Builder.new do |doc|
+    doc.html {
+      doc.head {
+        doc.meta_(charset: 'utf-8')
+        doc.title { doc.text 'Upload' }
+      }
+      doc.body {
+        doc.h2 { doc.text "valid until #{expires}" }
+        doc.form(action: form[:action], method: 'POST', enctype: "multipart/form-data") {
+          form[:fields].each_pair{|name, value|
+            doc.input(type: 'hidden', name: name, value: value)
+          }
+          doc.input(type: 'file', name: 'file')
+          doc.input(type: 'submit', value: 'Save')
+        }
+      }
+    }
+  end
+  Tempfile.create('error-report.html') do |tmp|
+    tmp.puts(builder.to_html)
+    tmp.close
+    XPI.add_asset('update.rdf', false, 'error-report.html', tmp.path, 'text/html')
+  end
 end
