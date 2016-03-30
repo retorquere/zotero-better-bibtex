@@ -66,7 +66,7 @@ class BetterBibTeXPatternFormatter
     result = Zotero.BetterBibTeX.removeDiacritics(result) if @fold
     return result
 
-  evaluate (step) ->
+  evaluate: (step) ->
     Zotero.BetterBibTeX.debug('evaluate', typeof step.method, step)
 
     value = step.method.apply(@, step.arguments) || ''
