@@ -308,7 +308,12 @@ doExport = ->
 
     ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate && item.url
 
-    ref.add((new DateField(item.date, item.language, 'date', 'year')).field)
+    if item.date
+      if m = item.date.match(/^\[([0-9]+)\]\s+(.*)/)
+        ref.add({ name: 'origdate', value: m[1] })
+        ref.add((new DateField(m[2], item.language, 'date', 'year')).field)
+      else
+        ref.add((new DateField(item.date, item.language, 'date', 'year')).field)
 
     switch
       when item.pages
