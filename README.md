@@ -1,70 +1,28 @@
-# Better BibTeX (BBT) for Zotero [![Build Status](https://travis-ci.org/retorquere/zotero-better-bibtex.svg?branch=master)](https://travis-ci.org/retorquere/zotero-better-bibtex)
+# Zotero: Better Bib(La)TeX [![Circle CI](https://circleci.com/gh/retorquere/zotero-better-bibtex.svg?style=shield)](https://circleci.com/gh/retorquere/zotero-better-bibtex)
 
-This extension aims to make Zotero effective for us text-based authoring holdouts; currently, that translates to the
-LaTeX/Markdown crowd. At its core, it behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero, you'll find Better Bib(La)TeX/CSL JSON
-listed as one of the choices. If nothing else, you could keep your existing workflow as-is, and just enjoy the improved
-LaTeX &lt;-&gt; unicode translation on im-and export. Over and above this improvement, it will give you
+This extension aims to make Zotero effective for us LaTeX holdouts. To get started, read the [[Installation]]
+instructions.  At its core, it behaves like any Zotero import/export module; anywhere you can export or import
+bibliography items in Zotero, you'll find Better Bib(La)TeX listed as one of the choices. If nothing else, you could
+keep your existing workflow as-is, and just enjoy the emproved LaTeX &lt;-&gt; unicode translation on im-and export.
+Over and above this improvement, it adds the following features to Zotero:
 
-* Stable, configurable [citation keys](https://retorquere.github.io/zotero-better-bibtex/citation-keys.html)
-* No more [Unicode problems](https://retorquere.github.io/zotero-better-bibtex/unicode.html)
-* A way to go [whole-hog](https://retorquere.github.io/zotero-better-bibtex/hardcore.html) for BibTeX
-* Other [niceties](https://retorquere.github.io/zotero-better-bibtex/niceties.html)
-
-BBT works from [BibTeXing](http://ctan.cs.uu.nl/biblio/bibtex/base/btxdoc.pdf) and [Tame the
-BeaST](http://www.lsv.ens-cachan.fr/~markey/BibTeX/doc/ttb_en.pdf) for BibTeX, and
-[The Biblatex Package](http://ctan.mirrorcatalogs.com/macros/latex/contrib/biblatex/doc/biblatex.pdf) for BibLaTeX, but
-since there isn't really a definitive manual for either format that is universally followed by Bib(La)TeX
-editors/processors, I'm pragmatic about implementing what works.
-
-# Configuration
-
-The Better BibTeX configuration pane can be found under the regular Zotero preferences pane, tab 'Better Bib(La)TeX'.
-You can get also there by clicking the Better BibTeX "Preferences" button in the addons pane. A full explanation of all
-available preferences can be found [here](https://retorquere.github.io/zotero-better-bibtex/configuration.html).
-
-# Installation (one-time)
-
-After installation, the plugin will auto-update to newer releases, so installation is a one-time procedure. You can
-install BBT in ***either*** Standalone or Firefox; installing Zotero in both puts Zotero Standalone and Zotero Firefox in
-what is called "connector mode", which is currently [not
-supported](https://github.com/retorquere/zotero-better-bibtex/issues/143). Or, to be fully exact, you can have it installed
-in both, but running both at the same time will have BBT break at indeterminate occasions. Recoverable, but not fun.
-
-Start by downloading the [latest XPI](https://github.com/retorquere/zotero-better-bibtex/releases/latest), and then
-
-## BBT for Zotero Firefox
-
-If you downloaded BBT from Firefox you will usually be prompted with an installation dialog; if not, or if you
-downloaded using another browser, double-click the downloaded xpi; Firefox ought to start and present you with the installation dialog.
-
-## BBT for Zotero Standalone
-
-1. In the main menu go to Tools > Add-ons
-2. Select 'Extensions'
-3. Click on the gear in the top-right corner and choose 'Install Add-on From File...'
-4. Choose .xpi that you've just downloaded, click 'Install'
-5. Restart Zotero
+* Stable [Citation Keys](https://github.com/retorquere/zotero-better-bibtex/wiki/Citation-Keys), without key clashes! Generates citation keys that take into account other existing keys in your library
+  that are not part of the items you export. Prevent random breakage!
+* Converts from/to HTML/LaTeX: Currently supports i/\emph/\textit, b/\textbf, sup/\_{...} and sub/^{...}; more can
+  be added on request. Finally add italics and super/supscript to your titles! The plugin contains a comprehensive list
+  of LaTeX constructs, so stuff like \"{o} or \"o will be converted to their unicode equivalents on import. If you need
+  literal LaTeX in your export: surround it with &lt;pre&gt;....&lt;/pre&gt; tags.
+* Set your own, fixed [Citation Keys](https://github.com/retorquere/zotero-better-bibtex/wiki/Citation-Keys), generate citation keys from [JabRef patterns](http://jabref.sourceforge.net/help/LabelPatterns.php), drag and drop LaTeX citations, add other custom BibLaTeX fields
+* Highly [Customized Exports](https://github.com/retorquere/zotero-better-bibtex/wiki/Customized-Exports)
+* Fixes date field exports: export dates like 'forthcoming' as 'forthcoming' instead of empty.
+* [Push/Pull Export](https://github.com/retorquere/zotero-better-bibtex/wiki/Push-and-Pull-Export) from the embedded webserver
+* Automatic [journal abbreviation](https://github.com/retorquere/zotero-better-bibtex/wiki/Citation-Keys)
 
 # Got problems? We got fixes!
 
-If you have any questions on the use of the plugin, please do not hesitate to file a GitHub issue to ask for help. If
-you're reporting a bug in the plugin, please take a moment to glance through the [Support Request Guidelines](https://retorquere.github.io/zotero-better-bibtex/support.html); it will
+If you have any questions on the use of the plugin, please do not hesitate to [file a GitHub issue](https://github.com/retorquere/zotero-better-bibtex/issues/new) to ask for help. If
+you're reporting a bug in the plugin, please take a moment to glance through the [Support Request Guidelines](https://github.com/retorquere/zotero-better-bibtex/wiki/Support); it will
 make sure I get your problem fixed as quick as possible. Clear bug reports commonly have time-to-fix of 10 minutes. The
 guidelines are very detailed, perhaps to the point of being off-putting, but please do not fret; these guidelines
 simply express my ideal bug submission. I of course prefer very clearly documented issue reports over fuzzy ones, but I
 prefer fuzzy ones over missed ones.
-
-# Plans
-
-* add "citekey" field to reference editor
-* sync citekey cleanly without abusing the "extra" field
-* faster journal abbreviator using the [LTWA](http://www.issn.org/services/online-services/access-to-the-ltwa/)
-
-## Known problems
-
-Before submitting an issue, please make sure this isn't a known problem. Known problems are either already on my radar,
-or there are problems preventing me from implementing a fix.
-
-* **Odd characters after import**. Zotero doesn't seem to handle importing of non-utf8 files particularly gracefully. If
-  you're coming from JabRef, please verify in JabRef using file-database properties that your bibliography is saved in
-  utf-8 format before importing.

@@ -956,3 +956,40 @@ task :s3form do
     XPI.add_asset('update.rdf', false, 'error-report.html', tmp.path, 'text/html')
   end
 end
+
+task :site do
+  sh "git clone git@github.com:retorquere/zotero-better-bibtex.wiki.git wiki" unless File.directory?('wiki')
+  sh "cd wiki && git pull"
+  open('wiki/Support.md', 'w'){|support|
+    written = false
+    support.puts('<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CONTRIBUTING.md. EDITS WILL BE OVERWRITTEN -->')
+    IO.readlines('CONTRIBUTING.md').each{|line|
+      if (line =~ /^#/ || line.strip == '' || line =~ /^<!--/) && !written
+        next
+      else
+        written = true
+        support.write(line)
+      end
+    }
+  }
+  open('wiki/Home.md', 'w') {|home|
+    home.puts('<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->')
+    IO.readlines('README.md').each{|line|
+      next if line =~ /^<!--/
+
+      line.gsub!(/\[(.*?)\]\(https:\/\/github.com\/retorquere\/zotero-better-bibtex\/wiki\/(.*?)\)/){|match|
+        label = $1
+        link = $2
+        if link.gsub('-', ' ') == label
+          "[[#{label}]]"
+        else
+          "[[#{label}|#{link}]]"
+        end
+      }
+      home.write(line)
+    }
+  }
+  sh "cd wiki && git add Home.md Support.md"
+  sh "cd wiki && git commit -m 'Home + Support'"
+  sh "cd wiki && git push"
+end
