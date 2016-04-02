@@ -1,10 +1,12 @@
 # Zotero: Better Bib(La)TeX [![Circle CI](https://circleci.com/gh/retorquere/zotero-better-bibtex.svg?style=shield)](https://circleci.com/gh/retorquere/zotero-better-bibtex)
 
-This extension aims to make Zotero effective for us LaTeX holdouts. To get started, read the [[Installation]]
-instructions.  At its core, it behaves like any Zotero import/export module; anywhere you can export or import
-bibliography items in Zotero, you'll find Better Bib(La)TeX listed as one of the choices. If nothing else, you could
-keep your existing workflow as-is, and just enjoy the emproved LaTeX &lt;-&gt; unicode translation on im-and export.
-Over and above this improvement, it adds the following features to Zotero:
+This extension aims to make Zotero effective for us text-based authoring holdouts; currently, that translates to the
+LaTeX/Markdown crowd. To get started, read the
+[Installation](https://github.com/retorquere/zotero-better-bibtex/wiki/Installation) instructions.  At its core, it
+behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero, you'll
+find Better Bib(La)TeX listed as one of the choices. If nothing else, you could keep your existing workflow as-is, and
+just enjoy the emproved LaTeX &lt;-&gt; unicode translation on im-and export.  Over and above this improvement, it adds
+the following features to Zotero:
 
 * Stable [Citation Keys](https://github.com/retorquere/zotero-better-bibtex/wiki/Citation-Keys), without key clashes! Generates citation keys that take into account other existing keys in your library
   that are not part of the items you export. Prevent random breakage!
@@ -17,6 +19,12 @@ Over and above this improvement, it adds the following features to Zotero:
 * Fixes date field exports: export dates like 'forthcoming' as 'forthcoming' instead of empty.
 * [Push/Pull Export](https://github.com/retorquere/zotero-better-bibtex/wiki/Push-and-Pull-Export) from the embedded webserver
 * Automatic [journal abbreviation](https://github.com/retorquere/zotero-better-bibtex/wiki/Citation-Keys)
+
+BBT works from [BibTeXing](http://ctan.cs.uu.nl/biblio/bibtex/base/btxdoc.pdf) and [Tame the
+BeaST](http://www.lsv.ens-cachan.fr/~markey/BibTeX/doc/ttb_en.pdf) for BibTeX, and
+[The Biblatex Package](http://ctan.mirrorcatalogs.com/macros/latex/contrib/biblatex/doc/biblatex.pdf) for BibLaTeX, but
+since there isn't really a definitive manual for either format that is universally followed by Bib(La)TeX
+editors/processors, I'm pragmatic about implementing what works.
 
 # Got problems? We got fixes!
 
