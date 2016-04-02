@@ -131,7 +131,7 @@ GEM
     rack (1.6.4)
     rainbow (2.1.0)
     rake (11.1.2)
-    rake-xpi (0.0.13)
+    rake-xpi (0.0.14)
       aws-sdk
       github_api
       jwt
