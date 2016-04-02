@@ -929,7 +929,7 @@ task :s3form do
   Tempfile.create('error-report.json') do |tmp|
     tmp.puts(JSON.pretty_generate(form))
     tmp.close
-    XPI.add_asset('update.rdf', false, 'error-report.json', tmp.path, 'application/json')
+    XPI.add_asset(:'update.rdf', false, 'error-report.json', tmp.path, 'application/json')
   end
 
   builder = Nokogiri::HTML::Builder.new do |doc|
@@ -953,7 +953,7 @@ task :s3form do
   Tempfile.create('error-report.html') do |tmp|
     tmp.puts(builder.to_html)
     tmp.close
-    XPI.add_asset('update.rdf', false, 'error-report.html', tmp.path, 'text/html')
+    XPI.add_asset(:'update.rdf', false, 'error-report.html', tmp.path, 'text/html')
   end
 end
 
