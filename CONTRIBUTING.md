@@ -15,7 +15,7 @@ fuzzy ones over missed ones.
 
 * Better BibTeX will fail with incomprehensible errors if you run but Zotero Standalone and Zotero for Firefox
   simultaniously [#143](https://github.com/retorquere/zotero-better-bibtex/issues/143)
-* If Zotero stalls with BBT installed, it is often a one-time thing as the [cache fills](https://retorquere.github.io/better-bibtex/performance.html)
+* If Zotero stalls with BBT installed, it is often a one-time thing as the [cache fills](https://github.com/retorquere/zotero-better-bibtex/wiki/Performance)
 
 # Submitting an issue
 

@@ -216,7 +216,6 @@ DEPENDENCIES
   front_matter_parser
   ghi
   git
-  github_api
   github_changelog_generator
   headless
   jwt

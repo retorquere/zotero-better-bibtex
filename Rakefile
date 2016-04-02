@@ -960,6 +960,18 @@ end
 task :site do
   sh "git clone git@github.com:retorquere/zotero-better-bibtex.wiki.git wiki" unless File.directory?('wiki')
   sh "cd wiki && git pull"
+
+  relink = lambda{|line|
+    line.gsub(/\[(.*?)\]\(https:\/\/github.com\/retorquere\/zotero-better-bibtex\/wiki\/(.*?)\)/){|match|
+      label = $1
+      link = $2
+      if link.gsub('-', ' ') == label
+        "[[#{label}]]"
+      else
+        "[[#{label}|#{link}]]"
+      end
+    }
+  }
   open('wiki/Support.md', 'w'){|support|
     written = false
     support.puts("<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CONTRIBUTING.md. EDITS WILL BE OVERWRITTEN -->\n\n")
@@ -968,7 +980,7 @@ task :site do
         next
       else
         written = true
-        support.write(line)
+        support.write(relink.call(line))
       end
     }
   }
@@ -976,21 +988,10 @@ task :site do
     home.puts("<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->\n\n")
     IO.readlines('README.md').each{|line|
       next if line =~ /^<!--/
-
-      line.gsub!(/\[(.*?)\]\(https:\/\/github.com\/retorquere\/zotero-better-bibtex\/wiki\/(.*?)\)/){|match|
-        label = $1
-        link = $2
-        if link.gsub('-', ' ') == label
-          "[[#{label}]]"
-        else
-          "[[#{label}|#{link}]]"
-        end
-      }
-      home.write(line)
+      home.write(relink.call(line))
     }
   }
 
-  sh "github_changelog_generator --user retorquere --project zotero-better-bibtex -o wiki/Changelog.md"
   sh "cd wiki && git add Home.md Support.md Changelog.md"
   sh "cd wiki && git commit -m 'Home + Support' || true"
   sh "cd wiki && git push"
