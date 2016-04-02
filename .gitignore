@@ -24,3 +24,4 @@ vendor
 .pushbullet
 resource/reports/cacheActivity.txt
 wiki
+*.sqlite
