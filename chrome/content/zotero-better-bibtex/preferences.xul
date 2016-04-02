@@ -83,14 +83,6 @@
                   <row>
                     <checkbox label="&zotero.better-bibtex.citekey.fold;" preference="pref-better-bibtex-fold"/>
                   </row>
-                  <row>
-                    <label value="&zotero.better-bibtex.bibtexURLs;"/>
-                    <radiogroup preference="pref-better-bibtex-bibtexURLs" orient="horizontal">
-                      <radio label="&zotero.better-bibtex.bibtexURLs.off;" value="off"/>
-                      <radio label="&zotero.better-bibtex.bibtexURLs.note;" value="note"/>
-                      <radio label="&zotero.better-bibtex.bibtexURLs.url;" value="url"/>
-                    </radiogroup>
-                  </row>
                   <!-- row>
                     <label value="&zotero.better-bibtex.langid;"/>
                     <radiogroup id="id-better-bibtex-preferences-langid" orient="vertical" preference="pref-better-bibtex-langid">
@@ -152,6 +144,14 @@
                       <radio label="&zotero.better-bibtex.doi-and-url.both;" value="both"/>
                       <radio label="&zotero.better-bibtex.doi-and-url.DOI;" value="doi"/>
                       <radio label="&zotero.better-bibtex.doi-and-url.URL;" value="url"/>
+                    </radiogroup>
+                  </row>
+                  <row>
+                    <label value="&zotero.better-bibtex.bibtexURLs;"/>
+                    <radiogroup preference="pref-better-bibtex-bibtexURLs" orient="horizontal">
+                      <radio label="&zotero.better-bibtex.bibtexURLs.off;" value="off"/>
+                      <radio label="&zotero.better-bibtex.bibtexURLs.note;" value="note"/>
+                      <radio label="&zotero.better-bibtex.bibtexURLs.url;" value="url"/>
                     </radiogroup>
                   </row>
                   <row>
