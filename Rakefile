@@ -962,7 +962,7 @@ task :site do
   sh "cd wiki && git pull"
   open('wiki/Support.md', 'w'){|support|
     written = false
-    support.puts('<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CONTRIBUTING.md. EDITS WILL BE OVERWRITTEN -->')
+    support.puts("<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CONTRIBUTING.md. EDITS WILL BE OVERWRITTEN -->\n\n")
     IO.readlines('CONTRIBUTING.md').each{|line|
       if (line =~ /^#/ || line.strip == '' || line =~ /^<!--/) && !written
         next
@@ -973,7 +973,7 @@ task :site do
     }
   }
   open('wiki/Home.md', 'w') {|home|
-    home.puts('<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->')
+    home.puts("<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->\n\n")
     IO.readlines('README.md').each{|line|
       next if line =~ /^<!--/
 
@@ -989,7 +989,9 @@ task :site do
       home.write(line)
     }
   }
-  sh "cd wiki && git add Home.md Support.md"
-  sh "cd wiki && git commit -m 'Home + Support'"
+
+  sh "github_changelog_generator --user retorquere --project zotero-better-bibtex -o wiki/Changelog.md"
+  sh "cd wiki && git add Home.md Support.md Changelog.md"
+  sh "cd wiki && git commit -m 'Home + Support' || true"
   sh "cd wiki && git push"
 end
