@@ -2,6 +2,8 @@
 
 require 'shellwords'
 
+STDOUT.sync = true
+
 debs = File.expand_path(File.dirname(__FILE__))
 
 IO.readlines(File.join(debs, 'debs.txt')).each{|download|
