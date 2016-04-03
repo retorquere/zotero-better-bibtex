@@ -3,17 +3,14 @@ machine:
     version: "2.2"
 dependencies:
   pre:
-    - ./dpkgs/debs.rb
-    - sudo dpkg -i dpkgs/*.deb
     - sudo apt-get update && sudo apt-get install libpango1.0-0 && sudo apt-get install firefox
   cache_directories:
     - test/fixtures/profiles
     - test/fixtures/plugins
     - wiki
-    - dpkgs
 test:
   override:
-    - sudo apt-get update && sudo apt-get install libpango1.0-0 && sudo apt-get install firefox && bundle exec rake test[ci-cluster-$CIRCLE_NODE_INDEX]:
+    - bundle exec rake test[ci-cluster-$CIRCLE_NODE_INDEX]:
         parallel: true
 deployment:
   all:
