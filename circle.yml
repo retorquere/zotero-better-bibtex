@@ -4,46 +4,40 @@ machine:
 dependencies:
   pre:
     - mkdir -p dpkgs
-    - wget -nc `apt-get download --print-uris librsvg2-common | awk -F "'" '{print $2}'` -O dpkgs/librsvg2-common_2.40.2-1_amd64.deb
-    - wget -nc `apt-get download --print-uris libcairo2-dev | awk -F "'" '{print $2}'` -O dpkgs/libcairo2-dev_1.13.0~20140204-0ubuntu1.1_amd64.deb
-    - wget -nc `apt-get download --print-uris libcairo2 | awk -F "'" '{print $2}'` -O dpkgs/libcairo2_1.13.0~20140204-0ubuntu1.1_amd64.deb
-    - wget -nc `apt-get download --print-uris libcairo2 | awk -F "'" '{print $2}'` -O dpkgs/libcairo2_1.13.0~20140204-0ubuntu1.1_amd64.deb
-    - wget -nc `apt-get download --print-uris libcairo-gobject2 | awk -F "'" '{print $2}'` -O dpkgs/libcairo-gobject2_1.13.0~20140204-0ubuntu1.1_amd64.deb
-    - wget -nc `apt-get download --print-uris libcairo-gobject2 | awk -F "'" '{print $2}'` -O dpkgs/libcairo-gobject2_1.13.0~20140204-0ubuntu1.1_amd64.deb
-    - wget -nc `apt-get download --print-uris libcairo-script-interpreter2 | awk -F "'" '{print $2}'` -O dpkgs/libcairo-script-interpreter2_1.13.0~20140204-0ubuntu1.1_amd64.deb
-    - wget -nc `apt-get download --print-uris librsvg2-dev | awk -F "'" '{print $2}'` -O dpkgs/librsvg2-dev_2.40.2-1_amd64.deb
-    - wget -nc `apt-get download --print-uris libgraphite2-3 | awk -F "'" '{print $2}'` -O dpkgs/libgraphite2-3_1.3.6-1ubuntu0.14.04.1_amd64.deb
-    - wget -nc `apt-get download --print-uris libharfbuzz0b | awk -F "'" '{print $2}'` -O dpkgs/libharfbuzz0b_0.9.27-1ubuntu1_amd64.deb
-    - wget -nc `apt-get download --print-uris libpango1.0-0 | awk -F "'" '{print $2}'` -O dpkgs/libpango1.0-0_1.36.3-1ubuntu1.1_amd64.deb
-    - wget -nc `apt-get download --print-uris libpangoft2-1.0-0 | awk -F "'" '{print $2}'` -O dpkgs/libpangoft2-1.0-0_1.36.3-1ubuntu1.1_amd64.deb
-    - wget -nc `apt-get download --print-uris libpangocairo-1.0-0 | awk -F "'" '{print $2}'` -O dpkgs/libpangocairo-1.0-0_1.36.3-1ubuntu1.1_amd64.deb
-    - wget -nc `apt-get download --print-uris libpangoxft-1.0-0 | awk -F "'" '{print $2}'` -O dpkgs/libpangoxft-1.0-0_1.36.3-1ubuntu1.1_amd64.deb
-    - wget -nc `apt-get download --print-uris libpangox-1.0-0 | awk -F "'" '{print $2}'` -O dpkgs/libpangox-1.0-0_0.0.2-4ubuntu1_amd64.deb
-    - wget -nc `apt-get download --print-uris plymouth | awk -F "'" '{print $2}'` -O dpkgs/plymouth_0.8.8-0ubuntu17.1_amd64.deb
-    - wget -nc `apt-get download --print-uris libplymouth2 | awk -F "'" '{print $2}'` -O dpkgs/libplymouth2_0.8.8-0ubuntu17.1_amd64.deb
-    - wget -nc `apt-get download --print-uris libjson-c2 | awk -F "'" '{print $2}'` -O dpkgs/libjson-c2_0.11-3ubuntu1.2_amd64.deb
-    - wget -nc `apt-get download --print-uris libjson-c2 | awk -F "'" '{print $2}'` -O dpkgs/libjson-c2_0.11-3ubuntu1.2_amd64.deb
-    - wget -nc `apt-get download --print-uris libjson0-dev | awk -F "'" '{print $2}'` -O dpkgs/libjson0-dev_0.11-3ubuntu1.2_amd64.deb
-    - wget -nc `apt-get download --print-uris libjson0 | awk -F "'" '{print $2}'` -O dpkgs/libjson0_0.11-3ubuntu1.2_amd64.deb
-    - wget -nc `apt-get download --print-uris libjson0 | awk -F "'" '{print $2}'` -O dpkgs/libjson0_0.11-3ubuntu1.2_amd64.deb
-    - wget -nc `apt-get download --print-uris libjson-c-dev | awk -F "'" '{print $2}'` -O dpkgs/libjson-c-dev_0.11-3ubuntu1.2_amd64.deb
-    - wget -nc `apt-get download --print-uris upstart | awk -F "'" '{print $2}'` -O dpkgs/upstart_1.12.1-0ubuntu4.2_amd64.deb
-    - wget -nc `apt-get download --print-uris libpango-1.0-0 | awk -F "'" '{print $2}'` -O dpkgs/libpango-1.0-0_1.36.3-1ubuntu1.1_amd64.deb
-    - wget -nc `apt-get download --print-uris liblzma5 | awk -F "'" '{print $2}'` -O dpkgs/liblzma5_5.1.1alpha+20120614-2ubuntu2_amd64.deb
-    - wget -nc `apt-get download --print-uris libxml2-dev | awk -F "'" '{print $2}'` -O dpkgs/libxml2-dev_2.9.1+dfsg1-3ubuntu4.7_amd64.deb
-    - wget -nc `apt-get download --print-uris libxml2 | awk -F "'" '{print $2}'` -O dpkgs/libxml2_2.9.1+dfsg1-3ubuntu4.7_amd64.deb
-    - wget -nc `apt-get download --print-uris libxml2 | awk -F "'" '{print $2}'` -O dpkgs/libxml2_2.9.1+dfsg1-3ubuntu4.7_amd64.deb
-    - wget -nc `apt-get download --print-uris librsvg2-2 | awk -F "'" '{print $2}'` -O dpkgs/librsvg2-2_2.40.2-1_amd64.deb
-    - wget -nc `apt-get download --print-uris gir1.2-rsvg-2.0 | awk -F "'" '{print $2}'` -O dpkgs/gir1.2-rsvg-2.0_2.40.2-1_amd64.deb
-    - wget -nc `apt-get download --print-uris libcups2 | awk -F "'" '{print $2}'` -O dpkgs/libcups2_1.7.2-0ubuntu1.7_amd64.deb
-    - wget -nc `apt-get download --print-uris libcups2 | awk -F "'" '{print $2}'` -O dpkgs/libcups2_1.7.2-0ubuntu1.7_amd64.deb
-    - wget -nc `apt-get download --print-uris libgail18 | awk -F "'" '{print $2}'` -O dpkgs/libgail18_2.24.23-0ubuntu1.4_amd64.deb
-    - wget -nc `apt-get download --print-uris libgtk2.0-0 | awk -F "'" '{print $2}'` -O dpkgs/libgtk2.0-0_2.24.23-0ubuntu1.4_amd64.deb
-    - wget -nc `apt-get download --print-uris libharfbuzz-gobject0 | awk -F "'" '{print $2}'` -O dpkgs/libharfbuzz-gobject0_0.9.27-1ubuntu1_amd64.deb
-    - wget -nc `apt-get download --print-uris libicu52 | awk -F "'" '{print $2}'` -O dpkgs/libicu52_52.1-3ubuntu0.4_amd64.deb
-    - wget -nc `apt-get download --print-uris libharfbuzz-icu0 | awk -F "'" '{print $2}'` -O dpkgs/libharfbuzz-icu0_0.9.27-1ubuntu1_amd64.deb
-    - wget -nc `apt-get download --print-uris gir1.2-gtk-2.0 | awk -F "'" '{print $2}'` -O dpkgs/gir1.2-gtk-2.0_2.24.23-0ubuntu1.4_amd64.deb
-    - wget -nc `apt-get download --print-uris libharfbuzz-dev | awk -F "'" '{print $2}'` -O dpkgs/libharfbuzz-dev_0.9.27-1ubuntu1_amd64.deb
+    - curl -z dpkgs/gir1.2-gtk-2.0_2.24.23-0ubuntu1.4_amd64.deb `apt-get download --print-uris gir1.2-gtk-2.0 | awk -F "'" '{print $2}'` -O dpkgs/gir1.2-gtk-2.0_2.24.23-0ubuntu1.4_amd64.deb
+    - curl -z dpkgs/gir1.2-rsvg-2.0_2.40.2-1_amd64.deb `apt-get download --print-uris gir1.2-rsvg-2.0 | awk -F "'" '{print $2}'` -O dpkgs/gir1.2-rsvg-2.0_2.40.2-1_amd64.deb
+    - curl -z dpkgs/libcairo2_1.13.0~20140204-0ubuntu1.1_amd64.deb `apt-get download --print-uris libcairo2 | awk -F "'" '{print $2}'` -O dpkgs/libcairo2_1.13.0~20140204-0ubuntu1.1_amd64.deb
+    - curl -z dpkgs/libcairo2-dev_1.13.0~20140204-0ubuntu1.1_amd64.deb `apt-get download --print-uris libcairo2-dev | awk -F "'" '{print $2}'` -O dpkgs/libcairo2-dev_1.13.0~20140204-0ubuntu1.1_amd64.deb
+    - curl -z dpkgs/libcairo-gobject2_1.13.0~20140204-0ubuntu1.1_amd64.deb `apt-get download --print-uris libcairo-gobject2 | awk -F "'" '{print $2}'` -O dpkgs/libcairo-gobject2_1.13.0~20140204-0ubuntu1.1_amd64.deb
+    - curl -z dpkgs/libcairo-script-interpreter2_1.13.0~20140204-0ubuntu1.1_amd64.deb `apt-get download --print-uris libcairo-script-interpreter2 | awk -F "'" '{print $2}'` -O dpkgs/libcairo-script-interpreter2_1.13.0~20140204-0ubuntu1.1_amd64.deb
+    - curl -z dpkgs/libcups2_1.7.2-0ubuntu1.7_amd64.deb `apt-get download --print-uris libcups2 | awk -F "'" '{print $2}'` -O dpkgs/libcups2_1.7.2-0ubuntu1.7_amd64.deb
+    - curl -z dpkgs/libgail18_2.24.23-0ubuntu1.4_amd64.deb `apt-get download --print-uris libgail18 | awk -F "'" '{print $2}'` -O dpkgs/libgail18_2.24.23-0ubuntu1.4_amd64.deb
+    - curl -z dpkgs/libgraphite2-3_1.3.6-1ubuntu0.14.04.1_amd64.deb `apt-get download --print-uris libgraphite2-3 | awk -F "'" '{print $2}'` -O dpkgs/libgraphite2-3_1.3.6-1ubuntu0.14.04.1_amd64.deb
+    - curl -z dpkgs/libgtk2.0-0_2.24.23-0ubuntu1.4_amd64.deb `apt-get download --print-uris libgtk2.0-0 | awk -F "'" '{print $2}'` -O dpkgs/libgtk2.0-0_2.24.23-0ubuntu1.4_amd64.deb
+    - curl -z dpkgs/libharfbuzz0b_0.9.27-1ubuntu1_amd64.deb `apt-get download --print-uris libharfbuzz0b | awk -F "'" '{print $2}'` -O dpkgs/libharfbuzz0b_0.9.27-1ubuntu1_amd64.deb
+    - curl -z dpkgs/libharfbuzz-dev_0.9.27-1ubuntu1_amd64.deb `apt-get download --print-uris libharfbuzz-dev | awk -F "'" '{print $2}'` -O dpkgs/libharfbuzz-dev_0.9.27-1ubuntu1_amd64.deb
+    - curl -z dpkgs/libharfbuzz-gobject0_0.9.27-1ubuntu1_amd64.deb `apt-get download --print-uris libharfbuzz-gobject0 | awk -F "'" '{print $2}'` -O dpkgs/libharfbuzz-gobject0_0.9.27-1ubuntu1_amd64.deb
+    - curl -z dpkgs/libharfbuzz-icu0_0.9.27-1ubuntu1_amd64.deb `apt-get download --print-uris libharfbuzz-icu0 | awk -F "'" '{print $2}'` -O dpkgs/libharfbuzz-icu0_0.9.27-1ubuntu1_amd64.deb
+    - curl -z dpkgs/libicu52_52.1-3ubuntu0.4_amd64.deb `apt-get download --print-uris libicu52 | awk -F "'" '{print $2}'` -O dpkgs/libicu52_52.1-3ubuntu0.4_amd64.deb
+    - curl -z dpkgs/libjson0_0.11-3ubuntu1.2_amd64.deb `apt-get download --print-uris libjson0 | awk -F "'" '{print $2}'` -O dpkgs/libjson0_0.11-3ubuntu1.2_amd64.deb
+    - curl -z dpkgs/libjson0-dev_0.11-3ubuntu1.2_amd64.deb `apt-get download --print-uris libjson0-dev | awk -F "'" '{print $2}'` -O dpkgs/libjson0-dev_0.11-3ubuntu1.2_amd64.deb
+    - curl -z dpkgs/libjson-c2_0.11-3ubuntu1.2_amd64.deb `apt-get download --print-uris libjson-c2 | awk -F "'" '{print $2}'` -O dpkgs/libjson-c2_0.11-3ubuntu1.2_amd64.deb
+    - curl -z dpkgs/libjson-c-dev_0.11-3ubuntu1.2_amd64.deb `apt-get download --print-uris libjson-c-dev | awk -F "'" '{print $2}'` -O dpkgs/libjson-c-dev_0.11-3ubuntu1.2_amd64.deb
+    - curl -z dpkgs/liblzma5_5.1.1alpha+20120614-2ubuntu2_amd64.deb `apt-get download --print-uris liblzma5 | awk -F "'" '{print $2}'` -O dpkgs/liblzma5_5.1.1alpha+20120614-2ubuntu2_amd64.deb
+    - curl -z dpkgs/libpango-1.0-0_1.36.3-1ubuntu1.1_amd64.deb `apt-get download --print-uris libpango-1.0-0 | awk -F "'" '{print $2}'` -O dpkgs/libpango-1.0-0_1.36.3-1ubuntu1.1_amd64.deb
+    - curl -z dpkgs/libpango1.0-0_1.36.3-1ubuntu1.1_amd64.deb `apt-get download --print-uris libpango1.0-0 | awk -F "'" '{print $2}'` -O dpkgs/libpango1.0-0_1.36.3-1ubuntu1.1_amd64.deb
+    - curl -z dpkgs/libpangocairo-1.0-0_1.36.3-1ubuntu1.1_amd64.deb `apt-get download --print-uris libpangocairo-1.0-0 | awk -F "'" '{print $2}'` -O dpkgs/libpangocairo-1.0-0_1.36.3-1ubuntu1.1_amd64.deb
+    - curl -z dpkgs/libpangoft2-1.0-0_1.36.3-1ubuntu1.1_amd64.deb `apt-get download --print-uris libpangoft2-1.0-0 | awk -F "'" '{print $2}'` -O dpkgs/libpangoft2-1.0-0_1.36.3-1ubuntu1.1_amd64.deb
+    - curl -z dpkgs/libpangox-1.0-0_0.0.2-4ubuntu1_amd64.deb `apt-get download --print-uris libpangox-1.0-0 | awk -F "'" '{print $2}'` -O dpkgs/libpangox-1.0-0_0.0.2-4ubuntu1_amd64.deb
+    - curl -z dpkgs/libpangoxft-1.0-0_1.36.3-1ubuntu1.1_amd64.deb `apt-get download --print-uris libpangoxft-1.0-0 | awk -F "'" '{print $2}'` -O dpkgs/libpangoxft-1.0-0_1.36.3-1ubuntu1.1_amd64.deb
+    - curl -z dpkgs/libplymouth2_0.8.8-0ubuntu17.1_amd64.deb `apt-get download --print-uris libplymouth2 | awk -F "'" '{print $2}'` -O dpkgs/libplymouth2_0.8.8-0ubuntu17.1_amd64.deb
+    - curl -z dpkgs/librsvg2-2_2.40.2-1_amd64.deb `apt-get download --print-uris librsvg2-2 | awk -F "'" '{print $2}'` -O dpkgs/librsvg2-2_2.40.2-1_amd64.deb
+    - curl -z dpkgs/librsvg2-common_2.40.2-1_amd64.deb `apt-get download --print-uris librsvg2-common | awk -F "'" '{print $2}'` -O dpkgs/librsvg2-common_2.40.2-1_amd64.deb
+    - curl -z dpkgs/librsvg2-dev_2.40.2-1_amd64.deb `apt-get download --print-uris librsvg2-dev | awk -F "'" '{print $2}'` -O dpkgs/librsvg2-dev_2.40.2-1_amd64.deb
+    - curl -z dpkgs/libxml2_2.9.1+dfsg1-3ubuntu4.7_amd64.deb `apt-get download --print-uris libxml2 | awk -F "'" '{print $2}'` -O dpkgs/libxml2_2.9.1+dfsg1-3ubuntu4.7_amd64.deb
+    - curl -z dpkgs/libxml2-dev_2.9.1+dfsg1-3ubuntu4.7_amd64.deb `apt-get download --print-uris libxml2-dev | awk -F "'" '{print $2}'` -O dpkgs/libxml2-dev_2.9.1+dfsg1-3ubuntu4.7_amd64.deb
+    - curl -z dpkgs/plymouth_0.8.8-0ubuntu17.1_amd64.deb `apt-get download --print-uris plymouth | awk -F "'" '{print $2}'` -O dpkgs/plymouth_0.8.8-0ubuntu17.1_amd64.deb
+    - curl -z dpkgs/upstart_1.12.1-0ubuntu4.2_amd64.deb `apt-get download --print-uris upstart | awk -F "'" '{print $2}'` -O dpkgs/upstart_1.12.1-0ubuntu4.2_amd64.deb
     - sudo dpkg -i dpkgs/*.deb
     - sudo apt-get update && sudo apt-get install libpango1.0-0 && sudo apt-get install firefox
   cache_directories:
