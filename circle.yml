@@ -3,6 +3,7 @@ machine:
     version: "2.2"
 dependencies:
   pre:
+    - mkdir -p dpkgs
     - wget -nc `apt-get download --print-uris librsvg2-common | awk -F "'" '{print $2}'` -O dpkgs/librsvg2-common_2.40.2-1_amd64.deb
     - wget -nc `apt-get download --print-uris libcairo2-dev | awk -F "'" '{print $2}'` -O dpkgs/libcairo2-dev_1.13.0~20140204-0ubuntu1.1_amd64.deb
     - wget -nc `apt-get download --print-uris libcairo2 | awk -F "'" '{print $2}'` -O dpkgs/libcairo2_1.13.0~20140204-0ubuntu1.1_amd64.deb
