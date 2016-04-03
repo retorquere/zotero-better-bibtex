@@ -25,3 +25,4 @@ vendor
 resource/reports/cacheActivity.txt
 wiki
 *.sqlite
+*.deb
