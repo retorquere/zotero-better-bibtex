@@ -138,7 +138,6 @@ task :gather do
     'chrome/content/zotero-better-bibtex/fold-to-ascii.js',
     'chrome/content/zotero-better-bibtex/punycode.js',
     'chrome/content/zotero-better-bibtex/lokijs.js',
-    'chrome/content/zotero-better-bibtex/release.js',
     'chrome/content/zotero-better-bibtex/csl-localedata.js',
     'chrome/content/zotero-better-bibtex/translators.js',
     'defaults/preferences/defaults.js',
@@ -158,14 +157,14 @@ task :gather do
   end
 end
 
-lambda {
-  js = "Zotero.BetterBibTeX.release = #{XPI.version.to_json};"
-  file = 'chrome/content/zotero-better-bibtex/release.js'
-  if !File.file?(file) || open(file).read.strip != js.strip
-    STDERR.puts "updating #{file} to #{js}" unless ENV['VERBOSE'] == 'false'
-    open(file, 'w') {|f| f.puts(js) }
-  end
-}.call
+#lambda {
+#  js = "Zotero.BetterBibTeX.release = #{XPI.version.to_json};"
+#  file = 'chrome/content/zotero-better-bibtex/release.js'
+#  if !File.file?(file) || open(file).read.strip != js.strip
+#    STDERR.puts "updating #{file} to #{js}" unless ENV['VERBOSE'] == 'false'
+#    open(file, 'w') {|f| f.puts(js) }
+#  end
+#}.call
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 

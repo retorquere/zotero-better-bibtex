@@ -4,7 +4,6 @@ if not Zotero.BetterBibTeX
   for script in " lokijs
                   zotero-better-bibtex
                   translators
-                  release
                   db
                   csl-localedata
                   fold-to-ascii
@@ -26,6 +25,6 @@ if not Zotero.BetterBibTeX
 
   window.addEventListener('load', (load = (event) ->
     window.removeEventListener('load', load, false) #remove listener, no longer needed
-    Zotero.BetterBibTeX.init()
+    Zotero.BetterBibTeX.startup()
     return
   ), false)

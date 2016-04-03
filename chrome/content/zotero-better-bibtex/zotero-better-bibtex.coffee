@@ -10,6 +10,13 @@ Zotero.BetterBibTeX = {
 }
 Components.utils.import('resource://zotero-better-bibtex/citeproc.js', Zotero.BetterBibTeX)
 
+Zotero.BetterBibTeX.startup = ->
+  AddonManager.getAddonByID('better-bibtex@iris-advies.com', (extension) ->
+    return unless extension
+    Zotero.BetterBibTeX.release = extension.version
+    Zotero.BetterBibTeX.init()
+  )
+
 Zotero.BetterBibTeX.titleCase = {
   state: {
     opt: { lang: 'en' }
