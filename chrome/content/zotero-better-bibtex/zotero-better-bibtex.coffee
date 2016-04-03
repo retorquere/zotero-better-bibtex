@@ -362,6 +362,19 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
     Zotero.debug('[better' + '-' + 'bibtex] ' + str, level)
 
 Zotero.BetterBibTeX.extensionConflicts = ->
+  AddonManager.getAddonByID('zotfile@columbia.edu', (extension) ->
+    return unless extension
+    return if Services.vc.compare(extension.version, '4.2.6') >= 0
+
+    Zotero.BetterBibTeX.disable('''
+      Better BibTeX has been disabled because it has detected conflicting extension "ZotFile" 4.2.5 or
+      earlier. After upgrading to 4.2.6, Better BibTeX will start up as usual. A pre-release of ZotFile 4.2.6 can be
+      found at
+
+      https://addons.mozilla.org/en-US/firefox/addon/zotfile/versions/
+    ''')
+  )
+
   AddonManager.getAddonByID('zoteromaps@zotero.org', (extension) ->
     return unless extension
     return if Services.vc.compare(extension.version, '1.0.10.1') > 0
