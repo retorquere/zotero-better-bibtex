@@ -24,10 +24,6 @@ Zotero.BetterBibTeX.DB = new class
       })
     }
 
-    db = Zotero.BetterBibTeX.createFile('serialized-items.json')
-    keepCache = db.exists()
-    db.moveTo(null, @db.volatile.filename) if keepCache
-
     @db.main.loadDatabase()
     @db.volatile.loadDatabase()
 
@@ -76,9 +72,9 @@ Zotero.BetterBibTeX.DB = new class
     @upgradeNeeded = @metadata.Zotero != ZOTERO_CONFIG.VERSION || @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
 
     cacheReset = Zotero.BetterBibTeX.pref.get('cacheReset')
-    Zotero.debug('DB.initialize, cache reset: ' + JSON.stringify({cacheReset, keepCache, metadata: @metadata, release: Zotero.BetterBibTeX.release}))
+    Zotero.debug('DB.initialize, cache reset: ' + JSON.stringify({cacheReset, metadata: @metadata, release: Zotero.BetterBibTeX.release}))
 
-    if !cacheReset && !keepCache
+    if !cacheReset
       cacheReset = @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
 
       ###
@@ -229,7 +225,7 @@ Zotero.BetterBibTeX.DB = new class
       if file.exists()
         Zotero.BetterBibTeX.debug('DB.loadDatabase:', {name, file: file.path})
         callback(Zotero.File.getContents(file))
-        file.moveTo(null, name + '.bak')
+        file.remove(null) if file.exists()
         return
 
       data = Zotero.DB.valueQuery("SELECT data FROM betterbibtex.lokijs WHERE name=?", [name])
@@ -280,10 +276,22 @@ Zotero.BetterBibTeX.DB = new class
     Set: (values) -> '(' + ('' + v for v in values).join(', ') + ')'
 
     migrate: ->
+      db = Zotero.BetterBibTeX.createFile('serialized-items.json')
+      db.remove(null) if db.exists()
+
+      db = Zotero.BetterBibTeX.createFile('db.json.bak')
+      db.remove(null) if db.exists()
+
+      db = Zotero.BetterBibTeX.createFile('cache.json.bak')
+      db.remove(null) if db.exists()
+
       db = Zotero.getZoteroDatabase('betterbibtexcache')
       db.remove(true) if db.exists()
 
       db = Zotero.BetterBibTeX.createFile('better-bibtex-serialized-items.json')
+      db.remove(true) if db.exists()
+
+      db = Zotero.getZoteroDatabase('..', 'betterbibtex.sqlite.bak')
       db.remove(true) if db.exists()
 
       db = Zotero.getZoteroDatabase('betterbibtex')
