@@ -7,10 +7,14 @@ Zotero.BetterBibTeX.DebugBridge.methods.init = ->
   return if Zotero.BetterBibTeX.DebugBridge.initialized
   Zotero.BetterBibTeX.DebugBridge.initialized = true
 
+  Zotero.getActiveZoteroPane().show()
+
   Zotero.noUserInput = true
 
-  # replacing Zotero.Items.getAll to get items sorted. With random order I can't really implement stable
-  # testing.
+  ###
+    replacing Zotero.Items.getAll to get items sorted. With random order I can't really implement stable
+    testing.
+  ###
   Zotero.Items.getAll = (onlyTopLevel, libraryID, includeDeleted) ->
     sql = 'SELECT A.itemID FROM items A'
     if onlyTopLevel
@@ -36,13 +40,16 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
     Zotero.BetterBibTeX.pref.prefs.clearUserPref(key)
 
   Zotero.Items.erase((item.id for item in Zotero.BetterBibTeX.safeGetAll()))
-  for item in Zotero.BetterBibTeX.safeGetAll() # notes don't get erased in bulk?!
+
+  ### notes don't get erased in bulk?! ###
+  for item in Zotero.BetterBibTeX.safeGetAll()
     item.erase()
+
   Zotero.Collections.erase((coll.id for coll in Zotero.getCollections()))
   Zotero.Items.emptyTrash()
 
-  Zotero.BetterBibTeX.cache.reset()
-  Zotero.BetterBibTeX.serialized.reset()
+  Zotero.BetterBibTeX.cache.reset('debugbridge.reset')
+  Zotero.BetterBibTeX.serialized.reset('debugbridge.reset')
   Zotero.BetterBibTeX.auto.clear()
   Zotero.BetterBibTeX.keymanager.reset()
 
@@ -73,7 +80,13 @@ Zotero.BetterBibTeX.DebugBridge.methods.librarySize = ->
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator, displayOptions) ->
   deferred = Q.defer()
-  Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {library: null}, displayOptions || {}, (err, result) ->
+
+  if translator.substring(0,3) == 'id:'
+    translator = translator.slice(3)
+  else
+    translator = Zotero.BetterBibTeX.getTranslator(translator)
+
+  Zotero.BetterBibTeX.translate(translator, {library: null}, displayOptions || {}, (err, result) ->
     if err
       deferred.reject(err)
     else
@@ -89,7 +102,11 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, displayOptio
   file.initWithPath(filename)
   translation.setLocation(file)
 
-  translator = Zotero.BetterBibTeX.getTranslator(translator)
+  if translator.substring(0,3) == 'id:'
+    translator = translator.slice(3)
+  else
+    translator = Zotero.BetterBibTeX.getTranslator(translator)
+
   translation.setTranslator(translator)
 
   displayOptions ||= {}
@@ -122,9 +139,10 @@ Zotero.BetterBibTeX.DebugBridge.methods.library = ->
 
 Zotero.BetterBibTeX.DebugBridge.methods.setPreference = (name, value) -> Zotero.Prefs.set(name, value)
 
-Zotero.BetterBibTeX.DebugBridge.methods.keyManagerState = -> Zotero.BetterBibTeX.keymanager.keys.find()
-Zotero.BetterBibTeX.DebugBridge.methods.cacheState = -> Zotero.BetterBibTeX.cache.cache.find()
+Zotero.BetterBibTeX.DebugBridge.methods.keyManagerState = -> Zotero.BetterBibTeX.DB.keys.find()
+Zotero.BetterBibTeX.DebugBridge.methods.cacheState = -> Zotero.BetterBibTeX.DB.cache.find()
 Zotero.BetterBibTeX.DebugBridge.methods.serializedState = -> Zotero.BetterBibTeX.serialized.items
+Zotero.BetterBibTeX.DebugBridge.methods.cacheStats = -> {serialized: Zotero.BetterBibTeX.serialized.stats, cache: Zotero.BetterBibTeX.cache.stats }
 
 Zotero.BetterBibTeX.DebugBridge.methods.find = (attribute, value, select) ->
   attribute = attribute.replace(/[^a-zA-Z]/, '')
@@ -137,10 +155,22 @@ Zotero.BetterBibTeX.DebugBridge.methods.find = (attribute, value, select) ->
 
   id = Zotero.DB.valueQuery(sql, [value])
   throw new Error("No item found with #{attribute} = '#{value}'") unless id
-  if select
+
+  id = parseInt(id)
+  return id unless select
+
+  for attempt in [1..10]
+    Zotero.BetterBibTeX.debug("select: #{id}, attempt #{attempt}")
     zoteroPane = Zotero.getActiveZoteroPane()
-    zoteroPane.selectItem(id, true)
-  return id
+    zoteroPane.show()
+    continue unless zoteroPane.selectItem(id, true)
+
+    selected = (parseInt(i) for i in zoteroPane.getSelectedItems(true))
+    return id if selected.length == 1 && id == selected[0]
+    Zotero.BetterBibTeX.debug("select: expected #{JSON.stringify([id])}, got #{JSON.stringify(selected)}")
+
+  throw new Error("failed to select #{id}")
+
 
 Zotero.BetterBibTeX.DebugBridge.methods.remove = (id) -> Zotero.Items.trash([id])
 
@@ -151,11 +181,6 @@ Zotero.BetterBibTeX.DebugBridge.methods.selected = (action) ->
 
 Zotero.BetterBibTeX.DebugBridge.methods.autoExports = ->
   exports = []
-  for e in Zotero.DB.query('select * from betterbibtex.autoexport')
-    ae = {}
-    for own k, v of e
-      ae[k] = v
-    exports.push(ae)
   return exports
 
 Zotero.BetterBibTeX.DebugBridge.methods.cayw = (picks, format) ->

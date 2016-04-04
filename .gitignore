@@ -8,15 +8,13 @@
 *.serialized
 .bundle
 *.js
+*.translator
 *.js.map
 *.tmp
 .depend.mf
 resource/translators/*.json
-resource/logs/*.html
-resource/logs/*.json
 test/fixtures/plugins
 tmp
-update.rdf
 *.xpi
 *.log
 node_modules
@@ -24,3 +22,5 @@ bin/github-release
 .ruby-version
 vendor
 .pushbullet
+resource/reports/cacheActivity.txt
+site/_site

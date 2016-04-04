@@ -1,18 +1,17 @@
 Translator.fieldMap = {
   # Zotero          BibTeX
-  place:            { name: 'address', preserveCaps: true, import: 'location' }
-  section:          { name: 'chapter', preserveCaps: true }
-  edition:          { name: 'edition', preserveCaps: true }
-  type:             { name: 'type', preserveCaps: true }
-  series:           { name: 'series', preserveCaps: true }
-  title:            { name: 'title', preserveCaps: true }
-  volume:           { name: 'volume', preserveCaps: true }
-  rights:           { name: 'copyright',  preserveCaps: true }
+  place:            { name: 'address', import: 'location' }
+  section:          { name: 'chapter' }
+  edition:          { name: 'edition' }
+  type:             { name: 'type' }
+  series:           { name: 'series' }
+  title:            { name: 'title', autoCase: true }
+  volume:           { name: 'volume' }
+  rights:           { name: 'copyright' }
   ISBN:             { name: 'isbn' }
   ISSN:             { name: 'issn' }
   callNumber:       { name: 'lccn'}
-  shortTitle:       { name: 'shorttitle', preserveCaps: true }
-  url:              { name: 'url' }
+  shortTitle:       { name: 'shorttitle', autoCase: true }
   DOI:              { name: 'doi' }
   abstractNote:     { name: 'abstract' }
   country:          { name: 'nationality' }
@@ -20,7 +19,7 @@ Translator.fieldMap = {
   assignee:         { name: 'assignee' }
   issue:            { import: 'issue' }
   publicationTitle: { import: 'booktitle' }
-  publisher:        { import: [ 'school', 'institution', 'publisher' ] }
+  publisher:        { import: [ 'school', 'institution', 'publisher' ], enc: 'literal' }
 }
 
 Translator.typeMap = {
@@ -49,29 +48,36 @@ doExport = ->
     ref = new Reference(item)
 
     ref.add({ name: 'number', value: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber })
-    ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*\d+:\d+:\d+/, '') })
+    ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
+
+    Translator.debug('urls:', {setting: Translator.bibtexURLs})
+    switch Translator.bibtexURLs
+      when 'url'
+        ref.add({ name: 'url', value: item.url, enc: 'verbatim'})
+      when 'note', 'true' # that's what you get when you change pref type
+        ref.add({ name: (if ref.referencetype in ['misc', 'booklet'] then 'howpublished' else 'note'), allowDuplicates: true, value: item.url, enc: 'url'})
+      else
+        ref.add({ name: 'howpublished', allowDuplicates: true, value: item.url, enc: 'url'}) if item.itemType == 'webpage'
 
     switch
       when item.itemType in ['bookSection', 'conferencePaper']
-        ref.add({ name: 'booktitle',  preserveCaps: true, value: item.publicationTitle, preserveBibTeXVariables: true })
+        ref.add({ name: 'booktitle',  autoCase: true, value: item.publicationTitle, preserveBibTeXVariables: true })
       when ref.isBibVar(item.publicationTitle)
         ref.add({ name: 'journal', value: item.publicationTitle, preserveBibTeXVariables: true })
       else
-        ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle, preserveCaps: true, preserveBibTeXVariables: true })
+        ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle, preserveBibTeXVariables: true })
 
     switch item.itemType
-      when 'thesis' then ref.add({ name: 'school', value: item.publisher, preserveCaps: true })
-      when 'report' then ref.add({ name: 'institution', value: item.publisher, preserveCaps: true })
-      else               ref.add({ name: 'publisher', value: item.publisher, preserveCaps: true })
+      when 'thesis' then ref.add({ name: 'school', value: item.publisher })
+      when 'report' then ref.add({ name: 'institution', value: item.publisher })
+      else               ref.add({ name: 'publisher', value: item.publisher, enc: 'literal' })
 
-    if item.itemType == 'thesis'
-      thesisType = (item.type || '').toLowerCase().trim()
-      if thesisType in ['mastersthesis', 'phdthesis']
-        ref.referencetype = thesisType
-        ref.remove('type')
+    if item.itemType == 'thesis' && item.thesisType in ['mastersthesis', 'phdthesis']
+      ref.referencetype = item.thesisType
+      ref.remove('type')
 
     if item.creators and item.creators.length
-      # split creators into subcategories
+      ### split creators into subcategories ###
       authors = []
       editors = []
       translators = []
@@ -85,20 +91,18 @@ doExport = ->
           when primaryCreatorType         then authors.push(creator)
           else                                 collaborators.push(creator)
 
-      ref.add({ name: 'author', value: authors, enc: 'creators', preserveCaps: true })
-      ref.add({ name: 'editor', value: editors, enc: 'creators', preserveCaps: true })
-      ref.add({ name: 'translator', value: translators, enc: 'creators', preserveCaps: true })
-      ref.add({ name: 'collaborator', value: collaborators, enc: 'creators', preserveCaps: true })
+      ref.add({ name: 'author', value: authors, enc: 'creators' })
+      ref.add({ name: 'editor', value: editors, enc: 'creators' })
+      ref.add({ name: 'translator', value: translators, enc: 'creators' })
+      ref.add({ name: 'collaborator', value: collaborators, enc: 'creators' })
 
     if item.date
-      date = Zotero.Utilities.strToDate(item.date)
-      if Translator.verbatimDate.test(item.date) || typeof date.year == 'undefined'
-        ref.add({ name: 'year', value: item.date, preserveCaps: true })
+      date = Zotero.BetterBibTeX.parseDateToObject(item.date, item.language)
+      if date.literal || date.year_end
+        ref.add({ name: 'year', value: item.date })
       else
-        if typeof date.month == 'number'
-          ref.add({ name: 'month', value: months[date.month], bare: true })
-
-        ref.add({ name: 'year', value: date.year })
+        ref.add({ name: 'month', value: months[date.month - 1], bare: true }) if date.month
+        ref.add({ name: 'year', value: '' + date.year })
 
     ref.add({ name: 'note', value: item.extra, allowDuplicates: true })
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
@@ -218,7 +222,10 @@ ZoteroItem::import = (bibtex) ->
       continue
 
     switch field
-      when '__note__', '__key__', '__type__', 'type', 'added-at', 'timestamp' then continue
+      when '__note__', '__key__', 'type', 'added-at', 'timestamp' then continue
+
+      when '__type__'
+        @item.thesisType = bibtex.__type__ if bibtex.__type__ in [ 'phdthesis', 'mastersthesis' ]
 
       when 'subtitle'
         @item.title = '' unless @item.title
@@ -243,7 +250,6 @@ ZoteroItem::import = (bibtex) ->
       when 'author', 'editor', 'translator'
         for creator in value
           continues unless creator
-          Translator.debug('creator:', creator)
           if typeof creator == 'string'
             creator = Zotero.Utilities.cleanAuthor(creator, field, false)
             creator.fieldMode = 1 if creator.lastName && !creator.firstName
@@ -269,7 +275,8 @@ ZoteroItem::import = (bibtex) ->
           value += ' '
 
         if @item.date
-          if value.indexOf(@item.date) >= 0 # value contains year and more
+          if value.indexOf(@item.date) >= 0
+            ### value contains year and more ###
             @item.date = value
           else
             @item.date = value + @item.date
@@ -293,8 +300,10 @@ ZoteroItem::import = (bibtex) ->
       when 'note'
         @addToExtra(value)
 
-      when 'howpublished'
-        if /^(https?:\/\/|mailto:)/i.test(value)
+      when 'url', 'howpublished'
+        if m = value.match(/^(\\url{)(https?:\/\/|mailto:)}$/i)
+          @item.url = m[2]
+        else if field == 'url' || /^(https?:\/\/|mailto:)/i.test(value)
           @item.url = value
         else
           @addToExtraData(field, value)
@@ -315,7 +324,7 @@ ZoteroItem::import = (bibtex) ->
           @item.attachments.push(att)
 
       when 'eprint', 'eprinttype'
-        # Support for IDs exported by BibLaTeX
+        ### Support for IDs exported by BibLaTeX ###
         @item["_#{field}"] = value
 
         if @item._eprint && @item._eprinttype

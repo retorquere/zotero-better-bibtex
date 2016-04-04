@@ -22,20 +22,6 @@
       "exportNotes": true
     }
   },
-  "keymanager": [
-    {
-      "itemID": 5,
-      "libraryID": null,
-      "citekey": "ZotPlus",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 3,
-      "libraryID": null,
-      "citekey": "ZotPlusa",
-      "citekeyFormat": null
-    }
-  ],
   "collections": [
     {
       "name": "Bibtex key generation not unique #199",
@@ -52,17 +38,17 @@
     {
       "itemID": 5,
       "itemType": "webpage",
-      "url": "https://github.com/ZotPlus/zotero-better-bibtex",
-      "extra": "bibtex: ZotPlus",
+      "url": "https://github.com/retorquere/zotero-better-bibtex",
+      "extra": "bibtex: retorquere",
       "accessDate": "2015-05-24 19:38:34",
       "abstractNote": "Contribute to zotero-better-bibtex development by creating an account on GitHub.",
       "websiteTitle": "GitHub",
-      "title": "ZotPlus/zotero-better-bibtex",
+      "title": "retorquere/zotero-better-bibtex",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "",
-          "lastName": "ZotPlus",
+          "lastName": "retorquere",
           "fieldMode": ""
         }
       ],
@@ -73,7 +59,7 @@
         {
           "title": "Snapshot",
           "mimeType": "text/html",
-          "url": "https://github.com/ZotPlus/zotero-better-bibtex"
+          "url": "https://github.com/retorquere/zotero-better-bibtex"
         }
       ],
       "tags": [
@@ -90,15 +76,15 @@
     {
       "itemID": 3,
       "itemType": "webpage",
-      "url": "https://zotplus.github.io/better-bibtex/Support-Request-Guidelines.html",
-      "extra": "bibtex: ZotPlusa",
+      "url": "https://retorquere.github.io/better-bibtex/Support-Request-Guidelines.html",
+      "extra": "bibtex: retorquerea",
       "accessDate": "2015-05-24 19:37:46",
       "title": "Support Request Guidelines - Better BibTeX",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "",
-          "lastName": "ZotPlus",
+          "lastName": "retorquere",
           "fieldMode": ""
         }
       ],
@@ -109,7 +95,7 @@
         {
           "title": "Support Request Guidelines - Better BibTeX",
           "mimeType": "text/html",
-          "url": "https://zotplus.github.io/better-bibtex/Support-Request-Guidelines.html"
+          "url": "https://retorquere.github.io/better-bibtex/Support-Request-Guidelines.html"
         }
       ],
       "tags": [
@@ -122,6 +108,5 @@
 
       ]
     }
-  ],
-  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
+  ]
 }

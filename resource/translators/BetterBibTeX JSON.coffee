@@ -9,7 +9,6 @@ scrub = (item) ->
   delete item.multi
   delete item.attachmentIDs
 
-  # TODO: temporary until I migrate to the 4.0.27 translator structure
   delete item.collections
 
   for creator in item.creators or []
@@ -79,25 +78,23 @@ doExport = ->
       id: Translator.header.translatorID
       label: Translator.header.label
       release: Translator.release
-      preferences: {}
-      options: {}
+      preferences: Translator.preferences
+      options: Translator.options
     }
     collections: Translator.collections
     items: []
+    cache: {
+      # no idea why this doesn't work anymore. The security manager won't let me call toJSON on this anymore
+      # activity: Zotero.BetterBibTeX.cache.stats()
+    }
   }
-
-  for pref in ['postscript', 'csquotes', 'citekeyFormat', 'skipWords', 'skipFields', 'usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'attachmentRelativePath', 'autoAbbrev',
-               'autoAbbrevStyle', 'unicode', 'pinCitekeys', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables']
-    data.config.preferences[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
-  for option in ['useJournalAbbreviation', 'exportCharset', 'exportFileData', 'exportNotes']
-    data.config.options[option] = Zotero.getOption(option)
 
   while item = Zotero.nextItem()
     data.items.push(scrub(item))
 
   if Zotero.getHiddenPref('better-bibtex.debug')
     data.keymanager = Zotero.BetterBibTeX.keymanager.cache()
-    data.cache = Zotero.BetterBibTeX.cache.dump((item.itemID for item in data.items))
+    data.cache.items = Zotero.BetterBibTeX.cache.dump((item.itemID for item in data.items))
 
   Zotero.write(JSON.stringify(data, null, '  '))
   return

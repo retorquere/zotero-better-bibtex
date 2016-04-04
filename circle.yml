@@ -2,18 +2,18 @@ machine:
   ruby:
     version: "2.2"
 dependencies:
-  post:
-    - ./circle.sh dependencies
+  pre:
+    - sudo apt-get update && sudo apt-get install libpango1.0-0 && sudo apt-get install firefox
   cache_directories:
-    - bin
     - test/fixtures/profiles
     - test/fixtures/plugins
 test:
   override:
-    - ./circle.sh test:
+    - sudo apt-get update && sudo apt-get install libpango1.0-0 && sudo apt-get install firefox && bundle exec rake test[ci-cluster-$CIRCLE_NODE_INDEX]:
         parallel: true
 deployment:
-  master:
-    branch: master
+  all:
+    branch: /.*/
     commands:
-      - ./circle.sh deploy
+      - bundle exec rake clean
+      - bundle exec rake publish

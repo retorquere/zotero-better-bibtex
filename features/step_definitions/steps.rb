@@ -10,6 +10,9 @@ require 'benchmark'
 require 'shellwords'
 require 'nokogiri'
 require 'mechanize'
+require 'open-uri'
+
+#$DEBUG=true
 
 if !OS.mac?
   require 'headless'
@@ -29,13 +32,8 @@ end
 
 STDOUT.sync = true unless ENV['CI'] == 'true'
 def say(msg)
-  return if ENV['CI'] == 'true'
   STDOUT.puts msg
 end
-
-Dir['*.xpi'].each{|xpi| File.unlink(xpi)}
-cmd('rake')
-cmd('rake plugins')
 
 def download(url, path)
   cmd "curl -L -s -S -o #{path.shellescape} #{url.shellescape}"
@@ -46,6 +44,7 @@ def loadZotero
   $Firefox = OpenStruct.new
 
   profile = Selenium::WebDriver::Firefox::Profile.new(File.expand_path('test/fixtures/profiles/default'))
+  profile.log_file = File.expand_path(File.join(File.dirname(__FILE__), '../../firefox-console.log'))
 
   say "Installing plugins..."
   (Dir['*.xpi'] + Dir['test/fixtures/plugins/*.xpi']).each{|xpi|
@@ -53,7 +52,10 @@ def loadZotero
     profile.add_extension(xpi)
   }
 
+  profile['xpinstall.signatures.required'] = false
+
   profile['extensions.zotero.showIn'] = 2
+  profile['extensions.zotero.translators.better-bibtex.confirmCacheResetSize'] = 0
   profile['extensions.zotero.httpServer.enabled'] = true
   profile['dom.max_chrome_script_run_time'] = 6000
   profile['browser.shell.checkDefaultBrowser'] = false
@@ -69,12 +71,33 @@ def loadZotero
 
   profile['browser.download.manager.showWhenStarting'] = false
   FileUtils.mkdir_p("/tmp/webdriver-downloads")
+
   profile['browser.download.dir'] = "/tmp/webdriver-downloads"
   profile['browser.download.folderList'] = 2
+  profile['browser.download.manager.showWhenStarting'] = false
   profile['browser.helperApps.alwaysAsk.force'] = false
-  #profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
   profile['browser.helperApps.neverAsk.saveToDisk'] = "application/octet-stream"
+  #profile['browser.helperApps.neverAsk.saveToDisk'] = "application/pdf"
+  profile['browser.shell.checkDefaultBrowser'] = false
+  profile['browser.uitour.enabled'] = false
+  profile['dom.max_chrome_script_run_time'] = 6000
+  profile['extensions.autoDisableScopes'] = 0
+  profile['extensions.zotero.backup.numBackups'] = 0
+  #profile['extensions.zotero.debug.level'] = $DEBUG_LEVEL
+  profile['extensions.zotero.showIn'] = 2 # show in tab
+  profile['extensions.zotero.debug.log'] = true
+  profile['extensions.zotero.debug.store'] = true
+  profile['extensions.zotero.debug.time'] = true
+  profile['extensions.zotero.firstRun2'] = false
+  profile['extensions.zotero.firstRunGuidance'] = false
+  profile['extensions.zotero.httpServer.enabled'] = true
+  profile['extensions.zotero.reportTranslationFailure'] = false
+  profile['extensions.zotero.showIn'] = 2
+  profile['extensions.zotero.translators.better-bibtex.debug'] = true
+  profile['extensions.zotfile.automatic_renaming'] = 1
+  profile['extensions.zotfile.watch_folder'] = false
   profile['pdfjs.disabled'] = true
+  profile['xpinstall.signatures.required'] = false
 
   say "Starting Firefox..."
   client = Selenium::WebDriver::Remote::Http::Default.new
@@ -86,6 +109,7 @@ def loadZotero
   say "Starting Zotero..."
   $Firefox.browser.navigate.to('chrome://zotero/content/tab.xul') # does this trigger the window load?
   say "Zotero started"
+
   #$headless.take_screenshot('/home/emile/zotero/zotero-better-bibtex/screenshot.png')
   $Firefox.DebugBridge = JSONRPCClient.new('http://localhost:23119/debug-bridge')
   sleep 3
@@ -93,6 +117,7 @@ def loadZotero
   $Firefox.BetterBibTeX = JSONRPCClient.new('http://localhost:23119/debug-bridge/better-bibtex')
   $Firefox.ScholarlyMarkdown = JSONRPCClient.new('http://localhost:23119/better-bibtex/schomd')
   $Firefox.BetterBibTeX.init
+  say "Zotero started"
 
   Dir['*.debug'].each{|d| File.unlink(d) }
   Dir['*.dbg'].each{|d| File.unlink(d) }
@@ -109,11 +134,15 @@ end
 Before do |scenario|
   loadZotero
   $Firefox.BetterBibTeX.reset unless scenario.source_tag_names.include?('@noreset')
+  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.confirmCacheResetSize', 0)
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.tests', 'all')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.test.timestamp', '2015-02-24 12:14:36 +0100')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.attachmentRelativePath', true)
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.autoExport', 'on-change')
-  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.debug', true) if ENV['CI'] != 'true'
+  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.debug', true)
+
+  @cacheStats = $Firefox.BetterBibTeX.cacheStats
+
   @selected = nil
   @expectedExport = nil
   @exportOptions = {}
@@ -126,18 +155,17 @@ AfterStep do |scenario|
 end
 
 After do |scenario|
+  Cucumber.wants_to_quit = scenario.failed? && ENV['CI'] != 'true'
+
+  filename = scenario.name.gsub(/[^0-9A-z.\-]/, '_')
+
+  if scenario.failed? || (ENV['CI'] != 'true' && scenario.source_tag_names.include?('@dumplogs'))
+    open("#{filename}.debug", 'w'){|f| f.write($Firefox.DebugBridge.log) }
+    open("#{filename}.log", 'w'){|f| f.write(browserLog) }
+  end
+
   if ENV['CI'] != 'true'
-    # stop on first failure outside CI
-    Cucumber.wants_to_quit = scenario.failed?
-
-    filename = scenario.name.gsub(/[^0-9A-z.\-]/, '_')
-
-    if scenario.failed? || scenario.source_tag_names.include?('@dumplogs')
-      open("#{filename}.debug", 'w'){|f| f.write($Firefox.DebugBridge.log) }
-      open("#{filename}.log", 'w'){|f| f.write(browserLog) }
-    end
-
-    open("#{filename}.keys", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.keyManagerState)) } if scenario.failed? || scenario.source_tag_names.include?('@dumpkeys')
+    open("#{filename}.keys", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.keyManagerState)) } if scenario.failed? && scenario.source_tag_names.include?('@dumpkeys')
     open("#{filename}.cache", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.cacheState)) } if scenario.failed? || scenario.source_tag_names.include?('@dumpcache')
     open("#{filename}.serialized", 'w'){|f| f.write(JSON.pretty_generate($Firefox.BetterBibTeX.serializedState)) } if scenario.failed? || scenario.source_tag_names.include?('@dumpserialized')
 
@@ -196,6 +224,7 @@ When /^I import (.+) from '(.+?)'(?:(?: as )'(.+)')?$/ do |items, filename, alia
 
       if data['config']['label'] == 'BetterBibTeX JSON'
         (data['config']['preferences'] || {}).each_pair{|key, value|
+          next if %w{confirmCacheResetSize tests test.timestamp attachmentRelativePath autoExport debug}.include?(key)
           $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.' + key, value)
         }
         @exportOptions = data['config']['options'] || {}
@@ -260,7 +289,9 @@ Then /^the library (without collections )?should match '(.+)'$/ do |nocollection
   found = $Firefox.BetterBibTeX.library
 
   expected.delete('keymanager')
+  expected.delete('cache')
   found.delete('keymanager')
+  found.delete('cache')
   
   if nocollections
     expected['collections'] = []
@@ -301,6 +332,17 @@ def preferenceValue(value)
   return value
 end
 
+Then(/^there should have been the following cache activity:$/) do |table|
+  cacheStats = $Firefox.BetterBibTeX.cacheStats
+
+  table.hashes.each{|stat|
+    stat = OpenStruct.new(stat)
+    expect(cacheStats[stat.cache][stat.measure] - @cacheStats[stat.cache][stat.measure]).to eq(stat.value.to_i)
+  }
+
+  @cacheStats = cacheStats
+end
+
 Then(/^the following library export should match '(.+)':$/) do |filename, table|
   exportOptions = table.rows_hash
   exportOptions.each{ |_,str| preferenceValue(str) }
@@ -321,6 +363,25 @@ Then(/^the following library export should match '(.+)':$/) do |filename, table|
   expect(found).to eq(expected)
 end
 
+Then(/show the cache activity/) do
+  puts $Firefox.BetterBibTeX.cacheStats.inspect
+end
+
+def sort_object(o)
+  return o unless o
+
+  return o.collect{|m| sort_object(m)} if o.is_a?(Array)
+  
+  if o.is_a?(Hash)
+    h = {}
+    o.keys.sort.each{|k|
+      h[k] = sort_object(o[k])
+    }
+    return h
+  end
+
+  return o
+end
 Then(/^a library export using '(.+)' should match '(.+)'$/) do |translator, filename|
   found = $Firefox.BetterBibTeX.exportToString(translator, @exportOptions).strip
 
@@ -328,7 +389,14 @@ Then(/^a library export using '(.+)' should match '(.+)'$/) do |translator, file
 
   expected = File.expand_path(File.join('test/fixtures', filename))
   expected = open(expected).read.strip
-  open("tmp/#{File.basename(filename)}", 'w'){|f| f.write(found)} if found != expected
+
+  if File.extname(filename) == '.json'
+    found = sort_object(JSON.parse(found))
+    found = JSON.pretty_generate(found)
+    expected = sort_object(JSON.parse(expected))
+    expected = JSON.pretty_generate(expected)
+  end
+
   expect(found).to eq(expected)
 end
 
@@ -355,7 +423,6 @@ When(/^I set preferences:$/) do |table|
   table.rows_hash.each_pair{ |name, value|
     name = "translators.better-bibtex#{name}" if name[0] == '.'
     value = preferenceValue(value)
-    STDOUT.puts "pref: #{name.inspect} -> #{value.inspect}"
     value = open(File.expand_path(File.join('test/fixtures', value))).read if name == 'translators.better-bibtex.postscript'
     $Firefox.BetterBibTeX.setPreference(name, value)
   }
@@ -396,9 +463,9 @@ Then /^save the query log to '(.+)'$$/ do |filename|
 end
 
 Then /^I select the first item where ([^\s]+) = '(.+)'$/ do |attribute, value|
-  howmany = -1 if howmany == 'the first'
   @selected = $Firefox.BetterBibTeX.find(attribute, value, true)
   expect(@selected).not_to be(nil)
+  sleep 3
 end
 
 Then /^I remove the selected item$/ do
@@ -406,7 +473,9 @@ Then /^I remove the selected item$/ do
 end
 
 Then /^I (re)?set the citation keys?$/ do |action|
+  sleep 3
   $Firefox.BetterBibTeX.selected("#{action}set")
+  sleep 3
 end
 
 Then /^the markdown citation for ([^\s]*) should be '(.*)'$/ do |keys, citation|
@@ -414,10 +483,16 @@ Then /^the markdown citation for ([^\s]*) should be '(.*)'$/ do |keys, citation|
   expect($Firefox.ScholarlyMarkdown.citation(keys)).to eq(citation)
 end
 
-Then /^the markdown bibliography for (.*) should be '(.*)'$/ do |keys, bibliography|
+Then /^the (markdown|html|bbl) bibliography for (.*) should be '(.*)'$/ do |type, keys, bibliography|
   keys = keys.split(',').collect{|k| k.strip}
-  found = $Firefox.ScholarlyMarkdown.bibliography(keys).gsub(/[\s\n]+/, ' ').strip
-  expected = bibliography.gsub(/[\s\n]+/, ' ').strip
+  found = case type
+    when 'markdown' then $Firefox.ScholarlyMarkdown.bibliography(keys).gsub(/[\s\n]+/, ' ')
+    when 'html' then $Firefox.ScholarlyMarkdown.bibliographyhtml(keys)
+    when 'bbl' then $Firefox.ScholarlyMarkdown.bibliographybbl(keys)
+  end
+  found.strip!
+  expected = bibliography.gsub(/[\s\n]+/, ' ') if type == 'markdown'
+  expected.strip!
   expect(found).to eq(expected)
 end
 

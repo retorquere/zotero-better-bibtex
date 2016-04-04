@@ -31,7 +31,7 @@
 
   "newlines_after_classes": { "value": 3, "level": "ignore" },
 
-  "no_backticks": { "level": "error" },
+  "no_backticks": { "level": "warn" },
 
   "no_debugger": { "level": "warn" },
 

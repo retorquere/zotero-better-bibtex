@@ -1,82 +1,118 @@
 LaTeX = {} unless LaTeX
 
-LaTeX.text2latex = (text) ->
-  latex = @html2latex(@cleanHTML(text))
-  return BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
+LaTeX.text2latex = (text, options = {}) ->
+  latex = @html2latex(@cleanHTML(text, options), options)
+  latex = BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
   return latex
 
-LaTeX.cleanHTML = (text) ->
-  html = ''
-  cdata = false
+LaTeX.titleCase = (string) ->
+  ###
+  # Force a word to lowercase if all of the following apply
+  # 1. It is not the first word of the sentence, as smallwords at the start should be uppercased
+  # 2. It is not the last word of the sentence (similar)
+  # 3. It is a smallWord
+  # 4. There is not a ':' two positions before the word (indicates subtitle)
+  # 5. There is either not a dash immediately after the word, or there is a dash immediately preceding the word
+  # 6. There is a space or a dash before the word
+  # [0-9a-z\xD7\xDF-\xFF] = -Lu
+  ###
+  return string.replace(/[A-Za-z0-9\u00C0-\u00FF]+[^\s-]*/g, (match, index, title) ->
+    if index > 0 and
+      index + match.length != title.length and
+      match.search(Translator.titleCaseLowerCase) == 0 and
+      title.charAt(index - 2) != ':' and
+      (title.charAt(index + match.length) != '-' or title.charAt(index - 1) == '-') and
+      title.charAt(index - 1).search(/[^"'(\s-]/) < 0
+        Translator.debug('titleCase: LC', match)
+        return match #.toLowerCase()
 
-  if Translator.csquotes.length > 0
-    open = ''
-    close = ''
-    for ch, i in Translator.csquotes
-      if i % 2 == 0 # open
-        open += ch
+    if match.search(Translator.titleCaseUpperCase) == 0
+      Translator.debug('titleCase: UC', match)
+      return match #.toUpperCase()
+
+    ###
+    # leave a word alone if it has an uppercase letter at the second position,
+    # or the second character is a period followed by anything
+    ###
+    if match.substr(1).search(/[A-Z]|\../) > -1
+      Translator.debug('titleCase: NC', match)
+      return match
+
+    ### uppercase ###
+    Translator.debug('titleCase: TC', match)
+    return match.charAt(0).toUpperCase() + match.substr(1)
+  )
+
+LaTeX.cleanHTML = (text, options) ->
+  {html, plain} = BetterBibTeXMarkupParser.parse(text, {titleCase: options.autoCase && Translator.titleCase, preserveCase: options.preserveCase || options.autoCase, csquotes: Translator.csquotes})
+
+  if options.autoCase && Translator.titleCase
+    Translator.debug('TITLECASE:>', plain.text)
+    #titleCased = Zotero.BetterBibTeX.CSL.titleCase(plain.text)
+    titleCased = @titleCase(plain.text)
+    Translator.debug('TITLECASE:<', titleCased)
+    _html = ''
+    for c, i in html
+      if plain.unprotected[i] != undefined
+        _html += titleCased[plain.unprotected[i]]
       else
-        close += ch
-    text = text.replace(new RegExp("[#{open}][\\s\\u00A0]?", 'g'), '<span enquote="true">')
-    text = text.replace(new RegExp("[\\s\\u00A0]?[#{close}]", 'g'), '</span>')
-
-  for chunk, i in text.split(/(<\/?(?:i|italic|b|sub|sup|pre|sc|span)(?:[^>a-z][^>]*)?>)/i)
-    switch
-      when i % 2 == 0 # text
-        html += LaTeX.he.escape(chunk)
-
-      when chunk.match(/^<pre/i)
-        html += '<![CDATA['
-        cdata = true
-
-      when chunk.match(/^<\/pre/i)
-        html += ']]>'
-        cdata = false
-
-      else
-        html += chunk
-
-  html += ']]>' if cdata
+        _html += c
+    html = _html
 
   return html
 
-LaTeX.html2latex = (html) ->
-  latex = (new @HTML(html)).latex
+LaTeX.html2latex = (html, options) ->
+  latex = (new @HTML(html, options)).latex
   latex = latex.replace(/(\\\\)+\s*\n\n/g, "\n\n")
   latex = latex.replace(/\n\n\n+/g, "\n\n")
   return latex
 
 class LaTeX.HTML
-  constructor: (html) ->
+  constructor: (html, @options = {}) ->
     @latex = ''
-    @stack = []
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
+    @stack = []
+    @preserveCase = 0
 
-    HTMLtoDOM.Parser(html, @)
+    @walk(Zotero.BetterBibTeX.HTMLParser(html))
 
-  start: (tag, attrs, unary) ->
-    tag = {name: tag.toLowerCase(), attrs: {}}
-    for attr in attrs
-      tag.attrs[attr.name.toLowerCase()] = attr.value
-    @stack.unshift(tag) unless unary
+  walk: (tag) ->
+    return unless tag
+
+    switch tag.name
+      when '#text'
+        @chars(tag.text)
+        return
+      when 'script'
+        @latex += tag.text
+        return
+
+    @stack.unshift(tag)
 
     switch tag.name
       when 'i', 'em', 'italic'
+        @latex += '{' if (@options.preserveCase || @options.autoCase) && !@preserveCase
         @latex += '\\emph{'
+
       when 'b', 'strong'
+        @latex += '{' if (@options.preserveCase || @options.autoCase) && !@preserveCase
         @latex += '\\textbf{'
 
       when 'a'
-        # zotero://open-pdf/0_5P2KA4XM/7 is actually a reference.
-        @latex += "\\href{#{tag.attrs.href}}{" if tag.attrs.href?.length > 0
+        ### zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. ###
+        if tag.attrs.href?.length > 0
+          @latex += "\\href{#{tag.attrs.href}}{"
 
       when 'sup'
+        @latex += '{' if (@options.preserveCase || @options.autoCase) && !@preserveCase
         @latex += '\\textsuperscript{'
+
       when 'sub'
+        @latex += '{' if (@options.preserveCase || @options.autoCase) && !@preserveCase
         @latex += '\\textsubscript{'
 
       when 'br'
-        # line-breaks on empty line makes LaTeX sad
+        ### line-breaks on empty line makes LaTeX sad ###
         @latex += "\\\\" if @latex != '' && @latex[@latex.length - 1] != "\n"
         @latex += "\n"
 
@@ -96,28 +132,39 @@ class LaTeX.HTML
       when 'span', 'sc'
         tag.smallcaps = tag.name == 'sc' || (tag.attrs.style || '').match(/small-caps/i)
         tag.enquote = (tag.attrs.enquote == 'true')
+        tag.relax = tag.class.relax
+
+        @preserveCase += 1 if tag.class.nocase
+
+        @latex += '{{' if tag.class.nocase && @preserveCase == 1
+
+        @latex += '{' if (@options.preserveCase || @options.autoCase) && !@preserveCase && (tag.relax || tag.enquote || tag.smallcaps)
         @latex += '\\enquote{' if tag.enquote
         @latex += '\\textsc{' if tag.smallcaps
+        @latex += '{\\relax ' if tag.relax
 
       when 'td', 'th'
         @latex += ' '
 
-      when 'tbody' then # ignore
+      when 'tbody', '#document', 'html', 'head', 'body' then # ignore
 
       else
         Translator.debug("unexpected tag '#{tag.name}'")
 
-  end: (tag) ->
-    tag = tag.toLowerCase()
+    for child in tag.children
+      @walk(child)
 
-    throw new Error("Unexpected close tag #{tag}") unless tag == @stack[0]?.name
-
-    switch tag
-      when 'i', 'italic', 'em', 'sup', 'sub', 'b', 'strong'
+    switch tag.name
+      when 'i', 'italic', 'em'
         @latex += '}'
+        @latex += '}' if (@options.preserveCase || @options.autoCase) && !@preserveCase
+
+      when 'sup', 'sub', 'b', 'strong'
+        @latex += '}'
+        @latex += '}' if (@options.preserveCase || @options.autoCase) && !@preserveCase
 
       when 'a'
-        @latex += '}' if @stack[0].attrs.href?.length > 0
+        @latex += '}' if tag.attrs.href?.length > 0
 
       when 'h1', 'h2', 'h3', 'h4'
         @latex += "}\n\n"
@@ -126,7 +173,14 @@ class LaTeX.HTML
         @latex += "\n\n"
 
       when 'span', 'sc'
-        @latex += '}' if @stack[0].smallcaps || @stack[0].enquote
+        @latex += '}' if tag.smallcaps
+        @latex += '}' if tag.enquote
+        @latex += '}' if tag.relax
+        @latex += '}' if (@options.preserveCase || @options.autoCase) && !@preserveCase && (tag.relax || tag.smallcaps || tag.enquote)
+
+        @latex += '}}' if tag.class.nocase && (@options.preserveCase || @options.autoCase) && @preserveCase == 1
+
+        @preserveCase -= 1 if tag.class.nocase
 
       when 'td', 'th'
         @latex += ' '
@@ -138,14 +192,9 @@ class LaTeX.HTML
 
     @stack.shift()
 
-  cdata: (text) ->
-    @latex += text
-
   chars: (text) ->
-    txt = LaTeX.he.decode(text)
-
     blocks = []
-    for c in XRegExp.split(txt, '')
+    for c in XRegExp.split(text, '')
       math = @mapping.math[c]
       blocks.unshift({math: !!math, text: ''}) if blocks.length == 0 || blocks[0].math != !!math
       blocks[0].text += (math || @mapping.text[c] || c)
@@ -157,103 +206,3 @@ class LaTeX.HTML
           @latex += "\\ensuremath{#{block.text}}"
       else
         @latex += block.text
-
-MarkDown = {}
-class MarkDown.HTML
-  constructor: (html) ->
-    @md = ''
-    @stack = []
-    HTMLtoDOM.Parser(html, @)
-
-  start: (tag, attrs, unary) ->
-    tag = {name: tag.toLowerCase(), attrs: {}}
-    for attr in attrs
-      tag.attrs[attr.name.toLowerCase()] = attr.value
-    @stack.unshift(tag) unless unary
-
-    switch tag.name
-      when 'i', 'em', 'italic'
-        @md += '_'
-
-      when 'b', 'strong'
-        @md += '**'
-
-      when 'a'
-        @md += '[' if tag.attrs.href?.length > 0
-
-      when 'sup'
-        @md += '<sup>'
-      when 'sub'
-        @md += '<sub>'
-
-      when 'br'
-        @md += "  \n"
-
-      when 'p', 'div', 'table', 'tr'
-        @md += "\n\n"
-
-      when 'h1', 'h2', 'h3', 'h4'
-        @md += "\n\n\\#{(new Array(parseInt(tag.name[1]))).join('#')} "
-
-      when 'ol', 'ul'
-        @md += "\n\n"
-
-      when 'li'
-        switch @stack[1]?.name
-          when 'ol'
-            @md += "\n1. "
-          when 'ul'
-            @md += "\n* "
-
-      when 'span', 'sc' then # ignore
-
-      when 'td', 'th'
-        @md += ' '
-
-      when 'tbody' then # ignore
-
-      else
-        Translator.debug("unexpected tag '#{tag.name}'")
-
-  end: (tag) ->
-    tag = tag.toLowerCase()
-
-    throw new Error("Unexpected close tag #{tag}") unless tag == @stack[0]?.name
-
-    switch tag
-      when 'i', 'italic', 'em'
-        @md += '_'
-
-      when 'sup', 'sub'
-        @md += "</#{tag}>"
-
-      when 'b', 'strong'
-        @md += '**'
-
-      when 'a'
-        @md += "](#{@stack[0].attrs.href})" if @stack[0].attrs.href?.length > 0
-
-      when 'h1', 'h2', 'h3', 'h4' then #ignore
-
-      when 'p', 'div', 'table', 'tr'
-        @md += "\n\n"
-
-      when 'span', 'sc' then # ignore
-
-      when 'td', 'th'
-        @md += ' '
-
-      when 'ol', 'ul'
-        @md += "\n\n"
-
-    @stack.shift()
-
-  cdata: (text) ->
-    @md += text
-
-  chars: (text) ->
-    txt = LaTeX.he.decode(text)
-
-    txt = txt.replace(/([-"\\`\*_{}\[\]\(\)#\+!])/g, "\\$1")
-    txt = txt.replace(/(^|[\n])(\s*[0-9]+)\.(\s)/g, "$1\\.$2")
-    @md += text

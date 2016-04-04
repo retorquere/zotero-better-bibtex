@@ -1,35 +1,38 @@
-# Getting support for the ZotPlus plugins
+# Getting support for Better BibTeX
 
 Before all else, ***thank you for taking the time for submitting an issue***, and I'm sorry that I've probably
 interrupted your flow.
-Your report matters to me. I love hearing my software helps you, and it pains me
-to know that things aren't working for you.
-If you have any questions on the use of the plugin, please do not hesitate to file a GitHub issue to ask for help. If
-you're reporting a bug in the plugin, please take a moment to glance through the Support Request Guidelines; it will
+
+Your report matters to me. I love hearing my software helps you, and it pains me to know that things aren't working for
+you.  If you have any questions on the use of the plugin, please do not hesitate to file a GitHub issue to ask for help.
+If you're reporting a bug in the plugin, please take a moment to glance through the Support Request Guidelines; it will
 make sure I get your problem fixed as quick as possible. Clear bug reports commonly have time-to-fix of 10 minutes. The
-guidelines are very detailed, perhaps to the point of being off-putting, but please do not fret; these guidelines
-simply express my ideal bug submission. I of course prefer very clearly documented issue reports over fuzzy ones, but I
-prefer fuzzy ones over missed ones.
+guidelines are very detailed, perhaps to the point of being off-putting, but please do not fret; these guidelines simply
+express my ideal bug submission. I of course prefer very clearly documented issue reports over fuzzy ones, but I prefer
+fuzzy ones over missed ones.
+
+# Known problems
+
+* Better BibTeX will fail with incomprehensible errors if you run but Zotero Standalone and Zotero for Firefox
+  simultaniously [#143](https://github.com/retorquere/zotero-better-bibtex/issues/143)
+* If Zotero stalls with BBT installed, it is often a one-time thing as the [cache fills](https://retorquere.github.io/better-bibtex/performance.html)
+
+# Submitting an issue
 
 Unfortunately, however, my time is extremely limited for a number of very great reasons (you shall have to trust me on this). Because of this, I
 cannot accept bug reports or support requests on anything but the latest version.
 
-If you submit an issue report, please include the version that you
-are on. By the time I get to your issue, the latest version might
-have bumped up already, and you will have to upgrade (you might
-have auto-upgraded already however) and re-verify that your issue
-still exists. Apologies for the inconvenience, but such
-are the breaks.
+If you submit an issue report, please include the version that you are on. By the time I get to your issue, the latest
+version might have bumped up already, and you will have to upgrade (you might have auto-upgraded already however) and
+re-verify that your issue still exists. Apologies for the inconvenience, but such are the breaks.
 
-## Better BibTeX
-
-* You can send off an error report by choosing `Report ZotPlus Errors` from the gear menu. Post the resulting url in a
+* You can send off an error report by choosing `Report Better BibTeX Errors` from the gear menu. Post the resulting url in a
   github issue.
 * You can send off an error report for a specific collection or (selection of) items that fails to export by selecting those, right-clicking
-  and choosing `Report ZotPlus Errors`
+  and choosing `Report Better BibTeX Errors`
 
 That in itself will in many cases give me what I need. Don't forget to copy the generated public ID to paste it into the github
-issue; you cannot call it up later (although you can just so it again). Still, if you want a faster fix:
+issue; you cannot call it up later (although you can just do it again). If you enable Still, if you want a faster fix:
 
 * **Please include *specifics* of what doesn't work**. I use this plugin every day myself, so "it doesn't work" is trivially
   false. Please tell me what you expected and what you see happening, and the relevant difference between them.

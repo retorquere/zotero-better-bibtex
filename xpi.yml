@@ -1,0 +1,108 @@
+---
+github:
+  user: retorquere
+  token: GITHUB_TOKEN
+  repo: zotero-better-bibtex
+sourceforge:
+  project: zotero-better-bibtex
+  user: retorquere
+  key: SOURCEFORGEAPIKEY
+bintray:
+  repo: xpi
+  package: better-bibtex
+  user: retorquere
+  secret: BINTRAYSECRET
+amo:
+  issuer: MOZJWTissuer
+  secret: MOZJWTsecret
+s3:
+  id: AWSAccessKeyId
+  secret: AWSSecretAccessKey
+  bucket: zotplus-builds-test
+  prefix: better-bibtex
+  region: eu-central-1
+errorreports:
+  key: AWSAccessKeyId
+  secret: AWSSecretAccessKey
+  username: AWSUserName
+  bucket: better-bibtex-error-reports-62200312
+  region: eu-central-1
+test:
+  xpis:
+    download:
+    - https://github.com/retorquere/zotero-debug-bridge/releases/download/update.rdf/update.rdf
+    - https://www.zotero.org/download/update.rdf
+    install: test/fixtures/plugins
+xpi: zotero-better-bibtex.xpi
+changelog: https://retorquere.github.io/zotero-better-bibtex/CHANGELOG.html
+files:
+- chrome.manifest
+- chrome/content/zotero-better-bibtex/BetterBibTeXPatternFormatter.js
+- chrome/content/zotero-better-bibtex/BetterBibTeXPatternParser.js
+- chrome/content/zotero-better-bibtex/autoexport.js
+- chrome/content/zotero-better-bibtex/bulk-clear-confirm.xul
+- chrome/content/zotero-better-bibtex/cache.js
+- chrome/content/zotero-better-bibtex/cayw.js
+- chrome/content/zotero-better-bibtex/csl-localedata.js
+- chrome/content/zotero-better-bibtex/db.js
+- chrome/content/zotero-better-bibtex/debug-bridge.js
+- chrome/content/zotero-better-bibtex/errorReport.js
+- chrome/content/zotero-better-bibtex/errorReport.xul
+- chrome/content/zotero-better-bibtex/exportOptions.js
+- chrome/content/zotero-better-bibtex/exportOptions.xul
+- chrome/content/zotero-better-bibtex/fold-to-ascii.js
+- chrome/content/zotero-better-bibtex/include.js
+- chrome/content/zotero-better-bibtex/itemPane.js
+- chrome/content/zotero-better-bibtex/itemPane.xul
+- chrome/content/zotero-better-bibtex/keymanager.js
+- chrome/content/zotero-better-bibtex/lokijs.js
+- chrome/content/zotero-better-bibtex/preferences.js
+- chrome/content/zotero-better-bibtex/preferences.xul
+- chrome/content/zotero-better-bibtex/punycode.js
+- chrome/content/zotero-better-bibtex/release.js
+- chrome/content/zotero-better-bibtex/schomd.js
+- chrome/content/zotero-better-bibtex/serialized.js
+- chrome/content/zotero-better-bibtex/translators.js
+- chrome/content/zotero-better-bibtex/web-endpoints.js
+- chrome/content/zotero-better-bibtex/zotero-better-bibtex.js
+- chrome/content/zotero-better-bibtex/zoteroPane.js
+- chrome/content/zotero-better-bibtex/zoteroPane.xul
+- chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd
+- chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.properties
+- chrome/skin/default/zotero-better-bibtex/auto-export/done.svg
+- chrome/skin/default/zotero-better-bibtex/auto-export/error.svg
+- chrome/skin/default/zotero-better-bibtex/auto-export/pending.svg
+- chrome/skin/default/zotero-better-bibtex/auto-export/running.svg
+- chrome/skin/default/zotero-better-bibtex/better-bibtex.svg
+- chrome/skin/default/zotero-better-bibtex/bibtex.svg
+- chrome/skin/default/zotero-better-bibtex/errorReport.css
+- chrome/skin/default/zotero-better-bibtex/ic_done_24px.svg
+- chrome/skin/default/zotero-better-bibtex/ic_sync_24px.svg
+- chrome/skin/default/zotero-better-bibtex/ic_sync_disabled_24px.svg
+- chrome/skin/default/zotero-better-bibtex/ic_sync_problem_24px.svg
+- chrome/skin/default/zotero-better-bibtex/ic_timer_24px.svg
+- chrome/skin/default/zotero-better-bibtex/itembox.css
+- chrome/skin/default/zotero-better-bibtex/overlay.css
+- chrome/skin/default/zotero-better-bibtex/preferences.css
+- defaults/preferences/defaults.js
+- install.rdf
+- resource/citeproc.js
+- resource/reports/cacheActivity.txt
+- resource/translators/Better BibLaTeX.json
+- resource/translators/Better BibLaTeX.translator
+- resource/translators/Better BibTeX.json
+- resource/translators/Better BibTeX.translator
+- resource/translators/Better CSL JSON.json
+- resource/translators/Better CSL JSON.translator
+- resource/translators/Better CSL YAML.json
+- resource/translators/Better CSL YAML.translator
+- resource/translators/BetterBibTeX JSON.json
+- resource/translators/BetterBibTeX JSON.translator
+- resource/translators/BibTeX AUX Scanner.json
+- resource/translators/BibTeX AUX Scanner.translator
+- resource/translators/Collected Notes.json
+- resource/translators/Collected Notes.translator
+- resource/translators/LaTeX Citation.json
+- resource/translators/LaTeX Citation.translator
+- resource/translators/Pandoc Citation.json
+- resource/translators/Pandoc Citation.translator

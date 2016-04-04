@@ -8,7 +8,7 @@
       "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "skipFields": "abstract,file,editora,editoratype,editorb,editorbtype",
-      "usePrefix": false,
+      "usePrefix": true,
       "preserveCaps": "none",
       "fancyURLs": false,
       "langID": "babel",
@@ -28,60 +28,10 @@
   "collections": [
 
   ],
-  "_items": [
-    {
-      "itemType": "journalArticle",
-      "title": "(Aubignac) (François Hédelin abbé d')",
-      "extra": "bibtex: abbot0",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "Aubignac",
-          "firstName": "François Hédelin abbé d'"
-        }
-      ]
-    },
-    {
-      "itemType": "journalArticle",
-      "title": "(abbé d'Aubignac) (François Hédelin)",
-      "extra": "bibtex: abbot2",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "abbé d'Aubignac",
-          "firstName": "François Hédelin"
-        }
-      ]
-    },
-    {
-      "itemType": "journalArticle",
-      "title": "(d'Aubignac) (François Hédelin, abbé)",
-      "extra": "bibtex: abbot4",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "d'Aubignac",
-          "firstName": "François Hédelin, abbé"
-        }
-      ]
-    },
-    {
-      "itemType": "journalArticle",
-      "title": "(d' Aubignac) (François Hédelin, abbé)",
-      "extra": "bibtex: abbot5",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "d' Aubignac",
-          "firstName": "François Hédelin, abbé"
-        }
-      ]
-    }
-  ],
   "items": [
     {
       "itemType": "journalArticle",
-      "title": "(abbé d' Aubignac) (François Hédelin)",
+      "title": "<span class=\"nocase\">(abbé d' Aubignac) (François Hédelin)</span>",
       "extra": "bibtex: abbot3",
       "creators": [
         {
@@ -93,7 +43,7 @@
     },
     {
       "itemType": "journalArticle",
-      "title": "(Aubignac) (François Hédelin, abbé d')",
+      "title": "<span class=\"nocase\">(Aubignac) (François Hédelin, abbé d')</span>",
       "extra": "relies on paricleParser fallback detection\nbibtex: abbot1",
       "creators": [
         {

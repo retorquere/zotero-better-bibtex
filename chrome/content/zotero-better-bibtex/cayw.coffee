@@ -75,18 +75,15 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
     @citation = {citationItems:[], properties:{}}
     @wrappedJSObject = @
 
-    @config = {
-      citeprefix: ''
-      citepostfix: ''
-      keyprefix: ''
-      keypostfix: ''
-      separator: ','
-      clipboard: false
-      format: ''
-    }
-
-    for own key of @config
-      @config[key] = config[key] if config[key]
+    @config = JSON.parse(JSON.stringify(config))
+    @config.citeprefix ||= ''
+    @config.citeprefix ||= ''
+    @config.citepostfix ||= ''
+    @config.keyprefix ||= ''
+    @config.keypostfix ||= ''
+    @config.separator ||= ','
+    @config.clipboard ||= false
+    @config.format ||= ''
 
     if @config.format.match(/^cite/)
       @config.command = @config.format
@@ -124,12 +121,20 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
       else
         formatted = @config.citeprefix + formatted.join(@config.separator) + @config.citepostfix
 
-    Zotero.Utilities.Internal.copyTextToClipboard(formatted) if @config.clipboard
-    @deferred.fulfill(formatted)
+    Zotero.BetterBibTeX.debug('formatted-type:', typeof formatted)
+    if typeof formatted == 'string'
+      resolve = formatted
+      deferred = Q.defer()
+      formatted = deferred.promise
+    Zotero.BetterBibTeX.debug('formatted-type:*', typeof formatted)
 
-    Zotero.Integration.currentWindow.close() unless Zotero.BetterBibTeX.pref.get('tests')
-
-    @doc.activate()
+    formatted.then((res) =>
+      Zotero.Utilities.Internal.copyTextToClipboard(res) if @config.clipboard
+      @deferred.fulfill(res)
+      Zotero.Integration.currentWindow.close() unless Zotero.BetterBibTeX.pref.get('tests')
+      @doc.activate()
+    )
+    deferred.resolve(resolve) if typeof resolve == 'string'
 
 Zotero.BetterBibTeX.CAYW.Formatter = {
   latex: (citations, config) ->
@@ -137,36 +142,43 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
 
     return '' if citations.length == 0
 
-    state = {
-      prefix: 0
-      suffix: 0
-      'suppress-author': 0
-      locator: 0
-      label: 0
-    }
     if citations.length > 1
+      state = {
+        prefix: 0
+        suffix: 0
+        'suppress-author': 0
+        locator: 0
+        label: 0
+      }
+
       for citation in citations
         for own k of citation
           state[k] ?= 0
           state[k]++
 
-    if state.suffix == 0 && state.prefix == 0 && state.locator == 0 && state['suppress-author'] in [0, citations.length]
-      # simple case where everything can be put in a single cite
-      return "\\#{if citations[0]['suppress-author'] then 'citeyear' else config.command}{#{(citation.citekey for citation in citations).join(',')}}"
+      Zotero.BetterBibTeX.debug('citations:', {citations, state})
+      if state.suffix == 0 && state.prefix == 0 && state.locator == 0 && state['suppress-author'] in [0, citations.length]
+        ### simple case where everything can be put in a single cite ###
+        return "\\#{if citations[0]['suppress-author'] then 'citeyear' else config.command}{#{(citation.citekey for citation in citations).join(',')}}"
 
     formatted = ''
     for citation in citations
-      formatted += ' ' + citation.prefix + ' ' if citation.prefix
       formatted += "\\"
       formatted += if citation['suppress-author'] then 'citeyear' else config.command
+      formatted += '[' + citation.prefix + ']' if citation.prefix
 
+      Zotero.BetterBibTeX.debug('citation:', citation)
       switch
         when citation.locator && citation.suffix
-          formatted += '[' + Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' ' + citation.locator + ', ' + citation.suffix + ']'
+          label = if citation.label == 'page' then '' else Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' '
+          formatted += "[#{label}#{citation.locator}, #{citation.suffix}]"
         when citation.locator
-          formatted += '[' + Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' ' + citation.locator + ']'
+          label = if citation.label == 'page' then '' else Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' '
+          formatted += "[#{label}#{citation.locator}]"
         when citation.suffix
-          formatted += '[' + citation.suffix + ']'
+          formatted += "[#{citation.suffix}]"
+        when citation.prefix
+          formatted += '[]'
       formatted += '{' + citation.citekey + '}'
 
     return formatted.trim()
@@ -190,8 +202,7 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       cite += ", #{Zotero.BetterBibTeX.CAYW.shortLocator[citation.label]} #{citation.locator}" if citation.locator
       cite += " #{citation.suffix}" if citation.suffix
       formatted.push(cite)
-    return '' if formatted.length == 0
-    return '[' + formatted.join(';') + ']'
+    return formatted.join('; ')
 
   'scannable-cite': (citations) ->
 
@@ -229,7 +240,8 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       title.set(item.firstCreator, ',', 'anon.')
 
       includeTitle = false
-      try # Prefs.get throws an error if the pref is not found
+      ### Prefs.get throws an error if the pref is not found ###
+      try
         includeTitle = Zotero.Prefs.get('translators.ODFScan.includeTitle')
       if includeTitle || !item.firstCreator
         title.set(item.getField('shortTitle') || item.getField('title'), ',', '(no title)')
@@ -257,14 +269,36 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
   'atom-zotero-citations': (citations, options = {}) ->
     citekeys = (citation.citekey for citation in citations)
 
-    items = (item for item in Zotero.BetterBibTeX.schmd.items(citekeys, options) when item)
+    itemIDs = (item for item in Zotero.BetterBibTeX.schomd.itemIDs(citekeys, options) when item)
     url = "http://www.zotero.org/styles/#{options.style ? 'apa'}"
     style = Zotero.Styles.get(url)
     cp = style.getCiteProc()
     cp.setOutputFormat('markdown')
-    cp.updateItems((item for item in items when item))
-    label = cp.appendCitationCluster({citationItems: ({id:item} for item in items), properties:{}}, true)[0][1]
+    cp.updateItems(itemIDs)
+    label = cp.appendCitationCluster({citationItems: ({id:itemID} for itemID in itemIDs), properties:{}}, true)[0][1]
 
-    citekeys = ("@#{citekey}" for citekey in citekeys).join(',')
-    return "[#{label}][#{citekeys}]"
+    prefix = if citekeys.length == 1 && citekeys[0].toLowerCase() == citekeys[0] then '@' else '#'
+    citekeys = ("#{prefix}#{citekey}" for citekey in citekeys).join(',')
+    return "[#{label}](#{citekeys})"
+
+  translate: (citations, options = {}) ->
+    items = Zotero.Items.get((citation.id for citation in citations))
+
+    translator = options.translator || 'biblatex'
+    translator = Zotero.BetterBibTeX.getTranslator(translator) || translator
+    Zotero.BetterBibTeX.debug('cayw.translate:', {requested: options, got: translator})
+
+    exportOptions = {
+      exportNotes: (options.exportNotes || '').toLowerCase() in ['yes', 'y', 'true']
+      useJournalAbbreviation: (options.useJournalAbbreviation || '').toLowerCase() in ['yes', 'y', 'true']
+    }
+
+    deferred = Q.defer()
+    Zotero.BetterBibTeX.translate(translator, {items: items}, exportOptions, (err, result) ->
+      if err
+        deferred.reject(err)
+      else
+        deferred.fulfill(result)
+    )
+    return deferred.promise
 }

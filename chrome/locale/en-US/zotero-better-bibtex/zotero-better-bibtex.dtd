@@ -12,9 +12,11 @@
 <!ENTITY zotero.better-bibtex.prefs.debug "Debug">
 
 <!ENTITY zotero.better-bibtex.show-citekey "Show citekey instead of 'extra' field in reference list (requires restart)">
+<!ENTITY zotero.better-bibtex.show-item-id "Show reference ID instead of 'call number' field in reference list (requires restart)">
+<!ENTITY zotero.better-bibtex.parseParticles "Move name-particles (de, von, ...) to the family name">
 
 <!ENTITY zotero.better-bibtex.restart-required "Restart Required">
-<!ENTITY zotero.better-bibtex.preferences.recursive "Export collections recursively">
+<!ENTITY zotero.better-bibtex.preferences.recursive "Display subcollections recursively">
 <!ENTITY zotero.better-bibtex.cite.command "Citation command">
 <!ENTITY zotero.better-bibtex.skipFields "Fields to omit from export (comma-separated)">
 <!ENTITY zotero.better-bibtex.cite.format "Citation key format">
@@ -25,24 +27,24 @@
 <!ENTITY zotero.better-bibtex.server.disabled "Export by HTTP disabled">
 <!ENTITY zotero.better-bibtex.server.address "Bibliography export at ">
 <!ENTITY zotero.better-bibtex.server.warning "BibTeX http export uses the general Zotero HTTP facility; please note that disabling this will disable ALL http facilities in zotero -- including the non-Firefox plugins">
-<!ENTITY zotero.better-bibtex.recursive.warning "Enabling recursive export also causes Zotero to display collection content recursively">
 <!ENTITY zotero.better-bibtex.ascii.BibTeX "Export BibTeX as ASCII">
 <!ENTITY zotero.better-bibtex.ascii.BibLaTeX "Export BibLaTeX as ASCII">
-<!ENTITY zotero.better-bibtex.fancyURLs "Clickable URLs">
-<!ENTITY zotero.better-bibtex.fancyURLs.warning "Wraps urls in a \href field -- not supported by all bibliography processors!">
+<!ENTITY zotero.better-bibtex.bibtexURLs "Add URLs to BibTeX export (BibTeX does not natively support them)">
+<!ENTITY zotero.better-bibtex.bibtexURLs.off "no">
+<!ENTITY zotero.better-bibtex.bibtexURLs.note "in a note field">
+<!ENTITY zotero.better-bibtex.bibtexURLs.url "in an url field">
 <!ENTITY zotero.better-bibtex.format-unique-warning "Caution: the default guarantees that each attachment has a unique filename. If you change the default, make sure the resulting filenames remain unique!">
 <!ENTITY zotero.better-bibtex.preserveCaps "Preserve capitalization">
 <!ENTITY zotero.better-bibtex.preserveCaps.no "No">
 <!ENTITY zotero.better-bibtex.preserveCaps.inner "Only words with 'iNNer' capitals">
 <!ENTITY zotero.better-bibtex.preserveCaps.all "All words with capitals">
-<!ENTITY zotero.better-bibtex.useprefix "Add 'useprefix' option to BibLaTeX export">
 <!ENTITY zotero.better-bibtex.raw-imports "Retain LaTeX markup on BibTeX import">
 <!ENTITY zotero.better-bibtex.langid "When exporting language information, use the conventions from">
 <!ENTITY zotero.better-bibtex.langid.babel "Babel">
 <!ENTITY zotero.better-bibtex.langid.polyglossia "Polyglossia">
 <!ENTITY zotero.better-bibtex.preferences.auto-abbrev "Automatically abbreviate journal title if none is set explicitly">
 <!ENTITY zotero.better-bibtex.preferences.auto-abbrev.style "Abbreviation style:">
-<!ENTITY zotero.better-bibtex.pin-citekeys "Auto-pin citation keys (requires sync to be off or auto):">
+<!ENTITY zotero.better-bibtex.pin-citekeys "Auto-pin citation keys (requires webdav/zotero sync to be off or auto):">
 <!ENTITY zotero.better-bibtex.pin-citekeys.manual "No">
 <!ENTITY zotero.better-bibtex.pin-citekeys.on-change "On item change. Note that this only affects references that have no pinned citation key -- after the initial pinning on creation or change, further changes will not be incorporated">
 <!ENTITY zotero.better-bibtex.pin-citekeys.on-export "On item export. Note that if you have auto-export set to 'on change', on-export auto-pinning is effectively the same as on-change auto-pinning.">
@@ -54,11 +56,11 @@
 <!ENTITY zotero.better-bibtex.doi-and-url.DOI "DOI">
 <!ENTITY zotero.better-bibtex.doi-and-url.URL "URL">
 
-<!ENTITY zotero.better-bibtex.reportErrors "Report ZotPlus Errors...">
-<!ENTITY zotero.better-bibtex.errorReport.review "The data below is about to submitted to ZotPlus for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
+<!ENTITY zotero.better-bibtex.reportErrors "Report Better BibTeX Errors...">
+<!ENTITY zotero.better-bibtex.errorReport.review "The data below is about to submitted to Better BibTeX for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
 
-If you are OK with sending this data, please click &quot;Continue&quot; and post the debug ID presented in the next screen in the issue tracker at https://github.com/ZotPlus/zotero-better-bibtex/issue">
-<!ENTITY zotero.better-bibtex.errorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/ZotPlus/zotero-better-bibtex/issues) with this Report ID, a description of the problem, and any steps necessary to reproduce it.">
+If you are OK with sending this data, please click &quot;Continue&quot; and post the debug ID presented in the next screen in the issue tracker at https://github.com/retorquere/zotero-better-bibtex/issue">
+<!ENTITY zotero.better-bibtex.errorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this Report ID, a description of the problem, and any steps necessary to reproduce it.">
 <!ENTITY zotero.better-bibtex.errorReport.notReviewed "Error reports can not reviewed unless referred to in the GitHub issue tracker.">
 <!ENTITY zotero.better-bibtex.errorReport.reportID "Report ID:">
 <!ENTITY zotero.errorReport.context "Application context">
@@ -67,7 +69,8 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.errorReport.references "References">
 <!ENTITY zotero.errorReport.include "Include in error report">
 
-<!ENTITY zotero.better-bibtex.caching "Cache activity">
+<!ENTITY zotero.better-bibtex.cacheActivity "View cache activity...">
+<!ENTITY zotero.better-bibtex.cacheActivity.disabled "In order to view the cache activity, enable &quot;&zotero.better-bibtex.server.enabled;&quot; in &quot;&zotero.better-bibtex.prefs.import-export;&quot;">
 <!ENTITY zotero.better-bibtex.resetCache "Reset cache">
 
 <!ENTITY zotero.better-bibtex.prefs.auto-export "Automatic Export">
@@ -91,12 +94,12 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 
 <!ENTITY zotero.better-bibtex.rescan-citekeys "Re-scan pinned citekeys after restart">
 
-<!ENTITY zotero.better-bibtex.preferences.debugOutputLogging "ZotPlus Debug Output">
-<!ENTITY zotero.better-bibtex.debug "ZotPlus extended debug logging. Restart Firefox/Zotero to activate, persists over reboots. Affects performance, so turn off when done.">
+<!ENTITY zotero.better-bibtex.preferences.debugOutputLogging "Better BibTeX Debug Output">
+<!ENTITY zotero.better-bibtex.debug "Better BibTeX extended debug logging. Restart Firefox/Zotero to activate, persists over reboots. Affects performance, so turn off when done.">
 
 
 <!ENTITY zotero.better-bibtex.preserveBibTeXVariables "Preserve BibTeX variables">
-<!ENTITY zotero.better-bibtex.preserveBibTeXVariables.explain "When enabled, single-word strings will be assumed to be extrenally-defined @string vars, and thus not surrounded by braces">
+<!ENTITY zotero.better-bibtex.preserveBibTeXVariables.explain "When enabled, single-word strings will be assumed to be externally-defined @string vars, and thus not surrounded by braces">
 
 <!ENTITY zotero.better-bibtex.bulkWarning.whatever "OK, and don't ask me again">
 <!ENTITY zotero.better-bibtex.bulkWarning.message "You are changing more than #{TRESHOLD} items in one go. Are you sure?">

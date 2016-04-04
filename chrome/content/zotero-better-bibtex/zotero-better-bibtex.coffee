@@ -1,12 +1,256 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
-Components.utils.import('resource://zotero/config.js')
+
+Components.utils.import('resource://zotero/config.js') unless ZOTERO_CONFIG?
 
 Zotero.BetterBibTeX = {
   serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
   document: Components.classes['@mozilla.org/xul/xul-document;1'].getService(Components.interfaces.nsIDOMDocument)
   Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
 }
+Components.utils.import('resource://zotero-better-bibtex/citeproc.js', Zotero.BetterBibTeX)
+
+Zotero.BetterBibTeX.titleCase = {
+  state: {
+    opt: { lang: 'en' }
+    locale: {
+      en: {
+        opts: {
+          'skip-words': Zotero.BetterBibTeX.CSL.SKIP_WORDS
+          'leading-noise-words': 'a,an,the'
+        }
+      }
+    }
+  }
+}
+Zotero.BetterBibTeX.titleCase.state.locale.en.opts['skip-words-regexp'] = new RegExp('(?:(?:[?!:]*\\s+|-|^)(?:' + Zotero.BetterBibTeX.titleCase.state.locale.en.opts['skip-words'].slice().join('|') + ')(?=[!?:]*\\s+|-|$))', 'g')
+
+Zotero.BetterBibTeX.HTMLParser = new class
+  DOMParser: Components.classes["@mozilla.org/xmlextras/domparser;1"].createInstance(Components.interfaces.nsIDOMParser)
+  ELEMENT_NODE:                 1
+  TEXT_NODE:                    3
+  CDATA_SECTION_NODE:           4
+  PROCESSING_INSTRUCTION_NODE:  7
+  COMMENT_NODE:                 8
+  DOCUMENT_NODE:                9
+  DOCUMENT_TYPE_NODE:           10
+  DOCUMENT_FRAGMENT_NODE:       11
+
+  text: (html) ->
+    doc = @DOMParser.parseFromString("<span>#{html}</span>", 'text/html')
+    doc = doc.documentElement if doc.nodeType == @DOCUMENT_NODE
+    txt = doc.textContent
+    Zotero.BetterBibTeX.debug('html2text:', {html, txt})
+    return txt
+
+  parse: (html) ->
+    return @walk(@DOMParser.parseFromString("<span>#{html}</span>", 'text/html'))
+
+  walk: (node, json) ->
+    tag = {name: node.nodeName.toLowerCase(), attrs: {}, class: {}, children: []}
+
+    if node.nodeType in [@TEXT_NODE, @CDATA_SECTION_NODE]
+      tag.text = node.textContent
+    else
+      tag.text = node.text if tag.name == 'script'
+      if node.nodeType == @ELEMENT_NODE && node.hasAttributes()
+        for attr in node.attributes
+          tag.attrs[attr.name] = attr.value
+        if tag.attrs.class
+          for cls in tag.attrs.class.split(/\s+/)
+            continue unless cls
+            tag.class[cls] = true
+
+      if node.childNodes
+        for child in [0 ... node.childNodes.length]
+          @walk(node.childNodes.item(child), tag)
+
+    return tag unless json
+
+    json.children.push(tag)
+    return json
+
+class Zotero.BetterBibTeX.DateParser
+  parseDateToObject: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).date
+  parseDateToArray: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).array()
+
+  toArray: (suffix = '') ->
+    date = {}
+    for d in ['year', 'month', 'day', 'empty']
+      date[d] = @date["#{d}#{suffix}"]
+
+    ### [ 0 ] instead if [0, 0]; see https://github.com/retorquere/zotero-better-bibtex/issues/360#issuecomment-143540469 ###
+    return [ 0 ] if date.empty
+
+    return null unless date.year
+
+    arr = [ date.year ]
+    if date.month
+      arr.push(date.month)
+      arr.push(date.day) if date.day
+    return arr
+
+  array: ->
+    date1 = @toArray()
+    return {literal: @source} unless date1
+
+    date2 = @toArray('_end')
+
+    array = {'date-parts': (if date2 then [date1, date2] else [date1])}
+    array.circa = true if @date.circa || @date.circa_end
+    return array
+
+  constructor: (@source, options = {}) ->
+    @source = @source.trim() if @source
+    @zoteroLocale ?= Zotero.locale.toLowerCase()
+
+    return unless @source
+
+    if options.verbatimDetection && @source.indexOf('[') >= 0
+      @date = {literal: @source}
+      return
+
+    if options.locale
+      locale = options.locale.toLowerCase()
+      @dateorder = Zotero.BetterBibTeX.Locales.dateorder[locale]
+      if @dateorder
+        found = locale
+      else
+        for k, v of Zotero.BetterBibTeX.Locales.dateorder
+          if k == locale || k.slice(0, locale.length) == locale
+            found = k
+            @dateorder = Zotero.BetterBibTeX.Locales.dateorder[options.locale] = v
+            break
+
+    if !@dateorder
+      fallback = Zotero.BetterBibTeX.pref.get('defaultDateParserLocale')
+      @dateorder = Zotero.BetterBibTeX.Locales.dateorder[fallback]
+      if !@dateorder
+        @dateorder = Zotero.BetterBibTeX.Locales.dateorder[fallback] = Zotero.BetterBibTeX.Locales.dateorder[fallback.trim().toLowerCase()]
+
+    @dateorder ||= Zotero.BetterBibTeX.Locales.dateorder[@zoteroLocale]
+
+    @date = @parse()
+
+  swapMonth: (date, dateorder) ->
+    return unless date.day && date.month
+
+    switch
+      when @dateorder && @dateorder == dateorder && date.day <= 12 then
+      when date.month > 12 then
+      else return
+    [date.month, date.day] = [date.day, date.month]
+
+  cruft: new Zotero.Utilities.XRegExp("[^\\p{Letter}\\p{Number}]+", 'g')
+  parsedate: (date) ->
+    date = date.trim()
+    return {empty: true} if date == ''
+
+    ### TODO: https://bitbucket.org/fbennett/citeproc-js/issues/189/8-juli-2011-parsed-as-literal ###
+    date = date.replace(/^([0-9]+)\.\s+([a-z])/i, '$1 $2')
+
+    if m = date.match(/^(-?[0-9]{3,4})(\?)?(~)?$/)
+      return {
+        year: @year(m[1])
+        uncertain: (if m[2] == '?' then true else undefined)
+        circa: (if m[3] == '?' then true else undefined)
+      }
+
+    ### CSL dateparser doesn't recognize d?/m/y ###
+    if m = date.match(/^(([0-9]{1,2})[-\.\s\/])?([0-9]{1,2})[-\.\s\/]([0-9]{3,4})(\?)?(~)?$/)
+      parsed = {
+        year: parseInt(m[4])
+        month: parseInt(m[3])
+        day: parseInt(m[1]) || undefined
+        uncertain: (if m[5] == '?' then true else undefined)
+        circa: (if m[6] == '~' then true else undefined)
+      }
+      @swapMonth(parsed, 'mdy')
+      return parsed
+
+    if m = date.match(/^(-?[0-9]{3,4})[-\.\s\/]([0-9]{1,2})([-\.\s\/]([0-9]{1,2}))?(\?)?(~)?$/)
+      parsed = {
+        year: @year(m[1])
+        month: parseInt(m[2])
+        day: parseInt(m[4]) || undefined
+        uncertain: (if m[5] == '?' then true else undefined)
+        circa: (if m[6] == '~' then true else undefined)
+      }
+      ### only swap to repair -- assume yyyy-nn-nn == EDTF-0 ###
+      @swapMonth(parsed)
+      return parsed
+
+    parsed = Zotero.BetterBibTeX.CSL.DateParser.parseDateToObject(date)
+    for k, v of parsed
+      switch
+        when v == 'NaN' then  parsed[k] = undefined
+        when typeof v == 'string' && v.match(/^-?[0-9]+$/) then parsed[k] = parseInt(v)
+
+    return null if parsed.literal
+
+    ### there's a season in there somewhere ###
+    return null if parsed.month && parsed.month > 12
+
+    shape = date
+    shape = shape.slice(1) if shape[0] == '-'
+    shape = Zotero.Utilities.XRegExp.replace(shape.trim(), @cruft, ' ', 'all')
+    shape = shape.split(' ')
+
+    fields = (if parsed.year then 1 else 0) + (if parsed.month then 1 else 0) + (if parsed.day then 1 else 0)
+
+    return parsed if fields == 3 || shape.length == fields
+
+    return null
+
+  parserange: (separators) ->
+    for sep in separators
+      continue if @source == sep
+      ### too hard to distinguish from negative year ###
+      continue if sep == '-' && @source.match(/^-[0-9]{3,4}$/)
+
+      range = @source.split(sep)
+      continue unless range.length == 2
+
+      range = [
+        @parsedate(range[0])
+        @parsedate(range[1])
+      ]
+
+      continue unless range[0] && range[1]
+
+      return {
+        empty: range[0].empty
+        year: range[0].year
+        month: range[0].month
+        day: range[0].day
+        circa: range[0].circa
+
+        empty_end: range[1].empty
+        year_end: range[1].year
+        month_end: range[1].month
+        day_end: range[1].day
+        circa_end: range[1].circa
+      }
+
+    return null
+
+  year: (y) ->
+    y = parseInt(y)
+    y -= 1 if y <= 0
+    return y
+
+  parse: ->
+    return {} if !@source || @source in ['--', '/', '_']
+
+    candidate = @parserange(['--', '_', '/', '-'])
+
+    ### if no range was found, try to parse the whole input as a single date ###
+    candidate ||= @parsedate(@source)
+
+    ### if that didn't yield anything, assume literal ###
+    candidate ||= {literal: @source}
+
+    return candidate
 
 Zotero.BetterBibTeX.error = (msg...) ->
   @_log.apply(@, [0].concat(msg))
@@ -21,6 +265,20 @@ Zotero.BetterBibTeX.log_off = ->
 Zotero.BetterBibTeX.log = Zotero.BetterBibTeX.log_on = (msg...) ->
   @_log.apply(@, [3].concat(msg))
 
+Zotero.BetterBibTeX.addCacheHistory = ->
+  Zotero.BetterBibTeX.cacheHistory ||= []
+  Zotero.BetterBibTeX.cacheHistory.push({
+    timestamp: new Date()
+    serialized:
+      hit: Zotero.BetterBibTeX.serialized.stats.hit
+      miss: Zotero.BetterBibTeX.serialized.stats.miss
+      clear: Zotero.BetterBibTeX.serialized.stats.clear
+    cache:
+      hit: Zotero.BetterBibTeX.cache.stats.hit
+      miss: Zotero.BetterBibTeX.cache.stats.miss
+      clear: Zotero.BetterBibTeX.cache.stats.clear
+  })
+
 Zotero.BetterBibTeX.debugMode = ->
   if @pref.get('debug')
     Zotero.Debug.setStore(true)
@@ -28,7 +286,18 @@ Zotero.BetterBibTeX.debugMode = ->
     @debug = @debug_on
     @log = @log_on
     @flash('Debug mode active', 'Debug mode is active. This will affect performance.')
+
+    clearInterval(Zotero.BetterBibTeX.debugInterval) if Zotero.BetterBibTeX.debugInterval
+    try
+      Zotero.BetterBibTeX.debugInterval = setInterval(->
+        Zotero.BetterBibTeX.addCacheHistory()
+      , 10000)
+    catch
+      delete Zotero.BetterBibTeX.debugInterval
   else
+    clearInterval(Zotero.BetterBibTeX.debugInterval) if Zotero.BetterBibTeX.debugInterval
+    delete Zotero.BetterBibTeX.debugInterval
+    delete Zotero.BetterBibTeX.cacheHistory
     @debug = @debug_off
     @log = @log_off
 
@@ -81,7 +350,7 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
   str = str.join(' ')
 
   if level == 0
-    Zotero.logError(msg)
+    Zotero.logError('[better' + '-' + 'bibtex] ' + str)
   else
     Zotero.debug('[better' + '-' + 'bibtex] ' + str, level)
 
@@ -143,20 +412,33 @@ Zotero.BetterBibTeX.extensionConflicts = ->
   if Services.vc.compare(ZOTERO_CONFIG.VERSION?.replace(/\.SOURCE$/, '') || '0.0.0', '4.0.28') < 0
     @disable("Better BibTeX has been disabled because it found Zotero #{ZOTERO_CONFIG.VERSION}, but requires 4.0.28 or later.")
 
+  @disableInConnector(Zotero.isConnector)
+
+Zotero.BetterBibTeX.disableInConnector = (isConnector) ->
+  return unless isConnector
+  @disable("""
+    You are running Zotero in connector mode (running Zotero Firefox and Zotero Standalone simultaneously.
+    This is not supported by Better BibTeX; see https://github.com/retorquere/zotero-better-bibtex/issues/143
+  """)
+
 Zotero.BetterBibTeX.disable = (message) ->
   @removeTranslators()
   @disabled = message
+  @debug('Better BibTeX has been disabled:', message)
   @flash('Better BibTeX has been disabled', message)
 
 Zotero.BetterBibTeX.flash = (title, body) ->
-  Zotero.BetterBibTeX.debug('flash:', title)
-  pw = new Zotero.ProgressWindow()
-  pw.changeHeadline(title)
-  body ||= title
-  body = body.join("\n") if Array.isArray(body)
-  pw.addDescription(body)
-  pw.show()
-  pw.startCloseTimer(8000)
+  try
+    Zotero.BetterBibTeX.debug('flash:', title)
+    pw = new Zotero.ProgressWindow()
+    pw.changeHeadline(title)
+    body ||= title
+    body = body.join("\n") if Array.isArray(body)
+    pw.addDescription(body)
+    pw.show()
+    pw.startCloseTimer(8000)
+  catch err
+    Zotero.BetterBibTeX.error('@flash failed:', {title, body}, err)
 
 Zotero.BetterBibTeX.reportErrors = (includeReferences) ->
   data = {}
@@ -200,7 +482,7 @@ Zotero.BetterBibTeX.pref.observer = {
     switch data
       when 'citekeyFormat', 'citekeyFold'
         Zotero.BetterBibTeX.setCitekeyFormatter()
-        # delete all dynamic keys that have a different citekeyformat (should be all)
+        ### delete all dynamic keys that have a different citekeyformat (should be all) ###
         Zotero.BetterBibTeX.keymanager.clearDynamic()
 
       when 'autoAbbrevStyle'
@@ -208,25 +490,13 @@ Zotero.BetterBibTeX.pref.observer = {
 
       when 'debug'
         Zotero.BetterBibTeX.debugMode()
-        return # don't drop the cache just for this
+        ### don't drop the cache just for this ###
+        return
 
-    # if any var changes, drop the cache and kick off all exports
-    Zotero.BetterBibTeX.cache.reset()
-    Zotero.BetterBibTeX.auto.reset()
-    Zotero.BetterBibTeX.auto.process('preferences change')
+    ### if any var changes, drop the cache and kick off all exports ###
+    Zotero.BetterBibTeX.cache.reset("pref change: #{data}")
+    Zotero.BetterBibTeX.auto.reset('preferences change')
     Zotero.BetterBibTeX.debug('preference change:', subject, topic, data)
-}
-
-Zotero.BetterBibTeX.pref.ZoteroObserver = {
-  register: -> Zotero.Prefs.prefBranch.addObserver('', @, false)
-  unregister: -> Zotero.Prefs.prefBranch.removeObserver('', @)
-  observe: (subject, topic, data) ->
-    switch data
-      when 'recursiveCollections'
-        recursive = "#{!!Zotero.BetterBibTeX.auto.recursive()}"
-        # libraries are always recursive
-        Zotero.DB.query("update betterbibtex.autoexport set exportedRecursively = ?, status = ? where exportedRecursively <> ? and collection not like 'library:%'", [recursive, Zotero.BetterBibTeX.auto.status('pending'), recursive])
-        Zotero.BetterBibTeX.auto.process("recursive export: #{recursive}")
 }
 
 Zotero.BetterBibTeX.pref.snapshot = ->
@@ -255,10 +525,10 @@ Zotero.BetterBibTeX.setCitekeyFormatter = (enforce) ->
 
   for attempt in attempts
     if attempt == 'reset'
-      msg = "Malformed citation '#{@pref.get('citekeyFormat')}' found, resetting to default"
+      msg = "Malformed citation pattern '#{@pref.get('citekeyFormat')}', resetting to default"
       @flash(msg)
       @error(msg)
-      @pref.clearUserPref('citekeyFormat')
+      @pref.prefs.clearUserPref('citekeyFormat')
 
     try
       citekeyPattern = @pref.get('citekeyFormat')
@@ -271,7 +541,7 @@ Zotero.BetterBibTeX.setCitekeyFormatter = (enforce) ->
       @formatter = formatter
       return
     catch err
-      @error(err)
+      @error('Error parsing citekey pattern', {citekeyPattern, citekeyFormat}, err)
 
   if enforce
     @flash('Citation pattern reset failed! Please report an error to the Better BibTeX issue list.')
@@ -281,10 +551,8 @@ Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
   Zotero.BetterBibTeX.debug("idle: #{topic}")
   switch topic
     when 'idle'
-      Zotero.BetterBibTeX.cache.flush()
-      Zotero.BetterBibTeX.keymanager.flush()
       Zotero.BetterBibTeX.auto.idle = true
-      Zotero.BetterBibTeX.auto.process('idle')
+      Zotero.BetterBibTeX.auto.schedule('idle')
 
     when 'back', 'active'
       Zotero.BetterBibTeX.auto.idle = false
@@ -295,56 +563,10 @@ Zotero.BetterBibTeX.version = (version) ->
   @debug("full version: #{version}, canonical version: #{v}")
   return v
 
-Zotero.BetterBibTeX.foreign_keys = (enabled) ->
-  statement = Zotero.DB.getStatement("PRAGMA foreign_keys = #{if enabled then 'ON' else 'OFF'}", null, true)
-  statement.executeStep()
-  statement.finalize()
+Zotero.BetterBibTeX.migrateData = ->
+  @DB.SQLite.migrate()
 
-Zotero.BetterBibTeX.parseTable = (name) ->
-  name = name.split('.')
-  switch name.length
-    when 1
-      schema = ''
-      name = name[0]
-    when 2
-      schema = name[0] + '.'
-      name = name[1]
-  name = name.slice(1, -1) if name[0] == '"'
-  return {schema: schema, name: name}
-
-Zotero.BetterBibTeX.table_info = (table) ->
-  table = @parseTable(table)
-  statement = Zotero.DB.getStatement("pragma #{table.schema}table_info(\"#{table.name}\")", null, true)
-
-  fields = (statement.getColumnName(i).toLowerCase() for i in [0...statement.columnCount])
-
-  columns = {}
-  while statement.executeStep()
-    values = (Zotero.DB._getTypedValue(statement, i) for i in [0...statement.columnCount])
-    column = {}
-    for name, i in fields
-      column[name] = values[i]
-    columns[column.name] = column
-  statement.finalize()
-
-  return columns
-
-Zotero.BetterBibTeX.columnNames = (table) ->
-  return Object.keys(@table_info(table))
-
-Zotero.BetterBibTeX.copyTable = (source, target, ignore = []) -> # assumes tables have identical layout!
-  ignore = [ignore] if typeof ignore == 'string'
-
-  columns = (column for column in @columnNames(target) when column not in ignore).join(', ')
-  Zotero.DB.query("insert into #{target} (#{columns}) select #{columns} from #{source}")
-
-Zotero.BetterBibTeX.tableExists = (name, mustHaveData = false) ->
-  table = @parseTable(name)
-  exists = (Zotero.DB.valueQuery("SELECT count(*) FROM #{table.schema}sqlite_master WHERE type='table' and name=?", [table.name]) != 0)
-  return exists && (!mustHaveData || Zotero.DB.valueQuery("select count(*) from #{name}") != 0)
-
-Zotero.BetterBibTeX.upgradeDatabase = ->
-  @flash('Better BibTeX: updating database', 'Updating database, this could take a while')
+  return unless @DB.upgradeNeeded
 
   for key in @pref.prefs.getChildList('')
     switch key
@@ -359,161 +581,20 @@ Zotero.BetterBibTeX.upgradeDatabase = ->
       when 'raw-imports' then @pref.set('rawImports', @pref.get(key))
       when 'show-citekey' then @pref.set('showCitekeys', @pref.get(key))
       when 'skipfields' then @pref.set('skipFields', @pref.get(key))
-      when 'useprefix' then @pref.set('usePrefix', @pref.get(key))
       when 'unicode'
         @pref.set('asciiBibTeX', (@pref.get(key) != 'always'))
         @pref.set('asciiBibLaTeX', (@pref.get(key) == 'never'))
+      when 'bibtexURLs'
+        v = @pref.get(key)
+        v = true if v == 'true'
+        @pref.set(key, (if v then 'note' else 'off')) if typeof v == 'boolean'
       else continue
     @pref.prefs.clearUserPref(key)
   @pref.prefs.clearUserPref('brace-all')
-
-  try
-    translatorSettings = JSON.parse(Zotero.Prefs.get('export.translatorSettings'))
-    @pref.set('preserveBibTeXVariables', true) if translatorSettings['Preserve BibTeX variables']
-
-  # cleanup any junk
-  for table in Zotero.DB.columnQuery("SELECT name FROM betterbibtex.sqlite_master WHERE type='table' AND name like '-%-'") || []
-    Zotero.DB.query("drop table if exists betterbibtex.\"#{table}\"")
-
-  tables = Zotero.DB.columnQuery("SELECT name FROM betterbibtex.sqlite_master WHERE type='table' AND name <> 'schema' ORDER BY name") || []
-
-  if @tableExists('betterbibtex.autoexport') && @table_info('betterbibtex.autoexport').collection
-    Zotero.DB.query("update betterbibtex.autoexport set collection = (select 'library:' || libraryID from groups where 'group:' || groupID = collection) where collection like 'group:%'")
-    Zotero.DB.query("update betterbibtex.autoexport set collection = 'collection:' || collection where collection <> 'library' and collection not like '%:%'")
-
-  tip = Zotero.DB.transactionInProgress()
-  Zotero.DB.beginTransaction() unless tip
-
-  @pref.set('scanCitekeys', true)
-
-  for table in tables
-    @debug('initDatabase: backing up', table)
-    Zotero.DB.query("alter table betterbibtex.#{table} rename to \"-#{table}-\"")
-
-  ### clean slate ###
-
-  Zotero.DB.query('create table betterbibtex.keys (itemID primary key, citekey not null, citekeyFormat)')
-
-  Zotero.DB.query("
-    create table betterbibtex.cache (
-      itemID not null,
-
-      exportCharset not null,
-      exportNotes default 'false' CHECK(exportNotes in ('true', 'false')),
-      getCollections default 'false' CHECK(getCollections in ('true', 'false')),
-      translatorID not null,
-      useJournalAbbreviation default 'false' CHECK(useJournalAbbreviation in ('true', 'false')),
-
-      citekey not null,
-      bibtex not null,
-      lastaccess not null default CURRENT_TIMESTAMP,
-      PRIMARY KEY (itemID, exportCharset, exportNotes, getCollections, translatorID, useJournalAbbreviation)
-      )
-    ")
-
-  Zotero.DB.query("
-    create table betterbibtex.autoexport (
-      id INTEGER PRIMARY KEY NOT NULL DEFAULT NULL,
-
-      collection not null,
-      path not null,
-
-      exportCharset not null,
-      exportNotes default 'false' CHECK(exportNotes in ('true', 'false')),
-      translatorID not null,
-      useJournalAbbreviation default 'false' CHECK(useJournalAbbreviation in ('true', 'false')),
-
-      exportedRecursively CHECK(exportedRecursively in ('true', 'false')),
-      status,
-
-      UNIQUE (path)
-      )
-    ")
-
-  ### migrate data where needed ###
-
-  if @tableExists('betterbibtex."-keys-"', true)
-    @debug('initDatabase: migrating keys')
-    if @table_info('betterbibtex."-keys-"').pinned
-      @debug('initDatabase: migrating old-style keys')
-      Zotero.BetterBibTeX.debug('Upgrading betterbibtex.keys')
-      Zotero.DB.query('insert into betterbibtex.keys (itemID, citekey, citekeyFormat)
-                      select itemID, citekey, case when pinned = 1 then null else ? end from betterbibtex."-keys-"', [@citekeyFormat])
-    else
-      @debug('initDatabase: migrating keys')
-      @copyTable('betterbibtex."-keys-"', 'betterbibtex.keys')
-
-  if @tableExists('betterbibtex."-autoexport-"', true)
-    @debug('initDatabase: migrating autoexport')
-    if @table_info('betterbibtex."-autoexport-"').context
-      # sorry my dear colleague, but this was a mess
-    else
-      @copyTable('betterbibtex."-autoexport-"', 'betterbibtex.autoexport', 'id')
-
-  ### cleanup ###
-
-  for table in Zotero.DB.columnQuery("SELECT name FROM betterbibtex.sqlite_master WHERE type='table' AND name like '-%-'") || []
-    @debug('initDatabase: deleting', table)
-    Zotero.DB.query("drop table if exists betterbibtex.\"#{table}\"")
-
-  Zotero.DB.commitTransaction() unless tip
-
-  Zotero.DB.query("update betterbibtex.autoexport set status = ?", [Zotero.BetterBibTeX.auto.status('pending')])
-
-  @flash('Better BibTeX: database updated', 'Database update finished')
-
-Zotero.BetterBibTeX.initDatabase = ->
-  db = Zotero.getZoteroDatabase('betterbibtex')
-  Zotero.DB.query('ATTACH ? AS betterbibtex', [db.path])
-
-  Zotero.DB.query("create table if not exists betterbibtex.schema (lock primary key default 'schema' check (lock='schema'), version not null)")
-  Zotero.DB.query("insert or ignore into betterbibtex.schema (lock, version) values ('schema', '')")
-  Zotero.DB.query("update betterbibtex.schema set version = '' where not version like '%.%.%'")
-
-  installed = Zotero.DB.valueQuery("select version from betterbibtex.schema")
-
-  # always upgrade on version change
-  upgrade = Services.vc.compare(installed, @release) != 0
-
-  for check in [
-    'SELECT itemID, citekey, citekeyFormat FROM betterbibtex.keys'
-    'SELECT id, collection, path, exportCharset, exportNotes, translatorID, useJournalAbbreviation, exportedRecursively, status FROM betterbibtex.autoexport'
-    'SELECT itemID, exportCharset, exportNotes, getCollections, translatorID, useJournalAbbreviation, citekey, bibtex, lastaccess FROM betterbibtex.cache'
-    ]
-    continue if upgrade
-    try
-      Zotero.DB.query(check + ' LIMIT 1')
-    catch e
-      @log('Unexpected schema:', check, e)
-      upgrade = true
-
-  @upgradeDatabase() if upgrade
-
-  if @pref.get('scanCitekeys')
-    @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
-    @keymanager.reset()
-    @cache.reset()
-    @pref.set('scanCitekeys', false)
-
-  @keymanager.load()
-  @keymanager.clearDynamic()
-
-  mismatched = Zotero.DB.query('select c.itemID, c.citekey as cached, k.citekey from betterbibtex.cache c join betterbibtex.keys k on c.itemID = k.itemID and c.citekey <> k.citekey') || []
-  for m in mismatched
-    Zotero.BetterBibTeX.log("export cache: citekey mismatch! #{m.itemID} cached=#{m.cached} key=#{m.citekey}")
-  if mismatched.length > 0
-    Zotero.DB.query('delete from betterbibtex.cache')
-
-  if Zotero.BetterBibTeX.pref.get('cacheReset') > 0
-    @cache.reset()
-    @serialized.reset()
-    Zotero.BetterBibTeX.pref.set('cacheReset', Zotero.BetterBibTeX.pref.get('cacheReset') - 1)
-    Zotero.BetterBibTeX.debug('cache.load forced reset', Zotero.BetterBibTeX.pref.get('cacheReset'), 'left')
-  else
-    @cache.load()
-    @serialized.load()
-
-  Zotero.DB.query("insert or replace into betterbibtex.schema (lock, version) values ('schema', ?)", [@release])
+  @pref.prefs.clearUserPref('usePrefix')
+  @pref.prefs.clearUserPref('useprefix')
+  @pref.prefs.clearUserPref('verbatimDate')
+  @pref.prefs.clearUserPref('confirmCacheResetSize')
 
 Zotero.BetterBibTeX.init = ->
   return if @initialized
@@ -535,29 +616,47 @@ Zotero.BetterBibTeX.init = ->
   @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
   @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
 
-  @initDatabase()
-  cfi = @pref.get('cacheFlushInterval')
-  cfi = 1 if typeof cfi != 'number' || cfi < 1
-  cfi = 5 if cfi > 5
-  setInterval((-> Zotero.BetterBibTeX.cache.flush(); Zotero.BetterBibTeX.keymanager.flush()), cfi * 1000 * 60)
+  @migrateData()
+  @DB.purge()
+
+  if @pref.get('scanCitekeys')
+    @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
+    @cache.reset('scanCitekeys')
+    @keymanager.reset()
+    @pref.set('scanCitekeys', false)
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     keymanager: {
       months:         @keymanager.months
-      journalAbbrev:  @keymanager.journalAbbrev.bind(@keymanager)
-      extract:        @keymanager.extract.bind(@keymanager)
-      get:            @keymanager.get.bind(@keymanager)
-      alternates:     @keymanager.alternates.bind(@keymanager)
-      cache:          @keymanager.cache.bind(@keymanager)
+      journalAbbrev:  (sandbox, params...) => @keymanager.journalAbbrev.apply(@keymanager, params)
+      extract:        (sandbox, params...) => @keymanager.extract.apply(@keymanager, params)
+      get:            (sandbox, params...) => @keymanager.get.apply(@keymanager, params)
+      alternates:     (sandbox, params...) => @keymanager.alternates.apply(@keymanager, params)
+      cache:          (sandbox, params...) => @keymanager.cache.apply(@keymanager, params)
     }
     cache: {
-      fetch:  @cache.fetch.bind(@cache)
-      store:  @cache.store.bind(@cache)
-      dump:   @cache.dump.bind(@cache)
+      fetch:  (sandbox, params...) => @cache.fetch.apply(@cache, params)
+      store:  (sandbox, params...) => @cache.store.apply(@cache, params)
+      dump:   (sandbox, params...) => @cache.dump.apply(@cache, params)
+      stats:  (sandbox)            -> Zotero.BetterBibTeX.cacheHistory
     }
     CSL: {
-      parseParticles: (sandbox, name, normalizeApostrophe) -> Zotero.CiteProc.CSL.parseParticles(name, normalizeApostrophe)
+      parseParticles: (sandbox, name) ->
+        ### twice to work around https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping ###
+        Zotero.BetterBibTeX.CSL.parseParticles(name)
+        Zotero.BetterBibTeX.CSL.parseParticles(name)
+      titleCase: (sandbox, string) ->
+        ### TODO: workaround for https://bitbucket.org/fbennett/citeproc-js/issues/187/title-case-formatter-does-not-title-case ###
+        string = string.replace(/\(/g, "(\x02 ")
+        string = string.replace(/\)/g, " \x03)")
+        string = Zotero.BetterBibTeX.CSL.Output.Formatters.title(Zotero.BetterBibTeX.titleCase.state, string)
+        string = string.replace(/\x02 /g, '')
+        string = string.replace(/ \x03/g, '')
+        return string
     }
+    parseDateToObject: (sandbox, date, locale) -> Zotero.BetterBibTeX.DateParser::parseDateToObject(date, {locale, verbatimDetection: true})
+    parseDateToArray: (sandbox, date, locale) -> Zotero.BetterBibTeX.DateParser::parseDateToArray(date, {locale, verbatimDetection: true})
+    HTMLParser: (sandbox, html) -> Zotero.BetterBibTeX.HTMLParser.parse(html)
   }
 
   for own name, endpoint of @endpoints
@@ -568,7 +667,10 @@ Zotero.BetterBibTeX.init = ->
   @loadTranslators()
   @extensionConflicts()
 
-  # monkey-patch Zotero.Server.DataListener.prototype._generateResponse for async handling
+  for k, months of Zotero.BetterBibTeX.Locales.months
+    Zotero.BetterBibTeX.CSL.DateParser.addDateParserMonths(months)
+
+  ### monkey-patch Zotero.Server.DataListener.prototype._generateResponse for async handling ###
   Zotero.Server.DataListener::_generateResponse = ((original) ->
     return (status, contentType, promise) ->
       try
@@ -583,7 +685,7 @@ Zotero.BetterBibTeX.init = ->
       return original.apply(@, arguments)
     )(Zotero.Server.DataListener::_generateResponse)
 
-  # monkey-patch Zotero.Server.DataListener.prototype._requestFinished for async handling of web api translation requests
+  ### monkey-patch Zotero.Server.DataListener.prototype._requestFinished for async handling of web api translation requests ###
   Zotero.Server.DataListener::_requestFinished = ((original) ->
     return (promise) ->
       try
@@ -601,25 +703,37 @@ Zotero.BetterBibTeX.init = ->
       return original.apply(@, arguments)
     )(Zotero.Server.DataListener::_requestFinished)
 
-  # monkey-patch Zotero.Search.prototype.save to trigger auto-exports
+  ### monkey-patch Zotero.Search.prototype.save to trigger auto-exports ###
   Zotero.Search::save = ((original) ->
     return (fixGaps) ->
       id = original.apply(@, arguments)
-      Zotero.BetterBibTeX.auto.markSearch(id)
+      Zotero.BetterBibTeX.auto.markSearch(id, 'search updated')
       return id
     )(Zotero.Search::save)
 
-  # monkey-patch Zotero.ItemTreeView::getCellText to replace the 'extra' column with the citekey
-  # I wish I didn't have to hijack the extra field, but Zotero has checks in numerous places to make sure it only
-  # displays 'genuine' Zotero fields, and monkey-patching around all of those got to be way too invasive (and thus
-  # fragile)
+  ### monkey-patch Zotero.ItemTreeView::getCellText to replace the 'extra' column with the citekey ###
+  ###
+  I wish I didn't have to hijack the extra field, but Zotero has checks in numerous places to make sure it only
+  displays 'genuine' Zotero fields, and monkey-patching around all of those got to be way too invasive (and thus
+  fragile)
+  ###
   Zotero.ItemTreeView::getCellText = ((original) ->
     return (row, column) ->
-      if column.id == 'zotero-items-column-extra' && Zotero.BetterBibTeX.pref.get('showCitekeys')
-        item = @._getItemAtRow(row)
-        if !(item?.ref) || item.ref.isAttachment() || item.ref.isNote()
-          return ''
-        else
+      switch
+        when column.id == 'zotero-items-column-callNumber' && Zotero.BetterBibTeX.pref.get('showItemIDs')
+          type = 'itemid'
+        when column.id == 'zotero-items-column-extra' && Zotero.BetterBibTeX.pref.get('showCitekeys')
+          type = 'citekey'
+      item = @._getItemAtRow(row) if type
+
+      return original.apply(@, arguments) unless item
+      return '' if !item.ref || item.ref.isAttachment() || item.ref.isNote()
+
+      switch type
+        when 'itemid'
+          return ('\u2003\u2003\u2003\u2003\u2003\u2003' + item.id).slice(-6)
+
+        when 'citekey'
           key = Zotero.BetterBibTeX.keymanager.get({itemID: item.id})
           return '' if key.citekey.match(/^zotero-(null|[0-9]+)-[0-9]+$/)
           return key.citekey + (if key.citekeyFormat then ' *' else '')
@@ -627,28 +741,29 @@ Zotero.BetterBibTeX.init = ->
       return original.apply(@, arguments)
     )(Zotero.ItemTreeView::getCellText)
 
-  # monkey-patch translate to capture export path and auto-export
+  ### monkey-patch translate to capture export path and auto-export ###
   Zotero.Translate.Export::translate = ((original) ->
     return ->
-      # requested translator
+      ### requested translator ###
       Zotero.BetterBibTeX.debug("Zotero.Translate.Export::translate: #{if @_export then Object.keys(@_export) else 'no @_export'}")
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
       Zotero.BetterBibTeX.debug('export: ', translatorID)
       return original.apply(@, arguments) unless translatorID
 
-      # pick up sentinel from patched Zotero_File_Interface.exportCollection in zoteroPane.coffee
+      ### pick up sentinel from patched Zotero_File_Interface.exportCollection in zoteroPane.coffee ###
       if @_export?.items?.search
         saved_search = @_export.items.search
         @_export.items = @_export.items.items
         throw new Error('Cannot export empty search') unless @_export.items
 
-      # regular behavior for non-BBT translators, or if translating to string
+      ### regular behavior for non-BBT translators, or if translating to string ###
       header = Zotero.BetterBibTeX.translators[translatorID]
       return original.apply(@, arguments) unless header && @location?.path
 
       if @_displayOptions
-        if @_displayOptions.exportFileData # export directory selected
+        if @_displayOptions.exportFileData
+          ### export directory selected ###
           @_displayOptions.exportPath = @location.path
         else
           @_displayOptions.exportPath = @location.parent.path
@@ -656,7 +771,7 @@ Zotero.BetterBibTeX.init = ->
 
       Zotero.BetterBibTeX.debug("export", @_export, " to #{if @_displayOptions?.exportFileData then 'directory' else 'file'}", @location.path, 'using', @_displayOptions)
 
-      # If no capture, we're done
+      ### If no capture, we're done ###
       return original.apply(@, arguments) unless @_displayOptions?['Keep updated'] && !@_displayOptions.exportFileData
 
       if !(@_export?.type in ['library', 'collection']) && !saved_search
@@ -698,44 +813,49 @@ Zotero.BetterBibTeX.init = ->
       return original.apply(@, arguments)
     )(Zotero.Translate.Export::translate)
 
-  # monkey-patch _prepareTranslation to notify itemgetter whether we're doing exportFileData
+  ### monkey-patch _prepareTranslation to notify itemgetter whether we're doing exportFileData ###
   Zotero.Translate.Export::_prepareTranslation = ((original) ->
     return ->
       r = original.apply(@, arguments)
 
-      # caching shortcut sentinels
+      ### caching shortcut sentinels ###
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
 
-      @_itemGetter._BetterBibTeX = Zotero.BetterBibTeX.translators[translatorID] if Zotero.BetterBibTeX.translators[translatorID]?.BetterBibTeX?.cache?.nextItem
+      @_itemGetter._BetterBibTeX = Zotero.BetterBibTeX.translators[translatorID]
       @_itemGetter._exportFileData = @_displayOptions.exportFileData
 
       return r
     )(Zotero.Translate.Export::_prepareTranslation)
 
-  # monkey-patch Zotero.Translate.ItemGetter::nextItem to fetch from pre-serialization cache.
-  # object serialization is approx 80% of the work being done while translating! Seriously!
+  ### monkey-patch Zotero.Translate.ItemGetter::nextItem to fetch from pre-serialization cache. ###
+  ### object serialization is approx 80% of the work being done while translating! Seriously! ###
   Zotero.Translate.ItemGetter::nextItem = ((original) ->
     return ->
-      # don't mess with this unless I know it's in BBT
-      return original.apply(@, arguments) unless @_BetterBibTeX
+      ### don't mess with this unless I know it's in BBT ###
+      return original.apply(@, arguments) if @legacy || !@_BetterBibTeX
+
+      ###
+        If I wanted to access serialized items when exporting file data, I'd have to pass "@" to serialized.get
+        and call attachmentToArray.call(itemGetter, ...) there rather than ::attachmentToArray(...) so attachmentToArray would have access to
+        @_exportFileDirectory
+      ###
+      if @_exportFileData
+        id = @_itemsLeft[0]?.id
+        item = original.apply(@, arguments)
+        Zotero.BetterBibTeX.serialized.fixup(item, id) if item
+        return item
 
       while @_itemsLeft.length != 0
-        item = @_itemsLeft.shift()
-        item = Zotero.BetterBibTeX.serialized.get.apply(@, [item, {exportFileData: @_exportFileData}])
+        item = Zotero.BetterBibTeX.serialized.get(@_itemsLeft.shift())
         continue unless item
 
-        return item if item.itemType == 'attachment'
-
-        item.attachments = []
-        for attachmentID in item.attachmentIDs
-          attachment = Zotero.BetterBibTeX.serialized.get.apply(@, [attachmentID, {attachmentID: true, exportFileData: @_exportFileData}])
-          item.attachments.push(attachment) if attachment
         return item
+
       return false
     )(Zotero.Translate.ItemGetter::nextItem)
 
-  # monkey-patch zotfile wildcard table to add bibtex key
+  ### monkey-patch zotfile wildcard table to add bibtex key ###
   if Zotero.ZotFile
     Zotero.ZotFile.wildcardTable = ((original) ->
       return (item) ->
@@ -747,14 +867,15 @@ Zotero.BetterBibTeX.init = ->
   @schomd.init()
 
   @pref.observer.register()
-  @pref.ZoteroObserver.register()
   Zotero.addShutdownListener(->
     Zotero.BetterBibTeX.log('shutting down')
-    Zotero.BetterBibTeX.cache.flush()
-    Zotero.BetterBibTeX.keymanager.flush()
-    Zotero.BetterBibTeX.serialized.save()
-
+    Zotero.BetterBibTeX.DB.save(true)
     Zotero.BetterBibTeX.debugMode()
+    return
+  )
+  Zotero.getActiveZoteroPane().addBeforeReloadListener((mode) =>
+    @debug('before reload:', {mode})
+    @disableInConnector(mode == 'connector')
   )
 
   nids = []
@@ -805,7 +926,6 @@ Zotero.BetterBibTeX.createFile = (paths...) ->
     f.append(path)
     f.create(Components.interfaces.nsIFile.DIRECTORY_TYPE, 0o777) unless f.exists()
   f.append(leaf)
-  f.create(Components.interfaces.nsIFile.NORMAL_FILE_TYPE, 0o666) unless f.exists()
   return f
 
 Zotero.BetterBibTeX.postscript = """
@@ -825,16 +945,15 @@ Translator.initialize = (function(original) {
 """
 
 Zotero.BetterBibTeX.loadTranslators = ->
-  @load('Better BibTeX', {postscript: @postscript})
-  @load('Better BibLaTeX', {postscript: @postscript})
-  @load('LaTeX Citation')
-  @load('Pandoc Citation')
-  @load('Pandoc JSON')
-  @load('BetterBibTeX JSON')
-  @load('BibTeXAuxScanner')
-  @load('Collected Notes', {target: @pref.get('collectedNotes')})
+  try
+    @removeTranslator({label: 'Pandoc JSON', translatorID: 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'})
+  try
+    @removeTranslator({label: 'Better CSL-JSON', translatorID: 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'})
 
-  # clean up junk
+  for translator in @Translators
+    @load(translator)
+
+  ### clean up junk ###
   try
     @removeTranslator({label: 'BibTeX Citation Keys', translatorID: '0a3d926d-467c-4162-acb6-45bded77edbb'})
   try
@@ -843,9 +962,9 @@ Zotero.BetterBibTeX.loadTranslators = ->
   Zotero.Translators.init()
 
 Zotero.BetterBibTeX.removeTranslators = ->
-  for own id, header of @translators
-    @removeTranslator(header)
-  @translators = Object.create(null)
+  for translator in @Translators
+    @removeTranslator(translator)
+  @translators = {}
   Zotero.Translators.init()
 
 Zotero.BetterBibTeX.removeTranslator = (header) ->
@@ -854,15 +973,21 @@ Zotero.BetterBibTeX.removeTranslator = (header) ->
     destFile = Zotero.getTranslatorsDirectory()
     destFile.append(fileName)
     destFile.remove(false) if destFile.exists()
+
+    delete @translators[header.translatorID]
+    delete @translators[header.label.replace(/\s/, '')]
   catch err
     @debug("failed to remove #{header.label}:", err)
 
 Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
+  Zotero.BetterBibTeX.debug('itemAdded:', {event, type, collection_items})
   collections = []
   items = []
 
-  # monitor items added to collection to find BibTeX AUX Scanner data. The scanner adds a dummy item whose 'extra'
-  # field has instructions on what to do after import
+  ###
+    monitor items added to collection to find BibTeX AUX Scanner data. The scanner adds a dummy item whose 'extra'
+    field has instructions on what to do after import
+  ###
 
   return if collection_items.length == 0
 
@@ -871,20 +996,21 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
     collections.push(collectionID)
     items.push(itemID)
 
-    # aux-scanner only triggers on add
+    ### aux-scanner only triggers on add ###
     continue unless event == 'add'
     collection = Zotero.Collections.get(collectionID)
     continue unless collection
 
     try
       extra = JSON.parse(Zotero.Items.get(itemID).getField('extra').trim())
+      @debug('AUX scanner/import error info found on collection add')
     catch error
-      @debug('no AUX scanner/import error info found on collection add')
       continue
 
     note = null
     switch extra.translator
-      when 'ca65189f-8815-4afe-8c8b-8c7c15f0edca' # Better BibTeX
+      when 'ca65189f-8815-4afe-8c8b-8c7c15f0edca'
+        ### Better BibTeX ###
         if extra.notimported && extra.notimported.length > 0
           report = new @HTMLNode('http://www.w3.org/1999/xhtml', 'html')
           report.div(->
@@ -894,7 +1020,8 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
           )
           note = report.serialize()
 
-      when '0af8f14d-9af7-43d9-a016-3c5df3426c98' # BibTeX AUX Scanner
+      when '0af8f14d-9af7-43d9-a016-3c5df3426c98'
+        ### BibTeX AUX Scanner ###
         missing = []
         for own citekey, found of @keymanager.resolve(extra.citations, {libraryID: collection.libraryID})
           if found
@@ -922,72 +1049,47 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
       item.save()
       collection.addItem(item.id)
 
-  collections = @withParentCollections(collections) if collections.length != 0
-  collections = ("'collection:#{id}'" for id in collections)
-  # collection changes do not affect the library
-  #for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@SQLSet(items)}")
-  #  if libraryID
-  #    collections.push("'library:#{libraryID}'")
-  #  else
-  #    collections.push("'library'")
+  collections = @auto.withParentCollections(collections) if collections.length != 0
+  collections = ("collection:#{id}" for id in collections)
+  Zotero.BetterBibTeX.debug('marking:', collections, 'from', (o.collection for o in @DB.autoexport.data))
   if collections.length > 0
-    collections = @SQLSet(collections)
-    Zotero.DB.query("update betterbibtex.autoexport set status = ? where collection in #{collections}", [Zotero.BetterBibTeX.auto.status('pending')])
-    @auto.process("collection changed: #{collections}")
+    for ae in @DB.autoexport.where((o) -> o.collection in collections)
+      @auto.mark(ae, 'pending', "itemAdded: #{collections}")
 ).bind(Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
-  Zotero.DB.query("delete from betterbibtex.autoexport where collection in #{Zotero.BetterBibTeX.SQLSet(extraData)}") if event == 'delete' && extraData.length > 0
-
-Zotero.BetterBibTeX.SQLSet = (values) -> '(' + ('' + v for v in values).join(', ') + ')'
+  return unless event == 'delete' && extraData.length > 0
+  extraData = ("collection:#{id}" for id in extraData)
+  @DB.autoexport.removeWhere((o) -> o.collection in extraData)
 
 Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
+  Zotero.BetterBibTeX.debug('itemChanged:', {event, type, ids, extraData})
+
   return unless type == 'item' && event in ['delete', 'trash', 'add', 'modify']
   ids = extraData if event == 'delete'
   return unless ids.length > 0
 
-  for itemID in ids.concat(Zotero.DB.columnQuery("SELECT linkedItemID FROM itemSeeAlso WHERE itemID in #{@SQLSet(ids)}"))
-    itemID = parseInt(itemID) unless typeof itemID == 'number'
-    @serialized.remove(itemID)
-    @cache.remove({itemID})
+  parents = []
+  for item in Zotero.Items.get(ids)
+    if item.isAttachment() || item.isNote()
+      parent = item.getSource()
+      parents.push(parent) if parent
 
-  @keymanager.scan(ids, event)
+  @keymanager.scan(ids, event) if ids.length > 0
+  @keymanager.scan(parents, 'modify') if parents.length > 0
 
-  collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
-  collections = @withParentCollections(collections) unless collections.length == 0
-  collections = ("'collection:#{id}'" for id in collections)
-  for libraryID in Zotero.DB.columnQuery("select distinct libraryID from items where itemID in #{@SQLSet(ids)}")
-    if libraryID
-      collections.push("'library:#{libraryID}'")
-    else
-      collections.push("'library'")
+  ids = (parseInt(id) for id in ids.concat(parents))
+  ids = ids.filter((v, i, arr) -> arr.indexOf(v) == i)
+  Zotero.BetterBibTeX.debug('itemChanged including parents:', {event, ids, parents})
 
-  for ae in Zotero.DB.query("select collection from betterbibtex.autoexport where status = 'done' and collection like 'search:%'")
-    @auto.markSearch(ae.collection.replace('search:', ''))
+  return unless ids.length > 0
 
-  if collections.length > 0
-    collections = @SQLSet(collections)
-    Zotero.DB.query("update betterbibtex.autoexport set status = ? where collection in #{collections}", [Zotero.BetterBibTeX.auto.status('pending')])
-    @auto.process("items changed: #{collections}")
+  for id in ids
+    @serialized.remove(id)
+    @cache.remove({itemID: id})
 
+  @auto.markIDs(ids, 'itemChanged')
 ).bind(Zotero.BetterBibTeX)
-
-Zotero.BetterBibTeX.withParentCollections = (collections) ->
-  return collections unless Zotero.BetterBibTeX.auto.recursive()
-  return collections if collections.length == 0
-
-  return Zotero.DB.columnQuery("
-    with recursive recursivecollections as (
-      select collectionID, parentCollectionID
-      from collections
-      where collectionID in #{Zotero.BetterBibTeX.SQLSet(collections)}
-
-      union all
-
-      select p.collectionID, p.parentCollectionID
-      from collections p
-      join recursivecollections as c on c.parentCollectionID = p.collectionID
-    ) select distinct collectionID from recursivecollections")
 
 Zotero.BetterBibTeX.displayOptions = (url) ->
   params = {}
@@ -999,7 +1101,7 @@ Zotero.BetterBibTeX.displayOptions = (url) ->
       params[key] = url.query[key]
       params[key] = [ 'y', 'yes', 'true' ].indexOf(params[key].toLowerCase()) >= 0 if isBool
       hasParams = true
-    catch
+
   return params if hasParams
   return null
 
@@ -1026,64 +1128,47 @@ Zotero.BetterBibTeX.getContentsFromURL = (url) ->
   catch err
     throw new Error("Failed to load #{url}: #{err.msg}")
 
-Zotero.BetterBibTeX.load = (translator, options = {}) ->
-  header = JSON.parse(Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator}.json"))
-  @removeTranslator(header)
+Zotero.BetterBibTeX.load = (translator) ->
+  @removeTranslator(translator)
 
-  header.target = options.target if options.target
-
-  sources = ['json5', 'translator', "#{translator}.header", translator].concat(header.BetterBibTeX?.dependencies || [])
-  @debug('translator.load:', translator, 'from', sources)
-  code = "exports = undefined;\nmodule = undefined;\n"
-  for src in sources
-    try
-      code += Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/#{src}.js") + "\n"
-    catch err
-      @debug('translator.load: source', src, 'for', translator, 'could not be loaded:', err)
-      throw err
-  code += options.postscript if options.postscript
-
-  if @pref.get('debug')
-    js = @createFile('translators', "#{translator}.js")
-    @debug("Saving #{translator} to #{js.path}")
-    Zotero.File.putContents(js, code)
-
-  @translators[header.translatorID] = @translators[header.label.replace(/\s/, '')] = header
-
-  # remove BBT metadata -- Zotero doesn't like it
-  header = JSON.parse(JSON.stringify(header))
-  delete header.BetterBibTeX
-  @debug('Translator.load header:', translator, header)
   try
-    fileName = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)
+    code = Zotero.BetterBibTeX.getContentsFromURL("resource://zotero-better-bibtex/translators/#{translator.label}.translator")
+  catch err
+    @debug('translator.load: ', translator, 'could not be loaded:', err)
+    throw err
+  code += "\n\n#{@postscript}" if translator.BetterBibTeX?.postscript
+
+  @debug('Translator.load header:', translator)
+  try
+    fileName = Zotero.Translators.getFileNameFromLabel(translator.label, translator.translatorID)
     destFile = Zotero.getTranslatorsDirectory()
     destFile.append(fileName)
 
-    metadataJSON = JSON.stringify(header, null, "\t")
-
-    existing = Zotero.Translators.get(header.translatorID)
+    existing = Zotero.Translators.get(translator.translatorID)
     if existing and destFile.equals(existing.file) and destFile.exists()
       msg = "Overwriting translator with same filename '#{fileName}'"
-      Zotero.BetterBibTeX.warn(msg, header)
+      Zotero.BetterBibTeX.warn(msg, translator)
       Components.utils.reportError(msg + ' in Zotero.BetterBibTeX.load()')
 
     existing.file.remove(false) if existing and existing.file.exists()
 
-    Zotero.BetterBibTeX.log("Saving translator '#{header.label}'")
+    Zotero.BetterBibTeX.log("Saving translator '#{translator.label}'")
 
-    Zotero.File.putContents(destFile, metadataJSON + "\n\n" + code)
+    Zotero.File.putContents(destFile, code)
 
     @debug('translator.load', translator, 'succeeded')
+
+    @translators[translator.translatorID] = @translators[translator.label.replace(/\s/, '')] = translator
   catch err
     @debug('translator.load', translator, 'failed:', err)
 
 Zotero.BetterBibTeX.getTranslator = (name) ->
-  return @translators[name.replace(/\s/, '')].translatorID if @translators[name.replace(/\s/, '')]
+  return @translators[name.replace(/\s/g, '')].translatorID if @translators[name.replace(/\s/g, '')]
 
-  name = name.toLowerCase().replace(/[^a-z]/, '')
+  name = name.toLowerCase().replace(/[^a-z]/g, '')
   translators = {}
   for id, header of @translators
-    label = header.label.toLowerCase().replace(/[^a-z]/, '')
+    label = header.label.toLowerCase().replace(/[^a-z]/g, '')
     translators[label] = header.translatorID
     translators[label.replace(/^zotero/, '')] = header.translatorID
     translators[label.replace(/^better/, '')] = header.translatorID
@@ -1155,7 +1240,7 @@ class Zotero.BetterBibTeX.XmlNode
     if typeof content[0] == 'object'
       for own name, attrs of content[0]
         continue if name == ''
-        # @doc['createElementNS'] rather than @doc.createElementNS to work around overzealous extension validator.
+        # @doc['createElementNS'] rather than @doc.createElementNS because someone thinks there's a relevant difference
         node = @doc['createElementNS'](@namespace, name)
         @root.appendChild(node)
         content = [attrs].concat(content.slice(1))

@@ -20,7 +20,8 @@ Zotero.BetterBibTeX.endpoints.collection.init = (url, data, sendResponseCallback
     path = path.join('.')
     path = "/0/#{path}" if path.charAt(0) != '/'
     path = path.split('/')
-    path.shift() # removes empty field before first '/'
+    ### removes empty field before first '/' ###
+    path.shift()
 
     libid = parseInt(path.shift())
     throw "Not a valid library ID: #{collectionkey}" if isNaN(libid)
@@ -126,8 +127,8 @@ Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
 
   try
     switch req.method
-      when 'citations', 'citation', 'bibliography', 'bibtex', 'search'
-        # the schomd methods search by citekey -- the cache needs to be fully primed for this to work
+      when 'citations', 'citation', 'bibliography', 'bibliographyhtml', 'bibliographybbl', 'bibtex', 'search'
+        ### the schomd methods search by citekey -- the cache needs to be fully primed for this to work ###
         Zotero.BetterBibTeX.keymanager.prime()
 
         result = Zotero.BetterBibTeX.schomd[req.method].apply(Zotero.BetterBibTeX.schomd, req.params)
@@ -176,3 +177,25 @@ Zotero.BetterBibTeX.endpoints.cayw.init = (url, data, sendResponseCallback) ->
     Zotero.Integration.displayDialog(doc, 'chrome://zotero/content/integration/quickFormat.xul', mode, io)
 
   sendResponseCallback(200, 'text/plain', deferred.promise)
+
+Zotero.BetterBibTeX.endpoints.cacheActivity =
+  supportedMethods: ['GET']
+  init: (url, data, sendResponseCallback) ->
+    try
+      dataURL = url.query['']
+    catch err
+      dataURL = null
+
+    if dataURL
+      # someone thinks HTML-loaded javascripts are harmful. If that were true, you have bigger problems than this
+      # people.
+      return sendResponseCallback(200, 'text/html', Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/reports/cacheActivity.txt'))
+
+    Zotero.BetterBibTeX.addCacheHistory()
+    timestamp = (date) ->
+      date = [date.getHours(), date.getMinutes(), date.getSeconds()]
+      date = (('0' + dp).slice(-2) for dp in date)
+      return date.join(':')
+    data = ([timestamp(dp.timestamp), dp.serialized.hit, dp.serialized.miss, dp.serialized.clear, dp.cache.hit, dp.cache.miss, dp.cache.clear] for dp in Zotero.BetterBibTeX.cacheHistory)
+
+    return sendResponseCallback(200, 'application/json', JSON.stringify(data))

@@ -1,0 +1,165 @@
+@book{vangogh,
+  author = {van Gogh, Vincent},
+  options = {useprefix=true}
+}
+
+@book{humboldt,
+  author = {von Humboldt, Alexander}
+}
+
+@book{beauvoir,
+  author = {de Beauvoir, Simone}
+}
+
+@book{degaulle,
+  author = {{de Gaulle}, Charles}
+}
+
+@book{king,
+  author = {King, Jr., Martin Luther}
+}
+
+@book{stevenson,
+  author = {Stevenson, III, Adlai E.}
+}
+
+@book{nationalaeronauticsandspaceadministration,
+  author = {{National Aeronautics and Space Administration}}
+}
+
+@book{bovendeert,
+  author = {boven d' Eert, Christianus},
+  options = {useprefix=true}
+}
+
+@book{s-gravesande,
+  author = {'s- Gravesande, Goverdus},
+  options = {useprefix=true}
+}
+
+@book{dequincey,
+  author = {De Quincey, Thomas}
+}
+
+@book{ortegaygasset,
+  author = {Ortega y Gasset, José}
+}
+
+@book{damato,
+  author = {D’Amato, Alfonse}
+}
+
+@book{sadat,
+  author = {el- Sadat, Anwar}
+}
+
+@book{lafollette,
+  author = {La Follette, Sr., Robert M.}
+}
+
+@book{delamare,
+  author = {{de la Mare}, Walter}
+}
+
+@book{degette,
+  author = {DeGette, Diana}
+}
+
+@book{saunders,
+  author = {Saunders, John Bertrand de Cusance Morant}
+}
+
+@book{marcusaurelius,
+  author = {{Marcus Aurelius}}
+}
+
+@book{dumas,
+  author = {Dumas, père, Alexandre}
+}
+
+@book{vanrensselaer,
+  author = {Van Rensselaer, Stephen}
+}
+
+@book{lenfant,
+  author = {L’Enfant, Pierre-Charles}
+}
+
+@book{vangulik,
+  author = {{van Gulik}, Robert}
+}
+
+@book{sackville-west,
+  author = {Sackville-West, Victoria}
+}
+
+@book{vaughanwilliams,
+  author = {Vaughan Williams, Ralph}
+}
+
+@book{miesvanderrohe,
+  author = {Mies van der Rohe, Ludwig}
+}
+
+@book{dalembert,
+  author = {d’ Alembert, Jean le Rond},
+  options = {useprefix=true}
+}
+
+@book{tocqueville,
+  author = {de Tocqueville, Alexis}
+}
+
+@book{lafontaine,
+  author = {de La Fontaine, Jean}
+}
+
+@book{lasalle,
+  author = {de La Salle, René-Robert Cavelier}
+}
+
+@book{dupuydeclinchamps,
+  author = {du Puy de Clinchamps, {\relax Ph}ilippe},
+  options = {useprefix=true}
+}
+
+@book{stein,
+  author = {vom und zum Stein, Heinrich Friedrich Karl}
+}
+
+@book{silva,
+  author = {da Silva, Agostinho}
+}
+
+@book{dagama,
+  author = {{da Gama}, Vasco}
+}
+
+@book{dannunzio,
+  author = {D’Annunzio, Gabriele}
+}
+
+@book{daponte,
+  author = {Da Ponte, Lorenzo}
+}
+
+@book{dellarobbia,
+  author = {Della Robbia, Luca}
+}
+
+@book{este,
+  author = {d’ Este, Beatrice}
+}
+
+@book{medici,
+  author = {de’​ Medici, Lorenzo}
+}
+
+@book{al-hakim,
+  author = {al- Hakim, Tawfiq},
+  options = {useprefix=true}
+}
+
+@book{levayer,
+  author = {Le Vayer, François de La Mothe}
+}

@@ -3,9 +3,12 @@ if not Zotero.BetterBibTeX
 
   for script in " lokijs
                   zotero-better-bibtex
+                  translators
+                  release
+                  db
+                  csl-localedata
                   fold-to-ascii
                   punycode
-                  release
                   BetterBibTeXPatternFormatter
                   BetterBibTeXPatternParser
                   preferences
@@ -15,8 +18,10 @@ if not Zotero.BetterBibTeX
                   cayw
                   debug-bridge
                   cache
+                  autoexport
                   serialized
                   ".trim().split(/\s+/)
+    Zotero.debug('BBT: ' + script)
     loader.loadSubScript("chrome://zotero-better-bibtex/content/#{script}.js")
 
   window.addEventListener('load', (load = (event) ->

@@ -1,6 +1,5 @@
 BetterBibTeXPref =
   paneLoad: ->
-    Zotero.BetterBibTeX.debug('preferences.paneLoad:', Zotero.BetterBibTeX.disabled)
     disabled = null
     tabs = document.getElementById('better-bibtex-prefs-tabs')
     for tab, i in tabs.getElementsByTagName('tab')
@@ -11,8 +10,18 @@ BetterBibTeXPref =
       document.getElementById('better-bibtex-prefs-tabpanels').selectedIndex = disabled
       document.getElementById('zotero-better-bibtex-disabled-message').value = Zotero.BetterBibTeX.disabled
 
+    document.getElementById('better-bibtex-preferences-cache-stats').value = "#{Math.max(Zotero.BetterBibTeX.DB.cache.data.length, Zotero.BetterBibTeX.DB.serialized.data.length)} in cache"
+    # document.getElementById('better-bibtex-preferences-zombies').setAttribute('label', "Purge zombies: #{JSON.stringify(Zotero.BetterBibTeX.DB.zombies())}")
+
     BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.pref.get('citekeyFormat')
     BetterBibTeXPref.update()
+
+    Zotero.BetterBibTeX.debug('prefs pane loaded:', document.location.hash)
+    if document.location.hash == '#better-bibtex'
+      ### runs into the 'TypeError: aId is undefined' problem for some reason. ###
+      setTimeout((->
+        document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex'))
+      ), 500)
 
   saveCitekeyFormat: ->
     BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.pref.get('citekeyFormat')
@@ -58,8 +67,11 @@ BetterBibTeXPref =
 
   update: ->
     serverCheckbox = document.getElementById('id-better-bibtex-preferences-server-enabled')
-    serverEnabled = serverCheckbox.checked
+    serverEnabled = !!serverCheckbox.checked
     serverCheckbox.setAttribute('hidden', Zotero.isStandalone && serverEnabled)
+
+    for state in ['enabled', 'disabled']
+      document.getElementById("better-bibtex-preferences-cacheActivity-#{state}").setAttribute('hidden', serverEnabled == (state == 'disabled'))
 
     keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
 
@@ -69,14 +81,13 @@ BetterBibTeXPref =
     catch err
       parseerror = err
 
-    Zotero.BetterBibTeX.debug('parsing format', keyformat.value, ':', !!parseerror)
+    Zotero.BetterBibTeX.debug('parsing format', keyformat.value, ':', !parseerror)
     keyformat.setAttribute('style', (if parseerror then '-moz-appearance: none !important; background-color: DarkOrange' else ''))
     keyformat.setAttribute('tooltiptext', '' + (parseerror || ''))
 
     document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-change').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())
     document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-export').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())
     document.getElementById('id-zotero-better-bibtex-server-warning').setAttribute('hidden', serverEnabled)
-    document.getElementById('id-zotero-better-bibtex-recursive-warning').setAttribute('hidden', not document.getElementById('id-better-bibtex-preferences-getCollections').checked)
 
     styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
 
@@ -102,8 +113,8 @@ BetterBibTeXPref =
     BetterBibTeXAutoExportPref.refresh()
 
   cacheReset: ->
-    Zotero.BetterBibTeX.cache.reset()
-    Zotero.BetterBibTeX.serialized.reset()
+    Zotero.BetterBibTeX.cache.reset('user request')
+    Zotero.BetterBibTeX.serialized.reset('user request')
 
 BetterBibTeXAutoExportPref =
   remove: ->
@@ -112,7 +123,7 @@ BetterBibTeXAutoExportPref =
     return if selected < 0
 
     id = exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')
-    Zotero.DB.query('delete from betterbibtex.autoexport where id = ?', [id])
+    Zotero.BetterBibTeX.DB.autoexport.remove(parseInt(id))
     @refresh()
 
   mark: ->
@@ -120,23 +131,25 @@ BetterBibTeXAutoExportPref =
     selected = exportlist.currentIndex
     return if selected < 0
 
-    id = exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')
+    id = parseInt(exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport'))
 
-    ae = Zotero.DB.rowQuery('select * from betterbibtex.autoexport ae where id = ?', [id])
-    return unless ae
+    ae = Zotero.BetterBibTeX.DB.autoexport.get(id)
+    if !ae
+      Zotero.BetterBibTeX.debug('No autoexport', id)
+      return
+
     try
       translation = Zotero.BetterBibTeX.auto.prepare(ae)
-    catch
+    catch err
+      Zotero.BetterBibTeX.debug('failed to prepare', ae, err.message)
       return
 
     if !translation
-      Zotero.DB.query('update betterbibtex.autoexport set status = ? where id = ?', [Zotero.BetterBibTeX.auto.status('done'), ae.id])
+      Zotero.BetterBibTeX.auto.mark(ae, 'done')
       return
 
     translation.setHandler('done', (obj, worked) ->
-      status = Zotero.BetterBibTeX.auto.status((if worked then 'done' else 'error'))
-      Zotero.BetterBibTeX.debug("auto.force: finished #{ae.id}: #{status}")
-      Zotero.DB.query('update betterbibtex.autoexport set status = ? where id = ?', [status, ae.id])
+      Zotero.BetterBibTeX.auto.mark(ae, (if worked then 'done' else 'error'))
       Zotero.BetterBibTeX.auto.refresh()
     )
     translation.translate()
@@ -175,17 +188,18 @@ BetterBibTeXAutoExportPref =
 
     tree = new BetterBibTeXAutoExport('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', exportlist, document)
 
-    for ae in Zotero.DB.query("select * from betterbibtex.autoexport order by path")
-      ae.status = 'running' if Zotero.BetterBibTeX.auto.running == ae.id
-      tree.treeitem({autoexport: "#{ae.id}", '': ->
+    for ae in Zotero.BetterBibTeX.DB.autoexport.chain().simplesort('path').data()
+      Zotero.BetterBibTeX.debug('refresh:', {id: ae.$loki, status: ae.status})
+      status = "#{ae.status} (#{ae.updated})"
+      tree.treeitem({autoexport: "#{ae['$loki']}", '': ->
         @treerow(->
           @treecell({editable: 'false', label: "#{BetterBibTeXAutoExportPref.exportType(ae.collection)}: #{BetterBibTeXAutoExportPref.exportName(ae.collection)}"})
-          @treecell({editable: 'false', label: ae.status})
+          @treecell({editable: 'false', label: status})
           @treecell({editable: 'false', label: ae.path})
           @treecell({editable: 'false', label: Zotero.BetterBibTeX.translatorName(ae.translatorID)})
           @treecell({editable: 'false', label: ae.exportCharset})
-          @treecell({editable: 'false', label: ae.useJournalAbbreviation})
-          @treecell({editable: 'false', label: ae.exportNotes})
+          @treecell({editable: 'false', label: '' + ae.useJournalAbbreviation})
+          @treecell({editable: 'false', label: '' + ae.exportNotes})
         )
       })
 

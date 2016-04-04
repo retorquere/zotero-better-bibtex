@@ -9,13 +9,12 @@ LaTeX.toLaTeX.unicode.text =
   '$': "{\\textdollar}"
   '%': "\\%"
   '&': "\\&"
-  '[': "{[}"
   '^': "\\^{}"
   '_': "\\_"
   '{': "\\{"
   '}': "\\}"
   '~': "{\\textasciitilde}"
-  '\u00A0': " "
+  '\u00A0': "~"
 LaTeX.toLaTeX.ascii.math =
   '<': "<"
   '>': ">"
@@ -1632,13 +1631,12 @@ LaTeX.toLaTeX.ascii.text =
   '$': "{\\textdollar}"
   '%': "\\%"
   '&': "\\&"
-  '[': "{[}"
   '^': "\\^{}"
   '_': "\\_"
   '{': "\\{"
   '}': "\\}"
   '~': "{\\textasciitilde}"
-  '\u00A0': " "
+  '\u00A0': "~"
   '\u00A1': "{\\textexclamdown}"
   '\u00A2': "{\\textcent}"
   '\u00A3': "{\\textsterling}"
@@ -2113,6 +2111,7 @@ LaTeX.toLaTeX.ascii.text =
   '\u2007': "\\hphantom{0}"
   '\u2008': "\\hphantom{,}"
   '\u2009': "\\hspace{0.167em}"
+  '\u200B': "\\mbox{}"
   '\u2010': "-"
   '\u2013': "{\\textendash}"
   '\u2014': "{\\textemdash}"
@@ -2397,7 +2396,6 @@ LaTeX.toUnicode =
   "\\textdollar ": '$'
   "\\%": '%'
   "\\&": '&'
-  "{[}": '['
   "\\backslash": '\\'
   "\\^{}": '^'
   "\\_": '_'
@@ -2405,6 +2403,7 @@ LaTeX.toUnicode =
   "\\}": '}'
   "{\\textasciitilde}": '~'
   "\\textasciitilde ": '~'
+  "~": '\u00A0'
   "{\\textexclamdown}": '\u00A1'
   "\\textexclamdown ": '\u00A1'
   "{\\textcent}": '\u00A2'
@@ -3363,6 +3362,7 @@ LaTeX.toUnicode =
   "\\hspace{0.167em}": '\u2009'
   "{\\mkern1mu}": '\u200A'
   "\\mkern1mu ": '\u200A'
+  "\\mbox{}": '\u200B'
   "-": '\u2010'
   "{\\textendash}": '\u2013'
   "\\textendash ": '\u2013'

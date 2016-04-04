@@ -13,7 +13,7 @@
       "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize:fold:alphanum]",
       "DOIandURL": "both",
       "fancyURLs": false,
-      "preserveCaps": "inner",
+      "titleCase": false,
       "skipFields": "abstract,note,file"
     },
     "options": {
@@ -93,6 +93,5 @@
 
       ]
     }
-  ],
-  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
+  ]
 }

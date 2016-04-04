@@ -33,7 +33,7 @@
       "extra": "bibtex: Yeh1985",
       "accessDate": "2013-01-11 09:39:35",
       "libraryCatalog": "Google Scholar",
-      "title": "Atomic subshell photoionization cross sections and asymmetry parameters: 1⩽< i> Z</i>⩽ 103",
+      "title": "Atomic subshell photoionization cross sections and asymmetry parameters: 1⩽< <span class=\"nocase\">i</span>> Z</i>⩽ 103",
       "shortTitle": "Atomic subshell photoionization cross sections and asymmetry parameters",
       "creators": [
         {
@@ -70,6 +70,5 @@
 
       ]
     }
-  ],
-  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
+  ]
 }

@@ -1,22 +1,22 @@
 Translator.fieldMap = {
   # Zotero          BibTeX
-  place:            { name: 'location', preserveCaps: true }
-  chapter:          { name: 'chapter', preserveCaps: true }
-  edition:          { name: 'edition', preserveCaps: true }
-  title:            { name: 'title', preserveCaps: true }
-  volume:           { name: 'volume', preserveCaps: true }
-  rights:           { name: 'rights', preserveCaps: true }
+  place:            { name: 'location', enc: 'literal' }
+  chapter:          { name: 'chapter' }
+  edition:          { name: 'edition' }
+  title:            { name: 'title', autoCase: true }
+  volume:           { name: 'volume' }
+  rights:           { name: 'rights' }
   ISBN:             { name: 'isbn' }
   ISSN:             { name: 'issn' }
   url:              { name: 'url' }
   DOI:              { name: 'doi' }
-  shortTitle:       { name: 'shorttitle', preserveCaps: true }
+  shortTitle:       { name: 'shorttitle', autoCase: true }
   abstractNote:     { name: 'abstract' }
   numberOfVolumes:  { name: 'volumes' }
-  version:          { name: 'version' }
-  conferenceName:   { name: 'eventtitle', preserveCaps: true }
+  versionNumber:    { name: 'version' }
+  conferenceName:   { name: 'eventtitle' }
   numPages:         { name: 'pagetotal' }
-  type:             { name: 'type', preserveCaps: true }
+  type:             { name: 'type' }
 }
 
 Translator.typeMap = {
@@ -28,8 +28,7 @@ Translator.typeMap = {
   letter:                             'email letter'
   movie:                              'film'
   artwork:                            'artwork'
-  # =online to fool the ridiculously stupid Mozilla code safety validator, as it thinks that any
-  # object property starting with 'on' on any kind of object installs an event handler on a DOM
+  # =online because someone thinks that any object property starting with 'on' on any kind of object installs an event handler on a DOM
   # node
   '=online':                          'blogPost forumPost webpage'
   inproceedings:                      'conferencePaper'
@@ -37,12 +36,12 @@ Translator.typeMap = {
   legislation:                        'statute bill'
   jurisdiction:                       'case hearing'
   patent:                             'patent'
-  audio:                              'audioRecording podcast'
-  video:                              'videoRecording'
+  audio:                              'audioRecording podcast radioBroadcast'
+  video:                              'videoRecording tvBroadcast'
   software:                           'computerProgram'
   unpublished:                        'manuscript presentation'
   inreference:                        'encyclopediaArticle dictionaryEntry'
-  misc:                               'interview map instantMessage tvBroadcast radioBroadcast document'
+  misc:                               'interview map instantMessage document'
 }
 
 Translator.fieldEncoding = {
@@ -60,244 +59,39 @@ Translator.fieldEncoding = {
   verbc: 'verbatim'
 }
 
-Language = new class
-  constructor: ->
-    @babelMap = {
-      af: 'afrikaans'
-      am: 'amharic'
-      ar: 'arabic'
-      ast: 'asturian'
-      bg: 'bulgarian'
-      bn: 'bengali'
-      bo: 'tibetan'
-      br: 'breton'
-      ca: 'catalan'
-      cop: 'coptic'
-      cy: 'welsh'
-      cz: 'czech'
-      da: 'danish'
-      de_1996: 'ngerman'
-      de_at_1996: 'naustrian'
-      de_at: 'austrian'
-      de_de_1996: 'ngerman'
-      de: ['german', 'germanb']
-      dsb: ['lsorbian', 'lowersorbian']
-      dv: 'divehi'
-      el: 'greek'
-      el_polyton: 'polutonikogreek'
-      en_au: 'australian'
-      en_ca: 'canadian'
-      en: 'english'
-      en_gb: ['british', 'ukenglish']
-      en_nz: 'newzealand'
-      en_us: ['american', 'usenglish']
-      eo: 'esperanto'
-      es: 'spanish'
-      et: 'estonian'
-      eu: 'basque'
-      fa: 'farsi'
-      fi: 'finnish'
-      fr_ca: [
-        'acadian'
-        'canadian'
-        'canadien'
-      ]
-      fr: ['french', 'francais']
-      fur: 'friulan'
-      ga: 'irish'
-      gd: ['scottish', 'gaelic']
-      gl: 'galician'
-      he: 'hebrew'
-      hi: 'hindi'
-      hr: 'croatian'
-      hsb: ['usorbian', 'uppersorbian']
-      hu: 'magyar'
-      hy: 'armenian'
-      ia: 'interlingua'
-      id: [
-        'indonesian'
-        'bahasa'
-        'bahasai'
-        'indon'
-        'meyalu'
-      ]
-      is: 'icelandic'
-      it$$: 'italian'
-      ja: 'japanese'
-      kn: 'kannada'
-      la: 'latin'
-      lo: 'lao'
-      lt: 'lithuanian'
-      lv: 'latvian'
-      ml: 'malayalam'
-      mn: 'mongolian'
-      mr: 'marathi'
-      nb: ['norsk', 'bokmal']
-      nl: 'dutch'
-      nn: 'nynorsk'
-      no: ['norwegian', 'norsk']
-      oc: 'occitan'
-      pl: 'polish'
-      pms: 'piedmontese'
-      pt_br: ['brazil', 'brazilian']
-      pt: ['portuguese', 'portuges']
-      pt_pt: 'portuguese'
-      rm: 'romansh'
-      ro: 'romanian'
-      ru: 'russian'
-      sa: 'sanskrit'
-      se: 'samin'
-      sk: 'slovak'
-      sl: ['slovenian', 'slovene']
-      sq_al: 'albanian'
-      sr_cyrl: 'serbianc'
-      sr_latn: 'serbian'
-      sr: 'serbian'
-      sv: 'swedish'
-      syr: 'syriac'
-      ta: 'tamil'
-      te: 'telugu'
-      th: ['thai', 'thaicjk']
-      tk: 'turkmen'
-      tr: 'turkish'
-      uk: 'ukrainian'
-      ur: 'urdu'
-      vi: 'vietnamese'
-      zh_latn: 'pinyin'
-      zh: 'pinyin'
-      zlm: [
-        'malay'
-        'bahasam'
-        'melayu'
-      ]
-    }
-    for own key, value of @babelMap
-      @babelMap[key] = [value] if typeof value == 'string'
+class DateField
+  constructor: (date, locale, formatted, literal) ->
+    parsed = Zotero.BetterBibTeX.parseDateToObject(date, locale)
 
-    # list of unique languages
-    @babelList = []
-    for own k, v of @babelMap
-      for lang in v
-        @babelList.push(lang) if @babelList.indexOf(lang) < 0
+    switch
+      when !parsed
+        @field = {}
 
-    @cache = Object.create(null)
+      when parsed.literal
+        @field = { name: literal, value: date }
 
-#  @polyglossia = [
-#    'albanian'
-#    'amharic'
-#    'arabic'
-#    'armenian'
-#    'asturian'
-#    'bahasai'
-#    'bahasam'
-#    'basque'
-#    'bengali'
-#    'brazilian'
-#    'brazil'
-#    'breton'
-#    'bulgarian'
-#    'catalan'
-#    'coptic'
-#    'croatian'
-#    'czech'
-#    'danish'
-#    'divehi'
-#    'dutch'
-#    'english'
-#    'british'
-#    'ukenglish'
-#    'esperanto'
-#    'estonian'
-#    'farsi'
-#    'finnish'
-#    'french'
-#    'friulan'
-#    'galician'
-#    'german'
-#    'austrian'
-#    'naustrian'
-#    'greek'
-#    'hebrew'
-#    'hindi'
-#    'icelandic'
-#    'interlingua'
-#    'irish'
-#    'italian'
-#    'kannada'
-#    'lao'
-#    'latin'
-#    'latvian'
-#    'lithuanian'
-#    'lsorbian'
-#    'magyar'
-#    'malayalam'
-#    'marathi'
-#    'nko'
-#    'norsk'
-#    'nynorsk'
-#    'occitan'
-#    'piedmontese'
-#    'polish'
-#    'portuges'
-#    'romanian'
-#    'romansh'
-#    'russian'
-#    'samin'
-#    'sanskrit'
-#    'scottish'
-#    'serbian'
-#    'slovak'
-#    'slovenian'
-#    'spanish'
-#    'swedish'
-#    'syriac'
-#    'tamil'
-#    'telugu'
-#    'thai'
-#    'tibetan'
-#    'turkish'
-#    'turkmen'
-#    'ukrainian'
-#    'urdu'
-#    'usorbian'
-#    'vietnamese'
-#    'welsh'
-#  ]
+      when (parsed.year || parsed.empty) && (parsed.year_end || parsed.empty_end)
+        @field = { name: formatted, value: @format(parsed) + '/' + @format(parsed, '_end') }
 
-Language.get_bigrams = (string) ->
-  s = string.toLowerCase()
-  s = (s.slice(i, i + 2) for i in [0 ... s.length])
-  s.sort()
-  return s
+      when parsed.year
+        @field = { name: formatted, value: @format(parsed) }
 
-Language.string_similarity = (str1, str2) ->
-  pairs1 = @get_bigrams(str1)
-  pairs2 = @get_bigrams(str2)
-  union = pairs1.length + pairs2.length
-  hit_count = 0
+      else
+        @field = {}
 
-  while pairs1.length > 0 && pairs2.length > 0
-    if pairs1[0] == pairs2[0]
-      hit_count++
-      pairs1.shift()
-      pairs2.shift()
-      continue
+  pad: (v, pad) ->
+    return v if v.length >= pad.length
+    return (pad + v).slice(-pad.length)
 
-    if pairs1[0] < pairs2[0]
-      pairs1.shift()
-    else
-      pairs2.shift()
+  format: (v, suffix = '') ->
+    _v = {}
+    for f in ['empty', 'year', 'month', 'day']
+      _v[f] = v["#{f}#{suffix}"]
 
-  return (2 * hit_count) / union
-
-Language.lookup = (langcode) ->
-  if not @cache[langcode]
-    @cache[langcode] = []
-    for lc in Language.babelList
-      @cache[langcode].push({ lang: lc, sim: @string_similarity(langcode, lc) })
-    @cache[langcode].sort((a, b) -> b.sim - a.sim)
-
-  return @cache[langcode]
+    return '' if _v.empty
+    return "#{_v.year}-#{@pad(_v.month, '00')}-#{@pad(_v.day, '00')}" if _v.year && _v.month && _v.day
+    return "#{_v.year}-#{@pad(_v.month, '00')}" if _v.year && _v.month
+    return '' + _v.year
 
 doExport = ->
   Zotero.write('\n')
@@ -308,9 +102,27 @@ doExport = ->
     ref.referencetype = 'collection' if item.itemType == 'book' and not ref.hasCreator('author') and ref.hasCreator('editor')
     ref.referencetype = 'mvbook' if ref.referencetype == 'book' and item.numberOfVolumes
 
-    if m = item.publicationTitle?.match(/^arxiv:\s*([\S]+)/i)
+    # arXiv:0707.3168 [hep-th]
+    # arXiv:YYMM.NNNNv# [category]
+    if m = item.publicationTitle?.match(/^arxiv:([0-9]{4}\.[0-9]{4})(v[0-9]+)?\s+\[(.*)\]$/i)
+      ref.add({ name: 'archivePrefix', value: 'arXiv'} )
       ref.add({ name: 'eprinttype', value: 'arxiv'})
       ref.add({ name: 'eprint', value: m[1] })
+      ref.add({ name: 'primaryClass', value: m[3]})
+      item.arXiv = item.publicationTitle
+      delete item.publicationTitle
+
+    # arXiv:arch-ive/YYMMNNNv# or arXiv:arch-ive/YYMMNNNv# [category]
+    else if m = item.publicationTitle?.match(/^arxiv:([a-z]+-[a-z]+)\/([0-9]{7})(v[0-9]+)?\s+\[(.*)\]$/i)
+      ref.add({ name: 'eprinttype', value: 'arxiv' })
+      ref.add({ name: 'eprint', value: "#{m[1]}/#{m[2]}" })
+      item.arXiv = item.publicationTitle
+      delete item.publicationTitle
+
+    else if m = item.publicationTitle?.match(/^arxiv:\s*([\S]+)/i)
+      ref.add({ name: 'eprinttype', value: 'arxiv'})
+      ref.add({ name: 'eprint', value: m[1] })
+      item.arXiv = item.publicationTitle
       delete item.publicationTitle
 
     if m = item.url?.match(/^http:\/\/www.jstor.org\/stable\/([\S]+)$/i)
@@ -363,73 +175,80 @@ doExport = ->
       if archive
         ref.add({ name: 'eprint', value: item.archiveLocation })    unless ref.has.eprint
 
-    ref.add({ name: 'options', value: 'useprefix' }) if Translator.usePrefix
+    ref.add({ name: 'langid', value: ref.language })
 
-    ref.add({ name: 'number', value: item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number })
+    ref.add({ name: 'number', value: item.docketNumber || item.publicLawNumber || item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number })
     ref.add({ name: (if isNaN(parseInt(item.issue)) then 'issue' else 'number'), value: item.issue })
 
     switch item.itemType
       when 'case', 'gazette'
-        ref.add({ name: 'journaltitle', value: item.reporter, preserveCaps: true, preserveBibTeXVariables: true })
+        ref.add({ name: 'journaltitle', value: item.reporter, preserveBibTeXVariables: true })
       when 'statute'
-        ref.add({ name: 'journaltitle', value: item.code, preserveCaps: true, preserveBibTeXVariables: true })
+        ref.add({ name: 'journaltitle', value: item.code, preserveBibTeXVariables: true })
 
     if item.publicationTitle
       switch item.itemType
         when 'bookSection', 'conferencePaper', 'dictionaryEntry', 'encyclopediaArticle'
-          ref.add({ name: 'booktitle', value: item.publicationTitle, preserveBibTeXVariables: true, preserveCaps: true})
+          ref.add({ name: 'booktitle', value: item.bookTitle || item.publicationTitle, preserveBibTeXVariables: true, autoCase: true})
 
         when 'magazineArticle', 'newspaperArticle'
-          ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true, preserveBibTeXVariables: true})
-          ref.add({ name: 'journalsubtitle', value: item.section, preserveCaps: true }) if item.itemType == 'newspaperArticle'
+          ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true})
+          ref.add({ name: 'journalsubtitle', value: item.section }) if item.itemType == 'newspaperArticle'
 
         when 'journalArticle'
           if ref.isBibVar(item.publicationTitle)
             ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
           else
             abbr = Zotero.BetterBibTeX.keymanager.journalAbbrev(item)
-            if Translator.useJournalAbbreviation and abbr
-              ref.add({ name: 'journal', value: abbr, preserveBibTeXVariables: true, preserveCaps: true })
+            if Translator.useJournalAbbreviation && abbr
+              ref.add({ name: 'journal', value: abbr, preserveBibTeXVariables: true })
+            else if Translator.BetterBibLaTeX && item.publicationTitle.match(/arxiv:/i)
+              ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true, preserveCase: false })
+              ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true })
             else
-              ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveCaps: true })
-              ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true, preserveCaps: true })
+              ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
+              ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true })
 
-    ref.add({ name: 'booktitle', value: item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, preserveCaps: true }) if not ref.has.booktitle
+    ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, autoCase: true }) if not ref.has.booktitle
 
-    ref.add({ name: 'titleaddon', value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, preserveCaps: true })
-    ref.add({ name: 'series', value: item.seriesTitle || item.series, preserveCaps: true })
+    ref.add({
+      name: (if ref.referencetype in ['movie', 'video'] then 'booktitle' else 'titleaddon')
+      value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle
+      autoCase: ref.referencetype in ['movie', 'video']
+    })
+    ref.add({ name: 'series', value: item.seriesTitle || item.series })
 
     switch item.itemType
       when 'report', 'thesis'
-        ref.add({ name: 'institution', value: item.publisher, preserveCaps: true })
+        ref.add({ name: 'institution', value: item.institution || item.publisher || item.university, enc: 'literal' })
 
       when 'case', 'hearing'
-        ref.add({ name: 'institution', value: item.court, preserveCaps: true })
+        ref.add({ name: 'institution', value: item.court, enc: 'literal' })
 
       else
-        ref.add({ name: 'publisher', value: item.publisher, preserveCaps: true })
+        ref.add({ name: 'publisher', value: item.publisher, enc: 'literal' })
 
     switch item.itemType
-      when 'letter' then ref.add({ name: 'type', value: item.letterType || 'Letter', replace: true })
+      when 'letter' then ref.add({ name: 'type', value: item.letterType || 'Letter', preserveCase: true, replace: true })
 
-      when 'email'  then ref.add({ name: 'type', value: 'E-mail', replace: true })
+      when 'email'  then ref.add({ name: 'type', value: 'E-mail', preserveCase: true, replace: true })
 
       when 'thesis'
-        thesisType = (item.type || '').toLowerCase().trim()
-        if thesisType in ['phdthesis', 'mastersthesis']
-          ref.referencetype = thesisType
+        thesistype = item.thesisType?.toLowerCase()
+        if thesistype in ['phdthesis', 'mastersthesis']
+          ref.referencetype = thesistype
           ref.remove('type')
         else
-          ref.add({ name: 'type', value: item.type, replace: true })
+          ref.add({ name: 'type', value: item.thesisType, preserveCase: true, replace: true })
 
       when 'report'
         if (item.type || '').toLowerCase().trim() == 'techreport'
           ref.referencetype = 'techreport'
         else
-          ref.add({ name: 'type', value: item.type, replace: true })
+          ref.add({ name: 'type', value: item.type, preserveCase: true, replace: true })
 
       else
-        ref.add({ name: 'type', value: item.type, replace: true })
+        ref.add({ name: 'type', value: item.type || item.websiteType || item.manuscriptType, preserveCase: true, replace: true })
 
     ref.add({ name: 'howpublished', value: item.presentationType || item.manuscriptType })
 
@@ -445,11 +264,19 @@ doExport = ->
         editorb: []
         holder: []
         translator: []
+        scriptwriter: []
+        director: []
       }
 
       for creator in item.creators
         switch creator.creatorType
-          when 'author', 'interviewer', 'director', 'programmer', 'artist', 'podcaster', 'presenter'
+          when 'director'
+            # 365.something
+            if ref.referencetype in ['video', 'movie']
+              creators.director.push(creator)
+            else
+              creators.author.push(creator)
+          when 'author', 'interviewer', 'programmer', 'artist', 'podcaster', 'presenter'
             creators.author.push(creator)
           when 'bookAuthor'
             creators.bookauthor.push(creator)
@@ -463,11 +290,18 @@ doExport = ->
             creators.translator.push(creator)
           when 'seriesEditor'
             creators.editorb.push(creator)
+          when 'scriptwriter'
+            # 365.something
+            if ref.referencetype in ['video', 'movie']
+              creators.scriptwriter.push(creator)
+            else
+              creators.editora.push(creator)
+
           else
             creators.editora.push(creator)
 
       for own field, value of creators
-        ref.add({ name: field, value: value, enc: 'creators', preserveCaps: true })
+        ref.add({ name: field, value: value, enc: 'creators' })
 
       ref.add({ name: 'editoratype', value: 'collaborator' }) if creators.editora.length > 0
       ref.add({ name: 'editorbtype', value: 'redactor' }) if creators.editorb.length > 0
@@ -475,23 +309,19 @@ doExport = ->
     ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate && item.url
 
     if item.date
-      if Translator.verbatimDate.test(item.date) || typeof Zotero.Utilities.strToDate(item.date).year == 'undefined'
-        ref.add({ name: 'date', value: item.date, preserveCaps: true })
+      if m = item.date.match(/^\[([0-9]+)\]\s+(.*)/)
+        ref.add({ name: 'origdate', value: m[1] })
+        ref.add((new DateField(m[2], item.language, 'date', 'year')).field)
       else
-        ref.add({ name: 'date', value: Zotero.Utilities.strToISO(item.date) })
+        ref.add((new DateField(item.date, item.language, 'date', 'year')).field)
 
-    ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )}) if item.pages
-
-    if item.language
-      langlc = item.language.toLowerCase()
-      language = Language.babelMap[langlc.replace(/[^a-z0-9]/, '_')]
-      if language
-        language = language[0]
-      else
-        sim = Language.lookup(langlc)
-        if sim[0].sim >= 0.9 then language = sim[0].lang else language = null
-
-      ref.add({ name: 'langid', value: language })
+    switch
+      when item.pages
+        ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )})
+      when item.firstPage && item.lastPage
+        ref.add({ name: 'pages', value: "#{item.firstPage}--#{item.lastPage}" })
+      when item.firstPage
+        ref.add({ name: 'pages', value: "#{item.firstPage}" })
 
     ref.add({ name: (if ref.has.note then 'annotation' else 'note'), value: item.extra, allowDuplicates: true })
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
@@ -500,7 +330,34 @@ doExport = ->
       for note in item.notes
         ref.add({ name: 'annotation', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true })
 
+    ###
+    # 'juniorcomma' needs more thought, it isn't for *all* suffixes you want this. Or even at all.
+    #ref.add({ name: 'options', value: (option for option in ['useprefix', 'juniorcomma'] when ref[option]).join(',') })
+    ###
+    ref.add({ name: 'options', value: 'useprefix=true' }) if ref.useprefix
+
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
+
+    ### pre-process overrides for #381 ###
+    for own name, value of ref.override
+      continue unless value.format == 'csl'
+
+      switch
+        when name == 'volume-title' && ref.item.itemType == 'book' && ref.has.title
+          ref.add({name: 'maintitle', value: value.value, autoCase: true })
+          [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]
+          [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
+
+        when  name == 'volume-title' && ref.item.itemType == 'bookSection' && ref.has.booktitle
+          ref.add({name: 'maintitle', value: value.value, autoCase: true })
+          [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]
+          [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]
+
+        else
+          continue
+
+      delete ref.override[name]
+
     ref.complete()
 
   Translator.exportGroups()

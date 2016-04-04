@@ -1,46 +1,28 @@
+Components.utils.import('resource://gre/modules/Services.jsm')
+
 Zotero.BetterBibTeX.keymanager = new class
   constructor: ->
+    @db = Zotero.BetterBibTeX.DB
     @log = Zotero.BetterBibTeX.log
     @resetJournalAbbrevs()
 
-    @keys = Zotero.BetterBibTeX.Cache.addCollection('keys', {disableChangesApi: false, indices: 'itemID libraryID citekey citekeyFormat'.split(/\s+/) })
-    @keys.on('insert', (key) ->
-      #Zotero.BetterBibTeX.debug('keymanager.loki insert', key)
-      Zotero.BetterBibTeX.keymanager.verify(key)
+  ###
+  three-letter month abbreviations. I assume these are the same ones that the
+  docs say are defined in some appendix of the LaTeX book. (I don't have the
+  LaTeX book.)
+  ###
+  months: [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
-      if !key.citekeyFormat && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
-        # removewhere will trigger 'delete' for the conflicts, which will take care of their cache dependents
-        Zotero.BetterBibTeX.keymanager.keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
-    )
-    @keys.on('update', (key) ->
-      #Zotero.BetterBibTeX.debug('keymanager.loki update', key)
-      Zotero.BetterBibTeX.keymanager.verify(key)
+  embeddedKeyRE: /\bbibtex: *([^\s\r\n]+)/
+  andersJohanssonKeyRE: /\bbiblatexcitekey\[([^\]]+)\]/
 
-      if !key.citekeyFormat && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
-        Zotero.BetterBibTeX.keymanager.keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
-
-      Zotero.BetterBibTeX.cache.remove({itemID: key.itemID})
-    )
-    @keys.on('delete', (key) ->
-      #Zotero.BetterBibTeX.debug('keymanager.loki delete', key)
-      Zotero.BetterBibTeX.cache.remove({itemID: key.itemID})
-    )
-
-    @findKeysSQL = "select i.itemID as itemID, i.libraryID as libraryID, idv.value as extra
-                    from items i
-                    join itemData id on i.itemID = id.itemID
-                    join itemDataValues idv on idv.valueID = id.valueID
-                    join fields f on id.fieldID = f.fieldID
-                    where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)
+  findKeysSQL: "select i.itemID as itemID, i.libraryID as libraryID, idv.value as extra
+                from items i
+                join itemData id on i.itemID = id.itemID
+                join itemDataValues idv on idv.valueID = id.valueID
+                join fields f on id.fieldID = f.fieldID
+                where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)
                       and (idv.value like '%bibtex:%' or idv.value like '%biblatexcitekey[%' or idv.value like '%biblatexcitekey{%')"
-
-    # three-letter month abbreviations. I assume these are the same ones that the
-    # docs say are defined in some appendix of the LaTeX book. (I don't have the
-    # LaTeX book.)
-    @months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
-
-    @embeddedKeyRE = /bibtex: *([^\s\r\n]+)/
-    @andersJohanssonKeyRE = /biblatexcitekey\[([^\]]+)\]/
 
   integer: (v) ->
     return v if typeof v == 'number' || v == null
@@ -49,36 +31,30 @@ Zotero.BetterBibTeX.keymanager = new class
     return _v
 
   cache: ->
-    return (@clone(key) for key in @keys.find())
-
-  load: ->
-    # clean up keys for items that have gone missing
-    Zotero.DB.query('delete from betterbibtex.keys where not itemID in (select itemID from items)')
-
-    for row in Zotero.DB.query('select k.itemID, k.citekey, k.citekeyFormat, i.libraryID from betterbibtex.keys k join items i on k.itemID = i.itemID')
-      @keys.insert({itemID: @integer(row.itemID), libraryID: row.libraryID, citekey: row.citekey, citekeyFormat: row.citekeyFormat})
-
-    # select non-note, non-attachment items that don't have a cached key, and generate one, to make sure the cache is
-    # complete. Should only run after first installation, as after that all new items or item changes will generate
-    # keys, but better safe than sorry.
-    # TODO: this works locally but fails on Travis -- investigate later
-    #for row in Zotero.DB.query('select itemID from items where itemTypeID not in (1, 14) and itemID not in (select itemID from betterbibtex.keys)')
-    #  @get({itemID: row.itemID})
+    return (@clone(key) for key in @db.keys.find())
 
   prime: ->
     sql = "select i.itemID as itemID from items i where itemTypeID not in (1, 14) and not i.itemID in (select itemID from deletedItems)"
-    assigned = (key.itemID for key in @keys.find())
-    sql += " and not i.itemID in #{Zotero.BetterBibTeX.SQLSet(assigned)}" if assigned.length > 0
+    assigned = (key.itemID for key in @db.keys.find())
+    sql += " and not i.itemID in #{Zotero.BetterBibTeX.DB.SQLite.Set(assigned)}" if assigned.length > 0
 
-    for itemID in Zotero.DB.columnQuery(sql)
+    items = Zotero.DB.columnQuery(sql)
+    if items.length > 100
+      return unless Services.prompt.confirm(null, 'Filling citation key cache', """
+          You have requested a scan over all citation keys, but have #{items.length} references for which the citation key must still be calculated.
+          This might take a long time, and Zotero will freeze while it's calculating them.
+          If you click 'Cancel' now, the scan will only occur over the citation keys you happen to have in place.
+
+          Do you wish to proceed calculating all citation keys now?
+      """)
+
+    for itemID in items
       @get({itemID}, 'on-export')
+    return
 
   reset: ->
-    Zotero.DB.query('delete from betterbibtex.keys')
     @resetJournalAbbrevs()
-    @keys.removeDataOnly()
-    @keys.removeWhere((obj) -> true) # causes cache drop
-    @keys.flushChanges()
+    @db.keys.removeWhere((obj) -> true) # causes cache drop
     @scan()
 
   resetJournalAbbrevs: ->
@@ -100,27 +76,12 @@ Zotero.BetterBibTeX.keymanager = new class
     }
 
   clearDynamic: ->
-    @keys.removeWhere((obj) -> obj.citekeyFormat)
-
-  flush: ->
-    tip = Zotero.DB.transactionInProgress()
-    Zotero.DB.beginTransaction() unless tip
-
-    for change in @keys.getChanges()
-      o = change.obj
-      switch change.operation
-        when 'I', 'U'
-          Zotero.DB.query('insert or replace into betterbibtex.keys (itemID, citekey, citekeyFormat) values (?, ?, ?)', [o.itemID, o.citekey, o.citekeyFormat])
-        when 'R'
-          Zotero.DB.query('delete from betterbibtex.keys where itemID = ?', [o.itemID])
-
-    Zotero.DB.commitTransaction() unless tip
-    @keys.flushChanges()
+    @db.keys.removeWhere((obj) -> obj.citekeyFormat)
 
   journalAbbrev: (item) ->
-    item = arguments[1] if arguments[0]._sandboxManager # the sandbox inserts itself in call parameters
-
     return item.journalAbbreviation if item.journalAbbreviation
+    return null unless item.itemType in ['journalArticle', 'bill', 'case', 'statute']
+
     key = item.publicationTitle || item.reporter || item.code
     return unless key
     return unless Zotero.BetterBibTeX.pref.get('autoAbbrev')
@@ -130,15 +91,13 @@ Zotero.BetterBibTeX.keymanager = new class
     @journalAbbrevs['default']?['container-title']?[key] || Zotero.Cite.getAbbreviation(style, @journalAbbrevs, 'default', 'container-title', key)
     return @journalAbbrevs['default']?['container-title']?[key] || key
 
-  extract: ->
-    [item, insitu] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
-
+  extract: (item, insitu) ->
     switch
       when item.getField
         throw("#{insitu}: cannot extract in-situ for real items") if insitu
         item = {itemID: item.id, extra: item.getField('extra')}
       when !insitu
-        item = {itemID: item?.itemID, extra: item.extra.slice(0)}
+        item = {itemID: item.itemID, extra: item.extra.slice(0)}
 
     return item unless item.extra
 
@@ -150,6 +109,16 @@ Zotero.BetterBibTeX.keymanager = new class
     delete item.__citekey__ if item.__citekey__ == ''
     return item
 
+  alphabet: (String.fromCharCode('a'.charCodeAt() + n) for n in [0...26])
+  postfix: (n) ->
+    return '' if n == 0
+    n -= 1
+    postfix = ''
+    while n >= 0
+      postfix = @alphabet[n % 26] + postfix
+      n = parseInt(n / 26) - 1
+    return postfix
+
   assign: (item, pin) ->
     {citekey, postfix: postfixStyle} = Zotero.BetterBibTeX.formatter.format(item)
     citekey = "zotero-#{if item.libraryID in [undefined, null] then 'null' else item.libraryID}-#{item.itemID}" if citekey in [undefined, null, '']
@@ -157,14 +126,14 @@ Zotero.BetterBibTeX.keymanager = new class
 
     libraryID = @integer(if item.libraryID == undefined then Zotero.DB.valueQuery('select libraryID from items where itemID = ?', [item.itemID]) else item.libraryID)
     itemID = @integer(item.itemID)
-    in_use = (key.citekey for key in @keys.where((o) -> o.libraryID == libraryID && o.itemID != itemID && o.citekey.indexOf(citekey) == 0))
-    postfix = { n: -1, c: '' }
+    in_use = (key.citekey for key in @db.keys.where((o) -> o.libraryID == libraryID && o.itemID != itemID && o.citekey.indexOf(citekey) == 0))
+    postfix = { n: 0, c: '' }
     while (citekey + postfix.c) in in_use
       postfix.n++
       if postfixStyle == '0'
-        postfix.c = '-' + (postfix.n + 1)
+        postfix.c = "-#{postfix.n}"
       else
-        postfix.c = String.fromCharCode('a'.charCodeAt() + postfix.n)
+        postfix.c = @postfix(postfix.n)
 
     res = @set(item, citekey + postfix.c, pin)
     return res
@@ -174,18 +143,17 @@ Zotero.BetterBibTeX.keymanager = new class
 
     zoteroPane = Zotero.getActiveZoteroPane()
     items = (item for item in zoteroPane.getSelectedItems() when !item.isAttachment() && !item.isNote())
+    items.sort((a, b) -> a.dateAdded.localeCompare(b.dateAdded))
 
     warn = Zotero.BetterBibTeX.pref.get('warnBulkModify')
-    Zotero.BetterBibTeX.debug('keymanager.selected:', items.length, 'selected, warn at', warn)
     if warn > 0 && items.length > warn
       ids = (parseInt(item.itemID) for item in items)
 
       if action == 'set'
         affected = items.length
       else
-        affected = @keys.where((key) -> key.itemID in ids && !key.citekeyFormat).length
+        affected = @db.keys.where((key) -> key.itemID in ids && !key.citekeyFormat).length
 
-      Zotero.BetterBibTeX.debug('keymanager.selected:', items.length, 'selected, warn at', warn, 'affected:', affected)
       if affected > warn
         params = { treshold: warn, response: null }
         window.openDialog('chrome://zotero-better-bibtex/content/bulk-clear-confirm.xul', '', 'chrome,dialog,centerscreen,modal', params)
@@ -202,13 +170,12 @@ Zotero.BetterBibTeX.keymanager = new class
         @assign(item, true)
 
   save: (item, citekey) ->
-    # only save if no change
+    ### only save if no change ###
     item = Zotero.Items.get(item.itemID) unless item.getField
 
     extra = @extract(item)
 
     if (extra.__citekey__ == citekey) || (!citekey && !extra.__citekey__)
-      Zotero.BetterBibTeX.debug("keymanager.save(#{item.itemID}, #{citekey}): no change")
       return
 
     extra = extra.extra
@@ -220,7 +187,7 @@ Zotero.BetterBibTeX.keymanager = new class
   set: (item, citekey, pin) ->
     throw new Error('Cannot set empty cite key') if !citekey || citekey.trim() == ''
 
-    # no keys for notes and attachments
+    ### no keys for notes and attachments ###
     return unless @eligible(item)
 
     item = Zotero.Items.get(item.itemID) unless item.getField
@@ -229,26 +196,28 @@ Zotero.BetterBibTeX.keymanager = new class
     libraryID = @integer(item.libraryID)
 
     citekeyFormat = if pin then null else Zotero.BetterBibTeX.citekeyFormat
-    key = @keys.findOne({itemID})
+    key = @db.keys.findOne({itemID})
     return @verify(key) if key && key.citekey == citekey && key.citekeyFormat == citekeyFormat
 
     if key
       key.citekey = citekey
       key.citekeyFormat = citekeyFormat
       key.libraryID = libraryID
-      @keys.update(key)
+      @db.keys.update(key)
     else
       key = {itemID, libraryID, citekey, citekeyFormat}
-      @keys.insert(key)
+      @db.keys.insert(key)
 
     @save(item, citekey) if pin
+
+    Zotero.BetterBibTeX.auto.markIDs([itemID], 'citekey changed')
 
     return @verify(key)
 
   scan: (ids, reason) ->
     if reason in ['delete', 'trash']
       ids = (@integer(id) for id in ids || [])
-      @keys.removeWhere((o) -> o.itemID in ids)
+      @db.keys.removeWhere((o) -> o.itemID in ids)
       return
 
     switch
@@ -266,7 +235,7 @@ Zotero.BetterBibTeX.keymanager = new class
     for item in items
       itemID = @integer(item.itemID)
       citekey = @extract(item).__citekey__
-      cached = @keys.findOne({itemID})
+      cached = @db.keys.findOne({itemID})
 
       continue unless citekey && citekey != ''
 
@@ -276,10 +245,10 @@ Zotero.BetterBibTeX.keymanager = new class
           cached.citekey = citekey
           cached.citekeyFormat = null
           cached.libraryID = libraryID
-          @keys.update(cached)
+          @db.keys.update(cached)
         else
           cached = {itemID, libraryID, citekey: citekey, citekeyFormat: null}
-          @keys.insert(cached)
+          @db.keys.insert(cached)
 
       pinned['' + item.itemID] = cached.citekey
 
@@ -289,7 +258,7 @@ Zotero.BetterBibTeX.keymanager = new class
       @get({itemID}, 'on-change')
 
   remove: (item, soft) ->
-    @keys.removeWhere({itemID: @integer(item.itemID)})
+    @db.keys.removeWhere({itemID: @integer(item.itemID)})
     @save(item) unless soft # only use soft remove if you know a hard set follows!
 
   eligible: (item) ->
@@ -332,24 +301,24 @@ Zotero.BetterBibTeX.keymanager = new class
     @verify(clone)
     return clone
 
-  get: ->
-    [item, pinmode] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
-
+  get: (item, pinmode) ->
     if (typeof item.itemID == 'undefined') && (typeof item.key != 'undefined') && (typeof item.libraryID != 'undefined')
       item = Zotero.Items.getByLibraryAndKey(item.libraryID, item.key)
 
-    # no keys for notes and attachments
+    ### no keys for notes and attachments ###
     return unless @eligible(item)
 
-    # pinmode can be:
-    #  on-change: generate and pin if pinCitekeys is on-change, 'null' behavior if not
-    #  on-export: generate and pin if pinCitekeys is on-export, 'null' behavior if not
-    #  null: fetch -> generate -> return
+    ###
+    pinmode can be:
+    * on-change: generate and pin if pinCitekeys is on-change, 'null' behavior if not
+    * on-export: generate and pin if pinCitekeys is on-export, 'null' behavior if not
+    * null: fetch -> generate -> return
+    ###
 
     pin = (pinmode == Zotero.BetterBibTeX.pref.get('pinCitekeys'))
-    cached = @keys.findOne({itemID: @integer(item.itemID)})
+    cached = @db.keys.findOne({itemID: @integer(item.itemID)})
 
-    # store new cache item if we have a miss or if a re-pin is requested
+    ### store new cache item if we have a miss or if a re-pin is requested ###
     cached = @assign(item, pin) if !cached || (pin && cached.citekeyFormat)
     return @clone(cached)
 
@@ -360,11 +329,9 @@ Zotero.BetterBibTeX.keymanager = new class
 
     resolved = {}
     for citekey in citekeys
-      resolved[citekey] = @keys.findObject({citekey, libraryID})
+      resolved[citekey] = @db.keys.findObject({citekey, libraryID})
     return resolved
 
-  alternates: ->
-    [item] = (if arguments[0]._sandboxManager then Array.slice(arguments, 1) else arguments)
-
+  alternates: (item) ->
     return Zotero.BetterBibTeX.formatter.alternates(item)
 

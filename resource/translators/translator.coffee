@@ -8,6 +8,9 @@ Translator.log_off = ->
 Translator.log = Translator.log_on = (msg...) ->
   @_log.apply(@, [3].concat(msg))
 
+Translator.HTMLEncode = (text) ->
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+
 Translator.stringify = (obj, replacer, spaces, cycleReplacer) ->
   str = JSON.stringify(obj, @stringifier(replacer, cycleReplacer), spaces)
   if Array.isArray(obj)
@@ -19,6 +22,17 @@ Translator.stringify = (obj, replacer, spaces, cycleReplacer) ->
         o[key] = obj[key]
       str += '+' + @stringify(o)
   return str
+
+Translator.locale = (language) ->
+  if !@languages.locales[language]
+    ll = language.toLowerCase()
+    for locale in @languages.langs
+      for k, v of locale
+        @languages.locales[language] = locale[1] if ll == v
+      break if @languages.locales[language]
+    @languages.locales[language] ||= language
+
+  return @languages.locales[language]
 
 Translator.stringifier = (replacer, cycleReplacer) ->
   stack = []
@@ -44,33 +58,128 @@ Translator._log = (level, msg...) ->
   msg = ((if (typeof m) in ['boolean', 'string', 'number'] then '' + m else Translator.stringify(m)) for m in msg).join(' ')
   Zotero.debug('[better' + '-' + "bibtex:#{@header.label}] " + msg, level)
 
+### http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables ###
+Translator.CSLVariables = {
+  #'abstract':                    {}
+  #'annote':                      {}
+  archive:                        {}
+  'archive_location':             {}
+  'archive-place':                {}
+  authority:                      { BibLaTeX: 'institution' }
+  'call-number':                  { BibTeX: 'lccn' }
+  #'citation-label':              {}
+  #'citation-number':             {}
+  'collection-title':             {}
+  'container-title':
+    BibLaTeX: ->
+      switch @item.itemType
+        when 'film', 'tvBroadcast', 'videoRecording' then 'booktitle'
+        when 'bookSection' then 'maintitle'
+        else 'journaltitle'
+
+  'container-title-short':        {}
+  dimensions:                     {}
+  DOI:                            { BibTeX: 'doi', BibLaTeX: 'doi' }
+  event:                          {}
+  'event-place':                  {}
+  #'first-reference-note-number': {}
+  genre:                          {}
+  ISBN:                           { BibTeX: 'isbn', BibLaTeX: 'isbn' }
+  ISSN:                           { BibTeX: 'issn', BibLaTeX: 'issn' }
+  jurisdiction:                   {}
+  keyword:                        {}
+  locator:                        {}
+  medium:                         {}
+  #'note':                        {}
+  'original-publisher':           { BibLaTeX: 'origpublisher', type: 'literal' }
+  'original-publisher-place':     { BibLaTeX: 'origlocation', type: 'literal' }
+  'original-title':               { BibLaTeX: 'origtitle' }
+  page:                           {}
+  'page-first':                   {}
+  PMCID:                          {}
+  PMID:                           {}
+  publisher:                      {}
+  'publisher-place':              { BibLaTeX: 'location', type: 'literal' }
+  references:                     {}
+  'reviewed-title':               {}
+  scale:                          {}
+  section:                        {}
+  source:                         {}
+  status:                         {}
+  title:                          { BibLaTeX: -> (if @referencetype == 'book' then 'maintitle' else null) }
+  'title-short':                  {}
+  URL:                            {}
+  version:                        {}
+  'volume-title':
+    BibLaTeX: ->
+      switch @item.itemType
+        when 'book' then 'title'
+        when 'bookSection' then 'booktitle'
+        else null
+
+  'year-suffix':                  {}
+  'chapter-number':               {}
+  'collection-number':            {}
+  edition:                        {}
+  issue:                          {}
+  number:                         { BibLaTeX: 'number' }
+  'number-of-pages':              {}
+  'number-of-volumes':            {}
+  volume:                         { BibLaTeX: 'volume' }
+  accessed:                       { type: 'date' }
+  container:                      { type: 'date' }
+  'event-date':                   { type: 'date' }
+  issued:                         { type: 'date', BibLaTeX: 'date' }
+  'original-date':                { type: 'date', BibLaTeX: 'origdate'}
+  submitted:                      { type: 'date' }
+  author:                         { type: 'creator', BibLaTeX: 'author' }
+  'collection-editor':            { type: 'creator' }
+  composer:                       { type: 'creator' }
+  'container-author':             { type: 'creator' }
+  director:                       { type: 'creator', BibLaTeX: 'director' }
+  editor:                         { type: 'creator', BibLaTeX: 'editor' }
+  'editorial-director':           { type: 'creator' }
+  illustrator:                    { type: 'creator' }
+  interviewer:                    { type: 'creator' }
+  'original-author':              { type: 'creator' }
+  recipient:                      { type: 'creator' }
+  'reviewed-author':              { type: 'creator' }
+  translator:                     { type: 'creator' }
+}
+for name, v of Translator.CSLVariables
+  v.name = name
+
+Translator.CSLVariable = (name) ->
+  return @CSLVariables[name] || @CSLVariables[name.toLowerCase()] || @CSLVariables[name.toUpperCase()]
+
+Translator.CSLCreator = (value) ->
+  creator = value.split(/\s*\|\|\s*/)
+  if creator.length == 2
+    return {lastName: creator[0] || '', firstName: creator[1] || ''}
+  else
+    return {name: value}
+
+Translator.extractFieldsKVRE = new RegExp("^\\s*(#{Object.keys(Translator.CSLVariables).join('|')}|LCCN|MR|Zbl|arXiv|JSTOR|HDL|GoogleBooksID)\\s*:\\s*(.+)\\s*$", 'i')
 Translator.extractFields = (item) ->
   return {} unless item.extra
 
   fields = {}
-  extra = []
-  for line in item.extra.split("\n")
-    m = /^\s*(LCCN|MR|Zbl|PMCID|PMID|arXiv|JSTOR|HDL|GoogleBooksID|DOI)\s*:\s*([\S]+)\s*$/i.exec(line)
-    if !m
-      extra.push(line)
-    else
-      fields[m[1]] = {value: m[2], format: 'key-value'}
-  item.extra = extra.join("\n")
 
-  m = /(biblatexdata|bibtex|biblatex)\[([^\]]+)\]/.exec(item.extra)
+  m = /(biblatexdata|bibtex|biblatex)(\*)?\[([^\]]+)\]/.exec(item.extra)
   if m
     item.extra = item.extra.replace(m[0], '').trim()
-    for assignment in m[2].split(';')
+    for assignment in m[3].split(';')
       data = assignment.match(/^([^=]+)=\s*(.*)/)
       if data
-        fields[data[1]] = {value: data[2], format: 'naive'}
+        fields[data[1].toLowerCase()] = {value: data[2], format: 'naive', raw: !m[2]}
       else
         Translator.debug("Not an assignment: #{assignment}")
 
-  m = /(biblatexdata|bibtex|biblatex)({[\s\S]+})/.exec(item.extra)
+  m = /(biblatexdata|bibtex|biblatex)(\*)?({[\s\S]+})/.exec(item.extra)
   if m
-    prefix = m[1]
-    data = m[2]
+    prefix = m[1] + (m[2] || '')
+    raw = !m[2]
+    data = m[3]
     while data.indexOf('}') >= 0
       try
         json = JSON5.parse(data)
@@ -81,16 +190,42 @@ Translator.extractFields = (item) ->
     if json
       item.extra = item.extra.replace(prefix + data, '').trim()
       for own name, value of json
-        fields[name] = {value, format: 'json' }
+        fields[name.toLowerCase()] = {value, format: 'json', raw }
 
-  # fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/
-  item.extra = item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, name, value) ->
-    fields[name] = { value, format: 'csl' }
+  ### fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/ ###
+  item.extra = item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, name, value) =>
+    cslvar = Translator.CSLVariable(name)
+    return '' unless cslvar
+
+    if cslvar.type == 'creator'
+      fields[cslvar.name] = {value: [], format: 'csl'} unless Array.isArray(fields[name]?.value)
+      fields[cslvar.name].value.push(@CSLCreator(value))
+    else
+      fields[cslvar.name] = { value, format: 'csl' }
+
     return ''
   )
 
+  extra = []
+  for line in item.extra.split("\n")
+    m = Translator.extractFieldsKVRE.exec(line)
+    cslvar = if m then @CSLVariable(m[1]) else null
+
+    switch
+      when !m
+        extra.push(line)
+      when !cslvar
+        fields[m[1].toLowerCase()] = {value: m[2].trim(), format: 'key-value'}
+      when cslvar.type == 'creator'
+        fields[cslvar.name] = {value: [], format: 'csl'} unless Array.isArray(fields[cslvar.name]?.value)
+        fields[cslvar.name].value.push(@CSLCreator(m[2].trim()))
+      else
+        fields[cslvar.name] = {value: m[2].trim(), format: 'csl'}
+  item.extra = extra.join("\n")
+
   item.extra = item.extra.trim()
   delete item.extra if item.extra == ''
+
   return fields
 
 Translator.initialize = ->
@@ -110,22 +245,30 @@ Translator.initialize = ->
   for own attr, f of @fieldMap || {}
     @BibLaTeXDataFieldMap[f.name] = f if f.name
 
-  @skipFields = (field.trim() for field in (Zotero.getHiddenPref('better-bibtex.skipFields') || '').split(','))
-  for pref in ['jabrefGroups', 'postscript', 'csquotes', 'usePrefix', 'preserveCaps', 'fancyURLs', 'langID', 'rawImports', 'DOIandURL', 'attachmentsNoMetadata', 'preserveBibTeXVariables', 'verbatimDate']
-    @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
-  if @verbatimDate == ''
-    delete @verbatimDate
-  else
-    @verbatimDate = new RegExp("^(#{@verbatimDate})$", 'i')
+  for pref in Object.keys(@preferences)
+    @preferences[pref] = @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
 
+  @titleCaseLowerCase = new RegExp('^(' + (word.replace(/\./g, '\\.') for word in @titleCaseLowerCase.split(/\s+/) when word).join('|') + ')$', 'i')
+  @titleCaseUpperCase = new RegExp('^(' + (word.replace(/\./g, '\\.') for word in @titleCaseUpperCase.split(/\s+/) when word).join('|') + ')$', 'i')
+
+  @skipFields = (field.trim() for field in (@skipFields || '').split(',') when field.trim())
+  if @csquotes
+    @csquotes = { open: '', close: '' }
+    for ch, i in Translator.preferences.csquotes
+      if i % 2 == 0 # open
+        @csquotes.open += ch
+      else
+        @csquotes.close += ch
+
+  @options = {}
   for option in ['useJournalAbbreviation', 'exportPath', 'exportFilename', 'exportCharset', 'exportFileData', 'exportNotes']
-    @[option] = Zotero.getOption(option)
+    @options[option] = @[option] = Zotero.getOption(option)
 
-  @caching = @header.BetterBibTeX?.cache?.BibTeX && !@exportFileData
+  @caching = !@exportFileData
 
   @unicode = switch
-    when @BetterBibLaTeX || @CollectedNotes then !Zotero.getHiddenPref('better-bibtex.asciiBibLaTeX')
-    when @BetterBibTeX then !Zotero.getHiddenPref('better-bibtex.asciiBibTeX')
+    when @BetterBibLaTeX || @CollectedNotes then !@asciiBibLaTeX
+    when @BetterBibTeX then !@asciiBibTeX
     else true
 
   if @typeMap
@@ -136,8 +279,7 @@ Translator.initialize = ->
     }
 
     for own bibtex, zotero of typeMap
-      # =online to fool the ridiculously stupid Mozilla code safety validator, as it thinks that any
-      # object property starting with 'on' on any kind of object installs an event handler on a DOM
+      # =online because someone assumes that any property starting with 'on' on any kind of object installs an event handler on a DOM
       # node
       bibtex = bibtex.replace(/^=/, '').trim().split(/\s+/)
       zotero = zotero.trim().split(/\s+/)
@@ -165,6 +307,13 @@ Translator.initialize = ->
       @debug('adding collection:', collection)
       @collections.push(@sanitizeCollection(collection))
 
+  @context = {
+    exportCharset: (@exportCharset || 'UTF-8').toUpperCase()
+    exportNotes: !!@exportNotes
+    translatorID: @translatorID
+    useJournalAbbreviation: !!@useJournalAbbreviation
+  }
+
 # The default collection structure passed is beyond screwed up.
 Translator.sanitizeCollection = (coll) ->
   sane = {
@@ -189,8 +338,9 @@ Translator.nextItem = ->
   while item = Zotero.nextItem()
     continue if item.itemType == 'note' || item.itemType == 'attachment'
     if @caching
-      cached = Zotero.BetterBibTeX.cache.fetch(item.itemID, Translator)
+      cached = Zotero.BetterBibTeX.cache.fetch(item.itemID, @context)
       if cached?.citekey
+        Translator.debug('nextItem: cached')
         @citekeys[item.itemID] = cached.citekey
         Zotero.write(cached.bibtex)
         continue
@@ -198,21 +348,8 @@ Translator.nextItem = ->
     Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
     item.__citekey__ ||= Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
 
-    # TODO: xref is unidirectional, Zotero relations are bidirectional
-    #xrefs = item.relations?['dc:relation']
-    #if xrefs
-    #  item.__xref__ = []
-    #  xrefs = [xrefs] unless Array.isArray(xrefs)
-    #  for xref in xrefs
-    #    m = xref.match(/^http:\/\/zotero.org\/users\/local\/[^\/]+\/items\/([A-Z0-9]+)$/i)
-    #    continue unless m
-    #    item.__xref__.push(Zotero.BetterBibTeX.keymanager.get({libraryID: item.libraryID, key: m[1]}, 'on-export').citekey)
-    #  if item.__xref__.length == 0
-    #    delete item.__xref__
-    #  else
-    #    item.__xref__ = item.__xref__.join(',')
-
     @citekeys[item.itemID] = item.__citekey__
+    Translator.debug('nextItem: serialized')
     return item
 
   return null

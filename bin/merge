@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require 'json'
+
+source = ARGV.shift
+
+json = JSON.parse(open(source).read)
+
+ARGV.each{|items|
+  add = JSON.parse(open(items).read)
+  json['items'] = json['items'].concat(add['items'])
+  File.unlink(items)
+}
+
+open(source, 'w'){|f|
+  f.write(JSON.pretty_generate(json))
+}

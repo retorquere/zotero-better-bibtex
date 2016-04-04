@@ -30,15 +30,15 @@
     {
       "itemID": 607,
       "itemType": "webpage",
-      "url": "https://zotplus.github.io/better-bibtex/Support-Request-Guidelines.html",
-      "extra": "bibtex: ZotPlus",
+      "url": "https://retorquere.github.io/better-bibtex/Support-Request-Guidelines.html",
+      "extra": "bibtex: retorquere",
       "accessDate": "2015-05-24 19:37:46",
       "title": "Support Request Guidelines - Better BibTeX",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "",
-          "lastName": "ZotPlus",
+          "lastName": "retorquere",
           "fieldMode": ""
         }
       ],
@@ -50,7 +50,7 @@
           "path": "/home/whk/.zotero/zotero/qpj7bsud.default/zotero/storage/USJXZBAM/Support-Request-Guidelines.html",
           "title": "Support Request Guidelines - Better BibTeX",
           "mimeType": "text/html",
-          "url": "https://zotplus.github.io/better-bibtex/Support-Request-Guidelines.html"
+          "url": "https://retorquere.github.io/better-bibtex/Support-Request-Guidelines.html"
         }
       ],
       "tags": [
@@ -66,17 +66,17 @@
     {
       "itemID": 609,
       "itemType": "webpage",
-      "url": "https://github.com/ZotPlus/zotero-better-bibtex",
-      "extra": "bibtex: ZotPlus",
+      "url": "https://github.com/retorquere/zotero-better-bibtex",
+      "extra": "bibtex: retorquere",
       "accessDate": "2015-05-24 19:38:34",
       "abstractNote": "Contribute to zotero-better-bibtex development by creating an account on GitHub.",
       "websiteTitle": "GitHub",
-      "title": "ZotPlus/zotero-better-bibtex",
+      "title": "retorquere/zotero-better-bibtex",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "",
-          "lastName": "ZotPlus",
+          "lastName": "retorquere",
           "fieldMode": ""
         }
       ],
@@ -88,7 +88,7 @@
           "path": "/home/whk/.zotero/zotero/qpj7bsud.default/zotero/storage/M4RPMVPF/zotero-better-bibtex.html",
           "title": "Snapshot",
           "mimeType": "text/html",
-          "url": "https://github.com/ZotPlus/zotero-better-bibtex"
+          "url": "https://github.com/retorquere/zotero-better-bibtex"
         }
       ],
       "tags": [
@@ -102,6 +102,5 @@
       ],
       "publicationTitle": "GitHub"
     }
-  ],
-  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
+  ]
 }

@@ -35,8 +35,8 @@
       "accessDate": "2013-10-26 09:05:28",
       "abstractNote": "The community that built the largest encyclopedia in history is shrinking, even as more people and Internet services depend on it than ever. Can it be revived, or is this the end of the Web’s idealistic era?",
       "websiteTitle": "MIT Technology Review",
-      "title": "The Decline of Wikipedia: Even As More People Than Ever Rely on It, Fewer People Create It",
-      "shortTitle": "The Decline of Wikipedia",
+      "title": "The decline of Wikipedia: even as more people than ever rely on it, fewer people create it",
+      "shortTitle": "The decline of Wikipedia",
       "creators": [
         {
           "creatorType": "author",
@@ -62,6 +62,5 @@
       ],
       "publicationTitle": "MIT Technology Review"
     }
-  ],
-  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
+  ]
 }

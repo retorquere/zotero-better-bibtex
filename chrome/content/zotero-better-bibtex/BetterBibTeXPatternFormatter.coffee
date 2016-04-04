@@ -12,7 +12,27 @@ class BetterBibTeXPatternFormatter
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
+    delete @year
+    delete @month
+
     return {} if @item.itemType in ['attachment', 'note']
+
+    if @item.date
+      date = Zotero.BetterBibTeX.DateParser::parseDateToObject(@item.date, {locale: @item.language, verbatimDetection: false})
+      if date
+        if date.literal
+          date = Zotero.Date.strToDate(@item.date)
+
+          @year = parseInt(date.year)
+          delete @year if isNaN(@year)
+          @year ?= @item.date
+
+          @month = parseInt(date.month)
+          delete @month if isNaN(@month)
+
+        else
+          @year = date.year
+          @month = date.month
 
     for candidate in @patterns[0]
       delete @postfix
@@ -41,16 +61,13 @@ class BetterBibTeXPatternFormatter
     return result
 
   reduce: (step) ->
-    value = @methods[step.method].apply(@, step.arguments)
-    Zotero.BetterBibTeX.debug('BetterBibTeXPatternFormatter.reduce:', step, value)
-    value = '' unless value
-
-    for filter in step.filters || []
-      value = @filters[filter.filter].apply(@, [value].concat(filter.arguments))
-      value = '' unless value
-
+    Zotero.BetterBibTeX.debug('reduce:', typeof step.method, step)
+    value = step.method.apply(@, step.arguments) || ''
     value = @clean(value) if step.scrub
-    Zotero.BetterBibTeX.debug('BetterBibTeXPatternFormatter.reduce.scrub:', step, value)
+
+    for filter in step.filters
+      value = @filters[filter.filter].apply(@, [value].concat(filter.arguments)) || ''
+
     return value
 
   clean: (str) ->
@@ -62,9 +79,11 @@ class BetterBibTeXPatternFormatter
   words: (str) ->
     return (@clean(word) for word in Zotero.Utilities.XRegExp.matchChain(@innerText(str), [@re.word]) when word != '')
 
+  ###
   # three-letter month abbreviations. I assume these are the same ones that the
   # docs say are defined in some appendix of the LaTeX book. (i don't have the
   # LaTeX book.)
+  ###
   months: [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
   titleWords: (title, options = {}) ->
@@ -78,7 +97,7 @@ class BetterBibTeXPatternFormatter
     return words
 
   innerText: (str) ->
-    return (new @HTML(str)).text.replace(/\s+/, ' ').trim()
+    return Zotero.BetterBibTeX.HTMLParser.text(str)
 
   creators: (onlyEditors, withInitials) ->
     return [] unless @item.creators?.length
@@ -88,10 +107,10 @@ class BetterBibTeXPatternFormatter
     for creator in @item.creators
       continue if onlyEditors && creator.creatorType not in ['editor', 'seriesEditor']
 
-      name = @innerText(creator.lastName)
+      name = @innerText(creator.name || creator.lastName)
 
       if name != ''
-        if withInitials and creator.firstName
+        if withInitials && creator.firstName
           initials = Zotero.Utilities.XRegExp.replace(creator.firstName, @re.caseNotUpperTitle, '', 'all')
           initials = Zotero.BetterBibTeX.removeDiacritics(initials)
           initials = Zotero.Utilities.XRegExp.replace(initials, @re.caseNotUpper, '', 'all')
@@ -121,7 +140,36 @@ class BetterBibTeXPatternFormatter
     return creators.editors || [] if onlyEditors
     return creators.authors || creators.editors || creators.translators || creators.collaborators || []
 
+  zotero:
+    numberRe: /^[0-9]+/
+    citeKeyTitleBannedRe: /\b(a|an|the|some|from|on|in|to|of|do|with|der|die|das|ein|eine|einer|eines|einem|einen|un|une|la|le|l\'|el|las|los|al|uno|una|unos|unas|de|des|del|d\')(\s+|\b)|(<\/?(i|b|sup|sub|sc|span style=\"small-caps\"|span)>)/g
+    citeKeyConversionsRe: /%([a-zA-Z])/
+    citeKeyCleanRe: /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+/g
+
   methods:
+    zotero: ->
+      @postfix = '0'
+      key = ''
+
+      if @item.creators && @item.creators[0] && (@item.creators[0].lastName || @item.creators[0].name)
+        key += (@item.creators[0].lastName || @item.creators[0].name).toLowerCase().replace(RegExp(' ', 'g'), '_').replace(/,/g, '')
+
+      key += '_'
+
+      if @item.title
+        key += @item.title.toLowerCase().replace(@zotero.citeKeyTitleBannedRe, '').split(/\s+/g)[0]
+
+      key += '_'
+
+      year = '????'
+      if @item.date
+        date = Zotero.Date.strToDate(@item.date)
+        year = date.year if date.year && @zotero.numberRe.test(date.year)
+      key += year
+
+      key = Zotero.Utilities.removeDiacritics(key.toLowerCase(), true)
+      return key.replace(@zotero.citeKeyCleanRe, '')
+
     '0': (text) ->
       @postfix = '0'
       return ''
@@ -139,7 +187,7 @@ class BetterBibTeXPatternFormatter
       authors = @creators(onlyEditors, withInitials)
       return ''  unless authors
       author = authors[m || 0]
-      author = author.substring(0, n)  if author and n
+      author = author.substring(0, n)  if author && n
       return author ? ''
 
     authorLast: (onlyEditors, withInitials) ->
@@ -240,24 +288,17 @@ class BetterBibTeXPatternFormatter
       words.slice(0, 1).join('')
 
     shortyear: ->
-      return '' unless @item.date
-      date = Zotero.Date.strToDate(@item.date)
-      return '' if typeof date.year == 'undefined'
-      year = date.year % 100
+      return '' unless @year
+      year = @year % 100
       return "0#{year}"  if year < 10
       return '' + year
 
     year: ->
-      return '' unless @item.date
-      date = Zotero.Date.strToDate(@item.date)
-      return @item.date if typeof date.year == 'undefined'
-      return date.year
+      return @year || ''
 
     month: ->
-      return '' unless @item.date
-      date = Zotero.Date.strToDate(@item.date)
-      return '' if typeof date.year == 'undefined'
-      return @months[date.month] ? ''
+      return '' unless @month
+      return @months[@month - 1] ? ''
 
     title: ->
       return @titleWords(@item.title).join('')
@@ -329,5 +370,3 @@ class BetterBibTeXPatternFormatter
 
     chars: (text) ->
       @text += text
-
-Components.utils.import('resource://zotero-better-bibtex/translators/htmlparser.js', BetterBibTeXPatternFormatter::HTML::)

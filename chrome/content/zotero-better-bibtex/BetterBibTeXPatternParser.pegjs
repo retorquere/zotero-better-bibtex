@@ -18,10 +18,10 @@ pattern
 
 callchain
   = '[' fcall:fcall ']'   { return fcall; }
-  / chars:[^\|>\[\]]+     { return {method: 'literal', scrub: false, arguments: [chars.join('')]}; }
+  / chars:[^\|>\[\]]+     { return {method: BetterBibTeXPatternFormatter.prototype.methods.literal, scrub: false, arguments: [chars.join('')], filters: []}; }
 
 fcall
-  = method:method filters:filter* { if (filters.length > 0) { method.filters = filters; } return method; }
+  = method:method filters:filter* { method.filters = filters; return method; }
 
 method
   = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') name:[\.a-zA-Z]* flag:flag? params:mparams? {
@@ -31,14 +31,22 @@ method
     if (editorsOnly) { prefix = (prefix === 'edtr') ? 'auth' : 'authors'; }
     name = prefix + name.join('');
     if (!params) { params = []; }
-    return {method: name, scrub: scrub, arguments: [editorsOnly, (flag === 'initials')].concat(params)};
+
+    var method = BetterBibTeXPatternFormatter.prototype.methods[name];
+    if (typeof method === 'function') {
+      return {method: method, scrub: scrub, arguments: [editorsOnly, (flag === 'initials')].concat(params)};
+    } else {
+      Zotero.BetterBibTeX.debug('invalid pattern:', name, 'method:', typeof method);
+      throw new Error('invalid pattern "' + name + '"');
+    }
   }
   / name:[0\.a-zA-Z]+ flag:flag? params:mparams? {
       name = name.join('')
-      if (BetterBibTeXPatternFormatter.prototype.methods[name]) {
-        return {method: name, scrub: true, arguments: params || []};
+      var method = BetterBibTeXPatternFormatter.prototype.methods[name];
+      if (method) {
+        return {method: method, scrub: true, arguments: params || []};
       } else {
-        return {method: 'property', scrub: false, arguments: [name]};
+        return {method: BetterBibTeXPatternFormatter.prototype.methods.property, scrub: false, arguments: [name]};
       }
     }
 

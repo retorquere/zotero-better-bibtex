@@ -1,0 +1,12 @@
+
+@incollection{koopman_efficient_99,
+  author = {Koopman, Pieter and Plasmeijer, Rinus},
+  booktitle = {Implementation of {{Functional Languages}}},
+  date = {1999},
+  doi = {10.1007/3-540-48515-5_8},
+  pages = {120--136},
+  publisher = {{Springer}},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Efficient Combinator Parsers}
+}
+

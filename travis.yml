@@ -1,0 +1,34 @@
+language: ruby
+sudo: false
+cache:
+- apt
+- bundler
+- npm
+git:
+  submodules: false
+rvm:
+- 2.2
+env:
+- TESTS=ci-cluster-0
+- TESTS=ci-cluster-1
+- TESTS=ci-cluster-2
+- TESTS=ci-cluster-3
+script:
+- curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
+- bundle exec rake test[$TESTS]
+before_install:
+- npm update
+branches:
+  except:
+    - /^[0-9]+\.[0-9]+\.[0-9]+$/
+addons:
+  firefox: "45.0"
+after_success:
+  - |
+      if [ "$(travis_parallel_sentinel script)" = "deploy" ]; then
+        echo "All jobs succeeded! PUBLISHING..."
+        rake clean
+        rake publish
+      else
+        echo "Some jobs failed"
+      fi

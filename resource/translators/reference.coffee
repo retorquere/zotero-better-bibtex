@@ -3,8 +3,8 @@
 #
 # The global Translator object allows access to the current configuration of the translator
 #
-# @param {enum} preserveCaps whether capitals should be preserved by bracing then with {}. Values: none, all, inner
-# @param {boolean} fancyURLs set to true when BBT will generate \url{..} around the urls
+# @param {enum} titleCase whether titles should be title-cased
+# @param {boolean} bibtexURLs set to true when BBT will generate \url{..} around the urls for BibTeX
 ###
 
 ###
@@ -29,7 +29,24 @@ class Reference
   constructor: (@item) ->
     @fields = []
     @has = Object.create(null)
-    @raw = ((tag.tag for tag in @item.tags when tag.tag == Translator.rawLaTag).length > 0)
+    @raw = (Translator.rawLaTag in @item.tags)
+
+    if !@item.language
+      @english = true
+    else
+      langlc = @item.language.toLowerCase()
+      @language = Language.babelMap[langlc.replace(/[^a-z0-9]/, '_')]
+      @language ||= Language.babelMap[langlc.replace(/-[a-z]+$/i, '').replace(/[^a-z0-9]/, '_')]
+      if @language
+        @language = @language[0]
+      else
+        sim = Language.lookup(langlc)
+        if sim[0].sim >= 0.9
+          @language = sim[0].lang
+        else
+          delete @language
+
+      @english = @language in ['american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'USenglish', 'UKenglish']
 
     @referencetype = Translator.typeMap.Zotero2BibTeX[@item.itemType] || 'misc'
 
@@ -63,15 +80,56 @@ class Reference
     return f.value
 
   ###
+  # Encode to date
+  #
+  # @param {field} field to encode
+  # @return {String} unmodified `field.value`
+  ###
+  isodate: (v, suffix = '') ->
+    year = v["year#{suffix}"]
+    return null unless year
+
+    month = v["month#{suffix}"]
+    month = "0#{month}".slice(-2) if month
+    day = v["day#{suffix}"]
+    day = "0#{day}".slice(-2) if day
+
+    date = '' + year
+    if month
+      date += "-#{month}"
+      date += "-#{day}" if day
+    return date
+
+  enc_date: (f) ->
+    return null unless f.value
+
+    value = f.value
+    value = Zotero.BetterBibTeX.parseDateToObject(value, @item.language) if typeof f.value == 'string'
+
+    if value.literal
+      return '\\bibstring{nodate}' if value.literal == 'n.d.'
+      return @enc_latex(@clone(f, value.literal))
+
+    date = @isodate(value)
+    return null unless date
+
+    enddate = @isodate(value, '_end')
+    date += "/#{enddate}" if enddate
+
+    return @enc_latex({value: date})
+
+  ###
   # Encode to LaTeX url
   #
   # @param {field} field to encode
-  # @return {String} field.value encoded as verbatim LaTeX string (minimal escaping). If preference `fancyURLs` is on, wraps return value in `\url{string}`
+  # @return {String} field.value encoded as verbatim LaTeX string (minimal escaping). If in Better BibTeX, wraps return value in `\url{string}`
   ###
   enc_url: (f) ->
     value = @enc_verbatim(f)
-    return "\\url{#{value}}" if Translator.fancyURLs
-    return value
+    if Translator.BetterBibTeX
+      return "\\url{#{@enc_verbatim(f)}}"
+    else
+      return value
 
   ###
   # Encode to verbatim LaTeX
@@ -84,10 +142,77 @@ class Reference
 
   nonLetters: new XRegExp("[^\\p{Letter}]", 'g')
   punctuationAtEnd: new XRegExp("[\\p{Punctuation}]$")
-  postfixedParticle: (particle) ->
-    return particle + ' ' if particle[particle.length - 1] == '.'
-    return particle if XRegExp.test(particle, @punctuationAtEnd)
-    return particle + ' '
+  startsWithLowercase: new XRegExp("^[\\p{Ll}]")
+  _enc_creators_postfix_particle: (particle) ->
+    # space at end is always OK
+    return '' if particle[particle.length - 1] == ' '
+
+    # if BBLT, always add a space if it isn't there
+    return ' ' if Translator.BetterBibLaTeX
+
+    # otherwise, we're in BBT.
+
+    # If the particle ends in a period, add a space
+    return ' ' if particle[particle.length - 1] == '.'
+
+    # if it ends in any other punctuation, it's probably something like d'Medici -- no space
+    return '' if XRegExp.test(particle, @punctuationAtEnd)
+
+    # otherwise, add a space
+    return ' '
+
+  _enc_creators_quote_separators: (value) ->
+    return ((if i % 2 == 0 then n else new String(n)) for n, i in value.split(/(\s+and\s+|,)/i))
+
+  _enc_creators_biblatex: (name) ->
+    for particle in ['non-dropping-particle', 'dropping-particle']
+      name[particle] += @_enc_creators_postfix_particle(name[particle]) if name[particle]
+
+    for k, v of name
+      continue unless typeof v == 'string'
+      switch
+        when v.length > 1 && v[0] == '"' && v[v.length - 1] == '"'
+          name[k] = @enc_latex({ value: new String(v.slice(1, -1)) })
+        when k == 'family' && XRegExp.test(v, @startsWithLowercase)
+          name[k] = @enc_latex({ value: new String(v) })
+        else
+          name[k] = @enc_latex({ value: @_enc_creators_quote_separators(v), sep: ' '})
+
+    latex = ''
+    latex += name['dropping-particle'] if name['dropping-particle']
+    latex += name['non-dropping-particle'] if name['non-dropping-particle']
+    latex += name.family if name.family
+    latex += ", #{name.suffix}" if name.suffix
+    latex += ", #{name.given || ''}"
+
+    return latex
+
+  _enc_creators_bibtex: (name) ->
+    for particle in ['non-dropping-particle', 'dropping-particle']
+      name[particle] += @_enc_creators_postfix_particle(name[particle]) if name[particle]
+
+    if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
+      name.family = name.family.slice(1, -1)
+
+    ###
+      TODO: http://chat.stackexchange.com/rooms/34705/discussion-between-retorquere-and-egreg
+
+      My advice is never using the alpha style; it's a relic of the past, when numbering citations was very difficult
+      because one didn't know the full citation list when writing a paper. In order to have the bibliography in
+      alphabetical order, such tricks were devised. The alternative was listing the citation in order of appearance.
+      Your document gains nothing with something like XYZ88 as citation key.
+
+      The “van” problem should be left to the bibliographic style. Some styles consider “van” as part of the name, some
+      don't. In any case, you'll have a kludge, mostly unportable. However, if you want van Gogh to be realized as vGo
+      in the label, use {\relax van} Gogh or something like this.
+    ###
+
+    latex = (part for part in [name['dropping-particle'], name['non-dropping-particle'], name.family] when part).join('')
+    latex = new String(latex) if latex.indexOf(' ') > 0 || latex.indexOf(',') >= 0
+    latex = [latex]
+    latex.push(name.suffix) if name.suffix
+    latex.push(name.given) if name.given
+    return @enc_latex({value: latex, sep: ', '})
 
   ###
   # Encode creators to author-style field
@@ -95,62 +220,44 @@ class Reference
   # @param {field} field to encode. The 'value' must be an array of Zotero-serialized `creator` objects.
   # @return {String} field.value encoded as author-style value
   ###
+  _enc_creators_relax_marker: '\u0097'
   enc_creators: (f, raw) ->
     return null if f.value.length == 0
-
-    Translator.debug('enc_creators', f, 'raw:', raw)
 
     encoded = []
     for creator in f.value
       switch
-        when creator.lastName && creator.fieldMode == 1
-          name = if raw then "{#{creator.lastName}}" else @enc_latex({value: new String(creator.lastName)})
+        when creator.name || (creator.lastName && creator.fieldMode == 1)
+          name = if raw then "{#{creator.name || creator.lastName}}" else @enc_latex({value: new String(creator.name || creator.lastName)})
 
         when raw
           name = [creator.lastName || '', creator.firstName || ''].join(', ')
 
-        when creator.lastName || creator.firstName
+        when Translator.parseParticles && (creator.lastName || creator.firstName)
           name = {family: creator.lastName || '', given: creator.firstName || ''}
-          # Parse name particles
-          # Replicate citeproc-js logic for what should be parsed so we don't
-          # break current behavior.
-          fallback = false
 
-          if name.family # && name.given
-            # Don't parse if last name is quoted
-            if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
-              name.family = @enc_latex({value: new String(name.family.slice(1, -1))})
+          Zotero.BetterBibTeX.CSL.parseParticles(name)
 
-            else
-              Zotero.BetterBibTeX.CSL.parseParticles(name)
+          if name.given && name.given.indexOf(@_enc_creators_relax_marker) >= 0 # zero-width space
+            name.given = '<span class="relax">' + name.given.replace(@_enc_creators_relax_marker, '</span>')
 
-              source = XRegExp.replace((creator.firstName || '') + (creator.lastName || ''), @nonLetters, '')
-              parsed = XRegExp.replace((part || '' for part in [name.given, name.family, name.suffix, name['non-dropping-particle'], name['dropping-particle']]).join(''), @nonLetters, '')
-              fallback = (source.length != parsed.length)
+          @useprefix ||= !!name['non-dropping-particle']
+          @juniorcomma ||= (f.juniorcomma && name['comma-suffix'])
 
-              Translator.debug('particle parser: creator=', creator, "@#{source.length}=", source, 'name=', name, "@#{parsed.length}=", parsed, 'fallback:', fallback)
-
-              if name['non-dropping-particle']
-                name.family = @enc_latex({value: new String((@postfixedParticle(name['non-dropping-particle']) + name.family).trim())})
-              else
-                name.family = @enc_latex({value: name.family}).replace(/ and /g, ' {and} ')
-
-              if name['dropping-particle']
-                name.family = @postfixedParticle(@enc_latex({value: name['dropping-particle']}).replace(/ and /g, ' {and} ')) + name.family
-
-          if name.given
-            name.given = @enc_latex({value: name.given}).replace(/ and /g, ' {and} ')
-
-          if name.suffix
-            name = [name.family || '', name.suffix, name.given || '']
+          if Translator.BetterBibTeX
+            name = @_enc_creators_bibtex(name)
           else
-            name = [name.family || '', name.given || '']
-          # TODO: is this the best way to deal with commas?
-          name = (part.replace(/,/g, '{,}') for part in name).join(', ')
+            name = @_enc_creators_biblatex(name)
 
-          if fallback
-            name = (part.replace(/,!/g, ',') for part in [creator.firstName + ' ' + creator.lastName] when part).join(' ')
-            name = @enc_latex({value: name}).replace(/ and /g, ' {and} ').replace(/,/g, '{,}')
+        when creator.lastName || creator.firstName
+          name = []
+          name.push(new String(creator.lastName)) if creator.lastName
+          if creator.firstName
+            if creator.firstName.indexOf(@_enc_creators_relax_marker) >= 0 # zero-width space
+              creator.firstName = '<span class="relax">' + creator.firstName.replace(@_enc_creators_relax_marker, '</span>')
+            name.push(creator.firstName)
+
+          name = @enc_latex({value: name, sep: ', '})
 
         else
           continue
@@ -158,6 +265,17 @@ class Reference
       encoded.push(name.trim())
 
     return encoded.join(' and ')
+
+  ###
+  # Encode text to LaTeX literal list (double-braced)
+  #
+  # This encoding supports simple HTML markup.
+  #
+  # @param {field} field to encode.
+  # @return {String} field.value encoded as author-style value
+  ###
+  enc_literal: (f) ->
+    return @enc_latex({value: new String(f.value)})
 
   ###
   # Encode text to LaTeX
@@ -168,21 +286,22 @@ class Reference
   # @return {String} field.value encoded as author-style value
   ###
   enc_latex: (f, raw) ->
+    Translator.debug('enc_latex:', {f, raw})
     return f.value if typeof f.value == 'number'
     return null unless f.value
 
     if Array.isArray(f.value)
       return null if f.value.length == 0
-      return (@enc_latex(@clone(f, word), raw) for word in f.value).join(f.sep)
+      return (@enc_latex(@clone(f, word), raw) for word in f.value).join(f.sep || '')
 
-    return f.value if raw
+    return f.value if f.raw || raw
 
-    value = LaTeX.text2latex(f.value)
+    value = LaTeX.text2latex(f.value, {preserveCase: f.preserveCase || f.autoCase, autoCase: f.autoCase && @english})
     value = new String("{#{value}}") if f.value instanceof String
     return value
 
   enc_tags: (f) ->
-    tags = (tag.tag for tag in f.value || [] when tag?.tag && tag.tag != Translator.rawLaTag)
+    tags = (tag for tag in f.value || [] when tag && tag != Translator.rawLaTag)
     return null if tags.length == 0
 
     # sort tags for stable tests
@@ -232,6 +351,8 @@ class Reference
         errors.push("BibTeX cannot handle file paths with braces: #{JSON.stringify(a.path)}")
         continue
 
+      a.mimetype = 'application/pdf' if !a.mimetype && a.path.slice(-4).toLowerCase() == '.pdf'
+
       switch
         when save
           att.saveFile(a.path)
@@ -246,21 +367,19 @@ class Reference
     f.errors = errors if errors.length != 0
     return null if attachments.length == 0
 
-    # sort attachments for stable tests
-    attachments.sort( ( (a, b) -> a.path.localeCompare(b.path) ) ) if Translator.testing
+    # sort attachments for stable tests, and to make non-snapshots the default for JabRef to open (#355)
+    attachments.sort((a, b) ->
+      return 1  if a.mimetype == 'text/html' && b.mimetype != 'text/html'
+      return -1 if b.mimetype == 'text/html' && a.mimetype != 'text/html'
+      return a.path.localeCompare(b.path)
+    )
 
     return (att.path.replace(/([\\{};])/g, "\\$1") for att in attachments).join(';') if Translator.attachmentsNoMetadata
     return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
 
-  preserveCaps: {
-    inner:  new XRegExp("(^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]+\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
-    all:    new XRegExp("(^|[\\s\\p{Punctuation}])([^\\s\\p{Punctuation}]*\\p{Uppercase_Letter}[^\\s\\p{Punctuation}]*)", 'g')
-  }
-  initialCapOnly: new XRegExp("^\\p{Uppercase_Letter}\\p{Lowercase_Letter}+$")
-
+  isBibVarRE: /^[a-z][a-z0-9_]*$/i
   isBibVar: (value) ->
-    return value && Translator.preserveBibTeXVariables && value.match(/^[a-z][a-z0-9_]*$/i)
-
+    return Translator.preserveBibTeXVariables && value && typeof value == 'string' && @isBibVarRE.test(value)
   ###
   # Add a field to the reference field set
   #
@@ -279,50 +398,27 @@ class Reference
     throw "duplicate field '#{field.name}' for #{@item.__citekey__}" if @has[field.name] && !field.allowDuplicates
 
     if ! field.bibtex
+      Translator.debug('add:', {
+        field
+        preserve: Translator.preserveBibTeXVariables
+        match: @isBibVar(field.value)
+      })
       if typeof field.value == 'number' || (field.preserveBibTeXVariables && @isBibVar(field.value))
         value = field.value
       else
-        enc = field.enc || Translator.fieldEncoding?[field.name] || 'latex'
-        value = @["enc_#{enc}"](field, (if field.enc && field.enc != 'creators' then false else @raw))
+        enc = field.enc || Translator.fieldEncoding[field.name] || 'latex'
+        value = @["enc_#{enc}"](field, @raw)
 
         return unless value
 
-        unless field.bare && !field.value.match(/\s/)
-          if Translator.preserveCaps != 'no' && field.preserveCaps && !@raw
-            braced = []
-            scan = value.replace(/\\./, '..')
-            for i in [0...value.length]
-              braced[i] = (braced[i - 1] || 0)
-              braced[i] += switch scan[i]
-                when '{' then 1
-                when '}' then -1
-                else          0
-              braced[i] = 0 if braced[i] < 0
-
-            value = XRegExp.replace(value, @preserveCaps[Translator.preserveCaps], (match, boundary, needle, pos, haystack) ->
-              boundary ?= ''
-              pos += boundary.length
-              #return boundary + needle if needle.length < 2 # don't encode single-letter capitals
-              return boundary + needle if pos == 0 && Translator.preserveCaps == 'all' && XRegExp.test(needle, Reference::initialCapOnly)
-
-              c = 0
-              for i in [pos - 1 .. 0] by -1
-                if haystack[i] == '\\'
-                  c++
-                else
-                  break
-              return boundary + needle if c % 2 == 1 # don't enclose LaTeX command
-
-              return boundary + needle if braced[pos] > 0
-              return "#{boundary}{#{needle}}"
-            )
-          value = "{#{value}}"
+        value = "{#{value}}" unless field.bare && !field.value.match(/\s/)
 
       field.bibtex = "#{value}"
 
     field.bibtex = field.bibtex.normalize('NFKC') if @normalize
     @fields.push(field)
     @has[field.name] = field
+    Translator.debug('added:', field)
 
   ###
   # Remove a field from the reference field set
@@ -339,22 +435,9 @@ class Reference
 
   normalize: (typeof (''.normalize) == 'function')
 
-  CSLtoBibTeX: (variable) ->
-    switch variable
-      when 'original-date' then return 'origdate'
-      when 'original-publisher' then return 'origpublisher'
-      when 'original-publisher-place' then return 'origlocation'
-      when 'original-title' then return 'origtitle'
-      when 'authority' then return 'institution'
-      when 'container-title'
-        switch @referencetype
-          when 'article', 'jurisdiction', 'legislation' then return 'journaltitle'
-
   postscript: ->
 
   complete: ->
-    #@add({name: 'xref', value: @item.__xref__, enc: 'raw'}) if !@has.xref && @item.__xref__
-
     if Translator.DOIandURL != 'both'
       if @has.doi && @has.url
         switch Translator.DOIandURL
@@ -363,55 +446,55 @@ class Reference
 
     fields = []
     for own name, value of @override
-      raw = (value.format in ['naive', 'json'])
-      name = name.toLowerCase()
-
       # psuedo-var, sets the reference type
       if name == 'referencetype'
         @referencetype = value.value
         continue
 
-      Translator.debug('override:', name, value)
+      # these are handled just like 'arxiv' and 'lccn', respectively
+      if name in ['PMID', 'PMCID']
+        value.format = 'key-value'
+        name = name.toLowerCase()
 
-      switch value.format
+      if value.format == 'csl'
         # CSL names are not in BibTeX format, so only add it if there's a mapping
-        when 'csl'
-          remapped = @CSLtoBibTeX(name)
-          if remapped
-            name = remapped
-            Translator.debug('CSL override:', name, value)
-          else
-            Translator.debug('Unmapped CSL field', name, '=', value.value)
-            continue
+        cslvar = Translator.CSLVariables[name]
+        mapped = cslvar[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
+        mapped = mapped.call(@) if typeof mapped == 'function'
+        autoCase = name in ['title', 'shorttitle', 'origtitle', 'booktitle', 'maintitle']
 
-        when 'key-value'
-          switch name
-            when 'mr'
-              fields.push({ name: 'mrnumber', value: value.value, raw: raw })
-            when 'zbl'
-              fields.push({ name: 'zmnumber', value: value.value, raw: raw })
-            when 'lccn', 'pmcid'
-              fields.push({ name: name, value: value.value, raw: raw })
-            when 'pmid', 'arxiv', 'jstor', 'hdl'
-              if Translator.BetterBibLaTeX
-                fields.push({ name: 'eprinttype', value: name.toLowerCase() })
-                fields.push({ name: 'eprint', value: value.value, raw: raw })
-              else
-                fields.push({ name, value: value.value, raw: raw })
-            when 'googlebooksid'
-              if Translator.BetterBibLaTeX
-                fields.push({ name: 'eprinttype', value: 'googlebooks' })
-                fields.push({ name: 'eprint', value: value.value, raw: raw })
-              else
-                fields.push({ name: 'googlebooks', value: value.value, raw: raw })
-            when 'xref'
-              fields.push({ name, value: value.value, enc: 'raw' })
+        if mapped
+          fields.push({ name: mapped, value: value.value, autoCase, raw: false, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type) })
 
+        else
+          Translator.debug('Unmapped CSL field', name, '=', value.value)
+
+      else
+        switch name
+          when 'mr'
+            fields.push({ name: 'mrnumber', value: value.value, raw: value.raw })
+          when 'zbl'
+            fields.push({ name: 'zmnumber', value: value.value, raw: value.raw })
+          when 'lccn', 'pmcid'
+            fields.push({ name: name, value: value.value, raw: value.raw })
+          when 'pmid', 'arxiv', 'jstor', 'hdl'
+            if Translator.BetterBibLaTeX
+              fields.push({ name: 'eprinttype', value: name.toLowerCase() })
+              fields.push({ name: 'eprint', value: value.value, raw: value.raw })
             else
-              fields.push({ name, value: value.value, raw: raw })
-          continue
+              fields.push({ name, value: value.value, raw: value.raw })
+          when 'googlebooksid'
+            if Translator.BetterBibLaTeX
+              fields.push({ name: 'eprinttype', value: 'googlebooks' })
+              fields.push({ name: 'eprint', value: value.value, raw: value.raw })
+            else
+              fields.push({ name: 'googlebooks', value: value.value, raw: value.raw })
+          when 'xref'
+            fields.push({ name, value: value.value, raw: value.raw })
 
-      fields.push({ name: name, value: value.value, raw: raw })
+          else
+            Translator.debug('fields.push', { name, value: value.value, raw: value.raw })
+            fields.push({ name, value: value.value, raw: value.raw })
 
     for name in Translator.skipFields
       @remove(name)
@@ -419,18 +502,13 @@ class Reference
     for field in fields
       name = field.name.split('.')
       if name.length > 1
-        Translator.debug('override: per-reftype', name)
         continue unless @referencetype == name[0]
         field.name = name[1]
 
-      Translator.debug('override: try', field)
-
       if (typeof field.value == 'string') && field.value.trim() == ''
-        Translator.debug('override: scrub', field)
         @remove(field.name)
         continue
 
-      Translator.debug('override: add', field)
       field = @clone(Translator.BibLaTeXDataFieldMap[field.name], field.value) if Translator.BibLaTeXDataFieldMap[field.name]
       field.replace = true
       @add(field)
@@ -461,3 +539,242 @@ class Reference
     return value
 
   hasCreator: (type) -> (@item.creators || []).some((creator) -> creator.creatorType == type)
+
+Language = new class
+  constructor: ->
+    @babelMap = {
+      af: 'afrikaans'
+      am: 'amharic'
+      ar: 'arabic'
+      ast: 'asturian'
+      bg: 'bulgarian'
+      bn: 'bengali'
+      bo: 'tibetan'
+      br: 'breton'
+      ca: 'catalan'
+      cop: 'coptic'
+      cy: 'welsh'
+      cz: 'czech'
+      da: 'danish'
+      de_1996: 'ngerman'
+      de_at_1996: 'naustrian'
+      de_at: 'austrian'
+      de_de_1996: 'ngerman'
+      de: ['german', 'germanb']
+      dsb: ['lsorbian', 'lowersorbian']
+      dv: 'divehi'
+      el: 'greek'
+      el_polyton: 'polutonikogreek'
+      en_au: 'australian'
+      en_ca: 'canadian'
+      en: 'english'
+      en_gb: ['british', 'ukenglish']
+      en_nz: 'newzealand'
+      en_us: ['american', 'usenglish']
+      eo: 'esperanto'
+      es: 'spanish'
+      et: 'estonian'
+      eu: 'basque'
+      fa: 'farsi'
+      fi: 'finnish'
+      fr_ca: [
+        'acadian'
+        'canadian'
+        'canadien'
+      ]
+      fr: ['french', 'francais']
+      fur: 'friulan'
+      ga: 'irish'
+      gd: ['scottish', 'gaelic']
+      gl: 'galician'
+      he: 'hebrew'
+      hi: 'hindi'
+      hr: 'croatian'
+      hsb: ['usorbian', 'uppersorbian']
+      hu: 'magyar'
+      hy: 'armenian'
+      ia: 'interlingua'
+      id: [
+        'indonesian'
+        'bahasa'
+        'bahasai'
+        'indon'
+        'meyalu'
+      ]
+      is: 'icelandic'
+      it: 'italian'
+      ja: 'japanese'
+      kn: 'kannada'
+      la: 'latin'
+      lo: 'lao'
+      lt: 'lithuanian'
+      lv: 'latvian'
+      ml: 'malayalam'
+      mn: 'mongolian'
+      mr: 'marathi'
+      nb: ['norsk', 'bokmal']
+      nl: 'dutch'
+      nn: 'nynorsk'
+      no: ['norwegian', 'norsk']
+      oc: 'occitan'
+      pl: 'polish'
+      pms: 'piedmontese'
+      pt_br: ['brazil', 'brazilian']
+      pt: ['portuguese', 'portuges']
+      pt_pt: 'portuguese'
+      rm: 'romansh'
+      ro: 'romanian'
+      ru: 'russian'
+      sa: 'sanskrit'
+      se: 'samin'
+      sk: 'slovak'
+      sl: ['slovenian', 'slovene']
+      sq_al: 'albanian'
+      sr_cyrl: 'serbianc'
+      sr_latn: 'serbian'
+      sr: 'serbian'
+      sv: 'swedish'
+      syr: 'syriac'
+      ta: 'tamil'
+      te: 'telugu'
+      th: ['thai', 'thaicjk']
+      tk: 'turkmen'
+      tr: 'turkish'
+      uk: 'ukrainian'
+      ur: 'urdu'
+      vi: 'vietnamese'
+      zh_latn: 'pinyin'
+      zh: 'pinyin'
+      zlm: [
+        'malay'
+        'bahasam'
+        'melayu'
+      ]
+    }
+    for own key, value of @babelMap
+      @babelMap[key] = [value] if typeof value == 'string'
+
+    # list of unique languages
+    @babelList = []
+    for own k, v of @babelMap
+      for lang in v
+        @babelList.push(lang) if @babelList.indexOf(lang) < 0
+
+    @cache = Object.create(null)
+
+#  @polyglossia = [
+#    'albanian'
+#    'amharic'
+#    'arabic'
+#    'armenian'
+#    'asturian'
+#    'bahasai'
+#    'bahasam'
+#    'basque'
+#    'bengali'
+#    'brazilian'
+#    'brazil'
+#    'breton'
+#    'bulgarian'
+#    'catalan'
+#    'coptic'
+#    'croatian'
+#    'czech'
+#    'danish'
+#    'divehi'
+#    'dutch'
+#    'english'
+#    'british'
+#    'ukenglish'
+#    'esperanto'
+#    'estonian'
+#    'farsi'
+#    'finnish'
+#    'french'
+#    'friulan'
+#    'galician'
+#    'german'
+#    'austrian'
+#    'naustrian'
+#    'greek'
+#    'hebrew'
+#    'hindi'
+#    'icelandic'
+#    'interlingua'
+#    'irish'
+#    'italian'
+#    'kannada'
+#    'lao'
+#    'latin'
+#    'latvian'
+#    'lithuanian'
+#    'lsorbian'
+#    'magyar'
+#    'malayalam'
+#    'marathi'
+#    'nko'
+#    'norsk'
+#    'nynorsk'
+#    'occitan'
+#    'piedmontese'
+#    'polish'
+#    'portuges'
+#    'romanian'
+#    'romansh'
+#    'russian'
+#    'samin'
+#    'sanskrit'
+#    'scottish'
+#    'serbian'
+#    'slovak'
+#    'slovenian'
+#    'spanish'
+#    'swedish'
+#    'syriac'
+#    'tamil'
+#    'telugu'
+#    'thai'
+#    'tibetan'
+#    'turkish'
+#    'turkmen'
+#    'ukrainian'
+#    'urdu'
+#    'usorbian'
+#    'vietnamese'
+#    'welsh'
+#  ]
+
+Language.get_bigrams = (string) ->
+  s = string.toLowerCase()
+  s = (s.slice(i, i + 2) for i in [0 ... s.length])
+  s.sort()
+  return s
+
+Language.string_similarity = (str1, str2) ->
+  pairs1 = @get_bigrams(str1)
+  pairs2 = @get_bigrams(str2)
+  union = pairs1.length + pairs2.length
+  hit_count = 0
+
+  while pairs1.length > 0 && pairs2.length > 0
+    if pairs1[0] == pairs2[0]
+      hit_count++
+      pairs1.shift()
+      pairs2.shift()
+      continue
+
+    if pairs1[0] < pairs2[0]
+      pairs1.shift()
+    else
+      pairs2.shift()
+
+  return (2 * hit_count) / union
+
+Language.lookup = (langcode) ->
+  if not @cache[langcode]
+    @cache[langcode] = []
+    for lc in Language.babelList
+      @cache[langcode].push({ lang: lc, sim: @string_similarity(langcode, lc) })
+    @cache[langcode].sort((a, b) -> b.sim - a.sim)
+
+  return @cache[langcode]

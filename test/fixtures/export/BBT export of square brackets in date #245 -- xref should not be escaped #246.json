@@ -23,7 +23,9 @@
       "exportNotes": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "journalArticle",
@@ -71,7 +73,9 @@
       ],
       "itemID": 281,
       "key": "C2SKJGVM",
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekeys__": [
         "abram_6_2014",
         "Abram2014"
@@ -79,7 +83,9 @@
     },
     {
       "itemType": "journalArticle",
-      "tags": [],
+      "tags": [
+
+      ],
       "relations": {
         "dc:relation": "http://zotero.org/users/local/aMgNMAOC/items/C2SKJGVM"
       },
@@ -101,11 +107,17 @@
           "firstName": "Peter"
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 831,
       "key": "QCDNM7UT",
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekeys__": [
         "pollard_bicycle_2007",
         "Pollard2007"
@@ -127,83 +139,28 @@
       "firstPage": "337",
       "caseName": "Kartinyeri v Commonwealth",
       "shortTitle": "Kartinyeri",
-      "creators": [],
-      "attachments": [],
-      "notes": [],
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 1825,
       "key": "S5XB48IN",
       "date": "1998-04-01",
       "volume": "195",
       "pages": "337",
       "title": "Kartinyeri v Commonwealth",
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekeys__": [
         "_kartinyeri_1998",
         "1998"
       ]
     }
-  ],
-  "keymanager": [
-    {
-      "itemID": 321,
-      "libraryID": null,
-      "citekey": "KlimatilpasningKokkedal2012Projektkonkurrence",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 1000,
-      "libraryID": null,
-      "citekey": "Serres2007Parasite",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 1008,
-      "libraryID": null,
-      "citekey": "KlimatilpasningKokkedal2012Projektbeskrivelse",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 281,
-      "libraryID": null,
-      "citekey": "bentley_academic_2011",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 1825,
-      "libraryID": null,
-      "citekey": "kartinyeri",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 1826,
-      "libraryID": null,
-      "citekey": "CapEA11",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 1827,
-      "libraryID": null,
-      "citekey": "CumEA14",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 1829,
-      "libraryID": null,
-      "citekey": "TayEA11",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 795,
-      "libraryID": null,
-      "citekey": "realdania_10_",
-      "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]"
-    },
-    {
-      "itemID": 831,
-      "libraryID": null,
-      "citekey": "pollard_bicycle_2007",
-      "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]"
-    }
-  ],
-  "cache": []
+  ]
 }
