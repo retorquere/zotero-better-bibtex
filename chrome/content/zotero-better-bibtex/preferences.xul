@@ -225,6 +225,8 @@
           </tabpanel>
           <tabpanel orient="vertical"><!-- debug information -->
             <label class="zotero-text-link" value="About Debug Preferences..." href="http://retorquere.github.io/zotero-better-bibtex/configuration.html#debug"/>
+            <label value="&zotero.better-bibtex.postscript;"/>
+            <textbox flex="1" multiline="true" preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript"/>
             <hbox class="better-bibtex-prefs">
               <checkbox label="&zotero.better-bibtex.debug;" preference="pref-better-bibtex-debug"/>
               <button label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors()"/>
@@ -238,8 +240,6 @@
             <label id="better-bibtex-preferences-cacheActivity-disabled" value="&zotero.better-bibtex.cacheActivity.disabled;"/>
             <label id="better-bibtex-preferences-cache-stats" value=""/>
             <!-- button id="better-bibtex-preferences-zombies" label="" oncommand="Zotero.BetterBibTeX.DB.purge()"/ -->
-            <label value="&zotero.better-bibtex.postscript;"/>
-            <textbox flex="1" multiline="true" preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript" class="plain"/>
           </tabpanel>
           <tabpanel> <!-- disabled -->
             <textbox flex="1" multiline="true" id="zotero-better-bibtex-disabled-message" class="plain" readonly="true"/>
