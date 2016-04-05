@@ -23,4 +23,6 @@ bin/github-release
 vendor
 .pushbullet
 resource/reports/cacheActivity.txt
-site/_site
+wiki
+*.sqlite
+*.deb
