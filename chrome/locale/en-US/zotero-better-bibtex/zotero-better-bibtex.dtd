@@ -9,7 +9,7 @@
 <!ENTITY zotero.better-bibtex.prefs.disabled "Better BibTeX has been disabled">
 <!ENTITY zotero.better-bibtex.prefs.import-export "Import/Export">
 <!ENTITY zotero.better-bibtex.prefs.journal-abbrev "Journal abbreviations">
-<!ENTITY zotero.better-bibtex.prefs.debug "Debug">
+<!ENTITY zotero.better-bibtex.prefs.debug "Advanced">
 
 <!ENTITY zotero.better-bibtex.show-citekey "Show citekey instead of 'extra' field in reference list (requires restart)">
 <!ENTITY zotero.better-bibtex.show-item-id "Show reference ID instead of 'call number' field in reference list (requires restart)">
@@ -96,7 +96,7 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 
 <!ENTITY zotero.better-bibtex.preferences.debugOutputLogging "Better BibTeX Debug Output">
 <!ENTITY zotero.better-bibtex.debug "Better BibTeX extended debug logging. Restart Firefox/Zotero to activate, persists over reboots. Affects performance, so turn off when done.">
-
+<!ENTITY zotero.better-bibtex.postscript "Postscript">
 
 <!ENTITY zotero.better-bibtex.preserveBibTeXVariables "Preserve BibTeX variables">
 <!ENTITY zotero.better-bibtex.preserveBibTeXVariables.explain "When enabled, single-word strings will be assumed to be externally-defined @string vars, and thus not surrounded by braces">

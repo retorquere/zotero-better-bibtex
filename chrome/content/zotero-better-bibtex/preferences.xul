@@ -46,6 +46,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.skipFields"               id="pref-better-bibtex-skipFields"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.bibtexURLs"               id="pref-better-bibtex-bibtexURLs"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.warnBulkModify"           id="pref-better-bibtex-bulkWarning"             type="int"/>
+        <preference name="extensions.zotero.translators.better-bibtex.postscript"               id="pref-better-bibtex-postscript"              type="string"/>
       </preferences>
       <tabbox>
         <tabs id="better-bibtex-prefs-tabs">
@@ -237,6 +238,8 @@
             <label id="better-bibtex-preferences-cacheActivity-disabled" value="&zotero.better-bibtex.cacheActivity.disabled;"/>
             <label id="better-bibtex-preferences-cache-stats" value=""/>
             <!-- button id="better-bibtex-preferences-zombies" label="" oncommand="Zotero.BetterBibTeX.DB.purge()"/ -->
+            <label value="&zotero.better-bibtex.postscript;"/>
+            <textbox flex="1" multiline="true" preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript" class="plain"/>
           </tabpanel>
           <tabpanel> <!-- disabled -->
             <textbox flex="1" multiline="true" id="zotero-better-bibtex-disabled-message" class="plain" readonly="true"/>
