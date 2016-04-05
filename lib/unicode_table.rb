@@ -4,6 +4,7 @@ require 'nokogiri'
 require 'ostruct'
 require 'open-uri'
 require 'yaml'
+require 'json'
 
 class UnicodeConverter
   def initialize
@@ -26,14 +27,14 @@ class UnicodeConverter
     return "'" + codepoint.collect{|cp| "\\u" + cp}.join('') + "'"
   end
 
-  def save(cs)
+  def save(target, source = nil)
     fixup
     expand
 
-    cs = File.expand_path(cs)
-    open(cs, 'w'){|f|
-      f.puts "LaTeX = {} unless LaTeX"
-      f.puts "LaTeX.toLaTeX = { unicode: {}, ascii: {} }"
+    target = File.expand_path(target)
+    open((source.nil? ? target : '/dev/null'), 'w'){|cs|
+      cs.puts "LaTeX = {} unless LaTeX"
+      cs.puts "LaTeX.toLaTeX = { unicode: {}, ascii: {} }"
 
       unicode = {math: '', text: ''}
       done = {}
@@ -41,36 +42,64 @@ class UnicodeConverter
         next unless (latex.force || charcode >= 0x20 && charcode <= 0x7E) || charcode == 0x00A0 || latex.latex == ' ' || charcode == ' '.ord # an ascii character that needs translation? Probably a TeX special character
         next if done[charcode]
         done[charcode] = true
-        unicode[latex.math ? :math : :text] << "  #{char(charcode)}: #{latex.latex[0].inspect}\n"
+        unicode[latex.math ? :math : :text] << "  #{char(charcode)}: #{latex.latex[0].to_json}\n"
       }
-      f.puts "LaTeX.toLaTeX.unicode.math ="
-      f.puts unicode[:math]
-      f.puts "LaTeX.toLaTeX.unicode.text ="
-      f.puts unicode[:text]
+      cs.puts "LaTeX.toLaTeX.unicode.math ="
+      cs.puts unicode[:math]
+      cs.puts "LaTeX.toLaTeX.unicode.text ="
+      cs.puts unicode[:text]
 
       ascii = {math: '', text: ''}
       done = {}
       @chars.sort.map{|charcode, latex|
         next if done[charcode]
         done[charcode] = true
-        ascii[latex.math ? :math : :text] << "  #{char(charcode)}: #{latex.latex[0].inspect}\n"
+        ascii[latex.math ? :math : :text] << "  #{char(charcode)}: #{latex.latex[0].to_json}\n"
       }
-      f.puts "LaTeX.toLaTeX.ascii.math ="
-      f.puts ascii[:math]
-      f.puts "LaTeX.toLaTeX.ascii.text ="
-      f.puts ascii[:text]
+      cs.puts "LaTeX.toLaTeX.ascii.math ="
+      cs.puts ascii[:math]
+      cs.puts "LaTeX.toLaTeX.ascii.text ="
+      cs.puts ascii[:text]
 
       done = {}
-      f.puts "LaTeX.toUnicode ="
+      unterminated = []
+      terminated = []
+      cs.puts "LaTeX.toUnicode ="
       @chars.sort.map{|charcode, latex|
         latex.latex.each{|ltx|
           next if ltx =~ /^[a-z]+$/i || ltx.strip == ''
+          ltx.strip!
+          ltx = ltx[1..-2] if ltx =~ /^\{.*\}$/
+          ltx.sub!(/\{\}$/, '')
           next if charcode < 256 && ltx == charcode.chr
           next if done[ltx]
           done[ltx] = true
-          f.puts "  #{ltx.inspect}: #{char(charcode)}"
+          # check
+          #puts ltx if ltx[0] != '\\' || ltx =~ /\{/
+          cs.puts "  #{ltx.strip.to_json}: #{char(charcode)}"
+
+          if ltx =~ /[a-z0-9]$/
+            unterminated << ltx.to_json
+          else
+            terminated << ltx.to_json
+          end
         }
       }
+
+      terminated = terminated.join("\n  / ")
+      unterminated = unterminated.join("\n  / ")
+
+      if source
+        puts "Patching #{target}"
+        open(target, 'w'){|pegjs|
+          pegjs.puts open(source).read + "\n\n"
+          pegjs.puts "latex = terminated:latex_terminated / (unterminated:latex_unterminated ![a-z0-9]) { return terminated || unterminated }"
+          pegjs.puts ""
+          pegjs.puts "latex_terminated\n  = #{terminated}\n\n"
+          pegjs.puts ""
+          pegjs.puts "latex_unterminated\n  = #{unterminated}\n\n"
+        }
+      end
     }
   end
 

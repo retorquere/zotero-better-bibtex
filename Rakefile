@@ -616,6 +616,9 @@ file 'resource/translators/latex_unicode_mapping.coffee' => 'lib/unicode_table.r
     UnicodeConverter.new.save(t.name)
   end
 end
+file 'resource/translators/BetterBibTeXParser.pegjs' => [ 'resource/translators/BetterBibTeXParser.grammar', 'lib/unicode_table.rb' ] do |t|
+  UnicodeConverter.new.save(t.name, t.source)
+end
 
 task :markfailing do
   tests = false
