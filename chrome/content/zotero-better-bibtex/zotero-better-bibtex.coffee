@@ -1140,6 +1140,7 @@ Zotero.BetterBibTeX.getContentsFromURL = (url) ->
     throw new Error("Failed to load #{url}: #{err.msg}")
 
 Zotero.BetterBibTeX.load = (translator) ->
+  throw new Error('not a translator') unless translator.label
   @removeTranslator(translator)
 
   try
