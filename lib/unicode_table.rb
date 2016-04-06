@@ -100,12 +100,19 @@ class UnicodeConverter
   end
 
   def fixup
-    @chars['&'.ord] = OpenStruct.new({latex: "\\&", math: false})
-    @chars[0xFFFD] = OpenStruct.new({latex: "\\dbend", math: false})
-    @chars[0x00A0] = OpenStruct.new({latex: '~', math: false})
     @chars["\\".ord] = OpenStruct.new({latex: "\\backslash", math: true})
+    @chars['&'.ord] = OpenStruct.new({latex: "\\&", math: false})
+    @chars[0x00A0] = OpenStruct.new({latex: '~', math: false})
+    @chars[0x2003] = OpenStruct.new({latex: "\\quad", math: false})
+    @chars[0x2004] = OpenStruct.new({latex: "\\;", math: false})
+    @chars[0x2009] = OpenStruct.new({latex: "\\,", math: false})
+    @chars[0x2009] = OpenStruct.new({latex: "\\,", math: false})
     @chars[0x200B] = OpenStruct.new({latex: "\\mbox{}", math: false})
-    @chars[0x2009] = OpenStruct.new({latex: "\\;", math: false})
+    @chars[0x205F] = OpenStruct.new({latex: "\\:", math: false})
+    @chars[0xFFFD] = OpenStruct.new({latex: "\\dbend", math: false})
+
+    \! (-3/18 em, did not find the code for this)
+    \qqad (2 em, did not find the code)
 
     # biber doesn't like it when I escape closing square brackets #245.1, so only opening bracket
     #@chars['['.ord] = OpenStruct.new({latex: '{[}', math: false})
