@@ -136,12 +136,13 @@ GEM
     rack (1.6.4)
     rainbow (2.1.0)
     rake (11.1.2)
-    rake-xpi (0.0.17)
+    rake-xpi (0.0.20)
       aws-sdk
-      github_api
+      faraday-http-cache
       jwt
       multipart-post
       nokogiri
+      octokit
       rake
       recursive-open-struct
       rest-client
