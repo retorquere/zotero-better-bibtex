@@ -2110,7 +2110,7 @@ LaTeX.toLaTeX.ascii.text =
   '\u2006': "\\hspace{0.166em}"
   '\u2007': "\\hphantom{0}"
   '\u2008': "\\hphantom{,}"
-  '\u2009': "\\hspace{0.167em}"
+  '\u2009': "\\;"
   '\u200B': "\\mbox{}"
   '\u2010': "-"
   '\u2013': "{\\textendash}"
@@ -2999,7 +2999,7 @@ LaTeX.toUnicode =
   "\\hspace{0.166em}": '\u2006'
   "\\hphantom{0}": '\u2007'
   "\\hphantom{,}": '\u2008'
-  "\\hspace{0.167em}": '\u2009'
+  "\\;": '\u2009'
   "\\mkern1mu": '\u200A'
   "\\mbox": '\u200B'
   "-": '\u2010'

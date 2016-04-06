@@ -611,14 +611,23 @@ task :share => XPI.xpi do |t|
   end
 end
 
-file 'resource/translators/latex_unicode_mapping.coffee' => 'lib/unicode_table.rb' do |t|
+file UnicodeConverter.cache => 'lib/unicode_table.rb' do |t|
+  puts "#{t.name} outdated"
+  UnicodeConverter.new.download
+end
+
+file 'resource/translators/latex_unicode_mapping.coffee' => UnicodeConverter.cache do |t|
+  puts "#{t.name} outdated"
   cleanly(t.name) do
-    UnicodeConverter.new.save(t.name)
+    UnicodeConverter.new.mapping(t.name)
   end
 end
-file 'resource/translators/BetterBibTeXParser.pegjs' => [ 'resource/translators/BetterBibTeXParser.grammar', 'lib/unicode_table.rb' ] do |t|
-  UnicodeConverter.new.save(t.name, t.source)
-end
+#file 'resource/translators/BetterBibTeXParser.pegjs' => [ 'resource/translators/BetterBibTeXParser.grammar', UnicodeConverter.cache ] do |t|
+#  puts "#{t.name} outdated"
+#  cleanly(t.name) do
+#    UnicodeConverter.new.pegjs(t.source, t.name)
+#  end
+#end
 
 task :markfailing do
   tests = false

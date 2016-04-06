@@ -7,12 +7,11 @@ require 'yaml'
 require 'json'
 
 class UnicodeConverter
-  def initialize
-    @chars = {}
-    @lowmask = ('1' * 10).to_i(2)
+  @@lowmask = ('1' * 10).to_i(2)
+  @@cache = 'resource/translators/unicode.yml'
 
-    read('http://www.w3.org/2003/entities/2007xml/unicode.xml')
-    read('http://www.w3.org/Math/characters/unicode.xml')
+  def self.cache
+    return @@cache
   end
 
   def char(charcode)
@@ -23,14 +22,11 @@ class UnicodeConverter
     return "'\\u#{charcode.to_s(16).upcase.rjust(4, '0')}'" if charcode < 0x10000
 
     codepoint = charcode - 0x10000
-    codepoint = [(codepoint >> 10) + 0xD800, (@lowmask & codepoint) + 0xDC00].collect{|n| n.to_s(16).upcase.rjust(4, '0')}
+    codepoint = [(codepoint >> 10) + 0xD800, (@@lowmask & codepoint) + 0xDC00].collect{|n| n.to_s(16).upcase.rjust(4, '0')}
     return "'" + codepoint.collect{|cp| "\\u" + cp}.join('') + "'"
   end
 
   def save(target, source = nil)
-    fixup
-    expand
-
     target = File.expand_path(target)
     open((source.nil? ? target : '/dev/null'), 'w'){|cs|
       cs.puts "LaTeX = {} unless LaTeX"
@@ -78,23 +74,23 @@ class UnicodeConverter
           #puts ltx if ltx[0] != '\\' || ltx =~ /\{/
           cs.puts "  #{ltx.strip.to_json}: #{char(charcode)}"
 
-          if ltx =~ /[a-z0-9]$/
-            unterminated << ltx.to_json
+          if ltx =~ /[a-z0-9]$/i
+            unterminated << ltx
           else
-            terminated << ltx.to_json
+            terminated << ltx
           end
         }
       }
 
-      terminated = terminated.join("\n  / ")
-      unterminated = unterminated.join("\n  / ")
-
       if source
-        puts "Patching #{target}"
+        puts "Unterminated: #{unterminated.collect{|ltx| ltx.length}.uniq.sort}"
+        puts "Terminated: #{terminated.collect{|ltx| ltx.length}.uniq.sort}"
+        terminated = terminated.collect{|ltx| ltx.to_json}.join("\n  / ")
+        unterminated = unterminated.collect{|ltx| ltx.to_json}.join("\n  / ")
+
+        puts "Patching #{target} from #{source} (#{IO.readlines(source).length} lines)"
         open(target, 'w'){|pegjs|
           pegjs.puts open(source).read + "\n\n"
-          pegjs.puts "latex = terminated:latex_terminated / (unterminated:latex_unterminated ![a-z0-9]) { return terminated || unterminated }"
-          pegjs.puts ""
           pegjs.puts "latex_terminated\n  = #{terminated}\n\n"
           pegjs.puts ""
           pegjs.puts "latex_unterminated\n  = #{unterminated}\n\n"
@@ -109,6 +105,7 @@ class UnicodeConverter
     @chars[0x00A0] = OpenStruct.new({latex: '~', math: false})
     @chars["\\".ord] = OpenStruct.new({latex: "\\backslash", math: true})
     @chars[0x200B] = OpenStruct.new({latex: "\\mbox{}", math: false})
+    @chars[0x2009] = OpenStruct.new({latex: "\\;", math: false})
 
     # biber doesn't like it when I escape closing square brackets #245.1, so only opening bracket
     #@chars['['.ord] = OpenStruct.new({latex: '{[}', math: false})
@@ -199,8 +196,141 @@ class UnicodeConverter
       @chars[char['id'].sub(/^u/i, '').to_i(16)] = OpenStruct.new({latex: latex , math: math})
     }
   end
+
+  def download(force=true)
+    if !force && File.file?(@@cache)
+      @chars = YAML::load_file(@@cache)
+    else
+      @chars = {}
+
+      read('http://www.w3.org/2003/entities/2007xml/unicode.xml')
+      read('http://www.w3.org/Math/characters/unicode.xml')
+
+      self.fixup
+      self.expand
+
+      open(@@cache, 'w'){|f| f.write(@chars.to_yaml) }
+      puts "#{@@cache} saved"
+    end
+  end
+
+  def mapping(target)
+    download(false)
+    save(target)
+  end
+
+  def pegjs(source, target)
+    download(false)
+    save(target, source)
+  end
+
+  def patterns
+    download(false)
+    patterns = {}
+
+    unterminated = [
+      /^\\fontencoding{[^}]+}\\selectfont\\char[0-9]+$/,
+      /^\\[a-z]+\\[a-zA-Z]+$/,
+      /^\\fontencoding{[^}]+}\\selectfont\\char[0-9]+$/,
+      /^\\[a-z]+\\[a-zA-Z]+$/,
+      /^\\[0-9a-zA-Z]+$/,
+      /^\\u \\i$/,
+      /^\\[~\^'`"]\\[ij]$/,
+      /^\\[Huvc] [a-zA-Z]$/,
+      /^\\[\.=][a-zA-Z]$/,
+      /^\\[~\^'`"][a-zA-Z]$/,
+      /^\^[123]$/,
+
+      nil,
+
+      /^\\sim\\joinrel\\leadsto$/,
+      /^\\mathchar\"2208$/,
+      /^\\'{}[a-zA-Z]$/,
+      /^_\\ast$/,
+      /^'n$/,
+      /^\\int(\\!\\int)+$/,
+      /^\\not\\kern-0.3em\\times$/
+    ]
+    terminated = [
+      /^\\acute{\\ddot{\\[a-z]+}}$/,
+      /^\\[a-zA-Z]+{\\?[0-9a-zA-Z]+}({\\?[0-9a-zA-Z]+})?$/,
+      /^\\cyrchar{\\'\\[a-zA-Z]+}$/,
+      /^\\[a-z]+{[,\.a-z0-9]+}$/,
+      /^\\mathrm{[^}]+}$/,
+      /^\\={\\i}$/,
+      /^\\[=kr]{[a-zA-Z]}$/,
+      /^''+$/,
+      /^\\[^a-zA-Z0-9]$/,
+      /^~$/,
+      /^\\ddot{\\[a-z]+}$/,
+      /^\\Pisymbol{[a-z0-9]+}{[0-9]+}$/,
+
+      nil,
+
+      /^{\/}\\!\\!{\/}$/,
+      /^\\stackrel{\*}{=}$/,
+      /^<\\kern-0.58em\($/,
+      /^\\fbox{~~}$/,
+      /^\\not[<>]$/,
+      /^\\ensuremath{\\[a-zA-Z0-9]+}$/,
+      /^[-`,\.]+$/,
+      /^\\rule{1em}{1pt}$/,
+      /^\\'\$\\alpha\$$/,
+      /^\\mathrm{\\ddot{[A-Z]}}$/,
+      /^\\'{}{[a-zA-Z]}$/,
+      /^'$/,
+      /^\\mathbin{{:}\\!\\!{-}\\!\\!{:}}$/,
+      /^\\not =$/,
+      /^=:$/,
+      /^:=$/,
+    ]
+
+    unterminated = unterminated.collect{|p| p ? OpenStruct.new({re: p, terminated: false, max: 0}) : nil }
+    terminated = terminated.collect{|p| p ? OpenStruct.new({re: p, terminated: true, max: 0}) : nil }
+
+    @chars.each_pair{|charcode, latex|
+      latex.latex.each{|ltx|
+        next if ltx =~ /^[a-z]+$/i || ltx.strip == ''
+        ltx.strip!
+        ltx = ltx[1..-2] if ltx =~ /^\{.*\}$/
+        ltx.sub!(/\{\}$/, '')
+        next if charcode < 256 && ltx == charcode.chr
+
+        if ltx =~ /[a-z0-9]$/i # unterminated
+          pattern = unterminated.detect{|p| p && ltx =~ p.re }
+          raise "No pattern for #{ltx.inspect}" unless pattern
+          pattern.max = [pattern.max, ltx.length].max
+
+        else # terminated
+          pattern = terminated.detect{|p| p && ltx =~ p.re }
+          raise "No pattern for #{ltx.inspect}" unless pattern
+          pattern.max = [pattern.max, ltx.length].max
+        end
+      }
+    }
+
+  patterns = unterminated[0,unterminated.index(nil)] + terminated[0,terminated.index(nil)]
+  patterns.sort_by{|p| p.max}.reverse.each{|p|
+    next unless p.max > 1
+    re = p.re.to_s
+    re.sub!(/^\(\?-mix:\^/, '')
+    re.sub!(/\$\)$/, '')
+
+    rule = "  / text:(\"#{re}\")"
+    rule = rule.ljust(60, ' ')
+
+    rule += " ![a-z0-9]" unless p.terminated
+    rule = rule.ljust(72, ' ')
+    rule += " &{ return LaTeX.toUnicode[text]; }"
+    rule = rule.ljust(110, ' ')
+    rule += "{ return LaTeX.toUnicode[text]; }"
+
+    puts re
+    #puts rule
+  }
+  end
 end
 
 if __FILE__ == $0
-  UnicodeConverter.new.save(File.join(File.dirname(__FILE__), '..', 'resource', 'translators', 'latex_unicode_mapping.coffee'))
+  UnicodeConverter.new.patterns
 end
