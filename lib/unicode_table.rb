@@ -111,9 +111,6 @@ class UnicodeConverter
     @chars[0x205F] = OpenStruct.new({latex: "\\:", math: false})
     @chars[0xFFFD] = OpenStruct.new({latex: "\\dbend", math: false})
 
-    \! (-3/18 em, did not find the code for this)
-    \qqad (2 em, did not find the code)
-
     # biber doesn't like it when I escape closing square brackets #245.1, so only opening bracket
     #@chars['['.ord] = OpenStruct.new({latex: '{[}', math: false})
 

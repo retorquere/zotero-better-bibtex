@@ -4039,13 +4039,13 @@
 8195: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\hspace{1em}"
+    - "\\quad"
     :math: false
   modifiable: true
 8196: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\hspace{0.33em}"
+    - "\\;"
     :math: false
   modifiable: true
 8197: !ruby/object:OpenStruct
@@ -4075,7 +4075,7 @@
 8201: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\;"
+    - "\\,"
     :math: false
   modifiable: true
 8202: !ruby/object:OpenStruct
@@ -4265,8 +4265,7 @@
 8287: !ruby/object:OpenStruct
   table:
     :latex:
-    - "{\\mkern4mu}"
-    - "\\mkern4mu "
+    - "\\:"
     :math: false
   modifiable: true
 8288: !ruby/object:OpenStruct
@@ -15052,15 +15051,15 @@
     - "\\rangle "
     :math: true
   modifiable: true
-65533: !ruby/object:OpenStruct
-  table:
-    :latex:
-    - "\\dbend"
-    :math: false
-  modifiable: true
 8203: !ruby/object:OpenStruct
   table:
     :latex:
     - "\\mbox{}"
+    :math: false
+  modifiable: true
+65533: !ruby/object:OpenStruct
+  table:
+    :latex:
+    - "\\dbend"
     :math: false
   modifiable: true

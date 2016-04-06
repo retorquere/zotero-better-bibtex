@@ -2104,13 +2104,13 @@ LaTeX.toLaTeX.ascii.text =
   '\u04E8': "{\\cyrchar\\CYROTLD}"
   '\u04E9': "{\\cyrchar\\cyrotld}"
   '\u2002': "\\hspace{0.6em}"
-  '\u2003': "\\hspace{1em}"
-  '\u2004': "\\hspace{0.33em}"
+  '\u2003': "\\quad"
+  '\u2004': "\\;"
   '\u2005': "\\hspace{0.25em}"
   '\u2006': "\\hspace{0.166em}"
   '\u2007': "\\hphantom{0}"
   '\u2008': "\\hphantom{,}"
-  '\u2009': "\\;"
+  '\u2009': "\\,"
   '\u200B': "\\mbox{}"
   '\u2010': "-"
   '\u2013': "{\\textendash}"
@@ -2132,7 +2132,7 @@ LaTeX.toLaTeX.ascii.text =
   '\u2031': "{\\textpertenthousand}"
   '\u2039': "{\\guilsinglleft}"
   '\u203A': "{\\guilsinglright}"
-  '\u205F': "{\\mkern4mu}"
+  '\u205F': "\\:"
   '\u2060': "{\\nolinebreak}"
   '\u20A7': "\\ensuremath{\\Elzpes}"
   '\u20AC': "{\\mbox{\\texteuro}}"
@@ -2993,13 +2993,13 @@ LaTeX.toUnicode =
   "\\cyrchar\\CYROTLD": '\u04E8'
   "\\cyrchar\\cyrotld": '\u04E9'
   "\\hspace{0.6em}": '\u2002'
-  "\\hspace{1em}": '\u2003'
-  "\\hspace{0.33em}": '\u2004'
+  "\\quad": '\u2003'
+  "\\;": '\u2004'
   "\\hspace{0.25em}": '\u2005'
   "\\hspace{0.166em}": '\u2006'
   "\\hphantom{0}": '\u2007'
   "\\hphantom{,}": '\u2008'
-  "\\;": '\u2009'
+  "\\,": '\u2009'
   "\\mkern1mu": '\u200A'
   "\\mbox": '\u200B'
   "-": '\u2010'
@@ -3027,7 +3027,7 @@ LaTeX.toUnicode =
   "\\guilsinglleft": '\u2039'
   "\\guilsinglright": '\u203A'
   "''''": '\u2057'
-  "\\mkern4mu": '\u205F'
+  "\\:": '\u205F'
   "\\nolinebreak": '\u2060'
   "\\ensuremath{\\Elzpes}": '\u20A7'
   "\\mbox{\\texteuro}": '\u20AC'
