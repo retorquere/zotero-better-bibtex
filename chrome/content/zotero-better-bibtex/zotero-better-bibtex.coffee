@@ -435,6 +435,7 @@ Zotero.BetterBibTeX.extensionConflicts = ->
   @disableInConnector(Zotero.isConnector)
 
 Zotero.BetterBibTeX.disableInConnector = (isConnector) ->
+  return
   return unless isConnector
   @disable("""
     You are running Zotero in connector mode (running Zotero Firefox and Zotero Standalone simultaneously.
@@ -895,7 +896,7 @@ Zotero.BetterBibTeX.init = ->
   )
   Zotero.getActiveZoteroPane().addBeforeReloadListener((mode) =>
     @debug('before reload:', {mode})
-    @disableInConnector(mode == 'connector')
+    Zotero.BetterBibTeX.DB.save() if Zotero.BetterBibTeX.DB && mode != 'connector'
   )
 
   nids = []
@@ -903,6 +904,13 @@ Zotero.BetterBibTeX.init = ->
   nids.push(Zotero.Notifier.registerObserver(@collectionChanged, ['collection']))
   nids.push(Zotero.Notifier.registerObserver(@itemAdded, ['collection-item']))
   window.addEventListener('unload', ((e) -> Zotero.Notifier.unregisterObserver(id) for id in nids), false)
+
+  Zotero.addReloadListener(->
+    Zotero.BetterBibTeX.DB.load('reload out of connector mode') if !Zotero.initialized || Zotero.isConnector
+  )
+  Zotero.addBeforeReloadListener((mode) ->
+    Zotero.BetterBibTeX.DB.save() if Zotero.BetterBibTeX.DB && mode != 'connector'
+  )
 
   @idleService.addIdleObserver(@idleObserver, @pref.get('autoExportIdleWait'))
 
