@@ -59,7 +59,6 @@ files:
 - chrome/content/zotero-better-bibtex/preferences.js
 - chrome/content/zotero-better-bibtex/preferences.xul
 - chrome/content/zotero-better-bibtex/punycode.js
-- chrome/content/zotero-better-bibtex/release.js
 - chrome/content/zotero-better-bibtex/schomd.js
 - chrome/content/zotero-better-bibtex/serialized.js
 - chrome/content/zotero-better-bibtex/translators.js

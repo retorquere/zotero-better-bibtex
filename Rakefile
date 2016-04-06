@@ -138,7 +138,6 @@ task :gather do
     'chrome/content/zotero-better-bibtex/fold-to-ascii.js',
     'chrome/content/zotero-better-bibtex/punycode.js',
     'chrome/content/zotero-better-bibtex/lokijs.js',
-    'chrome/content/zotero-better-bibtex/release.js',
     'chrome/content/zotero-better-bibtex/csl-localedata.js',
     'chrome/content/zotero-better-bibtex/translators.js',
     'defaults/preferences/defaults.js',
@@ -158,14 +157,14 @@ task :gather do
   end
 end
 
-lambda {
-  js = "Zotero.BetterBibTeX.release = #{XPI.version.to_json};"
-  file = 'chrome/content/zotero-better-bibtex/release.js'
-  if !File.file?(file) || open(file).read.strip != js.strip
-    STDERR.puts "updating #{file} to #{js}" unless ENV['VERBOSE'] == 'false'
-    open(file, 'w') {|f| f.puts(js) }
-  end
-}.call
+#lambda {
+#  js = "Zotero.BetterBibTeX.release = #{XPI.version.to_json};"
+#  file = 'chrome/content/zotero-better-bibtex/release.js'
+#  if !File.file?(file) || open(file).read.strip != js.strip
+#    STDERR.puts "updating #{file} to #{js}" unless ENV['VERBOSE'] == 'false'
+#    open(file, 'w') {|f| f.puts(js) }
+#  end
+#}.call
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -929,7 +928,7 @@ task :s3form do
   Tempfile.create('error-report.json') do |tmp|
     tmp.puts(JSON.pretty_generate(form))
     tmp.close
-    XPI.add_asset('update.rdf', false, 'error-report.json', tmp.path, 'application/json')
+    XPI.add_asset(:'update.rdf', false, 'error-report.json', tmp.path, 'application/json')
   end
 
   builder = Nokogiri::HTML::Builder.new do |doc|
@@ -953,6 +952,46 @@ task :s3form do
   Tempfile.create('error-report.html') do |tmp|
     tmp.puts(builder.to_html)
     tmp.close
-    XPI.add_asset('update.rdf', false, 'error-report.html', tmp.path, 'text/html')
+    XPI.add_asset(:'update.rdf', false, 'error-report.html', tmp.path, 'text/html')
   end
+end
+
+task :site do
+  sh "git clone git@github.com:retorquere/zotero-better-bibtex.wiki.git wiki" unless File.directory?('wiki')
+  sh "cd wiki && git pull"
+
+  relink = lambda{|line|
+    line.gsub(/\[(.*?)\]\(https:\/\/github.com\/retorquere\/zotero-better-bibtex\/wiki\/(.*?)\)/){|match|
+      label = $1
+      link = $2
+      if link.gsub('-', ' ') == label
+        "[[#{label}]]"
+      else
+        "[[#{label}|#{link}]]"
+      end
+    }
+  }
+  open('wiki/Support.md', 'w'){|support|
+    written = false
+    support.puts("<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CONTRIBUTING.md. EDITS WILL BE OVERWRITTEN -->\n\n")
+    IO.readlines('CONTRIBUTING.md').each{|line|
+      if (line =~ /^#/ || line.strip == '' || line =~ /^<!--/) && !written
+        next
+      else
+        written = true
+        support.write(relink.call(line))
+      end
+    }
+  }
+  open('wiki/Home.md', 'w') {|home|
+    home.puts("<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->\n\n")
+    IO.readlines('README.md').each{|line|
+      next if line =~ /^<!--/
+      home.write(relink.call(line))
+    }
+  }
+
+  sh "cd wiki && git add Home.md Support.md Changelog.md"
+  sh "cd wiki && git commit -m 'Home + Support' || true"
+  sh "cd wiki && git push"
 end
