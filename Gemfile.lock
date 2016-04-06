@@ -3,12 +3,12 @@ GEM
   specs:
     addressable (2.4.0)
     ast (2.2.0)
-    aws-sdk (2.2.31)
-      aws-sdk-resources (= 2.2.31)
-    aws-sdk-core (2.2.31)
+    aws-sdk (2.2.32)
+      aws-sdk-resources (= 2.2.32)
+    aws-sdk-core (2.2.32)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.31)
-      aws-sdk-core (= 2.2.31)
+    aws-sdk-resources (2.2.32)
+      aws-sdk-core (= 2.2.32)
     backports (3.6.8)
     bibtex-ruby (4.3.0)
       latex-decode (~> 0.0)
@@ -76,7 +76,7 @@ GEM
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     iniparse (1.4.2)
-    jmespath (1.2.3)
+    jmespath (1.2.4)
       json_pure (>= 1.8.1)
     json (1.8.3)
     json_pure (1.8.3)
@@ -120,7 +120,7 @@ GEM
     octokit (4.3.0)
       sawyer (~> 0.7.0, >= 0.5.3)
     os (0.9.6)
-    overcommit (0.32.0)
+    overcommit (0.33.0)
       childprocess (~> 0.5.8)
       iniparse (~> 1.4)
     parser (2.3.0.7)
@@ -136,7 +136,7 @@ GEM
     rack (1.6.4)
     rainbow (2.1.0)
     rake (11.1.2)
-    rake-xpi (0.0.16)
+    rake-xpi (0.0.17)
       aws-sdk
       github_api
       jwt
@@ -207,7 +207,7 @@ GEM
       faraday (~> 0.9.0)
       mime-types
     webrobots (0.1.2)
-    websocket (1.2.2)
+    websocket (1.2.3)
     yajl-ruby (1.2.1)
     zip-zip (0.3)
       rubyzip (>= 1.0.0)
