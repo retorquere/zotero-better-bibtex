@@ -9,7 +9,6 @@ dependencies:
   cache_directories:
     - test/fixtures/profiles
     - test/fixtures/plugins
-    - wiki
 test:
   override:
     - bundle exec rake test[ci-cluster-$CIRCLE_NODE_INDEX]:

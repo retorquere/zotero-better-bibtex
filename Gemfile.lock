@@ -76,6 +76,7 @@ GEM
     mime-types (2.99.1)
     mime-types-data (3.2016.0221)
     mini_portile2 (2.0.0)
+    moving_average (0.1.1)
     multi_json (1.11.2)
     multi_test (0.1.2)
     multipart-post (2.0.0)
@@ -184,6 +185,7 @@ DEPENDENCIES
   headless
   jwt
   mechanize
+  moving_average
   net-sftp
   nokogiri
   octokit

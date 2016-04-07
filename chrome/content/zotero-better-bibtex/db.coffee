@@ -3,8 +3,8 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 Zotero.BetterBibTeX.DB = new class
   cacheExpiry: Date.now() - (1000 * 60 * 60 * 24 * 30)
 
-  constructor: ->
-    Zotero.debug('DB.initialize')
+  load: (reason) ->
+    Zotero.debug('DB.initialize (' + ( reason || 'startup') + ')')
     ### split to speed up auto-saves ###
 
     db = Zotero.getZoteroDatabase('betterbibtex-lokijs')
@@ -141,8 +141,9 @@ Zotero.BetterBibTeX.DB = new class
     )
 
     Zotero.debug('DB.initialize: ready')
-    Zotero.debug("DB.initialize: ready.serialized: #{@serialized.data.length}")
 
+  constructor: ->
+    @load()
     idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
     idleService.addIdleObserver({observe: (subject, topic, data) => @save() if topic == 'idle'}, 5)
 
@@ -216,7 +217,10 @@ Zotero.BetterBibTeX.DB = new class
 
   adapter:
     saveDatabase: (name, serialized, callback) ->
-      Zotero.DB.query("INSERT OR REPLACE INTO betterbibtex.lokijs (name, data) VALUES (?, ?)", [name, serialized])
+      if !Zotero.initialized || Zotero.isConnector
+        Zotero.BetterBibTeX.flash('Zotero is in connector mode -- not saving database!')
+      else
+        Zotero.DB.query("INSERT OR REPLACE INTO betterbibtex.lokijs (name, data) VALUES (?, ?)", [name, serialized])
       callback()
       return
 
