@@ -570,7 +570,13 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
   end
 
 
-  cucumber = "cucumber --require features --strict #{tag} #{features}"
+  if ENV['CIRCLE_TEST_REPORTS']
+    testlog = ENV['CIRCLE_TEST_REPORTS'] + '/cucumber/tests.cucumber'
+    testlog = "--format json --out #{testlog.shellescape}"
+  else
+    testlog = ''
+  end
+  cucumber = "cucumber #{testlog} --require features --strict #{tag} #{features}"
   puts "Tests running: #{cucumber}"
   if ENV['CI'] == 'true'
     sh cucumber
