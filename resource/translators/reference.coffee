@@ -393,6 +393,7 @@ class Reference
       for name, value of field
         field = {name, value}
         break
+      return unless field.name && field.value
 
     if ! field.bibtex
       return if typeof field.value != 'number' && not field.value
