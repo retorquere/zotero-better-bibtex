@@ -577,6 +577,7 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
   else
     testlog = ''
   end
+  testlog = ''
   cucumber = "cucumber #{testlog} --require features --strict #{tag} #{features}"
   puts "Tests running: #{cucumber}"
   if ENV['CI'] == 'true'
