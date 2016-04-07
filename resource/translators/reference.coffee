@@ -389,6 +389,11 @@ class Reference
   #   ignored)
   ###
   add: (field) ->
+    if !field.name
+      for name, value of field
+        field = {name, value}
+        break
+
     if ! field.bibtex
       return if typeof field.value != 'number' && not field.value
       return if typeof field.value == 'string' && field.value.trim() == ''
