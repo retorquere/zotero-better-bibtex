@@ -35,6 +35,7 @@ Scenario Outline: Better BibTeX Import
 
   Examples:
   | file                                                                        | references  |
+  | Math markup to unicode not always imported correctly #472                   | 2           |
   | Better BibTeX.008                                                           | 1           |
   | Failure to handle unparsed author names (92)                                | 1           |
   | Better BibTeX.001                                                           | 1           |

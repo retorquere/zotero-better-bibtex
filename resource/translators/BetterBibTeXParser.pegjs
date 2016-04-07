@@ -1,5 +1,16 @@
 {
   var bibtex = new BetterBibTeXParserSupport(options);
+
+  function say(str) {
+    Translator.log(str);
+    return true;
+  }
+  function rule(name) {
+    return say(name + ':' + input.substr(peg$currPos, 4));
+  }
+  function lookup(text) {
+    return LaTeX.toUnicode[bibtex.flatten(text)];
+  }
 }
 
 start
@@ -75,6 +86,25 @@ raw
 
 string
   = text:plaintext                { return text }
+
+  / text:("\\fontencoding{" [^}]+ "}\\selectfont\\char" [0-9]+) ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
+  / text:("\\" [a-z]+ "\\" [a-zA-Z]+)                           ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
+  / text:("\\acute{\\ddot{\\" [a-z]+ "}}")                                          &{ return lookup(text); }  { return lookup(text); }
+  / text:("\\" [a-zA-Z]+ "{" "\\"? [0-9a-zA-Z]+ "}" ("{" "\\"? [0-9a-zA-Z]+ "}")?)  &{ return lookup(text); }  { return lookup(text); }
+  / text:("\\" [0-9a-zA-Z]+)                                    ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
+  / text:("\\cyrchar{\\'\\" [a-zA-Z]+ "}")                                          &{ return lookup(text); }  { return lookup(text); }
+  / text:("\\" [a-z]+ "{" [,\.a-z0-9]+ "}")                                         &{ return lookup(text); }  { return lookup(text); }
+  / text:("\\mathrm{" [^}]+ "}")                                                    &{ return lookup(text); }  { return lookup(text); }
+  / text:("\\={\\i}")                                                               &{ return lookup(text); }  { return lookup(text); }
+  / text:("\\u \\i")                                            ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
+  / text:("\\" [=kr] "{" [a-zA-Z] "}")                                              &{ return lookup(text); }  { return lookup(text); }
+  / text:("\\" [~\^'`"] "\\" [ij])                              ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
+  / text:("'" "'"+)                                                                 &{ return lookup(text); }  { return lookup(text); }
+  / text:("\\" [Huvc] " " [a-zA-Z])                             ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
+  / text:("\\" [\.=] [a-zA-Z])                                  ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
+  / text:("\\" [~\^'`"] [a-zA-Z])                               ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
+  / text:("^" [123])                                            ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
+
   / "\\\\"                        { return "\n" }
   / bracket:[\[\]]                { return bracket }
   / "\\" text:quotedchar          { return text }
@@ -88,25 +118,6 @@ string
   / "\\textit" text:bracedparam   { return '<i>' + text + '</i>' }
   / "\\textbf" text:bracedparam   { return '<b>' + text + '</b>' }
   / "\\textsc" text:bracedparam   { return '<span style="small-caps">' + text + '</span>' }
-
-  / text:("\\fontencoding{" [^}]+ "}\\selectfont\\char" [0-9]+) ![a-z0-9]           &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("\\" [a-z]+ "\\" [a-zA-Z]+)                           ![a-z0-9]           &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("\\acute{\\ddot{\\" [a-z]+ "}}")                                          &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("\\" [a-zA-Z]+ "{" "\\"? [0-9a-zA-Z]+ "}" ("{" "\\"? [0-9a-zA-Z]+ "}")?)  &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("\\" [0-9a-zA-Z]+)                                    ![a-z0-9]           &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("\\cyrchar{\\'\\" [a-zA-Z]+ "}")                                          &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("\\" [a-z]+ "{" [,\.a-z0-9]+ "}")                                         &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("\\mathrm{" [^}]+ "}")                                                    &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("\\={\\i}")                                                               &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("\\u \\i")                                            ![a-z0-9]           &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("\\" [=kr] "{" [a-zA-Z] "}")                                              &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("\\" [~\^'`"] "\\" [ij])                              ![a-z0-9]           &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("'" "'"+)                                                                 &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("\\" [Huvc] " " [a-zA-Z])                             ![a-z0-9]           &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("\\" [\.=] [a-zA-Z])                                  ![a-z0-9]           &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("\\" [~\^'`"] [a-zA-Z])                               ![a-z0-9]           &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-  / text:("^" [123])                                            ![a-z0-9]           &{ return LaTeX.toUnicode[text]; }   { return LaTeX.toUnicode[text]; }
-
   / '{' text:string* '}'          { return new String(bibtex.flatten(text)) } // use 'new String', not 'String', because only 'new String' will match 'instanceof'!
   / '$' text:string* '$'          { return bibtex.flatten(text) }
   /* / "%" [^\n]* "\n"            { return '' }          comment */
