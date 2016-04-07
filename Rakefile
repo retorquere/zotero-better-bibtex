@@ -572,6 +572,7 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
 
   if ENV['CIRCLE_TEST_REPORTS']
     testlog = ENV['CIRCLE_TEST_REPORTS'] + '/cucumber/tests.cucumber'
+    FileUtils.mkdir_p(File.dirname(testlog))
     testlog = "--format json --out #{testlog.shellescape}"
   else
     testlog = ''
