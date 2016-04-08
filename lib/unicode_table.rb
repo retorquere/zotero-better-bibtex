@@ -329,8 +329,7 @@ class UnicodeConverter
     rule = rule.ljust(110, ' ')
     rule += "{ return LaTeX.toUnicode[text]; }"
 
-    puts re
-    #puts rule
+    puts rule
   }
   end
 end

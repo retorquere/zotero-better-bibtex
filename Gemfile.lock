@@ -2,12 +2,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.4.0)
-    aws-sdk (2.2.32)
-      aws-sdk-resources (= 2.2.32)
-    aws-sdk-core (2.2.32)
+    aws-sdk (2.2.33)
+      aws-sdk-resources (= 2.2.33)
+    aws-sdk-core (2.2.33)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.32)
-      aws-sdk-core (= 2.2.32)
+    aws-sdk-resources (2.2.33)
+      aws-sdk-core (= 2.2.33)
     backports (3.6.8)
     bibtex-ruby (4.3.0)
       latex-decode (~> 0.0)
@@ -152,6 +152,7 @@ GEM
       pusher-client (~> 0.4)
       typhoeus (~> 0.6, >= 0.6.8)
     travis_parallel_sentinel (0.1.14)
+    trollop (2.1.2)
     typhoeus (0.8.0)
       ethon (>= 0.8.0)
     unf (0.1.4)
@@ -201,6 +202,7 @@ DEPENDENCIES
   sqlite3
   travis
   travis_parallel_sentinel
+  trollop
   typhoeus
   washbullet
   zip-zip
