@@ -1,6 +1,6 @@
 {
   var bibtex = new BetterBibTeXParserSupport(options);
-  bibtex.log(options);
+  Zotero.debug('parser options:' + JSON.stringify(options));
 
   function say(str) {
     bibtex.log(str);

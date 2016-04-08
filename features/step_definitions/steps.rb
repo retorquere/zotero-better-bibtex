@@ -140,6 +140,7 @@ Before do |scenario|
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.attachmentRelativePath', true)
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.autoExport', 'on-change')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.debug', true)
+  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.removeStock', true)
 
   @cacheStats = $Firefox.BetterBibTeX.cacheStats
 
