@@ -107,7 +107,7 @@ class UnicodeConverter
     @chars[0x2004] = OpenStruct.new({latex: "\\;", math: false})
     @chars[0x2009] = OpenStruct.new({latex: "\\,", math: false})
     @chars[0x2009] = OpenStruct.new({latex: "\\,", math: false})
-    @chars[0x200B] = OpenStruct.new({latex: "\\mbox{}", math: false})
+    @chars[0x200B] = OpenStruct.new({latex: "\\hspace{0pt}", math: false})
     @chars[0x205F] = OpenStruct.new({latex: "\\:", math: false})
     @chars[0xFFFD] = OpenStruct.new({latex: "\\dbend", math: false})
 

@@ -15239,7 +15239,7 @@
 8203: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mbox{}"
+    - "\\hspace{0pt}"
     :math: false
   modifiable: true
 65533: !ruby/object:OpenStruct
