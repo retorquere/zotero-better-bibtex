@@ -28,7 +28,7 @@ Scenario: option to mantain the braces and special commands in titles or all fie
   Then the library should match 'import/Better BibTeX.007.raw.json'
   And a library export using 'Better BibTeX' should match 'import/Better BibTeX.007.roundtrip.bib'
 
-@i3
+@i3 @472
 Scenario Outline: Better BibTeX Import
   When I import <references> reference from 'import/<file>.bib'
   Then the library without collections should match 'import/<file>.json'

@@ -6,10 +6,13 @@
     return true;
   }
   function rule(name) {
-    return say(name + ':' + input.substr(peg$currPos, 4));
+    return say(name + ':' + input.substr(peg$currPos, 400))
   }
-  function lookup(text) {
-    return LaTeX.toUnicode[bibtex.flatten(text)];
+  function lookup(text, rule) {
+    var match = LaTeX.toUnicode[bibtex.flatten(text)];
+    // if (rule && match && console && console.log) { console.log('rule ' + rule + ' matched ' + JSON.stringify(text) + ' to ' + JSON.stringify(match)); }
+    // if (rule && match && console && console.log) { console.log('rule ' + rule + ' matched ' + JSON.stringify(text) + ' to ' + match.charCodeAt(0).toString(16)); }
+    return match;
   }
 }
 
@@ -87,28 +90,30 @@ raw
 string
   = text:plaintext                { return text }
 
-  / text:("\\fontencoding{" [^}]+ "}\\selectfont\\char" [0-9]+) ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
-  / text:("\\" [a-z]+ "\\" [a-zA-Z]+)                           ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
-  / text:("\\acute{\\ddot{\\" [a-z]+ "}}")                                          &{ return lookup(text); }  { return lookup(text); }
-  / text:("\\" [a-zA-Z]+ "{" "\\"? [0-9a-zA-Z]+ "}" ("{" "\\"? [0-9a-zA-Z]+ "}")?)  &{ return lookup(text); }  { return lookup(text); }
-  / text:("\\" [0-9a-zA-Z]+)                                    ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
-  / text:("\\cyrchar{\\'\\" [a-zA-Z]+ "}")                                          &{ return lookup(text); }  { return lookup(text); }
-  / text:("\\" [a-z]+ "{" [,\.a-z0-9]+ "}")                                         &{ return lookup(text); }  { return lookup(text); }
-  / text:("\\mathrm{" [^}]+ "}")                                                    &{ return lookup(text); }  { return lookup(text); }
-  / text:("\\={\\i}")                                                               &{ return lookup(text); }  { return lookup(text); }
-  / text:("\\u \\i")                                            ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
-  / text:("\\" [=kr] "{" [a-zA-Z] "}")                                              &{ return lookup(text); }  { return lookup(text); }
-  / text:("\\" [~\^'`"] "\\" [ij])                              ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
-  / text:("'" "'"+)                                                                 &{ return lookup(text); }  { return lookup(text); }
-  / text:("\\" [Huvc] " " [a-zA-Z])                             ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
-  / text:("\\" [\.=] [a-zA-Z])                                  ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
-  / text:("\\" [~\^'`"] [a-zA-Z])                               ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
-  / text:("^" [123])                                            ![a-z0-9]           &{ return lookup(text); }  { return lookup(text); }
+  / text:("\\fontencoding{" [^}]+ "}\\selectfont\\char" [0-9]+)                     &{ return lookup(text, '1'); }  { return lookup(text); }
+  / text:("\\" [a-z]+ "\\" [a-zA-Z]+)                                               &{ return lookup(text, '2'); }  { return lookup(text); }
+  / text:("\\acute{\\ddot{\\" [a-z]+ "}}")                                          &{ return lookup(text, '3'); }  { return lookup(text); }
+  / text:("\\" [a-zA-Z]+ "{" "\\"? [0-9a-zA-Z]+ "}" ("{" "\\"? [0-9a-zA-Z]+ "}")?)  &{ return lookup(text, '4'); }  { return lookup(text); }
+  / text:("\\" [0-9a-zA-Z]+)                                                        &{ return lookup(text, '5'); }  { return lookup(text); }
+  / text:("\\cyrchar{\\'\\" [a-zA-Z]+ "}")                                          &{ return lookup(text, '6'); }  { return lookup(text); }
+  / text:("\\" [a-z]+ "{" [,\.a-z0-9]+ "}")                                         &{ return lookup(text, '7'); }  { return lookup(text); }
+  / text:("\\mathrm{" [^}]+ "}")                                                    &{ return lookup(text, '8'); }  { return lookup(text); }
+  / text:("\\={\\i}")                                                               &{ return lookup(text, '9'); }  { return lookup(text); }
+  / text:("\\u \\i")                                                                &{ return lookup(text, '10'); }  { return lookup(text); }
+  / text:("\\" [=kr] "{" [a-zA-Z] "}")                                              &{ return lookup(text, '11'); }  { return lookup(text); }
+  / text:("\\" [~\^'`"] "\\" [ij])                                                  &{ return lookup(text, '12'); }  { return lookup(text); }
+  / text:("'" "'"+)                                                                 &{ return lookup(text, '13'); }  { return lookup(text); }
+  / text:("\\" [Huvc] " " [a-zA-Z])                                                 &{ return lookup(text, '14'); }  { return lookup(text); }
+  / text:("\\" [\.=] [a-zA-Z])                                                      &{ return lookup(text, '15'); }  { return lookup(text); }
+  / text:("\\" [~\^'`"] [a-zA-Z])                                                   &{ return lookup(text, '16'); }  { return lookup(text); }
+  / text:("^" [123])                                                                &{ return lookup(text, '17'); }  { return lookup(text); }
+  / text:("\\" [^a-zA-Z0-9])                                                        &{ return lookup(text, '18'); }  { return lookup(text); }
+  / text:("~")                                                                      &{ return lookup(text, '19'); }  { return lookup(text); }
 
   / "\\\\"                        { return "\n" }
   / bracket:[\[\]]                { return bracket }
   / "\\" text:quotedchar          { return text }
-  / text:(_ / [~])+               { return ' ' }
+  / text:_+                       { return ' ' }
   / [#$&]+                        { return '' } /* macro parameters, math mode, table separator */
   / '_' text:param                { return '<sub>' + text + '</sub>' }
   / '^' text:param                { return '<sup>' + text + '</sup>' }
@@ -123,9 +128,9 @@ string
   /* / "%" [^\n]* "\n"            { return '' }          comment */
   / '%'                           { return '%' } // this doesn't feel right
   / "\\" command:[^a-z] ('[' key_value* ']')?  param:param { return bibtex.command(command, param); /* single-char command */ }
-  / "\\" cmd:[^a-z] ('[' key_value* ']')?  _+ { return LaTeX.toUnicode["\\" + cmd] || cmd /* single-char command without parameter */ }
-  / "\\" cmd:plaintext ('[' key_value* ']')? '{' text:string* '}' { return ((LaTeX.toUnicode["\\" + cmd] || '') + bibtex.flatten(text)); /* command */ }
-  / "\\" cmd:plaintext _* { return LaTeX.toUnicode["\\" + cmd] || cmd /* bare command */ }
+  / "\\" cmd:[^a-z] ('[' key_value* ']')?  _+ { return lookup("\\" + cmd) || cmd; /* single-char command without parameter */ }
+  / "\\" cmd:plaintext ('[' key_value* ']')? '{' text:string* '}' { return (lookup("\\" + cmd) || '') + bibtex.flatten(text); /* command */ }
+  / "\\" cmd:plaintext _* { return lookup("\\" + cmd) || cmd; /* bare command */ }
 
 param
   = text:[^\\{]           { return text }

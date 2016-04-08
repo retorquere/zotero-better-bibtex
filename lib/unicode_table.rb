@@ -315,7 +315,7 @@ class UnicodeConverter
 
   patterns = unterminated[0,unterminated.index(nil)] + terminated[0,terminated.index(nil)]
   patterns.sort_by{|p| p.max}.reverse.each{|p|
-    next unless p.max > 1
+    #next unless p.max > 1
     re = p.re.to_s
     re.sub!(/^\(\?-mix:\^/, '')
     re.sub!(/\$\)$/, '')
