@@ -2,12 +2,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.4.0)
-    aws-sdk (2.2.32)
-      aws-sdk-resources (= 2.2.32)
-    aws-sdk-core (2.2.32)
+    aws-sdk (2.2.33)
+      aws-sdk-resources (= 2.2.33)
+    aws-sdk-core (2.2.33)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.32)
-      aws-sdk-core (= 2.2.32)
+    aws-sdk-resources (2.2.33)
+      aws-sdk-core (= 2.2.33)
     backports (3.6.8)
     bibtex-ruby (4.3.0)
       latex-decode (~> 0.0)
@@ -15,6 +15,7 @@ GEM
     builder (3.2.2)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
+    colorize (0.7.7)
     cucumber (2.3.3)
       builder (>= 2.1.2)
       cucumber-core (~> 1.4.0)
@@ -74,7 +75,6 @@ GEM
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (>= 0.0.9, < 0.2)
     mime-types (2.99.1)
-    mime-types-data (3.2016.0221)
     mini_portile2 (2.0.0)
     moving_average (0.1.1)
     multi_json (1.11.2)
@@ -141,6 +141,8 @@ GEM
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
+    shell-spinner (1.0.4)
+      colorize
     sqlite3 (1.3.11)
     travis (1.8.2)
       backports
@@ -152,6 +154,7 @@ GEM
       pusher-client (~> 0.4)
       typhoeus (~> 0.6, >= 0.6.8)
     travis_parallel_sentinel (0.1.14)
+    trollop (2.1.2)
     typhoeus (0.8.0)
       ethon (>= 0.8.0)
     unf (0.1.4)
@@ -198,9 +201,14 @@ DEPENDENCIES
   rspec
   rubyzip (>= 1.0.0)
   selenium-webdriver
+  shell-spinner
   sqlite3
   travis
   travis_parallel_sentinel
+  trollop
   typhoeus
   washbullet
   zip-zip
+
+BUNDLED WITH
+   1.11.2

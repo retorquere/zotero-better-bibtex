@@ -35,3 +35,4 @@ gem 'travis_parallel_sentinel'
 gem 'typhoeus'
 gem 'washbullet'
 gem 'zip-zip' # will load compatibility for old rubyzip API.
+gem 'shell-spinner'
