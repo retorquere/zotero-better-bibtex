@@ -905,10 +905,11 @@ Zotero.BetterBibTeX.init = ->
   nids.push(Zotero.Notifier.registerObserver(@itemAdded, ['collection-item']))
   window.addEventListener('unload', ((e) -> Zotero.Notifier.unregisterObserver(id) for id in nids), false)
 
-  Zotero.addReloadListener(->
+  zoteroPane = Zotero.getActiveZoteroPane()
+  zoteroPane.addReloadListener(->
     Zotero.BetterBibTeX.DB.load('reload out of connector mode') if !Zotero.initialized || Zotero.isConnector
   )
-  Zotero.addBeforeReloadListener((mode) ->
+  zoteroPane.addBeforeReloadListener((mode) ->
     Zotero.BetterBibTeX.DB.save() if Zotero.BetterBibTeX.DB && mode != 'connector'
   )
 
