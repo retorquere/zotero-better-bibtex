@@ -47,8 +47,8 @@ doExport = ->
   while item = Translator.nextItem()
     ref = new Reference(item)
 
-    ref.add({ name: 'number', value: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber })
-    ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
+    ref.add({ number: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber })
+    ref.add({ urldate: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
     Translator.debug('urls:', {setting: Translator.bibtexURLs})
     switch Translator.bibtexURLs
@@ -68,8 +68,8 @@ doExport = ->
         ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle, preserveBibTeXVariables: true })
 
     switch item.itemType
-      when 'thesis' then ref.add({ name: 'school', value: item.publisher })
-      when 'report' then ref.add({ name: 'institution', value: item.publisher })
+      when 'thesis' then ref.add({ school: item.publisher })
+      when 'report' then ref.add({ institution: item.publisher })
       else               ref.add({ name: 'publisher', value: item.publisher, enc: 'literal' })
 
     if item.itemType == 'thesis' && item.thesisType in ['mastersthesis', 'phdthesis']
@@ -99,10 +99,10 @@ doExport = ->
     if item.date
       date = Zotero.BetterBibTeX.parseDateToObject(item.date, item.language)
       if date.literal || date.year_end
-        ref.add({ name: 'year', value: item.date })
+        ref.add({ year: item.date })
       else
         ref.add({ name: 'month', value: months[date.month - 1], bare: true }) if date.month
-        ref.add({ name: 'year', value: '' + date.year })
+        ref.add({ year: '' + date.year })
 
     ref.add({ name: 'note', value: item.extra, allowDuplicates: true })
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
@@ -110,7 +110,7 @@ doExport = ->
     if item.pages
       pages = item.pages
       pages = pages.replace(/[-\u2012-\u2015\u2053]+/g, '--') unless ref.raw
-      ref.add({ name: 'pages', value: pages })
+      ref.add({ pages })
 
     if item.notes and Translator.exportNotes
       for note in item.notes
