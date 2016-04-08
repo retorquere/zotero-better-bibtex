@@ -1,6 +1,6 @@
 {
   var bibtex = new BetterBibTeXParserSupport(options);
-  Zotero.debug('parser options:' + JSON.stringify(options));
+  // Zotero.debug('parser options:' + JSON.stringify(options));
 
   function say(str) {
     bibtex.log(str);
@@ -106,7 +106,7 @@ string
   / text:("'" "'"+)                                                                 &{ return lookup(text, '13'); }  { return lookup(text); }
   / text:("\\" [Huvc] " " [a-zA-Z])                                    ![a-z0-9]    &{ return lookup(text, '14'); }  { return lookup(text); }
   / text:("\\" [\.=] [a-zA-Z])                                         ![a-z0-9]    &{ return lookup(text, '15'); }  { return lookup(text); }
-  / text:("\\" [~\^'`"] [a-zA-Z])                                      ![a-z0-9]    &{ return lookup(text, '16'); }  { return lookup(text); }
+  / text:("\\" [~\^'`"] [a-zA-Z] _*)                                                &{ return lookup(text, '16'); }  { return lookup(text); }
   / text:("^" [123])                                                   ![a-z0-9]    &{ return lookup(text, '17'); }  { return lookup(text); }
   / text:("\\" [^a-zA-Z0-9])                                                        &{ return lookup(text, '18'); }  { return lookup(text); }
   / text:("~")                                                                      &{ return lookup(text, '19'); }  { return lookup(text); }
