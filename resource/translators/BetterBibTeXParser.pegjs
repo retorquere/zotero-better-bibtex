@@ -1,8 +1,9 @@
 {
   var bibtex = new BetterBibTeXParserSupport(options);
+  bibtex.log(options);
 
   function say(str) {
-    Translator.log(str);
+    bibtex.log(str);
     return true;
   }
   function rule(name) {
@@ -10,8 +11,8 @@
   }
   function lookup(text, rule) {
     var match = LaTeX.toUnicode[bibtex.flatten(text)];
-    if (rule && match && console && console.log) { console.log('rule ' + rule + ' matched ' + JSON.stringify(text) + ' to ' + JSON.stringify(match)); }
-    // if (rule && match && console && console.log) { console.log('rule ' + rule + ' matched ' + JSON.stringify(text) + ' to ' + match.charCodeAt(0).toString(16)); }
+    // if (rule && match) { bibtex.log('rule ' + rule + ' matched ' + JSON.stringify(text) + ' to ' + JSON.stringify(match)); }
+    // if (rule && match) { bibtex.log('rule ' + rule + ' matched ' + JSON.stringify(text) + ' to ' + match.charCodeAt(0).toString(16)); }
     return match;
   }
 }
