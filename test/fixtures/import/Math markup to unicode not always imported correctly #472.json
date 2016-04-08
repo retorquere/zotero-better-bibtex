@@ -2,21 +2,21 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.43-manchineel-1460014010",
+    "release": "1.6.43",
     "preferences": {
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "attachmentsNoMetadata": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoAbbrev": false,
-      "autoExport": "immediate",
+      "autoExport": "idle",
       "autoExportIdleWait": 10,
       "cacheFlushInterval": 5,
       "cacheReset": 0,
       "confirmCacheResetSize": 1000,
       "caching": true,
       "citeCommand": "cite",
-      "citekeyFormat": "[zotero][authors]",
+      "citekeyFormat": "[zotero]",
       "citekeyFold": true,
       "debug": true,
       "DOIandURL": "both",
@@ -24,17 +24,17 @@
       "csquotes": "",
       "keyConflictPolicy": "keep",
       "langID": "babel",
-      "pinCitekeys": "manual",
+      "pinCitekeys": "on-change",
       "preserveBibTeXVariables": true,
       "rawImports": false,
       "scanCitekeys": false,
-      "showCitekeys": false,
-      "showItemIDs": false,
+      "showCitekeys": true,
+      "showItemIDs": true,
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "tests": "",
       "warnBulkModify": 10,
-      "postscript": "this.add({ name: 'x-audience', value: 'international' });\nthis.add({ name: 'x-popularlevel', value: 'no' });\nthis.add({ name: 'x-peereviewing', value: 'yes' });\nthis.add({ name: 'x-proceedings', value: 'yes' });\nthis.add({ name: 'x-invitedcommunication', value: 'yes' });\nif (this.has.language) {\n  this.has.language.name = 'x-language';\n}\nif (this.item.itemType = 'report' && this.has.type) {\n  this.has.type.name = 'x-reporttype';\n}\n",
+      "postscript": "",
       "jabrefGroups": true,
       "defaultDateParserLocale": "",
       "parseParticles": true,
@@ -43,8 +43,8 @@
       "titleCaseUpperCase": "ID TV"
     },
     "options": {
-      "exportPath": "/Users/emile/Downloads",
-      "exportFilename": "Exported Items.json",
+      "exportPath": "/Users/jeffkerr/Dropbox/Grad/Research/papers/testimport",
+      "exportFilename": "testexport.json.txt",
       "exportFileData": false,
       "exportNotes": true
     }
@@ -60,10 +60,10 @@
       "relations": {},
       "pages": "300-301",
       "date": "February 2016",
-      "extra": "bibtex: test_citation",
+      "extra": "bibtex: test_citation1",
       "DOI": "10.1109/JPROC.2016.2526118",
       "abstractNote": "Abstract here",
-      "title": "Test Title With 100 μJ, 200​μJ Energy, and ±0.1% Accuracy, 0.2mm² Size, and -50dB Attenuation",
+      "title": "Test Title With 100 μJ, 200 μJ Energy, and ±0.1% Accuracy, 0.2 mm² Size, and －50dB Attenuation",
       "proceedingsTitle": "IEEE_J_PROC",
       "creators": [
         {
@@ -79,10 +79,10 @@
       ],
       "attachments": [],
       "notes": [],
-      "itemID": 61,
+      "itemID": 12,
       "publicationTitle": "IEEE_J_PROC",
       "seeAlso": [],
-      "__citekey__": "doe_test_2016DoeSmith"
+      "__citekey__": "doe_test_2016"
     },
     {
       "itemType": "conferencePaper",
@@ -93,10 +93,10 @@
       "relations": {},
       "pages": "300-301",
       "date": "February 2016",
-      "extra": "bibtex: test_citation",
+      "extra": "bibtex: test_citation2",
       "DOI": "10.1109/JPROC.2016.2526118",
       "abstractNote": "Abstract here",
-      "title": "Test Title with space  quad, spacesemi-colon, spacecolon, spacecomma, space nbsp",
+      "title": "Test Title with space quad, space semi-colon, space colon, space comma, space nbsp",
       "proceedingsTitle": "IEEE_J_PROC",
       "creators": [
         {
@@ -112,10 +112,10 @@
       ],
       "attachments": [],
       "notes": [],
-      "itemID": 62,
+      "itemID": 16,
       "publicationTitle": "IEEE_J_PROC",
       "seeAlso": [],
-      "__citekey__": "doe_test_2016DoeSmith"
+      "__citekey__": "doe_test_2016"
     }
   ],
   "cache": {
@@ -123,69 +123,57 @@
   },
   "keymanager": [
     {
-      "itemID": 8,
+      "itemID": 5,
       "libraryID": null,
-      "citekey": "CapEA11",
+      "citekey": "649",
       "citekeyFormat": null
     },
     {
-      "itemID": 9,
+      "itemID": 8,
       "libraryID": null,
-      "citekey": "CumEA14",
+      "citekey": "650",
       "citekeyFormat": null
     },
     {
       "itemID": 11,
       "libraryID": null,
-      "citekey": "TayEA11",
+      "citekey": "651",
       "citekeyFormat": null
     },
     {
-      "itemID": 3,
+      "itemID": 15,
       "libraryID": null,
-      "citekey": "ab_cd_2015",
+      "citekey": "652",
       "citekeyFormat": null
     },
     {
-      "itemID": 27,
+      "itemID": 1,
       "libraryID": null,
-      "citekey": "_mozilla_????",
-      "citekeyFormat": "[zotero][authors]"
-    },
-    {
-      "itemID": 29,
-      "libraryID": null,
-      "citekey": "shin_how_2014ShinSmithSmolinVazirani",
-      "citekeyFormat": "[zotero][authors]"
-    },
-    {
-      "itemID": 33,
-      "libraryID": null,
-      "citekey": "shulenburger_beyond_2015ShulenburgerMattssonDesjarlais",
-      "citekeyFormat": "[zotero][authors]"
-    },
-    {
-      "itemID": 13,
-      "libraryID": null,
-      "citekey": "arbesman_von_secondname_physical_2001ArbesmanvonSecondname",
-      "citekeyFormat": "[zotero][authors]"
-    },
-    {
-      "itemID": 25,
-      "libraryID": null,
-      "citekey": "karmasin_gestaltung_2002KarmasinRibing",
-      "citekeyFormat": "[zotero][authors]"
-    },
-    {
-      "itemID": 61,
-      "libraryID": null,
-      "citekey": "test_citation",
+      "citekey": "653",
       "citekeyFormat": null
     },
     {
-      "itemID": 62,
+      "itemID": 133,
       "libraryID": null,
-      "citekey": "test_citation",
+      "citekey": "654",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 9,
+      "libraryID": null,
+      "citekey": "655",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 12,
+      "libraryID": null,
+      "citekey": "test_citation1",
+      "citekeyFormat": null
+    },
+    {
+      "itemID": 16,
+      "libraryID": null,
+      "citekey": "test_citation2",
       "citekeyFormat": null
     }
   ]
