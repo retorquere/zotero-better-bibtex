@@ -294,30 +294,40 @@
   table:
     :latex:
     - "{\\`A}"
+    - "\\`{A}"
+    - "\\`A"
     :math: false
   modifiable: true
 193: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'A}"
+    - "\\'{A}"
+    - "\\'A"
     :math: false
   modifiable: true
 194: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^A}"
+    - "\\^{A}"
+    - "\\^A"
     :math: false
   modifiable: true
 195: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\~A}"
+    - "\\~{A}"
+    - "\\~A"
     :math: false
   modifiable: true
 196: !ruby/object:OpenStruct
   table:
     :latex:
     - '{\"A}'
+    - \"{A}
+    - \"A
     :math: false
   modifiable: true
 197: !ruby/object:OpenStruct
@@ -344,48 +354,64 @@
   table:
     :latex:
     - "{\\`E}"
+    - "\\`{E}"
+    - "\\`E"
     :math: false
   modifiable: true
 201: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'E}"
+    - "\\'{E}"
+    - "\\'E"
     :math: false
   modifiable: true
 202: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^E}"
+    - "\\^{E}"
+    - "\\^E"
     :math: false
   modifiable: true
 203: !ruby/object:OpenStruct
   table:
     :latex:
     - '{\"E}'
+    - \"{E}
+    - \"E
     :math: false
   modifiable: true
 204: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\`I}"
+    - "\\`{I}"
+    - "\\`I"
     :math: false
   modifiable: true
 205: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'I}"
+    - "\\'{I}"
+    - "\\'I"
     :math: false
   modifiable: true
 206: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^I}"
+    - "\\^{I}"
+    - "\\^I"
     :math: false
   modifiable: true
 207: !ruby/object:OpenStruct
   table:
     :latex:
     - '{\"I}'
+    - \"{I}
+    - \"I
     :math: false
   modifiable: true
 208: !ruby/object:OpenStruct
@@ -399,36 +425,48 @@
   table:
     :latex:
     - "{\\~N}"
+    - "\\~{N}"
+    - "\\~N"
     :math: false
   modifiable: true
 210: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\`O}"
+    - "\\`{O}"
+    - "\\`O"
     :math: false
   modifiable: true
 211: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'O}"
+    - "\\'{O}"
+    - "\\'O"
     :math: false
   modifiable: true
 212: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^O}"
+    - "\\^{O}"
+    - "\\^O"
     :math: false
   modifiable: true
 213: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\~O}"
+    - "\\~{O}"
+    - "\\~O"
     :math: false
   modifiable: true
 214: !ruby/object:OpenStruct
   table:
     :latex:
     - '{\"O}'
+    - \"{O}
+    - \"O
     :math: false
   modifiable: true
 215: !ruby/object:OpenStruct
@@ -449,30 +487,40 @@
   table:
     :latex:
     - "{\\`U}"
+    - "\\`{U}"
+    - "\\`U"
     :math: false
   modifiable: true
 218: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'U}"
+    - "\\'{U}"
+    - "\\'U"
     :math: false
   modifiable: true
 219: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^U}"
+    - "\\^{U}"
+    - "\\^U"
     :math: false
   modifiable: true
 220: !ruby/object:OpenStruct
   table:
     :latex:
     - '{\"U}'
+    - \"{U}
+    - \"U
     :math: false
   modifiable: true
 221: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'Y}"
+    - "\\'{Y}"
+    - "\\'Y"
     :math: false
   modifiable: true
 222: !ruby/object:OpenStruct
@@ -493,30 +541,40 @@
   table:
     :latex:
     - "{\\`a}"
+    - "\\`{a}"
+    - "\\`a"
     :math: false
   modifiable: true
 225: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'a}"
+    - "\\'{a}"
+    - "\\'a"
     :math: false
   modifiable: true
 226: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^a}"
+    - "\\^{a}"
+    - "\\^a"
     :math: false
   modifiable: true
 227: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\~a}"
+    - "\\~{a}"
+    - "\\~a"
     :math: false
   modifiable: true
 228: !ruby/object:OpenStruct
   table:
     :latex:
     - '{\"a}'
+    - \"{a}
+    - \"a
     :math: false
   modifiable: true
 229: !ruby/object:OpenStruct
@@ -543,24 +601,32 @@
   table:
     :latex:
     - "{\\`e}"
+    - "\\`{e}"
+    - "\\`e"
     :math: false
   modifiable: true
 233: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'e}"
+    - "\\'{e}"
+    - "\\'e"
     :math: false
   modifiable: true
 234: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^e}"
+    - "\\^{e}"
+    - "\\^e"
     :math: false
   modifiable: true
 235: !ruby/object:OpenStruct
   table:
     :latex:
     - '{\"e}'
+    - \"{e}
+    - \"e
     :math: false
   modifiable: true
 236: !ruby/object:OpenStruct
@@ -598,36 +664,48 @@
   table:
     :latex:
     - "{\\~n}"
+    - "\\~{n}"
+    - "\\~n"
     :math: false
   modifiable: true
 242: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\`o}"
+    - "\\`{o}"
+    - "\\`o"
     :math: false
   modifiable: true
 243: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'o}"
+    - "\\'{o}"
+    - "\\'o"
     :math: false
   modifiable: true
 244: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^o}"
+    - "\\^{o}"
+    - "\\^o"
     :math: false
   modifiable: true
 245: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\~o}"
+    - "\\~{o}"
+    - "\\~o"
     :math: false
   modifiable: true
 246: !ruby/object:OpenStruct
   table:
     :latex:
     - '{\"o}'
+    - \"{o}
+    - \"o
     :math: false
   modifiable: true
 247: !ruby/object:OpenStruct
@@ -648,30 +726,40 @@
   table:
     :latex:
     - "{\\`u}"
+    - "\\`{u}"
+    - "\\`u"
     :math: false
   modifiable: true
 250: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'u}"
+    - "\\'{u}"
+    - "\\'u"
     :math: false
   modifiable: true
 251: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^u}"
+    - "\\^{u}"
+    - "\\^u"
     :math: false
   modifiable: true
 252: !ruby/object:OpenStruct
   table:
     :latex:
     - '{\"u}'
+    - \"{u}
+    - \"u
     :math: false
   modifiable: true
 253: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'y}"
+    - "\\'{y}"
+    - "\\'y"
     :math: false
   modifiable: true
 254: !ruby/object:OpenStruct
@@ -685,12 +773,15 @@
   table:
     :latex:
     - '{\"y}'
+    - \"{y}
+    - \"y
     :math: false
   modifiable: true
 256: !ruby/object:OpenStruct
   table:
     :latex:
     - "\\={A}"
+    - "{\\=A}"
     - "\\=A"
     :math: false
   modifiable: true
@@ -698,6 +789,7 @@
   table:
     :latex:
     - "\\={a}"
+    - "{\\=a}"
     - "\\=a"
     :math: false
   modifiable: true
@@ -729,36 +821,48 @@
   table:
     :latex:
     - "{\\'C}"
+    - "\\'{C}"
+    - "\\'C"
     :math: false
   modifiable: true
 263: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'c}"
+    - "\\'{c}"
+    - "\\'c"
     :math: false
   modifiable: true
 264: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^C}"
+    - "\\^{C}"
+    - "\\^C"
     :math: false
   modifiable: true
 265: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^c}"
+    - "\\^{c}"
+    - "\\^c"
     :math: false
   modifiable: true
 266: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\.C}"
+    - "\\.{C}"
+    - "\\.C"
     :math: false
   modifiable: true
 267: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\.c}"
+    - "\\.{c}"
+    - "\\.c"
     :math: false
   modifiable: true
 268: !ruby/object:OpenStruct
@@ -803,6 +907,7 @@
   table:
     :latex:
     - "\\={E}"
+    - "{\\=E}"
     - "\\=E"
     :math: false
   modifiable: true
@@ -810,6 +915,7 @@
   table:
     :latex:
     - "\\={e}"
+    - "{\\=e}"
     - "\\=e"
     :math: false
   modifiable: true
@@ -829,12 +935,16 @@
   table:
     :latex:
     - "{\\.E}"
+    - "\\.{E}"
+    - "\\.E"
     :math: false
   modifiable: true
 279: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\.e}"
+    - "\\.{e}"
+    - "\\.e"
     :math: false
   modifiable: true
 280: !ruby/object:OpenStruct
@@ -865,12 +975,16 @@
   table:
     :latex:
     - "{\\^G}"
+    - "\\^{G}"
+    - "\\^G"
     :math: false
   modifiable: true
 285: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^g}"
+    - "\\^{g}"
+    - "\\^g"
     :math: false
   modifiable: true
 286: !ruby/object:OpenStruct
@@ -889,12 +1003,16 @@
   table:
     :latex:
     - "{\\.G}"
+    - "\\.{G}"
+    - "\\.G"
     :math: false
   modifiable: true
 289: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\.g}"
+    - "\\.{g}"
+    - "\\.g"
     :math: false
   modifiable: true
 290: !ruby/object:OpenStruct
@@ -913,12 +1031,16 @@
   table:
     :latex:
     - "{\\^H}"
+    - "\\^{H}"
+    - "\\^H"
     :math: false
   modifiable: true
 293: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^h}"
+    - "\\^{h}"
+    - "\\^h"
     :math: false
   modifiable: true
 294: !ruby/object:OpenStruct
@@ -938,6 +1060,8 @@
   table:
     :latex:
     - "{\\~I}"
+    - "\\~{I}"
+    - "\\~I"
     :math: false
   modifiable: true
 297: !ruby/object:OpenStruct
@@ -950,6 +1074,7 @@
   table:
     :latex:
     - "\\={I}"
+    - "{\\=I}"
     - "\\=I"
     :math: false
   modifiable: true
@@ -987,6 +1112,8 @@
   table:
     :latex:
     - "{\\.I}"
+    - "\\.{I}"
+    - "\\.I"
     :math: false
   modifiable: true
 305: !ruby/object:OpenStruct
@@ -1012,6 +1139,8 @@
   table:
     :latex:
     - "{\\^J}"
+    - "\\^{J}"
+    - "\\^J"
     :math: false
   modifiable: true
 309: !ruby/object:OpenStruct
@@ -1042,12 +1171,16 @@
   table:
     :latex:
     - "{\\'L}"
+    - "\\'{L}"
+    - "\\'L"
     :math: false
   modifiable: true
 314: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'l}"
+    - "\\'{l}"
+    - "\\'l"
     :math: false
   modifiable: true
 315: !ruby/object:OpenStruct
@@ -1104,12 +1237,16 @@
   table:
     :latex:
     - "{\\'N}"
+    - "\\'{N}"
+    - "\\'N"
     :math: false
   modifiable: true
 324: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'n}"
+    - "\\'{n}"
+    - "\\'n"
     :math: false
   modifiable: true
 325: !ruby/object:OpenStruct
@@ -1160,6 +1297,7 @@
   table:
     :latex:
     - "\\={O}"
+    - "{\\=O}"
     - "\\=O"
     :math: false
   modifiable: true
@@ -1167,6 +1305,7 @@
   table:
     :latex:
     - "\\={o}"
+    - "{\\=o}"
     - "\\=o"
     :math: false
   modifiable: true
@@ -1212,12 +1351,16 @@
   table:
     :latex:
     - "{\\'R}"
+    - "\\'{R}"
+    - "\\'R"
     :math: false
   modifiable: true
 341: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'r}"
+    - "\\'{r}"
+    - "\\'r"
     :math: false
   modifiable: true
 342: !ruby/object:OpenStruct
@@ -1248,24 +1391,32 @@
   table:
     :latex:
     - "{\\'S}"
+    - "\\'{S}"
+    - "\\'S"
     :math: false
   modifiable: true
 347: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'s}"
+    - "\\'{s}"
+    - "\\'s"
     :math: false
   modifiable: true
 348: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^S}"
+    - "\\^{S}"
+    - "\\^S"
     :math: false
   modifiable: true
 349: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^s}"
+    - "\\^{s}"
+    - "\\^s"
     :math: false
   modifiable: true
 350: !ruby/object:OpenStruct
@@ -1332,18 +1483,23 @@
   table:
     :latex:
     - "{\\~U}"
+    - "\\~{U}"
+    - "\\~U"
     :math: false
   modifiable: true
 361: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\~u}"
+    - "\\~{u}"
+    - "\\~u"
     :math: false
   modifiable: true
 362: !ruby/object:OpenStruct
   table:
     :latex:
     - "\\={U}"
+    - "{\\=U}"
     - "\\=U"
     :math: false
   modifiable: true
@@ -1351,6 +1507,7 @@
   table:
     :latex:
     - "\\={u}"
+    - "{\\=u}"
     - "\\=u"
     :math: false
   modifiable: true
@@ -1406,54 +1563,72 @@
   table:
     :latex:
     - "{\\^W}"
+    - "\\^{W}"
+    - "\\^W"
     :math: false
   modifiable: true
 373: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^w}"
+    - "\\^{w}"
+    - "\\^w"
     :math: false
   modifiable: true
 374: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^Y}"
+    - "\\^{Y}"
+    - "\\^Y"
     :math: false
   modifiable: true
 375: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\^y}"
+    - "\\^{y}"
+    - "\\^y"
     :math: false
   modifiable: true
 376: !ruby/object:OpenStruct
   table:
     :latex:
     - '{\"Y}'
+    - \"{Y}
+    - \"Y
     :math: false
   modifiable: true
 377: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'Z}"
+    - "\\'{Z}"
+    - "\\'Z"
     :math: false
   modifiable: true
 378: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'z}"
+    - "\\'{z}"
+    - "\\'z"
     :math: false
   modifiable: true
 379: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\.Z}"
+    - "\\.{Z}"
+    - "\\.Z"
     :math: false
   modifiable: true
 380: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\.z}"
+    - "\\.{z}"
+    - "\\.z"
     :math: false
   modifiable: true
 381: !ruby/object:OpenStruct
@@ -1512,6 +1687,8 @@
   table:
     :latex:
     - "{\\'g}"
+    - "\\'{g}"
+    - "\\'g"
     :math: false
   modifiable: true
 592: !ruby/object:OpenStruct
@@ -2152,18 +2329,24 @@
   table:
     :latex:
     - "{\\'A}"
+    - "\\'{A}"
+    - "\\'A"
     :math: false
   modifiable: true
 904: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'E}"
+    - "\\'{E}"
+    - "\\'E"
     :math: false
   modifiable: true
 905: !ruby/object:OpenStruct
   table:
     :latex:
     - "{\\'H}"
+    - "\\'{H}"
+    - "\\'H"
     :math: false
   modifiable: true
 906: !ruby/object:OpenStruct
@@ -2593,6 +2776,8 @@
   table:
     :latex:
     - "{\\'o}"
+    - "\\'{o}"
+    - "\\'o"
     :math: false
   modifiable: true
 973: !ruby/object:OpenStruct

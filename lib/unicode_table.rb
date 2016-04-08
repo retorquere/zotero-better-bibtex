@@ -146,13 +146,20 @@ class UnicodeConverter
       case latex[0]
         when /^(\\[a-z][^\s]*)\s$/i, /^(\\[^a-z])\s$/i  # '\ss ', '\& ' => '{\\s}', '{\&}'
           latex << "{#{$1}}"
-        when /^(\\[^a-z]){(.)}$/                       # '\"{a}' => '\"a'
-          latex << "#{$1}#{$2}"
-        when /^(\\[^a-z])(.)\s*$/                       # '\"a " => '\"{a}'
-          latex << "#{$1}{#{$2}}"
+        when /^\\([^a-z]){(.)}$/                       # '\"{a}' => '\"a', '{\"a}'
+          latex << "\\#{$1}#{$2}"
+          latex << "{\\#{$1}#{$2}}"
+        when /^\\([^a-z])(.)\s*$/                       # '\"a " => '\"{a}', '{\"a}'
+          latex << "\\#{$1}{#{$2}}"
+          latex << "{\\#{$1}#{$2}}"
+        when /^{\\([^a-z])(.)}$/                        # '{\"a}'
+          latex << "\\#{$1}#{$2}"
+          latex << "\\#{$1}{#{$2}}"
         when /^{(\\[.]+)}$/                             # '{....}' '.... '
           latex << "#{$1} "
       end
+
+      latex.uniq!
 
       # prefered option is braces-over-traling-space because of miktex bug that doesn't ignore spaces after commands
       latex.sort!{|a, b|

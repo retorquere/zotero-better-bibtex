@@ -107,6 +107,7 @@ string
   / text:("\\" [Huvc] " " [a-zA-Z])                                    ![a-z0-9]    &{ return lookup(text, '14'); }  { return lookup(text); }
   / text:("\\" [\.=] [a-zA-Z])                                         ![a-z0-9]    &{ return lookup(text, '15'); }  { return lookup(text); }
   / text:("\\" [~\^'`"] [a-zA-Z] _*)                                                &{ return lookup(text, '16'); }  { return lookup(text); }
+  / text:("\\" [~\^'`"] "{" [a-zA-Z] "}")                                           &{ return lookup(text, '16a'); }  { return lookup(text); }
   / text:("^" [123])                                                   ![a-z0-9]    &{ return lookup(text, '17'); }  { return lookup(text); }
   / text:("\\" [^a-zA-Z0-9])                                                        &{ return lookup(text, '18'); }  { return lookup(text); }
   / text:("~")                                                                      &{ return lookup(text, '19'); }  { return lookup(text); }
