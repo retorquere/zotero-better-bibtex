@@ -91,26 +91,26 @@ raw
 string
   = text:plaintext                { return text }
 
-  / text:("\\fontencoding{" [^}]+ "}\\selectfont\\char" [0-9]+)     _* ![a-z0-9]    &{ return lookup(text, '1'); }  { return lookup(text); }
-  / text:("\\" [a-z]+ "\\" [a-zA-Z]+)                               _* ![a-z0-9]    &{ return lookup(text, '2'); }  { return lookup(text); }
+  / text:("\\fontencoding{" [^}]+ "}\\selectfont\\char" [0-9]+)   terminator        &{ return lookup(text, '1'); }  { return lookup(text); }
+  / text:("\\" [a-z]+ "\\" [a-zA-Z]+)                             terminator        &{ return lookup(text, '2'); }  { return lookup(text); }
   / text:("\\acute{\\ddot{\\" [a-z]+ "}}")                                          &{ return lookup(text, '3'); }  { return lookup(text); }
   / text:("\\" [a-zA-Z]+ "{" "\\"? [0-9a-zA-Z]+ "}" ("{" "\\"? [0-9a-zA-Z]+ "}")?)  &{ return lookup(text, '4'); }  { return lookup(text); }
-  / text:("\\" [0-9a-zA-Z]+)                                        _* ![a-z0-9]    &{ return lookup(text, '5'); }  { return lookup(text); }
+  / text:("\\" [0-9a-zA-Z]+)                                      terminator        &{ return lookup(text, '5'); }  { return lookup(text); }
   / text:("\\cyrchar{\\'\\" [a-zA-Z]+ "}")                                          &{ return lookup(text, '6'); }  { return lookup(text); }
   / text:("\\" [a-z]+ "{" [,\.a-z0-9]+ "}")                                         &{ return lookup(text, '7'); }  { return lookup(text); }
   / text:("\\mathrm{" [^}]+ "}")                                                    &{ return lookup(text, '8'); }  { return lookup(text); }
   / text:("\\={\\i}")                                                               &{ return lookup(text, '9'); }  { return lookup(text); }
-  / text:("\\u \\i")                                                _* ![a-z0-9]    &{ return lookup(text, '10'); }  { return lookup(text); }
+  / text:("\\u \\i")                                              terminator        &{ return lookup(text, '10'); }  { return lookup(text); }
   / text:("\\" [=kr] "{" [a-zA-Z] "}")                                              &{ return lookup(text, '11'); }  { return lookup(text); }
-  / text:("\\" [~\^'`"] "\\" [ij])                                  _* ![a-z0-9]    &{ return lookup(text, '12'); }  { return lookup(text); }
+  / text:("\\" [~\^'`"] "\\" [ij])                                terminator        &{ return lookup(text, '12'); }  { return lookup(text); }
   / text:("'" "'"+)                                                                 &{ return lookup(text, '13'); }  { return lookup(text); }
-  / text:("\\" [Huvc] " " [a-zA-Z])                                 _* ![a-z0-9]    &{ return lookup(text, '14'); }  { return lookup(text); }
-  / text:("\\" [\.=] [a-zA-Z])                                      _* ![a-z0-9]    &{ return lookup(text, '15'); }  { return lookup(text); }
+  / text:("\\" [Huvc] " " [a-zA-Z])                               terminator        &{ return lookup(text, '14'); }  { return lookup(text); }
+  / text:("\\" [\.=] [a-zA-Z])                                    terminator        &{ return lookup(text, '15'); }  { return lookup(text); }
   / text:("\\" [~\^'`"] [a-zA-Z] _*)                                                &{ return lookup(text, '16'); }  { return lookup(text); }
   / text:("\\" [~\^'`"] "{" [a-zA-Z] "}")                                           &{ return lookup(text, '16a'); }  { return lookup(text); }
-  / text:("^" [123])                                                _* ![a-z0-9]    &{ return lookup(text, '17'); }  { return lookup(text); }
+  / text:("^" [123])                                              terminator        &{ return lookup(text, '17'); }  { return lookup(text); }
   / text:("\\" [^a-zA-Z0-9])                                                        &{ return lookup(text, '18'); }  { return lookup(text); }
-  / text:("~")                                                                      &{ return lookup(text, '19'); }  { return lookup(text); }
+  / text:"~"                                                                        &{ return lookup(text, '19'); }  { return lookup(text); }
 
   / "\\mbox{}"                    { return "\u200B"; }
   / "\\\\"                        { return "\n" }
@@ -135,6 +135,8 @@ string
   / "\\" cmd:[^a-z] ('[' key_value* ']')?  _+ { return lookup("\\" + cmd) || cmd; /* single-char command without parameter */ }
   / "\\" cmd:plaintext ('[' key_value* ']')? '{' text:string* '}' { return (lookup("\\" + cmd) || '') + bibtex.flatten(text); /* command */ }
   / "\\" cmd:plaintext _* { return lookup("\\" + cmd) || cmd; /* bare command */ }
+
+terminator = _+ / ![a-z0-9]
 
 param
   = text:[^\\{]           { return text }
