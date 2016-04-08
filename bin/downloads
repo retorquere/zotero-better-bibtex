@@ -12,6 +12,7 @@ require 'moving_average'
 OPTS = Trollop::options do
   opt :cache, 'cache file',                                               default: File.join(File.dirname(__FILE__), File.basename(__FILE__, File.extname(__FILE__)) + '.sqlite')
   opt :token, 'Github token',                                             default: 'GITHUB_TOKEN'
+  opt :silent, 'No spinners'
   opt :repo, 'target GitHub repo', type: :string, default: 'retorquere/zotero-better-bibtex'
 end
 
@@ -25,7 +26,7 @@ class SQLiteStore
   def read(key)
     v = DB.get_first_value("SELECT v FROM cache WHERE k = ?", key)
     v = YAML::load(v) if v
-    print(v ? '+' : '-')
+    print(v ? '+' : '-') unless OPTS.silent
     return v
   end
 
@@ -48,8 +49,7 @@ Octokit.middleware = Faraday::RackBuilder.new {|builder|
 }
 Octokit.auto_paginate = true
 
-downloads = {}
-ShellSpinner 'Getting releases' do
+def update
   Octokit.releases(OPTS.repo, sort: 'created', direction: 'asc').each{|release|
     next if release.prerelease
     next unless release.assets
@@ -58,11 +58,18 @@ ShellSpinner 'Getting releases' do
     release.assets.each{|asset|
       next unless File.extname(asset.name) == '.xpi'
       next unless asset.download_count > 1000
-      downloads[version] = {release: release.name, count: asset.download_count }
 
       DB.execute("INSERT OR REPLACE INTO downloads (version, day, downloads) VALUES (?, date('now'), ?)", [release.name.sub(/^v/, ''), asset.download_count])
     }
   }
+end
+
+if OPTS.silent
+  update
+else
+  ShellSpinner 'Getting releases' do
+    update
+  end
 end
 
 ## downloads = downloads.keys.sort.each_with_index.collect{|version, i|
