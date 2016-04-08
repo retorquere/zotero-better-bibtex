@@ -4,7 +4,7 @@
 source 'https://rubygems.org'
 
 gem 'os'
-#gem 'trollop'
+gem 'trollop'
 gem 'rake'
 gem 'nokogiri'
 gem 'bibtex-ruby'
