@@ -26,9 +26,9 @@ class UnicodeConverter
     return "'" + codepoint.collect{|cp| "\\u" + cp}.join('') + "'"
   end
 
-  def save(target, source = nil)
+  def save(target)
     target = File.expand_path(target)
-    open((source.nil? ? target : '/dev/null'), 'w'){|cs|
+    open((target), 'w'){|cs|
       cs.puts "LaTeX = {} unless LaTeX"
       cs.puts "LaTeX.toLaTeX = { unicode: {}, ascii: {} }"
 
@@ -64,38 +64,12 @@ class UnicodeConverter
       @chars.sort.map{|charcode, latex|
         latex.latex.each{|ltx|
           next if ltx =~ /^[a-z]+$/i || ltx.strip == ''
-          ltx.strip!
-          ltx = ltx[1..-2] if ltx =~ /^\{.*\}$/
-          ltx.sub!(/\{\}$/, '')
           next if charcode < 256 && ltx == charcode.chr
           next if done[ltx]
           done[ltx] = true
-          # check
-          #puts ltx if ltx[0] != '\\' || ltx =~ /\{/
           cs.puts "  #{ltx.strip.to_json}: #{char(charcode)}"
-
-          if ltx =~ /[a-z0-9]$/i
-            unterminated << ltx
-          else
-            terminated << ltx
-          end
         }
       }
-
-      if source
-        puts "Unterminated: #{unterminated.collect{|ltx| ltx.length}.uniq.sort}"
-        puts "Terminated: #{terminated.collect{|ltx| ltx.length}.uniq.sort}"
-        terminated = terminated.collect{|ltx| ltx.to_json}.join("\n  / ")
-        unterminated = unterminated.collect{|ltx| ltx.to_json}.join("\n  / ")
-
-        puts "Patching #{target} from #{source} (#{IO.readlines(source).length} lines)"
-        open(target, 'w'){|pegjs|
-          pegjs.puts open(source).read + "\n\n"
-          pegjs.puts "latex_terminated\n  = #{terminated}\n\n"
-          pegjs.puts ""
-          pegjs.puts "latex_unterminated\n  = #{unterminated}\n\n"
-        }
-      end
     }
   end
 
@@ -141,25 +115,30 @@ class UnicodeConverter
 
   def expand
     @chars.keys.each{|charcode|
-      latex = [@chars[charcode].latex]
+      base = @chars[charcode].latex
+      base += '{}' if base =~ /[0-9a-z]$/i
+      base.sub!(/ $/, '{}')
 
-      case latex[0]
+      latex = [base]
+      latex << base.sub(/{}$/, ' ') if base =~ /{}$/
+
+      case base
         when /^(\\[a-z][^\s]*)\s$/i, /^(\\[^a-z])\s$/i  # '\ss ', '\& ' => '{\\s}', '{\&}'
           latex << "{#{$1}}"
         when /^\\([^a-z]){(.)}$/                       # '\"{a}' => '\"a', '{\"a}'
-          latex << "\\#{$1}#{$2}"
+          latex << "\\#{$1}#{$2} "
           latex << "{\\#{$1}#{$2}}"
         when /^\\([^a-z])(.)\s*$/                       # '\"a " => '\"{a}', '{\"a}'
           latex << "\\#{$1}{#{$2}}"
           latex << "{\\#{$1}#{$2}}"
         when /^{\\([^a-z])(.)}$/                        # '{\"a}'
-          latex << "\\#{$1}#{$2}"
+          latex << "\\#{$1}#{$2} "
           latex << "\\#{$1}{#{$2}}"
         when /^{(\\[.]+)}$/                             # '{....}' '.... '
           latex << "#{$1} "
       end
 
-      latex.uniq!
+      latex = latex.collect{|ltx| ltx.strip}.uniq
 
       # prefered option is braces-over-traling-space because of miktex bug that doesn't ignore spaces after commands
       latex.sort!{|a, b|
@@ -236,7 +215,7 @@ class UnicodeConverter
   end
 
   def patterns
-    download(false)
+    download(true)
     patterns = {}
 
     unterminated = [
@@ -263,6 +242,7 @@ class UnicodeConverter
       /^\\not\\kern-0.3em\\times$/
     ]
     terminated = [
+      /^\\[\.~\^'`"]{[a-zA-Z]}$/,
       /^\\acute{\\ddot{\\[a-z]+}}$/,
       /^\\[a-zA-Z]+{\\?[0-9a-zA-Z]+}({\\?[0-9a-zA-Z]+})?$/,
       /^\\cyrchar{\\'\\[a-zA-Z]+}$/,
@@ -274,10 +254,10 @@ class UnicodeConverter
       /^\\[^a-zA-Z0-9]$/,
       /^~$/,
       /^\\ddot{\\[a-z]+}$/,
-      /^\\Pisymbol{[a-z0-9]+}{[0-9]+}$/,
 
       nil,
 
+      /^\\Pisymbol{[a-z0-9]+}{[0-9]+}$/,
       /^{\/}\\!\\!{\/}$/,
       /^\\stackrel{\*}{=}$/,
       /^<\\kern-0.58em\($/,
@@ -301,11 +281,11 @@ class UnicodeConverter
 
     @chars.each_pair{|charcode, latex|
       latex.latex.each{|ltx|
-        next if ltx =~ /^[a-z]+$/i || ltx.strip == ''
         ltx.strip!
         ltx = ltx[1..-2] if ltx =~ /^\{.*\}$/
-        ltx.sub!(/\{\}$/, '')
+        ltx.sub!(/{}$/, '')
         next if charcode < 256 && ltx == charcode.chr
+        next if ltx =~ /^[a-z]+$/i || ltx.strip == ''
 
         if ltx =~ /[a-z0-9]$/i # unterminated
           pattern = unterminated.detect{|p| p && ltx =~ p.re }
@@ -320,24 +300,29 @@ class UnicodeConverter
       }
     }
 
-  patterns = unterminated[0,unterminated.index(nil)] + terminated[0,terminated.index(nil)]
-  patterns.sort_by{|p| p.max}.reverse.each{|p|
-    #next unless p.max > 1
-    re = p.re.to_s
-    re.sub!(/^\(\?-mix:\^/, '')
-    re.sub!(/\$\)$/, '')
+    patterns = unterminated[0,unterminated.index(nil)] + terminated[0,terminated.index(nil)]
+    patterns.sort_by{|p| p.max}.reverse.each_with_index{|p, i|
+      #next unless p.max > 1
+      re = p.re.to_s
+      re.sub!(/^\(\?-mix:\^/, '')
+      re.sub!(/\$\)$/, '')
 
-    rule = "  / text:(\"#{re}\")"
-    rule = rule.ljust(60, ' ')
+      re.sub!(/'\+/, "\" \"'\"+")
+      re.gsub!(/([\[\(].*?[\]\)]\+?)/, "\" \\1 \"")
+      re = "\"#{re}\""
+      re.sub!(/\s*""$/, '')
 
-    rule += " ![a-z0-9]" unless p.terminated
-    rule = rule.ljust(72, ' ')
-    rule += " &{ return LaTeX.toUnicode[text]; }"
-    rule = rule.ljust(110, ' ')
-    rule += "{ return LaTeX.toUnicode[text]; }"
+      rule = "  / text:(#{re})"
+      rule = rule.ljust(70, ' ')
 
-    puts rule
-  }
+      rule += " terminator" unless p.terminated
+      rule = rule.ljust(85, ' ')
+      rule += " &{ return lookup(text, '#{i}'); }"
+      rule = rule.ljust(110, ' ')
+      rule += "{ return lookup(text); }"
+
+      puts rule
+    }
   end
 end
 
