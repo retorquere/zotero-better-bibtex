@@ -8,7 +8,7 @@
       "asciiBibTeX": true,
       "attachmentsNoMetadata": false,
       "bibtexURLs": false,
-      "citekeyFormat": "[auth:nopunct:condense,_][year][journal:nopunct][0]",
+      "citekeyFormat": "[auth:nopunct:condense,_][year][journal:abbr][0]",
       "csquotes": "",
       "DOIandURL": "doi",
       "jabrefGroups": false,
