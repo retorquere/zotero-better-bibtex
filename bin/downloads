@@ -1,0 +1,113 @@
+#!/usr/bin/env ruby
+
+require 'faraday/http_cache'
+require 'sqlite3'
+require 'yaml'
+require 'trollop'
+require 'octokit'
+require 'shell-spinner'
+require 'json'
+require 'moving_average'
+
+OPTS = Trollop::options do
+  opt :cache, 'cache file',                                               default: File.join(File.dirname(__FILE__), File.basename(__FILE__, File.extname(__FILE__)) + '.sqlite')
+  opt :token, 'Github token',                                             default: 'GITHUB_TOKEN'
+  opt :silent, 'No spinners'
+  opt :repo, 'target GitHub repo', type: :string, default: 'retorquere/zotero-better-bibtex'
+end
+
+DB = SQLite3::Database.new(OPTS.cache)
+DB.execute("CREATE TABLE IF NOT EXISTS cache (k PRIMARY KEY, v)")
+DB.execute("CREATE TABLE IF NOT EXISTS downloads (version, day, downloads, PRIMARY KEY(version, day))")
+DB.execute('PRAGMA synchronous = OFF')
+DB.execute('PRAGMA journal_mode = MEMORY')
+
+class SQLiteStore
+  def read(key)
+    v = DB.get_first_value("SELECT v FROM cache WHERE k = ?", key)
+    v = YAML::load(v) if v
+    print(v ? '+' : '-') unless OPTS.silent
+    return v
+  end
+
+  def delete(key)
+    DB.execute("DELETE FROM cache WHERE k = ?", key)
+  end
+
+  def write(key, value)
+    DB.execute('INSERT OR REPLACE INTO cache (k, v) VALUES (?, ?)', [key, YAML::dump(value)])
+  end
+end
+
+Octokit.configure{|c|
+  c.access_token = ENV[OPTS.token] || OPTS.token
+}
+Octokit.middleware = Faraday::RackBuilder.new {|builder|
+  builder.use Faraday::HttpCache, shared_cache: false, serializer: Marshal, store: SQLiteStore.new
+  builder.use Octokit::Response::RaiseError
+  builder.adapter Faraday.default_adapter
+}
+Octokit.auto_paginate = true
+
+def update
+  Octokit.releases(OPTS.repo, sort: 'created', direction: 'asc').each{|release|
+    next if release.prerelease
+    next unless release.assets
+
+    version = release.name.sub(/^v/, '').split('.').collect{|n| n.rjust(4, '0')}.join('.')
+    release.assets.each{|asset|
+      next unless File.extname(asset.name) == '.xpi'
+      next unless asset.download_count > 1000
+
+      DB.execute("INSERT OR REPLACE INTO downloads (version, day, downloads) VALUES (?, date('now'), ?)", [release.name.sub(/^v/, ''), asset.download_count])
+    }
+  }
+end
+
+if OPTS.silent
+  update
+else
+  ShellSpinner 'Getting releases' do
+    update
+  end
+end
+
+## downloads = downloads.keys.sort.each_with_index.collect{|version, i|
+##   stats = downloads[version]
+##   [stats[:release], stats[:count]]
+## }
+## #counts = downloads.collect{|n| n[1]}
+## #downloads.each_with_index{|d, i|
+##   #d << counts[0..i].reverse[0..2].simple_moving_average.to_i
+##   #d << counts[0..i].reverse[0..1].inject(0, :+)
+## #}
+## downloads.unshift(['Release', 'Downloads'])
+## 
+## open(File.join(File.dirname(__FILE__), 'downloads.html'), 'w'){|f|
+##   f.puts('<html><body><script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script><div id="chart_div"></div>')
+##   f.puts("""<script type='text/javascript'>
+##     google.charts.load('current', {packages: ['corechart', 'line']});
+##     google.charts.setOnLoadCallback(drawCurveTypes);
+## 
+##     function drawCurveTypes() {
+##       var data = google.visualization.arrayToDataTable(#{downloads.to_json});
+##       var options = {
+##         title: 'Better BibTeX Downloads',
+##         height: 350,
+##         vAxis: {
+##           title: 'Downloads'
+##         },
+##         hAxis: {
+##             title: 'Release',
+##             slantedText: true,  /* Enable slantedText for horizontal axis */
+##             slantedTextAngle: 90 /* Define slant Angle */
+##         },
+##         'chartArea': { 'width': '82%', height: '60%', top: '9%', left: '15%', right: '3%', bottom: '0'} /* Adjust chart alignment to fit vertical labels for horizontal axis*/
+##       };
+## 
+##       var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+##       chart.draw(data, options);
+##     }
+##   </script>""")
+##   f.puts('</body></html>')
+## }

@@ -17,5 +17,4 @@ deployment:
   all:
     branch: /.*/
     commands:
-      - bundle exec rake clean
       - bundle exec rake publish
