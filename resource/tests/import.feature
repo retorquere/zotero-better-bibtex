@@ -32,6 +32,7 @@ Scenario: option to mantain the braces and special commands in titles or all fie
 Scenario: Math markup to unicode not always imported correctly #472
   When I import 2 references from 'import/Math markup to unicode not always imported correctly #472.bib'
   Then the library without collections should match 'import/Math markup to unicode not always imported correctly #472.json'
+  And I set preference .preserveBibTeXVariables to true
   And a library export using 'Better BibTeX' should match 'import/Math markup to unicode not always imported correctly #472.roundtrip.bib'
 
 @i3
