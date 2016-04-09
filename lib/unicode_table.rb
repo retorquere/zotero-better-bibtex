@@ -142,6 +142,7 @@ class UnicodeConverter
       latex = latex.collect{|ltx| ltx.strip}.uniq
 
       # prefered option is braces-over-traling-space because of miktex bug that doesn't ignore spaces after commands
+      # https://github.com/retorquere/zotero-better-bibtex/issues/69
       latex.sort!{|a, b|
         nsa = !(a =~ /\s$/)
         nsb = !(a =~ /\s$/)
