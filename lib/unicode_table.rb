@@ -5,6 +5,7 @@ require 'ostruct'
 require 'open-uri'
 require 'yaml'
 require 'json'
+require 'regexp_parser'
 
 class UnicodeConverter
   @@lowmask = ('1' * 10).to_i(2)
@@ -156,6 +157,12 @@ class UnicodeConverter
           a <=> b
         end
       }
+
+      if charcode == 0x00B0
+        @chars[charcode].math = true
+        latex.unshift('^\\circ')
+        latex.uniq!
+      end
       @chars[charcode].latex = latex
     }
   end
@@ -215,13 +222,13 @@ class UnicodeConverter
   end
 
   def patterns
-    download(true)
+    download(false)
     patterns = {}
 
     unterminated = [
-      /^\\fontencoding{[^}]+}\\selectfont\\char[0-9]+$/,
+      /^\\fontencoding\{[^\}]+\}\\selectfont\\char[0-9]+$/,
       /^\\[a-z]+\\[a-zA-Z]+$/,
-      /^\\fontencoding{[^}]+}\\selectfont\\char[0-9]+$/,
+      /^\\fontencoding\{[^\}]+\}\\selectfont\\char[0-9]+$/,
       /^\\[a-z]+\\[a-zA-Z]+$/,
       /^\\[0-9a-zA-Z]+$/,
       /^\\u \\i$/,
@@ -230,47 +237,48 @@ class UnicodeConverter
       /^\\[\.=][a-zA-Z]$/,
       /^\\[~\^'`"][a-zA-Z]$/,
       /^\^[123]$/,
+      /^\^\\circ$/,
 
       nil,
 
       /^\\sim\\joinrel\\leadsto$/,
       /^\\mathchar\"2208$/,
-      /^\\'{}[a-zA-Z]$/,
+      /^\\'\{\}[a-zA-Z]$/,
       /^_\\ast$/,
       /^'n$/,
       /^\\int(\\!\\int)+$/,
       /^\\not\\kern-0.3em\\times$/
     ]
     terminated = [
-      /^\\[\.~\^'`"]{[a-zA-Z]}$/,
-      /^\\acute{\\ddot{\\[a-z]+}}$/,
-      /^\\[a-zA-Z]+{\\?[0-9a-zA-Z]+}({\\?[0-9a-zA-Z]+})?$/,
-      /^\\cyrchar{\\'\\[a-zA-Z]+}$/,
-      /^\\[a-z]+{[,\.a-z0-9]+}$/,
-      /^\\mathrm{[^}]+}$/,
-      /^\\={\\i}$/,
-      /^\\[=kr]{[a-zA-Z]}$/,
+      /^\\[\.~\^'`"]\{[a-zA-Z]\}$/,
+      /^\\acute\{\\ddot\{\\[a-z]+\}\}$/,
+      /^\\[a-zA-Z]+\{\\?[0-9a-zA-Z]+\}(\{\\?[0-9a-zA-Z]+\})?$/,
+      /^\\cyrchar\{\\'\\[a-zA-Z]+\}$/,
+      /^\\[a-z]+\{[,\.a-z0-9]+\}$/,
+      /^\\mathrm\{[^\}]+\}$/,
+      /^\\=\{\\i\}$/,
+      /^\\[=kr]\{[a-zA-Z]\}$/,
       /^''+$/,
       /^\\[^a-zA-Z0-9]$/,
       /^~$/,
-      /^\\ddot{\\[a-z]+}$/,
+      /^\\ddot\{\\[a-z]+\}$/,
 
       nil,
 
-      /^\\Pisymbol{[a-z0-9]+}{[0-9]+}$/,
-      /^{\/}\\!\\!{\/}$/,
-      /^\\stackrel{\*}{=}$/,
+      /^\\Pisymbol\{[a-z0-9]+\}\{[0-9]+\}$/,
+      /^\{\/\}\\!\\!\{\/\}$/,
+      /^\\stackrel\{\*\}\{=\}$/,
       /^<\\kern-0.58em\($/,
-      /^\\fbox{~~}$/,
+      /^\\fbox\{~~\}$/,
       /^\\not[<>]$/,
-      /^\\ensuremath{\\[a-zA-Z0-9]+}$/,
+      /^\\ensuremath\{\\[a-zA-Z0-9]+\}$/,
       /^[-`,\.]+$/,
-      /^\\rule{1em}{1pt}$/,
+      /^\\rule\{1em\}\{1pt\}$/,
       /^\\'\$\\alpha\$$/,
-      /^\\mathrm{\\ddot{[A-Z]}}$/,
-      /^\\'{}{[a-zA-Z]}$/,
+      /^\\mathrm\{\\ddot\{[A-Z]\}\}$/,
+      /^\\'\{\}\{[a-zA-Z]\}$/,
       /^'$/,
-      /^\\mathbin{{:}\\!\\!{-}\\!\\!{:}}$/,
+      /^\\mathbin\{\{:\}\\!\\!\{-\}\\!\\!\{:\}\}$/,
       /^\\not =$/,
       /^=:$/,
       /^:=$/,
@@ -303,16 +311,7 @@ class UnicodeConverter
     patterns = unterminated[0,unterminated.index(nil)] + terminated[0,terminated.index(nil)]
     patterns.sort_by{|p| p.max}.reverse.each_with_index{|p, i|
       #next unless p.max > 1
-      re = p.re.to_s
-      re.sub!(/^\(\?-mix:\^/, '')
-      re.sub!(/\$\)$/, '')
-
-      re.sub!(/'\+/, "\" \"'\"+")
-      re.gsub!(/([\[\(].*?[\]\)]\+?)/, "\" \\1 \"")
-      re = "\"#{re}\""
-      re.sub!(/\s*""$/, '')
-
-      rule = "  / text:(#{re})"
+      rule = "  / text:(#{pegjs_re(p.re)})"
       rule = rule.ljust(70, ' ')
 
       rule += " terminator" unless p.terminated
@@ -323,6 +322,51 @@ class UnicodeConverter
 
       puts rule
     }
+  end
+
+  def pegjs_re(re)
+    pegjs = ''
+    Regexp::Scanner.scan re  do |type, token, text, ts, te|
+      #puts "type == #{type.inspect} && token == #{token.inspect} #  text: '#{text.inspect}' [#{ts.inspect}..#{te.inspect}]"
+
+      if type == :anchor
+        # pass
+      elsif type == :escape && token == :interval_open #  text: '"\\{"' [32..34]
+        text = "\t\"{\"\t"
+      elsif type == :escape && token == :interval_close #  text: '"\\}"' [49..51]
+        text = "\t\"}\"\t"
+      elsif type == :escape || type == :literal
+        pegjs += "\t\"" + text + "\"\t"
+      elsif type == :set && token == :open #  text: '"["' [3..4]
+        pegjs += '['
+      elsif type == :set && token == :range #  text: '"a-z"' [4..7]
+        pegjs += text
+      elsif type == :set && token == :close #  text: '"]"' [10..11]
+        pegjs += ']'
+      elsif type == :set && token == :escape && text == "\\}"
+        pegjs += '}'
+      elsif type == :set && token == :escape
+        pegjs += '}'
+      elsif type == :set && token == :member
+        pegjs += text
+      elsif type == :quantifier
+        pegjs += text + ' '
+      elsif type == :set && token == :negate
+        pegjs += text
+      elsif type == :group
+        pegjs += text
+      else
+        raise "type: #{type.inspect}, token: #{token.inspect}, text: #{text.inspect} [#{ts.inspect}..#{te.inspect}]"
+      end
+    end
+
+    pegjs.gsub!(/("[^"]+")\t\?/, "\n\\1? ")
+    pegjs.gsub!(/"\t\t"/, '')
+    pegjs.gsub!(/\t+/, ' ')
+    pegjs.gsub!(/\n/, '')
+    pegjs.gsub!(/ +/, ' ')
+    pegjs.strip!
+    return pegjs
   end
 end
 

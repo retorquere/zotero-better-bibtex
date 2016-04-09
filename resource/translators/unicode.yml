@@ -188,9 +188,10 @@
 176: !ruby/object:OpenStruct
   table:
     :latex:
+    - "^\\circ"
     - "\\textdegree{}"
     - "\\textdegree"
-    :math: false
+    :math: true
   modifiable: true
 177: !ruby/object:OpenStruct
   table:
@@ -4904,8 +4905,8 @@
 8604: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\arrowwaveleft{}"
-    - "\\arrowwaveleft"
+    - "\\arrowwaveright{}"
+    - "\\arrowwaveright"
     :math: true
   modifiable: true
 8605: !ruby/object:OpenStruct
@@ -6733,8 +6734,8 @@
 8966: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\varperspcorrespond{}"
-    - "\\varperspcorrespond"
+    - "\\perspcorrespond{}"
+    - "\\perspcorrespond"
     :math: true
   modifiable: true
 8968: !ruby/object:OpenStruct
@@ -9611,307 +9612,307 @@
 119860: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{A}"
+    - "\\mathsl{A}"
     :math: true
   modifiable: true
 119861: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{B}"
+    - "\\mathsl{B}"
     :math: true
   modifiable: true
 119862: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{C}"
+    - "\\mathsl{C}"
     :math: true
   modifiable: true
 119863: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{D}"
+    - "\\mathsl{D}"
     :math: true
   modifiable: true
 119864: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{E}"
+    - "\\mathsl{E}"
     :math: true
   modifiable: true
 119865: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{F}"
+    - "\\mathsl{F}"
     :math: true
   modifiable: true
 119866: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{G}"
+    - "\\mathsl{G}"
     :math: true
   modifiable: true
 119867: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{H}"
+    - "\\mathsl{H}"
     :math: true
   modifiable: true
 119868: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{I}"
+    - "\\mathsl{I}"
     :math: true
   modifiable: true
 119869: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{J}"
+    - "\\mathsl{J}"
     :math: true
   modifiable: true
 119870: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{K}"
+    - "\\mathsl{K}"
     :math: true
   modifiable: true
 119871: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{L}"
+    - "\\mathsl{L}"
     :math: true
   modifiable: true
 119872: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{M}"
+    - "\\mathsl{M}"
     :math: true
   modifiable: true
 119873: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{N}"
+    - "\\mathsl{N}"
     :math: true
   modifiable: true
 119874: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{O}"
+    - "\\mathsl{O}"
     :math: true
   modifiable: true
 119875: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{P}"
+    - "\\mathsl{P}"
     :math: true
   modifiable: true
 119876: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{Q}"
+    - "\\mathsl{Q}"
     :math: true
   modifiable: true
 119877: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{R}"
+    - "\\mathsl{R}"
     :math: true
   modifiable: true
 119878: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{S}"
+    - "\\mathsl{S}"
     :math: true
   modifiable: true
 119879: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{T}"
+    - "\\mathsl{T}"
     :math: true
   modifiable: true
 119880: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{U}"
+    - "\\mathsl{U}"
     :math: true
   modifiable: true
 119881: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{V}"
+    - "\\mathsl{V}"
     :math: true
   modifiable: true
 119882: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{W}"
+    - "\\mathsl{W}"
     :math: true
   modifiable: true
 119883: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{X}"
+    - "\\mathsl{X}"
     :math: true
   modifiable: true
 119884: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{Y}"
+    - "\\mathsl{Y}"
     :math: true
   modifiable: true
 119885: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{Z}"
+    - "\\mathsl{Z}"
     :math: true
   modifiable: true
 119886: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{a}"
+    - "\\mathsl{a}"
     :math: true
   modifiable: true
 119887: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{b}"
+    - "\\mathsl{b}"
     :math: true
   modifiable: true
 119888: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{c}"
+    - "\\mathsl{c}"
     :math: true
   modifiable: true
 119889: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{d}"
+    - "\\mathsl{d}"
     :math: true
   modifiable: true
 119890: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{e}"
+    - "\\mathsl{e}"
     :math: true
   modifiable: true
 119891: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{f}"
+    - "\\mathsl{f}"
     :math: true
   modifiable: true
 119892: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{g}"
+    - "\\mathsl{g}"
     :math: true
   modifiable: true
 119894: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{i}"
+    - "\\mathsl{i}"
     :math: true
   modifiable: true
 119895: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{j}"
+    - "\\mathsl{j}"
     :math: true
   modifiable: true
 119896: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{k}"
+    - "\\mathsl{k}"
     :math: true
   modifiable: true
 119897: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{l}"
+    - "\\mathsl{l}"
     :math: true
   modifiable: true
 119898: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{m}"
+    - "\\mathsl{m}"
     :math: true
   modifiable: true
 119899: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{n}"
+    - "\\mathsl{n}"
     :math: true
   modifiable: true
 119900: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{o}"
+    - "\\mathsl{o}"
     :math: true
   modifiable: true
 119901: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{p}"
+    - "\\mathsl{p}"
     :math: true
   modifiable: true
 119902: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{q}"
+    - "\\mathsl{q}"
     :math: true
   modifiable: true
 119903: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{r}"
+    - "\\mathsl{r}"
     :math: true
   modifiable: true
 119904: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{s}"
+    - "\\mathsl{s}"
     :math: true
   modifiable: true
 119905: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{t}"
+    - "\\mathsl{t}"
     :math: true
   modifiable: true
 119906: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{u}"
+    - "\\mathsl{u}"
     :math: true
   modifiable: true
 119907: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{v}"
+    - "\\mathsl{v}"
     :math: true
   modifiable: true
 119908: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{w}"
+    - "\\mathsl{w}"
     :math: true
   modifiable: true
 119909: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{x}"
+    - "\\mathsl{x}"
     :math: true
   modifiable: true
 119910: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{y}"
+    - "\\mathsl{y}"
     :math: true
   modifiable: true
 119911: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{z}"
+    - "\\mathsl{z}"
     :math: true
   modifiable: true
 119912: !ruby/object:OpenStruct
@@ -10475,313 +10476,313 @@
 120016: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{A}"
+    - "\\mathmit{A}"
     :math: true
   modifiable: true
 120017: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{B}"
+    - "\\mathmit{B}"
     :math: true
   modifiable: true
 120018: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{C}"
+    - "\\mathmit{C}"
     :math: true
   modifiable: true
 120019: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{D}"
+    - "\\mathmit{D}"
     :math: true
   modifiable: true
 120020: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{E}"
+    - "\\mathmit{E}"
     :math: true
   modifiable: true
 120021: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{F}"
+    - "\\mathmit{F}"
     :math: true
   modifiable: true
 120022: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{G}"
+    - "\\mathmit{G}"
     :math: true
   modifiable: true
 120023: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{H}"
+    - "\\mathmit{H}"
     :math: true
   modifiable: true
 120024: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{I}"
+    - "\\mathmit{I}"
     :math: true
   modifiable: true
 120025: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{J}"
+    - "\\mathmit{J}"
     :math: true
   modifiable: true
 120026: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{K}"
+    - "\\mathmit{K}"
     :math: true
   modifiable: true
 120027: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{L}"
+    - "\\mathmit{L}"
     :math: true
   modifiable: true
 120028: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{M}"
+    - "\\mathmit{M}"
     :math: true
   modifiable: true
 120029: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{N}"
+    - "\\mathmit{N}"
     :math: true
   modifiable: true
 120030: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{O}"
+    - "\\mathmit{O}"
     :math: true
   modifiable: true
 120031: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{P}"
+    - "\\mathmit{P}"
     :math: true
   modifiable: true
 120032: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{Q}"
+    - "\\mathmit{Q}"
     :math: true
   modifiable: true
 120033: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{R}"
+    - "\\mathmit{R}"
     :math: true
   modifiable: true
 120034: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{S}"
+    - "\\mathmit{S}"
     :math: true
   modifiable: true
 120035: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{T}"
+    - "\\mathmit{T}"
     :math: true
   modifiable: true
 120036: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{U}"
+    - "\\mathmit{U}"
     :math: true
   modifiable: true
 120037: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{V}"
+    - "\\mathmit{V}"
     :math: true
   modifiable: true
 120038: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{W}"
+    - "\\mathmit{W}"
     :math: true
   modifiable: true
 120039: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{X}"
+    - "\\mathmit{X}"
     :math: true
   modifiable: true
 120040: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{Y}"
+    - "\\mathmit{Y}"
     :math: true
   modifiable: true
 120041: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{Z}"
+    - "\\mathmit{Z}"
     :math: true
   modifiable: true
 120042: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{a}"
+    - "\\mathmit{a}"
     :math: true
   modifiable: true
 120043: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{b}"
+    - "\\mathmit{b}"
     :math: true
   modifiable: true
 120044: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{c}"
+    - "\\mathmit{c}"
     :math: true
   modifiable: true
 120045: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{d}"
+    - "\\mathmit{d}"
     :math: true
   modifiable: true
 120046: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{e}"
+    - "\\mathmit{e}"
     :math: true
   modifiable: true
 120047: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{f}"
+    - "\\mathmit{f}"
     :math: true
   modifiable: true
 120048: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{g}"
+    - "\\mathmit{g}"
     :math: true
   modifiable: true
 120049: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{h}"
+    - "\\mathmit{h}"
     :math: true
   modifiable: true
 120050: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{i}"
+    - "\\mathmit{i}"
     :math: true
   modifiable: true
 120051: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{j}"
+    - "\\mathmit{j}"
     :math: true
   modifiable: true
 120052: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{k}"
+    - "\\mathmit{k}"
     :math: true
   modifiable: true
 120053: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{l}"
+    - "\\mathmit{l}"
     :math: true
   modifiable: true
 120054: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{m}"
+    - "\\mathmit{m}"
     :math: true
   modifiable: true
 120055: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{n}"
+    - "\\mathmit{n}"
     :math: true
   modifiable: true
 120056: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{o}"
+    - "\\mathmit{o}"
     :math: true
   modifiable: true
 120057: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{p}"
+    - "\\mathmit{p}"
     :math: true
   modifiable: true
 120058: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{q}"
+    - "\\mathmit{q}"
     :math: true
   modifiable: true
 120059: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{r}"
+    - "\\mathmit{r}"
     :math: true
   modifiable: true
 120060: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{s}"
+    - "\\mathmit{s}"
     :math: true
   modifiable: true
 120061: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{t}"
+    - "\\mathmit{t}"
     :math: true
   modifiable: true
 120062: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{u}"
+    - "\\mathmit{u}"
     :math: true
   modifiable: true
 120063: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{v}"
+    - "\\mathmit{v}"
     :math: true
   modifiable: true
 120064: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{w}"
+    - "\\mathmit{w}"
     :math: true
   modifiable: true
 120065: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{x}"
+    - "\\mathmit{x}"
     :math: true
   modifiable: true
 120066: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{y}"
+    - "\\mathmit{y}"
     :math: true
   modifiable: true
 120067: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbcal{z}"
+    - "\\mathmit{z}"
     :math: true
   modifiable: true
 120068: !ruby/object:OpenStruct
@@ -11339,313 +11340,313 @@
 120172: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{A}"
+    - "\\mathslbb{A}"
     :math: true
   modifiable: true
 120173: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{B}"
+    - "\\mathslbb{B}"
     :math: true
   modifiable: true
 120174: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{C}"
+    - "\\mathslbb{C}"
     :math: true
   modifiable: true
 120175: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{D}"
+    - "\\mathslbb{D}"
     :math: true
   modifiable: true
 120176: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{E}"
+    - "\\mathslbb{E}"
     :math: true
   modifiable: true
 120177: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{F}"
+    - "\\mathslbb{F}"
     :math: true
   modifiable: true
 120178: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{G}"
+    - "\\mathslbb{G}"
     :math: true
   modifiable: true
 120179: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{H}"
+    - "\\mathslbb{H}"
     :math: true
   modifiable: true
 120180: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{I}"
+    - "\\mathslbb{I}"
     :math: true
   modifiable: true
 120181: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{J}"
+    - "\\mathslbb{J}"
     :math: true
   modifiable: true
 120182: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{K}"
+    - "\\mathslbb{K}"
     :math: true
   modifiable: true
 120183: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{L}"
+    - "\\mathslbb{L}"
     :math: true
   modifiable: true
 120184: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{M}"
+    - "\\mathslbb{M}"
     :math: true
   modifiable: true
 120185: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{N}"
+    - "\\mathslbb{N}"
     :math: true
   modifiable: true
 120186: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{O}"
+    - "\\mathslbb{O}"
     :math: true
   modifiable: true
 120187: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{P}"
+    - "\\mathslbb{P}"
     :math: true
   modifiable: true
 120188: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{Q}"
+    - "\\mathslbb{Q}"
     :math: true
   modifiable: true
 120189: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{R}"
+    - "\\mathslbb{R}"
     :math: true
   modifiable: true
 120190: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{S}"
+    - "\\mathslbb{S}"
     :math: true
   modifiable: true
 120191: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{T}"
+    - "\\mathslbb{T}"
     :math: true
   modifiable: true
 120192: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{U}"
+    - "\\mathslbb{U}"
     :math: true
   modifiable: true
 120193: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{V}"
+    - "\\mathslbb{V}"
     :math: true
   modifiable: true
 120194: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{W}"
+    - "\\mathslbb{W}"
     :math: true
   modifiable: true
 120195: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{X}"
+    - "\\mathslbb{X}"
     :math: true
   modifiable: true
 120196: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{Y}"
+    - "\\mathslbb{Y}"
     :math: true
   modifiable: true
 120197: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{Z}"
+    - "\\mathslbb{Z}"
     :math: true
   modifiable: true
 120198: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{a}"
+    - "\\mathslbb{a}"
     :math: true
   modifiable: true
 120199: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{b}"
+    - "\\mathslbb{b}"
     :math: true
   modifiable: true
 120200: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{c}"
+    - "\\mathslbb{c}"
     :math: true
   modifiable: true
 120201: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{d}"
+    - "\\mathslbb{d}"
     :math: true
   modifiable: true
 120202: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{e}"
+    - "\\mathslbb{e}"
     :math: true
   modifiable: true
 120203: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{f}"
+    - "\\mathslbb{f}"
     :math: true
   modifiable: true
 120204: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{g}"
+    - "\\mathslbb{g}"
     :math: true
   modifiable: true
 120205: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{h}"
+    - "\\mathslbb{h}"
     :math: true
   modifiable: true
 120206: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{i}"
+    - "\\mathslbb{i}"
     :math: true
   modifiable: true
 120207: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{j}"
+    - "\\mathslbb{j}"
     :math: true
   modifiable: true
 120208: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{k}"
+    - "\\mathslbb{k}"
     :math: true
   modifiable: true
 120209: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{l}"
+    - "\\mathslbb{l}"
     :math: true
   modifiable: true
 120210: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{m}"
+    - "\\mathslbb{m}"
     :math: true
   modifiable: true
 120211: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{n}"
+    - "\\mathslbb{n}"
     :math: true
   modifiable: true
 120212: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{o}"
+    - "\\mathslbb{o}"
     :math: true
   modifiable: true
 120213: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{p}"
+    - "\\mathslbb{p}"
     :math: true
   modifiable: true
 120214: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{q}"
+    - "\\mathslbb{q}"
     :math: true
   modifiable: true
 120215: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{r}"
+    - "\\mathslbb{r}"
     :math: true
   modifiable: true
 120216: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{s}"
+    - "\\mathslbb{s}"
     :math: true
   modifiable: true
 120217: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{t}"
+    - "\\mathslbb{t}"
     :math: true
   modifiable: true
 120218: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{u}"
+    - "\\mathslbb{u}"
     :math: true
   modifiable: true
 120219: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{v}"
+    - "\\mathslbb{v}"
     :math: true
   modifiable: true
 120220: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{w}"
+    - "\\mathslbb{w}"
     :math: true
   modifiable: true
 120221: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{x}"
+    - "\\mathslbb{x}"
     :math: true
   modifiable: true
 120222: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{y}"
+    - "\\mathslbb{y}"
     :math: true
   modifiable: true
 120223: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbfrak{z}"
+    - "\\mathslbb{z}"
     :math: true
   modifiable: true
 120224: !ruby/object:OpenStruct
@@ -13277,7 +13278,8 @@
 120499: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{M}"
+    - M{}
+    - M
     :math: true
   modifiable: true
 120500: !ruby/object:OpenStruct
@@ -13369,43 +13371,43 @@
 120514: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\alpha}"
+    - "\\mathbf{\\Alpha}"
     :math: true
   modifiable: true
 120515: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\beta}"
+    - "\\mathbf{\\Beta}"
     :math: true
   modifiable: true
 120516: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\gamma}"
+    - "\\mathbf{\\Gamma}"
     :math: true
   modifiable: true
 120517: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\delta}"
+    - "\\mathbf{\\Delta}"
     :math: true
   modifiable: true
 120518: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\epsilon}"
+    - "\\mathbf{\\Epsilon}"
     :math: true
   modifiable: true
 120519: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\zeta}"
+    - "\\mathbf{\\Zeta}"
     :math: true
   modifiable: true
 120520: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\eta}"
+    - "\\mathbf{\\Eta}"
     :math: true
   modifiable: true
 120521: !ruby/object:OpenStruct
@@ -13417,55 +13419,58 @@
 120522: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\iota}"
+    - "\\mathbf{\\Iota}"
     :math: true
   modifiable: true
 120523: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\kappa}"
+    - "\\mathbf{\\Kappa}"
     :math: true
   modifiable: true
 120524: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\lambda}"
+    - "\\mathbf{\\Lambda}"
     :math: true
   modifiable: true
 120525: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\mu}"
+    - M{}
+    - M
     :math: true
   modifiable: true
 120526: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\nu}"
+    - N{}
+    - N
     :math: true
   modifiable: true
 120527: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\xi}"
+    - "\\mathbf{\\Xi}"
     :math: true
   modifiable: true
 120528: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{o}"
+    - O{}
+    - O
     :math: true
   modifiable: true
 120529: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\pi}"
+    - "\\mathbf{\\Pi}"
     :math: true
   modifiable: true
 120530: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\rho}"
+    - "\\mathbf{\\Rho}"
     :math: true
   modifiable: true
 120531: !ruby/object:OpenStruct
@@ -13477,43 +13482,43 @@
 120532: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\sigma}"
+    - "\\mathbf{\\Sigma}"
     :math: true
   modifiable: true
 120533: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\tau}"
+    - "\\mathbf{\\Tau}"
     :math: true
   modifiable: true
 120534: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\upsilon}"
+    - "\\mathbf{\\Upsilon}"
     :math: true
   modifiable: true
 120535: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\phi}"
+    - "\\mathbf{\\Phi}"
     :math: true
   modifiable: true
 120536: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\chi}"
+    - "\\mathbf{\\Chi}"
     :math: true
   modifiable: true
 120537: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\psi}"
+    - "\\mathbf{\\Psi}"
     :math: true
   modifiable: true
 120538: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\omega}"
+    - "\\mathbf{\\Omega}"
     :math: true
   modifiable: true
 120539: !ruby/object:OpenStruct
@@ -13526,7 +13531,8 @@
 120540: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbf{\\varepsilon}"
+    - "\\in{}"
+    - "\\in"
     :math: true
   modifiable: true
 120541: !ruby/object:OpenStruct
@@ -13562,73 +13568,74 @@
 120546: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Alpha}"
+    - "\\mathsl{\\Alpha}"
     :math: true
   modifiable: true
 120547: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Beta}"
+    - "\\mathsl{\\Beta}"
     :math: true
   modifiable: true
 120548: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Gamma}"
+    - "\\mathsl{\\Gamma}"
     :math: true
   modifiable: true
 120549: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Delta}"
+    - "\\mathsl{\\Delta}"
     :math: true
   modifiable: true
 120550: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Epsilon}"
+    - "\\mathsl{\\Epsilon}"
     :math: true
   modifiable: true
 120551: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Zeta}"
+    - "\\mathsl{\\Zeta}"
     :math: true
   modifiable: true
 120552: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Eta}"
+    - "\\mathsl{\\Eta}"
     :math: true
   modifiable: true
 120553: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Theta}"
+    - "\\mathsl{\\Theta}"
     :math: true
   modifiable: true
 120554: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Iota}"
+    - "\\mathsl{\\Iota}"
     :math: true
   modifiable: true
 120555: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Kappa}"
+    - "\\mathsl{\\Kappa}"
     :math: true
   modifiable: true
 120556: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Lambda}"
+    - "\\mathsl{\\Lambda}"
     :math: true
   modifiable: true
 120557: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{M}"
+    - M{}
+    - M
     :math: true
   modifiable: true
 120558: !ruby/object:OpenStruct
@@ -13641,7 +13648,7 @@
 120559: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Xi}"
+    - "\\mathsl{\\Xi}"
     :math: true
   modifiable: true
 120560: !ruby/object:OpenStruct
@@ -13654,217 +13661,220 @@
 120561: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Pi}"
+    - "\\mathsl{\\Pi}"
     :math: true
   modifiable: true
 120562: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Rho}"
+    - "\\mathsl{\\Rho}"
     :math: true
   modifiable: true
 120563: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\vartheta}"
+    - "\\mathsl{\\vartheta}"
     :math: false
   modifiable: true
 120564: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Sigma}"
+    - "\\mathsl{\\Sigma}"
     :math: true
   modifiable: true
 120565: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Tau}"
+    - "\\mathsl{\\Tau}"
     :math: true
   modifiable: true
 120566: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Upsilon}"
+    - "\\mathsl{\\Upsilon}"
     :math: true
   modifiable: true
 120567: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Phi}"
+    - "\\mathsl{\\Phi}"
     :math: true
   modifiable: true
 120568: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Chi}"
+    - "\\mathsl{\\Chi}"
     :math: true
   modifiable: true
 120569: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Psi}"
+    - "\\mathsl{\\Psi}"
     :math: true
   modifiable: true
 120570: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\Omega}"
+    - "\\mathsl{\\Omega}"
     :math: true
   modifiable: true
 120571: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\nabla}"
+    - "\\mathsl{\\nabla}"
     :math: true
   modifiable: true
 120572: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\alpha}"
+    - "\\mathsl{\\Alpha}"
     :math: true
   modifiable: true
 120573: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\beta}"
+    - "\\mathsl{\\Beta}"
     :math: true
   modifiable: true
 120574: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\gamma}"
+    - "\\mathsl{\\Gamma}"
     :math: true
   modifiable: true
 120575: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\delta}"
+    - "\\mathsl{\\Delta}"
     :math: true
   modifiable: true
 120576: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\epsilon}"
+    - "\\mathsl{\\Epsilon}"
     :math: true
   modifiable: true
 120577: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\zeta}"
+    - "\\mathsl{\\Zeta}"
     :math: true
   modifiable: true
 120578: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\eta}"
+    - "\\mathsl{\\Eta}"
     :math: true
   modifiable: true
 120579: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\theta}"
+    - "\\mathsl{\\Theta}"
     :math: true
   modifiable: true
 120580: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\iota}"
+    - "\\mathsl{\\Iota}"
     :math: true
   modifiable: true
 120581: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\kappa}"
+    - "\\mathsl{\\Kappa}"
     :math: true
   modifiable: true
 120582: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\lambda}"
+    - "\\mathsl{\\Lambda}"
     :math: true
   modifiable: true
 120583: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\mu}"
+    - M{}
+    - M
     :math: true
   modifiable: true
 120584: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\nu}"
+    - N{}
+    - N
     :math: true
   modifiable: true
 120585: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\xi}"
+    - "\\mathsl{\\Xi}"
     :math: true
   modifiable: true
 120586: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{o}"
+    - O{}
+    - O
     :math: true
   modifiable: true
 120587: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\pi}"
+    - "\\mathsl{\\Pi}"
     :math: true
   modifiable: true
 120588: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\rho}"
+    - "\\mathsl{\\Rho}"
     :math: true
   modifiable: true
 120589: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\varsigma}"
+    - "\\mathsl{\\varsigma}"
     :math: true
   modifiable: true
 120590: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\sigma}"
+    - "\\mathsl{\\Sigma}"
     :math: true
   modifiable: true
 120591: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\tau}"
+    - "\\mathsl{\\Tau}"
     :math: true
   modifiable: true
 120592: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\upsilon}"
+    - "\\mathsl{\\Upsilon}"
     :math: true
   modifiable: true
 120593: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\phi}"
+    - "\\mathsl{\\Phi}"
     :math: true
   modifiable: true
 120594: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\chi}"
+    - "\\mathsl{\\Chi}"
     :math: true
   modifiable: true
 120595: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\psi}"
+    - "\\mathsl{\\Psi}"
     :math: true
   modifiable: true
 120596: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\omega}"
+    - "\\mathsl{\\Omega}"
     :math: true
   modifiable: true
 120597: !ruby/object:OpenStruct
@@ -13884,31 +13894,31 @@
 120599: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\vartheta}"
+    - "\\mathsl{\\vartheta}"
     :math: false
   modifiable: true
 120600: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\varkappa}"
+    - "\\mathsl{\\varkappa}"
     :math: false
   modifiable: true
 120601: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\phi}"
+    - "\\mathsl{\\phi}"
     :math: false
   modifiable: true
 120602: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\varrho}"
+    - "\\mathsl{\\varrho}"
     :math: false
   modifiable: true
 120603: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathmit{\\varpi}"
+    - "\\mathsl{\\varpi}"
     :math: false
   modifiable: true
 120604: !ruby/object:OpenStruct
@@ -13980,13 +13990,15 @@
 120615: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{M}"
+    - M{}
+    - M
     :math: true
   modifiable: true
 120616: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{N}"
+    - N{}
+    - N
     :math: true
   modifiable: true
 120617: !ruby/object:OpenStruct
@@ -14071,103 +14083,106 @@
 120630: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\alpha}"
+    - "\\mathbit{\\Alpha}"
     :math: true
   modifiable: true
 120631: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\beta}"
+    - "\\mathbit{\\Beta}"
     :math: true
   modifiable: true
 120632: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\gamma}"
+    - "\\mathbit{\\Gamma}"
     :math: true
   modifiable: true
 120633: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\delta}"
+    - "\\mathbit{\\Delta}"
     :math: true
   modifiable: true
 120634: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\epsilon}"
+    - "\\mathbit{\\Epsilon}"
     :math: true
   modifiable: true
 120635: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\zeta}"
+    - "\\mathbit{\\Zeta}"
     :math: true
   modifiable: true
 120636: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\eta}"
+    - "\\mathbit{\\Eta}"
     :math: true
   modifiable: true
 120637: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\theta}"
+    - "\\mathbit{\\Theta}"
     :math: true
   modifiable: true
 120638: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\iota}"
+    - "\\mathbit{\\Iota}"
     :math: true
   modifiable: true
 120639: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\kappa}"
+    - "\\mathbit{\\Kappa}"
     :math: true
   modifiable: true
 120640: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\lambda}"
+    - "\\mathbit{\\Lambda}"
     :math: true
   modifiable: true
 120641: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\mu}"
+    - M{}
+    - M
     :math: true
   modifiable: true
 120642: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\nu}"
+    - N{}
+    - N
     :math: true
   modifiable: true
 120643: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\xi}"
+    - "\\mathbit{\\Xi}"
     :math: true
   modifiable: true
 120644: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{o}"
+    - O{}
+    - O
     :math: true
   modifiable: true
 120645: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\pi}"
+    - "\\mathbit{\\Pi}"
     :math: true
   modifiable: true
 120646: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\rho}"
+    - "\\mathbit{\\Rho}"
     :math: true
   modifiable: true
 120647: !ruby/object:OpenStruct
@@ -14179,43 +14194,43 @@
 120648: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\sigma}"
+    - "\\mathbit{\\Sigma}"
     :math: true
   modifiable: true
 120649: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\tau}"
+    - "\\mathbit{\\Tau}"
     :math: true
   modifiable: true
 120650: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\upsilon}"
+    - "\\mathbit{\\Upsilon}"
     :math: true
   modifiable: true
 120651: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\phi}"
+    - "\\mathbit{\\Phi}"
     :math: true
   modifiable: true
 120652: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\chi}"
+    - "\\mathbit{\\Chi}"
     :math: true
   modifiable: true
 120653: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\psi}"
+    - "\\mathbit{\\Psi}"
     :math: true
   modifiable: true
 120654: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathbit{\\omega}"
+    - "\\mathbit{\\Omega}"
     :math: true
   modifiable: true
 120655: !ruby/object:OpenStruct
@@ -14331,13 +14346,15 @@
 120673: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{M}"
+    - M{}
+    - M
     :math: true
   modifiable: true
 120674: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{N}"
+    - N{}
+    - N
     :math: true
   modifiable: true
 120675: !ruby/object:OpenStruct
@@ -14422,103 +14439,106 @@
 120688: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\alpha}"
+    - "\\mathsfbf{\\Alpha}"
     :math: true
   modifiable: true
 120689: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\beta}"
+    - "\\mathsfbf{\\Beta}"
     :math: true
   modifiable: true
 120690: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\gamma}"
+    - "\\mathsfbf{\\Gamma}"
     :math: true
   modifiable: true
 120691: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\delta}"
+    - "\\mathsfbf{\\Delta}"
     :math: true
   modifiable: true
 120692: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\epsilon}"
+    - "\\mathsfbf{\\Epsilon}"
     :math: true
   modifiable: true
 120693: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\zeta}"
+    - "\\mathsfbf{\\Zeta}"
     :math: true
   modifiable: true
 120694: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\eta}"
+    - "\\mathsfbf{\\Eta}"
     :math: true
   modifiable: true
 120695: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\theta}"
+    - "\\mathsfbf{\\Theta}"
     :math: true
   modifiable: true
 120696: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\iota}"
+    - "\\mathsfbf{\\Iota}"
     :math: true
   modifiable: true
 120697: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\kappa}"
+    - "\\mathsfbf{\\Kappa}"
     :math: true
   modifiable: true
 120698: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\lambda}"
+    - "\\mathsfbf{\\Lambda}"
     :math: true
   modifiable: true
 120699: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\mu}"
+    - M{}
+    - M
     :math: true
   modifiable: true
 120700: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\nu}"
+    - N{}
+    - N
     :math: true
   modifiable: true
 120701: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\xi}"
+    - "\\mathsfbf{\\Xi}"
     :math: true
   modifiable: true
 120702: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{o}"
+    - O{}
+    - O
     :math: true
   modifiable: true
 120703: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\pi}"
+    - "\\mathsfbf{\\Pi}"
     :math: true
   modifiable: true
 120704: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\rho}"
+    - "\\mathsfbf{\\Rho}"
     :math: true
   modifiable: true
 120705: !ruby/object:OpenStruct
@@ -14530,43 +14550,43 @@
 120706: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\sigma}"
+    - "\\mathsfbf{\\Sigma}"
     :math: true
   modifiable: true
 120707: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\tau}"
+    - "\\mathsfbf{\\Tau}"
     :math: true
   modifiable: true
 120708: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\upsilon}"
+    - "\\mathsfbf{\\Upsilon}"
     :math: true
   modifiable: true
 120709: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\phi}"
+    - "\\mathsfbf{\\Phi}"
     :math: true
   modifiable: true
 120710: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\chi}"
+    - "\\mathsfbf{\\Chi}"
     :math: true
   modifiable: true
 120711: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\psi}"
+    - "\\mathsfbf{\\Psi}"
     :math: true
   modifiable: true
 120712: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\omega}"
+    - "\\mathsfbf{\\Omega}"
     :math: true
   modifiable: true
 120713: !ruby/object:OpenStruct
@@ -14579,7 +14599,8 @@
 120714: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbf{\\varepsilon}"
+    - "\\in{}"
+    - "\\in"
     :math: true
   modifiable: true
 120715: !ruby/object:OpenStruct
@@ -14681,13 +14702,15 @@
 120731: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{M}"
+    - M{}
+    - M
     :math: true
   modifiable: true
 120732: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{N}"
+    - N{}
+    - N
     :math: true
   modifiable: true
 120733: !ruby/object:OpenStruct
@@ -14772,43 +14795,43 @@
 120746: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\alpha}"
+    - "\\mathsfbfsl{\\Alpha}"
     :math: true
   modifiable: true
 120747: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\beta}"
+    - "\\mathsfbfsl{\\Beta}"
     :math: true
   modifiable: true
 120748: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\gamma}"
+    - "\\mathsfbfsl{\\Gamma}"
     :math: true
   modifiable: true
 120749: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\delta}"
+    - "\\mathsfbfsl{\\Delta}"
     :math: true
   modifiable: true
 120750: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\epsilon}"
+    - "\\mathsfbfsl{\\Epsilon}"
     :math: true
   modifiable: true
 120751: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\zeta}"
+    - "\\mathsfbfsl{\\Zeta}"
     :math: true
   modifiable: true
 120752: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\eta}"
+    - "\\mathsfbfsl{\\Eta}"
     :math: true
   modifiable: true
 120753: !ruby/object:OpenStruct
@@ -14820,55 +14843,58 @@
 120754: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\iota}"
+    - "\\mathsfbfsl{\\Iota}"
     :math: true
   modifiable: true
 120755: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\kappa}"
+    - "\\mathsfbfsl{\\Kappa}"
     :math: true
   modifiable: true
 120756: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\lambda}"
+    - "\\mathsfbfsl{\\Lambda}"
     :math: true
   modifiable: true
 120757: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\mu}"
+    - M{}
+    - M
     :math: true
   modifiable: true
 120758: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\nu}"
+    - N{}
+    - N
     :math: true
   modifiable: true
 120759: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\xi}"
+    - "\\mathsfbfsl{\\Xi}"
     :math: true
   modifiable: true
 120760: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{o}"
+    - O{}
+    - O
     :math: true
   modifiable: true
 120761: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\pi}"
+    - "\\mathsfbfsl{\\Pi}"
     :math: true
   modifiable: true
 120762: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\rho}"
+    - "\\mathsfbfsl{\\Rho}"
     :math: true
   modifiable: true
 120763: !ruby/object:OpenStruct
@@ -14880,43 +14906,43 @@
 120764: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\sigma}"
+    - "\\mathsfbfsl{\\Sigma}"
     :math: true
   modifiable: true
 120765: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\tau}"
+    - "\\mathsfbfsl{\\Tau}"
     :math: true
   modifiable: true
 120766: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\upsilon}"
+    - "\\mathsfbfsl{\\Upsilon}"
     :math: true
   modifiable: true
 120767: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\phi}"
+    - "\\mathsfbfsl{\\Phi}"
     :math: true
   modifiable: true
 120768: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\chi}"
+    - "\\mathsfbfsl{\\Chi}"
     :math: true
   modifiable: true
 120769: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\psi}"
+    - "\\mathsfbfsl{\\Psi}"
     :math: true
   modifiable: true
 120770: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\mathsfbfsl{\\omega}"
+    - "\\mathsfbfsl{\\Omega}"
     :math: true
   modifiable: true
 120771: !ruby/object:OpenStruct
@@ -15261,6 +15287,20 @@
   table:
     :latex:
     - "\\mathtt{9}"
+    :math: true
+  modifiable: true
+9001: !ruby/object:OpenStruct
+  table:
+    :latex:
+    - "\\langle{}"
+    - "\\langle"
+    :math: true
+  modifiable: true
+9002: !ruby/object:OpenStruct
+  table:
+    :latex:
+    - "\\rangle{}"
+    - "\\rangle"
     :math: true
   modifiable: true
 8203: !ruby/object:OpenStruct

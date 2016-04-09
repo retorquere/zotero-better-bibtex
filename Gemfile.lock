@@ -116,6 +116,7 @@ GEM
       zip-zip
     rchardet (1.6.1)
     recursive-open-struct (1.0.1)
+    regexp_parser (0.3.2)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
@@ -197,6 +198,7 @@ DEPENDENCIES
   rake-xpi
   rchardet
   recursive-open-struct
+  regexp_parser
   rest-client
   rspec
   rubyzip (>= 1.0.0)

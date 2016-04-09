@@ -21,6 +21,7 @@ LaTeX.toLaTeX.ascii.math =
   '\\': "\\backslash{}"
   '\u00AC': "\\lnot{}"
   '\u00AD': "\\-"
+  '\u00B0': "^\\circ"
   '\u00B1': "\\pm{}"
   '\u00B2': "{^2}"
   '\u00B3': "{^3}"
@@ -1650,7 +1651,6 @@ LaTeX.toLaTeX.ascii.text =
   '\u00AB': "\\guillemotleft{}"
   '\u00AE': "\\textregistered{}"
   '\u00AF': "\\textasciimacron{}"
-  '\u00B0': "\\textdegree{}"
   '\u00B4': "\\textasciiacute{}"
   '\u00B6': "\\textparagraph{}"
   '\u00B8': "\\c{}"
@@ -2435,6 +2435,7 @@ LaTeX.toUnicode =
   "\\textregistered": '\u00AE'
   "\\textasciimacron{}": '\u00AF'
   "\\textasciimacron": '\u00AF'
+  "^\\circ": '\u00B0'
   "\\textdegree{}": '\u00B0'
   "\\textdegree": '\u00B0'
   "\\pm{}": '\u00B1'
