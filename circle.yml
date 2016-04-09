@@ -11,7 +11,7 @@ dependencies:
     - test/fixtures/plugins
 test:
   override:
-    - bundle exec rake test[ci-cluster-$CIRCLE_NODE_INDEX]:
+    - JURIS_M=true bundle exec rake test[ci-cluster-$CIRCLE_NODE_INDEX]:
         parallel: true
 deployment:
   all:

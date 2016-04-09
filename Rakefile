@@ -538,6 +538,10 @@ task :amo => XPI.xpi do
 end
 
 task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
+  if ENV['JURIS_M'] == 'true'
+    XPI.test.xpis.download.reject!{|update| update == 'https://www.zotero.org/download/update.rdf'}
+    XPI.test.xpis.download << 'https://juris-m.github.io/zotero/update.rdf'
+  end
   XPI.getxpis
 
   tag = ''
