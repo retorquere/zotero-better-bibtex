@@ -9,10 +9,13 @@ dependencies:
   cache_directories:
     - test/fixtures/profiles
     - test/fixtures/plugins
-test:
-  override:
-    - JURIS_M=true bundle exec rake test[ci-cluster-$CIRCLE_NODE_INDEX]:
-        parallel: true
+script: bundle exec rake test[$TAGS]
+env:
+  matrix:
+    - JURIS_M=true TAGS="--tag ~@noci --tag @test-cluster-0 --tag @test-cluster-1"
+    - JURIS_M=true TAGS="--tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1"
+    - JURIS_M=false TAGS="--tag ~@noci --tag @test-cluster-0 --tag @test-cluster-1"
+    - JURIS_M=false TAGS="--tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1"
 deployment:
   all:
     branch: /.*/

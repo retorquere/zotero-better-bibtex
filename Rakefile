@@ -544,19 +544,12 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
   end
   XPI.getxpis
 
+  features = 'resource/tests'
+
   tag = ''
 
-  features = 'resource/tests'
-  if args[:tag] =~ /ci-cluster-(.*)/
-    clusters = 4
-    cluster = $1
-    if cluster == '*'
-      tag = "--tag ~@noci"
-    elsif cluster =~ /^[0-9]$/ && cluster.to_i < (clusters - 1)
-      tag = "--tag ~@noci --tag @test-cluster-#{cluster}"
-    else
-      tag = "--tag ~@noci " + (0..clusters - 2).collect{|n| "--tag ~@test-cluster-#{n}" }.join(' ')
-    end
+  if ENV['CIRCLECI'] == 'true'
+    tag = args[:tag]
 
   elsif args[:tag] =~ /^([a-z]):([0-9]+)$/
     features = Dir["resource/tests/#{$1}*.feature"][0] + ":#{$2}"
