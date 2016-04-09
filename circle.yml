@@ -14,23 +14,16 @@ test:
   override:
   - ? |-
       case $CIRCLE_NODE_INDEX in
-        0)  JURIS_M=true TAGS="--tag ~@noci --tag @test-cluster-0 --tag @test-cluster-1"
+        0)  JURIS_M=true  bundle exec rake test[--tag ~@noci --tag @test-cluster-0 --tag @test-cluster-1]
             ;;
-        1)  JURIS_M=true TAGS="--tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1"
+        1)  JURIS_M=true  bundle exec rake test[--tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1]
             ;;
-        2)  JURIS_M=false TAGS="--tag ~@noci --tag @test-cluster-0 --tag @test-cluster-1"
+        2)  JURIS_M=false bundle exec rake test[--tag ~@noci --tag @test-cluster-0 --tag @test-cluster-1]
             ;;
-        *)  JURIS_M=false TAGS="--tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1"
+        *)  JURIS_M=false bundle exec rake test[--tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1]
             ;;
       esac
     : parallel: true
-script: bundle exec rake test[$TAGS]
-env:
-  matrix:
-  - JURIS_M=true TAGS="--tag ~@noci --tag @test-cluster-0 --tag @test-cluster-1"
-  - JURIS_M=true TAGS="--tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1"
-  - JURIS_M=false TAGS="--tag ~@noci --tag @test-cluster-0 --tag @test-cluster-1"
-  - JURIS_M=false TAGS="--tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1"
 deployment:
   all:
     branch: "/.*/"
