@@ -332,9 +332,9 @@ class UnicodeConverter
       if type == :anchor
         # pass
       elsif type == :escape && token == :interval_open #  text: '"\\{"' [32..34]
-        text = "\t\"{\"\t"
+        pegjs += "\t\"{\"\t"
       elsif type == :escape && token == :interval_close #  text: '"\\}"' [49..51]
-        text = "\t\"}\"\t"
+        pegjs += "\t\"}\"\t"
       elsif type == :escape || type == :literal
         pegjs += "\t\"" + text + "\"\t"
       elsif type == :set && token == :open #  text: '"["' [3..4]
@@ -346,7 +346,7 @@ class UnicodeConverter
       elsif type == :set && token == :escape && text == "\\}"
         pegjs += '}'
       elsif type == :set && token == :escape
-        pegjs += '}'
+        pegjs += text
       elsif type == :set && token == :member
         pegjs += text
       elsif type == :quantifier

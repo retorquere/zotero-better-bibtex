@@ -29,7 +29,7 @@ Scenario: option to mantain the braces and special commands in titles or all fie
   And a library export using 'Better BibTeX' should match 'import/Better BibTeX.007.roundtrip.bib'
 
 @472
-Scenario: ath markup to unicode not always imported correctly #472
+Scenario: Math markup to unicode not always imported correctly #472
   When I import 2 references from 'import/ath markup to unicode not always imported correctly #472.bib'
   Then the library without collections should match 'import/ath markup to unicode not always imported correctly #472.json'
   And a library export using 'Better BibTeX' should match 'import/ath markup to unicode not always imported correctly #472.roundtrip.bib'
