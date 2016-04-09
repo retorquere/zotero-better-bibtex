@@ -59,8 +59,6 @@ class UnicodeConverter
       cs.puts ascii[:text]
 
       done = {}
-      unterminated = []
-      terminated = []
       cs.puts "LaTeX.toUnicode ="
       @chars.sort.map{|charcode, latex|
         latex.latex.each{|ltx|
@@ -135,6 +133,8 @@ class UnicodeConverter
         when /^{\\([^a-z])(.)}$/                        # '{\"a}'
           latex << "\\#{$1}#{$2} "
           latex << "\\#{$1}{#{$2}}"
+        when /^{(\^[0-9])}$/
+          latex << $1
         when /^{(\\[.]+)}$/                             # '{....}' '.... '
           latex << "#{$1} "
       end
@@ -223,69 +223,60 @@ class UnicodeConverter
 
   def patterns(source, target)
     download(false)
-    patterns = {}
 
-    unterminated = [
-      /^\\fontencoding\{[^\}]+\}\\selectfont\\char[0-9]+$/,
-      /^\\[a-z]+\\[a-zA-Z]+$/,
-      /^\\fontencoding\{[^\}]+\}\\selectfont\\char[0-9]+$/,
-      /^\\[a-z]+\\[a-zA-Z]+$/,
-      /^\\[0-9a-zA-Z]+$/,
-      /^\\u \\i$/,
-      /^\\[~\^'`"]\\[ij]$/,
-      /^\\[Huvc] [a-zA-Z]$/,
-      /^\\[\.=][a-zA-Z]$/,
-      /^\^[123]$/,
-      /^\^\\circ$/,
+    patterns = {
+      /^\\fontencoding\{[^\}]+\}\\selectfont\\char[0-9]+$/      => {terminated: false},
+      /^\\acute\{\\ddot\{\\[a-z]+\}\}$/                         => {terminated: true},
+      /^\\fontencoding\{[^\}]+\}\\selectfont\\char[0-9]+$/      => {terminated: false},
+      /^\\cyrchar\{\\'\\[a-zA-Z]+\}$/                           => {terminated: true},
+      /^\\u \\i$/                                               => {terminated: false},
+      /^\\[~\^'`"]\\[ij]$/                                      => {terminated: false},
+      /^\\=\{\\i\}$/                                            => {terminated: true},
+      /^\\[Huvc] [a-zA-Z]$/                                     => {terminated: false},
+      /^\\mathrm\{[^\}]+\}$/                                    => {terminated: true},
+      /^\\[a-zA-Z]+\{\\?[0-9a-zA-Z]+\}(\{\\?[0-9a-zA-Z]+\})?$/  => {terminated: true},
+      /^\\[a-z]+\\[a-zA-Z]+$/                                   => {terminated: false},
+      /^\\[a-z]+\{[,\.a-z0-9]+\}$/                              => {terminated: true},
+      /^\\[0-9a-zA-Z]+$/                                        => {terminated: false},
+      /^\^[123] ?$/                                             => {terminated: true},
+      /^\^\{[123]\}$/                                           => {terminated: true},
+      /^\\[\.~\^'`"]\{[a-zA-Z]\}$/                              => {terminated: true},
+      /^\\[=kr]\{[a-zA-Z]\}$/                                   => {terminated: true},
+      /^\\[\.=][a-zA-Z]$/                                       => {terminated: false},
+      /^\^\\circ$/                                              => {terminated: false},
+      /^''+$/                                                   => {terminated: true},
+      /^\\[~\^'`"][a-zA-Z] ?$/                                  => {terminated: true},
+      /^\\[^a-zA-Z0-9]$/                                        => {terminated: true},
+      /^\\ddot\{\\[a-z]+\}$/                                    => {terminated: true},
+      /^~$/                                                     => {terminated: true},
 
-      nil,
-
-      /^\\sim\\joinrel\\leadsto$/,
-      /^\\mathchar\"2208$/,
-      /^\\'\{\}[a-zA-Z]$/,
-      /^_\\ast$/,
-      /^'n$/,
-      /^\\int(\\!\\int)+$/,
-      /^\\not\\kern-0.3em\\times$/
-    ]
-    terminated = [
-      /^\\[\.~\^'`"]\{[a-zA-Z]\}$/,
-      /^\\acute\{\\ddot\{\\[a-z]+\}\}$/,
-      /^\\[a-zA-Z]+\{\\?[0-9a-zA-Z]+\}(\{\\?[0-9a-zA-Z]+\})?$/,
-      /^\\cyrchar\{\\'\\[a-zA-Z]+\}$/,
-      /^\\[a-z]+\{[,\.a-z0-9]+\}$/,
-      /^\\mathrm\{[^\}]+\}$/,
-      /^\\=\{\\i\}$/,
-      /^\\[=kr]\{[a-zA-Z]\}$/,
-      /^''+$/,
-      /^\\[~\^'`"][a-zA-Z] ?$/,
-      /^\\[^a-zA-Z0-9]$/,
-      /^~$/,
-      /^\\ddot\{\\[a-z]+\}$/,
-
-      nil,
-
-      /^\\Pisymbol\{[a-z0-9]+\}\{[0-9]+\}$/,
-      /^\{\/\}\\!\\!\{\/\}$/,
-      /^\\stackrel\{\*\}\{=\}$/,
-      /^<\\kern-0.58em\($/,
-      /^\\fbox\{~~\}$/,
-      /^\\not[<>]$/,
-      /^\\ensuremath\{\\[a-zA-Z0-9]+\}$/,
-      /^[-`,\.]+$/,
-      /^\\rule\{1em\}\{1pt\}$/,
-      /^\\'\$\\alpha\$$/,
-      /^\\mathrm\{\\ddot\{[A-Z]\}\}$/,
-      /^\\'\{\}\{[a-zA-Z]\}$/,
-      /^'$/,
-      /^\\mathbin\{\{:\}\\!\\!\{-\}\\!\\!\{:\}\}$/,
-      /^\\not =$/,
-      /^=:$/,
-      /^:=$/,
-    ]
-
-    unterminated = unterminated.collect{|p| p ? OpenStruct.new({re: p, terminated: false, max: 0}) : nil }
-    terminated = terminated.collect{|p| p ? OpenStruct.new({re: p, terminated: true, max: 0}) : nil }
+      # unterminated
+      /^\\sim\\joinrel\\leadsto$/                               => {terminated: false, exclude: true},
+      /^\\mathchar\"2208$/                                      => {terminated: false, exclude: true},
+      /^\\'\{\}[a-zA-Z]$/                                       => {terminated: false, exclude: true},
+      /^_\\ast$/                                                => {terminated: false, exclude: true},
+      /^'n$/                                                    => {terminated: false, exclude: true},
+      /^\\int(\\!\\int)+$/                                      => {terminated: false, exclude: true},
+      /^\\not\\kern-0.3em\\times$/                              => {terminated: false, exclude: true},
+      # terminated
+      /^\\Pisymbol\{[a-z0-9]+\}\{[0-9]+\}$/                     => {terminated: true, exclude: true},
+      /^\{\/\}\\!\\!\{\/\}$/                                    => {terminated: true, exclude: true},
+      /^\\stackrel\{\*\}\{=\}$/                                 => {terminated: true, exclude: true},
+      /^<\\kern-0.58em\($/                                      => {terminated: true, exclude: true},
+      /^\\fbox\{~~\}$/                                          => {terminated: true, exclude: true},
+      /^\\not[<>]$/                                             => {terminated: true, exclude: true},
+      /^\\ensuremath\{\\[a-zA-Z0-9]+\}$/                        => {terminated: true, exclude: true},
+      /^[-`,\.]+$/                                              => {terminated: true, exclude: true},
+      /^\\rule\{1em\}\{1pt\}$/                                  => {terminated: true, exclude: true},
+      /^\\'\$\\alpha\$$/                                        => {terminated: true, exclude: true},
+      /^\\mathrm\{\\ddot\{[A-Z]\}\}$/                           => {terminated: true, exclude: true},
+      /^\\'\{\}\{[a-zA-Z]\}$/                                   => {terminated: true, exclude: true},
+      /^'$/                                                     => {terminated: true, exclude: true},
+      /^\\mathbin\{\{:\}\\!\\!\{-\}\\!\\!\{:\}\}$/              => {terminated: true, exclude: true},
+      /^\\not =$/                                               => {terminated: true, exclude: true},
+      /^=:$/                                                    => {terminated: true, exclude: true},
+      /^:=$/                                                    => {terminated: true, exclude: true},
+    }
 
     @chars.each_pair{|charcode, latex|
       latex.latex.each{|ltx|
@@ -295,14 +286,14 @@ class UnicodeConverter
         next if charcode < 256 && ltx == charcode.chr
         next if ltx =~ /^[a-z]+$/i || ltx.strip == ''
 
-        raise "#{ltx} matched by both" if terminated.detect{|p| p && ltx =~ p.re } && unterminated.detect{|p| p && ltx =~ p.re }
-
-        pattern = terminated.detect{|p| p && ltx =~ p.re } || unterminated.detect{|p| p && ltx =~ p.re }
-        if pattern
-          pattern.max = [pattern.max, ltx.length].max
-        else
-          raise "No pattern for #{ltx.inspect}"
-        end
+        patterns.detect{|(p, s)|
+          if p =~ ltx
+            s[:count] = s[:count].to_i + 1
+            true
+          else
+            false
+          end
+        } || raise("No pattern for #{ltx.inspect}")
       }
     }
 
@@ -310,8 +301,9 @@ class UnicodeConverter
       t.puts(open(source).read)
       t.puts "lookup\n"
       prefix = nil
-      patterns = unterminated[0,unterminated.index(nil)] + terminated[0,terminated.index(nil)]
-      patterns.sort_by{|p| p.max}.reverse.each_with_index{|p, i|
+
+      patterns.each_with_index {|(re, state), i|
+        next if state[:exclude] # || state[:count].to_i == 0
         #next unless p.max > 1
         if prefix.nil?
           prefix = "  ="
@@ -319,12 +311,12 @@ class UnicodeConverter
           prefix = "  /"
         end
         rule = prefix
-        rule += " text:(#{pegjs_re(p.re)})"
+        rule += " text:(#{pegjs_re(re)})"
         rule = rule.ljust(70, ' ')
 
-        rule += " terminator" unless p.terminated
+        rule += " terminator" unless state[:terminated]
         rule = rule.ljust(85, ' ')
-        rule += " &{ return lookup(text, '#{i}'); }"
+        rule += " &{ return lookup(text, #{i}); }"
         rule = rule.ljust(110, ' ')
         rule += "{ return lookup(text); }"
 
@@ -365,7 +357,7 @@ class UnicodeConverter
       elsif type == :group
         pegjs += text
       else
-        raise "type: #{type.inspect}, token: #{token.inspect}, text: #{text.inspect} [#{ts.inspect}..#{te.inspect}]"
+        raise "re: #{re}, type: #{type.inspect}, token: #{token.inspect}, text: #{text.inspect} [#{ts.inspect}..#{te.inspect}]"
       end
     end
 

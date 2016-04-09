@@ -204,12 +204,14 @@
   table:
     :latex:
     - "{^2}"
+    - "^2"
     :math: true
   modifiable: true
 179: !ruby/object:OpenStruct
   table:
     :latex:
     - "{^3}"
+    - "^3"
     :math: true
   modifiable: true
 180: !ruby/object:OpenStruct
@@ -250,6 +252,7 @@
   table:
     :latex:
     - "{^1}"
+    - "^1"
     :math: true
   modifiable: true
 186: !ruby/object:OpenStruct
