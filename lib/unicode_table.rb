@@ -221,7 +221,7 @@ class UnicodeConverter
     save(target, source)
   end
 
-  def patterns
+  def patterns(source, target)
     download(false)
     patterns = {}
 
@@ -235,7 +235,6 @@ class UnicodeConverter
       /^\\[~\^'`"]\\[ij]$/,
       /^\\[Huvc] [a-zA-Z]$/,
       /^\\[\.=][a-zA-Z]$/,
-      /^\\[~\^'`"][a-zA-Z]$/,
       /^\^[123]$/,
       /^\^\\circ$/,
 
@@ -259,6 +258,7 @@ class UnicodeConverter
       /^\\=\{\\i\}$/,
       /^\\[=kr]\{[a-zA-Z]\}$/,
       /^''+$/,
+      /^\\[~\^'`"][a-zA-Z] ?$/,
       /^\\[^a-zA-Z0-9]$/,
       /^~$/,
       /^\\ddot\{\\[a-z]+\}$/,
@@ -295,32 +295,41 @@ class UnicodeConverter
         next if charcode < 256 && ltx == charcode.chr
         next if ltx =~ /^[a-z]+$/i || ltx.strip == ''
 
-        if ltx =~ /[a-z0-9]$/i # unterminated
-          pattern = unterminated.detect{|p| p && ltx =~ p.re }
-          raise "No pattern for #{ltx.inspect}" unless pattern
-          pattern.max = [pattern.max, ltx.length].max
+        raise "#{ltx} matched by both" if terminated.detect{|p| p && ltx =~ p.re } && unterminated.detect{|p| p && ltx =~ p.re }
 
-        else # terminated
-          pattern = terminated.detect{|p| p && ltx =~ p.re }
-          raise "No pattern for #{ltx.inspect}" unless pattern
+        pattern = terminated.detect{|p| p && ltx =~ p.re } || unterminated.detect{|p| p && ltx =~ p.re }
+        if pattern
           pattern.max = [pattern.max, ltx.length].max
+        else
+          raise "No pattern for #{ltx.inspect}"
         end
       }
     }
 
-    patterns = unterminated[0,unterminated.index(nil)] + terminated[0,terminated.index(nil)]
-    patterns.sort_by{|p| p.max}.reverse.each_with_index{|p, i|
-      #next unless p.max > 1
-      rule = "  / text:(#{pegjs_re(p.re)})"
-      rule = rule.ljust(70, ' ')
+    open(target, 'w'){|t|
+      t.puts(open(source).read)
+      t.puts "lookup\n"
+      prefix = nil
+      patterns = unterminated[0,unterminated.index(nil)] + terminated[0,terminated.index(nil)]
+      patterns.sort_by{|p| p.max}.reverse.each_with_index{|p, i|
+        #next unless p.max > 1
+        if prefix.nil?
+          prefix = "  ="
+        else
+          prefix = "  /"
+        end
+        rule = prefix
+        rule += " text:(#{pegjs_re(p.re)})"
+        rule = rule.ljust(70, ' ')
 
-      rule += " terminator" unless p.terminated
-      rule = rule.ljust(85, ' ')
-      rule += " &{ return lookup(text, '#{i}'); }"
-      rule = rule.ljust(110, ' ')
-      rule += "{ return lookup(text); }"
+        rule += " terminator" unless p.terminated
+        rule = rule.ljust(85, ' ')
+        rule += " &{ return lookup(text, '#{i}'); }"
+        rule = rule.ljust(110, ' ')
+        rule += "{ return lookup(text); }"
 
-      puts rule
+        t.puts rule
+      }
     }
   end
 

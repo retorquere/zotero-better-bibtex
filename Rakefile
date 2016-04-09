@@ -626,12 +626,12 @@ file 'resource/translators/latex_unicode_mapping.coffee' => UnicodeConverter.cac
     UnicodeConverter.new.mapping(t.name)
   end
 end
-#file 'resource/translators/BetterBibTeXParser.pegjs' => [ 'resource/translators/BetterBibTeXParser.grammar', UnicodeConverter.cache ] do |t|
-#  puts "#{t.name} outdated"
-#  cleanly(t.name) do
-#    UnicodeConverter.new.pegjs(t.source, t.name)
-#  end
-#end
+file 'resource/translators/BetterBibTeXParser.pegjs' => [ 'resource/translators/BetterBibTeXParser.grammar', UnicodeConverter.cache ] do |t|
+  puts "#{t.name} outdated"
+  cleanly(t.name) do
+    UnicodeConverter.new.patterns(t.source, t.name)
+  end
+end
 
 task :markfailing do
   tests = false

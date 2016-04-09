@@ -25,7 +25,7 @@ class BetterBibTeXParserSupport
     return "#{peg$currPos} :: #{input.substr(peg$currPos, n)}"
 
   flatten: (str) ->
-    return (@flatten(s) for s in str).join('') if Array.isArray(str)
+    return (@flatten(s) for s in str when s?).join('') if Array.isArray(str)
     return '' + str
 
   log: (msg...) ->
