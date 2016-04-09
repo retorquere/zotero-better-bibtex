@@ -1,23 +1,38 @@
+---
 machine:
   ruby:
-    version: "2.2"
+    version: '2.2'
 dependencies:
   pre:
-    - echo sudo apt-get update
-    - echo sudo apt-get install libpango1.0-0
-    - echo sudo apt-get install firefox
+  - echo sudo apt-get update
+  - echo sudo apt-get install libpango1.0-0
+  - echo sudo apt-get install firefox
   cache_directories:
-    - test/fixtures/profiles
-    - test/fixtures/plugins
+  - test/fixtures/profiles
+  - test/fixtures/plugins
+test:
+  override:
+  - ? |-
+      case $CIRCLE_NODE_INDEX in
+        0)  JURIS_M=true TAGS="--tag ~@noci --tag @test-cluster-0 --tag @test-cluster-1"
+            ;;
+        1)  JURIS_M=true TAGS="--tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1"
+            ;;
+        2)  JURIS_M=false TAGS="--tag ~@noci --tag @test-cluster-0 --tag @test-cluster-1"
+            ;;
+        *)  JURIS_M=false TAGS="--tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1"
+            ;;
+      esac
+    : parallel: true
 script: bundle exec rake test[$TAGS]
 env:
   matrix:
-    - JURIS_M=true TAGS="--tag ~@noci --tag @test-cluster-0 --tag @test-cluster-1"
-    - JURIS_M=true TAGS="--tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1"
-    - JURIS_M=false TAGS="--tag ~@noci --tag @test-cluster-0 --tag @test-cluster-1"
-    - JURIS_M=false TAGS="--tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1"
+  - JURIS_M=true TAGS="--tag ~@noci --tag @test-cluster-0 --tag @test-cluster-1"
+  - JURIS_M=true TAGS="--tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1"
+  - JURIS_M=false TAGS="--tag ~@noci --tag @test-cluster-0 --tag @test-cluster-1"
+  - JURIS_M=false TAGS="--tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1"
 deployment:
   all:
-    branch: /.*/
+    branch: "/.*/"
     commands:
-      - bundle exec rake publish
+    - bundle exec rake publish
