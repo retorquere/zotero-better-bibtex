@@ -101,7 +101,7 @@ GEM
       posix-spawn (~> 0.3.6)
       yajl-ruby (~> 1.2.0)
     rake (11.1.2)
-    rake-xpi (0.0.20)
+    rake-xpi (0.0.21)
       aws-sdk
       faraday-http-cache
       jwt
