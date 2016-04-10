@@ -551,7 +551,6 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
 
   if ENV['CIRCLECI'] == 'true'
     tag = ENV['CIRCLE_TESTS']
-    puts "Running Circle tests #{tag.inspect}"
 
   elsif args[:tag] =~ /^([a-z]):([0-9]+)$/
     features = Dir["resource/tests/#{$1}*.feature"][0] + ":#{$2}"
