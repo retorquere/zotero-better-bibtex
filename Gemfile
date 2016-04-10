@@ -36,3 +36,4 @@ gem 'typhoeus'
 gem 'washbullet'
 gem 'zip-zip' # will load compatibility for old rubyzip API.
 gem 'shell-spinner'
+gem 'regexp_parser'

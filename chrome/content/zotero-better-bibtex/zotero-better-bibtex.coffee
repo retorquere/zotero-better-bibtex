@@ -905,10 +905,11 @@ Zotero.BetterBibTeX.init = ->
   nids.push(Zotero.Notifier.registerObserver(@itemAdded, ['collection-item']))
   window.addEventListener('unload', ((e) -> Zotero.Notifier.unregisterObserver(id) for id in nids), false)
 
-  Zotero.addReloadListener(->
+  zoteroPane = Zotero.getActiveZoteroPane()
+  zoteroPane.addReloadListener(->
     Zotero.BetterBibTeX.DB.load('reload out of connector mode') if !Zotero.initialized || Zotero.isConnector
   )
-  Zotero.addBeforeReloadListener((mode) ->
+  zoteroPane.addBeforeReloadListener((mode) ->
     Zotero.BetterBibTeX.DB.save() if Zotero.BetterBibTeX.DB && mode != 'connector'
   )
 
@@ -968,6 +969,11 @@ Zotero.BetterBibTeX.loadTranslators = ->
     @removeTranslator({label: 'Pandoc JSON', translatorID: 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'})
   try
     @removeTranslator({label: 'Better CSL-JSON', translatorID: 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'})
+
+  try
+    if Zotero.BetterBibTeX.pref.get('removeStock')
+      @removeTranslator({translatorID: 'b6e39b57-8942-4d11-8259-342c46ce395f', label: 'BibLaTeX'})
+      @removeTranslator({translatorID: '9cb70025-a888-4a29-a210-93ec52da40d4', label: 'BibTeX'})
 
   for translator in @Translators
     @load(translator)
@@ -1148,6 +1154,7 @@ Zotero.BetterBibTeX.getContentsFromURL = (url) ->
     throw new Error("Failed to load #{url}: #{err.msg}")
 
 Zotero.BetterBibTeX.load = (translator) ->
+  throw new Error('not a translator') unless translator.label
   @removeTranslator(translator)
 
   try

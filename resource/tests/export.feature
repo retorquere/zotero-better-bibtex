@@ -46,7 +46,7 @@ Scenario Outline: BibLaTeX Export
      | Fields in Extra should override defaults                                                       | 1           |
      | BraceBalancer                                                                                  | 1           |
 
-@bblt-1 @bblt @test-cluster-1
+@bblt-1 @bblt @test-cluster-1 @435
 Scenario Outline: BibLaTeX Export
   And I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
@@ -113,7 +113,7 @@ Scenario Outline: BibTeX Export
      | Replicate Zotero key algorithm #439                                                | 3          |
      | preserve BibTeX Variables does not check for null values while escaping #337       | 1          |
 
-@bbt @test-cluster-0
+@bbt @test-cluster-0 @300
 Scenario Outline: BibTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibTeX' should match 'export/<file>.bibtex'
