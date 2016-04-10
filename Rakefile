@@ -17,7 +17,7 @@ require 'rake'
 require 'rake/clean'
 require 'rake/loaders/makefile'
 require 'rake/xpi'
-require 'rake/xpi/github'
+require 'rake/xpi/publish/github'
 require 'rchardet'
 require 'rest-client'
 require 'rubygems/package'
@@ -489,7 +489,7 @@ Dir['resource/translators/*.yml'].each{|metadata|
   translator = File.basename(metadata, File.extname(metadata))
 
   sources = ['json5', 'translator', 'preferences', "#{translator}.header", translator]
-  header = YAML.load_file(metadata)
+  header = YAML::load_file(metadata)
   dependencies = header['BetterBibTeX']['dependencies'] if header['BetterBibTeX']
   dependencies ||= []
   sources += dependencies
