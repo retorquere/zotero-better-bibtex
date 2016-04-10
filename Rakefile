@@ -543,7 +543,7 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
   if ENV['JURIS_M'] == 'true'
     XPI.test.xpis.download.reject!{|update| update == 'https://www.zotero.org/download/update.rdf'}
     #XPI.test.xpis.download << 'https://juris-m.github.io/zotero/update.rdf'
-    XPI.test.xpis.download << 'https://github.com/Juris-M/zotero/releases/download/v4.0.29.6m64beta/jurism-v4.0.29.6m64beta7-fx.xpi'
+    XPI.test.xpis.download << 'https://github.com/Juris-M/zotero/releases/download/v4.0.29.6m64beta/jurism-v4.0.29.6m64beta8-fx.xpi'
   end
   XPI.getxpis
 
