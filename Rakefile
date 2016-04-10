@@ -573,7 +573,7 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
     output += " --format json --out " + "#{ENV['CIRCLE_TEST_REPORTS']}/cucumber/tests.cucumber".shellescape
   end
   cucumber = "cucumber #{output} --require features --strict #{tag} #{features}"
-  puts "Tests running: #{cucumber}"
+  puts "Tests running: JURIS_M=#{ENV['JURIS_M'] || 'false'} #{cucumber}"
   if ENV['CI'] == 'true'
     sh cucumber
   else
