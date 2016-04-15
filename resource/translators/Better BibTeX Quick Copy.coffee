@@ -19,12 +19,12 @@ Mode =
 
   orgmode: ->
     while item = Translator.nextItem()
-      m = item.uri.match(/\/(users|groups)\/([0-9]+|((local)\/[^\/]+))\/items\/([A-Z0-9]{8})$/)
+      m = item.uri.match(/\/(users|groups)\/([0-9]+|(local\/[^\/]+))\/items\/([A-Z0-9]{8})$/)
+      type = m[1]
       libraryID = m[2]
-      local = m[4]
-      key = m[5]
+      key = m[4]
 
-      if local != 'local'
+      if type != 'users'
         Translator.debug("Zotero doesn't support getting the group ID inside a translator, sorry", item.uri, {libraryID, local, key})
         # Can change to zotero://select/library/items/report.html?itemKey=JHYDCRBD later
         continue
