@@ -53,6 +53,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.bibtexURLs"               id="pref-better-bibtex-bibtexURLs"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.warnBulkModify"           id="pref-better-bibtex-bulkWarning"             type="int"/>
         <preference name="extensions.zotero.translators.better-bibtex.postscript"               id="pref-better-bibtex-postscript"              type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopyMode"            id="pref-better-bibtex-quickCopyMode"           type="string"/>
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
         <tabs id="better-bibtex-prefs-tabs">
@@ -125,6 +126,16 @@
               </grid>
             </groupbox>
             <checkbox id="id-better-bibtex-preferences-show-citekey" preference="pref-better-bibtex-show-citekey" label="&zotero.better-bibtex.prefs.citekey.show;"/>
+            <hbox>
+              <label>&zotero.better-bibtex.prefs.citekey.quickCopy;</label>
+              <menulist preference="pref-better-bibtex-quickCopyMode" preference-editable="true">
+                <menupopup>
+                  <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.latex;" value="latex"/>
+                  <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.pandoc;" value="pandoc"/>
+                  <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.orgmode;" value="orgmode"/>
+                </menupopup>
+              </menulist>
+            </hbox>
           </tabpanel>
 
           <tabpanel id="better-bibtex-preferences-export" orient="vertical">

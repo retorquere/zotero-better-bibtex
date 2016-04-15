@@ -17,20 +17,19 @@ Mode =
       keys.push("@#{item.__citekey__}")
     Zotero.write(keys.join('; '))
 
-  org: ->
+  orgmode: ->
     while item = Translator.nextItem()
-      m = item.uri.match(/\/(users|groups)/([0-9]+|((local)\/[^\/]+))/items/([A-Z0-9]{8})$/)
+      m = item.uri.match(/\/(users|groups)\/([0-9]+|((local)\/[^\/]+))\/items\/([A-Z0-9]{8})$/)
       libraryID = m[2]
       local = m[4]
       key = m[5]
 
-      if library != 'local'
-        Translator.debug("Zotero doesn't support getting the group ID inside a translator, sorry")
+      if local != 'local'
+        Translator.debug("Zotero doesn't support getting the group ID inside a translator, sorry", item.uri, {libraryID, local, key})
         # Can change to zotero://select/library/items/report.html?itemKey=JHYDCRBD later
-        next
+        continue
 
       Zotero.write("[[zotero://select/item/0_#{key}][@#{item.__citekey__}]]")
-    return
 
 doExport = ->
   mode = Zotero.getHiddenPref('better-bibtex.quickCopyMode')
