@@ -55,7 +55,7 @@
       </preferences>
       <tabbox>
         <tabs id="better-bibtex-prefs-tabs">
-          <tab label="&zotero.better-bibtex.prefs.citation;"/>
+          <tab label="&zotero.better-bibtex.prefs.citekey;"/>
           <tab label="&zotero.better-bibtex.prefs.import-export;"/>
           <tab label="&zotero.better-bibtex.prefs.journal-abbrev;"/>
           <tab id="better-bibtex-prefs-auto-export" label="&zotero.better-bibtex.prefs.auto-export;"/>
@@ -64,82 +64,76 @@
         </tabs>
 
         <tabpanels id="better-bibtex-prefs-tabpanels">
-          <tabpanel orient="vertical"><!-- citation -->
-            <label class="zotero-text-link" value="About Citation Preferences..." href="http://retorquere.github.io/zotero-better-bibtex/configuration.html#citation"/>
-            <grid class="better-bibtex-prefs" flex="1">
-              <columns>
-                <column/>
-                <column flex="1"/>
-              </columns>
-              <rows>
-                <row>
-                  <label>&zotero.better-bibtex.cite.command;</label>
-                  <hbox>
-                    <textbox size="10" id="id-better-bibtex-preferences-citeCommand" preference="pref-better-bibtex-citecommand"
-                      onchange="BetterBibTeXPref.update();"
-                      onkeypress="setTimeout(function() { BetterBibTeXPref.update() }, 1);"/>
-                  </hbox>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.cite.format;</label>
-                  <hbox>
+          <tabpanel id="better-bibtex-preferences-citekeys" orient="vertical">
+            <label class="zotero-text-link" value="&zotero.better-bibtex.prefs.citekey.about;" href="https://github.com/retorquere/zotero-better-bibtex/wiki/Configuration#citation"/>
+            <groupbox>
+              <caption label="&zotero.better-bibtex.prefs.citekey.citing;"/>
+              <grid class="better-bibtex-prefs" flex="1">
+                <columns>
+                  <column/>
+                  <column flex="1"/>
+                </columns>
+                <rows>
+                  <row>
+                    <label>&zotero.better-bibtex.prefs.citekey.format;</label>
                     <textbox size="40" id="id-better-bibtex-preferences-citekeyFormat" preference="pref-better-bibtex-format"
                       onfocus="BetterBibTeXPref.saveCitekeyFormat();"
                       onblur="BetterBibTeXPref.checkCitekeyFormat();"
                       oninput="BetterBibTeXPref.update();"
                       onkeypress="setTimeout(function() { BetterBibTeXPref.update() }, 1);"/>
-                  </hbox>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.citekey.fold;</label>
-                  <checkbox preference="pref-better-bibtex-fold"/>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.pin-citekeys;</label>
-                  <radiogroup id="id-better-bibtex-preferences-pin-citekeys"
-                    orient="vertical"
-                    preference="pref-better-bibtex-pin-citekeys"
-                    oncommand="BetterBibTeXPref.update();">
+                  </row>
+                  <row>
+                    <label>&zotero.better-bibtex.prefs.citekey.command;</label>
+                    <textbox size="10" id="id-better-bibtex-preferences-citeCommand" preference="pref-better-bibtex-citecommand"
+                      onchange="BetterBibTeXPref.update();"
+                      onkeypress="setTimeout(function() { BetterBibTeXPref.update() }, 1);"/>
+                  </row>
+                </rows>
+              </grid>
+              <hbox>
+                <label>&zotero.better-bibtex.prefs.citekey.fold;</label>
+                <checkbox preference="pref-better-bibtex-fold"/>
+              </hbox>
+            </groupbox>
 
-                    <hbox class="flush-top" pack="start" align="start">
-                      <radio id="id-better-bibtex-preferences-pin-citekeys-manual" value="manual"/>
-                      <label>&zotero.better-bibtex.pin-citekeys.manual;</label>
-                    </hbox>
-                    <hbox class="flush-top" pack="start" align="start">
-                      <radio id="id-better-bibtex-preferences-pin-citekeys-on-change" value="on-change"/>
-                      <label>&zotero.better-bibtex.pin-citekeys.on-change;</label>
-                    </hbox>
-                    <hbox class="flush-top" pack="start" align="start">
-                      <radio id="id-better-bibtex-preferences-pin-citekeys-on-export" value="on-export"/>
-                      <label>&zotero.better-bibtex.pin-citekeys.on-export;</label>
-                    </hbox>
-                  </radiogroup>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.pin-citekeys.key-conflict-policy;</label>
-                  <radiogroup id="id-better-bibtex-preferences-key-conflict-policy" orient="vertical" preference="pref-better-bibtex-citekey-conflict" oncommand="BetterBibTeXPref.update();">
-                    <radio id="id-better-bibtex-preferences-key-conflict-policy-change" label="&zotero.better-bibtex.pin-citekeys.key-conflict-policy.change;" value="change"/>
-                    <radio id="id-better-bibtex-preferences-key-conflict-policy-keep" label="&zotero.better-bibtex.pin-citekeys.key-conflict-policy.keep;" value="keep"/>
-                  </radiogroup>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.show-citekey;</label>
-                  <checkbox id="id-better-bibtex-preferences-show-citekey" preference="pref-better-bibtex-show-citekey"/>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.parseParticles;</label>
-                  <checkbox preference="pref-better-bibtex-parseParticles"/>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.prefs.bulkWarning;</label>
-                  <hbox>
-                    <textbox size="5" preference="pref-better-bibtex-bulkWarning"/>
-                  </hbox>
-                </row>
-              </rows>
-            </grid>
+            <groupbox>
+              <caption label="&zotero.better-bibtex.prefs.citekey.update;"/>
+              <description>&zotero.better-bibtex.prefs.citekey.update.pin.description;</description>
+              <grid class="better-bibtex-prefs" flex="1">
+                <columns>
+                  <column/>
+                  <column flex="1"/>
+                </columns>
+                <rows>
+                  <row>
+                    <label>&zotero.better-bibtex.prefs.citekey.update.pin;</label>
+                    <radiogroup id="id-better-bibtex-preferences-pin-citekeys"
+                      orient="horizontal"
+                      preference="pref-better-bibtex-pin-citekeys"
+                      oncommand="BetterBibTeXPref.update();">
+
+                      <radio id="id-better-bibtex-preferences-pin-citekeys-manual" label="&zotero.better-bibtex.prefs.citekey.update.pin.manual;" value="manual"/>
+                      <radio id="id-better-bibtex-preferences-pin-citekeys-on-change" label="&zotero.better-bibtex.prefs.citekey.update.pin.on-change;" value="on-change"/>
+                      <radio id="id-better-bibtex-preferences-pin-citekeys-on-export" label="&zotero.better-bibtex.prefs.citekey.update.pin.on-export;" value="on-export"/>
+                    </radiogroup>
+                  </row>
+                  <row>
+                    <label>&zotero.better-bibtex.prefs.citekey.update.conflict;</label>
+                    <radiogroup id="id-better-bibtex-preferences-key-conflict-policy" orient="horizontal" preference="pref-better-bibtex-citekey-conflict" oncommand="BetterBibTeXPref.update();">
+                      <radio id="id-better-bibtex-preferences-key-conflict-policy-change" label="&zotero.better-bibtex.prefs.citekey.update.conflict.change;" value="change"/>
+                      <radio id="id-better-bibtex-preferences-key-conflict-policy-keep" label="&zotero.better-bibtex.prefs.citekey.update.conflict.keep;" value="keep"/>
+                    </radiogroup>
+                  </row>
+                </rows>
+              </grid>
+            </groupbox>
+            <hbox>
+              <label>&zotero.better-bibtex.prefs.citekey.show;</label>
+              <checkbox id="id-better-bibtex-preferences-show-citekey" preference="pref-better-bibtex-show-citekey"/>
+            </hbox>
           </tabpanel>
-          <tabpanel orient="vertical"><!-- import-export -->
+
+          <tabpanel id="better-bibtex-preferences-import-export" orient="vertical">
             <label class="zotero-text-link" value="About Import/Export Preferences..." href="http://retorquere.github.io/zotero-better-bibtex/configuration.html#importexport"/>
             <grid class="better-bibtex-prefs" flex="1">
               <columns>
@@ -147,6 +141,10 @@
                 <column flex="1"/>
               </columns>
               <rows>
+                <row>
+                  <label>&zotero.better-bibtex.parseParticles;</label>
+                  <checkbox preference="pref-better-bibtex-parseParticles"/>
+                </row>
                 <row>
                   <label>&zotero.better-bibtex.skipFields;</label>
                   <hbox>
@@ -255,7 +253,7 @@
               </hbox>
             </vbox>
           </tabpanel>
-          <tabpanel orient="vertical"><!-- debug information -->
+          <tabpanel id="better-bibtex-preferences-advanced" orient="vertical">
             <label class="zotero-text-link" value="About Debug Preferences..." href="http://retorquere.github.io/zotero-better-bibtex/configuration.html#debug"/>
             <label value="&zotero.better-bibtex.postscript;"/>
             <textbox flex="1" multiline="true" preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript"/>
@@ -269,6 +267,11 @@
             <description id="better-bibtex-preferences-cacheActivity-enabled" flex="1">
               <html:a target="_blank" href="http://localhost:23119/better-bibtex/cacheActivity?http://localhost:23119/better-bibtex/cacheActivity">&zotero.better-bibtex.cacheActivity;</html:a>
             </description>
+
+            <label>&zotero.better-bibtex.prefs.bulkWarning;</label>
+            <hbox>
+              <textbox size="5" preference="pref-better-bibtex-bulkWarning"/>
+            </hbox>
             <label id="better-bibtex-preferences-cacheActivity-disabled">&zotero.better-bibtex.cacheActivity.disabled;</label>
             <label id="better-bibtex-preferences-cache-stats"/>
             <!-- button id="better-bibtex-preferences-zombies" label="" oncommand="Zotero.BetterBibTeX.DB.purge()"/ -->
