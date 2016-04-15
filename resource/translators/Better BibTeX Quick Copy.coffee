@@ -19,11 +19,17 @@ Mode =
 
   org: ->
     while item = Translator.nextItem()
-      m = item.uri.match(/\/(users|groups)\/([0-9]+|local)\/items/([A-Z0-9]{8})$/)
+      m = item.uri.match(/\/(users|groups)/([0-9]+|((local)\/[^\/]+))/items/([A-Z0-9]{8})$/)
       libraryID = m[2]
-      libraryID = '0' if libraryID == 'local'
-      key = m[3]
-      Zotero.write("[[zotero://select/item/#{libraryID}_#{key}][@#{item.__citekey__}]]")
+      local = m[4]
+      key = m[5]
+
+      if library != 'local'
+        Translator.debug("Zotero doesn't support getting the group ID inside a translator, sorry")
+        # Can change to zotero://select/library/items/report.html?itemKey=JHYDCRBD later
+        next
+
+      Zotero.write("[[zotero://select/item/0_#{key}][@#{item.__citekey__}]]")
     return
 
 doExport = ->
