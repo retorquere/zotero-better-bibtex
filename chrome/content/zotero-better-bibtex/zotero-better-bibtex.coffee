@@ -983,10 +983,17 @@ Translator.initialize = (function(original) {
 """
 
 Zotero.BetterBibTeX.loadTranslators = ->
-  try
-    @removeTranslator({label: 'Pandoc JSON', translatorID: 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'})
-  try
-    @removeTranslator({label: 'Better CSL-JSON', translatorID: 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'})
+  for label, translatorID of {
+    'LaTeX Citation': 'b4a5ab19-c3a2-42de-9961-07ae484b8cb0',
+    'Pandoc Citation': '4c52eb69-e778-4a78-8ca2-4edf024a5074',
+    'Pandoc JSON': 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc',
+    'Better CSL-JSON': 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'
+  }
+    try
+      Zotero.BetterBibTeX.debug('loadTranslators: removing', {label, translatorID})
+      @removeTranslator({label, translatorID})
+    catch err
+      Zotero.BetterBibTeX.debug('loadTranslators: removing', {label, translatorID}, ':', err)
 
   try
     if Zotero.BetterBibTeX.pref.get('removeStock')

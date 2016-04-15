@@ -1,12 +1,10 @@
 ---
-translatorID: b4a5ab19-c3a2-42de-9961-07ae484b8cb0
-label: LaTeX Citation
+translatorID: 9b85ff96-ceb3-4ca2-87a9-154c18ab38b1
+label: Better BibTeX Quick Copy
 creator: Emiliano heyns
-target: bib
+target: txt
 minVersion: 4.0.27
 maxVersion: ''
-configOptions:
-  getCollections: true
 displayOptions: 
 translatorType: 2
 browserSupport: gcsv
