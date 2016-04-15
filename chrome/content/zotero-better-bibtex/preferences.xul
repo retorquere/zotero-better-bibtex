@@ -57,7 +57,7 @@
       <tabbox id="better-bibtex-prefs-tabbox">
         <tabs id="better-bibtex-prefs-tabs">
           <tab label="&zotero.better-bibtex.prefs.citekey;"/>
-          <tab label="&zotero.better-bibtex.prefs.import-export;"/>
+          <tab label="&zotero.better-bibtex.prefs.export;"/>
           <tab label="&zotero.better-bibtex.prefs.journal-abbrev;"/>
           <tab id="better-bibtex-prefs-auto-export" label="&zotero.better-bibtex.prefs.auto-export;"/>
           <tab label="&zotero.better-bibtex.prefs.debug;"/>
@@ -68,7 +68,7 @@
           <tabpanel id="better-bibtex-prefs-citation-keys" orient="vertical">
             <groupbox>
               <caption label="&zotero.better-bibtex.prefs.citekey.citing;"/>
-              <grid class="better-bibtex-prefs" flex="1">
+              <grid flex="1">
                 <columns>
                   <column/>
                   <column flex="1"/>
@@ -90,16 +90,13 @@
                   </row>
                 </rows>
               </grid>
-              <hbox>
-                <label>&zotero.better-bibtex.prefs.citekey.fold;</label>
-                <checkbox preference="pref-better-bibtex-fold"/>
-              </hbox>
+              <checkbox preference="pref-better-bibtex-fold" label="&zotero.better-bibtex.prefs.citekey.fold;"/>
             </groupbox>
 
             <groupbox>
               <caption label="&zotero.better-bibtex.prefs.citekey.update;"/>
               <description>&zotero.better-bibtex.prefs.citekey.update.pin.description;</description>
-              <grid class="better-bibtex-prefs" flex="1">
+              <grid flex="1">
                 <columns>
                   <column/>
                   <column flex="1"/>
@@ -127,96 +124,65 @@
                 </rows>
               </grid>
             </groupbox>
-            <hbox>
-              <label>&zotero.better-bibtex.prefs.citekey.show;</label>
-              <checkbox id="id-better-bibtex-preferences-show-citekey" preference="pref-better-bibtex-show-citekey"/>
-            </hbox>
+            <checkbox id="id-better-bibtex-preferences-show-citekey" preference="pref-better-bibtex-show-citekey" label="&zotero.better-bibtex.prefs.citekey.show;"/>
           </tabpanel>
 
-          <tabpanel id="better-bibtex-preferences-import-export" orient="vertical">
-            <label class="zotero-text-link" value="About Import/Export Preferences..." href="http://retorquere.github.io/zotero-better-bibtex/configuration.html#importexport"/>
-            <grid class="better-bibtex-prefs" flex="1">
-              <columns>
-                <column/>
-                <column flex="1"/>
-              </columns>
-              <rows>
-                <row>
-                  <label>&zotero.better-bibtex.parseParticles;</label>
-                  <checkbox preference="pref-better-bibtex-parseParticles"/>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.skipFields;</label>
-                  <hbox>
+          <tabpanel id="better-bibtex-preferences-export" orient="vertical">
+            <groupbox>
+              <caption label="&zotero.better-bibtex.prefs.export.encoding;"/>
+              <checkbox preference="pref-better-bibtex-asciiBibTeX" label="&zotero.better-bibtex.prefs.export.encoding.BibTeX;"/>
+              <checkbox preference="pref-better-bibtex-asciiBibLaTeX" label="&zotero.better-bibtex.prefs.export.encoding.BibLaTeX;"/>
+            </groupbox>
+            <groupbox>
+              <caption label="&zotero.better-bibtex.prefs.export.fields;"/>
+              <checkbox preference="pref-better-bibtex-preserveBibTeXVariables" label="&zotero.better-bibtex.prefs.export.fields.preserveBibTeXVariables;"/>
+              <checkbox preference="pref-better-bibtex-attachments-nometadata" label="&zotero.better-bibtex.prefs.export.fields.attachmentsNoMetadata;"/>
+              <checkbox preference="pref-better-bibtex-parseParticles" label="&zotero.better-bibtex.prefs.export.fields.parseParticles;"/>
+              <grid>
+                <columns><column/><column flex="1"/></columns>
+                <rows>
+                  <row>
+                    <label>&zotero.better-bibtex.prefs.export.fields.doi-and-url;</label>
+                    <radiogroup orient="horizontal" preference="pref-better-bibtex-doi-and-url">
+                      <radio label="&zotero.better-bibtex.prefs.export.fields.doi-and-url.both;" value="both"/>
+                      <radio label="&zotero.better-bibtex.prefs.export.fields.doi-and-url.DOI;" value="doi"/>
+                      <radio label="&zotero.better-bibtex.prefs.export.fields.doi-and-url.URL;" value="url"/>
+                    </radiogroup>
+                  </row>
+                  <row>
+                    <label>&zotero.better-bibtex.prefs.export.fields.bibtexURLs;</label>
+                    <radiogroup preference="pref-better-bibtex-bibtexURLs" orient="horizontal">
+                      <radio label="&zotero.better-bibtex.prefs.export.fields.bibtexURLs.off;" value="off"/>
+                      <radio label="&zotero.better-bibtex.prefs.export.fields.bibtexURLs.note;" value="note"/>
+                      <radio label="&zotero.better-bibtex.prefs.export.fields.bibtexURLs.url;" value="url"/>
+                    </radiogroup>
+                  </row>
+                  <row>
+                    <label>&zotero.better-bibtex.prefs.export.fields.skip;</label>
                     <textbox size="80" id="id-better-bibtex-preferences-skipFields" preference="pref-better-bibtex-skipFields"
                       oninput="BetterBibTeXPref.update();"
                       onkeypress="setTimeout(function() { BetterBibTeXPref.update() }, 1);"/>
-                  </hbox>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.ascii.BibTeX;</label>
-                  <checkbox preference="pref-better-bibtex-asciiBibTeX"/>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.ascii.BibLaTeX;</label>
-                  <checkbox preference="pref-better-bibtex-asciiBibLaTeX"/>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.doi-and-url;</label>
-                  <radiogroup orient="horizontal" preference="pref-better-bibtex-doi-and-url">
-                    <radio label="&zotero.better-bibtex.doi-and-url.both;" value="both"/>
-                    <radio label="&zotero.better-bibtex.doi-and-url.DOI;" value="doi"/>
-                    <radio label="&zotero.better-bibtex.doi-and-url.URL;" value="url"/>
-                  </radiogroup>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.bibtexURLs;</label>
-                  <radiogroup preference="pref-better-bibtex-bibtexURLs" orient="horizontal">
-                    <radio label="&zotero.better-bibtex.bibtexURLs.off;" value="off"/>
-                    <radio label="&zotero.better-bibtex.bibtexURLs.note;" value="note"/>
-                    <radio label="&zotero.better-bibtex.bibtexURLs.url;" value="url"/>
-                  </radiogroup>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.preserveBibTeXVariables;</label>
-                  <hbox>
-                    <checkbox preference="pref-better-bibtex-preserveBibTeXVariables"/>
-                    <label>&zotero.better-bibtex.preserveBibTeXVariables.explain;</label>
-                  </hbox>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.attachmentsNoMetadata;</label>
-                  <checkbox preference="pref-better-bibtex-attachments-nometadata"/>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.preferences.recursive;</label>
-                  <checkbox id="id-better-bibtex-preferences-getCollections" preference="pref-better-bibtex-recursive"/>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.server.enabled;</label>
-                  <vbox>
-                    <checkbox id="id-better-bibtex-preferences-server-enabled" preference="pref-better-bibtex-server" oncommand="BetterBibTeXPref.update();"/>
-                    <label id="id-zotero-better-bibtex-server-warning" hidden="true" style="color: red">&zotero.better-bibtex.server.warning;</label>
-                  </vbox>
-                </row>
-                <row>
-                  <label>&zotero.better-bibtex.raw-imports;</label>
-                  <checkbox id="id-better-bibtex-preferences-raw-imports" preference="pref-better-bibtex-raw-imports"/>
-                </row>
-              </rows>
-            </grid>
+                  </row>
+                </rows>
+              </grid>
+            </groupbox>
+            <checkbox id="id-better-bibtex-preferences-getCollections" preference="pref-better-bibtex-recursive" label="&zotero.better-bibtex.prefs.export.recursiveCollections;"/>
+
+            <description id="id-zotero-better-bibtex-server-warning" hidden="true" style="color: red">&zotero.better-bibtex.prefs.export.server.warning;</description>
+            <checkbox id="id-better-bibtex-preferences-server-enabled" preference="pref-better-bibtex-server" oncommand="BetterBibTeXPref.update();" label="&zotero.better-bibtex.prefs.export.server.enabled;"/>
           </tabpanel>
-          <tabpanel orient="vertical"><!-- journal abbrev -->
+
+          <tabpanel id="better-bibtex-preferences-journal-abbreviations" orient="vertical">
             <label class="zotero-text-link" value="About Journal Abbreviation Preferences..." href="http://retorquere.github.io/zotero-better-bibtex/configuration.html#journal-abbreviations"/>
-            <vbox class="better-bibtex-prefs" flex="1">
+            <vbox flex="1">
                 <checkbox id="id-better-bibtex-preferences-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" preference="pref-better-bibtex-auto-abbrev"/>
                 <label>&zotero.better-bibtex.preferences.auto-abbrev.style;</label>
                 <listbox id="better-bibtex-abbrev-style" height="200" flex="1" onselect="BetterBibTeXPref.styleChanged()"/>
             </vbox>
           </tabpanel>
-          <tabpanel orient="vertical"><!-- auto export -->
+          <tabpanel id="better-bibtex-preferences-journal-automatic-export" orient="vertical">
             <label class="zotero-text-link" value="About Automatic Export Preferences..." href="http://retorquere.github.io/zotero-better-bibtex/configuration.html#automatic-export"/>
-            <vbox class="better-bibtex-prefs" flex="1">
+            <vbox flex="1">
               <label>&zotero.better-bibtex.auto-export.add;</label>
               <hbox>
                 <label>&zotero.better-bibtex.prefs.auto-export;</label>
@@ -257,24 +223,24 @@
             <label class="zotero-text-link" value="About Debug Preferences..." href="http://retorquere.github.io/zotero-better-bibtex/configuration.html#debug"/>
             <label value="&zotero.better-bibtex.postscript;"/>
             <textbox flex="1" multiline="true" preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript"/>
-            <hbox class="better-bibtex-prefs">
+            <hbox>
               <checkbox label="&zotero.better-bibtex.debug;" preference="pref-better-bibtex-debug"/>
               <button label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors()"/>
             </hbox>
             <checkbox label="&zotero.better-bibtex.show-item-id;" preference="pref-better-bibtex-show-item-ids"/>
             <checkbox label="&zotero.better-bibtex.rescan-citekeys;" preference="pref-better-bibtex-rescan-citekeys"/>
+            <checkbox id="id-better-bibtex-preferences-raw-imports" preference="pref-better-bibtex-raw-imports" label="&zotero.better-bibtex.raw-imports;"/>
             <button label="&zotero.better-bibtex.resetCache;" oncommand="BetterBibTeXPref.cacheReset()"/>
-            <description id="better-bibtex-preferences-cacheActivity-enabled" flex="1">
-              <html:a target="_blank" href="http://localhost:23119/better-bibtex/cacheActivity?http://localhost:23119/better-bibtex/cacheActivity">&zotero.better-bibtex.cacheActivity;</html:a>
+            <description id="better-bibtex-preferences-cacheActivity-enabled">
+              <html:a target="_blank" href="http://localhost:23119/better-bibtex/cacheActivity?http://localhost:23119/better-bibtex/cacheActivity">&zotero.better-bibtex.prefs.advanced.cacheActivity;</html:a>
             </description>
+            <label id="better-bibtex-preferences-cacheActivity-disabled">&zotero.better-bibtex.prefs.advanced.cacheActivity.disabled;</label>
 
             <label>&zotero.better-bibtex.prefs.bulkWarning;</label>
             <hbox>
               <textbox size="5" preference="pref-better-bibtex-bulkWarning"/>
             </hbox>
-            <label id="better-bibtex-preferences-cacheActivity-disabled">&zotero.better-bibtex.cacheActivity.disabled;</label>
             <label id="better-bibtex-preferences-cache-stats"/>
-            <!-- button id="better-bibtex-preferences-zombies" label="" oncommand="Zotero.BetterBibTeX.DB.purge()"/ -->
           </tabpanel>
           <tabpanel> <!-- disabled -->
             <textbox flex="1" multiline="true" id="zotero-better-bibtex-disabled-message" class="plain" readonly="true"/>

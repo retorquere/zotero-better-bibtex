@@ -5,30 +5,18 @@
 <!ENTITY zotero.better-bibtex.citekey.clear "Clear BibTeX key">
 <!ENTITY zotero.better-bibtex.preferences.prefpane.better-bibtex "Better BibTeX">
 
-<!ENTITY zotero.better-bibtex.prefs.citation "Citation">
 <!ENTITY zotero.better-bibtex.prefs.disabled "Better BibTeX has been disabled">
-<!ENTITY zotero.better-bibtex.prefs.import-export "Import/Export">
 <!ENTITY zotero.better-bibtex.prefs.journal-abbrev "Journal abbreviations">
 <!ENTITY zotero.better-bibtex.prefs.debug "Advanced">
 
 <!ENTITY zotero.better-bibtex.show-item-id "Show reference ID instead of 'call number' field in reference list (requires restart)">
-<!ENTITY zotero.better-bibtex.parseParticles "Move name-particles (de, von, ...) to the family name">
 
 <!ENTITY zotero.better-bibtex.restart-required "Restart Required">
-<!ENTITY zotero.better-bibtex.preferences.recursive "Display subcollections recursively">
-<!ENTITY zotero.better-bibtex.skipFields "Fields to omit from export (comma-separated)">
-<!ENTITY zotero.better-bibtex.attachmentsNoMetadata "Export attachments without metadata">
 <!ENTITY zotero.better-bibtex.dragons "Caution -- here be dragons">
-<!ENTITY zotero.better-bibtex.server.enabled "Enable export by HTTP">
 <!ENTITY zotero.better-bibtex.server.disabled "Export by HTTP disabled">
 <!ENTITY zotero.better-bibtex.server.address "Bibliography export at ">
-<!ENTITY zotero.better-bibtex.server.warning "BibTeX http export uses the general Zotero HTTP facility; please note that disabling this will disable ALL http facilities in zotero -- including the non-Firefox plugins">
-<!ENTITY zotero.better-bibtex.ascii.BibTeX "Export BibTeX as ASCII">
-<!ENTITY zotero.better-bibtex.ascii.BibLaTeX "Export BibLaTeX as ASCII">
-<!ENTITY zotero.better-bibtex.bibtexURLs "Add URLs to BibTeX export (BibTeX does not natively support them)">
-<!ENTITY zotero.better-bibtex.bibtexURLs.off "no">
-<!ENTITY zotero.better-bibtex.bibtexURLs.note "in a note field">
-<!ENTITY zotero.better-bibtex.bibtexURLs.url "in an url field">
+
+
 <!ENTITY zotero.better-bibtex.format-unique-warning "Caution: the default guarantees that each attachment has a unique filename. If you change the default, make sure the resulting filenames remain unique!">
 <!ENTITY zotero.better-bibtex.preserveCaps "Preserve capitalization">
 <!ENTITY zotero.better-bibtex.preserveCaps.no "No">
@@ -40,10 +28,6 @@
 <!ENTITY zotero.better-bibtex.langid.polyglossia "Polyglossia">
 <!ENTITY zotero.better-bibtex.preferences.auto-abbrev "Automatically abbreviate journal title if none is set explicitly">
 <!ENTITY zotero.better-bibtex.preferences.auto-abbrev.style "Abbreviation style:">
-<!ENTITY zotero.better-bibtex.doi-and-url "When a reference has both a DOI and an URL, export">
-<!ENTITY zotero.better-bibtex.doi-and-url.both "both">
-<!ENTITY zotero.better-bibtex.doi-and-url.DOI "DOI">
-<!ENTITY zotero.better-bibtex.doi-and-url.URL "URL">
 
 <!ENTITY zotero.better-bibtex.reportErrors "Report Better BibTeX Errors...">
 <!ENTITY zotero.better-bibtex.errorReport.review "The data below is about to submitted to Better BibTeX for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
@@ -58,8 +42,6 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.errorReport.references "References">
 <!ENTITY zotero.errorReport.include "Include in error report">
 
-<!ENTITY zotero.better-bibtex.cacheActivity "View cache activity...">
-<!ENTITY zotero.better-bibtex.cacheActivity.disabled "In order to view the cache activity, enable &quot;&zotero.better-bibtex.server.enabled;&quot; in &quot;&zotero.better-bibtex.prefs.import-export;&quot;">
 <!ENTITY zotero.better-bibtex.resetCache "Reset cache">
 
 <!ENTITY zotero.better-bibtex.prefs.auto-export "Automatic Export">
@@ -93,11 +75,40 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.better-bibtex.prefs.citekey.update.pin.manual "Manual">
 <!ENTITY zotero.better-bibtex.prefs.citekey.update.pin.on-change "On item change">
 <!ENTITY zotero.better-bibtex.prefs.citekey.update.pin.on-export "On item export">
-<!ENTITY zotero.better-bibtex.prefs.citekey.update.conflict "On conflict">
-<!ENTITY zotero.better-bibtex.prefs.citekey.update.conflict.change "changed non-pinned key(causes key changes)">
-<!ENTITY zotero.better-bibtex.prefs.citekey.update.conflict.keep "keep non-pinned key (causes key duplicates)">
+<!ENTITY zotero.better-bibtex.prefs.citekey.update.conflict "On conflict, non-pinned keys will be">
+<!ENTITY zotero.better-bibtex.prefs.citekey.update.conflict.change "postfixed (causes key changes)">
+<!ENTITY zotero.better-bibtex.prefs.citekey.update.conflict.keep "kept (causes key duplicates)">
 
 <!ENTITY zotero.better-bibtex.prefs.citekey.show "Show citekey instead of 'extra' field in reference list">
+
+<!ENTITY zotero.better-bibtex.prefs.export "Export">
+<!ENTITY zotero.better-bibtex.prefs.export.encoding "Encoding">
+<!ENTITY zotero.better-bibtex.prefs.export.encoding.BibTeX "Export BibTeX as ASCII">
+<!ENTITY zotero.better-bibtex.prefs.export.encoding.BibLaTeX "Export BibLaTeX as ASCII">
+<!ENTITY zotero.better-bibtex.prefs.export.encoding.BibLaTeX "Export BibLaTeX as ASCII">
+
+<!ENTITY zotero.better-bibtex.prefs.export.fields "Fields">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.preserveBibTeXVariables "Assume single-word strings to be externally-defined @string vars, and thus not surrounded by braces">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.attachmentsNoMetadata "Omit title and mimetype for attachments">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.parseParticles "Move name-particles (de, von, ...) to the family name">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.doi-and-url "When a reference has both a DOI and an URL, export">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.doi-and-url.both "both">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.doi-and-url.DOI "DOI">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.doi-and-url.URL "URL">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURLs "Add URLs to BibTeX export">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURLs.off "no">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURLs.note "in a note field">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURLs.url "in an url field">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.skip "Fields to omit from export (comma-separated)">
+
+<!ENTITY zotero.better-bibtex.prefs.export.server.enabled "Enable export by HTTP">
+<!ENTITY zotero.better-bibtex.prefs.export.server.warning "BibTeX http export uses the general Zotero HTTP facility; please note that disabling this will disable ALL http facilities in zotero -- including the non-Firefox plugins">
+
+<!ENTITY zotero.better-bibtex.prefs.export.recursiveCollections "Export subcollections">
+
+<!ENTITY zotero.better-bibtex.prefs.advanced.cacheActivity "View cache activity...">
+<!ENTITY zotero.better-bibtex.prefs.advanced.cacheActivity.disabled "In order to view the cache activity, enable &quot;&zotero.better-bibtex.prefs.export.server.enabled;&quot; in &quot;&zotero.better-bibtex.prefs.export;&quot;">
+
 
 <!ENTITY zotero.better-bibtex.rescan-citekeys "Re-scan pinned citekeys after restart">
 
@@ -105,8 +116,6 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.better-bibtex.debug "Better BibTeX extended debug logging. Restart Firefox/Zotero to activate, persists over reboots. Affects performance, so turn off when done.">
 <!ENTITY zotero.better-bibtex.postscript "Postscript">
 
-<!ENTITY zotero.better-bibtex.preserveBibTeXVariables "Preserve BibTeX variables">
-<!ENTITY zotero.better-bibtex.preserveBibTeXVariables.explain "When enabled, single-word strings will be assumed to be externally-defined @string vars, and thus not surrounded by braces">
 
 <!ENTITY zotero.better-bibtex.bulkWarning.whatever "OK, and don't ask me again">
 <!ENTITY zotero.better-bibtex.bulkWarning.message "You are changing more than #{TRESHOLD} items in one go. Are you sure?">

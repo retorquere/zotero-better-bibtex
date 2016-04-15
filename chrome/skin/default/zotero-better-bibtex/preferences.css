@@ -5,11 +5,3 @@
 #better-bibtex-export-list listitem.export-state-running  { background:url("auto-export/running.svg") center left no-repeat; background-size: 18px 18px;}
 #better-bibtex-export-list listitem.export-state-done     { background:url("auto-export/done.svg")    center left no-repeat; background-size: 18px 18px;}
 
-hbox.flush-top radio, hbox.flush-top label {
-  margin-top: 0;
-  margin-bottom: 3px;
-}
-
-vbox, hbox {
-  border: 1px solid red
-}
