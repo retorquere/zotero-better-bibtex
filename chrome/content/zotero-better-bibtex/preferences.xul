@@ -25,6 +25,7 @@
             label="&zotero.better-bibtex.preferences.prefpane.better-bibtex;"
             image="chrome://zotero-better-bibtex/skin/bibtex.svg"
             onpaneload="BetterBibTeXPref.paneLoad();"
+            helpTopic="BetterBibTeX"
             >
       <preferences id="zotero-preferences-cite">
         <preference name="extensions.zotero.httpServer.enabled"                                 id="pref-better-bibtex-server"                  type="bool"/>
@@ -53,7 +54,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.warnBulkModify"           id="pref-better-bibtex-bulkWarning"             type="int"/>
         <preference name="extensions.zotero.translators.better-bibtex.postscript"               id="pref-better-bibtex-postscript"              type="string"/>
       </preferences>
-      <tabbox>
+      <tabbox id="better-bibtex-prefs-tabbox">
         <tabs id="better-bibtex-prefs-tabs">
           <tab label="&zotero.better-bibtex.prefs.citekey;"/>
           <tab label="&zotero.better-bibtex.prefs.import-export;"/>
@@ -64,8 +65,7 @@
         </tabs>
 
         <tabpanels id="better-bibtex-prefs-tabpanels">
-          <tabpanel id="better-bibtex-preferences-citekeys" orient="vertical">
-            <label class="zotero-text-link" value="&zotero.better-bibtex.prefs.citekey.about;" href="https://github.com/retorquere/zotero-better-bibtex/wiki/Configuration#citation"/>
+          <tabpanel id="better-bibtex-prefs-citation-keys" orient="vertical">
             <groupbox>
               <caption label="&zotero.better-bibtex.prefs.citekey.citing;"/>
               <grid class="better-bibtex-prefs" flex="1">
