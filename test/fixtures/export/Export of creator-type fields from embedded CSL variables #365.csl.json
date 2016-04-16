@@ -12,6 +12,7 @@
     "author": [ { "family": "Author", "given": "Ann" } ],
     "editor": [ { "family": "Editrix", "given": "Emma" }, { "family": "Editor", "given": "Ed" } ],
     "event-place": "Place",
+    "archive-place": "Place",
     "genre": "working paper",
     "id": "Author2015",
     "issued": { "date-parts": [ [ 2015 ] ] },
@@ -34,6 +35,7 @@
     "dimensions": "22 min",
     "director": [ { "family": "Mancuso", "given": "Gail" } ],
     "event-place": "US",
+    "archive-place": "US",
     "id": "friends:leia:tv",
     "issued": { "date-parts": [ [ 1996, 9, 16 ] ] },
     "language": "en-US",
@@ -49,6 +51,7 @@
     "dimensions": "22 min",
     "director": [ { "family": "Mancuso", "given": "Gail" } ],
     "event-place": "US",
+    "archive-place": "US",
     "id": "friends:leia:dvd",
     "issued": { "date-parts": [ [ 2003 ] ] },
     "language": "en-US",
@@ -65,6 +68,6 @@
   {
     "editor": [ { "family": "", "given": "" } ],
     "id": "emptybook",
-    "type": "book"
+    "type": "report"
   }
 ]

@@ -9,7 +9,12 @@ doExport = ->
     else
       Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
       fields = Translator.extractFields(item)
+
+      if item.accessDate # WTH is Juris-M doing with those dates?
+        item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
+
       csl = Zotero.Utilities.itemToCSLJSON(item)
+      csl['archive-place'] = item.place if item.place && !csl['archive-place']
 
       csl.issued = Zotero.BetterBibTeX.parseDateToArray(item.date) if csl.issued && item.date
 
@@ -43,6 +48,16 @@ doExport = ->
         [csl[k], csl[v]] = [csl[v], csl[k]]
 
       citekey = csl.id = Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
+
+      ### Juris-M workarounds ###
+      for author in csl.author || []
+        delete author.multi
+      for editor in csl.editor || []
+        delete editor.multi
+      delete csl.multi
+      delete csl.system_id
+      if csl.accessed && csl.accessed.raw && (m = csl.accessed.raw.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/))
+        csl.accessed = {"date-parts": [[ m[1], parseInt(m[2]), parseInt(m[3]) ]]}
 
       csl = serialize(csl)
       Zotero.BetterBibTeX.cache.store(item.itemID, Translator.header, citekey, csl)

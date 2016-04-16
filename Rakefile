@@ -544,21 +544,19 @@ task :amo => XPI.xpi do
 end
 
 task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| js.sub(/\.coffee$/, '.js')} do |t, args|
+  if ENV['JURIS_M'] == 'true'
+    XPI.test.xpis.download.reject!{|update| update == 'https://www.zotero.org/download/update.rdf'}
+    #XPI.test.xpis.download << 'https://juris-m.github.io/zotero/update.rdf'
+    XPI.test.xpis.download << 'https://github.com/Juris-M/zotero/releases/download/v4.0.29.6m64beta/jurism-v4.0.29.6m64beta18-fx.xpi'
+  end
   XPI.getxpis
+
+  features = 'resource/tests'
 
   tag = ''
 
-  features = 'resource/tests'
-  if args[:tag] =~ /ci-cluster-(.*)/
-    clusters = 4
-    cluster = $1
-    if cluster == '*'
-      tag = "--tag ~@noci"
-    elsif cluster =~ /^[0-9]$/ && cluster.to_i < (clusters - 1)
-      tag = "--tag ~@noci --tag @test-cluster-#{cluster}"
-    else
-      tag = "--tag ~@noci " + (0..clusters - 2).collect{|n| "--tag ~@test-cluster-#{n}" }.join(' ')
-    end
+  if ENV['CIRCLE_TESTS']
+    tag = ENV['CIRCLE_TESTS']
 
   elsif args[:tag] =~ /^([a-z]):([0-9]+)$/
     features = Dir["resource/tests/#{$1}*.feature"][0] + ":#{$2}"
@@ -581,7 +579,7 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
     output += " --format json --out " + "#{ENV['CIRCLE_TEST_REPORTS']}/cucumber/tests.cucumber".shellescape
   end
   cucumber = "cucumber #{output} --require features --strict #{tag} #{features}"
-  puts "Tests running: #{cucumber}"
+  puts "Tests running: JURIS_M=#{ENV['JURIS_M'] || 'false'} #{cucumber}"
   if ENV['CI'] == 'true'
     sh cucumber
   else

@@ -24,7 +24,14 @@
     <em:targetApplication>
       <Description>
         <em:id>zotero@chnm.gmu.edu</em:id>
-        <em:minVersion>3.0</em:minVersion>
+        <em:minVersion>4.0</em:minVersion>
+        <em:maxVersion>4.0.*</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+    <em:targetApplication>
+      <Description>
+        <em:id>juris-m@juris-m.github.io</em:id>
+        <em:minVersion>4.0</em:minVersion>
         <em:maxVersion>4.0.*</em:maxVersion>
       </Description>
     </em:targetApplication>
