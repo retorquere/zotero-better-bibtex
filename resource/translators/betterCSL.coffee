@@ -44,6 +44,11 @@ doExport = ->
 
       citekey = csl.id = Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
 
+      ### Juris-M workaround ###
+      for author in item.author || []
+        delete author.multi
+      delete item.multi
+
       csl = serialize(csl)
       Zotero.BetterBibTeX.cache.store(item.itemID, Translator.header, citekey, csl)
 
