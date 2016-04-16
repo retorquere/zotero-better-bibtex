@@ -403,8 +403,8 @@ Then(/^a library export using '(.+)' should match '(.+)'$/) do |translator, file
       found = JSON.pretty_generate(sort_object(JSON.parse(found)))
       expected = JSON.pretty_generate(sort_object(JSON.parse(expected)))
     when '.yml'
-      found = sort_object(YAML.load(found))).to_yaml
-      expected = sort_object(YAML.load(expected))).to_yaml
+      found = sort_object(YAML.load(found)).to_yaml
+      expected = sort_object(YAML.load(expected)).to_yaml
   end
 
   expect(found).to eq(expected)
