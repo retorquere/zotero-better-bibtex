@@ -32,7 +32,7 @@ Mode =
       Zotero.write("[[zotero://select/item/0_#{key}][@#{item.__citekey__}]]")
 
 doExport = ->
-  mode = Zotero.getHiddenPref('better-bibtex.quickCopyMode')
+  mode = Zotero.getOption('quickCopyMode') || Zotero.getHiddenPref('better-bibtex.quickCopyMode')
   if Mode[mode]
     Mode[mode].call(null)
   else
