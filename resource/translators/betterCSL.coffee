@@ -50,10 +50,9 @@ doExport = ->
       citekey = csl.id = Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
 
       ### Juris-M workarounds ###
-      for author in csl.author || []
-        delete author.multi
-      for editor in csl.editor || []
-        delete editor.multi
+      for kind in ['author', 'editor', 'director']
+        for creator in csl[kind] || []
+          delete creator.multi
       delete csl.multi
       delete csl.system_id
       if csl.accessed && csl.accessed.raw && (m = csl.accessed.raw.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/))
