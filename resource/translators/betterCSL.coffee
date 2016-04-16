@@ -16,7 +16,6 @@ doExport = ->
       csl = Zotero.Utilities.itemToCSLJSON(item)
       csl['archive-place'] ?= item.place
       delete csl.authority
-      delete csl.genre
       csl.type = 'motion_picture' if item.itemType == 'videoRecording' && csl.type == 'video'
 
       csl.issued = Zotero.BetterBibTeX.parseDateToArray(item.date) if csl.issued && item.date
