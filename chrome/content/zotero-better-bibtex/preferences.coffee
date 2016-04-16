@@ -8,7 +8,8 @@ BetterBibTeXPref =
           id = document.getElementById('better-bibtex-prefs-tabbox').selectedPanel.id
           return unless id
           url = 'https://github.com/retorquere/zotero-better-bibtex/wiki/Configuration#' + id.replace('better-bibtex-prefs-', '')
-          if Zotero.Prefs.get('browser.preferences.instantApply', true)
+          ### Just a temporary fix until https://github.com/zotero/zotero/issues/949 is fixed ###
+          if Zotero.Prefs.get(['browser', 'preferences', 'instantApply'].join('.'), true)
             Zotero.getActiveZoteroPane().loadURI(url, { shiftKey: true, metaKey: true })
           else
             @openURL(url)
