@@ -302,7 +302,7 @@ Translator.initialize = ->
     @log = @log_off
 
   @collections = []
-  if Zotero.nextCollection
+  if Zotero.nextCollection && Translator.header.configOptions?.getCollections
     while collection = Zotero.nextCollection()
       @debug('adding collection:', collection)
       @collections.push(@sanitizeCollection(collection))

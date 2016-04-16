@@ -129,7 +129,11 @@ task :gather do
   found = (Dir['chrome/**/*.{coffee,pegjs}'].collect{|src|
     tgt = src.sub(/\.[^\.]+$/, '.js')
     tgt
-  } + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
+  }.reject{|f|
+    File.dirname(f) == 'chrome/content/zotero-better-bibtex/test'
+  } + Dir['chrome/**/*.xul'].reject{|f|
+    File.dirname(f) == 'chrome/content/zotero-better-bibtex/test'
+  }+ Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].reject{|yml| File.basename(yml) == 'unicode.yml'}.collect{|tr|
     [
       File.join(File.dirname(tr), File.basename(tr, File.extname(tr)) + '.translator'),
       File.join(File.dirname(tr), File.basename(tr, File.extname(tr)) + '.json')

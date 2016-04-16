@@ -691,6 +691,23 @@ Zotero.BetterBibTeX.init = ->
   for k, months of Zotero.BetterBibTeX.Locales.months
     Zotero.BetterBibTeX.CSL.DateParser.addDateParserMonths(months)
 
+  ### monkey-patch Zotero.Items.parseLibraryKeyHash(id) so you can get by ID -- mainly for SelectExtension ###
+  Zotero.Items.parseLibraryKeyHash = ((original) ->
+    return (libraryKey) ->
+      if libraryKey && libraryKey[0] == '@'
+        libraryKey = libraryKey.split('@')
+        libraryKey.reverse()
+        [citekey, libraryID] = libraryKey
+        libraryID = libraryID || null
+        item = Zotero.BetterBibTeX.DB.keys.findObject({citekey, libraryID})
+        return false unless item && item.itemID
+        item = Zotero.Items.get(item.itemID)
+        return false unless item
+        return {libraryID, key: item.key }
+
+      return original.call(@, libraryKey)
+    )(Zotero.Items.parseLibraryKeyHash)
+
   ### monkey-patch Zotero.Server.DataListener.prototype._generateResponse for async handling ###
   Zotero.Server.DataListener::_generateResponse = ((original) ->
     return (status, contentType, promise) ->
@@ -732,11 +749,12 @@ Zotero.BetterBibTeX.init = ->
       return id
     )(Zotero.Search::save)
 
-  ### monkey-patch Zotero.ItemTreeView::getCellText to replace the 'extra' column with the citekey ###
   ###
-  I wish I didn't have to hijack the extra field, but Zotero has checks in numerous places to make sure it only
-  displays 'genuine' Zotero fields, and monkey-patching around all of those got to be way too invasive (and thus
-  fragile)
+    monkey-patch Zotero.ItemTreeView::getCellText to replace the 'extra' column with the citekey
+
+    I wish I didn't have to hijack the extra field, but Zotero has checks in numerous places to make sure it only
+    displays 'genuine' Zotero fields, and monkey-patching around all of those got to be way too invasive (and thus
+    fragile)
   ###
   Zotero.ItemTreeView::getCellText = ((original) ->
     return (row, column) ->
@@ -965,10 +983,17 @@ Translator.initialize = (function(original) {
 """
 
 Zotero.BetterBibTeX.loadTranslators = ->
-  try
-    @removeTranslator({label: 'Pandoc JSON', translatorID: 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'})
-  try
-    @removeTranslator({label: 'Better CSL-JSON', translatorID: 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'})
+  for label, translatorID of {
+    'LaTeX Citation': 'b4a5ab19-c3a2-42de-9961-07ae484b8cb0',
+    'Pandoc Citation': '4c52eb69-e778-4a78-8ca2-4edf024a5074',
+    'Pandoc JSON': 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc',
+    'Better CSL-JSON': 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'
+  }
+    try
+      Zotero.BetterBibTeX.debug('loadTranslators: removing', {label, translatorID})
+      @removeTranslator({label, translatorID})
+    catch err
+      Zotero.BetterBibTeX.debug('loadTranslators: removing', {label, translatorID}, ':', err)
 
   try
     if Zotero.BetterBibTeX.pref.get('removeStock')
