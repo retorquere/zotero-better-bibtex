@@ -50,7 +50,10 @@ doExport = ->
     ref.add({ number: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber })
     ref.add({ urldate: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
-    Translator.bibtexURLs = Zotero.getHiddenPref("better-bibtex.bibtexURLs2")
+    try
+      bibtexURLs = Zotero.getHiddenPref("better-bibtex.bibtexURLs2")
+    Translator.bibtexURLs = bibtexURLs if bibtexURLs
+
     Translator.debug('urls:', {setting: Translator.bibtexURLs})
     switch Translator.bibtexURLs
       when 'url'
