@@ -68,7 +68,20 @@
         <tabpanels id="better-bibtex-prefs-tabpanels">
           <tabpanel id="better-bibtex-prefs-citation-keys" orient="vertical">
             <groupbox>
-              <caption label="&zotero.better-bibtex.prefs.citekey.citing;"/>
+              <caption label="&zotero.better-bibtex.prefs.citekey.citekeys;"/>
+              <hbox>
+                <label>&zotero.better-bibtex.prefs.citekey.format;</label>
+                <textbox size="40" id="id-better-bibtex-preferences-citekeyFormat" preference="pref-better-bibtex-format"
+                  onfocus="BetterBibTeXPref.saveCitekeyFormat();"
+                  onblur="BetterBibTeXPref.checkCitekeyFormat();"
+                  oninput="BetterBibTeXPref.update();"
+                  onkeypress="setTimeout(function() { BetterBibTeXPref.update() }, 1);"/>
+              </hbox>
+              <checkbox preference="pref-better-bibtex-fold" label="&zotero.better-bibtex.prefs.citekey.fold;"/>
+              <checkbox id="id-better-bibtex-preferences-show-citekey" preference="pref-better-bibtex-show-citekey" label="&zotero.better-bibtex.prefs.citekey.show;"/>
+            </groupbox>
+            <groupbox>
+              <caption label="&zotero.better-bibtex.prefs.citekey.quickCopy;"/>
               <grid flex="1">
                 <columns>
                   <column/>
@@ -76,22 +89,23 @@
                 </columns>
                 <rows>
                   <row>
-                    <label>&zotero.better-bibtex.prefs.citekey.format;</label>
-                    <textbox size="40" id="id-better-bibtex-preferences-citekeyFormat" preference="pref-better-bibtex-format"
-                      onfocus="BetterBibTeXPref.saveCitekeyFormat();"
-                      onblur="BetterBibTeXPref.checkCitekeyFormat();"
-                      oninput="BetterBibTeXPref.update();"
-                      onkeypress="setTimeout(function() { BetterBibTeXPref.update() }, 1);"/>
+                    <label>&zotero.better-bibtex.prefs.citekey.quickCopy.format;</label>
+                    <menulist preference="pref-better-bibtex-quickCopyMode" preference-editable="true">
+                      <menupopup>
+                        <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.latex;" value="latex"/>
+                        <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.pandoc;" value="pandoc"/>
+                        <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.orgmode;" value="orgmode"/>
+                      </menupopup>
+                    </menulist>
                   </row>
                   <row>
-                    <label>&zotero.better-bibtex.prefs.citekey.command;</label>
+                    <label>&zotero.better-bibtex.prefs.citekey.quickCopy.command;</label>
                     <textbox size="10" id="id-better-bibtex-preferences-citeCommand" preference="pref-better-bibtex-citecommand"
                       onchange="BetterBibTeXPref.update();"
                       onkeypress="setTimeout(function() { BetterBibTeXPref.update() }, 1);"/>
                   </row>
                 </rows>
               </grid>
-              <checkbox preference="pref-better-bibtex-fold" label="&zotero.better-bibtex.prefs.citekey.fold;"/>
             </groupbox>
 
             <groupbox>
@@ -125,17 +139,6 @@
                 </rows>
               </grid>
             </groupbox>
-            <checkbox id="id-better-bibtex-preferences-show-citekey" preference="pref-better-bibtex-show-citekey" label="&zotero.better-bibtex.prefs.citekey.show;"/>
-            <hbox>
-              <label>&zotero.better-bibtex.prefs.citekey.quickCopy;</label>
-              <menulist preference="pref-better-bibtex-quickCopyMode" preference-editable="true">
-                <menupopup>
-                  <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.latex;" value="latex"/>
-                  <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.pandoc;" value="pandoc"/>
-                  <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.orgmode;" value="orgmode"/>
-                </menupopup>
-              </menulist>
-            </hbox>
           </tabpanel>
 
           <tabpanel id="better-bibtex-preferences-export" orient="vertical">
@@ -184,15 +187,14 @@
           </tabpanel>
 
           <tabpanel id="better-bibtex-preferences-journal-abbreviations" orient="vertical">
-            <label class="zotero-text-link" value="About Journal Abbreviation Preferences..." href="http://retorquere.github.io/zotero-better-bibtex/configuration.html#journal-abbreviations"/>
-            <vbox flex="1">
-                <checkbox id="id-better-bibtex-preferences-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" preference="pref-better-bibtex-auto-abbrev"/>
-                <label>&zotero.better-bibtex.preferences.auto-abbrev.style;</label>
-                <listbox id="better-bibtex-abbrev-style" height="200" flex="1" onselect="BetterBibTeXPref.styleChanged()"/>
+            <vbox>
+              <checkbox id="id-better-bibtex-preferences-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" preference="pref-better-bibtex-auto-abbrev"/>
+              <label>&zotero.better-bibtex.preferences.auto-abbrev.style;</label>
+              <listbox id="better-bibtex-abbrev-style" onselect="BetterBibTeXPref.styleChanged()"/>
             </vbox>
           </tabpanel>
+
           <tabpanel id="better-bibtex-preferences-journal-automatic-export" orient="vertical">
-            <label class="zotero-text-link" value="About Automatic Export Preferences..." href="http://retorquere.github.io/zotero-better-bibtex/configuration.html#automatic-export"/>
             <vbox flex="1">
               <label>&zotero.better-bibtex.auto-export.add;</label>
               <hbox>
@@ -230,8 +232,8 @@
               </hbox>
             </vbox>
           </tabpanel>
+
           <tabpanel id="better-bibtex-preferences-advanced" orient="vertical">
-            <label class="zotero-text-link" value="About Debug Preferences..." href="http://retorquere.github.io/zotero-better-bibtex/configuration.html#debug"/>
             <label value="&zotero.better-bibtex.postscript;"/>
             <textbox flex="1" multiline="true" preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript"/>
             <hbox>
@@ -252,7 +254,9 @@
               <textbox size="5" preference="pref-better-bibtex-bulkWarning"/>
             </hbox>
             <label id="better-bibtex-preferences-cache-stats"/>
+            <label height="20px;" style="margin-bottom: 0px"/>
           </tabpanel>
+
           <tabpanel> <!-- disabled -->
             <textbox flex="1" multiline="true" id="zotero-better-bibtex-disabled-message" class="plain" readonly="true"/>
           </tabpanel>
