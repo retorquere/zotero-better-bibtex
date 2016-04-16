@@ -694,7 +694,11 @@ Zotero.BetterBibTeX.init = ->
   ### monkey-patch Zotero.Translate.Export::setTranslator until https://gitlab.com/egh/zotxt/issues/38 is fixed ###
   Zotero.Translate.Export::setTranslator = ((original) ->
     return (translator) ->
-      translator = {translatorID: '9b85ff96-ceb3-4ca2-87a9-154c18ab38b1', displayOptions: { quickCopyMode: 'pandoc' }}  if translator == '4c52eb69-e778-4a78-8ca2-4edf024a5074'
+      Zotero.BetterBibTeX.debug('setting translator:', translator)
+      if translator == '4c52eb69-e778-4a78-8ca2-4edf024a5074'
+        translator = {translatorID: '9b85ff96-ceb3-4ca2-87a9-154c18ab38b1', displayOptions: { quickCopyMode: 'pandoc' }}
+        Zotero.BetterBibTeX.debug('changing translator:', translator)
+
       original.call(@, translator)
     )(Zotero.Translate.Export::setTranslator)
 
