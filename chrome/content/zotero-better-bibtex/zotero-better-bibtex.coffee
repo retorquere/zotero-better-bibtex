@@ -696,9 +696,9 @@ Zotero.BetterBibTeX.init = ->
     return (translator) ->
       Zotero.BetterBibTeX.debug('setting translator:', translator)
       if translator == '4c52eb69-e778-4a78-8ca2-4edf024a5074'
-        translator = JSON.parse(JSON.stringify(Zotero.BetterBibTeX.translators.BetterBibTeXQuickCopy))
-        translator.displayOptions = { quickCopyMode: 'pandoc' }
-        Zotero.BetterBibTeX.debug('changing translator:', translator)
+        translator = Zotero.BetterBibTeX.translators.BetterBibTeXQuickCopy.translatorID
+        @_displayOptions = { quickCopyMode: 'pandoc' }
+        Zotero.BetterBibTeX.debug('changing translator:', {translator, displayOptions: @_displayOptions})
 
       original.call(@, translator)
     )(Zotero.Translate.Export::setTranslator)
