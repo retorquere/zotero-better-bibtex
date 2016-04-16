@@ -14,7 +14,10 @@ doExport = ->
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
 
       csl = Zotero.Utilities.itemToCSLJSON(item)
-      csl['archive-place'] = item.place if item.place && !csl['archive-place']
+      csl['archive-place'] ?= item.place
+      csl.authority ?= item.publisher
+      csl.genre ?= 'television broadcast' if item.itemType == 'tvBroadcast'
+      csl.type = 'motion_picture' if item.itemType == 'videoRecording' && csl.type == 'video'
 
       csl.issued = Zotero.BetterBibTeX.parseDateToArray(item.date) if csl.issued && item.date
 
