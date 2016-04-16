@@ -9,6 +9,9 @@ doExport = ->
     else
       Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
       fields = Translator.extractFields(item)
+
+      item.accessDate = item.accessDate.replace(/[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '') if item.accessDate
+
       csl = Zotero.Utilities.itemToCSLJSON(item)
 
       csl.issued = Zotero.BetterBibTeX.parseDateToArray(item.date) if csl.issued && item.date
