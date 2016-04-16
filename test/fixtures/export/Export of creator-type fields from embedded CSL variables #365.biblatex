@@ -57,7 +57,7 @@
   volume = {3}
 }
 
-@book{emptybook,
+@report{emptybook,
   editor = {{Xxx}},
   timestamp = {2015-02-24 12:14:36 +0100}
 }
