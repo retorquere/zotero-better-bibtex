@@ -398,22 +398,13 @@ Then(/^a library export using '(.+)' should match '(.+)'$/) do |translator, file
   expected = testfile(filename)
   expected = open(expected).read.strip
 
-  if File.extname(filename) == '.json'
-    found = sort_object(JSON.parse(found))
-    found = JSON.pretty_generate(found)
-
-    # Juris-M: TODO: what is 'multi' for an author?
-    if expected.is_a?(Array)
-      expected.each{|item|
-        next unless item.is_a?(Hash) && item['author'].is_a?(Array)
-        item['author'].each{|author|
-          author.delete('multi') if author['multi'] == { "_key": { } }
-        }
-      }
-    end
-
-    expected = sort_object(JSON.parse(expected))
-    expected = JSON.pretty_generate(expected)
+  case File.extname(filename)
+    when '.json'
+      found = JSON.pretty_generate(sort_object(JSON.parse(found)))
+      expected = JSON.pretty_generate(sort_object(JSON.parse(expected)))
+    when '.yml'
+      found = sort_object(YAML.load(found))).to_yaml
+      expected = sort_object(YAML.load(expected))).to_yaml
   end
 
   expect(found).to eq(expected)
