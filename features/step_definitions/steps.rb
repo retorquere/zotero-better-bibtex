@@ -283,8 +283,15 @@ def normalize(o)
   end
 end
 
+def testfile(filename)
+  f = File.expand_path(File.join('test/fixtures', filename))
+  pf = File.join(File.dirname(f), File.basename(f, File.extname(f)) + ".#{ENV['JURIS_M'] == 'true' ? 'juris-m' : 'zotero'}" + File.extname(f))
+  return pf if File.file?(pf)
+  return f
+end
+
 Then /^the library (without collections )?should match '(.+)'$/ do |nocollections, filename|
-  expected = File.expand_path(File.join('test/fixtures', filename))
+  expected = testfile(filename)
   expected = JSON.parse(open(expected).read)
 
   found = $Firefox.BetterBibTeX.library
@@ -358,7 +365,7 @@ Then(/^the following library export should match '(.+)':$/) do |filename, table|
 
   @expectedExport = OpenStruct.new(filename: filename, translator: translator)
 
-  expected = File.expand_path(File.join('test/fixtures', filename))
+  expected = testfile(filename)
   expected = open(expected).read.strip
   open("tmp/#{File.basename(filename)}", 'w'){|f| f.write(found)} if found != expected
   expect(found).to eq(expected)
@@ -388,7 +395,7 @@ Then(/^a library export using '(.+)' should match '(.+)'$/) do |translator, file
 
   @expectedExport = OpenStruct.new(filename: filename, translator: translator)
 
-  expected = File.expand_path(File.join('test/fixtures', filename))
+  expected = testfile(filename)
   expected = open(expected).read.strip
 
   if File.extname(filename) == '.json'
