@@ -63,8 +63,10 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.better-bibtex.auto-export.add "You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.">
 
 <!ENTITY zotero.better-bibtex.prefs.citekey "Citation Keys">
-<!ENTITY zotero.better-bibtex.prefs.citekey.citing "Citing">
-<!ENTITY zotero.better-bibtex.prefs.citekey.command "Citation command">
+<!ENTITY zotero.better-bibtex.prefs.citekey.citekeys "Citation keys">
+<!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy "Quick copy/drag-and-drop citations">
+<!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy.format "QuickCopy format">
+<!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy.command "LaTeX command">
 <!ENTITY zotero.better-bibtex.prefs.citekey.fold "Force citation key to ASCII">
 <!ENTITY zotero.better-bibtex.prefs.citekey.format "Citation key format">
 
@@ -81,7 +83,6 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 
 <!ENTITY zotero.better-bibtex.prefs.citekey.show "Show citekey instead of 'extra' field in reference list">
 
-<!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy "QuickCopy format">
 <!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy.latex "LaTeX">
 <!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy.pandoc "Pandoc">
 <!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy.orgmode "Org-mode">
