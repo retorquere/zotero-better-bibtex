@@ -66,8 +66,8 @@
     "volume": "3"
   },
   {
-    "editor": [ { "family": "", "given": "" } ],
+    "editor": [ { "family": "Xxx", "given": "", "isInstitution": 1 } ],
     "id": "emptybook",
-    "type": "book"
+    "type": "entry-encyclopedia"
   }
 ]

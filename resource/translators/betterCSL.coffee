@@ -20,6 +20,7 @@ doExport = ->
 
       csl.issued = Zotero.BetterBibTeX.parseDateToArray(item.date) if csl.issued && item.date
 
+      Translator.debug('extracted:', fields)
       for name, value of fields
         continue unless value.format == 'csl'
 
@@ -30,7 +31,7 @@ doExport = ->
           when 'creator'
             creators = []
             for creator in value.value
-              creator = {family: creator.lastName || '', given: creator.firstName || ''}
+              creator = {family: creator.name || creator.lastName || '', given: creator.firstName || '', isInstitution: (if creator.name then 1 else undefined)}
               Zotero.BetterBibTeX.CSL.parseParticles(creator)
               creators.push(creator)
 
@@ -51,7 +52,7 @@ doExport = ->
 
       citekey = csl.id = Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
 
-      ### Juris-M workarounds ###
+      ### Juris-M workarounds to match Zotero as close as possible ###
       for kind in ['author', 'editor', 'director']
         for creator in csl[kind] || []
           delete creator.multi
@@ -59,6 +60,7 @@ doExport = ->
       delete csl.system_id
       if csl.accessed && csl.accessed.raw && (m = csl.accessed.raw.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/))
         csl.accessed = {"date-parts": [[ m[1], parseInt(m[2]), parseInt(m[3]) ]]}
+      delete csl.genre if csl.type == 'broadcast' && csl.genre == 'television broadcast'
 
       csl = serialize(csl)
       Zotero.BetterBibTeX.cache.store(item.itemID, Translator.header, citekey, csl)
