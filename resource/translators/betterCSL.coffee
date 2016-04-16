@@ -48,6 +48,7 @@ doExport = ->
       for author in csl.author || []
         delete author.multi
       delete csl.multi
+      delete csl.system_id
 
       csl = serialize(csl)
       Zotero.BetterBibTeX.cache.store(item.itemID, Translator.header, citekey, csl)
