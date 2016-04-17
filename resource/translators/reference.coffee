@@ -57,6 +57,40 @@ class Reference
 
     @add({name: 'timestamp', value: Translator.testing_timestamp || @item.dateModified || @item.dateAdded})
 
+    if @override.arxiv || @override.arXiv
+      arXiv = { id: 'arxiv:' + (@override.arxiv || @override.arXiv).value, inTitle: false }
+    else if @item.publicationTitle?.match(/^arxiv/i) && (@item.libraryCatalog || '').toLowerCase() in ['arxiv.org', 'arxiv']
+      arXiv = { id: @item.publicationTitle, inTitle: true }
+    else
+      arXiv = { id: '' }
+    @item.arXiv = arXiv.id if arXiv.id
+    delete @override.arxiv
+    delete @override.arXiv
+
+    Translator.debug('arXiv:', arXiv)
+
+    # new-style IDs
+    # arXiv:0707.3168 [hep-th]
+    # arXiv:YYMM.NNNNv# [category]
+    if m = arXiv.id.match(/^arxiv:([0-9]{4}\.[0-9]+)(v[0-9]+)?(\s+\[(.*)\])?$/i)
+      @add({ archivePrefix: 'arXiv'} )
+      @add({ eprinttype: 'arxiv'})
+      @add({ eprint: m[1] })
+      @add({ primaryClass: m[4]})
+      delete @item.publicationTitle if arXiv.inTitle
+
+    # arXiv:arch-ive/YYMMNNNv# or arXiv:arch-ive/YYMMNNNv# [category]
+    else if m = arXiv.id.match(/^arxiv:([a-z]+-[a-z]+)\/([0-9]{7})(v[0-9]+)?(\s+\[(.*)\])?$/i)
+      @add({ eprinttype: 'arxiv' })
+      @add({ eprint: "#{m[1]}/#{m[2]}" })
+      delete @item.publicationTitle if arXiv.inTitle
+
+    # arXiv: others
+    else if m = arXiv.id.match(/^arxiv:\s*([\S]+)/i)
+      @add({ eprinttype: 'arxiv'})
+      @add({ eprint: m[1] })
+      delete @item.publicationTitle if arXiv.inTitle
+
   ###
   # Return a copy of the given `field` with a new value
   #

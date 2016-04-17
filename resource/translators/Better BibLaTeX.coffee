@@ -102,29 +102,6 @@ doExport = ->
     ref.referencetype = 'collection' if item.itemType == 'book' and not ref.hasCreator('author') and ref.hasCreator('editor')
     ref.referencetype = 'mvbook' if ref.referencetype == 'book' and item.numberOfVolumes
 
-    # arXiv:0707.3168 [hep-th]
-    # arXiv:YYMM.NNNNv# [category]
-    if m = item.publicationTitle?.match(/^arxiv:([0-9]{4}\.[0-9]{4})(v[0-9]+)?\s+\[(.*)\]$/i)
-      ref.add({ archivePrefix: 'arXiv'} )
-      ref.add({ eprinttype: 'arxiv'})
-      ref.add({ eprint: m[1] })
-      ref.add({ primaryClass: m[3]})
-      item.arXiv = item.publicationTitle
-      delete item.publicationTitle
-
-    # arXiv:arch-ive/YYMMNNNv# or arXiv:arch-ive/YYMMNNNv# [category]
-    else if m = item.publicationTitle?.match(/^arxiv:([a-z]+-[a-z]+)\/([0-9]{7})(v[0-9]+)?\s+\[(.*)\]$/i)
-      ref.add({ eprinttype: 'arxiv' })
-      ref.add({ eprint: "#{m[1]}/#{m[2]}" })
-      item.arXiv = item.publicationTitle
-      delete item.publicationTitle
-
-    else if m = item.publicationTitle?.match(/^arxiv:\s*([\S]+)/i)
-      ref.add({ eprinttype: 'arxiv'})
-      ref.add({ eprint: m[1] })
-      item.arXiv = item.publicationTitle
-      delete item.publicationTitle
-
     if m = item.url?.match(/^http:\/\/www.jstor.org\/stable\/([\S]+)$/i)
       ref.add({ eprinttype: 'jstor'})
       ref.add({ eprint: m[1] })

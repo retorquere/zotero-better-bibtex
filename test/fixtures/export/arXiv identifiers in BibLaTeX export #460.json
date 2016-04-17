@@ -47,7 +47,9 @@
       "exportNotes": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "journalArticle",
@@ -55,7 +57,8 @@
         "Condensed Matter - Materials Science",
         "Physics - Chemical Physics"
       ],
-      "relations": {},
+      "relations": {
+      },
       "url": "http://arxiv.org/abs/1501.03850",
       "publicationTitle": "arXiv:1501.03850 [physics.chem-ph]",
       "date": "2015-01-15",
@@ -100,9 +103,67 @@
         "Comment: 5 pages, 3 figures"
       ],
       "itemID": 391,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "Shulenburger.2015.chemical"
+    },
+    {
+      "itemType": "journalArticle",
+      "tags": [
+        "Batalin-Vilkoviski formalism",
+        "_tablet",
+        "covariant string field theory",
+        "futur: 3",
+        "note: 4",
+        "printed",
+        "superstring field theory"
+      ],
+      "relations": {
+      },
+      "url": "http://arxiv.org/abs/1508.05387",
+      "volume": "2016",
+      "issue": "2",
+      "publicationTitle": "Journal of High Energy Physics",
+      "ISSN": "1029-8479",
+      "date": "2/2016",
+      "extra": "arXiv: 1508.05387",
+      "DOI": "10.1007/JHEP02(2016)087",
+      "accessDate": "2016-04-17 05:57:20",
+      "libraryCatalog": "arXiv.org",
+      "abstractNote": "We construct the quantum BV master action for heterotic and type II string field theories.",
+      "title": "BV Master Action for Heterotic and Type II String Field Theories",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Sen",
+          "firstName": "Ashoke"
+        }
+      ],
+      "attachments": [
+        {
+          "path": "/mnt/data/Connaissances/Zotero/storage/WK3MP2RG/1508.html",
+          "title": "arXiv.org Snapshot",
+          "mimeType": "text/html",
+          "url": "http://arxiv.org/abs/1508.05387"
+        },
+        {
+          "path": "/mnt/data/Connaissances/Zotero/storage/IADTNUN4/sen_2015_bv_master_action_for_heterotic_and_type_ii_string_field_theories.pdf",
+          "title": "sen_2015_bv_master_action_for_heterotic_and_type_ii_string_field_theories.pdf",
+          "mimeType": "application/pdf",
+          "url": "http://arxiv.org/pdf/1508.05387v3"
+        }
+      ],
+      "notes": [
+        "<p>27/03/16 - overview - studying the papers of Ashoke</p>\n<p>This paper is of great importance because it constructs a fully consistent quantum action for (covariant) superstring field theory, including the Ramond sector. The idea is to introduce extra dynamical fields which are free (they don't even couple to gravity) and so they can be consistently decoupled.</p>"
+      ],
+      "itemID": 19002,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "Sen:2015:BVMasterAction"
     }
   ],
-  "cache": {}
+  "cache": {
+  }
 }
