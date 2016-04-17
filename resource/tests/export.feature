@@ -53,6 +53,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Export Forthcoming as Forthcoming                                                  | 1           |
      | biblatex export of phdthesis does not case-protect -type- #435                     | 1           |
      | CSL variables only recognized when in lowercase #408                               | 1           |
      | date and year are switched #406                                                    | 4           |
@@ -95,7 +96,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.012                                                                | 1           |
      | Better BibLaTeX.011                                                                | 1           |
      | Better BibLaTeX.010                                                                | 1           |
-     | Export Forthcoming as Forthcoming                                                  | 1           |
      | Malformed HTML                                                                     | 1           |
      | Better BibLaTeX.stable-keys                                                        | 6           |
      | Allow explicit field override                                                      | 1           |
