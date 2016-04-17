@@ -3,8 +3,8 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 Zotero.BetterBibTeX.DB = new class
   cacheExpiry: Date.now() - (1000 * 60 * 60 * 24 * 30)
 
-  constructor: ->
-    Zotero.debug('DB.initialize')
+  load: (reason) ->
+    Zotero.debug('DB.initialize (' + ( reason || 'startup') + ')')
     ### split to speed up auto-saves ###
 
     db = Zotero.getZoteroDatabase('betterbibtex-lokijs')
@@ -23,10 +23,6 @@ Zotero.BetterBibTeX.DB = new class
         env: 'BROWSER'
       })
     }
-
-    db = Zotero.BetterBibTeX.createFile('serialized-items.json')
-    keepCache = db.exists()
-    db.moveTo(null, @db.volatile.filename) if keepCache
 
     @db.main.loadDatabase()
     @db.volatile.loadDatabase()
@@ -76,9 +72,9 @@ Zotero.BetterBibTeX.DB = new class
     @upgradeNeeded = @metadata.Zotero != ZOTERO_CONFIG.VERSION || @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
 
     cacheReset = Zotero.BetterBibTeX.pref.get('cacheReset')
-    Zotero.debug('DB.initialize, cache reset: ' + JSON.stringify({cacheReset, keepCache, metadata: @metadata, release: Zotero.BetterBibTeX.release}))
+    Zotero.debug('DB.initialize, cache reset: ' + JSON.stringify({cacheReset, metadata: @metadata, release: Zotero.BetterBibTeX.release}))
 
-    if !cacheReset && !keepCache
+    if !cacheReset
       cacheReset = @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
 
       ###
@@ -145,8 +141,9 @@ Zotero.BetterBibTeX.DB = new class
     )
 
     Zotero.debug('DB.initialize: ready')
-    Zotero.debug("DB.initialize: ready.serialized: #{@serialized.data.length}")
 
+  constructor: ->
+    @load()
     idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
     idleService.addIdleObserver({observe: (subject, topic, data) => @save() if topic == 'idle'}, 5)
 
@@ -220,7 +217,10 @@ Zotero.BetterBibTeX.DB = new class
 
   adapter:
     saveDatabase: (name, serialized, callback) ->
-      Zotero.DB.query("INSERT OR REPLACE INTO betterbibtex.lokijs (name, data) VALUES (?, ?)", [name, serialized])
+      if !Zotero.initialized || Zotero.isConnector
+        Zotero.BetterBibTeX.flash('Zotero is in connector mode -- not saving database!')
+      else
+        Zotero.DB.query("INSERT OR REPLACE INTO betterbibtex.lokijs (name, data) VALUES (?, ?)", [name, serialized])
       callback()
       return
 
@@ -229,7 +229,7 @@ Zotero.BetterBibTeX.DB = new class
       if file.exists()
         Zotero.BetterBibTeX.debug('DB.loadDatabase:', {name, file: file.path})
         callback(Zotero.File.getContents(file))
-        file.moveTo(null, name + '.bak')
+        file.remove(null) if file.exists()
         return
 
       data = Zotero.DB.valueQuery("SELECT data FROM betterbibtex.lokijs WHERE name=?", [name])
@@ -280,10 +280,22 @@ Zotero.BetterBibTeX.DB = new class
     Set: (values) -> '(' + ('' + v for v in values).join(', ') + ')'
 
     migrate: ->
+      db = Zotero.BetterBibTeX.createFile('serialized-items.json')
+      db.remove(null) if db.exists()
+
+      db = Zotero.BetterBibTeX.createFile('db.json.bak')
+      db.remove(null) if db.exists()
+
+      db = Zotero.BetterBibTeX.createFile('cache.json.bak')
+      db.remove(null) if db.exists()
+
       db = Zotero.getZoteroDatabase('betterbibtexcache')
       db.remove(true) if db.exists()
 
       db = Zotero.BetterBibTeX.createFile('better-bibtex-serialized-items.json')
+      db.remove(true) if db.exists()
+
+      db = Zotero.getZoteroDatabase('..', 'betterbibtex.sqlite.bak')
       db.remove(true) if db.exists()
 
       db = Zotero.getZoteroDatabase('betterbibtex')

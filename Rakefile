@@ -17,7 +17,7 @@ require 'rake'
 require 'rake/clean'
 require 'rake/loaders/makefile'
 require 'rake/xpi'
-require 'rake/xpi/github'
+require 'rake/xpi/publish/github'
 require 'rchardet'
 require 'rest-client'
 require 'rubygems/package'
@@ -129,7 +129,11 @@ task :gather do
   found = (Dir['chrome/**/*.{coffee,pegjs}'].collect{|src|
     tgt = src.sub(/\.[^\.]+$/, '.js')
     tgt
-  } + Dir['chrome/**/*.xul'] + Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].collect{|tr|
+  }.reject{|f|
+    File.dirname(f) == 'chrome/content/zotero-better-bibtex/test'
+  } + Dir['chrome/**/*.xul'].reject{|f|
+    File.dirname(f) == 'chrome/content/zotero-better-bibtex/test'
+  }+ Dir['chrome/{skin,locale}/**/*.*'] + Dir['resource/translators/*.yml'].reject{|yml| File.basename(yml) == 'unicode.yml'}.collect{|tr|
     [
       File.join(File.dirname(tr), File.basename(tr, File.extname(tr)) + '.translator'),
       File.join(File.dirname(tr), File.basename(tr, File.extname(tr)) + '.json')
@@ -138,7 +142,6 @@ task :gather do
     'chrome/content/zotero-better-bibtex/fold-to-ascii.js',
     'chrome/content/zotero-better-bibtex/punycode.js',
     'chrome/content/zotero-better-bibtex/lokijs.js',
-    'chrome/content/zotero-better-bibtex/release.js',
     'chrome/content/zotero-better-bibtex/csl-localedata.js',
     'chrome/content/zotero-better-bibtex/translators.js',
     'defaults/preferences/defaults.js',
@@ -158,14 +161,14 @@ task :gather do
   end
 end
 
-lambda {
-  js = "Zotero.BetterBibTeX.release = #{XPI.version.to_json};"
-  file = 'chrome/content/zotero-better-bibtex/release.js'
-  if !File.file?(file) || open(file).read.strip != js.strip
-    STDERR.puts "updating #{file} to #{js}" unless ENV['VERBOSE'] == 'false'
-    open(file, 'w') {|f| f.puts(js) }
-  end
-}.call
+#lambda {
+#  js = "Zotero.BetterBibTeX.release = #{XPI.version.to_json};"
+#  file = 'chrome/content/zotero-better-bibtex/release.js'
+#  if !File.file?(file) || open(file).read.strip != js.strip
+#    STDERR.puts "updating #{file} to #{js}" unless ENV['VERBOSE'] == 'false'
+#    open(file, 'w') {|f| f.puts(js) }
+#  end
+#}.call
 
 TIMESTAMP = DateTime.now.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -238,7 +241,7 @@ DOWNLOADS.each_pair{|dir, files|
 #end
 
 file 'chrome/content/zotero-better-bibtex/translators.js' => Dir['resource/translators/*.yml'] + ['Rakefile'] do |t|
-  translators = Dir['resource/translators/*.yml'].collect{|header| header = YAML::load_file(header) }
+  translators = Dir['resource/translators/*.yml'].collect{|header| header = YAML::load_file(header) }.select{|header| header.is_a?(Hash) && header['label'] }
   open(t.name, 'w') {|f|
     f.puts("Zotero.BetterBibTeX.Translators = #{JSON.pretty_generate(translators)};")
   }
@@ -428,40 +431,42 @@ end
 
 # Keep this as coffeescript rather than JS so Travis doesn't have to check out the csl-locales repo (sort of a cache)
 file 'chrome/content/zotero-better-bibtex/csl-localedata.coffee' => ['Rakefile'] + Dir['csl-locales/*.xml'] + Dir['csl-locales/*.json'] do |t|
-  open(t.name, 'w'){|f|
-    f.puts('Zotero.BetterBibTeX.Locales = { months: {}, dateorder: {}}')
+  cleanly(t.name) do
+    open(t.name, 'w'){|f|
+      f.puts('Zotero.BetterBibTeX.Locales = { months: {}, dateorder: {}}')
 
-    locales = JSON.parse(open('csl-locales/locales.json').read)
-    locales['primary-dialects']['en'] = 'en-GB'
-    short = locales['primary-dialects'].invert
+      locales = JSON.parse(open('csl-locales/locales.json').read)
+      locales['primary-dialects']['en'] = 'en-GB'
+      short = locales['primary-dialects'].invert
 
-    locales['language-names'].keys.sort.each{|full|
-      names = ["'#{full.downcase}'"]
-      names << "'#{short[full].downcase}'" if short[full]
-      if full == 'en-US'
-        names << "'american'"
-      else
-        locales['language-names'][full].each{|name|
-          names << utf16literal(name.downcase)
-          names << utf16literal(name.sub(/\s\(.*/, '').downcase)
-        }
-      end
-      names.uniq!
-      names = names.collect{|name| "Zotero.BetterBibTeX.Locales.dateorder[#{name}]" }.join(' = ')
+      locales['language-names'].keys.sort.each{|full|
+        names = ["'#{full.downcase}'"]
+        names << "'#{short[full].downcase}'" if short[full]
+        if full == 'en-US'
+          names << "'american'"
+        else
+          locales['language-names'][full].each{|name|
+            names << utf16literal(name.downcase)
+            names << utf16literal(name.sub(/\s\(.*/, '').downcase)
+          }
+        end
+        names.uniq!
+        names = names.collect{|name| "Zotero.BetterBibTeX.Locales.dateorder[#{name}]" }.join(' = ')
 
-      locale = Nokogiri::XML(open("csl-locales/locales-#{full}.xml"))
-      locale.remove_namespaces!
-      order = locale.xpath('//date[@form="numeric"]/date-part').collect{|d| d['name'][0]}.join('')
-      f.puts("#{names} = #{order.inspect}")
+        locale = Nokogiri::XML(open("csl-locales/locales-#{full}.xml"))
+        locale.remove_namespaces!
+        order = locale.xpath('//date[@form="numeric"]/date-part').collect{|d| d['name'][0]}.join('')
+        f.puts("#{names} = #{order.inspect}")
 
-      months = 1.upto(12).collect{|month| locale.at("//term[@name='month-#{month.to_s.rjust(2, '0')}' and not(@form)]").inner_text.downcase }
-      seasons = 1.upto(4).collect{|season| locale.at("//term[@name='season-#{season.to_s.rjust(2, '0')}']").inner_text.downcase }
+        months = 1.upto(12).collect{|month| locale.at("//term[@name='month-#{month.to_s.rjust(2, '0')}' and not(@form)]").inner_text.downcase }
+        seasons = 1.upto(4).collect{|season| locale.at("//term[@name='season-#{season.to_s.rjust(2, '0')}']").inner_text.downcase }
 
-      months = '[' + (months + seasons).collect{|name| utf16literal(name) }.join(', ') + ']'
+        months = '[' + (months + seasons).collect{|name| utf16literal(name) }.join(', ') + ']'
 
-      f.puts("Zotero.BetterBibTeX.Locales.months[#{full.inspect}] = #{months}")
+        f.puts("Zotero.BetterBibTeX.Locales.months[#{full.inspect}] = #{months}")
+      }
     }
-  }
+  end
 end
 
 file 'resource/translators/yaml.js' => 'Rakefile' do |t|
@@ -488,7 +493,7 @@ Dir['resource/translators/*.yml'].each{|metadata|
   translator = File.basename(metadata, File.extname(metadata))
 
   sources = ['json5', 'translator', 'preferences', "#{translator}.header", translator]
-  header = YAML.load_file(metadata)
+  header = YAML::load_file(metadata)
   dependencies = header['BetterBibTeX']['dependencies'] if header['BetterBibTeX']
   dependencies ||= []
   sources += dependencies
@@ -570,8 +575,12 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
     end
   end
 
-
-  cucumber = "cucumber --require features --strict #{tag} #{features}"
+  output = "--format pretty"
+  if ENV['CIRCLE_TEST_REPORTS']
+    FileUtils.mkdir_p(File.expand_path(ENV['CIRCLE_TEST_REPORTS'] + '/cucumber'))
+    output += " --format json --out " + "#{ENV['CIRCLE_TEST_REPORTS']}/cucumber/tests.cucumber".shellescape
+  end
+  cucumber = "cucumber #{output} --require features --strict #{tag} #{features}"
   puts "Tests running: #{cucumber}"
   if ENV['CI'] == 'true'
     sh cucumber
@@ -612,9 +621,21 @@ task :share => XPI.xpi do |t|
   end
 end
 
-file 'resource/translators/latex_unicode_mapping.coffee' => 'lib/unicode_table.rb' do |t|
+file UnicodeConverter.cache => 'lib/unicode_table.rb' do |t|
+  puts "#{t.name} outdated"
+  UnicodeConverter.new.download
+end
+
+file 'resource/translators/latex_unicode_mapping.coffee' => UnicodeConverter.cache do |t|
+  puts "#{t.name} outdated"
   cleanly(t.name) do
-    UnicodeConverter.new.save(t.name)
+    UnicodeConverter.new.mapping(t.name)
+  end
+end
+file 'resource/translators/BetterBibTeXParser.pegjs' => [ 'resource/translators/BetterBibTeXParser.grammar', UnicodeConverter.cache ] do |t|
+  puts "#{t.name} outdated"
+  cleanly(t.name) do
+    UnicodeConverter.new.patterns(t.source, t.name)
   end
 end
 
@@ -929,7 +950,7 @@ task :s3form do
   Tempfile.create('error-report.json') do |tmp|
     tmp.puts(JSON.pretty_generate(form))
     tmp.close
-    XPI.add_asset('update.rdf', false, 'error-report.json', tmp.path, 'application/json')
+    XPI.add_asset(:'update.rdf', false, 'error-report.json', tmp.path, 'application/json')
   end
 
   builder = Nokogiri::HTML::Builder.new do |doc|
@@ -953,6 +974,46 @@ task :s3form do
   Tempfile.create('error-report.html') do |tmp|
     tmp.puts(builder.to_html)
     tmp.close
-    XPI.add_asset('update.rdf', false, 'error-report.html', tmp.path, 'text/html')
+    XPI.add_asset(:'update.rdf', false, 'error-report.html', tmp.path, 'text/html')
   end
+end
+
+task :site do
+  sh "git clone git@github.com:retorquere/zotero-better-bibtex.wiki.git wiki" unless File.directory?('wiki')
+  sh "cd wiki && git pull"
+
+  relink = lambda{|line|
+    line.gsub(/\[(.*?)\]\(https:\/\/github.com\/retorquere\/zotero-better-bibtex\/wiki\/(.*?)\)/){|match|
+      label = $1
+      link = $2
+      if link.gsub('-', ' ') == label
+        "[[#{label}]]"
+      else
+        "[[#{label}|#{link}]]"
+      end
+    }
+  }
+  open('wiki/Support.md', 'w'){|support|
+    written = false
+    support.puts("<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CONTRIBUTING.md. EDITS WILL BE OVERWRITTEN -->\n\n")
+    IO.readlines('CONTRIBUTING.md').each{|line|
+      if (line =~ /^#/ || line.strip == '' || line =~ /^<!--/) && !written
+        next
+      else
+        written = true
+        support.write(relink.call(line))
+      end
+    }
+  }
+  open('wiki/Home.md', 'w') {|home|
+    home.puts("<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->\n\n")
+    IO.readlines('README.md').each{|line|
+      next if line =~ /^<!--/
+      home.write(relink.call(line))
+    }
+  }
+
+  sh "cd wiki && git add Home.md Support.md Changelog.md"
+  sh "cd wiki && git commit -m 'Home + Support' || true"
+  sh "cd wiki && git push"
 end

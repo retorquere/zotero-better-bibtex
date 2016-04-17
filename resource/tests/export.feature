@@ -46,13 +46,14 @@ Scenario Outline: BibLaTeX Export
      | Fields in Extra should override defaults                                                       | 1           |
      | BraceBalancer                                                                                  | 1           |
 
-@bblt-1 @bblt @test-cluster-1
+@bblt-1 @bblt @test-cluster-1 @435
 Scenario Outline: BibLaTeX Export
   And I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
 
   Examples:
      | file                                                                               | references  |
+     | Export Forthcoming as Forthcoming                                                  | 1           |
      | biblatex export of phdthesis does not case-protect -type- #435                     | 1           |
      | CSL variables only recognized when in lowercase #408                               | 1           |
      | date and year are switched #406                                                    | 4           |
@@ -95,14 +96,13 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.012                                                                | 1           |
      | Better BibLaTeX.011                                                                | 1           |
      | Better BibLaTeX.010                                                                | 1           |
-     | Export Forthcoming as Forthcoming                                                  | 1           |
      | Malformed HTML                                                                     | 1           |
      | Better BibLaTeX.stable-keys                                                        | 6           |
      | Allow explicit field override                                                      | 1           |
 
 ### BibTeX cookie-cutter ###
 
-@441 @439 @bbt @other
+@441 @439 @bbt @test-cluster-0
 Scenario Outline: BibTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibTeX' should match 'export/<file>.bibtex'
@@ -113,7 +113,7 @@ Scenario Outline: BibTeX Export
      | Replicate Zotero key algorithm #439                                                | 3          |
      | preserve BibTeX Variables does not check for null values while escaping #337       | 1          |
 
-@bbt @test-cluster-0
+@bbt @test-cluster-0 @300
 Scenario Outline: BibTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibTeX' should match 'export/<file>.bibtex'
@@ -142,7 +142,7 @@ Scenario: Omit URL export when DOI present. #131
   And I set preference .DOIandURL to url
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-url.biblatex'
 
-@438 @bbt @test-cluster-3
+@438 @bbt @test-cluster-2
 Scenario: BibTeX name escaping has a million inconsistencies #438
   When I import 2 references from 'export/BibTeX name escaping has a million inconsistencies #438.json'
   And I set preference .relaxAuthors to true
@@ -156,7 +156,7 @@ Scenario: Bibtex key regenerating issue when trashing items #117
   And I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json' as 'Second Import.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Bibtex key regenerating issue when trashing items #117.biblatex'
 
-@412 @test-cluster-1 @bbt
+@412 @test-cluster-0 @bbt
 Scenario: BibTeX URLs
   Given I import 1 reference from 'export/BibTeX; URL missing in bibtex for Book Section #412.json'
   And I set preference .bibtexURLs to 'off'
@@ -231,8 +231,11 @@ Scenario: Date export to Better CSL-JSON #360
 @432 @447 @pandoc @test-cluster-2
 Scenario: Pandoc/LaTeX Citation Export
   When I import 4 references with 3 attachments from 'export/Pandoc Citation.json'
-  Then a library export using 'Pandoc Citation' should match 'export/Pandoc Citation.pandoc'
-  And a library export using 'LaTeX Citation' should match 'export/Pandoc Citation.latex'
+  And I set preference .quickCopyMode to 'pandoc'
+  Then a library export using 'Better BibTeX Quick Copy' should match 'export/Pandoc Citation.pandoc'
+  When I set preference .quickCopyMode to 'latex'
+  Then a library export using 'Better BibTeX Quick Copy' should match 'export/Pandoc Citation.latex'
+  And a library export using 'id:4c52eb69-e778-4a78-8ca2-4edf024a5074' should match 'export/Pandoc Citation.pandoc'
   And a library export using 'Better CSL JSON' should match 'export/Pandoc Citation.csl.json'
   And a library export using 'Better CSL YAML' should match 'export/Pandoc Citation.csl.yml'
 
@@ -296,7 +299,7 @@ Scenario: Capitalize all title-fields for language en #383
   Given I import 8 references from 'export/Capitalize all title-fields for language en #383.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Capitalize all title-fields for language en #383.biblatex'
 
-@411 @bblt @test-cluster-1
+@411 @bblt @test-cluster-2
 Scenario: Sorting and optional particle handling #411
   Given I import 2 references from 'export/Sorting and optional particle handling #411.json'
   And I set preference .parseParticles to true

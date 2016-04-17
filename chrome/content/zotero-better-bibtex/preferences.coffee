@@ -1,5 +1,22 @@
 BetterBibTeXPref =
   paneLoad: ->
+
+    Zotero_Preferences.openHelpLink = ((original) ->
+      return ->
+        helpTopic = document.getElementsByTagName("prefwindow")[0].currentPane.helpTopic
+        if helpTopic == 'BetterBibTeX'
+          id = document.getElementById('better-bibtex-prefs-tabbox').selectedPanel.id
+          return unless id
+          url = 'https://github.com/retorquere/zotero-better-bibtex/wiki/Configuration#' + id.replace('better-bibtex-prefs-', '')
+          ### Just a temporary fix until https://github.com/zotero/zotero/issues/949 is fixed ###
+          if Zotero.Prefs.get(['browser', 'preferences', 'instantApply'].join('.'), true)
+            Zotero.getActiveZoteroPane().loadURI(url, { shiftKey: true, metaKey: true })
+          else
+            @openURL(url)
+        else
+          original.apply(@, arguments)
+      )(Zotero_Preferences.openHelpLink)
+
     disabled = null
     tabs = document.getElementById('better-bibtex-prefs-tabs')
     for tab, i in tabs.getElementsByTagName('tab')

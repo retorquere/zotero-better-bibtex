@@ -14,14 +14,24 @@ if !ZoteroPane_Local.BetterBibTeX
 
       if itemGroup.isCollection()
         collection = collectionsView.getSelectedCollection()
-        url = "collection?/#{collection.libraryID or 0}/#{collection.key + extension}"
+        url = "collection?/#{collection.libraryID || 0}/#{collection.key + extension}"
+
+        path = [collection.name]
+        while collection.parent
+          collection = collection.parent
+          path.unshift(collection.name)
+        path = "collection?/#{collection.libraryID || 0}/" + path.join('/') + extension
 
       if itemGroup.isLibrary(true)
         libid = collectionsView.getSelectedLibraryID()
         url = if libid then "library?/#{libid}/library#{extension}" else "library?library#{extension}"
+        path = null
       if not url then return
 
-      return "http://localhost:#{serverPort}/better-bibtex/#{url}"
+      root = "http://localhost:#{serverPort}/better-bibtex/"
+      url = root + url
+      url += "\nor\n#{root}#{path}" if path
+      return url
   }
 
   ### monkey-patch buildCollectionContextMenu to add group library export ###

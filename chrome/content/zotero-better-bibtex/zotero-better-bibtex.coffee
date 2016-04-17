@@ -10,6 +10,13 @@ Zotero.BetterBibTeX = {
 }
 Components.utils.import('resource://zotero-better-bibtex/citeproc.js', Zotero.BetterBibTeX)
 
+Zotero.BetterBibTeX.startup = ->
+  AddonManager.getAddonByID('better-bibtex@iris-advies.com', (extension) ->
+    return unless extension
+    Zotero.BetterBibTeX.release = extension.version
+    Zotero.BetterBibTeX.init()
+  )
+
 Zotero.BetterBibTeX.titleCase = {
   state: {
     opt: { lang: 'en' }
@@ -355,6 +362,19 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
     Zotero.debug('[better' + '-' + 'bibtex] ' + str, level)
 
 Zotero.BetterBibTeX.extensionConflicts = ->
+  AddonManager.getAddonByID('zotfile@columbia.edu', (extension) ->
+    return unless extension
+    return if Services.vc.compare(extension.version, '4.2.6') >= 0
+
+    Zotero.BetterBibTeX.disable('''
+      Better BibTeX has been disabled because it has detected conflicting extension "ZotFile" 4.2.5 or
+      earlier. After upgrading to 4.2.6, Better BibTeX will start up as usual. A pre-release of ZotFile 4.2.6 can be
+      found at
+
+      https://addons.mozilla.org/en-US/firefox/addon/zotfile/versions/
+    ''')
+  )
+
   AddonManager.getAddonByID('zoteromaps@zotero.org', (extension) ->
     return unless extension
     return if Services.vc.compare(extension.version, '1.0.10.1') > 0
@@ -415,6 +435,7 @@ Zotero.BetterBibTeX.extensionConflicts = ->
   @disableInConnector(Zotero.isConnector)
 
 Zotero.BetterBibTeX.disableInConnector = (isConnector) ->
+  return
   return unless isConnector
   @disable("""
     You are running Zotero in connector mode (running Zotero Firefox and Zotero Standalone simultaneously.
@@ -670,6 +691,34 @@ Zotero.BetterBibTeX.init = ->
   for k, months of Zotero.BetterBibTeX.Locales.months
     Zotero.BetterBibTeX.CSL.DateParser.addDateParserMonths(months)
 
+  ### monkey-patch Zotero.Translate.Export::setTranslator until https://gitlab.com/egh/zotxt/issues/38 is fixed ###
+  Zotero.Translate.Export::setTranslator = ((original) ->
+    return (translator) ->
+      if translator == '4c52eb69-e778-4a78-8ca2-4edf024a5074'
+        r = original.call(@, Zotero.BetterBibTeX.translators.BetterBibTeXQuickCopy.translatorID)
+        @setDisplayOptions({quickCopyMode: 'pandoc'})
+        return r
+
+      return original.apply(@, arguments)
+    )(Zotero.Translate.Export::setTranslator)
+
+  ### monkey-patch Zotero.Items.parseLibraryKeyHash(id) so you can get by ID -- mainly for SelectExtension ###
+  Zotero.Items.parseLibraryKeyHash = ((original) ->
+    return (libraryKey) ->
+      if libraryKey && libraryKey[0] == '@'
+        libraryKey = libraryKey.split('@')
+        libraryKey.reverse()
+        [citekey, libraryID] = libraryKey
+        libraryID = libraryID || null
+        item = Zotero.BetterBibTeX.DB.keys.findObject({citekey, libraryID})
+        return false unless item && item.itemID
+        item = Zotero.Items.get(item.itemID)
+        return false unless item
+        return {libraryID, key: item.key }
+
+      return original.call(@, libraryKey)
+    )(Zotero.Items.parseLibraryKeyHash)
+
   ### monkey-patch Zotero.Server.DataListener.prototype._generateResponse for async handling ###
   Zotero.Server.DataListener::_generateResponse = ((original) ->
     return (status, contentType, promise) ->
@@ -711,11 +760,12 @@ Zotero.BetterBibTeX.init = ->
       return id
     )(Zotero.Search::save)
 
-  ### monkey-patch Zotero.ItemTreeView::getCellText to replace the 'extra' column with the citekey ###
   ###
-  I wish I didn't have to hijack the extra field, but Zotero has checks in numerous places to make sure it only
-  displays 'genuine' Zotero fields, and monkey-patching around all of those got to be way too invasive (and thus
-  fragile)
+    monkey-patch Zotero.ItemTreeView::getCellText to replace the 'extra' column with the citekey
+
+    I wish I didn't have to hijack the extra field, but Zotero has checks in numerous places to make sure it only
+    displays 'genuine' Zotero fields, and monkey-patching around all of those got to be way too invasive (and thus
+    fragile)
   ###
   Zotero.ItemTreeView::getCellText = ((original) ->
     return (row, column) ->
@@ -744,8 +794,8 @@ Zotero.BetterBibTeX.init = ->
   ### monkey-patch translate to capture export path and auto-export ###
   Zotero.Translate.Export::translate = ((original) ->
     return ->
+      Zotero.BetterBibTeX.debug("Zotero.Translate.Export::translate: #{if @_export then Object.keys(@_export) else 'no @_export'}", @_displayOptions)
       ### requested translator ###
-      Zotero.BetterBibTeX.debug("Zotero.Translate.Export::translate: #{if @_export then Object.keys(@_export) else 'no @_export'}")
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
       Zotero.BetterBibTeX.debug('export: ', translatorID)
@@ -875,7 +925,7 @@ Zotero.BetterBibTeX.init = ->
   )
   Zotero.getActiveZoteroPane().addBeforeReloadListener((mode) =>
     @debug('before reload:', {mode})
-    @disableInConnector(mode == 'connector')
+    Zotero.BetterBibTeX.DB.save() if Zotero.BetterBibTeX.DB && mode != 'connector'
   )
 
   nids = []
@@ -883,6 +933,14 @@ Zotero.BetterBibTeX.init = ->
   nids.push(Zotero.Notifier.registerObserver(@collectionChanged, ['collection']))
   nids.push(Zotero.Notifier.registerObserver(@itemAdded, ['collection-item']))
   window.addEventListener('unload', ((e) -> Zotero.Notifier.unregisterObserver(id) for id in nids), false)
+
+  zoteroPane = Zotero.getActiveZoteroPane()
+  zoteroPane.addReloadListener(->
+    Zotero.BetterBibTeX.DB.load('reload out of connector mode') if !Zotero.initialized || Zotero.isConnector
+  )
+  zoteroPane.addBeforeReloadListener((mode) ->
+    Zotero.BetterBibTeX.DB.save() if Zotero.BetterBibTeX.DB && mode != 'connector'
+  )
 
   @idleService.addIdleObserver(@idleObserver, @pref.get('autoExportIdleWait'))
 
@@ -936,10 +994,22 @@ Translator.initialize = (function(original) {
 """
 
 Zotero.BetterBibTeX.loadTranslators = ->
+  for label, translatorID of {
+    'LaTeX Citation': 'b4a5ab19-c3a2-42de-9961-07ae484b8cb0',
+    'Pandoc Citation': '4c52eb69-e778-4a78-8ca2-4edf024a5074',
+    'Pandoc JSON': 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc',
+    'Better CSL-JSON': 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'
+  }
+    try
+      Zotero.BetterBibTeX.debug('loadTranslators: removing', {label, translatorID})
+      @removeTranslator({label, translatorID})
+    catch err
+      Zotero.BetterBibTeX.debug('loadTranslators: removing', {label, translatorID}, ':', err)
+
   try
-    @removeTranslator({label: 'Pandoc JSON', translatorID: 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'})
-  try
-    @removeTranslator({label: 'Better CSL-JSON', translatorID: 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'})
+    if Zotero.BetterBibTeX.pref.get('removeStock')
+      @removeTranslator({translatorID: 'b6e39b57-8942-4d11-8259-342c46ce395f', label: 'BibLaTeX'})
+      @removeTranslator({translatorID: '9cb70025-a888-4a29-a210-93ec52da40d4', label: 'BibTeX'})
 
   for translator in @Translators
     @load(translator)
@@ -1108,7 +1178,7 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions, callback) ->
       when 'collection' then translation.setCollection(value)
 
   translation.setTranslator(translator)
-  translation.setDisplayOptions(displayOptions)
+  translation.setDisplayOptions(displayOptions) if displayOptions && Object.keys(displayOptions).length != 0
 
   translation.setHandler('done', (obj, success) -> callback(!success, if success then obj?.string else null))
   translation.translate()
@@ -1120,6 +1190,7 @@ Zotero.BetterBibTeX.getContentsFromURL = (url) ->
     throw new Error("Failed to load #{url}: #{err.msg}")
 
 Zotero.BetterBibTeX.load = (translator) ->
+  throw new Error('not a translator') unless translator.label
   @removeTranslator(translator)
 
   try
@@ -1149,7 +1220,7 @@ Zotero.BetterBibTeX.load = (translator) ->
 
     @debug('translator.load', translator, 'succeeded')
 
-    @translators[translator.translatorID] = @translators[translator.label.replace(/\s/, '')] = translator
+    @translators[translator.translatorID] = @translators[translator.label.replace(/\s/g, '')] = translator
   catch err
     @debug('translator.load', translator, 'failed:', err)
 

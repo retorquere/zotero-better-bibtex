@@ -105,79 +105,79 @@ doExport = ->
     # arXiv:0707.3168 [hep-th]
     # arXiv:YYMM.NNNNv# [category]
     if m = item.publicationTitle?.match(/^arxiv:([0-9]{4}\.[0-9]{4})(v[0-9]+)?\s+\[(.*)\]$/i)
-      ref.add({ name: 'archivePrefix', value: 'arXiv'} )
-      ref.add({ name: 'eprinttype', value: 'arxiv'})
-      ref.add({ name: 'eprint', value: m[1] })
-      ref.add({ name: 'primaryClass', value: m[3]})
+      ref.add({ archivePrefix: 'arXiv'} )
+      ref.add({ eprinttype: 'arxiv'})
+      ref.add({ eprint: m[1] })
+      ref.add({ primaryClass: m[3]})
       item.arXiv = item.publicationTitle
       delete item.publicationTitle
 
     # arXiv:arch-ive/YYMMNNNv# or arXiv:arch-ive/YYMMNNNv# [category]
     else if m = item.publicationTitle?.match(/^arxiv:([a-z]+-[a-z]+)\/([0-9]{7})(v[0-9]+)?\s+\[(.*)\]$/i)
-      ref.add({ name: 'eprinttype', value: 'arxiv' })
-      ref.add({ name: 'eprint', value: "#{m[1]}/#{m[2]}" })
+      ref.add({ eprinttype: 'arxiv' })
+      ref.add({ eprint: "#{m[1]}/#{m[2]}" })
       item.arXiv = item.publicationTitle
       delete item.publicationTitle
 
     else if m = item.publicationTitle?.match(/^arxiv:\s*([\S]+)/i)
-      ref.add({ name: 'eprinttype', value: 'arxiv'})
-      ref.add({ name: 'eprint', value: m[1] })
+      ref.add({ eprinttype: 'arxiv'})
+      ref.add({ eprint: m[1] })
       item.arXiv = item.publicationTitle
       delete item.publicationTitle
 
     if m = item.url?.match(/^http:\/\/www.jstor.org\/stable\/([\S]+)$/i)
-      ref.add({ name: 'eprinttype', value: 'jstor'})
-      ref.add({ name: 'eprint', value: m[1] })
+      ref.add({ eprinttype: 'jstor'})
+      ref.add({ eprint: m[1] })
       delete item.url
       ref.remove('url')
 
     if m = item.url?.match(/^http:\/\/books.google.com\/books?id=([\S]+)$/i)
-      ref.add({ name: 'eprinttype', value: 'googlebooks'})
-      ref.add({ name: 'eprint', value: m[1] })
+      ref.add({ eprinttype: 'googlebooks'})
+      ref.add({ eprint: m[1] })
       delete item.url
       ref.remove('url')
 
     if m = item.url?.match(/^http:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i)
-      ref.add({ name: 'eprinttype', value: 'pubmed'})
-      ref.add({ name: 'eprint', value: m[1] })
+      ref.add({ eprinttype: 'pubmed'})
+      ref.add({ eprint: m[1] })
       delete item.url
       ref.remove('url')
 
     for eprinttype in ['pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks']
       if ref.has[eprinttype]
         if not ref.has.eprinttype
-          ref.add({ name: 'eprinttype', value: eprinttype})
-          ref.add({ name: 'eprint', value: ref.has[eprinttype].value })
+          ref.add({ eprinttype: eprinttype})
+          ref.add({ eprint: ref.has[eprinttype].value })
         ref.remove(eprinttype)
 
     if item.archive and item.archiveLocation
       archive = true
       switch item.archive.toLowerCase()
         when 'arxiv'
-          ref.add({ name: 'eprinttype', value: 'arxiv' })           unless ref.has.eprinttype
-          ref.add({ name: 'eprintclass', value: item.callNumber })
+          ref.add({ eprinttype: 'arxiv' })           unless ref.has.eprinttype
+          ref.add({ eprintclass: item.callNumber })
 
         when 'jstor'
-          ref.add({ name: 'eprinttype', value: 'jstor' })           unless ref.has.eprinttype
+          ref.add({ eprinttype: 'jstor' })           unless ref.has.eprinttype
 
         when 'pubmed'
-          ref.add({ name: 'eprinttype', value: 'pubmed' })          unless ref.has.eprinttype
+          ref.add({ eprinttype: 'pubmed' })          unless ref.has.eprinttype
 
         when 'hdl'
-          ref.add({ name: 'eprinttype', value: 'hdl' })             unless ref.has.eprinttype
+          ref.add({ eprinttype: 'hdl' })             unless ref.has.eprinttype
 
         when 'googlebooks', 'google books'
-          ref.add({ name: 'eprinttype', value: 'googlebooks' })     unless ref.has.eprinttype
+          ref.add({ eprinttype: 'googlebooks' })     unless ref.has.eprinttype
 
         else
           archive = false
 
       if archive
-        ref.add({ name: 'eprint', value: item.archiveLocation })    unless ref.has.eprint
+        ref.add({ eprint: item.archiveLocation })    unless ref.has.eprint
 
-    ref.add({ name: 'langid', value: ref.language })
+    ref.add({ langid: ref.language })
 
-    ref.add({ name: 'number', value: item.docketNumber || item.publicLawNumber || item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number })
+    ref.add({ number: item.docketNumber || item.publicLawNumber || item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number })
     ref.add({ name: (if isNaN(parseInt(item.issue)) then 'issue' else 'number'), value: item.issue })
 
     switch item.itemType
@@ -193,7 +193,7 @@ doExport = ->
 
         when 'magazineArticle', 'newspaperArticle'
           ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true})
-          ref.add({ name: 'journalsubtitle', value: item.section }) if item.itemType == 'newspaperArticle'
+          ref.add({ journalsubtitle: item.section }) if item.itemType == 'newspaperArticle'
 
         when 'journalArticle'
           if ref.isBibVar(item.publicationTitle)
@@ -216,7 +216,7 @@ doExport = ->
       value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle
       autoCase: ref.referencetype in ['movie', 'video']
     })
-    ref.add({ name: 'series', value: item.seriesTitle || item.series })
+    ref.add({ series: item.seriesTitle || item.series })
 
     switch item.itemType
       when 'report', 'thesis'
@@ -250,7 +250,7 @@ doExport = ->
       else
         ref.add({ name: 'type', value: item.type || item.websiteType || item.manuscriptType, preserveCase: true, replace: true })
 
-    ref.add({ name: 'howpublished', value: item.presentationType || item.manuscriptType })
+    ref.add({ howpublished: item.presentationType || item.manuscriptType })
 
     ref.add({ name: 'note', value: item.meetingName, allowDuplicates: true })
 
@@ -303,20 +303,25 @@ doExport = ->
       for own field, value of creators
         ref.add({ name: field, value: value, enc: 'creators' })
 
-      ref.add({ name: 'editoratype', value: 'collaborator' }) if creators.editora.length > 0
-      ref.add({ name: 'editorbtype', value: 'redactor' }) if creators.editorb.length > 0
+      ref.add({ editoratype: 'collaborator' }) if creators.editora.length > 0
+      ref.add({ editorbtype: 'redactor' }) if creators.editorb.length > 0
 
-    ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate && item.url
+    ref.add({ urldate: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate && item.url
 
-    ref.add((new DateField(item.date, item.language, 'date', 'year')).field)
+    if item.date
+      if m = item.date.match(/^\[([0-9]+)\]\s+(.*)/)
+        ref.add({ origdate: m[1] })
+        ref.add((new DateField(m[2], item.language, 'date', 'year')).field)
+      else
+        ref.add((new DateField(item.date, item.language, 'date', 'year')).field)
 
     switch
       when item.pages
-        ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )})
+        ref.add({ pages: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )})
       when item.firstPage && item.lastPage
-        ref.add({ name: 'pages', value: "#{item.firstPage}--#{item.lastPage}" })
+        ref.add({ pages: "#{item.firstPage}--#{item.lastPage}" })
       when item.firstPage
-        ref.add({ name: 'pages', value: "#{item.firstPage}" })
+        ref.add({ pages: "#{item.firstPage}" })
 
     ref.add({ name: (if ref.has.note then 'annotation' else 'note'), value: item.extra, allowDuplicates: true })
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
@@ -329,7 +334,7 @@ doExport = ->
     # 'juniorcomma' needs more thought, it isn't for *all* suffixes you want this. Or even at all.
     #ref.add({ name: 'options', value: (option for option in ['useprefix', 'juniorcomma'] when ref[option]).join(',') })
     ###
-    ref.add({ name: 'options', value: 'useprefix=true' }) if ref.useprefix
+    ref.add({ options: 'useprefix=true' }) if ref.useprefix
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 

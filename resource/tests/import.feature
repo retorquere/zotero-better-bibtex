@@ -28,6 +28,13 @@ Scenario: option to mantain the braces and special commands in titles or all fie
   Then the library should match 'import/Better BibTeX.007.raw.json'
   And a library export using 'Better BibTeX' should match 'import/Better BibTeX.007.roundtrip.bib'
 
+@472
+Scenario: Math markup to unicode not always imported correctly #472
+  When I import 2 references from 'import/Math markup to unicode not always imported correctly #472.bib'
+  Then the library without collections should match 'import/Math markup to unicode not always imported correctly #472.json'
+  And I set preference .preserveBibTeXVariables to true
+  And a library export using 'Better BibTeX' should match 'import/Math markup to unicode not always imported correctly #472.roundtrip.bib'
+
 @i3
 Scenario Outline: Better BibTeX Import
   When I import <references> reference from 'import/<file>.bib'

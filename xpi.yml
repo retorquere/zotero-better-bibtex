@@ -59,7 +59,6 @@ files:
 - chrome/content/zotero-better-bibtex/preferences.js
 - chrome/content/zotero-better-bibtex/preferences.xul
 - chrome/content/zotero-better-bibtex/punycode.js
-- chrome/content/zotero-better-bibtex/release.js
 - chrome/content/zotero-better-bibtex/schomd.js
 - chrome/content/zotero-better-bibtex/serialized.js
 - chrome/content/zotero-better-bibtex/translators.js
@@ -102,7 +101,5 @@ files:
 - resource/translators/BibTeX AUX Scanner.translator
 - resource/translators/Collected Notes.json
 - resource/translators/Collected Notes.translator
-- resource/translators/LaTeX Citation.json
-- resource/translators/LaTeX Citation.translator
-- resource/translators/Pandoc Citation.json
-- resource/translators/Pandoc Citation.translator
+- resource/translators/Better BibTeX Quick Copy.json
+- resource/translators/Better BibTeX Quick Copy.translator

@@ -1,5 +1,9 @@
 Translator = {}
 
+Translator._log = (level, msg...) ->
+  msg = ((if (typeof m) in ['boolean', 'string', 'number'] then '' + m else Translator.stringify(m)) for m in msg).join(' ')
+  Zotero.debug('[better' + '-' + "bibtex:#{@header.label}] " + msg, level)
+
 Translator.debug_off = ->
 Translator.debug = Translator.debug_on = (msg...) ->
   @_log.apply(@, [5].concat(msg))
@@ -53,10 +57,6 @@ Translator.stringifier = (replacer, cycleReplacer) ->
 
     return value if replacer == null || replacer == undefined
     return replacer.call(this, key, value)
-
-Translator._log = (level, msg...) ->
-  msg = ((if (typeof m) in ['boolean', 'string', 'number'] then '' + m else Translator.stringify(m)) for m in msg).join(' ')
-  Zotero.debug('[better' + '-' + "bibtex:#{@header.label}] " + msg, level)
 
 ### http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables ###
 Translator.CSLVariables = {
@@ -302,7 +302,7 @@ Translator.initialize = ->
     @log = @log_off
 
   @collections = []
-  if Zotero.nextCollection
+  if Zotero.nextCollection && Translator.header.configOptions?.getCollections
     while collection = Zotero.nextCollection()
       @debug('adding collection:', collection)
       @collections.push(@sanitizeCollection(collection))

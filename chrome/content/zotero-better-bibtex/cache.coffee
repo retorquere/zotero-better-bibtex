@@ -50,7 +50,6 @@ Zotero.BetterBibTeX.cache = new class
     @db.cache.removeWhere(what)
 
   reset: (reason) ->
-    Zotero.BetterBibTeX.debug('cache.reset:', new Error(reason))
     @db.cache.removeDataOnly()
     @stats = {
       hit: 0
