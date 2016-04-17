@@ -50,7 +50,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.showItemIDs"              id="pref-better-bibtex-show-item-ids"           type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.parseParticles"           id="pref-better-bibtex-parseParticles"          type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.skipFields"               id="pref-better-bibtex-skipFields"              type="string"/>
-        <preference name="extensions.zotero.translators.better-bibtex.bibtexURLs"               id="pref-better-bibtex-bibtexURLs"              type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.bibtexURL"                id="pref-better-bibtex-bibtexURL"               type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.warnBulkModify"           id="pref-better-bibtex-bulkWarning"             type="int"/>
         <preference name="extensions.zotero.translators.better-bibtex.postscript"               id="pref-better-bibtex-postscript"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.quickCopyMode"            id="pref-better-bibtex-quickCopyMode"           type="string"/>
@@ -164,11 +164,11 @@
                     </radiogroup>
                   </row>
                   <row>
-                    <label>&zotero.better-bibtex.prefs.export.fields.bibtexURLs;</label>
-                    <radiogroup preference="pref-better-bibtex-bibtexURLs" orient="horizontal">
-                      <radio label="&zotero.better-bibtex.prefs.export.fields.bibtexURLs.off;" value="off"/>
-                      <radio label="&zotero.better-bibtex.prefs.export.fields.bibtexURLs.note;" value="note"/>
-                      <radio label="&zotero.better-bibtex.prefs.export.fields.bibtexURLs.url;" value="url"/>
+                    <label>&zotero.better-bibtex.prefs.export.fields.bibtexURL;</label>
+                    <radiogroup preference="pref-better-bibtex-bibtexURL" orient="horizontal">
+                      <radio label="&zotero.better-bibtex.prefs.export.fields.bibtexURL.off;" value="off"/>
+                      <radio label="&zotero.better-bibtex.prefs.export.fields.bibtexURL.note;" value="note"/>
+                      <radio label="&zotero.better-bibtex.prefs.export.fields.bibtexURL.url;" value="url"/>
                     </radiogroup>
                   </row>
                   <row>

@@ -4,7 +4,7 @@
 # The global Translator object allows access to the current configuration of the translator
 #
 # @param {enum} titleCase whether titles should be title-cased
-# @param {boolean} bibtexURLs set to true when BBT will generate \url{..} around the urls for BibTeX
+# @param {boolean} bibtexURL set to true when BBT will generate \url{..} around the urls for BibTeX
 ###
 
 ###

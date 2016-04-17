@@ -101,10 +101,10 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.better-bibtex.prefs.export.fields.doi-and-url.both "both">
 <!ENTITY zotero.better-bibtex.prefs.export.fields.doi-and-url.DOI "DOI">
 <!ENTITY zotero.better-bibtex.prefs.export.fields.doi-and-url.URL "URL">
-<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURLs "Add URLs to BibTeX export">
-<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURLs.off "no">
-<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURLs.note "in a note field">
-<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURLs.url "in an url field">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURL "Add URLs to BibTeX export">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURL.off "no">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURL.note "in a note field">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURL.url "in an url field">
 <!ENTITY zotero.better-bibtex.prefs.export.fields.skip "Fields to omit from export (comma-separated)">
 
 <!ENTITY zotero.better-bibtex.prefs.export.server.enabled "Enable export by HTTP">

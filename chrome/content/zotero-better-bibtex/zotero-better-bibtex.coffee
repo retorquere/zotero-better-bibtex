@@ -585,9 +585,7 @@ Zotero.BetterBibTeX.version = (version) ->
   return v
 
 Zotero.BetterBibTeX.migrateData = ->
-  @DB.SQLite.migrate()
-
-  return unless @DB.upgradeNeeded
+  return unless @DB.SQLite.migrate()
 
   for key in @pref.prefs.getChildList('')
     switch key
@@ -605,12 +603,7 @@ Zotero.BetterBibTeX.migrateData = ->
       when 'unicode'
         @pref.set('asciiBibTeX', (@pref.get(key) != 'always'))
         @pref.set('asciiBibLaTeX', (@pref.get(key) == 'never'))
-      when 'bibtexURLs'
-        v = @pref.get(key)
-        if v not in ['off', 'note', 'url']
-          Zotero.BetterBibTeX.debug('upgrading bibtexURLs from', {v})
-          v = true if v == 'true'
-          @pref.set(key, (if v then 'note' else 'off'))
+      when 'bibtexURLs' then @pref.set('bibtexURL', (if @pref.get(key) then 'note' else 'off'))
       else continue
     @pref.prefs.clearUserPref(key)
   @pref.prefs.clearUserPref('brace-all')
