@@ -32,8 +32,8 @@ Mode =
       Zotero.write("[[zotero://select/item/0_#{key}][@#{item.__citekey__}]]")
 
 doExport = ->
-  mode = Zotero.getOption('quickCopyMode') || Zotero.getHiddenPref('better-bibtex.quickCopyMode')
-  if Mode[mode]
-    Mode[mode].call(null)
+  mode = Mode['' + Zotero.getOption('quickCopyMode')] || Mode[Zotero.getHiddenPref('better-bibtex.quickCopyMode')]
+  if mode
+    mode.call(null)
   else
-    throw "Unsupported Quick Copy format '#{mode}'"
+    throw "Unsupported Quick Copy format '#{Zotero.getHiddenPref('better-bibtex.quickCopyMode')}'"
