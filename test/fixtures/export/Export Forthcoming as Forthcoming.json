@@ -6,7 +6,8 @@
     "preferences": {
       "preserveCaps": "inner",
       "fancyURLs": false,
-      "attachmentRelativePath": false
+      "attachmentRelativePath": false,
+      "citekeyFormat": "[auth][year]"
     },
     "options": {
       "exportFileData": false,

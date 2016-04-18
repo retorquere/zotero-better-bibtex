@@ -689,8 +689,12 @@ Zotero.BetterBibTeX.init = ->
   ### monkey-patch Zotero.Translate.Export::setTranslator until https://gitlab.com/egh/zotxt/issues/38 is fixed ###
   Zotero.Translate.Export::setTranslator = ((original) ->
     return (translator) ->
-      translator = {translatorID: '9b85ff96-ceb3-4ca2-87a9-154c18ab38b1', displayOptions: { quickCopyMode: 'pandoc' }}  if translator == '4c52eb69-e778-4a78-8ca2-4edf024a5074'
-      original.call(@, translator)
+      if translator == '4c52eb69-e778-4a78-8ca2-4edf024a5074'
+        r = original.call(@, Zotero.BetterBibTeX.translators.BetterBibTeXQuickCopy.translatorID)
+        @setDisplayOptions({quickCopyMode: 'pandoc'})
+        return r
+
+      return original.apply(@, arguments)
     )(Zotero.Translate.Export::setTranslator)
 
   ### monkey-patch Zotero.Items.parseLibraryKeyHash(id) so you can get by ID -- mainly for SelectExtension ###
@@ -785,8 +789,8 @@ Zotero.BetterBibTeX.init = ->
   ### monkey-patch translate to capture export path and auto-export ###
   Zotero.Translate.Export::translate = ((original) ->
     return ->
+      Zotero.BetterBibTeX.debug("Zotero.Translate.Export::translate: #{if @_export then Object.keys(@_export) else 'no @_export'}", @_displayOptions)
       ### requested translator ###
-      Zotero.BetterBibTeX.debug("Zotero.Translate.Export::translate: #{if @_export then Object.keys(@_export) else 'no @_export'}")
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
       Zotero.BetterBibTeX.debug('export: ', translatorID)
@@ -1169,7 +1173,7 @@ Zotero.BetterBibTeX.translate = (translator, items, displayOptions, callback) ->
       when 'collection' then translation.setCollection(value)
 
   translation.setTranslator(translator)
-  translation.setDisplayOptions(displayOptions)
+  translation.setDisplayOptions(displayOptions) if displayOptions && Object.keys(displayOptions).length != 0
 
   translation.setHandler('done', (obj, success) -> callback(!success, if success then obj?.string else null))
   translation.translate()
@@ -1211,7 +1215,7 @@ Zotero.BetterBibTeX.load = (translator) ->
 
     @debug('translator.load', translator, 'succeeded')
 
-    @translators[translator.translatorID] = @translators[translator.label.replace(/\s/, '')] = translator
+    @translators[translator.translatorID] = @translators[translator.label.replace(/\s/g, '')] = translator
   catch err
     @debug('translator.load', translator, 'failed:', err)
 
