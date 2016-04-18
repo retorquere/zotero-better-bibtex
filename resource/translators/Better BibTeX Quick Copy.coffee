@@ -20,16 +20,19 @@ Mode =
   orgmode: ->
     while item = Translator.nextItem()
       m = item.uri.match(/\/(users|groups)\/([0-9]+|(local\/[^\/]+))\/items\/([A-Z0-9]{8})$/)
+      throw "Malformed item uri #{item.uri}" unless m
+
       type = m[1]
       libraryID = m[2]
       key = m[4]
 
-      if type != 'users'
-        Translator.debug("Zotero doesn't support getting the group ID inside a translator, sorry", item.uri, {libraryID, type, key})
-        # Can change to zotero://select/library/items/report.html?itemKey=JHYDCRBD later
-        continue
+      switch type
+        when 'users'
+          libraryID = 0
+        when 'groups'
+          throw "Missing libraryID from #{item.uri}" unless libraryID
 
-      Zotero.write("[[zotero://select/item/0_#{key}][@#{item.__citekey__}]]")
+      Zotero.write("[[zotero://select/item/#{libraryID}_#{key}][@#{item.__citekey__}]]")
 
 doExport = ->
   mode = Mode['' + Zotero.getOption('quickCopyMode')] || Mode[Zotero.getHiddenPref('better-bibtex.quickCopyMode')]
