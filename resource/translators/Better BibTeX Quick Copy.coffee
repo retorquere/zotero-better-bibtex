@@ -28,11 +28,12 @@ Mode =
 
       switch type
         when 'users'
-          libraryID = 0
+          libraryID = '0_'
         when 'groups'
           throw "Missing libraryID from #{item.uri}" unless libraryID
+          libraryID += '~'
 
-      Zotero.write("[[zotero://select/item/#{libraryID}_#{key}][@#{item.__citekey__}]]")
+      Zotero.write("[[zotero://select/items/#{libraryID}#{key}][@#{item.__citekey__}]]")
 
 doExport = ->
   mode = Mode['' + Zotero.getOption('quickCopyMode')] || Mode[Zotero.getHiddenPref('better-bibtex.quickCopyMode')]
