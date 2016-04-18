@@ -54,6 +54,7 @@ Scenario Outline: BibLaTeX Export
   Examples:
      | file                                                                               | references  |
      | map csl-json variables #293                                                        | 2           |
+     | Export Forthcoming as Forthcoming                                                  | 1           |
      | biblatex export of phdthesis does not case-protect -type- #435                     | 1           |
      | CSL variables only recognized when in lowercase #408                               | 1           |
      | date and year are switched #406                                                    | 4           |
@@ -95,7 +96,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.012                                                                | 1           |
      | Better BibLaTeX.011                                                                | 1           |
      | Better BibLaTeX.010                                                                | 1           |
-     | Export Forthcoming as Forthcoming                                                  | 1           |
      | Malformed HTML                                                                     | 1           |
      | Better BibLaTeX.stable-keys                                                        | 6           |
      | Allow explicit field override                                                      | 1           |
@@ -235,6 +235,7 @@ Scenario: Pandoc/LaTeX Citation Export
   Then a library export using 'Better BibTeX Quick Copy' should match 'export/Pandoc Citation.pandoc'
   When I set preference .quickCopyMode to 'latex'
   Then a library export using 'Better BibTeX Quick Copy' should match 'export/Pandoc Citation.latex'
+  And a library export using 'id:4c52eb69-e778-4a78-8ca2-4edf024a5074' should match 'export/Pandoc Citation.pandoc'
   And a library export using 'Better CSL JSON' should match 'export/Pandoc Citation.csl.json'
   And a library export using 'Better CSL YAML' should match 'export/Pandoc Citation.csl.yml'
 
