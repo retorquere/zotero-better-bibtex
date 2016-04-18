@@ -28,6 +28,7 @@
       "url": "http://arxiv.org/abs/1412.2970",
       "publicationTitle": "arXiv:1412.2970 [math-ph, physics:quant-ph]",
       "date": "2014-12-09",
+      "extra": "arXiv: 1412.2970",
       "accessDate": "2015-02-07 13:25:26",
       "libraryCatalog": "arXiv.org",
       "abstractNote": "We consider translation invariant gapped quantum spin systems satisfying the Lieb-Robinson bound and containing single particle states in a ground state representation. Following the Haag-Ruelle approach from relativistic quantum field theory, we construct states describing collisions of several particles, and define the corresponding $S$-matrix. We also obtain some general restrictions on the shape of the energy-momentum spectrum. For the purpose of our analysis we adapt the concepts of almost local observables and energy-momentum transfer (or Arveson spectrum) from relativistic QFT to the lattice setting. Our results hold, in particular, in the Ising model in strong transverse magnetic fields.",
