@@ -113,7 +113,7 @@ Scenario Outline: BibTeX Export
      | Replicate Zotero key algorithm #439                                                | 3          |
      | preserve BibTeX Variables does not check for null values while escaping #337       | 1          |
 
-### TODO: check that #85, #86 and #152 are OK with the change proposed in #460
+### TODO: check that #85, #86, #152 and #170 are OK with the change proposed in #460
 
 @bbt @test-cluster-0 @300
 Scenario Outline: BibTeX Export
@@ -201,14 +201,14 @@ Scenario: two ISSN number are freezing browser #110 / Generating keys and export
   And I set the citation key
   Then a library export using 'Better BibLaTeX' should match 'export/two ISSN number are freezing browser #110.biblatex'
 
-@85 @bbt @test-cluster-2
+@85 @bbt @test-cluster-2 @arXiv
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 references from 'export/Square brackets in Publication field (85).json'
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85).bibtex'
   And I set preference .citekeyFormat to [year]-updated
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85) after pattern change.bibtex'
 
-@86 @bbt @test-cluster-2
+@86 @bbt @test-cluster-2 @arXiv
 Scenario: Include first name initial(s) in cite key generation pattern (86)
   When I import 1 reference from 'export/Include first name initial(s) in cite key generation pattern (86).json'
    And I set preference .citekeyFormat to [auth+initials][year]

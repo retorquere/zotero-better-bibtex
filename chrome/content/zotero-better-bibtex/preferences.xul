@@ -51,6 +51,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.parseParticles"           id="pref-better-bibtex-parseParticles"          type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.skipFields"               id="pref-better-bibtex-skipFields"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.bibtexURLs"               id="pref-better-bibtex-bibtexURLs"              type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.bibtexArXiv"              id="pref-better-bibtex-bibtexArXiv"             type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.warnBulkModify"           id="pref-better-bibtex-bulkWarning"             type="int"/>
         <preference name="extensions.zotero.translators.better-bibtex.postscript"               id="pref-better-bibtex-postscript"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.quickCopyMode"            id="pref-better-bibtex-quickCopyMode"           type="string"/>
@@ -145,6 +146,7 @@
             <groupbox>
               <caption label="&zotero.better-bibtex.prefs.export.bibtex;"/>
               <checkbox preference="pref-better-bibtex-asciiBibTeX" label="&zotero.better-bibtex.prefs.export.bibtex.ascii;"/>
+              <checkbox preference="pref-better-bibtex-bibtexArXiv" label="&zotero.better-bibtex.prefs.export.bibtex.arXiv;"/>
               <hbox>
                 <label>&zotero.better-bibtex.prefs.export.bibtex.URLs;</label>
                 <radiogroup preference="pref-better-bibtex-bibtexURLs" orient="horizontal">

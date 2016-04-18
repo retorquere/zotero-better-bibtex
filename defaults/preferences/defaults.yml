@@ -16,6 +16,7 @@ citekeyFold: true
 debug: false
 DOIandURL: both
 bibtexURLs: 'off'
+bibtexArXiv: false
 csquotes: ''
 keyConflictPolicy: keep
 langID: babel
