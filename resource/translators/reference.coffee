@@ -59,7 +59,7 @@ class Reference
 
     if @override.arxiv || @override.arXiv
       arXiv = { id: 'arxiv:' + (@override.arxiv || @override.arXiv).value, inTitle: false }
-    else if @item.publicationTitle?.match(/^arxiv/i) && (@item.libraryCatalog || '').toLowerCase() in ['arxiv.org', 'arxiv']
+    else if @item.publicationTitle?.match(/^arxiv:/i) && (@item.libraryCatalog || '').toLowerCase() in ['arxiv.org', 'arxiv']
       arXiv = { id: @item.publicationTitle, inTitle: true }
     else
       arXiv = { id: '' }

@@ -113,6 +113,8 @@ Scenario Outline: BibTeX Export
      | Replicate Zotero key algorithm #439                                                | 3          |
      | preserve BibTeX Variables does not check for null values while escaping #337       | 1          |
 
+### TODO: check that #85, #86 and #152 are OK with the change proposed in #460
+
 @bbt @test-cluster-0 @300
 Scenario Outline: BibTeX Export
   Given I import <references> references from 'export/<file>.json'
