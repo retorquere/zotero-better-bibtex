@@ -25,7 +25,7 @@ Mode =
       key = m[4]
 
       if type != 'users'
-        Translator.debug("Zotero doesn't support getting the group ID inside a translator, sorry", item.uri, {libraryID, local, key})
+        Translator.debug("Zotero doesn't support getting the group ID inside a translator, sorry", item.uri, {libraryID, type, key})
         # Can change to zotero://select/library/items/report.html?itemKey=JHYDCRBD later
         continue
 
