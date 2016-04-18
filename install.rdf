@@ -31,7 +31,7 @@
     <em:targetApplication>
       <Description>
         <em:id>juris-m@juris-m.github.io</em:id>
-        <em:minVersion>4.0.29.7</em:minVersion>
+        <em:minVersion>4.0.29.8</em:minVersion>
         <em:maxVersion>4.0.*</em:maxVersion>
       </Description>
     </em:targetApplication>
