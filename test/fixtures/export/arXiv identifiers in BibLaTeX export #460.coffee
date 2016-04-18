@@ -1,3 +1,3 @@
-if @item.arXiv && @has.journaltitle.value.toLowerCase().startsWith('arxiv:')
+if @item.arXiv
   @add({name: 'pages', value: @item.arXiv })
-  @add({name: 'journaltitle', bibtex: '{}', replace: true })
+  @add({name: 'journaltitle', bibtex: '{}' }) unless @has.journaltitle
