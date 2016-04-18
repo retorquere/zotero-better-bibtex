@@ -6,7 +6,7 @@ Background:
   And I set preference .jabrefGroups to false
   And I set preference .titleCase to true
   And I set preference .defaultDateParserLocale to en-GB
-  And I set preference .bibtexURLs to 'note'
+  And I set preference .bibtexURL to 'note'
 
 ### BibLaTeX cookie-cutter ###
 
@@ -159,11 +159,11 @@ Scenario: Bibtex key regenerating issue when trashing items #117
 @412 @test-cluster-0 @bbt
 Scenario: BibTeX URLs
   Given I import 1 reference from 'export/BibTeX; URL missing in bibtex for Book Section #412.json'
-  And I set preference .bibtexURLs to 'off'
+  And I set preference .bibtexURL to 'off'
   Then a library export using 'Better BibTeX' should match 'export/BibTeX; URL missing in bibtex for Book Section #412.off.bibtex'
-  When I set preference .bibtexURLs to 'note'
+  When I set preference .bibtexURL to 'note'
   Then a library export using 'Better BibTeX' should match 'export/BibTeX; URL missing in bibtex for Book Section #412.note.bibtex'
-  When I set preference .bibtexURLs to 'url'
+  When I set preference .bibtexURL to 'url'
   Then a library export using 'Better BibTeX' should match 'export/BibTeX; URL missing in bibtex for Book Section #412.url.bibtex'
 
 @cayw
