@@ -32,6 +32,7 @@ test:
     download:
     - https://github.com/retorquere/zotero-debug-bridge/releases/download/update.rdf/update.rdf
     - https://www.zotero.org/download/update.rdf
+    - https://addons.mozilla.org/en-US/firefox/addon/zotfile/
     install: test/fixtures/plugins
 xpi: zotero-better-bibtex.xpi
 changelog: https://retorquere.github.io/zotero-better-bibtex/CHANGELOG.html
