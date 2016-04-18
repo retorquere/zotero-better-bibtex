@@ -88,10 +88,14 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy.orgmode "Org-mode">
 
 <!ENTITY zotero.better-bibtex.prefs.export "Export">
-<!ENTITY zotero.better-bibtex.prefs.export.encoding "Encoding">
-<!ENTITY zotero.better-bibtex.prefs.export.encoding.BibTeX "Export BibTeX as ASCII">
-<!ENTITY zotero.better-bibtex.prefs.export.encoding.BibLaTeX "Export BibLaTeX as ASCII">
-<!ENTITY zotero.better-bibtex.prefs.export.encoding.BibLaTeX "Export BibLaTeX as ASCII">
+<!ENTITY zotero.better-bibtex.prefs.export.bibtex "BibTeX">
+<!ENTITY zotero.better-bibtex.prefs.export.bibtex.ascii "Export BibTeX as ASCII">
+<!ENTITY zotero.better-bibtex.prefs.export.bibtex.URLs "Add URLs to BibTeX export">
+<!ENTITY zotero.better-bibtex.prefs.export.bibtex.URLs.off "no">
+<!ENTITY zotero.better-bibtex.prefs.export.bibtex.URLs.note "in a note field">
+<!ENTITY zotero.better-bibtex.prefs.export.bibtex.URLs.url "in an url field">
+<!ENTITY zotero.better-bibtex.prefs.export.biblatex "BibLaTeX">
+<!ENTITY zotero.better-bibtex.prefs.export.biblatex.ascii "Export BibLaTeX as ASCII">
 
 <!ENTITY zotero.better-bibtex.prefs.export.fields "Fields">
 <!ENTITY zotero.better-bibtex.prefs.export.fields.preserveBibTeXVariables "Assume single-word strings to be externally-defined @string vars, and thus not surrounded by braces">
@@ -101,10 +105,6 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.better-bibtex.prefs.export.fields.doi-and-url.both "both">
 <!ENTITY zotero.better-bibtex.prefs.export.fields.doi-and-url.DOI "DOI">
 <!ENTITY zotero.better-bibtex.prefs.export.fields.doi-and-url.URL "URL">
-<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURL "Add URLs to BibTeX export">
-<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURL.off "no">
-<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURL.note "in a note field">
-<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexURL.url "in an url field">
 <!ENTITY zotero.better-bibtex.prefs.export.fields.skip "Fields to omit from export (comma-separated)">
 
 <!ENTITY zotero.better-bibtex.prefs.export.server.enabled "Enable export by HTTP">
