@@ -58,40 +58,42 @@ class Reference
     @add({name: 'timestamp', value: Translator.testing_timestamp || @item.dateModified || @item.dateAdded})
 
     switch
-      when Translator.BetterBibTeX && !Translator.bibtexArXiv then # pass
+      when (@item.libraryCatalog || '').toLowerCase() in ['arxiv.org', 'arxiv'] && (@item.arXiv = @arXiv.parse(@item.publicationTitle))
+        @item.arXiv.source = 'publicationTitle'
 
-      when @override.arxiv || @override.arXiv
-        arXiv = { id: 'arxiv:' + (@override.arxiv || @override.arXiv).value, inTitle: false }
-        delete @override.arxiv
-        delete @override.arXiv
+      when @override.arxiv && (@item.arXiv = @arXiv.parse(@override.arxiv.value))
+        @item.arXiv.source = 'extra'
 
-      when @item.publicationTitle?.match(/^arxiv:/i) && (@item.libraryCatalog || '').toLowerCase() in ['arxiv.org', 'arxiv']
-        arXiv = { id: @item.publicationTitle, inTitle: true }
+      when @item.pages && (@item.arXiv = @arXiv.parse(@item.pages))
+        @item.arXiv.source = 'pages'
 
-    if arXiv
-      @item.arXiv = arXiv.id
+    if @item.arXiv
+      @add({ archivePrefix: 'arXiv'} )
+      @add({ eprinttype: 'arxiv'})
+      @add({ eprint: @item.arXiv.eprint })
+      @add({ primaryClass: @item.arXiv.primaryClass }) if @item.arXiv.primaryClass
+      delete @override.arxiv
 
-      # new-style IDs
-      # arXiv:0707.3168 [hep-th]
-      # arXiv:YYMM.NNNNv# [category]
-      if m = arXiv.id.match(/^arxiv:([0-9]{4}\.[0-9]+)(v[0-9]+)?(\s+\[(.*)\])?$/i)
-        @add({ archivePrefix: 'arXiv'} )
-        @add({ eprinttype: 'arxiv'})
-        @add({ eprint: m[1] })
-        @add({ primaryClass: m[4]})
-        delete @item.publicationTitle if arXiv.inTitle
+  arXiv:
+    # new-style IDs
+    # arXiv:0707.3168 [hep-th]
+    # arXiv:YYMM.NNNNv# [category]
+    new: /^arxiv:([0-9]{4}\.[0-9]+)(v[0-9]+)?(\s+\[(.*)\])?$/i
 
-      # arXiv:arch-ive/YYMMNNNv# or arXiv:arch-ive/YYMMNNNv# [category]
-      else if m = arXiv.id.match(/^arxiv:([a-z]+-[a-z]+)\/([0-9]{7})(v[0-9]+)?(\s+\[(.*)\])?$/i)
-        @add({ eprinttype: 'arxiv' })
-        @add({ eprint: "#{m[1]}/#{m[2]}" })
-        delete @item.publicationTitle if arXiv.inTitle
+    # arXiv:arch-ive/YYMMNNNv# or arXiv:arch-ive/YYMMNNNv# [category]
+    old: /^arxiv:([a-z]+-[a-z]+\/[0-9]{7})(v[0-9]+)?(\s+\[(.*)\])?$/i
 
-      # arXiv: others
-      else if m = arXiv.id.match(/^arxiv:\s*([\S]+)/i)
-        @add({ eprinttype: 'arxiv'})
-        @add({ eprint: m[1] })
-        delete @item.publicationTitle if arXiv.inTitle
+    # bare
+    bare: /^arxiv:\s*([\S]+)/i
+
+    parse: (id) ->
+      return undefined unless id
+
+      return { id, eprint: m[1], primaryClass: m[4] } if m = @new.exec(id)
+      return { id, eprint: m[1], primaryClass: m[4] } if @old.exec(id)
+      return { id, eprint: m[1] } if @bare.exec(id)
+
+      return undefined
 
   ###
   # Return a copy of the given `field` with a new value
@@ -556,6 +558,10 @@ class Reference
       @add(field)
 
     @add({name: 'type', value: @referencetype}) if @fields.length == 0
+
+    # special little hack for #460
+    if @item.arXiv && @item.arXiv.source == 'pages' && !@has.journaltitle
+      @add({ name: 'journaltitle', bibtex: '{}' });
 
     try
       @postscript()
