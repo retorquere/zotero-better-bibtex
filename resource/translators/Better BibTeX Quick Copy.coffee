@@ -28,11 +28,11 @@ Mode =
 
       switch type
         when 'users'
-          Translator.debug("Link to synced item #{item.uri}") unless groupID.startswith('local')
+          Translator.debug("Link to synced item #{item.uri}") unless groupID.indexOf('local') == 0
           id = "0_#{key}"
         when 'groups'
           throw "Missing groupID in #{item.uri}" unless groupID
-          id = "@{groupID}~#{key}"
+          id = "#{groupID}~#{key}"
 
       Zotero.write("[[zotero://select/items/#{id}][@#{item.__citekey__}]]")
 
