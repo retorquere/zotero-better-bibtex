@@ -28,12 +28,13 @@ Mode =
 
       switch type
         when 'users'
-          libraryID = '0_'
+          Translator.debug("Link to synced item #{item.uri}") unless libraryID.startswith('local')
+          id = "0_#{key}"
         when 'groups'
-          throw "Missing libraryID from #{item.uri}" unless libraryID
-          libraryID += '~'
+          Translator.debug("Making only local match for #{item.uri}")
+          id = item.itemID
 
-      Zotero.write("[[zotero://select/items/#{libraryID}#{key}][@#{item.__citekey__}]]")
+      Zotero.write("[[zotero://select/items/#{id}][@#{item.__citekey__}]]")
 
 doExport = ->
   mode = Mode['' + Zotero.getOption('quickCopyMode')] || Mode[Zotero.getHiddenPref('better-bibtex.quickCopyMode')]
