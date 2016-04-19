@@ -60,9 +60,9 @@
       "relations": {
       },
       "url": "http://arxiv.org/abs/1501.03850",
-      "publicationTitle": "arXiv:1501.03850 [physics.chem-ph]",
+      "pages": "arXiv:1501.03850 [physics.chem-ph]",
       "date": "2015-01-15",
-      "extra": "bibtex: Shulenburger.2015.chemical",
+      "extra": "arXiv:1501.03850 \n bibtex: Shulenburger.2015.chemical",
       "accessDate": "2015-09-11 09:57:09",
       "libraryCatalog": "arXiv.org",
       "abstractNote": "Motivated by the disagreement between recent diffusion Monte Carlo calculations and experiments on the phase transition pressure between the ambient and beta-Sn phases of silicon, we present a study of the HCP to BCC phase transition in beryllium. This lighter element provides an oppor- tunity for directly testing many of the approximations required for calculations on silicon and may suggest a path towards increasing the practical accuracy of diffusion Monte Carlo calculations of solids in general. We demonstrate that the single largest approximation in these calculations is the pseudopotential approximation. After removing this we find excellent agreement with experiment for the ambient HCP phase and results similar to careful calculations using density functional theory for the phase transition pressure.",
