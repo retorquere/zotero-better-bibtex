@@ -6,7 +6,7 @@ Background:
   And I set preference .jabrefGroups to false
   And I set preference .titleCase to true
   And I set preference .defaultDateParserLocale to en-GB
-  And I set preference .bibtexURLs to 'note'
+  And I set preference .bibtexURL to 'note'
 
 ### BibLaTeX cookie-cutter ###
 
@@ -46,13 +46,14 @@ Scenario Outline: BibLaTeX Export
      | Fields in Extra should override defaults                                                       | 1           |
      | BraceBalancer                                                                                  | 1           |
 
-@bblt-1 @bblt @test-cluster-1 @435
+@bblt-1 @bblt @test-cluster-1 @435 @293
 Scenario Outline: BibLaTeX Export
   And I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
 
   Examples:
      | file                                                                               | references  |
+     | map csl-json variables #293                                                        | 2           |
      | Export Forthcoming as Forthcoming                                                  | 1           |
      | biblatex export of phdthesis does not case-protect -type- #435                     | 1           |
      | CSL variables only recognized when in lowercase #408                               | 1           |
@@ -64,7 +65,6 @@ Scenario Outline: BibLaTeX Export
      | remove the field if the override is empty #303                                     | 1           |
      | markup small-caps, superscript, italics #301                                       | 2           |
      | don't escape entry key fields for #296                                             | 1           |
-     | map csl-json variables #293                                                        | 2           |
      | typo stature-statute (zotero item type) #284                                       | 1           |
      | bookSection is always converted to @inbook, never @incollection #282               | 1           |
      | referencetype= does not work #278                                                  | 1           |
@@ -159,11 +159,11 @@ Scenario: Bibtex key regenerating issue when trashing items #117
 @412 @test-cluster-0 @bbt
 Scenario: BibTeX URLs
   Given I import 1 reference from 'export/BibTeX; URL missing in bibtex for Book Section #412.json'
-  And I set preference .bibtexURLs to 'off'
+  And I set preference .bibtexURL to 'off'
   Then a library export using 'Better BibTeX' should match 'export/BibTeX; URL missing in bibtex for Book Section #412.off.bibtex'
-  When I set preference .bibtexURLs to 'note'
+  When I set preference .bibtexURL to 'note'
   Then a library export using 'Better BibTeX' should match 'export/BibTeX; URL missing in bibtex for Book Section #412.note.bibtex'
-  When I set preference .bibtexURLs to 'url'
+  When I set preference .bibtexURL to 'url'
   Then a library export using 'Better BibTeX' should match 'export/BibTeX; URL missing in bibtex for Book Section #412.url.bibtex'
 
 @cayw
