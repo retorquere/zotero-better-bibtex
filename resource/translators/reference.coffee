@@ -64,7 +64,7 @@ class Reference
       when @override.arxiv && (@item.arXiv = @arXiv.parse(@override.arxiv.value))
         @item.arXiv.source = 'extra'
 
-      when Translator.BetterBibTeX && @item.pages && (@item.arXiv = @arXiv.parse(@item.pages))
+      when @item.pages && (@item.arXiv = @arXiv.parse(@item.pages))
         @item.arXiv.source = 'pages'
 
     if @item.arXiv
