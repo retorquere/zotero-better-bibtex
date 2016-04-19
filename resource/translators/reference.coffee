@@ -57,15 +57,18 @@ class Reference
 
     @add({name: 'timestamp', value: Translator.testing_timestamp || @item.dateModified || @item.dateAdded})
 
+    Translator.log('override:', @override)
     switch
       when (@item.libraryCatalog || '').toLowerCase() in ['arxiv.org', 'arxiv'] && (@item.arXiv = @arXiv.parse(@item.publicationTitle))
         @item.arXiv.source = 'publicationTitle'
 
-      when @override.arxiv && (@item.arXiv = @arXiv.parse(@override.arxiv.value))
-        @item.arXiv.source = 'extra'
-
       when @item.pages && (@item.arXiv = @arXiv.parse(@item.pages))
         @item.arXiv.source = 'pages'
+        ### to prevent default 'pages' handling ###
+        delete @item.pages
+
+      when @override.arxiv && (@item.arXiv = @arXiv.parse('arxiv:' + @override.arxiv.value))
+        @item.arXiv.source = 'extra'
 
     if @item.arXiv
       @add({ archivePrefix: 'arXiv'} )
@@ -90,8 +93,8 @@ class Reference
       return undefined unless id
 
       return { id, eprint: m[1], primaryClass: m[4] } if m = @new.exec(id)
-      return { id, eprint: m[1], primaryClass: m[4] } if @old.exec(id)
-      return { id, eprint: m[1] } if @bare.exec(id)
+      return { id, eprint: m[1], primaryClass: m[4] } if m = @old.exec(id)
+      return { id, eprint: m[1] } if m = @bare.exec(id)
 
       return undefined
 
@@ -562,6 +565,7 @@ class Reference
     # special little hack for #460
     if @item.arXiv && @item.arXiv.source == 'pages' && !@has.journaltitle
       @add({ name: 'journaltitle', bibtex: '{}' })
+      @add({ name: 'pages', value: @item.arXiv.id })
 
     try
       @postscript()
