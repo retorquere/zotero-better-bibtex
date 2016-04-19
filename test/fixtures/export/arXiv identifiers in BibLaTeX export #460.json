@@ -162,6 +162,146 @@
 
       ],
       "__citekey__": "Sen:2015:BVMasterAction"
+    },
+    {
+      "itemType": "journalArticle",
+      "tags": [
+        "Quantum Physics"
+      ],
+      "relations": {
+      },
+      "url": "http://arxiv.org/abs/1305.4904",
+      "publicationTitle": "arXiv:1305.4904 [quant-ph]",
+      "date": "2013-05-21",
+      "extra": "arXiv: 1305.4904",
+      "accessDate": "2016-04-18 23:47:42",
+      "libraryCatalog": "arXiv.org",
+      "abstractNote": "A pair of recent articles concluded that the D-Wave One machine actually operates in the quantum regime, rather than performing some classical evolution. Here we give a classical model that leads to the same behaviors used in those works to infer quantum effects. Thus, the evidence presented does not demonstrate the presence of quantum effects.",
+      "title": "Classical signature of quantum annealing",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Smolin",
+          "firstName": "John A."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Smith",
+          "firstName": "Graeme"
+        }
+      ],
+      "attachments": [
+        {
+          "path": "/Users/anurag/Library/Application Support/Firefox/Profiles/62nu48op.Test Biblatex/zotero/storage/HT7FUWAJ/Smolin and Smith - 2013 - Classical signature of quantum annealing.pdf",
+          "title": "arXiv:1305.4904 PDF",
+          "mimeType": "application/pdf",
+          "url": "http://www.arxiv.org/pdf/1305.4904.pdf"
+        },
+        {
+          "path": "/Users/anurag/Library/Application Support/Firefox/Profiles/62nu48op.Test Biblatex/zotero/storage/6ANP3H3A/1305.html",
+          "title": "arXiv.org Snapshot",
+          "mimeType": "text/html",
+          "url": "http://arxiv.org/abs/1305.4904"
+        }
+      ],
+      "notes": [
+        "Comment: 8 pages, 3 pdf figures"
+      ],
+      "itemID": 4,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "smolin_classical_2013"
+    },
+    {
+      "itemType": "journalArticle",
+      "tags": [
+        "Quantum Physics"
+      ],
+      "relations": {
+      },
+      "url": "http://arxiv.org/abs/1401.2910",
+      "volume": "345",
+      "issue": "6195",
+      "pages": "420-424",
+      "publicationTitle": "Science",
+      "ISSN": "0036-8075, 1095-9203",
+      "date": "2014-07-25",
+      "extra": "arXiv: 1401.2910",
+      "DOI": "10.1126/science.1252319",
+      "accessDate": "2016-04-18 23:47:51",
+      "libraryCatalog": "arXiv.org",
+      "abstractNote": "The development of small-scale digital and analog quantum devices raises the question of how to fairly assess and compare the computational power of classical and quantum devices, and of how to detect quantum speedup. Here we show how to define and measure quantum speedup in various scenarios, and how to avoid pitfalls that might mask or fake quantum speedup. We illustrate our discussion with data from a randomized benchmark test on a D-Wave Two device with up to 503 qubits. Comparing the performance of the device on random spin glass instances with limited precision to simulated classical and quantum annealers, we find no evidence of quantum speedup when the entire data set is considered, and obtain inconclusive results when comparing subsets of instances on an instance-by-instance basis. Our results for one particular benchmark do not rule out the possibility of speedup for other classes of problems and illustrate that quantum speedup is elusive and can depend on the question posed.",
+      "title": "Defining and detecting quantum speedup",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Rønnow",
+          "firstName": "Troels F."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Wang",
+          "firstName": "Zhihui"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Job",
+          "firstName": "Joshua"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Boixo",
+          "firstName": "Sergio"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Isakov",
+          "firstName": "Sergei V."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Wecker",
+          "firstName": "David"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Martinis",
+          "firstName": "John M."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Lidar",
+          "firstName": "Daniel A."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Troyer",
+          "firstName": "Matthias"
+        }
+      ],
+      "attachments": [
+        {
+          "path": "/Users/anurag/Library/Application Support/Firefox/Profiles/62nu48op.Test Biblatex/zotero/storage/CD99MNXZ/Rønnow et al. - 2014 - Defining and detecting quantum speedup.pdf",
+          "title": "arXiv:1401.2910 PDF",
+          "mimeType": "application/pdf",
+          "url": "http://www.arxiv.org/pdf/1401.2910.pdf"
+        },
+        {
+          "path": "/Users/anurag/Library/Application Support/Firefox/Profiles/62nu48op.Test Biblatex/zotero/storage/R9J23QVR/1401.html",
+          "title": "arXiv.org Snapshot",
+          "mimeType": "text/html",
+          "url": "http://arxiv.org/abs/1401.2910"
+        }
+      ],
+      "notes": [
+
+      ],
+      "itemID": 8,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "ronnow_defining_2014"
     }
   ],
   "cache": {

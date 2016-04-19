@@ -57,7 +57,6 @@ class Reference
 
     @add({name: 'timestamp', value: Translator.testing_timestamp || @item.dateModified || @item.dateAdded})
 
-    Translator.log('override:', @override)
     switch
       when (@item.libraryCatalog || '').toLowerCase() in ['arxiv.org', 'arxiv'] && (@item.arXiv = @arXiv.parse(@item.publicationTitle))
         @item.arXiv.source = 'publicationTitle'
@@ -92,9 +91,12 @@ class Reference
     parse: (id) ->
       return undefined unless id
 
-      return { id, eprint: m[1], primaryClass: m[4] } if m = @new.exec(id)
-      return { id, eprint: m[1], primaryClass: m[4] } if m = @old.exec(id)
-      return { id, eprint: m[1] } if m = @bare.exec(id)
+      if m = @new.exec(id)
+        return { id, eprint: m[1], primaryClass: m[4] }
+      if m = @old.exec(id)
+        return { id, eprint: m[1], primaryClass: m[4] }
+      if m = @bare.exec(id)
+        return { id, eprint: m[1] }
 
       return undefined
 

@@ -273,7 +273,7 @@ Scenario: Post script
 
 @460
 Scenario: arXiv identifiers in BibLaTeX export #460
-  Given I import 2 references from 'export/arXiv identifiers in BibLaTeX export #460.json'
+  Given I import 4 references from 'export/arXiv identifiers in BibLaTeX export #460.json'
   Then a library export using 'Better BibTeX' should match 'export/arXiv identifiers in BibLaTeX export #460.bibtex'
   #When I set preference .postscript to 'export/arXiv identifiers in BibLaTeX export #460.js'
   And a library export using 'Better BibLaTeX' should match 'export/arXiv identifiers in BibLaTeX export #460.biblatex'
