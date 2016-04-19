@@ -15,8 +15,8 @@ citekeyFormat: "[zotero]"
 citekeyFold: true
 debug: false
 DOIandURL: both
-bibtexURLs: 'off'
 bibtexArXiv: false
+bibtexURL: 'off'
 csquotes: ''
 keyConflictPolicy: keep
 langID: babel

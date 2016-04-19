@@ -50,8 +50,8 @@
         <preference name="extensions.zotero.translators.better-bibtex.showItemIDs"              id="pref-better-bibtex-show-item-ids"           type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.parseParticles"           id="pref-better-bibtex-parseParticles"          type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.skipFields"               id="pref-better-bibtex-skipFields"              type="string"/>
-        <preference name="extensions.zotero.translators.better-bibtex.bibtexURLs"               id="pref-better-bibtex-bibtexURLs"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.bibtexArXiv"              id="pref-better-bibtex-bibtexArXiv"             type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.bibtexURL"                id="pref-better-bibtex-bibtexURLs"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.warnBulkModify"           id="pref-better-bibtex-bulkWarning"             type="int"/>
         <preference name="extensions.zotero.translators.better-bibtex.postscript"               id="pref-better-bibtex-postscript"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.quickCopyMode"            id="pref-better-bibtex-quickCopyMode"           type="string"/>
@@ -95,7 +95,7 @@
                       <menupopup>
                         <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.latex;" value="latex"/>
                         <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.pandoc;" value="pandoc"/>
-                        <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.orgmode;" value="orgmode"/>
+                        <!-- menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.orgmode;" value="orgmode"/ -->
                       </menupopup>
                     </menulist>
                   </row>

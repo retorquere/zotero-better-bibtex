@@ -299,7 +299,7 @@ Zotero.BetterBibTeX.DB = new class
       db.remove(true) if db.exists()
 
       db = Zotero.getZoteroDatabase('betterbibtex')
-      return unless db.exists()
+      return false unless db.exists()
 
       Zotero.BetterBibTeX.flash('Better BibTeX: updating database', 'Updating database, this could take a while')
 
@@ -375,3 +375,5 @@ Zotero.BetterBibTeX.DB = new class
 
       Zotero.BetterBibTeX.flash('Better BibTeX: database updated', 'Database update finished')
       Zotero.BetterBibTeX.flash('Better BibTeX: cache has been reset', 'Cache has been reset due to a version upgrade. First exports after upgrade will be slower than usual')
+
+      return true

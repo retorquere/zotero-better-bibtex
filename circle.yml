@@ -1,20 +1,31 @@
+---
 machine:
   ruby:
-    version: "2.2"
+    version: '2.2'
 dependencies:
   pre:
-    - echo sudo apt-get update
-    - echo sudo apt-get install libpango1.0-0
-    - echo sudo apt-get install firefox
+  - echo sudo apt-get update
+  - echo sudo apt-get install libpango1.0-0
+  - echo sudo apt-get install firefox
   cache_directories:
-    - test/fixtures/profiles
-    - test/fixtures/plugins
+  - test/fixtures/profiles
+  - test/fixtures/plugins
 test:
   override:
-    - bundle exec rake test[ci-cluster-$CIRCLE_NODE_INDEX]:
-        parallel: true
+  - ? |-
+      case $CIRCLE_NODE_INDEX in
+        0)  JURIS_M=false CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-0,@test-cluster-1" bundle exec rake test
+            ;;
+        1)  JURIS_M=false CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1" bundle exec rake test
+            ;;
+        2)  JURIS_M=true  CIRCLE_TESTS="--tag ~@bulk --tag ~@noci --tag @test-cluster-0,@test-cluster-1" bundle exec rake test
+            ;;
+        *)  JURIS_M=true  CIRCLE_TESTS="--tag ~@bulk --tag ~@noci --tag ~@test-cluster-0 --tag ~@test-cluster-1" bundle exec rake test
+            ;;
+      esac
+    : parallel: true
 deployment:
   all:
-    branch: /.*/
+    branch: "/.*/"
     commands:
-      - bundle exec rake publish
+    - bundle exec rake publish
