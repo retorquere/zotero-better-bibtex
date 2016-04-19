@@ -23,16 +23,16 @@ Mode =
       throw "Malformed item uri #{item.uri}" unless m
 
       type = m[1]
-      libraryID = m[2]
+      groupID = m[2]
       key = m[4]
 
       switch type
         when 'users'
-          Translator.debug("Link to synced item #{item.uri}") unless libraryID.startswith('local')
+          Translator.debug("Link to synced item #{item.uri}") unless groupID.startswith('local')
           id = "0_#{key}"
         when 'groups'
-          Translator.debug("Making only local match for #{item.uri}")
-          id = item.itemID
+          throw "Missing groupID in #{item.uri}" unless groupID
+          id = "@{groupID}~#{key}"
 
       Zotero.write("[[zotero://select/items/#{id}][@#{item.__citekey__}]]")
 

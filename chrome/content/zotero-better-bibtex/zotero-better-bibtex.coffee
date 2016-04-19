@@ -711,6 +711,12 @@ Zotero.BetterBibTeX.init = ->
         return false unless item
         return {libraryID, key: item.key }
 
+      if libraryKey && (m = libraryKey.match(/^([0-9]+)~(.*)/))
+        try
+          return {libraryID: Zotero.Groups.getLibraryIDFromGroupID(m[1]), key: m[2]}
+        catch
+          Zotero.BetterBibTeX.debug('Zotero.Items.parseLibraryKeyHash: no library for group', libraryKey)
+
       return original.call(@, libraryKey)
     )(Zotero.Items.parseLibraryKeyHash)
 
