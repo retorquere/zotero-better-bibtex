@@ -561,7 +561,7 @@ class Reference
 
     # special little hack for #460
     if @item.arXiv && @item.arXiv.source == 'pages' && !@has.journaltitle
-      @add({ name: 'journaltitle', bibtex: '{}' });
+      @add({ name: 'journaltitle', bibtex: '{}' })
 
     try
       @postscript()
