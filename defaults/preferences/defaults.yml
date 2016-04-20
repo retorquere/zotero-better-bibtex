@@ -15,7 +15,6 @@ citekeyFormat: "[zotero]"
 citekeyFold: true
 debug: false
 DOIandURL: both
-bibtexArXiv: false
 bibtexURL: 'off'
 csquotes: ''
 keyConflictPolicy: keep
