@@ -60,6 +60,7 @@ class Reference
     switch
       when (@item.libraryCatalog || '').toLowerCase() in ['arxiv.org', 'arxiv'] && (@item.arXiv = @arXiv.parse(@item.publicationTitle))
         @item.arXiv.source = 'publicationTitle'
+        delete @item.publicationTitle if Translator.BetterBibLaTeX
 
       when @item.pages && (@item.arXiv = @arXiv.parse(@item.pages))
         @item.arXiv.source = 'pages'
