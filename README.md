@@ -1,6 +1,6 @@
-# Zotero: Better Bib(La)TeX [![Circle CI](https://circleci.com/gh/retorquere/zotero-better-bibtex.svg?style=shield)](https://circleci.com/gh/retorquere/zotero-better-bibtex)
+# Better Bib(La)TeX for Zotero/Juris-M [![Circle CI](https://circleci.com/gh/retorquere/zotero-better-bibtex.svg?style=shield)](https://circleci.com/gh/retorquere/zotero-better-bibtex)
 
-This extension aims to make Zotero effective for us text-based authoring holdouts; currently, that translates to the
+This extension aims to make Zotero/Juris-M effective for us text-based authoring holdouts; currently, that translates to the
 LaTeX/Markdown crowd. To get started, read the
 [Installation](https://github.com/retorquere/zotero-better-bibtex/wiki/Installation) instructions.  At its core, it
 behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero, you'll

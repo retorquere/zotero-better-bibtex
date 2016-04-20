@@ -44,7 +44,7 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 
 <!ENTITY zotero.better-bibtex.resetCache "Reset cache">
 
-<!ENTITY zotero.better-bibtex.prefs.auto-export "Automatic Export">
+<!ENTITY zotero.better-bibtex.prefs.auto-export "Automatic export">
 <!ENTITY zotero.better-bibtex.prefs.auto-export.off "Disabled">
 <!ENTITY zotero.better-bibtex.prefs.auto-export.immediate "On Change">
 <!ENTITY zotero.better-bibtex.prefs.auto-export.idle "When Idle">
@@ -62,7 +62,7 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.better-bibtex.auto-export.refresh "Refresh">
 <!ENTITY zotero.better-bibtex.auto-export.add "You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.">
 
-<!ENTITY zotero.better-bibtex.prefs.citekey "Citation Keys">
+<!ENTITY zotero.better-bibtex.prefs.citekey "Citation keys">
 <!ENTITY zotero.better-bibtex.prefs.citekey.citekeys "Citation keys">
 <!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy "Quick copy/drag-and-drop citations">
 <!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy.format "QuickCopy format">

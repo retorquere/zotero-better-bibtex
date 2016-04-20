@@ -873,11 +873,11 @@ task :doc do
   settings.remove_namespaces!
 
   panels = [
-    'Citation',
-    'Import/Export',
+    'Citation keys',
+    'Export',
     'Journal abbreviations',
-    'Automatic Export',
-    'Debug'
+    'Automatic export',
+    'Advanced'
   ]
   settings.xpath('//tabpanel').each_with_index{|panel, panelnr|
     panel.xpath('.//*[@preference]').each{|pref|
@@ -889,7 +889,7 @@ task :doc do
   documented = {}
 
   section = nil
-  IO.readlines('site/configuration.md').each{|line|
+  IO.readlines('wiki/Configuration.md').each{|line|
     line.strip!
     if line =~ /^## /
       section = line.sub(/^##/, '').strip
@@ -1010,7 +1010,7 @@ task :site do
     }
   }
 
-  sh "cd wiki && git add Home.md Support.md Changelog.md"
+  sh "cd wiki && git add Home.md Support.md"
   sh "cd wiki && git commit -m 'Home + Support' || true"
   sh "cd wiki && git push"
 end

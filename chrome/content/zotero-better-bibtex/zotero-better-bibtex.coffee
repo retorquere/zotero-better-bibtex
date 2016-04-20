@@ -1012,6 +1012,16 @@ Zotero.BetterBibTeX.loadTranslators = ->
       @removeTranslator({translatorID: 'b6e39b57-8942-4d11-8259-342c46ce395f', label: 'BibLaTeX'})
       @removeTranslator({translatorID: '9cb70025-a888-4a29-a210-93ec52da40d4', label: 'BibTeX'})
 
+  try
+    switch Zotero.Prefs.get('extensions.zotero.export.quickCopy.setting')
+      when 'export=b4a5ab19-c3a2-42de-9961-07ae484b8cb0'
+        Zotero.Prefs.set('extensions.zotero.export.quickCopy.setting', 'export=9b85ff96-ceb3-4ca2-87a9-154c18ab38b1')
+        Zotero.BetterBibTeX.pref.set('quickCopyMode', 'latex')
+
+      when 'export=4c52eb69-e778-4a78-8ca2-4edf024a5074'
+        Zotero.Prefs.set('extensions.zotero.export.quickCopy.setting', 'export=9b85ff96-ceb3-4ca2-87a9-154c18ab38b1')
+        Zotero.BetterBibTeX.pref.set('quickCopyMode', 'pandoc')
+
   for translator in @Translators
     @load(translator)
 
