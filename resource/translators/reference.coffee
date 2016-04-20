@@ -62,11 +62,6 @@ class Reference
         @item.arXiv.source = 'publicationTitle'
         delete @item.publicationTitle if Translator.BetterBibLaTeX
 
-      when @item.pages && (@item.arXiv = @arXiv.parse(@item.pages))
-        @item.arXiv.source = 'pages'
-        ### to prevent default 'pages' handling ###
-        delete @item.pages
-
       when @override.arxiv && (@item.arXiv = @arXiv.parse('arxiv:' + @override.arxiv.value))
         @item.arXiv.source = 'extra'
 
@@ -564,11 +559,6 @@ class Reference
       @add(field)
 
     @add({name: 'type', value: @referencetype}) if @fields.length == 0
-
-    # special little hack for #460
-    if @item.arXiv && @item.arXiv.source == 'pages' && !@has.journaltitle
-      @add({ name: 'journaltitle', bibtex: '{}' })
-      @add({ name: 'pages', value: @item.arXiv.id })
 
     try
       @postscript()
