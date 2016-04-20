@@ -57,6 +57,45 @@ class Reference
 
     @add({name: 'timestamp', value: Translator.testing_timestamp || @item.dateModified || @item.dateAdded})
 
+    switch
+      when (@item.libraryCatalog || '').toLowerCase() in ['arxiv.org', 'arxiv'] && (@item.arXiv = @arXiv.parse(@item.publicationTitle))
+        @item.arXiv.source = 'publicationTitle'
+        delete @item.publicationTitle if Translator.BetterBibLaTeX
+
+      when @override.arxiv && (@item.arXiv = @arXiv.parse('arxiv:' + @override.arxiv.value))
+        @item.arXiv.source = 'extra'
+
+    if @item.arXiv
+      @add({ archivePrefix: 'arXiv'} )
+      @add({ eprinttype: 'arxiv'})
+      @add({ eprint: @item.arXiv.eprint })
+      @add({ primaryClass: @item.arXiv.primaryClass }) if @item.arXiv.primaryClass
+      delete @override.arxiv
+
+  arXiv:
+    # new-style IDs
+    # arXiv:0707.3168 [hep-th]
+    # arXiv:YYMM.NNNNv# [category]
+    new: /^arxiv:([0-9]{4}\.[0-9]+)(v[0-9]+)?(\s+\[(.*)\])?$/i
+
+    # arXiv:arch-ive/YYMMNNNv# or arXiv:arch-ive/YYMMNNNv# [category]
+    old: /^arxiv:([a-z]+-[a-z]+\/[0-9]{7})(v[0-9]+)?(\s+\[(.*)\])?$/i
+
+    # bare
+    bare: /^arxiv:\s*([\S]+)/i
+
+    parse: (id) ->
+      return undefined unless id
+
+      if m = @new.exec(id)
+        return { id, eprint: m[1], primaryClass: m[4] }
+      if m = @old.exec(id)
+        return { id, eprint: m[1], primaryClass: m[4] }
+      if m = @bare.exec(id)
+        return { id, eprint: m[1] }
+
+      return undefined
+
   ###
   # Return a copy of the given `field` with a new value
   #

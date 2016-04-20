@@ -39,6 +39,9 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   for key in Zotero.BetterBibTeX.pref.prefs.getChildList('')
     Zotero.BetterBibTeX.pref.prefs.clearUserPref(key)
 
+  tags = Object.keys(Zotero.Tags.getAll())
+  Zotero.Tags.erase(tags) if tags.length > 0
+
   Zotero.Items.erase((item.id for item in Zotero.BetterBibTeX.safeGetAll()))
 
   ### notes don't get erased in bulk?! ###

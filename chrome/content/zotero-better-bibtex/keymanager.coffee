@@ -82,6 +82,9 @@ Zotero.BetterBibTeX.keymanager = new class
     return item.journalAbbreviation if item.journalAbbreviation
     return null unless item.itemType in ['journalArticle', 'bill', 'case', 'statute']
 
+    # don't even try to auto-abbrev arxiv IDs
+    return null if item.arXiv?.source == 'publicationTitle'
+
     key = item.publicationTitle || item.reporter || item.code
     return unless key
     return unless Zotero.BetterBibTeX.pref.get('autoAbbrev')

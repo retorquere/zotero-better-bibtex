@@ -199,14 +199,14 @@ Scenario: two ISSN number are freezing browser #110 / Generating keys and export
   And I set the citation key
   Then a library export using 'Better BibLaTeX' should match 'export/two ISSN number are freezing browser #110.biblatex'
 
-@85 @bbt @test-cluster-2
+@85 @bbt @test-cluster-2 @arXiv
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 references from 'export/Square brackets in Publication field (85).json'
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85).bibtex'
   And I set preference .citekeyFormat to [year]-updated
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85) after pattern change.bibtex'
 
-@86 @bbt @test-cluster-2
+@86 @bbt @test-cluster-2 @arXiv
 Scenario: Include first name initial(s) in cite key generation pattern (86)
   When I import 1 reference from 'export/Include first name initial(s) in cite key generation pattern (86).json'
    And I set preference .citekeyFormat to [auth+initials][year]
@@ -270,10 +270,10 @@ Scenario: Post script
   Then a library export using 'Better BibTeX' should match 'export/Export web page to misc type with notes and howpublished custom fields #329.bibtex'
 
 @460
-Scenario: arxive files are not correctly exported #460
-  Given I import 1 references from 'export/arxive files are not correctly exported #460.json'
-  And I set preference .postscript to 'export/arxive files are not correctly exported #460.js'
-  Then a library export using 'Better BibLaTeX' should match 'export/arxive files are not correctly exported #460.biblatex'
+Scenario: arXiv identifiers in BibLaTeX export #460
+  Given I import 3 references from 'export/arXiv identifiers in BibLaTeX export #460.json'
+  Then a library export using 'Better BibTeX' should match 'export/arXiv identifiers in BibLaTeX export #460.bibtex'
+  And a library export using 'Better BibLaTeX' should match 'export/arXiv identifiers in BibLaTeX export #460.biblatex'
 
 @456
 Scenario: Ignoring upper cases in German titles #456
