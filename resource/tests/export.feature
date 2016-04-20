@@ -113,8 +113,6 @@ Scenario Outline: BibTeX Export
      | Replicate Zotero key algorithm #439                                                | 3          |
      | preserve BibTeX Variables does not check for null values while escaping #337       | 1          |
 
-### TODO: check that #85, #86, #152 and #170 are OK with the change proposed in #460
-
 @bbt @test-cluster-0 @300
 Scenario Outline: BibTeX Export
   Given I import <references> references from 'export/<file>.json'
@@ -273,9 +271,8 @@ Scenario: Post script
 
 @460
 Scenario: arXiv identifiers in BibLaTeX export #460
-  Given I import 4 references from 'export/arXiv identifiers in BibLaTeX export #460.json'
+  Given I import 3 references from 'export/arXiv identifiers in BibLaTeX export #460.json'
   Then a library export using 'Better BibTeX' should match 'export/arXiv identifiers in BibLaTeX export #460.bibtex'
-  #When I set preference .postscript to 'export/arXiv identifiers in BibLaTeX export #460.js'
   And a library export using 'Better BibLaTeX' should match 'export/arXiv identifiers in BibLaTeX export #460.biblatex'
 
 @456

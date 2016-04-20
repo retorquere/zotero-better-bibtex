@@ -54,63 +54,6 @@
     {
       "itemType": "journalArticle",
       "tags": [
-        "Condensed Matter - Materials Science",
-        "Physics - Chemical Physics"
-      ],
-      "relations": {
-      },
-      "url": "http://arxiv.org/abs/1501.03850",
-      "pages": "arXiv:1501.03850 [physics.chem-ph]",
-      "date": "2015-01-15",
-      "extra": "arXiv:1501.03850 \n bibtex: Shulenburger.2015.chemical",
-      "accessDate": "2015-09-11 09:57:09",
-      "libraryCatalog": "arXiv.org",
-      "abstractNote": "Motivated by the disagreement between recent diffusion Monte Carlo calculations and experiments on the phase transition pressure between the ambient and beta-Sn phases of silicon, we present a study of the HCP to BCC phase transition in beryllium. This lighter element provides an oppor- tunity for directly testing many of the approximations required for calculations on silicon and may suggest a path towards increasing the practical accuracy of diffusion Monte Carlo calculations of solids in general. We demonstrate that the single largest approximation in these calculations is the pseudopotential approximation. After removing this we find excellent agreement with experiment for the ambient HCP phase and results similar to careful calculations using density functional theory for the phase transition pressure.",
-      "title": "Beyond chemical accuracy: The pseudopotential approximation in diffusion Monte Carlo calculations of the HCP to BCC phase transition in beryllium",
-      "shortTitle": "Beyond chemical accuracy",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "Shulenburger",
-          "firstName": "Luke"
-        },
-        {
-          "creatorType": "author",
-          "lastName": "Mattsson",
-          "firstName": "Thomas R."
-        },
-        {
-          "creatorType": "author",
-          "lastName": "Desjarlais",
-          "firstName": "M. P."
-        }
-      ],
-      "attachments": [
-        {
-          "path": "/home/katharina/.zotero/zotero/92vmmvdu.default/zotero/storage/85WH9ZR2/Shulenburger et al. - 2015 - Beyond chemical accuracy The pseudopotential appr.pdf",
-          "title": "arXiv:1501.03850 PDF",
-          "mimeType": "application/pdf",
-          "url": "http://www.arxiv.org/pdf/1501.03850.pdf"
-        },
-        {
-          "path": "/home/katharina/.zotero/zotero/92vmmvdu.default/zotero/storage/BMV8MFFF/1501.html",
-          "title": "arXiv.org Snapshot",
-          "mimeType": "text/html",
-          "url": "http://arxiv.org/abs/1501.03850"
-        }
-      ],
-      "notes": [
-        "Comment: 5 pages, 3 figures"
-      ],
-      "itemID": 391,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "Shulenburger.2015.chemical"
-    },
-    {
-      "itemType": "journalArticle",
-      "tags": [
         "Batalin-Vilkoviski formalism",
         "_tablet",
         "covariant string field theory",
