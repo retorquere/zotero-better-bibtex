@@ -23,17 +23,18 @@ Mode =
       throw "Malformed item uri #{item.uri}" unless m
 
       type = m[1]
-      libraryID = m[2]
+      groupID = m[2]
       key = m[4]
 
       switch type
         when 'users'
-          libraryID = '0_'
+          Translator.debug("Link to synced item #{item.uri}") unless groupID.indexOf('local') == 0
+          id = "0_#{key}"
         when 'groups'
-          throw "Missing libraryID from #{item.uri}" unless libraryID
-          libraryID += '~'
+          throw "Missing groupID in #{item.uri}" unless groupID
+          id = "#{groupID}~#{key}"
 
-      Zotero.write("[[zotero://select/items/#{libraryID}#{key}][@#{item.__citekey__}]]")
+      Zotero.write("[[zotero://select/items/#{id}][@#{item.__citekey__}]]")
 
 doExport = ->
   mode = Mode['' + Zotero.getOption('quickCopyMode')] || Mode[Zotero.getHiddenPref('better-bibtex.quickCopyMode')]
