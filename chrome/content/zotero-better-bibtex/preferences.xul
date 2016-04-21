@@ -141,7 +141,7 @@
             </groupbox>
           </tabpanel>
 
-          <tabpanel id="better-bibtex-preferences-export" orient="vertical">
+          <tabpanel id="better-bibtex-prefs-export" orient="vertical">
             <groupbox>
               <caption label="&zotero.better-bibtex.prefs.export.bibtex;"/>
               <checkbox preference="pref-better-bibtex-asciiBibTeX" label="&zotero.better-bibtex.prefs.export.bibtex.ascii;"/>
@@ -191,7 +191,7 @@
             <checkbox id="id-better-bibtex-preferences-server-enabled" preference="pref-better-bibtex-server" oncommand="BetterBibTeXPref.update();" label="&zotero.better-bibtex.prefs.export.server.enabled;"/>
           </tabpanel>
 
-          <tabpanel id="better-bibtex-preferences-journal-abbreviations" orient="vertical">
+          <tabpanel id="better-bibtex-prefs-journal-abbreviations" orient="vertical">
             <vbox>
               <checkbox id="id-better-bibtex-preferences-auto-abbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" preference="pref-better-bibtex-auto-abbrev"/>
               <label>&zotero.better-bibtex.preferences.auto-abbrev.style;</label>
@@ -199,7 +199,7 @@
             </vbox>
           </tabpanel>
 
-          <tabpanel id="better-bibtex-preferences-journal-automatic-export" orient="vertical">
+          <tabpanel id="better-bibtex-prefs-journal-automatic-export" orient="vertical">
             <vbox flex="1">
               <label>&zotero.better-bibtex.auto-export.add;</label>
               <hbox>
@@ -238,7 +238,7 @@
             </vbox>
           </tabpanel>
 
-          <tabpanel id="better-bibtex-preferences-advanced" orient="vertical">
+          <tabpanel id="better-bibtex-prefs-advanced" orient="vertical">
             <label value="&zotero.better-bibtex.postscript;"/>
             <textbox flex="1" multiline="true" preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript"/>
             <hbox>
