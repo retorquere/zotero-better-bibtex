@@ -2,12 +2,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.4.0)
-    aws-sdk (2.2.35)
-      aws-sdk-resources (= 2.2.35)
-    aws-sdk-core (2.2.35)
+    aws-sdk (2.2.36)
+      aws-sdk-resources (= 2.2.36)
+    aws-sdk-core (2.2.36)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.2.35)
-      aws-sdk-core (= 2.2.35)
+    aws-sdk-resources (2.2.36)
+      aws-sdk-core (= 2.2.36)
     backports (3.6.8)
     bibtex-ruby (4.3.0)
       latex-decode (~> 0.0)
