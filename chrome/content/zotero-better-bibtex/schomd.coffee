@@ -82,9 +82,13 @@ Zotero.BetterBibTeX.schomd.init = ->
     # \usepackage{xltxtra}, \textsuperscript{} \textsubscript{}
     text_escape: (text) ->
       text = '' unless text?
-      text = text.replace(/(\. )/g, ".\\ ")
-      text = text.replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "{\\textsuperscript{#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}}}"))
+      savetext = text
+      text = text.replace(/([$_^%{&])/g, "\\$1")
+        .replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "{\\textsuperscript{#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}}}"))
+      if savetext.search(/(^https?:\/\/.*$)/) != -1
+        return '\\href{' + savetext + '}{' + text + '}'
       return text
+
     # Todo: how to compute the width? I'm arbitrarily setting it to 4
     # digits for now.
     bibstart: '\\begin{thebibliography}{9999}\n\n'
@@ -115,9 +119,13 @@ Zotero.BetterBibTeX.schomd.init = ->
 
     '@quotes/false': false
 
+    # '@cite/entry': (state, str) ->
+    #   Zotero.BetterBibTeX.debug('bbl.@cite/entry:', state.registry.registry[@system_id].ref.id)
+    #   return str || ''
+
     '@cite/entry': (state, str) ->
       Zotero.BetterBibTeX.debug('bbl.@cite/entry:', state.registry.registry[@system_id].ref.id)
-      return str || ''
+      return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt)
 
     '@bibliography/entry': (state, str) ->
       Zotero.BetterBibTeX.debug('bbl.@bibliography/entry:', state.registry.registry[@system_id].ref.id)
@@ -138,8 +146,9 @@ Zotero.BetterBibTeX.schomd.init = ->
     '@showid/true': (state, str, cslid) -> "((showid:#{str}))"
 
     # May be TeXmacs specific, but can define macros.
-    '@URL/true': (state, str) -> "\\href{#{str}}"
-    '@DOI/true': (state, str) -> "\\hlink{#{str}}{http://dx.doi.org/#{str}}"
+    # Q: Do I need to use encodeURIComponent(str) here?
+    '@URL/true': (state, str) -> "\\href{#{str}}{#{str.replace(/([$_^%{&])/g, "\\$1")}}"
+    '@DOI/true': (state, str) -> "\\href{http://dx.doi.org/#{str}}{#{str}}"
 
     "@quotes/false": false
   }
@@ -244,7 +253,9 @@ Zotero.BetterBibTeX.schomd.bibliographybbl = (citekeys, {style, libraryID} = {})
   bib = cp.makeBibliography()
 
   return '' unless bib
-  return bib[0].bibstart + bib[1].join("") + bib[0].bibend
+  bibl = (b.replace(/(\w\.}?) /g, "$1\\hspace{1spc}") for b in bib[1])
+  bibstart = bib[0].bibstart
+  return bibstart.replace(/9999/,("0" for n in [1..bib[0].maxoffset]).join("")) + bibl.join("") + bib[0].bibend
 
 Zotero.BetterBibTeX.schomd.search = (term) ->
   search = new Zotero.Search()
