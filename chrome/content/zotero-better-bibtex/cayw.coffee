@@ -23,6 +23,8 @@ Zotero.BetterBibTeX.CAYW =
     verse: "vrs."
     volume: "vol."
 
+
+
 class Zotero.BetterBibTeX.CAYW.Document
   constructor: (@config) ->
     @fields = []
@@ -65,10 +67,14 @@ class Zotero.BetterBibTeX.CAYW.Document
   getFieldsAsync: (fieldType, observer) ->
     throw new Error('CAYW.Document.getFieldsAsync')
 
+
+
 class Zotero.BetterBibTeX.CAYW.Field
   constructor: (@fieldType, @noteType) ->
 
   setCode: (@code) ->
+
+
 
 class Zotero.BetterBibTeX.CAYW.CitationEditInterface
   constructor: (@deferred, config, @doc) ->
@@ -76,7 +82,6 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
     @wrappedJSObject = @
 
     @config = JSON.parse(JSON.stringify(config))
-    @config.citeprefix ||= ''
     @config.citeprefix ||= ''
     @config.citepostfix ||= ''
     @config.keyprefix ||= ''
@@ -136,6 +141,16 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
     )
     deferred.resolve(resolve) if typeof resolve == 'string'
 
+
+
+Zotero.BetterBibTeX.CAYW.getStyle = (id = 'apa') ->
+  style = Zotero.Styles.get("http://www.zotero.org/styles/#{id}")
+  style ||= Zotero.Styles.get("http://juris-m.github.io/styles/#{id}")
+  style ||= Zotero.Styles.get(id)
+  return style
+
+
+
 Zotero.BetterBibTeX.CAYW.Formatter = {
   latex: (citations, config) ->
     config.command ||= 'cite'
@@ -183,6 +198,11 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
 
     return formatted.trim()
 
+
+#  texmacs: (citations, config) ->
+    #
+
+
   mmd: (citations) ->
     formatted = []
     for citation in citations
@@ -192,7 +212,8 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
         formatted.push("[##{citation.citekey}][]")
     return formatted.join('')
 
-  pandoc: (citations, config = {}) ->
+
+  pandoc: (citations) ->
     formatted = []
     for citation in citations
       cite = ''
@@ -205,6 +226,7 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
     formatted = formatted.join('; ')
     formatted = '[' + formatted + ']' if config.brackets
     return formatted
+
 
   'scannable-cite': (citations) ->
 
@@ -268,12 +290,12 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       formatted.push("{#{citation.prefix}|#{label}|#{locator}|#{citation.suffix}|#{id}}")
     return formatted.join('')
 
+
   'atom-zotero-citations': (citations, options = {}) ->
     citekeys = (citation.citekey for citation in citations)
 
     itemIDs = (item for item in Zotero.BetterBibTeX.schomd.itemIDs(citekeys, options) when item)
-    url = "http://www.zotero.org/styles/#{options.style ? 'apa'}"
-    style = Zotero.Styles.get(url)
+    style = @getStyle(options.style)
     cp = style.getCiteProc()
     cp.setOutputFormat('markdown')
     cp.updateItems(itemIDs)
@@ -282,6 +304,7 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
     prefix = if citekeys.length == 1 && citekeys[0].toLowerCase() == citekeys[0] then '@' else '#'
     citekeys = ("#{prefix}#{citekey}" for citekey in citekeys).join(',')
     return "[#{label}](#{citekeys})"
+
 
   translate: (citations, options = {}) ->
     items = Zotero.Items.get((citation.id for citation in citations))
