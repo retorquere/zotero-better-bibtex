@@ -235,7 +235,6 @@ Scenario: Pandoc/LaTeX Citation Export
   Then a library export using 'Better BibTeX Quick Copy' should match 'export/Pandoc Citation.pandoc'
   When I set preference .quickCopyMode to 'latex'
   Then a library export using 'Better BibTeX Quick Copy' should match 'export/Pandoc Citation.latex'
-  And a library export using 'id:4c52eb69-e778-4a78-8ca2-4edf024a5074' should match 'export/Pandoc Citation.pandoc'
   And a library export using 'Better CSL JSON' should match 'export/Pandoc Citation.csl.json'
   And a library export using 'Better CSL YAML' should match 'export/Pandoc Citation.csl.yml'
 

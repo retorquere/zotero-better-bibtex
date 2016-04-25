@@ -686,17 +686,6 @@ Zotero.BetterBibTeX.init = ->
   for k, months of Zotero.BetterBibTeX.Locales.months
     Zotero.BetterBibTeX.CSL.DateParser.addDateParserMonths(months)
 
-  ### monkey-patch Zotero.Translate.Export::setTranslator until https://gitlab.com/egh/zotxt/issues/38 is fixed ###
-  Zotero.Translate.Export::setTranslator = ((original) ->
-    return (translator) ->
-      if translator == '4c52eb69-e778-4a78-8ca2-4edf024a5074'
-        r = original.call(@, Zotero.BetterBibTeX.translators.BetterBibTeXQuickCopy.translatorID)
-        @setDisplayOptions({quickCopyMode: 'pandoc'})
-        return r
-
-      return original.apply(@, arguments)
-    )(Zotero.Translate.Export::setTranslator)
-
   ### monkey-patch Zotero.Items.parseLibraryKeyHash(id) so you can get by ID -- mainly for SelectExtension ###
   Zotero.Items.parseLibraryKeyHash = ((original) ->
     return (libraryKey) ->
