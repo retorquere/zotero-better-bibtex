@@ -94,7 +94,7 @@ class DateField
     return '' + _v.year
 
 Reference::addCreators = ->
-  return unless if @item.creators and @item.creators.length
+  return unless @item.creators and @item.creators.length
 
   creators = {
     author: []
