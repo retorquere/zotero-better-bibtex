@@ -7,10 +7,11 @@ require 'yaml'
 require 'json'
 require 'regexp_parser'
 require 'progressbar'
+require 'sqlite3'
 
 class UnicodeConverter
   @@lowmask = ('1' * 10).to_i(2)
-  @@cache = 'resource/translators/unicode.yml'
+  @@cache = 'resource/translators/unicode.mapping'
 
   def self.cache
     return @@cache
@@ -34,133 +35,110 @@ class UnicodeConverter
       cs.puts "LaTeX = {} unless LaTeX"
       cs.puts "LaTeX.toLaTeX = { unicode: {}, ascii: {} }"
 
-      unicode = {math: '', text: ''}
-      done = {}
-      @chars.sort.map{|charcode, latex|
-        next unless (latex.force || charcode >= 0x20 && charcode <= 0x7E) || charcode == 0x00A0 || latex.latex == ' ' || charcode == ' '.ord # an ascii character that needs translation? Probably a TeX special character
-        next if done[charcode]
-        done[charcode] = true
-        unicode[latex.math ? :math : :text] << "  #{char(charcode)}: #{latex.latex[0].to_json}\n"
+      %w{unicode ascii}.each{|encoding|
+        mappings = {'text' => {}, 'math' => {}}
+        done = {}
+        @chars.execute('SELECT charcode, latex, mode FROM mapping ORDER BY preference, mode, LENGTH(latex), latex, charcode'){|mapping|
+          charcode, latex, mode = *mapping
+          # an ascii character that needs translation? Probably a TeX special character
+          if encoding == 'unicode'
+            next unless (charcode >= 0x20 && charcode <= 0x7E) || charcode == 0x00A0 || latex == ' ' || charcode == ' '.ord
+          end
+          next if mappings['text'][charcode] || mappings['math'][charcode]
+          mappings[mode][charcode] = "  #{char(charcode)}: #{latex.to_json}\n"
+        }
+        %w{math text}.each{|mode|
+          mappings[mode] = mappings[mode].keys.sort.collect{|charcode| mappings[mode][charcode] }
+          cs.puts "LaTeX.toLaTeX.#{encoding}.#{mode} =\n" + mappings[mode].join('')
+        }
       }
-      cs.puts "LaTeX.toLaTeX.unicode.math ="
-      cs.puts unicode[:math]
-      cs.puts "LaTeX.toLaTeX.unicode.text ="
-      cs.puts unicode[:text]
-
-      ascii = {math: '', text: ''}
-      done = {}
-      @chars.sort.map{|charcode, latex|
-        next if done[charcode]
-        done[charcode] = true
-        ascii[latex.math ? :math : :text] << "  #{char(charcode)}: #{latex.latex[0].to_json}\n"
-      }
-      cs.puts "LaTeX.toLaTeX.ascii.math ="
-      cs.puts ascii[:math]
-      cs.puts "LaTeX.toLaTeX.ascii.text ="
-      cs.puts ascii[:text]
 
       done = {}
       cs.puts "LaTeX.toUnicode ="
-      @chars.sort.map{|charcode, latex|
-        latex.latex.each{|ltx|
-          next if ltx =~ /^[a-z]+$/i || ltx.strip == ''
-          next if charcode < 256 && ltx == charcode.chr
-          next if done[ltx]
-          done[ltx] = true
-          cs.puts "  #{ltx.strip.to_json}: #{char(charcode)}"
-        }
+      @chars.execute('SELECT charcode, latex FROM mapping'){|mapping|
+        charcode, latex = *mapping
+        next if latex =~ /^[a-z]+$/i || latex.strip == ''
+        next if charcode < 256 && latex == charcode.chr
+        next if done[latex.strip]
+        done[latex.strip] = true
+        cs.puts "  #{latex.strip.to_json}: #{char(charcode)}"
       }
     }
   end
 
   def fixup
-    @chars["\\".ord] = OpenStruct.new({latex: "\\backslash", math: true})
-    @chars['&'.ord] = OpenStruct.new({latex: "\\&", math: false})
-    @chars[0x00A0] = OpenStruct.new({latex: '~', math: false})
-    @chars[0x2003] = OpenStruct.new({latex: "\\quad", math: false})
-    @chars[0x2004] = OpenStruct.new({latex: "\\;", math: false})
-    @chars[0x2009] = OpenStruct.new({latex: "\\,", math: false})
-    @chars[0x2009] = OpenStruct.new({latex: "\\,", math: false})
-    @chars[0x200B] = OpenStruct.new({latex: "\\hspace{0pt}", math: false})
-    @chars[0x205F] = OpenStruct.new({latex: "\\:", math: false})
-    @chars[0xFFFD] = OpenStruct.new({latex: "\\dbend", math: false})
-
-    # biber doesn't like it when I escape closing square brackets #245.1, so only opening bracket
-    #@chars['['.ord] = OpenStruct.new({latex: '{[}', math: false})
-
-    # TODO: replace '}' and '{' with textbrace(left|right) once the bug mentioned in
-    # http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754
-    # is widely enough distributed
-    ['_', '}', '{'].each{|char|
-      @chars[char.ord] = OpenStruct.new({latex: "\\" + char, math: false})
+    [
+      ["\\",    "\\backslash",    'math'],
+      ['&',     "\\&",            'text'],
+      [0x00A0,  '~',              'text'],
+      [0x2003,  "\\quad",         'text'],
+      [0x2004,  "\\;",            'text'],
+      [0x2009,  "\\,",            'text'],
+      [0x2009,  "\\,",            'text'],
+      [0x200B,  "\\hspace{0pt}",  'text'],
+      [0x205F,  "\\:",            'text'],
+      [0xFFFD,  "\\dbend",        'text'],
+      # TODO: replace '}' and '{' with textbrace(left|right) once the bug mentioned in
+      # http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754
+      # is widely enough distributed
+      ['_',     "\\_",            'text'],
+      ['}',     "\\}",            'text'],
+      ['{',     "\\{",            'text'],
+    ].each{|patch|
+      patch[0] = patch[0].ord if patch[0].is_a?(String)
+      @chars.execute("REPLACE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)", patch)
     }
 
-    @chars.keys.each{|charcode|
-      { "\\textdollar"        => "\\$",
-        "\\textquotedblleft"  => "``",
-        "\\textquotedblright" => "''",
-        "\\textasciigrave"    => "`",
-        "\\textquotesingle"   => "'",
-        "\\space"             => ' '
-      }.each_pair{|ist, soll|
-        next unless [@chars[charcode].latex].flatten.detect{|ltx| ltx.sub(/(\s|{})$/, '') == ist}
-        @chars[charcode].latex = ([soll] + [@chars[charcode].latex].flatten).uniq
-      }
-
-      #if @chars[charcode].latex == ' ' # || @chars[charcode].latex == '~'
-      #  @chars[charcode].latex = ' '
-      #  @chars[charcode].math = false
-      #end
+    { "\\textdollar"        => "\\$",
+      "\\textquotedblleft"  => "``",
+      "\\textquotedblright" => "''",
+      "\\textasciigrave"    => "`",
+      "\\textquotesingle"   => "'",
+      "\\space"             => ' '
+    }.each_pair{|ist, soll|
+      @chars.execute("""
+        REPLACE INTO mapping (charcode, latex, mode)
+        SELECT DISTINCT charcode, ?, 'text' FROM mapping WHERE rtrim(latex) IN (?, ?)""", [soll, ist, ist + '{}'])
     }
   end
 
   def expand
-    @chars.keys.each{|charcode|
-      latex = []
-      [@chars[charcode].latex].flatten.each{|base|
-        base += '{}' if base =~ /[0-9a-z]$/i
-        base.sub!(/ $/, '{}')
+    @chars.execute('SELECT charcode, latex, mode FROM mapping').collect{|mapping| mapping}.each{|mapping|
+      charcode, latex, mode = *mapping
+      latex += '{}' if latex =~ /[0-9a-z]$/i
+      latex.sub!(/ $/, '{}')
 
-        latex << base
-        latex << base.sub(/{}$/, ' ') if base =~ /{}$/
+      @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, latex, mode])
+      @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, latex.sub(/{}$/, ''), mode]) if latex =~ /{}$/
 
-        case base
-          when /^(\\[a-z][^\s]*)\s$/i, /^(\\[^a-z])\s$/i  # '\ss ', '\& ' => '{\\s}', '{\&}'
-            latex << "{#{$1}}"
-          when /^\\([^a-z]){(.)}$/                       # '\"{a}' => '\"a', '{\"a}'
-            latex << "\\#{$1}#{$2} "
-            latex << "{\\#{$1}#{$2}}"
-          when /^\\([^a-z])(.)\s*$/                       # '\"a " => '\"{a}', '{\"a}'
-            latex << "\\#{$1}{#{$2}}"
-            latex << "{\\#{$1}#{$2}}"
-          when /^{\\([^a-z])(.)}$/                        # '{\"a}'
-            latex << "\\#{$1}#{$2} "
-            latex << "\\#{$1}{#{$2}}"
-          when /^{(\^[0-9])}$/
-            latex << $1
-          when /^{(\\[.]+)}$/                             # '{....}' '.... '
-            latex << "#{$1} "
-        end
-      }
-      latex = latex.collect{|ltx| ltx.strip}.uniq
-
-      # prefered option is braces-over-traling-space because of miktex bug that doesn't ignore spaces after commands
-      # https://github.com/retorquere/zotero-better-bibtex/issues/69
-      latex.sort_by!{|ltx|
-        v = case
-          when ltx !~ /\\/ || ltx =~ /^\\[^a-zA-Z0-9]$/ then 0
-          when ltx =~ /}/ then 1
-          else 2
-        end
-      }
-
-      if charcode == 0x00B0
-        @chars[charcode].math = true
-        latex.unshift('^\\circ')
-        latex.uniq!
+      case latex
+        when /^(\\[a-z][^\s]*)\s$/i, /^(\\[^a-z])({}|\s)$/i  # '\ss ', '\& ' => '{\\s}', '{\&}'
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "{#{$1}}", mode])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "#{$1} ", mode])
+        when /^\\([^a-z]){(.)}$/                       # '\"{a}' => '\"a', '{\"a}'
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "\\#{$1}#{$2} ", mode])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "{\\#{$1}#{$2}}", mode])
+        when /^\\([^a-z])(.)({}|\s)*$/                       # '\"a " => '\"{a}', '{\"a}'
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "\\#{$1}{#{$2}}", mode])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "{\\#{$1}#{$2}}", mode])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "\\#{$1}#{$2}{}", mode])
+        when /^{\\([^a-z])(.)}$/                        # '{\"a}'
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "\\#{$1}#{$2} ", mode])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "\\#{$1}{#{$2}}", mode])
+        when /^{(\^[0-9])}$/
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, $1, mode])
+        when /^{(\\.+)}$/                             # '{....}' '.... '
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "#{$1} ", mode])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "#{$1}{}", mode])
+        when /^(\\.*)({}| )$/
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "{#{$1}}", mode])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "#{$1} ", mode])
       end
-      @chars[charcode].latex = latex
     }
+
+    # remove dups
+    @chars.execute("DELETE FROM mapping WHERE latex <> trim(latex) AND trim(latex) in (SELECT latex FROM mapping)")
+    @chars.execute('UPDATE mapping SET latex = trim(latex)')
   end
 
   def read(xml)
@@ -190,23 +168,43 @@ class UnicodeConverter
 
       chr = [char['dec'].to_s.to_i].pack('U')
       latex = latex.inner_text
-      math = (char['mode'] == 'math')
+      mode = (char['mode'] == 'math' ? 'math' : 'text')
 
       next if chr =~ /^[\x20-\x7E]$/ && ! %w{# $ % & ~ _ ^ { } [ ] > < \\}.include?(chr)
-      next if chr == latex && !math
+      next if chr == latex && mode == 'text'
 
       latex = "{\\#{$1}#{$2}}" if latex =~ /^\\(["^`\.'~]){([^}]+)}$/
       latex = "{\\#{$1} #{$2}}" if latex =~ /^\\([cuHv]){([^}]+)}$/
 
-      @chars[char['id'].sub(/^u/i, '').to_i(16)] = OpenStruct.new({latex: latex , math: math})
+      @chars.execute("REPLACE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)", [char['id'].sub(/^u/i, '').to_i(16), latex, mode])
     }
   end
 
   def download(force=true)
-    if !force && File.file?(@@cache)
-      @chars = YAML::load_file(@@cache)
-    else
-      @chars = {}
+    File.unlink(@@cache) if File.file?(@@cache) && force
+    @chars = SQLite3::Database.new(@@cache)
+    @chars.execute('PRAGMA synchronous = OFF')
+    @chars.execute('PRAGMA journal_mode = MEMORY')
+    @chars.results_as_hash
+
+    @chars.create_function('pref', 1) do |func, latex|
+      latex = latex.to_s
+      [
+        lambda{ latex !~ /\\/ || latex =~ /^\\[^a-zA-Z0-9]$/ || latex =~ /^\\[1-3]$/ },
+        lambda{ latex =~ /^(\\[0-9a-zA-Z]+)+{}$/ },
+        lambda{ latex =~ /^{.+}$/ },
+        lambda{ latex =~ /}/ },
+        lambda{ true }
+      ].each_with_index{|test, i|
+        next unless test.call
+        func.result = i
+        break
+      }
+    end
+
+    if @chars.get_first_value("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='mapping'") != 1
+      @chars.execute('CREATE TABLE mapping (charcode, latex, mode CHECK (mode IN ("text", "math")), preference DEFAULT 0, UNIQUE(charcode, latex))')
+      @chars.transaction
 
       read('http://www.w3.org/2003/entities/2007xml/unicode.xml')
       read('http://www.w3.org/Math/characters/unicode.xml')
@@ -214,7 +212,15 @@ class UnicodeConverter
       self.fixup
       self.expand
 
-      open(@@cache, 'w'){|f| f.write(@chars.to_yaml) }
+      # prefered option is braces-over-traling-space because of miktex bug that doesn't ignore spaces after commands
+      # https://github.com/retorquere/zotero-better-bibtex/issues/69
+      @chars.execute('UPDATE mapping SET preference = pref(latex)')
+
+      @chars.execute('UPDATE mapping SET preference = 1 WHERE charcode = 0x00B0 AND preference = 0')
+      @chars.execute('REPLACE INTO mapping (charcode, latex, mode, preference) VALUES (?, ?, ?, ?)', [0x00B0, '^\\circ', 'math', 0])
+
+      @chars.commit
+
       puts "#{@@cache} saved"
     end
   end
