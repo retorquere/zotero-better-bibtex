@@ -10,13 +10,14 @@ Background:
 
 ### BibLaTeX cookie-cutter ###
 
-@127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @test-cluster-0
+@127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @test-cluster-0 @485
 Scenario Outline: BibLaTeX Export
   And I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
 
   Examples:
      | file                                                                                           | references  |
+     | Dollar sign in title not properly escaped #485                                                 | 1           |
      | Book sections have book title for journal in citekey #409                                      | 1           |
      | Colon in bibtex key #405                                                                       | 1           |
      | Oriental dates trip up date parser #389                                                        | 1           |
