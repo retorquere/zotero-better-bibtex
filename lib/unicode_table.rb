@@ -292,23 +292,22 @@ class UnicodeConverter
       /^:=$/                                                    => {terminated: true, exclude: true},
     }
 
-    @chars.each_pair{|charcode, latex|
-      latex.latex.each{|ltx|
-        ltx.strip!
-        ltx = ltx[1..-2] if ltx =~ /^\{.*\}$/
-        ltx.sub!(/{}$/, '')
-        next if charcode < 256 && ltx == charcode.chr
-        next if ltx =~ /^[a-z]+$/i || ltx.strip == ''
+    @chars.execute('SELECT DISTINCT charcode, latex FROM mapping').each{|mapping|
+      charcode, latex = *mapping
+      latex.strip!
+      latex = latex[1..-2] if latex =~ /^\{.*\}$/
+      latex.sub!(/{}$/, '')
+      next if charcode < 256 && latex == charcode.chr
+      next if latex =~ /^[a-z]+$/i || latex.strip == ''
 
-        patterns.detect{|(p, s)|
-          if p =~ ltx
-            s[:count] = s[:count].to_i + 1
-            true
-          else
-            false
-          end
-        } || raise("No pattern for #{ltx.inspect}")
-      }
+      patterns.detect{|(p, s)|
+        if p =~ latex
+          s[:count] = s[:count].to_i + 1
+          true
+        else
+          false
+        end
+      } || raise("No pattern for #{latex.inspect}")
     }
 
     open(target, 'w'){|t|
