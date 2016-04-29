@@ -492,11 +492,12 @@ end
 Dir['resource/translators/*.yml'].each{|metadata|
   translator = File.basename(metadata, File.extname(metadata))
 
-  sources = ['json5', 'translator', 'preferences', "#{translator}.header", translator]
+  sources = ['json5', 'translator', 'preferences', "#{translator}.header"]
   header = YAML::load_file(metadata)
   dependencies = header['BetterBibTeX']['dependencies'] if header['BetterBibTeX']
   dependencies ||= []
   sources += dependencies
+  sources += [translator]
 
   sources = sources.collect{|src| "resource/translators/#{src}.js"}
 

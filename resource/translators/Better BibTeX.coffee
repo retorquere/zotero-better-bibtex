@@ -42,6 +42,32 @@ Translator.fieldEncoding = {
 
 months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
+Reference::addCreators = ->
+  return unless @item.creators and @item.creators.length
+  ### split creators into subcategories ###
+  authors = []
+  editors = []
+  translators = []
+  collaborators = []
+  primaryCreatorType = Zotero.Utilities.getCreatorsForType(@item.itemType)[0]
+
+  for creator in @item.creators
+    switch creator.creatorType
+      when 'editor', 'seriesEditor'   then editors.push(creator)
+      when 'translator'               then translators.push(creator)
+      when primaryCreatorType         then authors.push(creator)
+      else                                 collaborators.push(creator)
+
+  @remove('author')
+  @remove('editor')
+  @remove('translator')
+  @remove('collaborator')
+
+  @add({ name: 'author', value: authors, enc: 'creators' })
+  @add({ name: 'editor', value: editors, enc: 'creators' })
+  @add({ name: 'translator', value: translators, enc: 'creators' })
+  @add({ name: 'collaborator', value: collaborators, enc: 'creators' })
+
 doExport = ->
   Zotero.write('\n')
   while item = Translator.nextItem()
@@ -75,25 +101,7 @@ doExport = ->
       ref.referencetype = item.thesisType
       ref.remove('type')
 
-    if item.creators and item.creators.length
-      ### split creators into subcategories ###
-      authors = []
-      editors = []
-      translators = []
-      collaborators = []
-      primaryCreatorType = Zotero.Utilities.getCreatorsForType(item.itemType)[0]
-
-      for creator in item.creators
-        switch creator.creatorType
-          when 'editor', 'seriesEditor'   then editors.push(creator)
-          when 'translator'               then translators.push(creator)
-          when primaryCreatorType         then authors.push(creator)
-          else                                 collaborators.push(creator)
-
-      ref.add({ name: 'author', value: authors, enc: 'creators' })
-      ref.add({ name: 'editor', value: editors, enc: 'creators' })
-      ref.add({ name: 'translator', value: translators, enc: 'creators' })
-      ref.add({ name: 'collaborator', value: collaborators, enc: 'creators' })
+    ref.addCreators()
 
     if item.date
       date = Zotero.BetterBibTeX.parseDateToObject(item.date, item.language)
