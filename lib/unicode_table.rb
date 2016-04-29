@@ -6,6 +6,7 @@ require 'open-uri'
 require 'yaml'
 require 'json'
 require 'regexp_parser'
+require 'progressbar'
 
 class UnicodeConverter
   @@lowmask = ('1' * 10).to_i(2)
@@ -102,60 +103,54 @@ class UnicodeConverter
         "\\textquotesingle"   => "'",
         "\\space"             => ' '
       }.each_pair{|ist, soll|
-        @chars[charcode].latex = soll if @chars[charcode].latex == ist
+        next unless [@chars[charcode].latex].flatten.detect{|ltx| ltx.sub(/(\s|{})$/, '') == ist}
+        @chars[charcode].latex = ([soll] + [@chars[charcode].latex].flatten).uniq
       }
 
-      if @chars[charcode].latex == ' ' # || @chars[charcode].latex == '~'
-        @chars[charcode].latex = ' '
-        @chars[charcode].math = false
-      end
+      #if @chars[charcode].latex == ' ' # || @chars[charcode].latex == '~'
+      #  @chars[charcode].latex = ' '
+      #  @chars[charcode].math = false
+      #end
     }
   end
 
   def expand
     @chars.keys.each{|charcode|
-      base = @chars[charcode].latex
-      base += '{}' if base =~ /[0-9a-z]$/i
-      base.sub!(/ $/, '{}')
+      latex = []
+      [@chars[charcode].latex].flatten.each{|base|
+        base += '{}' if base =~ /[0-9a-z]$/i
+        base.sub!(/ $/, '{}')
 
-      latex = [base]
-      latex << base.sub(/{}$/, ' ') if base =~ /{}$/
+        latex << base
+        latex << base.sub(/{}$/, ' ') if base =~ /{}$/
 
-      case base
-        when /^(\\[a-z][^\s]*)\s$/i, /^(\\[^a-z])\s$/i  # '\ss ', '\& ' => '{\\s}', '{\&}'
-          latex << "{#{$1}}"
-        when /^\\([^a-z]){(.)}$/                       # '\"{a}' => '\"a', '{\"a}'
-          latex << "\\#{$1}#{$2} "
-          latex << "{\\#{$1}#{$2}}"
-        when /^\\([^a-z])(.)\s*$/                       # '\"a " => '\"{a}', '{\"a}'
-          latex << "\\#{$1}{#{$2}}"
-          latex << "{\\#{$1}#{$2}}"
-        when /^{\\([^a-z])(.)}$/                        # '{\"a}'
-          latex << "\\#{$1}#{$2} "
-          latex << "\\#{$1}{#{$2}}"
-        when /^{(\^[0-9])}$/
-          latex << $1
-        when /^{(\\[.]+)}$/                             # '{....}' '.... '
-          latex << "#{$1} "
-      end
-
+        case base
+          when /^(\\[a-z][^\s]*)\s$/i, /^(\\[^a-z])\s$/i  # '\ss ', '\& ' => '{\\s}', '{\&}'
+            latex << "{#{$1}}"
+          when /^\\([^a-z]){(.)}$/                       # '\"{a}' => '\"a', '{\"a}'
+            latex << "\\#{$1}#{$2} "
+            latex << "{\\#{$1}#{$2}}"
+          when /^\\([^a-z])(.)\s*$/                       # '\"a " => '\"{a}', '{\"a}'
+            latex << "\\#{$1}{#{$2}}"
+            latex << "{\\#{$1}#{$2}}"
+          when /^{\\([^a-z])(.)}$/                        # '{\"a}'
+            latex << "\\#{$1}#{$2} "
+            latex << "\\#{$1}{#{$2}}"
+          when /^{(\^[0-9])}$/
+            latex << $1
+          when /^{(\\[.]+)}$/                             # '{....}' '.... '
+            latex << "#{$1} "
+        end
+      }
       latex = latex.collect{|ltx| ltx.strip}.uniq
 
       # prefered option is braces-over-traling-space because of miktex bug that doesn't ignore spaces after commands
       # https://github.com/retorquere/zotero-better-bibtex/issues/69
-      latex.sort!{|a, b|
-        nsa = !(a =~ /\s$/)
-        nsb = !(a =~ /\s$/)
-        ba = a.gsub(/[^{]/, '')
-        bb = b.gsub(/[^{]/, '')
-        if nsa == nsb
-          bb <=> ba
-        elsif nsa
-          -1
-        elsif nsb
-          1
-        else
-          a <=> b
+      latex.sort_by!{|ltx|
+        v = case
+          when ltx !~ /\\/ || ltx =~ /^\\[^a-zA-Z0-9]$/ then 0
+          when ltx =~ /}/ then 1
+          else 2
         end
       }
 
@@ -169,8 +164,20 @@ class UnicodeConverter
   end
 
   def read(xml)
-    puts xml
-    mapping = Nokogiri::XML(open(xml))
+    pbar = nil
+    mapping = nil
+    open(xml,
+      content_length_proc: lambda {|t|
+        if t && t > 0
+          pbar = ProgressBar.new(xml, t)
+          pbar.file_transfer_mode
+        end
+      },
+      progress_proc: lambda {|s|
+        pbar.set s if pbar
+    }) {|f|
+      mapping = Nokogiri::XML(f)
+    }
 
     chars = []
 

@@ -6,10 +6,10 @@ LaTeX.toLaTeX.unicode.math =
   '\\': "\\backslash{}"
 LaTeX.toLaTeX.unicode.text =
   '#': "\\#"
-  '$': "\\textdollar{}"
+  '$': "\\$"
   '%': "\\%"
   '&': "\\&"
-  '^': "\\^{}"
+  '^': "\\^"
   '_': "\\_"
   '{': "\\{"
   '}': "\\}"
@@ -1629,10 +1629,10 @@ LaTeX.toLaTeX.ascii.math =
   '\uD835\uDFFF': "\\mathtt{9}"
 LaTeX.toLaTeX.ascii.text =
   '#': "\\#"
-  '$': "\\textdollar{}"
+  '$': "\\$"
   '%': "\\%"
   '&': "\\&"
-  '^': "\\^{}"
+  '^': "\\^"
   '_': "\\_"
   '{': "\\{"
   '}': "\\}"
@@ -2119,8 +2119,8 @@ LaTeX.toLaTeX.ascii.text =
   '\u2018': "`"
   '\u2019': "'"
   '\u201A': ","
-  '\u201C': "\\textquotedblleft{}"
-  '\u201D': "\\textquotedblright{}"
+  '\u201C': "``"
+  '\u201D': "''"
   '\u201E': ",,"
   '\u2020': "\\textdagger{}"
   '\u2021': "\\textdaggerdbl{}"
@@ -2392,14 +2392,15 @@ LaTeX.toLaTeX.ascii.text =
   '\uD835\uDFC9': "\\mathsfbfsl{\\varpi}"
 LaTeX.toUnicode =
   "\\#": '#'
+  "\\$": '$'
   "\\textdollar{}": '$'
   "\\textdollar": '$'
   "\\%": '%'
   "\\&": '&'
   "\\backslash{}": '\\'
   "\\backslash": '\\'
-  "\\^{}": '^'
   "\\^": '^'
+  "\\^{}": '^'
   "\\_": '_'
   "\\{": '{'
   "\\}": '}'
@@ -3573,8 +3574,10 @@ LaTeX.toUnicode =
   ",": '\u201A'
   "\\Elzreapos{}": '\u201B'
   "\\Elzreapos": '\u201B'
+  "``": '\u201C'
   "\\textquotedblleft{}": '\u201C'
   "\\textquotedblleft": '\u201C'
+  "''": '\u201D'
   "\\textquotedblright{}": '\u201D'
   "\\textquotedblright": '\u201D'
   ",,": '\u201E'

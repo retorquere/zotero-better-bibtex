@@ -8,6 +8,7 @@
 36: !ruby/object:OpenStruct
   table:
     :latex:
+    - "\\$"
     - "\\textdollar{}"
     - "\\textdollar"
     :math: false
@@ -46,8 +47,8 @@
 94: !ruby/object:OpenStruct
   table:
     :latex:
-    - "\\^{}"
     - "\\^"
+    - "\\^{}"
     :math: false
   modifiable: true
 95: !ruby/object:OpenStruct
@@ -4359,6 +4360,7 @@
 8220: !ruby/object:OpenStruct
   table:
     :latex:
+    - "``"
     - "\\textquotedblleft{}"
     - "\\textquotedblleft"
     :math: false
@@ -4366,6 +4368,7 @@
 8221: !ruby/object:OpenStruct
   table:
     :latex:
+    - "''"
     - "\\textquotedblright{}"
     - "\\textquotedblright"
     :math: false
