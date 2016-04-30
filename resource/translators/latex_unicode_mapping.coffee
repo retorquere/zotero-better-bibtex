@@ -1,3 +1,4 @@
+LaTeX = {} unless LaTeX
 LaTeX.toLaTeX = { unicode: {}, ascii: {} }
 LaTeX.toLaTeX.unicode.math =
   '<': "<"
