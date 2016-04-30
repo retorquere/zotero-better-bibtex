@@ -37,13 +37,14 @@ class UnicodeConverter
 
       %w{unicode ascii}.each{|encoding|
         mappings = {'text' => {}, 'math' => {}}
-        done = {}
-        @chars.execute('SELECT charcode, latex, mode FROM mapping ORDER BY preference, mode, LENGTH(latex), latex, charcode'){|mapping|
+        # an ascii character that needs translation? Probably a TeX special character, so also do when exporting to
+        # unicode
+        @chars.execute("""
+              SELECT charcode, latex, mode
+              FROM mapping
+              WHERE ? = 'ascii' OR charcode = 0x00A0 OR charcode BETWEEN 0x20 AND 0x7E
+              ORDER BY preference, mode, LENGTH(latex), latex, charcode""", [ encoding ]){|mapping|
           charcode, latex, mode = *mapping
-          # an ascii character that needs translation? Probably a TeX special character
-          if encoding == 'unicode'
-            next unless (charcode >= 0x20 && charcode <= 0x7E) || charcode == 0x00A0 || latex == ' ' || charcode == ' '.ord
-          end
           next if mappings['text'][charcode] || mappings['math'][charcode]
           mappings[mode][charcode] = "  #{char(charcode)}: #{latex.to_json}\n"
         }
@@ -187,6 +188,8 @@ class UnicodeConverter
     @chars.execute('PRAGMA journal_mode = MEMORY')
     @chars.results_as_hash
 
+    # prefered option is braces-over-traling-space because of miktex bug that doesn't ignore spaces after commands
+    # https://github.com/retorquere/zotero-better-bibtex/issues/69
     @chars.create_function('pref', 1) do |func, latex|
       latex = latex.to_s
       [
@@ -203,7 +206,16 @@ class UnicodeConverter
     end
 
     if @chars.get_first_value("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='mapping'") != 1
-      @chars.execute('CREATE TABLE mapping (charcode, latex, mode CHECK (mode IN ("text", "math")), preference DEFAULT 0, UNIQUE(charcode, latex))')
+      @chars.execute("""
+        CREATE TABLE mapping (
+          charcode,
+          latex,
+          mode CHECK (mode IN ('text', 'math')),
+          preference DEFAULT 0,
+
+          UNIQUE(charcode, latex)
+        )
+      """)
       @chars.transaction
 
       read('http://www.w3.org/2003/entities/2007xml/unicode.xml')
@@ -212,10 +224,7 @@ class UnicodeConverter
       self.fixup
       self.expand
 
-      # prefered option is braces-over-traling-space because of miktex bug that doesn't ignore spaces after commands
-      # https://github.com/retorquere/zotero-better-bibtex/issues/69
-      @chars.execute('UPDATE mapping SET preference = pref(latex)')
-
+      @chars.execute("UPDATE mapping SET preference = pref(latex)")
       @chars.execute('UPDATE mapping SET preference = 1 WHERE charcode = 0x00B0 AND preference = 0')
       @chars.execute('REPLACE INTO mapping (charcode, latex, mode, preference) VALUES (?, ?, ?, ?)', [0x00B0, '^\\circ', 'math', 0])
 
