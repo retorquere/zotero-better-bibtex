@@ -42,7 +42,7 @@ class UnicodeConverter
         @chars.execute("""
               SELECT charcode, latex, mode
               FROM mapping
-              WHERE ? = 'ascii' OR charcode = 0x00A0 OR charcode BETWEEN 0x20 AND 0x7E
+              WHERE ? = 'ascii' OR charcode = 160 OR charcode BETWEEN 32 AND 126
               ORDER BY preference, mode, LENGTH(latex), latex, charcode""", [ encoding ]){|mapping|
           charcode, latex, mode = *mapping
           next if mappings['text'][charcode] || mappings['math'][charcode]
