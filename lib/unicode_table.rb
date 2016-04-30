@@ -60,6 +60,9 @@ class UnicodeConverter
         charcode, latex = *mapping
         next if latex =~ /^[a-z]+$/i || latex.strip == ''
         next if charcode < 256 && latex == charcode.chr
+        latex = latex[1..-2] if latex =~ /^{.+}$/ && latex !~ /}{/
+        latex.sub!(/{}$/, '')
+        next if latex.length < 2
         next if done[latex.strip]
         done[latex.strip] = true
         cs.puts "  #{latex.strip.to_json}: #{char(charcode)}"
@@ -304,7 +307,7 @@ class UnicodeConverter
     @chars.execute('SELECT DISTINCT charcode, latex FROM mapping').each{|mapping|
       charcode, latex = *mapping
       latex.strip!
-      latex = latex[1..-2] if latex =~ /^\{.*\}$/
+      latex = latex[1..-2] if latex =~ /^{.+}$/ && latex !~ /}{/
       latex.sub!(/{}$/, '')
       next if charcode < 256 && latex == charcode.chr
       next if latex =~ /^[a-z]+$/i || latex.strip == ''
