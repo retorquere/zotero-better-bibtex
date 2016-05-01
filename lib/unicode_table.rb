@@ -243,7 +243,7 @@ class UnicodeConverter
       self.expand
 
       @chars.execute("""UPDATE mapping SET unicode_to_latex = CASE
-        WHEN charcode = 0x20 OR charcode BETWEEN 0x20 AND 0x7E AND CHAR(charcode) = latex THEN
+        WHEN mode = 'text' AND (charcode = 0x20 OR charcode BETWEEN 0x20 AND 0x7E AND CHAR(charcode) = latex) THEN
           'false'
         WHEN charcode = 0x00A0 OR charcode BETWEEN 0x20 AND 0x7E THEN
           'true'

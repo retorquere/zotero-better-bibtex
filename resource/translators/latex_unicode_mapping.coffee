@@ -1,6 +1,8 @@
 LaTeX = {} unless LaTeX
 LaTeX.toLaTeX = { unicode: {}, ascii: {} }
 LaTeX.toLaTeX.unicode.math =
+  '<': "<"
+  '>': ">"
   '\\': "\\backslash{}"
 LaTeX.toLaTeX.unicode.text =
   '#': "\\#"
@@ -14,6 +16,8 @@ LaTeX.toLaTeX.unicode.text =
   '~': "\\textasciitilde{}"
   '\u00A0': "~"
 LaTeX.toLaTeX.ascii.math =
+  '<': "<"
+  '>': ">"
   '\\': "\\backslash{}"
   '\u00AC': "\\lnot{}"
   '\u00AD': "\\-"
