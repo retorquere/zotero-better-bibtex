@@ -19,6 +19,7 @@ class UnicodeConverter
 
   def char(charcode)
     return "'\\\\'" if charcode == '\\'.ord
+    return "'".inspect if charcode == "'".ord
 
     return "'#{charcode.chr}'" if charcode >= 0x20 && charcode <= 0x7E
 
@@ -39,7 +40,7 @@ class UnicodeConverter
         mappings = {'text' => {}, 'math' => {}}
         # an ascii character that needs translation? Probably a TeX special character, so also do when exporting to
         # unicode
-        @chars.execute("SELECT charcode, latex, mode FROM mapping WHERE preference = 0 AND (? = 'ascii' OR asciionly = 'false') ORDER BY charcode", [ encoding ]){|mapping|
+        @chars.execute("SELECT charcode, latex, mode FROM mapping WHERE preference = 0 AND unicode_to_latex IN ('true', ?) ORDER BY charcode", [ encoding ]){|mapping|
           charcode, latex, mode = *mapping
           next if mappings['text'][charcode] || mappings['math'][charcode]
           mappings[mode][charcode] = "  #{char(charcode)}: #{latex.to_json}\n"
@@ -59,7 +60,7 @@ class UnicodeConverter
         #latex = latex[1..-2] if latex =~ /^{.+}$/ && latex !~ /}{/
         #latex.sub!(/{}$/, '')
         #next if latex.length < 2
-        latex = latex.strip
+        latex.strip!
         next if done[latex]
         done[latex] = true
         cs.puts "  #{latex.to_json}: #{char(charcode)}"
@@ -68,39 +69,49 @@ class UnicodeConverter
   end
 
   def fixup
+    @chars.execute("DELETE from mapping WHERE charcode = 0X219C AND latex = '\\arrowwaveleft' AND mode = 'math'")
+
     [
-      ["\\",    "\\backslash",      'math'],
-      ['&',     "\\&",              'text'],
-      [0x00A0,  '~',                'text'],
-      [0x2003,  "\\quad",           'text'],
-      [0x2004,  "\\;",              'text'],
-      [0x2009,  "\\,",              'text'],
-      [0x2009,  "\\,",              'text'],
-      [0x200B,  "\\hspace{0pt}",    'text'],
-      [0x205F,  "\\:",              'text'],
-      [0xFFFD,  "\\dbend",          'text'],
-      [0X219C,  "\\arrowwaveleft",  'math'],
+      ["\\",    "\\backslash{}",      'math'],
+      ['&',     "\\&",                'text'],
+      ['$',     "\\$",                'text'],
+      [0x00A0,  '~',                  'text'],
+      [0x2003,  "\\quad{}",           'text'],
+      [0x2004,  "\\;",                'text'],
+      [0x2009,  "\\,",                'text'],
+      [0x2009,  "\\,",                'text'],
+      [0x200B,  "\\hspace{0pt}",      'text'],
+      [0x205F,  "\\:",                'text'],
+      [0xFFFD,  "\\dbend{}",          'text'],
+      [0X219C,  "\\arrowwaveleft{}",  'math'],
+      [0x00B0,  '^\\circ{}',          'math'],
       # TODO: replace '}' and '{' with textbrace(left|right) once the bug mentioned in
       # http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754
       # is widely enough distributed
-      ['_',     "\\_",              'text'],
-      ['}',     "\\}",              'text'],
-      ['{',     "\\{",              'text'],
+      ['_',     "\\_",                'text'],
+      ['}',     "\\}",                'text'],
+      ['{',     "\\{",                'text'],
     ].each{|patch|
       patch[0] = patch[0].ord if patch[0].is_a?(String)
+      @prefer << patch[1]
       @chars.execute("REPLACE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)", patch)
     }
+
+    @chars.execute("REPLACE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)", ["`".ord, "\\textasciigrave", 'text'])
+    @chars.execute("REPLACE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)", ["'".ord, "\\textquotesingle", 'text'])
+    @chars.execute("REPLACE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)", [" ".ord, "\\space", 'text'])
 
     { "\\textdollar"        => "\\$",
       "\\textquotedblleft"  => "``",
       "\\textquotedblright" => "''",
       "\\textasciigrave"    => "`",
       "\\textquotesingle"   => "'",
-      "\\space"             => ' '
     }.each_pair{|ist, soll|
-      @chars.execute("""
-        REPLACE INTO mapping (charcode, latex, mode)
-        SELECT DISTINCT charcode, ?, 'text' FROM mapping WHERE rtrim(latex) IN (?, ?)""", [soll, ist, ist + '{}'])
+      @prefer << soll + '{}'
+      template = "SELECT DISTINCT charcode, ?, 'text' FROM mapping WHERE latex IN (?, ?, ?)"
+      params = [soll, ist, ist + ' ', ist + '{}']
+      raise "No mapping found for #{ist.inspect}" if @chars.execute(template, params).length == 0
+      @chars.execute("REPLACE INTO mapping (charcode, latex, mode) #{template}", params)
     }
   end
 
@@ -191,19 +202,22 @@ class UnicodeConverter
     @chars.execute('PRAGMA journal_mode = MEMORY')
     @chars.results_as_hash
 
+    @prefer = []
     # prefered option is braces-over-traling-space because of miktex bug that doesn't ignore spaces after commands
     # https://github.com/retorquere/zotero-better-bibtex/issues/69
-    @chars.create_function('rank', 1) do |func, latex|
+    @chars.create_function('rank', 1) do |func, latex, mode|
       latex = latex.to_s
-      [
-        lambda{ latex !~ /\\/ || latex =~ /^\\[^a-zA-Z0-9]$/ || latex =~ /^\\[1-3]$/ },
+      tests = [
+        lambda{ @prefer.include?(latex) },
+        lambda{ latex !~ /\\/ || latex == "\\$" || latex =~ /^\\[^a-zA-Z0-9]$/ || latex =~ /^\\\^[1-3]$/ },
         lambda{ latex =~ /^(\\[0-9a-zA-Z]+)+{}$/ },
         lambda{ latex =~ /^{.+}$/ },
         lambda{ latex =~ /}/ },
         lambda{ true }
-      ].each_with_index{|test, i|
+      ]
+      tests.each_with_index{|test, i|
         next unless test.call
-        func.result = i
+        func.result = (i * 2) + (mode == 'text' ? 0 : 1)
         break
       }
     end
@@ -214,7 +228,7 @@ class UnicodeConverter
           charcode,
           latex,
           mode CHECK (mode IN ('text', 'math')),
-          asciionly DEFAULT 'true' CHECK (asciionly IN ('true', 'false')),
+          unicode_to_latex DEFAULT 'false' CHECK (unicode_to_latex IN ('true', 'false', 'ascii')),
           preference DEFAULT 0,
 
           UNIQUE(charcode, latex)
@@ -228,12 +242,16 @@ class UnicodeConverter
       self.fixup
       self.expand
 
-      @chars.execute("UPDATE mapping SET preference = rank(latex)")
-      @chars.execute('UPDATE mapping SET preference = 1 WHERE charcode = 0x00B0 AND preference = 0')
-      @chars.execute('REPLACE INTO mapping (charcode, latex, mode, preference) VALUES (?, ?, ?, ?)', [0x00B0, '^\\circ', 'math', 0])
+      @chars.execute("""UPDATE mapping SET unicode_to_latex = CASE
+        WHEN charcode = 0x20 OR charcode BETWEEN 0x20 AND 0x7E AND CHAR(charcode) = latex THEN
+          'false'
+        WHEN charcode = 0x00A0 OR charcode BETWEEN 0x20 AND 0x7E THEN
+          'true'
+        ELSE
+          'ascii'
+        END""")
 
-      @chars.execute("UPDATE mapping SET asciionly = 'false' WHERE charcode = 0x00A0 OR charcode BETWEEN 0x20 AND 0x7E")
-
+      @chars.execute("UPDATE mapping SET preference = rank(latex, mode)")
       preference = {}
       @chars.execute("""
               SELECT charcode, latex
@@ -323,7 +341,7 @@ class UnicodeConverter
 
     @chars.execute('SELECT DISTINCT charcode, latex FROM mapping').each{|mapping|
       charcode, latex = *mapping
-      latex.strip!
+      latex.strip! if latex != ' '
       latex = latex[1..-2] if latex =~ /^{.+}$/ && latex !~ /}{/
       latex.sub!(/{}$/, '')
       next if charcode < 256 && latex == charcode.chr

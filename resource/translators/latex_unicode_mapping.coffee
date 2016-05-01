@@ -1,8 +1,6 @@
 LaTeX = {} unless LaTeX
 LaTeX.toLaTeX = { unicode: {}, ascii: {} }
 LaTeX.toLaTeX.unicode.math =
-  '<': "<"
-  '>': ">"
   '\\': "\\backslash{}"
 LaTeX.toLaTeX.unicode.text =
   '#': "\\#"
@@ -16,12 +14,10 @@ LaTeX.toLaTeX.unicode.text =
   '~': "\\textasciitilde{}"
   '\u00A0': "~"
 LaTeX.toLaTeX.ascii.math =
-  '<': "<"
-  '>': ">"
   '\\': "\\backslash{}"
   '\u00AC': "\\lnot{}"
   '\u00AD': "\\-"
-  '\u00B0': "^\\circ"
+  '\u00B0': "^\\circ{}"
   '\u00B1': "\\pm{}"
   '\u00B2': "^2"
   '\u00B3': "^3"
@@ -2391,6 +2387,9 @@ LaTeX.toLaTeX.ascii.text =
   '\uD835\uDFC8': "\\mathsfbfsl{\\varrho}"
   '\uD835\uDFC9': "\\mathsfbfsl{\\varpi}"
 LaTeX.toUnicode =
+  "\\space{}": ' '
+  "{\\space}": ' '
+  "\\space": ' '
   "\\#": '#'
   "\\$": '$'
   "\\textdollar{}": '$'
@@ -2398,16 +2397,22 @@ LaTeX.toUnicode =
   "\\textdollar": '$'
   "\\%": '%'
   "\\&": '&'
+  "\\textquotesingle{}": "'"
+  "{\\textquotesingle}": "'"
+  "\\textquotesingle": "'"
   "\\backslash{}": '\\'
   "\\textbackslash{}": '\\'
-  "{\\backslash}": '\\'
   "{\\textbackslash}": '\\'
-  "\\backslash": '\\'
+  "{\\backslash}": '\\'
   "\\textbackslash": '\\'
+  "\\backslash": '\\'
   "\\^": '^'
   "{\\^}": '^'
   "\\^{}": '^'
   "\\_": '_'
+  "\\textasciigrave{}": '`'
+  "{\\textasciigrave}": '`'
+  "\\textasciigrave": '`'
   "\\{": '{'
   "\\lbrace{}": '{'
   "{\\lbrace}": '{'
@@ -2463,10 +2468,11 @@ LaTeX.toUnicode =
   "\\textasciimacron{}": '\u00AF'
   "{\\textasciimacron}": '\u00AF'
   "\\textasciimacron": '\u00AF'
-  "^\\circ": '\u00B0'
+  "^\\circ{}": '\u00B0'
   "\\textdegree{}": '\u00B0'
   "{\\textdegree}": '\u00B0'
   "\\textdegree": '\u00B0'
+  "^\\circ": '\u00B0'
   "\\pm{}": '\u00B1'
   "{\\pm}": '\u00B1'
   "\\pm": '\u00B1'
