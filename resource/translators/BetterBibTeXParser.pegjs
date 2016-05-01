@@ -206,3 +206,4 @@ lookup
   / text:("\\" [^a-zA-Z0-9])                                                          &{ return lookup(text, 20); }{ return lookup(text); }
   / text:("\\ddot{\\" [a-z]+ "}")                                                     &{ return lookup(text, 21); }{ return lookup(text); }
   / text:("~")                                                                        &{ return lookup(text, 22); }{ return lookup(text); }
+  / text:("\\sqrt\[" [234] "\]")                                                      &{ return lookup(text, 23); }{ return lookup(text); }

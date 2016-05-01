@@ -154,6 +154,18 @@ class UnicodeConverter
     @chars.execute('UPDATE mapping SET latex = trim(latex)')
   end
 
+  def read_milde
+    header = nil
+    IO.readlines(open('http://milde.users.sourceforge.net/LUCR/Math/data/unimathsymbols.txt')).each{|line|
+      if line =~ /^#/
+        header = line.sub(/^#/, '').strip.split('^')
+      else
+        char = Hash[*header.zip(line.split('^').collect{|v| v == '' ? nil : v}).flatten]
+        addchar(char['no.'].to_i(16), char['LaTeX'] || char['unicode-math'], 'math')
+      end
+    }
+  end
+
   def read(xml)
     pbar = nil
     mapping = nil
@@ -170,29 +182,32 @@ class UnicodeConverter
       mapping = Nokogiri::XML(f)
     }
 
-    chars = []
-
-    to = {}
-    from = {}
     mapping.xpath('//character').each{|char|
       latex = char.at('.//latex')
       next unless latex
       next if char['id'] =~ /-/
 
-      chr = [char['dec'].to_s.to_i].pack('U')
       latex = latex.inner_text
       mode = (char['mode'] == 'math' ? 'math' : 'text')
-
-      next if chr =~ /^[\x20-\x7E]$/ && ! %w{# $ % & ~ _ ^ { } [ ] > < \\}.include?(chr)
-      next if chr == latex && mode == 'text'
-
-      latex = "{\\#{$1}#{$2}}" if latex =~ /^\\(["^`\.'~]){([^}]+)}$/
-      latex = "{\\#{$1} #{$2}}" if latex =~ /^\\([cuHv]){([^}]+)}$/
-
       charcode = char['id'].sub(/^u/i, '').to_i(16)
-      @chars.execute("DELETE FROM mapping where charcode = ?", [charcode])
-      @chars.execute("INSERT INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)", [charcode, latex, mode])
+
+      addchar(charcode, latex, mode)
     }
+  end
+
+  def addchar(charcode, latex, mode)
+    return if latex == '' || latex.nil?
+    if charcode >= 0x20 && charcode <= 0x7E
+      chr = charcode.chr
+      # removed [ ]
+      return if chr =~ /^[\x20-\x7E]$/ && ! %w{# $ % & ~ _ ^ { } > < \\}.include?(chr)
+      return if chr == latex && mode == 'text'
+    end
+    latex = "{\\#{$1}#{$2}}" if latex =~ /^\\(["^`\.'~]){([^}]+)}$/
+    latex = "{\\#{$1} #{$2}}" if latex =~ /^\\([cuHv]){([^}]+)}$/
+
+    @chars.execute("DELETE FROM mapping where charcode = ?", [charcode])
+    @chars.execute("INSERT INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)", [charcode, latex, mode])
   end
 
   def download(force=true)
@@ -225,17 +240,18 @@ class UnicodeConverter
     if @chars.get_first_value("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='mapping'") != 1
       @chars.execute("""
         CREATE TABLE mapping (
-          charcode,
-          latex,
+          charcode NOT NULL,
+          latex NOT NULL,
           mode CHECK (mode IN ('text', 'math')),
           unicode_to_latex DEFAULT 'false' CHECK (unicode_to_latex IN ('true', 'false', 'ascii')),
-          preference DEFAULT 0,
+          preference NOT NULL DEFAULT 0,
 
           UNIQUE(charcode, latex)
         )
       """)
       @chars.transaction
 
+      read_milde
       read('http://www.w3.org/2003/entities/2007xml/unicode.xml')
       read('http://www.w3.org/Math/characters/unicode.xml')
 
@@ -310,6 +326,7 @@ class UnicodeConverter
       /^\\[^a-zA-Z0-9]$/                                        => {terminated: true},
       /^\\ddot\{\\[a-z]+\}$/                                    => {terminated: true},
       /^~$/                                                     => {terminated: true},
+      /^\\sqrt\[[234]\]$/                                       => {terminated: true},
 
       # unterminated
       /^\\sim\\joinrel\\leadsto$/                               => {terminated: false, exclude: true},
@@ -337,6 +354,7 @@ class UnicodeConverter
       /^\\not =$/                                               => {terminated: true, exclude: true},
       /^=:$/                                                    => {terminated: true, exclude: true},
       /^:=$/                                                    => {terminated: true, exclude: true},
+      /^:$/                                                     => {terminated: true, exclude: true},
     }
 
     @chars.execute('SELECT DISTINCT charcode, latex FROM mapping').each{|mapping|

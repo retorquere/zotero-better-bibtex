@@ -32,6 +32,8 @@ LaTeX.toLaTeX.ascii.math =
   '\u0127': "\\Elzxh{}"
   '\u0192': "f"
   '\u01AA': "\\eth{}"
+  '\u01B5': "\\Zbar{}"
+  '\u0237': "\\jmath{}"
   '\u0250': "\\Elztrna{}"
   '\u0252': "\\Elztrnsa{}"
   '\u0254': "\\Elzopeno{}"
@@ -78,8 +80,17 @@ LaTeX.toLaTeX.ascii.math =
   '\u02D3': "\\Elzsblhr{}"
   '\u02D4': "\\Elzrais{}"
   '\u02D5': "\\Elzlow{}"
+  '\u0305': "\\overline{}"
+  '\u0309': "\\ovhook{}"
+  '\u0310': "\\candra{}"
+  '\u0312': "\\oturnedcomma{}"
+  '\u0315': "\\ocommatopright{}"
+  '\u031A': "\\droang{}"
   '\u0321': "\\Elzpalh{}"
   '\u032A': "\\Elzsbbrg{}"
+  '\u0330': "\\utilde{}"
+  '\u0331': "\\underbar{}"
+  '\u0332': "\\underline{}"
   '\u038E': "\\mathrm{'Y}"
   '\u038F': "\\mathrm{'\\Omega}"
   '\u0390': "\\acute{\\ddot{\\iota}}"
@@ -144,28 +155,65 @@ LaTeX.toLaTeX.ascii.math =
   '\u03D2': "\\Upsilon{}"
   '\u03D5': "\\phi{}"
   '\u03D6': "\\varpi{}"
+  '\u03D8': "\\Qoppa{}"
+  '\u03D9': "\\qoppa{}"
   '\u03DA': "\\Stigma{}"
+  '\u03DB': "\\stigma{}"
   '\u03DC': "\\Digamma{}"
   '\u03DD': "\\digamma{}"
   '\u03DE': "\\Koppa{}"
+  '\u03DF': "\\koppa{}"
   '\u03E0': "\\Sampi{}"
+  '\u03E1': "\\sampi{}"
   '\u03F0': "\\varkappa{}"
   '\u03F1': "\\varrho{}"
+  '\u03F5': "\\epsilon{}"
   '\u03F6': "\\backepsilon{}"
+  '\u2001': "\\quad{}"
   '\u200A': "\\mkern1mu{}"
   '\u2016': "\\Vert{}"
+  '\u2017': "\\twolowline{}"
   '\u201B': "\\Elzreapos{}"
   '\u2032': "{'}"
   '\u2033': "{''}"
   '\u2034': "{'''}"
   '\u2035': "\\backprime{}"
+  '\u2036': "\\backdprime{}"
+  '\u2037': "\\backtrprime{}"
+  '\u2038': "\\caretinsert{}"
+  '\u203C': "\\Exclam{}"
+  '\u2040': "\\cat{}"
+  '\u2043': "\\hyphenbullet{}"
+  '\u2044': "\\fracslash{}"
+  '\u2047': "\\Question{}"
+  '\u2050': "\\closure{}"
   '\u2057': "''''"
+  '\u20D0': "\\lvec{}"
+  '\u20D1': "\\vec{}"
+  '\u20D2': "\\vertoverlay{}"
+  '\u20D6': "\\LVec{}"
+  '\u20D7': "\\vec{}"
   '\u20DB': "\\dddot{}"
   '\u20DC': "\\ddddot{}"
+  '\u20DD': "\\enclosecircle{}"
+  '\u20DE': "\\enclosesquare{}"
+  '\u20DF': "\\enclosediamond{}"
+  '\u20E1': "\\overleftrightarrow{}"
+  '\u20E4': "\\enclosetriangle{}"
+  '\u20E7': "\\annuity{}"
+  '\u20E8': "\\threeunderdot{}"
+  '\u20E9': "\\widebridgeabove{}"
+  '\u20EC': "\\underrightharpoondown{}"
+  '\u20ED': "\\underleftharpoondown{}"
+  '\u20EE': "\\underleftarrow{}"
+  '\u20EF': "\\underrightarrow{}"
+  '\u20F0': "\\asteraccent{}"
   '\u2102': "\\mathbb{C}"
+  '\u2107': "\\Euler{}"
   '\u210B': "\\mathscr{H}"
   '\u210C': "\\mathfrak{H}"
   '\u210D': "\\mathbb{H}"
+  '\u210E': "\\Planckconst{}"
   '\u210F': "\\hslash{}"
   '\u2110': "\\mathscr{I}"
   '\u2111': "\\mathfrak{I}"
@@ -189,12 +237,29 @@ LaTeX.toLaTeX.ascii.math =
   '\u212F': "\\mathscr{e}"
   '\u2130': "\\mathscr{E}"
   '\u2131': "\\mathscr{F}"
+  '\u2132': "\\Finv{}"
   '\u2133': "\\mathscr{M}"
   '\u2134': "\\mathscr{o}"
   '\u2135': "\\aleph{}"
   '\u2136': "\\beth{}"
   '\u2137': "\\gimel{}"
   '\u2138': "\\daleth{}"
+  '\u213C': "\\mathbb{\\pi}"
+  '\u213D': "\\mathbb{\\gamma}"
+  '\u213E': "\\mathbb{\\Gamma}"
+  '\u213F': "\\mathbb{\\Pi}"
+  '\u2140': "\\mathbb{\\Sigma}"
+  '\u2141': "\\Game{}"
+  '\u2142': "\\sansLturned{}"
+  '\u2143': "\\sansLmirrored{}"
+  '\u2144': "\\Yup{}"
+  '\u2145': "\\CapitalDifferentialD{}"
+  '\u2146': "\\DifferentialD{}"
+  '\u2147': "\\ExponetialE{}"
+  '\u2148': "\\ComplexI{}"
+  '\u2149': "\\ComplexJ{}"
+  '\u214A': "\\PropertyLine{}"
+  '\u214B': "\\invamp{}"
   '\u2153': "\\textfrac{1}{3}"
   '\u2154': "\\textfrac{2}{3}"
   '\u2155': "\\textfrac{1}{5}"
@@ -222,21 +287,33 @@ LaTeX.toLaTeX.ascii.math =
   '\u219C': "\\arrowwaveleft{}"
   '\u219D': "\\arrowwaveright{}"
   '\u219E': "\\twoheadleftarrow{}"
+  '\u219F': "\\twoheaduparrow{}"
   '\u21A0': "\\twoheadrightarrow{}"
+  '\u21A1': "\\twoheaddownarrow{}"
   '\u21A2': "\\leftarrowtail{}"
   '\u21A3': "\\rightarrowtail{}"
+  '\u21A4': "\\mapsfrom{}"
+  '\u21A5': "\\MapsUp{}"
   '\u21A6': "\\mapsto{}"
+  '\u21A7': "\\MapsDown{}"
+  '\u21A8': "\\updownarrowbar{}"
   '\u21A9': "\\hookleftarrow{}"
   '\u21AA': "\\hookrightarrow{}"
   '\u21AB': "\\looparrowleft{}"
   '\u21AC': "\\looparrowright{}"
   '\u21AD': "\\leftrightsquigarrow{}"
   '\u21AE': "\\nleftrightarrow{}"
+  '\u21AF': "\\lightning{}"
   '\u21B0': "\\Lsh{}"
   '\u21B1': "\\Rsh{}"
+  '\u21B2': "\\dlsh{}"
   '\u21B3': "\\ElsevierGlyph{21B3}"
+  '\u21B4': "\\linefeed{}"
+  '\u21B5': "\\carriagereturn{}"
   '\u21B6': "\\curvearrowleft{}"
   '\u21B7': "\\curvearrowright{}"
+  '\u21B8': "\\barovernorthwestarrow{}"
+  '\u21B9': "\\barleftarrowrightarrowba{}"
   '\u21BA': "\\circlearrowleft{}"
   '\u21BB': "\\circlearrowright{}"
   '\u21BC': "\\leftharpoonup{}"
@@ -265,31 +342,67 @@ LaTeX.toLaTeX.ascii.math =
   '\u21D3': "\\Downarrow{}"
   '\u21D4': "\\Leftrightarrow{}"
   '\u21D5': "\\Updownarrow{}"
+  '\u21D6': "\\Nwarrow{}"
+  '\u21D7': "\\Nearrow{}"
+  '\u21D8': "\\Searrow{}"
+  '\u21D9': "\\Swarrow{}"
   '\u21DA': "\\Lleftarrow{}"
   '\u21DB': "\\Rrightarrow{}"
+  '\u21DC': "\\leftsquigarrow{}"
   '\u21DD': "\\rightsquigarrow{}"
+  '\u21DE': "\\nHuparrow{}"
+  '\u21DF': "\\nHdownarrow{}"
+  '\u21E0': "\\dashleftarrow{}"
+  '\u21E1': "\\updasharrow{}"
+  '\u21E2': "\\dashrightarrow{}"
+  '\u21E3': "\\downdasharrow{}"
+  '\u21E4': "\\LeftArrowBar{}"
+  '\u21E5': "\\RightArrowBar{}"
+  '\u21E6': "\\leftwhitearrow{}"
+  '\u21E7': "\\upwhitearrow{}"
+  '\u21E8': "\\rightwhitearrow{}"
+  '\u21E9': "\\downwhitearrow{}"
+  '\u21EA': "\\whitearrowupfrombar{}"
+  '\u21F4': "\\circleonrightarrow{}"
   '\u21F5': "\\DownArrowUpArrow{}"
+  '\u21F6': "\\rightthreearrows{}"
+  '\u21F7': "\\nvleftarrow{}"
+  '\u21F8': "\\pfun{}"
+  '\u21F9': "\\nvleftrightarrow{}"
+  '\u21FA': "\\nVleftarrow{}"
+  '\u21FB': "\\ffun{}"
+  '\u21FC': "\\nVleftrightarrow{}"
+  '\u21FD': "\\leftarrowtriangle{}"
+  '\u21FE': "\\rightarrowtriangle{}"
+  '\u21FF': "\\leftrightarrowtriangle{}"
   '\u2200': "\\forall{}"
   '\u2201': "\\complement{}"
   '\u2202': "\\partial{}"
   '\u2203': "\\exists{}"
   '\u2204': "\\nexists{}"
   '\u2205': "\\varnothing{}"
+  '\u2206': "\\increment{}"
   '\u2207': "\\nabla{}"
   '\u2208': "\\in{}"
   '\u2209': "\\not\\in{}"
+  '\u220A': "\\smallin{}"
   '\u220B': "\\ni{}"
   '\u220C': "\\not\\ni{}"
+  '\u220D': "\\smallni{}"
+  '\u220E': "\\QED{}"
   '\u220F': "\\prod{}"
   '\u2210': "\\coprod{}"
   '\u2211': "\\sum{}"
   '\u2213': "\\mp{}"
   '\u2214': "\\dotplus{}"
+  '\u2215': "\\slash{}"
   '\u2216': "\\setminus{}"
   '\u2217': "{_\\ast}"
   '\u2218': "\\circ{}"
   '\u2219': "\\bullet{}"
   '\u221A': "\\surd{}"
+  '\u221B': "\\sqrt[3]"
+  '\u221C': "\\sqrt[4]"
   '\u221D': "\\propto{}"
   '\u221E': "\\infty{}"
   '\u221F': "\\rightangle{}"
@@ -315,13 +428,16 @@ LaTeX.toLaTeX.ascii.math =
   '\u2233': "\\ElsevierGlyph{2233}"
   '\u2234': "\\therefore{}"
   '\u2235': "\\because{}"
+  '\u2236': ":"
   '\u2237': "\\Colon{}"
   '\u2238': "\\ElsevierGlyph{2238}"
+  '\u2239': "\\eqcolon{}"
   '\u223A': "\\mathbin{{:}\\!\\!{-}\\!\\!{:}}"
   '\u223B': "\\homothetic{}"
   '\u223C': "\\sim{}"
   '\u223D': "\\backsim{}"
   '\u223E': "\\lazysinv{}"
+  '\u223F': "\\AC{}"
   '\u2240': "\\wr{}"
   '\u2241': "\\not\\sim{}"
   '\u2242': "\\ElsevierGlyph{2242}"
@@ -345,14 +461,18 @@ LaTeX.toLaTeX.ascii.math =
   '\u2255': "=:"
   '\u2256': "\\eqcirc{}"
   '\u2257': "\\circeq{}"
+  '\u2258': "\\arceq{}"
   '\u2259': "\\estimates{}"
   '\u225A': "\\ElsevierGlyph{225A}"
   '\u225B': "\\starequal{}"
   '\u225C': "\\triangleq{}"
+  '\u225D': "\\eqdef{}"
+  '\u225E': "\\measeq{}"
   '\u225F': "\\ElsevierGlyph{225F}"
   '\u2260': "\\not ="
   '\u2261': "\\equiv{}"
   '\u2262': "\\not\\equiv{}"
+  '\u2263': "\\Equiv{}"
   '\u2264': "\\leq{}"
   '\u2265': "\\geq{}"
   '\u2266': "\\leqq{}"
@@ -393,6 +513,8 @@ LaTeX.toLaTeX.ascii.math =
   '\u2289': "\\not\\supseteq{}"
   '\u228A': "\\subsetneq{}"
   '\u228B': "\\supsetneq{}"
+  '\u228C': "\\cupleftarrow{}"
+  '\u228D': "\\cupdot{}"
   '\u228E': "\\uplus{}"
   '\u228F': "\\sqsubset{}"
   '\u2290': "\\sqsupset{}"
@@ -407,6 +529,7 @@ LaTeX.toLaTeX.ascii.math =
   '\u2299': "\\odot{}"
   '\u229A': "\\circledcirc{}"
   '\u229B': "\\circledast{}"
+  '\u229C': "\\circledequal{}"
   '\u229D': "\\circleddash{}"
   '\u229E': "\\boxplus{}"
   '\u229F': "\\boxminus{}"
@@ -416,6 +539,7 @@ LaTeX.toLaTeX.ascii.math =
   '\u22A3': "\\dashv{}"
   '\u22A4': "\\top{}"
   '\u22A5': "\\perp{}"
+  '\u22A6': "\\assert{}"
   '\u22A7': "\\truestate{}"
   '\u22A8': "\\forcesextra{}"
   '\u22A9': "\\Vdash{}"
@@ -425,6 +549,8 @@ LaTeX.toLaTeX.ascii.math =
   '\u22AD': "\\nvDash{}"
   '\u22AE': "\\nVdash{}"
   '\u22AF': "\\nVDash{}"
+  '\u22B0': "\\prurel{}"
+  '\u22B1': "\\scurel{}"
   '\u22B2': "\\vartriangleleft{}"
   '\u22B3': "\\vartriangleright{}"
   '\u22B4': "\\trianglelefteq{}"
@@ -435,7 +561,10 @@ LaTeX.toLaTeX.ascii.math =
   '\u22B9': "\\hermitconjmatrix{}"
   '\u22BA': "\\intercal{}"
   '\u22BB': "\\veebar{}"
+  '\u22BC': "\\barwedge{}"
+  '\u22BD': "\\barvee{}"
   '\u22BE': "\\rightanglearc{}"
+  '\u22BF': "\\varlrtriangle{}"
   '\u22C0': "\\ElsevierGlyph{22C0}"
   '\u22C1': "\\ElsevierGlyph{22C1}"
   '\u22C2': "\\bigcap{}"
@@ -457,16 +586,22 @@ LaTeX.toLaTeX.ascii.math =
   '\u22D2': "\\Cap{}"
   '\u22D3': "\\Cup{}"
   '\u22D4': "\\pitchfork{}"
+  '\u22D5': "\\hash{}"
   '\u22D6': "\\lessdot{}"
   '\u22D7': "\\gtrdot{}"
   '\u22D8': "\\verymuchless{}"
   '\u22D9': "\\verymuchgreater{}"
   '\u22DA': "\\lesseqgtr{}"
   '\u22DB': "\\gtreqless{}"
+  '\u22DC': "\\eqless{}"
+  '\u22DD': "\\eqgtr{}"
   '\u22DE': "\\curlyeqprec{}"
   '\u22DF': "\\curlyeqsucc{}"
+  '\u22E0': "\\npreceq{}"
+  '\u22E1': "\\nsucceq{}"
   '\u22E2': "\\not\\sqsubseteq{}"
   '\u22E3': "\\not\\sqsupseteq{}"
+  '\u22E4': "\\sqsubsetneq{}"
   '\u22E5': "\\Elzsqspne{}"
   '\u22E6': "\\lnsim{}"
   '\u22E7': "\\gnsim{}"
@@ -480,69 +615,348 @@ LaTeX.toLaTeX.ascii.math =
   '\u22EF': "\\cdots{}"
   '\u22F0': "\\upslopeellipsis{}"
   '\u22F1': "\\downslopeellipsis{}"
+  '\u22F2': "\\disin{}"
+  '\u22F3': "\\varisins{}"
+  '\u22F4': "\\isins{}"
+  '\u22F5': "\\isindot{}"
+  '\u22F6': "\\barin{}"
+  '\u22F7': "\\isinobar{}"
+  '\u22F8': "\\isinvb{}"
+  '\u22F9': "\\isinE{}"
+  '\u22FA': "\\nisd{}"
+  '\u22FB': "\\varnis{}"
+  '\u22FC': "\\nis{}"
+  '\u22FD': "\\varniobar{}"
+  '\u22FE': "\\niobar{}"
+  '\u22FF': "\\bagmember{}"
+  '\u2300': "\\diameter{}"
+  '\u2302': "\\house{}"
   '\u2306': "\\perspcorrespond{}"
   '\u2308': "\\lceil{}"
   '\u2309': "\\rceil{}"
   '\u230A': "\\lfloor{}"
   '\u230B': "\\rfloor{}"
+  '\u2310': "\\invneg{}"
+  '\u2311': "\\wasylozenge{}"
+  '\u2312': "\\profline{}"
+  '\u2313': "\\profsurf{}"
   '\u2315': "\\recorder{}"
   '\u2316': "{\\mathchar\"2208}"
+  '\u2317': "\\viewdata{}"
+  '\u2319': "\\turnednot{}"
   '\u231C': "\\ulcorner{}"
   '\u231D': "\\urcorner{}"
   '\u231E': "\\llcorner{}"
   '\u231F': "\\lrcorner{}"
+  '\u2320': "\\inttop{}"
+  '\u2321': "\\intbottom{}"
   '\u2322': "\\frown{}"
   '\u2323': "\\smile{}"
   '\u2329': "\\langle{}"
   '\u232A': "\\rangle{}"
+  '\u232C': "\\varhexagonlrbonds{}"
+  '\u2332': "\\conictaper{}"
+  '\u2336': "\\topbot{}"
+  '\u2339': "\\APLinv{}"
   '\u233D': "\\ElsevierGlyph{E838}"
+  '\u233F': "\\notslash{}"
+  '\u2340': "\\notbackslash{}"
+  '\u2347': "\\APLleftarrowbox{}"
+  '\u2348': "\\APLrightarrowbox{}"
+  '\u2350': "\\APLuparrowbox{}"
+  '\u2353': "\\APLboxupcaret{}"
+  '\u2357': "\\APLdownarrowbox{}"
+  '\u235D': "\\APLcomment{}"
+  '\u235E': "\\APLinput{}"
+  '\u235F': "\\APLlog{}"
+  '\u2370': "\\APLboxquestion{}"
+  '\u237C': "\\rangledownzigzagarrow{}"
+  '\u2394': "\\hexagon{}"
+  '\u239B': "\\lparenuend{}"
+  '\u239C': "\\lparenextender{}"
+  '\u239D': "\\lparenlend{}"
+  '\u239E': "\\rparenuend{}"
+  '\u239F': "\\rparenextender{}"
+  '\u23A0': "\\rparenlend{}"
+  '\u23A1': "\\lbrackuend{}"
+  '\u23A2': "\\lbrackextender{}"
   '\u23A3': "\\Elzdlcorn{}"
+  '\u23A4': "\\rbrackuend{}"
+  '\u23A5': "\\rbrackextender{}"
+  '\u23A6': "\\rbracklend{}"
+  '\u23A7': "\\lbraceuend{}"
+  '\u23A8': "\\lbracemid{}"
+  '\u23A9': "\\lbracelend{}"
+  '\u23AA': "\\vbraceextender{}"
+  '\u23AB': "\\rbraceuend{}"
+  '\u23AC': "\\rbracemid{}"
+  '\u23AD': "\\rbracelend{}"
+  '\u23AE': "\\intextender{}"
+  '\u23AF': "\\harrowextender{}"
   '\u23B0': "\\lmoustache{}"
   '\u23B1': "\\rmoustache{}"
+  '\u23B2': "\\sumtop{}"
+  '\u23B3': "\\sumbottom{}"
+  '\u23B4': "\\overbracket{}"
+  '\u23B5': "\\underbracket{}"
+  '\u23B6': "\\bbrktbrk{}"
+  '\u23B7': "\\sqrtbottom{}"
+  '\u23B8': "\\lvboxline{}"
+  '\u23B9': "\\rvboxline{}"
+  '\u23CE': "\\varcarriagereturn{}"
+  '\u23DC': "\\overparen{}"
+  '\u23DD': "\\underparen{}"
+  '\u23DE': "\\overbrace{}"
+  '\u23DF': "\\underbrace{}"
+  '\u23E0': "\\obrbrak{}"
+  '\u23E1': "\\ubrbrak{}"
+  '\u23E2': "\\trapezium{}"
+  '\u23E3': "\\benzenr{}"
+  '\u23E4': "\\strns{}"
+  '\u23E5': "\\fltns{}"
+  '\u23E6': "\\accurrent{}"
+  '\u23E7': "\\elinters{}"
   '\u24C8': "\\circledS{}"
   '\u2506': "\\Elzdshfnc{}"
   '\u2519': "\\Elzsqfnw{}"
   '\u2571': "\\diagup{}"
+  '\u2580': "\\blockuphalf{}"
+  '\u2584': "\\blocklowhalf{}"
+  '\u2588': "\\blockfull{}"
+  '\u258C': "\\blocklefthalf{}"
+  '\u2590': "\\blockrighthalf{}"
+  '\u2591': "\\blockqtrshaded{}"
+  '\u2592': "\\blockhalfshaded{}"
+  '\u2593': "\\blockthreeqtrshaded{}"
   '\u25A1': "\\square{}"
+  '\u25A2': "\\squoval{}"
+  '\u25A3': "\\blackinwhitesquare{}"
+  '\u25A4': "\\squarehfill{}"
+  '\u25A5': "\\squarevfill{}"
+  '\u25A6': "\\squarehvfill{}"
+  '\u25A7': "\\squarenwsefill{}"
+  '\u25A8': "\\squareneswfill{}"
+  '\u25A9': "\\squarecrossfill{}"
   '\u25AA': "\\blacksquare{}"
+  '\u25AB': "\\smwhtsquare{}"
+  '\u25AC': "\\hrectangleblack{}"
   '\u25AD': "\\fbox{~~}"
+  '\u25AE': "\\vrectangleblack{}"
   '\u25AF': "\\Elzvrecto{}"
+  '\u25B0': "\\parallelogramblack{}"
   '\u25B1': "\\ElsevierGlyph{E381}"
   '\u25B3': "\\bigtriangleup{}"
   '\u25B4': "\\blacktriangle{}"
   '\u25B5': "\\vartriangle{}"
+  '\u25B6': "\\RHD{}"
+  '\u25B7': "\\rhd{}"
   '\u25B8': "\\blacktriangleright{}"
   '\u25B9': "\\triangleright{}"
+  '\u25BA': "\\blackpointerright{}"
+  '\u25BB': "\\whitepointerright{}"
   '\u25BD': "\\bigtriangledown{}"
   '\u25BE': "\\blacktriangledown{}"
   '\u25BF': "\\triangledown{}"
+  '\u25C0': "\\LHD{}"
+  '\u25C1': "\\lhd{}"
   '\u25C2': "\\blacktriangleleft{}"
   '\u25C3': "\\triangleleft{}"
+  '\u25C4': "\\blackpointerleft{}"
+  '\u25C5': "\\whitepointerleft{}"
+  '\u25C7': "\\Diamond{}"
+  '\u25C8': "\\blackinwhitediamond{}"
+  '\u25C9': "\\fisheye{}"
   '\u25CA': "\\lozenge{}"
   '\u25CB': "\\bigcirc{}"
+  '\u25CC': "\\dottedcircle{}"
+  '\u25CD': "\\circlevertfill{}"
+  '\u25CE': "\\bullseye{}"
   '\u25D0': "\\Elzcirfl{}"
   '\u25D1': "\\Elzcirfr{}"
   '\u25D2': "\\Elzcirfb{}"
+  '\u25D3': "\\circletophalfblack{}"
+  '\u25D4': "\\circleurquadblack{}"
+  '\u25D5': "\\blackcircleulquadwhite{}"
+  '\u25D6': "\\LEFTCIRCLE{}"
   '\u25D8': "\\Elzrvbull{}"
+  '\u25D9': "\\inversewhitecircle{}"
+  '\u25DA': "\\invwhiteupperhalfcircle{}"
+  '\u25DB': "\\invwhitelowerhalfcircle{}"
+  '\u25DC': "\\ularc{}"
+  '\u25DD': "\\urarc{}"
+  '\u25DE': "\\lrarc{}"
+  '\u25DF': "\\llarc{}"
+  '\u25E0': "\\topsemicircle{}"
+  '\u25E1': "\\botsemicircle{}"
+  '\u25E2': "\\lrblacktriangle{}"
+  '\u25E3': "\\llblacktriangle{}"
+  '\u25E4': "\\ulblacktriangle{}"
+  '\u25E5': "\\urblacktriangle{}"
+  '\u25E6': "\\smwhtcircle{}"
   '\u25E7': "\\Elzsqfl{}"
   '\u25E8': "\\Elzsqfr{}"
+  '\u25E9': "\\squareulblack{}"
   '\u25EA': "\\Elzsqfse{}"
+  '\u25EB': "\\boxbar{}"
+  '\u25EC': "\\trianglecdot{}"
+  '\u25ED': "\\triangleleftblack{}"
+  '\u25EE': "\\trianglerightblack{}"
   '\u25EF': "\\bigcirc{}"
+  '\u25F0': "\\squareulquad{}"
+  '\u25F1': "\\squarellquad{}"
+  '\u25F2': "\\squarelrquad{}"
+  '\u25F3': "\\squareurquad{}"
+  '\u25F4': "\\circleulquad{}"
+  '\u25F5': "\\circlellquad{}"
+  '\u25F6': "\\circlelrquad{}"
+  '\u25F7': "\\circleurquad{}"
+  '\u25F8': "\\ultriangle{}"
+  '\u25F9': "\\urtriangle{}"
+  '\u25FA': "\\lltriangle{}"
+  '\u25FB': "\\square{}"
+  '\u25FC': "\\blacksquare{}"
+  '\u25FD': "\\mdsmwhtsquare{}"
+  '\u25FE': "\\mdsmblksquare{}"
+  '\u25FF': "\\lrtriangle{}"
+  '\u2609': "\\Sun{}"
+  '\u2610': "\\Square{}"
+  '\u2611': "\\CheckedBox{}"
+  '\u2612': "\\XBox{}"
+  '\u2615': "\\steaming{}"
+  '\u2620': "\\skull{}"
+  '\u2621': "\\danger{}"
+  '\u2622': "\\radiation{}"
+  '\u2623': "\\biohazard{}"
+  '\u262F': "\\yinyang{}"
+  '\u2639': "\\frownie{}"
+  '\u263A': "\\smiley{}"
+  '\u263B': "\\blacksmiley{}"
+  '\u263C': "\\sun{}"
+  '\u263D': "\\rightmoon{}"
+  '\u2641': "\\earth{}"
+  '\u2661': "\\heartsuit{}"
   '\u2662': "\\diamond{}"
+  '\u2664': "\\varspadesuit{}"
+  '\u2667': "\\varclubsuit{}"
+  '\u266B': "\\twonotes{}"
+  '\u266C': "\\sixteenthnote{}"
   '\u266D': "\\flat{}"
   '\u266E': "\\natural{}"
   '\u266F': "\\sharp{}"
+  '\u267B': "\\recycle{}"
+  '\u267E': "\\acidfree{}"
+  '\u2680': "\\dicei{}"
+  '\u2681': "\\diceii{}"
+  '\u2682': "\\diceiii{}"
+  '\u2683': "\\diceiv{}"
+  '\u2684': "\\dicev{}"
+  '\u2685': "\\dicevi{}"
+  '\u2686': "\\circledrightdot{}"
+  '\u2687': "\\circledtwodots{}"
+  '\u2688': "\\blackcircledrightdot{}"
+  '\u2689': "\\blackcircledtwodots{}"
+  '\u2693': "\\anchor{}"
+  '\u2694': "\\swords{}"
+  '\u26A0': "\\warning{}"
+  '\u26A5': "\\Hermaphrodite{}"
+  '\u26AA': "\\medcirc{}"
+  '\u26AB': "\\medbullet{}"
+  '\u26AC': "\\mdsmwhtcircle{}"
+  '\u26B2': "\\neuter{}"
+  '\u2772': "\\lbrbrak{}"
+  '\u2773': "\\rbrbrak{}"
+  '\u27C0': "\\threedangle{}"
+  '\u27C1': "\\whiteinwhitetriangle{}"
+  '\u27C2': "\\perp{}"
+  '\u27C3': "\\subsetcirc{}"
+  '\u27C4': "\\supsetcirc{}"
+  '\u27C5': "\\Lbag{}"
+  '\u27C6': "\\Rbag{}"
+  '\u27C7': "\\veedot{}"
+  '\u27C8': "\\bsolhsub{}"
+  '\u27C9': "\\suphsol{}"
+  '\u27CC': "\\longdivision{}"
+  '\u27D0': "\\Diamonddot{}"
+  '\u27D1': "\\wedgedot{}"
+  '\u27D2': "\\upin{}"
+  '\u27D3': "\\pullback{}"
+  '\u27D4': "\\pushout{}"
+  '\u27D5': "\\leftouterjoin{}"
+  '\u27D6': "\\rightouterjoin{}"
+  '\u27D7': "\\fullouterjoin{}"
+  '\u27D8': "\\bigbot{}"
+  '\u27D9': "\\bigtop{}"
+  '\u27DA': "\\DashVDash{}"
+  '\u27DB': "\\dashVdash{}"
+  '\u27DC': "\\multimapinv{}"
+  '\u27DD': "\\vlongdash{}"
+  '\u27DE': "\\longdashv{}"
+  '\u27DF': "\\cirbot{}"
+  '\u27E0': "\\lozengeminus{}"
+  '\u27E1': "\\concavediamond{}"
+  '\u27E2': "\\concavediamondtickleft{}"
+  '\u27E3': "\\concavediamondtickright{}"
+  '\u27E4': "\\whitesquaretickleft{}"
+  '\u27E5': "\\whitesquaretickright{}"
+  '\u27E6': "\\llbracket{}"
+  '\u27E7': "\\rrbracket{}"
+  '\u27EA': "\\lang{}"
+  '\u27EB': "\\rang{}"
+  '\u27EC': "\\Lbrbrak{}"
+  '\u27ED': "\\Rbrbrak{}"
+  '\u27EE': "\\lgroup{}"
+  '\u27EF': "\\rgroup{}"
+  '\u27F0': "\\UUparrow{}"
+  '\u27F1': "\\DDownarrow{}"
+  '\u27F2': "\\acwgapcirclearrow{}"
+  '\u27F3': "\\cwgapcirclearrow{}"
+  '\u27F4': "\\rightarrowonoplus{}"
   '\u27F5': "\\longleftarrow{}"
   '\u27F6': "\\longrightarrow{}"
   '\u27F7': "\\longleftrightarrow{}"
   '\u27F8': "\\Longleftarrow{}"
   '\u27F9': "\\Longrightarrow{}"
   '\u27FA': "\\Longleftrightarrow{}"
+  '\u27FB': "\\longmapsfrom{}"
   '\u27FC': "\\longmapsto{}"
+  '\u27FD': "\\Longmapsfrom{}"
+  '\u27FE': "\\Longmapsto{}"
   '\u27FF': "\\sim\\joinrel\\leadsto{}"
+  '\u2900': "\\psur{}"
+  '\u2901': "\\nVtwoheadrightarrow{}"
+  '\u2902': "\\nvLeftarrow{}"
+  '\u2903': "\\nvRightarrow{}"
+  '\u2904': "\\nvLeftrightarrow{}"
   '\u2905': "\\ElsevierGlyph{E212}"
+  '\u2906': "\\Mapsfrom{}"
+  '\u2907': "\\Mapsto{}"
+  '\u2908': "\\downarrowbarred{}"
+  '\u2909': "\\uparrowbarred{}"
+  '\u290A': "\\Uuparrow{}"
+  '\u290B': "\\Ddownarrow{}"
+  '\u290C': "\\leftbkarrow{}"
+  '\u290D': "\\rightbkarrow{}"
+  '\u290E': "\\leftdbkarrow{}"
+  '\u290F': "\\dbkarow{}"
+  '\u2910': "\\drbkarow{}"
+  '\u2911': "\\rightdotarrow{}"
   '\u2912': "\\UpArrowBar{}"
   '\u2913': "\\DownArrowBar{}"
+  '\u2914': "\\pinj{}"
+  '\u2915': "\\finj{}"
+  '\u2916': "\\bij{}"
+  '\u2917': "\\nvtwoheadrightarrowtail{}"
+  '\u2918': "\\nVtwoheadrightarrowtail{}"
+  '\u2919': "\\lefttail{}"
+  '\u291A': "\\righttail{}"
+  '\u291B': "\\leftdbltail{}"
+  '\u291C': "\\rightdbltail{}"
+  '\u291D': "\\diamondleftarrow{}"
+  '\u291E': "\\rightarrowdiamond{}"
+  '\u291F': "\\diamondleftarrowbar{}"
+  '\u2920': "\\barrightarrowdiamond{}"
+  '\u2921': "\\nwsearrow{}"
+  '\u2922': "\\neswarrow{}"
   '\u2923': "\\ElsevierGlyph{E20C}"
   '\u2924': "\\ElsevierGlyph{E20D}"
   '\u2925': "\\ElsevierGlyph{E20B}"
@@ -551,14 +965,41 @@ LaTeX.toLaTeX.ascii.math =
   '\u2928': "\\ElsevierGlyph{E20E}"
   '\u2929': "\\ElsevierGlyph{E20F}"
   '\u292A': "\\ElsevierGlyph{E210}"
+  '\u292B': "\\rdiagovfdiag{}"
+  '\u292C': "\\fdiagovrdiag{}"
+  '\u292D': "\\seovnearrow{}"
+  '\u292E': "\\neovsearrow{}"
+  '\u292F': "\\fdiagovnearrow{}"
+  '\u2930': "\\rdiagovsearrow{}"
+  '\u2931': "\\neovnwarrow{}"
+  '\u2932': "\\nwovnearrow{}"
   '\u2933': "\\ElsevierGlyph{E21C}"
+  '\u2934': "\\uprightcurvearrow{}"
+  '\u2935': "\\downrightcurvedarrow{}"
   '\u2936': "\\ElsevierGlyph{E21A}"
   '\u2937': "\\ElsevierGlyph{E219}"
+  '\u2938': "\\cwrightarcarrow{}"
+  '\u2939': "\\acwleftarcarrow{}"
+  '\u293A': "\\acwoverarcarrow{}"
+  '\u293B': "\\acwunderarcarrow{}"
+  '\u293C': "\\curvearrowrightminus{}"
+  '\u293D': "\\curvearrowleftplus{}"
+  '\u293E': "\\cwundercurvearrow{}"
+  '\u293F': "\\ccwundercurvearrow{}"
   '\u2940': "\\Elolarr{}"
   '\u2941': "\\Elorarr{}"
   '\u2942': "\\ElzRlarr{}"
+  '\u2943': "\\leftarrowshortrightarrow{}"
   '\u2944': "\\ElzrLarr{}"
+  '\u2945': "\\rightarrowplus{}"
+  '\u2946': "\\leftarrowplus{}"
   '\u2947': "\\Elzrarrx{}"
+  '\u2948': "\\leftrightarrowcircle{}"
+  '\u2949': "\\twoheaduparrowcircle{}"
+  '\u294A': "\\leftrightharpoon{}"
+  '\u294B': "\\rightleftharpoon{}"
+  '\u294C': "\\updownharpoonrightleft{}"
+  '\u294D': "\\updownharpoonleftright{}"
   '\u294E': "\\LeftRightVector{}"
   '\u294F': "\\RightUpDownVector{}"
   '\u2950': "\\DownLeftRightVector{}"
@@ -579,57 +1020,297 @@ LaTeX.toLaTeX.ascii.math =
   '\u295F': "\\DownRightTeeVector{}"
   '\u2960': "\\LeftUpTeeVector{}"
   '\u2961': "\\LeftDownTeeVector{}"
+  '\u2962': "\\leftleftharpoons{}"
+  '\u2963': "\\upupharpoons{}"
+  '\u2964': "\\rightrightharpoons{}"
+  '\u2965': "\\downdownharpoons{}"
+  '\u2966': "\\leftrightharpoonsup{}"
+  '\u2967': "\\leftrightharpoonsdown{}"
+  '\u2968': "\\rightleftharpoonsup{}"
+  '\u2969': "\\rightleftharpoonsdown{}"
+  '\u296A': "\\leftbarharpoon{}"
+  '\u296B': "\\barleftharpoon{}"
+  '\u296C': "\\rightbarharpoon{}"
+  '\u296D': "\\barrightharpoon{}"
   '\u296E': "\\UpEquilibrium{}"
   '\u296F': "\\ReverseUpEquilibrium{}"
   '\u2970': "\\RoundImplies{}"
+  '\u2971': "\\equalrightarrow{}"
+  '\u2972': "\\similarrightarrow{}"
+  '\u2973': "\\leftarrowsimilar{}"
+  '\u2974': "\\rightarrowsimilar{}"
+  '\u2975': "\\rightarrowapprox{}"
+  '\u2976': "\\ltlarr{}"
+  '\u2977': "\\leftarrowless{}"
+  '\u2978': "\\gtrarr{}"
+  '\u2979': "\\subrarr{}"
+  '\u297A': "\\leftarrowsubset{}"
+  '\u297B': "\\suplarr{}"
   '\u297C': "\\ElsevierGlyph{E214}"
   '\u297D': "\\ElsevierGlyph{E215}"
+  '\u297E': "\\upfishtail{}"
+  '\u297F': "\\downfishtail{}"
   '\u2980': "\\Elztfnc{}"
+  '\u2981': "\\spot{}"
+  '\u2982': "\\typecolon{}"
+  '\u2983': "\\lBrace{}"
+  '\u2984': "\\rBrace{}"
   '\u2985': "\\ElsevierGlyph{3018}"
   '\u2986': "\\Elroang{}"
+  '\u2987': "\\limg{}"
+  '\u2988': "\\rimg{}"
+  '\u2989': "\\lblot{}"
+  '\u298A': "\\rblot{}"
+  '\u298B': "\\lbrackubar{}"
+  '\u298C': "\\rbrackubar{}"
+  '\u298D': "\\lbrackultick{}"
+  '\u298E': "\\rbracklrtick{}"
+  '\u298F': "\\lbracklltick{}"
+  '\u2990': "\\rbrackurtick{}"
+  '\u2991': "\\langledot{}"
+  '\u2992': "\\rangledot{}"
   '\u2993': "<\\kern-0.58em("
   '\u2994': "\\ElsevierGlyph{E291}"
+  '\u2995': "\\Lparengtr{}"
+  '\u2996': "\\Rparenless{}"
+  '\u2997': "\\lblkbrbrak{}"
+  '\u2998': "\\rblkbrbrak{}"
   '\u2999': "\\Elzddfnc{}"
+  '\u299A': "\\vzigzag{}"
+  '\u299B': "\\measuredangleleft{}"
   '\u299C': "\\Angle{}"
+  '\u299D': "\\rightanglemdot{}"
+  '\u299E': "\\angles{}"
+  '\u299F': "\\angdnr{}"
   '\u29A0': "\\Elzlpargt{}"
+  '\u29A1': "\\sphericalangleup{}"
+  '\u29A2': "\\turnangle{}"
+  '\u29A3': "\\revangle{}"
+  '\u29A4': "\\angleubar{}"
+  '\u29A5': "\\revangleubar{}"
+  '\u29A6': "\\wideangledown{}"
+  '\u29A7': "\\wideangleup{}"
+  '\u29A8': "\\measanglerutone{}"
+  '\u29A9': "\\measanglelutonw{}"
+  '\u29AA': "\\measanglerdtose{}"
+  '\u29AB': "\\measangleldtosw{}"
+  '\u29AC': "\\measangleurtone{}"
+  '\u29AD': "\\measangleultonw{}"
+  '\u29AE': "\\measangledrtose{}"
+  '\u29AF': "\\measangledltosw{}"
+  '\u29B0': "\\revemptyset{}"
+  '\u29B1': "\\emptysetobar{}"
+  '\u29B2': "\\emptysetocirc{}"
+  '\u29B3': "\\emptysetoarr{}"
+  '\u29B4': "\\emptysetoarrl{}"
   '\u29B5': "\\ElsevierGlyph{E260}"
   '\u29B6': "\\ElsevierGlyph{E61B}"
+  '\u29B7': "\\circledparallel{}"
+  '\u29B8': "\\circledbslash{}"
+  '\u29B9': "\\operp{}"
+  '\u29BA': "\\obot{}"
+  '\u29BB': "\\olcross{}"
+  '\u29BC': "\\odotslashdot{}"
+  '\u29BD': "\\uparrowoncircle{}"
+  '\u29BE': "\\circledwhitebullet{}"
+  '\u29BF': "\\circledbullet{}"
+  '\u29C0': "\\circledless{}"
+  '\u29C1': "\\circledgtr{}"
+  '\u29C2': "\\cirscir{}"
+  '\u29C3': "\\cirE{}"
+  '\u29C4': "\\boxslash{}"
+  '\u29C5': "\\boxbslash{}"
+  '\u29C6': "\\boxast{}"
+  '\u29C7': "\\boxcircle{}"
+  '\u29C8': "\\boxbox{}"
+  '\u29C9': "\\boxonbox{}"
   '\u29CA': "\\ElzLap{}"
   '\u29CB': "\\Elzdefas{}"
+  '\u29CC': "\\triangles{}"
+  '\u29CD': "\\triangleserifs{}"
+  '\u29CE': "\\rtriltri{}"
   '\u29CF': "\\LeftTriangleBar{}"
   '\u29D0': "\\RightTriangleBar{}"
+  '\u29D1': "\\lfbowtie{}"
+  '\u29D2': "\\rfbowtie{}"
+  '\u29D3': "\\fbowtie{}"
+  '\u29D4': "\\lftimes{}"
+  '\u29D5': "\\rftimes{}"
+  '\u29D6': "\\hourglass{}"
+  '\u29D7': "\\blackhourglass{}"
+  '\u29D8': "\\lvzigzag{}"
+  '\u29D9': "\\rvzigzag{}"
+  '\u29DA': "\\Lvzigzag{}"
+  '\u29DB': "\\Rvzigzag{}"
   '\u29DC': "\\ElsevierGlyph{E372}"
+  '\u29DD': "\\tieinfty{}"
+  '\u29DE': "\\nvinfty{}"
+  '\u29DF': "\\multimapboth{}"
+  '\u29E0': "\\laplac{}"
+  '\u29E1': "\\lrtriangleeq{}"
+  '\u29E2': "\\shuffle{}"
+  '\u29E3': "\\eparsl{}"
+  '\u29E4': "\\smeparsl{}"
+  '\u29E5': "\\eqvparsl{}"
+  '\u29E6': "\\gleichstark{}"
+  '\u29E7': "\\thermod{}"
+  '\u29E8': "\\downtriangleleftblack{}"
+  '\u29E9': "\\downtrianglerightblack{}"
+  '\u29EA': "\\blackdiamonddownarrow{}"
   '\u29EB': "\\blacklozenge{}"
+  '\u29EC': "\\circledownarrow{}"
+  '\u29ED': "\\blackcircledownarrow{}"
+  '\u29EE': "\\errbarsquare{}"
+  '\u29EF': "\\errbarblacksquare{}"
+  '\u29F0': "\\errbardiamond{}"
+  '\u29F1': "\\errbarblackdiamond{}"
+  '\u29F2': "\\errbarcircle{}"
+  '\u29F3': "\\errbarblackcircle{}"
   '\u29F4': "\\RuleDelayed{}"
+  '\u29F5': "\\setminus{}"
+  '\u29F6': "\\dsol{}"
+  '\u29F7': "\\rsolbar{}"
+  '\u29F8': "\\xsol{}"
+  '\u29F9': "\\zhide{}"
+  '\u29FA': "\\doubleplus{}"
+  '\u29FB': "\\tripleplus{}"
+  '\u29FC': "\\lcurvyangle{}"
+  '\u29FD': "\\rcurvyangle{}"
+  '\u29FE': "\\tplus{}"
+  '\u29FF': "\\tminus{}"
+  '\u2A00': "\\bigodot{}"
+  '\u2A01': "\\bigoplus{}"
+  '\u2A02': "\\bigotimes{}"
+  '\u2A03': "\\bigcupdot{}"
   '\u2A04': "\\Elxuplus{}"
   '\u2A05': "\\ElzThr{}"
   '\u2A06': "\\Elxsqcup{}"
   '\u2A07': "\\ElzInf{}"
   '\u2A08': "\\ElzSup{}"
+  '\u2A09': "\\varprod{}"
+  '\u2A0A': "\\modtwosum{}"
+  '\u2A0B': "\\sumint{}"
+  '\u2A0C': "\\iiiint{}"
   '\u2A0D': "\\ElzCint{}"
+  '\u2A0E': "\\intBar{}"
   '\u2A0F': "\\clockoint{}"
   '\u2A10': "\\ElsevierGlyph{E395}"
+  '\u2A11': "\\awint{}"
+  '\u2A12': "\\rppolint{}"
+  '\u2A13': "\\scpolint{}"
+  '\u2A14': "\\npolint{}"
+  '\u2A15': "\\pointint{}"
   '\u2A16': "\\sqrint{}"
+  '\u2A17': "\\intlarhk{}"
+  '\u2A18': "\\intx{}"
+  '\u2A19': "\\intcap{}"
+  '\u2A1A': "\\intcup{}"
+  '\u2A1B': "\\upint{}"
+  '\u2A1C': "\\lowint{}"
+  '\u2A1D': "\\Join{}"
+  '\u2A1E': "\\bigtriangleleft{}"
+  '\u2A1F': "\\zcmp{}"
+  '\u2A20': "\\zpipe{}"
+  '\u2A21': "\\zproject{}"
+  '\u2A22': "\\ringplus{}"
+  '\u2A23': "\\plushat{}"
+  '\u2A24': "\\simplus{}"
   '\u2A25': "\\ElsevierGlyph{E25A}"
+  '\u2A26': "\\plussim{}"
+  '\u2A27': "\\plussubtwo{}"
+  '\u2A28': "\\plustrif{}"
+  '\u2A29': "\\commaminus{}"
   '\u2A2A': "\\ElsevierGlyph{E25B}"
+  '\u2A2B': "\\minusfdots{}"
+  '\u2A2C': "\\minusrdots{}"
   '\u2A2D': "\\ElsevierGlyph{E25C}"
   '\u2A2E': "\\ElsevierGlyph{E25D}"
   '\u2A2F': "\\ElzTimes{}"
+  '\u2A30': "\\dottimes{}"
+  '\u2A31': "\\timesbar{}"
+  '\u2A32': "\\btimes{}"
+  '\u2A33': "\\smashtimes{}"
   '\u2A34': "\\ElsevierGlyph{E25E}"
   '\u2A35': "\\ElsevierGlyph{E25E}"
+  '\u2A36': "\\otimeshat{}"
+  '\u2A37': "\\Otimes{}"
+  '\u2A38': "\\odiv{}"
+  '\u2A39': "\\triangleplus{}"
+  '\u2A3A': "\\triangleminus{}"
+  '\u2A3B': "\\triangletimes{}"
   '\u2A3C': "\\ElsevierGlyph{E259}"
+  '\u2A3D': "\\intprodr{}"
+  '\u2A3E': "\\fcmp{}"
   '\u2A3F': "\\amalg{}"
+  '\u2A40': "\\capdot{}"
+  '\u2A41': "\\uminus{}"
+  '\u2A42': "\\barcup{}"
+  '\u2A43': "\\barcap{}"
+  '\u2A44': "\\capwedge{}"
+  '\u2A45': "\\cupvee{}"
+  '\u2A46': "\\cupovercap{}"
+  '\u2A47': "\\capovercup{}"
+  '\u2A48': "\\cupbarcap{}"
+  '\u2A49': "\\capbarcup{}"
+  '\u2A4A': "\\twocups{}"
+  '\u2A4B': "\\twocaps{}"
+  '\u2A4C': "\\closedvarcup{}"
+  '\u2A4D': "\\closedvarcap{}"
+  '\u2A4E': "\\Sqcap{}"
+  '\u2A4F': "\\Sqcup{}"
+  '\u2A50': "\\closedvarcupsmashprod{}"
+  '\u2A51': "\\wedgeodot{}"
+  '\u2A52': "\\veeodot{}"
   '\u2A53': "\\ElzAnd{}"
   '\u2A54': "\\ElzOr{}"
   '\u2A55': "\\ElsevierGlyph{E36E}"
   '\u2A56': "\\ElOr{}"
+  '\u2A57': "\\bigslopedvee{}"
+  '\u2A58': "\\bigslopedwedge{}"
+  '\u2A59': "\\veeonwedge{}"
+  '\u2A5A': "\\wedgemidvert{}"
+  '\u2A5B': "\\veemidvert{}"
+  '\u2A5C': "\\midbarwedge{}"
+  '\u2A5D': "\\midbarvee{}"
   '\u2A5E': "\\perspcorrespond{}"
   '\u2A5F': "\\Elzminhat{}"
+  '\u2A60': "\\wedgedoublebar{}"
+  '\u2A61': "\\varveebar{}"
+  '\u2A62': "\\doublebarvee{}"
   '\u2A63': "\\ElsevierGlyph{225A}"
+  '\u2A64': "\\dsub{}"
+  '\u2A65': "\\rsub{}"
+  '\u2A66': "\\eqdot{}"
+  '\u2A67': "\\dotequiv{}"
+  '\u2A68': "\\equivVert{}"
+  '\u2A69': "\\equivVvert{}"
+  '\u2A6A': "\\dotsim{}"
+  '\u2A6B': "\\simrdots{}"
+  '\u2A6C': "\\simminussim{}"
+  '\u2A6D': "\\congdot{}"
   '\u2A6E': "\\stackrel{*}{=}"
+  '\u2A6F': "\\hatapprox{}"
+  '\u2A70': "\\approxeqq{}"
+  '\u2A71': "\\eqqplus{}"
+  '\u2A72': "\\pluseqq{}"
+  '\u2A73': "\\eqqsim{}"
+  '\u2A74': "\\Coloneqq{}"
   '\u2A75': "\\Equal{}"
+  '\u2A76': "\\Same{}"
+  '\u2A77': "\\ddotseq{}"
+  '\u2A78': "\\equivDD{}"
+  '\u2A79': "\\ltcir{}"
+  '\u2A7A': "\\gtcir{}"
+  '\u2A7B': "\\ltquest{}"
+  '\u2A7C': "\\gtquest{}"
   '\u2A7D': "\\leqslant{}"
   '\u2A7E': "\\geqslant{}"
+  '\u2A7F': "\\lesdot{}"
+  '\u2A80': "\\gesdot{}"
+  '\u2A81': "\\lesdoto{}"
+  '\u2A82': "\\gesdoto{}"
+  '\u2A83': "\\lesdotor{}"
+  '\u2A84': "\\gesdotol{}"
   '\u2A85': "\\lessapprox{}"
   '\u2A86': "\\gtrapprox{}"
   '\u2A87': "\\lneq{}"
@@ -638,33 +1319,195 @@ LaTeX.toLaTeX.ascii.math =
   '\u2A8A': "\\gnapprox{}"
   '\u2A8B': "\\lesseqqgtr{}"
   '\u2A8C': "\\gtreqqless{}"
+  '\u2A8D': "\\lsime{}"
+  '\u2A8E': "\\gsime{}"
+  '\u2A8F': "\\lsimg{}"
+  '\u2A90': "\\gsiml{}"
+  '\u2A91': "\\lgE{}"
+  '\u2A92': "\\glE{}"
+  '\u2A93': "\\lesges{}"
+  '\u2A94': "\\gesles{}"
   '\u2A95': "\\eqslantless{}"
   '\u2A96': "\\eqslantgtr{}"
+  '\u2A97': "\\elsdot{}"
+  '\u2A98': "\\egsdot{}"
+  '\u2A99': "\\eqqless{}"
+  '\u2A9A': "\\eqqgtr{}"
+  '\u2A9B': "\\eqqslantless{}"
+  '\u2A9C': "\\eqqslantgtr{}"
   '\u2A9D': "\\Pisymbol{ppi020}{117}"
   '\u2A9E': "\\Pisymbol{ppi020}{105}"
+  '\u2A9F': "\\simlE{}"
+  '\u2AA0': "\\simgE{}"
   '\u2AA1': "\\NestedLessLess{}"
   '\u2AA2': "\\NestedGreaterGreater{}"
+  '\u2AA3': "\\partialmeetcontraction{}"
+  '\u2AA4': "\\glj{}"
+  '\u2AA5': "\\gla{}"
+  '\u2AA6': "\\leftslice{}"
+  '\u2AA7': "\\rightslice{}"
+  '\u2AA8': "\\lescc{}"
+  '\u2AA9': "\\gescc{}"
+  '\u2AAA': "\\smt{}"
+  '\u2AAB': "\\lat{}"
+  '\u2AAC': "\\smte{}"
+  '\u2AAD': "\\late{}"
+  '\u2AAE': "\\bumpeqq{}"
   '\u2AAF': "\\preceq{}"
   '\u2AB0': "\\succeq{}"
+  '\u2AB1': "\\precneq{}"
+  '\u2AB2': "\\succneq{}"
+  '\u2AB3': "\\preceqq{}"
+  '\u2AB4': "\\succeqq{}"
   '\u2AB5': "\\precneqq{}"
   '\u2AB6': "\\succneqq{}"
   '\u2AB7': "\\precapprox{}"
   '\u2AB8': "\\succapprox{}"
   '\u2AB9': "\\precnapprox{}"
   '\u2ABA': "\\succnapprox{}"
+  '\u2ABB': "\\llcurly{}"
+  '\u2ABC': "\\ggcurly{}"
+  '\u2ABD': "\\subsetdot{}"
+  '\u2ABE': "\\supsetdot{}"
+  '\u2ABF': "\\subsetplus{}"
+  '\u2AC0': "\\supsetplus{}"
+  '\u2AC1': "\\submult{}"
+  '\u2AC2': "\\supmult{}"
+  '\u2AC3': "\\subedot{}"
+  '\u2AC4': "\\supedot{}"
   '\u2AC5': "\\subseteqq{}"
   '\u2AC6': "\\supseteqq{}"
+  '\u2AC7': "\\subsim{}"
+  '\u2AC8': "\\supsim{}"
+  '\u2AC9': "\\subsetapprox{}"
+  '\u2ACA': "\\supsetapprox{}"
   '\u2ACB': "\\subsetneqq{}"
   '\u2ACC': "\\supsetneqq{}"
+  '\u2ACD': "\\lsqhook{}"
+  '\u2ACE': "\\rsqhook{}"
+  '\u2ACF': "\\csub{}"
+  '\u2AD0': "\\csup{}"
+  '\u2AD1': "\\csube{}"
+  '\u2AD2': "\\csupe{}"
+  '\u2AD3': "\\subsup{}"
+  '\u2AD4': "\\supsub{}"
+  '\u2AD5': "\\subsub{}"
+  '\u2AD6': "\\supsup{}"
+  '\u2AD7': "\\suphsub{}"
+  '\u2AD8': "\\supdsub{}"
+  '\u2AD9': "\\forkv{}"
+  '\u2ADA': "\\topfork{}"
+  '\u2ADB': "\\mlcp{}"
+  '\u2ADC': "\\forks{}"
+  '\u2ADD': "\\forksnot{}"
+  '\u2ADE': "\\shortlefttack{}"
+  '\u2ADF': "\\shortdowntack{}"
+  '\u2AE0': "\\shortuptack{}"
+  '\u2AE1': "\\perps{}"
+  '\u2AE2': "\\vDdash{}"
+  '\u2AE3': "\\dashV{}"
+  '\u2AE4': "\\Dashv{}"
+  '\u2AE5': "\\DashV{}"
+  '\u2AE6': "\\varVdash{}"
+  '\u2AE7': "\\Barv{}"
+  '\u2AE8': "\\vBar{}"
+  '\u2AE9': "\\vBarv{}"
+  '\u2AEA': "\\Top{}"
   '\u2AEB': "\\ElsevierGlyph{E30D}"
+  '\u2AEC': "\\Not{}"
+  '\u2AED': "\\bNot{}"
+  '\u2AEE': "\\revnmid{}"
+  '\u2AEF': "\\cirmid{}"
+  '\u2AF0': "\\midcir{}"
+  '\u2AF1': "\\topcir{}"
+  '\u2AF2': "\\nhpar{}"
+  '\u2AF3': "\\parsim{}"
+  '\u2AF4': "\\interleave{}"
+  '\u2AF5': "\\nhVvert{}"
   '\u2AF6': "\\Elztdcol{}"
+  '\u2AF7': "\\lllnest{}"
+  '\u2AF8': "\\gggnest{}"
+  '\u2AF9': "\\leqqslant{}"
+  '\u2AFA': "\\geqqslant{}"
+  '\u2AFB': "\\trslash{}"
+  '\u2AFC': "\\biginterleave{}"
   '\u2AFD': "{{/}\\!\\!{/}}"
+  '\u2AFE': "\\talloblong{}"
+  '\u2AFF': "\\bigtalloblong{}"
+  '\u2B12': "\\squaretopblack{}"
+  '\u2B13': "\\squarebotblack{}"
+  '\u2B14': "\\squareurblack{}"
+  '\u2B15': "\\squarellblack{}"
+  '\u2B16': "\\diamondleftblack{}"
+  '\u2B17': "\\diamondrightblack{}"
+  '\u2B18': "\\diamondtopblack{}"
+  '\u2B19': "\\diamondbotblack{}"
+  '\u2B1A': "\\dottedsquare{}"
+  '\u2B1B': "\\blacksquare{}"
+  '\u2B1C': "\\square{}"
+  '\u2B1D': "\\vysmblksquare{}"
+  '\u2B1E': "\\vysmwhtsquare{}"
+  '\u2B1F': "\\pentagonblack{}"
+  '\u2B20': "\\pentagon{}"
+  '\u2B21': "\\varhexagon{}"
+  '\u2B22': "\\varhexagonblack{}"
+  '\u2B23': "\\hexagonblack{}"
+  '\u2B24': "\\lgblkcircle{}"
+  '\u2B25': "\\mdblkdiamond{}"
+  '\u2B26': "\\mdwhtdiamond{}"
+  '\u2B27': "\\mdblklozenge{}"
+  '\u2B28': "\\mdwhtlozenge{}"
+  '\u2B29': "\\smblkdiamond{}"
+  '\u2B2A': "\\smblklozenge{}"
+  '\u2B2B': "\\smwhtlozenge{}"
+  '\u2B2C': "\\blkhorzoval{}"
+  '\u2B2D': "\\whthorzoval{}"
+  '\u2B2E': "\\blkvertoval{}"
+  '\u2B2F': "\\whtvertoval{}"
+  '\u2B30': "\\circleonleftarrow{}"
+  '\u2B31': "\\leftthreearrows{}"
+  '\u2B32': "\\leftarrowonoplus{}"
+  '\u2B33': "\\longleftsquigarrow{}"
+  '\u2B34': "\\nvtwoheadleftarrow{}"
+  '\u2B35': "\\nVtwoheadleftarrow{}"
+  '\u2B36': "\\twoheadmapsfrom{}"
+  '\u2B37': "\\twoheadleftdbkarrow{}"
+  '\u2B38': "\\leftdotarrow{}"
+  '\u2B39': "\\nvleftarrowtail{}"
+  '\u2B3A': "\\nVleftarrowtail{}"
+  '\u2B3B': "\\twoheadleftarrowtail{}"
+  '\u2B3C': "\\nvtwoheadleftarrowtail{}"
+  '\u2B3D': "\\nVtwoheadleftarrowtail{}"
+  '\u2B3E': "\\leftarrowx{}"
+  '\u2B3F': "\\leftcurvedarrow{}"
+  '\u2B40': "\\equalleftarrow{}"
+  '\u2B41': "\\bsimilarleftarrow{}"
+  '\u2B42': "\\leftarrowbackapprox{}"
+  '\u2B43': "\\rightarrowgtr{}"
+  '\u2B44': "\\rightarrowsupset{}"
+  '\u2B45': "\\LLeftarrow{}"
+  '\u2B46': "\\RRightarrow{}"
+  '\u2B47': "\\bsimilarrightarrow{}"
+  '\u2B48': "\\rightarrowbackapprox{}"
+  '\u2B49': "\\similarleftarrow{}"
+  '\u2B4A': "\\leftarrowapprox{}"
+  '\u2B4B': "\\leftarrowbsimilar{}"
+  '\u2B4C': "\\rightarrowbsimilar{}"
+  '\u2B50': "\\medwhitestar{}"
+  '\u2B51': "\\medblackstar{}"
+  '\u2B52': "\\smwhitestar{}"
+  '\u2B53': "\\rightpentagonblack{}"
+  '\u2B54': "\\rightpentagon{}"
   '\u300A': "\\ElsevierGlyph{300A}"
   '\u300B': "\\ElsevierGlyph{300B}"
+  '\u3012': "\\postalmark{}"
+  '\u3014': "\\lbrbrak{}"
+  '\u3015': "\\rbrbrak{}"
   '\u3018': "\\ElsevierGlyph{3018}"
   '\u3019': "\\ElsevierGlyph{3019}"
   '\u301A': "\\openbracketleft{}"
   '\u301B': "\\openbracketright{}"
+  '\u3030': "\\hzigzag{}"
   '\uD835\uDC00': "\\mathbf{A}"
   '\uD835\uDC01': "\\mathbf{B}"
   '\uD835\uDC02': "\\mathbf{C}"
@@ -1317,6 +2160,8 @@ LaTeX.toLaTeX.ascii.math =
   '\uD835\uDEA1': "\\mathtt{x}"
   '\uD835\uDEA2': "\\mathtt{y}"
   '\uD835\uDEA3': "\\mathtt{z}"
+  '\uD835\uDEA4': "\\imath{}"
+  '\uD835\uDEA5': "\\jmath{}"
   '\uD835\uDEA8': "\\mathbf{\\Alpha}"
   '\uD835\uDEA9': "\\mathbf{\\Beta}"
   '\uD835\uDEAA': "\\mathbf{\\Gamma}"
@@ -1577,6 +2422,8 @@ LaTeX.toLaTeX.ascii.math =
   '\uD835\uDFC2': "\\mathsfbfsl{\\Omega}"
   '\uD835\uDFC3': "\\partial{}"
   '\uD835\uDFC4': "\\in{}"
+  '\uD835\uDFCA': "\\mbfDigamma{}"
+  '\uD835\uDFCB': "\\mbfdigamma{}"
   '\uD835\uDFCE': "\\mathbf{0}"
   '\uD835\uDFCF': "\\mathbf{1}"
   '\uD835\uDFD0': "\\mathbf{2}"
@@ -3080,6 +3927,9 @@ LaTeX.toUnicode =
   "\\eth{}": '\u01AA'
   "{\\eth}": '\u01AA'
   "\\eth": '\u01AA'
+  "\\Zbar{}": '\u01B5'
+  "{\\Zbar}": '\u01B5'
+  "\\Zbar": '\u01B5'
   "{\\fontencoding{LELA}\\selectfont\\char195}": '\u01BA'
   "\\fontencoding{LELA}\\selectfont\\char195": '\u01BA'
   "\\fontencoding{LELA}\\selectfont\\char195{}": '\u01BA'
@@ -3089,6 +3939,9 @@ LaTeX.toUnicode =
   "{\\'g}": '\u01F5'
   "\\'{g}": '\u01F5'
   "\\'g": '\u01F5'
+  "\\jmath{}": '\u0237'
+  "{\\jmath}": '\u0237'
+  "\\jmath": '\u0237'
   "\\Elztrna{}": '\u0250'
   "{\\Elztrna}": '\u0250'
   "\\Elztrna": '\u0250'
@@ -3274,26 +4127,44 @@ LaTeX.toUnicode =
   "\\'": '\u0301'
   "\\~": '\u0303'
   "\\=": '\u0304'
+  "\\overline{}": '\u0305'
+  "{\\overline}": '\u0305'
+  "\\overline": '\u0305'
   "\\u{}": '\u0306'
   "{\\u}": '\u0306'
   "\\u": '\u0306'
   "\\.": '\u0307'
   "\\\"": '\u0308'
+  "\\ovhook{}": '\u0309'
+  "{\\ovhook}": '\u0309'
+  "\\ovhook": '\u0309'
   "\\v{}": '\u030C'
   "{\\v}": '\u030C'
   "\\v": '\u030C'
   "\\cyrchar\\C{}": '\u030F'
   "{\\cyrchar\\C}": '\u030F'
   "\\cyrchar\\C": '\u030F'
+  "\\candra{}": '\u0310'
+  "{\\candra}": '\u0310'
+  "\\candra": '\u0310'
   "{\\fontencoding{LECO}\\selectfont\\char177}": '\u0311'
   "\\fontencoding{LECO}\\selectfont\\char177": '\u0311'
   "\\fontencoding{LECO}\\selectfont\\char177{}": '\u0311'
+  "\\oturnedcomma{}": '\u0312'
+  "{\\oturnedcomma}": '\u0312'
+  "\\oturnedcomma": '\u0312'
+  "\\ocommatopright{}": '\u0315'
+  "{\\ocommatopright}": '\u0315'
+  "\\ocommatopright": '\u0315'
   "{\\fontencoding{LECO}\\selectfont\\char184}": '\u0318'
   "\\fontencoding{LECO}\\selectfont\\char184": '\u0318'
   "\\fontencoding{LECO}\\selectfont\\char184{}": '\u0318'
   "{\\fontencoding{LECO}\\selectfont\\char185}": '\u0319'
   "\\fontencoding{LECO}\\selectfont\\char185": '\u0319'
   "\\fontencoding{LECO}\\selectfont\\char185{}": '\u0319'
+  "\\droang{}": '\u031A'
+  "{\\droang}": '\u031A'
+  "\\droang": '\u031A'
   "\\Elzpalh{}": '\u0321'
   "{\\Elzpalh}": '\u0321'
   "\\Elzpalh": '\u0321'
@@ -3309,6 +4180,15 @@ LaTeX.toUnicode =
   "{\\fontencoding{LECO}\\selectfont\\char207}": '\u032F'
   "\\fontencoding{LECO}\\selectfont\\char207": '\u032F'
   "\\fontencoding{LECO}\\selectfont\\char207{}": '\u032F'
+  "\\utilde{}": '\u0330'
+  "{\\utilde}": '\u0330'
+  "\\utilde": '\u0330'
+  "\\underbar{}": '\u0331'
+  "{\\underbar}": '\u0331'
+  "\\underbar": '\u0331'
+  "\\underline{}": '\u0332'
+  "{\\underline}": '\u0332'
+  "\\underline": '\u0332'
   "\\Elzxl{}": '\u0335'
   "{\\Elzxl}": '\u0335'
   "\\Elzxl": '\u0335'
@@ -3510,9 +4390,18 @@ LaTeX.toUnicode =
   "\\varpi{}": '\u03D6'
   "{\\varpi}": '\u03D6'
   "\\varpi": '\u03D6'
+  "\\Qoppa{}": '\u03D8'
+  "{\\Qoppa}": '\u03D8'
+  "\\Qoppa": '\u03D8'
+  "\\qoppa{}": '\u03D9'
+  "{\\qoppa}": '\u03D9'
+  "\\qoppa": '\u03D9'
   "\\Stigma{}": '\u03DA'
   "{\\Stigma}": '\u03DA'
   "\\Stigma": '\u03DA'
+  "\\stigma{}": '\u03DB'
+  "{\\stigma}": '\u03DB'
+  "\\stigma": '\u03DB'
   "\\Digamma{}": '\u03DC'
   "{\\Digamma}": '\u03DC'
   "\\Digamma": '\u03DC'
@@ -3522,9 +4411,15 @@ LaTeX.toUnicode =
   "\\Koppa{}": '\u03DE'
   "{\\Koppa}": '\u03DE'
   "\\Koppa": '\u03DE'
+  "\\koppa{}": '\u03DF'
+  "{\\koppa}": '\u03DF'
+  "\\koppa": '\u03DF'
   "\\Sampi{}": '\u03E0'
   "{\\Sampi}": '\u03E0'
   "\\Sampi": '\u03E0'
+  "\\sampi{}": '\u03E1'
+  "{\\sampi}": '\u03E1'
+  "\\sampi": '\u03E1'
   "\\varkappa{}": '\u03F0'
   "{\\varkappa}": '\u03F0'
   "\\varkappa": '\u03F0'
@@ -4099,11 +4994,11 @@ LaTeX.toUnicode =
   "\\cyrchar\\cyrotld{}": '\u04E9'
   "{\\cyrchar\\cyrotld}": '\u04E9'
   "\\cyrchar\\cyrotld": '\u04E9'
+  "\\quad{}": '\u2001'
+  "{\\quad}": '\u2001'
+  "\\quad": '\u2001'
   "\\hspace{0.6em}": '\u2002'
-  "\\quad{}": '\u2003'
-  "{\\quad}": '\u2003'
   "\\hspace{1em}": '\u2003'
-  "\\quad": '\u2003'
   "\\;": '\u2004'
   "\\hspace{0.33em}": '\u2004'
   "\\hspace{0.25em}": '\u2005'
@@ -4127,6 +5022,9 @@ LaTeX.toUnicode =
   "\\Vert{}": '\u2016'
   "{\\Vert}": '\u2016'
   "\\Vert": '\u2016'
+  "\\twolowline{}": '\u2017'
+  "{\\twolowline}": '\u2017'
+  "\\twolowline": '\u2017'
   "`": '\u2018'
   ",": '\u201A'
   "\\Elzreapos{}": '\u201B'
@@ -4167,12 +5065,39 @@ LaTeX.toUnicode =
   "\\backprime{}": '\u2035'
   "{\\backprime}": '\u2035'
   "\\backprime": '\u2035'
+  "\\backdprime{}": '\u2036'
+  "{\\backdprime}": '\u2036'
+  "\\backdprime": '\u2036'
+  "\\backtrprime{}": '\u2037'
+  "{\\backtrprime}": '\u2037'
+  "\\backtrprime": '\u2037'
+  "\\caretinsert{}": '\u2038'
+  "{\\caretinsert}": '\u2038'
+  "\\caretinsert": '\u2038'
   "\\guilsinglleft{}": '\u2039'
   "{\\guilsinglleft}": '\u2039'
   "\\guilsinglleft": '\u2039'
   "\\guilsinglright{}": '\u203A'
   "{\\guilsinglright}": '\u203A'
   "\\guilsinglright": '\u203A'
+  "\\Exclam{}": '\u203C'
+  "{\\Exclam}": '\u203C'
+  "\\Exclam": '\u203C'
+  "\\cat{}": '\u2040'
+  "{\\cat}": '\u2040'
+  "\\cat": '\u2040'
+  "\\hyphenbullet{}": '\u2043'
+  "{\\hyphenbullet}": '\u2043'
+  "\\hyphenbullet": '\u2043'
+  "\\fracslash{}": '\u2044'
+  "{\\fracslash}": '\u2044'
+  "\\fracslash": '\u2044'
+  "\\Question{}": '\u2047'
+  "{\\Question}": '\u2047'
+  "\\Question": '\u2047'
+  "\\closure{}": '\u2050'
+  "{\\closure}": '\u2050'
+  "\\closure": '\u2050'
   "''''": '\u2057'
   "\\:": '\u205F'
   "\\mkern4mu{}": '\u205F'
@@ -4185,17 +5110,74 @@ LaTeX.toUnicode =
   "{\\mbox{\\texteuro}}": '\u20AC'
   "\\mbox{\\texteuro}": '\u20AC'
   "\\mbox{\\texteuro}{}": '\u20AC'
+  "\\lvec{}": '\u20D0'
+  "{\\lvec}": '\u20D0'
+  "\\lvec": '\u20D0'
+  "\\vec{}": '\u20D1'
+  "{\\vec}": '\u20D1'
+  "\\vec": '\u20D1'
+  "\\vertoverlay{}": '\u20D2'
+  "{\\vertoverlay}": '\u20D2'
+  "\\vertoverlay": '\u20D2'
+  "\\LVec{}": '\u20D6'
+  "{\\LVec}": '\u20D6'
+  "\\LVec": '\u20D6'
   "\\dddot{}": '\u20DB'
   "{\\dddot}": '\u20DB'
   "\\dddot": '\u20DB'
   "\\ddddot{}": '\u20DC'
   "{\\ddddot}": '\u20DC'
   "\\ddddot": '\u20DC'
+  "\\enclosecircle{}": '\u20DD'
+  "{\\enclosecircle}": '\u20DD'
+  "\\enclosecircle": '\u20DD'
+  "\\enclosesquare{}": '\u20DE'
+  "{\\enclosesquare}": '\u20DE'
+  "\\enclosesquare": '\u20DE'
+  "\\enclosediamond{}": '\u20DF'
+  "{\\enclosediamond}": '\u20DF'
+  "\\enclosediamond": '\u20DF'
+  "\\overleftrightarrow{}": '\u20E1'
+  "{\\overleftrightarrow}": '\u20E1'
+  "\\overleftrightarrow": '\u20E1'
+  "\\enclosetriangle{}": '\u20E4'
+  "{\\enclosetriangle}": '\u20E4'
+  "\\enclosetriangle": '\u20E4'
+  "\\annuity{}": '\u20E7'
+  "{\\annuity}": '\u20E7'
+  "\\annuity": '\u20E7'
+  "\\threeunderdot{}": '\u20E8'
+  "{\\threeunderdot}": '\u20E8'
+  "\\threeunderdot": '\u20E8'
+  "\\widebridgeabove{}": '\u20E9'
+  "{\\widebridgeabove}": '\u20E9'
+  "\\widebridgeabove": '\u20E9'
+  "\\underrightharpoondown{}": '\u20EC'
+  "{\\underrightharpoondown}": '\u20EC'
+  "\\underrightharpoondown": '\u20EC'
+  "\\underleftharpoondown{}": '\u20ED'
+  "{\\underleftharpoondown}": '\u20ED'
+  "\\underleftharpoondown": '\u20ED'
+  "\\underleftarrow{}": '\u20EE'
+  "{\\underleftarrow}": '\u20EE'
+  "\\underleftarrow": '\u20EE'
+  "\\underrightarrow{}": '\u20EF'
+  "{\\underrightarrow}": '\u20EF'
+  "\\underrightarrow": '\u20EF'
+  "\\asteraccent{}": '\u20F0'
+  "{\\asteraccent}": '\u20F0'
+  "\\asteraccent": '\u20F0'
   "\\mathbb{C}": '\u2102'
+  "\\Euler{}": '\u2107'
+  "{\\Euler}": '\u2107'
+  "\\Euler": '\u2107'
   "\\mathscr{g}": '\u210A'
   "\\mathscr{H}": '\u210B'
   "\\mathfrak{H}": '\u210C'
   "\\mathbb{H}": '\u210D'
+  "\\Planckconst{}": '\u210E'
+  "{\\Planckconst}": '\u210E'
+  "\\Planckconst": '\u210E'
   "\\hslash{}": '\u210F'
   "{\\hslash}": '\u210F'
   "\\hslash": '\u210F'
@@ -4232,6 +5214,9 @@ LaTeX.toUnicode =
   "\\mathscr{e}": '\u212F'
   "\\mathscr{E}": '\u2130'
   "\\mathscr{F}": '\u2131'
+  "\\Finv{}": '\u2132'
+  "{\\Finv}": '\u2132'
+  "\\Finv": '\u2132'
   "\\mathscr{M}": '\u2133'
   "\\mathscr{o}": '\u2134'
   "\\aleph{}": '\u2135'
@@ -4246,6 +5231,44 @@ LaTeX.toUnicode =
   "\\daleth{}": '\u2138'
   "{\\daleth}": '\u2138'
   "\\daleth": '\u2138'
+  "\\mathbb{\\pi}": '\u213C'
+  "\\mathbb{\\gamma}": '\u213D'
+  "\\mathbb{\\Gamma}": '\u213E'
+  "\\mathbb{\\Pi}": '\u213F'
+  "\\mathbb{\\Sigma}": '\u2140'
+  "\\Game{}": '\u2141'
+  "{\\Game}": '\u2141'
+  "\\Game": '\u2141'
+  "\\sansLturned{}": '\u2142'
+  "{\\sansLturned}": '\u2142'
+  "\\sansLturned": '\u2142'
+  "\\sansLmirrored{}": '\u2143'
+  "{\\sansLmirrored}": '\u2143'
+  "\\sansLmirrored": '\u2143'
+  "\\Yup{}": '\u2144'
+  "{\\Yup}": '\u2144'
+  "\\Yup": '\u2144'
+  "\\CapitalDifferentialD{}": '\u2145'
+  "{\\CapitalDifferentialD}": '\u2145'
+  "\\CapitalDifferentialD": '\u2145'
+  "\\DifferentialD{}": '\u2146'
+  "{\\DifferentialD}": '\u2146'
+  "\\DifferentialD": '\u2146'
+  "\\ExponetialE{}": '\u2147'
+  "{\\ExponetialE}": '\u2147'
+  "\\ExponetialE": '\u2147'
+  "\\ComplexI{}": '\u2148'
+  "{\\ComplexI}": '\u2148'
+  "\\ComplexI": '\u2148'
+  "\\ComplexJ{}": '\u2149'
+  "{\\ComplexJ}": '\u2149'
+  "\\ComplexJ": '\u2149'
+  "\\PropertyLine{}": '\u214A'
+  "{\\PropertyLine}": '\u214A'
+  "\\PropertyLine": '\u214A'
+  "\\invamp{}": '\u214B'
+  "{\\invamp}": '\u214B'
+  "\\invamp": '\u214B'
   "\\textfrac{1}{3}": '\u2153'
   "\\textfrac{2}{3}": '\u2154'
   "\\textfrac{1}{5}": '\u2155'
@@ -4303,18 +5326,36 @@ LaTeX.toUnicode =
   "\\twoheadleftarrow{}": '\u219E'
   "{\\twoheadleftarrow}": '\u219E'
   "\\twoheadleftarrow": '\u219E'
+  "\\twoheaduparrow{}": '\u219F'
+  "{\\twoheaduparrow}": '\u219F'
+  "\\twoheaduparrow": '\u219F'
   "\\twoheadrightarrow{}": '\u21A0'
   "{\\twoheadrightarrow}": '\u21A0'
   "\\twoheadrightarrow": '\u21A0'
+  "\\twoheaddownarrow{}": '\u21A1'
+  "{\\twoheaddownarrow}": '\u21A1'
+  "\\twoheaddownarrow": '\u21A1'
   "\\leftarrowtail{}": '\u21A2'
   "{\\leftarrowtail}": '\u21A2'
   "\\leftarrowtail": '\u21A2'
   "\\rightarrowtail{}": '\u21A3'
   "{\\rightarrowtail}": '\u21A3'
   "\\rightarrowtail": '\u21A3'
+  "\\mapsfrom{}": '\u21A4'
+  "{\\mapsfrom}": '\u21A4'
+  "\\mapsfrom": '\u21A4'
+  "\\MapsUp{}": '\u21A5'
+  "{\\MapsUp}": '\u21A5'
+  "\\MapsUp": '\u21A5'
   "\\mapsto{}": '\u21A6'
   "{\\mapsto}": '\u21A6'
   "\\mapsto": '\u21A6'
+  "\\MapsDown{}": '\u21A7'
+  "{\\MapsDown}": '\u21A7'
+  "\\MapsDown": '\u21A7'
+  "\\updownarrowbar{}": '\u21A8'
+  "{\\updownarrowbar}": '\u21A8'
+  "\\updownarrowbar": '\u21A8'
   "\\hookleftarrow{}": '\u21A9'
   "{\\hookleftarrow}": '\u21A9'
   "\\hookleftarrow": '\u21A9'
@@ -4333,19 +5374,37 @@ LaTeX.toUnicode =
   "\\nleftrightarrow{}": '\u21AE'
   "{\\nleftrightarrow}": '\u21AE'
   "\\nleftrightarrow": '\u21AE'
+  "\\lightning{}": '\u21AF'
+  "{\\lightning}": '\u21AF'
+  "\\lightning": '\u21AF'
   "\\Lsh{}": '\u21B0'
   "{\\Lsh}": '\u21B0'
   "\\Lsh": '\u21B0'
   "\\Rsh{}": '\u21B1'
   "{\\Rsh}": '\u21B1'
   "\\Rsh": '\u21B1'
+  "\\dlsh{}": '\u21B2'
+  "{\\dlsh}": '\u21B2'
+  "\\dlsh": '\u21B2'
   "\\ElsevierGlyph{21B3}": '\u21B3'
+  "\\linefeed{}": '\u21B4'
+  "{\\linefeed}": '\u21B4'
+  "\\linefeed": '\u21B4'
+  "\\carriagereturn{}": '\u21B5'
+  "{\\carriagereturn}": '\u21B5'
+  "\\carriagereturn": '\u21B5'
   "\\curvearrowleft{}": '\u21B6'
   "{\\curvearrowleft}": '\u21B6'
   "\\curvearrowleft": '\u21B6'
   "\\curvearrowright{}": '\u21B7'
   "{\\curvearrowright}": '\u21B7'
   "\\curvearrowright": '\u21B7'
+  "\\barovernorthwestarrow{}": '\u21B8'
+  "{\\barovernorthwestarrow}": '\u21B8'
+  "\\barovernorthwestarrow": '\u21B8'
+  "\\barleftarrowrightarrowba{}": '\u21B9'
+  "{\\barleftarrowrightarrowba}": '\u21B9'
+  "\\barleftarrowrightarrowba": '\u21B9'
   "\\circlearrowleft{}": '\u21BA'
   "{\\circlearrowleft}": '\u21BA'
   "\\circlearrowleft": '\u21BA'
@@ -4430,18 +5489,105 @@ LaTeX.toUnicode =
   "\\Updownarrow{}": '\u21D5'
   "{\\Updownarrow}": '\u21D5'
   "\\Updownarrow": '\u21D5'
+  "\\Nwarrow{}": '\u21D6'
+  "{\\Nwarrow}": '\u21D6'
+  "\\Nwarrow": '\u21D6'
+  "\\Nearrow{}": '\u21D7'
+  "{\\Nearrow}": '\u21D7'
+  "\\Nearrow": '\u21D7'
+  "\\Searrow{}": '\u21D8'
+  "{\\Searrow}": '\u21D8'
+  "\\Searrow": '\u21D8'
+  "\\Swarrow{}": '\u21D9'
+  "{\\Swarrow}": '\u21D9'
+  "\\Swarrow": '\u21D9'
   "\\Lleftarrow{}": '\u21DA'
   "{\\Lleftarrow}": '\u21DA'
   "\\Lleftarrow": '\u21DA'
   "\\Rrightarrow{}": '\u21DB'
   "{\\Rrightarrow}": '\u21DB'
   "\\Rrightarrow": '\u21DB'
+  "\\leftsquigarrow{}": '\u21DC'
+  "{\\leftsquigarrow}": '\u21DC'
+  "\\leftsquigarrow": '\u21DC'
   "\\rightsquigarrow{}": '\u21DD'
   "{\\rightsquigarrow}": '\u21DD'
   "\\rightsquigarrow": '\u21DD'
+  "\\nHuparrow{}": '\u21DE'
+  "{\\nHuparrow}": '\u21DE'
+  "\\nHuparrow": '\u21DE'
+  "\\nHdownarrow{}": '\u21DF'
+  "{\\nHdownarrow}": '\u21DF'
+  "\\nHdownarrow": '\u21DF'
+  "\\dashleftarrow{}": '\u21E0'
+  "{\\dashleftarrow}": '\u21E0'
+  "\\dashleftarrow": '\u21E0'
+  "\\updasharrow{}": '\u21E1'
+  "{\\updasharrow}": '\u21E1'
+  "\\updasharrow": '\u21E1'
+  "\\dashrightarrow{}": '\u21E2'
+  "{\\dashrightarrow}": '\u21E2'
+  "\\dashrightarrow": '\u21E2'
+  "\\downdasharrow{}": '\u21E3'
+  "{\\downdasharrow}": '\u21E3'
+  "\\downdasharrow": '\u21E3'
+  "\\LeftArrowBar{}": '\u21E4'
+  "{\\LeftArrowBar}": '\u21E4'
+  "\\LeftArrowBar": '\u21E4'
+  "\\RightArrowBar{}": '\u21E5'
+  "{\\RightArrowBar}": '\u21E5'
+  "\\RightArrowBar": '\u21E5'
+  "\\leftwhitearrow{}": '\u21E6'
+  "{\\leftwhitearrow}": '\u21E6'
+  "\\leftwhitearrow": '\u21E6'
+  "\\upwhitearrow{}": '\u21E7'
+  "{\\upwhitearrow}": '\u21E7'
+  "\\upwhitearrow": '\u21E7'
+  "\\rightwhitearrow{}": '\u21E8'
+  "{\\rightwhitearrow}": '\u21E8'
+  "\\rightwhitearrow": '\u21E8'
+  "\\downwhitearrow{}": '\u21E9'
+  "{\\downwhitearrow}": '\u21E9'
+  "\\downwhitearrow": '\u21E9'
+  "\\whitearrowupfrombar{}": '\u21EA'
+  "{\\whitearrowupfrombar}": '\u21EA'
+  "\\whitearrowupfrombar": '\u21EA'
+  "\\circleonrightarrow{}": '\u21F4'
+  "{\\circleonrightarrow}": '\u21F4'
+  "\\circleonrightarrow": '\u21F4'
   "\\DownArrowUpArrow{}": '\u21F5'
   "{\\DownArrowUpArrow}": '\u21F5'
   "\\DownArrowUpArrow": '\u21F5'
+  "\\rightthreearrows{}": '\u21F6'
+  "{\\rightthreearrows}": '\u21F6'
+  "\\rightthreearrows": '\u21F6'
+  "\\nvleftarrow{}": '\u21F7'
+  "{\\nvleftarrow}": '\u21F7'
+  "\\nvleftarrow": '\u21F7'
+  "\\pfun{}": '\u21F8'
+  "{\\pfun}": '\u21F8'
+  "\\pfun": '\u21F8'
+  "\\nvleftrightarrow{}": '\u21F9'
+  "{\\nvleftrightarrow}": '\u21F9'
+  "\\nvleftrightarrow": '\u21F9'
+  "\\nVleftarrow{}": '\u21FA'
+  "{\\nVleftarrow}": '\u21FA'
+  "\\nVleftarrow": '\u21FA'
+  "\\ffun{}": '\u21FB'
+  "{\\ffun}": '\u21FB'
+  "\\ffun": '\u21FB'
+  "\\nVleftrightarrow{}": '\u21FC'
+  "{\\nVleftrightarrow}": '\u21FC'
+  "\\nVleftrightarrow": '\u21FC'
+  "\\leftarrowtriangle{}": '\u21FD'
+  "{\\leftarrowtriangle}": '\u21FD'
+  "\\leftarrowtriangle": '\u21FD'
+  "\\rightarrowtriangle{}": '\u21FE'
+  "{\\rightarrowtriangle}": '\u21FE'
+  "\\rightarrowtriangle": '\u21FE'
+  "\\leftrightarrowtriangle{}": '\u21FF'
+  "{\\leftrightarrowtriangle}": '\u21FF'
+  "\\leftrightarrowtriangle": '\u21FF'
   "\\forall{}": '\u2200'
   "{\\forall}": '\u2200'
   "\\forall": '\u2200'
@@ -4460,6 +5606,9 @@ LaTeX.toUnicode =
   "\\varnothing{}": '\u2205'
   "{\\varnothing}": '\u2205'
   "\\varnothing": '\u2205'
+  "\\increment{}": '\u2206'
+  "{\\increment}": '\u2206'
+  "\\increment": '\u2206'
   "\\nabla{}": '\u2207'
   "{\\nabla}": '\u2207'
   "\\nabla": '\u2207'
@@ -4469,12 +5618,21 @@ LaTeX.toUnicode =
   "\\not\\in{}": '\u2209'
   "{\\not\\in}": '\u2209'
   "\\not\\in": '\u2209'
+  "\\smallin{}": '\u220A'
+  "{\\smallin}": '\u220A'
+  "\\smallin": '\u220A'
   "\\ni{}": '\u220B'
   "{\\ni}": '\u220B'
   "\\ni": '\u220B'
   "\\not\\ni{}": '\u220C'
   "{\\not\\ni}": '\u220C'
   "\\not\\ni": '\u220C'
+  "\\smallni{}": '\u220D'
+  "{\\smallni}": '\u220D'
+  "\\smallni": '\u220D'
+  "\\QED{}": '\u220E'
+  "{\\QED}": '\u220E'
+  "\\QED": '\u220E'
   "\\prod{}": '\u220F'
   "{\\prod}": '\u220F'
   "\\prod": '\u220F'
@@ -4490,6 +5648,9 @@ LaTeX.toUnicode =
   "\\dotplus{}": '\u2214'
   "{\\dotplus}": '\u2214'
   "\\dotplus": '\u2214'
+  "\\slash{}": '\u2215'
+  "{\\slash}": '\u2215'
+  "\\slash": '\u2215'
   "\\setminus{}": '\u2216'
   "{\\setminus}": '\u2216'
   "\\setminus": '\u2216'
@@ -4503,6 +5664,8 @@ LaTeX.toUnicode =
   "\\surd{}": '\u221A'
   "{\\surd}": '\u221A'
   "\\surd": '\u221A'
+  "\\sqrt[3]": '\u221B'
+  "\\sqrt[4]": '\u221C'
   "\\propto{}": '\u221D'
   "{\\propto}": '\u221D'
   "\\propto": '\u221D'
@@ -4574,10 +5737,14 @@ LaTeX.toUnicode =
   "\\because{}": '\u2235'
   "{\\because}": '\u2235'
   "\\because": '\u2235'
+  ":": '\u2236'
   "\\Colon{}": '\u2237'
   "{\\Colon}": '\u2237'
   "\\Colon": '\u2237'
   "\\ElsevierGlyph{2238}": '\u2238'
+  "\\eqcolon{}": '\u2239'
+  "{\\eqcolon}": '\u2239'
+  "\\eqcolon": '\u2239'
   "\\mathbin{{:}\\!\\!{-}\\!\\!{:}}": '\u223A'
   "\\homothetic{}": '\u223B'
   "{\\homothetic}": '\u223B'
@@ -4591,6 +5758,10 @@ LaTeX.toUnicode =
   "\\lazysinv{}": '\u223E'
   "{\\lazysinv}": '\u223E'
   "\\lazysinv": '\u223E'
+  "\\AC{}": '\u223F'
+  "{\\AC}": '\u223F'
+  "\\A{C}": '\u223F'
+  "\\AC": '\u223F'
   "\\wr{}": '\u2240'
   "{\\wr}": '\u2240'
   "\\wr": '\u2240'
@@ -4657,6 +5828,9 @@ LaTeX.toUnicode =
   "\\circeq{}": '\u2257'
   "{\\circeq}": '\u2257'
   "\\circeq": '\u2257'
+  "\\arceq{}": '\u2258'
+  "{\\arceq}": '\u2258'
+  "\\arceq": '\u2258'
   "\\estimates{}": '\u2259'
   "{\\estimates}": '\u2259'
   "\\estimates": '\u2259'
@@ -4667,6 +5841,12 @@ LaTeX.toUnicode =
   "\\triangleq{}": '\u225C'
   "{\\triangleq}": '\u225C'
   "\\triangleq": '\u225C'
+  "\\eqdef{}": '\u225D'
+  "{\\eqdef}": '\u225D'
+  "\\eqdef": '\u225D'
+  "\\measeq{}": '\u225E'
+  "{\\measeq}": '\u225E'
+  "\\measeq": '\u225E'
   "\\ElsevierGlyph{225F}": '\u225F'
   "\\not =": '\u2260'
   "\\equiv{}": '\u2261'
@@ -4675,6 +5855,9 @@ LaTeX.toUnicode =
   "\\not\\equiv{}": '\u2262'
   "{\\not\\equiv}": '\u2262'
   "\\not\\equiv": '\u2262'
+  "\\Equiv{}": '\u2263'
+  "{\\Equiv}": '\u2263'
+  "\\Equiv": '\u2263'
   "\\leq{}": '\u2264'
   "{\\leq}": '\u2264'
   "\\leq": '\u2264'
@@ -4787,6 +5970,12 @@ LaTeX.toUnicode =
   "\\supsetneq{}": '\u228B'
   "{\\supsetneq}": '\u228B'
   "\\supsetneq": '\u228B'
+  "\\cupleftarrow{}": '\u228C'
+  "{\\cupleftarrow}": '\u228C'
+  "\\cupleftarrow": '\u228C'
+  "\\cupdot{}": '\u228D'
+  "{\\cupdot}": '\u228D'
+  "\\cupdot": '\u228D'
   "\\uplus{}": '\u228E'
   "{\\uplus}": '\u228E'
   "\\uplus": '\u228E'
@@ -4829,6 +6018,9 @@ LaTeX.toUnicode =
   "\\circledast{}": '\u229B'
   "{\\circledast}": '\u229B'
   "\\circledast": '\u229B'
+  "\\circledequal{}": '\u229C'
+  "{\\circledequal}": '\u229C'
+  "\\circledequal": '\u229C'
   "\\circleddash{}": '\u229D'
   "{\\circleddash}": '\u229D'
   "\\circleddash": '\u229D'
@@ -4856,6 +6048,9 @@ LaTeX.toUnicode =
   "\\perp{}": '\u22A5'
   "{\\perp}": '\u22A5'
   "\\perp": '\u22A5'
+  "\\assert{}": '\u22A6'
+  "{\\assert}": '\u22A6'
+  "\\assert": '\u22A6'
   "\\truestate{}": '\u22A7'
   "{\\truestate}": '\u22A7'
   "\\truestate": '\u22A7'
@@ -4883,6 +6078,12 @@ LaTeX.toUnicode =
   "\\nVDash{}": '\u22AF'
   "{\\nVDash}": '\u22AF'
   "\\nVDash": '\u22AF'
+  "\\prurel{}": '\u22B0'
+  "{\\prurel}": '\u22B0'
+  "\\prurel": '\u22B0'
+  "\\scurel{}": '\u22B1'
+  "{\\scurel}": '\u22B1'
+  "\\scurel": '\u22B1'
   "\\vartriangleleft{}": '\u22B2'
   "{\\vartriangleleft}": '\u22B2'
   "\\vartriangleleft": '\u22B2'
@@ -4913,9 +6114,18 @@ LaTeX.toUnicode =
   "\\veebar{}": '\u22BB'
   "{\\veebar}": '\u22BB'
   "\\veebar": '\u22BB'
+  "\\barwedge{}": '\u22BC'
+  "{\\barwedge}": '\u22BC'
+  "\\barwedge": '\u22BC'
+  "\\barvee{}": '\u22BD'
+  "{\\barvee}": '\u22BD'
+  "\\barvee": '\u22BD'
   "\\rightanglearc{}": '\u22BE'
   "{\\rightanglearc}": '\u22BE'
   "\\rightanglearc": '\u22BE'
+  "\\varlrtriangle{}": '\u22BF'
+  "{\\varlrtriangle}": '\u22BF'
+  "\\varlrtriangle": '\u22BF'
   "\\ElsevierGlyph{22C0}": '\u22C0'
   "\\ElsevierGlyph{22C1}": '\u22C1'
   "\\bigcap{}": '\u22C2'
@@ -4972,6 +6182,9 @@ LaTeX.toUnicode =
   "\\pitchfork{}": '\u22D4'
   "{\\pitchfork}": '\u22D4'
   "\\pitchfork": '\u22D4'
+  "\\hash{}": '\u22D5'
+  "{\\hash}": '\u22D5'
+  "\\hash": '\u22D5'
   "\\lessdot{}": '\u22D6'
   "{\\lessdot}": '\u22D6'
   "\\lessdot": '\u22D6'
@@ -4990,18 +6203,33 @@ LaTeX.toUnicode =
   "\\gtreqless{}": '\u22DB'
   "{\\gtreqless}": '\u22DB'
   "\\gtreqless": '\u22DB'
+  "\\eqless{}": '\u22DC'
+  "{\\eqless}": '\u22DC'
+  "\\eqless": '\u22DC'
+  "\\eqgtr{}": '\u22DD'
+  "{\\eqgtr}": '\u22DD'
+  "\\eqgtr": '\u22DD'
   "\\curlyeqprec{}": '\u22DE'
   "{\\curlyeqprec}": '\u22DE'
   "\\curlyeqprec": '\u22DE'
   "\\curlyeqsucc{}": '\u22DF'
   "{\\curlyeqsucc}": '\u22DF'
   "\\curlyeqsucc": '\u22DF'
+  "\\npreceq{}": '\u22E0'
+  "{\\npreceq}": '\u22E0'
+  "\\npreceq": '\u22E0'
+  "\\nsucceq{}": '\u22E1'
+  "{\\nsucceq}": '\u22E1'
+  "\\nsucceq": '\u22E1'
   "\\not\\sqsubseteq{}": '\u22E2'
   "{\\not\\sqsubseteq}": '\u22E2'
   "\\not\\sqsubseteq": '\u22E2'
   "\\not\\sqsupseteq{}": '\u22E3'
   "{\\not\\sqsupseteq}": '\u22E3'
   "\\not\\sqsupseteq": '\u22E3'
+  "\\sqsubsetneq{}": '\u22E4'
+  "{\\sqsubsetneq}": '\u22E4'
+  "\\sqsubsetneq": '\u22E4'
   "\\Elzsqspne{}": '\u22E5'
   "{\\Elzsqspne}": '\u22E5'
   "\\Elzsqspne": '\u22E5'
@@ -5041,9 +6269,54 @@ LaTeX.toUnicode =
   "\\downslopeellipsis{}": '\u22F1'
   "{\\downslopeellipsis}": '\u22F1'
   "\\downslopeellipsis": '\u22F1'
-  "\\barwedge{}": '\u2305'
-  "{\\barwedge}": '\u2305'
-  "\\barwedge": '\u2305'
+  "\\disin{}": '\u22F2'
+  "{\\disin}": '\u22F2'
+  "\\disin": '\u22F2'
+  "\\varisins{}": '\u22F3'
+  "{\\varisins}": '\u22F3'
+  "\\varisins": '\u22F3'
+  "\\isins{}": '\u22F4'
+  "{\\isins}": '\u22F4'
+  "\\isins": '\u22F4'
+  "\\isindot{}": '\u22F5'
+  "{\\isindot}": '\u22F5'
+  "\\isindot": '\u22F5'
+  "\\barin{}": '\u22F6'
+  "{\\barin}": '\u22F6'
+  "\\barin": '\u22F6'
+  "\\isinobar{}": '\u22F7'
+  "{\\isinobar}": '\u22F7'
+  "\\isinobar": '\u22F7'
+  "\\isinvb{}": '\u22F8'
+  "{\\isinvb}": '\u22F8'
+  "\\isinvb": '\u22F8'
+  "\\isinE{}": '\u22F9'
+  "{\\isinE}": '\u22F9'
+  "\\isinE": '\u22F9'
+  "\\nisd{}": '\u22FA'
+  "{\\nisd}": '\u22FA'
+  "\\nisd": '\u22FA'
+  "\\varnis{}": '\u22FB'
+  "{\\varnis}": '\u22FB'
+  "\\varnis": '\u22FB'
+  "\\nis{}": '\u22FC'
+  "{\\nis}": '\u22FC'
+  "\\nis": '\u22FC'
+  "\\varniobar{}": '\u22FD'
+  "{\\varniobar}": '\u22FD'
+  "\\varniobar": '\u22FD'
+  "\\niobar{}": '\u22FE'
+  "{\\niobar}": '\u22FE'
+  "\\niobar": '\u22FE'
+  "\\bagmember{}": '\u22FF'
+  "{\\bagmember}": '\u22FF'
+  "\\bagmember": '\u22FF'
+  "\\diameter{}": '\u2300'
+  "{\\diameter}": '\u2300'
+  "\\diameter": '\u2300'
+  "\\house{}": '\u2302'
+  "{\\house}": '\u2302'
+  "\\house": '\u2302'
   "\\perspcorrespond{}": '\u2306'
   "{\\perspcorrespond}": '\u2306'
   "\\perspcorrespond": '\u2306'
@@ -5059,12 +6332,30 @@ LaTeX.toUnicode =
   "\\rfloor{}": '\u230B'
   "{\\rfloor}": '\u230B'
   "\\rfloor": '\u230B'
+  "\\invneg{}": '\u2310'
+  "{\\invneg}": '\u2310'
+  "\\invneg": '\u2310'
+  "\\wasylozenge{}": '\u2311'
+  "{\\wasylozenge}": '\u2311'
+  "\\wasylozenge": '\u2311'
+  "\\profline{}": '\u2312'
+  "{\\profline}": '\u2312'
+  "\\profline": '\u2312'
+  "\\profsurf{}": '\u2313'
+  "{\\profsurf}": '\u2313'
+  "\\profsurf": '\u2313'
   "\\recorder{}": '\u2315'
   "{\\recorder}": '\u2315'
   "\\recorder": '\u2315'
   "{\\mathchar\"2208}": '\u2316'
   "\\mathchar\"2208{}": '\u2316'
   "\\mathchar\"2208": '\u2316'
+  "\\viewdata{}": '\u2317'
+  "{\\viewdata}": '\u2317'
+  "\\viewdata": '\u2317'
+  "\\turnednot{}": '\u2319'
+  "{\\turnednot}": '\u2319'
+  "\\turnednot": '\u2319'
   "\\ulcorner{}": '\u231C'
   "{\\ulcorner}": '\u231C'
   "\\ulcorner": '\u231C'
@@ -5077,6 +6368,12 @@ LaTeX.toUnicode =
   "\\lrcorner{}": '\u231F'
   "{\\lrcorner}": '\u231F'
   "\\lrcorner": '\u231F'
+  "\\inttop{}": '\u2320'
+  "{\\inttop}": '\u2320'
+  "\\inttop": '\u2320'
+  "\\intbottom{}": '\u2321'
+  "{\\intbottom}": '\u2321'
+  "\\intbottom": '\u2321'
   "\\frown{}": '\u2322'
   "{\\frown}": '\u2322'
   "\\frown": '\u2322'
@@ -5089,16 +6386,190 @@ LaTeX.toUnicode =
   "\\rangle{}": '\u232A'
   "{\\rangle}": '\u232A'
   "\\rangle": '\u232A'
+  "\\varhexagonlrbonds{}": '\u232C'
+  "{\\varhexagonlrbonds}": '\u232C'
+  "\\varhexagonlrbonds": '\u232C'
+  "\\conictaper{}": '\u2332'
+  "{\\conictaper}": '\u2332'
+  "\\conictaper": '\u2332'
+  "\\topbot{}": '\u2336'
+  "{\\topbot}": '\u2336'
+  "\\topbot": '\u2336'
+  "\\APLinv{}": '\u2339'
+  "{\\APLinv}": '\u2339'
+  "\\APLinv": '\u2339'
   "\\ElsevierGlyph{E838}": '\u233D'
+  "\\notslash{}": '\u233F'
+  "{\\notslash}": '\u233F'
+  "\\notslash": '\u233F'
+  "\\notbackslash{}": '\u2340'
+  "{\\notbackslash}": '\u2340'
+  "\\notbackslash": '\u2340'
+  "\\APLleftarrowbox{}": '\u2347'
+  "{\\APLleftarrowbox}": '\u2347'
+  "\\APLleftarrowbox": '\u2347'
+  "\\APLrightarrowbox{}": '\u2348'
+  "{\\APLrightarrowbox}": '\u2348'
+  "\\APLrightarrowbox": '\u2348'
+  "\\APLuparrowbox{}": '\u2350'
+  "{\\APLuparrowbox}": '\u2350'
+  "\\APLuparrowbox": '\u2350'
+  "\\APLboxupcaret{}": '\u2353'
+  "{\\APLboxupcaret}": '\u2353'
+  "\\APLboxupcaret": '\u2353'
+  "\\APLdownarrowbox{}": '\u2357'
+  "{\\APLdownarrowbox}": '\u2357'
+  "\\APLdownarrowbox": '\u2357'
+  "\\APLcomment{}": '\u235D'
+  "{\\APLcomment}": '\u235D'
+  "\\APLcomment": '\u235D'
+  "\\APLinput{}": '\u235E'
+  "{\\APLinput}": '\u235E'
+  "\\APLinput": '\u235E'
+  "\\APLlog{}": '\u235F'
+  "{\\APLlog}": '\u235F'
+  "\\APLlog": '\u235F'
+  "\\APLboxquestion{}": '\u2370'
+  "{\\APLboxquestion}": '\u2370'
+  "\\APLboxquestion": '\u2370'
+  "\\rangledownzigzagarrow{}": '\u237C'
+  "{\\rangledownzigzagarrow}": '\u237C'
+  "\\rangledownzigzagarrow": '\u237C'
+  "\\hexagon{}": '\u2394'
+  "{\\hexagon}": '\u2394'
+  "\\hexagon": '\u2394'
+  "\\lparenuend{}": '\u239B'
+  "{\\lparenuend}": '\u239B'
+  "\\lparenuend": '\u239B'
+  "\\lparenextender{}": '\u239C'
+  "{\\lparenextender}": '\u239C'
+  "\\lparenextender": '\u239C'
+  "\\lparenlend{}": '\u239D'
+  "{\\lparenlend}": '\u239D'
+  "\\lparenlend": '\u239D'
+  "\\rparenuend{}": '\u239E'
+  "{\\rparenuend}": '\u239E'
+  "\\rparenuend": '\u239E'
+  "\\rparenextender{}": '\u239F'
+  "{\\rparenextender}": '\u239F'
+  "\\rparenextender": '\u239F'
+  "\\rparenlend{}": '\u23A0'
+  "{\\rparenlend}": '\u23A0'
+  "\\rparenlend": '\u23A0'
+  "\\lbrackuend{}": '\u23A1'
+  "{\\lbrackuend}": '\u23A1'
+  "\\lbrackuend": '\u23A1'
+  "\\lbrackextender{}": '\u23A2'
+  "{\\lbrackextender}": '\u23A2'
+  "\\lbrackextender": '\u23A2'
   "\\Elzdlcorn{}": '\u23A3'
   "{\\Elzdlcorn}": '\u23A3'
   "\\Elzdlcorn": '\u23A3'
+  "\\rbrackuend{}": '\u23A4'
+  "{\\rbrackuend}": '\u23A4'
+  "\\rbrackuend": '\u23A4'
+  "\\rbrackextender{}": '\u23A5'
+  "{\\rbrackextender}": '\u23A5'
+  "\\rbrackextender": '\u23A5'
+  "\\rbracklend{}": '\u23A6'
+  "{\\rbracklend}": '\u23A6'
+  "\\rbracklend": '\u23A6'
+  "\\lbraceuend{}": '\u23A7'
+  "{\\lbraceuend}": '\u23A7'
+  "\\lbraceuend": '\u23A7'
+  "\\lbracemid{}": '\u23A8'
+  "{\\lbracemid}": '\u23A8'
+  "\\lbracemid": '\u23A8'
+  "\\lbracelend{}": '\u23A9'
+  "{\\lbracelend}": '\u23A9'
+  "\\lbracelend": '\u23A9'
+  "\\vbraceextender{}": '\u23AA'
+  "{\\vbraceextender}": '\u23AA'
+  "\\vbraceextender": '\u23AA'
+  "\\rbraceuend{}": '\u23AB'
+  "{\\rbraceuend}": '\u23AB'
+  "\\rbraceuend": '\u23AB'
+  "\\rbracemid{}": '\u23AC'
+  "{\\rbracemid}": '\u23AC'
+  "\\rbracemid": '\u23AC'
+  "\\rbracelend{}": '\u23AD'
+  "{\\rbracelend}": '\u23AD'
+  "\\rbracelend": '\u23AD'
+  "\\intextender{}": '\u23AE'
+  "{\\intextender}": '\u23AE'
+  "\\intextender": '\u23AE'
+  "\\harrowextender{}": '\u23AF'
+  "{\\harrowextender}": '\u23AF'
+  "\\harrowextender": '\u23AF'
   "\\lmoustache{}": '\u23B0'
   "{\\lmoustache}": '\u23B0'
   "\\lmoustache": '\u23B0'
   "\\rmoustache{}": '\u23B1'
   "{\\rmoustache}": '\u23B1'
   "\\rmoustache": '\u23B1'
+  "\\sumtop{}": '\u23B2'
+  "{\\sumtop}": '\u23B2'
+  "\\sumtop": '\u23B2'
+  "\\sumbottom{}": '\u23B3'
+  "{\\sumbottom}": '\u23B3'
+  "\\sumbottom": '\u23B3'
+  "\\overbracket{}": '\u23B4'
+  "{\\overbracket}": '\u23B4'
+  "\\overbracket": '\u23B4'
+  "\\underbracket{}": '\u23B5'
+  "{\\underbracket}": '\u23B5'
+  "\\underbracket": '\u23B5'
+  "\\bbrktbrk{}": '\u23B6'
+  "{\\bbrktbrk}": '\u23B6'
+  "\\bbrktbrk": '\u23B6'
+  "\\sqrtbottom{}": '\u23B7'
+  "{\\sqrtbottom}": '\u23B7'
+  "\\sqrtbottom": '\u23B7'
+  "\\lvboxline{}": '\u23B8'
+  "{\\lvboxline}": '\u23B8'
+  "\\lvboxline": '\u23B8'
+  "\\rvboxline{}": '\u23B9'
+  "{\\rvboxline}": '\u23B9'
+  "\\rvboxline": '\u23B9'
+  "\\varcarriagereturn{}": '\u23CE'
+  "{\\varcarriagereturn}": '\u23CE'
+  "\\varcarriagereturn": '\u23CE'
+  "\\overparen{}": '\u23DC'
+  "{\\overparen}": '\u23DC'
+  "\\overparen": '\u23DC'
+  "\\underparen{}": '\u23DD'
+  "{\\underparen}": '\u23DD'
+  "\\underparen": '\u23DD'
+  "\\overbrace{}": '\u23DE'
+  "{\\overbrace}": '\u23DE'
+  "\\overbrace": '\u23DE'
+  "\\underbrace{}": '\u23DF'
+  "{\\underbrace}": '\u23DF'
+  "\\underbrace": '\u23DF'
+  "\\obrbrak{}": '\u23E0'
+  "{\\obrbrak}": '\u23E0'
+  "\\obrbrak": '\u23E0'
+  "\\ubrbrak{}": '\u23E1'
+  "{\\ubrbrak}": '\u23E1'
+  "\\ubrbrak": '\u23E1'
+  "\\trapezium{}": '\u23E2'
+  "{\\trapezium}": '\u23E2'
+  "\\trapezium": '\u23E2'
+  "\\benzenr{}": '\u23E3'
+  "{\\benzenr}": '\u23E3'
+  "\\benzenr": '\u23E3'
+  "\\strns{}": '\u23E4'
+  "{\\strns}": '\u23E4'
+  "\\strns": '\u23E4'
+  "\\fltns{}": '\u23E5'
+  "{\\fltns}": '\u23E5'
+  "\\fltns": '\u23E5'
+  "\\accurrent{}": '\u23E6'
+  "{\\accurrent}": '\u23E6'
+  "\\accurrent": '\u23E6'
+  "\\elinters{}": '\u23E7'
+  "{\\elinters}": '\u23E7'
+  "\\elinters": '\u23E7'
   "\\textvisiblespace{}": '\u2423'
   "{\\textvisiblespace}": '\u2423'
   "\\textvisiblespace": '\u2423'
@@ -5124,17 +6595,77 @@ LaTeX.toUnicode =
   "\\diagup{}": '\u2571'
   "{\\diagup}": '\u2571'
   "\\diagup": '\u2571'
+  "\\blockuphalf{}": '\u2580'
+  "{\\blockuphalf}": '\u2580'
+  "\\blockuphalf": '\u2580'
+  "\\blocklowhalf{}": '\u2584'
+  "{\\blocklowhalf}": '\u2584'
+  "\\blocklowhalf": '\u2584'
+  "\\blockfull{}": '\u2588'
+  "{\\blockfull}": '\u2588'
+  "\\blockfull": '\u2588'
+  "\\blocklefthalf{}": '\u258C'
+  "{\\blocklefthalf}": '\u258C'
+  "\\blocklefthalf": '\u258C'
+  "\\blockrighthalf{}": '\u2590'
+  "{\\blockrighthalf}": '\u2590'
+  "\\blockrighthalf": '\u2590'
+  "\\blockqtrshaded{}": '\u2591'
+  "{\\blockqtrshaded}": '\u2591'
+  "\\blockqtrshaded": '\u2591'
+  "\\blockhalfshaded{}": '\u2592'
+  "{\\blockhalfshaded}": '\u2592'
+  "\\blockhalfshaded": '\u2592'
+  "\\blockthreeqtrshaded{}": '\u2593'
+  "{\\blockthreeqtrshaded}": '\u2593'
+  "\\blockthreeqtrshaded": '\u2593'
   "\\ding{110}": '\u25A0'
   "\\square{}": '\u25A1'
   "{\\square}": '\u25A1'
   "\\square": '\u25A1'
+  "\\squoval{}": '\u25A2'
+  "{\\squoval}": '\u25A2'
+  "\\squoval": '\u25A2'
+  "\\blackinwhitesquare{}": '\u25A3'
+  "{\\blackinwhitesquare}": '\u25A3'
+  "\\blackinwhitesquare": '\u25A3'
+  "\\squarehfill{}": '\u25A4'
+  "{\\squarehfill}": '\u25A4'
+  "\\squarehfill": '\u25A4'
+  "\\squarevfill{}": '\u25A5'
+  "{\\squarevfill}": '\u25A5'
+  "\\squarevfill": '\u25A5'
+  "\\squarehvfill{}": '\u25A6'
+  "{\\squarehvfill}": '\u25A6'
+  "\\squarehvfill": '\u25A6'
+  "\\squarenwsefill{}": '\u25A7'
+  "{\\squarenwsefill}": '\u25A7'
+  "\\squarenwsefill": '\u25A7'
+  "\\squareneswfill{}": '\u25A8'
+  "{\\squareneswfill}": '\u25A8'
+  "\\squareneswfill": '\u25A8'
+  "\\squarecrossfill{}": '\u25A9'
+  "{\\squarecrossfill}": '\u25A9'
+  "\\squarecrossfill": '\u25A9'
   "\\blacksquare{}": '\u25AA'
   "{\\blacksquare}": '\u25AA'
   "\\blacksquare": '\u25AA'
+  "\\smwhtsquare{}": '\u25AB'
+  "{\\smwhtsquare}": '\u25AB'
+  "\\smwhtsquare": '\u25AB'
+  "\\hrectangleblack{}": '\u25AC'
+  "{\\hrectangleblack}": '\u25AC'
+  "\\hrectangleblack": '\u25AC'
   "\\fbox{~~}": '\u25AD'
+  "\\vrectangleblack{}": '\u25AE'
+  "{\\vrectangleblack}": '\u25AE'
+  "\\vrectangleblack": '\u25AE'
   "\\Elzvrecto{}": '\u25AF'
   "{\\Elzvrecto}": '\u25AF'
   "\\Elzvrecto": '\u25AF'
+  "\\parallelogramblack{}": '\u25B0'
+  "{\\parallelogramblack}": '\u25B0'
+  "\\parallelogramblack": '\u25B0'
   "\\ElsevierGlyph{E381}": '\u25B1'
   "\\ding{115}": '\u25B2'
   "\\bigtriangleup{}": '\u25B3'
@@ -5146,12 +6677,24 @@ LaTeX.toUnicode =
   "\\vartriangle{}": '\u25B5'
   "{\\vartriangle}": '\u25B5'
   "\\vartriangle": '\u25B5'
+  "\\RHD{}": '\u25B6'
+  "{\\RHD}": '\u25B6'
+  "\\RHD": '\u25B6'
+  "\\rhd{}": '\u25B7'
+  "{\\rhd}": '\u25B7'
+  "\\rhd": '\u25B7'
   "\\blacktriangleright{}": '\u25B8'
   "{\\blacktriangleright}": '\u25B8'
   "\\blacktriangleright": '\u25B8'
   "\\triangleright{}": '\u25B9'
   "{\\triangleright}": '\u25B9'
   "\\triangleright": '\u25B9'
+  "\\blackpointerright{}": '\u25BA'
+  "{\\blackpointerright}": '\u25BA'
+  "\\blackpointerright": '\u25BA'
+  "\\whitepointerright{}": '\u25BB'
+  "{\\whitepointerright}": '\u25BB'
+  "\\whitepointerright": '\u25BB'
   "\\ding{116}": '\u25BC'
   "\\bigtriangledown{}": '\u25BD'
   "{\\bigtriangledown}": '\u25BD'
@@ -5162,19 +6705,49 @@ LaTeX.toUnicode =
   "\\triangledown{}": '\u25BF'
   "{\\triangledown}": '\u25BF'
   "\\triangledown": '\u25BF'
+  "\\LHD{}": '\u25C0'
+  "{\\LHD}": '\u25C0'
+  "\\LHD": '\u25C0'
+  "\\lhd{}": '\u25C1'
+  "{\\lhd}": '\u25C1'
+  "\\lhd": '\u25C1'
   "\\blacktriangleleft{}": '\u25C2'
   "{\\blacktriangleleft}": '\u25C2'
   "\\blacktriangleleft": '\u25C2'
   "\\triangleleft{}": '\u25C3'
   "{\\triangleleft}": '\u25C3'
   "\\triangleleft": '\u25C3'
+  "\\blackpointerleft{}": '\u25C4'
+  "{\\blackpointerleft}": '\u25C4'
+  "\\blackpointerleft": '\u25C4'
+  "\\whitepointerleft{}": '\u25C5'
+  "{\\whitepointerleft}": '\u25C5'
+  "\\whitepointerleft": '\u25C5'
   "\\ding{117}": '\u25C6'
+  "\\Diamond{}": '\u25C7'
+  "{\\Diamond}": '\u25C7'
+  "\\Diamond": '\u25C7'
+  "\\blackinwhitediamond{}": '\u25C8'
+  "{\\blackinwhitediamond}": '\u25C8'
+  "\\blackinwhitediamond": '\u25C8'
+  "\\fisheye{}": '\u25C9'
+  "{\\fisheye}": '\u25C9'
+  "\\fisheye": '\u25C9'
   "\\lozenge{}": '\u25CA'
   "{\\lozenge}": '\u25CA'
   "\\lozenge": '\u25CA'
   "\\bigcirc{}": '\u25CB'
   "{\\bigcirc}": '\u25CB'
   "\\bigcirc": '\u25CB'
+  "\\dottedcircle{}": '\u25CC'
+  "{\\dottedcircle}": '\u25CC'
+  "\\dottedcircle": '\u25CC'
+  "\\circlevertfill{}": '\u25CD'
+  "{\\circlevertfill}": '\u25CD'
+  "\\circlevertfill": '\u25CD'
+  "\\bullseye{}": '\u25CE'
+  "{\\bullseye}": '\u25CE'
+  "\\bullseye": '\u25CE'
   "\\ding{108}": '\u25CF'
   "\\Elzcirfl{}": '\u25D0'
   "{\\Elzcirfl}": '\u25D0'
@@ -5185,33 +6758,189 @@ LaTeX.toUnicode =
   "\\Elzcirfb{}": '\u25D2'
   "{\\Elzcirfb}": '\u25D2'
   "\\Elzcirfb": '\u25D2'
+  "\\circletophalfblack{}": '\u25D3'
+  "{\\circletophalfblack}": '\u25D3'
+  "\\circletophalfblack": '\u25D3'
+  "\\circleurquadblack{}": '\u25D4'
+  "{\\circleurquadblack}": '\u25D4'
+  "\\circleurquadblack": '\u25D4'
+  "\\blackcircleulquadwhite{}": '\u25D5'
+  "{\\blackcircleulquadwhite}": '\u25D5'
+  "\\blackcircleulquadwhite": '\u25D5'
+  "\\LEFTCIRCLE{}": '\u25D6'
+  "{\\LEFTCIRCLE}": '\u25D6'
+  "\\LEFTCIRCLE": '\u25D6'
   "\\ding{119}": '\u25D7'
   "\\Elzrvbull{}": '\u25D8'
   "{\\Elzrvbull}": '\u25D8'
   "\\Elzrvbull": '\u25D8'
+  "\\inversewhitecircle{}": '\u25D9'
+  "{\\inversewhitecircle}": '\u25D9'
+  "\\inversewhitecircle": '\u25D9'
+  "\\invwhiteupperhalfcircle{}": '\u25DA'
+  "{\\invwhiteupperhalfcircle}": '\u25DA'
+  "\\invwhiteupperhalfcircle": '\u25DA'
+  "\\invwhitelowerhalfcircle{}": '\u25DB'
+  "{\\invwhitelowerhalfcircle}": '\u25DB'
+  "\\invwhitelowerhalfcircle": '\u25DB'
+  "\\ularc{}": '\u25DC'
+  "{\\ularc}": '\u25DC'
+  "\\ularc": '\u25DC'
+  "\\urarc{}": '\u25DD'
+  "{\\urarc}": '\u25DD'
+  "\\urarc": '\u25DD'
+  "\\lrarc{}": '\u25DE'
+  "{\\lrarc}": '\u25DE'
+  "\\lrarc": '\u25DE'
+  "\\llarc{}": '\u25DF'
+  "{\\llarc}": '\u25DF'
+  "\\llarc": '\u25DF'
+  "\\topsemicircle{}": '\u25E0'
+  "{\\topsemicircle}": '\u25E0'
+  "\\topsemicircle": '\u25E0'
+  "\\botsemicircle{}": '\u25E1'
+  "{\\botsemicircle}": '\u25E1'
+  "\\botsemicircle": '\u25E1'
+  "\\lrblacktriangle{}": '\u25E2'
+  "{\\lrblacktriangle}": '\u25E2'
+  "\\lrblacktriangle": '\u25E2'
+  "\\llblacktriangle{}": '\u25E3'
+  "{\\llblacktriangle}": '\u25E3'
+  "\\llblacktriangle": '\u25E3'
+  "\\ulblacktriangle{}": '\u25E4'
+  "{\\ulblacktriangle}": '\u25E4'
+  "\\ulblacktriangle": '\u25E4'
+  "\\urblacktriangle{}": '\u25E5'
+  "{\\urblacktriangle}": '\u25E5'
+  "\\urblacktriangle": '\u25E5'
+  "\\smwhtcircle{}": '\u25E6'
+  "{\\smwhtcircle}": '\u25E6'
+  "\\smwhtcircle": '\u25E6'
   "\\Elzsqfl{}": '\u25E7'
   "{\\Elzsqfl}": '\u25E7'
   "\\Elzsqfl": '\u25E7'
   "\\Elzsqfr{}": '\u25E8'
   "{\\Elzsqfr}": '\u25E8'
   "\\Elzsqfr": '\u25E8'
+  "\\squareulblack{}": '\u25E9'
+  "{\\squareulblack}": '\u25E9'
+  "\\squareulblack": '\u25E9'
   "\\Elzsqfse{}": '\u25EA'
   "{\\Elzsqfse}": '\u25EA'
   "\\Elzsqfse": '\u25EA'
+  "\\boxbar{}": '\u25EB'
+  "{\\boxbar}": '\u25EB'
+  "\\boxbar": '\u25EB'
+  "\\trianglecdot{}": '\u25EC'
+  "{\\trianglecdot}": '\u25EC'
+  "\\trianglecdot": '\u25EC'
+  "\\triangleleftblack{}": '\u25ED'
+  "{\\triangleleftblack}": '\u25ED'
+  "\\triangleleftblack": '\u25ED'
+  "\\trianglerightblack{}": '\u25EE'
+  "{\\trianglerightblack}": '\u25EE'
+  "\\trianglerightblack": '\u25EE'
+  "\\squareulquad{}": '\u25F0'
+  "{\\squareulquad}": '\u25F0'
+  "\\squareulquad": '\u25F0'
+  "\\squarellquad{}": '\u25F1'
+  "{\\squarellquad}": '\u25F1'
+  "\\squarellquad": '\u25F1'
+  "\\squarelrquad{}": '\u25F2'
+  "{\\squarelrquad}": '\u25F2'
+  "\\squarelrquad": '\u25F2'
+  "\\squareurquad{}": '\u25F3'
+  "{\\squareurquad}": '\u25F3'
+  "\\squareurquad": '\u25F3'
+  "\\circleulquad{}": '\u25F4'
+  "{\\circleulquad}": '\u25F4'
+  "\\circleulquad": '\u25F4'
+  "\\circlellquad{}": '\u25F5'
+  "{\\circlellquad}": '\u25F5'
+  "\\circlellquad": '\u25F5'
+  "\\circlelrquad{}": '\u25F6'
+  "{\\circlelrquad}": '\u25F6'
+  "\\circlelrquad": '\u25F6'
+  "\\circleurquad{}": '\u25F7'
+  "{\\circleurquad}": '\u25F7'
+  "\\circleurquad": '\u25F7'
+  "\\ultriangle{}": '\u25F8'
+  "{\\ultriangle}": '\u25F8'
+  "\\ultriangle": '\u25F8'
+  "\\urtriangle{}": '\u25F9'
+  "{\\urtriangle}": '\u25F9'
+  "\\urtriangle": '\u25F9'
+  "\\lltriangle{}": '\u25FA'
+  "{\\lltriangle}": '\u25FA'
+  "\\lltriangle": '\u25FA'
+  "\\mdsmwhtsquare{}": '\u25FD'
+  "{\\mdsmwhtsquare}": '\u25FD'
+  "\\mdsmwhtsquare": '\u25FD'
+  "\\mdsmblksquare{}": '\u25FE'
+  "{\\mdsmblksquare}": '\u25FE'
+  "\\mdsmblksquare": '\u25FE'
+  "\\lrtriangle{}": '\u25FF'
+  "{\\lrtriangle}": '\u25FF'
+  "\\lrtriangle": '\u25FF'
   "\\ding{72}": '\u2605'
   "\\ding{73}": '\u2606'
+  "\\Sun{}": '\u2609'
+  "{\\Sun}": '\u2609'
+  "\\Sun": '\u2609'
   "\\ding{37}": '\u260E'
+  "\\Square{}": '\u2610'
+  "{\\Square}": '\u2610'
+  "\\Square": '\u2610'
+  "\\CheckedBox{}": '\u2611'
+  "{\\CheckedBox}": '\u2611'
+  "\\CheckedBox": '\u2611'
+  "\\XBox{}": '\u2612'
+  "{\\XBox}": '\u2612'
+  "\\XBox": '\u2612'
+  "\\steaming{}": '\u2615'
+  "{\\steaming}": '\u2615'
+  "\\steaming": '\u2615'
   "\\ding{42}": '\u261B'
   "\\ding{43}": '\u261E'
-  "\\rightmoon{}": '\u263E'
-  "{\\rightmoon}": '\u263E'
-  "\\rightmoon": '\u263E'
+  "\\skull{}": '\u2620'
+  "{\\skull}": '\u2620'
+  "\\skull": '\u2620'
+  "\\danger{}": '\u2621'
+  "{\\danger}": '\u2621'
+  "\\danger": '\u2621'
+  "\\radiation{}": '\u2622'
+  "{\\radiation}": '\u2622'
+  "\\radiation": '\u2622'
+  "\\biohazard{}": '\u2623'
+  "{\\biohazard}": '\u2623'
+  "\\biohazard": '\u2623'
+  "\\yinyang{}": '\u262F'
+  "{\\yinyang}": '\u262F'
+  "\\yinyang": '\u262F'
+  "\\frownie{}": '\u2639'
+  "{\\frownie}": '\u2639'
+  "\\frownie": '\u2639'
+  "\\smiley{}": '\u263A'
+  "{\\smiley}": '\u263A'
+  "\\smiley": '\u263A'
+  "\\blacksmiley{}": '\u263B'
+  "{\\blacksmiley}": '\u263B'
+  "\\blacksmiley": '\u263B'
+  "\\sun{}": '\u263C'
+  "{\\sun}": '\u263C'
+  "\\sun": '\u263C'
+  "\\rightmoon{}": '\u263D'
+  "{\\rightmoon}": '\u263D'
+  "\\rightmoon": '\u263D'
   "\\mercury{}": '\u263F'
   "{\\mercury}": '\u263F'
   "\\mercury": '\u263F'
   "\\venus{}": '\u2640'
   "{\\venus}": '\u2640'
   "\\venus": '\u2640'
+  "\\earth{}": '\u2641'
+  "{\\earth}": '\u2641'
+  "\\earth": '\u2641'
   "\\male{}": '\u2642'
   "{\\male}": '\u2642'
   "\\male": '\u2642'
@@ -5267,15 +6996,30 @@ LaTeX.toUnicode =
   "{\\pisces}": '\u2653'
   "\\pisces": '\u2653'
   "\\ding{171}": '\u2660'
+  "\\heartsuit{}": '\u2661'
+  "{\\heartsuit}": '\u2661'
+  "\\heartsuit": '\u2661'
   "\\ding{168}": '\u2663'
+  "\\varspadesuit{}": '\u2664'
+  "{\\varspadesuit}": '\u2664'
+  "\\varspadesuit": '\u2664'
   "\\ding{170}": '\u2665'
   "\\ding{169}": '\u2666'
+  "\\varclubsuit{}": '\u2667'
+  "{\\varclubsuit}": '\u2667'
+  "\\varclubsuit": '\u2667'
   "\\quarternote{}": '\u2669'
   "{\\quarternote}": '\u2669'
   "\\quarternote": '\u2669'
   "\\eighthnote{}": '\u266A'
   "{\\eighthnote}": '\u266A'
   "\\eighthnote": '\u266A'
+  "\\twonotes{}": '\u266B'
+  "{\\twonotes}": '\u266B'
+  "\\twonotes": '\u266B'
+  "\\sixteenthnote{}": '\u266C'
+  "{\\sixteenthnote}": '\u266C'
+  "\\sixteenthnote": '\u266C'
   "\\flat{}": '\u266D'
   "{\\flat}": '\u266D'
   "\\flat": '\u266D'
@@ -5285,6 +7029,66 @@ LaTeX.toUnicode =
   "\\sharp{}": '\u266F'
   "{\\sharp}": '\u266F'
   "\\sharp": '\u266F'
+  "\\recycle{}": '\u267B'
+  "{\\recycle}": '\u267B'
+  "\\recycle": '\u267B'
+  "\\acidfree{}": '\u267E'
+  "{\\acidfree}": '\u267E'
+  "\\acidfree": '\u267E'
+  "\\dicei{}": '\u2680'
+  "{\\dicei}": '\u2680'
+  "\\dicei": '\u2680'
+  "\\diceii{}": '\u2681'
+  "{\\diceii}": '\u2681'
+  "\\diceii": '\u2681'
+  "\\diceiii{}": '\u2682'
+  "{\\diceiii}": '\u2682'
+  "\\diceiii": '\u2682'
+  "\\diceiv{}": '\u2683'
+  "{\\diceiv}": '\u2683'
+  "\\diceiv": '\u2683'
+  "\\dicev{}": '\u2684'
+  "{\\dicev}": '\u2684'
+  "\\dicev": '\u2684'
+  "\\dicevi{}": '\u2685'
+  "{\\dicevi}": '\u2685'
+  "\\dicevi": '\u2685'
+  "\\circledrightdot{}": '\u2686'
+  "{\\circledrightdot}": '\u2686'
+  "\\circledrightdot": '\u2686'
+  "\\circledtwodots{}": '\u2687'
+  "{\\circledtwodots}": '\u2687'
+  "\\circledtwodots": '\u2687'
+  "\\blackcircledrightdot{}": '\u2688'
+  "{\\blackcircledrightdot}": '\u2688'
+  "\\blackcircledrightdot": '\u2688'
+  "\\blackcircledtwodots{}": '\u2689'
+  "{\\blackcircledtwodots}": '\u2689'
+  "\\blackcircledtwodots": '\u2689'
+  "\\anchor{}": '\u2693'
+  "{\\anchor}": '\u2693'
+  "\\anchor": '\u2693'
+  "\\swords{}": '\u2694'
+  "{\\swords}": '\u2694'
+  "\\swords": '\u2694'
+  "\\warning{}": '\u26A0'
+  "{\\warning}": '\u26A0'
+  "\\warning": '\u26A0'
+  "\\Hermaphrodite{}": '\u26A5'
+  "{\\Hermaphrodite}": '\u26A5'
+  "\\Hermaphrodite": '\u26A5'
+  "\\medcirc{}": '\u26AA'
+  "{\\medcirc}": '\u26AA'
+  "\\medcirc": '\u26AA'
+  "\\medbullet{}": '\u26AB'
+  "{\\medbullet}": '\u26AB'
+  "\\medbullet": '\u26AB'
+  "\\mdsmwhtcircle{}": '\u26AC'
+  "{\\mdsmwhtcircle}": '\u26AC'
+  "\\mdsmwhtcircle": '\u26AC'
+  "\\neuter{}": '\u26B2'
+  "{\\neuter}": '\u26B2'
+  "\\neuter": '\u26B2'
   "\\ding{33}": '\u2701'
   "\\ding{34}": '\u2702'
   "\\ding{35}": '\u2703'
@@ -5375,6 +7179,12 @@ LaTeX.toUnicode =
   "\\ding{165}": '\u2765'
   "\\ding{166}": '\u2766'
   "\\ding{167}": '\u2767'
+  "\\lbrbrak{}": '\u2772'
+  "{\\lbrbrak}": '\u2772'
+  "\\lbrbrak": '\u2772'
+  "\\rbrbrak{}": '\u2773'
+  "{\\rbrbrak}": '\u2773'
+  "\\rbrbrak": '\u2773'
   "\\ding{182}": '\u2776'
   "\\ding{183}": '\u2777'
   "\\ding{184}": '\u2778'
@@ -5444,6 +7254,141 @@ LaTeX.toUnicode =
   "\\ding{252}": '\u27BC'
   "\\ding{253}": '\u27BD'
   "\\ding{254}": '\u27BE'
+  "\\threedangle{}": '\u27C0'
+  "{\\threedangle}": '\u27C0'
+  "\\threedangle": '\u27C0'
+  "\\whiteinwhitetriangle{}": '\u27C1'
+  "{\\whiteinwhitetriangle}": '\u27C1'
+  "\\whiteinwhitetriangle": '\u27C1'
+  "\\subsetcirc{}": '\u27C3'
+  "{\\subsetcirc}": '\u27C3'
+  "\\subsetcirc": '\u27C3'
+  "\\supsetcirc{}": '\u27C4'
+  "{\\supsetcirc}": '\u27C4'
+  "\\supsetcirc": '\u27C4'
+  "\\Lbag{}": '\u27C5'
+  "{\\Lbag}": '\u27C5'
+  "\\Lbag": '\u27C5'
+  "\\Rbag{}": '\u27C6'
+  "{\\Rbag}": '\u27C6'
+  "\\Rbag": '\u27C6'
+  "\\veedot{}": '\u27C7'
+  "{\\veedot}": '\u27C7'
+  "\\veedot": '\u27C7'
+  "\\bsolhsub{}": '\u27C8'
+  "{\\bsolhsub}": '\u27C8'
+  "\\bsolhsub": '\u27C8'
+  "\\suphsol{}": '\u27C9'
+  "{\\suphsol}": '\u27C9'
+  "\\suphsol": '\u27C9'
+  "\\longdivision{}": '\u27CC'
+  "{\\longdivision}": '\u27CC'
+  "\\longdivision": '\u27CC'
+  "\\Diamonddot{}": '\u27D0'
+  "{\\Diamonddot}": '\u27D0'
+  "\\Diamonddot": '\u27D0'
+  "\\wedgedot{}": '\u27D1'
+  "{\\wedgedot}": '\u27D1'
+  "\\wedgedot": '\u27D1'
+  "\\upin{}": '\u27D2'
+  "{\\upin}": '\u27D2'
+  "\\upin": '\u27D2'
+  "\\pullback{}": '\u27D3'
+  "{\\pullback}": '\u27D3'
+  "\\pullback": '\u27D3'
+  "\\pushout{}": '\u27D4'
+  "{\\pushout}": '\u27D4'
+  "\\pushout": '\u27D4'
+  "\\leftouterjoin{}": '\u27D5'
+  "{\\leftouterjoin}": '\u27D5'
+  "\\leftouterjoin": '\u27D5'
+  "\\rightouterjoin{}": '\u27D6'
+  "{\\rightouterjoin}": '\u27D6'
+  "\\rightouterjoin": '\u27D6'
+  "\\fullouterjoin{}": '\u27D7'
+  "{\\fullouterjoin}": '\u27D7'
+  "\\fullouterjoin": '\u27D7'
+  "\\bigbot{}": '\u27D8'
+  "{\\bigbot}": '\u27D8'
+  "\\bigbot": '\u27D8'
+  "\\bigtop{}": '\u27D9'
+  "{\\bigtop}": '\u27D9'
+  "\\bigtop": '\u27D9'
+  "\\DashVDash{}": '\u27DA'
+  "{\\DashVDash}": '\u27DA'
+  "\\DashVDash": '\u27DA'
+  "\\dashVdash{}": '\u27DB'
+  "{\\dashVdash}": '\u27DB'
+  "\\dashVdash": '\u27DB'
+  "\\multimapinv{}": '\u27DC'
+  "{\\multimapinv}": '\u27DC'
+  "\\multimapinv": '\u27DC'
+  "\\vlongdash{}": '\u27DD'
+  "{\\vlongdash}": '\u27DD'
+  "\\vlongdash": '\u27DD'
+  "\\longdashv{}": '\u27DE'
+  "{\\longdashv}": '\u27DE'
+  "\\longdashv": '\u27DE'
+  "\\cirbot{}": '\u27DF'
+  "{\\cirbot}": '\u27DF'
+  "\\cirbot": '\u27DF'
+  "\\lozengeminus{}": '\u27E0'
+  "{\\lozengeminus}": '\u27E0'
+  "\\lozengeminus": '\u27E0'
+  "\\concavediamond{}": '\u27E1'
+  "{\\concavediamond}": '\u27E1'
+  "\\concavediamond": '\u27E1'
+  "\\concavediamondtickleft{}": '\u27E2'
+  "{\\concavediamondtickleft}": '\u27E2'
+  "\\concavediamondtickleft": '\u27E2'
+  "\\concavediamondtickright{}": '\u27E3'
+  "{\\concavediamondtickright}": '\u27E3'
+  "\\concavediamondtickright": '\u27E3'
+  "\\whitesquaretickleft{}": '\u27E4'
+  "{\\whitesquaretickleft}": '\u27E4'
+  "\\whitesquaretickleft": '\u27E4'
+  "\\whitesquaretickright{}": '\u27E5'
+  "{\\whitesquaretickright}": '\u27E5'
+  "\\whitesquaretickright": '\u27E5'
+  "\\llbracket{}": '\u27E6'
+  "{\\llbracket}": '\u27E6'
+  "\\llbracket": '\u27E6'
+  "\\rrbracket{}": '\u27E7'
+  "{\\rrbracket}": '\u27E7'
+  "\\rrbracket": '\u27E7'
+  "\\lang{}": '\u27EA'
+  "{\\lang}": '\u27EA'
+  "\\lang": '\u27EA'
+  "\\rang{}": '\u27EB'
+  "{\\rang}": '\u27EB'
+  "\\rang": '\u27EB'
+  "\\Lbrbrak{}": '\u27EC'
+  "{\\Lbrbrak}": '\u27EC'
+  "\\Lbrbrak": '\u27EC'
+  "\\Rbrbrak{}": '\u27ED'
+  "{\\Rbrbrak}": '\u27ED'
+  "\\Rbrbrak": '\u27ED'
+  "\\lgroup{}": '\u27EE'
+  "{\\lgroup}": '\u27EE'
+  "\\lgroup": '\u27EE'
+  "\\rgroup{}": '\u27EF'
+  "{\\rgroup}": '\u27EF'
+  "\\rgroup": '\u27EF'
+  "\\UUparrow{}": '\u27F0'
+  "{\\UUparrow}": '\u27F0'
+  "\\UUparrow": '\u27F0'
+  "\\DDownarrow{}": '\u27F1'
+  "{\\DDownarrow}": '\u27F1'
+  "\\DDownarrow": '\u27F1'
+  "\\acwgapcirclearrow{}": '\u27F2'
+  "{\\acwgapcirclearrow}": '\u27F2'
+  "\\acwgapcirclearrow": '\u27F2'
+  "\\cwgapcirclearrow{}": '\u27F3'
+  "{\\cwgapcirclearrow}": '\u27F3'
+  "\\cwgapcirclearrow": '\u27F3'
+  "\\rightarrowonoplus{}": '\u27F4'
+  "{\\rightarrowonoplus}": '\u27F4'
+  "\\rightarrowonoplus": '\u27F4'
   "\\longleftarrow{}": '\u27F5'
   "{\\longleftarrow}": '\u27F5'
   "\\longleftarrow": '\u27F5'
@@ -5462,19 +7407,124 @@ LaTeX.toUnicode =
   "\\Longleftrightarrow{}": '\u27FA'
   "{\\Longleftrightarrow}": '\u27FA'
   "\\Longleftrightarrow": '\u27FA'
+  "\\longmapsfrom{}": '\u27FB'
+  "{\\longmapsfrom}": '\u27FB'
+  "\\longmapsfrom": '\u27FB'
   "\\longmapsto{}": '\u27FC'
   "{\\longmapsto}": '\u27FC'
   "\\longmapsto": '\u27FC'
+  "\\Longmapsfrom{}": '\u27FD'
+  "{\\Longmapsfrom}": '\u27FD'
+  "\\Longmapsfrom": '\u27FD'
+  "\\Longmapsto{}": '\u27FE'
+  "{\\Longmapsto}": '\u27FE'
+  "\\Longmapsto": '\u27FE'
   "\\sim\\joinrel\\leadsto{}": '\u27FF'
   "{\\sim\\joinrel\\leadsto}": '\u27FF'
   "\\sim\\joinrel\\leadsto": '\u27FF'
+  "\\psur{}": '\u2900'
+  "{\\psur}": '\u2900'
+  "\\psur": '\u2900'
+  "\\nVtwoheadrightarrow{}": '\u2901'
+  "{\\nVtwoheadrightarrow}": '\u2901'
+  "\\nVtwoheadrightarrow": '\u2901'
+  "\\nvLeftarrow{}": '\u2902'
+  "{\\nvLeftarrow}": '\u2902'
+  "\\nvLeftarrow": '\u2902'
+  "\\nvRightarrow{}": '\u2903'
+  "{\\nvRightarrow}": '\u2903'
+  "\\nvRightarrow": '\u2903'
+  "\\nvLeftrightarrow{}": '\u2904'
+  "{\\nvLeftrightarrow}": '\u2904'
+  "\\nvLeftrightarrow": '\u2904'
   "\\ElsevierGlyph{E212}": '\u2905'
+  "\\Mapsfrom{}": '\u2906'
+  "{\\Mapsfrom}": '\u2906'
+  "\\Mapsfrom": '\u2906'
+  "\\Mapsto{}": '\u2907'
+  "{\\Mapsto}": '\u2907'
+  "\\Mapsto": '\u2907'
+  "\\downarrowbarred{}": '\u2908'
+  "{\\downarrowbarred}": '\u2908'
+  "\\downarrowbarred": '\u2908'
+  "\\uparrowbarred{}": '\u2909'
+  "{\\uparrowbarred}": '\u2909'
+  "\\uparrowbarred": '\u2909'
+  "\\Uuparrow{}": '\u290A'
+  "{\\Uuparrow}": '\u290A'
+  "\\Uuparrow": '\u290A'
+  "\\Ddownarrow{}": '\u290B'
+  "{\\Ddownarrow}": '\u290B'
+  "\\Ddownarrow": '\u290B'
+  "\\leftbkarrow{}": '\u290C'
+  "{\\leftbkarrow}": '\u290C'
+  "\\leftbkarrow": '\u290C'
+  "\\rightbkarrow{}": '\u290D'
+  "{\\rightbkarrow}": '\u290D'
+  "\\rightbkarrow": '\u290D'
+  "\\leftdbkarrow{}": '\u290E'
+  "{\\leftdbkarrow}": '\u290E'
+  "\\leftdbkarrow": '\u290E'
+  "\\dbkarow{}": '\u290F'
+  "{\\dbkarow}": '\u290F'
+  "\\dbkarow": '\u290F'
+  "\\drbkarow{}": '\u2910'
+  "{\\drbkarow}": '\u2910'
+  "\\drbkarow": '\u2910'
+  "\\rightdotarrow{}": '\u2911'
+  "{\\rightdotarrow}": '\u2911'
+  "\\rightdotarrow": '\u2911'
   "\\UpArrowBar{}": '\u2912'
   "{\\UpArrowBar}": '\u2912'
   "\\UpArrowBar": '\u2912'
   "\\DownArrowBar{}": '\u2913'
   "{\\DownArrowBar}": '\u2913'
   "\\DownArrowBar": '\u2913'
+  "\\pinj{}": '\u2914'
+  "{\\pinj}": '\u2914'
+  "\\pinj": '\u2914'
+  "\\finj{}": '\u2915'
+  "{\\finj}": '\u2915'
+  "\\finj": '\u2915'
+  "\\bij{}": '\u2916'
+  "{\\bij}": '\u2916'
+  "\\bij": '\u2916'
+  "\\nvtwoheadrightarrowtail{}": '\u2917'
+  "{\\nvtwoheadrightarrowtail}": '\u2917'
+  "\\nvtwoheadrightarrowtail": '\u2917'
+  "\\nVtwoheadrightarrowtail{}": '\u2918'
+  "{\\nVtwoheadrightarrowtail}": '\u2918'
+  "\\nVtwoheadrightarrowtail": '\u2918'
+  "\\lefttail{}": '\u2919'
+  "{\\lefttail}": '\u2919'
+  "\\lefttail": '\u2919'
+  "\\righttail{}": '\u291A'
+  "{\\righttail}": '\u291A'
+  "\\righttail": '\u291A'
+  "\\leftdbltail{}": '\u291B'
+  "{\\leftdbltail}": '\u291B'
+  "\\leftdbltail": '\u291B'
+  "\\rightdbltail{}": '\u291C'
+  "{\\rightdbltail}": '\u291C'
+  "\\rightdbltail": '\u291C'
+  "\\diamondleftarrow{}": '\u291D'
+  "{\\diamondleftarrow}": '\u291D'
+  "\\diamondleftarrow": '\u291D'
+  "\\rightarrowdiamond{}": '\u291E'
+  "{\\rightarrowdiamond}": '\u291E'
+  "\\rightarrowdiamond": '\u291E'
+  "\\diamondleftarrowbar{}": '\u291F'
+  "{\\diamondleftarrowbar}": '\u291F'
+  "\\diamondleftarrowbar": '\u291F'
+  "\\barrightarrowdiamond{}": '\u2920'
+  "{\\barrightarrowdiamond}": '\u2920'
+  "\\barrightarrowdiamond": '\u2920'
+  "\\nwsearrow{}": '\u2921'
+  "{\\nwsearrow}": '\u2921'
+  "\\nwsearrow": '\u2921'
+  "\\neswarrow{}": '\u2922'
+  "{\\neswarrow}": '\u2922'
+  "\\neswarrow": '\u2922'
   "\\ElsevierGlyph{E20C}": '\u2923'
   "\\ElsevierGlyph{E20D}": '\u2924'
   "\\ElsevierGlyph{E20B}": '\u2925'
@@ -5483,9 +7533,63 @@ LaTeX.toUnicode =
   "\\ElsevierGlyph{E20E}": '\u2928'
   "\\ElsevierGlyph{E20F}": '\u2929'
   "\\ElsevierGlyph{E210}": '\u292A'
+  "\\rdiagovfdiag{}": '\u292B'
+  "{\\rdiagovfdiag}": '\u292B'
+  "\\rdiagovfdiag": '\u292B'
+  "\\fdiagovrdiag{}": '\u292C'
+  "{\\fdiagovrdiag}": '\u292C'
+  "\\fdiagovrdiag": '\u292C'
+  "\\seovnearrow{}": '\u292D'
+  "{\\seovnearrow}": '\u292D'
+  "\\seovnearrow": '\u292D'
+  "\\neovsearrow{}": '\u292E'
+  "{\\neovsearrow}": '\u292E'
+  "\\neovsearrow": '\u292E'
+  "\\fdiagovnearrow{}": '\u292F'
+  "{\\fdiagovnearrow}": '\u292F'
+  "\\fdiagovnearrow": '\u292F'
+  "\\rdiagovsearrow{}": '\u2930'
+  "{\\rdiagovsearrow}": '\u2930'
+  "\\rdiagovsearrow": '\u2930'
+  "\\neovnwarrow{}": '\u2931'
+  "{\\neovnwarrow}": '\u2931'
+  "\\neovnwarrow": '\u2931'
+  "\\nwovnearrow{}": '\u2932'
+  "{\\nwovnearrow}": '\u2932'
+  "\\nwovnearrow": '\u2932'
   "\\ElsevierGlyph{E21C}": '\u2933'
+  "\\uprightcurvearrow{}": '\u2934'
+  "{\\uprightcurvearrow}": '\u2934'
+  "\\uprightcurvearrow": '\u2934'
+  "\\downrightcurvedarrow{}": '\u2935'
+  "{\\downrightcurvedarrow}": '\u2935'
+  "\\downrightcurvedarrow": '\u2935'
   "\\ElsevierGlyph{E21A}": '\u2936'
   "\\ElsevierGlyph{E219}": '\u2937'
+  "\\cwrightarcarrow{}": '\u2938'
+  "{\\cwrightarcarrow}": '\u2938'
+  "\\cwrightarcarrow": '\u2938'
+  "\\acwleftarcarrow{}": '\u2939'
+  "{\\acwleftarcarrow}": '\u2939'
+  "\\acwleftarcarrow": '\u2939'
+  "\\acwoverarcarrow{}": '\u293A'
+  "{\\acwoverarcarrow}": '\u293A'
+  "\\acwoverarcarrow": '\u293A'
+  "\\acwunderarcarrow{}": '\u293B'
+  "{\\acwunderarcarrow}": '\u293B'
+  "\\acwunderarcarrow": '\u293B'
+  "\\curvearrowrightminus{}": '\u293C'
+  "{\\curvearrowrightminus}": '\u293C'
+  "\\curvearrowrightminus": '\u293C'
+  "\\curvearrowleftplus{}": '\u293D'
+  "{\\curvearrowleftplus}": '\u293D'
+  "\\curvearrowleftplus": '\u293D'
+  "\\cwundercurvearrow{}": '\u293E'
+  "{\\cwundercurvearrow}": '\u293E'
+  "\\cwundercurvearrow": '\u293E'
+  "\\ccwundercurvearrow{}": '\u293F'
+  "{\\ccwundercurvearrow}": '\u293F'
+  "\\ccwundercurvearrow": '\u293F'
   "\\Elolarr{}": '\u2940'
   "{\\Elolarr}": '\u2940'
   "\\Elolarr": '\u2940'
@@ -5495,12 +7599,39 @@ LaTeX.toUnicode =
   "\\ElzRlarr{}": '\u2942'
   "{\\ElzRlarr}": '\u2942'
   "\\ElzRlarr": '\u2942'
+  "\\leftarrowshortrightarrow{}": '\u2943'
+  "{\\leftarrowshortrightarrow}": '\u2943'
+  "\\leftarrowshortrightarrow": '\u2943'
   "\\ElzrLarr{}": '\u2944'
   "{\\ElzrLarr}": '\u2944'
   "\\ElzrLarr": '\u2944'
+  "\\rightarrowplus{}": '\u2945'
+  "{\\rightarrowplus}": '\u2945'
+  "\\rightarrowplus": '\u2945'
+  "\\leftarrowplus{}": '\u2946'
+  "{\\leftarrowplus}": '\u2946'
+  "\\leftarrowplus": '\u2946'
   "\\Elzrarrx{}": '\u2947'
   "{\\Elzrarrx}": '\u2947'
   "\\Elzrarrx": '\u2947'
+  "\\leftrightarrowcircle{}": '\u2948'
+  "{\\leftrightarrowcircle}": '\u2948'
+  "\\leftrightarrowcircle": '\u2948'
+  "\\twoheaduparrowcircle{}": '\u2949'
+  "{\\twoheaduparrowcircle}": '\u2949'
+  "\\twoheaduparrowcircle": '\u2949'
+  "\\leftrightharpoon{}": '\u294A'
+  "{\\leftrightharpoon}": '\u294A'
+  "\\leftrightharpoon": '\u294A'
+  "\\rightleftharpoon{}": '\u294B'
+  "{\\rightleftharpoon}": '\u294B'
+  "\\rightleftharpoon": '\u294B'
+  "\\updownharpoonrightleft{}": '\u294C'
+  "{\\updownharpoonrightleft}": '\u294C'
+  "\\updownharpoonrightleft": '\u294C'
+  "\\updownharpoonleftright{}": '\u294D'
+  "{\\updownharpoonleftright}": '\u294D'
+  "\\updownharpoonleftright": '\u294D'
   "\\LeftRightVector{}": '\u294E'
   "{\\LeftRightVector}": '\u294E'
   "\\LeftRightVector": '\u294E'
@@ -5561,6 +7692,42 @@ LaTeX.toUnicode =
   "\\LeftDownTeeVector{}": '\u2961'
   "{\\LeftDownTeeVector}": '\u2961'
   "\\LeftDownTeeVector": '\u2961'
+  "\\leftleftharpoons{}": '\u2962'
+  "{\\leftleftharpoons}": '\u2962'
+  "\\leftleftharpoons": '\u2962'
+  "\\upupharpoons{}": '\u2963'
+  "{\\upupharpoons}": '\u2963'
+  "\\upupharpoons": '\u2963'
+  "\\rightrightharpoons{}": '\u2964'
+  "{\\rightrightharpoons}": '\u2964'
+  "\\rightrightharpoons": '\u2964'
+  "\\downdownharpoons{}": '\u2965'
+  "{\\downdownharpoons}": '\u2965'
+  "\\downdownharpoons": '\u2965'
+  "\\leftrightharpoonsup{}": '\u2966'
+  "{\\leftrightharpoonsup}": '\u2966'
+  "\\leftrightharpoonsup": '\u2966'
+  "\\leftrightharpoonsdown{}": '\u2967'
+  "{\\leftrightharpoonsdown}": '\u2967'
+  "\\leftrightharpoonsdown": '\u2967'
+  "\\rightleftharpoonsup{}": '\u2968'
+  "{\\rightleftharpoonsup}": '\u2968'
+  "\\rightleftharpoonsup": '\u2968'
+  "\\rightleftharpoonsdown{}": '\u2969'
+  "{\\rightleftharpoonsdown}": '\u2969'
+  "\\rightleftharpoonsdown": '\u2969'
+  "\\leftbarharpoon{}": '\u296A'
+  "{\\leftbarharpoon}": '\u296A'
+  "\\leftbarharpoon": '\u296A'
+  "\\barleftharpoon{}": '\u296B'
+  "{\\barleftharpoon}": '\u296B'
+  "\\barleftharpoon": '\u296B'
+  "\\rightbarharpoon{}": '\u296C'
+  "{\\rightbarharpoon}": '\u296C'
+  "\\rightbarharpoon": '\u296C'
+  "\\barrightharpoon{}": '\u296D'
+  "{\\barrightharpoon}": '\u296D'
+  "\\barrightharpoon": '\u296D'
   "\\UpEquilibrium{}": '\u296E'
   "{\\UpEquilibrium}": '\u296E'
   "\\UpEquilibrium": '\u296E'
@@ -5570,47 +7737,428 @@ LaTeX.toUnicode =
   "\\RoundImplies{}": '\u2970'
   "{\\RoundImplies}": '\u2970'
   "\\RoundImplies": '\u2970'
+  "\\equalrightarrow{}": '\u2971'
+  "{\\equalrightarrow}": '\u2971'
+  "\\equalrightarrow": '\u2971'
+  "\\similarrightarrow{}": '\u2972'
+  "{\\similarrightarrow}": '\u2972'
+  "\\similarrightarrow": '\u2972'
+  "\\leftarrowsimilar{}": '\u2973'
+  "{\\leftarrowsimilar}": '\u2973'
+  "\\leftarrowsimilar": '\u2973'
+  "\\rightarrowsimilar{}": '\u2974'
+  "{\\rightarrowsimilar}": '\u2974'
+  "\\rightarrowsimilar": '\u2974'
+  "\\rightarrowapprox{}": '\u2975'
+  "{\\rightarrowapprox}": '\u2975'
+  "\\rightarrowapprox": '\u2975'
+  "\\ltlarr{}": '\u2976'
+  "{\\ltlarr}": '\u2976'
+  "\\ltlarr": '\u2976'
+  "\\leftarrowless{}": '\u2977'
+  "{\\leftarrowless}": '\u2977'
+  "\\leftarrowless": '\u2977'
+  "\\gtrarr{}": '\u2978'
+  "{\\gtrarr}": '\u2978'
+  "\\gtrarr": '\u2978'
+  "\\subrarr{}": '\u2979'
+  "{\\subrarr}": '\u2979'
+  "\\subrarr": '\u2979'
+  "\\leftarrowsubset{}": '\u297A'
+  "{\\leftarrowsubset}": '\u297A'
+  "\\leftarrowsubset": '\u297A'
+  "\\suplarr{}": '\u297B'
+  "{\\suplarr}": '\u297B'
+  "\\suplarr": '\u297B'
   "\\ElsevierGlyph{E214}": '\u297C'
   "\\ElsevierGlyph{E215}": '\u297D'
+  "\\upfishtail{}": '\u297E'
+  "{\\upfishtail}": '\u297E'
+  "\\upfishtail": '\u297E'
+  "\\downfishtail{}": '\u297F'
+  "{\\downfishtail}": '\u297F'
+  "\\downfishtail": '\u297F'
   "\\Elztfnc{}": '\u2980'
   "{\\Elztfnc}": '\u2980'
   "\\Elztfnc": '\u2980'
+  "\\spot{}": '\u2981'
+  "{\\spot}": '\u2981'
+  "\\spot": '\u2981'
+  "\\typecolon{}": '\u2982'
+  "{\\typecolon}": '\u2982'
+  "\\typecolon": '\u2982'
+  "\\lBrace{}": '\u2983'
+  "{\\lBrace}": '\u2983'
+  "\\lBrace": '\u2983'
+  "\\rBrace{}": '\u2984'
+  "{\\rBrace}": '\u2984'
+  "\\rBrace": '\u2984'
   "\\ElsevierGlyph{3018}": '\u2985'
   "\\Elroang{}": '\u2986'
   "{\\Elroang}": '\u2986'
   "\\Elroang": '\u2986'
+  "\\limg{}": '\u2987'
+  "{\\limg}": '\u2987'
+  "\\limg": '\u2987'
+  "\\rimg{}": '\u2988'
+  "{\\rimg}": '\u2988'
+  "\\rimg": '\u2988'
+  "\\lblot{}": '\u2989'
+  "{\\lblot}": '\u2989'
+  "\\lblot": '\u2989'
+  "\\rblot{}": '\u298A'
+  "{\\rblot}": '\u298A'
+  "\\rblot": '\u298A'
+  "\\lbrackubar{}": '\u298B'
+  "{\\lbrackubar}": '\u298B'
+  "\\lbrackubar": '\u298B'
+  "\\rbrackubar{}": '\u298C'
+  "{\\rbrackubar}": '\u298C'
+  "\\rbrackubar": '\u298C'
+  "\\lbrackultick{}": '\u298D'
+  "{\\lbrackultick}": '\u298D'
+  "\\lbrackultick": '\u298D'
+  "\\rbracklrtick{}": '\u298E'
+  "{\\rbracklrtick}": '\u298E'
+  "\\rbracklrtick": '\u298E'
+  "\\lbracklltick{}": '\u298F'
+  "{\\lbracklltick}": '\u298F'
+  "\\lbracklltick": '\u298F'
+  "\\rbrackurtick{}": '\u2990'
+  "{\\rbrackurtick}": '\u2990'
+  "\\rbrackurtick": '\u2990'
+  "\\langledot{}": '\u2991'
+  "{\\langledot}": '\u2991'
+  "\\langledot": '\u2991'
+  "\\rangledot{}": '\u2992'
+  "{\\rangledot}": '\u2992'
+  "\\rangledot": '\u2992'
   "<\\kern-0.58em(": '\u2993'
   "\\ElsevierGlyph{E291}": '\u2994'
+  "\\Lparengtr{}": '\u2995'
+  "{\\Lparengtr}": '\u2995'
+  "\\Lparengtr": '\u2995'
+  "\\Rparenless{}": '\u2996'
+  "{\\Rparenless}": '\u2996'
+  "\\Rparenless": '\u2996'
+  "\\lblkbrbrak{}": '\u2997'
+  "{\\lblkbrbrak}": '\u2997'
+  "\\lblkbrbrak": '\u2997'
+  "\\rblkbrbrak{}": '\u2998'
+  "{\\rblkbrbrak}": '\u2998'
+  "\\rblkbrbrak": '\u2998'
   "\\Elzddfnc{}": '\u2999'
   "{\\Elzddfnc}": '\u2999'
   "\\Elzddfnc": '\u2999'
+  "\\vzigzag{}": '\u299A'
+  "{\\vzigzag}": '\u299A'
+  "\\vzigzag": '\u299A'
+  "\\measuredangleleft{}": '\u299B'
+  "{\\measuredangleleft}": '\u299B'
+  "\\measuredangleleft": '\u299B'
   "\\Angle{}": '\u299C'
   "{\\Angle}": '\u299C'
   "\\Angle": '\u299C'
+  "\\rightanglemdot{}": '\u299D'
+  "{\\rightanglemdot}": '\u299D'
+  "\\rightanglemdot": '\u299D'
+  "\\angles{}": '\u299E'
+  "{\\angles}": '\u299E'
+  "\\angles": '\u299E'
+  "\\angdnr{}": '\u299F'
+  "{\\angdnr}": '\u299F'
+  "\\angdnr": '\u299F'
   "\\Elzlpargt{}": '\u29A0'
   "{\\Elzlpargt}": '\u29A0'
   "\\Elzlpargt": '\u29A0'
+  "\\sphericalangleup{}": '\u29A1'
+  "{\\sphericalangleup}": '\u29A1'
+  "\\sphericalangleup": '\u29A1'
+  "\\turnangle{}": '\u29A2'
+  "{\\turnangle}": '\u29A2'
+  "\\turnangle": '\u29A2'
+  "\\revangle{}": '\u29A3'
+  "{\\revangle}": '\u29A3'
+  "\\revangle": '\u29A3'
+  "\\angleubar{}": '\u29A4'
+  "{\\angleubar}": '\u29A4'
+  "\\angleubar": '\u29A4'
+  "\\revangleubar{}": '\u29A5'
+  "{\\revangleubar}": '\u29A5'
+  "\\revangleubar": '\u29A5'
+  "\\wideangledown{}": '\u29A6'
+  "{\\wideangledown}": '\u29A6'
+  "\\wideangledown": '\u29A6'
+  "\\wideangleup{}": '\u29A7'
+  "{\\wideangleup}": '\u29A7'
+  "\\wideangleup": '\u29A7'
+  "\\measanglerutone{}": '\u29A8'
+  "{\\measanglerutone}": '\u29A8'
+  "\\measanglerutone": '\u29A8'
+  "\\measanglelutonw{}": '\u29A9'
+  "{\\measanglelutonw}": '\u29A9'
+  "\\measanglelutonw": '\u29A9'
+  "\\measanglerdtose{}": '\u29AA'
+  "{\\measanglerdtose}": '\u29AA'
+  "\\measanglerdtose": '\u29AA'
+  "\\measangleldtosw{}": '\u29AB'
+  "{\\measangleldtosw}": '\u29AB'
+  "\\measangleldtosw": '\u29AB'
+  "\\measangleurtone{}": '\u29AC'
+  "{\\measangleurtone}": '\u29AC'
+  "\\measangleurtone": '\u29AC'
+  "\\measangleultonw{}": '\u29AD'
+  "{\\measangleultonw}": '\u29AD'
+  "\\measangleultonw": '\u29AD'
+  "\\measangledrtose{}": '\u29AE'
+  "{\\measangledrtose}": '\u29AE'
+  "\\measangledrtose": '\u29AE'
+  "\\measangledltosw{}": '\u29AF'
+  "{\\measangledltosw}": '\u29AF'
+  "\\measangledltosw": '\u29AF'
+  "\\revemptyset{}": '\u29B0'
+  "{\\revemptyset}": '\u29B0'
+  "\\revemptyset": '\u29B0'
+  "\\emptysetobar{}": '\u29B1'
+  "{\\emptysetobar}": '\u29B1'
+  "\\emptysetobar": '\u29B1'
+  "\\emptysetocirc{}": '\u29B2'
+  "{\\emptysetocirc}": '\u29B2'
+  "\\emptysetocirc": '\u29B2'
+  "\\emptysetoarr{}": '\u29B3'
+  "{\\emptysetoarr}": '\u29B3'
+  "\\emptysetoarr": '\u29B3'
+  "\\emptysetoarrl{}": '\u29B4'
+  "{\\emptysetoarrl}": '\u29B4'
+  "\\emptysetoarrl": '\u29B4'
   "\\ElsevierGlyph{E260}": '\u29B5'
   "\\ElsevierGlyph{E61B}": '\u29B6'
+  "\\circledparallel{}": '\u29B7'
+  "{\\circledparallel}": '\u29B7'
+  "\\circledparallel": '\u29B7'
+  "\\circledbslash{}": '\u29B8'
+  "{\\circledbslash}": '\u29B8'
+  "\\circledbslash": '\u29B8'
+  "\\operp{}": '\u29B9'
+  "{\\operp}": '\u29B9'
+  "\\operp": '\u29B9'
+  "\\obot{}": '\u29BA'
+  "{\\obot}": '\u29BA'
+  "\\obot": '\u29BA'
+  "\\olcross{}": '\u29BB'
+  "{\\olcross}": '\u29BB'
+  "\\olcross": '\u29BB'
+  "\\odotslashdot{}": '\u29BC'
+  "{\\odotslashdot}": '\u29BC'
+  "\\odotslashdot": '\u29BC'
+  "\\uparrowoncircle{}": '\u29BD'
+  "{\\uparrowoncircle}": '\u29BD'
+  "\\uparrowoncircle": '\u29BD'
+  "\\circledwhitebullet{}": '\u29BE'
+  "{\\circledwhitebullet}": '\u29BE'
+  "\\circledwhitebullet": '\u29BE'
+  "\\circledbullet{}": '\u29BF'
+  "{\\circledbullet}": '\u29BF'
+  "\\circledbullet": '\u29BF'
+  "\\circledless{}": '\u29C0'
+  "{\\circledless}": '\u29C0'
+  "\\circledless": '\u29C0'
+  "\\circledgtr{}": '\u29C1'
+  "{\\circledgtr}": '\u29C1'
+  "\\circledgtr": '\u29C1'
+  "\\cirscir{}": '\u29C2'
+  "{\\cirscir}": '\u29C2'
+  "\\cirscir": '\u29C2'
+  "\\cirE{}": '\u29C3'
+  "{\\cirE}": '\u29C3'
+  "\\cirE": '\u29C3'
+  "\\boxslash{}": '\u29C4'
+  "{\\boxslash}": '\u29C4'
+  "\\boxslash": '\u29C4'
+  "\\boxbslash{}": '\u29C5'
+  "{\\boxbslash}": '\u29C5'
+  "\\boxbslash": '\u29C5'
+  "\\boxast{}": '\u29C6'
+  "{\\boxast}": '\u29C6'
+  "\\boxast": '\u29C6'
+  "\\boxcircle{}": '\u29C7'
+  "{\\boxcircle}": '\u29C7'
+  "\\boxcircle": '\u29C7'
+  "\\boxbox{}": '\u29C8'
+  "{\\boxbox}": '\u29C8'
+  "\\boxbox": '\u29C8'
+  "\\boxonbox{}": '\u29C9'
+  "{\\boxonbox}": '\u29C9'
+  "\\boxonbox": '\u29C9'
   "\\ElzLap{}": '\u29CA'
   "{\\ElzLap}": '\u29CA'
   "\\ElzLap": '\u29CA'
   "\\Elzdefas{}": '\u29CB'
   "{\\Elzdefas}": '\u29CB'
   "\\Elzdefas": '\u29CB'
+  "\\triangles{}": '\u29CC'
+  "{\\triangles}": '\u29CC'
+  "\\triangles": '\u29CC'
+  "\\triangleserifs{}": '\u29CD'
+  "{\\triangleserifs}": '\u29CD'
+  "\\triangleserifs": '\u29CD'
+  "\\rtriltri{}": '\u29CE'
+  "{\\rtriltri}": '\u29CE'
+  "\\rtriltri": '\u29CE'
   "\\LeftTriangleBar{}": '\u29CF'
   "{\\LeftTriangleBar}": '\u29CF'
   "\\LeftTriangleBar": '\u29CF'
   "\\RightTriangleBar{}": '\u29D0'
   "{\\RightTriangleBar}": '\u29D0'
   "\\RightTriangleBar": '\u29D0'
+  "\\lfbowtie{}": '\u29D1'
+  "{\\lfbowtie}": '\u29D1'
+  "\\lfbowtie": '\u29D1'
+  "\\rfbowtie{}": '\u29D2'
+  "{\\rfbowtie}": '\u29D2'
+  "\\rfbowtie": '\u29D2'
+  "\\fbowtie{}": '\u29D3'
+  "{\\fbowtie}": '\u29D3'
+  "\\fbowtie": '\u29D3'
+  "\\lftimes{}": '\u29D4'
+  "{\\lftimes}": '\u29D4'
+  "\\lftimes": '\u29D4'
+  "\\rftimes{}": '\u29D5'
+  "{\\rftimes}": '\u29D5'
+  "\\rftimes": '\u29D5'
+  "\\hourglass{}": '\u29D6'
+  "{\\hourglass}": '\u29D6'
+  "\\hourglass": '\u29D6'
+  "\\blackhourglass{}": '\u29D7'
+  "{\\blackhourglass}": '\u29D7'
+  "\\blackhourglass": '\u29D7'
+  "\\lvzigzag{}": '\u29D8'
+  "{\\lvzigzag}": '\u29D8'
+  "\\lvzigzag": '\u29D8'
+  "\\rvzigzag{}": '\u29D9'
+  "{\\rvzigzag}": '\u29D9'
+  "\\rvzigzag": '\u29D9'
+  "\\Lvzigzag{}": '\u29DA'
+  "{\\Lvzigzag}": '\u29DA'
+  "\\Lvzigzag": '\u29DA'
+  "\\Rvzigzag{}": '\u29DB'
+  "{\\Rvzigzag}": '\u29DB'
+  "\\Rvzigzag": '\u29DB'
   "\\ElsevierGlyph{E372}": '\u29DC'
+  "\\tieinfty{}": '\u29DD'
+  "{\\tieinfty}": '\u29DD'
+  "\\tieinfty": '\u29DD'
+  "\\nvinfty{}": '\u29DE'
+  "{\\nvinfty}": '\u29DE'
+  "\\nvinfty": '\u29DE'
+  "\\multimapboth{}": '\u29DF'
+  "{\\multimapboth}": '\u29DF'
+  "\\multimapboth": '\u29DF'
+  "\\laplac{}": '\u29E0'
+  "{\\laplac}": '\u29E0'
+  "\\laplac": '\u29E0'
+  "\\lrtriangleeq{}": '\u29E1'
+  "{\\lrtriangleeq}": '\u29E1'
+  "\\lrtriangleeq": '\u29E1'
+  "\\shuffle{}": '\u29E2'
+  "{\\shuffle}": '\u29E2'
+  "\\shuffle": '\u29E2'
+  "\\eparsl{}": '\u29E3'
+  "{\\eparsl}": '\u29E3'
+  "\\eparsl": '\u29E3'
+  "\\smeparsl{}": '\u29E4'
+  "{\\smeparsl}": '\u29E4'
+  "\\smeparsl": '\u29E4'
+  "\\eqvparsl{}": '\u29E5'
+  "{\\eqvparsl}": '\u29E5'
+  "\\eqvparsl": '\u29E5'
+  "\\gleichstark{}": '\u29E6'
+  "{\\gleichstark}": '\u29E6'
+  "\\gleichstark": '\u29E6'
+  "\\thermod{}": '\u29E7'
+  "{\\thermod}": '\u29E7'
+  "\\thermod": '\u29E7'
+  "\\downtriangleleftblack{}": '\u29E8'
+  "{\\downtriangleleftblack}": '\u29E8'
+  "\\downtriangleleftblack": '\u29E8'
+  "\\downtrianglerightblack{}": '\u29E9'
+  "{\\downtrianglerightblack}": '\u29E9'
+  "\\downtrianglerightblack": '\u29E9'
+  "\\blackdiamonddownarrow{}": '\u29EA'
+  "{\\blackdiamonddownarrow}": '\u29EA'
+  "\\blackdiamonddownarrow": '\u29EA'
   "\\blacklozenge{}": '\u29EB'
   "{\\blacklozenge}": '\u29EB'
   "\\blacklozenge": '\u29EB'
+  "\\circledownarrow{}": '\u29EC'
+  "{\\circledownarrow}": '\u29EC'
+  "\\circledownarrow": '\u29EC'
+  "\\blackcircledownarrow{}": '\u29ED'
+  "{\\blackcircledownarrow}": '\u29ED'
+  "\\blackcircledownarrow": '\u29ED'
+  "\\errbarsquare{}": '\u29EE'
+  "{\\errbarsquare}": '\u29EE'
+  "\\errbarsquare": '\u29EE'
+  "\\errbarblacksquare{}": '\u29EF'
+  "{\\errbarblacksquare}": '\u29EF'
+  "\\errbarblacksquare": '\u29EF'
+  "\\errbardiamond{}": '\u29F0'
+  "{\\errbardiamond}": '\u29F0'
+  "\\errbardiamond": '\u29F0'
+  "\\errbarblackdiamond{}": '\u29F1'
+  "{\\errbarblackdiamond}": '\u29F1'
+  "\\errbarblackdiamond": '\u29F1'
+  "\\errbarcircle{}": '\u29F2'
+  "{\\errbarcircle}": '\u29F2'
+  "\\errbarcircle": '\u29F2'
+  "\\errbarblackcircle{}": '\u29F3'
+  "{\\errbarblackcircle}": '\u29F3'
+  "\\errbarblackcircle": '\u29F3'
   "\\RuleDelayed{}": '\u29F4'
   "{\\RuleDelayed}": '\u29F4'
   "\\RuleDelayed": '\u29F4'
+  "\\dsol{}": '\u29F6'
+  "{\\dsol}": '\u29F6'
+  "\\dsol": '\u29F6'
+  "\\rsolbar{}": '\u29F7'
+  "{\\rsolbar}": '\u29F7'
+  "\\rsolbar": '\u29F7'
+  "\\xsol{}": '\u29F8'
+  "{\\xsol}": '\u29F8'
+  "\\xsol": '\u29F8'
+  "\\zhide{}": '\u29F9'
+  "{\\zhide}": '\u29F9'
+  "\\zhide": '\u29F9'
+  "\\doubleplus{}": '\u29FA'
+  "{\\doubleplus}": '\u29FA'
+  "\\doubleplus": '\u29FA'
+  "\\tripleplus{}": '\u29FB'
+  "{\\tripleplus}": '\u29FB'
+  "\\tripleplus": '\u29FB'
+  "\\lcurvyangle{}": '\u29FC'
+  "{\\lcurvyangle}": '\u29FC'
+  "\\lcurvyangle": '\u29FC'
+  "\\rcurvyangle{}": '\u29FD'
+  "{\\rcurvyangle}": '\u29FD'
+  "\\rcurvyangle": '\u29FD'
+  "\\tplus{}": '\u29FE'
+  "{\\tplus}": '\u29FE'
+  "\\tplus": '\u29FE'
+  "\\tminus{}": '\u29FF'
+  "{\\tminus}": '\u29FF'
+  "\\tminus": '\u29FF'
+  "\\bigodot{}": '\u2A00'
+  "{\\bigodot}": '\u2A00'
+  "\\bigodot": '\u2A00'
+  "\\bigoplus{}": '\u2A01'
+  "{\\bigoplus}": '\u2A01'
+  "\\bigoplus": '\u2A01'
+  "\\bigotimes{}": '\u2A02'
+  "{\\bigotimes}": '\u2A02'
+  "\\bigotimes": '\u2A02'
+  "\\bigcupdot{}": '\u2A03'
+  "{\\bigcupdot}": '\u2A03'
+  "\\bigcupdot": '\u2A03'
   "\\Elxuplus{}": '\u2A04'
   "{\\Elxuplus}": '\u2A04'
   "\\Elxuplus": '\u2A04'
@@ -5626,28 +8174,211 @@ LaTeX.toUnicode =
   "\\ElzSup{}": '\u2A08'
   "{\\ElzSup}": '\u2A08'
   "\\ElzSup": '\u2A08'
+  "\\varprod{}": '\u2A09'
+  "{\\varprod}": '\u2A09'
+  "\\varprod": '\u2A09'
+  "\\modtwosum{}": '\u2A0A'
+  "{\\modtwosum}": '\u2A0A'
+  "\\modtwosum": '\u2A0A'
+  "\\sumint{}": '\u2A0B'
+  "{\\sumint}": '\u2A0B'
+  "\\sumint": '\u2A0B'
+  "\\iiiint{}": '\u2A0C'
+  "{\\iiiint}": '\u2A0C'
+  "\\iiiint": '\u2A0C'
   "\\ElzCint{}": '\u2A0D'
   "{\\ElzCint}": '\u2A0D'
   "\\ElzCint": '\u2A0D'
+  "\\intBar{}": '\u2A0E'
+  "{\\intBar}": '\u2A0E'
+  "\\intBar": '\u2A0E'
   "\\clockoint{}": '\u2A0F'
   "{\\clockoint}": '\u2A0F'
   "\\clockoint": '\u2A0F'
   "\\ElsevierGlyph{E395}": '\u2A10'
+  "\\awint{}": '\u2A11'
+  "{\\awint}": '\u2A11'
+  "\\awint": '\u2A11'
+  "\\rppolint{}": '\u2A12'
+  "{\\rppolint}": '\u2A12'
+  "\\rppolint": '\u2A12'
+  "\\scpolint{}": '\u2A13'
+  "{\\scpolint}": '\u2A13'
+  "\\scpolint": '\u2A13'
+  "\\npolint{}": '\u2A14'
+  "{\\npolint}": '\u2A14'
+  "\\npolint": '\u2A14'
+  "\\pointint{}": '\u2A15'
+  "{\\pointint}": '\u2A15'
+  "\\pointint": '\u2A15'
   "\\sqrint{}": '\u2A16'
   "{\\sqrint}": '\u2A16'
   "\\sqrint": '\u2A16'
+  "\\intlarhk{}": '\u2A17'
+  "{\\intlarhk}": '\u2A17'
+  "\\intlarhk": '\u2A17'
+  "\\intx{}": '\u2A18'
+  "{\\intx}": '\u2A18'
+  "\\intx": '\u2A18'
+  "\\intcap{}": '\u2A19'
+  "{\\intcap}": '\u2A19'
+  "\\intcap": '\u2A19'
+  "\\intcup{}": '\u2A1A'
+  "{\\intcup}": '\u2A1A'
+  "\\intcup": '\u2A1A'
+  "\\upint{}": '\u2A1B'
+  "{\\upint}": '\u2A1B'
+  "\\upint": '\u2A1B'
+  "\\lowint{}": '\u2A1C'
+  "{\\lowint}": '\u2A1C'
+  "\\lowint": '\u2A1C'
+  "\\Join{}": '\u2A1D'
+  "{\\Join}": '\u2A1D'
+  "\\Join": '\u2A1D'
+  "\\bigtriangleleft{}": '\u2A1E'
+  "{\\bigtriangleleft}": '\u2A1E'
+  "\\bigtriangleleft": '\u2A1E'
+  "\\zcmp{}": '\u2A1F'
+  "{\\zcmp}": '\u2A1F'
+  "\\zcmp": '\u2A1F'
+  "\\zpipe{}": '\u2A20'
+  "{\\zpipe}": '\u2A20'
+  "\\zpipe": '\u2A20'
+  "\\zproject{}": '\u2A21'
+  "{\\zproject}": '\u2A21'
+  "\\zproject": '\u2A21'
+  "\\ringplus{}": '\u2A22'
+  "{\\ringplus}": '\u2A22'
+  "\\ringplus": '\u2A22'
+  "\\plushat{}": '\u2A23'
+  "{\\plushat}": '\u2A23'
+  "\\plushat": '\u2A23'
+  "\\simplus{}": '\u2A24'
+  "{\\simplus}": '\u2A24'
+  "\\simplus": '\u2A24'
   "\\ElsevierGlyph{E25A}": '\u2A25'
+  "\\plussim{}": '\u2A26'
+  "{\\plussim}": '\u2A26'
+  "\\plussim": '\u2A26'
+  "\\plussubtwo{}": '\u2A27'
+  "{\\plussubtwo}": '\u2A27'
+  "\\plussubtwo": '\u2A27'
+  "\\plustrif{}": '\u2A28'
+  "{\\plustrif}": '\u2A28'
+  "\\plustrif": '\u2A28'
+  "\\commaminus{}": '\u2A29'
+  "{\\commaminus}": '\u2A29'
+  "\\commaminus": '\u2A29'
   "\\ElsevierGlyph{E25B}": '\u2A2A'
+  "\\minusfdots{}": '\u2A2B'
+  "{\\minusfdots}": '\u2A2B'
+  "\\minusfdots": '\u2A2B'
+  "\\minusrdots{}": '\u2A2C'
+  "{\\minusrdots}": '\u2A2C'
+  "\\minusrdots": '\u2A2C'
   "\\ElsevierGlyph{E25C}": '\u2A2D'
   "\\ElsevierGlyph{E25D}": '\u2A2E'
   "\\ElzTimes{}": '\u2A2F'
   "{\\ElzTimes}": '\u2A2F'
   "\\ElzTimes": '\u2A2F'
+  "\\dottimes{}": '\u2A30'
+  "{\\dottimes}": '\u2A30'
+  "\\dottimes": '\u2A30'
+  "\\timesbar{}": '\u2A31'
+  "{\\timesbar}": '\u2A31'
+  "\\timesbar": '\u2A31'
+  "\\btimes{}": '\u2A32'
+  "{\\btimes}": '\u2A32'
+  "\\btimes": '\u2A32'
+  "\\smashtimes{}": '\u2A33'
+  "{\\smashtimes}": '\u2A33'
+  "\\smashtimes": '\u2A33'
   "\\ElsevierGlyph{E25E}": '\u2A34'
+  "\\otimeshat{}": '\u2A36'
+  "{\\otimeshat}": '\u2A36'
+  "\\otimeshat": '\u2A36'
+  "\\Otimes{}": '\u2A37'
+  "{\\Otimes}": '\u2A37'
+  "\\Otimes": '\u2A37'
+  "\\odiv{}": '\u2A38'
+  "{\\odiv}": '\u2A38'
+  "\\odiv": '\u2A38'
+  "\\triangleplus{}": '\u2A39'
+  "{\\triangleplus}": '\u2A39'
+  "\\triangleplus": '\u2A39'
+  "\\triangleminus{}": '\u2A3A'
+  "{\\triangleminus}": '\u2A3A'
+  "\\triangleminus": '\u2A3A'
+  "\\triangletimes{}": '\u2A3B'
+  "{\\triangletimes}": '\u2A3B'
+  "\\triangletimes": '\u2A3B'
   "\\ElsevierGlyph{E259}": '\u2A3C'
+  "\\intprodr{}": '\u2A3D'
+  "{\\intprodr}": '\u2A3D'
+  "\\intprodr": '\u2A3D'
+  "\\fcmp{}": '\u2A3E'
+  "{\\fcmp}": '\u2A3E'
+  "\\fcmp": '\u2A3E'
   "\\amalg{}": '\u2A3F'
   "{\\amalg}": '\u2A3F'
   "\\amalg": '\u2A3F'
+  "\\capdot{}": '\u2A40'
+  "{\\capdot}": '\u2A40'
+  "\\capdot": '\u2A40'
+  "\\uminus{}": '\u2A41'
+  "{\\uminus}": '\u2A41'
+  "\\uminus": '\u2A41'
+  "\\barcup{}": '\u2A42'
+  "{\\barcup}": '\u2A42'
+  "\\barcup": '\u2A42'
+  "\\barcap{}": '\u2A43'
+  "{\\barcap}": '\u2A43'
+  "\\barcap": '\u2A43'
+  "\\capwedge{}": '\u2A44'
+  "{\\capwedge}": '\u2A44'
+  "\\capwedge": '\u2A44'
+  "\\cupvee{}": '\u2A45'
+  "{\\cupvee}": '\u2A45'
+  "\\cupvee": '\u2A45'
+  "\\cupovercap{}": '\u2A46'
+  "{\\cupovercap}": '\u2A46'
+  "\\cupovercap": '\u2A46'
+  "\\capovercup{}": '\u2A47'
+  "{\\capovercup}": '\u2A47'
+  "\\capovercup": '\u2A47'
+  "\\cupbarcap{}": '\u2A48'
+  "{\\cupbarcap}": '\u2A48'
+  "\\cupbarcap": '\u2A48'
+  "\\capbarcup{}": '\u2A49'
+  "{\\capbarcup}": '\u2A49'
+  "\\capbarcup": '\u2A49'
+  "\\twocups{}": '\u2A4A'
+  "{\\twocups}": '\u2A4A'
+  "\\twocups": '\u2A4A'
+  "\\twocaps{}": '\u2A4B'
+  "{\\twocaps}": '\u2A4B'
+  "\\twocaps": '\u2A4B'
+  "\\closedvarcup{}": '\u2A4C'
+  "{\\closedvarcup}": '\u2A4C'
+  "\\closedvarcup": '\u2A4C'
+  "\\closedvarcap{}": '\u2A4D'
+  "{\\closedvarcap}": '\u2A4D'
+  "\\closedvarcap": '\u2A4D'
+  "\\Sqcap{}": '\u2A4E'
+  "{\\Sqcap}": '\u2A4E'
+  "\\Sqcap": '\u2A4E'
+  "\\Sqcup{}": '\u2A4F'
+  "{\\Sqcup}": '\u2A4F'
+  "\\Sqcup": '\u2A4F'
+  "\\closedvarcupsmashprod{}": '\u2A50'
+  "{\\closedvarcupsmashprod}": '\u2A50'
+  "\\closedvarcupsmashprod": '\u2A50'
+  "\\wedgeodot{}": '\u2A51'
+  "{\\wedgeodot}": '\u2A51'
+  "\\wedgeodot": '\u2A51'
+  "\\veeodot{}": '\u2A52'
+  "{\\veeodot}": '\u2A52'
+  "\\veeodot": '\u2A52'
   "\\ElzAnd{}": '\u2A53'
   "{\\ElzAnd}": '\u2A53'
   "\\ElzAnd": '\u2A53'
@@ -5658,19 +8389,136 @@ LaTeX.toUnicode =
   "\\ElOr{}": '\u2A56'
   "{\\ElOr}": '\u2A56'
   "\\ElOr": '\u2A56'
+  "\\bigslopedvee{}": '\u2A57'
+  "{\\bigslopedvee}": '\u2A57'
+  "\\bigslopedvee": '\u2A57'
+  "\\bigslopedwedge{}": '\u2A58'
+  "{\\bigslopedwedge}": '\u2A58'
+  "\\bigslopedwedge": '\u2A58'
+  "\\veeonwedge{}": '\u2A59'
+  "{\\veeonwedge}": '\u2A59'
+  "\\veeonwedge": '\u2A59'
+  "\\wedgemidvert{}": '\u2A5A'
+  "{\\wedgemidvert}": '\u2A5A'
+  "\\wedgemidvert": '\u2A5A'
+  "\\veemidvert{}": '\u2A5B'
+  "{\\veemidvert}": '\u2A5B'
+  "\\veemidvert": '\u2A5B'
+  "\\midbarwedge{}": '\u2A5C'
+  "{\\midbarwedge}": '\u2A5C'
+  "\\midbarwedge": '\u2A5C'
+  "\\midbarvee{}": '\u2A5D'
+  "{\\midbarvee}": '\u2A5D'
+  "\\midbarvee": '\u2A5D'
   "\\Elzminhat{}": '\u2A5F'
   "{\\Elzminhat}": '\u2A5F'
   "\\Elzminhat": '\u2A5F'
+  "\\wedgedoublebar{}": '\u2A60'
+  "{\\wedgedoublebar}": '\u2A60'
+  "\\wedgedoublebar": '\u2A60'
+  "\\varveebar{}": '\u2A61'
+  "{\\varveebar}": '\u2A61'
+  "\\varveebar": '\u2A61'
+  "\\doublebarvee{}": '\u2A62'
+  "{\\doublebarvee}": '\u2A62'
+  "\\doublebarvee": '\u2A62'
+  "\\dsub{}": '\u2A64'
+  "{\\dsub}": '\u2A64'
+  "\\dsub": '\u2A64'
+  "\\rsub{}": '\u2A65'
+  "{\\rsub}": '\u2A65'
+  "\\rsub": '\u2A65'
+  "\\eqdot{}": '\u2A66'
+  "{\\eqdot}": '\u2A66'
+  "\\eqdot": '\u2A66'
+  "\\dotequiv{}": '\u2A67'
+  "{\\dotequiv}": '\u2A67'
+  "\\dotequiv": '\u2A67'
+  "\\equivVert{}": '\u2A68'
+  "{\\equivVert}": '\u2A68'
+  "\\equivVert": '\u2A68'
+  "\\equivVvert{}": '\u2A69'
+  "{\\equivVvert}": '\u2A69'
+  "\\equivVvert": '\u2A69'
+  "\\dotsim{}": '\u2A6A'
+  "{\\dotsim}": '\u2A6A'
+  "\\dotsim": '\u2A6A'
+  "\\simrdots{}": '\u2A6B'
+  "{\\simrdots}": '\u2A6B'
+  "\\simrdots": '\u2A6B'
+  "\\simminussim{}": '\u2A6C'
+  "{\\simminussim}": '\u2A6C'
+  "\\simminussim": '\u2A6C'
+  "\\congdot{}": '\u2A6D'
+  "{\\congdot}": '\u2A6D'
+  "\\congdot": '\u2A6D'
   "\\stackrel{*}{=}": '\u2A6E'
+  "\\hatapprox{}": '\u2A6F'
+  "{\\hatapprox}": '\u2A6F'
+  "\\hatapprox": '\u2A6F'
+  "\\approxeqq{}": '\u2A70'
+  "{\\approxeqq}": '\u2A70'
+  "\\approxeqq": '\u2A70'
+  "\\eqqplus{}": '\u2A71'
+  "{\\eqqplus}": '\u2A71'
+  "\\eqqplus": '\u2A71'
+  "\\pluseqq{}": '\u2A72'
+  "{\\pluseqq}": '\u2A72'
+  "\\pluseqq": '\u2A72'
+  "\\eqqsim{}": '\u2A73'
+  "{\\eqqsim}": '\u2A73'
+  "\\eqqsim": '\u2A73'
+  "\\Coloneqq{}": '\u2A74'
+  "{\\Coloneqq}": '\u2A74'
+  "\\Coloneqq": '\u2A74'
   "\\Equal{}": '\u2A75'
   "{\\Equal}": '\u2A75'
   "\\Equal": '\u2A75'
+  "\\Same{}": '\u2A76'
+  "{\\Same}": '\u2A76'
+  "\\Same": '\u2A76'
+  "\\ddotseq{}": '\u2A77'
+  "{\\ddotseq}": '\u2A77'
+  "\\ddotseq": '\u2A77'
+  "\\equivDD{}": '\u2A78'
+  "{\\equivDD}": '\u2A78'
+  "\\equivDD": '\u2A78'
+  "\\ltcir{}": '\u2A79'
+  "{\\ltcir}": '\u2A79'
+  "\\ltcir": '\u2A79'
+  "\\gtcir{}": '\u2A7A'
+  "{\\gtcir}": '\u2A7A'
+  "\\gtcir": '\u2A7A'
+  "\\ltquest{}": '\u2A7B'
+  "{\\ltquest}": '\u2A7B'
+  "\\ltquest": '\u2A7B'
+  "\\gtquest{}": '\u2A7C'
+  "{\\gtquest}": '\u2A7C'
+  "\\gtquest": '\u2A7C'
   "\\leqslant{}": '\u2A7D'
   "{\\leqslant}": '\u2A7D'
   "\\leqslant": '\u2A7D'
   "\\geqslant{}": '\u2A7E'
   "{\\geqslant}": '\u2A7E'
   "\\geqslant": '\u2A7E'
+  "\\lesdot{}": '\u2A7F'
+  "{\\lesdot}": '\u2A7F'
+  "\\lesdot": '\u2A7F'
+  "\\gesdot{}": '\u2A80'
+  "{\\gesdot}": '\u2A80'
+  "\\gesdot": '\u2A80'
+  "\\lesdoto{}": '\u2A81'
+  "{\\lesdoto}": '\u2A81'
+  "\\lesdoto": '\u2A81'
+  "\\gesdoto{}": '\u2A82'
+  "{\\gesdoto}": '\u2A82'
+  "\\gesdoto": '\u2A82'
+  "\\lesdotor{}": '\u2A83'
+  "{\\lesdotor}": '\u2A83'
+  "\\lesdotor": '\u2A83'
+  "\\gesdotol{}": '\u2A84'
+  "{\\gesdotol}": '\u2A84'
+  "\\gesdotol": '\u2A84'
   "\\lessapprox{}": '\u2A85'
   "{\\lessapprox}": '\u2A85'
   "\\lessapprox": '\u2A85'
@@ -5695,26 +8543,122 @@ LaTeX.toUnicode =
   "\\gtreqqless{}": '\u2A8C'
   "{\\gtreqqless}": '\u2A8C'
   "\\gtreqqless": '\u2A8C'
+  "\\lsime{}": '\u2A8D'
+  "{\\lsime}": '\u2A8D'
+  "\\lsime": '\u2A8D'
+  "\\gsime{}": '\u2A8E'
+  "{\\gsime}": '\u2A8E'
+  "\\gsime": '\u2A8E'
+  "\\lsimg{}": '\u2A8F'
+  "{\\lsimg}": '\u2A8F'
+  "\\lsimg": '\u2A8F'
+  "\\gsiml{}": '\u2A90'
+  "{\\gsiml}": '\u2A90'
+  "\\gsiml": '\u2A90'
+  "\\lgE{}": '\u2A91'
+  "{\\lgE}": '\u2A91'
+  "\\lgE": '\u2A91'
+  "\\glE{}": '\u2A92'
+  "{\\glE}": '\u2A92'
+  "\\glE": '\u2A92'
+  "\\lesges{}": '\u2A93'
+  "{\\lesges}": '\u2A93'
+  "\\lesges": '\u2A93'
+  "\\gesles{}": '\u2A94'
+  "{\\gesles}": '\u2A94'
+  "\\gesles": '\u2A94'
   "\\eqslantless{}": '\u2A95'
   "{\\eqslantless}": '\u2A95'
   "\\eqslantless": '\u2A95'
   "\\eqslantgtr{}": '\u2A96'
   "{\\eqslantgtr}": '\u2A96'
   "\\eqslantgtr": '\u2A96'
+  "\\elsdot{}": '\u2A97'
+  "{\\elsdot}": '\u2A97'
+  "\\elsdot": '\u2A97'
+  "\\egsdot{}": '\u2A98'
+  "{\\egsdot}": '\u2A98'
+  "\\egsdot": '\u2A98'
+  "\\eqqless{}": '\u2A99'
+  "{\\eqqless}": '\u2A99'
+  "\\eqqless": '\u2A99'
+  "\\eqqgtr{}": '\u2A9A'
+  "{\\eqqgtr}": '\u2A9A'
+  "\\eqqgtr": '\u2A9A'
+  "\\eqqslantless{}": '\u2A9B'
+  "{\\eqqslantless}": '\u2A9B'
+  "\\eqqslantless": '\u2A9B'
+  "\\eqqslantgtr{}": '\u2A9C'
+  "{\\eqqslantgtr}": '\u2A9C'
+  "\\eqqslantgtr": '\u2A9C'
   "\\Pisymbol{ppi020}{117}": '\u2A9D'
   "\\Pisymbol{ppi020}{105}": '\u2A9E'
+  "\\simlE{}": '\u2A9F'
+  "{\\simlE}": '\u2A9F'
+  "\\simlE": '\u2A9F'
+  "\\simgE{}": '\u2AA0'
+  "{\\simgE}": '\u2AA0'
+  "\\simgE": '\u2AA0'
   "\\NestedLessLess{}": '\u2AA1'
   "{\\NestedLessLess}": '\u2AA1'
   "\\NestedLessLess": '\u2AA1'
   "\\NestedGreaterGreater{}": '\u2AA2'
   "{\\NestedGreaterGreater}": '\u2AA2'
   "\\NestedGreaterGreater": '\u2AA2'
+  "\\partialmeetcontraction{}": '\u2AA3'
+  "{\\partialmeetcontraction}": '\u2AA3'
+  "\\partialmeetcontraction": '\u2AA3'
+  "\\glj{}": '\u2AA4'
+  "{\\glj}": '\u2AA4'
+  "\\glj": '\u2AA4'
+  "\\gla{}": '\u2AA5'
+  "{\\gla}": '\u2AA5'
+  "\\gla": '\u2AA5'
+  "\\leftslice{}": '\u2AA6'
+  "{\\leftslice}": '\u2AA6'
+  "\\leftslice": '\u2AA6'
+  "\\rightslice{}": '\u2AA7'
+  "{\\rightslice}": '\u2AA7'
+  "\\rightslice": '\u2AA7'
+  "\\lescc{}": '\u2AA8'
+  "{\\lescc}": '\u2AA8'
+  "\\lescc": '\u2AA8'
+  "\\gescc{}": '\u2AA9'
+  "{\\gescc}": '\u2AA9'
+  "\\gescc": '\u2AA9'
+  "\\smt{}": '\u2AAA'
+  "{\\smt}": '\u2AAA'
+  "\\smt": '\u2AAA'
+  "\\lat{}": '\u2AAB'
+  "{\\lat}": '\u2AAB'
+  "\\lat": '\u2AAB'
+  "\\smte{}": '\u2AAC'
+  "{\\smte}": '\u2AAC'
+  "\\smte": '\u2AAC'
+  "\\late{}": '\u2AAD'
+  "{\\late}": '\u2AAD'
+  "\\late": '\u2AAD'
+  "\\bumpeqq{}": '\u2AAE'
+  "{\\bumpeqq}": '\u2AAE'
+  "\\bumpeqq": '\u2AAE'
   "\\preceq{}": '\u2AAF'
   "{\\preceq}": '\u2AAF'
   "\\preceq": '\u2AAF'
   "\\succeq{}": '\u2AB0'
   "{\\succeq}": '\u2AB0'
   "\\succeq": '\u2AB0'
+  "\\precneq{}": '\u2AB1'
+  "{\\precneq}": '\u2AB1'
+  "\\precneq": '\u2AB1'
+  "\\succneq{}": '\u2AB2'
+  "{\\succneq}": '\u2AB2'
+  "\\succneq": '\u2AB2'
+  "\\preceqq{}": '\u2AB3'
+  "{\\preceqq}": '\u2AB3'
+  "\\preceqq": '\u2AB3'
+  "\\succeqq{}": '\u2AB4'
+  "{\\succeqq}": '\u2AB4'
+  "\\succeqq": '\u2AB4'
   "\\precneqq{}": '\u2AB5'
   "{\\precneqq}": '\u2AB5'
   "\\precneqq": '\u2AB5'
@@ -5727,25 +8671,400 @@ LaTeX.toUnicode =
   "\\succnapprox{}": '\u2ABA'
   "{\\succnapprox}": '\u2ABA'
   "\\succnapprox": '\u2ABA'
+  "\\llcurly{}": '\u2ABB'
+  "{\\llcurly}": '\u2ABB'
+  "\\llcurly": '\u2ABB'
+  "\\ggcurly{}": '\u2ABC'
+  "{\\ggcurly}": '\u2ABC'
+  "\\ggcurly": '\u2ABC'
+  "\\subsetdot{}": '\u2ABD'
+  "{\\subsetdot}": '\u2ABD'
+  "\\subsetdot": '\u2ABD'
+  "\\supsetdot{}": '\u2ABE'
+  "{\\supsetdot}": '\u2ABE'
+  "\\supsetdot": '\u2ABE'
+  "\\subsetplus{}": '\u2ABF'
+  "{\\subsetplus}": '\u2ABF'
+  "\\subsetplus": '\u2ABF'
+  "\\supsetplus{}": '\u2AC0'
+  "{\\supsetplus}": '\u2AC0'
+  "\\supsetplus": '\u2AC0'
+  "\\submult{}": '\u2AC1'
+  "{\\submult}": '\u2AC1'
+  "\\submult": '\u2AC1'
+  "\\supmult{}": '\u2AC2'
+  "{\\supmult}": '\u2AC2'
+  "\\supmult": '\u2AC2'
+  "\\subedot{}": '\u2AC3'
+  "{\\subedot}": '\u2AC3'
+  "\\subedot": '\u2AC3'
+  "\\supedot{}": '\u2AC4'
+  "{\\supedot}": '\u2AC4'
+  "\\supedot": '\u2AC4'
   "\\subseteqq{}": '\u2AC5'
   "{\\subseteqq}": '\u2AC5'
   "\\subseteqq": '\u2AC5'
   "\\supseteqq{}": '\u2AC6'
   "{\\supseteqq}": '\u2AC6'
   "\\supseteqq": '\u2AC6'
+  "\\subsim{}": '\u2AC7'
+  "{\\subsim}": '\u2AC7'
+  "\\subsim": '\u2AC7'
+  "\\supsim{}": '\u2AC8'
+  "{\\supsim}": '\u2AC8'
+  "\\supsim": '\u2AC8'
+  "\\subsetapprox{}": '\u2AC9'
+  "{\\subsetapprox}": '\u2AC9'
+  "\\subsetapprox": '\u2AC9'
+  "\\supsetapprox{}": '\u2ACA'
+  "{\\supsetapprox}": '\u2ACA'
+  "\\supsetapprox": '\u2ACA'
   "\\subsetneqq{}": '\u2ACB'
   "{\\subsetneqq}": '\u2ACB'
   "\\subsetneqq": '\u2ACB'
   "\\supsetneqq{}": '\u2ACC'
   "{\\supsetneqq}": '\u2ACC'
   "\\supsetneqq": '\u2ACC'
+  "\\lsqhook{}": '\u2ACD'
+  "{\\lsqhook}": '\u2ACD'
+  "\\lsqhook": '\u2ACD'
+  "\\rsqhook{}": '\u2ACE'
+  "{\\rsqhook}": '\u2ACE'
+  "\\rsqhook": '\u2ACE'
+  "\\csub{}": '\u2ACF'
+  "{\\csub}": '\u2ACF'
+  "\\csub": '\u2ACF'
+  "\\csup{}": '\u2AD0'
+  "{\\csup}": '\u2AD0'
+  "\\csup": '\u2AD0'
+  "\\csube{}": '\u2AD1'
+  "{\\csube}": '\u2AD1'
+  "\\csube": '\u2AD1'
+  "\\csupe{}": '\u2AD2'
+  "{\\csupe}": '\u2AD2'
+  "\\csupe": '\u2AD2'
+  "\\subsup{}": '\u2AD3'
+  "{\\subsup}": '\u2AD3'
+  "\\subsup": '\u2AD3'
+  "\\supsub{}": '\u2AD4'
+  "{\\supsub}": '\u2AD4'
+  "\\supsub": '\u2AD4'
+  "\\subsub{}": '\u2AD5'
+  "{\\subsub}": '\u2AD5'
+  "\\subsub": '\u2AD5'
+  "\\supsup{}": '\u2AD6'
+  "{\\supsup}": '\u2AD6'
+  "\\supsup": '\u2AD6'
+  "\\suphsub{}": '\u2AD7'
+  "{\\suphsub}": '\u2AD7'
+  "\\suphsub": '\u2AD7'
+  "\\supdsub{}": '\u2AD8'
+  "{\\supdsub}": '\u2AD8'
+  "\\supdsub": '\u2AD8'
+  "\\forkv{}": '\u2AD9'
+  "{\\forkv}": '\u2AD9'
+  "\\forkv": '\u2AD9'
+  "\\topfork{}": '\u2ADA'
+  "{\\topfork}": '\u2ADA'
+  "\\topfork": '\u2ADA'
+  "\\mlcp{}": '\u2ADB'
+  "{\\mlcp}": '\u2ADB'
+  "\\mlcp": '\u2ADB'
+  "\\forks{}": '\u2ADC'
+  "{\\forks}": '\u2ADC'
+  "\\forks": '\u2ADC'
+  "\\forksnot{}": '\u2ADD'
+  "{\\forksnot}": '\u2ADD'
+  "\\forksnot": '\u2ADD'
+  "\\shortlefttack{}": '\u2ADE'
+  "{\\shortlefttack}": '\u2ADE'
+  "\\shortlefttack": '\u2ADE'
+  "\\shortdowntack{}": '\u2ADF'
+  "{\\shortdowntack}": '\u2ADF'
+  "\\shortdowntack": '\u2ADF'
+  "\\shortuptack{}": '\u2AE0'
+  "{\\shortuptack}": '\u2AE0'
+  "\\shortuptack": '\u2AE0'
+  "\\perps{}": '\u2AE1'
+  "{\\perps}": '\u2AE1'
+  "\\perps": '\u2AE1'
+  "\\vDdash{}": '\u2AE2'
+  "{\\vDdash}": '\u2AE2'
+  "\\vDdash": '\u2AE2'
+  "\\dashV{}": '\u2AE3'
+  "{\\dashV}": '\u2AE3'
+  "\\dashV": '\u2AE3'
+  "\\Dashv{}": '\u2AE4'
+  "{\\Dashv}": '\u2AE4'
+  "\\Dashv": '\u2AE4'
+  "\\DashV{}": '\u2AE5'
+  "{\\DashV}": '\u2AE5'
+  "\\DashV": '\u2AE5'
+  "\\varVdash{}": '\u2AE6'
+  "{\\varVdash}": '\u2AE6'
+  "\\varVdash": '\u2AE6'
+  "\\Barv{}": '\u2AE7'
+  "{\\Barv}": '\u2AE7'
+  "\\Barv": '\u2AE7'
+  "\\vBar{}": '\u2AE8'
+  "{\\vBar}": '\u2AE8'
+  "\\vBar": '\u2AE8'
+  "\\vBarv{}": '\u2AE9'
+  "{\\vBarv}": '\u2AE9'
+  "\\vBarv": '\u2AE9'
+  "\\Top{}": '\u2AEA'
+  "{\\Top}": '\u2AEA'
+  "\\Top": '\u2AEA'
   "\\ElsevierGlyph{E30D}": '\u2AEB'
+  "\\Not{}": '\u2AEC'
+  "{\\Not}": '\u2AEC'
+  "\\Not": '\u2AEC'
+  "\\bNot{}": '\u2AED'
+  "{\\bNot}": '\u2AED'
+  "\\bNot": '\u2AED'
+  "\\revnmid{}": '\u2AEE'
+  "{\\revnmid}": '\u2AEE'
+  "\\revnmid": '\u2AEE'
+  "\\cirmid{}": '\u2AEF'
+  "{\\cirmid}": '\u2AEF'
+  "\\cirmid": '\u2AEF'
+  "\\midcir{}": '\u2AF0'
+  "{\\midcir}": '\u2AF0'
+  "\\midcir": '\u2AF0'
+  "\\topcir{}": '\u2AF1'
+  "{\\topcir}": '\u2AF1'
+  "\\topcir": '\u2AF1'
+  "\\nhpar{}": '\u2AF2'
+  "{\\nhpar}": '\u2AF2'
+  "\\nhpar": '\u2AF2'
+  "\\parsim{}": '\u2AF3'
+  "{\\parsim}": '\u2AF3'
+  "\\parsim": '\u2AF3'
+  "\\interleave{}": '\u2AF4'
+  "{\\interleave}": '\u2AF4'
+  "\\interleave": '\u2AF4'
+  "\\nhVvert{}": '\u2AF5'
+  "{\\nhVvert}": '\u2AF5'
+  "\\nhVvert": '\u2AF5'
   "\\Elztdcol{}": '\u2AF6'
   "{\\Elztdcol}": '\u2AF6'
   "\\Elztdcol": '\u2AF6'
+  "\\lllnest{}": '\u2AF7'
+  "{\\lllnest}": '\u2AF7'
+  "\\lllnest": '\u2AF7'
+  "\\gggnest{}": '\u2AF8'
+  "{\\gggnest}": '\u2AF8'
+  "\\gggnest": '\u2AF8'
+  "\\leqqslant{}": '\u2AF9'
+  "{\\leqqslant}": '\u2AF9'
+  "\\leqqslant": '\u2AF9'
+  "\\geqqslant{}": '\u2AFA'
+  "{\\geqqslant}": '\u2AFA'
+  "\\geqqslant": '\u2AFA'
+  "\\trslash{}": '\u2AFB'
+  "{\\trslash}": '\u2AFB'
+  "\\trslash": '\u2AFB'
+  "\\biginterleave{}": '\u2AFC'
+  "{\\biginterleave}": '\u2AFC'
+  "\\biginterleave": '\u2AFC'
   "{{/}\\!\\!{/}}": '\u2AFD'
+  "\\talloblong{}": '\u2AFE'
+  "{\\talloblong}": '\u2AFE'
+  "\\talloblong": '\u2AFE'
+  "\\bigtalloblong{}": '\u2AFF'
+  "{\\bigtalloblong}": '\u2AFF'
+  "\\bigtalloblong": '\u2AFF'
+  "\\squaretopblack{}": '\u2B12'
+  "{\\squaretopblack}": '\u2B12'
+  "\\squaretopblack": '\u2B12'
+  "\\squarebotblack{}": '\u2B13'
+  "{\\squarebotblack}": '\u2B13'
+  "\\squarebotblack": '\u2B13'
+  "\\squareurblack{}": '\u2B14'
+  "{\\squareurblack}": '\u2B14'
+  "\\squareurblack": '\u2B14'
+  "\\squarellblack{}": '\u2B15'
+  "{\\squarellblack}": '\u2B15'
+  "\\squarellblack": '\u2B15'
+  "\\diamondleftblack{}": '\u2B16'
+  "{\\diamondleftblack}": '\u2B16'
+  "\\diamondleftblack": '\u2B16'
+  "\\diamondrightblack{}": '\u2B17'
+  "{\\diamondrightblack}": '\u2B17'
+  "\\diamondrightblack": '\u2B17'
+  "\\diamondtopblack{}": '\u2B18'
+  "{\\diamondtopblack}": '\u2B18'
+  "\\diamondtopblack": '\u2B18'
+  "\\diamondbotblack{}": '\u2B19'
+  "{\\diamondbotblack}": '\u2B19'
+  "\\diamondbotblack": '\u2B19'
+  "\\dottedsquare{}": '\u2B1A'
+  "{\\dottedsquare}": '\u2B1A'
+  "\\dottedsquare": '\u2B1A'
+  "\\vysmblksquare{}": '\u2B1D'
+  "{\\vysmblksquare}": '\u2B1D'
+  "\\vysmblksquare": '\u2B1D'
+  "\\vysmwhtsquare{}": '\u2B1E'
+  "{\\vysmwhtsquare}": '\u2B1E'
+  "\\vysmwhtsquare": '\u2B1E'
+  "\\pentagonblack{}": '\u2B1F'
+  "{\\pentagonblack}": '\u2B1F'
+  "\\pentagonblack": '\u2B1F'
+  "\\pentagon{}": '\u2B20'
+  "{\\pentagon}": '\u2B20'
+  "\\pentagon": '\u2B20'
+  "\\varhexagon{}": '\u2B21'
+  "{\\varhexagon}": '\u2B21'
+  "\\varhexagon": '\u2B21'
+  "\\varhexagonblack{}": '\u2B22'
+  "{\\varhexagonblack}": '\u2B22'
+  "\\varhexagonblack": '\u2B22'
+  "\\hexagonblack{}": '\u2B23'
+  "{\\hexagonblack}": '\u2B23'
+  "\\hexagonblack": '\u2B23'
+  "\\lgblkcircle{}": '\u2B24'
+  "{\\lgblkcircle}": '\u2B24'
+  "\\lgblkcircle": '\u2B24'
+  "\\mdblkdiamond{}": '\u2B25'
+  "{\\mdblkdiamond}": '\u2B25'
+  "\\mdblkdiamond": '\u2B25'
+  "\\mdwhtdiamond{}": '\u2B26'
+  "{\\mdwhtdiamond}": '\u2B26'
+  "\\mdwhtdiamond": '\u2B26'
+  "\\mdblklozenge{}": '\u2B27'
+  "{\\mdblklozenge}": '\u2B27'
+  "\\mdblklozenge": '\u2B27'
+  "\\mdwhtlozenge{}": '\u2B28'
+  "{\\mdwhtlozenge}": '\u2B28'
+  "\\mdwhtlozenge": '\u2B28'
+  "\\smblkdiamond{}": '\u2B29'
+  "{\\smblkdiamond}": '\u2B29'
+  "\\smblkdiamond": '\u2B29'
+  "\\smblklozenge{}": '\u2B2A'
+  "{\\smblklozenge}": '\u2B2A'
+  "\\smblklozenge": '\u2B2A'
+  "\\smwhtlozenge{}": '\u2B2B'
+  "{\\smwhtlozenge}": '\u2B2B'
+  "\\smwhtlozenge": '\u2B2B'
+  "\\blkhorzoval{}": '\u2B2C'
+  "{\\blkhorzoval}": '\u2B2C'
+  "\\blkhorzoval": '\u2B2C'
+  "\\whthorzoval{}": '\u2B2D'
+  "{\\whthorzoval}": '\u2B2D'
+  "\\whthorzoval": '\u2B2D'
+  "\\blkvertoval{}": '\u2B2E'
+  "{\\blkvertoval}": '\u2B2E'
+  "\\blkvertoval": '\u2B2E'
+  "\\whtvertoval{}": '\u2B2F'
+  "{\\whtvertoval}": '\u2B2F'
+  "\\whtvertoval": '\u2B2F'
+  "\\circleonleftarrow{}": '\u2B30'
+  "{\\circleonleftarrow}": '\u2B30'
+  "\\circleonleftarrow": '\u2B30'
+  "\\leftthreearrows{}": '\u2B31'
+  "{\\leftthreearrows}": '\u2B31'
+  "\\leftthreearrows": '\u2B31'
+  "\\leftarrowonoplus{}": '\u2B32'
+  "{\\leftarrowonoplus}": '\u2B32'
+  "\\leftarrowonoplus": '\u2B32'
+  "\\longleftsquigarrow{}": '\u2B33'
+  "{\\longleftsquigarrow}": '\u2B33'
+  "\\longleftsquigarrow": '\u2B33'
+  "\\nvtwoheadleftarrow{}": '\u2B34'
+  "{\\nvtwoheadleftarrow}": '\u2B34'
+  "\\nvtwoheadleftarrow": '\u2B34'
+  "\\nVtwoheadleftarrow{}": '\u2B35'
+  "{\\nVtwoheadleftarrow}": '\u2B35'
+  "\\nVtwoheadleftarrow": '\u2B35'
+  "\\twoheadmapsfrom{}": '\u2B36'
+  "{\\twoheadmapsfrom}": '\u2B36'
+  "\\twoheadmapsfrom": '\u2B36'
+  "\\twoheadleftdbkarrow{}": '\u2B37'
+  "{\\twoheadleftdbkarrow}": '\u2B37'
+  "\\twoheadleftdbkarrow": '\u2B37'
+  "\\leftdotarrow{}": '\u2B38'
+  "{\\leftdotarrow}": '\u2B38'
+  "\\leftdotarrow": '\u2B38'
+  "\\nvleftarrowtail{}": '\u2B39'
+  "{\\nvleftarrowtail}": '\u2B39'
+  "\\nvleftarrowtail": '\u2B39'
+  "\\nVleftarrowtail{}": '\u2B3A'
+  "{\\nVleftarrowtail}": '\u2B3A'
+  "\\nVleftarrowtail": '\u2B3A'
+  "\\twoheadleftarrowtail{}": '\u2B3B'
+  "{\\twoheadleftarrowtail}": '\u2B3B'
+  "\\twoheadleftarrowtail": '\u2B3B'
+  "\\nvtwoheadleftarrowtail{}": '\u2B3C'
+  "{\\nvtwoheadleftarrowtail}": '\u2B3C'
+  "\\nvtwoheadleftarrowtail": '\u2B3C'
+  "\\nVtwoheadleftarrowtail{}": '\u2B3D'
+  "{\\nVtwoheadleftarrowtail}": '\u2B3D'
+  "\\nVtwoheadleftarrowtail": '\u2B3D'
+  "\\leftarrowx{}": '\u2B3E'
+  "{\\leftarrowx}": '\u2B3E'
+  "\\leftarrowx": '\u2B3E'
+  "\\leftcurvedarrow{}": '\u2B3F'
+  "{\\leftcurvedarrow}": '\u2B3F'
+  "\\leftcurvedarrow": '\u2B3F'
+  "\\equalleftarrow{}": '\u2B40'
+  "{\\equalleftarrow}": '\u2B40'
+  "\\equalleftarrow": '\u2B40'
+  "\\bsimilarleftarrow{}": '\u2B41'
+  "{\\bsimilarleftarrow}": '\u2B41'
+  "\\bsimilarleftarrow": '\u2B41'
+  "\\leftarrowbackapprox{}": '\u2B42'
+  "{\\leftarrowbackapprox}": '\u2B42'
+  "\\leftarrowbackapprox": '\u2B42'
+  "\\rightarrowgtr{}": '\u2B43'
+  "{\\rightarrowgtr}": '\u2B43'
+  "\\rightarrowgtr": '\u2B43'
+  "\\rightarrowsupset{}": '\u2B44'
+  "{\\rightarrowsupset}": '\u2B44'
+  "\\rightarrowsupset": '\u2B44'
+  "\\LLeftarrow{}": '\u2B45'
+  "{\\LLeftarrow}": '\u2B45'
+  "\\LLeftarrow": '\u2B45'
+  "\\RRightarrow{}": '\u2B46'
+  "{\\RRightarrow}": '\u2B46'
+  "\\RRightarrow": '\u2B46'
+  "\\bsimilarrightarrow{}": '\u2B47'
+  "{\\bsimilarrightarrow}": '\u2B47'
+  "\\bsimilarrightarrow": '\u2B47'
+  "\\rightarrowbackapprox{}": '\u2B48'
+  "{\\rightarrowbackapprox}": '\u2B48'
+  "\\rightarrowbackapprox": '\u2B48'
+  "\\similarleftarrow{}": '\u2B49'
+  "{\\similarleftarrow}": '\u2B49'
+  "\\similarleftarrow": '\u2B49'
+  "\\leftarrowapprox{}": '\u2B4A'
+  "{\\leftarrowapprox}": '\u2B4A'
+  "\\leftarrowapprox": '\u2B4A'
+  "\\leftarrowbsimilar{}": '\u2B4B'
+  "{\\leftarrowbsimilar}": '\u2B4B'
+  "\\leftarrowbsimilar": '\u2B4B'
+  "\\rightarrowbsimilar{}": '\u2B4C'
+  "{\\rightarrowbsimilar}": '\u2B4C'
+  "\\rightarrowbsimilar": '\u2B4C'
+  "\\medwhitestar{}": '\u2B50'
+  "{\\medwhitestar}": '\u2B50'
+  "\\medwhitestar": '\u2B50'
+  "\\medblackstar{}": '\u2B51'
+  "{\\medblackstar}": '\u2B51'
+  "\\medblackstar": '\u2B51'
+  "\\smwhitestar{}": '\u2B52'
+  "{\\smwhitestar}": '\u2B52'
+  "\\smwhitestar": '\u2B52'
+  "\\rightpentagonblack{}": '\u2B53'
+  "{\\rightpentagonblack}": '\u2B53'
+  "\\rightpentagonblack": '\u2B53'
+  "\\rightpentagon{}": '\u2B54'
+  "{\\rightpentagon}": '\u2B54'
+  "\\rightpentagon": '\u2B54'
   "\\ElsevierGlyph{300A}": '\u300A'
   "\\ElsevierGlyph{300B}": '\u300B'
+  "\\postalmark{}": '\u3012'
+  "{\\postalmark}": '\u3012'
+  "\\postalmark": '\u3012'
   "\\ElsevierGlyph{3019}": '\u3019'
   "\\openbracketleft{}": '\u301A'
   "{\\openbracketleft}": '\u301A'
@@ -5753,6 +9072,9 @@ LaTeX.toUnicode =
   "\\openbracketright{}": '\u301B'
   "{\\openbracketright}": '\u301B'
   "\\openbracketright": '\u301B'
+  "\\hzigzag{}": '\u3030'
+  "{\\hzigzag}": '\u3030'
+  "\\hzigzag": '\u3030'
   "ff{}": '\uFB00'
   "fi{}": '\uFB01'
   "fl{}": '\uFB02'
@@ -6412,6 +9734,9 @@ LaTeX.toUnicode =
   "\\mathtt{x}": '\uD835\uDEA1'
   "\\mathtt{y}": '\uD835\uDEA2'
   "\\mathtt{z}": '\uD835\uDEA3'
+  "\\imath{}": '\uD835\uDEA4'
+  "{\\imath}": '\uD835\uDEA4'
+  "\\imath": '\uD835\uDEA4'
   "\\mathbf{\\Alpha}": '\uD835\uDEA8'
   "\\mathbf{\\Beta}": '\uD835\uDEA9'
   "\\mathbf{\\Gamma}": '\uD835\uDEAA'
@@ -6552,6 +9877,12 @@ LaTeX.toUnicode =
   "\\mathsfbfsl{\\phi}": '\uD835\uDFC7'
   "\\mathsfbfsl{\\varrho}": '\uD835\uDFC8'
   "\\mathsfbfsl{\\varpi}": '\uD835\uDFC9'
+  "\\mbfDigamma{}": '\uD835\uDFCA'
+  "{\\mbfDigamma}": '\uD835\uDFCA'
+  "\\mbfDigamma": '\uD835\uDFCA'
+  "\\mbfdigamma{}": '\uD835\uDFCB'
+  "{\\mbfdigamma}": '\uD835\uDFCB'
+  "\\mbfdigamma": '\uD835\uDFCB'
   "\\mathbf{0}": '\uD835\uDFCE'
   "\\mathbf{1}": '\uD835\uDFCF'
   "\\mathbf{2}": '\uD835\uDFD0'
