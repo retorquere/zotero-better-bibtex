@@ -296,16 +296,20 @@ Then /^the library (without collections )?should match '(.+)'$/ do |nocollection
 
   found = $Firefox.BetterBibTeX.library
 
-  expected.delete('keymanager')
-  expected.delete('cache')
-  found.delete('keymanager')
-  found.delete('cache')
-  
-  if nocollections
-    expected['collections'] = []
-    found['collections'] = []
-  end
+  [expected, found].each{|library|
+    library.delete('keymanager')
+    library.delete('cache')
 
+    library['items'].each{|item|
+      item.delete('multi')
+      (item.creators || []).each{|creator|
+        creator.delete('creatorID')
+        creator.delete('multi')
+      }
+    }
+    library['collections'] = [] if nocollections
+  }
+  
   renum = lambda{|collection, idmap, items=true|
     collection.delete('id')
     collection['items'] = collection['items'].collect{|i| idmap[i] } if items
