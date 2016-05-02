@@ -302,7 +302,7 @@ Then /^the library (without collections )?should match '(.+)'$/ do |nocollection
 
     library['items'].each{|item|
       item.delete('multi')
-      (item.creators || []).each{|creator|
+      (item['creators'] || []).each{|creator|
         creator.delete('creatorID')
         creator.delete('multi')
       }
