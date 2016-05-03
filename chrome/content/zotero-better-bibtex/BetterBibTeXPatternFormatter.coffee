@@ -13,7 +13,7 @@ class BetterBibTeXPatternFormatter
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
 
-    if @item.multi?._keys || @item.creators?.find((creator) -> creator.multi)
+    if @item.multi || (@item.creators && @item.creators.some((creator) -> creator.multi))
       Zotero.BetterBibTeX.debug('multi found')
       languages = Zotero.BetterBibTeX.pref.get('jurismPreferredLanguage').split(',')
       @item = JSON.parse(JSON.stringify(@item))
@@ -23,21 +23,25 @@ class BetterBibTeXPatternFormatter
 
       for field, variants of @item.multi._keys
         @item.multi._keys[field][@item.multi.main[field] || @item.language] = @item[field]
-        value = languages.find((lang) -> variants[lang])
-        @item[field] = value if value?
-        Zotero.BetterBibTeX.debug('multi found:', field, value) if value?
+        for lang in languages
+          continue unless variants[lang]
+          @item[field] = variants[lang]
+          Zotero.BetterBibTeX.debug('multi found:', field, variants[lang])
+          break
 
-      for creator in creators
+      for creator in (@item.creators || [])
         continue unless creator.multi
         creator.multi._key ||= {}
         creator.multi._key[creator.multi.main || @item.language] = creator
-        value = languages.find((lang) -> creator.multi._key[lang])
-        if value
-          Zotero.BetterBibTeX.debug('multi creator found:', value)
-          creator.lastName = value.lastName
-          creator.firstName = value.firstName
-          creator.name = value.name
-          creator.fieldMode = value.fieldMode
+        for lang in languages
+          pick = creator.multi._key[lang]
+          continue unless pick
+          Zotero.BetterBibTeX.debug('multi creator found:', pick)
+          creator.lastName = pick.lastName
+          creator.firstName = pick.firstName
+          creator.name = pick.name
+          creator.fieldMode = pick.fieldMode
+          break
 
     delete @year
     delete @month
