@@ -12,6 +12,33 @@ class BetterBibTeXPatternFormatter
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
+
+    if @item.multi?._keys || @item.creators?.find((creator) -> creator.multi)
+      Zotero.BetterBibTeX.debug('multi found')
+      languages = Zotero.BetterBibTeX.pref.get('jurismPreferredLanguage').split(',')
+      @item = JSON.parse(JSON.stringify(@item))
+      @item.multi ||= {}
+      @item.multi.main ||= {}
+      @item.multi._keys ||= {}
+
+      for field, variants of @item.multi._keys
+        @item.multi._keys[field][@item.multi.main[field] || @item.language] = @item[field]
+        value = languages.find((lang) -> variants[lang])
+        @item[field] = value if value?
+        Zotero.BetterBibTeX.debug('multi found:', field, value) if value?
+
+      for creator in creators
+        continue unless creator.multi
+        creator.multi._key ||= {}
+        creator.multi._key[creator.multi.main || @item.language] = creator
+        value = languages.find((lang) -> creator.multi._key[lang])
+        if value
+          Zotero.BetterBibTeX.debug('multi creator found:', value)
+          creator.lastName = value.lastName
+          creator.firstName = value.firstName
+          creator.name = value.name
+          creator.fieldMode = value.fieldMode
+
     delete @year
     delete @month
 
