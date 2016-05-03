@@ -48,7 +48,7 @@ method
       name = name.join('')
       var method = BetterBibTeXPatternFormatter.prototype.methods[name];
       if (method) {
-        return {method: method, scrub: (name not in ['journal', 'zotero']), arguments: params || []};
+        return {method: method, scrub: (name != 'journal' && name != 'zotero'), arguments: params || []};
       } else {
         return {method: BetterBibTeXPatternFormatter.prototype.methods.property, scrub: false, arguments: [name]};
       }
