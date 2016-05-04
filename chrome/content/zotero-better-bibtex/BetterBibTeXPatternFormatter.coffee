@@ -12,41 +12,10 @@ class BetterBibTeXPatternFormatter
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
-
-    if @item.multi || (@item.creators && @item.creators.some((creator) -> creator.multi))
-      Zotero.BetterBibTeX.debug('multi found')
-      languages = Zotero.BetterBibTeX.pref.get('jurismPreferredLanguage').split(',')
-      @item = JSON.parse(JSON.stringify(@item))
-      @item.multi ||= {}
-      @item.multi.main ||= {}
-      @item.multi._keys ||= {}
-
-      for field, variants of @item.multi._keys
-        @item.multi._keys[field][@item.multi.main[field] || @item.language] = @item[field]
-        for lang in languages
-          continue unless variants[lang]
-          @item[field] = variants[lang]
-          Zotero.BetterBibTeX.debug('multi found:', field, variants[lang])
-          break
-
-      for creator in (@item.creators || [])
-        continue unless creator.multi
-        creator.multi._key ||= {}
-        creator.multi._key[creator.multi.main || @item.language] = creator
-        for lang in languages
-          pick = creator.multi._key[lang]
-          continue unless pick
-          Zotero.BetterBibTeX.debug('multi creator found:', pick)
-          creator.lastName = pick.lastName
-          creator.firstName = pick.firstName
-          creator.name = pick.name
-          creator.fieldMode = pick.fieldMode
-          break
+    return {} if @item.itemType in ['attachment', 'note']
 
     delete @year
     delete @month
-
-    return {} if @item.itemType in ['attachment', 'note']
 
     if @item.date
       date = Zotero.BetterBibTeX.DateParser::parseDateToObject(@item.date, {locale: @item.language, verbatimDetection: false})
@@ -65,11 +34,55 @@ class BetterBibTeXPatternFormatter
           @year = date.year
           @month = date.month
 
-    for candidate in @patterns[0]
-      delete @postfix
-      citekey = @concat(candidate)
-      return {citekey: citekey, postfix: @postfix} if citekey != ''
-    return {}
+    items = [@item]
+    if @item.multi || (@item.creators && @item.creators.some((creator) -> creator.multi))
+      Zotero.BetterBibTeX.debug('multi found')
+
+      languages = {}
+
+      @item = JSON.parse(JSON.stringify(@item))
+      @item.multi ||= {}
+      @item.multi.main ||= {}
+      @item.multi._keys ||= {}
+      for field, variants of @item.multi._keys
+        @item.multi._keys[field][@item.multi.main[field] || @item.language] = @item[field]
+        for lang in Object.keys(@item.multi._keys[field])
+          continue unless lang
+          launguages[lang] = true
+
+      for creator in (@item.creators || [])
+        creator.multi ||= {}
+        creator.multi.main ||= {}
+        creator.multi._key ||= {}
+        creator.multi._key[creator.multi.main || @item.language] = creator
+        for lang in Object.keys(creator.multi._keys[field])
+          continue unless lang
+          launguages[lang] = true
+
+      for lang in Object.keys(languages)
+        item = JSON.parse(JSON.stringify(@item))
+
+        for field, variants of item.multi._keys
+          item[field] = variants[lang] if variants[lang]
+
+        for creator in (item.creators || [])
+          pick = creator.multi._key[lang]
+          continue unless pick
+          creator.lastName = pick.lastName
+          creator.firstName = pick.firstName
+          creator.name = pick.name
+          creator.fieldMode = pick.fieldMode
+
+        items.push(item)
+
+    match = {}
+    for @item in items
+      for candidate in @patterns[0]
+        delete @postfix
+        citekey = @concat(candidate)
+        continue unless citekey.length > (match.citekey || '').length
+        match = {citekey: citekey, postfix: @postfix}
+    return match
 
   alternates: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
