@@ -16,7 +16,6 @@ class BetterBibTeXPatternFormatter
 
     delete @year
     delete @month
-
     if @item.date
       date = Zotero.BetterBibTeX.DateParser::parseDateToObject(@item.date, {locale: @item.language, verbatimDetection: false})
       if date
@@ -34,60 +33,24 @@ class BetterBibTeXPatternFormatter
           @year = date.year
           @month = date.month
 
-    items = [@item]
-    if @item.multi || (@item.creators && @item.creators.some((creator) -> creator.multi))
-      Zotero.BetterBibTeX.debug('multi found')
-
-      languages = {}
-
-      @item = JSON.parse(JSON.stringify(@item))
-      @item.multi ||= {}
-      @item.multi.main ||= {}
-      @item.multi._keys ||= {}
+    delete @language
+    @languages = {}
+    if @item.multi && @item.multi._keys
       for field, variants of @item.multi._keys
-        @item.multi._keys[field][@item.multi.main[field] || @item.language] = @item[field]
-        for lang in Object.keys(@item.multi._keys[field])
-          continue unless lang
-          languages[lang] = true
-
-      for creator in (@item.creators || [])
-        creator.multi ||= {}
-        creator.multi.main ||= {}
-        creator.multi._key ||= {}
-        creator.multi._key[creator.multi.main || @item.language] = {
-          lastName: creator.lastName,
-          firstName: creator.firstName,
-          name: creator.name,
-          fieldMode: creator.fieldMode
-        }
+        for lang in Object.keys(variants)
+          @languages[lang] = true
+    if @item.creators
+      for creator in @item.creators
+        continue unless creator.multi && creator.multi._key
         for lang in Object.keys(creator.multi._key)
-          continue unless lang
-          languages[lang] = true
+          @languages[lang] = true
+    @languages = [null].concat(Object.keys(@languages))
 
-      for lang in Object.keys(languages)
-        item = JSON.parse(JSON.stringify(@item))
-
-        for field, variants of item.multi._keys
-          item[field] = variants[lang] if variants[lang]
-
-        for creator in (item.creators || [])
-          pick = creator.multi._key[lang]
-          continue unless pick
-          creator.lastName = pick.lastName
-          creator.firstName = pick.firstName
-          creator.name = pick.name
-          creator.fieldMode = pick.fieldMode
-
-        items.push(item)
-
-    match = {}
-    for @item in items
-      for candidate in @patterns[0]
-        delete @postfix
-        citekey = @concat(candidate)
-        continue unless citekey.length > (match.citekey || '').length
-        match = {citekey: citekey, postfix: @postfix}
-    return match
+    for candidate in @patterns[0]
+      delete @postfix
+      citekey = @concat(candidate)
+      return {citekey, postfix: @postfix} if citekey != ''
+    return {}
 
   alternates: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
@@ -105,12 +68,15 @@ class BetterBibTeXPatternFormatter
   concat: (pattern) ->
     result = ''
     for part in pattern
-      part = @evaluate(part)
-      continue unless part
-      if typeof(part) == 'function'
-        return '' unless part.call(null, result)
-      else
-        result += part.replace(/[\s{},]/g, '')
+      longest = ''
+      for @language in @languages
+        candidate = @evaluate(part)
+        if typeof(part) == 'function'
+          return '' unless part.call(null, result)
+        else
+          longest = candidate if candidate.length > longest.length
+      continue unless longest
+      result += longest.replace(/[\s{},]/g, '')
 
     result = Zotero.BetterBibTeX.removeDiacritics(result) if @fold
     return result
@@ -155,6 +121,7 @@ class BetterBibTeXPatternFormatter
     return words
 
   innerText: (str) ->
+    return '' unless str
     return Zotero.BetterBibTeX.HTMLParser.text(str)
 
   creators: (onlyEditors, withInitials) ->
@@ -165,7 +132,8 @@ class BetterBibTeXPatternFormatter
     for creator in @item.creators
       continue if onlyEditors && creator.creatorType not in ['editor', 'seriesEditor']
 
-      name = @innerText(creator.name || creator.lastName)
+      name = creator.multi?._key?[@language] || creator
+      name = @innerText(name.name || name.lastName)
 
       if name != ''
         if withInitials && creator.firstName
@@ -204,6 +172,10 @@ class BetterBibTeXPatternFormatter
     citeKeyConversionsRe: /%([a-zA-Z])/
     citeKeyCleanRe: /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+/g
 
+  prop: (name) ->
+    return @item[name] unless @language
+    return @item.multi?._keys?[name]?[@language]
+
   methods:
     zotero: ->
       @postfix = '0'
@@ -232,17 +204,16 @@ class BetterBibTeXPatternFormatter
       @postfix = '0'
       return ''
 
-    literal: (text) -> return text
+    literal: (text) -> text
 
     '>': (chars) ->
       return (text) -> (text && text.length > chars)
 
-    property: (name) ->
-      return @innerText(@item[name] || @item[name[0].toLowerCase() + name.slice(1)] || '')
+    property: (name) -> @innerText(@prop(name) || @prop(name[0].toLowerCase() + name.slice(1)) || '')
 
-    id: -> return @item.itemID
+    id: -> @item.itemID
 
-    key: -> return @item.key
+    key: -> @item.key
 
     auth: (onlyEditors, withInitials, n, m) ->
       authors = @creators(onlyEditors, withInitials)
@@ -256,7 +227,7 @@ class BetterBibTeXPatternFormatter
       return '' unless authors
       return authors[authors.length - 1] ? ''
 
-    journal: -> Zotero.BetterBibTeX.keymanager.journalAbbrev(@item) || @item.publicationTitle
+    journal: -> Zotero.BetterBibTeX.keymanager.journalAbbrev(@item) || @prop('publicationTitle')
 
     authors: (onlyEditors, withInitials, n) ->
       authors = @creators(onlyEditors, withInitials)
@@ -338,12 +309,12 @@ class BetterBibTeXPatternFormatter
       return lastpage
 
     shorttitle: ->
-      words = @titleWords(@item.title, { skipWords: true, asciiOnly: true})
+      words = @titleWords(@prop('title'), { skipWords: true, asciiOnly: true})
       return ''  unless words
       words.slice(0, 3).join('')
 
     veryshorttitle: ->
-      words = @titleWords(@item.title, { skipWords: true, asciiOnly: true})
+      words = @titleWords(@prop('title'), { skipWords: true, asciiOnly: true})
       return '' unless words
       words.slice(0, 1).join('')
 
@@ -361,7 +332,7 @@ class BetterBibTeXPatternFormatter
       return @months[@month - 1] ? ''
 
     title: ->
-      return @titleWords(@item.title).join('')
+      return @titleWords(@prop('title')).join('')
 
   filters:
     ifempty: (value, dflt) ->
