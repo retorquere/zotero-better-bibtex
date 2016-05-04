@@ -48,16 +48,21 @@ class BetterBibTeXPatternFormatter
         @item.multi._keys[field][@item.multi.main[field] || @item.language] = @item[field]
         for lang in Object.keys(@item.multi._keys[field])
           continue unless lang
-          launguages[lang] = true
+          languages[lang] = true
 
       for creator in (@item.creators || [])
         creator.multi ||= {}
         creator.multi.main ||= {}
         creator.multi._key ||= {}
-        creator.multi._key[creator.multi.main || @item.language] = creator
-        for lang in Object.keys(creator.multi._keys[field])
+        creator.multi._key[creator.multi.main || @item.language] = {
+          lastName: creator.lastName,
+          firstName: creator.firstName,
+          name: creator.name,
+          fieldMode: creator.fieldMode
+        }
+        for lang in Object.keys(creator.multi._key)
           continue unless lang
-          launguages[lang] = true
+          languages[lang] = true
 
       for lang in Object.keys(languages)
         item = JSON.parse(JSON.stringify(@item))
