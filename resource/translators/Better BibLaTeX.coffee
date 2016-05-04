@@ -93,6 +93,62 @@ class DateField
     return "#{_v.year}-#{@pad(_v.month, '00')}" if _v.year && _v.month
     return '' + _v.year
 
+Reference::addCreators = ->
+  return unless @item.creators and @item.creators.length
+
+  creators = {
+    author: []
+    bookauthor: []
+    commentator: []
+    editor: []
+    editora: []
+    editorb: []
+    holder: []
+    translator: []
+    scriptwriter: []
+    director: []
+  }
+  for creator in @item.creators
+    kind = switch creator.creatorType
+      when 'director'
+        # 365.something
+        if @referencetype in ['video', 'movie']
+          'director'
+        else
+          'author'
+      when 'author', 'interviewer', 'programmer', 'artist', 'podcaster', 'presenter'
+        'author'
+      when 'bookAuthor'
+        'bookauthor'
+      when 'commenter'
+        'commentator'
+      when 'editor'
+        'editor'
+      when 'inventor'
+        'holder'
+      when 'translator'
+        'translator'
+      when 'seriesEditor'
+        'editorb'
+      when 'scriptwriter'
+        # 365.something
+        if @referencetype in ['video', 'movie']
+          'scriptwriter'
+        else
+          'editora'
+
+      else
+        'editora'
+
+    creators[kind].push(creator)
+
+  for own field, value of creators
+    @remove(field)
+    @add({ name: field, value: value, enc: 'creators' })
+
+  @add({ editoratype: 'collaborator' }) if creators.editora.length > 0
+  @add({ editorbtype: 'redactor' }) if creators.editorb.length > 0
+
 doExport = ->
   Zotero.write('\n')
   while item = Translator.nextItem()
@@ -231,57 +287,7 @@ doExport = ->
 
     ref.add({ name: 'note', value: item.meetingName, allowDuplicates: true })
 
-    if item.creators and item.creators.length
-      creators = {
-        author: []
-        bookauthor: []
-        commentator: []
-        editor: []
-        editora: []
-        editorb: []
-        holder: []
-        translator: []
-        scriptwriter: []
-        director: []
-      }
-
-      for creator in item.creators
-        switch creator.creatorType
-          when 'director'
-            # 365.something
-            if ref.referencetype in ['video', 'movie']
-              creators.director.push(creator)
-            else
-              creators.author.push(creator)
-          when 'author', 'interviewer', 'programmer', 'artist', 'podcaster', 'presenter'
-            creators.author.push(creator)
-          when 'bookAuthor'
-            creators.bookauthor.push(creator)
-          when 'commenter'
-            creators.commentator.push(creator)
-          when 'editor'
-            creators.editor.push(creator)
-          when 'inventor'
-            creators.holder.push(creator)
-          when 'translator'
-            creators.translator.push(creator)
-          when 'seriesEditor'
-            creators.editorb.push(creator)
-          when 'scriptwriter'
-            # 365.something
-            if ref.referencetype in ['video', 'movie']
-              creators.scriptwriter.push(creator)
-            else
-              creators.editora.push(creator)
-
-          else
-            creators.editora.push(creator)
-
-      for own field, value of creators
-        ref.add({ name: field, value: value, enc: 'creators' })
-
-      ref.add({ editoratype: 'collaborator' }) if creators.editora.length > 0
-      ref.add({ editorbtype: 'redactor' }) if creators.editorb.length > 0
+    ref.addCreators()
 
     ref.add({ urldate: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate && item.url
 
