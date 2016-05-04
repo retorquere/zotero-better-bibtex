@@ -10,8 +10,25 @@ class BetterBibTeXPatternFormatter
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
     word: Zotero.Utilities.XRegExp("[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+", 'g')
 
+  getLanguages: ->
+    delete @language
+    @languages = {}
+    if @item.multi && @item.multi._keys
+      for field, variants of @item.multi._keys
+        for lang in Object.keys(variants)
+          @languages[lang] = true
+    if @item.creators
+      for creator in @item.creators
+        continue unless creator.multi && creator.multi._key
+        for lang in Object.keys(creator.multi._key)
+          @languages[lang] = true
+    @languages = [null].concat(Object.keys(@languages))
+    Zotero.BetterBibTeX.debug('formatting for:', @languages)
+
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
+    @getLanguages()
+
     return {} if @item.itemType in ['attachment', 'note']
 
     delete @year
@@ -33,18 +50,6 @@ class BetterBibTeXPatternFormatter
           @year = date.year
           @month = date.month
 
-    delete @language
-    @languages = {}
-    if @item.multi && @item.multi._keys
-      for field, variants of @item.multi._keys
-        for lang in Object.keys(variants)
-          @languages[lang] = true
-    if @item.creators
-      for creator in @item.creators
-        continue unless creator.multi && creator.multi._key
-        for lang in Object.keys(creator.multi._key)
-          @languages[lang] = true
-    @languages = [null].concat(Object.keys(@languages))
 
     for candidate in @patterns[0]
       delete @postfix
@@ -54,6 +59,8 @@ class BetterBibTeXPatternFormatter
 
   alternates: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
+    @getLanguages()
+
     return if @item.itemType in ['attachment', 'note']
 
     citekeys = []
