@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.4.0)
+    ast (2.2.0)
     aws-sdk (2.3.0)
       aws-sdk-resources (= 2.3.0)
     aws-sdk-core (2.3.0)
@@ -27,6 +28,8 @@ GEM
     cucumber-core (1.4.0)
       gherkin (~> 3.2.0)
     cucumber-wire (0.0.1)
+    descendants_tracker (0.0.4)
+      thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
     domain_name (0.5.20160310)
       unf (>= 0.0.5, < 1.0.0)
@@ -52,15 +55,32 @@ GEM
     ghi (1.2.0)
       pygments.rb
     git (1.3.0)
+    github_api (0.13.1)
+      addressable (~> 2.4.0)
+      descendants_tracker (~> 0.0.4)
+      faraday (~> 0.8, < 0.10)
+      hashie (>= 3.4)
+      multi_json (>= 1.7.5, < 2.0)
+      oauth2
+    github_changelog_generator (1.12.0)
+      bundler (>= 1.7)
+      colorize (~> 0.7)
+      github_api (~> 0.12)
+      overcommit (>= 0.31)
+      rake (>= 10.0)
+      rspec (>= 3.2)
+      rubocop (>= 0.31)
+    hashie (3.4.4)
     headless (2.2.3)
     highline (1.7.8)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
+    iniparse (1.4.2)
     jmespath (1.2.4)
       json_pure (>= 1.8.1)
     json (1.8.3)
     json_pure (1.8.3)
-    jwt (1.5.4)
+    jwt (1.5.1)
     latex-decode (0.2.2)
       unicode (~> 0.4)
     launchy (2.4.3)
@@ -79,6 +99,7 @@ GEM
     moving_average (0.1.1)
     multi_json (1.11.3)
     multi_test (0.1.2)
+    multi_xml (0.5.5)
     multipart-post (2.0.0)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
@@ -90,10 +111,22 @@ GEM
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     ntlm-http (0.1.1)
+    oauth2 (1.1.0)
+      faraday (>= 0.8, < 0.10)
+      jwt (~> 1.0, < 1.5.2)
+      multi_json (~> 1.3)
+      multi_xml (~> 0.5)
+      rack (>= 1.2, < 3)
     octokit (4.3.0)
       sawyer (~> 0.7.0, >= 0.5.3)
     os (0.9.6)
+    overcommit (0.33.0)
+      childprocess (~> 0.5.8)
+      iniparse (~> 1.4)
+    parser (2.3.1.0)
+      ast (~> 2.2)
     posix-spawn (0.3.11)
+    powerpack (0.1.1)
     progressbar (0.21.0)
     pusher-client (0.6.2)
       json
@@ -101,6 +134,8 @@ GEM
     pygments.rb (0.6.3)
       posix-spawn (~> 0.3.6)
       yajl-ruby (~> 1.2.0)
+    rack (1.6.4)
+    rainbow (2.1.0)
     rake (11.1.2)
     rake-xpi (0.0.24)
       aws-sdk
@@ -135,6 +170,13 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
+    rubocop (0.39.0)
+      parser (>= 2.3.0.7, < 3.0)
+      powerpack (~> 0.1)
+      rainbow (>= 1.99.1, < 3.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (~> 1.0, >= 1.0.1)
+    ruby-progressbar (1.8.0)
     rubyzip (1.2.0)
     sawyer (0.7.0)
       addressable (>= 2.3.5, < 2.5)
@@ -146,6 +188,7 @@ GEM
     shell-spinner (1.0.4)
       colorize
     sqlite3 (1.3.11)
+    thread_safe (0.3.5)
     travis (1.8.2)
       backports
       faraday (~> 0.9)
@@ -163,6 +206,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.2)
     unicode (0.4.4.2)
+    unicode-display_width (1.0.5)
     versionomy (0.5.0)
       blockenspiel (~> 0.5)
     washbullet (0.4.0)
@@ -187,6 +231,7 @@ DEPENDENCIES
   front_matter_parser
   ghi
   git
+  github_changelog_generator
   headless
   jwt
   mechanize
