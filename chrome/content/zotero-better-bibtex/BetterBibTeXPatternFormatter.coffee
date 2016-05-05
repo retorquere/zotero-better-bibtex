@@ -188,13 +188,16 @@ class BetterBibTeXPatternFormatter
       @postfix = '0'
       key = ''
 
-      if @item.creators && @item.creators[0] && (@item.creators[0].lastName || @item.creators[0].name)
-        key += (@item.creators[0].lastName || @item.creators[0].name).toLowerCase().replace(RegExp(' ', 'g'), '_').replace(/,/g, '')
+      creator = (@item.creators || [])[0]
+      if creator
+        creator = creator.multi?._key?[@language] || creator
+        creator = creator.lastName || creator.name
+        key += creator.toLowerCase().replace(RegExp(' ', 'g'), '_').replace(/,/g, '') if creator
 
       key += '_'
 
-      if @item.title
-        key += @item.title.toLowerCase().replace(@zotero.citeKeyTitleBannedRe, '').split(/\s+/g)[0]
+      if @prop('title')
+        key += @prop('title').toLowerCase().replace(@zotero.citeKeyTitleBannedRe, '').split(/\s+/g)[0]
 
       key += '_'
 
