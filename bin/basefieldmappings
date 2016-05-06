@@ -2,10 +2,9 @@
 
 require 'sqlite3'
 
-DB = SQLite3::Database.new(ARGV[0])
+DB = SQLite3::Database.new(ARGV[0] || '/Users/emile/Library/Application Support/Firefox/Profiles/dcdxff67.Juris-M/zotero/jurism.sqlite')
 
 mapping = {}
-
 DB.execute("""
   select it.typeName, bf.fieldName as baseFieldName, f.fieldName as fieldName
   from baseFieldMappings bfm
@@ -20,6 +19,7 @@ DB.execute("""
   typeName, baseFieldName, fieldName = *row
   raise fieldName if mapping[fieldName] && mapping[fieldName] != baseFieldName
   mapping[fieldName] = baseFieldName
+  puts "    # #{typeName}.#{fieldName} = item.#{baseFieldName}"
 }
 
 gather = {}
@@ -33,9 +33,9 @@ gather.each_pair{|fieldName, aliases|
   puts "    item.#{fieldName} ||= #{aliases.join(' || ')}"
 }
 puts
-puts "    if item.multi && item.multi._keys"
+puts "    if keys = (item.multi && item.multi._keys)"
 gather.each_pair{|fieldName, aliases|
-  aliases = aliases.collect{|name| "item.multi._keys.#{name}"}
-  puts "      item.multi._keys.#{fieldName} ||= #{aliases.join(' || ')}"
+  aliases = aliases.collect{|name| "keys.#{name}"}
+  puts "      keys.#{fieldName} ||= #{aliases.join(' || ')}"
 }
 puts
