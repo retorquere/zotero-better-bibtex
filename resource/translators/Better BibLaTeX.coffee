@@ -210,7 +210,7 @@ doExport = ->
 
     ref.add({ langid: ref.language })
 
-    ref.add({ number: item.docketNumber || item.publicLawNumber || item.reportNumber || item.seriesNumber || item.patentNumber || item.billNumber || item.episodeNumber || item.number })
+    ref.add({ number: item.number })
     ref.add({ name: (if isNaN(parseInt(item.issue)) then 'issue' else 'number'), value: item.issue })
 
     switch item.itemType
@@ -243,12 +243,21 @@ doExport = ->
               ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true })
 
     ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, autoCase: true }) if not ref.has.booktitle
+    ref.add({ name: 'booktitle', value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, autoCase: true }) if ref.referencetype in ['movie', 'video'] and not ref.has.booktitle
 
-    ref.add({
-      name: (if ref.referencetype in ['movie', 'video'] then 'booktitle' else 'titleaddon')
-      value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle
-      autoCase: ref.referencetype in ['movie', 'video']
-    })
+    if item.multi?._keys?.title && (main = item.multi?.main?.title || item.language)
+      languages = Object.keys(item.multi._keys.title).filter((lang) -> lang != main)
+      main += '-'
+      languages.sort((a, b) ->
+        return 0 if a == b
+        return -1 if a.indexOf(main) == 0 && b.indexOf(main) != 0
+        return 1 if a.indexOf(main) != 0 && b.indexOf(main) == 0
+        return -1 if a < b
+        return 1
+      )
+      for lang, i in languages
+        ref.add(name: (if i == 0 then 'titleaddon' else 'user' + String.fromCharCode('d'.charCodeAt() + n)), value: item.multi._keys.title[lang])
+
     ref.add({ series: item.seriesTitle || item.series })
 
     switch item.itemType
