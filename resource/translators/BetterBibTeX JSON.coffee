@@ -6,14 +6,9 @@ scrub = (item) ->
   delete item.dateAdded
   delete item.dateModified
   delete item.uri
-  delete item.multi
   delete item.attachmentIDs
 
   delete item.collections
-
-  for creator in item.creators or []
-    delete creator.creatorID
-    delete creator.multi
 
   item.attachments = ({ path: attachment.localPath, title: attachment.title, mimeType: attachment.mimeType, url: attachment.url } for attachment in item.attachments || [])
   item.notes = (note.note.trim() for note in item.notes || [])

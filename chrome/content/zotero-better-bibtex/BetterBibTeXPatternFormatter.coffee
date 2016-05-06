@@ -10,13 +10,29 @@ class BetterBibTeXPatternFormatter
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
     word: Zotero.Utilities.XRegExp("[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+", 'g')
 
+  getLanguages: ->
+    delete @language
+    @languages = {}
+    if @item.multi && @item.multi._keys
+      for field, variants of @item.multi._keys
+        for lang in Object.keys(variants)
+          @languages[lang] = true
+    if @item.creators
+      for creator in @item.creators
+        continue unless creator.multi && creator.multi._key
+        for lang in Object.keys(creator.multi._key)
+          @languages[lang] = true
+    @languages = [null].concat(Object.keys(@languages))
+    Zotero.BetterBibTeX.debug('formatting for:', @languages)
+
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
-    delete @year
-    delete @month
+    @getLanguages()
 
     return {} if @item.itemType in ['attachment', 'note']
 
+    delete @year
+    delete @month
     if @item.date
       date = Zotero.BetterBibTeX.DateParser::parseDateToObject(@item.date, {locale: @item.language, verbatimDetection: false})
       if date
@@ -34,14 +50,17 @@ class BetterBibTeXPatternFormatter
           @year = date.year
           @month = date.month
 
+
     for candidate in @patterns[0]
       delete @postfix
       citekey = @concat(candidate)
-      return {citekey: citekey, postfix: @postfix} if citekey != ''
+      return {citekey, postfix: @postfix} if citekey != ''
     return {}
 
   alternates: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
+    @getLanguages()
+
     return if @item.itemType in ['attachment', 'note']
 
     citekeys = []
@@ -56,12 +75,15 @@ class BetterBibTeXPatternFormatter
   concat: (pattern) ->
     result = ''
     for part in pattern
-      part = @evaluate(part)
-      continue unless part
-      if typeof(part) == 'function'
-        return '' unless part.call(null, result)
-      else
-        result += part.replace(/[\s{},]/g, '')
+      longest = ''
+      for @language in @languages
+        candidate = @evaluate(part)
+        if typeof(part) == 'function'
+          return '' unless part.call(null, result)
+        else
+          longest = candidate if candidate.length > longest.length
+      continue unless longest
+      result += longest.replace(/[\s{},]/g, '')
 
     result = Zotero.BetterBibTeX.removeDiacritics(result) if @fold
     return result
@@ -106,6 +128,7 @@ class BetterBibTeXPatternFormatter
     return words
 
   innerText: (str) ->
+    return '' unless str
     return Zotero.BetterBibTeX.HTMLParser.text(str)
 
   creators: (onlyEditors, withInitials) ->
@@ -116,7 +139,8 @@ class BetterBibTeXPatternFormatter
     for creator in @item.creators
       continue if onlyEditors && creator.creatorType not in ['editor', 'seriesEditor']
 
-      name = @innerText(creator.name || creator.lastName)
+      name = creator.multi?._key?[@language] || creator
+      name = @innerText(name.name || name.lastName)
 
       if name != ''
         if withInitials && creator.firstName
@@ -155,18 +179,25 @@ class BetterBibTeXPatternFormatter
     citeKeyConversionsRe: /%([a-zA-Z])/
     citeKeyCleanRe: /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+/g
 
+  prop: (name) ->
+    return @item[name] unless @language
+    return @item.multi?._keys?[name]?[@language]
+
   methods:
     zotero: ->
       @postfix = '0'
       key = ''
 
-      if @item.creators && @item.creators[0] && (@item.creators[0].lastName || @item.creators[0].name)
-        key += (@item.creators[0].lastName || @item.creators[0].name).toLowerCase().replace(RegExp(' ', 'g'), '_').replace(/,/g, '')
+      creator = (@item.creators || [])[0]
+      if creator
+        creator = creator.multi?._key?[@language] || creator
+        creator = creator.lastName || creator.name
+        key += creator.toLowerCase().replace(RegExp(' ', 'g'), '_').replace(/,/g, '') if creator
 
       key += '_'
 
-      if @item.title
-        key += @item.title.toLowerCase().replace(@zotero.citeKeyTitleBannedRe, '').split(/\s+/g)[0]
+      if @prop('title')
+        key += @prop('title').toLowerCase().replace(@zotero.citeKeyTitleBannedRe, '').split(/\s+/g)[0]
 
       key += '_'
 
@@ -183,17 +214,16 @@ class BetterBibTeXPatternFormatter
       @postfix = '0'
       return ''
 
-    literal: (text) -> return text
+    literal: (text) -> text
 
     '>': (chars) ->
       return (text) -> (text && text.length > chars)
 
-    property: (name) ->
-      return @innerText(@item[name] || @item[name[0].toLowerCase() + name.slice(1)] || '')
+    property: (name) -> @innerText(@prop(name) || @prop(name[0].toLowerCase() + name.slice(1)) || '')
 
-    id: -> return @item.itemID
+    id: -> @item.itemID
 
-    key: -> return @item.key
+    key: -> @item.key
 
     auth: (onlyEditors, withInitials, n, m) ->
       authors = @creators(onlyEditors, withInitials)
@@ -207,7 +237,7 @@ class BetterBibTeXPatternFormatter
       return '' unless authors
       return authors[authors.length - 1] ? ''
 
-    journal: -> Zotero.BetterBibTeX.keymanager.journalAbbrev(@item) || @item.publicationTitle
+    journal: -> Zotero.BetterBibTeX.keymanager.journalAbbrev(@item) || @prop('publicationTitle')
 
     authors: (onlyEditors, withInitials, n) ->
       authors = @creators(onlyEditors, withInitials)
@@ -289,12 +319,12 @@ class BetterBibTeXPatternFormatter
       return lastpage
 
     shorttitle: ->
-      words = @titleWords(@item.title, { skipWords: true, asciiOnly: true})
+      words = @titleWords(@prop('title'), { skipWords: true, asciiOnly: true})
       return ''  unless words
       words.slice(0, 3).join('')
 
     veryshorttitle: ->
-      words = @titleWords(@item.title, { skipWords: true, asciiOnly: true})
+      words = @titleWords(@prop('title'), { skipWords: true, asciiOnly: true})
       return '' unless words
       words.slice(0, 1).join('')
 
@@ -312,7 +342,7 @@ class BetterBibTeXPatternFormatter
       return @months[@month - 1] ? ''
 
     title: ->
-      return @titleWords(@item.title).join('')
+      return @titleWords(@prop('title')).join('')
 
   filters:
     ifempty: (value, dflt) ->
