@@ -1,25 +1,48 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
+Zotero.BetterBibTeX.DBStore = new class
+  constructor: ->
+    @store = new Zotero.DBConnection('betterbibtex-lokijs')
+    @store.query('CREATE TABLE IF NOT EXISTS lokijs (name PRIMARY KEY, data)')
+
+  saveDatabase: (name, serialized, callback) ->
+    if !Zotero.initialized || Zotero.isConnector
+      Zotero.BetterBibTeX.flash('Zotero is in connector mode -- not saving database!')
+    else
+      @store.query("INSERT OR REPLACE INTO lokijs (name, data) VALUES (?, ?)", [name, serialized])
+    callback()
+    return
+
+  loadDatabase: (name, callback) ->
+    file = Zotero.BetterBibTeX.createFile(name)
+    if file.exists()
+      Zotero.BetterBibTeX.debug('DB.loadDatabase:', {name, file: file.path})
+      callback(Zotero.File.getContents(file))
+      file.remove(null) if file.exists()
+      return
+
+    data = @store.valueQuery("SELECT data FROM lokijs WHERE name=?", [name]) || null
+
+    callback(null)
+    return
+
 Zotero.BetterBibTeX.DB = new class
   cacheExpiry: Date.now() - (1000 * 60 * 60 * 24 * 30)
 
   load: (reason) ->
     Zotero.debug('DB.initialize (' + ( reason || 'startup') + ')')
+
+
     ### split to speed up auto-saves ###
-
-    db = Zotero.getZoteroDatabase('betterbibtex-lokijs')
-    Zotero.DB.query('ATTACH ? AS betterbibtex', [db.path])
-    Zotero.DB.query('CREATE TABLE IF NOT EXISTS betterbibtex.lokijs (name PRIMARY KEY, data)')
-
     @db = {
       main: new loki('db.json', {
         autosave: true
         autosaveInterval: 10000
-        adapter: @adapter
+        adapter: Zotero.BetterBibTeX.DBStore
         env: 'BROWSER'
       })
       volatile: new loki('cache.json', {
-        adapter: @adapter
+        adapter: Zotero.BetterBibTeX.DBStore
         env: 'BROWSER'
       })
     }
@@ -214,31 +237,6 @@ Zotero.BetterBibTeX.DB = new class
           throw(err)
       )
       @db.main.autosaveClearFlags()
-
-  adapter:
-    saveDatabase: (name, serialized, callback) ->
-      if !Zotero.initialized || Zotero.isConnector
-        Zotero.BetterBibTeX.flash('Zotero is in connector mode -- not saving database!')
-      else
-        Zotero.DB.query("INSERT OR REPLACE INTO betterbibtex.lokijs (name, data) VALUES (?, ?)", [name, serialized])
-      callback()
-      return
-
-    loadDatabase: (name, callback) ->
-      file = Zotero.BetterBibTeX.createFile(name)
-      if file.exists()
-        Zotero.BetterBibTeX.debug('DB.loadDatabase:', {name, file: file.path})
-        callback(Zotero.File.getContents(file))
-        file.remove(null) if file.exists()
-        return
-
-      data = Zotero.DB.valueQuery("SELECT data FROM betterbibtex.lokijs WHERE name=?", [name])
-      if data
-        callback(data)
-        return
-
-      callback(null)
-      return
 
   SQLite:
     parseTable: (name) ->
