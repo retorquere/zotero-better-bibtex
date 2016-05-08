@@ -7,7 +7,15 @@ Zotero.BetterBibTeX.DB = new class
     Zotero.debug('DB.initialize (' + ( reason || 'startup') + ')')
     ### split to speed up auto-saves ###
 
-    db = Zotero.getZoteroDatabase('betterbibtex-lokijs')
+    dbname = 'betterbibtex-lokijs'
+    db = new Zotero.DBConnection(dbname)
+    try
+      db.test()
+      db.closeDatabase()
+    catch e
+      Zotero.BetterBibTeX.error(e)
+
+    db = Zotero.getZoteroDatabase(dbname)
     Zotero.DB.query('ATTACH ? AS betterbibtex', [db.path])
     Zotero.DB.query('CREATE TABLE IF NOT EXISTS betterbibtex.lokijs (name PRIMARY KEY, data)')
 
