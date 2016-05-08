@@ -8,14 +8,19 @@ Zotero.BetterBibTeX.DB = new class
     ### split to speed up auto-saves ###
 
     dbname = 'betterbibtex-lokijs'
-    db = new Zotero.DBConnection(dbname)
+    corrupt = false
     try
-      db.test()
+      Zotero.BetterBibTeX.debug("testing #{dbname} for corruption")
+      db = new Zotero.DBConnection(dbname)
+      corrupt = !db.integrityCheck()
       db.closeDatabase()
+      Zotero.BetterBibTeX.debug("testing #{dbname}: OK")
     catch e
-      Zotero.BetterBibTeX.error(e)
+      Zotero.BetterBibTeX.error("testing #{dbname} for corruption failed", e)
 
     db = Zotero.getZoteroDatabase(dbname)
+    ## should have been done by corruption detection?!
+    db.remove(null) if corrupt && db.exists()
     Zotero.DB.query('ATTACH ? AS betterbibtex', [db.path])
     Zotero.DB.query('CREATE TABLE IF NOT EXISTS betterbibtex.lokijs (name PRIMARY KEY, data)')
 
