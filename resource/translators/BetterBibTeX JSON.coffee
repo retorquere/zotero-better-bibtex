@@ -59,6 +59,9 @@ doImport = ->
   data = JSON.parse(json)
 
   for i in data.items
+    ### works around https://github.com/Juris-M/zotero/issues/20 ###
+    delete i.multi.main if i.multi
+
     item = new Zotero.Item()
     for own prop, value of i
       item[prop] = value
