@@ -256,7 +256,7 @@ doExport = ->
         return 1
       )
       for lang, i in languages
-        ref.add(name: (if i == 0 then 'titleaddon' else 'user' + String.fromCharCode('d'.charCodeAt() + n)), value: item.multi._keys.title[lang])
+        ref.add(name: (if i == 0 then 'titleaddon' else 'user' + String.fromCharCode('d'.charCodeAt() + i)), value: item.multi._keys.title[lang])
 
     ref.add({ series: item.seriesTitle || item.series })
 
