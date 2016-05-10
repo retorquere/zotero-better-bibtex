@@ -31,8 +31,6 @@ Zotero.BetterBibTeX.auto = new class
     @mark(ae, 'pending', reason) if ae
 
   updated: ->
-    @db.save()
-
     wm = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
     enumerator = wm.getEnumerator('zotero:pref')
     if enumerator.hasMoreElements()
@@ -55,6 +53,7 @@ Zotero.BetterBibTeX.auto = new class
       updated: (new Date()).toLocaleString()
     })
     @updated()
+    @db.save()
 
   markIDs: (ids, reason) ->
     collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
