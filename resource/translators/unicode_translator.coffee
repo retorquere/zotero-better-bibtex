@@ -48,7 +48,6 @@ LaTeX.cleanHTML = (text, options) ->
 
   if options.autoCase && Translator.titleCase
     Translator.debug('TITLECASE:>', plain.text)
-    #titleCased = Zotero.BetterBibTeX.CSL.titleCase(plain.text)
     titleCased = @titleCase(plain.text)
     Translator.debug('TITLECASE:<', titleCased)
     _html = ''

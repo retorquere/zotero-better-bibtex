@@ -10,7 +10,7 @@ Background:
 
 ### BibLaTeX cookie-cutter ###
 
-@127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @test-cluster-0 @485
+@test-cluster-0 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485
 Scenario Outline: BibLaTeX Export
   And I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
@@ -47,7 +47,7 @@ Scenario Outline: BibLaTeX Export
      | Fields in Extra should override defaults                                                       | 1           |
      | BraceBalancer                                                                                  | 1           |
 
-@bblt-1 @bblt @test-cluster-1 @435 @293
+@test-cluster-1 @bblt-1 @bblt @435 @293
 Scenario Outline: BibLaTeX Export
   And I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
@@ -101,9 +101,18 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.stable-keys                                                        | 6           |
      | Allow explicit field override                                                      | 1           |
 
+@test-cluster-2 @482
+Scenario Outline: BibLaTeX Export
+  And I import <references> references from 'export/<file>.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
+
+  Examples:
+     | file                                                                               | references  |
+     | Juris-M missing multi-lingual fields #482                                          | 2           |
+
 ### BibTeX cookie-cutter ###
 
-@441 @439 @bbt @test-cluster-0
+@test-cluster-0 @441 @439 @bbt @300
 Scenario Outline: BibTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibTeX' should match 'export/<file>.bibtex'
@@ -113,14 +122,6 @@ Scenario Outline: BibTeX Export
      | custom fields should be exported as-is #441                                        | 1          |
      | Replicate Zotero key algorithm #439                                                | 3          |
      | preserve BibTeX Variables does not check for null values while escaping #337       | 1          |
-
-@bbt @test-cluster-0 @300
-Scenario Outline: BibTeX Export
-  Given I import <references> references from 'export/<file>.json'
-  Then a library export using 'Better BibTeX' should match 'export/<file>.bibtex'
-
-  Examples:
-     | file                                                                               | references |
      | Underscores break capital-preservation #300                                        | 1          |
      | Numbers confuse capital-preservation #295                                          | 1          |
      | Export C as {v C}, not v{C} #152                                                   | 1          |
@@ -132,7 +133,7 @@ Scenario Outline: BibTeX Export
      | Better BibTeX.018                                                                  | 1          |
 
 ### Other ###
-@131 @test-cluster-2
+@test-cluster-2 @131
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json'
   And I set preference .DOIandURL to both
@@ -143,13 +144,13 @@ Scenario: Omit URL export when DOI present. #131
   And I set preference .DOIandURL to url
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-url.biblatex'
 
-@438 @bbt @test-cluster-2
+@test-cluster-2 @438 @bbt
 Scenario: BibTeX name escaping has a million inconsistencies #438
   When I import 2 references from 'export/BibTeX name escaping has a million inconsistencies #438.json'
   And I set preference .relaxAuthors to true
   Then a library export using 'Better BibTeX' should match 'export/BibTeX name escaping has a million inconsistencies #438.bibtex'
 
-@117 @test-cluster-2
+@test-cluster-2 @117
 Scenario: Bibtex key regenerating issue when trashing items #117
   When I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json'
   And I select the first item where publicationTitle = 'Genetics'
@@ -157,7 +158,7 @@ Scenario: Bibtex key regenerating issue when trashing items #117
   And I import 1 reference from 'export/Bibtex key regenerating issue when trashing items #117.json' as 'Second Import.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Bibtex key regenerating issue when trashing items #117.biblatex'
 
-@412 @test-cluster-0 @bbt
+@test-cluster-0 @412 @bbt
 Scenario: BibTeX URLs
   Given I import 1 reference from 'export/BibTeX; URL missing in bibtex for Book Section #412.json'
   And I set preference .bibtexURL to 'off'
@@ -181,7 +182,7 @@ Scenario: CAYW picker
   And the picks for latex should be '\cite[1]{bentley_academic_2011}\cite[ch. 1]{pollard_bicycle_2007}'
   And the picks for scannable-cite should be '{|Abram, 2014|p. 1||zu:0:ITEMKEY}{|Pollard and Bray, 2007|ch. 1||zu:0:ITEMKEY}'
 
-@307 @bbt @test-cluster-2
+@test-cluster-2 @307 @bbt
 Scenario: thesis zotero entries always create  bibtex entries #307
   When I import 2 references from 'export/thesis zotero entries always create  bibtex entries #307.json'
   Then a library export using 'Better BibTeX' should match 'export/thesis zotero entries always create  bibtex entries #307.bibtex'
@@ -193,21 +194,21 @@ Scenario: bibtex; url export does not survive underscores #402
   Then a library export using 'Better BibLaTeX' should match 'export/bibtex; url export does not survive underscores #402.biblatex'
   And a library export using 'Better BibTeX' should match 'export/bibtex; url export does not survive underscores #402.bibtex'
 
-@110 @111 @test-cluster-2
+@test-cluster-2 @110 @111
 Scenario: two ISSN number are freezing browser #110 / Generating keys and export broken #111
   When I import 1 reference from 'export/two ISSN number are freezing browser #110.json'
   And I select the first item where publicationTitle = 'Genetics'
   And I set the citation key
   Then a library export using 'Better BibLaTeX' should match 'export/two ISSN number are freezing browser #110.biblatex'
 
-@85 @bbt @test-cluster-2 @arXiv
+@test-cluster-2 @arXiv @85 @bbt
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 references from 'export/Square brackets in Publication field (85).json'
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85).bibtex'
   And I set preference .citekeyFormat to [year]-updated
   Then a library export using 'Better BibTeX' should match 'export/Square brackets in Publication field (85) after pattern change.bibtex'
 
-@86 @bbt @test-cluster-2 @arXiv
+@test-cluster-2 @86 @bbt @arXiv
 Scenario: Include first name initial(s) in cite key generation pattern (86)
   When I import 1 reference from 'export/Include first name initial(s) in cite key generation pattern (86).json'
    And I set preference .citekeyFormat to [auth+initials][year]
@@ -229,7 +230,7 @@ Scenario: Date export to Better CSL-JSON #360
   When I import 6 references from 'export/Date export to Better CSL-JSON #360.json'
   And a library export using 'Better CSL JSON' should match 'export/Date export to Better CSL-JSON #360.csl.json'
 
-@432 @447 @pandoc @test-cluster-2
+@test-cluster-2 @432 @447 @pandoc
 Scenario: Pandoc/LaTeX Citation Export
   When I import 4 references with 3 attachments from 'export/Pandoc Citation.json'
   And I set preference .quickCopyMode to 'pandoc'
@@ -239,7 +240,7 @@ Scenario: Pandoc/LaTeX Citation Export
   And a library export using 'Better CSL JSON' should match 'export/Pandoc Citation.csl.json'
   And a library export using 'Better CSL YAML' should match 'export/Pandoc Citation.csl.yml'
 
-@journal-abbrev @bbt @test-cluster-2
+@test-cluster-2 @journal-abbrev @bbt
 Scenario: Journal abbreviations
   Given I import 1 reference with 1 attachment from 'export/Better BibTeX.029.json'
   And I set preferences:
@@ -251,7 +252,7 @@ Scenario: Journal abbreviations
     | translator             | Better BibTeX  |
     | useJournalAbbreviation | true           |
 
-@81 @bbt @test-cluster-2
+@test-cluster-2 @81 @bbt
 Scenario: Journal abbreviations exported in bibtex (81)
   Given I import 1 reference from 'export/Journal abbreviations exported in bibtex (81).json'
   And I set preferences:
@@ -281,7 +282,7 @@ Scenario: Ignoring upper cases in German titles #456
   Then a library export using 'Better BibLaTeX' should match 'export/Ignoring upper cases in German titles #456.biblatex'
   And a library export using 'Better BibTeX' should match 'export/Ignoring upper cases in German titles #456.bibtex'
 
-@266 @286 @bblt @test-cluster-0
+@test-cluster-0 @266 @286 @bblt
 Scenario: Diacritics stripped from keys regardless of ascii or fold filters #266
   Given I import 1 reference from 'export/Diacritics stripped from keys regardless of ascii or fold filters #266.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Diacritics stripped from keys regardless of ascii or fold filters #266-fold.biblatex'
@@ -299,7 +300,7 @@ Scenario: Capitalize all title-fields for language en #383
   Given I import 8 references from 'export/Capitalize all title-fields for language en #383.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Capitalize all title-fields for language en #383.biblatex'
 
-@411 @bblt @test-cluster-2
+@test-cluster-2 @411 @bblt
 Scenario: Sorting and optional particle handling #411
   Given I import 2 references from 'export/Sorting and optional particle handling #411.json'
   And I set preference .parseParticles to true
@@ -307,7 +308,7 @@ Scenario: Sorting and optional particle handling #411
   When I set preference .parseParticles to false
   Then a library export using 'Better BibLaTeX' should match 'export/Sorting and optional particle handling #411.off.biblatex'
 
-@ae @test-cluster-0
+@test-cluster-0 @ae
 Scenario: auto-export
   Given I import 3 references with 2 attachments from 'export/autoexport.json'
   Then a library export using 'Better BibLaTeX' should match 'export/autoexport.before.biblatex'

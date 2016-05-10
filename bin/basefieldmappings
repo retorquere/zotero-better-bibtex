@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+
+require 'sqlite3'
+
+DB = SQLite3::Database.new(ARGV[0] || '/Users/emile/Library/Application Support/Firefox/Profiles/dcdxff67.Juris-M/zotero/jurism.sqlite')
+
+mapping = {}
+DB.execute("""
+  select it.typeName, bf.fieldName as baseFieldName, f.fieldName as fieldName
+  from baseFieldMappings bfm
+  join itemTypes it on it.itemTypeID = bfm.itemTypeID
+  join fields bf on bf.fieldID = bfm.baseFieldID
+  join fields f on f.fieldID = bfm.fieldID
+  order by
+    it.typeName,
+    bf.fieldName,
+    f.fieldName
+""").each{|row|
+  typeName, baseFieldName, fieldName = *row
+  raise fieldName if mapping[fieldName] && mapping[fieldName] != baseFieldName
+  mapping[fieldName] = baseFieldName
+  puts "    # #{typeName}.#{fieldName} = item.#{baseFieldName}"
+}
+
+gather = {}
+mapping.each_pair{|fieldName, baseFieldName|
+  gather[baseFieldName] ||= []
+  gather[baseFieldName] << fieldName
+}
+
+gather.each_pair{|fieldName, aliases|
+  aliases = aliases.collect{|name| "item.#{name}"}
+  puts "    item.#{fieldName} ||= #{aliases.join(' || ')}"
+}
+puts
+puts "    if keys = (item.multi && item.multi._keys)"
+gather.each_pair{|fieldName, aliases|
+  aliases = aliases.collect{|name| "keys.#{name}"}
+  puts "      keys.#{fieldName} ||= #{aliases.join(' || ')}"
+}
+puts

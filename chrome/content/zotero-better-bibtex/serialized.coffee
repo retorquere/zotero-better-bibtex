@@ -8,89 +8,105 @@ Zotero.BetterBibTeX.serialized = new class
 
     item.tags = ((if typeof tag == 'object' then tag.tag else tag) for tag in item.tags)
 
-    switch item.itemType
-      when 'artwork'
-        item.medium ?= item.artworkMedium
-      when 'audioRecording'
-        item.medium ?= item.audioRecordingFormat
-        item.publisher ?= item.label
-      when 'bill'
-        item.number ?= item.billNumber
-        item.pages ?= item.codePages
-        item.volume ?= item.codeVolume
-      when 'blogPost'
-        item.publicationTitle ?= item.blogTitle
-        item.type ?= item.websiteType
-      when 'bookSection'
-        item.publicationTitle ?= item.bookTitle
-      when 'case'
-        item.date ?= item.dateDecided
-        item.number ?= item.docketNumber
-        item.pages ?= item.firstPage
-        item.title ?= item.caseName
-        item.volume ?= item.reporterVolume
-      when 'computerProgram'
-        item.publisher ?= item.company
-      when 'conferencePaper'
-        item.publicationTitle ?= item.proceedingsTitle
-      when 'dictionaryEntry'
-        item.publicationTitle ?= item.dictionaryTitle
-      when 'email'
-        item.title ?= item.subject
-      when 'encyclopediaArticle'
-        item.publicationTitle ?= item.encyclopediaTitle
-      when 'film'
-        item.medium ?= item.videoRecordingFormat
-        item.publisher ?= item.distributor
-        item.type ?= item.genre
-      when 'forumPost'
-        item.publicationTitle ?= item.forumTitle
-        item.type ?= item.postType
-      when 'hearing'
-        item.number ?= item.documentNumber
-      when 'interview'
-        item.medium ?= item.interviewMedium
-      when 'letter'
-        item.type ?= item.letterType
-      when 'manuscript'
-        item.type ?= item.manuscriptType
-      when 'map'
-        item.type ?= item.mapType
-      when 'patent'
-        item.date ?= item.issueDate
-        item.number ?= item.patentNumber
-      when 'podcast'
-        item.medium ?= item.audioFileType
-        item.number ?= item.episodeNumber
-      when 'presentation'
-        item.type ?= item.presentationType
-      when 'radioBroadcast'
-        item.medium ?= item.audioRecordingFormat
-        item.number ?= item.episodeNumber
-        item.publicationTitle ?= item.programTitle
-        item.publisher ?= item.network
-      when 'report'
-        item.number ?= item.reportNumber
-        item.publisher ?= item.institution
-        item.type ?= item.reportType
-      when 'statute'
-        item.date ?= item.dateEnacted
-        item.number ?= item.publicLawNumber
-        item.title ?= item.nameOfAct
-      when 'thesis'
-        item.publisher ?= item.university
-        item.type ?= item.thesisType
-      when 'tvBroadcast'
-        item.medium ?= item.videoRecordingFormat
-        item.number ?= item.episodeNumber
-        item.publicationTitle ?= item.programTitle
-        item.publisher ?= item.network
-      when 'videoRecording'
-        item.medium ?= item.videoRecordingFormat
-        item.publisher ?= item.studio
-      when 'webpage'
-        item.publicationTitle ?= item.websiteTitle
-        item.type ?= item.websiteType
+    # artwork.artworkMedium = item.medium
+    # artwork.websiteTitle = item.publicationTitle
+    # audioRecording.release = item.edition
+    # audioRecording.audioRecordingFormat = item.medium
+    # audioRecording.album = item.publicationTitle
+    # audioRecording.label = item.publisher
+    # bill.billNumber = item.number
+    # bill.codePages = item.pages
+    # bill.reporter = item.publicationTitle
+    # bill.assemblyNumber = item.seriesNumber
+    # bill.sessionType = item.type
+    # bill.codeVolume = item.volume
+    # blogPost.blogTitle = item.publicationTitle
+    # blogPost.websiteType = item.type
+    # bookSection.bookTitle = item.publicationTitle
+    # case.dateDecided = item.date
+    # case.docketNumber = item.number
+    # case.firstPage = item.pages
+    # case.reporter = item.publicationTitle
+    # case.caseName = item.title
+    # case.reporterVolume = item.volume
+    # classic.manuscriptType = item.type
+    # computerProgram.company = item.publisher
+    # conferencePaper.proceedingsTitle = item.publicationTitle
+    # dictionaryEntry.dictionaryTitle = item.publicationTitle
+    # email.subject = item.title
+    # encyclopediaArticle.encyclopediaTitle = item.publicationTitle
+    # film.videoRecordingFormat = item.medium
+    # film.distributor = item.publisher
+    # film.genre = item.type
+    # forumPost.forumTitle = item.publicationTitle
+    # forumPost.postType = item.type
+    # gazette.dateEnacted = item.date
+    # gazette.publicLawNumber = item.number
+    # gazette.nameOfAct = item.title
+    # hearing.documentNumber = item.number
+    # hearing.reporter = item.publicationTitle
+    # hearing.sessionType = item.type
+    # interview.interviewMedium = item.medium
+    # letter.letterType = item.type
+    # manuscript.manuscriptType = item.type
+    # map.mapType = item.type
+    # patent.issueDate = item.date
+    # patent.patentNumber = item.number
+    # podcast.audioFileType = item.medium
+    # podcast.episodeNumber = item.number
+    # presentation.presentationType = item.type
+    # radioBroadcast.audioRecordingFormat = item.medium
+    # radioBroadcast.episodeNumber = item.number
+    # radioBroadcast.programTitle = item.publicationTitle
+    # radioBroadcast.network = item.publisher
+    # regulation.dateEnacted = item.date
+    # regulation.regulatoryBody = item.legislativeBody
+    # regulation.publicLawNumber = item.number
+    # regulation.nameOfAct = item.title
+    # regulation.regulationType = item.type
+    # report.reportNumber = item.number
+    # report.bookTitle = item.publicationTitle
+    # report.reportType = item.type
+    # statute.dateEnacted = item.date
+    # statute.publicLawNumber = item.number
+    # statute.nameOfAct = item.title
+    # thesis.university = item.publisher
+    # thesis.thesisType = item.type
+    # tvBroadcast.videoRecordingFormat = item.medium
+    # tvBroadcast.episodeNumber = item.number
+    # tvBroadcast.programTitle = item.publicationTitle
+    # tvBroadcast.network = item.publisher
+    # videoRecording.videoRecordingFormat = item.medium
+    # videoRecording.studio = item.publisher
+    # webpage.websiteTitle = item.publicationTitle
+    # webpage.websiteType = item.type
+
+    item.medium ||= item.artworkMedium || item.audioRecordingFormat || item.videoRecordingFormat || item.interviewMedium || item.audioFileType
+    item.publicationTitle ||= item.websiteTitle || item.album || item.reporter || item.blogTitle || item.bookTitle || item.proceedingsTitle || item.dictionaryTitle || item.encyclopediaTitle || item.forumTitle || item.programTitle
+    item.edition ||= item.release
+    item.publisher ||= item.label || item.company || item.distributor || item.network || item.university || item.studio
+    item.number ||= item.billNumber || item.docketNumber || item.publicLawNumber || item.documentNumber || item.patentNumber || item.episodeNumber || item.reportNumber
+    item.pages ||= item.codePages || item.firstPage
+    item.seriesNumber ||= item.assemblyNumber
+    item.type ||= item.sessionType || item.websiteType || item.manuscriptType || item.genre || item.postType || item.letterType || item.mapType || item.presentationType || item.regulationType || item.reportType || item.thesisType
+    item.volume ||= item.codeVolume || item.reporterVolume
+    item.date ||= item.dateDecided || item.dateEnacted || item.issueDate
+    item.title ||= item.caseName || item.subject || item.nameOfAct
+    item.legislativeBody ||= item.regulatoryBody
+
+    if keys = (item.multi && item.multi._keys)
+      keys.medium ||= keys.artworkMedium || keys.audioRecordingFormat || keys.videoRecordingFormat || keys.interviewMedium || keys.audioFileType
+      keys.publicationTitle ||= keys.websiteTitle || keys.album || keys.reporter || keys.blogTitle || keys.bookTitle || keys.proceedingsTitle || keys.dictionaryTitle || keys.encyclopediaTitle || keys.forumTitle || keys.programTitle
+      keys.edition ||= keys.release
+      keys.publisher ||= keys.label || keys.company || keys.distributor || keys.network || keys.university || keys.studio
+      keys.number ||= keys.billNumber || keys.docketNumber || keys.publicLawNumber || keys.documentNumber || keys.patentNumber || keys.episodeNumber || keys.reportNumber
+      keys.pages ||= keys.codePages || keys.firstPage
+      keys.seriesNumber ||= keys.assemblyNumber
+      keys.type ||= keys.sessionType || keys.websiteType || keys.manuscriptType || keys.genre || keys.postType || keys.letterType || keys.mapType || keys.presentationType || keys.regulationType || keys.reportType || keys.thesisType
+      keys.volume ||= keys.codeVolume || keys.reporterVolume
+      keys.date ||= keys.dateDecided || keys.dateEnacted || keys.issueDate
+      keys.title ||= keys.caseName || keys.subject || keys.nameOfAct
+      keys.legislativeBody ||= keys.regulatoryBody
 
     return item
 
