@@ -209,6 +209,7 @@ DOWNLOADS = {
     #'test/chai.js'      => 'http://chaijs.com/chai.js',
     #'test/yadda.js'     => 'https://raw.githubusercontent.com/acuminous/yadda/master/dist/yadda-0.11.5.js',
     #'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
+    'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/src/lokijs.js',
   },
   'resource/translators' => {
     'unicode.xml'         => 'http://www.w3.org/Math/characters/unicode.xml',
@@ -240,14 +241,14 @@ DOWNLOADS.each_pair{|dir, files|
 #  end
 #end
 
-file 'chrome/content/zotero-better-bibtex/lokijs.js' => 'Rakefile' do |t|
-  cleanly(t.name) do
-    Tempfile.create('lokijs') do |tmp|
-      download('https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js', tmp.path)
-      sh "#{NODEBIN}/js-beautify -o #{t.name.shellescape} #{tmp.path.shellescape}"
-    end
-  end
-end
+#file 'chrome/content/zotero-better-bibtex/lokijs.js' => 'Rakefile' do |t|
+#  cleanly(t.name) do
+#    Tempfile.create('lokijs') do |tmp|
+#      download('https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js', tmp.path)
+#      sh "#{NODEBIN}/js-beautify -o #{t.name.shellescape} #{tmp.path.shellescape}"
+#    end
+#  end
+#end
 
 file 'chrome/content/zotero-better-bibtex/translators.js' => Dir['resource/translators/*.yml'] + ['Rakefile'] do |t|
   translators = Dir['resource/translators/*.yml'].collect{|header| header = YAML::load_file(header) }.select{|header| header.is_a?(Hash) && header['label'] }
