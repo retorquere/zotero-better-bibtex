@@ -51,10 +51,9 @@ Zotero.BetterBibTeX.DB = new class
     @db.main.loadDatabase()
     @db.volatile.loadDatabase()
 
-    @metadata = @db.main.getCollection('metadata')
-    @metadata ||= @db.main.addCollection('metadata')
-    @metadata = @metadata.data[0]
-    @metadata ||= {}
+    metadata = @db.main.getCollection('metadata')
+    metadata ||= @db.main.addCollection('metadata')
+    @metadata = metadata.data[0] || {}
     delete @metadata.$loki
     delete @metadata.meta
     @metadata.cacheReap ||= Date.now()
@@ -229,8 +228,9 @@ Zotero.BetterBibTeX.DB = new class
         @metadata.Zotero = ZOTERO_CONFIG.VERSION
         @metadata.BetterBibTeX = Zotero.BetterBibTeX.release
 
-        @db.main.removeCollection('metadata')
-        metadata = @db.main.addCollection('metadata')
+        metadata = @db.main.getCollection('metadata')
+        metadata ||= @db.main.addCollection('metadata')
+        metadata.removeDataOnly()
         metadata.insert(@metadata)
       catch err
         Zotero.BetterBibTeX.error('error updating DB metadata:', err)
