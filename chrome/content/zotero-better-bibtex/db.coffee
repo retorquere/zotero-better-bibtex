@@ -9,6 +9,7 @@ Zotero.BetterBibTeX.DBStore = new class
     if !Zotero.initialized || Zotero.isConnector
       Zotero.BetterBibTeX.flash('Zotero is in connector mode -- not saving database!')
     else
+      Zotero.BetterBibTeX.debug("Saving database #{name}")
       @store.query("INSERT OR REPLACE INTO lokijs (name, data) VALUES (?, ?)", [name, serialized])
     callback()
     return
@@ -37,7 +38,7 @@ Zotero.BetterBibTeX.DB = new class
     @db = {
       main: new loki('db.json', {
         autosave: true
-        autosaveInterval: 10000
+        autosaveInterval: 5000
         adapter: Zotero.BetterBibTeX.DBStore
         env: 'BROWSER'
       })
