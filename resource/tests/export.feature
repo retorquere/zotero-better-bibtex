@@ -101,7 +101,7 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.stable-keys                                                        | 6           |
      | Allow explicit field override                                                      | 1           |
 
-@482
+@test-cluster-1 @482
 Scenario Outline: BibLaTeX Export
   And I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
@@ -133,7 +133,7 @@ Scenario Outline: BibTeX Export
      | Better BibTeX.018                                                                  | 1          |
 
 ### Other ###
-@131
+@test-cluster-1 @131
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json'
   And I set preference .DOIandURL to both
@@ -144,7 +144,7 @@ Scenario: Omit URL export when DOI present. #131
   And I set preference .DOIandURL to url
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-url.biblatex'
 
-@438 @bbt
+@test-cluster-1 @438 @bbt
 Scenario: BibTeX name escaping has a million inconsistencies #438
   When I import 2 references from 'export/BibTeX name escaping has a million inconsistencies #438.json'
   And I set preference .relaxAuthors to true
