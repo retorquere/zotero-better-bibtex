@@ -24,7 +24,7 @@ Zotero.BetterBibTeX.DBStore = new class
 
     data = @store.valueQuery("SELECT data FROM lokijs WHERE name=?", [name]) || null
 
-    callback(null)
+    callback(data)
     return
 
 Zotero.BetterBibTeX.DB = new class
