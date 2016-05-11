@@ -243,7 +243,7 @@ doExport = ->
               ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true })
 
         else
-          ref.add({ journaltitle: item.publicationTitle}) unless ref.has.journaltitle
+          ref.add({ journaltitle: item.publicationTitle}) if ! ref.has.journaltitle && item.publicationTitle != item.title
 
     ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, autoCase: true }) if not ref.has.booktitle
     ref.add({ name: 'booktitle', value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, autoCase: true }) if ref.referencetype in ['movie', 'video'] and not ref.has.booktitle
