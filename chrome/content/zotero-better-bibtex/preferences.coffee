@@ -167,7 +167,7 @@ BetterBibTeXAutoExportPref =
 
     translation.setHandler('done', (obj, worked) ->
       Zotero.BetterBibTeX.auto.mark(ae, (if worked then 'done' else 'error'))
-      Zotero.BetterBibTeX.auto.refresh()
+      Zotero.BetterBibTeX.auto.updated()
     )
     translation.translate()
 

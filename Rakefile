@@ -208,7 +208,8 @@ DOWNLOADS = {
   'chrome/content/zotero-better-bibtex' => {
     #'test/chai.js'      => 'http://chaijs.com/chai.js',
     #'test/yadda.js'     => 'https://raw.githubusercontent.com/acuminous/yadda/master/dist/yadda-0.11.5.js',
-    'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
+    #'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/build/lokijs.min.js',
+    'lokijs.js'         => 'https://raw.githubusercontent.com/techfort/LokiJS/master/src/lokijs.js',
   },
   'resource/translators' => {
     'unicode.xml'         => 'http://www.w3.org/Math/characters/unicode.xml',

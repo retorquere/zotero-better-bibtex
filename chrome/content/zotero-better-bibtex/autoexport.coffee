@@ -30,7 +30,7 @@ Zotero.BetterBibTeX.auto = new class
     ae = @db.autoexport.findObject({collection: "search:#{id}"})
     @mark(ae, 'pending', reason) if ae
 
-  refresh: ->
+  updated: ->
     wm = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
     enumerator = wm.getEnumerator('zotero:pref')
     if enumerator.hasMoreElements()
@@ -52,7 +52,8 @@ Zotero.BetterBibTeX.auto = new class
       status: 'done'
       updated: (new Date()).toLocaleString()
     })
-    @refresh()
+    @updated()
+    @db.save()
 
   markIDs: (ids, reason) ->
     collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
@@ -90,12 +91,12 @@ Zotero.BetterBibTeX.auto = new class
 
   clear: ->
     @db.autoexport.removeDataOnly()
-    @refresh()
+    @updated()
 
   reset: ->
     for ae in @db.autoexport.data
       @mark(ae, 'pending', 'reset')
-    @refresh()
+    @updated()
 
   prepare: (ae) ->
     Zotero.BetterBibTeX.debug('auto.prepare: candidate', ae)
@@ -212,7 +213,7 @@ Zotero.BetterBibTeX.auto = new class
 
     Zotero.BetterBibTeX.debug('auto.process: starting', ae)
     @mark(ae, 'running')
-    @refresh()
+    @updated()
 
     translation.setHandler('done', (obj, worked) =>
       running = @db.autoexport.get(ae.$loki)
@@ -225,7 +226,7 @@ Zotero.BetterBibTeX.auto = new class
       else
         Zotero.BetterBibTeX.debug("auto.process: #{ae.$loki} re-marked for export")
       Zotero.BetterBibTeX.auto.running = null
-      Zotero.BetterBibTeX.auto.refresh()
+      Zotero.BetterBibTeX.auto.updated()
       Zotero.BetterBibTeX.auto.process(reason)
     )
     translation.translate()

@@ -9,6 +9,7 @@ Zotero.BetterBibTeX.DBStore = new class
     if !Zotero.initialized || Zotero.isConnector
       Zotero.BetterBibTeX.flash('Zotero is in connector mode -- not saving database!')
     else
+      Zotero.BetterBibTeX.debug("Saving database #{name}")
       @store.query("INSERT OR REPLACE INTO lokijs (name, data) VALUES (?, ?)", [name, serialized])
     callback()
     return
@@ -21,9 +22,7 @@ Zotero.BetterBibTeX.DBStore = new class
       file.remove(null) if file.exists()
       return
 
-    data = @store.valueQuery("SELECT data FROM lokijs WHERE name=?", [name]) || null
-
-    callback(null)
+    callback(@store.valueQuery("SELECT data FROM lokijs WHERE name=?", [name]) || null)
     return
 
 Zotero.BetterBibTeX.DB = new class
@@ -37,7 +36,7 @@ Zotero.BetterBibTeX.DB = new class
     @db = {
       main: new loki('db.json', {
         autosave: true
-        autosaveInterval: 10000
+        autosaveInterval: 5000
         adapter: Zotero.BetterBibTeX.DBStore
         env: 'BROWSER'
       })
@@ -50,10 +49,9 @@ Zotero.BetterBibTeX.DB = new class
     @db.main.loadDatabase()
     @db.volatile.loadDatabase()
 
-    @metadata = @db.main.getCollection('metadata')
-    @metadata ||= @db.main.addCollection('metadata')
-    @metadata = @metadata.data[0]
-    @metadata ||= {}
+    metadata = @db.main.getCollection('metadata')
+    metadata ||= @db.main.addCollection('metadata')
+    @metadata = metadata.data[0] || {}
     delete @metadata.$loki
     delete @metadata.meta
     @metadata.cacheReap ||= Date.now()
@@ -162,6 +160,9 @@ Zotero.BetterBibTeX.DB = new class
       @keys.removeWhere({itemID: key.itemID})
       @cache.removeWhere({itemID: key.itemID})
     )
+    @autoexport.on('delete', (key) ->
+      Zotero.BetterBibTeX.debug('@autoexport.on(delete)', key)
+    )
 
     Zotero.debug('DB.initialize: ready')
 
@@ -225,8 +226,9 @@ Zotero.BetterBibTeX.DB = new class
         @metadata.Zotero = ZOTERO_CONFIG.VERSION
         @metadata.BetterBibTeX = Zotero.BetterBibTeX.release
 
-        @db.main.removeCollection('metadata')
-        metadata = @db.main.addCollection('metadata')
+        metadata = @db.main.getCollection('metadata')
+        metadata ||= @db.main.addCollection('metadata')
+        metadata.removeDataOnly()
         metadata.insert(@metadata)
       catch err
         Zotero.BetterBibTeX.error('error updating DB metadata:', err)
