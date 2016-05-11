@@ -22,9 +22,7 @@ Zotero.BetterBibTeX.DBStore = new class
       file.remove(null) if file.exists()
       return
 
-    data = @store.valueQuery("SELECT data FROM lokijs WHERE name=?", [name]) || null
-
-    callback(data)
+    callback(@store.valueQuery("SELECT data FROM lokijs WHERE name=?", [name]) || null)
     return
 
 Zotero.BetterBibTeX.DB = new class
