@@ -163,6 +163,9 @@ Zotero.BetterBibTeX.DB = new class
       @keys.removeWhere({itemID: key.itemID})
       @cache.removeWhere({itemID: key.itemID})
     )
+    @autoexport.on('delete', (key) ->
+      Zotero.BetterBibTeX.debug('@autoexport.on(delete)', key)
+    )
 
     Zotero.debug('DB.initialize: ready')
 
