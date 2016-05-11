@@ -1,7 +1,6 @@
-@test-cluster-3
+@test-cluster-3 @noci
 Feature: Bulk Export & Cache
 
-@noci
 Background:
   Given I set preference .citekeyFormat to [auth][year]
   And I set preference .jabrefGroups to false
