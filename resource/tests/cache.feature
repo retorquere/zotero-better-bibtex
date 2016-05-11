@@ -1,4 +1,3 @@
-@test-cluster-3
 Feature: Cache tests
 
 Background:

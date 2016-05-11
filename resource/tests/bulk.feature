@@ -1,4 +1,4 @@
-@test-cluster-3 @noci
+@noci
 Feature: Bulk Export & Cache
 
 Background:
