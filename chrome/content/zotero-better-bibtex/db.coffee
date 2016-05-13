@@ -51,7 +51,7 @@ Zotero.BetterBibTeX.DB = new class
 
     metadata = @db.main.getCollection('metadata')
     metadata ||= @db.main.addCollection('metadata')
-    @metadata = metadata.data[0] || {}
+    @metadata = JSON.parse(JSON.stringify(metadata.data[0] || {}))
     delete @metadata.$loki
     delete @metadata.meta
     @metadata.cacheReap ||= Date.now()
