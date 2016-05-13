@@ -143,7 +143,7 @@ Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
             return JSON.stringify({
               jsonrpc: (if req.jsonrpc then req.jsonrpc else undefined)
               id: (if req.id || (typeof req.id) == 'number' then req.id else null)
-              result: e.message
+              result: e.message || e.name
             })
           )
         else

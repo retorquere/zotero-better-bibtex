@@ -372,36 +372,31 @@ class Reference
     attachments = []
     errors = []
 
-    for att in f.value
-      a = {
-        title: att.title
-        path: att.localPath
-        mimetype: att.mimeType || ''
+    for attachment in f.value
+      att = {
+        title: attachment.title
+        mimetype: attachment.mimeType || ''
+        path: attachment.defaultPath || attachment.localPath
       }
 
-      save = Translator.exportFileData && att.defaultPath && att.saveFile
-      a.path = att.defaultPath if save
+      continue unless att.path # amazon/googlebooks etc links show up as atachments without a path
+      #att.path = att.path.replace(/^storage:/, '')
+      att.path = att.path.replace(/(?:\s*[{}]+)+\s*/g, ' ')
 
-      continue unless a.path # amazon/googlebooks etc links show up as atachments without a path
+      attachment.saveFile(att.path, true) if Translator.exportFileData && attachment.saveFile && attachment.defaultPath
 
-      a.title ||= att.path.replace(/.*[\\\/]/, '') || 'attachment'
+      att.title ||= att.path.replace(/.*[\\\/]/, '') || 'attachment'
 
-      if a.path.match(/[{}]/) # latex really doesn't want you to do this.
-        errors.push("BibTeX cannot handle file paths with braces: #{JSON.stringify(a.path)}")
-        continue
-
-      a.mimetype = 'application/pdf' if !a.mimetype && a.path.slice(-4).toLowerCase() == '.pdf'
+      att.mimetype = 'application/pdf' if !att.mimetype && att.path.slice(-4).toLowerCase() == '.pdf'
 
       switch
-        when save
-          att.saveFile(a.path)
         when Translator.testing
           Translator.attachmentCounter += 1
-          a.path = "files/#{Translator.attachmentCounter}/#{att.localPath.replace(/.*[\/\\]/, '')}"
-        when Translator.exportPath && att.localPath.indexOf(Translator.exportPath) == 0
-          a.path = att.localPath.slice(Translator.exportPath.length)
+          att.path = "files/#{Translator.attachmentCounter}/#{att.path.replace(/.*[\/\\]/, '')}"
+        when Translator.exportPath && att.path.indexOf(Translator.exportPath) == 0
+          att.path = att.path.slice(Translator.exportPath.length)
 
-      attachments.push(a)
+      attachments.push(att)
 
     f.errors = errors if errors.length != 0
     return null if attachments.length == 0
@@ -563,7 +558,7 @@ class Reference
     try
       @postscript()
     catch err
-      Translator.debug('postscript error:', err.message)
+      Translator.debug('postscript error:', err.message || err.name)
 
     # sort fields for stable tests
     @fields.sort((a, b) -> ("#{a.name} = #{a.value}").localeCompare(("#{b.name} = #{b.value}"))) if Translator.testing

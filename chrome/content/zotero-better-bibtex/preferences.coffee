@@ -158,7 +158,7 @@ BetterBibTeXAutoExportPref =
     try
       translation = Zotero.BetterBibTeX.auto.prepare(ae)
     catch err
-      Zotero.BetterBibTeX.debug('failed to prepare', ae, err.message)
+      Zotero.BetterBibTeX.debug('failed to prepare', ae, err)
       return
 
     if !translation

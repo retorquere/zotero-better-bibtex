@@ -110,7 +110,7 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
         formatted = Zotero.BetterBibTeX.CAYW.Formatter[@config.format].call(null, citations, @config)
       catch err
         Zotero.BetterBibTeX.error('cayw:', err)
-        alert('Could not format references: ' + err.msg)
+        alert('Could not format references: ' + (err.message || err.name))
         formatted = ''
     else
       formatted = []

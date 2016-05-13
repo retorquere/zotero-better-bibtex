@@ -31,7 +31,6 @@ Zotero.BetterBibTeX.DB = new class
   load: (reason) ->
     Zotero.debug('DB.initialize (' + ( reason || 'startup') + ')')
 
-
     ### split to speed up auto-saves ###
     @db = {
       main: new loki('db.json', {
@@ -49,12 +48,17 @@ Zotero.BetterBibTeX.DB = new class
     @db.main.loadDatabase()
     @db.volatile.loadDatabase()
 
-    metadata = @db.main.getCollection('metadata')
-    metadata ||= @db.main.addCollection('metadata')
+    metadata = @db.main.getCollection('metadata') || @db.main.addCollection('metadata')
     @metadata = JSON.parse(JSON.stringify(metadata.data[0] || {}))
     delete @metadata.$loki
     delete @metadata.meta
+
+    # I stored corrupted data in metadata at some point -- oy vey.
+    @db.main.removeCollection('metadata')
+    @db.main.getCollection('metadata') || @db.main.addCollection('metadata')
+
     @metadata.cacheReap ||= Date.now()
+    Zotero.BetterBibTeX.debug('db: loaded, metadata:', @metadata)
 
     ### this ensures that if the volatile DB hasn't been saved in the previous session, it is destroyed and will be rebuilt. ###
     volatile = Zotero.BetterBibTeX.createFile(@db.volatile.filename)
@@ -200,6 +204,7 @@ Zotero.BetterBibTeX.DB = new class
     Zotero.BetterBibTeX.debug('DB.save:', {all, serialized: @serialized.data.length})
 
     if all
+      Zotero.BetterBibTeX.error('purging cache: start')
       try
         for id, timestamp of @cacheAccess
           item = @cache.get(id)
@@ -210,7 +215,7 @@ Zotero.BetterBibTeX.DB = new class
           @metadata.cacheReap = Date.now()
           @cache.removeWhere((o) => (o.accessed || 0) < @cacheExpiry)
       catch err
-        Zotero.BetterBibTeX.error('error purging cache:', err)
+        Zotero.BetterBibTeX.error('failed to purge cache:', {message: err.message || err.name}, err)
 
       try
         @db.volatile.save((err) ->
