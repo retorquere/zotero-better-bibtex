@@ -1131,20 +1131,16 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
   ids = extraData if event == 'delete'
   return unless ids.length > 0
 
-  parents = []
+  ids = (parseInt(id) for id in ids)
+
   for item in Zotero.Items.get(ids)
     if item.isAttachment() || item.isNote()
       parent = item.getSource()
-      parents.push(parent) if parent
+      ids.push(parseInt(parent)) if parent
 
   @keymanager.scan(ids, event) if ids.length > 0
-  @keymanager.scan(parents, 'modify') if parents.length > 0
 
-  ids = (parseInt(id) for id in ids.concat(parents))
-  ids = ids.filter((v, i, arr) -> arr.indexOf(v) == i)
-  Zotero.BetterBibTeX.debug('itemChanged including parents:', {event, ids, parents})
-
-  return unless ids.length > 0
+  Zotero.BetterBibTeX.debug('itemChanged items:', {event, ids})
 
   for id in ids
     @serialized.remove(id)
