@@ -94,7 +94,7 @@ doExport = ->
 
     switch item.itemType
       when 'thesis' then ref.add({ school: item.publisher })
-      when 'report' then ref.add({ institution: item.publisher })
+      when 'report' then ref.add({ institution: item.institution || item.publisher })
       else               ref.add({ name: 'publisher', value: item.publisher, enc: 'literal' })
 
     if item.itemType == 'thesis' && item.thesisType in ['mastersthesis', 'phdthesis']
