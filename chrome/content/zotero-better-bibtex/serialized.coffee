@@ -140,10 +140,10 @@ Zotero.BetterBibTeX.serialized = new class
     item = @db.serialized.findOne({itemID})
 
     if item
-      Zotero.BetterBibTeX.debug('serialized: hit')
+      Zotero.BetterBibTeX.debug('serialized: hit', itemID)
       @stats.hit++
     else
-      Zotero.BetterBibTeX.debug('serialized: miss')
+      Zotero.BetterBibTeX.debug('serialized: miss', itemID)
       @stats.miss++
       zoteroItem = Zotero.Items.get(itemID) unless typeof zoteroItem.isAttachment == 'function'
 
