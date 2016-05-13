@@ -694,7 +694,10 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Sync.Storage.processDownload = ((original) ->
     return (data) ->
       r = original.apply(@, arguments)
-      setTimeout((-> Zotero.BetterBibTeX.itemChanged.notify('modify', 'item', [data.item.id], [])), 1000)
+      try
+        setTimeout((-> Zotero.BetterBibTeX.itemChanged.notify('modify', 'item', [data.item.id], [])), 1000)
+      catch e
+        Zotero.BetterBibTeX.debug('Zotero.Sync.Storage.processDownload:', e)
       return r
     )(Zotero.Sync.Storage.processDownload)
 

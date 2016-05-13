@@ -204,7 +204,7 @@ Zotero.BetterBibTeX.DB = new class
     Zotero.BetterBibTeX.debug('DB.save:', {all, serialized: @serialized.data.length})
 
     if all
-      Zotero.BetterBibTeX.error('purging cache: start')
+      Zotero.BetterBibTeX.debug('purging cache: start')
       try
         for id, timestamp of @cacheAccess
           item = @cache.get(id)
