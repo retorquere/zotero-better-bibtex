@@ -350,7 +350,7 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
       when (typeof m) in ['boolean', 'string', 'number']
         str.push('' + m)
       when m instanceof Error
-        str.push("<Exception: #{m.msg}#{if m.stack then '\n' + m.stack else ''}>")
+        str.push("<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>")
       else
         str.push(Zotero.BetterBibTeX.stringify(m))
   str = (s for s in str when s != '')
@@ -719,7 +719,7 @@ Zotero.BetterBibTeX.init = ->
             throw new Error("Zotero.Server.DataListener::_generateResponse: circular promise!") if typeof body?.then == 'function'
             original.apply(@, [status, contentType, body])
           ).catch((e) =>
-            original.apply(@, [500, 'text/plain', e.message])
+            original.apply(@, [500, 'text/plain', e.message || e.name])
           )
 
       return original.apply(@, arguments)
@@ -734,11 +734,11 @@ Zotero.BetterBibTeX.init = ->
             throw new Error("Zotero.Server.DataListener::_requestFinished: circular promise!") if typeof response?.then == 'function'
             original.apply(@, [response])
           ).catch((e) =>
-            original.apply(@, e.message)
+            original.apply(@, e.message || e.name)
           )
           return
       catch err
-        Zotero.debug("Zotero.Server.DataListener::_requestFinished: error handling promise: #{err.message}")
+        Zotero.debug("Zotero.Server.DataListener::_requestFinished: error handling promise: #{err.message || err.name}")
 
       return original.apply(@, arguments)
     )(Zotero.Server.DataListener::_requestFinished)
@@ -1188,7 +1188,7 @@ Zotero.BetterBibTeX.getContentsFromURL = (url) ->
   try
     return Zotero.File.getContentsFromURL(url)
   catch err
-    throw new Error("Failed to load #{url}: #{err.msg}")
+    throw new Error("Failed to load #{url}: #{err.message || err.name}")
 
 Zotero.BetterBibTeX.load = (translator) ->
   throw new Error('not a translator') unless translator.label

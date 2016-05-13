@@ -563,7 +563,7 @@ class Reference
     try
       @postscript()
     catch err
-      Translator.debug('postscript error:', err.message)
+      Translator.debug('postscript error:', err.message || err.name)
 
     # sort fields for stable tests
     @fields.sort((a, b) -> ("#{a.name} = #{a.value}").localeCompare(("#{b.name} = #{b.value}"))) if Translator.testing
