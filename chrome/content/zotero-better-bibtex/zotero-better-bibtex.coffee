@@ -642,7 +642,7 @@ Zotero.BetterBibTeX.init = ->
   if @pref.get('scanCitekeys')
     @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
     @cache.reset('scanCitekeys')
-    @keymanager.reset()
+    @keymanager.scan()
     @pref.set('scanCitekeys', false)
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
