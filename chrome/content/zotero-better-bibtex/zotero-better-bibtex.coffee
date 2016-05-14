@@ -690,6 +690,15 @@ Zotero.BetterBibTeX.init = ->
   for k, months of Zotero.BetterBibTeX.Locales.months
     Zotero.BetterBibTeX.CSL.DateParser.addDateParserMonths(months)
 
+  ### monkey-patch unwieldy BBT db logging ###
+  Zotero.DBConnection::_debug = ((original) ->
+    return (str, level) ->
+      try
+        if @_dbName == 'betterbibtex-lokijs' && str && str.length > 200
+          return original.call(@, str.substr(0, 200) + '...', level)
+      return original.apply(@, arguments)
+    )(Zotero.DBConnection::_debug)
+
   ### monkey-patch to fake the missing item notification after a zip is unpacked ###
   Zotero.Sync.Storage.processDownload = ((original) ->
     return (data) ->
