@@ -168,10 +168,20 @@ Zotero.BetterBibTeX.auto = new class
     return translation
 
   schedule: (reason) ->
+    #if Zotero.Sync.Server.syncInProgress || Zotero.Sync.Storage.syncInProgress
+    #  Zotero.BetterBibTeX.debug('auto.delay:', reason)
+    #  clearTimeout(@delayed) if @delayed
+    #  @delayed = setTimeout(->
+    #    Zotero.BetterBibTeX.auto.delayed = null
+    #    Zotero.BetterBibTeX.auto.schedule(reason)
+    #  , 5000)
+    #  return
+
     Zotero.BetterBibTeX.debug('auto.schedule:', reason)
     clearTimeout(@scheduled) if @scheduled
     @scheduled = setTimeout(->
-      Zotero.BetterBibTeX.auto.scheduled = null; Zotero.BetterBibTeX.auto.process(reason)
+      Zotero.BetterBibTeX.auto.scheduled = null
+      Zotero.BetterBibTeX.auto.process(reason)
     , 1000)
 
   process: (reason) ->

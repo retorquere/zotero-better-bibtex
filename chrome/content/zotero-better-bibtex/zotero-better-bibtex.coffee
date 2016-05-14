@@ -352,7 +352,10 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
       when m instanceof Error
         str.push("<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>")
       else
-        str.push(Zotero.BetterBibTeX.stringify(m))
+        try
+          str.push(Zotero.BetterBibTeX.stringify(m))
+        catch
+          str.push('' + m)
   str = (s for s in str when s != '')
   str = str.join(' ')
 
@@ -686,6 +689,17 @@ Zotero.BetterBibTeX.init = ->
 
   for k, months of Zotero.BetterBibTeX.Locales.months
     Zotero.BetterBibTeX.CSL.DateParser.addDateParserMonths(months)
+
+  ### monkey-patch to fake the missing item notification after a zip is unpacked ###
+  Zotero.Sync.Storage.processDownload = ((original) ->
+    return (data) ->
+      r = original.apply(@, arguments)
+      try
+        setTimeout((-> Zotero.BetterBibTeX.itemChanged.notify('modify', 'item', [data.item.id], [])), 1000)
+      catch e
+        Zotero.BetterBibTeX.debug('Zotero.Sync.Storage.processDownload:', e)
+      return r
+    )(Zotero.Sync.Storage.processDownload)
 
   ### monkey-patch Zotero.Items.parseLibraryKeyHash(id) so you can get by ID -- mainly for SelectExtension ###
   Zotero.Items.parseLibraryKeyHash = ((original) ->
