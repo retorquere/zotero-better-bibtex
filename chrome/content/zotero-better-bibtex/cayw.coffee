@@ -228,6 +228,7 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
     return formatted
 
 
+
   'scannable-cite': (citations) ->
 
     class Mem
