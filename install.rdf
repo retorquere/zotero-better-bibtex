@@ -4,7 +4,7 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>better-bibtex@iris-advies.com</em:id>
     <em:name>Zotero Better Bib(La)Tex</em:name>
-    <em:version>1.6.56</em:version>
+    <em:version>1.6.57</em:version>
     <em:description>Make Zotero useful for us LaTeX holdouts.</em:description>
     <em:homepageURL>https://github.com/retorquere/zotero-better-bibtex/wiki</em:homepageURL>
     <em:creator>Emiliano Heyns</em:creator>
