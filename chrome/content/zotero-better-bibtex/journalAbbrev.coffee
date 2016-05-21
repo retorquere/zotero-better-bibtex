@@ -1,9 +1,9 @@
 Zotero.BetterBibTeX.JournalAbbrev = new class
   constructor: ->
-    @reset()
+    @resetJournalAbbrevs()
 
   reset: ->
-    @abbrevs = {
+    @journalAbbrevs = {
       default: {
         "container-title": { },
         "collection-title": { },
@@ -33,5 +33,5 @@ Zotero.BetterBibTeX.JournalAbbrev = new class
 
     style = Zotero.BetterBibTeX.pref.get('autoAbbrevStyle') || (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)[0].styleID
 
-    @abbrevs['default']?['container-title']?[key] || Zotero.Cite.getAbbreviation(style, @abbrevs, 'default', 'container-title', key)
-    return @abbrevs['default']?['container-title']?[key] || key
+    @journalAbbrevs['default']?['container-title']?[key] || Zotero.Cite.getAbbreviation(style, @journalAbbrevs, 'default', 'container-title', key)
+    return @journalAbbrevs['default']?['container-title']?[key] || key
