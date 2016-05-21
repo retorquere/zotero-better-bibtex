@@ -649,7 +649,7 @@ Zotero.BetterBibTeX.init = ->
     @flash("Citation key rescan finished")
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
-    journalAbbrev:  (sandbox, params...) => @JournalAbbrev.get(@JournalAbbrev, params)
+    journalAbbrev:  (sandbox, params...) => @JournalAbbrev.get.apply(@JournalAbbrev, params)
     keymanager: {
       months:         @keymanager.months
       extract:        (sandbox, params...) => @keymanager.extract.apply(@keymanager, params)

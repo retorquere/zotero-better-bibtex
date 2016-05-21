@@ -237,7 +237,7 @@ class BetterBibTeXPatternFormatter
       return '' unless authors
       return authors[authors.length - 1] ? ''
 
-    journal: -> Zotero.BetterBibTeX.keymanager.journalAbbrev(@item) || @prop('publicationTitle')
+    journal: -> Zotero.BetterBibTeX.JournalAbbrev.get(@item) || @prop('publicationTitle')
 
     authors: (onlyEditors, withInitials, n) ->
       authors = @creators(onlyEditors, withInitials)
