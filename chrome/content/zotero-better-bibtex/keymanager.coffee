@@ -217,48 +217,40 @@ Zotero.BetterBibTeX.keymanager = new class
 
     return @verify(key)
 
-  scan: (ids, reason) ->
-    if reason in ['delete', 'trash']
-      ids = (@integer(id) for id in ids || [])
-      @db.keys.removeWhere((o) -> o.itemID in ids)
-      return
+  scan: (items) ->
+    items = Zotero.DB.query(@findKeysSQL) unless items
+    return [] if items.length == 0
+    if typeof items[0] in ['number', 'string']
+      items = Zotero.Items.get(items)
+      return [] unless items
+    items = [items] unless Array.isArray(items)
 
-    switch
-      when !ids
-        items = Zotero.DB.query(@findKeysSQL)
-      when ids.length == 0
-        items = []
-      when ids.length == 1
-        items = Zotero.Items.get(ids[0])
-        items = if items then [items] else []
-      else
-        items = Zotero.Items.get(ids) || []
-
-    pinned = {}
+    pinned = []
     for item in items
-      itemID = @integer(item.itemID)
+      throw new Error('keymanager.scan: expected Zotero.Item') unless item.getField
+      continue if item.isAttachment() || item.isNote()
+
       citekey = @extract(item).__citekey__
+      continue unless citekey
+
+      itemID = @integer(item.id)
       cached = @db.keys.findOne({itemID})
 
-      continue unless citekey && citekey != ''
+      continue if cached && cached.citekey == citekey && !cached.citekeyFormat
 
-      if !cached || cached.citekey != citekey || cached.citekeyFormat != null
-        libraryID = @integer(item.libraryID)
-        if cached
-          cached.citekey = citekey
-          cached.citekeyFormat = null
-          cached.libraryID = libraryID
-          @db.keys.update(cached)
-        else
-          cached = {itemID, libraryID, citekey: citekey, citekeyFormat: null}
-          @db.keys.insert(cached)
+      libraryID = @integer(item.libraryID)
+      if cached
+        cached.citekey = citekey
+        cached.citekeyFormat = null
+        cached.libraryID = libraryID
+        @db.keys.update(cached)
+      else
+        cached = {itemID, libraryID, citekey: citekey, citekeyFormat: null}
+        @db.keys.insert(cached)
 
-      pinned['' + item.itemID] = cached.citekey
+      pinned.push(itemID)
 
-    for itemID in ids || []
-      continue if pinned['' + itemID]
-      @remove({itemID}, true)
-      @get({itemID}, 'on-change')
+    return pinned
 
   remove: (item, soft) ->
     @db.keys.removeWhere({itemID: @integer(item.itemID)})

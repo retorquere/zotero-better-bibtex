@@ -639,11 +639,13 @@ Zotero.BetterBibTeX.init = ->
   @migrateData()
   @DB.purge()
 
-  if @pref.get('scanCitekeys')
-    @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
-    @cache.reset('scanCitekeys')
-    @keymanager.scan()
-    @pref.set('scanCitekeys', false)
+  if @pref.get('scanCitekeys') || Zotero.BetterBibTeX.DB.upgradeNeeded
+    reason = if @pref.get('scanCitekeys') then 'requested by user' else 'after upgrade'
+    @flash("Citation key rescan #{reason}", "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
+    changed = @keymanager.scan()
+    for itemID in changed
+      @cache.remove({itemID})
+    setTimeout((-> Zotero.BetterBibTeX.auto.markIDs(changed, 'scanCiteKeys')), 5000) if changed.length != 0
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     keymanager: {
@@ -1154,22 +1156,36 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
   ids = extraData if event == 'delete'
   return unless ids.length > 0
 
-  ids = (parseInt(id) for id in ids)
-
+  parents = []
+  attachments = []
+  items = []
   for item in Zotero.Items.get(ids)
     if item.isAttachment() || item.isNote()
+      attachments.push(parseInt(item.id))
       parent = item.getSource()
-      ids.push(parseInt(parent)) if parent
+      parents.push(parseInt(parent)) if parent
+    else
+      items.push(item)
 
-  @keymanager.scan(ids, event) if ids.length > 0
+  pinned = if event in ['add', 'modify'] then @keymanager.scan(items) else []
+  itemIDs = []
+  for item in items
+    continue if item.id in pinned
+    itemID = parseInt(item.id)
+    @db.keys.removeWhere({itemID})
+    @keymanager.get(item, 'on-change')
+    itemIDs.push(itemID)
 
-  Zotero.BetterBibTeX.debug('itemChanged items:', {event, ids})
+  items = {}
+  items[k] = k for k in itemIDs.concat(parents, attachments)
+  items = Object.keys(items)
+  Zotero.BetterBibTeX.debug('itemChanged items:', {event, items})
 
-  for id in ids
-    @serialized.remove(id)
-    @cache.remove({itemID: id})
+  for itemID in items
+    @serialized.remove(itemID)
+    @cache.remove({itemID})
 
-  @auto.markIDs(ids, 'itemChanged')
+  @auto.markIDs(items, 'itemChanged')
 ).bind(Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.displayOptions = (url) ->
