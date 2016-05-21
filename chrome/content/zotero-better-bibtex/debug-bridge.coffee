@@ -177,6 +177,13 @@ Zotero.BetterBibTeX.DebugBridge.methods.find = (attribute, value, select) ->
 
 Zotero.BetterBibTeX.DebugBridge.methods.remove = (id) -> Zotero.Items.trash([id])
 
+Zotero.BetterBibTeX.DebugBridge.methods.restore = ->
+  Zotero.DB.beginTransaction()
+  for item in Zotero.Items.getDeleted()
+    item.deleted = false
+    item.save()
+  Zotero.DB.commitTransaction()
+
 Zotero.BetterBibTeX.DebugBridge.methods.selected = (action) ->
   Zotero.BetterBibTeX.keymanager.selected(action)
   zoteroPane = Zotero.getActiveZoteroPane()

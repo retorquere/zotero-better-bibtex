@@ -1151,7 +1151,7 @@ Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
   @DB.autoexport.removeWhere((o) -> o.collection in extraData)
 
 Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
-  Zotero.BetterBibTeX.debug('itemChanged:', {event, type, ids, extraData})
+  Zotero.BetterBibTeX.debug("itemChanged:", {event, type, ids, extraData})
 
   return unless type == 'item' && event in ['delete', 'trash', 'add', 'modify']
   ids = extraData if event == 'delete'
@@ -1166,6 +1166,7 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
       parent = item.getSource()
       parents.push(parseInt(parent)) if parent
     else
+      Zotero.BetterBibTeX.debug("itemChanged item:", {itemID: item.id, extra: item.getField('extra')})
       items.push(item)
 
   pinned = if event in ['add', 'modify'] then @keymanager.scan(items) else []
@@ -1177,10 +1178,11 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
     @keymanager.get(item, 'on-change')
     itemIDs.push(itemID)
 
+  # get unique IDs
   items = {}
   items[k] = k for k in itemIDs.concat(parents, attachments)
-  items = Object.keys(items)
-  Zotero.BetterBibTeX.debug('itemChanged items:', {event, items})
+  items = (parseInt(id) for id in Object.keys(items))
+  Zotero.BetterBibTeX.debug("itemChanged items:", {pinned, event, items, keys: ({itemID: k.itemID, citekey: k.citekey, pinned: !k.citekeyFormat} for k in @DB.keys.data)})
 
   for itemID in items
     @serialized.remove(itemID)

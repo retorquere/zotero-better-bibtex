@@ -24,6 +24,15 @@ Zotero.BetterBibTeX.keymanager = new class
                 where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)
                       and (idv.value like '%bibtex:%' or idv.value like '%biblatexcitekey[%' or idv.value like '%biblatexcitekey{%')"
 
+  sort: (a, b) ->
+    # Zotero only uses second-level precision
+    # a.dateAdded.localeCompare(b.dateAdded)
+    return -1 if a.dateAdded < b.dateAdded
+    return 1 if a.dateAdded > b.dateAdded
+    return -1 if a.id < b.id
+    return 1 if a.id > b.id
+    return 0
+
   integer: (v) ->
     return v if typeof v == 'number' || v == null
     _v = parseInt(v)
@@ -146,7 +155,7 @@ Zotero.BetterBibTeX.keymanager = new class
 
     zoteroPane = Zotero.getActiveZoteroPane()
     items = (item for item in zoteroPane.getSelectedItems() when !item.isAttachment() && !item.isNote())
-    items.sort((a, b) -> a.dateAdded.localeCompare(b.dateAdded))
+    items.sort(@sort)
 
     warn = Zotero.BetterBibTeX.pref.get('warnBulkModify')
     if warn > 0 && items.length > warn
@@ -228,28 +237,31 @@ Zotero.BetterBibTeX.keymanager = new class
     throw new Error('keymanager.scan: expected Zotero.Item, got', (if typeof items[0] == 'object' then Object.keys(items[0]) else typeof items[0])) unless items[0].getField
 
     pinned = []
+    keys = []
+    libraryID = @integer(items[0].libraryID)
+
     for item in items
       continue if item.isAttachment() || item.isNote()
+      throw new Error('keymanager.scan: all items must be from the same library') unless @integer(item.libraryID) == libraryID
 
       citekey = @extract(item).__citekey__
       continue unless citekey
 
       itemID = @integer(item.id)
-      cached = @db.keys.findOne({itemID})
 
-      continue if cached && cached.citekey == citekey && !cached.citekeyFormat
+      keys.push(citekey)
+      pinned.push(itemID)
 
-      libraryID = @integer(item.libraryID)
-      if cached
+      if cached = @db.keys.findOne({itemID})
         cached.citekey = citekey
         cached.citekeyFormat = null
         cached.libraryID = libraryID
         @db.keys.update(cached)
       else
-        cached = {itemID, libraryID, citekey: citekey, citekeyFormat: null}
-        @db.keys.insert(cached)
+        @db.keys.insert({itemID, libraryID, citekey: citekey, citekeyFormat: null})
 
-      pinned.push(itemID)
+    if Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
+      @db.keys.removeWhere((k) -> k.libraryID == libraryID && k.citekeyFormat == null && k.citekey in keys)
 
     return pinned
 

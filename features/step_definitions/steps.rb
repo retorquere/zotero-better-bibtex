@@ -485,6 +485,9 @@ end
 Then /^I remove the selected item$/ do
   $Firefox.BetterBibTeX.remove(@selected)
 end
+Then /^I restore the trash$/ do
+  $Firefox.BetterBibTeX.restore
+end
 
 Then /^I (re)?set the citation keys?$/ do |action|
   sleep 3
