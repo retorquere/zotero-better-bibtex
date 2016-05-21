@@ -51,7 +51,6 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.BetterBibTeX.serialized.reset('debugbridge.reset')
   Zotero.BetterBibTeX.auto.clear()
   Zotero.BetterBibTeX.keymanager.reset()
-  Zotero.BetterBibTeX.JournalAbbrev.reset()
 
   return true if Zotero.DB.valueQuery('select count(*) from items') == 0
   err = JSON.stringify((item.toArray() for item in Zotero.BetterBibTeX.safeGetAll()))
