@@ -11,25 +11,21 @@ Zotero.BetterBibTeX.DebugBridge.methods.init = ->
 
   Zotero.noUserInput = true
 
-  ###
-    replacing Zotero.Items.getAll to get items sorted. With random order I can't really implement stable
-    testing.
-  ###
-  Zotero.Items.getAll = (onlyTopLevel, libraryID, includeDeleted) ->
-    sql = 'SELECT A.itemID FROM items A'
-    if onlyTopLevel
-      sql += ' LEFT JOIN itemNotes B USING (itemID) LEFT JOIN itemAttachments C ON (C.itemID=A.itemID) WHERE B.sourceItemID IS NULL AND C.sourceItemID IS NULL'
-    else
-      sql += ' WHERE 1'
-    if !includeDeleted
-      sql += ' AND A.itemID NOT IN (SELECT itemID FROM deletedItems)'
-    if libraryID
-      sql += ' AND libraryID=? ORDER BY A.itemID'
-      ids = Zotero.DB.columnQuery(sql, libraryID)
-    else
-      sql += ' AND libraryID IS NULL ORDER BY A.itemID'
-      ids = Zotero.DB.columnQuery(sql)
-    return @get(ids) || []
+  ### monkey-patching Zotero.Items.get to retrieve items sorted. With random order I can't really implement stable testing. ###
+  Zotero.Items.get = ((original) ->
+    return ->
+      items = original.apply(@, arguments)
+      items.sort(Zotero.BetterBibTeX.keymanager.sort) if Array.isArray(items)
+      return items
+    )(Zotero.Items.get)
+
+  for setter in ['setItems', 'setCollection', 'setAll']
+    Zotero.Translate.ItemGetter::[setter] = ((original) ->
+      return ->
+        r = original.apply(@, arguments)
+        @_itemsLeft.sort(Zotero.BetterBibTeX.keymanager.sort) if Array.isArray(@_itemsLeft)
+        return r
+      )(Zotero.Translate.ItemGetter::[setter])
 
   return true
 
