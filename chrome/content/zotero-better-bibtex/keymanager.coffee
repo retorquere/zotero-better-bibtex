@@ -218,16 +218,17 @@ Zotero.BetterBibTeX.keymanager = new class
     return @verify(key)
 
   scan: (items) ->
-    items = Zotero.DB.query(@findKeysSQL) unless items
+    items ||= (item.itemID for item in Zotero.DB.query(@findKeysSQL))
     return [] if items.length == 0
     if typeof items[0] in ['number', 'string']
       items = Zotero.Items.get(items)
       return [] unless items
     items = [items] unless Array.isArray(items)
 
+    throw new Error('keymanager.scan: expected Zotero.Item, got', (if typeof items[0] == 'object' then Object.keys(items[0]) else typeof items[0])) unless items[0].getField
+
     pinned = []
     for item in items
-      throw new Error('keymanager.scan: expected Zotero.Item') unless item.getField
       continue if item.isAttachment() || item.isNote()
 
       citekey = @extract(item).__citekey__
