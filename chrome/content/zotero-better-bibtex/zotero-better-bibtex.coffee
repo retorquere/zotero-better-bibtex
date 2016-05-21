@@ -646,6 +646,7 @@ Zotero.BetterBibTeX.init = ->
     for itemID in changed
       @cache.remove({itemID})
     setTimeout((-> Zotero.BetterBibTeX.auto.markIDs(changed, 'scanCiteKeys')), 5000) if changed.length != 0
+    @flash("Citation key rescan finished")
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     keymanager: {
@@ -1172,7 +1173,7 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
   for item in items
     continue if item.id in pinned
     itemID = parseInt(item.id)
-    @db.keys.removeWhere({itemID})
+    @DB.keys.removeWhere({itemID})
     @keymanager.get(item, 'on-change')
     itemIDs.push(itemID)
 

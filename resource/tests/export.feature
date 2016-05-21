@@ -47,20 +47,20 @@ Scenario Outline: BibLaTeX Export
      | Fields in Extra should override defaults                                                       | 1           |
      | BraceBalancer                                                                                  | 1           |
 
-@test-cluster-1 @bblt-1 @bblt @435 @293
+@test-cluster-1 @bblt-1 @bblt @435 @293 @381
 Scenario Outline: BibLaTeX Export
   And I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
 
   Examples:
      | file                                                                               | references  |
+     | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |
      | map csl-json variables #293                                                        | 2           |
      | Export Forthcoming as Forthcoming                                                  | 1           |
      | biblatex export of phdthesis does not case-protect -type- #435                     | 1           |
      | CSL variables only recognized when in lowercase #408                               | 1           |
      | date and year are switched #406                                                    | 4           |
      | Do not caps-protect literal lists #391                                             | 3           |
-     | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |
      | biblatex; Language tag xx is exported, xx-XX is not #380                           | 1           |
      | Normalize date ranges in citekeys #356                                             | 3           |
      | remove the field if the override is empty #303                                     | 1           |
