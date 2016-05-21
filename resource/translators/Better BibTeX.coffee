@@ -90,7 +90,7 @@ doExport = ->
       when ref.isBibVar(item.publicationTitle)
         ref.add({ name: 'journal', value: item.publicationTitle, preserveBibTeXVariables: true })
       else
-        ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.keymanager.journalAbbrev(item) || item.publicationTitle, preserveBibTeXVariables: true })
+        ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.journalAbbrev(item) || item.publicationTitle, preserveBibTeXVariables: true })
 
     switch item.itemType
       when 'thesis' then ref.add({ school: item.publisher })

@@ -510,7 +510,7 @@ Zotero.BetterBibTeX.pref.observer = {
         Zotero.BetterBibTeX.keymanager.clearDynamic()
 
       when 'autoAbbrevStyle'
-        Zotero.BetterBibTeX.keymanager.resetJournalAbbrevs()
+        Zotero.BetterBibTeX.JournalAbbrev.reset()
 
       when 'debug'
         Zotero.BetterBibTeX.debugMode()
@@ -649,9 +649,9 @@ Zotero.BetterBibTeX.init = ->
     @flash("Citation key rescan finished")
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
+    journalAbbrev:  (sandbox, params...) => @JournalAbbrev.get(@keymanager, params)
     keymanager: {
       months:         @keymanager.months
-      journalAbbrev:  (sandbox, params...) => @keymanager.journalAbbrev.apply(@keymanager, params)
       extract:        (sandbox, params...) => @keymanager.extract.apply(@keymanager, params)
       get:            (sandbox, params...) => @keymanager.get.apply(@keymanager, params)
       alternates:     (sandbox, params...) => @keymanager.alternates.apply(@keymanager, params)

@@ -4,7 +4,6 @@ Zotero.BetterBibTeX.keymanager = new class
   constructor: ->
     @db = Zotero.BetterBibTeX.DB
     @log = Zotero.BetterBibTeX.log
-    @resetJournalAbbrevs()
 
   ###
   three-letter month abbreviations. I assume these are the same ones that the
@@ -62,46 +61,11 @@ Zotero.BetterBibTeX.keymanager = new class
     return
 
   reset: ->
-    @resetJournalAbbrevs()
     @db.keys.removeWhere((obj) -> true) # causes cache drop
     @scan()
 
-  resetJournalAbbrevs: ->
-    @journalAbbrevs = {
-      default: {
-        "container-title": { },
-        "collection-title": { },
-        "institution-entire": { },
-        "institution-part": { },
-        "nickname": { },
-        "number": { },
-        "title": { },
-        "place": { },
-        "hereinafter": { },
-        "classic": { },
-        "container-phrase": { },
-        "title-phrase": { }
-      }
-    }
-
   clearDynamic: ->
     @db.keys.removeWhere((obj) -> obj.citekeyFormat)
-
-  journalAbbrev: (item) ->
-    return item.journalAbbreviation if item.journalAbbreviation
-    return null unless item.itemType in ['journalArticle', 'bill', 'case', 'statute']
-
-    # don't even try to auto-abbrev arxiv IDs
-    return null if item.arXiv?.source == 'publicationTitle'
-
-    key = item.publicationTitle || item.reporter || item.code
-    return unless key
-    return unless Zotero.BetterBibTeX.pref.get('autoAbbrev')
-
-    style = Zotero.BetterBibTeX.pref.get('autoAbbrevStyle') || (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)[0].styleID
-
-    @journalAbbrevs['default']?['container-title']?[key] || Zotero.Cite.getAbbreviation(style, @journalAbbrevs, 'default', 'container-title', key)
-    return @journalAbbrevs['default']?['container-title']?[key] || key
 
   extract: (item, insitu) ->
     switch
