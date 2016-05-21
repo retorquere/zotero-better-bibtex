@@ -1157,38 +1157,34 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
   ids = extraData if event == 'delete'
   return unless ids.length > 0
 
-  parents = []
-  attachments = []
-  items = []
-  for item in Zotero.Items.get(ids)
-    if item.isAttachment() || item.isNote()
-      attachments.push(parseInt(item.id))
-      parent = item.getSource()
-      parents.push(parseInt(parent)) if parent
-    else
-      Zotero.BetterBibTeX.debug("itemChanged item:", {itemID: item.id, extra: item.getField('extra')})
-      items.push(item)
-
-  pinned = if event in ['add', 'modify'] then @keymanager.scan(items) else []
-  itemIDs = []
+  items = Zotero.Items.get(ids)
+  ids = {}
+  references = []
   for item in items
-    continue if item.id in pinned
-    itemID = parseInt(item.id)
-    @DB.keys.removeWhere({itemID})
-    @keymanager.get(item, 'on-change')
-    itemIDs.push(itemID)
+    ids[item.id] = parseInt(item.id)
+    if item.isAttachment() || item.isNote()
+      parent = item.getSource()
+      ids[parent] = parseInt(parent) if parent
+    else
+      references.push(item)
+  ids = (v for k, v of ids)
 
-  # get unique IDs
-  items = {}
-  items[k] = k for k in itemIDs.concat(parents, attachments)
-  items = (parseInt(id) for id in Object.keys(items))
-  Zotero.BetterBibTeX.debug("itemChanged items:", {pinned, event, items, keys: ({itemID: k.itemID, citekey: k.citekey, pinned: !k.citekeyFormat} for k in @DB.keys.data)})
+  pinned = if event in ['add', 'modify'] then @keymanager.scan(references) else []
 
-  for itemID in items
+  @DB.keys.removeWhere((k) -> k.itemID in ids && !(k.itemID in pinned))
+
+  if event in ['add', 'modify']
+    for item in references
+      continue if parseInt(item.id) in pinned
+      @keymanager.get(item, 'on-change')
+
+  Zotero.BetterBibTeX.debug("itemChanged items:", {ids, pinned, event, keys: @DB.keys.data})
+
+  for itemID in ids
     @serialized.remove(itemID)
     @cache.remove({itemID})
 
-  @auto.markIDs(items, 'itemChanged')
+  @auto.markIDs(ids, 'itemChanged')
 ).bind(Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.displayOptions = (url) ->
