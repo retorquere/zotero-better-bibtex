@@ -71,6 +71,7 @@ Zotero.BetterBibTeX.schomd.init = ->
     "@quotes/false": false
   }
 
+
   Zotero.CiteProc.CSL.Output.Formats.bbl = {
     ###
     # text_escape: Format-specific function for escaping text destined
@@ -82,9 +83,13 @@ Zotero.BetterBibTeX.schomd.init = ->
     # \usepackage{xltxtra}, \textsuperscript{} \textsubscript{}
     text_escape: (text) ->
       text = '' unless text?
-      text = text.replace(/(\. )/g, ".\\ ")
-      text = text.replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "{\\textsuperscript{#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}}}"))
+      savetext = text
+      text = text.replace(/([$_^%{&])/g, "\\$1")
+        .replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "{\\textsuperscript{#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}}}"))
+      if savetext.search(/(^https?:\/\/.*$)/) != -1
+        return '\\href{' + savetext + '}{' + text + '}'
       return text
+
     # Todo: how to compute the width? I'm arbitrarily setting it to 4
     # digits for now.
     bibstart: '\\begin{thebibliography}{9999}\n\n'
@@ -99,7 +104,7 @@ Zotero.BetterBibTeX.schomd.init = ->
     '@font-weight/normal': false
     '@font-weight/light': false
     '@text-decoration/none': false
-    '@text-decoration/underline': false
+    '@text-decoration/underline': '\\underline{%%STRING%%}'
     '@vertical-align/sup': '\\textsuperscript{%%STRING%%}'
     '@vertical-align/sub': '\\textsubscript{%%STRING%%}'
     '@vertical-align/baseline': false
@@ -115,9 +120,13 @@ Zotero.BetterBibTeX.schomd.init = ->
 
     '@quotes/false': false
 
+    # '@cite/entry': (state, str) ->
+    #   Zotero.BetterBibTeX.debug('bbl.@cite/entry:', state.registry.registry[@system_id].ref.id)
+    #   return str || ''
+
     '@cite/entry': (state, str) ->
       Zotero.BetterBibTeX.debug('bbl.@cite/entry:', state.registry.registry[@system_id].ref.id)
-      return str || ''
+      return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt)
 
     '@bibliography/entry': (state, str) ->
       Zotero.BetterBibTeX.debug('bbl.@bibliography/entry:', state.registry.registry[@system_id].ref.id)
@@ -138,12 +147,14 @@ Zotero.BetterBibTeX.schomd.init = ->
     '@showid/true': (state, str, cslid) -> "((showid:#{str}))"
 
     # May be TeXmacs specific, but can define macros.
-    '@URL/true': (state, str) -> "\\href{#{str}}"
-    '@DOI/true': (state, str) -> "\\hlink{#{str}}{http://dx.doi.org/#{str}}"
+    # Q: Do I need to use encodeURIComponent(str) here?
+    '@URL/true': (state, str) -> "\\href{#{str}}{#{str.replace(/([$_^%{&])/g, "\\$1")}}"
+    '@DOI/true': (state, str) -> "\\href{http://dx.doi.org/#{str}}{#{str}}"
 
     "@quotes/false": false
   }
   return
+
 
 Zotero.BetterBibTeX.schomd.itemIDs = (citekeys, {libraryID} = {}) ->
   libraryID ||= null
@@ -157,11 +168,18 @@ Zotero.BetterBibTeX.schomd.itemIDs = (citekeys, {libraryID} = {}) ->
 
   return ((if typeof key == 'number' then key else resolved[key]?.itemID || null) for key in citekeys)
 
-Zotero.BetterBibTeX.schomd.citations = (citekeys, {style, libraryID} = {}) ->
-  url = "http://www.zotero.org/styles/#{style ? 'apa'}"
-  style = Zotero.Styles.get(url)
+
+Zotero.BetterBibTeX.schomd.getStyle = (id = 'apa') ->
+  style = Zotero.Styles.get("http://www.zotero.org/styles/#{id}")
+  style ||= Zotero.Styles.get("http://juris-m.github.io/styles/#{id}")
+  style ||= Zotero.Styles.get(id)
+  return style
+
+
+Zotero.BetterBibTeX.schomd.citationsX = (format, citekeys, style, libraryID) ->
+  style = @getStyle(style)
   cp = style.getCiteProc()
-  cp.setOutputFormat('markdown')
+  cp.setOutputFormat(format)
 
   clusters = []
   itemIDs = []
@@ -184,13 +202,22 @@ Zotero.BetterBibTeX.schomd.citations = (citekeys, {style, libraryID} = {}) ->
 
   return citations
 
-Zotero.BetterBibTeX.schomd.getStyle = (id = 'apa') ->
-  style = Zotero.Styles.get("http://www.zotero.org/styles/#{id}")
-  style ||= Zotero.Styles.get("http://juris-m.github.io/styles/#{id}")
-  style ||= Zotero.Styles.get(id)
-  return style
 
-Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, libraryID} = {}) ->
+Zotero.BetterBibTeX.schomd.citations = (citekeys, {style, libraryID} = {}) ->
+  return @citationsX('markdown', citekeys, style, libraryID)
+
+
+Zotero.BetterBibTeX.schomd.citationshtml = (citekeys, {style, libraryID} = {}) ->
+  return @citationsX('html', citekeys, style, libraryID)
+
+
+Zotero.BetterBibTeX.schomd.citationsbbl = (citekeys, {style, libraryID} = {}) ->
+  citations = @citationsX('bbl', citekeys, style, libraryID)
+  return (citation.replace(/(\w\.}?) /g, "$1\\hspace{1spc}") for citation in citations when citation)
+
+
+
+Zotero.BetterBibTeX.schomd.citationX = (format, citekeys, style, libraryID) ->
   itemIDs = (item for item in @itemIDs(citekeys, {libraryID}) when item)
 
   Zotero.BetterBibTeX.debug('schomd.citation', {citekeys, style, libraryID}, '->', itemIDs)
@@ -199,7 +226,7 @@ Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, libraryID} = {}) ->
 
   style = @getStyle(style)
   cp = style.getCiteProc()
-  cp.setOutputFormat('markdown')
+  cp.setOutputFormat(format)
   cp.updateItems(itemIDs)
 
   citation = cp.appendCitationCluster({citationItems: ({id:itemID} for itemID in itemIDs), properties:{}}, true)
@@ -207,44 +234,50 @@ Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, libraryID} = {}) ->
   citation = citation[0][1]
   return citation
 
-Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, libraryID} = {}) ->
+
+Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, libraryID} = {}) ->
+  return @citationX('markdown', citekeys, style, libraryID)
+
+
+Zotero.BetterBibTeX.schomd.citationhtml = (citekeys, {style, libraryID} = {}) ->
+  return @citationX('html', citekeys, style, libraryID)
+
+
+Zotero.BetterBibTeX.schomd.citationbbl = (citekeys, {style, libraryID} = {}) ->
+  return @citationX('bbl', citekeys, style, libraryID).replace(/(\w\.}?) /g, "$1\\hspace{1spc}")
+
+
+
+Zotero.BetterBibTeX.schomd.bibliographyX = (format, citekeys, style, libraryID) ->
   itemIDs = @itemIDs(citekeys, {libraryID})
   return '' if itemIDs.length == 0
-
   style = @getStyle(style)
   cp = style.getCiteProc()
-  cp.setOutputFormat('markdown')
+  cp.setOutputFormat(format)
   cp.updateItems((item for item in itemIDs when item))
-  bib = cp.makeBibliography()
+  return cp.makeBibliography()
 
+
+Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, libraryID} = {}) ->
+  bib = @bibliographyX('markdown', citekeys, style, libraryID)
   return '' unless bib
   return bib[0].bibstart + bib[1].join("") + bib[0].bibend
+
 
 Zotero.BetterBibTeX.schomd.bibliographyhtml = (citekeys, {style, libraryID} = {}) ->
-  itemIDs = @itemIDs(citekeys, {libraryID})
-  return '' if itemIDs.length == 0
-
-  style = @getStyle(style)
-  cp = style.getCiteProc()
-  cp.setOutputFormat('html')
-  cp.updateItems((item for item in itemIDs when item))
-  bib = cp.makeBibliography()
-
+  bib = @bibliographyX('html', citekeys, style, libraryID)
   return '' unless bib
   return bib[0].bibstart + bib[1].join("") + bib[0].bibend
+
 
 Zotero.BetterBibTeX.schomd.bibliographybbl = (citekeys, {style, libraryID} = {}) ->
-  itemIDs = @itemIDs(citekeys, {libraryID})
-  return '' if itemIDs.length == 0
-
-  style = @getStyle(style)
-  cp = style.getCiteProc()
-  cp.setOutputFormat('bbl')
-  cp.updateItems((item for item in itemIDs when item))
-  bib = cp.makeBibliography()
-
+  bib = @bibliographyX('bbl', citekeys, style, libraryID)
   return '' unless bib
-  return bib[0].bibstart + bib[1].join("") + bib[0].bibend
+  bibl = (b.replace(/(\w\.}?) /g, "$1\\hspace{1spc}") for b in bib[1])
+  bibstart = bib[0].bibstart
+  return bibstart.replace(/9999/,("0" for n in [1..bib[0].maxoffset]).join("")) + bibl.join("") + bib[0].bibend
+
+
 
 Zotero.BetterBibTeX.schomd.search = (term) ->
   search = new Zotero.Search()
@@ -266,6 +299,8 @@ Zotero.BetterBibTeX.schomd.search = (term) ->
         {lastName: creator.ref.lastName, firstName: creator.ref.firstName} for creator in item.getCreators()
       )
     } for item in Zotero.Items.get(results))
+
+
 
 Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, libraryID, displayOptions} = {}) ->
   itemIDs = @itemIDs(keys, {libraryID})
