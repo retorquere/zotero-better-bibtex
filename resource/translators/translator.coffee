@@ -360,7 +360,6 @@ Translator.nextItem = ->
     item.__citekey__ ||= Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
 
     @citekeys[item.itemID] = item.__citekey__
-    Translator.debug('nextItem: serialized', item)
     return item
 
   return null
