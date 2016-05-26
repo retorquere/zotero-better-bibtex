@@ -346,17 +346,12 @@ Zotero.BetterBibTeX.stringifier = (replacer, cycleReplacer) ->
 Zotero.BetterBibTeX._log = (level, msg...) ->
   str = []
   for m in msg
-    switch
-      when (typeof m) in ['boolean', 'string', 'number']
-        str.push('' + m)
-      when m instanceof Error
-        str.push("<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>")
-      else
-        try
-          str.push(Zotero.BetterBibTeX.stringify(m))
-        catch
-          str.push('' + m)
-  str = (s for s in str when s != '')
+    if m instanceof Error
+      m = "<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>"
+    else
+      m = Zotero.Utilities.varDump(m)
+    str.push(m) if m
+
   str = str.join(' ')
 
   if level == 0

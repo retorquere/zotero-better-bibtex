@@ -3,14 +3,11 @@ Translator = {}
 Translator._log = (level, msg...) ->
   str = []
   for m in msg
-    switch
-      when (typeof m) in ['boolean', 'string', 'number']
-        str.push('' + m)
-      when m instanceof Error
-        str.push("<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>")
-      else
-        str.push(Translator.stringify(m))
-  str = (s for s in str when s != '')
+    if m instanceof Error
+      m = "<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>"
+    else
+      m = Zotero.Utilities.varDump(m)
+    str.push(m) if m
   str = str.join(' ')
 
   Zotero.debug('[better' + '-' + "bibtex:#{@header.label}] " + str, level)
