@@ -201,19 +201,19 @@ Zotero.BetterBibTeX.keymanager = new class
     throw new Error('keymanager.scan: expected Zotero.Item, got', (if typeof items[0] == 'object' then Object.keys(items[0]) else typeof items[0])) unless items[0].getField
 
     pinned = []
-    keys = []
-    libraryID = @integer(items[0].libraryID)
+    change = (Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change')
 
     for item in items
       continue if item.isAttachment() || item.isNote()
-      throw new Error('keymanager.scan: all items must be from the same library') unless @integer(item.libraryID) == libraryID
 
       citekey = @extract(item).__citekey__
       continue unless citekey
 
       itemID = @integer(item.id)
+      libraryID = @integer(item.libraryID)
 
-      keys.push(citekey)
+      @db.keys.removeWhere({$and: [{libraryID}, {citekeyFormat: null}, {citekey}]}) if change
+
       pinned.push(itemID)
 
       if cached = @db.keys.findOne({itemID})
@@ -223,9 +223,6 @@ Zotero.BetterBibTeX.keymanager = new class
         @db.keys.update(cached)
       else
         @db.keys.insert({itemID, libraryID, citekey: citekey, citekeyFormat: null})
-
-    if Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
-      @db.keys.removeWhere((k) -> k.libraryID == libraryID && k.citekeyFormat == null && k.citekey in keys)
 
     return pinned
 
