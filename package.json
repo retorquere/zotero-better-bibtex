@@ -17,14 +17,14 @@
     "url": "https://github.com/retorquere/zotero-better-bibtex/issues"
   },
   "dependencies": {
-    "browserify": "^12.0.1",
+    "browserify": "^13.0.1",
     "coffee-script": "^1.10.0",
-    "coffeelint": "^1.15.0",
+    "coffeelint": "^1.15.7",
     "fold-to-ascii": "^2.0.2",
     "grasp": "^0.4.0",
-    "he": "^0.5.0",
+    "he": "^1.1.0",
     "js-beautify": "^1.6.2",
-    "js-yaml": "^3.4.6",
+    "js-yaml": "^3.6.1",
     "marked": "^0.3.5",
     "pegjs": "^0.9.0"
   }

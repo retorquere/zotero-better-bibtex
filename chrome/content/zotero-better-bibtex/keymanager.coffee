@@ -4,7 +4,6 @@ Zotero.BetterBibTeX.keymanager = new class
   constructor: ->
     @db = Zotero.BetterBibTeX.DB
     @log = Zotero.BetterBibTeX.log
-    @resetJournalAbbrevs()
 
   ###
   three-letter month abbreviations. I assume these are the same ones that the
@@ -23,6 +22,15 @@ Zotero.BetterBibTeX.keymanager = new class
                 join fields f on id.fieldID = f.fieldID
                 where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)
                       and (idv.value like '%bibtex:%' or idv.value like '%biblatexcitekey[%' or idv.value like '%biblatexcitekey{%')"
+
+  sort: (a, b) ->
+    # Zotero only uses second-level precision
+    # a.dateAdded.localeCompare(b.dateAdded)
+    return -1 if a.dateAdded < b.dateAdded
+    return 1 if a.dateAdded > b.dateAdded
+    return -1 if a.id < b.id
+    return 1 if a.id > b.id
+    return 0
 
   integer: (v) ->
     return v if typeof v == 'number' || v == null
@@ -53,46 +61,11 @@ Zotero.BetterBibTeX.keymanager = new class
     return
 
   reset: ->
-    @resetJournalAbbrevs()
     @db.keys.removeWhere((obj) -> true) # causes cache drop
     @scan()
 
-  resetJournalAbbrevs: ->
-    @journalAbbrevs = {
-      default: {
-        "container-title": { },
-        "collection-title": { },
-        "institution-entire": { },
-        "institution-part": { },
-        "nickname": { },
-        "number": { },
-        "title": { },
-        "place": { },
-        "hereinafter": { },
-        "classic": { },
-        "container-phrase": { },
-        "title-phrase": { }
-      }
-    }
-
   clearDynamic: ->
     @db.keys.removeWhere((obj) -> obj.citekeyFormat)
-
-  journalAbbrev: (item) ->
-    return item.journalAbbreviation if item.journalAbbreviation
-    return null unless item.itemType in ['journalArticle', 'bill', 'case', 'statute']
-
-    # don't even try to auto-abbrev arxiv IDs
-    return null if item.arXiv?.source == 'publicationTitle'
-
-    key = item.publicationTitle || item.reporter || item.code
-    return unless key
-    return unless Zotero.BetterBibTeX.pref.get('autoAbbrev')
-
-    style = Zotero.BetterBibTeX.pref.get('autoAbbrevStyle') || (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)[0].styleID
-
-    @journalAbbrevs['default']?['container-title']?[key] || Zotero.Cite.getAbbreviation(style, @journalAbbrevs, 'default', 'container-title', key)
-    return @journalAbbrevs['default']?['container-title']?[key] || key
 
   extract: (item, insitu) ->
     switch
@@ -146,7 +119,7 @@ Zotero.BetterBibTeX.keymanager = new class
 
     zoteroPane = Zotero.getActiveZoteroPane()
     items = (item for item in zoteroPane.getSelectedItems() when !item.isAttachment() && !item.isNote())
-    items.sort((a, b) -> a.dateAdded.localeCompare(b.dateAdded))
+    items.sort(@sort)
 
     warn = Zotero.BetterBibTeX.pref.get('warnBulkModify')
     if warn > 0 && items.length > warn
@@ -217,48 +190,44 @@ Zotero.BetterBibTeX.keymanager = new class
 
     return @verify(key)
 
-  scan: (ids, reason) ->
-    if reason in ['delete', 'trash']
-      ids = (@integer(id) for id in ids || [])
-      @db.keys.removeWhere((o) -> o.itemID in ids)
-      return
+  scan: (items) ->
+    items ||= (item.itemID for item in Zotero.DB.query(@findKeysSQL))
+    return [] if items.length == 0
+    if typeof items[0] in ['number', 'string']
+      items = Zotero.Items.get(items)
+      return [] unless items
+    items = [items] unless Array.isArray(items)
 
-    switch
-      when !ids
-        items = Zotero.DB.query(@findKeysSQL)
-      when ids.length == 0
-        items = []
-      when ids.length == 1
-        items = Zotero.Items.get(ids[0])
-        items = if items then [items] else []
-      else
-        items = Zotero.Items.get(ids) || []
+    throw new Error('keymanager.scan: expected Zotero.Item, got', (if typeof items[0] == 'object' then Object.keys(items[0]) else typeof items[0])) unless items[0].getField
 
-    pinned = {}
+    pinned = []
+    keys = []
+    libraryID = @integer(items[0].libraryID)
+
     for item in items
-      itemID = @integer(item.itemID)
+      continue if item.isAttachment() || item.isNote()
+      throw new Error('keymanager.scan: all items must be from the same library') unless @integer(item.libraryID) == libraryID
+
       citekey = @extract(item).__citekey__
-      cached = @db.keys.findOne({itemID})
+      continue unless citekey
 
-      continue unless citekey && citekey != ''
+      itemID = @integer(item.id)
 
-      if !cached || cached.citekey != citekey || cached.citekeyFormat != null
-        libraryID = @integer(item.libraryID)
-        if cached
-          cached.citekey = citekey
-          cached.citekeyFormat = null
-          cached.libraryID = libraryID
-          @db.keys.update(cached)
-        else
-          cached = {itemID, libraryID, citekey: citekey, citekeyFormat: null}
-          @db.keys.insert(cached)
+      keys.push(citekey)
+      pinned.push(itemID)
 
-      pinned['' + item.itemID] = cached.citekey
+      if cached = @db.keys.findOne({itemID})
+        cached.citekey = citekey
+        cached.citekeyFormat = null
+        cached.libraryID = libraryID
+        @db.keys.update(cached)
+      else
+        @db.keys.insert({itemID, libraryID, citekey: citekey, citekeyFormat: null})
 
-    for itemID in ids || []
-      continue if pinned['' + itemID]
-      @remove({itemID}, true)
-      @get({itemID}, 'on-change')
+    if Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
+      @db.keys.removeWhere((k) -> k.libraryID == libraryID && k.citekeyFormat == null && k.citekey in keys)
+
+    return pinned
 
   remove: (item, soft) ->
     @db.keys.removeWhere({itemID: @integer(item.itemID)})

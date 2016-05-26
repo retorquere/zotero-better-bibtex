@@ -346,17 +346,12 @@ Zotero.BetterBibTeX.stringifier = (replacer, cycleReplacer) ->
 Zotero.BetterBibTeX._log = (level, msg...) ->
   str = []
   for m in msg
-    switch
-      when (typeof m) in ['boolean', 'string', 'number']
-        str.push('' + m)
-      when m instanceof Error
-        str.push("<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>")
-      else
-        try
-          str.push(Zotero.BetterBibTeX.stringify(m))
-        catch
-          str.push('' + m)
-  str = (s for s in str when s != '')
+    if m instanceof Error
+      m = "<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>"
+    else
+      m = Zotero.Utilities.varDump(m)
+    str.push(m) if m
+
   str = str.join(' ')
 
   if level == 0
@@ -510,7 +505,7 @@ Zotero.BetterBibTeX.pref.observer = {
         Zotero.BetterBibTeX.keymanager.clearDynamic()
 
       when 'autoAbbrevStyle'
-        Zotero.BetterBibTeX.keymanager.resetJournalAbbrevs()
+        Zotero.BetterBibTeX.JournalAbbrev.reset()
 
       when 'debug'
         Zotero.BetterBibTeX.debugMode()
@@ -639,16 +634,19 @@ Zotero.BetterBibTeX.init = ->
   @migrateData()
   @DB.purge()
 
-  if @pref.get('scanCitekeys')
-    @flash('Citation key rescan', "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
-    @cache.reset('scanCitekeys')
-    @keymanager.scan()
-    @pref.set('scanCitekeys', false)
+  if @pref.get('scanCitekeys') || Zotero.BetterBibTeX.DB.upgradeNeeded
+    reason = if @pref.get('scanCitekeys') then 'requested by user' else 'after upgrade'
+    @flash("Citation key rescan #{reason}", "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
+    changed = @keymanager.scan()
+    for itemID in changed
+      @cache.remove({itemID})
+    setTimeout((-> Zotero.BetterBibTeX.auto.markIDs(changed, 'scanCiteKeys')), 5000) if changed.length != 0
+    @flash("Citation key rescan finished")
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
+    journalAbbrev:  (sandbox, params...) => @JournalAbbrev.get.apply(@JournalAbbrev, params)
     keymanager: {
       months:         @keymanager.months
-      journalAbbrev:  (sandbox, params...) => @keymanager.journalAbbrev.apply(@keymanager, params)
       extract:        (sandbox, params...) => @keymanager.extract.apply(@keymanager, params)
       get:            (sandbox, params...) => @keymanager.get.apply(@keymanager, params)
       alternates:     (sandbox, params...) => @keymanager.alternates.apply(@keymanager, params)
@@ -1148,26 +1146,38 @@ Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
   @DB.autoexport.removeWhere((o) -> o.collection in extraData)
 
 Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
-  Zotero.BetterBibTeX.debug('itemChanged:', {event, type, ids, extraData})
+  Zotero.BetterBibTeX.debug("itemChanged:", {event, type, ids, extraData})
 
   return unless type == 'item' && event in ['delete', 'trash', 'add', 'modify']
   ids = extraData if event == 'delete'
   return unless ids.length > 0
 
-  ids = (parseInt(id) for id in ids)
-
-  for item in Zotero.Items.get(ids)
+  items = Zotero.Items.get(ids)
+  ids = {}
+  references = []
+  for item in items
+    ids[item.id] = parseInt(item.id)
     if item.isAttachment() || item.isNote()
       parent = item.getSource()
-      ids.push(parseInt(parent)) if parent
+      ids[parent] = parseInt(parent) if parent
+    else
+      references.push(item)
+  ids = (v for k, v of ids)
 
-  @keymanager.scan(ids, event) if ids.length > 0
+  pinned = if event in ['add', 'modify'] then @keymanager.scan(references) else []
 
-  Zotero.BetterBibTeX.debug('itemChanged items:', {event, ids})
+  @DB.keys.removeWhere((k) -> k.itemID in ids && !(k.itemID in pinned))
 
-  for id in ids
-    @serialized.remove(id)
-    @cache.remove({itemID: id})
+  if event in ['add', 'modify']
+    for item in references
+      continue if parseInt(item.id) in pinned
+      @keymanager.get(item, 'on-change')
+
+  Zotero.BetterBibTeX.debug("itemChanged items:", {ids, pinned, event, keys: @DB.keys.data})
+
+  for itemID in ids
+    @serialized.remove(itemID)
+    @cache.remove({itemID})
 
   @auto.markIDs(ids, 'itemChanged')
 ).bind(Zotero.BetterBibTeX)

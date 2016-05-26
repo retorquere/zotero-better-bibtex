@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+require 'octokit'
+require 'faraday/http_cache'
+
+Octokit.configure{|c|
+  c.access_token = ENV['GITHUB_TOKEN']
+}
+Octokit.middleware = Faraday::RackBuilder.new {|builder|
+  builder.use Faraday::HttpCache, shared_cache: false, serializer: Marshal
+  builder.use Octokit::Response::RaiseError
+  builder.adapter Faraday.default_adapter
+}
+Octokit.auto_paginate = true
+
+Octokit.list_issues('retorquere/zotero-better-bibtex').each{|issue|
+  next if issue.comments == 0
+  comment = Octokit.issue_comments('retorquere/zotero-better-bibtex', issue.number).collect{|c| c}.last
+  labels = issue.labels.collect{|label| label.name}
+  next if labels.include?('deferred')
+
+  if comment.user.login == 'retorquere' && !labels.include?('awaiting feedback from user')
+    labels << 'awaiting feedback from user'
+  elsif comment.user.login != 'retorquere' && labels.include?('awaiting feedback from user')
+    labels = labels - ['awaiting feedback from user']
+  else
+    next
+  end
+
+  puts 'retorquere/zotero-better-bibtex', issue.number, labels: labels
+  #Octokit.update_issue('retorquere/zotero-better-bibtex', issue.number, labels: labels)
+}

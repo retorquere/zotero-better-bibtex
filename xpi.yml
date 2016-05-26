@@ -56,6 +56,7 @@ files:
 - chrome/content/zotero-better-bibtex/itemPane.js
 - chrome/content/zotero-better-bibtex/itemPane.xul
 - chrome/content/zotero-better-bibtex/keymanager.js
+- chrome/content/zotero-better-bibtex/journalAbbrev.js
 - chrome/content/zotero-better-bibtex/lokijs.js
 - chrome/content/zotero-better-bibtex/preferences.js
 - chrome/content/zotero-better-bibtex/preferences.xul

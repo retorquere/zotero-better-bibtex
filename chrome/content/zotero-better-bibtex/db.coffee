@@ -208,7 +208,7 @@ Zotero.BetterBibTeX.DB = new class
       try
         for id, timestamp of @cacheAccess
           item = @cache.get(id)
-          next unless item
+          continue unless item
           item.accessed = timestamp
           @cache.update(item)
         if @metadata.cacheReap < @cacheExpiry

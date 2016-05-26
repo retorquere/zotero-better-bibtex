@@ -78,8 +78,8 @@ class BetterBibTeXPatternFormatter
       longest = ''
       for @language in @languages
         candidate = @evaluate(part)
-        if typeof(part) == 'function'
-          return '' unless part.call(null, result)
+        if typeof(candidate) == 'function'
+          return '' unless candidate.call(null, result)
         else
           longest = candidate if candidate.length > longest.length
       continue unless longest
@@ -237,7 +237,7 @@ class BetterBibTeXPatternFormatter
       return '' unless authors
       return authors[authors.length - 1] ? ''
 
-    journal: -> Zotero.BetterBibTeX.keymanager.journalAbbrev(@item) || @prop('publicationTitle')
+    journal: -> Zotero.BetterBibTeX.JournalAbbrev.get(@item) || @prop('publicationTitle')
 
     authors: (onlyEditors, withInitials, n) ->
       authors = @creators(onlyEditors, withInitials)

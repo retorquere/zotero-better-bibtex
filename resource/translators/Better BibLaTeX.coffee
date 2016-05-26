@@ -232,7 +232,7 @@ doExport = ->
           if ref.isBibVar(item.publicationTitle)
             ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
           else
-            abbr = Zotero.BetterBibTeX.keymanager.journalAbbrev(item)
+            abbr = Zotero.BetterBibTeX.journalAbbrev(item)
             if Translator.useJournalAbbreviation && abbr
               ref.add({ name: 'journal', value: abbr, preserveBibTeXVariables: true })
             else if Translator.BetterBibLaTeX && item.publicationTitle.match(/arxiv:/i)
