@@ -223,7 +223,7 @@ class BetterBibTeXPatternFormatter
 
     id: -> @item.itemID
 
-    library:
+    library: ->
       item = Zotero.Items.get(@item.itemID)
       return '' unless item && item.libraryID
       return Zotero.Libraries.getName(item.libraryID)
