@@ -69,7 +69,7 @@
 }
 
 @article{bugreports_AsmJournals,
-  author = {Doe Co.,},
+  author = {Doe Co.},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
   title = {bugreports\_{{AsmJournals}}}
@@ -149,7 +149,7 @@
 }
 
 @article{disambiguate_YearCollapseWithInstitution,
-  author = {Smith Co,},
+  author = {Smith Co},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
   title = {disambiguate\_{{YearCollapseWithInstitution}}}
@@ -163,7 +163,7 @@
 }
 
 @article{group_ComplexNesting,
-  author = {Doe Inc.,},
+  author = {Doe Inc.},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
   title = {group\_{{ComplexNesting}}}
@@ -222,7 +222,7 @@
 }
 
 @article{name_Delimiter,
-  author = {Noakes Inc.,},
+  author = {Noakes Inc.},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
   title = {name\_{{Delimiter}}}
@@ -360,7 +360,7 @@
 }
 
 @article{position_IbidWithSuffix,
-  author = {Al-Khatib Organization,},
+  author = {Al-Khatib Organization},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
   title = {position\_{{IbidWithSuffix}}}
@@ -381,7 +381,7 @@
 }
 
 @article{sort_FamilyOnly,
-  author = {ANZ Group,},
+  author = {ANZ Group},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
   title = {sort\_{{FamilyOnly}}}
