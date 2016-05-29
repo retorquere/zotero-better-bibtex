@@ -28,6 +28,23 @@ Zotero.BetterBibTeX.DBStore = new class
 Zotero.BetterBibTeX.DB = new class
   cacheExpiry: Date.now() - (1000 * 60 * 60 * 24 * 30)
 
+  constructor: ->
+    @load()
+    idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
+    idleService.addIdleObserver({observe: (subject, topic, data) => @save() if topic == 'idle'}, 5)
+
+    Zotero.Notifier.registerObserver(
+      notify: (event, type, ids, extraData) ->
+        return unless event in ['delete', 'trash', 'modify']
+        ids = extraData if event == 'delete'
+        return unless ids.length > 0
+
+        for itemID in ids
+          Zotero.BetterBibTeX.debug('touch:', {event, itemID})
+          itemID = parseInt(itemID) unless typeof itemID == 'number'
+          Zotero.BetterBibTeX.DB.touch(itemID)
+    , ['item'])
+
   load: (reason) ->
     Zotero.debug('DB.initialize (' + ( reason || 'startup') + ')')
 
@@ -95,6 +112,7 @@ Zotero.BetterBibTeX.DB = new class
     # coll.ensureUniqueIndex("userId")
 
     @upgradeNeeded = @metadata.Zotero != ZOTERO_CONFIG.VERSION || @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
+    Zotero.BetterBibTeX.debug('upgradeneeded:', {needed: @upgradeNeeded, stored: {zotero: @metadata.Zotero, bbt: @metadata.BetterBibTeX}, current: {zotero: ZOTERO_CONFIG.VERSION, bbt: Zotero.BetterBibTeX.release}})
 
     cacheReset = Zotero.BetterBibTeX.pref.get('cacheReset')
     Zotero.debug('DB.initialize, cache reset: ' + JSON.stringify({cacheReset, metadata: @metadata, release: Zotero.BetterBibTeX.release}))
@@ -169,23 +187,6 @@ Zotero.BetterBibTeX.DB = new class
     )
 
     Zotero.debug('DB.initialize: ready')
-
-  constructor: ->
-    @load()
-    idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
-    idleService.addIdleObserver({observe: (subject, topic, data) => @save() if topic == 'idle'}, 5)
-
-    Zotero.Notifier.registerObserver(
-      notify: (event, type, ids, extraData) ->
-        return unless event in ['delete', 'trash', 'modify']
-        ids = extraData if event == 'delete'
-        return unless ids.length > 0
-
-        for itemID in ids
-          Zotero.BetterBibTeX.debug('touch:', {event, itemID})
-          itemID = parseInt(itemID) unless typeof itemID == 'number'
-          Zotero.BetterBibTeX.DB.touch(itemID)
-    , ['item'])
 
   purge: ->
     itemIDs = Zotero.DB.columnQuery('select itemID from items except select itemID from deletedItems')

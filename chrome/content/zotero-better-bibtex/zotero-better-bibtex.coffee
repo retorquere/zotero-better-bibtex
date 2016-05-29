@@ -6,16 +6,9 @@ Components.utils.import('resource://zotero/config.js') unless ZOTERO_CONFIG?
 Zotero.BetterBibTeX = {
   serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
   document: Components.classes['@mozilla.org/xul/xul-document;1'].getService(Components.interfaces.nsIDOMDocument)
-  Cache: new loki('betterbibtex.db', {env: 'BROWSER'})
+  release: Zotero.File.getContentsFromURL('resource://zotero-better-bibtex-manifest/').match(/<em:version>(.*)<\/em:version>/)[1]
 }
 Components.utils.import('resource://zotero-better-bibtex/citeproc.js', Zotero.BetterBibTeX)
-
-Zotero.BetterBibTeX.startup = ->
-  AddonManager.getAddonByID('better-bibtex@iris-advies.com', (extension) ->
-    return unless extension
-    Zotero.BetterBibTeX.release = extension.version
-    Zotero.BetterBibTeX.init()
-  )
 
 Zotero.BetterBibTeX.titleCase = {
   state: {

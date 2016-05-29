@@ -26,6 +26,6 @@ if not Zotero.BetterBibTeX
 
   window.addEventListener('load', (load = (event) ->
     window.removeEventListener('load', load, false) #remove listener, no longer needed
-    Zotero.BetterBibTeX.startup()
+    Zotero.BetterBibTeX.init()
     return
   ), false)
