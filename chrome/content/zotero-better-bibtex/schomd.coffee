@@ -71,6 +71,7 @@ Zotero.BetterBibTeX.schomd.init = ->
     "@quotes/false": false
   }
 
+
   Zotero.CiteProc.CSL.Output.Formats.bbl = {
     ###
     # text_escape: Format-specific function for escaping text destined
@@ -78,28 +79,35 @@ Zotero.BetterBibTeX.schomd.init = ->
     # will be run only once across each portion of text to be escaped, it
     # need not be idempotent.
     ###
-    # 29\raise0.5ex\hbox{th}
     # \usepackage{xltxtra}, \textsuperscript{} \textsubscript{}
+    #
     text_escape: (text) ->
       text = '' unless text?
-      text = text.replace(/(\. )/g, ".\\ ")
-      text = text.replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "{\\textsuperscript{#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}}}"))
+      savetext = text
+      text = text.replace(/([$_^{%&])(?!!)/g, "\\$1")
+        .replace(/([$_^{%&])!/g, "$1")
+        .replace(/\u00A0/g, "\\hspace{1spc}")
+        .replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP,
+          ((aChar) -> "{\\textsuperscript{#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}}}"))
+      # I think the \url macro takes care of escaping things... Not sure. Correct this if it's wrong.
+      if savetext.search('^(?:http|ftp)s?://') != -1
+        return '\\href{' + savetext + "}{\\url{" + savetext + '}}'
       return text
-    # Todo: how to compute the width? I'm arbitrarily setting it to 4
-    # digits for now.
+
+    # Width is set by computation using maxoffset after the bibliography is generated.
     bibstart: '\\begin{thebibliography}{9999}\n\n'
     bibend: '\\end{thebibliography}\n'
     '@font-style/italic': '\\textit{%%STRING%%}'
-    '@font-style/oblique':'\\textsl{%%STRING%%}'
-    '@font-style/normal': false
+    '@font-style/oblique': '\\textsl{%%STRING%%}'
+    '@font-style/normal': '{\\upshape %%STRING%%}'
     '@font-variant/small-caps': '\\textsc{%%STRING%%}'
     '@passthrough/true': Zotero.CiteProc.CSL.Output.Formatters.passthrough
-    '@font-variant/normal': false
+    '@font-variant/normal': '{\\upshape \\mdseries %%STRING%%}'
     '@font-weight/bold': '\\textbf{%%STRING%%}'
-    '@font-weight/normal': false
+    '@font-weight/normal': '{\\mdseries %%STRING%%}'
     '@font-weight/light': false
     '@text-decoration/none': false
-    '@text-decoration/underline': false
+    '@text-decoration/underline': '\\underline{%%STRING%%}'
     '@vertical-align/sup': '\\textsuperscript{%%STRING%%}'
     '@vertical-align/sub': '\\textsubscript{%%STRING%%}'
     '@vertical-align/baseline': false
@@ -107,43 +115,61 @@ Zotero.BetterBibTeX.schomd.init = ->
     '@strip-periods/false': Zotero.CiteProc.CSL.Output.Formatters.passthrough
     '@quotes/true': (state, str) ->
       return '``' unless str?
-      return '``' + str + '\'\''
+      return "``" + str + "''"
 
     '@quotes/inner': (state, str) ->
-      return '’'  unless str?
-      return state.getTerm('open-inner-quote') + str + state.getTerm('close-inner-quote')
+      return "'"  unless str?
+      return "`" + str + "'"
 
     '@quotes/false': false
 
+    # This apparently does not ever get called...?
     '@cite/entry': (state, str) ->
       Zotero.BetterBibTeX.debug('bbl.@cite/entry:', state.registry.registry[@system_id].ref.id)
-      return str || ''
+      return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt)
 
+    # The question now is whether escaping the _ causes problems for real LaTeX.
+    #
+    # TeXmacs] convert-error, latex error, too little arguments for \<sub>
+    # TeXmacs] convert-error, latex error in ...
+    # TeXmacs] convert-error,
+    # TeXmacs] convert-error, \bibitem{Stillman_Zotero_}
+    # TeXmacs] convert-error, Dan Stillman \& Simon Kor
     '@bibliography/entry': (state, str) ->
-      Zotero.BetterBibTeX.debug('bbl.@bibliography/entry:', state.registry.registry[@system_id].ref.id)
+      sys_id = state.registry.registry[@system_id].ref.id
+      Zotero.BetterBibTeX.debug('bbl.@bibliography/entry:', sys_id)
       try
-        citekey = Zotero.BetterBibTeX.keymanager.get({itemID: state.registry.registry[@system_id].ref.id}).citekey
+        citekey = Zotero.BetterBibTeX.keymanager.get({itemID: sys_id}).citekey.replace(/_/g, "\\_")
       catch
         citekey = '@@'
-      return "\\bibitem{#{citekey}}\n#{str}\n\n"
+
+      # For use with actual LaTeX, the \zbibCitationItemId macro will need to be defined in some
+      # way. It can expand to nothing and that will suffice to prevent an error. With TeXmacs, the
+      # \zbibCitationItemId macro will be run by the typesetter, to supply reference binding
+      # information for use in hyperlinking. Each zcite has the id of each item in the cluster in a
+      # JSON string saved in the fieldCode argument. That can be accessed by the Guile Scheme code
+      # that implements the TeXmacs <==> Juris-M / Zotero integration.
+      #
+      return "\\bibitem{#{citekey}}\\zbibCitationItemId{#{sys_id}}%\n#{str}\n\n"
 
     '@display/block': (state, str) -> "\n\\newblock #{str}\n"
 
+    # Not sure what these are intended for yet. Block or in-line? Margin-notes? Or raggedright/left?
     '@display/left-margin': (state, str) -> str
-
     '@display/right-inline': (state, str) -> str
 
-    '@display/indent': (state, str) -> "\n\\quad #{str}"
+    # Must define a \bibindent macro just to be sure.
+    '@display/indent': (state, str) -> "\n\\bibindent #{str}"
 
-    '@showid/true': (state, str, cslid) -> "((showid:#{str}))"
+    # If these are output, obviously the the macro must be defined to something.
+    '@showid/true': (state, str, cslid) -> "\\ztshowid{#{str}}"
 
-    # May be TeXmacs specific, but can define macros.
-    '@URL/true': (state, str) -> "\\href{#{str}}"
-    '@DOI/true': (state, str) -> "\\hlink{#{str}}{http://dx.doi.org/#{str}}"
-
-    "@quotes/false": false
+    # \href and \url are from the hyperref package for pdflatex
+    '@URL/true': (state, str) -> "\\href{#{str}}{\\url{#{str}}}"
+    '@DOI/true': (state, str) -> "\\href{http://dx.doi.org/#{str}}{#{str}}"
   }
   return
+
 
 Zotero.BetterBibTeX.schomd.itemIDs = (citekeys, {libraryID} = {}) ->
   libraryID ||= null
@@ -157,11 +183,18 @@ Zotero.BetterBibTeX.schomd.itemIDs = (citekeys, {libraryID} = {}) ->
 
   return ((if typeof key == 'number' then key else resolved[key]?.itemID || null) for key in citekeys)
 
-Zotero.BetterBibTeX.schomd.citations = (citekeys, {style, libraryID} = {}) ->
-  url = "http://www.zotero.org/styles/#{style ? 'apa'}"
-  style = Zotero.Styles.get(url)
+
+Zotero.BetterBibTeX.schomd.getStyle = (id = 'apa') ->
+  style = Zotero.Styles.get("http://www.zotero.org/styles/#{id}")
+  style ||= Zotero.Styles.get("http://juris-m.github.io/styles/#{id}")
+  style ||= Zotero.Styles.get(id)
+  return style
+
+
+Zotero.BetterBibTeX.schomd.citationsX = (format, citekeys, style, libraryID) ->
+  style = @getStyle(style)
   cp = style.getCiteProc()
-  cp.setOutputFormat('markdown')
+  cp.setOutputFormat(format)
 
   clusters = []
   itemIDs = []
@@ -182,15 +215,29 @@ Zotero.BetterBibTeX.schomd.citations = (citekeys, {style, libraryID} = {}) ->
     else
       citations.push(cp.appendCitationCluster({citationItems: cluster, properties:{}}, true)[0][1] || null)
 
-  return citations
+  # Setting an abbrev to X-X-X allows it to be an empty string this
+  # way. You can not set an abbrev to the empty string because that's
+  # how the interface allows resetting it to the default. So set it to
+  # X-X-X and presto! It disappears.
+  return (citation.replace(/X-X-X ?/g, "") for citation in citations when citation)
 
-Zotero.BetterBibTeX.schomd.getStyle = (id = 'apa') ->
-  style = Zotero.Styles.get("http://www.zotero.org/styles/#{id}")
-  style ||= Zotero.Styles.get("http://juris-m.github.io/styles/#{id}")
-  style ||= Zotero.Styles.get(id)
-  return style
 
-Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, libraryID} = {}) ->
+Zotero.BetterBibTeX.schomd.citations = (citekeys, {style, libraryID} = {}) ->
+  return @citationsX('markdown', citekeys, style, libraryID)
+
+
+Zotero.BetterBibTeX.schomd.citationshtml = (citekeys, {style, libraryID} = {}) ->
+  return @citationsX('html', citekeys, style, libraryID)
+
+
+Zotero.BetterBibTeX.schomd.citationsbbl = (citekeys, {style, libraryID} = {}) ->
+  citations = @citationsX('bbl', citekeys, style, libraryID)
+  return (citation.replace(/(\w\.}?) /g, "$1\\hspace{1spc}")
+    .replace(/(\w\.)! /g, "$1 ") for citation in citations when citation)
+
+
+
+Zotero.BetterBibTeX.schomd.citationX = (format, citekeys, style, libraryID) ->
   itemIDs = (item for item in @itemIDs(citekeys, {libraryID}) when item)
 
   Zotero.BetterBibTeX.debug('schomd.citation', {citekeys, style, libraryID}, '->', itemIDs)
@@ -199,7 +246,7 @@ Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, libraryID} = {}) ->
 
   style = @getStyle(style)
   cp = style.getCiteProc()
-  cp.setOutputFormat('markdown')
+  cp.setOutputFormat(format)
   cp.updateItems(itemIDs)
 
   citation = cp.appendCitationCluster({citationItems: ({id:itemID} for itemID in itemIDs), properties:{}}, true)
@@ -207,44 +254,50 @@ Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, libraryID} = {}) ->
   citation = citation[0][1]
   return citation
 
-Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, libraryID} = {}) ->
+
+Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, libraryID} = {}) ->
+  return @citationX('markdown', citekeys, style, libraryID)
+
+
+Zotero.BetterBibTeX.schomd.citationhtml = (citekeys, {style, libraryID} = {}) ->
+  return @citationX('html', citekeys, style, libraryID)
+
+
+Zotero.BetterBibTeX.schomd.citationbbl = (citekeys, {style, libraryID} = {}) ->
+  return @citationX('bbl', citekeys, style, libraryID).replace(/(\w\.}?) /g, "$1\\hspace{1spc}")
+
+
+
+Zotero.BetterBibTeX.schomd.bibliographyX = (format, citekeys, style, libraryID) ->
   itemIDs = @itemIDs(citekeys, {libraryID})
   return '' if itemIDs.length == 0
-
   style = @getStyle(style)
   cp = style.getCiteProc()
-  cp.setOutputFormat('markdown')
+  cp.setOutputFormat(format)
   cp.updateItems((item for item in itemIDs when item))
-  bib = cp.makeBibliography()
+  return cp.makeBibliography()
 
+
+Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, libraryID} = {}) ->
+  bib = @bibliographyX('markdown', citekeys, style, libraryID)
   return '' unless bib
   return bib[0].bibstart + bib[1].join("") + bib[0].bibend
+
 
 Zotero.BetterBibTeX.schomd.bibliographyhtml = (citekeys, {style, libraryID} = {}) ->
-  itemIDs = @itemIDs(citekeys, {libraryID})
-  return '' if itemIDs.length == 0
-
-  style = @getStyle(style)
-  cp = style.getCiteProc()
-  cp.setOutputFormat('html')
-  cp.updateItems((item for item in itemIDs when item))
-  bib = cp.makeBibliography()
-
+  bib = @bibliographyX('html', citekeys, style, libraryID)
   return '' unless bib
   return bib[0].bibstart + bib[1].join("") + bib[0].bibend
+
 
 Zotero.BetterBibTeX.schomd.bibliographybbl = (citekeys, {style, libraryID} = {}) ->
-  itemIDs = @itemIDs(citekeys, {libraryID})
-  return '' if itemIDs.length == 0
-
-  style = @getStyle(style)
-  cp = style.getCiteProc()
-  cp.setOutputFormat('bbl')
-  cp.updateItems((item for item in itemIDs when item))
-  bib = cp.makeBibliography()
-
+  bib = @bibliographyX('bbl', citekeys, style, libraryID)
   return '' unless bib
-  return bib[0].bibstart + bib[1].join("") + bib[0].bibend
+  bibl = (b.replace(/(\w\.}?) /g, "$1\\hspace{1spc}") for b in bib[1])
+  bibstart = bib[0].bibstart
+  return bibstart.replace(/9999/,("0" for n in [1..bib[0].maxoffset]).join("")) + bibl.join("") + bib[0].bibend
+
+
 
 Zotero.BetterBibTeX.schomd.search = (term) ->
   search = new Zotero.Search()
@@ -266,6 +319,8 @@ Zotero.BetterBibTeX.schomd.search = (term) ->
         {lastName: creator.ref.lastName, firstName: creator.ref.firstName} for creator in item.getCreators()
       )
     } for item in Zotero.Items.get(results))
+
+
 
 Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, libraryID, displayOptions} = {}) ->
   itemIDs = @itemIDs(keys, {libraryID})
