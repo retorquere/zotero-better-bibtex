@@ -6,7 +6,7 @@ Components.utils.import('resource://zotero/config.js') unless ZOTERO_CONFIG?
 Zotero.BetterBibTeX = {
   serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
   document: Components.classes['@mozilla.org/xul/xul-document;1'].getService(Components.interfaces.nsIDOMDocument)
-  release: Zotero.File.getContentsFromURL('resource://zotero-better-bibtex-manifest/').match(/<em:version>(.*)<\/em:version>/)[1]
+  release: Zotero.File.getContentsFromURL('resource://zotero-better-bibtex.rdf').match(/<em:version>(.*)<\/em:version>/)[1]
 }
 Components.utils.import('resource://zotero-better-bibtex/citeproc.js', Zotero.BetterBibTeX)
 
