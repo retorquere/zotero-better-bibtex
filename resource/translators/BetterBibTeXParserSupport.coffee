@@ -239,7 +239,7 @@ class BetterBibTeXParserSupport
       collection.name = group.data.shift()
       intersection = group.data.shift()
 
-      collection.items = group.data.filter(bibtex.skipEmptyKeys)
+      collection.items = group.data.filter(@skipEmptyKeys)
       collection.collections = []
 
       levels[group.level] = collection
@@ -252,10 +252,10 @@ class BetterBibTeXParserSupport
 
           when "1"
             ### intersection ###
-            collection.items = collection.items.filter(bibtex.intersect, levels[group.level - 1].items)
+            collection.items = collection.items.filter(@intersect, levels[group.level - 1].items)
 
           when "2"
             ### union ###
-            collection.items = bibtex.unique(levels[group.level - 1].items.concat(collection.items))
+            collection.items = @unique(levels[group.level - 1].items.concat(collection.items))
 
     @collections = @collections.concat(collections)
