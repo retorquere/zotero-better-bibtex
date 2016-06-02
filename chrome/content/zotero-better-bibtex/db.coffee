@@ -208,7 +208,7 @@ Zotero.BetterBibTeX.DB = new class
     @keys.removeWhere((o) -> o.itemID == itemID && o.citekeyFormat)
 
   save: (mode) ->
-    Zotero.BetterBibTeX.debug('DB.save:', {all, serialized: @serialized.data.length})
+    Zotero.BetterBibTeX.debug('DB.save:', {mode, serialized: @serialized.data.length})
     throw new Error("Unexpected mode '#{mode}'") unless mode in ['main', 'all', 'force']
 
     if mode in ['force', 'all']
