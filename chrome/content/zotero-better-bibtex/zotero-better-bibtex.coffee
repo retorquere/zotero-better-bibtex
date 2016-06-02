@@ -561,7 +561,7 @@ Zotero.BetterBibTeX.setCitekeyFormatter = (enforce) ->
 Zotero.BetterBibTeX.idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
   Zotero.BetterBibTeX.debug("idle: #{topic}")
-  Zotero.BetterBibTeX.DB.save(true)
+  Zotero.BetterBibTeX.DB.save('all')
   switch topic
     when 'idle'
       Zotero.BetterBibTeX.auto.idle = true
@@ -924,13 +924,13 @@ Zotero.BetterBibTeX.init = ->
   @pref.observer.register()
   Zotero.addShutdownListener(->
     Zotero.BetterBibTeX.log('shutting down')
-    Zotero.BetterBibTeX.DB.save(true)
+    Zotero.BetterBibTeX.DB.save('force')
     Zotero.BetterBibTeX.debugMode()
     return
   )
   Zotero.getActiveZoteroPane().addBeforeReloadListener((mode) =>
     @debug('before reload:', {mode})
-    Zotero.BetterBibTeX.DB.save() if Zotero.BetterBibTeX.DB && mode != 'connector'
+    Zotero.BetterBibTeX.DB.save('all') if Zotero.BetterBibTeX.DB && mode != 'connector'
   )
 
   nids = []
@@ -944,7 +944,7 @@ Zotero.BetterBibTeX.init = ->
     Zotero.BetterBibTeX.DB.load('reload out of connector mode') if !Zotero.initialized || Zotero.isConnector
   )
   zoteroPane.addBeforeReloadListener((mode) ->
-    Zotero.BetterBibTeX.DB.save() if Zotero.BetterBibTeX.DB && mode != 'connector'
+    Zotero.BetterBibTeX.DB.save('all') if Zotero.BetterBibTeX.DB && mode != 'connector'
   )
 
   @idleService.addIdleObserver(@idleObserver, @pref.get('autoExportIdleWait'))
