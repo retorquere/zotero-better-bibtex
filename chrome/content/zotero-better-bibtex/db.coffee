@@ -209,7 +209,7 @@ Zotero.BetterBibTeX.DB = new class
 
   save: (mode) ->
     Zotero.BetterBibTeX.debug('DB.save:', {all, serialized: @serialized.data.length})
-    throw new Error("Unexpected mode '#{mode}') unless mode in ['main', 'all', 'force']
+    throw new Error("Unexpected mode '#{mode}'") unless mode in ['main', 'all', 'force']
 
     if mode in ['force', 'all']
       Zotero.BetterBibTeX.debug('purging cache: start')
