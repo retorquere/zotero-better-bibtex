@@ -83,15 +83,15 @@ Zotero.BetterBibTeX.schomd.init = ->
     #
     text_escape: (text) ->
       text = '' unless text?
-      savetext = text
+      #savetext = text
       text = text.replace(/([$_^{%&])(?!!)/g, "\\$1")
         .replace(/([$_^{%&])!/g, "$1")
         .replace(/\u00A0/g, "\\hspace{1spc}")
         .replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP,
           ((aChar) -> "{\\textsuperscript{#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}}}"))
       # I think the \url macro takes care of escaping things... Not sure. Correct this if it's wrong.
-      if savetext.search('^(?:http|ftp)s?://') != -1
-        return '\\href{' + savetext + "}{\\url{" + savetext + '}}'
+      #if savetext.search('^(?:http|ftp)s?://') != -1
+      #  return '\\href{' + savetext + "}{\\url{" + savetext + '}}'
       return text
 
     # Width is set by computation using maxoffset after the bibliography is generated.
@@ -139,34 +139,57 @@ Zotero.BetterBibTeX.schomd.init = ->
       sys_id = state.registry.registry[@system_id].ref.id
       Zotero.BetterBibTeX.debug('bbl.@bibliography/entry:', sys_id)
       try
-        citekey = Zotero.BetterBibTeX.keymanager.get({itemID: sys_id}).citekey.replace(/_/g, "\\_")
+        citekey = Zotero.BetterBibTeX.keymanager.get({itemID: sys_id}).citekey.replace(/_$/g, "")
       catch
         citekey = '@@'
 
-      # For use with actual LaTeX, the \zbibCitationItemId macro will need to be defined in some
-      # way. It can expand to nothing and that will suffice to prevent an error. With TeXmacs, the
-      # \zbibCitationItemId macro will be run by the typesetter, to supply reference binding
-      # information for use in hyperlinking. Each zcite has the id of each item in the cluster in a
-      # JSON string saved in the fieldCode argument. That can be accessed by the Guile Scheme code
-      # that implements the TeXmacs <==> Juris-M / Zotero integration.
+      insert = ""
+      insert = state.sys.embedBibliographyEntry(this.item_id) if state.sys.embedBibliographyEntry
+
+      # For use with actual LaTeX, the \zbibItemText and \zbibCitationItemId macro will need to
+      # be defined in some way. They can expand to nothing and hopefully that will suffice to
+      # prevent an error. With TeXmacs, the\zbibCitationItemId macro will be run by the
+      # typesetter, to supply reference binding information for use in hyperlinking. Each zcite
+      # has the id of each item in the cluster in a JSON string saved in the fieldCode
+      # argument. That can be accessed by the Guile Scheme code that implements the TeXmacs <==>
+      # Juris-M / Zotero integration. In order for the \ztbibItemText
       #
-      return "\\bibitem{#{citekey}}\\zbibCitationItemId{#{sys_id}}%\n#{str}\n\n"
+      return "\\ztbibItemText{\\zbibCitationItemID{#{sys_id}}#{insert}\\bibitem{#{citekey}}#{str}}\n\n"
 
     '@display/block': (state, str) -> "\n\\newblock #{str}\n"
 
-    # Not sure what these are intended for yet. Block or in-line? Margin-notes? Or raggedright/left?
-    '@display/left-margin': (state, str) -> str
-    '@display/right-inline': (state, str) -> str
+    # \leftmargin{1. }\rightinline{body of bibentry}
+    '@display/left-margin': (state, str) -> "\\ztLeftMargin{#{str}}"
+    '@display/right-inline': (state, str) -> "\\ztRightInline{#{str}}"
 
-    # Must define a \bibindent macro just to be sure.
-    '@display/indent': (state, str) -> "\n\\bibindent #{str}"
+    # Must define a \ztbibindent macro just to be sure... I've not seen this output?
+    '@display/indent': (state, str) -> "\n\\ztbibIndent{#{str}}"
 
     # If these are output, obviously the the macro must be defined to something.
-    '@showid/true': (state, str, cslid) -> "\\ztshowid{#{str}}"
+    # How do I make it emit these?
+    '@showid/true': (state, str, cslid) ->
+      if !state.tmp.just_looking && !state.tmp.suppress_decorations
+        if cslid
+          return "\\ztShowID{\\ztcslidNode{#{state.opt.nodenames[cslid]}}\\ztcslid{#{cslid}}#{str}}"
+        else if this.params && "string" == typeof str
+          prePunct = ""
+          if str
+            m = str.match(CSL.VARIABLE_WRAPPER_PREPUNCT_REX)
+            prePunct = m[1]
+            str = m[2]
+          postPunct = ""
+          if str && CSL.SWAPPING_PUNCTUATION.indexOf(str.slice(-1)) > -1
+            postPunct = str.slice(-1)
+            str = str.slice(0,-1)
+          return state.sys.variableWrapper(this.params, prePunct, str, postPunct)
+        else
+          return str
+      else
+        return str
 
     # \href and \url are from the hyperref package for pdflatex
     '@URL/true': (state, str) -> "\\href{#{str}}{\\url{#{str}}}"
-    '@DOI/true': (state, str) -> "\\href{http://dx.doi.org/#{str}}{#{str}}"
+    '@DOI/true': (state, str) -> "\\href{http://doi.org/#{str}}{#{str}}"
   }
   return
 
