@@ -74,101 +74,85 @@ class UnicodeConverter
   def patch_bibtex(target)
     target = File.expand_path(target)
 
-#    state = nil
-#    mapping = []
-#    reverse = []
-#    IO.readlines('/Users/emile/zotero/translators/BibTeX.js').each_with_index{|line, no|
-#      if line =~ /var mappingTable = {/
-#        state = :mapping
-#      elsif line =~ /var reversemappingTable = {/
-#        state = :reverse
-#      elsif line =~ /^};/
-#        state = nil
-#      elsif line =~ /^\t?\/\// || line =~ /^\/\*/ || line =~ /^\*\// || line =~ /^\t"\\u02BE"/ || line.strip == ''
-#        # pass
-#      elsif state == :mapping
-#        if line =~ /^\t"\\u([0-9A-F]{4})":/
-#          mapping << $1
-#        elsif line =~ /^\t"([^"])"\s*:/
-#          mapping << $1
-#        else
-#          throw "#{no + 1} mapping: unrecognized #{line}"
-#        end
-#      elsif state == :reverse
-#        puts :reverse
-#        if line =~ /^\t(".*") *: /
-#          reverse << JSON.parse("{\"tex\": #{$1}}")['tex']
-#        else
-#          throw "#{no + 1} reverse: unrecognized #{line}"
-#        end
-#      end
-#    }
-#
-#    exit
+    bbt = OpenStruct.new(mapped: {}, reversed: [])
+    bbt.mapped = {}
+    @chars.execute("SELECT charcode, latex, mode, description FROM mapping WHERE preference = 0 AND unicode_to_latex IN ('true', 'ascii') ORDER BY charcode"){|mapping|
+      charcode, latex, mode, desc = *mapping
+      next if bbt.mapped[charcode]
+      latex = "$#{latex}$" if mode == 'math'
+      desc = " // #{desc.strip}" if (desc || '').strip != ''
+      bbt.mapped[charcode] = "\t#{char(charcode)}: #{latex.to_json},#{desc}"
+    }
 
-    open((target), 'w'){|js|
-      mappings = {}
-      @chars.execute("SELECT charcode, latex, mode, description FROM mapping WHERE preference = 0 AND unicode_to_latex IN ('true', 'ascii') ORDER BY charcode"){|mapping|
-        charcode, latex, mode, desc = *mapping
-        next if mappings[charcode]
-        latex = "$#{latex}$" if mode == 'math'
-        desc = " // #{desc.strip}" if (desc || '').strip != ''
-        mappings[charcode] = "  #{char(charcode)}: #{latex.to_json}#{desc}"
-      }
-      js.puts("var BBTmappingTable = {")
-      mappings = mappings.keys.sort.collect{|k| "\t" + mappings[k] }
-      mappings.each_with_index{|m, i|
-        if i != (mappings.length - 1)
-          if m =~ / \/\//
-            m.sub!(/ \/\//, ', //')
-          else
-            m += ','
+    done = {}
+    bbt.reversed = []
+    @chars.execute('SELECT charcode, latex, description FROM mapping ORDER BY charcode, preference'){|mapping|
+      charcode, latex, desc = *mapping
+      next if latex =~ /^[a-z]+$/i || latex.strip == ''
+      next if charcode < 256 && latex == charcode.chr
+      #latex = latex[1..-2] if latex =~ /^{.+}$/ && latex !~ /}{/
+      #latex.sub!(/{}$/, '')
+      #next if latex.length < 2
+      latex.strip!
+      next if done[latex]
+      done[latex] = true
+      desc = " // #{desc.strip}" if (desc || '').strip != ''
+      bbt.reversed << "\t#{latex.to_json}: #{char(charcode)},#{desc}"
+    }
+
+    zotero = OpenStruct.new(mapped: [], reversed: [])
+    open(target, 'w'){|js|
+      state = nil
+      IO.readlines('/Users/emile/zotero/translators/BibTeX.js').each_with_index{|line, no|
+        if line =~ /var mappingTable = {/
+          state = :mapping
+        elsif line =~ /var reversemappingTable = {/
+          state = :reverse
+        elsif line =~ /^};/
+          if state == :mapping
+            js.puts("\t// BBT")
+            bbt.mapped.keys.sort.each{|k|
+              next if zotero.mapped.include?(k) || bbt.mapped[k] !~ /'\\u/
+              js.puts(bbt.mapped[k])
+            }
+          elsif state == :reverse
+            js.puts("\t// BBT")
+            bbt.reversed.sort.each{|tex|
+              next if zotero.reversed.include?(tex)
+              js.puts(tex)
+            }
           end
-        end
-        js.puts(m)
-      }
-      js.puts("};")
-
-      done = {}
-      mappings = []
-      @chars.execute('SELECT charcode, latex, description FROM mapping ORDER BY charcode, preference'){|mapping|
-        charcode, latex, desc = *mapping
-        next if latex =~ /^[a-z]+$/i || latex.strip == ''
-        next if charcode < 256 && latex == charcode.chr
-        #latex = latex[1..-2] if latex =~ /^{.+}$/ && latex !~ /}{/
-        #latex.sub!(/{}$/, '')
-        #next if latex.length < 2
-        latex.strip!
-        next if done[latex]
-        done[latex] = true
-        desc = " // #{desc.strip}" if (desc || '').strip != ''
-        mappings << "\t#{latex.to_json}: #{char(charcode)}#{desc}"
-      }
-      js.puts("var BBTreversemappingTable = {")
-      mappings.each_with_index{|m, i|
-        if i != (mappings.length - 1)
-          if m =~ / \/\//
-            m.sub!(/ \/\//, ', //')
+          state = nil
+        elsif line =~ /^\t\/\/Greek/ || line =~ /^\/\* Derived/ || line.strip == '' || line =~ /^\/\* These / || line =~ /^\*\// || line =~ /\/\* Derived/
+          # pass
+        #elsif line =~ /^\t?\/\// || line =~ /^\/\*/ || line =~ /^\*\// || line =~ /^\t"\\u02BE"/ || line.strip == ''
+        # pass
+        elsif state == :mapping
+          if line =~ /^\t"\\u([0-9A-F]{4})":/
+            zotero.mapped << $1.to_i(16)
+          elsif  line =~ /^\/\*\t"\\u(02BF)"/
+            zotero.mapped << $1.to_i(16)
+          elsif line =~ /^\t"([^"])"\s*:/
+            zotero.mapped << $1.ord
           else
-            m += ','
+            throw "#{no + 1} mapping: unrecognized #{line}"
           end
+        elsif state == :reverse
+          tex = nil
+          if line =~ /^\t(".*") *: /
+            tex = $1
+          elsif line =~ /^\t\/\/("'n")/
+            tex = $1
+          elsif line =~ /^\s*\/[\/\*] *("[^"]+")/
+            tex = $1
+          else
+            throw "#{no + 1} reverse: unrecognized #{line}"
+          end
+          zotero.reversed << JSON.parse("{\"tex\": #{tex}}")['tex']
         end
-        js.puts(m)
-      }
-      js.puts("};")
 
-      js.puts("""
-for (var k in BBTmappingTable) {
-  if (!mappingTable[k]) {
-    mappingTable = BBTmappingTable[k];
-  }
-}
-for (var k in BBTreversemappingTable) {
-  if (!reversemappingTable[k]) {
-    reversemappingTable = BBTreversemappingTable[k];
-  }
-}
-""")
+        js.write(line)
+      }
     }
   end
 
