@@ -156,7 +156,8 @@ Zotero.BetterBibTeX.schomd.init = ->
       #
       return "\\ztbibItemText{\\zbibCitationItemID{#{sys_id}}#{insert}\\bibitem{#{citekey}}#{str}}\n\n"
 
-    '@display/block': (state, str) -> "\n\\newblock #{str}\n"
+    # Again, another macro to turn the ztNewBlock into a LaTeX newblock: "\n\\newblock #{str}\n"
+    '@display/block': (state, str) -> "\\ztNewBlock{#{str}}"
 
     # \leftmargin{1. }\rightinline{body of bibentry}
     '@display/left-margin': (state, str) -> "\\ztLeftMargin{#{str}}"
