@@ -625,7 +625,6 @@ Zotero.BetterBibTeX.init = ->
   @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
 
   @migrateData()
-  @DB.purge()
 
   if @pref.get('scanCitekeys') || Zotero.BetterBibTeX.DB.upgradeNeeded
     reason = if @pref.get('scanCitekeys') then 'requested by user' else 'after upgrade'
@@ -633,7 +632,7 @@ Zotero.BetterBibTeX.init = ->
     changed = @keymanager.scan()
     for itemID in changed
       @cache.remove({itemID})
-    Zotero.BetterBibTeX.DB.purge()
+    @DB.purge()
     setTimeout((-> Zotero.BetterBibTeX.auto.markIDs(changed, 'scanCiteKeys')), 5000) if changed.length != 0
     @flash("Citation key rescan finished")
 
