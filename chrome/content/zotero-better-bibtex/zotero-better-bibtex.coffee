@@ -149,6 +149,10 @@ class Zotero.BetterBibTeX.DateParser
     ### TODO: https://bitbucket.org/fbennett/citeproc-js/issues/189/8-juli-2011-parsed-as-literal ###
     date = date.replace(/^([0-9]+)\.\s+([a-z])/i, '$1 $2')
 
+    ### https://github.com/retorquere/zotero-better-bibtex/issues/515 ###
+    if m = date.match(/^(-?[0-9]{3,4}-[0-9]{1,2}-[0-9]{1,2})T[0-9]{2}:[0-9]{2}:[0-9]{2}(\+[0-9]+|\s*[A-Z]+)?(.*)/)
+      date = m[1] + m[3]
+
     if m = date.match(/^(-?[0-9]{3,4})(\?)?(~)?$/)
       return {
         year: @year(m[1])

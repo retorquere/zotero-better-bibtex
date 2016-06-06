@@ -10,13 +10,14 @@ Background:
 
 ### BibLaTeX cookie-cutter ###
 
-@test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485
+@test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515
 Scenario Outline: BibLaTeX Export
   And I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
 
   Examples:
      | file                                                                                           | references  |
+     | Date parses incorrectly with year 1000 when source Zotero field is in datetime format. #515    | 1           |
      | Dollar sign in title not properly escaped #485                                                 | 1           |
      | Book sections have book title for journal in citekey #409                                      | 1           |
      | Colon in bibtex key #405                                                                       | 1           |
