@@ -2,9935 +2,9935 @@
 LaTeX = {} unless LaTeX
 LaTeX.toLaTeX = { unicode: {}, ascii: {} }
 LaTeX.toLaTeX.unicode.math =
-  '<': "<"
-  '>': ">"
+  '<': "<" # LESS-THAN SIGN
+  '>': ">" # GREATER-THAN SIGN
   '\\': "\\backslash{}"
 LaTeX.toLaTeX.unicode.text =
-  '#': "\\#"
+  '#': "\\#" # NUMBER SIGN
   '$': "\\$"
-  '%': "\\%"
+  '%': "\\%" # PERCENT SIGN
   '&': "\\&"
-  '^': "\\^"
+  '^': "\\^" # CIRCUMFLEX ACCENT
   '_': "\\_"
   '{': "\\{"
   '}': "\\}"
-  '~': "\\textasciitilde{}"
+  '~': "\\textasciitilde{}" # TILDE
   '\u00A0': "~"
 LaTeX.toLaTeX.ascii.math =
-  '<': "<"
-  '>': ">"
+  '<': "<" # LESS-THAN SIGN
+  '>': ">" # GREATER-THAN SIGN
   '\\': "\\backslash{}"
-  '\u00AC': "\\lnot{}"
-  '\u00AD': "\\-"
+  '\u00AC': "\\lnot{}" # NOT SIGN
+  '\u00AD': "\\-" # SOFT HYPHEN
   '\u00B0': "^\\circ{}"
-  '\u00B1': "\\pm{}"
-  '\u00B2': "^2"
-  '\u00B3': "^3"
-  '\u00B5': "\\mathrm{\\mu}"
-  '\u00B7': "\\cdot{}"
-  '\u00B9': "^1"
-  '\u00F7': "\\div{}"
-  '\u0127': "\\Elzxh{}"
-  '\u0192': "f"
-  '\u01AA': "\\eth{}"
-  '\u01B5': "\\Zbar{}"
-  '\u0237': "\\jmath{}"
-  '\u0250': "\\Elztrna{}"
-  '\u0252': "\\Elztrnsa{}"
-  '\u0254': "\\Elzopeno{}"
-  '\u0256': "\\Elzrtld{}"
-  '\u0259': "\\Elzschwa{}"
-  '\u025B': "\\varepsilon{}"
-  '\u0263': "\\Elzpgamma{}"
-  '\u0264': "\\Elzpbgam{}"
-  '\u0265': "\\Elztrnh{}"
-  '\u026C': "\\Elzbtdl{}"
-  '\u026D': "\\Elzrtll{}"
-  '\u026F': "\\Elztrnm{}"
-  '\u0270': "\\Elztrnmlr{}"
-  '\u0271': "\\Elzltlmr{}"
-  '\u0273': "\\Elzrtln{}"
-  '\u0277': "\\Elzclomeg{}"
-  '\u0279': "\\Elztrnr{}"
-  '\u027A': "\\Elztrnrl{}"
-  '\u027B': "\\Elzrttrnr{}"
-  '\u027C': "\\Elzrl{}"
-  '\u027D': "\\Elzrtlr{}"
-  '\u027E': "\\Elzfhr{}"
-  '\u0282': "\\Elzrtls{}"
-  '\u0283': "\\Elzesh{}"
-  '\u0287': "\\Elztrnt{}"
-  '\u0288': "\\Elzrtlt{}"
-  '\u028A': "\\Elzpupsil{}"
-  '\u028B': "\\Elzpscrv{}"
-  '\u028C': "\\Elzinvv{}"
-  '\u028D': "\\Elzinvw{}"
-  '\u028E': "\\Elztrny{}"
-  '\u0290': "\\Elzrtlz{}"
-  '\u0292': "\\Elzyogh{}"
-  '\u0294': "\\Elzglst{}"
-  '\u0295': "\\Elzreglst{}"
-  '\u0296': "\\Elzinglst{}"
-  '\u02A4': "\\Elzdyogh{}"
-  '\u02A7': "\\Elztesh{}"
-  '\u02C8': "\\Elzverts{}"
-  '\u02CC': "\\Elzverti{}"
-  '\u02D0': "\\Elzlmrk{}"
-  '\u02D1': "\\Elzhlmrk{}"
-  '\u02D2': "\\Elzsbrhr{}"
-  '\u02D3': "\\Elzsblhr{}"
-  '\u02D4': "\\Elzrais{}"
-  '\u02D5': "\\Elzlow{}"
-  '\u0305': "\\overline{}"
-  '\u0309': "\\ovhook{}"
-  '\u0310': "\\candra{}"
-  '\u0312': "\\oturnedcomma{}"
-  '\u0315': "\\ocommatopright{}"
-  '\u031A': "\\droang{}"
-  '\u0321': "\\Elzpalh{}"
-  '\u032A': "\\Elzsbbrg{}"
-  '\u0330': "\\utilde{}"
-  '\u0331': "\\underbar{}"
-  '\u0332': "\\underline{}"
-  '\u038E': "\\mathrm{'Y}"
-  '\u038F': "\\mathrm{'\\Omega}"
-  '\u0390': "\\acute{\\ddot{\\iota}}"
-  '\u0391': "\\Alpha{}"
-  '\u0392': "\\Beta{}"
-  '\u0393': "\\Gamma{}"
-  '\u0394': "\\Delta{}"
-  '\u0395': "\\Epsilon{}"
-  '\u0396': "\\Zeta{}"
-  '\u0397': "\\Eta{}"
-  '\u0398': "\\Theta{}"
-  '\u0399': "\\Iota{}"
-  '\u039A': "\\Kappa{}"
-  '\u039B': "\\Lambda{}"
-  '\u039C': "M"
-  '\u039D': "N"
-  '\u039E': "\\Xi{}"
-  '\u039F': "O"
-  '\u03A0': "\\Pi{}"
-  '\u03A1': "\\Rho{}"
-  '\u03A3': "\\Sigma{}"
-  '\u03A4': "\\Tau{}"
-  '\u03A5': "\\Upsilon{}"
-  '\u03A6': "\\Phi{}"
-  '\u03A7': "\\Chi{}"
-  '\u03A8': "\\Psi{}"
-  '\u03A9': "\\Omega{}"
-  '\u03AA': "\\mathrm{\\ddot{I}}"
-  '\u03AB': "\\mathrm{\\ddot{Y}}"
-  '\u03AD': "\\acute{\\epsilon}"
-  '\u03AE': "\\acute{\\eta}"
-  '\u03AF': "\\acute{\\iota}"
-  '\u03B0': "\\acute{\\ddot{\\upsilon}}"
-  '\u03B1': "\\alpha{}"
-  '\u03B2': "\\beta{}"
-  '\u03B3': "\\gamma{}"
-  '\u03B4': "\\delta{}"
-  '\u03B5': "\\epsilon{}"
-  '\u03B6': "\\zeta{}"
-  '\u03B7': "\\eta{}"
-  '\u03B9': "\\iota{}"
-  '\u03BA': "\\kappa{}"
-  '\u03BB': "\\lambda{}"
-  '\u03BC': "\\mu{}"
-  '\u03BD': "\\nu{}"
-  '\u03BE': "\\xi{}"
-  '\u03BF': "o"
-  '\u03C0': "\\pi{}"
-  '\u03C1': "\\rho{}"
-  '\u03C2': "\\varsigma{}"
-  '\u03C3': "\\sigma{}"
-  '\u03C4': "\\tau{}"
-  '\u03C5': "\\upsilon{}"
-  '\u03C6': "\\varphi{}"
-  '\u03C7': "\\chi{}"
-  '\u03C8': "\\psi{}"
-  '\u03C9': "\\omega{}"
-  '\u03CA': "\\ddot{\\iota}"
-  '\u03CB': "\\ddot{\\upsilon}"
-  '\u03CD': "\\acute{\\upsilon}"
-  '\u03CE': "\\acute{\\omega}"
-  '\u03D2': "\\Upsilon{}"
-  '\u03D5': "\\phi{}"
-  '\u03D6': "\\varpi{}"
-  '\u03D8': "\\Qoppa{}"
-  '\u03D9': "\\qoppa{}"
-  '\u03DA': "\\Stigma{}"
-  '\u03DB': "\\stigma{}"
-  '\u03DC': "\\Digamma{}"
-  '\u03DD': "\\digamma{}"
-  '\u03DE': "\\Koppa{}"
-  '\u03DF': "\\koppa{}"
-  '\u03E0': "\\Sampi{}"
-  '\u03E1': "\\sampi{}"
-  '\u03F0': "\\varkappa{}"
-  '\u03F1': "\\varrho{}"
-  '\u03F5': "\\epsilon{}"
-  '\u03F6': "\\backepsilon{}"
-  '\u2001': "\\quad{}"
-  '\u200A': "\\mkern1mu{}"
-  '\u2016': "\\Vert{}"
-  '\u2017': "\\twolowline{}"
-  '\u201B': "\\Elzreapos{}"
-  '\u2032': "{'}"
-  '\u2033': "{''}"
-  '\u2034': "{'''}"
-  '\u2035': "\\backprime{}"
-  '\u2036': "\\backdprime{}"
-  '\u2037': "\\backtrprime{}"
-  '\u2038': "\\caretinsert{}"
-  '\u203C': "\\Exclam{}"
-  '\u2040': "\\cat{}"
-  '\u2043': "\\hyphenbullet{}"
-  '\u2044': "\\fracslash{}"
-  '\u2047': "\\Question{}"
-  '\u2050': "\\closure{}"
-  '\u2057': "''''"
-  '\u20D0': "\\lvec{}"
-  '\u20D1': "\\vec{}"
-  '\u20D2': "\\vertoverlay{}"
-  '\u20D6': "\\LVec{}"
-  '\u20D7': "\\vec{}"
-  '\u20DB': "\\dddot{}"
-  '\u20DC': "\\ddddot{}"
-  '\u20DD': "\\enclosecircle{}"
-  '\u20DE': "\\enclosesquare{}"
-  '\u20DF': "\\enclosediamond{}"
-  '\u20E1': "\\overleftrightarrow{}"
-  '\u20E4': "\\enclosetriangle{}"
-  '\u20E7': "\\annuity{}"
-  '\u20E8': "\\threeunderdot{}"
-  '\u20E9': "\\widebridgeabove{}"
-  '\u20EC': "\\underrightharpoondown{}"
-  '\u20ED': "\\underleftharpoondown{}"
-  '\u20EE': "\\underleftarrow{}"
-  '\u20EF': "\\underrightarrow{}"
-  '\u20F0': "\\asteraccent{}"
-  '\u2102': "\\mathbb{C}"
-  '\u2107': "\\Euler{}"
-  '\u210B': "\\mathscr{H}"
-  '\u210C': "\\mathfrak{H}"
-  '\u210D': "\\mathbb{H}"
-  '\u210E': "\\Planckconst{}"
-  '\u210F': "\\hslash{}"
-  '\u2110': "\\mathscr{I}"
-  '\u2111': "\\mathfrak{I}"
-  '\u2112': "\\mathscr{L}"
-  '\u2113': "\\mathscr{l}"
-  '\u2115': "\\mathbb{N}"
-  '\u2118': "\\wp{}"
-  '\u2119': "\\mathbb{P}"
-  '\u211A': "\\mathbb{Q}"
-  '\u211B': "\\mathscr{R}"
-  '\u211C': "\\mathfrak{R}"
-  '\u211D': "\\mathbb{R}"
-  '\u211E': "\\Elzxrat{}"
-  '\u2124': "\\mathbb{Z}"
-  '\u2126': "\\Omega{}"
-  '\u2127': "\\mho{}"
-  '\u2128': "\\mathfrak{Z}"
-  '\u2129': "\\ElsevierGlyph{2129}"
-  '\u212C': "\\mathscr{B}"
-  '\u212D': "\\mathfrak{C}"
-  '\u212F': "\\mathscr{e}"
-  '\u2130': "\\mathscr{E}"
-  '\u2131': "\\mathscr{F}"
-  '\u2132': "\\Finv{}"
-  '\u2133': "\\mathscr{M}"
-  '\u2134': "\\mathscr{o}"
-  '\u2135': "\\aleph{}"
-  '\u2136': "\\beth{}"
-  '\u2137': "\\gimel{}"
-  '\u2138': "\\daleth{}"
-  '\u213C': "\\mathbb{\\pi}"
-  '\u213D': "\\mathbb{\\gamma}"
-  '\u213E': "\\mathbb{\\Gamma}"
-  '\u213F': "\\mathbb{\\Pi}"
-  '\u2140': "\\mathbb{\\Sigma}"
-  '\u2141': "\\Game{}"
-  '\u2142': "\\sansLturned{}"
-  '\u2143': "\\sansLmirrored{}"
-  '\u2144': "\\Yup{}"
-  '\u2145': "\\CapitalDifferentialD{}"
-  '\u2146': "\\DifferentialD{}"
-  '\u2147': "\\ExponetialE{}"
-  '\u2148': "\\ComplexI{}"
-  '\u2149': "\\ComplexJ{}"
-  '\u214A': "\\PropertyLine{}"
-  '\u214B': "\\invamp{}"
-  '\u2153': "\\textfrac{1}{3}"
-  '\u2154': "\\textfrac{2}{3}"
-  '\u2155': "\\textfrac{1}{5}"
-  '\u2156': "\\textfrac{2}{5}"
-  '\u2157': "\\textfrac{3}{5}"
-  '\u2158': "\\textfrac{4}{5}"
-  '\u2159': "\\textfrac{1}{6}"
-  '\u215A': "\\textfrac{5}{6}"
-  '\u215B': "\\textfrac{1}{8}"
-  '\u215C': "\\textfrac{3}{8}"
-  '\u215D': "\\textfrac{5}{8}"
-  '\u215E': "\\textfrac{7}{8}"
-  '\u2190': "\\leftarrow{}"
-  '\u2191': "\\uparrow{}"
-  '\u2192': "\\rightarrow{}"
-  '\u2193': "\\downarrow{}"
-  '\u2194': "\\leftrightarrow{}"
-  '\u2195': "\\updownarrow{}"
-  '\u2196': "\\nwarrow{}"
-  '\u2197': "\\nearrow{}"
-  '\u2198': "\\searrow{}"
-  '\u2199': "\\swarrow{}"
-  '\u219A': "\\nleftarrow{}"
-  '\u219B': "\\nrightarrow{}"
+  '\u00B1': "\\pm{}" # PLUS-MINUS SIGN
+  '\u00B2': "^2" # SUPERSCRIPT TWO
+  '\u00B3': "^3" # SUPERSCRIPT THREE
+  '\u00B5': "\\mathrm{\\mu}" # MICRO SIGN
+  '\u00B7': "\\cdot{}" # MIDDLE DOT
+  '\u00B9': "^1" # SUPERSCRIPT ONE
+  '\u00F7': "\\div{}" # DIVISION SIGN
+  '\u0127': "\\Elzxh{}" # LATIN SMALL LETTER H WITH STROKE
+  '\u0192': "f" # LATIN SMALL LETTER F WITH HOOK
+  '\u01AA': "\\eth{}" # LATIN LETTER REVERSED ESH LOOP
+  '\u01B5': "\\Zbar{}" # impedance
+  '\u0237': "\\jmath{}" # jmath
+  '\u0250': "\\Elztrna{}" # LATIN SMALL LETTER TURNED A
+  '\u0252': "\\Elztrnsa{}" # LATIN SMALL LETTER TURNED ALPHA
+  '\u0254': "\\Elzopeno{}" # LATIN SMALL LETTER OPEN O
+  '\u0256': "\\Elzrtld{}" # LATIN SMALL LETTER D WITH TAIL
+  '\u0259': "\\Elzschwa{}" # LATIN SMALL LETTER SCHWA
+  '\u025B': "\\varepsilon{}" # LATIN SMALL LETTER OPEN E
+  '\u0263': "\\Elzpgamma{}" # LATIN SMALL LETTER GAMMA
+  '\u0264': "\\Elzpbgam{}" # LATIN SMALL LETTER RAMS HORN
+  '\u0265': "\\Elztrnh{}" # LATIN SMALL LETTER TURNED H
+  '\u026C': "\\Elzbtdl{}" # LATIN SMALL LETTER L WITH BELT
+  '\u026D': "\\Elzrtll{}" # LATIN SMALL LETTER L WITH RETROFLEX HOOK
+  '\u026F': "\\Elztrnm{}" # LATIN SMALL LETTER TURNED M
+  '\u0270': "\\Elztrnmlr{}" # LATIN SMALL LETTER TURNED M WITH LONG LEG
+  '\u0271': "\\Elzltlmr{}" # LATIN SMALL LETTER M WITH HOOK
+  '\u0273': "\\Elzrtln{}" # LATIN SMALL LETTER N WITH RETROFLEX HOOK
+  '\u0277': "\\Elzclomeg{}" # LATIN SMALL LETTER CLOSED OMEGA
+  '\u0279': "\\Elztrnr{}" # LATIN SMALL LETTER TURNED R
+  '\u027A': "\\Elztrnrl{}" # LATIN SMALL LETTER TURNED R WITH LONG LEG
+  '\u027B': "\\Elzrttrnr{}" # LATIN SMALL LETTER TURNED R WITH HOOK
+  '\u027C': "\\Elzrl{}" # LATIN SMALL LETTER R WITH LONG LEG
+  '\u027D': "\\Elzrtlr{}" # LATIN SMALL LETTER R WITH TAIL
+  '\u027E': "\\Elzfhr{}" # LATIN SMALL LETTER R WITH FISHHOOK
+  '\u0282': "\\Elzrtls{}" # LATIN SMALL LETTER S WITH HOOK
+  '\u0283': "\\Elzesh{}" # LATIN SMALL LETTER ESH
+  '\u0287': "\\Elztrnt{}" # LATIN SMALL LETTER TURNED T
+  '\u0288': "\\Elzrtlt{}" # LATIN SMALL LETTER T WITH RETROFLEX HOOK
+  '\u028A': "\\Elzpupsil{}" # LATIN SMALL LETTER UPSILON
+  '\u028B': "\\Elzpscrv{}" # LATIN SMALL LETTER V WITH HOOK
+  '\u028C': "\\Elzinvv{}" # LATIN SMALL LETTER TURNED V
+  '\u028D': "\\Elzinvw{}" # LATIN SMALL LETTER TURNED W
+  '\u028E': "\\Elztrny{}" # LATIN SMALL LETTER TURNED Y
+  '\u0290': "\\Elzrtlz{}" # LATIN SMALL LETTER Z WITH RETROFLEX HOOK
+  '\u0292': "\\Elzyogh{}" # LATIN SMALL LETTER EZH
+  '\u0294': "\\Elzglst{}" # LATIN LETTER GLOTTAL STOP
+  '\u0295': "\\Elzreglst{}" # LATIN LETTER PHARYNGEAL VOICED FRICATIVE
+  '\u0296': "\\Elzinglst{}" # LATIN LETTER INVERTED GLOTTAL STOP
+  '\u02A4': "\\Elzdyogh{}" # LATIN SMALL LETTER DEZH DIGRAPH
+  '\u02A7': "\\Elztesh{}" # LATIN SMALL LETTER TESH DIGRAPH
+  '\u02C8': "\\Elzverts{}" # MODIFIER LETTER VERTICAL LINE
+  '\u02CC': "\\Elzverti{}" # MODIFIER LETTER LOW VERTICAL LINE
+  '\u02D0': "\\Elzlmrk{}" # MODIFIER LETTER TRIANGULAR COLON
+  '\u02D1': "\\Elzhlmrk{}" # MODIFIER LETTER HALF TRIANGULAR COLON
+  '\u02D2': "\\Elzsbrhr{}" # MODIFIER LETTER CENTRED RIGHT HALF RING
+  '\u02D3': "\\Elzsblhr{}" # MODIFIER LETTER CENTRED LEFT HALF RING
+  '\u02D4': "\\Elzrais{}" # MODIFIER LETTER UP TACK
+  '\u02D5': "\\Elzlow{}" # MODIFIER LETTER DOWN TACK
+  '\u0305': "\\overline{}" # overbar embellishment
+  '\u0309': "\\ovhook{}" # COMBINING HOOK ABOVE
+  '\u0310': "\\candra{}" # candrabindu (non-spacing)
+  '\u0312': "\\oturnedcomma{}" # COMBINING TURNED COMMA ABOVE
+  '\u0315': "\\ocommatopright{}" # COMBINING COMMA ABOVE RIGHT
+  '\u031A': "\\droang{}" # left angle above (non-spacing)
+  '\u0321': "\\Elzpalh{}" # COMBINING PALATALIZED HOOK BELOW
+  '\u032A': "\\Elzsbbrg{}" # COMBINING BRIDGE BELOW
+  '\u0330': "\\utilde{}" # under tilde accent (multiple characters and non-spacing)
+  '\u0331': "\\underbar{}" # COMBINING MACRON BELOW
+  '\u0332': "\\underline{}" # COMBINING LOW LINE
+  '\u038E': "\\mathrm{'Y}" # GREEK CAPITAL LETTER UPSILON WITH TONOS
+  '\u038F': "\\mathrm{'\\Omega}" # GREEK CAPITAL LETTER OMEGA WITH TONOS
+  '\u0390': "\\acute{\\ddot{\\iota}}" # GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS
+  '\u0391': "\\Alpha{}" # GREEK CAPITAL LETTER ALPHA
+  '\u0392': "\\Beta{}" # GREEK CAPITAL LETTER BETA
+  '\u0393': "\\Gamma{}" # GREEK CAPITAL LETTER GAMMA
+  '\u0394': "\\Delta{}" # GREEK CAPITAL LETTER DELTA
+  '\u0395': "\\Epsilon{}" # GREEK CAPITAL LETTER EPSILON
+  '\u0396': "\\Zeta{}" # GREEK CAPITAL LETTER ZETA
+  '\u0397': "\\Eta{}" # GREEK CAPITAL LETTER ETA
+  '\u0398': "\\Theta{}" # GREEK CAPITAL LETTER THETA
+  '\u0399': "\\Iota{}" # GREEK CAPITAL LETTER IOTA
+  '\u039A': "\\Kappa{}" # GREEK CAPITAL LETTER KAPPA
+  '\u039B': "\\Lambda{}" # GREEK CAPITAL LETTER LAMDA
+  '\u039C': "M" # GREEK CAPITAL LETTER MU
+  '\u039D': "N" # GREEK CAPITAL LETTER NU
+  '\u039E': "\\Xi{}" # GREEK CAPITAL LETTER XI
+  '\u039F': "O" # GREEK CAPITAL LETTER OMICRON
+  '\u03A0': "\\Pi{}" # GREEK CAPITAL LETTER PI
+  '\u03A1': "\\Rho{}" # GREEK CAPITAL LETTER RHO
+  '\u03A3': "\\Sigma{}" # GREEK CAPITAL LETTER SIGMA
+  '\u03A4': "\\Tau{}" # GREEK CAPITAL LETTER TAU
+  '\u03A5': "\\Upsilon{}" # GREEK CAPITAL LETTER UPSILON
+  '\u03A6': "\\Phi{}" # GREEK CAPITAL LETTER PHI
+  '\u03A7': "\\Chi{}" # GREEK CAPITAL LETTER CHI
+  '\u03A8': "\\Psi{}" # GREEK CAPITAL LETTER PSI
+  '\u03A9': "\\Omega{}" # GREEK CAPITAL LETTER OMEGA
+  '\u03AA': "\\mathrm{\\ddot{I}}" # GREEK CAPITAL LETTER IOTA WITH DIALYTIKA
+  '\u03AB': "\\mathrm{\\ddot{Y}}" # GREEK CAPITAL LETTER UPSILON WITH DIALYTIKA
+  '\u03AD': "\\acute{\\epsilon}" # GREEK SMALL LETTER EPSILON WITH TONOS
+  '\u03AE': "\\acute{\\eta}" # GREEK SMALL LETTER ETA WITH TONOS
+  '\u03AF': "\\acute{\\iota}" # GREEK SMALL LETTER IOTA WITH TONOS
+  '\u03B0': "\\acute{\\ddot{\\upsilon}}" # GREEK SMALL LETTER UPSILON WITH DIALYTIKA AND TONOS
+  '\u03B1': "\\alpha{}" # GREEK SMALL LETTER ALPHA
+  '\u03B2': "\\beta{}" # GREEK SMALL LETTER BETA
+  '\u03B3': "\\gamma{}" # GREEK SMALL LETTER GAMMA
+  '\u03B4': "\\delta{}" # GREEK SMALL LETTER DELTA
+  '\u03B5': "\\epsilon{}" # GREEK SMALL LETTER EPSILON
+  '\u03B6': "\\zeta{}" # GREEK SMALL LETTER ZETA
+  '\u03B7': "\\eta{}" # GREEK SMALL LETTER ETA
+  '\u03B9': "\\iota{}" # GREEK SMALL LETTER IOTA
+  '\u03BA': "\\kappa{}" # GREEK SMALL LETTER KAPPA
+  '\u03BB': "\\lambda{}" # GREEK SMALL LETTER LAMDA
+  '\u03BC': "\\mu{}" # GREEK SMALL LETTER MU
+  '\u03BD': "\\nu{}" # GREEK SMALL LETTER NU
+  '\u03BE': "\\xi{}" # GREEK SMALL LETTER XI
+  '\u03BF': "o" # GREEK SMALL LETTER OMICRON
+  '\u03C0': "\\pi{}" # GREEK SMALL LETTER PI
+  '\u03C1': "\\rho{}" # GREEK SMALL LETTER RHO
+  '\u03C2': "\\varsigma{}" # GREEK SMALL LETTER FINAL SIGMA
+  '\u03C3': "\\sigma{}" # GREEK SMALL LETTER SIGMA
+  '\u03C4': "\\tau{}" # GREEK SMALL LETTER TAU
+  '\u03C5': "\\upsilon{}" # GREEK SMALL LETTER UPSILON
+  '\u03C6': "\\varphi{}" # GREEK SMALL LETTER PHI
+  '\u03C7': "\\chi{}" # GREEK SMALL LETTER CHI
+  '\u03C8': "\\psi{}" # GREEK SMALL LETTER PSI
+  '\u03C9': "\\omega{}" # GREEK SMALL LETTER OMEGA
+  '\u03CA': "\\ddot{\\iota}" # GREEK SMALL LETTER IOTA WITH DIALYTIKA
+  '\u03CB': "\\ddot{\\upsilon}" # GREEK SMALL LETTER UPSILON WITH DIALYTIKA
+  '\u03CD': "\\acute{\\upsilon}" # GREEK SMALL LETTER UPSILON WITH TONOS
+  '\u03CE': "\\acute{\\omega}" # GREEK SMALL LETTER OMEGA WITH TONOS
+  '\u03D2': "\\Upsilon{}" # GREEK UPSILON WITH HOOK SYMBOL
+  '\u03D5': "\\phi{}" # GREEK PHI SYMBOL
+  '\u03D6': "\\varpi{}" # GREEK PI SYMBOL
+  '\u03D8': "\\Qoppa{}" # = \Koppa (wrisym), t \Qoppa (LGR), GREEK LETTER ARCHAIC KOPPA
+  '\u03D9': "\\qoppa{}" # = \koppa (wrisym), t \qoppa (LGR), GREEK SMALL LETTER ARCHAIC KOPPA
+  '\u03DA': "\\Stigma{}" # GREEK LETTER STIGMA
+  '\u03DB': "\\stigma{}" # GREEK SMALL LETTER STIGMA
+  '\u03DC': "\\Digamma{}" # GREEK LETTER DIGAMMA
+  '\u03DD': "\\digamma{}" # GREEK SMALL LETTER DIGAMMA
+  '\u03DE': "\\Koppa{}" # GREEK LETTER KOPPA
+  '\u03DF': "\\koppa{}" # GREEK SMALL LETTER KOPPA
+  '\u03E0': "\\Sampi{}" # GREEK LETTER SAMPI
+  '\u03E1': "\\sampi{}" # # \sampi (wrisym), GREEK SMALL LETTER SAMPI
+  '\u03F0': "\\varkappa{}" # GREEK KAPPA SYMBOL
+  '\u03F1': "\\varrho{}" # GREEK RHO SYMBOL
+  '\u03F5': "\\epsilon{}" # = \mathrm{\epsilon} (omlmathrm), = \epsilonup (kpfonts mathdesign), GREEK LUNATE EPSILON SYMBOL
+  '\u03F6': "\\backepsilon{}" # GREEK REVERSED LUNATE EPSILON SYMBOL
+  '\u2001': "\\quad{}" # emquad
+  '\u200A': "\\mkern1mu{}" # HAIR SPACE
+  '\u2016': "\\Vert{}" # DOUBLE VERTICAL LINE
+  '\u2017': "\\twolowline{}" # DOUBLE LOW LINE (spacing)
+  '\u201B': "\\Elzreapos{}" # SINGLE HIGH-REVERSED-9 QUOTATION MARK
+  '\u2032': "{'}" # PRIME
+  '\u2033': "{''}" # DOUBLE PRIME
+  '\u2034': "{'''}" # TRIPLE PRIME
+  '\u2035': "\\backprime{}" # REVERSED PRIME
+  '\u2036': "\\backdprime{}" # double reverse prime, not superscripted
+  '\u2037': "\\backtrprime{}" # triple reverse prime, not superscripted
+  '\u2038': "\\caretinsert{}" # CARET (insertion mark)
+  '\u203C': "\\Exclam{}" # # !!, DOUBLE EXCLAMATION MARK
+  '\u2040': "\\cat{}" # CHARACTER TIE, z notation sequence concatenation
+  '\u2043': "\\hyphenbullet{}" # rectangle, filled (HYPHEN BULLET)
+  '\u2044': "\\fracslash{}" # # /, FRACTION SLASH
+  '\u2047': "\\Question{}" # # ??, DOUBLE QUESTION MARK
+  '\u2050': "\\closure{}" # CLOSE UP (editing mark)
+  '\u2057': "''''" # QUADRUPLE PRIME
+  '\u20D0': "\\lvec{}" # COMBINING LEFT HARPOON ABOVE
+  '\u20D1': "\\vec{}" # COMBINING RIGHT HARPOON ABOVE
+  '\u20D2': "\\vertoverlay{}" # COMBINING LONG VERTICAL LINE OVERLAY
+  '\u20D6': "\\LVec{}" # # \overleftarrow, COMBINING LEFT ARROW ABOVE
+  '\u20D7': "\\vec{}" # = \Vec (wrisym), # \overrightarrow, COMBINING RIGHT ARROW ABOVE
+  '\u20DB': "\\dddot{}" # COMBINING THREE DOTS ABOVE
+  '\u20DC': "\\ddddot{}" # COMBINING FOUR DOTS ABOVE
+  '\u20DD': "\\enclosecircle{}" # COMBINING ENCLOSING CIRCLE
+  '\u20DE': "\\enclosesquare{}" # COMBINING ENCLOSING SQUARE
+  '\u20DF': "\\enclosediamond{}" # COMBINING ENCLOSING DIAMOND
+  '\u20E1': "\\overleftrightarrow{}" # COMBINING LEFT RIGHT ARROW ABOVE
+  '\u20E4': "\\enclosetriangle{}" # COMBINING ENCLOSING UPWARD POINTING TRIANGLE
+  '\u20E7': "\\annuity{}" # COMBINING ANNUITY SYMBOL
+  '\u20E8': "\\threeunderdot{}" # COMBINING TRIPLE UNDERDOT
+  '\u20E9': "\\widebridgeabove{}" # COMBINING WIDE BRIDGE ABOVE
+  '\u20EC': "\\underrightharpoondown{}" # COMBINING RIGHTWARDS HARPOON WITH BARB DOWNWARDS
+  '\u20ED': "\\underleftharpoondown{}" # COMBINING LEFTWARDS HARPOON WITH BARB DOWNWARDS
+  '\u20EE': "\\underleftarrow{}" # COMBINING LEFT ARROW BELOW
+  '\u20EF': "\\underrightarrow{}" # COMBINING RIGHT ARROW BELOW
+  '\u20F0': "\\asteraccent{}" # COMBINING ASTERISK ABOVE
+  '\u2102': "\\mathbb{C}" # DOUBLE-STRUCK CAPITAL C
+  '\u2107': "\\Euler{}" # EULER CONSTANT
+  '\u210B': "\\mathscr{H}" # SCRIPT CAPITAL H
+  '\u210C': "\\mathfrak{H}" # BLACK-LETTER CAPITAL H
+  '\u210D': "\\mathbb{H}" # DOUBLE-STRUCK CAPITAL H
+  '\u210E': "\\Planckconst{}" # # h, Planck constant
+  '\u210F': "\\hslash{}" # PLANCK CONSTANT OVER TWO PI
+  '\u2110': "\\mathscr{I}" # SCRIPT CAPITAL I
+  '\u2111': "\\mathfrak{I}" # BLACK-LETTER CAPITAL I
+  '\u2112': "\\mathscr{L}" # SCRIPT CAPITAL L
+  '\u2113': "\\mathscr{l}" # SCRIPT SMALL L
+  '\u2115': "\\mathbb{N}" # DOUBLE-STRUCK CAPITAL N
+  '\u2118': "\\wp{}" # SCRIPT CAPITAL P
+  '\u2119': "\\mathbb{P}" # DOUBLE-STRUCK CAPITAL P
+  '\u211A': "\\mathbb{Q}" # DOUBLE-STRUCK CAPITAL Q
+  '\u211B': "\\mathscr{R}" # SCRIPT CAPITAL R
+  '\u211C': "\\mathfrak{R}" # BLACK-LETTER CAPITAL R
+  '\u211D': "\\mathbb{R}" # DOUBLE-STRUCK CAPITAL R
+  '\u211E': "\\Elzxrat{}" # PRESCRIPTION TAKE
+  '\u2124': "\\mathbb{Z}" # DOUBLE-STRUCK CAPITAL Z
+  '\u2126': "\\Omega{}" # OHM SIGN
+  '\u2127': "\\mho{}" # INVERTED OHM SIGN
+  '\u2128': "\\mathfrak{Z}" # BLACK-LETTER CAPITAL Z
+  '\u2129': "\\ElsevierGlyph{2129}" # TURNED GREEK SMALL LETTER IOTA
+  '\u212C': "\\mathscr{B}" # SCRIPT CAPITAL B
+  '\u212D': "\\mathfrak{C}" # BLACK-LETTER CAPITAL C
+  '\u212F': "\\mathscr{e}" # SCRIPT SMALL E
+  '\u2130': "\\mathscr{E}" # SCRIPT CAPITAL E
+  '\u2131': "\\mathscr{F}" # SCRIPT CAPITAL F
+  '\u2132': "\\Finv{}" # TURNED CAPITAL F
+  '\u2133': "\\mathscr{M}" # SCRIPT CAPITAL M
+  '\u2134': "\\mathscr{o}" # SCRIPT SMALL O
+  '\u2135': "\\aleph{}" # ALEF SYMBOL
+  '\u2136': "\\beth{}" # BET SYMBOL
+  '\u2137': "\\gimel{}" # GIMEL SYMBOL
+  '\u2138': "\\daleth{}" # DALET SYMBOL
+  '\u213C': "\\mathbb{\\pi}" # \DoublePi (wrisym), DOUBLE-STRUCK SMALL PI
+  '\u213D': "\\mathbb{\\gamma}" # \EulerGamma (wrisym), DOUBLE-STRUCK SMALL GAMMA
+  '\u213E': "\\mathbb{\\Gamma}" # DOUBLE-STRUCK CAPITAL GAMMA
+  '\u213F': "\\mathbb{\\Pi}" # DOUBLE-STRUCK CAPITAL PI
+  '\u2140': "\\mathbb{\\Sigma}" # DOUBLE-STRUCK N-ARY SUMMATION
+  '\u2141': "\\Game{}" # # \Game (amssymb), TURNED SANS-SERIF CAPITAL G (amssymb has mirrored G)
+  '\u2142': "\\sansLturned{}" # TURNED SANS-SERIF CAPITAL L
+  '\u2143': "\\sansLmirrored{}" # REVERSED SANS-SERIF CAPITAL L
+  '\u2144': "\\Yup{}" # TURNED SANS-SERIF CAPITAL Y
+  '\u2145': "\\CapitalDifferentialD{}" # = \DD (wrisym), DOUBLE-STRUCK ITALIC CAPITAL D
+  '\u2146': "\\DifferentialD{}" # = \dd (wrisym), DOUBLE-STRUCK ITALIC SMALL D
+  '\u2147': "\\ExponetialE{}" # = \ee (wrisym), DOUBLE-STRUCK ITALIC SMALL E
+  '\u2148': "\\ComplexI{}" # = \ii (wrisym), DOUBLE-STRUCK ITALIC SMALL I
+  '\u2149': "\\ComplexJ{}" # = \jj (wrisym), DOUBLE-STRUCK ITALIC SMALL J
+  '\u214A': "\\PropertyLine{}" # PROPERTY LINE
+  '\u214B': "\\invamp{}" # # \bindnasrepma (stmaryrd), TURNED AMPERSAND
+  '\u2153': "\\textfrac{1}{3}" # VULGAR FRACTION ONE THIRD
+  '\u2154': "\\textfrac{2}{3}" # VULGAR FRACTION TWO THIRDS
+  '\u2155': "\\textfrac{1}{5}" # VULGAR FRACTION ONE FIFTH
+  '\u2156': "\\textfrac{2}{5}" # VULGAR FRACTION TWO FIFTHS
+  '\u2157': "\\textfrac{3}{5}" # VULGAR FRACTION THREE FIFTHS
+  '\u2158': "\\textfrac{4}{5}" # VULGAR FRACTION FOUR FIFTHS
+  '\u2159': "\\textfrac{1}{6}" # VULGAR FRACTION ONE SIXTH
+  '\u215A': "\\textfrac{5}{6}" # VULGAR FRACTION FIVE SIXTHS
+  '\u215B': "\\textfrac{1}{8}" # VULGAR FRACTION ONE EIGHTH
+  '\u215C': "\\textfrac{3}{8}" # VULGAR FRACTION THREE EIGHTHS
+  '\u215D': "\\textfrac{5}{8}" # VULGAR FRACTION FIVE EIGHTHS
+  '\u215E': "\\textfrac{7}{8}" # VULGAR FRACTION SEVEN EIGHTHS
+  '\u2190': "\\leftarrow{}" # LEFTWARDS ARROW
+  '\u2191': "\\uparrow{}" # UPWARDS ARROW
+  '\u2192': "\\rightarrow{}" # RIGHTWARDS ARROW
+  '\u2193': "\\downarrow{}" # DOWNWARDS ARROW
+  '\u2194': "\\leftrightarrow{}" # LEFT RIGHT ARROW
+  '\u2195': "\\updownarrow{}" # UP DOWN ARROW
+  '\u2196': "\\nwarrow{}" # NORTH WEST ARROW
+  '\u2197': "\\nearrow{}" # NORTH EAST ARROW
+  '\u2198': "\\searrow{}" # SOUTH EAST ARROW
+  '\u2199': "\\swarrow{}" # SOUTH WEST ARROW
+  '\u219A': "\\nleftarrow{}" # LEFTWARDS ARROW WITH STROKE
+  '\u219B': "\\nrightarrow{}" # RIGHTWARDS ARROW WITH STROKE
   '\u219C': "\\arrowwaveleft{}"
-  '\u219D': "\\arrowwaveright{}"
-  '\u219E': "\\twoheadleftarrow{}"
-  '\u219F': "\\twoheaduparrow{}"
-  '\u21A0': "\\twoheadrightarrow{}"
-  '\u21A1': "\\twoheaddownarrow{}"
-  '\u21A2': "\\leftarrowtail{}"
-  '\u21A3': "\\rightarrowtail{}"
-  '\u21A4': "\\mapsfrom{}"
-  '\u21A5': "\\MapsUp{}"
-  '\u21A6': "\\mapsto{}"
-  '\u21A7': "\\MapsDown{}"
-  '\u21A8': "\\updownarrowbar{}"
-  '\u21A9': "\\hookleftarrow{}"
-  '\u21AA': "\\hookrightarrow{}"
-  '\u21AB': "\\looparrowleft{}"
-  '\u21AC': "\\looparrowright{}"
-  '\u21AD': "\\leftrightsquigarrow{}"
-  '\u21AE': "\\nleftrightarrow{}"
-  '\u21AF': "\\lightning{}"
-  '\u21B0': "\\Lsh{}"
-  '\u21B1': "\\Rsh{}"
-  '\u21B2': "\\dlsh{}"
-  '\u21B3': "\\ElsevierGlyph{21B3}"
-  '\u21B4': "\\linefeed{}"
-  '\u21B5': "\\carriagereturn{}"
-  '\u21B6': "\\curvearrowleft{}"
-  '\u21B7': "\\curvearrowright{}"
-  '\u21B8': "\\barovernorthwestarrow{}"
-  '\u21B9': "\\barleftarrowrightarrowba{}"
-  '\u21BA': "\\circlearrowleft{}"
-  '\u21BB': "\\circlearrowright{}"
-  '\u21BC': "\\leftharpoonup{}"
-  '\u21BD': "\\leftharpoondown{}"
-  '\u21BE': "\\upharpoonright{}"
-  '\u21BF': "\\upharpoonleft{}"
-  '\u21C0': "\\rightharpoonup{}"
-  '\u21C1': "\\rightharpoondown{}"
-  '\u21C2': "\\downharpoonright{}"
-  '\u21C3': "\\downharpoonleft{}"
-  '\u21C4': "\\rightleftarrows{}"
-  '\u21C5': "\\dblarrowupdown{}"
-  '\u21C6': "\\leftrightarrows{}"
-  '\u21C7': "\\leftleftarrows{}"
-  '\u21C8': "\\upuparrows{}"
-  '\u21C9': "\\rightrightarrows{}"
-  '\u21CA': "\\downdownarrows{}"
-  '\u21CB': "\\leftrightharpoons{}"
-  '\u21CC': "\\rightleftharpoons{}"
-  '\u21CD': "\\nLeftarrow{}"
-  '\u21CE': "\\nLeftrightarrow{}"
-  '\u21CF': "\\nRightarrow{}"
-  '\u21D0': "\\Leftarrow{}"
-  '\u21D1': "\\Uparrow{}"
-  '\u21D2': "\\Rightarrow{}"
-  '\u21D3': "\\Downarrow{}"
-  '\u21D4': "\\Leftrightarrow{}"
-  '\u21D5': "\\Updownarrow{}"
-  '\u21D6': "\\Nwarrow{}"
-  '\u21D7': "\\Nearrow{}"
-  '\u21D8': "\\Searrow{}"
-  '\u21D9': "\\Swarrow{}"
-  '\u21DA': "\\Lleftarrow{}"
-  '\u21DB': "\\Rrightarrow{}"
-  '\u21DC': "\\leftsquigarrow{}"
-  '\u21DD': "\\rightsquigarrow{}"
-  '\u21DE': "\\nHuparrow{}"
-  '\u21DF': "\\nHdownarrow{}"
-  '\u21E0': "\\dashleftarrow{}"
-  '\u21E1': "\\updasharrow{}"
-  '\u21E2': "\\dashrightarrow{}"
-  '\u21E3': "\\downdasharrow{}"
-  '\u21E4': "\\LeftArrowBar{}"
-  '\u21E5': "\\RightArrowBar{}"
-  '\u21E6': "\\leftwhitearrow{}"
-  '\u21E7': "\\upwhitearrow{}"
-  '\u21E8': "\\rightwhitearrow{}"
-  '\u21E9': "\\downwhitearrow{}"
-  '\u21EA': "\\whitearrowupfrombar{}"
-  '\u21F4': "\\circleonrightarrow{}"
-  '\u21F5': "\\DownArrowUpArrow{}"
-  '\u21F6': "\\rightthreearrows{}"
-  '\u21F7': "\\nvleftarrow{}"
-  '\u21F8': "\\pfun{}"
-  '\u21F9': "\\nvleftrightarrow{}"
-  '\u21FA': "\\nVleftarrow{}"
-  '\u21FB': "\\ffun{}"
-  '\u21FC': "\\nVleftrightarrow{}"
-  '\u21FD': "\\leftarrowtriangle{}"
-  '\u21FE': "\\rightarrowtriangle{}"
-  '\u21FF': "\\leftrightarrowtriangle{}"
-  '\u2200': "\\forall{}"
-  '\u2201': "\\complement{}"
-  '\u2202': "\\partial{}"
-  '\u2203': "\\exists{}"
-  '\u2204': "\\nexists{}"
-  '\u2205': "\\varnothing{}"
-  '\u2206': "\\increment{}"
-  '\u2207': "\\nabla{}"
-  '\u2208': "\\in{}"
-  '\u2209': "\\not\\in{}"
-  '\u220A': "\\smallin{}"
-  '\u220B': "\\ni{}"
-  '\u220C': "\\not\\ni{}"
-  '\u220D': "\\smallni{}"
-  '\u220E': "\\QED{}"
-  '\u220F': "\\prod{}"
-  '\u2210': "\\coprod{}"
-  '\u2211': "\\sum{}"
-  '\u2213': "\\mp{}"
-  '\u2214': "\\dotplus{}"
-  '\u2215': "\\slash{}"
-  '\u2216': "\\setminus{}"
-  '\u2217': "{_\\ast}"
-  '\u2218': "\\circ{}"
-  '\u2219': "\\bullet{}"
-  '\u221A': "\\surd{}"
-  '\u221B': "\\sqrt[3]"
-  '\u221C': "\\sqrt[4]"
-  '\u221D': "\\propto{}"
-  '\u221E': "\\infty{}"
-  '\u221F': "\\rightangle{}"
-  '\u2220': "\\angle{}"
-  '\u2221': "\\measuredangle{}"
-  '\u2222': "\\sphericalangle{}"
-  '\u2223': "\\mid{}"
-  '\u2224': "\\nmid{}"
-  '\u2225': "\\parallel{}"
-  '\u2226': "\\nparallel{}"
-  '\u2227': "\\wedge{}"
-  '\u2228': "\\vee{}"
-  '\u2229': "\\cap{}"
-  '\u222A': "\\cup{}"
-  '\u222B': "\\int{}"
-  '\u222C': "{\\int\\!\\int}"
-  '\u222D': "{\\int\\!\\int\\!\\int}"
-  '\u222E': "\\oint{}"
-  '\u222F': "\\surfintegral{}"
-  '\u2230': "\\volintegral{}"
-  '\u2231': "\\clwintegral{}"
-  '\u2232': "\\ElsevierGlyph{2232}"
-  '\u2233': "\\ElsevierGlyph{2233}"
-  '\u2234': "\\therefore{}"
-  '\u2235': "\\because{}"
-  '\u2236': ":"
-  '\u2237': "\\Colon{}"
-  '\u2238': "\\ElsevierGlyph{2238}"
-  '\u2239': "\\eqcolon{}"
-  '\u223A': "\\mathbin{{:}\\!\\!{-}\\!\\!{:}}"
-  '\u223B': "\\homothetic{}"
-  '\u223C': "\\sim{}"
-  '\u223D': "\\backsim{}"
-  '\u223E': "\\lazysinv{}"
-  '\u223F': "\\AC{}"
-  '\u2240': "\\wr{}"
-  '\u2241': "\\not\\sim{}"
-  '\u2242': "\\ElsevierGlyph{2242}"
-  '\u2243': "\\simeq{}"
-  '\u2244': "\\not\\simeq{}"
-  '\u2245': "\\cong{}"
-  '\u2246': "\\approxnotequal{}"
-  '\u2247': "\\not\\cong{}"
-  '\u2248': "\\approx{}"
-  '\u2249': "\\not\\approx{}"
-  '\u224A': "\\approxeq{}"
-  '\u224B': "\\tildetrpl{}"
-  '\u224C': "\\allequal{}"
-  '\u224D': "\\asymp{}"
-  '\u224E': "\\Bumpeq{}"
-  '\u224F': "\\bumpeq{}"
-  '\u2250': "\\doteq{}"
-  '\u2251': "\\doteqdot{}"
-  '\u2252': "\\fallingdotseq{}"
-  '\u2253': "\\risingdotseq{}"
-  '\u2255': "=:"
-  '\u2256': "\\eqcirc{}"
-  '\u2257': "\\circeq{}"
-  '\u2258': "\\arceq{}"
-  '\u2259': "\\estimates{}"
-  '\u225A': "\\ElsevierGlyph{225A}"
-  '\u225B': "\\starequal{}"
-  '\u225C': "\\triangleq{}"
-  '\u225D': "\\eqdef{}"
-  '\u225E': "\\measeq{}"
-  '\u225F': "\\ElsevierGlyph{225F}"
-  '\u2260': "\\not ="
-  '\u2261': "\\equiv{}"
-  '\u2262': "\\not\\equiv{}"
-  '\u2263': "\\Equiv{}"
-  '\u2264': "\\leq{}"
-  '\u2265': "\\geq{}"
-  '\u2266': "\\leqq{}"
-  '\u2267': "\\geqq{}"
-  '\u2268': "\\lneqq{}"
-  '\u2269': "\\gneqq{}"
-  '\u226A': "\\ll{}"
-  '\u226B': "\\gg{}"
-  '\u226C': "\\between{}"
-  '\u226D': "{\\not\\kern-0.3em\\times}"
-  '\u226E': "\\not<"
-  '\u226F': "\\not>"
-  '\u2270': "\\not\\leq{}"
-  '\u2271': "\\not\\geq{}"
-  '\u2272': "\\lessequivlnt{}"
-  '\u2273': "\\greaterequivlnt{}"
-  '\u2274': "\\ElsevierGlyph{2274}"
-  '\u2275': "\\ElsevierGlyph{2275}"
-  '\u2276': "\\lessgtr{}"
-  '\u2277': "\\gtrless{}"
-  '\u2278': "\\notlessgreater{}"
-  '\u2279': "\\notgreaterless{}"
-  '\u227A': "\\prec{}"
-  '\u227B': "\\succ{}"
-  '\u227C': "\\preccurlyeq{}"
-  '\u227D': "\\succcurlyeq{}"
-  '\u227E': "\\precapprox{}"
-  '\u227F': "\\succapprox{}"
-  '\u2280': "\\not\\prec{}"
-  '\u2281': "\\not\\succ{}"
-  '\u2282': "\\subset{}"
-  '\u2283': "\\supset{}"
-  '\u2284': "\\not\\subset{}"
-  '\u2285': "\\not\\supset{}"
-  '\u2286': "\\subseteq{}"
-  '\u2287': "\\supseteq{}"
-  '\u2288': "\\not\\subseteq{}"
-  '\u2289': "\\not\\supseteq{}"
-  '\u228A': "\\subsetneq{}"
-  '\u228B': "\\supsetneq{}"
-  '\u228C': "\\cupleftarrow{}"
-  '\u228D': "\\cupdot{}"
-  '\u228E': "\\uplus{}"
-  '\u228F': "\\sqsubset{}"
-  '\u2290': "\\sqsupset{}"
-  '\u2291': "\\sqsubseteq{}"
-  '\u2292': "\\sqsupseteq{}"
-  '\u2293': "\\sqcap{}"
-  '\u2294': "\\sqcup{}"
-  '\u2295': "\\oplus{}"
-  '\u2296': "\\ominus{}"
-  '\u2297': "\\otimes{}"
-  '\u2298': "\\oslash{}"
-  '\u2299': "\\odot{}"
-  '\u229A': "\\circledcirc{}"
-  '\u229B': "\\circledast{}"
-  '\u229C': "\\circledequal{}"
-  '\u229D': "\\circleddash{}"
-  '\u229E': "\\boxplus{}"
-  '\u229F': "\\boxminus{}"
-  '\u22A0': "\\boxtimes{}"
-  '\u22A1': "\\boxdot{}"
-  '\u22A2': "\\vdash{}"
-  '\u22A3': "\\dashv{}"
-  '\u22A4': "\\top{}"
-  '\u22A5': "\\perp{}"
-  '\u22A6': "\\assert{}"
-  '\u22A7': "\\truestate{}"
-  '\u22A8': "\\forcesextra{}"
-  '\u22A9': "\\Vdash{}"
-  '\u22AA': "\\Vvdash{}"
-  '\u22AB': "\\VDash{}"
-  '\u22AC': "\\nvdash{}"
-  '\u22AD': "\\nvDash{}"
-  '\u22AE': "\\nVdash{}"
-  '\u22AF': "\\nVDash{}"
-  '\u22B0': "\\prurel{}"
-  '\u22B1': "\\scurel{}"
-  '\u22B2': "\\vartriangleleft{}"
-  '\u22B3': "\\vartriangleright{}"
-  '\u22B4': "\\trianglelefteq{}"
-  '\u22B5': "\\trianglerighteq{}"
-  '\u22B6': "\\original{}"
-  '\u22B7': "\\image{}"
-  '\u22B8': "\\multimap{}"
-  '\u22B9': "\\hermitconjmatrix{}"
-  '\u22BA': "\\intercal{}"
-  '\u22BB': "\\veebar{}"
-  '\u22BC': "\\barwedge{}"
-  '\u22BD': "\\barvee{}"
-  '\u22BE': "\\rightanglearc{}"
-  '\u22BF': "\\varlrtriangle{}"
-  '\u22C0': "\\ElsevierGlyph{22C0}"
-  '\u22C1': "\\ElsevierGlyph{22C1}"
-  '\u22C2': "\\bigcap{}"
-  '\u22C3': "\\bigcup{}"
-  '\u22C4': "\\diamond{}"
-  '\u22C5': "\\cdot{}"
-  '\u22C6': "\\star{}"
-  '\u22C7': "\\divideontimes{}"
-  '\u22C8': "\\bowtie{}"
-  '\u22C9': "\\ltimes{}"
-  '\u22CA': "\\rtimes{}"
-  '\u22CB': "\\leftthreetimes{}"
-  '\u22CC': "\\rightthreetimes{}"
-  '\u22CD': "\\backsimeq{}"
-  '\u22CE': "\\curlyvee{}"
-  '\u22CF': "\\curlywedge{}"
-  '\u22D0': "\\Subset{}"
-  '\u22D1': "\\Supset{}"
-  '\u22D2': "\\Cap{}"
-  '\u22D3': "\\Cup{}"
-  '\u22D4': "\\pitchfork{}"
-  '\u22D5': "\\hash{}"
-  '\u22D6': "\\lessdot{}"
-  '\u22D7': "\\gtrdot{}"
-  '\u22D8': "\\verymuchless{}"
-  '\u22D9': "\\verymuchgreater{}"
-  '\u22DA': "\\lesseqgtr{}"
-  '\u22DB': "\\gtreqless{}"
-  '\u22DC': "\\eqless{}"
-  '\u22DD': "\\eqgtr{}"
-  '\u22DE': "\\curlyeqprec{}"
-  '\u22DF': "\\curlyeqsucc{}"
-  '\u22E0': "\\npreceq{}"
-  '\u22E1': "\\nsucceq{}"
-  '\u22E2': "\\not\\sqsubseteq{}"
-  '\u22E3': "\\not\\sqsupseteq{}"
-  '\u22E4': "\\sqsubsetneq{}"
-  '\u22E5': "\\Elzsqspne{}"
-  '\u22E6': "\\lnsim{}"
-  '\u22E7': "\\gnsim{}"
-  '\u22E8': "\\precedesnotsimilar{}"
-  '\u22E9': "\\succnsim{}"
-  '\u22EA': "\\ntriangleleft{}"
-  '\u22EB': "\\ntriangleright{}"
-  '\u22EC': "\\ntrianglelefteq{}"
-  '\u22ED': "\\ntrianglerighteq{}"
-  '\u22EE': "\\vdots{}"
-  '\u22EF': "\\cdots{}"
-  '\u22F0': "\\upslopeellipsis{}"
-  '\u22F1': "\\downslopeellipsis{}"
-  '\u22F2': "\\disin{}"
-  '\u22F3': "\\varisins{}"
-  '\u22F4': "\\isins{}"
-  '\u22F5': "\\isindot{}"
-  '\u22F6': "\\barin{}"
-  '\u22F7': "\\isinobar{}"
-  '\u22F8': "\\isinvb{}"
-  '\u22F9': "\\isinE{}"
-  '\u22FA': "\\nisd{}"
-  '\u22FB': "\\varnis{}"
-  '\u22FC': "\\nis{}"
-  '\u22FD': "\\varniobar{}"
-  '\u22FE': "\\niobar{}"
-  '\u22FF': "\\bagmember{}"
-  '\u2300': "\\diameter{}"
-  '\u2302': "\\house{}"
-  '\u2306': "\\perspcorrespond{}"
-  '\u2308': "\\lceil{}"
-  '\u2309': "\\rceil{}"
-  '\u230A': "\\lfloor{}"
-  '\u230B': "\\rfloor{}"
-  '\u2310': "\\invneg{}"
-  '\u2311': "\\wasylozenge{}"
-  '\u2312': "\\profline{}"
-  '\u2313': "\\profsurf{}"
-  '\u2315': "\\recorder{}"
-  '\u2316': "{\\mathchar\"2208}"
-  '\u2317': "\\viewdata{}"
-  '\u2319': "\\turnednot{}"
-  '\u231C': "\\ulcorner{}"
-  '\u231D': "\\urcorner{}"
-  '\u231E': "\\llcorner{}"
-  '\u231F': "\\lrcorner{}"
-  '\u2320': "\\inttop{}"
-  '\u2321': "\\intbottom{}"
-  '\u2322': "\\frown{}"
-  '\u2323': "\\smile{}"
-  '\u2329': "\\langle{}"
-  '\u232A': "\\rangle{}"
-  '\u232C': "\\varhexagonlrbonds{}"
-  '\u2332': "\\conictaper{}"
-  '\u2336': "\\topbot{}"
-  '\u2339': "\\APLinv{}"
-  '\u233D': "\\ElsevierGlyph{E838}"
-  '\u233F': "\\notslash{}"
-  '\u2340': "\\notbackslash{}"
-  '\u2347': "\\APLleftarrowbox{}"
-  '\u2348': "\\APLrightarrowbox{}"
-  '\u2350': "\\APLuparrowbox{}"
-  '\u2353': "\\APLboxupcaret{}"
-  '\u2357': "\\APLdownarrowbox{}"
-  '\u235D': "\\APLcomment{}"
-  '\u235E': "\\APLinput{}"
-  '\u235F': "\\APLlog{}"
-  '\u2370': "\\APLboxquestion{}"
-  '\u237C': "\\rangledownzigzagarrow{}"
-  '\u2394': "\\hexagon{}"
-  '\u239B': "\\lparenuend{}"
-  '\u239C': "\\lparenextender{}"
-  '\u239D': "\\lparenlend{}"
-  '\u239E': "\\rparenuend{}"
-  '\u239F': "\\rparenextender{}"
-  '\u23A0': "\\rparenlend{}"
-  '\u23A1': "\\lbrackuend{}"
-  '\u23A2': "\\lbrackextender{}"
-  '\u23A3': "\\Elzdlcorn{}"
-  '\u23A4': "\\rbrackuend{}"
-  '\u23A5': "\\rbrackextender{}"
-  '\u23A6': "\\rbracklend{}"
-  '\u23A7': "\\lbraceuend{}"
-  '\u23A8': "\\lbracemid{}"
-  '\u23A9': "\\lbracelend{}"
-  '\u23AA': "\\vbraceextender{}"
-  '\u23AB': "\\rbraceuend{}"
-  '\u23AC': "\\rbracemid{}"
-  '\u23AD': "\\rbracelend{}"
-  '\u23AE': "\\intextender{}"
-  '\u23AF': "\\harrowextender{}"
-  '\u23B0': "\\lmoustache{}"
-  '\u23B1': "\\rmoustache{}"
-  '\u23B2': "\\sumtop{}"
-  '\u23B3': "\\sumbottom{}"
-  '\u23B4': "\\overbracket{}"
-  '\u23B5': "\\underbracket{}"
-  '\u23B6': "\\bbrktbrk{}"
-  '\u23B7': "\\sqrtbottom{}"
-  '\u23B8': "\\lvboxline{}"
-  '\u23B9': "\\rvboxline{}"
-  '\u23CE': "\\varcarriagereturn{}"
-  '\u23DC': "\\overparen{}"
-  '\u23DD': "\\underparen{}"
-  '\u23DE': "\\overbrace{}"
-  '\u23DF': "\\underbrace{}"
-  '\u23E0': "\\obrbrak{}"
-  '\u23E1': "\\ubrbrak{}"
-  '\u23E2': "\\trapezium{}"
-  '\u23E3': "\\benzenr{}"
-  '\u23E4': "\\strns{}"
-  '\u23E5': "\\fltns{}"
-  '\u23E6': "\\accurrent{}"
-  '\u23E7': "\\elinters{}"
-  '\u24C8': "\\circledS{}"
-  '\u2506': "\\Elzdshfnc{}"
-  '\u2519': "\\Elzsqfnw{}"
-  '\u2571': "\\diagup{}"
-  '\u2580': "\\blockuphalf{}"
-  '\u2584': "\\blocklowhalf{}"
-  '\u2588': "\\blockfull{}"
-  '\u258C': "\\blocklefthalf{}"
-  '\u2590': "\\blockrighthalf{}"
-  '\u2591': "\\blockqtrshaded{}"
-  '\u2592': "\\blockhalfshaded{}"
-  '\u2593': "\\blockthreeqtrshaded{}"
-  '\u25A1': "\\square{}"
-  '\u25A2': "\\squoval{}"
-  '\u25A3': "\\blackinwhitesquare{}"
-  '\u25A4': "\\squarehfill{}"
-  '\u25A5': "\\squarevfill{}"
-  '\u25A6': "\\squarehvfill{}"
-  '\u25A7': "\\squarenwsefill{}"
-  '\u25A8': "\\squareneswfill{}"
-  '\u25A9': "\\squarecrossfill{}"
-  '\u25AA': "\\blacksquare{}"
-  '\u25AB': "\\smwhtsquare{}"
-  '\u25AC': "\\hrectangleblack{}"
-  '\u25AD': "\\fbox{~~}"
-  '\u25AE': "\\vrectangleblack{}"
-  '\u25AF': "\\Elzvrecto{}"
-  '\u25B0': "\\parallelogramblack{}"
-  '\u25B1': "\\ElsevierGlyph{E381}"
-  '\u25B3': "\\bigtriangleup{}"
-  '\u25B4': "\\blacktriangle{}"
-  '\u25B5': "\\vartriangle{}"
-  '\u25B6': "\\RHD{}"
-  '\u25B7': "\\rhd{}"
-  '\u25B8': "\\blacktriangleright{}"
-  '\u25B9': "\\triangleright{}"
-  '\u25BA': "\\blackpointerright{}"
-  '\u25BB': "\\whitepointerright{}"
-  '\u25BD': "\\bigtriangledown{}"
-  '\u25BE': "\\blacktriangledown{}"
-  '\u25BF': "\\triangledown{}"
-  '\u25C0': "\\LHD{}"
-  '\u25C1': "\\lhd{}"
-  '\u25C2': "\\blacktriangleleft{}"
-  '\u25C3': "\\triangleleft{}"
-  '\u25C4': "\\blackpointerleft{}"
-  '\u25C5': "\\whitepointerleft{}"
-  '\u25C7': "\\Diamond{}"
-  '\u25C8': "\\blackinwhitediamond{}"
-  '\u25C9': "\\fisheye{}"
-  '\u25CA': "\\lozenge{}"
-  '\u25CB': "\\bigcirc{}"
-  '\u25CC': "\\dottedcircle{}"
-  '\u25CD': "\\circlevertfill{}"
-  '\u25CE': "\\bullseye{}"
-  '\u25D0': "\\Elzcirfl{}"
-  '\u25D1': "\\Elzcirfr{}"
-  '\u25D2': "\\Elzcirfb{}"
-  '\u25D3': "\\circletophalfblack{}"
-  '\u25D4': "\\circleurquadblack{}"
-  '\u25D5': "\\blackcircleulquadwhite{}"
-  '\u25D6': "\\LEFTCIRCLE{}"
-  '\u25D8': "\\Elzrvbull{}"
-  '\u25D9': "\\inversewhitecircle{}"
-  '\u25DA': "\\invwhiteupperhalfcircle{}"
-  '\u25DB': "\\invwhitelowerhalfcircle{}"
-  '\u25DC': "\\ularc{}"
-  '\u25DD': "\\urarc{}"
-  '\u25DE': "\\lrarc{}"
-  '\u25DF': "\\llarc{}"
-  '\u25E0': "\\topsemicircle{}"
-  '\u25E1': "\\botsemicircle{}"
-  '\u25E2': "\\lrblacktriangle{}"
-  '\u25E3': "\\llblacktriangle{}"
-  '\u25E4': "\\ulblacktriangle{}"
-  '\u25E5': "\\urblacktriangle{}"
-  '\u25E6': "\\smwhtcircle{}"
-  '\u25E7': "\\Elzsqfl{}"
-  '\u25E8': "\\Elzsqfr{}"
-  '\u25E9': "\\squareulblack{}"
-  '\u25EA': "\\Elzsqfse{}"
-  '\u25EB': "\\boxbar{}"
-  '\u25EC': "\\trianglecdot{}"
-  '\u25ED': "\\triangleleftblack{}"
-  '\u25EE': "\\trianglerightblack{}"
-  '\u25EF': "\\bigcirc{}"
-  '\u25F0': "\\squareulquad{}"
-  '\u25F1': "\\squarellquad{}"
-  '\u25F2': "\\squarelrquad{}"
-  '\u25F3': "\\squareurquad{}"
-  '\u25F4': "\\circleulquad{}"
-  '\u25F5': "\\circlellquad{}"
-  '\u25F6': "\\circlelrquad{}"
-  '\u25F7': "\\circleurquad{}"
-  '\u25F8': "\\ultriangle{}"
-  '\u25F9': "\\urtriangle{}"
-  '\u25FA': "\\lltriangle{}"
-  '\u25FB': "\\square{}"
-  '\u25FC': "\\blacksquare{}"
-  '\u25FD': "\\mdsmwhtsquare{}"
-  '\u25FE': "\\mdsmblksquare{}"
-  '\u25FF': "\\lrtriangle{}"
-  '\u2609': "\\Sun{}"
-  '\u2610': "\\Square{}"
-  '\u2611': "\\CheckedBox{}"
-  '\u2612': "\\XBox{}"
-  '\u2615': "\\steaming{}"
-  '\u2620': "\\skull{}"
-  '\u2621': "\\danger{}"
-  '\u2622': "\\radiation{}"
-  '\u2623': "\\biohazard{}"
-  '\u262F': "\\yinyang{}"
-  '\u2639': "\\frownie{}"
-  '\u263A': "\\smiley{}"
-  '\u263B': "\\blacksmiley{}"
-  '\u263C': "\\sun{}"
-  '\u263D': "\\rightmoon{}"
-  '\u2641': "\\earth{}"
-  '\u2661': "\\heartsuit{}"
-  '\u2662': "\\diamond{}"
-  '\u2664': "\\varspadesuit{}"
-  '\u2667': "\\varclubsuit{}"
-  '\u266B': "\\twonotes{}"
-  '\u266C': "\\sixteenthnote{}"
-  '\u266D': "\\flat{}"
-  '\u266E': "\\natural{}"
-  '\u266F': "\\sharp{}"
-  '\u267B': "\\recycle{}"
-  '\u267E': "\\acidfree{}"
-  '\u2680': "\\dicei{}"
-  '\u2681': "\\diceii{}"
-  '\u2682': "\\diceiii{}"
-  '\u2683': "\\diceiv{}"
-  '\u2684': "\\dicev{}"
-  '\u2685': "\\dicevi{}"
-  '\u2686': "\\circledrightdot{}"
-  '\u2687': "\\circledtwodots{}"
-  '\u2688': "\\blackcircledrightdot{}"
-  '\u2689': "\\blackcircledtwodots{}"
-  '\u2693': "\\anchor{}"
-  '\u2694': "\\swords{}"
-  '\u26A0': "\\warning{}"
-  '\u26A5': "\\Hermaphrodite{}"
-  '\u26AA': "\\medcirc{}"
-  '\u26AB': "\\medbullet{}"
-  '\u26AC': "\\mdsmwhtcircle{}"
-  '\u26B2': "\\neuter{}"
-  '\u2772': "\\lbrbrak{}"
-  '\u2773': "\\rbrbrak{}"
-  '\u27C0': "\\threedangle{}"
-  '\u27C1': "\\whiteinwhitetriangle{}"
-  '\u27C2': "\\perp{}"
-  '\u27C3': "\\subsetcirc{}"
-  '\u27C4': "\\supsetcirc{}"
-  '\u27C5': "\\Lbag{}"
-  '\u27C6': "\\Rbag{}"
-  '\u27C7': "\\veedot{}"
-  '\u27C8': "\\bsolhsub{}"
-  '\u27C9': "\\suphsol{}"
-  '\u27CC': "\\longdivision{}"
-  '\u27D0': "\\Diamonddot{}"
-  '\u27D1': "\\wedgedot{}"
-  '\u27D2': "\\upin{}"
-  '\u27D3': "\\pullback{}"
-  '\u27D4': "\\pushout{}"
-  '\u27D5': "\\leftouterjoin{}"
-  '\u27D6': "\\rightouterjoin{}"
-  '\u27D7': "\\fullouterjoin{}"
-  '\u27D8': "\\bigbot{}"
-  '\u27D9': "\\bigtop{}"
-  '\u27DA': "\\DashVDash{}"
-  '\u27DB': "\\dashVdash{}"
-  '\u27DC': "\\multimapinv{}"
-  '\u27DD': "\\vlongdash{}"
-  '\u27DE': "\\longdashv{}"
-  '\u27DF': "\\cirbot{}"
-  '\u27E0': "\\lozengeminus{}"
-  '\u27E1': "\\concavediamond{}"
-  '\u27E2': "\\concavediamondtickleft{}"
-  '\u27E3': "\\concavediamondtickright{}"
-  '\u27E4': "\\whitesquaretickleft{}"
-  '\u27E5': "\\whitesquaretickright{}"
-  '\u27E6': "\\llbracket{}"
-  '\u27E7': "\\rrbracket{}"
-  '\u27E8': "\\langle{}"
-  '\u27E9': "\\rangle{}"
-  '\u27EA': "\\lang{}"
-  '\u27EB': "\\rang{}"
-  '\u27EC': "\\Lbrbrak{}"
-  '\u27ED': "\\Rbrbrak{}"
-  '\u27EE': "\\lgroup{}"
-  '\u27EF': "\\rgroup{}"
-  '\u27F0': "\\UUparrow{}"
-  '\u27F1': "\\DDownarrow{}"
-  '\u27F2': "\\acwgapcirclearrow{}"
-  '\u27F3': "\\cwgapcirclearrow{}"
-  '\u27F4': "\\rightarrowonoplus{}"
-  '\u27F5': "\\longleftarrow{}"
-  '\u27F6': "\\longrightarrow{}"
-  '\u27F7': "\\longleftrightarrow{}"
-  '\u27F8': "\\Longleftarrow{}"
-  '\u27F9': "\\Longrightarrow{}"
-  '\u27FA': "\\Longleftrightarrow{}"
-  '\u27FB': "\\longmapsfrom{}"
-  '\u27FC': "\\longmapsto{}"
-  '\u27FD': "\\Longmapsfrom{}"
-  '\u27FE': "\\Longmapsto{}"
-  '\u27FF': "\\sim\\joinrel\\leadsto{}"
-  '\u2900': "\\psur{}"
-  '\u2901': "\\nVtwoheadrightarrow{}"
-  '\u2902': "\\nvLeftarrow{}"
-  '\u2903': "\\nvRightarrow{}"
-  '\u2904': "\\nvLeftrightarrow{}"
-  '\u2905': "\\ElsevierGlyph{E212}"
-  '\u2906': "\\Mapsfrom{}"
-  '\u2907': "\\Mapsto{}"
-  '\u2908': "\\downarrowbarred{}"
-  '\u2909': "\\uparrowbarred{}"
-  '\u290A': "\\Uuparrow{}"
-  '\u290B': "\\Ddownarrow{}"
-  '\u290C': "\\leftbkarrow{}"
-  '\u290D': "\\rightbkarrow{}"
-  '\u290E': "\\leftdbkarrow{}"
-  '\u290F': "\\dbkarow{}"
-  '\u2910': "\\drbkarow{}"
-  '\u2911': "\\rightdotarrow{}"
-  '\u2912': "\\UpArrowBar{}"
-  '\u2913': "\\DownArrowBar{}"
-  '\u2914': "\\pinj{}"
-  '\u2915': "\\finj{}"
-  '\u2916': "\\bij{}"
-  '\u2917': "\\nvtwoheadrightarrowtail{}"
-  '\u2918': "\\nVtwoheadrightarrowtail{}"
-  '\u2919': "\\lefttail{}"
-  '\u291A': "\\righttail{}"
-  '\u291B': "\\leftdbltail{}"
-  '\u291C': "\\rightdbltail{}"
-  '\u291D': "\\diamondleftarrow{}"
-  '\u291E': "\\rightarrowdiamond{}"
-  '\u291F': "\\diamondleftarrowbar{}"
-  '\u2920': "\\barrightarrowdiamond{}"
-  '\u2921': "\\nwsearrow{}"
-  '\u2922': "\\neswarrow{}"
-  '\u2923': "\\ElsevierGlyph{E20C}"
-  '\u2924': "\\ElsevierGlyph{E20D}"
-  '\u2925': "\\ElsevierGlyph{E20B}"
-  '\u2926': "\\ElsevierGlyph{E20A}"
-  '\u2927': "\\ElsevierGlyph{E211}"
-  '\u2928': "\\ElsevierGlyph{E20E}"
-  '\u2929': "\\ElsevierGlyph{E20F}"
-  '\u292A': "\\ElsevierGlyph{E210}"
-  '\u292B': "\\rdiagovfdiag{}"
-  '\u292C': "\\fdiagovrdiag{}"
-  '\u292D': "\\seovnearrow{}"
-  '\u292E': "\\neovsearrow{}"
-  '\u292F': "\\fdiagovnearrow{}"
-  '\u2930': "\\rdiagovsearrow{}"
-  '\u2931': "\\neovnwarrow{}"
-  '\u2932': "\\nwovnearrow{}"
-  '\u2933': "\\ElsevierGlyph{E21C}"
-  '\u2934': "\\uprightcurvearrow{}"
-  '\u2935': "\\downrightcurvedarrow{}"
-  '\u2936': "\\ElsevierGlyph{E21A}"
-  '\u2937': "\\ElsevierGlyph{E219}"
-  '\u2938': "\\cwrightarcarrow{}"
-  '\u2939': "\\acwleftarcarrow{}"
-  '\u293A': "\\acwoverarcarrow{}"
-  '\u293B': "\\acwunderarcarrow{}"
-  '\u293C': "\\curvearrowrightminus{}"
-  '\u293D': "\\curvearrowleftplus{}"
-  '\u293E': "\\cwundercurvearrow{}"
-  '\u293F': "\\ccwundercurvearrow{}"
-  '\u2940': "\\Elolarr{}"
-  '\u2941': "\\Elorarr{}"
-  '\u2942': "\\ElzRlarr{}"
-  '\u2943': "\\leftarrowshortrightarrow{}"
-  '\u2944': "\\ElzrLarr{}"
-  '\u2945': "\\rightarrowplus{}"
-  '\u2946': "\\leftarrowplus{}"
-  '\u2947': "\\Elzrarrx{}"
-  '\u2948': "\\leftrightarrowcircle{}"
-  '\u2949': "\\twoheaduparrowcircle{}"
-  '\u294A': "\\leftrightharpoon{}"
-  '\u294B': "\\rightleftharpoon{}"
-  '\u294C': "\\updownharpoonrightleft{}"
-  '\u294D': "\\updownharpoonleftright{}"
-  '\u294E': "\\LeftRightVector{}"
-  '\u294F': "\\RightUpDownVector{}"
-  '\u2950': "\\DownLeftRightVector{}"
-  '\u2951': "\\LeftUpDownVector{}"
-  '\u2952': "\\LeftVectorBar{}"
-  '\u2953': "\\RightVectorBar{}"
-  '\u2954': "\\RightUpVectorBar{}"
-  '\u2955': "\\RightDownVectorBar{}"
-  '\u2956': "\\DownLeftVectorBar{}"
-  '\u2957': "\\DownRightVectorBar{}"
-  '\u2958': "\\LeftUpVectorBar{}"
-  '\u2959': "\\LeftDownVectorBar{}"
-  '\u295A': "\\LeftTeeVector{}"
-  '\u295B': "\\RightTeeVector{}"
-  '\u295C': "\\RightUpTeeVector{}"
-  '\u295D': "\\RightDownTeeVector{}"
-  '\u295E': "\\DownLeftTeeVector{}"
-  '\u295F': "\\DownRightTeeVector{}"
-  '\u2960': "\\LeftUpTeeVector{}"
-  '\u2961': "\\LeftDownTeeVector{}"
-  '\u2962': "\\leftleftharpoons{}"
-  '\u2963': "\\upupharpoons{}"
-  '\u2964': "\\rightrightharpoons{}"
-  '\u2965': "\\downdownharpoons{}"
-  '\u2966': "\\leftrightharpoonsup{}"
-  '\u2967': "\\leftrightharpoonsdown{}"
-  '\u2968': "\\rightleftharpoonsup{}"
-  '\u2969': "\\rightleftharpoonsdown{}"
-  '\u296A': "\\leftbarharpoon{}"
-  '\u296B': "\\barleftharpoon{}"
-  '\u296C': "\\rightbarharpoon{}"
-  '\u296D': "\\barrightharpoon{}"
-  '\u296E': "\\UpEquilibrium{}"
-  '\u296F': "\\ReverseUpEquilibrium{}"
-  '\u2970': "\\RoundImplies{}"
-  '\u2971': "\\equalrightarrow{}"
-  '\u2972': "\\similarrightarrow{}"
-  '\u2973': "\\leftarrowsimilar{}"
-  '\u2974': "\\rightarrowsimilar{}"
-  '\u2975': "\\rightarrowapprox{}"
-  '\u2976': "\\ltlarr{}"
-  '\u2977': "\\leftarrowless{}"
-  '\u2978': "\\gtrarr{}"
-  '\u2979': "\\subrarr{}"
-  '\u297A': "\\leftarrowsubset{}"
-  '\u297B': "\\suplarr{}"
-  '\u297C': "\\ElsevierGlyph{E214}"
-  '\u297D': "\\ElsevierGlyph{E215}"
-  '\u297E': "\\upfishtail{}"
-  '\u297F': "\\downfishtail{}"
-  '\u2980': "\\Elztfnc{}"
-  '\u2981': "\\spot{}"
-  '\u2982': "\\typecolon{}"
-  '\u2983': "\\lBrace{}"
-  '\u2984': "\\rBrace{}"
-  '\u2985': "\\ElsevierGlyph{3018}"
-  '\u2986': "\\Elroang{}"
-  '\u2987': "\\limg{}"
-  '\u2988': "\\rimg{}"
-  '\u2989': "\\lblot{}"
-  '\u298A': "\\rblot{}"
-  '\u298B': "\\lbrackubar{}"
-  '\u298C': "\\rbrackubar{}"
-  '\u298D': "\\lbrackultick{}"
-  '\u298E': "\\rbracklrtick{}"
-  '\u298F': "\\lbracklltick{}"
-  '\u2990': "\\rbrackurtick{}"
-  '\u2991': "\\langledot{}"
-  '\u2992': "\\rangledot{}"
-  '\u2993': "<\\kern-0.58em("
-  '\u2994': "\\ElsevierGlyph{E291}"
-  '\u2995': "\\Lparengtr{}"
-  '\u2996': "\\Rparenless{}"
-  '\u2997': "\\lblkbrbrak{}"
-  '\u2998': "\\rblkbrbrak{}"
-  '\u2999': "\\Elzddfnc{}"
-  '\u299A': "\\vzigzag{}"
-  '\u299B': "\\measuredangleleft{}"
-  '\u299C': "\\Angle{}"
-  '\u299D': "\\rightanglemdot{}"
-  '\u299E': "\\angles{}"
-  '\u299F': "\\angdnr{}"
-  '\u29A0': "\\Elzlpargt{}"
-  '\u29A1': "\\sphericalangleup{}"
-  '\u29A2': "\\turnangle{}"
-  '\u29A3': "\\revangle{}"
-  '\u29A4': "\\angleubar{}"
-  '\u29A5': "\\revangleubar{}"
-  '\u29A6': "\\wideangledown{}"
-  '\u29A7': "\\wideangleup{}"
-  '\u29A8': "\\measanglerutone{}"
-  '\u29A9': "\\measanglelutonw{}"
-  '\u29AA': "\\measanglerdtose{}"
-  '\u29AB': "\\measangleldtosw{}"
-  '\u29AC': "\\measangleurtone{}"
-  '\u29AD': "\\measangleultonw{}"
-  '\u29AE': "\\measangledrtose{}"
-  '\u29AF': "\\measangledltosw{}"
-  '\u29B0': "\\revemptyset{}"
-  '\u29B1': "\\emptysetobar{}"
-  '\u29B2': "\\emptysetocirc{}"
-  '\u29B3': "\\emptysetoarr{}"
-  '\u29B4': "\\emptysetoarrl{}"
-  '\u29B5': "\\ElsevierGlyph{E260}"
-  '\u29B6': "\\ElsevierGlyph{E61B}"
-  '\u29B7': "\\circledparallel{}"
-  '\u29B8': "\\circledbslash{}"
-  '\u29B9': "\\operp{}"
-  '\u29BA': "\\obot{}"
-  '\u29BB': "\\olcross{}"
-  '\u29BC': "\\odotslashdot{}"
-  '\u29BD': "\\uparrowoncircle{}"
-  '\u29BE': "\\circledwhitebullet{}"
-  '\u29BF': "\\circledbullet{}"
-  '\u29C0': "\\circledless{}"
-  '\u29C1': "\\circledgtr{}"
-  '\u29C2': "\\cirscir{}"
-  '\u29C3': "\\cirE{}"
-  '\u29C4': "\\boxslash{}"
-  '\u29C5': "\\boxbslash{}"
-  '\u29C6': "\\boxast{}"
-  '\u29C7': "\\boxcircle{}"
-  '\u29C8': "\\boxbox{}"
-  '\u29C9': "\\boxonbox{}"
-  '\u29CA': "\\ElzLap{}"
-  '\u29CB': "\\Elzdefas{}"
-  '\u29CC': "\\triangles{}"
-  '\u29CD': "\\triangleserifs{}"
-  '\u29CE': "\\rtriltri{}"
-  '\u29CF': "\\LeftTriangleBar{}"
-  '\u29D0': "\\RightTriangleBar{}"
-  '\u29D1': "\\lfbowtie{}"
-  '\u29D2': "\\rfbowtie{}"
-  '\u29D3': "\\fbowtie{}"
-  '\u29D4': "\\lftimes{}"
-  '\u29D5': "\\rftimes{}"
-  '\u29D6': "\\hourglass{}"
-  '\u29D7': "\\blackhourglass{}"
-  '\u29D8': "\\lvzigzag{}"
-  '\u29D9': "\\rvzigzag{}"
-  '\u29DA': "\\Lvzigzag{}"
-  '\u29DB': "\\Rvzigzag{}"
-  '\u29DC': "\\ElsevierGlyph{E372}"
-  '\u29DD': "\\tieinfty{}"
-  '\u29DE': "\\nvinfty{}"
-  '\u29DF': "\\multimapboth{}"
-  '\u29E0': "\\laplac{}"
-  '\u29E1': "\\lrtriangleeq{}"
-  '\u29E2': "\\shuffle{}"
-  '\u29E3': "\\eparsl{}"
-  '\u29E4': "\\smeparsl{}"
-  '\u29E5': "\\eqvparsl{}"
-  '\u29E6': "\\gleichstark{}"
-  '\u29E7': "\\thermod{}"
-  '\u29E8': "\\downtriangleleftblack{}"
-  '\u29E9': "\\downtrianglerightblack{}"
-  '\u29EA': "\\blackdiamonddownarrow{}"
-  '\u29EB': "\\blacklozenge{}"
-  '\u29EC': "\\circledownarrow{}"
-  '\u29ED': "\\blackcircledownarrow{}"
-  '\u29EE': "\\errbarsquare{}"
-  '\u29EF': "\\errbarblacksquare{}"
-  '\u29F0': "\\errbardiamond{}"
-  '\u29F1': "\\errbarblackdiamond{}"
-  '\u29F2': "\\errbarcircle{}"
-  '\u29F3': "\\errbarblackcircle{}"
-  '\u29F4': "\\RuleDelayed{}"
-  '\u29F5': "\\setminus{}"
-  '\u29F6': "\\dsol{}"
-  '\u29F7': "\\rsolbar{}"
-  '\u29F8': "\\xsol{}"
-  '\u29F9': "\\zhide{}"
-  '\u29FA': "\\doubleplus{}"
-  '\u29FB': "\\tripleplus{}"
-  '\u29FC': "\\lcurvyangle{}"
-  '\u29FD': "\\rcurvyangle{}"
-  '\u29FE': "\\tplus{}"
-  '\u29FF': "\\tminus{}"
-  '\u2A00': "\\bigodot{}"
-  '\u2A01': "\\bigoplus{}"
-  '\u2A02': "\\bigotimes{}"
-  '\u2A03': "\\bigcupdot{}"
-  '\u2A04': "\\Elxuplus{}"
-  '\u2A05': "\\ElzThr{}"
-  '\u2A06': "\\Elxsqcup{}"
-  '\u2A07': "\\ElzInf{}"
-  '\u2A08': "\\ElzSup{}"
-  '\u2A09': "\\varprod{}"
-  '\u2A0A': "\\modtwosum{}"
-  '\u2A0B': "\\sumint{}"
-  '\u2A0C': "\\iiiint{}"
-  '\u2A0D': "\\ElzCint{}"
-  '\u2A0E': "\\intBar{}"
-  '\u2A0F': "\\clockoint{}"
-  '\u2A10': "\\ElsevierGlyph{E395}"
-  '\u2A11': "\\awint{}"
-  '\u2A12': "\\rppolint{}"
-  '\u2A13': "\\scpolint{}"
-  '\u2A14': "\\npolint{}"
-  '\u2A15': "\\pointint{}"
-  '\u2A16': "\\sqrint{}"
-  '\u2A17': "\\intlarhk{}"
-  '\u2A18': "\\intx{}"
-  '\u2A19': "\\intcap{}"
-  '\u2A1A': "\\intcup{}"
-  '\u2A1B': "\\upint{}"
-  '\u2A1C': "\\lowint{}"
-  '\u2A1D': "\\Join{}"
-  '\u2A1E': "\\bigtriangleleft{}"
-  '\u2A1F': "\\zcmp{}"
-  '\u2A20': "\\zpipe{}"
-  '\u2A21': "\\zproject{}"
-  '\u2A22': "\\ringplus{}"
-  '\u2A23': "\\plushat{}"
-  '\u2A24': "\\simplus{}"
-  '\u2A25': "\\ElsevierGlyph{E25A}"
-  '\u2A26': "\\plussim{}"
-  '\u2A27': "\\plussubtwo{}"
-  '\u2A28': "\\plustrif{}"
-  '\u2A29': "\\commaminus{}"
-  '\u2A2A': "\\ElsevierGlyph{E25B}"
-  '\u2A2B': "\\minusfdots{}"
-  '\u2A2C': "\\minusrdots{}"
-  '\u2A2D': "\\ElsevierGlyph{E25C}"
-  '\u2A2E': "\\ElsevierGlyph{E25D}"
-  '\u2A2F': "\\ElzTimes{}"
-  '\u2A30': "\\dottimes{}"
-  '\u2A31': "\\timesbar{}"
-  '\u2A32': "\\btimes{}"
-  '\u2A33': "\\smashtimes{}"
-  '\u2A34': "\\ElsevierGlyph{E25E}"
-  '\u2A35': "\\ElsevierGlyph{E25E}"
-  '\u2A36': "\\otimeshat{}"
-  '\u2A37': "\\Otimes{}"
-  '\u2A38': "\\odiv{}"
-  '\u2A39': "\\triangleplus{}"
-  '\u2A3A': "\\triangleminus{}"
-  '\u2A3B': "\\triangletimes{}"
-  '\u2A3C': "\\ElsevierGlyph{E259}"
-  '\u2A3D': "\\intprodr{}"
-  '\u2A3E': "\\fcmp{}"
-  '\u2A3F': "\\amalg{}"
-  '\u2A40': "\\capdot{}"
-  '\u2A41': "\\uminus{}"
-  '\u2A42': "\\barcup{}"
-  '\u2A43': "\\barcap{}"
-  '\u2A44': "\\capwedge{}"
-  '\u2A45': "\\cupvee{}"
-  '\u2A46': "\\cupovercap{}"
-  '\u2A47': "\\capovercup{}"
-  '\u2A48': "\\cupbarcap{}"
-  '\u2A49': "\\capbarcup{}"
-  '\u2A4A': "\\twocups{}"
-  '\u2A4B': "\\twocaps{}"
-  '\u2A4C': "\\closedvarcup{}"
-  '\u2A4D': "\\closedvarcap{}"
-  '\u2A4E': "\\Sqcap{}"
-  '\u2A4F': "\\Sqcup{}"
-  '\u2A50': "\\closedvarcupsmashprod{}"
-  '\u2A51': "\\wedgeodot{}"
-  '\u2A52': "\\veeodot{}"
-  '\u2A53': "\\ElzAnd{}"
-  '\u2A54': "\\ElzOr{}"
-  '\u2A55': "\\ElsevierGlyph{E36E}"
-  '\u2A56': "\\ElOr{}"
-  '\u2A57': "\\bigslopedvee{}"
-  '\u2A58': "\\bigslopedwedge{}"
-  '\u2A59': "\\veeonwedge{}"
-  '\u2A5A': "\\wedgemidvert{}"
-  '\u2A5B': "\\veemidvert{}"
-  '\u2A5C': "\\midbarwedge{}"
-  '\u2A5D': "\\midbarvee{}"
-  '\u2A5E': "\\perspcorrespond{}"
-  '\u2A5F': "\\Elzminhat{}"
-  '\u2A60': "\\wedgedoublebar{}"
-  '\u2A61': "\\varveebar{}"
-  '\u2A62': "\\doublebarvee{}"
-  '\u2A63': "\\ElsevierGlyph{225A}"
-  '\u2A64': "\\dsub{}"
-  '\u2A65': "\\rsub{}"
-  '\u2A66': "\\eqdot{}"
-  '\u2A67': "\\dotequiv{}"
-  '\u2A68': "\\equivVert{}"
-  '\u2A69': "\\equivVvert{}"
-  '\u2A6A': "\\dotsim{}"
-  '\u2A6B': "\\simrdots{}"
-  '\u2A6C': "\\simminussim{}"
-  '\u2A6D': "\\congdot{}"
-  '\u2A6E': "\\stackrel{*}{=}"
-  '\u2A6F': "\\hatapprox{}"
-  '\u2A70': "\\approxeqq{}"
-  '\u2A71': "\\eqqplus{}"
-  '\u2A72': "\\pluseqq{}"
-  '\u2A73': "\\eqqsim{}"
-  '\u2A74': "\\Coloneqq{}"
-  '\u2A75': "\\Equal{}"
-  '\u2A76': "\\Same{}"
-  '\u2A77': "\\ddotseq{}"
-  '\u2A78': "\\equivDD{}"
-  '\u2A79': "\\ltcir{}"
-  '\u2A7A': "\\gtcir{}"
-  '\u2A7B': "\\ltquest{}"
-  '\u2A7C': "\\gtquest{}"
-  '\u2A7D': "\\leqslant{}"
-  '\u2A7E': "\\geqslant{}"
-  '\u2A7F': "\\lesdot{}"
-  '\u2A80': "\\gesdot{}"
-  '\u2A81': "\\lesdoto{}"
-  '\u2A82': "\\gesdoto{}"
-  '\u2A83': "\\lesdotor{}"
-  '\u2A84': "\\gesdotol{}"
-  '\u2A85': "\\lessapprox{}"
-  '\u2A86': "\\gtrapprox{}"
-  '\u2A87': "\\lneq{}"
-  '\u2A88': "\\gneq{}"
-  '\u2A89': "\\lnapprox{}"
-  '\u2A8A': "\\gnapprox{}"
-  '\u2A8B': "\\lesseqqgtr{}"
-  '\u2A8C': "\\gtreqqless{}"
-  '\u2A8D': "\\lsime{}"
-  '\u2A8E': "\\gsime{}"
-  '\u2A8F': "\\lsimg{}"
-  '\u2A90': "\\gsiml{}"
-  '\u2A91': "\\lgE{}"
-  '\u2A92': "\\glE{}"
-  '\u2A93': "\\lesges{}"
-  '\u2A94': "\\gesles{}"
-  '\u2A95': "\\eqslantless{}"
-  '\u2A96': "\\eqslantgtr{}"
-  '\u2A97': "\\elsdot{}"
-  '\u2A98': "\\egsdot{}"
-  '\u2A99': "\\eqqless{}"
-  '\u2A9A': "\\eqqgtr{}"
-  '\u2A9B': "\\eqqslantless{}"
-  '\u2A9C': "\\eqqslantgtr{}"
-  '\u2A9D': "\\Pisymbol{ppi020}{117}"
-  '\u2A9E': "\\Pisymbol{ppi020}{105}"
-  '\u2A9F': "\\simlE{}"
-  '\u2AA0': "\\simgE{}"
-  '\u2AA1': "\\NestedLessLess{}"
-  '\u2AA2': "\\NestedGreaterGreater{}"
-  '\u2AA3': "\\partialmeetcontraction{}"
-  '\u2AA4': "\\glj{}"
-  '\u2AA5': "\\gla{}"
-  '\u2AA6': "\\leftslice{}"
-  '\u2AA7': "\\rightslice{}"
-  '\u2AA8': "\\lescc{}"
-  '\u2AA9': "\\gescc{}"
-  '\u2AAA': "\\smt{}"
-  '\u2AAB': "\\lat{}"
-  '\u2AAC': "\\smte{}"
-  '\u2AAD': "\\late{}"
-  '\u2AAE': "\\bumpeqq{}"
-  '\u2AAF': "\\preceq{}"
-  '\u2AB0': "\\succeq{}"
-  '\u2AB1': "\\precneq{}"
-  '\u2AB2': "\\succneq{}"
-  '\u2AB3': "\\preceqq{}"
-  '\u2AB4': "\\succeqq{}"
-  '\u2AB5': "\\precneqq{}"
-  '\u2AB6': "\\succneqq{}"
-  '\u2AB7': "\\precapprox{}"
-  '\u2AB8': "\\succapprox{}"
-  '\u2AB9': "\\precnapprox{}"
-  '\u2ABA': "\\succnapprox{}"
-  '\u2ABB': "\\llcurly{}"
-  '\u2ABC': "\\ggcurly{}"
-  '\u2ABD': "\\subsetdot{}"
-  '\u2ABE': "\\supsetdot{}"
-  '\u2ABF': "\\subsetplus{}"
-  '\u2AC0': "\\supsetplus{}"
-  '\u2AC1': "\\submult{}"
-  '\u2AC2': "\\supmult{}"
-  '\u2AC3': "\\subedot{}"
-  '\u2AC4': "\\supedot{}"
-  '\u2AC5': "\\subseteqq{}"
-  '\u2AC6': "\\supseteqq{}"
-  '\u2AC7': "\\subsim{}"
-  '\u2AC8': "\\supsim{}"
-  '\u2AC9': "\\subsetapprox{}"
-  '\u2ACA': "\\supsetapprox{}"
-  '\u2ACB': "\\subsetneqq{}"
-  '\u2ACC': "\\supsetneqq{}"
-  '\u2ACD': "\\lsqhook{}"
-  '\u2ACE': "\\rsqhook{}"
-  '\u2ACF': "\\csub{}"
-  '\u2AD0': "\\csup{}"
-  '\u2AD1': "\\csube{}"
-  '\u2AD2': "\\csupe{}"
-  '\u2AD3': "\\subsup{}"
-  '\u2AD4': "\\supsub{}"
-  '\u2AD5': "\\subsub{}"
-  '\u2AD6': "\\supsup{}"
-  '\u2AD7': "\\suphsub{}"
-  '\u2AD8': "\\supdsub{}"
-  '\u2AD9': "\\forkv{}"
-  '\u2ADA': "\\topfork{}"
-  '\u2ADB': "\\mlcp{}"
-  '\u2ADC': "\\forks{}"
-  '\u2ADD': "\\forksnot{}"
-  '\u2ADE': "\\shortlefttack{}"
-  '\u2ADF': "\\shortdowntack{}"
-  '\u2AE0': "\\shortuptack{}"
-  '\u2AE1': "\\perps{}"
-  '\u2AE2': "\\vDdash{}"
-  '\u2AE3': "\\dashV{}"
-  '\u2AE4': "\\Dashv{}"
-  '\u2AE5': "\\DashV{}"
-  '\u2AE6': "\\varVdash{}"
-  '\u2AE7': "\\Barv{}"
-  '\u2AE8': "\\vBar{}"
-  '\u2AE9': "\\vBarv{}"
-  '\u2AEA': "\\Top{}"
-  '\u2AEB': "\\ElsevierGlyph{E30D}"
-  '\u2AEC': "\\Not{}"
-  '\u2AED': "\\bNot{}"
-  '\u2AEE': "\\revnmid{}"
-  '\u2AEF': "\\cirmid{}"
-  '\u2AF0': "\\midcir{}"
-  '\u2AF1': "\\topcir{}"
-  '\u2AF2': "\\nhpar{}"
-  '\u2AF3': "\\parsim{}"
-  '\u2AF4': "\\interleave{}"
-  '\u2AF5': "\\nhVvert{}"
-  '\u2AF6': "\\Elztdcol{}"
-  '\u2AF7': "\\lllnest{}"
-  '\u2AF8': "\\gggnest{}"
-  '\u2AF9': "\\leqqslant{}"
-  '\u2AFA': "\\geqqslant{}"
-  '\u2AFB': "\\trslash{}"
-  '\u2AFC': "\\biginterleave{}"
-  '\u2AFD': "{{/}\\!\\!{/}}"
-  '\u2AFE': "\\talloblong{}"
-  '\u2AFF': "\\bigtalloblong{}"
-  '\u2B12': "\\squaretopblack{}"
-  '\u2B13': "\\squarebotblack{}"
-  '\u2B14': "\\squareurblack{}"
-  '\u2B15': "\\squarellblack{}"
-  '\u2B16': "\\diamondleftblack{}"
-  '\u2B17': "\\diamondrightblack{}"
-  '\u2B18': "\\diamondtopblack{}"
-  '\u2B19': "\\diamondbotblack{}"
-  '\u2B1A': "\\dottedsquare{}"
-  '\u2B1B': "\\blacksquare{}"
-  '\u2B1C': "\\square{}"
-  '\u2B1D': "\\vysmblksquare{}"
-  '\u2B1E': "\\vysmwhtsquare{}"
-  '\u2B1F': "\\pentagonblack{}"
-  '\u2B20': "\\pentagon{}"
-  '\u2B21': "\\varhexagon{}"
-  '\u2B22': "\\varhexagonblack{}"
-  '\u2B23': "\\hexagonblack{}"
-  '\u2B24': "\\lgblkcircle{}"
-  '\u2B25': "\\mdblkdiamond{}"
-  '\u2B26': "\\mdwhtdiamond{}"
-  '\u2B27': "\\mdblklozenge{}"
-  '\u2B28': "\\mdwhtlozenge{}"
-  '\u2B29': "\\smblkdiamond{}"
-  '\u2B2A': "\\smblklozenge{}"
-  '\u2B2B': "\\smwhtlozenge{}"
-  '\u2B2C': "\\blkhorzoval{}"
-  '\u2B2D': "\\whthorzoval{}"
-  '\u2B2E': "\\blkvertoval{}"
-  '\u2B2F': "\\whtvertoval{}"
-  '\u2B30': "\\circleonleftarrow{}"
-  '\u2B31': "\\leftthreearrows{}"
-  '\u2B32': "\\leftarrowonoplus{}"
-  '\u2B33': "\\longleftsquigarrow{}"
-  '\u2B34': "\\nvtwoheadleftarrow{}"
-  '\u2B35': "\\nVtwoheadleftarrow{}"
-  '\u2B36': "\\twoheadmapsfrom{}"
-  '\u2B37': "\\twoheadleftdbkarrow{}"
-  '\u2B38': "\\leftdotarrow{}"
-  '\u2B39': "\\nvleftarrowtail{}"
-  '\u2B3A': "\\nVleftarrowtail{}"
-  '\u2B3B': "\\twoheadleftarrowtail{}"
-  '\u2B3C': "\\nvtwoheadleftarrowtail{}"
-  '\u2B3D': "\\nVtwoheadleftarrowtail{}"
-  '\u2B3E': "\\leftarrowx{}"
-  '\u2B3F': "\\leftcurvedarrow{}"
-  '\u2B40': "\\equalleftarrow{}"
-  '\u2B41': "\\bsimilarleftarrow{}"
-  '\u2B42': "\\leftarrowbackapprox{}"
-  '\u2B43': "\\rightarrowgtr{}"
-  '\u2B44': "\\rightarrowsupset{}"
-  '\u2B45': "\\LLeftarrow{}"
-  '\u2B46': "\\RRightarrow{}"
-  '\u2B47': "\\bsimilarrightarrow{}"
-  '\u2B48': "\\rightarrowbackapprox{}"
-  '\u2B49': "\\similarleftarrow{}"
-  '\u2B4A': "\\leftarrowapprox{}"
-  '\u2B4B': "\\leftarrowbsimilar{}"
-  '\u2B4C': "\\rightarrowbsimilar{}"
-  '\u2B50': "\\medwhitestar{}"
-  '\u2B51': "\\medblackstar{}"
-  '\u2B52': "\\smwhitestar{}"
-  '\u2B53': "\\rightpentagonblack{}"
-  '\u2B54': "\\rightpentagon{}"
-  '\u300A': "\\ElsevierGlyph{300A}"
-  '\u300B': "\\ElsevierGlyph{300B}"
-  '\u3012': "\\postalmark{}"
-  '\u3014': "\\lbrbrak{}"
-  '\u3015': "\\rbrbrak{}"
-  '\u3018': "\\ElsevierGlyph{3018}"
-  '\u3019': "\\ElsevierGlyph{3019}"
-  '\u301A': "\\openbracketleft{}"
-  '\u301B': "\\openbracketright{}"
-  '\u3030': "\\hzigzag{}"
-  '\uD835\uDC00': "\\mathbf{A}"
-  '\uD835\uDC01': "\\mathbf{B}"
-  '\uD835\uDC02': "\\mathbf{C}"
-  '\uD835\uDC03': "\\mathbf{D}"
-  '\uD835\uDC04': "\\mathbf{E}"
-  '\uD835\uDC05': "\\mathbf{F}"
-  '\uD835\uDC06': "\\mathbf{G}"
-  '\uD835\uDC07': "\\mathbf{H}"
-  '\uD835\uDC08': "\\mathbf{I}"
-  '\uD835\uDC09': "\\mathbf{J}"
-  '\uD835\uDC0A': "\\mathbf{K}"
-  '\uD835\uDC0B': "\\mathbf{L}"
-  '\uD835\uDC0C': "\\mathbf{M}"
-  '\uD835\uDC0D': "\\mathbf{N}"
-  '\uD835\uDC0E': "\\mathbf{O}"
-  '\uD835\uDC0F': "\\mathbf{P}"
-  '\uD835\uDC10': "\\mathbf{Q}"
-  '\uD835\uDC11': "\\mathbf{R}"
-  '\uD835\uDC12': "\\mathbf{S}"
-  '\uD835\uDC13': "\\mathbf{T}"
-  '\uD835\uDC14': "\\mathbf{U}"
-  '\uD835\uDC15': "\\mathbf{V}"
-  '\uD835\uDC16': "\\mathbf{W}"
-  '\uD835\uDC17': "\\mathbf{X}"
-  '\uD835\uDC18': "\\mathbf{Y}"
-  '\uD835\uDC19': "\\mathbf{Z}"
-  '\uD835\uDC1A': "\\mathbf{a}"
-  '\uD835\uDC1B': "\\mathbf{b}"
-  '\uD835\uDC1C': "\\mathbf{c}"
-  '\uD835\uDC1D': "\\mathbf{d}"
-  '\uD835\uDC1E': "\\mathbf{e}"
-  '\uD835\uDC1F': "\\mathbf{f}"
-  '\uD835\uDC20': "\\mathbf{g}"
-  '\uD835\uDC21': "\\mathbf{h}"
-  '\uD835\uDC22': "\\mathbf{i}"
-  '\uD835\uDC23': "\\mathbf{j}"
-  '\uD835\uDC24': "\\mathbf{k}"
-  '\uD835\uDC25': "\\mathbf{l}"
-  '\uD835\uDC26': "\\mathbf{m}"
-  '\uD835\uDC27': "\\mathbf{n}"
-  '\uD835\uDC28': "\\mathbf{o}"
-  '\uD835\uDC29': "\\mathbf{p}"
-  '\uD835\uDC2A': "\\mathbf{q}"
-  '\uD835\uDC2B': "\\mathbf{r}"
-  '\uD835\uDC2C': "\\mathbf{s}"
-  '\uD835\uDC2D': "\\mathbf{t}"
-  '\uD835\uDC2E': "\\mathbf{u}"
-  '\uD835\uDC2F': "\\mathbf{v}"
-  '\uD835\uDC30': "\\mathbf{w}"
-  '\uD835\uDC31': "\\mathbf{x}"
-  '\uD835\uDC32': "\\mathbf{y}"
-  '\uD835\uDC33': "\\mathbf{z}"
-  '\uD835\uDC34': "\\mathsl{A}"
-  '\uD835\uDC35': "\\mathsl{B}"
-  '\uD835\uDC36': "\\mathsl{C}"
-  '\uD835\uDC37': "\\mathsl{D}"
-  '\uD835\uDC38': "\\mathsl{E}"
-  '\uD835\uDC39': "\\mathsl{F}"
-  '\uD835\uDC3A': "\\mathsl{G}"
-  '\uD835\uDC3B': "\\mathsl{H}"
-  '\uD835\uDC3C': "\\mathsl{I}"
-  '\uD835\uDC3D': "\\mathsl{J}"
-  '\uD835\uDC3E': "\\mathsl{K}"
-  '\uD835\uDC3F': "\\mathsl{L}"
-  '\uD835\uDC40': "\\mathsl{M}"
-  '\uD835\uDC41': "\\mathsl{N}"
-  '\uD835\uDC42': "\\mathsl{O}"
-  '\uD835\uDC43': "\\mathsl{P}"
-  '\uD835\uDC44': "\\mathsl{Q}"
-  '\uD835\uDC45': "\\mathsl{R}"
-  '\uD835\uDC46': "\\mathsl{S}"
-  '\uD835\uDC47': "\\mathsl{T}"
-  '\uD835\uDC48': "\\mathsl{U}"
-  '\uD835\uDC49': "\\mathsl{V}"
-  '\uD835\uDC4A': "\\mathsl{W}"
-  '\uD835\uDC4B': "\\mathsl{X}"
-  '\uD835\uDC4C': "\\mathsl{Y}"
-  '\uD835\uDC4D': "\\mathsl{Z}"
-  '\uD835\uDC4E': "\\mathsl{a}"
-  '\uD835\uDC4F': "\\mathsl{b}"
-  '\uD835\uDC50': "\\mathsl{c}"
-  '\uD835\uDC51': "\\mathsl{d}"
-  '\uD835\uDC52': "\\mathsl{e}"
-  '\uD835\uDC53': "\\mathsl{f}"
-  '\uD835\uDC54': "\\mathsl{g}"
-  '\uD835\uDC56': "\\mathsl{i}"
-  '\uD835\uDC57': "\\mathsl{j}"
-  '\uD835\uDC58': "\\mathsl{k}"
-  '\uD835\uDC59': "\\mathsl{l}"
-  '\uD835\uDC5A': "\\mathsl{m}"
-  '\uD835\uDC5B': "\\mathsl{n}"
-  '\uD835\uDC5C': "\\mathsl{o}"
-  '\uD835\uDC5D': "\\mathsl{p}"
-  '\uD835\uDC5E': "\\mathsl{q}"
-  '\uD835\uDC5F': "\\mathsl{r}"
-  '\uD835\uDC60': "\\mathsl{s}"
-  '\uD835\uDC61': "\\mathsl{t}"
-  '\uD835\uDC62': "\\mathsl{u}"
-  '\uD835\uDC63': "\\mathsl{v}"
-  '\uD835\uDC64': "\\mathsl{w}"
-  '\uD835\uDC65': "\\mathsl{x}"
-  '\uD835\uDC66': "\\mathsl{y}"
-  '\uD835\uDC67': "\\mathsl{z}"
-  '\uD835\uDC68': "\\mathbit{A}"
-  '\uD835\uDC69': "\\mathbit{B}"
-  '\uD835\uDC6A': "\\mathbit{C}"
-  '\uD835\uDC6B': "\\mathbit{D}"
-  '\uD835\uDC6C': "\\mathbit{E}"
-  '\uD835\uDC6D': "\\mathbit{F}"
-  '\uD835\uDC6E': "\\mathbit{G}"
-  '\uD835\uDC6F': "\\mathbit{H}"
-  '\uD835\uDC70': "\\mathbit{I}"
-  '\uD835\uDC71': "\\mathbit{J}"
-  '\uD835\uDC72': "\\mathbit{K}"
-  '\uD835\uDC73': "\\mathbit{L}"
-  '\uD835\uDC74': "\\mathbit{M}"
-  '\uD835\uDC75': "\\mathbit{N}"
-  '\uD835\uDC76': "\\mathbit{O}"
-  '\uD835\uDC77': "\\mathbit{P}"
-  '\uD835\uDC78': "\\mathbit{Q}"
-  '\uD835\uDC79': "\\mathbit{R}"
-  '\uD835\uDC7A': "\\mathbit{S}"
-  '\uD835\uDC7B': "\\mathbit{T}"
-  '\uD835\uDC7C': "\\mathbit{U}"
-  '\uD835\uDC7D': "\\mathbit{V}"
-  '\uD835\uDC7E': "\\mathbit{W}"
-  '\uD835\uDC7F': "\\mathbit{X}"
-  '\uD835\uDC80': "\\mathbit{Y}"
-  '\uD835\uDC81': "\\mathbit{Z}"
-  '\uD835\uDC82': "\\mathbit{a}"
-  '\uD835\uDC83': "\\mathbit{b}"
-  '\uD835\uDC84': "\\mathbit{c}"
-  '\uD835\uDC85': "\\mathbit{d}"
-  '\uD835\uDC86': "\\mathbit{e}"
-  '\uD835\uDC87': "\\mathbit{f}"
-  '\uD835\uDC88': "\\mathbit{g}"
-  '\uD835\uDC89': "\\mathbit{h}"
-  '\uD835\uDC8A': "\\mathbit{i}"
-  '\uD835\uDC8B': "\\mathbit{j}"
-  '\uD835\uDC8C': "\\mathbit{k}"
-  '\uD835\uDC8D': "\\mathbit{l}"
-  '\uD835\uDC8E': "\\mathbit{m}"
-  '\uD835\uDC8F': "\\mathbit{n}"
-  '\uD835\uDC90': "\\mathbit{o}"
-  '\uD835\uDC91': "\\mathbit{p}"
-  '\uD835\uDC92': "\\mathbit{q}"
-  '\uD835\uDC93': "\\mathbit{r}"
-  '\uD835\uDC94': "\\mathbit{s}"
-  '\uD835\uDC95': "\\mathbit{t}"
-  '\uD835\uDC96': "\\mathbit{u}"
-  '\uD835\uDC97': "\\mathbit{v}"
-  '\uD835\uDC98': "\\mathbit{w}"
-  '\uD835\uDC99': "\\mathbit{x}"
-  '\uD835\uDC9A': "\\mathbit{y}"
-  '\uD835\uDC9B': "\\mathbit{z}"
-  '\uD835\uDC9C': "\\mathscr{A}"
-  '\uD835\uDC9E': "\\mathscr{C}"
-  '\uD835\uDC9F': "\\mathscr{D}"
-  '\uD835\uDCA2': "\\mathscr{G}"
-  '\uD835\uDCA5': "\\mathscr{J}"
-  '\uD835\uDCA6': "\\mathscr{K}"
-  '\uD835\uDCA9': "\\mathscr{N}"
-  '\uD835\uDCAA': "\\mathscr{O}"
-  '\uD835\uDCAB': "\\mathscr{P}"
-  '\uD835\uDCAC': "\\mathscr{Q}"
-  '\uD835\uDCAE': "\\mathscr{S}"
-  '\uD835\uDCAF': "\\mathscr{T}"
-  '\uD835\uDCB0': "\\mathscr{U}"
-  '\uD835\uDCB1': "\\mathscr{V}"
-  '\uD835\uDCB2': "\\mathscr{W}"
-  '\uD835\uDCB3': "\\mathscr{X}"
-  '\uD835\uDCB4': "\\mathscr{Y}"
-  '\uD835\uDCB5': "\\mathscr{Z}"
-  '\uD835\uDCB6': "\\mathscr{a}"
-  '\uD835\uDCB7': "\\mathscr{b}"
-  '\uD835\uDCB8': "\\mathscr{c}"
-  '\uD835\uDCB9': "\\mathscr{d}"
-  '\uD835\uDCBB': "\\mathscr{f}"
-  '\uD835\uDCBD': "\\mathscr{h}"
-  '\uD835\uDCBE': "\\mathscr{i}"
-  '\uD835\uDCBF': "\\mathscr{j}"
-  '\uD835\uDCC0': "\\mathscr{k}"
-  '\uD835\uDCC1': "\\mathscr{l}"
-  '\uD835\uDCC2': "\\mathscr{m}"
-  '\uD835\uDCC3': "\\mathscr{n}"
-  '\uD835\uDCC5': "\\mathscr{p}"
-  '\uD835\uDCC6': "\\mathscr{q}"
-  '\uD835\uDCC7': "\\mathscr{r}"
-  '\uD835\uDCC8': "\\mathscr{s}"
-  '\uD835\uDCC9': "\\mathscr{t}"
-  '\uD835\uDCCA': "\\mathscr{u}"
-  '\uD835\uDCCB': "\\mathscr{v}"
-  '\uD835\uDCCC': "\\mathscr{w}"
-  '\uD835\uDCCD': "\\mathscr{x}"
-  '\uD835\uDCCE': "\\mathscr{y}"
-  '\uD835\uDCCF': "\\mathscr{z}"
-  '\uD835\uDCD0': "\\mathmit{A}"
-  '\uD835\uDCD1': "\\mathmit{B}"
-  '\uD835\uDCD2': "\\mathmit{C}"
-  '\uD835\uDCD3': "\\mathmit{D}"
-  '\uD835\uDCD4': "\\mathmit{E}"
-  '\uD835\uDCD5': "\\mathmit{F}"
-  '\uD835\uDCD6': "\\mathmit{G}"
-  '\uD835\uDCD7': "\\mathmit{H}"
-  '\uD835\uDCD8': "\\mathmit{I}"
-  '\uD835\uDCD9': "\\mathmit{J}"
-  '\uD835\uDCDA': "\\mathmit{K}"
-  '\uD835\uDCDB': "\\mathmit{L}"
-  '\uD835\uDCDC': "\\mathmit{M}"
-  '\uD835\uDCDD': "\\mathmit{N}"
-  '\uD835\uDCDE': "\\mathmit{O}"
-  '\uD835\uDCDF': "\\mathmit{P}"
-  '\uD835\uDCE0': "\\mathmit{Q}"
-  '\uD835\uDCE1': "\\mathmit{R}"
-  '\uD835\uDCE2': "\\mathmit{S}"
-  '\uD835\uDCE3': "\\mathmit{T}"
-  '\uD835\uDCE4': "\\mathmit{U}"
-  '\uD835\uDCE5': "\\mathmit{V}"
-  '\uD835\uDCE6': "\\mathmit{W}"
-  '\uD835\uDCE7': "\\mathmit{X}"
-  '\uD835\uDCE8': "\\mathmit{Y}"
-  '\uD835\uDCE9': "\\mathmit{Z}"
-  '\uD835\uDCEA': "\\mathmit{a}"
-  '\uD835\uDCEB': "\\mathmit{b}"
-  '\uD835\uDCEC': "\\mathmit{c}"
-  '\uD835\uDCED': "\\mathmit{d}"
-  '\uD835\uDCEE': "\\mathmit{e}"
-  '\uD835\uDCEF': "\\mathmit{f}"
-  '\uD835\uDCF0': "\\mathmit{g}"
-  '\uD835\uDCF1': "\\mathmit{h}"
-  '\uD835\uDCF2': "\\mathmit{i}"
-  '\uD835\uDCF3': "\\mathmit{j}"
-  '\uD835\uDCF4': "\\mathmit{k}"
-  '\uD835\uDCF5': "\\mathmit{l}"
-  '\uD835\uDCF6': "\\mathmit{m}"
-  '\uD835\uDCF7': "\\mathmit{n}"
-  '\uD835\uDCF8': "\\mathmit{o}"
-  '\uD835\uDCF9': "\\mathmit{p}"
-  '\uD835\uDCFA': "\\mathmit{q}"
-  '\uD835\uDCFB': "\\mathmit{r}"
-  '\uD835\uDCFC': "\\mathmit{s}"
-  '\uD835\uDCFD': "\\mathmit{t}"
-  '\uD835\uDCFE': "\\mathmit{u}"
-  '\uD835\uDCFF': "\\mathmit{v}"
-  '\uD835\uDD00': "\\mathmit{w}"
-  '\uD835\uDD01': "\\mathmit{x}"
-  '\uD835\uDD02': "\\mathmit{y}"
-  '\uD835\uDD03': "\\mathmit{z}"
-  '\uD835\uDD04': "\\mathfrak{A}"
-  '\uD835\uDD05': "\\mathfrak{B}"
-  '\uD835\uDD07': "\\mathfrak{D}"
-  '\uD835\uDD08': "\\mathfrak{E}"
-  '\uD835\uDD09': "\\mathfrak{F}"
-  '\uD835\uDD0A': "\\mathfrak{G}"
-  '\uD835\uDD0D': "\\mathfrak{J}"
-  '\uD835\uDD0E': "\\mathfrak{K}"
-  '\uD835\uDD0F': "\\mathfrak{L}"
-  '\uD835\uDD10': "\\mathfrak{M}"
-  '\uD835\uDD11': "\\mathfrak{N}"
-  '\uD835\uDD12': "\\mathfrak{O}"
-  '\uD835\uDD13': "\\mathfrak{P}"
-  '\uD835\uDD14': "\\mathfrak{Q}"
-  '\uD835\uDD16': "\\mathfrak{S}"
-  '\uD835\uDD17': "\\mathfrak{T}"
-  '\uD835\uDD18': "\\mathfrak{U}"
-  '\uD835\uDD19': "\\mathfrak{V}"
-  '\uD835\uDD1A': "\\mathfrak{W}"
-  '\uD835\uDD1B': "\\mathfrak{X}"
-  '\uD835\uDD1C': "\\mathfrak{Y}"
-  '\uD835\uDD1E': "\\mathfrak{a}"
-  '\uD835\uDD1F': "\\mathfrak{b}"
-  '\uD835\uDD20': "\\mathfrak{c}"
-  '\uD835\uDD21': "\\mathfrak{d}"
-  '\uD835\uDD22': "\\mathfrak{e}"
-  '\uD835\uDD23': "\\mathfrak{f}"
-  '\uD835\uDD24': "\\mathfrak{g}"
-  '\uD835\uDD25': "\\mathfrak{h}"
-  '\uD835\uDD26': "\\mathfrak{i}"
-  '\uD835\uDD27': "\\mathfrak{j}"
-  '\uD835\uDD28': "\\mathfrak{k}"
-  '\uD835\uDD29': "\\mathfrak{l}"
-  '\uD835\uDD2A': "\\mathfrak{m}"
-  '\uD835\uDD2B': "\\mathfrak{n}"
-  '\uD835\uDD2C': "\\mathfrak{o}"
-  '\uD835\uDD2D': "\\mathfrak{p}"
-  '\uD835\uDD2E': "\\mathfrak{q}"
-  '\uD835\uDD2F': "\\mathfrak{r}"
-  '\uD835\uDD30': "\\mathfrak{s}"
-  '\uD835\uDD31': "\\mathfrak{t}"
-  '\uD835\uDD32': "\\mathfrak{u}"
-  '\uD835\uDD33': "\\mathfrak{v}"
-  '\uD835\uDD34': "\\mathfrak{w}"
-  '\uD835\uDD35': "\\mathfrak{x}"
-  '\uD835\uDD36': "\\mathfrak{y}"
-  '\uD835\uDD37': "\\mathfrak{z}"
-  '\uD835\uDD38': "\\mathbb{A}"
-  '\uD835\uDD39': "\\mathbb{B}"
-  '\uD835\uDD3B': "\\mathbb{D}"
-  '\uD835\uDD3C': "\\mathbb{E}"
-  '\uD835\uDD3D': "\\mathbb{F}"
-  '\uD835\uDD3E': "\\mathbb{G}"
-  '\uD835\uDD40': "\\mathbb{I}"
-  '\uD835\uDD41': "\\mathbb{J}"
-  '\uD835\uDD42': "\\mathbb{K}"
-  '\uD835\uDD43': "\\mathbb{L}"
-  '\uD835\uDD44': "\\mathbb{M}"
-  '\uD835\uDD46': "\\mathbb{O}"
-  '\uD835\uDD4A': "\\mathbb{S}"
-  '\uD835\uDD4B': "\\mathbb{T}"
-  '\uD835\uDD4C': "\\mathbb{U}"
-  '\uD835\uDD4D': "\\mathbb{V}"
-  '\uD835\uDD4E': "\\mathbb{W}"
-  '\uD835\uDD4F': "\\mathbb{X}"
-  '\uD835\uDD50': "\\mathbb{Y}"
-  '\uD835\uDD52': "\\mathbb{a}"
-  '\uD835\uDD53': "\\mathbb{b}"
-  '\uD835\uDD54': "\\mathbb{c}"
-  '\uD835\uDD55': "\\mathbb{d}"
-  '\uD835\uDD56': "\\mathbb{e}"
-  '\uD835\uDD57': "\\mathbb{f}"
-  '\uD835\uDD58': "\\mathbb{g}"
-  '\uD835\uDD59': "\\mathbb{h}"
-  '\uD835\uDD5A': "\\mathbb{i}"
-  '\uD835\uDD5B': "\\mathbb{j}"
-  '\uD835\uDD5C': "\\mathbb{k}"
-  '\uD835\uDD5D': "\\mathbb{l}"
-  '\uD835\uDD5E': "\\mathbb{m}"
-  '\uD835\uDD5F': "\\mathbb{n}"
-  '\uD835\uDD60': "\\mathbb{o}"
-  '\uD835\uDD61': "\\mathbb{p}"
-  '\uD835\uDD62': "\\mathbb{q}"
-  '\uD835\uDD63': "\\mathbb{r}"
-  '\uD835\uDD64': "\\mathbb{s}"
-  '\uD835\uDD65': "\\mathbb{t}"
-  '\uD835\uDD66': "\\mathbb{u}"
-  '\uD835\uDD67': "\\mathbb{v}"
-  '\uD835\uDD68': "\\mathbb{w}"
-  '\uD835\uDD69': "\\mathbb{x}"
-  '\uD835\uDD6A': "\\mathbb{y}"
-  '\uD835\uDD6B': "\\mathbb{z}"
-  '\uD835\uDD6C': "\\mathslbb{A}"
-  '\uD835\uDD6D': "\\mathslbb{B}"
-  '\uD835\uDD6E': "\\mathslbb{C}"
-  '\uD835\uDD6F': "\\mathslbb{D}"
-  '\uD835\uDD70': "\\mathslbb{E}"
-  '\uD835\uDD71': "\\mathslbb{F}"
-  '\uD835\uDD72': "\\mathslbb{G}"
-  '\uD835\uDD73': "\\mathslbb{H}"
-  '\uD835\uDD74': "\\mathslbb{I}"
-  '\uD835\uDD75': "\\mathslbb{J}"
-  '\uD835\uDD76': "\\mathslbb{K}"
-  '\uD835\uDD77': "\\mathslbb{L}"
-  '\uD835\uDD78': "\\mathslbb{M}"
-  '\uD835\uDD79': "\\mathslbb{N}"
-  '\uD835\uDD7A': "\\mathslbb{O}"
-  '\uD835\uDD7B': "\\mathslbb{P}"
-  '\uD835\uDD7C': "\\mathslbb{Q}"
-  '\uD835\uDD7D': "\\mathslbb{R}"
-  '\uD835\uDD7E': "\\mathslbb{S}"
-  '\uD835\uDD7F': "\\mathslbb{T}"
-  '\uD835\uDD80': "\\mathslbb{U}"
-  '\uD835\uDD81': "\\mathslbb{V}"
-  '\uD835\uDD82': "\\mathslbb{W}"
-  '\uD835\uDD83': "\\mathslbb{X}"
-  '\uD835\uDD84': "\\mathslbb{Y}"
-  '\uD835\uDD85': "\\mathslbb{Z}"
-  '\uD835\uDD86': "\\mathslbb{a}"
-  '\uD835\uDD87': "\\mathslbb{b}"
-  '\uD835\uDD88': "\\mathslbb{c}"
-  '\uD835\uDD89': "\\mathslbb{d}"
-  '\uD835\uDD8A': "\\mathslbb{e}"
-  '\uD835\uDD8B': "\\mathslbb{f}"
-  '\uD835\uDD8C': "\\mathslbb{g}"
-  '\uD835\uDD8D': "\\mathslbb{h}"
-  '\uD835\uDD8E': "\\mathslbb{i}"
-  '\uD835\uDD8F': "\\mathslbb{j}"
-  '\uD835\uDD90': "\\mathslbb{k}"
-  '\uD835\uDD91': "\\mathslbb{l}"
-  '\uD835\uDD92': "\\mathslbb{m}"
-  '\uD835\uDD93': "\\mathslbb{n}"
-  '\uD835\uDD94': "\\mathslbb{o}"
-  '\uD835\uDD95': "\\mathslbb{p}"
-  '\uD835\uDD96': "\\mathslbb{q}"
-  '\uD835\uDD97': "\\mathslbb{r}"
-  '\uD835\uDD98': "\\mathslbb{s}"
-  '\uD835\uDD99': "\\mathslbb{t}"
-  '\uD835\uDD9A': "\\mathslbb{u}"
-  '\uD835\uDD9B': "\\mathslbb{v}"
-  '\uD835\uDD9C': "\\mathslbb{w}"
-  '\uD835\uDD9D': "\\mathslbb{x}"
-  '\uD835\uDD9E': "\\mathslbb{y}"
-  '\uD835\uDD9F': "\\mathslbb{z}"
-  '\uD835\uDDA0': "\\mathsf{A}"
-  '\uD835\uDDA1': "\\mathsf{B}"
-  '\uD835\uDDA2': "\\mathsf{C}"
-  '\uD835\uDDA3': "\\mathsf{D}"
-  '\uD835\uDDA4': "\\mathsf{E}"
-  '\uD835\uDDA5': "\\mathsf{F}"
-  '\uD835\uDDA6': "\\mathsf{G}"
-  '\uD835\uDDA7': "\\mathsf{H}"
-  '\uD835\uDDA8': "\\mathsf{I}"
-  '\uD835\uDDA9': "\\mathsf{J}"
-  '\uD835\uDDAA': "\\mathsf{K}"
-  '\uD835\uDDAB': "\\mathsf{L}"
-  '\uD835\uDDAC': "\\mathsf{M}"
-  '\uD835\uDDAD': "\\mathsf{N}"
-  '\uD835\uDDAE': "\\mathsf{O}"
-  '\uD835\uDDAF': "\\mathsf{P}"
-  '\uD835\uDDB0': "\\mathsf{Q}"
-  '\uD835\uDDB1': "\\mathsf{R}"
-  '\uD835\uDDB2': "\\mathsf{S}"
-  '\uD835\uDDB3': "\\mathsf{T}"
-  '\uD835\uDDB4': "\\mathsf{U}"
-  '\uD835\uDDB5': "\\mathsf{V}"
-  '\uD835\uDDB6': "\\mathsf{W}"
-  '\uD835\uDDB7': "\\mathsf{X}"
-  '\uD835\uDDB8': "\\mathsf{Y}"
-  '\uD835\uDDB9': "\\mathsf{Z}"
-  '\uD835\uDDBA': "\\mathsf{a}"
-  '\uD835\uDDBB': "\\mathsf{b}"
-  '\uD835\uDDBC': "\\mathsf{c}"
-  '\uD835\uDDBD': "\\mathsf{d}"
-  '\uD835\uDDBE': "\\mathsf{e}"
-  '\uD835\uDDBF': "\\mathsf{f}"
-  '\uD835\uDDC0': "\\mathsf{g}"
-  '\uD835\uDDC1': "\\mathsf{h}"
-  '\uD835\uDDC2': "\\mathsf{i}"
-  '\uD835\uDDC3': "\\mathsf{j}"
-  '\uD835\uDDC4': "\\mathsf{k}"
-  '\uD835\uDDC5': "\\mathsf{l}"
-  '\uD835\uDDC6': "\\mathsf{m}"
-  '\uD835\uDDC7': "\\mathsf{n}"
-  '\uD835\uDDC8': "\\mathsf{o}"
-  '\uD835\uDDC9': "\\mathsf{p}"
-  '\uD835\uDDCA': "\\mathsf{q}"
-  '\uD835\uDDCB': "\\mathsf{r}"
-  '\uD835\uDDCC': "\\mathsf{s}"
-  '\uD835\uDDCD': "\\mathsf{t}"
-  '\uD835\uDDCE': "\\mathsf{u}"
-  '\uD835\uDDCF': "\\mathsf{v}"
-  '\uD835\uDDD0': "\\mathsf{w}"
-  '\uD835\uDDD1': "\\mathsf{x}"
-  '\uD835\uDDD2': "\\mathsf{y}"
-  '\uD835\uDDD3': "\\mathsf{z}"
-  '\uD835\uDDD4': "\\mathsfbf{A}"
-  '\uD835\uDDD5': "\\mathsfbf{B}"
-  '\uD835\uDDD6': "\\mathsfbf{C}"
-  '\uD835\uDDD7': "\\mathsfbf{D}"
-  '\uD835\uDDD8': "\\mathsfbf{E}"
-  '\uD835\uDDD9': "\\mathsfbf{F}"
-  '\uD835\uDDDA': "\\mathsfbf{G}"
-  '\uD835\uDDDB': "\\mathsfbf{H}"
-  '\uD835\uDDDC': "\\mathsfbf{I}"
-  '\uD835\uDDDD': "\\mathsfbf{J}"
-  '\uD835\uDDDE': "\\mathsfbf{K}"
-  '\uD835\uDDDF': "\\mathsfbf{L}"
-  '\uD835\uDDE0': "\\mathsfbf{M}"
-  '\uD835\uDDE1': "\\mathsfbf{N}"
-  '\uD835\uDDE2': "\\mathsfbf{O}"
-  '\uD835\uDDE3': "\\mathsfbf{P}"
-  '\uD835\uDDE4': "\\mathsfbf{Q}"
-  '\uD835\uDDE5': "\\mathsfbf{R}"
-  '\uD835\uDDE6': "\\mathsfbf{S}"
-  '\uD835\uDDE7': "\\mathsfbf{T}"
-  '\uD835\uDDE8': "\\mathsfbf{U}"
-  '\uD835\uDDE9': "\\mathsfbf{V}"
-  '\uD835\uDDEA': "\\mathsfbf{W}"
-  '\uD835\uDDEB': "\\mathsfbf{X}"
-  '\uD835\uDDEC': "\\mathsfbf{Y}"
-  '\uD835\uDDED': "\\mathsfbf{Z}"
-  '\uD835\uDDEE': "\\mathsfbf{a}"
-  '\uD835\uDDEF': "\\mathsfbf{b}"
-  '\uD835\uDDF0': "\\mathsfbf{c}"
-  '\uD835\uDDF1': "\\mathsfbf{d}"
-  '\uD835\uDDF2': "\\mathsfbf{e}"
-  '\uD835\uDDF3': "\\mathsfbf{f}"
-  '\uD835\uDDF4': "\\mathsfbf{g}"
-  '\uD835\uDDF5': "\\mathsfbf{h}"
-  '\uD835\uDDF6': "\\mathsfbf{i}"
-  '\uD835\uDDF7': "\\mathsfbf{j}"
-  '\uD835\uDDF8': "\\mathsfbf{k}"
-  '\uD835\uDDF9': "\\mathsfbf{l}"
-  '\uD835\uDDFA': "\\mathsfbf{m}"
-  '\uD835\uDDFB': "\\mathsfbf{n}"
-  '\uD835\uDDFC': "\\mathsfbf{o}"
-  '\uD835\uDDFD': "\\mathsfbf{p}"
-  '\uD835\uDDFE': "\\mathsfbf{q}"
-  '\uD835\uDDFF': "\\mathsfbf{r}"
-  '\uD835\uDE00': "\\mathsfbf{s}"
-  '\uD835\uDE01': "\\mathsfbf{t}"
-  '\uD835\uDE02': "\\mathsfbf{u}"
-  '\uD835\uDE03': "\\mathsfbf{v}"
-  '\uD835\uDE04': "\\mathsfbf{w}"
-  '\uD835\uDE05': "\\mathsfbf{x}"
-  '\uD835\uDE06': "\\mathsfbf{y}"
-  '\uD835\uDE07': "\\mathsfbf{z}"
-  '\uD835\uDE08': "\\mathsfsl{A}"
-  '\uD835\uDE09': "\\mathsfsl{B}"
-  '\uD835\uDE0A': "\\mathsfsl{C}"
-  '\uD835\uDE0B': "\\mathsfsl{D}"
-  '\uD835\uDE0C': "\\mathsfsl{E}"
-  '\uD835\uDE0D': "\\mathsfsl{F}"
-  '\uD835\uDE0E': "\\mathsfsl{G}"
-  '\uD835\uDE0F': "\\mathsfsl{H}"
-  '\uD835\uDE10': "\\mathsfsl{I}"
-  '\uD835\uDE11': "\\mathsfsl{J}"
-  '\uD835\uDE12': "\\mathsfsl{K}"
-  '\uD835\uDE13': "\\mathsfsl{L}"
-  '\uD835\uDE14': "\\mathsfsl{M}"
-  '\uD835\uDE15': "\\mathsfsl{N}"
-  '\uD835\uDE16': "\\mathsfsl{O}"
-  '\uD835\uDE17': "\\mathsfsl{P}"
-  '\uD835\uDE18': "\\mathsfsl{Q}"
-  '\uD835\uDE19': "\\mathsfsl{R}"
-  '\uD835\uDE1A': "\\mathsfsl{S}"
-  '\uD835\uDE1B': "\\mathsfsl{T}"
-  '\uD835\uDE1C': "\\mathsfsl{U}"
-  '\uD835\uDE1D': "\\mathsfsl{V}"
-  '\uD835\uDE1E': "\\mathsfsl{W}"
-  '\uD835\uDE1F': "\\mathsfsl{X}"
-  '\uD835\uDE20': "\\mathsfsl{Y}"
-  '\uD835\uDE21': "\\mathsfsl{Z}"
-  '\uD835\uDE22': "\\mathsfsl{a}"
-  '\uD835\uDE23': "\\mathsfsl{b}"
-  '\uD835\uDE24': "\\mathsfsl{c}"
-  '\uD835\uDE25': "\\mathsfsl{d}"
-  '\uD835\uDE26': "\\mathsfsl{e}"
-  '\uD835\uDE27': "\\mathsfsl{f}"
-  '\uD835\uDE28': "\\mathsfsl{g}"
-  '\uD835\uDE29': "\\mathsfsl{h}"
-  '\uD835\uDE2A': "\\mathsfsl{i}"
-  '\uD835\uDE2B': "\\mathsfsl{j}"
-  '\uD835\uDE2C': "\\mathsfsl{k}"
-  '\uD835\uDE2D': "\\mathsfsl{l}"
-  '\uD835\uDE2E': "\\mathsfsl{m}"
-  '\uD835\uDE2F': "\\mathsfsl{n}"
-  '\uD835\uDE30': "\\mathsfsl{o}"
-  '\uD835\uDE31': "\\mathsfsl{p}"
-  '\uD835\uDE32': "\\mathsfsl{q}"
-  '\uD835\uDE33': "\\mathsfsl{r}"
-  '\uD835\uDE34': "\\mathsfsl{s}"
-  '\uD835\uDE35': "\\mathsfsl{t}"
-  '\uD835\uDE36': "\\mathsfsl{u}"
-  '\uD835\uDE37': "\\mathsfsl{v}"
-  '\uD835\uDE38': "\\mathsfsl{w}"
-  '\uD835\uDE39': "\\mathsfsl{x}"
-  '\uD835\uDE3A': "\\mathsfsl{y}"
-  '\uD835\uDE3B': "\\mathsfsl{z}"
-  '\uD835\uDE3C': "\\mathsfbfsl{A}"
-  '\uD835\uDE3D': "\\mathsfbfsl{B}"
-  '\uD835\uDE3E': "\\mathsfbfsl{C}"
-  '\uD835\uDE3F': "\\mathsfbfsl{D}"
-  '\uD835\uDE40': "\\mathsfbfsl{E}"
-  '\uD835\uDE41': "\\mathsfbfsl{F}"
-  '\uD835\uDE42': "\\mathsfbfsl{G}"
-  '\uD835\uDE43': "\\mathsfbfsl{H}"
-  '\uD835\uDE44': "\\mathsfbfsl{I}"
-  '\uD835\uDE45': "\\mathsfbfsl{J}"
-  '\uD835\uDE46': "\\mathsfbfsl{K}"
-  '\uD835\uDE47': "\\mathsfbfsl{L}"
-  '\uD835\uDE48': "\\mathsfbfsl{M}"
-  '\uD835\uDE49': "\\mathsfbfsl{N}"
-  '\uD835\uDE4A': "\\mathsfbfsl{O}"
-  '\uD835\uDE4B': "\\mathsfbfsl{P}"
-  '\uD835\uDE4C': "\\mathsfbfsl{Q}"
-  '\uD835\uDE4D': "\\mathsfbfsl{R}"
-  '\uD835\uDE4E': "\\mathsfbfsl{S}"
-  '\uD835\uDE4F': "\\mathsfbfsl{T}"
-  '\uD835\uDE50': "\\mathsfbfsl{U}"
-  '\uD835\uDE51': "\\mathsfbfsl{V}"
-  '\uD835\uDE52': "\\mathsfbfsl{W}"
-  '\uD835\uDE53': "\\mathsfbfsl{X}"
-  '\uD835\uDE54': "\\mathsfbfsl{Y}"
-  '\uD835\uDE55': "\\mathsfbfsl{Z}"
-  '\uD835\uDE56': "\\mathsfbfsl{a}"
-  '\uD835\uDE57': "\\mathsfbfsl{b}"
-  '\uD835\uDE58': "\\mathsfbfsl{c}"
-  '\uD835\uDE59': "\\mathsfbfsl{d}"
-  '\uD835\uDE5A': "\\mathsfbfsl{e}"
-  '\uD835\uDE5B': "\\mathsfbfsl{f}"
-  '\uD835\uDE5C': "\\mathsfbfsl{g}"
-  '\uD835\uDE5D': "\\mathsfbfsl{h}"
-  '\uD835\uDE5E': "\\mathsfbfsl{i}"
-  '\uD835\uDE5F': "\\mathsfbfsl{j}"
-  '\uD835\uDE60': "\\mathsfbfsl{k}"
-  '\uD835\uDE61': "\\mathsfbfsl{l}"
-  '\uD835\uDE62': "\\mathsfbfsl{m}"
-  '\uD835\uDE63': "\\mathsfbfsl{n}"
-  '\uD835\uDE64': "\\mathsfbfsl{o}"
-  '\uD835\uDE65': "\\mathsfbfsl{p}"
-  '\uD835\uDE66': "\\mathsfbfsl{q}"
-  '\uD835\uDE67': "\\mathsfbfsl{r}"
-  '\uD835\uDE68': "\\mathsfbfsl{s}"
-  '\uD835\uDE69': "\\mathsfbfsl{t}"
-  '\uD835\uDE6A': "\\mathsfbfsl{u}"
-  '\uD835\uDE6B': "\\mathsfbfsl{v}"
-  '\uD835\uDE6C': "\\mathsfbfsl{w}"
-  '\uD835\uDE6D': "\\mathsfbfsl{x}"
-  '\uD835\uDE6E': "\\mathsfbfsl{y}"
-  '\uD835\uDE6F': "\\mathsfbfsl{z}"
-  '\uD835\uDE70': "\\mathtt{A}"
-  '\uD835\uDE71': "\\mathtt{B}"
-  '\uD835\uDE72': "\\mathtt{C}"
-  '\uD835\uDE73': "\\mathtt{D}"
-  '\uD835\uDE74': "\\mathtt{E}"
-  '\uD835\uDE75': "\\mathtt{F}"
-  '\uD835\uDE76': "\\mathtt{G}"
-  '\uD835\uDE77': "\\mathtt{H}"
-  '\uD835\uDE78': "\\mathtt{I}"
-  '\uD835\uDE79': "\\mathtt{J}"
-  '\uD835\uDE7A': "\\mathtt{K}"
-  '\uD835\uDE7B': "\\mathtt{L}"
-  '\uD835\uDE7C': "\\mathtt{M}"
-  '\uD835\uDE7D': "\\mathtt{N}"
-  '\uD835\uDE7E': "\\mathtt{O}"
-  '\uD835\uDE7F': "\\mathtt{P}"
-  '\uD835\uDE80': "\\mathtt{Q}"
-  '\uD835\uDE81': "\\mathtt{R}"
-  '\uD835\uDE82': "\\mathtt{S}"
-  '\uD835\uDE83': "\\mathtt{T}"
-  '\uD835\uDE84': "\\mathtt{U}"
-  '\uD835\uDE85': "\\mathtt{V}"
-  '\uD835\uDE86': "\\mathtt{W}"
-  '\uD835\uDE87': "\\mathtt{X}"
-  '\uD835\uDE88': "\\mathtt{Y}"
-  '\uD835\uDE89': "\\mathtt{Z}"
-  '\uD835\uDE8A': "\\mathtt{a}"
-  '\uD835\uDE8B': "\\mathtt{b}"
-  '\uD835\uDE8C': "\\mathtt{c}"
-  '\uD835\uDE8D': "\\mathtt{d}"
-  '\uD835\uDE8E': "\\mathtt{e}"
-  '\uD835\uDE8F': "\\mathtt{f}"
-  '\uD835\uDE90': "\\mathtt{g}"
-  '\uD835\uDE91': "\\mathtt{h}"
-  '\uD835\uDE92': "\\mathtt{i}"
-  '\uD835\uDE93': "\\mathtt{j}"
-  '\uD835\uDE94': "\\mathtt{k}"
-  '\uD835\uDE95': "\\mathtt{l}"
-  '\uD835\uDE96': "\\mathtt{m}"
-  '\uD835\uDE97': "\\mathtt{n}"
-  '\uD835\uDE98': "\\mathtt{o}"
-  '\uD835\uDE99': "\\mathtt{p}"
-  '\uD835\uDE9A': "\\mathtt{q}"
-  '\uD835\uDE9B': "\\mathtt{r}"
-  '\uD835\uDE9C': "\\mathtt{s}"
-  '\uD835\uDE9D': "\\mathtt{t}"
-  '\uD835\uDE9E': "\\mathtt{u}"
-  '\uD835\uDE9F': "\\mathtt{v}"
-  '\uD835\uDEA0': "\\mathtt{w}"
-  '\uD835\uDEA1': "\\mathtt{x}"
-  '\uD835\uDEA2': "\\mathtt{y}"
-  '\uD835\uDEA3': "\\mathtt{z}"
-  '\uD835\uDEA4': "\\imath{}"
-  '\uD835\uDEA5': "\\jmath{}"
-  '\uD835\uDEA8': "\\mathbf{\\Alpha}"
-  '\uD835\uDEA9': "\\mathbf{\\Beta}"
-  '\uD835\uDEAA': "\\mathbf{\\Gamma}"
-  '\uD835\uDEAB': "\\mathbf{\\Delta}"
-  '\uD835\uDEAC': "\\mathbf{\\Epsilon}"
-  '\uD835\uDEAD': "\\mathbf{\\Zeta}"
-  '\uD835\uDEAE': "\\mathbf{\\Eta}"
-  '\uD835\uDEAF': "\\mathbf{\\Theta}"
-  '\uD835\uDEB0': "\\mathbf{\\Iota}"
-  '\uD835\uDEB1': "\\mathbf{\\Kappa}"
-  '\uD835\uDEB2': "\\mathbf{\\Lambda}"
-  '\uD835\uDEB3': "M"
-  '\uD835\uDEB4': "N"
-  '\uD835\uDEB5': "\\mathbf{\\Xi}"
-  '\uD835\uDEB6': "O"
-  '\uD835\uDEB7': "\\mathbf{\\Pi}"
-  '\uD835\uDEB8': "\\mathbf{\\Rho}"
-  '\uD835\uDEBA': "\\mathbf{\\Sigma}"
-  '\uD835\uDEBB': "\\mathbf{\\Tau}"
-  '\uD835\uDEBC': "\\mathbf{\\Upsilon}"
-  '\uD835\uDEBD': "\\mathbf{\\Phi}"
-  '\uD835\uDEBE': "\\mathbf{\\Chi}"
-  '\uD835\uDEBF': "\\mathbf{\\Psi}"
-  '\uD835\uDEC0': "\\mathbf{\\Omega}"
-  '\uD835\uDEC1': "\\mathbf{\\nabla}"
-  '\uD835\uDEC2': "\\mathbf{\\Alpha}"
-  '\uD835\uDEC3': "\\mathbf{\\Beta}"
-  '\uD835\uDEC4': "\\mathbf{\\Gamma}"
-  '\uD835\uDEC5': "\\mathbf{\\Delta}"
-  '\uD835\uDEC6': "\\mathbf{\\Epsilon}"
-  '\uD835\uDEC7': "\\mathbf{\\Zeta}"
-  '\uD835\uDEC8': "\\mathbf{\\Eta}"
-  '\uD835\uDEC9': "\\mathbf{\\theta}"
-  '\uD835\uDECA': "\\mathbf{\\Iota}"
-  '\uD835\uDECB': "\\mathbf{\\Kappa}"
-  '\uD835\uDECC': "\\mathbf{\\Lambda}"
-  '\uD835\uDECD': "M"
-  '\uD835\uDECE': "N"
-  '\uD835\uDECF': "\\mathbf{\\Xi}"
-  '\uD835\uDED0': "O"
-  '\uD835\uDED1': "\\mathbf{\\Pi}"
-  '\uD835\uDED2': "\\mathbf{\\Rho}"
-  '\uD835\uDED3': "\\mathbf{\\varsigma}"
-  '\uD835\uDED4': "\\mathbf{\\Sigma}"
-  '\uD835\uDED5': "\\mathbf{\\Tau}"
-  '\uD835\uDED6': "\\mathbf{\\Upsilon}"
-  '\uD835\uDED7': "\\mathbf{\\Phi}"
-  '\uD835\uDED8': "\\mathbf{\\Chi}"
-  '\uD835\uDED9': "\\mathbf{\\Psi}"
-  '\uD835\uDEDA': "\\mathbf{\\Omega}"
-  '\uD835\uDEDB': "\\partial{}"
-  '\uD835\uDEDC': "\\in{}"
-  '\uD835\uDEE2': "\\mathsl{\\Alpha}"
-  '\uD835\uDEE3': "\\mathsl{\\Beta}"
-  '\uD835\uDEE4': "\\mathsl{\\Gamma}"
-  '\uD835\uDEE5': "\\mathsl{\\Delta}"
-  '\uD835\uDEE6': "\\mathsl{\\Epsilon}"
-  '\uD835\uDEE7': "\\mathsl{\\Zeta}"
-  '\uD835\uDEE8': "\\mathsl{\\Eta}"
-  '\uD835\uDEE9': "\\mathsl{\\Theta}"
-  '\uD835\uDEEA': "\\mathsl{\\Iota}"
-  '\uD835\uDEEB': "\\mathsl{\\Kappa}"
-  '\uD835\uDEEC': "\\mathsl{\\Lambda}"
-  '\uD835\uDEED': "M"
-  '\uD835\uDEEE': "N"
-  '\uD835\uDEEF': "\\mathsl{\\Xi}"
-  '\uD835\uDEF0': "O"
-  '\uD835\uDEF1': "\\mathsl{\\Pi}"
-  '\uD835\uDEF2': "\\mathsl{\\Rho}"
-  '\uD835\uDEF4': "\\mathsl{\\Sigma}"
-  '\uD835\uDEF5': "\\mathsl{\\Tau}"
-  '\uD835\uDEF6': "\\mathsl{\\Upsilon}"
-  '\uD835\uDEF7': "\\mathsl{\\Phi}"
-  '\uD835\uDEF8': "\\mathsl{\\Chi}"
-  '\uD835\uDEF9': "\\mathsl{\\Psi}"
-  '\uD835\uDEFA': "\\mathsl{\\Omega}"
-  '\uD835\uDEFB': "\\mathsl{\\nabla}"
-  '\uD835\uDEFC': "\\mathsl{\\Alpha}"
-  '\uD835\uDEFD': "\\mathsl{\\Beta}"
-  '\uD835\uDEFE': "\\mathsl{\\Gamma}"
-  '\uD835\uDEFF': "\\mathsl{\\Delta}"
-  '\uD835\uDF00': "\\mathsl{\\Epsilon}"
-  '\uD835\uDF01': "\\mathsl{\\Zeta}"
-  '\uD835\uDF02': "\\mathsl{\\Eta}"
-  '\uD835\uDF03': "\\mathsl{\\Theta}"
-  '\uD835\uDF04': "\\mathsl{\\Iota}"
-  '\uD835\uDF05': "\\mathsl{\\Kappa}"
-  '\uD835\uDF06': "\\mathsl{\\Lambda}"
-  '\uD835\uDF07': "M"
-  '\uD835\uDF08': "N"
-  '\uD835\uDF09': "\\mathsl{\\Xi}"
-  '\uD835\uDF0A': "O"
-  '\uD835\uDF0B': "\\mathsl{\\Pi}"
-  '\uD835\uDF0C': "\\mathsl{\\Rho}"
-  '\uD835\uDF0D': "\\mathsl{\\varsigma}"
-  '\uD835\uDF0E': "\\mathsl{\\Sigma}"
-  '\uD835\uDF0F': "\\mathsl{\\Tau}"
-  '\uD835\uDF10': "\\mathsl{\\Upsilon}"
-  '\uD835\uDF11': "\\mathsl{\\Phi}"
-  '\uD835\uDF12': "\\mathsl{\\Chi}"
-  '\uD835\uDF13': "\\mathsl{\\Psi}"
-  '\uD835\uDF14': "\\mathsl{\\Omega}"
-  '\uD835\uDF15': "\\partial{}"
-  '\uD835\uDF16': "\\in{}"
-  '\uD835\uDF1C': "\\mathbit{\\Alpha}"
-  '\uD835\uDF1D': "\\mathbit{\\Beta}"
-  '\uD835\uDF1E': "\\mathbit{\\Gamma}"
-  '\uD835\uDF1F': "\\mathbit{\\Delta}"
-  '\uD835\uDF20': "\\mathbit{\\Epsilon}"
-  '\uD835\uDF21': "\\mathbit{\\Zeta}"
-  '\uD835\uDF22': "\\mathbit{\\Eta}"
-  '\uD835\uDF23': "\\mathbit{\\Theta}"
-  '\uD835\uDF24': "\\mathbit{\\Iota}"
-  '\uD835\uDF25': "\\mathbit{\\Kappa}"
-  '\uD835\uDF26': "\\mathbit{\\Lambda}"
-  '\uD835\uDF27': "M"
-  '\uD835\uDF28': "N"
-  '\uD835\uDF29': "\\mathbit{\\Xi}"
-  '\uD835\uDF2A': "O"
-  '\uD835\uDF2B': "\\mathbit{\\Pi}"
-  '\uD835\uDF2C': "\\mathbit{\\Rho}"
-  '\uD835\uDF2E': "\\mathbit{\\Sigma}"
-  '\uD835\uDF2F': "\\mathbit{\\Tau}"
-  '\uD835\uDF30': "\\mathbit{\\Upsilon}"
-  '\uD835\uDF31': "\\mathbit{\\Phi}"
-  '\uD835\uDF32': "\\mathbit{\\Chi}"
-  '\uD835\uDF33': "\\mathbit{\\Psi}"
-  '\uD835\uDF34': "\\mathbit{\\Omega}"
-  '\uD835\uDF35': "\\mathbit{\\nabla}"
-  '\uD835\uDF36': "\\mathbit{\\Alpha}"
-  '\uD835\uDF37': "\\mathbit{\\Beta}"
-  '\uD835\uDF38': "\\mathbit{\\Gamma}"
-  '\uD835\uDF39': "\\mathbit{\\Delta}"
-  '\uD835\uDF3A': "\\mathbit{\\Epsilon}"
-  '\uD835\uDF3B': "\\mathbit{\\Zeta}"
-  '\uD835\uDF3C': "\\mathbit{\\Eta}"
-  '\uD835\uDF3D': "\\mathbit{\\Theta}"
-  '\uD835\uDF3E': "\\mathbit{\\Iota}"
-  '\uD835\uDF3F': "\\mathbit{\\Kappa}"
-  '\uD835\uDF40': "\\mathbit{\\Lambda}"
-  '\uD835\uDF41': "M"
-  '\uD835\uDF42': "N"
-  '\uD835\uDF43': "\\mathbit{\\Xi}"
-  '\uD835\uDF44': "O"
-  '\uD835\uDF45': "\\mathbit{\\Pi}"
-  '\uD835\uDF46': "\\mathbit{\\Rho}"
-  '\uD835\uDF47': "\\mathbit{\\varsigma}"
-  '\uD835\uDF48': "\\mathbit{\\Sigma}"
-  '\uD835\uDF49': "\\mathbit{\\Tau}"
-  '\uD835\uDF4A': "\\mathbit{\\Upsilon}"
-  '\uD835\uDF4B': "\\mathbit{\\Phi}"
-  '\uD835\uDF4C': "\\mathbit{\\Chi}"
-  '\uD835\uDF4D': "\\mathbit{\\Psi}"
-  '\uD835\uDF4E': "\\mathbit{\\Omega}"
-  '\uD835\uDF4F': "\\partial{}"
-  '\uD835\uDF50': "\\in{}"
-  '\uD835\uDF56': "\\mathsfbf{\\Alpha}"
-  '\uD835\uDF57': "\\mathsfbf{\\Beta}"
-  '\uD835\uDF58': "\\mathsfbf{\\Gamma}"
-  '\uD835\uDF59': "\\mathsfbf{\\Delta}"
-  '\uD835\uDF5A': "\\mathsfbf{\\Epsilon}"
-  '\uD835\uDF5B': "\\mathsfbf{\\Zeta}"
-  '\uD835\uDF5C': "\\mathsfbf{\\Eta}"
-  '\uD835\uDF5D': "\\mathsfbf{\\Theta}"
-  '\uD835\uDF5E': "\\mathsfbf{\\Iota}"
-  '\uD835\uDF5F': "\\mathsfbf{\\Kappa}"
-  '\uD835\uDF60': "\\mathsfbf{\\Lambda}"
-  '\uD835\uDF61': "M"
-  '\uD835\uDF62': "N"
-  '\uD835\uDF63': "\\mathsfbf{\\Xi}"
-  '\uD835\uDF64': "O"
-  '\uD835\uDF65': "\\mathsfbf{\\Pi}"
-  '\uD835\uDF66': "\\mathsfbf{\\Rho}"
-  '\uD835\uDF68': "\\mathsfbf{\\Sigma}"
-  '\uD835\uDF69': "\\mathsfbf{\\Tau}"
-  '\uD835\uDF6A': "\\mathsfbf{\\Upsilon}"
-  '\uD835\uDF6B': "\\mathsfbf{\\Phi}"
-  '\uD835\uDF6C': "\\mathsfbf{\\Chi}"
-  '\uD835\uDF6D': "\\mathsfbf{\\Psi}"
-  '\uD835\uDF6E': "\\mathsfbf{\\Omega}"
-  '\uD835\uDF6F': "\\mathsfbf{\\nabla}"
-  '\uD835\uDF70': "\\mathsfbf{\\Alpha}"
-  '\uD835\uDF71': "\\mathsfbf{\\Beta}"
-  '\uD835\uDF72': "\\mathsfbf{\\Gamma}"
-  '\uD835\uDF73': "\\mathsfbf{\\Delta}"
-  '\uD835\uDF74': "\\mathsfbf{\\Epsilon}"
-  '\uD835\uDF75': "\\mathsfbf{\\Zeta}"
-  '\uD835\uDF76': "\\mathsfbf{\\Eta}"
-  '\uD835\uDF77': "\\mathsfbf{\\Theta}"
-  '\uD835\uDF78': "\\mathsfbf{\\Iota}"
-  '\uD835\uDF79': "\\mathsfbf{\\Kappa}"
-  '\uD835\uDF7A': "\\mathsfbf{\\Lambda}"
-  '\uD835\uDF7B': "M"
-  '\uD835\uDF7C': "N"
-  '\uD835\uDF7D': "\\mathsfbf{\\Xi}"
-  '\uD835\uDF7E': "O"
-  '\uD835\uDF7F': "\\mathsfbf{\\Pi}"
-  '\uD835\uDF80': "\\mathsfbf{\\Rho}"
-  '\uD835\uDF81': "\\mathsfbf{\\varsigma}"
-  '\uD835\uDF82': "\\mathsfbf{\\Sigma}"
-  '\uD835\uDF83': "\\mathsfbf{\\Tau}"
-  '\uD835\uDF84': "\\mathsfbf{\\Upsilon}"
-  '\uD835\uDF85': "\\mathsfbf{\\Phi}"
-  '\uD835\uDF86': "\\mathsfbf{\\Chi}"
-  '\uD835\uDF87': "\\mathsfbf{\\Psi}"
-  '\uD835\uDF88': "\\mathsfbf{\\Omega}"
-  '\uD835\uDF89': "\\partial{}"
-  '\uD835\uDF8A': "\\in{}"
-  '\uD835\uDF90': "\\mathsfbfsl{\\Alpha}"
-  '\uD835\uDF91': "\\mathsfbfsl{\\Beta}"
-  '\uD835\uDF92': "\\mathsfbfsl{\\Gamma}"
-  '\uD835\uDF93': "\\mathsfbfsl{\\Delta}"
-  '\uD835\uDF94': "\\mathsfbfsl{\\Epsilon}"
-  '\uD835\uDF95': "\\mathsfbfsl{\\Zeta}"
-  '\uD835\uDF96': "\\mathsfbfsl{\\Eta}"
-  '\uD835\uDF97': "\\mathsfbfsl{\\vartheta}"
-  '\uD835\uDF98': "\\mathsfbfsl{\\Iota}"
-  '\uD835\uDF99': "\\mathsfbfsl{\\Kappa}"
-  '\uD835\uDF9A': "\\mathsfbfsl{\\Lambda}"
-  '\uD835\uDF9B': "M"
-  '\uD835\uDF9C': "N"
-  '\uD835\uDF9D': "\\mathsfbfsl{\\Xi}"
-  '\uD835\uDF9E': "O"
-  '\uD835\uDF9F': "\\mathsfbfsl{\\Pi}"
-  '\uD835\uDFA0': "\\mathsfbfsl{\\Rho}"
-  '\uD835\uDFA2': "\\mathsfbfsl{\\Sigma}"
-  '\uD835\uDFA3': "\\mathsfbfsl{\\Tau}"
-  '\uD835\uDFA4': "\\mathsfbfsl{\\Upsilon}"
-  '\uD835\uDFA5': "\\mathsfbfsl{\\Phi}"
-  '\uD835\uDFA6': "\\mathsfbfsl{\\Chi}"
-  '\uD835\uDFA7': "\\mathsfbfsl{\\Psi}"
-  '\uD835\uDFA8': "\\mathsfbfsl{\\Omega}"
-  '\uD835\uDFA9': "\\mathsfbfsl{\\nabla}"
-  '\uD835\uDFAA': "\\mathsfbfsl{\\Alpha}"
-  '\uD835\uDFAB': "\\mathsfbfsl{\\Beta}"
-  '\uD835\uDFAC': "\\mathsfbfsl{\\Gamma}"
-  '\uD835\uDFAD': "\\mathsfbfsl{\\Delta}"
-  '\uD835\uDFAE': "\\mathsfbfsl{\\Epsilon}"
-  '\uD835\uDFAF': "\\mathsfbfsl{\\Zeta}"
-  '\uD835\uDFB0': "\\mathsfbfsl{\\Eta}"
-  '\uD835\uDFB1': "\\mathsfbfsl{\\vartheta}"
-  '\uD835\uDFB2': "\\mathsfbfsl{\\Iota}"
-  '\uD835\uDFB3': "\\mathsfbfsl{\\Kappa}"
-  '\uD835\uDFB4': "\\mathsfbfsl{\\Lambda}"
-  '\uD835\uDFB5': "M"
-  '\uD835\uDFB6': "N"
-  '\uD835\uDFB7': "\\mathsfbfsl{\\Xi}"
-  '\uD835\uDFB8': "O"
-  '\uD835\uDFB9': "\\mathsfbfsl{\\Pi}"
-  '\uD835\uDFBA': "\\mathsfbfsl{\\Rho}"
-  '\uD835\uDFBB': "\\mathsfbfsl{\\varsigma}"
-  '\uD835\uDFBC': "\\mathsfbfsl{\\Sigma}"
-  '\uD835\uDFBD': "\\mathsfbfsl{\\Tau}"
-  '\uD835\uDFBE': "\\mathsfbfsl{\\Upsilon}"
-  '\uD835\uDFBF': "\\mathsfbfsl{\\Phi}"
-  '\uD835\uDFC0': "\\mathsfbfsl{\\Chi}"
-  '\uD835\uDFC1': "\\mathsfbfsl{\\Psi}"
-  '\uD835\uDFC2': "\\mathsfbfsl{\\Omega}"
-  '\uD835\uDFC3': "\\partial{}"
-  '\uD835\uDFC4': "\\in{}"
-  '\uD835\uDFCA': "\\mbfDigamma{}"
-  '\uD835\uDFCB': "\\mbfdigamma{}"
-  '\uD835\uDFCE': "\\mathbf{0}"
-  '\uD835\uDFCF': "\\mathbf{1}"
-  '\uD835\uDFD0': "\\mathbf{2}"
-  '\uD835\uDFD1': "\\mathbf{3}"
-  '\uD835\uDFD2': "\\mathbf{4}"
-  '\uD835\uDFD3': "\\mathbf{5}"
-  '\uD835\uDFD4': "\\mathbf{6}"
-  '\uD835\uDFD5': "\\mathbf{7}"
-  '\uD835\uDFD6': "\\mathbf{8}"
-  '\uD835\uDFD7': "\\mathbf{9}"
-  '\uD835\uDFD8': "\\mathbb{0}"
-  '\uD835\uDFD9': "\\mathbb{1}"
-  '\uD835\uDFDA': "\\mathbb{2}"
-  '\uD835\uDFDB': "\\mathbb{3}"
-  '\uD835\uDFDC': "\\mathbb{4}"
-  '\uD835\uDFDD': "\\mathbb{5}"
-  '\uD835\uDFDE': "\\mathbb{6}"
-  '\uD835\uDFDF': "\\mathbb{7}"
-  '\uD835\uDFE0': "\\mathbb{8}"
-  '\uD835\uDFE1': "\\mathbb{9}"
-  '\uD835\uDFE2': "\\mathsf{0}"
-  '\uD835\uDFE3': "\\mathsf{1}"
-  '\uD835\uDFE4': "\\mathsf{2}"
-  '\uD835\uDFE5': "\\mathsf{3}"
-  '\uD835\uDFE6': "\\mathsf{4}"
-  '\uD835\uDFE7': "\\mathsf{5}"
-  '\uD835\uDFE8': "\\mathsf{6}"
-  '\uD835\uDFE9': "\\mathsf{7}"
-  '\uD835\uDFEA': "\\mathsf{8}"
-  '\uD835\uDFEB': "\\mathsf{9}"
-  '\uD835\uDFEC': "\\mathsfbf{0}"
-  '\uD835\uDFED': "\\mathsfbf{1}"
-  '\uD835\uDFEE': "\\mathsfbf{2}"
-  '\uD835\uDFEF': "\\mathsfbf{3}"
-  '\uD835\uDFF0': "\\mathsfbf{4}"
-  '\uD835\uDFF1': "\\mathsfbf{5}"
-  '\uD835\uDFF2': "\\mathsfbf{6}"
-  '\uD835\uDFF3': "\\mathsfbf{7}"
-  '\uD835\uDFF4': "\\mathsfbf{8}"
-  '\uD835\uDFF5': "\\mathsfbf{9}"
-  '\uD835\uDFF6': "\\mathtt{0}"
-  '\uD835\uDFF7': "\\mathtt{1}"
-  '\uD835\uDFF8': "\\mathtt{2}"
-  '\uD835\uDFF9': "\\mathtt{3}"
-  '\uD835\uDFFA': "\\mathtt{4}"
-  '\uD835\uDFFB': "\\mathtt{5}"
-  '\uD835\uDFFC': "\\mathtt{6}"
-  '\uD835\uDFFD': "\\mathtt{7}"
-  '\uD835\uDFFE': "\\mathtt{8}"
-  '\uD835\uDFFF': "\\mathtt{9}"
+  '\u219D': "\\arrowwaveright{}" # RIGHTWARDS WAVE ARROW
+  '\u219E': "\\twoheadleftarrow{}" # LEFTWARDS TWO HEADED ARROW
+  '\u219F': "\\twoheaduparrow{}" # up two-headed arrow
+  '\u21A0': "\\twoheadrightarrow{}" # RIGHTWARDS TWO HEADED ARROW
+  '\u21A1': "\\twoheaddownarrow{}" # down two-headed arrow
+  '\u21A2': "\\leftarrowtail{}" # LEFTWARDS ARROW WITH TAIL
+  '\u21A3': "\\rightarrowtail{}" # RIGHTWARDS ARROW WITH TAIL
+  '\u21A4': "\\mapsfrom{}" # = \mappedfrom (kpfonts), maps to, leftward
+  '\u21A5': "\\MapsUp{}" # maps to, upward
+  '\u21A6': "\\mapsto{}" # RIGHTWARDS ARROW FROM BAR
+  '\u21A7': "\\MapsDown{}" # maps to, downward
+  '\u21A8': "\\updownarrowbar{}" # UP DOWN ARROW WITH BASE (perpendicular)
+  '\u21A9': "\\hookleftarrow{}" # LEFTWARDS ARROW WITH HOOK
+  '\u21AA': "\\hookrightarrow{}" # RIGHTWARDS ARROW WITH HOOK
+  '\u21AB': "\\looparrowleft{}" # LEFTWARDS ARROW WITH LOOP
+  '\u21AC': "\\looparrowright{}" # RIGHTWARDS ARROW WITH LOOP
+  '\u21AD': "\\leftrightsquigarrow{}" # LEFT RIGHT WAVE ARROW
+  '\u21AE': "\\nleftrightarrow{}" # LEFT RIGHT ARROW WITH STROKE
+  '\u21AF': "\\lightning{}" # t \Lightning (marvosym), DOWNWARDS ZIGZAG ARROW
+  '\u21B0': "\\Lsh{}" # UPWARDS ARROW WITH TIP LEFTWARDS
+  '\u21B1': "\\Rsh{}" # UPWARDS ARROW WITH TIP RIGHTWARDS
+  '\u21B2': "\\dlsh{}" # left down angled arrow
+  '\u21B3': "\\ElsevierGlyph{21B3}" # DOWNWARDS ARROW WITH TIP RIGHTWARDS
+  '\u21B4': "\\linefeed{}" # RIGHTWARDS ARROW WITH CORNER DOWNWARDS
+  '\u21B5': "\\carriagereturn{}" # downwards arrow with corner leftward = carriage return
+  '\u21B6': "\\curvearrowleft{}" # ANTICLOCKWISE TOP SEMICIRCLE ARROW
+  '\u21B7': "\\curvearrowright{}" # CLOCKWISE TOP SEMICIRCLE ARROW
+  '\u21B8': "\\barovernorthwestarrow{}" # NORTH WEST ARROW TO LONG BAR
+  '\u21B9': "\\barleftarrowrightarrowba{}" # LEFTWARDS ARROW TO BAR OVER RIGHTWARDS ARROW TO BAR
+  '\u21BA': "\\circlearrowleft{}" # ANTICLOCKWISE OPEN CIRCLE ARROW
+  '\u21BB': "\\circlearrowright{}" # CLOCKWISE OPEN CIRCLE ARROW
+  '\u21BC': "\\leftharpoonup{}" # LEFTWARDS HARPOON WITH BARB UPWARDS
+  '\u21BD': "\\leftharpoondown{}" # LEFTWARDS HARPOON WITH BARB DOWNWARDS
+  '\u21BE': "\\upharpoonright{}" # UPWARDS HARPOON WITH BARB RIGHTWARDS
+  '\u21BF': "\\upharpoonleft{}" # UPWARDS HARPOON WITH BARB LEFTWARDS
+  '\u21C0': "\\rightharpoonup{}" # RIGHTWARDS HARPOON WITH BARB UPWARDS
+  '\u21C1': "\\rightharpoondown{}" # RIGHTWARDS HARPOON WITH BARB DOWNWARDS
+  '\u21C2': "\\downharpoonright{}" # DOWNWARDS HARPOON WITH BARB RIGHTWARDS
+  '\u21C3': "\\downharpoonleft{}" # DOWNWARDS HARPOON WITH BARB LEFTWARDS
+  '\u21C4': "\\rightleftarrows{}" # RIGHTWARDS ARROW OVER LEFTWARDS ARROW
+  '\u21C5': "\\dblarrowupdown{}" # UPWARDS ARROW LEFTWARDS OF DOWNWARDS ARROW
+  '\u21C6': "\\leftrightarrows{}" # LEFTWARDS ARROW OVER RIGHTWARDS ARROW
+  '\u21C7': "\\leftleftarrows{}" # LEFTWARDS PAIRED ARROWS
+  '\u21C8': "\\upuparrows{}" # UPWARDS PAIRED ARROWS
+  '\u21C9': "\\rightrightarrows{}" # RIGHTWARDS PAIRED ARROWS
+  '\u21CA': "\\downdownarrows{}" # DOWNWARDS PAIRED ARROWS
+  '\u21CB': "\\leftrightharpoons{}" # LEFTWARDS HARPOON OVER RIGHTWARDS HARPOON
+  '\u21CC': "\\rightleftharpoons{}" # RIGHTWARDS HARPOON OVER LEFTWARDS HARPOON
+  '\u21CD': "\\nLeftarrow{}" # LEFTWARDS DOUBLE ARROW WITH STROKE
+  '\u21CE': "\\nLeftrightarrow{}" # LEFT RIGHT DOUBLE ARROW WITH STROKE
+  '\u21CF': "\\nRightarrow{}" # RIGHTWARDS DOUBLE ARROW WITH STROKE
+  '\u21D0': "\\Leftarrow{}" # LEFTWARDS DOUBLE ARROW
+  '\u21D1': "\\Uparrow{}" # UPWARDS DOUBLE ARROW
+  '\u21D2': "\\Rightarrow{}" # RIGHTWARDS DOUBLE ARROW
+  '\u21D3': "\\Downarrow{}" # DOWNWARDS DOUBLE ARROW
+  '\u21D4': "\\Leftrightarrow{}" # LEFT RIGHT DOUBLE ARROW
+  '\u21D5': "\\Updownarrow{}" # UP DOWN DOUBLE ARROW
+  '\u21D6': "\\Nwarrow{}" # nw pointing double arrow
+  '\u21D7': "\\Nearrow{}" # ne pointing double arrow
+  '\u21D8': "\\Searrow{}" # se pointing double arrow
+  '\u21D9': "\\Swarrow{}" # sw pointing double arrow
+  '\u21DA': "\\Lleftarrow{}" # LEFTWARDS TRIPLE ARROW
+  '\u21DB': "\\Rrightarrow{}" # RIGHTWARDS TRIPLE ARROW
+  '\u21DC': "\\leftsquigarrow{}" # LEFTWARDS SQUIGGLE ARROW
+  '\u21DD': "\\rightsquigarrow{}" # RIGHTWARDS SQUIGGLE ARROW
+  '\u21DE': "\\nHuparrow{}" # UPWARDS ARROW WITH DOUBLE STROKE
+  '\u21DF': "\\nHdownarrow{}" # DOWNWARDS ARROW WITH DOUBLE STROKE
+  '\u21E0': "\\dashleftarrow{}" # LEFTWARDS DASHED ARROW
+  '\u21E1': "\\updasharrow{}" # UPWARDS DASHED ARROW
+  '\u21E2': "\\dashrightarrow{}" # = \dasharrow (amsfonts), RIGHTWARDS DASHED ARROW
+  '\u21E3': "\\downdasharrow{}" # DOWNWARDS DASHED ARROW
+  '\u21E4': "\\LeftArrowBar{}" # LEFTWARDS ARROW TO BAR
+  '\u21E5': "\\RightArrowBar{}" # RIGHTWARDS ARROW TO BAR
+  '\u21E6': "\\leftwhitearrow{}" # LEFTWARDS WHITE ARROW
+  '\u21E7': "\\upwhitearrow{}" # UPWARDS WHITE ARROW
+  '\u21E8': "\\rightwhitearrow{}" # RIGHTWARDS WHITE ARROW
+  '\u21E9': "\\downwhitearrow{}" # DOWNWARDS WHITE ARROW
+  '\u21EA': "\\whitearrowupfrombar{}" # UPWARDS WHITE ARROW FROM BAR
+  '\u21F4': "\\circleonrightarrow{}" # RIGHT ARROW WITH SMALL CIRCLE
+  '\u21F5': "\\DownArrowUpArrow{}" # DOWNWARDS ARROW LEFTWARDS OF UPWARDS ARROW
+  '\u21F6': "\\rightthreearrows{}" # THREE RIGHTWARDS ARROWS
+  '\u21F7': "\\nvleftarrow{}" # LEFTWARDS ARROW WITH VERTICAL STROKE
+  '\u21F8': "\\pfun{}" # RIGHTWARDS ARROW WITH VERTICAL STROKE, z notation partial function
+  '\u21F9': "\\nvleftrightarrow{}" # LEFT RIGHT ARROW WITH VERTICAL STROKE, z notation partial relation
+  '\u21FA': "\\nVleftarrow{}" # LEFTWARDS ARROW WITH DOUBLE VERTICAL STROKE
+  '\u21FB': "\\ffun{}" # RIGHTWARDS ARROW WITH DOUBLE VERTICAL STROKE, z notation finite function
+  '\u21FC': "\\nVleftrightarrow{}" # LEFT RIGHT ARROW WITH DOUBLE VERTICAL STROKE, z notation finite relation
+  '\u21FD': "\\leftarrowtriangle{}" # LEFTWARDS OPEN-HEADED ARROW
+  '\u21FE': "\\rightarrowtriangle{}" # RIGHTWARDS OPEN-HEADED ARROW
+  '\u21FF': "\\leftrightarrowtriangle{}" # LEFT RIGHT OPEN-HEADED ARROW
+  '\u2200': "\\forall{}" # FOR ALL
+  '\u2201': "\\complement{}" # COMPLEMENT
+  '\u2202': "\\partial{}" # PARTIAL DIFFERENTIAL
+  '\u2203': "\\exists{}" # THERE EXISTS
+  '\u2204': "\\nexists{}" # THERE DOES NOT EXIST
+  '\u2205': "\\varnothing{}" # EMPTY SET
+  '\u2206': "\\increment{}" # # \mathrm{\Delta}, laplacian (Delta; nabla square)
+  '\u2207': "\\nabla{}" # NABLA
+  '\u2208': "\\in{}" # ELEMENT OF
+  '\u2209': "\\not\\in{}" # NOT AN ELEMENT OF
+  '\u220A': "\\smallin{}" # set membership (small set membership)
+  '\u220B': "\\ni{}" # CONTAINS AS MEMBER
+  '\u220C': "\\not\\ni{}" # DOES NOT CONTAIN AS MEMBER
+  '\u220D': "\\smallni{}" # r: contains (SMALL CONTAINS AS MEMBER)
+  '\u220E': "\\QED{}" # # \blacksquare (amssymb), END OF PROOF
+  '\u220F': "\\prod{}" # N-ARY PRODUCT
+  '\u2210': "\\coprod{}" # N-ARY COPRODUCT
+  '\u2211': "\\sum{}" # N-ARY SUMMATION
+  '\u2213': "\\mp{}" # MINUS-OR-PLUS SIGN
+  '\u2214': "\\dotplus{}" # DOT PLUS
+  '\u2215': "\\slash{}" # DIVISION SLASH
+  '\u2216': "\\setminus{}" # SET MINUS
+  '\u2217': "{_\\ast}" # ASTERISK OPERATOR
+  '\u2218': "\\circ{}" # RING OPERATOR
+  '\u2219': "\\bullet{}" # BULLET OPERATOR
+  '\u221A': "\\surd{}" # SQUARE ROOT
+  '\u221B': "\\sqrt[3]" # CUBE ROOT
+  '\u221C': "\\sqrt[4]" # FOURTH ROOT
+  '\u221D': "\\propto{}" # PROPORTIONAL TO
+  '\u221E': "\\infty{}" # INFINITY
+  '\u221F': "\\rightangle{}" # RIGHT ANGLE
+  '\u2220': "\\angle{}" # ANGLE
+  '\u2221': "\\measuredangle{}" # MEASURED ANGLE
+  '\u2222': "\\sphericalangle{}" # SPHERICAL ANGLE
+  '\u2223': "\\mid{}" # DIVIDES
+  '\u2224': "\\nmid{}" # DOES NOT DIVIDE
+  '\u2225': "\\parallel{}" # PARALLEL TO
+  '\u2226': "\\nparallel{}" # NOT PARALLEL TO
+  '\u2227': "\\wedge{}" # LOGICAL AND
+  '\u2228': "\\vee{}" # LOGICAL OR
+  '\u2229': "\\cap{}" # INTERSECTION
+  '\u222A': "\\cup{}" # UNION
+  '\u222B': "\\int{}" # INTEGRAL
+  '\u222C': "{\\int\\!\\int}" # DOUBLE INTEGRAL
+  '\u222D': "{\\int\\!\\int\\!\\int}" # TRIPLE INTEGRAL
+  '\u222E': "\\oint{}" # CONTOUR INTEGRAL
+  '\u222F': "\\surfintegral{}" # SURFACE INTEGRAL
+  '\u2230': "\\volintegral{}" # VOLUME INTEGRAL
+  '\u2231': "\\clwintegral{}" # CLOCKWISE INTEGRAL
+  '\u2232': "\\ElsevierGlyph{2232}" # CLOCKWISE CONTOUR INTEGRAL
+  '\u2233': "\\ElsevierGlyph{2233}" # ANTICLOCKWISE CONTOUR INTEGRAL
+  '\u2234': "\\therefore{}" # THEREFORE
+  '\u2235': "\\because{}" # BECAUSE
+  '\u2236': ":" # x \colon, RATIO
+  '\u2237': "\\Colon{}" # PROPORTION
+  '\u2238': "\\ElsevierGlyph{2238}" # DOT MINUS
+  '\u2239': "\\eqcolon{}" # # -: ,EXCESS
+  '\u223A': "\\mathbin{{:}\\!\\!{-}\\!\\!{:}}" # GEOMETRIC PROPORTION
+  '\u223B': "\\homothetic{}" # HOMOTHETIC
+  '\u223C': "\\sim{}" # TILDE OPERATOR
+  '\u223D': "\\backsim{}" # REVERSED TILDE
+  '\u223E': "\\lazysinv{}" # INVERTED LAZY S
+  '\u223F': "\\AC{}" # SINE WAVE, alternating current
+  '\u2240': "\\wr{}" # WREATH PRODUCT
+  '\u2241': "\\not\\sim{}" # NOT TILDE
+  '\u2242': "\\ElsevierGlyph{2242}" # MINUS TILDE
+  '\u2243': "\\simeq{}" # ASYMPTOTICALLY EQUAL TO
+  '\u2244': "\\not\\simeq{}" # NOT ASYMPTOTICALLY EQUAL TO
+  '\u2245': "\\cong{}" # APPROXIMATELY EQUAL TO
+  '\u2246': "\\approxnotequal{}" # APPROXIMATELY BUT NOT ACTUALLY EQUAL TO
+  '\u2247': "\\not\\cong{}" # NEITHER APPROXIMATELY NOR ACTUALLY EQUAL TO
+  '\u2248': "\\approx{}" # ALMOST EQUAL TO
+  '\u2249': "\\not\\approx{}" # NOT ALMOST EQUAL TO
+  '\u224A': "\\approxeq{}" # ALMOST EQUAL OR EQUAL TO
+  '\u224B': "\\tildetrpl{}" # TRIPLE TILDE
+  '\u224C': "\\allequal{}" # ALL EQUAL TO
+  '\u224D': "\\asymp{}" # EQUIVALENT TO
+  '\u224E': "\\Bumpeq{}" # GEOMETRICALLY EQUIVALENT TO
+  '\u224F': "\\bumpeq{}" # DIFFERENCE BETWEEN
+  '\u2250': "\\doteq{}" # APPROACHES THE LIMIT
+  '\u2251': "\\doteqdot{}" # GEOMETRICALLY EQUAL TO
+  '\u2252': "\\fallingdotseq{}" # APPROXIMATELY EQUAL TO OR THE IMAGE OF
+  '\u2253': "\\risingdotseq{}" # IMAGE OF OR APPROXIMATELY EQUAL TO
+  '\u2255': "=:" # EQUALS COLON
+  '\u2256': "\\eqcirc{}" # RING IN EQUAL TO
+  '\u2257': "\\circeq{}" # RING EQUAL TO
+  '\u2258': "\\arceq{}" # arc, equals; CORRESPONDS TO
+  '\u2259': "\\estimates{}" # ESTIMATES
+  '\u225A': "\\ElsevierGlyph{225A}" # EQUIANGULAR TO
+  '\u225B': "\\starequal{}" # STAR EQUALS
+  '\u225C': "\\triangleq{}" # DELTA EQUAL TO
+  '\u225D': "\\eqdef{}" # equals by definition
+  '\u225E': "\\measeq{}" # MEASURED BY (m over equals)
+  '\u225F': "\\ElsevierGlyph{225F}" # QUESTIONED EQUAL TO
+  '\u2260': "\\not =" # NOT EQUAL TO
+  '\u2261': "\\equiv{}" # IDENTICAL TO
+  '\u2262': "\\not\\equiv{}" # NOT IDENTICAL TO
+  '\u2263': "\\Equiv{}" # strict equivalence (4 lines)
+  '\u2264': "\\leq{}" # LESS-THAN OR EQUAL TO
+  '\u2265': "\\geq{}" # GREATER-THAN OR EQUAL TO
+  '\u2266': "\\leqq{}" # LESS-THAN OVER EQUAL TO
+  '\u2267': "\\geqq{}" # GREATER-THAN OVER EQUAL TO
+  '\u2268': "\\lneqq{}" # LESS-THAN BUT NOT EQUAL TO
+  '\u2269': "\\gneqq{}" # GREATER-THAN BUT NOT EQUAL TO
+  '\u226A': "\\ll{}" # MUCH LESS-THAN
+  '\u226B': "\\gg{}" # MUCH GREATER-THAN
+  '\u226C': "\\between{}" # BETWEEN
+  '\u226D': "{\\not\\kern-0.3em\\times}" # NOT EQUIVALENT TO
+  '\u226E': "\\not<" # NOT LESS-THAN
+  '\u226F': "\\not>" # NOT GREATER-THAN
+  '\u2270': "\\not\\leq{}" # NEITHER LESS-THAN NOR EQUAL TO
+  '\u2271': "\\not\\geq{}" # NEITHER GREATER-THAN NOR EQUAL TO
+  '\u2272': "\\lessequivlnt{}" # LESS-THAN OR EQUIVALENT TO
+  '\u2273': "\\greaterequivlnt{}" # GREATER-THAN OR EQUIVALENT TO
+  '\u2274': "\\ElsevierGlyph{2274}" # NEITHER LESS-THAN NOR EQUIVALENT TO
+  '\u2275': "\\ElsevierGlyph{2275}" # NEITHER GREATER-THAN NOR EQUIVALENT TO
+  '\u2276': "\\lessgtr{}" # LESS-THAN OR GREATER-THAN
+  '\u2277': "\\gtrless{}" # GREATER-THAN OR LESS-THAN
+  '\u2278': "\\notlessgreater{}" # NEITHER LESS-THAN NOR GREATER-THAN
+  '\u2279': "\\notgreaterless{}" # NEITHER GREATER-THAN NOR LESS-THAN
+  '\u227A': "\\prec{}" # PRECEDES
+  '\u227B': "\\succ{}" # SUCCEEDS
+  '\u227C': "\\preccurlyeq{}" # PRECEDES OR EQUAL TO
+  '\u227D': "\\succcurlyeq{}" # SUCCEEDS OR EQUAL TO
+  '\u227E': "\\precapprox{}" # PRECEDES OR EQUIVALENT TO
+  '\u227F': "\\succapprox{}" # SUCCEEDS OR EQUIVALENT TO
+  '\u2280': "\\not\\prec{}" # DOES NOT PRECEDE
+  '\u2281': "\\not\\succ{}" # DOES NOT SUCCEED
+  '\u2282': "\\subset{}" # SUBSET OF
+  '\u2283': "\\supset{}" # SUPERSET OF
+  '\u2284': "\\not\\subset{}" # NOT A SUBSET OF
+  '\u2285': "\\not\\supset{}" # NOT A SUPERSET OF
+  '\u2286': "\\subseteq{}" # SUBSET OF OR EQUAL TO
+  '\u2287': "\\supseteq{}" # SUPERSET OF OR EQUAL TO
+  '\u2288': "\\not\\subseteq{}" # NEITHER A SUBSET OF NOR EQUAL TO
+  '\u2289': "\\not\\supseteq{}" # NEITHER A SUPERSET OF NOR EQUAL TO
+  '\u228A': "\\subsetneq{}" # SUBSET OF WITH NOT EQUAL TO
+  '\u228B': "\\supsetneq{}" # SUPERSET OF WITH NOT EQUAL TO
+  '\u228C': "\\cupleftarrow{}" # MULTISET
+  '\u228D': "\\cupdot{}" # union, with dot
+  '\u228E': "\\uplus{}" # MULTISET UNION
+  '\u228F': "\\sqsubset{}" # SQUARE IMAGE OF
+  '\u2290': "\\sqsupset{}" # SQUARE ORIGINAL OF
+  '\u2291': "\\sqsubseteq{}" # SQUARE IMAGE OF OR EQUAL TO
+  '\u2292': "\\sqsupseteq{}" # SQUARE ORIGINAL OF OR EQUAL TO
+  '\u2293': "\\sqcap{}" # SQUARE CAP
+  '\u2294': "\\sqcup{}" # SQUARE CUP
+  '\u2295': "\\oplus{}" # CIRCLED PLUS
+  '\u2296': "\\ominus{}" # CIRCLED MINUS
+  '\u2297': "\\otimes{}" # CIRCLED TIMES
+  '\u2298': "\\oslash{}" # CIRCLED DIVISION SLASH
+  '\u2299': "\\odot{}" # CIRCLED DOT OPERATOR
+  '\u229A': "\\circledcirc{}" # CIRCLED RING OPERATOR
+  '\u229B': "\\circledast{}" # CIRCLED ASTERISK OPERATOR
+  '\u229C': "\\circledequal{}" # equal in circle
+  '\u229D': "\\circleddash{}" # CIRCLED DASH
+  '\u229E': "\\boxplus{}" # SQUARED PLUS
+  '\u229F': "\\boxminus{}" # SQUARED MINUS
+  '\u22A0': "\\boxtimes{}" # SQUARED TIMES
+  '\u22A1': "\\boxdot{}" # SQUARED DOT OPERATOR
+  '\u22A2': "\\vdash{}" # RIGHT TACK
+  '\u22A3': "\\dashv{}" # LEFT TACK
+  '\u22A4': "\\top{}" # DOWN TACK
+  '\u22A5': "\\perp{}" # UP TACK
+  '\u22A6': "\\assert{}" # # \vdash, ASSERTION (vertical, short dash)
+  '\u22A7': "\\truestate{}" # MODELS
+  '\u22A8': "\\forcesextra{}" # TRUE
+  '\u22A9': "\\Vdash{}" # FORCES
+  '\u22AA': "\\Vvdash{}" # TRIPLE VERTICAL BAR RIGHT TURNSTILE
+  '\u22AB': "\\VDash{}" # DOUBLE VERTICAL BAR DOUBLE RIGHT TURNSTILE
+  '\u22AC': "\\nvdash{}" # DOES NOT PROVE
+  '\u22AD': "\\nvDash{}" # NOT TRUE
+  '\u22AE': "\\nVdash{}" # DOES NOT FORCE
+  '\u22AF': "\\nVDash{}" # NEGATED DOUBLE VERTICAL BAR DOUBLE RIGHT TURNSTILE
+  '\u22B0': "\\prurel{}" # element PRECEDES UNDER RELATION
+  '\u22B1': "\\scurel{}" # SUCCEEDS UNDER RELATION
+  '\u22B2': "\\vartriangleleft{}" # NORMAL SUBGROUP OF
+  '\u22B3': "\\vartriangleright{}" # CONTAINS AS NORMAL SUBGROUP
+  '\u22B4': "\\trianglelefteq{}" # NORMAL SUBGROUP OF OR EQUAL TO
+  '\u22B5': "\\trianglerighteq{}" # CONTAINS AS NORMAL SUBGROUP OR EQUAL TO
+  '\u22B6': "\\original{}" # ORIGINAL OF
+  '\u22B7': "\\image{}" # IMAGE OF
+  '\u22B8': "\\multimap{}" # MULTIMAP
+  '\u22B9': "\\hermitconjmatrix{}" # HERMITIAN CONJUGATE MATRIX
+  '\u22BA': "\\intercal{}" # INTERCALATE
+  '\u22BB': "\\veebar{}" # XOR
+  '\u22BC': "\\barwedge{}" # logical NAND (bar over wedge)
+  '\u22BD': "\\barvee{}" # bar, vee (large vee)
+  '\u22BE': "\\rightanglearc{}" # RIGHT ANGLE WITH ARC
+  '\u22BF': "\\varlrtriangle{}" # RIGHT TRIANGLE
+  '\u22C0': "\\ElsevierGlyph{22C0}" # N-ARY LOGICAL AND
+  '\u22C1': "\\ElsevierGlyph{22C1}" # N-ARY LOGICAL OR
+  '\u22C2': "\\bigcap{}" # N-ARY INTERSECTION
+  '\u22C3': "\\bigcup{}" # N-ARY UNION
+  '\u22C4': "\\diamond{}" # DIAMOND OPERATOR
+  '\u22C5': "\\cdot{}" # DOT OPERATOR
+  '\u22C6': "\\star{}" # STAR OPERATOR
+  '\u22C7': "\\divideontimes{}" # DIVISION TIMES
+  '\u22C8': "\\bowtie{}" # BOWTIE
+  '\u22C9': "\\ltimes{}" # LEFT NORMAL FACTOR SEMIDIRECT PRODUCT
+  '\u22CA': "\\rtimes{}" # RIGHT NORMAL FACTOR SEMIDIRECT PRODUCT
+  '\u22CB': "\\leftthreetimes{}" # LEFT SEMIDIRECT PRODUCT
+  '\u22CC': "\\rightthreetimes{}" # RIGHT SEMIDIRECT PRODUCT
+  '\u22CD': "\\backsimeq{}" # REVERSED TILDE EQUALS
+  '\u22CE': "\\curlyvee{}" # CURLY LOGICAL OR
+  '\u22CF': "\\curlywedge{}" # CURLY LOGICAL AND
+  '\u22D0': "\\Subset{}" # DOUBLE SUBSET
+  '\u22D1': "\\Supset{}" # DOUBLE SUPERSET
+  '\u22D2': "\\Cap{}" # DOUBLE INTERSECTION
+  '\u22D3': "\\Cup{}" # DOUBLE UNION
+  '\u22D4': "\\pitchfork{}" # PITCHFORK
+  '\u22D5': "\\hash{}" # parallel, equal; equal or parallel
+  '\u22D6': "\\lessdot{}" # LESS-THAN WITH DOT
+  '\u22D7': "\\gtrdot{}" # GREATER-THAN WITH DOT
+  '\u22D8': "\\verymuchless{}" # VERY MUCH LESS-THAN
+  '\u22D9': "\\verymuchgreater{}" # VERY MUCH GREATER-THAN
+  '\u22DA': "\\lesseqgtr{}" # LESS-THAN EQUAL TO OR GREATER-THAN
+  '\u22DB': "\\gtreqless{}" # GREATER-THAN EQUAL TO OR LESS-THAN
+  '\u22DC': "\\eqless{}" # equal-or-less
+  '\u22DD': "\\eqgtr{}" # equal-or-greater
+  '\u22DE': "\\curlyeqprec{}" # EQUAL TO OR PRECEDES
+  '\u22DF': "\\curlyeqsucc{}" # EQUAL TO OR SUCCEEDS
+  '\u22E0': "\\npreceq{}" # DOES NOT PRECEDE OR EQUAL
+  '\u22E1': "\\nsucceq{}" # not succeeds, curly equals
+  '\u22E2': "\\not\\sqsubseteq{}" # NOT SQUARE IMAGE OF OR EQUAL TO
+  '\u22E3': "\\not\\sqsupseteq{}" # NOT SQUARE ORIGINAL OF OR EQUAL TO
+  '\u22E4': "\\sqsubsetneq{}" # square subset, not equals
+  '\u22E5': "\\Elzsqspne{}" # SQUARE ORIGINAL OF OR NOT EQUAL TO
+  '\u22E6': "\\lnsim{}" # LESS-THAN BUT NOT EQUIVALENT TO
+  '\u22E7': "\\gnsim{}" # GREATER-THAN BUT NOT EQUIVALENT TO
+  '\u22E8': "\\precedesnotsimilar{}" # PRECEDES BUT NOT EQUIVALENT TO
+  '\u22E9': "\\succnsim{}" # SUCCEEDS BUT NOT EQUIVALENT TO
+  '\u22EA': "\\ntriangleleft{}" # NOT NORMAL SUBGROUP OF
+  '\u22EB': "\\ntriangleright{}" # DOES NOT CONTAIN AS NORMAL SUBGROUP
+  '\u22EC': "\\ntrianglelefteq{}" # NOT NORMAL SUBGROUP OF OR EQUAL TO
+  '\u22ED': "\\ntrianglerighteq{}" # DOES NOT CONTAIN AS NORMAL SUBGROUP OR EQUAL
+  '\u22EE': "\\vdots{}" # VERTICAL ELLIPSIS
+  '\u22EF': "\\cdots{}" # MIDLINE HORIZONTAL ELLIPSIS
+  '\u22F0': "\\upslopeellipsis{}" # UP RIGHT DIAGONAL ELLIPSIS
+  '\u22F1': "\\downslopeellipsis{}" # DOWN RIGHT DIAGONAL ELLIPSIS
+  '\u22F2': "\\disin{}" # ELEMENT OF WITH LONG HORIZONTAL STROKE
+  '\u22F3': "\\varisins{}" # ELEMENT OF WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  '\u22F4': "\\isins{}" # SMALL ELEMENT OF WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  '\u22F5': "\\isindot{}" # ELEMENT OF WITH DOT ABOVE
+  '\u22F6': "\\barin{}" # ELEMENT OF WITH OVERBAR
+  '\u22F7': "\\isinobar{}" # SMALL ELEMENT OF WITH OVERBAR
+  '\u22F8': "\\isinvb{}" # ELEMENT OF WITH UNDERBAR
+  '\u22F9': "\\isinE{}" # ELEMENT OF WITH TWO HORIZONTAL STROKES
+  '\u22FA': "\\nisd{}" # CONTAINS WITH LONG HORIZONTAL STROKE
+  '\u22FB': "\\varnis{}" # CONTAINS WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  '\u22FC': "\\nis{}" # SMALL CONTAINS WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  '\u22FD': "\\varniobar{}" # CONTAINS WITH OVERBAR
+  '\u22FE': "\\niobar{}" # SMALL CONTAINS WITH OVERBAR
+  '\u22FF': "\\bagmember{}" # # \mathsf{E}, Z NOTATION BAG MEMBERSHIP
+  '\u2300': "\\diameter{}" # # \varnothing (amssymb), DIAMETER SIGN
+  '\u2302': "\\house{}" # HOUSE
+  '\u2306': "\\perspcorrespond{}" # PERSPECTIVE
+  '\u2308': "\\lceil{}" # LEFT CEILING
+  '\u2309': "\\rceil{}" # RIGHT CEILING
+  '\u230A': "\\lfloor{}" # LEFT FLOOR
+  '\u230B': "\\rfloor{}" # RIGHT FLOOR
+  '\u2310': "\\invneg{}" # reverse not
+  '\u2311': "\\wasylozenge{}" # SQUARE LOZENGE
+  '\u2312': "\\profline{}" # profile of a line
+  '\u2313': "\\profsurf{}" # profile of a surface
+  '\u2315': "\\recorder{}" # TELEPHONE RECORDER
+  '\u2316': "{\\mathchar\"2208}" # POSITION INDICATOR
+  '\u2317': "\\viewdata{}" # VIEWDATA SQUARE
+  '\u2319': "\\turnednot{}" # TURNED NOT SIGN
+  '\u231C': "\\ulcorner{}" # TOP LEFT CORNER
+  '\u231D': "\\urcorner{}" # TOP RIGHT CORNER
+  '\u231E': "\\llcorner{}" # BOTTOM LEFT CORNER
+  '\u231F': "\\lrcorner{}" # BOTTOM RIGHT CORNER
+  '\u2320': "\\inttop{}" # TOP HALF INTEGRAL
+  '\u2321': "\\intbottom{}" # BOTTOM HALF INTEGRAL
+  '\u2322': "\\frown{}" # FROWN
+  '\u2323': "\\smile{}" # SMILE
+  '\u2329': "\\langle{}" # LEFT-POINTING ANGLE BRACKET
+  '\u232A': "\\rangle{}" # RIGHT-POINTING ANGLE BRACKET
+  '\u232C': "\\varhexagonlrbonds{}" # six carbon ring, corner down, double bonds lower right etc
+  '\u2332': "\\conictaper{}" # CONICAL TAPER
+  '\u2336': "\\topbot{}" # APL FUNCTIONAL SYMBOL I-BEAM, top and bottom
+  '\u2339': "\\APLinv{}" # APL FUNCTIONAL SYMBOL QUAD DIVIDE
+  '\u233D': "\\ElsevierGlyph{E838}" # APL FUNCTIONAL SYMBOL CIRCLE STILE
+  '\u233F': "\\notslash{}" # APL FUNCTIONAL SYMBOL SLASH BAR, solidus, bar through
+  '\u2340': "\\notbackslash{}" # APL FUNCTIONAL SYMBOL BACKSLASH BAR
+  '\u2347': "\\APLleftarrowbox{}" # APL FUNCTIONAL SYMBOL QUAD LEFTWARDS ARROW
+  '\u2348': "\\APLrightarrowbox{}" # APL FUNCTIONAL SYMBOL QUAD RIGHTWARDS ARROW
+  '\u2350': "\\APLuparrowbox{}" # APL FUNCTIONAL SYMBOL QUAD UPWARDS ARROW
+  '\u2353': "\\APLboxupcaret{}" # APL FUNCTIONAL SYMBOL QUAD UP CARET
+  '\u2357': "\\APLdownarrowbox{}" # APL FUNCTIONAL SYMBOL QUAD DOWNWARDS ARROW
+  '\u235D': "\\APLcomment{}" # APL FUNCTIONAL SYMBOL UP SHOE JOT
+  '\u235E': "\\APLinput{}" # APL FUNCTIONAL SYMBOL QUOTE QUAD
+  '\u235F': "\\APLlog{}" # APL FUNCTIONAL SYMBOL CIRCLE STAR
+  '\u2370': "\\APLboxquestion{}" # APL FUNCTIONAL SYMBOL QUAD QUESTION
+  '\u237C': "\\rangledownzigzagarrow{}" # RIGHT ANGLE WITH DOWNWARDS ZIGZAG ARROW
+  '\u2394': "\\hexagon{}" # horizontal benzene ring [hexagon flat open]
+  '\u239B': "\\lparenuend{}" # LEFT PARENTHESIS UPPER HOOK
+  '\u239C': "\\lparenextender{}" # LEFT PARENTHESIS EXTENSION
+  '\u239D': "\\lparenlend{}" # LEFT PARENTHESIS LOWER HOOK
+  '\u239E': "\\rparenuend{}" # RIGHT PARENTHESIS UPPER HOOK
+  '\u239F': "\\rparenextender{}" # RIGHT PARENTHESIS EXTENSION
+  '\u23A0': "\\rparenlend{}" # RIGHT PARENTHESIS LOWER HOOK
+  '\u23A1': "\\lbrackuend{}" # LEFT SQUARE BRACKET UPPER CORNER
+  '\u23A2': "\\lbrackextender{}" # LEFT SQUARE BRACKET EXTENSION
+  '\u23A3': "\\Elzdlcorn{}" # LEFT SQUARE BRACKET LOWER CORNER
+  '\u23A4': "\\rbrackuend{}" # RIGHT SQUARE BRACKET UPPER CORNER
+  '\u23A5': "\\rbrackextender{}" # RIGHT SQUARE BRACKET EXTENSION
+  '\u23A6': "\\rbracklend{}" # RIGHT SQUARE BRACKET LOWER CORNER
+  '\u23A7': "\\lbraceuend{}" # LEFT CURLY BRACKET UPPER HOOK
+  '\u23A8': "\\lbracemid{}" # LEFT CURLY BRACKET MIDDLE PIECE
+  '\u23A9': "\\lbracelend{}" # LEFT CURLY BRACKET LOWER HOOK
+  '\u23AA': "\\vbraceextender{}" # CURLY BRACKET EXTENSION
+  '\u23AB': "\\rbraceuend{}" # RIGHT CURLY BRACKET UPPER HOOK
+  '\u23AC': "\\rbracemid{}" # RIGHT CURLY BRACKET MIDDLE PIECE
+  '\u23AD': "\\rbracelend{}" # RIGHT CURLY BRACKET LOWER HOOK
+  '\u23AE': "\\intextender{}" # INTEGRAL EXTENSION
+  '\u23AF': "\\harrowextender{}" # HORIZONTAL LINE EXTENSION (used to extend arrows)
+  '\u23B0': "\\lmoustache{}" # UPPER LEFT OR LOWER RIGHT CURLY BRACKET SECTION
+  '\u23B1': "\\rmoustache{}" # UPPER RIGHT OR LOWER LEFT CURLY BRACKET SECTION
+  '\u23B2': "\\sumtop{}" # SUMMATION TOP
+  '\u23B3': "\\sumbottom{}" # SUMMATION BOTTOM
+  '\u23B4': "\\overbracket{}" # TOP SQUARE BRACKET
+  '\u23B5': "\\underbracket{}" # BOTTOM SQUARE BRACKET
+  '\u23B6': "\\bbrktbrk{}" # BOTTOM SQUARE BRACKET OVER TOP SQUARE BRACKET
+  '\u23B7': "\\sqrtbottom{}" # RADICAL SYMBOL BOTTOM
+  '\u23B8': "\\lvboxline{}" # LEFT VERTICAL BOX LINE
+  '\u23B9': "\\rvboxline{}" # RIGHT VERTICAL BOX LINE
+  '\u23CE': "\\varcarriagereturn{}" # RETURN SYMBOL
+  '\u23DC': "\\overparen{}" # = \wideparen (yhmath mathabx fourier), TOP PARENTHESIS (mathematical use)
+  '\u23DD': "\\underparen{}" # BOTTOM PARENTHESIS (mathematical use)
+  '\u23DE': "\\overbrace{}" # TOP CURLY BRACKET (mathematical use)
+  '\u23DF': "\\underbrace{}" # BOTTOM CURLY BRACKET (mathematical use)
+  '\u23E0': "\\obrbrak{}" # TOP TORTOISE SHELL BRACKET (mathematical use)
+  '\u23E1': "\\ubrbrak{}" # BOTTOM TORTOISE SHELL BRACKET (mathematical use)
+  '\u23E2': "\\trapezium{}" # WHITE TRAPEZIUM
+  '\u23E3': "\\benzenr{}" # BENZENE RING WITH CIRCLE
+  '\u23E4': "\\strns{}" # STRAIGHTNESS
+  '\u23E5': "\\fltns{}" # FLATNESS
+  '\u23E6': "\\accurrent{}" # # \AC (wasysym), AC CURRENT
+  '\u23E7': "\\elinters{}" # ELECTRICAL INTERSECTION
+  '\u24C8': "\\circledS{}" # CIRCLED LATIN CAPITAL LETTER S
+  '\u2506': "\\Elzdshfnc{}" # BOX DRAWINGS LIGHT TRIPLE DASH VERTICAL
+  '\u2519': "\\Elzsqfnw{}" # BOX DRAWINGS UP LIGHT AND LEFT HEAVY
+  '\u2571': "\\diagup{}" # BOX DRAWINGS LIGHT DIAGONAL UPPER RIGHT TO LOWER LEFT
+  '\u2580': "\\blockuphalf{}" # UPPER HALF BLOCK
+  '\u2584': "\\blocklowhalf{}" # LOWER HALF BLOCK
+  '\u2588': "\\blockfull{}" # FULL BLOCK
+  '\u258C': "\\blocklefthalf{}" # LEFT HALF BLOCK
+  '\u2590': "\\blockrighthalf{}" # RIGHT HALF BLOCK
+  '\u2591': "\\blockqtrshaded{}" # 25\% shaded block
+  '\u2592': "\\blockhalfshaded{}" # 50\% shaded block
+  '\u2593': "\\blockthreeqtrshaded{}" # 75\% shaded block
+  '\u25A1': "\\square{}" # WHITE SQUARE
+  '\u25A2': "\\squoval{}" # WHITE SQUARE WITH ROUNDED CORNERS
+  '\u25A3': "\\blackinwhitesquare{}" # WHITE SQUARE CONTAINING BLACK SMALL SQUARE
+  '\u25A4': "\\squarehfill{}" # square, horizontal rule filled
+  '\u25A5': "\\squarevfill{}" # square, vertical rule filled
+  '\u25A6': "\\squarehvfill{}" # SQUARE WITH ORTHOGONAL CROSSHATCH FILL
+  '\u25A7': "\\squarenwsefill{}" # square, nw-to-se rule filled
+  '\u25A8': "\\squareneswfill{}" # square, ne-to-sw rule filled
+  '\u25A9': "\\squarecrossfill{}" # SQUARE WITH DIAGONAL CROSSHATCH FILL
+  '\u25AA': "\\blacksquare{}" # BLACK SMALL SQUARE
+  '\u25AB': "\\smwhtsquare{}" # WHITE SMALL SQUARE
+  '\u25AC': "\\hrectangleblack{}" # BLACK RECTANGLE
+  '\u25AD': "\\fbox{~~}" # WHITE RECTANGLE
+  '\u25AE': "\\vrectangleblack{}" # BLACK VERTICAL RECTANGLE
+  '\u25AF': "\\Elzvrecto{}" # WHITE VERTICAL RECTANGLE
+  '\u25B0': "\\parallelogramblack{}" # BLACK PARALLELOGRAM
+  '\u25B1': "\\ElsevierGlyph{E381}" # WHITE PARALLELOGRAM
+  '\u25B3': "\\bigtriangleup{}" # WHITE UP-POINTING TRIANGLE
+  '\u25B4': "\\blacktriangle{}" # BLACK UP-POINTING SMALL TRIANGLE
+  '\u25B5': "\\vartriangle{}" # WHITE UP-POINTING SMALL TRIANGLE
+  '\u25B6': "\\RHD{}" # = \blacktriangleright (fourier -mathabx), (large) right triangle, filled
+  '\u25B7': "\\rhd{}" # = \rres (oz), = \RightTriangle (wrisym), (large) right triangle, open; z notation range restriction
+  '\u25B8': "\\blacktriangleright{}" # BLACK RIGHT-POINTING SMALL TRIANGLE
+  '\u25B9': "\\triangleright{}" # WHITE RIGHT-POINTING SMALL TRIANGLE
+  '\u25BA': "\\blackpointerright{}" # BLACK RIGHT-POINTING POINTER
+  '\u25BB': "\\whitepointerright{}" # # \triangleright (mathabx), WHITE RIGHT-POINTING POINTER
+  '\u25BD': "\\bigtriangledown{}" # WHITE DOWN-POINTING TRIANGLE
+  '\u25BE': "\\blacktriangledown{}" # BLACK DOWN-POINTING SMALL TRIANGLE
+  '\u25BF': "\\triangledown{}" # WHITE DOWN-POINTING SMALL TRIANGLE
+  '\u25C0': "\\LHD{}" # = \blacktriangleleft (fourier -mathabx), (large) left triangle, filled
+  '\u25C1': "\\lhd{}" # = \dres (oz), = \LeftTriangle (wrisym), (large) left triangle, open; z notation domain restriction
+  '\u25C2': "\\blacktriangleleft{}" # BLACK LEFT-POINTING SMALL TRIANGLE
+  '\u25C3': "\\triangleleft{}" # WHITE LEFT-POINTING SMALL TRIANGLE
+  '\u25C4': "\\blackpointerleft{}" # BLACK LEFT-POINTING POINTER
+  '\u25C5': "\\whitepointerleft{}" # # \triangleleft (mathabx), WHITE LEFT-POINTING POINTER
+  '\u25C7': "\\Diamond{}" # WHITE DIAMOND; diamond, open
+  '\u25C8': "\\blackinwhitediamond{}" # WHITE DIAMOND CONTAINING BLACK SMALL DIAMOND
+  '\u25C9': "\\fisheye{}" # FISHEYE
+  '\u25CA': "\\lozenge{}" # LOZENGE
+  '\u25CB': "\\bigcirc{}" # WHITE CIRCLE
+  '\u25CC': "\\dottedcircle{}" # DOTTED CIRCLE
+  '\u25CD': "\\circlevertfill{}" # CIRCLE WITH VERTICAL FILL
+  '\u25CE': "\\bullseye{}" # # \circledcirc (amssymb), BULLSEYE
+  '\u25D0': "\\Elzcirfl{}" # CIRCLE WITH LEFT HALF BLACK
+  '\u25D1': "\\Elzcirfr{}" # CIRCLE WITH RIGHT HALF BLACK
+  '\u25D2': "\\Elzcirfb{}" # CIRCLE WITH LOWER HALF BLACK
+  '\u25D3': "\\circletophalfblack{}" # circle, filled top half
+  '\u25D4': "\\circleurquadblack{}" # CIRCLE WITH UPPER RIGHT QUADRANT BLACK
+  '\u25D5': "\\blackcircleulquadwhite{}" # CIRCLE WITH ALL BUT UPPER LEFT QUADRANT BLACK
+  '\u25D6': "\\LEFTCIRCLE{}" # LEFT HALF BLACK CIRCLE
+  '\u25D8': "\\Elzrvbull{}" # INVERSE BULLET
+  '\u25D9': "\\inversewhitecircle{}" # INVERSE WHITE CIRCLE
+  '\u25DA': "\\invwhiteupperhalfcircle{}" # UPPER HALF INVERSE WHITE CIRCLE
+  '\u25DB': "\\invwhitelowerhalfcircle{}" # LOWER HALF INVERSE WHITE CIRCLE
+  '\u25DC': "\\ularc{}" # UPPER LEFT QUADRANT CIRCULAR ARC
+  '\u25DD': "\\urarc{}" # UPPER RIGHT QUADRANT CIRCULAR ARC
+  '\u25DE': "\\lrarc{}" # LOWER RIGHT QUADRANT CIRCULAR ARC
+  '\u25DF': "\\llarc{}" # LOWER LEFT QUADRANT CIRCULAR ARC
+  '\u25E0': "\\topsemicircle{}" # UPPER HALF CIRCLE
+  '\u25E1': "\\botsemicircle{}" # LOWER HALF CIRCLE
+  '\u25E2': "\\lrblacktriangle{}" # lower right triangle, filled
+  '\u25E3': "\\llblacktriangle{}" # lower left triangle, filled
+  '\u25E4': "\\ulblacktriangle{}" # upper left triangle, filled
+  '\u25E5': "\\urblacktriangle{}" # upper right triangle, filled
+  '\u25E6': "\\smwhtcircle{}" # WHITE BULLET
+  '\u25E7': "\\Elzsqfl{}" # SQUARE WITH LEFT HALF BLACK
+  '\u25E8': "\\Elzsqfr{}" # SQUARE WITH RIGHT HALF BLACK
+  '\u25E9': "\\squareulblack{}" # square, filled top left corner
+  '\u25EA': "\\Elzsqfse{}" # SQUARE WITH LOWER RIGHT DIAGONAL HALF BLACK
+  '\u25EB': "\\boxbar{}" # vertical bar in box
+  '\u25EC': "\\trianglecdot{}" # triangle with centered dot
+  '\u25ED': "\\triangleleftblack{}" # UP-POINTING TRIANGLE WITH LEFT HALF BLACK
+  '\u25EE': "\\trianglerightblack{}" # UP-POINTING TRIANGLE WITH RIGHT HALF BLACK
+  '\u25EF': "\\bigcirc{}" # LARGE CIRCLE
+  '\u25F0': "\\squareulquad{}" # WHITE SQUARE WITH UPPER LEFT QUADRANT
+  '\u25F1': "\\squarellquad{}" # WHITE SQUARE WITH LOWER LEFT QUADRANT
+  '\u25F2': "\\squarelrquad{}" # WHITE SQUARE WITH LOWER RIGHT QUADRANT
+  '\u25F3': "\\squareurquad{}" # WHITE SQUARE WITH UPPER RIGHT QUADRANT
+  '\u25F4': "\\circleulquad{}" # WHITE CIRCLE WITH UPPER LEFT QUADRANT
+  '\u25F5': "\\circlellquad{}" # WHITE CIRCLE WITH LOWER LEFT QUADRANT
+  '\u25F6': "\\circlelrquad{}" # WHITE CIRCLE WITH LOWER RIGHT QUADRANT
+  '\u25F7': "\\circleurquad{}" # WHITE CIRCLE WITH UPPER RIGHT QUADRANT
+  '\u25F8': "\\ultriangle{}" # UPPER LEFT TRIANGLE
+  '\u25F9': "\\urtriangle{}" # UPPER RIGHT TRIANGLE
+  '\u25FA': "\\lltriangle{}" # LOWER LEFT TRIANGLE
+  '\u25FB': "\\square{}" # WHITE MEDIUM SQUARE
+  '\u25FC': "\\blacksquare{}" # BLACK MEDIUM SQUARE
+  '\u25FD': "\\mdsmwhtsquare{}" # WHITE MEDIUM SMALL SQUARE
+  '\u25FE': "\\mdsmblksquare{}" # BLACK MEDIUM SMALL SQUARE
+  '\u25FF': "\\lrtriangle{}" # LOWER RIGHT TRIANGLE
+  '\u2609': "\\Sun{}" # SUN
+  '\u2610': "\\Square{}" # BALLOT BOX
+  '\u2611': "\\CheckedBox{}" # t \Checkedbox (marvosym), BALLOT BOX WITH CHECK
+  '\u2612': "\\XBox{}" # t \Crossedbox (marvosym), BALLOT BOX WITH X
+  '\u2615': "\\steaming{}" # HOT BEVERAGE
+  '\u2620': "\\skull{}" # SKULL AND CROSSBONES
+  '\u2621': "\\danger{}" # CAUTION SIGN, dangerous bend
+  '\u2622': "\\radiation{}" # RADIOACTIVE SIGN
+  '\u2623': "\\biohazard{}" # BIOHAZARD SIGN
+  '\u262F': "\\yinyang{}" # YIN YANG
+  '\u2639': "\\frownie{}" # = \sadface (arevmath), WHITE FROWNING FACE
+  '\u263A': "\\smiley{}" # = \smileface (arevmath), WHITE SMILING FACE
+  '\u263B': "\\blacksmiley{}" # = \invsmileface (arevmath), BLACK SMILING FACE
+  '\u263C': "\\sun{}" # WHITE SUN WITH RAYS
+  '\u263D': "\\rightmoon{}" # FIRST QUARTER MOON
+  '\u2641': "\\earth{}" # = \varEarth (mathabx), EARTH
+  '\u2661': "\\heartsuit{}" # heart suit symbol
+  '\u2662': "\\diamond{}" # WHITE DIAMOND SUIT
+  '\u2664': "\\varspadesuit{}" # = \varspade (arevmath), spade, white (card suit)
+  '\u2667': "\\varclubsuit{}" # = \varclub (arevmath), club, white (card suit)
+  '\u266B': "\\twonotes{}" # BEAMED EIGHTH NOTES
+  '\u266C': "\\sixteenthnote{}" # BEAMED SIXTEENTH NOTES
+  '\u266D': "\\flat{}" # MUSIC FLAT SIGN
+  '\u266E': "\\natural{}" # MUSIC NATURAL SIGN
+  '\u266F': "\\sharp{}" # MUSIC SHARP SIGN
+  '\u267B': "\\recycle{}" # BLACK UNIVERSAL RECYCLING SYMBOL
+  '\u267E': "\\acidfree{}" # PERMANENT PAPER SIGN
+  '\u2680': "\\dicei{}" # DIE FACE-1
+  '\u2681': "\\diceii{}" # DIE FACE-2
+  '\u2682': "\\diceiii{}" # DIE FACE-3
+  '\u2683': "\\diceiv{}" # DIE FACE-4
+  '\u2684': "\\dicev{}" # DIE FACE-5
+  '\u2685': "\\dicevi{}" # DIE FACE-6
+  '\u2686': "\\circledrightdot{}" # WHITE CIRCLE WITH DOT RIGHT
+  '\u2687': "\\circledtwodots{}" # WHITE CIRCLE WITH TWO DOTS
+  '\u2688': "\\blackcircledrightdot{}" # BLACK CIRCLE WITH WHITE DOT RIGHT
+  '\u2689': "\\blackcircledtwodots{}" # BLACK CIRCLE WITH TWO WHITE DOTS
+  '\u2693': "\\anchor{}" # ANCHOR
+  '\u2694': "\\swords{}" # CROSSED SWORDS
+  '\u26A0': "\\warning{}" # WARNING SIGN
+  '\u26A5': "\\Hermaphrodite{}" # MALE AND FEMALE SIGN
+  '\u26AA': "\\medcirc{}" # MEDIUM WHITE CIRCLE
+  '\u26AB': "\\medbullet{}" # MEDIUM BLACK CIRCLE
+  '\u26AC': "\\mdsmwhtcircle{}" # MEDIUM SMALL WHITE CIRCLE
+  '\u26B2': "\\neuter{}" # NEUTER
+  '\u2772': "\\lbrbrak{}" # LIGHT LEFT TORTOISE SHELL BRACKET ORNAMENT
+  '\u2773': "\\rbrbrak{}" # LIGHT RIGHT TORTOISE SHELL BRACKET ORNAMENT
+  '\u27C0': "\\threedangle{}" # THREE DIMENSIONAL ANGLE
+  '\u27C1': "\\whiteinwhitetriangle{}" # WHITE TRIANGLE CONTAINING SMALL WHITE TRIANGLE
+  '\u27C2': "\\perp{}" # PERPENDICULAR
+  '\u27C3': "\\subsetcirc{}" # OPEN SUBSET
+  '\u27C4': "\\supsetcirc{}" # OPEN SUPERSET
+  '\u27C5': "\\Lbag{}" # = \lbag (stmaryrd -oz), LEFT S-SHAPED BAG DELIMITER
+  '\u27C6': "\\Rbag{}" # = \rbag (stmaryrd -oz), RIGHT S-SHAPED BAG DELIMITER
+  '\u27C7': "\\veedot{}" # OR WITH DOT INSIDE
+  '\u27C8': "\\bsolhsub{}" # REVERSE SOLIDUS PRECEDING SUBSET
+  '\u27C9': "\\suphsol{}" # SUPERSET PRECEDING SOLIDUS
+  '\u27CC': "\\longdivision{}" # LONG DIVISION
+  '\u27D0': "\\Diamonddot{}" # WHITE DIAMOND WITH CENTRED DOT
+  '\u27D1': "\\wedgedot{}" # AND WITH DOT
+  '\u27D2': "\\upin{}" # ELEMENT OF OPENING UPWARDS
+  '\u27D3': "\\pullback{}" # LOWER RIGHT CORNER WITH DOT
+  '\u27D4': "\\pushout{}" # UPPER LEFT CORNER WITH DOT
+  '\u27D5': "\\leftouterjoin{}" # LEFT OUTER JOIN
+  '\u27D6': "\\rightouterjoin{}" # RIGHT OUTER JOIN
+  '\u27D7': "\\fullouterjoin{}" # FULL OUTER JOIN
+  '\u27D8': "\\bigbot{}" # LARGE UP TACK
+  '\u27D9': "\\bigtop{}" # LARGE DOWN TACK
+  '\u27DA': "\\DashVDash{}" # LEFT AND RIGHT DOUBLE TURNSTILE
+  '\u27DB': "\\dashVdash{}" # LEFT AND RIGHT TACK
+  '\u27DC': "\\multimapinv{}" # LEFT MULTIMAP
+  '\u27DD': "\\vlongdash{}" # long left tack
+  '\u27DE': "\\longdashv{}" # long right tack
+  '\u27DF': "\\cirbot{}" # UP TACK WITH CIRCLE ABOVE
+  '\u27E0': "\\lozengeminus{}" # LOZENGE DIVIDED BY HORIZONTAL RULE
+  '\u27E1': "\\concavediamond{}" # WHITE CONCAVE-SIDED DIAMOND
+  '\u27E2': "\\concavediamondtickleft{}" # WHITE CONCAVE-SIDED DIAMOND WITH LEFTWARDS TICK
+  '\u27E3': "\\concavediamondtickright{}" # WHITE CONCAVE-SIDED DIAMOND WITH RIGHTWARDS TICK
+  '\u27E4': "\\whitesquaretickleft{}" # WHITE SQUARE WITH LEFTWARDS TICK
+  '\u27E5': "\\whitesquaretickright{}" # WHITE SQUARE WITH RIGHTWARDS TICK
+  '\u27E6': "\\llbracket{}" # = \Lbrack (mathbbol), = \lbag (oz -stmaryrd), MATHEMATICAL LEFT WHITE SQUARE BRACKET
+  '\u27E7': "\\rrbracket{}" # = \Rbrack (mathbbol), = \rbag (oz -stmaryrd), MATHEMATICAL RIGHT WHITE SQUARE BRACKET
+  '\u27EA': "\\lang{}" # MATHEMATICAL LEFT DOUBLE ANGLE BRACKET, z notation left chevron bracket
+  '\u27EB': "\\rang{}" # MATHEMATICAL RIGHT DOUBLE ANGLE BRACKET, z notation right chevron bracket
+  '\u27EC': "\\Lbrbrak{}" # MATHEMATICAL LEFT WHITE TORTOISE SHELL BRACKET
+  '\u27ED': "\\Rbrbrak{}" # MATHEMATICAL RIGHT WHITE TORTOISE SHELL BRACKET
+  '\u27EE': "\\lgroup{}" # MATHEMATICAL LEFT FLATTENED PARENTHESIS
+  '\u27EF': "\\rgroup{}" # MATHEMATICAL RIGHT FLATTENED PARENTHESIS
+  '\u27F0': "\\UUparrow{}" # UPWARDS QUADRUPLE ARROW
+  '\u27F1': "\\DDownarrow{}" # DOWNWARDS QUADRUPLE ARROW
+  '\u27F2': "\\acwgapcirclearrow{}" # ANTICLOCKWISE GAPPED CIRCLE ARROW
+  '\u27F3': "\\cwgapcirclearrow{}" # CLOCKWISE GAPPED CIRCLE ARROW
+  '\u27F4': "\\rightarrowonoplus{}" # RIGHT ARROW WITH CIRCLED PLUS
+  '\u27F5': "\\longleftarrow{}" # LONG LEFTWARDS ARROW
+  '\u27F6': "\\longrightarrow{}" # LONG RIGHTWARDS ARROW
+  '\u27F7': "\\longleftrightarrow{}" # LONG LEFT RIGHT ARROW
+  '\u27F8': "\\Longleftarrow{}" # LONG LEFTWARDS DOUBLE ARROW
+  '\u27F9': "\\Longrightarrow{}" # LONG RIGHTWARDS DOUBLE ARROW
+  '\u27FA': "\\Longleftrightarrow{}" # LONG LEFT RIGHT DOUBLE ARROW
+  '\u27FB': "\\longmapsfrom{}" # = \longmappedfrom (kpfonts), LONG LEFTWARDS ARROW FROM BAR
+  '\u27FC': "\\longmapsto{}" # LONG RIGHTWARDS ARROW FROM BAR
+  '\u27FD': "\\Longmapsfrom{}" # = \Longmappedfrom (kpfonts), LONG LEFTWARDS DOUBLE ARROW FROM BAR
+  '\u27FE': "\\Longmapsto{}" # LONG RIGHTWARDS DOUBLE ARROW FROM BAR
+  '\u27FF': "\\sim\\joinrel\\leadsto{}" # LONG RIGHTWARDS SQUIGGLE ARROW
+  '\u2900': "\\psur{}" # = \psurj (oz), RIGHTWARDS TWO-HEADED ARROW WITH VERTICAL STROKE, z notation partial surjection
+  '\u2901': "\\nVtwoheadrightarrow{}" # RIGHTWARDS TWO-HEADED ARROW WITH DOUBLE VERTICAL STROKE, z notation finite surjection
+  '\u2902': "\\nvLeftarrow{}" # LEFTWARDS DOUBLE ARROW WITH VERTICAL STROKE
+  '\u2903': "\\nvRightarrow{}" # RIGHTWARDS DOUBLE ARROW WITH VERTICAL STROKE
+  '\u2904': "\\nvLeftrightarrow{}" # LEFT RIGHT DOUBLE ARROW WITH VERTICAL STROKE
+  '\u2905': "\\ElsevierGlyph{E212}" # RIGHTWARDS TWO-HEADED ARROW FROM BAR
+  '\u2906': "\\Mapsfrom{}" # = \Mappedfrom (kpfonts), LEFTWARDS DOUBLE ARROW FROM BAR
+  '\u2907': "\\Mapsto{}" # RIGHTWARDS DOUBLE ARROW FROM BAR
+  '\u2908': "\\downarrowbarred{}" # DOWNWARDS ARROW WITH HORIZONTAL STROKE
+  '\u2909': "\\uparrowbarred{}" # UPWARDS ARROW WITH HORIZONTAL STROKE
+  '\u290A': "\\Uuparrow{}" # UPWARDS TRIPLE ARROW
+  '\u290B': "\\Ddownarrow{}" # DOWNWARDS TRIPLE ARROW
+  '\u290C': "\\leftbkarrow{}" # LEFTWARDS DOUBLE DASH ARROW
+  '\u290D': "\\rightbkarrow{}" # RIGHTWARDS DOUBLE DASH ARROW
+  '\u290E': "\\leftdbkarrow{}" # LEFTWARDS TRIPLE DASH ARROW
+  '\u290F': "\\dbkarow{}" # RIGHTWARDS TRIPLE DASH ARROW
+  '\u2910': "\\drbkarow{}" # RIGHTWARDS TWO-HEADED TRIPLE DASH ARROW
+  '\u2911': "\\rightdotarrow{}" # RIGHTWARDS ARROW WITH DOTTED STEM
+  '\u2912': "\\UpArrowBar{}" # UPWARDS ARROW TO BAR
+  '\u2913': "\\DownArrowBar{}" # DOWNWARDS ARROW TO BAR
+  '\u2914': "\\pinj{}" # RIGHTWARDS ARROW WITH TAIL WITH VERTICAL STROKE, z notation partial injection
+  '\u2915': "\\finj{}" # RIGHTWARDS ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE, z notation finite injection
+  '\u2916': "\\bij{}" # RIGHTWARDS TWO-HEADED ARROW WITH TAIL, z notation bijection
+  '\u2917': "\\nvtwoheadrightarrowtail{}" # RIGHTWARDS TWO-HEADED ARROW WITH TAIL WITH VERTICAL STROKE, z notation surjective injection
+  '\u2918': "\\nVtwoheadrightarrowtail{}" # RIGHTWARDS TWO-HEADED ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE, z notation finite surjective injection
+  '\u2919': "\\lefttail{}" # LEFTWARDS ARROW-TAIL
+  '\u291A': "\\righttail{}" # RIGHTWARDS ARROW-TAIL
+  '\u291B': "\\leftdbltail{}" # LEFTWARDS DOUBLE ARROW-TAIL
+  '\u291C': "\\rightdbltail{}" # RIGHTWARDS DOUBLE ARROW-TAIL
+  '\u291D': "\\diamondleftarrow{}" # LEFTWARDS ARROW TO BLACK DIAMOND
+  '\u291E': "\\rightarrowdiamond{}" # RIGHTWARDS ARROW TO BLACK DIAMOND
+  '\u291F': "\\diamondleftarrowbar{}" # LEFTWARDS ARROW FROM BAR TO BLACK DIAMOND
+  '\u2920': "\\barrightarrowdiamond{}" # RIGHTWARDS ARROW FROM BAR TO BLACK DIAMOND
+  '\u2921': "\\nwsearrow{}" # NORTH WEST AND SOUTH EAST ARROW
+  '\u2922': "\\neswarrow{}" # NORTH EAST AND SOUTH WEST ARROW
+  '\u2923': "\\ElsevierGlyph{E20C}" # NORTH WEST ARROW WITH HOOK
+  '\u2924': "\\ElsevierGlyph{E20D}" # NORTH EAST ARROW WITH HOOK
+  '\u2925': "\\ElsevierGlyph{E20B}" # SOUTH EAST ARROW WITH HOOK
+  '\u2926': "\\ElsevierGlyph{E20A}" # SOUTH WEST ARROW WITH HOOK
+  '\u2927': "\\ElsevierGlyph{E211}" # NORTH WEST ARROW AND NORTH EAST ARROW
+  '\u2928': "\\ElsevierGlyph{E20E}" # NORTH EAST ARROW AND SOUTH EAST ARROW
+  '\u2929': "\\ElsevierGlyph{E20F}" # SOUTH EAST ARROW AND SOUTH WEST ARROW
+  '\u292A': "\\ElsevierGlyph{E210}" # SOUTH WEST ARROW AND NORTH WEST ARROW
+  '\u292B': "\\rdiagovfdiag{}" # RISING DIAGONAL CROSSING FALLING DIAGONAL
+  '\u292C': "\\fdiagovrdiag{}" # FALLING DIAGONAL CROSSING RISING DIAGONAL
+  '\u292D': "\\seovnearrow{}" # SOUTH EAST ARROW CROSSING NORTH EAST ARROW
+  '\u292E': "\\neovsearrow{}" # NORTH EAST ARROW CROSSING SOUTH EAST ARROW
+  '\u292F': "\\fdiagovnearrow{}" # FALLING DIAGONAL CROSSING NORTH EAST ARROW
+  '\u2930': "\\rdiagovsearrow{}" # RISING DIAGONAL CROSSING SOUTH EAST ARROW
+  '\u2931': "\\neovnwarrow{}" # NORTH EAST ARROW CROSSING NORTH WEST ARROW
+  '\u2932': "\\nwovnearrow{}" # NORTH WEST ARROW CROSSING NORTH EAST ARROW
+  '\u2933': "\\ElsevierGlyph{E21C}" # WAVE ARROW POINTING DIRECTLY RIGHT
+  '\u2934': "\\uprightcurvearrow{}" # ARROW POINTING RIGHTWARDS THEN CURVING UPWARDS
+  '\u2935': "\\downrightcurvedarrow{}" # ARROW POINTING RIGHTWARDS THEN CURVING DOWNWARDS
+  '\u2936': "\\ElsevierGlyph{E21A}" # ARROW POINTING DOWNWARDS THEN CURVING LEFTWARDS
+  '\u2937': "\\ElsevierGlyph{E219}" # ARROW POINTING DOWNWARDS THEN CURVING RIGHTWARDS
+  '\u2938': "\\cwrightarcarrow{}" # RIGHT-SIDE ARC CLOCKWISE ARROW
+  '\u2939': "\\acwleftarcarrow{}" # LEFT-SIDE ARC ANTICLOCKWISE ARROW
+  '\u293A': "\\acwoverarcarrow{}" # TOP ARC ANTICLOCKWISE ARROW
+  '\u293B': "\\acwunderarcarrow{}" # BOTTOM ARC ANTICLOCKWISE ARROW
+  '\u293C': "\\curvearrowrightminus{}" # TOP ARC CLOCKWISE ARROW WITH MINUS
+  '\u293D': "\\curvearrowleftplus{}" # TOP ARC ANTICLOCKWISE ARROW WITH PLUS
+  '\u293E': "\\cwundercurvearrow{}" # LOWER RIGHT SEMICIRCULAR CLOCKWISE ARROW
+  '\u293F': "\\ccwundercurvearrow{}" # LOWER LEFT SEMICIRCULAR ANTICLOCKWISE ARROW
+  '\u2940': "\\Elolarr{}" # ANTICLOCKWISE CLOSED CIRCLE ARROW
+  '\u2941': "\\Elorarr{}" # CLOCKWISE CLOSED CIRCLE ARROW
+  '\u2942': "\\ElzRlarr{}" # RIGHTWARDS ARROW ABOVE SHORT LEFTWARDS ARROW
+  '\u2943': "\\leftarrowshortrightarrow{}" # LEFTWARDS ARROW ABOVE SHORT RIGHTWARDS ARROW
+  '\u2944': "\\ElzrLarr{}" # SHORT RIGHTWARDS ARROW ABOVE LEFTWARDS ARROW
+  '\u2945': "\\rightarrowplus{}" # RIGHTWARDS ARROW WITH PLUS BELOW
+  '\u2946': "\\leftarrowplus{}" # LEFTWARDS ARROW WITH PLUS BELOW
+  '\u2947': "\\Elzrarrx{}" # RIGHTWARDS ARROW THROUGH X
+  '\u2948': "\\leftrightarrowcircle{}" # LEFT RIGHT ARROW THROUGH SMALL CIRCLE
+  '\u2949': "\\twoheaduparrowcircle{}" # UPWARDS TWO-HEADED ARROW FROM SMALL CIRCLE
+  '\u294A': "\\leftrightharpoon{}" # LEFT BARB UP RIGHT BARB DOWN HARPOON
+  '\u294B': "\\rightleftharpoon{}" # LEFT BARB DOWN RIGHT BARB UP HARPOON
+  '\u294C': "\\updownharpoonrightleft{}" # UP BARB RIGHT DOWN BARB LEFT HARPOON
+  '\u294D': "\\updownharpoonleftright{}" # UP BARB LEFT DOWN BARB RIGHT HARPOON
+  '\u294E': "\\LeftRightVector{}" # LEFT BARB UP RIGHT BARB UP HARPOON
+  '\u294F': "\\RightUpDownVector{}" # UP BARB RIGHT DOWN BARB RIGHT HARPOON
+  '\u2950': "\\DownLeftRightVector{}" # LEFT BARB DOWN RIGHT BARB DOWN HARPOON
+  '\u2951': "\\LeftUpDownVector{}" # UP BARB LEFT DOWN BARB LEFT HARPOON
+  '\u2952': "\\LeftVectorBar{}" # LEFTWARDS HARPOON WITH BARB UP TO BAR
+  '\u2953': "\\RightVectorBar{}" # RIGHTWARDS HARPOON WITH BARB UP TO BAR
+  '\u2954': "\\RightUpVectorBar{}" # UPWARDS HARPOON WITH BARB RIGHT TO BAR
+  '\u2955': "\\RightDownVectorBar{}" # DOWNWARDS HARPOON WITH BARB RIGHT TO BAR
+  '\u2956': "\\DownLeftVectorBar{}" # LEFTWARDS HARPOON WITH BARB DOWN TO BAR
+  '\u2957': "\\DownRightVectorBar{}" # RIGHTWARDS HARPOON WITH BARB DOWN TO BAR
+  '\u2958': "\\LeftUpVectorBar{}" # UPWARDS HARPOON WITH BARB LEFT TO BAR
+  '\u2959': "\\LeftDownVectorBar{}" # DOWNWARDS HARPOON WITH BARB LEFT TO BAR
+  '\u295A': "\\LeftTeeVector{}" # LEFTWARDS HARPOON WITH BARB UP FROM BAR
+  '\u295B': "\\RightTeeVector{}" # RIGHTWARDS HARPOON WITH BARB UP FROM BAR
+  '\u295C': "\\RightUpTeeVector{}" # UPWARDS HARPOON WITH BARB RIGHT FROM BAR
+  '\u295D': "\\RightDownTeeVector{}" # DOWNWARDS HARPOON WITH BARB RIGHT FROM BAR
+  '\u295E': "\\DownLeftTeeVector{}" # LEFTWARDS HARPOON WITH BARB DOWN FROM BAR
+  '\u295F': "\\DownRightTeeVector{}" # RIGHTWARDS HARPOON WITH BARB DOWN FROM BAR
+  '\u2960': "\\LeftUpTeeVector{}" # UPWARDS HARPOON WITH BARB LEFT FROM BAR
+  '\u2961': "\\LeftDownTeeVector{}" # DOWNWARDS HARPOON WITH BARB LEFT FROM BAR
+  '\u2962': "\\leftleftharpoons{}" # LEFTWARDS HARPOON WITH BARB UP ABOVE LEFTWARDS HARPOON WITH BARB DOWN
+  '\u2963': "\\upupharpoons{}" # UPWARDS HARPOON WITH BARB LEFT BESIDE UPWARDS HARPOON WITH BARB RIGHT
+  '\u2964': "\\rightrightharpoons{}" # RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN
+  '\u2965': "\\downdownharpoons{}" # DOWNWARDS HARPOON WITH BARB LEFT BESIDE DOWNWARDS HARPOON WITH BARB RIGHT
+  '\u2966': "\\leftrightharpoonsup{}" # LEFTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB UP
+  '\u2967': "\\leftrightharpoonsdown{}" # LEFTWARDS HARPOON WITH BARB DOWN ABOVE RIGHTWARDS HARPOON WITH BARB DOWN
+  '\u2968': "\\rightleftharpoonsup{}" # RIGHTWARDS HARPOON WITH BARB UP ABOVE LEFTWARDS HARPOON WITH BARB UP
+  '\u2969': "\\rightleftharpoonsdown{}" # RIGHTWARDS HARPOON WITH BARB DOWN ABOVE LEFTWARDS HARPOON WITH BARB DOWN
+  '\u296A': "\\leftbarharpoon{}" # LEFTWARDS HARPOON WITH BARB UP ABOVE LONG DASH
+  '\u296B': "\\barleftharpoon{}" # LEFTWARDS HARPOON WITH BARB DOWN BELOW LONG DASH
+  '\u296C': "\\rightbarharpoon{}" # RIGHTWARDS HARPOON WITH BARB UP ABOVE LONG DASH
+  '\u296D': "\\barrightharpoon{}" # RIGHTWARDS HARPOON WITH BARB DOWN BELOW LONG DASH
+  '\u296E': "\\UpEquilibrium{}" # UPWARDS HARPOON WITH BARB LEFT BESIDE DOWNWARDS HARPOON WITH BARB RIGHT
+  '\u296F': "\\ReverseUpEquilibrium{}" # DOWNWARDS HARPOON WITH BARB LEFT BESIDE UPWARDS HARPOON WITH BARB RIGHT
+  '\u2970': "\\RoundImplies{}" # RIGHT DOUBLE ARROW WITH ROUNDED HEAD
+  '\u2971': "\\equalrightarrow{}" # EQUALS SIGN ABOVE RIGHTWARDS ARROW
+  '\u2972': "\\similarrightarrow{}" # TILDE OPERATOR ABOVE RIGHTWARDS ARROW
+  '\u2973': "\\leftarrowsimilar{}" # LEFTWARDS ARROW ABOVE TILDE OPERATOR
+  '\u2974': "\\rightarrowsimilar{}" # RIGHTWARDS ARROW ABOVE TILDE OPERATOR
+  '\u2975': "\\rightarrowapprox{}" # RIGHTWARDS ARROW ABOVE ALMOST EQUAL TO
+  '\u2976': "\\ltlarr{}" # LESS-THAN ABOVE LEFTWARDS ARROW
+  '\u2977': "\\leftarrowless{}" # LEFTWARDS ARROW THROUGH LESS-THAN
+  '\u2978': "\\gtrarr{}" # GREATER-THAN ABOVE RIGHTWARDS ARROW
+  '\u2979': "\\subrarr{}" # SUBSET ABOVE RIGHTWARDS ARROW
+  '\u297A': "\\leftarrowsubset{}" # LEFTWARDS ARROW THROUGH SUBSET
+  '\u297B': "\\suplarr{}" # SUPERSET ABOVE LEFTWARDS ARROW
+  '\u297C': "\\ElsevierGlyph{E214}" # LEFT FISH TAIL
+  '\u297D': "\\ElsevierGlyph{E215}" # RIGHT FISH TAIL
+  '\u297E': "\\upfishtail{}" # UP FISH TAIL
+  '\u297F': "\\downfishtail{}" # DOWN FISH TAIL
+  '\u2980': "\\Elztfnc{}" # TRIPLE VERTICAL BAR DELIMITER
+  '\u2981': "\\spot{}" # = \dot (oz), Z NOTATION SPOT
+  '\u2982': "\\typecolon{}" # Z NOTATION TYPE COLON, (present in bbold font but no command)
+  '\u2983': "\\lBrace{}" # LEFT WHITE CURLY BRACKET
+  '\u2984': "\\rBrace{}" # RIGHT WHITE CURLY BRACKET
+  '\u2985': "\\ElsevierGlyph{3018}" # LEFT WHITE PARENTHESIS
+  '\u2986': "\\Elroang{}" # RIGHT WHITE PARENTHESIS
+  '\u2987': "\\limg{}" # = \llparenthesis (stmaryrd), Z NOTATION LEFT IMAGE BRACKET
+  '\u2988': "\\rimg{}" # = \rrparenthesis (stmaryrd), Z NOTATION RIGHT IMAGE BRACKET
+  '\u2989': "\\lblot{}" # Z NOTATION LEFT BINDING BRACKET
+  '\u298A': "\\rblot{}" # Z NOTATION RIGHT BINDING BRACKET
+  '\u298B': "\\lbrackubar{}" # LEFT SQUARE BRACKET WITH UNDERBAR
+  '\u298C': "\\rbrackubar{}" # RIGHT SQUARE BRACKET WITH UNDERBAR
+  '\u298D': "\\lbrackultick{}" # LEFT SQUARE BRACKET WITH TICK IN TOP CORNER
+  '\u298E': "\\rbracklrtick{}" # RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER
+  '\u298F': "\\lbracklltick{}" # LEFT SQUARE BRACKET WITH TICK IN BOTTOM CORNER
+  '\u2990': "\\rbrackurtick{}" # RIGHT SQUARE BRACKET WITH TICK IN TOP CORNER
+  '\u2991': "\\langledot{}" # LEFT ANGLE BRACKET WITH DOT
+  '\u2992': "\\rangledot{}" # RIGHT ANGLE BRACKET WITH DOT
+  '\u2993': "<\\kern-0.58em(" # LEFT ARC LESS-THAN BRACKET
+  '\u2994': "\\ElsevierGlyph{E291}" # RIGHT ARC GREATER-THAN BRACKET
+  '\u2995': "\\Lparengtr{}" # DOUBLE LEFT ARC GREATER-THAN BRACKET
+  '\u2996': "\\Rparenless{}" # DOUBLE RIGHT ARC LESS-THAN BRACKET
+  '\u2997': "\\lblkbrbrak{}" # LEFT BLACK TORTOISE SHELL BRACKET
+  '\u2998': "\\rblkbrbrak{}" # RIGHT BLACK TORTOISE SHELL BRACKET
+  '\u2999': "\\Elzddfnc{}" # DOTTED FENCE
+  '\u299A': "\\vzigzag{}" # VERTICAL ZIGZAG LINE
+  '\u299B': "\\measuredangleleft{}" # MEASURED ANGLE OPENING LEFT
+  '\u299C': "\\Angle{}" # RIGHT ANGLE VARIANT WITH SQUARE
+  '\u299D': "\\rightanglemdot{}" # MEASURED RIGHT ANGLE WITH DOT
+  '\u299E': "\\angles{}" # ANGLE WITH S INSIDE
+  '\u299F': "\\angdnr{}" # ACUTE ANGLE
+  '\u29A0': "\\Elzlpargt{}" # SPHERICAL ANGLE OPENING LEFT
+  '\u29A1': "\\sphericalangleup{}" # SPHERICAL ANGLE OPENING UP
+  '\u29A2': "\\turnangle{}" # TURNED ANGLE
+  '\u29A3': "\\revangle{}" # REVERSED ANGLE
+  '\u29A4': "\\angleubar{}" # ANGLE WITH UNDERBAR
+  '\u29A5': "\\revangleubar{}" # REVERSED ANGLE WITH UNDERBAR
+  '\u29A6': "\\wideangledown{}" # OBLIQUE ANGLE OPENING UP
+  '\u29A7': "\\wideangleup{}" # OBLIQUE ANGLE OPENING DOWN
+  '\u29A8': "\\measanglerutone{}" # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING UP AND RIGHT
+  '\u29A9': "\\measanglelutonw{}" # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING UP AND LEFT
+  '\u29AA': "\\measanglerdtose{}" # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING DOWN AND RIGHT
+  '\u29AB': "\\measangleldtosw{}" # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING DOWN AND LEFT
+  '\u29AC': "\\measangleurtone{}" # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING RIGHT AND UP
+  '\u29AD': "\\measangleultonw{}" # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING LEFT AND UP
+  '\u29AE': "\\measangledrtose{}" # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING RIGHT AND DOWN
+  '\u29AF': "\\measangledltosw{}" # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING LEFT AND DOWN
+  '\u29B0': "\\revemptyset{}" # REVERSED EMPTY SET
+  '\u29B1': "\\emptysetobar{}" # EMPTY SET WITH OVERBAR
+  '\u29B2': "\\emptysetocirc{}" # EMPTY SET WITH SMALL CIRCLE ABOVE
+  '\u29B3': "\\emptysetoarr{}" # EMPTY SET WITH RIGHT ARROW ABOVE
+  '\u29B4': "\\emptysetoarrl{}" # EMPTY SET WITH LEFT ARROW ABOVE
+  '\u29B5': "\\ElsevierGlyph{E260}" # CIRCLE WITH HORIZONTAL BAR
+  '\u29B6': "\\ElsevierGlyph{E61B}" # CIRCLED VERTICAL BAR
+  '\u29B7': "\\circledparallel{}" # CIRCLED PARALLEL
+  '\u29B8': "\\circledbslash{}" # CIRCLED REVERSE SOLIDUS
+  '\u29B9': "\\operp{}" # CIRCLED PERPENDICULAR
+  '\u29BA': "\\obot{}" # CIRCLE DIVIDED BY HORIZONTAL BAR AND TOP HALF DIVIDED BY VERTICAL BAR
+  '\u29BB': "\\olcross{}" # CIRCLE WITH SUPERIMPOSED X
+  '\u29BC': "\\odotslashdot{}" # CIRCLED ANTICLOCKWISE-ROTATED DIVISION SIGN
+  '\u29BD': "\\uparrowoncircle{}" # UP ARROW THROUGH CIRCLE
+  '\u29BE': "\\circledwhitebullet{}" # CIRCLED WHITE BULLET
+  '\u29BF': "\\circledbullet{}" # CIRCLED BULLET
+  '\u29C0': "\\circledless{}" # CIRCLED LESS-THAN
+  '\u29C1': "\\circledgtr{}" # CIRCLED GREATER-THAN
+  '\u29C2': "\\cirscir{}" # CIRCLE WITH SMALL CIRCLE TO THE RIGHT
+  '\u29C3': "\\cirE{}" # CIRCLE WITH TWO HORIZONTAL STROKES TO THE RIGHT
+  '\u29C4': "\\boxslash{}" # SQUARED RISING DIAGONAL SLASH
+  '\u29C5': "\\boxbslash{}" # SQUARED FALLING DIAGONAL SLASH
+  '\u29C6': "\\boxast{}" # SQUARED ASTERISK
+  '\u29C7': "\\boxcircle{}" # SQUARED SMALL CIRCLE
+  '\u29C8': "\\boxbox{}" # SQUARED SQUARE
+  '\u29C9': "\\boxonbox{}" # TWO JOINED SQUARES
+  '\u29CA': "\\ElzLap{}" # TRIANGLE WITH DOT ABOVE
+  '\u29CB': "\\Elzdefas{}" # TRIANGLE WITH UNDERBAR
+  '\u29CC': "\\triangles{}" # S IN TRIANGLE
+  '\u29CD': "\\triangleserifs{}" # TRIANGLE WITH SERIFS AT BOTTOM
+  '\u29CE': "\\rtriltri{}" # RIGHT TRIANGLE ABOVE LEFT TRIANGLE
+  '\u29CF': "\\LeftTriangleBar{}" # LEFT TRIANGLE BESIDE VERTICAL BAR
+  '\u29D0': "\\RightTriangleBar{}" # VERTICAL BAR BESIDE RIGHT TRIANGLE
+  '\u29D1': "\\lfbowtie{}" # left black bowtie
+  '\u29D2': "\\rfbowtie{}" # right black bowtie
+  '\u29D3': "\\fbowtie{}" # BLACK BOWTIE
+  '\u29D4': "\\lftimes{}" # left black times
+  '\u29D5': "\\rftimes{}" # right black times
+  '\u29D6': "\\hourglass{}" # WHITE HOURGLASS
+  '\u29D7': "\\blackhourglass{}" # BLACK HOURGLASS
+  '\u29D8': "\\lvzigzag{}" # LEFT WIGGLY FENCE
+  '\u29D9': "\\rvzigzag{}" # RIGHT WIGGLY FENCE
+  '\u29DA': "\\Lvzigzag{}" # LEFT DOUBLE WIGGLY FENCE
+  '\u29DB': "\\Rvzigzag{}" # RIGHT DOUBLE WIGGLY FENCE
+  '\u29DC': "\\ElsevierGlyph{E372}" # INCOMPLETE INFINITY
+  '\u29DD': "\\tieinfty{}" # TIE OVER INFINITY
+  '\u29DE': "\\nvinfty{}" # INFINITY NEGATED WITH VERTICAL BAR
+  '\u29DF': "\\multimapboth{}" # DOUBLE-ENDED MULTIMAP
+  '\u29E0': "\\laplac{}" # SQUARE WITH CONTOURED OUTLINE
+  '\u29E1': "\\lrtriangleeq{}" # INCREASES AS
+  '\u29E2': "\\shuffle{}" # SHUFFLE PRODUCT
+  '\u29E3': "\\eparsl{}" # EQUALS SIGN AND SLANTED PARALLEL
+  '\u29E4': "\\smeparsl{}" # EQUALS SIGN AND SLANTED PARALLEL WITH TILDE ABOVE
+  '\u29E5': "\\eqvparsl{}" # IDENTICAL TO AND SLANTED PARALLEL
+  '\u29E6': "\\gleichstark{}" # GLEICH STARK
+  '\u29E7': "\\thermod{}" # THERMODYNAMIC
+  '\u29E8': "\\downtriangleleftblack{}" # DOWN-POINTING TRIANGLE WITH LEFT HALF BLACK
+  '\u29E9': "\\downtrianglerightblack{}" # DOWN-POINTING TRIANGLE WITH RIGHT HALF BLACK
+  '\u29EA': "\\blackdiamonddownarrow{}" # BLACK DIAMOND WITH DOWN ARROW
+  '\u29EB': "\\blacklozenge{}" # BLACK LOZENGE
+  '\u29EC': "\\circledownarrow{}" # WHITE CIRCLE WITH DOWN ARROW
+  '\u29ED': "\\blackcircledownarrow{}" # BLACK CIRCLE WITH DOWN ARROW
+  '\u29EE': "\\errbarsquare{}" # ERROR-BARRED WHITE SQUARE
+  '\u29EF': "\\errbarblacksquare{}" # ERROR-BARRED BLACK SQUARE
+  '\u29F0': "\\errbardiamond{}" # ERROR-BARRED WHITE DIAMOND
+  '\u29F1': "\\errbarblackdiamond{}" # ERROR-BARRED BLACK DIAMOND
+  '\u29F2': "\\errbarcircle{}" # ERROR-BARRED WHITE CIRCLE
+  '\u29F3': "\\errbarblackcircle{}" # ERROR-BARRED BLACK CIRCLE
+  '\u29F4': "\\RuleDelayed{}" # RULE-DELAYED
+  '\u29F5': "\\setminus{}" # REVERSE SOLIDUS OPERATOR
+  '\u29F6': "\\dsol{}" # SOLIDUS WITH OVERBAR
+  '\u29F7': "\\rsolbar{}" # REVERSE SOLIDUS WITH HORIZONTAL STROKE
+  '\u29F8': "\\xsol{}" # BIG SOLIDUS
+  '\u29F9': "\\zhide{}" # = \hide (oz), BIG REVERSE SOLIDUS, z notation schema hiding
+  '\u29FA': "\\doubleplus{}" # DOUBLE PLUS
+  '\u29FB': "\\tripleplus{}" # TRIPLE PLUS
+  '\u29FC': "\\lcurvyangle{}" # left pointing curved angle bracket
+  '\u29FD': "\\rcurvyangle{}" # right pointing curved angle bracket
+  '\u29FE': "\\tplus{}" # TINY
+  '\u29FF': "\\tminus{}" # MINY
+  '\u2A00': "\\bigodot{}" # N-ARY CIRCLED DOT OPERATOR
+  '\u2A01': "\\bigoplus{}" # N-ARY CIRCLED PLUS OPERATOR
+  '\u2A02': "\\bigotimes{}" # N-ARY CIRCLED TIMES OPERATOR
+  '\u2A03': "\\bigcupdot{}" # N-ARY UNION OPERATOR WITH DOT
+  '\u2A04': "\\Elxuplus{}" # N-ARY UNION OPERATOR WITH PLUS
+  '\u2A05': "\\ElzThr{}" # N-ARY SQUARE INTERSECTION OPERATOR
+  '\u2A06': "\\Elxsqcup{}" # N-ARY SQUARE UNION OPERATOR
+  '\u2A07': "\\ElzInf{}" # TWO LOGICAL AND OPERATOR
+  '\u2A08': "\\ElzSup{}" # TWO LOGICAL OR OPERATOR
+  '\u2A09': "\\varprod{}" # N-ARY TIMES OPERATOR
+  '\u2A0A': "\\modtwosum{}" # MODULO TWO SUM
+  '\u2A0B': "\\sumint{}" # SUMMATION WITH INTEGRAL
+  '\u2A0C': "\\iiiint{}" # QUADRUPLE INTEGRAL OPERATOR
+  '\u2A0D': "\\ElzCint{}" # FINITE PART INTEGRAL
+  '\u2A0E': "\\intBar{}" # INTEGRAL WITH DOUBLE STROKE
+  '\u2A0F': "\\clockoint{}" # INTEGRAL AVERAGE WITH SLASH
+  '\u2A10': "\\ElsevierGlyph{E395}" # CIRCULATION FUNCTION
+  '\u2A11': "\\awint{}" # ANTICLOCKWISE INTEGRATION
+  '\u2A12': "\\rppolint{}" # LINE INTEGRATION WITH RECTANGULAR PATH AROUND POLE
+  '\u2A13': "\\scpolint{}" # LINE INTEGRATION WITH SEMICIRCULAR PATH AROUND POLE
+  '\u2A14': "\\npolint{}" # LINE INTEGRATION NOT INCLUDING THE POLE
+  '\u2A15': "\\pointint{}" # INTEGRAL AROUND A POINT OPERATOR
+  '\u2A16': "\\sqrint{}" # QUATERNION INTEGRAL OPERATOR
+  '\u2A17': "\\intlarhk{}" # INTEGRAL WITH LEFTWARDS ARROW WITH HOOK
+  '\u2A18': "\\intx{}" # INTEGRAL WITH TIMES SIGN
+  '\u2A19': "\\intcap{}" # INTEGRAL WITH INTERSECTION
+  '\u2A1A': "\\intcup{}" # INTEGRAL WITH UNION
+  '\u2A1B': "\\upint{}" # INTEGRAL WITH OVERBAR
+  '\u2A1C': "\\lowint{}" # INTEGRAL WITH UNDERBAR
+  '\u2A1D': "\\Join{}" # JOIN
+  '\u2A1E': "\\bigtriangleleft{}" # LARGE LEFT TRIANGLE OPERATOR
+  '\u2A1F': "\\zcmp{}" # = \semi (oz), = \fatsemi (stmaryrd), Z NOTATION SCHEMA COMPOSITION
+  '\u2A20': "\\zpipe{}" # Z NOTATION SCHEMA PIPING
+  '\u2A21': "\\zproject{}" # = \project (oz), Z NOTATION SCHEMA PROJECTION
+  '\u2A22': "\\ringplus{}" # PLUS SIGN WITH SMALL CIRCLE ABOVE
+  '\u2A23': "\\plushat{}" # PLUS SIGN WITH CIRCUMFLEX ACCENT ABOVE
+  '\u2A24': "\\simplus{}" # PLUS SIGN WITH TILDE ABOVE
+  '\u2A25': "\\ElsevierGlyph{E25A}" # PLUS SIGN WITH DOT BELOW
+  '\u2A26': "\\plussim{}" # PLUS SIGN WITH TILDE BELOW
+  '\u2A27': "\\plussubtwo{}" # PLUS SIGN WITH SUBSCRIPT TWO
+  '\u2A28': "\\plustrif{}" # PLUS SIGN WITH BLACK TRIANGLE
+  '\u2A29': "\\commaminus{}" # MINUS SIGN WITH COMMA ABOVE
+  '\u2A2A': "\\ElsevierGlyph{E25B}" # MINUS SIGN WITH DOT BELOW
+  '\u2A2B': "\\minusfdots{}" # MINUS SIGN WITH FALLING DOTS
+  '\u2A2C': "\\minusrdots{}" # MINUS SIGN WITH RISING DOTS
+  '\u2A2D': "\\ElsevierGlyph{E25C}" # PLUS SIGN IN LEFT HALF CIRCLE
+  '\u2A2E': "\\ElsevierGlyph{E25D}" # PLUS SIGN IN RIGHT HALF CIRCLE
+  '\u2A2F': "\\ElzTimes{}" # VECTOR OR CROSS PRODUCT
+  '\u2A30': "\\dottimes{}" # MULTIPLICATION SIGN WITH DOT ABOVE
+  '\u2A31': "\\timesbar{}" # MULTIPLICATION SIGN WITH UNDERBAR
+  '\u2A32': "\\btimes{}" # SEMIDIRECT PRODUCT WITH BOTTOM CLOSED
+  '\u2A33': "\\smashtimes{}" # SMASH PRODUCT
+  '\u2A34': "\\ElsevierGlyph{E25E}" # MULTIPLICATION SIGN IN LEFT HALF CIRCLE
+  '\u2A35': "\\ElsevierGlyph{E25E}" # MULTIPLICATION SIGN IN RIGHT HALF CIRCLE
+  '\u2A36': "\\otimeshat{}" # CIRCLED MULTIPLICATION SIGN WITH CIRCUMFLEX ACCENT
+  '\u2A37': "\\Otimes{}" # MULTIPLICATION SIGN IN DOUBLE CIRCLE
+  '\u2A38': "\\odiv{}" # CIRCLED DIVISION SIGN
+  '\u2A39': "\\triangleplus{}" # PLUS SIGN IN TRIANGLE
+  '\u2A3A': "\\triangleminus{}" # MINUS SIGN IN TRIANGLE
+  '\u2A3B': "\\triangletimes{}" # MULTIPLICATION SIGN IN TRIANGLE
+  '\u2A3C': "\\ElsevierGlyph{E259}" # INTERIOR PRODUCT
+  '\u2A3D': "\\intprodr{}" # RIGHTHAND INTERIOR PRODUCT
+  '\u2A3E': "\\fcmp{}" # = \comp (oz), Z NOTATION RELATIONAL COMPOSITION
+  '\u2A3F': "\\amalg{}" # AMALGAMATION OR COPRODUCT
+  '\u2A40': "\\capdot{}" # INTERSECTION WITH DOT
+  '\u2A41': "\\uminus{}" # UNION WITH MINUS SIGN, z notation bag subtraction
+  '\u2A42': "\\barcup{}" # UNION WITH OVERBAR
+  '\u2A43': "\\barcap{}" # INTERSECTION WITH OVERBAR
+  '\u2A44': "\\capwedge{}" # INTERSECTION WITH LOGICAL AND
+  '\u2A45': "\\cupvee{}" # UNION WITH LOGICAL OR
+  '\u2A46': "\\cupovercap{}" # UNION ABOVE INTERSECTION
+  '\u2A47': "\\capovercup{}" # INTERSECTION ABOVE UNION
+  '\u2A48': "\\cupbarcap{}" # UNION ABOVE BAR ABOVE INTERSECTION
+  '\u2A49': "\\capbarcup{}" # INTERSECTION ABOVE BAR ABOVE UNION
+  '\u2A4A': "\\twocups{}" # UNION BESIDE AND JOINED WITH UNION
+  '\u2A4B': "\\twocaps{}" # INTERSECTION BESIDE AND JOINED WITH INTERSECTION
+  '\u2A4C': "\\closedvarcup{}" # CLOSED UNION WITH SERIFS
+  '\u2A4D': "\\closedvarcap{}" # CLOSED INTERSECTION WITH SERIFS
+  '\u2A4E': "\\Sqcap{}" # DOUBLE SQUARE INTERSECTION
+  '\u2A4F': "\\Sqcup{}" # DOUBLE SQUARE UNION
+  '\u2A50': "\\closedvarcupsmashprod{}" # CLOSED UNION WITH SERIFS AND SMASH PRODUCT
+  '\u2A51': "\\wedgeodot{}" # LOGICAL AND WITH DOT ABOVE
+  '\u2A52': "\\veeodot{}" # LOGICAL OR WITH DOT ABOVE
+  '\u2A53': "\\ElzAnd{}" # DOUBLE LOGICAL AND
+  '\u2A54': "\\ElzOr{}" # DOUBLE LOGICAL OR
+  '\u2A55': "\\ElsevierGlyph{E36E}" # TWO INTERSECTING LOGICAL AND
+  '\u2A56': "\\ElOr{}" # TWO INTERSECTING LOGICAL OR
+  '\u2A57': "\\bigslopedvee{}" # SLOPING LARGE OR
+  '\u2A58': "\\bigslopedwedge{}" # SLOPING LARGE AND
+  '\u2A59': "\\veeonwedge{}" # LOGICAL OR OVERLAPPING LOGICAL AND
+  '\u2A5A': "\\wedgemidvert{}" # LOGICAL AND WITH MIDDLE STEM
+  '\u2A5B': "\\veemidvert{}" # LOGICAL OR WITH MIDDLE STEM
+  '\u2A5C': "\\midbarwedge{}" # ogical and with horizontal dash
+  '\u2A5D': "\\midbarvee{}" # LOGICAL OR WITH HORIZONTAL DASH
+  '\u2A5E': "\\perspcorrespond{}" # LOGICAL AND WITH DOUBLE OVERBAR
+  '\u2A5F': "\\Elzminhat{}" # LOGICAL AND WITH UNDERBAR
+  '\u2A60': "\\wedgedoublebar{}" # LOGICAL AND WITH DOUBLE UNDERBAR
+  '\u2A61': "\\varveebar{}" # SMALL VEE WITH UNDERBAR
+  '\u2A62': "\\doublebarvee{}" # LOGICAL OR WITH DOUBLE OVERBAR
+  '\u2A63': "\\ElsevierGlyph{225A}" # LOGICAL OR WITH DOUBLE UNDERBAR
+  '\u2A64': "\\dsub{}" # = \ndres (oz), Z NOTATION DOMAIN ANTIRESTRICTION
+  '\u2A65': "\\rsub{}" # = \nrres (oz), Z NOTATION RANGE ANTIRESTRICTION
+  '\u2A66': "\\eqdot{}" # EQUALS SIGN WITH DOT BELOW
+  '\u2A67': "\\dotequiv{}" # IDENTICAL WITH DOT ABOVE
+  '\u2A68': "\\equivVert{}" # TRIPLE HORIZONTAL BAR WITH DOUBLE VERTICAL STROKE
+  '\u2A69': "\\equivVvert{}" # TRIPLE HORIZONTAL BAR WITH TRIPLE VERTICAL STROKE
+  '\u2A6A': "\\dotsim{}" # TILDE OPERATOR WITH DOT ABOVE
+  '\u2A6B': "\\simrdots{}" # TILDE OPERATOR WITH RISING DOTS
+  '\u2A6C': "\\simminussim{}" # SIMILAR MINUS SIMILAR
+  '\u2A6D': "\\congdot{}" # CONGRUENT WITH DOT ABOVE
+  '\u2A6E': "\\stackrel{*}{=}" # EQUALS WITH ASTERISK
+  '\u2A6F': "\\hatapprox{}" # ALMOST EQUAL TO WITH CIRCUMFLEX ACCENT
+  '\u2A70': "\\approxeqq{}" # APPROXIMATELY EQUAL OR EQUAL TO
+  '\u2A71': "\\eqqplus{}" # EQUALS SIGN ABOVE PLUS SIGN
+  '\u2A72': "\\pluseqq{}" # PLUS SIGN ABOVE EQUALS SIGN
+  '\u2A73': "\\eqqsim{}" # EQUALS SIGN ABOVE TILDE OPERATOR
+  '\u2A74': "\\Coloneqq{}" # # ::=, x \Coloneq (txfonts), DOUBLE COLON EQUAL
+  '\u2A75': "\\Equal{}" # TWO CONSECUTIVE EQUALS SIGNS
+  '\u2A76': "\\Same{}" # # ===, THREE CONSECUTIVE EQUALS SIGNS
+  '\u2A77': "\\ddotseq{}" # EQUALS SIGN WITH TWO DOTS ABOVE AND TWO DOTS BELOW
+  '\u2A78': "\\equivDD{}" # EQUIVALENT WITH FOUR DOTS ABOVE
+  '\u2A79': "\\ltcir{}" # LESS-THAN WITH CIRCLE INSIDE
+  '\u2A7A': "\\gtcir{}" # GREATER-THAN WITH CIRCLE INSIDE
+  '\u2A7B': "\\ltquest{}" # LESS-THAN WITH QUESTION MARK ABOVE
+  '\u2A7C': "\\gtquest{}" # GREATER-THAN WITH QUESTION MARK ABOVE
+  '\u2A7D': "\\leqslant{}" # LESS-THAN OR SLANTED EQUAL TO
+  '\u2A7E': "\\geqslant{}" # GREATER-THAN OR SLANTED EQUAL TO
+  '\u2A7F': "\\lesdot{}" # LESS-THAN OR SLANTED EQUAL TO WITH DOT INSIDE
+  '\u2A80': "\\gesdot{}" # GREATER-THAN OR SLANTED EQUAL TO WITH DOT INSIDE
+  '\u2A81': "\\lesdoto{}" # LESS-THAN OR SLANTED EQUAL TO WITH DOT ABOVE
+  '\u2A82': "\\gesdoto{}" # GREATER-THAN OR SLANTED EQUAL TO WITH DOT ABOVE
+  '\u2A83': "\\lesdotor{}" # LESS-THAN OR SLANTED EQUAL TO WITH DOT ABOVE RIGHT
+  '\u2A84': "\\gesdotol{}" # GREATER-THAN OR SLANTED EQUAL TO WITH DOT ABOVE LEFT
+  '\u2A85': "\\lessapprox{}" # LESS-THAN OR APPROXIMATE
+  '\u2A86': "\\gtrapprox{}" # GREATER-THAN OR APPROXIMATE
+  '\u2A87': "\\lneq{}" # LESS-THAN AND SINGLE-LINE NOT EQUAL TO
+  '\u2A88': "\\gneq{}" # GREATER-THAN AND SINGLE-LINE NOT EQUAL TO
+  '\u2A89': "\\lnapprox{}" # LESS-THAN AND NOT APPROXIMATE
+  '\u2A8A': "\\gnapprox{}" # GREATER-THAN AND NOT APPROXIMATE
+  '\u2A8B': "\\lesseqqgtr{}" # LESS-THAN ABOVE DOUBLE-LINE EQUAL ABOVE GREATER-THAN
+  '\u2A8C': "\\gtreqqless{}" # GREATER-THAN ABOVE DOUBLE-LINE EQUAL ABOVE LESS-THAN
+  '\u2A8D': "\\lsime{}" # LESS-THAN ABOVE SIMILAR OR EQUAL
+  '\u2A8E': "\\gsime{}" # GREATER-THAN ABOVE SIMILAR OR EQUAL
+  '\u2A8F': "\\lsimg{}" # LESS-THAN ABOVE SIMILAR ABOVE GREATER-THAN
+  '\u2A90': "\\gsiml{}" # GREATER-THAN ABOVE SIMILAR ABOVE LESS-THAN
+  '\u2A91': "\\lgE{}" # LESS-THAN ABOVE GREATER-THAN ABOVE DOUBLE-LINE EQUAL
+  '\u2A92': "\\glE{}" # GREATER-THAN ABOVE LESS-THAN ABOVE DOUBLE-LINE EQUAL
+  '\u2A93': "\\lesges{}" # LESS-THAN ABOVE SLANTED EQUAL ABOVE GREATER-THAN ABOVE SLANTED EQUAL
+  '\u2A94': "\\gesles{}" # GREATER-THAN ABOVE SLANTED EQUAL ABOVE LESS-THAN ABOVE SLANTED EQUAL
+  '\u2A95': "\\eqslantless{}" # SLANTED EQUAL TO OR LESS-THAN
+  '\u2A96': "\\eqslantgtr{}" # SLANTED EQUAL TO OR GREATER-THAN
+  '\u2A97': "\\elsdot{}" # SLANTED EQUAL TO OR LESS-THAN WITH DOT INSIDE
+  '\u2A98': "\\egsdot{}" # SLANTED EQUAL TO OR GREATER-THAN WITH DOT INSIDE
+  '\u2A99': "\\eqqless{}" # DOUBLE-LINE EQUAL TO OR LESS-THAN
+  '\u2A9A': "\\eqqgtr{}" # DOUBLE-LINE EQUAL TO OR GREATER-THAN
+  '\u2A9B': "\\eqqslantless{}" # DOUBLE-LINE SLANTED EQUAL TO OR LESS-THAN
+  '\u2A9C': "\\eqqslantgtr{}" # DOUBLE-LINE SLANTED EQUAL TO OR GREATER-THAN
+  '\u2A9D': "\\Pisymbol{ppi020}{117}" # SIMILAR OR LESS-THAN
+  '\u2A9E': "\\Pisymbol{ppi020}{105}" # SIMILAR OR GREATER-THAN
+  '\u2A9F': "\\simlE{}" # SIMILAR ABOVE LESS-THAN ABOVE EQUALS SIGN
+  '\u2AA0': "\\simgE{}" # SIMILAR ABOVE GREATER-THAN ABOVE EQUALS SIGN
+  '\u2AA1': "\\NestedLessLess{}" # DOUBLE NESTED LESS-THAN
+  '\u2AA2': "\\NestedGreaterGreater{}" # DOUBLE NESTED GREATER-THAN
+  '\u2AA3': "\\partialmeetcontraction{}" # double less-than with underbar
+  '\u2AA4': "\\glj{}" # GREATER-THAN OVERLAPPING LESS-THAN
+  '\u2AA5': "\\gla{}" # GREATER-THAN BESIDE LESS-THAN
+  '\u2AA6': "\\leftslice{}" # LESS-THAN CLOSED BY CURVE
+  '\u2AA7': "\\rightslice{}" # GREATER-THAN CLOSED BY CURVE
+  '\u2AA8': "\\lescc{}" # LESS-THAN CLOSED BY CURVE ABOVE SLANTED EQUAL
+  '\u2AA9': "\\gescc{}" # GREATER-THAN CLOSED BY CURVE ABOVE SLANTED EQUAL
+  '\u2AAA': "\\smt{}" # SMALLER THAN
+  '\u2AAB': "\\lat{}" # LARGER THAN
+  '\u2AAC': "\\smte{}" # SMALLER THAN OR EQUAL TO
+  '\u2AAD': "\\late{}" # LARGER THAN OR EQUAL TO
+  '\u2AAE': "\\bumpeqq{}" # EQUALS SIGN WITH BUMPY ABOVE
+  '\u2AAF': "\\preceq{}" # PRECEDES ABOVE SINGLE-LINE EQUALS SIGN
+  '\u2AB0': "\\succeq{}" # SUCCEEDS ABOVE SINGLE-LINE EQUALS SIGN
+  '\u2AB1': "\\precneq{}" # PRECEDES ABOVE SINGLE-LINE NOT EQUAL TO
+  '\u2AB2': "\\succneq{}" # SUCCEEDS ABOVE SINGLE-LINE NOT EQUAL TO
+  '\u2AB3': "\\preceqq{}" # PRECEDES ABOVE EQUALS SIGN
+  '\u2AB4': "\\succeqq{}" # SUCCEEDS ABOVE EQUALS SIGN
+  '\u2AB5': "\\precneqq{}" # PRECEDES ABOVE NOT EQUAL TO
+  '\u2AB6': "\\succneqq{}" # SUCCEEDS ABOVE NOT EQUAL TO
+  '\u2AB7': "\\precapprox{}" # PRECEDES ABOVE ALMOST EQUAL TO
+  '\u2AB8': "\\succapprox{}" # SUCCEEDS ABOVE ALMOST EQUAL TO
+  '\u2AB9': "\\precnapprox{}" # PRECEDES ABOVE NOT ALMOST EQUAL TO
+  '\u2ABA': "\\succnapprox{}" # SUCCEEDS ABOVE NOT ALMOST EQUAL TO
+  '\u2ABB': "\\llcurly{}" # DOUBLE PRECEDES
+  '\u2ABC': "\\ggcurly{}" # DOUBLE SUCCEEDS
+  '\u2ABD': "\\subsetdot{}" # SUBSET WITH DOT
+  '\u2ABE': "\\supsetdot{}" # SUPERSET WITH DOT
+  '\u2ABF': "\\subsetplus{}" # SUBSET WITH PLUS SIGN BELOW
+  '\u2AC0': "\\supsetplus{}" # SUPERSET WITH PLUS SIGN BELOW
+  '\u2AC1': "\\submult{}" # SUBSET WITH MULTIPLICATION SIGN BELOW
+  '\u2AC2': "\\supmult{}" # SUPERSET WITH MULTIPLICATION SIGN BELOW
+  '\u2AC3': "\\subedot{}" # SUBSET OF OR EQUAL TO WITH DOT ABOVE
+  '\u2AC4': "\\supedot{}" # SUPERSET OF OR EQUAL TO WITH DOT ABOVE
+  '\u2AC5': "\\subseteqq{}" # SUBSET OF ABOVE EQUALS SIGN
+  '\u2AC6': "\\supseteqq{}" # SUPERSET OF ABOVE EQUALS SIGN
+  '\u2AC7': "\\subsim{}" # SUBSET OF ABOVE TILDE OPERATOR
+  '\u2AC8': "\\supsim{}" # SUPERSET OF ABOVE TILDE OPERATOR
+  '\u2AC9': "\\subsetapprox{}" # SUBSET OF ABOVE ALMOST EQUAL TO
+  '\u2ACA': "\\supsetapprox{}" # SUPERSET OF ABOVE ALMOST EQUAL TO
+  '\u2ACB': "\\subsetneqq{}" # SUBSET OF ABOVE NOT EQUAL TO
+  '\u2ACC': "\\supsetneqq{}" # SUPERSET OF ABOVE NOT EQUAL TO
+  '\u2ACD': "\\lsqhook{}" # SQUARE LEFT OPEN BOX OPERATOR
+  '\u2ACE': "\\rsqhook{}" # SQUARE RIGHT OPEN BOX OPERATOR
+  '\u2ACF': "\\csub{}" # CLOSED SUBSET
+  '\u2AD0': "\\csup{}" # CLOSED SUPERSET
+  '\u2AD1': "\\csube{}" # CLOSED SUBSET OR EQUAL TO
+  '\u2AD2': "\\csupe{}" # CLOSED SUPERSET OR EQUAL TO
+  '\u2AD3': "\\subsup{}" # SUBSET ABOVE SUPERSET
+  '\u2AD4': "\\supsub{}" # SUPERSET ABOVE SUBSET
+  '\u2AD5': "\\subsub{}" # SUBSET ABOVE SUBSET
+  '\u2AD6': "\\supsup{}" # SUPERSET ABOVE SUPERSET
+  '\u2AD7': "\\suphsub{}" # SUPERSET BESIDE SUBSET
+  '\u2AD8': "\\supdsub{}" # SUPERSET BESIDE AND JOINED BY DASH WITH SUBSET
+  '\u2AD9': "\\forkv{}" # ELEMENT OF OPENING DOWNWARDS
+  '\u2ADA': "\\topfork{}" # PITCHFORK WITH TEE TOP
+  '\u2ADB': "\\mlcp{}" # TRANSVERSAL INTERSECTION
+  '\u2ADC': "\\forks{}" # FORKING
+  '\u2ADD': "\\forksnot{}" # NONFORKING
+  '\u2ADE': "\\shortlefttack{}" # SHORT LEFT TACK
+  '\u2ADF': "\\shortdowntack{}" # SHORT DOWN TACK
+  '\u2AE0': "\\shortuptack{}" # SHORT UP TACK
+  '\u2AE1': "\\perps{}" # PERPENDICULAR WITH S
+  '\u2AE2': "\\vDdash{}" # VERTICAL BAR TRIPLE RIGHT TURNSTILE
+  '\u2AE3': "\\dashV{}" # DOUBLE VERTICAL BAR LEFT TURNSTILE
+  '\u2AE4': "\\Dashv{}" # VERTICAL BAR DOUBLE LEFT TURNSTILE
+  '\u2AE5': "\\DashV{}" # DOUBLE VERTICAL BAR DOUBLE LEFT TURNSTILE
+  '\u2AE6': "\\varVdash{}" # LONG DASH FROM LEFT MEMBER OF DOUBLE VERTICAL
+  '\u2AE7': "\\Barv{}" # SHORT DOWN TACK WITH OVERBAR
+  '\u2AE8': "\\vBar{}" # SHORT UP TACK WITH UNDERBAR
+  '\u2AE9': "\\vBarv{}" # SHORT UP TACK ABOVE SHORT DOWN TACK
+  '\u2AEA': "\\Top{}" # DOUBLE DOWN TACK
+  '\u2AEB': "\\ElsevierGlyph{E30D}" # DOUBLE UP TACK
+  '\u2AEC': "\\Not{}" # DOUBLE STROKE NOT SIGN
+  '\u2AED': "\\bNot{}" # REVERSED DOUBLE STROKE NOT SIGN
+  '\u2AEE': "\\revnmid{}" # DOES NOT DIVIDE WITH REVERSED NEGATION SLASH
+  '\u2AEF': "\\cirmid{}" # VERTICAL LINE WITH CIRCLE ABOVE
+  '\u2AF0': "\\midcir{}" # VERTICAL LINE WITH CIRCLE BELOW
+  '\u2AF1': "\\topcir{}" # DOWN TACK WITH CIRCLE BELOW
+  '\u2AF2': "\\nhpar{}" # PARALLEL WITH HORIZONTAL STROKE
+  '\u2AF3': "\\parsim{}" # PARALLEL WITH TILDE OPERATOR
+  '\u2AF4': "\\interleave{}" # TRIPLE VERTICAL BAR BINARY RELATION
+  '\u2AF5': "\\nhVvert{}" # TRIPLE VERTICAL BAR WITH HORIZONTAL STROKE
+  '\u2AF6': "\\Elztdcol{}" # TRIPLE COLON OPERATOR
+  '\u2AF7': "\\lllnest{}" # TRIPLE NESTED LESS-THAN
+  '\u2AF8': "\\gggnest{}" # TRIPLE NESTED GREATER-THAN
+  '\u2AF9': "\\leqqslant{}" # DOUBLE-LINE SLANTED LESS-THAN OR EQUAL TO
+  '\u2AFA': "\\geqqslant{}" # DOUBLE-LINE SLANTED GREATER-THAN OR EQUAL TO
+  '\u2AFB': "\\trslash{}" # TRIPLE SOLIDUS BINARY RELATION
+  '\u2AFC': "\\biginterleave{}" # LARGE TRIPLE VERTICAL BAR OPERATOR
+  '\u2AFD': "{{/}\\!\\!{/}}" # DOUBLE SOLIDUS OPERATOR
+  '\u2AFE': "\\talloblong{}" # WHITE VERTICAL BAR
+  '\u2AFF': "\\bigtalloblong{}" # N-ARY WHITE VERTICAL BAR
+  '\u2B12': "\\squaretopblack{}" # SQUARE WITH TOP HALF BLACK
+  '\u2B13': "\\squarebotblack{}" # SQUARE WITH BOTTOM HALF BLACK
+  '\u2B14': "\\squareurblack{}" # SQUARE WITH UPPER RIGHT DIAGONAL HALF BLACK
+  '\u2B15': "\\squarellblack{}" # SQUARE WITH LOWER LEFT DIAGONAL HALF BLACK
+  '\u2B16': "\\diamondleftblack{}" # DIAMOND WITH LEFT HALF BLACK
+  '\u2B17': "\\diamondrightblack{}" # DIAMOND WITH RIGHT HALF BLACK
+  '\u2B18': "\\diamondtopblack{}" # DIAMOND WITH TOP HALF BLACK
+  '\u2B19': "\\diamondbotblack{}" # DIAMOND WITH BOTTOM HALF BLACK
+  '\u2B1A': "\\dottedsquare{}" # DOTTED SQUARE
+  '\u2B1B': "\\blacksquare{}" # BLACK LARGE SQUARE
+  '\u2B1C': "\\square{}" # WHITE LARGE SQUARE
+  '\u2B1D': "\\vysmblksquare{}" # # \centerdot (amssymb), t \Squaredot (marvosym), BLACK VERY SMALL SQUARE
+  '\u2B1E': "\\vysmwhtsquare{}" # WHITE VERY SMALL SQUARE
+  '\u2B1F': "\\pentagonblack{}" # BLACK PENTAGON
+  '\u2B20': "\\pentagon{}" # WHITE PENTAGON
+  '\u2B21': "\\varhexagon{}" # WHITE HEXAGON
+  '\u2B22': "\\varhexagonblack{}" # BLACK HEXAGON
+  '\u2B23': "\\hexagonblack{}" # HORIZONTAL BLACK HEXAGON
+  '\u2B24': "\\lgblkcircle{}" # BLACK LARGE CIRCLE
+  '\u2B25': "\\mdblkdiamond{}" # BLACK MEDIUM DIAMOND
+  '\u2B26': "\\mdwhtdiamond{}" # WHITE MEDIUM DIAMOND
+  '\u2B27': "\\mdblklozenge{}" # # \blacklozenge (amssymb), BLACK MEDIUM LOZENGE
+  '\u2B28': "\\mdwhtlozenge{}" # # \lozenge (amssymb), WHITE MEDIUM LOZENGE
+  '\u2B29': "\\smblkdiamond{}" # BLACK SMALL DIAMOND
+  '\u2B2A': "\\smblklozenge{}" # BLACK SMALL LOZENGE
+  '\u2B2B': "\\smwhtlozenge{}" # WHITE SMALL LOZENGE
+  '\u2B2C': "\\blkhorzoval{}" # BLACK HORIZONTAL ELLIPSE
+  '\u2B2D': "\\whthorzoval{}" # WHITE HORIZONTAL ELLIPSE
+  '\u2B2E': "\\blkvertoval{}" # BLACK VERTICAL ELLIPSE
+  '\u2B2F': "\\whtvertoval{}" # WHITE VERTICAL ELLIPSE
+  '\u2B30': "\\circleonleftarrow{}" # LEFT ARROW WITH SMALL CIRCLE
+  '\u2B31': "\\leftthreearrows{}" # THREE LEFTWARDS ARROWS
+  '\u2B32': "\\leftarrowonoplus{}" # LEFT ARROW WITH CIRCLED PLUS
+  '\u2B33': "\\longleftsquigarrow{}" # LONG LEFTWARDS SQUIGGLE ARROW
+  '\u2B34': "\\nvtwoheadleftarrow{}" # LEFTWARDS TWO-HEADED ARROW WITH VERTICAL STROKE
+  '\u2B35': "\\nVtwoheadleftarrow{}" # LEFTWARDS TWO-HEADED ARROW WITH DOUBLE VERTICAL STROKE
+  '\u2B36': "\\twoheadmapsfrom{}" # LEFTWARDS TWO-HEADED ARROW FROM BAR
+  '\u2B37': "\\twoheadleftdbkarrow{}" # leftwards two-headed triple-dash arrow
+  '\u2B38': "\\leftdotarrow{}" # LEFTWARDS ARROW WITH DOTTED STEM
+  '\u2B39': "\\nvleftarrowtail{}" # LEFTWARDS ARROW WITH TAIL WITH VERTICAL STROKE
+  '\u2B3A': "\\nVleftarrowtail{}" # LEFTWARDS ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE
+  '\u2B3B': "\\twoheadleftarrowtail{}" # LEFTWARDS TWO-HEADED ARROW WITH TAIL
+  '\u2B3C': "\\nvtwoheadleftarrowtail{}" # LEFTWARDS TWO-HEADED ARROW WITH TAIL WITH VERTICAL STROKE
+  '\u2B3D': "\\nVtwoheadleftarrowtail{}" # LEFTWARDS TWO-HEADED ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE
+  '\u2B3E': "\\leftarrowx{}" # LEFTWARDS ARROW THROUGH X
+  '\u2B3F': "\\leftcurvedarrow{}" # WAVE ARROW POINTING DIRECTLY LEFT
+  '\u2B40': "\\equalleftarrow{}" # EQUALS SIGN ABOVE LEFTWARDS ARROW
+  '\u2B41': "\\bsimilarleftarrow{}" # REVERSE TILDE OPERATOR ABOVE LEFTWARDS ARROW
+  '\u2B42': "\\leftarrowbackapprox{}" # LEFTWARDS ARROW ABOVE REVERSE ALMOST EQUAL TO
+  '\u2B43': "\\rightarrowgtr{}" # rightwards arrow through less-than
+  '\u2B44': "\\rightarrowsupset{}" # rightwards arrow through subset
+  '\u2B45': "\\LLeftarrow{}" # LEFTWARDS QUADRUPLE ARROW
+  '\u2B46': "\\RRightarrow{}" # RIGHTWARDS QUADRUPLE ARROW
+  '\u2B47': "\\bsimilarrightarrow{}" # REVERSE TILDE OPERATOR ABOVE RIGHTWARDS ARROW
+  '\u2B48': "\\rightarrowbackapprox{}" # RIGHTWARDS ARROW ABOVE REVERSE ALMOST EQUAL TO
+  '\u2B49': "\\similarleftarrow{}" # TILDE OPERATOR ABOVE LEFTWARDS ARROW
+  '\u2B4A': "\\leftarrowapprox{}" # LEFTWARDS ARROW ABOVE ALMOST EQUAL TO
+  '\u2B4B': "\\leftarrowbsimilar{}" # LEFTWARDS ARROW ABOVE REVERSE TILDE OPERATOR
+  '\u2B4C': "\\rightarrowbsimilar{}" # righttwards arrow above reverse tilde operator
+  '\u2B50': "\\medwhitestar{}" # WHITE MEDIUM STAR
+  '\u2B51': "\\medblackstar{}" # black medium star
+  '\u2B52': "\\smwhitestar{}" # WHITE SMALL STAR
+  '\u2B53': "\\rightpentagonblack{}" # BLACK RIGHT-POINTING PENTAGON
+  '\u2B54': "\\rightpentagon{}" # WHITE RIGHT-POINTING PENTAGON
+  '\u300A': "\\ElsevierGlyph{300A}" # LEFT DOUBLE ANGLE BRACKET
+  '\u300B': "\\ElsevierGlyph{300B}" # RIGHT DOUBLE ANGLE BRACKET
+  '\u3012': "\\postalmark{}" # POSTAL MARK
+  '\u3014': "\\lbrbrak{}" # left broken bracket
+  '\u3015': "\\rbrbrak{}" # right broken bracket
+  '\u3018': "\\ElsevierGlyph{3018}" # LEFT WHITE TORTOISE SHELL BRACKET
+  '\u3019': "\\ElsevierGlyph{3019}" # RIGHT WHITE TORTOISE SHELL BRACKET
+  '\u301A': "\\openbracketleft{}" # LEFT WHITE SQUARE BRACKET
+  '\u301B': "\\openbracketright{}" # RIGHT WHITE SQUARE BRACKET
+  '\u3030': "\\hzigzag{}" # zigzag
+  '\uD835\uDC00': "\\mathbf{A}" # MATHEMATICAL BOLD CAPITAL A
+  '\uD835\uDC01': "\\mathbf{B}" # MATHEMATICAL BOLD CAPITAL B
+  '\uD835\uDC02': "\\mathbf{C}" # MATHEMATICAL BOLD CAPITAL C
+  '\uD835\uDC03': "\\mathbf{D}" # MATHEMATICAL BOLD CAPITAL D
+  '\uD835\uDC04': "\\mathbf{E}" # MATHEMATICAL BOLD CAPITAL E
+  '\uD835\uDC05': "\\mathbf{F}" # MATHEMATICAL BOLD CAPITAL F
+  '\uD835\uDC06': "\\mathbf{G}" # MATHEMATICAL BOLD CAPITAL G
+  '\uD835\uDC07': "\\mathbf{H}" # MATHEMATICAL BOLD CAPITAL H
+  '\uD835\uDC08': "\\mathbf{I}" # MATHEMATICAL BOLD CAPITAL I
+  '\uD835\uDC09': "\\mathbf{J}" # MATHEMATICAL BOLD CAPITAL J
+  '\uD835\uDC0A': "\\mathbf{K}" # MATHEMATICAL BOLD CAPITAL K
+  '\uD835\uDC0B': "\\mathbf{L}" # MATHEMATICAL BOLD CAPITAL L
+  '\uD835\uDC0C': "\\mathbf{M}" # MATHEMATICAL BOLD CAPITAL M
+  '\uD835\uDC0D': "\\mathbf{N}" # MATHEMATICAL BOLD CAPITAL N
+  '\uD835\uDC0E': "\\mathbf{O}" # MATHEMATICAL BOLD CAPITAL O
+  '\uD835\uDC0F': "\\mathbf{P}" # MATHEMATICAL BOLD CAPITAL P
+  '\uD835\uDC10': "\\mathbf{Q}" # MATHEMATICAL BOLD CAPITAL Q
+  '\uD835\uDC11': "\\mathbf{R}" # MATHEMATICAL BOLD CAPITAL R
+  '\uD835\uDC12': "\\mathbf{S}" # MATHEMATICAL BOLD CAPITAL S
+  '\uD835\uDC13': "\\mathbf{T}" # MATHEMATICAL BOLD CAPITAL T
+  '\uD835\uDC14': "\\mathbf{U}" # MATHEMATICAL BOLD CAPITAL U
+  '\uD835\uDC15': "\\mathbf{V}" # MATHEMATICAL BOLD CAPITAL V
+  '\uD835\uDC16': "\\mathbf{W}" # MATHEMATICAL BOLD CAPITAL W
+  '\uD835\uDC17': "\\mathbf{X}" # MATHEMATICAL BOLD CAPITAL X
+  '\uD835\uDC18': "\\mathbf{Y}" # MATHEMATICAL BOLD CAPITAL Y
+  '\uD835\uDC19': "\\mathbf{Z}" # MATHEMATICAL BOLD CAPITAL Z
+  '\uD835\uDC1A': "\\mathbf{a}" # MATHEMATICAL BOLD SMALL A
+  '\uD835\uDC1B': "\\mathbf{b}" # MATHEMATICAL BOLD SMALL B
+  '\uD835\uDC1C': "\\mathbf{c}" # MATHEMATICAL BOLD SMALL C
+  '\uD835\uDC1D': "\\mathbf{d}" # MATHEMATICAL BOLD SMALL D
+  '\uD835\uDC1E': "\\mathbf{e}" # MATHEMATICAL BOLD SMALL E
+  '\uD835\uDC1F': "\\mathbf{f}" # MATHEMATICAL BOLD SMALL F
+  '\uD835\uDC20': "\\mathbf{g}" # MATHEMATICAL BOLD SMALL G
+  '\uD835\uDC21': "\\mathbf{h}" # MATHEMATICAL BOLD SMALL H
+  '\uD835\uDC22': "\\mathbf{i}" # MATHEMATICAL BOLD SMALL I
+  '\uD835\uDC23': "\\mathbf{j}" # MATHEMATICAL BOLD SMALL J
+  '\uD835\uDC24': "\\mathbf{k}" # MATHEMATICAL BOLD SMALL K
+  '\uD835\uDC25': "\\mathbf{l}" # MATHEMATICAL BOLD SMALL L
+  '\uD835\uDC26': "\\mathbf{m}" # MATHEMATICAL BOLD SMALL M
+  '\uD835\uDC27': "\\mathbf{n}" # MATHEMATICAL BOLD SMALL N
+  '\uD835\uDC28': "\\mathbf{o}" # MATHEMATICAL BOLD SMALL O
+  '\uD835\uDC29': "\\mathbf{p}" # MATHEMATICAL BOLD SMALL P
+  '\uD835\uDC2A': "\\mathbf{q}" # MATHEMATICAL BOLD SMALL Q
+  '\uD835\uDC2B': "\\mathbf{r}" # MATHEMATICAL BOLD SMALL R
+  '\uD835\uDC2C': "\\mathbf{s}" # MATHEMATICAL BOLD SMALL S
+  '\uD835\uDC2D': "\\mathbf{t}" # MATHEMATICAL BOLD SMALL T
+  '\uD835\uDC2E': "\\mathbf{u}" # MATHEMATICAL BOLD SMALL U
+  '\uD835\uDC2F': "\\mathbf{v}" # MATHEMATICAL BOLD SMALL V
+  '\uD835\uDC30': "\\mathbf{w}" # MATHEMATICAL BOLD SMALL W
+  '\uD835\uDC31': "\\mathbf{x}" # MATHEMATICAL BOLD SMALL X
+  '\uD835\uDC32': "\\mathbf{y}" # MATHEMATICAL BOLD SMALL Y
+  '\uD835\uDC33': "\\mathbf{z}" # MATHEMATICAL BOLD SMALL Z
+  '\uD835\uDC34': "\\mathsl{A}" # MATHEMATICAL ITALIC CAPITAL A
+  '\uD835\uDC35': "\\mathsl{B}" # MATHEMATICAL ITALIC CAPITAL B
+  '\uD835\uDC36': "\\mathsl{C}" # MATHEMATICAL ITALIC CAPITAL C
+  '\uD835\uDC37': "\\mathsl{D}" # MATHEMATICAL ITALIC CAPITAL D
+  '\uD835\uDC38': "\\mathsl{E}" # MATHEMATICAL ITALIC CAPITAL E
+  '\uD835\uDC39': "\\mathsl{F}" # MATHEMATICAL ITALIC CAPITAL F
+  '\uD835\uDC3A': "\\mathsl{G}" # MATHEMATICAL ITALIC CAPITAL G
+  '\uD835\uDC3B': "\\mathsl{H}" # MATHEMATICAL ITALIC CAPITAL H
+  '\uD835\uDC3C': "\\mathsl{I}" # MATHEMATICAL ITALIC CAPITAL I
+  '\uD835\uDC3D': "\\mathsl{J}" # MATHEMATICAL ITALIC CAPITAL J
+  '\uD835\uDC3E': "\\mathsl{K}" # MATHEMATICAL ITALIC CAPITAL K
+  '\uD835\uDC3F': "\\mathsl{L}" # MATHEMATICAL ITALIC CAPITAL L
+  '\uD835\uDC40': "\\mathsl{M}" # MATHEMATICAL ITALIC CAPITAL M
+  '\uD835\uDC41': "\\mathsl{N}" # MATHEMATICAL ITALIC CAPITAL N
+  '\uD835\uDC42': "\\mathsl{O}" # MATHEMATICAL ITALIC CAPITAL O
+  '\uD835\uDC43': "\\mathsl{P}" # MATHEMATICAL ITALIC CAPITAL P
+  '\uD835\uDC44': "\\mathsl{Q}" # MATHEMATICAL ITALIC CAPITAL Q
+  '\uD835\uDC45': "\\mathsl{R}" # MATHEMATICAL ITALIC CAPITAL R
+  '\uD835\uDC46': "\\mathsl{S}" # MATHEMATICAL ITALIC CAPITAL S
+  '\uD835\uDC47': "\\mathsl{T}" # MATHEMATICAL ITALIC CAPITAL T
+  '\uD835\uDC48': "\\mathsl{U}" # MATHEMATICAL ITALIC CAPITAL U
+  '\uD835\uDC49': "\\mathsl{V}" # MATHEMATICAL ITALIC CAPITAL V
+  '\uD835\uDC4A': "\\mathsl{W}" # MATHEMATICAL ITALIC CAPITAL W
+  '\uD835\uDC4B': "\\mathsl{X}" # MATHEMATICAL ITALIC CAPITAL X
+  '\uD835\uDC4C': "\\mathsl{Y}" # MATHEMATICAL ITALIC CAPITAL Y
+  '\uD835\uDC4D': "\\mathsl{Z}" # MATHEMATICAL ITALIC CAPITAL Z
+  '\uD835\uDC4E': "\\mathsl{a}" # MATHEMATICAL ITALIC SMALL A
+  '\uD835\uDC4F': "\\mathsl{b}" # MATHEMATICAL ITALIC SMALL B
+  '\uD835\uDC50': "\\mathsl{c}" # MATHEMATICAL ITALIC SMALL C
+  '\uD835\uDC51': "\\mathsl{d}" # MATHEMATICAL ITALIC SMALL D
+  '\uD835\uDC52': "\\mathsl{e}" # MATHEMATICAL ITALIC SMALL E
+  '\uD835\uDC53': "\\mathsl{f}" # MATHEMATICAL ITALIC SMALL F
+  '\uD835\uDC54': "\\mathsl{g}" # MATHEMATICAL ITALIC SMALL G
+  '\uD835\uDC56': "\\mathsl{i}" # MATHEMATICAL ITALIC SMALL I
+  '\uD835\uDC57': "\\mathsl{j}" # MATHEMATICAL ITALIC SMALL J
+  '\uD835\uDC58': "\\mathsl{k}" # MATHEMATICAL ITALIC SMALL K
+  '\uD835\uDC59': "\\mathsl{l}" # MATHEMATICAL ITALIC SMALL L
+  '\uD835\uDC5A': "\\mathsl{m}" # MATHEMATICAL ITALIC SMALL M
+  '\uD835\uDC5B': "\\mathsl{n}" # MATHEMATICAL ITALIC SMALL N
+  '\uD835\uDC5C': "\\mathsl{o}" # MATHEMATICAL ITALIC SMALL O
+  '\uD835\uDC5D': "\\mathsl{p}" # MATHEMATICAL ITALIC SMALL P
+  '\uD835\uDC5E': "\\mathsl{q}" # MATHEMATICAL ITALIC SMALL Q
+  '\uD835\uDC5F': "\\mathsl{r}" # MATHEMATICAL ITALIC SMALL R
+  '\uD835\uDC60': "\\mathsl{s}" # MATHEMATICAL ITALIC SMALL S
+  '\uD835\uDC61': "\\mathsl{t}" # MATHEMATICAL ITALIC SMALL T
+  '\uD835\uDC62': "\\mathsl{u}" # MATHEMATICAL ITALIC SMALL U
+  '\uD835\uDC63': "\\mathsl{v}" # MATHEMATICAL ITALIC SMALL V
+  '\uD835\uDC64': "\\mathsl{w}" # MATHEMATICAL ITALIC SMALL W
+  '\uD835\uDC65': "\\mathsl{x}" # MATHEMATICAL ITALIC SMALL X
+  '\uD835\uDC66': "\\mathsl{y}" # MATHEMATICAL ITALIC SMALL Y
+  '\uD835\uDC67': "\\mathsl{z}" # MATHEMATICAL ITALIC SMALL Z
+  '\uD835\uDC68': "\\mathbit{A}" # MATHEMATICAL BOLD ITALIC CAPITAL A
+  '\uD835\uDC69': "\\mathbit{B}" # MATHEMATICAL BOLD ITALIC CAPITAL B
+  '\uD835\uDC6A': "\\mathbit{C}" # MATHEMATICAL BOLD ITALIC CAPITAL C
+  '\uD835\uDC6B': "\\mathbit{D}" # MATHEMATICAL BOLD ITALIC CAPITAL D
+  '\uD835\uDC6C': "\\mathbit{E}" # MATHEMATICAL BOLD ITALIC CAPITAL E
+  '\uD835\uDC6D': "\\mathbit{F}" # MATHEMATICAL BOLD ITALIC CAPITAL F
+  '\uD835\uDC6E': "\\mathbit{G}" # MATHEMATICAL BOLD ITALIC CAPITAL G
+  '\uD835\uDC6F': "\\mathbit{H}" # MATHEMATICAL BOLD ITALIC CAPITAL H
+  '\uD835\uDC70': "\\mathbit{I}" # MATHEMATICAL BOLD ITALIC CAPITAL I
+  '\uD835\uDC71': "\\mathbit{J}" # MATHEMATICAL BOLD ITALIC CAPITAL J
+  '\uD835\uDC72': "\\mathbit{K}" # MATHEMATICAL BOLD ITALIC CAPITAL K
+  '\uD835\uDC73': "\\mathbit{L}" # MATHEMATICAL BOLD ITALIC CAPITAL L
+  '\uD835\uDC74': "\\mathbit{M}" # MATHEMATICAL BOLD ITALIC CAPITAL M
+  '\uD835\uDC75': "\\mathbit{N}" # MATHEMATICAL BOLD ITALIC CAPITAL N
+  '\uD835\uDC76': "\\mathbit{O}" # MATHEMATICAL BOLD ITALIC CAPITAL O
+  '\uD835\uDC77': "\\mathbit{P}" # MATHEMATICAL BOLD ITALIC CAPITAL P
+  '\uD835\uDC78': "\\mathbit{Q}" # MATHEMATICAL BOLD ITALIC CAPITAL Q
+  '\uD835\uDC79': "\\mathbit{R}" # MATHEMATICAL BOLD ITALIC CAPITAL R
+  '\uD835\uDC7A': "\\mathbit{S}" # MATHEMATICAL BOLD ITALIC CAPITAL S
+  '\uD835\uDC7B': "\\mathbit{T}" # MATHEMATICAL BOLD ITALIC CAPITAL T
+  '\uD835\uDC7C': "\\mathbit{U}" # MATHEMATICAL BOLD ITALIC CAPITAL U
+  '\uD835\uDC7D': "\\mathbit{V}" # MATHEMATICAL BOLD ITALIC CAPITAL V
+  '\uD835\uDC7E': "\\mathbit{W}" # MATHEMATICAL BOLD ITALIC CAPITAL W
+  '\uD835\uDC7F': "\\mathbit{X}" # MATHEMATICAL BOLD ITALIC CAPITAL X
+  '\uD835\uDC80': "\\mathbit{Y}" # MATHEMATICAL BOLD ITALIC CAPITAL Y
+  '\uD835\uDC81': "\\mathbit{Z}" # MATHEMATICAL BOLD ITALIC CAPITAL Z
+  '\uD835\uDC82': "\\mathbit{a}" # MATHEMATICAL BOLD ITALIC SMALL A
+  '\uD835\uDC83': "\\mathbit{b}" # MATHEMATICAL BOLD ITALIC SMALL B
+  '\uD835\uDC84': "\\mathbit{c}" # MATHEMATICAL BOLD ITALIC SMALL C
+  '\uD835\uDC85': "\\mathbit{d}" # MATHEMATICAL BOLD ITALIC SMALL D
+  '\uD835\uDC86': "\\mathbit{e}" # MATHEMATICAL BOLD ITALIC SMALL E
+  '\uD835\uDC87': "\\mathbit{f}" # MATHEMATICAL BOLD ITALIC SMALL F
+  '\uD835\uDC88': "\\mathbit{g}" # MATHEMATICAL BOLD ITALIC SMALL G
+  '\uD835\uDC89': "\\mathbit{h}" # MATHEMATICAL BOLD ITALIC SMALL H
+  '\uD835\uDC8A': "\\mathbit{i}" # MATHEMATICAL BOLD ITALIC SMALL I
+  '\uD835\uDC8B': "\\mathbit{j}" # MATHEMATICAL BOLD ITALIC SMALL J
+  '\uD835\uDC8C': "\\mathbit{k}" # MATHEMATICAL BOLD ITALIC SMALL K
+  '\uD835\uDC8D': "\\mathbit{l}" # MATHEMATICAL BOLD ITALIC SMALL L
+  '\uD835\uDC8E': "\\mathbit{m}" # MATHEMATICAL BOLD ITALIC SMALL M
+  '\uD835\uDC8F': "\\mathbit{n}" # MATHEMATICAL BOLD ITALIC SMALL N
+  '\uD835\uDC90': "\\mathbit{o}" # MATHEMATICAL BOLD ITALIC SMALL O
+  '\uD835\uDC91': "\\mathbit{p}" # MATHEMATICAL BOLD ITALIC SMALL P
+  '\uD835\uDC92': "\\mathbit{q}" # MATHEMATICAL BOLD ITALIC SMALL Q
+  '\uD835\uDC93': "\\mathbit{r}" # MATHEMATICAL BOLD ITALIC SMALL R
+  '\uD835\uDC94': "\\mathbit{s}" # MATHEMATICAL BOLD ITALIC SMALL S
+  '\uD835\uDC95': "\\mathbit{t}" # MATHEMATICAL BOLD ITALIC SMALL T
+  '\uD835\uDC96': "\\mathbit{u}" # MATHEMATICAL BOLD ITALIC SMALL U
+  '\uD835\uDC97': "\\mathbit{v}" # MATHEMATICAL BOLD ITALIC SMALL V
+  '\uD835\uDC98': "\\mathbit{w}" # MATHEMATICAL BOLD ITALIC SMALL W
+  '\uD835\uDC99': "\\mathbit{x}" # MATHEMATICAL BOLD ITALIC SMALL X
+  '\uD835\uDC9A': "\\mathbit{y}" # MATHEMATICAL BOLD ITALIC SMALL Y
+  '\uD835\uDC9B': "\\mathbit{z}" # MATHEMATICAL BOLD ITALIC SMALL Z
+  '\uD835\uDC9C': "\\mathscr{A}" # MATHEMATICAL SCRIPT CAPITAL A
+  '\uD835\uDC9E': "\\mathscr{C}" # MATHEMATICAL SCRIPT CAPITAL C
+  '\uD835\uDC9F': "\\mathscr{D}" # MATHEMATICAL SCRIPT CAPITAL D
+  '\uD835\uDCA2': "\\mathscr{G}" # MATHEMATICAL SCRIPT CAPITAL G
+  '\uD835\uDCA5': "\\mathscr{J}" # MATHEMATICAL SCRIPT CAPITAL J
+  '\uD835\uDCA6': "\\mathscr{K}" # MATHEMATICAL SCRIPT CAPITAL K
+  '\uD835\uDCA9': "\\mathscr{N}" # MATHEMATICAL SCRIPT CAPITAL N
+  '\uD835\uDCAA': "\\mathscr{O}" # MATHEMATICAL SCRIPT CAPITAL O
+  '\uD835\uDCAB': "\\mathscr{P}" # MATHEMATICAL SCRIPT CAPITAL P
+  '\uD835\uDCAC': "\\mathscr{Q}" # MATHEMATICAL SCRIPT CAPITAL Q
+  '\uD835\uDCAE': "\\mathscr{S}" # MATHEMATICAL SCRIPT CAPITAL S
+  '\uD835\uDCAF': "\\mathscr{T}" # MATHEMATICAL SCRIPT CAPITAL T
+  '\uD835\uDCB0': "\\mathscr{U}" # MATHEMATICAL SCRIPT CAPITAL U
+  '\uD835\uDCB1': "\\mathscr{V}" # MATHEMATICAL SCRIPT CAPITAL V
+  '\uD835\uDCB2': "\\mathscr{W}" # MATHEMATICAL SCRIPT CAPITAL W
+  '\uD835\uDCB3': "\\mathscr{X}" # MATHEMATICAL SCRIPT CAPITAL X
+  '\uD835\uDCB4': "\\mathscr{Y}" # MATHEMATICAL SCRIPT CAPITAL Y
+  '\uD835\uDCB5': "\\mathscr{Z}" # MATHEMATICAL SCRIPT CAPITAL Z
+  '\uD835\uDCB6': "\\mathscr{a}" # MATHEMATICAL SCRIPT SMALL A
+  '\uD835\uDCB7': "\\mathscr{b}" # MATHEMATICAL SCRIPT SMALL B
+  '\uD835\uDCB8': "\\mathscr{c}" # MATHEMATICAL SCRIPT SMALL C
+  '\uD835\uDCB9': "\\mathscr{d}" # MATHEMATICAL SCRIPT SMALL D
+  '\uD835\uDCBB': "\\mathscr{f}" # MATHEMATICAL SCRIPT SMALL F
+  '\uD835\uDCBD': "\\mathscr{h}" # MATHEMATICAL SCRIPT SMALL H
+  '\uD835\uDCBE': "\\mathscr{i}" # MATHEMATICAL SCRIPT SMALL I
+  '\uD835\uDCBF': "\\mathscr{j}" # MATHEMATICAL SCRIPT SMALL J
+  '\uD835\uDCC0': "\\mathscr{k}" # MATHEMATICAL SCRIPT SMALL K
+  '\uD835\uDCC1': "\\mathscr{l}" # MATHEMATICAL SCRIPT SMALL L
+  '\uD835\uDCC2': "\\mathscr{m}" # MATHEMATICAL SCRIPT SMALL M
+  '\uD835\uDCC3': "\\mathscr{n}" # MATHEMATICAL SCRIPT SMALL N
+  '\uD835\uDCC5': "\\mathscr{p}" # MATHEMATICAL SCRIPT SMALL P
+  '\uD835\uDCC6': "\\mathscr{q}" # MATHEMATICAL SCRIPT SMALL Q
+  '\uD835\uDCC7': "\\mathscr{r}" # MATHEMATICAL SCRIPT SMALL R
+  '\uD835\uDCC8': "\\mathscr{s}" # MATHEMATICAL SCRIPT SMALL S
+  '\uD835\uDCC9': "\\mathscr{t}" # MATHEMATICAL SCRIPT SMALL T
+  '\uD835\uDCCA': "\\mathscr{u}" # MATHEMATICAL SCRIPT SMALL U
+  '\uD835\uDCCB': "\\mathscr{v}" # MATHEMATICAL SCRIPT SMALL V
+  '\uD835\uDCCC': "\\mathscr{w}" # MATHEMATICAL SCRIPT SMALL W
+  '\uD835\uDCCD': "\\mathscr{x}" # MATHEMATICAL SCRIPT SMALL X
+  '\uD835\uDCCE': "\\mathscr{y}" # MATHEMATICAL SCRIPT SMALL Y
+  '\uD835\uDCCF': "\\mathscr{z}" # MATHEMATICAL SCRIPT SMALL Z
+  '\uD835\uDCD0': "\\mathmit{A}" # MATHEMATICAL BOLD SCRIPT CAPITAL A
+  '\uD835\uDCD1': "\\mathmit{B}" # MATHEMATICAL BOLD SCRIPT CAPITAL B
+  '\uD835\uDCD2': "\\mathmit{C}" # MATHEMATICAL BOLD SCRIPT CAPITAL C
+  '\uD835\uDCD3': "\\mathmit{D}" # MATHEMATICAL BOLD SCRIPT CAPITAL D
+  '\uD835\uDCD4': "\\mathmit{E}" # MATHEMATICAL BOLD SCRIPT CAPITAL E
+  '\uD835\uDCD5': "\\mathmit{F}" # MATHEMATICAL BOLD SCRIPT CAPITAL F
+  '\uD835\uDCD6': "\\mathmit{G}" # MATHEMATICAL BOLD SCRIPT CAPITAL G
+  '\uD835\uDCD7': "\\mathmit{H}" # MATHEMATICAL BOLD SCRIPT CAPITAL H
+  '\uD835\uDCD8': "\\mathmit{I}" # MATHEMATICAL BOLD SCRIPT CAPITAL I
+  '\uD835\uDCD9': "\\mathmit{J}" # MATHEMATICAL BOLD SCRIPT CAPITAL J
+  '\uD835\uDCDA': "\\mathmit{K}" # MATHEMATICAL BOLD SCRIPT CAPITAL K
+  '\uD835\uDCDB': "\\mathmit{L}" # MATHEMATICAL BOLD SCRIPT CAPITAL L
+  '\uD835\uDCDC': "\\mathmit{M}" # MATHEMATICAL BOLD SCRIPT CAPITAL M
+  '\uD835\uDCDD': "\\mathmit{N}" # MATHEMATICAL BOLD SCRIPT CAPITAL N
+  '\uD835\uDCDE': "\\mathmit{O}" # MATHEMATICAL BOLD SCRIPT CAPITAL O
+  '\uD835\uDCDF': "\\mathmit{P}" # MATHEMATICAL BOLD SCRIPT CAPITAL P
+  '\uD835\uDCE0': "\\mathmit{Q}" # MATHEMATICAL BOLD SCRIPT CAPITAL Q
+  '\uD835\uDCE1': "\\mathmit{R}" # MATHEMATICAL BOLD SCRIPT CAPITAL R
+  '\uD835\uDCE2': "\\mathmit{S}" # MATHEMATICAL BOLD SCRIPT CAPITAL S
+  '\uD835\uDCE3': "\\mathmit{T}" # MATHEMATICAL BOLD SCRIPT CAPITAL T
+  '\uD835\uDCE4': "\\mathmit{U}" # MATHEMATICAL BOLD SCRIPT CAPITAL U
+  '\uD835\uDCE5': "\\mathmit{V}" # MATHEMATICAL BOLD SCRIPT CAPITAL V
+  '\uD835\uDCE6': "\\mathmit{W}" # MATHEMATICAL BOLD SCRIPT CAPITAL W
+  '\uD835\uDCE7': "\\mathmit{X}" # MATHEMATICAL BOLD SCRIPT CAPITAL X
+  '\uD835\uDCE8': "\\mathmit{Y}" # MATHEMATICAL BOLD SCRIPT CAPITAL Y
+  '\uD835\uDCE9': "\\mathmit{Z}" # MATHEMATICAL BOLD SCRIPT CAPITAL Z
+  '\uD835\uDCEA': "\\mathmit{a}" # MATHEMATICAL BOLD SCRIPT SMALL A
+  '\uD835\uDCEB': "\\mathmit{b}" # MATHEMATICAL BOLD SCRIPT SMALL B
+  '\uD835\uDCEC': "\\mathmit{c}" # MATHEMATICAL BOLD SCRIPT SMALL C
+  '\uD835\uDCED': "\\mathmit{d}" # MATHEMATICAL BOLD SCRIPT SMALL D
+  '\uD835\uDCEE': "\\mathmit{e}" # MATHEMATICAL BOLD SCRIPT SMALL E
+  '\uD835\uDCEF': "\\mathmit{f}" # MATHEMATICAL BOLD SCRIPT SMALL F
+  '\uD835\uDCF0': "\\mathmit{g}" # MATHEMATICAL BOLD SCRIPT SMALL G
+  '\uD835\uDCF1': "\\mathmit{h}" # MATHEMATICAL BOLD SCRIPT SMALL H
+  '\uD835\uDCF2': "\\mathmit{i}" # MATHEMATICAL BOLD SCRIPT SMALL I
+  '\uD835\uDCF3': "\\mathmit{j}" # MATHEMATICAL BOLD SCRIPT SMALL J
+  '\uD835\uDCF4': "\\mathmit{k}" # MATHEMATICAL BOLD SCRIPT SMALL K
+  '\uD835\uDCF5': "\\mathmit{l}" # MATHEMATICAL BOLD SCRIPT SMALL L
+  '\uD835\uDCF6': "\\mathmit{m}" # MATHEMATICAL BOLD SCRIPT SMALL M
+  '\uD835\uDCF7': "\\mathmit{n}" # MATHEMATICAL BOLD SCRIPT SMALL N
+  '\uD835\uDCF8': "\\mathmit{o}" # MATHEMATICAL BOLD SCRIPT SMALL O
+  '\uD835\uDCF9': "\\mathmit{p}" # MATHEMATICAL BOLD SCRIPT SMALL P
+  '\uD835\uDCFA': "\\mathmit{q}" # MATHEMATICAL BOLD SCRIPT SMALL Q
+  '\uD835\uDCFB': "\\mathmit{r}" # MATHEMATICAL BOLD SCRIPT SMALL R
+  '\uD835\uDCFC': "\\mathmit{s}" # MATHEMATICAL BOLD SCRIPT SMALL S
+  '\uD835\uDCFD': "\\mathmit{t}" # MATHEMATICAL BOLD SCRIPT SMALL T
+  '\uD835\uDCFE': "\\mathmit{u}" # MATHEMATICAL BOLD SCRIPT SMALL U
+  '\uD835\uDCFF': "\\mathmit{v}" # MATHEMATICAL BOLD SCRIPT SMALL V
+  '\uD835\uDD00': "\\mathmit{w}" # MATHEMATICAL BOLD SCRIPT SMALL W
+  '\uD835\uDD01': "\\mathmit{x}" # MATHEMATICAL BOLD SCRIPT SMALL X
+  '\uD835\uDD02': "\\mathmit{y}" # MATHEMATICAL BOLD SCRIPT SMALL Y
+  '\uD835\uDD03': "\\mathmit{z}" # MATHEMATICAL BOLD SCRIPT SMALL Z
+  '\uD835\uDD04': "\\mathfrak{A}" # MATHEMATICAL FRAKTUR CAPITAL A
+  '\uD835\uDD05': "\\mathfrak{B}" # MATHEMATICAL FRAKTUR CAPITAL B
+  '\uD835\uDD07': "\\mathfrak{D}" # MATHEMATICAL FRAKTUR CAPITAL D
+  '\uD835\uDD08': "\\mathfrak{E}" # MATHEMATICAL FRAKTUR CAPITAL E
+  '\uD835\uDD09': "\\mathfrak{F}" # MATHEMATICAL FRAKTUR CAPITAL F
+  '\uD835\uDD0A': "\\mathfrak{G}" # MATHEMATICAL FRAKTUR CAPITAL G
+  '\uD835\uDD0D': "\\mathfrak{J}" # MATHEMATICAL FRAKTUR CAPITAL J
+  '\uD835\uDD0E': "\\mathfrak{K}" # MATHEMATICAL FRAKTUR CAPITAL K
+  '\uD835\uDD0F': "\\mathfrak{L}" # MATHEMATICAL FRAKTUR CAPITAL L
+  '\uD835\uDD10': "\\mathfrak{M}" # MATHEMATICAL FRAKTUR CAPITAL M
+  '\uD835\uDD11': "\\mathfrak{N}" # MATHEMATICAL FRAKTUR CAPITAL N
+  '\uD835\uDD12': "\\mathfrak{O}" # MATHEMATICAL FRAKTUR CAPITAL O
+  '\uD835\uDD13': "\\mathfrak{P}" # MATHEMATICAL FRAKTUR CAPITAL P
+  '\uD835\uDD14': "\\mathfrak{Q}" # MATHEMATICAL FRAKTUR CAPITAL Q
+  '\uD835\uDD16': "\\mathfrak{S}" # MATHEMATICAL FRAKTUR CAPITAL S
+  '\uD835\uDD17': "\\mathfrak{T}" # MATHEMATICAL FRAKTUR CAPITAL T
+  '\uD835\uDD18': "\\mathfrak{U}" # MATHEMATICAL FRAKTUR CAPITAL U
+  '\uD835\uDD19': "\\mathfrak{V}" # MATHEMATICAL FRAKTUR CAPITAL V
+  '\uD835\uDD1A': "\\mathfrak{W}" # MATHEMATICAL FRAKTUR CAPITAL W
+  '\uD835\uDD1B': "\\mathfrak{X}" # MATHEMATICAL FRAKTUR CAPITAL X
+  '\uD835\uDD1C': "\\mathfrak{Y}" # MATHEMATICAL FRAKTUR CAPITAL Y
+  '\uD835\uDD1E': "\\mathfrak{a}" # MATHEMATICAL FRAKTUR SMALL A
+  '\uD835\uDD1F': "\\mathfrak{b}" # MATHEMATICAL FRAKTUR SMALL B
+  '\uD835\uDD20': "\\mathfrak{c}" # MATHEMATICAL FRAKTUR SMALL C
+  '\uD835\uDD21': "\\mathfrak{d}" # MATHEMATICAL FRAKTUR SMALL D
+  '\uD835\uDD22': "\\mathfrak{e}" # MATHEMATICAL FRAKTUR SMALL E
+  '\uD835\uDD23': "\\mathfrak{f}" # MATHEMATICAL FRAKTUR SMALL F
+  '\uD835\uDD24': "\\mathfrak{g}" # MATHEMATICAL FRAKTUR SMALL G
+  '\uD835\uDD25': "\\mathfrak{h}" # MATHEMATICAL FRAKTUR SMALL H
+  '\uD835\uDD26': "\\mathfrak{i}" # MATHEMATICAL FRAKTUR SMALL I
+  '\uD835\uDD27': "\\mathfrak{j}" # MATHEMATICAL FRAKTUR SMALL J
+  '\uD835\uDD28': "\\mathfrak{k}" # MATHEMATICAL FRAKTUR SMALL K
+  '\uD835\uDD29': "\\mathfrak{l}" # MATHEMATICAL FRAKTUR SMALL L
+  '\uD835\uDD2A': "\\mathfrak{m}" # MATHEMATICAL FRAKTUR SMALL M
+  '\uD835\uDD2B': "\\mathfrak{n}" # MATHEMATICAL FRAKTUR SMALL N
+  '\uD835\uDD2C': "\\mathfrak{o}" # MATHEMATICAL FRAKTUR SMALL O
+  '\uD835\uDD2D': "\\mathfrak{p}" # MATHEMATICAL FRAKTUR SMALL P
+  '\uD835\uDD2E': "\\mathfrak{q}" # MATHEMATICAL FRAKTUR SMALL Q
+  '\uD835\uDD2F': "\\mathfrak{r}" # MATHEMATICAL FRAKTUR SMALL R
+  '\uD835\uDD30': "\\mathfrak{s}" # MATHEMATICAL FRAKTUR SMALL S
+  '\uD835\uDD31': "\\mathfrak{t}" # MATHEMATICAL FRAKTUR SMALL T
+  '\uD835\uDD32': "\\mathfrak{u}" # MATHEMATICAL FRAKTUR SMALL U
+  '\uD835\uDD33': "\\mathfrak{v}" # MATHEMATICAL FRAKTUR SMALL V
+  '\uD835\uDD34': "\\mathfrak{w}" # MATHEMATICAL FRAKTUR SMALL W
+  '\uD835\uDD35': "\\mathfrak{x}" # MATHEMATICAL FRAKTUR SMALL X
+  '\uD835\uDD36': "\\mathfrak{y}" # MATHEMATICAL FRAKTUR SMALL Y
+  '\uD835\uDD37': "\\mathfrak{z}" # MATHEMATICAL FRAKTUR SMALL Z
+  '\uD835\uDD38': "\\mathbb{A}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL A
+  '\uD835\uDD39': "\\mathbb{B}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL B
+  '\uD835\uDD3B': "\\mathbb{D}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL D
+  '\uD835\uDD3C': "\\mathbb{E}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL E
+  '\uD835\uDD3D': "\\mathbb{F}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL F
+  '\uD835\uDD3E': "\\mathbb{G}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL G
+  '\uD835\uDD40': "\\mathbb{I}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL I
+  '\uD835\uDD41': "\\mathbb{J}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL J
+  '\uD835\uDD42': "\\mathbb{K}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL K
+  '\uD835\uDD43': "\\mathbb{L}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL L
+  '\uD835\uDD44': "\\mathbb{M}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL M
+  '\uD835\uDD46': "\\mathbb{O}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL O
+  '\uD835\uDD4A': "\\mathbb{S}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL S
+  '\uD835\uDD4B': "\\mathbb{T}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL T
+  '\uD835\uDD4C': "\\mathbb{U}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL U
+  '\uD835\uDD4D': "\\mathbb{V}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL V
+  '\uD835\uDD4E': "\\mathbb{W}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL W
+  '\uD835\uDD4F': "\\mathbb{X}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL X
+  '\uD835\uDD50': "\\mathbb{Y}" # MATHEMATICAL DOUBLE-STRUCK CAPITAL Y
+  '\uD835\uDD52': "\\mathbb{a}" # MATHEMATICAL DOUBLE-STRUCK SMALL A
+  '\uD835\uDD53': "\\mathbb{b}" # MATHEMATICAL DOUBLE-STRUCK SMALL B
+  '\uD835\uDD54': "\\mathbb{c}" # MATHEMATICAL DOUBLE-STRUCK SMALL C
+  '\uD835\uDD55': "\\mathbb{d}" # MATHEMATICAL DOUBLE-STRUCK SMALL D
+  '\uD835\uDD56': "\\mathbb{e}" # MATHEMATICAL DOUBLE-STRUCK SMALL E
+  '\uD835\uDD57': "\\mathbb{f}" # MATHEMATICAL DOUBLE-STRUCK SMALL F
+  '\uD835\uDD58': "\\mathbb{g}" # MATHEMATICAL DOUBLE-STRUCK SMALL G
+  '\uD835\uDD59': "\\mathbb{h}" # MATHEMATICAL DOUBLE-STRUCK SMALL H
+  '\uD835\uDD5A': "\\mathbb{i}" # MATHEMATICAL DOUBLE-STRUCK SMALL I
+  '\uD835\uDD5B': "\\mathbb{j}" # MATHEMATICAL DOUBLE-STRUCK SMALL J
+  '\uD835\uDD5C': "\\mathbb{k}" # MATHEMATICAL DOUBLE-STRUCK SMALL K
+  '\uD835\uDD5D': "\\mathbb{l}" # MATHEMATICAL DOUBLE-STRUCK SMALL L
+  '\uD835\uDD5E': "\\mathbb{m}" # MATHEMATICAL DOUBLE-STRUCK SMALL M
+  '\uD835\uDD5F': "\\mathbb{n}" # MATHEMATICAL DOUBLE-STRUCK SMALL N
+  '\uD835\uDD60': "\\mathbb{o}" # MATHEMATICAL DOUBLE-STRUCK SMALL O
+  '\uD835\uDD61': "\\mathbb{p}" # MATHEMATICAL DOUBLE-STRUCK SMALL P
+  '\uD835\uDD62': "\\mathbb{q}" # MATHEMATICAL DOUBLE-STRUCK SMALL Q
+  '\uD835\uDD63': "\\mathbb{r}" # MATHEMATICAL DOUBLE-STRUCK SMALL R
+  '\uD835\uDD64': "\\mathbb{s}" # MATHEMATICAL DOUBLE-STRUCK SMALL S
+  '\uD835\uDD65': "\\mathbb{t}" # MATHEMATICAL DOUBLE-STRUCK SMALL T
+  '\uD835\uDD66': "\\mathbb{u}" # MATHEMATICAL DOUBLE-STRUCK SMALL U
+  '\uD835\uDD67': "\\mathbb{v}" # MATHEMATICAL DOUBLE-STRUCK SMALL V
+  '\uD835\uDD68': "\\mathbb{w}" # MATHEMATICAL DOUBLE-STRUCK SMALL W
+  '\uD835\uDD69': "\\mathbb{x}" # MATHEMATICAL DOUBLE-STRUCK SMALL X
+  '\uD835\uDD6A': "\\mathbb{y}" # MATHEMATICAL DOUBLE-STRUCK SMALL Y
+  '\uD835\uDD6B': "\\mathbb{z}" # MATHEMATICAL DOUBLE-STRUCK SMALL Z
+  '\uD835\uDD6C': "\\mathslbb{A}" # MATHEMATICAL BOLD FRAKTUR CAPITAL A
+  '\uD835\uDD6D': "\\mathslbb{B}" # MATHEMATICAL BOLD FRAKTUR CAPITAL B
+  '\uD835\uDD6E': "\\mathslbb{C}" # MATHEMATICAL BOLD FRAKTUR CAPITAL C
+  '\uD835\uDD6F': "\\mathslbb{D}" # MATHEMATICAL BOLD FRAKTUR CAPITAL D
+  '\uD835\uDD70': "\\mathslbb{E}" # MATHEMATICAL BOLD FRAKTUR CAPITAL E
+  '\uD835\uDD71': "\\mathslbb{F}" # MATHEMATICAL BOLD FRAKTUR CAPITAL F
+  '\uD835\uDD72': "\\mathslbb{G}" # MATHEMATICAL BOLD FRAKTUR CAPITAL G
+  '\uD835\uDD73': "\\mathslbb{H}" # MATHEMATICAL BOLD FRAKTUR CAPITAL H
+  '\uD835\uDD74': "\\mathslbb{I}" # MATHEMATICAL BOLD FRAKTUR CAPITAL I
+  '\uD835\uDD75': "\\mathslbb{J}" # MATHEMATICAL BOLD FRAKTUR CAPITAL J
+  '\uD835\uDD76': "\\mathslbb{K}" # MATHEMATICAL BOLD FRAKTUR CAPITAL K
+  '\uD835\uDD77': "\\mathslbb{L}" # MATHEMATICAL BOLD FRAKTUR CAPITAL L
+  '\uD835\uDD78': "\\mathslbb{M}" # MATHEMATICAL BOLD FRAKTUR CAPITAL M
+  '\uD835\uDD79': "\\mathslbb{N}" # MATHEMATICAL BOLD FRAKTUR CAPITAL N
+  '\uD835\uDD7A': "\\mathslbb{O}" # MATHEMATICAL BOLD FRAKTUR CAPITAL O
+  '\uD835\uDD7B': "\\mathslbb{P}" # MATHEMATICAL BOLD FRAKTUR CAPITAL P
+  '\uD835\uDD7C': "\\mathslbb{Q}" # MATHEMATICAL BOLD FRAKTUR CAPITAL Q
+  '\uD835\uDD7D': "\\mathslbb{R}" # MATHEMATICAL BOLD FRAKTUR CAPITAL R
+  '\uD835\uDD7E': "\\mathslbb{S}" # MATHEMATICAL BOLD FRAKTUR CAPITAL S
+  '\uD835\uDD7F': "\\mathslbb{T}" # MATHEMATICAL BOLD FRAKTUR CAPITAL T
+  '\uD835\uDD80': "\\mathslbb{U}" # MATHEMATICAL BOLD FRAKTUR CAPITAL U
+  '\uD835\uDD81': "\\mathslbb{V}" # MATHEMATICAL BOLD FRAKTUR CAPITAL V
+  '\uD835\uDD82': "\\mathslbb{W}" # MATHEMATICAL BOLD FRAKTUR CAPITAL W
+  '\uD835\uDD83': "\\mathslbb{X}" # MATHEMATICAL BOLD FRAKTUR CAPITAL X
+  '\uD835\uDD84': "\\mathslbb{Y}" # MATHEMATICAL BOLD FRAKTUR CAPITAL Y
+  '\uD835\uDD85': "\\mathslbb{Z}" # MATHEMATICAL BOLD FRAKTUR CAPITAL Z
+  '\uD835\uDD86': "\\mathslbb{a}" # MATHEMATICAL BOLD FRAKTUR SMALL A
+  '\uD835\uDD87': "\\mathslbb{b}" # MATHEMATICAL BOLD FRAKTUR SMALL B
+  '\uD835\uDD88': "\\mathslbb{c}" # MATHEMATICAL BOLD FRAKTUR SMALL C
+  '\uD835\uDD89': "\\mathslbb{d}" # MATHEMATICAL BOLD FRAKTUR SMALL D
+  '\uD835\uDD8A': "\\mathslbb{e}" # MATHEMATICAL BOLD FRAKTUR SMALL E
+  '\uD835\uDD8B': "\\mathslbb{f}" # MATHEMATICAL BOLD FRAKTUR SMALL F
+  '\uD835\uDD8C': "\\mathslbb{g}" # MATHEMATICAL BOLD FRAKTUR SMALL G
+  '\uD835\uDD8D': "\\mathslbb{h}" # MATHEMATICAL BOLD FRAKTUR SMALL H
+  '\uD835\uDD8E': "\\mathslbb{i}" # MATHEMATICAL BOLD FRAKTUR SMALL I
+  '\uD835\uDD8F': "\\mathslbb{j}" # MATHEMATICAL BOLD FRAKTUR SMALL J
+  '\uD835\uDD90': "\\mathslbb{k}" # MATHEMATICAL BOLD FRAKTUR SMALL K
+  '\uD835\uDD91': "\\mathslbb{l}" # MATHEMATICAL BOLD FRAKTUR SMALL L
+  '\uD835\uDD92': "\\mathslbb{m}" # MATHEMATICAL BOLD FRAKTUR SMALL M
+  '\uD835\uDD93': "\\mathslbb{n}" # MATHEMATICAL BOLD FRAKTUR SMALL N
+  '\uD835\uDD94': "\\mathslbb{o}" # MATHEMATICAL BOLD FRAKTUR SMALL O
+  '\uD835\uDD95': "\\mathslbb{p}" # MATHEMATICAL BOLD FRAKTUR SMALL P
+  '\uD835\uDD96': "\\mathslbb{q}" # MATHEMATICAL BOLD FRAKTUR SMALL Q
+  '\uD835\uDD97': "\\mathslbb{r}" # MATHEMATICAL BOLD FRAKTUR SMALL R
+  '\uD835\uDD98': "\\mathslbb{s}" # MATHEMATICAL BOLD FRAKTUR SMALL S
+  '\uD835\uDD99': "\\mathslbb{t}" # MATHEMATICAL BOLD FRAKTUR SMALL T
+  '\uD835\uDD9A': "\\mathslbb{u}" # MATHEMATICAL BOLD FRAKTUR SMALL U
+  '\uD835\uDD9B': "\\mathslbb{v}" # MATHEMATICAL BOLD FRAKTUR SMALL V
+  '\uD835\uDD9C': "\\mathslbb{w}" # MATHEMATICAL BOLD FRAKTUR SMALL W
+  '\uD835\uDD9D': "\\mathslbb{x}" # MATHEMATICAL BOLD FRAKTUR SMALL X
+  '\uD835\uDD9E': "\\mathslbb{y}" # MATHEMATICAL BOLD FRAKTUR SMALL Y
+  '\uD835\uDD9F': "\\mathslbb{z}" # MATHEMATICAL BOLD FRAKTUR SMALL Z
+  '\uD835\uDDA0': "\\mathsf{A}" # MATHEMATICAL SANS-SERIF CAPITAL A
+  '\uD835\uDDA1': "\\mathsf{B}" # MATHEMATICAL SANS-SERIF CAPITAL B
+  '\uD835\uDDA2': "\\mathsf{C}" # MATHEMATICAL SANS-SERIF CAPITAL C
+  '\uD835\uDDA3': "\\mathsf{D}" # MATHEMATICAL SANS-SERIF CAPITAL D
+  '\uD835\uDDA4': "\\mathsf{E}" # MATHEMATICAL SANS-SERIF CAPITAL E
+  '\uD835\uDDA5': "\\mathsf{F}" # MATHEMATICAL SANS-SERIF CAPITAL F
+  '\uD835\uDDA6': "\\mathsf{G}" # MATHEMATICAL SANS-SERIF CAPITAL G
+  '\uD835\uDDA7': "\\mathsf{H}" # MATHEMATICAL SANS-SERIF CAPITAL H
+  '\uD835\uDDA8': "\\mathsf{I}" # MATHEMATICAL SANS-SERIF CAPITAL I
+  '\uD835\uDDA9': "\\mathsf{J}" # MATHEMATICAL SANS-SERIF CAPITAL J
+  '\uD835\uDDAA': "\\mathsf{K}" # MATHEMATICAL SANS-SERIF CAPITAL K
+  '\uD835\uDDAB': "\\mathsf{L}" # MATHEMATICAL SANS-SERIF CAPITAL L
+  '\uD835\uDDAC': "\\mathsf{M}" # MATHEMATICAL SANS-SERIF CAPITAL M
+  '\uD835\uDDAD': "\\mathsf{N}" # MATHEMATICAL SANS-SERIF CAPITAL N
+  '\uD835\uDDAE': "\\mathsf{O}" # MATHEMATICAL SANS-SERIF CAPITAL O
+  '\uD835\uDDAF': "\\mathsf{P}" # MATHEMATICAL SANS-SERIF CAPITAL P
+  '\uD835\uDDB0': "\\mathsf{Q}" # MATHEMATICAL SANS-SERIF CAPITAL Q
+  '\uD835\uDDB1': "\\mathsf{R}" # MATHEMATICAL SANS-SERIF CAPITAL R
+  '\uD835\uDDB2': "\\mathsf{S}" # MATHEMATICAL SANS-SERIF CAPITAL S
+  '\uD835\uDDB3': "\\mathsf{T}" # MATHEMATICAL SANS-SERIF CAPITAL T
+  '\uD835\uDDB4': "\\mathsf{U}" # MATHEMATICAL SANS-SERIF CAPITAL U
+  '\uD835\uDDB5': "\\mathsf{V}" # MATHEMATICAL SANS-SERIF CAPITAL V
+  '\uD835\uDDB6': "\\mathsf{W}" # MATHEMATICAL SANS-SERIF CAPITAL W
+  '\uD835\uDDB7': "\\mathsf{X}" # MATHEMATICAL SANS-SERIF CAPITAL X
+  '\uD835\uDDB8': "\\mathsf{Y}" # MATHEMATICAL SANS-SERIF CAPITAL Y
+  '\uD835\uDDB9': "\\mathsf{Z}" # MATHEMATICAL SANS-SERIF CAPITAL Z
+  '\uD835\uDDBA': "\\mathsf{a}" # MATHEMATICAL SANS-SERIF SMALL A
+  '\uD835\uDDBB': "\\mathsf{b}" # MATHEMATICAL SANS-SERIF SMALL B
+  '\uD835\uDDBC': "\\mathsf{c}" # MATHEMATICAL SANS-SERIF SMALL C
+  '\uD835\uDDBD': "\\mathsf{d}" # MATHEMATICAL SANS-SERIF SMALL D
+  '\uD835\uDDBE': "\\mathsf{e}" # MATHEMATICAL SANS-SERIF SMALL E
+  '\uD835\uDDBF': "\\mathsf{f}" # MATHEMATICAL SANS-SERIF SMALL F
+  '\uD835\uDDC0': "\\mathsf{g}" # MATHEMATICAL SANS-SERIF SMALL G
+  '\uD835\uDDC1': "\\mathsf{h}" # MATHEMATICAL SANS-SERIF SMALL H
+  '\uD835\uDDC2': "\\mathsf{i}" # MATHEMATICAL SANS-SERIF SMALL I
+  '\uD835\uDDC3': "\\mathsf{j}" # MATHEMATICAL SANS-SERIF SMALL J
+  '\uD835\uDDC4': "\\mathsf{k}" # MATHEMATICAL SANS-SERIF SMALL K
+  '\uD835\uDDC5': "\\mathsf{l}" # MATHEMATICAL SANS-SERIF SMALL L
+  '\uD835\uDDC6': "\\mathsf{m}" # MATHEMATICAL SANS-SERIF SMALL M
+  '\uD835\uDDC7': "\\mathsf{n}" # MATHEMATICAL SANS-SERIF SMALL N
+  '\uD835\uDDC8': "\\mathsf{o}" # MATHEMATICAL SANS-SERIF SMALL O
+  '\uD835\uDDC9': "\\mathsf{p}" # MATHEMATICAL SANS-SERIF SMALL P
+  '\uD835\uDDCA': "\\mathsf{q}" # MATHEMATICAL SANS-SERIF SMALL Q
+  '\uD835\uDDCB': "\\mathsf{r}" # MATHEMATICAL SANS-SERIF SMALL R
+  '\uD835\uDDCC': "\\mathsf{s}" # MATHEMATICAL SANS-SERIF SMALL S
+  '\uD835\uDDCD': "\\mathsf{t}" # MATHEMATICAL SANS-SERIF SMALL T
+  '\uD835\uDDCE': "\\mathsf{u}" # MATHEMATICAL SANS-SERIF SMALL U
+  '\uD835\uDDCF': "\\mathsf{v}" # MATHEMATICAL SANS-SERIF SMALL V
+  '\uD835\uDDD0': "\\mathsf{w}" # MATHEMATICAL SANS-SERIF SMALL W
+  '\uD835\uDDD1': "\\mathsf{x}" # MATHEMATICAL SANS-SERIF SMALL X
+  '\uD835\uDDD2': "\\mathsf{y}" # MATHEMATICAL SANS-SERIF SMALL Y
+  '\uD835\uDDD3': "\\mathsf{z}" # MATHEMATICAL SANS-SERIF SMALL Z
+  '\uD835\uDDD4': "\\mathsfbf{A}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL A
+  '\uD835\uDDD5': "\\mathsfbf{B}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL B
+  '\uD835\uDDD6': "\\mathsfbf{C}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL C
+  '\uD835\uDDD7': "\\mathsfbf{D}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL D
+  '\uD835\uDDD8': "\\mathsfbf{E}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL E
+  '\uD835\uDDD9': "\\mathsfbf{F}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL F
+  '\uD835\uDDDA': "\\mathsfbf{G}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL G
+  '\uD835\uDDDB': "\\mathsfbf{H}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL H
+  '\uD835\uDDDC': "\\mathsfbf{I}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL I
+  '\uD835\uDDDD': "\\mathsfbf{J}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL J
+  '\uD835\uDDDE': "\\mathsfbf{K}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL K
+  '\uD835\uDDDF': "\\mathsfbf{L}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL L
+  '\uD835\uDDE0': "\\mathsfbf{M}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL M
+  '\uD835\uDDE1': "\\mathsfbf{N}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL N
+  '\uD835\uDDE2': "\\mathsfbf{O}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL O
+  '\uD835\uDDE3': "\\mathsfbf{P}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL P
+  '\uD835\uDDE4': "\\mathsfbf{Q}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL Q
+  '\uD835\uDDE5': "\\mathsfbf{R}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL R
+  '\uD835\uDDE6': "\\mathsfbf{S}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL S
+  '\uD835\uDDE7': "\\mathsfbf{T}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL T
+  '\uD835\uDDE8': "\\mathsfbf{U}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL U
+  '\uD835\uDDE9': "\\mathsfbf{V}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL V
+  '\uD835\uDDEA': "\\mathsfbf{W}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL W
+  '\uD835\uDDEB': "\\mathsfbf{X}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL X
+  '\uD835\uDDEC': "\\mathsfbf{Y}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL Y
+  '\uD835\uDDED': "\\mathsfbf{Z}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL Z
+  '\uD835\uDDEE': "\\mathsfbf{a}" # MATHEMATICAL SANS-SERIF BOLD SMALL A
+  '\uD835\uDDEF': "\\mathsfbf{b}" # MATHEMATICAL SANS-SERIF BOLD SMALL B
+  '\uD835\uDDF0': "\\mathsfbf{c}" # MATHEMATICAL SANS-SERIF BOLD SMALL C
+  '\uD835\uDDF1': "\\mathsfbf{d}" # MATHEMATICAL SANS-SERIF BOLD SMALL D
+  '\uD835\uDDF2': "\\mathsfbf{e}" # MATHEMATICAL SANS-SERIF BOLD SMALL E
+  '\uD835\uDDF3': "\\mathsfbf{f}" # MATHEMATICAL SANS-SERIF BOLD SMALL F
+  '\uD835\uDDF4': "\\mathsfbf{g}" # MATHEMATICAL SANS-SERIF BOLD SMALL G
+  '\uD835\uDDF5': "\\mathsfbf{h}" # MATHEMATICAL SANS-SERIF BOLD SMALL H
+  '\uD835\uDDF6': "\\mathsfbf{i}" # MATHEMATICAL SANS-SERIF BOLD SMALL I
+  '\uD835\uDDF7': "\\mathsfbf{j}" # MATHEMATICAL SANS-SERIF BOLD SMALL J
+  '\uD835\uDDF8': "\\mathsfbf{k}" # MATHEMATICAL SANS-SERIF BOLD SMALL K
+  '\uD835\uDDF9': "\\mathsfbf{l}" # MATHEMATICAL SANS-SERIF BOLD SMALL L
+  '\uD835\uDDFA': "\\mathsfbf{m}" # MATHEMATICAL SANS-SERIF BOLD SMALL M
+  '\uD835\uDDFB': "\\mathsfbf{n}" # MATHEMATICAL SANS-SERIF BOLD SMALL N
+  '\uD835\uDDFC': "\\mathsfbf{o}" # MATHEMATICAL SANS-SERIF BOLD SMALL O
+  '\uD835\uDDFD': "\\mathsfbf{p}" # MATHEMATICAL SANS-SERIF BOLD SMALL P
+  '\uD835\uDDFE': "\\mathsfbf{q}" # MATHEMATICAL SANS-SERIF BOLD SMALL Q
+  '\uD835\uDDFF': "\\mathsfbf{r}" # MATHEMATICAL SANS-SERIF BOLD SMALL R
+  '\uD835\uDE00': "\\mathsfbf{s}" # MATHEMATICAL SANS-SERIF BOLD SMALL S
+  '\uD835\uDE01': "\\mathsfbf{t}" # MATHEMATICAL SANS-SERIF BOLD SMALL T
+  '\uD835\uDE02': "\\mathsfbf{u}" # MATHEMATICAL SANS-SERIF BOLD SMALL U
+  '\uD835\uDE03': "\\mathsfbf{v}" # MATHEMATICAL SANS-SERIF BOLD SMALL V
+  '\uD835\uDE04': "\\mathsfbf{w}" # MATHEMATICAL SANS-SERIF BOLD SMALL W
+  '\uD835\uDE05': "\\mathsfbf{x}" # MATHEMATICAL SANS-SERIF BOLD SMALL X
+  '\uD835\uDE06': "\\mathsfbf{y}" # MATHEMATICAL SANS-SERIF BOLD SMALL Y
+  '\uD835\uDE07': "\\mathsfbf{z}" # MATHEMATICAL SANS-SERIF BOLD SMALL Z
+  '\uD835\uDE08': "\\mathsfsl{A}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL A
+  '\uD835\uDE09': "\\mathsfsl{B}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL B
+  '\uD835\uDE0A': "\\mathsfsl{C}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL C
+  '\uD835\uDE0B': "\\mathsfsl{D}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL D
+  '\uD835\uDE0C': "\\mathsfsl{E}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL E
+  '\uD835\uDE0D': "\\mathsfsl{F}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL F
+  '\uD835\uDE0E': "\\mathsfsl{G}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL G
+  '\uD835\uDE0F': "\\mathsfsl{H}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL H
+  '\uD835\uDE10': "\\mathsfsl{I}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL I
+  '\uD835\uDE11': "\\mathsfsl{J}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL J
+  '\uD835\uDE12': "\\mathsfsl{K}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL K
+  '\uD835\uDE13': "\\mathsfsl{L}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL L
+  '\uD835\uDE14': "\\mathsfsl{M}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL M
+  '\uD835\uDE15': "\\mathsfsl{N}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL N
+  '\uD835\uDE16': "\\mathsfsl{O}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL O
+  '\uD835\uDE17': "\\mathsfsl{P}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL P
+  '\uD835\uDE18': "\\mathsfsl{Q}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL Q
+  '\uD835\uDE19': "\\mathsfsl{R}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL R
+  '\uD835\uDE1A': "\\mathsfsl{S}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL S
+  '\uD835\uDE1B': "\\mathsfsl{T}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL T
+  '\uD835\uDE1C': "\\mathsfsl{U}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL U
+  '\uD835\uDE1D': "\\mathsfsl{V}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL V
+  '\uD835\uDE1E': "\\mathsfsl{W}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL W
+  '\uD835\uDE1F': "\\mathsfsl{X}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL X
+  '\uD835\uDE20': "\\mathsfsl{Y}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL Y
+  '\uD835\uDE21': "\\mathsfsl{Z}" # MATHEMATICAL SANS-SERIF ITALIC CAPITAL Z
+  '\uD835\uDE22': "\\mathsfsl{a}" # MATHEMATICAL SANS-SERIF ITALIC SMALL A
+  '\uD835\uDE23': "\\mathsfsl{b}" # MATHEMATICAL SANS-SERIF ITALIC SMALL B
+  '\uD835\uDE24': "\\mathsfsl{c}" # MATHEMATICAL SANS-SERIF ITALIC SMALL C
+  '\uD835\uDE25': "\\mathsfsl{d}" # MATHEMATICAL SANS-SERIF ITALIC SMALL D
+  '\uD835\uDE26': "\\mathsfsl{e}" # MATHEMATICAL SANS-SERIF ITALIC SMALL E
+  '\uD835\uDE27': "\\mathsfsl{f}" # MATHEMATICAL SANS-SERIF ITALIC SMALL F
+  '\uD835\uDE28': "\\mathsfsl{g}" # MATHEMATICAL SANS-SERIF ITALIC SMALL G
+  '\uD835\uDE29': "\\mathsfsl{h}" # MATHEMATICAL SANS-SERIF ITALIC SMALL H
+  '\uD835\uDE2A': "\\mathsfsl{i}" # MATHEMATICAL SANS-SERIF ITALIC SMALL I
+  '\uD835\uDE2B': "\\mathsfsl{j}" # MATHEMATICAL SANS-SERIF ITALIC SMALL J
+  '\uD835\uDE2C': "\\mathsfsl{k}" # MATHEMATICAL SANS-SERIF ITALIC SMALL K
+  '\uD835\uDE2D': "\\mathsfsl{l}" # MATHEMATICAL SANS-SERIF ITALIC SMALL L
+  '\uD835\uDE2E': "\\mathsfsl{m}" # MATHEMATICAL SANS-SERIF ITALIC SMALL M
+  '\uD835\uDE2F': "\\mathsfsl{n}" # MATHEMATICAL SANS-SERIF ITALIC SMALL N
+  '\uD835\uDE30': "\\mathsfsl{o}" # MATHEMATICAL SANS-SERIF ITALIC SMALL O
+  '\uD835\uDE31': "\\mathsfsl{p}" # MATHEMATICAL SANS-SERIF ITALIC SMALL P
+  '\uD835\uDE32': "\\mathsfsl{q}" # MATHEMATICAL SANS-SERIF ITALIC SMALL Q
+  '\uD835\uDE33': "\\mathsfsl{r}" # MATHEMATICAL SANS-SERIF ITALIC SMALL R
+  '\uD835\uDE34': "\\mathsfsl{s}" # MATHEMATICAL SANS-SERIF ITALIC SMALL S
+  '\uD835\uDE35': "\\mathsfsl{t}" # MATHEMATICAL SANS-SERIF ITALIC SMALL T
+  '\uD835\uDE36': "\\mathsfsl{u}" # MATHEMATICAL SANS-SERIF ITALIC SMALL U
+  '\uD835\uDE37': "\\mathsfsl{v}" # MATHEMATICAL SANS-SERIF ITALIC SMALL V
+  '\uD835\uDE38': "\\mathsfsl{w}" # MATHEMATICAL SANS-SERIF ITALIC SMALL W
+  '\uD835\uDE39': "\\mathsfsl{x}" # MATHEMATICAL SANS-SERIF ITALIC SMALL X
+  '\uD835\uDE3A': "\\mathsfsl{y}" # MATHEMATICAL SANS-SERIF ITALIC SMALL Y
+  '\uD835\uDE3B': "\\mathsfsl{z}" # MATHEMATICAL SANS-SERIF ITALIC SMALL Z
+  '\uD835\uDE3C': "\\mathsfbfsl{A}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL A
+  '\uD835\uDE3D': "\\mathsfbfsl{B}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL B
+  '\uD835\uDE3E': "\\mathsfbfsl{C}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL C
+  '\uD835\uDE3F': "\\mathsfbfsl{D}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL D
+  '\uD835\uDE40': "\\mathsfbfsl{E}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL E
+  '\uD835\uDE41': "\\mathsfbfsl{F}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL F
+  '\uD835\uDE42': "\\mathsfbfsl{G}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL G
+  '\uD835\uDE43': "\\mathsfbfsl{H}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL H
+  '\uD835\uDE44': "\\mathsfbfsl{I}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL I
+  '\uD835\uDE45': "\\mathsfbfsl{J}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL J
+  '\uD835\uDE46': "\\mathsfbfsl{K}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL K
+  '\uD835\uDE47': "\\mathsfbfsl{L}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL L
+  '\uD835\uDE48': "\\mathsfbfsl{M}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL M
+  '\uD835\uDE49': "\\mathsfbfsl{N}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL N
+  '\uD835\uDE4A': "\\mathsfbfsl{O}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL O
+  '\uD835\uDE4B': "\\mathsfbfsl{P}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL P
+  '\uD835\uDE4C': "\\mathsfbfsl{Q}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL Q
+  '\uD835\uDE4D': "\\mathsfbfsl{R}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL R
+  '\uD835\uDE4E': "\\mathsfbfsl{S}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL S
+  '\uD835\uDE4F': "\\mathsfbfsl{T}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL T
+  '\uD835\uDE50': "\\mathsfbfsl{U}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL U
+  '\uD835\uDE51': "\\mathsfbfsl{V}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL V
+  '\uD835\uDE52': "\\mathsfbfsl{W}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL W
+  '\uD835\uDE53': "\\mathsfbfsl{X}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL X
+  '\uD835\uDE54': "\\mathsfbfsl{Y}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL Y
+  '\uD835\uDE55': "\\mathsfbfsl{Z}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL Z
+  '\uD835\uDE56': "\\mathsfbfsl{a}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL A
+  '\uD835\uDE57': "\\mathsfbfsl{b}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL B
+  '\uD835\uDE58': "\\mathsfbfsl{c}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL C
+  '\uD835\uDE59': "\\mathsfbfsl{d}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL D
+  '\uD835\uDE5A': "\\mathsfbfsl{e}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL E
+  '\uD835\uDE5B': "\\mathsfbfsl{f}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL F
+  '\uD835\uDE5C': "\\mathsfbfsl{g}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL G
+  '\uD835\uDE5D': "\\mathsfbfsl{h}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL H
+  '\uD835\uDE5E': "\\mathsfbfsl{i}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL I
+  '\uD835\uDE5F': "\\mathsfbfsl{j}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL J
+  '\uD835\uDE60': "\\mathsfbfsl{k}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL K
+  '\uD835\uDE61': "\\mathsfbfsl{l}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL L
+  '\uD835\uDE62': "\\mathsfbfsl{m}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL M
+  '\uD835\uDE63': "\\mathsfbfsl{n}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL N
+  '\uD835\uDE64': "\\mathsfbfsl{o}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL O
+  '\uD835\uDE65': "\\mathsfbfsl{p}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL P
+  '\uD835\uDE66': "\\mathsfbfsl{q}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL Q
+  '\uD835\uDE67': "\\mathsfbfsl{r}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL R
+  '\uD835\uDE68': "\\mathsfbfsl{s}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL S
+  '\uD835\uDE69': "\\mathsfbfsl{t}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL T
+  '\uD835\uDE6A': "\\mathsfbfsl{u}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL U
+  '\uD835\uDE6B': "\\mathsfbfsl{v}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL V
+  '\uD835\uDE6C': "\\mathsfbfsl{w}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL W
+  '\uD835\uDE6D': "\\mathsfbfsl{x}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL X
+  '\uD835\uDE6E': "\\mathsfbfsl{y}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL Y
+  '\uD835\uDE6F': "\\mathsfbfsl{z}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL Z
+  '\uD835\uDE70': "\\mathtt{A}" # MATHEMATICAL MONOSPACE CAPITAL A
+  '\uD835\uDE71': "\\mathtt{B}" # MATHEMATICAL MONOSPACE CAPITAL B
+  '\uD835\uDE72': "\\mathtt{C}" # MATHEMATICAL MONOSPACE CAPITAL C
+  '\uD835\uDE73': "\\mathtt{D}" # MATHEMATICAL MONOSPACE CAPITAL D
+  '\uD835\uDE74': "\\mathtt{E}" # MATHEMATICAL MONOSPACE CAPITAL E
+  '\uD835\uDE75': "\\mathtt{F}" # MATHEMATICAL MONOSPACE CAPITAL F
+  '\uD835\uDE76': "\\mathtt{G}" # MATHEMATICAL MONOSPACE CAPITAL G
+  '\uD835\uDE77': "\\mathtt{H}" # MATHEMATICAL MONOSPACE CAPITAL H
+  '\uD835\uDE78': "\\mathtt{I}" # MATHEMATICAL MONOSPACE CAPITAL I
+  '\uD835\uDE79': "\\mathtt{J}" # MATHEMATICAL MONOSPACE CAPITAL J
+  '\uD835\uDE7A': "\\mathtt{K}" # MATHEMATICAL MONOSPACE CAPITAL K
+  '\uD835\uDE7B': "\\mathtt{L}" # MATHEMATICAL MONOSPACE CAPITAL L
+  '\uD835\uDE7C': "\\mathtt{M}" # MATHEMATICAL MONOSPACE CAPITAL M
+  '\uD835\uDE7D': "\\mathtt{N}" # MATHEMATICAL MONOSPACE CAPITAL N
+  '\uD835\uDE7E': "\\mathtt{O}" # MATHEMATICAL MONOSPACE CAPITAL O
+  '\uD835\uDE7F': "\\mathtt{P}" # MATHEMATICAL MONOSPACE CAPITAL P
+  '\uD835\uDE80': "\\mathtt{Q}" # MATHEMATICAL MONOSPACE CAPITAL Q
+  '\uD835\uDE81': "\\mathtt{R}" # MATHEMATICAL MONOSPACE CAPITAL R
+  '\uD835\uDE82': "\\mathtt{S}" # MATHEMATICAL MONOSPACE CAPITAL S
+  '\uD835\uDE83': "\\mathtt{T}" # MATHEMATICAL MONOSPACE CAPITAL T
+  '\uD835\uDE84': "\\mathtt{U}" # MATHEMATICAL MONOSPACE CAPITAL U
+  '\uD835\uDE85': "\\mathtt{V}" # MATHEMATICAL MONOSPACE CAPITAL V
+  '\uD835\uDE86': "\\mathtt{W}" # MATHEMATICAL MONOSPACE CAPITAL W
+  '\uD835\uDE87': "\\mathtt{X}" # MATHEMATICAL MONOSPACE CAPITAL X
+  '\uD835\uDE88': "\\mathtt{Y}" # MATHEMATICAL MONOSPACE CAPITAL Y
+  '\uD835\uDE89': "\\mathtt{Z}" # MATHEMATICAL MONOSPACE CAPITAL Z
+  '\uD835\uDE8A': "\\mathtt{a}" # MATHEMATICAL MONOSPACE SMALL A
+  '\uD835\uDE8B': "\\mathtt{b}" # MATHEMATICAL MONOSPACE SMALL B
+  '\uD835\uDE8C': "\\mathtt{c}" # MATHEMATICAL MONOSPACE SMALL C
+  '\uD835\uDE8D': "\\mathtt{d}" # MATHEMATICAL MONOSPACE SMALL D
+  '\uD835\uDE8E': "\\mathtt{e}" # MATHEMATICAL MONOSPACE SMALL E
+  '\uD835\uDE8F': "\\mathtt{f}" # MATHEMATICAL MONOSPACE SMALL F
+  '\uD835\uDE90': "\\mathtt{g}" # MATHEMATICAL MONOSPACE SMALL G
+  '\uD835\uDE91': "\\mathtt{h}" # MATHEMATICAL MONOSPACE SMALL H
+  '\uD835\uDE92': "\\mathtt{i}" # MATHEMATICAL MONOSPACE SMALL I
+  '\uD835\uDE93': "\\mathtt{j}" # MATHEMATICAL MONOSPACE SMALL J
+  '\uD835\uDE94': "\\mathtt{k}" # MATHEMATICAL MONOSPACE SMALL K
+  '\uD835\uDE95': "\\mathtt{l}" # MATHEMATICAL MONOSPACE SMALL L
+  '\uD835\uDE96': "\\mathtt{m}" # MATHEMATICAL MONOSPACE SMALL M
+  '\uD835\uDE97': "\\mathtt{n}" # MATHEMATICAL MONOSPACE SMALL N
+  '\uD835\uDE98': "\\mathtt{o}" # MATHEMATICAL MONOSPACE SMALL O
+  '\uD835\uDE99': "\\mathtt{p}" # MATHEMATICAL MONOSPACE SMALL P
+  '\uD835\uDE9A': "\\mathtt{q}" # MATHEMATICAL MONOSPACE SMALL Q
+  '\uD835\uDE9B': "\\mathtt{r}" # MATHEMATICAL MONOSPACE SMALL R
+  '\uD835\uDE9C': "\\mathtt{s}" # MATHEMATICAL MONOSPACE SMALL S
+  '\uD835\uDE9D': "\\mathtt{t}" # MATHEMATICAL MONOSPACE SMALL T
+  '\uD835\uDE9E': "\\mathtt{u}" # MATHEMATICAL MONOSPACE SMALL U
+  '\uD835\uDE9F': "\\mathtt{v}" # MATHEMATICAL MONOSPACE SMALL V
+  '\uD835\uDEA0': "\\mathtt{w}" # MATHEMATICAL MONOSPACE SMALL W
+  '\uD835\uDEA1': "\\mathtt{x}" # MATHEMATICAL MONOSPACE SMALL X
+  '\uD835\uDEA2': "\\mathtt{y}" # MATHEMATICAL MONOSPACE SMALL Y
+  '\uD835\uDEA3': "\\mathtt{z}" # MATHEMATICAL MONOSPACE SMALL Z
+  '\uD835\uDEA4': "\\imath{}" # MATHEMATICAL ITALIC SMALL DOTLESS I
+  '\uD835\uDEA5': "\\jmath{}" # MATHEMATICAL ITALIC SMALL DOTLESS J
+  '\uD835\uDEA8': "\\mathbf{\\Alpha}" # MATHEMATICAL BOLD CAPITAL ALPHA
+  '\uD835\uDEA9': "\\mathbf{\\Beta}" # MATHEMATICAL BOLD CAPITAL BETA
+  '\uD835\uDEAA': "\\mathbf{\\Gamma}" # MATHEMATICAL BOLD CAPITAL GAMMA
+  '\uD835\uDEAB': "\\mathbf{\\Delta}" # MATHEMATICAL BOLD CAPITAL DELTA
+  '\uD835\uDEAC': "\\mathbf{\\Epsilon}" # MATHEMATICAL BOLD CAPITAL EPSILON
+  '\uD835\uDEAD': "\\mathbf{\\Zeta}" # MATHEMATICAL BOLD CAPITAL ZETA
+  '\uD835\uDEAE': "\\mathbf{\\Eta}" # MATHEMATICAL BOLD CAPITAL ETA
+  '\uD835\uDEAF': "\\mathbf{\\Theta}" # MATHEMATICAL BOLD CAPITAL THETA
+  '\uD835\uDEB0': "\\mathbf{\\Iota}" # MATHEMATICAL BOLD CAPITAL IOTA
+  '\uD835\uDEB1': "\\mathbf{\\Kappa}" # MATHEMATICAL BOLD CAPITAL KAPPA
+  '\uD835\uDEB2': "\\mathbf{\\Lambda}" # MATHEMATICAL BOLD CAPITAL LAMDA
+  '\uD835\uDEB3': "M" # MATHEMATICAL BOLD CAPITAL MU
+  '\uD835\uDEB4': "N" # MATHEMATICAL BOLD CAPITAL NU
+  '\uD835\uDEB5': "\\mathbf{\\Xi}" # MATHEMATICAL BOLD CAPITAL XI
+  '\uD835\uDEB6': "O" # MATHEMATICAL BOLD CAPITAL OMICRON
+  '\uD835\uDEB7': "\\mathbf{\\Pi}" # MATHEMATICAL BOLD CAPITAL PI
+  '\uD835\uDEB8': "\\mathbf{\\Rho}" # MATHEMATICAL BOLD CAPITAL RHO
+  '\uD835\uDEBA': "\\mathbf{\\Sigma}" # MATHEMATICAL BOLD CAPITAL SIGMA
+  '\uD835\uDEBB': "\\mathbf{\\Tau}" # MATHEMATICAL BOLD CAPITAL TAU
+  '\uD835\uDEBC': "\\mathbf{\\Upsilon}" # MATHEMATICAL BOLD CAPITAL UPSILON
+  '\uD835\uDEBD': "\\mathbf{\\Phi}" # MATHEMATICAL BOLD CAPITAL PHI
+  '\uD835\uDEBE': "\\mathbf{\\Chi}" # MATHEMATICAL BOLD CAPITAL CHI
+  '\uD835\uDEBF': "\\mathbf{\\Psi}" # MATHEMATICAL BOLD CAPITAL PSI
+  '\uD835\uDEC0': "\\mathbf{\\Omega}" # MATHEMATICAL BOLD CAPITAL OMEGA
+  '\uD835\uDEC1': "\\mathbf{\\nabla}" # MATHEMATICAL BOLD NABLA
+  '\uD835\uDEC2': "\\mathbf{\\Alpha}" # MATHEMATICAL BOLD SMALL ALPHA
+  '\uD835\uDEC3': "\\mathbf{\\Beta}" # MATHEMATICAL BOLD SMALL BETA
+  '\uD835\uDEC4': "\\mathbf{\\Gamma}" # MATHEMATICAL BOLD SMALL GAMMA
+  '\uD835\uDEC5': "\\mathbf{\\Delta}" # MATHEMATICAL BOLD SMALL DELTA
+  '\uD835\uDEC6': "\\mathbf{\\Epsilon}" # MATHEMATICAL BOLD SMALL EPSILON
+  '\uD835\uDEC7': "\\mathbf{\\Zeta}" # MATHEMATICAL BOLD SMALL ZETA
+  '\uD835\uDEC8': "\\mathbf{\\Eta}" # MATHEMATICAL BOLD SMALL ETA
+  '\uD835\uDEC9': "\\mathbf{\\theta}" # MATHEMATICAL BOLD SMALL THETA
+  '\uD835\uDECA': "\\mathbf{\\Iota}" # MATHEMATICAL BOLD SMALL IOTA
+  '\uD835\uDECB': "\\mathbf{\\Kappa}" # MATHEMATICAL BOLD SMALL KAPPA
+  '\uD835\uDECC': "\\mathbf{\\Lambda}" # MATHEMATICAL BOLD SMALL LAMDA
+  '\uD835\uDECD': "M" # MATHEMATICAL BOLD SMALL MU
+  '\uD835\uDECE': "N" # MATHEMATICAL BOLD SMALL NU
+  '\uD835\uDECF': "\\mathbf{\\Xi}" # MATHEMATICAL BOLD SMALL XI
+  '\uD835\uDED0': "O" # MATHEMATICAL BOLD SMALL OMICRON
+  '\uD835\uDED1': "\\mathbf{\\Pi}" # MATHEMATICAL BOLD SMALL PI
+  '\uD835\uDED2': "\\mathbf{\\Rho}" # MATHEMATICAL BOLD SMALL RHO
+  '\uD835\uDED3': "\\mathbf{\\varsigma}" # MATHEMATICAL BOLD SMALL FINAL SIGMA
+  '\uD835\uDED4': "\\mathbf{\\Sigma}" # MATHEMATICAL BOLD SMALL SIGMA
+  '\uD835\uDED5': "\\mathbf{\\Tau}" # MATHEMATICAL BOLD SMALL TAU
+  '\uD835\uDED6': "\\mathbf{\\Upsilon}" # MATHEMATICAL BOLD SMALL UPSILON
+  '\uD835\uDED7': "\\mathbf{\\Phi}" # MATHEMATICAL BOLD SMALL PHI
+  '\uD835\uDED8': "\\mathbf{\\Chi}" # MATHEMATICAL BOLD SMALL CHI
+  '\uD835\uDED9': "\\mathbf{\\Psi}" # MATHEMATICAL BOLD SMALL PSI
+  '\uD835\uDEDA': "\\mathbf{\\Omega}" # MATHEMATICAL BOLD SMALL OMEGA
+  '\uD835\uDEDB': "\\partial{}" # MATHEMATICAL BOLD PARTIAL DIFFERENTIAL
+  '\uD835\uDEDC': "\\in{}" # MATHEMATICAL BOLD EPSILON SYMBOL
+  '\uD835\uDEE2': "\\mathsl{\\Alpha}" # MATHEMATICAL ITALIC CAPITAL ALPHA
+  '\uD835\uDEE3': "\\mathsl{\\Beta}" # MATHEMATICAL ITALIC CAPITAL BETA
+  '\uD835\uDEE4': "\\mathsl{\\Gamma}" # MATHEMATICAL ITALIC CAPITAL GAMMA
+  '\uD835\uDEE5': "\\mathsl{\\Delta}" # MATHEMATICAL ITALIC CAPITAL DELTA
+  '\uD835\uDEE6': "\\mathsl{\\Epsilon}" # MATHEMATICAL ITALIC CAPITAL EPSILON
+  '\uD835\uDEE7': "\\mathsl{\\Zeta}" # MATHEMATICAL ITALIC CAPITAL ZETA
+  '\uD835\uDEE8': "\\mathsl{\\Eta}" # MATHEMATICAL ITALIC CAPITAL ETA
+  '\uD835\uDEE9': "\\mathsl{\\Theta}" # MATHEMATICAL ITALIC CAPITAL THETA
+  '\uD835\uDEEA': "\\mathsl{\\Iota}" # MATHEMATICAL ITALIC CAPITAL IOTA
+  '\uD835\uDEEB': "\\mathsl{\\Kappa}" # MATHEMATICAL ITALIC CAPITAL KAPPA
+  '\uD835\uDEEC': "\\mathsl{\\Lambda}" # MATHEMATICAL ITALIC CAPITAL LAMDA
+  '\uD835\uDEED': "M" # MATHEMATICAL ITALIC CAPITAL MU
+  '\uD835\uDEEE': "N" # MATHEMATICAL ITALIC CAPITAL NU
+  '\uD835\uDEEF': "\\mathsl{\\Xi}" # MATHEMATICAL ITALIC CAPITAL XI
+  '\uD835\uDEF0': "O" # MATHEMATICAL ITALIC CAPITAL OMICRON
+  '\uD835\uDEF1': "\\mathsl{\\Pi}" # MATHEMATICAL ITALIC CAPITAL PI
+  '\uD835\uDEF2': "\\mathsl{\\Rho}" # MATHEMATICAL ITALIC CAPITAL RHO
+  '\uD835\uDEF4': "\\mathsl{\\Sigma}" # MATHEMATICAL ITALIC CAPITAL SIGMA
+  '\uD835\uDEF5': "\\mathsl{\\Tau}" # MATHEMATICAL ITALIC CAPITAL TAU
+  '\uD835\uDEF6': "\\mathsl{\\Upsilon}" # MATHEMATICAL ITALIC CAPITAL UPSILON
+  '\uD835\uDEF7': "\\mathsl{\\Phi}" # MATHEMATICAL ITALIC CAPITAL PHI
+  '\uD835\uDEF8': "\\mathsl{\\Chi}" # MATHEMATICAL ITALIC CAPITAL CHI
+  '\uD835\uDEF9': "\\mathsl{\\Psi}" # MATHEMATICAL ITALIC CAPITAL PSI
+  '\uD835\uDEFA': "\\mathsl{\\Omega}" # MATHEMATICAL ITALIC CAPITAL OMEGA
+  '\uD835\uDEFB': "\\mathsl{\\nabla}" # MATHEMATICAL ITALIC NABLA
+  '\uD835\uDEFC': "\\mathsl{\\Alpha}" # MATHEMATICAL ITALIC SMALL ALPHA
+  '\uD835\uDEFD': "\\mathsl{\\Beta}" # MATHEMATICAL ITALIC SMALL BETA
+  '\uD835\uDEFE': "\\mathsl{\\Gamma}" # MATHEMATICAL ITALIC SMALL GAMMA
+  '\uD835\uDEFF': "\\mathsl{\\Delta}" # MATHEMATICAL ITALIC SMALL DELTA
+  '\uD835\uDF00': "\\mathsl{\\Epsilon}" # MATHEMATICAL ITALIC SMALL EPSILON
+  '\uD835\uDF01': "\\mathsl{\\Zeta}" # MATHEMATICAL ITALIC SMALL ZETA
+  '\uD835\uDF02': "\\mathsl{\\Eta}" # MATHEMATICAL ITALIC SMALL ETA
+  '\uD835\uDF03': "\\mathsl{\\Theta}" # MATHEMATICAL ITALIC SMALL THETA
+  '\uD835\uDF04': "\\mathsl{\\Iota}" # MATHEMATICAL ITALIC SMALL IOTA
+  '\uD835\uDF05': "\\mathsl{\\Kappa}" # MATHEMATICAL ITALIC SMALL KAPPA
+  '\uD835\uDF06': "\\mathsl{\\Lambda}" # MATHEMATICAL ITALIC SMALL LAMDA
+  '\uD835\uDF07': "M" # MATHEMATICAL ITALIC SMALL MU
+  '\uD835\uDF08': "N" # MATHEMATICAL ITALIC SMALL NU
+  '\uD835\uDF09': "\\mathsl{\\Xi}" # MATHEMATICAL ITALIC SMALL XI
+  '\uD835\uDF0A': "O" # MATHEMATICAL ITALIC SMALL OMICRON
+  '\uD835\uDF0B': "\\mathsl{\\Pi}" # MATHEMATICAL ITALIC SMALL PI
+  '\uD835\uDF0C': "\\mathsl{\\Rho}" # MATHEMATICAL ITALIC SMALL RHO
+  '\uD835\uDF0D': "\\mathsl{\\varsigma}" # MATHEMATICAL ITALIC SMALL FINAL SIGMA
+  '\uD835\uDF0E': "\\mathsl{\\Sigma}" # MATHEMATICAL ITALIC SMALL SIGMA
+  '\uD835\uDF0F': "\\mathsl{\\Tau}" # MATHEMATICAL ITALIC SMALL TAU
+  '\uD835\uDF10': "\\mathsl{\\Upsilon}" # MATHEMATICAL ITALIC SMALL UPSILON
+  '\uD835\uDF11': "\\mathsl{\\Phi}" # MATHEMATICAL ITALIC SMALL PHI
+  '\uD835\uDF12': "\\mathsl{\\Chi}" # MATHEMATICAL ITALIC SMALL CHI
+  '\uD835\uDF13': "\\mathsl{\\Psi}" # MATHEMATICAL ITALIC SMALL PSI
+  '\uD835\uDF14': "\\mathsl{\\Omega}" # MATHEMATICAL ITALIC SMALL OMEGA
+  '\uD835\uDF15': "\\partial{}" # MATHEMATICAL ITALIC PARTIAL DIFFERENTIAL
+  '\uD835\uDF16': "\\in{}" # MATHEMATICAL ITALIC EPSILON SYMBOL
+  '\uD835\uDF1C': "\\mathbit{\\Alpha}" # MATHEMATICAL BOLD ITALIC CAPITAL ALPHA
+  '\uD835\uDF1D': "\\mathbit{\\Beta}" # MATHEMATICAL BOLD ITALIC CAPITAL BETA
+  '\uD835\uDF1E': "\\mathbit{\\Gamma}" # MATHEMATICAL BOLD ITALIC CAPITAL GAMMA
+  '\uD835\uDF1F': "\\mathbit{\\Delta}" # MATHEMATICAL BOLD ITALIC CAPITAL DELTA
+  '\uD835\uDF20': "\\mathbit{\\Epsilon}" # MATHEMATICAL BOLD ITALIC CAPITAL EPSILON
+  '\uD835\uDF21': "\\mathbit{\\Zeta}" # MATHEMATICAL BOLD ITALIC CAPITAL ZETA
+  '\uD835\uDF22': "\\mathbit{\\Eta}" # MATHEMATICAL BOLD ITALIC CAPITAL ETA
+  '\uD835\uDF23': "\\mathbit{\\Theta}" # MATHEMATICAL BOLD ITALIC CAPITAL THETA
+  '\uD835\uDF24': "\\mathbit{\\Iota}" # MATHEMATICAL BOLD ITALIC CAPITAL IOTA
+  '\uD835\uDF25': "\\mathbit{\\Kappa}" # MATHEMATICAL BOLD ITALIC CAPITAL KAPPA
+  '\uD835\uDF26': "\\mathbit{\\Lambda}" # MATHEMATICAL BOLD ITALIC CAPITAL LAMDA
+  '\uD835\uDF27': "M" # MATHEMATICAL BOLD ITALIC CAPITAL MU
+  '\uD835\uDF28': "N" # MATHEMATICAL BOLD ITALIC CAPITAL NU
+  '\uD835\uDF29': "\\mathbit{\\Xi}" # MATHEMATICAL BOLD ITALIC CAPITAL XI
+  '\uD835\uDF2A': "O" # MATHEMATICAL BOLD ITALIC CAPITAL OMICRON
+  '\uD835\uDF2B': "\\mathbit{\\Pi}" # MATHEMATICAL BOLD ITALIC CAPITAL PI
+  '\uD835\uDF2C': "\\mathbit{\\Rho}" # MATHEMATICAL BOLD ITALIC CAPITAL RHO
+  '\uD835\uDF2E': "\\mathbit{\\Sigma}" # MATHEMATICAL BOLD ITALIC CAPITAL SIGMA
+  '\uD835\uDF2F': "\\mathbit{\\Tau}" # MATHEMATICAL BOLD ITALIC CAPITAL TAU
+  '\uD835\uDF30': "\\mathbit{\\Upsilon}" # MATHEMATICAL BOLD ITALIC CAPITAL UPSILON
+  '\uD835\uDF31': "\\mathbit{\\Phi}" # MATHEMATICAL BOLD ITALIC CAPITAL PHI
+  '\uD835\uDF32': "\\mathbit{\\Chi}" # MATHEMATICAL BOLD ITALIC CAPITAL CHI
+  '\uD835\uDF33': "\\mathbit{\\Psi}" # MATHEMATICAL BOLD ITALIC CAPITAL PSI
+  '\uD835\uDF34': "\\mathbit{\\Omega}" # MATHEMATICAL BOLD ITALIC CAPITAL OMEGA
+  '\uD835\uDF35': "\\mathbit{\\nabla}" # MATHEMATICAL BOLD ITALIC NABLA
+  '\uD835\uDF36': "\\mathbit{\\Alpha}" # MATHEMATICAL BOLD ITALIC SMALL ALPHA
+  '\uD835\uDF37': "\\mathbit{\\Beta}" # MATHEMATICAL BOLD ITALIC SMALL BETA
+  '\uD835\uDF38': "\\mathbit{\\Gamma}" # MATHEMATICAL BOLD ITALIC SMALL GAMMA
+  '\uD835\uDF39': "\\mathbit{\\Delta}" # MATHEMATICAL BOLD ITALIC SMALL DELTA
+  '\uD835\uDF3A': "\\mathbit{\\Epsilon}" # MATHEMATICAL BOLD ITALIC SMALL EPSILON
+  '\uD835\uDF3B': "\\mathbit{\\Zeta}" # MATHEMATICAL BOLD ITALIC SMALL ZETA
+  '\uD835\uDF3C': "\\mathbit{\\Eta}" # MATHEMATICAL BOLD ITALIC SMALL ETA
+  '\uD835\uDF3D': "\\mathbit{\\Theta}" # MATHEMATICAL BOLD ITALIC SMALL THETA
+  '\uD835\uDF3E': "\\mathbit{\\Iota}" # MATHEMATICAL BOLD ITALIC SMALL IOTA
+  '\uD835\uDF3F': "\\mathbit{\\Kappa}" # MATHEMATICAL BOLD ITALIC SMALL KAPPA
+  '\uD835\uDF40': "\\mathbit{\\Lambda}" # MATHEMATICAL BOLD ITALIC SMALL LAMDA
+  '\uD835\uDF41': "M" # MATHEMATICAL BOLD ITALIC SMALL MU
+  '\uD835\uDF42': "N" # MATHEMATICAL BOLD ITALIC SMALL NU
+  '\uD835\uDF43': "\\mathbit{\\Xi}" # MATHEMATICAL BOLD ITALIC SMALL XI
+  '\uD835\uDF44': "O" # MATHEMATICAL BOLD ITALIC SMALL OMICRON
+  '\uD835\uDF45': "\\mathbit{\\Pi}" # MATHEMATICAL BOLD ITALIC SMALL PI
+  '\uD835\uDF46': "\\mathbit{\\Rho}" # MATHEMATICAL BOLD ITALIC SMALL RHO
+  '\uD835\uDF47': "\\mathbit{\\varsigma}" # MATHEMATICAL BOLD ITALIC SMALL FINAL SIGMA
+  '\uD835\uDF48': "\\mathbit{\\Sigma}" # MATHEMATICAL BOLD ITALIC SMALL SIGMA
+  '\uD835\uDF49': "\\mathbit{\\Tau}" # MATHEMATICAL BOLD ITALIC SMALL TAU
+  '\uD835\uDF4A': "\\mathbit{\\Upsilon}" # MATHEMATICAL BOLD ITALIC SMALL UPSILON
+  '\uD835\uDF4B': "\\mathbit{\\Phi}" # MATHEMATICAL BOLD ITALIC SMALL PHI
+  '\uD835\uDF4C': "\\mathbit{\\Chi}" # MATHEMATICAL BOLD ITALIC SMALL CHI
+  '\uD835\uDF4D': "\\mathbit{\\Psi}" # MATHEMATICAL BOLD ITALIC SMALL PSI
+  '\uD835\uDF4E': "\\mathbit{\\Omega}" # MATHEMATICAL BOLD ITALIC SMALL OMEGA
+  '\uD835\uDF4F': "\\partial{}" # MATHEMATICAL BOLD ITALIC PARTIAL DIFFERENTIAL
+  '\uD835\uDF50': "\\in{}" # MATHEMATICAL BOLD ITALIC EPSILON SYMBOL
+  '\uD835\uDF56': "\\mathsfbf{\\Alpha}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL ALPHA
+  '\uD835\uDF57': "\\mathsfbf{\\Beta}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL BETA
+  '\uD835\uDF58': "\\mathsfbf{\\Gamma}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL GAMMA
+  '\uD835\uDF59': "\\mathsfbf{\\Delta}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL DELTA
+  '\uD835\uDF5A': "\\mathsfbf{\\Epsilon}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL EPSILON
+  '\uD835\uDF5B': "\\mathsfbf{\\Zeta}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL ZETA
+  '\uD835\uDF5C': "\\mathsfbf{\\Eta}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL ETA
+  '\uD835\uDF5D': "\\mathsfbf{\\Theta}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL THETA
+  '\uD835\uDF5E': "\\mathsfbf{\\Iota}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL IOTA
+  '\uD835\uDF5F': "\\mathsfbf{\\Kappa}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL KAPPA
+  '\uD835\uDF60': "\\mathsfbf{\\Lambda}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL LAMDA
+  '\uD835\uDF61': "M" # MATHEMATICAL SANS-SERIF BOLD CAPITAL MU
+  '\uD835\uDF62': "N" # MATHEMATICAL SANS-SERIF BOLD CAPITAL NU
+  '\uD835\uDF63': "\\mathsfbf{\\Xi}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL XI
+  '\uD835\uDF64': "O" # MATHEMATICAL SANS-SERIF BOLD CAPITAL OMICRON
+  '\uD835\uDF65': "\\mathsfbf{\\Pi}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL PI
+  '\uD835\uDF66': "\\mathsfbf{\\Rho}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL RHO
+  '\uD835\uDF68': "\\mathsfbf{\\Sigma}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL SIGMA
+  '\uD835\uDF69': "\\mathsfbf{\\Tau}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL TAU
+  '\uD835\uDF6A': "\\mathsfbf{\\Upsilon}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL UPSILON
+  '\uD835\uDF6B': "\\mathsfbf{\\Phi}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL PHI
+  '\uD835\uDF6C': "\\mathsfbf{\\Chi}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL CHI
+  '\uD835\uDF6D': "\\mathsfbf{\\Psi}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL PSI
+  '\uD835\uDF6E': "\\mathsfbf{\\Omega}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL OMEGA
+  '\uD835\uDF6F': "\\mathsfbf{\\nabla}" # MATHEMATICAL SANS-SERIF BOLD NABLA
+  '\uD835\uDF70': "\\mathsfbf{\\Alpha}" # MATHEMATICAL SANS-SERIF BOLD SMALL ALPHA
+  '\uD835\uDF71': "\\mathsfbf{\\Beta}" # MATHEMATICAL SANS-SERIF BOLD SMALL BETA
+  '\uD835\uDF72': "\\mathsfbf{\\Gamma}" # MATHEMATICAL SANS-SERIF BOLD SMALL GAMMA
+  '\uD835\uDF73': "\\mathsfbf{\\Delta}" # MATHEMATICAL SANS-SERIF BOLD SMALL DELTA
+  '\uD835\uDF74': "\\mathsfbf{\\Epsilon}" # MATHEMATICAL SANS-SERIF BOLD SMALL EPSILON
+  '\uD835\uDF75': "\\mathsfbf{\\Zeta}" # MATHEMATICAL SANS-SERIF BOLD SMALL ZETA
+  '\uD835\uDF76': "\\mathsfbf{\\Eta}" # MATHEMATICAL SANS-SERIF BOLD SMALL ETA
+  '\uD835\uDF77': "\\mathsfbf{\\Theta}" # MATHEMATICAL SANS-SERIF BOLD SMALL THETA
+  '\uD835\uDF78': "\\mathsfbf{\\Iota}" # MATHEMATICAL SANS-SERIF BOLD SMALL IOTA
+  '\uD835\uDF79': "\\mathsfbf{\\Kappa}" # MATHEMATICAL SANS-SERIF BOLD SMALL KAPPA
+  '\uD835\uDF7A': "\\mathsfbf{\\Lambda}" # MATHEMATICAL SANS-SERIF BOLD SMALL LAMDA
+  '\uD835\uDF7B': "M" # MATHEMATICAL SANS-SERIF BOLD SMALL MU
+  '\uD835\uDF7C': "N" # MATHEMATICAL SANS-SERIF BOLD SMALL NU
+  '\uD835\uDF7D': "\\mathsfbf{\\Xi}" # MATHEMATICAL SANS-SERIF BOLD SMALL XI
+  '\uD835\uDF7E': "O" # MATHEMATICAL SANS-SERIF BOLD SMALL OMICRON
+  '\uD835\uDF7F': "\\mathsfbf{\\Pi}" # MATHEMATICAL SANS-SERIF BOLD SMALL PI
+  '\uD835\uDF80': "\\mathsfbf{\\Rho}" # MATHEMATICAL SANS-SERIF BOLD SMALL RHO
+  '\uD835\uDF81': "\\mathsfbf{\\varsigma}" # MATHEMATICAL SANS-SERIF BOLD SMALL FINAL SIGMA
+  '\uD835\uDF82': "\\mathsfbf{\\Sigma}" # MATHEMATICAL SANS-SERIF BOLD SMALL SIGMA
+  '\uD835\uDF83': "\\mathsfbf{\\Tau}" # MATHEMATICAL SANS-SERIF BOLD SMALL TAU
+  '\uD835\uDF84': "\\mathsfbf{\\Upsilon}" # MATHEMATICAL SANS-SERIF BOLD SMALL UPSILON
+  '\uD835\uDF85': "\\mathsfbf{\\Phi}" # MATHEMATICAL SANS-SERIF BOLD SMALL PHI
+  '\uD835\uDF86': "\\mathsfbf{\\Chi}" # MATHEMATICAL SANS-SERIF BOLD SMALL CHI
+  '\uD835\uDF87': "\\mathsfbf{\\Psi}" # MATHEMATICAL SANS-SERIF BOLD SMALL PSI
+  '\uD835\uDF88': "\\mathsfbf{\\Omega}" # MATHEMATICAL SANS-SERIF BOLD SMALL OMEGA
+  '\uD835\uDF89': "\\partial{}" # MATHEMATICAL SANS-SERIF BOLD PARTIAL DIFFERENTIAL
+  '\uD835\uDF8A': "\\in{}" # MATHEMATICAL SANS-SERIF BOLD EPSILON SYMBOL
+  '\uD835\uDF90': "\\mathsfbfsl{\\Alpha}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL ALPHA
+  '\uD835\uDF91': "\\mathsfbfsl{\\Beta}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL BETA
+  '\uD835\uDF92': "\\mathsfbfsl{\\Gamma}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL GAMMA
+  '\uD835\uDF93': "\\mathsfbfsl{\\Delta}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL DELTA
+  '\uD835\uDF94': "\\mathsfbfsl{\\Epsilon}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL EPSILON
+  '\uD835\uDF95': "\\mathsfbfsl{\\Zeta}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL ZETA
+  '\uD835\uDF96': "\\mathsfbfsl{\\Eta}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL ETA
+  '\uD835\uDF97': "\\mathsfbfsl{\\vartheta}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL THETA
+  '\uD835\uDF98': "\\mathsfbfsl{\\Iota}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL IOTA
+  '\uD835\uDF99': "\\mathsfbfsl{\\Kappa}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL KAPPA
+  '\uD835\uDF9A': "\\mathsfbfsl{\\Lambda}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL LAMDA
+  '\uD835\uDF9B': "M" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL MU
+  '\uD835\uDF9C': "N" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL NU
+  '\uD835\uDF9D': "\\mathsfbfsl{\\Xi}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL XI
+  '\uD835\uDF9E': "O" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL OMICRON
+  '\uD835\uDF9F': "\\mathsfbfsl{\\Pi}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL PI
+  '\uD835\uDFA0': "\\mathsfbfsl{\\Rho}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL RHO
+  '\uD835\uDFA2': "\\mathsfbfsl{\\Sigma}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL SIGMA
+  '\uD835\uDFA3': "\\mathsfbfsl{\\Tau}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL TAU
+  '\uD835\uDFA4': "\\mathsfbfsl{\\Upsilon}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL UPSILON
+  '\uD835\uDFA5': "\\mathsfbfsl{\\Phi}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL PHI
+  '\uD835\uDFA6': "\\mathsfbfsl{\\Chi}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL CHI
+  '\uD835\uDFA7': "\\mathsfbfsl{\\Psi}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL PSI
+  '\uD835\uDFA8': "\\mathsfbfsl{\\Omega}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL OMEGA
+  '\uD835\uDFA9': "\\mathsfbfsl{\\nabla}" # MATHEMATICAL SANS-SERIF BOLD ITALIC NABLA
+  '\uD835\uDFAA': "\\mathsfbfsl{\\Alpha}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL ALPHA
+  '\uD835\uDFAB': "\\mathsfbfsl{\\Beta}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL BETA
+  '\uD835\uDFAC': "\\mathsfbfsl{\\Gamma}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL GAMMA
+  '\uD835\uDFAD': "\\mathsfbfsl{\\Delta}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL DELTA
+  '\uD835\uDFAE': "\\mathsfbfsl{\\Epsilon}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL EPSILON
+  '\uD835\uDFAF': "\\mathsfbfsl{\\Zeta}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL ZETA
+  '\uD835\uDFB0': "\\mathsfbfsl{\\Eta}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL ETA
+  '\uD835\uDFB1': "\\mathsfbfsl{\\vartheta}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL THETA
+  '\uD835\uDFB2': "\\mathsfbfsl{\\Iota}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL IOTA
+  '\uD835\uDFB3': "\\mathsfbfsl{\\Kappa}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL KAPPA
+  '\uD835\uDFB4': "\\mathsfbfsl{\\Lambda}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL LAMDA
+  '\uD835\uDFB5': "M" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL MU
+  '\uD835\uDFB6': "N" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL NU
+  '\uD835\uDFB7': "\\mathsfbfsl{\\Xi}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL XI
+  '\uD835\uDFB8': "O" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL OMICRON
+  '\uD835\uDFB9': "\\mathsfbfsl{\\Pi}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL PI
+  '\uD835\uDFBA': "\\mathsfbfsl{\\Rho}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL RHO
+  '\uD835\uDFBB': "\\mathsfbfsl{\\varsigma}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL FINAL SIGMA
+  '\uD835\uDFBC': "\\mathsfbfsl{\\Sigma}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL SIGMA
+  '\uD835\uDFBD': "\\mathsfbfsl{\\Tau}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL TAU
+  '\uD835\uDFBE': "\\mathsfbfsl{\\Upsilon}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL UPSILON
+  '\uD835\uDFBF': "\\mathsfbfsl{\\Phi}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL PHI
+  '\uD835\uDFC0': "\\mathsfbfsl{\\Chi}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL CHI
+  '\uD835\uDFC1': "\\mathsfbfsl{\\Psi}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL PSI
+  '\uD835\uDFC2': "\\mathsfbfsl{\\Omega}" # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL OMEGA
+  '\uD835\uDFC3': "\\partial{}" # MATHEMATICAL SANS-SERIF BOLD ITALIC PARTIAL DIFFERENTIAL
+  '\uD835\uDFC4': "\\in{}" # MATHEMATICAL SANS-SERIF BOLD ITALIC EPSILON SYMBOL
+  '\uD835\uDFCA': "\\mbfDigamma{}" # MATHEMATICAL BOLD CAPITAL DIGAMMA
+  '\uD835\uDFCB': "\\mbfdigamma{}" # MATHEMATICAL BOLD SMALL DIGAMMA
+  '\uD835\uDFCE': "\\mathbf{0}" # MATHEMATICAL BOLD DIGIT ZERO
+  '\uD835\uDFCF': "\\mathbf{1}" # MATHEMATICAL BOLD DIGIT ONE
+  '\uD835\uDFD0': "\\mathbf{2}" # MATHEMATICAL BOLD DIGIT TWO
+  '\uD835\uDFD1': "\\mathbf{3}" # MATHEMATICAL BOLD DIGIT THREE
+  '\uD835\uDFD2': "\\mathbf{4}" # MATHEMATICAL BOLD DIGIT FOUR
+  '\uD835\uDFD3': "\\mathbf{5}" # MATHEMATICAL BOLD DIGIT FIVE
+  '\uD835\uDFD4': "\\mathbf{6}" # MATHEMATICAL BOLD DIGIT SIX
+  '\uD835\uDFD5': "\\mathbf{7}" # MATHEMATICAL BOLD DIGIT SEVEN
+  '\uD835\uDFD6': "\\mathbf{8}" # MATHEMATICAL BOLD DIGIT EIGHT
+  '\uD835\uDFD7': "\\mathbf{9}" # MATHEMATICAL BOLD DIGIT NINE
+  '\uD835\uDFD8': "\\mathbb{0}" # MATHEMATICAL DOUBLE-STRUCK DIGIT ZERO
+  '\uD835\uDFD9': "\\mathbb{1}" # MATHEMATICAL DOUBLE-STRUCK DIGIT ONE
+  '\uD835\uDFDA': "\\mathbb{2}" # MATHEMATICAL DOUBLE-STRUCK DIGIT TWO
+  '\uD835\uDFDB': "\\mathbb{3}" # MATHEMATICAL DOUBLE-STRUCK DIGIT THREE
+  '\uD835\uDFDC': "\\mathbb{4}" # MATHEMATICAL DOUBLE-STRUCK DIGIT FOUR
+  '\uD835\uDFDD': "\\mathbb{5}" # MATHEMATICAL DOUBLE-STRUCK DIGIT FIVE
+  '\uD835\uDFDE': "\\mathbb{6}" # MATHEMATICAL DOUBLE-STRUCK DIGIT SIX
+  '\uD835\uDFDF': "\\mathbb{7}" # MATHEMATICAL DOUBLE-STRUCK DIGIT SEVEN
+  '\uD835\uDFE0': "\\mathbb{8}" # MATHEMATICAL DOUBLE-STRUCK DIGIT EIGHT
+  '\uD835\uDFE1': "\\mathbb{9}" # MATHEMATICAL DOUBLE-STRUCK DIGIT NINE
+  '\uD835\uDFE2': "\\mathsf{0}" # MATHEMATICAL SANS-SERIF DIGIT ZERO
+  '\uD835\uDFE3': "\\mathsf{1}" # MATHEMATICAL SANS-SERIF DIGIT ONE
+  '\uD835\uDFE4': "\\mathsf{2}" # MATHEMATICAL SANS-SERIF DIGIT TWO
+  '\uD835\uDFE5': "\\mathsf{3}" # MATHEMATICAL SANS-SERIF DIGIT THREE
+  '\uD835\uDFE6': "\\mathsf{4}" # MATHEMATICAL SANS-SERIF DIGIT FOUR
+  '\uD835\uDFE7': "\\mathsf{5}" # MATHEMATICAL SANS-SERIF DIGIT FIVE
+  '\uD835\uDFE8': "\\mathsf{6}" # MATHEMATICAL SANS-SERIF DIGIT SIX
+  '\uD835\uDFE9': "\\mathsf{7}" # MATHEMATICAL SANS-SERIF DIGIT SEVEN
+  '\uD835\uDFEA': "\\mathsf{8}" # MATHEMATICAL SANS-SERIF DIGIT EIGHT
+  '\uD835\uDFEB': "\\mathsf{9}" # MATHEMATICAL SANS-SERIF DIGIT NINE
+  '\uD835\uDFEC': "\\mathsfbf{0}" # MATHEMATICAL SANS-SERIF BOLD DIGIT ZERO
+  '\uD835\uDFED': "\\mathsfbf{1}" # MATHEMATICAL SANS-SERIF BOLD DIGIT ONE
+  '\uD835\uDFEE': "\\mathsfbf{2}" # MATHEMATICAL SANS-SERIF BOLD DIGIT TWO
+  '\uD835\uDFEF': "\\mathsfbf{3}" # MATHEMATICAL SANS-SERIF BOLD DIGIT THREE
+  '\uD835\uDFF0': "\\mathsfbf{4}" # MATHEMATICAL SANS-SERIF BOLD DIGIT FOUR
+  '\uD835\uDFF1': "\\mathsfbf{5}" # MATHEMATICAL SANS-SERIF BOLD DIGIT FIVE
+  '\uD835\uDFF2': "\\mathsfbf{6}" # MATHEMATICAL SANS-SERIF BOLD DIGIT SIX
+  '\uD835\uDFF3': "\\mathsfbf{7}" # MATHEMATICAL SANS-SERIF BOLD DIGIT SEVEN
+  '\uD835\uDFF4': "\\mathsfbf{8}" # MATHEMATICAL SANS-SERIF BOLD DIGIT EIGHT
+  '\uD835\uDFF5': "\\mathsfbf{9}" # MATHEMATICAL SANS-SERIF BOLD DIGIT NINE
+  '\uD835\uDFF6': "\\mathtt{0}" # MATHEMATICAL MONOSPACE DIGIT ZERO
+  '\uD835\uDFF7': "\\mathtt{1}" # MATHEMATICAL MONOSPACE DIGIT ONE
+  '\uD835\uDFF8': "\\mathtt{2}" # MATHEMATICAL MONOSPACE DIGIT TWO
+  '\uD835\uDFF9': "\\mathtt{3}" # MATHEMATICAL MONOSPACE DIGIT THREE
+  '\uD835\uDFFA': "\\mathtt{4}" # MATHEMATICAL MONOSPACE DIGIT FOUR
+  '\uD835\uDFFB': "\\mathtt{5}" # MATHEMATICAL MONOSPACE DIGIT FIVE
+  '\uD835\uDFFC': "\\mathtt{6}" # MATHEMATICAL MONOSPACE DIGIT SIX
+  '\uD835\uDFFD': "\\mathtt{7}" # MATHEMATICAL MONOSPACE DIGIT SEVEN
+  '\uD835\uDFFE': "\\mathtt{8}" # MATHEMATICAL MONOSPACE DIGIT EIGHT
+  '\uD835\uDFFF': "\\mathtt{9}" # MATHEMATICAL MONOSPACE DIGIT NINE
 LaTeX.toLaTeX.ascii.text =
-  '#': "\\#"
+  '#': "\\#" # NUMBER SIGN
   '$': "\\$"
-  '%': "\\%"
+  '%': "\\%" # PERCENT SIGN
   '&': "\\&"
-  '^': "\\^"
+  '^': "\\^" # CIRCUMFLEX ACCENT
   '_': "\\_"
   '{': "\\{"
   '}': "\\}"
-  '~': "\\textasciitilde{}"
+  '~': "\\textasciitilde{}" # TILDE
   '\u00A0': "~"
-  '\u00A1': "\\textexclamdown{}"
-  '\u00A2': "\\textcent{}"
-  '\u00A3': "\\textsterling{}"
-  '\u00A4': "\\textcurrency{}"
-  '\u00A5': "\\textyen{}"
-  '\u00A6': "\\textbrokenbar{}"
-  '\u00A7': "\\textsection{}"
-  '\u00A8': "\\textasciidieresis{}"
-  '\u00A9': "\\textcopyright{}"
-  '\u00AA': "\\textordfeminine{}"
-  '\u00AB': "\\guillemotleft{}"
-  '\u00AE': "\\textregistered{}"
-  '\u00AF': "\\textasciimacron{}"
-  '\u00B4': "\\textasciiacute{}"
-  '\u00B6': "\\textparagraph{}"
-  '\u00B8': "\\c{}"
-  '\u00BA': "\\textordmasculine{}"
-  '\u00BB': "\\guillemotright{}"
-  '\u00BC': "\\textonequarter{}"
-  '\u00BD': "\\textonehalf{}"
-  '\u00BE': "\\textthreequarters{}"
-  '\u00BF': "\\textquestiondown{}"
-  '\u00C0': "{\\`A}"
-  '\u00C1': "{\\'A}"
-  '\u00C2': "{\\^A}"
-  '\u00C3': "{\\~A}"
-  '\u00C4': "{\\\"A}"
-  '\u00C5': "\\AA{}"
-  '\u00C6': "\\AE{}"
-  '\u00C7': "{\\c C}"
-  '\u00C8': "{\\`E}"
-  '\u00C9': "{\\'E}"
-  '\u00CA': "{\\^E}"
-  '\u00CB': "{\\\"E}"
-  '\u00CC': "{\\`I}"
-  '\u00CD': "{\\'I}"
-  '\u00CE': "{\\^I}"
-  '\u00CF': "{\\\"I}"
-  '\u00D0': "\\DH{}"
-  '\u00D1': "{\\~N}"
-  '\u00D2': "{\\`O}"
-  '\u00D3': "{\\'O}"
-  '\u00D4': "{\\^O}"
-  '\u00D5': "{\\~O}"
-  '\u00D6': "{\\\"O}"
-  '\u00D7': "\\texttimes{}"
-  '\u00D8': "\\O{}"
-  '\u00D9': "{\\`U}"
-  '\u00DA': "{\\'U}"
-  '\u00DB': "{\\^U}"
-  '\u00DC': "{\\\"U}"
-  '\u00DD': "{\\'Y}"
-  '\u00DE': "\\TH{}"
-  '\u00DF': "\\ss{}"
-  '\u00E0': "{\\`a}"
-  '\u00E1': "{\\'a}"
-  '\u00E2': "{\\^a}"
-  '\u00E3': "{\\~a}"
-  '\u00E4': "{\\\"a}"
-  '\u00E5': "\\aa{}"
-  '\u00E6': "\\ae{}"
-  '\u00E7': "{\\c c}"
-  '\u00E8': "{\\`e}"
-  '\u00E9': "{\\'e}"
-  '\u00EA': "{\\^e}"
-  '\u00EB': "{\\\"e}"
-  '\u00EC': "{\\`\\i}"
-  '\u00ED': "{\\'\\i}"
-  '\u00EE': "{\\^\\i}"
-  '\u00EF': "{\\\"\\i}"
-  '\u00F0': "\\dh{}"
-  '\u00F1': "{\\~n}"
-  '\u00F2': "{\\`o}"
-  '\u00F3': "{\\'o}"
-  '\u00F4': "{\\^o}"
-  '\u00F5': "{\\~o}"
-  '\u00F6': "{\\\"o}"
-  '\u00F8': "\\o{}"
-  '\u00F9': "{\\`u}"
-  '\u00FA': "{\\'u}"
-  '\u00FB': "{\\^u}"
-  '\u00FC': "{\\\"u}"
-  '\u00FD': "{\\'y}"
-  '\u00FE': "\\th{}"
-  '\u00FF': "{\\\"y}"
-  '\u0100': "{\\=A}"
-  '\u0101': "{\\=a}"
-  '\u0102': "{\\u A}"
-  '\u0103': "{\\u a}"
-  '\u0104': "\\k{A}"
-  '\u0105': "\\k{a}"
-  '\u0106': "{\\'C}"
-  '\u0107': "{\\'c}"
-  '\u0108': "{\\^C}"
-  '\u0109': "{\\^c}"
-  '\u010A': "{\\.C}"
-  '\u010B': "{\\.c}"
-  '\u010C': "{\\v C}"
-  '\u010D': "{\\v c}"
-  '\u010E': "{\\v D}"
-  '\u010F': "{\\v d}"
-  '\u0110': "\\DJ{}"
-  '\u0111': "\\dj{}"
-  '\u0112': "{\\=E}"
-  '\u0113': "{\\=e}"
-  '\u0114': "{\\u E}"
-  '\u0115': "{\\u e}"
-  '\u0116': "{\\.E}"
-  '\u0117': "{\\.e}"
-  '\u0118': "\\k{E}"
-  '\u0119': "\\k{e}"
-  '\u011A': "{\\v E}"
-  '\u011B': "{\\v e}"
-  '\u011C': "{\\^G}"
-  '\u011D': "{\\^g}"
-  '\u011E': "{\\u G}"
-  '\u011F': "{\\u g}"
-  '\u0120': "{\\.G}"
-  '\u0121': "{\\.g}"
-  '\u0122': "{\\c G}"
-  '\u0123': "{\\c g}"
-  '\u0124': "{\\^H}"
-  '\u0125': "{\\^h}"
-  '\u0126': "{\\fontencoding{LELA}\\selectfont\\char40}"
-  '\u0128': "{\\~I}"
-  '\u0129': "{\\~\\i}"
-  '\u012A': "{\\=I}"
-  '\u012B': "\\={\\i}"
-  '\u012C': "{\\u I}"
-  '\u012D': "{\\u \\i}"
-  '\u012E': "\\k{I}"
-  '\u012F': "\\k{i}"
-  '\u0130': "{\\.I}"
-  '\u0131': "\\i{}"
-  '\u0132': "IJ"
-  '\u0133': "ij"
-  '\u0134': "{\\^J}"
-  '\u0135': "{\\^\\j}"
-  '\u0136': "{\\c K}"
-  '\u0137': "{\\c k}"
-  '\u0138': "{\\fontencoding{LELA}\\selectfont\\char91}"
-  '\u0139': "{\\'L}"
-  '\u013A': "{\\'l}"
-  '\u013B': "{\\c L}"
-  '\u013C': "{\\c l}"
-  '\u013D': "{\\v L}"
-  '\u013E': "{\\v l}"
-  '\u013F': "{\\fontencoding{LELA}\\selectfont\\char201}"
-  '\u0140': "{\\fontencoding{LELA}\\selectfont\\char202}"
-  '\u0141': "\\L{}"
-  '\u0142': "\\l{}"
-  '\u0143': "{\\'N}"
-  '\u0144': "{\\'n}"
-  '\u0145': "{\\c N}"
-  '\u0146': "{\\c n}"
-  '\u0147': "{\\v N}"
-  '\u0148': "{\\v n}"
-  '\u0149': "'n"
-  '\u014A': "\\NG{}"
-  '\u014B': "\\ng{}"
-  '\u014C': "{\\=O}"
-  '\u014D': "{\\=o}"
-  '\u014E': "{\\u O}"
-  '\u014F': "{\\u o}"
-  '\u0150': "{\\H O}"
-  '\u0151': "{\\H o}"
-  '\u0152': "\\OE{}"
-  '\u0153': "\\oe{}"
-  '\u0154': "{\\'R}"
-  '\u0155': "{\\'r}"
-  '\u0156': "{\\c R}"
-  '\u0157': "{\\c r}"
-  '\u0158': "{\\v R}"
-  '\u0159': "{\\v r}"
-  '\u015A': "{\\'S}"
-  '\u015B': "{\\'s}"
-  '\u015C': "{\\^S}"
-  '\u015D': "{\\^s}"
-  '\u015E': "{\\c S}"
-  '\u015F': "{\\c s}"
-  '\u0160': "{\\v S}"
-  '\u0161': "{\\v s}"
-  '\u0162': "{\\c T}"
-  '\u0163': "{\\c t}"
-  '\u0164': "{\\v T}"
-  '\u0165': "{\\v t}"
-  '\u0166': "{\\fontencoding{LELA}\\selectfont\\char47}"
-  '\u0167': "{\\fontencoding{LELA}\\selectfont\\char63}"
-  '\u0168': "{\\~U}"
-  '\u0169': "{\\~u}"
-  '\u016A': "{\\=U}"
-  '\u016B': "{\\=u}"
-  '\u016C': "{\\u U}"
-  '\u016D': "{\\u u}"
-  '\u016E': "\\r{U}"
-  '\u016F': "\\r{u}"
-  '\u0170': "{\\H U}"
-  '\u0171': "{\\H u}"
-  '\u0172': "\\k{U}"
-  '\u0173': "\\k{u}"
-  '\u0174': "{\\^W}"
-  '\u0175': "{\\^w}"
-  '\u0176': "{\\^Y}"
-  '\u0177': "{\\^y}"
-  '\u0178': "{\\\"Y}"
-  '\u0179': "{\\'Z}"
-  '\u017A': "{\\'z}"
-  '\u017B': "{\\.Z}"
-  '\u017C': "{\\.z}"
-  '\u017D': "{\\v Z}"
-  '\u017E': "{\\v z}"
-  '\u0195': "\\texthvlig{}"
-  '\u019E': "\\textnrleg{}"
-  '\u01BA': "{\\fontencoding{LELA}\\selectfont\\char195}"
-  '\u01C2': "\\textdoublepipe{}"
-  '\u01F5': "{\\'g}"
-  '\u0258': "{\\fontencoding{LEIP}\\selectfont\\char61}"
-  '\u0261': "g"
-  '\u0272': "\\Elzltln{}"
-  '\u0278': "\\textphi{}"
-  '\u027F': "{\\fontencoding{LEIP}\\selectfont\\char202}"
-  '\u029E': "\\textturnk{}"
-  '\u02BC': "'"
-  '\u02C7': "\\textasciicaron{}"
-  '\u02D8': "\\textasciibreve{}"
-  '\u02D9': "\\textperiodcentered{}"
-  '\u02DA': "\\r{}"
-  '\u02DB': "\\k{}"
-  '\u02DC': "\\texttildelow{}"
-  '\u02DD': "\\H{}"
-  '\u02E5': "\\tone{55}"
-  '\u02E6': "\\tone{44}"
-  '\u02E7': "\\tone{33}"
-  '\u02E8': "\\tone{22}"
-  '\u02E9': "\\tone{11}"
-  '\u0300': "\\`"
-  '\u0301': "\\'"
-  '\u0302': "\\^"
-  '\u0303': "\\~"
-  '\u0304': "\\="
-  '\u0306': "\\u{}"
-  '\u0307': "\\."
-  '\u0308': "\\\""
-  '\u030A': "\\r{}"
-  '\u030B': "\\H{}"
-  '\u030C': "\\v{}"
-  '\u030F': "\\cyrchar\\C{}"
-  '\u0311': "{\\fontencoding{LECO}\\selectfont\\char177}"
-  '\u0318': "{\\fontencoding{LECO}\\selectfont\\char184}"
-  '\u0319': "{\\fontencoding{LECO}\\selectfont\\char185}"
-  '\u0322': "\\Elzrh{}"
-  '\u0327': "\\c{}"
-  '\u0328': "\\k{}"
-  '\u032B': "{\\fontencoding{LECO}\\selectfont\\char203}"
-  '\u032F': "{\\fontencoding{LECO}\\selectfont\\char207}"
-  '\u0335': "\\Elzxl{}"
-  '\u0336': "\\Elzbar{}"
-  '\u0337': "{\\fontencoding{LECO}\\selectfont\\char215}"
-  '\u0338': "{\\fontencoding{LECO}\\selectfont\\char216}"
-  '\u033A': "{\\fontencoding{LECO}\\selectfont\\char218}"
-  '\u033B': "{\\fontencoding{LECO}\\selectfont\\char219}"
-  '\u033C': "{\\fontencoding{LECO}\\selectfont\\char220}"
-  '\u033D': "{\\fontencoding{LECO}\\selectfont\\char221}"
-  '\u0361': "{\\fontencoding{LECO}\\selectfont\\char225}"
-  '\u0386': "{\\'A}"
-  '\u0388': "{\\'E}"
-  '\u0389': "{\\'H}"
-  '\u038A': "\\'{}{I}"
-  '\u038C': "{\\'{}O}"
-  '\u03AC': "{\\'$\\alpha$}"
-  '\u03B8': "\\texttheta{}"
-  '\u03CC': "{\\'o}"
-  '\u03D0': "\\Pisymbol{ppi022}{87}"
-  '\u03D1': "\\textvartheta{}"
-  '\u03F4': "\\textTheta{}"
-  '\u0401': "\\cyrchar\\CYRYO{}"
-  '\u0402': "\\cyrchar\\CYRDJE{}"
-  '\u0403': "\\cyrchar{\\'\\CYRG}"
-  '\u0404': "\\cyrchar\\CYRIE{}"
-  '\u0405': "\\cyrchar\\CYRDZE{}"
-  '\u0406': "\\cyrchar\\CYRII{}"
-  '\u0407': "\\cyrchar\\CYRYI{}"
-  '\u0408': "\\cyrchar\\CYRJE{}"
-  '\u0409': "\\cyrchar\\CYRLJE{}"
-  '\u040A': "\\cyrchar\\CYRNJE{}"
-  '\u040B': "\\cyrchar\\CYRTSHE{}"
-  '\u040C': "\\cyrchar{\\'\\CYRK}"
-  '\u040E': "\\cyrchar\\CYRUSHRT{}"
-  '\u040F': "\\cyrchar\\CYRDZHE{}"
-  '\u0410': "\\cyrchar\\CYRA{}"
-  '\u0411': "\\cyrchar\\CYRB{}"
-  '\u0412': "\\cyrchar\\CYRV{}"
-  '\u0413': "\\cyrchar\\CYRG{}"
-  '\u0414': "\\cyrchar\\CYRD{}"
-  '\u0415': "\\cyrchar\\CYRE{}"
-  '\u0416': "\\cyrchar\\CYRZH{}"
-  '\u0417': "\\cyrchar\\CYRZ{}"
-  '\u0418': "\\cyrchar\\CYRI{}"
-  '\u0419': "\\cyrchar\\CYRISHRT{}"
-  '\u041A': "\\cyrchar\\CYRK{}"
-  '\u041B': "\\cyrchar\\CYRL{}"
-  '\u041C': "\\cyrchar\\CYRM{}"
-  '\u041D': "\\cyrchar\\CYRN{}"
-  '\u041E': "\\cyrchar\\CYRO{}"
-  '\u041F': "\\cyrchar\\CYRP{}"
-  '\u0420': "\\cyrchar\\CYRR{}"
-  '\u0421': "\\cyrchar\\CYRS{}"
-  '\u0422': "\\cyrchar\\CYRT{}"
-  '\u0423': "\\cyrchar\\CYRU{}"
-  '\u0424': "\\cyrchar\\CYRF{}"
-  '\u0425': "\\cyrchar\\CYRH{}"
-  '\u0426': "\\cyrchar\\CYRC{}"
-  '\u0427': "\\cyrchar\\CYRCH{}"
-  '\u0428': "\\cyrchar\\CYRSH{}"
-  '\u0429': "\\cyrchar\\CYRSHCH{}"
-  '\u042A': "\\cyrchar\\CYRHRDSN{}"
-  '\u042B': "\\cyrchar\\CYRERY{}"
-  '\u042C': "\\cyrchar\\CYRSFTSN{}"
-  '\u042D': "\\cyrchar\\CYREREV{}"
-  '\u042E': "\\cyrchar\\CYRYU{}"
-  '\u042F': "\\cyrchar\\CYRYA{}"
-  '\u0430': "\\cyrchar\\cyra{}"
-  '\u0431': "\\cyrchar\\cyrb{}"
-  '\u0432': "\\cyrchar\\cyrv{}"
-  '\u0433': "\\cyrchar\\cyrg{}"
-  '\u0434': "\\cyrchar\\cyrd{}"
-  '\u0435': "\\cyrchar\\cyre{}"
-  '\u0436': "\\cyrchar\\cyrzh{}"
-  '\u0437': "\\cyrchar\\cyrz{}"
-  '\u0438': "\\cyrchar\\cyri{}"
-  '\u0439': "\\cyrchar\\cyrishrt{}"
-  '\u043A': "\\cyrchar\\cyrk{}"
-  '\u043B': "\\cyrchar\\cyrl{}"
-  '\u043C': "\\cyrchar\\cyrm{}"
-  '\u043D': "\\cyrchar\\cyrn{}"
-  '\u043E': "\\cyrchar\\cyro{}"
-  '\u043F': "\\cyrchar\\cyrp{}"
-  '\u0440': "\\cyrchar\\cyrr{}"
-  '\u0441': "\\cyrchar\\cyrs{}"
-  '\u0442': "\\cyrchar\\cyrt{}"
-  '\u0443': "\\cyrchar\\cyru{}"
-  '\u0444': "\\cyrchar\\cyrf{}"
-  '\u0445': "\\cyrchar\\cyrh{}"
-  '\u0446': "\\cyrchar\\cyrc{}"
-  '\u0447': "\\cyrchar\\cyrch{}"
-  '\u0448': "\\cyrchar\\cyrsh{}"
-  '\u0449': "\\cyrchar\\cyrshch{}"
-  '\u044A': "\\cyrchar\\cyrhrdsn{}"
-  '\u044B': "\\cyrchar\\cyrery{}"
-  '\u044C': "\\cyrchar\\cyrsftsn{}"
-  '\u044D': "\\cyrchar\\cyrerev{}"
-  '\u044E': "\\cyrchar\\cyryu{}"
-  '\u044F': "\\cyrchar\\cyrya{}"
-  '\u0451': "\\cyrchar\\cyryo{}"
-  '\u0452': "\\cyrchar\\cyrdje{}"
-  '\u0453': "\\cyrchar{\\'\\cyrg}"
-  '\u0454': "\\cyrchar\\cyrie{}"
-  '\u0455': "\\cyrchar\\cyrdze{}"
-  '\u0456': "\\cyrchar\\cyrii{}"
-  '\u0457': "\\cyrchar\\cyryi{}"
-  '\u0458': "\\cyrchar\\cyrje{}"
-  '\u0459': "\\cyrchar\\cyrlje{}"
-  '\u045A': "\\cyrchar\\cyrnje{}"
-  '\u045B': "\\cyrchar\\cyrtshe{}"
-  '\u045C': "\\cyrchar{\\'\\cyrk}"
-  '\u045E': "\\cyrchar\\cyrushrt{}"
-  '\u045F': "\\cyrchar\\cyrdzhe{}"
-  '\u0460': "\\cyrchar\\CYROMEGA{}"
-  '\u0461': "\\cyrchar\\cyromega{}"
-  '\u0462': "\\cyrchar\\CYRYAT{}"
-  '\u0464': "\\cyrchar\\CYRIOTE{}"
-  '\u0465': "\\cyrchar\\cyriote{}"
-  '\u0466': "\\cyrchar\\CYRLYUS{}"
-  '\u0467': "\\cyrchar\\cyrlyus{}"
-  '\u0468': "\\cyrchar\\CYRIOTLYUS{}"
-  '\u0469': "\\cyrchar\\cyriotlyus{}"
-  '\u046A': "\\cyrchar\\CYRBYUS{}"
-  '\u046C': "\\cyrchar\\CYRIOTBYUS{}"
-  '\u046D': "\\cyrchar\\cyriotbyus{}"
-  '\u046E': "\\cyrchar\\CYRKSI{}"
-  '\u046F': "\\cyrchar\\cyrksi{}"
-  '\u0470': "\\cyrchar\\CYRPSI{}"
-  '\u0471': "\\cyrchar\\cyrpsi{}"
-  '\u0472': "\\cyrchar\\CYRFITA{}"
-  '\u0474': "\\cyrchar\\CYRIZH{}"
-  '\u0478': "\\cyrchar\\CYRUK{}"
-  '\u0479': "\\cyrchar\\cyruk{}"
-  '\u047A': "\\cyrchar\\CYROMEGARND{}"
-  '\u047B': "\\cyrchar\\cyromegarnd{}"
-  '\u047C': "\\cyrchar\\CYROMEGATITLO{}"
-  '\u047D': "\\cyrchar\\cyromegatitlo{}"
-  '\u047E': "\\cyrchar\\CYROT{}"
-  '\u047F': "\\cyrchar\\cyrot{}"
-  '\u0480': "\\cyrchar\\CYRKOPPA{}"
-  '\u0481': "\\cyrchar\\cyrkoppa{}"
-  '\u0482': "\\cyrchar\\cyrthousands{}"
-  '\u0488': "\\cyrchar\\cyrhundredthousands{}"
-  '\u0489': "\\cyrchar\\cyrmillions{}"
-  '\u048C': "\\cyrchar\\CYRSEMISFTSN{}"
-  '\u048D': "\\cyrchar\\cyrsemisftsn{}"
-  '\u048E': "\\cyrchar\\CYRRTICK{}"
-  '\u048F': "\\cyrchar\\cyrrtick{}"
-  '\u0490': "\\cyrchar\\CYRGUP{}"
-  '\u0491': "\\cyrchar\\cyrgup{}"
-  '\u0492': "\\cyrchar\\CYRGHCRS{}"
-  '\u0493': "\\cyrchar\\cyrghcrs{}"
-  '\u0494': "\\cyrchar\\CYRGHK{}"
-  '\u0495': "\\cyrchar\\cyrghk{}"
-  '\u0496': "\\cyrchar\\CYRZHDSC{}"
-  '\u0497': "\\cyrchar\\cyrzhdsc{}"
-  '\u0498': "\\cyrchar\\CYRZDSC{}"
-  '\u0499': "\\cyrchar\\cyrzdsc{}"
-  '\u049A': "\\cyrchar\\CYRKDSC{}"
-  '\u049B': "\\cyrchar\\cyrkdsc{}"
-  '\u049C': "\\cyrchar\\CYRKVCRS{}"
-  '\u049D': "\\cyrchar\\cyrkvcrs{}"
-  '\u049E': "\\cyrchar\\CYRKHCRS{}"
-  '\u049F': "\\cyrchar\\cyrkhcrs{}"
-  '\u04A0': "\\cyrchar\\CYRKBEAK{}"
-  '\u04A1': "\\cyrchar\\cyrkbeak{}"
-  '\u04A2': "\\cyrchar\\CYRNDSC{}"
-  '\u04A3': "\\cyrchar\\cyrndsc{}"
-  '\u04A4': "\\cyrchar\\CYRNG{}"
-  '\u04A5': "\\cyrchar\\cyrng{}"
-  '\u04A6': "\\cyrchar\\CYRPHK{}"
-  '\u04A7': "\\cyrchar\\cyrphk{}"
-  '\u04A8': "\\cyrchar\\CYRABHHA{}"
-  '\u04A9': "\\cyrchar\\cyrabhha{}"
-  '\u04AA': "\\cyrchar\\CYRSDSC{}"
-  '\u04AB': "\\cyrchar\\cyrsdsc{}"
-  '\u04AC': "\\cyrchar\\CYRTDSC{}"
-  '\u04AD': "\\cyrchar\\cyrtdsc{}"
-  '\u04AE': "\\cyrchar\\CYRY{}"
-  '\u04AF': "\\cyrchar\\cyry{}"
-  '\u04B0': "\\cyrchar\\CYRYHCRS{}"
-  '\u04B1': "\\cyrchar\\cyryhcrs{}"
-  '\u04B2': "\\cyrchar\\CYRHDSC{}"
-  '\u04B3': "\\cyrchar\\cyrhdsc{}"
-  '\u04B4': "\\cyrchar\\CYRTETSE{}"
-  '\u04B5': "\\cyrchar\\cyrtetse{}"
-  '\u04B6': "\\cyrchar\\CYRCHRDSC{}"
-  '\u04B7': "\\cyrchar\\cyrchrdsc{}"
-  '\u04B8': "\\cyrchar\\CYRCHVCRS{}"
-  '\u04B9': "\\cyrchar\\cyrchvcrs{}"
-  '\u04BA': "\\cyrchar\\CYRSHHA{}"
-  '\u04BB': "\\cyrchar\\cyrshha{}"
-  '\u04BC': "\\cyrchar\\CYRABHCH{}"
-  '\u04BD': "\\cyrchar\\cyrabhch{}"
-  '\u04BE': "\\cyrchar\\CYRABHCHDSC{}"
-  '\u04BF': "\\cyrchar\\cyrabhchdsc{}"
-  '\u04C0': "\\cyrchar\\CYRpalochka{}"
-  '\u04C3': "\\cyrchar\\CYRKHK{}"
-  '\u04C4': "\\cyrchar\\cyrkhk{}"
-  '\u04C7': "\\cyrchar\\CYRNHK{}"
-  '\u04C8': "\\cyrchar\\cyrnhk{}"
-  '\u04CB': "\\cyrchar\\CYRCHLDSC{}"
-  '\u04CC': "\\cyrchar\\cyrchldsc{}"
-  '\u04D4': "\\cyrchar\\CYRAE{}"
-  '\u04D5': "\\cyrchar\\cyrae{}"
-  '\u04D8': "\\cyrchar\\CYRSCHWA{}"
-  '\u04D9': "\\cyrchar\\cyrschwa{}"
-  '\u04E0': "\\cyrchar\\CYRABHDZE{}"
-  '\u04E1': "\\cyrchar\\cyrabhdze{}"
-  '\u04E8': "\\cyrchar\\CYROTLD{}"
-  '\u04E9': "\\cyrchar\\cyrotld{}"
-  '\u2002': "\\hspace{0.6em}"
+  '\u00A1': "\\textexclamdown{}" # INVERTED EXCLAMATION MARK
+  '\u00A2': "\\textcent{}" # CENT SIGN
+  '\u00A3': "\\textsterling{}" # POUND SIGN
+  '\u00A4': "\\textcurrency{}" # CURRENCY SIGN
+  '\u00A5': "\\textyen{}" # YEN SIGN
+  '\u00A6': "\\textbrokenbar{}" # BROKEN BAR
+  '\u00A7': "\\textsection{}" # SECTION SIGN
+  '\u00A8': "\\textasciidieresis{}" # DIAERESIS
+  '\u00A9': "\\textcopyright{}" # COPYRIGHT SIGN
+  '\u00AA': "\\textordfeminine{}" # FEMININE ORDINAL INDICATOR
+  '\u00AB': "\\guillemotleft{}" # LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
+  '\u00AE': "\\textregistered{}" # REGISTERED SIGN
+  '\u00AF': "\\textasciimacron{}" # MACRON
+  '\u00B4': "\\textasciiacute{}" # ACUTE ACCENT
+  '\u00B6': "\\textparagraph{}" # PILCROW SIGN
+  '\u00B8': "\\c{}" # CEDILLA
+  '\u00BA': "\\textordmasculine{}" # MASCULINE ORDINAL INDICATOR
+  '\u00BB': "\\guillemotright{}" # RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK
+  '\u00BC': "\\textonequarter{}" # VULGAR FRACTION ONE QUARTER
+  '\u00BD': "\\textonehalf{}" # VULGAR FRACTION ONE HALF
+  '\u00BE': "\\textthreequarters{}" # VULGAR FRACTION THREE QUARTERS
+  '\u00BF': "\\textquestiondown{}" # INVERTED QUESTION MARK
+  '\u00C0': "{\\`A}" # LATIN CAPITAL LETTER A WITH GRAVE
+  '\u00C1': "{\\'A}" # LATIN CAPITAL LETTER A WITH ACUTE
+  '\u00C2': "{\\^A}" # LATIN CAPITAL LETTER A WITH CIRCUMFLEX
+  '\u00C3': "{\\~A}" # LATIN CAPITAL LETTER A WITH TILDE
+  '\u00C4': "{\\\"A}" # LATIN CAPITAL LETTER A WITH DIAERESIS
+  '\u00C5': "\\AA{}" # LATIN CAPITAL LETTER A WITH RING ABOVE
+  '\u00C6': "\\AE{}" # LATIN CAPITAL LETTER AE
+  '\u00C7': "{\\c C}" # LATIN CAPITAL LETTER C WITH CEDILLA
+  '\u00C8': "{\\`E}" # LATIN CAPITAL LETTER E WITH GRAVE
+  '\u00C9': "{\\'E}" # LATIN CAPITAL LETTER E WITH ACUTE
+  '\u00CA': "{\\^E}" # LATIN CAPITAL LETTER E WITH CIRCUMFLEX
+  '\u00CB': "{\\\"E}" # LATIN CAPITAL LETTER E WITH DIAERESIS
+  '\u00CC': "{\\`I}" # LATIN CAPITAL LETTER I WITH GRAVE
+  '\u00CD': "{\\'I}" # LATIN CAPITAL LETTER I WITH ACUTE
+  '\u00CE': "{\\^I}" # LATIN CAPITAL LETTER I WITH CIRCUMFLEX
+  '\u00CF': "{\\\"I}" # LATIN CAPITAL LETTER I WITH DIAERESIS
+  '\u00D0': "\\DH{}" # LATIN CAPITAL LETTER ETH
+  '\u00D1': "{\\~N}" # LATIN CAPITAL LETTER N WITH TILDE
+  '\u00D2': "{\\`O}" # LATIN CAPITAL LETTER O WITH GRAVE
+  '\u00D3': "{\\'O}" # LATIN CAPITAL LETTER O WITH ACUTE
+  '\u00D4': "{\\^O}" # LATIN CAPITAL LETTER O WITH CIRCUMFLEX
+  '\u00D5': "{\\~O}" # LATIN CAPITAL LETTER O WITH TILDE
+  '\u00D6': "{\\\"O}" # LATIN CAPITAL LETTER O WITH DIAERESIS
+  '\u00D7': "\\texttimes{}" # MULTIPLICATION SIGN
+  '\u00D8': "\\O{}" # LATIN CAPITAL LETTER O WITH STROKE
+  '\u00D9': "{\\`U}" # LATIN CAPITAL LETTER U WITH GRAVE
+  '\u00DA': "{\\'U}" # LATIN CAPITAL LETTER U WITH ACUTE
+  '\u00DB': "{\\^U}" # LATIN CAPITAL LETTER U WITH CIRCUMFLEX
+  '\u00DC': "{\\\"U}" # LATIN CAPITAL LETTER U WITH DIAERESIS
+  '\u00DD': "{\\'Y}" # LATIN CAPITAL LETTER Y WITH ACUTE
+  '\u00DE': "\\TH{}" # LATIN CAPITAL LETTER THORN
+  '\u00DF': "\\ss{}" # LATIN SMALL LETTER SHARP S
+  '\u00E0': "{\\`a}" # LATIN SMALL LETTER A WITH GRAVE
+  '\u00E1': "{\\'a}" # LATIN SMALL LETTER A WITH ACUTE
+  '\u00E2': "{\\^a}" # LATIN SMALL LETTER A WITH CIRCUMFLEX
+  '\u00E3': "{\\~a}" # LATIN SMALL LETTER A WITH TILDE
+  '\u00E4': "{\\\"a}" # LATIN SMALL LETTER A WITH DIAERESIS
+  '\u00E5': "\\aa{}" # LATIN SMALL LETTER A WITH RING ABOVE
+  '\u00E6': "\\ae{}" # LATIN SMALL LETTER AE
+  '\u00E7': "{\\c c}" # LATIN SMALL LETTER C WITH CEDILLA
+  '\u00E8': "{\\`e}" # LATIN SMALL LETTER E WITH GRAVE
+  '\u00E9': "{\\'e}" # LATIN SMALL LETTER E WITH ACUTE
+  '\u00EA': "{\\^e}" # LATIN SMALL LETTER E WITH CIRCUMFLEX
+  '\u00EB': "{\\\"e}" # LATIN SMALL LETTER E WITH DIAERESIS
+  '\u00EC': "{\\`\\i}" # LATIN SMALL LETTER I WITH GRAVE
+  '\u00ED': "{\\'\\i}" # LATIN SMALL LETTER I WITH ACUTE
+  '\u00EE': "{\\^\\i}" # LATIN SMALL LETTER I WITH CIRCUMFLEX
+  '\u00EF': "{\\\"\\i}" # LATIN SMALL LETTER I WITH DIAERESIS
+  '\u00F0': "\\dh{}" # LATIN SMALL LETTER ETH
+  '\u00F1': "{\\~n}" # LATIN SMALL LETTER N WITH TILDE
+  '\u00F2': "{\\`o}" # LATIN SMALL LETTER O WITH GRAVE
+  '\u00F3': "{\\'o}" # LATIN SMALL LETTER O WITH ACUTE
+  '\u00F4': "{\\^o}" # LATIN SMALL LETTER O WITH CIRCUMFLEX
+  '\u00F5': "{\\~o}" # LATIN SMALL LETTER O WITH TILDE
+  '\u00F6': "{\\\"o}" # LATIN SMALL LETTER O WITH DIAERESIS
+  '\u00F8': "\\o{}" # LATIN SMALL LETTER O WITH STROKE
+  '\u00F9': "{\\`u}" # LATIN SMALL LETTER U WITH GRAVE
+  '\u00FA': "{\\'u}" # LATIN SMALL LETTER U WITH ACUTE
+  '\u00FB': "{\\^u}" # LATIN SMALL LETTER U WITH CIRCUMFLEX
+  '\u00FC': "{\\\"u}" # LATIN SMALL LETTER U WITH DIAERESIS
+  '\u00FD': "{\\'y}" # LATIN SMALL LETTER Y WITH ACUTE
+  '\u00FE': "\\th{}" # LATIN SMALL LETTER THORN
+  '\u00FF': "{\\\"y}" # LATIN SMALL LETTER Y WITH DIAERESIS
+  '\u0100': "{\\=A}" # LATIN CAPITAL LETTER A WITH MACRON
+  '\u0101': "{\\=a}" # LATIN SMALL LETTER A WITH MACRON
+  '\u0102': "{\\u A}" # LATIN CAPITAL LETTER A WITH BREVE
+  '\u0103': "{\\u a}" # LATIN SMALL LETTER A WITH BREVE
+  '\u0104': "\\k{A}" # LATIN CAPITAL LETTER A WITH OGONEK
+  '\u0105': "\\k{a}" # LATIN SMALL LETTER A WITH OGONEK
+  '\u0106': "{\\'C}" # LATIN CAPITAL LETTER C WITH ACUTE
+  '\u0107': "{\\'c}" # LATIN SMALL LETTER C WITH ACUTE
+  '\u0108': "{\\^C}" # LATIN CAPITAL LETTER C WITH CIRCUMFLEX
+  '\u0109': "{\\^c}" # LATIN SMALL LETTER C WITH CIRCUMFLEX
+  '\u010A': "{\\.C}" # LATIN CAPITAL LETTER C WITH DOT ABOVE
+  '\u010B': "{\\.c}" # LATIN SMALL LETTER C WITH DOT ABOVE
+  '\u010C': "{\\v C}" # LATIN CAPITAL LETTER C WITH CARON
+  '\u010D': "{\\v c}" # LATIN SMALL LETTER C WITH CARON
+  '\u010E': "{\\v D}" # LATIN CAPITAL LETTER D WITH CARON
+  '\u010F': "{\\v d}" # LATIN SMALL LETTER D WITH CARON
+  '\u0110': "\\DJ{}" # LATIN CAPITAL LETTER D WITH STROKE
+  '\u0111': "\\dj{}" # LATIN SMALL LETTER D WITH STROKE
+  '\u0112': "{\\=E}" # LATIN CAPITAL LETTER E WITH MACRON
+  '\u0113': "{\\=e}" # LATIN SMALL LETTER E WITH MACRON
+  '\u0114': "{\\u E}" # LATIN CAPITAL LETTER E WITH BREVE
+  '\u0115': "{\\u e}" # LATIN SMALL LETTER E WITH BREVE
+  '\u0116': "{\\.E}" # LATIN CAPITAL LETTER E WITH DOT ABOVE
+  '\u0117': "{\\.e}" # LATIN SMALL LETTER E WITH DOT ABOVE
+  '\u0118': "\\k{E}" # LATIN CAPITAL LETTER E WITH OGONEK
+  '\u0119': "\\k{e}" # LATIN SMALL LETTER E WITH OGONEK
+  '\u011A': "{\\v E}" # LATIN CAPITAL LETTER E WITH CARON
+  '\u011B': "{\\v e}" # LATIN SMALL LETTER E WITH CARON
+  '\u011C': "{\\^G}" # LATIN CAPITAL LETTER G WITH CIRCUMFLEX
+  '\u011D': "{\\^g}" # LATIN SMALL LETTER G WITH CIRCUMFLEX
+  '\u011E': "{\\u G}" # LATIN CAPITAL LETTER G WITH BREVE
+  '\u011F': "{\\u g}" # LATIN SMALL LETTER G WITH BREVE
+  '\u0120': "{\\.G}" # LATIN CAPITAL LETTER G WITH DOT ABOVE
+  '\u0121': "{\\.g}" # LATIN SMALL LETTER G WITH DOT ABOVE
+  '\u0122': "{\\c G}" # LATIN CAPITAL LETTER G WITH CEDILLA
+  '\u0123': "{\\c g}" # LATIN SMALL LETTER G WITH CEDILLA
+  '\u0124': "{\\^H}" # LATIN CAPITAL LETTER H WITH CIRCUMFLEX
+  '\u0125': "{\\^h}" # LATIN SMALL LETTER H WITH CIRCUMFLEX
+  '\u0126': "{\\fontencoding{LELA}\\selectfont\\char40}" # LATIN CAPITAL LETTER H WITH STROKE
+  '\u0128': "{\\~I}" # LATIN CAPITAL LETTER I WITH TILDE
+  '\u0129': "{\\~\\i}" # LATIN SMALL LETTER I WITH TILDE
+  '\u012A': "{\\=I}" # LATIN CAPITAL LETTER I WITH MACRON
+  '\u012B': "\\={\\i}" # LATIN SMALL LETTER I WITH MACRON
+  '\u012C': "{\\u I}" # LATIN CAPITAL LETTER I WITH BREVE
+  '\u012D': "{\\u \\i}" # LATIN SMALL LETTER I WITH BREVE
+  '\u012E': "\\k{I}" # LATIN CAPITAL LETTER I WITH OGONEK
+  '\u012F': "\\k{i}" # LATIN SMALL LETTER I WITH OGONEK
+  '\u0130': "{\\.I}" # LATIN CAPITAL LETTER I WITH DOT ABOVE
+  '\u0131': "\\i{}" # LATIN SMALL LETTER DOTLESS I
+  '\u0132': "IJ" # LATIN CAPITAL LIGATURE IJ
+  '\u0133': "ij" # LATIN SMALL LIGATURE IJ
+  '\u0134': "{\\^J}" # LATIN CAPITAL LETTER J WITH CIRCUMFLEX
+  '\u0135': "{\\^\\j}" # LATIN SMALL LETTER J WITH CIRCUMFLEX
+  '\u0136': "{\\c K}" # LATIN CAPITAL LETTER K WITH CEDILLA
+  '\u0137': "{\\c k}" # LATIN SMALL LETTER K WITH CEDILLA
+  '\u0138': "{\\fontencoding{LELA}\\selectfont\\char91}" # LATIN SMALL LETTER KRA
+  '\u0139': "{\\'L}" # LATIN CAPITAL LETTER L WITH ACUTE
+  '\u013A': "{\\'l}" # LATIN SMALL LETTER L WITH ACUTE
+  '\u013B': "{\\c L}" # LATIN CAPITAL LETTER L WITH CEDILLA
+  '\u013C': "{\\c l}" # LATIN SMALL LETTER L WITH CEDILLA
+  '\u013D': "{\\v L}" # LATIN CAPITAL LETTER L WITH CARON
+  '\u013E': "{\\v l}" # LATIN SMALL LETTER L WITH CARON
+  '\u013F': "{\\fontencoding{LELA}\\selectfont\\char201}" # LATIN CAPITAL LETTER L WITH MIDDLE DOT
+  '\u0140': "{\\fontencoding{LELA}\\selectfont\\char202}" # LATIN SMALL LETTER L WITH MIDDLE DOT
+  '\u0141': "\\L{}" # LATIN CAPITAL LETTER L WITH STROKE
+  '\u0142': "\\l{}" # LATIN SMALL LETTER L WITH STROKE
+  '\u0143': "{\\'N}" # LATIN CAPITAL LETTER N WITH ACUTE
+  '\u0144': "{\\'n}" # LATIN SMALL LETTER N WITH ACUTE
+  '\u0145': "{\\c N}" # LATIN CAPITAL LETTER N WITH CEDILLA
+  '\u0146': "{\\c n}" # LATIN SMALL LETTER N WITH CEDILLA
+  '\u0147': "{\\v N}" # LATIN CAPITAL LETTER N WITH CARON
+  '\u0148': "{\\v n}" # LATIN SMALL LETTER N WITH CARON
+  '\u0149': "'n" # LATIN SMALL LETTER N PRECEDED BY APOSTROPHE
+  '\u014A': "\\NG{}" # LATIN CAPITAL LETTER ENG
+  '\u014B': "\\ng{}" # LATIN SMALL LETTER ENG
+  '\u014C': "{\\=O}" # LATIN CAPITAL LETTER O WITH MACRON
+  '\u014D': "{\\=o}" # LATIN SMALL LETTER O WITH MACRON
+  '\u014E': "{\\u O}" # LATIN CAPITAL LETTER O WITH BREVE
+  '\u014F': "{\\u o}" # LATIN SMALL LETTER O WITH BREVE
+  '\u0150': "{\\H O}" # LATIN CAPITAL LETTER O WITH DOUBLE ACUTE
+  '\u0151': "{\\H o}" # LATIN SMALL LETTER O WITH DOUBLE ACUTE
+  '\u0152': "\\OE{}" # LATIN CAPITAL LIGATURE OE
+  '\u0153': "\\oe{}" # LATIN SMALL LIGATURE OE
+  '\u0154': "{\\'R}" # LATIN CAPITAL LETTER R WITH ACUTE
+  '\u0155': "{\\'r}" # LATIN SMALL LETTER R WITH ACUTE
+  '\u0156': "{\\c R}" # LATIN CAPITAL LETTER R WITH CEDILLA
+  '\u0157': "{\\c r}" # LATIN SMALL LETTER R WITH CEDILLA
+  '\u0158': "{\\v R}" # LATIN CAPITAL LETTER R WITH CARON
+  '\u0159': "{\\v r}" # LATIN SMALL LETTER R WITH CARON
+  '\u015A': "{\\'S}" # LATIN CAPITAL LETTER S WITH ACUTE
+  '\u015B': "{\\'s}" # LATIN SMALL LETTER S WITH ACUTE
+  '\u015C': "{\\^S}" # LATIN CAPITAL LETTER S WITH CIRCUMFLEX
+  '\u015D': "{\\^s}" # LATIN SMALL LETTER S WITH CIRCUMFLEX
+  '\u015E': "{\\c S}" # LATIN CAPITAL LETTER S WITH CEDILLA
+  '\u015F': "{\\c s}" # LATIN SMALL LETTER S WITH CEDILLA
+  '\u0160': "{\\v S}" # LATIN CAPITAL LETTER S WITH CARON
+  '\u0161': "{\\v s}" # LATIN SMALL LETTER S WITH CARON
+  '\u0162': "{\\c T}" # LATIN CAPITAL LETTER T WITH CEDILLA
+  '\u0163': "{\\c t}" # LATIN SMALL LETTER T WITH CEDILLA
+  '\u0164': "{\\v T}" # LATIN CAPITAL LETTER T WITH CARON
+  '\u0165': "{\\v t}" # LATIN SMALL LETTER T WITH CARON
+  '\u0166': "{\\fontencoding{LELA}\\selectfont\\char47}" # LATIN CAPITAL LETTER T WITH STROKE
+  '\u0167': "{\\fontencoding{LELA}\\selectfont\\char63}" # LATIN SMALL LETTER T WITH STROKE
+  '\u0168': "{\\~U}" # LATIN CAPITAL LETTER U WITH TILDE
+  '\u0169': "{\\~u}" # LATIN SMALL LETTER U WITH TILDE
+  '\u016A': "{\\=U}" # LATIN CAPITAL LETTER U WITH MACRON
+  '\u016B': "{\\=u}" # LATIN SMALL LETTER U WITH MACRON
+  '\u016C': "{\\u U}" # LATIN CAPITAL LETTER U WITH BREVE
+  '\u016D': "{\\u u}" # LATIN SMALL LETTER U WITH BREVE
+  '\u016E': "\\r{U}" # LATIN CAPITAL LETTER U WITH RING ABOVE
+  '\u016F': "\\r{u}" # LATIN SMALL LETTER U WITH RING ABOVE
+  '\u0170': "{\\H U}" # LATIN CAPITAL LETTER U WITH DOUBLE ACUTE
+  '\u0171': "{\\H u}" # LATIN SMALL LETTER U WITH DOUBLE ACUTE
+  '\u0172': "\\k{U}" # LATIN CAPITAL LETTER U WITH OGONEK
+  '\u0173': "\\k{u}" # LATIN SMALL LETTER U WITH OGONEK
+  '\u0174': "{\\^W}" # LATIN CAPITAL LETTER W WITH CIRCUMFLEX
+  '\u0175': "{\\^w}" # LATIN SMALL LETTER W WITH CIRCUMFLEX
+  '\u0176': "{\\^Y}" # LATIN CAPITAL LETTER Y WITH CIRCUMFLEX
+  '\u0177': "{\\^y}" # LATIN SMALL LETTER Y WITH CIRCUMFLEX
+  '\u0178': "{\\\"Y}" # LATIN CAPITAL LETTER Y WITH DIAERESIS
+  '\u0179': "{\\'Z}" # LATIN CAPITAL LETTER Z WITH ACUTE
+  '\u017A': "{\\'z}" # LATIN SMALL LETTER Z WITH ACUTE
+  '\u017B': "{\\.Z}" # LATIN CAPITAL LETTER Z WITH DOT ABOVE
+  '\u017C': "{\\.z}" # LATIN SMALL LETTER Z WITH DOT ABOVE
+  '\u017D': "{\\v Z}" # LATIN CAPITAL LETTER Z WITH CARON
+  '\u017E': "{\\v z}" # LATIN SMALL LETTER Z WITH CARON
+  '\u0195': "\\texthvlig{}" # LATIN SMALL LETTER HV
+  '\u019E': "\\textnrleg{}" # LATIN SMALL LETTER N WITH LONG RIGHT LEG
+  '\u01BA': "{\\fontencoding{LELA}\\selectfont\\char195}" # LATIN SMALL LETTER EZH WITH TAIL
+  '\u01C2': "\\textdoublepipe{}" # LATIN LETTER ALVEOLAR CLICK
+  '\u01F5': "{\\'g}" # LATIN SMALL LETTER G WITH ACUTE
+  '\u0258': "{\\fontencoding{LEIP}\\selectfont\\char61}" # LATIN SMALL LETTER REVERSED E
+  '\u0261': "g" # LATIN SMALL LETTER SCRIPT G
+  '\u0272': "\\Elzltln{}" # LATIN SMALL LETTER N WITH LEFT HOOK
+  '\u0278': "\\textphi{}" # LATIN SMALL LETTER PHI
+  '\u027F': "{\\fontencoding{LEIP}\\selectfont\\char202}" # LATIN SMALL LETTER REVERSED R WITH FISHHOOK
+  '\u029E': "\\textturnk{}" # LATIN SMALL LETTER TURNED K
+  '\u02BC': "'" # MODIFIER LETTER APOSTROPHE
+  '\u02C7': "\\textasciicaron{}" # CARON
+  '\u02D8': "\\textasciibreve{}" # BREVE
+  '\u02D9': "\\textperiodcentered{}" # DOT ABOVE
+  '\u02DA': "\\r{}" # RING ABOVE
+  '\u02DB': "\\k{}" # OGONEK
+  '\u02DC': "\\texttildelow{}" # SMALL TILDE
+  '\u02DD': "\\H{}" # DOUBLE ACUTE ACCENT
+  '\u02E5': "\\tone{55}" # MODIFIER LETTER EXTRA-HIGH TONE BAR
+  '\u02E6': "\\tone{44}" # MODIFIER LETTER HIGH TONE BAR
+  '\u02E7': "\\tone{33}" # MODIFIER LETTER MID TONE BAR
+  '\u02E8': "\\tone{22}" # MODIFIER LETTER LOW TONE BAR
+  '\u02E9': "\\tone{11}" # MODIFIER LETTER EXTRA-LOW TONE BAR
+  '\u0300': "\\`" # COMBINING GRAVE ACCENT
+  '\u0301': "\\'" # COMBINING ACUTE ACCENT
+  '\u0302': "\\^" # COMBINING CIRCUMFLEX ACCENT
+  '\u0303': "\\~" # COMBINING TILDE
+  '\u0304': "\\=" # COMBINING MACRON
+  '\u0306': "\\u{}" # COMBINING BREVE
+  '\u0307': "\\." # COMBINING DOT ABOVE
+  '\u0308': "\\\"" # COMBINING DIAERESIS
+  '\u030A': "\\r{}" # COMBINING RING ABOVE
+  '\u030B': "\\H{}" # COMBINING DOUBLE ACUTE ACCENT
+  '\u030C': "\\v{}" # COMBINING CARON
+  '\u030F': "\\cyrchar\\C{}" # COMBINING DOUBLE GRAVE ACCENT
+  '\u0311': "{\\fontencoding{LECO}\\selectfont\\char177}" # COMBINING INVERTED BREVE
+  '\u0318': "{\\fontencoding{LECO}\\selectfont\\char184}" # COMBINING LEFT TACK BELOW
+  '\u0319': "{\\fontencoding{LECO}\\selectfont\\char185}" # COMBINING RIGHT TACK BELOW
+  '\u0322': "\\Elzrh{}" # COMBINING RETROFLEX HOOK BELOW
+  '\u0327': "\\c{}" # COMBINING CEDILLA
+  '\u0328': "\\k{}" # COMBINING OGONEK
+  '\u032B': "{\\fontencoding{LECO}\\selectfont\\char203}" # COMBINING INVERTED DOUBLE ARCH BELOW
+  '\u032F': "{\\fontencoding{LECO}\\selectfont\\char207}" # COMBINING INVERTED BREVE BELOW
+  '\u0335': "\\Elzxl{}" # COMBINING SHORT STROKE OVERLAY
+  '\u0336': "\\Elzbar{}" # COMBINING LONG STROKE OVERLAY
+  '\u0337': "{\\fontencoding{LECO}\\selectfont\\char215}" # COMBINING SHORT SOLIDUS OVERLAY
+  '\u0338': "{\\fontencoding{LECO}\\selectfont\\char216}" # COMBINING LONG SOLIDUS OVERLAY
+  '\u033A': "{\\fontencoding{LECO}\\selectfont\\char218}" # COMBINING INVERTED BRIDGE BELOW
+  '\u033B': "{\\fontencoding{LECO}\\selectfont\\char219}" # COMBINING SQUARE BELOW
+  '\u033C': "{\\fontencoding{LECO}\\selectfont\\char220}" # COMBINING SEAGULL BELOW
+  '\u033D': "{\\fontencoding{LECO}\\selectfont\\char221}" # COMBINING X ABOVE
+  '\u0361': "{\\fontencoding{LECO}\\selectfont\\char225}" # COMBINING DOUBLE INVERTED BREVE
+  '\u0386': "{\\'A}" # GREEK CAPITAL LETTER ALPHA WITH TONOS
+  '\u0388': "{\\'E}" # GREEK CAPITAL LETTER EPSILON WITH TONOS
+  '\u0389': "{\\'H}" # GREEK CAPITAL LETTER ETA WITH TONOS
+  '\u038A': "\\'{}{I}" # GREEK CAPITAL LETTER IOTA WITH TONOS
+  '\u038C': "{\\'{}O}" # GREEK CAPITAL LETTER OMICRON WITH TONOS
+  '\u03AC': "{\\'$\\alpha$}" # GREEK SMALL LETTER ALPHA WITH TONOS
+  '\u03B8': "\\texttheta{}" # GREEK SMALL LETTER THETA
+  '\u03CC': "{\\'o}" # GREEK SMALL LETTER OMICRON WITH TONOS
+  '\u03D0': "\\Pisymbol{ppi022}{87}" # GREEK BETA SYMBOL
+  '\u03D1': "\\textvartheta{}" # GREEK THETA SYMBOL
+  '\u03F4': "\\textTheta{}" # GREEK CAPITAL THETA SYMBOL
+  '\u0401': "\\cyrchar\\CYRYO{}" # CYRILLIC CAPITAL LETTER IO
+  '\u0402': "\\cyrchar\\CYRDJE{}" # CYRILLIC CAPITAL LETTER DJE
+  '\u0403': "\\cyrchar{\\'\\CYRG}" # CYRILLIC CAPITAL LETTER GJE
+  '\u0404': "\\cyrchar\\CYRIE{}" # CYRILLIC CAPITAL LETTER UKRAINIAN IE
+  '\u0405': "\\cyrchar\\CYRDZE{}" # CYRILLIC CAPITAL LETTER DZE
+  '\u0406': "\\cyrchar\\CYRII{}" # CYRILLIC CAPITAL LETTER BYELORUSSIAN-UKRAINIAN I
+  '\u0407': "\\cyrchar\\CYRYI{}" # CYRILLIC CAPITAL LETTER YI
+  '\u0408': "\\cyrchar\\CYRJE{}" # CYRILLIC CAPITAL LETTER JE
+  '\u0409': "\\cyrchar\\CYRLJE{}" # CYRILLIC CAPITAL LETTER LJE
+  '\u040A': "\\cyrchar\\CYRNJE{}" # CYRILLIC CAPITAL LETTER NJE
+  '\u040B': "\\cyrchar\\CYRTSHE{}" # CYRILLIC CAPITAL LETTER TSHE
+  '\u040C': "\\cyrchar{\\'\\CYRK}" # CYRILLIC CAPITAL LETTER KJE
+  '\u040E': "\\cyrchar\\CYRUSHRT{}" # CYRILLIC CAPITAL LETTER SHORT U
+  '\u040F': "\\cyrchar\\CYRDZHE{}" # CYRILLIC CAPITAL LETTER DZHE
+  '\u0410': "\\cyrchar\\CYRA{}" # CYRILLIC CAPITAL LETTER A
+  '\u0411': "\\cyrchar\\CYRB{}" # CYRILLIC CAPITAL LETTER BE
+  '\u0412': "\\cyrchar\\CYRV{}" # CYRILLIC CAPITAL LETTER VE
+  '\u0413': "\\cyrchar\\CYRG{}" # CYRILLIC CAPITAL LETTER GHE
+  '\u0414': "\\cyrchar\\CYRD{}" # CYRILLIC CAPITAL LETTER DE
+  '\u0415': "\\cyrchar\\CYRE{}" # CYRILLIC CAPITAL LETTER IE
+  '\u0416': "\\cyrchar\\CYRZH{}" # CYRILLIC CAPITAL LETTER ZHE
+  '\u0417': "\\cyrchar\\CYRZ{}" # CYRILLIC CAPITAL LETTER ZE
+  '\u0418': "\\cyrchar\\CYRI{}" # CYRILLIC CAPITAL LETTER I
+  '\u0419': "\\cyrchar\\CYRISHRT{}" # CYRILLIC CAPITAL LETTER SHORT I
+  '\u041A': "\\cyrchar\\CYRK{}" # CYRILLIC CAPITAL LETTER KA
+  '\u041B': "\\cyrchar\\CYRL{}" # CYRILLIC CAPITAL LETTER EL
+  '\u041C': "\\cyrchar\\CYRM{}" # CYRILLIC CAPITAL LETTER EM
+  '\u041D': "\\cyrchar\\CYRN{}" # CYRILLIC CAPITAL LETTER EN
+  '\u041E': "\\cyrchar\\CYRO{}" # CYRILLIC CAPITAL LETTER O
+  '\u041F': "\\cyrchar\\CYRP{}" # CYRILLIC CAPITAL LETTER PE
+  '\u0420': "\\cyrchar\\CYRR{}" # CYRILLIC CAPITAL LETTER ER
+  '\u0421': "\\cyrchar\\CYRS{}" # CYRILLIC CAPITAL LETTER ES
+  '\u0422': "\\cyrchar\\CYRT{}" # CYRILLIC CAPITAL LETTER TE
+  '\u0423': "\\cyrchar\\CYRU{}" # CYRILLIC CAPITAL LETTER U
+  '\u0424': "\\cyrchar\\CYRF{}" # CYRILLIC CAPITAL LETTER EF
+  '\u0425': "\\cyrchar\\CYRH{}" # CYRILLIC CAPITAL LETTER HA
+  '\u0426': "\\cyrchar\\CYRC{}" # CYRILLIC CAPITAL LETTER TSE
+  '\u0427': "\\cyrchar\\CYRCH{}" # CYRILLIC CAPITAL LETTER CHE
+  '\u0428': "\\cyrchar\\CYRSH{}" # CYRILLIC CAPITAL LETTER SHA
+  '\u0429': "\\cyrchar\\CYRSHCH{}" # CYRILLIC CAPITAL LETTER SHCHA
+  '\u042A': "\\cyrchar\\CYRHRDSN{}" # CYRILLIC CAPITAL LETTER HARD SIGN
+  '\u042B': "\\cyrchar\\CYRERY{}" # CYRILLIC CAPITAL LETTER YERU
+  '\u042C': "\\cyrchar\\CYRSFTSN{}" # CYRILLIC CAPITAL LETTER SOFT SIGN
+  '\u042D': "\\cyrchar\\CYREREV{}" # CYRILLIC CAPITAL LETTER E
+  '\u042E': "\\cyrchar\\CYRYU{}" # CYRILLIC CAPITAL LETTER YU
+  '\u042F': "\\cyrchar\\CYRYA{}" # CYRILLIC CAPITAL LETTER YA
+  '\u0430': "\\cyrchar\\cyra{}" # CYRILLIC SMALL LETTER A
+  '\u0431': "\\cyrchar\\cyrb{}" # CYRILLIC SMALL LETTER BE
+  '\u0432': "\\cyrchar\\cyrv{}" # CYRILLIC SMALL LETTER VE
+  '\u0433': "\\cyrchar\\cyrg{}" # CYRILLIC SMALL LETTER GHE
+  '\u0434': "\\cyrchar\\cyrd{}" # CYRILLIC SMALL LETTER DE
+  '\u0435': "\\cyrchar\\cyre{}" # CYRILLIC SMALL LETTER IE
+  '\u0436': "\\cyrchar\\cyrzh{}" # CYRILLIC SMALL LETTER ZHE
+  '\u0437': "\\cyrchar\\cyrz{}" # CYRILLIC SMALL LETTER ZE
+  '\u0438': "\\cyrchar\\cyri{}" # CYRILLIC SMALL LETTER I
+  '\u0439': "\\cyrchar\\cyrishrt{}" # CYRILLIC SMALL LETTER SHORT I
+  '\u043A': "\\cyrchar\\cyrk{}" # CYRILLIC SMALL LETTER KA
+  '\u043B': "\\cyrchar\\cyrl{}" # CYRILLIC SMALL LETTER EL
+  '\u043C': "\\cyrchar\\cyrm{}" # CYRILLIC SMALL LETTER EM
+  '\u043D': "\\cyrchar\\cyrn{}" # CYRILLIC SMALL LETTER EN
+  '\u043E': "\\cyrchar\\cyro{}" # CYRILLIC SMALL LETTER O
+  '\u043F': "\\cyrchar\\cyrp{}" # CYRILLIC SMALL LETTER PE
+  '\u0440': "\\cyrchar\\cyrr{}" # CYRILLIC SMALL LETTER ER
+  '\u0441': "\\cyrchar\\cyrs{}" # CYRILLIC SMALL LETTER ES
+  '\u0442': "\\cyrchar\\cyrt{}" # CYRILLIC SMALL LETTER TE
+  '\u0443': "\\cyrchar\\cyru{}" # CYRILLIC SMALL LETTER U
+  '\u0444': "\\cyrchar\\cyrf{}" # CYRILLIC SMALL LETTER EF
+  '\u0445': "\\cyrchar\\cyrh{}" # CYRILLIC SMALL LETTER HA
+  '\u0446': "\\cyrchar\\cyrc{}" # CYRILLIC SMALL LETTER TSE
+  '\u0447': "\\cyrchar\\cyrch{}" # CYRILLIC SMALL LETTER CHE
+  '\u0448': "\\cyrchar\\cyrsh{}" # CYRILLIC SMALL LETTER SHA
+  '\u0449': "\\cyrchar\\cyrshch{}" # CYRILLIC SMALL LETTER SHCHA
+  '\u044A': "\\cyrchar\\cyrhrdsn{}" # CYRILLIC SMALL LETTER HARD SIGN
+  '\u044B': "\\cyrchar\\cyrery{}" # CYRILLIC SMALL LETTER YERU
+  '\u044C': "\\cyrchar\\cyrsftsn{}" # CYRILLIC SMALL LETTER SOFT SIGN
+  '\u044D': "\\cyrchar\\cyrerev{}" # CYRILLIC SMALL LETTER E
+  '\u044E': "\\cyrchar\\cyryu{}" # CYRILLIC SMALL LETTER YU
+  '\u044F': "\\cyrchar\\cyrya{}" # CYRILLIC SMALL LETTER YA
+  '\u0451': "\\cyrchar\\cyryo{}" # CYRILLIC SMALL LETTER IO
+  '\u0452': "\\cyrchar\\cyrdje{}" # CYRILLIC SMALL LETTER DJE
+  '\u0453': "\\cyrchar{\\'\\cyrg}" # CYRILLIC SMALL LETTER GJE
+  '\u0454': "\\cyrchar\\cyrie{}" # CYRILLIC SMALL LETTER UKRAINIAN IE
+  '\u0455': "\\cyrchar\\cyrdze{}" # CYRILLIC SMALL LETTER DZE
+  '\u0456': "\\cyrchar\\cyrii{}" # CYRILLIC SMALL LETTER BYELORUSSIAN-UKRAINIAN I
+  '\u0457': "\\cyrchar\\cyryi{}" # CYRILLIC SMALL LETTER YI
+  '\u0458': "\\cyrchar\\cyrje{}" # CYRILLIC SMALL LETTER JE
+  '\u0459': "\\cyrchar\\cyrlje{}" # CYRILLIC SMALL LETTER LJE
+  '\u045A': "\\cyrchar\\cyrnje{}" # CYRILLIC SMALL LETTER NJE
+  '\u045B': "\\cyrchar\\cyrtshe{}" # CYRILLIC SMALL LETTER TSHE
+  '\u045C': "\\cyrchar{\\'\\cyrk}" # CYRILLIC SMALL LETTER KJE
+  '\u045E': "\\cyrchar\\cyrushrt{}" # CYRILLIC SMALL LETTER SHORT U
+  '\u045F': "\\cyrchar\\cyrdzhe{}" # CYRILLIC SMALL LETTER DZHE
+  '\u0460': "\\cyrchar\\CYROMEGA{}" # CYRILLIC CAPITAL LETTER OMEGA
+  '\u0461': "\\cyrchar\\cyromega{}" # CYRILLIC SMALL LETTER OMEGA
+  '\u0462': "\\cyrchar\\CYRYAT{}" # CYRILLIC CAPITAL LETTER YAT
+  '\u0464': "\\cyrchar\\CYRIOTE{}" # CYRILLIC CAPITAL LETTER IOTIFIED E
+  '\u0465': "\\cyrchar\\cyriote{}" # CYRILLIC SMALL LETTER IOTIFIED E
+  '\u0466': "\\cyrchar\\CYRLYUS{}" # CYRILLIC CAPITAL LETTER LITTLE YUS
+  '\u0467': "\\cyrchar\\cyrlyus{}" # CYRILLIC SMALL LETTER LITTLE YUS
+  '\u0468': "\\cyrchar\\CYRIOTLYUS{}" # CYRILLIC CAPITAL LETTER IOTIFIED LITTLE YUS
+  '\u0469': "\\cyrchar\\cyriotlyus{}" # CYRILLIC SMALL LETTER IOTIFIED LITTLE YUS
+  '\u046A': "\\cyrchar\\CYRBYUS{}" # CYRILLIC CAPITAL LETTER BIG YUS
+  '\u046C': "\\cyrchar\\CYRIOTBYUS{}" # CYRILLIC CAPITAL LETTER IOTIFIED BIG YUS
+  '\u046D': "\\cyrchar\\cyriotbyus{}" # CYRILLIC SMALL LETTER IOTIFIED BIG YUS
+  '\u046E': "\\cyrchar\\CYRKSI{}" # CYRILLIC CAPITAL LETTER KSI
+  '\u046F': "\\cyrchar\\cyrksi{}" # CYRILLIC SMALL LETTER KSI
+  '\u0470': "\\cyrchar\\CYRPSI{}" # CYRILLIC CAPITAL LETTER PSI
+  '\u0471': "\\cyrchar\\cyrpsi{}" # CYRILLIC SMALL LETTER PSI
+  '\u0472': "\\cyrchar\\CYRFITA{}" # CYRILLIC CAPITAL LETTER FITA
+  '\u0474': "\\cyrchar\\CYRIZH{}" # CYRILLIC CAPITAL LETTER IZHITSA
+  '\u0478': "\\cyrchar\\CYRUK{}" # CYRILLIC CAPITAL LETTER UK
+  '\u0479': "\\cyrchar\\cyruk{}" # CYRILLIC SMALL LETTER UK
+  '\u047A': "\\cyrchar\\CYROMEGARND{}" # CYRILLIC CAPITAL LETTER ROUND OMEGA
+  '\u047B': "\\cyrchar\\cyromegarnd{}" # CYRILLIC SMALL LETTER ROUND OMEGA
+  '\u047C': "\\cyrchar\\CYROMEGATITLO{}" # CYRILLIC CAPITAL LETTER OMEGA WITH TITLO
+  '\u047D': "\\cyrchar\\cyromegatitlo{}" # CYRILLIC SMALL LETTER OMEGA WITH TITLO
+  '\u047E': "\\cyrchar\\CYROT{}" # CYRILLIC CAPITAL LETTER OT
+  '\u047F': "\\cyrchar\\cyrot{}" # CYRILLIC SMALL LETTER OT
+  '\u0480': "\\cyrchar\\CYRKOPPA{}" # CYRILLIC CAPITAL LETTER KOPPA
+  '\u0481': "\\cyrchar\\cyrkoppa{}" # CYRILLIC SMALL LETTER KOPPA
+  '\u0482': "\\cyrchar\\cyrthousands{}" # CYRILLIC THOUSANDS SIGN
+  '\u0488': "\\cyrchar\\cyrhundredthousands{}" # COMBINING CYRILLIC HUNDRED THOUSANDS SIGN
+  '\u0489': "\\cyrchar\\cyrmillions{}" # COMBINING CYRILLIC MILLIONS SIGN
+  '\u048C': "\\cyrchar\\CYRSEMISFTSN{}" # CYRILLIC CAPITAL LETTER SEMISOFT SIGN
+  '\u048D': "\\cyrchar\\cyrsemisftsn{}" # CYRILLIC SMALL LETTER SEMISOFT SIGN
+  '\u048E': "\\cyrchar\\CYRRTICK{}" # CYRILLIC CAPITAL LETTER ER WITH TICK
+  '\u048F': "\\cyrchar\\cyrrtick{}" # CYRILLIC SMALL LETTER ER WITH TICK
+  '\u0490': "\\cyrchar\\CYRGUP{}" # CYRILLIC CAPITAL LETTER GHE WITH UPTURN
+  '\u0491': "\\cyrchar\\cyrgup{}" # CYRILLIC SMALL LETTER GHE WITH UPTURN
+  '\u0492': "\\cyrchar\\CYRGHCRS{}" # CYRILLIC CAPITAL LETTER GHE WITH STROKE
+  '\u0493': "\\cyrchar\\cyrghcrs{}" # CYRILLIC SMALL LETTER GHE WITH STROKE
+  '\u0494': "\\cyrchar\\CYRGHK{}" # CYRILLIC CAPITAL LETTER GHE WITH MIDDLE HOOK
+  '\u0495': "\\cyrchar\\cyrghk{}" # CYRILLIC SMALL LETTER GHE WITH MIDDLE HOOK
+  '\u0496': "\\cyrchar\\CYRZHDSC{}" # CYRILLIC CAPITAL LETTER ZHE WITH DESCENDER
+  '\u0497': "\\cyrchar\\cyrzhdsc{}" # CYRILLIC SMALL LETTER ZHE WITH DESCENDER
+  '\u0498': "\\cyrchar\\CYRZDSC{}" # CYRILLIC CAPITAL LETTER ZE WITH DESCENDER
+  '\u0499': "\\cyrchar\\cyrzdsc{}" # CYRILLIC SMALL LETTER ZE WITH DESCENDER
+  '\u049A': "\\cyrchar\\CYRKDSC{}" # CYRILLIC CAPITAL LETTER KA WITH DESCENDER
+  '\u049B': "\\cyrchar\\cyrkdsc{}" # CYRILLIC SMALL LETTER KA WITH DESCENDER
+  '\u049C': "\\cyrchar\\CYRKVCRS{}" # CYRILLIC CAPITAL LETTER KA WITH VERTICAL STROKE
+  '\u049D': "\\cyrchar\\cyrkvcrs{}" # CYRILLIC SMALL LETTER KA WITH VERTICAL STROKE
+  '\u049E': "\\cyrchar\\CYRKHCRS{}" # CYRILLIC CAPITAL LETTER KA WITH STROKE
+  '\u049F': "\\cyrchar\\cyrkhcrs{}" # CYRILLIC SMALL LETTER KA WITH STROKE
+  '\u04A0': "\\cyrchar\\CYRKBEAK{}" # CYRILLIC CAPITAL LETTER BASHKIR KA
+  '\u04A1': "\\cyrchar\\cyrkbeak{}" # CYRILLIC SMALL LETTER BASHKIR KA
+  '\u04A2': "\\cyrchar\\CYRNDSC{}" # CYRILLIC CAPITAL LETTER EN WITH DESCENDER
+  '\u04A3': "\\cyrchar\\cyrndsc{}" # CYRILLIC SMALL LETTER EN WITH DESCENDER
+  '\u04A4': "\\cyrchar\\CYRNG{}" # CYRILLIC CAPITAL LIGATURE EN GHE
+  '\u04A5': "\\cyrchar\\cyrng{}" # CYRILLIC SMALL LIGATURE EN GHE
+  '\u04A6': "\\cyrchar\\CYRPHK{}" # CYRILLIC CAPITAL LETTER PE WITH MIDDLE HOOK
+  '\u04A7': "\\cyrchar\\cyrphk{}" # CYRILLIC SMALL LETTER PE WITH MIDDLE HOOK
+  '\u04A8': "\\cyrchar\\CYRABHHA{}" # CYRILLIC CAPITAL LETTER ABKHASIAN HA
+  '\u04A9': "\\cyrchar\\cyrabhha{}" # CYRILLIC SMALL LETTER ABKHASIAN HA
+  '\u04AA': "\\cyrchar\\CYRSDSC{}" # CYRILLIC CAPITAL LETTER ES WITH DESCENDER
+  '\u04AB': "\\cyrchar\\cyrsdsc{}" # CYRILLIC SMALL LETTER ES WITH DESCENDER
+  '\u04AC': "\\cyrchar\\CYRTDSC{}" # CYRILLIC CAPITAL LETTER TE WITH DESCENDER
+  '\u04AD': "\\cyrchar\\cyrtdsc{}" # CYRILLIC SMALL LETTER TE WITH DESCENDER
+  '\u04AE': "\\cyrchar\\CYRY{}" # CYRILLIC CAPITAL LETTER STRAIGHT U
+  '\u04AF': "\\cyrchar\\cyry{}" # CYRILLIC SMALL LETTER STRAIGHT U
+  '\u04B0': "\\cyrchar\\CYRYHCRS{}" # CYRILLIC CAPITAL LETTER STRAIGHT U WITH STROKE
+  '\u04B1': "\\cyrchar\\cyryhcrs{}" # CYRILLIC SMALL LETTER STRAIGHT U WITH STROKE
+  '\u04B2': "\\cyrchar\\CYRHDSC{}" # CYRILLIC CAPITAL LETTER HA WITH DESCENDER
+  '\u04B3': "\\cyrchar\\cyrhdsc{}" # CYRILLIC SMALL LETTER HA WITH DESCENDER
+  '\u04B4': "\\cyrchar\\CYRTETSE{}" # CYRILLIC CAPITAL LIGATURE TE TSE
+  '\u04B5': "\\cyrchar\\cyrtetse{}" # CYRILLIC SMALL LIGATURE TE TSE
+  '\u04B6': "\\cyrchar\\CYRCHRDSC{}" # CYRILLIC CAPITAL LETTER CHE WITH DESCENDER
+  '\u04B7': "\\cyrchar\\cyrchrdsc{}" # CYRILLIC SMALL LETTER CHE WITH DESCENDER
+  '\u04B8': "\\cyrchar\\CYRCHVCRS{}" # CYRILLIC CAPITAL LETTER CHE WITH VERTICAL STROKE
+  '\u04B9': "\\cyrchar\\cyrchvcrs{}" # CYRILLIC SMALL LETTER CHE WITH VERTICAL STROKE
+  '\u04BA': "\\cyrchar\\CYRSHHA{}" # CYRILLIC CAPITAL LETTER SHHA
+  '\u04BB': "\\cyrchar\\cyrshha{}" # CYRILLIC SMALL LETTER SHHA
+  '\u04BC': "\\cyrchar\\CYRABHCH{}" # CYRILLIC CAPITAL LETTER ABKHASIAN CHE
+  '\u04BD': "\\cyrchar\\cyrabhch{}" # CYRILLIC SMALL LETTER ABKHASIAN CHE
+  '\u04BE': "\\cyrchar\\CYRABHCHDSC{}" # CYRILLIC CAPITAL LETTER ABKHASIAN CHE WITH DESCENDER
+  '\u04BF': "\\cyrchar\\cyrabhchdsc{}" # CYRILLIC SMALL LETTER ABKHASIAN CHE WITH DESCENDER
+  '\u04C0': "\\cyrchar\\CYRpalochka{}" # CYRILLIC LETTER PALOCHKA
+  '\u04C3': "\\cyrchar\\CYRKHK{}" # CYRILLIC CAPITAL LETTER KA WITH HOOK
+  '\u04C4': "\\cyrchar\\cyrkhk{}" # CYRILLIC SMALL LETTER KA WITH HOOK
+  '\u04C7': "\\cyrchar\\CYRNHK{}" # CYRILLIC CAPITAL LETTER EN WITH HOOK
+  '\u04C8': "\\cyrchar\\cyrnhk{}" # CYRILLIC SMALL LETTER EN WITH HOOK
+  '\u04CB': "\\cyrchar\\CYRCHLDSC{}" # CYRILLIC CAPITAL LETTER KHAKASSIAN CHE
+  '\u04CC': "\\cyrchar\\cyrchldsc{}" # CYRILLIC SMALL LETTER KHAKASSIAN CHE
+  '\u04D4': "\\cyrchar\\CYRAE{}" # CYRILLIC CAPITAL LIGATURE A IE
+  '\u04D5': "\\cyrchar\\cyrae{}" # CYRILLIC SMALL LIGATURE A IE
+  '\u04D8': "\\cyrchar\\CYRSCHWA{}" # CYRILLIC CAPITAL LETTER SCHWA
+  '\u04D9': "\\cyrchar\\cyrschwa{}" # CYRILLIC SMALL LETTER SCHWA
+  '\u04E0': "\\cyrchar\\CYRABHDZE{}" # CYRILLIC CAPITAL LETTER ABKHASIAN DZE
+  '\u04E1': "\\cyrchar\\cyrabhdze{}" # CYRILLIC SMALL LETTER ABKHASIAN DZE
+  '\u04E8': "\\cyrchar\\CYROTLD{}" # CYRILLIC CAPITAL LETTER BARRED O
+  '\u04E9': "\\cyrchar\\cyrotld{}" # CYRILLIC SMALL LETTER BARRED O
+  '\u2002': "\\hspace{0.6em}" # EN SPACE
   '\u2003': "\\quad{}"
   '\u2004': "\\;"
-  '\u2005': "\\hspace{0.25em}"
-  '\u2006': "\\hspace{0.166em}"
-  '\u2007': "\\hphantom{0}"
-  '\u2008': "\\hphantom{,}"
+  '\u2005': "\\hspace{0.25em}" # FOUR-PER-EM SPACE
+  '\u2006': "\\hspace{0.166em}" # SIX-PER-EM SPACE
+  '\u2007': "\\hphantom{0}" # FIGURE SPACE
+  '\u2008': "\\hphantom{,}" # PUNCTUATION SPACE
   '\u2009': "\\,"
   '\u200B': "\\hspace{0pt}"
-  '\u2010': "-"
-  '\u2013': "\\textendash{}"
-  '\u2014': "\\textemdash{}"
-  '\u2015': "\\rule{1em}{1pt}"
-  '\u2018': "`"
-  '\u2019': "'"
-  '\u201A': ","
+  '\u2010': "-" # HYPHEN
+  '\u2013': "\\textendash{}" # EN DASH
+  '\u2014': "\\textemdash{}" # EM DASH
+  '\u2015': "\\rule{1em}{1pt}" # HORIZONTAL BAR
+  '\u2018': "`" # LEFT SINGLE QUOTATION MARK
+  '\u2019': "'" # RIGHT SINGLE QUOTATION MARK
+  '\u201A': "," # SINGLE LOW-9 QUOTATION MARK
   '\u201C': "``"
   '\u201D': "''"
-  '\u201E': ",,"
-  '\u2020': "\\textdagger{}"
-  '\u2021': "\\textdaggerdbl{}"
-  '\u2022': "\\textbullet{}"
-  '\u2024': "."
-  '\u2025': ".."
-  '\u2026': "\\ldots{}"
-  '\u2030': "\\textperthousand{}"
-  '\u2031': "\\textpertenthousand{}"
-  '\u2039': "\\guilsinglleft{}"
-  '\u203A': "\\guilsinglright{}"
+  '\u201E': ",," # DOUBLE LOW-9 QUOTATION MARK
+  '\u2020': "\\textdagger{}" # DAGGER
+  '\u2021': "\\textdaggerdbl{}" # DOUBLE DAGGER
+  '\u2022': "\\textbullet{}" # BULLET
+  '\u2024': "." # ONE DOT LEADER
+  '\u2025': ".." # TWO DOT LEADER
+  '\u2026': "\\ldots{}" # HORIZONTAL ELLIPSIS
+  '\u2030': "\\textperthousand{}" # PER MILLE SIGN
+  '\u2031': "\\textpertenthousand{}" # PER TEN THOUSAND SIGN
+  '\u2039': "\\guilsinglleft{}" # SINGLE LEFT-POINTING ANGLE QUOTATION MARK
+  '\u203A': "\\guilsinglright{}" # SINGLE RIGHT-POINTING ANGLE QUOTATION MARK
   '\u205F': "\\:"
-  '\u2060': "\\nolinebreak{}"
-  '\u20A7': "\\ensuremath{\\Elzpes}"
-  '\u20AC': "{\\mbox{\\texteuro}}"
-  '\u210A': "\\mathscr{g}"
-  '\u2116': "\\cyrchar\\textnumero{}"
-  '\u2122': "\\texttrademark{}"
-  '\u212B': "\\AA{}"
-  '\u2212': "-"
-  '\u2254': ":="
-  '\u2305': "\\barwedge{}"
-  '\u2423': "\\textvisiblespace{}"
-  '\u2460': "\\ding{172}"
-  '\u2461': "\\ding{173}"
-  '\u2462': "\\ding{174}"
-  '\u2463': "\\ding{175}"
-  '\u2464': "\\ding{176}"
-  '\u2465': "\\ding{177}"
-  '\u2466': "\\ding{178}"
-  '\u2467': "\\ding{179}"
-  '\u2468': "\\ding{180}"
-  '\u2469': "\\ding{181}"
-  '\u25A0': "\\ding{110}"
-  '\u25B2': "\\ding{115}"
-  '\u25BC': "\\ding{116}"
-  '\u25C6': "\\ding{117}"
-  '\u25CF': "\\ding{108}"
-  '\u25D7': "\\ding{119}"
-  '\u2605': "\\ding{72}"
-  '\u2606': "\\ding{73}"
-  '\u260E': "\\ding{37}"
-  '\u261B': "\\ding{42}"
-  '\u261E': "\\ding{43}"
-  '\u263E': "\\rightmoon{}"
-  '\u263F': "\\mercury{}"
-  '\u2640': "\\venus{}"
-  '\u2642': "\\male{}"
-  '\u2643': "\\jupiter{}"
-  '\u2644': "\\saturn{}"
-  '\u2645': "\\uranus{}"
-  '\u2646': "\\neptune{}"
-  '\u2647': "\\pluto{}"
-  '\u2648': "\\aries{}"
-  '\u2649': "\\taurus{}"
-  '\u264A': "\\gemini{}"
-  '\u264B': "\\cancer{}"
-  '\u264C': "\\leo{}"
-  '\u264D': "\\virgo{}"
-  '\u264E': "\\libra{}"
-  '\u264F': "\\scorpio{}"
-  '\u2650': "\\sagittarius{}"
-  '\u2651': "\\capricornus{}"
-  '\u2652': "\\aquarius{}"
-  '\u2653': "\\pisces{}"
-  '\u2660': "\\ding{171}"
-  '\u2663': "\\ding{168}"
-  '\u2665': "\\ding{170}"
-  '\u2666': "\\ding{169}"
-  '\u2669': "\\quarternote{}"
-  '\u266A': "\\eighthnote{}"
-  '\u2701': "\\ding{33}"
-  '\u2702': "\\ding{34}"
-  '\u2703': "\\ding{35}"
-  '\u2704': "\\ding{36}"
-  '\u2706': "\\ding{38}"
-  '\u2707': "\\ding{39}"
-  '\u2708': "\\ding{40}"
-  '\u2709': "\\ding{41}"
-  '\u270C': "\\ding{44}"
-  '\u270D': "\\ding{45}"
-  '\u270E': "\\ding{46}"
-  '\u270F': "\\ding{47}"
-  '\u2710': "\\ding{48}"
-  '\u2711': "\\ding{49}"
-  '\u2712': "\\ding{50}"
-  '\u2713': "\\ding{51}"
-  '\u2714': "\\ding{52}"
-  '\u2715': "\\ding{53}"
-  '\u2716': "\\ding{54}"
-  '\u2717': "\\ding{55}"
-  '\u2718': "\\ding{56}"
-  '\u2719': "\\ding{57}"
-  '\u271A': "\\ding{58}"
-  '\u271B': "\\ding{59}"
-  '\u271C': "\\ding{60}"
-  '\u271D': "\\ding{61}"
-  '\u271E': "\\ding{62}"
-  '\u271F': "\\ding{63}"
-  '\u2720': "\\ding{64}"
-  '\u2721': "\\ding{65}"
-  '\u2722': "\\ding{66}"
-  '\u2723': "\\ding{67}"
-  '\u2724': "\\ding{68}"
-  '\u2725': "\\ding{69}"
-  '\u2726': "\\ding{70}"
-  '\u2727': "\\ding{71}"
-  '\u2729': "\\ding{73}"
-  '\u272A': "\\ding{74}"
-  '\u272B': "\\ding{75}"
-  '\u272C': "\\ding{76}"
-  '\u272D': "\\ding{77}"
-  '\u272E': "\\ding{78}"
-  '\u272F': "\\ding{79}"
-  '\u2730': "\\ding{80}"
-  '\u2731': "\\ding{81}"
-  '\u2732': "\\ding{82}"
-  '\u2733': "\\ding{83}"
-  '\u2734': "\\ding{84}"
-  '\u2735': "\\ding{85}"
-  '\u2736': "\\ding{86}"
-  '\u2737': "\\ding{87}"
-  '\u2738': "\\ding{88}"
-  '\u2739': "\\ding{89}"
-  '\u273A': "\\ding{90}"
-  '\u273B': "\\ding{91}"
-  '\u273C': "\\ding{92}"
-  '\u273D': "\\ding{93}"
-  '\u273E': "\\ding{94}"
-  '\u273F': "\\ding{95}"
-  '\u2740': "\\ding{96}"
-  '\u2741': "\\ding{97}"
-  '\u2742': "\\ding{98}"
-  '\u2743': "\\ding{99}"
-  '\u2744': "\\ding{100}"
-  '\u2745': "\\ding{101}"
-  '\u2746': "\\ding{102}"
-  '\u2747': "\\ding{103}"
-  '\u2748': "\\ding{104}"
-  '\u2749': "\\ding{105}"
-  '\u274A': "\\ding{106}"
-  '\u274B': "\\ding{107}"
-  '\u274D': "\\ding{109}"
-  '\u274F': "\\ding{111}"
-  '\u2750': "\\ding{112}"
-  '\u2751': "\\ding{113}"
-  '\u2752': "\\ding{114}"
-  '\u2756': "\\ding{118}"
-  '\u2758': "\\ding{120}"
-  '\u2759': "\\ding{121}"
-  '\u275A': "\\ding{122}"
-  '\u275B': "\\ding{123}"
-  '\u275C': "\\ding{124}"
-  '\u275D': "\\ding{125}"
-  '\u275E': "\\ding{126}"
-  '\u2761': "\\ding{161}"
-  '\u2762': "\\ding{162}"
-  '\u2763': "\\ding{163}"
-  '\u2764': "\\ding{164}"
-  '\u2765': "\\ding{165}"
-  '\u2766': "\\ding{166}"
-  '\u2767': "\\ding{167}"
-  '\u2776': "\\ding{182}"
-  '\u2777': "\\ding{183}"
-  '\u2778': "\\ding{184}"
-  '\u2779': "\\ding{185}"
-  '\u277A': "\\ding{186}"
-  '\u277B': "\\ding{187}"
-  '\u277C': "\\ding{188}"
-  '\u277D': "\\ding{189}"
-  '\u277E': "\\ding{190}"
-  '\u277F': "\\ding{191}"
-  '\u2780': "\\ding{192}"
-  '\u2781': "\\ding{193}"
-  '\u2782': "\\ding{194}"
-  '\u2783': "\\ding{195}"
-  '\u2784': "\\ding{196}"
-  '\u2785': "\\ding{197}"
-  '\u2786': "\\ding{198}"
-  '\u2787': "\\ding{199}"
-  '\u2788': "\\ding{200}"
-  '\u2789': "\\ding{201}"
-  '\u278A': "\\ding{202}"
-  '\u278B': "\\ding{203}"
-  '\u278C': "\\ding{204}"
-  '\u278D': "\\ding{205}"
-  '\u278E': "\\ding{206}"
-  '\u278F': "\\ding{207}"
-  '\u2790': "\\ding{208}"
-  '\u2791': "\\ding{209}"
-  '\u2792': "\\ding{210}"
-  '\u2793': "\\ding{211}"
-  '\u2794': "\\ding{212}"
-  '\u2798': "\\ding{216}"
-  '\u2799': "\\ding{217}"
-  '\u279A': "\\ding{218}"
-  '\u279B': "\\ding{219}"
-  '\u279C': "\\ding{220}"
-  '\u279D': "\\ding{221}"
-  '\u279E': "\\ding{222}"
-  '\u279F': "\\ding{223}"
-  '\u27A0': "\\ding{224}"
-  '\u27A1': "\\ding{225}"
-  '\u27A2': "\\ding{226}"
-  '\u27A3': "\\ding{227}"
-  '\u27A4': "\\ding{228}"
-  '\u27A5': "\\ding{229}"
-  '\u27A6': "\\ding{230}"
-  '\u27A7': "\\ding{231}"
-  '\u27A8': "\\ding{232}"
-  '\u27A9': "\\ding{233}"
-  '\u27AA': "\\ding{234}"
-  '\u27AB': "\\ding{235}"
-  '\u27AC': "\\ding{236}"
-  '\u27AD': "\\ding{237}"
-  '\u27AE': "\\ding{238}"
-  '\u27AF': "\\ding{239}"
-  '\u27B1': "\\ding{241}"
-  '\u27B2': "\\ding{242}"
-  '\u27B3': "\\ding{243}"
-  '\u27B4': "\\ding{244}"
-  '\u27B5': "\\ding{245}"
-  '\u27B6': "\\ding{246}"
-  '\u27B7': "\\ding{247}"
-  '\u27B8': "\\ding{248}"
-  '\u27B9': "\\ding{249}"
-  '\u27BA': "\\ding{250}"
-  '\u27BB': "\\ding{251}"
-  '\u27BC': "\\ding{252}"
-  '\u27BD': "\\ding{253}"
-  '\u27BE': "\\ding{254}"
-  '\uFB00': "ff"
-  '\uFB01': "fi"
-  '\uFB02': "fl"
-  '\uFB03': "ffi"
-  '\uFB04': "ffl"
+  '\u2060': "\\nolinebreak{}" # WORD JOINER
+  '\u20A7': "\\ensuremath{\\Elzpes}" # PESETA SIGN
+  '\u20AC': "{\\mbox{\\texteuro}}" # EURO SIGN
+  '\u210A': "\\mathscr{g}" # SCRIPT SMALL G
+  '\u2116': "\\cyrchar\\textnumero{}" # NUMERO SIGN
+  '\u2122': "\\texttrademark{}" # TRADE MARK SIGN
+  '\u212B': "\\AA{}" # ANGSTROM SIGN
+  '\u2212': "-" # MINUS SIGN
+  '\u2254': ":=" # COLON EQUALS
+  '\u2305': "\\barwedge{}" # PROJECTIVE
+  '\u2423': "\\textvisiblespace{}" # OPEN BOX
+  '\u2460': "\\ding{172}" # CIRCLED DIGIT ONE
+  '\u2461': "\\ding{173}" # CIRCLED DIGIT TWO
+  '\u2462': "\\ding{174}" # CIRCLED DIGIT THREE
+  '\u2463': "\\ding{175}" # CIRCLED DIGIT FOUR
+  '\u2464': "\\ding{176}" # CIRCLED DIGIT FIVE
+  '\u2465': "\\ding{177}" # CIRCLED DIGIT SIX
+  '\u2466': "\\ding{178}" # CIRCLED DIGIT SEVEN
+  '\u2467': "\\ding{179}" # CIRCLED DIGIT EIGHT
+  '\u2468': "\\ding{180}" # CIRCLED DIGIT NINE
+  '\u2469': "\\ding{181}" # CIRCLED NUMBER TEN
+  '\u25A0': "\\ding{110}" # BLACK SQUARE
+  '\u25B2': "\\ding{115}" # BLACK UP-POINTING TRIANGLE
+  '\u25BC': "\\ding{116}" # BLACK DOWN-POINTING TRIANGLE
+  '\u25C6': "\\ding{117}" # BLACK DIAMOND
+  '\u25CF': "\\ding{108}" # BLACK CIRCLE
+  '\u25D7': "\\ding{119}" # RIGHT HALF BLACK CIRCLE
+  '\u2605': "\\ding{72}" # BLACK STAR
+  '\u2606': "\\ding{73}" # WHITE STAR
+  '\u260E': "\\ding{37}" # BLACK TELEPHONE
+  '\u261B': "\\ding{42}" # BLACK RIGHT POINTING INDEX
+  '\u261E': "\\ding{43}" # WHITE RIGHT POINTING INDEX
+  '\u263E': "\\rightmoon{}" # LAST QUARTER MOON
+  '\u263F': "\\mercury{}" # MERCURY
+  '\u2640': "\\venus{}" # FEMALE SIGN
+  '\u2642': "\\male{}" # MALE SIGN
+  '\u2643': "\\jupiter{}" # JUPITER
+  '\u2644': "\\saturn{}" # SATURN
+  '\u2645': "\\uranus{}" # URANUS
+  '\u2646': "\\neptune{}" # NEPTUNE
+  '\u2647': "\\pluto{}" # PLUTO
+  '\u2648': "\\aries{}" # ARIES
+  '\u2649': "\\taurus{}" # TAURUS
+  '\u264A': "\\gemini{}" # GEMINI
+  '\u264B': "\\cancer{}" # CANCER
+  '\u264C': "\\leo{}" # LEO
+  '\u264D': "\\virgo{}" # VIRGO
+  '\u264E': "\\libra{}" # LIBRA
+  '\u264F': "\\scorpio{}" # SCORPIUS
+  '\u2650': "\\sagittarius{}" # SAGITTARIUS
+  '\u2651': "\\capricornus{}" # CAPRICORN
+  '\u2652': "\\aquarius{}" # AQUARIUS
+  '\u2653': "\\pisces{}" # PISCES
+  '\u2660': "\\ding{171}" # BLACK SPADE SUIT
+  '\u2663': "\\ding{168}" # BLACK CLUB SUIT
+  '\u2665': "\\ding{170}" # BLACK HEART SUIT
+  '\u2666': "\\ding{169}" # BLACK DIAMOND SUIT
+  '\u2669': "\\quarternote{}" # QUARTER NOTE
+  '\u266A': "\\eighthnote{}" # EIGHTH NOTE
+  '\u2701': "\\ding{33}" # UPPER BLADE SCISSORS
+  '\u2702': "\\ding{34}" # BLACK SCISSORS
+  '\u2703': "\\ding{35}" # LOWER BLADE SCISSORS
+  '\u2704': "\\ding{36}" # WHITE SCISSORS
+  '\u2706': "\\ding{38}" # TELEPHONE LOCATION SIGN
+  '\u2707': "\\ding{39}" # TAPE DRIVE
+  '\u2708': "\\ding{40}" # AIRPLANE
+  '\u2709': "\\ding{41}" # ENVELOPE
+  '\u270C': "\\ding{44}" # VICTORY HAND
+  '\u270D': "\\ding{45}" # WRITING HAND
+  '\u270E': "\\ding{46}" # LOWER RIGHT PENCIL
+  '\u270F': "\\ding{47}" # PENCIL
+  '\u2710': "\\ding{48}" # UPPER RIGHT PENCIL
+  '\u2711': "\\ding{49}" # WHITE NIB
+  '\u2712': "\\ding{50}" # BLACK NIB
+  '\u2713': "\\ding{51}" # CHECK MARK
+  '\u2714': "\\ding{52}" # HEAVY CHECK MARK
+  '\u2715': "\\ding{53}" # MULTIPLICATION X
+  '\u2716': "\\ding{54}" # HEAVY MULTIPLICATION X
+  '\u2717': "\\ding{55}" # BALLOT X
+  '\u2718': "\\ding{56}" # HEAVY BALLOT X
+  '\u2719': "\\ding{57}" # OUTLINED GREEK CROSS
+  '\u271A': "\\ding{58}" # HEAVY GREEK CROSS
+  '\u271B': "\\ding{59}" # OPEN CENTRE CROSS
+  '\u271C': "\\ding{60}" # HEAVY OPEN CENTRE CROSS
+  '\u271D': "\\ding{61}" # LATIN CROSS
+  '\u271E': "\\ding{62}" # SHADOWED WHITE LATIN CROSS
+  '\u271F': "\\ding{63}" # OUTLINED LATIN CROSS
+  '\u2720': "\\ding{64}" # MALTESE CROSS
+  '\u2721': "\\ding{65}" # STAR OF DAVID
+  '\u2722': "\\ding{66}" # FOUR TEARDROP-SPOKED ASTERISK
+  '\u2723': "\\ding{67}" # FOUR BALLOON-SPOKED ASTERISK
+  '\u2724': "\\ding{68}" # HEAVY FOUR BALLOON-SPOKED ASTERISK
+  '\u2725': "\\ding{69}" # FOUR CLUB-SPOKED ASTERISK
+  '\u2726': "\\ding{70}" # BLACK FOUR POINTED STAR
+  '\u2727': "\\ding{71}" # WHITE FOUR POINTED STAR
+  '\u2729': "\\ding{73}" # STRESS OUTLINED WHITE STAR
+  '\u272A': "\\ding{74}" # CIRCLED WHITE STAR
+  '\u272B': "\\ding{75}" # OPEN CENTRE BLACK STAR
+  '\u272C': "\\ding{76}" # BLACK CENTRE WHITE STAR
+  '\u272D': "\\ding{77}" # OUTLINED BLACK STAR
+  '\u272E': "\\ding{78}" # HEAVY OUTLINED BLACK STAR
+  '\u272F': "\\ding{79}" # PINWHEEL STAR
+  '\u2730': "\\ding{80}" # SHADOWED WHITE STAR
+  '\u2731': "\\ding{81}" # HEAVY ASTERISK
+  '\u2732': "\\ding{82}" # OPEN CENTRE ASTERISK
+  '\u2733': "\\ding{83}" # EIGHT SPOKED ASTERISK
+  '\u2734': "\\ding{84}" # EIGHT POINTED BLACK STAR
+  '\u2735': "\\ding{85}" # EIGHT POINTED PINWHEEL STAR
+  '\u2736': "\\ding{86}" # SIX POINTED BLACK STAR
+  '\u2737': "\\ding{87}" # EIGHT POINTED RECTILINEAR BLACK STAR
+  '\u2738': "\\ding{88}" # HEAVY EIGHT POINTED RECTILINEAR BLACK STAR
+  '\u2739': "\\ding{89}" # TWELVE POINTED BLACK STAR
+  '\u273A': "\\ding{90}" # SIXTEEN POINTED ASTERISK
+  '\u273B': "\\ding{91}" # TEARDROP-SPOKED ASTERISK
+  '\u273C': "\\ding{92}" # OPEN CENTRE TEARDROP-SPOKED ASTERISK
+  '\u273D': "\\ding{93}" # HEAVY TEARDROP-SPOKED ASTERISK
+  '\u273E': "\\ding{94}" # SIX PETALLED BLACK AND WHITE FLORETTE
+  '\u273F': "\\ding{95}" # BLACK FLORETTE
+  '\u2740': "\\ding{96}" # WHITE FLORETTE
+  '\u2741': "\\ding{97}" # EIGHT PETALLED OUTLINED BLACK FLORETTE
+  '\u2742': "\\ding{98}" # CIRCLED OPEN CENTRE EIGHT POINTED STAR
+  '\u2743': "\\ding{99}" # HEAVY TEARDROP-SPOKED PINWHEEL ASTERISK
+  '\u2744': "\\ding{100}" # SNOWFLAKE
+  '\u2745': "\\ding{101}" # TIGHT TRIFOLIATE SNOWFLAKE
+  '\u2746': "\\ding{102}" # HEAVY CHEVRON SNOWFLAKE
+  '\u2747': "\\ding{103}" # SPARKLE
+  '\u2748': "\\ding{104}" # HEAVY SPARKLE
+  '\u2749': "\\ding{105}" # BALLOON-SPOKED ASTERISK
+  '\u274A': "\\ding{106}" # EIGHT TEARDROP-SPOKED PROPELLER ASTERISK
+  '\u274B': "\\ding{107}" # HEAVY EIGHT TEARDROP-SPOKED PROPELLER ASTERISK
+  '\u274D': "\\ding{109}" # SHADOWED WHITE CIRCLE
+  '\u274F': "\\ding{111}" # LOWER RIGHT DROP-SHADOWED WHITE SQUARE
+  '\u2750': "\\ding{112}" # UPPER RIGHT DROP-SHADOWED WHITE SQUARE
+  '\u2751': "\\ding{113}" # LOWER RIGHT SHADOWED WHITE SQUARE
+  '\u2752': "\\ding{114}" # UPPER RIGHT SHADOWED WHITE SQUARE
+  '\u2756': "\\ding{118}" # BLACK DIAMOND MINUS WHITE X
+  '\u2758': "\\ding{120}" # LIGHT VERTICAL BAR
+  '\u2759': "\\ding{121}" # MEDIUM VERTICAL BAR
+  '\u275A': "\\ding{122}" # HEAVY VERTICAL BAR
+  '\u275B': "\\ding{123}" # HEAVY SINGLE TURNED COMMA QUOTATION MARK ORNAMENT
+  '\u275C': "\\ding{124}" # HEAVY SINGLE COMMA QUOTATION MARK ORNAMENT
+  '\u275D': "\\ding{125}" # HEAVY DOUBLE TURNED COMMA QUOTATION MARK ORNAMENT
+  '\u275E': "\\ding{126}" # HEAVY DOUBLE COMMA QUOTATION MARK ORNAMENT
+  '\u2761': "\\ding{161}" # CURVED STEM PARAGRAPH SIGN ORNAMENT
+  '\u2762': "\\ding{162}" # HEAVY EXCLAMATION MARK ORNAMENT
+  '\u2763': "\\ding{163}" # HEAVY HEART EXCLAMATION MARK ORNAMENT
+  '\u2764': "\\ding{164}" # HEAVY BLACK HEART
+  '\u2765': "\\ding{165}" # ROTATED HEAVY BLACK HEART BULLET
+  '\u2766': "\\ding{166}" # FLORAL HEART
+  '\u2767': "\\ding{167}" # ROTATED FLORAL HEART BULLET
+  '\u2776': "\\ding{182}" # DINGBAT NEGATIVE CIRCLED DIGIT ONE
+  '\u2777': "\\ding{183}" # DINGBAT NEGATIVE CIRCLED DIGIT TWO
+  '\u2778': "\\ding{184}" # DINGBAT NEGATIVE CIRCLED DIGIT THREE
+  '\u2779': "\\ding{185}" # DINGBAT NEGATIVE CIRCLED DIGIT FOUR
+  '\u277A': "\\ding{186}" # DINGBAT NEGATIVE CIRCLED DIGIT FIVE
+  '\u277B': "\\ding{187}" # DINGBAT NEGATIVE CIRCLED DIGIT SIX
+  '\u277C': "\\ding{188}" # DINGBAT NEGATIVE CIRCLED DIGIT SEVEN
+  '\u277D': "\\ding{189}" # DINGBAT NEGATIVE CIRCLED DIGIT EIGHT
+  '\u277E': "\\ding{190}" # DINGBAT NEGATIVE CIRCLED DIGIT NINE
+  '\u277F': "\\ding{191}" # DINGBAT NEGATIVE CIRCLED NUMBER TEN
+  '\u2780': "\\ding{192}" # DINGBAT CIRCLED SANS-SERIF DIGIT ONE
+  '\u2781': "\\ding{193}" # DINGBAT CIRCLED SANS-SERIF DIGIT TWO
+  '\u2782': "\\ding{194}" # DINGBAT CIRCLED SANS-SERIF DIGIT THREE
+  '\u2783': "\\ding{195}" # DINGBAT CIRCLED SANS-SERIF DIGIT FOUR
+  '\u2784': "\\ding{196}" # DINGBAT CIRCLED SANS-SERIF DIGIT FIVE
+  '\u2785': "\\ding{197}" # DINGBAT CIRCLED SANS-SERIF DIGIT SIX
+  '\u2786': "\\ding{198}" # DINGBAT CIRCLED SANS-SERIF DIGIT SEVEN
+  '\u2787': "\\ding{199}" # DINGBAT CIRCLED SANS-SERIF DIGIT EIGHT
+  '\u2788': "\\ding{200}" # DINGBAT CIRCLED SANS-SERIF DIGIT NINE
+  '\u2789': "\\ding{201}" # DINGBAT CIRCLED SANS-SERIF NUMBER TEN
+  '\u278A': "\\ding{202}" # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT ONE
+  '\u278B': "\\ding{203}" # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT TWO
+  '\u278C': "\\ding{204}" # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT THREE
+  '\u278D': "\\ding{205}" # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT FOUR
+  '\u278E': "\\ding{206}" # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT FIVE
+  '\u278F': "\\ding{207}" # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT SIX
+  '\u2790': "\\ding{208}" # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT SEVEN
+  '\u2791': "\\ding{209}" # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT EIGHT
+  '\u2792': "\\ding{210}" # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT NINE
+  '\u2793': "\\ding{211}" # DINGBAT NEGATIVE CIRCLED SANS-SERIF NUMBER TEN
+  '\u2794': "\\ding{212}" # HEAVY WIDE-HEADED RIGHTWARDS ARROW
+  '\u2798': "\\ding{216}" # HEAVY SOUTH EAST ARROW
+  '\u2799': "\\ding{217}" # HEAVY RIGHTWARDS ARROW
+  '\u279A': "\\ding{218}" # HEAVY NORTH EAST ARROW
+  '\u279B': "\\ding{219}" # DRAFTING POINT RIGHTWARDS ARROW
+  '\u279C': "\\ding{220}" # HEAVY ROUND-TIPPED RIGHTWARDS ARROW
+  '\u279D': "\\ding{221}" # TRIANGLE-HEADED RIGHTWARDS ARROW
+  '\u279E': "\\ding{222}" # HEAVY TRIANGLE-HEADED RIGHTWARDS ARROW
+  '\u279F': "\\ding{223}" # DASHED TRIANGLE-HEADED RIGHTWARDS ARROW
+  '\u27A0': "\\ding{224}" # HEAVY DASHED TRIANGLE-HEADED RIGHTWARDS ARROW
+  '\u27A1': "\\ding{225}" # BLACK RIGHTWARDS ARROW
+  '\u27A2': "\\ding{226}" # THREE-D TOP-LIGHTED RIGHTWARDS ARROWHEAD
+  '\u27A3': "\\ding{227}" # THREE-D BOTTOM-LIGHTED RIGHTWARDS ARROWHEAD
+  '\u27A4': "\\ding{228}" # BLACK RIGHTWARDS ARROWHEAD
+  '\u27A5': "\\ding{229}" # HEAVY BLACK CURVED DOWNWARDS AND RIGHTWARDS ARROW
+  '\u27A6': "\\ding{230}" # HEAVY BLACK CURVED UPWARDS AND RIGHTWARDS ARROW
+  '\u27A7': "\\ding{231}" # SQUAT BLACK RIGHTWARDS ARROW
+  '\u27A8': "\\ding{232}" # HEAVY CONCAVE-POINTED BLACK RIGHTWARDS ARROW
+  '\u27A9': "\\ding{233}" # RIGHT-SHADED WHITE RIGHTWARDS ARROW
+  '\u27AA': "\\ding{234}" # LEFT-SHADED WHITE RIGHTWARDS ARROW
+  '\u27AB': "\\ding{235}" # BACK-TILTED SHADOWED WHITE RIGHTWARDS ARROW
+  '\u27AC': "\\ding{236}" # FRONT-TILTED SHADOWED WHITE RIGHTWARDS ARROW
+  '\u27AD': "\\ding{237}" # HEAVY LOWER RIGHT-SHADOWED WHITE RIGHTWARDS ARROW
+  '\u27AE': "\\ding{238}" # HEAVY UPPER RIGHT-SHADOWED WHITE RIGHTWARDS ARROW
+  '\u27AF': "\\ding{239}" # NOTCHED LOWER RIGHT-SHADOWED WHITE RIGHTWARDS ARROW
+  '\u27B1': "\\ding{241}" # NOTCHED UPPER RIGHT-SHADOWED WHITE RIGHTWARDS ARROW
+  '\u27B2': "\\ding{242}" # CIRCLED HEAVY WHITE RIGHTWARDS ARROW
+  '\u27B3': "\\ding{243}" # WHITE-FEATHERED RIGHTWARDS ARROW
+  '\u27B4': "\\ding{244}" # BLACK-FEATHERED SOUTH EAST ARROW
+  '\u27B5': "\\ding{245}" # BLACK-FEATHERED RIGHTWARDS ARROW
+  '\u27B6': "\\ding{246}" # BLACK-FEATHERED NORTH EAST ARROW
+  '\u27B7': "\\ding{247}" # HEAVY BLACK-FEATHERED SOUTH EAST ARROW
+  '\u27B8': "\\ding{248}" # HEAVY BLACK-FEATHERED RIGHTWARDS ARROW
+  '\u27B9': "\\ding{249}" # HEAVY BLACK-FEATHERED NORTH EAST ARROW
+  '\u27BA': "\\ding{250}" # TEARDROP-BARBED RIGHTWARDS ARROW
+  '\u27BB': "\\ding{251}" # HEAVY TEARDROP-SHANKED RIGHTWARDS ARROW
+  '\u27BC': "\\ding{252}" # WEDGE-TAILED RIGHTWARDS ARROW
+  '\u27BD': "\\ding{253}" # HEAVY WEDGE-TAILED RIGHTWARDS ARROW
+  '\u27BE': "\\ding{254}" # OPEN-OUTLINED RIGHTWARDS ARROW
+  '\u27E8': "\\langle{}" # MATHEMATICAL LEFT ANGLE BRACKET
+  '\u27E9': "\\rangle{}" # MATHEMATICAL RIGHT ANGLE BRACKET
+  '\uFB00': "ff" # LATIN SMALL LIGATURE FF
+  '\uFB01': "fi" # LATIN SMALL LIGATURE FI
+  '\uFB02': "fl" # LATIN SMALL LIGATURE FL
+  '\uFB03': "ffi" # LATIN SMALL LIGATURE FFI
+  '\uFB04': "ffl" # LATIN SMALL LIGATURE FFL
   '\uFFFD': "\\dbend{}"
-  '\uD835\uDEB9': "\\mathbf{\\vartheta}"
-  '\uD835\uDEDD': "\\mathbf{\\vartheta}"
-  '\uD835\uDEDE': "\\mathbf{\\varkappa}"
-  '\uD835\uDEDF': "\\mathbf{\\phi}"
-  '\uD835\uDEE0': "\\mathbf{\\varrho}"
-  '\uD835\uDEE1': "\\mathbf{\\varpi}"
-  '\uD835\uDEF3': "\\mathsl{\\vartheta}"
-  '\uD835\uDF17': "\\mathsl{\\vartheta}"
-  '\uD835\uDF18': "\\mathsl{\\varkappa}"
-  '\uD835\uDF19': "\\mathsl{\\phi}"
-  '\uD835\uDF1A': "\\mathsl{\\varrho}"
-  '\uD835\uDF1B': "\\mathsl{\\varpi}"
-  '\uD835\uDF2D': "\\mathbit{O}"
-  '\uD835\uDF51': "\\mathbit{\\vartheta}"
-  '\uD835\uDF52': "\\mathbit{\\varkappa}"
-  '\uD835\uDF53': "\\mathbit{\\phi}"
-  '\uD835\uDF54': "\\mathbit{\\varrho}"
-  '\uD835\uDF55': "\\mathbit{\\varpi}"
-  '\uD835\uDF67': "\\mathsfbf{\\vartheta}"
-  '\uD835\uDF8B': "\\mathsfbf{\\vartheta}"
-  '\uD835\uDF8C': "\\mathsfbf{\\varkappa}"
-  '\uD835\uDF8D': "\\mathsfbf{\\phi}"
-  '\uD835\uDF8E': "\\mathsfbf{\\varrho}"
-  '\uD835\uDF8F': "\\mathsfbf{\\varpi}"
-  '\uD835\uDFA1': "\\mathsfbfsl{\\vartheta}"
-  '\uD835\uDFC5': "\\mathsfbfsl{\\vartheta}"
-  '\uD835\uDFC6': "\\mathsfbfsl{\\varkappa}"
-  '\uD835\uDFC7': "\\mathsfbfsl{\\phi}"
-  '\uD835\uDFC8': "\\mathsfbfsl{\\varrho}"
-  '\uD835\uDFC9': "\\mathsfbfsl{\\varpi}"
+  '\uD835\uDEB9': "\\mathbf{\\vartheta}" # MATHEMATICAL BOLD CAPITAL THETA SYMBOL
+  '\uD835\uDEDD': "\\mathbf{\\vartheta}" # MATHEMATICAL BOLD THETA SYMBOL
+  '\uD835\uDEDE': "\\mathbf{\\varkappa}" # MATHEMATICAL BOLD KAPPA SYMBOL
+  '\uD835\uDEDF': "\\mathbf{\\phi}" # MATHEMATICAL BOLD PHI SYMBOL
+  '\uD835\uDEE0': "\\mathbf{\\varrho}" # MATHEMATICAL BOLD RHO SYMBOL
+  '\uD835\uDEE1': "\\mathbf{\\varpi}" # MATHEMATICAL BOLD PI SYMBOL
+  '\uD835\uDEF3': "\\mathsl{\\vartheta}" # MATHEMATICAL ITALIC CAPITAL THETA SYMBOL
+  '\uD835\uDF17': "\\mathsl{\\vartheta}" # MATHEMATICAL ITALIC THETA SYMBOL
+  '\uD835\uDF18': "\\mathsl{\\varkappa}" # MATHEMATICAL ITALIC KAPPA SYMBOL
+  '\uD835\uDF19': "\\mathsl{\\phi}" # MATHEMATICAL ITALIC PHI SYMBOL
+  '\uD835\uDF1A': "\\mathsl{\\varrho}" # MATHEMATICAL ITALIC RHO SYMBOL
+  '\uD835\uDF1B': "\\mathsl{\\varpi}" # MATHEMATICAL ITALIC PI SYMBOL
+  '\uD835\uDF2D': "\\mathbit{O}" # MATHEMATICAL BOLD ITALIC CAPITAL THETA SYMBOL
+  '\uD835\uDF51': "\\mathbit{\\vartheta}" # MATHEMATICAL BOLD ITALIC THETA SYMBOL
+  '\uD835\uDF52': "\\mathbit{\\varkappa}" # MATHEMATICAL BOLD ITALIC KAPPA SYMBOL
+  '\uD835\uDF53': "\\mathbit{\\phi}" # MATHEMATICAL BOLD ITALIC PHI SYMBOL
+  '\uD835\uDF54': "\\mathbit{\\varrho}" # MATHEMATICAL BOLD ITALIC RHO SYMBOL
+  '\uD835\uDF55': "\\mathbit{\\varpi}" # MATHEMATICAL BOLD ITALIC PI SYMBOL
+  '\uD835\uDF67': "\\mathsfbf{\\vartheta}" # MATHEMATICAL SANS-SERIF BOLD CAPITAL THETA SYMBOL
+  '\uD835\uDF8B': "\\mathsfbf{\\vartheta}" # MATHEMATICAL SANS-SERIF BOLD THETA SYMBOL
+  '\uD835\uDF8C': "\\mathsfbf{\\varkappa}" # MATHEMATICAL SANS-SERIF BOLD KAPPA SYMBOL
+  '\uD835\uDF8D': "\\mathsfbf{\\phi}" # MATHEMATICAL SANS-SERIF BOLD PHI SYMBOL
+  '\uD835\uDF8E': "\\mathsfbf{\\varrho}" # MATHEMATICAL SANS-SERIF BOLD RHO SYMBOL
+  '\uD835\uDF8F': "\\mathsfbf{\\varpi}" # MATHEMATICAL SANS-SERIF BOLD PI SYMBOL
+  '\uD835\uDFA1': "\\mathsfbfsl{\\vartheta}" # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL THETA SYMBOL
+  '\uD835\uDFC5': "\\mathsfbfsl{\\vartheta}" # MATHEMATICAL SANS-SERIF BOLD ITALIC THETA SYMBOL
+  '\uD835\uDFC6': "\\mathsfbfsl{\\varkappa}" # MATHEMATICAL SANS-SERIF BOLD ITALIC KAPPA SYMBOL
+  '\uD835\uDFC7': "\\mathsfbfsl{\\phi}" # MATHEMATICAL SANS-SERIF BOLD ITALIC PHI SYMBOL
+  '\uD835\uDFC8': "\\mathsfbfsl{\\varrho}" # MATHEMATICAL SANS-SERIF BOLD ITALIC RHO SYMBOL
+  '\uD835\uDFC9': "\\mathsfbfsl{\\varpi}" # MATHEMATICAL SANS-SERIF BOLD ITALIC PI SYMBOL
 LaTeX.toUnicode =
   "\\space{}": ' '
   "{\\space}": ' '
   "\\space": ' '
-  "\\#": '#'
+  "\\#": '#' # NUMBER SIGN
   "\\$": '$'
-  "\\textdollar{}": '$'
-  "{\\textdollar}": '$'
-  "\\textdollar": '$'
-  "\\%": '%'
+  "\\textdollar{}": '$' # DOLLAR SIGN
+  "{\\textdollar}": '$' # DOLLAR SIGN
+  "\\textdollar": '$' # DOLLAR SIGN
+  "\\%": '%' # PERCENT SIGN
   "\\&": '&'
   "\\textquotesingle{}": "'"
   "{\\textquotesingle}": "'"
   "\\textquotesingle": "'"
   "\\backslash{}": '\\'
-  "\\textbackslash{}": '\\'
-  "{\\textbackslash}": '\\'
+  "\\textbackslash{}": '\\' # REVERSE SOLIDUS
+  "{\\textbackslash}": '\\' # REVERSE SOLIDUS
   "{\\backslash}": '\\'
-  "\\textbackslash": '\\'
+  "\\textbackslash": '\\' # REVERSE SOLIDUS
   "\\backslash": '\\'
-  "\\^": '^'
-  "{\\^}": '^'
-  "\\^{}": '^'
+  "\\^": '^' # CIRCUMFLEX ACCENT
+  "{\\^}": '^' # CIRCUMFLEX ACCENT
+  "\\^{}": '^' # CIRCUMFLEX ACCENT
   "\\_": '_'
   "\\textasciigrave{}": '`'
   "{\\textasciigrave}": '`'
   "\\textasciigrave": '`'
   "\\{": '{'
-  "\\lbrace{}": '{'
-  "{\\lbrace}": '{'
-  "\\lbrace": '{'
+  "\\lbrace{}": '{' # LEFT CURLY BRACKET
+  "{\\lbrace}": '{' # LEFT CURLY BRACKET
+  "\\lbrace": '{' # LEFT CURLY BRACKET
   "\\}": '}'
-  "\\rbrace{}": '}'
-  "{\\rbrace}": '}'
-  "\\rbrace": '}'
-  "\\textasciitilde{}": '~'
-  "{\\textasciitilde}": '~'
-  "\\textasciitilde": '~'
+  "\\rbrace{}": '}' # RIGHT CURLY BRACKET
+  "{\\rbrace}": '}' # RIGHT CURLY BRACKET
+  "\\rbrace": '}' # RIGHT CURLY BRACKET
+  "\\textasciitilde{}": '~' # TILDE
+  "{\\textasciitilde}": '~' # TILDE
+  "\\textasciitilde": '~' # TILDE
   "~": '\u00A0'
-  "\\textexclamdown{}": '\u00A1'
-  "{\\textexclamdown}": '\u00A1'
-  "\\textexclamdown": '\u00A1'
-  "\\textcent{}": '\u00A2'
-  "{\\textcent}": '\u00A2'
-  "\\textcent": '\u00A2'
-  "\\textsterling{}": '\u00A3'
-  "{\\textsterling}": '\u00A3'
-  "\\textsterling": '\u00A3'
-  "\\textcurrency{}": '\u00A4'
-  "{\\textcurrency}": '\u00A4'
-  "\\textcurrency": '\u00A4'
-  "\\textyen{}": '\u00A5'
-  "{\\textyen}": '\u00A5'
-  "\\textyen": '\u00A5'
-  "\\textbrokenbar{}": '\u00A6'
-  "{\\textbrokenbar}": '\u00A6'
-  "\\textbrokenbar": '\u00A6'
-  "\\textsection{}": '\u00A7'
-  "{\\textsection}": '\u00A7'
-  "\\textsection": '\u00A7'
-  "\\textasciidieresis{}": '\u00A8'
-  "{\\textasciidieresis}": '\u00A8'
-  "\\textasciidieresis": '\u00A8'
-  "\\textcopyright{}": '\u00A9'
-  "{\\textcopyright}": '\u00A9'
-  "\\textcopyright": '\u00A9'
-  "\\textordfeminine{}": '\u00AA'
-  "{\\textordfeminine}": '\u00AA'
-  "\\textordfeminine": '\u00AA'
-  "\\guillemotleft{}": '\u00AB'
-  "{\\guillemotleft}": '\u00AB'
-  "\\guillemotleft": '\u00AB'
-  "\\lnot{}": '\u00AC'
-  "{\\lnot}": '\u00AC'
-  "\\lnot": '\u00AC'
-  "\\-": '\u00AD'
-  "\\textregistered{}": '\u00AE'
-  "{\\textregistered}": '\u00AE'
-  "\\textregistered": '\u00AE'
-  "\\textasciimacron{}": '\u00AF'
-  "{\\textasciimacron}": '\u00AF'
-  "\\textasciimacron": '\u00AF'
+  "\\textexclamdown{}": '\u00A1' # INVERTED EXCLAMATION MARK
+  "{\\textexclamdown}": '\u00A1' # INVERTED EXCLAMATION MARK
+  "\\textexclamdown": '\u00A1' # INVERTED EXCLAMATION MARK
+  "\\textcent{}": '\u00A2' # CENT SIGN
+  "{\\textcent}": '\u00A2' # CENT SIGN
+  "\\textcent": '\u00A2' # CENT SIGN
+  "\\textsterling{}": '\u00A3' # POUND SIGN
+  "{\\textsterling}": '\u00A3' # POUND SIGN
+  "\\textsterling": '\u00A3' # POUND SIGN
+  "\\textcurrency{}": '\u00A4' # CURRENCY SIGN
+  "{\\textcurrency}": '\u00A4' # CURRENCY SIGN
+  "\\textcurrency": '\u00A4' # CURRENCY SIGN
+  "\\textyen{}": '\u00A5' # YEN SIGN
+  "{\\textyen}": '\u00A5' # YEN SIGN
+  "\\textyen": '\u00A5' # YEN SIGN
+  "\\textbrokenbar{}": '\u00A6' # BROKEN BAR
+  "{\\textbrokenbar}": '\u00A6' # BROKEN BAR
+  "\\textbrokenbar": '\u00A6' # BROKEN BAR
+  "\\textsection{}": '\u00A7' # SECTION SIGN
+  "{\\textsection}": '\u00A7' # SECTION SIGN
+  "\\textsection": '\u00A7' # SECTION SIGN
+  "\\textasciidieresis{}": '\u00A8' # DIAERESIS
+  "{\\textasciidieresis}": '\u00A8' # DIAERESIS
+  "\\textasciidieresis": '\u00A8' # DIAERESIS
+  "\\textcopyright{}": '\u00A9' # COPYRIGHT SIGN
+  "{\\textcopyright}": '\u00A9' # COPYRIGHT SIGN
+  "\\textcopyright": '\u00A9' # COPYRIGHT SIGN
+  "\\textordfeminine{}": '\u00AA' # FEMININE ORDINAL INDICATOR
+  "{\\textordfeminine}": '\u00AA' # FEMININE ORDINAL INDICATOR
+  "\\textordfeminine": '\u00AA' # FEMININE ORDINAL INDICATOR
+  "\\guillemotleft{}": '\u00AB' # LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
+  "{\\guillemotleft}": '\u00AB' # LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
+  "\\guillemotleft": '\u00AB' # LEFT-POINTING DOUBLE ANGLE QUOTATION MARK
+  "\\lnot{}": '\u00AC' # NOT SIGN
+  "{\\lnot}": '\u00AC' # NOT SIGN
+  "\\lnot": '\u00AC' # NOT SIGN
+  "\\-": '\u00AD' # SOFT HYPHEN
+  "\\textregistered{}": '\u00AE' # REGISTERED SIGN
+  "{\\textregistered}": '\u00AE' # REGISTERED SIGN
+  "\\textregistered": '\u00AE' # REGISTERED SIGN
+  "\\textasciimacron{}": '\u00AF' # MACRON
+  "{\\textasciimacron}": '\u00AF' # MACRON
+  "\\textasciimacron": '\u00AF' # MACRON
   "^\\circ{}": '\u00B0'
-  "\\textdegree{}": '\u00B0'
-  "{\\textdegree}": '\u00B0'
-  "\\textdegree": '\u00B0'
+  "\\textdegree{}": '\u00B0' # DEGREE SIGN
+  "{\\textdegree}": '\u00B0' # DEGREE SIGN
+  "\\textdegree": '\u00B0' # DEGREE SIGN
   "^\\circ": '\u00B0'
-  "\\pm{}": '\u00B1'
-  "{\\pm}": '\u00B1'
-  "\\pm": '\u00B1'
-  "^2": '\u00B2'
-  "{^2}": '\u00B2'
-  "^3": '\u00B3'
-  "{^3}": '\u00B3'
-  "\\textasciiacute{}": '\u00B4'
-  "{\\textasciiacute}": '\u00B4'
-  "\\textasciiacute": '\u00B4'
-  "\\mathrm{\\mu}": '\u00B5'
-  "\\textparagraph{}": '\u00B6'
-  "{\\textparagraph}": '\u00B6'
-  "\\textparagraph": '\u00B6'
-  "\\cdot{}": '\u00B7'
-  "{\\cdot}": '\u00B7'
-  "\\cdot": '\u00B7'
-  "\\c{}": '\u00B8'
-  "{\\c}": '\u00B8'
-  "\\c": '\u00B8'
-  "^1": '\u00B9'
-  "{^1}": '\u00B9'
-  "\\textordmasculine{}": '\u00BA'
-  "{\\textordmasculine}": '\u00BA'
-  "\\textordmasculine": '\u00BA'
-  "\\guillemotright{}": '\u00BB'
-  "{\\guillemotright}": '\u00BB'
-  "\\guillemotright": '\u00BB'
-  "\\textonequarter{}": '\u00BC'
-  "{\\textonequarter}": '\u00BC'
-  "\\textonequarter": '\u00BC'
-  "\\textonehalf{}": '\u00BD'
-  "{\\textonehalf}": '\u00BD'
-  "\\textonehalf": '\u00BD'
-  "\\textthreequarters{}": '\u00BE'
-  "{\\textthreequarters}": '\u00BE'
-  "\\textthreequarters": '\u00BE'
-  "\\textquestiondown{}": '\u00BF'
-  "{\\textquestiondown}": '\u00BF'
-  "\\textquestiondown": '\u00BF'
-  "{\\`A}": '\u00C0'
-  "\\`{A}": '\u00C0'
-  "\\`A": '\u00C0'
-  "{\\'A}": '\u00C1'
-  "\\'{A}": '\u00C1'
-  "\\'A": '\u00C1'
-  "{\\^A}": '\u00C2'
-  "\\^{A}": '\u00C2'
-  "\\^A": '\u00C2'
-  "{\\~A}": '\u00C3'
-  "\\~{A}": '\u00C3'
-  "\\~A": '\u00C3'
-  "{\\\"A}": '\u00C4'
-  "\\\"{A}": '\u00C4'
-  "\\\"A": '\u00C4'
-  "\\AA{}": '\u00C5'
-  "{\\AA}": '\u00C5'
-  "\\A{A}": '\u00C5'
-  "\\AA": '\u00C5'
-  "\\AE{}": '\u00C6'
-  "{\\AE}": '\u00C6'
-  "\\A{E}": '\u00C6'
-  "\\AE": '\u00C6'
-  "{\\c C}": '\u00C7'
-  "\\c C{}": '\u00C7'
-  "\\c C": '\u00C7'
-  "{\\`E}": '\u00C8'
-  "\\`{E}": '\u00C8'
-  "\\`E": '\u00C8'
-  "{\\'E}": '\u00C9'
-  "\\'{E}": '\u00C9'
-  "\\'E": '\u00C9'
-  "{\\^E}": '\u00CA'
-  "\\^{E}": '\u00CA'
-  "\\^E": '\u00CA'
-  "{\\\"E}": '\u00CB'
-  "\\\"{E}": '\u00CB'
-  "\\\"E": '\u00CB'
-  "{\\`I}": '\u00CC'
-  "\\`{I}": '\u00CC'
-  "\\`I": '\u00CC'
-  "{\\'I}": '\u00CD'
-  "\\'{I}": '\u00CD'
-  "\\'I": '\u00CD'
-  "{\\^I}": '\u00CE'
-  "\\^{I}": '\u00CE'
-  "\\^I": '\u00CE'
-  "{\\\"I}": '\u00CF'
-  "\\\"{I}": '\u00CF'
-  "\\\"I": '\u00CF'
-  "\\DH{}": '\u00D0'
-  "{\\DH}": '\u00D0'
-  "\\D{H}": '\u00D0'
-  "\\DH": '\u00D0'
-  "{\\~N}": '\u00D1'
-  "\\~{N}": '\u00D1'
-  "\\~N": '\u00D1'
-  "{\\`O}": '\u00D2'
-  "\\`{O}": '\u00D2'
-  "\\`O": '\u00D2'
-  "{\\'O}": '\u00D3'
-  "\\'{O}": '\u00D3'
-  "\\'O": '\u00D3'
-  "{\\^O}": '\u00D4'
-  "\\^{O}": '\u00D4'
-  "\\^O": '\u00D4'
-  "{\\~O}": '\u00D5'
-  "\\~{O}": '\u00D5'
-  "\\~O": '\u00D5'
-  "{\\\"O}": '\u00D6'
-  "\\\"{O}": '\u00D6'
-  "\\\"O": '\u00D6'
-  "\\texttimes{}": '\u00D7'
-  "{\\texttimes}": '\u00D7'
-  "\\texttimes": '\u00D7'
-  "\\O{}": '\u00D8'
-  "{\\O}": '\u00D8'
-  "\\O": '\u00D8'
-  "{\\`U}": '\u00D9'
-  "\\`{U}": '\u00D9'
-  "\\`U": '\u00D9'
-  "{\\'U}": '\u00DA'
-  "\\'{U}": '\u00DA'
-  "\\'U": '\u00DA'
-  "{\\^U}": '\u00DB'
-  "\\^{U}": '\u00DB'
-  "\\^U": '\u00DB'
-  "{\\\"U}": '\u00DC'
-  "\\\"{U}": '\u00DC'
-  "\\\"U": '\u00DC'
-  "{\\'Y}": '\u00DD'
-  "\\'{Y}": '\u00DD'
-  "\\'Y": '\u00DD'
-  "\\TH{}": '\u00DE'
-  "{\\TH}": '\u00DE'
-  "\\T{H}": '\u00DE'
-  "\\TH": '\u00DE'
-  "\\ss{}": '\u00DF'
-  "{\\ss}": '\u00DF'
-  "\\ss": '\u00DF'
-  "{\\`a}": '\u00E0'
-  "\\`{a}": '\u00E0'
-  "\\`a": '\u00E0'
-  "{\\'a}": '\u00E1'
-  "\\'{a}": '\u00E1'
-  "\\'a": '\u00E1'
-  "{\\^a}": '\u00E2'
-  "\\^{a}": '\u00E2'
-  "\\^a": '\u00E2'
-  "{\\~a}": '\u00E3'
-  "\\~{a}": '\u00E3'
-  "\\~a": '\u00E3'
-  "{\\\"a}": '\u00E4'
-  "\\\"{a}": '\u00E4'
-  "\\\"a": '\u00E4'
-  "\\aa{}": '\u00E5'
-  "{\\aa}": '\u00E5'
-  "\\aa": '\u00E5'
-  "\\ae{}": '\u00E6'
-  "{\\ae}": '\u00E6'
-  "\\ae": '\u00E6'
-  "{\\c c}": '\u00E7'
-  "\\c c{}": '\u00E7'
-  "\\c c": '\u00E7'
-  "{\\`e}": '\u00E8'
-  "\\`{e}": '\u00E8'
-  "\\`e": '\u00E8'
-  "{\\'e}": '\u00E9'
-  "\\'{e}": '\u00E9'
-  "\\'e": '\u00E9'
-  "{\\^e}": '\u00EA'
-  "\\^{e}": '\u00EA'
-  "\\^e": '\u00EA'
-  "{\\\"e}": '\u00EB'
-  "\\\"{e}": '\u00EB'
-  "\\\"e": '\u00EB'
-  "{\\`\\i}": '\u00EC'
-  "\\`\\i{}": '\u00EC'
-  "\\`\\i": '\u00EC'
-  "{\\'\\i}": '\u00ED'
-  "\\'\\i{}": '\u00ED'
-  "\\'\\i": '\u00ED'
-  "{\\^\\i}": '\u00EE'
-  "\\^\\i{}": '\u00EE'
-  "\\^\\i": '\u00EE'
-  "{\\\"\\i}": '\u00EF'
-  "\\\"\\i{}": '\u00EF'
-  "\\\"\\i": '\u00EF'
-  "\\dh{}": '\u00F0'
-  "{\\dh}": '\u00F0'
-  "\\dh": '\u00F0'
-  "{\\~n}": '\u00F1'
-  "\\~{n}": '\u00F1'
-  "\\~n": '\u00F1'
-  "{\\`o}": '\u00F2'
-  "\\`{o}": '\u00F2'
-  "\\`o": '\u00F2'
-  "{\\'o}": '\u00F3'
-  "\\'{o}": '\u00F3'
-  "\\'o": '\u00F3'
-  "{\\^o}": '\u00F4'
-  "\\^{o}": '\u00F4'
-  "\\^o": '\u00F4'
-  "{\\~o}": '\u00F5'
-  "\\~{o}": '\u00F5'
-  "\\~o": '\u00F5'
-  "{\\\"o}": '\u00F6'
-  "\\\"{o}": '\u00F6'
-  "\\\"o": '\u00F6'
-  "\\div{}": '\u00F7'
-  "{\\div}": '\u00F7'
-  "\\div": '\u00F7'
-  "\\o{}": '\u00F8'
-  "{\\o}": '\u00F8'
-  "\\o": '\u00F8'
-  "{\\`u}": '\u00F9'
-  "\\`{u}": '\u00F9'
-  "\\`u": '\u00F9'
-  "{\\'u}": '\u00FA'
-  "\\'{u}": '\u00FA'
-  "\\'u": '\u00FA'
-  "{\\^u}": '\u00FB'
-  "\\^{u}": '\u00FB'
-  "\\^u": '\u00FB'
-  "{\\\"u}": '\u00FC'
-  "\\\"{u}": '\u00FC'
-  "\\\"u": '\u00FC'
-  "{\\'y}": '\u00FD'
-  "\\'{y}": '\u00FD'
-  "\\'y": '\u00FD'
-  "\\th{}": '\u00FE'
-  "{\\th}": '\u00FE'
-  "\\th": '\u00FE'
-  "{\\\"y}": '\u00FF'
-  "\\\"{y}": '\u00FF'
-  "\\\"y": '\u00FF'
-  "{\\=A}": '\u0100'
-  "\\={A}": '\u0100'
-  "\\=A": '\u0100'
-  "{\\=a}": '\u0101'
-  "\\={a}": '\u0101'
-  "\\=a": '\u0101'
-  "{\\u A}": '\u0102'
-  "\\u A{}": '\u0102'
-  "\\u A": '\u0102'
-  "{\\u a}": '\u0103'
-  "\\u a{}": '\u0103'
-  "\\u a": '\u0103'
-  "\\k{A}": '\u0104'
-  "\\k{a}": '\u0105'
-  "{\\'C}": '\u0106'
-  "\\'{C}": '\u0106'
-  "\\'C": '\u0106'
-  "{\\'c}": '\u0107'
-  "\\'{c}": '\u0107'
-  "\\'c": '\u0107'
-  "{\\^C}": '\u0108'
-  "\\^{C}": '\u0108'
-  "\\^C": '\u0108'
-  "{\\^c}": '\u0109'
-  "\\^{c}": '\u0109'
-  "\\^c": '\u0109'
-  "{\\.C}": '\u010A'
-  "\\.{C}": '\u010A'
-  "\\.C": '\u010A'
-  "{\\.c}": '\u010B'
-  "\\.{c}": '\u010B'
-  "\\.c": '\u010B'
-  "{\\v C}": '\u010C'
-  "\\v C{}": '\u010C'
-  "\\v C": '\u010C'
-  "{\\v c}": '\u010D'
-  "\\v c{}": '\u010D'
-  "\\v c": '\u010D'
-  "{\\v D}": '\u010E'
-  "\\v D{}": '\u010E'
-  "\\v D": '\u010E'
-  "{\\v d}": '\u010F'
-  "\\v d{}": '\u010F'
-  "\\v d": '\u010F'
-  "\\DJ{}": '\u0110'
-  "{\\DJ}": '\u0110'
-  "\\D{J}": '\u0110'
-  "\\DJ": '\u0110'
-  "\\dj{}": '\u0111'
-  "{\\dj}": '\u0111'
-  "\\dj": '\u0111'
-  "{\\=E}": '\u0112'
-  "\\={E}": '\u0112'
-  "\\=E": '\u0112'
-  "{\\=e}": '\u0113'
-  "\\={e}": '\u0113'
-  "\\=e": '\u0113'
-  "{\\u E}": '\u0114'
-  "\\u E{}": '\u0114'
-  "\\u E": '\u0114'
-  "{\\u e}": '\u0115'
-  "\\u e{}": '\u0115'
-  "\\u e": '\u0115'
-  "{\\.E}": '\u0116'
-  "\\.{E}": '\u0116'
-  "\\.E": '\u0116'
-  "{\\.e}": '\u0117'
-  "\\.{e}": '\u0117'
-  "\\.e": '\u0117'
-  "\\k{E}": '\u0118'
-  "\\k{e}": '\u0119'
-  "{\\v E}": '\u011A'
-  "\\v E{}": '\u011A'
-  "\\v E": '\u011A'
-  "{\\v e}": '\u011B'
-  "\\v e{}": '\u011B'
-  "\\v e": '\u011B'
-  "{\\^G}": '\u011C'
-  "\\^{G}": '\u011C'
-  "\\^G": '\u011C'
-  "{\\^g}": '\u011D'
-  "\\^{g}": '\u011D'
-  "\\^g": '\u011D'
-  "{\\u G}": '\u011E'
-  "\\u G{}": '\u011E'
-  "\\u G": '\u011E'
-  "{\\u g}": '\u011F'
-  "\\u g{}": '\u011F'
-  "\\u g": '\u011F'
-  "{\\.G}": '\u0120'
-  "\\.{G}": '\u0120'
-  "\\.G": '\u0120'
-  "{\\.g}": '\u0121'
-  "\\.{g}": '\u0121'
-  "\\.g": '\u0121'
-  "{\\c G}": '\u0122'
-  "\\c G{}": '\u0122'
-  "\\c G": '\u0122'
-  "{\\c g}": '\u0123'
-  "\\c g{}": '\u0123'
-  "\\c g": '\u0123'
-  "{\\^H}": '\u0124'
-  "\\^{H}": '\u0124'
-  "\\^H": '\u0124'
-  "{\\^h}": '\u0125'
-  "\\^{h}": '\u0125'
-  "\\^h": '\u0125'
-  "{\\fontencoding{LELA}\\selectfont\\char40}": '\u0126'
-  "\\fontencoding{LELA}\\selectfont\\char40": '\u0126'
-  "\\fontencoding{LELA}\\selectfont\\char40{}": '\u0126'
-  "\\Elzxh{}": '\u0127'
-  "{\\Elzxh}": '\u0127'
-  "\\Elzxh": '\u0127'
-  "{\\~I}": '\u0128'
-  "\\~{I}": '\u0128'
-  "\\~I": '\u0128'
-  "{\\~\\i}": '\u0129'
-  "\\~\\i{}": '\u0129'
-  "\\~\\i": '\u0129'
-  "{\\=I}": '\u012A'
-  "\\={I}": '\u012A'
-  "\\=I": '\u012A'
-  "\\={\\i}": '\u012B'
-  "{\\u I}": '\u012C'
-  "\\u I{}": '\u012C'
-  "\\u I": '\u012C'
-  "{\\u \\i}": '\u012D'
-  "\\u \\i{}": '\u012D'
-  "\\u \\i": '\u012D'
-  "\\k{I}": '\u012E'
-  "\\k{i}": '\u012F'
-  "{\\.I}": '\u0130'
-  "\\.{I}": '\u0130'
-  "\\.I": '\u0130'
-  "\\i{}": '\u0131'
-  "{\\i}": '\u0131'
-  "\\i": '\u0131'
-  "IJ{}": '\u0132'
-  "ij{}": '\u0133'
-  "{\\^J}": '\u0134'
-  "\\^{J}": '\u0134'
-  "\\^J": '\u0134'
-  "{\\^\\j}": '\u0135'
-  "\\^\\j{}": '\u0135'
-  "\\^\\j": '\u0135'
-  "{\\c K}": '\u0136'
-  "\\c K{}": '\u0136'
-  "\\c K": '\u0136'
-  "{\\c k}": '\u0137'
-  "\\c k{}": '\u0137'
-  "\\c k": '\u0137'
-  "{\\fontencoding{LELA}\\selectfont\\char91}": '\u0138'
-  "\\fontencoding{LELA}\\selectfont\\char91": '\u0138'
-  "\\fontencoding{LELA}\\selectfont\\char91{}": '\u0138'
-  "{\\'L}": '\u0139'
-  "\\'{L}": '\u0139'
-  "\\'L": '\u0139'
-  "{\\'l}": '\u013A'
-  "\\'{l}": '\u013A'
-  "\\'l": '\u013A'
-  "{\\c L}": '\u013B'
-  "\\c L{}": '\u013B'
-  "\\c L": '\u013B'
-  "{\\c l}": '\u013C'
-  "\\c l{}": '\u013C'
-  "\\c l": '\u013C'
-  "{\\v L}": '\u013D'
-  "\\v L{}": '\u013D'
-  "\\v L": '\u013D'
-  "{\\v l}": '\u013E'
-  "\\v l{}": '\u013E'
-  "\\v l": '\u013E'
-  "{\\fontencoding{LELA}\\selectfont\\char201}": '\u013F'
-  "\\fontencoding{LELA}\\selectfont\\char201": '\u013F'
-  "\\fontencoding{LELA}\\selectfont\\char201{}": '\u013F'
-  "{\\fontencoding{LELA}\\selectfont\\char202}": '\u0140'
-  "\\fontencoding{LELA}\\selectfont\\char202": '\u0140'
-  "\\fontencoding{LELA}\\selectfont\\char202{}": '\u0140'
-  "\\L{}": '\u0141'
-  "{\\L}": '\u0141'
-  "\\L": '\u0141'
-  "\\l{}": '\u0142'
-  "{\\l}": '\u0142'
-  "\\l": '\u0142'
-  "{\\'N}": '\u0143'
-  "\\'{N}": '\u0143'
-  "\\'N": '\u0143'
-  "{\\'n}": '\u0144'
-  "\\'{n}": '\u0144'
-  "\\'n": '\u0144'
-  "{\\c N}": '\u0145'
-  "\\c N{}": '\u0145'
-  "\\c N": '\u0145'
-  "{\\c n}": '\u0146'
-  "\\c n{}": '\u0146'
-  "\\c n": '\u0146'
-  "{\\v N}": '\u0147'
-  "\\v N{}": '\u0147'
-  "\\v N": '\u0147'
-  "{\\v n}": '\u0148'
-  "\\v n{}": '\u0148'
-  "\\v n": '\u0148'
-  "'n": '\u0149'
-  "'n{}": '\u0149'
-  "\\NG{}": '\u014A'
-  "{\\NG}": '\u014A'
-  "\\N{G}": '\u014A'
-  "\\NG": '\u014A'
-  "\\ng{}": '\u014B'
-  "{\\ng}": '\u014B'
-  "\\ng": '\u014B'
-  "{\\=O}": '\u014C'
-  "\\={O}": '\u014C'
-  "\\=O": '\u014C'
-  "{\\=o}": '\u014D'
-  "\\={o}": '\u014D'
-  "\\=o": '\u014D'
-  "{\\u O}": '\u014E'
-  "\\u O{}": '\u014E'
-  "\\u O": '\u014E'
-  "{\\u o}": '\u014F'
-  "\\u o{}": '\u014F'
-  "\\u o": '\u014F'
-  "{\\H O}": '\u0150'
-  "\\H O{}": '\u0150'
-  "\\H O": '\u0150'
-  "{\\H o}": '\u0151'
-  "\\H o{}": '\u0151'
-  "\\H o": '\u0151'
-  "\\OE{}": '\u0152'
-  "{\\OE}": '\u0152'
-  "\\O{E}": '\u0152'
-  "\\OE": '\u0152'
-  "\\oe{}": '\u0153'
-  "{\\oe}": '\u0153'
-  "\\oe": '\u0153'
-  "{\\'R}": '\u0154'
-  "\\'{R}": '\u0154'
-  "\\'R": '\u0154'
-  "{\\'r}": '\u0155'
-  "\\'{r}": '\u0155'
-  "\\'r": '\u0155'
-  "{\\c R}": '\u0156'
-  "\\c R{}": '\u0156'
-  "\\c R": '\u0156'
-  "{\\c r}": '\u0157'
-  "\\c r{}": '\u0157'
-  "\\c r": '\u0157'
-  "{\\v R}": '\u0158'
-  "\\v R{}": '\u0158'
-  "\\v R": '\u0158'
-  "{\\v r}": '\u0159'
-  "\\v r{}": '\u0159'
-  "\\v r": '\u0159'
-  "{\\'S}": '\u015A'
-  "\\'{S}": '\u015A'
-  "\\'S": '\u015A'
-  "{\\'s}": '\u015B'
-  "\\'{s}": '\u015B'
-  "\\'s": '\u015B'
-  "{\\^S}": '\u015C'
-  "\\^{S}": '\u015C'
-  "\\^S": '\u015C'
-  "{\\^s}": '\u015D'
-  "\\^{s}": '\u015D'
-  "\\^s": '\u015D'
-  "{\\c S}": '\u015E'
-  "\\c S{}": '\u015E'
-  "\\c S": '\u015E'
-  "{\\c s}": '\u015F'
-  "\\c s{}": '\u015F'
-  "\\c s": '\u015F'
-  "{\\v S}": '\u0160'
-  "\\v S{}": '\u0160'
-  "\\v S": '\u0160'
-  "{\\v s}": '\u0161'
-  "\\v s{}": '\u0161'
-  "\\v s": '\u0161'
-  "{\\c T}": '\u0162'
-  "\\c T{}": '\u0162'
-  "\\c T": '\u0162'
-  "{\\c t}": '\u0163'
-  "\\c t{}": '\u0163'
-  "\\c t": '\u0163'
-  "{\\v T}": '\u0164'
-  "\\v T{}": '\u0164'
-  "\\v T": '\u0164'
-  "{\\v t}": '\u0165'
-  "\\v t{}": '\u0165'
-  "\\v t": '\u0165'
-  "{\\fontencoding{LELA}\\selectfont\\char47}": '\u0166'
-  "\\fontencoding{LELA}\\selectfont\\char47": '\u0166'
-  "\\fontencoding{LELA}\\selectfont\\char47{}": '\u0166'
-  "{\\fontencoding{LELA}\\selectfont\\char63}": '\u0167'
-  "\\fontencoding{LELA}\\selectfont\\char63": '\u0167'
-  "\\fontencoding{LELA}\\selectfont\\char63{}": '\u0167'
-  "{\\~U}": '\u0168'
-  "\\~{U}": '\u0168'
-  "\\~U": '\u0168'
-  "{\\~u}": '\u0169'
-  "\\~{u}": '\u0169'
-  "\\~u": '\u0169'
-  "{\\=U}": '\u016A'
-  "\\={U}": '\u016A'
-  "\\=U": '\u016A'
-  "{\\=u}": '\u016B'
-  "\\={u}": '\u016B'
-  "\\=u": '\u016B'
-  "{\\u U}": '\u016C'
-  "\\u U{}": '\u016C'
-  "\\u U": '\u016C'
-  "{\\u u}": '\u016D'
-  "\\u u{}": '\u016D'
-  "\\u u": '\u016D'
-  "\\r{U}": '\u016E'
-  "\\r{u}": '\u016F'
-  "{\\H U}": '\u0170'
-  "\\H U{}": '\u0170'
-  "\\H U": '\u0170'
-  "{\\H u}": '\u0171'
-  "\\H u{}": '\u0171'
-  "\\H u": '\u0171'
-  "\\k{U}": '\u0172'
-  "\\k{u}": '\u0173'
-  "{\\^W}": '\u0174'
-  "\\^{W}": '\u0174'
-  "\\^W": '\u0174'
-  "{\\^w}": '\u0175'
-  "\\^{w}": '\u0175'
-  "\\^w": '\u0175'
-  "{\\^Y}": '\u0176'
-  "\\^{Y}": '\u0176'
-  "\\^Y": '\u0176'
-  "{\\^y}": '\u0177'
-  "\\^{y}": '\u0177'
-  "\\^y": '\u0177'
-  "{\\\"Y}": '\u0178'
-  "\\\"{Y}": '\u0178'
-  "\\\"Y": '\u0178'
-  "{\\'Z}": '\u0179'
-  "\\'{Z}": '\u0179'
-  "\\'Z": '\u0179'
-  "{\\'z}": '\u017A'
-  "\\'{z}": '\u017A'
-  "\\'z": '\u017A'
-  "{\\.Z}": '\u017B'
-  "\\.{Z}": '\u017B'
-  "\\.Z": '\u017B'
-  "{\\.z}": '\u017C'
-  "\\.{z}": '\u017C'
-  "\\.z": '\u017C'
-  "{\\v Z}": '\u017D'
-  "\\v Z{}": '\u017D'
-  "\\v Z": '\u017D'
-  "{\\v z}": '\u017E'
-  "\\v z{}": '\u017E'
-  "\\v z": '\u017E'
-  "f{}": '\u0192'
-  "\\texthvlig{}": '\u0195'
-  "{\\texthvlig}": '\u0195'
-  "\\texthvlig": '\u0195'
-  "\\textnrleg{}": '\u019E'
-  "{\\textnrleg}": '\u019E'
-  "\\textnrleg": '\u019E'
-  "\\eth{}": '\u01AA'
-  "{\\eth}": '\u01AA'
-  "\\eth": '\u01AA'
-  "\\Zbar{}": '\u01B5'
-  "{\\Zbar}": '\u01B5'
-  "\\Zbar": '\u01B5'
-  "{\\fontencoding{LELA}\\selectfont\\char195}": '\u01BA'
-  "\\fontencoding{LELA}\\selectfont\\char195": '\u01BA'
-  "\\fontencoding{LELA}\\selectfont\\char195{}": '\u01BA'
-  "\\textdoublepipe{}": '\u01C2'
-  "{\\textdoublepipe}": '\u01C2'
-  "\\textdoublepipe": '\u01C2'
-  "{\\'g}": '\u01F5'
-  "\\'{g}": '\u01F5'
-  "\\'g": '\u01F5'
-  "\\jmath{}": '\u0237'
-  "{\\jmath}": '\u0237'
-  "\\jmath": '\u0237'
-  "\\Elztrna{}": '\u0250'
-  "{\\Elztrna}": '\u0250'
-  "\\Elztrna": '\u0250'
-  "\\Elztrnsa{}": '\u0252'
-  "{\\Elztrnsa}": '\u0252'
-  "\\Elztrnsa": '\u0252'
-  "\\Elzopeno{}": '\u0254'
-  "{\\Elzopeno}": '\u0254'
-  "\\Elzopeno": '\u0254'
-  "\\Elzrtld{}": '\u0256'
-  "{\\Elzrtld}": '\u0256'
-  "\\Elzrtld": '\u0256'
-  "{\\fontencoding{LEIP}\\selectfont\\char61}": '\u0258'
-  "\\fontencoding{LEIP}\\selectfont\\char61": '\u0258'
-  "\\fontencoding{LEIP}\\selectfont\\char61{}": '\u0258'
-  "\\Elzschwa{}": '\u0259'
-  "{\\Elzschwa}": '\u0259'
-  "\\Elzschwa": '\u0259'
-  "\\varepsilon{}": '\u025B'
-  "{\\varepsilon}": '\u025B'
-  "\\varepsilon": '\u025B'
-  "g{}": '\u0261'
-  "\\Elzpgamma{}": '\u0263'
-  "{\\Elzpgamma}": '\u0263'
-  "\\Elzpgamma": '\u0263'
-  "\\Elzpbgam{}": '\u0264'
-  "{\\Elzpbgam}": '\u0264'
-  "\\Elzpbgam": '\u0264'
-  "\\Elztrnh{}": '\u0265'
-  "{\\Elztrnh}": '\u0265'
-  "\\Elztrnh": '\u0265'
-  "\\Elzbtdl{}": '\u026C'
-  "{\\Elzbtdl}": '\u026C'
-  "\\Elzbtdl": '\u026C'
-  "\\Elzrtll{}": '\u026D'
-  "{\\Elzrtll}": '\u026D'
-  "\\Elzrtll": '\u026D'
-  "\\Elztrnm{}": '\u026F'
-  "{\\Elztrnm}": '\u026F'
-  "\\Elztrnm": '\u026F'
-  "\\Elztrnmlr{}": '\u0270'
-  "{\\Elztrnmlr}": '\u0270'
-  "\\Elztrnmlr": '\u0270'
-  "\\Elzltlmr{}": '\u0271'
-  "{\\Elzltlmr}": '\u0271'
-  "\\Elzltlmr": '\u0271'
-  "\\Elzltln{}": '\u0272'
-  "{\\Elzltln}": '\u0272'
-  "\\Elzltln": '\u0272'
-  "\\Elzrtln{}": '\u0273'
-  "{\\Elzrtln}": '\u0273'
-  "\\Elzrtln": '\u0273'
-  "\\Elzclomeg{}": '\u0277'
-  "{\\Elzclomeg}": '\u0277'
-  "\\Elzclomeg": '\u0277'
-  "\\textphi{}": '\u0278'
-  "{\\textphi}": '\u0278'
-  "\\textphi": '\u0278'
-  "\\Elztrnr{}": '\u0279'
-  "{\\Elztrnr}": '\u0279'
-  "\\Elztrnr": '\u0279'
-  "\\Elztrnrl{}": '\u027A'
-  "{\\Elztrnrl}": '\u027A'
-  "\\Elztrnrl": '\u027A'
-  "\\Elzrttrnr{}": '\u027B'
-  "{\\Elzrttrnr}": '\u027B'
-  "\\Elzrttrnr": '\u027B'
-  "\\Elzrl{}": '\u027C'
-  "{\\Elzrl}": '\u027C'
-  "\\Elzrl": '\u027C'
-  "\\Elzrtlr{}": '\u027D'
-  "{\\Elzrtlr}": '\u027D'
-  "\\Elzrtlr": '\u027D'
-  "\\Elzfhr{}": '\u027E'
-  "{\\Elzfhr}": '\u027E'
-  "\\Elzfhr": '\u027E'
-  "{\\fontencoding{LEIP}\\selectfont\\char202}": '\u027F'
-  "\\fontencoding{LEIP}\\selectfont\\char202": '\u027F'
-  "\\fontencoding{LEIP}\\selectfont\\char202{}": '\u027F'
-  "\\Elzrtls{}": '\u0282'
-  "{\\Elzrtls}": '\u0282'
-  "\\Elzrtls": '\u0282'
-  "\\Elzesh{}": '\u0283'
-  "{\\Elzesh}": '\u0283'
-  "\\Elzesh": '\u0283'
-  "\\Elztrnt{}": '\u0287'
-  "{\\Elztrnt}": '\u0287'
-  "\\Elztrnt": '\u0287'
-  "\\Elzrtlt{}": '\u0288'
-  "{\\Elzrtlt}": '\u0288'
-  "\\Elzrtlt": '\u0288'
-  "\\Elzpupsil{}": '\u028A'
-  "{\\Elzpupsil}": '\u028A'
-  "\\Elzpupsil": '\u028A'
-  "\\Elzpscrv{}": '\u028B'
-  "{\\Elzpscrv}": '\u028B'
-  "\\Elzpscrv": '\u028B'
-  "\\Elzinvv{}": '\u028C'
-  "{\\Elzinvv}": '\u028C'
-  "\\Elzinvv": '\u028C'
-  "\\Elzinvw{}": '\u028D'
-  "{\\Elzinvw}": '\u028D'
-  "\\Elzinvw": '\u028D'
-  "\\Elztrny{}": '\u028E'
-  "{\\Elztrny}": '\u028E'
-  "\\Elztrny": '\u028E'
-  "\\Elzrtlz{}": '\u0290'
-  "{\\Elzrtlz}": '\u0290'
-  "\\Elzrtlz": '\u0290'
-  "\\Elzyogh{}": '\u0292'
-  "{\\Elzyogh}": '\u0292'
-  "\\Elzyogh": '\u0292'
-  "\\Elzglst{}": '\u0294'
-  "{\\Elzglst}": '\u0294'
-  "\\Elzglst": '\u0294'
-  "\\Elzreglst{}": '\u0295'
-  "{\\Elzreglst}": '\u0295'
-  "\\Elzreglst": '\u0295'
-  "\\Elzinglst{}": '\u0296'
-  "{\\Elzinglst}": '\u0296'
-  "\\Elzinglst": '\u0296'
-  "\\textturnk{}": '\u029E'
-  "{\\textturnk}": '\u029E'
-  "\\textturnk": '\u029E'
-  "\\Elzdyogh{}": '\u02A4'
-  "{\\Elzdyogh}": '\u02A4'
-  "\\Elzdyogh": '\u02A4'
-  "\\Elztesh{}": '\u02A7'
-  "{\\Elztesh}": '\u02A7'
-  "\\Elztesh": '\u02A7'
-  "'": '\u02BC'
-  "\\textasciicaron{}": '\u02C7'
-  "{\\textasciicaron}": '\u02C7'
-  "\\textasciicaron": '\u02C7'
-  "\\Elzverts{}": '\u02C8'
-  "{\\Elzverts}": '\u02C8'
-  "\\Elzverts": '\u02C8'
-  "\\Elzverti{}": '\u02CC'
-  "{\\Elzverti}": '\u02CC'
-  "\\Elzverti": '\u02CC'
-  "\\Elzlmrk{}": '\u02D0'
-  "{\\Elzlmrk}": '\u02D0'
-  "\\Elzlmrk": '\u02D0'
-  "\\Elzhlmrk{}": '\u02D1'
-  "{\\Elzhlmrk}": '\u02D1'
-  "\\Elzhlmrk": '\u02D1'
-  "\\Elzsbrhr{}": '\u02D2'
-  "{\\Elzsbrhr}": '\u02D2'
-  "\\Elzsbrhr": '\u02D2'
-  "\\Elzsblhr{}": '\u02D3'
-  "{\\Elzsblhr}": '\u02D3'
-  "\\Elzsblhr": '\u02D3'
-  "\\Elzrais{}": '\u02D4'
-  "{\\Elzrais}": '\u02D4'
-  "\\Elzrais": '\u02D4'
-  "\\Elzlow{}": '\u02D5'
-  "{\\Elzlow}": '\u02D5'
-  "\\Elzlow": '\u02D5'
-  "\\textasciibreve{}": '\u02D8'
-  "{\\textasciibreve}": '\u02D8'
-  "\\textasciibreve": '\u02D8'
-  "\\textperiodcentered{}": '\u02D9'
-  "{\\textperiodcentered}": '\u02D9'
-  "\\textperiodcentered": '\u02D9'
-  "\\r{}": '\u02DA'
-  "{\\r}": '\u02DA'
-  "\\r": '\u02DA'
-  "\\k{}": '\u02DB'
-  "{\\k}": '\u02DB'
-  "\\k": '\u02DB'
-  "\\texttildelow{}": '\u02DC'
-  "{\\texttildelow}": '\u02DC'
-  "\\texttildelow": '\u02DC'
-  "\\H{}": '\u02DD'
-  "{\\H}": '\u02DD'
-  "\\H": '\u02DD'
-  "\\tone{55}": '\u02E5'
-  "\\tone{44}": '\u02E6'
-  "\\tone{33}": '\u02E7'
-  "\\tone{22}": '\u02E8'
-  "\\tone{11}": '\u02E9'
-  "\\`": '\u0300'
-  "\\'": '\u0301'
-  "\\~": '\u0303'
-  "\\=": '\u0304'
-  "\\overline{}": '\u0305'
-  "{\\overline}": '\u0305'
-  "\\overline": '\u0305'
-  "\\u{}": '\u0306'
-  "{\\u}": '\u0306'
-  "\\u": '\u0306'
-  "\\.": '\u0307'
-  "\\\"": '\u0308'
-  "\\ovhook{}": '\u0309'
-  "{\\ovhook}": '\u0309'
-  "\\ovhook": '\u0309'
-  "\\v{}": '\u030C'
-  "{\\v}": '\u030C'
-  "\\v": '\u030C'
-  "\\cyrchar\\C{}": '\u030F'
-  "{\\cyrchar\\C}": '\u030F'
-  "\\cyrchar\\C": '\u030F'
-  "\\candra{}": '\u0310'
-  "{\\candra}": '\u0310'
-  "\\candra": '\u0310'
-  "{\\fontencoding{LECO}\\selectfont\\char177}": '\u0311'
-  "\\fontencoding{LECO}\\selectfont\\char177": '\u0311'
-  "\\fontencoding{LECO}\\selectfont\\char177{}": '\u0311'
-  "\\oturnedcomma{}": '\u0312'
-  "{\\oturnedcomma}": '\u0312'
-  "\\oturnedcomma": '\u0312'
-  "\\ocommatopright{}": '\u0315'
-  "{\\ocommatopright}": '\u0315'
-  "\\ocommatopright": '\u0315'
-  "{\\fontencoding{LECO}\\selectfont\\char184}": '\u0318'
-  "\\fontencoding{LECO}\\selectfont\\char184": '\u0318'
-  "\\fontencoding{LECO}\\selectfont\\char184{}": '\u0318'
-  "{\\fontencoding{LECO}\\selectfont\\char185}": '\u0319'
-  "\\fontencoding{LECO}\\selectfont\\char185": '\u0319'
-  "\\fontencoding{LECO}\\selectfont\\char185{}": '\u0319'
-  "\\droang{}": '\u031A'
-  "{\\droang}": '\u031A'
-  "\\droang": '\u031A'
-  "\\Elzpalh{}": '\u0321'
-  "{\\Elzpalh}": '\u0321'
-  "\\Elzpalh": '\u0321'
-  "\\Elzrh{}": '\u0322'
-  "{\\Elzrh}": '\u0322'
-  "\\Elzrh": '\u0322'
-  "\\Elzsbbrg{}": '\u032A'
-  "{\\Elzsbbrg}": '\u032A'
-  "\\Elzsbbrg": '\u032A'
-  "{\\fontencoding{LECO}\\selectfont\\char203}": '\u032B'
-  "\\fontencoding{LECO}\\selectfont\\char203": '\u032B'
-  "\\fontencoding{LECO}\\selectfont\\char203{}": '\u032B'
-  "{\\fontencoding{LECO}\\selectfont\\char207}": '\u032F'
-  "\\fontencoding{LECO}\\selectfont\\char207": '\u032F'
-  "\\fontencoding{LECO}\\selectfont\\char207{}": '\u032F'
-  "\\utilde{}": '\u0330'
-  "{\\utilde}": '\u0330'
-  "\\utilde": '\u0330'
-  "\\underbar{}": '\u0331'
-  "{\\underbar}": '\u0331'
-  "\\underbar": '\u0331'
-  "\\underline{}": '\u0332'
-  "{\\underline}": '\u0332'
-  "\\underline": '\u0332'
-  "\\Elzxl{}": '\u0335'
-  "{\\Elzxl}": '\u0335'
-  "\\Elzxl": '\u0335'
-  "\\Elzbar{}": '\u0336'
-  "{\\Elzbar}": '\u0336'
-  "\\Elzbar": '\u0336'
-  "{\\fontencoding{LECO}\\selectfont\\char215}": '\u0337'
-  "\\fontencoding{LECO}\\selectfont\\char215": '\u0337'
-  "\\fontencoding{LECO}\\selectfont\\char215{}": '\u0337'
-  "{\\fontencoding{LECO}\\selectfont\\char216}": '\u0338'
-  "\\fontencoding{LECO}\\selectfont\\char216": '\u0338'
-  "\\fontencoding{LECO}\\selectfont\\char216{}": '\u0338'
-  "{\\fontencoding{LECO}\\selectfont\\char218}": '\u033A'
-  "\\fontencoding{LECO}\\selectfont\\char218": '\u033A'
-  "\\fontencoding{LECO}\\selectfont\\char218{}": '\u033A'
-  "{\\fontencoding{LECO}\\selectfont\\char219}": '\u033B'
-  "\\fontencoding{LECO}\\selectfont\\char219": '\u033B'
-  "\\fontencoding{LECO}\\selectfont\\char219{}": '\u033B'
-  "{\\fontencoding{LECO}\\selectfont\\char220}": '\u033C'
-  "\\fontencoding{LECO}\\selectfont\\char220": '\u033C'
-  "\\fontencoding{LECO}\\selectfont\\char220{}": '\u033C'
-  "{\\fontencoding{LECO}\\selectfont\\char221}": '\u033D'
-  "\\fontencoding{LECO}\\selectfont\\char221": '\u033D'
-  "\\fontencoding{LECO}\\selectfont\\char221{}": '\u033D'
-  "{\\fontencoding{LECO}\\selectfont\\char225}": '\u0361'
-  "\\fontencoding{LECO}\\selectfont\\char225": '\u0361'
-  "\\fontencoding{LECO}\\selectfont\\char225{}": '\u0361'
-  "{\\'H}": '\u0389'
-  "\\'{H}": '\u0389'
-  "\\'H": '\u0389'
-  "\\'{}{I}": '\u038A'
-  "{\\'{}O}": '\u038C'
-  "\\'{}O": '\u038C'
-  "\\'{}O{}": '\u038C'
-  "\\mathrm{'Y}": '\u038E'
-  "\\mathrm{'\\Omega}": '\u038F'
-  "\\acute{\\ddot{\\iota}}": '\u0390'
-  "\\Alpha{}": '\u0391'
-  "{\\Alpha}": '\u0391'
-  "\\Alpha": '\u0391'
-  "\\Beta{}": '\u0392'
-  "{\\Beta}": '\u0392'
-  "\\Beta": '\u0392'
-  "\\Gamma{}": '\u0393'
-  "{\\Gamma}": '\u0393'
-  "\\Gamma": '\u0393'
-  "\\Delta{}": '\u0394'
-  "{\\Delta}": '\u0394'
-  "\\Delta": '\u0394'
-  "\\Epsilon{}": '\u0395'
-  "{\\Epsilon}": '\u0395'
-  "\\Epsilon": '\u0395'
-  "\\Zeta{}": '\u0396'
-  "{\\Zeta}": '\u0396'
-  "\\Zeta": '\u0396'
-  "\\Eta{}": '\u0397'
-  "{\\Eta}": '\u0397'
-  "\\Eta": '\u0397'
-  "\\Theta{}": '\u0398'
-  "{\\Theta}": '\u0398'
-  "\\Theta": '\u0398'
-  "\\Iota{}": '\u0399'
-  "{\\Iota}": '\u0399'
-  "\\Iota": '\u0399'
-  "\\Kappa{}": '\u039A'
-  "{\\Kappa}": '\u039A'
-  "\\Kappa": '\u039A'
-  "\\Lambda{}": '\u039B'
-  "{\\Lambda}": '\u039B'
-  "\\Lambda": '\u039B'
-  "M{}": '\u039C'
-  "N{}": '\u039D'
-  "\\Xi{}": '\u039E'
-  "{\\Xi}": '\u039E'
-  "\\X{i}": '\u039E'
-  "\\Xi": '\u039E'
-  "O{}": '\u039F'
-  "\\Pi{}": '\u03A0'
-  "{\\Pi}": '\u03A0'
-  "\\P{i}": '\u03A0'
-  "\\Pi": '\u03A0'
-  "\\Rho{}": '\u03A1'
-  "{\\Rho}": '\u03A1'
-  "\\Rho": '\u03A1'
-  "\\Sigma{}": '\u03A3'
-  "{\\Sigma}": '\u03A3'
-  "\\Sigma": '\u03A3'
-  "\\Tau{}": '\u03A4'
-  "{\\Tau}": '\u03A4'
-  "\\Tau": '\u03A4'
-  "\\Upsilon{}": '\u03A5'
-  "{\\Upsilon}": '\u03A5'
-  "\\Upsilon": '\u03A5'
-  "\\Phi{}": '\u03A6'
-  "{\\Phi}": '\u03A6'
-  "\\Phi": '\u03A6'
-  "\\Chi{}": '\u03A7'
-  "{\\Chi}": '\u03A7'
-  "\\Chi": '\u03A7'
-  "\\Psi{}": '\u03A8'
-  "{\\Psi}": '\u03A8'
-  "\\Psi": '\u03A8'
-  "\\Omega{}": '\u03A9'
-  "{\\Omega}": '\u03A9'
-  "\\Omega": '\u03A9'
-  "\\mathrm{\\ddot{I}}": '\u03AA'
-  "\\mathrm{\\ddot{Y}}": '\u03AB'
-  "{\\'$\\alpha$}": '\u03AC'
-  "\\'$\\alpha${}": '\u03AC'
-  "\\'$\\alpha$": '\u03AC'
-  "\\acute{\\epsilon}": '\u03AD'
-  "\\acute{\\eta}": '\u03AE'
-  "\\acute{\\iota}": '\u03AF'
-  "\\acute{\\ddot{\\upsilon}}": '\u03B0'
-  "\\alpha{}": '\u03B1'
-  "{\\alpha}": '\u03B1'
-  "\\alpha": '\u03B1'
-  "\\beta{}": '\u03B2'
-  "{\\beta}": '\u03B2'
-  "\\beta": '\u03B2'
-  "\\gamma{}": '\u03B3'
-  "{\\gamma}": '\u03B3'
-  "\\gamma": '\u03B3'
-  "\\delta{}": '\u03B4'
-  "{\\delta}": '\u03B4'
-  "\\delta": '\u03B4'
-  "\\epsilon{}": '\u03B5'
-  "{\\epsilon}": '\u03B5'
-  "\\epsilon": '\u03B5'
-  "\\zeta{}": '\u03B6'
-  "{\\zeta}": '\u03B6'
-  "\\zeta": '\u03B6'
-  "\\eta{}": '\u03B7'
-  "{\\eta}": '\u03B7'
-  "\\eta": '\u03B7'
-  "\\texttheta{}": '\u03B8'
-  "{\\texttheta}": '\u03B8'
-  "\\texttheta": '\u03B8'
-  "\\iota{}": '\u03B9'
-  "{\\iota}": '\u03B9'
-  "\\iota": '\u03B9'
-  "\\kappa{}": '\u03BA'
-  "{\\kappa}": '\u03BA'
-  "\\kappa": '\u03BA'
-  "\\lambda{}": '\u03BB'
-  "{\\lambda}": '\u03BB'
-  "\\lambda": '\u03BB'
-  "\\mu{}": '\u03BC'
-  "{\\mu}": '\u03BC'
-  "\\mu": '\u03BC'
-  "\\nu{}": '\u03BD'
-  "{\\nu}": '\u03BD'
-  "\\nu": '\u03BD'
-  "\\xi{}": '\u03BE'
-  "{\\xi}": '\u03BE'
-  "\\xi": '\u03BE'
-  "o{}": '\u03BF'
-  "\\pi{}": '\u03C0'
-  "{\\pi}": '\u03C0'
-  "\\pi": '\u03C0'
-  "\\rho{}": '\u03C1'
-  "{\\rho}": '\u03C1'
-  "\\rho": '\u03C1'
-  "\\varsigma{}": '\u03C2'
-  "{\\varsigma}": '\u03C2'
-  "\\varsigma": '\u03C2'
-  "\\sigma{}": '\u03C3'
-  "{\\sigma}": '\u03C3'
-  "\\sigma": '\u03C3'
-  "\\tau{}": '\u03C4'
-  "{\\tau}": '\u03C4'
-  "\\tau": '\u03C4'
-  "\\upsilon{}": '\u03C5'
-  "{\\upsilon}": '\u03C5'
-  "\\upsilon": '\u03C5'
-  "\\varphi{}": '\u03C6'
-  "{\\varphi}": '\u03C6'
-  "\\varphi": '\u03C6'
-  "\\chi{}": '\u03C7'
-  "{\\chi}": '\u03C7'
-  "\\chi": '\u03C7'
-  "\\psi{}": '\u03C8'
-  "{\\psi}": '\u03C8'
-  "\\psi": '\u03C8'
-  "\\omega{}": '\u03C9'
-  "{\\omega}": '\u03C9'
-  "\\omega": '\u03C9'
-  "\\ddot{\\iota}": '\u03CA'
-  "\\ddot{\\upsilon}": '\u03CB'
-  "\\acute{\\upsilon}": '\u03CD'
-  "\\acute{\\omega}": '\u03CE'
-  "\\Pisymbol{ppi022}{87}": '\u03D0'
-  "\\textvartheta{}": '\u03D1'
-  "{\\textvartheta}": '\u03D1'
-  "\\textvartheta": '\u03D1'
-  "\\phi{}": '\u03D5'
-  "{\\phi}": '\u03D5'
-  "\\phi": '\u03D5'
-  "\\varpi{}": '\u03D6'
-  "{\\varpi}": '\u03D6'
-  "\\varpi": '\u03D6'
-  "\\Qoppa{}": '\u03D8'
-  "{\\Qoppa}": '\u03D8'
-  "\\Qoppa": '\u03D8'
-  "\\qoppa{}": '\u03D9'
-  "{\\qoppa}": '\u03D9'
-  "\\qoppa": '\u03D9'
-  "\\Stigma{}": '\u03DA'
-  "{\\Stigma}": '\u03DA'
-  "\\Stigma": '\u03DA'
-  "\\stigma{}": '\u03DB'
-  "{\\stigma}": '\u03DB'
-  "\\stigma": '\u03DB'
-  "\\Digamma{}": '\u03DC'
-  "{\\Digamma}": '\u03DC'
-  "\\Digamma": '\u03DC'
-  "\\digamma{}": '\u03DD'
-  "{\\digamma}": '\u03DD'
-  "\\digamma": '\u03DD'
-  "\\Koppa{}": '\u03DE'
-  "{\\Koppa}": '\u03DE'
-  "\\Koppa": '\u03DE'
-  "\\koppa{}": '\u03DF'
-  "{\\koppa}": '\u03DF'
-  "\\koppa": '\u03DF'
-  "\\Sampi{}": '\u03E0'
-  "{\\Sampi}": '\u03E0'
-  "\\Sampi": '\u03E0'
-  "\\sampi{}": '\u03E1'
-  "{\\sampi}": '\u03E1'
-  "\\sampi": '\u03E1'
-  "\\varkappa{}": '\u03F0'
-  "{\\varkappa}": '\u03F0'
-  "\\varkappa": '\u03F0'
-  "\\varrho{}": '\u03F1'
-  "{\\varrho}": '\u03F1'
-  "\\varrho": '\u03F1'
-  "\\textTheta{}": '\u03F4'
-  "{\\textTheta}": '\u03F4'
-  "\\textTheta": '\u03F4'
-  "\\backepsilon{}": '\u03F6'
-  "{\\backepsilon}": '\u03F6'
-  "\\backepsilon": '\u03F6'
-  "\\cyrchar\\CYRYO{}": '\u0401'
-  "{\\cyrchar\\CYRYO}": '\u0401'
-  "\\cyrchar\\CYRYO": '\u0401'
-  "\\cyrchar\\CYRDJE{}": '\u0402'
-  "{\\cyrchar\\CYRDJE}": '\u0402'
-  "\\cyrchar\\CYRDJE": '\u0402'
-  "\\cyrchar{\\'\\CYRG}": '\u0403'
-  "\\cyrchar\\CYRIE{}": '\u0404'
-  "{\\cyrchar\\CYRIE}": '\u0404'
-  "\\cyrchar\\CYRIE": '\u0404'
-  "\\cyrchar\\CYRDZE{}": '\u0405'
-  "{\\cyrchar\\CYRDZE}": '\u0405'
-  "\\cyrchar\\CYRDZE": '\u0405'
-  "\\cyrchar\\CYRII{}": '\u0406'
-  "{\\cyrchar\\CYRII}": '\u0406'
-  "\\cyrchar\\CYRII": '\u0406'
-  "\\cyrchar\\CYRYI{}": '\u0407'
-  "{\\cyrchar\\CYRYI}": '\u0407'
-  "\\cyrchar\\CYRYI": '\u0407'
-  "\\cyrchar\\CYRJE{}": '\u0408'
-  "{\\cyrchar\\CYRJE}": '\u0408'
-  "\\cyrchar\\CYRJE": '\u0408'
-  "\\cyrchar\\CYRLJE{}": '\u0409'
-  "{\\cyrchar\\CYRLJE}": '\u0409'
-  "\\cyrchar\\CYRLJE": '\u0409'
-  "\\cyrchar\\CYRNJE{}": '\u040A'
-  "{\\cyrchar\\CYRNJE}": '\u040A'
-  "\\cyrchar\\CYRNJE": '\u040A'
-  "\\cyrchar\\CYRTSHE{}": '\u040B'
-  "{\\cyrchar\\CYRTSHE}": '\u040B'
-  "\\cyrchar\\CYRTSHE": '\u040B'
-  "\\cyrchar{\\'\\CYRK}": '\u040C'
-  "\\cyrchar\\CYRUSHRT{}": '\u040E'
-  "{\\cyrchar\\CYRUSHRT}": '\u040E'
-  "\\cyrchar\\CYRUSHRT": '\u040E'
-  "\\cyrchar\\CYRDZHE{}": '\u040F'
-  "{\\cyrchar\\CYRDZHE}": '\u040F'
-  "\\cyrchar\\CYRDZHE": '\u040F'
-  "\\cyrchar\\CYRA{}": '\u0410'
-  "{\\cyrchar\\CYRA}": '\u0410'
-  "\\cyrchar\\CYRA": '\u0410'
-  "\\cyrchar\\CYRB{}": '\u0411'
-  "{\\cyrchar\\CYRB}": '\u0411'
-  "\\cyrchar\\CYRB": '\u0411'
-  "\\cyrchar\\CYRV{}": '\u0412'
-  "{\\cyrchar\\CYRV}": '\u0412'
-  "\\cyrchar\\CYRV": '\u0412'
-  "\\cyrchar\\CYRG{}": '\u0413'
-  "{\\cyrchar\\CYRG}": '\u0413'
-  "\\cyrchar\\CYRG": '\u0413'
-  "\\cyrchar\\CYRD{}": '\u0414'
-  "{\\cyrchar\\CYRD}": '\u0414'
-  "\\cyrchar\\CYRD": '\u0414'
-  "\\cyrchar\\CYRE{}": '\u0415'
-  "{\\cyrchar\\CYRE}": '\u0415'
-  "\\cyrchar\\CYRE": '\u0415'
-  "\\cyrchar\\CYRZH{}": '\u0416'
-  "{\\cyrchar\\CYRZH}": '\u0416'
-  "\\cyrchar\\CYRZH": '\u0416'
-  "\\cyrchar\\CYRZ{}": '\u0417'
-  "{\\cyrchar\\CYRZ}": '\u0417'
-  "\\cyrchar\\CYRZ": '\u0417'
-  "\\cyrchar\\CYRI{}": '\u0418'
-  "{\\cyrchar\\CYRI}": '\u0418'
-  "\\cyrchar\\CYRI": '\u0418'
-  "\\cyrchar\\CYRISHRT{}": '\u0419'
-  "{\\cyrchar\\CYRISHRT}": '\u0419'
-  "\\cyrchar\\CYRISHRT": '\u0419'
-  "\\cyrchar\\CYRK{}": '\u041A'
-  "{\\cyrchar\\CYRK}": '\u041A'
-  "\\cyrchar\\CYRK": '\u041A'
-  "\\cyrchar\\CYRL{}": '\u041B'
-  "{\\cyrchar\\CYRL}": '\u041B'
-  "\\cyrchar\\CYRL": '\u041B'
-  "\\cyrchar\\CYRM{}": '\u041C'
-  "{\\cyrchar\\CYRM}": '\u041C'
-  "\\cyrchar\\CYRM": '\u041C'
-  "\\cyrchar\\CYRN{}": '\u041D'
-  "{\\cyrchar\\CYRN}": '\u041D'
-  "\\cyrchar\\CYRN": '\u041D'
-  "\\cyrchar\\CYRO{}": '\u041E'
-  "{\\cyrchar\\CYRO}": '\u041E'
-  "\\cyrchar\\CYRO": '\u041E'
-  "\\cyrchar\\CYRP{}": '\u041F'
-  "{\\cyrchar\\CYRP}": '\u041F'
-  "\\cyrchar\\CYRP": '\u041F'
-  "\\cyrchar\\CYRR{}": '\u0420'
-  "{\\cyrchar\\CYRR}": '\u0420'
-  "\\cyrchar\\CYRR": '\u0420'
-  "\\cyrchar\\CYRS{}": '\u0421'
-  "{\\cyrchar\\CYRS}": '\u0421'
-  "\\cyrchar\\CYRS": '\u0421'
-  "\\cyrchar\\CYRT{}": '\u0422'
-  "{\\cyrchar\\CYRT}": '\u0422'
-  "\\cyrchar\\CYRT": '\u0422'
-  "\\cyrchar\\CYRU{}": '\u0423'
-  "{\\cyrchar\\CYRU}": '\u0423'
-  "\\cyrchar\\CYRU": '\u0423'
-  "\\cyrchar\\CYRF{}": '\u0424'
-  "{\\cyrchar\\CYRF}": '\u0424'
-  "\\cyrchar\\CYRF": '\u0424'
-  "\\cyrchar\\CYRH{}": '\u0425'
-  "{\\cyrchar\\CYRH}": '\u0425'
-  "\\cyrchar\\CYRH": '\u0425'
-  "\\cyrchar\\CYRC{}": '\u0426'
-  "{\\cyrchar\\CYRC}": '\u0426'
-  "\\cyrchar\\CYRC": '\u0426'
-  "\\cyrchar\\CYRCH{}": '\u0427'
-  "{\\cyrchar\\CYRCH}": '\u0427'
-  "\\cyrchar\\CYRCH": '\u0427'
-  "\\cyrchar\\CYRSH{}": '\u0428'
-  "{\\cyrchar\\CYRSH}": '\u0428'
-  "\\cyrchar\\CYRSH": '\u0428'
-  "\\cyrchar\\CYRSHCH{}": '\u0429'
-  "{\\cyrchar\\CYRSHCH}": '\u0429'
-  "\\cyrchar\\CYRSHCH": '\u0429'
-  "\\cyrchar\\CYRHRDSN{}": '\u042A'
-  "{\\cyrchar\\CYRHRDSN}": '\u042A'
-  "\\cyrchar\\CYRHRDSN": '\u042A'
-  "\\cyrchar\\CYRERY{}": '\u042B'
-  "{\\cyrchar\\CYRERY}": '\u042B'
-  "\\cyrchar\\CYRERY": '\u042B'
-  "\\cyrchar\\CYRSFTSN{}": '\u042C'
-  "{\\cyrchar\\CYRSFTSN}": '\u042C'
-  "\\cyrchar\\CYRSFTSN": '\u042C'
-  "\\cyrchar\\CYREREV{}": '\u042D'
-  "{\\cyrchar\\CYREREV}": '\u042D'
-  "\\cyrchar\\CYREREV": '\u042D'
-  "\\cyrchar\\CYRYU{}": '\u042E'
-  "{\\cyrchar\\CYRYU}": '\u042E'
-  "\\cyrchar\\CYRYU": '\u042E'
-  "\\cyrchar\\CYRYA{}": '\u042F'
-  "{\\cyrchar\\CYRYA}": '\u042F'
-  "\\cyrchar\\CYRYA": '\u042F'
-  "\\cyrchar\\cyra{}": '\u0430'
-  "{\\cyrchar\\cyra}": '\u0430'
-  "\\cyrchar\\cyra": '\u0430'
-  "\\cyrchar\\cyrb{}": '\u0431'
-  "{\\cyrchar\\cyrb}": '\u0431'
-  "\\cyrchar\\cyrb": '\u0431'
-  "\\cyrchar\\cyrv{}": '\u0432'
-  "{\\cyrchar\\cyrv}": '\u0432'
-  "\\cyrchar\\cyrv": '\u0432'
-  "\\cyrchar\\cyrg{}": '\u0433'
-  "{\\cyrchar\\cyrg}": '\u0433'
-  "\\cyrchar\\cyrg": '\u0433'
-  "\\cyrchar\\cyrd{}": '\u0434'
-  "{\\cyrchar\\cyrd}": '\u0434'
-  "\\cyrchar\\cyrd": '\u0434'
-  "\\cyrchar\\cyre{}": '\u0435'
-  "{\\cyrchar\\cyre}": '\u0435'
-  "\\cyrchar\\cyre": '\u0435'
-  "\\cyrchar\\cyrzh{}": '\u0436'
-  "{\\cyrchar\\cyrzh}": '\u0436'
-  "\\cyrchar\\cyrzh": '\u0436'
-  "\\cyrchar\\cyrz{}": '\u0437'
-  "{\\cyrchar\\cyrz}": '\u0437'
-  "\\cyrchar\\cyrz": '\u0437'
-  "\\cyrchar\\cyri{}": '\u0438'
-  "{\\cyrchar\\cyri}": '\u0438'
-  "\\cyrchar\\cyri": '\u0438'
-  "\\cyrchar\\cyrishrt{}": '\u0439'
-  "{\\cyrchar\\cyrishrt}": '\u0439'
-  "\\cyrchar\\cyrishrt": '\u0439'
-  "\\cyrchar\\cyrk{}": '\u043A'
-  "{\\cyrchar\\cyrk}": '\u043A'
-  "\\cyrchar\\cyrk": '\u043A'
-  "\\cyrchar\\cyrl{}": '\u043B'
-  "{\\cyrchar\\cyrl}": '\u043B'
-  "\\cyrchar\\cyrl": '\u043B'
-  "\\cyrchar\\cyrm{}": '\u043C'
-  "{\\cyrchar\\cyrm}": '\u043C'
-  "\\cyrchar\\cyrm": '\u043C'
-  "\\cyrchar\\cyrn{}": '\u043D'
-  "{\\cyrchar\\cyrn}": '\u043D'
-  "\\cyrchar\\cyrn": '\u043D'
-  "\\cyrchar\\cyro{}": '\u043E'
-  "{\\cyrchar\\cyro}": '\u043E'
-  "\\cyrchar\\cyro": '\u043E'
-  "\\cyrchar\\cyrp{}": '\u043F'
-  "{\\cyrchar\\cyrp}": '\u043F'
-  "\\cyrchar\\cyrp": '\u043F'
-  "\\cyrchar\\cyrr{}": '\u0440'
-  "{\\cyrchar\\cyrr}": '\u0440'
-  "\\cyrchar\\cyrr": '\u0440'
-  "\\cyrchar\\cyrs{}": '\u0441'
-  "{\\cyrchar\\cyrs}": '\u0441'
-  "\\cyrchar\\cyrs": '\u0441'
-  "\\cyrchar\\cyrt{}": '\u0442'
-  "{\\cyrchar\\cyrt}": '\u0442'
-  "\\cyrchar\\cyrt": '\u0442'
-  "\\cyrchar\\cyru{}": '\u0443'
-  "{\\cyrchar\\cyru}": '\u0443'
-  "\\cyrchar\\cyru": '\u0443'
-  "\\cyrchar\\cyrf{}": '\u0444'
-  "{\\cyrchar\\cyrf}": '\u0444'
-  "\\cyrchar\\cyrf": '\u0444'
-  "\\cyrchar\\cyrh{}": '\u0445'
-  "{\\cyrchar\\cyrh}": '\u0445'
-  "\\cyrchar\\cyrh": '\u0445'
-  "\\cyrchar\\cyrc{}": '\u0446'
-  "{\\cyrchar\\cyrc}": '\u0446'
-  "\\cyrchar\\cyrc": '\u0446'
-  "\\cyrchar\\cyrch{}": '\u0447'
-  "{\\cyrchar\\cyrch}": '\u0447'
-  "\\cyrchar\\cyrch": '\u0447'
-  "\\cyrchar\\cyrsh{}": '\u0448'
-  "{\\cyrchar\\cyrsh}": '\u0448'
-  "\\cyrchar\\cyrsh": '\u0448'
-  "\\cyrchar\\cyrshch{}": '\u0449'
-  "{\\cyrchar\\cyrshch}": '\u0449'
-  "\\cyrchar\\cyrshch": '\u0449'
-  "\\cyrchar\\cyrhrdsn{}": '\u044A'
-  "{\\cyrchar\\cyrhrdsn}": '\u044A'
-  "\\cyrchar\\cyrhrdsn": '\u044A'
-  "\\cyrchar\\cyrery{}": '\u044B'
-  "{\\cyrchar\\cyrery}": '\u044B'
-  "\\cyrchar\\cyrery": '\u044B'
-  "\\cyrchar\\cyrsftsn{}": '\u044C'
-  "{\\cyrchar\\cyrsftsn}": '\u044C'
-  "\\cyrchar\\cyrsftsn": '\u044C'
-  "\\cyrchar\\cyrerev{}": '\u044D'
-  "{\\cyrchar\\cyrerev}": '\u044D'
-  "\\cyrchar\\cyrerev": '\u044D'
-  "\\cyrchar\\cyryu{}": '\u044E'
-  "{\\cyrchar\\cyryu}": '\u044E'
-  "\\cyrchar\\cyryu": '\u044E'
-  "\\cyrchar\\cyrya{}": '\u044F'
-  "{\\cyrchar\\cyrya}": '\u044F'
-  "\\cyrchar\\cyrya": '\u044F'
-  "\\cyrchar\\cyryo{}": '\u0451'
-  "{\\cyrchar\\cyryo}": '\u0451'
-  "\\cyrchar\\cyryo": '\u0451'
-  "\\cyrchar\\cyrdje{}": '\u0452'
-  "{\\cyrchar\\cyrdje}": '\u0452'
-  "\\cyrchar\\cyrdje": '\u0452'
-  "\\cyrchar{\\'\\cyrg}": '\u0453'
-  "\\cyrchar\\cyrie{}": '\u0454'
-  "{\\cyrchar\\cyrie}": '\u0454'
-  "\\cyrchar\\cyrie": '\u0454'
-  "\\cyrchar\\cyrdze{}": '\u0455'
-  "{\\cyrchar\\cyrdze}": '\u0455'
-  "\\cyrchar\\cyrdze": '\u0455'
-  "\\cyrchar\\cyrii{}": '\u0456'
-  "{\\cyrchar\\cyrii}": '\u0456'
-  "\\cyrchar\\cyrii": '\u0456'
-  "\\cyrchar\\cyryi{}": '\u0457'
-  "{\\cyrchar\\cyryi}": '\u0457'
-  "\\cyrchar\\cyryi": '\u0457'
-  "\\cyrchar\\cyrje{}": '\u0458'
-  "{\\cyrchar\\cyrje}": '\u0458'
-  "\\cyrchar\\cyrje": '\u0458'
-  "\\cyrchar\\cyrlje{}": '\u0459'
-  "{\\cyrchar\\cyrlje}": '\u0459'
-  "\\cyrchar\\cyrlje": '\u0459'
-  "\\cyrchar\\cyrnje{}": '\u045A'
-  "{\\cyrchar\\cyrnje}": '\u045A'
-  "\\cyrchar\\cyrnje": '\u045A'
-  "\\cyrchar\\cyrtshe{}": '\u045B'
-  "{\\cyrchar\\cyrtshe}": '\u045B'
-  "\\cyrchar\\cyrtshe": '\u045B'
-  "\\cyrchar{\\'\\cyrk}": '\u045C'
-  "\\cyrchar\\cyrushrt{}": '\u045E'
-  "{\\cyrchar\\cyrushrt}": '\u045E'
-  "\\cyrchar\\cyrushrt": '\u045E'
-  "\\cyrchar\\cyrdzhe{}": '\u045F'
-  "{\\cyrchar\\cyrdzhe}": '\u045F'
-  "\\cyrchar\\cyrdzhe": '\u045F'
-  "\\cyrchar\\CYROMEGA{}": '\u0460'
-  "{\\cyrchar\\CYROMEGA}": '\u0460'
-  "\\cyrchar\\CYROMEGA": '\u0460'
-  "\\cyrchar\\cyromega{}": '\u0461'
-  "{\\cyrchar\\cyromega}": '\u0461'
-  "\\cyrchar\\cyromega": '\u0461'
-  "\\cyrchar\\CYRYAT{}": '\u0462'
-  "{\\cyrchar\\CYRYAT}": '\u0462'
-  "\\cyrchar\\CYRYAT": '\u0462'
-  "\\cyrchar\\CYRIOTE{}": '\u0464'
-  "{\\cyrchar\\CYRIOTE}": '\u0464'
-  "\\cyrchar\\CYRIOTE": '\u0464'
-  "\\cyrchar\\cyriote{}": '\u0465'
-  "{\\cyrchar\\cyriote}": '\u0465'
-  "\\cyrchar\\cyriote": '\u0465'
-  "\\cyrchar\\CYRLYUS{}": '\u0466'
-  "{\\cyrchar\\CYRLYUS}": '\u0466'
-  "\\cyrchar\\CYRLYUS": '\u0466'
-  "\\cyrchar\\cyrlyus{}": '\u0467'
-  "{\\cyrchar\\cyrlyus}": '\u0467'
-  "\\cyrchar\\cyrlyus": '\u0467'
-  "\\cyrchar\\CYRIOTLYUS{}": '\u0468'
-  "{\\cyrchar\\CYRIOTLYUS}": '\u0468'
-  "\\cyrchar\\CYRIOTLYUS": '\u0468'
-  "\\cyrchar\\cyriotlyus{}": '\u0469'
-  "{\\cyrchar\\cyriotlyus}": '\u0469'
-  "\\cyrchar\\cyriotlyus": '\u0469'
-  "\\cyrchar\\CYRBYUS{}": '\u046A'
-  "{\\cyrchar\\CYRBYUS}": '\u046A'
-  "\\cyrchar\\CYRBYUS": '\u046A'
-  "\\cyrchar\\CYRIOTBYUS{}": '\u046C'
-  "{\\cyrchar\\CYRIOTBYUS}": '\u046C'
-  "\\cyrchar\\CYRIOTBYUS": '\u046C'
-  "\\cyrchar\\cyriotbyus{}": '\u046D'
-  "{\\cyrchar\\cyriotbyus}": '\u046D'
-  "\\cyrchar\\cyriotbyus": '\u046D'
-  "\\cyrchar\\CYRKSI{}": '\u046E'
-  "{\\cyrchar\\CYRKSI}": '\u046E'
-  "\\cyrchar\\CYRKSI": '\u046E'
-  "\\cyrchar\\cyrksi{}": '\u046F'
-  "{\\cyrchar\\cyrksi}": '\u046F'
-  "\\cyrchar\\cyrksi": '\u046F'
-  "\\cyrchar\\CYRPSI{}": '\u0470'
-  "{\\cyrchar\\CYRPSI}": '\u0470'
-  "\\cyrchar\\CYRPSI": '\u0470'
-  "\\cyrchar\\cyrpsi{}": '\u0471'
-  "{\\cyrchar\\cyrpsi}": '\u0471'
-  "\\cyrchar\\cyrpsi": '\u0471'
-  "\\cyrchar\\CYRFITA{}": '\u0472'
-  "{\\cyrchar\\CYRFITA}": '\u0472'
-  "\\cyrchar\\CYRFITA": '\u0472'
-  "\\cyrchar\\CYRIZH{}": '\u0474'
-  "{\\cyrchar\\CYRIZH}": '\u0474'
-  "\\cyrchar\\CYRIZH": '\u0474'
-  "\\cyrchar\\CYRUK{}": '\u0478'
-  "{\\cyrchar\\CYRUK}": '\u0478'
-  "\\cyrchar\\CYRUK": '\u0478'
-  "\\cyrchar\\cyruk{}": '\u0479'
-  "{\\cyrchar\\cyruk}": '\u0479'
-  "\\cyrchar\\cyruk": '\u0479'
-  "\\cyrchar\\CYROMEGARND{}": '\u047A'
-  "{\\cyrchar\\CYROMEGARND}": '\u047A'
-  "\\cyrchar\\CYROMEGARND": '\u047A'
-  "\\cyrchar\\cyromegarnd{}": '\u047B'
-  "{\\cyrchar\\cyromegarnd}": '\u047B'
-  "\\cyrchar\\cyromegarnd": '\u047B'
-  "\\cyrchar\\CYROMEGATITLO{}": '\u047C'
-  "{\\cyrchar\\CYROMEGATITLO}": '\u047C'
-  "\\cyrchar\\CYROMEGATITLO": '\u047C'
-  "\\cyrchar\\cyromegatitlo{}": '\u047D'
-  "{\\cyrchar\\cyromegatitlo}": '\u047D'
-  "\\cyrchar\\cyromegatitlo": '\u047D'
-  "\\cyrchar\\CYROT{}": '\u047E'
-  "{\\cyrchar\\CYROT}": '\u047E'
-  "\\cyrchar\\CYROT": '\u047E'
-  "\\cyrchar\\cyrot{}": '\u047F'
-  "{\\cyrchar\\cyrot}": '\u047F'
-  "\\cyrchar\\cyrot": '\u047F'
-  "\\cyrchar\\CYRKOPPA{}": '\u0480'
-  "{\\cyrchar\\CYRKOPPA}": '\u0480'
-  "\\cyrchar\\CYRKOPPA": '\u0480'
-  "\\cyrchar\\cyrkoppa{}": '\u0481'
-  "{\\cyrchar\\cyrkoppa}": '\u0481'
-  "\\cyrchar\\cyrkoppa": '\u0481'
-  "\\cyrchar\\cyrthousands{}": '\u0482'
-  "{\\cyrchar\\cyrthousands}": '\u0482'
-  "\\cyrchar\\cyrthousands": '\u0482'
-  "\\cyrchar\\cyrhundredthousands{}": '\u0488'
-  "{\\cyrchar\\cyrhundredthousands}": '\u0488'
-  "\\cyrchar\\cyrhundredthousands": '\u0488'
-  "\\cyrchar\\cyrmillions{}": '\u0489'
-  "{\\cyrchar\\cyrmillions}": '\u0489'
-  "\\cyrchar\\cyrmillions": '\u0489'
-  "\\cyrchar\\CYRSEMISFTSN{}": '\u048C'
-  "{\\cyrchar\\CYRSEMISFTSN}": '\u048C'
-  "\\cyrchar\\CYRSEMISFTSN": '\u048C'
-  "\\cyrchar\\cyrsemisftsn{}": '\u048D'
-  "{\\cyrchar\\cyrsemisftsn}": '\u048D'
-  "\\cyrchar\\cyrsemisftsn": '\u048D'
-  "\\cyrchar\\CYRRTICK{}": '\u048E'
-  "{\\cyrchar\\CYRRTICK}": '\u048E'
-  "\\cyrchar\\CYRRTICK": '\u048E'
-  "\\cyrchar\\cyrrtick{}": '\u048F'
-  "{\\cyrchar\\cyrrtick}": '\u048F'
-  "\\cyrchar\\cyrrtick": '\u048F'
-  "\\cyrchar\\CYRGUP{}": '\u0490'
-  "{\\cyrchar\\CYRGUP}": '\u0490'
-  "\\cyrchar\\CYRGUP": '\u0490'
-  "\\cyrchar\\cyrgup{}": '\u0491'
-  "{\\cyrchar\\cyrgup}": '\u0491'
-  "\\cyrchar\\cyrgup": '\u0491'
-  "\\cyrchar\\CYRGHCRS{}": '\u0492'
-  "{\\cyrchar\\CYRGHCRS}": '\u0492'
-  "\\cyrchar\\CYRGHCRS": '\u0492'
-  "\\cyrchar\\cyrghcrs{}": '\u0493'
-  "{\\cyrchar\\cyrghcrs}": '\u0493'
-  "\\cyrchar\\cyrghcrs": '\u0493'
-  "\\cyrchar\\CYRGHK{}": '\u0494'
-  "{\\cyrchar\\CYRGHK}": '\u0494'
-  "\\cyrchar\\CYRGHK": '\u0494'
-  "\\cyrchar\\cyrghk{}": '\u0495'
-  "{\\cyrchar\\cyrghk}": '\u0495'
-  "\\cyrchar\\cyrghk": '\u0495'
-  "\\cyrchar\\CYRZHDSC{}": '\u0496'
-  "{\\cyrchar\\CYRZHDSC}": '\u0496'
-  "\\cyrchar\\CYRZHDSC": '\u0496'
-  "\\cyrchar\\cyrzhdsc{}": '\u0497'
-  "{\\cyrchar\\cyrzhdsc}": '\u0497'
-  "\\cyrchar\\cyrzhdsc": '\u0497'
-  "\\cyrchar\\CYRZDSC{}": '\u0498'
-  "{\\cyrchar\\CYRZDSC}": '\u0498'
-  "\\cyrchar\\CYRZDSC": '\u0498'
-  "\\cyrchar\\cyrzdsc{}": '\u0499'
-  "{\\cyrchar\\cyrzdsc}": '\u0499'
-  "\\cyrchar\\cyrzdsc": '\u0499'
-  "\\cyrchar\\CYRKDSC{}": '\u049A'
-  "{\\cyrchar\\CYRKDSC}": '\u049A'
-  "\\cyrchar\\CYRKDSC": '\u049A'
-  "\\cyrchar\\cyrkdsc{}": '\u049B'
-  "{\\cyrchar\\cyrkdsc}": '\u049B'
-  "\\cyrchar\\cyrkdsc": '\u049B'
-  "\\cyrchar\\CYRKVCRS{}": '\u049C'
-  "{\\cyrchar\\CYRKVCRS}": '\u049C'
-  "\\cyrchar\\CYRKVCRS": '\u049C'
-  "\\cyrchar\\cyrkvcrs{}": '\u049D'
-  "{\\cyrchar\\cyrkvcrs}": '\u049D'
-  "\\cyrchar\\cyrkvcrs": '\u049D'
-  "\\cyrchar\\CYRKHCRS{}": '\u049E'
-  "{\\cyrchar\\CYRKHCRS}": '\u049E'
-  "\\cyrchar\\CYRKHCRS": '\u049E'
-  "\\cyrchar\\cyrkhcrs{}": '\u049F'
-  "{\\cyrchar\\cyrkhcrs}": '\u049F'
-  "\\cyrchar\\cyrkhcrs": '\u049F'
-  "\\cyrchar\\CYRKBEAK{}": '\u04A0'
-  "{\\cyrchar\\CYRKBEAK}": '\u04A0'
-  "\\cyrchar\\CYRKBEAK": '\u04A0'
-  "\\cyrchar\\cyrkbeak{}": '\u04A1'
-  "{\\cyrchar\\cyrkbeak}": '\u04A1'
-  "\\cyrchar\\cyrkbeak": '\u04A1'
-  "\\cyrchar\\CYRNDSC{}": '\u04A2'
-  "{\\cyrchar\\CYRNDSC}": '\u04A2'
-  "\\cyrchar\\CYRNDSC": '\u04A2'
-  "\\cyrchar\\cyrndsc{}": '\u04A3'
-  "{\\cyrchar\\cyrndsc}": '\u04A3'
-  "\\cyrchar\\cyrndsc": '\u04A3'
-  "\\cyrchar\\CYRNG{}": '\u04A4'
-  "{\\cyrchar\\CYRNG}": '\u04A4'
-  "\\cyrchar\\CYRNG": '\u04A4'
-  "\\cyrchar\\cyrng{}": '\u04A5'
-  "{\\cyrchar\\cyrng}": '\u04A5'
-  "\\cyrchar\\cyrng": '\u04A5'
-  "\\cyrchar\\CYRPHK{}": '\u04A6'
-  "{\\cyrchar\\CYRPHK}": '\u04A6'
-  "\\cyrchar\\CYRPHK": '\u04A6'
-  "\\cyrchar\\cyrphk{}": '\u04A7'
-  "{\\cyrchar\\cyrphk}": '\u04A7'
-  "\\cyrchar\\cyrphk": '\u04A7'
-  "\\cyrchar\\CYRABHHA{}": '\u04A8'
-  "{\\cyrchar\\CYRABHHA}": '\u04A8'
-  "\\cyrchar\\CYRABHHA": '\u04A8'
-  "\\cyrchar\\cyrabhha{}": '\u04A9'
-  "{\\cyrchar\\cyrabhha}": '\u04A9'
-  "\\cyrchar\\cyrabhha": '\u04A9'
-  "\\cyrchar\\CYRSDSC{}": '\u04AA'
-  "{\\cyrchar\\CYRSDSC}": '\u04AA'
-  "\\cyrchar\\CYRSDSC": '\u04AA'
-  "\\cyrchar\\cyrsdsc{}": '\u04AB'
-  "{\\cyrchar\\cyrsdsc}": '\u04AB'
-  "\\cyrchar\\cyrsdsc": '\u04AB'
-  "\\cyrchar\\CYRTDSC{}": '\u04AC'
-  "{\\cyrchar\\CYRTDSC}": '\u04AC'
-  "\\cyrchar\\CYRTDSC": '\u04AC'
-  "\\cyrchar\\cyrtdsc{}": '\u04AD'
-  "{\\cyrchar\\cyrtdsc}": '\u04AD'
-  "\\cyrchar\\cyrtdsc": '\u04AD'
-  "\\cyrchar\\CYRY{}": '\u04AE'
-  "{\\cyrchar\\CYRY}": '\u04AE'
-  "\\cyrchar\\CYRY": '\u04AE'
-  "\\cyrchar\\cyry{}": '\u04AF'
-  "{\\cyrchar\\cyry}": '\u04AF'
-  "\\cyrchar\\cyry": '\u04AF'
-  "\\cyrchar\\CYRYHCRS{}": '\u04B0'
-  "{\\cyrchar\\CYRYHCRS}": '\u04B0'
-  "\\cyrchar\\CYRYHCRS": '\u04B0'
-  "\\cyrchar\\cyryhcrs{}": '\u04B1'
-  "{\\cyrchar\\cyryhcrs}": '\u04B1'
-  "\\cyrchar\\cyryhcrs": '\u04B1'
-  "\\cyrchar\\CYRHDSC{}": '\u04B2'
-  "{\\cyrchar\\CYRHDSC}": '\u04B2'
-  "\\cyrchar\\CYRHDSC": '\u04B2'
-  "\\cyrchar\\cyrhdsc{}": '\u04B3'
-  "{\\cyrchar\\cyrhdsc}": '\u04B3'
-  "\\cyrchar\\cyrhdsc": '\u04B3'
-  "\\cyrchar\\CYRTETSE{}": '\u04B4'
-  "{\\cyrchar\\CYRTETSE}": '\u04B4'
-  "\\cyrchar\\CYRTETSE": '\u04B4'
-  "\\cyrchar\\cyrtetse{}": '\u04B5'
-  "{\\cyrchar\\cyrtetse}": '\u04B5'
-  "\\cyrchar\\cyrtetse": '\u04B5'
-  "\\cyrchar\\CYRCHRDSC{}": '\u04B6'
-  "{\\cyrchar\\CYRCHRDSC}": '\u04B6'
-  "\\cyrchar\\CYRCHRDSC": '\u04B6'
-  "\\cyrchar\\cyrchrdsc{}": '\u04B7'
-  "{\\cyrchar\\cyrchrdsc}": '\u04B7'
-  "\\cyrchar\\cyrchrdsc": '\u04B7'
-  "\\cyrchar\\CYRCHVCRS{}": '\u04B8'
-  "{\\cyrchar\\CYRCHVCRS}": '\u04B8'
-  "\\cyrchar\\CYRCHVCRS": '\u04B8'
-  "\\cyrchar\\cyrchvcrs{}": '\u04B9'
-  "{\\cyrchar\\cyrchvcrs}": '\u04B9'
-  "\\cyrchar\\cyrchvcrs": '\u04B9'
-  "\\cyrchar\\CYRSHHA{}": '\u04BA'
-  "{\\cyrchar\\CYRSHHA}": '\u04BA'
-  "\\cyrchar\\CYRSHHA": '\u04BA'
-  "\\cyrchar\\cyrshha{}": '\u04BB'
-  "{\\cyrchar\\cyrshha}": '\u04BB'
-  "\\cyrchar\\cyrshha": '\u04BB'
-  "\\cyrchar\\CYRABHCH{}": '\u04BC'
-  "{\\cyrchar\\CYRABHCH}": '\u04BC'
-  "\\cyrchar\\CYRABHCH": '\u04BC'
-  "\\cyrchar\\cyrabhch{}": '\u04BD'
-  "{\\cyrchar\\cyrabhch}": '\u04BD'
-  "\\cyrchar\\cyrabhch": '\u04BD'
-  "\\cyrchar\\CYRABHCHDSC{}": '\u04BE'
-  "{\\cyrchar\\CYRABHCHDSC}": '\u04BE'
-  "\\cyrchar\\CYRABHCHDSC": '\u04BE'
-  "\\cyrchar\\cyrabhchdsc{}": '\u04BF'
-  "{\\cyrchar\\cyrabhchdsc}": '\u04BF'
-  "\\cyrchar\\cyrabhchdsc": '\u04BF'
-  "\\cyrchar\\CYRpalochka{}": '\u04C0'
-  "{\\cyrchar\\CYRpalochka}": '\u04C0'
-  "\\cyrchar\\CYRpalochka": '\u04C0'
-  "\\cyrchar\\CYRKHK{}": '\u04C3'
-  "{\\cyrchar\\CYRKHK}": '\u04C3'
-  "\\cyrchar\\CYRKHK": '\u04C3'
-  "\\cyrchar\\cyrkhk{}": '\u04C4'
-  "{\\cyrchar\\cyrkhk}": '\u04C4'
-  "\\cyrchar\\cyrkhk": '\u04C4'
-  "\\cyrchar\\CYRNHK{}": '\u04C7'
-  "{\\cyrchar\\CYRNHK}": '\u04C7'
-  "\\cyrchar\\CYRNHK": '\u04C7'
-  "\\cyrchar\\cyrnhk{}": '\u04C8'
-  "{\\cyrchar\\cyrnhk}": '\u04C8'
-  "\\cyrchar\\cyrnhk": '\u04C8'
-  "\\cyrchar\\CYRCHLDSC{}": '\u04CB'
-  "{\\cyrchar\\CYRCHLDSC}": '\u04CB'
-  "\\cyrchar\\CYRCHLDSC": '\u04CB'
-  "\\cyrchar\\cyrchldsc{}": '\u04CC'
-  "{\\cyrchar\\cyrchldsc}": '\u04CC'
-  "\\cyrchar\\cyrchldsc": '\u04CC'
-  "\\cyrchar\\CYRAE{}": '\u04D4'
-  "{\\cyrchar\\CYRAE}": '\u04D4'
-  "\\cyrchar\\CYRAE": '\u04D4'
-  "\\cyrchar\\cyrae{}": '\u04D5'
-  "{\\cyrchar\\cyrae}": '\u04D5'
-  "\\cyrchar\\cyrae": '\u04D5'
-  "\\cyrchar\\CYRSCHWA{}": '\u04D8'
-  "{\\cyrchar\\CYRSCHWA}": '\u04D8'
-  "\\cyrchar\\CYRSCHWA": '\u04D8'
-  "\\cyrchar\\cyrschwa{}": '\u04D9'
-  "{\\cyrchar\\cyrschwa}": '\u04D9'
-  "\\cyrchar\\cyrschwa": '\u04D9'
-  "\\cyrchar\\CYRABHDZE{}": '\u04E0'
-  "{\\cyrchar\\CYRABHDZE}": '\u04E0'
-  "\\cyrchar\\CYRABHDZE": '\u04E0'
-  "\\cyrchar\\cyrabhdze{}": '\u04E1'
-  "{\\cyrchar\\cyrabhdze}": '\u04E1'
-  "\\cyrchar\\cyrabhdze": '\u04E1'
-  "\\cyrchar\\CYROTLD{}": '\u04E8'
-  "{\\cyrchar\\CYROTLD}": '\u04E8'
-  "\\cyrchar\\CYROTLD": '\u04E8'
-  "\\cyrchar\\cyrotld{}": '\u04E9'
-  "{\\cyrchar\\cyrotld}": '\u04E9'
-  "\\cyrchar\\cyrotld": '\u04E9'
-  "\\quad{}": '\u2001'
-  "{\\quad}": '\u2001'
-  "\\quad": '\u2001'
-  "\\hspace{0.6em}": '\u2002'
-  "\\hspace{1em}": '\u2003'
+  "\\pm{}": '\u00B1' # PLUS-MINUS SIGN
+  "{\\pm}": '\u00B1' # PLUS-MINUS SIGN
+  "\\pm": '\u00B1' # PLUS-MINUS SIGN
+  "^2": '\u00B2' # SUPERSCRIPT TWO
+  "{^2}": '\u00B2' # SUPERSCRIPT TWO
+  "^3": '\u00B3' # SUPERSCRIPT THREE
+  "{^3}": '\u00B3' # SUPERSCRIPT THREE
+  "\\textasciiacute{}": '\u00B4' # ACUTE ACCENT
+  "{\\textasciiacute}": '\u00B4' # ACUTE ACCENT
+  "\\textasciiacute": '\u00B4' # ACUTE ACCENT
+  "\\mathrm{\\mu}": '\u00B5' # MICRO SIGN
+  "\\textparagraph{}": '\u00B6' # PILCROW SIGN
+  "{\\textparagraph}": '\u00B6' # PILCROW SIGN
+  "\\textparagraph": '\u00B6' # PILCROW SIGN
+  "\\cdot{}": '\u00B7' # MIDDLE DOT
+  "{\\cdot}": '\u00B7' # MIDDLE DOT
+  "\\cdot": '\u00B7' # MIDDLE DOT
+  "\\c{}": '\u00B8' # CEDILLA
+  "{\\c}": '\u00B8' # CEDILLA
+  "\\c": '\u00B8' # CEDILLA
+  "^1": '\u00B9' # SUPERSCRIPT ONE
+  "{^1}": '\u00B9' # SUPERSCRIPT ONE
+  "\\textordmasculine{}": '\u00BA' # MASCULINE ORDINAL INDICATOR
+  "{\\textordmasculine}": '\u00BA' # MASCULINE ORDINAL INDICATOR
+  "\\textordmasculine": '\u00BA' # MASCULINE ORDINAL INDICATOR
+  "\\guillemotright{}": '\u00BB' # RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK
+  "{\\guillemotright}": '\u00BB' # RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK
+  "\\guillemotright": '\u00BB' # RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK
+  "\\textonequarter{}": '\u00BC' # VULGAR FRACTION ONE QUARTER
+  "{\\textonequarter}": '\u00BC' # VULGAR FRACTION ONE QUARTER
+  "\\textonequarter": '\u00BC' # VULGAR FRACTION ONE QUARTER
+  "\\textonehalf{}": '\u00BD' # VULGAR FRACTION ONE HALF
+  "{\\textonehalf}": '\u00BD' # VULGAR FRACTION ONE HALF
+  "\\textonehalf": '\u00BD' # VULGAR FRACTION ONE HALF
+  "\\textthreequarters{}": '\u00BE' # VULGAR FRACTION THREE QUARTERS
+  "{\\textthreequarters}": '\u00BE' # VULGAR FRACTION THREE QUARTERS
+  "\\textthreequarters": '\u00BE' # VULGAR FRACTION THREE QUARTERS
+  "\\textquestiondown{}": '\u00BF' # INVERTED QUESTION MARK
+  "{\\textquestiondown}": '\u00BF' # INVERTED QUESTION MARK
+  "\\textquestiondown": '\u00BF' # INVERTED QUESTION MARK
+  "{\\`A}": '\u00C0' # LATIN CAPITAL LETTER A WITH GRAVE
+  "\\`{A}": '\u00C0' # LATIN CAPITAL LETTER A WITH GRAVE
+  "\\`A": '\u00C0' # LATIN CAPITAL LETTER A WITH GRAVE
+  "{\\'A}": '\u00C1' # LATIN CAPITAL LETTER A WITH ACUTE
+  "\\'{A}": '\u00C1' # LATIN CAPITAL LETTER A WITH ACUTE
+  "\\'A": '\u00C1' # LATIN CAPITAL LETTER A WITH ACUTE
+  "{\\^A}": '\u00C2' # LATIN CAPITAL LETTER A WITH CIRCUMFLEX
+  "\\^{A}": '\u00C2' # LATIN CAPITAL LETTER A WITH CIRCUMFLEX
+  "\\^A": '\u00C2' # LATIN CAPITAL LETTER A WITH CIRCUMFLEX
+  "{\\~A}": '\u00C3' # LATIN CAPITAL LETTER A WITH TILDE
+  "\\~{A}": '\u00C3' # LATIN CAPITAL LETTER A WITH TILDE
+  "\\~A": '\u00C3' # LATIN CAPITAL LETTER A WITH TILDE
+  "{\\\"A}": '\u00C4' # LATIN CAPITAL LETTER A WITH DIAERESIS
+  "\\\"{A}": '\u00C4' # LATIN CAPITAL LETTER A WITH DIAERESIS
+  "\\\"A": '\u00C4' # LATIN CAPITAL LETTER A WITH DIAERESIS
+  "\\AA{}": '\u00C5' # LATIN CAPITAL LETTER A WITH RING ABOVE
+  "{\\AA}": '\u00C5' # LATIN CAPITAL LETTER A WITH RING ABOVE
+  "\\A{A}": '\u00C5' # LATIN CAPITAL LETTER A WITH RING ABOVE
+  "\\AA": '\u00C5' # LATIN CAPITAL LETTER A WITH RING ABOVE
+  "\\AE{}": '\u00C6' # LATIN CAPITAL LETTER AE
+  "{\\AE}": '\u00C6' # LATIN CAPITAL LETTER AE
+  "\\A{E}": '\u00C6' # LATIN CAPITAL LETTER AE
+  "\\AE": '\u00C6' # LATIN CAPITAL LETTER AE
+  "{\\c C}": '\u00C7' # LATIN CAPITAL LETTER C WITH CEDILLA
+  "\\c C{}": '\u00C7' # LATIN CAPITAL LETTER C WITH CEDILLA
+  "\\c C": '\u00C7' # LATIN CAPITAL LETTER C WITH CEDILLA
+  "{\\`E}": '\u00C8' # LATIN CAPITAL LETTER E WITH GRAVE
+  "\\`{E}": '\u00C8' # LATIN CAPITAL LETTER E WITH GRAVE
+  "\\`E": '\u00C8' # LATIN CAPITAL LETTER E WITH GRAVE
+  "{\\'E}": '\u00C9' # LATIN CAPITAL LETTER E WITH ACUTE
+  "\\'{E}": '\u00C9' # LATIN CAPITAL LETTER E WITH ACUTE
+  "\\'E": '\u00C9' # LATIN CAPITAL LETTER E WITH ACUTE
+  "{\\^E}": '\u00CA' # LATIN CAPITAL LETTER E WITH CIRCUMFLEX
+  "\\^{E}": '\u00CA' # LATIN CAPITAL LETTER E WITH CIRCUMFLEX
+  "\\^E": '\u00CA' # LATIN CAPITAL LETTER E WITH CIRCUMFLEX
+  "{\\\"E}": '\u00CB' # LATIN CAPITAL LETTER E WITH DIAERESIS
+  "\\\"{E}": '\u00CB' # LATIN CAPITAL LETTER E WITH DIAERESIS
+  "\\\"E": '\u00CB' # LATIN CAPITAL LETTER E WITH DIAERESIS
+  "{\\`I}": '\u00CC' # LATIN CAPITAL LETTER I WITH GRAVE
+  "\\`{I}": '\u00CC' # LATIN CAPITAL LETTER I WITH GRAVE
+  "\\`I": '\u00CC' # LATIN CAPITAL LETTER I WITH GRAVE
+  "{\\'I}": '\u00CD' # LATIN CAPITAL LETTER I WITH ACUTE
+  "\\'{I}": '\u00CD' # LATIN CAPITAL LETTER I WITH ACUTE
+  "\\'I": '\u00CD' # LATIN CAPITAL LETTER I WITH ACUTE
+  "{\\^I}": '\u00CE' # LATIN CAPITAL LETTER I WITH CIRCUMFLEX
+  "\\^{I}": '\u00CE' # LATIN CAPITAL LETTER I WITH CIRCUMFLEX
+  "\\^I": '\u00CE' # LATIN CAPITAL LETTER I WITH CIRCUMFLEX
+  "{\\\"I}": '\u00CF' # LATIN CAPITAL LETTER I WITH DIAERESIS
+  "\\\"{I}": '\u00CF' # LATIN CAPITAL LETTER I WITH DIAERESIS
+  "\\\"I": '\u00CF' # LATIN CAPITAL LETTER I WITH DIAERESIS
+  "\\DH{}": '\u00D0' # LATIN CAPITAL LETTER ETH
+  "{\\DH}": '\u00D0' # LATIN CAPITAL LETTER ETH
+  "\\D{H}": '\u00D0' # LATIN CAPITAL LETTER ETH
+  "\\DH": '\u00D0' # LATIN CAPITAL LETTER ETH
+  "{\\~N}": '\u00D1' # LATIN CAPITAL LETTER N WITH TILDE
+  "\\~{N}": '\u00D1' # LATIN CAPITAL LETTER N WITH TILDE
+  "\\~N": '\u00D1' # LATIN CAPITAL LETTER N WITH TILDE
+  "{\\`O}": '\u00D2' # LATIN CAPITAL LETTER O WITH GRAVE
+  "\\`{O}": '\u00D2' # LATIN CAPITAL LETTER O WITH GRAVE
+  "\\`O": '\u00D2' # LATIN CAPITAL LETTER O WITH GRAVE
+  "{\\'O}": '\u00D3' # LATIN CAPITAL LETTER O WITH ACUTE
+  "\\'{O}": '\u00D3' # LATIN CAPITAL LETTER O WITH ACUTE
+  "\\'O": '\u00D3' # LATIN CAPITAL LETTER O WITH ACUTE
+  "{\\^O}": '\u00D4' # LATIN CAPITAL LETTER O WITH CIRCUMFLEX
+  "\\^{O}": '\u00D4' # LATIN CAPITAL LETTER O WITH CIRCUMFLEX
+  "\\^O": '\u00D4' # LATIN CAPITAL LETTER O WITH CIRCUMFLEX
+  "{\\~O}": '\u00D5' # LATIN CAPITAL LETTER O WITH TILDE
+  "\\~{O}": '\u00D5' # LATIN CAPITAL LETTER O WITH TILDE
+  "\\~O": '\u00D5' # LATIN CAPITAL LETTER O WITH TILDE
+  "{\\\"O}": '\u00D6' # LATIN CAPITAL LETTER O WITH DIAERESIS
+  "\\\"{O}": '\u00D6' # LATIN CAPITAL LETTER O WITH DIAERESIS
+  "\\\"O": '\u00D6' # LATIN CAPITAL LETTER O WITH DIAERESIS
+  "\\texttimes{}": '\u00D7' # MULTIPLICATION SIGN
+  "{\\texttimes}": '\u00D7' # MULTIPLICATION SIGN
+  "\\texttimes": '\u00D7' # MULTIPLICATION SIGN
+  "\\O{}": '\u00D8' # LATIN CAPITAL LETTER O WITH STROKE
+  "{\\O}": '\u00D8' # LATIN CAPITAL LETTER O WITH STROKE
+  "\\O": '\u00D8' # LATIN CAPITAL LETTER O WITH STROKE
+  "{\\`U}": '\u00D9' # LATIN CAPITAL LETTER U WITH GRAVE
+  "\\`{U}": '\u00D9' # LATIN CAPITAL LETTER U WITH GRAVE
+  "\\`U": '\u00D9' # LATIN CAPITAL LETTER U WITH GRAVE
+  "{\\'U}": '\u00DA' # LATIN CAPITAL LETTER U WITH ACUTE
+  "\\'{U}": '\u00DA' # LATIN CAPITAL LETTER U WITH ACUTE
+  "\\'U": '\u00DA' # LATIN CAPITAL LETTER U WITH ACUTE
+  "{\\^U}": '\u00DB' # LATIN CAPITAL LETTER U WITH CIRCUMFLEX
+  "\\^{U}": '\u00DB' # LATIN CAPITAL LETTER U WITH CIRCUMFLEX
+  "\\^U": '\u00DB' # LATIN CAPITAL LETTER U WITH CIRCUMFLEX
+  "{\\\"U}": '\u00DC' # LATIN CAPITAL LETTER U WITH DIAERESIS
+  "\\\"{U}": '\u00DC' # LATIN CAPITAL LETTER U WITH DIAERESIS
+  "\\\"U": '\u00DC' # LATIN CAPITAL LETTER U WITH DIAERESIS
+  "{\\'Y}": '\u00DD' # LATIN CAPITAL LETTER Y WITH ACUTE
+  "\\'{Y}": '\u00DD' # LATIN CAPITAL LETTER Y WITH ACUTE
+  "\\'Y": '\u00DD' # LATIN CAPITAL LETTER Y WITH ACUTE
+  "\\TH{}": '\u00DE' # LATIN CAPITAL LETTER THORN
+  "{\\TH}": '\u00DE' # LATIN CAPITAL LETTER THORN
+  "\\T{H}": '\u00DE' # LATIN CAPITAL LETTER THORN
+  "\\TH": '\u00DE' # LATIN CAPITAL LETTER THORN
+  "\\ss{}": '\u00DF' # LATIN SMALL LETTER SHARP S
+  "{\\ss}": '\u00DF' # LATIN SMALL LETTER SHARP S
+  "\\ss": '\u00DF' # LATIN SMALL LETTER SHARP S
+  "{\\`a}": '\u00E0' # LATIN SMALL LETTER A WITH GRAVE
+  "\\`{a}": '\u00E0' # LATIN SMALL LETTER A WITH GRAVE
+  "\\`a": '\u00E0' # LATIN SMALL LETTER A WITH GRAVE
+  "{\\'a}": '\u00E1' # LATIN SMALL LETTER A WITH ACUTE
+  "\\'{a}": '\u00E1' # LATIN SMALL LETTER A WITH ACUTE
+  "\\'a": '\u00E1' # LATIN SMALL LETTER A WITH ACUTE
+  "{\\^a}": '\u00E2' # LATIN SMALL LETTER A WITH CIRCUMFLEX
+  "\\^{a}": '\u00E2' # LATIN SMALL LETTER A WITH CIRCUMFLEX
+  "\\^a": '\u00E2' # LATIN SMALL LETTER A WITH CIRCUMFLEX
+  "{\\~a}": '\u00E3' # LATIN SMALL LETTER A WITH TILDE
+  "\\~{a}": '\u00E3' # LATIN SMALL LETTER A WITH TILDE
+  "\\~a": '\u00E3' # LATIN SMALL LETTER A WITH TILDE
+  "{\\\"a}": '\u00E4' # LATIN SMALL LETTER A WITH DIAERESIS
+  "\\\"{a}": '\u00E4' # LATIN SMALL LETTER A WITH DIAERESIS
+  "\\\"a": '\u00E4' # LATIN SMALL LETTER A WITH DIAERESIS
+  "\\aa{}": '\u00E5' # LATIN SMALL LETTER A WITH RING ABOVE
+  "{\\aa}": '\u00E5' # LATIN SMALL LETTER A WITH RING ABOVE
+  "\\aa": '\u00E5' # LATIN SMALL LETTER A WITH RING ABOVE
+  "\\ae{}": '\u00E6' # LATIN SMALL LETTER AE
+  "{\\ae}": '\u00E6' # LATIN SMALL LETTER AE
+  "\\ae": '\u00E6' # LATIN SMALL LETTER AE
+  "{\\c c}": '\u00E7' # LATIN SMALL LETTER C WITH CEDILLA
+  "\\c c{}": '\u00E7' # LATIN SMALL LETTER C WITH CEDILLA
+  "\\c c": '\u00E7' # LATIN SMALL LETTER C WITH CEDILLA
+  "{\\`e}": '\u00E8' # LATIN SMALL LETTER E WITH GRAVE
+  "\\`{e}": '\u00E8' # LATIN SMALL LETTER E WITH GRAVE
+  "\\`e": '\u00E8' # LATIN SMALL LETTER E WITH GRAVE
+  "{\\'e}": '\u00E9' # LATIN SMALL LETTER E WITH ACUTE
+  "\\'{e}": '\u00E9' # LATIN SMALL LETTER E WITH ACUTE
+  "\\'e": '\u00E9' # LATIN SMALL LETTER E WITH ACUTE
+  "{\\^e}": '\u00EA' # LATIN SMALL LETTER E WITH CIRCUMFLEX
+  "\\^{e}": '\u00EA' # LATIN SMALL LETTER E WITH CIRCUMFLEX
+  "\\^e": '\u00EA' # LATIN SMALL LETTER E WITH CIRCUMFLEX
+  "{\\\"e}": '\u00EB' # LATIN SMALL LETTER E WITH DIAERESIS
+  "\\\"{e}": '\u00EB' # LATIN SMALL LETTER E WITH DIAERESIS
+  "\\\"e": '\u00EB' # LATIN SMALL LETTER E WITH DIAERESIS
+  "{\\`\\i}": '\u00EC' # LATIN SMALL LETTER I WITH GRAVE
+  "\\`\\i{}": '\u00EC' # LATIN SMALL LETTER I WITH GRAVE
+  "\\`\\i": '\u00EC' # LATIN SMALL LETTER I WITH GRAVE
+  "{\\'\\i}": '\u00ED' # LATIN SMALL LETTER I WITH ACUTE
+  "\\'\\i{}": '\u00ED' # LATIN SMALL LETTER I WITH ACUTE
+  "\\'\\i": '\u00ED' # LATIN SMALL LETTER I WITH ACUTE
+  "{\\^\\i}": '\u00EE' # LATIN SMALL LETTER I WITH CIRCUMFLEX
+  "\\^\\i{}": '\u00EE' # LATIN SMALL LETTER I WITH CIRCUMFLEX
+  "\\^\\i": '\u00EE' # LATIN SMALL LETTER I WITH CIRCUMFLEX
+  "{\\\"\\i}": '\u00EF' # LATIN SMALL LETTER I WITH DIAERESIS
+  "\\\"\\i{}": '\u00EF' # LATIN SMALL LETTER I WITH DIAERESIS
+  "\\\"\\i": '\u00EF' # LATIN SMALL LETTER I WITH DIAERESIS
+  "\\dh{}": '\u00F0' # LATIN SMALL LETTER ETH
+  "{\\dh}": '\u00F0' # LATIN SMALL LETTER ETH
+  "\\dh": '\u00F0' # LATIN SMALL LETTER ETH
+  "{\\~n}": '\u00F1' # LATIN SMALL LETTER N WITH TILDE
+  "\\~{n}": '\u00F1' # LATIN SMALL LETTER N WITH TILDE
+  "\\~n": '\u00F1' # LATIN SMALL LETTER N WITH TILDE
+  "{\\`o}": '\u00F2' # LATIN SMALL LETTER O WITH GRAVE
+  "\\`{o}": '\u00F2' # LATIN SMALL LETTER O WITH GRAVE
+  "\\`o": '\u00F2' # LATIN SMALL LETTER O WITH GRAVE
+  "{\\'o}": '\u00F3' # LATIN SMALL LETTER O WITH ACUTE
+  "\\'{o}": '\u00F3' # LATIN SMALL LETTER O WITH ACUTE
+  "\\'o": '\u00F3' # LATIN SMALL LETTER O WITH ACUTE
+  "{\\^o}": '\u00F4' # LATIN SMALL LETTER O WITH CIRCUMFLEX
+  "\\^{o}": '\u00F4' # LATIN SMALL LETTER O WITH CIRCUMFLEX
+  "\\^o": '\u00F4' # LATIN SMALL LETTER O WITH CIRCUMFLEX
+  "{\\~o}": '\u00F5' # LATIN SMALL LETTER O WITH TILDE
+  "\\~{o}": '\u00F5' # LATIN SMALL LETTER O WITH TILDE
+  "\\~o": '\u00F5' # LATIN SMALL LETTER O WITH TILDE
+  "{\\\"o}": '\u00F6' # LATIN SMALL LETTER O WITH DIAERESIS
+  "\\\"{o}": '\u00F6' # LATIN SMALL LETTER O WITH DIAERESIS
+  "\\\"o": '\u00F6' # LATIN SMALL LETTER O WITH DIAERESIS
+  "\\div{}": '\u00F7' # DIVISION SIGN
+  "{\\div}": '\u00F7' # DIVISION SIGN
+  "\\div": '\u00F7' # DIVISION SIGN
+  "\\o{}": '\u00F8' # LATIN SMALL LETTER O WITH STROKE
+  "{\\o}": '\u00F8' # LATIN SMALL LETTER O WITH STROKE
+  "\\o": '\u00F8' # LATIN SMALL LETTER O WITH STROKE
+  "{\\`u}": '\u00F9' # LATIN SMALL LETTER U WITH GRAVE
+  "\\`{u}": '\u00F9' # LATIN SMALL LETTER U WITH GRAVE
+  "\\`u": '\u00F9' # LATIN SMALL LETTER U WITH GRAVE
+  "{\\'u}": '\u00FA' # LATIN SMALL LETTER U WITH ACUTE
+  "\\'{u}": '\u00FA' # LATIN SMALL LETTER U WITH ACUTE
+  "\\'u": '\u00FA' # LATIN SMALL LETTER U WITH ACUTE
+  "{\\^u}": '\u00FB' # LATIN SMALL LETTER U WITH CIRCUMFLEX
+  "\\^{u}": '\u00FB' # LATIN SMALL LETTER U WITH CIRCUMFLEX
+  "\\^u": '\u00FB' # LATIN SMALL LETTER U WITH CIRCUMFLEX
+  "{\\\"u}": '\u00FC' # LATIN SMALL LETTER U WITH DIAERESIS
+  "\\\"{u}": '\u00FC' # LATIN SMALL LETTER U WITH DIAERESIS
+  "\\\"u": '\u00FC' # LATIN SMALL LETTER U WITH DIAERESIS
+  "{\\'y}": '\u00FD' # LATIN SMALL LETTER Y WITH ACUTE
+  "\\'{y}": '\u00FD' # LATIN SMALL LETTER Y WITH ACUTE
+  "\\'y": '\u00FD' # LATIN SMALL LETTER Y WITH ACUTE
+  "\\th{}": '\u00FE' # LATIN SMALL LETTER THORN
+  "{\\th}": '\u00FE' # LATIN SMALL LETTER THORN
+  "\\th": '\u00FE' # LATIN SMALL LETTER THORN
+  "{\\\"y}": '\u00FF' # LATIN SMALL LETTER Y WITH DIAERESIS
+  "\\\"{y}": '\u00FF' # LATIN SMALL LETTER Y WITH DIAERESIS
+  "\\\"y": '\u00FF' # LATIN SMALL LETTER Y WITH DIAERESIS
+  "{\\=A}": '\u0100' # LATIN CAPITAL LETTER A WITH MACRON
+  "\\={A}": '\u0100' # LATIN CAPITAL LETTER A WITH MACRON
+  "\\=A": '\u0100' # LATIN CAPITAL LETTER A WITH MACRON
+  "{\\=a}": '\u0101' # LATIN SMALL LETTER A WITH MACRON
+  "\\={a}": '\u0101' # LATIN SMALL LETTER A WITH MACRON
+  "\\=a": '\u0101' # LATIN SMALL LETTER A WITH MACRON
+  "{\\u A}": '\u0102' # LATIN CAPITAL LETTER A WITH BREVE
+  "\\u A{}": '\u0102' # LATIN CAPITAL LETTER A WITH BREVE
+  "\\u A": '\u0102' # LATIN CAPITAL LETTER A WITH BREVE
+  "{\\u a}": '\u0103' # LATIN SMALL LETTER A WITH BREVE
+  "\\u a{}": '\u0103' # LATIN SMALL LETTER A WITH BREVE
+  "\\u a": '\u0103' # LATIN SMALL LETTER A WITH BREVE
+  "\\k{A}": '\u0104' # LATIN CAPITAL LETTER A WITH OGONEK
+  "\\k{a}": '\u0105' # LATIN SMALL LETTER A WITH OGONEK
+  "{\\'C}": '\u0106' # LATIN CAPITAL LETTER C WITH ACUTE
+  "\\'{C}": '\u0106' # LATIN CAPITAL LETTER C WITH ACUTE
+  "\\'C": '\u0106' # LATIN CAPITAL LETTER C WITH ACUTE
+  "{\\'c}": '\u0107' # LATIN SMALL LETTER C WITH ACUTE
+  "\\'{c}": '\u0107' # LATIN SMALL LETTER C WITH ACUTE
+  "\\'c": '\u0107' # LATIN SMALL LETTER C WITH ACUTE
+  "{\\^C}": '\u0108' # LATIN CAPITAL LETTER C WITH CIRCUMFLEX
+  "\\^{C}": '\u0108' # LATIN CAPITAL LETTER C WITH CIRCUMFLEX
+  "\\^C": '\u0108' # LATIN CAPITAL LETTER C WITH CIRCUMFLEX
+  "{\\^c}": '\u0109' # LATIN SMALL LETTER C WITH CIRCUMFLEX
+  "\\^{c}": '\u0109' # LATIN SMALL LETTER C WITH CIRCUMFLEX
+  "\\^c": '\u0109' # LATIN SMALL LETTER C WITH CIRCUMFLEX
+  "{\\.C}": '\u010A' # LATIN CAPITAL LETTER C WITH DOT ABOVE
+  "\\.{C}": '\u010A' # LATIN CAPITAL LETTER C WITH DOT ABOVE
+  "\\.C": '\u010A' # LATIN CAPITAL LETTER C WITH DOT ABOVE
+  "{\\.c}": '\u010B' # LATIN SMALL LETTER C WITH DOT ABOVE
+  "\\.{c}": '\u010B' # LATIN SMALL LETTER C WITH DOT ABOVE
+  "\\.c": '\u010B' # LATIN SMALL LETTER C WITH DOT ABOVE
+  "{\\v C}": '\u010C' # LATIN CAPITAL LETTER C WITH CARON
+  "\\v C{}": '\u010C' # LATIN CAPITAL LETTER C WITH CARON
+  "\\v C": '\u010C' # LATIN CAPITAL LETTER C WITH CARON
+  "{\\v c}": '\u010D' # LATIN SMALL LETTER C WITH CARON
+  "\\v c{}": '\u010D' # LATIN SMALL LETTER C WITH CARON
+  "\\v c": '\u010D' # LATIN SMALL LETTER C WITH CARON
+  "{\\v D}": '\u010E' # LATIN CAPITAL LETTER D WITH CARON
+  "\\v D{}": '\u010E' # LATIN CAPITAL LETTER D WITH CARON
+  "\\v D": '\u010E' # LATIN CAPITAL LETTER D WITH CARON
+  "{\\v d}": '\u010F' # LATIN SMALL LETTER D WITH CARON
+  "\\v d{}": '\u010F' # LATIN SMALL LETTER D WITH CARON
+  "\\v d": '\u010F' # LATIN SMALL LETTER D WITH CARON
+  "\\DJ{}": '\u0110' # LATIN CAPITAL LETTER D WITH STROKE
+  "{\\DJ}": '\u0110' # LATIN CAPITAL LETTER D WITH STROKE
+  "\\D{J}": '\u0110' # LATIN CAPITAL LETTER D WITH STROKE
+  "\\DJ": '\u0110' # LATIN CAPITAL LETTER D WITH STROKE
+  "\\dj{}": '\u0111' # LATIN SMALL LETTER D WITH STROKE
+  "{\\dj}": '\u0111' # LATIN SMALL LETTER D WITH STROKE
+  "\\dj": '\u0111' # LATIN SMALL LETTER D WITH STROKE
+  "{\\=E}": '\u0112' # LATIN CAPITAL LETTER E WITH MACRON
+  "\\={E}": '\u0112' # LATIN CAPITAL LETTER E WITH MACRON
+  "\\=E": '\u0112' # LATIN CAPITAL LETTER E WITH MACRON
+  "{\\=e}": '\u0113' # LATIN SMALL LETTER E WITH MACRON
+  "\\={e}": '\u0113' # LATIN SMALL LETTER E WITH MACRON
+  "\\=e": '\u0113' # LATIN SMALL LETTER E WITH MACRON
+  "{\\u E}": '\u0114' # LATIN CAPITAL LETTER E WITH BREVE
+  "\\u E{}": '\u0114' # LATIN CAPITAL LETTER E WITH BREVE
+  "\\u E": '\u0114' # LATIN CAPITAL LETTER E WITH BREVE
+  "{\\u e}": '\u0115' # LATIN SMALL LETTER E WITH BREVE
+  "\\u e{}": '\u0115' # LATIN SMALL LETTER E WITH BREVE
+  "\\u e": '\u0115' # LATIN SMALL LETTER E WITH BREVE
+  "{\\.E}": '\u0116' # LATIN CAPITAL LETTER E WITH DOT ABOVE
+  "\\.{E}": '\u0116' # LATIN CAPITAL LETTER E WITH DOT ABOVE
+  "\\.E": '\u0116' # LATIN CAPITAL LETTER E WITH DOT ABOVE
+  "{\\.e}": '\u0117' # LATIN SMALL LETTER E WITH DOT ABOVE
+  "\\.{e}": '\u0117' # LATIN SMALL LETTER E WITH DOT ABOVE
+  "\\.e": '\u0117' # LATIN SMALL LETTER E WITH DOT ABOVE
+  "\\k{E}": '\u0118' # LATIN CAPITAL LETTER E WITH OGONEK
+  "\\k{e}": '\u0119' # LATIN SMALL LETTER E WITH OGONEK
+  "{\\v E}": '\u011A' # LATIN CAPITAL LETTER E WITH CARON
+  "\\v E{}": '\u011A' # LATIN CAPITAL LETTER E WITH CARON
+  "\\v E": '\u011A' # LATIN CAPITAL LETTER E WITH CARON
+  "{\\v e}": '\u011B' # LATIN SMALL LETTER E WITH CARON
+  "\\v e{}": '\u011B' # LATIN SMALL LETTER E WITH CARON
+  "\\v e": '\u011B' # LATIN SMALL LETTER E WITH CARON
+  "{\\^G}": '\u011C' # LATIN CAPITAL LETTER G WITH CIRCUMFLEX
+  "\\^{G}": '\u011C' # LATIN CAPITAL LETTER G WITH CIRCUMFLEX
+  "\\^G": '\u011C' # LATIN CAPITAL LETTER G WITH CIRCUMFLEX
+  "{\\^g}": '\u011D' # LATIN SMALL LETTER G WITH CIRCUMFLEX
+  "\\^{g}": '\u011D' # LATIN SMALL LETTER G WITH CIRCUMFLEX
+  "\\^g": '\u011D' # LATIN SMALL LETTER G WITH CIRCUMFLEX
+  "{\\u G}": '\u011E' # LATIN CAPITAL LETTER G WITH BREVE
+  "\\u G{}": '\u011E' # LATIN CAPITAL LETTER G WITH BREVE
+  "\\u G": '\u011E' # LATIN CAPITAL LETTER G WITH BREVE
+  "{\\u g}": '\u011F' # LATIN SMALL LETTER G WITH BREVE
+  "\\u g{}": '\u011F' # LATIN SMALL LETTER G WITH BREVE
+  "\\u g": '\u011F' # LATIN SMALL LETTER G WITH BREVE
+  "{\\.G}": '\u0120' # LATIN CAPITAL LETTER G WITH DOT ABOVE
+  "\\.{G}": '\u0120' # LATIN CAPITAL LETTER G WITH DOT ABOVE
+  "\\.G": '\u0120' # LATIN CAPITAL LETTER G WITH DOT ABOVE
+  "{\\.g}": '\u0121' # LATIN SMALL LETTER G WITH DOT ABOVE
+  "\\.{g}": '\u0121' # LATIN SMALL LETTER G WITH DOT ABOVE
+  "\\.g": '\u0121' # LATIN SMALL LETTER G WITH DOT ABOVE
+  "{\\c G}": '\u0122' # LATIN CAPITAL LETTER G WITH CEDILLA
+  "\\c G{}": '\u0122' # LATIN CAPITAL LETTER G WITH CEDILLA
+  "\\c G": '\u0122' # LATIN CAPITAL LETTER G WITH CEDILLA
+  "{\\c g}": '\u0123' # LATIN SMALL LETTER G WITH CEDILLA
+  "\\c g{}": '\u0123' # LATIN SMALL LETTER G WITH CEDILLA
+  "\\c g": '\u0123' # LATIN SMALL LETTER G WITH CEDILLA
+  "{\\^H}": '\u0124' # LATIN CAPITAL LETTER H WITH CIRCUMFLEX
+  "\\^{H}": '\u0124' # LATIN CAPITAL LETTER H WITH CIRCUMFLEX
+  "\\^H": '\u0124' # LATIN CAPITAL LETTER H WITH CIRCUMFLEX
+  "{\\^h}": '\u0125' # LATIN SMALL LETTER H WITH CIRCUMFLEX
+  "\\^{h}": '\u0125' # LATIN SMALL LETTER H WITH CIRCUMFLEX
+  "\\^h": '\u0125' # LATIN SMALL LETTER H WITH CIRCUMFLEX
+  "{\\fontencoding{LELA}\\selectfont\\char40}": '\u0126' # LATIN CAPITAL LETTER H WITH STROKE
+  "\\fontencoding{LELA}\\selectfont\\char40": '\u0126' # LATIN CAPITAL LETTER H WITH STROKE
+  "\\fontencoding{LELA}\\selectfont\\char40{}": '\u0126' # LATIN CAPITAL LETTER H WITH STROKE
+  "\\Elzxh{}": '\u0127' # LATIN SMALL LETTER H WITH STROKE
+  "{\\Elzxh}": '\u0127' # LATIN SMALL LETTER H WITH STROKE
+  "\\Elzxh": '\u0127' # LATIN SMALL LETTER H WITH STROKE
+  "{\\~I}": '\u0128' # LATIN CAPITAL LETTER I WITH TILDE
+  "\\~{I}": '\u0128' # LATIN CAPITAL LETTER I WITH TILDE
+  "\\~I": '\u0128' # LATIN CAPITAL LETTER I WITH TILDE
+  "{\\~\\i}": '\u0129' # LATIN SMALL LETTER I WITH TILDE
+  "\\~\\i{}": '\u0129' # LATIN SMALL LETTER I WITH TILDE
+  "\\~\\i": '\u0129' # LATIN SMALL LETTER I WITH TILDE
+  "{\\=I}": '\u012A' # LATIN CAPITAL LETTER I WITH MACRON
+  "\\={I}": '\u012A' # LATIN CAPITAL LETTER I WITH MACRON
+  "\\=I": '\u012A' # LATIN CAPITAL LETTER I WITH MACRON
+  "\\={\\i}": '\u012B' # LATIN SMALL LETTER I WITH MACRON
+  "{\\u I}": '\u012C' # LATIN CAPITAL LETTER I WITH BREVE
+  "\\u I{}": '\u012C' # LATIN CAPITAL LETTER I WITH BREVE
+  "\\u I": '\u012C' # LATIN CAPITAL LETTER I WITH BREVE
+  "{\\u \\i}": '\u012D' # LATIN SMALL LETTER I WITH BREVE
+  "\\u \\i{}": '\u012D' # LATIN SMALL LETTER I WITH BREVE
+  "\\u \\i": '\u012D' # LATIN SMALL LETTER I WITH BREVE
+  "\\k{I}": '\u012E' # LATIN CAPITAL LETTER I WITH OGONEK
+  "\\k{i}": '\u012F' # LATIN SMALL LETTER I WITH OGONEK
+  "{\\.I}": '\u0130' # LATIN CAPITAL LETTER I WITH DOT ABOVE
+  "\\.{I}": '\u0130' # LATIN CAPITAL LETTER I WITH DOT ABOVE
+  "\\.I": '\u0130' # LATIN CAPITAL LETTER I WITH DOT ABOVE
+  "\\i{}": '\u0131' # LATIN SMALL LETTER DOTLESS I
+  "{\\i}": '\u0131' # LATIN SMALL LETTER DOTLESS I
+  "\\i": '\u0131' # LATIN SMALL LETTER DOTLESS I
+  "IJ{}": '\u0132' # LATIN CAPITAL LIGATURE IJ
+  "ij{}": '\u0133' # LATIN SMALL LIGATURE IJ
+  "{\\^J}": '\u0134' # LATIN CAPITAL LETTER J WITH CIRCUMFLEX
+  "\\^{J}": '\u0134' # LATIN CAPITAL LETTER J WITH CIRCUMFLEX
+  "\\^J": '\u0134' # LATIN CAPITAL LETTER J WITH CIRCUMFLEX
+  "{\\^\\j}": '\u0135' # LATIN SMALL LETTER J WITH CIRCUMFLEX
+  "\\^\\j{}": '\u0135' # LATIN SMALL LETTER J WITH CIRCUMFLEX
+  "\\^\\j": '\u0135' # LATIN SMALL LETTER J WITH CIRCUMFLEX
+  "{\\c K}": '\u0136' # LATIN CAPITAL LETTER K WITH CEDILLA
+  "\\c K{}": '\u0136' # LATIN CAPITAL LETTER K WITH CEDILLA
+  "\\c K": '\u0136' # LATIN CAPITAL LETTER K WITH CEDILLA
+  "{\\c k}": '\u0137' # LATIN SMALL LETTER K WITH CEDILLA
+  "\\c k{}": '\u0137' # LATIN SMALL LETTER K WITH CEDILLA
+  "\\c k": '\u0137' # LATIN SMALL LETTER K WITH CEDILLA
+  "{\\fontencoding{LELA}\\selectfont\\char91}": '\u0138' # LATIN SMALL LETTER KRA
+  "\\fontencoding{LELA}\\selectfont\\char91": '\u0138' # LATIN SMALL LETTER KRA
+  "\\fontencoding{LELA}\\selectfont\\char91{}": '\u0138' # LATIN SMALL LETTER KRA
+  "{\\'L}": '\u0139' # LATIN CAPITAL LETTER L WITH ACUTE
+  "\\'{L}": '\u0139' # LATIN CAPITAL LETTER L WITH ACUTE
+  "\\'L": '\u0139' # LATIN CAPITAL LETTER L WITH ACUTE
+  "{\\'l}": '\u013A' # LATIN SMALL LETTER L WITH ACUTE
+  "\\'{l}": '\u013A' # LATIN SMALL LETTER L WITH ACUTE
+  "\\'l": '\u013A' # LATIN SMALL LETTER L WITH ACUTE
+  "{\\c L}": '\u013B' # LATIN CAPITAL LETTER L WITH CEDILLA
+  "\\c L{}": '\u013B' # LATIN CAPITAL LETTER L WITH CEDILLA
+  "\\c L": '\u013B' # LATIN CAPITAL LETTER L WITH CEDILLA
+  "{\\c l}": '\u013C' # LATIN SMALL LETTER L WITH CEDILLA
+  "\\c l{}": '\u013C' # LATIN SMALL LETTER L WITH CEDILLA
+  "\\c l": '\u013C' # LATIN SMALL LETTER L WITH CEDILLA
+  "{\\v L}": '\u013D' # LATIN CAPITAL LETTER L WITH CARON
+  "\\v L{}": '\u013D' # LATIN CAPITAL LETTER L WITH CARON
+  "\\v L": '\u013D' # LATIN CAPITAL LETTER L WITH CARON
+  "{\\v l}": '\u013E' # LATIN SMALL LETTER L WITH CARON
+  "\\v l{}": '\u013E' # LATIN SMALL LETTER L WITH CARON
+  "\\v l": '\u013E' # LATIN SMALL LETTER L WITH CARON
+  "{\\fontencoding{LELA}\\selectfont\\char201}": '\u013F' # LATIN CAPITAL LETTER L WITH MIDDLE DOT
+  "\\fontencoding{LELA}\\selectfont\\char201": '\u013F' # LATIN CAPITAL LETTER L WITH MIDDLE DOT
+  "\\fontencoding{LELA}\\selectfont\\char201{}": '\u013F' # LATIN CAPITAL LETTER L WITH MIDDLE DOT
+  "{\\fontencoding{LELA}\\selectfont\\char202}": '\u0140' # LATIN SMALL LETTER L WITH MIDDLE DOT
+  "\\fontencoding{LELA}\\selectfont\\char202": '\u0140' # LATIN SMALL LETTER L WITH MIDDLE DOT
+  "\\fontencoding{LELA}\\selectfont\\char202{}": '\u0140' # LATIN SMALL LETTER L WITH MIDDLE DOT
+  "\\L{}": '\u0141' # LATIN CAPITAL LETTER L WITH STROKE
+  "{\\L}": '\u0141' # LATIN CAPITAL LETTER L WITH STROKE
+  "\\L": '\u0141' # LATIN CAPITAL LETTER L WITH STROKE
+  "\\l{}": '\u0142' # LATIN SMALL LETTER L WITH STROKE
+  "{\\l}": '\u0142' # LATIN SMALL LETTER L WITH STROKE
+  "\\l": '\u0142' # LATIN SMALL LETTER L WITH STROKE
+  "{\\'N}": '\u0143' # LATIN CAPITAL LETTER N WITH ACUTE
+  "\\'{N}": '\u0143' # LATIN CAPITAL LETTER N WITH ACUTE
+  "\\'N": '\u0143' # LATIN CAPITAL LETTER N WITH ACUTE
+  "{\\'n}": '\u0144' # LATIN SMALL LETTER N WITH ACUTE
+  "\\'{n}": '\u0144' # LATIN SMALL LETTER N WITH ACUTE
+  "\\'n": '\u0144' # LATIN SMALL LETTER N WITH ACUTE
+  "{\\c N}": '\u0145' # LATIN CAPITAL LETTER N WITH CEDILLA
+  "\\c N{}": '\u0145' # LATIN CAPITAL LETTER N WITH CEDILLA
+  "\\c N": '\u0145' # LATIN CAPITAL LETTER N WITH CEDILLA
+  "{\\c n}": '\u0146' # LATIN SMALL LETTER N WITH CEDILLA
+  "\\c n{}": '\u0146' # LATIN SMALL LETTER N WITH CEDILLA
+  "\\c n": '\u0146' # LATIN SMALL LETTER N WITH CEDILLA
+  "{\\v N}": '\u0147' # LATIN CAPITAL LETTER N WITH CARON
+  "\\v N{}": '\u0147' # LATIN CAPITAL LETTER N WITH CARON
+  "\\v N": '\u0147' # LATIN CAPITAL LETTER N WITH CARON
+  "{\\v n}": '\u0148' # LATIN SMALL LETTER N WITH CARON
+  "\\v n{}": '\u0148' # LATIN SMALL LETTER N WITH CARON
+  "\\v n": '\u0148' # LATIN SMALL LETTER N WITH CARON
+  "'n": '\u0149' # LATIN SMALL LETTER N PRECEDED BY APOSTROPHE
+  "'n{}": '\u0149' # LATIN SMALL LETTER N PRECEDED BY APOSTROPHE
+  "\\NG{}": '\u014A' # LATIN CAPITAL LETTER ENG
+  "{\\NG}": '\u014A' # LATIN CAPITAL LETTER ENG
+  "\\N{G}": '\u014A' # LATIN CAPITAL LETTER ENG
+  "\\NG": '\u014A' # LATIN CAPITAL LETTER ENG
+  "\\ng{}": '\u014B' # LATIN SMALL LETTER ENG
+  "{\\ng}": '\u014B' # LATIN SMALL LETTER ENG
+  "\\ng": '\u014B' # LATIN SMALL LETTER ENG
+  "{\\=O}": '\u014C' # LATIN CAPITAL LETTER O WITH MACRON
+  "\\={O}": '\u014C' # LATIN CAPITAL LETTER O WITH MACRON
+  "\\=O": '\u014C' # LATIN CAPITAL LETTER O WITH MACRON
+  "{\\=o}": '\u014D' # LATIN SMALL LETTER O WITH MACRON
+  "\\={o}": '\u014D' # LATIN SMALL LETTER O WITH MACRON
+  "\\=o": '\u014D' # LATIN SMALL LETTER O WITH MACRON
+  "{\\u O}": '\u014E' # LATIN CAPITAL LETTER O WITH BREVE
+  "\\u O{}": '\u014E' # LATIN CAPITAL LETTER O WITH BREVE
+  "\\u O": '\u014E' # LATIN CAPITAL LETTER O WITH BREVE
+  "{\\u o}": '\u014F' # LATIN SMALL LETTER O WITH BREVE
+  "\\u o{}": '\u014F' # LATIN SMALL LETTER O WITH BREVE
+  "\\u o": '\u014F' # LATIN SMALL LETTER O WITH BREVE
+  "{\\H O}": '\u0150' # LATIN CAPITAL LETTER O WITH DOUBLE ACUTE
+  "\\H O{}": '\u0150' # LATIN CAPITAL LETTER O WITH DOUBLE ACUTE
+  "\\H O": '\u0150' # LATIN CAPITAL LETTER O WITH DOUBLE ACUTE
+  "{\\H o}": '\u0151' # LATIN SMALL LETTER O WITH DOUBLE ACUTE
+  "\\H o{}": '\u0151' # LATIN SMALL LETTER O WITH DOUBLE ACUTE
+  "\\H o": '\u0151' # LATIN SMALL LETTER O WITH DOUBLE ACUTE
+  "\\OE{}": '\u0152' # LATIN CAPITAL LIGATURE OE
+  "{\\OE}": '\u0152' # LATIN CAPITAL LIGATURE OE
+  "\\O{E}": '\u0152' # LATIN CAPITAL LIGATURE OE
+  "\\OE": '\u0152' # LATIN CAPITAL LIGATURE OE
+  "\\oe{}": '\u0153' # LATIN SMALL LIGATURE OE
+  "{\\oe}": '\u0153' # LATIN SMALL LIGATURE OE
+  "\\oe": '\u0153' # LATIN SMALL LIGATURE OE
+  "{\\'R}": '\u0154' # LATIN CAPITAL LETTER R WITH ACUTE
+  "\\'{R}": '\u0154' # LATIN CAPITAL LETTER R WITH ACUTE
+  "\\'R": '\u0154' # LATIN CAPITAL LETTER R WITH ACUTE
+  "{\\'r}": '\u0155' # LATIN SMALL LETTER R WITH ACUTE
+  "\\'{r}": '\u0155' # LATIN SMALL LETTER R WITH ACUTE
+  "\\'r": '\u0155' # LATIN SMALL LETTER R WITH ACUTE
+  "{\\c R}": '\u0156' # LATIN CAPITAL LETTER R WITH CEDILLA
+  "\\c R{}": '\u0156' # LATIN CAPITAL LETTER R WITH CEDILLA
+  "\\c R": '\u0156' # LATIN CAPITAL LETTER R WITH CEDILLA
+  "{\\c r}": '\u0157' # LATIN SMALL LETTER R WITH CEDILLA
+  "\\c r{}": '\u0157' # LATIN SMALL LETTER R WITH CEDILLA
+  "\\c r": '\u0157' # LATIN SMALL LETTER R WITH CEDILLA
+  "{\\v R}": '\u0158' # LATIN CAPITAL LETTER R WITH CARON
+  "\\v R{}": '\u0158' # LATIN CAPITAL LETTER R WITH CARON
+  "\\v R": '\u0158' # LATIN CAPITAL LETTER R WITH CARON
+  "{\\v r}": '\u0159' # LATIN SMALL LETTER R WITH CARON
+  "\\v r{}": '\u0159' # LATIN SMALL LETTER R WITH CARON
+  "\\v r": '\u0159' # LATIN SMALL LETTER R WITH CARON
+  "{\\'S}": '\u015A' # LATIN CAPITAL LETTER S WITH ACUTE
+  "\\'{S}": '\u015A' # LATIN CAPITAL LETTER S WITH ACUTE
+  "\\'S": '\u015A' # LATIN CAPITAL LETTER S WITH ACUTE
+  "{\\'s}": '\u015B' # LATIN SMALL LETTER S WITH ACUTE
+  "\\'{s}": '\u015B' # LATIN SMALL LETTER S WITH ACUTE
+  "\\'s": '\u015B' # LATIN SMALL LETTER S WITH ACUTE
+  "{\\^S}": '\u015C' # LATIN CAPITAL LETTER S WITH CIRCUMFLEX
+  "\\^{S}": '\u015C' # LATIN CAPITAL LETTER S WITH CIRCUMFLEX
+  "\\^S": '\u015C' # LATIN CAPITAL LETTER S WITH CIRCUMFLEX
+  "{\\^s}": '\u015D' # LATIN SMALL LETTER S WITH CIRCUMFLEX
+  "\\^{s}": '\u015D' # LATIN SMALL LETTER S WITH CIRCUMFLEX
+  "\\^s": '\u015D' # LATIN SMALL LETTER S WITH CIRCUMFLEX
+  "{\\c S}": '\u015E' # LATIN CAPITAL LETTER S WITH CEDILLA
+  "\\c S{}": '\u015E' # LATIN CAPITAL LETTER S WITH CEDILLA
+  "\\c S": '\u015E' # LATIN CAPITAL LETTER S WITH CEDILLA
+  "{\\c s}": '\u015F' # LATIN SMALL LETTER S WITH CEDILLA
+  "\\c s{}": '\u015F' # LATIN SMALL LETTER S WITH CEDILLA
+  "\\c s": '\u015F' # LATIN SMALL LETTER S WITH CEDILLA
+  "{\\v S}": '\u0160' # LATIN CAPITAL LETTER S WITH CARON
+  "\\v S{}": '\u0160' # LATIN CAPITAL LETTER S WITH CARON
+  "\\v S": '\u0160' # LATIN CAPITAL LETTER S WITH CARON
+  "{\\v s}": '\u0161' # LATIN SMALL LETTER S WITH CARON
+  "\\v s{}": '\u0161' # LATIN SMALL LETTER S WITH CARON
+  "\\v s": '\u0161' # LATIN SMALL LETTER S WITH CARON
+  "{\\c T}": '\u0162' # LATIN CAPITAL LETTER T WITH CEDILLA
+  "\\c T{}": '\u0162' # LATIN CAPITAL LETTER T WITH CEDILLA
+  "\\c T": '\u0162' # LATIN CAPITAL LETTER T WITH CEDILLA
+  "{\\c t}": '\u0163' # LATIN SMALL LETTER T WITH CEDILLA
+  "\\c t{}": '\u0163' # LATIN SMALL LETTER T WITH CEDILLA
+  "\\c t": '\u0163' # LATIN SMALL LETTER T WITH CEDILLA
+  "{\\v T}": '\u0164' # LATIN CAPITAL LETTER T WITH CARON
+  "\\v T{}": '\u0164' # LATIN CAPITAL LETTER T WITH CARON
+  "\\v T": '\u0164' # LATIN CAPITAL LETTER T WITH CARON
+  "{\\v t}": '\u0165' # LATIN SMALL LETTER T WITH CARON
+  "\\v t{}": '\u0165' # LATIN SMALL LETTER T WITH CARON
+  "\\v t": '\u0165' # LATIN SMALL LETTER T WITH CARON
+  "{\\fontencoding{LELA}\\selectfont\\char47}": '\u0166' # LATIN CAPITAL LETTER T WITH STROKE
+  "\\fontencoding{LELA}\\selectfont\\char47": '\u0166' # LATIN CAPITAL LETTER T WITH STROKE
+  "\\fontencoding{LELA}\\selectfont\\char47{}": '\u0166' # LATIN CAPITAL LETTER T WITH STROKE
+  "{\\fontencoding{LELA}\\selectfont\\char63}": '\u0167' # LATIN SMALL LETTER T WITH STROKE
+  "\\fontencoding{LELA}\\selectfont\\char63": '\u0167' # LATIN SMALL LETTER T WITH STROKE
+  "\\fontencoding{LELA}\\selectfont\\char63{}": '\u0167' # LATIN SMALL LETTER T WITH STROKE
+  "{\\~U}": '\u0168' # LATIN CAPITAL LETTER U WITH TILDE
+  "\\~{U}": '\u0168' # LATIN CAPITAL LETTER U WITH TILDE
+  "\\~U": '\u0168' # LATIN CAPITAL LETTER U WITH TILDE
+  "{\\~u}": '\u0169' # LATIN SMALL LETTER U WITH TILDE
+  "\\~{u}": '\u0169' # LATIN SMALL LETTER U WITH TILDE
+  "\\~u": '\u0169' # LATIN SMALL LETTER U WITH TILDE
+  "{\\=U}": '\u016A' # LATIN CAPITAL LETTER U WITH MACRON
+  "\\={U}": '\u016A' # LATIN CAPITAL LETTER U WITH MACRON
+  "\\=U": '\u016A' # LATIN CAPITAL LETTER U WITH MACRON
+  "{\\=u}": '\u016B' # LATIN SMALL LETTER U WITH MACRON
+  "\\={u}": '\u016B' # LATIN SMALL LETTER U WITH MACRON
+  "\\=u": '\u016B' # LATIN SMALL LETTER U WITH MACRON
+  "{\\u U}": '\u016C' # LATIN CAPITAL LETTER U WITH BREVE
+  "\\u U{}": '\u016C' # LATIN CAPITAL LETTER U WITH BREVE
+  "\\u U": '\u016C' # LATIN CAPITAL LETTER U WITH BREVE
+  "{\\u u}": '\u016D' # LATIN SMALL LETTER U WITH BREVE
+  "\\u u{}": '\u016D' # LATIN SMALL LETTER U WITH BREVE
+  "\\u u": '\u016D' # LATIN SMALL LETTER U WITH BREVE
+  "\\r{U}": '\u016E' # LATIN CAPITAL LETTER U WITH RING ABOVE
+  "\\r{u}": '\u016F' # LATIN SMALL LETTER U WITH RING ABOVE
+  "{\\H U}": '\u0170' # LATIN CAPITAL LETTER U WITH DOUBLE ACUTE
+  "\\H U{}": '\u0170' # LATIN CAPITAL LETTER U WITH DOUBLE ACUTE
+  "\\H U": '\u0170' # LATIN CAPITAL LETTER U WITH DOUBLE ACUTE
+  "{\\H u}": '\u0171' # LATIN SMALL LETTER U WITH DOUBLE ACUTE
+  "\\H u{}": '\u0171' # LATIN SMALL LETTER U WITH DOUBLE ACUTE
+  "\\H u": '\u0171' # LATIN SMALL LETTER U WITH DOUBLE ACUTE
+  "\\k{U}": '\u0172' # LATIN CAPITAL LETTER U WITH OGONEK
+  "\\k{u}": '\u0173' # LATIN SMALL LETTER U WITH OGONEK
+  "{\\^W}": '\u0174' # LATIN CAPITAL LETTER W WITH CIRCUMFLEX
+  "\\^{W}": '\u0174' # LATIN CAPITAL LETTER W WITH CIRCUMFLEX
+  "\\^W": '\u0174' # LATIN CAPITAL LETTER W WITH CIRCUMFLEX
+  "{\\^w}": '\u0175' # LATIN SMALL LETTER W WITH CIRCUMFLEX
+  "\\^{w}": '\u0175' # LATIN SMALL LETTER W WITH CIRCUMFLEX
+  "\\^w": '\u0175' # LATIN SMALL LETTER W WITH CIRCUMFLEX
+  "{\\^Y}": '\u0176' # LATIN CAPITAL LETTER Y WITH CIRCUMFLEX
+  "\\^{Y}": '\u0176' # LATIN CAPITAL LETTER Y WITH CIRCUMFLEX
+  "\\^Y": '\u0176' # LATIN CAPITAL LETTER Y WITH CIRCUMFLEX
+  "{\\^y}": '\u0177' # LATIN SMALL LETTER Y WITH CIRCUMFLEX
+  "\\^{y}": '\u0177' # LATIN SMALL LETTER Y WITH CIRCUMFLEX
+  "\\^y": '\u0177' # LATIN SMALL LETTER Y WITH CIRCUMFLEX
+  "{\\\"Y}": '\u0178' # LATIN CAPITAL LETTER Y WITH DIAERESIS
+  "\\\"{Y}": '\u0178' # LATIN CAPITAL LETTER Y WITH DIAERESIS
+  "\\\"Y": '\u0178' # LATIN CAPITAL LETTER Y WITH DIAERESIS
+  "{\\'Z}": '\u0179' # LATIN CAPITAL LETTER Z WITH ACUTE
+  "\\'{Z}": '\u0179' # LATIN CAPITAL LETTER Z WITH ACUTE
+  "\\'Z": '\u0179' # LATIN CAPITAL LETTER Z WITH ACUTE
+  "{\\'z}": '\u017A' # LATIN SMALL LETTER Z WITH ACUTE
+  "\\'{z}": '\u017A' # LATIN SMALL LETTER Z WITH ACUTE
+  "\\'z": '\u017A' # LATIN SMALL LETTER Z WITH ACUTE
+  "{\\.Z}": '\u017B' # LATIN CAPITAL LETTER Z WITH DOT ABOVE
+  "\\.{Z}": '\u017B' # LATIN CAPITAL LETTER Z WITH DOT ABOVE
+  "\\.Z": '\u017B' # LATIN CAPITAL LETTER Z WITH DOT ABOVE
+  "{\\.z}": '\u017C' # LATIN SMALL LETTER Z WITH DOT ABOVE
+  "\\.{z}": '\u017C' # LATIN SMALL LETTER Z WITH DOT ABOVE
+  "\\.z": '\u017C' # LATIN SMALL LETTER Z WITH DOT ABOVE
+  "{\\v Z}": '\u017D' # LATIN CAPITAL LETTER Z WITH CARON
+  "\\v Z{}": '\u017D' # LATIN CAPITAL LETTER Z WITH CARON
+  "\\v Z": '\u017D' # LATIN CAPITAL LETTER Z WITH CARON
+  "{\\v z}": '\u017E' # LATIN SMALL LETTER Z WITH CARON
+  "\\v z{}": '\u017E' # LATIN SMALL LETTER Z WITH CARON
+  "\\v z": '\u017E' # LATIN SMALL LETTER Z WITH CARON
+  "f{}": '\u0192' # LATIN SMALL LETTER F WITH HOOK
+  "\\texthvlig{}": '\u0195' # LATIN SMALL LETTER HV
+  "{\\texthvlig}": '\u0195' # LATIN SMALL LETTER HV
+  "\\texthvlig": '\u0195' # LATIN SMALL LETTER HV
+  "\\textnrleg{}": '\u019E' # LATIN SMALL LETTER N WITH LONG RIGHT LEG
+  "{\\textnrleg}": '\u019E' # LATIN SMALL LETTER N WITH LONG RIGHT LEG
+  "\\textnrleg": '\u019E' # LATIN SMALL LETTER N WITH LONG RIGHT LEG
+  "\\eth{}": '\u01AA' # LATIN LETTER REVERSED ESH LOOP
+  "{\\eth}": '\u01AA' # LATIN LETTER REVERSED ESH LOOP
+  "\\eth": '\u01AA' # LATIN LETTER REVERSED ESH LOOP
+  "\\Zbar{}": '\u01B5' # impedance
+  "{\\Zbar}": '\u01B5' # impedance
+  "\\Zbar": '\u01B5' # impedance
+  "{\\fontencoding{LELA}\\selectfont\\char195}": '\u01BA' # LATIN SMALL LETTER EZH WITH TAIL
+  "\\fontencoding{LELA}\\selectfont\\char195": '\u01BA' # LATIN SMALL LETTER EZH WITH TAIL
+  "\\fontencoding{LELA}\\selectfont\\char195{}": '\u01BA' # LATIN SMALL LETTER EZH WITH TAIL
+  "\\textdoublepipe{}": '\u01C2' # LATIN LETTER ALVEOLAR CLICK
+  "{\\textdoublepipe}": '\u01C2' # LATIN LETTER ALVEOLAR CLICK
+  "\\textdoublepipe": '\u01C2' # LATIN LETTER ALVEOLAR CLICK
+  "{\\'g}": '\u01F5' # LATIN SMALL LETTER G WITH ACUTE
+  "\\'{g}": '\u01F5' # LATIN SMALL LETTER G WITH ACUTE
+  "\\'g": '\u01F5' # LATIN SMALL LETTER G WITH ACUTE
+  "\\jmath{}": '\u0237' # jmath
+  "{\\jmath}": '\u0237' # jmath
+  "\\jmath": '\u0237' # jmath
+  "\\Elztrna{}": '\u0250' # LATIN SMALL LETTER TURNED A
+  "{\\Elztrna}": '\u0250' # LATIN SMALL LETTER TURNED A
+  "\\Elztrna": '\u0250' # LATIN SMALL LETTER TURNED A
+  "\\Elztrnsa{}": '\u0252' # LATIN SMALL LETTER TURNED ALPHA
+  "{\\Elztrnsa}": '\u0252' # LATIN SMALL LETTER TURNED ALPHA
+  "\\Elztrnsa": '\u0252' # LATIN SMALL LETTER TURNED ALPHA
+  "\\Elzopeno{}": '\u0254' # LATIN SMALL LETTER OPEN O
+  "{\\Elzopeno}": '\u0254' # LATIN SMALL LETTER OPEN O
+  "\\Elzopeno": '\u0254' # LATIN SMALL LETTER OPEN O
+  "\\Elzrtld{}": '\u0256' # LATIN SMALL LETTER D WITH TAIL
+  "{\\Elzrtld}": '\u0256' # LATIN SMALL LETTER D WITH TAIL
+  "\\Elzrtld": '\u0256' # LATIN SMALL LETTER D WITH TAIL
+  "{\\fontencoding{LEIP}\\selectfont\\char61}": '\u0258' # LATIN SMALL LETTER REVERSED E
+  "\\fontencoding{LEIP}\\selectfont\\char61": '\u0258' # LATIN SMALL LETTER REVERSED E
+  "\\fontencoding{LEIP}\\selectfont\\char61{}": '\u0258' # LATIN SMALL LETTER REVERSED E
+  "\\Elzschwa{}": '\u0259' # LATIN SMALL LETTER SCHWA
+  "{\\Elzschwa}": '\u0259' # LATIN SMALL LETTER SCHWA
+  "\\Elzschwa": '\u0259' # LATIN SMALL LETTER SCHWA
+  "\\varepsilon{}": '\u025B' # LATIN SMALL LETTER OPEN E
+  "{\\varepsilon}": '\u025B' # LATIN SMALL LETTER OPEN E
+  "\\varepsilon": '\u025B' # LATIN SMALL LETTER OPEN E
+  "g{}": '\u0261' # LATIN SMALL LETTER SCRIPT G
+  "\\Elzpgamma{}": '\u0263' # LATIN SMALL LETTER GAMMA
+  "{\\Elzpgamma}": '\u0263' # LATIN SMALL LETTER GAMMA
+  "\\Elzpgamma": '\u0263' # LATIN SMALL LETTER GAMMA
+  "\\Elzpbgam{}": '\u0264' # LATIN SMALL LETTER RAMS HORN
+  "{\\Elzpbgam}": '\u0264' # LATIN SMALL LETTER RAMS HORN
+  "\\Elzpbgam": '\u0264' # LATIN SMALL LETTER RAMS HORN
+  "\\Elztrnh{}": '\u0265' # LATIN SMALL LETTER TURNED H
+  "{\\Elztrnh}": '\u0265' # LATIN SMALL LETTER TURNED H
+  "\\Elztrnh": '\u0265' # LATIN SMALL LETTER TURNED H
+  "\\Elzbtdl{}": '\u026C' # LATIN SMALL LETTER L WITH BELT
+  "{\\Elzbtdl}": '\u026C' # LATIN SMALL LETTER L WITH BELT
+  "\\Elzbtdl": '\u026C' # LATIN SMALL LETTER L WITH BELT
+  "\\Elzrtll{}": '\u026D' # LATIN SMALL LETTER L WITH RETROFLEX HOOK
+  "{\\Elzrtll}": '\u026D' # LATIN SMALL LETTER L WITH RETROFLEX HOOK
+  "\\Elzrtll": '\u026D' # LATIN SMALL LETTER L WITH RETROFLEX HOOK
+  "\\Elztrnm{}": '\u026F' # LATIN SMALL LETTER TURNED M
+  "{\\Elztrnm}": '\u026F' # LATIN SMALL LETTER TURNED M
+  "\\Elztrnm": '\u026F' # LATIN SMALL LETTER TURNED M
+  "\\Elztrnmlr{}": '\u0270' # LATIN SMALL LETTER TURNED M WITH LONG LEG
+  "{\\Elztrnmlr}": '\u0270' # LATIN SMALL LETTER TURNED M WITH LONG LEG
+  "\\Elztrnmlr": '\u0270' # LATIN SMALL LETTER TURNED M WITH LONG LEG
+  "\\Elzltlmr{}": '\u0271' # LATIN SMALL LETTER M WITH HOOK
+  "{\\Elzltlmr}": '\u0271' # LATIN SMALL LETTER M WITH HOOK
+  "\\Elzltlmr": '\u0271' # LATIN SMALL LETTER M WITH HOOK
+  "\\Elzltln{}": '\u0272' # LATIN SMALL LETTER N WITH LEFT HOOK
+  "{\\Elzltln}": '\u0272' # LATIN SMALL LETTER N WITH LEFT HOOK
+  "\\Elzltln": '\u0272' # LATIN SMALL LETTER N WITH LEFT HOOK
+  "\\Elzrtln{}": '\u0273' # LATIN SMALL LETTER N WITH RETROFLEX HOOK
+  "{\\Elzrtln}": '\u0273' # LATIN SMALL LETTER N WITH RETROFLEX HOOK
+  "\\Elzrtln": '\u0273' # LATIN SMALL LETTER N WITH RETROFLEX HOOK
+  "\\Elzclomeg{}": '\u0277' # LATIN SMALL LETTER CLOSED OMEGA
+  "{\\Elzclomeg}": '\u0277' # LATIN SMALL LETTER CLOSED OMEGA
+  "\\Elzclomeg": '\u0277' # LATIN SMALL LETTER CLOSED OMEGA
+  "\\textphi{}": '\u0278' # LATIN SMALL LETTER PHI
+  "{\\textphi}": '\u0278' # LATIN SMALL LETTER PHI
+  "\\textphi": '\u0278' # LATIN SMALL LETTER PHI
+  "\\Elztrnr{}": '\u0279' # LATIN SMALL LETTER TURNED R
+  "{\\Elztrnr}": '\u0279' # LATIN SMALL LETTER TURNED R
+  "\\Elztrnr": '\u0279' # LATIN SMALL LETTER TURNED R
+  "\\Elztrnrl{}": '\u027A' # LATIN SMALL LETTER TURNED R WITH LONG LEG
+  "{\\Elztrnrl}": '\u027A' # LATIN SMALL LETTER TURNED R WITH LONG LEG
+  "\\Elztrnrl": '\u027A' # LATIN SMALL LETTER TURNED R WITH LONG LEG
+  "\\Elzrttrnr{}": '\u027B' # LATIN SMALL LETTER TURNED R WITH HOOK
+  "{\\Elzrttrnr}": '\u027B' # LATIN SMALL LETTER TURNED R WITH HOOK
+  "\\Elzrttrnr": '\u027B' # LATIN SMALL LETTER TURNED R WITH HOOK
+  "\\Elzrl{}": '\u027C' # LATIN SMALL LETTER R WITH LONG LEG
+  "{\\Elzrl}": '\u027C' # LATIN SMALL LETTER R WITH LONG LEG
+  "\\Elzrl": '\u027C' # LATIN SMALL LETTER R WITH LONG LEG
+  "\\Elzrtlr{}": '\u027D' # LATIN SMALL LETTER R WITH TAIL
+  "{\\Elzrtlr}": '\u027D' # LATIN SMALL LETTER R WITH TAIL
+  "\\Elzrtlr": '\u027D' # LATIN SMALL LETTER R WITH TAIL
+  "\\Elzfhr{}": '\u027E' # LATIN SMALL LETTER R WITH FISHHOOK
+  "{\\Elzfhr}": '\u027E' # LATIN SMALL LETTER R WITH FISHHOOK
+  "\\Elzfhr": '\u027E' # LATIN SMALL LETTER R WITH FISHHOOK
+  "{\\fontencoding{LEIP}\\selectfont\\char202}": '\u027F' # LATIN SMALL LETTER REVERSED R WITH FISHHOOK
+  "\\fontencoding{LEIP}\\selectfont\\char202": '\u027F' # LATIN SMALL LETTER REVERSED R WITH FISHHOOK
+  "\\fontencoding{LEIP}\\selectfont\\char202{}": '\u027F' # LATIN SMALL LETTER REVERSED R WITH FISHHOOK
+  "\\Elzrtls{}": '\u0282' # LATIN SMALL LETTER S WITH HOOK
+  "{\\Elzrtls}": '\u0282' # LATIN SMALL LETTER S WITH HOOK
+  "\\Elzrtls": '\u0282' # LATIN SMALL LETTER S WITH HOOK
+  "\\Elzesh{}": '\u0283' # LATIN SMALL LETTER ESH
+  "{\\Elzesh}": '\u0283' # LATIN SMALL LETTER ESH
+  "\\Elzesh": '\u0283' # LATIN SMALL LETTER ESH
+  "\\Elztrnt{}": '\u0287' # LATIN SMALL LETTER TURNED T
+  "{\\Elztrnt}": '\u0287' # LATIN SMALL LETTER TURNED T
+  "\\Elztrnt": '\u0287' # LATIN SMALL LETTER TURNED T
+  "\\Elzrtlt{}": '\u0288' # LATIN SMALL LETTER T WITH RETROFLEX HOOK
+  "{\\Elzrtlt}": '\u0288' # LATIN SMALL LETTER T WITH RETROFLEX HOOK
+  "\\Elzrtlt": '\u0288' # LATIN SMALL LETTER T WITH RETROFLEX HOOK
+  "\\Elzpupsil{}": '\u028A' # LATIN SMALL LETTER UPSILON
+  "{\\Elzpupsil}": '\u028A' # LATIN SMALL LETTER UPSILON
+  "\\Elzpupsil": '\u028A' # LATIN SMALL LETTER UPSILON
+  "\\Elzpscrv{}": '\u028B' # LATIN SMALL LETTER V WITH HOOK
+  "{\\Elzpscrv}": '\u028B' # LATIN SMALL LETTER V WITH HOOK
+  "\\Elzpscrv": '\u028B' # LATIN SMALL LETTER V WITH HOOK
+  "\\Elzinvv{}": '\u028C' # LATIN SMALL LETTER TURNED V
+  "{\\Elzinvv}": '\u028C' # LATIN SMALL LETTER TURNED V
+  "\\Elzinvv": '\u028C' # LATIN SMALL LETTER TURNED V
+  "\\Elzinvw{}": '\u028D' # LATIN SMALL LETTER TURNED W
+  "{\\Elzinvw}": '\u028D' # LATIN SMALL LETTER TURNED W
+  "\\Elzinvw": '\u028D' # LATIN SMALL LETTER TURNED W
+  "\\Elztrny{}": '\u028E' # LATIN SMALL LETTER TURNED Y
+  "{\\Elztrny}": '\u028E' # LATIN SMALL LETTER TURNED Y
+  "\\Elztrny": '\u028E' # LATIN SMALL LETTER TURNED Y
+  "\\Elzrtlz{}": '\u0290' # LATIN SMALL LETTER Z WITH RETROFLEX HOOK
+  "{\\Elzrtlz}": '\u0290' # LATIN SMALL LETTER Z WITH RETROFLEX HOOK
+  "\\Elzrtlz": '\u0290' # LATIN SMALL LETTER Z WITH RETROFLEX HOOK
+  "\\Elzyogh{}": '\u0292' # LATIN SMALL LETTER EZH
+  "{\\Elzyogh}": '\u0292' # LATIN SMALL LETTER EZH
+  "\\Elzyogh": '\u0292' # LATIN SMALL LETTER EZH
+  "\\Elzglst{}": '\u0294' # LATIN LETTER GLOTTAL STOP
+  "{\\Elzglst}": '\u0294' # LATIN LETTER GLOTTAL STOP
+  "\\Elzglst": '\u0294' # LATIN LETTER GLOTTAL STOP
+  "\\Elzreglst{}": '\u0295' # LATIN LETTER PHARYNGEAL VOICED FRICATIVE
+  "{\\Elzreglst}": '\u0295' # LATIN LETTER PHARYNGEAL VOICED FRICATIVE
+  "\\Elzreglst": '\u0295' # LATIN LETTER PHARYNGEAL VOICED FRICATIVE
+  "\\Elzinglst{}": '\u0296' # LATIN LETTER INVERTED GLOTTAL STOP
+  "{\\Elzinglst}": '\u0296' # LATIN LETTER INVERTED GLOTTAL STOP
+  "\\Elzinglst": '\u0296' # LATIN LETTER INVERTED GLOTTAL STOP
+  "\\textturnk{}": '\u029E' # LATIN SMALL LETTER TURNED K
+  "{\\textturnk}": '\u029E' # LATIN SMALL LETTER TURNED K
+  "\\textturnk": '\u029E' # LATIN SMALL LETTER TURNED K
+  "\\Elzdyogh{}": '\u02A4' # LATIN SMALL LETTER DEZH DIGRAPH
+  "{\\Elzdyogh}": '\u02A4' # LATIN SMALL LETTER DEZH DIGRAPH
+  "\\Elzdyogh": '\u02A4' # LATIN SMALL LETTER DEZH DIGRAPH
+  "\\Elztesh{}": '\u02A7' # LATIN SMALL LETTER TESH DIGRAPH
+  "{\\Elztesh}": '\u02A7' # LATIN SMALL LETTER TESH DIGRAPH
+  "\\Elztesh": '\u02A7' # LATIN SMALL LETTER TESH DIGRAPH
+  "'": '\u02BC' # MODIFIER LETTER APOSTROPHE
+  "\\textasciicaron{}": '\u02C7' # CARON
+  "{\\textasciicaron}": '\u02C7' # CARON
+  "\\textasciicaron": '\u02C7' # CARON
+  "\\Elzverts{}": '\u02C8' # MODIFIER LETTER VERTICAL LINE
+  "{\\Elzverts}": '\u02C8' # MODIFIER LETTER VERTICAL LINE
+  "\\Elzverts": '\u02C8' # MODIFIER LETTER VERTICAL LINE
+  "\\Elzverti{}": '\u02CC' # MODIFIER LETTER LOW VERTICAL LINE
+  "{\\Elzverti}": '\u02CC' # MODIFIER LETTER LOW VERTICAL LINE
+  "\\Elzverti": '\u02CC' # MODIFIER LETTER LOW VERTICAL LINE
+  "\\Elzlmrk{}": '\u02D0' # MODIFIER LETTER TRIANGULAR COLON
+  "{\\Elzlmrk}": '\u02D0' # MODIFIER LETTER TRIANGULAR COLON
+  "\\Elzlmrk": '\u02D0' # MODIFIER LETTER TRIANGULAR COLON
+  "\\Elzhlmrk{}": '\u02D1' # MODIFIER LETTER HALF TRIANGULAR COLON
+  "{\\Elzhlmrk}": '\u02D1' # MODIFIER LETTER HALF TRIANGULAR COLON
+  "\\Elzhlmrk": '\u02D1' # MODIFIER LETTER HALF TRIANGULAR COLON
+  "\\Elzsbrhr{}": '\u02D2' # MODIFIER LETTER CENTRED RIGHT HALF RING
+  "{\\Elzsbrhr}": '\u02D2' # MODIFIER LETTER CENTRED RIGHT HALF RING
+  "\\Elzsbrhr": '\u02D2' # MODIFIER LETTER CENTRED RIGHT HALF RING
+  "\\Elzsblhr{}": '\u02D3' # MODIFIER LETTER CENTRED LEFT HALF RING
+  "{\\Elzsblhr}": '\u02D3' # MODIFIER LETTER CENTRED LEFT HALF RING
+  "\\Elzsblhr": '\u02D3' # MODIFIER LETTER CENTRED LEFT HALF RING
+  "\\Elzrais{}": '\u02D4' # MODIFIER LETTER UP TACK
+  "{\\Elzrais}": '\u02D4' # MODIFIER LETTER UP TACK
+  "\\Elzrais": '\u02D4' # MODIFIER LETTER UP TACK
+  "\\Elzlow{}": '\u02D5' # MODIFIER LETTER DOWN TACK
+  "{\\Elzlow}": '\u02D5' # MODIFIER LETTER DOWN TACK
+  "\\Elzlow": '\u02D5' # MODIFIER LETTER DOWN TACK
+  "\\textasciibreve{}": '\u02D8' # BREVE
+  "{\\textasciibreve}": '\u02D8' # BREVE
+  "\\textasciibreve": '\u02D8' # BREVE
+  "\\textperiodcentered{}": '\u02D9' # DOT ABOVE
+  "{\\textperiodcentered}": '\u02D9' # DOT ABOVE
+  "\\textperiodcentered": '\u02D9' # DOT ABOVE
+  "\\r{}": '\u02DA' # RING ABOVE
+  "{\\r}": '\u02DA' # RING ABOVE
+  "\\r": '\u02DA' # RING ABOVE
+  "\\k{}": '\u02DB' # OGONEK
+  "{\\k}": '\u02DB' # OGONEK
+  "\\k": '\u02DB' # OGONEK
+  "\\texttildelow{}": '\u02DC' # SMALL TILDE
+  "{\\texttildelow}": '\u02DC' # SMALL TILDE
+  "\\texttildelow": '\u02DC' # SMALL TILDE
+  "\\H{}": '\u02DD' # DOUBLE ACUTE ACCENT
+  "{\\H}": '\u02DD' # DOUBLE ACUTE ACCENT
+  "\\H": '\u02DD' # DOUBLE ACUTE ACCENT
+  "\\tone{55}": '\u02E5' # MODIFIER LETTER EXTRA-HIGH TONE BAR
+  "\\tone{44}": '\u02E6' # MODIFIER LETTER HIGH TONE BAR
+  "\\tone{33}": '\u02E7' # MODIFIER LETTER MID TONE BAR
+  "\\tone{22}": '\u02E8' # MODIFIER LETTER LOW TONE BAR
+  "\\tone{11}": '\u02E9' # MODIFIER LETTER EXTRA-LOW TONE BAR
+  "\\`": '\u0300' # COMBINING GRAVE ACCENT
+  "\\'": '\u0301' # COMBINING ACUTE ACCENT
+  "\\~": '\u0303' # COMBINING TILDE
+  "\\=": '\u0304' # COMBINING MACRON
+  "\\overline{}": '\u0305' # overbar embellishment
+  "{\\overline}": '\u0305' # overbar embellishment
+  "\\overline": '\u0305' # overbar embellishment
+  "\\u{}": '\u0306' # COMBINING BREVE
+  "{\\u}": '\u0306' # COMBINING BREVE
+  "\\u": '\u0306' # COMBINING BREVE
+  "\\.": '\u0307' # COMBINING DOT ABOVE
+  "\\\"": '\u0308' # COMBINING DIAERESIS
+  "\\ovhook{}": '\u0309' # COMBINING HOOK ABOVE
+  "{\\ovhook}": '\u0309' # COMBINING HOOK ABOVE
+  "\\ovhook": '\u0309' # COMBINING HOOK ABOVE
+  "\\v{}": '\u030C' # COMBINING CARON
+  "{\\v}": '\u030C' # COMBINING CARON
+  "\\v": '\u030C' # COMBINING CARON
+  "\\cyrchar\\C{}": '\u030F' # COMBINING DOUBLE GRAVE ACCENT
+  "{\\cyrchar\\C}": '\u030F' # COMBINING DOUBLE GRAVE ACCENT
+  "\\cyrchar\\C": '\u030F' # COMBINING DOUBLE GRAVE ACCENT
+  "\\candra{}": '\u0310' # candrabindu (non-spacing)
+  "{\\candra}": '\u0310' # candrabindu (non-spacing)
+  "\\candra": '\u0310' # candrabindu (non-spacing)
+  "{\\fontencoding{LECO}\\selectfont\\char177}": '\u0311' # COMBINING INVERTED BREVE
+  "\\fontencoding{LECO}\\selectfont\\char177": '\u0311' # COMBINING INVERTED BREVE
+  "\\fontencoding{LECO}\\selectfont\\char177{}": '\u0311' # COMBINING INVERTED BREVE
+  "\\oturnedcomma{}": '\u0312' # COMBINING TURNED COMMA ABOVE
+  "{\\oturnedcomma}": '\u0312' # COMBINING TURNED COMMA ABOVE
+  "\\oturnedcomma": '\u0312' # COMBINING TURNED COMMA ABOVE
+  "\\ocommatopright{}": '\u0315' # COMBINING COMMA ABOVE RIGHT
+  "{\\ocommatopright}": '\u0315' # COMBINING COMMA ABOVE RIGHT
+  "\\ocommatopright": '\u0315' # COMBINING COMMA ABOVE RIGHT
+  "{\\fontencoding{LECO}\\selectfont\\char184}": '\u0318' # COMBINING LEFT TACK BELOW
+  "\\fontencoding{LECO}\\selectfont\\char184": '\u0318' # COMBINING LEFT TACK BELOW
+  "\\fontencoding{LECO}\\selectfont\\char184{}": '\u0318' # COMBINING LEFT TACK BELOW
+  "{\\fontencoding{LECO}\\selectfont\\char185}": '\u0319' # COMBINING RIGHT TACK BELOW
+  "\\fontencoding{LECO}\\selectfont\\char185": '\u0319' # COMBINING RIGHT TACK BELOW
+  "\\fontencoding{LECO}\\selectfont\\char185{}": '\u0319' # COMBINING RIGHT TACK BELOW
+  "\\droang{}": '\u031A' # left angle above (non-spacing)
+  "{\\droang}": '\u031A' # left angle above (non-spacing)
+  "\\droang": '\u031A' # left angle above (non-spacing)
+  "\\Elzpalh{}": '\u0321' # COMBINING PALATALIZED HOOK BELOW
+  "{\\Elzpalh}": '\u0321' # COMBINING PALATALIZED HOOK BELOW
+  "\\Elzpalh": '\u0321' # COMBINING PALATALIZED HOOK BELOW
+  "\\Elzrh{}": '\u0322' # COMBINING RETROFLEX HOOK BELOW
+  "{\\Elzrh}": '\u0322' # COMBINING RETROFLEX HOOK BELOW
+  "\\Elzrh": '\u0322' # COMBINING RETROFLEX HOOK BELOW
+  "\\Elzsbbrg{}": '\u032A' # COMBINING BRIDGE BELOW
+  "{\\Elzsbbrg}": '\u032A' # COMBINING BRIDGE BELOW
+  "\\Elzsbbrg": '\u032A' # COMBINING BRIDGE BELOW
+  "{\\fontencoding{LECO}\\selectfont\\char203}": '\u032B' # COMBINING INVERTED DOUBLE ARCH BELOW
+  "\\fontencoding{LECO}\\selectfont\\char203": '\u032B' # COMBINING INVERTED DOUBLE ARCH BELOW
+  "\\fontencoding{LECO}\\selectfont\\char203{}": '\u032B' # COMBINING INVERTED DOUBLE ARCH BELOW
+  "{\\fontencoding{LECO}\\selectfont\\char207}": '\u032F' # COMBINING INVERTED BREVE BELOW
+  "\\fontencoding{LECO}\\selectfont\\char207": '\u032F' # COMBINING INVERTED BREVE BELOW
+  "\\fontencoding{LECO}\\selectfont\\char207{}": '\u032F' # COMBINING INVERTED BREVE BELOW
+  "\\utilde{}": '\u0330' # under tilde accent (multiple characters and non-spacing)
+  "{\\utilde}": '\u0330' # under tilde accent (multiple characters and non-spacing)
+  "\\utilde": '\u0330' # under tilde accent (multiple characters and non-spacing)
+  "\\underbar{}": '\u0331' # COMBINING MACRON BELOW
+  "{\\underbar}": '\u0331' # COMBINING MACRON BELOW
+  "\\underbar": '\u0331' # COMBINING MACRON BELOW
+  "\\underline{}": '\u0332' # COMBINING LOW LINE
+  "{\\underline}": '\u0332' # COMBINING LOW LINE
+  "\\underline": '\u0332' # COMBINING LOW LINE
+  "\\Elzxl{}": '\u0335' # COMBINING SHORT STROKE OVERLAY
+  "{\\Elzxl}": '\u0335' # COMBINING SHORT STROKE OVERLAY
+  "\\Elzxl": '\u0335' # COMBINING SHORT STROKE OVERLAY
+  "\\Elzbar{}": '\u0336' # COMBINING LONG STROKE OVERLAY
+  "{\\Elzbar}": '\u0336' # COMBINING LONG STROKE OVERLAY
+  "\\Elzbar": '\u0336' # COMBINING LONG STROKE OVERLAY
+  "{\\fontencoding{LECO}\\selectfont\\char215}": '\u0337' # COMBINING SHORT SOLIDUS OVERLAY
+  "\\fontencoding{LECO}\\selectfont\\char215": '\u0337' # COMBINING SHORT SOLIDUS OVERLAY
+  "\\fontencoding{LECO}\\selectfont\\char215{}": '\u0337' # COMBINING SHORT SOLIDUS OVERLAY
+  "{\\fontencoding{LECO}\\selectfont\\char216}": '\u0338' # COMBINING LONG SOLIDUS OVERLAY
+  "\\fontencoding{LECO}\\selectfont\\char216": '\u0338' # COMBINING LONG SOLIDUS OVERLAY
+  "\\fontencoding{LECO}\\selectfont\\char216{}": '\u0338' # COMBINING LONG SOLIDUS OVERLAY
+  "{\\fontencoding{LECO}\\selectfont\\char218}": '\u033A' # COMBINING INVERTED BRIDGE BELOW
+  "\\fontencoding{LECO}\\selectfont\\char218": '\u033A' # COMBINING INVERTED BRIDGE BELOW
+  "\\fontencoding{LECO}\\selectfont\\char218{}": '\u033A' # COMBINING INVERTED BRIDGE BELOW
+  "{\\fontencoding{LECO}\\selectfont\\char219}": '\u033B' # COMBINING SQUARE BELOW
+  "\\fontencoding{LECO}\\selectfont\\char219": '\u033B' # COMBINING SQUARE BELOW
+  "\\fontencoding{LECO}\\selectfont\\char219{}": '\u033B' # COMBINING SQUARE BELOW
+  "{\\fontencoding{LECO}\\selectfont\\char220}": '\u033C' # COMBINING SEAGULL BELOW
+  "\\fontencoding{LECO}\\selectfont\\char220": '\u033C' # COMBINING SEAGULL BELOW
+  "\\fontencoding{LECO}\\selectfont\\char220{}": '\u033C' # COMBINING SEAGULL BELOW
+  "{\\fontencoding{LECO}\\selectfont\\char221}": '\u033D' # COMBINING X ABOVE
+  "\\fontencoding{LECO}\\selectfont\\char221": '\u033D' # COMBINING X ABOVE
+  "\\fontencoding{LECO}\\selectfont\\char221{}": '\u033D' # COMBINING X ABOVE
+  "{\\fontencoding{LECO}\\selectfont\\char225}": '\u0361' # COMBINING DOUBLE INVERTED BREVE
+  "\\fontencoding{LECO}\\selectfont\\char225": '\u0361' # COMBINING DOUBLE INVERTED BREVE
+  "\\fontencoding{LECO}\\selectfont\\char225{}": '\u0361' # COMBINING DOUBLE INVERTED BREVE
+  "{\\'H}": '\u0389' # GREEK CAPITAL LETTER ETA WITH TONOS
+  "\\'{H}": '\u0389' # GREEK CAPITAL LETTER ETA WITH TONOS
+  "\\'H": '\u0389' # GREEK CAPITAL LETTER ETA WITH TONOS
+  "\\'{}{I}": '\u038A' # GREEK CAPITAL LETTER IOTA WITH TONOS
+  "{\\'{}O}": '\u038C' # GREEK CAPITAL LETTER OMICRON WITH TONOS
+  "\\'{}O": '\u038C' # GREEK CAPITAL LETTER OMICRON WITH TONOS
+  "\\'{}O{}": '\u038C' # GREEK CAPITAL LETTER OMICRON WITH TONOS
+  "\\mathrm{'Y}": '\u038E' # GREEK CAPITAL LETTER UPSILON WITH TONOS
+  "\\mathrm{'\\Omega}": '\u038F' # GREEK CAPITAL LETTER OMEGA WITH TONOS
+  "\\acute{\\ddot{\\iota}}": '\u0390' # GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS
+  "\\Alpha{}": '\u0391' # GREEK CAPITAL LETTER ALPHA
+  "{\\Alpha}": '\u0391' # GREEK CAPITAL LETTER ALPHA
+  "\\Alpha": '\u0391' # GREEK CAPITAL LETTER ALPHA
+  "\\Beta{}": '\u0392' # GREEK CAPITAL LETTER BETA
+  "{\\Beta}": '\u0392' # GREEK CAPITAL LETTER BETA
+  "\\Beta": '\u0392' # GREEK CAPITAL LETTER BETA
+  "\\Gamma{}": '\u0393' # GREEK CAPITAL LETTER GAMMA
+  "{\\Gamma}": '\u0393' # GREEK CAPITAL LETTER GAMMA
+  "\\Gamma": '\u0393' # GREEK CAPITAL LETTER GAMMA
+  "\\Delta{}": '\u0394' # GREEK CAPITAL LETTER DELTA
+  "{\\Delta}": '\u0394' # GREEK CAPITAL LETTER DELTA
+  "\\Delta": '\u0394' # GREEK CAPITAL LETTER DELTA
+  "\\Epsilon{}": '\u0395' # GREEK CAPITAL LETTER EPSILON
+  "{\\Epsilon}": '\u0395' # GREEK CAPITAL LETTER EPSILON
+  "\\Epsilon": '\u0395' # GREEK CAPITAL LETTER EPSILON
+  "\\Zeta{}": '\u0396' # GREEK CAPITAL LETTER ZETA
+  "{\\Zeta}": '\u0396' # GREEK CAPITAL LETTER ZETA
+  "\\Zeta": '\u0396' # GREEK CAPITAL LETTER ZETA
+  "\\Eta{}": '\u0397' # GREEK CAPITAL LETTER ETA
+  "{\\Eta}": '\u0397' # GREEK CAPITAL LETTER ETA
+  "\\Eta": '\u0397' # GREEK CAPITAL LETTER ETA
+  "\\Theta{}": '\u0398' # GREEK CAPITAL LETTER THETA
+  "{\\Theta}": '\u0398' # GREEK CAPITAL LETTER THETA
+  "\\Theta": '\u0398' # GREEK CAPITAL LETTER THETA
+  "\\Iota{}": '\u0399' # GREEK CAPITAL LETTER IOTA
+  "{\\Iota}": '\u0399' # GREEK CAPITAL LETTER IOTA
+  "\\Iota": '\u0399' # GREEK CAPITAL LETTER IOTA
+  "\\Kappa{}": '\u039A' # GREEK CAPITAL LETTER KAPPA
+  "{\\Kappa}": '\u039A' # GREEK CAPITAL LETTER KAPPA
+  "\\Kappa": '\u039A' # GREEK CAPITAL LETTER KAPPA
+  "\\Lambda{}": '\u039B' # GREEK CAPITAL LETTER LAMDA
+  "{\\Lambda}": '\u039B' # GREEK CAPITAL LETTER LAMDA
+  "\\Lambda": '\u039B' # GREEK CAPITAL LETTER LAMDA
+  "M{}": '\u039C' # GREEK CAPITAL LETTER MU
+  "N{}": '\u039D' # GREEK CAPITAL LETTER NU
+  "\\Xi{}": '\u039E' # GREEK CAPITAL LETTER XI
+  "{\\Xi}": '\u039E' # GREEK CAPITAL LETTER XI
+  "\\X{i}": '\u039E' # GREEK CAPITAL LETTER XI
+  "\\Xi": '\u039E' # GREEK CAPITAL LETTER XI
+  "O{}": '\u039F' # GREEK CAPITAL LETTER OMICRON
+  "\\Pi{}": '\u03A0' # GREEK CAPITAL LETTER PI
+  "{\\Pi}": '\u03A0' # GREEK CAPITAL LETTER PI
+  "\\P{i}": '\u03A0' # GREEK CAPITAL LETTER PI
+  "\\Pi": '\u03A0' # GREEK CAPITAL LETTER PI
+  "\\Rho{}": '\u03A1' # GREEK CAPITAL LETTER RHO
+  "{\\Rho}": '\u03A1' # GREEK CAPITAL LETTER RHO
+  "\\Rho": '\u03A1' # GREEK CAPITAL LETTER RHO
+  "\\Sigma{}": '\u03A3' # GREEK CAPITAL LETTER SIGMA
+  "{\\Sigma}": '\u03A3' # GREEK CAPITAL LETTER SIGMA
+  "\\Sigma": '\u03A3' # GREEK CAPITAL LETTER SIGMA
+  "\\Tau{}": '\u03A4' # GREEK CAPITAL LETTER TAU
+  "{\\Tau}": '\u03A4' # GREEK CAPITAL LETTER TAU
+  "\\Tau": '\u03A4' # GREEK CAPITAL LETTER TAU
+  "\\Upsilon{}": '\u03A5' # GREEK CAPITAL LETTER UPSILON
+  "{\\Upsilon}": '\u03A5' # GREEK CAPITAL LETTER UPSILON
+  "\\Upsilon": '\u03A5' # GREEK CAPITAL LETTER UPSILON
+  "\\Phi{}": '\u03A6' # GREEK CAPITAL LETTER PHI
+  "{\\Phi}": '\u03A6' # GREEK CAPITAL LETTER PHI
+  "\\Phi": '\u03A6' # GREEK CAPITAL LETTER PHI
+  "\\Chi{}": '\u03A7' # GREEK CAPITAL LETTER CHI
+  "{\\Chi}": '\u03A7' # GREEK CAPITAL LETTER CHI
+  "\\Chi": '\u03A7' # GREEK CAPITAL LETTER CHI
+  "\\Psi{}": '\u03A8' # GREEK CAPITAL LETTER PSI
+  "{\\Psi}": '\u03A8' # GREEK CAPITAL LETTER PSI
+  "\\Psi": '\u03A8' # GREEK CAPITAL LETTER PSI
+  "\\Omega{}": '\u03A9' # GREEK CAPITAL LETTER OMEGA
+  "{\\Omega}": '\u03A9' # GREEK CAPITAL LETTER OMEGA
+  "\\Omega": '\u03A9' # GREEK CAPITAL LETTER OMEGA
+  "\\mathrm{\\ddot{I}}": '\u03AA' # GREEK CAPITAL LETTER IOTA WITH DIALYTIKA
+  "\\mathrm{\\ddot{Y}}": '\u03AB' # GREEK CAPITAL LETTER UPSILON WITH DIALYTIKA
+  "{\\'$\\alpha$}": '\u03AC' # GREEK SMALL LETTER ALPHA WITH TONOS
+  "\\'$\\alpha${}": '\u03AC' # GREEK SMALL LETTER ALPHA WITH TONOS
+  "\\'$\\alpha$": '\u03AC' # GREEK SMALL LETTER ALPHA WITH TONOS
+  "\\acute{\\epsilon}": '\u03AD' # GREEK SMALL LETTER EPSILON WITH TONOS
+  "\\acute{\\eta}": '\u03AE' # GREEK SMALL LETTER ETA WITH TONOS
+  "\\acute{\\iota}": '\u03AF' # GREEK SMALL LETTER IOTA WITH TONOS
+  "\\acute{\\ddot{\\upsilon}}": '\u03B0' # GREEK SMALL LETTER UPSILON WITH DIALYTIKA AND TONOS
+  "\\alpha{}": '\u03B1' # GREEK SMALL LETTER ALPHA
+  "{\\alpha}": '\u03B1' # GREEK SMALL LETTER ALPHA
+  "\\alpha": '\u03B1' # GREEK SMALL LETTER ALPHA
+  "\\beta{}": '\u03B2' # GREEK SMALL LETTER BETA
+  "{\\beta}": '\u03B2' # GREEK SMALL LETTER BETA
+  "\\beta": '\u03B2' # GREEK SMALL LETTER BETA
+  "\\gamma{}": '\u03B3' # GREEK SMALL LETTER GAMMA
+  "{\\gamma}": '\u03B3' # GREEK SMALL LETTER GAMMA
+  "\\gamma": '\u03B3' # GREEK SMALL LETTER GAMMA
+  "\\delta{}": '\u03B4' # GREEK SMALL LETTER DELTA
+  "{\\delta}": '\u03B4' # GREEK SMALL LETTER DELTA
+  "\\delta": '\u03B4' # GREEK SMALL LETTER DELTA
+  "\\epsilon{}": '\u03B5' # GREEK SMALL LETTER EPSILON
+  "{\\epsilon}": '\u03B5' # GREEK SMALL LETTER EPSILON
+  "\\epsilon": '\u03B5' # GREEK SMALL LETTER EPSILON
+  "\\zeta{}": '\u03B6' # GREEK SMALL LETTER ZETA
+  "{\\zeta}": '\u03B6' # GREEK SMALL LETTER ZETA
+  "\\zeta": '\u03B6' # GREEK SMALL LETTER ZETA
+  "\\eta{}": '\u03B7' # GREEK SMALL LETTER ETA
+  "{\\eta}": '\u03B7' # GREEK SMALL LETTER ETA
+  "\\eta": '\u03B7' # GREEK SMALL LETTER ETA
+  "\\texttheta{}": '\u03B8' # GREEK SMALL LETTER THETA
+  "{\\texttheta}": '\u03B8' # GREEK SMALL LETTER THETA
+  "\\texttheta": '\u03B8' # GREEK SMALL LETTER THETA
+  "\\iota{}": '\u03B9' # GREEK SMALL LETTER IOTA
+  "{\\iota}": '\u03B9' # GREEK SMALL LETTER IOTA
+  "\\iota": '\u03B9' # GREEK SMALL LETTER IOTA
+  "\\kappa{}": '\u03BA' # GREEK SMALL LETTER KAPPA
+  "{\\kappa}": '\u03BA' # GREEK SMALL LETTER KAPPA
+  "\\kappa": '\u03BA' # GREEK SMALL LETTER KAPPA
+  "\\lambda{}": '\u03BB' # GREEK SMALL LETTER LAMDA
+  "{\\lambda}": '\u03BB' # GREEK SMALL LETTER LAMDA
+  "\\lambda": '\u03BB' # GREEK SMALL LETTER LAMDA
+  "\\mu{}": '\u03BC' # GREEK SMALL LETTER MU
+  "{\\mu}": '\u03BC' # GREEK SMALL LETTER MU
+  "\\mu": '\u03BC' # GREEK SMALL LETTER MU
+  "\\nu{}": '\u03BD' # GREEK SMALL LETTER NU
+  "{\\nu}": '\u03BD' # GREEK SMALL LETTER NU
+  "\\nu": '\u03BD' # GREEK SMALL LETTER NU
+  "\\xi{}": '\u03BE' # GREEK SMALL LETTER XI
+  "{\\xi}": '\u03BE' # GREEK SMALL LETTER XI
+  "\\xi": '\u03BE' # GREEK SMALL LETTER XI
+  "o{}": '\u03BF' # GREEK SMALL LETTER OMICRON
+  "\\pi{}": '\u03C0' # GREEK SMALL LETTER PI
+  "{\\pi}": '\u03C0' # GREEK SMALL LETTER PI
+  "\\pi": '\u03C0' # GREEK SMALL LETTER PI
+  "\\rho{}": '\u03C1' # GREEK SMALL LETTER RHO
+  "{\\rho}": '\u03C1' # GREEK SMALL LETTER RHO
+  "\\rho": '\u03C1' # GREEK SMALL LETTER RHO
+  "\\varsigma{}": '\u03C2' # GREEK SMALL LETTER FINAL SIGMA
+  "{\\varsigma}": '\u03C2' # GREEK SMALL LETTER FINAL SIGMA
+  "\\varsigma": '\u03C2' # GREEK SMALL LETTER FINAL SIGMA
+  "\\sigma{}": '\u03C3' # GREEK SMALL LETTER SIGMA
+  "{\\sigma}": '\u03C3' # GREEK SMALL LETTER SIGMA
+  "\\sigma": '\u03C3' # GREEK SMALL LETTER SIGMA
+  "\\tau{}": '\u03C4' # GREEK SMALL LETTER TAU
+  "{\\tau}": '\u03C4' # GREEK SMALL LETTER TAU
+  "\\tau": '\u03C4' # GREEK SMALL LETTER TAU
+  "\\upsilon{}": '\u03C5' # GREEK SMALL LETTER UPSILON
+  "{\\upsilon}": '\u03C5' # GREEK SMALL LETTER UPSILON
+  "\\upsilon": '\u03C5' # GREEK SMALL LETTER UPSILON
+  "\\varphi{}": '\u03C6' # GREEK SMALL LETTER PHI
+  "{\\varphi}": '\u03C6' # GREEK SMALL LETTER PHI
+  "\\varphi": '\u03C6' # GREEK SMALL LETTER PHI
+  "\\chi{}": '\u03C7' # GREEK SMALL LETTER CHI
+  "{\\chi}": '\u03C7' # GREEK SMALL LETTER CHI
+  "\\chi": '\u03C7' # GREEK SMALL LETTER CHI
+  "\\psi{}": '\u03C8' # GREEK SMALL LETTER PSI
+  "{\\psi}": '\u03C8' # GREEK SMALL LETTER PSI
+  "\\psi": '\u03C8' # GREEK SMALL LETTER PSI
+  "\\omega{}": '\u03C9' # GREEK SMALL LETTER OMEGA
+  "{\\omega}": '\u03C9' # GREEK SMALL LETTER OMEGA
+  "\\omega": '\u03C9' # GREEK SMALL LETTER OMEGA
+  "\\ddot{\\iota}": '\u03CA' # GREEK SMALL LETTER IOTA WITH DIALYTIKA
+  "\\ddot{\\upsilon}": '\u03CB' # GREEK SMALL LETTER UPSILON WITH DIALYTIKA
+  "\\acute{\\upsilon}": '\u03CD' # GREEK SMALL LETTER UPSILON WITH TONOS
+  "\\acute{\\omega}": '\u03CE' # GREEK SMALL LETTER OMEGA WITH TONOS
+  "\\Pisymbol{ppi022}{87}": '\u03D0' # GREEK BETA SYMBOL
+  "\\textvartheta{}": '\u03D1' # GREEK THETA SYMBOL
+  "{\\textvartheta}": '\u03D1' # GREEK THETA SYMBOL
+  "\\textvartheta": '\u03D1' # GREEK THETA SYMBOL
+  "\\phi{}": '\u03D5' # GREEK PHI SYMBOL
+  "{\\phi}": '\u03D5' # GREEK PHI SYMBOL
+  "\\phi": '\u03D5' # GREEK PHI SYMBOL
+  "\\varpi{}": '\u03D6' # GREEK PI SYMBOL
+  "{\\varpi}": '\u03D6' # GREEK PI SYMBOL
+  "\\varpi": '\u03D6' # GREEK PI SYMBOL
+  "\\Qoppa{}": '\u03D8' # = \Koppa (wrisym), t \Qoppa (LGR), GREEK LETTER ARCHAIC KOPPA
+  "{\\Qoppa}": '\u03D8' # = \Koppa (wrisym), t \Qoppa (LGR), GREEK LETTER ARCHAIC KOPPA
+  "\\Qoppa": '\u03D8' # = \Koppa (wrisym), t \Qoppa (LGR), GREEK LETTER ARCHAIC KOPPA
+  "\\qoppa{}": '\u03D9' # = \koppa (wrisym), t \qoppa (LGR), GREEK SMALL LETTER ARCHAIC KOPPA
+  "{\\qoppa}": '\u03D9' # = \koppa (wrisym), t \qoppa (LGR), GREEK SMALL LETTER ARCHAIC KOPPA
+  "\\qoppa": '\u03D9' # = \koppa (wrisym), t \qoppa (LGR), GREEK SMALL LETTER ARCHAIC KOPPA
+  "\\Stigma{}": '\u03DA' # GREEK LETTER STIGMA
+  "{\\Stigma}": '\u03DA' # GREEK LETTER STIGMA
+  "\\Stigma": '\u03DA' # GREEK LETTER STIGMA
+  "\\stigma{}": '\u03DB' # GREEK SMALL LETTER STIGMA
+  "{\\stigma}": '\u03DB' # GREEK SMALL LETTER STIGMA
+  "\\stigma": '\u03DB' # GREEK SMALL LETTER STIGMA
+  "\\Digamma{}": '\u03DC' # GREEK LETTER DIGAMMA
+  "{\\Digamma}": '\u03DC' # GREEK LETTER DIGAMMA
+  "\\Digamma": '\u03DC' # GREEK LETTER DIGAMMA
+  "\\digamma{}": '\u03DD' # GREEK SMALL LETTER DIGAMMA
+  "{\\digamma}": '\u03DD' # GREEK SMALL LETTER DIGAMMA
+  "\\digamma": '\u03DD' # GREEK SMALL LETTER DIGAMMA
+  "\\Koppa{}": '\u03DE' # GREEK LETTER KOPPA
+  "{\\Koppa}": '\u03DE' # GREEK LETTER KOPPA
+  "\\Koppa": '\u03DE' # GREEK LETTER KOPPA
+  "\\koppa{}": '\u03DF' # GREEK SMALL LETTER KOPPA
+  "{\\koppa}": '\u03DF' # GREEK SMALL LETTER KOPPA
+  "\\koppa": '\u03DF' # GREEK SMALL LETTER KOPPA
+  "\\Sampi{}": '\u03E0' # GREEK LETTER SAMPI
+  "{\\Sampi}": '\u03E0' # GREEK LETTER SAMPI
+  "\\Sampi": '\u03E0' # GREEK LETTER SAMPI
+  "\\sampi{}": '\u03E1' # # \sampi (wrisym), GREEK SMALL LETTER SAMPI
+  "{\\sampi}": '\u03E1' # # \sampi (wrisym), GREEK SMALL LETTER SAMPI
+  "\\sampi": '\u03E1' # # \sampi (wrisym), GREEK SMALL LETTER SAMPI
+  "\\varkappa{}": '\u03F0' # GREEK KAPPA SYMBOL
+  "{\\varkappa}": '\u03F0' # GREEK KAPPA SYMBOL
+  "\\varkappa": '\u03F0' # GREEK KAPPA SYMBOL
+  "\\varrho{}": '\u03F1' # GREEK RHO SYMBOL
+  "{\\varrho}": '\u03F1' # GREEK RHO SYMBOL
+  "\\varrho": '\u03F1' # GREEK RHO SYMBOL
+  "\\textTheta{}": '\u03F4' # GREEK CAPITAL THETA SYMBOL
+  "{\\textTheta}": '\u03F4' # GREEK CAPITAL THETA SYMBOL
+  "\\textTheta": '\u03F4' # GREEK CAPITAL THETA SYMBOL
+  "\\backepsilon{}": '\u03F6' # GREEK REVERSED LUNATE EPSILON SYMBOL
+  "{\\backepsilon}": '\u03F6' # GREEK REVERSED LUNATE EPSILON SYMBOL
+  "\\backepsilon": '\u03F6' # GREEK REVERSED LUNATE EPSILON SYMBOL
+  "\\cyrchar\\CYRYO{}": '\u0401' # CYRILLIC CAPITAL LETTER IO
+  "{\\cyrchar\\CYRYO}": '\u0401' # CYRILLIC CAPITAL LETTER IO
+  "\\cyrchar\\CYRYO": '\u0401' # CYRILLIC CAPITAL LETTER IO
+  "\\cyrchar\\CYRDJE{}": '\u0402' # CYRILLIC CAPITAL LETTER DJE
+  "{\\cyrchar\\CYRDJE}": '\u0402' # CYRILLIC CAPITAL LETTER DJE
+  "\\cyrchar\\CYRDJE": '\u0402' # CYRILLIC CAPITAL LETTER DJE
+  "\\cyrchar{\\'\\CYRG}": '\u0403' # CYRILLIC CAPITAL LETTER GJE
+  "\\cyrchar\\CYRIE{}": '\u0404' # CYRILLIC CAPITAL LETTER UKRAINIAN IE
+  "{\\cyrchar\\CYRIE}": '\u0404' # CYRILLIC CAPITAL LETTER UKRAINIAN IE
+  "\\cyrchar\\CYRIE": '\u0404' # CYRILLIC CAPITAL LETTER UKRAINIAN IE
+  "\\cyrchar\\CYRDZE{}": '\u0405' # CYRILLIC CAPITAL LETTER DZE
+  "{\\cyrchar\\CYRDZE}": '\u0405' # CYRILLIC CAPITAL LETTER DZE
+  "\\cyrchar\\CYRDZE": '\u0405' # CYRILLIC CAPITAL LETTER DZE
+  "\\cyrchar\\CYRII{}": '\u0406' # CYRILLIC CAPITAL LETTER BYELORUSSIAN-UKRAINIAN I
+  "{\\cyrchar\\CYRII}": '\u0406' # CYRILLIC CAPITAL LETTER BYELORUSSIAN-UKRAINIAN I
+  "\\cyrchar\\CYRII": '\u0406' # CYRILLIC CAPITAL LETTER BYELORUSSIAN-UKRAINIAN I
+  "\\cyrchar\\CYRYI{}": '\u0407' # CYRILLIC CAPITAL LETTER YI
+  "{\\cyrchar\\CYRYI}": '\u0407' # CYRILLIC CAPITAL LETTER YI
+  "\\cyrchar\\CYRYI": '\u0407' # CYRILLIC CAPITAL LETTER YI
+  "\\cyrchar\\CYRJE{}": '\u0408' # CYRILLIC CAPITAL LETTER JE
+  "{\\cyrchar\\CYRJE}": '\u0408' # CYRILLIC CAPITAL LETTER JE
+  "\\cyrchar\\CYRJE": '\u0408' # CYRILLIC CAPITAL LETTER JE
+  "\\cyrchar\\CYRLJE{}": '\u0409' # CYRILLIC CAPITAL LETTER LJE
+  "{\\cyrchar\\CYRLJE}": '\u0409' # CYRILLIC CAPITAL LETTER LJE
+  "\\cyrchar\\CYRLJE": '\u0409' # CYRILLIC CAPITAL LETTER LJE
+  "\\cyrchar\\CYRNJE{}": '\u040A' # CYRILLIC CAPITAL LETTER NJE
+  "{\\cyrchar\\CYRNJE}": '\u040A' # CYRILLIC CAPITAL LETTER NJE
+  "\\cyrchar\\CYRNJE": '\u040A' # CYRILLIC CAPITAL LETTER NJE
+  "\\cyrchar\\CYRTSHE{}": '\u040B' # CYRILLIC CAPITAL LETTER TSHE
+  "{\\cyrchar\\CYRTSHE}": '\u040B' # CYRILLIC CAPITAL LETTER TSHE
+  "\\cyrchar\\CYRTSHE": '\u040B' # CYRILLIC CAPITAL LETTER TSHE
+  "\\cyrchar{\\'\\CYRK}": '\u040C' # CYRILLIC CAPITAL LETTER KJE
+  "\\cyrchar\\CYRUSHRT{}": '\u040E' # CYRILLIC CAPITAL LETTER SHORT U
+  "{\\cyrchar\\CYRUSHRT}": '\u040E' # CYRILLIC CAPITAL LETTER SHORT U
+  "\\cyrchar\\CYRUSHRT": '\u040E' # CYRILLIC CAPITAL LETTER SHORT U
+  "\\cyrchar\\CYRDZHE{}": '\u040F' # CYRILLIC CAPITAL LETTER DZHE
+  "{\\cyrchar\\CYRDZHE}": '\u040F' # CYRILLIC CAPITAL LETTER DZHE
+  "\\cyrchar\\CYRDZHE": '\u040F' # CYRILLIC CAPITAL LETTER DZHE
+  "\\cyrchar\\CYRA{}": '\u0410' # CYRILLIC CAPITAL LETTER A
+  "{\\cyrchar\\CYRA}": '\u0410' # CYRILLIC CAPITAL LETTER A
+  "\\cyrchar\\CYRA": '\u0410' # CYRILLIC CAPITAL LETTER A
+  "\\cyrchar\\CYRB{}": '\u0411' # CYRILLIC CAPITAL LETTER BE
+  "{\\cyrchar\\CYRB}": '\u0411' # CYRILLIC CAPITAL LETTER BE
+  "\\cyrchar\\CYRB": '\u0411' # CYRILLIC CAPITAL LETTER BE
+  "\\cyrchar\\CYRV{}": '\u0412' # CYRILLIC CAPITAL LETTER VE
+  "{\\cyrchar\\CYRV}": '\u0412' # CYRILLIC CAPITAL LETTER VE
+  "\\cyrchar\\CYRV": '\u0412' # CYRILLIC CAPITAL LETTER VE
+  "\\cyrchar\\CYRG{}": '\u0413' # CYRILLIC CAPITAL LETTER GHE
+  "{\\cyrchar\\CYRG}": '\u0413' # CYRILLIC CAPITAL LETTER GHE
+  "\\cyrchar\\CYRG": '\u0413' # CYRILLIC CAPITAL LETTER GHE
+  "\\cyrchar\\CYRD{}": '\u0414' # CYRILLIC CAPITAL LETTER DE
+  "{\\cyrchar\\CYRD}": '\u0414' # CYRILLIC CAPITAL LETTER DE
+  "\\cyrchar\\CYRD": '\u0414' # CYRILLIC CAPITAL LETTER DE
+  "\\cyrchar\\CYRE{}": '\u0415' # CYRILLIC CAPITAL LETTER IE
+  "{\\cyrchar\\CYRE}": '\u0415' # CYRILLIC CAPITAL LETTER IE
+  "\\cyrchar\\CYRE": '\u0415' # CYRILLIC CAPITAL LETTER IE
+  "\\cyrchar\\CYRZH{}": '\u0416' # CYRILLIC CAPITAL LETTER ZHE
+  "{\\cyrchar\\CYRZH}": '\u0416' # CYRILLIC CAPITAL LETTER ZHE
+  "\\cyrchar\\CYRZH": '\u0416' # CYRILLIC CAPITAL LETTER ZHE
+  "\\cyrchar\\CYRZ{}": '\u0417' # CYRILLIC CAPITAL LETTER ZE
+  "{\\cyrchar\\CYRZ}": '\u0417' # CYRILLIC CAPITAL LETTER ZE
+  "\\cyrchar\\CYRZ": '\u0417' # CYRILLIC CAPITAL LETTER ZE
+  "\\cyrchar\\CYRI{}": '\u0418' # CYRILLIC CAPITAL LETTER I
+  "{\\cyrchar\\CYRI}": '\u0418' # CYRILLIC CAPITAL LETTER I
+  "\\cyrchar\\CYRI": '\u0418' # CYRILLIC CAPITAL LETTER I
+  "\\cyrchar\\CYRISHRT{}": '\u0419' # CYRILLIC CAPITAL LETTER SHORT I
+  "{\\cyrchar\\CYRISHRT}": '\u0419' # CYRILLIC CAPITAL LETTER SHORT I
+  "\\cyrchar\\CYRISHRT": '\u0419' # CYRILLIC CAPITAL LETTER SHORT I
+  "\\cyrchar\\CYRK{}": '\u041A' # CYRILLIC CAPITAL LETTER KA
+  "{\\cyrchar\\CYRK}": '\u041A' # CYRILLIC CAPITAL LETTER KA
+  "\\cyrchar\\CYRK": '\u041A' # CYRILLIC CAPITAL LETTER KA
+  "\\cyrchar\\CYRL{}": '\u041B' # CYRILLIC CAPITAL LETTER EL
+  "{\\cyrchar\\CYRL}": '\u041B' # CYRILLIC CAPITAL LETTER EL
+  "\\cyrchar\\CYRL": '\u041B' # CYRILLIC CAPITAL LETTER EL
+  "\\cyrchar\\CYRM{}": '\u041C' # CYRILLIC CAPITAL LETTER EM
+  "{\\cyrchar\\CYRM}": '\u041C' # CYRILLIC CAPITAL LETTER EM
+  "\\cyrchar\\CYRM": '\u041C' # CYRILLIC CAPITAL LETTER EM
+  "\\cyrchar\\CYRN{}": '\u041D' # CYRILLIC CAPITAL LETTER EN
+  "{\\cyrchar\\CYRN}": '\u041D' # CYRILLIC CAPITAL LETTER EN
+  "\\cyrchar\\CYRN": '\u041D' # CYRILLIC CAPITAL LETTER EN
+  "\\cyrchar\\CYRO{}": '\u041E' # CYRILLIC CAPITAL LETTER O
+  "{\\cyrchar\\CYRO}": '\u041E' # CYRILLIC CAPITAL LETTER O
+  "\\cyrchar\\CYRO": '\u041E' # CYRILLIC CAPITAL LETTER O
+  "\\cyrchar\\CYRP{}": '\u041F' # CYRILLIC CAPITAL LETTER PE
+  "{\\cyrchar\\CYRP}": '\u041F' # CYRILLIC CAPITAL LETTER PE
+  "\\cyrchar\\CYRP": '\u041F' # CYRILLIC CAPITAL LETTER PE
+  "\\cyrchar\\CYRR{}": '\u0420' # CYRILLIC CAPITAL LETTER ER
+  "{\\cyrchar\\CYRR}": '\u0420' # CYRILLIC CAPITAL LETTER ER
+  "\\cyrchar\\CYRR": '\u0420' # CYRILLIC CAPITAL LETTER ER
+  "\\cyrchar\\CYRS{}": '\u0421' # CYRILLIC CAPITAL LETTER ES
+  "{\\cyrchar\\CYRS}": '\u0421' # CYRILLIC CAPITAL LETTER ES
+  "\\cyrchar\\CYRS": '\u0421' # CYRILLIC CAPITAL LETTER ES
+  "\\cyrchar\\CYRT{}": '\u0422' # CYRILLIC CAPITAL LETTER TE
+  "{\\cyrchar\\CYRT}": '\u0422' # CYRILLIC CAPITAL LETTER TE
+  "\\cyrchar\\CYRT": '\u0422' # CYRILLIC CAPITAL LETTER TE
+  "\\cyrchar\\CYRU{}": '\u0423' # CYRILLIC CAPITAL LETTER U
+  "{\\cyrchar\\CYRU}": '\u0423' # CYRILLIC CAPITAL LETTER U
+  "\\cyrchar\\CYRU": '\u0423' # CYRILLIC CAPITAL LETTER U
+  "\\cyrchar\\CYRF{}": '\u0424' # CYRILLIC CAPITAL LETTER EF
+  "{\\cyrchar\\CYRF}": '\u0424' # CYRILLIC CAPITAL LETTER EF
+  "\\cyrchar\\CYRF": '\u0424' # CYRILLIC CAPITAL LETTER EF
+  "\\cyrchar\\CYRH{}": '\u0425' # CYRILLIC CAPITAL LETTER HA
+  "{\\cyrchar\\CYRH}": '\u0425' # CYRILLIC CAPITAL LETTER HA
+  "\\cyrchar\\CYRH": '\u0425' # CYRILLIC CAPITAL LETTER HA
+  "\\cyrchar\\CYRC{}": '\u0426' # CYRILLIC CAPITAL LETTER TSE
+  "{\\cyrchar\\CYRC}": '\u0426' # CYRILLIC CAPITAL LETTER TSE
+  "\\cyrchar\\CYRC": '\u0426' # CYRILLIC CAPITAL LETTER TSE
+  "\\cyrchar\\CYRCH{}": '\u0427' # CYRILLIC CAPITAL LETTER CHE
+  "{\\cyrchar\\CYRCH}": '\u0427' # CYRILLIC CAPITAL LETTER CHE
+  "\\cyrchar\\CYRCH": '\u0427' # CYRILLIC CAPITAL LETTER CHE
+  "\\cyrchar\\CYRSH{}": '\u0428' # CYRILLIC CAPITAL LETTER SHA
+  "{\\cyrchar\\CYRSH}": '\u0428' # CYRILLIC CAPITAL LETTER SHA
+  "\\cyrchar\\CYRSH": '\u0428' # CYRILLIC CAPITAL LETTER SHA
+  "\\cyrchar\\CYRSHCH{}": '\u0429' # CYRILLIC CAPITAL LETTER SHCHA
+  "{\\cyrchar\\CYRSHCH}": '\u0429' # CYRILLIC CAPITAL LETTER SHCHA
+  "\\cyrchar\\CYRSHCH": '\u0429' # CYRILLIC CAPITAL LETTER SHCHA
+  "\\cyrchar\\CYRHRDSN{}": '\u042A' # CYRILLIC CAPITAL LETTER HARD SIGN
+  "{\\cyrchar\\CYRHRDSN}": '\u042A' # CYRILLIC CAPITAL LETTER HARD SIGN
+  "\\cyrchar\\CYRHRDSN": '\u042A' # CYRILLIC CAPITAL LETTER HARD SIGN
+  "\\cyrchar\\CYRERY{}": '\u042B' # CYRILLIC CAPITAL LETTER YERU
+  "{\\cyrchar\\CYRERY}": '\u042B' # CYRILLIC CAPITAL LETTER YERU
+  "\\cyrchar\\CYRERY": '\u042B' # CYRILLIC CAPITAL LETTER YERU
+  "\\cyrchar\\CYRSFTSN{}": '\u042C' # CYRILLIC CAPITAL LETTER SOFT SIGN
+  "{\\cyrchar\\CYRSFTSN}": '\u042C' # CYRILLIC CAPITAL LETTER SOFT SIGN
+  "\\cyrchar\\CYRSFTSN": '\u042C' # CYRILLIC CAPITAL LETTER SOFT SIGN
+  "\\cyrchar\\CYREREV{}": '\u042D' # CYRILLIC CAPITAL LETTER E
+  "{\\cyrchar\\CYREREV}": '\u042D' # CYRILLIC CAPITAL LETTER E
+  "\\cyrchar\\CYREREV": '\u042D' # CYRILLIC CAPITAL LETTER E
+  "\\cyrchar\\CYRYU{}": '\u042E' # CYRILLIC CAPITAL LETTER YU
+  "{\\cyrchar\\CYRYU}": '\u042E' # CYRILLIC CAPITAL LETTER YU
+  "\\cyrchar\\CYRYU": '\u042E' # CYRILLIC CAPITAL LETTER YU
+  "\\cyrchar\\CYRYA{}": '\u042F' # CYRILLIC CAPITAL LETTER YA
+  "{\\cyrchar\\CYRYA}": '\u042F' # CYRILLIC CAPITAL LETTER YA
+  "\\cyrchar\\CYRYA": '\u042F' # CYRILLIC CAPITAL LETTER YA
+  "\\cyrchar\\cyra{}": '\u0430' # CYRILLIC SMALL LETTER A
+  "{\\cyrchar\\cyra}": '\u0430' # CYRILLIC SMALL LETTER A
+  "\\cyrchar\\cyra": '\u0430' # CYRILLIC SMALL LETTER A
+  "\\cyrchar\\cyrb{}": '\u0431' # CYRILLIC SMALL LETTER BE
+  "{\\cyrchar\\cyrb}": '\u0431' # CYRILLIC SMALL LETTER BE
+  "\\cyrchar\\cyrb": '\u0431' # CYRILLIC SMALL LETTER BE
+  "\\cyrchar\\cyrv{}": '\u0432' # CYRILLIC SMALL LETTER VE
+  "{\\cyrchar\\cyrv}": '\u0432' # CYRILLIC SMALL LETTER VE
+  "\\cyrchar\\cyrv": '\u0432' # CYRILLIC SMALL LETTER VE
+  "\\cyrchar\\cyrg{}": '\u0433' # CYRILLIC SMALL LETTER GHE
+  "{\\cyrchar\\cyrg}": '\u0433' # CYRILLIC SMALL LETTER GHE
+  "\\cyrchar\\cyrg": '\u0433' # CYRILLIC SMALL LETTER GHE
+  "\\cyrchar\\cyrd{}": '\u0434' # CYRILLIC SMALL LETTER DE
+  "{\\cyrchar\\cyrd}": '\u0434' # CYRILLIC SMALL LETTER DE
+  "\\cyrchar\\cyrd": '\u0434' # CYRILLIC SMALL LETTER DE
+  "\\cyrchar\\cyre{}": '\u0435' # CYRILLIC SMALL LETTER IE
+  "{\\cyrchar\\cyre}": '\u0435' # CYRILLIC SMALL LETTER IE
+  "\\cyrchar\\cyre": '\u0435' # CYRILLIC SMALL LETTER IE
+  "\\cyrchar\\cyrzh{}": '\u0436' # CYRILLIC SMALL LETTER ZHE
+  "{\\cyrchar\\cyrzh}": '\u0436' # CYRILLIC SMALL LETTER ZHE
+  "\\cyrchar\\cyrzh": '\u0436' # CYRILLIC SMALL LETTER ZHE
+  "\\cyrchar\\cyrz{}": '\u0437' # CYRILLIC SMALL LETTER ZE
+  "{\\cyrchar\\cyrz}": '\u0437' # CYRILLIC SMALL LETTER ZE
+  "\\cyrchar\\cyrz": '\u0437' # CYRILLIC SMALL LETTER ZE
+  "\\cyrchar\\cyri{}": '\u0438' # CYRILLIC SMALL LETTER I
+  "{\\cyrchar\\cyri}": '\u0438' # CYRILLIC SMALL LETTER I
+  "\\cyrchar\\cyri": '\u0438' # CYRILLIC SMALL LETTER I
+  "\\cyrchar\\cyrishrt{}": '\u0439' # CYRILLIC SMALL LETTER SHORT I
+  "{\\cyrchar\\cyrishrt}": '\u0439' # CYRILLIC SMALL LETTER SHORT I
+  "\\cyrchar\\cyrishrt": '\u0439' # CYRILLIC SMALL LETTER SHORT I
+  "\\cyrchar\\cyrk{}": '\u043A' # CYRILLIC SMALL LETTER KA
+  "{\\cyrchar\\cyrk}": '\u043A' # CYRILLIC SMALL LETTER KA
+  "\\cyrchar\\cyrk": '\u043A' # CYRILLIC SMALL LETTER KA
+  "\\cyrchar\\cyrl{}": '\u043B' # CYRILLIC SMALL LETTER EL
+  "{\\cyrchar\\cyrl}": '\u043B' # CYRILLIC SMALL LETTER EL
+  "\\cyrchar\\cyrl": '\u043B' # CYRILLIC SMALL LETTER EL
+  "\\cyrchar\\cyrm{}": '\u043C' # CYRILLIC SMALL LETTER EM
+  "{\\cyrchar\\cyrm}": '\u043C' # CYRILLIC SMALL LETTER EM
+  "\\cyrchar\\cyrm": '\u043C' # CYRILLIC SMALL LETTER EM
+  "\\cyrchar\\cyrn{}": '\u043D' # CYRILLIC SMALL LETTER EN
+  "{\\cyrchar\\cyrn}": '\u043D' # CYRILLIC SMALL LETTER EN
+  "\\cyrchar\\cyrn": '\u043D' # CYRILLIC SMALL LETTER EN
+  "\\cyrchar\\cyro{}": '\u043E' # CYRILLIC SMALL LETTER O
+  "{\\cyrchar\\cyro}": '\u043E' # CYRILLIC SMALL LETTER O
+  "\\cyrchar\\cyro": '\u043E' # CYRILLIC SMALL LETTER O
+  "\\cyrchar\\cyrp{}": '\u043F' # CYRILLIC SMALL LETTER PE
+  "{\\cyrchar\\cyrp}": '\u043F' # CYRILLIC SMALL LETTER PE
+  "\\cyrchar\\cyrp": '\u043F' # CYRILLIC SMALL LETTER PE
+  "\\cyrchar\\cyrr{}": '\u0440' # CYRILLIC SMALL LETTER ER
+  "{\\cyrchar\\cyrr}": '\u0440' # CYRILLIC SMALL LETTER ER
+  "\\cyrchar\\cyrr": '\u0440' # CYRILLIC SMALL LETTER ER
+  "\\cyrchar\\cyrs{}": '\u0441' # CYRILLIC SMALL LETTER ES
+  "{\\cyrchar\\cyrs}": '\u0441' # CYRILLIC SMALL LETTER ES
+  "\\cyrchar\\cyrs": '\u0441' # CYRILLIC SMALL LETTER ES
+  "\\cyrchar\\cyrt{}": '\u0442' # CYRILLIC SMALL LETTER TE
+  "{\\cyrchar\\cyrt}": '\u0442' # CYRILLIC SMALL LETTER TE
+  "\\cyrchar\\cyrt": '\u0442' # CYRILLIC SMALL LETTER TE
+  "\\cyrchar\\cyru{}": '\u0443' # CYRILLIC SMALL LETTER U
+  "{\\cyrchar\\cyru}": '\u0443' # CYRILLIC SMALL LETTER U
+  "\\cyrchar\\cyru": '\u0443' # CYRILLIC SMALL LETTER U
+  "\\cyrchar\\cyrf{}": '\u0444' # CYRILLIC SMALL LETTER EF
+  "{\\cyrchar\\cyrf}": '\u0444' # CYRILLIC SMALL LETTER EF
+  "\\cyrchar\\cyrf": '\u0444' # CYRILLIC SMALL LETTER EF
+  "\\cyrchar\\cyrh{}": '\u0445' # CYRILLIC SMALL LETTER HA
+  "{\\cyrchar\\cyrh}": '\u0445' # CYRILLIC SMALL LETTER HA
+  "\\cyrchar\\cyrh": '\u0445' # CYRILLIC SMALL LETTER HA
+  "\\cyrchar\\cyrc{}": '\u0446' # CYRILLIC SMALL LETTER TSE
+  "{\\cyrchar\\cyrc}": '\u0446' # CYRILLIC SMALL LETTER TSE
+  "\\cyrchar\\cyrc": '\u0446' # CYRILLIC SMALL LETTER TSE
+  "\\cyrchar\\cyrch{}": '\u0447' # CYRILLIC SMALL LETTER CHE
+  "{\\cyrchar\\cyrch}": '\u0447' # CYRILLIC SMALL LETTER CHE
+  "\\cyrchar\\cyrch": '\u0447' # CYRILLIC SMALL LETTER CHE
+  "\\cyrchar\\cyrsh{}": '\u0448' # CYRILLIC SMALL LETTER SHA
+  "{\\cyrchar\\cyrsh}": '\u0448' # CYRILLIC SMALL LETTER SHA
+  "\\cyrchar\\cyrsh": '\u0448' # CYRILLIC SMALL LETTER SHA
+  "\\cyrchar\\cyrshch{}": '\u0449' # CYRILLIC SMALL LETTER SHCHA
+  "{\\cyrchar\\cyrshch}": '\u0449' # CYRILLIC SMALL LETTER SHCHA
+  "\\cyrchar\\cyrshch": '\u0449' # CYRILLIC SMALL LETTER SHCHA
+  "\\cyrchar\\cyrhrdsn{}": '\u044A' # CYRILLIC SMALL LETTER HARD SIGN
+  "{\\cyrchar\\cyrhrdsn}": '\u044A' # CYRILLIC SMALL LETTER HARD SIGN
+  "\\cyrchar\\cyrhrdsn": '\u044A' # CYRILLIC SMALL LETTER HARD SIGN
+  "\\cyrchar\\cyrery{}": '\u044B' # CYRILLIC SMALL LETTER YERU
+  "{\\cyrchar\\cyrery}": '\u044B' # CYRILLIC SMALL LETTER YERU
+  "\\cyrchar\\cyrery": '\u044B' # CYRILLIC SMALL LETTER YERU
+  "\\cyrchar\\cyrsftsn{}": '\u044C' # CYRILLIC SMALL LETTER SOFT SIGN
+  "{\\cyrchar\\cyrsftsn}": '\u044C' # CYRILLIC SMALL LETTER SOFT SIGN
+  "\\cyrchar\\cyrsftsn": '\u044C' # CYRILLIC SMALL LETTER SOFT SIGN
+  "\\cyrchar\\cyrerev{}": '\u044D' # CYRILLIC SMALL LETTER E
+  "{\\cyrchar\\cyrerev}": '\u044D' # CYRILLIC SMALL LETTER E
+  "\\cyrchar\\cyrerev": '\u044D' # CYRILLIC SMALL LETTER E
+  "\\cyrchar\\cyryu{}": '\u044E' # CYRILLIC SMALL LETTER YU
+  "{\\cyrchar\\cyryu}": '\u044E' # CYRILLIC SMALL LETTER YU
+  "\\cyrchar\\cyryu": '\u044E' # CYRILLIC SMALL LETTER YU
+  "\\cyrchar\\cyrya{}": '\u044F' # CYRILLIC SMALL LETTER YA
+  "{\\cyrchar\\cyrya}": '\u044F' # CYRILLIC SMALL LETTER YA
+  "\\cyrchar\\cyrya": '\u044F' # CYRILLIC SMALL LETTER YA
+  "\\cyrchar\\cyryo{}": '\u0451' # CYRILLIC SMALL LETTER IO
+  "{\\cyrchar\\cyryo}": '\u0451' # CYRILLIC SMALL LETTER IO
+  "\\cyrchar\\cyryo": '\u0451' # CYRILLIC SMALL LETTER IO
+  "\\cyrchar\\cyrdje{}": '\u0452' # CYRILLIC SMALL LETTER DJE
+  "{\\cyrchar\\cyrdje}": '\u0452' # CYRILLIC SMALL LETTER DJE
+  "\\cyrchar\\cyrdje": '\u0452' # CYRILLIC SMALL LETTER DJE
+  "\\cyrchar{\\'\\cyrg}": '\u0453' # CYRILLIC SMALL LETTER GJE
+  "\\cyrchar\\cyrie{}": '\u0454' # CYRILLIC SMALL LETTER UKRAINIAN IE
+  "{\\cyrchar\\cyrie}": '\u0454' # CYRILLIC SMALL LETTER UKRAINIAN IE
+  "\\cyrchar\\cyrie": '\u0454' # CYRILLIC SMALL LETTER UKRAINIAN IE
+  "\\cyrchar\\cyrdze{}": '\u0455' # CYRILLIC SMALL LETTER DZE
+  "{\\cyrchar\\cyrdze}": '\u0455' # CYRILLIC SMALL LETTER DZE
+  "\\cyrchar\\cyrdze": '\u0455' # CYRILLIC SMALL LETTER DZE
+  "\\cyrchar\\cyrii{}": '\u0456' # CYRILLIC SMALL LETTER BYELORUSSIAN-UKRAINIAN I
+  "{\\cyrchar\\cyrii}": '\u0456' # CYRILLIC SMALL LETTER BYELORUSSIAN-UKRAINIAN I
+  "\\cyrchar\\cyrii": '\u0456' # CYRILLIC SMALL LETTER BYELORUSSIAN-UKRAINIAN I
+  "\\cyrchar\\cyryi{}": '\u0457' # CYRILLIC SMALL LETTER YI
+  "{\\cyrchar\\cyryi}": '\u0457' # CYRILLIC SMALL LETTER YI
+  "\\cyrchar\\cyryi": '\u0457' # CYRILLIC SMALL LETTER YI
+  "\\cyrchar\\cyrje{}": '\u0458' # CYRILLIC SMALL LETTER JE
+  "{\\cyrchar\\cyrje}": '\u0458' # CYRILLIC SMALL LETTER JE
+  "\\cyrchar\\cyrje": '\u0458' # CYRILLIC SMALL LETTER JE
+  "\\cyrchar\\cyrlje{}": '\u0459' # CYRILLIC SMALL LETTER LJE
+  "{\\cyrchar\\cyrlje}": '\u0459' # CYRILLIC SMALL LETTER LJE
+  "\\cyrchar\\cyrlje": '\u0459' # CYRILLIC SMALL LETTER LJE
+  "\\cyrchar\\cyrnje{}": '\u045A' # CYRILLIC SMALL LETTER NJE
+  "{\\cyrchar\\cyrnje}": '\u045A' # CYRILLIC SMALL LETTER NJE
+  "\\cyrchar\\cyrnje": '\u045A' # CYRILLIC SMALL LETTER NJE
+  "\\cyrchar\\cyrtshe{}": '\u045B' # CYRILLIC SMALL LETTER TSHE
+  "{\\cyrchar\\cyrtshe}": '\u045B' # CYRILLIC SMALL LETTER TSHE
+  "\\cyrchar\\cyrtshe": '\u045B' # CYRILLIC SMALL LETTER TSHE
+  "\\cyrchar{\\'\\cyrk}": '\u045C' # CYRILLIC SMALL LETTER KJE
+  "\\cyrchar\\cyrushrt{}": '\u045E' # CYRILLIC SMALL LETTER SHORT U
+  "{\\cyrchar\\cyrushrt}": '\u045E' # CYRILLIC SMALL LETTER SHORT U
+  "\\cyrchar\\cyrushrt": '\u045E' # CYRILLIC SMALL LETTER SHORT U
+  "\\cyrchar\\cyrdzhe{}": '\u045F' # CYRILLIC SMALL LETTER DZHE
+  "{\\cyrchar\\cyrdzhe}": '\u045F' # CYRILLIC SMALL LETTER DZHE
+  "\\cyrchar\\cyrdzhe": '\u045F' # CYRILLIC SMALL LETTER DZHE
+  "\\cyrchar\\CYROMEGA{}": '\u0460' # CYRILLIC CAPITAL LETTER OMEGA
+  "{\\cyrchar\\CYROMEGA}": '\u0460' # CYRILLIC CAPITAL LETTER OMEGA
+  "\\cyrchar\\CYROMEGA": '\u0460' # CYRILLIC CAPITAL LETTER OMEGA
+  "\\cyrchar\\cyromega{}": '\u0461' # CYRILLIC SMALL LETTER OMEGA
+  "{\\cyrchar\\cyromega}": '\u0461' # CYRILLIC SMALL LETTER OMEGA
+  "\\cyrchar\\cyromega": '\u0461' # CYRILLIC SMALL LETTER OMEGA
+  "\\cyrchar\\CYRYAT{}": '\u0462' # CYRILLIC CAPITAL LETTER YAT
+  "{\\cyrchar\\CYRYAT}": '\u0462' # CYRILLIC CAPITAL LETTER YAT
+  "\\cyrchar\\CYRYAT": '\u0462' # CYRILLIC CAPITAL LETTER YAT
+  "\\cyrchar\\CYRIOTE{}": '\u0464' # CYRILLIC CAPITAL LETTER IOTIFIED E
+  "{\\cyrchar\\CYRIOTE}": '\u0464' # CYRILLIC CAPITAL LETTER IOTIFIED E
+  "\\cyrchar\\CYRIOTE": '\u0464' # CYRILLIC CAPITAL LETTER IOTIFIED E
+  "\\cyrchar\\cyriote{}": '\u0465' # CYRILLIC SMALL LETTER IOTIFIED E
+  "{\\cyrchar\\cyriote}": '\u0465' # CYRILLIC SMALL LETTER IOTIFIED E
+  "\\cyrchar\\cyriote": '\u0465' # CYRILLIC SMALL LETTER IOTIFIED E
+  "\\cyrchar\\CYRLYUS{}": '\u0466' # CYRILLIC CAPITAL LETTER LITTLE YUS
+  "{\\cyrchar\\CYRLYUS}": '\u0466' # CYRILLIC CAPITAL LETTER LITTLE YUS
+  "\\cyrchar\\CYRLYUS": '\u0466' # CYRILLIC CAPITAL LETTER LITTLE YUS
+  "\\cyrchar\\cyrlyus{}": '\u0467' # CYRILLIC SMALL LETTER LITTLE YUS
+  "{\\cyrchar\\cyrlyus}": '\u0467' # CYRILLIC SMALL LETTER LITTLE YUS
+  "\\cyrchar\\cyrlyus": '\u0467' # CYRILLIC SMALL LETTER LITTLE YUS
+  "\\cyrchar\\CYRIOTLYUS{}": '\u0468' # CYRILLIC CAPITAL LETTER IOTIFIED LITTLE YUS
+  "{\\cyrchar\\CYRIOTLYUS}": '\u0468' # CYRILLIC CAPITAL LETTER IOTIFIED LITTLE YUS
+  "\\cyrchar\\CYRIOTLYUS": '\u0468' # CYRILLIC CAPITAL LETTER IOTIFIED LITTLE YUS
+  "\\cyrchar\\cyriotlyus{}": '\u0469' # CYRILLIC SMALL LETTER IOTIFIED LITTLE YUS
+  "{\\cyrchar\\cyriotlyus}": '\u0469' # CYRILLIC SMALL LETTER IOTIFIED LITTLE YUS
+  "\\cyrchar\\cyriotlyus": '\u0469' # CYRILLIC SMALL LETTER IOTIFIED LITTLE YUS
+  "\\cyrchar\\CYRBYUS{}": '\u046A' # CYRILLIC CAPITAL LETTER BIG YUS
+  "{\\cyrchar\\CYRBYUS}": '\u046A' # CYRILLIC CAPITAL LETTER BIG YUS
+  "\\cyrchar\\CYRBYUS": '\u046A' # CYRILLIC CAPITAL LETTER BIG YUS
+  "\\cyrchar\\CYRIOTBYUS{}": '\u046C' # CYRILLIC CAPITAL LETTER IOTIFIED BIG YUS
+  "{\\cyrchar\\CYRIOTBYUS}": '\u046C' # CYRILLIC CAPITAL LETTER IOTIFIED BIG YUS
+  "\\cyrchar\\CYRIOTBYUS": '\u046C' # CYRILLIC CAPITAL LETTER IOTIFIED BIG YUS
+  "\\cyrchar\\cyriotbyus{}": '\u046D' # CYRILLIC SMALL LETTER IOTIFIED BIG YUS
+  "{\\cyrchar\\cyriotbyus}": '\u046D' # CYRILLIC SMALL LETTER IOTIFIED BIG YUS
+  "\\cyrchar\\cyriotbyus": '\u046D' # CYRILLIC SMALL LETTER IOTIFIED BIG YUS
+  "\\cyrchar\\CYRKSI{}": '\u046E' # CYRILLIC CAPITAL LETTER KSI
+  "{\\cyrchar\\CYRKSI}": '\u046E' # CYRILLIC CAPITAL LETTER KSI
+  "\\cyrchar\\CYRKSI": '\u046E' # CYRILLIC CAPITAL LETTER KSI
+  "\\cyrchar\\cyrksi{}": '\u046F' # CYRILLIC SMALL LETTER KSI
+  "{\\cyrchar\\cyrksi}": '\u046F' # CYRILLIC SMALL LETTER KSI
+  "\\cyrchar\\cyrksi": '\u046F' # CYRILLIC SMALL LETTER KSI
+  "\\cyrchar\\CYRPSI{}": '\u0470' # CYRILLIC CAPITAL LETTER PSI
+  "{\\cyrchar\\CYRPSI}": '\u0470' # CYRILLIC CAPITAL LETTER PSI
+  "\\cyrchar\\CYRPSI": '\u0470' # CYRILLIC CAPITAL LETTER PSI
+  "\\cyrchar\\cyrpsi{}": '\u0471' # CYRILLIC SMALL LETTER PSI
+  "{\\cyrchar\\cyrpsi}": '\u0471' # CYRILLIC SMALL LETTER PSI
+  "\\cyrchar\\cyrpsi": '\u0471' # CYRILLIC SMALL LETTER PSI
+  "\\cyrchar\\CYRFITA{}": '\u0472' # CYRILLIC CAPITAL LETTER FITA
+  "{\\cyrchar\\CYRFITA}": '\u0472' # CYRILLIC CAPITAL LETTER FITA
+  "\\cyrchar\\CYRFITA": '\u0472' # CYRILLIC CAPITAL LETTER FITA
+  "\\cyrchar\\CYRIZH{}": '\u0474' # CYRILLIC CAPITAL LETTER IZHITSA
+  "{\\cyrchar\\CYRIZH}": '\u0474' # CYRILLIC CAPITAL LETTER IZHITSA
+  "\\cyrchar\\CYRIZH": '\u0474' # CYRILLIC CAPITAL LETTER IZHITSA
+  "\\cyrchar\\CYRUK{}": '\u0478' # CYRILLIC CAPITAL LETTER UK
+  "{\\cyrchar\\CYRUK}": '\u0478' # CYRILLIC CAPITAL LETTER UK
+  "\\cyrchar\\CYRUK": '\u0478' # CYRILLIC CAPITAL LETTER UK
+  "\\cyrchar\\cyruk{}": '\u0479' # CYRILLIC SMALL LETTER UK
+  "{\\cyrchar\\cyruk}": '\u0479' # CYRILLIC SMALL LETTER UK
+  "\\cyrchar\\cyruk": '\u0479' # CYRILLIC SMALL LETTER UK
+  "\\cyrchar\\CYROMEGARND{}": '\u047A' # CYRILLIC CAPITAL LETTER ROUND OMEGA
+  "{\\cyrchar\\CYROMEGARND}": '\u047A' # CYRILLIC CAPITAL LETTER ROUND OMEGA
+  "\\cyrchar\\CYROMEGARND": '\u047A' # CYRILLIC CAPITAL LETTER ROUND OMEGA
+  "\\cyrchar\\cyromegarnd{}": '\u047B' # CYRILLIC SMALL LETTER ROUND OMEGA
+  "{\\cyrchar\\cyromegarnd}": '\u047B' # CYRILLIC SMALL LETTER ROUND OMEGA
+  "\\cyrchar\\cyromegarnd": '\u047B' # CYRILLIC SMALL LETTER ROUND OMEGA
+  "\\cyrchar\\CYROMEGATITLO{}": '\u047C' # CYRILLIC CAPITAL LETTER OMEGA WITH TITLO
+  "{\\cyrchar\\CYROMEGATITLO}": '\u047C' # CYRILLIC CAPITAL LETTER OMEGA WITH TITLO
+  "\\cyrchar\\CYROMEGATITLO": '\u047C' # CYRILLIC CAPITAL LETTER OMEGA WITH TITLO
+  "\\cyrchar\\cyromegatitlo{}": '\u047D' # CYRILLIC SMALL LETTER OMEGA WITH TITLO
+  "{\\cyrchar\\cyromegatitlo}": '\u047D' # CYRILLIC SMALL LETTER OMEGA WITH TITLO
+  "\\cyrchar\\cyromegatitlo": '\u047D' # CYRILLIC SMALL LETTER OMEGA WITH TITLO
+  "\\cyrchar\\CYROT{}": '\u047E' # CYRILLIC CAPITAL LETTER OT
+  "{\\cyrchar\\CYROT}": '\u047E' # CYRILLIC CAPITAL LETTER OT
+  "\\cyrchar\\CYROT": '\u047E' # CYRILLIC CAPITAL LETTER OT
+  "\\cyrchar\\cyrot{}": '\u047F' # CYRILLIC SMALL LETTER OT
+  "{\\cyrchar\\cyrot}": '\u047F' # CYRILLIC SMALL LETTER OT
+  "\\cyrchar\\cyrot": '\u047F' # CYRILLIC SMALL LETTER OT
+  "\\cyrchar\\CYRKOPPA{}": '\u0480' # CYRILLIC CAPITAL LETTER KOPPA
+  "{\\cyrchar\\CYRKOPPA}": '\u0480' # CYRILLIC CAPITAL LETTER KOPPA
+  "\\cyrchar\\CYRKOPPA": '\u0480' # CYRILLIC CAPITAL LETTER KOPPA
+  "\\cyrchar\\cyrkoppa{}": '\u0481' # CYRILLIC SMALL LETTER KOPPA
+  "{\\cyrchar\\cyrkoppa}": '\u0481' # CYRILLIC SMALL LETTER KOPPA
+  "\\cyrchar\\cyrkoppa": '\u0481' # CYRILLIC SMALL LETTER KOPPA
+  "\\cyrchar\\cyrthousands{}": '\u0482' # CYRILLIC THOUSANDS SIGN
+  "{\\cyrchar\\cyrthousands}": '\u0482' # CYRILLIC THOUSANDS SIGN
+  "\\cyrchar\\cyrthousands": '\u0482' # CYRILLIC THOUSANDS SIGN
+  "\\cyrchar\\cyrhundredthousands{}": '\u0488' # COMBINING CYRILLIC HUNDRED THOUSANDS SIGN
+  "{\\cyrchar\\cyrhundredthousands}": '\u0488' # COMBINING CYRILLIC HUNDRED THOUSANDS SIGN
+  "\\cyrchar\\cyrhundredthousands": '\u0488' # COMBINING CYRILLIC HUNDRED THOUSANDS SIGN
+  "\\cyrchar\\cyrmillions{}": '\u0489' # COMBINING CYRILLIC MILLIONS SIGN
+  "{\\cyrchar\\cyrmillions}": '\u0489' # COMBINING CYRILLIC MILLIONS SIGN
+  "\\cyrchar\\cyrmillions": '\u0489' # COMBINING CYRILLIC MILLIONS SIGN
+  "\\cyrchar\\CYRSEMISFTSN{}": '\u048C' # CYRILLIC CAPITAL LETTER SEMISOFT SIGN
+  "{\\cyrchar\\CYRSEMISFTSN}": '\u048C' # CYRILLIC CAPITAL LETTER SEMISOFT SIGN
+  "\\cyrchar\\CYRSEMISFTSN": '\u048C' # CYRILLIC CAPITAL LETTER SEMISOFT SIGN
+  "\\cyrchar\\cyrsemisftsn{}": '\u048D' # CYRILLIC SMALL LETTER SEMISOFT SIGN
+  "{\\cyrchar\\cyrsemisftsn}": '\u048D' # CYRILLIC SMALL LETTER SEMISOFT SIGN
+  "\\cyrchar\\cyrsemisftsn": '\u048D' # CYRILLIC SMALL LETTER SEMISOFT SIGN
+  "\\cyrchar\\CYRRTICK{}": '\u048E' # CYRILLIC CAPITAL LETTER ER WITH TICK
+  "{\\cyrchar\\CYRRTICK}": '\u048E' # CYRILLIC CAPITAL LETTER ER WITH TICK
+  "\\cyrchar\\CYRRTICK": '\u048E' # CYRILLIC CAPITAL LETTER ER WITH TICK
+  "\\cyrchar\\cyrrtick{}": '\u048F' # CYRILLIC SMALL LETTER ER WITH TICK
+  "{\\cyrchar\\cyrrtick}": '\u048F' # CYRILLIC SMALL LETTER ER WITH TICK
+  "\\cyrchar\\cyrrtick": '\u048F' # CYRILLIC SMALL LETTER ER WITH TICK
+  "\\cyrchar\\CYRGUP{}": '\u0490' # CYRILLIC CAPITAL LETTER GHE WITH UPTURN
+  "{\\cyrchar\\CYRGUP}": '\u0490' # CYRILLIC CAPITAL LETTER GHE WITH UPTURN
+  "\\cyrchar\\CYRGUP": '\u0490' # CYRILLIC CAPITAL LETTER GHE WITH UPTURN
+  "\\cyrchar\\cyrgup{}": '\u0491' # CYRILLIC SMALL LETTER GHE WITH UPTURN
+  "{\\cyrchar\\cyrgup}": '\u0491' # CYRILLIC SMALL LETTER GHE WITH UPTURN
+  "\\cyrchar\\cyrgup": '\u0491' # CYRILLIC SMALL LETTER GHE WITH UPTURN
+  "\\cyrchar\\CYRGHCRS{}": '\u0492' # CYRILLIC CAPITAL LETTER GHE WITH STROKE
+  "{\\cyrchar\\CYRGHCRS}": '\u0492' # CYRILLIC CAPITAL LETTER GHE WITH STROKE
+  "\\cyrchar\\CYRGHCRS": '\u0492' # CYRILLIC CAPITAL LETTER GHE WITH STROKE
+  "\\cyrchar\\cyrghcrs{}": '\u0493' # CYRILLIC SMALL LETTER GHE WITH STROKE
+  "{\\cyrchar\\cyrghcrs}": '\u0493' # CYRILLIC SMALL LETTER GHE WITH STROKE
+  "\\cyrchar\\cyrghcrs": '\u0493' # CYRILLIC SMALL LETTER GHE WITH STROKE
+  "\\cyrchar\\CYRGHK{}": '\u0494' # CYRILLIC CAPITAL LETTER GHE WITH MIDDLE HOOK
+  "{\\cyrchar\\CYRGHK}": '\u0494' # CYRILLIC CAPITAL LETTER GHE WITH MIDDLE HOOK
+  "\\cyrchar\\CYRGHK": '\u0494' # CYRILLIC CAPITAL LETTER GHE WITH MIDDLE HOOK
+  "\\cyrchar\\cyrghk{}": '\u0495' # CYRILLIC SMALL LETTER GHE WITH MIDDLE HOOK
+  "{\\cyrchar\\cyrghk}": '\u0495' # CYRILLIC SMALL LETTER GHE WITH MIDDLE HOOK
+  "\\cyrchar\\cyrghk": '\u0495' # CYRILLIC SMALL LETTER GHE WITH MIDDLE HOOK
+  "\\cyrchar\\CYRZHDSC{}": '\u0496' # CYRILLIC CAPITAL LETTER ZHE WITH DESCENDER
+  "{\\cyrchar\\CYRZHDSC}": '\u0496' # CYRILLIC CAPITAL LETTER ZHE WITH DESCENDER
+  "\\cyrchar\\CYRZHDSC": '\u0496' # CYRILLIC CAPITAL LETTER ZHE WITH DESCENDER
+  "\\cyrchar\\cyrzhdsc{}": '\u0497' # CYRILLIC SMALL LETTER ZHE WITH DESCENDER
+  "{\\cyrchar\\cyrzhdsc}": '\u0497' # CYRILLIC SMALL LETTER ZHE WITH DESCENDER
+  "\\cyrchar\\cyrzhdsc": '\u0497' # CYRILLIC SMALL LETTER ZHE WITH DESCENDER
+  "\\cyrchar\\CYRZDSC{}": '\u0498' # CYRILLIC CAPITAL LETTER ZE WITH DESCENDER
+  "{\\cyrchar\\CYRZDSC}": '\u0498' # CYRILLIC CAPITAL LETTER ZE WITH DESCENDER
+  "\\cyrchar\\CYRZDSC": '\u0498' # CYRILLIC CAPITAL LETTER ZE WITH DESCENDER
+  "\\cyrchar\\cyrzdsc{}": '\u0499' # CYRILLIC SMALL LETTER ZE WITH DESCENDER
+  "{\\cyrchar\\cyrzdsc}": '\u0499' # CYRILLIC SMALL LETTER ZE WITH DESCENDER
+  "\\cyrchar\\cyrzdsc": '\u0499' # CYRILLIC SMALL LETTER ZE WITH DESCENDER
+  "\\cyrchar\\CYRKDSC{}": '\u049A' # CYRILLIC CAPITAL LETTER KA WITH DESCENDER
+  "{\\cyrchar\\CYRKDSC}": '\u049A' # CYRILLIC CAPITAL LETTER KA WITH DESCENDER
+  "\\cyrchar\\CYRKDSC": '\u049A' # CYRILLIC CAPITAL LETTER KA WITH DESCENDER
+  "\\cyrchar\\cyrkdsc{}": '\u049B' # CYRILLIC SMALL LETTER KA WITH DESCENDER
+  "{\\cyrchar\\cyrkdsc}": '\u049B' # CYRILLIC SMALL LETTER KA WITH DESCENDER
+  "\\cyrchar\\cyrkdsc": '\u049B' # CYRILLIC SMALL LETTER KA WITH DESCENDER
+  "\\cyrchar\\CYRKVCRS{}": '\u049C' # CYRILLIC CAPITAL LETTER KA WITH VERTICAL STROKE
+  "{\\cyrchar\\CYRKVCRS}": '\u049C' # CYRILLIC CAPITAL LETTER KA WITH VERTICAL STROKE
+  "\\cyrchar\\CYRKVCRS": '\u049C' # CYRILLIC CAPITAL LETTER KA WITH VERTICAL STROKE
+  "\\cyrchar\\cyrkvcrs{}": '\u049D' # CYRILLIC SMALL LETTER KA WITH VERTICAL STROKE
+  "{\\cyrchar\\cyrkvcrs}": '\u049D' # CYRILLIC SMALL LETTER KA WITH VERTICAL STROKE
+  "\\cyrchar\\cyrkvcrs": '\u049D' # CYRILLIC SMALL LETTER KA WITH VERTICAL STROKE
+  "\\cyrchar\\CYRKHCRS{}": '\u049E' # CYRILLIC CAPITAL LETTER KA WITH STROKE
+  "{\\cyrchar\\CYRKHCRS}": '\u049E' # CYRILLIC CAPITAL LETTER KA WITH STROKE
+  "\\cyrchar\\CYRKHCRS": '\u049E' # CYRILLIC CAPITAL LETTER KA WITH STROKE
+  "\\cyrchar\\cyrkhcrs{}": '\u049F' # CYRILLIC SMALL LETTER KA WITH STROKE
+  "{\\cyrchar\\cyrkhcrs}": '\u049F' # CYRILLIC SMALL LETTER KA WITH STROKE
+  "\\cyrchar\\cyrkhcrs": '\u049F' # CYRILLIC SMALL LETTER KA WITH STROKE
+  "\\cyrchar\\CYRKBEAK{}": '\u04A0' # CYRILLIC CAPITAL LETTER BASHKIR KA
+  "{\\cyrchar\\CYRKBEAK}": '\u04A0' # CYRILLIC CAPITAL LETTER BASHKIR KA
+  "\\cyrchar\\CYRKBEAK": '\u04A0' # CYRILLIC CAPITAL LETTER BASHKIR KA
+  "\\cyrchar\\cyrkbeak{}": '\u04A1' # CYRILLIC SMALL LETTER BASHKIR KA
+  "{\\cyrchar\\cyrkbeak}": '\u04A1' # CYRILLIC SMALL LETTER BASHKIR KA
+  "\\cyrchar\\cyrkbeak": '\u04A1' # CYRILLIC SMALL LETTER BASHKIR KA
+  "\\cyrchar\\CYRNDSC{}": '\u04A2' # CYRILLIC CAPITAL LETTER EN WITH DESCENDER
+  "{\\cyrchar\\CYRNDSC}": '\u04A2' # CYRILLIC CAPITAL LETTER EN WITH DESCENDER
+  "\\cyrchar\\CYRNDSC": '\u04A2' # CYRILLIC CAPITAL LETTER EN WITH DESCENDER
+  "\\cyrchar\\cyrndsc{}": '\u04A3' # CYRILLIC SMALL LETTER EN WITH DESCENDER
+  "{\\cyrchar\\cyrndsc}": '\u04A3' # CYRILLIC SMALL LETTER EN WITH DESCENDER
+  "\\cyrchar\\cyrndsc": '\u04A3' # CYRILLIC SMALL LETTER EN WITH DESCENDER
+  "\\cyrchar\\CYRNG{}": '\u04A4' # CYRILLIC CAPITAL LIGATURE EN GHE
+  "{\\cyrchar\\CYRNG}": '\u04A4' # CYRILLIC CAPITAL LIGATURE EN GHE
+  "\\cyrchar\\CYRNG": '\u04A4' # CYRILLIC CAPITAL LIGATURE EN GHE
+  "\\cyrchar\\cyrng{}": '\u04A5' # CYRILLIC SMALL LIGATURE EN GHE
+  "{\\cyrchar\\cyrng}": '\u04A5' # CYRILLIC SMALL LIGATURE EN GHE
+  "\\cyrchar\\cyrng": '\u04A5' # CYRILLIC SMALL LIGATURE EN GHE
+  "\\cyrchar\\CYRPHK{}": '\u04A6' # CYRILLIC CAPITAL LETTER PE WITH MIDDLE HOOK
+  "{\\cyrchar\\CYRPHK}": '\u04A6' # CYRILLIC CAPITAL LETTER PE WITH MIDDLE HOOK
+  "\\cyrchar\\CYRPHK": '\u04A6' # CYRILLIC CAPITAL LETTER PE WITH MIDDLE HOOK
+  "\\cyrchar\\cyrphk{}": '\u04A7' # CYRILLIC SMALL LETTER PE WITH MIDDLE HOOK
+  "{\\cyrchar\\cyrphk}": '\u04A7' # CYRILLIC SMALL LETTER PE WITH MIDDLE HOOK
+  "\\cyrchar\\cyrphk": '\u04A7' # CYRILLIC SMALL LETTER PE WITH MIDDLE HOOK
+  "\\cyrchar\\CYRABHHA{}": '\u04A8' # CYRILLIC CAPITAL LETTER ABKHASIAN HA
+  "{\\cyrchar\\CYRABHHA}": '\u04A8' # CYRILLIC CAPITAL LETTER ABKHASIAN HA
+  "\\cyrchar\\CYRABHHA": '\u04A8' # CYRILLIC CAPITAL LETTER ABKHASIAN HA
+  "\\cyrchar\\cyrabhha{}": '\u04A9' # CYRILLIC SMALL LETTER ABKHASIAN HA
+  "{\\cyrchar\\cyrabhha}": '\u04A9' # CYRILLIC SMALL LETTER ABKHASIAN HA
+  "\\cyrchar\\cyrabhha": '\u04A9' # CYRILLIC SMALL LETTER ABKHASIAN HA
+  "\\cyrchar\\CYRSDSC{}": '\u04AA' # CYRILLIC CAPITAL LETTER ES WITH DESCENDER
+  "{\\cyrchar\\CYRSDSC}": '\u04AA' # CYRILLIC CAPITAL LETTER ES WITH DESCENDER
+  "\\cyrchar\\CYRSDSC": '\u04AA' # CYRILLIC CAPITAL LETTER ES WITH DESCENDER
+  "\\cyrchar\\cyrsdsc{}": '\u04AB' # CYRILLIC SMALL LETTER ES WITH DESCENDER
+  "{\\cyrchar\\cyrsdsc}": '\u04AB' # CYRILLIC SMALL LETTER ES WITH DESCENDER
+  "\\cyrchar\\cyrsdsc": '\u04AB' # CYRILLIC SMALL LETTER ES WITH DESCENDER
+  "\\cyrchar\\CYRTDSC{}": '\u04AC' # CYRILLIC CAPITAL LETTER TE WITH DESCENDER
+  "{\\cyrchar\\CYRTDSC}": '\u04AC' # CYRILLIC CAPITAL LETTER TE WITH DESCENDER
+  "\\cyrchar\\CYRTDSC": '\u04AC' # CYRILLIC CAPITAL LETTER TE WITH DESCENDER
+  "\\cyrchar\\cyrtdsc{}": '\u04AD' # CYRILLIC SMALL LETTER TE WITH DESCENDER
+  "{\\cyrchar\\cyrtdsc}": '\u04AD' # CYRILLIC SMALL LETTER TE WITH DESCENDER
+  "\\cyrchar\\cyrtdsc": '\u04AD' # CYRILLIC SMALL LETTER TE WITH DESCENDER
+  "\\cyrchar\\CYRY{}": '\u04AE' # CYRILLIC CAPITAL LETTER STRAIGHT U
+  "{\\cyrchar\\CYRY}": '\u04AE' # CYRILLIC CAPITAL LETTER STRAIGHT U
+  "\\cyrchar\\CYRY": '\u04AE' # CYRILLIC CAPITAL LETTER STRAIGHT U
+  "\\cyrchar\\cyry{}": '\u04AF' # CYRILLIC SMALL LETTER STRAIGHT U
+  "{\\cyrchar\\cyry}": '\u04AF' # CYRILLIC SMALL LETTER STRAIGHT U
+  "\\cyrchar\\cyry": '\u04AF' # CYRILLIC SMALL LETTER STRAIGHT U
+  "\\cyrchar\\CYRYHCRS{}": '\u04B0' # CYRILLIC CAPITAL LETTER STRAIGHT U WITH STROKE
+  "{\\cyrchar\\CYRYHCRS}": '\u04B0' # CYRILLIC CAPITAL LETTER STRAIGHT U WITH STROKE
+  "\\cyrchar\\CYRYHCRS": '\u04B0' # CYRILLIC CAPITAL LETTER STRAIGHT U WITH STROKE
+  "\\cyrchar\\cyryhcrs{}": '\u04B1' # CYRILLIC SMALL LETTER STRAIGHT U WITH STROKE
+  "{\\cyrchar\\cyryhcrs}": '\u04B1' # CYRILLIC SMALL LETTER STRAIGHT U WITH STROKE
+  "\\cyrchar\\cyryhcrs": '\u04B1' # CYRILLIC SMALL LETTER STRAIGHT U WITH STROKE
+  "\\cyrchar\\CYRHDSC{}": '\u04B2' # CYRILLIC CAPITAL LETTER HA WITH DESCENDER
+  "{\\cyrchar\\CYRHDSC}": '\u04B2' # CYRILLIC CAPITAL LETTER HA WITH DESCENDER
+  "\\cyrchar\\CYRHDSC": '\u04B2' # CYRILLIC CAPITAL LETTER HA WITH DESCENDER
+  "\\cyrchar\\cyrhdsc{}": '\u04B3' # CYRILLIC SMALL LETTER HA WITH DESCENDER
+  "{\\cyrchar\\cyrhdsc}": '\u04B3' # CYRILLIC SMALL LETTER HA WITH DESCENDER
+  "\\cyrchar\\cyrhdsc": '\u04B3' # CYRILLIC SMALL LETTER HA WITH DESCENDER
+  "\\cyrchar\\CYRTETSE{}": '\u04B4' # CYRILLIC CAPITAL LIGATURE TE TSE
+  "{\\cyrchar\\CYRTETSE}": '\u04B4' # CYRILLIC CAPITAL LIGATURE TE TSE
+  "\\cyrchar\\CYRTETSE": '\u04B4' # CYRILLIC CAPITAL LIGATURE TE TSE
+  "\\cyrchar\\cyrtetse{}": '\u04B5' # CYRILLIC SMALL LIGATURE TE TSE
+  "{\\cyrchar\\cyrtetse}": '\u04B5' # CYRILLIC SMALL LIGATURE TE TSE
+  "\\cyrchar\\cyrtetse": '\u04B5' # CYRILLIC SMALL LIGATURE TE TSE
+  "\\cyrchar\\CYRCHRDSC{}": '\u04B6' # CYRILLIC CAPITAL LETTER CHE WITH DESCENDER
+  "{\\cyrchar\\CYRCHRDSC}": '\u04B6' # CYRILLIC CAPITAL LETTER CHE WITH DESCENDER
+  "\\cyrchar\\CYRCHRDSC": '\u04B6' # CYRILLIC CAPITAL LETTER CHE WITH DESCENDER
+  "\\cyrchar\\cyrchrdsc{}": '\u04B7' # CYRILLIC SMALL LETTER CHE WITH DESCENDER
+  "{\\cyrchar\\cyrchrdsc}": '\u04B7' # CYRILLIC SMALL LETTER CHE WITH DESCENDER
+  "\\cyrchar\\cyrchrdsc": '\u04B7' # CYRILLIC SMALL LETTER CHE WITH DESCENDER
+  "\\cyrchar\\CYRCHVCRS{}": '\u04B8' # CYRILLIC CAPITAL LETTER CHE WITH VERTICAL STROKE
+  "{\\cyrchar\\CYRCHVCRS}": '\u04B8' # CYRILLIC CAPITAL LETTER CHE WITH VERTICAL STROKE
+  "\\cyrchar\\CYRCHVCRS": '\u04B8' # CYRILLIC CAPITAL LETTER CHE WITH VERTICAL STROKE
+  "\\cyrchar\\cyrchvcrs{}": '\u04B9' # CYRILLIC SMALL LETTER CHE WITH VERTICAL STROKE
+  "{\\cyrchar\\cyrchvcrs}": '\u04B9' # CYRILLIC SMALL LETTER CHE WITH VERTICAL STROKE
+  "\\cyrchar\\cyrchvcrs": '\u04B9' # CYRILLIC SMALL LETTER CHE WITH VERTICAL STROKE
+  "\\cyrchar\\CYRSHHA{}": '\u04BA' # CYRILLIC CAPITAL LETTER SHHA
+  "{\\cyrchar\\CYRSHHA}": '\u04BA' # CYRILLIC CAPITAL LETTER SHHA
+  "\\cyrchar\\CYRSHHA": '\u04BA' # CYRILLIC CAPITAL LETTER SHHA
+  "\\cyrchar\\cyrshha{}": '\u04BB' # CYRILLIC SMALL LETTER SHHA
+  "{\\cyrchar\\cyrshha}": '\u04BB' # CYRILLIC SMALL LETTER SHHA
+  "\\cyrchar\\cyrshha": '\u04BB' # CYRILLIC SMALL LETTER SHHA
+  "\\cyrchar\\CYRABHCH{}": '\u04BC' # CYRILLIC CAPITAL LETTER ABKHASIAN CHE
+  "{\\cyrchar\\CYRABHCH}": '\u04BC' # CYRILLIC CAPITAL LETTER ABKHASIAN CHE
+  "\\cyrchar\\CYRABHCH": '\u04BC' # CYRILLIC CAPITAL LETTER ABKHASIAN CHE
+  "\\cyrchar\\cyrabhch{}": '\u04BD' # CYRILLIC SMALL LETTER ABKHASIAN CHE
+  "{\\cyrchar\\cyrabhch}": '\u04BD' # CYRILLIC SMALL LETTER ABKHASIAN CHE
+  "\\cyrchar\\cyrabhch": '\u04BD' # CYRILLIC SMALL LETTER ABKHASIAN CHE
+  "\\cyrchar\\CYRABHCHDSC{}": '\u04BE' # CYRILLIC CAPITAL LETTER ABKHASIAN CHE WITH DESCENDER
+  "{\\cyrchar\\CYRABHCHDSC}": '\u04BE' # CYRILLIC CAPITAL LETTER ABKHASIAN CHE WITH DESCENDER
+  "\\cyrchar\\CYRABHCHDSC": '\u04BE' # CYRILLIC CAPITAL LETTER ABKHASIAN CHE WITH DESCENDER
+  "\\cyrchar\\cyrabhchdsc{}": '\u04BF' # CYRILLIC SMALL LETTER ABKHASIAN CHE WITH DESCENDER
+  "{\\cyrchar\\cyrabhchdsc}": '\u04BF' # CYRILLIC SMALL LETTER ABKHASIAN CHE WITH DESCENDER
+  "\\cyrchar\\cyrabhchdsc": '\u04BF' # CYRILLIC SMALL LETTER ABKHASIAN CHE WITH DESCENDER
+  "\\cyrchar\\CYRpalochka{}": '\u04C0' # CYRILLIC LETTER PALOCHKA
+  "{\\cyrchar\\CYRpalochka}": '\u04C0' # CYRILLIC LETTER PALOCHKA
+  "\\cyrchar\\CYRpalochka": '\u04C0' # CYRILLIC LETTER PALOCHKA
+  "\\cyrchar\\CYRKHK{}": '\u04C3' # CYRILLIC CAPITAL LETTER KA WITH HOOK
+  "{\\cyrchar\\CYRKHK}": '\u04C3' # CYRILLIC CAPITAL LETTER KA WITH HOOK
+  "\\cyrchar\\CYRKHK": '\u04C3' # CYRILLIC CAPITAL LETTER KA WITH HOOK
+  "\\cyrchar\\cyrkhk{}": '\u04C4' # CYRILLIC SMALL LETTER KA WITH HOOK
+  "{\\cyrchar\\cyrkhk}": '\u04C4' # CYRILLIC SMALL LETTER KA WITH HOOK
+  "\\cyrchar\\cyrkhk": '\u04C4' # CYRILLIC SMALL LETTER KA WITH HOOK
+  "\\cyrchar\\CYRNHK{}": '\u04C7' # CYRILLIC CAPITAL LETTER EN WITH HOOK
+  "{\\cyrchar\\CYRNHK}": '\u04C7' # CYRILLIC CAPITAL LETTER EN WITH HOOK
+  "\\cyrchar\\CYRNHK": '\u04C7' # CYRILLIC CAPITAL LETTER EN WITH HOOK
+  "\\cyrchar\\cyrnhk{}": '\u04C8' # CYRILLIC SMALL LETTER EN WITH HOOK
+  "{\\cyrchar\\cyrnhk}": '\u04C8' # CYRILLIC SMALL LETTER EN WITH HOOK
+  "\\cyrchar\\cyrnhk": '\u04C8' # CYRILLIC SMALL LETTER EN WITH HOOK
+  "\\cyrchar\\CYRCHLDSC{}": '\u04CB' # CYRILLIC CAPITAL LETTER KHAKASSIAN CHE
+  "{\\cyrchar\\CYRCHLDSC}": '\u04CB' # CYRILLIC CAPITAL LETTER KHAKASSIAN CHE
+  "\\cyrchar\\CYRCHLDSC": '\u04CB' # CYRILLIC CAPITAL LETTER KHAKASSIAN CHE
+  "\\cyrchar\\cyrchldsc{}": '\u04CC' # CYRILLIC SMALL LETTER KHAKASSIAN CHE
+  "{\\cyrchar\\cyrchldsc}": '\u04CC' # CYRILLIC SMALL LETTER KHAKASSIAN CHE
+  "\\cyrchar\\cyrchldsc": '\u04CC' # CYRILLIC SMALL LETTER KHAKASSIAN CHE
+  "\\cyrchar\\CYRAE{}": '\u04D4' # CYRILLIC CAPITAL LIGATURE A IE
+  "{\\cyrchar\\CYRAE}": '\u04D4' # CYRILLIC CAPITAL LIGATURE A IE
+  "\\cyrchar\\CYRAE": '\u04D4' # CYRILLIC CAPITAL LIGATURE A IE
+  "\\cyrchar\\cyrae{}": '\u04D5' # CYRILLIC SMALL LIGATURE A IE
+  "{\\cyrchar\\cyrae}": '\u04D5' # CYRILLIC SMALL LIGATURE A IE
+  "\\cyrchar\\cyrae": '\u04D5' # CYRILLIC SMALL LIGATURE A IE
+  "\\cyrchar\\CYRSCHWA{}": '\u04D8' # CYRILLIC CAPITAL LETTER SCHWA
+  "{\\cyrchar\\CYRSCHWA}": '\u04D8' # CYRILLIC CAPITAL LETTER SCHWA
+  "\\cyrchar\\CYRSCHWA": '\u04D8' # CYRILLIC CAPITAL LETTER SCHWA
+  "\\cyrchar\\cyrschwa{}": '\u04D9' # CYRILLIC SMALL LETTER SCHWA
+  "{\\cyrchar\\cyrschwa}": '\u04D9' # CYRILLIC SMALL LETTER SCHWA
+  "\\cyrchar\\cyrschwa": '\u04D9' # CYRILLIC SMALL LETTER SCHWA
+  "\\cyrchar\\CYRABHDZE{}": '\u04E0' # CYRILLIC CAPITAL LETTER ABKHASIAN DZE
+  "{\\cyrchar\\CYRABHDZE}": '\u04E0' # CYRILLIC CAPITAL LETTER ABKHASIAN DZE
+  "\\cyrchar\\CYRABHDZE": '\u04E0' # CYRILLIC CAPITAL LETTER ABKHASIAN DZE
+  "\\cyrchar\\cyrabhdze{}": '\u04E1' # CYRILLIC SMALL LETTER ABKHASIAN DZE
+  "{\\cyrchar\\cyrabhdze}": '\u04E1' # CYRILLIC SMALL LETTER ABKHASIAN DZE
+  "\\cyrchar\\cyrabhdze": '\u04E1' # CYRILLIC SMALL LETTER ABKHASIAN DZE
+  "\\cyrchar\\CYROTLD{}": '\u04E8' # CYRILLIC CAPITAL LETTER BARRED O
+  "{\\cyrchar\\CYROTLD}": '\u04E8' # CYRILLIC CAPITAL LETTER BARRED O
+  "\\cyrchar\\CYROTLD": '\u04E8' # CYRILLIC CAPITAL LETTER BARRED O
+  "\\cyrchar\\cyrotld{}": '\u04E9' # CYRILLIC SMALL LETTER BARRED O
+  "{\\cyrchar\\cyrotld}": '\u04E9' # CYRILLIC SMALL LETTER BARRED O
+  "\\cyrchar\\cyrotld": '\u04E9' # CYRILLIC SMALL LETTER BARRED O
+  "\\quad{}": '\u2001' # emquad
+  "{\\quad}": '\u2001' # emquad
+  "\\quad": '\u2001' # emquad
+  "\\hspace{0.6em}": '\u2002' # EN SPACE
+  "\\hspace{1em}": '\u2003' # EM SPACE
   "\\;": '\u2004'
-  "\\hspace{0.33em}": '\u2004'
-  "\\hspace{0.25em}": '\u2005'
-  "\\hspace{0.166em}": '\u2006'
-  "\\hphantom{0}": '\u2007'
-  "\\hphantom{,}": '\u2008'
+  "\\hspace{0.33em}": '\u2004' # THREE-PER-EM SPACE
+  "\\hspace{0.25em}": '\u2005' # FOUR-PER-EM SPACE
+  "\\hspace{0.166em}": '\u2006' # SIX-PER-EM SPACE
+  "\\hphantom{0}": '\u2007' # FIGURE SPACE
+  "\\hphantom{,}": '\u2008' # PUNCTUATION SPACE
   "\\,": '\u2009'
-  "\\hspace{0.167em}": '\u2009'
-  "\\mkern1mu{}": '\u200A'
-  "{\\mkern1mu}": '\u200A'
-  "\\mkern1mu": '\u200A'
+  "\\hspace{0.167em}": '\u2009' # THIN SPACE
+  "\\mkern1mu{}": '\u200A' # HAIR SPACE
+  "{\\mkern1mu}": '\u200A' # HAIR SPACE
+  "\\mkern1mu": '\u200A' # HAIR SPACE
   "\\hspace{0pt}": '\u200B'
-  "-": '\u2010'
-  "\\textendash{}": '\u2013'
-  "{\\textendash}": '\u2013'
-  "\\textendash": '\u2013'
-  "\\textemdash{}": '\u2014'
-  "{\\textemdash}": '\u2014'
-  "\\textemdash": '\u2014'
-  "\\rule{1em}{1pt}": '\u2015'
-  "\\Vert{}": '\u2016'
-  "{\\Vert}": '\u2016'
-  "\\Vert": '\u2016'
-  "\\twolowline{}": '\u2017'
-  "{\\twolowline}": '\u2017'
-  "\\twolowline": '\u2017'
-  "`": '\u2018'
-  ",": '\u201A'
-  "\\Elzreapos{}": '\u201B'
-  "{\\Elzreapos}": '\u201B'
-  "\\Elzreapos": '\u201B'
+  "-": '\u2010' # HYPHEN
+  "\\textendash{}": '\u2013' # EN DASH
+  "{\\textendash}": '\u2013' # EN DASH
+  "\\textendash": '\u2013' # EN DASH
+  "\\textemdash{}": '\u2014' # EM DASH
+  "{\\textemdash}": '\u2014' # EM DASH
+  "\\textemdash": '\u2014' # EM DASH
+  "\\rule{1em}{1pt}": '\u2015' # HORIZONTAL BAR
+  "\\Vert{}": '\u2016' # DOUBLE VERTICAL LINE
+  "{\\Vert}": '\u2016' # DOUBLE VERTICAL LINE
+  "\\Vert": '\u2016' # DOUBLE VERTICAL LINE
+  "\\twolowline{}": '\u2017' # DOUBLE LOW LINE (spacing)
+  "{\\twolowline}": '\u2017' # DOUBLE LOW LINE (spacing)
+  "\\twolowline": '\u2017' # DOUBLE LOW LINE (spacing)
+  "`": '\u2018' # LEFT SINGLE QUOTATION MARK
+  ",": '\u201A' # SINGLE LOW-9 QUOTATION MARK
+  "\\Elzreapos{}": '\u201B' # SINGLE HIGH-REVERSED-9 QUOTATION MARK
+  "{\\Elzreapos}": '\u201B' # SINGLE HIGH-REVERSED-9 QUOTATION MARK
+  "\\Elzreapos": '\u201B' # SINGLE HIGH-REVERSED-9 QUOTATION MARK
   "``": '\u201C'
-  "\\textquotedblleft{}": '\u201C'
-  "{\\textquotedblleft}": '\u201C'
-  "\\textquotedblleft": '\u201C'
+  "\\textquotedblleft{}": '\u201C' # LEFT DOUBLE QUOTATION MARK
+  "{\\textquotedblleft}": '\u201C' # LEFT DOUBLE QUOTATION MARK
+  "\\textquotedblleft": '\u201C' # LEFT DOUBLE QUOTATION MARK
   "''": '\u201D'
-  "\\textquotedblright{}": '\u201D'
-  "{\\textquotedblright}": '\u201D'
-  "\\textquotedblright": '\u201D'
-  ",,": '\u201E'
-  "\\textdagger{}": '\u2020'
-  "{\\textdagger}": '\u2020'
-  "\\textdagger": '\u2020'
-  "\\textdaggerdbl{}": '\u2021'
-  "{\\textdaggerdbl}": '\u2021'
-  "\\textdaggerdbl": '\u2021'
-  "\\textbullet{}": '\u2022'
-  "{\\textbullet}": '\u2022'
-  "\\textbullet": '\u2022'
-  ".": '\u2024'
-  "..": '\u2025'
-  "\\ldots{}": '\u2026'
-  "{\\ldots}": '\u2026'
-  "\\ldots": '\u2026'
-  "\\textperthousand{}": '\u2030'
-  "{\\textperthousand}": '\u2030'
-  "\\textperthousand": '\u2030'
-  "\\textpertenthousand{}": '\u2031'
-  "{\\textpertenthousand}": '\u2031'
-  "\\textpertenthousand": '\u2031'
-  "{'}": '\u2032'
-  "{''}": '\u2033'
-  "{'''}": '\u2034'
-  "\\backprime{}": '\u2035'
-  "{\\backprime}": '\u2035'
-  "\\backprime": '\u2035'
-  "\\backdprime{}": '\u2036'
-  "{\\backdprime}": '\u2036'
-  "\\backdprime": '\u2036'
-  "\\backtrprime{}": '\u2037'
-  "{\\backtrprime}": '\u2037'
-  "\\backtrprime": '\u2037'
-  "\\caretinsert{}": '\u2038'
-  "{\\caretinsert}": '\u2038'
-  "\\caretinsert": '\u2038'
-  "\\guilsinglleft{}": '\u2039'
-  "{\\guilsinglleft}": '\u2039'
-  "\\guilsinglleft": '\u2039'
-  "\\guilsinglright{}": '\u203A'
-  "{\\guilsinglright}": '\u203A'
-  "\\guilsinglright": '\u203A'
-  "\\Exclam{}": '\u203C'
-  "{\\Exclam}": '\u203C'
-  "\\Exclam": '\u203C'
-  "\\cat{}": '\u2040'
-  "{\\cat}": '\u2040'
-  "\\cat": '\u2040'
-  "\\hyphenbullet{}": '\u2043'
-  "{\\hyphenbullet}": '\u2043'
-  "\\hyphenbullet": '\u2043'
-  "\\fracslash{}": '\u2044'
-  "{\\fracslash}": '\u2044'
-  "\\fracslash": '\u2044'
-  "\\Question{}": '\u2047'
-  "{\\Question}": '\u2047'
-  "\\Question": '\u2047'
-  "\\closure{}": '\u2050'
-  "{\\closure}": '\u2050'
-  "\\closure": '\u2050'
-  "''''": '\u2057'
+  "\\textquotedblright{}": '\u201D' # RIGHT DOUBLE QUOTATION MARK
+  "{\\textquotedblright}": '\u201D' # RIGHT DOUBLE QUOTATION MARK
+  "\\textquotedblright": '\u201D' # RIGHT DOUBLE QUOTATION MARK
+  ",,": '\u201E' # DOUBLE LOW-9 QUOTATION MARK
+  "\\textdagger{}": '\u2020' # DAGGER
+  "{\\textdagger}": '\u2020' # DAGGER
+  "\\textdagger": '\u2020' # DAGGER
+  "\\textdaggerdbl{}": '\u2021' # DOUBLE DAGGER
+  "{\\textdaggerdbl}": '\u2021' # DOUBLE DAGGER
+  "\\textdaggerdbl": '\u2021' # DOUBLE DAGGER
+  "\\textbullet{}": '\u2022' # BULLET
+  "{\\textbullet}": '\u2022' # BULLET
+  "\\textbullet": '\u2022' # BULLET
+  ".": '\u2024' # ONE DOT LEADER
+  "..": '\u2025' # TWO DOT LEADER
+  "\\ldots{}": '\u2026' # HORIZONTAL ELLIPSIS
+  "{\\ldots}": '\u2026' # HORIZONTAL ELLIPSIS
+  "\\ldots": '\u2026' # HORIZONTAL ELLIPSIS
+  "\\textperthousand{}": '\u2030' # PER MILLE SIGN
+  "{\\textperthousand}": '\u2030' # PER MILLE SIGN
+  "\\textperthousand": '\u2030' # PER MILLE SIGN
+  "\\textpertenthousand{}": '\u2031' # PER TEN THOUSAND SIGN
+  "{\\textpertenthousand}": '\u2031' # PER TEN THOUSAND SIGN
+  "\\textpertenthousand": '\u2031' # PER TEN THOUSAND SIGN
+  "{'}": '\u2032' # PRIME
+  "{''}": '\u2033' # DOUBLE PRIME
+  "{'''}": '\u2034' # TRIPLE PRIME
+  "\\backprime{}": '\u2035' # REVERSED PRIME
+  "{\\backprime}": '\u2035' # REVERSED PRIME
+  "\\backprime": '\u2035' # REVERSED PRIME
+  "\\backdprime{}": '\u2036' # double reverse prime, not superscripted
+  "{\\backdprime}": '\u2036' # double reverse prime, not superscripted
+  "\\backdprime": '\u2036' # double reverse prime, not superscripted
+  "\\backtrprime{}": '\u2037' # triple reverse prime, not superscripted
+  "{\\backtrprime}": '\u2037' # triple reverse prime, not superscripted
+  "\\backtrprime": '\u2037' # triple reverse prime, not superscripted
+  "\\caretinsert{}": '\u2038' # CARET (insertion mark)
+  "{\\caretinsert}": '\u2038' # CARET (insertion mark)
+  "\\caretinsert": '\u2038' # CARET (insertion mark)
+  "\\guilsinglleft{}": '\u2039' # SINGLE LEFT-POINTING ANGLE QUOTATION MARK
+  "{\\guilsinglleft}": '\u2039' # SINGLE LEFT-POINTING ANGLE QUOTATION MARK
+  "\\guilsinglleft": '\u2039' # SINGLE LEFT-POINTING ANGLE QUOTATION MARK
+  "\\guilsinglright{}": '\u203A' # SINGLE RIGHT-POINTING ANGLE QUOTATION MARK
+  "{\\guilsinglright}": '\u203A' # SINGLE RIGHT-POINTING ANGLE QUOTATION MARK
+  "\\guilsinglright": '\u203A' # SINGLE RIGHT-POINTING ANGLE QUOTATION MARK
+  "\\Exclam{}": '\u203C' # # !!, DOUBLE EXCLAMATION MARK
+  "{\\Exclam}": '\u203C' # # !!, DOUBLE EXCLAMATION MARK
+  "\\Exclam": '\u203C' # # !!, DOUBLE EXCLAMATION MARK
+  "\\cat{}": '\u2040' # CHARACTER TIE, z notation sequence concatenation
+  "{\\cat}": '\u2040' # CHARACTER TIE, z notation sequence concatenation
+  "\\cat": '\u2040' # CHARACTER TIE, z notation sequence concatenation
+  "\\hyphenbullet{}": '\u2043' # rectangle, filled (HYPHEN BULLET)
+  "{\\hyphenbullet}": '\u2043' # rectangle, filled (HYPHEN BULLET)
+  "\\hyphenbullet": '\u2043' # rectangle, filled (HYPHEN BULLET)
+  "\\fracslash{}": '\u2044' # # /, FRACTION SLASH
+  "{\\fracslash}": '\u2044' # # /, FRACTION SLASH
+  "\\fracslash": '\u2044' # # /, FRACTION SLASH
+  "\\Question{}": '\u2047' # # ??, DOUBLE QUESTION MARK
+  "{\\Question}": '\u2047' # # ??, DOUBLE QUESTION MARK
+  "\\Question": '\u2047' # # ??, DOUBLE QUESTION MARK
+  "\\closure{}": '\u2050' # CLOSE UP (editing mark)
+  "{\\closure}": '\u2050' # CLOSE UP (editing mark)
+  "\\closure": '\u2050' # CLOSE UP (editing mark)
+  "''''": '\u2057' # QUADRUPLE PRIME
   "\\:": '\u205F'
-  "\\mkern4mu{}": '\u205F'
-  "{\\mkern4mu}": '\u205F'
-  "\\mkern4mu": '\u205F'
-  "\\nolinebreak{}": '\u2060'
-  "{\\nolinebreak}": '\u2060'
-  "\\nolinebreak": '\u2060'
-  "\\ensuremath{\\Elzpes}": '\u20A7'
-  "{\\mbox{\\texteuro}}": '\u20AC'
-  "\\mbox{\\texteuro}": '\u20AC'
-  "\\mbox{\\texteuro}{}": '\u20AC'
-  "\\lvec{}": '\u20D0'
-  "{\\lvec}": '\u20D0'
-  "\\lvec": '\u20D0'
-  "\\vec{}": '\u20D1'
-  "{\\vec}": '\u20D1'
-  "\\vec": '\u20D1'
-  "\\vertoverlay{}": '\u20D2'
-  "{\\vertoverlay}": '\u20D2'
-  "\\vertoverlay": '\u20D2'
-  "\\LVec{}": '\u20D6'
-  "{\\LVec}": '\u20D6'
-  "\\LVec": '\u20D6'
-  "\\dddot{}": '\u20DB'
-  "{\\dddot}": '\u20DB'
-  "\\dddot": '\u20DB'
-  "\\ddddot{}": '\u20DC'
-  "{\\ddddot}": '\u20DC'
-  "\\ddddot": '\u20DC'
-  "\\enclosecircle{}": '\u20DD'
-  "{\\enclosecircle}": '\u20DD'
-  "\\enclosecircle": '\u20DD'
-  "\\enclosesquare{}": '\u20DE'
-  "{\\enclosesquare}": '\u20DE'
-  "\\enclosesquare": '\u20DE'
-  "\\enclosediamond{}": '\u20DF'
-  "{\\enclosediamond}": '\u20DF'
-  "\\enclosediamond": '\u20DF'
-  "\\overleftrightarrow{}": '\u20E1'
-  "{\\overleftrightarrow}": '\u20E1'
-  "\\overleftrightarrow": '\u20E1'
-  "\\enclosetriangle{}": '\u20E4'
-  "{\\enclosetriangle}": '\u20E4'
-  "\\enclosetriangle": '\u20E4'
-  "\\annuity{}": '\u20E7'
-  "{\\annuity}": '\u20E7'
-  "\\annuity": '\u20E7'
-  "\\threeunderdot{}": '\u20E8'
-  "{\\threeunderdot}": '\u20E8'
-  "\\threeunderdot": '\u20E8'
-  "\\widebridgeabove{}": '\u20E9'
-  "{\\widebridgeabove}": '\u20E9'
-  "\\widebridgeabove": '\u20E9'
-  "\\underrightharpoondown{}": '\u20EC'
-  "{\\underrightharpoondown}": '\u20EC'
-  "\\underrightharpoondown": '\u20EC'
-  "\\underleftharpoondown{}": '\u20ED'
-  "{\\underleftharpoondown}": '\u20ED'
-  "\\underleftharpoondown": '\u20ED'
-  "\\underleftarrow{}": '\u20EE'
-  "{\\underleftarrow}": '\u20EE'
-  "\\underleftarrow": '\u20EE'
-  "\\underrightarrow{}": '\u20EF'
-  "{\\underrightarrow}": '\u20EF'
-  "\\underrightarrow": '\u20EF'
-  "\\asteraccent{}": '\u20F0'
-  "{\\asteraccent}": '\u20F0'
-  "\\asteraccent": '\u20F0'
-  "\\mathbb{C}": '\u2102'
-  "\\Euler{}": '\u2107'
-  "{\\Euler}": '\u2107'
-  "\\Euler": '\u2107'
-  "\\mathscr{g}": '\u210A'
-  "\\mathscr{H}": '\u210B'
-  "\\mathfrak{H}": '\u210C'
-  "\\mathbb{H}": '\u210D'
-  "\\Planckconst{}": '\u210E'
-  "{\\Planckconst}": '\u210E'
-  "\\Planckconst": '\u210E'
-  "\\hslash{}": '\u210F'
-  "{\\hslash}": '\u210F'
-  "\\hslash": '\u210F'
-  "\\mathscr{I}": '\u2110'
-  "\\mathfrak{I}": '\u2111'
-  "\\mathscr{L}": '\u2112'
-  "\\mathscr{l}": '\u2113'
-  "\\mathbb{N}": '\u2115'
-  "\\cyrchar\\textnumero{}": '\u2116'
-  "{\\cyrchar\\textnumero}": '\u2116'
-  "\\cyrchar\\textnumero": '\u2116'
-  "\\wp{}": '\u2118'
-  "{\\wp}": '\u2118'
-  "\\wp": '\u2118'
-  "\\mathbb{P}": '\u2119'
-  "\\mathbb{Q}": '\u211A'
-  "\\mathscr{R}": '\u211B'
-  "\\mathfrak{R}": '\u211C'
-  "\\mathbb{R}": '\u211D'
-  "\\Elzxrat{}": '\u211E'
-  "{\\Elzxrat}": '\u211E'
-  "\\Elzxrat": '\u211E'
-  "\\texttrademark{}": '\u2122'
-  "{\\texttrademark}": '\u2122'
-  "\\texttrademark": '\u2122'
-  "\\mathbb{Z}": '\u2124'
-  "\\mho{}": '\u2127'
-  "{\\mho}": '\u2127'
-  "\\mho": '\u2127'
-  "\\mathfrak{Z}": '\u2128'
-  "\\ElsevierGlyph{2129}": '\u2129'
-  "\\mathscr{B}": '\u212C'
-  "\\mathfrak{C}": '\u212D'
-  "\\mathscr{e}": '\u212F'
-  "\\mathscr{E}": '\u2130'
-  "\\mathscr{F}": '\u2131'
-  "\\Finv{}": '\u2132'
-  "{\\Finv}": '\u2132'
-  "\\Finv": '\u2132'
-  "\\mathscr{M}": '\u2133'
-  "\\mathscr{o}": '\u2134'
-  "\\aleph{}": '\u2135'
-  "{\\aleph}": '\u2135'
-  "\\aleph": '\u2135'
-  "\\beth{}": '\u2136'
-  "{\\beth}": '\u2136'
-  "\\beth": '\u2136'
-  "\\gimel{}": '\u2137'
-  "{\\gimel}": '\u2137'
-  "\\gimel": '\u2137'
-  "\\daleth{}": '\u2138'
-  "{\\daleth}": '\u2138'
-  "\\daleth": '\u2138'
-  "\\mathbb{\\pi}": '\u213C'
-  "\\mathbb{\\gamma}": '\u213D'
-  "\\mathbb{\\Gamma}": '\u213E'
-  "\\mathbb{\\Pi}": '\u213F'
-  "\\mathbb{\\Sigma}": '\u2140'
-  "\\Game{}": '\u2141'
-  "{\\Game}": '\u2141'
-  "\\Game": '\u2141'
-  "\\sansLturned{}": '\u2142'
-  "{\\sansLturned}": '\u2142'
-  "\\sansLturned": '\u2142'
-  "\\sansLmirrored{}": '\u2143'
-  "{\\sansLmirrored}": '\u2143'
-  "\\sansLmirrored": '\u2143'
-  "\\Yup{}": '\u2144'
-  "{\\Yup}": '\u2144'
-  "\\Yup": '\u2144'
-  "\\CapitalDifferentialD{}": '\u2145'
-  "{\\CapitalDifferentialD}": '\u2145'
-  "\\CapitalDifferentialD": '\u2145'
-  "\\DifferentialD{}": '\u2146'
-  "{\\DifferentialD}": '\u2146'
-  "\\DifferentialD": '\u2146'
-  "\\ExponetialE{}": '\u2147'
-  "{\\ExponetialE}": '\u2147'
-  "\\ExponetialE": '\u2147'
-  "\\ComplexI{}": '\u2148'
-  "{\\ComplexI}": '\u2148'
-  "\\ComplexI": '\u2148'
-  "\\ComplexJ{}": '\u2149'
-  "{\\ComplexJ}": '\u2149'
-  "\\ComplexJ": '\u2149'
-  "\\PropertyLine{}": '\u214A'
-  "{\\PropertyLine}": '\u214A'
-  "\\PropertyLine": '\u214A'
-  "\\invamp{}": '\u214B'
-  "{\\invamp}": '\u214B'
-  "\\invamp": '\u214B'
-  "\\textfrac{1}{3}": '\u2153'
-  "\\textfrac{2}{3}": '\u2154'
-  "\\textfrac{1}{5}": '\u2155'
-  "\\textfrac{2}{5}": '\u2156'
-  "\\textfrac{3}{5}": '\u2157'
-  "\\textfrac{4}{5}": '\u2158'
-  "\\textfrac{1}{6}": '\u2159'
-  "\\textfrac{5}{6}": '\u215A'
-  "\\textfrac{1}{8}": '\u215B'
-  "\\textfrac{3}{8}": '\u215C'
-  "\\textfrac{5}{8}": '\u215D'
-  "\\textfrac{7}{8}": '\u215E'
-  "\\leftarrow{}": '\u2190'
-  "{\\leftarrow}": '\u2190'
-  "\\leftarrow": '\u2190'
-  "\\uparrow{}": '\u2191'
-  "{\\uparrow}": '\u2191'
-  "\\uparrow": '\u2191'
-  "\\rightarrow{}": '\u2192'
-  "{\\rightarrow}": '\u2192'
-  "\\rightarrow": '\u2192'
-  "\\downarrow{}": '\u2193'
-  "{\\downarrow}": '\u2193'
-  "\\downarrow": '\u2193'
-  "\\leftrightarrow{}": '\u2194'
-  "{\\leftrightarrow}": '\u2194'
-  "\\leftrightarrow": '\u2194'
-  "\\updownarrow{}": '\u2195'
-  "{\\updownarrow}": '\u2195'
-  "\\updownarrow": '\u2195'
-  "\\nwarrow{}": '\u2196'
-  "{\\nwarrow}": '\u2196'
-  "\\nwarrow": '\u2196'
-  "\\nearrow{}": '\u2197'
-  "{\\nearrow}": '\u2197'
-  "\\nearrow": '\u2197'
-  "\\searrow{}": '\u2198'
-  "{\\searrow}": '\u2198'
-  "\\searrow": '\u2198'
-  "\\swarrow{}": '\u2199'
-  "{\\swarrow}": '\u2199'
-  "\\swarrow": '\u2199'
-  "\\nleftarrow{}": '\u219A'
-  "{\\nleftarrow}": '\u219A'
-  "\\nleftarrow": '\u219A'
-  "\\nrightarrow{}": '\u219B'
-  "{\\nrightarrow}": '\u219B'
-  "\\nrightarrow": '\u219B'
+  "\\mkern4mu{}": '\u205F' # MEDIUM MATHEMATICAL SPACE
+  "{\\mkern4mu}": '\u205F' # MEDIUM MATHEMATICAL SPACE
+  "\\mkern4mu": '\u205F' # MEDIUM MATHEMATICAL SPACE
+  "\\nolinebreak{}": '\u2060' # WORD JOINER
+  "{\\nolinebreak}": '\u2060' # WORD JOINER
+  "\\nolinebreak": '\u2060' # WORD JOINER
+  "\\ensuremath{\\Elzpes}": '\u20A7' # PESETA SIGN
+  "{\\mbox{\\texteuro}}": '\u20AC' # EURO SIGN
+  "\\mbox{\\texteuro}": '\u20AC' # EURO SIGN
+  "\\mbox{\\texteuro}{}": '\u20AC' # EURO SIGN
+  "\\lvec{}": '\u20D0' # COMBINING LEFT HARPOON ABOVE
+  "{\\lvec}": '\u20D0' # COMBINING LEFT HARPOON ABOVE
+  "\\lvec": '\u20D0' # COMBINING LEFT HARPOON ABOVE
+  "\\vec{}": '\u20D1' # COMBINING RIGHT HARPOON ABOVE
+  "{\\vec}": '\u20D1' # COMBINING RIGHT HARPOON ABOVE
+  "\\vec": '\u20D1' # COMBINING RIGHT HARPOON ABOVE
+  "\\vertoverlay{}": '\u20D2' # COMBINING LONG VERTICAL LINE OVERLAY
+  "{\\vertoverlay}": '\u20D2' # COMBINING LONG VERTICAL LINE OVERLAY
+  "\\vertoverlay": '\u20D2' # COMBINING LONG VERTICAL LINE OVERLAY
+  "\\LVec{}": '\u20D6' # # \overleftarrow, COMBINING LEFT ARROW ABOVE
+  "{\\LVec}": '\u20D6' # # \overleftarrow, COMBINING LEFT ARROW ABOVE
+  "\\LVec": '\u20D6' # # \overleftarrow, COMBINING LEFT ARROW ABOVE
+  "\\dddot{}": '\u20DB' # COMBINING THREE DOTS ABOVE
+  "{\\dddot}": '\u20DB' # COMBINING THREE DOTS ABOVE
+  "\\dddot": '\u20DB' # COMBINING THREE DOTS ABOVE
+  "\\ddddot{}": '\u20DC' # COMBINING FOUR DOTS ABOVE
+  "{\\ddddot}": '\u20DC' # COMBINING FOUR DOTS ABOVE
+  "\\ddddot": '\u20DC' # COMBINING FOUR DOTS ABOVE
+  "\\enclosecircle{}": '\u20DD' # COMBINING ENCLOSING CIRCLE
+  "{\\enclosecircle}": '\u20DD' # COMBINING ENCLOSING CIRCLE
+  "\\enclosecircle": '\u20DD' # COMBINING ENCLOSING CIRCLE
+  "\\enclosesquare{}": '\u20DE' # COMBINING ENCLOSING SQUARE
+  "{\\enclosesquare}": '\u20DE' # COMBINING ENCLOSING SQUARE
+  "\\enclosesquare": '\u20DE' # COMBINING ENCLOSING SQUARE
+  "\\enclosediamond{}": '\u20DF' # COMBINING ENCLOSING DIAMOND
+  "{\\enclosediamond}": '\u20DF' # COMBINING ENCLOSING DIAMOND
+  "\\enclosediamond": '\u20DF' # COMBINING ENCLOSING DIAMOND
+  "\\overleftrightarrow{}": '\u20E1' # COMBINING LEFT RIGHT ARROW ABOVE
+  "{\\overleftrightarrow}": '\u20E1' # COMBINING LEFT RIGHT ARROW ABOVE
+  "\\overleftrightarrow": '\u20E1' # COMBINING LEFT RIGHT ARROW ABOVE
+  "\\enclosetriangle{}": '\u20E4' # COMBINING ENCLOSING UPWARD POINTING TRIANGLE
+  "{\\enclosetriangle}": '\u20E4' # COMBINING ENCLOSING UPWARD POINTING TRIANGLE
+  "\\enclosetriangle": '\u20E4' # COMBINING ENCLOSING UPWARD POINTING TRIANGLE
+  "\\annuity{}": '\u20E7' # COMBINING ANNUITY SYMBOL
+  "{\\annuity}": '\u20E7' # COMBINING ANNUITY SYMBOL
+  "\\annuity": '\u20E7' # COMBINING ANNUITY SYMBOL
+  "\\threeunderdot{}": '\u20E8' # COMBINING TRIPLE UNDERDOT
+  "{\\threeunderdot}": '\u20E8' # COMBINING TRIPLE UNDERDOT
+  "\\threeunderdot": '\u20E8' # COMBINING TRIPLE UNDERDOT
+  "\\widebridgeabove{}": '\u20E9' # COMBINING WIDE BRIDGE ABOVE
+  "{\\widebridgeabove}": '\u20E9' # COMBINING WIDE BRIDGE ABOVE
+  "\\widebridgeabove": '\u20E9' # COMBINING WIDE BRIDGE ABOVE
+  "\\underrightharpoondown{}": '\u20EC' # COMBINING RIGHTWARDS HARPOON WITH BARB DOWNWARDS
+  "{\\underrightharpoondown}": '\u20EC' # COMBINING RIGHTWARDS HARPOON WITH BARB DOWNWARDS
+  "\\underrightharpoondown": '\u20EC' # COMBINING RIGHTWARDS HARPOON WITH BARB DOWNWARDS
+  "\\underleftharpoondown{}": '\u20ED' # COMBINING LEFTWARDS HARPOON WITH BARB DOWNWARDS
+  "{\\underleftharpoondown}": '\u20ED' # COMBINING LEFTWARDS HARPOON WITH BARB DOWNWARDS
+  "\\underleftharpoondown": '\u20ED' # COMBINING LEFTWARDS HARPOON WITH BARB DOWNWARDS
+  "\\underleftarrow{}": '\u20EE' # COMBINING LEFT ARROW BELOW
+  "{\\underleftarrow}": '\u20EE' # COMBINING LEFT ARROW BELOW
+  "\\underleftarrow": '\u20EE' # COMBINING LEFT ARROW BELOW
+  "\\underrightarrow{}": '\u20EF' # COMBINING RIGHT ARROW BELOW
+  "{\\underrightarrow}": '\u20EF' # COMBINING RIGHT ARROW BELOW
+  "\\underrightarrow": '\u20EF' # COMBINING RIGHT ARROW BELOW
+  "\\asteraccent{}": '\u20F0' # COMBINING ASTERISK ABOVE
+  "{\\asteraccent}": '\u20F0' # COMBINING ASTERISK ABOVE
+  "\\asteraccent": '\u20F0' # COMBINING ASTERISK ABOVE
+  "\\mathbb{C}": '\u2102' # DOUBLE-STRUCK CAPITAL C
+  "\\Euler{}": '\u2107' # EULER CONSTANT
+  "{\\Euler}": '\u2107' # EULER CONSTANT
+  "\\Euler": '\u2107' # EULER CONSTANT
+  "\\mathscr{g}": '\u210A' # SCRIPT SMALL G
+  "\\mathscr{H}": '\u210B' # SCRIPT CAPITAL H
+  "\\mathfrak{H}": '\u210C' # BLACK-LETTER CAPITAL H
+  "\\mathbb{H}": '\u210D' # DOUBLE-STRUCK CAPITAL H
+  "\\Planckconst{}": '\u210E' # # h, Planck constant
+  "{\\Planckconst}": '\u210E' # # h, Planck constant
+  "\\Planckconst": '\u210E' # # h, Planck constant
+  "\\hslash{}": '\u210F' # PLANCK CONSTANT OVER TWO PI
+  "{\\hslash}": '\u210F' # PLANCK CONSTANT OVER TWO PI
+  "\\hslash": '\u210F' # PLANCK CONSTANT OVER TWO PI
+  "\\mathscr{I}": '\u2110' # SCRIPT CAPITAL I
+  "\\mathfrak{I}": '\u2111' # BLACK-LETTER CAPITAL I
+  "\\mathscr{L}": '\u2112' # SCRIPT CAPITAL L
+  "\\mathscr{l}": '\u2113' # SCRIPT SMALL L
+  "\\mathbb{N}": '\u2115' # DOUBLE-STRUCK CAPITAL N
+  "\\cyrchar\\textnumero{}": '\u2116' # NUMERO SIGN
+  "{\\cyrchar\\textnumero}": '\u2116' # NUMERO SIGN
+  "\\cyrchar\\textnumero": '\u2116' # NUMERO SIGN
+  "\\wp{}": '\u2118' # SCRIPT CAPITAL P
+  "{\\wp}": '\u2118' # SCRIPT CAPITAL P
+  "\\wp": '\u2118' # SCRIPT CAPITAL P
+  "\\mathbb{P}": '\u2119' # DOUBLE-STRUCK CAPITAL P
+  "\\mathbb{Q}": '\u211A' # DOUBLE-STRUCK CAPITAL Q
+  "\\mathscr{R}": '\u211B' # SCRIPT CAPITAL R
+  "\\mathfrak{R}": '\u211C' # BLACK-LETTER CAPITAL R
+  "\\mathbb{R}": '\u211D' # DOUBLE-STRUCK CAPITAL R
+  "\\Elzxrat{}": '\u211E' # PRESCRIPTION TAKE
+  "{\\Elzxrat}": '\u211E' # PRESCRIPTION TAKE
+  "\\Elzxrat": '\u211E' # PRESCRIPTION TAKE
+  "\\texttrademark{}": '\u2122' # TRADE MARK SIGN
+  "{\\texttrademark}": '\u2122' # TRADE MARK SIGN
+  "\\texttrademark": '\u2122' # TRADE MARK SIGN
+  "\\mathbb{Z}": '\u2124' # DOUBLE-STRUCK CAPITAL Z
+  "\\mho{}": '\u2127' # INVERTED OHM SIGN
+  "{\\mho}": '\u2127' # INVERTED OHM SIGN
+  "\\mho": '\u2127' # INVERTED OHM SIGN
+  "\\mathfrak{Z}": '\u2128' # BLACK-LETTER CAPITAL Z
+  "\\ElsevierGlyph{2129}": '\u2129' # TURNED GREEK SMALL LETTER IOTA
+  "\\mathscr{B}": '\u212C' # SCRIPT CAPITAL B
+  "\\mathfrak{C}": '\u212D' # BLACK-LETTER CAPITAL C
+  "\\mathscr{e}": '\u212F' # SCRIPT SMALL E
+  "\\mathscr{E}": '\u2130' # SCRIPT CAPITAL E
+  "\\mathscr{F}": '\u2131' # SCRIPT CAPITAL F
+  "\\Finv{}": '\u2132' # TURNED CAPITAL F
+  "{\\Finv}": '\u2132' # TURNED CAPITAL F
+  "\\Finv": '\u2132' # TURNED CAPITAL F
+  "\\mathscr{M}": '\u2133' # SCRIPT CAPITAL M
+  "\\mathscr{o}": '\u2134' # SCRIPT SMALL O
+  "\\aleph{}": '\u2135' # ALEF SYMBOL
+  "{\\aleph}": '\u2135' # ALEF SYMBOL
+  "\\aleph": '\u2135' # ALEF SYMBOL
+  "\\beth{}": '\u2136' # BET SYMBOL
+  "{\\beth}": '\u2136' # BET SYMBOL
+  "\\beth": '\u2136' # BET SYMBOL
+  "\\gimel{}": '\u2137' # GIMEL SYMBOL
+  "{\\gimel}": '\u2137' # GIMEL SYMBOL
+  "\\gimel": '\u2137' # GIMEL SYMBOL
+  "\\daleth{}": '\u2138' # DALET SYMBOL
+  "{\\daleth}": '\u2138' # DALET SYMBOL
+  "\\daleth": '\u2138' # DALET SYMBOL
+  "\\mathbb{\\pi}": '\u213C' # \DoublePi (wrisym), DOUBLE-STRUCK SMALL PI
+  "\\mathbb{\\gamma}": '\u213D' # \EulerGamma (wrisym), DOUBLE-STRUCK SMALL GAMMA
+  "\\mathbb{\\Gamma}": '\u213E' # DOUBLE-STRUCK CAPITAL GAMMA
+  "\\mathbb{\\Pi}": '\u213F' # DOUBLE-STRUCK CAPITAL PI
+  "\\mathbb{\\Sigma}": '\u2140' # DOUBLE-STRUCK N-ARY SUMMATION
+  "\\Game{}": '\u2141' # # \Game (amssymb), TURNED SANS-SERIF CAPITAL G (amssymb has mirrored G)
+  "{\\Game}": '\u2141' # # \Game (amssymb), TURNED SANS-SERIF CAPITAL G (amssymb has mirrored G)
+  "\\Game": '\u2141' # # \Game (amssymb), TURNED SANS-SERIF CAPITAL G (amssymb has mirrored G)
+  "\\sansLturned{}": '\u2142' # TURNED SANS-SERIF CAPITAL L
+  "{\\sansLturned}": '\u2142' # TURNED SANS-SERIF CAPITAL L
+  "\\sansLturned": '\u2142' # TURNED SANS-SERIF CAPITAL L
+  "\\sansLmirrored{}": '\u2143' # REVERSED SANS-SERIF CAPITAL L
+  "{\\sansLmirrored}": '\u2143' # REVERSED SANS-SERIF CAPITAL L
+  "\\sansLmirrored": '\u2143' # REVERSED SANS-SERIF CAPITAL L
+  "\\Yup{}": '\u2144' # TURNED SANS-SERIF CAPITAL Y
+  "{\\Yup}": '\u2144' # TURNED SANS-SERIF CAPITAL Y
+  "\\Yup": '\u2144' # TURNED SANS-SERIF CAPITAL Y
+  "\\CapitalDifferentialD{}": '\u2145' # = \DD (wrisym), DOUBLE-STRUCK ITALIC CAPITAL D
+  "{\\CapitalDifferentialD}": '\u2145' # = \DD (wrisym), DOUBLE-STRUCK ITALIC CAPITAL D
+  "\\CapitalDifferentialD": '\u2145' # = \DD (wrisym), DOUBLE-STRUCK ITALIC CAPITAL D
+  "\\DifferentialD{}": '\u2146' # = \dd (wrisym), DOUBLE-STRUCK ITALIC SMALL D
+  "{\\DifferentialD}": '\u2146' # = \dd (wrisym), DOUBLE-STRUCK ITALIC SMALL D
+  "\\DifferentialD": '\u2146' # = \dd (wrisym), DOUBLE-STRUCK ITALIC SMALL D
+  "\\ExponetialE{}": '\u2147' # = \ee (wrisym), DOUBLE-STRUCK ITALIC SMALL E
+  "{\\ExponetialE}": '\u2147' # = \ee (wrisym), DOUBLE-STRUCK ITALIC SMALL E
+  "\\ExponetialE": '\u2147' # = \ee (wrisym), DOUBLE-STRUCK ITALIC SMALL E
+  "\\ComplexI{}": '\u2148' # = \ii (wrisym), DOUBLE-STRUCK ITALIC SMALL I
+  "{\\ComplexI}": '\u2148' # = \ii (wrisym), DOUBLE-STRUCK ITALIC SMALL I
+  "\\ComplexI": '\u2148' # = \ii (wrisym), DOUBLE-STRUCK ITALIC SMALL I
+  "\\ComplexJ{}": '\u2149' # = \jj (wrisym), DOUBLE-STRUCK ITALIC SMALL J
+  "{\\ComplexJ}": '\u2149' # = \jj (wrisym), DOUBLE-STRUCK ITALIC SMALL J
+  "\\ComplexJ": '\u2149' # = \jj (wrisym), DOUBLE-STRUCK ITALIC SMALL J
+  "\\PropertyLine{}": '\u214A' # PROPERTY LINE
+  "{\\PropertyLine}": '\u214A' # PROPERTY LINE
+  "\\PropertyLine": '\u214A' # PROPERTY LINE
+  "\\invamp{}": '\u214B' # # \bindnasrepma (stmaryrd), TURNED AMPERSAND
+  "{\\invamp}": '\u214B' # # \bindnasrepma (stmaryrd), TURNED AMPERSAND
+  "\\invamp": '\u214B' # # \bindnasrepma (stmaryrd), TURNED AMPERSAND
+  "\\textfrac{1}{3}": '\u2153' # VULGAR FRACTION ONE THIRD
+  "\\textfrac{2}{3}": '\u2154' # VULGAR FRACTION TWO THIRDS
+  "\\textfrac{1}{5}": '\u2155' # VULGAR FRACTION ONE FIFTH
+  "\\textfrac{2}{5}": '\u2156' # VULGAR FRACTION TWO FIFTHS
+  "\\textfrac{3}{5}": '\u2157' # VULGAR FRACTION THREE FIFTHS
+  "\\textfrac{4}{5}": '\u2158' # VULGAR FRACTION FOUR FIFTHS
+  "\\textfrac{1}{6}": '\u2159' # VULGAR FRACTION ONE SIXTH
+  "\\textfrac{5}{6}": '\u215A' # VULGAR FRACTION FIVE SIXTHS
+  "\\textfrac{1}{8}": '\u215B' # VULGAR FRACTION ONE EIGHTH
+  "\\textfrac{3}{8}": '\u215C' # VULGAR FRACTION THREE EIGHTHS
+  "\\textfrac{5}{8}": '\u215D' # VULGAR FRACTION FIVE EIGHTHS
+  "\\textfrac{7}{8}": '\u215E' # VULGAR FRACTION SEVEN EIGHTHS
+  "\\leftarrow{}": '\u2190' # LEFTWARDS ARROW
+  "{\\leftarrow}": '\u2190' # LEFTWARDS ARROW
+  "\\leftarrow": '\u2190' # LEFTWARDS ARROW
+  "\\uparrow{}": '\u2191' # UPWARDS ARROW
+  "{\\uparrow}": '\u2191' # UPWARDS ARROW
+  "\\uparrow": '\u2191' # UPWARDS ARROW
+  "\\rightarrow{}": '\u2192' # RIGHTWARDS ARROW
+  "{\\rightarrow}": '\u2192' # RIGHTWARDS ARROW
+  "\\rightarrow": '\u2192' # RIGHTWARDS ARROW
+  "\\downarrow{}": '\u2193' # DOWNWARDS ARROW
+  "{\\downarrow}": '\u2193' # DOWNWARDS ARROW
+  "\\downarrow": '\u2193' # DOWNWARDS ARROW
+  "\\leftrightarrow{}": '\u2194' # LEFT RIGHT ARROW
+  "{\\leftrightarrow}": '\u2194' # LEFT RIGHT ARROW
+  "\\leftrightarrow": '\u2194' # LEFT RIGHT ARROW
+  "\\updownarrow{}": '\u2195' # UP DOWN ARROW
+  "{\\updownarrow}": '\u2195' # UP DOWN ARROW
+  "\\updownarrow": '\u2195' # UP DOWN ARROW
+  "\\nwarrow{}": '\u2196' # NORTH WEST ARROW
+  "{\\nwarrow}": '\u2196' # NORTH WEST ARROW
+  "\\nwarrow": '\u2196' # NORTH WEST ARROW
+  "\\nearrow{}": '\u2197' # NORTH EAST ARROW
+  "{\\nearrow}": '\u2197' # NORTH EAST ARROW
+  "\\nearrow": '\u2197' # NORTH EAST ARROW
+  "\\searrow{}": '\u2198' # SOUTH EAST ARROW
+  "{\\searrow}": '\u2198' # SOUTH EAST ARROW
+  "\\searrow": '\u2198' # SOUTH EAST ARROW
+  "\\swarrow{}": '\u2199' # SOUTH WEST ARROW
+  "{\\swarrow}": '\u2199' # SOUTH WEST ARROW
+  "\\swarrow": '\u2199' # SOUTH WEST ARROW
+  "\\nleftarrow{}": '\u219A' # LEFTWARDS ARROW WITH STROKE
+  "{\\nleftarrow}": '\u219A' # LEFTWARDS ARROW WITH STROKE
+  "\\nleftarrow": '\u219A' # LEFTWARDS ARROW WITH STROKE
+  "\\nrightarrow{}": '\u219B' # RIGHTWARDS ARROW WITH STROKE
+  "{\\nrightarrow}": '\u219B' # RIGHTWARDS ARROW WITH STROKE
+  "\\nrightarrow": '\u219B' # RIGHTWARDS ARROW WITH STROKE
   "\\arrowwaveleft{}": '\u219C'
-  "\\arrowwaveright{}": '\u219C'
+  "\\arrowwaveright{}": '\u219C' # LEFTWARDS WAVE ARROW
   "{\\arrowwaveleft}": '\u219C'
-  "{\\arrowwaveright}": '\u219C'
+  "{\\arrowwaveright}": '\u219C' # LEFTWARDS WAVE ARROW
   "\\arrowwaveleft": '\u219C'
-  "\\arrowwaveright": '\u219C'
-  "\\twoheadleftarrow{}": '\u219E'
-  "{\\twoheadleftarrow}": '\u219E'
-  "\\twoheadleftarrow": '\u219E'
-  "\\twoheaduparrow{}": '\u219F'
-  "{\\twoheaduparrow}": '\u219F'
-  "\\twoheaduparrow": '\u219F'
-  "\\twoheadrightarrow{}": '\u21A0'
-  "{\\twoheadrightarrow}": '\u21A0'
-  "\\twoheadrightarrow": '\u21A0'
-  "\\twoheaddownarrow{}": '\u21A1'
-  "{\\twoheaddownarrow}": '\u21A1'
-  "\\twoheaddownarrow": '\u21A1'
-  "\\leftarrowtail{}": '\u21A2'
-  "{\\leftarrowtail}": '\u21A2'
-  "\\leftarrowtail": '\u21A2'
-  "\\rightarrowtail{}": '\u21A3'
-  "{\\rightarrowtail}": '\u21A3'
-  "\\rightarrowtail": '\u21A3'
-  "\\mapsfrom{}": '\u21A4'
-  "{\\mapsfrom}": '\u21A4'
-  "\\mapsfrom": '\u21A4'
-  "\\MapsUp{}": '\u21A5'
-  "{\\MapsUp}": '\u21A5'
-  "\\MapsUp": '\u21A5'
-  "\\mapsto{}": '\u21A6'
-  "{\\mapsto}": '\u21A6'
-  "\\mapsto": '\u21A6'
-  "\\MapsDown{}": '\u21A7'
-  "{\\MapsDown}": '\u21A7'
-  "\\MapsDown": '\u21A7'
-  "\\updownarrowbar{}": '\u21A8'
-  "{\\updownarrowbar}": '\u21A8'
-  "\\updownarrowbar": '\u21A8'
-  "\\hookleftarrow{}": '\u21A9'
-  "{\\hookleftarrow}": '\u21A9'
-  "\\hookleftarrow": '\u21A9'
-  "\\hookrightarrow{}": '\u21AA'
-  "{\\hookrightarrow}": '\u21AA'
-  "\\hookrightarrow": '\u21AA'
-  "\\looparrowleft{}": '\u21AB'
-  "{\\looparrowleft}": '\u21AB'
-  "\\looparrowleft": '\u21AB'
-  "\\looparrowright{}": '\u21AC'
-  "{\\looparrowright}": '\u21AC'
-  "\\looparrowright": '\u21AC'
-  "\\leftrightsquigarrow{}": '\u21AD'
-  "{\\leftrightsquigarrow}": '\u21AD'
-  "\\leftrightsquigarrow": '\u21AD'
-  "\\nleftrightarrow{}": '\u21AE'
-  "{\\nleftrightarrow}": '\u21AE'
-  "\\nleftrightarrow": '\u21AE'
-  "\\lightning{}": '\u21AF'
-  "{\\lightning}": '\u21AF'
-  "\\lightning": '\u21AF'
-  "\\Lsh{}": '\u21B0'
-  "{\\Lsh}": '\u21B0'
-  "\\Lsh": '\u21B0'
-  "\\Rsh{}": '\u21B1'
-  "{\\Rsh}": '\u21B1'
-  "\\Rsh": '\u21B1'
-  "\\dlsh{}": '\u21B2'
-  "{\\dlsh}": '\u21B2'
-  "\\dlsh": '\u21B2'
-  "\\ElsevierGlyph{21B3}": '\u21B3'
-  "\\linefeed{}": '\u21B4'
-  "{\\linefeed}": '\u21B4'
-  "\\linefeed": '\u21B4'
-  "\\carriagereturn{}": '\u21B5'
-  "{\\carriagereturn}": '\u21B5'
-  "\\carriagereturn": '\u21B5'
-  "\\curvearrowleft{}": '\u21B6'
-  "{\\curvearrowleft}": '\u21B6'
-  "\\curvearrowleft": '\u21B6'
-  "\\curvearrowright{}": '\u21B7'
-  "{\\curvearrowright}": '\u21B7'
-  "\\curvearrowright": '\u21B7'
-  "\\barovernorthwestarrow{}": '\u21B8'
-  "{\\barovernorthwestarrow}": '\u21B8'
-  "\\barovernorthwestarrow": '\u21B8'
-  "\\barleftarrowrightarrowba{}": '\u21B9'
-  "{\\barleftarrowrightarrowba}": '\u21B9'
-  "\\barleftarrowrightarrowba": '\u21B9'
-  "\\circlearrowleft{}": '\u21BA'
-  "{\\circlearrowleft}": '\u21BA'
-  "\\circlearrowleft": '\u21BA'
-  "\\circlearrowright{}": '\u21BB'
-  "{\\circlearrowright}": '\u21BB'
-  "\\circlearrowright": '\u21BB'
-  "\\leftharpoonup{}": '\u21BC'
-  "{\\leftharpoonup}": '\u21BC'
-  "\\leftharpoonup": '\u21BC'
-  "\\leftharpoondown{}": '\u21BD'
-  "{\\leftharpoondown}": '\u21BD'
-  "\\leftharpoondown": '\u21BD'
-  "\\upharpoonright{}": '\u21BE'
-  "{\\upharpoonright}": '\u21BE'
-  "\\upharpoonright": '\u21BE'
-  "\\upharpoonleft{}": '\u21BF'
-  "{\\upharpoonleft}": '\u21BF'
-  "\\upharpoonleft": '\u21BF'
-  "\\rightharpoonup{}": '\u21C0'
-  "{\\rightharpoonup}": '\u21C0'
-  "\\rightharpoonup": '\u21C0'
-  "\\rightharpoondown{}": '\u21C1'
-  "{\\rightharpoondown}": '\u21C1'
-  "\\rightharpoondown": '\u21C1'
-  "\\downharpoonright{}": '\u21C2'
-  "{\\downharpoonright}": '\u21C2'
-  "\\downharpoonright": '\u21C2'
-  "\\downharpoonleft{}": '\u21C3'
-  "{\\downharpoonleft}": '\u21C3'
-  "\\downharpoonleft": '\u21C3'
-  "\\rightleftarrows{}": '\u21C4'
-  "{\\rightleftarrows}": '\u21C4'
-  "\\rightleftarrows": '\u21C4'
-  "\\dblarrowupdown{}": '\u21C5'
-  "{\\dblarrowupdown}": '\u21C5'
-  "\\dblarrowupdown": '\u21C5'
-  "\\leftrightarrows{}": '\u21C6'
-  "{\\leftrightarrows}": '\u21C6'
-  "\\leftrightarrows": '\u21C6'
-  "\\leftleftarrows{}": '\u21C7'
-  "{\\leftleftarrows}": '\u21C7'
-  "\\leftleftarrows": '\u21C7'
-  "\\upuparrows{}": '\u21C8'
-  "{\\upuparrows}": '\u21C8'
-  "\\upuparrows": '\u21C8'
-  "\\rightrightarrows{}": '\u21C9'
-  "{\\rightrightarrows}": '\u21C9'
-  "\\rightrightarrows": '\u21C9'
-  "\\downdownarrows{}": '\u21CA'
-  "{\\downdownarrows}": '\u21CA'
-  "\\downdownarrows": '\u21CA'
-  "\\leftrightharpoons{}": '\u21CB'
-  "{\\leftrightharpoons}": '\u21CB'
-  "\\leftrightharpoons": '\u21CB'
-  "\\rightleftharpoons{}": '\u21CC'
-  "{\\rightleftharpoons}": '\u21CC'
-  "\\rightleftharpoons": '\u21CC'
-  "\\nLeftarrow{}": '\u21CD'
-  "{\\nLeftarrow}": '\u21CD'
-  "\\nLeftarrow": '\u21CD'
-  "\\nLeftrightarrow{}": '\u21CE'
-  "{\\nLeftrightarrow}": '\u21CE'
-  "\\nLeftrightarrow": '\u21CE'
-  "\\nRightarrow{}": '\u21CF'
-  "{\\nRightarrow}": '\u21CF'
-  "\\nRightarrow": '\u21CF'
-  "\\Leftarrow{}": '\u21D0'
-  "{\\Leftarrow}": '\u21D0'
-  "\\Leftarrow": '\u21D0'
-  "\\Uparrow{}": '\u21D1'
-  "{\\Uparrow}": '\u21D1'
-  "\\Uparrow": '\u21D1'
-  "\\Rightarrow{}": '\u21D2'
-  "{\\Rightarrow}": '\u21D2'
-  "\\Rightarrow": '\u21D2'
-  "\\Downarrow{}": '\u21D3'
-  "{\\Downarrow}": '\u21D3'
-  "\\Downarrow": '\u21D3'
-  "\\Leftrightarrow{}": '\u21D4'
-  "{\\Leftrightarrow}": '\u21D4'
-  "\\Leftrightarrow": '\u21D4'
-  "\\Updownarrow{}": '\u21D5'
-  "{\\Updownarrow}": '\u21D5'
-  "\\Updownarrow": '\u21D5'
-  "\\Nwarrow{}": '\u21D6'
-  "{\\Nwarrow}": '\u21D6'
-  "\\Nwarrow": '\u21D6'
-  "\\Nearrow{}": '\u21D7'
-  "{\\Nearrow}": '\u21D7'
-  "\\Nearrow": '\u21D7'
-  "\\Searrow{}": '\u21D8'
-  "{\\Searrow}": '\u21D8'
-  "\\Searrow": '\u21D8'
-  "\\Swarrow{}": '\u21D9'
-  "{\\Swarrow}": '\u21D9'
-  "\\Swarrow": '\u21D9'
-  "\\Lleftarrow{}": '\u21DA'
-  "{\\Lleftarrow}": '\u21DA'
-  "\\Lleftarrow": '\u21DA'
-  "\\Rrightarrow{}": '\u21DB'
-  "{\\Rrightarrow}": '\u21DB'
-  "\\Rrightarrow": '\u21DB'
-  "\\leftsquigarrow{}": '\u21DC'
-  "{\\leftsquigarrow}": '\u21DC'
-  "\\leftsquigarrow": '\u21DC'
-  "\\rightsquigarrow{}": '\u21DD'
-  "{\\rightsquigarrow}": '\u21DD'
-  "\\rightsquigarrow": '\u21DD'
-  "\\nHuparrow{}": '\u21DE'
-  "{\\nHuparrow}": '\u21DE'
-  "\\nHuparrow": '\u21DE'
-  "\\nHdownarrow{}": '\u21DF'
-  "{\\nHdownarrow}": '\u21DF'
-  "\\nHdownarrow": '\u21DF'
-  "\\dashleftarrow{}": '\u21E0'
-  "{\\dashleftarrow}": '\u21E0'
-  "\\dashleftarrow": '\u21E0'
-  "\\updasharrow{}": '\u21E1'
-  "{\\updasharrow}": '\u21E1'
-  "\\updasharrow": '\u21E1'
-  "\\dashrightarrow{}": '\u21E2'
-  "{\\dashrightarrow}": '\u21E2'
-  "\\dashrightarrow": '\u21E2'
-  "\\downdasharrow{}": '\u21E3'
-  "{\\downdasharrow}": '\u21E3'
-  "\\downdasharrow": '\u21E3'
-  "\\LeftArrowBar{}": '\u21E4'
-  "{\\LeftArrowBar}": '\u21E4'
-  "\\LeftArrowBar": '\u21E4'
-  "\\RightArrowBar{}": '\u21E5'
-  "{\\RightArrowBar}": '\u21E5'
-  "\\RightArrowBar": '\u21E5'
-  "\\leftwhitearrow{}": '\u21E6'
-  "{\\leftwhitearrow}": '\u21E6'
-  "\\leftwhitearrow": '\u21E6'
-  "\\upwhitearrow{}": '\u21E7'
-  "{\\upwhitearrow}": '\u21E7'
-  "\\upwhitearrow": '\u21E7'
-  "\\rightwhitearrow{}": '\u21E8'
-  "{\\rightwhitearrow}": '\u21E8'
-  "\\rightwhitearrow": '\u21E8'
-  "\\downwhitearrow{}": '\u21E9'
-  "{\\downwhitearrow}": '\u21E9'
-  "\\downwhitearrow": '\u21E9'
-  "\\whitearrowupfrombar{}": '\u21EA'
-  "{\\whitearrowupfrombar}": '\u21EA'
-  "\\whitearrowupfrombar": '\u21EA'
-  "\\circleonrightarrow{}": '\u21F4'
-  "{\\circleonrightarrow}": '\u21F4'
-  "\\circleonrightarrow": '\u21F4'
-  "\\DownArrowUpArrow{}": '\u21F5'
-  "{\\DownArrowUpArrow}": '\u21F5'
-  "\\DownArrowUpArrow": '\u21F5'
-  "\\rightthreearrows{}": '\u21F6'
-  "{\\rightthreearrows}": '\u21F6'
-  "\\rightthreearrows": '\u21F6'
-  "\\nvleftarrow{}": '\u21F7'
-  "{\\nvleftarrow}": '\u21F7'
-  "\\nvleftarrow": '\u21F7'
-  "\\pfun{}": '\u21F8'
-  "{\\pfun}": '\u21F8'
-  "\\pfun": '\u21F8'
-  "\\nvleftrightarrow{}": '\u21F9'
-  "{\\nvleftrightarrow}": '\u21F9'
-  "\\nvleftrightarrow": '\u21F9'
-  "\\nVleftarrow{}": '\u21FA'
-  "{\\nVleftarrow}": '\u21FA'
-  "\\nVleftarrow": '\u21FA'
-  "\\ffun{}": '\u21FB'
-  "{\\ffun}": '\u21FB'
-  "\\ffun": '\u21FB'
-  "\\nVleftrightarrow{}": '\u21FC'
-  "{\\nVleftrightarrow}": '\u21FC'
-  "\\nVleftrightarrow": '\u21FC'
-  "\\leftarrowtriangle{}": '\u21FD'
-  "{\\leftarrowtriangle}": '\u21FD'
-  "\\leftarrowtriangle": '\u21FD'
-  "\\rightarrowtriangle{}": '\u21FE'
-  "{\\rightarrowtriangle}": '\u21FE'
-  "\\rightarrowtriangle": '\u21FE'
-  "\\leftrightarrowtriangle{}": '\u21FF'
-  "{\\leftrightarrowtriangle}": '\u21FF'
-  "\\leftrightarrowtriangle": '\u21FF'
-  "\\forall{}": '\u2200'
-  "{\\forall}": '\u2200'
-  "\\forall": '\u2200'
-  "\\complement{}": '\u2201'
-  "{\\complement}": '\u2201'
-  "\\complement": '\u2201'
-  "\\partial{}": '\u2202'
-  "{\\partial}": '\u2202'
-  "\\partial": '\u2202'
-  "\\exists{}": '\u2203'
-  "{\\exists}": '\u2203'
-  "\\exists": '\u2203'
-  "\\nexists{}": '\u2204'
-  "{\\nexists}": '\u2204'
-  "\\nexists": '\u2204'
-  "\\varnothing{}": '\u2205'
-  "{\\varnothing}": '\u2205'
-  "\\varnothing": '\u2205'
-  "\\increment{}": '\u2206'
-  "{\\increment}": '\u2206'
-  "\\increment": '\u2206'
-  "\\nabla{}": '\u2207'
-  "{\\nabla}": '\u2207'
-  "\\nabla": '\u2207'
-  "\\in{}": '\u2208'
-  "{\\in}": '\u2208'
-  "\\in": '\u2208'
-  "\\not\\in{}": '\u2209'
-  "{\\not\\in}": '\u2209'
-  "\\not\\in": '\u2209'
-  "\\smallin{}": '\u220A'
-  "{\\smallin}": '\u220A'
-  "\\smallin": '\u220A'
-  "\\ni{}": '\u220B'
-  "{\\ni}": '\u220B'
-  "\\ni": '\u220B'
-  "\\not\\ni{}": '\u220C'
-  "{\\not\\ni}": '\u220C'
-  "\\not\\ni": '\u220C'
-  "\\smallni{}": '\u220D'
-  "{\\smallni}": '\u220D'
-  "\\smallni": '\u220D'
-  "\\QED{}": '\u220E'
-  "{\\QED}": '\u220E'
-  "\\QED": '\u220E'
-  "\\prod{}": '\u220F'
-  "{\\prod}": '\u220F'
-  "\\prod": '\u220F'
-  "\\coprod{}": '\u2210'
-  "{\\coprod}": '\u2210'
-  "\\coprod": '\u2210'
-  "\\sum{}": '\u2211'
-  "{\\sum}": '\u2211'
-  "\\sum": '\u2211'
-  "\\mp{}": '\u2213'
-  "{\\mp}": '\u2213'
-  "\\mp": '\u2213'
-  "\\dotplus{}": '\u2214'
-  "{\\dotplus}": '\u2214'
-  "\\dotplus": '\u2214'
-  "\\slash{}": '\u2215'
-  "{\\slash}": '\u2215'
-  "\\slash": '\u2215'
-  "\\setminus{}": '\u2216'
-  "{\\setminus}": '\u2216'
-  "\\setminus": '\u2216'
-  "{_\\ast}": '\u2217'
-  "\\circ{}": '\u2218'
-  "{\\circ}": '\u2218'
-  "\\circ": '\u2218'
-  "\\bullet{}": '\u2219'
-  "{\\bullet}": '\u2219'
-  "\\bullet": '\u2219'
-  "\\surd{}": '\u221A'
-  "{\\surd}": '\u221A'
-  "\\surd": '\u221A'
-  "\\sqrt[3]": '\u221B'
-  "\\sqrt[4]": '\u221C'
-  "\\propto{}": '\u221D'
-  "{\\propto}": '\u221D'
-  "\\propto": '\u221D'
-  "\\infty{}": '\u221E'
-  "{\\infty}": '\u221E'
-  "\\infty": '\u221E'
-  "\\rightangle{}": '\u221F'
-  "{\\rightangle}": '\u221F'
-  "\\rightangle": '\u221F'
-  "\\angle{}": '\u2220'
-  "{\\angle}": '\u2220'
-  "\\angle": '\u2220'
-  "\\measuredangle{}": '\u2221'
-  "{\\measuredangle}": '\u2221'
-  "\\measuredangle": '\u2221'
-  "\\sphericalangle{}": '\u2222'
-  "{\\sphericalangle}": '\u2222'
-  "\\sphericalangle": '\u2222'
-  "\\mid{}": '\u2223'
-  "{\\mid}": '\u2223'
-  "\\mid": '\u2223'
-  "\\nmid{}": '\u2224'
-  "{\\nmid}": '\u2224'
-  "\\nmid": '\u2224'
-  "\\parallel{}": '\u2225'
-  "{\\parallel}": '\u2225'
-  "\\parallel": '\u2225'
-  "\\nparallel{}": '\u2226'
-  "{\\nparallel}": '\u2226'
-  "\\nparallel": '\u2226'
-  "\\wedge{}": '\u2227'
-  "{\\wedge}": '\u2227'
-  "\\wedge": '\u2227'
-  "\\vee{}": '\u2228'
-  "{\\vee}": '\u2228'
-  "\\vee": '\u2228'
-  "\\cap{}": '\u2229'
-  "{\\cap}": '\u2229'
-  "\\cap": '\u2229'
-  "\\cup{}": '\u222A'
-  "{\\cup}": '\u222A'
-  "\\cup": '\u222A'
-  "\\int{}": '\u222B'
-  "{\\int}": '\u222B'
-  "\\int": '\u222B'
-  "{\\int\\!\\int}": '\u222C'
-  "\\int\\!\\int{}": '\u222C'
-  "\\int\\!\\int": '\u222C'
-  "{\\int\\!\\int\\!\\int}": '\u222D'
-  "\\int\\!\\int\\!\\int{}": '\u222D'
-  "\\int\\!\\int\\!\\int": '\u222D'
-  "\\oint{}": '\u222E'
-  "{\\oint}": '\u222E'
-  "\\oint": '\u222E'
-  "\\surfintegral{}": '\u222F'
-  "{\\surfintegral}": '\u222F'
-  "\\surfintegral": '\u222F'
-  "\\volintegral{}": '\u2230'
-  "{\\volintegral}": '\u2230'
-  "\\volintegral": '\u2230'
-  "\\clwintegral{}": '\u2231'
-  "{\\clwintegral}": '\u2231'
-  "\\clwintegral": '\u2231'
-  "\\ElsevierGlyph{2232}": '\u2232'
-  "\\ElsevierGlyph{2233}": '\u2233'
-  "\\therefore{}": '\u2234'
-  "{\\therefore}": '\u2234'
-  "\\therefore": '\u2234'
-  "\\because{}": '\u2235'
-  "{\\because}": '\u2235'
-  "\\because": '\u2235'
-  ":": '\u2236'
-  "\\Colon{}": '\u2237'
-  "{\\Colon}": '\u2237'
-  "\\Colon": '\u2237'
-  "\\ElsevierGlyph{2238}": '\u2238'
-  "\\eqcolon{}": '\u2239'
-  "{\\eqcolon}": '\u2239'
-  "\\eqcolon": '\u2239'
-  "\\mathbin{{:}\\!\\!{-}\\!\\!{:}}": '\u223A'
-  "\\homothetic{}": '\u223B'
-  "{\\homothetic}": '\u223B'
-  "\\homothetic": '\u223B'
-  "\\sim{}": '\u223C'
-  "{\\sim}": '\u223C'
-  "\\sim": '\u223C'
-  "\\backsim{}": '\u223D'
-  "{\\backsim}": '\u223D'
-  "\\backsim": '\u223D'
-  "\\lazysinv{}": '\u223E'
-  "{\\lazysinv}": '\u223E'
-  "\\lazysinv": '\u223E'
-  "\\AC{}": '\u223F'
-  "{\\AC}": '\u223F'
-  "\\A{C}": '\u223F'
-  "\\AC": '\u223F'
-  "\\wr{}": '\u2240'
-  "{\\wr}": '\u2240'
-  "\\wr": '\u2240'
-  "\\not\\sim{}": '\u2241'
-  "{\\not\\sim}": '\u2241'
-  "\\not\\sim": '\u2241'
-  "\\ElsevierGlyph{2242}": '\u2242'
-  "\\simeq{}": '\u2243'
-  "{\\simeq}": '\u2243'
-  "\\simeq": '\u2243'
-  "\\not\\simeq{}": '\u2244'
-  "{\\not\\simeq}": '\u2244'
-  "\\not\\simeq": '\u2244'
-  "\\cong{}": '\u2245'
-  "{\\cong}": '\u2245'
-  "\\cong": '\u2245'
-  "\\approxnotequal{}": '\u2246'
-  "{\\approxnotequal}": '\u2246'
-  "\\approxnotequal": '\u2246'
-  "\\not\\cong{}": '\u2247'
-  "{\\not\\cong}": '\u2247'
-  "\\not\\cong": '\u2247'
-  "\\approx{}": '\u2248'
-  "{\\approx}": '\u2248'
-  "\\approx": '\u2248'
-  "\\not\\approx{}": '\u2249'
-  "{\\not\\approx}": '\u2249'
-  "\\not\\approx": '\u2249'
-  "\\approxeq{}": '\u224A'
-  "{\\approxeq}": '\u224A'
-  "\\approxeq": '\u224A'
-  "\\tildetrpl{}": '\u224B'
-  "{\\tildetrpl}": '\u224B'
-  "\\tildetrpl": '\u224B'
-  "\\allequal{}": '\u224C'
-  "{\\allequal}": '\u224C'
-  "\\allequal": '\u224C'
-  "\\asymp{}": '\u224D'
-  "{\\asymp}": '\u224D'
-  "\\asymp": '\u224D'
-  "\\Bumpeq{}": '\u224E'
-  "{\\Bumpeq}": '\u224E'
-  "\\Bumpeq": '\u224E'
-  "\\bumpeq{}": '\u224F'
-  "{\\bumpeq}": '\u224F'
-  "\\bumpeq": '\u224F'
-  "\\doteq{}": '\u2250'
-  "{\\doteq}": '\u2250'
-  "\\doteq": '\u2250'
-  "\\doteqdot{}": '\u2251'
-  "{\\doteqdot}": '\u2251'
-  "\\doteqdot": '\u2251'
-  "\\fallingdotseq{}": '\u2252'
-  "{\\fallingdotseq}": '\u2252'
-  "\\fallingdotseq": '\u2252'
-  "\\risingdotseq{}": '\u2253'
-  "{\\risingdotseq}": '\u2253'
-  "\\risingdotseq": '\u2253'
-  ":=": '\u2254'
-  "=:": '\u2255'
-  "\\eqcirc{}": '\u2256'
-  "{\\eqcirc}": '\u2256'
-  "\\eqcirc": '\u2256'
-  "\\circeq{}": '\u2257'
-  "{\\circeq}": '\u2257'
-  "\\circeq": '\u2257'
-  "\\arceq{}": '\u2258'
-  "{\\arceq}": '\u2258'
-  "\\arceq": '\u2258'
-  "\\estimates{}": '\u2259'
-  "{\\estimates}": '\u2259'
-  "\\estimates": '\u2259'
-  "\\ElsevierGlyph{225A}": '\u225A'
-  "\\starequal{}": '\u225B'
-  "{\\starequal}": '\u225B'
-  "\\starequal": '\u225B'
-  "\\triangleq{}": '\u225C'
-  "{\\triangleq}": '\u225C'
-  "\\triangleq": '\u225C'
-  "\\eqdef{}": '\u225D'
-  "{\\eqdef}": '\u225D'
-  "\\eqdef": '\u225D'
-  "\\measeq{}": '\u225E'
-  "{\\measeq}": '\u225E'
-  "\\measeq": '\u225E'
-  "\\ElsevierGlyph{225F}": '\u225F'
-  "\\not =": '\u2260'
-  "\\equiv{}": '\u2261'
-  "{\\equiv}": '\u2261'
-  "\\equiv": '\u2261'
-  "\\not\\equiv{}": '\u2262'
-  "{\\not\\equiv}": '\u2262'
-  "\\not\\equiv": '\u2262'
-  "\\Equiv{}": '\u2263'
-  "{\\Equiv}": '\u2263'
-  "\\Equiv": '\u2263'
-  "\\leq{}": '\u2264'
-  "{\\leq}": '\u2264'
-  "\\leq": '\u2264'
-  "\\geq{}": '\u2265'
-  "{\\geq}": '\u2265'
-  "\\geq": '\u2265'
-  "\\leqq{}": '\u2266'
-  "{\\leqq}": '\u2266'
-  "\\leqq": '\u2266'
-  "\\geqq{}": '\u2267'
-  "{\\geqq}": '\u2267'
-  "\\geqq": '\u2267'
-  "\\lneqq{}": '\u2268'
-  "{\\lneqq}": '\u2268'
-  "\\lneqq": '\u2268'
-  "\\gneqq{}": '\u2269'
-  "{\\gneqq}": '\u2269'
-  "\\gneqq": '\u2269'
-  "\\ll{}": '\u226A'
-  "{\\ll}": '\u226A'
-  "\\ll": '\u226A'
-  "\\gg{}": '\u226B'
-  "{\\gg}": '\u226B'
-  "\\gg": '\u226B'
-  "\\between{}": '\u226C'
-  "{\\between}": '\u226C'
-  "\\between": '\u226C'
-  "{\\not\\kern-0.3em\\times}": '\u226D'
-  "\\not\\kern-0.3em\\times{}": '\u226D'
-  "\\not\\kern-0.3em\\times": '\u226D'
-  "\\not<": '\u226E'
-  "\\not>": '\u226F'
-  "\\not\\leq{}": '\u2270'
-  "{\\not\\leq}": '\u2270'
-  "\\not\\leq": '\u2270'
-  "\\not\\geq{}": '\u2271'
-  "{\\not\\geq}": '\u2271'
-  "\\not\\geq": '\u2271'
-  "\\lessequivlnt{}": '\u2272'
-  "{\\lessequivlnt}": '\u2272'
-  "\\lessequivlnt": '\u2272'
-  "\\greaterequivlnt{}": '\u2273'
-  "{\\greaterequivlnt}": '\u2273'
-  "\\greaterequivlnt": '\u2273'
-  "\\ElsevierGlyph{2274}": '\u2274'
-  "\\ElsevierGlyph{2275}": '\u2275'
-  "\\lessgtr{}": '\u2276'
-  "{\\lessgtr}": '\u2276'
-  "\\lessgtr": '\u2276'
-  "\\gtrless{}": '\u2277'
-  "{\\gtrless}": '\u2277'
-  "\\gtrless": '\u2277'
-  "\\notlessgreater{}": '\u2278'
-  "{\\notlessgreater}": '\u2278'
-  "\\notlessgreater": '\u2278'
-  "\\notgreaterless{}": '\u2279'
-  "{\\notgreaterless}": '\u2279'
-  "\\notgreaterless": '\u2279'
-  "\\prec{}": '\u227A'
-  "{\\prec}": '\u227A'
-  "\\prec": '\u227A'
-  "\\succ{}": '\u227B'
-  "{\\succ}": '\u227B'
-  "\\succ": '\u227B'
-  "\\preccurlyeq{}": '\u227C'
-  "{\\preccurlyeq}": '\u227C'
-  "\\preccurlyeq": '\u227C'
-  "\\succcurlyeq{}": '\u227D'
-  "{\\succcurlyeq}": '\u227D'
-  "\\succcurlyeq": '\u227D'
-  "\\precapprox{}": '\u227E'
-  "{\\precapprox}": '\u227E'
-  "\\precapprox": '\u227E'
-  "\\succapprox{}": '\u227F'
-  "{\\succapprox}": '\u227F'
-  "\\succapprox": '\u227F'
-  "\\not\\prec{}": '\u2280'
-  "{\\not\\prec}": '\u2280'
-  "\\not\\prec": '\u2280'
-  "\\not\\succ{}": '\u2281'
-  "{\\not\\succ}": '\u2281'
-  "\\not\\succ": '\u2281'
-  "\\subset{}": '\u2282'
-  "{\\subset}": '\u2282'
-  "\\subset": '\u2282'
-  "\\supset{}": '\u2283'
-  "{\\supset}": '\u2283'
-  "\\supset": '\u2283'
-  "\\not\\subset{}": '\u2284'
-  "{\\not\\subset}": '\u2284'
-  "\\not\\subset": '\u2284'
-  "\\not\\supset{}": '\u2285'
-  "{\\not\\supset}": '\u2285'
-  "\\not\\supset": '\u2285'
-  "\\subseteq{}": '\u2286'
-  "{\\subseteq}": '\u2286'
-  "\\subseteq": '\u2286'
-  "\\supseteq{}": '\u2287'
-  "{\\supseteq}": '\u2287'
-  "\\supseteq": '\u2287'
-  "\\not\\subseteq{}": '\u2288'
-  "{\\not\\subseteq}": '\u2288'
-  "\\not\\subseteq": '\u2288'
-  "\\not\\supseteq{}": '\u2289'
-  "{\\not\\supseteq}": '\u2289'
-  "\\not\\supseteq": '\u2289'
-  "\\subsetneq{}": '\u228A'
-  "{\\subsetneq}": '\u228A'
-  "\\subsetneq": '\u228A'
-  "\\supsetneq{}": '\u228B'
-  "{\\supsetneq}": '\u228B'
-  "\\supsetneq": '\u228B'
-  "\\cupleftarrow{}": '\u228C'
-  "{\\cupleftarrow}": '\u228C'
-  "\\cupleftarrow": '\u228C'
-  "\\cupdot{}": '\u228D'
-  "{\\cupdot}": '\u228D'
-  "\\cupdot": '\u228D'
-  "\\uplus{}": '\u228E'
-  "{\\uplus}": '\u228E'
-  "\\uplus": '\u228E'
-  "\\sqsubset{}": '\u228F'
-  "{\\sqsubset}": '\u228F'
-  "\\sqsubset": '\u228F'
-  "\\sqsupset{}": '\u2290'
-  "{\\sqsupset}": '\u2290'
-  "\\sqsupset": '\u2290'
-  "\\sqsubseteq{}": '\u2291'
-  "{\\sqsubseteq}": '\u2291'
-  "\\sqsubseteq": '\u2291'
-  "\\sqsupseteq{}": '\u2292'
-  "{\\sqsupseteq}": '\u2292'
-  "\\sqsupseteq": '\u2292'
-  "\\sqcap{}": '\u2293'
-  "{\\sqcap}": '\u2293'
-  "\\sqcap": '\u2293'
-  "\\sqcup{}": '\u2294'
-  "{\\sqcup}": '\u2294'
-  "\\sqcup": '\u2294'
-  "\\oplus{}": '\u2295'
-  "{\\oplus}": '\u2295'
-  "\\oplus": '\u2295'
-  "\\ominus{}": '\u2296'
-  "{\\ominus}": '\u2296'
-  "\\ominus": '\u2296'
-  "\\otimes{}": '\u2297'
-  "{\\otimes}": '\u2297'
-  "\\otimes": '\u2297'
-  "\\oslash{}": '\u2298'
-  "{\\oslash}": '\u2298'
-  "\\oslash": '\u2298'
-  "\\odot{}": '\u2299'
-  "{\\odot}": '\u2299'
-  "\\odot": '\u2299'
-  "\\circledcirc{}": '\u229A'
-  "{\\circledcirc}": '\u229A'
-  "\\circledcirc": '\u229A'
-  "\\circledast{}": '\u229B'
-  "{\\circledast}": '\u229B'
-  "\\circledast": '\u229B'
-  "\\circledequal{}": '\u229C'
-  "{\\circledequal}": '\u229C'
-  "\\circledequal": '\u229C'
-  "\\circleddash{}": '\u229D'
-  "{\\circleddash}": '\u229D'
-  "\\circleddash": '\u229D'
-  "\\boxplus{}": '\u229E'
-  "{\\boxplus}": '\u229E'
-  "\\boxplus": '\u229E'
-  "\\boxminus{}": '\u229F'
-  "{\\boxminus}": '\u229F'
-  "\\boxminus": '\u229F'
-  "\\boxtimes{}": '\u22A0'
-  "{\\boxtimes}": '\u22A0'
-  "\\boxtimes": '\u22A0'
-  "\\boxdot{}": '\u22A1'
-  "{\\boxdot}": '\u22A1'
-  "\\boxdot": '\u22A1'
-  "\\vdash{}": '\u22A2'
-  "{\\vdash}": '\u22A2'
-  "\\vdash": '\u22A2'
-  "\\dashv{}": '\u22A3'
-  "{\\dashv}": '\u22A3'
-  "\\dashv": '\u22A3'
-  "\\top{}": '\u22A4'
-  "{\\top}": '\u22A4'
-  "\\top": '\u22A4'
-  "\\perp{}": '\u22A5'
-  "{\\perp}": '\u22A5'
-  "\\perp": '\u22A5'
-  "\\assert{}": '\u22A6'
-  "{\\assert}": '\u22A6'
-  "\\assert": '\u22A6'
-  "\\truestate{}": '\u22A7'
-  "{\\truestate}": '\u22A7'
-  "\\truestate": '\u22A7'
-  "\\forcesextra{}": '\u22A8'
-  "{\\forcesextra}": '\u22A8'
-  "\\forcesextra": '\u22A8'
-  "\\Vdash{}": '\u22A9'
-  "{\\Vdash}": '\u22A9'
-  "\\Vdash": '\u22A9'
-  "\\Vvdash{}": '\u22AA'
-  "{\\Vvdash}": '\u22AA'
-  "\\Vvdash": '\u22AA'
-  "\\VDash{}": '\u22AB'
-  "{\\VDash}": '\u22AB'
-  "\\VDash": '\u22AB'
-  "\\nvdash{}": '\u22AC'
-  "{\\nvdash}": '\u22AC'
-  "\\nvdash": '\u22AC'
-  "\\nvDash{}": '\u22AD'
-  "{\\nvDash}": '\u22AD'
-  "\\nvDash": '\u22AD'
-  "\\nVdash{}": '\u22AE'
-  "{\\nVdash}": '\u22AE'
-  "\\nVdash": '\u22AE'
-  "\\nVDash{}": '\u22AF'
-  "{\\nVDash}": '\u22AF'
-  "\\nVDash": '\u22AF'
-  "\\prurel{}": '\u22B0'
-  "{\\prurel}": '\u22B0'
-  "\\prurel": '\u22B0'
-  "\\scurel{}": '\u22B1'
-  "{\\scurel}": '\u22B1'
-  "\\scurel": '\u22B1'
-  "\\vartriangleleft{}": '\u22B2'
-  "{\\vartriangleleft}": '\u22B2'
-  "\\vartriangleleft": '\u22B2'
-  "\\vartriangleright{}": '\u22B3'
-  "{\\vartriangleright}": '\u22B3'
-  "\\vartriangleright": '\u22B3'
-  "\\trianglelefteq{}": '\u22B4'
-  "{\\trianglelefteq}": '\u22B4'
-  "\\trianglelefteq": '\u22B4'
-  "\\trianglerighteq{}": '\u22B5'
-  "{\\trianglerighteq}": '\u22B5'
-  "\\trianglerighteq": '\u22B5'
-  "\\original{}": '\u22B6'
-  "{\\original}": '\u22B6'
-  "\\original": '\u22B6'
-  "\\image{}": '\u22B7'
-  "{\\image}": '\u22B7'
-  "\\image": '\u22B7'
-  "\\multimap{}": '\u22B8'
-  "{\\multimap}": '\u22B8'
-  "\\multimap": '\u22B8'
-  "\\hermitconjmatrix{}": '\u22B9'
-  "{\\hermitconjmatrix}": '\u22B9'
-  "\\hermitconjmatrix": '\u22B9'
-  "\\intercal{}": '\u22BA'
-  "{\\intercal}": '\u22BA'
-  "\\intercal": '\u22BA'
-  "\\veebar{}": '\u22BB'
-  "{\\veebar}": '\u22BB'
-  "\\veebar": '\u22BB'
-  "\\barwedge{}": '\u22BC'
-  "{\\barwedge}": '\u22BC'
-  "\\barwedge": '\u22BC'
-  "\\barvee{}": '\u22BD'
-  "{\\barvee}": '\u22BD'
-  "\\barvee": '\u22BD'
-  "\\rightanglearc{}": '\u22BE'
-  "{\\rightanglearc}": '\u22BE'
-  "\\rightanglearc": '\u22BE'
-  "\\varlrtriangle{}": '\u22BF'
-  "{\\varlrtriangle}": '\u22BF'
-  "\\varlrtriangle": '\u22BF'
-  "\\ElsevierGlyph{22C0}": '\u22C0'
-  "\\ElsevierGlyph{22C1}": '\u22C1'
-  "\\bigcap{}": '\u22C2'
-  "{\\bigcap}": '\u22C2'
-  "\\bigcap": '\u22C2'
-  "\\bigcup{}": '\u22C3'
-  "{\\bigcup}": '\u22C3'
-  "\\bigcup": '\u22C3'
-  "\\diamond{}": '\u22C4'
-  "{\\diamond}": '\u22C4'
-  "\\diamond": '\u22C4'
-  "\\star{}": '\u22C6'
-  "{\\star}": '\u22C6'
-  "\\star": '\u22C6'
-  "\\divideontimes{}": '\u22C7'
-  "{\\divideontimes}": '\u22C7'
-  "\\divideontimes": '\u22C7'
-  "\\bowtie{}": '\u22C8'
-  "{\\bowtie}": '\u22C8'
-  "\\bowtie": '\u22C8'
-  "\\ltimes{}": '\u22C9'
-  "{\\ltimes}": '\u22C9'
-  "\\ltimes": '\u22C9'
-  "\\rtimes{}": '\u22CA'
-  "{\\rtimes}": '\u22CA'
-  "\\rtimes": '\u22CA'
-  "\\leftthreetimes{}": '\u22CB'
-  "{\\leftthreetimes}": '\u22CB'
-  "\\leftthreetimes": '\u22CB'
-  "\\rightthreetimes{}": '\u22CC'
-  "{\\rightthreetimes}": '\u22CC'
-  "\\rightthreetimes": '\u22CC'
-  "\\backsimeq{}": '\u22CD'
-  "{\\backsimeq}": '\u22CD'
-  "\\backsimeq": '\u22CD'
-  "\\curlyvee{}": '\u22CE'
-  "{\\curlyvee}": '\u22CE'
-  "\\curlyvee": '\u22CE'
-  "\\curlywedge{}": '\u22CF'
-  "{\\curlywedge}": '\u22CF'
-  "\\curlywedge": '\u22CF'
-  "\\Subset{}": '\u22D0'
-  "{\\Subset}": '\u22D0'
-  "\\Subset": '\u22D0'
-  "\\Supset{}": '\u22D1'
-  "{\\Supset}": '\u22D1'
-  "\\Supset": '\u22D1'
-  "\\Cap{}": '\u22D2'
-  "{\\Cap}": '\u22D2'
-  "\\Cap": '\u22D2'
-  "\\Cup{}": '\u22D3'
-  "{\\Cup}": '\u22D3'
-  "\\Cup": '\u22D3'
-  "\\pitchfork{}": '\u22D4'
-  "{\\pitchfork}": '\u22D4'
-  "\\pitchfork": '\u22D4'
-  "\\hash{}": '\u22D5'
-  "{\\hash}": '\u22D5'
-  "\\hash": '\u22D5'
-  "\\lessdot{}": '\u22D6'
-  "{\\lessdot}": '\u22D6'
-  "\\lessdot": '\u22D6'
-  "\\gtrdot{}": '\u22D7'
-  "{\\gtrdot}": '\u22D7'
-  "\\gtrdot": '\u22D7'
-  "\\verymuchless{}": '\u22D8'
-  "{\\verymuchless}": '\u22D8'
-  "\\verymuchless": '\u22D8'
-  "\\verymuchgreater{}": '\u22D9'
-  "{\\verymuchgreater}": '\u22D9'
-  "\\verymuchgreater": '\u22D9'
-  "\\lesseqgtr{}": '\u22DA'
-  "{\\lesseqgtr}": '\u22DA'
-  "\\lesseqgtr": '\u22DA'
-  "\\gtreqless{}": '\u22DB'
-  "{\\gtreqless}": '\u22DB'
-  "\\gtreqless": '\u22DB'
-  "\\eqless{}": '\u22DC'
-  "{\\eqless}": '\u22DC'
-  "\\eqless": '\u22DC'
-  "\\eqgtr{}": '\u22DD'
-  "{\\eqgtr}": '\u22DD'
-  "\\eqgtr": '\u22DD'
-  "\\curlyeqprec{}": '\u22DE'
-  "{\\curlyeqprec}": '\u22DE'
-  "\\curlyeqprec": '\u22DE'
-  "\\curlyeqsucc{}": '\u22DF'
-  "{\\curlyeqsucc}": '\u22DF'
-  "\\curlyeqsucc": '\u22DF'
-  "\\npreceq{}": '\u22E0'
-  "{\\npreceq}": '\u22E0'
-  "\\npreceq": '\u22E0'
-  "\\nsucceq{}": '\u22E1'
-  "{\\nsucceq}": '\u22E1'
-  "\\nsucceq": '\u22E1'
-  "\\not\\sqsubseteq{}": '\u22E2'
-  "{\\not\\sqsubseteq}": '\u22E2'
-  "\\not\\sqsubseteq": '\u22E2'
-  "\\not\\sqsupseteq{}": '\u22E3'
-  "{\\not\\sqsupseteq}": '\u22E3'
-  "\\not\\sqsupseteq": '\u22E3'
-  "\\sqsubsetneq{}": '\u22E4'
-  "{\\sqsubsetneq}": '\u22E4'
-  "\\sqsubsetneq": '\u22E4'
-  "\\Elzsqspne{}": '\u22E5'
-  "{\\Elzsqspne}": '\u22E5'
-  "\\Elzsqspne": '\u22E5'
-  "\\lnsim{}": '\u22E6'
-  "{\\lnsim}": '\u22E6'
-  "\\lnsim": '\u22E6'
-  "\\gnsim{}": '\u22E7'
-  "{\\gnsim}": '\u22E7'
-  "\\gnsim": '\u22E7'
-  "\\precedesnotsimilar{}": '\u22E8'
-  "{\\precedesnotsimilar}": '\u22E8'
-  "\\precedesnotsimilar": '\u22E8'
-  "\\succnsim{}": '\u22E9'
-  "{\\succnsim}": '\u22E9'
-  "\\succnsim": '\u22E9'
-  "\\ntriangleleft{}": '\u22EA'
-  "{\\ntriangleleft}": '\u22EA'
-  "\\ntriangleleft": '\u22EA'
-  "\\ntriangleright{}": '\u22EB'
-  "{\\ntriangleright}": '\u22EB'
-  "\\ntriangleright": '\u22EB'
-  "\\ntrianglelefteq{}": '\u22EC'
-  "{\\ntrianglelefteq}": '\u22EC'
-  "\\ntrianglelefteq": '\u22EC'
-  "\\ntrianglerighteq{}": '\u22ED'
-  "{\\ntrianglerighteq}": '\u22ED'
-  "\\ntrianglerighteq": '\u22ED'
-  "\\vdots{}": '\u22EE'
-  "{\\vdots}": '\u22EE'
-  "\\vdots": '\u22EE'
-  "\\cdots{}": '\u22EF'
-  "{\\cdots}": '\u22EF'
-  "\\cdots": '\u22EF'
-  "\\upslopeellipsis{}": '\u22F0'
-  "{\\upslopeellipsis}": '\u22F0'
-  "\\upslopeellipsis": '\u22F0'
-  "\\downslopeellipsis{}": '\u22F1'
-  "{\\downslopeellipsis}": '\u22F1'
-  "\\downslopeellipsis": '\u22F1'
-  "\\disin{}": '\u22F2'
-  "{\\disin}": '\u22F2'
-  "\\disin": '\u22F2'
-  "\\varisins{}": '\u22F3'
-  "{\\varisins}": '\u22F3'
-  "\\varisins": '\u22F3'
-  "\\isins{}": '\u22F4'
-  "{\\isins}": '\u22F4'
-  "\\isins": '\u22F4'
-  "\\isindot{}": '\u22F5'
-  "{\\isindot}": '\u22F5'
-  "\\isindot": '\u22F5'
-  "\\barin{}": '\u22F6'
-  "{\\barin}": '\u22F6'
-  "\\barin": '\u22F6'
-  "\\isinobar{}": '\u22F7'
-  "{\\isinobar}": '\u22F7'
-  "\\isinobar": '\u22F7'
-  "\\isinvb{}": '\u22F8'
-  "{\\isinvb}": '\u22F8'
-  "\\isinvb": '\u22F8'
-  "\\isinE{}": '\u22F9'
-  "{\\isinE}": '\u22F9'
-  "\\isinE": '\u22F9'
-  "\\nisd{}": '\u22FA'
-  "{\\nisd}": '\u22FA'
-  "\\nisd": '\u22FA'
-  "\\varnis{}": '\u22FB'
-  "{\\varnis}": '\u22FB'
-  "\\varnis": '\u22FB'
-  "\\nis{}": '\u22FC'
-  "{\\nis}": '\u22FC'
-  "\\nis": '\u22FC'
-  "\\varniobar{}": '\u22FD'
-  "{\\varniobar}": '\u22FD'
-  "\\varniobar": '\u22FD'
-  "\\niobar{}": '\u22FE'
-  "{\\niobar}": '\u22FE'
-  "\\niobar": '\u22FE'
-  "\\bagmember{}": '\u22FF'
-  "{\\bagmember}": '\u22FF'
-  "\\bagmember": '\u22FF'
-  "\\diameter{}": '\u2300'
-  "{\\diameter}": '\u2300'
-  "\\diameter": '\u2300'
-  "\\house{}": '\u2302'
-  "{\\house}": '\u2302'
-  "\\house": '\u2302'
-  "\\perspcorrespond{}": '\u2306'
-  "{\\perspcorrespond}": '\u2306'
-  "\\perspcorrespond": '\u2306'
-  "\\lceil{}": '\u2308'
-  "{\\lceil}": '\u2308'
-  "\\lceil": '\u2308'
-  "\\rceil{}": '\u2309'
-  "{\\rceil}": '\u2309'
-  "\\rceil": '\u2309'
-  "\\lfloor{}": '\u230A'
-  "{\\lfloor}": '\u230A'
-  "\\lfloor": '\u230A'
-  "\\rfloor{}": '\u230B'
-  "{\\rfloor}": '\u230B'
-  "\\rfloor": '\u230B'
-  "\\invneg{}": '\u2310'
-  "{\\invneg}": '\u2310'
-  "\\invneg": '\u2310'
-  "\\wasylozenge{}": '\u2311'
-  "{\\wasylozenge}": '\u2311'
-  "\\wasylozenge": '\u2311'
-  "\\profline{}": '\u2312'
-  "{\\profline}": '\u2312'
-  "\\profline": '\u2312'
-  "\\profsurf{}": '\u2313'
-  "{\\profsurf}": '\u2313'
-  "\\profsurf": '\u2313'
-  "\\recorder{}": '\u2315'
-  "{\\recorder}": '\u2315'
-  "\\recorder": '\u2315'
-  "{\\mathchar\"2208}": '\u2316'
-  "\\mathchar\"2208{}": '\u2316'
-  "\\mathchar\"2208": '\u2316'
-  "\\viewdata{}": '\u2317'
-  "{\\viewdata}": '\u2317'
-  "\\viewdata": '\u2317'
-  "\\turnednot{}": '\u2319'
-  "{\\turnednot}": '\u2319'
-  "\\turnednot": '\u2319'
-  "\\ulcorner{}": '\u231C'
-  "{\\ulcorner}": '\u231C'
-  "\\ulcorner": '\u231C'
-  "\\urcorner{}": '\u231D'
-  "{\\urcorner}": '\u231D'
-  "\\urcorner": '\u231D'
-  "\\llcorner{}": '\u231E'
-  "{\\llcorner}": '\u231E'
-  "\\llcorner": '\u231E'
-  "\\lrcorner{}": '\u231F'
-  "{\\lrcorner}": '\u231F'
-  "\\lrcorner": '\u231F'
-  "\\inttop{}": '\u2320'
-  "{\\inttop}": '\u2320'
-  "\\inttop": '\u2320'
-  "\\intbottom{}": '\u2321'
-  "{\\intbottom}": '\u2321'
-  "\\intbottom": '\u2321'
-  "\\frown{}": '\u2322'
-  "{\\frown}": '\u2322'
-  "\\frown": '\u2322'
-  "\\smile{}": '\u2323'
-  "{\\smile}": '\u2323'
-  "\\smile": '\u2323'
-  "\\langle{}": '\u2329'
-  "{\\langle}": '\u2329'
-  "\\langle": '\u2329'
-  "\\rangle{}": '\u232A'
-  "{\\rangle}": '\u232A'
-  "\\rangle": '\u232A'
-  "\\varhexagonlrbonds{}": '\u232C'
-  "{\\varhexagonlrbonds}": '\u232C'
-  "\\varhexagonlrbonds": '\u232C'
-  "\\conictaper{}": '\u2332'
-  "{\\conictaper}": '\u2332'
-  "\\conictaper": '\u2332'
-  "\\topbot{}": '\u2336'
-  "{\\topbot}": '\u2336'
-  "\\topbot": '\u2336'
-  "\\APLinv{}": '\u2339'
-  "{\\APLinv}": '\u2339'
-  "\\APLinv": '\u2339'
-  "\\ElsevierGlyph{E838}": '\u233D'
-  "\\notslash{}": '\u233F'
-  "{\\notslash}": '\u233F'
-  "\\notslash": '\u233F'
-  "\\notbackslash{}": '\u2340'
-  "{\\notbackslash}": '\u2340'
-  "\\notbackslash": '\u2340'
-  "\\APLleftarrowbox{}": '\u2347'
-  "{\\APLleftarrowbox}": '\u2347'
-  "\\APLleftarrowbox": '\u2347'
-  "\\APLrightarrowbox{}": '\u2348'
-  "{\\APLrightarrowbox}": '\u2348'
-  "\\APLrightarrowbox": '\u2348'
-  "\\APLuparrowbox{}": '\u2350'
-  "{\\APLuparrowbox}": '\u2350'
-  "\\APLuparrowbox": '\u2350'
-  "\\APLboxupcaret{}": '\u2353'
-  "{\\APLboxupcaret}": '\u2353'
-  "\\APLboxupcaret": '\u2353'
-  "\\APLdownarrowbox{}": '\u2357'
-  "{\\APLdownarrowbox}": '\u2357'
-  "\\APLdownarrowbox": '\u2357'
-  "\\APLcomment{}": '\u235D'
-  "{\\APLcomment}": '\u235D'
-  "\\APLcomment": '\u235D'
-  "\\APLinput{}": '\u235E'
-  "{\\APLinput}": '\u235E'
-  "\\APLinput": '\u235E'
-  "\\APLlog{}": '\u235F'
-  "{\\APLlog}": '\u235F'
-  "\\APLlog": '\u235F'
-  "\\APLboxquestion{}": '\u2370'
-  "{\\APLboxquestion}": '\u2370'
-  "\\APLboxquestion": '\u2370'
-  "\\rangledownzigzagarrow{}": '\u237C'
-  "{\\rangledownzigzagarrow}": '\u237C'
-  "\\rangledownzigzagarrow": '\u237C'
-  "\\hexagon{}": '\u2394'
-  "{\\hexagon}": '\u2394'
-  "\\hexagon": '\u2394'
-  "\\lparenuend{}": '\u239B'
-  "{\\lparenuend}": '\u239B'
-  "\\lparenuend": '\u239B'
-  "\\lparenextender{}": '\u239C'
-  "{\\lparenextender}": '\u239C'
-  "\\lparenextender": '\u239C'
-  "\\lparenlend{}": '\u239D'
-  "{\\lparenlend}": '\u239D'
-  "\\lparenlend": '\u239D'
-  "\\rparenuend{}": '\u239E'
-  "{\\rparenuend}": '\u239E'
-  "\\rparenuend": '\u239E'
-  "\\rparenextender{}": '\u239F'
-  "{\\rparenextender}": '\u239F'
-  "\\rparenextender": '\u239F'
-  "\\rparenlend{}": '\u23A0'
-  "{\\rparenlend}": '\u23A0'
-  "\\rparenlend": '\u23A0'
-  "\\lbrackuend{}": '\u23A1'
-  "{\\lbrackuend}": '\u23A1'
-  "\\lbrackuend": '\u23A1'
-  "\\lbrackextender{}": '\u23A2'
-  "{\\lbrackextender}": '\u23A2'
-  "\\lbrackextender": '\u23A2'
-  "\\Elzdlcorn{}": '\u23A3'
-  "{\\Elzdlcorn}": '\u23A3'
-  "\\Elzdlcorn": '\u23A3'
-  "\\rbrackuend{}": '\u23A4'
-  "{\\rbrackuend}": '\u23A4'
-  "\\rbrackuend": '\u23A4'
-  "\\rbrackextender{}": '\u23A5'
-  "{\\rbrackextender}": '\u23A5'
-  "\\rbrackextender": '\u23A5'
-  "\\rbracklend{}": '\u23A6'
-  "{\\rbracklend}": '\u23A6'
-  "\\rbracklend": '\u23A6'
-  "\\lbraceuend{}": '\u23A7'
-  "{\\lbraceuend}": '\u23A7'
-  "\\lbraceuend": '\u23A7'
-  "\\lbracemid{}": '\u23A8'
-  "{\\lbracemid}": '\u23A8'
-  "\\lbracemid": '\u23A8'
-  "\\lbracelend{}": '\u23A9'
-  "{\\lbracelend}": '\u23A9'
-  "\\lbracelend": '\u23A9'
-  "\\vbraceextender{}": '\u23AA'
-  "{\\vbraceextender}": '\u23AA'
-  "\\vbraceextender": '\u23AA'
-  "\\rbraceuend{}": '\u23AB'
-  "{\\rbraceuend}": '\u23AB'
-  "\\rbraceuend": '\u23AB'
-  "\\rbracemid{}": '\u23AC'
-  "{\\rbracemid}": '\u23AC'
-  "\\rbracemid": '\u23AC'
-  "\\rbracelend{}": '\u23AD'
-  "{\\rbracelend}": '\u23AD'
-  "\\rbracelend": '\u23AD'
-  "\\intextender{}": '\u23AE'
-  "{\\intextender}": '\u23AE'
-  "\\intextender": '\u23AE'
-  "\\harrowextender{}": '\u23AF'
-  "{\\harrowextender}": '\u23AF'
-  "\\harrowextender": '\u23AF'
-  "\\lmoustache{}": '\u23B0'
-  "{\\lmoustache}": '\u23B0'
-  "\\lmoustache": '\u23B0'
-  "\\rmoustache{}": '\u23B1'
-  "{\\rmoustache}": '\u23B1'
-  "\\rmoustache": '\u23B1'
-  "\\sumtop{}": '\u23B2'
-  "{\\sumtop}": '\u23B2'
-  "\\sumtop": '\u23B2'
-  "\\sumbottom{}": '\u23B3'
-  "{\\sumbottom}": '\u23B3'
-  "\\sumbottom": '\u23B3'
-  "\\overbracket{}": '\u23B4'
-  "{\\overbracket}": '\u23B4'
-  "\\overbracket": '\u23B4'
-  "\\underbracket{}": '\u23B5'
-  "{\\underbracket}": '\u23B5'
-  "\\underbracket": '\u23B5'
-  "\\bbrktbrk{}": '\u23B6'
-  "{\\bbrktbrk}": '\u23B6'
-  "\\bbrktbrk": '\u23B6'
-  "\\sqrtbottom{}": '\u23B7'
-  "{\\sqrtbottom}": '\u23B7'
-  "\\sqrtbottom": '\u23B7'
-  "\\lvboxline{}": '\u23B8'
-  "{\\lvboxline}": '\u23B8'
-  "\\lvboxline": '\u23B8'
-  "\\rvboxline{}": '\u23B9'
-  "{\\rvboxline}": '\u23B9'
-  "\\rvboxline": '\u23B9'
-  "\\varcarriagereturn{}": '\u23CE'
-  "{\\varcarriagereturn}": '\u23CE'
-  "\\varcarriagereturn": '\u23CE'
-  "\\overparen{}": '\u23DC'
-  "{\\overparen}": '\u23DC'
-  "\\overparen": '\u23DC'
-  "\\underparen{}": '\u23DD'
-  "{\\underparen}": '\u23DD'
-  "\\underparen": '\u23DD'
-  "\\overbrace{}": '\u23DE'
-  "{\\overbrace}": '\u23DE'
-  "\\overbrace": '\u23DE'
-  "\\underbrace{}": '\u23DF'
-  "{\\underbrace}": '\u23DF'
-  "\\underbrace": '\u23DF'
-  "\\obrbrak{}": '\u23E0'
-  "{\\obrbrak}": '\u23E0'
-  "\\obrbrak": '\u23E0'
-  "\\ubrbrak{}": '\u23E1'
-  "{\\ubrbrak}": '\u23E1'
-  "\\ubrbrak": '\u23E1'
-  "\\trapezium{}": '\u23E2'
-  "{\\trapezium}": '\u23E2'
-  "\\trapezium": '\u23E2'
-  "\\benzenr{}": '\u23E3'
-  "{\\benzenr}": '\u23E3'
-  "\\benzenr": '\u23E3'
-  "\\strns{}": '\u23E4'
-  "{\\strns}": '\u23E4'
-  "\\strns": '\u23E4'
-  "\\fltns{}": '\u23E5'
-  "{\\fltns}": '\u23E5'
-  "\\fltns": '\u23E5'
-  "\\accurrent{}": '\u23E6'
-  "{\\accurrent}": '\u23E6'
-  "\\accurrent": '\u23E6'
-  "\\elinters{}": '\u23E7'
-  "{\\elinters}": '\u23E7'
-  "\\elinters": '\u23E7'
-  "\\textvisiblespace{}": '\u2423'
-  "{\\textvisiblespace}": '\u2423'
-  "\\textvisiblespace": '\u2423'
-  "\\ding{172}": '\u2460'
-  "\\ding{173}": '\u2461'
-  "\\ding{174}": '\u2462'
-  "\\ding{175}": '\u2463'
-  "\\ding{176}": '\u2464'
-  "\\ding{177}": '\u2465'
-  "\\ding{178}": '\u2466'
-  "\\ding{179}": '\u2467'
-  "\\ding{180}": '\u2468'
-  "\\ding{181}": '\u2469'
-  "\\circledS{}": '\u24C8'
-  "{\\circledS}": '\u24C8'
-  "\\circledS": '\u24C8'
-  "\\Elzdshfnc{}": '\u2506'
-  "{\\Elzdshfnc}": '\u2506'
-  "\\Elzdshfnc": '\u2506'
-  "\\Elzsqfnw{}": '\u2519'
-  "{\\Elzsqfnw}": '\u2519'
-  "\\Elzsqfnw": '\u2519'
-  "\\diagup{}": '\u2571'
-  "{\\diagup}": '\u2571'
-  "\\diagup": '\u2571'
-  "\\blockuphalf{}": '\u2580'
-  "{\\blockuphalf}": '\u2580'
-  "\\blockuphalf": '\u2580'
-  "\\blocklowhalf{}": '\u2584'
-  "{\\blocklowhalf}": '\u2584'
-  "\\blocklowhalf": '\u2584'
-  "\\blockfull{}": '\u2588'
-  "{\\blockfull}": '\u2588'
-  "\\blockfull": '\u2588'
-  "\\blocklefthalf{}": '\u258C'
-  "{\\blocklefthalf}": '\u258C'
-  "\\blocklefthalf": '\u258C'
-  "\\blockrighthalf{}": '\u2590'
-  "{\\blockrighthalf}": '\u2590'
-  "\\blockrighthalf": '\u2590'
-  "\\blockqtrshaded{}": '\u2591'
-  "{\\blockqtrshaded}": '\u2591'
-  "\\blockqtrshaded": '\u2591'
-  "\\blockhalfshaded{}": '\u2592'
-  "{\\blockhalfshaded}": '\u2592'
-  "\\blockhalfshaded": '\u2592'
-  "\\blockthreeqtrshaded{}": '\u2593'
-  "{\\blockthreeqtrshaded}": '\u2593'
-  "\\blockthreeqtrshaded": '\u2593'
-  "\\ding{110}": '\u25A0'
-  "\\square{}": '\u25A1'
-  "{\\square}": '\u25A1'
-  "\\square": '\u25A1'
-  "\\squoval{}": '\u25A2'
-  "{\\squoval}": '\u25A2'
-  "\\squoval": '\u25A2'
-  "\\blackinwhitesquare{}": '\u25A3'
-  "{\\blackinwhitesquare}": '\u25A3'
-  "\\blackinwhitesquare": '\u25A3'
-  "\\squarehfill{}": '\u25A4'
-  "{\\squarehfill}": '\u25A4'
-  "\\squarehfill": '\u25A4'
-  "\\squarevfill{}": '\u25A5'
-  "{\\squarevfill}": '\u25A5'
-  "\\squarevfill": '\u25A5'
-  "\\squarehvfill{}": '\u25A6'
-  "{\\squarehvfill}": '\u25A6'
-  "\\squarehvfill": '\u25A6'
-  "\\squarenwsefill{}": '\u25A7'
-  "{\\squarenwsefill}": '\u25A7'
-  "\\squarenwsefill": '\u25A7'
-  "\\squareneswfill{}": '\u25A8'
-  "{\\squareneswfill}": '\u25A8'
-  "\\squareneswfill": '\u25A8'
-  "\\squarecrossfill{}": '\u25A9'
-  "{\\squarecrossfill}": '\u25A9'
-  "\\squarecrossfill": '\u25A9'
-  "\\blacksquare{}": '\u25AA'
-  "{\\blacksquare}": '\u25AA'
-  "\\blacksquare": '\u25AA'
-  "\\smwhtsquare{}": '\u25AB'
-  "{\\smwhtsquare}": '\u25AB'
-  "\\smwhtsquare": '\u25AB'
-  "\\hrectangleblack{}": '\u25AC'
-  "{\\hrectangleblack}": '\u25AC'
-  "\\hrectangleblack": '\u25AC'
-  "\\fbox{~~}": '\u25AD'
-  "\\vrectangleblack{}": '\u25AE'
-  "{\\vrectangleblack}": '\u25AE'
-  "\\vrectangleblack": '\u25AE'
-  "\\Elzvrecto{}": '\u25AF'
-  "{\\Elzvrecto}": '\u25AF'
-  "\\Elzvrecto": '\u25AF'
-  "\\parallelogramblack{}": '\u25B0'
-  "{\\parallelogramblack}": '\u25B0'
-  "\\parallelogramblack": '\u25B0'
-  "\\ElsevierGlyph{E381}": '\u25B1'
-  "\\ding{115}": '\u25B2'
-  "\\bigtriangleup{}": '\u25B3'
-  "{\\bigtriangleup}": '\u25B3'
-  "\\bigtriangleup": '\u25B3'
-  "\\blacktriangle{}": '\u25B4'
-  "{\\blacktriangle}": '\u25B4'
-  "\\blacktriangle": '\u25B4'
-  "\\vartriangle{}": '\u25B5'
-  "{\\vartriangle}": '\u25B5'
-  "\\vartriangle": '\u25B5'
-  "\\RHD{}": '\u25B6'
-  "{\\RHD}": '\u25B6'
-  "\\RHD": '\u25B6'
-  "\\rhd{}": '\u25B7'
-  "{\\rhd}": '\u25B7'
-  "\\rhd": '\u25B7'
-  "\\blacktriangleright{}": '\u25B8'
-  "{\\blacktriangleright}": '\u25B8'
-  "\\blacktriangleright": '\u25B8'
-  "\\triangleright{}": '\u25B9'
-  "{\\triangleright}": '\u25B9'
-  "\\triangleright": '\u25B9'
-  "\\blackpointerright{}": '\u25BA'
-  "{\\blackpointerright}": '\u25BA'
-  "\\blackpointerright": '\u25BA'
-  "\\whitepointerright{}": '\u25BB'
-  "{\\whitepointerright}": '\u25BB'
-  "\\whitepointerright": '\u25BB'
-  "\\ding{116}": '\u25BC'
-  "\\bigtriangledown{}": '\u25BD'
-  "{\\bigtriangledown}": '\u25BD'
-  "\\bigtriangledown": '\u25BD'
-  "\\blacktriangledown{}": '\u25BE'
-  "{\\blacktriangledown}": '\u25BE'
-  "\\blacktriangledown": '\u25BE'
-  "\\triangledown{}": '\u25BF'
-  "{\\triangledown}": '\u25BF'
-  "\\triangledown": '\u25BF'
-  "\\LHD{}": '\u25C0'
-  "{\\LHD}": '\u25C0'
-  "\\LHD": '\u25C0'
-  "\\lhd{}": '\u25C1'
-  "{\\lhd}": '\u25C1'
-  "\\lhd": '\u25C1'
-  "\\blacktriangleleft{}": '\u25C2'
-  "{\\blacktriangleleft}": '\u25C2'
-  "\\blacktriangleleft": '\u25C2'
-  "\\triangleleft{}": '\u25C3'
-  "{\\triangleleft}": '\u25C3'
-  "\\triangleleft": '\u25C3'
-  "\\blackpointerleft{}": '\u25C4'
-  "{\\blackpointerleft}": '\u25C4'
-  "\\blackpointerleft": '\u25C4'
-  "\\whitepointerleft{}": '\u25C5'
-  "{\\whitepointerleft}": '\u25C5'
-  "\\whitepointerleft": '\u25C5'
-  "\\ding{117}": '\u25C6'
-  "\\Diamond{}": '\u25C7'
-  "{\\Diamond}": '\u25C7'
-  "\\Diamond": '\u25C7'
-  "\\blackinwhitediamond{}": '\u25C8'
-  "{\\blackinwhitediamond}": '\u25C8'
-  "\\blackinwhitediamond": '\u25C8'
-  "\\fisheye{}": '\u25C9'
-  "{\\fisheye}": '\u25C9'
-  "\\fisheye": '\u25C9'
-  "\\lozenge{}": '\u25CA'
-  "{\\lozenge}": '\u25CA'
-  "\\lozenge": '\u25CA'
-  "\\bigcirc{}": '\u25CB'
-  "{\\bigcirc}": '\u25CB'
-  "\\bigcirc": '\u25CB'
-  "\\dottedcircle{}": '\u25CC'
-  "{\\dottedcircle}": '\u25CC'
-  "\\dottedcircle": '\u25CC'
-  "\\circlevertfill{}": '\u25CD'
-  "{\\circlevertfill}": '\u25CD'
-  "\\circlevertfill": '\u25CD'
-  "\\bullseye{}": '\u25CE'
-  "{\\bullseye}": '\u25CE'
-  "\\bullseye": '\u25CE'
-  "\\ding{108}": '\u25CF'
-  "\\Elzcirfl{}": '\u25D0'
-  "{\\Elzcirfl}": '\u25D0'
-  "\\Elzcirfl": '\u25D0'
-  "\\Elzcirfr{}": '\u25D1'
-  "{\\Elzcirfr}": '\u25D1'
-  "\\Elzcirfr": '\u25D1'
-  "\\Elzcirfb{}": '\u25D2'
-  "{\\Elzcirfb}": '\u25D2'
-  "\\Elzcirfb": '\u25D2'
-  "\\circletophalfblack{}": '\u25D3'
-  "{\\circletophalfblack}": '\u25D3'
-  "\\circletophalfblack": '\u25D3'
-  "\\circleurquadblack{}": '\u25D4'
-  "{\\circleurquadblack}": '\u25D4'
-  "\\circleurquadblack": '\u25D4'
-  "\\blackcircleulquadwhite{}": '\u25D5'
-  "{\\blackcircleulquadwhite}": '\u25D5'
-  "\\blackcircleulquadwhite": '\u25D5'
-  "\\LEFTCIRCLE{}": '\u25D6'
-  "{\\LEFTCIRCLE}": '\u25D6'
-  "\\LEFTCIRCLE": '\u25D6'
-  "\\ding{119}": '\u25D7'
-  "\\Elzrvbull{}": '\u25D8'
-  "{\\Elzrvbull}": '\u25D8'
-  "\\Elzrvbull": '\u25D8'
-  "\\inversewhitecircle{}": '\u25D9'
-  "{\\inversewhitecircle}": '\u25D9'
-  "\\inversewhitecircle": '\u25D9'
-  "\\invwhiteupperhalfcircle{}": '\u25DA'
-  "{\\invwhiteupperhalfcircle}": '\u25DA'
-  "\\invwhiteupperhalfcircle": '\u25DA'
-  "\\invwhitelowerhalfcircle{}": '\u25DB'
-  "{\\invwhitelowerhalfcircle}": '\u25DB'
-  "\\invwhitelowerhalfcircle": '\u25DB'
-  "\\ularc{}": '\u25DC'
-  "{\\ularc}": '\u25DC'
-  "\\ularc": '\u25DC'
-  "\\urarc{}": '\u25DD'
-  "{\\urarc}": '\u25DD'
-  "\\urarc": '\u25DD'
-  "\\lrarc{}": '\u25DE'
-  "{\\lrarc}": '\u25DE'
-  "\\lrarc": '\u25DE'
-  "\\llarc{}": '\u25DF'
-  "{\\llarc}": '\u25DF'
-  "\\llarc": '\u25DF'
-  "\\topsemicircle{}": '\u25E0'
-  "{\\topsemicircle}": '\u25E0'
-  "\\topsemicircle": '\u25E0'
-  "\\botsemicircle{}": '\u25E1'
-  "{\\botsemicircle}": '\u25E1'
-  "\\botsemicircle": '\u25E1'
-  "\\lrblacktriangle{}": '\u25E2'
-  "{\\lrblacktriangle}": '\u25E2'
-  "\\lrblacktriangle": '\u25E2'
-  "\\llblacktriangle{}": '\u25E3'
-  "{\\llblacktriangle}": '\u25E3'
-  "\\llblacktriangle": '\u25E3'
-  "\\ulblacktriangle{}": '\u25E4'
-  "{\\ulblacktriangle}": '\u25E4'
-  "\\ulblacktriangle": '\u25E4'
-  "\\urblacktriangle{}": '\u25E5'
-  "{\\urblacktriangle}": '\u25E5'
-  "\\urblacktriangle": '\u25E5'
-  "\\smwhtcircle{}": '\u25E6'
-  "{\\smwhtcircle}": '\u25E6'
-  "\\smwhtcircle": '\u25E6'
-  "\\Elzsqfl{}": '\u25E7'
-  "{\\Elzsqfl}": '\u25E7'
-  "\\Elzsqfl": '\u25E7'
-  "\\Elzsqfr{}": '\u25E8'
-  "{\\Elzsqfr}": '\u25E8'
-  "\\Elzsqfr": '\u25E8'
-  "\\squareulblack{}": '\u25E9'
-  "{\\squareulblack}": '\u25E9'
-  "\\squareulblack": '\u25E9'
-  "\\Elzsqfse{}": '\u25EA'
-  "{\\Elzsqfse}": '\u25EA'
-  "\\Elzsqfse": '\u25EA'
-  "\\boxbar{}": '\u25EB'
-  "{\\boxbar}": '\u25EB'
-  "\\boxbar": '\u25EB'
-  "\\trianglecdot{}": '\u25EC'
-  "{\\trianglecdot}": '\u25EC'
-  "\\trianglecdot": '\u25EC'
-  "\\triangleleftblack{}": '\u25ED'
-  "{\\triangleleftblack}": '\u25ED'
-  "\\triangleleftblack": '\u25ED'
-  "\\trianglerightblack{}": '\u25EE'
-  "{\\trianglerightblack}": '\u25EE'
-  "\\trianglerightblack": '\u25EE'
-  "\\squareulquad{}": '\u25F0'
-  "{\\squareulquad}": '\u25F0'
-  "\\squareulquad": '\u25F0'
-  "\\squarellquad{}": '\u25F1'
-  "{\\squarellquad}": '\u25F1'
-  "\\squarellquad": '\u25F1'
-  "\\squarelrquad{}": '\u25F2'
-  "{\\squarelrquad}": '\u25F2'
-  "\\squarelrquad": '\u25F2'
-  "\\squareurquad{}": '\u25F3'
-  "{\\squareurquad}": '\u25F3'
-  "\\squareurquad": '\u25F3'
-  "\\circleulquad{}": '\u25F4'
-  "{\\circleulquad}": '\u25F4'
-  "\\circleulquad": '\u25F4'
-  "\\circlellquad{}": '\u25F5'
-  "{\\circlellquad}": '\u25F5'
-  "\\circlellquad": '\u25F5'
-  "\\circlelrquad{}": '\u25F6'
-  "{\\circlelrquad}": '\u25F6'
-  "\\circlelrquad": '\u25F6'
-  "\\circleurquad{}": '\u25F7'
-  "{\\circleurquad}": '\u25F7'
-  "\\circleurquad": '\u25F7'
-  "\\ultriangle{}": '\u25F8'
-  "{\\ultriangle}": '\u25F8'
-  "\\ultriangle": '\u25F8'
-  "\\urtriangle{}": '\u25F9'
-  "{\\urtriangle}": '\u25F9'
-  "\\urtriangle": '\u25F9'
-  "\\lltriangle{}": '\u25FA'
-  "{\\lltriangle}": '\u25FA'
-  "\\lltriangle": '\u25FA'
-  "\\mdsmwhtsquare{}": '\u25FD'
-  "{\\mdsmwhtsquare}": '\u25FD'
-  "\\mdsmwhtsquare": '\u25FD'
-  "\\mdsmblksquare{}": '\u25FE'
-  "{\\mdsmblksquare}": '\u25FE'
-  "\\mdsmblksquare": '\u25FE'
-  "\\lrtriangle{}": '\u25FF'
-  "{\\lrtriangle}": '\u25FF'
-  "\\lrtriangle": '\u25FF'
-  "\\ding{72}": '\u2605'
-  "\\ding{73}": '\u2606'
-  "\\Sun{}": '\u2609'
-  "{\\Sun}": '\u2609'
-  "\\Sun": '\u2609'
-  "\\ding{37}": '\u260E'
-  "\\Square{}": '\u2610'
-  "{\\Square}": '\u2610'
-  "\\Square": '\u2610'
-  "\\CheckedBox{}": '\u2611'
-  "{\\CheckedBox}": '\u2611'
-  "\\CheckedBox": '\u2611'
-  "\\XBox{}": '\u2612'
-  "{\\XBox}": '\u2612'
-  "\\XBox": '\u2612'
-  "\\steaming{}": '\u2615'
-  "{\\steaming}": '\u2615'
-  "\\steaming": '\u2615'
-  "\\ding{42}": '\u261B'
-  "\\ding{43}": '\u261E'
-  "\\skull{}": '\u2620'
-  "{\\skull}": '\u2620'
-  "\\skull": '\u2620'
-  "\\danger{}": '\u2621'
-  "{\\danger}": '\u2621'
-  "\\danger": '\u2621'
-  "\\radiation{}": '\u2622'
-  "{\\radiation}": '\u2622'
-  "\\radiation": '\u2622'
-  "\\biohazard{}": '\u2623'
-  "{\\biohazard}": '\u2623'
-  "\\biohazard": '\u2623'
-  "\\yinyang{}": '\u262F'
-  "{\\yinyang}": '\u262F'
-  "\\yinyang": '\u262F'
-  "\\frownie{}": '\u2639'
-  "{\\frownie}": '\u2639'
-  "\\frownie": '\u2639'
-  "\\smiley{}": '\u263A'
-  "{\\smiley}": '\u263A'
-  "\\smiley": '\u263A'
-  "\\blacksmiley{}": '\u263B'
-  "{\\blacksmiley}": '\u263B'
-  "\\blacksmiley": '\u263B'
-  "\\sun{}": '\u263C'
-  "{\\sun}": '\u263C'
-  "\\sun": '\u263C'
-  "\\rightmoon{}": '\u263D'
-  "{\\rightmoon}": '\u263D'
-  "\\rightmoon": '\u263D'
-  "\\mercury{}": '\u263F'
-  "{\\mercury}": '\u263F'
-  "\\mercury": '\u263F'
-  "\\venus{}": '\u2640'
-  "{\\venus}": '\u2640'
-  "\\venus": '\u2640'
-  "\\earth{}": '\u2641'
-  "{\\earth}": '\u2641'
-  "\\earth": '\u2641'
-  "\\male{}": '\u2642'
-  "{\\male}": '\u2642'
-  "\\male": '\u2642'
-  "\\jupiter{}": '\u2643'
-  "{\\jupiter}": '\u2643'
-  "\\jupiter": '\u2643'
-  "\\saturn{}": '\u2644'
-  "{\\saturn}": '\u2644'
-  "\\saturn": '\u2644'
-  "\\uranus{}": '\u2645'
-  "{\\uranus}": '\u2645'
-  "\\uranus": '\u2645'
-  "\\neptune{}": '\u2646'
-  "{\\neptune}": '\u2646'
-  "\\neptune": '\u2646'
-  "\\pluto{}": '\u2647'
-  "{\\pluto}": '\u2647'
-  "\\pluto": '\u2647'
-  "\\aries{}": '\u2648'
-  "{\\aries}": '\u2648'
-  "\\aries": '\u2648'
-  "\\taurus{}": '\u2649'
-  "{\\taurus}": '\u2649'
-  "\\taurus": '\u2649'
-  "\\gemini{}": '\u264A'
-  "{\\gemini}": '\u264A'
-  "\\gemini": '\u264A'
-  "\\cancer{}": '\u264B'
-  "{\\cancer}": '\u264B'
-  "\\cancer": '\u264B'
-  "\\leo{}": '\u264C'
-  "{\\leo}": '\u264C'
-  "\\leo": '\u264C'
-  "\\virgo{}": '\u264D'
-  "{\\virgo}": '\u264D'
-  "\\virgo": '\u264D'
-  "\\libra{}": '\u264E'
-  "{\\libra}": '\u264E'
-  "\\libra": '\u264E'
-  "\\scorpio{}": '\u264F'
-  "{\\scorpio}": '\u264F'
-  "\\scorpio": '\u264F'
-  "\\sagittarius{}": '\u2650'
-  "{\\sagittarius}": '\u2650'
-  "\\sagittarius": '\u2650'
-  "\\capricornus{}": '\u2651'
-  "{\\capricornus}": '\u2651'
-  "\\capricornus": '\u2651'
-  "\\aquarius{}": '\u2652'
-  "{\\aquarius}": '\u2652'
-  "\\aquarius": '\u2652'
-  "\\pisces{}": '\u2653'
-  "{\\pisces}": '\u2653'
-  "\\pisces": '\u2653'
-  "\\ding{171}": '\u2660'
-  "\\heartsuit{}": '\u2661'
-  "{\\heartsuit}": '\u2661'
-  "\\heartsuit": '\u2661'
-  "\\ding{168}": '\u2663'
-  "\\varspadesuit{}": '\u2664'
-  "{\\varspadesuit}": '\u2664'
-  "\\varspadesuit": '\u2664'
-  "\\ding{170}": '\u2665'
-  "\\ding{169}": '\u2666'
-  "\\varclubsuit{}": '\u2667'
-  "{\\varclubsuit}": '\u2667'
-  "\\varclubsuit": '\u2667'
-  "\\quarternote{}": '\u2669'
-  "{\\quarternote}": '\u2669'
-  "\\quarternote": '\u2669'
-  "\\eighthnote{}": '\u266A'
-  "{\\eighthnote}": '\u266A'
-  "\\eighthnote": '\u266A'
-  "\\twonotes{}": '\u266B'
-  "{\\twonotes}": '\u266B'
-  "\\twonotes": '\u266B'
-  "\\sixteenthnote{}": '\u266C'
-  "{\\sixteenthnote}": '\u266C'
-  "\\sixteenthnote": '\u266C'
-  "\\flat{}": '\u266D'
-  "{\\flat}": '\u266D'
-  "\\flat": '\u266D'
-  "\\natural{}": '\u266E'
-  "{\\natural}": '\u266E'
-  "\\natural": '\u266E'
-  "\\sharp{}": '\u266F'
-  "{\\sharp}": '\u266F'
-  "\\sharp": '\u266F'
-  "\\recycle{}": '\u267B'
-  "{\\recycle}": '\u267B'
-  "\\recycle": '\u267B'
-  "\\acidfree{}": '\u267E'
-  "{\\acidfree}": '\u267E'
-  "\\acidfree": '\u267E'
-  "\\dicei{}": '\u2680'
-  "{\\dicei}": '\u2680'
-  "\\dicei": '\u2680'
-  "\\diceii{}": '\u2681'
-  "{\\diceii}": '\u2681'
-  "\\diceii": '\u2681'
-  "\\diceiii{}": '\u2682'
-  "{\\diceiii}": '\u2682'
-  "\\diceiii": '\u2682'
-  "\\diceiv{}": '\u2683'
-  "{\\diceiv}": '\u2683'
-  "\\diceiv": '\u2683'
-  "\\dicev{}": '\u2684'
-  "{\\dicev}": '\u2684'
-  "\\dicev": '\u2684'
-  "\\dicevi{}": '\u2685'
-  "{\\dicevi}": '\u2685'
-  "\\dicevi": '\u2685'
-  "\\circledrightdot{}": '\u2686'
-  "{\\circledrightdot}": '\u2686'
-  "\\circledrightdot": '\u2686'
-  "\\circledtwodots{}": '\u2687'
-  "{\\circledtwodots}": '\u2687'
-  "\\circledtwodots": '\u2687'
-  "\\blackcircledrightdot{}": '\u2688'
-  "{\\blackcircledrightdot}": '\u2688'
-  "\\blackcircledrightdot": '\u2688'
-  "\\blackcircledtwodots{}": '\u2689'
-  "{\\blackcircledtwodots}": '\u2689'
-  "\\blackcircledtwodots": '\u2689'
-  "\\anchor{}": '\u2693'
-  "{\\anchor}": '\u2693'
-  "\\anchor": '\u2693'
-  "\\swords{}": '\u2694'
-  "{\\swords}": '\u2694'
-  "\\swords": '\u2694'
-  "\\warning{}": '\u26A0'
-  "{\\warning}": '\u26A0'
-  "\\warning": '\u26A0'
-  "\\Hermaphrodite{}": '\u26A5'
-  "{\\Hermaphrodite}": '\u26A5'
-  "\\Hermaphrodite": '\u26A5'
-  "\\medcirc{}": '\u26AA'
-  "{\\medcirc}": '\u26AA'
-  "\\medcirc": '\u26AA'
-  "\\medbullet{}": '\u26AB'
-  "{\\medbullet}": '\u26AB'
-  "\\medbullet": '\u26AB'
-  "\\mdsmwhtcircle{}": '\u26AC'
-  "{\\mdsmwhtcircle}": '\u26AC'
-  "\\mdsmwhtcircle": '\u26AC'
-  "\\neuter{}": '\u26B2'
-  "{\\neuter}": '\u26B2'
-  "\\neuter": '\u26B2'
-  "\\ding{33}": '\u2701'
-  "\\ding{34}": '\u2702'
-  "\\ding{35}": '\u2703'
-  "\\ding{36}": '\u2704'
-  "\\ding{38}": '\u2706'
-  "\\ding{39}": '\u2707'
-  "\\ding{40}": '\u2708'
-  "\\ding{41}": '\u2709'
-  "\\ding{44}": '\u270C'
-  "\\ding{45}": '\u270D'
-  "\\ding{46}": '\u270E'
-  "\\ding{47}": '\u270F'
-  "\\ding{48}": '\u2710'
-  "\\ding{49}": '\u2711'
-  "\\ding{50}": '\u2712'
-  "\\ding{51}": '\u2713'
-  "\\ding{52}": '\u2714'
-  "\\ding{53}": '\u2715'
-  "\\ding{54}": '\u2716'
-  "\\ding{55}": '\u2717'
-  "\\ding{56}": '\u2718'
-  "\\ding{57}": '\u2719'
-  "\\ding{58}": '\u271A'
-  "\\ding{59}": '\u271B'
-  "\\ding{60}": '\u271C'
-  "\\ding{61}": '\u271D'
-  "\\ding{62}": '\u271E'
-  "\\ding{63}": '\u271F'
-  "\\ding{64}": '\u2720'
-  "\\ding{65}": '\u2721'
-  "\\ding{66}": '\u2722'
-  "\\ding{67}": '\u2723'
-  "\\ding{68}": '\u2724'
-  "\\ding{69}": '\u2725'
-  "\\ding{70}": '\u2726'
-  "\\ding{71}": '\u2727'
-  "\\ding{74}": '\u272A'
-  "\\ding{75}": '\u272B'
-  "\\ding{76}": '\u272C'
-  "\\ding{77}": '\u272D'
-  "\\ding{78}": '\u272E'
-  "\\ding{79}": '\u272F'
-  "\\ding{80}": '\u2730'
-  "\\ding{81}": '\u2731'
-  "\\ding{82}": '\u2732'
-  "\\ding{83}": '\u2733'
-  "\\ding{84}": '\u2734'
-  "\\ding{85}": '\u2735'
-  "\\ding{86}": '\u2736'
-  "\\ding{87}": '\u2737'
-  "\\ding{88}": '\u2738'
-  "\\ding{89}": '\u2739'
-  "\\ding{90}": '\u273A'
-  "\\ding{91}": '\u273B'
-  "\\ding{92}": '\u273C'
-  "\\ding{93}": '\u273D'
-  "\\ding{94}": '\u273E'
-  "\\ding{95}": '\u273F'
-  "\\ding{96}": '\u2740'
-  "\\ding{97}": '\u2741'
-  "\\ding{98}": '\u2742'
-  "\\ding{99}": '\u2743'
-  "\\ding{100}": '\u2744'
-  "\\ding{101}": '\u2745'
-  "\\ding{102}": '\u2746'
-  "\\ding{103}": '\u2747'
-  "\\ding{104}": '\u2748'
-  "\\ding{105}": '\u2749'
-  "\\ding{106}": '\u274A'
-  "\\ding{107}": '\u274B'
-  "\\ding{109}": '\u274D'
-  "\\ding{111}": '\u274F'
-  "\\ding{112}": '\u2750'
-  "\\ding{113}": '\u2751'
-  "\\ding{114}": '\u2752'
-  "\\ding{118}": '\u2756'
-  "\\ding{120}": '\u2758'
-  "\\ding{121}": '\u2759'
-  "\\ding{122}": '\u275A'
-  "\\ding{123}": '\u275B'
-  "\\ding{124}": '\u275C'
-  "\\ding{125}": '\u275D'
-  "\\ding{126}": '\u275E'
-  "\\ding{161}": '\u2761'
-  "\\ding{162}": '\u2762'
-  "\\ding{163}": '\u2763'
-  "\\ding{164}": '\u2764'
-  "\\ding{165}": '\u2765'
-  "\\ding{166}": '\u2766'
-  "\\ding{167}": '\u2767'
-  "\\lbrbrak{}": '\u2772'
-  "{\\lbrbrak}": '\u2772'
-  "\\lbrbrak": '\u2772'
-  "\\rbrbrak{}": '\u2773'
-  "{\\rbrbrak}": '\u2773'
-  "\\rbrbrak": '\u2773'
-  "\\ding{182}": '\u2776'
-  "\\ding{183}": '\u2777'
-  "\\ding{184}": '\u2778'
-  "\\ding{185}": '\u2779'
-  "\\ding{186}": '\u277A'
-  "\\ding{187}": '\u277B'
-  "\\ding{188}": '\u277C'
-  "\\ding{189}": '\u277D'
-  "\\ding{190}": '\u277E'
-  "\\ding{191}": '\u277F'
-  "\\ding{192}": '\u2780'
-  "\\ding{193}": '\u2781'
-  "\\ding{194}": '\u2782'
-  "\\ding{195}": '\u2783'
-  "\\ding{196}": '\u2784'
-  "\\ding{197}": '\u2785'
-  "\\ding{198}": '\u2786'
-  "\\ding{199}": '\u2787'
-  "\\ding{200}": '\u2788'
-  "\\ding{201}": '\u2789'
-  "\\ding{202}": '\u278A'
-  "\\ding{203}": '\u278B'
-  "\\ding{204}": '\u278C'
-  "\\ding{205}": '\u278D'
-  "\\ding{206}": '\u278E'
-  "\\ding{207}": '\u278F'
-  "\\ding{208}": '\u2790'
-  "\\ding{209}": '\u2791'
-  "\\ding{210}": '\u2792'
-  "\\ding{211}": '\u2793'
-  "\\ding{212}": '\u2794'
-  "\\ding{216}": '\u2798'
-  "\\ding{217}": '\u2799'
-  "\\ding{218}": '\u279A'
-  "\\ding{219}": '\u279B'
-  "\\ding{220}": '\u279C'
-  "\\ding{221}": '\u279D'
-  "\\ding{222}": '\u279E'
-  "\\ding{223}": '\u279F'
-  "\\ding{224}": '\u27A0'
-  "\\ding{225}": '\u27A1'
-  "\\ding{226}": '\u27A2'
-  "\\ding{227}": '\u27A3'
-  "\\ding{228}": '\u27A4'
-  "\\ding{229}": '\u27A5'
-  "\\ding{230}": '\u27A6'
-  "\\ding{231}": '\u27A7'
-  "\\ding{232}": '\u27A8'
-  "\\ding{233}": '\u27A9'
-  "\\ding{234}": '\u27AA'
-  "\\ding{235}": '\u27AB'
-  "\\ding{236}": '\u27AC'
-  "\\ding{237}": '\u27AD'
-  "\\ding{238}": '\u27AE'
-  "\\ding{239}": '\u27AF'
-  "\\ding{241}": '\u27B1'
-  "\\ding{242}": '\u27B2'
-  "\\ding{243}": '\u27B3'
-  "\\ding{244}": '\u27B4'
-  "\\ding{245}": '\u27B5'
-  "\\ding{246}": '\u27B6'
-  "\\ding{247}": '\u27B7'
-  "\\ding{248}": '\u27B8'
-  "\\ding{249}": '\u27B9'
-  "\\ding{250}": '\u27BA'
-  "\\ding{251}": '\u27BB'
-  "\\ding{252}": '\u27BC'
-  "\\ding{253}": '\u27BD'
-  "\\ding{254}": '\u27BE'
-  "\\threedangle{}": '\u27C0'
-  "{\\threedangle}": '\u27C0'
-  "\\threedangle": '\u27C0'
-  "\\whiteinwhitetriangle{}": '\u27C1'
-  "{\\whiteinwhitetriangle}": '\u27C1'
-  "\\whiteinwhitetriangle": '\u27C1'
-  "\\subsetcirc{}": '\u27C3'
-  "{\\subsetcirc}": '\u27C3'
-  "\\subsetcirc": '\u27C3'
-  "\\supsetcirc{}": '\u27C4'
-  "{\\supsetcirc}": '\u27C4'
-  "\\supsetcirc": '\u27C4'
-  "\\Lbag{}": '\u27C5'
-  "{\\Lbag}": '\u27C5'
-  "\\Lbag": '\u27C5'
-  "\\Rbag{}": '\u27C6'
-  "{\\Rbag}": '\u27C6'
-  "\\Rbag": '\u27C6'
-  "\\veedot{}": '\u27C7'
-  "{\\veedot}": '\u27C7'
-  "\\veedot": '\u27C7'
-  "\\bsolhsub{}": '\u27C8'
-  "{\\bsolhsub}": '\u27C8'
-  "\\bsolhsub": '\u27C8'
-  "\\suphsol{}": '\u27C9'
-  "{\\suphsol}": '\u27C9'
-  "\\suphsol": '\u27C9'
-  "\\longdivision{}": '\u27CC'
-  "{\\longdivision}": '\u27CC'
-  "\\longdivision": '\u27CC'
-  "\\Diamonddot{}": '\u27D0'
-  "{\\Diamonddot}": '\u27D0'
-  "\\Diamonddot": '\u27D0'
-  "\\wedgedot{}": '\u27D1'
-  "{\\wedgedot}": '\u27D1'
-  "\\wedgedot": '\u27D1'
-  "\\upin{}": '\u27D2'
-  "{\\upin}": '\u27D2'
-  "\\upin": '\u27D2'
-  "\\pullback{}": '\u27D3'
-  "{\\pullback}": '\u27D3'
-  "\\pullback": '\u27D3'
-  "\\pushout{}": '\u27D4'
-  "{\\pushout}": '\u27D4'
-  "\\pushout": '\u27D4'
-  "\\leftouterjoin{}": '\u27D5'
-  "{\\leftouterjoin}": '\u27D5'
-  "\\leftouterjoin": '\u27D5'
-  "\\rightouterjoin{}": '\u27D6'
-  "{\\rightouterjoin}": '\u27D6'
-  "\\rightouterjoin": '\u27D6'
-  "\\fullouterjoin{}": '\u27D7'
-  "{\\fullouterjoin}": '\u27D7'
-  "\\fullouterjoin": '\u27D7'
-  "\\bigbot{}": '\u27D8'
-  "{\\bigbot}": '\u27D8'
-  "\\bigbot": '\u27D8'
-  "\\bigtop{}": '\u27D9'
-  "{\\bigtop}": '\u27D9'
-  "\\bigtop": '\u27D9'
-  "\\DashVDash{}": '\u27DA'
-  "{\\DashVDash}": '\u27DA'
-  "\\DashVDash": '\u27DA'
-  "\\dashVdash{}": '\u27DB'
-  "{\\dashVdash}": '\u27DB'
-  "\\dashVdash": '\u27DB'
-  "\\multimapinv{}": '\u27DC'
-  "{\\multimapinv}": '\u27DC'
-  "\\multimapinv": '\u27DC'
-  "\\vlongdash{}": '\u27DD'
-  "{\\vlongdash}": '\u27DD'
-  "\\vlongdash": '\u27DD'
-  "\\longdashv{}": '\u27DE'
-  "{\\longdashv}": '\u27DE'
-  "\\longdashv": '\u27DE'
-  "\\cirbot{}": '\u27DF'
-  "{\\cirbot}": '\u27DF'
-  "\\cirbot": '\u27DF'
-  "\\lozengeminus{}": '\u27E0'
-  "{\\lozengeminus}": '\u27E0'
-  "\\lozengeminus": '\u27E0'
-  "\\concavediamond{}": '\u27E1'
-  "{\\concavediamond}": '\u27E1'
-  "\\concavediamond": '\u27E1'
-  "\\concavediamondtickleft{}": '\u27E2'
-  "{\\concavediamondtickleft}": '\u27E2'
-  "\\concavediamondtickleft": '\u27E2'
-  "\\concavediamondtickright{}": '\u27E3'
-  "{\\concavediamondtickright}": '\u27E3'
-  "\\concavediamondtickright": '\u27E3'
-  "\\whitesquaretickleft{}": '\u27E4'
-  "{\\whitesquaretickleft}": '\u27E4'
-  "\\whitesquaretickleft": '\u27E4'
-  "\\whitesquaretickright{}": '\u27E5'
-  "{\\whitesquaretickright}": '\u27E5'
-  "\\whitesquaretickright": '\u27E5'
-  "\\llbracket{}": '\u27E6'
-  "{\\llbracket}": '\u27E6'
-  "\\llbracket": '\u27E6'
-  "\\rrbracket{}": '\u27E7'
-  "{\\rrbracket}": '\u27E7'
-  "\\rrbracket": '\u27E7'
-  "\\lang{}": '\u27EA'
-  "{\\lang}": '\u27EA'
-  "\\lang": '\u27EA'
-  "\\rang{}": '\u27EB'
-  "{\\rang}": '\u27EB'
-  "\\rang": '\u27EB'
-  "\\Lbrbrak{}": '\u27EC'
-  "{\\Lbrbrak}": '\u27EC'
-  "\\Lbrbrak": '\u27EC'
-  "\\Rbrbrak{}": '\u27ED'
-  "{\\Rbrbrak}": '\u27ED'
-  "\\Rbrbrak": '\u27ED'
-  "\\lgroup{}": '\u27EE'
-  "{\\lgroup}": '\u27EE'
-  "\\lgroup": '\u27EE'
-  "\\rgroup{}": '\u27EF'
-  "{\\rgroup}": '\u27EF'
-  "\\rgroup": '\u27EF'
-  "\\UUparrow{}": '\u27F0'
-  "{\\UUparrow}": '\u27F0'
-  "\\UUparrow": '\u27F0'
-  "\\DDownarrow{}": '\u27F1'
-  "{\\DDownarrow}": '\u27F1'
-  "\\DDownarrow": '\u27F1'
-  "\\acwgapcirclearrow{}": '\u27F2'
-  "{\\acwgapcirclearrow}": '\u27F2'
-  "\\acwgapcirclearrow": '\u27F2'
-  "\\cwgapcirclearrow{}": '\u27F3'
-  "{\\cwgapcirclearrow}": '\u27F3'
-  "\\cwgapcirclearrow": '\u27F3'
-  "\\rightarrowonoplus{}": '\u27F4'
-  "{\\rightarrowonoplus}": '\u27F4'
-  "\\rightarrowonoplus": '\u27F4'
-  "\\longleftarrow{}": '\u27F5'
-  "{\\longleftarrow}": '\u27F5'
-  "\\longleftarrow": '\u27F5'
-  "\\longrightarrow{}": '\u27F6'
-  "{\\longrightarrow}": '\u27F6'
-  "\\longrightarrow": '\u27F6'
-  "\\longleftrightarrow{}": '\u27F7'
-  "{\\longleftrightarrow}": '\u27F7'
-  "\\longleftrightarrow": '\u27F7'
-  "\\Longleftarrow{}": '\u27F8'
-  "{\\Longleftarrow}": '\u27F8'
-  "\\Longleftarrow": '\u27F8'
-  "\\Longrightarrow{}": '\u27F9'
-  "{\\Longrightarrow}": '\u27F9'
-  "\\Longrightarrow": '\u27F9'
-  "\\Longleftrightarrow{}": '\u27FA'
-  "{\\Longleftrightarrow}": '\u27FA'
-  "\\Longleftrightarrow": '\u27FA'
-  "\\longmapsfrom{}": '\u27FB'
-  "{\\longmapsfrom}": '\u27FB'
-  "\\longmapsfrom": '\u27FB'
-  "\\longmapsto{}": '\u27FC'
-  "{\\longmapsto}": '\u27FC'
-  "\\longmapsto": '\u27FC'
-  "\\Longmapsfrom{}": '\u27FD'
-  "{\\Longmapsfrom}": '\u27FD'
-  "\\Longmapsfrom": '\u27FD'
-  "\\Longmapsto{}": '\u27FE'
-  "{\\Longmapsto}": '\u27FE'
-  "\\Longmapsto": '\u27FE'
-  "\\sim\\joinrel\\leadsto{}": '\u27FF'
-  "{\\sim\\joinrel\\leadsto}": '\u27FF'
-  "\\sim\\joinrel\\leadsto": '\u27FF'
-  "\\psur{}": '\u2900'
-  "{\\psur}": '\u2900'
-  "\\psur": '\u2900'
-  "\\nVtwoheadrightarrow{}": '\u2901'
-  "{\\nVtwoheadrightarrow}": '\u2901'
-  "\\nVtwoheadrightarrow": '\u2901'
-  "\\nvLeftarrow{}": '\u2902'
-  "{\\nvLeftarrow}": '\u2902'
-  "\\nvLeftarrow": '\u2902'
-  "\\nvRightarrow{}": '\u2903'
-  "{\\nvRightarrow}": '\u2903'
-  "\\nvRightarrow": '\u2903'
-  "\\nvLeftrightarrow{}": '\u2904'
-  "{\\nvLeftrightarrow}": '\u2904'
-  "\\nvLeftrightarrow": '\u2904'
-  "\\ElsevierGlyph{E212}": '\u2905'
-  "\\Mapsfrom{}": '\u2906'
-  "{\\Mapsfrom}": '\u2906'
-  "\\Mapsfrom": '\u2906'
-  "\\Mapsto{}": '\u2907'
-  "{\\Mapsto}": '\u2907'
-  "\\Mapsto": '\u2907'
-  "\\downarrowbarred{}": '\u2908'
-  "{\\downarrowbarred}": '\u2908'
-  "\\downarrowbarred": '\u2908'
-  "\\uparrowbarred{}": '\u2909'
-  "{\\uparrowbarred}": '\u2909'
-  "\\uparrowbarred": '\u2909'
-  "\\Uuparrow{}": '\u290A'
-  "{\\Uuparrow}": '\u290A'
-  "\\Uuparrow": '\u290A'
-  "\\Ddownarrow{}": '\u290B'
-  "{\\Ddownarrow}": '\u290B'
-  "\\Ddownarrow": '\u290B'
-  "\\leftbkarrow{}": '\u290C'
-  "{\\leftbkarrow}": '\u290C'
-  "\\leftbkarrow": '\u290C'
-  "\\rightbkarrow{}": '\u290D'
-  "{\\rightbkarrow}": '\u290D'
-  "\\rightbkarrow": '\u290D'
-  "\\leftdbkarrow{}": '\u290E'
-  "{\\leftdbkarrow}": '\u290E'
-  "\\leftdbkarrow": '\u290E'
-  "\\dbkarow{}": '\u290F'
-  "{\\dbkarow}": '\u290F'
-  "\\dbkarow": '\u290F'
-  "\\drbkarow{}": '\u2910'
-  "{\\drbkarow}": '\u2910'
-  "\\drbkarow": '\u2910'
-  "\\rightdotarrow{}": '\u2911'
-  "{\\rightdotarrow}": '\u2911'
-  "\\rightdotarrow": '\u2911'
-  "\\UpArrowBar{}": '\u2912'
-  "{\\UpArrowBar}": '\u2912'
-  "\\UpArrowBar": '\u2912'
-  "\\DownArrowBar{}": '\u2913'
-  "{\\DownArrowBar}": '\u2913'
-  "\\DownArrowBar": '\u2913'
-  "\\pinj{}": '\u2914'
-  "{\\pinj}": '\u2914'
-  "\\pinj": '\u2914'
-  "\\finj{}": '\u2915'
-  "{\\finj}": '\u2915'
-  "\\finj": '\u2915'
-  "\\bij{}": '\u2916'
-  "{\\bij}": '\u2916'
-  "\\bij": '\u2916'
-  "\\nvtwoheadrightarrowtail{}": '\u2917'
-  "{\\nvtwoheadrightarrowtail}": '\u2917'
-  "\\nvtwoheadrightarrowtail": '\u2917'
-  "\\nVtwoheadrightarrowtail{}": '\u2918'
-  "{\\nVtwoheadrightarrowtail}": '\u2918'
-  "\\nVtwoheadrightarrowtail": '\u2918'
-  "\\lefttail{}": '\u2919'
-  "{\\lefttail}": '\u2919'
-  "\\lefttail": '\u2919'
-  "\\righttail{}": '\u291A'
-  "{\\righttail}": '\u291A'
-  "\\righttail": '\u291A'
-  "\\leftdbltail{}": '\u291B'
-  "{\\leftdbltail}": '\u291B'
-  "\\leftdbltail": '\u291B'
-  "\\rightdbltail{}": '\u291C'
-  "{\\rightdbltail}": '\u291C'
-  "\\rightdbltail": '\u291C'
-  "\\diamondleftarrow{}": '\u291D'
-  "{\\diamondleftarrow}": '\u291D'
-  "\\diamondleftarrow": '\u291D'
-  "\\rightarrowdiamond{}": '\u291E'
-  "{\\rightarrowdiamond}": '\u291E'
-  "\\rightarrowdiamond": '\u291E'
-  "\\diamondleftarrowbar{}": '\u291F'
-  "{\\diamondleftarrowbar}": '\u291F'
-  "\\diamondleftarrowbar": '\u291F'
-  "\\barrightarrowdiamond{}": '\u2920'
-  "{\\barrightarrowdiamond}": '\u2920'
-  "\\barrightarrowdiamond": '\u2920'
-  "\\nwsearrow{}": '\u2921'
-  "{\\nwsearrow}": '\u2921'
-  "\\nwsearrow": '\u2921'
-  "\\neswarrow{}": '\u2922'
-  "{\\neswarrow}": '\u2922'
-  "\\neswarrow": '\u2922'
-  "\\ElsevierGlyph{E20C}": '\u2923'
-  "\\ElsevierGlyph{E20D}": '\u2924'
-  "\\ElsevierGlyph{E20B}": '\u2925'
-  "\\ElsevierGlyph{E20A}": '\u2926'
-  "\\ElsevierGlyph{E211}": '\u2927'
-  "\\ElsevierGlyph{E20E}": '\u2928'
-  "\\ElsevierGlyph{E20F}": '\u2929'
-  "\\ElsevierGlyph{E210}": '\u292A'
-  "\\rdiagovfdiag{}": '\u292B'
-  "{\\rdiagovfdiag}": '\u292B'
-  "\\rdiagovfdiag": '\u292B'
-  "\\fdiagovrdiag{}": '\u292C'
-  "{\\fdiagovrdiag}": '\u292C'
-  "\\fdiagovrdiag": '\u292C'
-  "\\seovnearrow{}": '\u292D'
-  "{\\seovnearrow}": '\u292D'
-  "\\seovnearrow": '\u292D'
-  "\\neovsearrow{}": '\u292E'
-  "{\\neovsearrow}": '\u292E'
-  "\\neovsearrow": '\u292E'
-  "\\fdiagovnearrow{}": '\u292F'
-  "{\\fdiagovnearrow}": '\u292F'
-  "\\fdiagovnearrow": '\u292F'
-  "\\rdiagovsearrow{}": '\u2930'
-  "{\\rdiagovsearrow}": '\u2930'
-  "\\rdiagovsearrow": '\u2930'
-  "\\neovnwarrow{}": '\u2931'
-  "{\\neovnwarrow}": '\u2931'
-  "\\neovnwarrow": '\u2931'
-  "\\nwovnearrow{}": '\u2932'
-  "{\\nwovnearrow}": '\u2932'
-  "\\nwovnearrow": '\u2932'
-  "\\ElsevierGlyph{E21C}": '\u2933'
-  "\\uprightcurvearrow{}": '\u2934'
-  "{\\uprightcurvearrow}": '\u2934'
-  "\\uprightcurvearrow": '\u2934'
-  "\\downrightcurvedarrow{}": '\u2935'
-  "{\\downrightcurvedarrow}": '\u2935'
-  "\\downrightcurvedarrow": '\u2935'
-  "\\ElsevierGlyph{E21A}": '\u2936'
-  "\\ElsevierGlyph{E219}": '\u2937'
-  "\\cwrightarcarrow{}": '\u2938'
-  "{\\cwrightarcarrow}": '\u2938'
-  "\\cwrightarcarrow": '\u2938'
-  "\\acwleftarcarrow{}": '\u2939'
-  "{\\acwleftarcarrow}": '\u2939'
-  "\\acwleftarcarrow": '\u2939'
-  "\\acwoverarcarrow{}": '\u293A'
-  "{\\acwoverarcarrow}": '\u293A'
-  "\\acwoverarcarrow": '\u293A'
-  "\\acwunderarcarrow{}": '\u293B'
-  "{\\acwunderarcarrow}": '\u293B'
-  "\\acwunderarcarrow": '\u293B'
-  "\\curvearrowrightminus{}": '\u293C'
-  "{\\curvearrowrightminus}": '\u293C'
-  "\\curvearrowrightminus": '\u293C'
-  "\\curvearrowleftplus{}": '\u293D'
-  "{\\curvearrowleftplus}": '\u293D'
-  "\\curvearrowleftplus": '\u293D'
-  "\\cwundercurvearrow{}": '\u293E'
-  "{\\cwundercurvearrow}": '\u293E'
-  "\\cwundercurvearrow": '\u293E'
-  "\\ccwundercurvearrow{}": '\u293F'
-  "{\\ccwundercurvearrow}": '\u293F'
-  "\\ccwundercurvearrow": '\u293F'
-  "\\Elolarr{}": '\u2940'
-  "{\\Elolarr}": '\u2940'
-  "\\Elolarr": '\u2940'
-  "\\Elorarr{}": '\u2941'
-  "{\\Elorarr}": '\u2941'
-  "\\Elorarr": '\u2941'
-  "\\ElzRlarr{}": '\u2942'
-  "{\\ElzRlarr}": '\u2942'
-  "\\ElzRlarr": '\u2942'
-  "\\leftarrowshortrightarrow{}": '\u2943'
-  "{\\leftarrowshortrightarrow}": '\u2943'
-  "\\leftarrowshortrightarrow": '\u2943'
-  "\\ElzrLarr{}": '\u2944'
-  "{\\ElzrLarr}": '\u2944'
-  "\\ElzrLarr": '\u2944'
-  "\\rightarrowplus{}": '\u2945'
-  "{\\rightarrowplus}": '\u2945'
-  "\\rightarrowplus": '\u2945'
-  "\\leftarrowplus{}": '\u2946'
-  "{\\leftarrowplus}": '\u2946'
-  "\\leftarrowplus": '\u2946'
-  "\\Elzrarrx{}": '\u2947'
-  "{\\Elzrarrx}": '\u2947'
-  "\\Elzrarrx": '\u2947'
-  "\\leftrightarrowcircle{}": '\u2948'
-  "{\\leftrightarrowcircle}": '\u2948'
-  "\\leftrightarrowcircle": '\u2948'
-  "\\twoheaduparrowcircle{}": '\u2949'
-  "{\\twoheaduparrowcircle}": '\u2949'
-  "\\twoheaduparrowcircle": '\u2949'
-  "\\leftrightharpoon{}": '\u294A'
-  "{\\leftrightharpoon}": '\u294A'
-  "\\leftrightharpoon": '\u294A'
-  "\\rightleftharpoon{}": '\u294B'
-  "{\\rightleftharpoon}": '\u294B'
-  "\\rightleftharpoon": '\u294B'
-  "\\updownharpoonrightleft{}": '\u294C'
-  "{\\updownharpoonrightleft}": '\u294C'
-  "\\updownharpoonrightleft": '\u294C'
-  "\\updownharpoonleftright{}": '\u294D'
-  "{\\updownharpoonleftright}": '\u294D'
-  "\\updownharpoonleftright": '\u294D'
-  "\\LeftRightVector{}": '\u294E'
-  "{\\LeftRightVector}": '\u294E'
-  "\\LeftRightVector": '\u294E'
-  "\\RightUpDownVector{}": '\u294F'
-  "{\\RightUpDownVector}": '\u294F'
-  "\\RightUpDownVector": '\u294F'
-  "\\DownLeftRightVector{}": '\u2950'
-  "{\\DownLeftRightVector}": '\u2950'
-  "\\DownLeftRightVector": '\u2950'
-  "\\LeftUpDownVector{}": '\u2951'
-  "{\\LeftUpDownVector}": '\u2951'
-  "\\LeftUpDownVector": '\u2951'
-  "\\LeftVectorBar{}": '\u2952'
-  "{\\LeftVectorBar}": '\u2952'
-  "\\LeftVectorBar": '\u2952'
-  "\\RightVectorBar{}": '\u2953'
-  "{\\RightVectorBar}": '\u2953'
-  "\\RightVectorBar": '\u2953'
-  "\\RightUpVectorBar{}": '\u2954'
-  "{\\RightUpVectorBar}": '\u2954'
-  "\\RightUpVectorBar": '\u2954'
-  "\\RightDownVectorBar{}": '\u2955'
-  "{\\RightDownVectorBar}": '\u2955'
-  "\\RightDownVectorBar": '\u2955'
-  "\\DownLeftVectorBar{}": '\u2956'
-  "{\\DownLeftVectorBar}": '\u2956'
-  "\\DownLeftVectorBar": '\u2956'
-  "\\DownRightVectorBar{}": '\u2957'
-  "{\\DownRightVectorBar}": '\u2957'
-  "\\DownRightVectorBar": '\u2957'
-  "\\LeftUpVectorBar{}": '\u2958'
-  "{\\LeftUpVectorBar}": '\u2958'
-  "\\LeftUpVectorBar": '\u2958'
-  "\\LeftDownVectorBar{}": '\u2959'
-  "{\\LeftDownVectorBar}": '\u2959'
-  "\\LeftDownVectorBar": '\u2959'
-  "\\LeftTeeVector{}": '\u295A'
-  "{\\LeftTeeVector}": '\u295A'
-  "\\LeftTeeVector": '\u295A'
-  "\\RightTeeVector{}": '\u295B'
-  "{\\RightTeeVector}": '\u295B'
-  "\\RightTeeVector": '\u295B'
-  "\\RightUpTeeVector{}": '\u295C'
-  "{\\RightUpTeeVector}": '\u295C'
-  "\\RightUpTeeVector": '\u295C'
-  "\\RightDownTeeVector{}": '\u295D'
-  "{\\RightDownTeeVector}": '\u295D'
-  "\\RightDownTeeVector": '\u295D'
-  "\\DownLeftTeeVector{}": '\u295E'
-  "{\\DownLeftTeeVector}": '\u295E'
-  "\\DownLeftTeeVector": '\u295E'
-  "\\DownRightTeeVector{}": '\u295F'
-  "{\\DownRightTeeVector}": '\u295F'
-  "\\DownRightTeeVector": '\u295F'
-  "\\LeftUpTeeVector{}": '\u2960'
-  "{\\LeftUpTeeVector}": '\u2960'
-  "\\LeftUpTeeVector": '\u2960'
-  "\\LeftDownTeeVector{}": '\u2961'
-  "{\\LeftDownTeeVector}": '\u2961'
-  "\\LeftDownTeeVector": '\u2961'
-  "\\leftleftharpoons{}": '\u2962'
-  "{\\leftleftharpoons}": '\u2962'
-  "\\leftleftharpoons": '\u2962'
-  "\\upupharpoons{}": '\u2963'
-  "{\\upupharpoons}": '\u2963'
-  "\\upupharpoons": '\u2963'
-  "\\rightrightharpoons{}": '\u2964'
-  "{\\rightrightharpoons}": '\u2964'
-  "\\rightrightharpoons": '\u2964'
-  "\\downdownharpoons{}": '\u2965'
-  "{\\downdownharpoons}": '\u2965'
-  "\\downdownharpoons": '\u2965'
-  "\\leftrightharpoonsup{}": '\u2966'
-  "{\\leftrightharpoonsup}": '\u2966'
-  "\\leftrightharpoonsup": '\u2966'
-  "\\leftrightharpoonsdown{}": '\u2967'
-  "{\\leftrightharpoonsdown}": '\u2967'
-  "\\leftrightharpoonsdown": '\u2967'
-  "\\rightleftharpoonsup{}": '\u2968'
-  "{\\rightleftharpoonsup}": '\u2968'
-  "\\rightleftharpoonsup": '\u2968'
-  "\\rightleftharpoonsdown{}": '\u2969'
-  "{\\rightleftharpoonsdown}": '\u2969'
-  "\\rightleftharpoonsdown": '\u2969'
-  "\\leftbarharpoon{}": '\u296A'
-  "{\\leftbarharpoon}": '\u296A'
-  "\\leftbarharpoon": '\u296A'
-  "\\barleftharpoon{}": '\u296B'
-  "{\\barleftharpoon}": '\u296B'
-  "\\barleftharpoon": '\u296B'
-  "\\rightbarharpoon{}": '\u296C'
-  "{\\rightbarharpoon}": '\u296C'
-  "\\rightbarharpoon": '\u296C'
-  "\\barrightharpoon{}": '\u296D'
-  "{\\barrightharpoon}": '\u296D'
-  "\\barrightharpoon": '\u296D'
-  "\\UpEquilibrium{}": '\u296E'
-  "{\\UpEquilibrium}": '\u296E'
-  "\\UpEquilibrium": '\u296E'
-  "\\ReverseUpEquilibrium{}": '\u296F'
-  "{\\ReverseUpEquilibrium}": '\u296F'
-  "\\ReverseUpEquilibrium": '\u296F'
-  "\\RoundImplies{}": '\u2970'
-  "{\\RoundImplies}": '\u2970'
-  "\\RoundImplies": '\u2970'
-  "\\equalrightarrow{}": '\u2971'
-  "{\\equalrightarrow}": '\u2971'
-  "\\equalrightarrow": '\u2971'
-  "\\similarrightarrow{}": '\u2972'
-  "{\\similarrightarrow}": '\u2972'
-  "\\similarrightarrow": '\u2972'
-  "\\leftarrowsimilar{}": '\u2973'
-  "{\\leftarrowsimilar}": '\u2973'
-  "\\leftarrowsimilar": '\u2973'
-  "\\rightarrowsimilar{}": '\u2974'
-  "{\\rightarrowsimilar}": '\u2974'
-  "\\rightarrowsimilar": '\u2974'
-  "\\rightarrowapprox{}": '\u2975'
-  "{\\rightarrowapprox}": '\u2975'
-  "\\rightarrowapprox": '\u2975'
-  "\\ltlarr{}": '\u2976'
-  "{\\ltlarr}": '\u2976'
-  "\\ltlarr": '\u2976'
-  "\\leftarrowless{}": '\u2977'
-  "{\\leftarrowless}": '\u2977'
-  "\\leftarrowless": '\u2977'
-  "\\gtrarr{}": '\u2978'
-  "{\\gtrarr}": '\u2978'
-  "\\gtrarr": '\u2978'
-  "\\subrarr{}": '\u2979'
-  "{\\subrarr}": '\u2979'
-  "\\subrarr": '\u2979'
-  "\\leftarrowsubset{}": '\u297A'
-  "{\\leftarrowsubset}": '\u297A'
-  "\\leftarrowsubset": '\u297A'
-  "\\suplarr{}": '\u297B'
-  "{\\suplarr}": '\u297B'
-  "\\suplarr": '\u297B'
-  "\\ElsevierGlyph{E214}": '\u297C'
-  "\\ElsevierGlyph{E215}": '\u297D'
-  "\\upfishtail{}": '\u297E'
-  "{\\upfishtail}": '\u297E'
-  "\\upfishtail": '\u297E'
-  "\\downfishtail{}": '\u297F'
-  "{\\downfishtail}": '\u297F'
-  "\\downfishtail": '\u297F'
-  "\\Elztfnc{}": '\u2980'
-  "{\\Elztfnc}": '\u2980'
-  "\\Elztfnc": '\u2980'
-  "\\spot{}": '\u2981'
-  "{\\spot}": '\u2981'
-  "\\spot": '\u2981'
-  "\\typecolon{}": '\u2982'
-  "{\\typecolon}": '\u2982'
-  "\\typecolon": '\u2982'
-  "\\lBrace{}": '\u2983'
-  "{\\lBrace}": '\u2983'
-  "\\lBrace": '\u2983'
-  "\\rBrace{}": '\u2984'
-  "{\\rBrace}": '\u2984'
-  "\\rBrace": '\u2984'
-  "\\ElsevierGlyph{3018}": '\u2985'
-  "\\Elroang{}": '\u2986'
-  "{\\Elroang}": '\u2986'
-  "\\Elroang": '\u2986'
-  "\\limg{}": '\u2987'
-  "{\\limg}": '\u2987'
-  "\\limg": '\u2987'
-  "\\rimg{}": '\u2988'
-  "{\\rimg}": '\u2988'
-  "\\rimg": '\u2988'
-  "\\lblot{}": '\u2989'
-  "{\\lblot}": '\u2989'
-  "\\lblot": '\u2989'
-  "\\rblot{}": '\u298A'
-  "{\\rblot}": '\u298A'
-  "\\rblot": '\u298A'
-  "\\lbrackubar{}": '\u298B'
-  "{\\lbrackubar}": '\u298B'
-  "\\lbrackubar": '\u298B'
-  "\\rbrackubar{}": '\u298C'
-  "{\\rbrackubar}": '\u298C'
-  "\\rbrackubar": '\u298C'
-  "\\lbrackultick{}": '\u298D'
-  "{\\lbrackultick}": '\u298D'
-  "\\lbrackultick": '\u298D'
-  "\\rbracklrtick{}": '\u298E'
-  "{\\rbracklrtick}": '\u298E'
-  "\\rbracklrtick": '\u298E'
-  "\\lbracklltick{}": '\u298F'
-  "{\\lbracklltick}": '\u298F'
-  "\\lbracklltick": '\u298F'
-  "\\rbrackurtick{}": '\u2990'
-  "{\\rbrackurtick}": '\u2990'
-  "\\rbrackurtick": '\u2990'
-  "\\langledot{}": '\u2991'
-  "{\\langledot}": '\u2991'
-  "\\langledot": '\u2991'
-  "\\rangledot{}": '\u2992'
-  "{\\rangledot}": '\u2992'
-  "\\rangledot": '\u2992'
-  "<\\kern-0.58em(": '\u2993'
-  "\\ElsevierGlyph{E291}": '\u2994'
-  "\\Lparengtr{}": '\u2995'
-  "{\\Lparengtr}": '\u2995'
-  "\\Lparengtr": '\u2995'
-  "\\Rparenless{}": '\u2996'
-  "{\\Rparenless}": '\u2996'
-  "\\Rparenless": '\u2996'
-  "\\lblkbrbrak{}": '\u2997'
-  "{\\lblkbrbrak}": '\u2997'
-  "\\lblkbrbrak": '\u2997'
-  "\\rblkbrbrak{}": '\u2998'
-  "{\\rblkbrbrak}": '\u2998'
-  "\\rblkbrbrak": '\u2998'
-  "\\Elzddfnc{}": '\u2999'
-  "{\\Elzddfnc}": '\u2999'
-  "\\Elzddfnc": '\u2999'
-  "\\vzigzag{}": '\u299A'
-  "{\\vzigzag}": '\u299A'
-  "\\vzigzag": '\u299A'
-  "\\measuredangleleft{}": '\u299B'
-  "{\\measuredangleleft}": '\u299B'
-  "\\measuredangleleft": '\u299B'
-  "\\Angle{}": '\u299C'
-  "{\\Angle}": '\u299C'
-  "\\Angle": '\u299C'
-  "\\rightanglemdot{}": '\u299D'
-  "{\\rightanglemdot}": '\u299D'
-  "\\rightanglemdot": '\u299D'
-  "\\angles{}": '\u299E'
-  "{\\angles}": '\u299E'
-  "\\angles": '\u299E'
-  "\\angdnr{}": '\u299F'
-  "{\\angdnr}": '\u299F'
-  "\\angdnr": '\u299F'
-  "\\Elzlpargt{}": '\u29A0'
-  "{\\Elzlpargt}": '\u29A0'
-  "\\Elzlpargt": '\u29A0'
-  "\\sphericalangleup{}": '\u29A1'
-  "{\\sphericalangleup}": '\u29A1'
-  "\\sphericalangleup": '\u29A1'
-  "\\turnangle{}": '\u29A2'
-  "{\\turnangle}": '\u29A2'
-  "\\turnangle": '\u29A2'
-  "\\revangle{}": '\u29A3'
-  "{\\revangle}": '\u29A3'
-  "\\revangle": '\u29A3'
-  "\\angleubar{}": '\u29A4'
-  "{\\angleubar}": '\u29A4'
-  "\\angleubar": '\u29A4'
-  "\\revangleubar{}": '\u29A5'
-  "{\\revangleubar}": '\u29A5'
-  "\\revangleubar": '\u29A5'
-  "\\wideangledown{}": '\u29A6'
-  "{\\wideangledown}": '\u29A6'
-  "\\wideangledown": '\u29A6'
-  "\\wideangleup{}": '\u29A7'
-  "{\\wideangleup}": '\u29A7'
-  "\\wideangleup": '\u29A7'
-  "\\measanglerutone{}": '\u29A8'
-  "{\\measanglerutone}": '\u29A8'
-  "\\measanglerutone": '\u29A8'
-  "\\measanglelutonw{}": '\u29A9'
-  "{\\measanglelutonw}": '\u29A9'
-  "\\measanglelutonw": '\u29A9'
-  "\\measanglerdtose{}": '\u29AA'
-  "{\\measanglerdtose}": '\u29AA'
-  "\\measanglerdtose": '\u29AA'
-  "\\measangleldtosw{}": '\u29AB'
-  "{\\measangleldtosw}": '\u29AB'
-  "\\measangleldtosw": '\u29AB'
-  "\\measangleurtone{}": '\u29AC'
-  "{\\measangleurtone}": '\u29AC'
-  "\\measangleurtone": '\u29AC'
-  "\\measangleultonw{}": '\u29AD'
-  "{\\measangleultonw}": '\u29AD'
-  "\\measangleultonw": '\u29AD'
-  "\\measangledrtose{}": '\u29AE'
-  "{\\measangledrtose}": '\u29AE'
-  "\\measangledrtose": '\u29AE'
-  "\\measangledltosw{}": '\u29AF'
-  "{\\measangledltosw}": '\u29AF'
-  "\\measangledltosw": '\u29AF'
-  "\\revemptyset{}": '\u29B0'
-  "{\\revemptyset}": '\u29B0'
-  "\\revemptyset": '\u29B0'
-  "\\emptysetobar{}": '\u29B1'
-  "{\\emptysetobar}": '\u29B1'
-  "\\emptysetobar": '\u29B1'
-  "\\emptysetocirc{}": '\u29B2'
-  "{\\emptysetocirc}": '\u29B2'
-  "\\emptysetocirc": '\u29B2'
-  "\\emptysetoarr{}": '\u29B3'
-  "{\\emptysetoarr}": '\u29B3'
-  "\\emptysetoarr": '\u29B3'
-  "\\emptysetoarrl{}": '\u29B4'
-  "{\\emptysetoarrl}": '\u29B4'
-  "\\emptysetoarrl": '\u29B4'
-  "\\ElsevierGlyph{E260}": '\u29B5'
-  "\\ElsevierGlyph{E61B}": '\u29B6'
-  "\\circledparallel{}": '\u29B7'
-  "{\\circledparallel}": '\u29B7'
-  "\\circledparallel": '\u29B7'
-  "\\circledbslash{}": '\u29B8'
-  "{\\circledbslash}": '\u29B8'
-  "\\circledbslash": '\u29B8'
-  "\\operp{}": '\u29B9'
-  "{\\operp}": '\u29B9'
-  "\\operp": '\u29B9'
-  "\\obot{}": '\u29BA'
-  "{\\obot}": '\u29BA'
-  "\\obot": '\u29BA'
-  "\\olcross{}": '\u29BB'
-  "{\\olcross}": '\u29BB'
-  "\\olcross": '\u29BB'
-  "\\odotslashdot{}": '\u29BC'
-  "{\\odotslashdot}": '\u29BC'
-  "\\odotslashdot": '\u29BC'
-  "\\uparrowoncircle{}": '\u29BD'
-  "{\\uparrowoncircle}": '\u29BD'
-  "\\uparrowoncircle": '\u29BD'
-  "\\circledwhitebullet{}": '\u29BE'
-  "{\\circledwhitebullet}": '\u29BE'
-  "\\circledwhitebullet": '\u29BE'
-  "\\circledbullet{}": '\u29BF'
-  "{\\circledbullet}": '\u29BF'
-  "\\circledbullet": '\u29BF'
-  "\\circledless{}": '\u29C0'
-  "{\\circledless}": '\u29C0'
-  "\\circledless": '\u29C0'
-  "\\circledgtr{}": '\u29C1'
-  "{\\circledgtr}": '\u29C1'
-  "\\circledgtr": '\u29C1'
-  "\\cirscir{}": '\u29C2'
-  "{\\cirscir}": '\u29C2'
-  "\\cirscir": '\u29C2'
-  "\\cirE{}": '\u29C3'
-  "{\\cirE}": '\u29C3'
-  "\\cirE": '\u29C3'
-  "\\boxslash{}": '\u29C4'
-  "{\\boxslash}": '\u29C4'
-  "\\boxslash": '\u29C4'
-  "\\boxbslash{}": '\u29C5'
-  "{\\boxbslash}": '\u29C5'
-  "\\boxbslash": '\u29C5'
-  "\\boxast{}": '\u29C6'
-  "{\\boxast}": '\u29C6'
-  "\\boxast": '\u29C6'
-  "\\boxcircle{}": '\u29C7'
-  "{\\boxcircle}": '\u29C7'
-  "\\boxcircle": '\u29C7'
-  "\\boxbox{}": '\u29C8'
-  "{\\boxbox}": '\u29C8'
-  "\\boxbox": '\u29C8'
-  "\\boxonbox{}": '\u29C9'
-  "{\\boxonbox}": '\u29C9'
-  "\\boxonbox": '\u29C9'
-  "\\ElzLap{}": '\u29CA'
-  "{\\ElzLap}": '\u29CA'
-  "\\ElzLap": '\u29CA'
-  "\\Elzdefas{}": '\u29CB'
-  "{\\Elzdefas}": '\u29CB'
-  "\\Elzdefas": '\u29CB'
-  "\\triangles{}": '\u29CC'
-  "{\\triangles}": '\u29CC'
-  "\\triangles": '\u29CC'
-  "\\triangleserifs{}": '\u29CD'
-  "{\\triangleserifs}": '\u29CD'
-  "\\triangleserifs": '\u29CD'
-  "\\rtriltri{}": '\u29CE'
-  "{\\rtriltri}": '\u29CE'
-  "\\rtriltri": '\u29CE'
-  "\\LeftTriangleBar{}": '\u29CF'
-  "{\\LeftTriangleBar}": '\u29CF'
-  "\\LeftTriangleBar": '\u29CF'
-  "\\RightTriangleBar{}": '\u29D0'
-  "{\\RightTriangleBar}": '\u29D0'
-  "\\RightTriangleBar": '\u29D0'
-  "\\lfbowtie{}": '\u29D1'
-  "{\\lfbowtie}": '\u29D1'
-  "\\lfbowtie": '\u29D1'
-  "\\rfbowtie{}": '\u29D2'
-  "{\\rfbowtie}": '\u29D2'
-  "\\rfbowtie": '\u29D2'
-  "\\fbowtie{}": '\u29D3'
-  "{\\fbowtie}": '\u29D3'
-  "\\fbowtie": '\u29D3'
-  "\\lftimes{}": '\u29D4'
-  "{\\lftimes}": '\u29D4'
-  "\\lftimes": '\u29D4'
-  "\\rftimes{}": '\u29D5'
-  "{\\rftimes}": '\u29D5'
-  "\\rftimes": '\u29D5'
-  "\\hourglass{}": '\u29D6'
-  "{\\hourglass}": '\u29D6'
-  "\\hourglass": '\u29D6'
-  "\\blackhourglass{}": '\u29D7'
-  "{\\blackhourglass}": '\u29D7'
-  "\\blackhourglass": '\u29D7'
-  "\\lvzigzag{}": '\u29D8'
-  "{\\lvzigzag}": '\u29D8'
-  "\\lvzigzag": '\u29D8'
-  "\\rvzigzag{}": '\u29D9'
-  "{\\rvzigzag}": '\u29D9'
-  "\\rvzigzag": '\u29D9'
-  "\\Lvzigzag{}": '\u29DA'
-  "{\\Lvzigzag}": '\u29DA'
-  "\\Lvzigzag": '\u29DA'
-  "\\Rvzigzag{}": '\u29DB'
-  "{\\Rvzigzag}": '\u29DB'
-  "\\Rvzigzag": '\u29DB'
-  "\\ElsevierGlyph{E372}": '\u29DC'
-  "\\tieinfty{}": '\u29DD'
-  "{\\tieinfty}": '\u29DD'
-  "\\tieinfty": '\u29DD'
-  "\\nvinfty{}": '\u29DE'
-  "{\\nvinfty}": '\u29DE'
-  "\\nvinfty": '\u29DE'
-  "\\multimapboth{}": '\u29DF'
-  "{\\multimapboth}": '\u29DF'
-  "\\multimapboth": '\u29DF'
-  "\\laplac{}": '\u29E0'
-  "{\\laplac}": '\u29E0'
-  "\\laplac": '\u29E0'
-  "\\lrtriangleeq{}": '\u29E1'
-  "{\\lrtriangleeq}": '\u29E1'
-  "\\lrtriangleeq": '\u29E1'
-  "\\shuffle{}": '\u29E2'
-  "{\\shuffle}": '\u29E2'
-  "\\shuffle": '\u29E2'
-  "\\eparsl{}": '\u29E3'
-  "{\\eparsl}": '\u29E3'
-  "\\eparsl": '\u29E3'
-  "\\smeparsl{}": '\u29E4'
-  "{\\smeparsl}": '\u29E4'
-  "\\smeparsl": '\u29E4'
-  "\\eqvparsl{}": '\u29E5'
-  "{\\eqvparsl}": '\u29E5'
-  "\\eqvparsl": '\u29E5'
-  "\\gleichstark{}": '\u29E6'
-  "{\\gleichstark}": '\u29E6'
-  "\\gleichstark": '\u29E6'
-  "\\thermod{}": '\u29E7'
-  "{\\thermod}": '\u29E7'
-  "\\thermod": '\u29E7'
-  "\\downtriangleleftblack{}": '\u29E8'
-  "{\\downtriangleleftblack}": '\u29E8'
-  "\\downtriangleleftblack": '\u29E8'
-  "\\downtrianglerightblack{}": '\u29E9'
-  "{\\downtrianglerightblack}": '\u29E9'
-  "\\downtrianglerightblack": '\u29E9'
-  "\\blackdiamonddownarrow{}": '\u29EA'
-  "{\\blackdiamonddownarrow}": '\u29EA'
-  "\\blackdiamonddownarrow": '\u29EA'
-  "\\blacklozenge{}": '\u29EB'
-  "{\\blacklozenge}": '\u29EB'
-  "\\blacklozenge": '\u29EB'
-  "\\circledownarrow{}": '\u29EC'
-  "{\\circledownarrow}": '\u29EC'
-  "\\circledownarrow": '\u29EC'
-  "\\blackcircledownarrow{}": '\u29ED'
-  "{\\blackcircledownarrow}": '\u29ED'
-  "\\blackcircledownarrow": '\u29ED'
-  "\\errbarsquare{}": '\u29EE'
-  "{\\errbarsquare}": '\u29EE'
-  "\\errbarsquare": '\u29EE'
-  "\\errbarblacksquare{}": '\u29EF'
-  "{\\errbarblacksquare}": '\u29EF'
-  "\\errbarblacksquare": '\u29EF'
-  "\\errbardiamond{}": '\u29F0'
-  "{\\errbardiamond}": '\u29F0'
-  "\\errbardiamond": '\u29F0'
-  "\\errbarblackdiamond{}": '\u29F1'
-  "{\\errbarblackdiamond}": '\u29F1'
-  "\\errbarblackdiamond": '\u29F1'
-  "\\errbarcircle{}": '\u29F2'
-  "{\\errbarcircle}": '\u29F2'
-  "\\errbarcircle": '\u29F2'
-  "\\errbarblackcircle{}": '\u29F3'
-  "{\\errbarblackcircle}": '\u29F3'
-  "\\errbarblackcircle": '\u29F3'
-  "\\RuleDelayed{}": '\u29F4'
-  "{\\RuleDelayed}": '\u29F4'
-  "\\RuleDelayed": '\u29F4'
-  "\\dsol{}": '\u29F6'
-  "{\\dsol}": '\u29F6'
-  "\\dsol": '\u29F6'
-  "\\rsolbar{}": '\u29F7'
-  "{\\rsolbar}": '\u29F7'
-  "\\rsolbar": '\u29F7'
-  "\\xsol{}": '\u29F8'
-  "{\\xsol}": '\u29F8'
-  "\\xsol": '\u29F8'
-  "\\zhide{}": '\u29F9'
-  "{\\zhide}": '\u29F9'
-  "\\zhide": '\u29F9'
-  "\\doubleplus{}": '\u29FA'
-  "{\\doubleplus}": '\u29FA'
-  "\\doubleplus": '\u29FA'
-  "\\tripleplus{}": '\u29FB'
-  "{\\tripleplus}": '\u29FB'
-  "\\tripleplus": '\u29FB'
-  "\\lcurvyangle{}": '\u29FC'
-  "{\\lcurvyangle}": '\u29FC'
-  "\\lcurvyangle": '\u29FC'
-  "\\rcurvyangle{}": '\u29FD'
-  "{\\rcurvyangle}": '\u29FD'
-  "\\rcurvyangle": '\u29FD'
-  "\\tplus{}": '\u29FE'
-  "{\\tplus}": '\u29FE'
-  "\\tplus": '\u29FE'
-  "\\tminus{}": '\u29FF'
-  "{\\tminus}": '\u29FF'
-  "\\tminus": '\u29FF'
-  "\\bigodot{}": '\u2A00'
-  "{\\bigodot}": '\u2A00'
-  "\\bigodot": '\u2A00'
-  "\\bigoplus{}": '\u2A01'
-  "{\\bigoplus}": '\u2A01'
-  "\\bigoplus": '\u2A01'
-  "\\bigotimes{}": '\u2A02'
-  "{\\bigotimes}": '\u2A02'
-  "\\bigotimes": '\u2A02'
-  "\\bigcupdot{}": '\u2A03'
-  "{\\bigcupdot}": '\u2A03'
-  "\\bigcupdot": '\u2A03'
-  "\\Elxuplus{}": '\u2A04'
-  "{\\Elxuplus}": '\u2A04'
-  "\\Elxuplus": '\u2A04'
-  "\\ElzThr{}": '\u2A05'
-  "{\\ElzThr}": '\u2A05'
-  "\\ElzThr": '\u2A05'
-  "\\Elxsqcup{}": '\u2A06'
-  "{\\Elxsqcup}": '\u2A06'
-  "\\Elxsqcup": '\u2A06'
-  "\\ElzInf{}": '\u2A07'
-  "{\\ElzInf}": '\u2A07'
-  "\\ElzInf": '\u2A07'
-  "\\ElzSup{}": '\u2A08'
-  "{\\ElzSup}": '\u2A08'
-  "\\ElzSup": '\u2A08'
-  "\\varprod{}": '\u2A09'
-  "{\\varprod}": '\u2A09'
-  "\\varprod": '\u2A09'
-  "\\modtwosum{}": '\u2A0A'
-  "{\\modtwosum}": '\u2A0A'
-  "\\modtwosum": '\u2A0A'
-  "\\sumint{}": '\u2A0B'
-  "{\\sumint}": '\u2A0B'
-  "\\sumint": '\u2A0B'
-  "\\iiiint{}": '\u2A0C'
-  "{\\iiiint}": '\u2A0C'
-  "\\iiiint": '\u2A0C'
-  "\\ElzCint{}": '\u2A0D'
-  "{\\ElzCint}": '\u2A0D'
-  "\\ElzCint": '\u2A0D'
-  "\\intBar{}": '\u2A0E'
-  "{\\intBar}": '\u2A0E'
-  "\\intBar": '\u2A0E'
-  "\\clockoint{}": '\u2A0F'
-  "{\\clockoint}": '\u2A0F'
-  "\\clockoint": '\u2A0F'
-  "\\ElsevierGlyph{E395}": '\u2A10'
-  "\\awint{}": '\u2A11'
-  "{\\awint}": '\u2A11'
-  "\\awint": '\u2A11'
-  "\\rppolint{}": '\u2A12'
-  "{\\rppolint}": '\u2A12'
-  "\\rppolint": '\u2A12'
-  "\\scpolint{}": '\u2A13'
-  "{\\scpolint}": '\u2A13'
-  "\\scpolint": '\u2A13'
-  "\\npolint{}": '\u2A14'
-  "{\\npolint}": '\u2A14'
-  "\\npolint": '\u2A14'
-  "\\pointint{}": '\u2A15'
-  "{\\pointint}": '\u2A15'
-  "\\pointint": '\u2A15'
-  "\\sqrint{}": '\u2A16'
-  "{\\sqrint}": '\u2A16'
-  "\\sqrint": '\u2A16'
-  "\\intlarhk{}": '\u2A17'
-  "{\\intlarhk}": '\u2A17'
-  "\\intlarhk": '\u2A17'
-  "\\intx{}": '\u2A18'
-  "{\\intx}": '\u2A18'
-  "\\intx": '\u2A18'
-  "\\intcap{}": '\u2A19'
-  "{\\intcap}": '\u2A19'
-  "\\intcap": '\u2A19'
-  "\\intcup{}": '\u2A1A'
-  "{\\intcup}": '\u2A1A'
-  "\\intcup": '\u2A1A'
-  "\\upint{}": '\u2A1B'
-  "{\\upint}": '\u2A1B'
-  "\\upint": '\u2A1B'
-  "\\lowint{}": '\u2A1C'
-  "{\\lowint}": '\u2A1C'
-  "\\lowint": '\u2A1C'
-  "\\Join{}": '\u2A1D'
-  "{\\Join}": '\u2A1D'
-  "\\Join": '\u2A1D'
-  "\\bigtriangleleft{}": '\u2A1E'
-  "{\\bigtriangleleft}": '\u2A1E'
-  "\\bigtriangleleft": '\u2A1E'
-  "\\zcmp{}": '\u2A1F'
-  "{\\zcmp}": '\u2A1F'
-  "\\zcmp": '\u2A1F'
-  "\\zpipe{}": '\u2A20'
-  "{\\zpipe}": '\u2A20'
-  "\\zpipe": '\u2A20'
-  "\\zproject{}": '\u2A21'
-  "{\\zproject}": '\u2A21'
-  "\\zproject": '\u2A21'
-  "\\ringplus{}": '\u2A22'
-  "{\\ringplus}": '\u2A22'
-  "\\ringplus": '\u2A22'
-  "\\plushat{}": '\u2A23'
-  "{\\plushat}": '\u2A23'
-  "\\plushat": '\u2A23'
-  "\\simplus{}": '\u2A24'
-  "{\\simplus}": '\u2A24'
-  "\\simplus": '\u2A24'
-  "\\ElsevierGlyph{E25A}": '\u2A25'
-  "\\plussim{}": '\u2A26'
-  "{\\plussim}": '\u2A26'
-  "\\plussim": '\u2A26'
-  "\\plussubtwo{}": '\u2A27'
-  "{\\plussubtwo}": '\u2A27'
-  "\\plussubtwo": '\u2A27'
-  "\\plustrif{}": '\u2A28'
-  "{\\plustrif}": '\u2A28'
-  "\\plustrif": '\u2A28'
-  "\\commaminus{}": '\u2A29'
-  "{\\commaminus}": '\u2A29'
-  "\\commaminus": '\u2A29'
-  "\\ElsevierGlyph{E25B}": '\u2A2A'
-  "\\minusfdots{}": '\u2A2B'
-  "{\\minusfdots}": '\u2A2B'
-  "\\minusfdots": '\u2A2B'
-  "\\minusrdots{}": '\u2A2C'
-  "{\\minusrdots}": '\u2A2C'
-  "\\minusrdots": '\u2A2C'
-  "\\ElsevierGlyph{E25C}": '\u2A2D'
-  "\\ElsevierGlyph{E25D}": '\u2A2E'
-  "\\ElzTimes{}": '\u2A2F'
-  "{\\ElzTimes}": '\u2A2F'
-  "\\ElzTimes": '\u2A2F'
-  "\\dottimes{}": '\u2A30'
-  "{\\dottimes}": '\u2A30'
-  "\\dottimes": '\u2A30'
-  "\\timesbar{}": '\u2A31'
-  "{\\timesbar}": '\u2A31'
-  "\\timesbar": '\u2A31'
-  "\\btimes{}": '\u2A32'
-  "{\\btimes}": '\u2A32'
-  "\\btimes": '\u2A32'
-  "\\smashtimes{}": '\u2A33'
-  "{\\smashtimes}": '\u2A33'
-  "\\smashtimes": '\u2A33'
-  "\\ElsevierGlyph{E25E}": '\u2A34'
-  "\\otimeshat{}": '\u2A36'
-  "{\\otimeshat}": '\u2A36'
-  "\\otimeshat": '\u2A36'
-  "\\Otimes{}": '\u2A37'
-  "{\\Otimes}": '\u2A37'
-  "\\Otimes": '\u2A37'
-  "\\odiv{}": '\u2A38'
-  "{\\odiv}": '\u2A38'
-  "\\odiv": '\u2A38'
-  "\\triangleplus{}": '\u2A39'
-  "{\\triangleplus}": '\u2A39'
-  "\\triangleplus": '\u2A39'
-  "\\triangleminus{}": '\u2A3A'
-  "{\\triangleminus}": '\u2A3A'
-  "\\triangleminus": '\u2A3A'
-  "\\triangletimes{}": '\u2A3B'
-  "{\\triangletimes}": '\u2A3B'
-  "\\triangletimes": '\u2A3B'
-  "\\ElsevierGlyph{E259}": '\u2A3C'
-  "\\intprodr{}": '\u2A3D'
-  "{\\intprodr}": '\u2A3D'
-  "\\intprodr": '\u2A3D'
-  "\\fcmp{}": '\u2A3E'
-  "{\\fcmp}": '\u2A3E'
-  "\\fcmp": '\u2A3E'
-  "\\amalg{}": '\u2A3F'
-  "{\\amalg}": '\u2A3F'
-  "\\amalg": '\u2A3F'
-  "\\capdot{}": '\u2A40'
-  "{\\capdot}": '\u2A40'
-  "\\capdot": '\u2A40'
-  "\\uminus{}": '\u2A41'
-  "{\\uminus}": '\u2A41'
-  "\\uminus": '\u2A41'
-  "\\barcup{}": '\u2A42'
-  "{\\barcup}": '\u2A42'
-  "\\barcup": '\u2A42'
-  "\\barcap{}": '\u2A43'
-  "{\\barcap}": '\u2A43'
-  "\\barcap": '\u2A43'
-  "\\capwedge{}": '\u2A44'
-  "{\\capwedge}": '\u2A44'
-  "\\capwedge": '\u2A44'
-  "\\cupvee{}": '\u2A45'
-  "{\\cupvee}": '\u2A45'
-  "\\cupvee": '\u2A45'
-  "\\cupovercap{}": '\u2A46'
-  "{\\cupovercap}": '\u2A46'
-  "\\cupovercap": '\u2A46'
-  "\\capovercup{}": '\u2A47'
-  "{\\capovercup}": '\u2A47'
-  "\\capovercup": '\u2A47'
-  "\\cupbarcap{}": '\u2A48'
-  "{\\cupbarcap}": '\u2A48'
-  "\\cupbarcap": '\u2A48'
-  "\\capbarcup{}": '\u2A49'
-  "{\\capbarcup}": '\u2A49'
-  "\\capbarcup": '\u2A49'
-  "\\twocups{}": '\u2A4A'
-  "{\\twocups}": '\u2A4A'
-  "\\twocups": '\u2A4A'
-  "\\twocaps{}": '\u2A4B'
-  "{\\twocaps}": '\u2A4B'
-  "\\twocaps": '\u2A4B'
-  "\\closedvarcup{}": '\u2A4C'
-  "{\\closedvarcup}": '\u2A4C'
-  "\\closedvarcup": '\u2A4C'
-  "\\closedvarcap{}": '\u2A4D'
-  "{\\closedvarcap}": '\u2A4D'
-  "\\closedvarcap": '\u2A4D'
-  "\\Sqcap{}": '\u2A4E'
-  "{\\Sqcap}": '\u2A4E'
-  "\\Sqcap": '\u2A4E'
-  "\\Sqcup{}": '\u2A4F'
-  "{\\Sqcup}": '\u2A4F'
-  "\\Sqcup": '\u2A4F'
-  "\\closedvarcupsmashprod{}": '\u2A50'
-  "{\\closedvarcupsmashprod}": '\u2A50'
-  "\\closedvarcupsmashprod": '\u2A50'
-  "\\wedgeodot{}": '\u2A51'
-  "{\\wedgeodot}": '\u2A51'
-  "\\wedgeodot": '\u2A51'
-  "\\veeodot{}": '\u2A52'
-  "{\\veeodot}": '\u2A52'
-  "\\veeodot": '\u2A52'
-  "\\ElzAnd{}": '\u2A53'
-  "{\\ElzAnd}": '\u2A53'
-  "\\ElzAnd": '\u2A53'
-  "\\ElzOr{}": '\u2A54'
-  "{\\ElzOr}": '\u2A54'
-  "\\ElzOr": '\u2A54'
-  "\\ElsevierGlyph{E36E}": '\u2A55'
-  "\\ElOr{}": '\u2A56'
-  "{\\ElOr}": '\u2A56'
-  "\\ElOr": '\u2A56'
-  "\\bigslopedvee{}": '\u2A57'
-  "{\\bigslopedvee}": '\u2A57'
-  "\\bigslopedvee": '\u2A57'
-  "\\bigslopedwedge{}": '\u2A58'
-  "{\\bigslopedwedge}": '\u2A58'
-  "\\bigslopedwedge": '\u2A58'
-  "\\veeonwedge{}": '\u2A59'
-  "{\\veeonwedge}": '\u2A59'
-  "\\veeonwedge": '\u2A59'
-  "\\wedgemidvert{}": '\u2A5A'
-  "{\\wedgemidvert}": '\u2A5A'
-  "\\wedgemidvert": '\u2A5A'
-  "\\veemidvert{}": '\u2A5B'
-  "{\\veemidvert}": '\u2A5B'
-  "\\veemidvert": '\u2A5B'
-  "\\midbarwedge{}": '\u2A5C'
-  "{\\midbarwedge}": '\u2A5C'
-  "\\midbarwedge": '\u2A5C'
-  "\\midbarvee{}": '\u2A5D'
-  "{\\midbarvee}": '\u2A5D'
-  "\\midbarvee": '\u2A5D'
-  "\\Elzminhat{}": '\u2A5F'
-  "{\\Elzminhat}": '\u2A5F'
-  "\\Elzminhat": '\u2A5F'
-  "\\wedgedoublebar{}": '\u2A60'
-  "{\\wedgedoublebar}": '\u2A60'
-  "\\wedgedoublebar": '\u2A60'
-  "\\varveebar{}": '\u2A61'
-  "{\\varveebar}": '\u2A61'
-  "\\varveebar": '\u2A61'
-  "\\doublebarvee{}": '\u2A62'
-  "{\\doublebarvee}": '\u2A62'
-  "\\doublebarvee": '\u2A62'
-  "\\dsub{}": '\u2A64'
-  "{\\dsub}": '\u2A64'
-  "\\dsub": '\u2A64'
-  "\\rsub{}": '\u2A65'
-  "{\\rsub}": '\u2A65'
-  "\\rsub": '\u2A65'
-  "\\eqdot{}": '\u2A66'
-  "{\\eqdot}": '\u2A66'
-  "\\eqdot": '\u2A66'
-  "\\dotequiv{}": '\u2A67'
-  "{\\dotequiv}": '\u2A67'
-  "\\dotequiv": '\u2A67'
-  "\\equivVert{}": '\u2A68'
-  "{\\equivVert}": '\u2A68'
-  "\\equivVert": '\u2A68'
-  "\\equivVvert{}": '\u2A69'
-  "{\\equivVvert}": '\u2A69'
-  "\\equivVvert": '\u2A69'
-  "\\dotsim{}": '\u2A6A'
-  "{\\dotsim}": '\u2A6A'
-  "\\dotsim": '\u2A6A'
-  "\\simrdots{}": '\u2A6B'
-  "{\\simrdots}": '\u2A6B'
-  "\\simrdots": '\u2A6B'
-  "\\simminussim{}": '\u2A6C'
-  "{\\simminussim}": '\u2A6C'
-  "\\simminussim": '\u2A6C'
-  "\\congdot{}": '\u2A6D'
-  "{\\congdot}": '\u2A6D'
-  "\\congdot": '\u2A6D'
-  "\\stackrel{*}{=}": '\u2A6E'
-  "\\hatapprox{}": '\u2A6F'
-  "{\\hatapprox}": '\u2A6F'
-  "\\hatapprox": '\u2A6F'
-  "\\approxeqq{}": '\u2A70'
-  "{\\approxeqq}": '\u2A70'
-  "\\approxeqq": '\u2A70'
-  "\\eqqplus{}": '\u2A71'
-  "{\\eqqplus}": '\u2A71'
-  "\\eqqplus": '\u2A71'
-  "\\pluseqq{}": '\u2A72'
-  "{\\pluseqq}": '\u2A72'
-  "\\pluseqq": '\u2A72'
-  "\\eqqsim{}": '\u2A73'
-  "{\\eqqsim}": '\u2A73'
-  "\\eqqsim": '\u2A73'
-  "\\Coloneqq{}": '\u2A74'
-  "{\\Coloneqq}": '\u2A74'
-  "\\Coloneqq": '\u2A74'
-  "\\Equal{}": '\u2A75'
-  "{\\Equal}": '\u2A75'
-  "\\Equal": '\u2A75'
-  "\\Same{}": '\u2A76'
-  "{\\Same}": '\u2A76'
-  "\\Same": '\u2A76'
-  "\\ddotseq{}": '\u2A77'
-  "{\\ddotseq}": '\u2A77'
-  "\\ddotseq": '\u2A77'
-  "\\equivDD{}": '\u2A78'
-  "{\\equivDD}": '\u2A78'
-  "\\equivDD": '\u2A78'
-  "\\ltcir{}": '\u2A79'
-  "{\\ltcir}": '\u2A79'
-  "\\ltcir": '\u2A79'
-  "\\gtcir{}": '\u2A7A'
-  "{\\gtcir}": '\u2A7A'
-  "\\gtcir": '\u2A7A'
-  "\\ltquest{}": '\u2A7B'
-  "{\\ltquest}": '\u2A7B'
-  "\\ltquest": '\u2A7B'
-  "\\gtquest{}": '\u2A7C'
-  "{\\gtquest}": '\u2A7C'
-  "\\gtquest": '\u2A7C'
-  "\\leqslant{}": '\u2A7D'
-  "{\\leqslant}": '\u2A7D'
-  "\\leqslant": '\u2A7D'
-  "\\geqslant{}": '\u2A7E'
-  "{\\geqslant}": '\u2A7E'
-  "\\geqslant": '\u2A7E'
-  "\\lesdot{}": '\u2A7F'
-  "{\\lesdot}": '\u2A7F'
-  "\\lesdot": '\u2A7F'
-  "\\gesdot{}": '\u2A80'
-  "{\\gesdot}": '\u2A80'
-  "\\gesdot": '\u2A80'
-  "\\lesdoto{}": '\u2A81'
-  "{\\lesdoto}": '\u2A81'
-  "\\lesdoto": '\u2A81'
-  "\\gesdoto{}": '\u2A82'
-  "{\\gesdoto}": '\u2A82'
-  "\\gesdoto": '\u2A82'
-  "\\lesdotor{}": '\u2A83'
-  "{\\lesdotor}": '\u2A83'
-  "\\lesdotor": '\u2A83'
-  "\\gesdotol{}": '\u2A84'
-  "{\\gesdotol}": '\u2A84'
-  "\\gesdotol": '\u2A84'
-  "\\lessapprox{}": '\u2A85'
-  "{\\lessapprox}": '\u2A85'
-  "\\lessapprox": '\u2A85'
-  "\\gtrapprox{}": '\u2A86'
-  "{\\gtrapprox}": '\u2A86'
-  "\\gtrapprox": '\u2A86'
-  "\\lneq{}": '\u2A87'
-  "{\\lneq}": '\u2A87'
-  "\\lneq": '\u2A87'
-  "\\gneq{}": '\u2A88'
-  "{\\gneq}": '\u2A88'
-  "\\gneq": '\u2A88'
-  "\\lnapprox{}": '\u2A89'
-  "{\\lnapprox}": '\u2A89'
-  "\\lnapprox": '\u2A89'
-  "\\gnapprox{}": '\u2A8A'
-  "{\\gnapprox}": '\u2A8A'
-  "\\gnapprox": '\u2A8A'
-  "\\lesseqqgtr{}": '\u2A8B'
-  "{\\lesseqqgtr}": '\u2A8B'
-  "\\lesseqqgtr": '\u2A8B'
-  "\\gtreqqless{}": '\u2A8C'
-  "{\\gtreqqless}": '\u2A8C'
-  "\\gtreqqless": '\u2A8C'
-  "\\lsime{}": '\u2A8D'
-  "{\\lsime}": '\u2A8D'
-  "\\lsime": '\u2A8D'
-  "\\gsime{}": '\u2A8E'
-  "{\\gsime}": '\u2A8E'
-  "\\gsime": '\u2A8E'
-  "\\lsimg{}": '\u2A8F'
-  "{\\lsimg}": '\u2A8F'
-  "\\lsimg": '\u2A8F'
-  "\\gsiml{}": '\u2A90'
-  "{\\gsiml}": '\u2A90'
-  "\\gsiml": '\u2A90'
-  "\\lgE{}": '\u2A91'
-  "{\\lgE}": '\u2A91'
-  "\\lgE": '\u2A91'
-  "\\glE{}": '\u2A92'
-  "{\\glE}": '\u2A92'
-  "\\glE": '\u2A92'
-  "\\lesges{}": '\u2A93'
-  "{\\lesges}": '\u2A93'
-  "\\lesges": '\u2A93'
-  "\\gesles{}": '\u2A94'
-  "{\\gesles}": '\u2A94'
-  "\\gesles": '\u2A94'
-  "\\eqslantless{}": '\u2A95'
-  "{\\eqslantless}": '\u2A95'
-  "\\eqslantless": '\u2A95'
-  "\\eqslantgtr{}": '\u2A96'
-  "{\\eqslantgtr}": '\u2A96'
-  "\\eqslantgtr": '\u2A96'
-  "\\elsdot{}": '\u2A97'
-  "{\\elsdot}": '\u2A97'
-  "\\elsdot": '\u2A97'
-  "\\egsdot{}": '\u2A98'
-  "{\\egsdot}": '\u2A98'
-  "\\egsdot": '\u2A98'
-  "\\eqqless{}": '\u2A99'
-  "{\\eqqless}": '\u2A99'
-  "\\eqqless": '\u2A99'
-  "\\eqqgtr{}": '\u2A9A'
-  "{\\eqqgtr}": '\u2A9A'
-  "\\eqqgtr": '\u2A9A'
-  "\\eqqslantless{}": '\u2A9B'
-  "{\\eqqslantless}": '\u2A9B'
-  "\\eqqslantless": '\u2A9B'
-  "\\eqqslantgtr{}": '\u2A9C'
-  "{\\eqqslantgtr}": '\u2A9C'
-  "\\eqqslantgtr": '\u2A9C'
-  "\\Pisymbol{ppi020}{117}": '\u2A9D'
-  "\\Pisymbol{ppi020}{105}": '\u2A9E'
-  "\\simlE{}": '\u2A9F'
-  "{\\simlE}": '\u2A9F'
-  "\\simlE": '\u2A9F'
-  "\\simgE{}": '\u2AA0'
-  "{\\simgE}": '\u2AA0'
-  "\\simgE": '\u2AA0'
-  "\\NestedLessLess{}": '\u2AA1'
-  "{\\NestedLessLess}": '\u2AA1'
-  "\\NestedLessLess": '\u2AA1'
-  "\\NestedGreaterGreater{}": '\u2AA2'
-  "{\\NestedGreaterGreater}": '\u2AA2'
-  "\\NestedGreaterGreater": '\u2AA2'
-  "\\partialmeetcontraction{}": '\u2AA3'
-  "{\\partialmeetcontraction}": '\u2AA3'
-  "\\partialmeetcontraction": '\u2AA3'
-  "\\glj{}": '\u2AA4'
-  "{\\glj}": '\u2AA4'
-  "\\glj": '\u2AA4'
-  "\\gla{}": '\u2AA5'
-  "{\\gla}": '\u2AA5'
-  "\\gla": '\u2AA5'
-  "\\leftslice{}": '\u2AA6'
-  "{\\leftslice}": '\u2AA6'
-  "\\leftslice": '\u2AA6'
-  "\\rightslice{}": '\u2AA7'
-  "{\\rightslice}": '\u2AA7'
-  "\\rightslice": '\u2AA7'
-  "\\lescc{}": '\u2AA8'
-  "{\\lescc}": '\u2AA8'
-  "\\lescc": '\u2AA8'
-  "\\gescc{}": '\u2AA9'
-  "{\\gescc}": '\u2AA9'
-  "\\gescc": '\u2AA9'
-  "\\smt{}": '\u2AAA'
-  "{\\smt}": '\u2AAA'
-  "\\smt": '\u2AAA'
-  "\\lat{}": '\u2AAB'
-  "{\\lat}": '\u2AAB'
-  "\\lat": '\u2AAB'
-  "\\smte{}": '\u2AAC'
-  "{\\smte}": '\u2AAC'
-  "\\smte": '\u2AAC'
-  "\\late{}": '\u2AAD'
-  "{\\late}": '\u2AAD'
-  "\\late": '\u2AAD'
-  "\\bumpeqq{}": '\u2AAE'
-  "{\\bumpeqq}": '\u2AAE'
-  "\\bumpeqq": '\u2AAE'
-  "\\preceq{}": '\u2AAF'
-  "{\\preceq}": '\u2AAF'
-  "\\preceq": '\u2AAF'
-  "\\succeq{}": '\u2AB0'
-  "{\\succeq}": '\u2AB0'
-  "\\succeq": '\u2AB0'
-  "\\precneq{}": '\u2AB1'
-  "{\\precneq}": '\u2AB1'
-  "\\precneq": '\u2AB1'
-  "\\succneq{}": '\u2AB2'
-  "{\\succneq}": '\u2AB2'
-  "\\succneq": '\u2AB2'
-  "\\preceqq{}": '\u2AB3'
-  "{\\preceqq}": '\u2AB3'
-  "\\preceqq": '\u2AB3'
-  "\\succeqq{}": '\u2AB4'
-  "{\\succeqq}": '\u2AB4'
-  "\\succeqq": '\u2AB4'
-  "\\precneqq{}": '\u2AB5'
-  "{\\precneqq}": '\u2AB5'
-  "\\precneqq": '\u2AB5'
-  "\\succneqq{}": '\u2AB6'
-  "{\\succneqq}": '\u2AB6'
-  "\\succneqq": '\u2AB6'
-  "\\precnapprox{}": '\u2AB9'
-  "{\\precnapprox}": '\u2AB9'
-  "\\precnapprox": '\u2AB9'
-  "\\succnapprox{}": '\u2ABA'
-  "{\\succnapprox}": '\u2ABA'
-  "\\succnapprox": '\u2ABA'
-  "\\llcurly{}": '\u2ABB'
-  "{\\llcurly}": '\u2ABB'
-  "\\llcurly": '\u2ABB'
-  "\\ggcurly{}": '\u2ABC'
-  "{\\ggcurly}": '\u2ABC'
-  "\\ggcurly": '\u2ABC'
-  "\\subsetdot{}": '\u2ABD'
-  "{\\subsetdot}": '\u2ABD'
-  "\\subsetdot": '\u2ABD'
-  "\\supsetdot{}": '\u2ABE'
-  "{\\supsetdot}": '\u2ABE'
-  "\\supsetdot": '\u2ABE'
-  "\\subsetplus{}": '\u2ABF'
-  "{\\subsetplus}": '\u2ABF'
-  "\\subsetplus": '\u2ABF'
-  "\\supsetplus{}": '\u2AC0'
-  "{\\supsetplus}": '\u2AC0'
-  "\\supsetplus": '\u2AC0'
-  "\\submult{}": '\u2AC1'
-  "{\\submult}": '\u2AC1'
-  "\\submult": '\u2AC1'
-  "\\supmult{}": '\u2AC2'
-  "{\\supmult}": '\u2AC2'
-  "\\supmult": '\u2AC2'
-  "\\subedot{}": '\u2AC3'
-  "{\\subedot}": '\u2AC3'
-  "\\subedot": '\u2AC3'
-  "\\supedot{}": '\u2AC4'
-  "{\\supedot}": '\u2AC4'
-  "\\supedot": '\u2AC4'
-  "\\subseteqq{}": '\u2AC5'
-  "{\\subseteqq}": '\u2AC5'
-  "\\subseteqq": '\u2AC5'
-  "\\supseteqq{}": '\u2AC6'
-  "{\\supseteqq}": '\u2AC6'
-  "\\supseteqq": '\u2AC6'
-  "\\subsim{}": '\u2AC7'
-  "{\\subsim}": '\u2AC7'
-  "\\subsim": '\u2AC7'
-  "\\supsim{}": '\u2AC8'
-  "{\\supsim}": '\u2AC8'
-  "\\supsim": '\u2AC8'
-  "\\subsetapprox{}": '\u2AC9'
-  "{\\subsetapprox}": '\u2AC9'
-  "\\subsetapprox": '\u2AC9'
-  "\\supsetapprox{}": '\u2ACA'
-  "{\\supsetapprox}": '\u2ACA'
-  "\\supsetapprox": '\u2ACA'
-  "\\subsetneqq{}": '\u2ACB'
-  "{\\subsetneqq}": '\u2ACB'
-  "\\subsetneqq": '\u2ACB'
-  "\\supsetneqq{}": '\u2ACC'
-  "{\\supsetneqq}": '\u2ACC'
-  "\\supsetneqq": '\u2ACC'
-  "\\lsqhook{}": '\u2ACD'
-  "{\\lsqhook}": '\u2ACD'
-  "\\lsqhook": '\u2ACD'
-  "\\rsqhook{}": '\u2ACE'
-  "{\\rsqhook}": '\u2ACE'
-  "\\rsqhook": '\u2ACE'
-  "\\csub{}": '\u2ACF'
-  "{\\csub}": '\u2ACF'
-  "\\csub": '\u2ACF'
-  "\\csup{}": '\u2AD0'
-  "{\\csup}": '\u2AD0'
-  "\\csup": '\u2AD0'
-  "\\csube{}": '\u2AD1'
-  "{\\csube}": '\u2AD1'
-  "\\csube": '\u2AD1'
-  "\\csupe{}": '\u2AD2'
-  "{\\csupe}": '\u2AD2'
-  "\\csupe": '\u2AD2'
-  "\\subsup{}": '\u2AD3'
-  "{\\subsup}": '\u2AD3'
-  "\\subsup": '\u2AD3'
-  "\\supsub{}": '\u2AD4'
-  "{\\supsub}": '\u2AD4'
-  "\\supsub": '\u2AD4'
-  "\\subsub{}": '\u2AD5'
-  "{\\subsub}": '\u2AD5'
-  "\\subsub": '\u2AD5'
-  "\\supsup{}": '\u2AD6'
-  "{\\supsup}": '\u2AD6'
-  "\\supsup": '\u2AD6'
-  "\\suphsub{}": '\u2AD7'
-  "{\\suphsub}": '\u2AD7'
-  "\\suphsub": '\u2AD7'
-  "\\supdsub{}": '\u2AD8'
-  "{\\supdsub}": '\u2AD8'
-  "\\supdsub": '\u2AD8'
-  "\\forkv{}": '\u2AD9'
-  "{\\forkv}": '\u2AD9'
-  "\\forkv": '\u2AD9'
-  "\\topfork{}": '\u2ADA'
-  "{\\topfork}": '\u2ADA'
-  "\\topfork": '\u2ADA'
-  "\\mlcp{}": '\u2ADB'
-  "{\\mlcp}": '\u2ADB'
-  "\\mlcp": '\u2ADB'
-  "\\forks{}": '\u2ADC'
-  "{\\forks}": '\u2ADC'
-  "\\forks": '\u2ADC'
-  "\\forksnot{}": '\u2ADD'
-  "{\\forksnot}": '\u2ADD'
-  "\\forksnot": '\u2ADD'
-  "\\shortlefttack{}": '\u2ADE'
-  "{\\shortlefttack}": '\u2ADE'
-  "\\shortlefttack": '\u2ADE'
-  "\\shortdowntack{}": '\u2ADF'
-  "{\\shortdowntack}": '\u2ADF'
-  "\\shortdowntack": '\u2ADF'
-  "\\shortuptack{}": '\u2AE0'
-  "{\\shortuptack}": '\u2AE0'
-  "\\shortuptack": '\u2AE0'
-  "\\perps{}": '\u2AE1'
-  "{\\perps}": '\u2AE1'
-  "\\perps": '\u2AE1'
-  "\\vDdash{}": '\u2AE2'
-  "{\\vDdash}": '\u2AE2'
-  "\\vDdash": '\u2AE2'
-  "\\dashV{}": '\u2AE3'
-  "{\\dashV}": '\u2AE3'
-  "\\dashV": '\u2AE3'
-  "\\Dashv{}": '\u2AE4'
-  "{\\Dashv}": '\u2AE4'
-  "\\Dashv": '\u2AE4'
-  "\\DashV{}": '\u2AE5'
-  "{\\DashV}": '\u2AE5'
-  "\\DashV": '\u2AE5'
-  "\\varVdash{}": '\u2AE6'
-  "{\\varVdash}": '\u2AE6'
-  "\\varVdash": '\u2AE6'
-  "\\Barv{}": '\u2AE7'
-  "{\\Barv}": '\u2AE7'
-  "\\Barv": '\u2AE7'
-  "\\vBar{}": '\u2AE8'
-  "{\\vBar}": '\u2AE8'
-  "\\vBar": '\u2AE8'
-  "\\vBarv{}": '\u2AE9'
-  "{\\vBarv}": '\u2AE9'
-  "\\vBarv": '\u2AE9'
-  "\\Top{}": '\u2AEA'
-  "{\\Top}": '\u2AEA'
-  "\\Top": '\u2AEA'
-  "\\ElsevierGlyph{E30D}": '\u2AEB'
-  "\\Not{}": '\u2AEC'
-  "{\\Not}": '\u2AEC'
-  "\\Not": '\u2AEC'
-  "\\bNot{}": '\u2AED'
-  "{\\bNot}": '\u2AED'
-  "\\bNot": '\u2AED'
-  "\\revnmid{}": '\u2AEE'
-  "{\\revnmid}": '\u2AEE'
-  "\\revnmid": '\u2AEE'
-  "\\cirmid{}": '\u2AEF'
-  "{\\cirmid}": '\u2AEF'
-  "\\cirmid": '\u2AEF'
-  "\\midcir{}": '\u2AF0'
-  "{\\midcir}": '\u2AF0'
-  "\\midcir": '\u2AF0'
-  "\\topcir{}": '\u2AF1'
-  "{\\topcir}": '\u2AF1'
-  "\\topcir": '\u2AF1'
-  "\\nhpar{}": '\u2AF2'
-  "{\\nhpar}": '\u2AF2'
-  "\\nhpar": '\u2AF2'
-  "\\parsim{}": '\u2AF3'
-  "{\\parsim}": '\u2AF3'
-  "\\parsim": '\u2AF3'
-  "\\interleave{}": '\u2AF4'
-  "{\\interleave}": '\u2AF4'
-  "\\interleave": '\u2AF4'
-  "\\nhVvert{}": '\u2AF5'
-  "{\\nhVvert}": '\u2AF5'
-  "\\nhVvert": '\u2AF5'
-  "\\Elztdcol{}": '\u2AF6'
-  "{\\Elztdcol}": '\u2AF6'
-  "\\Elztdcol": '\u2AF6'
-  "\\lllnest{}": '\u2AF7'
-  "{\\lllnest}": '\u2AF7'
-  "\\lllnest": '\u2AF7'
-  "\\gggnest{}": '\u2AF8'
-  "{\\gggnest}": '\u2AF8'
-  "\\gggnest": '\u2AF8'
-  "\\leqqslant{}": '\u2AF9'
-  "{\\leqqslant}": '\u2AF9'
-  "\\leqqslant": '\u2AF9'
-  "\\geqqslant{}": '\u2AFA'
-  "{\\geqqslant}": '\u2AFA'
-  "\\geqqslant": '\u2AFA'
-  "\\trslash{}": '\u2AFB'
-  "{\\trslash}": '\u2AFB'
-  "\\trslash": '\u2AFB'
-  "\\biginterleave{}": '\u2AFC'
-  "{\\biginterleave}": '\u2AFC'
-  "\\biginterleave": '\u2AFC'
-  "{{/}\\!\\!{/}}": '\u2AFD'
-  "\\talloblong{}": '\u2AFE'
-  "{\\talloblong}": '\u2AFE'
-  "\\talloblong": '\u2AFE'
-  "\\bigtalloblong{}": '\u2AFF'
-  "{\\bigtalloblong}": '\u2AFF'
-  "\\bigtalloblong": '\u2AFF'
-  "\\squaretopblack{}": '\u2B12'
-  "{\\squaretopblack}": '\u2B12'
-  "\\squaretopblack": '\u2B12'
-  "\\squarebotblack{}": '\u2B13'
-  "{\\squarebotblack}": '\u2B13'
-  "\\squarebotblack": '\u2B13'
-  "\\squareurblack{}": '\u2B14'
-  "{\\squareurblack}": '\u2B14'
-  "\\squareurblack": '\u2B14'
-  "\\squarellblack{}": '\u2B15'
-  "{\\squarellblack}": '\u2B15'
-  "\\squarellblack": '\u2B15'
-  "\\diamondleftblack{}": '\u2B16'
-  "{\\diamondleftblack}": '\u2B16'
-  "\\diamondleftblack": '\u2B16'
-  "\\diamondrightblack{}": '\u2B17'
-  "{\\diamondrightblack}": '\u2B17'
-  "\\diamondrightblack": '\u2B17'
-  "\\diamondtopblack{}": '\u2B18'
-  "{\\diamondtopblack}": '\u2B18'
-  "\\diamondtopblack": '\u2B18'
-  "\\diamondbotblack{}": '\u2B19'
-  "{\\diamondbotblack}": '\u2B19'
-  "\\diamondbotblack": '\u2B19'
-  "\\dottedsquare{}": '\u2B1A'
-  "{\\dottedsquare}": '\u2B1A'
-  "\\dottedsquare": '\u2B1A'
-  "\\vysmblksquare{}": '\u2B1D'
-  "{\\vysmblksquare}": '\u2B1D'
-  "\\vysmblksquare": '\u2B1D'
-  "\\vysmwhtsquare{}": '\u2B1E'
-  "{\\vysmwhtsquare}": '\u2B1E'
-  "\\vysmwhtsquare": '\u2B1E'
-  "\\pentagonblack{}": '\u2B1F'
-  "{\\pentagonblack}": '\u2B1F'
-  "\\pentagonblack": '\u2B1F'
-  "\\pentagon{}": '\u2B20'
-  "{\\pentagon}": '\u2B20'
-  "\\pentagon": '\u2B20'
-  "\\varhexagon{}": '\u2B21'
-  "{\\varhexagon}": '\u2B21'
-  "\\varhexagon": '\u2B21'
-  "\\varhexagonblack{}": '\u2B22'
-  "{\\varhexagonblack}": '\u2B22'
-  "\\varhexagonblack": '\u2B22'
-  "\\hexagonblack{}": '\u2B23'
-  "{\\hexagonblack}": '\u2B23'
-  "\\hexagonblack": '\u2B23'
-  "\\lgblkcircle{}": '\u2B24'
-  "{\\lgblkcircle}": '\u2B24'
-  "\\lgblkcircle": '\u2B24'
-  "\\mdblkdiamond{}": '\u2B25'
-  "{\\mdblkdiamond}": '\u2B25'
-  "\\mdblkdiamond": '\u2B25'
-  "\\mdwhtdiamond{}": '\u2B26'
-  "{\\mdwhtdiamond}": '\u2B26'
-  "\\mdwhtdiamond": '\u2B26'
-  "\\mdblklozenge{}": '\u2B27'
-  "{\\mdblklozenge}": '\u2B27'
-  "\\mdblklozenge": '\u2B27'
-  "\\mdwhtlozenge{}": '\u2B28'
-  "{\\mdwhtlozenge}": '\u2B28'
-  "\\mdwhtlozenge": '\u2B28'
-  "\\smblkdiamond{}": '\u2B29'
-  "{\\smblkdiamond}": '\u2B29'
-  "\\smblkdiamond": '\u2B29'
-  "\\smblklozenge{}": '\u2B2A'
-  "{\\smblklozenge}": '\u2B2A'
-  "\\smblklozenge": '\u2B2A'
-  "\\smwhtlozenge{}": '\u2B2B'
-  "{\\smwhtlozenge}": '\u2B2B'
-  "\\smwhtlozenge": '\u2B2B'
-  "\\blkhorzoval{}": '\u2B2C'
-  "{\\blkhorzoval}": '\u2B2C'
-  "\\blkhorzoval": '\u2B2C'
-  "\\whthorzoval{}": '\u2B2D'
-  "{\\whthorzoval}": '\u2B2D'
-  "\\whthorzoval": '\u2B2D'
-  "\\blkvertoval{}": '\u2B2E'
-  "{\\blkvertoval}": '\u2B2E'
-  "\\blkvertoval": '\u2B2E'
-  "\\whtvertoval{}": '\u2B2F'
-  "{\\whtvertoval}": '\u2B2F'
-  "\\whtvertoval": '\u2B2F'
-  "\\circleonleftarrow{}": '\u2B30'
-  "{\\circleonleftarrow}": '\u2B30'
-  "\\circleonleftarrow": '\u2B30'
-  "\\leftthreearrows{}": '\u2B31'
-  "{\\leftthreearrows}": '\u2B31'
-  "\\leftthreearrows": '\u2B31'
-  "\\leftarrowonoplus{}": '\u2B32'
-  "{\\leftarrowonoplus}": '\u2B32'
-  "\\leftarrowonoplus": '\u2B32'
-  "\\longleftsquigarrow{}": '\u2B33'
-  "{\\longleftsquigarrow}": '\u2B33'
-  "\\longleftsquigarrow": '\u2B33'
-  "\\nvtwoheadleftarrow{}": '\u2B34'
-  "{\\nvtwoheadleftarrow}": '\u2B34'
-  "\\nvtwoheadleftarrow": '\u2B34'
-  "\\nVtwoheadleftarrow{}": '\u2B35'
-  "{\\nVtwoheadleftarrow}": '\u2B35'
-  "\\nVtwoheadleftarrow": '\u2B35'
-  "\\twoheadmapsfrom{}": '\u2B36'
-  "{\\twoheadmapsfrom}": '\u2B36'
-  "\\twoheadmapsfrom": '\u2B36'
-  "\\twoheadleftdbkarrow{}": '\u2B37'
-  "{\\twoheadleftdbkarrow}": '\u2B37'
-  "\\twoheadleftdbkarrow": '\u2B37'
-  "\\leftdotarrow{}": '\u2B38'
-  "{\\leftdotarrow}": '\u2B38'
-  "\\leftdotarrow": '\u2B38'
-  "\\nvleftarrowtail{}": '\u2B39'
-  "{\\nvleftarrowtail}": '\u2B39'
-  "\\nvleftarrowtail": '\u2B39'
-  "\\nVleftarrowtail{}": '\u2B3A'
-  "{\\nVleftarrowtail}": '\u2B3A'
-  "\\nVleftarrowtail": '\u2B3A'
-  "\\twoheadleftarrowtail{}": '\u2B3B'
-  "{\\twoheadleftarrowtail}": '\u2B3B'
-  "\\twoheadleftarrowtail": '\u2B3B'
-  "\\nvtwoheadleftarrowtail{}": '\u2B3C'
-  "{\\nvtwoheadleftarrowtail}": '\u2B3C'
-  "\\nvtwoheadleftarrowtail": '\u2B3C'
-  "\\nVtwoheadleftarrowtail{}": '\u2B3D'
-  "{\\nVtwoheadleftarrowtail}": '\u2B3D'
-  "\\nVtwoheadleftarrowtail": '\u2B3D'
-  "\\leftarrowx{}": '\u2B3E'
-  "{\\leftarrowx}": '\u2B3E'
-  "\\leftarrowx": '\u2B3E'
-  "\\leftcurvedarrow{}": '\u2B3F'
-  "{\\leftcurvedarrow}": '\u2B3F'
-  "\\leftcurvedarrow": '\u2B3F'
-  "\\equalleftarrow{}": '\u2B40'
-  "{\\equalleftarrow}": '\u2B40'
-  "\\equalleftarrow": '\u2B40'
-  "\\bsimilarleftarrow{}": '\u2B41'
-  "{\\bsimilarleftarrow}": '\u2B41'
-  "\\bsimilarleftarrow": '\u2B41'
-  "\\leftarrowbackapprox{}": '\u2B42'
-  "{\\leftarrowbackapprox}": '\u2B42'
-  "\\leftarrowbackapprox": '\u2B42'
-  "\\rightarrowgtr{}": '\u2B43'
-  "{\\rightarrowgtr}": '\u2B43'
-  "\\rightarrowgtr": '\u2B43'
-  "\\rightarrowsupset{}": '\u2B44'
-  "{\\rightarrowsupset}": '\u2B44'
-  "\\rightarrowsupset": '\u2B44'
-  "\\LLeftarrow{}": '\u2B45'
-  "{\\LLeftarrow}": '\u2B45'
-  "\\LLeftarrow": '\u2B45'
-  "\\RRightarrow{}": '\u2B46'
-  "{\\RRightarrow}": '\u2B46'
-  "\\RRightarrow": '\u2B46'
-  "\\bsimilarrightarrow{}": '\u2B47'
-  "{\\bsimilarrightarrow}": '\u2B47'
-  "\\bsimilarrightarrow": '\u2B47'
-  "\\rightarrowbackapprox{}": '\u2B48'
-  "{\\rightarrowbackapprox}": '\u2B48'
-  "\\rightarrowbackapprox": '\u2B48'
-  "\\similarleftarrow{}": '\u2B49'
-  "{\\similarleftarrow}": '\u2B49'
-  "\\similarleftarrow": '\u2B49'
-  "\\leftarrowapprox{}": '\u2B4A'
-  "{\\leftarrowapprox}": '\u2B4A'
-  "\\leftarrowapprox": '\u2B4A'
-  "\\leftarrowbsimilar{}": '\u2B4B'
-  "{\\leftarrowbsimilar}": '\u2B4B'
-  "\\leftarrowbsimilar": '\u2B4B'
-  "\\rightarrowbsimilar{}": '\u2B4C'
-  "{\\rightarrowbsimilar}": '\u2B4C'
-  "\\rightarrowbsimilar": '\u2B4C'
-  "\\medwhitestar{}": '\u2B50'
-  "{\\medwhitestar}": '\u2B50'
-  "\\medwhitestar": '\u2B50'
-  "\\medblackstar{}": '\u2B51'
-  "{\\medblackstar}": '\u2B51'
-  "\\medblackstar": '\u2B51'
-  "\\smwhitestar{}": '\u2B52'
-  "{\\smwhitestar}": '\u2B52'
-  "\\smwhitestar": '\u2B52'
-  "\\rightpentagonblack{}": '\u2B53'
-  "{\\rightpentagonblack}": '\u2B53'
-  "\\rightpentagonblack": '\u2B53'
-  "\\rightpentagon{}": '\u2B54'
-  "{\\rightpentagon}": '\u2B54'
-  "\\rightpentagon": '\u2B54'
-  "\\ElsevierGlyph{300A}": '\u300A'
-  "\\ElsevierGlyph{300B}": '\u300B'
-  "\\postalmark{}": '\u3012'
-  "{\\postalmark}": '\u3012'
-  "\\postalmark": '\u3012'
-  "\\ElsevierGlyph{3019}": '\u3019'
-  "\\openbracketleft{}": '\u301A'
-  "{\\openbracketleft}": '\u301A'
-  "\\openbracketleft": '\u301A'
-  "\\openbracketright{}": '\u301B'
-  "{\\openbracketright}": '\u301B'
-  "\\openbracketright": '\u301B'
-  "\\hzigzag{}": '\u3030'
-  "{\\hzigzag}": '\u3030'
-  "\\hzigzag": '\u3030'
-  "ff{}": '\uFB00'
-  "fi{}": '\uFB01'
-  "fl{}": '\uFB02'
-  "ffi{}": '\uFB03'
-  "ffl{}": '\uFB04'
+  "\\arrowwaveright": '\u219C' # LEFTWARDS WAVE ARROW
+  "\\twoheadleftarrow{}": '\u219E' # LEFTWARDS TWO HEADED ARROW
+  "{\\twoheadleftarrow}": '\u219E' # LEFTWARDS TWO HEADED ARROW
+  "\\twoheadleftarrow": '\u219E' # LEFTWARDS TWO HEADED ARROW
+  "\\twoheaduparrow{}": '\u219F' # up two-headed arrow
+  "{\\twoheaduparrow}": '\u219F' # up two-headed arrow
+  "\\twoheaduparrow": '\u219F' # up two-headed arrow
+  "\\twoheadrightarrow{}": '\u21A0' # RIGHTWARDS TWO HEADED ARROW
+  "{\\twoheadrightarrow}": '\u21A0' # RIGHTWARDS TWO HEADED ARROW
+  "\\twoheadrightarrow": '\u21A0' # RIGHTWARDS TWO HEADED ARROW
+  "\\twoheaddownarrow{}": '\u21A1' # down two-headed arrow
+  "{\\twoheaddownarrow}": '\u21A1' # down two-headed arrow
+  "\\twoheaddownarrow": '\u21A1' # down two-headed arrow
+  "\\leftarrowtail{}": '\u21A2' # LEFTWARDS ARROW WITH TAIL
+  "{\\leftarrowtail}": '\u21A2' # LEFTWARDS ARROW WITH TAIL
+  "\\leftarrowtail": '\u21A2' # LEFTWARDS ARROW WITH TAIL
+  "\\rightarrowtail{}": '\u21A3' # RIGHTWARDS ARROW WITH TAIL
+  "{\\rightarrowtail}": '\u21A3' # RIGHTWARDS ARROW WITH TAIL
+  "\\rightarrowtail": '\u21A3' # RIGHTWARDS ARROW WITH TAIL
+  "\\mapsfrom{}": '\u21A4' # = \mappedfrom (kpfonts), maps to, leftward
+  "{\\mapsfrom}": '\u21A4' # = \mappedfrom (kpfonts), maps to, leftward
+  "\\mapsfrom": '\u21A4' # = \mappedfrom (kpfonts), maps to, leftward
+  "\\MapsUp{}": '\u21A5' # maps to, upward
+  "{\\MapsUp}": '\u21A5' # maps to, upward
+  "\\MapsUp": '\u21A5' # maps to, upward
+  "\\mapsto{}": '\u21A6' # RIGHTWARDS ARROW FROM BAR
+  "{\\mapsto}": '\u21A6' # RIGHTWARDS ARROW FROM BAR
+  "\\mapsto": '\u21A6' # RIGHTWARDS ARROW FROM BAR
+  "\\MapsDown{}": '\u21A7' # maps to, downward
+  "{\\MapsDown}": '\u21A7' # maps to, downward
+  "\\MapsDown": '\u21A7' # maps to, downward
+  "\\updownarrowbar{}": '\u21A8' # UP DOWN ARROW WITH BASE (perpendicular)
+  "{\\updownarrowbar}": '\u21A8' # UP DOWN ARROW WITH BASE (perpendicular)
+  "\\updownarrowbar": '\u21A8' # UP DOWN ARROW WITH BASE (perpendicular)
+  "\\hookleftarrow{}": '\u21A9' # LEFTWARDS ARROW WITH HOOK
+  "{\\hookleftarrow}": '\u21A9' # LEFTWARDS ARROW WITH HOOK
+  "\\hookleftarrow": '\u21A9' # LEFTWARDS ARROW WITH HOOK
+  "\\hookrightarrow{}": '\u21AA' # RIGHTWARDS ARROW WITH HOOK
+  "{\\hookrightarrow}": '\u21AA' # RIGHTWARDS ARROW WITH HOOK
+  "\\hookrightarrow": '\u21AA' # RIGHTWARDS ARROW WITH HOOK
+  "\\looparrowleft{}": '\u21AB' # LEFTWARDS ARROW WITH LOOP
+  "{\\looparrowleft}": '\u21AB' # LEFTWARDS ARROW WITH LOOP
+  "\\looparrowleft": '\u21AB' # LEFTWARDS ARROW WITH LOOP
+  "\\looparrowright{}": '\u21AC' # RIGHTWARDS ARROW WITH LOOP
+  "{\\looparrowright}": '\u21AC' # RIGHTWARDS ARROW WITH LOOP
+  "\\looparrowright": '\u21AC' # RIGHTWARDS ARROW WITH LOOP
+  "\\leftrightsquigarrow{}": '\u21AD' # LEFT RIGHT WAVE ARROW
+  "{\\leftrightsquigarrow}": '\u21AD' # LEFT RIGHT WAVE ARROW
+  "\\leftrightsquigarrow": '\u21AD' # LEFT RIGHT WAVE ARROW
+  "\\nleftrightarrow{}": '\u21AE' # LEFT RIGHT ARROW WITH STROKE
+  "{\\nleftrightarrow}": '\u21AE' # LEFT RIGHT ARROW WITH STROKE
+  "\\nleftrightarrow": '\u21AE' # LEFT RIGHT ARROW WITH STROKE
+  "\\lightning{}": '\u21AF' # t \Lightning (marvosym), DOWNWARDS ZIGZAG ARROW
+  "{\\lightning}": '\u21AF' # t \Lightning (marvosym), DOWNWARDS ZIGZAG ARROW
+  "\\lightning": '\u21AF' # t \Lightning (marvosym), DOWNWARDS ZIGZAG ARROW
+  "\\Lsh{}": '\u21B0' # UPWARDS ARROW WITH TIP LEFTWARDS
+  "{\\Lsh}": '\u21B0' # UPWARDS ARROW WITH TIP LEFTWARDS
+  "\\Lsh": '\u21B0' # UPWARDS ARROW WITH TIP LEFTWARDS
+  "\\Rsh{}": '\u21B1' # UPWARDS ARROW WITH TIP RIGHTWARDS
+  "{\\Rsh}": '\u21B1' # UPWARDS ARROW WITH TIP RIGHTWARDS
+  "\\Rsh": '\u21B1' # UPWARDS ARROW WITH TIP RIGHTWARDS
+  "\\dlsh{}": '\u21B2' # left down angled arrow
+  "{\\dlsh}": '\u21B2' # left down angled arrow
+  "\\dlsh": '\u21B2' # left down angled arrow
+  "\\ElsevierGlyph{21B3}": '\u21B3' # DOWNWARDS ARROW WITH TIP RIGHTWARDS
+  "\\linefeed{}": '\u21B4' # RIGHTWARDS ARROW WITH CORNER DOWNWARDS
+  "{\\linefeed}": '\u21B4' # RIGHTWARDS ARROW WITH CORNER DOWNWARDS
+  "\\linefeed": '\u21B4' # RIGHTWARDS ARROW WITH CORNER DOWNWARDS
+  "\\carriagereturn{}": '\u21B5' # downwards arrow with corner leftward = carriage return
+  "{\\carriagereturn}": '\u21B5' # downwards arrow with corner leftward = carriage return
+  "\\carriagereturn": '\u21B5' # downwards arrow with corner leftward = carriage return
+  "\\curvearrowleft{}": '\u21B6' # ANTICLOCKWISE TOP SEMICIRCLE ARROW
+  "{\\curvearrowleft}": '\u21B6' # ANTICLOCKWISE TOP SEMICIRCLE ARROW
+  "\\curvearrowleft": '\u21B6' # ANTICLOCKWISE TOP SEMICIRCLE ARROW
+  "\\curvearrowright{}": '\u21B7' # CLOCKWISE TOP SEMICIRCLE ARROW
+  "{\\curvearrowright}": '\u21B7' # CLOCKWISE TOP SEMICIRCLE ARROW
+  "\\curvearrowright": '\u21B7' # CLOCKWISE TOP SEMICIRCLE ARROW
+  "\\barovernorthwestarrow{}": '\u21B8' # NORTH WEST ARROW TO LONG BAR
+  "{\\barovernorthwestarrow}": '\u21B8' # NORTH WEST ARROW TO LONG BAR
+  "\\barovernorthwestarrow": '\u21B8' # NORTH WEST ARROW TO LONG BAR
+  "\\barleftarrowrightarrowba{}": '\u21B9' # LEFTWARDS ARROW TO BAR OVER RIGHTWARDS ARROW TO BAR
+  "{\\barleftarrowrightarrowba}": '\u21B9' # LEFTWARDS ARROW TO BAR OVER RIGHTWARDS ARROW TO BAR
+  "\\barleftarrowrightarrowba": '\u21B9' # LEFTWARDS ARROW TO BAR OVER RIGHTWARDS ARROW TO BAR
+  "\\circlearrowleft{}": '\u21BA' # ANTICLOCKWISE OPEN CIRCLE ARROW
+  "{\\circlearrowleft}": '\u21BA' # ANTICLOCKWISE OPEN CIRCLE ARROW
+  "\\circlearrowleft": '\u21BA' # ANTICLOCKWISE OPEN CIRCLE ARROW
+  "\\circlearrowright{}": '\u21BB' # CLOCKWISE OPEN CIRCLE ARROW
+  "{\\circlearrowright}": '\u21BB' # CLOCKWISE OPEN CIRCLE ARROW
+  "\\circlearrowright": '\u21BB' # CLOCKWISE OPEN CIRCLE ARROW
+  "\\leftharpoonup{}": '\u21BC' # LEFTWARDS HARPOON WITH BARB UPWARDS
+  "{\\leftharpoonup}": '\u21BC' # LEFTWARDS HARPOON WITH BARB UPWARDS
+  "\\leftharpoonup": '\u21BC' # LEFTWARDS HARPOON WITH BARB UPWARDS
+  "\\leftharpoondown{}": '\u21BD' # LEFTWARDS HARPOON WITH BARB DOWNWARDS
+  "{\\leftharpoondown}": '\u21BD' # LEFTWARDS HARPOON WITH BARB DOWNWARDS
+  "\\leftharpoondown": '\u21BD' # LEFTWARDS HARPOON WITH BARB DOWNWARDS
+  "\\upharpoonright{}": '\u21BE' # UPWARDS HARPOON WITH BARB RIGHTWARDS
+  "{\\upharpoonright}": '\u21BE' # UPWARDS HARPOON WITH BARB RIGHTWARDS
+  "\\upharpoonright": '\u21BE' # UPWARDS HARPOON WITH BARB RIGHTWARDS
+  "\\upharpoonleft{}": '\u21BF' # UPWARDS HARPOON WITH BARB LEFTWARDS
+  "{\\upharpoonleft}": '\u21BF' # UPWARDS HARPOON WITH BARB LEFTWARDS
+  "\\upharpoonleft": '\u21BF' # UPWARDS HARPOON WITH BARB LEFTWARDS
+  "\\rightharpoonup{}": '\u21C0' # RIGHTWARDS HARPOON WITH BARB UPWARDS
+  "{\\rightharpoonup}": '\u21C0' # RIGHTWARDS HARPOON WITH BARB UPWARDS
+  "\\rightharpoonup": '\u21C0' # RIGHTWARDS HARPOON WITH BARB UPWARDS
+  "\\rightharpoondown{}": '\u21C1' # RIGHTWARDS HARPOON WITH BARB DOWNWARDS
+  "{\\rightharpoondown}": '\u21C1' # RIGHTWARDS HARPOON WITH BARB DOWNWARDS
+  "\\rightharpoondown": '\u21C1' # RIGHTWARDS HARPOON WITH BARB DOWNWARDS
+  "\\downharpoonright{}": '\u21C2' # DOWNWARDS HARPOON WITH BARB RIGHTWARDS
+  "{\\downharpoonright}": '\u21C2' # DOWNWARDS HARPOON WITH BARB RIGHTWARDS
+  "\\downharpoonright": '\u21C2' # DOWNWARDS HARPOON WITH BARB RIGHTWARDS
+  "\\downharpoonleft{}": '\u21C3' # DOWNWARDS HARPOON WITH BARB LEFTWARDS
+  "{\\downharpoonleft}": '\u21C3' # DOWNWARDS HARPOON WITH BARB LEFTWARDS
+  "\\downharpoonleft": '\u21C3' # DOWNWARDS HARPOON WITH BARB LEFTWARDS
+  "\\rightleftarrows{}": '\u21C4' # RIGHTWARDS ARROW OVER LEFTWARDS ARROW
+  "{\\rightleftarrows}": '\u21C4' # RIGHTWARDS ARROW OVER LEFTWARDS ARROW
+  "\\rightleftarrows": '\u21C4' # RIGHTWARDS ARROW OVER LEFTWARDS ARROW
+  "\\dblarrowupdown{}": '\u21C5' # UPWARDS ARROW LEFTWARDS OF DOWNWARDS ARROW
+  "{\\dblarrowupdown}": '\u21C5' # UPWARDS ARROW LEFTWARDS OF DOWNWARDS ARROW
+  "\\dblarrowupdown": '\u21C5' # UPWARDS ARROW LEFTWARDS OF DOWNWARDS ARROW
+  "\\leftrightarrows{}": '\u21C6' # LEFTWARDS ARROW OVER RIGHTWARDS ARROW
+  "{\\leftrightarrows}": '\u21C6' # LEFTWARDS ARROW OVER RIGHTWARDS ARROW
+  "\\leftrightarrows": '\u21C6' # LEFTWARDS ARROW OVER RIGHTWARDS ARROW
+  "\\leftleftarrows{}": '\u21C7' # LEFTWARDS PAIRED ARROWS
+  "{\\leftleftarrows}": '\u21C7' # LEFTWARDS PAIRED ARROWS
+  "\\leftleftarrows": '\u21C7' # LEFTWARDS PAIRED ARROWS
+  "\\upuparrows{}": '\u21C8' # UPWARDS PAIRED ARROWS
+  "{\\upuparrows}": '\u21C8' # UPWARDS PAIRED ARROWS
+  "\\upuparrows": '\u21C8' # UPWARDS PAIRED ARROWS
+  "\\rightrightarrows{}": '\u21C9' # RIGHTWARDS PAIRED ARROWS
+  "{\\rightrightarrows}": '\u21C9' # RIGHTWARDS PAIRED ARROWS
+  "\\rightrightarrows": '\u21C9' # RIGHTWARDS PAIRED ARROWS
+  "\\downdownarrows{}": '\u21CA' # DOWNWARDS PAIRED ARROWS
+  "{\\downdownarrows}": '\u21CA' # DOWNWARDS PAIRED ARROWS
+  "\\downdownarrows": '\u21CA' # DOWNWARDS PAIRED ARROWS
+  "\\leftrightharpoons{}": '\u21CB' # LEFTWARDS HARPOON OVER RIGHTWARDS HARPOON
+  "{\\leftrightharpoons}": '\u21CB' # LEFTWARDS HARPOON OVER RIGHTWARDS HARPOON
+  "\\leftrightharpoons": '\u21CB' # LEFTWARDS HARPOON OVER RIGHTWARDS HARPOON
+  "\\rightleftharpoons{}": '\u21CC' # RIGHTWARDS HARPOON OVER LEFTWARDS HARPOON
+  "{\\rightleftharpoons}": '\u21CC' # RIGHTWARDS HARPOON OVER LEFTWARDS HARPOON
+  "\\rightleftharpoons": '\u21CC' # RIGHTWARDS HARPOON OVER LEFTWARDS HARPOON
+  "\\nLeftarrow{}": '\u21CD' # LEFTWARDS DOUBLE ARROW WITH STROKE
+  "{\\nLeftarrow}": '\u21CD' # LEFTWARDS DOUBLE ARROW WITH STROKE
+  "\\nLeftarrow": '\u21CD' # LEFTWARDS DOUBLE ARROW WITH STROKE
+  "\\nLeftrightarrow{}": '\u21CE' # LEFT RIGHT DOUBLE ARROW WITH STROKE
+  "{\\nLeftrightarrow}": '\u21CE' # LEFT RIGHT DOUBLE ARROW WITH STROKE
+  "\\nLeftrightarrow": '\u21CE' # LEFT RIGHT DOUBLE ARROW WITH STROKE
+  "\\nRightarrow{}": '\u21CF' # RIGHTWARDS DOUBLE ARROW WITH STROKE
+  "{\\nRightarrow}": '\u21CF' # RIGHTWARDS DOUBLE ARROW WITH STROKE
+  "\\nRightarrow": '\u21CF' # RIGHTWARDS DOUBLE ARROW WITH STROKE
+  "\\Leftarrow{}": '\u21D0' # LEFTWARDS DOUBLE ARROW
+  "{\\Leftarrow}": '\u21D0' # LEFTWARDS DOUBLE ARROW
+  "\\Leftarrow": '\u21D0' # LEFTWARDS DOUBLE ARROW
+  "\\Uparrow{}": '\u21D1' # UPWARDS DOUBLE ARROW
+  "{\\Uparrow}": '\u21D1' # UPWARDS DOUBLE ARROW
+  "\\Uparrow": '\u21D1' # UPWARDS DOUBLE ARROW
+  "\\Rightarrow{}": '\u21D2' # RIGHTWARDS DOUBLE ARROW
+  "{\\Rightarrow}": '\u21D2' # RIGHTWARDS DOUBLE ARROW
+  "\\Rightarrow": '\u21D2' # RIGHTWARDS DOUBLE ARROW
+  "\\Downarrow{}": '\u21D3' # DOWNWARDS DOUBLE ARROW
+  "{\\Downarrow}": '\u21D3' # DOWNWARDS DOUBLE ARROW
+  "\\Downarrow": '\u21D3' # DOWNWARDS DOUBLE ARROW
+  "\\Leftrightarrow{}": '\u21D4' # LEFT RIGHT DOUBLE ARROW
+  "{\\Leftrightarrow}": '\u21D4' # LEFT RIGHT DOUBLE ARROW
+  "\\Leftrightarrow": '\u21D4' # LEFT RIGHT DOUBLE ARROW
+  "\\Updownarrow{}": '\u21D5' # UP DOWN DOUBLE ARROW
+  "{\\Updownarrow}": '\u21D5' # UP DOWN DOUBLE ARROW
+  "\\Updownarrow": '\u21D5' # UP DOWN DOUBLE ARROW
+  "\\Nwarrow{}": '\u21D6' # nw pointing double arrow
+  "{\\Nwarrow}": '\u21D6' # nw pointing double arrow
+  "\\Nwarrow": '\u21D6' # nw pointing double arrow
+  "\\Nearrow{}": '\u21D7' # ne pointing double arrow
+  "{\\Nearrow}": '\u21D7' # ne pointing double arrow
+  "\\Nearrow": '\u21D7' # ne pointing double arrow
+  "\\Searrow{}": '\u21D8' # se pointing double arrow
+  "{\\Searrow}": '\u21D8' # se pointing double arrow
+  "\\Searrow": '\u21D8' # se pointing double arrow
+  "\\Swarrow{}": '\u21D9' # sw pointing double arrow
+  "{\\Swarrow}": '\u21D9' # sw pointing double arrow
+  "\\Swarrow": '\u21D9' # sw pointing double arrow
+  "\\Lleftarrow{}": '\u21DA' # LEFTWARDS TRIPLE ARROW
+  "{\\Lleftarrow}": '\u21DA' # LEFTWARDS TRIPLE ARROW
+  "\\Lleftarrow": '\u21DA' # LEFTWARDS TRIPLE ARROW
+  "\\Rrightarrow{}": '\u21DB' # RIGHTWARDS TRIPLE ARROW
+  "{\\Rrightarrow}": '\u21DB' # RIGHTWARDS TRIPLE ARROW
+  "\\Rrightarrow": '\u21DB' # RIGHTWARDS TRIPLE ARROW
+  "\\leftsquigarrow{}": '\u21DC' # LEFTWARDS SQUIGGLE ARROW
+  "{\\leftsquigarrow}": '\u21DC' # LEFTWARDS SQUIGGLE ARROW
+  "\\leftsquigarrow": '\u21DC' # LEFTWARDS SQUIGGLE ARROW
+  "\\rightsquigarrow{}": '\u21DD' # RIGHTWARDS SQUIGGLE ARROW
+  "{\\rightsquigarrow}": '\u21DD' # RIGHTWARDS SQUIGGLE ARROW
+  "\\rightsquigarrow": '\u21DD' # RIGHTWARDS SQUIGGLE ARROW
+  "\\nHuparrow{}": '\u21DE' # UPWARDS ARROW WITH DOUBLE STROKE
+  "{\\nHuparrow}": '\u21DE' # UPWARDS ARROW WITH DOUBLE STROKE
+  "\\nHuparrow": '\u21DE' # UPWARDS ARROW WITH DOUBLE STROKE
+  "\\nHdownarrow{}": '\u21DF' # DOWNWARDS ARROW WITH DOUBLE STROKE
+  "{\\nHdownarrow}": '\u21DF' # DOWNWARDS ARROW WITH DOUBLE STROKE
+  "\\nHdownarrow": '\u21DF' # DOWNWARDS ARROW WITH DOUBLE STROKE
+  "\\dashleftarrow{}": '\u21E0' # LEFTWARDS DASHED ARROW
+  "{\\dashleftarrow}": '\u21E0' # LEFTWARDS DASHED ARROW
+  "\\dashleftarrow": '\u21E0' # LEFTWARDS DASHED ARROW
+  "\\updasharrow{}": '\u21E1' # UPWARDS DASHED ARROW
+  "{\\updasharrow}": '\u21E1' # UPWARDS DASHED ARROW
+  "\\updasharrow": '\u21E1' # UPWARDS DASHED ARROW
+  "\\dashrightarrow{}": '\u21E2' # = \dasharrow (amsfonts), RIGHTWARDS DASHED ARROW
+  "{\\dashrightarrow}": '\u21E2' # = \dasharrow (amsfonts), RIGHTWARDS DASHED ARROW
+  "\\dashrightarrow": '\u21E2' # = \dasharrow (amsfonts), RIGHTWARDS DASHED ARROW
+  "\\downdasharrow{}": '\u21E3' # DOWNWARDS DASHED ARROW
+  "{\\downdasharrow}": '\u21E3' # DOWNWARDS DASHED ARROW
+  "\\downdasharrow": '\u21E3' # DOWNWARDS DASHED ARROW
+  "\\LeftArrowBar{}": '\u21E4' # LEFTWARDS ARROW TO BAR
+  "{\\LeftArrowBar}": '\u21E4' # LEFTWARDS ARROW TO BAR
+  "\\LeftArrowBar": '\u21E4' # LEFTWARDS ARROW TO BAR
+  "\\RightArrowBar{}": '\u21E5' # RIGHTWARDS ARROW TO BAR
+  "{\\RightArrowBar}": '\u21E5' # RIGHTWARDS ARROW TO BAR
+  "\\RightArrowBar": '\u21E5' # RIGHTWARDS ARROW TO BAR
+  "\\leftwhitearrow{}": '\u21E6' # LEFTWARDS WHITE ARROW
+  "{\\leftwhitearrow}": '\u21E6' # LEFTWARDS WHITE ARROW
+  "\\leftwhitearrow": '\u21E6' # LEFTWARDS WHITE ARROW
+  "\\upwhitearrow{}": '\u21E7' # UPWARDS WHITE ARROW
+  "{\\upwhitearrow}": '\u21E7' # UPWARDS WHITE ARROW
+  "\\upwhitearrow": '\u21E7' # UPWARDS WHITE ARROW
+  "\\rightwhitearrow{}": '\u21E8' # RIGHTWARDS WHITE ARROW
+  "{\\rightwhitearrow}": '\u21E8' # RIGHTWARDS WHITE ARROW
+  "\\rightwhitearrow": '\u21E8' # RIGHTWARDS WHITE ARROW
+  "\\downwhitearrow{}": '\u21E9' # DOWNWARDS WHITE ARROW
+  "{\\downwhitearrow}": '\u21E9' # DOWNWARDS WHITE ARROW
+  "\\downwhitearrow": '\u21E9' # DOWNWARDS WHITE ARROW
+  "\\whitearrowupfrombar{}": '\u21EA' # UPWARDS WHITE ARROW FROM BAR
+  "{\\whitearrowupfrombar}": '\u21EA' # UPWARDS WHITE ARROW FROM BAR
+  "\\whitearrowupfrombar": '\u21EA' # UPWARDS WHITE ARROW FROM BAR
+  "\\circleonrightarrow{}": '\u21F4' # RIGHT ARROW WITH SMALL CIRCLE
+  "{\\circleonrightarrow}": '\u21F4' # RIGHT ARROW WITH SMALL CIRCLE
+  "\\circleonrightarrow": '\u21F4' # RIGHT ARROW WITH SMALL CIRCLE
+  "\\DownArrowUpArrow{}": '\u21F5' # DOWNWARDS ARROW LEFTWARDS OF UPWARDS ARROW
+  "{\\DownArrowUpArrow}": '\u21F5' # DOWNWARDS ARROW LEFTWARDS OF UPWARDS ARROW
+  "\\DownArrowUpArrow": '\u21F5' # DOWNWARDS ARROW LEFTWARDS OF UPWARDS ARROW
+  "\\rightthreearrows{}": '\u21F6' # THREE RIGHTWARDS ARROWS
+  "{\\rightthreearrows}": '\u21F6' # THREE RIGHTWARDS ARROWS
+  "\\rightthreearrows": '\u21F6' # THREE RIGHTWARDS ARROWS
+  "\\nvleftarrow{}": '\u21F7' # LEFTWARDS ARROW WITH VERTICAL STROKE
+  "{\\nvleftarrow}": '\u21F7' # LEFTWARDS ARROW WITH VERTICAL STROKE
+  "\\nvleftarrow": '\u21F7' # LEFTWARDS ARROW WITH VERTICAL STROKE
+  "\\pfun{}": '\u21F8' # RIGHTWARDS ARROW WITH VERTICAL STROKE, z notation partial function
+  "{\\pfun}": '\u21F8' # RIGHTWARDS ARROW WITH VERTICAL STROKE, z notation partial function
+  "\\pfun": '\u21F8' # RIGHTWARDS ARROW WITH VERTICAL STROKE, z notation partial function
+  "\\nvleftrightarrow{}": '\u21F9' # LEFT RIGHT ARROW WITH VERTICAL STROKE, z notation partial relation
+  "{\\nvleftrightarrow}": '\u21F9' # LEFT RIGHT ARROW WITH VERTICAL STROKE, z notation partial relation
+  "\\nvleftrightarrow": '\u21F9' # LEFT RIGHT ARROW WITH VERTICAL STROKE, z notation partial relation
+  "\\nVleftarrow{}": '\u21FA' # LEFTWARDS ARROW WITH DOUBLE VERTICAL STROKE
+  "{\\nVleftarrow}": '\u21FA' # LEFTWARDS ARROW WITH DOUBLE VERTICAL STROKE
+  "\\nVleftarrow": '\u21FA' # LEFTWARDS ARROW WITH DOUBLE VERTICAL STROKE
+  "\\ffun{}": '\u21FB' # RIGHTWARDS ARROW WITH DOUBLE VERTICAL STROKE, z notation finite function
+  "{\\ffun}": '\u21FB' # RIGHTWARDS ARROW WITH DOUBLE VERTICAL STROKE, z notation finite function
+  "\\ffun": '\u21FB' # RIGHTWARDS ARROW WITH DOUBLE VERTICAL STROKE, z notation finite function
+  "\\nVleftrightarrow{}": '\u21FC' # LEFT RIGHT ARROW WITH DOUBLE VERTICAL STROKE, z notation finite relation
+  "{\\nVleftrightarrow}": '\u21FC' # LEFT RIGHT ARROW WITH DOUBLE VERTICAL STROKE, z notation finite relation
+  "\\nVleftrightarrow": '\u21FC' # LEFT RIGHT ARROW WITH DOUBLE VERTICAL STROKE, z notation finite relation
+  "\\leftarrowtriangle{}": '\u21FD' # LEFTWARDS OPEN-HEADED ARROW
+  "{\\leftarrowtriangle}": '\u21FD' # LEFTWARDS OPEN-HEADED ARROW
+  "\\leftarrowtriangle": '\u21FD' # LEFTWARDS OPEN-HEADED ARROW
+  "\\rightarrowtriangle{}": '\u21FE' # RIGHTWARDS OPEN-HEADED ARROW
+  "{\\rightarrowtriangle}": '\u21FE' # RIGHTWARDS OPEN-HEADED ARROW
+  "\\rightarrowtriangle": '\u21FE' # RIGHTWARDS OPEN-HEADED ARROW
+  "\\leftrightarrowtriangle{}": '\u21FF' # LEFT RIGHT OPEN-HEADED ARROW
+  "{\\leftrightarrowtriangle}": '\u21FF' # LEFT RIGHT OPEN-HEADED ARROW
+  "\\leftrightarrowtriangle": '\u21FF' # LEFT RIGHT OPEN-HEADED ARROW
+  "\\forall{}": '\u2200' # FOR ALL
+  "{\\forall}": '\u2200' # FOR ALL
+  "\\forall": '\u2200' # FOR ALL
+  "\\complement{}": '\u2201' # COMPLEMENT
+  "{\\complement}": '\u2201' # COMPLEMENT
+  "\\complement": '\u2201' # COMPLEMENT
+  "\\partial{}": '\u2202' # PARTIAL DIFFERENTIAL
+  "{\\partial}": '\u2202' # PARTIAL DIFFERENTIAL
+  "\\partial": '\u2202' # PARTIAL DIFFERENTIAL
+  "\\exists{}": '\u2203' # THERE EXISTS
+  "{\\exists}": '\u2203' # THERE EXISTS
+  "\\exists": '\u2203' # THERE EXISTS
+  "\\nexists{}": '\u2204' # THERE DOES NOT EXIST
+  "{\\nexists}": '\u2204' # THERE DOES NOT EXIST
+  "\\nexists": '\u2204' # THERE DOES NOT EXIST
+  "\\varnothing{}": '\u2205' # EMPTY SET
+  "{\\varnothing}": '\u2205' # EMPTY SET
+  "\\varnothing": '\u2205' # EMPTY SET
+  "\\increment{}": '\u2206' # # \mathrm{\Delta}, laplacian (Delta; nabla square)
+  "{\\increment}": '\u2206' # # \mathrm{\Delta}, laplacian (Delta; nabla square)
+  "\\increment": '\u2206' # # \mathrm{\Delta}, laplacian (Delta; nabla square)
+  "\\nabla{}": '\u2207' # NABLA
+  "{\\nabla}": '\u2207' # NABLA
+  "\\nabla": '\u2207' # NABLA
+  "\\in{}": '\u2208' # ELEMENT OF
+  "{\\in}": '\u2208' # ELEMENT OF
+  "\\in": '\u2208' # ELEMENT OF
+  "\\not\\in{}": '\u2209' # NOT AN ELEMENT OF
+  "{\\not\\in}": '\u2209' # NOT AN ELEMENT OF
+  "\\not\\in": '\u2209' # NOT AN ELEMENT OF
+  "\\smallin{}": '\u220A' # set membership (small set membership)
+  "{\\smallin}": '\u220A' # set membership (small set membership)
+  "\\smallin": '\u220A' # set membership (small set membership)
+  "\\ni{}": '\u220B' # CONTAINS AS MEMBER
+  "{\\ni}": '\u220B' # CONTAINS AS MEMBER
+  "\\ni": '\u220B' # CONTAINS AS MEMBER
+  "\\not\\ni{}": '\u220C' # DOES NOT CONTAIN AS MEMBER
+  "{\\not\\ni}": '\u220C' # DOES NOT CONTAIN AS MEMBER
+  "\\not\\ni": '\u220C' # DOES NOT CONTAIN AS MEMBER
+  "\\smallni{}": '\u220D' # r: contains (SMALL CONTAINS AS MEMBER)
+  "{\\smallni}": '\u220D' # r: contains (SMALL CONTAINS AS MEMBER)
+  "\\smallni": '\u220D' # r: contains (SMALL CONTAINS AS MEMBER)
+  "\\QED{}": '\u220E' # # \blacksquare (amssymb), END OF PROOF
+  "{\\QED}": '\u220E' # # \blacksquare (amssymb), END OF PROOF
+  "\\QED": '\u220E' # # \blacksquare (amssymb), END OF PROOF
+  "\\prod{}": '\u220F' # N-ARY PRODUCT
+  "{\\prod}": '\u220F' # N-ARY PRODUCT
+  "\\prod": '\u220F' # N-ARY PRODUCT
+  "\\coprod{}": '\u2210' # N-ARY COPRODUCT
+  "{\\coprod}": '\u2210' # N-ARY COPRODUCT
+  "\\coprod": '\u2210' # N-ARY COPRODUCT
+  "\\sum{}": '\u2211' # N-ARY SUMMATION
+  "{\\sum}": '\u2211' # N-ARY SUMMATION
+  "\\sum": '\u2211' # N-ARY SUMMATION
+  "\\mp{}": '\u2213' # MINUS-OR-PLUS SIGN
+  "{\\mp}": '\u2213' # MINUS-OR-PLUS SIGN
+  "\\mp": '\u2213' # MINUS-OR-PLUS SIGN
+  "\\dotplus{}": '\u2214' # DOT PLUS
+  "{\\dotplus}": '\u2214' # DOT PLUS
+  "\\dotplus": '\u2214' # DOT PLUS
+  "\\slash{}": '\u2215' # DIVISION SLASH
+  "{\\slash}": '\u2215' # DIVISION SLASH
+  "\\slash": '\u2215' # DIVISION SLASH
+  "\\setminus{}": '\u2216' # SET MINUS
+  "{\\setminus}": '\u2216' # SET MINUS
+  "\\setminus": '\u2216' # SET MINUS
+  "{_\\ast}": '\u2217' # ASTERISK OPERATOR
+  "\\circ{}": '\u2218' # RING OPERATOR
+  "{\\circ}": '\u2218' # RING OPERATOR
+  "\\circ": '\u2218' # RING OPERATOR
+  "\\bullet{}": '\u2219' # BULLET OPERATOR
+  "{\\bullet}": '\u2219' # BULLET OPERATOR
+  "\\bullet": '\u2219' # BULLET OPERATOR
+  "\\surd{}": '\u221A' # SQUARE ROOT
+  "{\\surd}": '\u221A' # SQUARE ROOT
+  "\\surd": '\u221A' # SQUARE ROOT
+  "\\sqrt[3]": '\u221B' # CUBE ROOT
+  "\\sqrt[4]": '\u221C' # FOURTH ROOT
+  "\\propto{}": '\u221D' # PROPORTIONAL TO
+  "{\\propto}": '\u221D' # PROPORTIONAL TO
+  "\\propto": '\u221D' # PROPORTIONAL TO
+  "\\infty{}": '\u221E' # INFINITY
+  "{\\infty}": '\u221E' # INFINITY
+  "\\infty": '\u221E' # INFINITY
+  "\\rightangle{}": '\u221F' # RIGHT ANGLE
+  "{\\rightangle}": '\u221F' # RIGHT ANGLE
+  "\\rightangle": '\u221F' # RIGHT ANGLE
+  "\\angle{}": '\u2220' # ANGLE
+  "{\\angle}": '\u2220' # ANGLE
+  "\\angle": '\u2220' # ANGLE
+  "\\measuredangle{}": '\u2221' # MEASURED ANGLE
+  "{\\measuredangle}": '\u2221' # MEASURED ANGLE
+  "\\measuredangle": '\u2221' # MEASURED ANGLE
+  "\\sphericalangle{}": '\u2222' # SPHERICAL ANGLE
+  "{\\sphericalangle}": '\u2222' # SPHERICAL ANGLE
+  "\\sphericalangle": '\u2222' # SPHERICAL ANGLE
+  "\\mid{}": '\u2223' # DIVIDES
+  "{\\mid}": '\u2223' # DIVIDES
+  "\\mid": '\u2223' # DIVIDES
+  "\\nmid{}": '\u2224' # DOES NOT DIVIDE
+  "{\\nmid}": '\u2224' # DOES NOT DIVIDE
+  "\\nmid": '\u2224' # DOES NOT DIVIDE
+  "\\parallel{}": '\u2225' # PARALLEL TO
+  "{\\parallel}": '\u2225' # PARALLEL TO
+  "\\parallel": '\u2225' # PARALLEL TO
+  "\\nparallel{}": '\u2226' # NOT PARALLEL TO
+  "{\\nparallel}": '\u2226' # NOT PARALLEL TO
+  "\\nparallel": '\u2226' # NOT PARALLEL TO
+  "\\wedge{}": '\u2227' # LOGICAL AND
+  "{\\wedge}": '\u2227' # LOGICAL AND
+  "\\wedge": '\u2227' # LOGICAL AND
+  "\\vee{}": '\u2228' # LOGICAL OR
+  "{\\vee}": '\u2228' # LOGICAL OR
+  "\\vee": '\u2228' # LOGICAL OR
+  "\\cap{}": '\u2229' # INTERSECTION
+  "{\\cap}": '\u2229' # INTERSECTION
+  "\\cap": '\u2229' # INTERSECTION
+  "\\cup{}": '\u222A' # UNION
+  "{\\cup}": '\u222A' # UNION
+  "\\cup": '\u222A' # UNION
+  "\\int{}": '\u222B' # INTEGRAL
+  "{\\int}": '\u222B' # INTEGRAL
+  "\\int": '\u222B' # INTEGRAL
+  "{\\int\\!\\int}": '\u222C' # DOUBLE INTEGRAL
+  "\\int\\!\\int{}": '\u222C' # DOUBLE INTEGRAL
+  "\\int\\!\\int": '\u222C' # DOUBLE INTEGRAL
+  "{\\int\\!\\int\\!\\int}": '\u222D' # TRIPLE INTEGRAL
+  "\\int\\!\\int\\!\\int{}": '\u222D' # TRIPLE INTEGRAL
+  "\\int\\!\\int\\!\\int": '\u222D' # TRIPLE INTEGRAL
+  "\\oint{}": '\u222E' # CONTOUR INTEGRAL
+  "{\\oint}": '\u222E' # CONTOUR INTEGRAL
+  "\\oint": '\u222E' # CONTOUR INTEGRAL
+  "\\surfintegral{}": '\u222F' # SURFACE INTEGRAL
+  "{\\surfintegral}": '\u222F' # SURFACE INTEGRAL
+  "\\surfintegral": '\u222F' # SURFACE INTEGRAL
+  "\\volintegral{}": '\u2230' # VOLUME INTEGRAL
+  "{\\volintegral}": '\u2230' # VOLUME INTEGRAL
+  "\\volintegral": '\u2230' # VOLUME INTEGRAL
+  "\\clwintegral{}": '\u2231' # CLOCKWISE INTEGRAL
+  "{\\clwintegral}": '\u2231' # CLOCKWISE INTEGRAL
+  "\\clwintegral": '\u2231' # CLOCKWISE INTEGRAL
+  "\\ElsevierGlyph{2232}": '\u2232' # CLOCKWISE CONTOUR INTEGRAL
+  "\\ElsevierGlyph{2233}": '\u2233' # ANTICLOCKWISE CONTOUR INTEGRAL
+  "\\therefore{}": '\u2234' # THEREFORE
+  "{\\therefore}": '\u2234' # THEREFORE
+  "\\therefore": '\u2234' # THEREFORE
+  "\\because{}": '\u2235' # BECAUSE
+  "{\\because}": '\u2235' # BECAUSE
+  "\\because": '\u2235' # BECAUSE
+  ":": '\u2236' # x \colon, RATIO
+  "\\Colon{}": '\u2237' # PROPORTION
+  "{\\Colon}": '\u2237' # PROPORTION
+  "\\Colon": '\u2237' # PROPORTION
+  "\\ElsevierGlyph{2238}": '\u2238' # DOT MINUS
+  "\\eqcolon{}": '\u2239' # # -: ,EXCESS
+  "{\\eqcolon}": '\u2239' # # -: ,EXCESS
+  "\\eqcolon": '\u2239' # # -: ,EXCESS
+  "\\mathbin{{:}\\!\\!{-}\\!\\!{:}}": '\u223A' # GEOMETRIC PROPORTION
+  "\\homothetic{}": '\u223B' # HOMOTHETIC
+  "{\\homothetic}": '\u223B' # HOMOTHETIC
+  "\\homothetic": '\u223B' # HOMOTHETIC
+  "\\sim{}": '\u223C' # TILDE OPERATOR
+  "{\\sim}": '\u223C' # TILDE OPERATOR
+  "\\sim": '\u223C' # TILDE OPERATOR
+  "\\backsim{}": '\u223D' # REVERSED TILDE
+  "{\\backsim}": '\u223D' # REVERSED TILDE
+  "\\backsim": '\u223D' # REVERSED TILDE
+  "\\lazysinv{}": '\u223E' # INVERTED LAZY S
+  "{\\lazysinv}": '\u223E' # INVERTED LAZY S
+  "\\lazysinv": '\u223E' # INVERTED LAZY S
+  "\\AC{}": '\u223F' # SINE WAVE, alternating current
+  "{\\AC}": '\u223F' # SINE WAVE, alternating current
+  "\\A{C}": '\u223F' # SINE WAVE, alternating current
+  "\\AC": '\u223F' # SINE WAVE, alternating current
+  "\\wr{}": '\u2240' # WREATH PRODUCT
+  "{\\wr}": '\u2240' # WREATH PRODUCT
+  "\\wr": '\u2240' # WREATH PRODUCT
+  "\\not\\sim{}": '\u2241' # NOT TILDE
+  "{\\not\\sim}": '\u2241' # NOT TILDE
+  "\\not\\sim": '\u2241' # NOT TILDE
+  "\\ElsevierGlyph{2242}": '\u2242' # MINUS TILDE
+  "\\simeq{}": '\u2243' # ASYMPTOTICALLY EQUAL TO
+  "{\\simeq}": '\u2243' # ASYMPTOTICALLY EQUAL TO
+  "\\simeq": '\u2243' # ASYMPTOTICALLY EQUAL TO
+  "\\not\\simeq{}": '\u2244' # NOT ASYMPTOTICALLY EQUAL TO
+  "{\\not\\simeq}": '\u2244' # NOT ASYMPTOTICALLY EQUAL TO
+  "\\not\\simeq": '\u2244' # NOT ASYMPTOTICALLY EQUAL TO
+  "\\cong{}": '\u2245' # APPROXIMATELY EQUAL TO
+  "{\\cong}": '\u2245' # APPROXIMATELY EQUAL TO
+  "\\cong": '\u2245' # APPROXIMATELY EQUAL TO
+  "\\approxnotequal{}": '\u2246' # APPROXIMATELY BUT NOT ACTUALLY EQUAL TO
+  "{\\approxnotequal}": '\u2246' # APPROXIMATELY BUT NOT ACTUALLY EQUAL TO
+  "\\approxnotequal": '\u2246' # APPROXIMATELY BUT NOT ACTUALLY EQUAL TO
+  "\\not\\cong{}": '\u2247' # NEITHER APPROXIMATELY NOR ACTUALLY EQUAL TO
+  "{\\not\\cong}": '\u2247' # NEITHER APPROXIMATELY NOR ACTUALLY EQUAL TO
+  "\\not\\cong": '\u2247' # NEITHER APPROXIMATELY NOR ACTUALLY EQUAL TO
+  "\\approx{}": '\u2248' # ALMOST EQUAL TO
+  "{\\approx}": '\u2248' # ALMOST EQUAL TO
+  "\\approx": '\u2248' # ALMOST EQUAL TO
+  "\\not\\approx{}": '\u2249' # NOT ALMOST EQUAL TO
+  "{\\not\\approx}": '\u2249' # NOT ALMOST EQUAL TO
+  "\\not\\approx": '\u2249' # NOT ALMOST EQUAL TO
+  "\\approxeq{}": '\u224A' # ALMOST EQUAL OR EQUAL TO
+  "{\\approxeq}": '\u224A' # ALMOST EQUAL OR EQUAL TO
+  "\\approxeq": '\u224A' # ALMOST EQUAL OR EQUAL TO
+  "\\tildetrpl{}": '\u224B' # TRIPLE TILDE
+  "{\\tildetrpl}": '\u224B' # TRIPLE TILDE
+  "\\tildetrpl": '\u224B' # TRIPLE TILDE
+  "\\allequal{}": '\u224C' # ALL EQUAL TO
+  "{\\allequal}": '\u224C' # ALL EQUAL TO
+  "\\allequal": '\u224C' # ALL EQUAL TO
+  "\\asymp{}": '\u224D' # EQUIVALENT TO
+  "{\\asymp}": '\u224D' # EQUIVALENT TO
+  "\\asymp": '\u224D' # EQUIVALENT TO
+  "\\Bumpeq{}": '\u224E' # GEOMETRICALLY EQUIVALENT TO
+  "{\\Bumpeq}": '\u224E' # GEOMETRICALLY EQUIVALENT TO
+  "\\Bumpeq": '\u224E' # GEOMETRICALLY EQUIVALENT TO
+  "\\bumpeq{}": '\u224F' # DIFFERENCE BETWEEN
+  "{\\bumpeq}": '\u224F' # DIFFERENCE BETWEEN
+  "\\bumpeq": '\u224F' # DIFFERENCE BETWEEN
+  "\\doteq{}": '\u2250' # APPROACHES THE LIMIT
+  "{\\doteq}": '\u2250' # APPROACHES THE LIMIT
+  "\\doteq": '\u2250' # APPROACHES THE LIMIT
+  "\\doteqdot{}": '\u2251' # GEOMETRICALLY EQUAL TO
+  "{\\doteqdot}": '\u2251' # GEOMETRICALLY EQUAL TO
+  "\\doteqdot": '\u2251' # GEOMETRICALLY EQUAL TO
+  "\\fallingdotseq{}": '\u2252' # APPROXIMATELY EQUAL TO OR THE IMAGE OF
+  "{\\fallingdotseq}": '\u2252' # APPROXIMATELY EQUAL TO OR THE IMAGE OF
+  "\\fallingdotseq": '\u2252' # APPROXIMATELY EQUAL TO OR THE IMAGE OF
+  "\\risingdotseq{}": '\u2253' # IMAGE OF OR APPROXIMATELY EQUAL TO
+  "{\\risingdotseq}": '\u2253' # IMAGE OF OR APPROXIMATELY EQUAL TO
+  "\\risingdotseq": '\u2253' # IMAGE OF OR APPROXIMATELY EQUAL TO
+  ":=": '\u2254' # COLON EQUALS
+  "=:": '\u2255' # EQUALS COLON
+  "\\eqcirc{}": '\u2256' # RING IN EQUAL TO
+  "{\\eqcirc}": '\u2256' # RING IN EQUAL TO
+  "\\eqcirc": '\u2256' # RING IN EQUAL TO
+  "\\circeq{}": '\u2257' # RING EQUAL TO
+  "{\\circeq}": '\u2257' # RING EQUAL TO
+  "\\circeq": '\u2257' # RING EQUAL TO
+  "\\arceq{}": '\u2258' # arc, equals; CORRESPONDS TO
+  "{\\arceq}": '\u2258' # arc, equals; CORRESPONDS TO
+  "\\arceq": '\u2258' # arc, equals; CORRESPONDS TO
+  "\\estimates{}": '\u2259' # ESTIMATES
+  "{\\estimates}": '\u2259' # ESTIMATES
+  "\\estimates": '\u2259' # ESTIMATES
+  "\\ElsevierGlyph{225A}": '\u225A' # EQUIANGULAR TO
+  "\\starequal{}": '\u225B' # STAR EQUALS
+  "{\\starequal}": '\u225B' # STAR EQUALS
+  "\\starequal": '\u225B' # STAR EQUALS
+  "\\triangleq{}": '\u225C' # DELTA EQUAL TO
+  "{\\triangleq}": '\u225C' # DELTA EQUAL TO
+  "\\triangleq": '\u225C' # DELTA EQUAL TO
+  "\\eqdef{}": '\u225D' # equals by definition
+  "{\\eqdef}": '\u225D' # equals by definition
+  "\\eqdef": '\u225D' # equals by definition
+  "\\measeq{}": '\u225E' # MEASURED BY (m over equals)
+  "{\\measeq}": '\u225E' # MEASURED BY (m over equals)
+  "\\measeq": '\u225E' # MEASURED BY (m over equals)
+  "\\ElsevierGlyph{225F}": '\u225F' # QUESTIONED EQUAL TO
+  "\\not =": '\u2260' # NOT EQUAL TO
+  "\\equiv{}": '\u2261' # IDENTICAL TO
+  "{\\equiv}": '\u2261' # IDENTICAL TO
+  "\\equiv": '\u2261' # IDENTICAL TO
+  "\\not\\equiv{}": '\u2262' # NOT IDENTICAL TO
+  "{\\not\\equiv}": '\u2262' # NOT IDENTICAL TO
+  "\\not\\equiv": '\u2262' # NOT IDENTICAL TO
+  "\\Equiv{}": '\u2263' # strict equivalence (4 lines)
+  "{\\Equiv}": '\u2263' # strict equivalence (4 lines)
+  "\\Equiv": '\u2263' # strict equivalence (4 lines)
+  "\\leq{}": '\u2264' # LESS-THAN OR EQUAL TO
+  "{\\leq}": '\u2264' # LESS-THAN OR EQUAL TO
+  "\\leq": '\u2264' # LESS-THAN OR EQUAL TO
+  "\\geq{}": '\u2265' # GREATER-THAN OR EQUAL TO
+  "{\\geq}": '\u2265' # GREATER-THAN OR EQUAL TO
+  "\\geq": '\u2265' # GREATER-THAN OR EQUAL TO
+  "\\leqq{}": '\u2266' # LESS-THAN OVER EQUAL TO
+  "{\\leqq}": '\u2266' # LESS-THAN OVER EQUAL TO
+  "\\leqq": '\u2266' # LESS-THAN OVER EQUAL TO
+  "\\geqq{}": '\u2267' # GREATER-THAN OVER EQUAL TO
+  "{\\geqq}": '\u2267' # GREATER-THAN OVER EQUAL TO
+  "\\geqq": '\u2267' # GREATER-THAN OVER EQUAL TO
+  "\\lneqq{}": '\u2268' # LESS-THAN BUT NOT EQUAL TO
+  "{\\lneqq}": '\u2268' # LESS-THAN BUT NOT EQUAL TO
+  "\\lneqq": '\u2268' # LESS-THAN BUT NOT EQUAL TO
+  "\\gneqq{}": '\u2269' # GREATER-THAN BUT NOT EQUAL TO
+  "{\\gneqq}": '\u2269' # GREATER-THAN BUT NOT EQUAL TO
+  "\\gneqq": '\u2269' # GREATER-THAN BUT NOT EQUAL TO
+  "\\ll{}": '\u226A' # MUCH LESS-THAN
+  "{\\ll}": '\u226A' # MUCH LESS-THAN
+  "\\ll": '\u226A' # MUCH LESS-THAN
+  "\\gg{}": '\u226B' # MUCH GREATER-THAN
+  "{\\gg}": '\u226B' # MUCH GREATER-THAN
+  "\\gg": '\u226B' # MUCH GREATER-THAN
+  "\\between{}": '\u226C' # BETWEEN
+  "{\\between}": '\u226C' # BETWEEN
+  "\\between": '\u226C' # BETWEEN
+  "{\\not\\kern-0.3em\\times}": '\u226D' # NOT EQUIVALENT TO
+  "\\not\\kern-0.3em\\times{}": '\u226D' # NOT EQUIVALENT TO
+  "\\not\\kern-0.3em\\times": '\u226D' # NOT EQUIVALENT TO
+  "\\not<": '\u226E' # NOT LESS-THAN
+  "\\not>": '\u226F' # NOT GREATER-THAN
+  "\\not\\leq{}": '\u2270' # NEITHER LESS-THAN NOR EQUAL TO
+  "{\\not\\leq}": '\u2270' # NEITHER LESS-THAN NOR EQUAL TO
+  "\\not\\leq": '\u2270' # NEITHER LESS-THAN NOR EQUAL TO
+  "\\not\\geq{}": '\u2271' # NEITHER GREATER-THAN NOR EQUAL TO
+  "{\\not\\geq}": '\u2271' # NEITHER GREATER-THAN NOR EQUAL TO
+  "\\not\\geq": '\u2271' # NEITHER GREATER-THAN NOR EQUAL TO
+  "\\lessequivlnt{}": '\u2272' # LESS-THAN OR EQUIVALENT TO
+  "{\\lessequivlnt}": '\u2272' # LESS-THAN OR EQUIVALENT TO
+  "\\lessequivlnt": '\u2272' # LESS-THAN OR EQUIVALENT TO
+  "\\greaterequivlnt{}": '\u2273' # GREATER-THAN OR EQUIVALENT TO
+  "{\\greaterequivlnt}": '\u2273' # GREATER-THAN OR EQUIVALENT TO
+  "\\greaterequivlnt": '\u2273' # GREATER-THAN OR EQUIVALENT TO
+  "\\ElsevierGlyph{2274}": '\u2274' # NEITHER LESS-THAN NOR EQUIVALENT TO
+  "\\ElsevierGlyph{2275}": '\u2275' # NEITHER GREATER-THAN NOR EQUIVALENT TO
+  "\\lessgtr{}": '\u2276' # LESS-THAN OR GREATER-THAN
+  "{\\lessgtr}": '\u2276' # LESS-THAN OR GREATER-THAN
+  "\\lessgtr": '\u2276' # LESS-THAN OR GREATER-THAN
+  "\\gtrless{}": '\u2277' # GREATER-THAN OR LESS-THAN
+  "{\\gtrless}": '\u2277' # GREATER-THAN OR LESS-THAN
+  "\\gtrless": '\u2277' # GREATER-THAN OR LESS-THAN
+  "\\notlessgreater{}": '\u2278' # NEITHER LESS-THAN NOR GREATER-THAN
+  "{\\notlessgreater}": '\u2278' # NEITHER LESS-THAN NOR GREATER-THAN
+  "\\notlessgreater": '\u2278' # NEITHER LESS-THAN NOR GREATER-THAN
+  "\\notgreaterless{}": '\u2279' # NEITHER GREATER-THAN NOR LESS-THAN
+  "{\\notgreaterless}": '\u2279' # NEITHER GREATER-THAN NOR LESS-THAN
+  "\\notgreaterless": '\u2279' # NEITHER GREATER-THAN NOR LESS-THAN
+  "\\prec{}": '\u227A' # PRECEDES
+  "{\\prec}": '\u227A' # PRECEDES
+  "\\prec": '\u227A' # PRECEDES
+  "\\succ{}": '\u227B' # SUCCEEDS
+  "{\\succ}": '\u227B' # SUCCEEDS
+  "\\succ": '\u227B' # SUCCEEDS
+  "\\preccurlyeq{}": '\u227C' # PRECEDES OR EQUAL TO
+  "{\\preccurlyeq}": '\u227C' # PRECEDES OR EQUAL TO
+  "\\preccurlyeq": '\u227C' # PRECEDES OR EQUAL TO
+  "\\succcurlyeq{}": '\u227D' # SUCCEEDS OR EQUAL TO
+  "{\\succcurlyeq}": '\u227D' # SUCCEEDS OR EQUAL TO
+  "\\succcurlyeq": '\u227D' # SUCCEEDS OR EQUAL TO
+  "\\precapprox{}": '\u227E' # PRECEDES OR EQUIVALENT TO
+  "{\\precapprox}": '\u227E' # PRECEDES OR EQUIVALENT TO
+  "\\precapprox": '\u227E' # PRECEDES OR EQUIVALENT TO
+  "\\succapprox{}": '\u227F' # SUCCEEDS OR EQUIVALENT TO
+  "{\\succapprox}": '\u227F' # SUCCEEDS OR EQUIVALENT TO
+  "\\succapprox": '\u227F' # SUCCEEDS OR EQUIVALENT TO
+  "\\not\\prec{}": '\u2280' # DOES NOT PRECEDE
+  "{\\not\\prec}": '\u2280' # DOES NOT PRECEDE
+  "\\not\\prec": '\u2280' # DOES NOT PRECEDE
+  "\\not\\succ{}": '\u2281' # DOES NOT SUCCEED
+  "{\\not\\succ}": '\u2281' # DOES NOT SUCCEED
+  "\\not\\succ": '\u2281' # DOES NOT SUCCEED
+  "\\subset{}": '\u2282' # SUBSET OF
+  "{\\subset}": '\u2282' # SUBSET OF
+  "\\subset": '\u2282' # SUBSET OF
+  "\\supset{}": '\u2283' # SUPERSET OF
+  "{\\supset}": '\u2283' # SUPERSET OF
+  "\\supset": '\u2283' # SUPERSET OF
+  "\\not\\subset{}": '\u2284' # NOT A SUBSET OF
+  "{\\not\\subset}": '\u2284' # NOT A SUBSET OF
+  "\\not\\subset": '\u2284' # NOT A SUBSET OF
+  "\\not\\supset{}": '\u2285' # NOT A SUPERSET OF
+  "{\\not\\supset}": '\u2285' # NOT A SUPERSET OF
+  "\\not\\supset": '\u2285' # NOT A SUPERSET OF
+  "\\subseteq{}": '\u2286' # SUBSET OF OR EQUAL TO
+  "{\\subseteq}": '\u2286' # SUBSET OF OR EQUAL TO
+  "\\subseteq": '\u2286' # SUBSET OF OR EQUAL TO
+  "\\supseteq{}": '\u2287' # SUPERSET OF OR EQUAL TO
+  "{\\supseteq}": '\u2287' # SUPERSET OF OR EQUAL TO
+  "\\supseteq": '\u2287' # SUPERSET OF OR EQUAL TO
+  "\\not\\subseteq{}": '\u2288' # NEITHER A SUBSET OF NOR EQUAL TO
+  "{\\not\\subseteq}": '\u2288' # NEITHER A SUBSET OF NOR EQUAL TO
+  "\\not\\subseteq": '\u2288' # NEITHER A SUBSET OF NOR EQUAL TO
+  "\\not\\supseteq{}": '\u2289' # NEITHER A SUPERSET OF NOR EQUAL TO
+  "{\\not\\supseteq}": '\u2289' # NEITHER A SUPERSET OF NOR EQUAL TO
+  "\\not\\supseteq": '\u2289' # NEITHER A SUPERSET OF NOR EQUAL TO
+  "\\subsetneq{}": '\u228A' # SUBSET OF WITH NOT EQUAL TO
+  "{\\subsetneq}": '\u228A' # SUBSET OF WITH NOT EQUAL TO
+  "\\subsetneq": '\u228A' # SUBSET OF WITH NOT EQUAL TO
+  "\\supsetneq{}": '\u228B' # SUPERSET OF WITH NOT EQUAL TO
+  "{\\supsetneq}": '\u228B' # SUPERSET OF WITH NOT EQUAL TO
+  "\\supsetneq": '\u228B' # SUPERSET OF WITH NOT EQUAL TO
+  "\\cupleftarrow{}": '\u228C' # MULTISET
+  "{\\cupleftarrow}": '\u228C' # MULTISET
+  "\\cupleftarrow": '\u228C' # MULTISET
+  "\\cupdot{}": '\u228D' # union, with dot
+  "{\\cupdot}": '\u228D' # union, with dot
+  "\\cupdot": '\u228D' # union, with dot
+  "\\uplus{}": '\u228E' # MULTISET UNION
+  "{\\uplus}": '\u228E' # MULTISET UNION
+  "\\uplus": '\u228E' # MULTISET UNION
+  "\\sqsubset{}": '\u228F' # SQUARE IMAGE OF
+  "{\\sqsubset}": '\u228F' # SQUARE IMAGE OF
+  "\\sqsubset": '\u228F' # SQUARE IMAGE OF
+  "\\sqsupset{}": '\u2290' # SQUARE ORIGINAL OF
+  "{\\sqsupset}": '\u2290' # SQUARE ORIGINAL OF
+  "\\sqsupset": '\u2290' # SQUARE ORIGINAL OF
+  "\\sqsubseteq{}": '\u2291' # SQUARE IMAGE OF OR EQUAL TO
+  "{\\sqsubseteq}": '\u2291' # SQUARE IMAGE OF OR EQUAL TO
+  "\\sqsubseteq": '\u2291' # SQUARE IMAGE OF OR EQUAL TO
+  "\\sqsupseteq{}": '\u2292' # SQUARE ORIGINAL OF OR EQUAL TO
+  "{\\sqsupseteq}": '\u2292' # SQUARE ORIGINAL OF OR EQUAL TO
+  "\\sqsupseteq": '\u2292' # SQUARE ORIGINAL OF OR EQUAL TO
+  "\\sqcap{}": '\u2293' # SQUARE CAP
+  "{\\sqcap}": '\u2293' # SQUARE CAP
+  "\\sqcap": '\u2293' # SQUARE CAP
+  "\\sqcup{}": '\u2294' # SQUARE CUP
+  "{\\sqcup}": '\u2294' # SQUARE CUP
+  "\\sqcup": '\u2294' # SQUARE CUP
+  "\\oplus{}": '\u2295' # CIRCLED PLUS
+  "{\\oplus}": '\u2295' # CIRCLED PLUS
+  "\\oplus": '\u2295' # CIRCLED PLUS
+  "\\ominus{}": '\u2296' # CIRCLED MINUS
+  "{\\ominus}": '\u2296' # CIRCLED MINUS
+  "\\ominus": '\u2296' # CIRCLED MINUS
+  "\\otimes{}": '\u2297' # CIRCLED TIMES
+  "{\\otimes}": '\u2297' # CIRCLED TIMES
+  "\\otimes": '\u2297' # CIRCLED TIMES
+  "\\oslash{}": '\u2298' # CIRCLED DIVISION SLASH
+  "{\\oslash}": '\u2298' # CIRCLED DIVISION SLASH
+  "\\oslash": '\u2298' # CIRCLED DIVISION SLASH
+  "\\odot{}": '\u2299' # CIRCLED DOT OPERATOR
+  "{\\odot}": '\u2299' # CIRCLED DOT OPERATOR
+  "\\odot": '\u2299' # CIRCLED DOT OPERATOR
+  "\\circledcirc{}": '\u229A' # CIRCLED RING OPERATOR
+  "{\\circledcirc}": '\u229A' # CIRCLED RING OPERATOR
+  "\\circledcirc": '\u229A' # CIRCLED RING OPERATOR
+  "\\circledast{}": '\u229B' # CIRCLED ASTERISK OPERATOR
+  "{\\circledast}": '\u229B' # CIRCLED ASTERISK OPERATOR
+  "\\circledast": '\u229B' # CIRCLED ASTERISK OPERATOR
+  "\\circledequal{}": '\u229C' # equal in circle
+  "{\\circledequal}": '\u229C' # equal in circle
+  "\\circledequal": '\u229C' # equal in circle
+  "\\circleddash{}": '\u229D' # CIRCLED DASH
+  "{\\circleddash}": '\u229D' # CIRCLED DASH
+  "\\circleddash": '\u229D' # CIRCLED DASH
+  "\\boxplus{}": '\u229E' # SQUARED PLUS
+  "{\\boxplus}": '\u229E' # SQUARED PLUS
+  "\\boxplus": '\u229E' # SQUARED PLUS
+  "\\boxminus{}": '\u229F' # SQUARED MINUS
+  "{\\boxminus}": '\u229F' # SQUARED MINUS
+  "\\boxminus": '\u229F' # SQUARED MINUS
+  "\\boxtimes{}": '\u22A0' # SQUARED TIMES
+  "{\\boxtimes}": '\u22A0' # SQUARED TIMES
+  "\\boxtimes": '\u22A0' # SQUARED TIMES
+  "\\boxdot{}": '\u22A1' # SQUARED DOT OPERATOR
+  "{\\boxdot}": '\u22A1' # SQUARED DOT OPERATOR
+  "\\boxdot": '\u22A1' # SQUARED DOT OPERATOR
+  "\\vdash{}": '\u22A2' # RIGHT TACK
+  "{\\vdash}": '\u22A2' # RIGHT TACK
+  "\\vdash": '\u22A2' # RIGHT TACK
+  "\\dashv{}": '\u22A3' # LEFT TACK
+  "{\\dashv}": '\u22A3' # LEFT TACK
+  "\\dashv": '\u22A3' # LEFT TACK
+  "\\top{}": '\u22A4' # DOWN TACK
+  "{\\top}": '\u22A4' # DOWN TACK
+  "\\top": '\u22A4' # DOWN TACK
+  "\\perp{}": '\u22A5' # UP TACK
+  "{\\perp}": '\u22A5' # UP TACK
+  "\\perp": '\u22A5' # UP TACK
+  "\\assert{}": '\u22A6' # # \vdash, ASSERTION (vertical, short dash)
+  "{\\assert}": '\u22A6' # # \vdash, ASSERTION (vertical, short dash)
+  "\\assert": '\u22A6' # # \vdash, ASSERTION (vertical, short dash)
+  "\\truestate{}": '\u22A7' # MODELS
+  "{\\truestate}": '\u22A7' # MODELS
+  "\\truestate": '\u22A7' # MODELS
+  "\\forcesextra{}": '\u22A8' # TRUE
+  "{\\forcesextra}": '\u22A8' # TRUE
+  "\\forcesextra": '\u22A8' # TRUE
+  "\\Vdash{}": '\u22A9' # FORCES
+  "{\\Vdash}": '\u22A9' # FORCES
+  "\\Vdash": '\u22A9' # FORCES
+  "\\Vvdash{}": '\u22AA' # TRIPLE VERTICAL BAR RIGHT TURNSTILE
+  "{\\Vvdash}": '\u22AA' # TRIPLE VERTICAL BAR RIGHT TURNSTILE
+  "\\Vvdash": '\u22AA' # TRIPLE VERTICAL BAR RIGHT TURNSTILE
+  "\\VDash{}": '\u22AB' # DOUBLE VERTICAL BAR DOUBLE RIGHT TURNSTILE
+  "{\\VDash}": '\u22AB' # DOUBLE VERTICAL BAR DOUBLE RIGHT TURNSTILE
+  "\\VDash": '\u22AB' # DOUBLE VERTICAL BAR DOUBLE RIGHT TURNSTILE
+  "\\nvdash{}": '\u22AC' # DOES NOT PROVE
+  "{\\nvdash}": '\u22AC' # DOES NOT PROVE
+  "\\nvdash": '\u22AC' # DOES NOT PROVE
+  "\\nvDash{}": '\u22AD' # NOT TRUE
+  "{\\nvDash}": '\u22AD' # NOT TRUE
+  "\\nvDash": '\u22AD' # NOT TRUE
+  "\\nVdash{}": '\u22AE' # DOES NOT FORCE
+  "{\\nVdash}": '\u22AE' # DOES NOT FORCE
+  "\\nVdash": '\u22AE' # DOES NOT FORCE
+  "\\nVDash{}": '\u22AF' # NEGATED DOUBLE VERTICAL BAR DOUBLE RIGHT TURNSTILE
+  "{\\nVDash}": '\u22AF' # NEGATED DOUBLE VERTICAL BAR DOUBLE RIGHT TURNSTILE
+  "\\nVDash": '\u22AF' # NEGATED DOUBLE VERTICAL BAR DOUBLE RIGHT TURNSTILE
+  "\\prurel{}": '\u22B0' # element PRECEDES UNDER RELATION
+  "{\\prurel}": '\u22B0' # element PRECEDES UNDER RELATION
+  "\\prurel": '\u22B0' # element PRECEDES UNDER RELATION
+  "\\scurel{}": '\u22B1' # SUCCEEDS UNDER RELATION
+  "{\\scurel}": '\u22B1' # SUCCEEDS UNDER RELATION
+  "\\scurel": '\u22B1' # SUCCEEDS UNDER RELATION
+  "\\vartriangleleft{}": '\u22B2' # NORMAL SUBGROUP OF
+  "{\\vartriangleleft}": '\u22B2' # NORMAL SUBGROUP OF
+  "\\vartriangleleft": '\u22B2' # NORMAL SUBGROUP OF
+  "\\vartriangleright{}": '\u22B3' # CONTAINS AS NORMAL SUBGROUP
+  "{\\vartriangleright}": '\u22B3' # CONTAINS AS NORMAL SUBGROUP
+  "\\vartriangleright": '\u22B3' # CONTAINS AS NORMAL SUBGROUP
+  "\\trianglelefteq{}": '\u22B4' # NORMAL SUBGROUP OF OR EQUAL TO
+  "{\\trianglelefteq}": '\u22B4' # NORMAL SUBGROUP OF OR EQUAL TO
+  "\\trianglelefteq": '\u22B4' # NORMAL SUBGROUP OF OR EQUAL TO
+  "\\trianglerighteq{}": '\u22B5' # CONTAINS AS NORMAL SUBGROUP OR EQUAL TO
+  "{\\trianglerighteq}": '\u22B5' # CONTAINS AS NORMAL SUBGROUP OR EQUAL TO
+  "\\trianglerighteq": '\u22B5' # CONTAINS AS NORMAL SUBGROUP OR EQUAL TO
+  "\\original{}": '\u22B6' # ORIGINAL OF
+  "{\\original}": '\u22B6' # ORIGINAL OF
+  "\\original": '\u22B6' # ORIGINAL OF
+  "\\image{}": '\u22B7' # IMAGE OF
+  "{\\image}": '\u22B7' # IMAGE OF
+  "\\image": '\u22B7' # IMAGE OF
+  "\\multimap{}": '\u22B8' # MULTIMAP
+  "{\\multimap}": '\u22B8' # MULTIMAP
+  "\\multimap": '\u22B8' # MULTIMAP
+  "\\hermitconjmatrix{}": '\u22B9' # HERMITIAN CONJUGATE MATRIX
+  "{\\hermitconjmatrix}": '\u22B9' # HERMITIAN CONJUGATE MATRIX
+  "\\hermitconjmatrix": '\u22B9' # HERMITIAN CONJUGATE MATRIX
+  "\\intercal{}": '\u22BA' # INTERCALATE
+  "{\\intercal}": '\u22BA' # INTERCALATE
+  "\\intercal": '\u22BA' # INTERCALATE
+  "\\veebar{}": '\u22BB' # XOR
+  "{\\veebar}": '\u22BB' # XOR
+  "\\veebar": '\u22BB' # XOR
+  "\\barwedge{}": '\u22BC' # logical NAND (bar over wedge)
+  "{\\barwedge}": '\u22BC' # logical NAND (bar over wedge)
+  "\\barwedge": '\u22BC' # logical NAND (bar over wedge)
+  "\\barvee{}": '\u22BD' # bar, vee (large vee)
+  "{\\barvee}": '\u22BD' # bar, vee (large vee)
+  "\\barvee": '\u22BD' # bar, vee (large vee)
+  "\\rightanglearc{}": '\u22BE' # RIGHT ANGLE WITH ARC
+  "{\\rightanglearc}": '\u22BE' # RIGHT ANGLE WITH ARC
+  "\\rightanglearc": '\u22BE' # RIGHT ANGLE WITH ARC
+  "\\varlrtriangle{}": '\u22BF' # RIGHT TRIANGLE
+  "{\\varlrtriangle}": '\u22BF' # RIGHT TRIANGLE
+  "\\varlrtriangle": '\u22BF' # RIGHT TRIANGLE
+  "\\ElsevierGlyph{22C0}": '\u22C0' # N-ARY LOGICAL AND
+  "\\ElsevierGlyph{22C1}": '\u22C1' # N-ARY LOGICAL OR
+  "\\bigcap{}": '\u22C2' # N-ARY INTERSECTION
+  "{\\bigcap}": '\u22C2' # N-ARY INTERSECTION
+  "\\bigcap": '\u22C2' # N-ARY INTERSECTION
+  "\\bigcup{}": '\u22C3' # N-ARY UNION
+  "{\\bigcup}": '\u22C3' # N-ARY UNION
+  "\\bigcup": '\u22C3' # N-ARY UNION
+  "\\diamond{}": '\u22C4' # DIAMOND OPERATOR
+  "{\\diamond}": '\u22C4' # DIAMOND OPERATOR
+  "\\diamond": '\u22C4' # DIAMOND OPERATOR
+  "\\star{}": '\u22C6' # STAR OPERATOR
+  "{\\star}": '\u22C6' # STAR OPERATOR
+  "\\star": '\u22C6' # STAR OPERATOR
+  "\\divideontimes{}": '\u22C7' # DIVISION TIMES
+  "{\\divideontimes}": '\u22C7' # DIVISION TIMES
+  "\\divideontimes": '\u22C7' # DIVISION TIMES
+  "\\bowtie{}": '\u22C8' # BOWTIE
+  "{\\bowtie}": '\u22C8' # BOWTIE
+  "\\bowtie": '\u22C8' # BOWTIE
+  "\\ltimes{}": '\u22C9' # LEFT NORMAL FACTOR SEMIDIRECT PRODUCT
+  "{\\ltimes}": '\u22C9' # LEFT NORMAL FACTOR SEMIDIRECT PRODUCT
+  "\\ltimes": '\u22C9' # LEFT NORMAL FACTOR SEMIDIRECT PRODUCT
+  "\\rtimes{}": '\u22CA' # RIGHT NORMAL FACTOR SEMIDIRECT PRODUCT
+  "{\\rtimes}": '\u22CA' # RIGHT NORMAL FACTOR SEMIDIRECT PRODUCT
+  "\\rtimes": '\u22CA' # RIGHT NORMAL FACTOR SEMIDIRECT PRODUCT
+  "\\leftthreetimes{}": '\u22CB' # LEFT SEMIDIRECT PRODUCT
+  "{\\leftthreetimes}": '\u22CB' # LEFT SEMIDIRECT PRODUCT
+  "\\leftthreetimes": '\u22CB' # LEFT SEMIDIRECT PRODUCT
+  "\\rightthreetimes{}": '\u22CC' # RIGHT SEMIDIRECT PRODUCT
+  "{\\rightthreetimes}": '\u22CC' # RIGHT SEMIDIRECT PRODUCT
+  "\\rightthreetimes": '\u22CC' # RIGHT SEMIDIRECT PRODUCT
+  "\\backsimeq{}": '\u22CD' # REVERSED TILDE EQUALS
+  "{\\backsimeq}": '\u22CD' # REVERSED TILDE EQUALS
+  "\\backsimeq": '\u22CD' # REVERSED TILDE EQUALS
+  "\\curlyvee{}": '\u22CE' # CURLY LOGICAL OR
+  "{\\curlyvee}": '\u22CE' # CURLY LOGICAL OR
+  "\\curlyvee": '\u22CE' # CURLY LOGICAL OR
+  "\\curlywedge{}": '\u22CF' # CURLY LOGICAL AND
+  "{\\curlywedge}": '\u22CF' # CURLY LOGICAL AND
+  "\\curlywedge": '\u22CF' # CURLY LOGICAL AND
+  "\\Subset{}": '\u22D0' # DOUBLE SUBSET
+  "{\\Subset}": '\u22D0' # DOUBLE SUBSET
+  "\\Subset": '\u22D0' # DOUBLE SUBSET
+  "\\Supset{}": '\u22D1' # DOUBLE SUPERSET
+  "{\\Supset}": '\u22D1' # DOUBLE SUPERSET
+  "\\Supset": '\u22D1' # DOUBLE SUPERSET
+  "\\Cap{}": '\u22D2' # DOUBLE INTERSECTION
+  "{\\Cap}": '\u22D2' # DOUBLE INTERSECTION
+  "\\Cap": '\u22D2' # DOUBLE INTERSECTION
+  "\\Cup{}": '\u22D3' # DOUBLE UNION
+  "{\\Cup}": '\u22D3' # DOUBLE UNION
+  "\\Cup": '\u22D3' # DOUBLE UNION
+  "\\pitchfork{}": '\u22D4' # PITCHFORK
+  "{\\pitchfork}": '\u22D4' # PITCHFORK
+  "\\pitchfork": '\u22D4' # PITCHFORK
+  "\\hash{}": '\u22D5' # parallel, equal; equal or parallel
+  "{\\hash}": '\u22D5' # parallel, equal; equal or parallel
+  "\\hash": '\u22D5' # parallel, equal; equal or parallel
+  "\\lessdot{}": '\u22D6' # LESS-THAN WITH DOT
+  "{\\lessdot}": '\u22D6' # LESS-THAN WITH DOT
+  "\\lessdot": '\u22D6' # LESS-THAN WITH DOT
+  "\\gtrdot{}": '\u22D7' # GREATER-THAN WITH DOT
+  "{\\gtrdot}": '\u22D7' # GREATER-THAN WITH DOT
+  "\\gtrdot": '\u22D7' # GREATER-THAN WITH DOT
+  "\\verymuchless{}": '\u22D8' # VERY MUCH LESS-THAN
+  "{\\verymuchless}": '\u22D8' # VERY MUCH LESS-THAN
+  "\\verymuchless": '\u22D8' # VERY MUCH LESS-THAN
+  "\\verymuchgreater{}": '\u22D9' # VERY MUCH GREATER-THAN
+  "{\\verymuchgreater}": '\u22D9' # VERY MUCH GREATER-THAN
+  "\\verymuchgreater": '\u22D9' # VERY MUCH GREATER-THAN
+  "\\lesseqgtr{}": '\u22DA' # LESS-THAN EQUAL TO OR GREATER-THAN
+  "{\\lesseqgtr}": '\u22DA' # LESS-THAN EQUAL TO OR GREATER-THAN
+  "\\lesseqgtr": '\u22DA' # LESS-THAN EQUAL TO OR GREATER-THAN
+  "\\gtreqless{}": '\u22DB' # GREATER-THAN EQUAL TO OR LESS-THAN
+  "{\\gtreqless}": '\u22DB' # GREATER-THAN EQUAL TO OR LESS-THAN
+  "\\gtreqless": '\u22DB' # GREATER-THAN EQUAL TO OR LESS-THAN
+  "\\eqless{}": '\u22DC' # equal-or-less
+  "{\\eqless}": '\u22DC' # equal-or-less
+  "\\eqless": '\u22DC' # equal-or-less
+  "\\eqgtr{}": '\u22DD' # equal-or-greater
+  "{\\eqgtr}": '\u22DD' # equal-or-greater
+  "\\eqgtr": '\u22DD' # equal-or-greater
+  "\\curlyeqprec{}": '\u22DE' # EQUAL TO OR PRECEDES
+  "{\\curlyeqprec}": '\u22DE' # EQUAL TO OR PRECEDES
+  "\\curlyeqprec": '\u22DE' # EQUAL TO OR PRECEDES
+  "\\curlyeqsucc{}": '\u22DF' # EQUAL TO OR SUCCEEDS
+  "{\\curlyeqsucc}": '\u22DF' # EQUAL TO OR SUCCEEDS
+  "\\curlyeqsucc": '\u22DF' # EQUAL TO OR SUCCEEDS
+  "\\npreceq{}": '\u22E0' # DOES NOT PRECEDE OR EQUAL
+  "{\\npreceq}": '\u22E0' # DOES NOT PRECEDE OR EQUAL
+  "\\npreceq": '\u22E0' # DOES NOT PRECEDE OR EQUAL
+  "\\nsucceq{}": '\u22E1' # not succeeds, curly equals
+  "{\\nsucceq}": '\u22E1' # not succeeds, curly equals
+  "\\nsucceq": '\u22E1' # not succeeds, curly equals
+  "\\not\\sqsubseteq{}": '\u22E2' # NOT SQUARE IMAGE OF OR EQUAL TO
+  "{\\not\\sqsubseteq}": '\u22E2' # NOT SQUARE IMAGE OF OR EQUAL TO
+  "\\not\\sqsubseteq": '\u22E2' # NOT SQUARE IMAGE OF OR EQUAL TO
+  "\\not\\sqsupseteq{}": '\u22E3' # NOT SQUARE ORIGINAL OF OR EQUAL TO
+  "{\\not\\sqsupseteq}": '\u22E3' # NOT SQUARE ORIGINAL OF OR EQUAL TO
+  "\\not\\sqsupseteq": '\u22E3' # NOT SQUARE ORIGINAL OF OR EQUAL TO
+  "\\sqsubsetneq{}": '\u22E4' # square subset, not equals
+  "{\\sqsubsetneq}": '\u22E4' # square subset, not equals
+  "\\sqsubsetneq": '\u22E4' # square subset, not equals
+  "\\Elzsqspne{}": '\u22E5' # SQUARE ORIGINAL OF OR NOT EQUAL TO
+  "{\\Elzsqspne}": '\u22E5' # SQUARE ORIGINAL OF OR NOT EQUAL TO
+  "\\Elzsqspne": '\u22E5' # SQUARE ORIGINAL OF OR NOT EQUAL TO
+  "\\lnsim{}": '\u22E6' # LESS-THAN BUT NOT EQUIVALENT TO
+  "{\\lnsim}": '\u22E6' # LESS-THAN BUT NOT EQUIVALENT TO
+  "\\lnsim": '\u22E6' # LESS-THAN BUT NOT EQUIVALENT TO
+  "\\gnsim{}": '\u22E7' # GREATER-THAN BUT NOT EQUIVALENT TO
+  "{\\gnsim}": '\u22E7' # GREATER-THAN BUT NOT EQUIVALENT TO
+  "\\gnsim": '\u22E7' # GREATER-THAN BUT NOT EQUIVALENT TO
+  "\\precedesnotsimilar{}": '\u22E8' # PRECEDES BUT NOT EQUIVALENT TO
+  "{\\precedesnotsimilar}": '\u22E8' # PRECEDES BUT NOT EQUIVALENT TO
+  "\\precedesnotsimilar": '\u22E8' # PRECEDES BUT NOT EQUIVALENT TO
+  "\\succnsim{}": '\u22E9' # SUCCEEDS BUT NOT EQUIVALENT TO
+  "{\\succnsim}": '\u22E9' # SUCCEEDS BUT NOT EQUIVALENT TO
+  "\\succnsim": '\u22E9' # SUCCEEDS BUT NOT EQUIVALENT TO
+  "\\ntriangleleft{}": '\u22EA' # NOT NORMAL SUBGROUP OF
+  "{\\ntriangleleft}": '\u22EA' # NOT NORMAL SUBGROUP OF
+  "\\ntriangleleft": '\u22EA' # NOT NORMAL SUBGROUP OF
+  "\\ntriangleright{}": '\u22EB' # DOES NOT CONTAIN AS NORMAL SUBGROUP
+  "{\\ntriangleright}": '\u22EB' # DOES NOT CONTAIN AS NORMAL SUBGROUP
+  "\\ntriangleright": '\u22EB' # DOES NOT CONTAIN AS NORMAL SUBGROUP
+  "\\ntrianglelefteq{}": '\u22EC' # NOT NORMAL SUBGROUP OF OR EQUAL TO
+  "{\\ntrianglelefteq}": '\u22EC' # NOT NORMAL SUBGROUP OF OR EQUAL TO
+  "\\ntrianglelefteq": '\u22EC' # NOT NORMAL SUBGROUP OF OR EQUAL TO
+  "\\ntrianglerighteq{}": '\u22ED' # DOES NOT CONTAIN AS NORMAL SUBGROUP OR EQUAL
+  "{\\ntrianglerighteq}": '\u22ED' # DOES NOT CONTAIN AS NORMAL SUBGROUP OR EQUAL
+  "\\ntrianglerighteq": '\u22ED' # DOES NOT CONTAIN AS NORMAL SUBGROUP OR EQUAL
+  "\\vdots{}": '\u22EE' # VERTICAL ELLIPSIS
+  "{\\vdots}": '\u22EE' # VERTICAL ELLIPSIS
+  "\\vdots": '\u22EE' # VERTICAL ELLIPSIS
+  "\\cdots{}": '\u22EF' # MIDLINE HORIZONTAL ELLIPSIS
+  "{\\cdots}": '\u22EF' # MIDLINE HORIZONTAL ELLIPSIS
+  "\\cdots": '\u22EF' # MIDLINE HORIZONTAL ELLIPSIS
+  "\\upslopeellipsis{}": '\u22F0' # UP RIGHT DIAGONAL ELLIPSIS
+  "{\\upslopeellipsis}": '\u22F0' # UP RIGHT DIAGONAL ELLIPSIS
+  "\\upslopeellipsis": '\u22F0' # UP RIGHT DIAGONAL ELLIPSIS
+  "\\downslopeellipsis{}": '\u22F1' # DOWN RIGHT DIAGONAL ELLIPSIS
+  "{\\downslopeellipsis}": '\u22F1' # DOWN RIGHT DIAGONAL ELLIPSIS
+  "\\downslopeellipsis": '\u22F1' # DOWN RIGHT DIAGONAL ELLIPSIS
+  "\\disin{}": '\u22F2' # ELEMENT OF WITH LONG HORIZONTAL STROKE
+  "{\\disin}": '\u22F2' # ELEMENT OF WITH LONG HORIZONTAL STROKE
+  "\\disin": '\u22F2' # ELEMENT OF WITH LONG HORIZONTAL STROKE
+  "\\varisins{}": '\u22F3' # ELEMENT OF WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "{\\varisins}": '\u22F3' # ELEMENT OF WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "\\varisins": '\u22F3' # ELEMENT OF WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "\\isins{}": '\u22F4' # SMALL ELEMENT OF WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "{\\isins}": '\u22F4' # SMALL ELEMENT OF WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "\\isins": '\u22F4' # SMALL ELEMENT OF WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "\\isindot{}": '\u22F5' # ELEMENT OF WITH DOT ABOVE
+  "{\\isindot}": '\u22F5' # ELEMENT OF WITH DOT ABOVE
+  "\\isindot": '\u22F5' # ELEMENT OF WITH DOT ABOVE
+  "\\barin{}": '\u22F6' # ELEMENT OF WITH OVERBAR
+  "{\\barin}": '\u22F6' # ELEMENT OF WITH OVERBAR
+  "\\barin": '\u22F6' # ELEMENT OF WITH OVERBAR
+  "\\isinobar{}": '\u22F7' # SMALL ELEMENT OF WITH OVERBAR
+  "{\\isinobar}": '\u22F7' # SMALL ELEMENT OF WITH OVERBAR
+  "\\isinobar": '\u22F7' # SMALL ELEMENT OF WITH OVERBAR
+  "\\isinvb{}": '\u22F8' # ELEMENT OF WITH UNDERBAR
+  "{\\isinvb}": '\u22F8' # ELEMENT OF WITH UNDERBAR
+  "\\isinvb": '\u22F8' # ELEMENT OF WITH UNDERBAR
+  "\\isinE{}": '\u22F9' # ELEMENT OF WITH TWO HORIZONTAL STROKES
+  "{\\isinE}": '\u22F9' # ELEMENT OF WITH TWO HORIZONTAL STROKES
+  "\\isinE": '\u22F9' # ELEMENT OF WITH TWO HORIZONTAL STROKES
+  "\\nisd{}": '\u22FA' # CONTAINS WITH LONG HORIZONTAL STROKE
+  "{\\nisd}": '\u22FA' # CONTAINS WITH LONG HORIZONTAL STROKE
+  "\\nisd": '\u22FA' # CONTAINS WITH LONG HORIZONTAL STROKE
+  "\\varnis{}": '\u22FB' # CONTAINS WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "{\\varnis}": '\u22FB' # CONTAINS WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "\\varnis": '\u22FB' # CONTAINS WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "\\nis{}": '\u22FC' # SMALL CONTAINS WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "{\\nis}": '\u22FC' # SMALL CONTAINS WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "\\nis": '\u22FC' # SMALL CONTAINS WITH VERTICAL BAR AT END OF HORIZONTAL STROKE
+  "\\varniobar{}": '\u22FD' # CONTAINS WITH OVERBAR
+  "{\\varniobar}": '\u22FD' # CONTAINS WITH OVERBAR
+  "\\varniobar": '\u22FD' # CONTAINS WITH OVERBAR
+  "\\niobar{}": '\u22FE' # SMALL CONTAINS WITH OVERBAR
+  "{\\niobar}": '\u22FE' # SMALL CONTAINS WITH OVERBAR
+  "\\niobar": '\u22FE' # SMALL CONTAINS WITH OVERBAR
+  "\\bagmember{}": '\u22FF' # # \mathsf{E}, Z NOTATION BAG MEMBERSHIP
+  "{\\bagmember}": '\u22FF' # # \mathsf{E}, Z NOTATION BAG MEMBERSHIP
+  "\\bagmember": '\u22FF' # # \mathsf{E}, Z NOTATION BAG MEMBERSHIP
+  "\\diameter{}": '\u2300' # # \varnothing (amssymb), DIAMETER SIGN
+  "{\\diameter}": '\u2300' # # \varnothing (amssymb), DIAMETER SIGN
+  "\\diameter": '\u2300' # # \varnothing (amssymb), DIAMETER SIGN
+  "\\house{}": '\u2302' # HOUSE
+  "{\\house}": '\u2302' # HOUSE
+  "\\house": '\u2302' # HOUSE
+  "\\perspcorrespond{}": '\u2306' # PERSPECTIVE
+  "{\\perspcorrespond}": '\u2306' # PERSPECTIVE
+  "\\perspcorrespond": '\u2306' # PERSPECTIVE
+  "\\lceil{}": '\u2308' # LEFT CEILING
+  "{\\lceil}": '\u2308' # LEFT CEILING
+  "\\lceil": '\u2308' # LEFT CEILING
+  "\\rceil{}": '\u2309' # RIGHT CEILING
+  "{\\rceil}": '\u2309' # RIGHT CEILING
+  "\\rceil": '\u2309' # RIGHT CEILING
+  "\\lfloor{}": '\u230A' # LEFT FLOOR
+  "{\\lfloor}": '\u230A' # LEFT FLOOR
+  "\\lfloor": '\u230A' # LEFT FLOOR
+  "\\rfloor{}": '\u230B' # RIGHT FLOOR
+  "{\\rfloor}": '\u230B' # RIGHT FLOOR
+  "\\rfloor": '\u230B' # RIGHT FLOOR
+  "\\invneg{}": '\u2310' # reverse not
+  "{\\invneg}": '\u2310' # reverse not
+  "\\invneg": '\u2310' # reverse not
+  "\\wasylozenge{}": '\u2311' # SQUARE LOZENGE
+  "{\\wasylozenge}": '\u2311' # SQUARE LOZENGE
+  "\\wasylozenge": '\u2311' # SQUARE LOZENGE
+  "\\profline{}": '\u2312' # profile of a line
+  "{\\profline}": '\u2312' # profile of a line
+  "\\profline": '\u2312' # profile of a line
+  "\\profsurf{}": '\u2313' # profile of a surface
+  "{\\profsurf}": '\u2313' # profile of a surface
+  "\\profsurf": '\u2313' # profile of a surface
+  "\\recorder{}": '\u2315' # TELEPHONE RECORDER
+  "{\\recorder}": '\u2315' # TELEPHONE RECORDER
+  "\\recorder": '\u2315' # TELEPHONE RECORDER
+  "{\\mathchar\"2208}": '\u2316' # POSITION INDICATOR
+  "\\mathchar\"2208{}": '\u2316' # POSITION INDICATOR
+  "\\mathchar\"2208": '\u2316' # POSITION INDICATOR
+  "\\viewdata{}": '\u2317' # VIEWDATA SQUARE
+  "{\\viewdata}": '\u2317' # VIEWDATA SQUARE
+  "\\viewdata": '\u2317' # VIEWDATA SQUARE
+  "\\turnednot{}": '\u2319' # TURNED NOT SIGN
+  "{\\turnednot}": '\u2319' # TURNED NOT SIGN
+  "\\turnednot": '\u2319' # TURNED NOT SIGN
+  "\\ulcorner{}": '\u231C' # TOP LEFT CORNER
+  "{\\ulcorner}": '\u231C' # TOP LEFT CORNER
+  "\\ulcorner": '\u231C' # TOP LEFT CORNER
+  "\\urcorner{}": '\u231D' # TOP RIGHT CORNER
+  "{\\urcorner}": '\u231D' # TOP RIGHT CORNER
+  "\\urcorner": '\u231D' # TOP RIGHT CORNER
+  "\\llcorner{}": '\u231E' # BOTTOM LEFT CORNER
+  "{\\llcorner}": '\u231E' # BOTTOM LEFT CORNER
+  "\\llcorner": '\u231E' # BOTTOM LEFT CORNER
+  "\\lrcorner{}": '\u231F' # BOTTOM RIGHT CORNER
+  "{\\lrcorner}": '\u231F' # BOTTOM RIGHT CORNER
+  "\\lrcorner": '\u231F' # BOTTOM RIGHT CORNER
+  "\\inttop{}": '\u2320' # TOP HALF INTEGRAL
+  "{\\inttop}": '\u2320' # TOP HALF INTEGRAL
+  "\\inttop": '\u2320' # TOP HALF INTEGRAL
+  "\\intbottom{}": '\u2321' # BOTTOM HALF INTEGRAL
+  "{\\intbottom}": '\u2321' # BOTTOM HALF INTEGRAL
+  "\\intbottom": '\u2321' # BOTTOM HALF INTEGRAL
+  "\\frown{}": '\u2322' # FROWN
+  "{\\frown}": '\u2322' # FROWN
+  "\\frown": '\u2322' # FROWN
+  "\\smile{}": '\u2323' # SMILE
+  "{\\smile}": '\u2323' # SMILE
+  "\\smile": '\u2323' # SMILE
+  "\\langle{}": '\u2329' # LEFT-POINTING ANGLE BRACKET
+  "{\\langle}": '\u2329' # LEFT-POINTING ANGLE BRACKET
+  "\\langle": '\u2329' # LEFT-POINTING ANGLE BRACKET
+  "\\rangle{}": '\u232A' # RIGHT-POINTING ANGLE BRACKET
+  "{\\rangle}": '\u232A' # RIGHT-POINTING ANGLE BRACKET
+  "\\rangle": '\u232A' # RIGHT-POINTING ANGLE BRACKET
+  "\\varhexagonlrbonds{}": '\u232C' # six carbon ring, corner down, double bonds lower right etc
+  "{\\varhexagonlrbonds}": '\u232C' # six carbon ring, corner down, double bonds lower right etc
+  "\\varhexagonlrbonds": '\u232C' # six carbon ring, corner down, double bonds lower right etc
+  "\\conictaper{}": '\u2332' # CONICAL TAPER
+  "{\\conictaper}": '\u2332' # CONICAL TAPER
+  "\\conictaper": '\u2332' # CONICAL TAPER
+  "\\topbot{}": '\u2336' # APL FUNCTIONAL SYMBOL I-BEAM, top and bottom
+  "{\\topbot}": '\u2336' # APL FUNCTIONAL SYMBOL I-BEAM, top and bottom
+  "\\topbot": '\u2336' # APL FUNCTIONAL SYMBOL I-BEAM, top and bottom
+  "\\APLinv{}": '\u2339' # APL FUNCTIONAL SYMBOL QUAD DIVIDE
+  "{\\APLinv}": '\u2339' # APL FUNCTIONAL SYMBOL QUAD DIVIDE
+  "\\APLinv": '\u2339' # APL FUNCTIONAL SYMBOL QUAD DIVIDE
+  "\\ElsevierGlyph{E838}": '\u233D' # APL FUNCTIONAL SYMBOL CIRCLE STILE
+  "\\notslash{}": '\u233F' # APL FUNCTIONAL SYMBOL SLASH BAR, solidus, bar through
+  "{\\notslash}": '\u233F' # APL FUNCTIONAL SYMBOL SLASH BAR, solidus, bar through
+  "\\notslash": '\u233F' # APL FUNCTIONAL SYMBOL SLASH BAR, solidus, bar through
+  "\\notbackslash{}": '\u2340' # APL FUNCTIONAL SYMBOL BACKSLASH BAR
+  "{\\notbackslash}": '\u2340' # APL FUNCTIONAL SYMBOL BACKSLASH BAR
+  "\\notbackslash": '\u2340' # APL FUNCTIONAL SYMBOL BACKSLASH BAR
+  "\\APLleftarrowbox{}": '\u2347' # APL FUNCTIONAL SYMBOL QUAD LEFTWARDS ARROW
+  "{\\APLleftarrowbox}": '\u2347' # APL FUNCTIONAL SYMBOL QUAD LEFTWARDS ARROW
+  "\\APLleftarrowbox": '\u2347' # APL FUNCTIONAL SYMBOL QUAD LEFTWARDS ARROW
+  "\\APLrightarrowbox{}": '\u2348' # APL FUNCTIONAL SYMBOL QUAD RIGHTWARDS ARROW
+  "{\\APLrightarrowbox}": '\u2348' # APL FUNCTIONAL SYMBOL QUAD RIGHTWARDS ARROW
+  "\\APLrightarrowbox": '\u2348' # APL FUNCTIONAL SYMBOL QUAD RIGHTWARDS ARROW
+  "\\APLuparrowbox{}": '\u2350' # APL FUNCTIONAL SYMBOL QUAD UPWARDS ARROW
+  "{\\APLuparrowbox}": '\u2350' # APL FUNCTIONAL SYMBOL QUAD UPWARDS ARROW
+  "\\APLuparrowbox": '\u2350' # APL FUNCTIONAL SYMBOL QUAD UPWARDS ARROW
+  "\\APLboxupcaret{}": '\u2353' # APL FUNCTIONAL SYMBOL QUAD UP CARET
+  "{\\APLboxupcaret}": '\u2353' # APL FUNCTIONAL SYMBOL QUAD UP CARET
+  "\\APLboxupcaret": '\u2353' # APL FUNCTIONAL SYMBOL QUAD UP CARET
+  "\\APLdownarrowbox{}": '\u2357' # APL FUNCTIONAL SYMBOL QUAD DOWNWARDS ARROW
+  "{\\APLdownarrowbox}": '\u2357' # APL FUNCTIONAL SYMBOL QUAD DOWNWARDS ARROW
+  "\\APLdownarrowbox": '\u2357' # APL FUNCTIONAL SYMBOL QUAD DOWNWARDS ARROW
+  "\\APLcomment{}": '\u235D' # APL FUNCTIONAL SYMBOL UP SHOE JOT
+  "{\\APLcomment}": '\u235D' # APL FUNCTIONAL SYMBOL UP SHOE JOT
+  "\\APLcomment": '\u235D' # APL FUNCTIONAL SYMBOL UP SHOE JOT
+  "\\APLinput{}": '\u235E' # APL FUNCTIONAL SYMBOL QUOTE QUAD
+  "{\\APLinput}": '\u235E' # APL FUNCTIONAL SYMBOL QUOTE QUAD
+  "\\APLinput": '\u235E' # APL FUNCTIONAL SYMBOL QUOTE QUAD
+  "\\APLlog{}": '\u235F' # APL FUNCTIONAL SYMBOL CIRCLE STAR
+  "{\\APLlog}": '\u235F' # APL FUNCTIONAL SYMBOL CIRCLE STAR
+  "\\APLlog": '\u235F' # APL FUNCTIONAL SYMBOL CIRCLE STAR
+  "\\APLboxquestion{}": '\u2370' # APL FUNCTIONAL SYMBOL QUAD QUESTION
+  "{\\APLboxquestion}": '\u2370' # APL FUNCTIONAL SYMBOL QUAD QUESTION
+  "\\APLboxquestion": '\u2370' # APL FUNCTIONAL SYMBOL QUAD QUESTION
+  "\\rangledownzigzagarrow{}": '\u237C' # RIGHT ANGLE WITH DOWNWARDS ZIGZAG ARROW
+  "{\\rangledownzigzagarrow}": '\u237C' # RIGHT ANGLE WITH DOWNWARDS ZIGZAG ARROW
+  "\\rangledownzigzagarrow": '\u237C' # RIGHT ANGLE WITH DOWNWARDS ZIGZAG ARROW
+  "\\hexagon{}": '\u2394' # horizontal benzene ring [hexagon flat open]
+  "{\\hexagon}": '\u2394' # horizontal benzene ring [hexagon flat open]
+  "\\hexagon": '\u2394' # horizontal benzene ring [hexagon flat open]
+  "\\lparenuend{}": '\u239B' # LEFT PARENTHESIS UPPER HOOK
+  "{\\lparenuend}": '\u239B' # LEFT PARENTHESIS UPPER HOOK
+  "\\lparenuend": '\u239B' # LEFT PARENTHESIS UPPER HOOK
+  "\\lparenextender{}": '\u239C' # LEFT PARENTHESIS EXTENSION
+  "{\\lparenextender}": '\u239C' # LEFT PARENTHESIS EXTENSION
+  "\\lparenextender": '\u239C' # LEFT PARENTHESIS EXTENSION
+  "\\lparenlend{}": '\u239D' # LEFT PARENTHESIS LOWER HOOK
+  "{\\lparenlend}": '\u239D' # LEFT PARENTHESIS LOWER HOOK
+  "\\lparenlend": '\u239D' # LEFT PARENTHESIS LOWER HOOK
+  "\\rparenuend{}": '\u239E' # RIGHT PARENTHESIS UPPER HOOK
+  "{\\rparenuend}": '\u239E' # RIGHT PARENTHESIS UPPER HOOK
+  "\\rparenuend": '\u239E' # RIGHT PARENTHESIS UPPER HOOK
+  "\\rparenextender{}": '\u239F' # RIGHT PARENTHESIS EXTENSION
+  "{\\rparenextender}": '\u239F' # RIGHT PARENTHESIS EXTENSION
+  "\\rparenextender": '\u239F' # RIGHT PARENTHESIS EXTENSION
+  "\\rparenlend{}": '\u23A0' # RIGHT PARENTHESIS LOWER HOOK
+  "{\\rparenlend}": '\u23A0' # RIGHT PARENTHESIS LOWER HOOK
+  "\\rparenlend": '\u23A0' # RIGHT PARENTHESIS LOWER HOOK
+  "\\lbrackuend{}": '\u23A1' # LEFT SQUARE BRACKET UPPER CORNER
+  "{\\lbrackuend}": '\u23A1' # LEFT SQUARE BRACKET UPPER CORNER
+  "\\lbrackuend": '\u23A1' # LEFT SQUARE BRACKET UPPER CORNER
+  "\\lbrackextender{}": '\u23A2' # LEFT SQUARE BRACKET EXTENSION
+  "{\\lbrackextender}": '\u23A2' # LEFT SQUARE BRACKET EXTENSION
+  "\\lbrackextender": '\u23A2' # LEFT SQUARE BRACKET EXTENSION
+  "\\Elzdlcorn{}": '\u23A3' # LEFT SQUARE BRACKET LOWER CORNER
+  "{\\Elzdlcorn}": '\u23A3' # LEFT SQUARE BRACKET LOWER CORNER
+  "\\Elzdlcorn": '\u23A3' # LEFT SQUARE BRACKET LOWER CORNER
+  "\\rbrackuend{}": '\u23A4' # RIGHT SQUARE BRACKET UPPER CORNER
+  "{\\rbrackuend}": '\u23A4' # RIGHT SQUARE BRACKET UPPER CORNER
+  "\\rbrackuend": '\u23A4' # RIGHT SQUARE BRACKET UPPER CORNER
+  "\\rbrackextender{}": '\u23A5' # RIGHT SQUARE BRACKET EXTENSION
+  "{\\rbrackextender}": '\u23A5' # RIGHT SQUARE BRACKET EXTENSION
+  "\\rbrackextender": '\u23A5' # RIGHT SQUARE BRACKET EXTENSION
+  "\\rbracklend{}": '\u23A6' # RIGHT SQUARE BRACKET LOWER CORNER
+  "{\\rbracklend}": '\u23A6' # RIGHT SQUARE BRACKET LOWER CORNER
+  "\\rbracklend": '\u23A6' # RIGHT SQUARE BRACKET LOWER CORNER
+  "\\lbraceuend{}": '\u23A7' # LEFT CURLY BRACKET UPPER HOOK
+  "{\\lbraceuend}": '\u23A7' # LEFT CURLY BRACKET UPPER HOOK
+  "\\lbraceuend": '\u23A7' # LEFT CURLY BRACKET UPPER HOOK
+  "\\lbracemid{}": '\u23A8' # LEFT CURLY BRACKET MIDDLE PIECE
+  "{\\lbracemid}": '\u23A8' # LEFT CURLY BRACKET MIDDLE PIECE
+  "\\lbracemid": '\u23A8' # LEFT CURLY BRACKET MIDDLE PIECE
+  "\\lbracelend{}": '\u23A9' # LEFT CURLY BRACKET LOWER HOOK
+  "{\\lbracelend}": '\u23A9' # LEFT CURLY BRACKET LOWER HOOK
+  "\\lbracelend": '\u23A9' # LEFT CURLY BRACKET LOWER HOOK
+  "\\vbraceextender{}": '\u23AA' # CURLY BRACKET EXTENSION
+  "{\\vbraceextender}": '\u23AA' # CURLY BRACKET EXTENSION
+  "\\vbraceextender": '\u23AA' # CURLY BRACKET EXTENSION
+  "\\rbraceuend{}": '\u23AB' # RIGHT CURLY BRACKET UPPER HOOK
+  "{\\rbraceuend}": '\u23AB' # RIGHT CURLY BRACKET UPPER HOOK
+  "\\rbraceuend": '\u23AB' # RIGHT CURLY BRACKET UPPER HOOK
+  "\\rbracemid{}": '\u23AC' # RIGHT CURLY BRACKET MIDDLE PIECE
+  "{\\rbracemid}": '\u23AC' # RIGHT CURLY BRACKET MIDDLE PIECE
+  "\\rbracemid": '\u23AC' # RIGHT CURLY BRACKET MIDDLE PIECE
+  "\\rbracelend{}": '\u23AD' # RIGHT CURLY BRACKET LOWER HOOK
+  "{\\rbracelend}": '\u23AD' # RIGHT CURLY BRACKET LOWER HOOK
+  "\\rbracelend": '\u23AD' # RIGHT CURLY BRACKET LOWER HOOK
+  "\\intextender{}": '\u23AE' # INTEGRAL EXTENSION
+  "{\\intextender}": '\u23AE' # INTEGRAL EXTENSION
+  "\\intextender": '\u23AE' # INTEGRAL EXTENSION
+  "\\harrowextender{}": '\u23AF' # HORIZONTAL LINE EXTENSION (used to extend arrows)
+  "{\\harrowextender}": '\u23AF' # HORIZONTAL LINE EXTENSION (used to extend arrows)
+  "\\harrowextender": '\u23AF' # HORIZONTAL LINE EXTENSION (used to extend arrows)
+  "\\lmoustache{}": '\u23B0' # UPPER LEFT OR LOWER RIGHT CURLY BRACKET SECTION
+  "{\\lmoustache}": '\u23B0' # UPPER LEFT OR LOWER RIGHT CURLY BRACKET SECTION
+  "\\lmoustache": '\u23B0' # UPPER LEFT OR LOWER RIGHT CURLY BRACKET SECTION
+  "\\rmoustache{}": '\u23B1' # UPPER RIGHT OR LOWER LEFT CURLY BRACKET SECTION
+  "{\\rmoustache}": '\u23B1' # UPPER RIGHT OR LOWER LEFT CURLY BRACKET SECTION
+  "\\rmoustache": '\u23B1' # UPPER RIGHT OR LOWER LEFT CURLY BRACKET SECTION
+  "\\sumtop{}": '\u23B2' # SUMMATION TOP
+  "{\\sumtop}": '\u23B2' # SUMMATION TOP
+  "\\sumtop": '\u23B2' # SUMMATION TOP
+  "\\sumbottom{}": '\u23B3' # SUMMATION BOTTOM
+  "{\\sumbottom}": '\u23B3' # SUMMATION BOTTOM
+  "\\sumbottom": '\u23B3' # SUMMATION BOTTOM
+  "\\overbracket{}": '\u23B4' # TOP SQUARE BRACKET
+  "{\\overbracket}": '\u23B4' # TOP SQUARE BRACKET
+  "\\overbracket": '\u23B4' # TOP SQUARE BRACKET
+  "\\underbracket{}": '\u23B5' # BOTTOM SQUARE BRACKET
+  "{\\underbracket}": '\u23B5' # BOTTOM SQUARE BRACKET
+  "\\underbracket": '\u23B5' # BOTTOM SQUARE BRACKET
+  "\\bbrktbrk{}": '\u23B6' # BOTTOM SQUARE BRACKET OVER TOP SQUARE BRACKET
+  "{\\bbrktbrk}": '\u23B6' # BOTTOM SQUARE BRACKET OVER TOP SQUARE BRACKET
+  "\\bbrktbrk": '\u23B6' # BOTTOM SQUARE BRACKET OVER TOP SQUARE BRACKET
+  "\\sqrtbottom{}": '\u23B7' # RADICAL SYMBOL BOTTOM
+  "{\\sqrtbottom}": '\u23B7' # RADICAL SYMBOL BOTTOM
+  "\\sqrtbottom": '\u23B7' # RADICAL SYMBOL BOTTOM
+  "\\lvboxline{}": '\u23B8' # LEFT VERTICAL BOX LINE
+  "{\\lvboxline}": '\u23B8' # LEFT VERTICAL BOX LINE
+  "\\lvboxline": '\u23B8' # LEFT VERTICAL BOX LINE
+  "\\rvboxline{}": '\u23B9' # RIGHT VERTICAL BOX LINE
+  "{\\rvboxline}": '\u23B9' # RIGHT VERTICAL BOX LINE
+  "\\rvboxline": '\u23B9' # RIGHT VERTICAL BOX LINE
+  "\\varcarriagereturn{}": '\u23CE' # RETURN SYMBOL
+  "{\\varcarriagereturn}": '\u23CE' # RETURN SYMBOL
+  "\\varcarriagereturn": '\u23CE' # RETURN SYMBOL
+  "\\overparen{}": '\u23DC' # = \wideparen (yhmath mathabx fourier), TOP PARENTHESIS (mathematical use)
+  "{\\overparen}": '\u23DC' # = \wideparen (yhmath mathabx fourier), TOP PARENTHESIS (mathematical use)
+  "\\overparen": '\u23DC' # = \wideparen (yhmath mathabx fourier), TOP PARENTHESIS (mathematical use)
+  "\\underparen{}": '\u23DD' # BOTTOM PARENTHESIS (mathematical use)
+  "{\\underparen}": '\u23DD' # BOTTOM PARENTHESIS (mathematical use)
+  "\\underparen": '\u23DD' # BOTTOM PARENTHESIS (mathematical use)
+  "\\overbrace{}": '\u23DE' # TOP CURLY BRACKET (mathematical use)
+  "{\\overbrace}": '\u23DE' # TOP CURLY BRACKET (mathematical use)
+  "\\overbrace": '\u23DE' # TOP CURLY BRACKET (mathematical use)
+  "\\underbrace{}": '\u23DF' # BOTTOM CURLY BRACKET (mathematical use)
+  "{\\underbrace}": '\u23DF' # BOTTOM CURLY BRACKET (mathematical use)
+  "\\underbrace": '\u23DF' # BOTTOM CURLY BRACKET (mathematical use)
+  "\\obrbrak{}": '\u23E0' # TOP TORTOISE SHELL BRACKET (mathematical use)
+  "{\\obrbrak}": '\u23E0' # TOP TORTOISE SHELL BRACKET (mathematical use)
+  "\\obrbrak": '\u23E0' # TOP TORTOISE SHELL BRACKET (mathematical use)
+  "\\ubrbrak{}": '\u23E1' # BOTTOM TORTOISE SHELL BRACKET (mathematical use)
+  "{\\ubrbrak}": '\u23E1' # BOTTOM TORTOISE SHELL BRACKET (mathematical use)
+  "\\ubrbrak": '\u23E1' # BOTTOM TORTOISE SHELL BRACKET (mathematical use)
+  "\\trapezium{}": '\u23E2' # WHITE TRAPEZIUM
+  "{\\trapezium}": '\u23E2' # WHITE TRAPEZIUM
+  "\\trapezium": '\u23E2' # WHITE TRAPEZIUM
+  "\\benzenr{}": '\u23E3' # BENZENE RING WITH CIRCLE
+  "{\\benzenr}": '\u23E3' # BENZENE RING WITH CIRCLE
+  "\\benzenr": '\u23E3' # BENZENE RING WITH CIRCLE
+  "\\strns{}": '\u23E4' # STRAIGHTNESS
+  "{\\strns}": '\u23E4' # STRAIGHTNESS
+  "\\strns": '\u23E4' # STRAIGHTNESS
+  "\\fltns{}": '\u23E5' # FLATNESS
+  "{\\fltns}": '\u23E5' # FLATNESS
+  "\\fltns": '\u23E5' # FLATNESS
+  "\\accurrent{}": '\u23E6' # # \AC (wasysym), AC CURRENT
+  "{\\accurrent}": '\u23E6' # # \AC (wasysym), AC CURRENT
+  "\\accurrent": '\u23E6' # # \AC (wasysym), AC CURRENT
+  "\\elinters{}": '\u23E7' # ELECTRICAL INTERSECTION
+  "{\\elinters}": '\u23E7' # ELECTRICAL INTERSECTION
+  "\\elinters": '\u23E7' # ELECTRICAL INTERSECTION
+  "\\textvisiblespace{}": '\u2423' # OPEN BOX
+  "{\\textvisiblespace}": '\u2423' # OPEN BOX
+  "\\textvisiblespace": '\u2423' # OPEN BOX
+  "\\ding{172}": '\u2460' # CIRCLED DIGIT ONE
+  "\\ding{173}": '\u2461' # CIRCLED DIGIT TWO
+  "\\ding{174}": '\u2462' # CIRCLED DIGIT THREE
+  "\\ding{175}": '\u2463' # CIRCLED DIGIT FOUR
+  "\\ding{176}": '\u2464' # CIRCLED DIGIT FIVE
+  "\\ding{177}": '\u2465' # CIRCLED DIGIT SIX
+  "\\ding{178}": '\u2466' # CIRCLED DIGIT SEVEN
+  "\\ding{179}": '\u2467' # CIRCLED DIGIT EIGHT
+  "\\ding{180}": '\u2468' # CIRCLED DIGIT NINE
+  "\\ding{181}": '\u2469' # CIRCLED NUMBER TEN
+  "\\circledS{}": '\u24C8' # CIRCLED LATIN CAPITAL LETTER S
+  "{\\circledS}": '\u24C8' # CIRCLED LATIN CAPITAL LETTER S
+  "\\circledS": '\u24C8' # CIRCLED LATIN CAPITAL LETTER S
+  "\\Elzdshfnc{}": '\u2506' # BOX DRAWINGS LIGHT TRIPLE DASH VERTICAL
+  "{\\Elzdshfnc}": '\u2506' # BOX DRAWINGS LIGHT TRIPLE DASH VERTICAL
+  "\\Elzdshfnc": '\u2506' # BOX DRAWINGS LIGHT TRIPLE DASH VERTICAL
+  "\\Elzsqfnw{}": '\u2519' # BOX DRAWINGS UP LIGHT AND LEFT HEAVY
+  "{\\Elzsqfnw}": '\u2519' # BOX DRAWINGS UP LIGHT AND LEFT HEAVY
+  "\\Elzsqfnw": '\u2519' # BOX DRAWINGS UP LIGHT AND LEFT HEAVY
+  "\\diagup{}": '\u2571' # BOX DRAWINGS LIGHT DIAGONAL UPPER RIGHT TO LOWER LEFT
+  "{\\diagup}": '\u2571' # BOX DRAWINGS LIGHT DIAGONAL UPPER RIGHT TO LOWER LEFT
+  "\\diagup": '\u2571' # BOX DRAWINGS LIGHT DIAGONAL UPPER RIGHT TO LOWER LEFT
+  "\\blockuphalf{}": '\u2580' # UPPER HALF BLOCK
+  "{\\blockuphalf}": '\u2580' # UPPER HALF BLOCK
+  "\\blockuphalf": '\u2580' # UPPER HALF BLOCK
+  "\\blocklowhalf{}": '\u2584' # LOWER HALF BLOCK
+  "{\\blocklowhalf}": '\u2584' # LOWER HALF BLOCK
+  "\\blocklowhalf": '\u2584' # LOWER HALF BLOCK
+  "\\blockfull{}": '\u2588' # FULL BLOCK
+  "{\\blockfull}": '\u2588' # FULL BLOCK
+  "\\blockfull": '\u2588' # FULL BLOCK
+  "\\blocklefthalf{}": '\u258C' # LEFT HALF BLOCK
+  "{\\blocklefthalf}": '\u258C' # LEFT HALF BLOCK
+  "\\blocklefthalf": '\u258C' # LEFT HALF BLOCK
+  "\\blockrighthalf{}": '\u2590' # RIGHT HALF BLOCK
+  "{\\blockrighthalf}": '\u2590' # RIGHT HALF BLOCK
+  "\\blockrighthalf": '\u2590' # RIGHT HALF BLOCK
+  "\\blockqtrshaded{}": '\u2591' # 25\% shaded block
+  "{\\blockqtrshaded}": '\u2591' # 25\% shaded block
+  "\\blockqtrshaded": '\u2591' # 25\% shaded block
+  "\\blockhalfshaded{}": '\u2592' # 50\% shaded block
+  "{\\blockhalfshaded}": '\u2592' # 50\% shaded block
+  "\\blockhalfshaded": '\u2592' # 50\% shaded block
+  "\\blockthreeqtrshaded{}": '\u2593' # 75\% shaded block
+  "{\\blockthreeqtrshaded}": '\u2593' # 75\% shaded block
+  "\\blockthreeqtrshaded": '\u2593' # 75\% shaded block
+  "\\ding{110}": '\u25A0' # BLACK SQUARE
+  "\\square{}": '\u25A1' # WHITE SQUARE
+  "{\\square}": '\u25A1' # WHITE SQUARE
+  "\\square": '\u25A1' # WHITE SQUARE
+  "\\squoval{}": '\u25A2' # WHITE SQUARE WITH ROUNDED CORNERS
+  "{\\squoval}": '\u25A2' # WHITE SQUARE WITH ROUNDED CORNERS
+  "\\squoval": '\u25A2' # WHITE SQUARE WITH ROUNDED CORNERS
+  "\\blackinwhitesquare{}": '\u25A3' # WHITE SQUARE CONTAINING BLACK SMALL SQUARE
+  "{\\blackinwhitesquare}": '\u25A3' # WHITE SQUARE CONTAINING BLACK SMALL SQUARE
+  "\\blackinwhitesquare": '\u25A3' # WHITE SQUARE CONTAINING BLACK SMALL SQUARE
+  "\\squarehfill{}": '\u25A4' # square, horizontal rule filled
+  "{\\squarehfill}": '\u25A4' # square, horizontal rule filled
+  "\\squarehfill": '\u25A4' # square, horizontal rule filled
+  "\\squarevfill{}": '\u25A5' # square, vertical rule filled
+  "{\\squarevfill}": '\u25A5' # square, vertical rule filled
+  "\\squarevfill": '\u25A5' # square, vertical rule filled
+  "\\squarehvfill{}": '\u25A6' # SQUARE WITH ORTHOGONAL CROSSHATCH FILL
+  "{\\squarehvfill}": '\u25A6' # SQUARE WITH ORTHOGONAL CROSSHATCH FILL
+  "\\squarehvfill": '\u25A6' # SQUARE WITH ORTHOGONAL CROSSHATCH FILL
+  "\\squarenwsefill{}": '\u25A7' # square, nw-to-se rule filled
+  "{\\squarenwsefill}": '\u25A7' # square, nw-to-se rule filled
+  "\\squarenwsefill": '\u25A7' # square, nw-to-se rule filled
+  "\\squareneswfill{}": '\u25A8' # square, ne-to-sw rule filled
+  "{\\squareneswfill}": '\u25A8' # square, ne-to-sw rule filled
+  "\\squareneswfill": '\u25A8' # square, ne-to-sw rule filled
+  "\\squarecrossfill{}": '\u25A9' # SQUARE WITH DIAGONAL CROSSHATCH FILL
+  "{\\squarecrossfill}": '\u25A9' # SQUARE WITH DIAGONAL CROSSHATCH FILL
+  "\\squarecrossfill": '\u25A9' # SQUARE WITH DIAGONAL CROSSHATCH FILL
+  "\\blacksquare{}": '\u25AA' # BLACK SMALL SQUARE
+  "{\\blacksquare}": '\u25AA' # BLACK SMALL SQUARE
+  "\\blacksquare": '\u25AA' # BLACK SMALL SQUARE
+  "\\smwhtsquare{}": '\u25AB' # WHITE SMALL SQUARE
+  "{\\smwhtsquare}": '\u25AB' # WHITE SMALL SQUARE
+  "\\smwhtsquare": '\u25AB' # WHITE SMALL SQUARE
+  "\\hrectangleblack{}": '\u25AC' # BLACK RECTANGLE
+  "{\\hrectangleblack}": '\u25AC' # BLACK RECTANGLE
+  "\\hrectangleblack": '\u25AC' # BLACK RECTANGLE
+  "\\fbox{~~}": '\u25AD' # WHITE RECTANGLE
+  "\\vrectangleblack{}": '\u25AE' # BLACK VERTICAL RECTANGLE
+  "{\\vrectangleblack}": '\u25AE' # BLACK VERTICAL RECTANGLE
+  "\\vrectangleblack": '\u25AE' # BLACK VERTICAL RECTANGLE
+  "\\Elzvrecto{}": '\u25AF' # WHITE VERTICAL RECTANGLE
+  "{\\Elzvrecto}": '\u25AF' # WHITE VERTICAL RECTANGLE
+  "\\Elzvrecto": '\u25AF' # WHITE VERTICAL RECTANGLE
+  "\\parallelogramblack{}": '\u25B0' # BLACK PARALLELOGRAM
+  "{\\parallelogramblack}": '\u25B0' # BLACK PARALLELOGRAM
+  "\\parallelogramblack": '\u25B0' # BLACK PARALLELOGRAM
+  "\\ElsevierGlyph{E381}": '\u25B1' # WHITE PARALLELOGRAM
+  "\\ding{115}": '\u25B2' # BLACK UP-POINTING TRIANGLE
+  "\\bigtriangleup{}": '\u25B3' # WHITE UP-POINTING TRIANGLE
+  "{\\bigtriangleup}": '\u25B3' # WHITE UP-POINTING TRIANGLE
+  "\\bigtriangleup": '\u25B3' # WHITE UP-POINTING TRIANGLE
+  "\\blacktriangle{}": '\u25B4' # BLACK UP-POINTING SMALL TRIANGLE
+  "{\\blacktriangle}": '\u25B4' # BLACK UP-POINTING SMALL TRIANGLE
+  "\\blacktriangle": '\u25B4' # BLACK UP-POINTING SMALL TRIANGLE
+  "\\vartriangle{}": '\u25B5' # WHITE UP-POINTING SMALL TRIANGLE
+  "{\\vartriangle}": '\u25B5' # WHITE UP-POINTING SMALL TRIANGLE
+  "\\vartriangle": '\u25B5' # WHITE UP-POINTING SMALL TRIANGLE
+  "\\RHD{}": '\u25B6' # = \blacktriangleright (fourier -mathabx), (large) right triangle, filled
+  "{\\RHD}": '\u25B6' # = \blacktriangleright (fourier -mathabx), (large) right triangle, filled
+  "\\RHD": '\u25B6' # = \blacktriangleright (fourier -mathabx), (large) right triangle, filled
+  "\\rhd{}": '\u25B7' # = \rres (oz), = \RightTriangle (wrisym), (large) right triangle, open; z notation range restriction
+  "{\\rhd}": '\u25B7' # = \rres (oz), = \RightTriangle (wrisym), (large) right triangle, open; z notation range restriction
+  "\\rhd": '\u25B7' # = \rres (oz), = \RightTriangle (wrisym), (large) right triangle, open; z notation range restriction
+  "\\blacktriangleright{}": '\u25B8' # BLACK RIGHT-POINTING SMALL TRIANGLE
+  "{\\blacktriangleright}": '\u25B8' # BLACK RIGHT-POINTING SMALL TRIANGLE
+  "\\blacktriangleright": '\u25B8' # BLACK RIGHT-POINTING SMALL TRIANGLE
+  "\\triangleright{}": '\u25B9' # WHITE RIGHT-POINTING SMALL TRIANGLE
+  "{\\triangleright}": '\u25B9' # WHITE RIGHT-POINTING SMALL TRIANGLE
+  "\\triangleright": '\u25B9' # WHITE RIGHT-POINTING SMALL TRIANGLE
+  "\\blackpointerright{}": '\u25BA' # BLACK RIGHT-POINTING POINTER
+  "{\\blackpointerright}": '\u25BA' # BLACK RIGHT-POINTING POINTER
+  "\\blackpointerright": '\u25BA' # BLACK RIGHT-POINTING POINTER
+  "\\whitepointerright{}": '\u25BB' # # \triangleright (mathabx), WHITE RIGHT-POINTING POINTER
+  "{\\whitepointerright}": '\u25BB' # # \triangleright (mathabx), WHITE RIGHT-POINTING POINTER
+  "\\whitepointerright": '\u25BB' # # \triangleright (mathabx), WHITE RIGHT-POINTING POINTER
+  "\\ding{116}": '\u25BC' # BLACK DOWN-POINTING TRIANGLE
+  "\\bigtriangledown{}": '\u25BD' # WHITE DOWN-POINTING TRIANGLE
+  "{\\bigtriangledown}": '\u25BD' # WHITE DOWN-POINTING TRIANGLE
+  "\\bigtriangledown": '\u25BD' # WHITE DOWN-POINTING TRIANGLE
+  "\\blacktriangledown{}": '\u25BE' # BLACK DOWN-POINTING SMALL TRIANGLE
+  "{\\blacktriangledown}": '\u25BE' # BLACK DOWN-POINTING SMALL TRIANGLE
+  "\\blacktriangledown": '\u25BE' # BLACK DOWN-POINTING SMALL TRIANGLE
+  "\\triangledown{}": '\u25BF' # WHITE DOWN-POINTING SMALL TRIANGLE
+  "{\\triangledown}": '\u25BF' # WHITE DOWN-POINTING SMALL TRIANGLE
+  "\\triangledown": '\u25BF' # WHITE DOWN-POINTING SMALL TRIANGLE
+  "\\LHD{}": '\u25C0' # = \blacktriangleleft (fourier -mathabx), (large) left triangle, filled
+  "{\\LHD}": '\u25C0' # = \blacktriangleleft (fourier -mathabx), (large) left triangle, filled
+  "\\LHD": '\u25C0' # = \blacktriangleleft (fourier -mathabx), (large) left triangle, filled
+  "\\lhd{}": '\u25C1' # = \dres (oz), = \LeftTriangle (wrisym), (large) left triangle, open; z notation domain restriction
+  "{\\lhd}": '\u25C1' # = \dres (oz), = \LeftTriangle (wrisym), (large) left triangle, open; z notation domain restriction
+  "\\lhd": '\u25C1' # = \dres (oz), = \LeftTriangle (wrisym), (large) left triangle, open; z notation domain restriction
+  "\\blacktriangleleft{}": '\u25C2' # BLACK LEFT-POINTING SMALL TRIANGLE
+  "{\\blacktriangleleft}": '\u25C2' # BLACK LEFT-POINTING SMALL TRIANGLE
+  "\\blacktriangleleft": '\u25C2' # BLACK LEFT-POINTING SMALL TRIANGLE
+  "\\triangleleft{}": '\u25C3' # WHITE LEFT-POINTING SMALL TRIANGLE
+  "{\\triangleleft}": '\u25C3' # WHITE LEFT-POINTING SMALL TRIANGLE
+  "\\triangleleft": '\u25C3' # WHITE LEFT-POINTING SMALL TRIANGLE
+  "\\blackpointerleft{}": '\u25C4' # BLACK LEFT-POINTING POINTER
+  "{\\blackpointerleft}": '\u25C4' # BLACK LEFT-POINTING POINTER
+  "\\blackpointerleft": '\u25C4' # BLACK LEFT-POINTING POINTER
+  "\\whitepointerleft{}": '\u25C5' # # \triangleleft (mathabx), WHITE LEFT-POINTING POINTER
+  "{\\whitepointerleft}": '\u25C5' # # \triangleleft (mathabx), WHITE LEFT-POINTING POINTER
+  "\\whitepointerleft": '\u25C5' # # \triangleleft (mathabx), WHITE LEFT-POINTING POINTER
+  "\\ding{117}": '\u25C6' # BLACK DIAMOND
+  "\\Diamond{}": '\u25C7' # WHITE DIAMOND; diamond, open
+  "{\\Diamond}": '\u25C7' # WHITE DIAMOND; diamond, open
+  "\\Diamond": '\u25C7' # WHITE DIAMOND; diamond, open
+  "\\blackinwhitediamond{}": '\u25C8' # WHITE DIAMOND CONTAINING BLACK SMALL DIAMOND
+  "{\\blackinwhitediamond}": '\u25C8' # WHITE DIAMOND CONTAINING BLACK SMALL DIAMOND
+  "\\blackinwhitediamond": '\u25C8' # WHITE DIAMOND CONTAINING BLACK SMALL DIAMOND
+  "\\fisheye{}": '\u25C9' # FISHEYE
+  "{\\fisheye}": '\u25C9' # FISHEYE
+  "\\fisheye": '\u25C9' # FISHEYE
+  "\\lozenge{}": '\u25CA' # LOZENGE
+  "{\\lozenge}": '\u25CA' # LOZENGE
+  "\\lozenge": '\u25CA' # LOZENGE
+  "\\bigcirc{}": '\u25CB' # WHITE CIRCLE
+  "{\\bigcirc}": '\u25CB' # WHITE CIRCLE
+  "\\bigcirc": '\u25CB' # WHITE CIRCLE
+  "\\dottedcircle{}": '\u25CC' # DOTTED CIRCLE
+  "{\\dottedcircle}": '\u25CC' # DOTTED CIRCLE
+  "\\dottedcircle": '\u25CC' # DOTTED CIRCLE
+  "\\circlevertfill{}": '\u25CD' # CIRCLE WITH VERTICAL FILL
+  "{\\circlevertfill}": '\u25CD' # CIRCLE WITH VERTICAL FILL
+  "\\circlevertfill": '\u25CD' # CIRCLE WITH VERTICAL FILL
+  "\\bullseye{}": '\u25CE' # # \circledcirc (amssymb), BULLSEYE
+  "{\\bullseye}": '\u25CE' # # \circledcirc (amssymb), BULLSEYE
+  "\\bullseye": '\u25CE' # # \circledcirc (amssymb), BULLSEYE
+  "\\ding{108}": '\u25CF' # BLACK CIRCLE
+  "\\Elzcirfl{}": '\u25D0' # CIRCLE WITH LEFT HALF BLACK
+  "{\\Elzcirfl}": '\u25D0' # CIRCLE WITH LEFT HALF BLACK
+  "\\Elzcirfl": '\u25D0' # CIRCLE WITH LEFT HALF BLACK
+  "\\Elzcirfr{}": '\u25D1' # CIRCLE WITH RIGHT HALF BLACK
+  "{\\Elzcirfr}": '\u25D1' # CIRCLE WITH RIGHT HALF BLACK
+  "\\Elzcirfr": '\u25D1' # CIRCLE WITH RIGHT HALF BLACK
+  "\\Elzcirfb{}": '\u25D2' # CIRCLE WITH LOWER HALF BLACK
+  "{\\Elzcirfb}": '\u25D2' # CIRCLE WITH LOWER HALF BLACK
+  "\\Elzcirfb": '\u25D2' # CIRCLE WITH LOWER HALF BLACK
+  "\\circletophalfblack{}": '\u25D3' # circle, filled top half
+  "{\\circletophalfblack}": '\u25D3' # circle, filled top half
+  "\\circletophalfblack": '\u25D3' # circle, filled top half
+  "\\circleurquadblack{}": '\u25D4' # CIRCLE WITH UPPER RIGHT QUADRANT BLACK
+  "{\\circleurquadblack}": '\u25D4' # CIRCLE WITH UPPER RIGHT QUADRANT BLACK
+  "\\circleurquadblack": '\u25D4' # CIRCLE WITH UPPER RIGHT QUADRANT BLACK
+  "\\blackcircleulquadwhite{}": '\u25D5' # CIRCLE WITH ALL BUT UPPER LEFT QUADRANT BLACK
+  "{\\blackcircleulquadwhite}": '\u25D5' # CIRCLE WITH ALL BUT UPPER LEFT QUADRANT BLACK
+  "\\blackcircleulquadwhite": '\u25D5' # CIRCLE WITH ALL BUT UPPER LEFT QUADRANT BLACK
+  "\\LEFTCIRCLE{}": '\u25D6' # LEFT HALF BLACK CIRCLE
+  "{\\LEFTCIRCLE}": '\u25D6' # LEFT HALF BLACK CIRCLE
+  "\\LEFTCIRCLE": '\u25D6' # LEFT HALF BLACK CIRCLE
+  "\\ding{119}": '\u25D7' # RIGHT HALF BLACK CIRCLE
+  "\\Elzrvbull{}": '\u25D8' # INVERSE BULLET
+  "{\\Elzrvbull}": '\u25D8' # INVERSE BULLET
+  "\\Elzrvbull": '\u25D8' # INVERSE BULLET
+  "\\inversewhitecircle{}": '\u25D9' # INVERSE WHITE CIRCLE
+  "{\\inversewhitecircle}": '\u25D9' # INVERSE WHITE CIRCLE
+  "\\inversewhitecircle": '\u25D9' # INVERSE WHITE CIRCLE
+  "\\invwhiteupperhalfcircle{}": '\u25DA' # UPPER HALF INVERSE WHITE CIRCLE
+  "{\\invwhiteupperhalfcircle}": '\u25DA' # UPPER HALF INVERSE WHITE CIRCLE
+  "\\invwhiteupperhalfcircle": '\u25DA' # UPPER HALF INVERSE WHITE CIRCLE
+  "\\invwhitelowerhalfcircle{}": '\u25DB' # LOWER HALF INVERSE WHITE CIRCLE
+  "{\\invwhitelowerhalfcircle}": '\u25DB' # LOWER HALF INVERSE WHITE CIRCLE
+  "\\invwhitelowerhalfcircle": '\u25DB' # LOWER HALF INVERSE WHITE CIRCLE
+  "\\ularc{}": '\u25DC' # UPPER LEFT QUADRANT CIRCULAR ARC
+  "{\\ularc}": '\u25DC' # UPPER LEFT QUADRANT CIRCULAR ARC
+  "\\ularc": '\u25DC' # UPPER LEFT QUADRANT CIRCULAR ARC
+  "\\urarc{}": '\u25DD' # UPPER RIGHT QUADRANT CIRCULAR ARC
+  "{\\urarc}": '\u25DD' # UPPER RIGHT QUADRANT CIRCULAR ARC
+  "\\urarc": '\u25DD' # UPPER RIGHT QUADRANT CIRCULAR ARC
+  "\\lrarc{}": '\u25DE' # LOWER RIGHT QUADRANT CIRCULAR ARC
+  "{\\lrarc}": '\u25DE' # LOWER RIGHT QUADRANT CIRCULAR ARC
+  "\\lrarc": '\u25DE' # LOWER RIGHT QUADRANT CIRCULAR ARC
+  "\\llarc{}": '\u25DF' # LOWER LEFT QUADRANT CIRCULAR ARC
+  "{\\llarc}": '\u25DF' # LOWER LEFT QUADRANT CIRCULAR ARC
+  "\\llarc": '\u25DF' # LOWER LEFT QUADRANT CIRCULAR ARC
+  "\\topsemicircle{}": '\u25E0' # UPPER HALF CIRCLE
+  "{\\topsemicircle}": '\u25E0' # UPPER HALF CIRCLE
+  "\\topsemicircle": '\u25E0' # UPPER HALF CIRCLE
+  "\\botsemicircle{}": '\u25E1' # LOWER HALF CIRCLE
+  "{\\botsemicircle}": '\u25E1' # LOWER HALF CIRCLE
+  "\\botsemicircle": '\u25E1' # LOWER HALF CIRCLE
+  "\\lrblacktriangle{}": '\u25E2' # lower right triangle, filled
+  "{\\lrblacktriangle}": '\u25E2' # lower right triangle, filled
+  "\\lrblacktriangle": '\u25E2' # lower right triangle, filled
+  "\\llblacktriangle{}": '\u25E3' # lower left triangle, filled
+  "{\\llblacktriangle}": '\u25E3' # lower left triangle, filled
+  "\\llblacktriangle": '\u25E3' # lower left triangle, filled
+  "\\ulblacktriangle{}": '\u25E4' # upper left triangle, filled
+  "{\\ulblacktriangle}": '\u25E4' # upper left triangle, filled
+  "\\ulblacktriangle": '\u25E4' # upper left triangle, filled
+  "\\urblacktriangle{}": '\u25E5' # upper right triangle, filled
+  "{\\urblacktriangle}": '\u25E5' # upper right triangle, filled
+  "\\urblacktriangle": '\u25E5' # upper right triangle, filled
+  "\\smwhtcircle{}": '\u25E6' # WHITE BULLET
+  "{\\smwhtcircle}": '\u25E6' # WHITE BULLET
+  "\\smwhtcircle": '\u25E6' # WHITE BULLET
+  "\\Elzsqfl{}": '\u25E7' # SQUARE WITH LEFT HALF BLACK
+  "{\\Elzsqfl}": '\u25E7' # SQUARE WITH LEFT HALF BLACK
+  "\\Elzsqfl": '\u25E7' # SQUARE WITH LEFT HALF BLACK
+  "\\Elzsqfr{}": '\u25E8' # SQUARE WITH RIGHT HALF BLACK
+  "{\\Elzsqfr}": '\u25E8' # SQUARE WITH RIGHT HALF BLACK
+  "\\Elzsqfr": '\u25E8' # SQUARE WITH RIGHT HALF BLACK
+  "\\squareulblack{}": '\u25E9' # square, filled top left corner
+  "{\\squareulblack}": '\u25E9' # square, filled top left corner
+  "\\squareulblack": '\u25E9' # square, filled top left corner
+  "\\Elzsqfse{}": '\u25EA' # SQUARE WITH LOWER RIGHT DIAGONAL HALF BLACK
+  "{\\Elzsqfse}": '\u25EA' # SQUARE WITH LOWER RIGHT DIAGONAL HALF BLACK
+  "\\Elzsqfse": '\u25EA' # SQUARE WITH LOWER RIGHT DIAGONAL HALF BLACK
+  "\\boxbar{}": '\u25EB' # vertical bar in box
+  "{\\boxbar}": '\u25EB' # vertical bar in box
+  "\\boxbar": '\u25EB' # vertical bar in box
+  "\\trianglecdot{}": '\u25EC' # triangle with centered dot
+  "{\\trianglecdot}": '\u25EC' # triangle with centered dot
+  "\\trianglecdot": '\u25EC' # triangle with centered dot
+  "\\triangleleftblack{}": '\u25ED' # UP-POINTING TRIANGLE WITH LEFT HALF BLACK
+  "{\\triangleleftblack}": '\u25ED' # UP-POINTING TRIANGLE WITH LEFT HALF BLACK
+  "\\triangleleftblack": '\u25ED' # UP-POINTING TRIANGLE WITH LEFT HALF BLACK
+  "\\trianglerightblack{}": '\u25EE' # UP-POINTING TRIANGLE WITH RIGHT HALF BLACK
+  "{\\trianglerightblack}": '\u25EE' # UP-POINTING TRIANGLE WITH RIGHT HALF BLACK
+  "\\trianglerightblack": '\u25EE' # UP-POINTING TRIANGLE WITH RIGHT HALF BLACK
+  "\\squareulquad{}": '\u25F0' # WHITE SQUARE WITH UPPER LEFT QUADRANT
+  "{\\squareulquad}": '\u25F0' # WHITE SQUARE WITH UPPER LEFT QUADRANT
+  "\\squareulquad": '\u25F0' # WHITE SQUARE WITH UPPER LEFT QUADRANT
+  "\\squarellquad{}": '\u25F1' # WHITE SQUARE WITH LOWER LEFT QUADRANT
+  "{\\squarellquad}": '\u25F1' # WHITE SQUARE WITH LOWER LEFT QUADRANT
+  "\\squarellquad": '\u25F1' # WHITE SQUARE WITH LOWER LEFT QUADRANT
+  "\\squarelrquad{}": '\u25F2' # WHITE SQUARE WITH LOWER RIGHT QUADRANT
+  "{\\squarelrquad}": '\u25F2' # WHITE SQUARE WITH LOWER RIGHT QUADRANT
+  "\\squarelrquad": '\u25F2' # WHITE SQUARE WITH LOWER RIGHT QUADRANT
+  "\\squareurquad{}": '\u25F3' # WHITE SQUARE WITH UPPER RIGHT QUADRANT
+  "{\\squareurquad}": '\u25F3' # WHITE SQUARE WITH UPPER RIGHT QUADRANT
+  "\\squareurquad": '\u25F3' # WHITE SQUARE WITH UPPER RIGHT QUADRANT
+  "\\circleulquad{}": '\u25F4' # WHITE CIRCLE WITH UPPER LEFT QUADRANT
+  "{\\circleulquad}": '\u25F4' # WHITE CIRCLE WITH UPPER LEFT QUADRANT
+  "\\circleulquad": '\u25F4' # WHITE CIRCLE WITH UPPER LEFT QUADRANT
+  "\\circlellquad{}": '\u25F5' # WHITE CIRCLE WITH LOWER LEFT QUADRANT
+  "{\\circlellquad}": '\u25F5' # WHITE CIRCLE WITH LOWER LEFT QUADRANT
+  "\\circlellquad": '\u25F5' # WHITE CIRCLE WITH LOWER LEFT QUADRANT
+  "\\circlelrquad{}": '\u25F6' # WHITE CIRCLE WITH LOWER RIGHT QUADRANT
+  "{\\circlelrquad}": '\u25F6' # WHITE CIRCLE WITH LOWER RIGHT QUADRANT
+  "\\circlelrquad": '\u25F6' # WHITE CIRCLE WITH LOWER RIGHT QUADRANT
+  "\\circleurquad{}": '\u25F7' # WHITE CIRCLE WITH UPPER RIGHT QUADRANT
+  "{\\circleurquad}": '\u25F7' # WHITE CIRCLE WITH UPPER RIGHT QUADRANT
+  "\\circleurquad": '\u25F7' # WHITE CIRCLE WITH UPPER RIGHT QUADRANT
+  "\\ultriangle{}": '\u25F8' # UPPER LEFT TRIANGLE
+  "{\\ultriangle}": '\u25F8' # UPPER LEFT TRIANGLE
+  "\\ultriangle": '\u25F8' # UPPER LEFT TRIANGLE
+  "\\urtriangle{}": '\u25F9' # UPPER RIGHT TRIANGLE
+  "{\\urtriangle}": '\u25F9' # UPPER RIGHT TRIANGLE
+  "\\urtriangle": '\u25F9' # UPPER RIGHT TRIANGLE
+  "\\lltriangle{}": '\u25FA' # LOWER LEFT TRIANGLE
+  "{\\lltriangle}": '\u25FA' # LOWER LEFT TRIANGLE
+  "\\lltriangle": '\u25FA' # LOWER LEFT TRIANGLE
+  "\\mdsmwhtsquare{}": '\u25FD' # WHITE MEDIUM SMALL SQUARE
+  "{\\mdsmwhtsquare}": '\u25FD' # WHITE MEDIUM SMALL SQUARE
+  "\\mdsmwhtsquare": '\u25FD' # WHITE MEDIUM SMALL SQUARE
+  "\\mdsmblksquare{}": '\u25FE' # BLACK MEDIUM SMALL SQUARE
+  "{\\mdsmblksquare}": '\u25FE' # BLACK MEDIUM SMALL SQUARE
+  "\\mdsmblksquare": '\u25FE' # BLACK MEDIUM SMALL SQUARE
+  "\\lrtriangle{}": '\u25FF' # LOWER RIGHT TRIANGLE
+  "{\\lrtriangle}": '\u25FF' # LOWER RIGHT TRIANGLE
+  "\\lrtriangle": '\u25FF' # LOWER RIGHT TRIANGLE
+  "\\ding{72}": '\u2605' # BLACK STAR
+  "\\ding{73}": '\u2606' # WHITE STAR
+  "\\Sun{}": '\u2609' # SUN
+  "{\\Sun}": '\u2609' # SUN
+  "\\Sun": '\u2609' # SUN
+  "\\ding{37}": '\u260E' # BLACK TELEPHONE
+  "\\Square{}": '\u2610' # BALLOT BOX
+  "{\\Square}": '\u2610' # BALLOT BOX
+  "\\Square": '\u2610' # BALLOT BOX
+  "\\CheckedBox{}": '\u2611' # t \Checkedbox (marvosym), BALLOT BOX WITH CHECK
+  "{\\CheckedBox}": '\u2611' # t \Checkedbox (marvosym), BALLOT BOX WITH CHECK
+  "\\CheckedBox": '\u2611' # t \Checkedbox (marvosym), BALLOT BOX WITH CHECK
+  "\\XBox{}": '\u2612' # t \Crossedbox (marvosym), BALLOT BOX WITH X
+  "{\\XBox}": '\u2612' # t \Crossedbox (marvosym), BALLOT BOX WITH X
+  "\\XBox": '\u2612' # t \Crossedbox (marvosym), BALLOT BOX WITH X
+  "\\steaming{}": '\u2615' # HOT BEVERAGE
+  "{\\steaming}": '\u2615' # HOT BEVERAGE
+  "\\steaming": '\u2615' # HOT BEVERAGE
+  "\\ding{42}": '\u261B' # BLACK RIGHT POINTING INDEX
+  "\\ding{43}": '\u261E' # WHITE RIGHT POINTING INDEX
+  "\\skull{}": '\u2620' # SKULL AND CROSSBONES
+  "{\\skull}": '\u2620' # SKULL AND CROSSBONES
+  "\\skull": '\u2620' # SKULL AND CROSSBONES
+  "\\danger{}": '\u2621' # CAUTION SIGN, dangerous bend
+  "{\\danger}": '\u2621' # CAUTION SIGN, dangerous bend
+  "\\danger": '\u2621' # CAUTION SIGN, dangerous bend
+  "\\radiation{}": '\u2622' # RADIOACTIVE SIGN
+  "{\\radiation}": '\u2622' # RADIOACTIVE SIGN
+  "\\radiation": '\u2622' # RADIOACTIVE SIGN
+  "\\biohazard{}": '\u2623' # BIOHAZARD SIGN
+  "{\\biohazard}": '\u2623' # BIOHAZARD SIGN
+  "\\biohazard": '\u2623' # BIOHAZARD SIGN
+  "\\yinyang{}": '\u262F' # YIN YANG
+  "{\\yinyang}": '\u262F' # YIN YANG
+  "\\yinyang": '\u262F' # YIN YANG
+  "\\frownie{}": '\u2639' # = \sadface (arevmath), WHITE FROWNING FACE
+  "{\\frownie}": '\u2639' # = \sadface (arevmath), WHITE FROWNING FACE
+  "\\frownie": '\u2639' # = \sadface (arevmath), WHITE FROWNING FACE
+  "\\smiley{}": '\u263A' # = \smileface (arevmath), WHITE SMILING FACE
+  "{\\smiley}": '\u263A' # = \smileface (arevmath), WHITE SMILING FACE
+  "\\smiley": '\u263A' # = \smileface (arevmath), WHITE SMILING FACE
+  "\\blacksmiley{}": '\u263B' # = \invsmileface (arevmath), BLACK SMILING FACE
+  "{\\blacksmiley}": '\u263B' # = \invsmileface (arevmath), BLACK SMILING FACE
+  "\\blacksmiley": '\u263B' # = \invsmileface (arevmath), BLACK SMILING FACE
+  "\\sun{}": '\u263C' # WHITE SUN WITH RAYS
+  "{\\sun}": '\u263C' # WHITE SUN WITH RAYS
+  "\\sun": '\u263C' # WHITE SUN WITH RAYS
+  "\\rightmoon{}": '\u263D' # FIRST QUARTER MOON
+  "{\\rightmoon}": '\u263D' # FIRST QUARTER MOON
+  "\\rightmoon": '\u263D' # FIRST QUARTER MOON
+  "\\mercury{}": '\u263F' # MERCURY
+  "{\\mercury}": '\u263F' # MERCURY
+  "\\mercury": '\u263F' # MERCURY
+  "\\venus{}": '\u2640' # FEMALE SIGN
+  "{\\venus}": '\u2640' # FEMALE SIGN
+  "\\venus": '\u2640' # FEMALE SIGN
+  "\\earth{}": '\u2641' # = \varEarth (mathabx), EARTH
+  "{\\earth}": '\u2641' # = \varEarth (mathabx), EARTH
+  "\\earth": '\u2641' # = \varEarth (mathabx), EARTH
+  "\\male{}": '\u2642' # MALE SIGN
+  "{\\male}": '\u2642' # MALE SIGN
+  "\\male": '\u2642' # MALE SIGN
+  "\\jupiter{}": '\u2643' # JUPITER
+  "{\\jupiter}": '\u2643' # JUPITER
+  "\\jupiter": '\u2643' # JUPITER
+  "\\saturn{}": '\u2644' # SATURN
+  "{\\saturn}": '\u2644' # SATURN
+  "\\saturn": '\u2644' # SATURN
+  "\\uranus{}": '\u2645' # URANUS
+  "{\\uranus}": '\u2645' # URANUS
+  "\\uranus": '\u2645' # URANUS
+  "\\neptune{}": '\u2646' # NEPTUNE
+  "{\\neptune}": '\u2646' # NEPTUNE
+  "\\neptune": '\u2646' # NEPTUNE
+  "\\pluto{}": '\u2647' # PLUTO
+  "{\\pluto}": '\u2647' # PLUTO
+  "\\pluto": '\u2647' # PLUTO
+  "\\aries{}": '\u2648' # ARIES
+  "{\\aries}": '\u2648' # ARIES
+  "\\aries": '\u2648' # ARIES
+  "\\taurus{}": '\u2649' # TAURUS
+  "{\\taurus}": '\u2649' # TAURUS
+  "\\taurus": '\u2649' # TAURUS
+  "\\gemini{}": '\u264A' # GEMINI
+  "{\\gemini}": '\u264A' # GEMINI
+  "\\gemini": '\u264A' # GEMINI
+  "\\cancer{}": '\u264B' # CANCER
+  "{\\cancer}": '\u264B' # CANCER
+  "\\cancer": '\u264B' # CANCER
+  "\\leo{}": '\u264C' # LEO
+  "{\\leo}": '\u264C' # LEO
+  "\\leo": '\u264C' # LEO
+  "\\virgo{}": '\u264D' # VIRGO
+  "{\\virgo}": '\u264D' # VIRGO
+  "\\virgo": '\u264D' # VIRGO
+  "\\libra{}": '\u264E' # LIBRA
+  "{\\libra}": '\u264E' # LIBRA
+  "\\libra": '\u264E' # LIBRA
+  "\\scorpio{}": '\u264F' # SCORPIUS
+  "{\\scorpio}": '\u264F' # SCORPIUS
+  "\\scorpio": '\u264F' # SCORPIUS
+  "\\sagittarius{}": '\u2650' # SAGITTARIUS
+  "{\\sagittarius}": '\u2650' # SAGITTARIUS
+  "\\sagittarius": '\u2650' # SAGITTARIUS
+  "\\capricornus{}": '\u2651' # CAPRICORN
+  "{\\capricornus}": '\u2651' # CAPRICORN
+  "\\capricornus": '\u2651' # CAPRICORN
+  "\\aquarius{}": '\u2652' # AQUARIUS
+  "{\\aquarius}": '\u2652' # AQUARIUS
+  "\\aquarius": '\u2652' # AQUARIUS
+  "\\pisces{}": '\u2653' # PISCES
+  "{\\pisces}": '\u2653' # PISCES
+  "\\pisces": '\u2653' # PISCES
+  "\\ding{171}": '\u2660' # BLACK SPADE SUIT
+  "\\heartsuit{}": '\u2661' # heart suit symbol
+  "{\\heartsuit}": '\u2661' # heart suit symbol
+  "\\heartsuit": '\u2661' # heart suit symbol
+  "\\ding{168}": '\u2663' # BLACK CLUB SUIT
+  "\\varspadesuit{}": '\u2664' # = \varspade (arevmath), spade, white (card suit)
+  "{\\varspadesuit}": '\u2664' # = \varspade (arevmath), spade, white (card suit)
+  "\\varspadesuit": '\u2664' # = \varspade (arevmath), spade, white (card suit)
+  "\\ding{170}": '\u2665' # BLACK HEART SUIT
+  "\\ding{169}": '\u2666' # BLACK DIAMOND SUIT
+  "\\varclubsuit{}": '\u2667' # = \varclub (arevmath), club, white (card suit)
+  "{\\varclubsuit}": '\u2667' # = \varclub (arevmath), club, white (card suit)
+  "\\varclubsuit": '\u2667' # = \varclub (arevmath), club, white (card suit)
+  "\\quarternote{}": '\u2669' # QUARTER NOTE
+  "{\\quarternote}": '\u2669' # QUARTER NOTE
+  "\\quarternote": '\u2669' # QUARTER NOTE
+  "\\eighthnote{}": '\u266A' # EIGHTH NOTE
+  "{\\eighthnote}": '\u266A' # EIGHTH NOTE
+  "\\eighthnote": '\u266A' # EIGHTH NOTE
+  "\\twonotes{}": '\u266B' # BEAMED EIGHTH NOTES
+  "{\\twonotes}": '\u266B' # BEAMED EIGHTH NOTES
+  "\\twonotes": '\u266B' # BEAMED EIGHTH NOTES
+  "\\sixteenthnote{}": '\u266C' # BEAMED SIXTEENTH NOTES
+  "{\\sixteenthnote}": '\u266C' # BEAMED SIXTEENTH NOTES
+  "\\sixteenthnote": '\u266C' # BEAMED SIXTEENTH NOTES
+  "\\flat{}": '\u266D' # MUSIC FLAT SIGN
+  "{\\flat}": '\u266D' # MUSIC FLAT SIGN
+  "\\flat": '\u266D' # MUSIC FLAT SIGN
+  "\\natural{}": '\u266E' # MUSIC NATURAL SIGN
+  "{\\natural}": '\u266E' # MUSIC NATURAL SIGN
+  "\\natural": '\u266E' # MUSIC NATURAL SIGN
+  "\\sharp{}": '\u266F' # MUSIC SHARP SIGN
+  "{\\sharp}": '\u266F' # MUSIC SHARP SIGN
+  "\\sharp": '\u266F' # MUSIC SHARP SIGN
+  "\\recycle{}": '\u267B' # BLACK UNIVERSAL RECYCLING SYMBOL
+  "{\\recycle}": '\u267B' # BLACK UNIVERSAL RECYCLING SYMBOL
+  "\\recycle": '\u267B' # BLACK UNIVERSAL RECYCLING SYMBOL
+  "\\acidfree{}": '\u267E' # PERMANENT PAPER SIGN
+  "{\\acidfree}": '\u267E' # PERMANENT PAPER SIGN
+  "\\acidfree": '\u267E' # PERMANENT PAPER SIGN
+  "\\dicei{}": '\u2680' # DIE FACE-1
+  "{\\dicei}": '\u2680' # DIE FACE-1
+  "\\dicei": '\u2680' # DIE FACE-1
+  "\\diceii{}": '\u2681' # DIE FACE-2
+  "{\\diceii}": '\u2681' # DIE FACE-2
+  "\\diceii": '\u2681' # DIE FACE-2
+  "\\diceiii{}": '\u2682' # DIE FACE-3
+  "{\\diceiii}": '\u2682' # DIE FACE-3
+  "\\diceiii": '\u2682' # DIE FACE-3
+  "\\diceiv{}": '\u2683' # DIE FACE-4
+  "{\\diceiv}": '\u2683' # DIE FACE-4
+  "\\diceiv": '\u2683' # DIE FACE-4
+  "\\dicev{}": '\u2684' # DIE FACE-5
+  "{\\dicev}": '\u2684' # DIE FACE-5
+  "\\dicev": '\u2684' # DIE FACE-5
+  "\\dicevi{}": '\u2685' # DIE FACE-6
+  "{\\dicevi}": '\u2685' # DIE FACE-6
+  "\\dicevi": '\u2685' # DIE FACE-6
+  "\\circledrightdot{}": '\u2686' # WHITE CIRCLE WITH DOT RIGHT
+  "{\\circledrightdot}": '\u2686' # WHITE CIRCLE WITH DOT RIGHT
+  "\\circledrightdot": '\u2686' # WHITE CIRCLE WITH DOT RIGHT
+  "\\circledtwodots{}": '\u2687' # WHITE CIRCLE WITH TWO DOTS
+  "{\\circledtwodots}": '\u2687' # WHITE CIRCLE WITH TWO DOTS
+  "\\circledtwodots": '\u2687' # WHITE CIRCLE WITH TWO DOTS
+  "\\blackcircledrightdot{}": '\u2688' # BLACK CIRCLE WITH WHITE DOT RIGHT
+  "{\\blackcircledrightdot}": '\u2688' # BLACK CIRCLE WITH WHITE DOT RIGHT
+  "\\blackcircledrightdot": '\u2688' # BLACK CIRCLE WITH WHITE DOT RIGHT
+  "\\blackcircledtwodots{}": '\u2689' # BLACK CIRCLE WITH TWO WHITE DOTS
+  "{\\blackcircledtwodots}": '\u2689' # BLACK CIRCLE WITH TWO WHITE DOTS
+  "\\blackcircledtwodots": '\u2689' # BLACK CIRCLE WITH TWO WHITE DOTS
+  "\\anchor{}": '\u2693' # ANCHOR
+  "{\\anchor}": '\u2693' # ANCHOR
+  "\\anchor": '\u2693' # ANCHOR
+  "\\swords{}": '\u2694' # CROSSED SWORDS
+  "{\\swords}": '\u2694' # CROSSED SWORDS
+  "\\swords": '\u2694' # CROSSED SWORDS
+  "\\warning{}": '\u26A0' # WARNING SIGN
+  "{\\warning}": '\u26A0' # WARNING SIGN
+  "\\warning": '\u26A0' # WARNING SIGN
+  "\\Hermaphrodite{}": '\u26A5' # MALE AND FEMALE SIGN
+  "{\\Hermaphrodite}": '\u26A5' # MALE AND FEMALE SIGN
+  "\\Hermaphrodite": '\u26A5' # MALE AND FEMALE SIGN
+  "\\medcirc{}": '\u26AA' # MEDIUM WHITE CIRCLE
+  "{\\medcirc}": '\u26AA' # MEDIUM WHITE CIRCLE
+  "\\medcirc": '\u26AA' # MEDIUM WHITE CIRCLE
+  "\\medbullet{}": '\u26AB' # MEDIUM BLACK CIRCLE
+  "{\\medbullet}": '\u26AB' # MEDIUM BLACK CIRCLE
+  "\\medbullet": '\u26AB' # MEDIUM BLACK CIRCLE
+  "\\mdsmwhtcircle{}": '\u26AC' # MEDIUM SMALL WHITE CIRCLE
+  "{\\mdsmwhtcircle}": '\u26AC' # MEDIUM SMALL WHITE CIRCLE
+  "\\mdsmwhtcircle": '\u26AC' # MEDIUM SMALL WHITE CIRCLE
+  "\\neuter{}": '\u26B2' # NEUTER
+  "{\\neuter}": '\u26B2' # NEUTER
+  "\\neuter": '\u26B2' # NEUTER
+  "\\ding{33}": '\u2701' # UPPER BLADE SCISSORS
+  "\\ding{34}": '\u2702' # BLACK SCISSORS
+  "\\ding{35}": '\u2703' # LOWER BLADE SCISSORS
+  "\\ding{36}": '\u2704' # WHITE SCISSORS
+  "\\ding{38}": '\u2706' # TELEPHONE LOCATION SIGN
+  "\\ding{39}": '\u2707' # TAPE DRIVE
+  "\\ding{40}": '\u2708' # AIRPLANE
+  "\\ding{41}": '\u2709' # ENVELOPE
+  "\\ding{44}": '\u270C' # VICTORY HAND
+  "\\ding{45}": '\u270D' # WRITING HAND
+  "\\ding{46}": '\u270E' # LOWER RIGHT PENCIL
+  "\\ding{47}": '\u270F' # PENCIL
+  "\\ding{48}": '\u2710' # UPPER RIGHT PENCIL
+  "\\ding{49}": '\u2711' # WHITE NIB
+  "\\ding{50}": '\u2712' # BLACK NIB
+  "\\ding{51}": '\u2713' # CHECK MARK
+  "\\ding{52}": '\u2714' # HEAVY CHECK MARK
+  "\\ding{53}": '\u2715' # MULTIPLICATION X
+  "\\ding{54}": '\u2716' # HEAVY MULTIPLICATION X
+  "\\ding{55}": '\u2717' # BALLOT X
+  "\\ding{56}": '\u2718' # HEAVY BALLOT X
+  "\\ding{57}": '\u2719' # OUTLINED GREEK CROSS
+  "\\ding{58}": '\u271A' # HEAVY GREEK CROSS
+  "\\ding{59}": '\u271B' # OPEN CENTRE CROSS
+  "\\ding{60}": '\u271C' # HEAVY OPEN CENTRE CROSS
+  "\\ding{61}": '\u271D' # LATIN CROSS
+  "\\ding{62}": '\u271E' # SHADOWED WHITE LATIN CROSS
+  "\\ding{63}": '\u271F' # OUTLINED LATIN CROSS
+  "\\ding{64}": '\u2720' # MALTESE CROSS
+  "\\ding{65}": '\u2721' # STAR OF DAVID
+  "\\ding{66}": '\u2722' # FOUR TEARDROP-SPOKED ASTERISK
+  "\\ding{67}": '\u2723' # FOUR BALLOON-SPOKED ASTERISK
+  "\\ding{68}": '\u2724' # HEAVY FOUR BALLOON-SPOKED ASTERISK
+  "\\ding{69}": '\u2725' # FOUR CLUB-SPOKED ASTERISK
+  "\\ding{70}": '\u2726' # BLACK FOUR POINTED STAR
+  "\\ding{71}": '\u2727' # WHITE FOUR POINTED STAR
+  "\\ding{74}": '\u272A' # CIRCLED WHITE STAR
+  "\\ding{75}": '\u272B' # OPEN CENTRE BLACK STAR
+  "\\ding{76}": '\u272C' # BLACK CENTRE WHITE STAR
+  "\\ding{77}": '\u272D' # OUTLINED BLACK STAR
+  "\\ding{78}": '\u272E' # HEAVY OUTLINED BLACK STAR
+  "\\ding{79}": '\u272F' # PINWHEEL STAR
+  "\\ding{80}": '\u2730' # SHADOWED WHITE STAR
+  "\\ding{81}": '\u2731' # HEAVY ASTERISK
+  "\\ding{82}": '\u2732' # OPEN CENTRE ASTERISK
+  "\\ding{83}": '\u2733' # EIGHT SPOKED ASTERISK
+  "\\ding{84}": '\u2734' # EIGHT POINTED BLACK STAR
+  "\\ding{85}": '\u2735' # EIGHT POINTED PINWHEEL STAR
+  "\\ding{86}": '\u2736' # SIX POINTED BLACK STAR
+  "\\ding{87}": '\u2737' # EIGHT POINTED RECTILINEAR BLACK STAR
+  "\\ding{88}": '\u2738' # HEAVY EIGHT POINTED RECTILINEAR BLACK STAR
+  "\\ding{89}": '\u2739' # TWELVE POINTED BLACK STAR
+  "\\ding{90}": '\u273A' # SIXTEEN POINTED ASTERISK
+  "\\ding{91}": '\u273B' # TEARDROP-SPOKED ASTERISK
+  "\\ding{92}": '\u273C' # OPEN CENTRE TEARDROP-SPOKED ASTERISK
+  "\\ding{93}": '\u273D' # HEAVY TEARDROP-SPOKED ASTERISK
+  "\\ding{94}": '\u273E' # SIX PETALLED BLACK AND WHITE FLORETTE
+  "\\ding{95}": '\u273F' # BLACK FLORETTE
+  "\\ding{96}": '\u2740' # WHITE FLORETTE
+  "\\ding{97}": '\u2741' # EIGHT PETALLED OUTLINED BLACK FLORETTE
+  "\\ding{98}": '\u2742' # CIRCLED OPEN CENTRE EIGHT POINTED STAR
+  "\\ding{99}": '\u2743' # HEAVY TEARDROP-SPOKED PINWHEEL ASTERISK
+  "\\ding{100}": '\u2744' # SNOWFLAKE
+  "\\ding{101}": '\u2745' # TIGHT TRIFOLIATE SNOWFLAKE
+  "\\ding{102}": '\u2746' # HEAVY CHEVRON SNOWFLAKE
+  "\\ding{103}": '\u2747' # SPARKLE
+  "\\ding{104}": '\u2748' # HEAVY SPARKLE
+  "\\ding{105}": '\u2749' # BALLOON-SPOKED ASTERISK
+  "\\ding{106}": '\u274A' # EIGHT TEARDROP-SPOKED PROPELLER ASTERISK
+  "\\ding{107}": '\u274B' # HEAVY EIGHT TEARDROP-SPOKED PROPELLER ASTERISK
+  "\\ding{109}": '\u274D' # SHADOWED WHITE CIRCLE
+  "\\ding{111}": '\u274F' # LOWER RIGHT DROP-SHADOWED WHITE SQUARE
+  "\\ding{112}": '\u2750' # UPPER RIGHT DROP-SHADOWED WHITE SQUARE
+  "\\ding{113}": '\u2751' # LOWER RIGHT SHADOWED WHITE SQUARE
+  "\\ding{114}": '\u2752' # UPPER RIGHT SHADOWED WHITE SQUARE
+  "\\ding{118}": '\u2756' # BLACK DIAMOND MINUS WHITE X
+  "\\ding{120}": '\u2758' # LIGHT VERTICAL BAR
+  "\\ding{121}": '\u2759' # MEDIUM VERTICAL BAR
+  "\\ding{122}": '\u275A' # HEAVY VERTICAL BAR
+  "\\ding{123}": '\u275B' # HEAVY SINGLE TURNED COMMA QUOTATION MARK ORNAMENT
+  "\\ding{124}": '\u275C' # HEAVY SINGLE COMMA QUOTATION MARK ORNAMENT
+  "\\ding{125}": '\u275D' # HEAVY DOUBLE TURNED COMMA QUOTATION MARK ORNAMENT
+  "\\ding{126}": '\u275E' # HEAVY DOUBLE COMMA QUOTATION MARK ORNAMENT
+  "\\ding{161}": '\u2761' # CURVED STEM PARAGRAPH SIGN ORNAMENT
+  "\\ding{162}": '\u2762' # HEAVY EXCLAMATION MARK ORNAMENT
+  "\\ding{163}": '\u2763' # HEAVY HEART EXCLAMATION MARK ORNAMENT
+  "\\ding{164}": '\u2764' # HEAVY BLACK HEART
+  "\\ding{165}": '\u2765' # ROTATED HEAVY BLACK HEART BULLET
+  "\\ding{166}": '\u2766' # FLORAL HEART
+  "\\ding{167}": '\u2767' # ROTATED FLORAL HEART BULLET
+  "\\lbrbrak{}": '\u2772' # LIGHT LEFT TORTOISE SHELL BRACKET ORNAMENT
+  "{\\lbrbrak}": '\u2772' # LIGHT LEFT TORTOISE SHELL BRACKET ORNAMENT
+  "\\lbrbrak": '\u2772' # LIGHT LEFT TORTOISE SHELL BRACKET ORNAMENT
+  "\\rbrbrak{}": '\u2773' # LIGHT RIGHT TORTOISE SHELL BRACKET ORNAMENT
+  "{\\rbrbrak}": '\u2773' # LIGHT RIGHT TORTOISE SHELL BRACKET ORNAMENT
+  "\\rbrbrak": '\u2773' # LIGHT RIGHT TORTOISE SHELL BRACKET ORNAMENT
+  "\\ding{182}": '\u2776' # DINGBAT NEGATIVE CIRCLED DIGIT ONE
+  "\\ding{183}": '\u2777' # DINGBAT NEGATIVE CIRCLED DIGIT TWO
+  "\\ding{184}": '\u2778' # DINGBAT NEGATIVE CIRCLED DIGIT THREE
+  "\\ding{185}": '\u2779' # DINGBAT NEGATIVE CIRCLED DIGIT FOUR
+  "\\ding{186}": '\u277A' # DINGBAT NEGATIVE CIRCLED DIGIT FIVE
+  "\\ding{187}": '\u277B' # DINGBAT NEGATIVE CIRCLED DIGIT SIX
+  "\\ding{188}": '\u277C' # DINGBAT NEGATIVE CIRCLED DIGIT SEVEN
+  "\\ding{189}": '\u277D' # DINGBAT NEGATIVE CIRCLED DIGIT EIGHT
+  "\\ding{190}": '\u277E' # DINGBAT NEGATIVE CIRCLED DIGIT NINE
+  "\\ding{191}": '\u277F' # DINGBAT NEGATIVE CIRCLED NUMBER TEN
+  "\\ding{192}": '\u2780' # DINGBAT CIRCLED SANS-SERIF DIGIT ONE
+  "\\ding{193}": '\u2781' # DINGBAT CIRCLED SANS-SERIF DIGIT TWO
+  "\\ding{194}": '\u2782' # DINGBAT CIRCLED SANS-SERIF DIGIT THREE
+  "\\ding{195}": '\u2783' # DINGBAT CIRCLED SANS-SERIF DIGIT FOUR
+  "\\ding{196}": '\u2784' # DINGBAT CIRCLED SANS-SERIF DIGIT FIVE
+  "\\ding{197}": '\u2785' # DINGBAT CIRCLED SANS-SERIF DIGIT SIX
+  "\\ding{198}": '\u2786' # DINGBAT CIRCLED SANS-SERIF DIGIT SEVEN
+  "\\ding{199}": '\u2787' # DINGBAT CIRCLED SANS-SERIF DIGIT EIGHT
+  "\\ding{200}": '\u2788' # DINGBAT CIRCLED SANS-SERIF DIGIT NINE
+  "\\ding{201}": '\u2789' # DINGBAT CIRCLED SANS-SERIF NUMBER TEN
+  "\\ding{202}": '\u278A' # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT ONE
+  "\\ding{203}": '\u278B' # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT TWO
+  "\\ding{204}": '\u278C' # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT THREE
+  "\\ding{205}": '\u278D' # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT FOUR
+  "\\ding{206}": '\u278E' # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT FIVE
+  "\\ding{207}": '\u278F' # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT SIX
+  "\\ding{208}": '\u2790' # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT SEVEN
+  "\\ding{209}": '\u2791' # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT EIGHT
+  "\\ding{210}": '\u2792' # DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT NINE
+  "\\ding{211}": '\u2793' # DINGBAT NEGATIVE CIRCLED SANS-SERIF NUMBER TEN
+  "\\ding{212}": '\u2794' # HEAVY WIDE-HEADED RIGHTWARDS ARROW
+  "\\ding{216}": '\u2798' # HEAVY SOUTH EAST ARROW
+  "\\ding{217}": '\u2799' # HEAVY RIGHTWARDS ARROW
+  "\\ding{218}": '\u279A' # HEAVY NORTH EAST ARROW
+  "\\ding{219}": '\u279B' # DRAFTING POINT RIGHTWARDS ARROW
+  "\\ding{220}": '\u279C' # HEAVY ROUND-TIPPED RIGHTWARDS ARROW
+  "\\ding{221}": '\u279D' # TRIANGLE-HEADED RIGHTWARDS ARROW
+  "\\ding{222}": '\u279E' # HEAVY TRIANGLE-HEADED RIGHTWARDS ARROW
+  "\\ding{223}": '\u279F' # DASHED TRIANGLE-HEADED RIGHTWARDS ARROW
+  "\\ding{224}": '\u27A0' # HEAVY DASHED TRIANGLE-HEADED RIGHTWARDS ARROW
+  "\\ding{225}": '\u27A1' # BLACK RIGHTWARDS ARROW
+  "\\ding{226}": '\u27A2' # THREE-D TOP-LIGHTED RIGHTWARDS ARROWHEAD
+  "\\ding{227}": '\u27A3' # THREE-D BOTTOM-LIGHTED RIGHTWARDS ARROWHEAD
+  "\\ding{228}": '\u27A4' # BLACK RIGHTWARDS ARROWHEAD
+  "\\ding{229}": '\u27A5' # HEAVY BLACK CURVED DOWNWARDS AND RIGHTWARDS ARROW
+  "\\ding{230}": '\u27A6' # HEAVY BLACK CURVED UPWARDS AND RIGHTWARDS ARROW
+  "\\ding{231}": '\u27A7' # SQUAT BLACK RIGHTWARDS ARROW
+  "\\ding{232}": '\u27A8' # HEAVY CONCAVE-POINTED BLACK RIGHTWARDS ARROW
+  "\\ding{233}": '\u27A9' # RIGHT-SHADED WHITE RIGHTWARDS ARROW
+  "\\ding{234}": '\u27AA' # LEFT-SHADED WHITE RIGHTWARDS ARROW
+  "\\ding{235}": '\u27AB' # BACK-TILTED SHADOWED WHITE RIGHTWARDS ARROW
+  "\\ding{236}": '\u27AC' # FRONT-TILTED SHADOWED WHITE RIGHTWARDS ARROW
+  "\\ding{237}": '\u27AD' # HEAVY LOWER RIGHT-SHADOWED WHITE RIGHTWARDS ARROW
+  "\\ding{238}": '\u27AE' # HEAVY UPPER RIGHT-SHADOWED WHITE RIGHTWARDS ARROW
+  "\\ding{239}": '\u27AF' # NOTCHED LOWER RIGHT-SHADOWED WHITE RIGHTWARDS ARROW
+  "\\ding{241}": '\u27B1' # NOTCHED UPPER RIGHT-SHADOWED WHITE RIGHTWARDS ARROW
+  "\\ding{242}": '\u27B2' # CIRCLED HEAVY WHITE RIGHTWARDS ARROW
+  "\\ding{243}": '\u27B3' # WHITE-FEATHERED RIGHTWARDS ARROW
+  "\\ding{244}": '\u27B4' # BLACK-FEATHERED SOUTH EAST ARROW
+  "\\ding{245}": '\u27B5' # BLACK-FEATHERED RIGHTWARDS ARROW
+  "\\ding{246}": '\u27B6' # BLACK-FEATHERED NORTH EAST ARROW
+  "\\ding{247}": '\u27B7' # HEAVY BLACK-FEATHERED SOUTH EAST ARROW
+  "\\ding{248}": '\u27B8' # HEAVY BLACK-FEATHERED RIGHTWARDS ARROW
+  "\\ding{249}": '\u27B9' # HEAVY BLACK-FEATHERED NORTH EAST ARROW
+  "\\ding{250}": '\u27BA' # TEARDROP-BARBED RIGHTWARDS ARROW
+  "\\ding{251}": '\u27BB' # HEAVY TEARDROP-SHANKED RIGHTWARDS ARROW
+  "\\ding{252}": '\u27BC' # WEDGE-TAILED RIGHTWARDS ARROW
+  "\\ding{253}": '\u27BD' # HEAVY WEDGE-TAILED RIGHTWARDS ARROW
+  "\\ding{254}": '\u27BE' # OPEN-OUTLINED RIGHTWARDS ARROW
+  "\\threedangle{}": '\u27C0' # THREE DIMENSIONAL ANGLE
+  "{\\threedangle}": '\u27C0' # THREE DIMENSIONAL ANGLE
+  "\\threedangle": '\u27C0' # THREE DIMENSIONAL ANGLE
+  "\\whiteinwhitetriangle{}": '\u27C1' # WHITE TRIANGLE CONTAINING SMALL WHITE TRIANGLE
+  "{\\whiteinwhitetriangle}": '\u27C1' # WHITE TRIANGLE CONTAINING SMALL WHITE TRIANGLE
+  "\\whiteinwhitetriangle": '\u27C1' # WHITE TRIANGLE CONTAINING SMALL WHITE TRIANGLE
+  "\\subsetcirc{}": '\u27C3' # OPEN SUBSET
+  "{\\subsetcirc}": '\u27C3' # OPEN SUBSET
+  "\\subsetcirc": '\u27C3' # OPEN SUBSET
+  "\\supsetcirc{}": '\u27C4' # OPEN SUPERSET
+  "{\\supsetcirc}": '\u27C4' # OPEN SUPERSET
+  "\\supsetcirc": '\u27C4' # OPEN SUPERSET
+  "\\Lbag{}": '\u27C5' # = \lbag (stmaryrd -oz), LEFT S-SHAPED BAG DELIMITER
+  "{\\Lbag}": '\u27C5' # = \lbag (stmaryrd -oz), LEFT S-SHAPED BAG DELIMITER
+  "\\Lbag": '\u27C5' # = \lbag (stmaryrd -oz), LEFT S-SHAPED BAG DELIMITER
+  "\\Rbag{}": '\u27C6' # = \rbag (stmaryrd -oz), RIGHT S-SHAPED BAG DELIMITER
+  "{\\Rbag}": '\u27C6' # = \rbag (stmaryrd -oz), RIGHT S-SHAPED BAG DELIMITER
+  "\\Rbag": '\u27C6' # = \rbag (stmaryrd -oz), RIGHT S-SHAPED BAG DELIMITER
+  "\\veedot{}": '\u27C7' # OR WITH DOT INSIDE
+  "{\\veedot}": '\u27C7' # OR WITH DOT INSIDE
+  "\\veedot": '\u27C7' # OR WITH DOT INSIDE
+  "\\bsolhsub{}": '\u27C8' # REVERSE SOLIDUS PRECEDING SUBSET
+  "{\\bsolhsub}": '\u27C8' # REVERSE SOLIDUS PRECEDING SUBSET
+  "\\bsolhsub": '\u27C8' # REVERSE SOLIDUS PRECEDING SUBSET
+  "\\suphsol{}": '\u27C9' # SUPERSET PRECEDING SOLIDUS
+  "{\\suphsol}": '\u27C9' # SUPERSET PRECEDING SOLIDUS
+  "\\suphsol": '\u27C9' # SUPERSET PRECEDING SOLIDUS
+  "\\longdivision{}": '\u27CC' # LONG DIVISION
+  "{\\longdivision}": '\u27CC' # LONG DIVISION
+  "\\longdivision": '\u27CC' # LONG DIVISION
+  "\\Diamonddot{}": '\u27D0' # WHITE DIAMOND WITH CENTRED DOT
+  "{\\Diamonddot}": '\u27D0' # WHITE DIAMOND WITH CENTRED DOT
+  "\\Diamonddot": '\u27D0' # WHITE DIAMOND WITH CENTRED DOT
+  "\\wedgedot{}": '\u27D1' # AND WITH DOT
+  "{\\wedgedot}": '\u27D1' # AND WITH DOT
+  "\\wedgedot": '\u27D1' # AND WITH DOT
+  "\\upin{}": '\u27D2' # ELEMENT OF OPENING UPWARDS
+  "{\\upin}": '\u27D2' # ELEMENT OF OPENING UPWARDS
+  "\\upin": '\u27D2' # ELEMENT OF OPENING UPWARDS
+  "\\pullback{}": '\u27D3' # LOWER RIGHT CORNER WITH DOT
+  "{\\pullback}": '\u27D3' # LOWER RIGHT CORNER WITH DOT
+  "\\pullback": '\u27D3' # LOWER RIGHT CORNER WITH DOT
+  "\\pushout{}": '\u27D4' # UPPER LEFT CORNER WITH DOT
+  "{\\pushout}": '\u27D4' # UPPER LEFT CORNER WITH DOT
+  "\\pushout": '\u27D4' # UPPER LEFT CORNER WITH DOT
+  "\\leftouterjoin{}": '\u27D5' # LEFT OUTER JOIN
+  "{\\leftouterjoin}": '\u27D5' # LEFT OUTER JOIN
+  "\\leftouterjoin": '\u27D5' # LEFT OUTER JOIN
+  "\\rightouterjoin{}": '\u27D6' # RIGHT OUTER JOIN
+  "{\\rightouterjoin}": '\u27D6' # RIGHT OUTER JOIN
+  "\\rightouterjoin": '\u27D6' # RIGHT OUTER JOIN
+  "\\fullouterjoin{}": '\u27D7' # FULL OUTER JOIN
+  "{\\fullouterjoin}": '\u27D7' # FULL OUTER JOIN
+  "\\fullouterjoin": '\u27D7' # FULL OUTER JOIN
+  "\\bigbot{}": '\u27D8' # LARGE UP TACK
+  "{\\bigbot}": '\u27D8' # LARGE UP TACK
+  "\\bigbot": '\u27D8' # LARGE UP TACK
+  "\\bigtop{}": '\u27D9' # LARGE DOWN TACK
+  "{\\bigtop}": '\u27D9' # LARGE DOWN TACK
+  "\\bigtop": '\u27D9' # LARGE DOWN TACK
+  "\\DashVDash{}": '\u27DA' # LEFT AND RIGHT DOUBLE TURNSTILE
+  "{\\DashVDash}": '\u27DA' # LEFT AND RIGHT DOUBLE TURNSTILE
+  "\\DashVDash": '\u27DA' # LEFT AND RIGHT DOUBLE TURNSTILE
+  "\\dashVdash{}": '\u27DB' # LEFT AND RIGHT TACK
+  "{\\dashVdash}": '\u27DB' # LEFT AND RIGHT TACK
+  "\\dashVdash": '\u27DB' # LEFT AND RIGHT TACK
+  "\\multimapinv{}": '\u27DC' # LEFT MULTIMAP
+  "{\\multimapinv}": '\u27DC' # LEFT MULTIMAP
+  "\\multimapinv": '\u27DC' # LEFT MULTIMAP
+  "\\vlongdash{}": '\u27DD' # long left tack
+  "{\\vlongdash}": '\u27DD' # long left tack
+  "\\vlongdash": '\u27DD' # long left tack
+  "\\longdashv{}": '\u27DE' # long right tack
+  "{\\longdashv}": '\u27DE' # long right tack
+  "\\longdashv": '\u27DE' # long right tack
+  "\\cirbot{}": '\u27DF' # UP TACK WITH CIRCLE ABOVE
+  "{\\cirbot}": '\u27DF' # UP TACK WITH CIRCLE ABOVE
+  "\\cirbot": '\u27DF' # UP TACK WITH CIRCLE ABOVE
+  "\\lozengeminus{}": '\u27E0' # LOZENGE DIVIDED BY HORIZONTAL RULE
+  "{\\lozengeminus}": '\u27E0' # LOZENGE DIVIDED BY HORIZONTAL RULE
+  "\\lozengeminus": '\u27E0' # LOZENGE DIVIDED BY HORIZONTAL RULE
+  "\\concavediamond{}": '\u27E1' # WHITE CONCAVE-SIDED DIAMOND
+  "{\\concavediamond}": '\u27E1' # WHITE CONCAVE-SIDED DIAMOND
+  "\\concavediamond": '\u27E1' # WHITE CONCAVE-SIDED DIAMOND
+  "\\concavediamondtickleft{}": '\u27E2' # WHITE CONCAVE-SIDED DIAMOND WITH LEFTWARDS TICK
+  "{\\concavediamondtickleft}": '\u27E2' # WHITE CONCAVE-SIDED DIAMOND WITH LEFTWARDS TICK
+  "\\concavediamondtickleft": '\u27E2' # WHITE CONCAVE-SIDED DIAMOND WITH LEFTWARDS TICK
+  "\\concavediamondtickright{}": '\u27E3' # WHITE CONCAVE-SIDED DIAMOND WITH RIGHTWARDS TICK
+  "{\\concavediamondtickright}": '\u27E3' # WHITE CONCAVE-SIDED DIAMOND WITH RIGHTWARDS TICK
+  "\\concavediamondtickright": '\u27E3' # WHITE CONCAVE-SIDED DIAMOND WITH RIGHTWARDS TICK
+  "\\whitesquaretickleft{}": '\u27E4' # WHITE SQUARE WITH LEFTWARDS TICK
+  "{\\whitesquaretickleft}": '\u27E4' # WHITE SQUARE WITH LEFTWARDS TICK
+  "\\whitesquaretickleft": '\u27E4' # WHITE SQUARE WITH LEFTWARDS TICK
+  "\\whitesquaretickright{}": '\u27E5' # WHITE SQUARE WITH RIGHTWARDS TICK
+  "{\\whitesquaretickright}": '\u27E5' # WHITE SQUARE WITH RIGHTWARDS TICK
+  "\\whitesquaretickright": '\u27E5' # WHITE SQUARE WITH RIGHTWARDS TICK
+  "\\llbracket{}": '\u27E6' # = \Lbrack (mathbbol), = \lbag (oz -stmaryrd), MATHEMATICAL LEFT WHITE SQUARE BRACKET
+  "{\\llbracket}": '\u27E6' # = \Lbrack (mathbbol), = \lbag (oz -stmaryrd), MATHEMATICAL LEFT WHITE SQUARE BRACKET
+  "\\llbracket": '\u27E6' # = \Lbrack (mathbbol), = \lbag (oz -stmaryrd), MATHEMATICAL LEFT WHITE SQUARE BRACKET
+  "\\rrbracket{}": '\u27E7' # = \Rbrack (mathbbol), = \rbag (oz -stmaryrd), MATHEMATICAL RIGHT WHITE SQUARE BRACKET
+  "{\\rrbracket}": '\u27E7' # = \Rbrack (mathbbol), = \rbag (oz -stmaryrd), MATHEMATICAL RIGHT WHITE SQUARE BRACKET
+  "\\rrbracket": '\u27E7' # = \Rbrack (mathbbol), = \rbag (oz -stmaryrd), MATHEMATICAL RIGHT WHITE SQUARE BRACKET
+  "\\lang{}": '\u27EA' # MATHEMATICAL LEFT DOUBLE ANGLE BRACKET, z notation left chevron bracket
+  "{\\lang}": '\u27EA' # MATHEMATICAL LEFT DOUBLE ANGLE BRACKET, z notation left chevron bracket
+  "\\lang": '\u27EA' # MATHEMATICAL LEFT DOUBLE ANGLE BRACKET, z notation left chevron bracket
+  "\\rang{}": '\u27EB' # MATHEMATICAL RIGHT DOUBLE ANGLE BRACKET, z notation right chevron bracket
+  "{\\rang}": '\u27EB' # MATHEMATICAL RIGHT DOUBLE ANGLE BRACKET, z notation right chevron bracket
+  "\\rang": '\u27EB' # MATHEMATICAL RIGHT DOUBLE ANGLE BRACKET, z notation right chevron bracket
+  "\\Lbrbrak{}": '\u27EC' # MATHEMATICAL LEFT WHITE TORTOISE SHELL BRACKET
+  "{\\Lbrbrak}": '\u27EC' # MATHEMATICAL LEFT WHITE TORTOISE SHELL BRACKET
+  "\\Lbrbrak": '\u27EC' # MATHEMATICAL LEFT WHITE TORTOISE SHELL BRACKET
+  "\\Rbrbrak{}": '\u27ED' # MATHEMATICAL RIGHT WHITE TORTOISE SHELL BRACKET
+  "{\\Rbrbrak}": '\u27ED' # MATHEMATICAL RIGHT WHITE TORTOISE SHELL BRACKET
+  "\\Rbrbrak": '\u27ED' # MATHEMATICAL RIGHT WHITE TORTOISE SHELL BRACKET
+  "\\lgroup{}": '\u27EE' # MATHEMATICAL LEFT FLATTENED PARENTHESIS
+  "{\\lgroup}": '\u27EE' # MATHEMATICAL LEFT FLATTENED PARENTHESIS
+  "\\lgroup": '\u27EE' # MATHEMATICAL LEFT FLATTENED PARENTHESIS
+  "\\rgroup{}": '\u27EF' # MATHEMATICAL RIGHT FLATTENED PARENTHESIS
+  "{\\rgroup}": '\u27EF' # MATHEMATICAL RIGHT FLATTENED PARENTHESIS
+  "\\rgroup": '\u27EF' # MATHEMATICAL RIGHT FLATTENED PARENTHESIS
+  "\\UUparrow{}": '\u27F0' # UPWARDS QUADRUPLE ARROW
+  "{\\UUparrow}": '\u27F0' # UPWARDS QUADRUPLE ARROW
+  "\\UUparrow": '\u27F0' # UPWARDS QUADRUPLE ARROW
+  "\\DDownarrow{}": '\u27F1' # DOWNWARDS QUADRUPLE ARROW
+  "{\\DDownarrow}": '\u27F1' # DOWNWARDS QUADRUPLE ARROW
+  "\\DDownarrow": '\u27F1' # DOWNWARDS QUADRUPLE ARROW
+  "\\acwgapcirclearrow{}": '\u27F2' # ANTICLOCKWISE GAPPED CIRCLE ARROW
+  "{\\acwgapcirclearrow}": '\u27F2' # ANTICLOCKWISE GAPPED CIRCLE ARROW
+  "\\acwgapcirclearrow": '\u27F2' # ANTICLOCKWISE GAPPED CIRCLE ARROW
+  "\\cwgapcirclearrow{}": '\u27F3' # CLOCKWISE GAPPED CIRCLE ARROW
+  "{\\cwgapcirclearrow}": '\u27F3' # CLOCKWISE GAPPED CIRCLE ARROW
+  "\\cwgapcirclearrow": '\u27F3' # CLOCKWISE GAPPED CIRCLE ARROW
+  "\\rightarrowonoplus{}": '\u27F4' # RIGHT ARROW WITH CIRCLED PLUS
+  "{\\rightarrowonoplus}": '\u27F4' # RIGHT ARROW WITH CIRCLED PLUS
+  "\\rightarrowonoplus": '\u27F4' # RIGHT ARROW WITH CIRCLED PLUS
+  "\\longleftarrow{}": '\u27F5' # LONG LEFTWARDS ARROW
+  "{\\longleftarrow}": '\u27F5' # LONG LEFTWARDS ARROW
+  "\\longleftarrow": '\u27F5' # LONG LEFTWARDS ARROW
+  "\\longrightarrow{}": '\u27F6' # LONG RIGHTWARDS ARROW
+  "{\\longrightarrow}": '\u27F6' # LONG RIGHTWARDS ARROW
+  "\\longrightarrow": '\u27F6' # LONG RIGHTWARDS ARROW
+  "\\longleftrightarrow{}": '\u27F7' # LONG LEFT RIGHT ARROW
+  "{\\longleftrightarrow}": '\u27F7' # LONG LEFT RIGHT ARROW
+  "\\longleftrightarrow": '\u27F7' # LONG LEFT RIGHT ARROW
+  "\\Longleftarrow{}": '\u27F8' # LONG LEFTWARDS DOUBLE ARROW
+  "{\\Longleftarrow}": '\u27F8' # LONG LEFTWARDS DOUBLE ARROW
+  "\\Longleftarrow": '\u27F8' # LONG LEFTWARDS DOUBLE ARROW
+  "\\Longrightarrow{}": '\u27F9' # LONG RIGHTWARDS DOUBLE ARROW
+  "{\\Longrightarrow}": '\u27F9' # LONG RIGHTWARDS DOUBLE ARROW
+  "\\Longrightarrow": '\u27F9' # LONG RIGHTWARDS DOUBLE ARROW
+  "\\Longleftrightarrow{}": '\u27FA' # LONG LEFT RIGHT DOUBLE ARROW
+  "{\\Longleftrightarrow}": '\u27FA' # LONG LEFT RIGHT DOUBLE ARROW
+  "\\Longleftrightarrow": '\u27FA' # LONG LEFT RIGHT DOUBLE ARROW
+  "\\longmapsfrom{}": '\u27FB' # = \longmappedfrom (kpfonts), LONG LEFTWARDS ARROW FROM BAR
+  "{\\longmapsfrom}": '\u27FB' # = \longmappedfrom (kpfonts), LONG LEFTWARDS ARROW FROM BAR
+  "\\longmapsfrom": '\u27FB' # = \longmappedfrom (kpfonts), LONG LEFTWARDS ARROW FROM BAR
+  "\\longmapsto{}": '\u27FC' # LONG RIGHTWARDS ARROW FROM BAR
+  "{\\longmapsto}": '\u27FC' # LONG RIGHTWARDS ARROW FROM BAR
+  "\\longmapsto": '\u27FC' # LONG RIGHTWARDS ARROW FROM BAR
+  "\\Longmapsfrom{}": '\u27FD' # = \Longmappedfrom (kpfonts), LONG LEFTWARDS DOUBLE ARROW FROM BAR
+  "{\\Longmapsfrom}": '\u27FD' # = \Longmappedfrom (kpfonts), LONG LEFTWARDS DOUBLE ARROW FROM BAR
+  "\\Longmapsfrom": '\u27FD' # = \Longmappedfrom (kpfonts), LONG LEFTWARDS DOUBLE ARROW FROM BAR
+  "\\Longmapsto{}": '\u27FE' # LONG RIGHTWARDS DOUBLE ARROW FROM BAR
+  "{\\Longmapsto}": '\u27FE' # LONG RIGHTWARDS DOUBLE ARROW FROM BAR
+  "\\Longmapsto": '\u27FE' # LONG RIGHTWARDS DOUBLE ARROW FROM BAR
+  "\\sim\\joinrel\\leadsto{}": '\u27FF' # LONG RIGHTWARDS SQUIGGLE ARROW
+  "{\\sim\\joinrel\\leadsto}": '\u27FF' # LONG RIGHTWARDS SQUIGGLE ARROW
+  "\\sim\\joinrel\\leadsto": '\u27FF' # LONG RIGHTWARDS SQUIGGLE ARROW
+  "\\psur{}": '\u2900' # = \psurj (oz), RIGHTWARDS TWO-HEADED ARROW WITH VERTICAL STROKE, z notation partial surjection
+  "{\\psur}": '\u2900' # = \psurj (oz), RIGHTWARDS TWO-HEADED ARROW WITH VERTICAL STROKE, z notation partial surjection
+  "\\psur": '\u2900' # = \psurj (oz), RIGHTWARDS TWO-HEADED ARROW WITH VERTICAL STROKE, z notation partial surjection
+  "\\nVtwoheadrightarrow{}": '\u2901' # RIGHTWARDS TWO-HEADED ARROW WITH DOUBLE VERTICAL STROKE, z notation finite surjection
+  "{\\nVtwoheadrightarrow}": '\u2901' # RIGHTWARDS TWO-HEADED ARROW WITH DOUBLE VERTICAL STROKE, z notation finite surjection
+  "\\nVtwoheadrightarrow": '\u2901' # RIGHTWARDS TWO-HEADED ARROW WITH DOUBLE VERTICAL STROKE, z notation finite surjection
+  "\\nvLeftarrow{}": '\u2902' # LEFTWARDS DOUBLE ARROW WITH VERTICAL STROKE
+  "{\\nvLeftarrow}": '\u2902' # LEFTWARDS DOUBLE ARROW WITH VERTICAL STROKE
+  "\\nvLeftarrow": '\u2902' # LEFTWARDS DOUBLE ARROW WITH VERTICAL STROKE
+  "\\nvRightarrow{}": '\u2903' # RIGHTWARDS DOUBLE ARROW WITH VERTICAL STROKE
+  "{\\nvRightarrow}": '\u2903' # RIGHTWARDS DOUBLE ARROW WITH VERTICAL STROKE
+  "\\nvRightarrow": '\u2903' # RIGHTWARDS DOUBLE ARROW WITH VERTICAL STROKE
+  "\\nvLeftrightarrow{}": '\u2904' # LEFT RIGHT DOUBLE ARROW WITH VERTICAL STROKE
+  "{\\nvLeftrightarrow}": '\u2904' # LEFT RIGHT DOUBLE ARROW WITH VERTICAL STROKE
+  "\\nvLeftrightarrow": '\u2904' # LEFT RIGHT DOUBLE ARROW WITH VERTICAL STROKE
+  "\\ElsevierGlyph{E212}": '\u2905' # RIGHTWARDS TWO-HEADED ARROW FROM BAR
+  "\\Mapsfrom{}": '\u2906' # = \Mappedfrom (kpfonts), LEFTWARDS DOUBLE ARROW FROM BAR
+  "{\\Mapsfrom}": '\u2906' # = \Mappedfrom (kpfonts), LEFTWARDS DOUBLE ARROW FROM BAR
+  "\\Mapsfrom": '\u2906' # = \Mappedfrom (kpfonts), LEFTWARDS DOUBLE ARROW FROM BAR
+  "\\Mapsto{}": '\u2907' # RIGHTWARDS DOUBLE ARROW FROM BAR
+  "{\\Mapsto}": '\u2907' # RIGHTWARDS DOUBLE ARROW FROM BAR
+  "\\Mapsto": '\u2907' # RIGHTWARDS DOUBLE ARROW FROM BAR
+  "\\downarrowbarred{}": '\u2908' # DOWNWARDS ARROW WITH HORIZONTAL STROKE
+  "{\\downarrowbarred}": '\u2908' # DOWNWARDS ARROW WITH HORIZONTAL STROKE
+  "\\downarrowbarred": '\u2908' # DOWNWARDS ARROW WITH HORIZONTAL STROKE
+  "\\uparrowbarred{}": '\u2909' # UPWARDS ARROW WITH HORIZONTAL STROKE
+  "{\\uparrowbarred}": '\u2909' # UPWARDS ARROW WITH HORIZONTAL STROKE
+  "\\uparrowbarred": '\u2909' # UPWARDS ARROW WITH HORIZONTAL STROKE
+  "\\Uuparrow{}": '\u290A' # UPWARDS TRIPLE ARROW
+  "{\\Uuparrow}": '\u290A' # UPWARDS TRIPLE ARROW
+  "\\Uuparrow": '\u290A' # UPWARDS TRIPLE ARROW
+  "\\Ddownarrow{}": '\u290B' # DOWNWARDS TRIPLE ARROW
+  "{\\Ddownarrow}": '\u290B' # DOWNWARDS TRIPLE ARROW
+  "\\Ddownarrow": '\u290B' # DOWNWARDS TRIPLE ARROW
+  "\\leftbkarrow{}": '\u290C' # LEFTWARDS DOUBLE DASH ARROW
+  "{\\leftbkarrow}": '\u290C' # LEFTWARDS DOUBLE DASH ARROW
+  "\\leftbkarrow": '\u290C' # LEFTWARDS DOUBLE DASH ARROW
+  "\\rightbkarrow{}": '\u290D' # RIGHTWARDS DOUBLE DASH ARROW
+  "{\\rightbkarrow}": '\u290D' # RIGHTWARDS DOUBLE DASH ARROW
+  "\\rightbkarrow": '\u290D' # RIGHTWARDS DOUBLE DASH ARROW
+  "\\leftdbkarrow{}": '\u290E' # LEFTWARDS TRIPLE DASH ARROW
+  "{\\leftdbkarrow}": '\u290E' # LEFTWARDS TRIPLE DASH ARROW
+  "\\leftdbkarrow": '\u290E' # LEFTWARDS TRIPLE DASH ARROW
+  "\\dbkarow{}": '\u290F' # RIGHTWARDS TRIPLE DASH ARROW
+  "{\\dbkarow}": '\u290F' # RIGHTWARDS TRIPLE DASH ARROW
+  "\\dbkarow": '\u290F' # RIGHTWARDS TRIPLE DASH ARROW
+  "\\drbkarow{}": '\u2910' # RIGHTWARDS TWO-HEADED TRIPLE DASH ARROW
+  "{\\drbkarow}": '\u2910' # RIGHTWARDS TWO-HEADED TRIPLE DASH ARROW
+  "\\drbkarow": '\u2910' # RIGHTWARDS TWO-HEADED TRIPLE DASH ARROW
+  "\\rightdotarrow{}": '\u2911' # RIGHTWARDS ARROW WITH DOTTED STEM
+  "{\\rightdotarrow}": '\u2911' # RIGHTWARDS ARROW WITH DOTTED STEM
+  "\\rightdotarrow": '\u2911' # RIGHTWARDS ARROW WITH DOTTED STEM
+  "\\UpArrowBar{}": '\u2912' # UPWARDS ARROW TO BAR
+  "{\\UpArrowBar}": '\u2912' # UPWARDS ARROW TO BAR
+  "\\UpArrowBar": '\u2912' # UPWARDS ARROW TO BAR
+  "\\DownArrowBar{}": '\u2913' # DOWNWARDS ARROW TO BAR
+  "{\\DownArrowBar}": '\u2913' # DOWNWARDS ARROW TO BAR
+  "\\DownArrowBar": '\u2913' # DOWNWARDS ARROW TO BAR
+  "\\pinj{}": '\u2914' # RIGHTWARDS ARROW WITH TAIL WITH VERTICAL STROKE, z notation partial injection
+  "{\\pinj}": '\u2914' # RIGHTWARDS ARROW WITH TAIL WITH VERTICAL STROKE, z notation partial injection
+  "\\pinj": '\u2914' # RIGHTWARDS ARROW WITH TAIL WITH VERTICAL STROKE, z notation partial injection
+  "\\finj{}": '\u2915' # RIGHTWARDS ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE, z notation finite injection
+  "{\\finj}": '\u2915' # RIGHTWARDS ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE, z notation finite injection
+  "\\finj": '\u2915' # RIGHTWARDS ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE, z notation finite injection
+  "\\bij{}": '\u2916' # RIGHTWARDS TWO-HEADED ARROW WITH TAIL, z notation bijection
+  "{\\bij}": '\u2916' # RIGHTWARDS TWO-HEADED ARROW WITH TAIL, z notation bijection
+  "\\bij": '\u2916' # RIGHTWARDS TWO-HEADED ARROW WITH TAIL, z notation bijection
+  "\\nvtwoheadrightarrowtail{}": '\u2917' # RIGHTWARDS TWO-HEADED ARROW WITH TAIL WITH VERTICAL STROKE, z notation surjective injection
+  "{\\nvtwoheadrightarrowtail}": '\u2917' # RIGHTWARDS TWO-HEADED ARROW WITH TAIL WITH VERTICAL STROKE, z notation surjective injection
+  "\\nvtwoheadrightarrowtail": '\u2917' # RIGHTWARDS TWO-HEADED ARROW WITH TAIL WITH VERTICAL STROKE, z notation surjective injection
+  "\\nVtwoheadrightarrowtail{}": '\u2918' # RIGHTWARDS TWO-HEADED ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE, z notation finite surjective injection
+  "{\\nVtwoheadrightarrowtail}": '\u2918' # RIGHTWARDS TWO-HEADED ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE, z notation finite surjective injection
+  "\\nVtwoheadrightarrowtail": '\u2918' # RIGHTWARDS TWO-HEADED ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE, z notation finite surjective injection
+  "\\lefttail{}": '\u2919' # LEFTWARDS ARROW-TAIL
+  "{\\lefttail}": '\u2919' # LEFTWARDS ARROW-TAIL
+  "\\lefttail": '\u2919' # LEFTWARDS ARROW-TAIL
+  "\\righttail{}": '\u291A' # RIGHTWARDS ARROW-TAIL
+  "{\\righttail}": '\u291A' # RIGHTWARDS ARROW-TAIL
+  "\\righttail": '\u291A' # RIGHTWARDS ARROW-TAIL
+  "\\leftdbltail{}": '\u291B' # LEFTWARDS DOUBLE ARROW-TAIL
+  "{\\leftdbltail}": '\u291B' # LEFTWARDS DOUBLE ARROW-TAIL
+  "\\leftdbltail": '\u291B' # LEFTWARDS DOUBLE ARROW-TAIL
+  "\\rightdbltail{}": '\u291C' # RIGHTWARDS DOUBLE ARROW-TAIL
+  "{\\rightdbltail}": '\u291C' # RIGHTWARDS DOUBLE ARROW-TAIL
+  "\\rightdbltail": '\u291C' # RIGHTWARDS DOUBLE ARROW-TAIL
+  "\\diamondleftarrow{}": '\u291D' # LEFTWARDS ARROW TO BLACK DIAMOND
+  "{\\diamondleftarrow}": '\u291D' # LEFTWARDS ARROW TO BLACK DIAMOND
+  "\\diamondleftarrow": '\u291D' # LEFTWARDS ARROW TO BLACK DIAMOND
+  "\\rightarrowdiamond{}": '\u291E' # RIGHTWARDS ARROW TO BLACK DIAMOND
+  "{\\rightarrowdiamond}": '\u291E' # RIGHTWARDS ARROW TO BLACK DIAMOND
+  "\\rightarrowdiamond": '\u291E' # RIGHTWARDS ARROW TO BLACK DIAMOND
+  "\\diamondleftarrowbar{}": '\u291F' # LEFTWARDS ARROW FROM BAR TO BLACK DIAMOND
+  "{\\diamondleftarrowbar}": '\u291F' # LEFTWARDS ARROW FROM BAR TO BLACK DIAMOND
+  "\\diamondleftarrowbar": '\u291F' # LEFTWARDS ARROW FROM BAR TO BLACK DIAMOND
+  "\\barrightarrowdiamond{}": '\u2920' # RIGHTWARDS ARROW FROM BAR TO BLACK DIAMOND
+  "{\\barrightarrowdiamond}": '\u2920' # RIGHTWARDS ARROW FROM BAR TO BLACK DIAMOND
+  "\\barrightarrowdiamond": '\u2920' # RIGHTWARDS ARROW FROM BAR TO BLACK DIAMOND
+  "\\nwsearrow{}": '\u2921' # NORTH WEST AND SOUTH EAST ARROW
+  "{\\nwsearrow}": '\u2921' # NORTH WEST AND SOUTH EAST ARROW
+  "\\nwsearrow": '\u2921' # NORTH WEST AND SOUTH EAST ARROW
+  "\\neswarrow{}": '\u2922' # NORTH EAST AND SOUTH WEST ARROW
+  "{\\neswarrow}": '\u2922' # NORTH EAST AND SOUTH WEST ARROW
+  "\\neswarrow": '\u2922' # NORTH EAST AND SOUTH WEST ARROW
+  "\\ElsevierGlyph{E20C}": '\u2923' # NORTH WEST ARROW WITH HOOK
+  "\\ElsevierGlyph{E20D}": '\u2924' # NORTH EAST ARROW WITH HOOK
+  "\\ElsevierGlyph{E20B}": '\u2925' # SOUTH EAST ARROW WITH HOOK
+  "\\ElsevierGlyph{E20A}": '\u2926' # SOUTH WEST ARROW WITH HOOK
+  "\\ElsevierGlyph{E211}": '\u2927' # NORTH WEST ARROW AND NORTH EAST ARROW
+  "\\ElsevierGlyph{E20E}": '\u2928' # NORTH EAST ARROW AND SOUTH EAST ARROW
+  "\\ElsevierGlyph{E20F}": '\u2929' # SOUTH EAST ARROW AND SOUTH WEST ARROW
+  "\\ElsevierGlyph{E210}": '\u292A' # SOUTH WEST ARROW AND NORTH WEST ARROW
+  "\\rdiagovfdiag{}": '\u292B' # RISING DIAGONAL CROSSING FALLING DIAGONAL
+  "{\\rdiagovfdiag}": '\u292B' # RISING DIAGONAL CROSSING FALLING DIAGONAL
+  "\\rdiagovfdiag": '\u292B' # RISING DIAGONAL CROSSING FALLING DIAGONAL
+  "\\fdiagovrdiag{}": '\u292C' # FALLING DIAGONAL CROSSING RISING DIAGONAL
+  "{\\fdiagovrdiag}": '\u292C' # FALLING DIAGONAL CROSSING RISING DIAGONAL
+  "\\fdiagovrdiag": '\u292C' # FALLING DIAGONAL CROSSING RISING DIAGONAL
+  "\\seovnearrow{}": '\u292D' # SOUTH EAST ARROW CROSSING NORTH EAST ARROW
+  "{\\seovnearrow}": '\u292D' # SOUTH EAST ARROW CROSSING NORTH EAST ARROW
+  "\\seovnearrow": '\u292D' # SOUTH EAST ARROW CROSSING NORTH EAST ARROW
+  "\\neovsearrow{}": '\u292E' # NORTH EAST ARROW CROSSING SOUTH EAST ARROW
+  "{\\neovsearrow}": '\u292E' # NORTH EAST ARROW CROSSING SOUTH EAST ARROW
+  "\\neovsearrow": '\u292E' # NORTH EAST ARROW CROSSING SOUTH EAST ARROW
+  "\\fdiagovnearrow{}": '\u292F' # FALLING DIAGONAL CROSSING NORTH EAST ARROW
+  "{\\fdiagovnearrow}": '\u292F' # FALLING DIAGONAL CROSSING NORTH EAST ARROW
+  "\\fdiagovnearrow": '\u292F' # FALLING DIAGONAL CROSSING NORTH EAST ARROW
+  "\\rdiagovsearrow{}": '\u2930' # RISING DIAGONAL CROSSING SOUTH EAST ARROW
+  "{\\rdiagovsearrow}": '\u2930' # RISING DIAGONAL CROSSING SOUTH EAST ARROW
+  "\\rdiagovsearrow": '\u2930' # RISING DIAGONAL CROSSING SOUTH EAST ARROW
+  "\\neovnwarrow{}": '\u2931' # NORTH EAST ARROW CROSSING NORTH WEST ARROW
+  "{\\neovnwarrow}": '\u2931' # NORTH EAST ARROW CROSSING NORTH WEST ARROW
+  "\\neovnwarrow": '\u2931' # NORTH EAST ARROW CROSSING NORTH WEST ARROW
+  "\\nwovnearrow{}": '\u2932' # NORTH WEST ARROW CROSSING NORTH EAST ARROW
+  "{\\nwovnearrow}": '\u2932' # NORTH WEST ARROW CROSSING NORTH EAST ARROW
+  "\\nwovnearrow": '\u2932' # NORTH WEST ARROW CROSSING NORTH EAST ARROW
+  "\\ElsevierGlyph{E21C}": '\u2933' # WAVE ARROW POINTING DIRECTLY RIGHT
+  "\\uprightcurvearrow{}": '\u2934' # ARROW POINTING RIGHTWARDS THEN CURVING UPWARDS
+  "{\\uprightcurvearrow}": '\u2934' # ARROW POINTING RIGHTWARDS THEN CURVING UPWARDS
+  "\\uprightcurvearrow": '\u2934' # ARROW POINTING RIGHTWARDS THEN CURVING UPWARDS
+  "\\downrightcurvedarrow{}": '\u2935' # ARROW POINTING RIGHTWARDS THEN CURVING DOWNWARDS
+  "{\\downrightcurvedarrow}": '\u2935' # ARROW POINTING RIGHTWARDS THEN CURVING DOWNWARDS
+  "\\downrightcurvedarrow": '\u2935' # ARROW POINTING RIGHTWARDS THEN CURVING DOWNWARDS
+  "\\ElsevierGlyph{E21A}": '\u2936' # ARROW POINTING DOWNWARDS THEN CURVING LEFTWARDS
+  "\\ElsevierGlyph{E219}": '\u2937' # ARROW POINTING DOWNWARDS THEN CURVING RIGHTWARDS
+  "\\cwrightarcarrow{}": '\u2938' # RIGHT-SIDE ARC CLOCKWISE ARROW
+  "{\\cwrightarcarrow}": '\u2938' # RIGHT-SIDE ARC CLOCKWISE ARROW
+  "\\cwrightarcarrow": '\u2938' # RIGHT-SIDE ARC CLOCKWISE ARROW
+  "\\acwleftarcarrow{}": '\u2939' # LEFT-SIDE ARC ANTICLOCKWISE ARROW
+  "{\\acwleftarcarrow}": '\u2939' # LEFT-SIDE ARC ANTICLOCKWISE ARROW
+  "\\acwleftarcarrow": '\u2939' # LEFT-SIDE ARC ANTICLOCKWISE ARROW
+  "\\acwoverarcarrow{}": '\u293A' # TOP ARC ANTICLOCKWISE ARROW
+  "{\\acwoverarcarrow}": '\u293A' # TOP ARC ANTICLOCKWISE ARROW
+  "\\acwoverarcarrow": '\u293A' # TOP ARC ANTICLOCKWISE ARROW
+  "\\acwunderarcarrow{}": '\u293B' # BOTTOM ARC ANTICLOCKWISE ARROW
+  "{\\acwunderarcarrow}": '\u293B' # BOTTOM ARC ANTICLOCKWISE ARROW
+  "\\acwunderarcarrow": '\u293B' # BOTTOM ARC ANTICLOCKWISE ARROW
+  "\\curvearrowrightminus{}": '\u293C' # TOP ARC CLOCKWISE ARROW WITH MINUS
+  "{\\curvearrowrightminus}": '\u293C' # TOP ARC CLOCKWISE ARROW WITH MINUS
+  "\\curvearrowrightminus": '\u293C' # TOP ARC CLOCKWISE ARROW WITH MINUS
+  "\\curvearrowleftplus{}": '\u293D' # TOP ARC ANTICLOCKWISE ARROW WITH PLUS
+  "{\\curvearrowleftplus}": '\u293D' # TOP ARC ANTICLOCKWISE ARROW WITH PLUS
+  "\\curvearrowleftplus": '\u293D' # TOP ARC ANTICLOCKWISE ARROW WITH PLUS
+  "\\cwundercurvearrow{}": '\u293E' # LOWER RIGHT SEMICIRCULAR CLOCKWISE ARROW
+  "{\\cwundercurvearrow}": '\u293E' # LOWER RIGHT SEMICIRCULAR CLOCKWISE ARROW
+  "\\cwundercurvearrow": '\u293E' # LOWER RIGHT SEMICIRCULAR CLOCKWISE ARROW
+  "\\ccwundercurvearrow{}": '\u293F' # LOWER LEFT SEMICIRCULAR ANTICLOCKWISE ARROW
+  "{\\ccwundercurvearrow}": '\u293F' # LOWER LEFT SEMICIRCULAR ANTICLOCKWISE ARROW
+  "\\ccwundercurvearrow": '\u293F' # LOWER LEFT SEMICIRCULAR ANTICLOCKWISE ARROW
+  "\\Elolarr{}": '\u2940' # ANTICLOCKWISE CLOSED CIRCLE ARROW
+  "{\\Elolarr}": '\u2940' # ANTICLOCKWISE CLOSED CIRCLE ARROW
+  "\\Elolarr": '\u2940' # ANTICLOCKWISE CLOSED CIRCLE ARROW
+  "\\Elorarr{}": '\u2941' # CLOCKWISE CLOSED CIRCLE ARROW
+  "{\\Elorarr}": '\u2941' # CLOCKWISE CLOSED CIRCLE ARROW
+  "\\Elorarr": '\u2941' # CLOCKWISE CLOSED CIRCLE ARROW
+  "\\ElzRlarr{}": '\u2942' # RIGHTWARDS ARROW ABOVE SHORT LEFTWARDS ARROW
+  "{\\ElzRlarr}": '\u2942' # RIGHTWARDS ARROW ABOVE SHORT LEFTWARDS ARROW
+  "\\ElzRlarr": '\u2942' # RIGHTWARDS ARROW ABOVE SHORT LEFTWARDS ARROW
+  "\\leftarrowshortrightarrow{}": '\u2943' # LEFTWARDS ARROW ABOVE SHORT RIGHTWARDS ARROW
+  "{\\leftarrowshortrightarrow}": '\u2943' # LEFTWARDS ARROW ABOVE SHORT RIGHTWARDS ARROW
+  "\\leftarrowshortrightarrow": '\u2943' # LEFTWARDS ARROW ABOVE SHORT RIGHTWARDS ARROW
+  "\\ElzrLarr{}": '\u2944' # SHORT RIGHTWARDS ARROW ABOVE LEFTWARDS ARROW
+  "{\\ElzrLarr}": '\u2944' # SHORT RIGHTWARDS ARROW ABOVE LEFTWARDS ARROW
+  "\\ElzrLarr": '\u2944' # SHORT RIGHTWARDS ARROW ABOVE LEFTWARDS ARROW
+  "\\rightarrowplus{}": '\u2945' # RIGHTWARDS ARROW WITH PLUS BELOW
+  "{\\rightarrowplus}": '\u2945' # RIGHTWARDS ARROW WITH PLUS BELOW
+  "\\rightarrowplus": '\u2945' # RIGHTWARDS ARROW WITH PLUS BELOW
+  "\\leftarrowplus{}": '\u2946' # LEFTWARDS ARROW WITH PLUS BELOW
+  "{\\leftarrowplus}": '\u2946' # LEFTWARDS ARROW WITH PLUS BELOW
+  "\\leftarrowplus": '\u2946' # LEFTWARDS ARROW WITH PLUS BELOW
+  "\\Elzrarrx{}": '\u2947' # RIGHTWARDS ARROW THROUGH X
+  "{\\Elzrarrx}": '\u2947' # RIGHTWARDS ARROW THROUGH X
+  "\\Elzrarrx": '\u2947' # RIGHTWARDS ARROW THROUGH X
+  "\\leftrightarrowcircle{}": '\u2948' # LEFT RIGHT ARROW THROUGH SMALL CIRCLE
+  "{\\leftrightarrowcircle}": '\u2948' # LEFT RIGHT ARROW THROUGH SMALL CIRCLE
+  "\\leftrightarrowcircle": '\u2948' # LEFT RIGHT ARROW THROUGH SMALL CIRCLE
+  "\\twoheaduparrowcircle{}": '\u2949' # UPWARDS TWO-HEADED ARROW FROM SMALL CIRCLE
+  "{\\twoheaduparrowcircle}": '\u2949' # UPWARDS TWO-HEADED ARROW FROM SMALL CIRCLE
+  "\\twoheaduparrowcircle": '\u2949' # UPWARDS TWO-HEADED ARROW FROM SMALL CIRCLE
+  "\\leftrightharpoon{}": '\u294A' # LEFT BARB UP RIGHT BARB DOWN HARPOON
+  "{\\leftrightharpoon}": '\u294A' # LEFT BARB UP RIGHT BARB DOWN HARPOON
+  "\\leftrightharpoon": '\u294A' # LEFT BARB UP RIGHT BARB DOWN HARPOON
+  "\\rightleftharpoon{}": '\u294B' # LEFT BARB DOWN RIGHT BARB UP HARPOON
+  "{\\rightleftharpoon}": '\u294B' # LEFT BARB DOWN RIGHT BARB UP HARPOON
+  "\\rightleftharpoon": '\u294B' # LEFT BARB DOWN RIGHT BARB UP HARPOON
+  "\\updownharpoonrightleft{}": '\u294C' # UP BARB RIGHT DOWN BARB LEFT HARPOON
+  "{\\updownharpoonrightleft}": '\u294C' # UP BARB RIGHT DOWN BARB LEFT HARPOON
+  "\\updownharpoonrightleft": '\u294C' # UP BARB RIGHT DOWN BARB LEFT HARPOON
+  "\\updownharpoonleftright{}": '\u294D' # UP BARB LEFT DOWN BARB RIGHT HARPOON
+  "{\\updownharpoonleftright}": '\u294D' # UP BARB LEFT DOWN BARB RIGHT HARPOON
+  "\\updownharpoonleftright": '\u294D' # UP BARB LEFT DOWN BARB RIGHT HARPOON
+  "\\LeftRightVector{}": '\u294E' # LEFT BARB UP RIGHT BARB UP HARPOON
+  "{\\LeftRightVector}": '\u294E' # LEFT BARB UP RIGHT BARB UP HARPOON
+  "\\LeftRightVector": '\u294E' # LEFT BARB UP RIGHT BARB UP HARPOON
+  "\\RightUpDownVector{}": '\u294F' # UP BARB RIGHT DOWN BARB RIGHT HARPOON
+  "{\\RightUpDownVector}": '\u294F' # UP BARB RIGHT DOWN BARB RIGHT HARPOON
+  "\\RightUpDownVector": '\u294F' # UP BARB RIGHT DOWN BARB RIGHT HARPOON
+  "\\DownLeftRightVector{}": '\u2950' # LEFT BARB DOWN RIGHT BARB DOWN HARPOON
+  "{\\DownLeftRightVector}": '\u2950' # LEFT BARB DOWN RIGHT BARB DOWN HARPOON
+  "\\DownLeftRightVector": '\u2950' # LEFT BARB DOWN RIGHT BARB DOWN HARPOON
+  "\\LeftUpDownVector{}": '\u2951' # UP BARB LEFT DOWN BARB LEFT HARPOON
+  "{\\LeftUpDownVector}": '\u2951' # UP BARB LEFT DOWN BARB LEFT HARPOON
+  "\\LeftUpDownVector": '\u2951' # UP BARB LEFT DOWN BARB LEFT HARPOON
+  "\\LeftVectorBar{}": '\u2952' # LEFTWARDS HARPOON WITH BARB UP TO BAR
+  "{\\LeftVectorBar}": '\u2952' # LEFTWARDS HARPOON WITH BARB UP TO BAR
+  "\\LeftVectorBar": '\u2952' # LEFTWARDS HARPOON WITH BARB UP TO BAR
+  "\\RightVectorBar{}": '\u2953' # RIGHTWARDS HARPOON WITH BARB UP TO BAR
+  "{\\RightVectorBar}": '\u2953' # RIGHTWARDS HARPOON WITH BARB UP TO BAR
+  "\\RightVectorBar": '\u2953' # RIGHTWARDS HARPOON WITH BARB UP TO BAR
+  "\\RightUpVectorBar{}": '\u2954' # UPWARDS HARPOON WITH BARB RIGHT TO BAR
+  "{\\RightUpVectorBar}": '\u2954' # UPWARDS HARPOON WITH BARB RIGHT TO BAR
+  "\\RightUpVectorBar": '\u2954' # UPWARDS HARPOON WITH BARB RIGHT TO BAR
+  "\\RightDownVectorBar{}": '\u2955' # DOWNWARDS HARPOON WITH BARB RIGHT TO BAR
+  "{\\RightDownVectorBar}": '\u2955' # DOWNWARDS HARPOON WITH BARB RIGHT TO BAR
+  "\\RightDownVectorBar": '\u2955' # DOWNWARDS HARPOON WITH BARB RIGHT TO BAR
+  "\\DownLeftVectorBar{}": '\u2956' # LEFTWARDS HARPOON WITH BARB DOWN TO BAR
+  "{\\DownLeftVectorBar}": '\u2956' # LEFTWARDS HARPOON WITH BARB DOWN TO BAR
+  "\\DownLeftVectorBar": '\u2956' # LEFTWARDS HARPOON WITH BARB DOWN TO BAR
+  "\\DownRightVectorBar{}": '\u2957' # RIGHTWARDS HARPOON WITH BARB DOWN TO BAR
+  "{\\DownRightVectorBar}": '\u2957' # RIGHTWARDS HARPOON WITH BARB DOWN TO BAR
+  "\\DownRightVectorBar": '\u2957' # RIGHTWARDS HARPOON WITH BARB DOWN TO BAR
+  "\\LeftUpVectorBar{}": '\u2958' # UPWARDS HARPOON WITH BARB LEFT TO BAR
+  "{\\LeftUpVectorBar}": '\u2958' # UPWARDS HARPOON WITH BARB LEFT TO BAR
+  "\\LeftUpVectorBar": '\u2958' # UPWARDS HARPOON WITH BARB LEFT TO BAR
+  "\\LeftDownVectorBar{}": '\u2959' # DOWNWARDS HARPOON WITH BARB LEFT TO BAR
+  "{\\LeftDownVectorBar}": '\u2959' # DOWNWARDS HARPOON WITH BARB LEFT TO BAR
+  "\\LeftDownVectorBar": '\u2959' # DOWNWARDS HARPOON WITH BARB LEFT TO BAR
+  "\\LeftTeeVector{}": '\u295A' # LEFTWARDS HARPOON WITH BARB UP FROM BAR
+  "{\\LeftTeeVector}": '\u295A' # LEFTWARDS HARPOON WITH BARB UP FROM BAR
+  "\\LeftTeeVector": '\u295A' # LEFTWARDS HARPOON WITH BARB UP FROM BAR
+  "\\RightTeeVector{}": '\u295B' # RIGHTWARDS HARPOON WITH BARB UP FROM BAR
+  "{\\RightTeeVector}": '\u295B' # RIGHTWARDS HARPOON WITH BARB UP FROM BAR
+  "\\RightTeeVector": '\u295B' # RIGHTWARDS HARPOON WITH BARB UP FROM BAR
+  "\\RightUpTeeVector{}": '\u295C' # UPWARDS HARPOON WITH BARB RIGHT FROM BAR
+  "{\\RightUpTeeVector}": '\u295C' # UPWARDS HARPOON WITH BARB RIGHT FROM BAR
+  "\\RightUpTeeVector": '\u295C' # UPWARDS HARPOON WITH BARB RIGHT FROM BAR
+  "\\RightDownTeeVector{}": '\u295D' # DOWNWARDS HARPOON WITH BARB RIGHT FROM BAR
+  "{\\RightDownTeeVector}": '\u295D' # DOWNWARDS HARPOON WITH BARB RIGHT FROM BAR
+  "\\RightDownTeeVector": '\u295D' # DOWNWARDS HARPOON WITH BARB RIGHT FROM BAR
+  "\\DownLeftTeeVector{}": '\u295E' # LEFTWARDS HARPOON WITH BARB DOWN FROM BAR
+  "{\\DownLeftTeeVector}": '\u295E' # LEFTWARDS HARPOON WITH BARB DOWN FROM BAR
+  "\\DownLeftTeeVector": '\u295E' # LEFTWARDS HARPOON WITH BARB DOWN FROM BAR
+  "\\DownRightTeeVector{}": '\u295F' # RIGHTWARDS HARPOON WITH BARB DOWN FROM BAR
+  "{\\DownRightTeeVector}": '\u295F' # RIGHTWARDS HARPOON WITH BARB DOWN FROM BAR
+  "\\DownRightTeeVector": '\u295F' # RIGHTWARDS HARPOON WITH BARB DOWN FROM BAR
+  "\\LeftUpTeeVector{}": '\u2960' # UPWARDS HARPOON WITH BARB LEFT FROM BAR
+  "{\\LeftUpTeeVector}": '\u2960' # UPWARDS HARPOON WITH BARB LEFT FROM BAR
+  "\\LeftUpTeeVector": '\u2960' # UPWARDS HARPOON WITH BARB LEFT FROM BAR
+  "\\LeftDownTeeVector{}": '\u2961' # DOWNWARDS HARPOON WITH BARB LEFT FROM BAR
+  "{\\LeftDownTeeVector}": '\u2961' # DOWNWARDS HARPOON WITH BARB LEFT FROM BAR
+  "\\LeftDownTeeVector": '\u2961' # DOWNWARDS HARPOON WITH BARB LEFT FROM BAR
+  "\\leftleftharpoons{}": '\u2962' # LEFTWARDS HARPOON WITH BARB UP ABOVE LEFTWARDS HARPOON WITH BARB DOWN
+  "{\\leftleftharpoons}": '\u2962' # LEFTWARDS HARPOON WITH BARB UP ABOVE LEFTWARDS HARPOON WITH BARB DOWN
+  "\\leftleftharpoons": '\u2962' # LEFTWARDS HARPOON WITH BARB UP ABOVE LEFTWARDS HARPOON WITH BARB DOWN
+  "\\upupharpoons{}": '\u2963' # UPWARDS HARPOON WITH BARB LEFT BESIDE UPWARDS HARPOON WITH BARB RIGHT
+  "{\\upupharpoons}": '\u2963' # UPWARDS HARPOON WITH BARB LEFT BESIDE UPWARDS HARPOON WITH BARB RIGHT
+  "\\upupharpoons": '\u2963' # UPWARDS HARPOON WITH BARB LEFT BESIDE UPWARDS HARPOON WITH BARB RIGHT
+  "\\rightrightharpoons{}": '\u2964' # RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN
+  "{\\rightrightharpoons}": '\u2964' # RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN
+  "\\rightrightharpoons": '\u2964' # RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN
+  "\\downdownharpoons{}": '\u2965' # DOWNWARDS HARPOON WITH BARB LEFT BESIDE DOWNWARDS HARPOON WITH BARB RIGHT
+  "{\\downdownharpoons}": '\u2965' # DOWNWARDS HARPOON WITH BARB LEFT BESIDE DOWNWARDS HARPOON WITH BARB RIGHT
+  "\\downdownharpoons": '\u2965' # DOWNWARDS HARPOON WITH BARB LEFT BESIDE DOWNWARDS HARPOON WITH BARB RIGHT
+  "\\leftrightharpoonsup{}": '\u2966' # LEFTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB UP
+  "{\\leftrightharpoonsup}": '\u2966' # LEFTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB UP
+  "\\leftrightharpoonsup": '\u2966' # LEFTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB UP
+  "\\leftrightharpoonsdown{}": '\u2967' # LEFTWARDS HARPOON WITH BARB DOWN ABOVE RIGHTWARDS HARPOON WITH BARB DOWN
+  "{\\leftrightharpoonsdown}": '\u2967' # LEFTWARDS HARPOON WITH BARB DOWN ABOVE RIGHTWARDS HARPOON WITH BARB DOWN
+  "\\leftrightharpoonsdown": '\u2967' # LEFTWARDS HARPOON WITH BARB DOWN ABOVE RIGHTWARDS HARPOON WITH BARB DOWN
+  "\\rightleftharpoonsup{}": '\u2968' # RIGHTWARDS HARPOON WITH BARB UP ABOVE LEFTWARDS HARPOON WITH BARB UP
+  "{\\rightleftharpoonsup}": '\u2968' # RIGHTWARDS HARPOON WITH BARB UP ABOVE LEFTWARDS HARPOON WITH BARB UP
+  "\\rightleftharpoonsup": '\u2968' # RIGHTWARDS HARPOON WITH BARB UP ABOVE LEFTWARDS HARPOON WITH BARB UP
+  "\\rightleftharpoonsdown{}": '\u2969' # RIGHTWARDS HARPOON WITH BARB DOWN ABOVE LEFTWARDS HARPOON WITH BARB DOWN
+  "{\\rightleftharpoonsdown}": '\u2969' # RIGHTWARDS HARPOON WITH BARB DOWN ABOVE LEFTWARDS HARPOON WITH BARB DOWN
+  "\\rightleftharpoonsdown": '\u2969' # RIGHTWARDS HARPOON WITH BARB DOWN ABOVE LEFTWARDS HARPOON WITH BARB DOWN
+  "\\leftbarharpoon{}": '\u296A' # LEFTWARDS HARPOON WITH BARB UP ABOVE LONG DASH
+  "{\\leftbarharpoon}": '\u296A' # LEFTWARDS HARPOON WITH BARB UP ABOVE LONG DASH
+  "\\leftbarharpoon": '\u296A' # LEFTWARDS HARPOON WITH BARB UP ABOVE LONG DASH
+  "\\barleftharpoon{}": '\u296B' # LEFTWARDS HARPOON WITH BARB DOWN BELOW LONG DASH
+  "{\\barleftharpoon}": '\u296B' # LEFTWARDS HARPOON WITH BARB DOWN BELOW LONG DASH
+  "\\barleftharpoon": '\u296B' # LEFTWARDS HARPOON WITH BARB DOWN BELOW LONG DASH
+  "\\rightbarharpoon{}": '\u296C' # RIGHTWARDS HARPOON WITH BARB UP ABOVE LONG DASH
+  "{\\rightbarharpoon}": '\u296C' # RIGHTWARDS HARPOON WITH BARB UP ABOVE LONG DASH
+  "\\rightbarharpoon": '\u296C' # RIGHTWARDS HARPOON WITH BARB UP ABOVE LONG DASH
+  "\\barrightharpoon{}": '\u296D' # RIGHTWARDS HARPOON WITH BARB DOWN BELOW LONG DASH
+  "{\\barrightharpoon}": '\u296D' # RIGHTWARDS HARPOON WITH BARB DOWN BELOW LONG DASH
+  "\\barrightharpoon": '\u296D' # RIGHTWARDS HARPOON WITH BARB DOWN BELOW LONG DASH
+  "\\UpEquilibrium{}": '\u296E' # UPWARDS HARPOON WITH BARB LEFT BESIDE DOWNWARDS HARPOON WITH BARB RIGHT
+  "{\\UpEquilibrium}": '\u296E' # UPWARDS HARPOON WITH BARB LEFT BESIDE DOWNWARDS HARPOON WITH BARB RIGHT
+  "\\UpEquilibrium": '\u296E' # UPWARDS HARPOON WITH BARB LEFT BESIDE DOWNWARDS HARPOON WITH BARB RIGHT
+  "\\ReverseUpEquilibrium{}": '\u296F' # DOWNWARDS HARPOON WITH BARB LEFT BESIDE UPWARDS HARPOON WITH BARB RIGHT
+  "{\\ReverseUpEquilibrium}": '\u296F' # DOWNWARDS HARPOON WITH BARB LEFT BESIDE UPWARDS HARPOON WITH BARB RIGHT
+  "\\ReverseUpEquilibrium": '\u296F' # DOWNWARDS HARPOON WITH BARB LEFT BESIDE UPWARDS HARPOON WITH BARB RIGHT
+  "\\RoundImplies{}": '\u2970' # RIGHT DOUBLE ARROW WITH ROUNDED HEAD
+  "{\\RoundImplies}": '\u2970' # RIGHT DOUBLE ARROW WITH ROUNDED HEAD
+  "\\RoundImplies": '\u2970' # RIGHT DOUBLE ARROW WITH ROUNDED HEAD
+  "\\equalrightarrow{}": '\u2971' # EQUALS SIGN ABOVE RIGHTWARDS ARROW
+  "{\\equalrightarrow}": '\u2971' # EQUALS SIGN ABOVE RIGHTWARDS ARROW
+  "\\equalrightarrow": '\u2971' # EQUALS SIGN ABOVE RIGHTWARDS ARROW
+  "\\similarrightarrow{}": '\u2972' # TILDE OPERATOR ABOVE RIGHTWARDS ARROW
+  "{\\similarrightarrow}": '\u2972' # TILDE OPERATOR ABOVE RIGHTWARDS ARROW
+  "\\similarrightarrow": '\u2972' # TILDE OPERATOR ABOVE RIGHTWARDS ARROW
+  "\\leftarrowsimilar{}": '\u2973' # LEFTWARDS ARROW ABOVE TILDE OPERATOR
+  "{\\leftarrowsimilar}": '\u2973' # LEFTWARDS ARROW ABOVE TILDE OPERATOR
+  "\\leftarrowsimilar": '\u2973' # LEFTWARDS ARROW ABOVE TILDE OPERATOR
+  "\\rightarrowsimilar{}": '\u2974' # RIGHTWARDS ARROW ABOVE TILDE OPERATOR
+  "{\\rightarrowsimilar}": '\u2974' # RIGHTWARDS ARROW ABOVE TILDE OPERATOR
+  "\\rightarrowsimilar": '\u2974' # RIGHTWARDS ARROW ABOVE TILDE OPERATOR
+  "\\rightarrowapprox{}": '\u2975' # RIGHTWARDS ARROW ABOVE ALMOST EQUAL TO
+  "{\\rightarrowapprox}": '\u2975' # RIGHTWARDS ARROW ABOVE ALMOST EQUAL TO
+  "\\rightarrowapprox": '\u2975' # RIGHTWARDS ARROW ABOVE ALMOST EQUAL TO
+  "\\ltlarr{}": '\u2976' # LESS-THAN ABOVE LEFTWARDS ARROW
+  "{\\ltlarr}": '\u2976' # LESS-THAN ABOVE LEFTWARDS ARROW
+  "\\ltlarr": '\u2976' # LESS-THAN ABOVE LEFTWARDS ARROW
+  "\\leftarrowless{}": '\u2977' # LEFTWARDS ARROW THROUGH LESS-THAN
+  "{\\leftarrowless}": '\u2977' # LEFTWARDS ARROW THROUGH LESS-THAN
+  "\\leftarrowless": '\u2977' # LEFTWARDS ARROW THROUGH LESS-THAN
+  "\\gtrarr{}": '\u2978' # GREATER-THAN ABOVE RIGHTWARDS ARROW
+  "{\\gtrarr}": '\u2978' # GREATER-THAN ABOVE RIGHTWARDS ARROW
+  "\\gtrarr": '\u2978' # GREATER-THAN ABOVE RIGHTWARDS ARROW
+  "\\subrarr{}": '\u2979' # SUBSET ABOVE RIGHTWARDS ARROW
+  "{\\subrarr}": '\u2979' # SUBSET ABOVE RIGHTWARDS ARROW
+  "\\subrarr": '\u2979' # SUBSET ABOVE RIGHTWARDS ARROW
+  "\\leftarrowsubset{}": '\u297A' # LEFTWARDS ARROW THROUGH SUBSET
+  "{\\leftarrowsubset}": '\u297A' # LEFTWARDS ARROW THROUGH SUBSET
+  "\\leftarrowsubset": '\u297A' # LEFTWARDS ARROW THROUGH SUBSET
+  "\\suplarr{}": '\u297B' # SUPERSET ABOVE LEFTWARDS ARROW
+  "{\\suplarr}": '\u297B' # SUPERSET ABOVE LEFTWARDS ARROW
+  "\\suplarr": '\u297B' # SUPERSET ABOVE LEFTWARDS ARROW
+  "\\ElsevierGlyph{E214}": '\u297C' # LEFT FISH TAIL
+  "\\ElsevierGlyph{E215}": '\u297D' # RIGHT FISH TAIL
+  "\\upfishtail{}": '\u297E' # UP FISH TAIL
+  "{\\upfishtail}": '\u297E' # UP FISH TAIL
+  "\\upfishtail": '\u297E' # UP FISH TAIL
+  "\\downfishtail{}": '\u297F' # DOWN FISH TAIL
+  "{\\downfishtail}": '\u297F' # DOWN FISH TAIL
+  "\\downfishtail": '\u297F' # DOWN FISH TAIL
+  "\\Elztfnc{}": '\u2980' # TRIPLE VERTICAL BAR DELIMITER
+  "{\\Elztfnc}": '\u2980' # TRIPLE VERTICAL BAR DELIMITER
+  "\\Elztfnc": '\u2980' # TRIPLE VERTICAL BAR DELIMITER
+  "\\spot{}": '\u2981' # = \dot (oz), Z NOTATION SPOT
+  "{\\spot}": '\u2981' # = \dot (oz), Z NOTATION SPOT
+  "\\spot": '\u2981' # = \dot (oz), Z NOTATION SPOT
+  "\\typecolon{}": '\u2982' # Z NOTATION TYPE COLON, (present in bbold font but no command)
+  "{\\typecolon}": '\u2982' # Z NOTATION TYPE COLON, (present in bbold font but no command)
+  "\\typecolon": '\u2982' # Z NOTATION TYPE COLON, (present in bbold font but no command)
+  "\\lBrace{}": '\u2983' # LEFT WHITE CURLY BRACKET
+  "{\\lBrace}": '\u2983' # LEFT WHITE CURLY BRACKET
+  "\\lBrace": '\u2983' # LEFT WHITE CURLY BRACKET
+  "\\rBrace{}": '\u2984' # RIGHT WHITE CURLY BRACKET
+  "{\\rBrace}": '\u2984' # RIGHT WHITE CURLY BRACKET
+  "\\rBrace": '\u2984' # RIGHT WHITE CURLY BRACKET
+  "\\ElsevierGlyph{3018}": '\u2985' # LEFT WHITE PARENTHESIS
+  "\\Elroang{}": '\u2986' # RIGHT WHITE PARENTHESIS
+  "{\\Elroang}": '\u2986' # RIGHT WHITE PARENTHESIS
+  "\\Elroang": '\u2986' # RIGHT WHITE PARENTHESIS
+  "\\limg{}": '\u2987' # = \llparenthesis (stmaryrd), Z NOTATION LEFT IMAGE BRACKET
+  "{\\limg}": '\u2987' # = \llparenthesis (stmaryrd), Z NOTATION LEFT IMAGE BRACKET
+  "\\limg": '\u2987' # = \llparenthesis (stmaryrd), Z NOTATION LEFT IMAGE BRACKET
+  "\\rimg{}": '\u2988' # = \rrparenthesis (stmaryrd), Z NOTATION RIGHT IMAGE BRACKET
+  "{\\rimg}": '\u2988' # = \rrparenthesis (stmaryrd), Z NOTATION RIGHT IMAGE BRACKET
+  "\\rimg": '\u2988' # = \rrparenthesis (stmaryrd), Z NOTATION RIGHT IMAGE BRACKET
+  "\\lblot{}": '\u2989' # Z NOTATION LEFT BINDING BRACKET
+  "{\\lblot}": '\u2989' # Z NOTATION LEFT BINDING BRACKET
+  "\\lblot": '\u2989' # Z NOTATION LEFT BINDING BRACKET
+  "\\rblot{}": '\u298A' # Z NOTATION RIGHT BINDING BRACKET
+  "{\\rblot}": '\u298A' # Z NOTATION RIGHT BINDING BRACKET
+  "\\rblot": '\u298A' # Z NOTATION RIGHT BINDING BRACKET
+  "\\lbrackubar{}": '\u298B' # LEFT SQUARE BRACKET WITH UNDERBAR
+  "{\\lbrackubar}": '\u298B' # LEFT SQUARE BRACKET WITH UNDERBAR
+  "\\lbrackubar": '\u298B' # LEFT SQUARE BRACKET WITH UNDERBAR
+  "\\rbrackubar{}": '\u298C' # RIGHT SQUARE BRACKET WITH UNDERBAR
+  "{\\rbrackubar}": '\u298C' # RIGHT SQUARE BRACKET WITH UNDERBAR
+  "\\rbrackubar": '\u298C' # RIGHT SQUARE BRACKET WITH UNDERBAR
+  "\\lbrackultick{}": '\u298D' # LEFT SQUARE BRACKET WITH TICK IN TOP CORNER
+  "{\\lbrackultick}": '\u298D' # LEFT SQUARE BRACKET WITH TICK IN TOP CORNER
+  "\\lbrackultick": '\u298D' # LEFT SQUARE BRACKET WITH TICK IN TOP CORNER
+  "\\rbracklrtick{}": '\u298E' # RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER
+  "{\\rbracklrtick}": '\u298E' # RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER
+  "\\rbracklrtick": '\u298E' # RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER
+  "\\lbracklltick{}": '\u298F' # LEFT SQUARE BRACKET WITH TICK IN BOTTOM CORNER
+  "{\\lbracklltick}": '\u298F' # LEFT SQUARE BRACKET WITH TICK IN BOTTOM CORNER
+  "\\lbracklltick": '\u298F' # LEFT SQUARE BRACKET WITH TICK IN BOTTOM CORNER
+  "\\rbrackurtick{}": '\u2990' # RIGHT SQUARE BRACKET WITH TICK IN TOP CORNER
+  "{\\rbrackurtick}": '\u2990' # RIGHT SQUARE BRACKET WITH TICK IN TOP CORNER
+  "\\rbrackurtick": '\u2990' # RIGHT SQUARE BRACKET WITH TICK IN TOP CORNER
+  "\\langledot{}": '\u2991' # LEFT ANGLE BRACKET WITH DOT
+  "{\\langledot}": '\u2991' # LEFT ANGLE BRACKET WITH DOT
+  "\\langledot": '\u2991' # LEFT ANGLE BRACKET WITH DOT
+  "\\rangledot{}": '\u2992' # RIGHT ANGLE BRACKET WITH DOT
+  "{\\rangledot}": '\u2992' # RIGHT ANGLE BRACKET WITH DOT
+  "\\rangledot": '\u2992' # RIGHT ANGLE BRACKET WITH DOT
+  "<\\kern-0.58em(": '\u2993' # LEFT ARC LESS-THAN BRACKET
+  "\\ElsevierGlyph{E291}": '\u2994' # RIGHT ARC GREATER-THAN BRACKET
+  "\\Lparengtr{}": '\u2995' # DOUBLE LEFT ARC GREATER-THAN BRACKET
+  "{\\Lparengtr}": '\u2995' # DOUBLE LEFT ARC GREATER-THAN BRACKET
+  "\\Lparengtr": '\u2995' # DOUBLE LEFT ARC GREATER-THAN BRACKET
+  "\\Rparenless{}": '\u2996' # DOUBLE RIGHT ARC LESS-THAN BRACKET
+  "{\\Rparenless}": '\u2996' # DOUBLE RIGHT ARC LESS-THAN BRACKET
+  "\\Rparenless": '\u2996' # DOUBLE RIGHT ARC LESS-THAN BRACKET
+  "\\lblkbrbrak{}": '\u2997' # LEFT BLACK TORTOISE SHELL BRACKET
+  "{\\lblkbrbrak}": '\u2997' # LEFT BLACK TORTOISE SHELL BRACKET
+  "\\lblkbrbrak": '\u2997' # LEFT BLACK TORTOISE SHELL BRACKET
+  "\\rblkbrbrak{}": '\u2998' # RIGHT BLACK TORTOISE SHELL BRACKET
+  "{\\rblkbrbrak}": '\u2998' # RIGHT BLACK TORTOISE SHELL BRACKET
+  "\\rblkbrbrak": '\u2998' # RIGHT BLACK TORTOISE SHELL BRACKET
+  "\\Elzddfnc{}": '\u2999' # DOTTED FENCE
+  "{\\Elzddfnc}": '\u2999' # DOTTED FENCE
+  "\\Elzddfnc": '\u2999' # DOTTED FENCE
+  "\\vzigzag{}": '\u299A' # VERTICAL ZIGZAG LINE
+  "{\\vzigzag}": '\u299A' # VERTICAL ZIGZAG LINE
+  "\\vzigzag": '\u299A' # VERTICAL ZIGZAG LINE
+  "\\measuredangleleft{}": '\u299B' # MEASURED ANGLE OPENING LEFT
+  "{\\measuredangleleft}": '\u299B' # MEASURED ANGLE OPENING LEFT
+  "\\measuredangleleft": '\u299B' # MEASURED ANGLE OPENING LEFT
+  "\\Angle{}": '\u299C' # RIGHT ANGLE VARIANT WITH SQUARE
+  "{\\Angle}": '\u299C' # RIGHT ANGLE VARIANT WITH SQUARE
+  "\\Angle": '\u299C' # RIGHT ANGLE VARIANT WITH SQUARE
+  "\\rightanglemdot{}": '\u299D' # MEASURED RIGHT ANGLE WITH DOT
+  "{\\rightanglemdot}": '\u299D' # MEASURED RIGHT ANGLE WITH DOT
+  "\\rightanglemdot": '\u299D' # MEASURED RIGHT ANGLE WITH DOT
+  "\\angles{}": '\u299E' # ANGLE WITH S INSIDE
+  "{\\angles}": '\u299E' # ANGLE WITH S INSIDE
+  "\\angles": '\u299E' # ANGLE WITH S INSIDE
+  "\\angdnr{}": '\u299F' # ACUTE ANGLE
+  "{\\angdnr}": '\u299F' # ACUTE ANGLE
+  "\\angdnr": '\u299F' # ACUTE ANGLE
+  "\\Elzlpargt{}": '\u29A0' # SPHERICAL ANGLE OPENING LEFT
+  "{\\Elzlpargt}": '\u29A0' # SPHERICAL ANGLE OPENING LEFT
+  "\\Elzlpargt": '\u29A0' # SPHERICAL ANGLE OPENING LEFT
+  "\\sphericalangleup{}": '\u29A1' # SPHERICAL ANGLE OPENING UP
+  "{\\sphericalangleup}": '\u29A1' # SPHERICAL ANGLE OPENING UP
+  "\\sphericalangleup": '\u29A1' # SPHERICAL ANGLE OPENING UP
+  "\\turnangle{}": '\u29A2' # TURNED ANGLE
+  "{\\turnangle}": '\u29A2' # TURNED ANGLE
+  "\\turnangle": '\u29A2' # TURNED ANGLE
+  "\\revangle{}": '\u29A3' # REVERSED ANGLE
+  "{\\revangle}": '\u29A3' # REVERSED ANGLE
+  "\\revangle": '\u29A3' # REVERSED ANGLE
+  "\\angleubar{}": '\u29A4' # ANGLE WITH UNDERBAR
+  "{\\angleubar}": '\u29A4' # ANGLE WITH UNDERBAR
+  "\\angleubar": '\u29A4' # ANGLE WITH UNDERBAR
+  "\\revangleubar{}": '\u29A5' # REVERSED ANGLE WITH UNDERBAR
+  "{\\revangleubar}": '\u29A5' # REVERSED ANGLE WITH UNDERBAR
+  "\\revangleubar": '\u29A5' # REVERSED ANGLE WITH UNDERBAR
+  "\\wideangledown{}": '\u29A6' # OBLIQUE ANGLE OPENING UP
+  "{\\wideangledown}": '\u29A6' # OBLIQUE ANGLE OPENING UP
+  "\\wideangledown": '\u29A6' # OBLIQUE ANGLE OPENING UP
+  "\\wideangleup{}": '\u29A7' # OBLIQUE ANGLE OPENING DOWN
+  "{\\wideangleup}": '\u29A7' # OBLIQUE ANGLE OPENING DOWN
+  "\\wideangleup": '\u29A7' # OBLIQUE ANGLE OPENING DOWN
+  "\\measanglerutone{}": '\u29A8' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING UP AND RIGHT
+  "{\\measanglerutone}": '\u29A8' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING UP AND RIGHT
+  "\\measanglerutone": '\u29A8' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING UP AND RIGHT
+  "\\measanglelutonw{}": '\u29A9' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING UP AND LEFT
+  "{\\measanglelutonw}": '\u29A9' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING UP AND LEFT
+  "\\measanglelutonw": '\u29A9' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING UP AND LEFT
+  "\\measanglerdtose{}": '\u29AA' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING DOWN AND RIGHT
+  "{\\measanglerdtose}": '\u29AA' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING DOWN AND RIGHT
+  "\\measanglerdtose": '\u29AA' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING DOWN AND RIGHT
+  "\\measangleldtosw{}": '\u29AB' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING DOWN AND LEFT
+  "{\\measangleldtosw}": '\u29AB' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING DOWN AND LEFT
+  "\\measangleldtosw": '\u29AB' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING DOWN AND LEFT
+  "\\measangleurtone{}": '\u29AC' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING RIGHT AND UP
+  "{\\measangleurtone}": '\u29AC' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING RIGHT AND UP
+  "\\measangleurtone": '\u29AC' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING RIGHT AND UP
+  "\\measangleultonw{}": '\u29AD' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING LEFT AND UP
+  "{\\measangleultonw}": '\u29AD' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING LEFT AND UP
+  "\\measangleultonw": '\u29AD' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING LEFT AND UP
+  "\\measangledrtose{}": '\u29AE' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING RIGHT AND DOWN
+  "{\\measangledrtose}": '\u29AE' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING RIGHT AND DOWN
+  "\\measangledrtose": '\u29AE' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING RIGHT AND DOWN
+  "\\measangledltosw{}": '\u29AF' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING LEFT AND DOWN
+  "{\\measangledltosw}": '\u29AF' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING LEFT AND DOWN
+  "\\measangledltosw": '\u29AF' # MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING LEFT AND DOWN
+  "\\revemptyset{}": '\u29B0' # REVERSED EMPTY SET
+  "{\\revemptyset}": '\u29B0' # REVERSED EMPTY SET
+  "\\revemptyset": '\u29B0' # REVERSED EMPTY SET
+  "\\emptysetobar{}": '\u29B1' # EMPTY SET WITH OVERBAR
+  "{\\emptysetobar}": '\u29B1' # EMPTY SET WITH OVERBAR
+  "\\emptysetobar": '\u29B1' # EMPTY SET WITH OVERBAR
+  "\\emptysetocirc{}": '\u29B2' # EMPTY SET WITH SMALL CIRCLE ABOVE
+  "{\\emptysetocirc}": '\u29B2' # EMPTY SET WITH SMALL CIRCLE ABOVE
+  "\\emptysetocirc": '\u29B2' # EMPTY SET WITH SMALL CIRCLE ABOVE
+  "\\emptysetoarr{}": '\u29B3' # EMPTY SET WITH RIGHT ARROW ABOVE
+  "{\\emptysetoarr}": '\u29B3' # EMPTY SET WITH RIGHT ARROW ABOVE
+  "\\emptysetoarr": '\u29B3' # EMPTY SET WITH RIGHT ARROW ABOVE
+  "\\emptysetoarrl{}": '\u29B4' # EMPTY SET WITH LEFT ARROW ABOVE
+  "{\\emptysetoarrl}": '\u29B4' # EMPTY SET WITH LEFT ARROW ABOVE
+  "\\emptysetoarrl": '\u29B4' # EMPTY SET WITH LEFT ARROW ABOVE
+  "\\ElsevierGlyph{E260}": '\u29B5' # CIRCLE WITH HORIZONTAL BAR
+  "\\ElsevierGlyph{E61B}": '\u29B6' # CIRCLED VERTICAL BAR
+  "\\circledparallel{}": '\u29B7' # CIRCLED PARALLEL
+  "{\\circledparallel}": '\u29B7' # CIRCLED PARALLEL
+  "\\circledparallel": '\u29B7' # CIRCLED PARALLEL
+  "\\circledbslash{}": '\u29B8' # CIRCLED REVERSE SOLIDUS
+  "{\\circledbslash}": '\u29B8' # CIRCLED REVERSE SOLIDUS
+  "\\circledbslash": '\u29B8' # CIRCLED REVERSE SOLIDUS
+  "\\operp{}": '\u29B9' # CIRCLED PERPENDICULAR
+  "{\\operp}": '\u29B9' # CIRCLED PERPENDICULAR
+  "\\operp": '\u29B9' # CIRCLED PERPENDICULAR
+  "\\obot{}": '\u29BA' # CIRCLE DIVIDED BY HORIZONTAL BAR AND TOP HALF DIVIDED BY VERTICAL BAR
+  "{\\obot}": '\u29BA' # CIRCLE DIVIDED BY HORIZONTAL BAR AND TOP HALF DIVIDED BY VERTICAL BAR
+  "\\obot": '\u29BA' # CIRCLE DIVIDED BY HORIZONTAL BAR AND TOP HALF DIVIDED BY VERTICAL BAR
+  "\\olcross{}": '\u29BB' # CIRCLE WITH SUPERIMPOSED X
+  "{\\olcross}": '\u29BB' # CIRCLE WITH SUPERIMPOSED X
+  "\\olcross": '\u29BB' # CIRCLE WITH SUPERIMPOSED X
+  "\\odotslashdot{}": '\u29BC' # CIRCLED ANTICLOCKWISE-ROTATED DIVISION SIGN
+  "{\\odotslashdot}": '\u29BC' # CIRCLED ANTICLOCKWISE-ROTATED DIVISION SIGN
+  "\\odotslashdot": '\u29BC' # CIRCLED ANTICLOCKWISE-ROTATED DIVISION SIGN
+  "\\uparrowoncircle{}": '\u29BD' # UP ARROW THROUGH CIRCLE
+  "{\\uparrowoncircle}": '\u29BD' # UP ARROW THROUGH CIRCLE
+  "\\uparrowoncircle": '\u29BD' # UP ARROW THROUGH CIRCLE
+  "\\circledwhitebullet{}": '\u29BE' # CIRCLED WHITE BULLET
+  "{\\circledwhitebullet}": '\u29BE' # CIRCLED WHITE BULLET
+  "\\circledwhitebullet": '\u29BE' # CIRCLED WHITE BULLET
+  "\\circledbullet{}": '\u29BF' # CIRCLED BULLET
+  "{\\circledbullet}": '\u29BF' # CIRCLED BULLET
+  "\\circledbullet": '\u29BF' # CIRCLED BULLET
+  "\\circledless{}": '\u29C0' # CIRCLED LESS-THAN
+  "{\\circledless}": '\u29C0' # CIRCLED LESS-THAN
+  "\\circledless": '\u29C0' # CIRCLED LESS-THAN
+  "\\circledgtr{}": '\u29C1' # CIRCLED GREATER-THAN
+  "{\\circledgtr}": '\u29C1' # CIRCLED GREATER-THAN
+  "\\circledgtr": '\u29C1' # CIRCLED GREATER-THAN
+  "\\cirscir{}": '\u29C2' # CIRCLE WITH SMALL CIRCLE TO THE RIGHT
+  "{\\cirscir}": '\u29C2' # CIRCLE WITH SMALL CIRCLE TO THE RIGHT
+  "\\cirscir": '\u29C2' # CIRCLE WITH SMALL CIRCLE TO THE RIGHT
+  "\\cirE{}": '\u29C3' # CIRCLE WITH TWO HORIZONTAL STROKES TO THE RIGHT
+  "{\\cirE}": '\u29C3' # CIRCLE WITH TWO HORIZONTAL STROKES TO THE RIGHT
+  "\\cirE": '\u29C3' # CIRCLE WITH TWO HORIZONTAL STROKES TO THE RIGHT
+  "\\boxslash{}": '\u29C4' # SQUARED RISING DIAGONAL SLASH
+  "{\\boxslash}": '\u29C4' # SQUARED RISING DIAGONAL SLASH
+  "\\boxslash": '\u29C4' # SQUARED RISING DIAGONAL SLASH
+  "\\boxbslash{}": '\u29C5' # SQUARED FALLING DIAGONAL SLASH
+  "{\\boxbslash}": '\u29C5' # SQUARED FALLING DIAGONAL SLASH
+  "\\boxbslash": '\u29C5' # SQUARED FALLING DIAGONAL SLASH
+  "\\boxast{}": '\u29C6' # SQUARED ASTERISK
+  "{\\boxast}": '\u29C6' # SQUARED ASTERISK
+  "\\boxast": '\u29C6' # SQUARED ASTERISK
+  "\\boxcircle{}": '\u29C7' # SQUARED SMALL CIRCLE
+  "{\\boxcircle}": '\u29C7' # SQUARED SMALL CIRCLE
+  "\\boxcircle": '\u29C7' # SQUARED SMALL CIRCLE
+  "\\boxbox{}": '\u29C8' # SQUARED SQUARE
+  "{\\boxbox}": '\u29C8' # SQUARED SQUARE
+  "\\boxbox": '\u29C8' # SQUARED SQUARE
+  "\\boxonbox{}": '\u29C9' # TWO JOINED SQUARES
+  "{\\boxonbox}": '\u29C9' # TWO JOINED SQUARES
+  "\\boxonbox": '\u29C9' # TWO JOINED SQUARES
+  "\\ElzLap{}": '\u29CA' # TRIANGLE WITH DOT ABOVE
+  "{\\ElzLap}": '\u29CA' # TRIANGLE WITH DOT ABOVE
+  "\\ElzLap": '\u29CA' # TRIANGLE WITH DOT ABOVE
+  "\\Elzdefas{}": '\u29CB' # TRIANGLE WITH UNDERBAR
+  "{\\Elzdefas}": '\u29CB' # TRIANGLE WITH UNDERBAR
+  "\\Elzdefas": '\u29CB' # TRIANGLE WITH UNDERBAR
+  "\\triangles{}": '\u29CC' # S IN TRIANGLE
+  "{\\triangles}": '\u29CC' # S IN TRIANGLE
+  "\\triangles": '\u29CC' # S IN TRIANGLE
+  "\\triangleserifs{}": '\u29CD' # TRIANGLE WITH SERIFS AT BOTTOM
+  "{\\triangleserifs}": '\u29CD' # TRIANGLE WITH SERIFS AT BOTTOM
+  "\\triangleserifs": '\u29CD' # TRIANGLE WITH SERIFS AT BOTTOM
+  "\\rtriltri{}": '\u29CE' # RIGHT TRIANGLE ABOVE LEFT TRIANGLE
+  "{\\rtriltri}": '\u29CE' # RIGHT TRIANGLE ABOVE LEFT TRIANGLE
+  "\\rtriltri": '\u29CE' # RIGHT TRIANGLE ABOVE LEFT TRIANGLE
+  "\\LeftTriangleBar{}": '\u29CF' # LEFT TRIANGLE BESIDE VERTICAL BAR
+  "{\\LeftTriangleBar}": '\u29CF' # LEFT TRIANGLE BESIDE VERTICAL BAR
+  "\\LeftTriangleBar": '\u29CF' # LEFT TRIANGLE BESIDE VERTICAL BAR
+  "\\RightTriangleBar{}": '\u29D0' # VERTICAL BAR BESIDE RIGHT TRIANGLE
+  "{\\RightTriangleBar}": '\u29D0' # VERTICAL BAR BESIDE RIGHT TRIANGLE
+  "\\RightTriangleBar": '\u29D0' # VERTICAL BAR BESIDE RIGHT TRIANGLE
+  "\\lfbowtie{}": '\u29D1' # left black bowtie
+  "{\\lfbowtie}": '\u29D1' # left black bowtie
+  "\\lfbowtie": '\u29D1' # left black bowtie
+  "\\rfbowtie{}": '\u29D2' # right black bowtie
+  "{\\rfbowtie}": '\u29D2' # right black bowtie
+  "\\rfbowtie": '\u29D2' # right black bowtie
+  "\\fbowtie{}": '\u29D3' # BLACK BOWTIE
+  "{\\fbowtie}": '\u29D3' # BLACK BOWTIE
+  "\\fbowtie": '\u29D3' # BLACK BOWTIE
+  "\\lftimes{}": '\u29D4' # left black times
+  "{\\lftimes}": '\u29D4' # left black times
+  "\\lftimes": '\u29D4' # left black times
+  "\\rftimes{}": '\u29D5' # right black times
+  "{\\rftimes}": '\u29D5' # right black times
+  "\\rftimes": '\u29D5' # right black times
+  "\\hourglass{}": '\u29D6' # WHITE HOURGLASS
+  "{\\hourglass}": '\u29D6' # WHITE HOURGLASS
+  "\\hourglass": '\u29D6' # WHITE HOURGLASS
+  "\\blackhourglass{}": '\u29D7' # BLACK HOURGLASS
+  "{\\blackhourglass}": '\u29D7' # BLACK HOURGLASS
+  "\\blackhourglass": '\u29D7' # BLACK HOURGLASS
+  "\\lvzigzag{}": '\u29D8' # LEFT WIGGLY FENCE
+  "{\\lvzigzag}": '\u29D8' # LEFT WIGGLY FENCE
+  "\\lvzigzag": '\u29D8' # LEFT WIGGLY FENCE
+  "\\rvzigzag{}": '\u29D9' # RIGHT WIGGLY FENCE
+  "{\\rvzigzag}": '\u29D9' # RIGHT WIGGLY FENCE
+  "\\rvzigzag": '\u29D9' # RIGHT WIGGLY FENCE
+  "\\Lvzigzag{}": '\u29DA' # LEFT DOUBLE WIGGLY FENCE
+  "{\\Lvzigzag}": '\u29DA' # LEFT DOUBLE WIGGLY FENCE
+  "\\Lvzigzag": '\u29DA' # LEFT DOUBLE WIGGLY FENCE
+  "\\Rvzigzag{}": '\u29DB' # RIGHT DOUBLE WIGGLY FENCE
+  "{\\Rvzigzag}": '\u29DB' # RIGHT DOUBLE WIGGLY FENCE
+  "\\Rvzigzag": '\u29DB' # RIGHT DOUBLE WIGGLY FENCE
+  "\\ElsevierGlyph{E372}": '\u29DC' # INCOMPLETE INFINITY
+  "\\tieinfty{}": '\u29DD' # TIE OVER INFINITY
+  "{\\tieinfty}": '\u29DD' # TIE OVER INFINITY
+  "\\tieinfty": '\u29DD' # TIE OVER INFINITY
+  "\\nvinfty{}": '\u29DE' # INFINITY NEGATED WITH VERTICAL BAR
+  "{\\nvinfty}": '\u29DE' # INFINITY NEGATED WITH VERTICAL BAR
+  "\\nvinfty": '\u29DE' # INFINITY NEGATED WITH VERTICAL BAR
+  "\\multimapboth{}": '\u29DF' # DOUBLE-ENDED MULTIMAP
+  "{\\multimapboth}": '\u29DF' # DOUBLE-ENDED MULTIMAP
+  "\\multimapboth": '\u29DF' # DOUBLE-ENDED MULTIMAP
+  "\\laplac{}": '\u29E0' # SQUARE WITH CONTOURED OUTLINE
+  "{\\laplac}": '\u29E0' # SQUARE WITH CONTOURED OUTLINE
+  "\\laplac": '\u29E0' # SQUARE WITH CONTOURED OUTLINE
+  "\\lrtriangleeq{}": '\u29E1' # INCREASES AS
+  "{\\lrtriangleeq}": '\u29E1' # INCREASES AS
+  "\\lrtriangleeq": '\u29E1' # INCREASES AS
+  "\\shuffle{}": '\u29E2' # SHUFFLE PRODUCT
+  "{\\shuffle}": '\u29E2' # SHUFFLE PRODUCT
+  "\\shuffle": '\u29E2' # SHUFFLE PRODUCT
+  "\\eparsl{}": '\u29E3' # EQUALS SIGN AND SLANTED PARALLEL
+  "{\\eparsl}": '\u29E3' # EQUALS SIGN AND SLANTED PARALLEL
+  "\\eparsl": '\u29E3' # EQUALS SIGN AND SLANTED PARALLEL
+  "\\smeparsl{}": '\u29E4' # EQUALS SIGN AND SLANTED PARALLEL WITH TILDE ABOVE
+  "{\\smeparsl}": '\u29E4' # EQUALS SIGN AND SLANTED PARALLEL WITH TILDE ABOVE
+  "\\smeparsl": '\u29E4' # EQUALS SIGN AND SLANTED PARALLEL WITH TILDE ABOVE
+  "\\eqvparsl{}": '\u29E5' # IDENTICAL TO AND SLANTED PARALLEL
+  "{\\eqvparsl}": '\u29E5' # IDENTICAL TO AND SLANTED PARALLEL
+  "\\eqvparsl": '\u29E5' # IDENTICAL TO AND SLANTED PARALLEL
+  "\\gleichstark{}": '\u29E6' # GLEICH STARK
+  "{\\gleichstark}": '\u29E6' # GLEICH STARK
+  "\\gleichstark": '\u29E6' # GLEICH STARK
+  "\\thermod{}": '\u29E7' # THERMODYNAMIC
+  "{\\thermod}": '\u29E7' # THERMODYNAMIC
+  "\\thermod": '\u29E7' # THERMODYNAMIC
+  "\\downtriangleleftblack{}": '\u29E8' # DOWN-POINTING TRIANGLE WITH LEFT HALF BLACK
+  "{\\downtriangleleftblack}": '\u29E8' # DOWN-POINTING TRIANGLE WITH LEFT HALF BLACK
+  "\\downtriangleleftblack": '\u29E8' # DOWN-POINTING TRIANGLE WITH LEFT HALF BLACK
+  "\\downtrianglerightblack{}": '\u29E9' # DOWN-POINTING TRIANGLE WITH RIGHT HALF BLACK
+  "{\\downtrianglerightblack}": '\u29E9' # DOWN-POINTING TRIANGLE WITH RIGHT HALF BLACK
+  "\\downtrianglerightblack": '\u29E9' # DOWN-POINTING TRIANGLE WITH RIGHT HALF BLACK
+  "\\blackdiamonddownarrow{}": '\u29EA' # BLACK DIAMOND WITH DOWN ARROW
+  "{\\blackdiamonddownarrow}": '\u29EA' # BLACK DIAMOND WITH DOWN ARROW
+  "\\blackdiamonddownarrow": '\u29EA' # BLACK DIAMOND WITH DOWN ARROW
+  "\\blacklozenge{}": '\u29EB' # BLACK LOZENGE
+  "{\\blacklozenge}": '\u29EB' # BLACK LOZENGE
+  "\\blacklozenge": '\u29EB' # BLACK LOZENGE
+  "\\circledownarrow{}": '\u29EC' # WHITE CIRCLE WITH DOWN ARROW
+  "{\\circledownarrow}": '\u29EC' # WHITE CIRCLE WITH DOWN ARROW
+  "\\circledownarrow": '\u29EC' # WHITE CIRCLE WITH DOWN ARROW
+  "\\blackcircledownarrow{}": '\u29ED' # BLACK CIRCLE WITH DOWN ARROW
+  "{\\blackcircledownarrow}": '\u29ED' # BLACK CIRCLE WITH DOWN ARROW
+  "\\blackcircledownarrow": '\u29ED' # BLACK CIRCLE WITH DOWN ARROW
+  "\\errbarsquare{}": '\u29EE' # ERROR-BARRED WHITE SQUARE
+  "{\\errbarsquare}": '\u29EE' # ERROR-BARRED WHITE SQUARE
+  "\\errbarsquare": '\u29EE' # ERROR-BARRED WHITE SQUARE
+  "\\errbarblacksquare{}": '\u29EF' # ERROR-BARRED BLACK SQUARE
+  "{\\errbarblacksquare}": '\u29EF' # ERROR-BARRED BLACK SQUARE
+  "\\errbarblacksquare": '\u29EF' # ERROR-BARRED BLACK SQUARE
+  "\\errbardiamond{}": '\u29F0' # ERROR-BARRED WHITE DIAMOND
+  "{\\errbardiamond}": '\u29F0' # ERROR-BARRED WHITE DIAMOND
+  "\\errbardiamond": '\u29F0' # ERROR-BARRED WHITE DIAMOND
+  "\\errbarblackdiamond{}": '\u29F1' # ERROR-BARRED BLACK DIAMOND
+  "{\\errbarblackdiamond}": '\u29F1' # ERROR-BARRED BLACK DIAMOND
+  "\\errbarblackdiamond": '\u29F1' # ERROR-BARRED BLACK DIAMOND
+  "\\errbarcircle{}": '\u29F2' # ERROR-BARRED WHITE CIRCLE
+  "{\\errbarcircle}": '\u29F2' # ERROR-BARRED WHITE CIRCLE
+  "\\errbarcircle": '\u29F2' # ERROR-BARRED WHITE CIRCLE
+  "\\errbarblackcircle{}": '\u29F3' # ERROR-BARRED BLACK CIRCLE
+  "{\\errbarblackcircle}": '\u29F3' # ERROR-BARRED BLACK CIRCLE
+  "\\errbarblackcircle": '\u29F3' # ERROR-BARRED BLACK CIRCLE
+  "\\RuleDelayed{}": '\u29F4' # RULE-DELAYED
+  "{\\RuleDelayed}": '\u29F4' # RULE-DELAYED
+  "\\RuleDelayed": '\u29F4' # RULE-DELAYED
+  "\\dsol{}": '\u29F6' # SOLIDUS WITH OVERBAR
+  "{\\dsol}": '\u29F6' # SOLIDUS WITH OVERBAR
+  "\\dsol": '\u29F6' # SOLIDUS WITH OVERBAR
+  "\\rsolbar{}": '\u29F7' # REVERSE SOLIDUS WITH HORIZONTAL STROKE
+  "{\\rsolbar}": '\u29F7' # REVERSE SOLIDUS WITH HORIZONTAL STROKE
+  "\\rsolbar": '\u29F7' # REVERSE SOLIDUS WITH HORIZONTAL STROKE
+  "\\xsol{}": '\u29F8' # BIG SOLIDUS
+  "{\\xsol}": '\u29F8' # BIG SOLIDUS
+  "\\xsol": '\u29F8' # BIG SOLIDUS
+  "\\zhide{}": '\u29F9' # = \hide (oz), BIG REVERSE SOLIDUS, z notation schema hiding
+  "{\\zhide}": '\u29F9' # = \hide (oz), BIG REVERSE SOLIDUS, z notation schema hiding
+  "\\zhide": '\u29F9' # = \hide (oz), BIG REVERSE SOLIDUS, z notation schema hiding
+  "\\doubleplus{}": '\u29FA' # DOUBLE PLUS
+  "{\\doubleplus}": '\u29FA' # DOUBLE PLUS
+  "\\doubleplus": '\u29FA' # DOUBLE PLUS
+  "\\tripleplus{}": '\u29FB' # TRIPLE PLUS
+  "{\\tripleplus}": '\u29FB' # TRIPLE PLUS
+  "\\tripleplus": '\u29FB' # TRIPLE PLUS
+  "\\lcurvyangle{}": '\u29FC' # left pointing curved angle bracket
+  "{\\lcurvyangle}": '\u29FC' # left pointing curved angle bracket
+  "\\lcurvyangle": '\u29FC' # left pointing curved angle bracket
+  "\\rcurvyangle{}": '\u29FD' # right pointing curved angle bracket
+  "{\\rcurvyangle}": '\u29FD' # right pointing curved angle bracket
+  "\\rcurvyangle": '\u29FD' # right pointing curved angle bracket
+  "\\tplus{}": '\u29FE' # TINY
+  "{\\tplus}": '\u29FE' # TINY
+  "\\tplus": '\u29FE' # TINY
+  "\\tminus{}": '\u29FF' # MINY
+  "{\\tminus}": '\u29FF' # MINY
+  "\\tminus": '\u29FF' # MINY
+  "\\bigodot{}": '\u2A00' # N-ARY CIRCLED DOT OPERATOR
+  "{\\bigodot}": '\u2A00' # N-ARY CIRCLED DOT OPERATOR
+  "\\bigodot": '\u2A00' # N-ARY CIRCLED DOT OPERATOR
+  "\\bigoplus{}": '\u2A01' # N-ARY CIRCLED PLUS OPERATOR
+  "{\\bigoplus}": '\u2A01' # N-ARY CIRCLED PLUS OPERATOR
+  "\\bigoplus": '\u2A01' # N-ARY CIRCLED PLUS OPERATOR
+  "\\bigotimes{}": '\u2A02' # N-ARY CIRCLED TIMES OPERATOR
+  "{\\bigotimes}": '\u2A02' # N-ARY CIRCLED TIMES OPERATOR
+  "\\bigotimes": '\u2A02' # N-ARY CIRCLED TIMES OPERATOR
+  "\\bigcupdot{}": '\u2A03' # N-ARY UNION OPERATOR WITH DOT
+  "{\\bigcupdot}": '\u2A03' # N-ARY UNION OPERATOR WITH DOT
+  "\\bigcupdot": '\u2A03' # N-ARY UNION OPERATOR WITH DOT
+  "\\Elxuplus{}": '\u2A04' # N-ARY UNION OPERATOR WITH PLUS
+  "{\\Elxuplus}": '\u2A04' # N-ARY UNION OPERATOR WITH PLUS
+  "\\Elxuplus": '\u2A04' # N-ARY UNION OPERATOR WITH PLUS
+  "\\ElzThr{}": '\u2A05' # N-ARY SQUARE INTERSECTION OPERATOR
+  "{\\ElzThr}": '\u2A05' # N-ARY SQUARE INTERSECTION OPERATOR
+  "\\ElzThr": '\u2A05' # N-ARY SQUARE INTERSECTION OPERATOR
+  "\\Elxsqcup{}": '\u2A06' # N-ARY SQUARE UNION OPERATOR
+  "{\\Elxsqcup}": '\u2A06' # N-ARY SQUARE UNION OPERATOR
+  "\\Elxsqcup": '\u2A06' # N-ARY SQUARE UNION OPERATOR
+  "\\ElzInf{}": '\u2A07' # TWO LOGICAL AND OPERATOR
+  "{\\ElzInf}": '\u2A07' # TWO LOGICAL AND OPERATOR
+  "\\ElzInf": '\u2A07' # TWO LOGICAL AND OPERATOR
+  "\\ElzSup{}": '\u2A08' # TWO LOGICAL OR OPERATOR
+  "{\\ElzSup}": '\u2A08' # TWO LOGICAL OR OPERATOR
+  "\\ElzSup": '\u2A08' # TWO LOGICAL OR OPERATOR
+  "\\varprod{}": '\u2A09' # N-ARY TIMES OPERATOR
+  "{\\varprod}": '\u2A09' # N-ARY TIMES OPERATOR
+  "\\varprod": '\u2A09' # N-ARY TIMES OPERATOR
+  "\\modtwosum{}": '\u2A0A' # MODULO TWO SUM
+  "{\\modtwosum}": '\u2A0A' # MODULO TWO SUM
+  "\\modtwosum": '\u2A0A' # MODULO TWO SUM
+  "\\sumint{}": '\u2A0B' # SUMMATION WITH INTEGRAL
+  "{\\sumint}": '\u2A0B' # SUMMATION WITH INTEGRAL
+  "\\sumint": '\u2A0B' # SUMMATION WITH INTEGRAL
+  "\\iiiint{}": '\u2A0C' # QUADRUPLE INTEGRAL OPERATOR
+  "{\\iiiint}": '\u2A0C' # QUADRUPLE INTEGRAL OPERATOR
+  "\\iiiint": '\u2A0C' # QUADRUPLE INTEGRAL OPERATOR
+  "\\ElzCint{}": '\u2A0D' # FINITE PART INTEGRAL
+  "{\\ElzCint}": '\u2A0D' # FINITE PART INTEGRAL
+  "\\ElzCint": '\u2A0D' # FINITE PART INTEGRAL
+  "\\intBar{}": '\u2A0E' # INTEGRAL WITH DOUBLE STROKE
+  "{\\intBar}": '\u2A0E' # INTEGRAL WITH DOUBLE STROKE
+  "\\intBar": '\u2A0E' # INTEGRAL WITH DOUBLE STROKE
+  "\\clockoint{}": '\u2A0F' # INTEGRAL AVERAGE WITH SLASH
+  "{\\clockoint}": '\u2A0F' # INTEGRAL AVERAGE WITH SLASH
+  "\\clockoint": '\u2A0F' # INTEGRAL AVERAGE WITH SLASH
+  "\\ElsevierGlyph{E395}": '\u2A10' # CIRCULATION FUNCTION
+  "\\awint{}": '\u2A11' # ANTICLOCKWISE INTEGRATION
+  "{\\awint}": '\u2A11' # ANTICLOCKWISE INTEGRATION
+  "\\awint": '\u2A11' # ANTICLOCKWISE INTEGRATION
+  "\\rppolint{}": '\u2A12' # LINE INTEGRATION WITH RECTANGULAR PATH AROUND POLE
+  "{\\rppolint}": '\u2A12' # LINE INTEGRATION WITH RECTANGULAR PATH AROUND POLE
+  "\\rppolint": '\u2A12' # LINE INTEGRATION WITH RECTANGULAR PATH AROUND POLE
+  "\\scpolint{}": '\u2A13' # LINE INTEGRATION WITH SEMICIRCULAR PATH AROUND POLE
+  "{\\scpolint}": '\u2A13' # LINE INTEGRATION WITH SEMICIRCULAR PATH AROUND POLE
+  "\\scpolint": '\u2A13' # LINE INTEGRATION WITH SEMICIRCULAR PATH AROUND POLE
+  "\\npolint{}": '\u2A14' # LINE INTEGRATION NOT INCLUDING THE POLE
+  "{\\npolint}": '\u2A14' # LINE INTEGRATION NOT INCLUDING THE POLE
+  "\\npolint": '\u2A14' # LINE INTEGRATION NOT INCLUDING THE POLE
+  "\\pointint{}": '\u2A15' # INTEGRAL AROUND A POINT OPERATOR
+  "{\\pointint}": '\u2A15' # INTEGRAL AROUND A POINT OPERATOR
+  "\\pointint": '\u2A15' # INTEGRAL AROUND A POINT OPERATOR
+  "\\sqrint{}": '\u2A16' # QUATERNION INTEGRAL OPERATOR
+  "{\\sqrint}": '\u2A16' # QUATERNION INTEGRAL OPERATOR
+  "\\sqrint": '\u2A16' # QUATERNION INTEGRAL OPERATOR
+  "\\intlarhk{}": '\u2A17' # INTEGRAL WITH LEFTWARDS ARROW WITH HOOK
+  "{\\intlarhk}": '\u2A17' # INTEGRAL WITH LEFTWARDS ARROW WITH HOOK
+  "\\intlarhk": '\u2A17' # INTEGRAL WITH LEFTWARDS ARROW WITH HOOK
+  "\\intx{}": '\u2A18' # INTEGRAL WITH TIMES SIGN
+  "{\\intx}": '\u2A18' # INTEGRAL WITH TIMES SIGN
+  "\\intx": '\u2A18' # INTEGRAL WITH TIMES SIGN
+  "\\intcap{}": '\u2A19' # INTEGRAL WITH INTERSECTION
+  "{\\intcap}": '\u2A19' # INTEGRAL WITH INTERSECTION
+  "\\intcap": '\u2A19' # INTEGRAL WITH INTERSECTION
+  "\\intcup{}": '\u2A1A' # INTEGRAL WITH UNION
+  "{\\intcup}": '\u2A1A' # INTEGRAL WITH UNION
+  "\\intcup": '\u2A1A' # INTEGRAL WITH UNION
+  "\\upint{}": '\u2A1B' # INTEGRAL WITH OVERBAR
+  "{\\upint}": '\u2A1B' # INTEGRAL WITH OVERBAR
+  "\\upint": '\u2A1B' # INTEGRAL WITH OVERBAR
+  "\\lowint{}": '\u2A1C' # INTEGRAL WITH UNDERBAR
+  "{\\lowint}": '\u2A1C' # INTEGRAL WITH UNDERBAR
+  "\\lowint": '\u2A1C' # INTEGRAL WITH UNDERBAR
+  "\\Join{}": '\u2A1D' # JOIN
+  "{\\Join}": '\u2A1D' # JOIN
+  "\\Join": '\u2A1D' # JOIN
+  "\\bigtriangleleft{}": '\u2A1E' # LARGE LEFT TRIANGLE OPERATOR
+  "{\\bigtriangleleft}": '\u2A1E' # LARGE LEFT TRIANGLE OPERATOR
+  "\\bigtriangleleft": '\u2A1E' # LARGE LEFT TRIANGLE OPERATOR
+  "\\zcmp{}": '\u2A1F' # = \semi (oz), = \fatsemi (stmaryrd), Z NOTATION SCHEMA COMPOSITION
+  "{\\zcmp}": '\u2A1F' # = \semi (oz), = \fatsemi (stmaryrd), Z NOTATION SCHEMA COMPOSITION
+  "\\zcmp": '\u2A1F' # = \semi (oz), = \fatsemi (stmaryrd), Z NOTATION SCHEMA COMPOSITION
+  "\\zpipe{}": '\u2A20' # Z NOTATION SCHEMA PIPING
+  "{\\zpipe}": '\u2A20' # Z NOTATION SCHEMA PIPING
+  "\\zpipe": '\u2A20' # Z NOTATION SCHEMA PIPING
+  "\\zproject{}": '\u2A21' # = \project (oz), Z NOTATION SCHEMA PROJECTION
+  "{\\zproject}": '\u2A21' # = \project (oz), Z NOTATION SCHEMA PROJECTION
+  "\\zproject": '\u2A21' # = \project (oz), Z NOTATION SCHEMA PROJECTION
+  "\\ringplus{}": '\u2A22' # PLUS SIGN WITH SMALL CIRCLE ABOVE
+  "{\\ringplus}": '\u2A22' # PLUS SIGN WITH SMALL CIRCLE ABOVE
+  "\\ringplus": '\u2A22' # PLUS SIGN WITH SMALL CIRCLE ABOVE
+  "\\plushat{}": '\u2A23' # PLUS SIGN WITH CIRCUMFLEX ACCENT ABOVE
+  "{\\plushat}": '\u2A23' # PLUS SIGN WITH CIRCUMFLEX ACCENT ABOVE
+  "\\plushat": '\u2A23' # PLUS SIGN WITH CIRCUMFLEX ACCENT ABOVE
+  "\\simplus{}": '\u2A24' # PLUS SIGN WITH TILDE ABOVE
+  "{\\simplus}": '\u2A24' # PLUS SIGN WITH TILDE ABOVE
+  "\\simplus": '\u2A24' # PLUS SIGN WITH TILDE ABOVE
+  "\\ElsevierGlyph{E25A}": '\u2A25' # PLUS SIGN WITH DOT BELOW
+  "\\plussim{}": '\u2A26' # PLUS SIGN WITH TILDE BELOW
+  "{\\plussim}": '\u2A26' # PLUS SIGN WITH TILDE BELOW
+  "\\plussim": '\u2A26' # PLUS SIGN WITH TILDE BELOW
+  "\\plussubtwo{}": '\u2A27' # PLUS SIGN WITH SUBSCRIPT TWO
+  "{\\plussubtwo}": '\u2A27' # PLUS SIGN WITH SUBSCRIPT TWO
+  "\\plussubtwo": '\u2A27' # PLUS SIGN WITH SUBSCRIPT TWO
+  "\\plustrif{}": '\u2A28' # PLUS SIGN WITH BLACK TRIANGLE
+  "{\\plustrif}": '\u2A28' # PLUS SIGN WITH BLACK TRIANGLE
+  "\\plustrif": '\u2A28' # PLUS SIGN WITH BLACK TRIANGLE
+  "\\commaminus{}": '\u2A29' # MINUS SIGN WITH COMMA ABOVE
+  "{\\commaminus}": '\u2A29' # MINUS SIGN WITH COMMA ABOVE
+  "\\commaminus": '\u2A29' # MINUS SIGN WITH COMMA ABOVE
+  "\\ElsevierGlyph{E25B}": '\u2A2A' # MINUS SIGN WITH DOT BELOW
+  "\\minusfdots{}": '\u2A2B' # MINUS SIGN WITH FALLING DOTS
+  "{\\minusfdots}": '\u2A2B' # MINUS SIGN WITH FALLING DOTS
+  "\\minusfdots": '\u2A2B' # MINUS SIGN WITH FALLING DOTS
+  "\\minusrdots{}": '\u2A2C' # MINUS SIGN WITH RISING DOTS
+  "{\\minusrdots}": '\u2A2C' # MINUS SIGN WITH RISING DOTS
+  "\\minusrdots": '\u2A2C' # MINUS SIGN WITH RISING DOTS
+  "\\ElsevierGlyph{E25C}": '\u2A2D' # PLUS SIGN IN LEFT HALF CIRCLE
+  "\\ElsevierGlyph{E25D}": '\u2A2E' # PLUS SIGN IN RIGHT HALF CIRCLE
+  "\\ElzTimes{}": '\u2A2F' # VECTOR OR CROSS PRODUCT
+  "{\\ElzTimes}": '\u2A2F' # VECTOR OR CROSS PRODUCT
+  "\\ElzTimes": '\u2A2F' # VECTOR OR CROSS PRODUCT
+  "\\dottimes{}": '\u2A30' # MULTIPLICATION SIGN WITH DOT ABOVE
+  "{\\dottimes}": '\u2A30' # MULTIPLICATION SIGN WITH DOT ABOVE
+  "\\dottimes": '\u2A30' # MULTIPLICATION SIGN WITH DOT ABOVE
+  "\\timesbar{}": '\u2A31' # MULTIPLICATION SIGN WITH UNDERBAR
+  "{\\timesbar}": '\u2A31' # MULTIPLICATION SIGN WITH UNDERBAR
+  "\\timesbar": '\u2A31' # MULTIPLICATION SIGN WITH UNDERBAR
+  "\\btimes{}": '\u2A32' # SEMIDIRECT PRODUCT WITH BOTTOM CLOSED
+  "{\\btimes}": '\u2A32' # SEMIDIRECT PRODUCT WITH BOTTOM CLOSED
+  "\\btimes": '\u2A32' # SEMIDIRECT PRODUCT WITH BOTTOM CLOSED
+  "\\smashtimes{}": '\u2A33' # SMASH PRODUCT
+  "{\\smashtimes}": '\u2A33' # SMASH PRODUCT
+  "\\smashtimes": '\u2A33' # SMASH PRODUCT
+  "\\ElsevierGlyph{E25E}": '\u2A34' # MULTIPLICATION SIGN IN LEFT HALF CIRCLE
+  "\\otimeshat{}": '\u2A36' # CIRCLED MULTIPLICATION SIGN WITH CIRCUMFLEX ACCENT
+  "{\\otimeshat}": '\u2A36' # CIRCLED MULTIPLICATION SIGN WITH CIRCUMFLEX ACCENT
+  "\\otimeshat": '\u2A36' # CIRCLED MULTIPLICATION SIGN WITH CIRCUMFLEX ACCENT
+  "\\Otimes{}": '\u2A37' # MULTIPLICATION SIGN IN DOUBLE CIRCLE
+  "{\\Otimes}": '\u2A37' # MULTIPLICATION SIGN IN DOUBLE CIRCLE
+  "\\Otimes": '\u2A37' # MULTIPLICATION SIGN IN DOUBLE CIRCLE
+  "\\odiv{}": '\u2A38' # CIRCLED DIVISION SIGN
+  "{\\odiv}": '\u2A38' # CIRCLED DIVISION SIGN
+  "\\odiv": '\u2A38' # CIRCLED DIVISION SIGN
+  "\\triangleplus{}": '\u2A39' # PLUS SIGN IN TRIANGLE
+  "{\\triangleplus}": '\u2A39' # PLUS SIGN IN TRIANGLE
+  "\\triangleplus": '\u2A39' # PLUS SIGN IN TRIANGLE
+  "\\triangleminus{}": '\u2A3A' # MINUS SIGN IN TRIANGLE
+  "{\\triangleminus}": '\u2A3A' # MINUS SIGN IN TRIANGLE
+  "\\triangleminus": '\u2A3A' # MINUS SIGN IN TRIANGLE
+  "\\triangletimes{}": '\u2A3B' # MULTIPLICATION SIGN IN TRIANGLE
+  "{\\triangletimes}": '\u2A3B' # MULTIPLICATION SIGN IN TRIANGLE
+  "\\triangletimes": '\u2A3B' # MULTIPLICATION SIGN IN TRIANGLE
+  "\\ElsevierGlyph{E259}": '\u2A3C' # INTERIOR PRODUCT
+  "\\intprodr{}": '\u2A3D' # RIGHTHAND INTERIOR PRODUCT
+  "{\\intprodr}": '\u2A3D' # RIGHTHAND INTERIOR PRODUCT
+  "\\intprodr": '\u2A3D' # RIGHTHAND INTERIOR PRODUCT
+  "\\fcmp{}": '\u2A3E' # = \comp (oz), Z NOTATION RELATIONAL COMPOSITION
+  "{\\fcmp}": '\u2A3E' # = \comp (oz), Z NOTATION RELATIONAL COMPOSITION
+  "\\fcmp": '\u2A3E' # = \comp (oz), Z NOTATION RELATIONAL COMPOSITION
+  "\\amalg{}": '\u2A3F' # AMALGAMATION OR COPRODUCT
+  "{\\amalg}": '\u2A3F' # AMALGAMATION OR COPRODUCT
+  "\\amalg": '\u2A3F' # AMALGAMATION OR COPRODUCT
+  "\\capdot{}": '\u2A40' # INTERSECTION WITH DOT
+  "{\\capdot}": '\u2A40' # INTERSECTION WITH DOT
+  "\\capdot": '\u2A40' # INTERSECTION WITH DOT
+  "\\uminus{}": '\u2A41' # UNION WITH MINUS SIGN, z notation bag subtraction
+  "{\\uminus}": '\u2A41' # UNION WITH MINUS SIGN, z notation bag subtraction
+  "\\uminus": '\u2A41' # UNION WITH MINUS SIGN, z notation bag subtraction
+  "\\barcup{}": '\u2A42' # UNION WITH OVERBAR
+  "{\\barcup}": '\u2A42' # UNION WITH OVERBAR
+  "\\barcup": '\u2A42' # UNION WITH OVERBAR
+  "\\barcap{}": '\u2A43' # INTERSECTION WITH OVERBAR
+  "{\\barcap}": '\u2A43' # INTERSECTION WITH OVERBAR
+  "\\barcap": '\u2A43' # INTERSECTION WITH OVERBAR
+  "\\capwedge{}": '\u2A44' # INTERSECTION WITH LOGICAL AND
+  "{\\capwedge}": '\u2A44' # INTERSECTION WITH LOGICAL AND
+  "\\capwedge": '\u2A44' # INTERSECTION WITH LOGICAL AND
+  "\\cupvee{}": '\u2A45' # UNION WITH LOGICAL OR
+  "{\\cupvee}": '\u2A45' # UNION WITH LOGICAL OR
+  "\\cupvee": '\u2A45' # UNION WITH LOGICAL OR
+  "\\cupovercap{}": '\u2A46' # UNION ABOVE INTERSECTION
+  "{\\cupovercap}": '\u2A46' # UNION ABOVE INTERSECTION
+  "\\cupovercap": '\u2A46' # UNION ABOVE INTERSECTION
+  "\\capovercup{}": '\u2A47' # INTERSECTION ABOVE UNION
+  "{\\capovercup}": '\u2A47' # INTERSECTION ABOVE UNION
+  "\\capovercup": '\u2A47' # INTERSECTION ABOVE UNION
+  "\\cupbarcap{}": '\u2A48' # UNION ABOVE BAR ABOVE INTERSECTION
+  "{\\cupbarcap}": '\u2A48' # UNION ABOVE BAR ABOVE INTERSECTION
+  "\\cupbarcap": '\u2A48' # UNION ABOVE BAR ABOVE INTERSECTION
+  "\\capbarcup{}": '\u2A49' # INTERSECTION ABOVE BAR ABOVE UNION
+  "{\\capbarcup}": '\u2A49' # INTERSECTION ABOVE BAR ABOVE UNION
+  "\\capbarcup": '\u2A49' # INTERSECTION ABOVE BAR ABOVE UNION
+  "\\twocups{}": '\u2A4A' # UNION BESIDE AND JOINED WITH UNION
+  "{\\twocups}": '\u2A4A' # UNION BESIDE AND JOINED WITH UNION
+  "\\twocups": '\u2A4A' # UNION BESIDE AND JOINED WITH UNION
+  "\\twocaps{}": '\u2A4B' # INTERSECTION BESIDE AND JOINED WITH INTERSECTION
+  "{\\twocaps}": '\u2A4B' # INTERSECTION BESIDE AND JOINED WITH INTERSECTION
+  "\\twocaps": '\u2A4B' # INTERSECTION BESIDE AND JOINED WITH INTERSECTION
+  "\\closedvarcup{}": '\u2A4C' # CLOSED UNION WITH SERIFS
+  "{\\closedvarcup}": '\u2A4C' # CLOSED UNION WITH SERIFS
+  "\\closedvarcup": '\u2A4C' # CLOSED UNION WITH SERIFS
+  "\\closedvarcap{}": '\u2A4D' # CLOSED INTERSECTION WITH SERIFS
+  "{\\closedvarcap}": '\u2A4D' # CLOSED INTERSECTION WITH SERIFS
+  "\\closedvarcap": '\u2A4D' # CLOSED INTERSECTION WITH SERIFS
+  "\\Sqcap{}": '\u2A4E' # DOUBLE SQUARE INTERSECTION
+  "{\\Sqcap}": '\u2A4E' # DOUBLE SQUARE INTERSECTION
+  "\\Sqcap": '\u2A4E' # DOUBLE SQUARE INTERSECTION
+  "\\Sqcup{}": '\u2A4F' # DOUBLE SQUARE UNION
+  "{\\Sqcup}": '\u2A4F' # DOUBLE SQUARE UNION
+  "\\Sqcup": '\u2A4F' # DOUBLE SQUARE UNION
+  "\\closedvarcupsmashprod{}": '\u2A50' # CLOSED UNION WITH SERIFS AND SMASH PRODUCT
+  "{\\closedvarcupsmashprod}": '\u2A50' # CLOSED UNION WITH SERIFS AND SMASH PRODUCT
+  "\\closedvarcupsmashprod": '\u2A50' # CLOSED UNION WITH SERIFS AND SMASH PRODUCT
+  "\\wedgeodot{}": '\u2A51' # LOGICAL AND WITH DOT ABOVE
+  "{\\wedgeodot}": '\u2A51' # LOGICAL AND WITH DOT ABOVE
+  "\\wedgeodot": '\u2A51' # LOGICAL AND WITH DOT ABOVE
+  "\\veeodot{}": '\u2A52' # LOGICAL OR WITH DOT ABOVE
+  "{\\veeodot}": '\u2A52' # LOGICAL OR WITH DOT ABOVE
+  "\\veeodot": '\u2A52' # LOGICAL OR WITH DOT ABOVE
+  "\\ElzAnd{}": '\u2A53' # DOUBLE LOGICAL AND
+  "{\\ElzAnd}": '\u2A53' # DOUBLE LOGICAL AND
+  "\\ElzAnd": '\u2A53' # DOUBLE LOGICAL AND
+  "\\ElzOr{}": '\u2A54' # DOUBLE LOGICAL OR
+  "{\\ElzOr}": '\u2A54' # DOUBLE LOGICAL OR
+  "\\ElzOr": '\u2A54' # DOUBLE LOGICAL OR
+  "\\ElsevierGlyph{E36E}": '\u2A55' # TWO INTERSECTING LOGICAL AND
+  "\\ElOr{}": '\u2A56' # TWO INTERSECTING LOGICAL OR
+  "{\\ElOr}": '\u2A56' # TWO INTERSECTING LOGICAL OR
+  "\\ElOr": '\u2A56' # TWO INTERSECTING LOGICAL OR
+  "\\bigslopedvee{}": '\u2A57' # SLOPING LARGE OR
+  "{\\bigslopedvee}": '\u2A57' # SLOPING LARGE OR
+  "\\bigslopedvee": '\u2A57' # SLOPING LARGE OR
+  "\\bigslopedwedge{}": '\u2A58' # SLOPING LARGE AND
+  "{\\bigslopedwedge}": '\u2A58' # SLOPING LARGE AND
+  "\\bigslopedwedge": '\u2A58' # SLOPING LARGE AND
+  "\\veeonwedge{}": '\u2A59' # LOGICAL OR OVERLAPPING LOGICAL AND
+  "{\\veeonwedge}": '\u2A59' # LOGICAL OR OVERLAPPING LOGICAL AND
+  "\\veeonwedge": '\u2A59' # LOGICAL OR OVERLAPPING LOGICAL AND
+  "\\wedgemidvert{}": '\u2A5A' # LOGICAL AND WITH MIDDLE STEM
+  "{\\wedgemidvert}": '\u2A5A' # LOGICAL AND WITH MIDDLE STEM
+  "\\wedgemidvert": '\u2A5A' # LOGICAL AND WITH MIDDLE STEM
+  "\\veemidvert{}": '\u2A5B' # LOGICAL OR WITH MIDDLE STEM
+  "{\\veemidvert}": '\u2A5B' # LOGICAL OR WITH MIDDLE STEM
+  "\\veemidvert": '\u2A5B' # LOGICAL OR WITH MIDDLE STEM
+  "\\midbarwedge{}": '\u2A5C' # ogical and with horizontal dash
+  "{\\midbarwedge}": '\u2A5C' # ogical and with horizontal dash
+  "\\midbarwedge": '\u2A5C' # ogical and with horizontal dash
+  "\\midbarvee{}": '\u2A5D' # LOGICAL OR WITH HORIZONTAL DASH
+  "{\\midbarvee}": '\u2A5D' # LOGICAL OR WITH HORIZONTAL DASH
+  "\\midbarvee": '\u2A5D' # LOGICAL OR WITH HORIZONTAL DASH
+  "\\Elzminhat{}": '\u2A5F' # LOGICAL AND WITH UNDERBAR
+  "{\\Elzminhat}": '\u2A5F' # LOGICAL AND WITH UNDERBAR
+  "\\Elzminhat": '\u2A5F' # LOGICAL AND WITH UNDERBAR
+  "\\wedgedoublebar{}": '\u2A60' # LOGICAL AND WITH DOUBLE UNDERBAR
+  "{\\wedgedoublebar}": '\u2A60' # LOGICAL AND WITH DOUBLE UNDERBAR
+  "\\wedgedoublebar": '\u2A60' # LOGICAL AND WITH DOUBLE UNDERBAR
+  "\\varveebar{}": '\u2A61' # SMALL VEE WITH UNDERBAR
+  "{\\varveebar}": '\u2A61' # SMALL VEE WITH UNDERBAR
+  "\\varveebar": '\u2A61' # SMALL VEE WITH UNDERBAR
+  "\\doublebarvee{}": '\u2A62' # LOGICAL OR WITH DOUBLE OVERBAR
+  "{\\doublebarvee}": '\u2A62' # LOGICAL OR WITH DOUBLE OVERBAR
+  "\\doublebarvee": '\u2A62' # LOGICAL OR WITH DOUBLE OVERBAR
+  "\\dsub{}": '\u2A64' # = \ndres (oz), Z NOTATION DOMAIN ANTIRESTRICTION
+  "{\\dsub}": '\u2A64' # = \ndres (oz), Z NOTATION DOMAIN ANTIRESTRICTION
+  "\\dsub": '\u2A64' # = \ndres (oz), Z NOTATION DOMAIN ANTIRESTRICTION
+  "\\rsub{}": '\u2A65' # = \nrres (oz), Z NOTATION RANGE ANTIRESTRICTION
+  "{\\rsub}": '\u2A65' # = \nrres (oz), Z NOTATION RANGE ANTIRESTRICTION
+  "\\rsub": '\u2A65' # = \nrres (oz), Z NOTATION RANGE ANTIRESTRICTION
+  "\\eqdot{}": '\u2A66' # EQUALS SIGN WITH DOT BELOW
+  "{\\eqdot}": '\u2A66' # EQUALS SIGN WITH DOT BELOW
+  "\\eqdot": '\u2A66' # EQUALS SIGN WITH DOT BELOW
+  "\\dotequiv{}": '\u2A67' # IDENTICAL WITH DOT ABOVE
+  "{\\dotequiv}": '\u2A67' # IDENTICAL WITH DOT ABOVE
+  "\\dotequiv": '\u2A67' # IDENTICAL WITH DOT ABOVE
+  "\\equivVert{}": '\u2A68' # TRIPLE HORIZONTAL BAR WITH DOUBLE VERTICAL STROKE
+  "{\\equivVert}": '\u2A68' # TRIPLE HORIZONTAL BAR WITH DOUBLE VERTICAL STROKE
+  "\\equivVert": '\u2A68' # TRIPLE HORIZONTAL BAR WITH DOUBLE VERTICAL STROKE
+  "\\equivVvert{}": '\u2A69' # TRIPLE HORIZONTAL BAR WITH TRIPLE VERTICAL STROKE
+  "{\\equivVvert}": '\u2A69' # TRIPLE HORIZONTAL BAR WITH TRIPLE VERTICAL STROKE
+  "\\equivVvert": '\u2A69' # TRIPLE HORIZONTAL BAR WITH TRIPLE VERTICAL STROKE
+  "\\dotsim{}": '\u2A6A' # TILDE OPERATOR WITH DOT ABOVE
+  "{\\dotsim}": '\u2A6A' # TILDE OPERATOR WITH DOT ABOVE
+  "\\dotsim": '\u2A6A' # TILDE OPERATOR WITH DOT ABOVE
+  "\\simrdots{}": '\u2A6B' # TILDE OPERATOR WITH RISING DOTS
+  "{\\simrdots}": '\u2A6B' # TILDE OPERATOR WITH RISING DOTS
+  "\\simrdots": '\u2A6B' # TILDE OPERATOR WITH RISING DOTS
+  "\\simminussim{}": '\u2A6C' # SIMILAR MINUS SIMILAR
+  "{\\simminussim}": '\u2A6C' # SIMILAR MINUS SIMILAR
+  "\\simminussim": '\u2A6C' # SIMILAR MINUS SIMILAR
+  "\\congdot{}": '\u2A6D' # CONGRUENT WITH DOT ABOVE
+  "{\\congdot}": '\u2A6D' # CONGRUENT WITH DOT ABOVE
+  "\\congdot": '\u2A6D' # CONGRUENT WITH DOT ABOVE
+  "\\stackrel{*}{=}": '\u2A6E' # EQUALS WITH ASTERISK
+  "\\hatapprox{}": '\u2A6F' # ALMOST EQUAL TO WITH CIRCUMFLEX ACCENT
+  "{\\hatapprox}": '\u2A6F' # ALMOST EQUAL TO WITH CIRCUMFLEX ACCENT
+  "\\hatapprox": '\u2A6F' # ALMOST EQUAL TO WITH CIRCUMFLEX ACCENT
+  "\\approxeqq{}": '\u2A70' # APPROXIMATELY EQUAL OR EQUAL TO
+  "{\\approxeqq}": '\u2A70' # APPROXIMATELY EQUAL OR EQUAL TO
+  "\\approxeqq": '\u2A70' # APPROXIMATELY EQUAL OR EQUAL TO
+  "\\eqqplus{}": '\u2A71' # EQUALS SIGN ABOVE PLUS SIGN
+  "{\\eqqplus}": '\u2A71' # EQUALS SIGN ABOVE PLUS SIGN
+  "\\eqqplus": '\u2A71' # EQUALS SIGN ABOVE PLUS SIGN
+  "\\pluseqq{}": '\u2A72' # PLUS SIGN ABOVE EQUALS SIGN
+  "{\\pluseqq}": '\u2A72' # PLUS SIGN ABOVE EQUALS SIGN
+  "\\pluseqq": '\u2A72' # PLUS SIGN ABOVE EQUALS SIGN
+  "\\eqqsim{}": '\u2A73' # EQUALS SIGN ABOVE TILDE OPERATOR
+  "{\\eqqsim}": '\u2A73' # EQUALS SIGN ABOVE TILDE OPERATOR
+  "\\eqqsim": '\u2A73' # EQUALS SIGN ABOVE TILDE OPERATOR
+  "\\Coloneqq{}": '\u2A74' # # ::=, x \Coloneq (txfonts), DOUBLE COLON EQUAL
+  "{\\Coloneqq}": '\u2A74' # # ::=, x \Coloneq (txfonts), DOUBLE COLON EQUAL
+  "\\Coloneqq": '\u2A74' # # ::=, x \Coloneq (txfonts), DOUBLE COLON EQUAL
+  "\\Equal{}": '\u2A75' # TWO CONSECUTIVE EQUALS SIGNS
+  "{\\Equal}": '\u2A75' # TWO CONSECUTIVE EQUALS SIGNS
+  "\\Equal": '\u2A75' # TWO CONSECUTIVE EQUALS SIGNS
+  "\\Same{}": '\u2A76' # # ===, THREE CONSECUTIVE EQUALS SIGNS
+  "{\\Same}": '\u2A76' # # ===, THREE CONSECUTIVE EQUALS SIGNS
+  "\\Same": '\u2A76' # # ===, THREE CONSECUTIVE EQUALS SIGNS
+  "\\ddotseq{}": '\u2A77' # EQUALS SIGN WITH TWO DOTS ABOVE AND TWO DOTS BELOW
+  "{\\ddotseq}": '\u2A77' # EQUALS SIGN WITH TWO DOTS ABOVE AND TWO DOTS BELOW
+  "\\ddotseq": '\u2A77' # EQUALS SIGN WITH TWO DOTS ABOVE AND TWO DOTS BELOW
+  "\\equivDD{}": '\u2A78' # EQUIVALENT WITH FOUR DOTS ABOVE
+  "{\\equivDD}": '\u2A78' # EQUIVALENT WITH FOUR DOTS ABOVE
+  "\\equivDD": '\u2A78' # EQUIVALENT WITH FOUR DOTS ABOVE
+  "\\ltcir{}": '\u2A79' # LESS-THAN WITH CIRCLE INSIDE
+  "{\\ltcir}": '\u2A79' # LESS-THAN WITH CIRCLE INSIDE
+  "\\ltcir": '\u2A79' # LESS-THAN WITH CIRCLE INSIDE
+  "\\gtcir{}": '\u2A7A' # GREATER-THAN WITH CIRCLE INSIDE
+  "{\\gtcir}": '\u2A7A' # GREATER-THAN WITH CIRCLE INSIDE
+  "\\gtcir": '\u2A7A' # GREATER-THAN WITH CIRCLE INSIDE
+  "\\ltquest{}": '\u2A7B' # LESS-THAN WITH QUESTION MARK ABOVE
+  "{\\ltquest}": '\u2A7B' # LESS-THAN WITH QUESTION MARK ABOVE
+  "\\ltquest": '\u2A7B' # LESS-THAN WITH QUESTION MARK ABOVE
+  "\\gtquest{}": '\u2A7C' # GREATER-THAN WITH QUESTION MARK ABOVE
+  "{\\gtquest}": '\u2A7C' # GREATER-THAN WITH QUESTION MARK ABOVE
+  "\\gtquest": '\u2A7C' # GREATER-THAN WITH QUESTION MARK ABOVE
+  "\\leqslant{}": '\u2A7D' # LESS-THAN OR SLANTED EQUAL TO
+  "{\\leqslant}": '\u2A7D' # LESS-THAN OR SLANTED EQUAL TO
+  "\\leqslant": '\u2A7D' # LESS-THAN OR SLANTED EQUAL TO
+  "\\geqslant{}": '\u2A7E' # GREATER-THAN OR SLANTED EQUAL TO
+  "{\\geqslant}": '\u2A7E' # GREATER-THAN OR SLANTED EQUAL TO
+  "\\geqslant": '\u2A7E' # GREATER-THAN OR SLANTED EQUAL TO
+  "\\lesdot{}": '\u2A7F' # LESS-THAN OR SLANTED EQUAL TO WITH DOT INSIDE
+  "{\\lesdot}": '\u2A7F' # LESS-THAN OR SLANTED EQUAL TO WITH DOT INSIDE
+  "\\lesdot": '\u2A7F' # LESS-THAN OR SLANTED EQUAL TO WITH DOT INSIDE
+  "\\gesdot{}": '\u2A80' # GREATER-THAN OR SLANTED EQUAL TO WITH DOT INSIDE
+  "{\\gesdot}": '\u2A80' # GREATER-THAN OR SLANTED EQUAL TO WITH DOT INSIDE
+  "\\gesdot": '\u2A80' # GREATER-THAN OR SLANTED EQUAL TO WITH DOT INSIDE
+  "\\lesdoto{}": '\u2A81' # LESS-THAN OR SLANTED EQUAL TO WITH DOT ABOVE
+  "{\\lesdoto}": '\u2A81' # LESS-THAN OR SLANTED EQUAL TO WITH DOT ABOVE
+  "\\lesdoto": '\u2A81' # LESS-THAN OR SLANTED EQUAL TO WITH DOT ABOVE
+  "\\gesdoto{}": '\u2A82' # GREATER-THAN OR SLANTED EQUAL TO WITH DOT ABOVE
+  "{\\gesdoto}": '\u2A82' # GREATER-THAN OR SLANTED EQUAL TO WITH DOT ABOVE
+  "\\gesdoto": '\u2A82' # GREATER-THAN OR SLANTED EQUAL TO WITH DOT ABOVE
+  "\\lesdotor{}": '\u2A83' # LESS-THAN OR SLANTED EQUAL TO WITH DOT ABOVE RIGHT
+  "{\\lesdotor}": '\u2A83' # LESS-THAN OR SLANTED EQUAL TO WITH DOT ABOVE RIGHT
+  "\\lesdotor": '\u2A83' # LESS-THAN OR SLANTED EQUAL TO WITH DOT ABOVE RIGHT
+  "\\gesdotol{}": '\u2A84' # GREATER-THAN OR SLANTED EQUAL TO WITH DOT ABOVE LEFT
+  "{\\gesdotol}": '\u2A84' # GREATER-THAN OR SLANTED EQUAL TO WITH DOT ABOVE LEFT
+  "\\gesdotol": '\u2A84' # GREATER-THAN OR SLANTED EQUAL TO WITH DOT ABOVE LEFT
+  "\\lessapprox{}": '\u2A85' # LESS-THAN OR APPROXIMATE
+  "{\\lessapprox}": '\u2A85' # LESS-THAN OR APPROXIMATE
+  "\\lessapprox": '\u2A85' # LESS-THAN OR APPROXIMATE
+  "\\gtrapprox{}": '\u2A86' # GREATER-THAN OR APPROXIMATE
+  "{\\gtrapprox}": '\u2A86' # GREATER-THAN OR APPROXIMATE
+  "\\gtrapprox": '\u2A86' # GREATER-THAN OR APPROXIMATE
+  "\\lneq{}": '\u2A87' # LESS-THAN AND SINGLE-LINE NOT EQUAL TO
+  "{\\lneq}": '\u2A87' # LESS-THAN AND SINGLE-LINE NOT EQUAL TO
+  "\\lneq": '\u2A87' # LESS-THAN AND SINGLE-LINE NOT EQUAL TO
+  "\\gneq{}": '\u2A88' # GREATER-THAN AND SINGLE-LINE NOT EQUAL TO
+  "{\\gneq}": '\u2A88' # GREATER-THAN AND SINGLE-LINE NOT EQUAL TO
+  "\\gneq": '\u2A88' # GREATER-THAN AND SINGLE-LINE NOT EQUAL TO
+  "\\lnapprox{}": '\u2A89' # LESS-THAN AND NOT APPROXIMATE
+  "{\\lnapprox}": '\u2A89' # LESS-THAN AND NOT APPROXIMATE
+  "\\lnapprox": '\u2A89' # LESS-THAN AND NOT APPROXIMATE
+  "\\gnapprox{}": '\u2A8A' # GREATER-THAN AND NOT APPROXIMATE
+  "{\\gnapprox}": '\u2A8A' # GREATER-THAN AND NOT APPROXIMATE
+  "\\gnapprox": '\u2A8A' # GREATER-THAN AND NOT APPROXIMATE
+  "\\lesseqqgtr{}": '\u2A8B' # LESS-THAN ABOVE DOUBLE-LINE EQUAL ABOVE GREATER-THAN
+  "{\\lesseqqgtr}": '\u2A8B' # LESS-THAN ABOVE DOUBLE-LINE EQUAL ABOVE GREATER-THAN
+  "\\lesseqqgtr": '\u2A8B' # LESS-THAN ABOVE DOUBLE-LINE EQUAL ABOVE GREATER-THAN
+  "\\gtreqqless{}": '\u2A8C' # GREATER-THAN ABOVE DOUBLE-LINE EQUAL ABOVE LESS-THAN
+  "{\\gtreqqless}": '\u2A8C' # GREATER-THAN ABOVE DOUBLE-LINE EQUAL ABOVE LESS-THAN
+  "\\gtreqqless": '\u2A8C' # GREATER-THAN ABOVE DOUBLE-LINE EQUAL ABOVE LESS-THAN
+  "\\lsime{}": '\u2A8D' # LESS-THAN ABOVE SIMILAR OR EQUAL
+  "{\\lsime}": '\u2A8D' # LESS-THAN ABOVE SIMILAR OR EQUAL
+  "\\lsime": '\u2A8D' # LESS-THAN ABOVE SIMILAR OR EQUAL
+  "\\gsime{}": '\u2A8E' # GREATER-THAN ABOVE SIMILAR OR EQUAL
+  "{\\gsime}": '\u2A8E' # GREATER-THAN ABOVE SIMILAR OR EQUAL
+  "\\gsime": '\u2A8E' # GREATER-THAN ABOVE SIMILAR OR EQUAL
+  "\\lsimg{}": '\u2A8F' # LESS-THAN ABOVE SIMILAR ABOVE GREATER-THAN
+  "{\\lsimg}": '\u2A8F' # LESS-THAN ABOVE SIMILAR ABOVE GREATER-THAN
+  "\\lsimg": '\u2A8F' # LESS-THAN ABOVE SIMILAR ABOVE GREATER-THAN
+  "\\gsiml{}": '\u2A90' # GREATER-THAN ABOVE SIMILAR ABOVE LESS-THAN
+  "{\\gsiml}": '\u2A90' # GREATER-THAN ABOVE SIMILAR ABOVE LESS-THAN
+  "\\gsiml": '\u2A90' # GREATER-THAN ABOVE SIMILAR ABOVE LESS-THAN
+  "\\lgE{}": '\u2A91' # LESS-THAN ABOVE GREATER-THAN ABOVE DOUBLE-LINE EQUAL
+  "{\\lgE}": '\u2A91' # LESS-THAN ABOVE GREATER-THAN ABOVE DOUBLE-LINE EQUAL
+  "\\lgE": '\u2A91' # LESS-THAN ABOVE GREATER-THAN ABOVE DOUBLE-LINE EQUAL
+  "\\glE{}": '\u2A92' # GREATER-THAN ABOVE LESS-THAN ABOVE DOUBLE-LINE EQUAL
+  "{\\glE}": '\u2A92' # GREATER-THAN ABOVE LESS-THAN ABOVE DOUBLE-LINE EQUAL
+  "\\glE": '\u2A92' # GREATER-THAN ABOVE LESS-THAN ABOVE DOUBLE-LINE EQUAL
+  "\\lesges{}": '\u2A93' # LESS-THAN ABOVE SLANTED EQUAL ABOVE GREATER-THAN ABOVE SLANTED EQUAL
+  "{\\lesges}": '\u2A93' # LESS-THAN ABOVE SLANTED EQUAL ABOVE GREATER-THAN ABOVE SLANTED EQUAL
+  "\\lesges": '\u2A93' # LESS-THAN ABOVE SLANTED EQUAL ABOVE GREATER-THAN ABOVE SLANTED EQUAL
+  "\\gesles{}": '\u2A94' # GREATER-THAN ABOVE SLANTED EQUAL ABOVE LESS-THAN ABOVE SLANTED EQUAL
+  "{\\gesles}": '\u2A94' # GREATER-THAN ABOVE SLANTED EQUAL ABOVE LESS-THAN ABOVE SLANTED EQUAL
+  "\\gesles": '\u2A94' # GREATER-THAN ABOVE SLANTED EQUAL ABOVE LESS-THAN ABOVE SLANTED EQUAL
+  "\\eqslantless{}": '\u2A95' # SLANTED EQUAL TO OR LESS-THAN
+  "{\\eqslantless}": '\u2A95' # SLANTED EQUAL TO OR LESS-THAN
+  "\\eqslantless": '\u2A95' # SLANTED EQUAL TO OR LESS-THAN
+  "\\eqslantgtr{}": '\u2A96' # SLANTED EQUAL TO OR GREATER-THAN
+  "{\\eqslantgtr}": '\u2A96' # SLANTED EQUAL TO OR GREATER-THAN
+  "\\eqslantgtr": '\u2A96' # SLANTED EQUAL TO OR GREATER-THAN
+  "\\elsdot{}": '\u2A97' # SLANTED EQUAL TO OR LESS-THAN WITH DOT INSIDE
+  "{\\elsdot}": '\u2A97' # SLANTED EQUAL TO OR LESS-THAN WITH DOT INSIDE
+  "\\elsdot": '\u2A97' # SLANTED EQUAL TO OR LESS-THAN WITH DOT INSIDE
+  "\\egsdot{}": '\u2A98' # SLANTED EQUAL TO OR GREATER-THAN WITH DOT INSIDE
+  "{\\egsdot}": '\u2A98' # SLANTED EQUAL TO OR GREATER-THAN WITH DOT INSIDE
+  "\\egsdot": '\u2A98' # SLANTED EQUAL TO OR GREATER-THAN WITH DOT INSIDE
+  "\\eqqless{}": '\u2A99' # DOUBLE-LINE EQUAL TO OR LESS-THAN
+  "{\\eqqless}": '\u2A99' # DOUBLE-LINE EQUAL TO OR LESS-THAN
+  "\\eqqless": '\u2A99' # DOUBLE-LINE EQUAL TO OR LESS-THAN
+  "\\eqqgtr{}": '\u2A9A' # DOUBLE-LINE EQUAL TO OR GREATER-THAN
+  "{\\eqqgtr}": '\u2A9A' # DOUBLE-LINE EQUAL TO OR GREATER-THAN
+  "\\eqqgtr": '\u2A9A' # DOUBLE-LINE EQUAL TO OR GREATER-THAN
+  "\\eqqslantless{}": '\u2A9B' # DOUBLE-LINE SLANTED EQUAL TO OR LESS-THAN
+  "{\\eqqslantless}": '\u2A9B' # DOUBLE-LINE SLANTED EQUAL TO OR LESS-THAN
+  "\\eqqslantless": '\u2A9B' # DOUBLE-LINE SLANTED EQUAL TO OR LESS-THAN
+  "\\eqqslantgtr{}": '\u2A9C' # DOUBLE-LINE SLANTED EQUAL TO OR GREATER-THAN
+  "{\\eqqslantgtr}": '\u2A9C' # DOUBLE-LINE SLANTED EQUAL TO OR GREATER-THAN
+  "\\eqqslantgtr": '\u2A9C' # DOUBLE-LINE SLANTED EQUAL TO OR GREATER-THAN
+  "\\Pisymbol{ppi020}{117}": '\u2A9D' # SIMILAR OR LESS-THAN
+  "\\Pisymbol{ppi020}{105}": '\u2A9E' # SIMILAR OR GREATER-THAN
+  "\\simlE{}": '\u2A9F' # SIMILAR ABOVE LESS-THAN ABOVE EQUALS SIGN
+  "{\\simlE}": '\u2A9F' # SIMILAR ABOVE LESS-THAN ABOVE EQUALS SIGN
+  "\\simlE": '\u2A9F' # SIMILAR ABOVE LESS-THAN ABOVE EQUALS SIGN
+  "\\simgE{}": '\u2AA0' # SIMILAR ABOVE GREATER-THAN ABOVE EQUALS SIGN
+  "{\\simgE}": '\u2AA0' # SIMILAR ABOVE GREATER-THAN ABOVE EQUALS SIGN
+  "\\simgE": '\u2AA0' # SIMILAR ABOVE GREATER-THAN ABOVE EQUALS SIGN
+  "\\NestedLessLess{}": '\u2AA1' # DOUBLE NESTED LESS-THAN
+  "{\\NestedLessLess}": '\u2AA1' # DOUBLE NESTED LESS-THAN
+  "\\NestedLessLess": '\u2AA1' # DOUBLE NESTED LESS-THAN
+  "\\NestedGreaterGreater{}": '\u2AA2' # DOUBLE NESTED GREATER-THAN
+  "{\\NestedGreaterGreater}": '\u2AA2' # DOUBLE NESTED GREATER-THAN
+  "\\NestedGreaterGreater": '\u2AA2' # DOUBLE NESTED GREATER-THAN
+  "\\partialmeetcontraction{}": '\u2AA3' # double less-than with underbar
+  "{\\partialmeetcontraction}": '\u2AA3' # double less-than with underbar
+  "\\partialmeetcontraction": '\u2AA3' # double less-than with underbar
+  "\\glj{}": '\u2AA4' # GREATER-THAN OVERLAPPING LESS-THAN
+  "{\\glj}": '\u2AA4' # GREATER-THAN OVERLAPPING LESS-THAN
+  "\\glj": '\u2AA4' # GREATER-THAN OVERLAPPING LESS-THAN
+  "\\gla{}": '\u2AA5' # GREATER-THAN BESIDE LESS-THAN
+  "{\\gla}": '\u2AA5' # GREATER-THAN BESIDE LESS-THAN
+  "\\gla": '\u2AA5' # GREATER-THAN BESIDE LESS-THAN
+  "\\leftslice{}": '\u2AA6' # LESS-THAN CLOSED BY CURVE
+  "{\\leftslice}": '\u2AA6' # LESS-THAN CLOSED BY CURVE
+  "\\leftslice": '\u2AA6' # LESS-THAN CLOSED BY CURVE
+  "\\rightslice{}": '\u2AA7' # GREATER-THAN CLOSED BY CURVE
+  "{\\rightslice}": '\u2AA7' # GREATER-THAN CLOSED BY CURVE
+  "\\rightslice": '\u2AA7' # GREATER-THAN CLOSED BY CURVE
+  "\\lescc{}": '\u2AA8' # LESS-THAN CLOSED BY CURVE ABOVE SLANTED EQUAL
+  "{\\lescc}": '\u2AA8' # LESS-THAN CLOSED BY CURVE ABOVE SLANTED EQUAL
+  "\\lescc": '\u2AA8' # LESS-THAN CLOSED BY CURVE ABOVE SLANTED EQUAL
+  "\\gescc{}": '\u2AA9' # GREATER-THAN CLOSED BY CURVE ABOVE SLANTED EQUAL
+  "{\\gescc}": '\u2AA9' # GREATER-THAN CLOSED BY CURVE ABOVE SLANTED EQUAL
+  "\\gescc": '\u2AA9' # GREATER-THAN CLOSED BY CURVE ABOVE SLANTED EQUAL
+  "\\smt{}": '\u2AAA' # SMALLER THAN
+  "{\\smt}": '\u2AAA' # SMALLER THAN
+  "\\smt": '\u2AAA' # SMALLER THAN
+  "\\lat{}": '\u2AAB' # LARGER THAN
+  "{\\lat}": '\u2AAB' # LARGER THAN
+  "\\lat": '\u2AAB' # LARGER THAN
+  "\\smte{}": '\u2AAC' # SMALLER THAN OR EQUAL TO
+  "{\\smte}": '\u2AAC' # SMALLER THAN OR EQUAL TO
+  "\\smte": '\u2AAC' # SMALLER THAN OR EQUAL TO
+  "\\late{}": '\u2AAD' # LARGER THAN OR EQUAL TO
+  "{\\late}": '\u2AAD' # LARGER THAN OR EQUAL TO
+  "\\late": '\u2AAD' # LARGER THAN OR EQUAL TO
+  "\\bumpeqq{}": '\u2AAE' # EQUALS SIGN WITH BUMPY ABOVE
+  "{\\bumpeqq}": '\u2AAE' # EQUALS SIGN WITH BUMPY ABOVE
+  "\\bumpeqq": '\u2AAE' # EQUALS SIGN WITH BUMPY ABOVE
+  "\\preceq{}": '\u2AAF' # PRECEDES ABOVE SINGLE-LINE EQUALS SIGN
+  "{\\preceq}": '\u2AAF' # PRECEDES ABOVE SINGLE-LINE EQUALS SIGN
+  "\\preceq": '\u2AAF' # PRECEDES ABOVE SINGLE-LINE EQUALS SIGN
+  "\\succeq{}": '\u2AB0' # SUCCEEDS ABOVE SINGLE-LINE EQUALS SIGN
+  "{\\succeq}": '\u2AB0' # SUCCEEDS ABOVE SINGLE-LINE EQUALS SIGN
+  "\\succeq": '\u2AB0' # SUCCEEDS ABOVE SINGLE-LINE EQUALS SIGN
+  "\\precneq{}": '\u2AB1' # PRECEDES ABOVE SINGLE-LINE NOT EQUAL TO
+  "{\\precneq}": '\u2AB1' # PRECEDES ABOVE SINGLE-LINE NOT EQUAL TO
+  "\\precneq": '\u2AB1' # PRECEDES ABOVE SINGLE-LINE NOT EQUAL TO
+  "\\succneq{}": '\u2AB2' # SUCCEEDS ABOVE SINGLE-LINE NOT EQUAL TO
+  "{\\succneq}": '\u2AB2' # SUCCEEDS ABOVE SINGLE-LINE NOT EQUAL TO
+  "\\succneq": '\u2AB2' # SUCCEEDS ABOVE SINGLE-LINE NOT EQUAL TO
+  "\\preceqq{}": '\u2AB3' # PRECEDES ABOVE EQUALS SIGN
+  "{\\preceqq}": '\u2AB3' # PRECEDES ABOVE EQUALS SIGN
+  "\\preceqq": '\u2AB3' # PRECEDES ABOVE EQUALS SIGN
+  "\\succeqq{}": '\u2AB4' # SUCCEEDS ABOVE EQUALS SIGN
+  "{\\succeqq}": '\u2AB4' # SUCCEEDS ABOVE EQUALS SIGN
+  "\\succeqq": '\u2AB4' # SUCCEEDS ABOVE EQUALS SIGN
+  "\\precneqq{}": '\u2AB5' # PRECEDES ABOVE NOT EQUAL TO
+  "{\\precneqq}": '\u2AB5' # PRECEDES ABOVE NOT EQUAL TO
+  "\\precneqq": '\u2AB5' # PRECEDES ABOVE NOT EQUAL TO
+  "\\succneqq{}": '\u2AB6' # SUCCEEDS ABOVE NOT EQUAL TO
+  "{\\succneqq}": '\u2AB6' # SUCCEEDS ABOVE NOT EQUAL TO
+  "\\succneqq": '\u2AB6' # SUCCEEDS ABOVE NOT EQUAL TO
+  "\\precnapprox{}": '\u2AB9' # PRECEDES ABOVE NOT ALMOST EQUAL TO
+  "{\\precnapprox}": '\u2AB9' # PRECEDES ABOVE NOT ALMOST EQUAL TO
+  "\\precnapprox": '\u2AB9' # PRECEDES ABOVE NOT ALMOST EQUAL TO
+  "\\succnapprox{}": '\u2ABA' # SUCCEEDS ABOVE NOT ALMOST EQUAL TO
+  "{\\succnapprox}": '\u2ABA' # SUCCEEDS ABOVE NOT ALMOST EQUAL TO
+  "\\succnapprox": '\u2ABA' # SUCCEEDS ABOVE NOT ALMOST EQUAL TO
+  "\\llcurly{}": '\u2ABB' # DOUBLE PRECEDES
+  "{\\llcurly}": '\u2ABB' # DOUBLE PRECEDES
+  "\\llcurly": '\u2ABB' # DOUBLE PRECEDES
+  "\\ggcurly{}": '\u2ABC' # DOUBLE SUCCEEDS
+  "{\\ggcurly}": '\u2ABC' # DOUBLE SUCCEEDS
+  "\\ggcurly": '\u2ABC' # DOUBLE SUCCEEDS
+  "\\subsetdot{}": '\u2ABD' # SUBSET WITH DOT
+  "{\\subsetdot}": '\u2ABD' # SUBSET WITH DOT
+  "\\subsetdot": '\u2ABD' # SUBSET WITH DOT
+  "\\supsetdot{}": '\u2ABE' # SUPERSET WITH DOT
+  "{\\supsetdot}": '\u2ABE' # SUPERSET WITH DOT
+  "\\supsetdot": '\u2ABE' # SUPERSET WITH DOT
+  "\\subsetplus{}": '\u2ABF' # SUBSET WITH PLUS SIGN BELOW
+  "{\\subsetplus}": '\u2ABF' # SUBSET WITH PLUS SIGN BELOW
+  "\\subsetplus": '\u2ABF' # SUBSET WITH PLUS SIGN BELOW
+  "\\supsetplus{}": '\u2AC0' # SUPERSET WITH PLUS SIGN BELOW
+  "{\\supsetplus}": '\u2AC0' # SUPERSET WITH PLUS SIGN BELOW
+  "\\supsetplus": '\u2AC0' # SUPERSET WITH PLUS SIGN BELOW
+  "\\submult{}": '\u2AC1' # SUBSET WITH MULTIPLICATION SIGN BELOW
+  "{\\submult}": '\u2AC1' # SUBSET WITH MULTIPLICATION SIGN BELOW
+  "\\submult": '\u2AC1' # SUBSET WITH MULTIPLICATION SIGN BELOW
+  "\\supmult{}": '\u2AC2' # SUPERSET WITH MULTIPLICATION SIGN BELOW
+  "{\\supmult}": '\u2AC2' # SUPERSET WITH MULTIPLICATION SIGN BELOW
+  "\\supmult": '\u2AC2' # SUPERSET WITH MULTIPLICATION SIGN BELOW
+  "\\subedot{}": '\u2AC3' # SUBSET OF OR EQUAL TO WITH DOT ABOVE
+  "{\\subedot}": '\u2AC3' # SUBSET OF OR EQUAL TO WITH DOT ABOVE
+  "\\subedot": '\u2AC3' # SUBSET OF OR EQUAL TO WITH DOT ABOVE
+  "\\supedot{}": '\u2AC4' # SUPERSET OF OR EQUAL TO WITH DOT ABOVE
+  "{\\supedot}": '\u2AC4' # SUPERSET OF OR EQUAL TO WITH DOT ABOVE
+  "\\supedot": '\u2AC4' # SUPERSET OF OR EQUAL TO WITH DOT ABOVE
+  "\\subseteqq{}": '\u2AC5' # SUBSET OF ABOVE EQUALS SIGN
+  "{\\subseteqq}": '\u2AC5' # SUBSET OF ABOVE EQUALS SIGN
+  "\\subseteqq": '\u2AC5' # SUBSET OF ABOVE EQUALS SIGN
+  "\\supseteqq{}": '\u2AC6' # SUPERSET OF ABOVE EQUALS SIGN
+  "{\\supseteqq}": '\u2AC6' # SUPERSET OF ABOVE EQUALS SIGN
+  "\\supseteqq": '\u2AC6' # SUPERSET OF ABOVE EQUALS SIGN
+  "\\subsim{}": '\u2AC7' # SUBSET OF ABOVE TILDE OPERATOR
+  "{\\subsim}": '\u2AC7' # SUBSET OF ABOVE TILDE OPERATOR
+  "\\subsim": '\u2AC7' # SUBSET OF ABOVE TILDE OPERATOR
+  "\\supsim{}": '\u2AC8' # SUPERSET OF ABOVE TILDE OPERATOR
+  "{\\supsim}": '\u2AC8' # SUPERSET OF ABOVE TILDE OPERATOR
+  "\\supsim": '\u2AC8' # SUPERSET OF ABOVE TILDE OPERATOR
+  "\\subsetapprox{}": '\u2AC9' # SUBSET OF ABOVE ALMOST EQUAL TO
+  "{\\subsetapprox}": '\u2AC9' # SUBSET OF ABOVE ALMOST EQUAL TO
+  "\\subsetapprox": '\u2AC9' # SUBSET OF ABOVE ALMOST EQUAL TO
+  "\\supsetapprox{}": '\u2ACA' # SUPERSET OF ABOVE ALMOST EQUAL TO
+  "{\\supsetapprox}": '\u2ACA' # SUPERSET OF ABOVE ALMOST EQUAL TO
+  "\\supsetapprox": '\u2ACA' # SUPERSET OF ABOVE ALMOST EQUAL TO
+  "\\subsetneqq{}": '\u2ACB' # SUBSET OF ABOVE NOT EQUAL TO
+  "{\\subsetneqq}": '\u2ACB' # SUBSET OF ABOVE NOT EQUAL TO
+  "\\subsetneqq": '\u2ACB' # SUBSET OF ABOVE NOT EQUAL TO
+  "\\supsetneqq{}": '\u2ACC' # SUPERSET OF ABOVE NOT EQUAL TO
+  "{\\supsetneqq}": '\u2ACC' # SUPERSET OF ABOVE NOT EQUAL TO
+  "\\supsetneqq": '\u2ACC' # SUPERSET OF ABOVE NOT EQUAL TO
+  "\\lsqhook{}": '\u2ACD' # SQUARE LEFT OPEN BOX OPERATOR
+  "{\\lsqhook}": '\u2ACD' # SQUARE LEFT OPEN BOX OPERATOR
+  "\\lsqhook": '\u2ACD' # SQUARE LEFT OPEN BOX OPERATOR
+  "\\rsqhook{}": '\u2ACE' # SQUARE RIGHT OPEN BOX OPERATOR
+  "{\\rsqhook}": '\u2ACE' # SQUARE RIGHT OPEN BOX OPERATOR
+  "\\rsqhook": '\u2ACE' # SQUARE RIGHT OPEN BOX OPERATOR
+  "\\csub{}": '\u2ACF' # CLOSED SUBSET
+  "{\\csub}": '\u2ACF' # CLOSED SUBSET
+  "\\csub": '\u2ACF' # CLOSED SUBSET
+  "\\csup{}": '\u2AD0' # CLOSED SUPERSET
+  "{\\csup}": '\u2AD0' # CLOSED SUPERSET
+  "\\csup": '\u2AD0' # CLOSED SUPERSET
+  "\\csube{}": '\u2AD1' # CLOSED SUBSET OR EQUAL TO
+  "{\\csube}": '\u2AD1' # CLOSED SUBSET OR EQUAL TO
+  "\\csube": '\u2AD1' # CLOSED SUBSET OR EQUAL TO
+  "\\csupe{}": '\u2AD2' # CLOSED SUPERSET OR EQUAL TO
+  "{\\csupe}": '\u2AD2' # CLOSED SUPERSET OR EQUAL TO
+  "\\csupe": '\u2AD2' # CLOSED SUPERSET OR EQUAL TO
+  "\\subsup{}": '\u2AD3' # SUBSET ABOVE SUPERSET
+  "{\\subsup}": '\u2AD3' # SUBSET ABOVE SUPERSET
+  "\\subsup": '\u2AD3' # SUBSET ABOVE SUPERSET
+  "\\supsub{}": '\u2AD4' # SUPERSET ABOVE SUBSET
+  "{\\supsub}": '\u2AD4' # SUPERSET ABOVE SUBSET
+  "\\supsub": '\u2AD4' # SUPERSET ABOVE SUBSET
+  "\\subsub{}": '\u2AD5' # SUBSET ABOVE SUBSET
+  "{\\subsub}": '\u2AD5' # SUBSET ABOVE SUBSET
+  "\\subsub": '\u2AD5' # SUBSET ABOVE SUBSET
+  "\\supsup{}": '\u2AD6' # SUPERSET ABOVE SUPERSET
+  "{\\supsup}": '\u2AD6' # SUPERSET ABOVE SUPERSET
+  "\\supsup": '\u2AD6' # SUPERSET ABOVE SUPERSET
+  "\\suphsub{}": '\u2AD7' # SUPERSET BESIDE SUBSET
+  "{\\suphsub}": '\u2AD7' # SUPERSET BESIDE SUBSET
+  "\\suphsub": '\u2AD7' # SUPERSET BESIDE SUBSET
+  "\\supdsub{}": '\u2AD8' # SUPERSET BESIDE AND JOINED BY DASH WITH SUBSET
+  "{\\supdsub}": '\u2AD8' # SUPERSET BESIDE AND JOINED BY DASH WITH SUBSET
+  "\\supdsub": '\u2AD8' # SUPERSET BESIDE AND JOINED BY DASH WITH SUBSET
+  "\\forkv{}": '\u2AD9' # ELEMENT OF OPENING DOWNWARDS
+  "{\\forkv}": '\u2AD9' # ELEMENT OF OPENING DOWNWARDS
+  "\\forkv": '\u2AD9' # ELEMENT OF OPENING DOWNWARDS
+  "\\topfork{}": '\u2ADA' # PITCHFORK WITH TEE TOP
+  "{\\topfork}": '\u2ADA' # PITCHFORK WITH TEE TOP
+  "\\topfork": '\u2ADA' # PITCHFORK WITH TEE TOP
+  "\\mlcp{}": '\u2ADB' # TRANSVERSAL INTERSECTION
+  "{\\mlcp}": '\u2ADB' # TRANSVERSAL INTERSECTION
+  "\\mlcp": '\u2ADB' # TRANSVERSAL INTERSECTION
+  "\\forks{}": '\u2ADC' # FORKING
+  "{\\forks}": '\u2ADC' # FORKING
+  "\\forks": '\u2ADC' # FORKING
+  "\\forksnot{}": '\u2ADD' # NONFORKING
+  "{\\forksnot}": '\u2ADD' # NONFORKING
+  "\\forksnot": '\u2ADD' # NONFORKING
+  "\\shortlefttack{}": '\u2ADE' # SHORT LEFT TACK
+  "{\\shortlefttack}": '\u2ADE' # SHORT LEFT TACK
+  "\\shortlefttack": '\u2ADE' # SHORT LEFT TACK
+  "\\shortdowntack{}": '\u2ADF' # SHORT DOWN TACK
+  "{\\shortdowntack}": '\u2ADF' # SHORT DOWN TACK
+  "\\shortdowntack": '\u2ADF' # SHORT DOWN TACK
+  "\\shortuptack{}": '\u2AE0' # SHORT UP TACK
+  "{\\shortuptack}": '\u2AE0' # SHORT UP TACK
+  "\\shortuptack": '\u2AE0' # SHORT UP TACK
+  "\\perps{}": '\u2AE1' # PERPENDICULAR WITH S
+  "{\\perps}": '\u2AE1' # PERPENDICULAR WITH S
+  "\\perps": '\u2AE1' # PERPENDICULAR WITH S
+  "\\vDdash{}": '\u2AE2' # VERTICAL BAR TRIPLE RIGHT TURNSTILE
+  "{\\vDdash}": '\u2AE2' # VERTICAL BAR TRIPLE RIGHT TURNSTILE
+  "\\vDdash": '\u2AE2' # VERTICAL BAR TRIPLE RIGHT TURNSTILE
+  "\\dashV{}": '\u2AE3' # DOUBLE VERTICAL BAR LEFT TURNSTILE
+  "{\\dashV}": '\u2AE3' # DOUBLE VERTICAL BAR LEFT TURNSTILE
+  "\\dashV": '\u2AE3' # DOUBLE VERTICAL BAR LEFT TURNSTILE
+  "\\Dashv{}": '\u2AE4' # VERTICAL BAR DOUBLE LEFT TURNSTILE
+  "{\\Dashv}": '\u2AE4' # VERTICAL BAR DOUBLE LEFT TURNSTILE
+  "\\Dashv": '\u2AE4' # VERTICAL BAR DOUBLE LEFT TURNSTILE
+  "\\DashV{}": '\u2AE5' # DOUBLE VERTICAL BAR DOUBLE LEFT TURNSTILE
+  "{\\DashV}": '\u2AE5' # DOUBLE VERTICAL BAR DOUBLE LEFT TURNSTILE
+  "\\DashV": '\u2AE5' # DOUBLE VERTICAL BAR DOUBLE LEFT TURNSTILE
+  "\\varVdash{}": '\u2AE6' # LONG DASH FROM LEFT MEMBER OF DOUBLE VERTICAL
+  "{\\varVdash}": '\u2AE6' # LONG DASH FROM LEFT MEMBER OF DOUBLE VERTICAL
+  "\\varVdash": '\u2AE6' # LONG DASH FROM LEFT MEMBER OF DOUBLE VERTICAL
+  "\\Barv{}": '\u2AE7' # SHORT DOWN TACK WITH OVERBAR
+  "{\\Barv}": '\u2AE7' # SHORT DOWN TACK WITH OVERBAR
+  "\\Barv": '\u2AE7' # SHORT DOWN TACK WITH OVERBAR
+  "\\vBar{}": '\u2AE8' # SHORT UP TACK WITH UNDERBAR
+  "{\\vBar}": '\u2AE8' # SHORT UP TACK WITH UNDERBAR
+  "\\vBar": '\u2AE8' # SHORT UP TACK WITH UNDERBAR
+  "\\vBarv{}": '\u2AE9' # SHORT UP TACK ABOVE SHORT DOWN TACK
+  "{\\vBarv}": '\u2AE9' # SHORT UP TACK ABOVE SHORT DOWN TACK
+  "\\vBarv": '\u2AE9' # SHORT UP TACK ABOVE SHORT DOWN TACK
+  "\\Top{}": '\u2AEA' # DOUBLE DOWN TACK
+  "{\\Top}": '\u2AEA' # DOUBLE DOWN TACK
+  "\\Top": '\u2AEA' # DOUBLE DOWN TACK
+  "\\ElsevierGlyph{E30D}": '\u2AEB' # DOUBLE UP TACK
+  "\\Not{}": '\u2AEC' # DOUBLE STROKE NOT SIGN
+  "{\\Not}": '\u2AEC' # DOUBLE STROKE NOT SIGN
+  "\\Not": '\u2AEC' # DOUBLE STROKE NOT SIGN
+  "\\bNot{}": '\u2AED' # REVERSED DOUBLE STROKE NOT SIGN
+  "{\\bNot}": '\u2AED' # REVERSED DOUBLE STROKE NOT SIGN
+  "\\bNot": '\u2AED' # REVERSED DOUBLE STROKE NOT SIGN
+  "\\revnmid{}": '\u2AEE' # DOES NOT DIVIDE WITH REVERSED NEGATION SLASH
+  "{\\revnmid}": '\u2AEE' # DOES NOT DIVIDE WITH REVERSED NEGATION SLASH
+  "\\revnmid": '\u2AEE' # DOES NOT DIVIDE WITH REVERSED NEGATION SLASH
+  "\\cirmid{}": '\u2AEF' # VERTICAL LINE WITH CIRCLE ABOVE
+  "{\\cirmid}": '\u2AEF' # VERTICAL LINE WITH CIRCLE ABOVE
+  "\\cirmid": '\u2AEF' # VERTICAL LINE WITH CIRCLE ABOVE
+  "\\midcir{}": '\u2AF0' # VERTICAL LINE WITH CIRCLE BELOW
+  "{\\midcir}": '\u2AF0' # VERTICAL LINE WITH CIRCLE BELOW
+  "\\midcir": '\u2AF0' # VERTICAL LINE WITH CIRCLE BELOW
+  "\\topcir{}": '\u2AF1' # DOWN TACK WITH CIRCLE BELOW
+  "{\\topcir}": '\u2AF1' # DOWN TACK WITH CIRCLE BELOW
+  "\\topcir": '\u2AF1' # DOWN TACK WITH CIRCLE BELOW
+  "\\nhpar{}": '\u2AF2' # PARALLEL WITH HORIZONTAL STROKE
+  "{\\nhpar}": '\u2AF2' # PARALLEL WITH HORIZONTAL STROKE
+  "\\nhpar": '\u2AF2' # PARALLEL WITH HORIZONTAL STROKE
+  "\\parsim{}": '\u2AF3' # PARALLEL WITH TILDE OPERATOR
+  "{\\parsim}": '\u2AF3' # PARALLEL WITH TILDE OPERATOR
+  "\\parsim": '\u2AF3' # PARALLEL WITH TILDE OPERATOR
+  "\\interleave{}": '\u2AF4' # TRIPLE VERTICAL BAR BINARY RELATION
+  "{\\interleave}": '\u2AF4' # TRIPLE VERTICAL BAR BINARY RELATION
+  "\\interleave": '\u2AF4' # TRIPLE VERTICAL BAR BINARY RELATION
+  "\\nhVvert{}": '\u2AF5' # TRIPLE VERTICAL BAR WITH HORIZONTAL STROKE
+  "{\\nhVvert}": '\u2AF5' # TRIPLE VERTICAL BAR WITH HORIZONTAL STROKE
+  "\\nhVvert": '\u2AF5' # TRIPLE VERTICAL BAR WITH HORIZONTAL STROKE
+  "\\Elztdcol{}": '\u2AF6' # TRIPLE COLON OPERATOR
+  "{\\Elztdcol}": '\u2AF6' # TRIPLE COLON OPERATOR
+  "\\Elztdcol": '\u2AF6' # TRIPLE COLON OPERATOR
+  "\\lllnest{}": '\u2AF7' # TRIPLE NESTED LESS-THAN
+  "{\\lllnest}": '\u2AF7' # TRIPLE NESTED LESS-THAN
+  "\\lllnest": '\u2AF7' # TRIPLE NESTED LESS-THAN
+  "\\gggnest{}": '\u2AF8' # TRIPLE NESTED GREATER-THAN
+  "{\\gggnest}": '\u2AF8' # TRIPLE NESTED GREATER-THAN
+  "\\gggnest": '\u2AF8' # TRIPLE NESTED GREATER-THAN
+  "\\leqqslant{}": '\u2AF9' # DOUBLE-LINE SLANTED LESS-THAN OR EQUAL TO
+  "{\\leqqslant}": '\u2AF9' # DOUBLE-LINE SLANTED LESS-THAN OR EQUAL TO
+  "\\leqqslant": '\u2AF9' # DOUBLE-LINE SLANTED LESS-THAN OR EQUAL TO
+  "\\geqqslant{}": '\u2AFA' # DOUBLE-LINE SLANTED GREATER-THAN OR EQUAL TO
+  "{\\geqqslant}": '\u2AFA' # DOUBLE-LINE SLANTED GREATER-THAN OR EQUAL TO
+  "\\geqqslant": '\u2AFA' # DOUBLE-LINE SLANTED GREATER-THAN OR EQUAL TO
+  "\\trslash{}": '\u2AFB' # TRIPLE SOLIDUS BINARY RELATION
+  "{\\trslash}": '\u2AFB' # TRIPLE SOLIDUS BINARY RELATION
+  "\\trslash": '\u2AFB' # TRIPLE SOLIDUS BINARY RELATION
+  "\\biginterleave{}": '\u2AFC' # LARGE TRIPLE VERTICAL BAR OPERATOR
+  "{\\biginterleave}": '\u2AFC' # LARGE TRIPLE VERTICAL BAR OPERATOR
+  "\\biginterleave": '\u2AFC' # LARGE TRIPLE VERTICAL BAR OPERATOR
+  "{{/}\\!\\!{/}}": '\u2AFD' # DOUBLE SOLIDUS OPERATOR
+  "\\talloblong{}": '\u2AFE' # WHITE VERTICAL BAR
+  "{\\talloblong}": '\u2AFE' # WHITE VERTICAL BAR
+  "\\talloblong": '\u2AFE' # WHITE VERTICAL BAR
+  "\\bigtalloblong{}": '\u2AFF' # N-ARY WHITE VERTICAL BAR
+  "{\\bigtalloblong}": '\u2AFF' # N-ARY WHITE VERTICAL BAR
+  "\\bigtalloblong": '\u2AFF' # N-ARY WHITE VERTICAL BAR
+  "\\squaretopblack{}": '\u2B12' # SQUARE WITH TOP HALF BLACK
+  "{\\squaretopblack}": '\u2B12' # SQUARE WITH TOP HALF BLACK
+  "\\squaretopblack": '\u2B12' # SQUARE WITH TOP HALF BLACK
+  "\\squarebotblack{}": '\u2B13' # SQUARE WITH BOTTOM HALF BLACK
+  "{\\squarebotblack}": '\u2B13' # SQUARE WITH BOTTOM HALF BLACK
+  "\\squarebotblack": '\u2B13' # SQUARE WITH BOTTOM HALF BLACK
+  "\\squareurblack{}": '\u2B14' # SQUARE WITH UPPER RIGHT DIAGONAL HALF BLACK
+  "{\\squareurblack}": '\u2B14' # SQUARE WITH UPPER RIGHT DIAGONAL HALF BLACK
+  "\\squareurblack": '\u2B14' # SQUARE WITH UPPER RIGHT DIAGONAL HALF BLACK
+  "\\squarellblack{}": '\u2B15' # SQUARE WITH LOWER LEFT DIAGONAL HALF BLACK
+  "{\\squarellblack}": '\u2B15' # SQUARE WITH LOWER LEFT DIAGONAL HALF BLACK
+  "\\squarellblack": '\u2B15' # SQUARE WITH LOWER LEFT DIAGONAL HALF BLACK
+  "\\diamondleftblack{}": '\u2B16' # DIAMOND WITH LEFT HALF BLACK
+  "{\\diamondleftblack}": '\u2B16' # DIAMOND WITH LEFT HALF BLACK
+  "\\diamondleftblack": '\u2B16' # DIAMOND WITH LEFT HALF BLACK
+  "\\diamondrightblack{}": '\u2B17' # DIAMOND WITH RIGHT HALF BLACK
+  "{\\diamondrightblack}": '\u2B17' # DIAMOND WITH RIGHT HALF BLACK
+  "\\diamondrightblack": '\u2B17' # DIAMOND WITH RIGHT HALF BLACK
+  "\\diamondtopblack{}": '\u2B18' # DIAMOND WITH TOP HALF BLACK
+  "{\\diamondtopblack}": '\u2B18' # DIAMOND WITH TOP HALF BLACK
+  "\\diamondtopblack": '\u2B18' # DIAMOND WITH TOP HALF BLACK
+  "\\diamondbotblack{}": '\u2B19' # DIAMOND WITH BOTTOM HALF BLACK
+  "{\\diamondbotblack}": '\u2B19' # DIAMOND WITH BOTTOM HALF BLACK
+  "\\diamondbotblack": '\u2B19' # DIAMOND WITH BOTTOM HALF BLACK
+  "\\dottedsquare{}": '\u2B1A' # DOTTED SQUARE
+  "{\\dottedsquare}": '\u2B1A' # DOTTED SQUARE
+  "\\dottedsquare": '\u2B1A' # DOTTED SQUARE
+  "\\vysmblksquare{}": '\u2B1D' # # \centerdot (amssymb), t \Squaredot (marvosym), BLACK VERY SMALL SQUARE
+  "{\\vysmblksquare}": '\u2B1D' # # \centerdot (amssymb), t \Squaredot (marvosym), BLACK VERY SMALL SQUARE
+  "\\vysmblksquare": '\u2B1D' # # \centerdot (amssymb), t \Squaredot (marvosym), BLACK VERY SMALL SQUARE
+  "\\vysmwhtsquare{}": '\u2B1E' # WHITE VERY SMALL SQUARE
+  "{\\vysmwhtsquare}": '\u2B1E' # WHITE VERY SMALL SQUARE
+  "\\vysmwhtsquare": '\u2B1E' # WHITE VERY SMALL SQUARE
+  "\\pentagonblack{}": '\u2B1F' # BLACK PENTAGON
+  "{\\pentagonblack}": '\u2B1F' # BLACK PENTAGON
+  "\\pentagonblack": '\u2B1F' # BLACK PENTAGON
+  "\\pentagon{}": '\u2B20' # WHITE PENTAGON
+  "{\\pentagon}": '\u2B20' # WHITE PENTAGON
+  "\\pentagon": '\u2B20' # WHITE PENTAGON
+  "\\varhexagon{}": '\u2B21' # WHITE HEXAGON
+  "{\\varhexagon}": '\u2B21' # WHITE HEXAGON
+  "\\varhexagon": '\u2B21' # WHITE HEXAGON
+  "\\varhexagonblack{}": '\u2B22' # BLACK HEXAGON
+  "{\\varhexagonblack}": '\u2B22' # BLACK HEXAGON
+  "\\varhexagonblack": '\u2B22' # BLACK HEXAGON
+  "\\hexagonblack{}": '\u2B23' # HORIZONTAL BLACK HEXAGON
+  "{\\hexagonblack}": '\u2B23' # HORIZONTAL BLACK HEXAGON
+  "\\hexagonblack": '\u2B23' # HORIZONTAL BLACK HEXAGON
+  "\\lgblkcircle{}": '\u2B24' # BLACK LARGE CIRCLE
+  "{\\lgblkcircle}": '\u2B24' # BLACK LARGE CIRCLE
+  "\\lgblkcircle": '\u2B24' # BLACK LARGE CIRCLE
+  "\\mdblkdiamond{}": '\u2B25' # BLACK MEDIUM DIAMOND
+  "{\\mdblkdiamond}": '\u2B25' # BLACK MEDIUM DIAMOND
+  "\\mdblkdiamond": '\u2B25' # BLACK MEDIUM DIAMOND
+  "\\mdwhtdiamond{}": '\u2B26' # WHITE MEDIUM DIAMOND
+  "{\\mdwhtdiamond}": '\u2B26' # WHITE MEDIUM DIAMOND
+  "\\mdwhtdiamond": '\u2B26' # WHITE MEDIUM DIAMOND
+  "\\mdblklozenge{}": '\u2B27' # # \blacklozenge (amssymb), BLACK MEDIUM LOZENGE
+  "{\\mdblklozenge}": '\u2B27' # # \blacklozenge (amssymb), BLACK MEDIUM LOZENGE
+  "\\mdblklozenge": '\u2B27' # # \blacklozenge (amssymb), BLACK MEDIUM LOZENGE
+  "\\mdwhtlozenge{}": '\u2B28' # # \lozenge (amssymb), WHITE MEDIUM LOZENGE
+  "{\\mdwhtlozenge}": '\u2B28' # # \lozenge (amssymb), WHITE MEDIUM LOZENGE
+  "\\mdwhtlozenge": '\u2B28' # # \lozenge (amssymb), WHITE MEDIUM LOZENGE
+  "\\smblkdiamond{}": '\u2B29' # BLACK SMALL DIAMOND
+  "{\\smblkdiamond}": '\u2B29' # BLACK SMALL DIAMOND
+  "\\smblkdiamond": '\u2B29' # BLACK SMALL DIAMOND
+  "\\smblklozenge{}": '\u2B2A' # BLACK SMALL LOZENGE
+  "{\\smblklozenge}": '\u2B2A' # BLACK SMALL LOZENGE
+  "\\smblklozenge": '\u2B2A' # BLACK SMALL LOZENGE
+  "\\smwhtlozenge{}": '\u2B2B' # WHITE SMALL LOZENGE
+  "{\\smwhtlozenge}": '\u2B2B' # WHITE SMALL LOZENGE
+  "\\smwhtlozenge": '\u2B2B' # WHITE SMALL LOZENGE
+  "\\blkhorzoval{}": '\u2B2C' # BLACK HORIZONTAL ELLIPSE
+  "{\\blkhorzoval}": '\u2B2C' # BLACK HORIZONTAL ELLIPSE
+  "\\blkhorzoval": '\u2B2C' # BLACK HORIZONTAL ELLIPSE
+  "\\whthorzoval{}": '\u2B2D' # WHITE HORIZONTAL ELLIPSE
+  "{\\whthorzoval}": '\u2B2D' # WHITE HORIZONTAL ELLIPSE
+  "\\whthorzoval": '\u2B2D' # WHITE HORIZONTAL ELLIPSE
+  "\\blkvertoval{}": '\u2B2E' # BLACK VERTICAL ELLIPSE
+  "{\\blkvertoval}": '\u2B2E' # BLACK VERTICAL ELLIPSE
+  "\\blkvertoval": '\u2B2E' # BLACK VERTICAL ELLIPSE
+  "\\whtvertoval{}": '\u2B2F' # WHITE VERTICAL ELLIPSE
+  "{\\whtvertoval}": '\u2B2F' # WHITE VERTICAL ELLIPSE
+  "\\whtvertoval": '\u2B2F' # WHITE VERTICAL ELLIPSE
+  "\\circleonleftarrow{}": '\u2B30' # LEFT ARROW WITH SMALL CIRCLE
+  "{\\circleonleftarrow}": '\u2B30' # LEFT ARROW WITH SMALL CIRCLE
+  "\\circleonleftarrow": '\u2B30' # LEFT ARROW WITH SMALL CIRCLE
+  "\\leftthreearrows{}": '\u2B31' # THREE LEFTWARDS ARROWS
+  "{\\leftthreearrows}": '\u2B31' # THREE LEFTWARDS ARROWS
+  "\\leftthreearrows": '\u2B31' # THREE LEFTWARDS ARROWS
+  "\\leftarrowonoplus{}": '\u2B32' # LEFT ARROW WITH CIRCLED PLUS
+  "{\\leftarrowonoplus}": '\u2B32' # LEFT ARROW WITH CIRCLED PLUS
+  "\\leftarrowonoplus": '\u2B32' # LEFT ARROW WITH CIRCLED PLUS
+  "\\longleftsquigarrow{}": '\u2B33' # LONG LEFTWARDS SQUIGGLE ARROW
+  "{\\longleftsquigarrow}": '\u2B33' # LONG LEFTWARDS SQUIGGLE ARROW
+  "\\longleftsquigarrow": '\u2B33' # LONG LEFTWARDS SQUIGGLE ARROW
+  "\\nvtwoheadleftarrow{}": '\u2B34' # LEFTWARDS TWO-HEADED ARROW WITH VERTICAL STROKE
+  "{\\nvtwoheadleftarrow}": '\u2B34' # LEFTWARDS TWO-HEADED ARROW WITH VERTICAL STROKE
+  "\\nvtwoheadleftarrow": '\u2B34' # LEFTWARDS TWO-HEADED ARROW WITH VERTICAL STROKE
+  "\\nVtwoheadleftarrow{}": '\u2B35' # LEFTWARDS TWO-HEADED ARROW WITH DOUBLE VERTICAL STROKE
+  "{\\nVtwoheadleftarrow}": '\u2B35' # LEFTWARDS TWO-HEADED ARROW WITH DOUBLE VERTICAL STROKE
+  "\\nVtwoheadleftarrow": '\u2B35' # LEFTWARDS TWO-HEADED ARROW WITH DOUBLE VERTICAL STROKE
+  "\\twoheadmapsfrom{}": '\u2B36' # LEFTWARDS TWO-HEADED ARROW FROM BAR
+  "{\\twoheadmapsfrom}": '\u2B36' # LEFTWARDS TWO-HEADED ARROW FROM BAR
+  "\\twoheadmapsfrom": '\u2B36' # LEFTWARDS TWO-HEADED ARROW FROM BAR
+  "\\twoheadleftdbkarrow{}": '\u2B37' # leftwards two-headed triple-dash arrow
+  "{\\twoheadleftdbkarrow}": '\u2B37' # leftwards two-headed triple-dash arrow
+  "\\twoheadleftdbkarrow": '\u2B37' # leftwards two-headed triple-dash arrow
+  "\\leftdotarrow{}": '\u2B38' # LEFTWARDS ARROW WITH DOTTED STEM
+  "{\\leftdotarrow}": '\u2B38' # LEFTWARDS ARROW WITH DOTTED STEM
+  "\\leftdotarrow": '\u2B38' # LEFTWARDS ARROW WITH DOTTED STEM
+  "\\nvleftarrowtail{}": '\u2B39' # LEFTWARDS ARROW WITH TAIL WITH VERTICAL STROKE
+  "{\\nvleftarrowtail}": '\u2B39' # LEFTWARDS ARROW WITH TAIL WITH VERTICAL STROKE
+  "\\nvleftarrowtail": '\u2B39' # LEFTWARDS ARROW WITH TAIL WITH VERTICAL STROKE
+  "\\nVleftarrowtail{}": '\u2B3A' # LEFTWARDS ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE
+  "{\\nVleftarrowtail}": '\u2B3A' # LEFTWARDS ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE
+  "\\nVleftarrowtail": '\u2B3A' # LEFTWARDS ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE
+  "\\twoheadleftarrowtail{}": '\u2B3B' # LEFTWARDS TWO-HEADED ARROW WITH TAIL
+  "{\\twoheadleftarrowtail}": '\u2B3B' # LEFTWARDS TWO-HEADED ARROW WITH TAIL
+  "\\twoheadleftarrowtail": '\u2B3B' # LEFTWARDS TWO-HEADED ARROW WITH TAIL
+  "\\nvtwoheadleftarrowtail{}": '\u2B3C' # LEFTWARDS TWO-HEADED ARROW WITH TAIL WITH VERTICAL STROKE
+  "{\\nvtwoheadleftarrowtail}": '\u2B3C' # LEFTWARDS TWO-HEADED ARROW WITH TAIL WITH VERTICAL STROKE
+  "\\nvtwoheadleftarrowtail": '\u2B3C' # LEFTWARDS TWO-HEADED ARROW WITH TAIL WITH VERTICAL STROKE
+  "\\nVtwoheadleftarrowtail{}": '\u2B3D' # LEFTWARDS TWO-HEADED ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE
+  "{\\nVtwoheadleftarrowtail}": '\u2B3D' # LEFTWARDS TWO-HEADED ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE
+  "\\nVtwoheadleftarrowtail": '\u2B3D' # LEFTWARDS TWO-HEADED ARROW WITH TAIL WITH DOUBLE VERTICAL STROKE
+  "\\leftarrowx{}": '\u2B3E' # LEFTWARDS ARROW THROUGH X
+  "{\\leftarrowx}": '\u2B3E' # LEFTWARDS ARROW THROUGH X
+  "\\leftarrowx": '\u2B3E' # LEFTWARDS ARROW THROUGH X
+  "\\leftcurvedarrow{}": '\u2B3F' # WAVE ARROW POINTING DIRECTLY LEFT
+  "{\\leftcurvedarrow}": '\u2B3F' # WAVE ARROW POINTING DIRECTLY LEFT
+  "\\leftcurvedarrow": '\u2B3F' # WAVE ARROW POINTING DIRECTLY LEFT
+  "\\equalleftarrow{}": '\u2B40' # EQUALS SIGN ABOVE LEFTWARDS ARROW
+  "{\\equalleftarrow}": '\u2B40' # EQUALS SIGN ABOVE LEFTWARDS ARROW
+  "\\equalleftarrow": '\u2B40' # EQUALS SIGN ABOVE LEFTWARDS ARROW
+  "\\bsimilarleftarrow{}": '\u2B41' # REVERSE TILDE OPERATOR ABOVE LEFTWARDS ARROW
+  "{\\bsimilarleftarrow}": '\u2B41' # REVERSE TILDE OPERATOR ABOVE LEFTWARDS ARROW
+  "\\bsimilarleftarrow": '\u2B41' # REVERSE TILDE OPERATOR ABOVE LEFTWARDS ARROW
+  "\\leftarrowbackapprox{}": '\u2B42' # LEFTWARDS ARROW ABOVE REVERSE ALMOST EQUAL TO
+  "{\\leftarrowbackapprox}": '\u2B42' # LEFTWARDS ARROW ABOVE REVERSE ALMOST EQUAL TO
+  "\\leftarrowbackapprox": '\u2B42' # LEFTWARDS ARROW ABOVE REVERSE ALMOST EQUAL TO
+  "\\rightarrowgtr{}": '\u2B43' # rightwards arrow through less-than
+  "{\\rightarrowgtr}": '\u2B43' # rightwards arrow through less-than
+  "\\rightarrowgtr": '\u2B43' # rightwards arrow through less-than
+  "\\rightarrowsupset{}": '\u2B44' # rightwards arrow through subset
+  "{\\rightarrowsupset}": '\u2B44' # rightwards arrow through subset
+  "\\rightarrowsupset": '\u2B44' # rightwards arrow through subset
+  "\\LLeftarrow{}": '\u2B45' # LEFTWARDS QUADRUPLE ARROW
+  "{\\LLeftarrow}": '\u2B45' # LEFTWARDS QUADRUPLE ARROW
+  "\\LLeftarrow": '\u2B45' # LEFTWARDS QUADRUPLE ARROW
+  "\\RRightarrow{}": '\u2B46' # RIGHTWARDS QUADRUPLE ARROW
+  "{\\RRightarrow}": '\u2B46' # RIGHTWARDS QUADRUPLE ARROW
+  "\\RRightarrow": '\u2B46' # RIGHTWARDS QUADRUPLE ARROW
+  "\\bsimilarrightarrow{}": '\u2B47' # REVERSE TILDE OPERATOR ABOVE RIGHTWARDS ARROW
+  "{\\bsimilarrightarrow}": '\u2B47' # REVERSE TILDE OPERATOR ABOVE RIGHTWARDS ARROW
+  "\\bsimilarrightarrow": '\u2B47' # REVERSE TILDE OPERATOR ABOVE RIGHTWARDS ARROW
+  "\\rightarrowbackapprox{}": '\u2B48' # RIGHTWARDS ARROW ABOVE REVERSE ALMOST EQUAL TO
+  "{\\rightarrowbackapprox}": '\u2B48' # RIGHTWARDS ARROW ABOVE REVERSE ALMOST EQUAL TO
+  "\\rightarrowbackapprox": '\u2B48' # RIGHTWARDS ARROW ABOVE REVERSE ALMOST EQUAL TO
+  "\\similarleftarrow{}": '\u2B49' # TILDE OPERATOR ABOVE LEFTWARDS ARROW
+  "{\\similarleftarrow}": '\u2B49' # TILDE OPERATOR ABOVE LEFTWARDS ARROW
+  "\\similarleftarrow": '\u2B49' # TILDE OPERATOR ABOVE LEFTWARDS ARROW
+  "\\leftarrowapprox{}": '\u2B4A' # LEFTWARDS ARROW ABOVE ALMOST EQUAL TO
+  "{\\leftarrowapprox}": '\u2B4A' # LEFTWARDS ARROW ABOVE ALMOST EQUAL TO
+  "\\leftarrowapprox": '\u2B4A' # LEFTWARDS ARROW ABOVE ALMOST EQUAL TO
+  "\\leftarrowbsimilar{}": '\u2B4B' # LEFTWARDS ARROW ABOVE REVERSE TILDE OPERATOR
+  "{\\leftarrowbsimilar}": '\u2B4B' # LEFTWARDS ARROW ABOVE REVERSE TILDE OPERATOR
+  "\\leftarrowbsimilar": '\u2B4B' # LEFTWARDS ARROW ABOVE REVERSE TILDE OPERATOR
+  "\\rightarrowbsimilar{}": '\u2B4C' # righttwards arrow above reverse tilde operator
+  "{\\rightarrowbsimilar}": '\u2B4C' # righttwards arrow above reverse tilde operator
+  "\\rightarrowbsimilar": '\u2B4C' # righttwards arrow above reverse tilde operator
+  "\\medwhitestar{}": '\u2B50' # WHITE MEDIUM STAR
+  "{\\medwhitestar}": '\u2B50' # WHITE MEDIUM STAR
+  "\\medwhitestar": '\u2B50' # WHITE MEDIUM STAR
+  "\\medblackstar{}": '\u2B51' # black medium star
+  "{\\medblackstar}": '\u2B51' # black medium star
+  "\\medblackstar": '\u2B51' # black medium star
+  "\\smwhitestar{}": '\u2B52' # WHITE SMALL STAR
+  "{\\smwhitestar}": '\u2B52' # WHITE SMALL STAR
+  "\\smwhitestar": '\u2B52' # WHITE SMALL STAR
+  "\\rightpentagonblack{}": '\u2B53' # BLACK RIGHT-POINTING PENTAGON
+  "{\\rightpentagonblack}": '\u2B53' # BLACK RIGHT-POINTING PENTAGON
+  "\\rightpentagonblack": '\u2B53' # BLACK RIGHT-POINTING PENTAGON
+  "\\rightpentagon{}": '\u2B54' # WHITE RIGHT-POINTING PENTAGON
+  "{\\rightpentagon}": '\u2B54' # WHITE RIGHT-POINTING PENTAGON
+  "\\rightpentagon": '\u2B54' # WHITE RIGHT-POINTING PENTAGON
+  "\\ElsevierGlyph{300A}": '\u300A' # LEFT DOUBLE ANGLE BRACKET
+  "\\ElsevierGlyph{300B}": '\u300B' # RIGHT DOUBLE ANGLE BRACKET
+  "\\postalmark{}": '\u3012' # POSTAL MARK
+  "{\\postalmark}": '\u3012' # POSTAL MARK
+  "\\postalmark": '\u3012' # POSTAL MARK
+  "\\ElsevierGlyph{3019}": '\u3019' # RIGHT WHITE TORTOISE SHELL BRACKET
+  "\\openbracketleft{}": '\u301A' # LEFT WHITE SQUARE BRACKET
+  "{\\openbracketleft}": '\u301A' # LEFT WHITE SQUARE BRACKET
+  "\\openbracketleft": '\u301A' # LEFT WHITE SQUARE BRACKET
+  "\\openbracketright{}": '\u301B' # RIGHT WHITE SQUARE BRACKET
+  "{\\openbracketright}": '\u301B' # RIGHT WHITE SQUARE BRACKET
+  "\\openbracketright": '\u301B' # RIGHT WHITE SQUARE BRACKET
+  "\\hzigzag{}": '\u3030' # zigzag
+  "{\\hzigzag}": '\u3030' # zigzag
+  "\\hzigzag": '\u3030' # zigzag
+  "ff{}": '\uFB00' # LATIN SMALL LIGATURE FF
+  "fi{}": '\uFB01' # LATIN SMALL LIGATURE FI
+  "fl{}": '\uFB02' # LATIN SMALL LIGATURE FL
+  "ffi{}": '\uFB03' # LATIN SMALL LIGATURE FFI
+  "ffl{}": '\uFB04' # LATIN SMALL LIGATURE FFL
   "\\dbend{}": '\uFFFD'
   "{\\dbend}": '\uFFFD'
   "\\dbend": '\uFFFD'
-  "\\mathbf{A}": '\uD835\uDC00'
-  "\\mathbf{B}": '\uD835\uDC01'
-  "\\mathbf{C}": '\uD835\uDC02'
-  "\\mathbf{D}": '\uD835\uDC03'
-  "\\mathbf{E}": '\uD835\uDC04'
-  "\\mathbf{F}": '\uD835\uDC05'
-  "\\mathbf{G}": '\uD835\uDC06'
-  "\\mathbf{H}": '\uD835\uDC07'
-  "\\mathbf{I}": '\uD835\uDC08'
-  "\\mathbf{J}": '\uD835\uDC09'
-  "\\mathbf{K}": '\uD835\uDC0A'
-  "\\mathbf{L}": '\uD835\uDC0B'
-  "\\mathbf{M}": '\uD835\uDC0C'
-  "\\mathbf{N}": '\uD835\uDC0D'
-  "\\mathbf{O}": '\uD835\uDC0E'
-  "\\mathbf{P}": '\uD835\uDC0F'
-  "\\mathbf{Q}": '\uD835\uDC10'
-  "\\mathbf{R}": '\uD835\uDC11'
-  "\\mathbf{S}": '\uD835\uDC12'
-  "\\mathbf{T}": '\uD835\uDC13'
-  "\\mathbf{U}": '\uD835\uDC14'
-  "\\mathbf{V}": '\uD835\uDC15'
-  "\\mathbf{W}": '\uD835\uDC16'
-  "\\mathbf{X}": '\uD835\uDC17'
-  "\\mathbf{Y}": '\uD835\uDC18'
-  "\\mathbf{Z}": '\uD835\uDC19'
-  "\\mathbf{a}": '\uD835\uDC1A'
-  "\\mathbf{b}": '\uD835\uDC1B'
-  "\\mathbf{c}": '\uD835\uDC1C'
-  "\\mathbf{d}": '\uD835\uDC1D'
-  "\\mathbf{e}": '\uD835\uDC1E'
-  "\\mathbf{f}": '\uD835\uDC1F'
-  "\\mathbf{g}": '\uD835\uDC20'
-  "\\mathbf{h}": '\uD835\uDC21'
-  "\\mathbf{i}": '\uD835\uDC22'
-  "\\mathbf{j}": '\uD835\uDC23'
-  "\\mathbf{k}": '\uD835\uDC24'
-  "\\mathbf{l}": '\uD835\uDC25'
-  "\\mathbf{m}": '\uD835\uDC26'
-  "\\mathbf{n}": '\uD835\uDC27'
-  "\\mathbf{o}": '\uD835\uDC28'
-  "\\mathbf{p}": '\uD835\uDC29'
-  "\\mathbf{q}": '\uD835\uDC2A'
-  "\\mathbf{r}": '\uD835\uDC2B'
-  "\\mathbf{s}": '\uD835\uDC2C'
-  "\\mathbf{t}": '\uD835\uDC2D'
-  "\\mathbf{u}": '\uD835\uDC2E'
-  "\\mathbf{v}": '\uD835\uDC2F'
-  "\\mathbf{w}": '\uD835\uDC30'
-  "\\mathbf{x}": '\uD835\uDC31'
-  "\\mathbf{y}": '\uD835\uDC32'
-  "\\mathbf{z}": '\uD835\uDC33'
-  "\\mathsl{A}": '\uD835\uDC34'
-  "\\mathsl{B}": '\uD835\uDC35'
-  "\\mathsl{C}": '\uD835\uDC36'
-  "\\mathsl{D}": '\uD835\uDC37'
-  "\\mathsl{E}": '\uD835\uDC38'
-  "\\mathsl{F}": '\uD835\uDC39'
-  "\\mathsl{G}": '\uD835\uDC3A'
-  "\\mathsl{H}": '\uD835\uDC3B'
-  "\\mathsl{I}": '\uD835\uDC3C'
-  "\\mathsl{J}": '\uD835\uDC3D'
-  "\\mathsl{K}": '\uD835\uDC3E'
-  "\\mathsl{L}": '\uD835\uDC3F'
-  "\\mathsl{M}": '\uD835\uDC40'
-  "\\mathsl{N}": '\uD835\uDC41'
-  "\\mathsl{O}": '\uD835\uDC42'
-  "\\mathsl{P}": '\uD835\uDC43'
-  "\\mathsl{Q}": '\uD835\uDC44'
-  "\\mathsl{R}": '\uD835\uDC45'
-  "\\mathsl{S}": '\uD835\uDC46'
-  "\\mathsl{T}": '\uD835\uDC47'
-  "\\mathsl{U}": '\uD835\uDC48'
-  "\\mathsl{V}": '\uD835\uDC49'
-  "\\mathsl{W}": '\uD835\uDC4A'
-  "\\mathsl{X}": '\uD835\uDC4B'
-  "\\mathsl{Y}": '\uD835\uDC4C'
-  "\\mathsl{Z}": '\uD835\uDC4D'
-  "\\mathsl{a}": '\uD835\uDC4E'
-  "\\mathsl{b}": '\uD835\uDC4F'
-  "\\mathsl{c}": '\uD835\uDC50'
-  "\\mathsl{d}": '\uD835\uDC51'
-  "\\mathsl{e}": '\uD835\uDC52'
-  "\\mathsl{f}": '\uD835\uDC53'
-  "\\mathsl{g}": '\uD835\uDC54'
-  "\\mathsl{i}": '\uD835\uDC56'
-  "\\mathsl{j}": '\uD835\uDC57'
-  "\\mathsl{k}": '\uD835\uDC58'
-  "\\mathsl{l}": '\uD835\uDC59'
-  "\\mathsl{m}": '\uD835\uDC5A'
-  "\\mathsl{n}": '\uD835\uDC5B'
-  "\\mathsl{o}": '\uD835\uDC5C'
-  "\\mathsl{p}": '\uD835\uDC5D'
-  "\\mathsl{q}": '\uD835\uDC5E'
-  "\\mathsl{r}": '\uD835\uDC5F'
-  "\\mathsl{s}": '\uD835\uDC60'
-  "\\mathsl{t}": '\uD835\uDC61'
-  "\\mathsl{u}": '\uD835\uDC62'
-  "\\mathsl{v}": '\uD835\uDC63'
-  "\\mathsl{w}": '\uD835\uDC64'
-  "\\mathsl{x}": '\uD835\uDC65'
-  "\\mathsl{y}": '\uD835\uDC66'
-  "\\mathsl{z}": '\uD835\uDC67'
-  "\\mathbit{A}": '\uD835\uDC68'
-  "\\mathbit{B}": '\uD835\uDC69'
-  "\\mathbit{C}": '\uD835\uDC6A'
-  "\\mathbit{D}": '\uD835\uDC6B'
-  "\\mathbit{E}": '\uD835\uDC6C'
-  "\\mathbit{F}": '\uD835\uDC6D'
-  "\\mathbit{G}": '\uD835\uDC6E'
-  "\\mathbit{H}": '\uD835\uDC6F'
-  "\\mathbit{I}": '\uD835\uDC70'
-  "\\mathbit{J}": '\uD835\uDC71'
-  "\\mathbit{K}": '\uD835\uDC72'
-  "\\mathbit{L}": '\uD835\uDC73'
-  "\\mathbit{M}": '\uD835\uDC74'
-  "\\mathbit{N}": '\uD835\uDC75'
-  "\\mathbit{O}": '\uD835\uDC76'
-  "\\mathbit{P}": '\uD835\uDC77'
-  "\\mathbit{Q}": '\uD835\uDC78'
-  "\\mathbit{R}": '\uD835\uDC79'
-  "\\mathbit{S}": '\uD835\uDC7A'
-  "\\mathbit{T}": '\uD835\uDC7B'
-  "\\mathbit{U}": '\uD835\uDC7C'
-  "\\mathbit{V}": '\uD835\uDC7D'
-  "\\mathbit{W}": '\uD835\uDC7E'
-  "\\mathbit{X}": '\uD835\uDC7F'
-  "\\mathbit{Y}": '\uD835\uDC80'
-  "\\mathbit{Z}": '\uD835\uDC81'
-  "\\mathbit{a}": '\uD835\uDC82'
-  "\\mathbit{b}": '\uD835\uDC83'
-  "\\mathbit{c}": '\uD835\uDC84'
-  "\\mathbit{d}": '\uD835\uDC85'
-  "\\mathbit{e}": '\uD835\uDC86'
-  "\\mathbit{f}": '\uD835\uDC87'
-  "\\mathbit{g}": '\uD835\uDC88'
-  "\\mathbit{h}": '\uD835\uDC89'
-  "\\mathbit{i}": '\uD835\uDC8A'
-  "\\mathbit{j}": '\uD835\uDC8B'
-  "\\mathbit{k}": '\uD835\uDC8C'
-  "\\mathbit{l}": '\uD835\uDC8D'
-  "\\mathbit{m}": '\uD835\uDC8E'
-  "\\mathbit{n}": '\uD835\uDC8F'
-  "\\mathbit{o}": '\uD835\uDC90'
-  "\\mathbit{p}": '\uD835\uDC91'
-  "\\mathbit{q}": '\uD835\uDC92'
-  "\\mathbit{r}": '\uD835\uDC93'
-  "\\mathbit{s}": '\uD835\uDC94'
-  "\\mathbit{t}": '\uD835\uDC95'
-  "\\mathbit{u}": '\uD835\uDC96'
-  "\\mathbit{v}": '\uD835\uDC97'
-  "\\mathbit{w}": '\uD835\uDC98'
-  "\\mathbit{x}": '\uD835\uDC99'
-  "\\mathbit{y}": '\uD835\uDC9A'
-  "\\mathbit{z}": '\uD835\uDC9B'
-  "\\mathscr{A}": '\uD835\uDC9C'
-  "\\mathscr{C}": '\uD835\uDC9E'
-  "\\mathscr{D}": '\uD835\uDC9F'
-  "\\mathscr{G}": '\uD835\uDCA2'
-  "\\mathscr{J}": '\uD835\uDCA5'
-  "\\mathscr{K}": '\uD835\uDCA6'
-  "\\mathscr{N}": '\uD835\uDCA9'
-  "\\mathscr{O}": '\uD835\uDCAA'
-  "\\mathscr{P}": '\uD835\uDCAB'
-  "\\mathscr{Q}": '\uD835\uDCAC'
-  "\\mathscr{S}": '\uD835\uDCAE'
-  "\\mathscr{T}": '\uD835\uDCAF'
-  "\\mathscr{U}": '\uD835\uDCB0'
-  "\\mathscr{V}": '\uD835\uDCB1'
-  "\\mathscr{W}": '\uD835\uDCB2'
-  "\\mathscr{X}": '\uD835\uDCB3'
-  "\\mathscr{Y}": '\uD835\uDCB4'
-  "\\mathscr{Z}": '\uD835\uDCB5'
-  "\\mathscr{a}": '\uD835\uDCB6'
-  "\\mathscr{b}": '\uD835\uDCB7'
-  "\\mathscr{c}": '\uD835\uDCB8'
-  "\\mathscr{d}": '\uD835\uDCB9'
-  "\\mathscr{f}": '\uD835\uDCBB'
-  "\\mathscr{h}": '\uD835\uDCBD'
-  "\\mathscr{i}": '\uD835\uDCBE'
-  "\\mathscr{j}": '\uD835\uDCBF'
-  "\\mathscr{k}": '\uD835\uDCC0'
-  "\\mathscr{m}": '\uD835\uDCC2'
-  "\\mathscr{n}": '\uD835\uDCC3'
-  "\\mathscr{p}": '\uD835\uDCC5'
-  "\\mathscr{q}": '\uD835\uDCC6'
-  "\\mathscr{r}": '\uD835\uDCC7'
-  "\\mathscr{s}": '\uD835\uDCC8'
-  "\\mathscr{t}": '\uD835\uDCC9'
-  "\\mathscr{u}": '\uD835\uDCCA'
-  "\\mathscr{v}": '\uD835\uDCCB'
-  "\\mathscr{w}": '\uD835\uDCCC'
-  "\\mathscr{x}": '\uD835\uDCCD'
-  "\\mathscr{y}": '\uD835\uDCCE'
-  "\\mathscr{z}": '\uD835\uDCCF'
-  "\\mathmit{A}": '\uD835\uDCD0'
-  "\\mathmit{B}": '\uD835\uDCD1'
-  "\\mathmit{C}": '\uD835\uDCD2'
-  "\\mathmit{D}": '\uD835\uDCD3'
-  "\\mathmit{E}": '\uD835\uDCD4'
-  "\\mathmit{F}": '\uD835\uDCD5'
-  "\\mathmit{G}": '\uD835\uDCD6'
-  "\\mathmit{H}": '\uD835\uDCD7'
-  "\\mathmit{I}": '\uD835\uDCD8'
-  "\\mathmit{J}": '\uD835\uDCD9'
-  "\\mathmit{K}": '\uD835\uDCDA'
-  "\\mathmit{L}": '\uD835\uDCDB'
-  "\\mathmit{M}": '\uD835\uDCDC'
-  "\\mathmit{N}": '\uD835\uDCDD'
-  "\\mathmit{O}": '\uD835\uDCDE'
-  "\\mathmit{P}": '\uD835\uDCDF'
-  "\\mathmit{Q}": '\uD835\uDCE0'
-  "\\mathmit{R}": '\uD835\uDCE1'
-  "\\mathmit{S}": '\uD835\uDCE2'
-  "\\mathmit{T}": '\uD835\uDCE3'
-  "\\mathmit{U}": '\uD835\uDCE4'
-  "\\mathmit{V}": '\uD835\uDCE5'
-  "\\mathmit{W}": '\uD835\uDCE6'
-  "\\mathmit{X}": '\uD835\uDCE7'
-  "\\mathmit{Y}": '\uD835\uDCE8'
-  "\\mathmit{Z}": '\uD835\uDCE9'
-  "\\mathmit{a}": '\uD835\uDCEA'
-  "\\mathmit{b}": '\uD835\uDCEB'
-  "\\mathmit{c}": '\uD835\uDCEC'
-  "\\mathmit{d}": '\uD835\uDCED'
-  "\\mathmit{e}": '\uD835\uDCEE'
-  "\\mathmit{f}": '\uD835\uDCEF'
-  "\\mathmit{g}": '\uD835\uDCF0'
-  "\\mathmit{h}": '\uD835\uDCF1'
-  "\\mathmit{i}": '\uD835\uDCF2'
-  "\\mathmit{j}": '\uD835\uDCF3'
-  "\\mathmit{k}": '\uD835\uDCF4'
-  "\\mathmit{l}": '\uD835\uDCF5'
-  "\\mathmit{m}": '\uD835\uDCF6'
-  "\\mathmit{n}": '\uD835\uDCF7'
-  "\\mathmit{o}": '\uD835\uDCF8'
-  "\\mathmit{p}": '\uD835\uDCF9'
-  "\\mathmit{q}": '\uD835\uDCFA'
-  "\\mathmit{r}": '\uD835\uDCFB'
-  "\\mathmit{s}": '\uD835\uDCFC'
-  "\\mathmit{t}": '\uD835\uDCFD'
-  "\\mathmit{u}": '\uD835\uDCFE'
-  "\\mathmit{v}": '\uD835\uDCFF'
-  "\\mathmit{w}": '\uD835\uDD00'
-  "\\mathmit{x}": '\uD835\uDD01'
-  "\\mathmit{y}": '\uD835\uDD02'
-  "\\mathmit{z}": '\uD835\uDD03'
-  "\\mathfrak{A}": '\uD835\uDD04'
-  "\\mathfrak{B}": '\uD835\uDD05'
-  "\\mathfrak{D}": '\uD835\uDD07'
-  "\\mathfrak{E}": '\uD835\uDD08'
-  "\\mathfrak{F}": '\uD835\uDD09'
-  "\\mathfrak{G}": '\uD835\uDD0A'
-  "\\mathfrak{J}": '\uD835\uDD0D'
-  "\\mathfrak{K}": '\uD835\uDD0E'
-  "\\mathfrak{L}": '\uD835\uDD0F'
-  "\\mathfrak{M}": '\uD835\uDD10'
-  "\\mathfrak{N}": '\uD835\uDD11'
-  "\\mathfrak{O}": '\uD835\uDD12'
-  "\\mathfrak{P}": '\uD835\uDD13'
-  "\\mathfrak{Q}": '\uD835\uDD14'
-  "\\mathfrak{S}": '\uD835\uDD16'
-  "\\mathfrak{T}": '\uD835\uDD17'
-  "\\mathfrak{U}": '\uD835\uDD18'
-  "\\mathfrak{V}": '\uD835\uDD19'
-  "\\mathfrak{W}": '\uD835\uDD1A'
-  "\\mathfrak{X}": '\uD835\uDD1B'
-  "\\mathfrak{Y}": '\uD835\uDD1C'
-  "\\mathfrak{a}": '\uD835\uDD1E'
-  "\\mathfrak{b}": '\uD835\uDD1F'
-  "\\mathfrak{c}": '\uD835\uDD20'
-  "\\mathfrak{d}": '\uD835\uDD21'
-  "\\mathfrak{e}": '\uD835\uDD22'
-  "\\mathfrak{f}": '\uD835\uDD23'
-  "\\mathfrak{g}": '\uD835\uDD24'
-  "\\mathfrak{h}": '\uD835\uDD25'
-  "\\mathfrak{i}": '\uD835\uDD26'
-  "\\mathfrak{j}": '\uD835\uDD27'
-  "\\mathfrak{k}": '\uD835\uDD28'
-  "\\mathfrak{l}": '\uD835\uDD29'
-  "\\mathfrak{m}": '\uD835\uDD2A'
-  "\\mathfrak{n}": '\uD835\uDD2B'
-  "\\mathfrak{o}": '\uD835\uDD2C'
-  "\\mathfrak{p}": '\uD835\uDD2D'
-  "\\mathfrak{q}": '\uD835\uDD2E'
-  "\\mathfrak{r}": '\uD835\uDD2F'
-  "\\mathfrak{s}": '\uD835\uDD30'
-  "\\mathfrak{t}": '\uD835\uDD31'
-  "\\mathfrak{u}": '\uD835\uDD32'
-  "\\mathfrak{v}": '\uD835\uDD33'
-  "\\mathfrak{w}": '\uD835\uDD34'
-  "\\mathfrak{x}": '\uD835\uDD35'
-  "\\mathfrak{y}": '\uD835\uDD36'
-  "\\mathfrak{z}": '\uD835\uDD37'
-  "\\mathbb{A}": '\uD835\uDD38'
-  "\\mathbb{B}": '\uD835\uDD39'
-  "\\mathbb{D}": '\uD835\uDD3B'
-  "\\mathbb{E}": '\uD835\uDD3C'
-  "\\mathbb{F}": '\uD835\uDD3D'
-  "\\mathbb{G}": '\uD835\uDD3E'
-  "\\mathbb{I}": '\uD835\uDD40'
-  "\\mathbb{J}": '\uD835\uDD41'
-  "\\mathbb{K}": '\uD835\uDD42'
-  "\\mathbb{L}": '\uD835\uDD43'
-  "\\mathbb{M}": '\uD835\uDD44'
-  "\\mathbb{O}": '\uD835\uDD46'
-  "\\mathbb{S}": '\uD835\uDD4A'
-  "\\mathbb{T}": '\uD835\uDD4B'
-  "\\mathbb{U}": '\uD835\uDD4C'
-  "\\mathbb{V}": '\uD835\uDD4D'
-  "\\mathbb{W}": '\uD835\uDD4E'
-  "\\mathbb{X}": '\uD835\uDD4F'
-  "\\mathbb{Y}": '\uD835\uDD50'
-  "\\mathbb{a}": '\uD835\uDD52'
-  "\\mathbb{b}": '\uD835\uDD53'
-  "\\mathbb{c}": '\uD835\uDD54'
-  "\\mathbb{d}": '\uD835\uDD55'
-  "\\mathbb{e}": '\uD835\uDD56'
-  "\\mathbb{f}": '\uD835\uDD57'
-  "\\mathbb{g}": '\uD835\uDD58'
-  "\\mathbb{h}": '\uD835\uDD59'
-  "\\mathbb{i}": '\uD835\uDD5A'
-  "\\mathbb{j}": '\uD835\uDD5B'
-  "\\mathbb{k}": '\uD835\uDD5C'
-  "\\mathbb{l}": '\uD835\uDD5D'
-  "\\mathbb{m}": '\uD835\uDD5E'
-  "\\mathbb{n}": '\uD835\uDD5F'
-  "\\mathbb{o}": '\uD835\uDD60'
-  "\\mathbb{p}": '\uD835\uDD61'
-  "\\mathbb{q}": '\uD835\uDD62'
-  "\\mathbb{r}": '\uD835\uDD63'
-  "\\mathbb{s}": '\uD835\uDD64'
-  "\\mathbb{t}": '\uD835\uDD65'
-  "\\mathbb{u}": '\uD835\uDD66'
-  "\\mathbb{v}": '\uD835\uDD67'
-  "\\mathbb{w}": '\uD835\uDD68'
-  "\\mathbb{x}": '\uD835\uDD69'
-  "\\mathbb{y}": '\uD835\uDD6A'
-  "\\mathbb{z}": '\uD835\uDD6B'
-  "\\mathslbb{A}": '\uD835\uDD6C'
-  "\\mathslbb{B}": '\uD835\uDD6D'
-  "\\mathslbb{C}": '\uD835\uDD6E'
-  "\\mathslbb{D}": '\uD835\uDD6F'
-  "\\mathslbb{E}": '\uD835\uDD70'
-  "\\mathslbb{F}": '\uD835\uDD71'
-  "\\mathslbb{G}": '\uD835\uDD72'
-  "\\mathslbb{H}": '\uD835\uDD73'
-  "\\mathslbb{I}": '\uD835\uDD74'
-  "\\mathslbb{J}": '\uD835\uDD75'
-  "\\mathslbb{K}": '\uD835\uDD76'
-  "\\mathslbb{L}": '\uD835\uDD77'
-  "\\mathslbb{M}": '\uD835\uDD78'
-  "\\mathslbb{N}": '\uD835\uDD79'
-  "\\mathslbb{O}": '\uD835\uDD7A'
-  "\\mathslbb{P}": '\uD835\uDD7B'
-  "\\mathslbb{Q}": '\uD835\uDD7C'
-  "\\mathslbb{R}": '\uD835\uDD7D'
-  "\\mathslbb{S}": '\uD835\uDD7E'
-  "\\mathslbb{T}": '\uD835\uDD7F'
-  "\\mathslbb{U}": '\uD835\uDD80'
-  "\\mathslbb{V}": '\uD835\uDD81'
-  "\\mathslbb{W}": '\uD835\uDD82'
-  "\\mathslbb{X}": '\uD835\uDD83'
-  "\\mathslbb{Y}": '\uD835\uDD84'
-  "\\mathslbb{Z}": '\uD835\uDD85'
-  "\\mathslbb{a}": '\uD835\uDD86'
-  "\\mathslbb{b}": '\uD835\uDD87'
-  "\\mathslbb{c}": '\uD835\uDD88'
-  "\\mathslbb{d}": '\uD835\uDD89'
-  "\\mathslbb{e}": '\uD835\uDD8A'
-  "\\mathslbb{f}": '\uD835\uDD8B'
-  "\\mathslbb{g}": '\uD835\uDD8C'
-  "\\mathslbb{h}": '\uD835\uDD8D'
-  "\\mathslbb{i}": '\uD835\uDD8E'
-  "\\mathslbb{j}": '\uD835\uDD8F'
-  "\\mathslbb{k}": '\uD835\uDD90'
-  "\\mathslbb{l}": '\uD835\uDD91'
-  "\\mathslbb{m}": '\uD835\uDD92'
-  "\\mathslbb{n}": '\uD835\uDD93'
-  "\\mathslbb{o}": '\uD835\uDD94'
-  "\\mathslbb{p}": '\uD835\uDD95'
-  "\\mathslbb{q}": '\uD835\uDD96'
-  "\\mathslbb{r}": '\uD835\uDD97'
-  "\\mathslbb{s}": '\uD835\uDD98'
-  "\\mathslbb{t}": '\uD835\uDD99'
-  "\\mathslbb{u}": '\uD835\uDD9A'
-  "\\mathslbb{v}": '\uD835\uDD9B'
-  "\\mathslbb{w}": '\uD835\uDD9C'
-  "\\mathslbb{x}": '\uD835\uDD9D'
-  "\\mathslbb{y}": '\uD835\uDD9E'
-  "\\mathslbb{z}": '\uD835\uDD9F'
-  "\\mathsf{A}": '\uD835\uDDA0'
-  "\\mathsf{B}": '\uD835\uDDA1'
-  "\\mathsf{C}": '\uD835\uDDA2'
-  "\\mathsf{D}": '\uD835\uDDA3'
-  "\\mathsf{E}": '\uD835\uDDA4'
-  "\\mathsf{F}": '\uD835\uDDA5'
-  "\\mathsf{G}": '\uD835\uDDA6'
-  "\\mathsf{H}": '\uD835\uDDA7'
-  "\\mathsf{I}": '\uD835\uDDA8'
-  "\\mathsf{J}": '\uD835\uDDA9'
-  "\\mathsf{K}": '\uD835\uDDAA'
-  "\\mathsf{L}": '\uD835\uDDAB'
-  "\\mathsf{M}": '\uD835\uDDAC'
-  "\\mathsf{N}": '\uD835\uDDAD'
-  "\\mathsf{O}": '\uD835\uDDAE'
-  "\\mathsf{P}": '\uD835\uDDAF'
-  "\\mathsf{Q}": '\uD835\uDDB0'
-  "\\mathsf{R}": '\uD835\uDDB1'
-  "\\mathsf{S}": '\uD835\uDDB2'
-  "\\mathsf{T}": '\uD835\uDDB3'
-  "\\mathsf{U}": '\uD835\uDDB4'
-  "\\mathsf{V}": '\uD835\uDDB5'
-  "\\mathsf{W}": '\uD835\uDDB6'
-  "\\mathsf{X}": '\uD835\uDDB7'
-  "\\mathsf{Y}": '\uD835\uDDB8'
-  "\\mathsf{Z}": '\uD835\uDDB9'
-  "\\mathsf{a}": '\uD835\uDDBA'
-  "\\mathsf{b}": '\uD835\uDDBB'
-  "\\mathsf{c}": '\uD835\uDDBC'
-  "\\mathsf{d}": '\uD835\uDDBD'
-  "\\mathsf{e}": '\uD835\uDDBE'
-  "\\mathsf{f}": '\uD835\uDDBF'
-  "\\mathsf{g}": '\uD835\uDDC0'
-  "\\mathsf{h}": '\uD835\uDDC1'
-  "\\mathsf{i}": '\uD835\uDDC2'
-  "\\mathsf{j}": '\uD835\uDDC3'
-  "\\mathsf{k}": '\uD835\uDDC4'
-  "\\mathsf{l}": '\uD835\uDDC5'
-  "\\mathsf{m}": '\uD835\uDDC6'
-  "\\mathsf{n}": '\uD835\uDDC7'
-  "\\mathsf{o}": '\uD835\uDDC8'
-  "\\mathsf{p}": '\uD835\uDDC9'
-  "\\mathsf{q}": '\uD835\uDDCA'
-  "\\mathsf{r}": '\uD835\uDDCB'
-  "\\mathsf{s}": '\uD835\uDDCC'
-  "\\mathsf{t}": '\uD835\uDDCD'
-  "\\mathsf{u}": '\uD835\uDDCE'
-  "\\mathsf{v}": '\uD835\uDDCF'
-  "\\mathsf{w}": '\uD835\uDDD0'
-  "\\mathsf{x}": '\uD835\uDDD1'
-  "\\mathsf{y}": '\uD835\uDDD2'
-  "\\mathsf{z}": '\uD835\uDDD3'
-  "\\mathsfbf{A}": '\uD835\uDDD4'
-  "\\mathsfbf{B}": '\uD835\uDDD5'
-  "\\mathsfbf{C}": '\uD835\uDDD6'
-  "\\mathsfbf{D}": '\uD835\uDDD7'
-  "\\mathsfbf{E}": '\uD835\uDDD8'
-  "\\mathsfbf{F}": '\uD835\uDDD9'
-  "\\mathsfbf{G}": '\uD835\uDDDA'
-  "\\mathsfbf{H}": '\uD835\uDDDB'
-  "\\mathsfbf{I}": '\uD835\uDDDC'
-  "\\mathsfbf{J}": '\uD835\uDDDD'
-  "\\mathsfbf{K}": '\uD835\uDDDE'
-  "\\mathsfbf{L}": '\uD835\uDDDF'
-  "\\mathsfbf{M}": '\uD835\uDDE0'
-  "\\mathsfbf{N}": '\uD835\uDDE1'
-  "\\mathsfbf{O}": '\uD835\uDDE2'
-  "\\mathsfbf{P}": '\uD835\uDDE3'
-  "\\mathsfbf{Q}": '\uD835\uDDE4'
-  "\\mathsfbf{R}": '\uD835\uDDE5'
-  "\\mathsfbf{S}": '\uD835\uDDE6'
-  "\\mathsfbf{T}": '\uD835\uDDE7'
-  "\\mathsfbf{U}": '\uD835\uDDE8'
-  "\\mathsfbf{V}": '\uD835\uDDE9'
-  "\\mathsfbf{W}": '\uD835\uDDEA'
-  "\\mathsfbf{X}": '\uD835\uDDEB'
-  "\\mathsfbf{Y}": '\uD835\uDDEC'
-  "\\mathsfbf{Z}": '\uD835\uDDED'
-  "\\mathsfbf{a}": '\uD835\uDDEE'
-  "\\mathsfbf{b}": '\uD835\uDDEF'
-  "\\mathsfbf{c}": '\uD835\uDDF0'
-  "\\mathsfbf{d}": '\uD835\uDDF1'
-  "\\mathsfbf{e}": '\uD835\uDDF2'
-  "\\mathsfbf{f}": '\uD835\uDDF3'
-  "\\mathsfbf{g}": '\uD835\uDDF4'
-  "\\mathsfbf{h}": '\uD835\uDDF5'
-  "\\mathsfbf{i}": '\uD835\uDDF6'
-  "\\mathsfbf{j}": '\uD835\uDDF7'
-  "\\mathsfbf{k}": '\uD835\uDDF8'
-  "\\mathsfbf{l}": '\uD835\uDDF9'
-  "\\mathsfbf{m}": '\uD835\uDDFA'
-  "\\mathsfbf{n}": '\uD835\uDDFB'
-  "\\mathsfbf{o}": '\uD835\uDDFC'
-  "\\mathsfbf{p}": '\uD835\uDDFD'
-  "\\mathsfbf{q}": '\uD835\uDDFE'
-  "\\mathsfbf{r}": '\uD835\uDDFF'
-  "\\mathsfbf{s}": '\uD835\uDE00'
-  "\\mathsfbf{t}": '\uD835\uDE01'
-  "\\mathsfbf{u}": '\uD835\uDE02'
-  "\\mathsfbf{v}": '\uD835\uDE03'
-  "\\mathsfbf{w}": '\uD835\uDE04'
-  "\\mathsfbf{x}": '\uD835\uDE05'
-  "\\mathsfbf{y}": '\uD835\uDE06'
-  "\\mathsfbf{z}": '\uD835\uDE07'
-  "\\mathsfsl{A}": '\uD835\uDE08'
-  "\\mathsfsl{B}": '\uD835\uDE09'
-  "\\mathsfsl{C}": '\uD835\uDE0A'
-  "\\mathsfsl{D}": '\uD835\uDE0B'
-  "\\mathsfsl{E}": '\uD835\uDE0C'
-  "\\mathsfsl{F}": '\uD835\uDE0D'
-  "\\mathsfsl{G}": '\uD835\uDE0E'
-  "\\mathsfsl{H}": '\uD835\uDE0F'
-  "\\mathsfsl{I}": '\uD835\uDE10'
-  "\\mathsfsl{J}": '\uD835\uDE11'
-  "\\mathsfsl{K}": '\uD835\uDE12'
-  "\\mathsfsl{L}": '\uD835\uDE13'
-  "\\mathsfsl{M}": '\uD835\uDE14'
-  "\\mathsfsl{N}": '\uD835\uDE15'
-  "\\mathsfsl{O}": '\uD835\uDE16'
-  "\\mathsfsl{P}": '\uD835\uDE17'
-  "\\mathsfsl{Q}": '\uD835\uDE18'
-  "\\mathsfsl{R}": '\uD835\uDE19'
-  "\\mathsfsl{S}": '\uD835\uDE1A'
-  "\\mathsfsl{T}": '\uD835\uDE1B'
-  "\\mathsfsl{U}": '\uD835\uDE1C'
-  "\\mathsfsl{V}": '\uD835\uDE1D'
-  "\\mathsfsl{W}": '\uD835\uDE1E'
-  "\\mathsfsl{X}": '\uD835\uDE1F'
-  "\\mathsfsl{Y}": '\uD835\uDE20'
-  "\\mathsfsl{Z}": '\uD835\uDE21'
-  "\\mathsfsl{a}": '\uD835\uDE22'
-  "\\mathsfsl{b}": '\uD835\uDE23'
-  "\\mathsfsl{c}": '\uD835\uDE24'
-  "\\mathsfsl{d}": '\uD835\uDE25'
-  "\\mathsfsl{e}": '\uD835\uDE26'
-  "\\mathsfsl{f}": '\uD835\uDE27'
-  "\\mathsfsl{g}": '\uD835\uDE28'
-  "\\mathsfsl{h}": '\uD835\uDE29'
-  "\\mathsfsl{i}": '\uD835\uDE2A'
-  "\\mathsfsl{j}": '\uD835\uDE2B'
-  "\\mathsfsl{k}": '\uD835\uDE2C'
-  "\\mathsfsl{l}": '\uD835\uDE2D'
-  "\\mathsfsl{m}": '\uD835\uDE2E'
-  "\\mathsfsl{n}": '\uD835\uDE2F'
-  "\\mathsfsl{o}": '\uD835\uDE30'
-  "\\mathsfsl{p}": '\uD835\uDE31'
-  "\\mathsfsl{q}": '\uD835\uDE32'
-  "\\mathsfsl{r}": '\uD835\uDE33'
-  "\\mathsfsl{s}": '\uD835\uDE34'
-  "\\mathsfsl{t}": '\uD835\uDE35'
-  "\\mathsfsl{u}": '\uD835\uDE36'
-  "\\mathsfsl{v}": '\uD835\uDE37'
-  "\\mathsfsl{w}": '\uD835\uDE38'
-  "\\mathsfsl{x}": '\uD835\uDE39'
-  "\\mathsfsl{y}": '\uD835\uDE3A'
-  "\\mathsfsl{z}": '\uD835\uDE3B'
-  "\\mathsfbfsl{A}": '\uD835\uDE3C'
-  "\\mathsfbfsl{B}": '\uD835\uDE3D'
-  "\\mathsfbfsl{C}": '\uD835\uDE3E'
-  "\\mathsfbfsl{D}": '\uD835\uDE3F'
-  "\\mathsfbfsl{E}": '\uD835\uDE40'
-  "\\mathsfbfsl{F}": '\uD835\uDE41'
-  "\\mathsfbfsl{G}": '\uD835\uDE42'
-  "\\mathsfbfsl{H}": '\uD835\uDE43'
-  "\\mathsfbfsl{I}": '\uD835\uDE44'
-  "\\mathsfbfsl{J}": '\uD835\uDE45'
-  "\\mathsfbfsl{K}": '\uD835\uDE46'
-  "\\mathsfbfsl{L}": '\uD835\uDE47'
-  "\\mathsfbfsl{M}": '\uD835\uDE48'
-  "\\mathsfbfsl{N}": '\uD835\uDE49'
-  "\\mathsfbfsl{O}": '\uD835\uDE4A'
-  "\\mathsfbfsl{P}": '\uD835\uDE4B'
-  "\\mathsfbfsl{Q}": '\uD835\uDE4C'
-  "\\mathsfbfsl{R}": '\uD835\uDE4D'
-  "\\mathsfbfsl{S}": '\uD835\uDE4E'
-  "\\mathsfbfsl{T}": '\uD835\uDE4F'
-  "\\mathsfbfsl{U}": '\uD835\uDE50'
-  "\\mathsfbfsl{V}": '\uD835\uDE51'
-  "\\mathsfbfsl{W}": '\uD835\uDE52'
-  "\\mathsfbfsl{X}": '\uD835\uDE53'
-  "\\mathsfbfsl{Y}": '\uD835\uDE54'
-  "\\mathsfbfsl{Z}": '\uD835\uDE55'
-  "\\mathsfbfsl{a}": '\uD835\uDE56'
-  "\\mathsfbfsl{b}": '\uD835\uDE57'
-  "\\mathsfbfsl{c}": '\uD835\uDE58'
-  "\\mathsfbfsl{d}": '\uD835\uDE59'
-  "\\mathsfbfsl{e}": '\uD835\uDE5A'
-  "\\mathsfbfsl{f}": '\uD835\uDE5B'
-  "\\mathsfbfsl{g}": '\uD835\uDE5C'
-  "\\mathsfbfsl{h}": '\uD835\uDE5D'
-  "\\mathsfbfsl{i}": '\uD835\uDE5E'
-  "\\mathsfbfsl{j}": '\uD835\uDE5F'
-  "\\mathsfbfsl{k}": '\uD835\uDE60'
-  "\\mathsfbfsl{l}": '\uD835\uDE61'
-  "\\mathsfbfsl{m}": '\uD835\uDE62'
-  "\\mathsfbfsl{n}": '\uD835\uDE63'
-  "\\mathsfbfsl{o}": '\uD835\uDE64'
-  "\\mathsfbfsl{p}": '\uD835\uDE65'
-  "\\mathsfbfsl{q}": '\uD835\uDE66'
-  "\\mathsfbfsl{r}": '\uD835\uDE67'
-  "\\mathsfbfsl{s}": '\uD835\uDE68'
-  "\\mathsfbfsl{t}": '\uD835\uDE69'
-  "\\mathsfbfsl{u}": '\uD835\uDE6A'
-  "\\mathsfbfsl{v}": '\uD835\uDE6B'
-  "\\mathsfbfsl{w}": '\uD835\uDE6C'
-  "\\mathsfbfsl{x}": '\uD835\uDE6D'
-  "\\mathsfbfsl{y}": '\uD835\uDE6E'
-  "\\mathsfbfsl{z}": '\uD835\uDE6F'
-  "\\mathtt{A}": '\uD835\uDE70'
-  "\\mathtt{B}": '\uD835\uDE71'
-  "\\mathtt{C}": '\uD835\uDE72'
-  "\\mathtt{D}": '\uD835\uDE73'
-  "\\mathtt{E}": '\uD835\uDE74'
-  "\\mathtt{F}": '\uD835\uDE75'
-  "\\mathtt{G}": '\uD835\uDE76'
-  "\\mathtt{H}": '\uD835\uDE77'
-  "\\mathtt{I}": '\uD835\uDE78'
-  "\\mathtt{J}": '\uD835\uDE79'
-  "\\mathtt{K}": '\uD835\uDE7A'
-  "\\mathtt{L}": '\uD835\uDE7B'
-  "\\mathtt{M}": '\uD835\uDE7C'
-  "\\mathtt{N}": '\uD835\uDE7D'
-  "\\mathtt{O}": '\uD835\uDE7E'
-  "\\mathtt{P}": '\uD835\uDE7F'
-  "\\mathtt{Q}": '\uD835\uDE80'
-  "\\mathtt{R}": '\uD835\uDE81'
-  "\\mathtt{S}": '\uD835\uDE82'
-  "\\mathtt{T}": '\uD835\uDE83'
-  "\\mathtt{U}": '\uD835\uDE84'
-  "\\mathtt{V}": '\uD835\uDE85'
-  "\\mathtt{W}": '\uD835\uDE86'
-  "\\mathtt{X}": '\uD835\uDE87'
-  "\\mathtt{Y}": '\uD835\uDE88'
-  "\\mathtt{Z}": '\uD835\uDE89'
-  "\\mathtt{a}": '\uD835\uDE8A'
-  "\\mathtt{b}": '\uD835\uDE8B'
-  "\\mathtt{c}": '\uD835\uDE8C'
-  "\\mathtt{d}": '\uD835\uDE8D'
-  "\\mathtt{e}": '\uD835\uDE8E'
-  "\\mathtt{f}": '\uD835\uDE8F'
-  "\\mathtt{g}": '\uD835\uDE90'
-  "\\mathtt{h}": '\uD835\uDE91'
-  "\\mathtt{i}": '\uD835\uDE92'
-  "\\mathtt{j}": '\uD835\uDE93'
-  "\\mathtt{k}": '\uD835\uDE94'
-  "\\mathtt{l}": '\uD835\uDE95'
-  "\\mathtt{m}": '\uD835\uDE96'
-  "\\mathtt{n}": '\uD835\uDE97'
-  "\\mathtt{o}": '\uD835\uDE98'
-  "\\mathtt{p}": '\uD835\uDE99'
-  "\\mathtt{q}": '\uD835\uDE9A'
-  "\\mathtt{r}": '\uD835\uDE9B'
-  "\\mathtt{s}": '\uD835\uDE9C'
-  "\\mathtt{t}": '\uD835\uDE9D'
-  "\\mathtt{u}": '\uD835\uDE9E'
-  "\\mathtt{v}": '\uD835\uDE9F'
-  "\\mathtt{w}": '\uD835\uDEA0'
-  "\\mathtt{x}": '\uD835\uDEA1'
-  "\\mathtt{y}": '\uD835\uDEA2'
-  "\\mathtt{z}": '\uD835\uDEA3'
-  "\\imath{}": '\uD835\uDEA4'
-  "{\\imath}": '\uD835\uDEA4'
-  "\\imath": '\uD835\uDEA4'
-  "\\mathbf{\\Alpha}": '\uD835\uDEA8'
-  "\\mathbf{\\Beta}": '\uD835\uDEA9'
-  "\\mathbf{\\Gamma}": '\uD835\uDEAA'
-  "\\mathbf{\\Delta}": '\uD835\uDEAB'
-  "\\mathbf{\\Epsilon}": '\uD835\uDEAC'
-  "\\mathbf{\\Zeta}": '\uD835\uDEAD'
-  "\\mathbf{\\Eta}": '\uD835\uDEAE'
-  "\\mathbf{\\Theta}": '\uD835\uDEAF'
-  "\\mathbf{\\Iota}": '\uD835\uDEB0'
-  "\\mathbf{\\Kappa}": '\uD835\uDEB1'
-  "\\mathbf{\\Lambda}": '\uD835\uDEB2'
-  "\\mathbf{\\Xi}": '\uD835\uDEB5'
-  "\\mathbf{\\Pi}": '\uD835\uDEB7'
-  "\\mathbf{\\Rho}": '\uD835\uDEB8'
-  "\\mathbf{\\vartheta}": '\uD835\uDEB9'
-  "\\mathbf{\\Sigma}": '\uD835\uDEBA'
-  "\\mathbf{\\Tau}": '\uD835\uDEBB'
-  "\\mathbf{\\Upsilon}": '\uD835\uDEBC'
-  "\\mathbf{\\Phi}": '\uD835\uDEBD'
-  "\\mathbf{\\Chi}": '\uD835\uDEBE'
-  "\\mathbf{\\Psi}": '\uD835\uDEBF'
-  "\\mathbf{\\Omega}": '\uD835\uDEC0'
-  "\\mathbf{\\nabla}": '\uD835\uDEC1'
-  "\\mathbf{\\theta}": '\uD835\uDEC9'
-  "\\mathbf{\\varsigma}": '\uD835\uDED3'
-  "\\mathbf{\\varkappa}": '\uD835\uDEDE'
-  "\\mathbf{\\phi}": '\uD835\uDEDF'
-  "\\mathbf{\\varrho}": '\uD835\uDEE0'
-  "\\mathbf{\\varpi}": '\uD835\uDEE1'
-  "\\mathsl{\\Alpha}": '\uD835\uDEE2'
-  "\\mathsl{\\Beta}": '\uD835\uDEE3'
-  "\\mathsl{\\Gamma}": '\uD835\uDEE4'
-  "\\mathsl{\\Delta}": '\uD835\uDEE5'
-  "\\mathsl{\\Epsilon}": '\uD835\uDEE6'
-  "\\mathsl{\\Zeta}": '\uD835\uDEE7'
-  "\\mathsl{\\Eta}": '\uD835\uDEE8'
-  "\\mathsl{\\Theta}": '\uD835\uDEE9'
-  "\\mathsl{\\Iota}": '\uD835\uDEEA'
-  "\\mathsl{\\Kappa}": '\uD835\uDEEB'
-  "\\mathsl{\\Lambda}": '\uD835\uDEEC'
-  "\\mathsl{\\Xi}": '\uD835\uDEEF'
-  "\\mathsl{\\Pi}": '\uD835\uDEF1'
-  "\\mathsl{\\Rho}": '\uD835\uDEF2'
-  "\\mathsl{\\vartheta}": '\uD835\uDEF3'
-  "\\mathsl{\\Sigma}": '\uD835\uDEF4'
-  "\\mathsl{\\Tau}": '\uD835\uDEF5'
-  "\\mathsl{\\Upsilon}": '\uD835\uDEF6'
-  "\\mathsl{\\Phi}": '\uD835\uDEF7'
-  "\\mathsl{\\Chi}": '\uD835\uDEF8'
-  "\\mathsl{\\Psi}": '\uD835\uDEF9'
-  "\\mathsl{\\Omega}": '\uD835\uDEFA'
-  "\\mathsl{\\nabla}": '\uD835\uDEFB'
-  "\\mathsl{\\varsigma}": '\uD835\uDF0D'
-  "\\mathsl{\\varkappa}": '\uD835\uDF18'
-  "\\mathsl{\\phi}": '\uD835\uDF19'
-  "\\mathsl{\\varrho}": '\uD835\uDF1A'
-  "\\mathsl{\\varpi}": '\uD835\uDF1B'
-  "\\mathbit{\\Alpha}": '\uD835\uDF1C'
-  "\\mathbit{\\Beta}": '\uD835\uDF1D'
-  "\\mathbit{\\Gamma}": '\uD835\uDF1E'
-  "\\mathbit{\\Delta}": '\uD835\uDF1F'
-  "\\mathbit{\\Epsilon}": '\uD835\uDF20'
-  "\\mathbit{\\Zeta}": '\uD835\uDF21'
-  "\\mathbit{\\Eta}": '\uD835\uDF22'
-  "\\mathbit{\\Theta}": '\uD835\uDF23'
-  "\\mathbit{\\Iota}": '\uD835\uDF24'
-  "\\mathbit{\\Kappa}": '\uD835\uDF25'
-  "\\mathbit{\\Lambda}": '\uD835\uDF26'
-  "\\mathbit{\\Xi}": '\uD835\uDF29'
-  "\\mathbit{\\Pi}": '\uD835\uDF2B'
-  "\\mathbit{\\Rho}": '\uD835\uDF2C'
-  "\\mathbit{\\Sigma}": '\uD835\uDF2E'
-  "\\mathbit{\\Tau}": '\uD835\uDF2F'
-  "\\mathbit{\\Upsilon}": '\uD835\uDF30'
-  "\\mathbit{\\Phi}": '\uD835\uDF31'
-  "\\mathbit{\\Chi}": '\uD835\uDF32'
-  "\\mathbit{\\Psi}": '\uD835\uDF33'
-  "\\mathbit{\\Omega}": '\uD835\uDF34'
-  "\\mathbit{\\nabla}": '\uD835\uDF35'
-  "\\mathbit{\\varsigma}": '\uD835\uDF47'
-  "\\mathbit{\\vartheta}": '\uD835\uDF51'
-  "\\mathbit{\\varkappa}": '\uD835\uDF52'
-  "\\mathbit{\\phi}": '\uD835\uDF53'
-  "\\mathbit{\\varrho}": '\uD835\uDF54'
-  "\\mathbit{\\varpi}": '\uD835\uDF55'
-  "\\mathsfbf{\\Alpha}": '\uD835\uDF56'
-  "\\mathsfbf{\\Beta}": '\uD835\uDF57'
-  "\\mathsfbf{\\Gamma}": '\uD835\uDF58'
-  "\\mathsfbf{\\Delta}": '\uD835\uDF59'
-  "\\mathsfbf{\\Epsilon}": '\uD835\uDF5A'
-  "\\mathsfbf{\\Zeta}": '\uD835\uDF5B'
-  "\\mathsfbf{\\Eta}": '\uD835\uDF5C'
-  "\\mathsfbf{\\Theta}": '\uD835\uDF5D'
-  "\\mathsfbf{\\Iota}": '\uD835\uDF5E'
-  "\\mathsfbf{\\Kappa}": '\uD835\uDF5F'
-  "\\mathsfbf{\\Lambda}": '\uD835\uDF60'
-  "\\mathsfbf{\\Xi}": '\uD835\uDF63'
-  "\\mathsfbf{\\Pi}": '\uD835\uDF65'
-  "\\mathsfbf{\\Rho}": '\uD835\uDF66'
-  "\\mathsfbf{\\vartheta}": '\uD835\uDF67'
-  "\\mathsfbf{\\Sigma}": '\uD835\uDF68'
-  "\\mathsfbf{\\Tau}": '\uD835\uDF69'
-  "\\mathsfbf{\\Upsilon}": '\uD835\uDF6A'
-  "\\mathsfbf{\\Phi}": '\uD835\uDF6B'
-  "\\mathsfbf{\\Chi}": '\uD835\uDF6C'
-  "\\mathsfbf{\\Psi}": '\uD835\uDF6D'
-  "\\mathsfbf{\\Omega}": '\uD835\uDF6E'
-  "\\mathsfbf{\\nabla}": '\uD835\uDF6F'
-  "\\mathsfbf{\\varsigma}": '\uD835\uDF81'
-  "\\mathsfbf{\\varkappa}": '\uD835\uDF8C'
-  "\\mathsfbf{\\phi}": '\uD835\uDF8D'
-  "\\mathsfbf{\\varrho}": '\uD835\uDF8E'
-  "\\mathsfbf{\\varpi}": '\uD835\uDF8F'
-  "\\mathsfbfsl{\\Alpha}": '\uD835\uDF90'
-  "\\mathsfbfsl{\\Beta}": '\uD835\uDF91'
-  "\\mathsfbfsl{\\Gamma}": '\uD835\uDF92'
-  "\\mathsfbfsl{\\Delta}": '\uD835\uDF93'
-  "\\mathsfbfsl{\\Epsilon}": '\uD835\uDF94'
-  "\\mathsfbfsl{\\Zeta}": '\uD835\uDF95'
-  "\\mathsfbfsl{\\Eta}": '\uD835\uDF96'
-  "\\mathsfbfsl{\\vartheta}": '\uD835\uDF97'
-  "\\mathsfbfsl{\\Iota}": '\uD835\uDF98'
-  "\\mathsfbfsl{\\Kappa}": '\uD835\uDF99'
-  "\\mathsfbfsl{\\Lambda}": '\uD835\uDF9A'
-  "\\mathsfbfsl{\\Xi}": '\uD835\uDF9D'
-  "\\mathsfbfsl{\\Pi}": '\uD835\uDF9F'
-  "\\mathsfbfsl{\\Rho}": '\uD835\uDFA0'
-  "\\mathsfbfsl{\\Sigma}": '\uD835\uDFA2'
-  "\\mathsfbfsl{\\Tau}": '\uD835\uDFA3'
-  "\\mathsfbfsl{\\Upsilon}": '\uD835\uDFA4'
-  "\\mathsfbfsl{\\Phi}": '\uD835\uDFA5'
-  "\\mathsfbfsl{\\Chi}": '\uD835\uDFA6'
-  "\\mathsfbfsl{\\Psi}": '\uD835\uDFA7'
-  "\\mathsfbfsl{\\Omega}": '\uD835\uDFA8'
-  "\\mathsfbfsl{\\nabla}": '\uD835\uDFA9'
-  "\\mathsfbfsl{\\varsigma}": '\uD835\uDFBB'
-  "\\mathsfbfsl{\\varkappa}": '\uD835\uDFC6'
-  "\\mathsfbfsl{\\phi}": '\uD835\uDFC7'
-  "\\mathsfbfsl{\\varrho}": '\uD835\uDFC8'
-  "\\mathsfbfsl{\\varpi}": '\uD835\uDFC9'
-  "\\mbfDigamma{}": '\uD835\uDFCA'
-  "{\\mbfDigamma}": '\uD835\uDFCA'
-  "\\mbfDigamma": '\uD835\uDFCA'
-  "\\mbfdigamma{}": '\uD835\uDFCB'
-  "{\\mbfdigamma}": '\uD835\uDFCB'
-  "\\mbfdigamma": '\uD835\uDFCB'
-  "\\mathbf{0}": '\uD835\uDFCE'
-  "\\mathbf{1}": '\uD835\uDFCF'
-  "\\mathbf{2}": '\uD835\uDFD0'
-  "\\mathbf{3}": '\uD835\uDFD1'
-  "\\mathbf{4}": '\uD835\uDFD2'
-  "\\mathbf{5}": '\uD835\uDFD3'
-  "\\mathbf{6}": '\uD835\uDFD4'
-  "\\mathbf{7}": '\uD835\uDFD5'
-  "\\mathbf{8}": '\uD835\uDFD6'
-  "\\mathbf{9}": '\uD835\uDFD7'
-  "\\mathbb{0}": '\uD835\uDFD8'
-  "\\mathbb{1}": '\uD835\uDFD9'
-  "\\mathbb{2}": '\uD835\uDFDA'
-  "\\mathbb{3}": '\uD835\uDFDB'
-  "\\mathbb{4}": '\uD835\uDFDC'
-  "\\mathbb{5}": '\uD835\uDFDD'
-  "\\mathbb{6}": '\uD835\uDFDE'
-  "\\mathbb{7}": '\uD835\uDFDF'
-  "\\mathbb{8}": '\uD835\uDFE0'
-  "\\mathbb{9}": '\uD835\uDFE1'
-  "\\mathsf{0}": '\uD835\uDFE2'
-  "\\mathsf{1}": '\uD835\uDFE3'
-  "\\mathsf{2}": '\uD835\uDFE4'
-  "\\mathsf{3}": '\uD835\uDFE5'
-  "\\mathsf{4}": '\uD835\uDFE6'
-  "\\mathsf{5}": '\uD835\uDFE7'
-  "\\mathsf{6}": '\uD835\uDFE8'
-  "\\mathsf{7}": '\uD835\uDFE9'
-  "\\mathsf{8}": '\uD835\uDFEA'
-  "\\mathsf{9}": '\uD835\uDFEB'
-  "\\mathsfbf{0}": '\uD835\uDFEC'
-  "\\mathsfbf{1}": '\uD835\uDFED'
-  "\\mathsfbf{2}": '\uD835\uDFEE'
-  "\\mathsfbf{3}": '\uD835\uDFEF'
-  "\\mathsfbf{4}": '\uD835\uDFF0'
-  "\\mathsfbf{5}": '\uD835\uDFF1'
-  "\\mathsfbf{6}": '\uD835\uDFF2'
-  "\\mathsfbf{7}": '\uD835\uDFF3'
-  "\\mathsfbf{8}": '\uD835\uDFF4'
-  "\\mathsfbf{9}": '\uD835\uDFF5'
-  "\\mathtt{0}": '\uD835\uDFF6'
-  "\\mathtt{1}": '\uD835\uDFF7'
-  "\\mathtt{2}": '\uD835\uDFF8'
-  "\\mathtt{3}": '\uD835\uDFF9'
-  "\\mathtt{4}": '\uD835\uDFFA'
-  "\\mathtt{5}": '\uD835\uDFFB'
-  "\\mathtt{6}": '\uD835\uDFFC'
-  "\\mathtt{7}": '\uD835\uDFFD'
-  "\\mathtt{8}": '\uD835\uDFFE'
-  "\\mathtt{9}": '\uD835\uDFFF'
+  "\\mathbf{A}": '\uD835\uDC00' # MATHEMATICAL BOLD CAPITAL A
+  "\\mathbf{B}": '\uD835\uDC01' # MATHEMATICAL BOLD CAPITAL B
+  "\\mathbf{C}": '\uD835\uDC02' # MATHEMATICAL BOLD CAPITAL C
+  "\\mathbf{D}": '\uD835\uDC03' # MATHEMATICAL BOLD CAPITAL D
+  "\\mathbf{E}": '\uD835\uDC04' # MATHEMATICAL BOLD CAPITAL E
+  "\\mathbf{F}": '\uD835\uDC05' # MATHEMATICAL BOLD CAPITAL F
+  "\\mathbf{G}": '\uD835\uDC06' # MATHEMATICAL BOLD CAPITAL G
+  "\\mathbf{H}": '\uD835\uDC07' # MATHEMATICAL BOLD CAPITAL H
+  "\\mathbf{I}": '\uD835\uDC08' # MATHEMATICAL BOLD CAPITAL I
+  "\\mathbf{J}": '\uD835\uDC09' # MATHEMATICAL BOLD CAPITAL J
+  "\\mathbf{K}": '\uD835\uDC0A' # MATHEMATICAL BOLD CAPITAL K
+  "\\mathbf{L}": '\uD835\uDC0B' # MATHEMATICAL BOLD CAPITAL L
+  "\\mathbf{M}": '\uD835\uDC0C' # MATHEMATICAL BOLD CAPITAL M
+  "\\mathbf{N}": '\uD835\uDC0D' # MATHEMATICAL BOLD CAPITAL N
+  "\\mathbf{O}": '\uD835\uDC0E' # MATHEMATICAL BOLD CAPITAL O
+  "\\mathbf{P}": '\uD835\uDC0F' # MATHEMATICAL BOLD CAPITAL P
+  "\\mathbf{Q}": '\uD835\uDC10' # MATHEMATICAL BOLD CAPITAL Q
+  "\\mathbf{R}": '\uD835\uDC11' # MATHEMATICAL BOLD CAPITAL R
+  "\\mathbf{S}": '\uD835\uDC12' # MATHEMATICAL BOLD CAPITAL S
+  "\\mathbf{T}": '\uD835\uDC13' # MATHEMATICAL BOLD CAPITAL T
+  "\\mathbf{U}": '\uD835\uDC14' # MATHEMATICAL BOLD CAPITAL U
+  "\\mathbf{V}": '\uD835\uDC15' # MATHEMATICAL BOLD CAPITAL V
+  "\\mathbf{W}": '\uD835\uDC16' # MATHEMATICAL BOLD CAPITAL W
+  "\\mathbf{X}": '\uD835\uDC17' # MATHEMATICAL BOLD CAPITAL X
+  "\\mathbf{Y}": '\uD835\uDC18' # MATHEMATICAL BOLD CAPITAL Y
+  "\\mathbf{Z}": '\uD835\uDC19' # MATHEMATICAL BOLD CAPITAL Z
+  "\\mathbf{a}": '\uD835\uDC1A' # MATHEMATICAL BOLD SMALL A
+  "\\mathbf{b}": '\uD835\uDC1B' # MATHEMATICAL BOLD SMALL B
+  "\\mathbf{c}": '\uD835\uDC1C' # MATHEMATICAL BOLD SMALL C
+  "\\mathbf{d}": '\uD835\uDC1D' # MATHEMATICAL BOLD SMALL D
+  "\\mathbf{e}": '\uD835\uDC1E' # MATHEMATICAL BOLD SMALL E
+  "\\mathbf{f}": '\uD835\uDC1F' # MATHEMATICAL BOLD SMALL F
+  "\\mathbf{g}": '\uD835\uDC20' # MATHEMATICAL BOLD SMALL G
+  "\\mathbf{h}": '\uD835\uDC21' # MATHEMATICAL BOLD SMALL H
+  "\\mathbf{i}": '\uD835\uDC22' # MATHEMATICAL BOLD SMALL I
+  "\\mathbf{j}": '\uD835\uDC23' # MATHEMATICAL BOLD SMALL J
+  "\\mathbf{k}": '\uD835\uDC24' # MATHEMATICAL BOLD SMALL K
+  "\\mathbf{l}": '\uD835\uDC25' # MATHEMATICAL BOLD SMALL L
+  "\\mathbf{m}": '\uD835\uDC26' # MATHEMATICAL BOLD SMALL M
+  "\\mathbf{n}": '\uD835\uDC27' # MATHEMATICAL BOLD SMALL N
+  "\\mathbf{o}": '\uD835\uDC28' # MATHEMATICAL BOLD SMALL O
+  "\\mathbf{p}": '\uD835\uDC29' # MATHEMATICAL BOLD SMALL P
+  "\\mathbf{q}": '\uD835\uDC2A' # MATHEMATICAL BOLD SMALL Q
+  "\\mathbf{r}": '\uD835\uDC2B' # MATHEMATICAL BOLD SMALL R
+  "\\mathbf{s}": '\uD835\uDC2C' # MATHEMATICAL BOLD SMALL S
+  "\\mathbf{t}": '\uD835\uDC2D' # MATHEMATICAL BOLD SMALL T
+  "\\mathbf{u}": '\uD835\uDC2E' # MATHEMATICAL BOLD SMALL U
+  "\\mathbf{v}": '\uD835\uDC2F' # MATHEMATICAL BOLD SMALL V
+  "\\mathbf{w}": '\uD835\uDC30' # MATHEMATICAL BOLD SMALL W
+  "\\mathbf{x}": '\uD835\uDC31' # MATHEMATICAL BOLD SMALL X
+  "\\mathbf{y}": '\uD835\uDC32' # MATHEMATICAL BOLD SMALL Y
+  "\\mathbf{z}": '\uD835\uDC33' # MATHEMATICAL BOLD SMALL Z
+  "\\mathsl{A}": '\uD835\uDC34' # MATHEMATICAL ITALIC CAPITAL A
+  "\\mathsl{B}": '\uD835\uDC35' # MATHEMATICAL ITALIC CAPITAL B
+  "\\mathsl{C}": '\uD835\uDC36' # MATHEMATICAL ITALIC CAPITAL C
+  "\\mathsl{D}": '\uD835\uDC37' # MATHEMATICAL ITALIC CAPITAL D
+  "\\mathsl{E}": '\uD835\uDC38' # MATHEMATICAL ITALIC CAPITAL E
+  "\\mathsl{F}": '\uD835\uDC39' # MATHEMATICAL ITALIC CAPITAL F
+  "\\mathsl{G}": '\uD835\uDC3A' # MATHEMATICAL ITALIC CAPITAL G
+  "\\mathsl{H}": '\uD835\uDC3B' # MATHEMATICAL ITALIC CAPITAL H
+  "\\mathsl{I}": '\uD835\uDC3C' # MATHEMATICAL ITALIC CAPITAL I
+  "\\mathsl{J}": '\uD835\uDC3D' # MATHEMATICAL ITALIC CAPITAL J
+  "\\mathsl{K}": '\uD835\uDC3E' # MATHEMATICAL ITALIC CAPITAL K
+  "\\mathsl{L}": '\uD835\uDC3F' # MATHEMATICAL ITALIC CAPITAL L
+  "\\mathsl{M}": '\uD835\uDC40' # MATHEMATICAL ITALIC CAPITAL M
+  "\\mathsl{N}": '\uD835\uDC41' # MATHEMATICAL ITALIC CAPITAL N
+  "\\mathsl{O}": '\uD835\uDC42' # MATHEMATICAL ITALIC CAPITAL O
+  "\\mathsl{P}": '\uD835\uDC43' # MATHEMATICAL ITALIC CAPITAL P
+  "\\mathsl{Q}": '\uD835\uDC44' # MATHEMATICAL ITALIC CAPITAL Q
+  "\\mathsl{R}": '\uD835\uDC45' # MATHEMATICAL ITALIC CAPITAL R
+  "\\mathsl{S}": '\uD835\uDC46' # MATHEMATICAL ITALIC CAPITAL S
+  "\\mathsl{T}": '\uD835\uDC47' # MATHEMATICAL ITALIC CAPITAL T
+  "\\mathsl{U}": '\uD835\uDC48' # MATHEMATICAL ITALIC CAPITAL U
+  "\\mathsl{V}": '\uD835\uDC49' # MATHEMATICAL ITALIC CAPITAL V
+  "\\mathsl{W}": '\uD835\uDC4A' # MATHEMATICAL ITALIC CAPITAL W
+  "\\mathsl{X}": '\uD835\uDC4B' # MATHEMATICAL ITALIC CAPITAL X
+  "\\mathsl{Y}": '\uD835\uDC4C' # MATHEMATICAL ITALIC CAPITAL Y
+  "\\mathsl{Z}": '\uD835\uDC4D' # MATHEMATICAL ITALIC CAPITAL Z
+  "\\mathsl{a}": '\uD835\uDC4E' # MATHEMATICAL ITALIC SMALL A
+  "\\mathsl{b}": '\uD835\uDC4F' # MATHEMATICAL ITALIC SMALL B
+  "\\mathsl{c}": '\uD835\uDC50' # MATHEMATICAL ITALIC SMALL C
+  "\\mathsl{d}": '\uD835\uDC51' # MATHEMATICAL ITALIC SMALL D
+  "\\mathsl{e}": '\uD835\uDC52' # MATHEMATICAL ITALIC SMALL E
+  "\\mathsl{f}": '\uD835\uDC53' # MATHEMATICAL ITALIC SMALL F
+  "\\mathsl{g}": '\uD835\uDC54' # MATHEMATICAL ITALIC SMALL G
+  "\\mathsl{i}": '\uD835\uDC56' # MATHEMATICAL ITALIC SMALL I
+  "\\mathsl{j}": '\uD835\uDC57' # MATHEMATICAL ITALIC SMALL J
+  "\\mathsl{k}": '\uD835\uDC58' # MATHEMATICAL ITALIC SMALL K
+  "\\mathsl{l}": '\uD835\uDC59' # MATHEMATICAL ITALIC SMALL L
+  "\\mathsl{m}": '\uD835\uDC5A' # MATHEMATICAL ITALIC SMALL M
+  "\\mathsl{n}": '\uD835\uDC5B' # MATHEMATICAL ITALIC SMALL N
+  "\\mathsl{o}": '\uD835\uDC5C' # MATHEMATICAL ITALIC SMALL O
+  "\\mathsl{p}": '\uD835\uDC5D' # MATHEMATICAL ITALIC SMALL P
+  "\\mathsl{q}": '\uD835\uDC5E' # MATHEMATICAL ITALIC SMALL Q
+  "\\mathsl{r}": '\uD835\uDC5F' # MATHEMATICAL ITALIC SMALL R
+  "\\mathsl{s}": '\uD835\uDC60' # MATHEMATICAL ITALIC SMALL S
+  "\\mathsl{t}": '\uD835\uDC61' # MATHEMATICAL ITALIC SMALL T
+  "\\mathsl{u}": '\uD835\uDC62' # MATHEMATICAL ITALIC SMALL U
+  "\\mathsl{v}": '\uD835\uDC63' # MATHEMATICAL ITALIC SMALL V
+  "\\mathsl{w}": '\uD835\uDC64' # MATHEMATICAL ITALIC SMALL W
+  "\\mathsl{x}": '\uD835\uDC65' # MATHEMATICAL ITALIC SMALL X
+  "\\mathsl{y}": '\uD835\uDC66' # MATHEMATICAL ITALIC SMALL Y
+  "\\mathsl{z}": '\uD835\uDC67' # MATHEMATICAL ITALIC SMALL Z
+  "\\mathbit{A}": '\uD835\uDC68' # MATHEMATICAL BOLD ITALIC CAPITAL A
+  "\\mathbit{B}": '\uD835\uDC69' # MATHEMATICAL BOLD ITALIC CAPITAL B
+  "\\mathbit{C}": '\uD835\uDC6A' # MATHEMATICAL BOLD ITALIC CAPITAL C
+  "\\mathbit{D}": '\uD835\uDC6B' # MATHEMATICAL BOLD ITALIC CAPITAL D
+  "\\mathbit{E}": '\uD835\uDC6C' # MATHEMATICAL BOLD ITALIC CAPITAL E
+  "\\mathbit{F}": '\uD835\uDC6D' # MATHEMATICAL BOLD ITALIC CAPITAL F
+  "\\mathbit{G}": '\uD835\uDC6E' # MATHEMATICAL BOLD ITALIC CAPITAL G
+  "\\mathbit{H}": '\uD835\uDC6F' # MATHEMATICAL BOLD ITALIC CAPITAL H
+  "\\mathbit{I}": '\uD835\uDC70' # MATHEMATICAL BOLD ITALIC CAPITAL I
+  "\\mathbit{J}": '\uD835\uDC71' # MATHEMATICAL BOLD ITALIC CAPITAL J
+  "\\mathbit{K}": '\uD835\uDC72' # MATHEMATICAL BOLD ITALIC CAPITAL K
+  "\\mathbit{L}": '\uD835\uDC73' # MATHEMATICAL BOLD ITALIC CAPITAL L
+  "\\mathbit{M}": '\uD835\uDC74' # MATHEMATICAL BOLD ITALIC CAPITAL M
+  "\\mathbit{N}": '\uD835\uDC75' # MATHEMATICAL BOLD ITALIC CAPITAL N
+  "\\mathbit{O}": '\uD835\uDC76' # MATHEMATICAL BOLD ITALIC CAPITAL O
+  "\\mathbit{P}": '\uD835\uDC77' # MATHEMATICAL BOLD ITALIC CAPITAL P
+  "\\mathbit{Q}": '\uD835\uDC78' # MATHEMATICAL BOLD ITALIC CAPITAL Q
+  "\\mathbit{R}": '\uD835\uDC79' # MATHEMATICAL BOLD ITALIC CAPITAL R
+  "\\mathbit{S}": '\uD835\uDC7A' # MATHEMATICAL BOLD ITALIC CAPITAL S
+  "\\mathbit{T}": '\uD835\uDC7B' # MATHEMATICAL BOLD ITALIC CAPITAL T
+  "\\mathbit{U}": '\uD835\uDC7C' # MATHEMATICAL BOLD ITALIC CAPITAL U
+  "\\mathbit{V}": '\uD835\uDC7D' # MATHEMATICAL BOLD ITALIC CAPITAL V
+  "\\mathbit{W}": '\uD835\uDC7E' # MATHEMATICAL BOLD ITALIC CAPITAL W
+  "\\mathbit{X}": '\uD835\uDC7F' # MATHEMATICAL BOLD ITALIC CAPITAL X
+  "\\mathbit{Y}": '\uD835\uDC80' # MATHEMATICAL BOLD ITALIC CAPITAL Y
+  "\\mathbit{Z}": '\uD835\uDC81' # MATHEMATICAL BOLD ITALIC CAPITAL Z
+  "\\mathbit{a}": '\uD835\uDC82' # MATHEMATICAL BOLD ITALIC SMALL A
+  "\\mathbit{b}": '\uD835\uDC83' # MATHEMATICAL BOLD ITALIC SMALL B
+  "\\mathbit{c}": '\uD835\uDC84' # MATHEMATICAL BOLD ITALIC SMALL C
+  "\\mathbit{d}": '\uD835\uDC85' # MATHEMATICAL BOLD ITALIC SMALL D
+  "\\mathbit{e}": '\uD835\uDC86' # MATHEMATICAL BOLD ITALIC SMALL E
+  "\\mathbit{f}": '\uD835\uDC87' # MATHEMATICAL BOLD ITALIC SMALL F
+  "\\mathbit{g}": '\uD835\uDC88' # MATHEMATICAL BOLD ITALIC SMALL G
+  "\\mathbit{h}": '\uD835\uDC89' # MATHEMATICAL BOLD ITALIC SMALL H
+  "\\mathbit{i}": '\uD835\uDC8A' # MATHEMATICAL BOLD ITALIC SMALL I
+  "\\mathbit{j}": '\uD835\uDC8B' # MATHEMATICAL BOLD ITALIC SMALL J
+  "\\mathbit{k}": '\uD835\uDC8C' # MATHEMATICAL BOLD ITALIC SMALL K
+  "\\mathbit{l}": '\uD835\uDC8D' # MATHEMATICAL BOLD ITALIC SMALL L
+  "\\mathbit{m}": '\uD835\uDC8E' # MATHEMATICAL BOLD ITALIC SMALL M
+  "\\mathbit{n}": '\uD835\uDC8F' # MATHEMATICAL BOLD ITALIC SMALL N
+  "\\mathbit{o}": '\uD835\uDC90' # MATHEMATICAL BOLD ITALIC SMALL O
+  "\\mathbit{p}": '\uD835\uDC91' # MATHEMATICAL BOLD ITALIC SMALL P
+  "\\mathbit{q}": '\uD835\uDC92' # MATHEMATICAL BOLD ITALIC SMALL Q
+  "\\mathbit{r}": '\uD835\uDC93' # MATHEMATICAL BOLD ITALIC SMALL R
+  "\\mathbit{s}": '\uD835\uDC94' # MATHEMATICAL BOLD ITALIC SMALL S
+  "\\mathbit{t}": '\uD835\uDC95' # MATHEMATICAL BOLD ITALIC SMALL T
+  "\\mathbit{u}": '\uD835\uDC96' # MATHEMATICAL BOLD ITALIC SMALL U
+  "\\mathbit{v}": '\uD835\uDC97' # MATHEMATICAL BOLD ITALIC SMALL V
+  "\\mathbit{w}": '\uD835\uDC98' # MATHEMATICAL BOLD ITALIC SMALL W
+  "\\mathbit{x}": '\uD835\uDC99' # MATHEMATICAL BOLD ITALIC SMALL X
+  "\\mathbit{y}": '\uD835\uDC9A' # MATHEMATICAL BOLD ITALIC SMALL Y
+  "\\mathbit{z}": '\uD835\uDC9B' # MATHEMATICAL BOLD ITALIC SMALL Z
+  "\\mathscr{A}": '\uD835\uDC9C' # MATHEMATICAL SCRIPT CAPITAL A
+  "\\mathscr{C}": '\uD835\uDC9E' # MATHEMATICAL SCRIPT CAPITAL C
+  "\\mathscr{D}": '\uD835\uDC9F' # MATHEMATICAL SCRIPT CAPITAL D
+  "\\mathscr{G}": '\uD835\uDCA2' # MATHEMATICAL SCRIPT CAPITAL G
+  "\\mathscr{J}": '\uD835\uDCA5' # MATHEMATICAL SCRIPT CAPITAL J
+  "\\mathscr{K}": '\uD835\uDCA6' # MATHEMATICAL SCRIPT CAPITAL K
+  "\\mathscr{N}": '\uD835\uDCA9' # MATHEMATICAL SCRIPT CAPITAL N
+  "\\mathscr{O}": '\uD835\uDCAA' # MATHEMATICAL SCRIPT CAPITAL O
+  "\\mathscr{P}": '\uD835\uDCAB' # MATHEMATICAL SCRIPT CAPITAL P
+  "\\mathscr{Q}": '\uD835\uDCAC' # MATHEMATICAL SCRIPT CAPITAL Q
+  "\\mathscr{S}": '\uD835\uDCAE' # MATHEMATICAL SCRIPT CAPITAL S
+  "\\mathscr{T}": '\uD835\uDCAF' # MATHEMATICAL SCRIPT CAPITAL T
+  "\\mathscr{U}": '\uD835\uDCB0' # MATHEMATICAL SCRIPT CAPITAL U
+  "\\mathscr{V}": '\uD835\uDCB1' # MATHEMATICAL SCRIPT CAPITAL V
+  "\\mathscr{W}": '\uD835\uDCB2' # MATHEMATICAL SCRIPT CAPITAL W
+  "\\mathscr{X}": '\uD835\uDCB3' # MATHEMATICAL SCRIPT CAPITAL X
+  "\\mathscr{Y}": '\uD835\uDCB4' # MATHEMATICAL SCRIPT CAPITAL Y
+  "\\mathscr{Z}": '\uD835\uDCB5' # MATHEMATICAL SCRIPT CAPITAL Z
+  "\\mathscr{a}": '\uD835\uDCB6' # MATHEMATICAL SCRIPT SMALL A
+  "\\mathscr{b}": '\uD835\uDCB7' # MATHEMATICAL SCRIPT SMALL B
+  "\\mathscr{c}": '\uD835\uDCB8' # MATHEMATICAL SCRIPT SMALL C
+  "\\mathscr{d}": '\uD835\uDCB9' # MATHEMATICAL SCRIPT SMALL D
+  "\\mathscr{f}": '\uD835\uDCBB' # MATHEMATICAL SCRIPT SMALL F
+  "\\mathscr{h}": '\uD835\uDCBD' # MATHEMATICAL SCRIPT SMALL H
+  "\\mathscr{i}": '\uD835\uDCBE' # MATHEMATICAL SCRIPT SMALL I
+  "\\mathscr{j}": '\uD835\uDCBF' # MATHEMATICAL SCRIPT SMALL J
+  "\\mathscr{k}": '\uD835\uDCC0' # MATHEMATICAL SCRIPT SMALL K
+  "\\mathscr{m}": '\uD835\uDCC2' # MATHEMATICAL SCRIPT SMALL M
+  "\\mathscr{n}": '\uD835\uDCC3' # MATHEMATICAL SCRIPT SMALL N
+  "\\mathscr{p}": '\uD835\uDCC5' # MATHEMATICAL SCRIPT SMALL P
+  "\\mathscr{q}": '\uD835\uDCC6' # MATHEMATICAL SCRIPT SMALL Q
+  "\\mathscr{r}": '\uD835\uDCC7' # MATHEMATICAL SCRIPT SMALL R
+  "\\mathscr{s}": '\uD835\uDCC8' # MATHEMATICAL SCRIPT SMALL S
+  "\\mathscr{t}": '\uD835\uDCC9' # MATHEMATICAL SCRIPT SMALL T
+  "\\mathscr{u}": '\uD835\uDCCA' # MATHEMATICAL SCRIPT SMALL U
+  "\\mathscr{v}": '\uD835\uDCCB' # MATHEMATICAL SCRIPT SMALL V
+  "\\mathscr{w}": '\uD835\uDCCC' # MATHEMATICAL SCRIPT SMALL W
+  "\\mathscr{x}": '\uD835\uDCCD' # MATHEMATICAL SCRIPT SMALL X
+  "\\mathscr{y}": '\uD835\uDCCE' # MATHEMATICAL SCRIPT SMALL Y
+  "\\mathscr{z}": '\uD835\uDCCF' # MATHEMATICAL SCRIPT SMALL Z
+  "\\mathmit{A}": '\uD835\uDCD0' # MATHEMATICAL BOLD SCRIPT CAPITAL A
+  "\\mathmit{B}": '\uD835\uDCD1' # MATHEMATICAL BOLD SCRIPT CAPITAL B
+  "\\mathmit{C}": '\uD835\uDCD2' # MATHEMATICAL BOLD SCRIPT CAPITAL C
+  "\\mathmit{D}": '\uD835\uDCD3' # MATHEMATICAL BOLD SCRIPT CAPITAL D
+  "\\mathmit{E}": '\uD835\uDCD4' # MATHEMATICAL BOLD SCRIPT CAPITAL E
+  "\\mathmit{F}": '\uD835\uDCD5' # MATHEMATICAL BOLD SCRIPT CAPITAL F
+  "\\mathmit{G}": '\uD835\uDCD6' # MATHEMATICAL BOLD SCRIPT CAPITAL G
+  "\\mathmit{H}": '\uD835\uDCD7' # MATHEMATICAL BOLD SCRIPT CAPITAL H
+  "\\mathmit{I}": '\uD835\uDCD8' # MATHEMATICAL BOLD SCRIPT CAPITAL I
+  "\\mathmit{J}": '\uD835\uDCD9' # MATHEMATICAL BOLD SCRIPT CAPITAL J
+  "\\mathmit{K}": '\uD835\uDCDA' # MATHEMATICAL BOLD SCRIPT CAPITAL K
+  "\\mathmit{L}": '\uD835\uDCDB' # MATHEMATICAL BOLD SCRIPT CAPITAL L
+  "\\mathmit{M}": '\uD835\uDCDC' # MATHEMATICAL BOLD SCRIPT CAPITAL M
+  "\\mathmit{N}": '\uD835\uDCDD' # MATHEMATICAL BOLD SCRIPT CAPITAL N
+  "\\mathmit{O}": '\uD835\uDCDE' # MATHEMATICAL BOLD SCRIPT CAPITAL O
+  "\\mathmit{P}": '\uD835\uDCDF' # MATHEMATICAL BOLD SCRIPT CAPITAL P
+  "\\mathmit{Q}": '\uD835\uDCE0' # MATHEMATICAL BOLD SCRIPT CAPITAL Q
+  "\\mathmit{R}": '\uD835\uDCE1' # MATHEMATICAL BOLD SCRIPT CAPITAL R
+  "\\mathmit{S}": '\uD835\uDCE2' # MATHEMATICAL BOLD SCRIPT CAPITAL S
+  "\\mathmit{T}": '\uD835\uDCE3' # MATHEMATICAL BOLD SCRIPT CAPITAL T
+  "\\mathmit{U}": '\uD835\uDCE4' # MATHEMATICAL BOLD SCRIPT CAPITAL U
+  "\\mathmit{V}": '\uD835\uDCE5' # MATHEMATICAL BOLD SCRIPT CAPITAL V
+  "\\mathmit{W}": '\uD835\uDCE6' # MATHEMATICAL BOLD SCRIPT CAPITAL W
+  "\\mathmit{X}": '\uD835\uDCE7' # MATHEMATICAL BOLD SCRIPT CAPITAL X
+  "\\mathmit{Y}": '\uD835\uDCE8' # MATHEMATICAL BOLD SCRIPT CAPITAL Y
+  "\\mathmit{Z}": '\uD835\uDCE9' # MATHEMATICAL BOLD SCRIPT CAPITAL Z
+  "\\mathmit{a}": '\uD835\uDCEA' # MATHEMATICAL BOLD SCRIPT SMALL A
+  "\\mathmit{b}": '\uD835\uDCEB' # MATHEMATICAL BOLD SCRIPT SMALL B
+  "\\mathmit{c}": '\uD835\uDCEC' # MATHEMATICAL BOLD SCRIPT SMALL C
+  "\\mathmit{d}": '\uD835\uDCED' # MATHEMATICAL BOLD SCRIPT SMALL D
+  "\\mathmit{e}": '\uD835\uDCEE' # MATHEMATICAL BOLD SCRIPT SMALL E
+  "\\mathmit{f}": '\uD835\uDCEF' # MATHEMATICAL BOLD SCRIPT SMALL F
+  "\\mathmit{g}": '\uD835\uDCF0' # MATHEMATICAL BOLD SCRIPT SMALL G
+  "\\mathmit{h}": '\uD835\uDCF1' # MATHEMATICAL BOLD SCRIPT SMALL H
+  "\\mathmit{i}": '\uD835\uDCF2' # MATHEMATICAL BOLD SCRIPT SMALL I
+  "\\mathmit{j}": '\uD835\uDCF3' # MATHEMATICAL BOLD SCRIPT SMALL J
+  "\\mathmit{k}": '\uD835\uDCF4' # MATHEMATICAL BOLD SCRIPT SMALL K
+  "\\mathmit{l}": '\uD835\uDCF5' # MATHEMATICAL BOLD SCRIPT SMALL L
+  "\\mathmit{m}": '\uD835\uDCF6' # MATHEMATICAL BOLD SCRIPT SMALL M
+  "\\mathmit{n}": '\uD835\uDCF7' # MATHEMATICAL BOLD SCRIPT SMALL N
+  "\\mathmit{o}": '\uD835\uDCF8' # MATHEMATICAL BOLD SCRIPT SMALL O
+  "\\mathmit{p}": '\uD835\uDCF9' # MATHEMATICAL BOLD SCRIPT SMALL P
+  "\\mathmit{q}": '\uD835\uDCFA' # MATHEMATICAL BOLD SCRIPT SMALL Q
+  "\\mathmit{r}": '\uD835\uDCFB' # MATHEMATICAL BOLD SCRIPT SMALL R
+  "\\mathmit{s}": '\uD835\uDCFC' # MATHEMATICAL BOLD SCRIPT SMALL S
+  "\\mathmit{t}": '\uD835\uDCFD' # MATHEMATICAL BOLD SCRIPT SMALL T
+  "\\mathmit{u}": '\uD835\uDCFE' # MATHEMATICAL BOLD SCRIPT SMALL U
+  "\\mathmit{v}": '\uD835\uDCFF' # MATHEMATICAL BOLD SCRIPT SMALL V
+  "\\mathmit{w}": '\uD835\uDD00' # MATHEMATICAL BOLD SCRIPT SMALL W
+  "\\mathmit{x}": '\uD835\uDD01' # MATHEMATICAL BOLD SCRIPT SMALL X
+  "\\mathmit{y}": '\uD835\uDD02' # MATHEMATICAL BOLD SCRIPT SMALL Y
+  "\\mathmit{z}": '\uD835\uDD03' # MATHEMATICAL BOLD SCRIPT SMALL Z
+  "\\mathfrak{A}": '\uD835\uDD04' # MATHEMATICAL FRAKTUR CAPITAL A
+  "\\mathfrak{B}": '\uD835\uDD05' # MATHEMATICAL FRAKTUR CAPITAL B
+  "\\mathfrak{D}": '\uD835\uDD07' # MATHEMATICAL FRAKTUR CAPITAL D
+  "\\mathfrak{E}": '\uD835\uDD08' # MATHEMATICAL FRAKTUR CAPITAL E
+  "\\mathfrak{F}": '\uD835\uDD09' # MATHEMATICAL FRAKTUR CAPITAL F
+  "\\mathfrak{G}": '\uD835\uDD0A' # MATHEMATICAL FRAKTUR CAPITAL G
+  "\\mathfrak{J}": '\uD835\uDD0D' # MATHEMATICAL FRAKTUR CAPITAL J
+  "\\mathfrak{K}": '\uD835\uDD0E' # MATHEMATICAL FRAKTUR CAPITAL K
+  "\\mathfrak{L}": '\uD835\uDD0F' # MATHEMATICAL FRAKTUR CAPITAL L
+  "\\mathfrak{M}": '\uD835\uDD10' # MATHEMATICAL FRAKTUR CAPITAL M
+  "\\mathfrak{N}": '\uD835\uDD11' # MATHEMATICAL FRAKTUR CAPITAL N
+  "\\mathfrak{O}": '\uD835\uDD12' # MATHEMATICAL FRAKTUR CAPITAL O
+  "\\mathfrak{P}": '\uD835\uDD13' # MATHEMATICAL FRAKTUR CAPITAL P
+  "\\mathfrak{Q}": '\uD835\uDD14' # MATHEMATICAL FRAKTUR CAPITAL Q
+  "\\mathfrak{S}": '\uD835\uDD16' # MATHEMATICAL FRAKTUR CAPITAL S
+  "\\mathfrak{T}": '\uD835\uDD17' # MATHEMATICAL FRAKTUR CAPITAL T
+  "\\mathfrak{U}": '\uD835\uDD18' # MATHEMATICAL FRAKTUR CAPITAL U
+  "\\mathfrak{V}": '\uD835\uDD19' # MATHEMATICAL FRAKTUR CAPITAL V
+  "\\mathfrak{W}": '\uD835\uDD1A' # MATHEMATICAL FRAKTUR CAPITAL W
+  "\\mathfrak{X}": '\uD835\uDD1B' # MATHEMATICAL FRAKTUR CAPITAL X
+  "\\mathfrak{Y}": '\uD835\uDD1C' # MATHEMATICAL FRAKTUR CAPITAL Y
+  "\\mathfrak{a}": '\uD835\uDD1E' # MATHEMATICAL FRAKTUR SMALL A
+  "\\mathfrak{b}": '\uD835\uDD1F' # MATHEMATICAL FRAKTUR SMALL B
+  "\\mathfrak{c}": '\uD835\uDD20' # MATHEMATICAL FRAKTUR SMALL C
+  "\\mathfrak{d}": '\uD835\uDD21' # MATHEMATICAL FRAKTUR SMALL D
+  "\\mathfrak{e}": '\uD835\uDD22' # MATHEMATICAL FRAKTUR SMALL E
+  "\\mathfrak{f}": '\uD835\uDD23' # MATHEMATICAL FRAKTUR SMALL F
+  "\\mathfrak{g}": '\uD835\uDD24' # MATHEMATICAL FRAKTUR SMALL G
+  "\\mathfrak{h}": '\uD835\uDD25' # MATHEMATICAL FRAKTUR SMALL H
+  "\\mathfrak{i}": '\uD835\uDD26' # MATHEMATICAL FRAKTUR SMALL I
+  "\\mathfrak{j}": '\uD835\uDD27' # MATHEMATICAL FRAKTUR SMALL J
+  "\\mathfrak{k}": '\uD835\uDD28' # MATHEMATICAL FRAKTUR SMALL K
+  "\\mathfrak{l}": '\uD835\uDD29' # MATHEMATICAL FRAKTUR SMALL L
+  "\\mathfrak{m}": '\uD835\uDD2A' # MATHEMATICAL FRAKTUR SMALL M
+  "\\mathfrak{n}": '\uD835\uDD2B' # MATHEMATICAL FRAKTUR SMALL N
+  "\\mathfrak{o}": '\uD835\uDD2C' # MATHEMATICAL FRAKTUR SMALL O
+  "\\mathfrak{p}": '\uD835\uDD2D' # MATHEMATICAL FRAKTUR SMALL P
+  "\\mathfrak{q}": '\uD835\uDD2E' # MATHEMATICAL FRAKTUR SMALL Q
+  "\\mathfrak{r}": '\uD835\uDD2F' # MATHEMATICAL FRAKTUR SMALL R
+  "\\mathfrak{s}": '\uD835\uDD30' # MATHEMATICAL FRAKTUR SMALL S
+  "\\mathfrak{t}": '\uD835\uDD31' # MATHEMATICAL FRAKTUR SMALL T
+  "\\mathfrak{u}": '\uD835\uDD32' # MATHEMATICAL FRAKTUR SMALL U
+  "\\mathfrak{v}": '\uD835\uDD33' # MATHEMATICAL FRAKTUR SMALL V
+  "\\mathfrak{w}": '\uD835\uDD34' # MATHEMATICAL FRAKTUR SMALL W
+  "\\mathfrak{x}": '\uD835\uDD35' # MATHEMATICAL FRAKTUR SMALL X
+  "\\mathfrak{y}": '\uD835\uDD36' # MATHEMATICAL FRAKTUR SMALL Y
+  "\\mathfrak{z}": '\uD835\uDD37' # MATHEMATICAL FRAKTUR SMALL Z
+  "\\mathbb{A}": '\uD835\uDD38' # MATHEMATICAL DOUBLE-STRUCK CAPITAL A
+  "\\mathbb{B}": '\uD835\uDD39' # MATHEMATICAL DOUBLE-STRUCK CAPITAL B
+  "\\mathbb{D}": '\uD835\uDD3B' # MATHEMATICAL DOUBLE-STRUCK CAPITAL D
+  "\\mathbb{E}": '\uD835\uDD3C' # MATHEMATICAL DOUBLE-STRUCK CAPITAL E
+  "\\mathbb{F}": '\uD835\uDD3D' # MATHEMATICAL DOUBLE-STRUCK CAPITAL F
+  "\\mathbb{G}": '\uD835\uDD3E' # MATHEMATICAL DOUBLE-STRUCK CAPITAL G
+  "\\mathbb{I}": '\uD835\uDD40' # MATHEMATICAL DOUBLE-STRUCK CAPITAL I
+  "\\mathbb{J}": '\uD835\uDD41' # MATHEMATICAL DOUBLE-STRUCK CAPITAL J
+  "\\mathbb{K}": '\uD835\uDD42' # MATHEMATICAL DOUBLE-STRUCK CAPITAL K
+  "\\mathbb{L}": '\uD835\uDD43' # MATHEMATICAL DOUBLE-STRUCK CAPITAL L
+  "\\mathbb{M}": '\uD835\uDD44' # MATHEMATICAL DOUBLE-STRUCK CAPITAL M
+  "\\mathbb{O}": '\uD835\uDD46' # MATHEMATICAL DOUBLE-STRUCK CAPITAL O
+  "\\mathbb{S}": '\uD835\uDD4A' # MATHEMATICAL DOUBLE-STRUCK CAPITAL S
+  "\\mathbb{T}": '\uD835\uDD4B' # MATHEMATICAL DOUBLE-STRUCK CAPITAL T
+  "\\mathbb{U}": '\uD835\uDD4C' # MATHEMATICAL DOUBLE-STRUCK CAPITAL U
+  "\\mathbb{V}": '\uD835\uDD4D' # MATHEMATICAL DOUBLE-STRUCK CAPITAL V
+  "\\mathbb{W}": '\uD835\uDD4E' # MATHEMATICAL DOUBLE-STRUCK CAPITAL W
+  "\\mathbb{X}": '\uD835\uDD4F' # MATHEMATICAL DOUBLE-STRUCK CAPITAL X
+  "\\mathbb{Y}": '\uD835\uDD50' # MATHEMATICAL DOUBLE-STRUCK CAPITAL Y
+  "\\mathbb{a}": '\uD835\uDD52' # MATHEMATICAL DOUBLE-STRUCK SMALL A
+  "\\mathbb{b}": '\uD835\uDD53' # MATHEMATICAL DOUBLE-STRUCK SMALL B
+  "\\mathbb{c}": '\uD835\uDD54' # MATHEMATICAL DOUBLE-STRUCK SMALL C
+  "\\mathbb{d}": '\uD835\uDD55' # MATHEMATICAL DOUBLE-STRUCK SMALL D
+  "\\mathbb{e}": '\uD835\uDD56' # MATHEMATICAL DOUBLE-STRUCK SMALL E
+  "\\mathbb{f}": '\uD835\uDD57' # MATHEMATICAL DOUBLE-STRUCK SMALL F
+  "\\mathbb{g}": '\uD835\uDD58' # MATHEMATICAL DOUBLE-STRUCK SMALL G
+  "\\mathbb{h}": '\uD835\uDD59' # MATHEMATICAL DOUBLE-STRUCK SMALL H
+  "\\mathbb{i}": '\uD835\uDD5A' # MATHEMATICAL DOUBLE-STRUCK SMALL I
+  "\\mathbb{j}": '\uD835\uDD5B' # MATHEMATICAL DOUBLE-STRUCK SMALL J
+  "\\mathbb{k}": '\uD835\uDD5C' # MATHEMATICAL DOUBLE-STRUCK SMALL K
+  "\\mathbb{l}": '\uD835\uDD5D' # MATHEMATICAL DOUBLE-STRUCK SMALL L
+  "\\mathbb{m}": '\uD835\uDD5E' # MATHEMATICAL DOUBLE-STRUCK SMALL M
+  "\\mathbb{n}": '\uD835\uDD5F' # MATHEMATICAL DOUBLE-STRUCK SMALL N
+  "\\mathbb{o}": '\uD835\uDD60' # MATHEMATICAL DOUBLE-STRUCK SMALL O
+  "\\mathbb{p}": '\uD835\uDD61' # MATHEMATICAL DOUBLE-STRUCK SMALL P
+  "\\mathbb{q}": '\uD835\uDD62' # MATHEMATICAL DOUBLE-STRUCK SMALL Q
+  "\\mathbb{r}": '\uD835\uDD63' # MATHEMATICAL DOUBLE-STRUCK SMALL R
+  "\\mathbb{s}": '\uD835\uDD64' # MATHEMATICAL DOUBLE-STRUCK SMALL S
+  "\\mathbb{t}": '\uD835\uDD65' # MATHEMATICAL DOUBLE-STRUCK SMALL T
+  "\\mathbb{u}": '\uD835\uDD66' # MATHEMATICAL DOUBLE-STRUCK SMALL U
+  "\\mathbb{v}": '\uD835\uDD67' # MATHEMATICAL DOUBLE-STRUCK SMALL V
+  "\\mathbb{w}": '\uD835\uDD68' # MATHEMATICAL DOUBLE-STRUCK SMALL W
+  "\\mathbb{x}": '\uD835\uDD69' # MATHEMATICAL DOUBLE-STRUCK SMALL X
+  "\\mathbb{y}": '\uD835\uDD6A' # MATHEMATICAL DOUBLE-STRUCK SMALL Y
+  "\\mathbb{z}": '\uD835\uDD6B' # MATHEMATICAL DOUBLE-STRUCK SMALL Z
+  "\\mathslbb{A}": '\uD835\uDD6C' # MATHEMATICAL BOLD FRAKTUR CAPITAL A
+  "\\mathslbb{B}": '\uD835\uDD6D' # MATHEMATICAL BOLD FRAKTUR CAPITAL B
+  "\\mathslbb{C}": '\uD835\uDD6E' # MATHEMATICAL BOLD FRAKTUR CAPITAL C
+  "\\mathslbb{D}": '\uD835\uDD6F' # MATHEMATICAL BOLD FRAKTUR CAPITAL D
+  "\\mathslbb{E}": '\uD835\uDD70' # MATHEMATICAL BOLD FRAKTUR CAPITAL E
+  "\\mathslbb{F}": '\uD835\uDD71' # MATHEMATICAL BOLD FRAKTUR CAPITAL F
+  "\\mathslbb{G}": '\uD835\uDD72' # MATHEMATICAL BOLD FRAKTUR CAPITAL G
+  "\\mathslbb{H}": '\uD835\uDD73' # MATHEMATICAL BOLD FRAKTUR CAPITAL H
+  "\\mathslbb{I}": '\uD835\uDD74' # MATHEMATICAL BOLD FRAKTUR CAPITAL I
+  "\\mathslbb{J}": '\uD835\uDD75' # MATHEMATICAL BOLD FRAKTUR CAPITAL J
+  "\\mathslbb{K}": '\uD835\uDD76' # MATHEMATICAL BOLD FRAKTUR CAPITAL K
+  "\\mathslbb{L}": '\uD835\uDD77' # MATHEMATICAL BOLD FRAKTUR CAPITAL L
+  "\\mathslbb{M}": '\uD835\uDD78' # MATHEMATICAL BOLD FRAKTUR CAPITAL M
+  "\\mathslbb{N}": '\uD835\uDD79' # MATHEMATICAL BOLD FRAKTUR CAPITAL N
+  "\\mathslbb{O}": '\uD835\uDD7A' # MATHEMATICAL BOLD FRAKTUR CAPITAL O
+  "\\mathslbb{P}": '\uD835\uDD7B' # MATHEMATICAL BOLD FRAKTUR CAPITAL P
+  "\\mathslbb{Q}": '\uD835\uDD7C' # MATHEMATICAL BOLD FRAKTUR CAPITAL Q
+  "\\mathslbb{R}": '\uD835\uDD7D' # MATHEMATICAL BOLD FRAKTUR CAPITAL R
+  "\\mathslbb{S}": '\uD835\uDD7E' # MATHEMATICAL BOLD FRAKTUR CAPITAL S
+  "\\mathslbb{T}": '\uD835\uDD7F' # MATHEMATICAL BOLD FRAKTUR CAPITAL T
+  "\\mathslbb{U}": '\uD835\uDD80' # MATHEMATICAL BOLD FRAKTUR CAPITAL U
+  "\\mathslbb{V}": '\uD835\uDD81' # MATHEMATICAL BOLD FRAKTUR CAPITAL V
+  "\\mathslbb{W}": '\uD835\uDD82' # MATHEMATICAL BOLD FRAKTUR CAPITAL W
+  "\\mathslbb{X}": '\uD835\uDD83' # MATHEMATICAL BOLD FRAKTUR CAPITAL X
+  "\\mathslbb{Y}": '\uD835\uDD84' # MATHEMATICAL BOLD FRAKTUR CAPITAL Y
+  "\\mathslbb{Z}": '\uD835\uDD85' # MATHEMATICAL BOLD FRAKTUR CAPITAL Z
+  "\\mathslbb{a}": '\uD835\uDD86' # MATHEMATICAL BOLD FRAKTUR SMALL A
+  "\\mathslbb{b}": '\uD835\uDD87' # MATHEMATICAL BOLD FRAKTUR SMALL B
+  "\\mathslbb{c}": '\uD835\uDD88' # MATHEMATICAL BOLD FRAKTUR SMALL C
+  "\\mathslbb{d}": '\uD835\uDD89' # MATHEMATICAL BOLD FRAKTUR SMALL D
+  "\\mathslbb{e}": '\uD835\uDD8A' # MATHEMATICAL BOLD FRAKTUR SMALL E
+  "\\mathslbb{f}": '\uD835\uDD8B' # MATHEMATICAL BOLD FRAKTUR SMALL F
+  "\\mathslbb{g}": '\uD835\uDD8C' # MATHEMATICAL BOLD FRAKTUR SMALL G
+  "\\mathslbb{h}": '\uD835\uDD8D' # MATHEMATICAL BOLD FRAKTUR SMALL H
+  "\\mathslbb{i}": '\uD835\uDD8E' # MATHEMATICAL BOLD FRAKTUR SMALL I
+  "\\mathslbb{j}": '\uD835\uDD8F' # MATHEMATICAL BOLD FRAKTUR SMALL J
+  "\\mathslbb{k}": '\uD835\uDD90' # MATHEMATICAL BOLD FRAKTUR SMALL K
+  "\\mathslbb{l}": '\uD835\uDD91' # MATHEMATICAL BOLD FRAKTUR SMALL L
+  "\\mathslbb{m}": '\uD835\uDD92' # MATHEMATICAL BOLD FRAKTUR SMALL M
+  "\\mathslbb{n}": '\uD835\uDD93' # MATHEMATICAL BOLD FRAKTUR SMALL N
+  "\\mathslbb{o}": '\uD835\uDD94' # MATHEMATICAL BOLD FRAKTUR SMALL O
+  "\\mathslbb{p}": '\uD835\uDD95' # MATHEMATICAL BOLD FRAKTUR SMALL P
+  "\\mathslbb{q}": '\uD835\uDD96' # MATHEMATICAL BOLD FRAKTUR SMALL Q
+  "\\mathslbb{r}": '\uD835\uDD97' # MATHEMATICAL BOLD FRAKTUR SMALL R
+  "\\mathslbb{s}": '\uD835\uDD98' # MATHEMATICAL BOLD FRAKTUR SMALL S
+  "\\mathslbb{t}": '\uD835\uDD99' # MATHEMATICAL BOLD FRAKTUR SMALL T
+  "\\mathslbb{u}": '\uD835\uDD9A' # MATHEMATICAL BOLD FRAKTUR SMALL U
+  "\\mathslbb{v}": '\uD835\uDD9B' # MATHEMATICAL BOLD FRAKTUR SMALL V
+  "\\mathslbb{w}": '\uD835\uDD9C' # MATHEMATICAL BOLD FRAKTUR SMALL W
+  "\\mathslbb{x}": '\uD835\uDD9D' # MATHEMATICAL BOLD FRAKTUR SMALL X
+  "\\mathslbb{y}": '\uD835\uDD9E' # MATHEMATICAL BOLD FRAKTUR SMALL Y
+  "\\mathslbb{z}": '\uD835\uDD9F' # MATHEMATICAL BOLD FRAKTUR SMALL Z
+  "\\mathsf{A}": '\uD835\uDDA0' # MATHEMATICAL SANS-SERIF CAPITAL A
+  "\\mathsf{B}": '\uD835\uDDA1' # MATHEMATICAL SANS-SERIF CAPITAL B
+  "\\mathsf{C}": '\uD835\uDDA2' # MATHEMATICAL SANS-SERIF CAPITAL C
+  "\\mathsf{D}": '\uD835\uDDA3' # MATHEMATICAL SANS-SERIF CAPITAL D
+  "\\mathsf{E}": '\uD835\uDDA4' # MATHEMATICAL SANS-SERIF CAPITAL E
+  "\\mathsf{F}": '\uD835\uDDA5' # MATHEMATICAL SANS-SERIF CAPITAL F
+  "\\mathsf{G}": '\uD835\uDDA6' # MATHEMATICAL SANS-SERIF CAPITAL G
+  "\\mathsf{H}": '\uD835\uDDA7' # MATHEMATICAL SANS-SERIF CAPITAL H
+  "\\mathsf{I}": '\uD835\uDDA8' # MATHEMATICAL SANS-SERIF CAPITAL I
+  "\\mathsf{J}": '\uD835\uDDA9' # MATHEMATICAL SANS-SERIF CAPITAL J
+  "\\mathsf{K}": '\uD835\uDDAA' # MATHEMATICAL SANS-SERIF CAPITAL K
+  "\\mathsf{L}": '\uD835\uDDAB' # MATHEMATICAL SANS-SERIF CAPITAL L
+  "\\mathsf{M}": '\uD835\uDDAC' # MATHEMATICAL SANS-SERIF CAPITAL M
+  "\\mathsf{N}": '\uD835\uDDAD' # MATHEMATICAL SANS-SERIF CAPITAL N
+  "\\mathsf{O}": '\uD835\uDDAE' # MATHEMATICAL SANS-SERIF CAPITAL O
+  "\\mathsf{P}": '\uD835\uDDAF' # MATHEMATICAL SANS-SERIF CAPITAL P
+  "\\mathsf{Q}": '\uD835\uDDB0' # MATHEMATICAL SANS-SERIF CAPITAL Q
+  "\\mathsf{R}": '\uD835\uDDB1' # MATHEMATICAL SANS-SERIF CAPITAL R
+  "\\mathsf{S}": '\uD835\uDDB2' # MATHEMATICAL SANS-SERIF CAPITAL S
+  "\\mathsf{T}": '\uD835\uDDB3' # MATHEMATICAL SANS-SERIF CAPITAL T
+  "\\mathsf{U}": '\uD835\uDDB4' # MATHEMATICAL SANS-SERIF CAPITAL U
+  "\\mathsf{V}": '\uD835\uDDB5' # MATHEMATICAL SANS-SERIF CAPITAL V
+  "\\mathsf{W}": '\uD835\uDDB6' # MATHEMATICAL SANS-SERIF CAPITAL W
+  "\\mathsf{X}": '\uD835\uDDB7' # MATHEMATICAL SANS-SERIF CAPITAL X
+  "\\mathsf{Y}": '\uD835\uDDB8' # MATHEMATICAL SANS-SERIF CAPITAL Y
+  "\\mathsf{Z}": '\uD835\uDDB9' # MATHEMATICAL SANS-SERIF CAPITAL Z
+  "\\mathsf{a}": '\uD835\uDDBA' # MATHEMATICAL SANS-SERIF SMALL A
+  "\\mathsf{b}": '\uD835\uDDBB' # MATHEMATICAL SANS-SERIF SMALL B
+  "\\mathsf{c}": '\uD835\uDDBC' # MATHEMATICAL SANS-SERIF SMALL C
+  "\\mathsf{d}": '\uD835\uDDBD' # MATHEMATICAL SANS-SERIF SMALL D
+  "\\mathsf{e}": '\uD835\uDDBE' # MATHEMATICAL SANS-SERIF SMALL E
+  "\\mathsf{f}": '\uD835\uDDBF' # MATHEMATICAL SANS-SERIF SMALL F
+  "\\mathsf{g}": '\uD835\uDDC0' # MATHEMATICAL SANS-SERIF SMALL G
+  "\\mathsf{h}": '\uD835\uDDC1' # MATHEMATICAL SANS-SERIF SMALL H
+  "\\mathsf{i}": '\uD835\uDDC2' # MATHEMATICAL SANS-SERIF SMALL I
+  "\\mathsf{j}": '\uD835\uDDC3' # MATHEMATICAL SANS-SERIF SMALL J
+  "\\mathsf{k}": '\uD835\uDDC4' # MATHEMATICAL SANS-SERIF SMALL K
+  "\\mathsf{l}": '\uD835\uDDC5' # MATHEMATICAL SANS-SERIF SMALL L
+  "\\mathsf{m}": '\uD835\uDDC6' # MATHEMATICAL SANS-SERIF SMALL M
+  "\\mathsf{n}": '\uD835\uDDC7' # MATHEMATICAL SANS-SERIF SMALL N
+  "\\mathsf{o}": '\uD835\uDDC8' # MATHEMATICAL SANS-SERIF SMALL O
+  "\\mathsf{p}": '\uD835\uDDC9' # MATHEMATICAL SANS-SERIF SMALL P
+  "\\mathsf{q}": '\uD835\uDDCA' # MATHEMATICAL SANS-SERIF SMALL Q
+  "\\mathsf{r}": '\uD835\uDDCB' # MATHEMATICAL SANS-SERIF SMALL R
+  "\\mathsf{s}": '\uD835\uDDCC' # MATHEMATICAL SANS-SERIF SMALL S
+  "\\mathsf{t}": '\uD835\uDDCD' # MATHEMATICAL SANS-SERIF SMALL T
+  "\\mathsf{u}": '\uD835\uDDCE' # MATHEMATICAL SANS-SERIF SMALL U
+  "\\mathsf{v}": '\uD835\uDDCF' # MATHEMATICAL SANS-SERIF SMALL V
+  "\\mathsf{w}": '\uD835\uDDD0' # MATHEMATICAL SANS-SERIF SMALL W
+  "\\mathsf{x}": '\uD835\uDDD1' # MATHEMATICAL SANS-SERIF SMALL X
+  "\\mathsf{y}": '\uD835\uDDD2' # MATHEMATICAL SANS-SERIF SMALL Y
+  "\\mathsf{z}": '\uD835\uDDD3' # MATHEMATICAL SANS-SERIF SMALL Z
+  "\\mathsfbf{A}": '\uD835\uDDD4' # MATHEMATICAL SANS-SERIF BOLD CAPITAL A
+  "\\mathsfbf{B}": '\uD835\uDDD5' # MATHEMATICAL SANS-SERIF BOLD CAPITAL B
+  "\\mathsfbf{C}": '\uD835\uDDD6' # MATHEMATICAL SANS-SERIF BOLD CAPITAL C
+  "\\mathsfbf{D}": '\uD835\uDDD7' # MATHEMATICAL SANS-SERIF BOLD CAPITAL D
+  "\\mathsfbf{E}": '\uD835\uDDD8' # MATHEMATICAL SANS-SERIF BOLD CAPITAL E
+  "\\mathsfbf{F}": '\uD835\uDDD9' # MATHEMATICAL SANS-SERIF BOLD CAPITAL F
+  "\\mathsfbf{G}": '\uD835\uDDDA' # MATHEMATICAL SANS-SERIF BOLD CAPITAL G
+  "\\mathsfbf{H}": '\uD835\uDDDB' # MATHEMATICAL SANS-SERIF BOLD CAPITAL H
+  "\\mathsfbf{I}": '\uD835\uDDDC' # MATHEMATICAL SANS-SERIF BOLD CAPITAL I
+  "\\mathsfbf{J}": '\uD835\uDDDD' # MATHEMATICAL SANS-SERIF BOLD CAPITAL J
+  "\\mathsfbf{K}": '\uD835\uDDDE' # MATHEMATICAL SANS-SERIF BOLD CAPITAL K
+  "\\mathsfbf{L}": '\uD835\uDDDF' # MATHEMATICAL SANS-SERIF BOLD CAPITAL L
+  "\\mathsfbf{M}": '\uD835\uDDE0' # MATHEMATICAL SANS-SERIF BOLD CAPITAL M
+  "\\mathsfbf{N}": '\uD835\uDDE1' # MATHEMATICAL SANS-SERIF BOLD CAPITAL N
+  "\\mathsfbf{O}": '\uD835\uDDE2' # MATHEMATICAL SANS-SERIF BOLD CAPITAL O
+  "\\mathsfbf{P}": '\uD835\uDDE3' # MATHEMATICAL SANS-SERIF BOLD CAPITAL P
+  "\\mathsfbf{Q}": '\uD835\uDDE4' # MATHEMATICAL SANS-SERIF BOLD CAPITAL Q
+  "\\mathsfbf{R}": '\uD835\uDDE5' # MATHEMATICAL SANS-SERIF BOLD CAPITAL R
+  "\\mathsfbf{S}": '\uD835\uDDE6' # MATHEMATICAL SANS-SERIF BOLD CAPITAL S
+  "\\mathsfbf{T}": '\uD835\uDDE7' # MATHEMATICAL SANS-SERIF BOLD CAPITAL T
+  "\\mathsfbf{U}": '\uD835\uDDE8' # MATHEMATICAL SANS-SERIF BOLD CAPITAL U
+  "\\mathsfbf{V}": '\uD835\uDDE9' # MATHEMATICAL SANS-SERIF BOLD CAPITAL V
+  "\\mathsfbf{W}": '\uD835\uDDEA' # MATHEMATICAL SANS-SERIF BOLD CAPITAL W
+  "\\mathsfbf{X}": '\uD835\uDDEB' # MATHEMATICAL SANS-SERIF BOLD CAPITAL X
+  "\\mathsfbf{Y}": '\uD835\uDDEC' # MATHEMATICAL SANS-SERIF BOLD CAPITAL Y
+  "\\mathsfbf{Z}": '\uD835\uDDED' # MATHEMATICAL SANS-SERIF BOLD CAPITAL Z
+  "\\mathsfbf{a}": '\uD835\uDDEE' # MATHEMATICAL SANS-SERIF BOLD SMALL A
+  "\\mathsfbf{b}": '\uD835\uDDEF' # MATHEMATICAL SANS-SERIF BOLD SMALL B
+  "\\mathsfbf{c}": '\uD835\uDDF0' # MATHEMATICAL SANS-SERIF BOLD SMALL C
+  "\\mathsfbf{d}": '\uD835\uDDF1' # MATHEMATICAL SANS-SERIF BOLD SMALL D
+  "\\mathsfbf{e}": '\uD835\uDDF2' # MATHEMATICAL SANS-SERIF BOLD SMALL E
+  "\\mathsfbf{f}": '\uD835\uDDF3' # MATHEMATICAL SANS-SERIF BOLD SMALL F
+  "\\mathsfbf{g}": '\uD835\uDDF4' # MATHEMATICAL SANS-SERIF BOLD SMALL G
+  "\\mathsfbf{h}": '\uD835\uDDF5' # MATHEMATICAL SANS-SERIF BOLD SMALL H
+  "\\mathsfbf{i}": '\uD835\uDDF6' # MATHEMATICAL SANS-SERIF BOLD SMALL I
+  "\\mathsfbf{j}": '\uD835\uDDF7' # MATHEMATICAL SANS-SERIF BOLD SMALL J
+  "\\mathsfbf{k}": '\uD835\uDDF8' # MATHEMATICAL SANS-SERIF BOLD SMALL K
+  "\\mathsfbf{l}": '\uD835\uDDF9' # MATHEMATICAL SANS-SERIF BOLD SMALL L
+  "\\mathsfbf{m}": '\uD835\uDDFA' # MATHEMATICAL SANS-SERIF BOLD SMALL M
+  "\\mathsfbf{n}": '\uD835\uDDFB' # MATHEMATICAL SANS-SERIF BOLD SMALL N
+  "\\mathsfbf{o}": '\uD835\uDDFC' # MATHEMATICAL SANS-SERIF BOLD SMALL O
+  "\\mathsfbf{p}": '\uD835\uDDFD' # MATHEMATICAL SANS-SERIF BOLD SMALL P
+  "\\mathsfbf{q}": '\uD835\uDDFE' # MATHEMATICAL SANS-SERIF BOLD SMALL Q
+  "\\mathsfbf{r}": '\uD835\uDDFF' # MATHEMATICAL SANS-SERIF BOLD SMALL R
+  "\\mathsfbf{s}": '\uD835\uDE00' # MATHEMATICAL SANS-SERIF BOLD SMALL S
+  "\\mathsfbf{t}": '\uD835\uDE01' # MATHEMATICAL SANS-SERIF BOLD SMALL T
+  "\\mathsfbf{u}": '\uD835\uDE02' # MATHEMATICAL SANS-SERIF BOLD SMALL U
+  "\\mathsfbf{v}": '\uD835\uDE03' # MATHEMATICAL SANS-SERIF BOLD SMALL V
+  "\\mathsfbf{w}": '\uD835\uDE04' # MATHEMATICAL SANS-SERIF BOLD SMALL W
+  "\\mathsfbf{x}": '\uD835\uDE05' # MATHEMATICAL SANS-SERIF BOLD SMALL X
+  "\\mathsfbf{y}": '\uD835\uDE06' # MATHEMATICAL SANS-SERIF BOLD SMALL Y
+  "\\mathsfbf{z}": '\uD835\uDE07' # MATHEMATICAL SANS-SERIF BOLD SMALL Z
+  "\\mathsfsl{A}": '\uD835\uDE08' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL A
+  "\\mathsfsl{B}": '\uD835\uDE09' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL B
+  "\\mathsfsl{C}": '\uD835\uDE0A' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL C
+  "\\mathsfsl{D}": '\uD835\uDE0B' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL D
+  "\\mathsfsl{E}": '\uD835\uDE0C' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL E
+  "\\mathsfsl{F}": '\uD835\uDE0D' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL F
+  "\\mathsfsl{G}": '\uD835\uDE0E' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL G
+  "\\mathsfsl{H}": '\uD835\uDE0F' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL H
+  "\\mathsfsl{I}": '\uD835\uDE10' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL I
+  "\\mathsfsl{J}": '\uD835\uDE11' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL J
+  "\\mathsfsl{K}": '\uD835\uDE12' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL K
+  "\\mathsfsl{L}": '\uD835\uDE13' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL L
+  "\\mathsfsl{M}": '\uD835\uDE14' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL M
+  "\\mathsfsl{N}": '\uD835\uDE15' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL N
+  "\\mathsfsl{O}": '\uD835\uDE16' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL O
+  "\\mathsfsl{P}": '\uD835\uDE17' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL P
+  "\\mathsfsl{Q}": '\uD835\uDE18' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL Q
+  "\\mathsfsl{R}": '\uD835\uDE19' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL R
+  "\\mathsfsl{S}": '\uD835\uDE1A' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL S
+  "\\mathsfsl{T}": '\uD835\uDE1B' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL T
+  "\\mathsfsl{U}": '\uD835\uDE1C' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL U
+  "\\mathsfsl{V}": '\uD835\uDE1D' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL V
+  "\\mathsfsl{W}": '\uD835\uDE1E' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL W
+  "\\mathsfsl{X}": '\uD835\uDE1F' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL X
+  "\\mathsfsl{Y}": '\uD835\uDE20' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL Y
+  "\\mathsfsl{Z}": '\uD835\uDE21' # MATHEMATICAL SANS-SERIF ITALIC CAPITAL Z
+  "\\mathsfsl{a}": '\uD835\uDE22' # MATHEMATICAL SANS-SERIF ITALIC SMALL A
+  "\\mathsfsl{b}": '\uD835\uDE23' # MATHEMATICAL SANS-SERIF ITALIC SMALL B
+  "\\mathsfsl{c}": '\uD835\uDE24' # MATHEMATICAL SANS-SERIF ITALIC SMALL C
+  "\\mathsfsl{d}": '\uD835\uDE25' # MATHEMATICAL SANS-SERIF ITALIC SMALL D
+  "\\mathsfsl{e}": '\uD835\uDE26' # MATHEMATICAL SANS-SERIF ITALIC SMALL E
+  "\\mathsfsl{f}": '\uD835\uDE27' # MATHEMATICAL SANS-SERIF ITALIC SMALL F
+  "\\mathsfsl{g}": '\uD835\uDE28' # MATHEMATICAL SANS-SERIF ITALIC SMALL G
+  "\\mathsfsl{h}": '\uD835\uDE29' # MATHEMATICAL SANS-SERIF ITALIC SMALL H
+  "\\mathsfsl{i}": '\uD835\uDE2A' # MATHEMATICAL SANS-SERIF ITALIC SMALL I
+  "\\mathsfsl{j}": '\uD835\uDE2B' # MATHEMATICAL SANS-SERIF ITALIC SMALL J
+  "\\mathsfsl{k}": '\uD835\uDE2C' # MATHEMATICAL SANS-SERIF ITALIC SMALL K
+  "\\mathsfsl{l}": '\uD835\uDE2D' # MATHEMATICAL SANS-SERIF ITALIC SMALL L
+  "\\mathsfsl{m}": '\uD835\uDE2E' # MATHEMATICAL SANS-SERIF ITALIC SMALL M
+  "\\mathsfsl{n}": '\uD835\uDE2F' # MATHEMATICAL SANS-SERIF ITALIC SMALL N
+  "\\mathsfsl{o}": '\uD835\uDE30' # MATHEMATICAL SANS-SERIF ITALIC SMALL O
+  "\\mathsfsl{p}": '\uD835\uDE31' # MATHEMATICAL SANS-SERIF ITALIC SMALL P
+  "\\mathsfsl{q}": '\uD835\uDE32' # MATHEMATICAL SANS-SERIF ITALIC SMALL Q
+  "\\mathsfsl{r}": '\uD835\uDE33' # MATHEMATICAL SANS-SERIF ITALIC SMALL R
+  "\\mathsfsl{s}": '\uD835\uDE34' # MATHEMATICAL SANS-SERIF ITALIC SMALL S
+  "\\mathsfsl{t}": '\uD835\uDE35' # MATHEMATICAL SANS-SERIF ITALIC SMALL T
+  "\\mathsfsl{u}": '\uD835\uDE36' # MATHEMATICAL SANS-SERIF ITALIC SMALL U
+  "\\mathsfsl{v}": '\uD835\uDE37' # MATHEMATICAL SANS-SERIF ITALIC SMALL V
+  "\\mathsfsl{w}": '\uD835\uDE38' # MATHEMATICAL SANS-SERIF ITALIC SMALL W
+  "\\mathsfsl{x}": '\uD835\uDE39' # MATHEMATICAL SANS-SERIF ITALIC SMALL X
+  "\\mathsfsl{y}": '\uD835\uDE3A' # MATHEMATICAL SANS-SERIF ITALIC SMALL Y
+  "\\mathsfsl{z}": '\uD835\uDE3B' # MATHEMATICAL SANS-SERIF ITALIC SMALL Z
+  "\\mathsfbfsl{A}": '\uD835\uDE3C' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL A
+  "\\mathsfbfsl{B}": '\uD835\uDE3D' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL B
+  "\\mathsfbfsl{C}": '\uD835\uDE3E' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL C
+  "\\mathsfbfsl{D}": '\uD835\uDE3F' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL D
+  "\\mathsfbfsl{E}": '\uD835\uDE40' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL E
+  "\\mathsfbfsl{F}": '\uD835\uDE41' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL F
+  "\\mathsfbfsl{G}": '\uD835\uDE42' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL G
+  "\\mathsfbfsl{H}": '\uD835\uDE43' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL H
+  "\\mathsfbfsl{I}": '\uD835\uDE44' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL I
+  "\\mathsfbfsl{J}": '\uD835\uDE45' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL J
+  "\\mathsfbfsl{K}": '\uD835\uDE46' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL K
+  "\\mathsfbfsl{L}": '\uD835\uDE47' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL L
+  "\\mathsfbfsl{M}": '\uD835\uDE48' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL M
+  "\\mathsfbfsl{N}": '\uD835\uDE49' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL N
+  "\\mathsfbfsl{O}": '\uD835\uDE4A' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL O
+  "\\mathsfbfsl{P}": '\uD835\uDE4B' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL P
+  "\\mathsfbfsl{Q}": '\uD835\uDE4C' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL Q
+  "\\mathsfbfsl{R}": '\uD835\uDE4D' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL R
+  "\\mathsfbfsl{S}": '\uD835\uDE4E' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL S
+  "\\mathsfbfsl{T}": '\uD835\uDE4F' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL T
+  "\\mathsfbfsl{U}": '\uD835\uDE50' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL U
+  "\\mathsfbfsl{V}": '\uD835\uDE51' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL V
+  "\\mathsfbfsl{W}": '\uD835\uDE52' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL W
+  "\\mathsfbfsl{X}": '\uD835\uDE53' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL X
+  "\\mathsfbfsl{Y}": '\uD835\uDE54' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL Y
+  "\\mathsfbfsl{Z}": '\uD835\uDE55' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL Z
+  "\\mathsfbfsl{a}": '\uD835\uDE56' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL A
+  "\\mathsfbfsl{b}": '\uD835\uDE57' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL B
+  "\\mathsfbfsl{c}": '\uD835\uDE58' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL C
+  "\\mathsfbfsl{d}": '\uD835\uDE59' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL D
+  "\\mathsfbfsl{e}": '\uD835\uDE5A' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL E
+  "\\mathsfbfsl{f}": '\uD835\uDE5B' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL F
+  "\\mathsfbfsl{g}": '\uD835\uDE5C' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL G
+  "\\mathsfbfsl{h}": '\uD835\uDE5D' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL H
+  "\\mathsfbfsl{i}": '\uD835\uDE5E' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL I
+  "\\mathsfbfsl{j}": '\uD835\uDE5F' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL J
+  "\\mathsfbfsl{k}": '\uD835\uDE60' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL K
+  "\\mathsfbfsl{l}": '\uD835\uDE61' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL L
+  "\\mathsfbfsl{m}": '\uD835\uDE62' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL M
+  "\\mathsfbfsl{n}": '\uD835\uDE63' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL N
+  "\\mathsfbfsl{o}": '\uD835\uDE64' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL O
+  "\\mathsfbfsl{p}": '\uD835\uDE65' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL P
+  "\\mathsfbfsl{q}": '\uD835\uDE66' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL Q
+  "\\mathsfbfsl{r}": '\uD835\uDE67' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL R
+  "\\mathsfbfsl{s}": '\uD835\uDE68' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL S
+  "\\mathsfbfsl{t}": '\uD835\uDE69' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL T
+  "\\mathsfbfsl{u}": '\uD835\uDE6A' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL U
+  "\\mathsfbfsl{v}": '\uD835\uDE6B' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL V
+  "\\mathsfbfsl{w}": '\uD835\uDE6C' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL W
+  "\\mathsfbfsl{x}": '\uD835\uDE6D' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL X
+  "\\mathsfbfsl{y}": '\uD835\uDE6E' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL Y
+  "\\mathsfbfsl{z}": '\uD835\uDE6F' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL Z
+  "\\mathtt{A}": '\uD835\uDE70' # MATHEMATICAL MONOSPACE CAPITAL A
+  "\\mathtt{B}": '\uD835\uDE71' # MATHEMATICAL MONOSPACE CAPITAL B
+  "\\mathtt{C}": '\uD835\uDE72' # MATHEMATICAL MONOSPACE CAPITAL C
+  "\\mathtt{D}": '\uD835\uDE73' # MATHEMATICAL MONOSPACE CAPITAL D
+  "\\mathtt{E}": '\uD835\uDE74' # MATHEMATICAL MONOSPACE CAPITAL E
+  "\\mathtt{F}": '\uD835\uDE75' # MATHEMATICAL MONOSPACE CAPITAL F
+  "\\mathtt{G}": '\uD835\uDE76' # MATHEMATICAL MONOSPACE CAPITAL G
+  "\\mathtt{H}": '\uD835\uDE77' # MATHEMATICAL MONOSPACE CAPITAL H
+  "\\mathtt{I}": '\uD835\uDE78' # MATHEMATICAL MONOSPACE CAPITAL I
+  "\\mathtt{J}": '\uD835\uDE79' # MATHEMATICAL MONOSPACE CAPITAL J
+  "\\mathtt{K}": '\uD835\uDE7A' # MATHEMATICAL MONOSPACE CAPITAL K
+  "\\mathtt{L}": '\uD835\uDE7B' # MATHEMATICAL MONOSPACE CAPITAL L
+  "\\mathtt{M}": '\uD835\uDE7C' # MATHEMATICAL MONOSPACE CAPITAL M
+  "\\mathtt{N}": '\uD835\uDE7D' # MATHEMATICAL MONOSPACE CAPITAL N
+  "\\mathtt{O}": '\uD835\uDE7E' # MATHEMATICAL MONOSPACE CAPITAL O
+  "\\mathtt{P}": '\uD835\uDE7F' # MATHEMATICAL MONOSPACE CAPITAL P
+  "\\mathtt{Q}": '\uD835\uDE80' # MATHEMATICAL MONOSPACE CAPITAL Q
+  "\\mathtt{R}": '\uD835\uDE81' # MATHEMATICAL MONOSPACE CAPITAL R
+  "\\mathtt{S}": '\uD835\uDE82' # MATHEMATICAL MONOSPACE CAPITAL S
+  "\\mathtt{T}": '\uD835\uDE83' # MATHEMATICAL MONOSPACE CAPITAL T
+  "\\mathtt{U}": '\uD835\uDE84' # MATHEMATICAL MONOSPACE CAPITAL U
+  "\\mathtt{V}": '\uD835\uDE85' # MATHEMATICAL MONOSPACE CAPITAL V
+  "\\mathtt{W}": '\uD835\uDE86' # MATHEMATICAL MONOSPACE CAPITAL W
+  "\\mathtt{X}": '\uD835\uDE87' # MATHEMATICAL MONOSPACE CAPITAL X
+  "\\mathtt{Y}": '\uD835\uDE88' # MATHEMATICAL MONOSPACE CAPITAL Y
+  "\\mathtt{Z}": '\uD835\uDE89' # MATHEMATICAL MONOSPACE CAPITAL Z
+  "\\mathtt{a}": '\uD835\uDE8A' # MATHEMATICAL MONOSPACE SMALL A
+  "\\mathtt{b}": '\uD835\uDE8B' # MATHEMATICAL MONOSPACE SMALL B
+  "\\mathtt{c}": '\uD835\uDE8C' # MATHEMATICAL MONOSPACE SMALL C
+  "\\mathtt{d}": '\uD835\uDE8D' # MATHEMATICAL MONOSPACE SMALL D
+  "\\mathtt{e}": '\uD835\uDE8E' # MATHEMATICAL MONOSPACE SMALL E
+  "\\mathtt{f}": '\uD835\uDE8F' # MATHEMATICAL MONOSPACE SMALL F
+  "\\mathtt{g}": '\uD835\uDE90' # MATHEMATICAL MONOSPACE SMALL G
+  "\\mathtt{h}": '\uD835\uDE91' # MATHEMATICAL MONOSPACE SMALL H
+  "\\mathtt{i}": '\uD835\uDE92' # MATHEMATICAL MONOSPACE SMALL I
+  "\\mathtt{j}": '\uD835\uDE93' # MATHEMATICAL MONOSPACE SMALL J
+  "\\mathtt{k}": '\uD835\uDE94' # MATHEMATICAL MONOSPACE SMALL K
+  "\\mathtt{l}": '\uD835\uDE95' # MATHEMATICAL MONOSPACE SMALL L
+  "\\mathtt{m}": '\uD835\uDE96' # MATHEMATICAL MONOSPACE SMALL M
+  "\\mathtt{n}": '\uD835\uDE97' # MATHEMATICAL MONOSPACE SMALL N
+  "\\mathtt{o}": '\uD835\uDE98' # MATHEMATICAL MONOSPACE SMALL O
+  "\\mathtt{p}": '\uD835\uDE99' # MATHEMATICAL MONOSPACE SMALL P
+  "\\mathtt{q}": '\uD835\uDE9A' # MATHEMATICAL MONOSPACE SMALL Q
+  "\\mathtt{r}": '\uD835\uDE9B' # MATHEMATICAL MONOSPACE SMALL R
+  "\\mathtt{s}": '\uD835\uDE9C' # MATHEMATICAL MONOSPACE SMALL S
+  "\\mathtt{t}": '\uD835\uDE9D' # MATHEMATICAL MONOSPACE SMALL T
+  "\\mathtt{u}": '\uD835\uDE9E' # MATHEMATICAL MONOSPACE SMALL U
+  "\\mathtt{v}": '\uD835\uDE9F' # MATHEMATICAL MONOSPACE SMALL V
+  "\\mathtt{w}": '\uD835\uDEA0' # MATHEMATICAL MONOSPACE SMALL W
+  "\\mathtt{x}": '\uD835\uDEA1' # MATHEMATICAL MONOSPACE SMALL X
+  "\\mathtt{y}": '\uD835\uDEA2' # MATHEMATICAL MONOSPACE SMALL Y
+  "\\mathtt{z}": '\uD835\uDEA3' # MATHEMATICAL MONOSPACE SMALL Z
+  "\\imath{}": '\uD835\uDEA4' # MATHEMATICAL ITALIC SMALL DOTLESS I
+  "{\\imath}": '\uD835\uDEA4' # MATHEMATICAL ITALIC SMALL DOTLESS I
+  "\\imath": '\uD835\uDEA4' # MATHEMATICAL ITALIC SMALL DOTLESS I
+  "\\mathbf{\\Alpha}": '\uD835\uDEA8' # MATHEMATICAL BOLD CAPITAL ALPHA
+  "\\mathbf{\\Beta}": '\uD835\uDEA9' # MATHEMATICAL BOLD CAPITAL BETA
+  "\\mathbf{\\Gamma}": '\uD835\uDEAA' # MATHEMATICAL BOLD CAPITAL GAMMA
+  "\\mathbf{\\Delta}": '\uD835\uDEAB' # MATHEMATICAL BOLD CAPITAL DELTA
+  "\\mathbf{\\Epsilon}": '\uD835\uDEAC' # MATHEMATICAL BOLD CAPITAL EPSILON
+  "\\mathbf{\\Zeta}": '\uD835\uDEAD' # MATHEMATICAL BOLD CAPITAL ZETA
+  "\\mathbf{\\Eta}": '\uD835\uDEAE' # MATHEMATICAL BOLD CAPITAL ETA
+  "\\mathbf{\\Theta}": '\uD835\uDEAF' # MATHEMATICAL BOLD CAPITAL THETA
+  "\\mathbf{\\Iota}": '\uD835\uDEB0' # MATHEMATICAL BOLD CAPITAL IOTA
+  "\\mathbf{\\Kappa}": '\uD835\uDEB1' # MATHEMATICAL BOLD CAPITAL KAPPA
+  "\\mathbf{\\Lambda}": '\uD835\uDEB2' # MATHEMATICAL BOLD CAPITAL LAMDA
+  "\\mathbf{\\Xi}": '\uD835\uDEB5' # MATHEMATICAL BOLD CAPITAL XI
+  "\\mathbf{\\Pi}": '\uD835\uDEB7' # MATHEMATICAL BOLD CAPITAL PI
+  "\\mathbf{\\Rho}": '\uD835\uDEB8' # MATHEMATICAL BOLD CAPITAL RHO
+  "\\mathbf{\\vartheta}": '\uD835\uDEB9' # MATHEMATICAL BOLD CAPITAL THETA SYMBOL
+  "\\mathbf{\\Sigma}": '\uD835\uDEBA' # MATHEMATICAL BOLD CAPITAL SIGMA
+  "\\mathbf{\\Tau}": '\uD835\uDEBB' # MATHEMATICAL BOLD CAPITAL TAU
+  "\\mathbf{\\Upsilon}": '\uD835\uDEBC' # MATHEMATICAL BOLD CAPITAL UPSILON
+  "\\mathbf{\\Phi}": '\uD835\uDEBD' # MATHEMATICAL BOLD CAPITAL PHI
+  "\\mathbf{\\Chi}": '\uD835\uDEBE' # MATHEMATICAL BOLD CAPITAL CHI
+  "\\mathbf{\\Psi}": '\uD835\uDEBF' # MATHEMATICAL BOLD CAPITAL PSI
+  "\\mathbf{\\Omega}": '\uD835\uDEC0' # MATHEMATICAL BOLD CAPITAL OMEGA
+  "\\mathbf{\\nabla}": '\uD835\uDEC1' # MATHEMATICAL BOLD NABLA
+  "\\mathbf{\\theta}": '\uD835\uDEC9' # MATHEMATICAL BOLD SMALL THETA
+  "\\mathbf{\\varsigma}": '\uD835\uDED3' # MATHEMATICAL BOLD SMALL FINAL SIGMA
+  "\\mathbf{\\varkappa}": '\uD835\uDEDE' # MATHEMATICAL BOLD KAPPA SYMBOL
+  "\\mathbf{\\phi}": '\uD835\uDEDF' # MATHEMATICAL BOLD PHI SYMBOL
+  "\\mathbf{\\varrho}": '\uD835\uDEE0' # MATHEMATICAL BOLD RHO SYMBOL
+  "\\mathbf{\\varpi}": '\uD835\uDEE1' # MATHEMATICAL BOLD PI SYMBOL
+  "\\mathsl{\\Alpha}": '\uD835\uDEE2' # MATHEMATICAL ITALIC CAPITAL ALPHA
+  "\\mathsl{\\Beta}": '\uD835\uDEE3' # MATHEMATICAL ITALIC CAPITAL BETA
+  "\\mathsl{\\Gamma}": '\uD835\uDEE4' # MATHEMATICAL ITALIC CAPITAL GAMMA
+  "\\mathsl{\\Delta}": '\uD835\uDEE5' # MATHEMATICAL ITALIC CAPITAL DELTA
+  "\\mathsl{\\Epsilon}": '\uD835\uDEE6' # MATHEMATICAL ITALIC CAPITAL EPSILON
+  "\\mathsl{\\Zeta}": '\uD835\uDEE7' # MATHEMATICAL ITALIC CAPITAL ZETA
+  "\\mathsl{\\Eta}": '\uD835\uDEE8' # MATHEMATICAL ITALIC CAPITAL ETA
+  "\\mathsl{\\Theta}": '\uD835\uDEE9' # MATHEMATICAL ITALIC CAPITAL THETA
+  "\\mathsl{\\Iota}": '\uD835\uDEEA' # MATHEMATICAL ITALIC CAPITAL IOTA
+  "\\mathsl{\\Kappa}": '\uD835\uDEEB' # MATHEMATICAL ITALIC CAPITAL KAPPA
+  "\\mathsl{\\Lambda}": '\uD835\uDEEC' # MATHEMATICAL ITALIC CAPITAL LAMDA
+  "\\mathsl{\\Xi}": '\uD835\uDEEF' # MATHEMATICAL ITALIC CAPITAL XI
+  "\\mathsl{\\Pi}": '\uD835\uDEF1' # MATHEMATICAL ITALIC CAPITAL PI
+  "\\mathsl{\\Rho}": '\uD835\uDEF2' # MATHEMATICAL ITALIC CAPITAL RHO
+  "\\mathsl{\\vartheta}": '\uD835\uDEF3' # MATHEMATICAL ITALIC CAPITAL THETA SYMBOL
+  "\\mathsl{\\Sigma}": '\uD835\uDEF4' # MATHEMATICAL ITALIC CAPITAL SIGMA
+  "\\mathsl{\\Tau}": '\uD835\uDEF5' # MATHEMATICAL ITALIC CAPITAL TAU
+  "\\mathsl{\\Upsilon}": '\uD835\uDEF6' # MATHEMATICAL ITALIC CAPITAL UPSILON
+  "\\mathsl{\\Phi}": '\uD835\uDEF7' # MATHEMATICAL ITALIC CAPITAL PHI
+  "\\mathsl{\\Chi}": '\uD835\uDEF8' # MATHEMATICAL ITALIC CAPITAL CHI
+  "\\mathsl{\\Psi}": '\uD835\uDEF9' # MATHEMATICAL ITALIC CAPITAL PSI
+  "\\mathsl{\\Omega}": '\uD835\uDEFA' # MATHEMATICAL ITALIC CAPITAL OMEGA
+  "\\mathsl{\\nabla}": '\uD835\uDEFB' # MATHEMATICAL ITALIC NABLA
+  "\\mathsl{\\varsigma}": '\uD835\uDF0D' # MATHEMATICAL ITALIC SMALL FINAL SIGMA
+  "\\mathsl{\\varkappa}": '\uD835\uDF18' # MATHEMATICAL ITALIC KAPPA SYMBOL
+  "\\mathsl{\\phi}": '\uD835\uDF19' # MATHEMATICAL ITALIC PHI SYMBOL
+  "\\mathsl{\\varrho}": '\uD835\uDF1A' # MATHEMATICAL ITALIC RHO SYMBOL
+  "\\mathsl{\\varpi}": '\uD835\uDF1B' # MATHEMATICAL ITALIC PI SYMBOL
+  "\\mathbit{\\Alpha}": '\uD835\uDF1C' # MATHEMATICAL BOLD ITALIC CAPITAL ALPHA
+  "\\mathbit{\\Beta}": '\uD835\uDF1D' # MATHEMATICAL BOLD ITALIC CAPITAL BETA
+  "\\mathbit{\\Gamma}": '\uD835\uDF1E' # MATHEMATICAL BOLD ITALIC CAPITAL GAMMA
+  "\\mathbit{\\Delta}": '\uD835\uDF1F' # MATHEMATICAL BOLD ITALIC CAPITAL DELTA
+  "\\mathbit{\\Epsilon}": '\uD835\uDF20' # MATHEMATICAL BOLD ITALIC CAPITAL EPSILON
+  "\\mathbit{\\Zeta}": '\uD835\uDF21' # MATHEMATICAL BOLD ITALIC CAPITAL ZETA
+  "\\mathbit{\\Eta}": '\uD835\uDF22' # MATHEMATICAL BOLD ITALIC CAPITAL ETA
+  "\\mathbit{\\Theta}": '\uD835\uDF23' # MATHEMATICAL BOLD ITALIC CAPITAL THETA
+  "\\mathbit{\\Iota}": '\uD835\uDF24' # MATHEMATICAL BOLD ITALIC CAPITAL IOTA
+  "\\mathbit{\\Kappa}": '\uD835\uDF25' # MATHEMATICAL BOLD ITALIC CAPITAL KAPPA
+  "\\mathbit{\\Lambda}": '\uD835\uDF26' # MATHEMATICAL BOLD ITALIC CAPITAL LAMDA
+  "\\mathbit{\\Xi}": '\uD835\uDF29' # MATHEMATICAL BOLD ITALIC CAPITAL XI
+  "\\mathbit{\\Pi}": '\uD835\uDF2B' # MATHEMATICAL BOLD ITALIC CAPITAL PI
+  "\\mathbit{\\Rho}": '\uD835\uDF2C' # MATHEMATICAL BOLD ITALIC CAPITAL RHO
+  "\\mathbit{\\Sigma}": '\uD835\uDF2E' # MATHEMATICAL BOLD ITALIC CAPITAL SIGMA
+  "\\mathbit{\\Tau}": '\uD835\uDF2F' # MATHEMATICAL BOLD ITALIC CAPITAL TAU
+  "\\mathbit{\\Upsilon}": '\uD835\uDF30' # MATHEMATICAL BOLD ITALIC CAPITAL UPSILON
+  "\\mathbit{\\Phi}": '\uD835\uDF31' # MATHEMATICAL BOLD ITALIC CAPITAL PHI
+  "\\mathbit{\\Chi}": '\uD835\uDF32' # MATHEMATICAL BOLD ITALIC CAPITAL CHI
+  "\\mathbit{\\Psi}": '\uD835\uDF33' # MATHEMATICAL BOLD ITALIC CAPITAL PSI
+  "\\mathbit{\\Omega}": '\uD835\uDF34' # MATHEMATICAL BOLD ITALIC CAPITAL OMEGA
+  "\\mathbit{\\nabla}": '\uD835\uDF35' # MATHEMATICAL BOLD ITALIC NABLA
+  "\\mathbit{\\varsigma}": '\uD835\uDF47' # MATHEMATICAL BOLD ITALIC SMALL FINAL SIGMA
+  "\\mathbit{\\vartheta}": '\uD835\uDF51' # MATHEMATICAL BOLD ITALIC THETA SYMBOL
+  "\\mathbit{\\varkappa}": '\uD835\uDF52' # MATHEMATICAL BOLD ITALIC KAPPA SYMBOL
+  "\\mathbit{\\phi}": '\uD835\uDF53' # MATHEMATICAL BOLD ITALIC PHI SYMBOL
+  "\\mathbit{\\varrho}": '\uD835\uDF54' # MATHEMATICAL BOLD ITALIC RHO SYMBOL
+  "\\mathbit{\\varpi}": '\uD835\uDF55' # MATHEMATICAL BOLD ITALIC PI SYMBOL
+  "\\mathsfbf{\\Alpha}": '\uD835\uDF56' # MATHEMATICAL SANS-SERIF BOLD CAPITAL ALPHA
+  "\\mathsfbf{\\Beta}": '\uD835\uDF57' # MATHEMATICAL SANS-SERIF BOLD CAPITAL BETA
+  "\\mathsfbf{\\Gamma}": '\uD835\uDF58' # MATHEMATICAL SANS-SERIF BOLD CAPITAL GAMMA
+  "\\mathsfbf{\\Delta}": '\uD835\uDF59' # MATHEMATICAL SANS-SERIF BOLD CAPITAL DELTA
+  "\\mathsfbf{\\Epsilon}": '\uD835\uDF5A' # MATHEMATICAL SANS-SERIF BOLD CAPITAL EPSILON
+  "\\mathsfbf{\\Zeta}": '\uD835\uDF5B' # MATHEMATICAL SANS-SERIF BOLD CAPITAL ZETA
+  "\\mathsfbf{\\Eta}": '\uD835\uDF5C' # MATHEMATICAL SANS-SERIF BOLD CAPITAL ETA
+  "\\mathsfbf{\\Theta}": '\uD835\uDF5D' # MATHEMATICAL SANS-SERIF BOLD CAPITAL THETA
+  "\\mathsfbf{\\Iota}": '\uD835\uDF5E' # MATHEMATICAL SANS-SERIF BOLD CAPITAL IOTA
+  "\\mathsfbf{\\Kappa}": '\uD835\uDF5F' # MATHEMATICAL SANS-SERIF BOLD CAPITAL KAPPA
+  "\\mathsfbf{\\Lambda}": '\uD835\uDF60' # MATHEMATICAL SANS-SERIF BOLD CAPITAL LAMDA
+  "\\mathsfbf{\\Xi}": '\uD835\uDF63' # MATHEMATICAL SANS-SERIF BOLD CAPITAL XI
+  "\\mathsfbf{\\Pi}": '\uD835\uDF65' # MATHEMATICAL SANS-SERIF BOLD CAPITAL PI
+  "\\mathsfbf{\\Rho}": '\uD835\uDF66' # MATHEMATICAL SANS-SERIF BOLD CAPITAL RHO
+  "\\mathsfbf{\\vartheta}": '\uD835\uDF67' # MATHEMATICAL SANS-SERIF BOLD CAPITAL THETA SYMBOL
+  "\\mathsfbf{\\Sigma}": '\uD835\uDF68' # MATHEMATICAL SANS-SERIF BOLD CAPITAL SIGMA
+  "\\mathsfbf{\\Tau}": '\uD835\uDF69' # MATHEMATICAL SANS-SERIF BOLD CAPITAL TAU
+  "\\mathsfbf{\\Upsilon}": '\uD835\uDF6A' # MATHEMATICAL SANS-SERIF BOLD CAPITAL UPSILON
+  "\\mathsfbf{\\Phi}": '\uD835\uDF6B' # MATHEMATICAL SANS-SERIF BOLD CAPITAL PHI
+  "\\mathsfbf{\\Chi}": '\uD835\uDF6C' # MATHEMATICAL SANS-SERIF BOLD CAPITAL CHI
+  "\\mathsfbf{\\Psi}": '\uD835\uDF6D' # MATHEMATICAL SANS-SERIF BOLD CAPITAL PSI
+  "\\mathsfbf{\\Omega}": '\uD835\uDF6E' # MATHEMATICAL SANS-SERIF BOLD CAPITAL OMEGA
+  "\\mathsfbf{\\nabla}": '\uD835\uDF6F' # MATHEMATICAL SANS-SERIF BOLD NABLA
+  "\\mathsfbf{\\varsigma}": '\uD835\uDF81' # MATHEMATICAL SANS-SERIF BOLD SMALL FINAL SIGMA
+  "\\mathsfbf{\\varkappa}": '\uD835\uDF8C' # MATHEMATICAL SANS-SERIF BOLD KAPPA SYMBOL
+  "\\mathsfbf{\\phi}": '\uD835\uDF8D' # MATHEMATICAL SANS-SERIF BOLD PHI SYMBOL
+  "\\mathsfbf{\\varrho}": '\uD835\uDF8E' # MATHEMATICAL SANS-SERIF BOLD RHO SYMBOL
+  "\\mathsfbf{\\varpi}": '\uD835\uDF8F' # MATHEMATICAL SANS-SERIF BOLD PI SYMBOL
+  "\\mathsfbfsl{\\Alpha}": '\uD835\uDF90' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL ALPHA
+  "\\mathsfbfsl{\\Beta}": '\uD835\uDF91' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL BETA
+  "\\mathsfbfsl{\\Gamma}": '\uD835\uDF92' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL GAMMA
+  "\\mathsfbfsl{\\Delta}": '\uD835\uDF93' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL DELTA
+  "\\mathsfbfsl{\\Epsilon}": '\uD835\uDF94' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL EPSILON
+  "\\mathsfbfsl{\\Zeta}": '\uD835\uDF95' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL ZETA
+  "\\mathsfbfsl{\\Eta}": '\uD835\uDF96' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL ETA
+  "\\mathsfbfsl{\\vartheta}": '\uD835\uDF97' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL THETA
+  "\\mathsfbfsl{\\Iota}": '\uD835\uDF98' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL IOTA
+  "\\mathsfbfsl{\\Kappa}": '\uD835\uDF99' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL KAPPA
+  "\\mathsfbfsl{\\Lambda}": '\uD835\uDF9A' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL LAMDA
+  "\\mathsfbfsl{\\Xi}": '\uD835\uDF9D' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL XI
+  "\\mathsfbfsl{\\Pi}": '\uD835\uDF9F' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL PI
+  "\\mathsfbfsl{\\Rho}": '\uD835\uDFA0' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL RHO
+  "\\mathsfbfsl{\\Sigma}": '\uD835\uDFA2' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL SIGMA
+  "\\mathsfbfsl{\\Tau}": '\uD835\uDFA3' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL TAU
+  "\\mathsfbfsl{\\Upsilon}": '\uD835\uDFA4' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL UPSILON
+  "\\mathsfbfsl{\\Phi}": '\uD835\uDFA5' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL PHI
+  "\\mathsfbfsl{\\Chi}": '\uD835\uDFA6' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL CHI
+  "\\mathsfbfsl{\\Psi}": '\uD835\uDFA7' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL PSI
+  "\\mathsfbfsl{\\Omega}": '\uD835\uDFA8' # MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL OMEGA
+  "\\mathsfbfsl{\\nabla}": '\uD835\uDFA9' # MATHEMATICAL SANS-SERIF BOLD ITALIC NABLA
+  "\\mathsfbfsl{\\varsigma}": '\uD835\uDFBB' # MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL FINAL SIGMA
+  "\\mathsfbfsl{\\varkappa}": '\uD835\uDFC6' # MATHEMATICAL SANS-SERIF BOLD ITALIC KAPPA SYMBOL
+  "\\mathsfbfsl{\\phi}": '\uD835\uDFC7' # MATHEMATICAL SANS-SERIF BOLD ITALIC PHI SYMBOL
+  "\\mathsfbfsl{\\varrho}": '\uD835\uDFC8' # MATHEMATICAL SANS-SERIF BOLD ITALIC RHO SYMBOL
+  "\\mathsfbfsl{\\varpi}": '\uD835\uDFC9' # MATHEMATICAL SANS-SERIF BOLD ITALIC PI SYMBOL
+  "\\mbfDigamma{}": '\uD835\uDFCA' # MATHEMATICAL BOLD CAPITAL DIGAMMA
+  "{\\mbfDigamma}": '\uD835\uDFCA' # MATHEMATICAL BOLD CAPITAL DIGAMMA
+  "\\mbfDigamma": '\uD835\uDFCA' # MATHEMATICAL BOLD CAPITAL DIGAMMA
+  "\\mbfdigamma{}": '\uD835\uDFCB' # MATHEMATICAL BOLD SMALL DIGAMMA
+  "{\\mbfdigamma}": '\uD835\uDFCB' # MATHEMATICAL BOLD SMALL DIGAMMA
+  "\\mbfdigamma": '\uD835\uDFCB' # MATHEMATICAL BOLD SMALL DIGAMMA
+  "\\mathbf{0}": '\uD835\uDFCE' # MATHEMATICAL BOLD DIGIT ZERO
+  "\\mathbf{1}": '\uD835\uDFCF' # MATHEMATICAL BOLD DIGIT ONE
+  "\\mathbf{2}": '\uD835\uDFD0' # MATHEMATICAL BOLD DIGIT TWO
+  "\\mathbf{3}": '\uD835\uDFD1' # MATHEMATICAL BOLD DIGIT THREE
+  "\\mathbf{4}": '\uD835\uDFD2' # MATHEMATICAL BOLD DIGIT FOUR
+  "\\mathbf{5}": '\uD835\uDFD3' # MATHEMATICAL BOLD DIGIT FIVE
+  "\\mathbf{6}": '\uD835\uDFD4' # MATHEMATICAL BOLD DIGIT SIX
+  "\\mathbf{7}": '\uD835\uDFD5' # MATHEMATICAL BOLD DIGIT SEVEN
+  "\\mathbf{8}": '\uD835\uDFD6' # MATHEMATICAL BOLD DIGIT EIGHT
+  "\\mathbf{9}": '\uD835\uDFD7' # MATHEMATICAL BOLD DIGIT NINE
+  "\\mathbb{0}": '\uD835\uDFD8' # MATHEMATICAL DOUBLE-STRUCK DIGIT ZERO
+  "\\mathbb{1}": '\uD835\uDFD9' # MATHEMATICAL DOUBLE-STRUCK DIGIT ONE
+  "\\mathbb{2}": '\uD835\uDFDA' # MATHEMATICAL DOUBLE-STRUCK DIGIT TWO
+  "\\mathbb{3}": '\uD835\uDFDB' # MATHEMATICAL DOUBLE-STRUCK DIGIT THREE
+  "\\mathbb{4}": '\uD835\uDFDC' # MATHEMATICAL DOUBLE-STRUCK DIGIT FOUR
+  "\\mathbb{5}": '\uD835\uDFDD' # MATHEMATICAL DOUBLE-STRUCK DIGIT FIVE
+  "\\mathbb{6}": '\uD835\uDFDE' # MATHEMATICAL DOUBLE-STRUCK DIGIT SIX
+  "\\mathbb{7}": '\uD835\uDFDF' # MATHEMATICAL DOUBLE-STRUCK DIGIT SEVEN
+  "\\mathbb{8}": '\uD835\uDFE0' # MATHEMATICAL DOUBLE-STRUCK DIGIT EIGHT
+  "\\mathbb{9}": '\uD835\uDFE1' # MATHEMATICAL DOUBLE-STRUCK DIGIT NINE
+  "\\mathsf{0}": '\uD835\uDFE2' # MATHEMATICAL SANS-SERIF DIGIT ZERO
+  "\\mathsf{1}": '\uD835\uDFE3' # MATHEMATICAL SANS-SERIF DIGIT ONE
+  "\\mathsf{2}": '\uD835\uDFE4' # MATHEMATICAL SANS-SERIF DIGIT TWO
+  "\\mathsf{3}": '\uD835\uDFE5' # MATHEMATICAL SANS-SERIF DIGIT THREE
+  "\\mathsf{4}": '\uD835\uDFE6' # MATHEMATICAL SANS-SERIF DIGIT FOUR
+  "\\mathsf{5}": '\uD835\uDFE7' # MATHEMATICAL SANS-SERIF DIGIT FIVE
+  "\\mathsf{6}": '\uD835\uDFE8' # MATHEMATICAL SANS-SERIF DIGIT SIX
+  "\\mathsf{7}": '\uD835\uDFE9' # MATHEMATICAL SANS-SERIF DIGIT SEVEN
+  "\\mathsf{8}": '\uD835\uDFEA' # MATHEMATICAL SANS-SERIF DIGIT EIGHT
+  "\\mathsf{9}": '\uD835\uDFEB' # MATHEMATICAL SANS-SERIF DIGIT NINE
+  "\\mathsfbf{0}": '\uD835\uDFEC' # MATHEMATICAL SANS-SERIF BOLD DIGIT ZERO
+  "\\mathsfbf{1}": '\uD835\uDFED' # MATHEMATICAL SANS-SERIF BOLD DIGIT ONE
+  "\\mathsfbf{2}": '\uD835\uDFEE' # MATHEMATICAL SANS-SERIF BOLD DIGIT TWO
+  "\\mathsfbf{3}": '\uD835\uDFEF' # MATHEMATICAL SANS-SERIF BOLD DIGIT THREE
+  "\\mathsfbf{4}": '\uD835\uDFF0' # MATHEMATICAL SANS-SERIF BOLD DIGIT FOUR
+  "\\mathsfbf{5}": '\uD835\uDFF1' # MATHEMATICAL SANS-SERIF BOLD DIGIT FIVE
+  "\\mathsfbf{6}": '\uD835\uDFF2' # MATHEMATICAL SANS-SERIF BOLD DIGIT SIX
+  "\\mathsfbf{7}": '\uD835\uDFF3' # MATHEMATICAL SANS-SERIF BOLD DIGIT SEVEN
+  "\\mathsfbf{8}": '\uD835\uDFF4' # MATHEMATICAL SANS-SERIF BOLD DIGIT EIGHT
+  "\\mathsfbf{9}": '\uD835\uDFF5' # MATHEMATICAL SANS-SERIF BOLD DIGIT NINE
+  "\\mathtt{0}": '\uD835\uDFF6' # MATHEMATICAL MONOSPACE DIGIT ZERO
+  "\\mathtt{1}": '\uD835\uDFF7' # MATHEMATICAL MONOSPACE DIGIT ONE
+  "\\mathtt{2}": '\uD835\uDFF8' # MATHEMATICAL MONOSPACE DIGIT TWO
+  "\\mathtt{3}": '\uD835\uDFF9' # MATHEMATICAL MONOSPACE DIGIT THREE
+  "\\mathtt{4}": '\uD835\uDFFA' # MATHEMATICAL MONOSPACE DIGIT FOUR
+  "\\mathtt{5}": '\uD835\uDFFB' # MATHEMATICAL MONOSPACE DIGIT FIVE
+  "\\mathtt{6}": '\uD835\uDFFC' # MATHEMATICAL MONOSPACE DIGIT SIX
+  "\\mathtt{7}": '\uD835\uDFFD' # MATHEMATICAL MONOSPACE DIGIT SEVEN
+  "\\mathtt{8}": '\uD835\uDFFE' # MATHEMATICAL MONOSPACE DIGIT EIGHT
+  "\\mathtt{9}": '\uD835\uDFFF' # MATHEMATICAL MONOSPACE DIGIT NINE

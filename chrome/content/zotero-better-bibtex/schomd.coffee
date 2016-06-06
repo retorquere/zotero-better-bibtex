@@ -83,7 +83,7 @@ Zotero.BetterBibTeX.schomd.init = ->
     #
     text_escape: (text) ->
       text = '' unless text?
-      # savetext = text
+      #savetext = text
       text = text.replace(/([$_^{%&])(?!!)/g, "\\$1")
         .replace(/([$_^{%&])!/g, "$1")
         .replace(/\u00A0/g, "\\hspace{1spc}")

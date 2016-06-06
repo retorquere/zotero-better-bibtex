@@ -41,10 +41,11 @@ class UnicodeConverter
         mappings = {'text' => {}, 'math' => {}}
         # an ascii character that needs translation? Probably a TeX special character, so also do when exporting to
         # unicode
-        @chars.execute("SELECT charcode, latex, mode FROM mapping WHERE preference = 0 AND unicode_to_latex IN ('true', ?) ORDER BY charcode", [ encoding ]){|mapping|
-          charcode, latex, mode = *mapping
+        @chars.execute("SELECT charcode, latex, mode, description FROM mapping WHERE preference = 0 AND unicode_to_latex IN ('true', ?) ORDER BY charcode", [ encoding ]){|mapping|
+          charcode, latex, mode, desc = *mapping
           next if mappings['text'][charcode] || mappings['math'][charcode]
-          mappings[mode][charcode] = "  #{char(charcode)}: #{latex.to_json}\n"
+          desc = " # #{desc.strip}" if (desc || '').strip != ''
+          mappings[mode][charcode] = "  #{char(charcode)}: #{latex.to_json}#{desc}\n"
         }
         %w{math text}.each{|mode|
           mappings[mode] = mappings[mode].keys.sort.collect{|charcode| mappings[mode][charcode] }
@@ -54,8 +55,8 @@ class UnicodeConverter
 
       done = {}
       cs.puts "LaTeX.toUnicode ="
-      @chars.execute('SELECT charcode, latex FROM mapping ORDER BY charcode, preference'){|mapping|
-        charcode, latex = *mapping
+      @chars.execute('SELECT charcode, latex, description FROM mapping ORDER BY charcode, preference'){|mapping|
+        charcode, latex, desc = *mapping
         next if latex =~ /^[a-z]+$/i || latex.strip == ''
         next if charcode < 256 && latex == charcode.chr
         #latex = latex[1..-2] if latex =~ /^{.+}$/ && latex !~ /}{/
@@ -64,7 +65,93 @@ class UnicodeConverter
         latex.strip!
         next if done[latex]
         done[latex] = true
-        cs.puts "  #{latex.to_json}: #{char(charcode)}"
+        desc = " # #{desc.strip}" if (desc || '').strip != ''
+        cs.puts "  #{latex.to_json}: #{char(charcode)}#{desc}"
+      }
+    }
+  end
+
+  def patch_bibtex(target)
+    target = File.expand_path(target)
+
+    bbt = OpenStruct.new(mapped: {}, reversed: [])
+    bbt.mapped = {}
+    @chars.execute("SELECT charcode, latex, mode, description FROM mapping WHERE preference = 0 AND unicode_to_latex IN ('true', 'ascii') ORDER BY charcode"){|mapping|
+      charcode, latex, mode, desc = *mapping
+      next if bbt.mapped[charcode]
+      latex = "$#{latex}$" if mode == 'math'
+      desc = " // #{desc.strip}" if (desc || '').strip != ''
+      bbt.mapped[charcode] = "\t#{char(charcode)}: #{latex.to_json},#{desc}"
+    }
+
+    done = {}
+    bbt.reversed = []
+    @chars.execute('SELECT charcode, latex, description FROM mapping ORDER BY charcode, preference'){|mapping|
+      charcode, latex, desc = *mapping
+      next if latex =~ /^[a-z]+$/i || latex.strip == ''
+      next if charcode < 256 && latex == charcode.chr
+      #latex = latex[1..-2] if latex =~ /^{.+}$/ && latex !~ /}{/
+      #latex.sub!(/{}$/, '')
+      #next if latex.length < 2
+      latex.strip!
+      next if done[latex]
+      done[latex] = true
+      desc = " // #{desc.strip}" if (desc || '').strip != ''
+      bbt.reversed << "\t#{latex.to_json}: #{char(charcode)},#{desc}"
+    }
+
+    zotero = OpenStruct.new(mapped: [], reversed: [])
+    open(target, 'w'){|js|
+      state = nil
+      IO.readlines('/Users/emile/zotero/translators/BibTeX.js').each_with_index{|line, no|
+        if line =~ /var mappingTable = {/
+          state = :mapping
+        elsif line =~ /var reversemappingTable = {/
+          state = :reverse
+        elsif line =~ /^};/
+          if state == :mapping
+            js.puts("\t// BBT")
+            bbt.mapped.keys.sort.each{|k|
+              next if zotero.mapped.include?(k) || bbt.mapped[k] !~ /'\\u/
+              js.puts(bbt.mapped[k])
+            }
+          elsif state == :reverse
+            js.puts("\t// BBT")
+            bbt.reversed.sort.each{|tex|
+              next if zotero.reversed.include?(tex)
+              js.puts(tex)
+            }
+          end
+          state = nil
+        elsif line =~ /^\t\/\/Greek/ || line =~ /^\/\* Derived/ || line.strip == '' || line =~ /^\/\* These / || line =~ /^\*\// || line =~ /\/\* Derived/
+          # pass
+        #elsif line =~ /^\t?\/\// || line =~ /^\/\*/ || line =~ /^\*\// || line =~ /^\t"\\u02BE"/ || line.strip == ''
+        # pass
+        elsif state == :mapping
+          if line =~ /^\t"\\u([0-9A-F]{4})":/
+            zotero.mapped << $1.to_i(16)
+          elsif  line =~ /^\/\*\t"\\u(02BF)"/
+            zotero.mapped << $1.to_i(16)
+          elsif line =~ /^\t"([^"])"\s*:/
+            zotero.mapped << $1.ord
+          else
+            throw "#{no + 1} mapping: unrecognized #{line}"
+          end
+        elsif state == :reverse
+          tex = nil
+          if line =~ /^\t(".*") *: /
+            tex = $1
+          elsif line =~ /^\t\/\/("'n")/
+            tex = $1
+          elsif line =~ /^\s*\/[\/\*] *("[^"]+")/
+            tex = $1
+          else
+            throw "#{no + 1} reverse: unrecognized #{line}"
+          end
+          zotero.reversed << JSON.parse("{\"tex\": #{tex}}")['tex']
+        end
+
+        js.write(line)
       }
     }
   end
@@ -117,36 +204,36 @@ class UnicodeConverter
   end
 
   def expand
-    @chars.execute('SELECT charcode, latex, mode FROM mapping').collect{|mapping| mapping}.each{|mapping|
-      charcode, latex, mode = *mapping
+    @chars.execute('SELECT charcode, latex, mode, description FROM mapping').collect{|mapping| mapping}.each{|mapping|
+      charcode, latex, mode, description = *mapping
       latex += '{}' if latex =~ /[0-9a-z]$/i
       latex.sub!(/ $/, '{}')
 
-      @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, latex, mode])
-      @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, latex.sub(/{}$/, ''), mode]) if latex =~ /{}$/
+      @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, latex, mode, description])
+      @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, latex.sub(/{}$/, ''), mode, description]) if latex =~ /{}$/
 
       case latex
         when /^(\\[a-z][^\s]*)\s$/i, /^(\\[^a-z])({}|\s)$/i  # '\ss ', '\& ' => '{\\s}', '{\&}'
-          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "{#{$1}}", mode])
-          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "#{$1} ", mode])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, "{#{$1}}", mode, description])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, "#{$1} ", mode, description])
         when /^\\([^a-z]){(.)}$/                       # '\"{a}' => '\"a', '{\"a}'
-          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "\\#{$1}#{$2} ", mode])
-          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "{\\#{$1}#{$2}}", mode])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, "\\#{$1}#{$2} ", mode, description])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, "{\\#{$1}#{$2}}", mode, description])
         when /^\\([^a-z])(.)({}|\s)*$/                       # '\"a " => '\"{a}', '{\"a}'
-          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "\\#{$1}{#{$2}}", mode])
-          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "{\\#{$1}#{$2}}", mode])
-          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "\\#{$1}#{$2}{}", mode])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, "\\#{$1}{#{$2}}", mode, description])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, "{\\#{$1}#{$2}}", mode, description])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, "\\#{$1}#{$2}{}", mode, description])
         when /^{\\([^a-z])(.)}$/                        # '{\"a}'
-          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "\\#{$1}#{$2} ", mode])
-          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "\\#{$1}{#{$2}}", mode])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, "\\#{$1}#{$2} ", mode, description])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, "\\#{$1}{#{$2}}", mode, description])
         when /^{(\^[0-9])}$/
-          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, $1, mode])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, $1, mode, description])
         when /^{(\\.+)}$/                             # '{....}' '.... '
-          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "#{$1} ", mode])
-          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "#{$1}{}", mode])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, "#{$1} ", mode, description])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, "#{$1}{}", mode, description])
         when /^(\\.*)({}| )$/
-          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "{#{$1}}", mode])
-          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)', [charcode, "#{$1} ", mode])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, "{#{$1}}", mode, description])
+          @chars.execute('INSERT OR IGNORE INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)', [charcode, "#{$1} ", mode, description])
       end
     }
 
@@ -162,7 +249,7 @@ class UnicodeConverter
         header = line.sub(/^#/, '').strip.split('^')
       else
         char = Hash[*header.zip(line.split('^').collect{|v| v == '' ? nil : v}).flatten]
-        addchar(char['no.'].to_i(16), char['LaTeX'] || char['unicode-math'], 'math')
+        addchar(char['no.'].to_i(16), char['LaTeX'] || char['unicode-math'], 'math', char['comments'])
       end
     }
   end
@@ -192,11 +279,19 @@ class UnicodeConverter
       mode = (char['mode'] == 'math' ? 'math' : 'text')
       charcode = char['id'].sub(/^u/i, '').to_i(16)
 
-      addchar(charcode, latex, mode)
+      description = char.at('.//unicodedata[@unicode1]')
+      description = description['unicode1'].to_s.strip if description
+      if !description || description.strip == ''
+        description = char.at('.//description')
+        description = description.inner_text if description
+      end
+      description ||= ''
+
+      addchar(charcode, latex, mode, description)
     }
   end
 
-  def addchar(charcode, latex, mode)
+  def addchar(charcode, latex, mode, description)
     return if latex == '' || latex.nil?
     if charcode >= 0x20 && charcode <= 0x7E
       chr = charcode.chr
@@ -208,7 +303,7 @@ class UnicodeConverter
     latex = "{\\#{$1} #{$2}}" if latex =~ /^\\([cuHv]){([^}]+)}$/
 
     @chars.execute("DELETE FROM mapping where charcode = ?", [charcode])
-    @chars.execute("INSERT INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)", [charcode, latex, mode])
+    @chars.execute("INSERT INTO mapping (charcode, latex, mode, description) VALUES (?, ?, ?, ?)", [charcode, latex, mode, description])
   end
 
   def download(force=true)
@@ -246,6 +341,7 @@ class UnicodeConverter
           mode CHECK (mode IN ('text', 'math')),
           unicode_to_latex DEFAULT 'false' CHECK (unicode_to_latex IN ('true', 'false', 'ascii')),
           preference NOT NULL DEFAULT 0,
+          description,
 
           UNIQUE(charcode, latex)
         )
@@ -292,6 +388,11 @@ class UnicodeConverter
   def mapping(target)
     download(false)
     save(target)
+  end
+
+  def zotero_patch(target)
+    download(false)
+    patch_bibtex(target)
   end
 
   def pegjs(source, target)
@@ -451,5 +552,5 @@ class UnicodeConverter
 end
 
 if __FILE__ == $0
-  UnicodeConverter.new.patterns
+  UnicodeConverter.new.zotero_patch('BibTeX.js')
 end

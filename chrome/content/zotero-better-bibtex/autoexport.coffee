@@ -53,7 +53,7 @@ Zotero.BetterBibTeX.auto = new class
       updated: (new Date()).toLocaleString()
     })
     @updated()
-    @db.save()
+    @db.save('main')
 
   markIDs: (ids, reason) ->
     collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
