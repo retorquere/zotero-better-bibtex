@@ -83,15 +83,17 @@ Zotero.BetterBibTeX.schomd.init = ->
     #
     text_escape: (text) ->
       text = '' unless text?
-      #savetext = text
+      # savetext = text
       text = text.replace(/([$_^{%&])(?!!)/g, "\\$1")
         .replace(/([$_^{%&])!/g, "$1")
         .replace(/\u00A0/g, "\\hspace{1spc}")
         .replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP,
           ((aChar) -> "{\\textsuperscript{#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}}}"))
-      # I think the \url macro takes care of escaping things... Not sure. Correct this if it's wrong.
-      #if savetext.search('^(?:http|ftp)s?://') != -1
-      #  return '\\href{' + savetext + "}{\\url{" + savetext + '}}'
+      # Wrap URL's anyway?
+      #if ! state.development_extensions.wrap_url_and_doi
+      #  # but not twice when that option is on.
+      #  if savetext.search('^(?:http|ftp)s?://') != -1
+      #  return '\\ztHref{' + savetext + "}{" + savetext + '}'
       return text
 
     # Width is set by computation using maxoffset after the bibliography is generated.
@@ -123,23 +125,23 @@ Zotero.BetterBibTeX.schomd.init = ->
 
     '@quotes/false': false
 
-    # This apparently does not ever get called...?
+    # When opt.development_extensions.apply_citation_wrapper = true and
+    # state.sys.wrapCitationEntry is defined.
+    #
     '@cite/entry': (state, str) ->
       Zotero.BetterBibTeX.debug('bbl.@cite/entry:', state.registry.registry[@system_id].ref.id)
       return state.sys.wrapCitationEntry(str, this.item_id, this.locator_txt, this.suffix_txt)
 
-    # The question now is whether escaping the _ causes problems for real LaTeX.
+    # I've seen errors from TeXmacs when the BibTeX key has a trailing
+    # "_". I won't correct that here. It can be corrected by more
+    # carefully defining the means by which they are formed, a user
+    # option inside Better BibTeX for Zotero.
     #
-    # TeXmacs] convert-error, latex error, too little arguments for \<sub>
-    # TeXmacs] convert-error, latex error in ...
-    # TeXmacs] convert-error,
-    # TeXmacs] convert-error, \bibitem{Stillman_Zotero_}
-    # TeXmacs] convert-error, Dan Stillman \& Simon Kor
     '@bibliography/entry': (state, str) ->
       sys_id = state.registry.registry[@system_id].ref.id
       Zotero.BetterBibTeX.debug('bbl.@bibliography/entry:', sys_id)
       try
-        citekey = Zotero.BetterBibTeX.keymanager.get({itemID: sys_id}).citekey.replace(/_$/g, "")
+        citekey = Zotero.BetterBibTeX.keymanager.get({itemID: sys_id}).citekey
       catch
         citekey = '@@'
 
@@ -157,21 +159,27 @@ Zotero.BetterBibTeX.schomd.init = ->
       return "\\ztbibItemText{\\zbibCitationItemID{#{sys_id}}#{insert}\\bibitem{#{citekey}}#{str}}\n\n"
 
     # Again, another macro to turn the ztNewBlock into a LaTeX newblock: "\n\\newblock #{str}\n"
-    '@display/block': (state, str) -> "\\ztNewBlock{#{str}}"
+    #
+    '@display/block': (state, str) -> "\\ztNewBlock{#{str}}\n"
 
     # \leftmargin{1. }\rightinline{body of bibentry}
+    #
     '@display/left-margin': (state, str) -> "\\ztLeftMargin{#{str}}"
-    '@display/right-inline': (state, str) -> "\\ztRightInline{#{str}}"
+    '@display/right-inline': (state, str) -> "\\ztRightInline{#{str}}\n"
 
     # Must define a \ztbibindent macro just to be sure... I've not seen this output?
-    '@display/indent': (state, str) -> "\n\\ztbibIndent{#{str}}"
+    #
+    '@display/indent': (state, str) -> "\\ztbibIndent{#{str}}\n"
 
     # If these are output, obviously the the macro must be defined to something.
-    # How do I make it emit these?
+    # It will emit these only when
+    # development_extensions.csl_reverse_lookup_support = true
+    # in citeproc.js, which must be set at build time.
+    #
     '@showid/true': (state, str, cslid) ->
       if !state.tmp.just_looking && !state.tmp.suppress_decorations
         if cslid
-          return "\\ztShowID{\\ztcslidNode{#{state.opt.nodenames[cslid]}}\\ztcslid{#{cslid}}#{str}}"
+          return "\\ztShowID{#{state.opt.nodenames[cslid]}}{#{cslid}}{#{str}}"
         else if this.params && "string" == typeof str
           prePunct = ""
           if str
@@ -188,9 +196,25 @@ Zotero.BetterBibTeX.schomd.init = ->
       else
         return str
 
-    # \href and \url are from the hyperref package for pdflatex
-    '@URL/true': (state, str) -> "\\href{#{str}}{\\url{#{str}}}"
-    '@DOI/true': (state, str) -> "\\href{http://doi.org/#{str}}{#{str}}"
+    # \href and \url are from the hyperref package for pdflatex... but
+    # TeXmacs processes them specially; it turns them into \hlink
+    # which is a primitive, defined in C++, that I can not redefine
+    # the way I need to so that the rendering decision can be made in
+    # the style sheet, in order to make the links become footnotes
+    # when in-text. So yet another macro wrapper is needed here as
+    # well. For use with LaTeX, just define this macro to expand the
+    # way you want.  \ztHref{url-location}{displayed-text}.
+    #
+    '@URL/true': (state, str) -> "\\ztHref{#{str}}{#{str}}"
+
+    # In some styles, a DOI link is displayed prefixed with "doi:",
+    # but in others it is displayed prefixed with
+    # "http://doi.org/". That text is not part of the link's hyperlink
+    # locus (lights up when I fly the mouse over it) in either
+    # case. That is why the following does NOT have the http... part
+    # inside of the second field.
+    #
+    '@DOI/true': (state, str) -> "\\ztHref{http://dx.doi.org/#{str}}{#{str}}"
   }
   return
 
