@@ -221,8 +221,6 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
     formatted = '[' + formatted + ']' if config.brackets
     return formatted
 
-
-
   'scannable-cite': (citations) ->
 
     class Mem
@@ -290,7 +288,12 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
     citekeys = (citation.citekey for citation in citations)
 
     itemIDs = (item for item in Zotero.BetterBibTeX.schomd.itemIDs(citekeys, options) when item)
-    style = @getStyle(options.style)
+    try
+      style = Zotero.BetterBibTeX.CAYW.getStyle(options.style)
+    catch e
+      Zotero.BetterBibTeX.debug('atom-zotero-citations: could not get style')
+      throw e
+
     cp = style.getCiteProc()
     cp.setOutputFormat('markdown')
     cp.updateItems(itemIDs)
