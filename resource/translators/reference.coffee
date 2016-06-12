@@ -375,7 +375,7 @@ class Reference
     for attachment in f.value
       att = {
         title: attachment.title
-        mimetype: attachment.mimeType || ''
+        mimetype: attachment.contentType || ''
         path: attachment.defaultPath || attachment.localPath
       }
 

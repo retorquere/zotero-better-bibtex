@@ -105,7 +105,7 @@ string
   / "\\url{" text:urlchar* "}"    { return bibtex.flatten(text) }
   / "\\textit" text:bracedparam   { return '<i>' + text + '</i>' }
   / "\\textbf" text:bracedparam   { return '<b>' + text + '</b>' }
-  / "\\textsc" text:bracedparam   { return '<span style="small-caps">' + text + '</span>' }
+  / "\\textsc" text:bracedparam   { return '<span style="font-variant: small-caps;">' + text + '</span>' }
   / '{' text:string* '}'          { return new String(bibtex.flatten(text)) } // use 'new String', not 'String', because only 'new String' will match 'instanceof'!
   / '$' text:string* '$'          { return bibtex.flatten(text) }
   /* / "%" [^\n]* "\n"            { return '' }          comment */
