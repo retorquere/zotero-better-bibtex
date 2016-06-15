@@ -283,7 +283,6 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       formatted.push("{#{citation.prefix}|#{label}|#{locator}|#{citation.suffix}|#{id}}")
     return formatted.join('')
 
-
   'atom-zotero-citations': (citations, options = {}) ->
     citekeys = (citation.citekey for citation in citations)
 
@@ -295,10 +294,16 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
     cp.updateItems(itemIDs)
     label = cp.appendCitationCluster({citationItems: ({id:itemID} for itemID in itemIDs), properties:{}}, true)[0][1]
 
-    prefix = if citekeys.length == 1 && citekeys[0].toLowerCase() == citekeys[0] then '@' else '#'
+    if citekeys.length == 1 && citekeys[0].toLowerCase() == citekeys[0]
+      prefix = '@'
+      open = '['
+      close = ']'
+    else
+      prefix = '#'
+      open = '('
+      close = ')'
     citekeys = ("#{prefix}#{citekey}" for citekey in citekeys).join(',')
-    return "[#{label}](#{citekeys})"
-
+    return "[#{label}]#{open}#{citekeys}#{close}"
 
   translate: (citations, options = {}) ->
     items = Zotero.Items.get((citation.id for citation in citations))
