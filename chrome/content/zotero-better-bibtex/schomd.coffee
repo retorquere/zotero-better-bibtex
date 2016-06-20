@@ -332,6 +332,20 @@ Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, libraryID} = {}) ->
   return bib[0].bibstart + bib[1].join("") + bib[0].bibend
 
 
+Zotero.BetterBibTeX.schomd.bibliographyYAML = (citekeys, {libraryID} = {}) ->
+  itemIDs = @itemIDs(citekeys, {libraryID})
+
+  items = Zotero.Items.get(itemIDs)
+
+  deferred = Q.defer()
+  Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator('bettercslyaml'), {items}, {}, (err, result) ->
+    if err
+      deferred.reject(err)
+    else
+      deferred.fulfill(result)
+  )
+  return deferred.promise
+
 Zotero.BetterBibTeX.schomd.bibliographyhtml = (citekeys, {style, libraryID} = {}) ->
   bib = @bibliographyX('html', citekeys, style, libraryID)
   return '' unless bib
