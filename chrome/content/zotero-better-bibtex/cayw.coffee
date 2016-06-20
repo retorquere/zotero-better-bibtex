@@ -294,16 +294,10 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
     cp.updateItems(itemIDs)
     label = cp.appendCitationCluster({citationItems: ({id:itemID} for itemID in itemIDs), properties:{}}, true)[0][1]
 
-    if citekeys.length == 1 && citekeys[0].toLowerCase() == citekeys[0]
-      prefix = '@'
-      open = '['
-      close = ']'
+    if citekeys.length == 1
+      return "[#{label}](#@#{citekeys.join(',')})"
     else
-      prefix = '#'
-      open = '('
-      close = ')'
-    citekeys = ("#{prefix}#{citekey}" for citekey in citekeys).join(',')
-    return "[#{label}]#{open}#{citekeys}#{close}"
+      return "[#{label}](?@#{citekeys.join(',')})"
 
   translate: (citations, options = {}) ->
     items = Zotero.Items.get((citation.id for citation in citations))

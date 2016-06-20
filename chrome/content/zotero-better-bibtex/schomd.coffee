@@ -53,7 +53,7 @@ Zotero.BetterBibTeX.schomd.init = ->
         citekey = Zotero.BetterBibTeX.keymanager.get({itemID: state.registry.registry[@system_id].ref.id}).citekey
       catch
         citekey = '@@'
-      return "[@#{citekey}]: ##{citekey} \"#{str.replace(/\\/g, '').replace(/"/g, "'")}\"\n<a name=\"#{citekey}\"></a>#{str}\n"
+      return "<a name=\"@#{citekey}\"/>#{str}\n"
 
     '@display/block': (state, str) -> "\n\n#{str}\n\n"
 
