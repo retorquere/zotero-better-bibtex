@@ -1,5 +1,11 @@
 Zotero.BetterBibTeX.schomd = {}
 
+Zotero.BetterBibTeX.schomd.markdown_text_escape = (text) ->
+  text = text.replace(/([-"\\`\*_{}\[\]\(\)#\+!])/g, "\\$1")
+  text = text.replace(/(^|[\n])(\s*[0-9]+)\.(\s)/g, "$1\\.$2")
+  text = text.replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "<sup>#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}</sup>"))
+  return text
+
 Zotero.BetterBibTeX.schomd.init = ->
   Zotero.CiteProc.CSL.Output.Formats.markdown = {
     ###
@@ -8,12 +14,13 @@ Zotero.BetterBibTeX.schomd.init = ->
     # will be run only once across each portion of text to be escaped, it
     # need not be idempotent.
     ###
-    text_escape: (text) ->
-      text = '' unless text?
-      text = text.replace(/([-"\\`\*_{}\[\]\(\)#\+!])/g, "\\$1")
-      text = text.replace(/(^|[\n])(\s*[0-9]+)\.(\s)/g, "$1\\.$2")
-      text = text.replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "<sup>#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}</sup>"))
-      return text
+    text_escape: (text, force) ->
+      return '' unless text?
+
+      if text.match(/(https?:\/\/[^\s]+)/)
+        return '[' + Zotero.BetterBibTeX.schomd.markdown_text_escape(text) + '](' + text + ')'
+      else
+        return Zotero.BetterBibTeX.schomd.markdown_text_escape(text)
 
     bibstart: ''
     bibend: ''
