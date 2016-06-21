@@ -1354,7 +1354,12 @@ class Zotero.BetterBibTeX.AUXScanner
     @parse(fp.file)
     @citations = Object.keys(@citations)
     return if @citations.length == 0
-    collection = Zotero.Collections.add(fp.file.leafName.substr(0, fp.file.leafName.lastIndexOf(".")), Zotero.getActiveZoteroPane()?.getSelectedCollection()?.id || null)
+
+    collection = Zotero.getActiveZoteroPane()?.getSelectedCollection()
+    # hasChildItems counts items in trash
+    if !collection || collection.getChildItems(true).length != 0
+      name = fp.file.leafName.substr(0, fp.file.leafName.lastIndexOf(".")) + ' ' + (new Date()).toLocaleString()
+      collection = Zotero.Collections.add(name , collection?.id || null)
     @save(collection, @citations)
 
   parse: (file) ->
