@@ -1098,36 +1098,17 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
             @add(' ')
             @pre(extra.notimported)
           )
-          note = report.serialize()
+
+          Zotero.Items.trash([itemID])
+          item = new Zotero.Item('note')
+          item.libraryID = collection.libraryID
+          item.setNote(report.serialize())
+          item.save()
+          collection.addItem(item.id)
 
       when '0af8f14d-9af7-43d9-a016-3c5df3426c98'
-        ### BibTeX AUX Scanner ###
-        missing = []
-        for own citekey, found of @keymanager.resolve(extra.citations, {libraryID: collection.libraryID})
-          if found
-            collection.addItem(found.itemID)
-          else
-            missing.push(citekey)
-
-        if missing.length != 0
-          report = new @HTMLNode('http://www.w3.org/1999/xhtml', 'html')
-          report.div(->
-            @p(-> @b('BibTeX AUX scan'))
-            @p('Missing references:')
-            @ul(->
-              for citekey in missing
-                @li(citekey)
-            )
-          )
-          note = report.serialize()
-
-    if note
-      Zotero.Items.trash([itemID])
-      item = new Zotero.Item('note')
-      item.libraryID = collection.libraryID
-      item.setNote(note)
-      item.save()
-      collection.addItem(item.id)
+        Zotero.BetterBibTeX.AUXScanner::save(extra.citations, collection)
+        Zotero.Items.trash([itemID])
 
   collections = @auto.withParentCollections(collections) if collections.length != 0
   collections = ("collection:#{id}" for id in collections)
@@ -1359,3 +1340,56 @@ class Zotero.BetterBibTeX.HTMLNode extends Zotero.BetterBibTeX.XmlNode
   Node: HTMLNode
 
   HTMLNode::alias(['pre', 'b', 'p', 'div', 'ul', 'li'])
+
+class Zotero.BetterBibTeX.AUXScanner
+  constructor: (window) ->
+    fp = Components.classes['@mozilla.org/filepicker;1'].createInstance(Components.interfaces.nsIFilePicker)
+    fp.init(window, Zotero.getString('fileInterface.import'), Components.interfaces.nsIFilePicker.modeOpen)
+    fp.appendFilter('AUX file', '*.aux')
+    rv = fp.show()
+    return false unless rv in [Components.interfaces.nsIFilePicker.returnOK, Components.interfaces.nsIFilePicker.returnReplace]
+
+    @citations = {}
+
+    @parse(fp.file)
+    @citations = Object.keys(@citations)
+    return if @citations.length == 0
+    collection = Zotero.Collections.add(fp.file.leafName.substr(0, fp.file.leafName.lastIndexOf(".")), Zotero.getActiveZoteroPane()?.getSelectedCollection()?.id || null)
+    @save(collection, @citations)
+
+  parse: (file) ->
+    Zotero.BetterBibTeX.debug('AUXScanner:', file.path)
+    contents = Zotero.File.getContents(file)
+
+    re = /(\\citation|@cite){([^}]+)}/g
+    while m = re.exec(contents)
+      for key in m[2].split(',')
+        @citations[key] = true
+
+    re = /\\include{([^}]+)}/g
+    while m = re.exec(contents)
+      @parse(file.parent.append(m[1]))
+
+  save: (collection, keys) ->
+    missing = []
+    for own citekey, found of Zotero.BetterBibTeX.keymanager.resolve(keys, {libraryID: collection.libraryID})
+      if found
+        collection.addItem(found.itemID)
+      else
+        missing.push(citekey)
+
+    if missing.length != 0
+      report = new Zotero.BetterBibTeX.HTMLNode('http://www.w3.org/1999/xhtml', 'html')
+      report.div(->
+        @p(-> @b('BibTeX AUX scan'))
+        @p('Missing references:')
+        @ul(->
+          for citekey in missing
+            @li(citekey)
+        )
+      )
+      item = new Zotero.Item('note')
+      item.libraryID = collection.libraryID
+      item.setNote(report.serialize())
+      item.save()
+      collection.addItem(item.id)

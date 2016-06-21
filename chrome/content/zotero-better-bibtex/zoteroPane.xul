@@ -9,6 +9,7 @@
 
   <menupopup id="zotero-tb-actions-popup">
     <menuitem insertafter="zotero-tb-actions-reportErrors" label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors()"/>
+    <menuitem insertafter="zotero-tb-actions-plugins-separator" label="&zotero.better-bibtex.auxScanner;" oncommand="new Zotero.BetterBibTeX.AUXScanner(window)"/>
   </menupopup>
 
   <menupopup id="zotero-collectionmenu">

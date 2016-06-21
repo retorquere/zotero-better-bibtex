@@ -29,6 +29,7 @@
 <!ENTITY zotero.better-bibtex.preferences.auto-abbrev "Automatically abbreviate journal title if none is set explicitly">
 <!ENTITY zotero.better-bibtex.preferences.auto-abbrev.style "Abbreviation style:">
 
+<!ENTITY zotero.better-bibtex.auxScanner "Scan BibTeX AUX file for references...">
 <!ENTITY zotero.better-bibtex.reportErrors "Report Better BibTeX Errors...">
 <!ENTITY zotero.better-bibtex.errorReport.review "The data below is about to submitted to Better BibTeX for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
 
