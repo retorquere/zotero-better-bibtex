@@ -3,7 +3,7 @@ Zotero.BetterBibTeX.schomd = {}
 Zotero.BetterBibTeX.schomd.init = ->
   Zotero.CiteProc.CSL.Output.Formats.markdown = {
     ### capture and remember the bare text for sane URL wrapping. ###
-    _text_unescaped: null
+    _unescaped: null
 
     ###
     # text_escape: Format-specific function for escaping text destined
@@ -12,8 +12,10 @@ Zotero.BetterBibTeX.schomd.init = ->
     # need not be idempotent.
     ###
     text_escape: (text) ->
-      Zotero.CiteProc.CSL.Output.Formats.markdown._text_unescaped = text
-      return '' unless text?
+      text ||= ''
+      Zotero.CiteProc.CSL.Output.Formats.markdown._unescaped = text
+
+      return '' if text == 'http://dx.doi.org/' || text == 'http://doi.org/'
 
       text = text.replace(/([-"\\`\*_{}\[\]\(\)#\+!])/g, "\\$1")
       text = text.replace(/(^|[\n])(\s*[0-9]+)\.(\s)/g, "$1\\.$2")
@@ -70,8 +72,8 @@ Zotero.BetterBibTeX.schomd.init = ->
 
     '@showid/true': (state, str, cslid) -> str
 
-    '@URL/true': (state, str) -> return "[#{str}](#{Zotero.CiteProc.CSL.Output.Formats.markdown._text_unescaped})"
-    '@DOI/true': (state, str) -> "[#{str}](http://dx.doi.org/#{Zotero.CiteProc.CSL.Output.Formats.markdown._text_unescaped})"
+    '@URL/true': (state, str) -> return "[#{str}](#{Zotero.CiteProc.CSL.Output.Formats.markdown._unescaped})"
+    '@DOI/true': (state, str) -> "[#{str}](http://dx.doi.org/#{Zotero.CiteProc.CSL.Output.Formats.markdown._unescaped})"
 
     "@quotes/false": false
   }
