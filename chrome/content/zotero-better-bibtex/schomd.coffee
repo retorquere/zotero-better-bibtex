@@ -1,26 +1,24 @@
 Zotero.BetterBibTeX.schomd = {}
 
-Zotero.BetterBibTeX.schomd.markdown_text_escape = (text) ->
-  text = text.replace(/([-"\\`\*_{}\[\]\(\)#\+!])/g, "\\$1")
-  text = text.replace(/(^|[\n])(\s*[0-9]+)\.(\s)/g, "$1\\.$2")
-  text = text.replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "<sup>#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}</sup>"))
-  return text
-
 Zotero.BetterBibTeX.schomd.init = ->
   Zotero.CiteProc.CSL.Output.Formats.markdown = {
+    ### capture and remember the bare text for sane URL wrapping. ###
+    _text_unescaped: null
+
     ###
     # text_escape: Format-specific function for escaping text destined
     # for output.  Takes the text to be escaped as sole argument.  Function
     # will be run only once across each portion of text to be escaped, it
     # need not be idempotent.
     ###
-    text_escape: (text, force) ->
+    text_escape: (text) ->
+      Zotero.CiteProc.CSL.Output.Formats.markdown._text_unescaped = text
       return '' unless text?
 
-      if text.match(/(https?:\/\/[^\s]+)/)
-        return '[' + Zotero.BetterBibTeX.schomd.markdown_text_escape(text) + '](' + text + ')'
-      else
-        return Zotero.BetterBibTeX.schomd.markdown_text_escape(text)
+      text = text.replace(/([-"\\`\*_{}\[\]\(\)#\+!])/g, "\\$1")
+      text = text.replace(/(^|[\n])(\s*[0-9]+)\.(\s)/g, "$1\\.$2")
+      text = text.replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "<sup>#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}</sup>"))
+      return text
 
     bibstart: ''
     bibend: ''
@@ -72,8 +70,8 @@ Zotero.BetterBibTeX.schomd.init = ->
 
     '@showid/true': (state, str, cslid) -> str
 
-    '@URL/true': (state, str) -> "[#{str}](#{str})"
-    '@DOI/true': (state, str) -> "[#{str}](http://dx.doi.org/#{str})"
+    '@URL/true': (state, str) -> return "[#{str}](#{Zotero.CiteProc.CSL.Output.Formats.markdown._text_unescaped})"
+    '@DOI/true': (state, str) -> "[#{str}](http://dx.doi.org/#{Zotero.CiteProc.CSL.Output.Formats.markdown._text_unescaped})"
 
     "@quotes/false": false
   }
@@ -251,6 +249,7 @@ Zotero.BetterBibTeX.schomd.citations = (citekeys, {format, style, libraryID} = {
 
   style = @getStyle(style)
   cp = style.getCiteProc()
+  cp.opt.development_extensions.wrap_url_and_doi = true
   cp.setOutputFormat(format)
 
   clusters = []
@@ -298,6 +297,7 @@ Zotero.BetterBibTeX.schomd.citation = (citekeys, {format, style, libraryID} = {}
 
   style = @getStyle(style)
   cp = style.getCiteProc()
+  cp.opt.development_extensions.wrap_url_and_doi = true
   cp.setOutputFormat(format)
   cp.updateItems(itemIDs)
 
@@ -326,6 +326,7 @@ Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {format, style, libraryID} 
   if format != 'yaml'
     style = @getStyle(style)
     cp = style.getCiteProc()
+    cp.opt.development_extensions.wrap_url_and_doi = true
     cp.setOutputFormat(format)
     cp.updateItems(itemIDs)
     bib = cp.makeBibliography()
