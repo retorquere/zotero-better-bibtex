@@ -1007,7 +1007,8 @@ Zotero.BetterBibTeX.loadTranslators = ->
     'LaTeX Citation': 'b4a5ab19-c3a2-42de-9961-07ae484b8cb0',
     'Pandoc Citation': '4c52eb69-e778-4a78-8ca2-4edf024a5074',
     'Pandoc JSON': 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc',
-    'Better CSL-JSON': 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc'
+    'Better CSL-JSON': 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc',
+    'BibTeX AUX Scanner': '0af8f14d-9af7-43d9-a016-3c5df3426c98'
   }
     try
       Zotero.BetterBibTeX.debug('loadTranslators: removing', {label, translatorID})
@@ -1065,7 +1066,7 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
   items = []
 
   ###
-    monitor items added to collection to find BibTeX AUX Scanner data. The scanner adds a dummy item whose 'extra'
+    monitor items added to collection to find BibTeX import errors. The scanner adds a dummy item whose 'extra'
     field has instructions on what to do after import
   ###
 
@@ -1076,18 +1077,16 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
     collections.push(collectionID)
     items.push(itemID)
 
-    ### aux-scanner only triggers on add ###
     continue unless event == 'add'
     collection = Zotero.Collections.get(collectionID)
     continue unless collection
 
     try
       extra = JSON.parse(Zotero.Items.get(itemID).getField('extra').trim())
-      @debug('AUX scanner/import error info found on collection add')
+      @debug('import error info found on collection add')
     catch error
       continue
 
-    note = null
     switch extra.translator
       when 'ca65189f-8815-4afe-8c8b-8c7c15f0edca'
         ### Better BibTeX ###
@@ -1105,10 +1104,6 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
           item.setNote(report.serialize())
           item.save()
           collection.addItem(item.id)
-
-      when '0af8f14d-9af7-43d9-a016-3c5df3426c98'
-        Zotero.BetterBibTeX.AUXScanner::save(extra.citations, collection)
-        Zotero.Items.trash([itemID])
 
   collections = @auto.withParentCollections(collections) if collections.length != 0
   collections = ("collection:#{id}" for id in collections)

@@ -6,12 +6,6 @@ Background:
   And I set preference .jabrefGroups to false
   And I set preference .defaultDateParserLocale to en-GB
 
-@aux
-Scenario: AUX scanner
-  When I import 149 references from 'import/AUX scanner-pre.json'
-  And I import 0 references from 'import/AUX scanner.aux'
-  Then the library should match 'import/AUX scanner-post.json'
-
 @i1
 Scenario: Better BibTeX Import 2
   When I import 2 references from 'import/Better BibTeX.002.bib'

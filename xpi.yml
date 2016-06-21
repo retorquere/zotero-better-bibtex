@@ -98,8 +98,6 @@ files:
 - resource/translators/Better CSL YAML.translator
 - resource/translators/BetterBibTeX JSON.json
 - resource/translators/BetterBibTeX JSON.translator
-- resource/translators/BibTeX AUX Scanner.json
-- resource/translators/BibTeX AUX Scanner.translator
 - resource/translators/Collected Notes.json
 - resource/translators/Collected Notes.translator
 - resource/translators/Better BibTeX Quick Copy.json
