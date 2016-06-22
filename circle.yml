@@ -24,6 +24,10 @@ test:
             ;;
       esac
     : parallel: true
+general:
+  branches:
+    ignore:
+      - gh-pages
 deployment:
   all:
     branch: "/.*/"
