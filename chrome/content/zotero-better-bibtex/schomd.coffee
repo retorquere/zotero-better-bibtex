@@ -15,7 +15,7 @@ Zotero.BetterBibTeX.schomd.init = ->
       text ||= ''
       Zotero.CiteProc.CSL.Output.Formats.markdown._unescaped = text
 
-      return '' if text == 'http://dx.doi.org/' || text == 'http://doi.org/'
+      return '' if text.match(/^https?:\/\/(dx.)?doi.org\/$/i)
 
       text = text.replace(/([-"\\`\*_{}\[\]\(\)#\+!])/g, "\\$1")
       text = text.replace(/(^|[\n])(\s*[0-9]+)\.(\s)/g, "$1\\.$2")
@@ -75,7 +75,7 @@ Zotero.BetterBibTeX.schomd.init = ->
     '@URL/true': (state, str) -> return "[#{str}](#{Zotero.CiteProc.CSL.Output.Formats.markdown._unescaped})"
     '@DOI/true': (state, str) ->
       url = Zotero.CiteProc.CSL.Output.Formats.markdown._unescaped
-      url = 'http://dx.doi.org/' + url unless url.match(/^https?:/)
+      url = 'https://doi.org/' + url unless url.match(/^https?:/)
       "[#{str}](#{url})"
 
     "@quotes/false": false
