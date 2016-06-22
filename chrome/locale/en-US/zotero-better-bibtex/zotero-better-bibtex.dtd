@@ -87,6 +87,7 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy.latex "LaTeX">
 <!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy.pandoc "Pandoc">
 <!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy.orgmode "Org-mode">
+<!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy.atom "Atom (https://atom.io/packages/zotero-citations)">
 
 <!ENTITY zotero.better-bibtex.prefs.export "Export">
 <!ENTITY zotero.better-bibtex.prefs.export.bibtex "BibTeX">

@@ -1,4 +1,14 @@
 Mode =
+  atom: ->
+    keys = []
+    while item = Translator.nextItem()
+      Translator.debug('item:', item)
+      keys.push(item.__citekey__)
+    if keys.length == 1
+      return "[](#@#{keys[0]})"
+    else
+      return "[](?@#{keys.join(',')})"
+
   latex: ->
     keys = []
     while item = Translator.nextItem()

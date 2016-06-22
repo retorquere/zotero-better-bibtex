@@ -2,6 +2,9 @@ Zotero.BetterBibTeX.schomd = {}
 
 Zotero.BetterBibTeX.schomd.init = ->
   Zotero.CiteProc.CSL.Output.Formats.markdown = {
+    ### capture and remember the bare text for sane URL wrapping. ###
+    _unescaped: null
+
     ###
     # text_escape: Format-specific function for escaping text destined
     # for output.  Takes the text to be escaped as sole argument.  Function
@@ -9,7 +12,11 @@ Zotero.BetterBibTeX.schomd.init = ->
     # need not be idempotent.
     ###
     text_escape: (text) ->
-      text = '' unless text?
+      text ||= ''
+      Zotero.CiteProc.CSL.Output.Formats.markdown._unescaped = text
+
+      return '' if text == 'http://dx.doi.org/' || text == 'http://doi.org/'
+
       text = text.replace(/([-"\\`\*_{}\[\]\(\)#\+!])/g, "\\$1")
       text = text.replace(/(^|[\n])(\s*[0-9]+)\.(\s)/g, "$1\\.$2")
       text = text.replace(Zotero.CiteProc.CSL.SUPERSCRIPTS_REGEXP, ((aChar) -> "<sup>#{Zotero.CiteProc.CSL.SUPERSCRIPTS[aChar]}</sup>"))
@@ -53,7 +60,7 @@ Zotero.BetterBibTeX.schomd.init = ->
         citekey = Zotero.BetterBibTeX.keymanager.get({itemID: state.registry.registry[@system_id].ref.id}).citekey
       catch
         citekey = '@@'
-      return "[@#{citekey}]: ##{citekey} \"#{str.replace(/\\/g, '').replace(/"/g, "'")}\"\n<a name=\"#{citekey}\"></a>#{str}\n"
+      return "<a name=\"@#{citekey}\"></a>#{str}\n\n"
 
     '@display/block': (state, str) -> "\n\n#{str}\n\n"
 
@@ -65,8 +72,8 @@ Zotero.BetterBibTeX.schomd.init = ->
 
     '@showid/true': (state, str, cslid) -> str
 
-    '@URL/true': (state, str) -> "[#{str}](#{str})"
-    '@DOI/true': (state, str) -> "[#{str}](http://dx.doi.org/#{str})"
+    '@URL/true': (state, str) -> return "[#{str}](#{Zotero.CiteProc.CSL.Output.Formats.markdown._unescaped})"
+    '@DOI/true': (state, str) -> "[#{str}](http://dx.doi.org/#{Zotero.CiteProc.CSL.Output.Formats.markdown._unescaped})"
 
     "@quotes/false": false
   }
@@ -239,9 +246,12 @@ Zotero.BetterBibTeX.schomd.getStyle = (id = 'apa') ->
   return style
 
 
-Zotero.BetterBibTeX.schomd.citationsX = (format, citekeys, style, libraryID) ->
+Zotero.BetterBibTeX.schomd.citations = (citekeys, {format, style, libraryID} = {}) ->
+  format ||= 'markdown'
+
   style = @getStyle(style)
   cp = style.getCiteProc()
+  cp.opt.development_extensions.wrap_url_and_doi = true
   cp.setOutputFormat(format)
 
   clusters = []
@@ -267,25 +277,20 @@ Zotero.BetterBibTeX.schomd.citationsX = (format, citekeys, style, libraryID) ->
   # way. You can not set an abbrev to the empty string because that's
   # how the interface allows resetting it to the default. So set it to
   # X-X-X and presto! It disappears.
-  return (citation.replace(/X-X-X ?/g, "") for citation in citations when citation)
+  citations = (citation.replace(/X-X-X ?/g, "") for citation in citations when citation)
 
+  switch format
+    when 'markdown', 'html'
+      return citations
 
-Zotero.BetterBibTeX.schomd.citations = (citekeys, {style, libraryID} = {}) ->
-  return @citationsX('markdown', citekeys, style, libraryID)
+    when 'bbl'
+      return (citation.replace(/(\w\.}?) /g, "$1\\hspace{1spc}").replace(/(\w\.)! /g, "$1 ") for citation in citations when citation)
 
+    else
+      throw new Error("schomd.citations: unsupported format #{format}")
 
-Zotero.BetterBibTeX.schomd.citationshtml = (citekeys, {style, libraryID} = {}) ->
-  return @citationsX('html', citekeys, style, libraryID)
-
-
-Zotero.BetterBibTeX.schomd.citationsbbl = (citekeys, {style, libraryID} = {}) ->
-  citations = @citationsX('bbl', citekeys, style, libraryID)
-  return (citation.replace(/(\w\.}?) /g, "$1\\hspace{1spc}")
-    .replace(/(\w\.)! /g, "$1 ") for citation in citations when citation)
-
-
-
-Zotero.BetterBibTeX.schomd.citationX = (format, citekeys, style, libraryID) ->
+Zotero.BetterBibTeX.schomd.citation = (citekeys, {format, style, libraryID} = {}) ->
+  format ||= 'markdown'
   itemIDs = (item for item in @itemIDs(citekeys, {libraryID}) when item)
 
   Zotero.BetterBibTeX.debug('schomd.citation', {citekeys, style, libraryID}, '->', itemIDs)
@@ -294,58 +299,65 @@ Zotero.BetterBibTeX.schomd.citationX = (format, citekeys, style, libraryID) ->
 
   style = @getStyle(style)
   cp = style.getCiteProc()
+  cp.opt.development_extensions.wrap_url_and_doi = true
   cp.setOutputFormat(format)
   cp.updateItems(itemIDs)
 
   citation = cp.appendCitationCluster({citationItems: ({id:itemID} for itemID in itemIDs), properties:{}}, true)
   Zotero.BetterBibTeX.debug('schomd.citation:', citekeys, '->', JSON.stringify(citation))
   citation = citation[0][1]
-  return citation
 
+  switch format
+    when 'markdown', 'html'
+      return citation
 
-Zotero.BetterBibTeX.schomd.citation = (citekeys, {style, libraryID} = {}) ->
-  return @citationX('markdown', citekeys, style, libraryID)
+    when 'bbl'
+      return citation.replace(/(\w\.}?) /g, "$1\\hspace{1spc}")
 
+    else
+      throw new Error("schomd.citation: unsupported format #{format}")
 
-Zotero.BetterBibTeX.schomd.citationhtml = (citekeys, {style, libraryID} = {}) ->
-  return @citationX('html', citekeys, style, libraryID)
-
-
-Zotero.BetterBibTeX.schomd.citationbbl = (citekeys, {style, libraryID} = {}) ->
-  return @citationX('bbl', citekeys, style, libraryID).replace(/(\w\.}?) /g, "$1\\hspace{1spc}")
-
-
-
-Zotero.BetterBibTeX.schomd.bibliographyX = (format, citekeys, style, libraryID) ->
+Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {format, style, libraryID} = {}) ->
+  format ||= 'markdown'
   itemIDs = @itemIDs(citekeys, {libraryID})
   return '' if itemIDs.length == 0
-  style = @getStyle(style)
-  cp = style.getCiteProc()
-  cp.setOutputFormat(format)
-  cp.updateItems((item for item in itemIDs when item))
-  return cp.makeBibliography()
 
+  # ditch unresolved citation keys
+  itemIDs = (item for item in itemIDs when item)
 
-Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {style, libraryID} = {}) ->
-  bib = @bibliographyX('markdown', citekeys, style, libraryID)
-  return '' unless bib
-  return bib[0].bibstart + bib[1].join("") + bib[0].bibend
+  if format != 'yaml'
+    style = @getStyle(style)
+    cp = style.getCiteProc()
+    cp.opt.development_extensions.wrap_url_and_doi = true
+    cp.setOutputFormat(format)
+    cp.updateItems(itemIDs)
+    bib = cp.makeBibliography()
 
+  switch format
+    when 'markdown', 'html'
+      return '' unless bib
+      return bib[0].bibstart + bib[1].join("") + bib[0].bibend
 
-Zotero.BetterBibTeX.schomd.bibliographyhtml = (citekeys, {style, libraryID} = {}) ->
-  bib = @bibliographyX('html', citekeys, style, libraryID)
-  return '' unless bib
-  return bib[0].bibstart + bib[1].join("") + bib[0].bibend
+    when 'yaml'
+      items = Zotero.Items.get(itemIDs)
 
+      deferred = Q.defer()
+      Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator('bettercslyaml'), {items}, {}, (err, result) ->
+        if err
+          deferred.reject(err)
+        else
+          deferred.fulfill(result)
+      )
+      return deferred.promise
 
-Zotero.BetterBibTeX.schomd.bibliographybbl = (citekeys, {style, libraryID} = {}) ->
-  bib = @bibliographyX('bbl', citekeys, style, libraryID)
-  return '' unless bib
-  bibl = (b.replace(/(\w\.}?) /g, "$1\\hspace{1spc}") for b in bib[1])
-  bibstart = bib[0].bibstart
-  return bibstart.replace(/9999/,("0" for n in [1..bib[0].maxoffset]).join("")) + bibl.join("") + bib[0].bibend
+    when 'bbl'
+      return '' unless bib
+      bibl = (b.replace(/(\w\.}?) /g, "$1\\hspace{1spc}") for b in bib[1])
+      bibstart = bib[0].bibstart
+      return bibstart.replace(/9999/,("0" for n in [1..bib[0].maxoffset]).join("")) + bibl.join("") + bib[0].bibend
 
-
+    else
+      throw new Error("schomd.bibliography: unsupported format #{format}")
 
 Zotero.BetterBibTeX.schomd.search = (term) ->
   search = new Zotero.Search()
