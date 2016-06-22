@@ -73,7 +73,10 @@ Zotero.BetterBibTeX.schomd.init = ->
     '@showid/true': (state, str, cslid) -> str
 
     '@URL/true': (state, str) -> return "[#{str}](#{Zotero.CiteProc.CSL.Output.Formats.markdown._unescaped})"
-    '@DOI/true': (state, str) -> "[#{str}](http://dx.doi.org/#{Zotero.CiteProc.CSL.Output.Formats.markdown._unescaped})"
+    '@DOI/true': (state, str) ->
+      url = Zotero.CiteProc.CSL.Output.Formats.markdown._unescaped
+      url = 'http://dx.doi.org/' + url unless url.match(/^https?:/)
+      "[#{str}](#{url})"
 
     "@quotes/false": false
   }
