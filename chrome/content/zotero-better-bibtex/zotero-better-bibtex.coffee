@@ -1366,7 +1366,7 @@ class Zotero.BetterBibTeX.AUXScanner
       for key in m[2].split(',')
         @citations[key] = true
 
-    re = /\\include{([^}]+)}/g
+    re = /\\@input{([^}]+)}/g
     while m = re.exec(contents)
       @parse(file.parent.append(m[1]))
 
