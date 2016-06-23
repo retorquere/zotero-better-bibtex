@@ -252,6 +252,8 @@ Zotero.BetterBibTeX.schomd.getStyle = (id = 'apa') ->
 Zotero.BetterBibTeX.schomd.citations = (citekeys, {format, style, libraryID} = {}) ->
   format ||= 'markdown'
 
+  Zotero.BetterBibTeX.debug("schomd.citations:", {citekeys, format, style, libraryID})
+
   style = @getStyle(style)
   cp = style.getCiteProc()
   cp.opt.development_extensions.wrap_url_and_doi = true
@@ -272,22 +274,22 @@ Zotero.BetterBibTeX.schomd.citations = (citekeys, {format, style, libraryID} = {
   citations = []
   for cluster in clusters
     if cluster.length == 0
+      # this null is intentional -- the input and output arrays must be the same length so the calling application can
+      # tell which key cluster resolves to which label
       citations.push(null)
     else
       citations.push(cp.appendCitationCluster({citationItems: cluster, properties:{}}, true)[0][1] || null)
-
-  # Setting an abbrev to X-X-X allows it to be an empty string this
-  # way. You can not set an abbrev to the empty string because that's
-  # how the interface allows resetting it to the default. So set it to
-  # X-X-X and presto! It disappears.
-  citations = (citation.replace(/X-X-X ?/g, "") for citation in citations when citation)
 
   switch format
     when 'markdown', 'html'
       return citations
 
     when 'bbl'
-      return (citation.replace(/(\w\.}?) /g, "$1\\hspace{1spc}").replace(/(\w\.)! /g, "$1 ") for citation in citations when citation)
+      # Setting an abbrev to X-X-X allows it to be an empty string this
+      # way. You can not set an abbrev to the empty string because that's
+      # how the interface allows resetting it to the default. So set it to
+      # X-X-X and presto! It disappears.
+      return (citation.replace(/X-X-X ?/g, "").replace(/(\w\.}?) /g, "$1\\hspace{1spc}").replace(/(\w\.)! /g, "$1 ") for citation in citations when citation)
 
     else
       throw new Error("schomd.citations: unsupported format #{format}")
