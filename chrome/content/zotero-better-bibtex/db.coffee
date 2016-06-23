@@ -112,51 +112,96 @@ Zotero.BetterBibTeX.DB = new class
     # # add unique index
     # coll.ensureUniqueIndex("userId")
 
-    @upgradeNeeded = @metadata.Zotero != ZOTERO_CONFIG.VERSION || @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
-    Zotero.BetterBibTeX.debug('upgradeneeded:', {needed: @upgradeNeeded, stored: {zotero: @metadata.Zotero, bbt: @metadata.BetterBibTeX}, current: {zotero: ZOTERO_CONFIG.VERSION, bbt: Zotero.BetterBibTeX.release}})
+    @upgradeNeeded = {}
+    freshInstall = true
+    for k, v of { Zotero: ZOTERO_CONFIG.VERSION, BetterBibTeX: Zotero.BetterBibTeX.release, storage: Zotero.getZoteroDirectory().path }
+      continue if @metadata[k] == v
+      freshInstall = false if @metadata[k]
+      @upgradeNeeded[k] = v
+    @upgradeNeeded = false if Object.keys(@upgradeNeeded).length == 0
+    Zotero.BetterBibTeX.debug('upgrade needed?', @upgradeNeeded)
 
-    cacheReset = Zotero.BetterBibTeX.pref.get('cacheReset')
-    Zotero.debug('DB.initialize, cache reset: ' + JSON.stringify({cacheReset, metadata: @metadata, release: Zotero.BetterBibTeX.release}))
+    switch
+      # force cache reset by user request, or fresh install
+      when Zotero.BetterBibTeX.pref.get('cacheReset')
+        Zotero.BetterBibTeX.debug('reset cache: user request')
+        cacheReset = true
 
-    if !cacheReset
-      cacheReset = @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
+      when freshInstall
+        Zotero.BetterBibTeX.debug('reset cache: new installation')
+        cacheReset = true
 
-      ###
-      # The default is arbitrarily set at 1000. I just assume if you have less than that actually cached, you will be more annoyed by being
-      # asked about the cache than about it being regenerated.
-      ###
-      confirmCacheResetSize = Zotero.BetterBibTeX.pref.get('confirmCacheResetSize')
+      # nothing changed, don't touch the cache
+      when !@upgradeNeeded
+        Zotero.BetterBibTeX.debug('reset cache: no')
+        cacheReset = false
 
-      if cacheReset && confirmCacheResetSize && Math.max(@cache.data.length, @serialized.data.length) > confirmCacheResetSize
-        prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(Components.interfaces.nsIPromptService)
+      # something has changed, really *should* drop the cache, but let's ask the user
+      else
+        Zotero.BetterBibTeX.debug('reset cache: conditional')
         ###
-        # 1 is magic (https://bugzilla.mozilla.org/show_bug.cgi?id=345067)
-        # if you abort the window, I will assume you want the cache dropped. Keeping the cache should be a confirmed
-        # choice.
+        # The default is arbitrarily set at 1000. I just assume if you have less than that actually cached, you will be more annoyed by being
+        # asked about the cache than about it being regenerated.
         ###
-        cacheReset = 1 == prompts.confirmEx(
-          null,
-          'Clear Better BibTeX cache?',
-          """
-            You have upgraded BetterBibTeX. This usually means output generation for Bib(La)TeX has changed, and it is recommended to clear the cache in order for these changes to take effect.
+        confirmCacheResetSize = Zotero.BetterBibTeX.pref.get('confirmCacheResetSize')
 
-            Since you have a large library, with #{Math.max(@cache.data.length, @serialized.data.length)} entries cached, this may lead to a slow first (auto)export as the cache is refilled.
+        if confirmCacheResetSize && Math.max(@cache.data.length, @serialized.data.length) > confirmCacheResetSize
+          prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(Components.interfaces.nsIPromptService)
+          ###
+          # 1 is magic (https://bugzilla.mozilla.org/show_bug.cgi?id=345067)
+          # if you abort the window, I will assume you want the cache dropped. Keeping the cache should be a confirmed
+          # choice.
+          ###
 
-            If you don't care about the changes introduced in #{Zotero.BetterBibTeX.release}, and you want to keep your old cache, you may consider skipping this step.
+          upgrade = []
+          storage = []
+          for k, v of upgradeNeeded
+            continue unless v
+            if k == 'storage'
+              storage.push("changed the Zotero storage location to #{v}")
+            else
+              upgrade.push("#{k} to #{v}")
 
-            If you opt NOT to clear the cache, and you experience unexpected output at some point in the future, please first clear the cache from the preferences before reporting an issue
+          if upgrade.length > 0
+            upgrade[0] = 'upgraded ' + upgrade[0]
 
-            Do you want to clear the BibTeX cache now?
-          """,
-          prompts.BUTTON_POS_1_DEFAULT + prompts.BUTTON_POS_0 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_POS_1 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_DELAY_ENABLE,
-          "I know what I'm Doing. Keep the cache",
-          'Clear cache (recommended)',
-          '',
-          null,
-          {value: false}
-        )
+          doneIt = upgrade.concat(storage)
+
+          switch doneIt.length
+            when 0
+              doneIt = ['upgraded Better BibTeX']
+            when 1
+              # pass
+            else
+              l = doneIt.length
+              doneIt.splice(l - 2, 2, doneIt[l - 2] + ' and ' + doneIt[l - 1])
+          doneIt = doneIt.join(', ')
+          Zotero.BetterBibTeX.debug("reset cache: user has #{doneIt}")
+
+          cacheReset = 1 == prompts.confirmEx(
+            null,
+            'Clear Better BibTeX cache?',
+            """
+              You have #{doneIt}. This usually means output generation for Bib(La)TeX has changed, and it is recommended to clear the cache in order for these changes to take effect.
+
+              Since you have a large library, with #{Math.max(@cache.data.length, @serialized.data.length)} entries cached, this may lead to a slow first (auto)export as the cache is refilled.
+
+              If you don't care about the changes introduced in #{Zotero.BetterBibTeX.release}, and you want to keep your old cache, you may consider skipping this step.
+
+              If you opt NOT to clear the cache, and you experience unexpected output at some point in the future, please first clear the cache from the preferences before reporting an issue
+
+              Do you want to clear the BibTeX cache now?
+            """,
+            prompts.BUTTON_POS_1_DEFAULT + prompts.BUTTON_POS_0 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_POS_1 * prompts.BUTTON_TITLE_IS_STRING + prompts.BUTTON_DELAY_ENABLE,
+            "I know what I'm Doing. Keep the cache",
+            'Clear cache (recommended)',
+            '',
+            null,
+            {value: false}
+          )
 
     if cacheReset
+      Zotero.BetterBibTeX.debug('reset cache: roger roger')
       @serialized.removeDataOnly()
       @cache.removeDataOnly()
       if typeof cacheReset == 'number'
@@ -187,9 +232,9 @@ Zotero.BetterBibTeX.DB = new class
       Zotero.BetterBibTeX.debug('@autoexport.on(delete)', key)
     )
 
-    if @metadata.Zotero != ZOTERO_CONFIG.VERSION || @metadata.BetterBibTeX != Zotero.BetterBibTeX.release
-      @metadata.Zotero = ZOTERO_CONFIG.VERSION
-      @metadata.BetterBibTeX = Zotero.BetterBibTeX.release
+    if @upgradeNeeded
+      for k, v of @upgradeNeeded
+        @metadata[k] = v
       @db.metadata.update(@metadata)
 
     Zotero.debug('DB.initialize: ready')
