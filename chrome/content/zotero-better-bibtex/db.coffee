@@ -115,8 +115,8 @@ Zotero.BetterBibTeX.DB = new class
     @upgradeNeeded = {}
     freshInstall = true
     for k, v of { Zotero: ZOTERO_CONFIG.VERSION, BetterBibTeX: Zotero.BetterBibTeX.release, storage: Zotero.getZoteroDirectory().path }
-      continue if @metadata[k] == v
       freshInstall = false if @metadata[k]
+      continue if @metadata[k] == v
       @upgradeNeeded[k] = v
     @upgradeNeeded = false if Object.keys(@upgradeNeeded).length == 0
     Zotero.BetterBibTeX.debug('upgrade needed?', @upgradeNeeded)
@@ -127,7 +127,7 @@ Zotero.BetterBibTeX.DB = new class
         Zotero.BetterBibTeX.debug('reset cache: user request')
         cacheReset = true
 
-      when freshInstall
+      when @upgradeNeeded && freshInstall
         Zotero.BetterBibTeX.debug('reset cache: new installation')
         cacheReset = true
 
