@@ -1,4 +1,4 @@
-#ruby=2.3
+#ruby=2.2
 #ruby-gemset=zotero
 
 source 'https://rubygems.org'
