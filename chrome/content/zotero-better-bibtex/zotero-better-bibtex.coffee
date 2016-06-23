@@ -1352,7 +1352,8 @@ class Zotero.BetterBibTeX.AUXScanner
 
     collection = Zotero.getActiveZoteroPane()?.getSelectedCollection()
     # hasChildItems counts items in trash
-    if !collection || collection.getChildItems(true).length != 0
+    # MFG getChildItems returns false rather than an empty list
+    if !collection || (collection.getChildItems(true) || []).length != 0
       name = fp.file.leafName.substr(0, fp.file.leafName.lastIndexOf(".")) + ' ' + (new Date()).toLocaleString()
       collection = Zotero.Collections.add(name , collection?.id || null)
     @save(collection, @citations)
@@ -1368,7 +1369,9 @@ class Zotero.BetterBibTeX.AUXScanner
 
     re = /\\@input{([^}]+)}/g
     while m = re.exec(contents)
-      @parse(file.parent.append(m[1]))
+      inc = file.parent.clone()
+      inc.append(m[1])
+      @parse(inc)
 
   save: (collection, keys) ->
     missing = []
