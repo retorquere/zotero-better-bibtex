@@ -2,12 +2,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.4.0)
-    aws-sdk (2.3.15)
-      aws-sdk-resources (= 2.3.15)
-    aws-sdk-core (2.3.15)
+    aws-sdk (2.3.16)
+      aws-sdk-resources (= 2.3.16)
+    aws-sdk-core (2.3.16)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.3.15)
-      aws-sdk-core (= 2.3.15)
+    aws-sdk-resources (2.3.16)
+      aws-sdk-core (= 2.3.16)
     backports (3.6.8)
     bibtex-ruby (4.4.0)
       latex-decode (~> 0.0)
@@ -125,7 +125,7 @@ GEM
       yajl-ruby (~> 1.2.0)
     rack (1.6.4)
     rake (11.2.2)
-    rake-xpi (0.0.29)
+    rake-xpi (0.0.30)
       aws-sdk
       faraday-http-cache
       jwt
