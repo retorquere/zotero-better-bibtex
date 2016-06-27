@@ -436,7 +436,6 @@ Zotero.BetterBibTeX.extensionConflicts = ->
   @disableInConnector(Zotero.isConnector)
 
 Zotero.BetterBibTeX.disableInConnector = (isConnector) ->
-  return
   return unless isConnector
   @disable("""
     You are running Zotero in connector mode (running Zotero Firefox and Zotero Standalone simultaneously.
