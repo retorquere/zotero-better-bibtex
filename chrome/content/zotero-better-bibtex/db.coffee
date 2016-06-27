@@ -155,7 +155,7 @@ Zotero.BetterBibTeX.DB = new class
 
           upgrade = []
           storage = []
-          for k, v of upgradeNeeded
+          for k, v of @upgradeNeeded
             continue unless v
             if k == 'storage'
               storage.push("changed the Zotero storage location to #{v}")
