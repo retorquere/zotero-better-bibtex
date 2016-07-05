@@ -1,28 +1,53 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
+Components.utils.import('resource://gre/modules/FileUtils.jsm')
 
 Zotero.BetterBibTeX.DBStore = new class
   constructor: ->
-    @store = new Zotero.DBConnection('betterbibtex-lokijs')
-    @store.query('CREATE TABLE IF NOT EXISTS lokijs (name PRIMARY KEY, data)')
+    # this will go away in 5.0
+    dbName = 'betterbibtex-lokijs'
+    file = Zotero.getZoteroDatabase(dbName)
+    if file.exists()
+      store = new Zotero.DBConnection(dbName)
+      for row in store.columnQuery("SELECT name, data FROM lokijs WHERE name IN ('cache.json', 'db.json')")
+        @saveDatabase(row.name, row.data, ->)
+      file.remove(null)
 
   saveDatabase: (name, serialized, callback) ->
-    if !Zotero.initialized || Zotero.isConnector
+    if Zotero.isConnector
       Zotero.BetterBibTeX.flash('Zotero is in connector mode -- not saving database!')
     else
       Zotero.BetterBibTeX.debug("Saving database #{name}")
-      @store.query("INSERT OR REPLACE INTO lokijs (name, data) VALUES (?, ?)", [name, serialized])
+      file = Zotero.BetterBibTeX.createFile(name)
+      fos = FileUtils.openSafeFileOutputStream(file)
+      fos.write(serialized, serialized.length)
+      FileUtils.closeSafeFileOutputStream(fos)
     callback()
     return
 
   loadDatabase: (name, callback) ->
-    file = Zotero.BetterBibTeX.createFile(name)
-    if file.exists()
-      Zotero.BetterBibTeX.debug('DB.loadDatabase:', {name, file: file.path})
-      callback(Zotero.File.getContents(file))
-      file.remove(null) if file.exists()
-      return
+    data = null
 
-    callback(@store.valueQuery("SELECT data FROM lokijs WHERE name=?", [name]) || null)
+    file = Zotero.BetterBibTeX.createFile(name)
+    if file.exists() and file.isReadable()
+      Zotero.BetterBibTeX.debug('DB.loadDatabase:', {name, file: file.path})
+
+      data = ''
+      try
+        fstream = Components.classes['@mozilla.org/network/file-input-stream;1'].createInstance(Ci.nsIFileInputStream)
+        sstream = Components.classes['@mozilla.org/scriptableinputstream;1'].createInstance(Ci.nsIScriptableInputStream)
+        fstream.init(file, -1, 0, 0)
+        sstream.init(fstream)
+        str = sstream.read(4096)
+        while str.length > 0
+          data += str
+          str = sstream.read(4096)
+        sstream.close()
+        fstream.close()
+      catch e
+        data = null
+        Zotero.BetterBibTeX.debug('loadDatabase:', e)
+
+    callback(data)
     return
 
 Zotero.BetterBibTeX.DB = new class
