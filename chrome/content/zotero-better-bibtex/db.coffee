@@ -2,6 +2,8 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 
 Zotero.BetterBibTeX.DBStore = new class
+  backups: 4
+
   constructor: ->
     # this will go away in 5.0
     dbName = 'betterbibtex-lokijs'
@@ -27,7 +29,7 @@ Zotero.BetterBibTeX.DBStore = new class
       return
 
     try
-      for id in [5..0]
+      for id in [@backups..0]
         db = Zotero.BetterBibTeX.createFile(@versioned(name, id))
         continue unless db.exists()
         Zotero.BetterBibTeX.debug("DBStore: backing up #{db.path}")
@@ -44,6 +46,7 @@ Zotero.BetterBibTeX.DBStore = new class
     return
 
   tryDatabase: (name) ->
+    Zotero.BetterBibTeX.debug("DBStore.load: trying #{name}")
     file = Zotero.BetterBibTeX.createFile(name)
     throw {name: 'NoSuchFile', message: "#{file.path} not found", toString: -> "#{@name}: #{@message}"} unless file.exists()
 
@@ -69,7 +72,7 @@ Zotero.BetterBibTeX.DBStore = new class
 
   loadDatabase: (name, callback) ->
     data = null
-    for id in [0..5]
+    for id in [0..@backups]
       try
         data = @tryDatabase(@versioned(name, id))
         break
