@@ -289,13 +289,13 @@ Zotero.BetterBibTeX.addCacheHistory = ->
       clear: Zotero.BetterBibTeX.cache.stats.clear
   })
 
-Zotero.BetterBibTeX.debugMode = ->
+Zotero.BetterBibTeX.debugMode = (silent) ->
   if @pref.get('debug')
     Zotero.Debug.setStore(true)
     Zotero.Prefs.set('debug.store', true)
     @debug = @debug_on
     @log = @log_on
-    @flash('Debug mode active', 'Debug mode is active. This will affect performance.')
+    @flash('Debug mode active', 'Debug mode is active. This will affect performance.') unless silent
 
     clearInterval(Zotero.BetterBibTeX.debugInterval) if Zotero.BetterBibTeX.debugInterval
     try
@@ -904,7 +904,7 @@ Zotero.BetterBibTeX.init = ->
   Zotero.addShutdownListener(->
     Zotero.BetterBibTeX.log('shutting down')
     Zotero.BetterBibTeX.DB.save('force')
-    Zotero.BetterBibTeX.debugMode()
+    Zotero.BetterBibTeX.debugMode(true)
     return
   )
   Zotero.getActiveZoteroPane().addBeforeReloadListener((mode) =>
