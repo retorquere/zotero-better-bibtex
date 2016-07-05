@@ -452,7 +452,7 @@ Zotero.BetterBibTeX.flash = (title, body) ->
   try
     Zotero.BetterBibTeX.debug('flash:', title)
     pw = new Zotero.ProgressWindow()
-    pw.changeHeadline(title)
+    pw.changeHeadline('Better BibTeX: ' + title)
     body ||= title
     body = body.join("\n") if Array.isArray(body)
     pw.addDescription(body)
@@ -585,34 +585,6 @@ Zotero.BetterBibTeX.version = (version) ->
   @debug("full version: #{version}, canonical version: #{v}")
   return v
 
-Zotero.BetterBibTeX.migrateData = ->
-  return unless @DB.SQLite.migrate()
-
-  for key in @pref.prefs.getChildList('')
-    switch key
-      when 'auto-abbrev.style' then @pref.set('autoAbbrevStyle', @pref.get(key))
-      when 'auto-abbrev' then @pref.set('autoAbbrev', @pref.get(key))
-      when 'auto-export' then @pref.set('autoExport', @pref.get(key))
-      when 'citeKeyFormat' then @pref.set('citekeyFormat', @pref.get(key))
-      when 'doi-and-url' then @pref.set('DOIandURL', @pref.get(key))
-      when 'key-conflict-policy' then @pref.set('keyConflictPolicy', @pref.get(key))
-      when 'langid' then @pref.set('langID', @pref.get(key))
-      when 'pin-citekeys' then @pref.set('pinCitekeys', @pref.get(key))
-      when 'raw-imports' then @pref.set('rawImports', @pref.get(key))
-      when 'show-citekey' then @pref.set('showCitekeys', @pref.get(key))
-      when 'skipfields' then @pref.set('skipFields', @pref.get(key))
-      when 'unicode'
-        @pref.set('asciiBibTeX', (@pref.get(key) != 'always'))
-        @pref.set('asciiBibLaTeX', (@pref.get(key) == 'never'))
-      when 'bibtexURLs' then @pref.set('bibtexURL', (if @pref.get(key) then 'note' else 'off'))
-      else continue
-    @pref.prefs.clearUserPref(key)
-  @pref.prefs.clearUserPref('brace-all')
-  @pref.prefs.clearUserPref('usePrefix')
-  @pref.prefs.clearUserPref('useprefix')
-  @pref.prefs.clearUserPref('verbatimDate')
-  @pref.prefs.clearUserPref('confirmCacheResetSize')
-
 Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
@@ -632,8 +604,6 @@ Zotero.BetterBibTeX.init = ->
   @translators = Object.create(null)
   @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
   @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
-
-  @migrateData()
 
   if @pref.get('scanCitekeys') || Zotero.BetterBibTeX.DB.upgradeNeeded
     reason = if @pref.get('scanCitekeys') then 'requested by user' else 'after upgrade'

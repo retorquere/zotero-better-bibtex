@@ -6,47 +6,76 @@ Zotero.BetterBibTeX.DBStore = new class
     # this will go away in 5.0
     dbName = 'betterbibtex-lokijs'
     file = Zotero.getZoteroDatabase(dbName)
+    Zotero.BetterBibTeX.debug('DBStore: looking for', file.path)
     if file.exists()
+      Zotero.BetterBibTeX.debug('DBStore: migrating', dbName)
       store = new Zotero.DBConnection(dbName)
-      for row in store.columnQuery("SELECT name, data FROM lokijs WHERE name IN ('cache.json', 'db.json')")
+      for row in store.query("SELECT name, data FROM lokijs WHERE name IN ('cache.json', 'db.json')")
+        Zotero.BetterBibTeX.debug('DBStore: migrating', row, row.name)
         @saveDatabase(row.name, row.data, ->)
+      store.closeDatabase(true)
       file.remove(null)
+
+  versioned: (name, id) ->
+    return name unless id
+    return "#{name}.#{id}"
 
   saveDatabase: (name, serialized, callback) ->
     if Zotero.isConnector
       Zotero.BetterBibTeX.flash('Zotero is in connector mode -- not saving database!')
-    else
-      Zotero.BetterBibTeX.debug("Saving database #{name}")
-      file = Zotero.BetterBibTeX.createFile(name)
-      fos = FileUtils.openSafeFileOutputStream(file)
-      fos.write(serialized, serialized.length)
-      FileUtils.closeSafeFileOutputStream(fos)
+      callback()
+      return
+
+    try
+      for id in [5..0]
+        db = Zotero.BetterBibTeX.createFile(@versioned(name, id))
+        continue unless db.exists()
+        Zotero.BetterBibTeX.debug("DBStore: backing up #{db.path}")
+        db.moveTo(null, name + ".#{id + 1}")
+    catch err
+      Zotero.BetterBibTeX.debug('DBStore: backup failed', err)
+
+    Zotero.BetterBibTeX.debug("DBStore: Saving database #{name}")
+    db = Zotero.BetterBibTeX.createFile(name)
+    fos = FileUtils.openSafeFileOutputStream(db)
+    fos.write(serialized, serialized.length)
+    FileUtils.closeSafeFileOutputStream(fos)
     callback()
     return
 
+  tryDatabase: (name) ->
+    file = Zotero.BetterBibTeX.createFile(name)
+    throw {name: 'NoSuchFile', message: "#{file.path} not found", toString: -> "#{@name}: #{@message}"} unless file.exists()
+
+    #data = ''
+    #fstream = Components.classes['@mozilla.org/network/file-input-stream;1'].createInstance(Ci.nsIFileInputStream)
+    #sstream = Components.classes['@mozilla.org/scriptableinputstream;1'].createInstance(Ci.nsIScriptableInputStream)
+    #fstream.init(file, -1, 0, 0)
+    #sstream.init(fstream)
+    #str = sstream.read(4096)
+    #while str.length > 0
+    #  data += str
+    #  str = sstream.read(4096)
+    #sstream.close()
+    #fstream.close()
+
+    data = Zotero.File.getContents(file)
+
+    # will throw an error if not valid JSON -- too bad we're doing this twice, but better safe than sorry, and only
+    # happens at startup
+    JSON.parse(data)
+
+    return data
+
   loadDatabase: (name, callback) ->
     data = null
-
-    file = Zotero.BetterBibTeX.createFile(name)
-    if file.exists() and file.isReadable()
-      Zotero.BetterBibTeX.debug('DB.loadDatabase:', {name, file: file.path})
-
-      #data = ''
+    for id in [0..5]
       try
-        #fstream = Components.classes['@mozilla.org/network/file-input-stream;1'].createInstance(Ci.nsIFileInputStream)
-        #sstream = Components.classes['@mozilla.org/scriptableinputstream;1'].createInstance(Ci.nsIScriptableInputStream)
-        #fstream.init(file, -1, 0, 0)
-        #sstream.init(fstream)
-        #str = sstream.read(4096)
-        #while str.length > 0
-        #  data += str
-        #  str = sstream.read(4096)
-        #sstream.close()
-        #fstream.close()
-        data = Zotero.File.getContents(file)
-      catch e
+        data = @tryDatabase(@versioned(name, id))
+        break
+      catch err
         data = null
-        Zotero.BetterBibTeX.debug('loadDatabase:', e)
+        Zotero.BetterBibTeX.flash("DBStore: failed to load #{@versioned(name, id)}", err)
 
     callback(data)
     return
@@ -103,10 +132,6 @@ Zotero.BetterBibTeX.DB = new class
       @metadata.cacheReap = Date.now()
       @db.metadata.update(@metadata)
     Zotero.BetterBibTeX.debug('db: loaded, metadata:', @metadata)
-
-    ### this ensures that if the volatile DB hasn't been saved in the previous session, it is destroyed and will be rebuilt. ###
-    volatile = Zotero.BetterBibTeX.createFile(@db.volatile.filename)
-    volatile.moveTo(null, @db.volatile.filename + '.bak') if volatile.exists()
 
     @cache = @db.volatile.getCollection('cache')
     @cache ||= @db.volatile.addCollection('cache', { indices: ['itemID'] })
@@ -314,139 +339,4 @@ Zotero.BetterBibTeX.DB = new class
       @db.main.autosaveClearFlags()
 
   SQLite:
-    parseTable: (name) ->
-      name = name.split('.')
-      switch name.length
-        when 1
-          schema = ''
-          name = name[0]
-        when 2
-          schema = name[0] + '.'
-          name = name[1]
-      name = name.slice(1, -1) if name[0] == '"'
-      return {schema: schema, name: name}
-
-    table_info: (table) ->
-      table = @parseTable(table)
-      statement = Zotero.DB.getStatement("pragma #{table.schema}table_info(\"#{table.name}\")", null, true)
-
-      fields = (statement.getColumnName(i).toLowerCase() for i in [0...statement.columnCount])
-
-      columns = {}
-      while statement.executeStep()
-        values = (Zotero.DB._getTypedValue(statement, i) for i in [0...statement.columnCount])
-        column = {}
-        for name, i in fields
-          column[name] = values[i]
-        columns[column.name] = column
-      statement.finalize()
-
-      return columns
-
-    columnNames: (table) ->
-      return Object.keys(@table_info(table))
-
-    tableExists: (name) ->
-      table = @parseTable(name)
-      return (Zotero.DB.valueQuery("SELECT count(*) FROM #{table.schema}sqlite_master WHERE type='table' and name=?", [table.name]) != 0)
-
     Set: (values) -> '(' + ('' + v for v in values).join(', ') + ')'
-
-    migrate: ->
-      db = Zotero.BetterBibTeX.createFile('serialized-items.json')
-      db.remove(null) if db.exists()
-
-      db = Zotero.BetterBibTeX.createFile('db.json.bak')
-      db.remove(null) if db.exists()
-
-      db = Zotero.BetterBibTeX.createFile('cache.json.bak')
-      db.remove(null) if db.exists()
-
-      db = Zotero.getZoteroDatabase('betterbibtexcache')
-      db.remove(true) if db.exists()
-
-      db = Zotero.BetterBibTeX.createFile('better-bibtex-serialized-items.json')
-      db.remove(true) if db.exists()
-
-      db = Zotero.getZoteroDatabase('..', 'betterbibtex.sqlite.bak')
-      db.remove(true) if db.exists()
-
-      db = Zotero.getZoteroDatabase('betterbibtex')
-      return false unless db.exists()
-
-      Zotero.BetterBibTeX.flash('Better BibTeX: updating database', 'Updating database, this could take a while')
-
-      Zotero.DB.query('ATTACH ? AS betterbibtexmigration', [db.path])
-
-      if @tableExists('betterbibtexmigration.autoexport') && !@table_info('betterbibtexmigration.autoexport').context
-        Zotero.BetterBibTeX.debug('DB.migrate: autoexport')
-        Zotero.BetterBibTeX.DB.autoexport.removeDataOnly()
-
-        if @table_info('betterbibtexmigration.autoexport').collection
-          Zotero.DB.query("update betterbibtexmigration.autoexport set collection = (select 'library:' || libraryID from groups where 'group:' || groupID = collection) where collection like 'group:%'")
-          Zotero.DB.query("update betterbibtexmigration.autoexport set collection = 'collection:' || collection where collection <> 'library' and collection not like '%:%'")
-
-        migrated = 0
-        for row in Zotero.DB.query('select * from betterbibtexmigration.autoexport')
-          migrated += 1
-          Zotero.BetterBibTeX.DB.autoexport.insert({
-            collection: row.collection
-            path: row.path
-            exportCharset: row.exportCharset
-            exportNotes: (row.exportNotes == 'true')
-            translatorID: row.translatorID
-            useJournalAbbreviation: (row.useJournalAbbreviation == 'true')
-            status: 'pending'
-          })
-        Zotero.BetterBibTeX.debug('DB.migrate: autoexport=', migrated)
-
-      if @tableExists('betterbibtexmigration.cache')
-        Zotero.BetterBibTeX.debug('DB.migrate: cache')
-        Zotero.BetterBibTeX.DB.cache.removeDataOnly()
-
-        migrated = 0
-        for row in Zotero.DB.query('select * from betterbibtexmigration.cache')
-          migrated += 1
-          Zotero.BetterBibTeX.DB.cache.insert({
-            itemID: parseInt(row.itemID)
-            exportCharset: row.exportCharset
-            exportNotes: (row.exportNotes == 'true')
-            translatorID: row.translatorID
-            useJournalAbbreviation: (row.useJournalAbbreviation == 'true')
-            citekey: row.citekey
-            bibtex: row.bibtex
-            accessed: Date.now()
-          })
-
-        Zotero.BetterBibTeX.debug('DB.migrate: cache=', migrated)
-
-      if @tableExists('betterbibtexmigration.keys')
-        Zotero.BetterBibTeX.debug('DB.migrate: keys')
-        Zotero.BetterBibTeX.DB.keys.removeDataOnly()
-        pinned = @table_info('betterbibtexmigration.autoexport').pinned
-
-        migrated = 0
-        for row in Zotero.DB.query('select k.*, i.libraryID from betterbibtexmigration.keys k join items i on k.itemID = i.itemID')
-          continue if pinned && row.pinned != 1
-          migrated += 1
-
-          row.citekeyFormat = null unless row.citekeyFormat
-
-          Zotero.BetterBibTeX.DB.keys.insert({
-            itemID: parseInt(row.itemID)
-            citekey: row.citekey
-            citekeyFormat: row.citekeyFormat
-            libraryID: row.libraryID
-          })
-        Zotero.BetterBibTeX.debug('DB.migrate: keys=', migrated)
-
-      Zotero.DB.query('DETACH betterbibtexmigration')
-
-      db.moveTo(null, 'betterbibtex.sqlite.bak')
-
-      Zotero.BetterBibTeX.DB.save('force')
-
-      Zotero.BetterBibTeX.flash('Better BibTeX: database updated', 'Database update finished')
-      Zotero.BetterBibTeX.flash('Better BibTeX: cache has been reset', 'Cache has been reset due to a version upgrade. First exports after upgrade will be slower than usual')
-
-      return true
