@@ -31,18 +31,19 @@ Zotero.BetterBibTeX.DBStore = new class
     if file.exists() and file.isReadable()
       Zotero.BetterBibTeX.debug('DB.loadDatabase:', {name, file: file.path})
 
-      data = ''
+      #data = ''
       try
-        fstream = Components.classes['@mozilla.org/network/file-input-stream;1'].createInstance(Ci.nsIFileInputStream)
-        sstream = Components.classes['@mozilla.org/scriptableinputstream;1'].createInstance(Ci.nsIScriptableInputStream)
-        fstream.init(file, -1, 0, 0)
-        sstream.init(fstream)
-        str = sstream.read(4096)
-        while str.length > 0
-          data += str
-          str = sstream.read(4096)
-        sstream.close()
-        fstream.close()
+        #fstream = Components.classes['@mozilla.org/network/file-input-stream;1'].createInstance(Ci.nsIFileInputStream)
+        #sstream = Components.classes['@mozilla.org/scriptableinputstream;1'].createInstance(Ci.nsIScriptableInputStream)
+        #fstream.init(file, -1, 0, 0)
+        #sstream.init(fstream)
+        #str = sstream.read(4096)
+        #while str.length > 0
+        #  data += str
+        #  str = sstream.read(4096)
+        #sstream.close()
+        #fstream.close()
+        data = Zotero.File.getContents(file)
       catch e
         data = null
         Zotero.BetterBibTeX.debug('loadDatabase:', e)
