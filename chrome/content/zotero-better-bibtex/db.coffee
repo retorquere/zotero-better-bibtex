@@ -10,13 +10,16 @@ Zotero.BetterBibTeX.DBStore = new class
     file = Zotero.getZoteroDatabase(dbName)
     Zotero.BetterBibTeX.debug('DBStore: looking for', file.path)
     if file.exists()
-      Zotero.BetterBibTeX.debug('DBStore: migrating', dbName)
-      store = new Zotero.DBConnection(dbName)
-      for row in store.query("SELECT name, data FROM lokijs WHERE name IN ('cache.json', 'db.json')")
-        Zotero.BetterBibTeX.debug('DBStore: migrating', row, row.name)
-        @saveDatabase(row.name, row.data, ->)
-      store.closeDatabase(true)
-      file.remove(null)
+      try
+        Zotero.BetterBibTeX.debug('DBStore: migrating', dbName)
+        store = new Zotero.DBConnection(dbName)
+        for row in store.query("SELECT name, data FROM lokijs WHERE name IN ('cache.json', 'db.json')")
+          Zotero.BetterBibTeX.debug('DBStore: migrating', row, row.name)
+          @saveDatabase(row.name, row.data, ->)
+        store.closeDatabase(true)
+        file.remove(null)
+      catch err
+        Zotero.BetterBibTeX.debug('DBStore: migration failed:', err)
 
   versioned: (name, id) ->
     return name unless id
