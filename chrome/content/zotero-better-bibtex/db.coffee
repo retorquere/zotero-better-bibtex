@@ -19,7 +19,9 @@ Zotero.BetterBibTeX.DBStore = new class
         store.closeDatabase(true)
         file.remove(null)
       catch err
+        Zotero.BetterBibTeX.flash("Failed to migrate #{file.path}; the database has been backup up, please file an error report")
         Zotero.BetterBibTeX.debug('DBStore: migration failed:', err)
+        file.moveTo(null, file.leafName + '.failedmigration')
 
   versioned: (name, id) ->
     return name unless id
