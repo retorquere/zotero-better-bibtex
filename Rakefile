@@ -254,7 +254,7 @@ end
 
 file 'resource/citeproc.js' => 'Rakefile' do |t|
   cleanly(t.name) do
-    download('https://bitbucket.org/fbennett/citeproc-js/raw/tip/citeproc.js', t.name)
+    download('https://raw.githubusercontent.com/Juris-M/citeproc-js/master/citeproc.js', t.name)
     sh "#{NODEBIN}/grasp -i -e 'thedate[DATE_PARTS_ALL[i]]' --replace 'thedate[CSL.DATE_PARTS_ALL[i]]' #{t.name.shellescape}"
     sh "#{NODEBIN}/grasp -i -e 'if (!Array.indexOf) { _$ }' --replace '' #{t.name.shellescape}"
     File.rewrite(t.name){|src|
