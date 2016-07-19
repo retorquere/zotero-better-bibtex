@@ -103,14 +103,20 @@ Zotero.BetterBibTeX.auto = new class
     path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
     path.initWithPath(ae.path)
 
-    if path.exists() && !(path.isFile() && path.isWritable())
-      msg = "auto.prepare: candidate path '#{ae.path}' exists but is not writable"
-      Zotero.BetterBibTeX.debug(msg)
-      @mark(ae, 'error')
-      throw new Error(msg)
+    switch
+      when path.exists() && (!path.isFile() || !path.isWritable())
+        error = "auto.prepare: candidate path '#{ae.path}' exists but is not writable"
 
-    if !(path.parent.exists() && path.parent.isDirectory() && path.parent.isWritable())
-      msg = "auto.prepare: parent of candidate path '#{ae.path}' exists but is not writable"
+      when path.parent.exists() && !path.parent.isWritable()
+        error = "auto.prepare: parent of candidate path '#{ae.path}' exists but is not writable"
+
+      when !path.parent.exists()
+        error = "auto.prepare: parent of candidate path '#{ae.path}' does not exist"
+
+      else
+        error = null
+
+    if error
       Zotero.BetterBibTeX.debug(msg)
       @mark(ae, 'error')
       throw new Error(msg)
