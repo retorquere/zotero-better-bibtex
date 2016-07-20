@@ -44,12 +44,13 @@ Zotero.BetterBibTeX.DBStore = new class
 
     Zotero.BetterBibTeX.debug("DBStore: Saving database #{name}")
     db = Zotero.BetterBibTeX.createFile(name)
-    fos = FileUtils.openSafeFileOutputStream(db)
-    os = Components.classes["@mozilla.org/intl/converter-output-stream;1"].createInstance(Components.interfaces.nsIConverterOutputStream)
-    os.init(fos, 'UTF-8', 4096, "?".charCodeAt(0))
-    os.writeString(serialized)
-    os.close()
-    FileUtils.closeSafeFileOutputStream(fos)
+    #fos = FileUtils.openSafeFileOutputStream(db)
+    #cos = Components.classes["@mozilla.org/intl/converter-output-stream;1"].createInstance(Components.interfaces.nsIConverterOutputStream)
+    #cos.init(fos, 'UTF-8', 4096, "?".charCodeAt(0))
+    #cos.writeString(serialized)
+    #cos.close()
+    #FileUtils.closeSafeFileOutputStream(fos)
+    Zotero.File.putContents(file, serialized)
 
     callback()
     return
