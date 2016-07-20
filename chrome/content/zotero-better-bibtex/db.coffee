@@ -45,8 +45,12 @@ Zotero.BetterBibTeX.DBStore = new class
     Zotero.BetterBibTeX.debug("DBStore: Saving database #{name}")
     db = Zotero.BetterBibTeX.createFile(name)
     fos = FileUtils.openSafeFileOutputStream(db)
-    fos.write(serialized, serialized.length)
+    os = Components.classes["@mozilla.org/intl/converter-output-stream;1"].createInstance(Components.interfaces.nsIConverterOutputStream)
+    os.init(fos, 'UTF-8', 4096, "?".charCodeAt(0))
+    os.writeString(serialized)
+    os.close()
     FileUtils.closeSafeFileOutputStream(fos)
+
     callback()
     return
 
@@ -55,17 +59,17 @@ Zotero.BetterBibTeX.DBStore = new class
     file = Zotero.BetterBibTeX.createFile(name)
     throw {name: 'NoSuchFile', message: "#{file.path} not found", toString: -> "#{@name}: #{@message}"} unless file.exists()
 
+    #fis = Components.classes['@mozilla.org/network/file-input-stream;1'].createInstance(Components.interfaces.nsIFileInputStream)
+    #fis.init(file, 0x01, 0664, 0)
+    #blockSize = 524288
+    #replacementChar = Components.interfaces.nsIConverterInputStream.DEFAULT_REPLACEMENT_CHARACTER
+    #cis = Components.classes['@mozilla.org/intl/converter-input-stream;1'].createInstance(Components.interfaces.nsIConverterInputStream)
+    #cis.init(fis, 'UTF-8', blockSize, replacementChar)
     #data = ''
-    #fstream = Components.classes['@mozilla.org/network/file-input-stream;1'].createInstance(Ci.nsIFileInputStream)
-    #sstream = Components.classes['@mozilla.org/scriptableinputstream;1'].createInstance(Ci.nsIScriptableInputStream)
-    #fstream.init(file, -1, 0, 0)
-    #sstream.init(fstream)
-    #str = sstream.read(4096)
-    #while str.length > 0
-    #  data += str
-    #  str = sstream.read(4096)
-    #sstream.close()
-    #fstream.close()
+    #str = {}
+    #while cis.readString(blockSize, str) != 0
+    #  contents += str.value
+    #cis.close()
 
     data = Zotero.File.getContents(file)
 
