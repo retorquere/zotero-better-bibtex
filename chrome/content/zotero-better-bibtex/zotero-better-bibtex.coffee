@@ -660,14 +660,14 @@ Zotero.BetterBibTeX.init = ->
   for k, months of Zotero.BetterBibTeX.Locales.months
     Zotero.BetterBibTeX.CSL.DateParser.addDateParserMonths(months)
 
-  ### monkey-patch away Zotero error to avoid cluttering the error log ###
-  Zotero.Utilities.parseMarkup = ((original) ->
-    return (str) ->
-      if !(str?)
-        Zotero.BetterBibTeX.debug(new Error('Zotero.Utilities.parseMarkup passed a null or undefined string, proceeding with empty string'))
-        str = ''
-      return original.call(@, str)
-    )(Zotero.Utilities.parseMarkup)
+#  ### monkey-patch away Zotero error to avoid cluttering the error log ###
+#  Zotero.Utilities.parseMarkup = ((original) ->
+#    return (str) ->
+#      if !(str?)
+#        Zotero.BetterBibTeX.debug(new Error('Zotero.Utilities.parseMarkup passed a null or undefined string, proceeding with empty string'))
+#        str = ''
+#      return original.call(@, str)
+#    )(Zotero.Utilities.parseMarkup)
 
   ### monkey-patch unwieldy BBT db logging ###
   Zotero.DBConnection::_debug = ((original) ->
