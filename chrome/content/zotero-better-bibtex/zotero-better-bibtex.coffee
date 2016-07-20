@@ -355,12 +355,14 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
       m = Zotero.Utilities.varDump(m)
     str.push(m) if m
 
-  str = str.join(' ')
+  str = "[better-bibtex] #{str.join(' ')}"
 
   if level == 0
-    Zotero.logError('[better' + '-' + 'bibtex] ' + str)
+    Zotero.logError(str)
   else
-    Zotero.debug('[better' + '-' + 'bibtex] ' + str, level)
+    Zotero.debug(str, level)
+
+  console.log(str)
 
 Zotero.BetterBibTeX.extensionConflicts = ->
   AddonManager.getAddonByID('zotfile@columbia.edu', (extension) ->

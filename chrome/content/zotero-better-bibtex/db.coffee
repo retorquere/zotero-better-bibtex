@@ -17,7 +17,7 @@ Zotero.BetterBibTeX.DBStore = new class
           Zotero.BetterBibTeX.debug('DBStore: migrating', row, row.name)
           @saveDatabase(row.name, row.data, ->)
         store.closeDatabase(true)
-        file.remove(null)
+        file.moveTo(null, file.leafName + '.migrated')
       catch err
         Zotero.BetterBibTeX.flash("Failed to migrate #{file.path}; the database has been backup up, please file an error report")
         Zotero.BetterBibTeX.debug('DBStore: migration failed:', err)
@@ -44,13 +44,13 @@ Zotero.BetterBibTeX.DBStore = new class
 
     Zotero.BetterBibTeX.debug("DBStore: Saving database #{name}")
     db = Zotero.BetterBibTeX.createFile(name)
-    #fos = FileUtils.openSafeFileOutputStream(db)
-    #cos = Components.classes["@mozilla.org/intl/converter-output-stream;1"].createInstance(Components.interfaces.nsIConverterOutputStream)
-    #cos.init(fos, 'UTF-8', 4096, "?".charCodeAt(0))
-    #cos.writeString(serialized)
-    #cos.close()
-    #FileUtils.closeSafeFileOutputStream(fos)
-    Zotero.File.putContents(file, serialized)
+    fos = FileUtils.openSafeFileOutputStream(db)
+    cos = Components.classes["@mozilla.org/intl/converter-output-stream;1"].createInstance(Components.interfaces.nsIConverterOutputStream)
+    cos.init(fos, 'UTF-8', 4096, "?".charCodeAt(0))
+    cos.writeString(serialized)
+    cos.close()
+    FileUtils.closeSafeFileOutputStream(fos)
+    #Zotero.File.putContents(file, serialized)
 
     callback()
     return
@@ -87,8 +87,8 @@ Zotero.BetterBibTeX.DBStore = new class
         data = @tryDatabase(@versioned(name, id))
         break
       catch err
-        data = null
         Zotero.BetterBibTeX.flash("DBStore: failed to load #{@versioned(name, id)}", err)
+        data = null
 
     callback(data)
     return
@@ -294,6 +294,12 @@ Zotero.BetterBibTeX.DB = new class
     )
     @autoexport.on('delete', (key) ->
       Zotero.BetterBibTeX.debug('@autoexport.on(delete)', key)
+    )
+    @autoexport.on('insert', (key) ->
+      Zotero.BetterBibTeX.debug('@autoexport.on(insert)', key)
+    )
+    @autoexport.on('update', (key) ->
+      Zotero.BetterBibTeX.debug('@autoexport.on(update)', key)
     )
 
     if @upgradeNeeded
