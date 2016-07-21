@@ -87,8 +87,10 @@ Zotero.BetterBibTeX.DBStore = new class
         data = @tryDatabase(@versioned(name, id))
         break
       catch err
-        Zotero.BetterBibTeX.flash("DBStore: failed to load #{@versioned(name, id)}", err)
+        Zotero.BetterBibTeX.debug("DBStore: failed to load #{@versioned(name, id)}", err)
         data = null
+
+    Zotero.BetterBibTeX.flash("failed to load #{name}") unless data
 
     callback(data)
     return
