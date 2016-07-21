@@ -56,18 +56,6 @@ Zotero.BetterBibTeX.DBStore = new class
     file = Zotero.BetterBibTeX.createFile(name)
     throw {name: 'NoSuchFile', message: "#{file.path} not found", toString: -> "#{@name}: #{@message}"} unless file.exists()
 
-    #fis = Components.classes['@mozilla.org/network/file-input-stream;1'].createInstance(Components.interfaces.nsIFileInputStream)
-    #fis.init(file, 0x01, 0664, 0)
-    #blockSize = 524288
-    #replacementChar = Components.interfaces.nsIConverterInputStream.DEFAULT_REPLACEMENT_CHARACTER
-    #cis = Components.classes['@mozilla.org/intl/converter-input-stream;1'].createInstance(Components.interfaces.nsIConverterInputStream)
-    #cis.init(fis, 'UTF-8', blockSize, replacementChar)
-    #data = ''
-    #str = {}
-    #while cis.readString(blockSize, str) != 0
-    #  contents += str.value
-    #cis.close()
-
     data = Zotero.File.getContents(file)
 
     # will throw an error if not valid JSON -- too bad we're doing this twice, but better safe than sorry, and only
