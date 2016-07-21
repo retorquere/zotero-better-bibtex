@@ -1,5 +1,7 @@
 # Better Bib(La)TeX for Zotero/Juris-M [![Circle CI](https://circleci.com/gh/retorquere/zotero-better-bibtex.svg?style=shield)](https://circleci.com/gh/retorquere/zotero-better-bibtex)
 
+[![Join the chat at https://gitter.im/retorquere/zotero-better-bibtex](https://badges.gitter.im/retorquere/zotero-better-bibtex.svg)](https://gitter.im/retorquere/zotero-better-bibtex?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This extension aims to make Zotero/Juris-M effective for us text-based authoring holdouts; currently, that translates to the
 LaTeX/Markdown crowd. To get started, read the
 [Installation](https://github.com/retorquere/zotero-better-bibtex/wiki/Installation) instructions.  At its core, it
