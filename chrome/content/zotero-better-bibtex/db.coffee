@@ -44,18 +44,9 @@ Zotero.BetterBibTeX.DBStore = new class
     catch err
       Zotero.BetterBibTeX.debug('DBStore: backup failed', err)
 
-    try
-      Zotero.BetterBibTeX.debug("DBStore: Saving database #{name}")
-      db = Zotero.BetterBibTeX.createFile(name)
-      fos = FileUtils.openSafeFileOutputStream(db)
-      cos = Components.classes["@mozilla.org/intl/converter-output-stream;1"].createInstance(Components.interfaces.nsIConverterOutputStream)
-      cos.init(fos, 'UTF-8', 4096, "?".charCodeAt(0))
-      cos.writeString(serialized)
-      cos.close()
-      FileUtils.closeSafeFileOutputStream(fos)
-    catch err
-      Zotero.BetterBibTeX.debug('DBStore: save failed, falling back to putContents', err)
-      Zotero.File.putContents(Zotero.BetterBibTeX.createFile(name), serialized)
+    db = Zotero.BetterBibTeX.createFile(name + '.saving')
+    Zotero.File.putContents(db, serialized)
+    db.moveTo(null, name)
 
     callback()
     return
