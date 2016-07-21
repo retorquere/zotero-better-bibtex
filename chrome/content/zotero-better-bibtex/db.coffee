@@ -34,23 +34,28 @@ Zotero.BetterBibTeX.DBStore = new class
       return
 
     try
-      for id in [@backups..0]
-        db = Zotero.BetterBibTeX.createFile(@versioned(name, id))
-        continue unless db.exists()
-        Zotero.BetterBibTeX.debug("DBStore: backing up #{db.path}")
-        db.moveTo(null, name + ".#{id + 1}")
+      db = Zotero.BetterBibTeX.createFile(name)
+      if db.exists()
+        for id in [@backups..0]
+          db = Zotero.BetterBibTeX.createFile(@versioned(name, id))
+          continue unless db.exists()
+          Zotero.BetterBibTeX.debug("DBStore: backing up #{db.path}")
+          db.moveTo(null, name + ".#{id + 1}")
     catch err
       Zotero.BetterBibTeX.debug('DBStore: backup failed', err)
 
-    Zotero.BetterBibTeX.debug("DBStore: Saving database #{name}")
-    db = Zotero.BetterBibTeX.createFile(name)
-    fos = FileUtils.openSafeFileOutputStream(db)
-    cos = Components.classes["@mozilla.org/intl/converter-output-stream;1"].createInstance(Components.interfaces.nsIConverterOutputStream)
-    cos.init(fos, 'UTF-8', 4096, "?".charCodeAt(0))
-    cos.writeString(serialized)
-    cos.close()
-    FileUtils.closeSafeFileOutputStream(fos)
-    #Zotero.File.putContents(file, serialized)
+    try
+      Zotero.BetterBibTeX.debug("DBStore: Saving database #{name}")
+      db = Zotero.BetterBibTeX.createFile(name)
+      fos = FileUtils.openSafeFileOutputStream(db)
+      cos = Components.classes["@mozilla.org/intl/converter-output-stream;1"].createInstance(Components.interfaces.nsIConverterOutputStream)
+      cos.init(fos, 'UTF-8', 4096, "?".charCodeAt(0))
+      cos.writeString(serialized)
+      cos.close()
+      FileUtils.closeSafeFileOutputStream(fos)
+    catch err
+      Zotero.BetterBibTeX.debug('DBStore: save failed, falling back to putContents', err)
+      Zotero.File.putContents(Zotero.BetterBibTeX.createFile(name), serialized)
 
     callback()
     return
