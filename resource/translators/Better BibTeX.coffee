@@ -27,7 +27,7 @@ Translator.typeMap = {
   'book booklet manual proceedings':  'book'
   'incollection inbook':              'bookSection'
   'article misc':                     'journalArticle magazineArticle newspaperArticle'
-  'phdthesis mastersthesis':          'thesis'
+  'phdthesis mastersthesis thesis':   'thesis'
   unpublished:                        'manuscript'
   patent:                             'patent'
   'inproceedings conference':         'conferencePaper'
