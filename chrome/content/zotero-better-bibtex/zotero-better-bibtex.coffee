@@ -566,6 +566,8 @@ Zotero.BetterBibTeX.setCitekeyFormatter = (enforce) ->
     catch err
       @error('Error parsing citekey pattern', {citekeyPattern, citekeyFormat}, err)
 
+  Zotero.BetterBibTeX.keymanager.clearDynamic()
+
   if enforce
     @flash('Citation pattern reset failed! Please report an error to the Better BibTeX issue list.')
 
@@ -610,7 +612,7 @@ Zotero.BetterBibTeX.init = ->
   if @pref.get('scanCitekeys') || Zotero.BetterBibTeX.DB.upgradeNeeded
     reason = if @pref.get('scanCitekeys') then 'requested by user' else 'after upgrade'
     @flash("Citation key rescan #{reason}", "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
-    changed = @keymanager.scan()
+    changed = @keymanager.scan().concat(Zotero.BetterBibTeX.keymanager.clearDynamic())
     for itemID in changed
       @cache.remove({itemID})
     @DB.purge()

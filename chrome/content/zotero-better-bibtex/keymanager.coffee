@@ -67,7 +67,14 @@ Zotero.BetterBibTeX.keymanager = new class
     @scan()
 
   clearDynamic: ->
-    @db.keys.removeWhere((obj) -> obj.citekeyFormat)
+    current = Zotero.BetterBibTeX.pref.get('citekeyFormat')
+    affected = []
+    @db.keys.removeWhere((obj) ->
+      return false if !obj.citekeyFormat || obj.citekeyFormat == current
+      affected.push(obj.itemID)
+      return true
+    )
+    return affected
 
   extract: (item, insitu) ->
     switch
