@@ -468,6 +468,10 @@ file 'chrome/content/zotero-better-bibtex/lokijs.js' => 'Rakefile' do |t|
   browserify("Zotero.LokiJS = require('lokijs');", t.name)
 end
 
+file 'chrome/content/zotero-better-bibtex/vardump.js' => 'Rakefile' do |t|
+  browserify("Zotero.BetterBibTeX.varDump = require('util').inspect;", t.name)
+end
+
 file 'chrome/content/zotero-better-bibtex/fold-to-ascii.js' => 'Rakefile' do |t|
   browserify("Zotero.BetterBibTeX.removeDiacritics = require('fold-to-ascii').fold;", t.name)
 end

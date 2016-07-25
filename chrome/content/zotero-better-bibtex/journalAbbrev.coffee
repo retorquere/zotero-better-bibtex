@@ -29,9 +29,9 @@ Zotero.BetterBibTeX.JournalAbbrev = new class
 
     key = item.publicationTitle || item.reporter || item.code
     return unless key
-    return unless Zotero.BetterBibTeX.pref.get('autoAbbrev')
+    return unless Zotero.BetterBibTeX.Pref.get('autoAbbrev')
 
-    style = Zotero.BetterBibTeX.pref.get('autoAbbrevStyle') || (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)[0].styleID
+    style = Zotero.BetterBibTeX.Pref.get('autoAbbrevStyle') || (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)[0].styleID
 
     @abbrevs['default']?['container-title']?[key] || Zotero.Cite.getAbbreviation(style, @abbrevs, 'default', 'container-title', key)
     return @abbrevs['default']?['container-title']?[key] || key

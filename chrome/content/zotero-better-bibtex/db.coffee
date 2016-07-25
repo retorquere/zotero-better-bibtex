@@ -173,7 +173,7 @@ Zotero.BetterBibTeX.DB = new class
 
     switch
       # force cache reset by user request, or fresh install
-      when Zotero.BetterBibTeX.pref.get('cacheReset')
+      when Zotero.BetterBibTeX.Pref.get('cacheReset')
         Zotero.BetterBibTeX.debug('reset cache: user request')
         cacheReset = true
 
@@ -193,7 +193,7 @@ Zotero.BetterBibTeX.DB = new class
         # The default is arbitrarily set at 1000. I just assume if you have less than that actually cached, you will be more annoyed by being
         # asked about the cache than about it being regenerated.
         ###
-        confirmCacheResetSize = Zotero.BetterBibTeX.pref.get('confirmCacheResetSize')
+        confirmCacheResetSize = Zotero.BetterBibTeX.Pref.get('confirmCacheResetSize')
 
         if confirmCacheResetSize && Math.max(@cache.data.length, @serialized.data.length) > confirmCacheResetSize
           prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(Components.interfaces.nsIPromptService)
@@ -257,19 +257,19 @@ Zotero.BetterBibTeX.DB = new class
       if typeof cacheReset == 'number'
         cacheReset = cacheReset - 1
         cacheReset = 0 if cacheReset < 0
-        Zotero.BetterBibTeX.pref.set('cacheReset', cacheReset)
+        Zotero.BetterBibTeX.Pref.set('cacheReset', cacheReset)
         Zotero.debug('DB.initialize, cache.load forced reset, ' + cacheReset + 'left')
       else
         Zotero.debug("DB.initialize, cache.load reset after upgrade from #{@metadata.BetterBibTeX} to #{Zotero.BetterBibTeX.release}")
 
     @keys.on('insert', (key) =>
-      if !key.citekeyFormat && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
+      if !key.citekeyFormat && Zotero.BetterBibTeX.Pref.get('keyConflictPolicy') == 'change'
         ### removewhere will trigger 'delete' for the conflicts, which will take care of their cache dependents ###
         @keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
       @cache.removeWhere({itemID: key.itemID})
     )
     @keys.on('update', (key) =>
-      if !key.citekeyFormat && Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change'
+      if !key.citekeyFormat && Zotero.BetterBibTeX.Pref.get('keyConflictPolicy') == 'change'
         @keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
 
       @cache.removeWhere({itemID: key.itemID})

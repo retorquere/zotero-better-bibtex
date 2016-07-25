@@ -30,7 +30,7 @@ BetterBibTeXPref =
     document.getElementById('better-bibtex-preferences-cache-stats').value = "#{Math.max(Zotero.BetterBibTeX.DB.cache.data.length, Zotero.BetterBibTeX.DB.serialized.data.length)} in cache"
     # document.getElementById('better-bibtex-preferences-zombies').setAttribute('label', "Purge zombies: #{JSON.stringify(Zotero.BetterBibTeX.DB.zombies())}")
 
-    BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.pref.get('citekeyFormat')
+    BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.Pref.get('citekeyFormat')
     BetterBibTeXPref.update()
 
     Zotero.BetterBibTeX.debug('prefs pane loaded:', document.location.hash)
@@ -41,7 +41,7 @@ BetterBibTeXPref =
       ), 500)
 
   saveCitekeyFormat: ->
-    BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.pref.get('citekeyFormat')
+    BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.Pref.get('citekeyFormat')
 
   checkCitekeyFormat: ->
     keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
@@ -55,21 +55,21 @@ BetterBibTeXPref =
           BetterBibTeXPref.savedPattern = null
 
       if BetterBibTeXPref.savedPattern
-        Zotero.BetterBibTeX.pref.set('citekeyFormat', BetterBibTeXPref.savedPattern)
+        Zotero.BetterBibTeX.Pref.set('citekeyFormat', BetterBibTeXPref.savedPattern)
       else
-        Zotero.BetterBibTeX.pref.clearUserPref('citekeyFormat')
+        Zotero.BetterBibTeX.Pref.clear('citekeyFormat')
 
   paneUnload: ->
     try
-      BetterBibTeXPatternParser.parse(Zotero.BetterBibTeX.pref.get('citekeyFormat'))
+      BetterBibTeXPatternParser.parse(Zotero.BetterBibTeX.Pref.get('citekeyFormat'))
     catch err
-      Zotero.BetterBibTeX.pref.set('citekeyFormat', BetterBibTeXPref.savedPattern)
+      Zotero.BetterBibTeX.Pref.set('citekeyFormat', BetterBibTeXPref.savedPattern)
 
   styleChanged: (index) ->
     stylebox = document.getElementById('better-bibtex-abbrev-style')
     selectedItem = if typeof index != 'undefined' then stylebox.getItemAtIndex(index) else stylebox.selectedItem
     styleID = selectedItem.getAttribute('value')
-    Zotero.BetterBibTeX.pref.set('autoAbbrevStyle', styleID)
+    Zotero.BetterBibTeX.Pref.set('autoAbbrevStyle', styleID)
 
   clone: (obj) ->
     clone = Object.create(null)
@@ -110,7 +110,7 @@ BetterBibTeXPref =
 
     stylebox = document.getElementById('better-bibtex-abbrev-style')
     refill = stylebox.children.length == 0
-    selectedStyle = Zotero.BetterBibTeX.pref.get('autoAbbrevStyle')
+    selectedStyle = Zotero.BetterBibTeX.Pref.get('autoAbbrevStyle')
     selectedIndex = -1
     for style, i in styles
       if refill

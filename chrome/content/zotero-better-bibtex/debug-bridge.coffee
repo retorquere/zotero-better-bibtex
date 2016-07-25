@@ -32,8 +32,8 @@ Zotero.BetterBibTeX.DebugBridge.methods.init = ->
 Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.BetterBibTeX.DebugBridge.methods.init()
 
-  for key in Zotero.BetterBibTeX.pref.prefs.getChildList('')
-    Zotero.BetterBibTeX.pref.prefs.clearUserPref(key)
+  for key in Zotero.BetterBibTeX.Pref.branch.getChildList('')
+    Zotero.BetterBibTeX.Pref.clear(key)
 
   tags = Object.keys(Zotero.Tags.getAll())
   Zotero.Tags.erase(tags) if tags.length > 0

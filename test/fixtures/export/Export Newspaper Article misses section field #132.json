@@ -4,8 +4,6 @@
     "label": "BetterBibTeX JSON",
     "release": "0.7.1",
     "preferences": {
-      "fancyURLs": false,
-      "attachmentRelativePath": false,
       "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize]",
       "skipFields": "abstract,note",
       "usePrefix": false,

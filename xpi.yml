@@ -58,13 +58,15 @@ files:
 - chrome/content/zotero-better-bibtex/journalAbbrev.js
 - chrome/content/zotero-better-bibtex/lokijs.js
 - chrome/content/zotero-better-bibtex/preferences.js
-- chrome/content/zotero-better-bibtex/preferences.xul
+- chrome/content/zotero-better-bibtex/preferences/preferences.js
+- chrome/content/zotero-better-bibtex/preferences/preferences.xul
 - chrome/content/zotero-better-bibtex/punycode.js
 - chrome/content/zotero-better-bibtex/schomd.js
 - chrome/content/zotero-better-bibtex/serialized.js
 - chrome/content/zotero-better-bibtex/translators.js
 - chrome/content/zotero-better-bibtex/web-endpoints.js
 - chrome/content/zotero-better-bibtex/zotero-better-bibtex.js
+- chrome/content/zotero-better-bibtex/vardump.js
 - chrome/content/zotero-better-bibtex/zoteroPane.js
 - chrome/content/zotero-better-bibtex/zoteroPane.xul
 - chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd

@@ -14,7 +14,7 @@ Zotero.BetterBibTeX.cache = new class
     return _v
 
   verify: (entry) ->
-    return entry unless Zotero.BetterBibTeX.pref.get('debug') || Zotero.BetterBibTeX.testing
+    return entry unless Zotero.BetterBibTeX.Pref.get('debug') || Zotero.BetterBibTeX.testing
 
     verify = {itemID: 1, exportCharset: 'x', exportNotes: true, translatorID: 'x', useJournalAbbreviation: true }
 
@@ -79,7 +79,7 @@ Zotero.BetterBibTeX.cache = new class
 
   fetch: (itemID, context) ->
     Zotero.BetterBibTeX.debug('cache.fetch:', {itemID, context})
-    #return unless Zotero.BetterBibTeX.pref.get('caching')
+    #return unless Zotero.BetterBibTeX.Pref.get('caching')
 
     ### file paths vary if exportFileData is on ###
     return if context.exportFileData

@@ -129,7 +129,7 @@ class Zotero.BetterBibTeX.DateParser
             break
 
     if !@dateorder
-      fallback = Zotero.BetterBibTeX.pref.get('defaultDateParserLocale')
+      fallback = Zotero.BetterBibTeX.Pref.get('defaultDateParserLocale')
       @dateorder = Zotero.BetterBibTeX.Locales.dateorder[fallback]
       if !@dateorder
         @dateorder = Zotero.BetterBibTeX.Locales.dateorder[fallback] = Zotero.BetterBibTeX.Locales.dateorder[fallback.trim().toLowerCase()]
@@ -290,7 +290,7 @@ Zotero.BetterBibTeX.addCacheHistory = ->
   })
 
 Zotero.BetterBibTeX.debugMode = (silent) ->
-  if @pref.get('debug')
+  if @Pref.get('debug')
     Zotero.Debug.setStore(true)
     Zotero.Prefs.set('debug.store', true)
     @debug = @debug_on
@@ -349,11 +349,13 @@ Zotero.BetterBibTeX.stringifier = (replacer, cycleReplacer) ->
 Zotero.BetterBibTeX._log = (level, msg...) ->
   str = []
   for m in msg
-    if m instanceof Error
-      m = "<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>"
-    else
-      m = Zotero.Utilities.varDump(m)
-    str.push(m) if m
+    switch
+      when m instanceof Error
+        str.push("<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>")
+      when !m || (typeof m in ['number', 'string', 'boolean'])
+        str.push('' + m)
+      else
+        str.push(Zotero.BetterBibTeX.varDump(m).replace(/\n/g, ''))
 
   str = "[better-bibtex] #{str.join(' ')}"
 
@@ -361,7 +363,6 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
     Zotero.logError(str)
   else
     Zotero.debug(str, level)
-
   console.log(str)
 
 Zotero.BetterBibTeX.extensionConflicts = ->
@@ -494,83 +495,6 @@ Zotero.BetterBibTeX.reportErrors = (includeReferences) ->
     ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
     ww.openWindow(null, 'chrome://zotero-better-bibtex/content/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', params)
 
-Zotero.BetterBibTeX.pref = {}
-
-Zotero.BetterBibTeX.pref.prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.zotero.translators.better-bibtex.')
-
-Zotero.BetterBibTeX.pref.observer = {
-  register: -> Zotero.BetterBibTeX.pref.prefs.addObserver('', @, false)
-  unregister: -> Zotero.BetterBibTeX.pref.prefs.removeObserver('', @)
-  observe: (subject, topic, data) ->
-    switch data
-      when 'citekeyFormat', 'citekeyFold'
-        Zotero.BetterBibTeX.setCitekeyFormatter()
-        ### delete all dynamic keys that have a different citekeyformat (should be all) ###
-        Zotero.BetterBibTeX.keymanager.clearDynamic()
-
-      when 'autoAbbrevStyle'
-        Zotero.BetterBibTeX.JournalAbbrev.reset()
-
-      when 'debug'
-        Zotero.BetterBibTeX.debugMode()
-        ### don't drop the cache just for this ###
-        return
-
-    ### if any var changes, drop the cache and kick off all exports ###
-    Zotero.BetterBibTeX.cache.reset("pref change: #{data}")
-    Zotero.BetterBibTeX.auto.reset('preferences change')
-    Zotero.BetterBibTeX.debug('preference change:', subject, topic, data)
-}
-
-Zotero.BetterBibTeX.pref.snapshot = ->
-  stash = Object.create(null)
-  for key in @prefs.getChildList('')
-    stash[key] = @get(key)
-  return stash
-
-Zotero.BetterBibTeX.pref.stash = -> @stashed = @snapshot()
-
-Zotero.BetterBibTeX.pref.restore = ->
-  for own key, value of @stashed ? {}
-    @set(key, value)
-
-Zotero.BetterBibTeX.pref.set = (key, value) ->
-  return Zotero.Prefs.set("translators.better-bibtex.#{key}", value)
-
-Zotero.BetterBibTeX.pref.get = (key) ->
-  return Zotero.Prefs.get("translators.better-bibtex.#{key}")
-
-Zotero.BetterBibTeX.setCitekeyFormatter = (enforce) ->
-  if enforce
-    attempts = ['get', 'reset']
-  else
-    attempts = ['get']
-
-  for attempt in attempts
-    if attempt == 'reset'
-      msg = "Malformed citation pattern '#{@pref.get('citekeyFormat')}', resetting to default"
-      @flash(msg)
-      @error(msg)
-      @pref.prefs.clearUserPref('citekeyFormat')
-
-    try
-      citekeyPattern = @pref.get('citekeyFormat')
-      citekeyFormat = citekeyPattern.replace(/>.*/, '')
-      throw new Error("no variable parts found in citekey pattern '#{citekeyFormat}'") unless citekeyFormat.indexOf('[') >= 0
-      formatter = new BetterBibTeXPatternFormatter(BetterBibTeXPatternParser.parse(citekeyPattern), @pref.get('citekeyFold'))
-
-      @citekeyPattern = citekeyPattern
-      @citekeyFormat = citekeyFormat
-      @formatter = formatter
-      return
-    catch err
-      @error('Error parsing citekey pattern', {citekeyPattern, citekeyFormat}, err)
-
-  Zotero.BetterBibTeX.keymanager.clearDynamic()
-
-  if enforce
-    @flash('Citation pattern reset failed! Please report an error to the Better BibTeX issue list.')
-
 Zotero.BetterBibTeX.idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
   Zotero.BetterBibTeX.debug("idle: #{topic}")
@@ -593,15 +517,15 @@ Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
 
-  @testing = (@pref.get('tests') != '')
+  @testing = (@Pref.get('tests') != '')
 
   try
-    BetterBibTeXPatternFormatter::skipWords = @pref.get('skipWords').split(',')
+    BetterBibTeXPatternFormatter::skipWords = @Pref.get('skipWords').split(',')
     Zotero.BetterBibTeX.debug('skipwords:', BetterBibTeXPatternFormatter::skipWords)
   catch err
     Zotero.BetterBibTeX.error('could not read skipwords:', err)
     BetterBibTeXPatternFormatter::skipWords = []
-  @setCitekeyFormatter(true)
+  @keymanager.setFormatter(true)
 
   @debugMode()
 
@@ -609,8 +533,8 @@ Zotero.BetterBibTeX.init = ->
   @threadManager = Components.classes['@mozilla.org/thread-manager;1'].getService()
   @windowMediator = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
 
-  if @pref.get('scanCitekeys') || Zotero.BetterBibTeX.DB.upgradeNeeded
-    reason = if @pref.get('scanCitekeys') then 'requested by user' else 'after upgrade'
+  if @Pref.get('scanCitekeys') || Zotero.BetterBibTeX.DB.upgradeNeeded
+    reason = if @Pref.get('scanCitekeys') then 'requested by user' else 'after upgrade'
     @flash("Citation key rescan #{reason}", "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
     changed = @keymanager.scan().concat(Zotero.BetterBibTeX.keymanager.clearDynamic())
     for itemID in changed
@@ -758,9 +682,9 @@ Zotero.BetterBibTeX.init = ->
   Zotero.ItemTreeView::getCellText = ((original) ->
     return (row, column) ->
       switch
-        when column.id == 'zotero-items-column-callNumber' && Zotero.BetterBibTeX.pref.get('showItemIDs')
+        when column.id == 'zotero-items-column-callNumber' && Zotero.BetterBibTeX.Pref.get('showItemIDs')
           type = 'itemid'
-        when column.id == 'zotero-items-column-extra' && Zotero.BetterBibTeX.pref.get('showCitekeys')
+        when column.id == 'zotero-items-column-extra' && Zotero.BetterBibTeX.Pref.get('showCitekeys')
           type = 'citekey'
       item = @._getItemAtRow(row) if type
 
@@ -904,7 +828,7 @@ Zotero.BetterBibTeX.init = ->
 
   @schomd.init()
 
-  @pref.observer.register()
+  @Pref.observer.register()
   Zotero.addShutdownListener(->
     Zotero.BetterBibTeX.log('shutting down')
     Zotero.BetterBibTeX.DB.save('force')
@@ -930,7 +854,7 @@ Zotero.BetterBibTeX.init = ->
     Zotero.BetterBibTeX.DB.save('all') if Zotero.BetterBibTeX.DB && mode != 'connector'
   )
 
-  @idleService.addIdleObserver(@idleObserver, @pref.get('autoExportIdleWait'))
+  @idleService.addIdleObserver(@idleObserver, @Pref.get('autoExportIdleWait'))
 
   uninstaller = {
     onUninstalling: (addon, needsRestart) ->
@@ -944,8 +868,8 @@ Zotero.BetterBibTeX.init = ->
   AddonManager.addAddonListener(uninstaller)
 
   if @testing
-    tests = @pref.get('tests')
-    @pref.set('tests', '')
+    tests = @Pref.get('tests')
+    @Pref.set('tests', '')
     try
       loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader)
       loader.loadSubScript("chrome://zotero-better-bibtex/content/test/include.js")
@@ -996,7 +920,7 @@ Zotero.BetterBibTeX.loadTranslators = ->
       Zotero.BetterBibTeX.debug('loadTranslators: removing', {label, translatorID}, ':', err)
 
   try
-    if Zotero.BetterBibTeX.pref.get('removeStock')
+    if Zotero.BetterBibTeX.Pref.get('removeStock')
       @removeTranslator({translatorID: 'b6e39b57-8942-4d11-8259-342c46ce395f', label: 'BibLaTeX'})
       @removeTranslator({translatorID: '9cb70025-a888-4a29-a210-93ec52da40d4', label: 'BibTeX'})
 
@@ -1004,11 +928,11 @@ Zotero.BetterBibTeX.loadTranslators = ->
     switch Zotero.Prefs.get('extensions.zotero.export.quickCopy.setting')
       when 'export=b4a5ab19-c3a2-42de-9961-07ae484b8cb0'
         Zotero.Prefs.set('extensions.zotero.export.quickCopy.setting', 'export=9b85ff96-ceb3-4ca2-87a9-154c18ab38b1')
-        Zotero.BetterBibTeX.pref.set('quickCopyMode', 'latex')
+        Zotero.BetterBibTeX.Pref.set('quickCopyMode', 'latex')
 
       when 'export=4c52eb69-e778-4a78-8ca2-4edf024a5074'
         Zotero.Prefs.set('extensions.zotero.export.quickCopy.setting', 'export=9b85ff96-ceb3-4ca2-87a9-154c18ab38b1')
-        Zotero.BetterBibTeX.pref.set('quickCopyMode', 'pandoc')
+        Zotero.BetterBibTeX.Pref.set('quickCopyMode', 'pandoc')
 
   for translator in @Translators
     @load(translator)

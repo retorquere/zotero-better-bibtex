@@ -7,8 +7,6 @@
       "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]",
       "skipFields": "",
       "usePrefix": false,
-      "preserveCaps": "all",
-      "fancyURLs": false,
       "langID": "babel",
       "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
@@ -23,7 +21,9 @@
       "exportNotes": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemID": 10,
@@ -36,14 +36,24 @@
       "firstPage": "337",
       "caseName": "Kartinyeri v Commonwealth",
       "shortTitle": "Kartinyeri",
-      "creators": [],
-      "notes": [],
-      "attachments": [],
+      "creators": [
+
+      ],
+      "notes": [
+
+      ],
+      "attachments": [
+
+      ],
       "tags": [
         "au"
       ],
-      "related": [],
-      "seeAlso": [],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
       "title": "Kartinyeri v Commonwealth",
       "volume": "195",
       "pages": "337",

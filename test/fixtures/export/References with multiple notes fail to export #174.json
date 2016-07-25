@@ -4,9 +4,6 @@
     "label": "BetterBibTeX JSON",
     "release": "0.8.2",
     "preferences": {
-      "preserveCaps": "all",
-      "fancyURLs": false,
-      "attachmentRelativePath": false,
       "attachmentsNoMetadata": true
     },
     "options": {

@@ -137,7 +137,6 @@ Before do |scenario|
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.confirmCacheResetSize', 0)
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.tests', 'all')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.test.timestamp', '2015-02-24 12:14:36 +0100')
-  $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.attachmentRelativePath', true)
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.autoExport', 'on-change')
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.debug', true)
   $Firefox.BetterBibTeX.setPreference('translators.better-bibtex.removeStock', true)

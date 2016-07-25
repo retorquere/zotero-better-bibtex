@@ -3,6 +3,8 @@ if not Zotero.BetterBibTeX
 
   for script in " lokijs
                   zotero-better-bibtex
+                  vardump
+                  preferences
                   translators
                   db
                   csl-localedata

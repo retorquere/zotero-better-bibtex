@@ -4,14 +4,11 @@
     "label": "BetterBibTeX JSON",
     "release": "0.7.33",
     "preferences": {
-      "attachmentRelativePath": false,
       "attachmentsNoMetadata": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "autoAbbrev": true,
       "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize:fold:alphanum]",
       "DOIandURL": "both",
-      "fancyURLs": false,
-      "preserveCaps": "inner",
       "skipFields": "abstract,note,file"
     },
     "options": {

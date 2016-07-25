@@ -5,8 +5,6 @@
     "release": "0.6.44",
     "preferences": {
       "usePrefix": true,
-      "fancyURLs": false,
-      "attachmentRelativePath": false,
       "titleCase": true
     },
     "options": {
