@@ -105,7 +105,7 @@ Zotero.BetterBibTeX.Pref = new class
       Zotero.BetterBibTeX.auto.reset('preferences change')
 
   snapshot: -> JSON.parse(JSON.stringify(@cache))
-  atash: -> @stashed = @snapshot()
+  stash: -> @stashed = @snapshot()
   restore: -> @cache = JSON.parse(JSON.stringify(@stashed))
 
   set: (key, value) ->
