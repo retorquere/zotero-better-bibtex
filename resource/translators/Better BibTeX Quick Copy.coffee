@@ -21,6 +21,12 @@ Mode =
     else
       Zotero.write("\\#{cmd}{#{keys.join(',')}}")
 
+  citekeys: ->
+    keys = []
+    while item = Translator.nextItem()
+      keys.push(item.__citekey__)
+    Zotero.write(keys.join(','))
+
   pandoc: ->
     keys = []
     while item = Translator.nextItem()

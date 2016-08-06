@@ -93,6 +93,7 @@
                     <menulist preference="pref-better-bibtex-quickCopyMode" preference-editable="true">
                       <menupopup>
                         <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.latex;" value="latex"/>
+                        <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.citekeys;" value="citekeys"/>
                         <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.pandoc;" value="pandoc"/>
                         <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.orgmode;" value="orgmode"/>
                         <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.atom;" value="atom"/>
