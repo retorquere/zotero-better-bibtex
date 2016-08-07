@@ -498,7 +498,6 @@ Zotero.BetterBibTeX.reportErrors = (includeReferences) ->
 Zotero.BetterBibTeX.idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
   Zotero.BetterBibTeX.debug("idle: #{topic}")
-  Zotero.BetterBibTeX.DB.save('all')
   switch topic
     when 'idle'
       Zotero.BetterBibTeX.auto.idle = true
