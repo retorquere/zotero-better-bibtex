@@ -5,10 +5,8 @@
     "release": "0.7.5",
     "preferences": {
       "citekeyFormat": "[auth:lower][year]",
-      "attachmentRelativePath": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoAbbrev": true,
-      "fancyURLs": false,
       "unicode": true,
       "usePrefix": true
     },

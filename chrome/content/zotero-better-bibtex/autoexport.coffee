@@ -197,7 +197,7 @@ Zotero.BetterBibTeX.auto = new class
       Zotero.BetterBibTeX.debug('auto.process: export already running')
       return
 
-    switch Zotero.BetterBibTeX.pref.get('autoExport')
+    switch Zotero.BetterBibTeX.Pref.get('autoExport')
       when 'off'
         Zotero.BetterBibTeX.debug('auto.process: off')
         return

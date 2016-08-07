@@ -49,7 +49,9 @@
       "exportNotes": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "conferencePaper",
@@ -57,7 +59,8 @@
         "Keyword 1",
         "Keyword 2"
       ],
-      "relations": {},
+      "relations": {
+      },
       "pages": "300-301",
       "date": "February 2016",
       "extra": "bibtex: test_citation1",
@@ -77,11 +80,17 @@
           "firstName": "R."
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 69,
       "publicationTitle": "IEEE_J_PROC",
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "doe_test_2016DoeSmith"
     },
     {
@@ -90,7 +99,8 @@
         "Keyword 1",
         "Keyword 2"
       ],
-      "relations": {},
+      "relations": {
+      },
       "pages": "300-301",
       "date": "February 2016",
       "extra": "bibtex: test_citation2",
@@ -110,83 +120,18 @@
           "firstName": "R."
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 70,
       "publicationTitle": "IEEE_J_PROC",
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "doe_test_2016DoeSmith"
-    }
-  ],
-  "cache": {
-    "items": []
-  },
-  "keymanager": [
-    {
-      "itemID": 8,
-      "libraryID": null,
-      "citekey": "CapEA11",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 9,
-      "libraryID": null,
-      "citekey": "CumEA14",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 11,
-      "libraryID": null,
-      "citekey": "TayEA11",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 3,
-      "libraryID": null,
-      "citekey": "ab_cd_2015",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 27,
-      "libraryID": null,
-      "citekey": "_mozilla_????",
-      "citekeyFormat": "[zotero][authors]"
-    },
-    {
-      "itemID": 29,
-      "libraryID": null,
-      "citekey": "shin_how_2014ShinSmithSmolinVazirani",
-      "citekeyFormat": "[zotero][authors]"
-    },
-    {
-      "itemID": 33,
-      "libraryID": null,
-      "citekey": "shulenburger_beyond_2015ShulenburgerMattssonDesjarlais",
-      "citekeyFormat": "[zotero][authors]"
-    },
-    {
-      "itemID": 13,
-      "libraryID": null,
-      "citekey": "arbesman_von_secondname_physical_2001ArbesmanvonSecondname",
-      "citekeyFormat": "[zotero][authors]"
-    },
-    {
-      "itemID": 25,
-      "libraryID": null,
-      "citekey": "karmasin_gestaltung_2002KarmasinRibing",
-      "citekeyFormat": "[zotero][authors]"
-    },
-    {
-      "itemID": 69,
-      "libraryID": null,
-      "citekey": "test_citation1",
-      "citekeyFormat": null
-    },
-    {
-      "itemID": 70,
-      "libraryID": null,
-      "citekey": "test_citation2",
-      "citekeyFormat": null
     }
   ]
 }

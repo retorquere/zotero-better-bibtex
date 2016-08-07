@@ -4,8 +4,6 @@
     "label": "BetterBibTeX JSON",
     "release": "0.6.44",
     "preferences": {
-      "fancyURLs": false,
-      "attachmentRelativePath": false,
       "usePrefix": true,
       "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",

@@ -5,8 +5,6 @@
     "release": "0.6.64",
     "preferences": {
       "brace-all": true,
-      "fancyURLs": false,
-      "attachmentRelativePath": false,
       "unicode": "always"
     },
     "options": {

@@ -7,8 +7,6 @@
       "citekeyFormat": "[auth][year]",
       "skipFields": "",
       "usePrefix": false,
-      "preserveCaps": "inner",
-      "fancyURLs": false,
       "langID": "babel",
       "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",

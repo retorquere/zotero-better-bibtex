@@ -9,7 +9,11 @@ Dir['test/fixtures/*/*.json'].each{|json|
   next unless test['config'].is_a?(Hash)
   next unless test['config']['id'] == '36a3b0b5-bad0-4a04-b79b-441c7cef77db'
 
-  if test['keymanager'] || test['_items'] || test['id'] || test['cache']
+  obsoleteKeys = %w{attachmentRelativePath preserveCaps fancyURLs}
+
+  hasObs = test['config']['preferences'] && (test['config']['preferences'].keys & obsoleteKeys != [])
+  if test['keymanager'] || test['_items'] || test['id'] || test['cache'] || hasObs
+    obsoleteKeys.each{|key| test['config']['preferences'].delete(key)} if hasObs
     test.delete('keymanager')
     test.delete('_items')
     test.delete('id')

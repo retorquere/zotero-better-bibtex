@@ -9,8 +9,6 @@
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "skipFields": "",
       "usePrefix": false,
-      "preserveCaps": "all",
-      "fancyURLs": false,
       "langID": "babel",
       "autoAbbrev": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
@@ -25,12 +23,17 @@
       "exportNotes": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "webpage",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "url": "http://www.ntp.org/ntpfaq/NTP-s-sw-clocks-quality.htm",
       "date": "2015",
       "accessDate": "2015-02-13 15:35:03",
@@ -50,15 +53,22 @@
           "url": "http://www.ntp.org/ntpfaq/NTP-s-sw-clocks-quality.htm"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 75,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "ntp.org_clock_2015"
     },
     {
       "itemType": "webpage",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "url": "http://www.ntp.org/ntpfaq/NTP-s-sw-clocks-quality.htm",
       "date": "2015",
       "title": "Clock Quality",
@@ -77,15 +87,22 @@
           "url": "http://www.ntp.org/ntpfaq/NTP-s-sw-clocks-quality.htm"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 75,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "ntp.org_clock_2015"
     },
     {
       "itemType": "webpage",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "url": "http://www.ntp.org/ntpfaq/NTP-s-sw-clocks-quality.htm",
       "date": "2015",
       "title": "Clock Quality",
@@ -104,9 +121,13 @@
           "url": "http://www.ntp.org/ntpfaq/NTP-s-sw-clocks-quality.htm"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 75,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "ntp.org_clock_2015"
     }
   ]

@@ -1,229 +1,119 @@
-BetterBibTeXPref =
-  paneLoad: ->
+Zotero.BetterBibTeX.Pref = new class
+  branch: Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.zotero.translators.better-bibtex.')
+  cache: {}
 
-    Zotero_Preferences.openHelpLink = ((original) ->
-      return ->
-        helpTopic = document.getElementsByTagName("prefwindow")[0].currentPane.helpTopic
-        if helpTopic == 'BetterBibTeX'
-          id = document.getElementById('better-bibtex-prefs-tabbox').selectedPanel.id
-          return unless id
-          url = 'https://github.com/retorquere/zotero-better-bibtex/wiki/Configuration#' + id.replace('better-bibtex-prefs-', '')
-          ### Just a temporary fix until https://github.com/zotero/zotero/issues/949 is fixed ###
-          if Zotero.Prefs.get(['browser', 'preferences', 'instantApply'].join('.'), true)
-            Zotero.getActiveZoteroPane().loadURI(url, { shiftKey: true, metaKey: true })
+  constructor: ->
+    @load(@branch)
+
+  load: (root, key = null) ->
+    if key
+      keys = [key]
+    else
+      keys = @branch.getChildList('')
+
+    for key in keys
+      try
+        switch @branch.getPrefType(key)
+          when @branch.PREF_BOOL
+            @cache[key] = root.getBoolPref(key)
+          when @branch.PREF_STRING
+            @cache[key] = '' + root.getComplexValue(key, Components.interfaces.nsISupportsString)
+          when @branch.PREF_INT
+            @cache[key] = root.getIntPref(key)
           else
-            @openURL(url)
+            throw "Zotero.BetterBibTeX.Pref: unexpected type for preference #{key}: #{@branch.getPrefType(key)}"
+      catch e
+        throw "Zotero.BetterBibTeX.Pref: error loading preference '#{key}': #{e}"
+    Zotero.BetterBibTeX.debug('Zotero.BetterBibTeX.Pref: loaded', keys, 'into', @cache)
+
+  observer:
+    register: -> Zotero.BetterBibTeX.Pref.branch.addObserver('', @, false)
+    unregister: -> Zotero.BetterBibTeX.Pref.branch.removeObserver('', @)
+    observe: (subject, topic, data) ->
+      Zotero.BetterBibTeX.debug('Zotero.BetterBibTeX.Pref: preference change:', subject, topic, data)
+      # make sure the Prefs are up to date
+      Zotero.BetterBibTeX.Pref.load.call(Zotero.BetterBibTeX.Pref, subject, data)
+
+      switch data
+        when 'debug'
+          ### don't drop the cache just for this ###
+          Zotero.BetterBibTeX.debugMode()
+          return
+
+        when  'removeStock',            \
+              'autoExport',             \
+              'autoExportIdleWait',     \
+              'cacheFlushInterval',     \
+              'cacheReset',             \
+              'confirmCacheResetSize',  \
+              'caching',                \
+              'citeCommand',            \
+              'debug',                  \
+              'keyConflictPolicy',      \
+              'pinCitekeys',            \
+              'rawImports',             \
+              'scanCitekeys',           \
+              'showCitekeys',           \
+              'showItemIDs',            \
+              'tests',                  \
+              'warnBulkModify',         \
+              'quickCopyMode',          \
+              'usePrefix'
+          ### innocent changes ###
+          return
+
+        when 'test.timestamp'
+          ### for testing only ###
+          return
+
+        when 'citekeyFormat', 'citekeyFold'
+          Zotero.BetterBibTeX.keymanager.setFormatter()
+
+        when 'autoAbbrevStyle'
+          Zotero.BetterBibTeX.JournalAbbrev.reset()
+
+        when  'asciiBibLaTeX',            \
+              'asciiBibTeX',              \
+              'attachmentsNoMetadata',    \
+              'autoAbbrevStyle',          \
+              'autoAbbrev',               \
+              'citekeyFormat',            \
+              'citekeyFold',              \
+              'DOIandURL',                \
+              'bibtexURL',                \
+              'csquotes',                 \
+              'langID',                   \
+              'preserveBibTeXVariables',  \
+              'skipFields',               \
+              'skipWords',                \
+              'postscript',               \
+              'jabrefGroups',             \
+              'defaultDateParserLocale',  \
+              'parseParticles',           \
+              'titleCase',                \
+              'titleCaseLowerCase',       \
+              'titleCaseUpperCase',       \
+              'jurismPreferredLanguage'
+          ### pass through to cache drop ###
+
         else
-          original.apply(@, arguments)
-      )(Zotero_Preferences.openHelpLink)
+          Zotero.BetterBibTeX.debug("Zotero.BetterBibTeX.Pref: Did not expect change to preference #{data}")
+          throw "Did not expect change to preference #{data}!"
 
-    disabled = null
-    tabs = document.getElementById('better-bibtex-prefs-tabs')
-    for tab, i in tabs.getElementsByTagName('tab')
-      tab.setAttribute('hidden', !(if tab.id == 'better-bibtex-prefs-disabled' then Zotero.BetterBibTeX.disabled else !Zotero.BetterBibTeX.disabled))
-      disabled = i if tab.id == 'better-bibtex-prefs-disabled'
+      ### drop the cache and kick off all exports ###
+      Zotero.BetterBibTeX.cache.reset("pref change: #{data}")
+      Zotero.BetterBibTeX.auto.reset('preferences change')
 
-    if Zotero.BetterBibTeX.disabled
-      document.getElementById('better-bibtex-prefs-tabpanels').selectedIndex = disabled
-      document.getElementById('zotero-better-bibtex-disabled-message').value = Zotero.BetterBibTeX.disabled
+  snapshot: -> JSON.parse(JSON.stringify(@cache))
+  stash: -> @stashed = @snapshot()
+  restore: -> @cache = JSON.parse(JSON.stringify(@stashed))
 
-    document.getElementById('better-bibtex-preferences-cache-stats').value = "#{Math.max(Zotero.BetterBibTeX.DB.cache.data.length, Zotero.BetterBibTeX.DB.serialized.data.length)} in cache"
-    # document.getElementById('better-bibtex-preferences-zombies').setAttribute('label', "Purge zombies: #{JSON.stringify(Zotero.BetterBibTeX.DB.zombies())}")
+  set: (key, value) ->
+    @cache[key] = value
+    Zotero.Prefs.set("translators.better-bibtex.#{key}", value)
 
-    BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.pref.get('citekeyFormat')
-    BetterBibTeXPref.update()
+  get: (key) -> @cache[key]
 
-    Zotero.BetterBibTeX.debug('prefs pane loaded:', document.location.hash)
-    if document.location.hash == '#better-bibtex'
-      ### runs into the 'TypeError: aId is undefined' problem for some reason. ###
-      setTimeout((->
-        document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex'))
-      ), 500)
-
-  saveCitekeyFormat: ->
-    BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.pref.get('citekeyFormat')
-
-  checkCitekeyFormat: ->
-    keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-    try
-      BetterBibTeXPatternParser.parse(keyformat.value)
-    catch err
-      if BetterBibTeXPref.savedPattern
-        try
-          BetterBibTeXPatternParser.parse(BetterBibTeXPref.savedPattern)
-        catch
-          BetterBibTeXPref.savedPattern = null
-
-      if BetterBibTeXPref.savedPattern
-        Zotero.BetterBibTeX.pref.set('citekeyFormat', BetterBibTeXPref.savedPattern)
-      else
-        Zotero.BetterBibTeX.pref.clearUserPref('citekeyFormat')
-
-  paneUnload: ->
-    try
-      BetterBibTeXPatternParser.parse(Zotero.BetterBibTeX.pref.get('citekeyFormat'))
-    catch err
-      Zotero.BetterBibTeX.pref.set('citekeyFormat', BetterBibTeXPref.savedPattern)
-
-  styleChanged: (index) ->
-    stylebox = document.getElementById('better-bibtex-abbrev-style')
-    selectedItem = if typeof index != 'undefined' then stylebox.getItemAtIndex(index) else stylebox.selectedItem
-    styleID = selectedItem.getAttribute('value')
-    Zotero.BetterBibTeX.pref.set('autoAbbrevStyle', styleID)
-
-  clone: (obj) ->
-    clone = Object.create(null)
-    for own key, value of obj
-      clone[key] = value
-    return clone
-
-  display: (id, text) ->
-    elt = document.getElementById(id)
-    elt.value = text
-    elt.setAttribute('tooltiptext', text) if text != ''
-
-  update: ->
-    serverCheckbox = document.getElementById('id-better-bibtex-preferences-server-enabled')
-    serverEnabled = !!serverCheckbox.checked
-    serverCheckbox.setAttribute('hidden', Zotero.isStandalone && serverEnabled)
-
-    for state in ['enabled', 'disabled']
-      document.getElementById("better-bibtex-preferences-cacheActivity-#{state}").setAttribute('hidden', serverEnabled == (state == 'disabled'))
-
-    keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-
-    parseerror = null
-    try
-      BetterBibTeXPatternParser.parse(keyformat.value)
-    catch err
-      parseerror = err
-
-    Zotero.BetterBibTeX.debug('parsing format', keyformat.value, ':', !parseerror)
-    keyformat.setAttribute('style', (if parseerror then '-moz-appearance: none !important; background-color: DarkOrange' else ''))
-    keyformat.setAttribute('tooltiptext', '' + (parseerror || ''))
-
-    document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-change').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())
-    document.getElementById('id-better-bibtex-preferences-pin-citekeys-on-export').setAttribute('disabled', not Zotero.BetterBibTeX.allowAutoPin())
-    document.getElementById('id-zotero-better-bibtex-server-warning').setAttribute('hidden', serverEnabled)
-
-    styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
-
-    stylebox = document.getElementById('better-bibtex-abbrev-style')
-    refill = stylebox.children.length == 0
-    selectedStyle = Zotero.BetterBibTeX.pref.get('autoAbbrevStyle')
-    selectedIndex = -1
-    for style, i in styles
-      if refill
-        itemNode = document.createElement('listitem')
-        itemNode.setAttribute('value', style.styleID)
-        itemNode.setAttribute('label', style.title)
-        stylebox.appendChild(itemNode)
-      if style.styleID == selectedStyle then selectedIndex = i
-    selectedIndex = 0 if selectedIndex == -1
-    BetterBibTeXPref.styleChanged(selectedIndex)
-
-    window.setTimeout((->
-      stylebox.ensureIndexIsVisible(selectedIndex)
-      stylebox.selectedIndex = selectedIndex
-      return), 0)
-
-    BetterBibTeXAutoExportPref.refresh()
-
-  cacheReset: ->
-    Zotero.BetterBibTeX.cache.reset('user request')
-    Zotero.BetterBibTeX.serialized.reset('user request')
-
-BetterBibTeXAutoExportPref =
-  remove: ->
-    exportlist = document.getElementById('better-bibtex-export-list')
-    selected = exportlist.currentIndex
-    return if selected < 0
-
-    id = exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')
-    Zotero.BetterBibTeX.DB.autoexport.remove(parseInt(id))
-    @refresh()
-
-  mark: ->
-    exportlist = document.getElementById('better-bibtex-export-list')
-    selected = exportlist.currentIndex
-    return if selected < 0
-
-    id = parseInt(exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport'))
-
-    ae = Zotero.BetterBibTeX.DB.autoexport.get(id)
-    if !ae
-      Zotero.BetterBibTeX.debug('No autoexport', id)
-      return
-
-    try
-      translation = Zotero.BetterBibTeX.auto.prepare(ae)
-    catch err
-      Zotero.BetterBibTeX.debug('failed to prepare', ae, err)
-      return
-
-    if !translation
-      Zotero.BetterBibTeX.auto.mark(ae, 'done')
-      return
-
-    translation.setHandler('done', (obj, worked) ->
-      Zotero.BetterBibTeX.auto.mark(ae, (if worked then 'done' else 'error'))
-      Zotero.BetterBibTeX.auto.updated()
-    )
-    translation.translate()
-
-  exportType: (id) ->
-    return switch
-      when id == '' then ''
-      when id == 'library' then 'library'
-      when m = /^(library|search|collection):[0-9]+$/.exec(id) then m[1]
-      else id
-
-  exportName: (id, full) ->
-    try
-      name = switch
-        when id == '' then ''
-        when id == 'library' then Zotero.Libraries.getName()
-        when m = /^library:([0-9]+)$/.exec(id) then Zotero.Libraries.getName(m[1])
-        when m = /^search:([0-9]+)$/.exec(id) then Zotero.Searches.get(m[1])?.name
-        when m = /^collection:([0-9]+)$/.exec(id) then (if full then @collectionPath(m[1]) else Zotero.Collections.get(m[1])?.name)
-      return name || id
-    catch err
-      return "not found: #{id}"
-
-  collectionPath: (id) ->
-    return '' unless id
-    coll = Zotero.Collections.get(id)
-    return '' unless coll
-
-    return @collectionPath(coll.parent) + '/' + coll.name if coll.parent
-    return coll.name
-
-  refresh: ->
-    exportlist = document.getElementById('better-bibtex-auto-exports')
-    while exportlist.firstChild
-      exportlist.removeChild(exportlist.firstChild)
-
-    tree = new BetterBibTeXAutoExport('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', exportlist, document)
-
-    for ae in Zotero.BetterBibTeX.DB.autoexport.chain().simplesort('path').data()
-      Zotero.BetterBibTeX.debug('refresh:', {id: ae.$loki, status: ae.status})
-      status = "#{ae.status} (#{ae.updated})"
-      tree.treeitem({autoexport: "#{ae['$loki']}", '': ->
-        @treerow(->
-          @treecell({editable: 'false', label: "#{BetterBibTeXAutoExportPref.exportType(ae.collection)}: #{BetterBibTeXAutoExportPref.exportName(ae.collection)}"})
-          @treecell({editable: 'false', label: status})
-          @treecell({editable: 'false', label: ae.path})
-          @treecell({editable: 'false', label: Zotero.BetterBibTeX.translatorName(ae.translatorID)})
-          @treecell({editable: 'false', label: ae.exportCharset})
-          @treecell({editable: 'false', label: '' + ae.useJournalAbbreviation})
-          @treecell({editable: 'false', label: '' + ae.exportNotes})
-        )
-      })
-
-class BetterBibTeXAutoExport extends Zotero.BetterBibTeX.XmlNode
-  constructor: (@namespace, @root, @doc) ->
-    super(@namespace, @root, @doc)
-
-  Node: BetterBibTeXAutoExport
-
-  BetterBibTeXAutoExport::alias(['treerow', 'treeitem', 'treecell', 'treechildren', 'listitem'])
+  clear: (key) ->
+    @branch.clearUserPref(key)
+    @cache[key] = Zotero.Prefs.get("translators.better-bibtex.#{key}")

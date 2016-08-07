@@ -66,8 +66,22 @@ Zotero.BetterBibTeX.keymanager = new class
     @db.keys.removeWhere((obj) -> true) # causes cache drop
     @scan()
 
+  patternHash: (obj) ->
+    citekeyFormat = Zotero.BetterBibTeX.Pref.get('citekeyFormat')
+    return '' unless citekeyFormat
+
+    return "format=#{citekeyFormat},fold=#{Zotero.BetterBibTeX.Pref.get('citekeyFold')}"
+
   clearDynamic: ->
-    @db.keys.removeWhere((obj) -> obj.citekeyFormat)
+    affected = []
+    current = @patternHash()
+    Zotero.BetterBibTeX.debug('keymanager.clearDynamic:', current)
+    @db.keys.removeWhere((obj) ->
+      return false if !obj.citekeyFormat || obj.citekeyFormat == current
+      affected.push(obj.itemID)
+      return true
+    )
+    return affected
 
   extract: (item, insitu) ->
     switch
@@ -98,7 +112,7 @@ Zotero.BetterBibTeX.keymanager = new class
     return postfix
 
   assign: (item, pin) ->
-    {citekey, postfix: postfixStyle} = Zotero.BetterBibTeX.formatter.format(item)
+    {citekey, postfix: postfixStyle} = @formatter.format(item)
     citekey = "zotero-#{if item.libraryID in [undefined, null] then 'null' else item.libraryID}-#{item.itemID}" if citekey in [undefined, null, '']
     return null unless citekey
 
@@ -123,7 +137,7 @@ Zotero.BetterBibTeX.keymanager = new class
     items = (item for item in zoteroPane.getSelectedItems() when !item.isAttachment() && !item.isNote())
     items.sort(@sort)
 
-    warn = Zotero.BetterBibTeX.pref.get('warnBulkModify')
+    warn = Zotero.BetterBibTeX.Pref.get('warnBulkModify')
     if warn > 0 && items.length > warn
       ids = (parseInt(item.itemID) for item in items)
 
@@ -137,7 +151,7 @@ Zotero.BetterBibTeX.keymanager = new class
         window.openDialog('chrome://zotero-better-bibtex/content/bulk-clear-confirm.xul', '', 'chrome,dialog,centerscreen,modal', params)
         switch params.response
           when 'ok'       then
-          when 'whatever' then Zotero.BetterBibTeX.pref.set('warnBulkModify', 0)
+          when 'whatever' then Zotero.BetterBibTeX.Pref.set('warnBulkModify', 0)
           else            return
 
     for item in items
@@ -173,7 +187,7 @@ Zotero.BetterBibTeX.keymanager = new class
     itemID = @integer(item.itemID)
     libraryID = @integer(item.libraryID)
 
-    citekeyFormat = if pin then null else Zotero.BetterBibTeX.citekeyFormat
+    citekeyFormat = if pin then null else @patternHash()
     key = @db.keys.findOne({itemID})
     return @verify(key) if key && key.citekey == citekey && key.citekeyFormat == citekeyFormat
 
@@ -203,7 +217,7 @@ Zotero.BetterBibTeX.keymanager = new class
     throw new Error('keymanager.scan: expected Zotero.Item, got', (if typeof items[0] == 'object' then Object.keys(items[0]) else typeof items[0])) unless items[0].getField
 
     pinned = []
-    change = (Zotero.BetterBibTeX.pref.get('keyConflictPolicy') == 'change')
+    change = (Zotero.BetterBibTeX.Pref.get('keyConflictPolicy') == 'change')
 
     for item in items
       continue if item.isAttachment() || item.isNote()
@@ -247,7 +261,7 @@ Zotero.BetterBibTeX.keymanager = new class
     return true
 
   verify: (entry) ->
-    return entry unless Zotero.BetterBibTeX.pref.get('debug') || Zotero.BetterBibTeX.testing
+    return entry unless Zotero.BetterBibTeX.Pref.get('debug') || Zotero.BetterBibTeX.testing
 
     verify = {citekey: true, citekeyFormat: null, itemID: true, libraryID: null}
     for own key, value of entry
@@ -286,7 +300,7 @@ Zotero.BetterBibTeX.keymanager = new class
     * null: fetch -> generate -> return
     ###
 
-    pin = (pinmode == Zotero.BetterBibTeX.pref.get('pinCitekeys'))
+    pin = (pinmode == Zotero.BetterBibTeX.Pref.get('pinCitekeys'))
     cached = @db.keys.findOne({itemID: @integer(item.itemID)})
 
     ### store new cache item if we have a miss or if a re-pin is requested ###
@@ -304,5 +318,35 @@ Zotero.BetterBibTeX.keymanager = new class
     return resolved
 
   alternates: (item) ->
-    return Zotero.BetterBibTeX.formatter.alternates(item)
+    return @formatter.alternates(item)
 
+  setFormatter: (enforce) ->
+    Zotero.BetterBibTeX.debug('setFormatter:', {format: Zotero.BetterBibTeX.Pref.get('citekeyFormat'), fold: Zotero.BetterBibTeX.Pref.get('citekeyFold')})
+    if enforce
+      attempts = ['get', 'reset']
+    else
+      attempts = ['get']
+
+    for attempt in attempts
+      if attempt == 'reset'
+        msg = "Malformed citation pattern '#{Zotero.BetterBibTeX.Pref.get('citekeyFormat')}', resetting to default"
+        Zotero.BetterBibTeX.flash(msg)
+        Zotero.BetterBibTeX.error(msg)
+        Zotero.BetterBibTeX.Pref.clear('citekeyFormat')
+
+      try
+        citekeyPattern = Zotero.BetterBibTeX.Pref.get('citekeyFormat')
+        citekeyFormat = citekeyPattern.replace(/>.*/, '')
+        throw new Error("no variable parts found in citekey pattern '#{citekeyFormat}'") unless citekeyFormat.indexOf('[') >= 0
+        formatter = new BetterBibTeXPatternFormatter(BetterBibTeXPatternParser.parse(citekeyPattern), Zotero.BetterBibTeX.Pref.get('citekeyFold'))
+
+        Zotero.BetterBibTeX.debug('keymanager.setFormatter.apply:', {pattern: citekeyFormat, fold: formatter.fold})
+
+        @formatter = formatter
+        @clearDynamic()
+        return
+      catch err
+        Zotero.BetterBibTeX.error('Error parsing citekey pattern', {citekeyPattern, citekeyFormat}, err)
+
+    if enforce
+      Zotero.BetterBibTeX.flash('Citation pattern reset failed! Please report an error to the Better BibTeX issue list.')

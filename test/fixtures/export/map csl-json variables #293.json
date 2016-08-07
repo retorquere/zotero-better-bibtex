@@ -9,7 +9,6 @@
       "skipFields": "file,editora,editoratype,editorb,editorbtype",
       "usePrefix": false,
       "titleCase": false,
-      "fancyURLs": false,
       "langID": "babel",
       "autoAbbrev": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",

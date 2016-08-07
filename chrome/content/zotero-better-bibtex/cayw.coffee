@@ -136,7 +136,7 @@ class Zotero.BetterBibTeX.CAYW.CitationEditInterface
     formatted.then((res) =>
       Zotero.Utilities.Internal.copyTextToClipboard(res) if @config.clipboard
       @deferred.fulfill(res)
-      Zotero.Integration.currentWindow.close() unless Zotero.BetterBibTeX.pref.get('tests')
+      Zotero.Integration.currentWindow.close() unless Zotero.BetterBibTeX.Pref.get('tests')
       @doc.activate()
     )
     deferred.resolve(resolve) if typeof resolve == 'string'
@@ -244,7 +244,7 @@ Zotero.BetterBibTeX.CAYW.Formatter = {
       item = Zotero.Items.get(citation.id)
       isLegal = Zotero.ItemTypes.getName(item.itemTypeID) in [ 'bill', 'case', 'gazette', 'hearing', 'patent', 'regulation', 'statute', 'treaty' ]
 
-      key = if Zotero.BetterBibTeX.pref.get('tests') then 'ITEMKEY' else item.key
+      key = if Zotero.BetterBibTeX.Pref.get('tests') then 'ITEMKEY' else item.key
       id = switch
         when item.libraryID then "zg:#{item.libraryID}:#{key}"
         when Zotero.userID then "zu:#{Zotero.userID}:#{key}"

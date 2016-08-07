@@ -6,13 +6,11 @@
     "preferences": {
       "asciiBibLaTeX": false,
       "asciiBibTeX": false,
-      "attachmentRelativePath": false,
       "attachmentsNoMetadata": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "autoAbbrev": true,
       "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize:fold:alphanum]",
       "DOIandURL": "both",
-      "fancyURLs": false,
       "titleCase": false,
       "skipFields": "abstract,note,file"
     },
