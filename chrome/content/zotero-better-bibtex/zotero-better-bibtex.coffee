@@ -588,6 +588,26 @@ Zotero.BetterBibTeX.init = ->
   for k, months of Zotero.BetterBibTeX.Locales.months
     Zotero.BetterBibTeX.CSL.DateParser.addDateParserMonths(months)
 
+  ### monkey-patch Zotero.Search::search to allow searching for citekey ###
+  Zotero.Search::search = ((original) ->
+    return (asTempTable) ->
+      searchText = null
+      for c in @_conditions
+        continue unless c && c.condition == 'field'
+        searchText = c.value.toLowerCase() if c.value
+      return original.apply(@, arguments) unless searchText
+
+      ids = original.call(@, false) || []
+
+      Zotero.BetterBibTeX.debug('search: looking for', searchText, 'to add to', ids)
+      for key in Zotero.BetterBibTeX.keymanager.db.keys.where((k) -> k.citekey.toLowerCase().indexOf(searchText) >= 0)
+        ids.push('' + key.itemID) unless ids.indexOf('' + key.itemID) >= 0
+
+      return false if ids.length == 0
+      return Zotero.Search.idsToTempTable(ids) if asTempTable
+      return ids
+    )(Zotero.Search::search)
+
   ### monkey-patch unwieldy BBT db logging ###
   Zotero.DBConnection::_debug = ((original) ->
     return (str, level) ->
