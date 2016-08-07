@@ -854,6 +854,7 @@ Zotero.BetterBibTeX.init = ->
     Zotero.BetterBibTeX.DB.save('all') if Zotero.BetterBibTeX.DB && mode != 'connector'
   )
 
+  Zotero.BetterBibTeX.debug("Scheduling auto-export on idle on a #{@Pref.get('autoExportIdleWait')} second delay")
   @idleService.addIdleObserver(@idleObserver, @Pref.get('autoExportIdleWait'))
 
   uninstaller = {
