@@ -357,7 +357,7 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
       else
         str.push(Zotero.BetterBibTeX.varDump(m).replace(/\n/g, ''))
 
-  str = "[better-bibtex] #{str.join(' ')}"
+  str = "[better-bibtex @ #{new Date()}] #{str.join(' ')}"
 
   if level == 0
     Zotero.logError(str)
