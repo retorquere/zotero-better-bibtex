@@ -539,8 +539,12 @@ Zotero.BetterBibTeX.init = ->
     for itemID in changed
       @cache.remove({itemID})
     @DB.purge()
-    setTimeout((-> Zotero.BetterBibTeX.auto.markIDs(changed, 'scanCiteKeys')), 5000) if changed.length != 0
+    setTimeout((-> Zotero.BetterBibTeX.auto.markIDs(changed, 'scanCiteKeys')), 5000) if !Zotero.BetterBibTeX.DB.cacheReset && changed.length != 0
     @flash("Citation key rescan finished")
+
+  if Zotero.BetterBibTeX.DB.cacheReset
+    for ae in Zotero.BetterBibTeX.auto.db.autoexport.data
+      Zotero.BetterBibTeX.auto.mark(ae, 'pending', 'cache reset')
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     journalAbbrev:  (sandbox, params...) => @JournalAbbrev.get.apply(@JournalAbbrev, params)
