@@ -240,7 +240,7 @@ Zotero.BetterBibTeX.auto = new class
         Zotero.BetterBibTeX.debug("auto.process: finished #{Zotero.BetterBibTeX.auto.running}: #{status}")
         @mark(ae, status)
       else
-        Zotero.BetterBibTeX.debug("auto.process: #{ae.$loki} re-marked for export")
+        Zotero.BetterBibTeX.debug("auto.process: #{ae.$loki} was re-marked to #{running.status} before it finished")
       Zotero.BetterBibTeX.auto.running = null
       Zotero.BetterBibTeX.auto.updated()
       Zotero.BetterBibTeX.auto.process(reason)
