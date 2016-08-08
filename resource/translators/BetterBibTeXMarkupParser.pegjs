@@ -35,7 +35,7 @@ start
   / chunks:chunk* { return {html: chunks.join(''), plain: plain}; }
 
 chunk
-  = "<" "pre"i (_ [^>]*)? ">"                                                                   { state.pre = true; return add('<script>'); }
+  = "<pre"i (_ [^>]*)? ">"                                                                      { state.pre = true; return add('<script>'); }
   / "</pre>"i                                                                                   { state.pre = false; return add('</script>'); }
   / &{ return state.pre } char:.                                                                { return add(char, char); }
   / '<span class="nocase">'                                                                     { state.nocase = true; return add('<span class="nocase">'); }
