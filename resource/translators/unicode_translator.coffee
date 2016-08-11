@@ -75,7 +75,7 @@ class LaTeX.HTML
       when 'li'
         @latex += "\n\\item "
 
-      when 'span', 'sc' then # ignore, handled by the relax/nocase/smallcaps handler above
+      when 'span', 'sc', 'nc' then # ignore, handled by the relax/nocase/smallcaps handler above
 
       when 'td', 'th'
         @latex += ' '
