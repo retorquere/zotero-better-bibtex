@@ -79,7 +79,13 @@ class Translator.MarkupParser
       html = html.replace(///[#{csquotes.open.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")}]///g, '<enquote>')
       html = html.replace(///[#{csquotes.close.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")}]///g, '</enquote>')
 
-    @titleCased = Translator.TitleCaser.titleCase(html) if options.titleCase
+    if options.titleCase
+      ### TODO: remove this workaround when https://bitbucket.org/fbennett/citeproc-js/issues/187/title-case-formatter-does-not-title-case is resolved ###
+      @titleCased = html.replace(/\(/g, "(\x02 ")
+      @titleCased = @titleCased.replace(/\)/g, " \x03)")
+      @titleCased = Translator.TitleCaser.titleCase(@titleCased)
+      @titleCased = @titleCased.replace(/\x02 /g, '')
+      @titleCased = @titleCased.replace(/ \x03/g, '')
 
     length = html.length
     while html
