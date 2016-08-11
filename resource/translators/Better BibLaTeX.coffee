@@ -297,7 +297,7 @@ doExport = ->
 
     ref.add({ howpublished: item.presentationType || item.manuscriptType })
 
-    ref.add({ name: 'note', value: item.meetingName, allowDuplicates: true })
+    ref.add({ name: 'note', value: item.meetingName, allowDuplicates: true, html: true })
 
     ref.addCreators()
 
@@ -318,12 +318,12 @@ doExport = ->
       when item.firstPage
         ref.add({ pages: "#{item.firstPage}" })
 
-    ref.add({ name: (if ref.has.note then 'annotation' else 'note'), value: item.extra, allowDuplicates: true })
+    ref.add({ name: (if ref.has.note then 'annotation' else 'note'), value: item.extra, allowDuplicates: true, html: true })
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
     if item.notes and Translator.exportNotes
       for note in item.notes
-        ref.add({ name: 'annotation', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true })
+        ref.add({ name: 'annotation', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true, html: true })
 
     ###
     # 'juniorcomma' needs more thought, it isn't for *all* suffixes you want this. Or even at all.

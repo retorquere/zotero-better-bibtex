@@ -335,7 +335,7 @@ class Reference
 
     return f.value if f.raw || raw
 
-    value = LaTeX.text2latex(f.value, {preserveCase: f.preserveCase || f.titleCase, titleCase: f.titleCase && @english})
+    value = LaTeX.text2latex(f.value, {mode: (if f.html then 'html' else 'text'), preserveCase: f.preserveCase, titleCase: f.titleCase && @english})
     value = new String("{#{value}}") if f.value instanceof String
     return value
 

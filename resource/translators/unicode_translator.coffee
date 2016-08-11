@@ -15,7 +15,7 @@ LaTeX.html2latex = (html, options) ->
   return latex
 
 class LaTeX.HTML
-  constructor: (html, @options = {}) ->
+  constructor: (html, options = {}) ->
     @latex = ''
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
     @stack = []
@@ -35,13 +35,15 @@ class LaTeX.HTML
 
     @stack.unshift(tag)
 
+    @latex += '\\textsc{' if tag.smallcaps
+    @latex += '{{'        if tag.nocase
+    @latex += '{\\relax ' if tag.relax
+
     switch tag.name
       when 'i', 'em', 'italic'
-        @latex += '{' if (@options.preserveCase || @options.titleCase) && !@preserveCase
         @latex += '\\emph{'
 
       when 'b', 'strong'
-        @latex += '{' if (@options.preserveCase || @options.titleCase) && !@preserveCase
         @latex += '\\textbf{'
 
       when 'a'
@@ -50,11 +52,9 @@ class LaTeX.HTML
           @latex += "\\href{#{tag.attrs.href}}{"
 
       when 'sup'
-        @latex += '{' if (@options.preserveCase || @options.titleCase) && !@preserveCase
         @latex += '\\textsuperscript{'
 
       when 'sub'
-        @latex += '{' if (@options.preserveCase || @options.titleCase) && !@preserveCase
         @latex += '\\textsubscript{'
 
       when 'br'
@@ -75,19 +75,7 @@ class LaTeX.HTML
       when 'li'
         @latex += "\n\\item "
 
-      when 'span', 'sc'
-        tag.smallcaps = tag.name == 'sc' || (tag.attrs.style || '').match(/small-caps/i)
-        tag.enquote = (tag.attrs.enquote == 'true')
-        tag.relax = tag.class.relax
-
-        @preserveCase += 1 if tag.class.nocase
-
-        @latex += '{{' if tag.class.nocase && @preserveCase == 1
-
-        @latex += '{' if (@options.preserveCase || @options.titleCase) && !@preserveCase && (tag.relax || tag.enquote || tag.smallcaps)
-        @latex += '\\enquote{' if tag.enquote
-        @latex += '\\textsc{' if tag.smallcaps
-        @latex += '{\\relax ' if tag.relax
+      when 'span', 'sc' then # ignore, handled by the relax/nocase/smallcaps handler above
 
       when 'td', 'th'
         @latex += ' '
@@ -103,11 +91,9 @@ class LaTeX.HTML
     switch tag.name
       when 'i', 'italic', 'em'
         @latex += '}'
-        @latex += '}' if (@options.preserveCase || @options.titleCase) && !@preserveCase
 
       when 'sup', 'sub', 'b', 'strong'
         @latex += '}'
-        @latex += '}' if (@options.preserveCase || @options.titleCase) && !@preserveCase
 
       when 'a'
         @latex += '}' if tag.attrs.href?.length > 0
@@ -118,16 +104,6 @@ class LaTeX.HTML
       when 'p', 'div', 'table', 'tr'
         @latex += "\n\n"
 
-      when 'span', 'sc'
-        @latex += '}' if tag.smallcaps
-        @latex += '}' if tag.enquote
-        @latex += '}' if tag.relax
-        @latex += '}' if (@options.preserveCase || @options.titleCase) && !@preserveCase && (tag.relax || tag.smallcaps || tag.enquote)
-
-        @latex += '}}' if tag.class.nocase && (@options.preserveCase || @options.titleCase) && @preserveCase == 1
-
-        @preserveCase -= 1 if tag.class.nocase
-
       when 'td', 'th'
         @latex += ' '
 
@@ -135,6 +111,10 @@ class LaTeX.HTML
         @latex += "\n\n\\end{enumerate}\n"
       when 'ul'
         @latex += "\n\n\\end{itemize}\n"
+
+    @latex += '}' if tag.relax
+    @latex += '}' if tag.nocase
+    @latex += '}' if tag.smallcaps
 
     @stack.shift()
 
