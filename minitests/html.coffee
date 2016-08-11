@@ -76,33 +76,8 @@ doxastic agency. And that we can exercise control in the doxastic realm naturall
 guide both action and belief.</span></p>
 """
 
-html = 'Effects of open- and closed-system temperature changes on blood O<sub>2</sub>-binding characteristics of Atlantic bluefin tuna (<i>Thunnus thynnus</i>)'
+html = 'Effects of <span relax class="nocase">open-</span> and «closed-system» temperature changes on blood O<sub>2</sub>-binding characteristics of Atlantic bluefin tuna (<i>Thunnus thynnus</i>)'
 
-parse5 = require('parse5')
-HTMLParser = {
-  parse: (html) ->
-    return @walk(parse5.parseFragment(html))
-
-  walk: (node, host) ->
-    tag = {name: node.nodeName.toLowerCase(), attrs: {}, class: {}, children: []}
-
-    if tag.name == '#text'
-      tag.text = node.value
-    else
-      for k, v in node.attrs || []
-        tag.attrs[k] = v
-      for cls in (tag.attrs.class || '').split(/\s+/)
-        continue unless cls
-        tag.class[cls] = true
-      for child in node.childNodes || []
-        @walk(child, tag)
-
-    return tag unless host
-    host.children.push(tag)
-    return host
-}
-Zotero = {} unless Zotero
-Zotero.BetterBibTeX ||= {}
-Zotero.BetterBibTeX.HTMLParser = (html) -> HTMLParser.parse(html)
-
-console.log(LaTeX.text2latex(html, {preserveCase: true}))
+parser = new Translator.HTMLParser()
+ast = parser.parse(html, {titleCase: true, csquotes: '‹›«»'})
+console.log(JSON.stringify(ast, null, 2))

@@ -3,14 +3,14 @@ Translator.fieldMap = {
   place:            { name: 'location', enc: 'literal' }
   chapter:          { name: 'chapter' }
   edition:          { name: 'edition' }
-  title:            { name: 'title', autoCase: true }
+  title:            { name: 'title', titleCase: true }
   volume:           { name: 'volume' }
   rights:           { name: 'rights' }
   ISBN:             { name: 'isbn' }
   ISSN:             { name: 'issn' }
   url:              { name: 'url' }
   DOI:              { name: 'doi' }
-  shortTitle:       { name: 'shorttitle', autoCase: true }
+  shortTitle:       { name: 'shorttitle', titleCase: true }
   abstractNote:     { name: 'abstract' }
   numberOfVolumes:  { name: 'volumes' }
   versionNumber:    { name: 'version' }
@@ -222,7 +222,7 @@ doExport = ->
     if item.publicationTitle
       switch item.itemType
         when 'bookSection', 'conferencePaper', 'dictionaryEntry', 'encyclopediaArticle'
-          ref.add({ name: 'booktitle', value: item.bookTitle || item.publicationTitle, preserveBibTeXVariables: true, autoCase: true})
+          ref.add({ name: 'booktitle', value: item.bookTitle || item.publicationTitle, preserveBibTeXVariables: true, titleCase: true})
 
         when 'magazineArticle', 'newspaperArticle'
           ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true})
@@ -245,8 +245,8 @@ doExport = ->
         else
           ref.add({ journaltitle: item.publicationTitle}) if ! ref.has.journaltitle && item.publicationTitle != item.title
 
-    ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, autoCase: true }) if not ref.has.booktitle
-    ref.add({ name: 'booktitle', value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, autoCase: true }) if ref.referencetype in ['movie', 'video'] and not ref.has.booktitle
+    ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, titleCase: true }) if not ref.has.booktitle
+    ref.add({ name: 'booktitle', value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, titleCase: true }) if ref.referencetype in ['movie', 'video'] and not ref.has.booktitle
 
     if item.multi?._keys?.title && (main = item.multi?.main?.title || item.language)
       languages = Object.keys(item.multi._keys.title).filter((lang) -> lang != main)
@@ -339,12 +339,12 @@ doExport = ->
 
       switch
         when name == 'volume-title' && ref.item.itemType == 'book' && ref.has.title
-          ref.add({name: 'maintitle', value: value.value, autoCase: true })
+          ref.add({name: 'maintitle', value: value.value, titleCase: true })
           [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]
           [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
 
         when  name == 'volume-title' && ref.item.itemType == 'bookSection' && ref.has.booktitle
-          ref.add({name: 'maintitle', value: value.value, autoCase: true })
+          ref.add({name: 'maintitle', value: value.value, titleCase: true })
           [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]
           [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]
 

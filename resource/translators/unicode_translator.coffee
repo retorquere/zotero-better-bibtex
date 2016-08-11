@@ -1,66 +1,13 @@
 LaTeX = {} unless LaTeX
 
 LaTeX.text2latex = (text, options = {}) ->
-  latex = @html2latex(@cleanHTML(text, options), options)
+  options.mode = 'text'
+  latex = @html2latex(text, options)
   latex = BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
   return latex
 
-LaTeX.titleCase = (string) ->
-  ###
-  # Force a word to lowercase if all of the following apply
-  # 1. It is not the first word of the sentence, as smallwords at the start should be uppercased
-  # 2. It is not the last word of the sentence (similar)
-  # 3. It is a smallWord
-  # 4. There is not a ':' two positions before the word (indicates subtitle)
-  # 5. There is either not a dash immediately after the word, or there is a dash immediately preceding the word
-  # 6. There is a space or a dash before the word
-  # [0-9a-z\xD7\xDF-\xFF] = -Lu
-  ###
-  return string.replace(/[A-Za-z0-9\u00C0-\u00FF]+[^\s-]*/g, (match, index, title) ->
-    if index > 0 and
-      index + match.length != title.length and
-      match.search(Translator.titleCaseLowerCase) == 0 and
-      title.charAt(index - 2) != ':' and
-      (title.charAt(index + match.length) != '-' or title.charAt(index - 1) == '-') and
-      title.charAt(index - 1).search(/[^"'(\s-]/) < 0
-        Translator.debug('titleCase: LC', match)
-        return match #.toLowerCase()
-
-    if match.search(Translator.titleCaseUpperCase) == 0
-      Translator.debug('titleCase: UC', match)
-      return match #.toUpperCase()
-
-    ###
-    # leave a word alone if it has an uppercase letter at the second position,
-    # or the second character is a period followed by anything
-    ###
-    if match.substr(1).search(/[A-Z]|\../) > -1
-      Translator.debug('titleCase: NC', match)
-      return match
-
-    ### uppercase ###
-    Translator.debug('titleCase: TC', match)
-    return match.charAt(0).toUpperCase() + match.substr(1)
-  )
-
-LaTeX.cleanHTML = (text, options) ->
-  {html, plain} = BetterBibTeXMarkupParser.parse(text, {titleCase: options.autoCase && Translator.titleCase, preserveCase: options.preserveCase || options.autoCase, csquotes: Translator.csquotes})
-
-  if options.autoCase && Translator.titleCase
-    Translator.debug('TITLECASE:>', plain.text)
-    titleCased = @titleCase(plain.text)
-    Translator.debug('TITLECASE:<', titleCased)
-    _html = ''
-    for c, i in html
-      if plain.unprotected[i] != undefined
-        _html += titleCased[plain.unprotected[i]]
-      else
-        _html += c
-    html = _html
-
-  return html
-
 LaTeX.html2latex = (html, options) ->
+  options.mode ||= 'html'
   latex = (new @HTML(html, options)).latex
   latex = latex.replace(/(\\\\)+\s*\n\n/g, "\n\n")
   latex = latex.replace(/\n\n\n+/g, "\n\n")
@@ -72,9 +19,8 @@ class LaTeX.HTML
     @latex = ''
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
     @stack = []
-    @preserveCase = 0
 
-    @walk(Zotero.BetterBibTeX.HTMLParser(html))
+    @walk(Translator.HTMLParser.parse(html, options))
 
   walk: (tag) ->
     return unless tag
@@ -83,7 +29,7 @@ class LaTeX.HTML
       when '#text'
         @chars(tag.text)
         return
-      when 'script'
+      when 'pre'
         @latex += tag.text
         return
 
@@ -91,11 +37,11 @@ class LaTeX.HTML
 
     switch tag.name
       when 'i', 'em', 'italic'
-        @latex += '{' if (@options.preserveCase || @options.autoCase) && !@preserveCase
+        @latex += '{' if (@options.preserveCase || @options.titleCase) && !@preserveCase
         @latex += '\\emph{'
 
       when 'b', 'strong'
-        @latex += '{' if (@options.preserveCase || @options.autoCase) && !@preserveCase
+        @latex += '{' if (@options.preserveCase || @options.titleCase) && !@preserveCase
         @latex += '\\textbf{'
 
       when 'a'
@@ -104,11 +50,11 @@ class LaTeX.HTML
           @latex += "\\href{#{tag.attrs.href}}{"
 
       when 'sup'
-        @latex += '{' if (@options.preserveCase || @options.autoCase) && !@preserveCase
+        @latex += '{' if (@options.preserveCase || @options.titleCase) && !@preserveCase
         @latex += '\\textsuperscript{'
 
       when 'sub'
-        @latex += '{' if (@options.preserveCase || @options.autoCase) && !@preserveCase
+        @latex += '{' if (@options.preserveCase || @options.titleCase) && !@preserveCase
         @latex += '\\textsubscript{'
 
       when 'br'
@@ -138,7 +84,7 @@ class LaTeX.HTML
 
         @latex += '{{' if tag.class.nocase && @preserveCase == 1
 
-        @latex += '{' if (@options.preserveCase || @options.autoCase) && !@preserveCase && (tag.relax || tag.enquote || tag.smallcaps)
+        @latex += '{' if (@options.preserveCase || @options.titleCase) && !@preserveCase && (tag.relax || tag.enquote || tag.smallcaps)
         @latex += '\\enquote{' if tag.enquote
         @latex += '\\textsc{' if tag.smallcaps
         @latex += '{\\relax ' if tag.relax
@@ -157,11 +103,11 @@ class LaTeX.HTML
     switch tag.name
       when 'i', 'italic', 'em'
         @latex += '}'
-        @latex += '}' if (@options.preserveCase || @options.autoCase) && !@preserveCase
+        @latex += '}' if (@options.preserveCase || @options.titleCase) && !@preserveCase
 
       when 'sup', 'sub', 'b', 'strong'
         @latex += '}'
-        @latex += '}' if (@options.preserveCase || @options.autoCase) && !@preserveCase
+        @latex += '}' if (@options.preserveCase || @options.titleCase) && !@preserveCase
 
       when 'a'
         @latex += '}' if tag.attrs.href?.length > 0
@@ -176,9 +122,9 @@ class LaTeX.HTML
         @latex += '}' if tag.smallcaps
         @latex += '}' if tag.enquote
         @latex += '}' if tag.relax
-        @latex += '}' if (@options.preserveCase || @options.autoCase) && !@preserveCase && (tag.relax || tag.smallcaps || tag.enquote)
+        @latex += '}' if (@options.preserveCase || @options.titleCase) && !@preserveCase && (tag.relax || tag.smallcaps || tag.enquote)
 
-        @latex += '}}' if tag.class.nocase && (@options.preserveCase || @options.autoCase) && @preserveCase == 1
+        @latex += '}}' if tag.class.nocase && (@options.preserveCase || @options.titleCase) && @preserveCase == 1
 
         @preserveCase -= 1 if tag.class.nocase
 

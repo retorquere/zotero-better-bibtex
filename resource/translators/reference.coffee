@@ -278,7 +278,7 @@ class Reference
           Zotero.BetterBibTeX.CSL.parseParticles(name)
 
           if name.given && name.given.indexOf(@_enc_creators_relax_marker) >= 0 # zero-width space
-            name.given = '<span class="relax">' + name.given.replace(@_enc_creators_relax_marker, '</span>')
+            name.given = '<span relax="true">' + name.given.replace(@_enc_creators_relax_marker, '</span>')
 
           @useprefix ||= !!name['non-dropping-particle']
           @juniorcomma ||= (f.juniorcomma && name['comma-suffix'])
@@ -335,7 +335,7 @@ class Reference
 
     return f.value if f.raw || raw
 
-    value = LaTeX.text2latex(f.value, {preserveCase: f.preserveCase || f.autoCase, autoCase: f.autoCase && @english})
+    value = LaTeX.text2latex(f.value, {preserveCase: f.preserveCase || f.titleCase, titleCase: f.titleCase && @english})
     value = new String("{#{value}}") if f.value instanceof String
     return value
 
@@ -501,10 +501,10 @@ class Reference
         cslvar = Translator.CSLVariables[name]
         mapped = cslvar[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
         mapped = mapped.call(@) if typeof mapped == 'function'
-        autoCase = name in ['title', 'shorttitle', 'origtitle', 'booktitle', 'maintitle']
+        titleCase = name in ['title', 'shorttitle', 'origtitle', 'booktitle', 'maintitle']
 
         if mapped
-          fields.push({ name: mapped, value: value.value, autoCase, raw: false, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type) })
+          fields.push({ name: mapped, value: value.value, titleCase, raw: false, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type) })
 
         else
           Translator.debug('Unmapped CSL field', name, '=', value.value)
