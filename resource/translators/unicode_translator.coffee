@@ -20,7 +20,7 @@ class LaTeX.HTML
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
     @stack = []
 
-    @walk(Translator.HTMLParser.parse(html, options))
+    @walk(Translator.MarkupParser.parse(html, options))
 
   walk: (tag) ->
     return unless tag

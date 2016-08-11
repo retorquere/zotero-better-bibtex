@@ -283,3 +283,5 @@ class Translator.MarkupParser
             else
               @plaintext(text[0], pos + (length - text.length))
             text = text.substring(1)
+
+Translator.MarkupParser = new Translator.MarkupParser()
