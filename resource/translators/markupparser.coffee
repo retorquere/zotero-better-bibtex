@@ -71,8 +71,8 @@ class Translator.MarkupParser
 
     ### add enquote psuedo-tags. Pseudo-tags are used here because they're cleanly removable for the pre block ###
     if Translator.csquotes
-      html = html.replace(///[#{Translator.csquotes.open.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")}]///g, "\x0E")
-      html = html.replace(///[#{Translator.csquotes.close.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")}]///g, "\x0F")
+      html = html.replace(///[#{Translator.csquotes.open.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]\s*/g, "\\$&")}]\s*///g, "\x0E")
+      html = html.replace(///\s*[#{Translator.csquotes.close.replace(/\s*[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")}]///g, "\x0F")
 
     if options.titleCase
       ### must be done after the enquote fudges because the string to be passed to titlecase must be exactly the same length as what is passed to the parser ###
@@ -101,10 +101,11 @@ class Translator.MarkupParser
             match = html.match(@re.endTag)
             switch
               when htmlMode || match[1] == 'span' then # pass
-              when @minimal[match[1]] && match[0][match[1].length] == '>' # pass
+              when @minimal[match[1]] && match[0][match[1].length + 2] == '>' # pass
               else match = null
           else
             match = [html[0], 'enquote']
+
           if match
             html = html.substring(match[0].length)
             @parseEndTag.apply(@, match)
@@ -115,7 +116,7 @@ class Translator.MarkupParser
             match = html.match(@re.startTag)
             switch
               when htmlMode || match[1] == 'span' then # pass
-              when @minimal[match[1]] && match[0].substr(match[1].length, 2) in ['/>', '>'] # pass
+              when @minimal[match[1]] && match[0].substr(match[1].length + 1, 2) in ['/>', '>'] # pass
               else match = null
           else
             match = [html[0], 'enquote', '', '']
@@ -146,7 +147,6 @@ class Translator.MarkupParser
     @simplify(@handler.root) if options.titleCase || options.preserveCase
 
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
-    @handler.root = {name: 'span', children: [@handler.root], attr: {}, class: {}} if @handler.root.name == '#text'
     @mathTags(@handler.root)
 
     return @handler.root
@@ -257,7 +257,7 @@ class Translator.MarkupParser
     AST::re.whitespace = /^[ \t\n\r\u00A0]+/
 
     constructor: (@preserveCase) ->
-      @root = {children: []}
+      @root = {name: 'span', children: [], attr: {}, class: {}}
       @elems = [@root]
       @sentenceStart = true
 
@@ -310,7 +310,7 @@ class Translator.MarkupParser
             text = text.substring(m[0].length)
 
           else
-            @sentenceStart = (text[0] == ':')
+            @sentenceStart = (text[1] && text[0] in [':', ';', '.'] && @re.whitespace.exec(text[1]))
             @plaintext(text[0], pos + (length - text.length))
             text = text.substring(1)
 

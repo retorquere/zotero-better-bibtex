@@ -33,10 +33,13 @@ class Reference
 
     if !@item.language
       @english = true
+      Translator.debug('detecting language: defaulting to english')
     else
       langlc = @item.language.toLowerCase()
       @language = Language.babelMap[langlc.replace(/[^a-z0-9]/, '_')]
       @language ||= Language.babelMap[langlc.replace(/-[a-z]+$/i, '').replace(/[^a-z0-9]/, '_')]
+      @language ||= Language.fromPrefix(langlc)
+      Translator.debug('detecting language:', {langlc, language: @language})
       if @language
         @language = @language[0]
       else
@@ -47,6 +50,7 @@ class Reference
           delete @language
 
       @english = @language in ['american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'USenglish', 'UKenglish']
+      Translator.debug('detected language:', {language: @language, english: @english})
 
     @referencetype = Translator.typeMap.Zotero2BibTeX[@item.itemType] || 'misc'
 
@@ -325,7 +329,7 @@ class Reference
   # @return {String} field.value encoded as author-style value
   ###
   enc_latex: (f, raw) ->
-    Translator.debug('enc_latex:', {f, raw})
+    Translator.debug('enc_latex:', {f, raw, english: @english})
     return f.value if typeof f.value == 'number'
     return null unless f.value
 
@@ -700,7 +704,8 @@ Language = new class
       for lang in v
         @babelList.push(lang) if @babelList.indexOf(lang) < 0
 
-    @cache = Object.create(null)
+    @cache = {}
+    @prefix = {}
 
 #  @polyglossia = [
 #    'albanian'
@@ -818,3 +823,22 @@ Language.lookup = (langcode) ->
     @cache[langcode].sort((a, b) -> b.sim - a.sim)
 
   return @cache[langcode]
+
+Language.fromPrefix = (langcode) ->
+  return false unless langcode && langcode.length >= 2
+
+  if ! @prefix[langcode]?
+    # consider a langcode matched if it is the prefix of exactly one language in the map
+    lc = langcode.toLowerCase()
+    matches = []
+    for code, languages of Language.babelMap
+      for lang in languages
+        continue if lang.toLowerCase().indexOf(lc) != 0
+        matches.push(languages)
+        break
+    if matches.length == 1
+      @prefix[langcode] = matches[0]
+    else
+      @prefix[langcode] = false
+
+  return @prefix[langcode]

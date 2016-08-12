@@ -85,7 +85,7 @@ class LaTeX.HTML
       when 'tbody', '#document', 'html', 'head', 'body' then # ignore
 
       else
-        Translator.debug("unexpected tag '#{tag.name}'")
+        Translator.debug("unexpected tag '#{tag.name}' (#{Object.keys(tag)})")
 
     for child in tag.children
       @walk(child)

@@ -3,10 +3,13 @@ Translator = {}
 Translator._log = (level, msg...) ->
   str = []
   for m in msg
-    if m instanceof Error
-      m = "<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>"
-    else
-      m = Zotero.Utilities.varDump(m)
+    switch
+      when m instanceof Error
+        m = "<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>"
+      when m instanceof String
+        m = '' + m
+      else
+        m = Zotero.Utilities.varDump(m)
     str.push(m) if m
   str = str.join(' ')
 

@@ -412,8 +412,8 @@ file 'resource/translators/titlecaser.js' => 'Rakefile' do |t|
         Translator.TitleCaser.titleCase = function(text) {
           var opts = Translator.TitleCaser.state.locale[Translator.TitleCaser.state.opt.lang].opts;
           if ( !opts['skip-words'] ) {
-            opts['skip-words'] = Translator.titleCaseLowerCase; // Translator.TitleCaser.SKIP_WORDS
-            opts['skip-words-regexp'] = new RegExp( '(?:(?:[?!:]*\\\\s+|-|^)(?:' + Translator.titleCaseLowerCase.join('|') + ')(?=[!?:]*\\\\s+|-|$))', 'g');
+            opts['skip-words'] = Translator.titleCaseLowerCase || Translator.TitleCaser.SKIP_WORDS;
+            opts['skip-words-regexp'] = new RegExp( '(?:(?:[?!:]*\\\\s+|-|^)(?:' + opts['skip-words'].join('|') + ')(?=[!?:]*\\\\s+|-|$))', 'g');
           }
 
           return Translator.TitleCaser.Output.Formatters.title(Translator.TitleCaser.state, text);

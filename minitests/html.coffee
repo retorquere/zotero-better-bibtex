@@ -78,6 +78,16 @@ guide both action and belief.</span></p>
 
 html = 'Effects of <span relax class="nocase">open-</span> and «closed-system» temperature changes on blood O<sub>2</sub>-binding characteristics of Atlantic bluefin tuna (<i>Thunnus thynnus</i>)'
 
-parser = new Translator.MarkupParser()
-ast = parser.parse(html, {titleCase: true, csquotes: '‹›«»'})
+html = "Loi n<sup>o</sup> 2011-525 du 17 mai 2011 de simplification et d'amélioration de la qualité du droit"
+
+html = "Critique d'une métanotion fonctionnelle. La notion (trop) fonctionnelle de « notion fonctionnelle »"
+
+html = "How to derive Ought from Is"
+
+Translator.csquotes = {
+  open: '‹«'
+  close: '›»'
+}
+ast = Translator.MarkupParser.parse(html, {preserveCase: true})
 console.log(JSON.stringify(ast, null, 2))
+console.log(Translator.TitleCaser.titleCase(html))
