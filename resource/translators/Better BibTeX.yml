@@ -22,7 +22,6 @@ BetterBibTeX:
   - titlecaser
   - unicode_translator
   - latex_unicode_mapping
-  - BetterBibTeXBraceBalancer
   - BetterBibTeXParserSupport
   - BetterBibTeXParser
   postscript: true

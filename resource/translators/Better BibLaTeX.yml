@@ -21,7 +21,6 @@ BetterBibTeX:
   - titlecaser
   - unicode_translator
   - latex_unicode_mapping
-  - BetterBibTeXBraceBalancer
   postscript: true
 priority: 50
 inRepository: true

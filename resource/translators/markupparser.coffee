@@ -15,7 +15,7 @@ class Translator.MarkupParser
     return map
 
   # supported elements -- sc == smallcaps
-  minimal: MarkupParser::makeMap('em italic i strong b sc enquote pre span sub sup')
+  minimal: MarkupParser::makeMap('em italic i strong b nc sc enquote pre span sub sup')
   closeSelf: MarkupParser::makeMap('colgroup dd dt li options p td tfoot th thead tr')
   empty: MarkupParser::makeMap('area base basefont br col frame hr img input link meta param embed command keygen source track wbr')
 
@@ -69,17 +69,13 @@ class Translator.MarkupParser
     htmlMode = (options.mode == 'html')
     last = html
 
-    if options.csquotes
-      csquotes = {open: '', close: ''}
-      for q, i in options.csquotes
-        if i % 2 == 0
-          csquotes.open += q
-        else
-          csquotes.close += q
-      html = html.replace(///[#{csquotes.open.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")}]///g, '<enquote>')
-      html = html.replace(///[#{csquotes.close.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")}]///g, '</enquote>')
+    ### add enquote psuedo-tags. Pseudo-tags are used here because they're cleanly removable for the pre block ###
+    if Translator.csquotes
+      html = html.replace(///[#{Translator.csquotes.open.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")}]///g, "\x0E")
+      html = html.replace(///[#{Translator.csquotes.close.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")}]///g, "\x0F")
 
     if options.titleCase
+      ### must be done after the enquote fudges because the string to be passed to titlecase must be exactly the same length as what is passed to the parser ###
       ### TODO: remove this workaround when https://bitbucket.org/fbennett/citeproc-js/issues/187/title-case-formatter-does-not-title-case is resolved ###
       @titleCased = html.replace(/\(/g, "(\x02 ")
       @titleCased = @titleCased.replace(/\)/g, " \x03)")
@@ -93,25 +89,38 @@ class Translator.MarkupParser
 
       switch
         when @lastTag == 'pre'
-          html = html.replace(@re.pre, (all, match) =>
-            @handler.chars(text) if @handler.chars
+          html = html.replace(@re.pre, (all, text) =>
+            @handler.chars(text.replace(/[\x0E\x0F]/g, '')) if @handler.chars
             return ''
           )
-
           chars = false
           @parseEndTag('', @lastTag)
 
-        when html.substring(0, 2) == '</'
-          match = html.match(@re.endTag)
-          if match && (htmlMode || @minimal[match[1]])
+        when html.substring(0, 2) == '</' || html[0] == "\x0F"
+          if html[0] == '<'
+            match = html.match(@re.endTag)
+            switch
+              when htmlMode || match[1] == 'span' then # pass
+              when @minimal[match[1]] && match[0][match[1].length] == '>' # pass
+              else match = null
+          else
+            match = [html[0], 'enquote']
+          if match
             html = html.substring(match[0].length)
             @parseEndTag.apply(@, match)
             chars = false
 
-        when html[0] == '<'
-          match = html.match(@re.startTag)
+        when html[0] == '<' || html[0] == "\x0E"
+          if html[0] == '<'
+            match = html.match(@re.startTag)
+            switch
+              when htmlMode || match[1] == 'span' then # pass
+              when @minimal[match[1]] && match[0].substr(match[1].length, 2) in ['/>', '>'] # pass
+              else match = null
+          else
+            match = [html[0], 'enquote', '', '']
 
-          if match && (htmlMode || @minimal[match[1]])
+          if match
             html = html.substring(match[0].length)
             @parseStartTag.apply(@, match)
             chars = false
@@ -122,7 +131,7 @@ class Translator.MarkupParser
             chars = false
 
       if chars
-        index = html.indexOf('<')
+        index = html.search(/[<\x0E\x0F]/)
         pos = length - html.length
         text = if index < 0 then html else html.substring(0, index)
         html = if index < 0 then '' else html.substring(index)
@@ -136,7 +145,31 @@ class Translator.MarkupParser
     @titleCase(@handler.root) if options.titleCase
     @simplify(@handler.root) if options.titleCase || options.preserveCase
 
+    @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
+    @handler.root = {name: 'span', children: [@handler.root], attr: {}, class: {}} if @handler.root.name == '#text'
+    @mathTags(@hander.root)
+
     return @handler.root
+
+  mathTags: (node) ->
+    children = []
+
+    for child in node.children
+      if child.name != '#text'
+        children.unshift(child)
+        mathTags(child)
+        continue
+
+      for c in XRegExp.split(text, '')
+        isMath = !!@mapping.math[c]
+        if children.length == 0 || children[0].name != '#text' || isMath != !!children[0].math
+          children.unshift({name: '#text', text: c})
+        else
+          children[0].text += c
+        children[0].math = true if isMath
+
+    children.reverse()
+    node.children = children
 
   simplify: (node, isNoCased) ->
     delete node.nocase if isNoCased
@@ -265,11 +298,11 @@ class Translator.MarkupParser
         switch
           when @sentenceStart && (m = @re.leadingProtectedWords.exec(text))
             @sentenceStart = false
-            @elems[0].children.push({pos: pos + (length - text.length), sentenceStart: true, name: 'span', nocase: true, children: [{name: '#text', text: m[0]}]})
+            @elems[0].children.push({pos: pos + (length - text.length), name: 'span', nocase: true, children: [{name: '#text', text: m[0]}], attr: {}, class: {}})
             text = text.substring(m[0].length)
 
           when !@sentenceStart && (m = @re.protectedWords.exec(text))
-            @elems[0].children.push({pos: pos + (length - text.length), name: 'span', nocase: true, children: [{name: '#text', text: m[0]}]})
+            @elems[0].children.push({pos: pos + (length - text.length), name: 'span', nocase: true, children: [{name: '#text', text: m[0]}], attr: {}, class: {}})
             text = text.substring(m[0].length)
 
           when (m = @re.whitespace.exec(text))
@@ -278,10 +311,7 @@ class Translator.MarkupParser
 
           else
             @sentenceStart = (text[0] == ':')
-            if @sentenceStart
-              @elems[0].children.push({pos: pos + (length - text.length), sentenceStart: true, name: '#text', text: text[0]})
-            else
-              @plaintext(text[0], pos + (length - text.length))
+            @plaintext(text[0], pos + (length - text.length))
             text = text.substring(1)
 
 Translator.MarkupParser = new Translator.MarkupParser()

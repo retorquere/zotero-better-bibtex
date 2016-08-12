@@ -1,9 +1,8 @@
 LaTeX = {} unless LaTeX
 
 LaTeX.text2latex = (text, options = {}) ->
-  options.mode = 'text'
+  options.mode ||= 'text'
   latex = @html2latex(text, options)
-  latex = BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
   return latex
 
 LaTeX.html2latex = (html, options) ->
@@ -27,7 +26,7 @@ class LaTeX.HTML
 
     switch tag.name
       when '#text'
-        @chars(tag.text)
+        @chars(tag.text, tag.math)
         return
       when 'pre'
         @latex += tag.text
@@ -75,6 +74,9 @@ class LaTeX.HTML
       when 'li'
         @latex += "\n\\item "
 
+      when 'enquote'
+        @latex += '\\enquote{'
+
       when 'span', 'sc', 'nc' then # ignore, handled by the relax/nocase/smallcaps handler above
 
       when 'td', 'th'
@@ -107,6 +109,9 @@ class LaTeX.HTML
       when 'td', 'th'
         @latex += ' '
 
+      when 'enquote'
+        @latex += '}'
+
       when 'ol'
         @latex += "\n\n\\end{enumerate}\n"
       when 'ul'
@@ -118,17 +123,20 @@ class LaTeX.HTML
 
     @stack.shift()
 
-  chars: (text) ->
-    blocks = []
+  chars: (text, math) ->
+    @latex += "$" if math
+
+    ### balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed ###
+    braced = 0
     for c in XRegExp.split(text, '')
-      math = @mapping.math[c]
-      blocks.unshift({math: !!math, text: ''}) if blocks.length == 0 || blocks[0].math != !!math
-      blocks[0].text += (math || @mapping.text[c] || c)
-    for block in blocks by -1
-      if block.math
-        if block.text.match(/^{[^{}]*}$/)
-          @latex += "\\ensuremath#{block.text}"
-        else
-          @latex += "\\ensuremath{#{block.text}}"
-      else
-        @latex += block.text
+      switch c
+        when '{' then braced += 1
+        when '}' then braced -= 1
+      if braced < 0
+        @latex += "\\vphantom{\\{}"
+        braced = 0
+      @latex += @mapping.math[c] || @mapping.text[c] || c || ''
+    if braced > 0
+      @latex += "\\vphantom#{(new Array(braced)).join("\\}")}"
+
+    @latex += '$' if math

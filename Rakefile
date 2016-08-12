@@ -414,7 +414,7 @@ file 'resource/translators/titlecaser.js' => 'Rakefile' do |t|
           locale: {
             en: {
               opts: {
-                'skip-words': Translator.TitleCaser.SKIP_WORDS
+                'skip-words': Translator.titleCaseLowerCase // Translator.TitleCaser.SKIP_WORDS
               }
             }
           }

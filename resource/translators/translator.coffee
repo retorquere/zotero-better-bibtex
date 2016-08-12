@@ -256,6 +256,8 @@ Translator.initialize = ->
   for pref in Object.keys(@preferences)
     @preferences[pref] = @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
 
+  @skipWords = @skipWords.trim().split(/\s*,\s*/)
+  @titleCaseLowerCase = @titleCaseLowerCase.trim().split(/\s+/)
   @skipFields = (field.trim() for field in (@skipFields || '').split(',') when field.trim())
   if @csquotes
     @csquotes = { open: '', close: '' }
