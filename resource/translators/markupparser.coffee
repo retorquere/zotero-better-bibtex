@@ -228,7 +228,7 @@ class Translator.MarkupParser
 
     AST::re.WordChar = AST::re.Lu + AST::re.NonLu
 
-    AST::re.WordJoiner = '([ \t\n\r\u00A0]|--)+'
+    AST::re.WordJoiner = '([ \t\n\r\u00A0]|-+)+'
 
     AST::re.leadingProtectedWords = ///
       ^

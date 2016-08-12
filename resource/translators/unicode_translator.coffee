@@ -2,8 +2,7 @@ LaTeX = {} unless LaTeX
 
 LaTeX.text2latex = (text, options = {}) ->
   options.mode ||= 'text'
-  latex = @html2latex(text, options)
-  return latex
+  return @html2latex(text, options)
 
 LaTeX.html2latex = (html, options) ->
   options.mode ||= 'html'
