@@ -258,7 +258,7 @@ end
 def grasp(t, from, to)
   system "./node_modules/.bin/grasp -i '#{from.gsub('"', "\\\"")}' --replace '#{to.gsub('"', "\\\"")}' #{t.name.shellescape}" || exit(1)
 end
-file 'resource/translators/titlecaser.js' => 'Rakefile' do |t|
+file 'resource/translators/titlecaser.js' => ['resource/translators/titlecaser-citeproc-js.js', 'Rakefile'] do |t|
   cleanly(t.name) do
     js = ''
     download('https://raw.githubusercontent.com/Juris-M/citeproc-js/master/src/load.js', t.name)
@@ -406,19 +406,7 @@ file 'resource/translators/titlecaser.js' => 'Rakefile' do |t|
           empty = 0
         end
         empty > 1
-      }.join('') + """
-        Translator.TitleCaser.state = { opt: { lang: 'en' }, locale: { en: { opts: { } } } };
-
-        Translator.TitleCaser.titleCase = function(text) {
-          var opts = Translator.TitleCaser.state.locale[Translator.TitleCaser.state.opt.lang].opts;
-          if ( !opts['skip-words'] ) {
-            opts['skip-words'] = Translator.titleCaseLowerCase || Translator.TitleCaser.SKIP_WORDS;
-            opts['skip-words-regexp'] = new RegExp( '(?:(?:[?!:]*\\\\s+|-|^)(?:' + opts['skip-words'].join('|') + ')(?=[!?:]*\\\\s+|-|$))', 'g');
-          }
-
-          return Translator.TitleCaser.Output.Formatters.title(Translator.TitleCaser.state, text);
-        }
-      """
+      }.join('') + "\n" + open(t.source).read
     }
   end
 end

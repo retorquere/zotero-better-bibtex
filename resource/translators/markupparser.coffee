@@ -100,6 +100,7 @@ class Translator.MarkupParser
           if html[0] == '<'
             match = html.match(@re.endTag)
             switch
+              when !match then # pass
               when htmlMode || match[1] == 'span' then # pass
               when @minimal[match[1]] && match[0][match[1].length + 2] == '>' # pass
               else match = null
@@ -115,6 +116,7 @@ class Translator.MarkupParser
           if html[0] == '<'
             match = html.match(@re.startTag)
             switch
+              when !match then # pass
               when htmlMode || match[1] == 'span' then # pass
               when @minimal[match[1]] && match[0].substr(match[1].length + 1, 2) in ['/>', '>'] # pass
               else match = null
@@ -256,6 +258,8 @@ class Translator.MarkupParser
 
     AST::re.whitespace = /^[ \t\n\r\u00A0]+/
 
+    AST::re.url = /^(https?|mailto):\/\/[^\s]+/
+
     constructor: (@preserveCase) ->
       @root = {name: 'span', children: [], attr: {}, class: {}}
       @elems = [@root]
@@ -302,6 +306,11 @@ class Translator.MarkupParser
             text = text.substring(m[0].length)
 
           when !@sentenceStart && (m = @re.protectedWords.exec(text))
+            @elems[0].children.push({pos: pos + (length - text.length), name: 'span', nocase: true, children: [{name: '#text', text: m[0]}], attr: {}, class: {}})
+            text = text.substring(m[0].length)
+
+          when m = @re.url.exec(text)
+            @sentenceStart = false
             @elems[0].children.push({pos: pos + (length - text.length), name: 'span', nocase: true, children: [{name: '#text', text: m[0]}], attr: {}, class: {}})
             text = text.substring(m[0].length)
 

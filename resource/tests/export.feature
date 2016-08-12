@@ -17,6 +17,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Be robust against misconfigured journal abbreviator #127                                       | 1           |
      | Date parses incorrectly with year 1000 when source Zotero field is in datetime format. #515    | 1           |
      | Dollar sign in title not properly escaped #485                                                 | 1           |
      | Book sections have book title for journal in citekey #409                                      | 1           |
@@ -36,7 +37,6 @@ Scenario Outline: BibLaTeX Export
      | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | Export mapping for reporter field #219                                                         | 1           |
      | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201     | 1           |
-     | Be robust against misconfigured journal abbreviator #127                                       | 1           |
      | Better BibLaTeX.009                                                                            | 2           |
      | Better BibLaTeX.007                                                                            | 1           |
      | Better BibLaTeX.006                                                                            | 1           |
