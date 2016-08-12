@@ -118,7 +118,7 @@ class LaTeX.HTML
         @latex += "\n\n\\end{itemize}\n"
 
     @latex += '}' if tag.relax
-    @latex += '}' if tag.nocase
+    @latex += '}}' if tag.nocase
     @latex += '}' if tag.smallcaps
 
     @stack.shift()

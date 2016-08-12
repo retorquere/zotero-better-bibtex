@@ -147,7 +147,7 @@ class Translator.MarkupParser
 
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
     @handler.root = {name: 'span', children: [@handler.root], attr: {}, class: {}} if @handler.root.name == '#text'
-    @mathTags(@hander.root)
+    @mathTags(@handler.root)
 
     return @handler.root
 
@@ -157,10 +157,10 @@ class Translator.MarkupParser
     for child in node.children
       if child.name != '#text'
         children.unshift(child)
-        mathTags(child)
+        @mathTags(child)
         continue
 
-      for c in XRegExp.split(text, '')
+      for c in XRegExp.split(child.text, '')
         isMath = !!@mapping.math[c]
         if children.length == 0 || children[0].name != '#text' || isMath != !!children[0].math
           children.unshift({name: '#text', text: c})

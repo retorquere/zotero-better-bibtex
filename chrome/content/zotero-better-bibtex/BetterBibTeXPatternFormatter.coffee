@@ -131,7 +131,7 @@ class BetterBibTeXPatternFormatter
   innerText: (str) ->
     return '' unless str
     doc = @DOMParser.parseFromString("<span>#{str}</span>", 'text/html')
-    doc = doc.documentElement if doc.nodeType == @DOCUMENT_NODE
+    doc = doc.documentElement if doc.nodeType == 9 # DOCUMENT_NODE
     return doc.textContent
 
   creators: (onlyEditors, withInitials) ->

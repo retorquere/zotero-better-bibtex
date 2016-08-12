@@ -407,26 +407,15 @@ file 'resource/translators/titlecaser.js' => 'Rakefile' do |t|
         end
         empty > 1
       }.join('') + """
-        Translator.TitleCaser.state ={
-          opt: {
-            lang: 'en'
-          },
-          locale: {
-            en: {
-              opts: {
-                'skip-words': Translator.titleCaseLowerCase // Translator.TitleCaser.SKIP_WORDS
-              }
-            }
-          }
-        };
-        Translator.TitleCaser.makeRegExp = function (lst) {
-          var lst = lst.slice();
-          var ret = new RegExp( '(?:(?:[?!:]*\\\\s+|-|^)(?:' + lst.join('|') + ')(?=[!?:]*\\\\s+|-|$))', 'g');
-          return ret;
-        }
-        Translator.TitleCaser.state.locale[Translator.TitleCaser.state.opt.lang].opts['skip-words-regexp'] = Translator.TitleCaser.makeRegExp(Translator.TitleCaser.state.locale[Translator.TitleCaser.state.opt.lang].opts['skip-words']);
+        Translator.TitleCaser.state = { opt: { lang: 'en' }, locale: { en: { opts: { } } } };
 
         Translator.TitleCaser.titleCase = function(text) {
+          var opts = Translator.TitleCaser.state.locale[Translator.TitleCaser.state.opt.lang].opts;
+          if ( !opts['skip-words'] ) {
+            opts['skip-words'] = Translator.titleCaseLowerCase; // Translator.TitleCaser.SKIP_WORDS
+            opts['skip-words-regexp'] = new RegExp( '(?:(?:[?!:]*\\\\s+|-|^)(?:' + Translator.titleCaseLowerCase.join('|') + ')(?=[!?:]*\\\\s+|-|$))', 'g');
+          }
+
           return Translator.TitleCaser.Output.Formatters.title(Translator.TitleCaser.state, text);
         }
       """
