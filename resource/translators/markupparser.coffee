@@ -320,7 +320,8 @@ class Translator.MarkupParser
             @plaintext(m[0], pos + (length - text.length))
             text = text.substring(m[0].length)
 
-          when (m = @re.word.exec(text))
+          when m = @re.word.exec(text)
+            @sentenceStart = false
             @plaintext(m[0], pos + (length - text.length))
             text = text.substring(m[0].length)
 

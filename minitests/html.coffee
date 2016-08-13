@@ -86,6 +86,8 @@ html = "How to derive Ought from Is"
 
 html = "USGS monitoring ecological impacts"
 
+html = "Test of markupconversion: Italics, bold, superscript, subscript, and small caps: Mitochondrial DNA<sub>2</sub> sequences suggest unexpected phylogenetic position of Corso-Sardinian grass snakes (<i>Natrix cetti</i>) and <b>do not</b> support their <span style=\"small-caps\">species status</span>, with notes on phylogeography and subspecies delineation of grass snakes."
+
 Translator.csquotes = {
   open: '‹«'
   close: '›»'
