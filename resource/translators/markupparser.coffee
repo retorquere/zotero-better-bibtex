@@ -228,35 +228,37 @@ class Translator.MarkupParser
 
     AST::re.WordChar = AST::re.Lu + AST::re.NonLu
 
+    AST::re.WordChunk = "([#{AST::re.WordChar}]|([-\\.][#{AST::re.WordChar}]))"
+
     AST::re.WordJoiner = '([ \t\n\r\u00A0]|-+)+'
 
     AST::re.leadingProtectedWords = ///
       ^
       [#{AST::re.NonLu}]+
       [#{AST::re.Lu}]+
-      [#{AST::re.WordChar}]*
+      #{AST::re.WordChunk}*
       (
         #{AST::re.WordJoiner}
-        [#{AST::re.WordChar}]*
+        #{AST::re.WordChunk}*
         [#{AST::re.Lu}]+
-        [#{AST::re.WordChar}]*
+        #{AST::re.WordChunk}*
       )*
       ///
 
     AST::re.protectedWords = ///
       ^
-      [#{AST::re.WordChar}]*
+      #{AST::re.WordChunk}*
       [#{AST::re.Lu}]+
-      [#{AST::re.WordChar}]*
+      #{AST::re.WordChunk}*
       (
         #{AST::re.WordJoiner}
-        [#{AST::re.WordChar}]*
+        #{AST::re.WordChunk}*
         [#{AST::re.Lu}]+
-        [#{AST::re.WordChar}]*
+        #{AST::re.WordChunk}*
       )*
       ///
 
-    AST::re.word = ///^[#{AST::re.WordChar}]+///
+    AST::re.word = ///^#{AST::re.WordChunk}+///
 
     AST::re.whitespace = /^[ \t\n\r\u00A0]+/
 
