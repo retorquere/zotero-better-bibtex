@@ -84,10 +84,12 @@ html = "Critique d'une métanotion fonctionnelle. La notion (trop) fonctionnelle
 
 html = "How to derive Ought from Is"
 
+html = "USGS monitoring ecological impacts"
+
 Translator.csquotes = {
   open: '‹«'
   close: '›»'
 }
 ast = Translator.MarkupParser.parse(html, {preserveCase: true})
 console.log(JSON.stringify(ast, null, 2))
-console.log(Translator.TitleCaser.titleCase(html))
+#console.log(Translator.TitleCaser.titleCase(html))

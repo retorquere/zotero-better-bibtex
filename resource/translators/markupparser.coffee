@@ -256,6 +256,8 @@ class Translator.MarkupParser
       )*
       ///
 
+    AST::re.word = ///^[#{AST::re.WordChar}]+///
+
     AST::re.whitespace = /^[ \t\n\r\u00A0]+/
 
     AST::re.url = /^(https?|mailto):\/\/[^\s]+/
@@ -315,6 +317,10 @@ class Translator.MarkupParser
             text = text.substring(m[0].length)
 
           when (m = @re.whitespace.exec(text))
+            @plaintext(m[0], pos + (length - text.length))
+            text = text.substring(m[0].length)
+
+          when (m = @re.word.exec(text))
             @plaintext(m[0], pos + (length - text.length))
             text = text.substring(m[0].length)
 
