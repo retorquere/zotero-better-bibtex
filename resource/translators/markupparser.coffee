@@ -310,31 +310,28 @@ class Translator.MarkupParser
 
       length = text.length
       while text
+        if m = @re.whitespace.exec(text)
+          @plaintext(m[0], pos + (length - text.length))
+          text = text.substring(m[0].length)
+          continue
+
+        if @sentenceStart && (m = @re.leadingUnprotectedWord.exec(text))
+          @sentenceStart = false
+          @plaintext(m[0], pos + (length - text.length))
+          text = text.substring(m[0].length)
+          continue
+
+        @sentenceStart = false
         switch
-          when @sentenceStart && (m = @re.leadingUnprotectedWords.exec(text))
-            @plaintext(m[0], pos + (length - text.length))
-            text = text.substring(m[0].length)
-
-          when @sentenceStart && (m = @re.leadingProtectedWords.exec(text))
-            @sentenceStart = false
-            @elems[0].children.push({pos: pos + (length - text.length), name: 'span', nocase: true, children: [{name: '#text', text: m[0]}], attr: {}, class: {}})
-            text = text.substring(m[0].length)
-
-          when !@sentenceStart && (m = @re.protectedWords.exec(text))
+          when m = @re.protectedWords.exec(text)
             @elems[0].children.push({pos: pos + (length - text.length), name: 'span', nocase: true, children: [{name: '#text', text: m[0]}], attr: {}, class: {}})
             text = text.substring(m[0].length)
 
           when m = @re.url.exec(text)
-            @sentenceStart = false
             @elems[0].children.push({pos: pos + (length - text.length), name: 'span', nocase: true, children: [{name: '#text', text: m[0]}], attr: {}, class: {}})
             text = text.substring(m[0].length)
 
-          when (m = @re.whitespace.exec(text))
-            @plaintext(m[0], pos + (length - text.length))
-            text = text.substring(m[0].length)
-
           when m = @re.word.exec(text)
-            @sentenceStart = false
             @plaintext(m[0], pos + (length - text.length))
             text = text.substring(m[0].length)
 
