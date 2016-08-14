@@ -232,6 +232,13 @@ class Translator.MarkupParser
 
     AST::re.WordJoiner = '([ \t\n\r\u00A0]|-+)+'
 
+    AST::re.leadingUnprotectedWord = ///
+      ^
+      [#{AST::re.Lu}]
+      [#{AST::re.NonLu}]+
+      ([.:; \t\n\r\u00A0]|$)
+      ///
+
     AST::re.leadingProtectedWords = ///
       ^
       [#{AST::re.NonLu}]+
@@ -304,6 +311,10 @@ class Translator.MarkupParser
       length = text.length
       while text
         switch
+          when @sentenceStart && (m = @re.leadingUnprotectedWords.exec(text))
+            @plaintext(m[0], pos + (length - text.length))
+            text = text.substring(m[0].length)
+
           when @sentenceStart && (m = @re.leadingProtectedWords.exec(text))
             @sentenceStart = false
             @elems[0].children.push({pos: pos + (length - text.length), name: 'span', nocase: true, children: [{name: '#text', text: m[0]}], attr: {}, class: {}})
