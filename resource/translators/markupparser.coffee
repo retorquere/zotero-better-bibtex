@@ -21,8 +21,6 @@ class Translator.MarkupParser
 
   parseStartTag: (tag, tagName, rest, unary) ->
     tagName = tagName.toLowerCase()
-    @stack.push(tagName)
-    @lastTag = tagName
 
     # TODO: In addition to lastTag === tagName, also check special case for th, td, tfoot, tbody, thead
     @parseEndTag("", tagName) if (@closeSelf[tagName] && @lastTag == tagName)

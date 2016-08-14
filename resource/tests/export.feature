@@ -55,6 +55,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Ignore HTML tags when generating citation key #264                                 | 1           |
      | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |
      | map csl-json variables #293                                                        | 2           |
      | Export Forthcoming as Forthcoming                                                  | 1           |
@@ -70,7 +71,6 @@ Scenario Outline: BibLaTeX Export
      | typo stature-statute (zotero item type) #284                                       | 1           |
      | bookSection is always converted to @inbook, never @incollection #282               | 1           |
      | referencetype= does not work #278                                                  | 1           |
-     | Ignore HTML tags when generating citation key #264                                 | 1           |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246      | 3           |
      | References with multiple notes fail to export #174                                 | 1           |
      | Better BibTeX does not use biblatex fields eprint and eprinttype #170              | 1           |
