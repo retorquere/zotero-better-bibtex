@@ -233,8 +233,8 @@ class Translator.MarkupParser
 
     AST::re.leadingUnprotectedWord = ///
       ^
-      [#{AST::re.Lu}]
-      [#{AST::re.NonLu}]*
+      ([#{AST::re.Lu}][#{AST::re.NonLu}]*)
+      ($|[^#{AST::re.WordChar}])
       ///
 
     AST::re.leadingProtectedWords = ///
@@ -313,10 +313,10 @@ class Translator.MarkupParser
           text = text.substring(m[0].length)
           continue
 
-        if @sentenceStart && (m = @re.leadingUnprotectedWord.exec(text)) && @re.whitespace.exec(text[m[0].length] || ' ')
+        if @sentenceStart && (m = @re.leadingUnprotectedWord.exec(text))
           @sentenceStart = false
-          @plaintext(m[0], pos + (length - text.length))
-          text = text.substring(m[0].length)
+          @plaintext(m[1], pos + (length - text.length))
+          text = text.substring(m[1].length)
           continue
 
         @sentenceStart = false
