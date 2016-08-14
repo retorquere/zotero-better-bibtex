@@ -183,7 +183,6 @@ class Translator.MarkupParser
     node ||= @root
     if node.name == '#text' && node.pos?
       node.text = @titleCased.substr(node.pos, node.text.length)
-      # something
     else
       for child in node.children
         @titleCase(child) unless child.nocase
@@ -235,8 +234,7 @@ class Translator.MarkupParser
     AST::re.leadingUnprotectedWord = ///
       ^
       [#{AST::re.Lu}]
-      [#{AST::re.NonLu}]+
-      ([.:; \t\n\r\u00A0]|$)
+      [#{AST::re.NonLu}]*
       ///
 
     AST::re.leadingProtectedWords = ///
@@ -315,7 +313,7 @@ class Translator.MarkupParser
           text = text.substring(m[0].length)
           continue
 
-        if @sentenceStart && (m = @re.leadingUnprotectedWord.exec(text))
+        if @sentenceStart && (m = @re.leadingUnprotectedWord.exec(text)) && @re.whitespace.exec(text[m[0].length] || ' ')
           @sentenceStart = false
           @plaintext(m[0], pos + (length - text.length))
           text = text.substring(m[0].length)
@@ -324,11 +322,11 @@ class Translator.MarkupParser
         @sentenceStart = false
         switch
           when m = @re.protectedWords.exec(text)
-            @elems[0].children.push({pos: pos + (length - text.length), name: 'span', nocase: true, children: [{name: '#text', text: m[0]}], attr: {}, class: {}})
+            @elems[0].children.push({name: 'span', nocase: true, children: [{pos: pos + (length - text.length), name: '#text', text: m[0]}], attr: {}, class: {}})
             text = text.substring(m[0].length)
 
           when m = @re.url.exec(text)
-            @elems[0].children.push({pos: pos + (length - text.length), name: 'span', nocase: true, children: [{name: '#text', text: m[0]}], attr: {}, class: {}})
+            @elems[0].children.push({name: 'span', nocase: true, children: [{pos: pos + (length - text.length), name: '#text', text: m[0]}], attr: {}, class: {}})
             text = text.substring(m[0].length)
 
           when m = @re.word.exec(text)
