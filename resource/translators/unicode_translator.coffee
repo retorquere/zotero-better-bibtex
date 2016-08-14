@@ -135,7 +135,6 @@ class LaTeX.HTML
         @latex += "\\vphantom{\\{}"
         braced = 0
       @latex += @mapping.math[c] || @mapping.text[c] || c || ''
-    if braced > 0
-      @latex += "\\vphantom#{(new Array(braced)).join("\\}")}"
+    @latex += "\\vphantom#{(new Array(braced + 1)).join("\\}")}" if braced > 0
 
     @latex += '$' if math
