@@ -232,7 +232,7 @@ class Translator.MarkupParser
     AST::re.leadingUnprotectedWord = ///
       ^
       ([#{AST::re.Lu}][#{AST::re.NonLu}]*)
-      ($|[ \t\n\r\u00A0])
+      ([ \t\n\r\u00A0]|$)
       ///
 
     AST::re.leadingProtectedWords = ///
