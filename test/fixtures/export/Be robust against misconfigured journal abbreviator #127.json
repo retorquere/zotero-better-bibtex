@@ -5,7 +5,6 @@
     "release": "0.6.63",
     "preferences": {
       "citekeyFormat": "[auth][year]",
-      "usePrefix": false,
       "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/american-physics-society"
     },
