@@ -123,13 +123,7 @@ class LaTeX.HTML
     @stack.shift()
 
   chars: (text, math) ->
-    ### minor cleanup ###
-    text = text.replace(/({})+(^[0-9a-z])/ig, '$2')
-
-    if math
-      @latex += "$"
-      ### this is safe because we know at least an '$' follows ###
-      text = text.replace(/({})+$/, '')
+    @latex += "$" if math
 
     ### balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed ###
     braced = 0
@@ -146,4 +140,9 @@ class LaTeX.HTML
       when 1 then @latex += "\\vphantom\\}"
       else @latex += "\\vphantom{#{(new Array(braced + 1)).join("\\}")}}"
 
-    @latex += '$' if math
+    ### minor cleanup ###
+    text = text.replace(/({})+(^[0-9a-z])/ig, '$2')
+    if math
+      ### this is safe because we know at least an '$' follows ###
+      text = text.replace(/({})+$/, '')
+      @latex += '$'
