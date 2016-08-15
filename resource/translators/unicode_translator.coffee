@@ -128,7 +128,7 @@ class LaTeX.HTML
 
     if math
       @latex += "$"
-      ### this is safe because we know at least an '$' follows
+      ### this is safe because we know at least an '$' follows ###
       text = text.replace(/({})+$/, '')
 
     ### balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed ###
