@@ -132,12 +132,12 @@ class LaTeX.HTML
         when '{' then braced += 1
         when '}' then braced -= 1
       if braced < 0
-        @latex += "\\vphantom{\\{}"
+        @latex += "\\vphantom\\{}"
         braced = 0
       @latex += @mapping.math[c] || @mapping.text[c] || c || ''
     switch braced
       when 0 then # pass
-      when 1 then @latex += "\\vphantom{\\}}"
+      when 1 then @latex += "\\vphantom\\}}"
       else @latex += "\\vphantom{#{(new Array(braced + 1)).join("\\}")}}"
 
     @latex += '$' if math
