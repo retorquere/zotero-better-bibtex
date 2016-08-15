@@ -1,4 +1,4 @@
-html = "11-Oxygenated Steroids. XIII. Synthesis and proof of structure of <span class=\"nocase\">Δ1,4-Pregnadiene-17α,21-diol-3,11,20-trione and Δ1,4-Pregnadiene-11β,17α,21-triol-3,20-dione</span>"
+html = "Dr. Strangelove or: how I learned to stop worrying and love the bomb"
 
 Translator.csquotes = {
   open: '‹«'

@@ -232,9 +232,9 @@ class Translator.MarkupParser
 
       whitespace: / \t\n\r\u00A0/.source
 
-      intrawordPunct: /[-\.]/.source
+      intrawordPunct: /[–-\.]/.source
 
-    @::re.wordJoiner = "([#{@::re.whitespace}]|--+)+"
+    @::re.wordJoiner = "([#{@::re.whitespace}]|--+|–)+"
 
     @::re.lcChar = @::re.Ll + @::re.Lt + @::re.Lm + @::re.Lo + @::re.Mn + @::re.Mc + @::re.Nd + @::re.Nl
     @::re.lcPrefix = "([#{@::re.lcChar}]#{@::re.intrawordPunct}?)"

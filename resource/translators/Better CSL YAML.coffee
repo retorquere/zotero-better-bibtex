@@ -8,12 +8,12 @@ flush = (items) -> "---\nreferences:\n" + items.join("\n") + "...\n"
 class HTML
   constructor: (html) ->
     @markdown = ''
-    @walk(Zotero.BetterBibTeX.HTMLParser(html))
+    @walk(Translator.MarkupParser.parse(html))
 
   walk: (tag) ->
     return unless tag
 
-    if tag.name in ['#text', 'script']
+    if tag.name in ['#text', 'pre']
       @markdown += tag.text.replace(/([\[*~^])/g, "\\$1")
       return
 
