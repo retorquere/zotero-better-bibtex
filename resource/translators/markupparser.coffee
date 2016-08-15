@@ -232,17 +232,17 @@ class Translator.MarkupParser
 
       whitespace: / \t\n\r\u00A0/.source
 
-      intrawordPunct: /\u002D\u2010\u2011\.]/.source
+      intrawordPunct: /[\u002D\u2010\u2011\.]/.source
 
     @::re.wordJoiner = "([#{@::re.whitespace}]|--+|[\u2013\u2014\u2E3A\u2E3B])+"
 
     @::re.lcChar = @::re.Ll + @::re.Lt + @::re.Lm + @::re.Lo + @::re.Mn + @::re.Mc + @::re.Nd + @::re.Nl
     @::re.lcPrefix = "([#{@::re.lcChar}]#{@::re.intrawordPunct}?)"
-    @::re.lcPostfix = "([#{@::re.lcChar}]|(#{@::re.intrawordPunct}[#{@::re.lcChar}]))*"
+    @::re.lcPostfix = "(#{@::re.intrawordPunct}?[#{@::re.lcChar}])*"
 
     @::re.char = @::re.Lu + @::re.lcChar
     @::re.prefix = "([#{@::re.char}]#{@::re.intrawordPunct}?)"
-    @::re.postfix = "([#{@::re.char}]|(#{@::re.intrawordPunct}[#{@::re.char}]))*"
+    @::re.postfix = "(#{@::re.intrawordPunct}?[#{@::re.char}])*"
     @::re.protectedWord = "#{@::re.lcPrefix}*[#{@::re.Lu}]#{@::re.postfix}"
 
     ### actual regexps ###
