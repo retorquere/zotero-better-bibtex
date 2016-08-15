@@ -55,6 +55,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Better BibLaTeX.019                                                                | 1           |
      | Ignore HTML tags when generating citation key #264                                 | 1           |
      | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |
      | map csl-json variables #293                                                        | 2           |
@@ -89,7 +90,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.022                                                                | 1           |
      | Better BibLaTeX.021                                                                | 1           |
      | Better BibLaTeX.020                                                                | 1           |
-     | Better BibLaTeX.019                                                                | 1           |
      | Better BibLaTeX.017                                                                | 1           |
      | Better BibLaTeX.016                                                                | 1           |
      | Better BibLaTeX.015                                                                | 1           |

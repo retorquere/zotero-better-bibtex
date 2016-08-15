@@ -100,7 +100,7 @@ class Translator.MarkupParser
             switch
               when !match then # pass
               when htmlMode || match[1] == 'span' then # pass
-              when @minimal[match[1]] && match[0][match[1].length + 2] == '>' # pass
+              when @minimal[match[1]] && match[0][match[1].length + 2] == '>' then # pass
               else match = null
           else
             match = [html[0], 'enquote']
@@ -116,7 +116,7 @@ class Translator.MarkupParser
             switch
               when !match then # pass
               when htmlMode || match[1] == 'span' then # pass
-              when @minimal[match[1]] && match[0].substr(match[1].length + 1, 2) in ['/>', '>'] # pass
+              when @minimal[match[1]] && match[0].substr(match[1].length + 1, 2) in ['/>', '>'] then # pass
               else match = null
           else
             match = [html[0], 'enquote', '', '']
@@ -173,14 +173,27 @@ class Translator.MarkupParser
 
   simplify: (node, isNoCased) ->
     delete node.nocase if isNoCased
-    return if node.name == '#text'
-    for child in node.children
-      @simplify(child, isNoCased || node.nocase)
+
+    switch node.name
+      when '#text' then # pass
+
+      when 'pre'
+        switch node.children.length
+          when 0 then # pass
+          when 1
+            throw new Error("Pre node had unexpected child #{JSON.stringify(node.children[0])}") unless node.children[0].name == '#text'
+            node.text = node.children[0].text
+            node.children = []
+          else
+            throw new Error("Pre node had unexpected children #{JSON.stringify(node.children)}")
+
+      else
+        for child in node.children
+          @simplify(child, isNoCased || node.nocase)
 
   titleCase: (node) ->
-    node ||= @root
-    if node.name == '#text' && node.pos?
-      node.text = @titleCased.substr(node.pos, node.text.length)
+    if node.name == '#text'
+      node.text = @titleCased.substr(node.pos, node.text.length) if node.pos?
     else
       for child in node.children
         @titleCase(child) unless child.nocase
