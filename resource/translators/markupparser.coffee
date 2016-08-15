@@ -236,19 +236,21 @@ class Translator.MarkupParser
 
     @::re.wordJoiner = "([#{@::re.whitespace}]|--+)+"
 
-    @::re.lcWordChar = @::re.Ll + @::re.Lt + @::re.Lm + @::re.Lo + @::re.Mn + @::re.Mc + @::re.Nd + @::re.Nl
-    @::re.lcWordChunk = "([#{@::re.lcWordChar}]|(#{@::re.intrawordPunct}[#{@::re.lcWordChar}]))"
+    @::re.lcChar = @::re.Ll + @::re.Lt + @::re.Lm + @::re.Lo + @::re.Mn + @::re.Mc + @::re.Nd + @::re.Nl
+    @::re.lcPrefix = "([#{@::re.lcChar}]#{@::re.intrawordPunct}?)"
+    @::re.lcPostfix = "([#{@::re.lcChar}]|(#{@::re.intrawordPunct}[#{@::re.lcChar}]))*"
 
-    @::re.wordChar = @::re.Lu + @::re.lcWordChar
-    @::re.wordChunk = "([#{@::re.wordChar}]|(#{@::re.intrawordPunct}[#{@::re.wordChar}]))"
-    @::re.protectedWord = "#{@::re.lcWordChunk}*[#{@::re.Lu}]#{@::re.wordChunk}*"
+    @::re.char = @::re.Lu + @::re.lcChar
+    @::re.prefix = "([#{@::re.char}]#{@::re.intrawordPunct}?)"
+    @::re.postfix = "([#{@::re.char}]|(#{@::re.intrawordPunct}[#{@::re.char}]))*"
+    @::re.protectedWord = "#{@::re.lcPrefix}*[#{@::re.Lu}]#{@::re.postfix}"
 
     ### actual regexps ###
 
     ### TODO: add punctuation ###
-    @::re.leadingUnprotectedWord = ///^([#{@::re.Lu}][#{@::re.lcWordChar}]*)[#{@::re.whitespace}#{@::re.Pish}]///
+    @::re.leadingUnprotectedWord = ///^([#{@::re.Lu}][#{@::re.lcChar}]*)[#{@::re.whitespace}#{@::re.Pish}]///
     @::re.protectedWords = ///^(#{@::re.protectedWord})((#{@::re.wordJoiner})(#{@::re.protectedWord}))*///
-    @::re.unprotectedWord = ///^#{@::re.wordChunk}+///
+    @::re.unprotectedWord = ///^#{@::re.prefix}+[#{@::re.char}]?///
     @::re.url = /^(https?|mailto):\/\/[^\s]+/
     @::re.whitespace = ///^[#{@::re.whitespace}]+///
 
@@ -292,11 +294,13 @@ class Translator.MarkupParser
       length = text.length
       while text
         if m = @re.whitespace.exec(text)
+          #console.log('ws')
           @plaintext(m[0], pos + (length - text.length))
           text = text.substring(m[0].length)
           continue
 
         if @sentenceStart && (m = @re.leadingUnprotectedWord.exec(text + ' '))
+          #console.log('luw:', m[1])
           @sentenceStart = false
           @plaintext(m[1], pos + (length - text.length))
           text = text.substring(m[1].length)
@@ -305,19 +309,23 @@ class Translator.MarkupParser
         @sentenceStart = false
         switch
           when m = @re.protectedWords.exec(text)
+            #console.log('pw:', m[0])
             @elems[0].children.push({name: 'span', nocase: true, children: [{pos: pos + (length - text.length), name: '#text', text: m[0]}], attr: {}, class: {}})
             text = text.substring(m[0].length)
 
           when m = @re.url.exec(text)
+            #console.log('url:', m[0])
             @elems[0].children.push({name: 'span', nocase: true, children: [{pos: pos + (length - text.length), name: '#text', text: m[0]}], attr: {}, class: {}})
             text = text.substring(m[0].length)
 
           when m = @re.unprotectedWord.exec(text)
+            #console.log('uw:', m[0])
             @plaintext(m[0], pos + (length - text.length))
             text = text.substring(m[0].length)
 
           else
             @sentenceStart = (text[1] && (text[0] in [':', ';', '.']) && @re.whitespace.exec(text[1]))
+            #console.log('char:', text[0], 'start:', !!@sentenceStart)
             @plaintext(text[0], pos + (length - text.length))
             text = text.substring(1)
 
