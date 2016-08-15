@@ -535,7 +535,7 @@ Zotero.BetterBibTeX.init = ->
   if @Pref.get('scanCitekeys') || Zotero.BetterBibTeX.DB.upgradeNeeded
     reason = if @Pref.get('scanCitekeys') then 'requested by user' else 'after upgrade'
     @flash("Citation key rescan #{reason}", "Scanning 'extra' fields for fixed keys\nFor a large library, this might take a while")
-    changed = @keymanager.scan().concat(Zotero.BetterBibTeX.keymanager.clearDynamic())
+    changed = @keymanager.scan() # TODO: .concat(Zotero.BetterBibTeX.keymanager.clearDynamic()) temporarily disable this until I figure out what to do between #538 and #545
     for itemID in changed
       @cache.remove({itemID})
     @DB.purge()
