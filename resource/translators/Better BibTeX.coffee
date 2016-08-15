@@ -5,13 +5,13 @@ Translator.fieldMap = {
   edition:          { name: 'edition' }
   type:             { name: 'type' }
   series:           { name: 'series' }
-  title:            { name: 'title', titleCase: true }
+  title:            { name: 'title', caseConversion: true }
   volume:           { name: 'volume' }
   rights:           { name: 'copyright' }
   ISBN:             { name: 'isbn' }
   ISSN:             { name: 'issn' }
   callNumber:       { name: 'lccn'}
-  shortTitle:       { name: 'shorttitle', titleCase: true }
+  shortTitle:       { name: 'shorttitle', caseConversion: true }
   DOI:              { name: 'doi' }
   abstractNote:     { name: 'abstract' }
   country:          { name: 'nationality' }
@@ -86,7 +86,7 @@ doExport = ->
 
     switch
       when item.itemType in ['bookSection', 'conferencePaper']
-        ref.add({ name: 'booktitle',  titleCase: true, value: item.publicationTitle, preserveBibTeXVariables: true })
+        ref.add({ name: 'booktitle',  caseConversion: true, value: item.publicationTitle, preserveBibTeXVariables: true })
       when ref.isBibVar(item.publicationTitle)
         ref.add({ name: 'journal', value: item.publicationTitle, preserveBibTeXVariables: true })
       else

@@ -3,7 +3,7 @@
 #
 # The global Translator object allows access to the current configuration of the translator
 #
-# @param {enum} titleCase whether titles should be title-cased
+# @param {enum} caseConversion whether titles should be title-cased and case-preserved
 # @param {boolean} bibtexURL set to true when BBT will generate \url{..} around the urls for BibTeX
 ###
 
@@ -339,7 +339,7 @@ class Reference
 
     return f.value if f.raw || raw
 
-    value = LaTeX.text2latex(f.value, {mode: (if f.html then 'html' else 'text'), preserveCase: f.preserveCase || f.titleCase, titleCase: f.titleCase && @english})
+    value = LaTeX.text2latex(f.value, {mode: (if f.html then 'html' else 'text'), caseConversion: f.caseConversion && @english})
     value = new String("{#{value}}") if f.value instanceof String
     return value
 
@@ -505,10 +505,10 @@ class Reference
         cslvar = Translator.CSLVariables[name]
         mapped = cslvar[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
         mapped = mapped.call(@) if typeof mapped == 'function'
-        titleCase = name in ['title', 'shorttitle', 'origtitle', 'booktitle', 'maintitle']
+        caseConversion = name in ['title', 'shorttitle', 'origtitle', 'booktitle', 'maintitle']
 
         if mapped
-          fields.push({ name: mapped, value: value.value, titleCase, raw: false, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type) })
+          fields.push({ name: mapped, value: value.value, caseConversion, raw: false, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type) })
 
         else
           Translator.debug('Unmapped CSL field', name, '=', value.value)

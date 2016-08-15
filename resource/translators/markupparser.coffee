@@ -62,7 +62,7 @@ class Translator.MarkupParser
     return
 
   parse: (html, options = {}) ->
-    @handler = new AST(options.preserveCase || options.titleCase)
+    @handler = new AST(options.caseConversion)
     @stack = []
     htmlMode = (options.mode == 'html')
     last = html
@@ -72,13 +72,12 @@ class Translator.MarkupParser
       html = html.replace(///[#{Translator.csquotes.open.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]\s*/g, "\\$&")}]\s*///g, "\x0E")
       html = html.replace(///\s*[#{Translator.csquotes.close.replace(/\s*[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")}]///g, "\x0F")
 
-    if options.titleCase
+    if options.caseConversion
       ### must be done after the enquote fudges because the string to be passed to titlecase must be exactly the same length as what is passed to the parser ###
       ### TODO: remove this workaround when https://bitbucket.org/fbennett/citeproc-js/issues/187/title-case-formatter-does-not-title-case is resolved ###
       @titleCased = html.replace(/\(/g, "(\x02 ")
       @titleCased = @titleCased.replace(/\)/g, " \x03)")
       @titleCased = Translator.TitleCaser.titleCase(@titleCased)
-
       @titleCased = @titleCased.replace(/\x02 /g, '')
       @titleCased = @titleCased.replace(/ \x03/g, '')
 
@@ -144,8 +143,9 @@ class Translator.MarkupParser
     # Clean up any remaining tags
     @parseEndTag()
 
-    @titleCase(@handler.root) if options.titleCase
-    @simplify(@handler.root) if options.titleCase || options.preserveCase
+    if options.caseConversion
+      @titleCase(@handler.root)
+      @simplify(@handler.root)
 
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
     @mathTags(@handler.root)
@@ -255,7 +255,7 @@ class Translator.MarkupParser
     @::re.url = /^(https?|mailto):\/\/[^\s]+/
     @::re.whitespace = ///^[#{@::re.whitespace}]+///
 
-    constructor: (@preserveCase) ->
+    constructor: (@caseConversion) ->
       @root = {name: 'span', children: [], attr: {}, class: {}}
       @elems = [@root]
       @sentenceStart = true
@@ -288,7 +288,7 @@ class Translator.MarkupParser
         @elems[0].children[l - 1].text += text
 
     chars: (text, pos) ->
-      if !(@preserveCase && pos?)
+      if !(@caseConversion && pos?)
         @elems[0].children.push({pos, name: '#text', text})
         return
 

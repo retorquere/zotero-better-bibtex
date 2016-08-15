@@ -29,8 +29,7 @@ display = (html, options) ->
   #console.log(JSON.stringify(ast))
   #console.log(Translator.TitleCaser.titleCase(html))
 
-  options.preserveCase = true
-  options.titleCase = ((options.language || 'en') == 'en')
+  options.caseConversion = ((options.language || 'en') == 'en')
 
   cp = LaTeX.text2latex(html, options)
   console.log("bibtex  : <<#{cp}>>")
@@ -64,6 +63,7 @@ titles = [
   {html: "In memoriam, na cidade", language: 'por'}
   {html: "Norm and Action. A Logical Enquiry"}
   {html: "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru"}
+  {html: "Critique d'une métanotion fonctionnelle. La notion (trop) fonctionnelle de « notion fonctionnelle »", language: 'fr'}
 ]
 
 for title in titles
