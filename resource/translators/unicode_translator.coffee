@@ -18,7 +18,29 @@ class LaTeX.HTML
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
     @stack = []
 
-    @walk(Translator.MarkupParser.parse(html, options))
+    ast = Translator.MarkupParser.parse(html, options)
+    @mathTags(ast)
+    @walk(ast)
+
+  mathTags: (node) ->
+    children = []
+
+    for child in node.children
+      if child.name != '#text'
+        children.unshift(child)
+        @mathTags(child)
+        continue
+
+      for c in XRegExp.split(child.text, '')
+        isMath = !!@mapping.math[c]
+        if children.length == 0 || children[0].name != '#text' || isMath != !!children[0].math
+          children.unshift({name: '#text', text: c})
+        else
+          children[0].text += c
+        children[0].math = true if isMath
+
+    children.reverse()
+    node.children = children
 
   walk: (tag) ->
     return unless tag

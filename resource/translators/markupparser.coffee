@@ -147,30 +147,7 @@ class Translator.MarkupParser
       @titleCase(@handler.root)
       @simplify(@handler.root)
 
-    @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
-    @mathTags(@handler.root)
-
     return @handler.root
-
-  mathTags: (node) ->
-    children = []
-
-    for child in node.children
-      if child.name != '#text'
-        children.unshift(child)
-        @mathTags(child)
-        continue
-
-      for c in XRegExp.split(child.text, '')
-        isMath = !!@mapping.math[c]
-        if children.length == 0 || children[0].name != '#text' || isMath != !!children[0].math
-          children.unshift({name: '#text', text: c})
-        else
-          children[0].text += c
-        children[0].math = true if isMath
-
-    children.reverse()
-    node.children = children
 
   simplify: (node, isNoCased) ->
     delete node.nocase if isNoCased
