@@ -1,4 +1,4 @@
-Translator.TitleCaser =
+Translator.altTitleCaser =
   titleCase: (str) ->
     return str unless str
 

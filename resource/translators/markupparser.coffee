@@ -78,6 +78,7 @@ class Translator.MarkupParser
       @titleCased = html.replace(/\(/g, "(\x02 ")
       @titleCased = @titleCased.replace(/\)/g, " \x03)")
       @titleCased = Translator.TitleCaser.titleCase(@titleCased)
+
       @titleCased = @titleCased.replace(/\x02 /g, '')
       @titleCased = @titleCased.replace(/ \x03/g, '')
 
