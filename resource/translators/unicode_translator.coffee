@@ -125,6 +125,10 @@ class LaTeX.HTML
   chars: (text, math) ->
     @latex += "$" if math
 
+    ### minor cleanup ###
+    text = text.replace(/({})+$/, '')
+    text = text.replace(/({})+(^[0-9a-z])/ig, '$2')
+
     ### balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed ###
     braced = 0
     for c in XRegExp.split(text, '')
