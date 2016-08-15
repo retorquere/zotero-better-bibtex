@@ -1,4 +1,4 @@
-html = 'position of Corso-Sardinian grass snakes'
+html = "Dr. Strangelove or: how I learned to stop worrying and love the bomb"
 
 Translator.csquotes = {
   open: '‹«'

@@ -656,7 +656,7 @@ Language = new class
       ml: 'malayalam'
       mn: 'mongolian'
       mr: 'marathi'
-      nb: ['norsk', 'bokmal']
+      nb: ['norsk', 'bokmal', 'nob']
       nl: 'dutch'
       nn: 'nynorsk'
       no: ['norwegian', 'norsk']

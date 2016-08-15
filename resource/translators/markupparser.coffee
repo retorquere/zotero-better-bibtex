@@ -248,7 +248,7 @@ class Translator.MarkupParser
     ### actual regexps ###
 
     ### TODO: add punctuation ###
-    @::re.leadingUnprotectedWord = ///^([#{@::re.Lu}][#{@::re.lcChar}]*)[#{@::re.whitespace}#{@::re.Pish}]///
+    @::re.leadingUnprotectedWord = ///^([#{@::re.Lu}][#{@::re.lcChar}]*)([#{@::re.whitespace}#{@::re.Pish}]|\.[#{@::re.whitespace}])///
     @::re.protectedWords = ///^(#{@::re.protectedWord})((#{@::re.wordJoiner})(#{@::re.protectedWord}))*///
     @::re.unprotectedWord = ///^#{@::re.prefix}+[#{@::re.char}]?///
     @::re.url = /^(https?|mailto):\/\/[^\s]+/
