@@ -18,36 +18,14 @@ class LaTeX.HTML
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
     @stack = []
 
-    ast = Translator.MarkupParser.parse(html, options)
-    @mathTags(ast)
-    @walk(ast)
-
-  mathTags: (node) ->
-    children = []
-
-    for child in node.children
-      if child.name != '#text'
-        children.unshift(child)
-        @mathTags(child)
-        continue
-
-      for c in XRegExp.split(child.text, '')
-        isMath = !!@mapping.math[c]
-        if children.length == 0 || children[0].name != '#text' || isMath != !!children[0].math
-          children.unshift({name: '#text', text: c})
-        else
-          children[0].text += c
-        children[0].math = true if isMath
-
-    children.reverse()
-    node.children = children
+    @walk(Translator.MarkupParser.parse(html, options))
 
   walk: (tag) ->
     return unless tag
 
     switch tag.name
       when '#text'
-        @chars(tag.text, tag.math)
+        @chars(tag.text)
         return
       when 'pre'
         @latex += tag.text
@@ -144,26 +122,34 @@ class LaTeX.HTML
 
     @stack.shift()
 
-  chars: (text, math) ->
+  chars: (text) ->
     latex = ''
-
-    latex += "$" if math
-
-    ### balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed ###
+    math = false
     braced = 0
+
     for c in XRegExp.split(text, '')
+      # in and out of math mode
+      if !!@mapping.math[c] != math
+        latex += '$'
+        math = !!@mapping.math[c]
+
+      ### balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed ###
       switch c
         when '{' then braced += 1
         when '}' then braced -= 1
       if braced < 0
         latex += "\\vphantom\\{"
         braced = 0
-      latex += @mapping.math[c] || @mapping.text[c] || c || ''
+
+      latex += @mapping.math[c] || @mapping.text[c] || c
+
+    # add any missing closing phantom braces
     switch braced
       when 0 then # pass
       when 1 then latex += "\\vphantom\\}"
       else latex += "\\vphantom{#{(new Array(braced + 1)).join("\\}")}}"
 
+    # might still be in math mode at the end
     latex += "$" if math
 
     ### minor cleanup ###
