@@ -92,4 +92,5 @@ titles.push({html: "This is really, <i>really</i> good"})
 
 
 for title in titles
-  display(title.html, title)
+  console.log(title.html)
+  #display(title.html, title)
