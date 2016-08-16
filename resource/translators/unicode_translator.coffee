@@ -37,23 +37,29 @@ class LaTeX.HTML
     @latex += '{{'        if tag.nocase
     @latex += '{\\relax ' if tag.relax
 
+    postfix = ''
     switch tag.name
       when 'i', 'em', 'italic'
-        @latex += '\\emph{'
+        @latex += '{\\emph{'
+        postfix = '}}'
 
       when 'b', 'strong'
-        @latex += '\\textbf{'
+        @latex += '{\\textbf{'
+        postfix = '}}'
 
       when 'a'
         ### zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. ###
         if tag.attrs.href?.length > 0
           @latex += "\\href{#{tag.attrs.href}}{"
+          postfix = '}'
 
       when 'sup'
-        @latex += '\\textsuperscript{'
+        @latex += '{\\textsuperscript{'
+        postfix = '}}'
 
       when 'sub'
-        @latex += '\\textsubscript{'
+        @latex += '{\\textsubscript{'
+        postfix = '}}'
 
       when 'br'
         ### line-breaks on empty line makes LaTeX sad ###
@@ -62,24 +68,30 @@ class LaTeX.HTML
 
       when 'p', 'div', 'table', 'tr'
         @latex += "\n\n"
+        postfix = "\n\n"
 
       when 'h1', 'h2', 'h3', 'h4'
         @latex += "\n\n\\#{(new Array(parseInt(tag.name[1]))).join('sub')}section{"
+        postfix = "}\n\n"
 
       when 'ol'
         @latex += "\n\n\\begin{enumerate}\n"
+        postfix = "\n\n\\end{enumerate}\n"
       when 'ul'
         @latex += "\n\n\\begin{itemize}\n"
+        postfix = "\n\n\\end{itemize}\n"
       when 'li'
         @latex += "\n\\item "
 
       when 'enquote'
         @latex += '\\enquote{'
+        postfix = '}'
 
       when 'span', 'sc', 'nc' then # ignore, handled by the relax/nocase/smallcaps handler above
 
       when 'td', 'th'
         @latex += ' '
+        postfix = ' '
 
       when 'tbody', '#document', 'html', 'head', 'body' then # ignore
 
@@ -89,32 +101,8 @@ class LaTeX.HTML
     for child in tag.children
       @walk(child)
 
-    switch tag.name
-      when 'i', 'italic', 'em'
-        @latex += '}'
+    @latex += postfix
 
-      when 'sup', 'sub', 'b', 'strong'
-        @latex += '}'
-
-      when 'a'
-        @latex += '}' if tag.attrs.href?.length > 0
-
-      when 'h1', 'h2', 'h3', 'h4'
-        @latex += "}\n\n"
-
-      when 'p', 'div', 'table', 'tr'
-        @latex += "\n\n"
-
-      when 'td', 'th'
-        @latex += ' '
-
-      when 'enquote'
-        @latex += '}'
-
-      when 'ol'
-        @latex += "\n\n\\end{enumerate}\n"
-      when 'ul'
-        @latex += "\n\n\\end{itemize}\n"
 
     @latex += '}' if tag.relax
     @latex += '}}' if tag.nocase
