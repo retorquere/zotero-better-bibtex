@@ -24,7 +24,7 @@ Translator.titleCaseLowerCase = '''
 
 display = (html, options) ->
   lang = ((options.language || '<none>') + '        ').substr(0, 8)
-  console.log("#{lang}: <<#{html}>>")
+  console.log("#{lang}: [#{html}]")
   #ast = Translator.MarkupParser.parse(html, {preserveCase: true})
   #console.log(JSON.stringify(ast))
   #console.log(Translator.TitleCaser.titleCase(html))
@@ -32,7 +32,7 @@ display = (html, options) ->
   options.caseConversion = ((options.language || 'en') == 'en')
 
   cp = LaTeX.text2latex(html, options)
-  console.log("bibtex  : <<#{cp}>>")
+  console.log("bibtex  : {#{cp}}")
   console.log('')
 
 titles = [

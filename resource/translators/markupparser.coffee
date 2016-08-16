@@ -298,7 +298,6 @@ class Translator.MarkupParser
             text = text.substring(m[0].length)
 
           else
-            @sentenceStart = (text[1] && (text[0] in [':', ';', '.']) && @re.whitespace.exec(text[1]))
             #console.log('char:', text[0], 'start:', !!@sentenceStart)
             @plaintext(text[0], pos + (length - text.length))
             text = text.substring(1)
