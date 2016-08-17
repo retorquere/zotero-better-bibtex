@@ -340,7 +340,7 @@ class Reference
     return f.value if f.raw || raw
 
     value = LaTeX.text2latex(f.value, {mode: (if f.html then 'html' else 'text'), caseConversion: f.caseConversion && @english})
-    value = "{#{value}}" if Translator.BetterBibTeX && !@english
+    value = "{#{value}}" if f.caseConversion && Translator.BetterBibTeX && !@english
 
     value = new String("{#{value}}") if f.value instanceof String
     return value

@@ -90,7 +90,7 @@ titles = [
 titles.push({html: "This is really, <i>really</i> good"})
 
 titles = [
-  {html: 'Effects of open- and closed-system temperature changes on blood O<sub>2</sub>-binding characteristics of Atlantic bluefin tuna (<i>Thunnus <a span class="nocase">thynnus</span></a></i>)'}
+  {html: "Test of markupconversion: Italics, bold, superscript, subscript, and small caps: Mitochondrial DNA<sub>2</sub> sequences suggest unexpected phylogenetic position of Corso-Sardinian grass snakes (<i>Natrix cetti</i>) and <b>do not</b> support their <span style=\"small-caps\">species status</span>, with notes on phylogeography and subspecies delineation of grass snakes.", language: 'fr'}
 ]
 
 for title in titles

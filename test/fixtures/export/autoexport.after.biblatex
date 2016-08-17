@@ -13,7 +13,7 @@
   publisher = {{IEEE Press}},
   series = {SC '14},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {Application Centric Energy-Efficiency Study of Distributed Multi-Core and Hybrid {{CPU-GPU}} Systems},
+  title = {Application Centric Energy-Efficiency Study of Distributed Multi-Core and Hybrid {{CPU}}-{{GPU}} Systems},
   url = {http://dx.doi.org/10.1109/SC.2014.72},
   urldate = {2015-01-12}
 }
