@@ -86,6 +86,7 @@ class Translator.MarkupParser
           @parseEndTag('', @lastTag)
 
         when html.substring(0, 2) == '</' || html[0] == "\x0F"
+          console.log('end tag:', html)
           if html[0] == '<'
             match = html.match(@re.endTag)
             switch
@@ -93,12 +94,18 @@ class Translator.MarkupParser
               when htmlMode || match[1] == 'span' then # pass
               when @minimal[match[1]] && match[0][match[1].length + 2] == '>' then # pass
               else match = null
+            console.log('recognized end tag:', match, html)
           else
             match = [html[0], 'enquote']
 
           if match
             html = html.substring(match[0].length)
             @parseEndTag.apply(@, match)
+            chars = false
+          else
+            #ignore the angle bracket
+            @handler.chars('<', length - html.length) if @handler.chars
+            html = html.substring(1)
             chars = false
 
         when html[0] == '<' || html[0] == "\x0E"
@@ -129,6 +136,7 @@ class Translator.MarkupParser
         html = if index < 0 then '' else html.substring(index)
         @handler.chars(text, pos) if @handler.chars
       if html == last
+        console.log('not matched:', html)
         throw 'Parse Error: ' + html
       last = html
     # Clean up any remaining tags
@@ -267,6 +275,7 @@ class Translator.MarkupParser
 
       length = text.length
       while text
+        #console.log('todo:', text)
         if m = @re.whitespace.exec(text)
           #console.log('ws')
           @plaintext(m[0], pos + (length - text.length))
@@ -298,7 +307,7 @@ class Translator.MarkupParser
             text = text.substring(m[0].length)
 
           else
-            #console.log('char:', text[0], 'start:', !!@sentenceStart)
+            #console.log('char:', text[0])
             @plaintext(text[0], pos + (length - text.length))
             text = text.substring(1)
 
