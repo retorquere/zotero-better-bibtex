@@ -71,9 +71,9 @@ class LaTeX.HTML
         latex = "\n\\item ..."
 
       when 'enquote'
-        latex = '\\enquote{...}'
+        latex = '{\\enquote{...}}'
 
-      when 'span', 'sc', 'nc' then # ignore, handled by the relax/nocase/smallcaps handler above
+      when 'span', 'sc', 'nc' then # ignore, handled by the relax/nocase/smallcaps handler below
 
       when 'td', 'th'
         latex = ' ... '
