@@ -33,80 +33,66 @@ class LaTeX.HTML
 
     @stack.unshift(tag)
 
-    @latex += '\\textsc{' if tag.smallcaps
-    @latex += '{{'        if tag.nocase
-    @latex += '{\\relax ' if tag.relax
-
-    postfix = ''
+    latex = '...' # default to no-op
     switch tag.name
       when 'i', 'em', 'italic'
-        @latex += '{\\emph{'
-        postfix = '}}'
+        latex = '{\\emph{...}}'
 
       when 'b', 'strong'
-        @latex += '{\\textbf{'
-        postfix = '}}'
+        latex = '{\\textbf{...}}'
 
       when 'a'
         ### zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. ###
-        if tag.attrs.href?.length > 0
-          @latex += "\\href{#{tag.attrs.href}}{"
-          postfix = '}'
+        latex = "\\href{#{tag.attrs.href}}{...}" if tag.attrs.href?.length > 0
 
       when 'sup'
-        @latex += '{\\textsuperscript{'
-        postfix = '}}'
+        latex = '{\\textsuperscript{...}}'
 
       when 'sub'
-        @latex += '{\\textsubscript{'
-        postfix = '}}'
+        latex = '{\\textsubscript{...}}'
 
       when 'br'
+        latex = ''
         ### line-breaks on empty line makes LaTeX sad ###
-        @latex += "\\\\" if @latex != '' && @latex[@latex.length - 1] != "\n"
-        @latex += "\n"
+        latex = "\\\\" if @latex != '' && @latex[@latex.length - 1] != "\n"
+        latex += "\n..."
 
       when 'p', 'div', 'table', 'tr'
-        @latex += "\n\n"
-        postfix = "\n\n"
+        latex = "\n\n...\n\n"
 
       when 'h1', 'h2', 'h3', 'h4'
-        @latex += "\n\n\\#{(new Array(parseInt(tag.name[1]))).join('sub')}section{"
-        postfix = "}\n\n"
+        latex = "\n\n\\#{(new Array(parseInt(tag.name[1]))).join('sub')}section{...}\n\n"
 
       when 'ol'
-        @latex += "\n\n\\begin{enumerate}\n"
-        postfix = "\n\n\\end{enumerate}\n"
+        latex = "\n\n\\begin{enumerate}\n...\n\n\\end{enumerate}\n"
       when 'ul'
-        @latex += "\n\n\\begin{itemize}\n"
-        postfix = "\n\n\\end{itemize}\n"
+        latex = "\n\n\\begin{itemize}\n...\n\n\\end{itemize}\n"
       when 'li'
-        @latex += "\n\\item "
+        latex = "\n\\item ..."
 
       when 'enquote'
-        @latex += '\\enquote{'
-        postfix = '}'
+        latex = '\\enquote{...}'
 
       when 'span', 'sc', 'nc' then # ignore, handled by the relax/nocase/smallcaps handler above
 
       when 'td', 'th'
-        @latex += ' '
-        postfix = ' '
+        latex = ' ... '
 
       when 'tbody', '#document', 'html', 'head', 'body' then # ignore
 
       else
         Translator.debug("unexpected tag '#{tag.name}' (#{Object.keys(tag)})")
 
+    latex = "{\\textsc{...}}".replace('...', latex) if tag.smallcaps
+    latex = "{{...}}".replace('...', latex)         if tag.nocase
+    latex = "{\\relax ...}".replace('...', latex)   if tag.relax
+
+    [prefix, postfix] = latex.split('...')
+
+    @latex += prefix
     for child in tag.children
       @walk(child)
-
     @latex += postfix
-
-
-    @latex += '}' if tag.relax
-    @latex += '}}' if tag.nocase
-    @latex += '}' if tag.smallcaps
 
     @stack.shift()
 
