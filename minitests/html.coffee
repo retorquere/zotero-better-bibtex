@@ -30,7 +30,7 @@ display = (html, options) ->
   console.log("#{lang}: `#{html}`")
   #ast = Translator.MarkupParser.parse(html, {preserveCase: true})
   #console.log(JSON.stringify(ast))
-  #console.log(Translator.TitleCaser.titleCase(html))
+  console.log(Translator.TitleCaser.titleCase(html))
 
   options.caseConversion = ((options.language || 'en') == 'en')
 
@@ -89,7 +89,9 @@ titles = [
 
 titles.push({html: "This is really, <i>really</i> good"})
 
-
+titles = [
+  {html: 'Pre-harvest, Pd-N-heterocyclic, S-matrix, High-speed'}
+]
 
 for title in titles
   display(title.html, title)
