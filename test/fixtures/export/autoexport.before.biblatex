@@ -1,7 +1,7 @@
 
 @inproceedings{CapEA11,
   author = {Cappello, Franck and Jacquelin, Mathias and Marchal, Loris and Robert, Yves and Snir, Marc},
-  booktitle = {High Performance Computing ({{HiPC}}), 2011 18th International Conference On},
+  booktitle = {High Performance Computing ({{HiPC}}), 2011 18th International Conference on},
   date = {2011},
   doi = {10.1109/HiPC.2011.6152428},
   keywords = {bdec15,zotero_testcase},
@@ -26,7 +26,7 @@
   publisher = {{IEEE Press}},
   series = {SC '14},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {Application Centric Energy-Efficiency Study of Distributed Multi-Core and Hybrid {{CPU-GPU}} Systems},
+  title = {Application Centric Energy-Efficiency Study of Distributed Multi-Core and Hybrid {{CPU}}-{{GPU}} Systems},
   url = {http://dx.doi.org/10.1109/SC.2014.72},
   urldate = {2015-01-12}
 }
