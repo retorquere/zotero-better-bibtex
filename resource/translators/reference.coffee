@@ -47,7 +47,7 @@ class Reference
         if sim[0].sim >= 0.9
           @language = sim[0].lang
         else
-          delete @language
+          @language = @item.language
 
       @english = @language in ['american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'USenglish', 'UKenglish']
       Translator.debug('detected language:', {language: @language, english: @english})
@@ -829,7 +829,7 @@ Language.lookup = (langcode) ->
 Language.fromPrefix = (langcode) ->
   return false unless langcode && langcode.length >= 2
 
-  if ! @prefix[langcode]?
+  unless @prefix[langcode]?
     # consider a langcode matched if it is the prefix of exactly one language in the map
     lc = langcode.toLowerCase()
     matches = []
