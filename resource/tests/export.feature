@@ -56,6 +56,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
      | Better BibLaTeX.019                                                                | 1           |
      | Ignore HTML tags when generating citation key #264                                 | 1           |
      | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |
@@ -79,7 +80,6 @@ Scenario Outline: BibLaTeX Export
      | Capitalisation in techreport titles #160                                           | 1           |
      | German Umlaut separated by brackets #146                                           | 1           |
      | HTML Fragment separator escaped in url #140 #147                                   | 1           |
-     | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
      | Export Newspaper Article misses section field #132                                 | 1           |
      | Exporting of single-field author lacks braces #130                                 | 1           |
      | Math parts in title #113                                                           | 1           |

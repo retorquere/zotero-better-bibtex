@@ -450,7 +450,7 @@ class Reference
         match: @isBibVar(field.value)
       })
       if typeof field.value == 'number' || (field.preserveBibTeXVariables && @isBibVar(field.value))
-        value = field.value
+        value = '' + field.value
       else
         enc = field.enc || Translator.fieldEncoding[field.name] || 'latex'
         value = @["enc_#{enc}"](field, @raw)
