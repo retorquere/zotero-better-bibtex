@@ -237,9 +237,9 @@ class Translator.MarkupParser
       if tag.attr.class
         for cls in tag.attr.class.split(/\s+/)
           tag.class[cls] = true
-      tag.smallcaps = true if name == 'sc' || (tag.attr.style || '').match(/small-caps/i)
-      tag.nocase = true if tag.class.nocase || name == 'nc'
-      tag.relax = true if tag.attr.relax?
+      tag.smallcaps = true if name == 'sc' || tag.class.smallcaps || tag.attr.smallcaps? || (tag.attr.style || '').match(/small-caps/i)
+      tag.nocase = true if tag.attr.nocase? || tag.class.nocase || name == 'nc'
+      tag.relax = true if tag.attr.relax? || tag.class.relax
 
       @elems[0].children.push(tag)
       @elems.unshift(tag)

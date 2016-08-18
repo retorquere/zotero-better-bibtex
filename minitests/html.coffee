@@ -39,5 +39,5 @@ display = (html, options) ->
   console.log('')
 
 
-html = "The largest U.S. companies would owe $620 billion in U.S. taxes on the cash they store in tax havens, the equivalent of our defense budget. [Tweet]"
+html = "Effects of open- and closed-system temperature changes on blood O<sub>2</sub>-binding characteristics of Atlantic bluefin tuna (<i nocase>Thunnus thynnus</i>)"
 display(html, {})
