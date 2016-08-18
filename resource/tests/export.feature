@@ -17,6 +17,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | italics in title - capitalization #541                                                         | 1           |
      | Better BibLaTeX.007                                                                            | 1           |
      | Be robust against misconfigured journal abbreviator #127                                       | 1           |
      | Date parses incorrectly with year 1000 when source Zotero field is in datetime format. #515    | 1           |
@@ -47,7 +48,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.001                                                                            | 1           |
      | Fields in Extra should override defaults                                                       | 1           |
      | BraceBalancer                                                                                  | 1           |
-     | italics in title - capitalization #541                                                         | 1           |
 
 @test-cluster-1 @bblt-1 @bblt @435 @293 @381
 Scenario Outline: BibLaTeX Export
