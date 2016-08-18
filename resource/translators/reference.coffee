@@ -628,7 +628,7 @@ Language = new class
         'canadian'
         'canadien'
       ]
-      fr: ['french', 'francais']
+      fr: ['french', 'francais', 'français']
       fur: 'friulan'
       ga: 'irish'
       gd: ['scottish', 'gaelic']
