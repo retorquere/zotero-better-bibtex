@@ -459,6 +459,9 @@ class Reference
 
         value = "{#{value}}" unless field.bare && !field.value.match(/\s/)
 
+      # separation protection at end unnecesary
+      value = value.replace(/{}$/, '')
+
       field.bibtex = "#{value}"
 
     field.bibtex = field.bibtex.normalize('NFKC') if @normalize

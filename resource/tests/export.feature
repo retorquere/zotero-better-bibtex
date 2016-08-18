@@ -47,6 +47,7 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.001                                                                            | 1           |
      | Fields in Extra should override defaults                                                       | 1           |
      | BraceBalancer                                                                                  | 1           |
+     | italics in title - capitalization #541                                                         | 1           |
 
 @test-cluster-1 @bblt-1 @bblt @435 @293 @381
 Scenario Outline: BibLaTeX Export
@@ -184,10 +185,10 @@ Scenario: CAYW picker
   And the picks for scannable-cite should be '{|Abram, 2014|p. 1||zu:0:ITEMKEY}{|Pollard and Bray, 2007|ch. 1||zu:0:ITEMKEY}'
 
 @307 @bbt
-Scenario: thesis zotero entries always create  bibtex entries #307
-  When I import 2 references from 'export/thesis zotero entries always create  bibtex entries #307.json'
-  Then a library export using 'Better BibTeX' should match 'export/thesis zotero entries always create  bibtex entries #307.bibtex'
-  And a library export using 'Better BibLaTeX' should match 'export/thesis zotero entries always create  bibtex entries #307.biblatex'
+Scenario: thesis zotero entries always create @phpthesis bibtex entries #307
+  When I import 2 references from 'export/thesis zotero entries always create @phdthesis bibtex entries #307.json'
+  Then a library export using 'Better BibTeX' should match 'export/thesis zotero entries always create @phdthesis bibtex entries #307.bibtex'
+  And a library export using 'Better BibLaTeX' should match 'export/thesis zotero entries always create @phdthesis bibtex entries #307.biblatex'
 
 @402 @bbt
 Scenario: bibtex; url export does not survive underscores #402
