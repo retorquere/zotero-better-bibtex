@@ -24,12 +24,45 @@ Translator.titleCaseLowerCase = '''
   regardless such their where
 '''.replace(/\n/g, ' ').trim().split(/\s+/)
 
+class Reconstruct
+  constructor: (ast) ->
+    @html = ''
+
+    @walk(ast)
+
+  walk: (node) ->
+    if node.name == '#text'
+      @html += node.text.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      return
+
+    for k of node
+      node.attr[k] ||= '' unless k in ['children', 'name', 'attr', 'class']
+
+    if node.name == 'span' && Object.keys(node.attr).length == 0
+      for child in node.children
+        @walk(child)
+      return
+
+    @html += "<#{node.name}"
+    for k, v of node.attr
+      @html += " #{k}='#{v}'"
+    @html += '>'
+    for child in node.children
+      @walk(child)
+    @html += "</#{node.name}>"
+
 display = (html, options) ->
+  console.log(html)
+  ast = Translator.MarkupParser.parse(html, {caseConversion: true})
+  console.log(JSON.stringify(ast, null, 2))
+  console.log((new Reconstruct(ast)).html)
+  console.log(LaTeX.text2latex(html, {caseConversion: true}))
+  return
+
   lang = ((options.language || '<none>') + '        ').substr(0, 8)
   console.log(options.source)
   console.log("#{lang}: `#{html}`")
-  #ast = Translator.MarkupParser.parse(html, {preserveCase: true})
-  #console.log(JSON.stringify(ast))
+
   console.log(Translator.TitleCaser.titleCase(html))
 
   options.caseConversion = ((options.language || 'en') == 'en')
@@ -38,6 +71,5 @@ display = (html, options) ->
   console.log("biblatex: {#{cp}}")
   console.log('')
 
-
-html = "Effects of open- and closed-system temperature changes on blood O<sub>2</sub>-binding characteristics of Atlantic bluefin tuna (<i nocase>Thunnus thynnus</i>)"
+html = '<i>Foo</i>'
 display(html, {})

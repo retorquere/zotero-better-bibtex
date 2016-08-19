@@ -143,6 +143,10 @@ class Translator.MarkupParser
 
       @simplify(@handler.root)
 
+      ### BibLaTeX is beyond insane https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240999396 ###
+      # MUST come after simplify
+      @unwrapNocase(@handler.root)
+
     return @handler.root
 
   innerText: (node, text = '') ->
@@ -152,6 +156,39 @@ class Translator.MarkupParser
       for child in node.children
         text = @innerText(child, text)
     return text
+
+  unwrapNocase: (node) ->
+    return node if node.name == '#text'
+
+    children = (@unwrapNocase(child) for child in node.children)
+    node.children = [].concat(children...)
+
+    expand = false
+    for child in node.children
+      if child.nocase
+        expand = true
+        break
+    return node unless expand
+
+    expanded = []
+    last = null
+    for child in node.children
+      clone = JSON.parse(JSON.stringify(node))
+
+      switch
+        when child.nocase
+          clone.children = child.children
+          child.children = [clone]
+          expanded.push(child)
+          last = null
+        when last && !last.nocase
+          last.children.push(child)
+        else
+          clone.children = [child]
+          expanded.push(clone)
+          last = clone
+
+    return expanded
 
   simplify: (node, isNoCased) ->
     delete node.nocase if isNoCased

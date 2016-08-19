@@ -13,12 +13,12 @@ LaTeX.html2latex = (html, options) ->
   return latex
 
 class LaTeX.HTML
-  constructor: (html, options = {}) ->
+  constructor: (html, @options = {}) ->
     @latex = ''
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
     @stack = []
 
-    @walk(Translator.MarkupParser.parse(html, options))
+    @walk(Translator.MarkupParser.parse(html, @options))
 
   walk: (tag) ->
     return unless tag
@@ -36,20 +36,20 @@ class LaTeX.HTML
     latex = '...' # default to no-op
     switch tag.name
       when 'i', 'em', 'italic'
-        latex = '{\\emph{...}}'
+        latex = '\\emph{...}'
 
       when 'b', 'strong'
-        latex = '{\\textbf{...}}'
+        latex = '\\textbf{...}'
 
       when 'a'
         ### zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. ###
         latex = "\\href{#{tag.attrs.href}}{...}" if tag.attrs.href?.length > 0
 
       when 'sup'
-        latex = '{\\textsuperscript{...}}'
+        latex = '\\textsuperscript{...}'
 
       when 'sub'
-        latex = '{\\textsubscript{...}}'
+        latex = '\\textsubscript{...}'
 
       when 'br'
         latex = ''
@@ -71,7 +71,7 @@ class LaTeX.HTML
         latex = "\n\\item ..."
 
       when 'enquote'
-        latex = '{\\enquote{...}}'
+        latex = '\\enquote{...}'
 
       when 'span', 'sc', 'nc' then # ignore, handled by the relax/nocase/smallcaps handler below
 
@@ -83,9 +83,18 @@ class LaTeX.HTML
       else
         Translator.debug("unexpected tag '#{tag.name}' (#{Object.keys(tag)})")
 
-    latex = "{\\textsc{...}}".replace('...', latex) if tag.smallcaps
-    latex = "{{...}}".replace('...', latex)         if tag.nocase
-    latex = "{\\relax ...}".replace('...', latex)   if tag.relax
+    ### holy mother of %^$#^%$@ the bib(la)tex case conversion rules are insane ###
+    ### https://github.com/retorquere/zotero-better-bibtex/issues/541 ###
+    ### https://github.com/plk/biblatex/issues/459 ... oy! ###
+    @embrace ?= @options.caseConversion && ((latex != '...' && ((@latex || latex)[0] != '\\')) || Translator.BetterBibTeX)
+
+    latex = '{' + latex + '}' if @embrace && latex.match(/^\\[a-z]+{\.\.\.}$/)
+
+    latex = "\\textsc{#{latex}}" if tag.smallcaps
+    latex = '{' + latex + '}'    if @embrace && tag.smallcaps
+
+    latex = "{{#{latex}}}"         if tag.nocase
+    latex = "{\\relax #{latex}}"   if tag.relax
 
     [prefix, postfix] = latex.split('...')
 
