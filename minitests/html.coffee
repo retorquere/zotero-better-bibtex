@@ -4,6 +4,8 @@ Translator.csquotes = {
   close: '›»'
 }
 Translator.unicode = true
+Translator.BetterBibTeX = false
+Translator.BetterBibLaTeX = true
 
 Translator.titleCaseLowerCase = '''
   about above across afore after against along

@@ -83,16 +83,8 @@ class LaTeX.HTML
       else
         Translator.debug("unexpected tag '#{tag.name}' (#{Object.keys(tag)})")
 
-    ### holy mother of %^$#^%$@ the bib(la)tex case conversion rules are insane ###
-    ### https://github.com/retorquere/zotero-better-bibtex/issues/541 ###
-    ### https://github.com/plk/biblatex/issues/459 ... oy! ###
-    @embrace ?= @options.caseConversion && ((latex != '...' && ((@latex || latex)[0] != '\\')) || Translator.BetterBibTeX)
-
-    latex = '{' + latex + '}' if @embrace && latex.match(/^\\[a-z]+{\.\.\.}$/)
-
-    latex = "\\textsc{#{latex}}" if tag.smallcaps
-    latex = '{' + latex + '}'    if @embrace && tag.smallcaps
-
+    latex = @embrace(latex, latex.match(/^\\[a-z]+{\.\.\.}$/)) if latex != '...'
+    latex = @embrace("\\textsc{#{latex}}", true) if tag.smallcaps
     latex = "{{#{latex}}}"         if tag.nocase
     latex = "{\\relax #{latex}}"   if tag.relax
 
@@ -104,6 +96,14 @@ class LaTeX.HTML
     @latex += postfix
 
     @stack.shift()
+
+  embrace: (latex, condition) ->
+    ### holy mother of %^$#^%$@ the bib(la)tex case conversion rules are insane ###
+    ### https://github.com/retorquere/zotero-better-bibtex/issues/541 ###
+    ### https://github.com/plk/biblatex/issues/459 ... oy! ###
+    @embraced ?= @options.caseConversion && (((@latex || latex)[0] != '\\') || Translator.BetterBibTeX)
+    return latex unless @embraced && condition
+    return '{' + latex + '}'
 
   chars: (text) ->
     latex = ''
@@ -124,7 +124,8 @@ class LaTeX.HTML
         latex += "\\vphantom\\{"
         braced = 0
 
-      latex += @mapping.math[c] || @mapping.text[c] || c
+      c = @mapping.math[c] || @mapping.text[c] || c
+      latex += @embrace(c, LaTeX.toLaTeX.embrace[c])
 
     # add any missing closing phantom braces
     switch braced
