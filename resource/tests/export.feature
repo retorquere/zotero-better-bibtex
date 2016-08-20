@@ -17,6 +17,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Abbreviations in key generated for Conference Proceedings #548                                 | 1           |
      | Date parses incorrectly with year 1000 when source Zotero field is in datetime format. #515    | 1           |
      | Dollar sign in title not properly escaped #485                                                 | 1           |
      | Book sections have book title for journal in citekey #409                                      | 1           |
