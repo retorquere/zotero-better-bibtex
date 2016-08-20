@@ -6,7 +6,6 @@
     "preferences": {
       "citekeyFormat": "[auth][year]",
       "skipFields": "keywords,abstract,file",
-      "usePrefix": false,
       "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/ieee"
     },

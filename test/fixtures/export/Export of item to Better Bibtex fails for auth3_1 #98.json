@@ -4,8 +4,7 @@
     "label": "BetterBibTeX JSON",
     "preferences": {
       "citekeyFormat": "[auth3][auth3_1][auth3_2][auth3_3][auth3_4][shortyear]",
-      "skipFields": "url,issn",
-      "usePrefix": false
+      "skipFields": "url,issn"
     },
     "options": {
       "exportFileData": false,

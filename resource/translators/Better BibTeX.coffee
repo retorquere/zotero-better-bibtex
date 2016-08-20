@@ -5,13 +5,13 @@ Translator.fieldMap = {
   edition:          { name: 'edition' }
   type:             { name: 'type' }
   series:           { name: 'series' }
-  title:            { name: 'title', autoCase: true }
+  title:            { name: 'title', caseConversion: true }
   volume:           { name: 'volume' }
   rights:           { name: 'copyright' }
   ISBN:             { name: 'isbn' }
   ISSN:             { name: 'issn' }
   callNumber:       { name: 'lccn'}
-  shortTitle:       { name: 'shorttitle', autoCase: true }
+  shortTitle:       { name: 'shorttitle', caseConversion: true }
   DOI:              { name: 'doi' }
   abstractNote:     { name: 'abstract' }
   country:          { name: 'nationality' }
@@ -86,7 +86,7 @@ doExport = ->
 
     switch
       when item.itemType in ['bookSection', 'conferencePaper']
-        ref.add({ name: 'booktitle',  autoCase: true, value: item.publicationTitle, preserveBibTeXVariables: true })
+        ref.add({ name: 'booktitle',  caseConversion: true, value: item.publicationTitle, preserveBibTeXVariables: true })
       when ref.isBibVar(item.publicationTitle)
         ref.add({ name: 'journal', value: item.publicationTitle, preserveBibTeXVariables: true })
       else
@@ -111,7 +111,7 @@ doExport = ->
         ref.add({ name: 'month', value: months[date.month - 1], bare: true }) if date.month
         ref.add({ year: '' + date.year })
 
-    ref.add({ name: 'note', value: item.extra, allowDuplicates: true })
+    ref.add({ name: 'note', value: item.extra, allowDuplicates: true, html: true })
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
     if item.pages
@@ -121,7 +121,7 @@ doExport = ->
 
     if item.notes and Translator.exportNotes
       for note in item.notes
-        ref.add({ name: 'annote', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true })
+        ref.add({ name: 'annote', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true, html: true })
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
     ref.complete()

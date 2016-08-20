@@ -6,11 +6,9 @@
     "preferences": {
       "citekeyFormat": "[auth][year]",
       "skipFields": "",
-      "usePrefix": false,
       "langID": "babel",
       "autoAbbrev": true,
       "autoAbbrevStyle": "",
-      "unicode": "",
       "pinCitekeys": "manual",
       "rawImports": false,
       "DOIandURL": "both",

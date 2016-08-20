@@ -16,66 +16,6 @@ do ->
 
 Components.utils.import('resource://zotero-better-bibtex/citeproc.js', Zotero.BetterBibTeX)
 
-Zotero.BetterBibTeX.titleCase = {
-  state: {
-    opt: { lang: 'en' }
-    locale: {
-      en: {
-        opts: {
-          'skip-words': Zotero.BetterBibTeX.CSL.SKIP_WORDS
-          'leading-noise-words': 'a,an,the'
-        }
-      }
-    }
-  }
-}
-Zotero.BetterBibTeX.titleCase.state.locale.en.opts['skip-words-regexp'] = new RegExp('(?:(?:[?!:]*\\s+|-|^)(?:' + Zotero.BetterBibTeX.titleCase.state.locale.en.opts['skip-words'].slice().join('|') + ')(?=[!?:]*\\s+|-|$))', 'g')
-
-Zotero.BetterBibTeX.HTMLParser = new class
-  DOMParser: Components.classes["@mozilla.org/xmlextras/domparser;1"].createInstance(Components.interfaces.nsIDOMParser)
-  ELEMENT_NODE:                 1
-  TEXT_NODE:                    3
-  CDATA_SECTION_NODE:           4
-  PROCESSING_INSTRUCTION_NODE:  7
-  COMMENT_NODE:                 8
-  DOCUMENT_NODE:                9
-  DOCUMENT_TYPE_NODE:           10
-  DOCUMENT_FRAGMENT_NODE:       11
-
-  text: (html) ->
-    doc = @DOMParser.parseFromString("<span>#{html}</span>", 'text/html')
-    doc = doc.documentElement if doc.nodeType == @DOCUMENT_NODE
-    txt = doc.textContent
-    Zotero.BetterBibTeX.debug('html2text:', {html, txt})
-    return txt
-
-  parse: (html) ->
-    return @walk(@DOMParser.parseFromString("<span>#{html}</span>", 'text/html'))
-
-  walk: (node, json) ->
-    tag = {name: node.nodeName.toLowerCase(), attrs: {}, class: {}, children: []}
-
-    if node.nodeType in [@TEXT_NODE, @CDATA_SECTION_NODE]
-      tag.text = node.textContent
-    else
-      tag.text = node.text if tag.name == 'script'
-      if node.nodeType == @ELEMENT_NODE && node.hasAttributes()
-        for attr in node.attributes
-          tag.attrs[attr.name] = attr.value
-        if tag.attrs.class
-          for cls in tag.attrs.class.split(/\s+/)
-            continue unless cls
-            tag.class[cls] = true
-
-      if node.childNodes
-        for child in [0 ... node.childNodes.length]
-          @walk(node.childNodes.item(child), tag)
-
-    return tag unless json
-
-    json.children.push(tag)
-    return json
-
 class Zotero.BetterBibTeX.DateParser
   parseDateToObject: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).date
   parseDateToArray: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).array()
@@ -562,18 +502,9 @@ Zotero.BetterBibTeX.init = ->
         ### twice to work around https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping ###
         Zotero.BetterBibTeX.CSL.parseParticles(name)
         Zotero.BetterBibTeX.CSL.parseParticles(name)
-      titleCase: (sandbox, string) ->
-        ### TODO: workaround for https://bitbucket.org/fbennett/citeproc-js/issues/187/title-case-formatter-does-not-title-case ###
-        string = string.replace(/\(/g, "(\x02 ")
-        string = string.replace(/\)/g, " \x03)")
-        string = Zotero.BetterBibTeX.CSL.Output.Formatters.title(Zotero.BetterBibTeX.titleCase.state, string)
-        string = string.replace(/\x02 /g, '')
-        string = string.replace(/ \x03/g, '')
-        return string
     }
     parseDateToObject: (sandbox, date, locale) -> Zotero.BetterBibTeX.DateParser::parseDateToObject(date, {locale, verbatimDetection: true})
     parseDateToArray: (sandbox, date, locale) -> Zotero.BetterBibTeX.DateParser::parseDateToArray(date, {locale, verbatimDetection: true})
-    HTMLParser: (sandbox, html) -> Zotero.BetterBibTeX.HTMLParser.parse(html)
   }
 
   for own name, endpoint of @endpoints

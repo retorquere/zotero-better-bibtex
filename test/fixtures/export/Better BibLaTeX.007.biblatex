@@ -7,7 +7,7 @@
   langid = {french},
   pages = {71--80},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {Test of markupconversion: {{Italics}}, bold, superscript, subscript, and small caps: {{Mitochondrial DNA}}{\textsubscript{2}} sequences suggest unexpected phylogenetic position of {{Corso-Sardinian}} grass snakes ({\emph{Natrix cetti}}) and {\textbf{do not}} support their {\textsc{species status}}, with notes on phylogeography and subspecies delineation of grass snakes.},
+  title = {Test of markupconversion: Italics, bold, superscript, subscript, and small caps: Mitochondrial DNA\textsubscript{2} sequences suggest unexpected phylogenetic position of Corso-Sardinian grass snakes (\emph{Natrix cetti}) and \textbf{do not} support their \textsc{species status}, with notes on phylogeography and subspecies delineation of grass snakes.},
   volume = {12}
 }
 

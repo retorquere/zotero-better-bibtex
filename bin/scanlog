@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+re = Regexp.new(ARGV[1])
+
+def duration(msecs)
+  seconds = (msecs / 1000).to_i
+
+  hours = seconds / 3600
+  seconds -= hours * 3600
+
+  minutes = seconds / 60
+  seconds -= minutes * 60
+
+  return "#{hours.to_s.rjust(2, '0')}:#{minutes.to_s.rjust(2, '0')}:#{seconds.to_s.rjust(2, '0')}"
+end
+
+time = 0
+IO.readlines(ARGV[0]).each_with_index{|line, i|
+  if line =~ /^\([0-9]\)\(\+([0-9]+)\):/
+    time += $1.to_i
+  end
+  puts "#{duration(time)}: #{line[0, 200]}" if re.match(line)
+}
