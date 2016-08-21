@@ -24,8 +24,8 @@ Translator.fieldMap = {
 
 Translator.typeMap = {
 # BibTeX                              Zotero
-  'book booklet manual proceedings':  'book'
-  'incollection inbook':              'bookSection'
+  'book booklet manual proceedings collection':  'book'
+  'incollection inbook inreference':  'bookSection'
   'article misc':                     'journalArticle magazineArticle newspaperArticle'
   'phdthesis mastersthesis thesis':   'thesis'
   unpublished:                        'manuscript'
@@ -149,7 +149,7 @@ doImport = ->
     data = ''
     while (read = Zotero.read(0x100000)) != false
       data += read
-    bib = BetterBibTeXParser.parse(data, {raw: Translator.rawImports})
+    bib = BetterBibTeXParser.parse(data, {csquotes: Translator.csquotes, raw: Translator.rawImports})
 
     for ref in bib.references
       new ZoteroItem(ref)
@@ -244,7 +244,7 @@ ZoteroItem::import = (bibtex) ->
           @item.title += ' ' if @item.title.length
         @item.title += value
 
-      when 'journal'
+      when 'journal', 'journaltitle',
         if @item.publicationTitle
           @item.journalAbbreviation = value
         else
