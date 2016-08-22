@@ -71,7 +71,10 @@ class LaTeX.HTML
         latex = "\n\\item ..."
 
       when 'enquote'
-        latex = '\\enquote{...}'
+        if Translator.BetterBibTeX
+          latex = '\\enquote{...}'
+        else
+          latex = '\\mkbibquote{...}'
 
       when 'span', 'sc', 'nc' then # ignore, handled by the relax/nocase/smallcaps handler below
 
