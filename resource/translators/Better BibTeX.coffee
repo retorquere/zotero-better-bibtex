@@ -244,7 +244,7 @@ ZoteroItem::import = (bibtex) ->
           @item.title += ' ' if @item.title.length
         @item.title += value
 
-      when 'journal', 'journaltitle',
+      when 'journal', 'journaltitle'
         if @item.publicationTitle
           @item.journalAbbreviation = value
         else
