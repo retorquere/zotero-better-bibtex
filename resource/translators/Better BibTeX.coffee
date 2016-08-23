@@ -181,7 +181,7 @@ JabRef.importGroup = (group) ->
 
 class ZoteroItem
   constructor: (bibtex) ->
-    @type = Translator.typeMap.BibTeX2Zotero[Zotero.Utilities.trimInternal((bibtex.type || bibtex.__type__).toLowerCase())] || 'journalArticle'
+    @type = Translator.typeMap.BibTeX2Zotero[Zotero.Utilities.trimInternal(bibtex.__type__.toLowerCase())] || 'journalArticle'
     @item = new Zotero.Item(@type)
     @item.itemID = bibtex.__key__
     Translator.log("new reference: #{@item.itemID}")
@@ -229,7 +229,10 @@ ZoteroItem::import = (bibtex) ->
       continue
 
     switch field
-      when '__note__', '__key__', 'type', 'added-at', 'timestamp' then continue
+      when '__note__', '__key__', 'added-at', 'timestamp' then continue
+
+      when 'type'
+        @item.sessionType = @item.websiteType = @item.manuscriptType = @item.genre = @item.postType = @item.sessionType = @item.letterType = @item.manuscriptType = @item.mapType = @item.presentationType = @item.regulationType = @item.reportType = @item.thesisType = @item.websiteType = value
 
       when '__type__'
         @item.thesisType = bibtex.__type__ if bibtex.__type__ in [ 'phdthesis', 'mastersthesis' ]
