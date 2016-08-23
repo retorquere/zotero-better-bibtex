@@ -6,7 +6,6 @@
     "preferences": {
       "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize]",
       "skipFields": "abstract,note",
-      "usePrefix": false,
       "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard"
     },

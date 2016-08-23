@@ -3,7 +3,7 @@
 #
 # The global Translator object allows access to the current configuration of the translator
 #
-# @param {enum} titleCase whether titles should be title-cased
+# @param {enum} caseConversion whether titles should be title-cased and case-preserved
 # @param {boolean} bibtexURL set to true when BBT will generate \url{..} around the urls for BibTeX
 ###
 
@@ -33,10 +33,13 @@ class Reference
 
     if !@item.language
       @english = true
+      Translator.debug('detecting language: defaulting to english')
     else
       langlc = @item.language.toLowerCase()
       @language = Language.babelMap[langlc.replace(/[^a-z0-9]/, '_')]
       @language ||= Language.babelMap[langlc.replace(/-[a-z]+$/i, '').replace(/[^a-z0-9]/, '_')]
+      @language ||= Language.fromPrefix(langlc)
+      Translator.debug('detecting language:', {langlc, language: @language})
       if @language
         @language = @language[0]
       else
@@ -44,9 +47,10 @@ class Reference
         if sim[0].sim >= 0.9
           @language = sim[0].lang
         else
-          delete @language
+          @language = @item.language
 
       @english = @language in ['american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'USenglish', 'UKenglish']
+      Translator.debug('detected language:', {language: @language, english: @english})
 
     @referencetype = Translator.typeMap.Zotero2BibTeX[@item.itemType] || 'misc'
 
@@ -278,7 +282,7 @@ class Reference
           Zotero.BetterBibTeX.CSL.parseParticles(name)
 
           if name.given && name.given.indexOf(@_enc_creators_relax_marker) >= 0 # zero-width space
-            name.given = '<span class="relax">' + name.given.replace(@_enc_creators_relax_marker, '</span>')
+            name.given = '<span relax="true">' + name.given.replace(@_enc_creators_relax_marker, '</span>')
 
           @useprefix ||= !!name['non-dropping-particle']
           @juniorcomma ||= (f.juniorcomma && name['comma-suffix'])
@@ -325,7 +329,7 @@ class Reference
   # @return {String} field.value encoded as author-style value
   ###
   enc_latex: (f, raw) ->
-    Translator.debug('enc_latex:', {f, raw})
+    Translator.debug('enc_latex:', {f, raw, english: @english})
     return f.value if typeof f.value == 'number'
     return null unless f.value
 
@@ -335,7 +339,9 @@ class Reference
 
     return f.value if f.raw || raw
 
-    value = LaTeX.text2latex(f.value, {preserveCase: f.preserveCase || f.autoCase, autoCase: f.autoCase && @english})
+    value = LaTeX.text2latex(f.value, {mode: (if f.html then 'html' else 'text'), caseConversion: f.caseConversion && @english})
+    value = "{#{value}}" if f.caseConversion && Translator.BetterBibTeX && !@english
+
     value = new String("{#{value}}") if f.value instanceof String
     return value
 
@@ -444,7 +450,7 @@ class Reference
         match: @isBibVar(field.value)
       })
       if typeof field.value == 'number' || (field.preserveBibTeXVariables && @isBibVar(field.value))
-        value = field.value
+        value = '' + field.value
       else
         enc = field.enc || Translator.fieldEncoding[field.name] || 'latex'
         value = @["enc_#{enc}"](field, @raw)
@@ -452,6 +458,9 @@ class Reference
         return unless value
 
         value = "{#{value}}" unless field.bare && !field.value.match(/\s/)
+
+      # separation protection at end unnecesary
+      value = value.replace(/{}$/, '')
 
       field.bibtex = "#{value}"
 
@@ -501,10 +510,10 @@ class Reference
         cslvar = Translator.CSLVariables[name]
         mapped = cslvar[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
         mapped = mapped.call(@) if typeof mapped == 'function'
-        autoCase = name in ['title', 'shorttitle', 'origtitle', 'booktitle', 'maintitle']
+        caseConversion = name in ['title', 'shorttitle', 'origtitle', 'booktitle', 'maintitle']
 
         if mapped
-          fields.push({ name: mapped, value: value.value, autoCase, raw: false, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type) })
+          fields.push({ name: mapped, value: value.value, caseConversion, raw: false, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type) })
 
         else
           Translator.debug('Unmapped CSL field', name, '=', value.value)
@@ -622,7 +631,7 @@ Language = new class
         'canadian'
         'canadien'
       ]
-      fr: ['french', 'francais']
+      fr: ['french', 'francais', 'français']
       fur: 'friulan'
       ga: 'irish'
       gd: ['scottish', 'gaelic']
@@ -652,7 +661,7 @@ Language = new class
       ml: 'malayalam'
       mn: 'mongolian'
       mr: 'marathi'
-      nb: ['norsk', 'bokmal']
+      nb: ['norsk', 'bokmal', 'nob']
       nl: 'dutch'
       nn: 'nynorsk'
       no: ['norwegian', 'norsk']
@@ -700,7 +709,8 @@ Language = new class
       for lang in v
         @babelList.push(lang) if @babelList.indexOf(lang) < 0
 
-    @cache = Object.create(null)
+    @cache = {}
+    @prefix = {}
 
 #  @polyglossia = [
 #    'albanian'
@@ -818,3 +828,22 @@ Language.lookup = (langcode) ->
     @cache[langcode].sort((a, b) -> b.sim - a.sim)
 
   return @cache[langcode]
+
+Language.fromPrefix = (langcode) ->
+  return false unless langcode && langcode.length >= 2
+
+  unless @prefix[langcode]?
+    # consider a langcode matched if it is the prefix of exactly one language in the map
+    lc = langcode.toLowerCase()
+    matches = []
+    for code, languages of Language.babelMap
+      for lang in languages
+        continue if lang.toLowerCase().indexOf(lc) != 0
+        matches.push(languages)
+        break
+    if matches.length == 1
+      @prefix[langcode] = matches[0]
+    else
+      @prefix[langcode] = false
+
+  return @prefix[langcode]

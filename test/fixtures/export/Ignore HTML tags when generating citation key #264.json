@@ -7,7 +7,6 @@
       "citekeyFormat": "[auth:fold:lower][Title:fold:nopunct:skipwords:select,1,1:lower:prefix,_][year:prefix,_][0]",
       "skipWords": "a,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,das,de,del,der,des,despite,die,do,down,during,ein,eine,einem,einen,einer,eines,el,except,for,from,in,inside,into,is,l,la,las,le,les,like,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,while,with,within,without,yet,zu,zum",
       "skipFields": "",
-      "usePrefix": false,
       "langID": "babel",
       "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
@@ -40,7 +39,7 @@
       "date": "1998",
       "accessDate": "2015-07-07",
       "libraryCatalog": "journals.lib.unb.ca",
-      "title": "<i><span class=\"nocase\">Nodo unitatis et caritatis</span></i>: The Structure and Argument of Augustine's <i><span class=\"nocase\">De doctrina Christiana</span></i>",
+      "title": "<i><span class=\"nocase\">Nodo unitatis et caritatis</span></i>: The structure and argument of Augustine's <i><span class=\"nocase\">De doctrina Christiana</span></i>",
       "creators": [
         {
           "creatorType": "author",

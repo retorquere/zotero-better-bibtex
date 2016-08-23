@@ -127,9 +127,12 @@ class BetterBibTeXPatternFormatter
     return null if words.length == 0
     return words
 
+  DOMParser: Components.classes["@mozilla.org/xmlextras/domparser;1"].createInstance(Components.interfaces.nsIDOMParser)
   innerText: (str) ->
     return '' unless str
-    return Zotero.BetterBibTeX.HTMLParser.text(str)
+    doc = @DOMParser.parseFromString("<span>#{str}</span>", 'text/html')
+    doc = doc.documentElement if doc.nodeType == 9 # DOCUMENT_NODE
+    return doc.textContent
 
   creators: (onlyEditors, withInitials) ->
     return [] unless @item.creators?.length

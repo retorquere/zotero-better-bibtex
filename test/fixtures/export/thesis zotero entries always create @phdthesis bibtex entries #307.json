@@ -11,7 +11,6 @@
       "autoAbbrev": true,
       "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize:fold:alphanum]",
       "DOIandURL": "both",
-      "titleCase": false,
       "skipFields": "abstract,note,file"
     },
     "options": {
@@ -26,7 +25,8 @@
       "itemType": "thesis",
       "thesisType": "mastersthesis",
       "date": "2011",
-      "title": "CTR Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler",
+      "language": "norsk",
+      "title": "Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler",
       "creators": [
         {
           "creatorType": "author",
@@ -61,6 +61,7 @@
       "itemType": "thesis",
       "thesisType": "phdthesis",
       "date": "2011",
+      "language": "norsk",
       "title": "CTR Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler",
       "creators": [
         {

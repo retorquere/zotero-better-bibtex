@@ -20,7 +20,6 @@
       "citekeyFold": true,
       "debug": true,
       "DOIandURL": "url",
-      "bibtexURLs": "off",
       "csquotes": "",
       "keyConflictPolicy": "change",
       "langID": "babel",
@@ -38,24 +37,28 @@
       "jabrefGroups": false,
       "defaultDateParserLocale": "",
       "parseParticles": true,
-      "titleCase": false,
-      "titleCaseLowerCase": "about above across afore after against along alongside amid amidst among amongst anenst apropos apud around as aside astride at athwart atop barring before behind below beneath beside besides between beyond but by circa despite down during except for forenenst from given in inside into lest like modulo near next notwithstanding of off on onto out over per plus pro qua sans since than through thru throughout thruout till to toward towards under underneath until unto up upon versus vs. v. vs v via vis-à-vis with within without according to ahead of apart from as for as of as per as regards aside from back to because of close to due to except for far from inside of instead of near to next to on to out from out of outside of prior to pursuant to rather than regardless of such as _that_ their of up to where as or yet so for and nor a an the de d' von van c et ca",
-      "titleCaseUpperCase": "ID TV"
+      "titleCaseLowerCase": "about above across afore after against along alongside amid amidst among amongst anenst apropos apud around as aside astride at athwart atop barring before behind below beneath beside besides between beyond but by circa despite down during except for forenenst from given in inside into lest like modulo near next notwithstanding of off on onto out over per plus pro qua sans since than through thru throughout thruout till to toward towards under underneath until unto up upon versus vs. v. vs v via vis-à-vis with within without according to ahead of apart from as for as of as per as regards aside from back to because of close to due to except for far from inside of instead of near to next to on to out from out of outside of prior to pursuant to rather than regardless of such as _that_ their of up to where as or yet so for and nor a an the de d' von van c et ca"
     },
     "options": {
       "exportFileData": false,
       "exportNotes": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "bookSection",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "url": "http://link.springer.com/chapter/10.1007/978-3-322-99962-7_7",
       "rights": "©2002 VS Verlag für Sozialwissenschaften | Springer Fachmedien Wiesbaden GmbH, Wiesbaden",
       "publisher": "VS Verlag für Sozialwissenschaften",
+      "language": "de",
       "pages": "145-160",
       "ISBN": "978-3-322-99963-4 978-3-322-99962-7",
       "date": "[1990]2002",
@@ -65,8 +68,16 @@
       "title": "Sozialpolitik und Bevölkerungsprozeß",
       "bookTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen",
       "creators": [
-        { "creatorType": "author", "lastName": "Kaufmann", "firstName": "Franz-Xaver" },
-        { "creatorType": "editor", "lastName": "Kauffmann", "firstName": "Franz-Xaver" }
+        {
+          "creatorType": "author",
+          "lastName": "Kaufmann",
+          "firstName": "Franz-Xaver"
+        },
+        {
+          "creatorType": "editor",
+          "lastName": "Kauffmann",
+          "firstName": "Franz-Xaver"
+        }
       ],
       "attachments": [
         {
@@ -75,15 +86,22 @@
           "mimeType": "application/pdf"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 362,
       "publicationTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen",
-      "seeAlso": []
+      "seeAlso": [
+
+      ]
     },
     {
       "itemType": "bookSection",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "url": "http://link.springer.com/chapter/10.1007/978-3-322-99962-7_11",
       "rights": "©2002 VS Verlag für Sozialwissenschaften | Springer Fachmedien Wiesbaden GmbH, Wiesbaden",
       "publisher": "VS Verlag für Sozialwissenschaften",
@@ -97,8 +115,16 @@
       "title": "Schwindet die integrative Funktion des Sozialstaates?",
       "bookTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen",
       "creators": [
-        { "creatorType": "author", "lastName": "Kaufmann", "firstName": "Franz-Xaver" },
-        { "creatorType": "editor", "lastName": "Kauffmann", "firstName": "Franz-Xaver" }
+        {
+          "creatorType": "author",
+          "lastName": "Kaufmann",
+          "firstName": "Franz-Xaver"
+        },
+        {
+          "creatorType": "editor",
+          "lastName": "Kauffmann",
+          "firstName": "Franz-Xaver"
+        }
       ],
       "attachments": [
         {
@@ -107,10 +133,14 @@
           "mimeType": "application/pdf"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 386,
       "publicationTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen",
-      "seeAlso": []
+      "seeAlso": [
+
+      ]
     }
   ]
 }

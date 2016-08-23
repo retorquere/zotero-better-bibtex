@@ -8,12 +8,10 @@ cd ..
 
 OFFLINE=true
 rm -f minitests/test.js
-echo "var Translator = { csquotes: true, debug: function(msg) { console.log(msg); }}, LaTeX = {};" >> minitests/test.js
-wget -O - https://raw.githubusercontent.com/Munawwar/neutron-html5parser/master/htmlparser.js | sed "s/'object'/'_object'/" | sed "s/root.HTMLtoDOM/Translator.HTMLtoDOM/" > minitests/htmlparser.js
-cat minitests/htmlparser.js >> minitests/test.js
-echo "var HTMLtoDOM = Translator.HTMLtoDOM;" >> minitests/test.js
-for src in resource/translators/he.js resource/translators/latex_unicode_mapping.js  resource/translators/unicode_translator.js minitests/html.js ; do
+echo "var Translator = { debug: function(msg) { console.log(msg); }}, LaTeX = {};" >> minitests/test.js
+for src in resource/translators/xregexp-all.js resource/translators/simple-titlecaser.js resource/translators/titlecaser.js resource/translators/markupparser.js resource/translators/latex_unicode_mapping.js resource/translators/unicode_translator.js minitests/html-reconstruct.js minitests/html.js ; do
   rake $src
+  cp $src wiki/retorquere/latex
   cat $src >> minitests/test.js
 done
 

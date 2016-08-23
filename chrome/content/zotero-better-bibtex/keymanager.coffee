@@ -66,7 +66,7 @@ Zotero.BetterBibTeX.keymanager = new class
     @db.keys.removeWhere((obj) -> true) # causes cache drop
     @scan()
 
-  patternHash: (obj) ->
+  patternHash: ->
     citekeyFormat = Zotero.BetterBibTeX.Pref.get('citekeyFormat')
     return '' unless citekeyFormat
 
@@ -75,9 +75,11 @@ Zotero.BetterBibTeX.keymanager = new class
   clearDynamic: ->
     affected = []
     current = @patternHash()
+    # compensate for #545
+    ckf = Zotero.BetterBibTeX.Pref.get('citekeyFormat')
     Zotero.BetterBibTeX.debug('keymanager.clearDynamic:', current)
     @db.keys.removeWhere((obj) ->
-      return false if !obj.citekeyFormat || obj.citekeyFormat == current
+      return false if !obj.citekeyFormat || obj.citekeyFormat in [current, ckf]
       affected.push(obj.itemID)
       return true
     )
