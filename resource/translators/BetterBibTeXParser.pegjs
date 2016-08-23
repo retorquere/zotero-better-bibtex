@@ -102,8 +102,7 @@ string
   / '^' text:param                { return '<sup>' + text + '</sup>' }
   / "\\vphantom" text:bracedparam { return '' }
   / "\\" "mkbib"? "emph" text:bracedparam  { return '<i>' + text + '</i>' }
-  / "\\mkbibquote" text:bracedparam { return '\u2018' + text + '\u2019'; }
-  / "\\enquote" text:bracedparam  { return csquotes[0] + text + csquotes[1]; }
+  / "\\" ("enquote" / "mkbibquote") text:bracedparam  { return csquotes[0] + text + csquotes[1]; }
   / "\\mbox" text:bracedparam     { return text }
   / "\\url{" text:urlchar* "}"    { return bibtex.flatten(text) }
   / "\\textit" text:bracedparam   { return '<i>' + text + '</i>' }

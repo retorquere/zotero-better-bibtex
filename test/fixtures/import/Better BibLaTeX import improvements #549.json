@@ -1,0 +1,56 @@
+{
+  "items": [
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "01e"
+        }
+      ],
+      "extra": "bibtex: 1e",
+      "itemType": "journalArticle",
+      "title": "Blah <i>emph</i> and “enquote”."
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "01b"
+        }
+      ],
+      "extra": "bibtex: 1b",
+      "itemType": "journalArticle",
+      "title": "Blah <i>mkbibemph</i> and “mkbibquote”."
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "02e"
+        }
+      ],
+      "extra": "bibtex: 2e",
+      "itemType": "book",
+      "title": "Blah <i>emph</i> and “enquote”."
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "02b"
+        }
+      ],
+      "extra": "bibtex: 2b",
+      "itemType": "book",
+      "title": "Blah <i>mkbibemph</i> and “mkbibquote”."
+    }
+  ],
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON"
+  }
+}

@@ -9,7 +9,7 @@
   shortjournal = {RFDA},
   shorttitle = {Critique d'une métanotion fonctionnelle},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {Critique d'une métanotion fonctionnelle. La notion (trop) fonctionnelle de \enquote{notion fonctionnelle}}
+  title = {Critique d'une métanotion fonctionnelle. La notion (trop) fonctionnelle de \mkbibquote{notion fonctionnelle}}
 }
 
 @article{searle_how_1964,
