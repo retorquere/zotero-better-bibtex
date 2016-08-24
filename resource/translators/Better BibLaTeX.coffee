@@ -211,7 +211,7 @@ doExport = ->
     ref.add({ langid: ref.language })
 
     ref.add({ number: item.seriesNumber || item.number })
-    ref.add({ name: (if isNaN(parseInt(item.issue)) then 'issue' else 'number'), value: item.issue })
+    ref.add({ name: (if isNaN(parseInt(item.issue)) || (( '' + parseInt(item.issue)) != ('' + item.issue))  then 'issue' else 'number'), value: item.issue })
 
     switch item.itemType
       when 'case', 'gazette'
