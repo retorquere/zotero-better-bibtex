@@ -346,19 +346,18 @@ ZoteroItem::$eprint = ZoteroItem::$eprinttype = (value, field) ->
 
 ZoteroItem::$pmid = ZoteroItem::$pmcid = (value, field) ->
   @hackyFields.push("#{field.toUpperCase()}: #{value}")
-  return true
 
 ZoteroItem::$lccn = (value) ->
   @hackyFields.push("LCCB: #{value}")
-  return true
 
 ZoteroItem::$mrnumber = (value) ->
   @hackyFields.push("MR: #{value}")
-  return true
 
 ZoteroItem::$zmnumber = (value) ->
   @hackyFields.push("Zbl: #{value}")
-  return true
+
+ZoteroItem::$note = (value) ->
+  @addToExtra(value)
 
 ZoteroItem::import = () ->
   @hackyFields = []
