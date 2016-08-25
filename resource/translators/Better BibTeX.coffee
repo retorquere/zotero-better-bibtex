@@ -358,6 +358,7 @@ ZoteroItem::$zmnumber = (value) ->
 
 ZoteroItem::$note = (value) ->
   @addToExtra(value)
+  return true
 
 ZoteroItem::import = () ->
   @hackyFields = []
