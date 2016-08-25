@@ -96,6 +96,7 @@
       "volume": "1"
     },
     {
+      "bookTitle": "Encyclopedia Iranica",
       "creators": [
         {
           "creatorType": "author",
@@ -104,10 +105,11 @@
         }
       ],
       "date": "1985",
-      "extra": "bibtex: Algar1985 \nbibtex[lista=Besmallah: in exegesis, jurisprudence, and cultural life]",
+      "extra": "bibtex: Algar1985",
       "itemType": "bookSection",
       "pages": "172-4",
-      "title": "Encyclopedia Iranica",
+      "publicationTitle": "Encyclopedia Iranica",
+      "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
       "volume": "4"
     },
     {
