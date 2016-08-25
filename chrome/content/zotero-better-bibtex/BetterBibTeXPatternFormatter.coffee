@@ -289,6 +289,13 @@ class BetterBibTeXPatternFormatter
       return '' unless authors
       return authors.slice(0, 2).concat((if authors.length > 2 then ['ea'] else [])).join('.')
 
+    'authEtAl': (onlyEditors, withInitials) ->
+      authors = @creators(onlyEditors, withInitials)
+      return '' unless authors
+
+      return authors.join('') if authors.length == 2
+      return authors.slice(0, 1).concat((if authors.length > 1 then ['EtAl'] else [])).join('')
+
     'auth.etal': (onlyEditors, withInitials) ->
       authors = @creators(onlyEditors, withInitials)
       return '' unless authors

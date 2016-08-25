@@ -122,6 +122,8 @@ Scenario Outline: BibTeX Export
 
   Examples:
      | file                                                                               | references |
+     | Missing JabRef pattern; authEtAl #554                                              | 1          |
+     | Missing JabRef pattern; authorsN+initials #553                                     | 1          |
      | custom fields should be exported as-is #441                                        | 1          |
      | Replicate Zotero key algorithm #439                                                | 3          |
      | preserve BibTeX Variables does not check for null values while escaping #337       | 1          |
