@@ -369,7 +369,9 @@ ZoteroItem::import = () ->
     continue if value == ''
 
     continue if @['$' + field]?(value, field)
-    continue if target = @fieldMap[field] && @item[target] ||= value
+    if target = @fieldMap[field]
+      @item[target] ||= value
+      continue
     @addToExtraData(field, value)
 
   if @item.itemType == 'conferencePaper' and @item.publicationTitle and not @item.proceedingsTitle
