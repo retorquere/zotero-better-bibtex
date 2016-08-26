@@ -45,6 +45,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.pinCitekeys"              id="pref-better-bibtex-pin-citekeys"            type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.preserveBibTeXVariables"  id="pref-better-bibtex-preserveBibTeXVariables" type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.rawImports"               id="pref-better-bibtex-raw-imports"             type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.ZotFile"                  id="pref-better-bibtex-zotfile"                 type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.scanCitekeys"             id="pref-better-bibtex-rescan-citekeys"         type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.showCitekeys"             id="pref-better-bibtex-show-citekey"            type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.showItemIDs"              id="pref-better-bibtex-show-item-ids"           type="bool"/>
@@ -250,6 +251,7 @@
             <checkbox label="&zotero.better-bibtex.show-item-id;" preference="pref-better-bibtex-show-item-ids"/>
             <checkbox label="&zotero.better-bibtex.rescan-citekeys;" preference="pref-better-bibtex-rescan-citekeys"/>
             <checkbox id="id-better-bibtex-preferences-raw-imports" preference="pref-better-bibtex-raw-imports" label="&zotero.better-bibtex.raw-imports;"/>
+            <checkbox preference="pref-better-bibtex-zotfile" label="&zotero.better-bibtex.prefs.advanced.zotFile;"/>
             <button label="&zotero.better-bibtex.resetCache;" oncommand="BetterBibTeXPref.cacheReset()"/>
             <description id="better-bibtex-preferences-cacheActivity-enabled">
               <html:a target="_blank" href="http://localhost:23119/better-bibtex/cacheActivity?http://localhost:23119/better-bibtex/cacheActivity">&zotero.better-bibtex.prefs.advanced.cacheActivity;</html:a>
