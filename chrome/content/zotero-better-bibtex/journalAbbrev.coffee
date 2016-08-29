@@ -22,7 +22,7 @@ Zotero.BetterBibTeX.JournalAbbrev = new class
 
   get: (item) ->
     return item.journalAbbreviation if item.journalAbbreviation
-    return null unless item.itemType in ['journalArticle', 'bill', 'case', 'statute']
+    return null unless item.itemType in ['conferencePaper', 'journalArticle', 'bill', 'case', 'statute']
 
     # don't even try to auto-abbrev arxiv IDs
     return null if item.arXiv?.source == 'publicationTitle'

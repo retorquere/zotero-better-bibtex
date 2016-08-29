@@ -1,6 +1,6 @@
 @article{_carbocyclic,
   langid = {british},
-  title = {A Carbocyclic Carbene as an Efficient Catalyst Ligand for {{C–C}} Coupling Reactions}
+  title = {A Carbocyclic Carbene as an Efficient Catalyst Ligand for {{C}}–{{C}} Coupling Reactions}
 }
 
 @book{_alkanethiolate,
@@ -15,7 +15,7 @@
 
 @article{_effect,
   langid = {american},
-  title = {Effect of Immobilization on Catalytic Characteristics of Saturated {{Pd-N}}-Heterocyclic Carbenes in {{Mizoroki-Heck}} Reactions}
+  title = {Effect of Immobilization on Catalytic Characteristics of Saturated {{Pd}}-{{N}}-Heterocyclic Carbenes in {{Mizoroki}}-{{Heck}} Reactions}
 }
 
 @book{_estimateur,
@@ -26,12 +26,12 @@
 
 @book{_highspeed,
   langid = {american},
-  title = {High-Speed {{Digital}}-to-{{RF}} Converter}
+  title = {High-Speed Digital-to-{{RF}} Converter}
 }
 
 @article{_pleistocene,
   langid = {british},
-  title = {Pleistocene {\emph{{{Homo sapiens}}}} from {{Middle Awash}}, {{Ethiopia}}}
+  title = {Pleistocene {{{\emph{Homo sapiens}}}} from {{Middle Awash}}, {{Ethiopia}}}
 }
 
 @book{_remarks,

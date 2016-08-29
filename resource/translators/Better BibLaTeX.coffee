@@ -3,14 +3,14 @@ Translator.fieldMap = {
   place:            { name: 'location', enc: 'literal' }
   chapter:          { name: 'chapter' }
   edition:          { name: 'edition' }
-  title:            { name: 'title', autoCase: true }
+  title:            { name: 'title', caseConversion: true }
   volume:           { name: 'volume' }
   rights:           { name: 'rights' }
   ISBN:             { name: 'isbn' }
   ISSN:             { name: 'issn' }
   url:              { name: 'url' }
   DOI:              { name: 'doi' }
-  shortTitle:       { name: 'shorttitle', autoCase: true }
+  shortTitle:       { name: 'shorttitle', caseConversion: true }
   abstractNote:     { name: 'abstract' }
   numberOfVolumes:  { name: 'volumes' }
   versionNumber:    { name: 'version' }
@@ -211,7 +211,7 @@ doExport = ->
     ref.add({ langid: ref.language })
 
     ref.add({ number: item.seriesNumber || item.number })
-    ref.add({ name: (if isNaN(parseInt(item.issue)) then 'issue' else 'number'), value: item.issue })
+    ref.add({ name: (if isNaN(parseInt(item.issue)) || (( '' + parseInt(item.issue)) != ('' + item.issue))  then 'issue' else 'number'), value: item.issue })
 
     switch item.itemType
       when 'case', 'gazette'
@@ -222,7 +222,7 @@ doExport = ->
     if item.publicationTitle
       switch item.itemType
         when 'bookSection', 'conferencePaper', 'dictionaryEntry', 'encyclopediaArticle'
-          ref.add({ name: 'booktitle', value: item.bookTitle || item.publicationTitle, preserveBibTeXVariables: true, autoCase: true})
+          ref.add({ name: 'booktitle', value: item.bookTitle || item.publicationTitle, preserveBibTeXVariables: true, caseConversion: true})
 
         when 'magazineArticle', 'newspaperArticle'
           ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true})
@@ -236,7 +236,7 @@ doExport = ->
             if Translator.useJournalAbbreviation && abbr
               ref.add({ name: 'journal', value: abbr, preserveBibTeXVariables: true })
             else if Translator.BetterBibLaTeX && item.publicationTitle.match(/arxiv:/i)
-              ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true, preserveCase: false })
+              ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
               ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true })
             else
               ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
@@ -245,8 +245,8 @@ doExport = ->
         else
           ref.add({ journaltitle: item.publicationTitle}) if ! ref.has.journaltitle && item.publicationTitle != item.title
 
-    ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, autoCase: true }) if not ref.has.booktitle
-    ref.add({ name: 'booktitle', value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, autoCase: true }) if ref.referencetype in ['movie', 'video'] and not ref.has.booktitle
+    ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle, caseConversion: true }) if not ref.has.booktitle
+    ref.add({ name: 'booktitle', value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle, caseConversion: true }) if ref.referencetype in ['movie', 'video'] and not ref.has.booktitle
 
     if item.multi?._keys?.title && (main = item.multi?.main?.title || item.language)
       languages = Object.keys(item.multi._keys.title).filter((lang) -> lang != main)
@@ -274,9 +274,9 @@ doExport = ->
         ref.add({ name: 'publisher', value: item.publisher, enc: 'literal' })
 
     switch item.itemType
-      when 'letter' then ref.add({ name: 'type', value: item.letterType || 'Letter', preserveCase: true, replace: true })
+      when 'letter' then ref.add({ name: 'type', value: item.letterType || 'Letter', caseConversion: true, replace: true })
 
-      when 'email'  then ref.add({ name: 'type', value: 'E-mail', preserveCase: true, replace: true })
+      when 'email'  then ref.add({ name: 'type', value: 'E-mail', caseConversion: true, replace: true })
 
       when 'thesis'
         thesistype = item.thesisType?.toLowerCase()
@@ -284,20 +284,20 @@ doExport = ->
           ref.referencetype = thesistype
           ref.remove('type')
         else
-          ref.add({ name: 'type', value: item.thesisType, preserveCase: true, replace: true })
+          ref.add({ name: 'type', value: item.thesisType, caseConversion: true, replace: true })
 
       when 'report'
         if (item.type || '').toLowerCase().trim() == 'techreport'
           ref.referencetype = 'techreport'
         else
-          ref.add({ name: 'type', value: item.type, preserveCase: true, replace: true })
+          ref.add({ name: 'type', value: item.type, caseConversion: true, replace: true })
 
       else
-        ref.add({ name: 'type', value: item.type || item.websiteType || item.manuscriptType, preserveCase: true, replace: true })
+        ref.add({ name: 'type', value: item.type || item.websiteType || item.manuscriptType, caseConversion: true, replace: true })
 
     ref.add({ howpublished: item.presentationType || item.manuscriptType })
 
-    ref.add({ name: 'note', value: item.meetingName, allowDuplicates: true })
+    ref.add({ name: 'note', value: item.meetingName, allowDuplicates: true, html: true })
 
     ref.addCreators()
 
@@ -318,12 +318,12 @@ doExport = ->
       when item.firstPage
         ref.add({ pages: "#{item.firstPage}" })
 
-    ref.add({ name: (if ref.has.note then 'annotation' else 'note'), value: item.extra, allowDuplicates: true })
+    ref.add({ name: (if ref.has.note then 'annotation' else 'note'), value: item.extra, allowDuplicates: true, html: true })
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
     if item.notes and Translator.exportNotes
       for note in item.notes
-        ref.add({ name: 'annotation', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true })
+        ref.add({ name: 'annotation', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true, html: true })
 
     ###
     # 'juniorcomma' needs more thought, it isn't for *all* suffixes you want this. Or even at all.
@@ -339,12 +339,12 @@ doExport = ->
 
       switch
         when name == 'volume-title' && ref.item.itemType == 'book' && ref.has.title
-          ref.add({name: 'maintitle', value: value.value, autoCase: true })
+          ref.add({name: 'maintitle', value: value.value, caseConversion: true })
           [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]
           [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
 
         when  name == 'volume-title' && ref.item.itemType == 'bookSection' && ref.has.booktitle
-          ref.add({name: 'maintitle', value: value.value, autoCase: true })
+          ref.add({name: 'maintitle', value: value.value, caseConversion: true })
           [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]
           [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]
 

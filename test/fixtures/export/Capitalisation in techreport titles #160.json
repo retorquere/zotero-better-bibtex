@@ -9,8 +9,7 @@
       "autoAbbrev": true,
       "citekeyFormat": "[auth]_[year]",
       "DOIandURL": "doi",
-      "rawImports": false,
-      "usePrefix": false
+      "rawImports": false
     },
     "options": {
       "exportFileData": false,

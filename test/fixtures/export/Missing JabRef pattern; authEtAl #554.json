@@ -1,0 +1,126 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "citekeyFormat": "[authEtAl]"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false,
+      "Export collections": true
+    }
+  },
+  "items": [
+    {
+      "multi": {
+        "main": {
+        },
+        "_keys": {
+        },
+        "_lsts": {
+        }
+      },
+      "itemType": "journalArticle",
+      "url": "http://arxiv.org/abs/1407.5694",
+      "rights": "",
+      "series": "",
+      "volume": "",
+      "issue": "",
+      "pages": "",
+      "publicationTitle": "arXiv:1407.5694 [math]",
+      "ISSN": "",
+      "date": "2014-07-21",
+      "callNumber": "",
+      "archiveLocation": "",
+      "extra": "",
+      "journalAbbreviation": "",
+      "DOI": "",
+      "accessDate": "2014-08-11 05:58:32",
+      "seriesTitle": "",
+      "seriesText": "",
+      "libraryCatalog": "arXiv.org",
+      "language": "",
+      "abstractNote": "Let X be a projective variety which is algebraic Lang hyperbolic. We show that Lang's conjecture holds (one direction only): X and all its subvarieties are of general type and the canonical divisor K_X is ample at smooth points and Kawamata log terminal points of X, provided that K_X is Q-Cartier, no Calabi-Yau variety is algebraic Lang hyperbolic and a weak abundance conjecture holds.",
+      "title": "Ampleness of canonical divisors of hyperbolic normal projective varieties",
+      "status": "",
+      "jurisdiction": "",
+      "shortTitle": "",
+      "archive": "",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Fei",
+          "lastName": "Hu",
+          "fieldMode": "",
+          "shortName": "",
+          "birthYear": "",
+          "multi": {
+            "_lst": [
+
+            ],
+            "_key": {
+            },
+            "main": false
+          }
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sheng",
+          "lastName": "Meng",
+          "fieldMode": "",
+          "shortName": "",
+          "birthYear": "",
+          "multi": {
+            "_lst": [
+
+            ],
+            "_key": {
+            },
+            "main": false
+          }
+        },
+        {
+          "creatorType": "author",
+          "firstName": "De-Qi",
+          "lastName": "Zhang",
+          "fieldMode": "",
+          "shortName": "",
+          "birthYear": "",
+          "multi": {
+            "_lst": [
+
+            ],
+            "_key": {
+            },
+            "main": false
+          }
+        }
+      ],
+      "notes": [
+        "Comment: Mathematische Zeitschrift (to appear)"
+      ],
+      "attachments": [
+        {
+          "path": "C:\\Users\\emile\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\ozxllr4w.Zotero Test\\zotero\\storage\\57WEWM4K\\Hu et al. - 2014 - Ampleness of canonical divisors of hyperbolic norm.pdf",
+          "title": "1407.5694 PDF",
+          "mimeType": "application/pdf"
+        },
+        {
+          "path": "C:\\Users\\emile\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\ozxllr4w.Zotero Test\\zotero\\storage\\VPMNSB3Q\\1407.html",
+          "title": "arXiv.org Snapshot",
+          "mimeType": "text/html"
+        }
+      ],
+      "tags": [
+        "32Q45 Hyperbolic and Kobayashi hyperbolic manifolds, 14E30 Minimal model program (Mori theory, extremal rays)",
+        "Mathematics - Algebraic Geometry",
+        "Mathematics - Complex Variables",
+        "Mathematics - Differential Geometry"
+      ],
+      "related": [
+
+      ]
+    }
+  ]
+}

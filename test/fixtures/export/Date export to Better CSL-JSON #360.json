@@ -4,8 +4,6 @@
     "label": "BetterBibTeX JSON",
     "release": "1.4.7",
     "preferences": {
-      "exportFileData": false,
-      "exportNotes": true
     },
     "options": {
       "skipFields": [
@@ -23,83 +21,175 @@
       "preserveBibTeXVariables": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "manuscript",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "date": "2014-12-31/2015-01-01",
       "extra": "bibtex: t1\naccessed: 2014-12-31~\noriginal-date: 1777-07-27/1888-08-28\ncontainer: 1777-07-27\nevent-date: 1888-08-28\nsubmitted:1999-09-29/",
       "title": "A manuscript",
-      "creators": [ { "creatorType": "author", "lastName": "Doe", "firstName": "John" } ],
-      "attachments": [],
-      "notes": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 8,
-      "seeAlso": []
+      "seeAlso": [
+
+      ]
     },
     {
       "itemType": "book",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "extra": "bibtex: t2\naccessed: 13th cent\ncontainer: 1700-01-01_1700-12-31\nevent-date: 1800-01-01--1800-12-31\nsubmitted: 1900-01-01/1900-12-31",
       "title": "container, event-date, and submitted test",
-      "creators": [ { "creatorType": "author", "lastName": "Doe", "firstName": "John" } ],
-      "attachments": [],
-      "notes": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 12,
-      "seeAlso": []
+      "seeAlso": [
+
+      ]
     },
     {
       "itemType": "book",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "date": "2014-12-31/",
       "title": "open-ended date range test",
-      "creators": [ { "creatorType": "author", "lastName": "Doe", "firstName": "John" } ],
-      "attachments": [],
-      "notes": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 11,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "extra": "bibtex: t3"
     },
     {
       "itemType": "book",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "date": "2014-12-31",
       "title": "single date test",
-      "creators": [ { "creatorType": "author", "lastName": "Doe", "firstName": "John" } ],
-      "attachments": [],
-      "notes": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 13,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "extra": "bibtex: t4"
     },
     {
       "itemType": "book",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "date": "-0333",
       "extra": "bibtex: t5\naccessed: -0332-11-05\noriginal-date: -0333/-0332\ncontainer: -0062-09-23/0014-08-19\nevent-date: 0000\nsubmitted:-0001",
       "title": "BC tests",
-      "creators": [ { "creatorType": "author", "lastName": "Doe", "firstName": "John" } ],
-      "attachments": [],
-      "notes": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 13,
-      "seeAlso": []
+      "seeAlso": [
+
+      ]
     },
     {
       "itemType": "book",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "date": "-0099-07-12/-0043-03-15",
       "title": "BC tests 2",
-      "creators": [ { "creatorType": "author", "lastName": "Doe", "firstName": "John" } ],
-      "attachments": [],
-      "notes": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 13,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "extra": "bibtex: t6"
     }
   ]

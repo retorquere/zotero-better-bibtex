@@ -8,12 +8,12 @@ flush = (items) -> "---\nreferences:\n" + items.join("\n") + "...\n"
 class HTML
   constructor: (html) ->
     @markdown = ''
-    @walk(Zotero.BetterBibTeX.HTMLParser(html))
+    @walk(Translator.MarkupParser.parse(html))
 
   walk: (tag) ->
     return unless tag
 
-    if tag.name in ['#text', 'script']
+    if tag.name in ['#text', 'pre']
       @markdown += tag.text.replace(/([\[*~^])/g, "\\$1")
       return
 
@@ -26,7 +26,7 @@ class HTML
 
       when 'a'
         ### zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. ###
-        @markdown += '[' if tag.attrs.href?.length > 0
+        @markdown += '[' if tag.attr.href?.length > 0
 
       when 'sup'
         @markdown += '^'
@@ -36,10 +36,10 @@ class HTML
 
       when 'sc'
         @markdown += '<span style="font-variant:small-caps;">'
-        tag.attrs.style = "font-variant:small-caps;"
+        tag.attr.style = "font-variant:small-caps;"
 
       when 'span'
-        @markdown += "<span#{(" #{k}=\"#{v}\"" for k, v of tag.attrs).join('')}>" if Object.keys(tag.attrs).length > 0
+        @markdown += "<span#{(" #{k}=\"#{v}\"" for k, v of tag.attr).join('')}>" if Object.keys(tag.attr).length > 0
 
       when 'tbody', '#document', 'html', 'head', 'body' then # ignore
 
@@ -63,10 +63,10 @@ class HTML
         @markdown += '~'
 
       when 'a'
-        @markdown += "](#{tag.attrs.href})" if tag.attrs.href?.length > 0
+        @markdown += "](#{tag.attr.href})" if tag.attr.href?.length > 0
 
       when 'sc'
         @markdown += '</span>'
 
       when 'span'
-        @markdown += '</span>' if Object.keys(tag.attrs).length > 0
+        @markdown += '</span>' if Object.keys(tag.attr).length > 0

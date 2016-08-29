@@ -25,8 +25,7 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "preferences": {
-      "citekeyFormat": "[auth:lower][year]",
-      "titleCase": false
+      "citekeyFormat": "[auth:lower][year]"
     }
   }
 }

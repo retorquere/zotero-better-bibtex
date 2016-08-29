@@ -1,6 +1,6 @@
 @incollection{burgorgue-larsen_interventions_2011,
   author = {Burgorgue-Larsen, Laurence},
-  booktitle = {La conscience des droits. {{Mélanges}} en l'honneur de {{Jean-Paul Costa}}},
+  booktitle = {La conscience des droits. Mélanges en l'honneur de Jean-Paul Costa},
   date = {2011},
   isbn = {978-2-247-10748-3},
   langid = {french},
@@ -8,13 +8,13 @@
   pages = {68--82},
   publisher = {{Dalloz}},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {Les interventions {\emph{éclairées}} devant la {{Cour}} européenne des droits de l'homme ou le rôle stratégique des {\emph{amici curiae}}},
+  title = {Les interventions \emph{éclairées} devant la Cour européenne des droits de l'homme ou le rôle stratégique des \emph{amici curiae}},
   volumes = {xxxi+710 p.}
 }
 
 @incollection{leveleux-teixeira_opinion_2010,
   author = {Leveleux-Teixeira, Corinne},
-  booktitle = {Consulter, délibérer, décider : donner son avis au {{Moyen Âge}} ({{France-Espagne}}, {\textsc{vii}}{\textsuperscript{e}}-{\textsc{xvi}}{\textsuperscript{e}} siècles)},
+  booktitle = {Consulter, délibérer, décider : donner son avis au Moyen Âge (France-Espagne, \textsc{vii}\textsuperscript{e}-\textsc{xvi}\textsuperscript{e} siècles)},
   date = {2010},
   editor = {Charageat, Martine and Leveleux-Teixeira, Corinne},
   isbn = {978-2-912025-68-5},
@@ -24,7 +24,7 @@
   publisher = {{CNRS et Université de Toulouse-Le Mirail [Framespa]}},
   series = {Méridiennes. Études médiévales ibériques},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {Opinion et conseil dans la doctrine juridique savante ({\textsc{xii}}{\textsuperscript{e}}-{\textsc{xiv}}{\textsuperscript{e}} siècles)},
+  title = {Opinion et conseil dans la doctrine juridique savante (\textsc{xii}\textsuperscript{e}-\textsc{xiv}\textsuperscript{e} siècles)},
   volumes = {355 p.}
 }
 

@@ -4,10 +4,6 @@
     "label": "BetterBibTeX JSON",
     "release": "1.5.9",
     "preferences": {
-      "exportPath": "/Users/emile/zotero/better-bibtex",
-      "exportFilename": "Exported Items.json",
-      "exportFileData": false,
-      "exportNotes": true
     },
     "options": {
       "skipFields": [

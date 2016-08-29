@@ -1,6 +1,7 @@
 {
   var bibtex = new BetterBibTeXParserSupport(options);
   // Zotero.debug('parser options:' + JSON.stringify(options));
+  var csquotes = bibtex.options.csquotes || '\u201C\u201D';
 
   function say(str) {
     bibtex.log(str);
@@ -79,8 +80,8 @@ url
   / '"' &{ return bibtex.quoteWith('"')  } val:urlchar* '"' &{ return bibtex.quoteWith() } { return bibtex.flatten(val) }
 
 strings
-  = &{ return !bibtex.raw } strings:string*    { return strings }
-  / &{ return bibtex.raw  } strings:raw*       { return strings }
+  = &{ return !bibtex.options.raw } strings:string*    { return strings }
+  / &{ return bibtex.options.raw  } strings:raw*       { return strings }
 
 raw
   = &{ return bibtex.braced } text:[^\\{}]+    { return text.join('') }
@@ -100,7 +101,8 @@ string
   / '_' text:param                { return '<sub>' + text + '</sub>' }
   / '^' text:param                { return '<sup>' + text + '</sup>' }
   / "\\vphantom" text:bracedparam { return '' }
-  / "\\emph" text:bracedparam     { return '<i>' + text + '</i>' }
+  / "\\" "mkbib"? "emph" text:bracedparam  { return '<i>' + text + '</i>' }
+  / "\\" ("enquote" / "mkbibquote") text:bracedparam  { return csquotes[0] + text + csquotes[1]; }
   / "\\mbox" text:bracedparam     { return text }
   / "\\url{" text:urlchar* "}"    { return bibtex.flatten(text) }
   / "\\textit" text:bracedparam   { return '<i>' + text + '</i>' }

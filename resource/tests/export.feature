@@ -17,36 +17,38 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | @jurisdiction; map court,authority to institution #326                                         | 1           |
+     | @legislation; map code,container-title to journaltitle #327                                    | 1           |
+     | Abbreviations in key generated for Conference Proceedings #548                                 | 1           |
+     | Be robust against misconfigured journal abbreviator #127                                       | 1           |
+     | Better BibLaTeX.001                                                                            | 1           |
+     | Better BibLaTeX.002                                                                            | 2           |
+     | Better BibLaTeX.003                                                                            | 2           |
+     | Better BibLaTeX.004                                                                            | 1           |
+     | Better BibLaTeX.005                                                                            | 1           |
+     | Better BibLaTeX.006                                                                            | 1           |
+     | Better BibLaTeX.007                                                                            | 1           |
+     | Better BibLaTeX.009                                                                            | 2           |
+     | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
+     | BibTeX variable support for journal titles. #309                                               | 1           |
+     | Book converted to mvbook #288                                                                  | 1           |
+     | Book sections have book title for journal in citekey #409                                      | 1           |
+     | BraceBalancer                                                                                  | 1           |
+     | Colon in bibtex key #405                                                                       | 1           |
+     | Colon not allowed in citation key format #268                                                  | 1           |
      | Date parses incorrectly with year 1000 when source Zotero field is in datetime format. #515    | 1           |
      | Dollar sign in title not properly escaped #485                                                 | 1           |
-     | Book sections have book title for journal in citekey #409                                      | 1           |
-     | Colon in bibtex key #405                                                                       | 1           |
-     | Oriental dates trip up date parser #389                                                        | 1           |
+     | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201     | 1           |
+     | Export mapping for reporter field #219                                                         | 1           |
+     | Fields in Extra should override defaults                                                       | 1           |
      | Non-ascii in dates is not matched by date parser #376                                          | 1           |
-     | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
-     | @legislation; map code,container-title to journaltitle #327                                    | 1           |
-     | @jurisdiction; map court,authority to institution #326                                         | 1           |
+     | Oriental dates trip up date parser #389                                                        | 1           |
+     | Spaces not stripped from citation keys #294                                                    | 1           |
+     | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | auth leaves punctuation in citation key #310                                                   | 1           |
-     | BibTeX variable support for journal titles. #309                                               | 1           |
      | condense in cite key format not working #308                                                   | 1           |
      | csquotes #302                                                                                  | 2           |
-     | Spaces not stripped from citation keys #294                                                    | 1           |
-     | Book converted to mvbook #288                                                                  | 1           |
-     | Colon not allowed in citation key format #268                                                  | 1           |
-     | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
-     | Export mapping for reporter field #219                                                         | 1           |
-     | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201     | 1           |
-     | Be robust against misconfigured journal abbreviator #127                                       | 1           |
-     | Better BibLaTeX.009                                                                            | 2           |
-     | Better BibLaTeX.007                                                                            | 1           |
-     | Better BibLaTeX.006                                                                            | 1           |
-     | Better BibLaTeX.005                                                                            | 1           |
-     | Better BibLaTeX.004                                                                            | 1           |
-     | Better BibLaTeX.003                                                                            | 2           |
-     | Better BibLaTeX.002                                                                            | 2           |
-     | Better BibLaTeX.001                                                                            | 1           |
-     | Fields in Extra should override defaults                                                       | 1           |
-     | BraceBalancer                                                                                  | 1           |
+     | italics in title - capitalization #541                                                         | 1           |
 
 @test-cluster-1 @bblt-1 @bblt @435 @293 @381
 Scenario Outline: BibLaTeX Export
@@ -55,6 +57,9 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
+     | Better BibLaTeX.019                                                                | 1           |
+     | Ignore HTML tags when generating citation key #264                                 | 1           |
      | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |
      | map csl-json variables #293                                                        | 2           |
      | Export Forthcoming as Forthcoming                                                  | 1           |
@@ -70,14 +75,12 @@ Scenario Outline: BibLaTeX Export
      | typo stature-statute (zotero item type) #284                                       | 1           |
      | bookSection is always converted to @inbook, never @incollection #282               | 1           |
      | referencetype= does not work #278                                                  | 1           |
-     | Ignore HTML tags when generating citation key #264                                 | 1           |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246      | 3           |
      | References with multiple notes fail to export #174                                 | 1           |
      | Better BibTeX does not use biblatex fields eprint and eprinttype #170              | 1           |
      | Capitalisation in techreport titles #160                                           | 1           |
      | German Umlaut separated by brackets #146                                           | 1           |
      | HTML Fragment separator escaped in url #140 #147                                   | 1           |
-     | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
      | Export Newspaper Article misses section field #132                                 | 1           |
      | Exporting of single-field author lacks braces #130                                 | 1           |
      | Math parts in title #113                                                           | 1           |
@@ -89,7 +92,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.022                                                                | 1           |
      | Better BibLaTeX.021                                                                | 1           |
      | Better BibLaTeX.020                                                                | 1           |
-     | Better BibLaTeX.019                                                                | 1           |
      | Better BibLaTeX.017                                                                | 1           |
      | Better BibLaTeX.016                                                                | 1           |
      | Better BibLaTeX.015                                                                | 1           |
@@ -120,6 +122,8 @@ Scenario Outline: BibTeX Export
 
   Examples:
      | file                                                                               | references |
+     | Missing JabRef pattern; authEtAl #554                                              | 1          |
+     | Missing JabRef pattern; authorsN+initials #553                                     | 1          |
      | custom fields should be exported as-is #441                                        | 1          |
      | Replicate Zotero key algorithm #439                                                | 3          |
      | preserve BibTeX Variables does not check for null values while escaping #337       | 1          |
@@ -184,10 +188,10 @@ Scenario: CAYW picker
   And the picks for scannable-cite should be '{|Abram, 2014|p. 1||zu:0:ITEMKEY}{|Pollard and Bray, 2007|ch. 1||zu:0:ITEMKEY}'
 
 @307 @bbt
-Scenario: thesis zotero entries always create  bibtex entries #307
-  When I import 2 references from 'export/thesis zotero entries always create  bibtex entries #307.json'
-  Then a library export using 'Better BibTeX' should match 'export/thesis zotero entries always create  bibtex entries #307.bibtex'
-  And a library export using 'Better BibLaTeX' should match 'export/thesis zotero entries always create  bibtex entries #307.biblatex'
+Scenario: thesis zotero entries always create @phpthesis bibtex entries #307
+  When I import 2 references from 'export/thesis zotero entries always create @phdthesis bibtex entries #307.json'
+  Then a library export using 'Better BibTeX' should match 'export/thesis zotero entries always create @phdthesis bibtex entries #307.bibtex'
+  And a library export using 'Better BibLaTeX' should match 'export/thesis zotero entries always create @phdthesis bibtex entries #307.biblatex'
 
 @402 @bbt
 Scenario: bibtex; url export does not survive underscores #402

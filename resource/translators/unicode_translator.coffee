@@ -1,66 +1,11 @@
 LaTeX = {} unless LaTeX
 
 LaTeX.text2latex = (text, options = {}) ->
-  latex = @html2latex(@cleanHTML(text, options), options)
-  latex = BetterBibTeXBraceBalancer.parse(latex) if latex.indexOf("\\{") >= 0 || latex.indexOf("\\textleftbrace") >= 0 || latex.indexOf("\\}") >= 0 || latex.indexOf("\\textrightbrace") >= 0
-  return latex
-
-LaTeX.titleCase = (string) ->
-  ###
-  # Force a word to lowercase if all of the following apply
-  # 1. It is not the first word of the sentence, as smallwords at the start should be uppercased
-  # 2. It is not the last word of the sentence (similar)
-  # 3. It is a smallWord
-  # 4. There is not a ':' two positions before the word (indicates subtitle)
-  # 5. There is either not a dash immediately after the word, or there is a dash immediately preceding the word
-  # 6. There is a space or a dash before the word
-  # [0-9a-z\xD7\xDF-\xFF] = -Lu
-  ###
-  return string.replace(/[A-Za-z0-9\u00C0-\u00FF]+[^\s-]*/g, (match, index, title) ->
-    if index > 0 and
-      index + match.length != title.length and
-      match.search(Translator.titleCaseLowerCase) == 0 and
-      title.charAt(index - 2) != ':' and
-      (title.charAt(index + match.length) != '-' or title.charAt(index - 1) == '-') and
-      title.charAt(index - 1).search(/[^"'(\s-]/) < 0
-        Translator.debug('titleCase: LC', match)
-        return match #.toLowerCase()
-
-    if match.search(Translator.titleCaseUpperCase) == 0
-      Translator.debug('titleCase: UC', match)
-      return match #.toUpperCase()
-
-    ###
-    # leave a word alone if it has an uppercase letter at the second position,
-    # or the second character is a period followed by anything
-    ###
-    if match.substr(1).search(/[A-Z]|\../) > -1
-      Translator.debug('titleCase: NC', match)
-      return match
-
-    ### uppercase ###
-    Translator.debug('titleCase: TC', match)
-    return match.charAt(0).toUpperCase() + match.substr(1)
-  )
-
-LaTeX.cleanHTML = (text, options) ->
-  {html, plain} = BetterBibTeXMarkupParser.parse(text, {titleCase: options.autoCase && Translator.titleCase, preserveCase: options.preserveCase || options.autoCase, csquotes: Translator.csquotes})
-
-  if options.autoCase && Translator.titleCase
-    Translator.debug('TITLECASE:>', plain.text)
-    titleCased = @titleCase(plain.text)
-    Translator.debug('TITLECASE:<', titleCased)
-    _html = ''
-    for c, i in html
-      if plain.unprotected[i] != undefined
-        _html += titleCased[plain.unprotected[i]]
-      else
-        _html += c
-    html = _html
-
-  return html
+  options.mode ||= 'text'
+  return @html2latex(text, options)
 
 LaTeX.html2latex = (html, options) ->
+  options.mode ||= 'html'
   latex = (new @HTML(html, options)).latex
   latex = latex.replace(/(\\\\)+\s*\n\n/g, "\n\n")
   latex = latex.replace(/\n\n\n+/g, "\n\n")
@@ -72,9 +17,8 @@ class LaTeX.HTML
     @latex = ''
     @mapping = (if Translator.unicode then LaTeX.toLaTeX.unicode else LaTeX.toLaTeX.ascii)
     @stack = []
-    @preserveCase = 0
 
-    @walk(Zotero.BetterBibTeX.HTMLParser(html))
+    @walk(Translator.MarkupParser.parse(html, @options))
 
   walk: (tag) ->
     return unless tag
@@ -83,126 +27,119 @@ class LaTeX.HTML
       when '#text'
         @chars(tag.text)
         return
-      when 'script'
+      when 'pre'
         @latex += tag.text
         return
 
     @stack.unshift(tag)
 
+    latex = '...' # default to no-op
     switch tag.name
       when 'i', 'em', 'italic'
-        @latex += '{' if (@options.preserveCase || @options.autoCase) && !@preserveCase
-        @latex += '\\emph{'
+        latex = '\\emph{...}'
 
       when 'b', 'strong'
-        @latex += '{' if (@options.preserveCase || @options.autoCase) && !@preserveCase
-        @latex += '\\textbf{'
+        latex = '\\textbf{...}'
 
       when 'a'
         ### zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. ###
-        if tag.attrs.href?.length > 0
-          @latex += "\\href{#{tag.attrs.href}}{"
+        latex = "\\href{#{tag.attrs.href}}{...}" if tag.attrs.href?.length > 0
 
       when 'sup'
-        @latex += '{' if (@options.preserveCase || @options.autoCase) && !@preserveCase
-        @latex += '\\textsuperscript{'
+        latex = '\\textsuperscript{...}'
 
       when 'sub'
-        @latex += '{' if (@options.preserveCase || @options.autoCase) && !@preserveCase
-        @latex += '\\textsubscript{'
+        latex = '\\textsubscript{...}'
 
       when 'br'
+        latex = ''
         ### line-breaks on empty line makes LaTeX sad ###
-        @latex += "\\\\" if @latex != '' && @latex[@latex.length - 1] != "\n"
-        @latex += "\n"
+        latex = "\\\\" if @latex != '' && @latex[@latex.length - 1] != "\n"
+        latex += "\n..."
 
       when 'p', 'div', 'table', 'tr'
-        @latex += "\n\n"
+        latex = "\n\n...\n\n"
 
       when 'h1', 'h2', 'h3', 'h4'
-        @latex += "\n\n\\#{(new Array(parseInt(tag.name[1]))).join('sub')}section{"
+        latex = "\n\n\\#{(new Array(parseInt(tag.name[1]))).join('sub')}section{...}\n\n"
 
       when 'ol'
-        @latex += "\n\n\\begin{enumerate}\n"
+        latex = "\n\n\\begin{enumerate}\n...\n\n\\end{enumerate}\n"
       when 'ul'
-        @latex += "\n\n\\begin{itemize}\n"
+        latex = "\n\n\\begin{itemize}\n...\n\n\\end{itemize}\n"
       when 'li'
-        @latex += "\n\\item "
+        latex = "\n\\item ..."
 
-      when 'span', 'sc'
-        tag.smallcaps = tag.name == 'sc' || (tag.attrs.style || '').match(/small-caps/i)
-        tag.enquote = (tag.attrs.enquote == 'true')
-        tag.relax = tag.class.relax
+      when 'enquote'
+        if Translator.BetterBibTeX
+          latex = '\\enquote{...}'
+        else
+          latex = '\\mkbibquote{...}'
 
-        @preserveCase += 1 if tag.class.nocase
-
-        @latex += '{{' if tag.class.nocase && @preserveCase == 1
-
-        @latex += '{' if (@options.preserveCase || @options.autoCase) && !@preserveCase && (tag.relax || tag.enquote || tag.smallcaps)
-        @latex += '\\enquote{' if tag.enquote
-        @latex += '\\textsc{' if tag.smallcaps
-        @latex += '{\\relax ' if tag.relax
+      when 'span', 'sc', 'nc' then # ignore, handled by the relax/nocase/smallcaps handler below
 
       when 'td', 'th'
-        @latex += ' '
+        latex = ' ... '
 
       when 'tbody', '#document', 'html', 'head', 'body' then # ignore
 
       else
-        Translator.debug("unexpected tag '#{tag.name}'")
+        Translator.debug("unexpected tag '#{tag.name}' (#{Object.keys(tag)})")
 
+    latex = @embrace(latex, latex.match(/^\\[a-z]+{\.\.\.}$/)) if latex != '...'
+    latex = @embrace("\\textsc{#{latex}}", true) if tag.smallcaps
+    latex = "{{#{latex}}}"         if tag.nocase
+    latex = "{\\relax #{latex}}"   if tag.relax
+
+    [prefix, postfix] = latex.split('...')
+
+    @latex += prefix
     for child in tag.children
       @walk(child)
-
-    switch tag.name
-      when 'i', 'italic', 'em'
-        @latex += '}'
-        @latex += '}' if (@options.preserveCase || @options.autoCase) && !@preserveCase
-
-      when 'sup', 'sub', 'b', 'strong'
-        @latex += '}'
-        @latex += '}' if (@options.preserveCase || @options.autoCase) && !@preserveCase
-
-      when 'a'
-        @latex += '}' if tag.attrs.href?.length > 0
-
-      when 'h1', 'h2', 'h3', 'h4'
-        @latex += "}\n\n"
-
-      when 'p', 'div', 'table', 'tr'
-        @latex += "\n\n"
-
-      when 'span', 'sc'
-        @latex += '}' if tag.smallcaps
-        @latex += '}' if tag.enquote
-        @latex += '}' if tag.relax
-        @latex += '}' if (@options.preserveCase || @options.autoCase) && !@preserveCase && (tag.relax || tag.smallcaps || tag.enquote)
-
-        @latex += '}}' if tag.class.nocase && (@options.preserveCase || @options.autoCase) && @preserveCase == 1
-
-        @preserveCase -= 1 if tag.class.nocase
-
-      when 'td', 'th'
-        @latex += ' '
-
-      when 'ol'
-        @latex += "\n\n\\end{enumerate}\n"
-      when 'ul'
-        @latex += "\n\n\\end{itemize}\n"
+    @latex += postfix
 
     @stack.shift()
 
+  embrace: (latex, condition) ->
+    ### holy mother of %^$#^%$@ the bib(la)tex case conversion rules are insane ###
+    ### https://github.com/retorquere/zotero-better-bibtex/issues/541 ###
+    ### https://github.com/plk/biblatex/issues/459 ... oy! ###
+    @embraced ?= @options.caseConversion && (((@latex || latex)[0] != '\\') || Translator.BetterBibTeX)
+    return latex unless @embraced && condition
+    return '{' + latex + '}'
+
   chars: (text) ->
-    blocks = []
+    latex = ''
+    math = false
+    braced = 0
+
     for c in XRegExp.split(text, '')
-      math = @mapping.math[c]
-      blocks.unshift({math: !!math, text: ''}) if blocks.length == 0 || blocks[0].math != !!math
-      blocks[0].text += (math || @mapping.text[c] || c)
-    for block in blocks by -1
-      if block.math
-        if block.text.match(/^{[^{}]*}$/)
-          @latex += "\\ensuremath#{block.text}"
-        else
-          @latex += "\\ensuremath{#{block.text}}"
-      else
-        @latex += block.text
+      # in and out of math mode
+      if !!@mapping.math[c] != math
+        latex += '$'
+        math = !!@mapping.math[c]
+
+      ### balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed ###
+      switch c
+        when '{' then braced += 1
+        when '}' then braced -= 1
+      if braced < 0
+        latex += "\\vphantom\\{"
+        braced = 0
+
+      c = @mapping.math[c] || @mapping.text[c] || c
+      latex += @embrace(c, LaTeX.toLaTeX.embrace[c])
+
+    # add any missing closing phantom braces
+    switch braced
+      when 0 then # pass
+      when 1 then latex += "\\vphantom\\}"
+      else latex += "\\vphantom{#{(new Array(braced + 1)).join("\\}")}}"
+
+    # might still be in math mode at the end
+    latex += "$" if math
+
+    ### minor cleanup ###
+    latex = latex.replace(/([^\\])({})+([^0-9a-z])/ig, '$1$3')
+
+    @latex += latex
