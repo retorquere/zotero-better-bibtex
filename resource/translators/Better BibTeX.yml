@@ -18,10 +18,10 @@ BetterBibTeX:
   dependencies:
   - xregexp-all
   - reference
-  - BetterBibTeXMarkupParser
+  - markupparser
+  - titlecaser
   - unicode_translator
   - latex_unicode_mapping
-  - BetterBibTeXBraceBalancer
   - BetterBibTeXParserSupport
   - BetterBibTeXParser
   postscript: true

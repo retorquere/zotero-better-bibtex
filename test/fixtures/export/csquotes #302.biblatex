@@ -3,12 +3,13 @@
   author = {Tusseau, Guillaume},
   date = {2009},
   journaltitle = {Revue française de droit administratif},
+  langid = {french},
   number = {4},
   pages = {641--656},
   shortjournal = {RFDA},
   shorttitle = {Critique d'une métanotion fonctionnelle},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {Critique d'une métanotion fonctionnelle. {{La}} notion (trop) fonctionnelle de {\enquote{notion fonctionnelle}}}
+  title = {Critique d'une métanotion fonctionnelle. La notion (trop) fonctionnelle de \mkbibquote{notion fonctionnelle}}
 }
 
 @article{searle_how_1964,
@@ -21,7 +22,7 @@
   number = {1},
   pages = {43--58},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {How to Derive "{{Ought}}" from "{{Is}}"},
+  title = {How to derive "{{Ought}}" from "{{Is}}"},
   volume = {73}
 }
 

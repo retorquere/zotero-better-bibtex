@@ -3,10 +3,13 @@ Translator = {}
 Translator._log = (level, msg...) ->
   str = []
   for m in msg
-    if m instanceof Error
-      m = "<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>"
-    else
-      m = Zotero.Utilities.varDump(m)
+    switch
+      when m instanceof Error
+        m = "<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>"
+      when m instanceof String
+        m = '' + m
+      else
+        m = Zotero.Utilities.varDump(m)
     str.push(m) if m
   str = str.join(' ')
 
@@ -256,8 +259,8 @@ Translator.initialize = ->
   for pref in Object.keys(@preferences)
     @preferences[pref] = @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
 
-  @titleCaseLowerCase = new RegExp('^(' + (word.replace(/\./g, '\\.') for word in @titleCaseLowerCase.split(/\s+/) when word).join('|') + ')$', 'i')
-
+  @skipWords = @skipWords.trim().split(/\s*,\s*/)
+  @titleCaseLowerCase = @titleCaseLowerCase.trim().split(/\s+/)
   @skipFields = (field.trim() for field in (@skipFields || '').split(',') when field.trim())
   if @csquotes
     @csquotes = { open: '', close: '' }

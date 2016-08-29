@@ -17,14 +17,15 @@
   author = {von Humboldt, Alexander and Gooding, Jr., Cuba and de La Fontaine, Jean and von Wright, Georg Henrik Auto and {von Wright}, Georg Henrik Explicit},
   date = {1963},
   isbn = {0-7100-3616-7},
+  langid = {anglais},
   location = {{Londres}},
   options = {useprefix=true},
   pagetotal = {xviii+214},
   publisher = {{Routledge \& Kegan Paul}},
   series = {International Library of Philosophy and Scientific Method},
-  shorttitle = {Norm and {{Action}}},
+  shorttitle = {Norm and Action},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {Norm and {{Action}}. {{A Logical Enquiry}}}
+  title = {Norm and Action. A Logical Enquiry}
 }
 
 @collection{almeida_reading_2013,
@@ -36,7 +37,7 @@
   pagetotal = {vi+309},
   publisher = {{Hart Publishing}},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {Reading {{HLA Hart}}'s: {\emph{The {{Concept}} of {{Law}}}}}
+  title = {Reading {{HLA Hart}}'s: {{{\emph{The Concept}}}}{\emph{ of }}{{{\emph{Law}}}}}
 }
 
 @book{bennett_citations_2013,

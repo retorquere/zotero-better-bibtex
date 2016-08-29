@@ -16,7 +16,7 @@
   number = {77},
   timestamp = {2015-02-24 12:14:36 +0100},
   title = {A Report},
-  type = {working paper}
+  type = {Working Paper}
 }
 
 @video{Kubrick1964,
@@ -24,7 +24,7 @@
   director = {Kubrick, Stanley},
   shorttitle = {Dr. {{Strangelove}}},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {Dr. {{Strangelove}} Or: How {{I}} Learned to Stop Worrying and Love the Bomb}
+  title = {Dr. {{Strangelove}} or: How {{I}} Learned to Stop Worrying and Love the Bomb}
 }
 
 @video{friends:leia:tv,

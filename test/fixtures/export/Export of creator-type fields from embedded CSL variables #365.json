@@ -4,9 +4,6 @@
     "label": "BetterBibTeX JSON",
     "release": "1.5.3",
     "preferences": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "titleCase": true
     },
     "options": {
       "skipFields": [

@@ -11,6 +11,8 @@ translatorType: 2
 browserSupport: gcsv
 BetterBibTeX:
   dependencies:
+  - xregexp-all
+  - markupparser
   - betterCSL
   - yaml
 priority: 100

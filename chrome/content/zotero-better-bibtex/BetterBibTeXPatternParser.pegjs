@@ -24,7 +24,7 @@ fcall
   = method:method filters:filter* { method.filters = filters; return method; }
 
 method
-  = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') name:[\.a-zA-Z]* flag:flag? params:mparams? {
+  = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') name:[\.a-zA-Z]* params:mparams? flag:flag? {
       var scrub = (prefix[0] !== 'A' && prefix[0] !== 'E')
       prefix = prefix.toLowerCase();
       var editorsOnly = (prefix === 'edtr' || prefix === 'editors');

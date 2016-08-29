@@ -6,7 +6,6 @@
     "preferences": {
       "citekeyFormat": "[auth:lower][year]",
       "skipFields": "abstract,file",
-      "usePrefix": true,
       "langID": "babel",
       "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
