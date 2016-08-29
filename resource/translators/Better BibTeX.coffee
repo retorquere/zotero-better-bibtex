@@ -24,8 +24,8 @@ Translator.fieldMap = {
 
 Translator.typeMap = {
 # BibTeX                              Zotero
-  'book booklet manual proceedings':  'book'
-  'incollection inbook':              'bookSection'
+  'book booklet manual proceedings collection':  'book'
+  'incollection inbook inreference':  'bookSection'
   'article misc':                     'journalArticle magazineArticle newspaperArticle'
   'phdthesis mastersthesis thesis':   'thesis'
   unpublished:                        'manuscript'
@@ -149,7 +149,7 @@ doImport = ->
     data = ''
     while (read = Zotero.read(0x100000)) != false
       data += read
-    bib = BetterBibTeXParser.parse(data, {raw: Translator.rawImports})
+    bib = BetterBibTeXParser.parse(data, {csquotes: Translator.csquotes, raw: Translator.rawImports})
 
     for ref in bib.references
       new ZoteroItem(ref)
@@ -180,14 +180,14 @@ JabRef.importGroup = (group) ->
   return collection
 
 class ZoteroItem
-  constructor: (bibtex) ->
-    @type = Translator.typeMap.BibTeX2Zotero[Zotero.Utilities.trimInternal((bibtex.type || bibtex.__type__).toLowerCase())] || 'journalArticle'
+  constructor: (@bibtex) ->
+    @type = Translator.typeMap.BibTeX2Zotero[Zotero.Utilities.trimInternal(@bibtex.__type__.toLowerCase())] || 'journalArticle'
     @item = new Zotero.Item(@type)
-    @item.itemID = bibtex.__key__
+    @item.itemID = @bibtex.__key__
     Translator.log("new reference: #{@item.itemID}")
     @biblatexdata = {}
-    @item.notes.push({ note: ('The following fields were not imported:<br/>' + bibtex.__note__).trim(), tags: ['#BBT Import'] }) if bibtex.__note__
-    @import(bibtex)
+    @item.notes.push({ note: ('The following fields were not imported:<br/>' + @bibtex.__note__).trim(), tags: ['#BBT Import'] }) if @bibtex.__note__
+    @import()
     if Translator.rawImports
       @item.tags ?= []
       @item.tags.push(Translator.rawLaTag)
@@ -216,151 +216,163 @@ for own attr, field of Translator.fieldMap
   for f in fields
     ZoteroItem::fieldMap[f] ?= attr
 
-ZoteroItem::import = (bibtex) ->
-  hackyFields = []
+ZoteroItem::$__note__ = ZoteroItem::$__key__ = ZoteroItem::['$added-at'] = ZoteroItem::$timestamp = () -> true
 
-  for own field, value of bibtex
+ZoteroItem::$type = (value) ->
+  @item.sessionType = @item.websiteType = @item.manuscriptType = @item.genre = @item.postType = @item.sessionType = @item.letterType = @item.manuscriptType = @item.mapType = @item.presentationType = @item.regulationType = @item.reportType = @item.thesisType = @item.websiteType = value
+
+ZoteroItem::$__type__ = (value) ->
+  @item.thesisType = @bibtex.__type__ if @bibtex.__type__ in [ 'phdthesis', 'mastersthesis' ]
+  return true
+
+ZoteroItem::$lista = (value) ->
+  @item.title = value if @bibtex.__type__ == 'inreference'
+
+ZoteroItem::$title = (value) ->
+  if @bibtex.__type__ == 'inreference'
+    @item.bookTitle = value
+  else
+    @item.title = value
+
+ZoteroItem::$subtitle = (value) ->
+  @item.title = '' unless @item.title
+  @item.title = @item.title.trim()
+  value = value.trim()
+  if not /[-–—:!?.;]$/.test(@item.title) and not /^[-–—:.;¡¿]/.test(value)
+    @item.title += ': '
+  else
+  @item.title += ' ' if @item.title.length
+  @item.title += value
+
+ZoteroItem::$journal = ZoteroItem::$journaltitle = (value) ->
+  if @item.publicationTitle
+    @item.journalAbbreviation = value
+  else
+    @item.publicationTitle = value
+
+ZoteroItem::$fjournal = (value) ->
+  @item.journalAbbreviation = @item.publicationTitle if @item.publicationTitle
+  @item.publicationTitle = value
+
+ZoteroItem::$author = ZoteroItem::$editor = ZoteroItem::$translator = (value, field) ->
+  for creator in value
+    continues unless creator
+    if typeof creator == 'string'
+      creator = Zotero.Utilities.cleanAuthor(creator, field, false)
+      creator.fieldMode = 1 if creator.lastName && !creator.firstName
+    else
+      creator.creatorType = field
+    @item.creators.push(creator)
+  return true
+
+ZoteroItem::$institution = ZoteroItem::$organization = (value) ->
+  @item.backupPublisher = value
+
+ZoteroItem::$number = (value) ->
+  switch @item.itemType
+    when 'report'               then @item.reportNumber = value
+    when 'book', 'bookSection'  then @item.seriesNumber = value
+    when 'patent'               then @item.patentNumber = value
+    else                             @item.issue = value
+
+ZoteroItem::$month = (value) ->
+  month = months.indexOf(value.toLowerCase())
+  if month >= 0
+    value = Zotero.Utilities.formatDate({month: month})
+  else
+    value += ' '
+
+  if @item.date
+    if value.indexOf(@item.date) >= 0
+      ### value contains year and more ###
+      @item.date = value
+    else
+      @item.date = value + @item.date
+  else
+    @item.date = value
+
+ZoteroItem::$year = (value) ->
+  if @item.date
+    @item.date += value if @item.date.indexOf(value) < 0
+  else
+    @item.date = value
+
+ZoteroItem::$pages = (value) ->
+  if @item.itemType in ['book', 'thesis', 'manuscript']
+    @item.numPages = value
+  else
+    @item.pages = value.replace(/--/g, '-')
+
+ZoteroItem::$date = (value) -> @item.date = value
+
+ZoteroItem::$url = ZoteroItem::$howpublished = (value) ->
+  if m = value.match(/^(\\url{)(https?:\/\/|mailto:)}$/i)
+    @item.url = m[2]
+  else if field == 'url' || /^(https?:\/\/|mailto:)/i.test(value)
+    @item.url = value
+  else
+    false
+
+ZoteroItem::$lastchecked = ZoteroItem::$urldate = (value) ->
+  @item.accessDate = value
+
+ZoteroItem::$keywords = ZoteroItem::$keyword = (value) ->
+  keywords = value.split(/[,;]/)
+  keywords = value.split(/\s+/) if keywords.length == 1
+  @item.tags = (@keywordClean(kw) for kw in keywords)
+
+ZoteroItem::$comment = ZoteroItem::$annote = ZoteroItem::$review = ZoteroItem::$notes = (value) ->
+  @item.notes.push({note: Zotero.Utilities.text2html(value)})
+
+ZoteroItem::$file = (value) ->
+  for att in value
+    @item.attachments.push(att)
+  return true
+
+ZoteroItem::$eprint = ZoteroItem::$eprinttype = (value, field) ->
+  ### Support for IDs exported by BibLaTeX ###
+  @item["_#{field}"] = value
+
+  if @item._eprint && @item._eprinttype
+    switch @item._eprinttype.trim().toLowerCase()
+      when 'arxiv' then @hackyFields.push("arXiv: #{value}")
+      when 'jstor' then @hackyFields.push("JSTOR: #{value}")
+      when 'pubmed' then @hackyFields.push("PMID: #{value}")
+      when 'hdl' then @hackyFields.push("HDL: #{value}")
+      when 'googlebooks' then @hackyFields.push("GoogleBooksID: #{value}")
+    delete @item._eprint
+    delete @item._eprinttype
+  return true
+
+ZoteroItem::$pmid = ZoteroItem::$pmcid = (value, field) ->
+  @hackyFields.push("#{field.toUpperCase()}: #{value}")
+
+ZoteroItem::$lccn = (value) ->
+  @hackyFields.push("LCCB: #{value}")
+
+ZoteroItem::$mrnumber = (value) ->
+  @hackyFields.push("MR: #{value}")
+
+ZoteroItem::$zmnumber = (value) ->
+  @hackyFields.push("Zbl: #{value}")
+
+ZoteroItem::$note = (value) ->
+  @addToExtra(value)
+  return true
+
+ZoteroItem::import = () ->
+  @hackyFields = []
+
+  for own field, value of @bibtex
     continue if typeof value != 'number' && not value
     value = Zotero.Utilities.trim(value) if typeof value == 'string'
     continue if value == ''
 
-    if @fieldMap[field]
-      @item[@fieldMap[field]] = value
+    continue if @['$' + field]?(value, field)
+    if target = @fieldMap[field]
+      @item[target] ||= value
       continue
-
-    switch field
-      when '__note__', '__key__', 'type', 'added-at', 'timestamp' then continue
-
-      when '__type__'
-        @item.thesisType = bibtex.__type__ if bibtex.__type__ in [ 'phdthesis', 'mastersthesis' ]
-
-      when 'subtitle'
-        @item.title = '' unless @item.title
-        @item.title = @item.title.trim()
-        value = value.trim()
-        if not /[-–—:!?.;]$/.test(@item.title) and not /^[-–—:.;¡¿]/.test(value)
-          @item.title += ': '
-        else
-          @item.title += ' ' if @item.title.length
-        @item.title += value
-
-      when 'journal'
-        if @item.publicationTitle
-          @item.journalAbbreviation = value
-        else
-          @item.publicationTitle = value
-
-      when 'fjournal'
-        @item.journalAbbreviation = @item.publicationTitle if @item.publicationTitle
-        @item.publicationTitle = value
-
-      when 'author', 'editor', 'translator'
-        for creator in value
-          continues unless creator
-          if typeof creator == 'string'
-            creator = Zotero.Utilities.cleanAuthor(creator, field, false)
-            creator.fieldMode = 1 if creator.lastName && !creator.firstName
-          else
-            creator.creatorType = field
-          @item.creators.push(creator)
-
-      when 'institution', 'organization'
-        @item.backupPublisher = value
-
-      when 'number'
-        switch @item.itemType
-          when 'report'               then @item.reportNumber = value
-          when 'book', 'bookSection'  then @item.seriesNumber = value
-          when 'patent'               then @item.patentNumber = value
-          else                             @item.issue = value
-
-      when 'month'
-        month = months.indexOf(value.toLowerCase())
-        if month >= 0
-          value = Zotero.Utilities.formatDate({month: month})
-        else
-          value += ' '
-
-        if @item.date
-          if value.indexOf(@item.date) >= 0
-            ### value contains year and more ###
-            @item.date = value
-          else
-            @item.date = value + @item.date
-        else
-          @item.date = value
-
-      when 'year'
-        if @item.date
-          @item.date += value if @item.date.indexOf(value) < 0
-        else
-          @item.date = value
-
-      when 'date'
-        @item.date = value
-
-      when 'pages'
-        switch @item.itemType
-          when 'book', 'thesis', 'manuscript' then @item.numPages = value
-          else                                     @item.pages = value.replace(/--/g, '-')
-
-      when 'note'
-        @addToExtra(value)
-
-      when 'url', 'howpublished'
-        if m = value.match(/^(\\url{)(https?:\/\/|mailto:)}$/i)
-          @item.url = m[2]
-        else if field == 'url' || /^(https?:\/\/|mailto:)/i.test(value)
-          @item.url = value
-        else
-          @addToExtraData(field, value)
-
-      when 'lastchecked', 'urldate'
-        @item.accessDate = value
-
-      when 'keywords', 'keyword'
-        keywords = value.split(/[,;]/)
-        keywords = value.split(/\s+/) if keywords.length == 1
-        @item.tags = (@keywordClean(kw) for kw in keywords)
-
-      when 'comment', 'annote', 'review', 'notes'
-        @item.notes.push({note: Zotero.Utilities.text2html(value)})
-
-      when 'file'
-        for att in value
-          @item.attachments.push(att)
-
-      when 'eprint', 'eprinttype'
-        ### Support for IDs exported by BibLaTeX ###
-        @item["_#{field}"] = value
-
-        if @item._eprint && @item._eprinttype
-          switch @item._eprinttype.trim().toLowerCase()
-            when 'arxiv' then hackyFields.push("arXiv: #{value}")
-            when 'jstor' then hackyFields.push("JSTOR: #{value}")
-            when 'pubmed' then hackyFields.push("PMID: #{value}")
-            when 'hdl' then hackyFields.push("HDL: #{value}")
-            when 'googlebooks' then hackyFields.push("GoogleBooksID: #{value}")
-          delete @item._eprint
-          delete @item._eprinttype
-
-      when 'lccn'
-        hackyFields.push("LCCB: #{value}")
-
-      when 'mrnumber'
-        hackyFields.push("MR: #{value}")
-
-      when 'zmnumber'
-        hackyFields.push("Zbl: #{value}")
-
-      when 'pmid'
-        hackyFields.push("PMID: #{value}")
-
-      when 'pmcid'
-        hackyFields.push("PMCID: #{value}")
-
-      else
-        @addToExtraData(field, value)
+    @addToExtraData(field, value)
 
   if @item.itemType == 'conferencePaper' and @item.publicationTitle and not @item.proceedingsTitle
     @item.proceedingsTitle = @item.publicationTitle
@@ -387,9 +399,9 @@ ZoteroItem::import = (bibtex) ->
 
     @addToExtra(biblatexdata)
 
-  if hackyFields.length > 0
-    hackyFields.sort()
-    @addToExtra(hackyFields.join(" \n"))
+  if @hackyFields.length > 0
+    @hackyFields.sort()
+    @addToExtra(@hackyFields.join(" \n"))
 
   if not @item.publisher and @item.backupPublisher
     @item.publisher = @item.backupPublisher

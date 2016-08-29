@@ -297,7 +297,7 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
       else
         str.push(Zotero.BetterBibTeX.varDump(m).replace(/\n/g, ''))
 
-  str = "[better-bibtex] #{str.join(' ')}"
+  str = "[better-bibtex @ #{new Date()}] #{str.join(' ')}"
 
   if level == 0
     Zotero.logError(str)
@@ -479,8 +479,12 @@ Zotero.BetterBibTeX.init = ->
     for itemID in changed
       @cache.remove({itemID})
     @DB.purge()
-    setTimeout((-> Zotero.BetterBibTeX.auto.markIDs(changed, 'scanCiteKeys')), 5000) if changed.length != 0
+    setTimeout((-> Zotero.BetterBibTeX.auto.markIDs(changed, 'scanCiteKeys')), 5000) if !Zotero.BetterBibTeX.DB.cacheReset && changed.length != 0
     @flash("Citation key rescan finished")
+
+  if Zotero.BetterBibTeX.DB.cacheReset
+    for ae in Zotero.BetterBibTeX.auto.db.autoexport.data
+      Zotero.BetterBibTeX.auto.mark(ae, 'pending', 'cache reset')
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     journalAbbrev:  (sandbox, params...) => @JournalAbbrev.get.apply(@JournalAbbrev, params)
@@ -768,11 +772,11 @@ Zotero.BetterBibTeX.init = ->
     )(Zotero.Translate.ItemGetter::nextItem)
 
   ### monkey-patch zotfile wildcard table to add bibtex key ###
-  if Zotero.ZotFile
+  if Zotero.ZotFile && Zotero.BetterBibTeX.Pref.get('ZotFile')
     Zotero.ZotFile.wildcardTable = ((original) ->
       return (item) ->
         table = original.apply(@, arguments)
-        table['%b'] = Zotero.BetterBibTeX.keymanager.get(item).citekey unless item.isAttachment() || item.isNote()
+        table['%b'] ||= Zotero.BetterBibTeX.keymanager.get(item).citekey unless item.isAttachment() || item.isNote()
         return table
       )(Zotero.ZotFile.wildcardTable)
 
@@ -804,6 +808,7 @@ Zotero.BetterBibTeX.init = ->
     Zotero.BetterBibTeX.DB.save('all') if Zotero.BetterBibTeX.DB && mode != 'connector'
   )
 
+  Zotero.BetterBibTeX.debug("Scheduling auto-export on idle on a #{@Pref.get('autoExportIdleWait')} second delay")
   @idleService.addIdleObserver(@idleObserver, @Pref.get('autoExportIdleWait'))
 
   uninstaller = {

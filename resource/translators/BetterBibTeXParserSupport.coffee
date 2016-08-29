@@ -1,7 +1,5 @@
 class BetterBibTeXParserSupport
-  constructor: (options) ->
-    @raw = options.raw
-
+  constructor: (@options) ->
     @references = []
     @collections = []
     @strings = Object.create(null)

@@ -118,6 +118,8 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.better-bibtex.prefs.advanced.cacheActivity "View cache activity...">
 <!ENTITY zotero.better-bibtex.prefs.advanced.cacheActivity.disabled "In order to view the cache activity, enable &quot;&zotero.better-bibtex.prefs.export.server.enabled;&quot; in &quot;&zotero.better-bibtex.prefs.export;&quot;">
 
+<!ENTITY zotero.better-bibtex.prefs.advanced.zotFile "Add '&#37;b' to the Zotfile pattern generator (requires restart)">
+
 
 <!ENTITY zotero.better-bibtex.rescan-citekeys "Re-scan pinned citekeys after restart">
 

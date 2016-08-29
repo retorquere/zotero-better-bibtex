@@ -237,6 +237,10 @@ file 'defaults/preferences/defaults.js' => ['defaults/preferences/defaults.yml',
       k = "extensions.zotero.translators.better-bibtex.#{k}"
       f.puts("pref(#{k.to_json}, #{v.to_json});")
     }
+    prefs.each_pair{|k, v|
+      k = "extensions.zotero.translators.better-bibtex.#{k}"
+      f.puts("pref(#{('services.sync.prefs.sync.' + k).to_json}, true);")
+    }
   }
 end
 
