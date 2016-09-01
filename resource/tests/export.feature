@@ -17,6 +17,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | pre not working in Extra field #559                                                            | 1           |
      | @jurisdiction; map court,authority to institution #326                                         | 1           |
      | @legislation; map code,container-title to journaltitle #327                                    | 1           |
      | Abbreviations in key generated for Conference Proceedings #548                                 | 1           |
