@@ -8,6 +8,9 @@ class Reconstruct
     if node.name == '#text'
       @html += node.text.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
       return
+    if node.name == 'pre'
+      @html += '<pre>' + node.text + '</pre>'
+      return
 
     for k of node
       node.attr[k] ||= '' unless k in ['children', 'name', 'attr', 'class']

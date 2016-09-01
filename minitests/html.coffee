@@ -27,11 +27,11 @@ Translator.titleCaseLowerCase = '''
 '''.replace(/\n/g, ' ').trim().split(/\s+/)
 
 display = (html, options) ->
-  console.log(html)
-  ast = Translator.MarkupParser.parse(html, {caseConversion: true})
+  console.log(html, options)
+  ast = Translator.MarkupParser.parse(html, options)
   console.log(JSON.stringify(ast, null, 2))
-  console.log((new Reconstruct(ast)).html)
-  console.log(LaTeX.text2latex(html, {caseConversion: true}))
+  # console.log((new Reconstruct(ast)).html)
+  # console.log(LaTeX.text2latex(html, options))
   return
 
   lang = ((options.language || '<none>') + '        ').substr(0, 8)
@@ -46,5 +46,7 @@ display = (html, options) ->
   console.log("biblatex: {#{cp}}")
   console.log('')
 
-html = '<i><span class=\"nocase\">Nodo unitatis et caritatis</span></i>: The Structure and Argument of Augustine\'s <i><span class=\"nocase\">De doctrina Christiana</span></i>'
-display(html, {})
+html = '<i><span class=\"nocase\">Nodo unitatis et caritatis</span></i>: The <pre>Structure</pre> and Argument of Augustine\'s <i><span class=\"nocase\">De doctrina Christiana</span></i>'
+html = "Hello <pre> hej </pre>"
+display(html, {mode: 'html'})
+display(html, {caseConversion: true})
