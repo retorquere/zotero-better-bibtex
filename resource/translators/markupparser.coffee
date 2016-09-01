@@ -79,7 +79,7 @@ class Translator.MarkupParser
       switch
         when @lastTag == 'pre'
           html = html.replace(@re.pre, (all, text) =>
-            @handler.chars(text.replace(/[\x0E\x0F]/g, '')) if @handler.chars
+            @handler.pre(text.replace(/[\x0E\x0F]/g, '')) if @handler.pre
             return ''
           )
           chars = false
@@ -290,6 +290,12 @@ class Translator.MarkupParser
         @elems[0].children.push({pos, name: '#text', text})
       else
         @elems[0].children[l - 1].text += text
+
+    pre: (text) ->
+      throw "Expectd 'pre' tag, found '#{@elems[0].name}'" unless @elems[0].name == 'pre'
+      throw "Text already set on pre tag'" if @elems[0].text
+      throw "Prei must not have children" if @elems[0].children && @elems[0].children.length > 0
+      @elems[0].text = text
 
     chars: (text, pos) ->
       if !(@caseConversion && pos?)
