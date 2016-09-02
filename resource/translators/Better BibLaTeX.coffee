@@ -318,7 +318,7 @@ doExport = ->
       when item.firstPage
         ref.add({ pages: "#{item.firstPage}" })
 
-    ref.add({ name: (if ref.has.note then 'annotation' else 'note'), value: item.extra, allowDuplicates: true, html: true })
+    ref.add({ name: (if ref.has.note then 'annotation' else 'note'), value: item.extra, allowDuplicates: true })
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
     if item.notes and Translator.exportNotes

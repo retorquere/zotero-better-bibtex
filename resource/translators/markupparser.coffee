@@ -63,6 +63,12 @@ class Translator.MarkupParser
 
   parse: (html, options = {}) ->
     @handler = new AST(options.caseConversion)
+
+    if options.mode == 'plain'
+      throw "No case conversion in plain mode" if options.caseConversion
+      @handler.chars(html)
+      return @handler.root
+
     @stack = []
     htmlMode = (options.mode == 'html')
     last = html
