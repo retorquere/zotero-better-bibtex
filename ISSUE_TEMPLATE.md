@@ -1,4 +1,4 @@
-This issue concerns:
+This bug report/feature request/question concerns:
 
 * [ ] BibTeX export
 * [ ] BibLaTeX export
