@@ -126,34 +126,30 @@ Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
   throw new Error('batch requests are not supported') if Array.isArray(req)
 
   try
-    switch req.method
-      when 'citations', 'citation', 'bibliography', 'bibtex', 'search'
-        ### the schomd methods search by citekey -- the cache needs to be fully primed for this to work ###
-        Zotero.BetterBibTeX.keymanager.prime()
+    ### the schomd methods search by citekey -- the cache needs to be fully primed for this to work ###
+    Zotero.BetterBibTeX.keymanager.prime()
 
-        result = Zotero.BetterBibTeX.schomd[req.method].apply(Zotero.BetterBibTeX.schomd, req.params)
-        if typeof result?.then == 'function'
-          result = result.then((result) ->
-            return JSON.stringify({
-              jsonrpc: (if req.jsonrpc then req.jsonrpc else undefined)
-              id: (if req.id || (typeof req.id) == 'number' then req.id else null)
-              result
-            })
-          ).catch((e) ->
-            return JSON.stringify({
-              jsonrpc: (if req.jsonrpc then req.jsonrpc else undefined)
-              id: (if req.id || (typeof req.id) == 'number' then req.id else null)
-              result: e.message || e.name
-            })
-          )
-        else
-          result = JSON.stringify({
-            jsonrpc: (if req.jsonrpc then req.jsonrpc else undefined)
-            id: (if req.id || (typeof req.id) == 'number' then req.id else null)
-            result
-          })
-
-      else throw("Unsupported method '#{req.method}'")
+    result = Zotero.BetterBibTeX.schomd['jsonrpc_' + req.method].apply(Zotero.BetterBibTeX.schomd, req.params)
+    if typeof result?.then == 'function'
+      result = result.then((result) ->
+        return JSON.stringify({
+          jsonrpc: (if req.jsonrpc then req.jsonrpc else undefined)
+          id: (if req.id || (typeof req.id) == 'number' then req.id else null)
+          result
+        })
+      ).catch((e) ->
+        return JSON.stringify({
+          jsonrpc: (if req.jsonrpc then req.jsonrpc else undefined)
+          id: (if req.id || (typeof req.id) == 'number' then req.id else null)
+          result: e.message || e.name
+        })
+      )
+    else
+      result = JSON.stringify({
+        jsonrpc: (if req.jsonrpc then req.jsonrpc else undefined)
+        id: (if req.id || (typeof req.id) == 'number' then req.id else null)
+        result
+      })
   catch err
     result = JSON.stringify({jsonrpc: '2.0', error: {code: 5000, message: '' + err + "\n" + err.stack}, id: null})
 

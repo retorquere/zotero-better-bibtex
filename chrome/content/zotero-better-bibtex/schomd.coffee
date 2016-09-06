@@ -99,7 +99,7 @@ Zotero.BetterBibTeX.schomd.getStyle = (id = 'apa') ->
   style ||= Zotero.Styles.get(id)
   return style
 
-Zotero.BetterBibTeX.schomd.citations = (citekeys, {format, style, libraryID} = {}) ->
+Zotero.BetterBibTeX.schomd.jsonrpc_citations = (citekeys, {format, style, libraryID} = {}) ->
   format ||= 'markdown'
 
   Zotero.BetterBibTeX.debug("schomd.citations:", {citekeys, format, style, libraryID})
@@ -133,7 +133,7 @@ Zotero.BetterBibTeX.schomd.citations = (citekeys, {format, style, libraryID} = {
   throw new Error("schomd.citations: unsupported format #{format}") unless format == 'markdown'
   return citations
 
-Zotero.BetterBibTeX.schomd.citation = (citekeys, {format, style, libraryID} = {}) ->
+Zotero.BetterBibTeX.schomd.jsonrpc_citation = (citekeys, {format, style, libraryID} = {}) ->
   format ||= 'markdown'
   throw new Error("schomd.citation: unsupported format #{format}") unless format == 'markdown'
 
@@ -154,7 +154,7 @@ Zotero.BetterBibTeX.schomd.citation = (citekeys, {format, style, libraryID} = {}
 
   return citation[0][1]
 
-Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {format, style, libraryID} = {}) ->
+Zotero.BetterBibTeX.schomd.jsonrpc_bibliography = (citekeys, {format, style, libraryID} = {}) ->
   format ||= 'markdown'
   itemIDs = @itemIDs(citekeys, {libraryID})
   return '' if itemIDs.length == 0
@@ -188,7 +188,7 @@ Zotero.BetterBibTeX.schomd.bibliography = (citekeys, {format, style, libraryID} 
     else
       throw new Error("schomd.bibliography: unsupported format #{format}")
 
-Zotero.BetterBibTeX.schomd.search = (term) ->
+Zotero.BetterBibTeX.schomd.jsonrpc_search = (term) ->
   search = new Zotero.Search()
   search.addCondition('quicksearch-titleCreatorYear', 'contains', term, false)
   results = search.search()
@@ -210,7 +210,7 @@ Zotero.BetterBibTeX.schomd.search = (term) ->
     } for item in Zotero.Items.get(results))
 
 
-Zotero.BetterBibTeX.schomd.bibtex = (keys, {translator, libraryID, displayOptions} = {}) ->
+Zotero.BetterBibTeX.schomd.jsonrpc_bibtex = (keys, {translator, libraryID, displayOptions} = {}) ->
   itemIDs = @itemIDs(keys, {libraryID})
 
   return '' if itemIDs.length == 0
