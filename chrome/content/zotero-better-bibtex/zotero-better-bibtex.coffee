@@ -363,18 +363,22 @@ Zotero.BetterBibTeX.extensionConflicts = ->
 
       Once that has been implemented, Better BibTeX will start up as usual.  Alternately, you can uninstall Recoll Firefox.
 
-      In the meantime, unfortunately, Better BibTeX and recoll-firefox cannot co-exist, and the previous workaround
-      Better BibTeX had in place conflicts with a Mozilla policy all Fireox extensions must soon comply with.
+      In the meantime, unfortunately, Better BibTeX and recoll-firefox cannot co-exist.
     ''')
   )
 
-  if ZOTERO_CONFIG.VERSION?.match(/\.SOURCE$/)
-    @flash(
-      "You are on a custom Zotero build (#{ZOTERO_CONFIG.VERSION}). " +
-      'Feel free to submit error reports for Better BibTeX when things go wrong, I will do my best to address them, but the target will always be the latest officially released version of Zotero'
-    )
-  if Services.vc.compare(ZOTERO_CONFIG.VERSION?.replace(/\.SOURCE$/, '') || '0.0.0', '4.0.28') < 0
-    @disable("Better BibTeX has been disabled because it found Zotero #{ZOTERO_CONFIG.VERSION}, but requires 4.0.28 or later.")
+  AddonManager.getAddonByID('zotero@chnm.gmu.edu', (extension) =>
+    switch
+      when Services.vc.compare(extension.version.replace(/\.SOURCE$/, ''), '4.0.28') < 0
+        @disable("Better BibTeX has been disabled because it found Zotero #{extension.version}, but requires 4.0.28 or later.")
+      when Services.vc.compare(extension.version.replace(/\.SOURCE$/, ''), '5.0.0') >= 0
+        @disable("Better BibTeX has been disabled because is not compatible with Zotero version 5.0 or later.")
+      when extension.version.match(/\.SOURCE$/)
+        @flash(
+          "You are on a custom Zotero build (#{extension.version}). " +
+          'Feel free to submit error reports for Better BibTeX when things go wrong, I will do my best to address them, but the target will always be the latest official 4.0 version of Zotero'
+        )
+  )
 
   @disableInConnector(Zotero.isConnector)
 
