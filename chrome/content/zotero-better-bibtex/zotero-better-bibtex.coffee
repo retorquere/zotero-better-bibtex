@@ -589,47 +589,6 @@ Zotero.BetterBibTeX.init = ->
       return original.call(@, libraryKey)
     )(Zotero.Items.parseLibraryKeyHash)
 
-  ### monkey-patch Zotero.Server.DataListener.prototype._generateResponse for async handling ###
-  Zotero.Server.DataListener::_generateResponse = ((original) ->
-    return (status, contentType, promise) ->
-      try
-        if typeof promise?.then == 'function'
-          return promise.then((body) =>
-            throw new Error("Zotero.Server.DataListener::_generateResponse: circular promise!") if typeof body?.then == 'function'
-            original.apply(@, [status, contentType, body])
-          ).catch((e) =>
-            original.apply(@, [500, 'text/plain', e.message || e.name])
-          )
-
-      return original.apply(@, arguments)
-    )(Zotero.Server.DataListener::_generateResponse)
-
-  ### monkey-patch Zotero.Server.DataListener.prototype._requestFinished for async handling of web api translation requests ###
-  Zotero.Server.DataListener::_requestFinished = ((original) ->
-    return (promise) ->
-      try
-        if typeof promise?.then == 'function'
-          promise.then((response) =>
-            throw new Error("Zotero.Server.DataListener::_requestFinished: circular promise!") if typeof response?.then == 'function'
-            original.apply(@, [response])
-          ).catch((e) =>
-            original.apply(@, e.message || e.name)
-          )
-          return
-      catch err
-        Zotero.debug("Zotero.Server.DataListener::_requestFinished: error handling promise: #{err.message || err.name}")
-
-      return original.apply(@, arguments)
-    )(Zotero.Server.DataListener::_requestFinished)
-
-  ### monkey-patch Zotero.Search.prototype.save to trigger auto-exports ###
-  Zotero.Search::save = ((original) ->
-    return (fixGaps) ->
-      id = original.apply(@, arguments)
-      Zotero.BetterBibTeX.auto.markSearch(id, 'search updated')
-      return id
-    )(Zotero.Search::save)
-
   ###
     monkey-patch Zotero.ItemTreeView::getCellText to replace the 'extra' column with the citekey
 

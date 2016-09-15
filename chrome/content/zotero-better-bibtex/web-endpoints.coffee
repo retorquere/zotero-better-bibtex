@@ -39,14 +39,12 @@ Zotero.BetterBibTeX.endpoints.collection.init = (url, data, sendResponseCallback
     col ||= Zotero.Collections.getByLibraryAndKey(libid, key)
     throw "#{collectionkey} not found" unless col
 
-    deferred = Q.defer()
     Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {collection: col}, Zotero.BetterBibTeX.displayOptions(url), (err, result) ->
       if err
-        deferred.reject(err)
+        sendResponseCallback(500, 'text/plain', '' + err)
       else
-        deferred.fulfill(result)
+        sendResponseCallback(200, 'text/plain', result)
     )
-    sendResponseCallback(200, 'text/plain', deferred.promise)
 
   catch err
     Zotero.BetterBibTeX.log("Could not export bibliography '#{collection}", err)
@@ -82,14 +80,12 @@ Zotero.BetterBibTeX.endpoints.library.init = (url, data, sendResponseCallback) -
       sendResponseCallback(404, 'text/plain', "Could not export bibliography '#{library}': unsupported format #{format}")
       return
 
-    deferred = Q.defer()
     Zotero.BetterBibTeX.translate(translator, {library: libid}, Zotero.BetterBibTeX.displayOptions(url), (err, result) ->
       if err
-        deferred.reject(err)
+        sendResponseCallback(500, 'text/plain', '' + err)
       else
-        deferred.fulfill(result)
+        sendResponseCallback(200, 'text/plain', result)
     )
-    sendResponseCallback(200, 'text/plain', deferred.promise)
 
   catch err
     Zotero.BetterBibTeX.log("Could not export bibliography '#{library}'", err)
@@ -109,14 +105,12 @@ Zotero.BetterBibTeX.endpoints.selected.init = (url, data, sendResponseCallback) 
   zoteroPane = Zotero.getActiveZoteroPane()
   items = Zotero.Items.get((item.id for item of zoteroPane.getSelectedItems()))
 
-  deferred = Q.defer()
   Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator(translator), {items: items}, Zotero.BetterBibTeX.displayOptions(url), (err, result) ->
     if err
-      deferred.reject(err)
+      sendResponseCallback(500, 'text/plain', '' + err)
     else
-      deferred.fulfill(result)
+      sendResponseCallback(200, 'text/plain', result)
   )
-  sendResponseCallback(200, 'text/plain', deferred.promise)
 
 Zotero.BetterBibTeX.endpoints.schomd = { supportedMethods: ['POST'] }
 Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
@@ -172,7 +166,10 @@ Zotero.BetterBibTeX.endpoints.cayw.init = (url, data, sendResponseCallback) ->
     mode = if !Zotero.isMac and Zotero.Prefs.get('integration.keepAddCitationDialogRaised') then 'popup' else 'alwaysRaised'
     Zotero.Integration.displayDialog(doc, 'chrome://zotero/content/integration/quickFormat.xul', mode, io)
 
-  sendResponseCallback(200, 'text/plain', deferred.promise)
+  deferred.then(
+    ((value) -> sendResponseCallback(200, 'text/plain', value)),
+    ((reason) -> sendResponseCallback(500, 'text/plain', '' + reason)),
+  )
 
 Zotero.BetterBibTeX.endpoints.cacheActivity =
   supportedMethods: ['GET']
