@@ -42,6 +42,19 @@ Translator.fieldEncoding = {
 
 months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
+Reference::requiredFields =
+  inproceedings: ['author','booktitle','pages','publisher','title','year']
+  article: ['author','journal','number','pages','title','volume','year']
+  techreport: ['author','institution','title','year']
+  incollection: ['author','booktitle','pages','publisher','title','year']
+  book: ['author','publisher','title','year']
+  inbook: ['author','booktitle','pages','publisher','title','year']
+  proceedings: ['editor','publisher','title','year']
+  phdthesis: ['author','school','title','year']
+  mastersthesis: ['author','school','title','year']
+  electronic: ['author','title','url','year']
+  misc: ['author','howpublished','title','year']
+
 Reference::addCreators = ->
   return unless @item.creators and @item.creators.length
   ### split creators into subcategories ###

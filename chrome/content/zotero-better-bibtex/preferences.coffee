@@ -93,6 +93,7 @@ Zotero.BetterBibTeX.Pref = new class
               'titleCase',                \
               'titleCaseLowerCase',       \
               'titleCaseUpperCase',       \
+              'qualityReport',            \
               'jurismPreferredLanguage'
           ### pass through to cache drop ###
 

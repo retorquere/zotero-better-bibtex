@@ -93,6 +93,43 @@ class DateField
     return "#{_v.year}-#{@pad(_v.month, '00')}" if _v.year && _v.month
     return '' + _v.year
 
+Reference::requiredFields =
+  article: ['author', 'title', 'journaltitle', 'year/date']
+  book: ['author', 'title', 'year/date']
+  mvbook: ['book']
+  inbook: ['author', 'title', 'booktitle', 'year/date']
+  bookinbook: ['inbook']
+  suppbook: ['inbook']
+  booklet: ['author/editor', 'title', 'year/date']
+  collection: ['editor', 'title', 'year/date']
+  mvcollection: ['collection']
+  incollection: ['author', 'title', 'booktitle', 'year/date']
+  suppcollection: ['incollection']
+  manual: ['author/editor', 'title', 'year/date']
+  misc: ['author/editor', 'title', 'year/date']
+  online: ['author/editor', 'title', 'year/date', 'url']
+  patent: ['author', 'title', 'number', 'year/date']
+  periodical: ['editor', 'title', 'year/date']
+  suppperiodical: ['article']
+  proceedings: ['title', 'year/date']
+  mvproceedings: ['proceedings']
+  inproceedings: ['author', 'title', 'booktitle', 'year/date']
+  reference: ['collection']
+  mvreference: ['collection']
+  inreference: ['incollection']
+  report: ['author', 'title', 'type', 'institution', 'year/date']
+  thesis: ['author', 'title', 'type', 'institution', 'year/date']
+  unpublished: ['author', 'title', 'year/date']
+
+  # semi aliases (differing fields)
+  mastersthesis: ['author', 'title', 'institution', 'year/date']
+  techreport: ['author', 'title', 'institution', 'year/date']
+
+Reference::requiredFields.conference = Reference::requiredFields.inproceedings
+Reference::requiredFields.electronic = Reference::requiredFields.online
+Reference::requiredFields.phdthesis = Reference::requiredFields.mastersthesis
+Reference::requiredFields.www = Reference::requiredFields.online
+
 Reference::addCreators = ->
   return unless @item.creators and @item.creators.length
 
