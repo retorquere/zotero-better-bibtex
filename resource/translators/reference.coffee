@@ -574,9 +574,9 @@ class Reference
 
     ref = "@#{@referencetype}{#{@item.__citekey__},\n"
     ref += ("  #{field.name} = #{field.bibtex}" for field in @fields).join(',\n')
-    ref += '\n}'
-    ref += "% Quality Report:\n#{qr}\n" if qr = @qualityReport()
-    ref += "\n\n"
+    ref += '\n}\n'
+    ref += "% Quality Report for #{@item.__citekey__}:\n#{qr}\n" if qr = @qualityReport()
+    ref += "\n"
     Zotero.write(ref)
 
     Zotero.BetterBibTeX.cache.store(@item.itemID, Translator, @item.__citekey__, ref) if Translator.caching
@@ -603,22 +603,22 @@ class Reference
         report.push("% Missing required field #{field}")
 
     if @referencetype == 'proceedings' && @has.pages
-      report.push("% proceedings with page numbers -- maybe his reference should be an 'inproceedings'")
+      report.push("% Proceedings with page numbers -- maybe his reference should be an 'inproceedings'")
 
     if @referencetype == 'article' && @has.journal
-      report.push("% biblatex uses journaltitle, not journal") if Translator.BetterBibLaTeX
-      report.push("% abbreviated journal title #{@has.journal.value}") if @has.journal.value.indexOf('.') >= 0
+      report.push("% BibLaTeX uses journaltitle, not journal") if Translator.BetterBibLaTeX
+      report.push("% Abbreviated journal title #{@has.journal.value}") if @has.journal.value.indexOf('.') >= 0
 
     if @referencetype == 'article' && @has.journaltitle
-      report.push("% abbreviated journal title #{@has.journaltitle.value}") if @has.journaltitle.value.indexOf('.') >= 0
+      report.push("% Abbreviated journal title #{@has.journaltitle.value}") if @has.journaltitle.value.indexOf('.') >= 0
 
     if @referencetype == 'inproceedings' and @has.booktitle
       if ! @has.booktitle.value.match(/:|Proceedings|Companion| '/) || @has.booktitle.value.match(/\.|workshop|conference|symposium/)
-        report.push("% unsure about the formatting of the booktitle")
+        report.push("% Unsure about the formatting of the booktitle")
 
     if @has.title
       if Translator.TitleCaser.titleCase(@has.title.value) == @has.title.value
-        report.push("% title looks like it was title-cased in Zotero")
+        report.push("% Title looks like it was stored in title-case in Zotero")
 
     return report.join("\n")
 

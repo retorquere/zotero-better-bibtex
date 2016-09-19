@@ -32,6 +32,7 @@ require 'yaml'
 require 'zip'
 require 'zlib'
 require_relative 'lib/unicode_table'
+require_relative 'lib/PreferencesDoc'
 
 #require 'github_changelog_generator'
 
@@ -1016,6 +1017,10 @@ task :logs2s3 do
       end
     }
   end
+end
+
+file 'wiki/Configuration.md' => ['lib/PreferencesDoc.rb', 'defaults/preferences/defaults.yml', 'chrome/content/zotero-better-bibtex/preferences/preferences.xul', 'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd'] do |t|
+  PreferencesDoc.new(t)
 end
 
 task :doc do

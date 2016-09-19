@@ -7,7 +7,6 @@ autoAbbrev: false
 autoExport: idle
 autoExportIdleWait: 10
 cacheFlushInterval: 5
-cacheReset: 0
 confirmCacheResetSize: 1000
 caching: true
 citeCommand: cite
