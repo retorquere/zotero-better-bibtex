@@ -192,6 +192,45 @@ class UnicodeConverter
       @chars.execute("REPLACE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)", patch)
     }
 
+    # http://jblevins.org/log/greek
+    ucaseGreek = {
+      'Alpha' => 'A',
+      'Beta' => 'B',
+      'Epsilon' => 'E',
+      'Zeta' => 'Z',
+      'Eta' => 'H',
+      'Iota' => 'I',
+      'Kappa' => 'K',
+      'Mu' => 'M',
+      'Nu' => 'N',
+      'Rho' => 'P',
+      'Tau' => 'T',
+      'Chi' => 'X'
+    }
+    @chars.execute("select distinct charcode, latex from mapping where mode = 'math'").each{|row|
+      charcode, latex = *row
+
+      fixed = ucaseGreek.select{|k, v| latex =~ /^\\#{k}( |{})$/}
+      if fixed.length == 1
+        @chars.execute("UPDATE mapping SET latex = ? WHERE charcode = ? AND mode = 'math'", [fixed.values[0], charcode])
+        next
+      end
+      fixed = ucaseGreek.select{|k, v| latex =~ /{\\#{k}}/ }
+      if fixed.length == 1
+        @chars.execute("UPDATE mapping SET latex = ? WHERE charcode = ? AND mode = 'math'", [latex.sub(/{\\#{fixed.keys[0]}}/, "{#{fixed.values[0]}}"), charcode])
+      end
+    }
+    invalid = false
+    @chars.execute('select distinct charcode, latex, mode  from mapping').each{|row|
+      charcode, latex, mode = *row
+
+      if latex =~ /\\(Alpha|Beta|Epsilon|Zeta|Eta|Iota|Kappa|Mu|Nu|Rho|Tau|Chi)\b/
+        puts "Please add replacement for [0x#{charcode.to_s(16)}, ??, 'text'], # '#{latex}' (#{mode})"
+        invalid = true
+      end
+    }
+    throw 'Invalid mappings' if invalid
+
     @chars.execute("REPLACE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)", ["`".ord, "\\textasciigrave", 'text'])
     @chars.execute("REPLACE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)", ["'".ord, "\\textquotesingle", 'text'])
     @chars.execute("REPLACE INTO mapping (charcode, latex, mode) VALUES (?, ?, ?)", [" ".ord, "\\space", 'text'])
@@ -363,7 +402,7 @@ class UnicodeConverter
       self.expand
 
       @chars.execute("""UPDATE mapping SET unicode_to_latex = CASE
-        WHEN mode = 'text' AND (charcode = 0x20 OR charcode BETWEEN 0x20 AND 0x7E AND CHAR(charcode) = latex) THEN
+        WHEN mode = 'text' AND (charcode = 0x20 OR (charcode BETWEEN 0x20 AND 0x7E AND CHAR(charcode) = latex)) THEN
           'false'
         WHEN charcode = 0x00A0 OR charcode BETWEEN 0x20 AND 0x7E THEN
           'true'
