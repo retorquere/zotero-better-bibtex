@@ -58,11 +58,11 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                               | references  |
+     | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |
+     | map csl-json variables #293                                                        | 2           |
      | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
      | Better BibLaTeX.019                                                                | 1           |
      | Ignore HTML tags when generating citation key #264                                 | 1           |
-     | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |
-     | map csl-json variables #293                                                        | 2           |
      | Export Forthcoming as Forthcoming                                                  | 1           |
      | biblatex export of phdthesis does not case-protect -type- #435                     | 1           |
      | CSL variables only recognized when in lowercase #408                               | 1           |

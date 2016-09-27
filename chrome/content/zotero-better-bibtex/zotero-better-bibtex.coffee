@@ -368,6 +368,7 @@ Zotero.BetterBibTeX.extensionConflicts = ->
   )
 
   AddonManager.getAddonByID('zotero@chnm.gmu.edu', (extension) =>
+    return unless extension
     switch
       when Services.vc.compare(extension.version.replace(/\.SOURCE$/, ''), '4.0.28') < 0
         @disable("Better BibTeX has been disabled because it found Zotero #{extension.version}, but requires 4.0.28 or later.")
