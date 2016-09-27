@@ -370,6 +370,12 @@ doExport = ->
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
+    # Juris-M imports CSL-var volume-title to volumeTitle
+    if ref.item.volumeTitle && ref.item.itemType == 'book' && ref.has.title
+      ref.add({name: 'maintitle', value: ref.item.volumeTitle, caseConversion: true })
+      [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]
+      [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
+
     ### pre-process overrides for #381 ###
     for own name, value of ref.override
       continue unless value.format == 'csl'
