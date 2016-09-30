@@ -399,6 +399,7 @@ Then(/^a library export using '(.+)' should match '(.+)'$/) do |translator, file
   @expectedExport = OpenStruct.new(filename: filename, translator: translator)
 
   expected = testfile(filename)
+  say "Matching against #{expected}"
   expected = open(expected).read.strip
 
   case File.extname(filename)
