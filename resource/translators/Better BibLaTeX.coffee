@@ -370,31 +370,19 @@ doExport = ->
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
-    # Juris-M imports CSL-var volume-title to volumeTitle
-    if ref.item.volumeTitle && ref.item.itemType == 'book' && ref.has.title
-      ref.add({name: 'maintitle', value: ref.item.volumeTitle, caseConversion: true })
-      [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]
-      [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
+    if item.volumeTitle # #381
+      Translator.debug('volumeTitle: true, itemType:', item.itemType, 'has:', Object.keys(ref.has))
+      if item.itemType == 'book' && ref.has.title
+        Translator.debug('volumeTitle: for book, itemType:', item.itemType, 'has:', Object.keys(ref.has))
+        ref.add({name: 'maintitle', value: item.volumeTitle, caseConversion: true })
+        [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]
+        [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
 
-    ### pre-process overrides for #381 ###
-    for own name, value of ref.override
-      continue unless value.format == 'csl'
-
-      switch
-        when name == 'volume-title' && ref.item.itemType == 'book' && ref.has.title
-          ref.add({name: 'maintitle', value: value.value, caseConversion: true })
-          [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]
-          [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
-
-        when  name == 'volume-title' && ref.item.itemType == 'bookSection' && ref.has.booktitle
-          ref.add({name: 'maintitle', value: value.value, caseConversion: true })
-          [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]
-          [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]
-
-        else
-          continue
-
-      delete ref.override[name]
+      if item.itemType == 'bookSection' && ref.has.booktitle
+        Translator.debug('volumeTitle: for bookSection, itemType:', item.itemType, 'has:', Object.keys(ref.has))
+        ref.add({name: 'maintitle', value: item.volumeTitle, caseConversion: true })
+        [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]
+        [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]
 
     ref.complete()
 

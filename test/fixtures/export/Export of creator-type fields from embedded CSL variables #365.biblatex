@@ -13,6 +13,7 @@
   editor = {Editrix, Emma and Editor, Ed},
   institution = {{Institution}},
   location = {{Place}},
+  note = {\{:X-genre: xxx\}},
   number = {77},
   timestamp = {2015-02-24 12:14:36 +0100},
   title = {A Report},
@@ -60,5 +61,6 @@
 
 @inreference{emptybook,
   editor = {{Xxx}},
+  note = {\{:X-genre: xxx\}},
   timestamp = {2015-02-24 12:14:36 +0100}
 }

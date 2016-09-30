@@ -121,13 +121,7 @@ Translator.CSLVariables = {
   'title-short':                  {}
   URL:                            {}
   version:                        {}
-  'volume-title':
-    BibLaTeX: ->
-      switch @item.itemType
-        when 'book' then 'title'
-        when 'bookSection' then 'booktitle'
-        else null
-
+  'volume-title':                 { field: 'volumeTitle' }
   'year-suffix':                  {}
   'chapter-number':               {}
   'collection-number':            {}
@@ -206,13 +200,16 @@ Translator.extractFields = (item) ->
   ### fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/ ###
   item.extra = item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, name, value) =>
     cslvar = Translator.CSLVariable(name)
-    return '' unless cslvar
+    return m unless cslvar
 
-    if cslvar.type == 'creator'
-      fields[cslvar.name] = {value: [], format: 'csl'} unless Array.isArray(fields[name]?.value)
-      fields[cslvar.name].value.push(@CSLCreator(value))
-    else
-      fields[cslvar.name] = { value, format: 'csl' }
+    switch
+      when cslvar.field
+        item[cslvar.field] = value
+      when cslvar.type == 'creator'
+        fields[cslvar.name] = {value: [], format: 'csl'} unless Array.isArray(fields[name]?.value)
+        fields[cslvar.name].value.push(@CSLCreator(value))
+      else
+        fields[cslvar.name] = { value, format: 'csl' }
 
     return ''
   )
@@ -227,6 +224,8 @@ Translator.extractFields = (item) ->
         extra.push(line)
       when !cslvar
         fields[m[1].toLowerCase()] = {value: m[2].trim(), format: 'key-value'}
+      when cslvar.field
+        item[cslvar.field] = m[2].trim()
       when cslvar.type == 'creator'
         fields[cslvar.name] = {value: [], format: 'csl'} unless Array.isArray(fields[cslvar.name]?.value)
         fields[cslvar.name].value.push(@CSLCreator(m[2].trim()))

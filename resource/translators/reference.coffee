@@ -55,6 +55,8 @@ class Reference
     @referencetype = Translator.typeMap.Zotero2BibTeX[@item.itemType] || 'misc'
 
     @override = Translator.extractFields(@item)
+    Translator.debug('postextract: item:', @item)
+    Translator.debug('postextract: overrides:', @override)
 
     for own attr, f of Translator.fieldMap || {}
       @add(@clone(f, @item[attr])) if f.name

@@ -60,8 +60,8 @@ Scenario Outline: BibLaTeX Export
   Examples:
      | file                                                                               | references  |
      | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |
-     | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
      | Better BibLaTeX.019                                                                | 1           |
+     | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
      | Ignore HTML tags when generating citation key #264                                 | 1           |
      | map csl-json variables #293                                                        | 2           |
      | Export Forthcoming as Forthcoming                                                  | 1           |

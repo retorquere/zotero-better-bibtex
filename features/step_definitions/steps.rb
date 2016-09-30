@@ -284,7 +284,9 @@ end
 
 def testfile(filename)
   f = File.expand_path(File.join('test/fixtures', filename))
-  pf = File.join(File.dirname(f), File.basename(f, File.extname(f)) + ".#{ENV['JURIS_M'] == 'true' ? 'juris-m' : 'zotero'}" + File.extname(f))
+
+  jurism = ENV.keys.select{|k| k =~ /^JURISM/}.sort.first
+  pf = File.join(File.dirname(f), File.basename(f, File.extname(f)) + ".#{jurism && ENV[jurism] == 'true' ? 'juris-m' : 'zotero'}" + File.extname(f))
   return pf if File.file?(pf)
   return f
 end

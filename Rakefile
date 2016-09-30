@@ -703,10 +703,6 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
   #sh "bundle list"
   #sh "npm list"
 
-  if ENV['JURIS_M'] == 'true'
-    XPI.test.xpis.download.reject!{|update| update == 'https://www.zotero.org/download/update.rdf'}
-    XPI.test.xpis.download << 'https://juris-m.github.io/zotero/update.rdf'
-  end
   XPI.getxpis
 
   features = 'resource/tests'
@@ -737,7 +733,7 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
     output += " --format json --out " + "#{ENV['CIRCLE_TEST_REPORTS']}/cucumber/tests.cucumber".shellescape
   end
   cucumber = "cucumber #{output} --require features --strict #{tag} #{features}"
-  puts "Tests running: JURIS_M=#{ENV['JURIS_M'] || 'false'} #{cucumber}"
+  puts "Tests running: JURISM=#{ENV['JURISM'] || 'false'} #{cucumber}"
   if ENV['CI'] == 'true'
     sh cucumber
   else

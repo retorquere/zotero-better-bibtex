@@ -14,13 +14,13 @@ test:
   override:
   - ? |-
       case $CIRCLE_NODE_INDEX in
-        0)  JURIS_M=false CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1" bundle exec rake test
+        0)  JURISM=false CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1" bundle exec rake test
             ;;
-        1)  JURIS_M=false CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1" bundle exec rake test
+        1)  JURISM=false CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1" bundle exec rake test
             ;;
-        2)  JURIS_M=true  CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1" bundle exec rake test
+        2)  JURISMBETA=true  CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1" bundle exec rake test
             ;;
-        *)  JURIS_M=true  CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1" bundle exec rake test
+        *)  JURISMBETA=true  CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1" bundle exec rake test
             ;;
       esac
     : parallel: true
