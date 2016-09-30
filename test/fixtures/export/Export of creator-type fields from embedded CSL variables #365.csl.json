@@ -16,6 +16,7 @@
     "genre": "working paper",
     "id": "Author2015",
     "issued": { "date-parts": [ [ 2015 ] ] },
+    "note": "{:X-genre: xxx}",
     "number": "77",
     "publisher": "Institution",
     "publisher-place": "Place",
@@ -68,6 +69,7 @@
   {
     "editor": [ { "family": "Xxx", "given": "", "isInstitution": 1 } ],
     "id": "emptybook",
+    "note": "{:X-genre: xxx}",
     "type": "entry-encyclopedia"
   }
 ]
