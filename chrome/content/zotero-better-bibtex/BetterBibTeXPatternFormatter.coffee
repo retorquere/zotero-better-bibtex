@@ -108,7 +108,8 @@ class BetterBibTeXPatternFormatter
     return Zotero.Utilities.XRegExp.replace(str, @re.unsafechars, '', 'all')
 
   words: (str) ->
-    return (@clean(word) for word in Zotero.Utilities.XRegExp.matchChain(@innerText(str), [@re.word]) when word != '')
+    # 551
+    return (@clean(word).replace('-', '') for word in Zotero.Utilities.XRegExp.matchChain(@innerText(str), [@re.word]) when word != '')
 
   ###
   # three-letter month abbreviations. I assume these are the same ones that the
