@@ -284,7 +284,9 @@ end
 
 def testfile(filename)
   f = File.expand_path(File.join('test/fixtures', filename))
-  pf = File.join(File.dirname(f), File.basename(f, File.extname(f)) + ".#{ENV['JURISM'] == 'true' ? 'juris-m' : 'zotero'}" + File.extname(f))
+
+  jurism = ENV.keys.select{|k| k =~ /^JURISM/}.sort.first
+  pf = File.join(File.dirname(f), File.basename(f, File.extname(f)) + ".#{jurism && ENV[jurism] == 'true' ? 'juris-m' : 'zotero'}" + File.extname(f))
   return pf if File.file?(pf)
   return f
 end
@@ -399,7 +401,6 @@ Then(/^a library export using '(.+)' should match '(.+)'$/) do |translator, file
   @expectedExport = OpenStruct.new(filename: filename, translator: translator)
 
   expected = testfile(filename)
-  say "Matching against #{expected}"
   expected = open(expected).read.strip
 
   case File.extname(filename)
