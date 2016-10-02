@@ -295,12 +295,25 @@ class Reference
             name = @_enc_creators_biblatex(name)
 
         when creator.lastName || creator.firstName
-          name = []
-          name.push(new String(creator.lastName)) if creator.lastName
-          if creator.firstName
-            if creator.firstName.indexOf(@_enc_creators_relax_marker) >= 0 # zero-width space
-              creator.firstName = '<span class="relax">' + creator.firstName.replace(@_enc_creators_relax_marker, '</span>')
-            name.push(creator.firstName)
+          if creator.lastName && creator.firstName
+            lastName = creator.lastName
+            firstName = creator.firstName
+          else
+            lastName = creator.lastName || creator.firstName
+            firstName = null
+
+          if lastName.indexOf(' ') >= 0 || lastName.indexOf(',') >= 0 || lastName.indexOf(' and ') >= 0
+            name = [new String(lastName)]
+          else
+            name = [lastName]
+
+          if firstName
+            if firstName.indexOf(@_enc_creators_relax_marker) >= 0 # zero-width space
+              firstName = '<span class="relax">' + firstName.replace(@_enc_creators_relax_marker, '</span>')
+            if firstName.indexOf(' and ') >= 0
+              name.push(new String(firstName))
+            else
+              name.push(firstName)
 
           name = @enc_latex({value: name, sep: ', '})
 
