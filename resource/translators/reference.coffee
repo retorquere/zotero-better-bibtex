@@ -193,7 +193,7 @@ class Reference
     return particle if particle[particle.length - 1] == ' '
 
     # if BBLT, always add a space if it isn't there
-    return particle + ' ' if Translator.BetterBibLaTeX
+    # return particle + ' ' if Translator.BetterBibLaTeX
 
     # otherwise, we're in BBT.
 

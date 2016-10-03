@@ -11,7 +11,8 @@ rm -f minitests/test.js
 echo "var CSL = { };" >> minitests/test.js
 
 if ! [ -f minitests/util_name_particles.js ]; then
-  curl -o minitests/util_name_particles.js https://bitbucket.org/fbennett/citeproc-js/raw/f501a37e2b1a05aed4bf1d510b69d1cd5eb47c6d/src/util_name_particles.js
+  curl -o minitests/util_name_particles.js https://raw.githubusercontent.com/Juris-M/citeproc-js/master/src/util_name_particles.js
+  cp minitests/util_name_particles.js wiki/bbt
 fi
 cat minitests/util_name_particles.js >> minitests/test.js
 for src in minitests/names.js ; do
