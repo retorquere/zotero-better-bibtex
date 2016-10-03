@@ -188,30 +188,34 @@ class Reference
   nonLetters: new XRegExp("[^\\p{Letter}]", 'g')
   punctuationAtEnd: new XRegExp("[\\p{Punctuation}]$")
   startsWithLowercase: new XRegExp("^[\\p{Ll}]")
-  _enc_creators_postfix_particle: (particle) ->
+  _enc_creators_pad_particle: (particle) ->
     # space at end is always OK
-    return '' if particle[particle.length - 1] == ' '
+    return particle if particle[particle.length - 1] == ' '
 
     # if BBLT, always add a space if it isn't there
-    return ' ' if Translator.BetterBibLaTeX
+    return particle + ' ' if Translator.BetterBibLaTeX
 
     # otherwise, we're in BBT.
 
     # If the particle ends in a period, add a space
-    return ' ' if particle[particle.length - 1] == '.'
+    return particle + ' ' if particle[particle.length - 1] == '.'
 
     # if it ends in any other punctuation, it's probably something like d'Medici -- no space
-    return '' if XRegExp.test(particle, @punctuationAtEnd)
+    if XRegExp.test(particle, @punctuationAtEnd)
+      if Translator.BetterBibTeX
+        return particle + @_enc_creators_relax_marker
+      else
+        return particle
 
     # otherwise, add a space
-    return ' '
+    return particle + ' '
 
   _enc_creators_quote_separators: (value) ->
     return ((if i % 2 == 0 then n else new String(n)) for n, i in value.split(/(\s+and\s+|,)/i))
 
   _enc_creators_biblatex: (name) ->
     for particle in ['non-dropping-particle', 'dropping-particle']
-      name[particle] += @_enc_creators_postfix_particle(name[particle]) if name[particle]
+      name[particle] = @_enc_creators_pad_particle(name[particle]) if name[particle]
 
     for k, v of name
       continue unless typeof v == 'string'
@@ -237,7 +241,9 @@ class Reference
       name.family = new String(name.family.slice(1, -1))
 
     for particle in ['non-dropping-particle', 'dropping-particle']
-      name[particle] += @_enc_creators_postfix_particle(name[particle]) if name[particle]
+      name[particle] = @_enc_creators_pad_particle(name[particle]) if name[particle]
+
+    Translator.debug('_enc_creators_bibtex:', name)
 
     ###
       TODO: http://chat.stackexchange.com/rooms/34705/discussion-between-retorquere-and-egreg
@@ -253,19 +259,23 @@ class Reference
     ###
 
     name.family = name['non-dropping-particle'] + name.family if name['non-dropping-particle']
-    name.family = new String(name.family) if name.family.indexOf(' ') > 0 || name.family.indexOf(',') >= 0
+    name.family = new String(name.family) if XRegExp.test(name.family, @startsWithLowercase)
     name.family = @enc_latex({value: name.family})
-    name.family = @enc_latex({value: name['dropping-particle']}) + name.family if name['dropping-particle']
+
+    if name['dropping-particle']
+      if Translator.parseParticles
+        name.family = @enc_latex({value: name['dropping-particle']}) + name.family
+      else
+        name.given += ' ' + name['dropping-particle'].trim()
 
     name.given = @enc_latex({value: name.given}) if name.given
     name.suffix = @enc_latex({value: name.suffix}) if name.suffix
 
-    latex = []
-    for part in [name.family, name.suffix, name.given]
-      continue unless part
-      latex.push(part)
+    Translator.debug('_enc_creators_BibTeX:', name)
 
-    return latex.join(', ')
+    latex = name.family
+    latex += ", #{name.suffix}" if name.suffix
+    latex += ", #{name.given}" if name.given
 
   ###
   # Encode creators to author-style field
@@ -273,7 +283,8 @@ class Reference
   # @param {field} field to encode. The 'value' must be an array of Zotero-serialized `creator` objects.
   # @return {String} field.value encoded as author-style value
   ###
-  _enc_creators_relax_marker: '\u0097'
+  _enc_creators_relax_block_marker: '\u0097'
+  _enc_creators_relax_marker: '\u200C'
   enc_creators: (f, raw) ->
     return null if f.value.length == 0
 
@@ -289,10 +300,10 @@ class Reference
         when creator.lastName || creator.firstName
           name = {family: creator.lastName || '', given: creator.firstName || ''}
 
-          Zotero.BetterBibTeX.CSL.parseParticles(name) if Translator.parseParticles
+          Zotero.BetterBibTeX.CSL.parseParticles(name)
 
-          if name.given && name.given.indexOf(@_enc_creators_relax_marker) >= 0 # zero-width space
-            name.given = '<span relax="true">' + name.given.replace(@_enc_creators_relax_marker, '</span>')
+          if name.given && name.given.indexOf(@_enc_creators_relax_block_marker) >= 0 # zero-width space
+            name.given = '<span relax="true">' + name.given.replace(@_enc_creators_relax_block_marker, '</span>')
 
           @useprefix ||= !!name['non-dropping-particle']
           @juniorcomma ||= (f.juniorcomma && name['comma-suffix'])

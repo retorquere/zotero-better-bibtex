@@ -745,7 +745,7 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
       end
     ensure
       sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
-      sh "rm -f cucumber.run"
+      #sh "rm -f cucumber.run"
     end
   end
 end
