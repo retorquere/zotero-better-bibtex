@@ -193,7 +193,7 @@ class Reference
     return particle if particle[particle.length - 1] == ' '
 
     # if BBLT, always add a space if it isn't there
-    # return particle + ' ' if Translator.BetterBibLaTeX
+    return particle + ' ' if Translator.BetterBibLaTeX
 
     # otherwise, we're in BBT.
 
@@ -201,11 +201,7 @@ class Reference
     return particle + ' ' if particle[particle.length - 1] == '.'
 
     # if it ends in any other punctuation, it's probably something like d'Medici -- no space
-    if XRegExp.test(particle, @punctuationAtEnd)
-      if Translator.BetterBibTeX
-        return particle + @_enc_creators_relax_marker
-      else
-        return particle
+    return particle + @_enc_creators_relax_marker if XRegExp.test(particle, @punctuationAtEnd)
 
     # otherwise, add a space
     return particle + ' '
