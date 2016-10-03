@@ -238,12 +238,9 @@ class Reference
 
   _enc_creators_bibtex: (name) ->
     if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
-      name.family = new String(name.family.slice(1, -1))
-
-    for particle in ['non-dropping-particle', 'dropping-particle']
-      name[particle] = @_enc_creators_pad_particle(name[particle]) if name[particle]
-
-    Translator.debug('_enc_creators_bibtex:', name)
+      family = new String(name.family.slice(1, -1))
+    else
+      family = name.family
 
     ###
       TODO: http://chat.stackexchange.com/rooms/34705/discussion-between-retorquere-and-egreg
@@ -258,22 +255,19 @@ class Reference
       in the label, use {\relax van} Gogh or something like this.
     ###
 
-    name.family = name['non-dropping-particle'] + name.family if name['non-dropping-particle']
-    name.family = new String(name.family) if XRegExp.test(name.family, @startsWithLowercase)
-    name.family = @enc_latex({value: name.family})
-
-    if name['dropping-particle']
-      if Translator.parseParticles
-        name.family = @enc_latex({value: name['dropping-particle']}) + name.family
-      else
-        name.given += ' ' + name['dropping-particle'].trim()
+    family = @_enc_creators_pad_particle(name['non-dropping-particle']) + family if name['non-dropping-particle']
+    family = new String(family) if XRegExp.test(family, @startsWithLowercase)
+    family = @enc_latex({value: family})
+    family = @enc_latex({value: @_enc_creators_pad_particle(name['dropping-particle'])}) + family if name['dropping-particle']
+    Translator.debug('_enc_creators_bibtex:', {bbt: Translator.BetterBibTeX, phantom: Translator.bibtexAddPhantomName, name})
+    family = '\\vphantom{' + @enc_latex({value: name.family}) + '}' + family if Translator.BetterBibTeX && Translator.bibtexAddPhantomName && (name['non-dropping-particle'] || name['dropping-particle'])
 
     name.given = @enc_latex({value: name.given}) if name.given
     name.suffix = @enc_latex({value: name.suffix}) if name.suffix
 
     Translator.debug('_enc_creators_BibTeX:', name)
 
-    latex = name.family
+    latex = family
     latex += ", #{name.suffix}" if name.suffix
     latex += ", #{name.given}" if name.given
 
