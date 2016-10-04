@@ -791,6 +791,23 @@ file 'resource/translators/BetterBibTeXParser.pegjs' => [ 'resource/translators/
   end
 end
 
+rule '.js' => '.pegjs' do |t|
+  cleanly(t.name) do
+    var = File.basename(t.source, File.extname(t.source))
+    declaration = ''
+    var.split('.')[0..-2].inject([]){|result, part|
+      result = result + [part]
+      v = result.join('.')
+      declaration += "if (typeof #{v} === 'undefined') { #{v} = {}; }\n"
+      result
+    }
+    sh "#{NODEBIN}/pegjs -e #{var.shellescape} #{t.source.shellescape} #{t.name.shellescape}"
+    File.rewrite(t.name){|js|
+      declaration + js
+    }
+  end
+end
+
 task :markfailing do
   tests = false
 
