@@ -341,8 +341,15 @@ Translator.sanitizeCollection = (coll) ->
 
   return sane
 
+Translator.unique_chars = (str) ->
+  uniq = ''
+  for c in str
+    uniq += c if uniq.indexOf(c) < 0
+  return uniq
+
 Translator.nextItem = ->
   @initialize()
+  @preamble = {DeclarePrefChars: ''}
 
   while item = Zotero.nextItem()
     continue if item.itemType == 'note' || item.itemType == 'attachment'
@@ -352,6 +359,7 @@ Translator.nextItem = ->
         Translator.debug('nextItem: cached')
         @citekeys[item.itemID] = cached.citekey
         Zotero.write(cached.bibtex)
+        @preamble.DeclarePrefChars += cached.data.DeclarePrefChars if cached.data.DeclarePrefChars
         continue
 
     Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
@@ -361,6 +369,13 @@ Translator.nextItem = ->
     return item
 
   return null
+
+Translator.complete ->
+  @exportGroups()
+
+  @preamble.DeclarePrefChars = @unique_chars(@preamble.DeclarePrefChars)
+  if @preamble.DeclarePrefChars
+    Zotero.write("@preamble { \"\DeclarePrefChars{#{@preamble.DeclarePrefChars}}\" }\n")
 
 Translator.exportGroups = ->
   @debug('exportGroups:', @collections)
