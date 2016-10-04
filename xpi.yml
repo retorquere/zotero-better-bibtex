@@ -34,6 +34,7 @@ test:
     - default: https://www.zotero.org/download/update.rdf
     - jurism: https://juris-m.github.io/zotero/update.rdf
     - jurismbeta: https://github.com/Juris-M/zotero/releases/download/v4.0.29.12m98beta/jurism-v4.0.29.12m98beta1-fx.xpi
+    - zotero5: https://www.zotero.org/download/dev/zotero-5.0-beta.xpi
     install: test/fixtures/plugins
 xpi: zotero-better-bibtex.xpi
 changelog: https://retorquere.github.io/zotero-better-bibtex/CHANGELOG.html
