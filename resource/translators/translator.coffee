@@ -370,12 +370,9 @@ Translator.nextItem = ->
 
   return null
 
-Translator.complete ->
+Translator.complete = ->
   @exportGroups()
-
-  @preamble.DeclarePrefChars = @unique_chars(@preamble.DeclarePrefChars)
-  if @preamble.DeclarePrefChars
-    Zotero.write("@preamble { \"\DeclarePrefChars{#{@preamble.DeclarePrefChars}}\" }\n")
+  Zotero.write("@preamble { \"\DeclarePrefChars{#{@unique_chars(@preamble.DeclarePrefChars)}}\" }\n") if @preamble.DeclarePrefChars
 
 Translator.exportGroups = ->
   @debug('exportGroups:', @collections)
