@@ -302,6 +302,7 @@ file 'resource/translators/titlecaser.js' => ['resource/translators/titlecaser-c
         AbbreviationSegments
         BEFORE
         CITE_FIELDS
+        CLOSURES
         COLLAPSE_VALUES
         CONDITION_LEVEL_BOTTOM
         CONDITION_LEVEL_TOP

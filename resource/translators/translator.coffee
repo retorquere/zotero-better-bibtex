@@ -242,6 +242,7 @@ Translator.initialize = ->
   return if @initialized
   @initialized = true
 
+  @preamble = {DeclarePrefChars: ''}
   @citekeys = Object.create(null)
   @attachmentCounter = 0
   @rawLaTag = '#LaTeX'
@@ -349,7 +350,6 @@ Translator.unique_chars = (str) ->
 
 Translator.nextItem = ->
   @initialize()
-  @preamble = {DeclarePrefChars: ''}
 
   while item = Zotero.nextItem()
     continue if item.itemType == 'note' || item.itemType == 'attachment'
@@ -372,7 +372,7 @@ Translator.nextItem = ->
 
 Translator.complete = ->
   @exportGroups()
-  Zotero.write("@preamble { \"\DeclarePrefChars{#{@unique_chars(@preamble.DeclarePrefChars)}}\" }\n") if @preamble.DeclarePrefChars
+  Zotero.write("@preamble{ \"\DeclarePrefChars{#{@unique_chars(@preamble.DeclarePrefChars)}}\" }\n") if @preamble.DeclarePrefChars
 
 Translator.exportGroups = ->
   @debug('exportGroups:', @collections)

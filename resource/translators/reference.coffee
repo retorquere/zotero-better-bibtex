@@ -593,7 +593,8 @@ class Reference
 
     Zotero.BetterBibTeX.cache.store(@item.itemID, Translator, @item.__citekey__, ref, @data) if Translator.caching
 
-    Translator.preamble.DeclarePrefChars += @data.DeclarePrefChars if cached.data.DeclarePrefChars
+    Translator.preamble.DeclarePrefChars += @data.DeclarePrefChars if @data.DeclarePrefChars
+    Translator.debug('item.complete:', {data: @data, preamble: Translator.preamble})
 
   toVerbatim: (text) ->
     if Translator.BetterBibTeX
