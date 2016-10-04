@@ -17,6 +17,7 @@ test/fixtures/plugins
 tmp
 *.xpi
 *.log
+*.run
 node_modules
 bin/github-release
 .ruby-version
