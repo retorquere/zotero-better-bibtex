@@ -139,7 +139,7 @@ doExport = ->
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
     ref.complete()
 
-  Translator.exportGroups()
+  Translator.complete()
   Zotero.write('\n')
   return
 

@@ -302,6 +302,7 @@ file 'resource/translators/titlecaser.js' => ['resource/translators/titlecaser-c
         AbbreviationSegments
         BEFORE
         CITE_FIELDS
+        CLOSURES
         COLLAPSE_VALUES
         CONDITION_LEVEL_BOTTOM
         CONDITION_LEVEL_TOP
@@ -788,6 +789,23 @@ file 'resource/translators/BetterBibTeXParser.pegjs' => [ 'resource/translators/
   puts "#{t.name} outdated"
   cleanly(t.name) do
     UnicodeConverter.new.patterns(t.source, t.name)
+  end
+end
+
+rule '.js' => '.pegjs' do |t|
+  cleanly(t.name) do
+    var = File.basename(t.source, File.extname(t.source))
+    declaration = ''
+    var.split('.')[0..-2].inject([]){|result, part|
+      result = result + [part]
+      v = result.join('.')
+      declaration += "if (typeof #{v} === 'undefined') { #{v} = {}; }\n"
+      result
+    }
+    sh "#{NODEBIN}/pegjs -e #{var.shellescape} #{t.source.shellescape} #{t.name.shellescape}"
+    File.rewrite(t.name){|js|
+      declaration + js
+    }
   end
 end
 

@@ -30,6 +30,7 @@ class Reference
     @fields = []
     @has = Object.create(null)
     @raw = (Translator.rawLaTag in @item.tags)
+    @data = {DeclarePrefChars: ''}
 
     if !@item.language
       @english = true
@@ -192,8 +193,10 @@ class Reference
     # space at end is always OK
     return particle if particle[particle.length - 1] == ' '
 
-    # if BBLT, always add a space if it isn't there
-    return particle + ' ' if Translator.BetterBibLaTeX
+    if Translator.BetterBibLaTeX
+      @data.DeclarePrefChars += particle[particle.length - 1] if XRegExp.test(particle, @punctuationAtEnd)
+      # if BBLT, always add a space if it isn't there
+      return particle + ' '
 
     # otherwise, we're in BBT.
 
@@ -580,7 +583,12 @@ class Reference
     ref += "\n"
     Zotero.write(ref)
 
-    Zotero.BetterBibTeX.cache.store(@item.itemID, Translator, @item.__citekey__, ref) if Translator.caching
+    @data.DeclarePrefChars = Translator.unique_chars(@data.DeclarePrefChars)
+
+    Zotero.BetterBibTeX.cache.store(@item.itemID, Translator, @item.__citekey__, ref, @data) if Translator.caching
+
+    Translator.preamble.DeclarePrefChars += @data.DeclarePrefChars if @data.DeclarePrefChars
+    Translator.debug('item.complete:', {data: @data, preamble: Translator.preamble})
 
   toVerbatim: (text) ->
     if Translator.BetterBibTeX

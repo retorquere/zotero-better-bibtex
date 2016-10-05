@@ -203,3 +203,5 @@
   author = {Le Vayer, François de La Mothe},
   note = {[Le Vayer][François de La Mothe]}
 }
+
+@preamble{ "\DeclarePrefChars{'-’}" }

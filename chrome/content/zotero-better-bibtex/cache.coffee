@@ -102,7 +102,7 @@ Zotero.BetterBibTeX.cache = new class
 
     return cached
 
-  store: (itemID, context, citekey, bibtex) ->
+  store: (itemID, context, citekey, bibtex, data) ->
     ### file paths vary if exportFileData is on ###
     if context.exportFileData
       return
@@ -112,10 +112,12 @@ Zotero.BetterBibTeX.cache = new class
     if cached
       cached.citekey = citekey
       cached.bibtex = bibtex
+      cached.data = data
       cached.accessed = Date.now()
       @db.cache.update(cached)
     else
       record.citekey = citekey
       record.bibtex = bibtex
+      record.data = data
       record.accessed = Date.now()
       @db.cache.insert(record)
