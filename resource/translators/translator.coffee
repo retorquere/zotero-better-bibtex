@@ -378,7 +378,7 @@ Translator.complete = ->
   preamble.push('\\newcommand{\noopsort}[1]{}') if @preamble.noopsort
   if preamble.length > 0
     preamble = ('"' + cmd + ' "' for cmd in preamble)
-    Zotero.write("@preamble{\n " + preamble.join(" \n # ") + "}\n")
+    Zotero.write("@preamble{ " + preamble.join(" \n # ") + " }\n")
 
 Translator.exportGroups = ->
   @debug('exportGroups:', @collections)
