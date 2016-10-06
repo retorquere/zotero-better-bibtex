@@ -176,7 +176,6 @@ class UnicodeConverter
       [0x2009,  "\\,",                'text'],
       [0x2009,  "\\,",                'text'],
       [0x200B,  "\\hspace{0pt}",      'text'],
-      [0x200B,  "\\mbox{}",           'text'],
       [0x200C,  "\\relax ",           'text'],
       [0x205F,  "\\:",                'text'],
       [0xFFFD,  "\\dbend{}",          'text'],
@@ -367,7 +366,6 @@ class UnicodeConverter
     @chars.create_function('rank', 1) do |func, latex, mode|
       latex = latex.to_s
       tests = [
-        lambda{ latex == '\\relax ' || latex == '\\mbox{}' },
         lambda{ @prefer.include?(latex) },
         lambda{ latex !~ /\\/ || latex == "\\$" || latex =~ /^\\[^a-zA-Z0-9]$/ || latex =~ /^\\\^[1-3]$/ },
         lambda{ latex =~ /^(\\[0-9a-zA-Z]+)+{}$/ },

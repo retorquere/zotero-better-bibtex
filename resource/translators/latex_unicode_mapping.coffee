@@ -2959,7 +2959,7 @@ LaTeX.toLaTeX.ascii.text =
   '\u2007': "\\hphantom{0}" # FIGURE SPACE
   '\u2008': "\\hphantom{,}" # PUNCTUATION SPACE
   '\u2009': "\\,"
-  '\u200B': "\\mbox{}"
+  '\u200B': "\\hspace{0pt}"
   '\u200C': "\\relax{}"
   '\u2010': "-" # HYPHEN
   '\u2013': "\\textendash{}" # EN DASH
@@ -5004,10 +5004,7 @@ LaTeX.toUnicode =
   "\\mkern1mu{}": '\u200A' # HAIR SPACE
   "{\\mkern1mu}": '\u200A' # HAIR SPACE
   "\\mkern1mu": '\u200A' # HAIR SPACE
-  "\\mbox{}": '\u200B'
   "\\hspace{0pt}": '\u200B'
-  "{\\mbox}": '\u200B'
-  "\\mbox": '\u200B'
   "-": '\u2010' # HYPHEN
   "\\textendash{}": '\u2013' # EN DASH
   "{\\textendash}": '\u2013' # EN DASH
