@@ -204,7 +204,7 @@ class Reference
     return particle + ' ' if particle[particle.length - 1] == '.'
 
     # if it ends in any other punctuation, it's probably something like d'Medici -- no space
-    return particle + @_enc_creators_relax_marker if XRegExp.test(particle, @punctuationAtEnd)
+    return particle + @_enc_creators_relax_marker + ' ' if XRegExp.test(particle, @punctuationAtEnd)
 
     # otherwise, add a space
     return particle + ' '
@@ -242,8 +242,6 @@ class Reference
     for particle in ['non-dropping-particle', 'dropping-particle']
       name[particle] = @_enc_creators_pad_particle(name[particle]) if name[particle]
 
-    Translator.debug('_enc_creators_bibtex:', name)
-
     ###
       TODO: http://chat.stackexchange.com/rooms/34705/discussion-between-retorquere-and-egreg
 
@@ -269,8 +267,6 @@ class Reference
 
     name.given = @enc_latex({value: name.given}) if name.given
     name.suffix = @enc_latex({value: name.suffix}) if name.suffix
-
-    Translator.debug('_enc_creators_BibTeX:', name)
 
     latex = name.family
     latex += ", #{name.suffix}" if name.suffix
