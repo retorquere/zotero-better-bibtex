@@ -375,7 +375,7 @@ Translator.complete = ->
 
   preamble = []
   preamble.push('\\DeclarePrefChars{' + @unique_chars(@preamble.DeclarePrefChars) + '}') if @preamble.DeclarePrefChars
-  preamble.push('\\newcommand{\noopsort}[1]{}') if @preamble.noopsort
+  preamble.push('\\newcommand{\\noopsort}[1]{}') if @preamble.noopsort
   if preamble.length > 0
     preamble = ('"' + cmd + ' "' for cmd in preamble)
     Zotero.write("@preamble{ " + preamble.join(" \n # ") + " }\n")
