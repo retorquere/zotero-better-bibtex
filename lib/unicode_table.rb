@@ -43,7 +43,6 @@ class UnicodeConverter
         # unicode
         @chars.execute("SELECT charcode, latex, mode, description FROM mapping WHERE preference = 0 AND unicode_to_latex IN ('true', ?) ORDER BY charcode", [ encoding ]){|mapping|
           charcode, latex, mode, desc = *mapping
-          latex += ' ' if latex =~ /^\\[a-z]+$/
           next if mappings['text'][charcode] || mappings['math'][charcode]
           desc = " # #{desc.strip}" if (desc || '').strip != ''
           mappings[mode][charcode] = "  #{char(charcode)}: #{latex.to_json}#{desc}\n"
@@ -368,7 +367,7 @@ class UnicodeConverter
     @chars.create_function('rank', 1) do |func, latex, mode|
       latex = latex.to_s
       tests = [
-        lambda{ latex == '\\relax' || latex == '\\mbox{}' },
+        lambda{ latex == '\\relax ' || latex == '\\mbox{}' },
         lambda{ @prefer.include?(latex) },
         lambda{ latex !~ /\\/ || latex == "\\$" || latex =~ /^\\[^a-zA-Z0-9]$/ || latex =~ /^\\\^[1-3]$/ },
         lambda{ latex =~ /^(\\[0-9a-zA-Z]+)+{}$/ },

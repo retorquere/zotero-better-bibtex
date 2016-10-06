@@ -2960,7 +2960,7 @@ LaTeX.toLaTeX.ascii.text =
   '\u2008': "\\hphantom{,}" # PUNCTUATION SPACE
   '\u2009': "\\,"
   '\u200B': "\\mbox{}"
-  '\u200C': "\\relax "
+  '\u200C': "\\relax{}"
   '\u2010': "-" # HYPHEN
   '\u2013': "\\textendash{}" # EN DASH
   '\u2014': "\\textemdash{}" # EM DASH
