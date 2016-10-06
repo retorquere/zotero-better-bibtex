@@ -269,6 +269,8 @@ class Reference
     latex += ", #{name.suffix}" if name.suffix
     latex += ", #{name.given}" if name.given
 
+    return latex
+
   ###
   # Encode creators to author-style field
   #
