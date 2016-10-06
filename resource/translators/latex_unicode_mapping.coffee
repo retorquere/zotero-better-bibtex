@@ -5004,6 +5004,10 @@ LaTeX.toUnicode =
   "\\mkern1mu{}": '\u200A' # HAIR SPACE
   "{\\mkern1mu}": '\u200A' # HAIR SPACE
   "\\mkern1mu": '\u200A' # HAIR SPACE
+  "\\mbox{}": '\u200B'
+  "\\hspace{0pt}": '\u200B'
+  "{\\mbox}": '\u200B'
+  "\\mbox": '\u200B'
   "-": '\u2010' # HYPHEN
   "\\textendash{}": '\u2013' # EN DASH
   "{\\textendash}": '\u2013' # EN DASH
