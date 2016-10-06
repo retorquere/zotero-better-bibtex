@@ -415,8 +415,8 @@ class UnicodeConverter
           ELSE
             'ascii'
           END,
-        latex_to_unicode = CASE charcode
-          WHEN 0x200C THEN 'false'
+        latex_to_unicode = CASE WHEN
+          charcode in (0x200C, 0x200B) THEN 'false'
           ELSE 'true'
           END
       """)
