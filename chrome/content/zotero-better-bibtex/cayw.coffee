@@ -99,6 +99,15 @@ Zotero.BetterBibTeX.CAYW =
       formatted = '[' + formatted + ']' if config.brackets
       return formatted
 
+    asciidoctor: (citations, config = {}) ->
+      formatted = []
+      for citation in citations
+        cite = citation.citekey
+        cite += "(#{Zotero.BetterBibTeX.CAYW.shortLocator[citation.label]} #{citation.locator})" if citation.locator
+        formatted.push(cite)
+      formatted = formatted.join(', ')
+      formatted = '[' + formatted + ']' # if config.brackets
+
     'scannable-cite': (citations) ->
 
       class Mem
