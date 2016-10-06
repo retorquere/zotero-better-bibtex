@@ -204,7 +204,7 @@ class Reference
     return particle + ' ' if particle[particle.length - 1] == '.'
 
     # if it ends in any other punctuation, it's probably something like d'Medici -- no space
-    return particle + @_enc_creators_relax_marker if XRegExp.test(particle, @punctuationAtEnd)
+    return particle + @_enc_creators_relax_marker + ' ' if XRegExp.test(particle, @punctuationAtEnd)
 
     # otherwise, add a space
     return particle + ' '
@@ -258,13 +258,12 @@ class Reference
     family = new String(family) if XRegExp.test(family, @startsWithLowercase)
     family = @enc_latex({value: family})
     family = @enc_latex({value: @_enc_creators_pad_particle(name['dropping-particle'])}) + family if name['dropping-particle']
-    Translator.debug('_enc_creators_bibtex:', {bbt: Translator.BetterBibTeX, phantom: Translator.bibtexAddPhantomName, name})
-    family = '\\vphantom{' + @enc_latex({value: name.family}) + '}' + family if Translator.BetterBibTeX && Translator.bibtexAddPhantomName && (name['non-dropping-particle'] || name['dropping-particle'])
+    if Translator.BetterBibTeX && Translator.bibtexNoopSortForParticles && (name['non-dropping-particle'] || name['dropping-particle'])
+      family = '\\noopsort{' + @enc_latex({value: name.family}) + '}' + family
+      Translator.preamble.noopsort = true
 
     name.given = @enc_latex({value: name.given}) if name.given
     name.suffix = @enc_latex({value: name.suffix}) if name.suffix
-
-    Translator.debug('_enc_creators_BibTeX:', name)
 
     latex = family
     latex += ", #{name.suffix}" if name.suffix

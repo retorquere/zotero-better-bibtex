@@ -140,6 +140,6 @@ class LaTeX.HTML
     latex += "$" if math
 
     ### minor cleanup ###
-    latex = latex.replace(/([^\\])({})+([^0-9a-z])/ig, '$1$3')
+    latex = latex.replace(/([^\\])({})+([^ 0-9a-z])/ig, '$1$3')
 
     @latex += latex

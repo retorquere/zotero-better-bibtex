@@ -2959,7 +2959,7 @@ LaTeX.toLaTeX.ascii.text =
   '\u2007': "\\hphantom{0}" # FIGURE SPACE
   '\u2008': "\\hphantom{,}" # PUNCTUATION SPACE
   '\u2009': "\\,"
-  '\u200B': "\\hspace{0pt}"
+  '\u200B': "\\mbox{}"
   '\u200C': "\\relax{}"
   '\u2010': "-" # HYPHEN
   '\u2013': "\\textendash{}" # EN DASH
@@ -2984,7 +2984,7 @@ LaTeX.toLaTeX.ascii.text =
   '\u205F': "\\:"
   '\u2060': "\\nolinebreak{}" # WORD JOINER
   '\u20A7': "\\ensuremath{\\Elzpes}" # PESETA SIGN
-  '\u20AC': "{\\mbox{\\texteuro}}" # EURO SIGN
+  '\u20AC': "\\texteuro{}"
   '\u210A': "\\mathscr{g}" # SCRIPT SMALL G
   '\u2116': "\\cyrchar\\textnumero{}" # NUMERO SIGN
   '\u2122': "\\texttrademark{}" # TRADE MARK SIGN
@@ -5004,7 +5004,6 @@ LaTeX.toUnicode =
   "\\mkern1mu{}": '\u200A' # HAIR SPACE
   "{\\mkern1mu}": '\u200A' # HAIR SPACE
   "\\mkern1mu": '\u200A' # HAIR SPACE
-  "\\hspace{0pt}": '\u200B'
   "-": '\u2010' # HYPHEN
   "\\textendash{}": '\u2013' # EN DASH
   "{\\textendash}": '\u2013' # EN DASH
@@ -5101,9 +5100,12 @@ LaTeX.toUnicode =
   "{\\nolinebreak}": '\u2060' # WORD JOINER
   "\\nolinebreak": '\u2060' # WORD JOINER
   "\\ensuremath{\\Elzpes}": '\u20A7' # PESETA SIGN
+  "\\texteuro{}": '\u20AC'
+  "{\\texteuro}": '\u20AC'
   "{\\mbox{\\texteuro}}": '\u20AC' # EURO SIGN
   "\\mbox{\\texteuro}": '\u20AC' # EURO SIGN
   "\\mbox{\\texteuro}{}": '\u20AC' # EURO SIGN
+  "\\texteuro": '\u20AC'
   "\\lvec{}": '\u20D0' # COMBINING LEFT HARPOON ABOVE
   "{\\lvec}": '\u20D0' # COMBINING LEFT HARPOON ABOVE
   "\\lvec": '\u20D0' # COMBINING LEFT HARPOON ABOVE

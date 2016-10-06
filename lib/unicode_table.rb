@@ -176,11 +176,13 @@ class UnicodeConverter
       [0x2009,  "\\,",                'text'],
       [0x2009,  "\\,",                'text'],
       [0x200B,  "\\hspace{0pt}",      'text'],
-      [0x200C,  "\\relax ",           'text'],
+      [0x200B,  "\\mbox{}",           'text'],
+      [0x200C,  "\\relax{}",          'text'],
       [0x205F,  "\\:",                'text'],
       [0xFFFD,  "\\dbend{}",          'text'],
       [0X219C,  "\\arrowwaveleft{}",  'math'],
       [0x00B0,  '^\\circ{}',          'math'],
+      [0x20AC,  '\\texteuro{}',       'text'],
       # TODO: replace '}' and '{' with textbrace(left|right) once the bug mentioned in
       # http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754
       # is widely enough distributed
@@ -366,6 +368,7 @@ class UnicodeConverter
     @chars.create_function('rank', 1) do |func, latex, mode|
       latex = latex.to_s
       tests = [
+        lambda{ latex == '\\mbox{}' },
         lambda{ @prefer.include?(latex) },
         lambda{ latex !~ /\\/ || latex == "\\$" || latex =~ /^\\[^a-zA-Z0-9]$/ || latex =~ /^\\\^[1-3]$/ },
         lambda{ latex =~ /^(\\[0-9a-zA-Z]+)+{}$/ },
@@ -414,6 +417,7 @@ class UnicodeConverter
           END,
         latex_to_unicode = CASE charcode
           WHEN 0x200C THEN 'false'
+          WHEN 0x200B THEN 'false'
           ELSE 'true'
           END
       """)

@@ -372,7 +372,11 @@ Translator.nextItem = ->
 
 Translator.complete = ->
   @exportGroups()
-  Zotero.write("@preamble{ \"\\DeclarePrefChars{#{@unique_chars(@preamble.DeclarePrefChars)}}\" }\n") if @preamble.DeclarePrefChars
+
+  preamble = []
+  preamble.push("\""\\DeclarePrefChars{#{@unique_chars(@preamble.DeclarePrefChars)}}\"") if @preamble.DeclarePrefChars
+  preamble.push('"\\newcommand{\noopsort}[1]{} "') if @preamble.noopsort
+  Zotero.write("@preamble{\n " + preamble.join(" \n # ") + "}\n") if preamble.length > 1
 
 Translator.exportGroups = ->
   @debug('exportGroups:', @collections)
