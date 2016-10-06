@@ -103,10 +103,13 @@ Zotero.BetterBibTeX.CAYW =
       formatted = []
       for citation in citations
         cite = citation.citekey
-        cite += "(#{Zotero.BetterBibTeX.CAYW.shortLocator[citation.label]} #{citation.locator})" if citation.locator
+        if citation.locator
+          label = citation.locator
+          label = Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' ' + label if citation.label != 'page'
+          cite += '(' + label + ')'
         formatted.push(cite)
       formatted = formatted.join(', ')
-      formatted = 'cite:[' + formatted + ']'
+      formatted = (config.cite || 'cite') + ':[' + formatted + ']'
       return formatted
 
     'scannable-cite': (citations) ->
