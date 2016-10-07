@@ -114,9 +114,6 @@
           that comes with it.
         -->
 
-        <preference name="extensions.zotero.translators.better-bibtex.titleCaseLowerCase"       id="pref-better-bibtex-titleCaseLowerCase"      type="string"/>
-        <!-- List of words to keep lowercase when applying title casing. -->
-
         <preference name="extensions.zotero.translators.better-bibtex.jurismPreferredLanguage"  id="pref-better-bibtex-jurismPreferredLanguage" type="string"/>
         <!-- When language alternates are present in Juris-M, this is the language BBT will pick. -->
 
