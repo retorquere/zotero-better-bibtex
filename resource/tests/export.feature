@@ -298,14 +298,14 @@ Scenario: Diacritics stripped from keys regardless of ascii or fold filters #266
   Then a library export using 'Better BibLaTeX' should match 'export/Diacritics stripped from keys regardless of ascii or fold filters #266-nofold.biblatex'
 
 @384 @bbt @565
-Scenario: Do not caps-protect name fields #384 #565
-  Given I import 40 references from 'export/Do not caps-protect name fields #384 #565.json'
-  Then a library export using 'Better BibLaTeX' should match 'export/Do not caps-protect name fields #384 #565.biblatex'
-  And a library export using 'Better BibTeX' should match 'export/Do not caps-protect name fields #384 #565.bibtex'
+Scenario: Do not caps-protect name fields #384 #565 #566
+  Given I import 40 references from 'export/Do not caps-protect name fields #384 #565 #566.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Do not caps-protect name fields #384 #565 #566.biblatex'
+  And a library export using 'Better BibTeX' should match 'export/Do not caps-protect name fields #384 #565 #566.bibtex'
   When I set preference .bibtexNoopSortForParticles to true
-  Then a library export using 'Better BibTeX' should match 'export/Do not caps-protect name fields #384 #565.noopsort.bibtex'
+  Then a library export using 'Better BibTeX' should match 'export/Do not caps-protect name fields #384 #565 #566.noopsort.bibtex'
   When I set preference .biblatexExtendedNameFormat to true
-  Then a library export using 'Better BibLaTeX' should match 'export/Do not caps-protect name fields #384 #565.biber26.biblatex'
+  Then a library export using 'Better BibLaTeX' should match 'export/Do not caps-protect name fields #384 #565 #566.biber26.biblatex'
 
 @383 @bblt
 Scenario: Capitalize all title-fields for language en #383
