@@ -177,7 +177,7 @@ class UnicodeConverter
       [0x2009,  "\\,",                'text'],
       [0x200B,  "\\hspace{0pt}",      'text'],
       [0x200B,  "\\mbox{}",           'text'],
-      [0x200C,  "\\relax{}",          'text'],
+      [0x200C,  "{\\aftergroup\\ignorespaces}", 'text'],
       [0x205F,  "\\:",                'text'],
       [0xFFFD,  "\\dbend{}",          'text'],
       [0X219C,  "\\arrowwaveleft{}",  'math'],
