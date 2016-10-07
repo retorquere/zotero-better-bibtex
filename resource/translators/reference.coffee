@@ -225,6 +225,7 @@ class Reference
       latex = []
       latex.push('family=' + @enc_latex({value: family})) if family
       latex.push('given=' + @enc_latex({value: name.given})) if name.given
+      latex.push('suffix=' + @enc_latex({value: name.suffix})) if name.suffix
       if name['dropping-particle'] || name['non-dropping-particle']
         latex.push('prefix=' + @enc_latex({value: name['dropping-particle'] || name['non-dropping-particle']}))
         latex.push('useprefix=' + !!name['non-dropping-particle'])

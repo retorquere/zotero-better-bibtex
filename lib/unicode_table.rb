@@ -410,14 +410,14 @@ class UnicodeConverter
         unicode_to_latex = CASE
           WHEN mode = 'text' AND (charcode = 0x20 OR (charcode BETWEEN 0x20 AND 0x7E AND CHAR(charcode) = latex)) THEN
             'false'
-          WHEN charcode = 0x00A0 OR charcode BETWEEN 0x20 AND 0x7E THEN
+          WHEN charcode IN (0x00A0, 0x200B, 0x200C) OR charcode BETWEEN 0x20 AND 0x7E THEN
             'true'
           ELSE
             'ascii'
           END,
         latex_to_unicode = CASE charcode
-          WHEN 0x200C THEN 'false'
           WHEN 0x200B THEN 'false'
+          WHEN 0x200C THEN 'false'
           ELSE 'true'
           END
       """)

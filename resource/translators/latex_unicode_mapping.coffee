@@ -16,6 +16,8 @@ LaTeX.toLaTeX.unicode.text =
   '}': "\\}"
   '~': "\\textasciitilde{}" # TILDE
   '\u00A0': "~"
+  '\u200B': "\\mbox{}"
+  '\u200C': "{\\aftergroup\\ignorespaces}"
 LaTeX.toLaTeX.ascii.math =
   '<': "<" # LESS-THAN SIGN
   '>': ">" # GREATER-THAN SIGN
