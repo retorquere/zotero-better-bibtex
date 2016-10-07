@@ -149,7 +149,7 @@
 
 @book{dupuydeclinchamps,
   author = {du Puy de Clinchamps, {\relax Ph}ilippe},
-  note = {[du Puy de Clinchamps][Philippe]},
+  note = {[du Puy de Clinchamps][PhU+0097ilippe]},
   options = {useprefix=true}
 }
 
@@ -190,7 +190,7 @@
 
 @book{medici,
   author = {de’​ Medici, Lorenzo},
-  note = {[Medici][Lorenzo de’​]}
+  note = {[Medici][Lorenzo de’U+200B]}
 }
 
 @book{al-hakim,
