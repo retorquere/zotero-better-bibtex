@@ -117,13 +117,14 @@ Scenario Outline: BibLaTeX Export
 
 ### BibTeX cookie-cutter ###
 
-@441 @439 @bbt @300
+@441 @439 @bbt @300 @551
 Scenario Outline: BibTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibTeX' should match 'export/<file>.bibtex'
 
   Examples:
      | file                                                                               | references |
+     | veryshorttitle and compound words #551                                             | 2          |
      | Missing JabRef pattern; authEtAl #554                                              | 1          |
      | Missing JabRef pattern; authorsN+initials #553                                     | 1          |
      | custom fields should be exported as-is #441                                        | 1          |
