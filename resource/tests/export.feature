@@ -124,7 +124,7 @@ Scenario Outline: BibTeX Export
 
   Examples:
      | file                                                                               | references |
-     | veryshorttitle and compound words #551                                             | 2          |
+     | veryshorttitle and compound words #551                                             | 4          |
      | Braces around author last name when exporting BibTeX #565                          | 5          |
      | Missing JabRef pattern; authEtAl #554                                              | 1          |
      | Missing JabRef pattern; authorsN+initials #553                                     | 1          |

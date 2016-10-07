@@ -154,6 +154,99 @@
 
       ],
       "__citekey__": "bowles_co_1988"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "place": "Boston, MA",
+      "publisher": "Ginn",
+      "date": "1906",
+      "libraryCatalog": "Open WorldCat",
+      "language": "English",
+      "title": "Folkways: a study of the social importance of usages, manners, customs, mores, and morals",
+      "shortTitle": "Folkways",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Sumner",
+          "firstName": "William Graham"
+        }
+      ],
+      "attachments": [
+        {
+          "path": "/Users/McKarlo/Academia/Books/Sumner 1906 Folkways.pdf",
+          "title": "Sumner 1906 Folkways.pdf",
+          "mimeType": "application/pdf"
+        }
+      ],
+      "notes": [
+
+      ],
+      "itemID": 1730,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "sumner_folkways:_1906"
+    },
+    {
+      "itemType": "journalArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://pss.sagepub.com/content/early/2013/11/08/0956797613493444",
+      "volume": "25",
+      "issue": "1",
+      "pages": "47-57",
+      "publicationTitle": "Psychological Science",
+      "ISSN": "0956-7976, 1467-9280",
+      "date": "2014",
+      "extra": "PMID: 24220626",
+      "journalAbbreviation": "Psychological Science",
+      "DOI": "10.1177/0956797613493444",
+      "accessDate": "2014-01-08 13:28:09",
+      "libraryCatalog": "pss.sagepub.com",
+      "language": "en",
+      "abstractNote": "In suggesting that new nations often coalesce in the decades following war, historians have posed an important psychological question: Does the experience of war generate an enduring elevation in people’s egalitarian motivations toward their in-group? We administered social-choice tasks to more than 1,000 children and adults differentially affected by wars in the Republic of Georgia and Sierra Leone. We found that greater exposure to war created a lasting increase in people’s egalitarian motivations toward their in-group, but not their out-groups, during a developmental window starting in middle childhood (around 7 years of age) and ending in early adulthood (around 20 years of age). Outside this window, war had no measurable impact on social motivations in young children and had only muted effects on the motivations of older adults. These “war effects” are broadly consistent with predictions from evolutionary approaches that emphasize the importance of group cooperation in defending against external threats, though they also highlight key areas in need of greater theoretical development.",
+      "title": "War’s Enduring Effects on the Development of Egalitarian Motivations and In-Group Biases",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Bauer",
+          "firstName": "Michal"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Cassar",
+          "firstName": "Alessandra"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Chytilová",
+          "firstName": "Julie"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Henrich",
+          "firstName": "Joseph"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 1983,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "bauer_wars_2014"
     }
   ],
   "cache": {
