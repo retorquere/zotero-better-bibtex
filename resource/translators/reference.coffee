@@ -189,7 +189,7 @@ class Reference
   nonLetters: new XRegExp("[^\\p{Letter}]", 'g')
   punctuationAtEnd: new XRegExp("[\\p{Punctuation}]$")
   startsWithLowercase: new XRegExp("^[\\p{Ll}]")
-  hasLowercaseWord: new XRegExp("\s[\\p{Ll}]")
+  hasLowercaseWord: new XRegExp("\\s[\\p{Ll}]")
   _enc_creators_pad_particle: (particle, relax) ->
     # space at end is always OK
     return particle if particle[particle.length - 1] == ' '
