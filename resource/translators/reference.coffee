@@ -205,7 +205,9 @@ class Reference
     return particle + ' ' if particle[particle.length - 1] == '.'
 
     # if it ends in any other punctuation, it's probably something like d'Medici -- no space
-    return particle + @_enc_creators_relax_marker + ' ' if relax && XRegExp.test(particle, @punctuationAtEnd)
+    if XRegExp.test(particle, @punctuationAtEnd)
+      return particle + @_enc_creators_relax_marker + ' ' if relax
+      return particle
 
     # otherwise, add a space
     return particle + ' '
