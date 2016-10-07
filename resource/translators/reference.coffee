@@ -263,8 +263,6 @@ class Reference
       family = '\\noopsort{' + @enc_latex({value: name.family.toLowerCase()}) + '}' + family
       Translator.preamble.noopsort = true
 
-    # the ZWS->\mbox must not be done in BibTeX
-    #name.given = name.given.replace(@_enc_creators_biblatex_zws, '') if name.given
     name.given = @enc_latex({value: name.given}) if name.given
     name.suffix = @enc_latex({value: name.suffix}) if name.suffix
 
@@ -282,7 +280,6 @@ class Reference
   ###
   _enc_creators_relax_block_marker: '\u0097'
   _enc_creators_relax_marker: '\u200C'
-  _enc_creators_biblatex_zws: /\u200B/g
   enc_creators: (f, raw) ->
     return null if f.value.length == 0
 
