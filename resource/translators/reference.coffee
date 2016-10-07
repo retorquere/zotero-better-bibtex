@@ -259,7 +259,7 @@ class Reference
     family = @enc_latex({value: family})
     family = @enc_latex({value: @_enc_creators_pad_particle(name['dropping-particle'])}) + family if name['dropping-particle']
     if Translator.BetterBibTeX && Translator.bibtexNoopSortForParticles && (name['non-dropping-particle'] || name['dropping-particle'])
-      family = '\\noopsort{' + @enc_latex({value: name.family}) + '}' + family
+      family = '\\noopsort{' + @enc_latex({value: name.family.toLowerCase()}) + '}' + family
       Translator.preamble.noopsort = true
 
     name.given = @enc_latex({value: name.given}) if name.given
