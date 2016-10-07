@@ -213,25 +213,21 @@ class Reference
     return ((if i % 2 == 0 then n else new String(n)) for n, i in value.split(/(\s+and\s+|,)/i))
 
   _enc_creators_biblatex: (name) ->
-    for particle in ['non-dropping-particle', 'dropping-particle']
-      name[particle] = @_enc_creators_pad_particle(name[particle]) if name[particle]
+    if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
+      family = new String(name.family.slice(1, -1))
+    else
+      family = name.family
 
-    for k, v of name
-      continue unless typeof v == 'string'
-      switch
-        when v.length > 1 && v[0] == '"' && v[v.length - 1] == '"'
-          name[k] = @enc_latex({ value: new String(v.slice(1, -1)) })
-        when k == 'family' && XRegExp.test(v, @startsWithLowercase)
-          name[k] = @enc_latex({ value: new String(v) })
-        else
-          name[k] = @enc_latex({ value: @_enc_creators_quote_separators(v), sep: ' '})
+    family = new String(family) if family && XRegExp.test(family, @startsWithLowercase)
+
+    family = @enc_latex({value: family}) if family
 
     latex = ''
-    latex += name['dropping-particle'] if name['dropping-particle']
-    latex += name['non-dropping-particle'] if name['non-dropping-particle']
-    latex += name.family if name.family
-    latex += ", #{name.suffix}" if name.suffix
-    latex += ", #{name.given || ''}" if name.given
+    latex += @enc_latex({value: @_enc_creators_pad_particle(name['dropping-particle'])}) if name['dropping-particle']
+    latex += @enc_latex({value: @_enc_creators_pad_particle(name['non-dropping-particle'])}) if name['non-dropping-particle']
+    latex += family if family
+    latex += ', ' + @enc_latex({value: name.suffix}) if name.suffix
+    latex += ', ' + @enc_latex({value: name.given}) if name.given
 
     return latex
 

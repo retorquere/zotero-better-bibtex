@@ -32,6 +32,7 @@ postscript: ''
 jabrefGroups: true
 defaultDateParserLocale: ''
 bibtexNoopSortForParticles: false
+biblatexExtendedNameFormat: false
 titleCaseLowerCase: about above across afore after against along
   alongside amid amidst among amongst anenst apropos apud around as
   aside astride at athwart atop barring before behind below beneath
