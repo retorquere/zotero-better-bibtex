@@ -251,7 +251,7 @@ class Reference
       in the label, use {\relax van} Gogh or something like this.
     ###
 
-    family = @_enc_creators_pad_particle(name['non-dropping-particle']) + family if name['non-dropping-particle']
+    family = new String(@_enc_creators_pad_particle(name['non-dropping-particle']) + family) if name['non-dropping-particle']
     family = new String(family) if XRegExp.test(family, @startsWithLowercase) || XRegExp.test(family, @hasLowercaseWord)
     family = @enc_latex({value: family})
     family = @enc_latex({value: @_enc_creators_pad_particle(name['dropping-particle'], true)}) + family if name['dropping-particle']
