@@ -58,7 +58,6 @@ Zotero.BetterBibTeX.Pref = new class
               'tests',                  \
               'warnBulkModify',         \
               'quickCopyMode',          \
-              'usePrefix'
           ### innocent changes ###
           return
 
@@ -94,12 +93,12 @@ Zotero.BetterBibTeX.Pref = new class
               'titleCaseLowerCase',       \
               'titleCaseUpperCase',       \
               'qualityReport',            \
-              'jurismPreferredLanguage'
+              'jurismPreferredLanguage',  \
+              'usePrefix'
           ### pass through to cache drop ###
 
         else
           Zotero.BetterBibTeX.debug("Zotero.BetterBibTeX.Pref: Did not expect change to preference #{data}")
-          throw "Did not expect change to preference #{data}!"
 
       ### drop the cache and kick off all exports ###
       Zotero.BetterBibTeX.cache.reset("pref change: #{data}")
