@@ -103,7 +103,7 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.better-bibtex.prefs.export.fields "Fields">
 <!ENTITY zotero.better-bibtex.prefs.export.fields.preserveBibTeXVariables "Assume single-word strings to be externally-defined @string vars, and thus not surrounded by braces">
 <!ENTITY zotero.better-bibtex.prefs.export.fields.attachmentsNoMetadata "Omit title and mimetype for attachments">
-<!ENTITY zotero.better-bibtex.prefs.export.fields.parseParticles "Move name-particles (de, von, ...) to the family name">
+<!ENTITY zotero.better-bibtex.prefs.export.fields.bibtexParticleNoOp "Disregard name prefixes when sorting">
 <!ENTITY zotero.better-bibtex.prefs.export.fields.doi-and-url "When a reference has both a DOI and an URL, export">
 <!ENTITY zotero.better-bibtex.prefs.export.fields.doi-and-url.both "both">
 <!ENTITY zotero.better-bibtex.prefs.export.fields.doi-and-url.DOI "DOI">

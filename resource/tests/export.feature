@@ -117,7 +117,7 @@ Scenario Outline: BibLaTeX Export
 
 ### BibTeX cookie-cutter ###
 
-@441 @439 @bbt @300 @551
+@441 @439 @bbt @300 @565 @551
 Scenario Outline: BibTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibTeX' should match 'export/<file>.bibtex'
@@ -125,6 +125,7 @@ Scenario Outline: BibTeX Export
   Examples:
      | file                                                                               | references |
      | veryshorttitle and compound words #551                                             | 2          |
+     | Braces around author last name when exporting BibTeX #565                          | 5          |
      | Missing JabRef pattern; authEtAl #554                                              | 1          |
      | Missing JabRef pattern; authorsN+initials #553                                     | 1          |
      | custom fields should be exported as-is #441                                        | 1          |
@@ -302,19 +303,21 @@ Scenario: Do not caps-protect name fields #384
   Given I import 40 references from 'export/Do not caps-protect name fields #384.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Do not caps-protect name fields #384.biblatex'
   And a library export using 'Better BibTeX' should match 'export/Do not caps-protect name fields #384.bibtex'
+  When I set preference .bibtexParticleNoOp to true
+  Then a library export using 'Better BibTeX' should match 'export/Do not caps-protect name fields #384.noopsort.bibtex'
 
 @383 @bblt
 Scenario: Capitalize all title-fields for language en #383
   Given I import 8 references from 'export/Capitalize all title-fields for language en #383.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Capitalize all title-fields for language en #383.biblatex'
 
-@411 @bblt
-Scenario: Sorting and optional particle handling #411
-  Given I import 2 references from 'export/Sorting and optional particle handling #411.json'
-  And I set preference .parseParticles to true
-  Then a library export using 'Better BibLaTeX' should match 'export/Sorting and optional particle handling #411.on.biblatex'
-  When I set preference .parseParticles to false
-  Then a library export using 'Better BibLaTeX' should match 'export/Sorting and optional particle handling #411.off.biblatex'
+#@411 @bblt
+#Scenario: Sorting and optional particle handling #411
+#  Given I import 2 references from 'export/Sorting and optional particle handling #411.json'
+#  And I set preference .parseParticles to true
+#  Then a library export using 'Better BibLaTeX' should match 'export/Sorting and optional particle handling #411.on.biblatex'
+#  When I set preference .parseParticles to false
+#  Then a library export using 'Better BibLaTeX' should match 'export/Sorting and optional particle handling #411.off.biblatex'
 
 @test-cluster-1 @ae
 Scenario: auto-export

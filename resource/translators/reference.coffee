@@ -30,6 +30,7 @@ class Reference
     @fields = []
     @has = Object.create(null)
     @raw = (Translator.rawLaTag in @item.tags)
+    @data = {DeclarePrefChars: ''}
 
     if !@item.language
       @english = true
@@ -188,56 +189,56 @@ class Reference
   nonLetters: new XRegExp("[^\\p{Letter}]", 'g')
   punctuationAtEnd: new XRegExp("[\\p{Punctuation}]$")
   startsWithLowercase: new XRegExp("^[\\p{Ll}]")
-  _enc_creators_postfix_particle: (particle) ->
+  hasLowercaseWord: new XRegExp("\\s[\\p{Ll}]")
+  _enc_creators_pad_particle: (particle, relax) ->
     # space at end is always OK
-    return '' if particle[particle.length - 1] == ' '
+    return particle if particle[particle.length - 1] == ' '
 
-    # if BBLT, always add a space if it isn't there
-    return ' ' if Translator.BetterBibLaTeX
+    if Translator.BetterBibLaTeX
+      @data.DeclarePrefChars += particle[particle.length - 1] if XRegExp.test(particle, @punctuationAtEnd)
+      # if BBLT, always add a space if it isn't there
+      return particle + ' '
 
     # otherwise, we're in BBT.
 
     # If the particle ends in a period, add a space
-    return ' ' if particle[particle.length - 1] == '.'
+    return particle + ' ' if particle[particle.length - 1] == '.'
 
     # if it ends in any other punctuation, it's probably something like d'Medici -- no space
-    return '' if XRegExp.test(particle, @punctuationAtEnd)
+    if XRegExp.test(particle, @punctuationAtEnd)
+      return particle + @_enc_creators_relax_marker + ' ' if relax
+      return particle
 
     # otherwise, add a space
-    return ' '
+    return particle + ' '
 
   _enc_creators_quote_separators: (value) ->
     return ((if i % 2 == 0 then n else new String(n)) for n, i in value.split(/(\s+and\s+|,)/i))
 
   _enc_creators_biblatex: (name) ->
-    for particle in ['non-dropping-particle', 'dropping-particle']
-      name[particle] += @_enc_creators_postfix_particle(name[particle]) if name[particle]
+    if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
+      family = new String(name.family.slice(1, -1))
+    else
+      family = name.family
 
-    for k, v of name
-      continue unless typeof v == 'string'
-      switch
-        when v.length > 1 && v[0] == '"' && v[v.length - 1] == '"'
-          name[k] = @enc_latex({ value: new String(v.slice(1, -1)) })
-        when k == 'family' && XRegExp.test(v, @startsWithLowercase)
-          name[k] = @enc_latex({ value: new String(v) })
-        else
-          name[k] = @enc_latex({ value: @_enc_creators_quote_separators(v), sep: ' '})
+    family = new String(family) if family && XRegExp.test(family, @startsWithLowercase)
+
+    family = @enc_latex({value: family}) if family
 
     latex = ''
-    latex += name['dropping-particle'] if name['dropping-particle']
-    latex += name['non-dropping-particle'] if name['non-dropping-particle']
-    latex += name.family if name.family
-    latex += ", #{name.suffix}" if name.suffix
-    latex += ", #{name.given || ''}" if name.given
+    latex += @enc_latex({value: @_enc_creators_pad_particle(name['dropping-particle'])}) if name['dropping-particle']
+    latex += @enc_latex({value: @_enc_creators_pad_particle(name['non-dropping-particle'])}) if name['non-dropping-particle']
+    latex += family if family
+    latex += ', ' + @enc_latex({value: name.suffix}) if name.suffix
+    latex += ', ' + @enc_latex({value: name.given}) if name.given
 
     return latex
 
   _enc_creators_bibtex: (name) ->
-    for particle in ['non-dropping-particle', 'dropping-particle']
-      name[particle] += @_enc_creators_postfix_particle(name[particle]) if name[particle]
-
     if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
-      name.family = name.family.slice(1, -1)
+      family = new String(name.family.slice(1, -1))
+    else
+      family = name.family
 
     ###
       TODO: http://chat.stackexchange.com/rooms/34705/discussion-between-retorquere-and-egreg
@@ -252,12 +253,23 @@ class Reference
       in the label, use {\relax van} Gogh or something like this.
     ###
 
-    latex = (part for part in [name['dropping-particle'], name['non-dropping-particle'], name.family] when part).join('')
-    latex = new String(latex) if latex.indexOf(' ') > 0 || latex.indexOf(',') >= 0
-    latex = [latex]
-    latex.push(name.suffix) if name.suffix
-    latex.push(name.given) if name.given
-    return @enc_latex({value: latex, sep: ', '})
+    family = new String(@_enc_creators_pad_particle(name['non-dropping-particle']) + family) if name['non-dropping-particle']
+    family = new String(family) if XRegExp.test(family, @startsWithLowercase) || XRegExp.test(family, @hasLowercaseWord)
+    family = @enc_latex({value: family})
+    family = @enc_latex({value: @_enc_creators_pad_particle(name['dropping-particle'], true)}) + family if name['dropping-particle']
+
+    if Translator.BetterBibTeX && Translator.bibtexParticleNoOp && (name['non-dropping-particle'] || name['dropping-particle'])
+      family = '{\\noopsort{' + @enc_latex({value: name.family.toLowerCase()}) + '}}' + family
+      Translator.preamble.noopsort = true
+
+    name.given = @enc_latex({value: name.given}) if name.given
+    name.suffix = @enc_latex({value: name.suffix}) if name.suffix
+
+    latex = family
+    latex += ", #{name.suffix}" if name.suffix
+    latex += ", #{name.given}" if name.given
+
+    return latex
 
   ###
   # Encode creators to author-style field
@@ -265,7 +277,8 @@ class Reference
   # @param {field} field to encode. The 'value' must be an array of Zotero-serialized `creator` objects.
   # @return {String} field.value encoded as author-style value
   ###
-  _enc_creators_relax_marker: '\u0097'
+  _enc_creators_relax_block_marker: '\u0097'
+  _enc_creators_relax_marker: '\u200C'
   enc_creators: (f, raw) ->
     return null if f.value.length == 0
 
@@ -278,13 +291,13 @@ class Reference
         when raw
           name = [creator.lastName || '', creator.firstName || ''].join(', ')
 
-        when Translator.parseParticles && (creator.lastName || creator.firstName)
+        when creator.lastName || creator.firstName
           name = {family: creator.lastName || '', given: creator.firstName || ''}
 
           Zotero.BetterBibTeX.CSL.parseParticles(name)
 
-          if name.given && name.given.indexOf(@_enc_creators_relax_marker) >= 0 # zero-width space
-            name.given = '<span relax="true">' + name.given.replace(@_enc_creators_relax_marker, '</span>')
+          if name.given && name.given.indexOf(@_enc_creators_relax_block_marker) >= 0 # zero-width space
+            name.given = '<span relax="true">' + name.given.replace(@_enc_creators_relax_block_marker, '</span>')
 
           @useprefix ||= !!name['non-dropping-particle']
           @juniorcomma ||= (f.juniorcomma && name['comma-suffix'])
@@ -293,16 +306,6 @@ class Reference
             name = @_enc_creators_bibtex(name)
           else
             name = @_enc_creators_biblatex(name)
-
-        when creator.lastName || creator.firstName
-          name = []
-          name.push(new String(creator.lastName)) if creator.lastName
-          if creator.firstName
-            if creator.firstName.indexOf(@_enc_creators_relax_marker) >= 0 # zero-width space
-              creator.firstName = '<span class="relax">' + creator.firstName.replace(@_enc_creators_relax_marker, '</span>')
-            name.push(creator.firstName)
-
-          name = @enc_latex({value: name, sep: ', '})
 
         else
           continue
@@ -581,7 +584,12 @@ class Reference
     ref += "\n"
     Zotero.write(ref)
 
-    Zotero.BetterBibTeX.cache.store(@item.itemID, Translator, @item.__citekey__, ref) if Translator.caching
+    @data.DeclarePrefChars = Translator.unique_chars(@data.DeclarePrefChars)
+
+    Zotero.BetterBibTeX.cache.store(@item.itemID, Translator, @item.__citekey__, ref, @data) if Translator.caching
+
+    Translator.preamble.DeclarePrefChars += @data.DeclarePrefChars if @data.DeclarePrefChars
+    Translator.debug('item.complete:', {data: @data, preamble: Translator.preamble})
 
   toVerbatim: (text) ->
     if Translator.BetterBibTeX

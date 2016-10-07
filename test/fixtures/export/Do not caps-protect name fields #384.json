@@ -50,7 +50,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "vangogh"
+      "__citekey__": "vangogh",
+      "extra": "[van Gogh][Vincent]"
     },
     {
       "itemType": "book",
@@ -76,7 +77,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "humboldt"
+      "__citekey__": "humboldt",
+      "extra": "[Humboldt][Alexander von]"
     },
     {
       "itemType": "book",
@@ -102,7 +104,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "beauvoir"
+      "__citekey__": "beauvoir",
+      "extra": "[Beauvoir][Simone de]"
     },
     {
       "itemType": "book",
@@ -128,7 +131,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "degaulle"
+      "__citekey__": "degaulle",
+      "extra": "[\"de Gaulle\"][Charles]"
     },
     {
       "itemType": "book",
@@ -154,7 +158,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "king"
+      "__citekey__": "king",
+      "extra": "[King][Martin Luther, Jr.]"
     },
     {
       "itemType": "book",
@@ -180,7 +185,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "stevenson"
+      "__citekey__": "stevenson",
+      "extra": "[Stevenson][Adlai E.,! III]"
     },
     {
       "itemType": "book",
@@ -206,7 +212,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "nationalaeronauticsandspaceadministration"
+      "__citekey__": "nationalaeronauticsandspaceadministration",
+      "extra": "[[National Aeronautics and Space Administration]]"
     },
     {
       "itemType": "book",
@@ -232,7 +239,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "bovendeert"
+      "__citekey__": "bovendeert",
+      "extra": "[boven d'Eert][Christianus]"
     },
     {
       "itemType": "book",
@@ -258,7 +266,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "s-gravesande"
+      "__citekey__": "s-gravesande",
+      "extra": "['s-Gravesande][Goverdus]"
     },
     {
       "itemType": "book",
@@ -284,7 +293,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "dequincey"
+      "__citekey__": "dequincey",
+      "extra": "[De Quincey][Thomas]"
     },
     {
       "itemType": "book",
@@ -310,7 +320,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "ortegaygasset"
+      "__citekey__": "ortegaygasset",
+      "extra": "[Ortega y Gasset][José]"
     },
     {
       "itemType": "book",
@@ -336,7 +347,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "damato"
+      "__citekey__": "damato",
+      "extra": "[D’Amato][Alfonse]"
     },
     {
       "itemType": "book",
@@ -362,7 +374,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "sadat"
+      "__citekey__": "sadat",
+      "extra": "[Sadat][Anwar el-]"
     },
     {
       "itemType": "book",
@@ -388,7 +401,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "lafollette"
+      "__citekey__": "lafollette",
+      "extra": "[La Follette][Robert M., Sr.]"
     },
     {
       "itemType": "book",
@@ -414,7 +428,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "delamare"
+      "__citekey__": "delamare",
+      "extra": "[\"de la Mare\"][Walter]"
     },
     {
       "itemType": "book",
@@ -440,7 +455,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "degette"
+      "__citekey__": "degette",
+      "extra": "[DeGette][Diana]"
     },
     {
       "itemType": "book",
@@ -466,7 +482,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "saunders"
+      "__citekey__": "saunders",
+      "extra": "[Saunders][John Bertrand de Cusance Morant]"
     },
     {
       "itemType": "book",
@@ -492,7 +509,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "marcusaurelius"
+      "__citekey__": "marcusaurelius",
+      "extra": "[[Marcus Aurelius]]"
     },
     {
       "itemType": "book",
@@ -518,7 +536,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "dumas"
+      "__citekey__": "dumas",
+      "extra": "[Dumas][Alexandre, père]"
     },
     {
       "itemType": "book",
@@ -544,7 +563,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "vanrensselaer"
+      "__citekey__": "vanrensselaer",
+      "extra": "[Van Rensselaer][Stephen]"
     },
     {
       "itemType": "book",
@@ -570,7 +590,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "lenfant"
+      "__citekey__": "lenfant",
+      "extra": "[L’Enfant][Pierre-Charles]"
     },
     {
       "itemType": "book",
@@ -596,7 +617,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "vangulik"
+      "__citekey__": "vangulik",
+      "extra": "[\"van Gulik\"][Robert]"
     },
     {
       "itemType": "book",
@@ -622,7 +644,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "sackville-west"
+      "__citekey__": "sackville-west",
+      "extra": "[Sackville-West][Victoria]"
     },
     {
       "itemType": "book",
@@ -648,7 +671,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "vaughanwilliams"
+      "__citekey__": "vaughanwilliams",
+      "extra": "[Vaughan Williams][Ralph]"
     },
     {
       "itemType": "book",
@@ -674,7 +698,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "miesvanderrohe"
+      "__citekey__": "miesvanderrohe",
+      "extra": "[Mies van der Rohe][Ludwig]"
     },
     {
       "itemType": "book",
@@ -700,7 +725,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "dalembert"
+      "__citekey__": "dalembert",
+      "extra": "[d’Alembert][Jean le Rond]"
     },
     {
       "itemType": "book",
@@ -726,7 +752,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "tocqueville"
+      "__citekey__": "tocqueville",
+      "extra": "[Tocqueville][Alexis de]"
     },
     {
       "itemType": "book",
@@ -752,7 +779,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "lafontaine"
+      "__citekey__": "lafontaine",
+      "extra": "[La Fontaine][Jean de]"
     },
     {
       "itemType": "book",
@@ -778,7 +806,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "lasalle"
+      "__citekey__": "lasalle",
+      "extra": "[La Salle][René-Robert Cavelier de]"
     },
     {
       "itemType": "book",
@@ -804,7 +833,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "dupuydeclinchamps"
+      "__citekey__": "dupuydeclinchamps",
+      "extra": "[du Puy de Clinchamps][PhU+0097ilippe]"
     },
     {
       "itemType": "book",
@@ -830,7 +860,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "stein"
+      "__citekey__": "stein",
+      "extra": "[Stein][Heinrich Friedrich Karl vom und zum]"
     },
     {
       "itemType": "book",
@@ -856,7 +887,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "silva"
+      "__citekey__": "silva",
+      "extra": "[Silva][Agostinho da]"
     },
     {
       "itemType": "book",
@@ -882,7 +914,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "dagama"
+      "__citekey__": "dagama",
+      "extra": "[\"da Gama\"][Vasco]"
     },
     {
       "itemType": "book",
@@ -908,7 +941,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "dannunzio"
+      "__citekey__": "dannunzio",
+      "extra": "[D’Annunzio][Gabriele]"
     },
     {
       "itemType": "book",
@@ -934,7 +968,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "daponte"
+      "__citekey__": "daponte",
+      "extra": "[Da Ponte][Lorenzo]"
     },
     {
       "itemType": "book",
@@ -960,7 +995,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "dellarobbia"
+      "__citekey__": "dellarobbia",
+      "extra": "[Della Robbia][Luca]"
     },
     {
       "itemType": "book",
@@ -986,7 +1022,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "este"
+      "__citekey__": "este",
+      "extra": "[Este][Beatrice d’]"
     },
     {
       "itemType": "book",
@@ -1012,7 +1049,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "medici"
+      "__citekey__": "medici",
+      "extra": "[Medici][Lorenzo de’U+200B]"
     },
     {
       "itemType": "book",
@@ -1038,7 +1076,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "al-hakim"
+      "__citekey__": "al-hakim",
+      "extra": "[al-Hakim][Tawfiq]"
     },
     {
       "itemType": "book",
@@ -1064,7 +1103,8 @@
       "seeAlso": [
 
       ],
-      "__citekey__": "levayer"
+      "__citekey__": "levayer",
+      "extra": "[Le Vayer][François de La Mothe]"
     }
   ]
 }

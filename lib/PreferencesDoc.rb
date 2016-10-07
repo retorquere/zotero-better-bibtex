@@ -38,7 +38,7 @@ class PreferencesDoc
     pane = config.sources.detect{|f| File.extname(f) == '.xul'}
     pane = File.read(pane)
     pane.sub!(/SYSTEM ".*?"/, dtd)
-    open('test.xml', 'w'){|f| f.puts(pane) }
+    #open('test.xml', 'w'){|f| f.puts(pane) }
 
     pane = Nokogiri::XML(pane) {|cfg| cfg.noent.strict }
 
