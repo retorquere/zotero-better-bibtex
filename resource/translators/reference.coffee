@@ -190,7 +190,7 @@ class Reference
   punctuationAtEnd: new XRegExp("[\\p{Punctuation}]$")
   startsWithLowercase: new XRegExp("^[\\p{Ll}]")
   hasLowercaseWord: new XRegExp("\s[\\p{Ll}]")
-  _enc_creators_pad_particle: (particle) ->
+  _enc_creators_pad_particle: (particle, relax) ->
     # space at end is always OK
     return particle if particle[particle.length - 1] == ' '
 
@@ -205,7 +205,7 @@ class Reference
     return particle + ' ' if particle[particle.length - 1] == '.'
 
     # if it ends in any other punctuation, it's probably something like d'Medici -- no space
-    return particle + @_enc_creators_relax_marker + ' ' if XRegExp.test(particle, @punctuationAtEnd)
+    return particle + @_enc_creators_relax_marker + ' ' if relax && XRegExp.test(particle, @punctuationAtEnd)
 
     # otherwise, add a space
     return particle + ' '
@@ -254,7 +254,7 @@ class Reference
     family = @_enc_creators_pad_particle(name['non-dropping-particle']) + family if name['non-dropping-particle']
     family = new String(family) if XRegExp.test(family, @startsWithLowercase) || XRegExp.test(family, @hasLowercaseWord)
     family = @enc_latex({value: family})
-    family = @enc_latex({value: @_enc_creators_pad_particle(name['dropping-particle'])}) + family if name['dropping-particle']
+    family = @enc_latex({value: @_enc_creators_pad_particle(name['dropping-particle'], true)}) + family if name['dropping-particle']
     # \relax{} space doesn't work, must be \relax space -- this is a bit tricky because it could eat legitimate spaces,
     # but ah well
     family = family.replace(/\\relax{} /g, "\\relax ")
@@ -263,6 +263,8 @@ class Reference
       family = '\\noopsort{' + @enc_latex({value: name.family.toLowerCase()}) + '}' + family
       Translator.preamble.noopsort = true
 
+    # the ZWS->\mbox must not be done in BibTeX
+    #name.given = name.given.replace(@_enc_creators_biblatex_zws, '') if name.given
     name.given = @enc_latex({value: name.given}) if name.given
     name.suffix = @enc_latex({value: name.suffix}) if name.suffix
 
@@ -280,6 +282,7 @@ class Reference
   ###
   _enc_creators_relax_block_marker: '\u0097'
   _enc_creators_relax_marker: '\u200C'
+  _enc_creators_biblatex_zws: /\u200B/g
   enc_creators: (f, raw) ->
     return null if f.value.length == 0
 
