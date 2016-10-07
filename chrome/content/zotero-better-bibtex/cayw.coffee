@@ -99,7 +99,7 @@ Zotero.BetterBibTeX.CAYW =
       formatted = '[' + formatted + ']' if config.brackets
       return formatted
 
-    asciidoctor: (citations, config = {}) ->
+    'asciidoctor-bibtex': (citations, config = {}) ->
       formatted = []
       for citation in citations
         cite = citation.citekey
