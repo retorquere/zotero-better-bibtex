@@ -89,7 +89,7 @@ Zotero.BetterBibTeX.Pref = new class
               'postscript',               \
               'jabrefGroups',             \
               'defaultDateParserLocale',  \
-              'bibtexNoopSortForParticles',\
+              'bibtexParticleNoOp',       \
               'titleCase',                \
               'titleCaseLowerCase',       \
               'titleCaseUpperCase',       \
