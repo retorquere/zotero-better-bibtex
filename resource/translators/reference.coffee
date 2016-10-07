@@ -189,6 +189,7 @@ class Reference
   nonLetters: new XRegExp("[^\\p{Letter}]", 'g')
   punctuationAtEnd: new XRegExp("[\\p{Punctuation}]$")
   startsWithLowercase: new XRegExp("^[\\p{Ll}]")
+  hasLowercaseWord: new XRegExp("\s[\\p{Ll}]")
   _enc_creators_pad_particle: (particle) ->
     # space at end is always OK
     return particle if particle[particle.length - 1] == ' '
@@ -251,9 +252,13 @@ class Reference
     ###
 
     family = @_enc_creators_pad_particle(name['non-dropping-particle']) + family if name['non-dropping-particle']
-    family = new String(family) if XRegExp.test(family, @startsWithLowercase)
+    family = new String(family) if XRegExp.test(family, @startsWithLowercase) || XRegExp.test(family, @hasLowercaseWord)
     family = @enc_latex({value: family})
     family = @enc_latex({value: @_enc_creators_pad_particle(name['dropping-particle'])}) + family if name['dropping-particle']
+    # \relax{} space doesn't work, must be \relax space -- this is a bit tricky because it could eat legitimate spaces,
+    # but ah well
+    family = family.replace(/\\relax{} /g, "\\relax ")
+
     if Translator.BetterBibTeX && Translator.bibtexNoopSortForParticles && (name['non-dropping-particle'] || name['dropping-particle'])
       family = '\\noopsort{' + @enc_latex({value: name.family.toLowerCase()}) + '}' + family
       Translator.preamble.noopsort = true
