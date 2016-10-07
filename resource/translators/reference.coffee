@@ -221,6 +221,16 @@ class Reference
     else
       family = name.family
 
+    if Translator.biblatexExtendedNameFormat && (name['dropping-particle'] || name['non-dropping-particle'] || name['comma-suffix'])
+      latex = []
+      latex.push('family=' + @enc_latex({value: family})) if family
+      latex.push('given=' + @enc_latex({value: name.given})) if name.given
+      if name['dropping-particle'] || name['non-dropping-particle']
+        latex.push('prefix=' + @enc_latex({value: name['dropping-particle'] || name['non-dropping-particle']}))
+        latex.push('useprefix=' + !!name['non-dropping-particle'])
+      latex.push('juniorcomma=true') if name['comma-suffix']
+      return latex.join(', ')
+
     family = new String(family) if family && XRegExp.test(family, @startsWithLowercase)
 
     family = @enc_latex({value: family}) if family
@@ -299,8 +309,9 @@ class Reference
           if name.given && name.given.indexOf(@_enc_creators_relax_block_marker) >= 0 # zero-width space
             name.given = '<span relax="true">' + name.given.replace(@_enc_creators_relax_block_marker, '</span>')
 
-          @useprefix ||= !!name['non-dropping-particle']
-          @juniorcomma ||= (f.juniorcomma && name['comma-suffix'])
+          unless Translator.BetterBibLaTeX && Translator.biblatexExtendedNameFormat
+            @useprefix ||= !!name['non-dropping-particle']
+            @juniorcomma ||= (f.juniorcomma && name['comma-suffix'])
 
           if Translator.BetterBibTeX
             name = @_enc_creators_bibtex(name)
