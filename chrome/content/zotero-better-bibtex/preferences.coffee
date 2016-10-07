@@ -57,7 +57,7 @@ Zotero.BetterBibTeX.Pref = new class
               'showItemIDs',            \
               'tests',                  \
               'warnBulkModify',         \
-              'quickCopyMode',          \
+              'quickCopyMode'
           ### innocent changes ###
           return
 

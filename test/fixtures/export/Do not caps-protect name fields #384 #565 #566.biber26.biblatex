@@ -24,7 +24,7 @@
 }
 
 @book{stevenson,
-  author = {family=Stevenson, given=Adlai E., juniorcomma=true},
+  author = {family=Stevenson, given=Adlai E., suffix=III, juniorcomma=true},
   note = {[Stevenson][Adlai E.,! III]}
 }
 
@@ -184,7 +184,7 @@
 }
 
 @book{medici,
-  author = {family=Medici, given=Lorenzo, prefix=de’ , useprefix=false},
+  author = {family=Medici, given=Lorenzo, prefix=de’\mbox{}, useprefix=false},
   note = {[Medici][Lorenzo de’U+200B]}
 }
 
