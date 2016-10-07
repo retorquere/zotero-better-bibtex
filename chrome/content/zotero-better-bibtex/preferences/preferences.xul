@@ -59,7 +59,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.scanCitekeys"             id="pref-better-bibtex-scanCitekeys"            type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.showCitekeys"             id="pref-better-bibtex-showCitekeys"            type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.showItemIDs"              id="pref-better-bibtex-showItemIDs"             type="bool"/>
-        <preference name="extensions.zotero.translators.better-bibtex.parseParticles"           id="pref-better-bibtex-parseParticles"          type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.bibtexParticleNoOp"       id="pref-better-bibtex-bibtexParticleNoOp"      type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.skipFields"               id="pref-better-bibtex-skipFields"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.bibtexURL"                id="pref-better-bibtex-bibtexURL"               type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.warnBulkModify"           id="pref-better-bibtex-warnBulkModify"          type="int"/>
@@ -268,6 +268,12 @@
               <!--
                 BibTeX has really spotty Unicode support, so you generally want this on. It will translate things like accented characters to their equivalent LaTeX constructs on export.
               -->
+              <checkbox preference="pref-better-bibtex-bibtexParticleNoOp" label="&zotero.better-bibtex.prefs.export.fields.bibtexParticleNoOp;"/>
+              <!--
+                Name handling is a lot more complex than I had ever thought it to be. A *lot* more complex. BibTeX has
+                really limited ways of dealing with names with particles (van, von, de, etc). If you turn this on, BBT
+                will add code to have `van Gogh` sorted under `Gogh`.
+              -->
               <hbox>
                 <label>&zotero.better-bibtex.prefs.export.bibtex.URLs;</label>
                 <radiogroup preference="pref-better-bibtex-bibtexURL" orient="horizontal">
@@ -304,13 +310,6 @@
               <!--
                 By default, Better BibTeX will export attachments including a title and their mimetype, in a format supported by JabRef.
                 Many but not all BibTeX managers support this format, but if yours (like emacs ebib) doesn't, enable this to export only the filename.
-              -->
-              <checkbox preference="pref-better-bibtex-parseParticles" label="&zotero.better-bibtex.prefs.export.fields.parseParticles;"/>
-              <!--
-                Name handling is a lot more complex than I had ever thought it to be. A *lot* more complex. This setting
-                determines how two-part names (that is, names specified in separate `last name` and `first name` fields) are handled.
-                When enabled, `Gogh`, `Rembrandt van` will be exported (roughly) to `author = {van Gogh, Rembrandt}`. This is not
-                always desirable, so you can disable this, in which case you will get (roughly) `author = {Gogh, Rembrandt van}`
               -->
               <grid>
                 <columns><column/><column flex="1"/></columns>

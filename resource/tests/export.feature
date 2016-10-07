@@ -302,7 +302,7 @@ Scenario: Do not caps-protect name fields #384
   Given I import 40 references from 'export/Do not caps-protect name fields #384.json'
   Then a library export using 'Better BibLaTeX' should match 'export/Do not caps-protect name fields #384.biblatex'
   And a library export using 'Better BibTeX' should match 'export/Do not caps-protect name fields #384.bibtex'
-  When I set preference .bibtexNoopSortForParticles to true
+  When I set preference .bibtexParticleNoOp to true
   Then a library export using 'Better BibTeX' should match 'export/Do not caps-protect name fields #384.noopsort.bibtex'
 
 @383 @bblt
