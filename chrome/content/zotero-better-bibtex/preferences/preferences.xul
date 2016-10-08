@@ -121,7 +121,6 @@
         <!-- Generate quality reports for exported references.  -->
 
         <preference name="extensions.zotero.translators.better-bibtex.biblatexExtendedNameFormat" id="pref-better-bibtex-biblatexExtendedNameFormat" type="bool"/>
-        <!-- Use the extended biber 2.6 format for names with particles -->
 
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
@@ -297,6 +296,8 @@
                 BibLaTeX actually has really good Unicode support, so you generally want this off. But for some geezers such as me it is
                 simply more pleasing to have things like accented characters translated to their equivalent LaTeX constructs on export.
               -->
+              <checkbox preference="pref-better-bibtex-biblatexExtendedNameFormat" label="&zotero.better-bibtex.prefs.export.biblatex.extendedNameFormat;"/>
+              <!-- Use the extended biber 2.7 format for names with particles - ony works in BibLaTeX 3.5 or later -->
             </groupbox>
 
             <groupbox>
