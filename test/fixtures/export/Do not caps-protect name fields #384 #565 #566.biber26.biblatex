@@ -144,7 +144,7 @@
 }
 
 @book{dupuydeclinchamps,
-  author = {family=Puy de Clinchamps, given={\relax Ph}ilippe, prefix=du, useprefix=true},
+  author = {family=Puy de Clinchamps, given=Philippe, given-i={Ph}, prefix=du, useprefix=true},
   note = {[du Puy de Clinchamps][PhU+0097ilippe]}
 }
 
