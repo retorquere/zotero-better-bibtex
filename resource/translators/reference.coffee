@@ -221,9 +221,32 @@ class Reference
     else
       family = name.family
 
+    initials = (name.given || '').indexOf(@_enc_creators_initials_marker) # zero-width space
+
+    if Translator.biblatexExtendedNameFormat && (name['dropping-particle'] || name['non-dropping-particle'] || name['comma-suffix'])
+      if initials >= 0
+        initials = name.given.substring(0, initials)
+        initials = new String(initials) if initials.length > 1
+        name.given = name.given.replace(@_enc_creators_initials_marker, '')
+      else
+        initials = ''
+
+      latex = []
+      latex.push('family=' + @enc_latex({value: family})) if family
+      latex.push('given=' + @enc_latex({value: name.given})) if name.given
+      latex.push('given-i=' + @enc_latex({value: initials})) if initials
+      latex.push('suffix=' + @enc_latex({value: name.suffix})) if name.suffix
+      if name['dropping-particle'] || name['non-dropping-particle']
+        latex.push('prefix=' + @enc_latex({value: name['dropping-particle'] || name['non-dropping-particle']}))
+        latex.push('useprefix=' + !!name['non-dropping-particle'])
+      latex.push('juniorcomma=true') if name['comma-suffix']
+      return latex.join(', ')
+
     family = new String(family) if family && XRegExp.test(family, @startsWithLowercase)
 
     family = @enc_latex({value: family}) if family
+
+    name.given = '<span relax="true">' + name.given.replace(@_enc_creators_initials_marker, '</span>') if initials >= 0
 
     latex = ''
     latex += @enc_latex({value: @_enc_creators_pad_particle(name['dropping-particle'])}) if name['dropping-particle']
@@ -239,6 +262,9 @@ class Reference
       family = new String(name.family.slice(1, -1))
     else
       family = name.family
+
+    if name.given && name.given.indexOf(@_enc_creators_initials_marker) >= 0 # zero-width space
+      name.given = '<span relax="true">' + name.given.replace(@_enc_creators_initials_marker, '</span>')
 
     ###
       TODO: http://chat.stackexchange.com/rooms/34705/discussion-between-retorquere-and-egreg
@@ -277,7 +303,7 @@ class Reference
   # @param {field} field to encode. The 'value' must be an array of Zotero-serialized `creator` objects.
   # @return {String} field.value encoded as author-style value
   ###
-  _enc_creators_relax_block_marker: '\u0097'
+  _enc_creators_initials_marker: '\u0097'
   _enc_creators_relax_marker: '\u200C'
   enc_creators: (f, raw) ->
     return null if f.value.length == 0
@@ -296,11 +322,9 @@ class Reference
 
           Zotero.BetterBibTeX.CSL.parseParticles(name)
 
-          if name.given && name.given.indexOf(@_enc_creators_relax_block_marker) >= 0 # zero-width space
-            name.given = '<span relax="true">' + name.given.replace(@_enc_creators_relax_block_marker, '</span>')
-
-          @useprefix ||= !!name['non-dropping-particle']
-          @juniorcomma ||= (f.juniorcomma && name['comma-suffix'])
+          unless Translator.BetterBibLaTeX && Translator.biblatexExtendedNameFormat
+            @useprefix ||= !!name['non-dropping-particle']
+            @juniorcomma ||= (f.juniorcomma && name['comma-suffix'])
 
           if Translator.BetterBibTeX
             name = @_enc_creators_bibtex(name)

@@ -117,7 +117,7 @@ Scenario Outline: BibLaTeX Export
 
 ### BibTeX cookie-cutter ###
 
-@441 @439 @bbt @300 @565 @551
+@441 @439 @bbt @300 @565 @551 @558
 Scenario Outline: BibTeX Export
   Given I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibTeX' should match 'export/<file>.bibtex'
@@ -125,6 +125,7 @@ Scenario Outline: BibTeX Export
   Examples:
      | file                                                                               | references |
      | veryshorttitle and compound words #551                                             | 4          |
+     | titles are title-cased in .bib file #558                                           | 2          |
      | Braces around author last name when exporting BibTeX #565                          | 5          |
      | Missing JabRef pattern; authEtAl #554                                              | 1          |
      | Missing JabRef pattern; authorsN+initials #553                                     | 1          |
@@ -190,6 +191,7 @@ Scenario: CAYW picker
   And the picks for mmd should be '[#bentley_academic_2011][][#pollard_bicycle_2007][]'
   And the picks for latex should be '\cite[1]{bentley_academic_2011}\cite[ch. 1]{pollard_bicycle_2007}'
   And the picks for scannable-cite should be '{|Abram, 2014|p. 1||zu:0:ITEMKEY}{|Pollard and Bray, 2007|ch. 1||zu:0:ITEMKEY}'
+  And the picks for asciidoctor-bibtex should be 'cite:[bentley_academic_2011(1), pollard_bicycle_2007(ch. 1)]'
 
 @307 @bbt
 Scenario: thesis zotero entries always create @phpthesis bibtex entries #307
@@ -298,13 +300,15 @@ Scenario: Diacritics stripped from keys regardless of ascii or fold filters #266
   When I set preference .citekeyFold to false
   Then a library export using 'Better BibLaTeX' should match 'export/Diacritics stripped from keys regardless of ascii or fold filters #266-nofold.biblatex'
 
-@384 @bbt
-Scenario: Do not caps-protect name fields #384
-  Given I import 40 references from 'export/Do not caps-protect name fields #384.json'
-  Then a library export using 'Better BibLaTeX' should match 'export/Do not caps-protect name fields #384.biblatex'
-  And a library export using 'Better BibTeX' should match 'export/Do not caps-protect name fields #384.bibtex'
+@384 @bbt @565 @566
+Scenario: Do not caps-protect name fields #384 #565 #566
+  Given I import 40 references from 'export/Do not caps-protect name fields #384 #565 #566.json'
+  Then a library export using 'Better BibLaTeX' should match 'export/Do not caps-protect name fields #384 #565 #566.biblatex'
+  And a library export using 'Better BibTeX' should match 'export/Do not caps-protect name fields #384 #565 #566.bibtex'
   When I set preference .bibtexParticleNoOp to true
-  Then a library export using 'Better BibTeX' should match 'export/Do not caps-protect name fields #384.noopsort.bibtex'
+  Then a library export using 'Better BibTeX' should match 'export/Do not caps-protect name fields #384 #565 #566.noopsort.bibtex'
+  When I set preference .biblatexExtendedNameFormat to true
+  Then a library export using 'Better BibLaTeX' should match 'export/Do not caps-protect name fields #384 #565 #566.biber26.biblatex'
 
 @383 @bblt
 Scenario: Capitalize all title-fields for language en #383

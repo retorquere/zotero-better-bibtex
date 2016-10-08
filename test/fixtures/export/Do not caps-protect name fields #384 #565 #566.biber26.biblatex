@@ -1,0 +1,199 @@
+@book{vangogh,
+  author = {family=Gogh, given=Vincent, prefix=van, useprefix=true},
+  note = {[van Gogh][Vincent]}
+}
+
+@book{humboldt,
+  author = {family=Humboldt, given=Alexander, prefix=von, useprefix=false},
+  note = {[Humboldt][Alexander von]}
+}
+
+@book{beauvoir,
+  author = {family=Beauvoir, given=Simone, prefix=de, useprefix=false},
+  note = {[Beauvoir][Simone de]}
+}
+
+@book{degaulle,
+  author = {{de Gaulle}, Charles},
+  note = {["de Gaulle"][Charles]}
+}
+
+@book{king,
+  author = {King, Jr., Martin Luther},
+  note = {[King][Martin Luther, Jr.]}
+}
+
+@book{stevenson,
+  author = {family=Stevenson, given=Adlai E., suffix=III, juniorcomma=true},
+  note = {[Stevenson][Adlai E.,! III]}
+}
+
+@book{nationalaeronauticsandspaceadministration,
+  author = {{National Aeronautics and Space Administration}},
+  note = {[[National Aeronautics and Space Administration]]}
+}
+
+@book{bovendeert,
+  author = {family=Eert, given=Christianus, prefix=boven d', useprefix=true},
+  note = {[boven d'Eert][Christianus]}
+}
+
+@book{s-gravesande,
+  author = {family=Gravesande, given=Goverdus, prefix='s-, useprefix=true},
+  note = {['s-Gravesande][Goverdus]}
+}
+
+@book{dequincey,
+  author = {De Quincey, Thomas},
+  note = {[De Quincey][Thomas]}
+}
+
+@book{ortegaygasset,
+  author = {Ortega y Gasset, José},
+  note = {[Ortega y Gasset][José]}
+}
+
+@book{damato,
+  author = {D’Amato, Alfonse},
+  note = {[D’Amato][Alfonse]}
+}
+
+@book{sadat,
+  author = {family=Sadat, given=Anwar, prefix=el-, useprefix=false},
+  note = {[Sadat][Anwar el-]}
+}
+
+@book{lafollette,
+  author = {La Follette, Sr., Robert M.},
+  note = {[La Follette][Robert M., Sr.]}
+}
+
+@book{delamare,
+  author = {{de la Mare}, Walter},
+  note = {["de la Mare"][Walter]}
+}
+
+@book{degette,
+  author = {DeGette, Diana},
+  note = {[DeGette][Diana]}
+}
+
+@book{saunders,
+  author = {Saunders, John Bertrand de Cusance Morant},
+  note = {[Saunders][John Bertrand de Cusance Morant]}
+}
+
+@book{marcusaurelius,
+  author = {{Marcus Aurelius}},
+  note = {[[Marcus Aurelius]]}
+}
+
+@book{dumas,
+  author = {Dumas, père, Alexandre},
+  note = {[Dumas][Alexandre, père]}
+}
+
+@book{vanrensselaer,
+  author = {Van Rensselaer, Stephen},
+  note = {[Van Rensselaer][Stephen]}
+}
+
+@book{lenfant,
+  author = {L’Enfant, Pierre-Charles},
+  note = {[L’Enfant][Pierre-Charles]}
+}
+
+@book{vangulik,
+  author = {{van Gulik}, Robert},
+  note = {["van Gulik"][Robert]}
+}
+
+@book{sackville-west,
+  author = {Sackville-West, Victoria},
+  note = {[Sackville-West][Victoria]}
+}
+
+@book{vaughanwilliams,
+  author = {Vaughan Williams, Ralph},
+  note = {[Vaughan Williams][Ralph]}
+}
+
+@book{miesvanderrohe,
+  author = {Mies van der Rohe, Ludwig},
+  note = {[Mies van der Rohe][Ludwig]}
+}
+
+@book{dalembert,
+  author = {family=Alembert, given=Jean le Rond, prefix=d’, useprefix=true},
+  note = {[d’Alembert][Jean le Rond]}
+}
+
+@book{tocqueville,
+  author = {family=Tocqueville, given=Alexis, prefix=de, useprefix=false},
+  note = {[Tocqueville][Alexis de]}
+}
+
+@book{lafontaine,
+  author = {family=La Fontaine, given=Jean, prefix=de, useprefix=false},
+  note = {[La Fontaine][Jean de]}
+}
+
+@book{lasalle,
+  author = {family=La Salle, given=René-Robert Cavelier, prefix=de, useprefix=false},
+  note = {[La Salle][René-Robert Cavelier de]}
+}
+
+@book{dupuydeclinchamps,
+  author = {family=Puy de Clinchamps, given=Philippe, given-i={Ph}, prefix=du, useprefix=true},
+  note = {[du Puy de Clinchamps][PhU+0097ilippe]}
+}
+
+@book{stein,
+  author = {family=Stein, given=Heinrich Friedrich Karl, prefix=vom und zum, useprefix=false},
+  note = {[Stein][Heinrich Friedrich Karl vom und zum]}
+}
+
+@book{silva,
+  author = {family=Silva, given=Agostinho, prefix=da, useprefix=false},
+  note = {[Silva][Agostinho da]}
+}
+
+@book{dagama,
+  author = {{da Gama}, Vasco},
+  note = {["da Gama"][Vasco]}
+}
+
+@book{dannunzio,
+  author = {D’Annunzio, Gabriele},
+  note = {[D’Annunzio][Gabriele]}
+}
+
+@book{daponte,
+  author = {Da Ponte, Lorenzo},
+  note = {[Da Ponte][Lorenzo]}
+}
+
+@book{dellarobbia,
+  author = {Della Robbia, Luca},
+  note = {[Della Robbia][Luca]}
+}
+
+@book{este,
+  author = {family=Este, given=Beatrice, prefix=d’, useprefix=false},
+  note = {[Este][Beatrice d’]}
+}
+
+@book{medici,
+  author = {family=Medici, given=Lorenzo, prefix=de’\mbox{}, useprefix=false},
+  note = {[Medici][Lorenzo de’U+200B]}
+}
+
+@book{al-hakim,
+  author = {family=Hakim, given=Tawfiq, prefix=al-, useprefix=true},
+  note = {[al-Hakim][Tawfiq]}
+}
+
+@book{levayer,
+  author = {Le Vayer, François de La Mothe},
+  note = {[Le Vayer][François de La Mothe]}
+}
