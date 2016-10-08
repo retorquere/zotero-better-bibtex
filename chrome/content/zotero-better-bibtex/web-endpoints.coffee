@@ -166,7 +166,7 @@ Zotero.BetterBibTeX.endpoints.cayw.init = (url, data, sendResponseCallback) ->
     mode = if !Zotero.isMac and Zotero.Prefs.get('integration.keepAddCitationDialogRaised') then 'popup' else 'alwaysRaised'
     Zotero.Integration.displayDialog(doc, 'chrome://zotero/content/integration/quickFormat.xul', mode, io)
 
-  deferred.then(
+  deferred.promise.then(
     ((value) -> sendResponseCallback(200, 'text/plain', value)),
     ((reason) -> sendResponseCallback(500, 'text/plain', '' + reason)),
   )

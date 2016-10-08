@@ -99,6 +99,19 @@ Zotero.BetterBibTeX.CAYW =
       formatted = '[' + formatted + ']' if config.brackets
       return formatted
 
+    'asciidoctor-bibtex': (citations, config = {}) ->
+      formatted = []
+      for citation in citations
+        cite = citation.citekey
+        if citation.locator
+          label = citation.locator
+          label = Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' ' + label if citation.label != 'page'
+          cite += '(' + label + ')'
+        formatted.push(cite)
+      formatted = formatted.join(', ')
+      formatted = (config.cite || 'cite') + ':[' + formatted + ']'
+      return formatted
+
     'scannable-cite': (citations) ->
 
       class Mem
