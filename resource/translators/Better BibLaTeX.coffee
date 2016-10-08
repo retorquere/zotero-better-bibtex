@@ -386,6 +386,6 @@ doExport = ->
 
     ref.complete()
 
-  Translator.exportGroups()
+  Translator.complete()
   Zotero.write('\n')
   return

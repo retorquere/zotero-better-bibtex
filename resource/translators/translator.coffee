@@ -242,6 +242,7 @@ Translator.initialize = ->
   return if @initialized
   @initialized = true
 
+  @preamble = {DeclarePrefChars: ''}
   @citekeys = Object.create(null)
   @attachmentCounter = 0
   @rawLaTag = '#LaTeX'
@@ -259,7 +260,6 @@ Translator.initialize = ->
     @preferences[pref] = @[pref] = Zotero.getHiddenPref("better-bibtex.#{pref}")
 
   @skipWords = @skipWords.trim().split(/\s*,\s*/)
-  @titleCaseLowerCase = @titleCaseLowerCase.trim().split(/\s+/)
   @skipFields = (field.trim() for field in (@skipFields || '').split(',') when field.trim())
   if @csquotes
     @csquotes = { open: '', close: '' }
@@ -341,6 +341,12 @@ Translator.sanitizeCollection = (coll) ->
 
   return sane
 
+Translator.unique_chars = (str) ->
+  uniq = ''
+  for c in str
+    uniq += c if uniq.indexOf(c) < 0
+  return uniq
+
 Translator.nextItem = ->
   @initialize()
 
@@ -352,6 +358,7 @@ Translator.nextItem = ->
         Translator.debug('nextItem: cached')
         @citekeys[item.itemID] = cached.citekey
         Zotero.write(cached.bibtex)
+        @preamble.DeclarePrefChars += cached.data.DeclarePrefChars if cached.data.DeclarePrefChars
         continue
 
     Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
@@ -361,6 +368,16 @@ Translator.nextItem = ->
     return item
 
   return null
+
+Translator.complete = ->
+  @exportGroups()
+
+  preamble = []
+  preamble.push('\\DeclarePrefChars{' + @unique_chars(@preamble.DeclarePrefChars) + '}') if @preamble.DeclarePrefChars
+  preamble.push('\\newcommand{\\noopsort}[1]{}') if @preamble.noopsort
+  if preamble.length > 0
+    preamble = ('"' + cmd + ' "' for cmd in preamble)
+    Zotero.write("@preamble{ " + preamble.join(" \n # ") + " }\n")
 
 Translator.exportGroups = ->
   @debug('exportGroups:', @collections)

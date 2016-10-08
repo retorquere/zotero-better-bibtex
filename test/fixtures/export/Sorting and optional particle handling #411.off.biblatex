@@ -1,5 +1,5 @@
 @book{macedo_catalogo_1799,
-  author = {{Macedo}, Agostinho José da Costa de},
+  author = {Macedo, Agostinho José da Costa de},
   date = {1799},
   keywords = {Literary Criticism / European / Spanish & Portuguese,Portuguese literature},
   langid = {portuguese},
@@ -12,7 +12,7 @@
 }
 
 @thesis{oliveira_memoriam_2007,
-  author = {{Oliveira}, Maria Manuel Lobo Pinto de},
+  author = {Oliveira, Maria Manuel Lobo Pinto de},
   date = {2007},
   institution = {{Universidade do Minho}},
   location = {{Guimarães, Portugal}},

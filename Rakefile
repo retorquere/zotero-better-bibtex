@@ -302,6 +302,7 @@ file 'resource/translators/titlecaser.js' => ['resource/translators/titlecaser-c
         AbbreviationSegments
         BEFORE
         CITE_FIELDS
+        CLOSURES
         COLLAPSE_VALUES
         CONDITION_LEVEL_BOTTOM
         CONDITION_LEVEL_TOP
@@ -745,7 +746,7 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
       end
     ensure
       sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
-      sh "rm -f cucumber.run"
+      #sh "rm -f cucumber.run"
     end
   end
 end
