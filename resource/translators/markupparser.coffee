@@ -144,7 +144,7 @@ class Translator.MarkupParser
     @parseEndTag()
 
     if options.caseConversion
-      @titleCased = Translator.TitleCaser.titleCase(@innerText(@handler.root))
+      @titleCased = Zotero.BetterBibTeX.CSL.titleCase(@innerText(@handler.root))
       @titleCase(@handler.root)
 
       @simplify(@handler.root)

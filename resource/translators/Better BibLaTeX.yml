@@ -18,7 +18,6 @@ BetterBibTeX:
   - xregexp-all
   - reference
   - markupparser
-  - titlecaser
   - unicode_translator
   - latex_unicode_mapping
   postscript: true

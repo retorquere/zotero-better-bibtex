@@ -651,7 +651,7 @@ class Reference
         report.push("% Unsure about the formatting of the booktitle")
 
     if @has.title
-      if Translator.TitleCaser.titleCase(@has.title.value) == @has.title.value
+      if Zotero.BetterBibTeX.CSL.titleCase(@has.title.value) == @has.title.value
         report.push("% Title looks like it was stored in title-case in Zotero")
 
     return report.join("\n")
