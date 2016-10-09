@@ -641,19 +641,19 @@ file 'resource/translators/acorn.js' => 'Rakefile' do |t|
   browserify("acorn = require('../../node_modules/acorn/dist/acorn_csp');", t.name)
 end
 
-file 'chrome/content/zotero-better-bibtex/lokijs.js' => 'Rakefile' do |t|
+file 'chrome/content/zotero-better-bibtex/lib/lokijs.js' => 'Rakefile' do |t|
   browserify("Zotero.LokiJS = require('lokijs');", t.name)
 end
 
-file 'chrome/content/zotero-better-bibtex/vardump.js' => 'Rakefile' do |t|
+file 'chrome/content/zotero-better-bibtex/lib/vardump.js' => 'Rakefile' do |t|
   browserify("Zotero.BetterBibTeX.varDump = require('util').inspect;", t.name)
 end
 
-file 'chrome/content/zotero-better-bibtex/fold-to-ascii.js' => 'Rakefile' do |t|
+file 'chrome/content/zotero-better-bibtex/lib/fold-to-ascii.js' => 'Rakefile' do |t|
   browserify("Zotero.BetterBibTeX.removeDiacritics = require('fold-to-ascii').fold;", t.name)
 end
 
-file 'chrome/content/zotero-better-bibtex/punycode.js' => 'Rakefile' do |t|
+file 'chrome/content/zotero-better-bibtex/lib/punycode.js' => 'Rakefile' do |t|
   browserify("Zotero.BetterBibTeX.punycode = require('punycode');", t.name)
 end
 
@@ -819,6 +819,13 @@ rule '.js' => '.pegjs' do |t|
       declaration + js
     }
   end
+end
+
+file 'chrome/content/zotero-better-bibtex/include.coffee' => %w{Rakefile} + XPI.files.select{|js| File.extname(js) == '.js' && File.basename(js) != 'include.js' } do |t|
+  scripts = t.sources.select{|js| File.extname(js) == '.js'}.collect{|js| js.sub('chrome/content/zotero-better-bibtex/', '')}.select{|js| %w{. lib util}.include?(File.dirname(js)) }
+  File.rewrite(t.name){|js|
+    js.sub(/for script in.*?\n/, "for script in #{scripts.to_json}\n")
+  }
 end
 
 task :markfailing do

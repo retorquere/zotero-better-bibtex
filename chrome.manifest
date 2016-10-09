@@ -3,7 +3,7 @@ locale    zotero-better-bibtex  en-US   chrome/locale/en-US/zotero-better-bibtex
 skin      zotero-better-bibtex  default chrome/skin/default/zotero-better-bibtex/
 resource  zotero-better-bibtex          resource/
 
-overlay	chrome://zotero/content/exportOptions.xul           chrome://zotero-better-bibtex/content/exportOptions.xul
-overlay	chrome://zotero/content/itemPane.xul	              chrome://zotero-better-bibtex/content/itemPane.xul
-overlay	chrome://zotero/content/preferences/preferences.xul chrome://zotero-better-bibtex/content/preferences/preferences.xul
-overlay	chrome://zotero/content/zoteroPane.xul	            chrome://zotero-better-bibtex/content/zoteroPane.xul
+overlay	chrome://zotero/content/exportOptions.xul           chrome://zotero-better-bibtex/content/xul/exportOptions.xul
+overlay	chrome://zotero/content/itemPane.xul	              chrome://zotero-better-bibtex/content/xul/itemPane.xul
+overlay	chrome://zotero/content/preferences/preferences.xul chrome://zotero-better-bibtex/content/xul/preferences.xul
+overlay	chrome://zotero/content/zoteroPane.xul	            chrome://zotero-better-bibtex/content/xul/zoteroPane.xul
