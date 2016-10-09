@@ -15,9 +15,6 @@
 
   <!-- Include the main extension logic -->
   <script src="chrome://zotero/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeXPatternFormatter.js"/>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeXPatternParser.js"/>
 
   <prefwindow id="zotero-prefs">
     <prefpane id="zotero-prefpane-better-bibtex"
@@ -457,5 +454,5 @@
     </prefpane>
   </prefwindow>
 
-  <script src="chrome://zotero-better-bibtex/content/preferences/preferences.js"/><!-- needs to be included every time anew to bind windows and document -->
+  <script src="chrome://zotero-better-bibtex/content/xul/preferences.js"/><!-- needs to be included every time anew to bind windows and document -->
 </overlay>

@@ -150,7 +150,7 @@ Zotero.BetterBibTeX.keymanager = new class
 
       if affected > warn
         params = { treshold: warn, response: null }
-        window.openDialog('chrome://zotero-better-bibtex/content/bulk-clear-confirm.xul', '', 'chrome,dialog,centerscreen,modal', params)
+        window.openDialog('chrome://zotero-better-bibtex/content/xul/bulk-clear-confirm.xul', '', 'chrome,dialog,centerscreen,modal', params)
         switch params.response
           when 'ok'       then
           when 'whatever' then Zotero.BetterBibTeX.Pref.set('warnBulkModify', 0)

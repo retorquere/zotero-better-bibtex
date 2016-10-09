@@ -431,12 +431,12 @@ Zotero.BetterBibTeX.reportErrors = (includeReferences) ->
     @translate(@translators.BetterBibTeXJSON.translatorID, data, { exportNotes: true, exportFileData: false }, (err, references) ->
       params = {wrappedJSObject: {references: (if err then null else references)}}
       ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
-      ww.openWindow(null, 'chrome://zotero-better-bibtex/content/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', params)
+      ww.openWindow(null, 'chrome://zotero-better-bibtex/content/xul/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', params)
     )
   else
     params = {wrappedJSObject: {}}
     ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
-    ww.openWindow(null, 'chrome://zotero-better-bibtex/content/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', params)
+    ww.openWindow(null, 'chrome://zotero-better-bibtex/content/xul/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', params)
 
 Zotero.BetterBibTeX.idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
