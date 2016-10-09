@@ -69,7 +69,6 @@
         <preference name="extensions.zotero.translators.better-bibtex.quickCopyMode"            id="pref-better-bibtex-quickCopyMode"           type="string"/>
 
         <preference name="extensions.zotero.translators.better-bibtex.autoAbbrevStyle"          id="pref-better-bibtex-autoAbbrevStyle"         type="string"/>
-        <!-- Select the style for auto-abbreviation. -->
         <preference name="extensions.zotero.translators.better-bibtex.autoExportIdleWait"       id="pref-better-bibtex-autoExportIdleWait"      type="int"/>
         <!-- Number of seconds to wait after your system goes idle before kicking off auto-exports. -->
         <preference name="extensions.zotero.translators.better-bibtex.cacheFlushInterval"       id="pref-better-bibtex-cacheFlushInterval"      type="int"/>
@@ -349,7 +348,8 @@
                 If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.
               -->
               <label>&zotero.better-bibtex.preferences.auto-abbrev.style;</label>
-              <listbox id="better-bibtex-abbrev-style" onselect="BetterBibTeXPref.styleChanged()"/>
+              <listbox id="better-bibtex-abbrev-style" docpreference="pref-better-bibtex-autoAbbrevStyle" onselect="BetterBibTeXPref.styleChanged()"/>
+              <!-- Select the style for auto-abbreviation. -->
             </vbox>
           </tabpanel>
 

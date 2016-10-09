@@ -43,7 +43,7 @@ class PreferencesDoc
     pane = Nokogiri::XML(pane) {|cfg| cfg.noent.strict }
 
     pane.xpath("//node()[name() = 'label']").each{|node|
-      next unless node.next_element && node.next_element['preference'] && !node.next_element['label']
+      next unless node.next_element && (node.next_element['preference'] || node.next_element['docpreference']) && !node.next_element['label']
       node.next_element['label'] = node['value'] || node.inner_text
       throw node.next_element['preference'] if node.next_element['label'] == ''
     }
@@ -73,9 +73,9 @@ class PreferencesDoc
         panel += 1
       end
 
-      next unless node['preference']
+      next unless node['preference'] || node['docpreference']
 
-      pref = prefs.detect{|p| p.key == node['preference']}
+      pref = prefs.detect{|p| p.key == node['preference'] || p.key == node['docpreference']}
       throw "#{node['preference']} not found" unless pref
       pref.panel = panels[panel]
       pref.label = node['label'] if node['label']
