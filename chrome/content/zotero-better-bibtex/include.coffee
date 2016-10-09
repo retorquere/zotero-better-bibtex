@@ -3,6 +3,7 @@ if not Zotero.BetterBibTeX
 
   for script in " lokijs
                   zotero-better-bibtex
+                  lib/citeproc
                   vardump
                   preferences
                   translators

@@ -14,8 +14,6 @@ do ->
   AddonManager.getAddonByID('better-bibtex@iris-advies.com', cb)
   Zotero.BetterBibTeX.release = Async.waitForSyncCallback(cb).version
 
-Components.utils.import('resource://zotero-better-bibtex/citeproc.js', Zotero.BetterBibTeX)
-
 class Zotero.BetterBibTeX.DateParser
   parseDateToObject: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).date
   parseDateToArray: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).array()

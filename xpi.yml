@@ -72,6 +72,7 @@ files:
 - chrome/content/zotero-better-bibtex/vardump.js
 - chrome/content/zotero-better-bibtex/zoteroPane.js
 - chrome/content/zotero-better-bibtex/zoteroPane.xul
+- chrome/content/zotero-better-bibtex/lib/citeproc.js
 - chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd
 - chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.properties
 - chrome/skin/default/zotero-better-bibtex/auto-export/done.svg
@@ -91,7 +92,6 @@ files:
 - chrome/skin/default/zotero-better-bibtex/preferences.css
 - defaults/preferences/defaults.js
 - install.rdf
-- resource/citeproc.js
 - resource/reports/cacheActivity.txt
 - resource/translators/Better BibLaTeX.json
 - resource/translators/Better BibLaTeX.translator
