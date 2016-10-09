@@ -642,7 +642,7 @@ file 'resource/translators/acorn.js' => 'Rakefile' do |t|
 end
 
 file 'chrome/content/zotero-better-bibtex/lib/lokijs.js' => 'Rakefile' do |t|
-  browserify("Zotero.LokiJS = require('lokijs');", t.name)
+  browserify("Zotero.BetterBibTeX.LokiJS = require('lokijs');", t.name)
 end
 
 file 'chrome/content/zotero-better-bibtex/lib/vardump.js' => 'Rakefile' do |t|

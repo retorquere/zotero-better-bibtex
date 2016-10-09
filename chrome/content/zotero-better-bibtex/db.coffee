@@ -104,13 +104,13 @@ Zotero.BetterBibTeX.DB = new class
 
     ### split to speed up auto-saves ###
     @db = {
-      main: new Zotero.LokiJS('db.json', {
+      main: new Zotero.BetterBibTeX.LokiJS('db.json', {
         autosave: true
         autosaveInterval: 5000
         adapter: Zotero.BetterBibTeX.DBStore
         env: 'BROWSER'
       })
-      volatile: new Zotero.LokiJS('cache.json', {
+      volatile: new Zotero.BetterBibTeX.LokiJS('cache.json', {
         adapter: Zotero.BetterBibTeX.DBStore
         env: 'BROWSER'
       })
