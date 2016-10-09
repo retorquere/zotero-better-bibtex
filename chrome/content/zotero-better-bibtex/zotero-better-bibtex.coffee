@@ -14,8 +14,6 @@ do ->
   AddonManager.getAddonByID('better-bibtex@iris-advies.com', cb)
   Zotero.BetterBibTeX.release = Async.waitForSyncCallback(cb).version
 
-Components.utils.import('resource://zotero-better-bibtex/citeproc.js', Zotero.BetterBibTeX)
-
 class Zotero.BetterBibTeX.DateParser
   parseDateToObject: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).date
   parseDateToArray: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).array()
@@ -507,6 +505,22 @@ Zotero.BetterBibTeX.init = ->
       stats:  (sandbox)            -> Zotero.BetterBibTeX.cacheHistory
     }
     CSL: {
+      state: {
+        opt: {
+          lang: 'en'
+        },
+        locale: {
+          en: {
+            opts: {
+              'skip-words': Zotero.BetterBibTeX.CSL.SKIP_WORDS,
+              'skip-words-regexp': new RegExp( '(?:(?:[?!:]*\\s+|-|^)(?:' + Zotero.BetterBibTeX.CSL.SKIP_WORDS.map((term) -> term.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]\s*/g, '\\$&')).join('|') + ')(?=[!?:]*\\s+|-|$))', 'g')
+            }
+          }
+        }
+      },
+      titleCase: (sandbox, text) ->
+        return Zotero.BetterBibTeX.CSL.Output.Formatters.title(Zotero.Translate.Export::Sandbox.BetterBibTeX.CSL.state, text)
+
       parseParticles: (sandbox, name) ->
         ### twice to work around https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping ###
         Zotero.BetterBibTeX.CSL.parseParticles(name)
