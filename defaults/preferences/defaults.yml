@@ -37,3 +37,4 @@ quickCopyMode: latex
 jurismPreferredLanguage: zh-alalc97
 ZotFile: true
 qualityReport: false
+suppressTitleCase: false
