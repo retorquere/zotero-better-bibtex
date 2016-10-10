@@ -340,7 +340,7 @@ class BetterBibTeXPatternFormatter
       words.slice(0, 3).join('')
 
     veryshorttitle: ->
-      Zotero.BetterBibTeX.debug('veryshorttitle:', {item: @item, title: @prop('title'), words: @titleWords(@prop('title'), { skipWords: true, asciiOnly: true}))
+      Zotero.BetterBibTeX.debug('veryshorttitle:', {item: @item, title: @prop('title'), words: @titleWords(@prop('title'), { skipWords: true, asciiOnly: true})})
       words = @titleWords(@prop('title'), { skipWords: true, asciiOnly: true})
       return '' unless words
       words.slice(0, 1).join('')
