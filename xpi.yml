@@ -51,8 +51,8 @@ files:
 - chrome/content/zotero-better-bibtex/translators.js
 - chrome/content/zotero-better-bibtex/db.js
 - chrome/content/zotero-better-bibtex/csl-localedata.js
-- chrome/content/zotero-better-bibtex/BetterBibTeXPatternFormatter.js
-- chrome/content/zotero-better-bibtex/BetterBibTeXPatternParser.js
+- chrome/content/zotero-better-bibtex/pattern-formatter.js
+- chrome/content/zotero-better-bibtex/Zotero.BetterBibTeX.PatternParser.js
 - chrome/content/zotero-better-bibtex/keymanager.js
 - chrome/content/zotero-better-bibtex/journalAbbrev.js
 - chrome/content/zotero-better-bibtex/web-endpoints.js

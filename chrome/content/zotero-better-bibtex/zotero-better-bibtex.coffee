@@ -462,11 +462,11 @@ Zotero.BetterBibTeX.init = ->
   @testing = (@Pref.get('tests') != '')
 
   try
-    BetterBibTeXPatternFormatter::skipWords = @Pref.get('skipWords').split(',')
-    Zotero.BetterBibTeX.debug('skipwords:', BetterBibTeXPatternFormatter::skipWords)
+    Zotero.BetterBibTeX.PatternFormatter::skipWords = @Pref.get('skipWords').split(',')
+    Zotero.BetterBibTeX.debug('skipwords:', Zotero.BetterBibTeX.PatternFormatter::skipWords)
   catch err
     Zotero.BetterBibTeX.error('could not read skipwords:', err)
-    BetterBibTeXPatternFormatter::skipWords = []
+    Zotero.BetterBibTeX.PatternFormatter::skipWords = []
   @keymanager.setFormatter(true)
 
   @debugMode()

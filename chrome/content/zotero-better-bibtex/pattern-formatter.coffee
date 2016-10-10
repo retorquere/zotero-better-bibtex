@@ -1,6 +1,6 @@
-class BetterBibTeXPatternFormatter
+class Zotero.BetterBibTeX.PatternFormatter
   constructor: (@patterns, @fold) ->
-    Zotero.BetterBibTeX.debug('BetterBibTeXPatternFormatter:', {patterns: @patterns.length, fold: @fold})
+    Zotero.BetterBibTeX.debug('PatternFormatter:', {patterns: @patterns.length, fold: @fold})
 
   re:
     unsafechars: Zotero.Utilities.XRegExp("[^-\\p{L}0-9_!$*+./;?\\[\\]]")
