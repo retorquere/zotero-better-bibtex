@@ -14,6 +14,11 @@
   id="zotero-error-report" title="&zotero.errorReport.title;"
   width="550" height="450">
 
+  <!-- Include the main extension logic -->
+  <script src="chrome://zotero/content/include.js"/>
+  <script src="chrome://zotero-better-bibtex/content/include.js"/>
+  <script src="chrome://zotero-better-bibtex/content/xul/errorReport.js"/><!-- needs to be included every time anew to bind windows and document -->
+
   <wizardpage onpageshow="Zotero_BetterBibTeX_ErrorReport.init()" label=" ">
     <description style="white-space: pre-wrap;" class="header">&zotero.better-bibtex.errorReport.review;</description>
     <tabbox flex="1">
@@ -62,9 +67,4 @@
     <description>&zotero.better-bibtex.errorReport.postToGitHub;</description>
     <description>&zotero.better-bibtex.errorReport.notReviewed;</description>
   </wizardpage>
-
-  <!-- Include the main extension logic -->
-  <script src="chrome://zotero/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/xul/errorReport.js"/><!-- needs to be included every time anew to bind windows and document -->
 </wizard>
