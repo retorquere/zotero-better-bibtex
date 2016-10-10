@@ -158,7 +158,7 @@ class PreferencesDoc
         else
           default = pref.default
         end
-        markdown += "\n\n### #{pref.label} (default: #{default})\n\n"
+        markdown += "\n\n### #{pref.label}\n*default: #{default}*\n\n"
         markdown += pref.doc
       }
     }
@@ -173,7 +173,7 @@ class PreferencesDoc
       else
         default = pref.default
       end
-      markdown += "\n\n### #{pref.name} (default: #{default})\n\n"
+      markdown += "\n\n### #{pref.name}\n*default: #{default}*\n\n"
       markdown += pref.doc
     }
 
