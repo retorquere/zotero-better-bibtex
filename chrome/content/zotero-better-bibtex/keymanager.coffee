@@ -340,7 +340,7 @@ Zotero.BetterBibTeX.keymanager = new class
         citekeyPattern = Zotero.BetterBibTeX.Pref.get('citekeyFormat')
         citekeyFormat = citekeyPattern.replace(/>.*/, '')
         throw new Error("no variable parts found in citekey pattern '#{citekeyFormat}'") unless citekeyFormat.indexOf('[') >= 0
-        formatter = new BetterBibTeXPatternFormatter(BetterBibTeXPatternParser.parse(citekeyPattern), Zotero.BetterBibTeX.Pref.get('citekeyFold'))
+        formatter = new Zotero.BetterBibTeX.PatternFormatter(Zotero.BetterBibTeX.PatternParser.parse(citekeyPattern), Zotero.BetterBibTeX.Pref.get('citekeyFold'))
 
         Zotero.BetterBibTeX.debug('keymanager.setFormatter.apply:', {pattern: citekeyFormat, fold: formatter.fold})
 
