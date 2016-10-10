@@ -118,6 +118,11 @@
 
         <preference name="extensions.zotero.translators.better-bibtex.biblatexExtendedNameFormat" id="pref-better-bibtex-biblatexExtendedNameFormat" type="bool"/>
 
+        <preference name="extensions.zotero.translators.better-bibtex.suppressTitleCase" id="pref-better-bibtex-suppressTitleCase" type="bool"/>
+        <!--
+          If you're dead-set on ignoring both the BibTeX/BibLaTeX spec and the Zotero recommendations on title/sentence casing, set this preference to "true" to suppress title casing.
+        -->
+
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
         <tabs id="better-bibtex-prefs-tabs">
