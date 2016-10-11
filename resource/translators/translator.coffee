@@ -116,7 +116,7 @@ Translator.CSLVariables = {
   scale:                          {}
   section:                        {}
   source:                         {}
-  status:                         {}
+  status:                         { BibLaTeX: 'pubstate' }
   title:                          { BibLaTeX: -> (if @referencetype == 'book' then 'maintitle' else null) }
   'title-short':                  {}
   URL:                            {}
