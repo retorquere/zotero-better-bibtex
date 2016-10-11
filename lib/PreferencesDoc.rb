@@ -163,7 +163,23 @@ class PreferencesDoc
       }
     }
 
-    markdown += "\n\n## Hidden preferences\n\n"
+		markdown += "\n\n## Hidden preferences\n\n"
+
+		markdown +="""
+You can edit most BBT preferences through the Preferences window. However, the
+preferences window does not include all of the different ways you can customize
+BBT. To view the the full list of BBT's preferences, including many hidden
+preferences, type `about:config` into the Firefox location bar and enter
+`better-bibtex` into the Filter field at the top of the list that comes up. In
+Zotero Standalone you can access `about:config` from the Advanced pane of the
+preferences. You can change all preferences here but I strongly recommend
+changing the regular preferences through the preferences UI rather than here --
+it is possible to enter unexpected values here, and not all of these cases have
+been tested.
+
+All Zotero hidden preferences are preceded by `extensions.zotero.translators.better-bibtex.`
+
+    """
     prefs.reject{|pref| pref.panel}.each{|pref|
       next unless pref.bbt
       if pref.default.is_a?(String) && pref.default.length > 10

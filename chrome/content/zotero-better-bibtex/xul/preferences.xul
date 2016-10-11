@@ -90,7 +90,7 @@
         -->
 
         <preference name="extensions.zotero.translators.better-bibtex.csquotes"                 id="pref-better-bibtex-csquotes"                type="string"/>
-        <!-- Enables [[csquotes|From Unicode to LaTeX and Back Again]] support. -->
+        <!-- Enables [csquotes](Unnecessarily-complicated-BibTeX-output%3F#hidden-features) support. -->
 
         <preference name="extensions.zotero.translators.better-bibtex.skipWords"                id="pref-better-bibtex-skipWords"               type="string"/>
         <!-- list of words to skip in title when generating citation keys -->
@@ -120,8 +120,8 @@
 
         <preference name="extensions.zotero.translators.better-bibtex.suppressTitleCase" id="pref-better-bibtex-suppressTitleCase" type="bool"/>
         <!--
-          If you're dead-set on ignoring both the BibTeX/BibLaTeX spec and the Zotero recommendations on title/sentence
-          casing, set this preference to "true" to suppress title casing for English references.
+          If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
+          casing, set this preference to "true" to suppress [title casing for English references](Unnecessarily-complicated-BibTeX-output%3F#mapping-fields).
         -->
 
       </preferences>
