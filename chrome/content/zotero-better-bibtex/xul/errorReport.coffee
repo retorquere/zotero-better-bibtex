@@ -1,10 +1,7 @@
 # Components.utils.importGlobalProperties(['Blob'])
 Components.utils.import('resource://zotero/config.js')
 
-Zotero_BetterBibTeX_ErrorReport = new class
-  constructor: ->
-    @form = JSON.parse(Zotero.File.getContentsFromURL('https://github.com/retorquere/zotero-better-bibtex/releases/download/update.rdf/error-report.json'))
-
+Zotero_BetterBibTeX_ErrorReport =
   submit: (filename, data, callback) ->
     fd = new FormData()
     for own name, value of @form.fields
@@ -23,41 +20,53 @@ Zotero_BetterBibTeX_ErrorReport = new class
       callback(request)
     request.send(fd)
 
+  getSystemInfo: ->
+    return new Promise((resolve, reject) =>
+      Zotero.getSystemInfo((info) =>
+        try
+          @errorlog = {
+            info: info
+            errors: Zotero.getErrors(true).join('\n')
+            full: Zotero.Debug.get()
+          }
+
+          debug = @errorlog.full.split("\n")
+          debug = debug.slice(0, 5000) # max 5k lines
+          debug = (Zotero.Utilities.ellipsize(line, 80, true) for line in debug) # trim lines
+          debug = debug.join("\n")
+          @errorlog.truncated = debug
+
+          resolve()
+        catch err
+          reject(err)
+      )
+    )
+
   init: ->
+    @form = JSON.parse(Zotero.File.getContentsFromURL('https://github.com/retorquere/zotero-better-bibtex/releases/download/update.rdf/error-report.json'))
     @key = Zotero.Utilities.generateObjectKey()
     @timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
     wizard = document.getElementById('zotero-error-report')
     continueButton = wizard.getButton('next')
     continueButton.disabled = true
-    document.getElementById('betterbibtex.errorReport.references').hidden = true
 
-    Zotero.getSystemInfo((info) =>
-      @errorlog = {
-        info: info
-        errors: Zotero.getErrors(true).join('\n')
-        full: Zotero.Debug.get()
-      }
+    @params = window.arguments[0].wrappedJSObject
+    if @params.references
+      document.getElementById('betterbibtex.errorReport.references').hidden = false
+      document.getElementById('zotero-error-references').value = @params.references.substring(0, 5000)
+    else
+      document.getElementById('betterbibtex.errorReport.references').hidden = true
+      document.getElementById("zotero-error-include-references").checked = false
 
-      debug = @errorlog.full.split("\n")
-      debug = debug.slice(0, 5000) # max 5k lines
-      debug = (Zotero.Utilities.ellipsize(line, 80, true) for line in debug) # trim lines
-      debug = debug.join("\n")
-      @errorlog.truncated = debug
-
-      params = window.arguments[0].wrappedJSObject
-      if params.references
-        document.getElementById('betterbibtex.errorReport.references').hidden = false
-        document.getElementById('zotero-error-references').value = params.references.substring(0, 5000)
-      else
-        document.getElementById("zotero-error-include-references").checked = false
-
-      document.getElementById('zotero-error-context').value = info
+    @getSystemInfo().then(=>
+      document.getElementById('zotero-error-context').value = @errorlog.info
       document.getElementById('zotero-error-errors').value = @errorlog.errors
       document.getElementById('zotero-error-log').value = @errorlog.truncated
 
       continueButton.disabled = false
       continueButton.focus()
+      return
     )
 
   selectReportPart: ->
