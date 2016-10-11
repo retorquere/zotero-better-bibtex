@@ -31,19 +31,19 @@
 
       <tabpanels>
         <tabpanel orient="vertical">
-          <checkbox oncommand="Zotero_BetterBibTeX_ErrorReport.selectReportPart();" id="zotero-error-include-context" label="&zotero.errorReport.include;" checked="true"/>
+          <checkbox oncommand="Zotero_BetterBibTeX_ErrorReport.config();" id="zotero-error-include-context" label="&zotero.errorReport.include;" checked="true"/>
           <textbox id="zotero-error-context" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
         <tabpanel orient="vertical">
-          <checkbox oncommand="Zotero_BetterBibTeX_ErrorReport.selectReportPart();" id="zotero-error-include-errors" label="&zotero.errorReport.include;" checked="true"/>
+          <checkbox oncommand="Zotero_BetterBibTeX_ErrorReport.config();" id="zotero-error-include-errors" label="&zotero.errorReport.include;" checked="true"/>
           <textbox id="zotero-error-errors" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
         <tabpanel orient="vertical">
-          <checkbox oncommand="Zotero_BetterBibTeX_ErrorReport.selectReportPart();" id="zotero-error-include-log" label="&zotero.errorReport.include;" checked="true"/>
+          <checkbox oncommand="Zotero_BetterBibTeX_ErrorReport.config();" id="zotero-error-include-log" label="&zotero.errorReport.include;" checked="true"/>
           <textbox id="zotero-error-log" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
         <tabpanel orient="vertical">
-          <checkbox oncommand="Zotero_BetterBibTeX_ErrorReport.selectReportPart();" id="zotero-error-include-references" label="&zotero.errorReport.include;" checked="true"/>
+          <checkbox oncommand="Zotero_BetterBibTeX_ErrorReport.config();" id="zotero-error-include-references" label="&zotero.errorReport.include;" checked="true"/>
           <textbox id="zotero-error-references" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
       </tabpanels>
