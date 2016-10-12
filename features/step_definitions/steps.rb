@@ -296,8 +296,9 @@ Then /^the library (without collections )?should match '(.+)'$/ do |nocollection
   expected = JSON.parse(open(expected).read)
 
   found = $Firefox.BetterBibTeX.library
+  throw "library is not a hash!" unless found.is_a?(Hash)
 
-  [expected, found].each{|library|
+  [expected, found].each_with_index{|library, i|
     library.delete('keymanager')
     library.delete('cache')
 
