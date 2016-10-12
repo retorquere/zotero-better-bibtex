@@ -408,7 +408,7 @@ Zotero.BetterBibTeX.flash = (title, body) ->
     Zotero.BetterBibTeX.error('@flash failed:', {title, body}, err)
 
 Zotero.BetterBibTeX.reportErrors = (includeReferences) ->
-  data = {}
+  items = null
 
   pane = Zotero.getActiveZoteroPane()
 
@@ -418,25 +418,30 @@ Zotero.BetterBibTeX.reportErrors = (includeReferences) ->
       itemGroup = collectionsView?._getItemAtRow(collectionsView.selection?.currentIndex)
       switch itemGroup?.type
         when 'collection'
-          data = {data: true, collection: collectionsView.getSelectedCollection() }
+          items = {collection: collectionsView.getSelectedCollection() }
         when 'library'
-          data = { data: true }
+          items = { }
         when 'group'
-          data = { data: true, collection: Zotero.Groups.get(collectionsView.getSelectedLibraryID()) }
+          items = { collection: Zotero.Groups.get(collectionsView.getSelectedLibraryID()) }
 
     when 'items'
-      data = { data: true, items: pane.getSelectedItems() }
+      items = { items: pane.getSelectedItems() }
 
-  if data.data
-    @translate(@translators.BetterBibTeXJSON.translatorID, data, { exportNotes: true, exportFileData: false }, (err, references) ->
-      params = {wrappedJSObject: {references: (if err then null else references)}}
-      ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
-      ww.openWindow(null, 'chrome://zotero-better-bibtex/content/xul/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', params)
+  items = null if items && items.items && items.items.length == 0
+
+  params = {wrappedJSObject: {}}
+
+  if items
+    getReferences = @translate(@translators.BetterBibTeXJSON.translatorID, items, { exportNotes: true, exportFileData: false }).then((references) ->
+      params.wrappedJSObject.references = references.trim()
     )
   else
-    params = {wrappedJSObject: {}}
+    getReferences = Promise.resolve()
+
+  getReferences.then(->
     ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
     ww.openWindow(null, 'chrome://zotero-better-bibtex/content/xul/errorReport.xul', 'zotero-error-report', 'chrome,centerscreen,modal', params)
+  )
 
 Zotero.BetterBibTeX.idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
@@ -1003,22 +1008,24 @@ Zotero.BetterBibTeX.displayOptions = (url) ->
   return params if hasParams
   return null
 
-Zotero.BetterBibTeX.translate = (translator, items, displayOptions, callback) ->
-  throw 'null translator' unless translator
+Zotero.BetterBibTeX.translate = (translator, items, displayOptions, path) ->
+  return Promise.reject('null translator') unless translator
 
-  translation = new Zotero.Translate.Export()
+  return new Promise((resolve, reject) ->
+    translation = new Zotero.Translate.Export()
+    for key, value of items
+      switch key
+        when 'library' then translation.setLibraryID(value)
+        when 'items' then translation.setItems(value)
+        when 'collection' then translation.setCollection(value)
 
-  for own key, value of items
-    switch key
-      when 'library' then translation.setLibraryID(value)
-      when 'items' then translation.setItems(value)
-      when 'collection' then translation.setCollection(value)
+    translation.setTranslator(translator)
+    translation.setDisplayOptions(displayOptions) if displayOptions && Object.keys(displayOptions).length != 0
+    translation.setLocation(path) if path
 
-  translation.setTranslator(translator)
-  translation.setDisplayOptions(displayOptions) if displayOptions && Object.keys(displayOptions).length != 0
-
-  translation.setHandler('done', (obj, success) -> callback(!success, if success then obj?.string else null))
-  translation.translate()
+    translation.setHandler('done', (obj, success) -> if success then resolve(obj?.string) else reject())
+    translation.translate()
+  )
 
 Zotero.BetterBibTeX.getContentsFromURL = (url) ->
   try

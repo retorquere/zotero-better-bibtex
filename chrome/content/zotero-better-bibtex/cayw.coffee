@@ -202,14 +202,7 @@ Zotero.BetterBibTeX.CAYW =
         useJournalAbbreviation: (options.useJournalAbbreviation || '').toLowerCase() in ['yes', 'y', 'true']
       }
 
-      deferred = Q.defer()
-      Zotero.BetterBibTeX.translate(translator, {items: items}, exportOptions, (err, result) ->
-        if err
-          deferred.reject(err)
-        else
-          deferred.fulfill(result)
-      )
-      return deferred.promise
+      return Zotero.BetterBibTeX.translate(translator, {items: items}, exportOptions)
 
 class Zotero.BetterBibTeX.CAYW.Document
   constructor: (@config) ->

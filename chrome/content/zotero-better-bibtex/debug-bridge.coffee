@@ -79,63 +79,31 @@ Zotero.BetterBibTeX.DebugBridge.methods.librarySize = ->
   return items
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator, displayOptions) ->
-  deferred = Q.defer()
-
   if translator.substring(0,3) == 'id:'
     translator = translator.slice(3)
   else
     translator = Zotero.BetterBibTeX.getTranslator(translator)
 
-  Zotero.BetterBibTeX.translate(translator, {library: null}, displayOptions || {}, (err, result) ->
-    if err
-      deferred.reject(err)
-    else
-      deferred.fulfill(result)
-  )
-
-  return deferred.promise
+  return Zotero.BetterBibTeX.translate(translator, {library: null}, displayOptions || {})
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, displayOptions, filename) ->
-  translation = new Zotero.Translate.Export()
-
   file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile)
   file.initWithPath(filename)
-  translation.setLocation(file)
 
   if translator.substring(0,3) == 'id:'
     translator = translator.slice(3)
   else
     translator = Zotero.BetterBibTeX.getTranslator(translator)
-
-  translation.setTranslator(translator)
 
   displayOptions ||= {}
   displayOptions.exportFileData = false
-  translation.setDisplayOptions(displayOptions)
-  translation.setLibraryID(null)
 
-  deferred = Q.defer()
-  translation.setHandler('done', (obj, worked) ->
-    if worked
-      deferred.fulfill(true)
-    else
-      deferred.reject(!worked)
-  )
-  translation.translate()
-
-  return deferred.promise
+  return Zotero.BetterBibTeX.translate(translator, {library: null}, displayOptions, file)
 
 Zotero.BetterBibTeX.DebugBridge.methods.library = ->
-  translator = Zotero.BetterBibTeX.getTranslator('BetterBibTeX JSON')
-
-  deferred = Q.defer()
-  Zotero.BetterBibTeX.translate(translator, {library: null}, { exportNotes: true, exportFileData: false }, (err, result) ->
-    if err
-      deferred.reject(err)
-    else
-      deferred.fulfill(JSON.parse(result))
+  return Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator('BetterBibTeX JSON'), {library: null}, { exportNotes: true, exportFileData: false }).then((result) ->
+    Promise.resolve(JSON.parse(result))
   )
-  return deferred.promise
 
 Zotero.BetterBibTeX.DebugBridge.methods.setPreference = (name, value) -> Zotero.Prefs.set(name, value)
 
