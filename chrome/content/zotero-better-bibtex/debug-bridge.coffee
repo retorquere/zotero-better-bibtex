@@ -11,22 +11,6 @@ Zotero.BetterBibTeX.DebugBridge.methods.init = ->
 
   Zotero.noUserInput = true
 
-  ### monkey-patching Zotero.Items.get to retrieve items sorted. With random order I can't really implement stable testing. ###
-  Zotero.Items.get = ((original) ->
-    return ->
-      items = original.apply(@, arguments)
-      items.sort(Zotero.BetterBibTeX.keymanager.sort) if Array.isArray(items)
-      return items
-    )(Zotero.Items.get)
-
-  for setter in ['setItems', 'setCollection', 'setAll']
-    Zotero.Translate.ItemGetter::[setter] = ((original) ->
-      return ->
-        r = original.apply(@, arguments)
-        @_itemsLeft.sort(Zotero.BetterBibTeX.keymanager.sort) if Array.isArray(@_itemsLeft)
-        return r
-      )(Zotero.Translate.ItemGetter::[setter])
-
   return true
 
 Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
