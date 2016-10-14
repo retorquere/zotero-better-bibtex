@@ -12,7 +12,6 @@
       "autoExport": "idle",
       "autoExportIdleWait": 10,
       "cacheFlushInterval": 5,
-      "cacheReset": 0,
       "confirmCacheResetSize": 1000,
       "caching": true,
       "citeCommand": "cite",
@@ -37,8 +36,6 @@
       "postscript": "// the bib(la)tex fields are ordered according to this array.\n// If a field is not in this list, it will show up at the end in random order.\n// https://github.com/retorquere/zotero-better-bibtex/issues/512\nvar order = ['author', 'date', 'origdate', 'shorthand', 'title'];\nthis.fields.sort(function(a, b) {\n  var oa = order.indexOf(a.name);\n  var ob = order.indexOf(b.name);\n  if (oa < 0) { return 1; } // a is not in order, so put it at the end\n  if (ob < 0) { return -1; } // b is not in order, so put it at the end\n  return oa - ob;\n});",
       "jabrefGroups": false,
       "defaultDateParserLocale": "",
-      "parseParticles": true,
-      "titleCaseLowerCase": "about above across afore after against along alongside amid amidst among amongst anenst apropos apud around as aside astride at athwart atop barring before behind below beneath beside besides between beyond but by circa despite down during except for forenenst from given in inside into lest like modulo near next notwithstanding of off on onto out over per plus pro qua sans since than through thru throughout thruout till to toward towards under underneath until unto up upon versus vs. v. vs v via vis-à-vis with within without according to ahead of apart from as for as of as per as regards aside from back to because of close to due to except for far from inside of instead of near to next to on to out from out of outside of prior to pursuant to rather than regardless of such as _that_ their of up to where as or yet so for and nor a an the de d' von van c et ca",
       "quickCopyMode": "latex",
       "jurismPreferredLanguage": "zh-alalc97"
     },

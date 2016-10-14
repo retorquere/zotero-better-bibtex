@@ -12,7 +12,6 @@
       "autoExport": "off",
       "autoExportIdleWait": 10,
       "cacheFlushInterval": 5,
-      "cacheReset": 0,
       "confirmCacheResetSize": 1000,
       "caching": true,
       "citeCommand": "cite",
@@ -37,8 +36,6 @@
       "postscript": "",
       "jabrefGroups": false,
       "defaultDateParserLocale": "",
-      "parseParticles": false,
-      "titleCaseLowerCase": "about above across afore after against along alongside amid amidst among amongst anenst apropos apud around as aside astride at athwart atop barring before behind below beneath beside besides between beyond but by circa despite down during except for forenenst from given in inside into lest like modulo near next notwithstanding of off on onto out over per plus pro qua sans since than through thru throughout thruout till to toward towards under underneath until unto up upon versus vs. v. vs v via vis-à-vis with within without according to ahead of apart from as for as of as per as regards aside from back to because of close to due to except for far from inside of instead of near to next to on to out from out of outside of prior to pursuant to rather than regardless of such as that of up to where as or yet so and nor a an the de d' von van c et ca thru according ahead apart regards back because close due far instead outside prior pursuant rather regardless such their where",
       "quickCopyMode": "latex",
       "jurismPreferredLanguage": "zh-alalc97",
       "ZotFile": true
@@ -48,7 +45,9 @@
       "exportNotes": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "journalArticle",
@@ -58,7 +57,8 @@
         "gradability",
         "vagueness"
       ],
-      "relations": {},
+      "relations": {
+      },
       "url": "http://www.springerlink.com/index/10.1007/s10988-006-9008-0",
       "volume": "30",
       "issue": "1",
@@ -86,15 +86,22 @@
           "url": "http://semantics.uchicago.edu/kennedy/docs/vg-epub.pdf"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 115,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "kenne"
     },
     {
       "itemType": "thesis",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "url": "http://www.semanticsarchive.net/Archive/jA3N2IwN/fintel-1994-thesis.pdf",
       "date": "1994",
       "accessDate": "2014-04-20 20:08:43",
@@ -116,10 +123,14 @@
           "url": "http://www.semanticsarchive.net/Archive/jA3N2IwN/fintel-1994-thesis.pdf"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 227,
       "publisher": "University of Massachusetts",
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "vonf"
     },
     {
@@ -155,17 +166,24 @@
           "mimeType": "application/pdf"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 547,
       "type": "Master's Thesis",
       "publisher": "Universiteit Utrecht",
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "devr"
     },
     {
       "itemType": "book",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "place": "Paris",
       "publisher": "Peeters",
       "ISBN": "978-90-6831-748-0",
@@ -180,16 +198,25 @@
           "firstName": "Danièle"
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 1638,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "vand"
     },
     {
       "itemType": "journalArticle",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "url": "http://link.springer.com.are.uab.cat/article/10.1023/A%3A1005916004600",
       "volume": "16",
       "issue": "2",
@@ -218,11 +245,14 @@
           "url": "http://link.springer.com.are.uab.cat/content/pdf/10.1023%2FA%3A1005916004600.pdf"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 2000,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "desw"
     }
-  ],
-  "cache": {}
+  ]
 }
