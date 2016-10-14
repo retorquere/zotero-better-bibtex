@@ -23,6 +23,7 @@ test:
         *)  JURISMBETA=true  CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1" bundle exec rake test
             ;;
       esac
+      find . -type f -empty -delete
       mv *.debug *.log $CIRCLE_ARTIFACTS || echo 'no log artifacts'
     : parallel: true
 general:
