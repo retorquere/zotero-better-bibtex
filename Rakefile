@@ -749,6 +749,7 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
   puts "Tests running: JURISM=#{ENV['JURISM'] || 'false'} #{cucumber}"
   if ENV['CI'] == 'true'
     sh cucumber
+    sh "rm -f *.log *.debug"
   else
     begin
       if OS.mac?
