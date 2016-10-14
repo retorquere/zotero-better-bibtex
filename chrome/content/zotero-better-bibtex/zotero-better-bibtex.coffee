@@ -7,12 +7,20 @@ Components.utils.import('resource://zotero/config.js') unless ZOTERO_CONFIG?
 Zotero.BetterBibTeX = {
   serializer: Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
   document: Components.classes['@mozilla.org/xul/xul-document;1'].getService(Components.interfaces.nsIDOMDocument)
+  # because bugger this async crap
+  demand: (promise) ->
+    callback = Async.makeSyncCallback()
+    promise.then(
+      (value) -> callback(value),
+      (reason) -> callback.throw(reason)
+    )
+    return Async.waitForSyncCallback(callback)
 }
-# because bugger this async crap
-do ->
-  cb = Async.makeSyncCallback()
-  AddonManager.getAddonByID('better-bibtex@iris-advies.com', cb)
-  Zotero.BetterBibTeX.release = Async.waitForSyncCallback(cb).version
+
+Zotero.BetterBibTeX.addonVersion = (id) ->
+  return @demand(new Promise((resolve) -> AddonManager.getAddonByID(id, resolve)))?.version
+
+Zotero.BetterBibTeX.release = Zotero.BetterBibTeX.addonVersion('better-bibtex@iris-advies.com')
 
 class Zotero.BetterBibTeX.DateParser
   parseDateToObject: (date, options) -> (new Zotero.BetterBibTeX.DateParser(date, options)).date
@@ -304,24 +312,18 @@ Zotero.BetterBibTeX._log = (level, msg...) ->
   console.log(str)
 
 Zotero.BetterBibTeX.extensionConflicts = ->
-  AddonManager.getAddonByID('zotfile@columbia.edu', (extension) ->
-    return unless extension
-    return if Services.vc.compare(extension.version, '4.2.6') >= 0
-
-    Zotero.BetterBibTeX.disable('''
+  if version = @addonVersion('zotfile@columbia.edu') && Services.vc.compare(version, '4.2.6') < 0
+    @disable('''
       Better BibTeX has been disabled because it has detected conflicting extension "ZotFile" 4.2.5 or
       earlier. After upgrading to 4.2.6, Better BibTeX will start up as usual. A pre-release of ZotFile 4.2.6 can be
       found at
 
       https://addons.mozilla.org/en-US/firefox/addon/zotfile/versions/
     ''')
-  )
+    return true
 
-  AddonManager.getAddonByID('zoteromaps@zotero.org', (extension) ->
-    return unless extension
-    return if Services.vc.compare(extension.version, '1.0.10.1') > 0
-
-    Zotero.BetterBibTeX.disable('''
+  if version = @addonVersion('zoteromaps@zotero.org') && Services.vc.compare(version, '1.0.10.1') < 0
+    @disable('''
       Better BibTeX has been disabled because it has detected conflicting extension "zotero-maps" 1.0.10 or
       earlier. Unfortunately this plugin appears to be abandoned, and their issue tracker at
 
@@ -329,13 +331,10 @@ Zotero.BetterBibTeX.extensionConflicts = ->
 
       is not enabled.
     ''')
-  )
+    return true
 
-  AddonManager.getAddonByID('zutilo@www.wesailatdawn.com', (extension) ->
-    return unless extension
-    return if Services.vc.compare(extension.version, '1.2.10.1') > 0
-
-    Zotero.BetterBibTeX.disable('''
+  if version = @addonVersion('zutilo@www.wesailatdawn.com') && Services.vc.compare(version, '1.2.10.1') <= 0
+    @disable('''
       Better BibTeX has been disabled because it has detected conflicting extension "zutilo" 1.2.10.1 or
       earlier. If have proposed a fix at
 
@@ -347,13 +346,10 @@ Zotero.BetterBibTeX.extensionConflicts = ->
 
       should work; alternately, you can uninstall Zutilo.
     ''')
-  )
+    return true
 
-  AddonManager.getAddonByID('{359f0058-a6ca-443e-8dd8-09868141bebc}', (extension) ->
-    return unless extension
-    return if Services.vc.compare(extension.version, '1.2.3') > 0
-
-    Zotero.BetterBibTeX.disable( '''
+  if version = @addonVersion('{359f0058-a6ca-443e-8dd8-09868141bebc}') && Services.vc.compare(version, '1.2.3') <= 0
+    @disable( '''
       Better BibTeX has been disabled because it has detected conflicting extension "recoll-firefox" 1.2.3 or
       earlier. If have proposed a fix for recall-firefox at
 
@@ -363,30 +359,32 @@ Zotero.BetterBibTeX.extensionConflicts = ->
 
       In the meantime, unfortunately, Better BibTeX and recoll-firefox cannot co-exist.
     ''')
-  )
+    return true
 
-  AddonManager.getAddonByID('zotero@chnm.gmu.edu', (extension) =>
-    return unless extension
-    switch
-      when Services.vc.compare(extension.version.replace(/\.SOURCE$/, ''), '4.0.28') < 0
-        @disable("Better BibTeX has been disabled because it found Zotero #{extension.version}, but requires 4.0.28 or later.")
-      when Services.vc.compare(extension.version.replace(/\.SOURCE$/, ''), '5.0.0') >= 0
-        @disable("Better BibTeX has been disabled because is not compatible with Zotero version 5.0 or later.")
-      when extension.version.match(/\.SOURCE$/)
-        @flash(
-          "You are on a custom Zotero build (#{extension.version}). " +
-          'Feel free to submit error reports for Better BibTeX when things go wrong, I will do my best to address them, but the target will always be the latest official 4.0 version of Zotero'
-        )
-  )
+  switch version = @addonVersion('zotero@chnm.gmu.edu')
+    when Services.vc.compare(version.replace(/\.SOURCE$/, ''), '4.0.28') < 0
+      @disable("Better BibTeX has been disabled because it found Zotero #{extension.version}, but requires 4.0.28 or later.")
+      return true
+    when Services.vc.compare(version.replace(/\.SOURCE$/, ''), '5.0.0') >= 0
+      @disable("Better BibTeX has been disabled because is not compatible with Zotero version 5.0 or later.")
+      return true
+    when version.match(/\.SOURCE$/)
+      @flash(
+        "You are on a custom Zotero build (#{version}). " +
+        'Feel free to submit error reports for Better BibTeX when things go wrong, I will do my best to address them, but the target will always be the latest official version of Zotero'
+      )
 
-  @disableInConnector(Zotero.isConnector)
+  return true if @disableInConnector(Zotero.isConnector)
+
+  return false
 
 Zotero.BetterBibTeX.disableInConnector = (isConnector) ->
-  return unless isConnector
+  return false unless isConnector
   @disable("""
     You are running Zotero in connector mode (running Zotero Firefox and Zotero Standalone simultaneously.
     This is not supported by Better BibTeX; see https://github.com/retorquere/zotero-better-bibtex/issues/143
   """)
+  return true
 
 Zotero.BetterBibTeX.disable = (message) ->
   @removeTranslators()
@@ -463,6 +461,8 @@ Zotero.BetterBibTeX.version = (version) ->
 Zotero.BetterBibTeX.init = ->
   return if @initialized
   @initialized = true
+
+  return if @extensionConflicts()
 
   @testing = (@Pref.get('tests') != '')
 
@@ -541,7 +541,6 @@ Zotero.BetterBibTeX.init = ->
     ep:: = endpoint
 
   @loadTranslators()
-  @extensionConflicts()
 
   for k, months of Zotero.BetterBibTeX.Locales.months
     Zotero.BetterBibTeX.CSL.DateParser.addDateParserMonths(months)
