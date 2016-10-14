@@ -2,16 +2,17 @@ if not Zotero.BetterBibTeX
   do ->
     loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader)
 
-    for script in ["zotero-better-bibtex.js","lib/lokijs.js","lib/citeproc.js","lib/vardump.js","lib/fold-to-ascii.js","lib/punycode.js","preferences.js","translators.js","db.js","csl-localedata.js","pattern-formatter.js","Zotero.BetterBibTeX.PatternParser.js","keymanager.js","journalAbbrev.js","web-endpoints.js","schomd.js","cayw.js","debug-bridge.js","cache.js","autoexport.js","serialized.js"]
+    for script in ["zotero-better-bibtex.js","lib/lokijs.js","lib/citeproc.js","lib/vardump.js","lib/fold-to-ascii.js","lib/punycode.js","preferences.js","translators.js","translator-metadata.js","db.js","csl-localedata.js","pattern-formatter.js","Zotero.BetterBibTeX.PatternParser.js","keymanager.js","journalAbbrev.js","web-endpoints.js","schomd.js","cayw.js","debug-bridge.js","cache.js","autoexport.js","serialized.js"]
       try
         Zotero.debug('BBT: ' + script)
         loader.loadSubScript("chrome://zotero-better-bibtex/content/#{script}")
       catch err
-        try
-          Zotero.BetterBibTeX.disable("BBT: failed to load #{script}: #{err}")
+        Zotero.debug('BBT: ' + script + ' load failed: ' + err)
         loader = null
+        break
 
     if loader
+      Zotero.debug('BBT: all loaded')
       try
         Zotero.debug('BBT: scheduling init')
         window.addEventListener('load', (load = (event) ->

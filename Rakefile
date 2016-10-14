@@ -224,10 +224,16 @@ DOWNLOADS.each_pair{|dir, files|
   }
 }
 
-file 'chrome/content/zotero-better-bibtex/translators.js' => Dir['resource/translators/*.yml'] + ['Rakefile'] do |t|
+file 'chrome/content/zotero-better-bibtex/translator-metadata.js' => Dir['resource/translators/*.yml'] + ['Rakefile'] do |t|
   translators = Dir['resource/translators/*.yml'].collect{|header| header = YAML::load_file(header) }.select{|header| header.is_a?(Hash) && header['label'] }
   open(t.name, 'w') {|f|
-    f.puts("Zotero.BetterBibTeX.Translators = #{JSON.pretty_generate(translators)};")
+    names = []
+    translators.each{|tr|
+      names << "Zotero.BetterBibTeX.Translators.#{tr['label'].gsub(' ', '')}"
+      f.puts("#{names[-1]} = Zotero.BetterBibTeX.Translators.#{tr['label'].gsub(' ', '').downcase} = Zotero.BetterBibTeX.Translators['#{tr['translatorID']}'] = #{JSON.pretty_generate(tr)};")
+    }
+
+    f.puts("Zotero.BetterBibTeX.Translators.all = [#{names.join(', ')}];")
   }
 end
 

@@ -194,7 +194,7 @@ Zotero.BetterBibTeX.CAYW =
       items = Zotero.Items.get((citation.id for citation in citations))
 
       translator = options.translator || 'biblatex'
-      translator = Zotero.BetterBibTeX.getTranslator(translator) || translator
+      translator = Zotero.BetterBibTeX.Translators.getID(translator) || translator
       Zotero.BetterBibTeX.debug('cayw.translate:', {requested: options, got: translator})
 
       exportOptions = {

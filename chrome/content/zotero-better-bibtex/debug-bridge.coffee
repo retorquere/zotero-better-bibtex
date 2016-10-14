@@ -63,9 +63,9 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator, displayOpt
   if translator.substring(0,3) == 'id:'
     translator = translator.slice(3)
   else
-    translator = Zotero.BetterBibTeX.getTranslator(translator)
+    translator = Zotero.BetterBibTeX.Translators.getID(translator)
 
-  return Zotero.BetterBibTeX.translate(translator, {library: null}, displayOptions || {})
+  return Zotero.BetterBibTeX.Translators.translate(translator, {library: null}, displayOptions || {})
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, displayOptions, filename) ->
   file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile)
@@ -74,15 +74,15 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, displayOptio
   if translator.substring(0,3) == 'id:'
     translator = translator.slice(3)
   else
-    translator = Zotero.BetterBibTeX.getTranslator(translator)
+    translator = Zotero.BetterBibTeX.Translators.getID(translator)
 
   displayOptions ||= {}
   displayOptions.exportFileData = false
 
-  return Zotero.BetterBibTeX.translate(translator, {library: null}, displayOptions, file)
+  return Zotero.BetterBibTeX.Translators.translate(translator, {library: null}, displayOptions, file)
 
 Zotero.BetterBibTeX.DebugBridge.methods.library = ->
-  return Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.getTranslator('BetterBibTeX JSON'), {library: null}, { exportNotes: true, exportFileData: false }).then((result) ->
+  return Zotero.BetterBibTeX.Translators.translate(Zotero.BetterBibTeX.Translators.getID('BetterBibTeX JSON'), {library: null}, { exportNotes: true, exportFileData: false }).then((result) ->
     Promise.resolve(JSON.parse(result))
   )
 
