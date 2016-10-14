@@ -115,5 +115,9 @@ Zotero.BetterBibTeX.Pref = new class
   get: (key) -> @cache[key]
 
   clear: (key) ->
-    @branch.clearUserPref(key)
-    @cache[key] = Zotero.Prefs.get("translators.better-bibtex.#{key}")
+    try
+      @branch.clearUserPref(key)
+      @cache[key] = Zotero.Prefs.get("translators.better-bibtex.#{key}")
+    catch err
+      Zotero.BetterBibTeX.debug('preferences.clear', key, err)
+      @cache[key] = null
