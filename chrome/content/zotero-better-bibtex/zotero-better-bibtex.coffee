@@ -361,12 +361,25 @@ Zotero.BetterBibTeX.extensionConflicts = ->
     ''')
     return true
 
-  switch version = @addonVersion('zotero@chnm.gmu.edu')
-    when !version
-      switch version = @addonVersion('juris-m@juris-m.github.io')?.replace('m', '.')
-        when !version
-          @disable("Better BibTeX has been disabled because neither Zotero nor Juris-M are installed")
+  switch
+    when version = @addonVersion('zotero@chnm.gmu.edu')?.version
+      switch
+        when Services.vc.compare(version.replace(/(\.SOURCE|beta[0-9]+)$/, ''), '4.0.28') < 0
+          @disable("Better BibTeX has been disabled because it found Zotero #{extension.version}, but requires 4.0.28 or later.")
           return true
+
+        when Services.vc.compare(version.replace(/(\.SOURCE|beta[0-9]+)$/, ''), '5.0.0') >= 0
+          @disable("Better BibTeX has been disabled because is not compatible with Zotero version 5.0 or later.")
+          return true
+
+        when version.match(/(\.SOURCE|beta[0-9]+)$/)
+          @flash(
+            "You are on a custom/beta Zotero build (#{version}). " +
+            'Feel free to submit error reports for Better BibTeX when things go wrong, I will do my best to address them, but the target will always be the latest official version of Zotero'
+          )
+
+    when version = @addonVersion('juris-m@juris-m.github.io')?.replace('m', '.')
+      switch
         when Services.vc.compare(version.replace(/(\.SOURCE|beta[0-9]+)$/, ''), '4.0.29.12.98') < 0
           @disable("Better BibTeX has been disabled because it found Juris-M #{extension.version}, but requires 4.0.29.12m98 or later.")
           return true
@@ -379,20 +392,9 @@ Zotero.BetterBibTeX.extensionConflicts = ->
             'Feel free to submit error reports for Better BibTeX when things go wrong, I will do my best to address them, but the target will always be the latest official version of Juris-M'
           )
 
-    when Services.vc.compare(version.replace(/(\.SOURCE|beta[0-9]+)$/, ''), '4.0.28') < 0
-      @disable("Better BibTeX has been disabled because it found Zotero #{extension.version}, but requires 4.0.28 or later.")
+    else
+      @disable("Better BibTeX has been disabled because neither Zotero nor Juris-M are installed")
       return true
-
-    when Services.vc.compare(version.replace(/(\.SOURCE|beta[0-9]+)$/, ''), '5.0.0') >= 0
-      @disable("Better BibTeX has been disabled because is not compatible with Zotero version 5.0 or later.")
-      return true
-
-    when version.match(/(\.SOURCE|beta[0-9]+)$/)
-      @flash(
-        "You are on a custom/beta Zotero build (#{version}). " +
-        'Feel free to submit error reports for Better BibTeX when things go wrong, I will do my best to address them, but the target will always be the latest official version of Zotero'
-      )
-
 
   return true if @disableInConnector(Zotero.isConnector)
 
