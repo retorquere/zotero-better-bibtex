@@ -1063,63 +1063,6 @@ file 'wiki/Configuration.md' => ['lib/PreferencesDoc.rb', 'defaults/preferences/
   PreferencesDoc.new(t)
 end
 
-task :doc do
-  preferences = {}
-  defaults = {}
-
-  YAML::load_file('defaults/preferences/defaults.yml').each_pair{|pref, default|
-    preferences["extensions.zotero.translators.better-bibtex.#{pref}"] = 'Hidden'
-    defaults["extensions.zotero.translators.better-bibtex.#{pref}"] = default
-  }
-
-  settings = Nokogiri::XML(open('chrome/content/zotero-better-bibtex/preferences.xul'))
-  settings.remove_namespaces!
-
-  panels = [
-    'Citation keys',
-    'Export',
-    'Journal abbreviations',
-    'Automatic export',
-    'Advanced'
-  ]
-  settings.xpath('//tabpanel').each_with_index{|panel, panelnr|
-    panel.xpath('.//*[@preference]').each{|pref|
-      name = settings.at("//preference[@id='#{pref['preference']}']")['name']
-      preferences[name] = panels[panelnr]
-    }
-  }
-
-  documented = {}
-
-  section = nil
-  IO.readlines('wiki/Configuration.md').each{|line|
-    line.strip!
-    if line =~ /^## /
-      section = line.sub(/^##/, '').strip
-      next
-    end
-
-    if line =~ /^<!-- (.*) -->/
-      pref = $1.strip
-      documented[pref] = section
-    end
-  }
-
-  documented.keys.each{|pref|
-    if !preferences[pref]
-      puts "Documented obsolete preference #{documented[pref]} / #{pref}"
-    elsif preferences[pref] != documented[pref]
-      puts "#{pref} documented in #{documented[pref]} but visible in #{preferences[pref]}"
-    end
-  }
-  preferences.keys.each{|pref|
-    if !documented[pref]
-      heading = "## #{pref.sub(/.*\./, '')} <!-- #{pref} -->"
-      puts "Undocumented preference #{preferences[pref]} / #{heading} (#{defaults[pref]})"
-    end
-  }
-end
-
 task :s3form do
   user = OpenStruct.new({
     key: XPI.errorreports.key,

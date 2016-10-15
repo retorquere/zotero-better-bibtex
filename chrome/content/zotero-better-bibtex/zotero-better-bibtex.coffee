@@ -585,7 +585,7 @@ Zotero.BetterBibTeX.init = ->
 
   @schomd.init()
 
-  @Pref.observer.register()
+  @Pref.register()
   Zotero.addShutdownListener(->
     Zotero.BetterBibTeX.log('shutting down')
     Zotero.BetterBibTeX.DB.save('force')
