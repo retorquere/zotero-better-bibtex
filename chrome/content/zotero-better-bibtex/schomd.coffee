@@ -175,7 +175,7 @@ Zotero.BetterBibTeX.schomd.jsonrpc_bibliography = (citekeys, {format, style, lib
 
     when 'yaml'
       items = Zotero.Items.get(itemIDs)
-      return Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.Translators.getID('Better CSL YAML'), {items}, {})
+      return Zotero.BetterBibTeX.Translators.translate(Zotero.BetterBibTeX.Translators.getID('Better CSL YAML'), {items}, {})
 
     else
       throw new Error("schomd.bibliography: unsupported format #{format}")
@@ -211,4 +211,4 @@ Zotero.BetterBibTeX.schomd.jsonrpc_bibtex = (keys, {translator, libraryID, displ
   translator ||= 'betterbiblatex'
   displayOptions ||= {}
 
-  return Zotero.BetterBibTeX.translate(Zotero.BetterBibTeX.Translators.getID(translator), {items}, displayOptions)
+  return Zotero.BetterBibTeX.Translators.translate(Zotero.BetterBibTeX.Translators.getID(translator), {items}, displayOptions)

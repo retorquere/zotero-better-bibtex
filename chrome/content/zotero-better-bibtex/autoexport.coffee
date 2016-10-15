@@ -138,7 +138,7 @@ Zotero.BetterBibTeX.auto = new class
         Zotero.BetterBibTeX.flash("Auto-Export: unexpected collection id #{ae.collection}")
         return null
 
-    return Zotero.BetterBibTeX.translate(ae.translatorID, items, { exportCharset: ae.exportCharset, exportNotes: ae.exportNotes, useJournalAbbreviation: ae.useJournalAbbreviation }, path)
+    return Zotero.BetterBibTeX.Translators.translate(ae.translatorID, items, { exportCharset: ae.exportCharset, exportNotes: ae.exportNotes, useJournalAbbreviation: ae.useJournalAbbreviation }, path)
 
   schedule: (reason) ->
     #if Zotero.Sync.Server.syncInProgress || Zotero.Sync.Storage.syncInProgress

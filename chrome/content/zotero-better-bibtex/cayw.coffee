@@ -202,7 +202,7 @@ Zotero.BetterBibTeX.CAYW =
         useJournalAbbreviation: (options.useJournalAbbreviation || '').toLowerCase() in ['yes', 'y', 'true']
       }
 
-      return Zotero.BetterBibTeX.translate(translator, {items: items}, exportOptions)
+      return Zotero.BetterBibTeX.Translators.translate(translator, {items: items}, exportOptions)
 
 class Zotero.BetterBibTeX.CAYW.Document
   constructor: (@config) ->
