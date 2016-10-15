@@ -34,5 +34,5 @@ deployment:
   all:
     branch: "/.*/"
     commands:
-    - find . -name test -prune -o -name .git -prune -o -name wiki -prune -o -name node_modules -prune -o -type f
+    - find . -name vendor -prune -o -name test -prune -o -name .git -prune -o -name wiki -prune -o -name node_modules -prune -o -type f
     - bundle exec rake publish
