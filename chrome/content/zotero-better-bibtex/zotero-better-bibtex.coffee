@@ -8,6 +8,9 @@ Zotero.BetterBibTeX = new class
   disabled: "BBT load failed"
 
   constructor: ->
+    @debug = @debug_on
+    @log = @log_on
+
     # because bugger async
     @activeAddons = {}
     callback = Async.makeSyncCallback()
@@ -119,18 +122,48 @@ Zotero.BetterBibTeX = new class
 
     return null
 
-Zotero.BetterBibTeX.error = (msg...) ->
-  @_log.apply(@, [0].concat(msg))
-Zotero.BetterBibTeX.warn = (msg...) ->
-  @_log.apply(@, [1].concat(msg))
+  _log: (level, msg...) ->
+    str = []
+    for m in msg
+      switch
+        when m instanceof Error
+          str.push("<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>")
+        when !m || (typeof m in ['number', 'string', 'boolean'])
+          str.push('' + m)
+        when @varDump
+          str.push(@varDump(m).replace(/\n/g, ''))
+        else
+          str.push('' + m)
 
-Zotero.BetterBibTeX.debug_off = ->
-Zotero.BetterBibTeX.debug = Zotero.BetterBibTeX.debug_on = (msg...) ->
-  @_log.apply(@, [5].concat(msg))
+    str = "[better-bibtex @ #{new Date()}] #{str.join(' ')}"
 
-Zotero.BetterBibTeX.log_off = ->
-Zotero.BetterBibTeX.log = Zotero.BetterBibTeX.log_on = (msg...) ->
-  @_log.apply(@, [3].concat(msg))
+    if level == 0
+      Zotero.logError(str)
+    else
+      Zotero.debug(str, level)
+    console.log(str)
+
+  flash: (title, body) ->
+    try
+      @debug('flash:', title, body)
+      pw = new Zotero.ProgressWindow()
+      pw.changeHeadline('Better BibTeX: ' + title)
+      body ||= title
+      body = body.join("\n") if Array.isArray(body)
+      pw.addDescription(body)
+      pw.show()
+      pw.startCloseTimer(8000)
+    catch err
+      @error('@flash failed:', {title, body}, err)
+
+  error: (msg...) -> @_log.apply(@, [0].concat(msg))
+  warn: (msg...) -> @_log.apply(@, [1].concat(msg))
+
+  debug_on: (msg...) -> @_log.apply(@, [5].concat(msg))
+  debug_off: ->
+
+  log_on: (msg...) -> @_log.apply(@, [3].concat(msg))
+  log_off: ->
 
 Zotero.BetterBibTeX.addCacheHistory = ->
   Zotero.BetterBibTeX.cacheHistory ||= []
@@ -167,73 +200,6 @@ Zotero.BetterBibTeX.debugMode = (silent) ->
     delete Zotero.BetterBibTeX.cacheHistory
     @debug = @debug_off
     @log = @log_off
-
-Zotero.BetterBibTeX.stringify = (obj, replacer, spaces, cycleReplacer) ->
-  str = JSON.stringify(obj, @stringifier(replacer, cycleReplacer), spaces)
-
-  if Array.isArray(obj)
-    hybrid = false
-    keys = Object.keys(obj)
-    if keys.length > 0
-      o = {}
-      for key in keys
-        continue if key.match(/^\d+$/)
-        o[key] = obj[key]
-        hybrid = true
-      str += '+' + @stringify(o) if hybrid
-  return str
-
-Zotero.BetterBibTeX.stringifier = (replacer, cycleReplacer) ->
-  stack = []
-  keys = []
-  if cycleReplacer == null
-    cycleReplacer = (key, value) ->
-      return '[Circular ~]' if stack[0] == value
-      return '[Circular ~.' + keys.slice(0, stack.indexOf(value)).join('.') + ']'
-
-  return (key, value) ->
-    if stack.length > 0
-      thisPos = stack.indexOf(this)
-      if ~thisPos then stack.splice(thisPos + 1) else stack.push(this)
-      if ~thisPos then keys.splice(thisPos, Infinity, key) else keys.push(key)
-      value = cycleReplacer.call(this, key, value) if ~stack.indexOf(value)
-    else
-      stack.push(value)
-
-    return value if replacer == null || replacer == undefined
-    return replacer.call(this, key, value)
-
-Zotero.BetterBibTeX._log = (level, msg...) ->
-  str = []
-  for m in msg
-    switch
-      when m instanceof Error
-        str.push("<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>")
-      when !m || (typeof m in ['number', 'string', 'boolean'])
-        str.push('' + m)
-      else
-        str.push(Zotero.BetterBibTeX.varDump(m).replace(/\n/g, ''))
-
-  str = "[better-bibtex @ #{new Date()}] #{str.join(' ')}"
-
-  if level == 0
-    Zotero.logError(str)
-  else
-    Zotero.debug(str, level)
-  console.log(str)
-
-Zotero.BetterBibTeX.flash = (title, body) ->
-  try
-    Zotero.BetterBibTeX.debug('flash:', title)
-    pw = new Zotero.ProgressWindow()
-    pw.changeHeadline('Better BibTeX: ' + title)
-    body ||= title
-    body = body.join("\n") if Array.isArray(body)
-    pw.addDescription(body)
-    pw.show()
-    pw.startCloseTimer(8000)
-  catch err
-    Zotero.BetterBibTeX.error('@flash failed:', {title, body}, err)
 
 Zotero.BetterBibTeX.reportErrors = (includeReferences) ->
   items = null
