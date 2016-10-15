@@ -755,7 +755,8 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
   puts "Tests running: JURISM=#{ENV['JURISM'] || 'false'} #{cucumber}"
   if ENV['CI'] == 'true'
     sh cucumber
-    sh "rm -f *.log *.debug"
+    logdir = ENV['LOGS'] || '.'
+    sh "rm -f #{logdir}/*.log #{logdir}/*.debug"
   else
     begin
       if OS.mac?
@@ -765,7 +766,7 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
       end
     ensure
       sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
-      #sh "rm -f cucumber.run"
+      sh "rm -f cucumber.run"
     end
   end
 end

@@ -154,14 +154,20 @@ AfterStep do |scenario|
   #sleep 5 if ENV['CIRCLECI'] == 'true'
 end
 
+def writeLog(file, contents)
+  return if contents.strip == ''
+  open(file, 'w'){|f| f.write(contents) }
+end
+
 After do |scenario|
   Cucumber.wants_to_quit = scenario.failed? && ENV['CI'] != 'true'
 
   filename = scenario.name.gsub(/[^0-9A-z.\-]/, '_')
 
   if scenario.failed? || (ENV['CI'] != 'true' && scenario.source_tag_names.include?('@dumplogs'))
-    open("#{filename}.debug", 'w'){|f| f.write($Firefox.DebugBridge.log) }
-    open("#{filename}.log", 'w'){|f| f.write(browserLog) }
+    logdir = ENV['LOGS'] || '.'
+    writeLog("#{logdir}/#{filename}.debug", $Firefox.DebugBridge.log)
+    writeLog("#{logdir}/#{filename}.log", browserLog)
   end
 
   if ENV['CI'] != 'true'
