@@ -52,7 +52,6 @@ class Zotero.BetterBibTeX.PatternFormatter
 
 
     for candidate in @patterns[0]
-      Zotero.BetterBibTeX.debug('formatter: ', candidate)
       delete @postfix
       citekey = @concat(candidate)
       return {citekey, postfix: @postfix} if citekey != ''
@@ -75,9 +74,7 @@ class Zotero.BetterBibTeX.PatternFormatter
 
   concat: (pattern) ->
     result = ''
-    Zotero.BetterBibTeX.debug('formatter: concat:', pattern)
     for part in pattern
-      Zotero.BetterBibTeX.debug('formatter: concat: part:', pattern)
       longest = ''
       for @language in @languages
         candidate = @evaluate(part)
@@ -87,10 +84,8 @@ class Zotero.BetterBibTeX.PatternFormatter
           longest = candidate if candidate.length > longest.length
       continue unless longest
       result += longest.replace(/[\s{},]/g, '')
-      Zotero.BetterBibTeX.debug('formatter: concat: acc:', result)
 
     result = Zotero.BetterBibTeX.removeDiacritics(result) if @fold
-    Zotero.BetterBibTeX.debug('formatter: concat: result:', result)
     return result
 
   evaluate: (step) ->
@@ -345,7 +340,6 @@ class Zotero.BetterBibTeX.PatternFormatter
       words.slice(0, 3).join('')
 
     veryshorttitle: ->
-      Zotero.BetterBibTeX.debug('veryshorttitle:', {item: @item, title: @prop('title'), words: @titleWords(@prop('title'), { skipWords: true, asciiOnly: true})})
       words = @titleWords(@prop('title'), { skipWords: true, asciiOnly: true})
       return '' unless words
       words.slice(0, 1).join('')
