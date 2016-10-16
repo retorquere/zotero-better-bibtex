@@ -213,7 +213,7 @@ BetterBibTeXAutoExportPref =
           @treecell({editable: 'false', label: "#{BetterBibTeXAutoExportPref.exportType(ae.collection)}: #{BetterBibTeXAutoExportPref.exportName(ae.collection)}"})
           @treecell({editable: 'false', label: status})
           @treecell({editable: 'false', label: ae.path})
-          @treecell({editable: 'false', label: Zotero.BetterBibTeX.translatorName(ae.translatorID)})
+          @treecell({editable: 'false', label: Zotero.BetterBibTeX.Translators.getName(ae.translatorID)})
           @treecell({editable: 'false', label: ae.exportCharset})
           @treecell({editable: 'false', label: '' + ae.useJournalAbbreviation})
           @treecell({editable: 'false', label: '' + ae.exportNotes})

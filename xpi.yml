@@ -49,6 +49,7 @@ files:
 - chrome/content/zotero-better-bibtex/lib/punycode.js
 - chrome/content/zotero-better-bibtex/preferences.js
 - chrome/content/zotero-better-bibtex/translators.js
+- chrome/content/zotero-better-bibtex/translator-metadata.js
 - chrome/content/zotero-better-bibtex/db.js
 - chrome/content/zotero-better-bibtex/csl-localedata.js
 - chrome/content/zotero-better-bibtex/pattern-formatter.js

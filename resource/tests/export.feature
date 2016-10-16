@@ -10,13 +10,14 @@ Background:
 
 ### BibLaTeX cookie-cutter ###
 
-@test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515
+@test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515 @573
 Scenario Outline: BibLaTeX Export
   And I import <references> references from 'export/<file>.json'
   Then a library export using 'Better BibLaTeX' should match 'export/<file>.biblatex'
 
   Examples:
      | file                                                                                           | references  |
+     | CSL status = biblatex pubstate #573                                                            | 1           |
      | Title case of latex greek text on biblatex export #564                                         | 2           |
      | pre not working in Extra field #559                                                            | 1           |
      | @jurisdiction; map court,authority to institution #326                                         | 1           |

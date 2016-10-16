@@ -103,23 +103,17 @@ Zotero.BetterBibTeX.auto = new class
     path = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile)
     path.initWithPath(ae.path)
 
-    switch
-      when path.exists() && (!path.isFile() || !path.isWritable())
-        error = "auto.prepare: candidate path '#{ae.path}' exists but is not writable"
+    if path.exists() && (!path.isFile() || !path.isWritable())
+      Zotero.BetterBibTeX.flash("Auto-Export: candidate path '#{ae.path}' exists but is not writable")
+      return null
 
-      when path.parent.exists() && !path.parent.isWritable()
-        error = "auto.prepare: parent of candidate path '#{ae.path}' exists but is not writable"
+    if path.parent.exists() && !path.parent.isWritable()
+      Zotero.BetterBibTeX.flash("Auto-Export: parent of candidate path '#{ae.path}' exists but is not writable")
+      return null
 
-      when !path.parent.exists()
-        error = "auto.prepare: parent of candidate path '#{ae.path}' does not exist"
-
-      else
-        error = null
-
-    if error
-      Zotero.BetterBibTeX.debug(msg)
-      @mark(ae, 'error')
-      throw new Error(msg)
+    if !path.parent.exists()
+      Zotero.BetterBibTeX.flash("Auto-Export: parent of candidate path '#{ae.path}' does not exist")
+      return null
 
     switch
       when ae.collection == 'library'
@@ -141,37 +135,10 @@ Zotero.BetterBibTeX.auto = new class
         items = {collection: parseInt(m[1])}
 
       else #??
-        Zotero.BetterBibTeX.debug('auto.prepare: unexpected collection id ', ae.collection)
+        Zotero.BetterBibTeX.flash("Auto-Export: unexpected collection id #{ae.collection}")
         return null
 
-    if items.items && items.items.length == 0
-      Zotero.BetterBibTeX.debug('auto.prepare: candidate ', ae.path, ' has no items')
-      return null
-
-    translation = new Zotero.Translate.Export()
-
-    for own k, v of items
-      switch k
-        when 'items'
-          Zotero.BetterBibTeX.debug('preparing auto-export from', items.length, 'items')
-          translation.setItems(items.items)
-        when 'collection'
-          Zotero.BetterBibTeX.debug('preparing auto-export from collection', items.collection)
-          translation.setCollection(Zotero.Collections.get(items.collection))
-        when 'library'
-          Zotero.BetterBibTeX.debug('preparing auto-export from library', items.library)
-          translation.setLibraryID(items.library)
-
-    translation.setLocation(path)
-    translation.setTranslator(ae.translatorID)
-
-    translation.setDisplayOptions({
-      exportCharset: ae.exportCharset
-      exportNotes: ae.exportNotes
-      useJournalAbbreviation: ae.useJournalAbbreviation
-    })
-
-    return translation
+    return Zotero.BetterBibTeX.Translators.translate(ae.translatorID, items, { exportCharset: ae.exportCharset, exportNotes: ae.exportNotes, useJournalAbbreviation: ae.useJournalAbbreviation }, path)
 
   schedule: (reason) ->
     #if Zotero.Sync.Server.syncInProgress || Zotero.Sync.Storage.syncInProgress
@@ -207,42 +174,34 @@ Zotero.BetterBibTeX.auto = new class
           return
 
     skip = {error: [], done: []}
-    translation = null
 
+    translate = null
     for ae in @db.autoexport.findObjects({status: 'pending'})
-      try
-        translation = @prepare(ae)
-      catch err
-        Zotero.BetterBibTeX.debug('auto.process:', err)
-        continue
+      break if translate = @prepare(ae)
+      @mark(ae, 'error')
 
-      if !translation
-        @mark(ae, 'done')
-      else
-        break
-
-    if translation
-      @running = '' + ae.$loki
-    else
+    if !translate
       Zotero.BetterBibTeX.debug('auto.process: no pending jobs')
       return
 
+    @running = '' + ae.$loki
     Zotero.BetterBibTeX.debug('auto.process: starting', ae)
     @mark(ae, 'running')
     @updated()
 
-    translation.setHandler('done', (obj, worked) =>
-      running = @db.autoexport.get(ae.$loki)
-
-      ### could have been re-marked for export before this one was done ###
-      if running.status == 'running'
-        status = (if worked then 'done' else 'error')
-        Zotero.BetterBibTeX.debug("auto.process: finished #{Zotero.BetterBibTeX.auto.running}: #{status}")
-        @mark(ae, status)
-      else
-        Zotero.BetterBibTeX.debug("auto.process: #{ae.$loki} was re-marked to #{running.status} before it finished")
-      Zotero.BetterBibTeX.auto.running = null
-      Zotero.BetterBibTeX.auto.updated()
-      Zotero.BetterBibTeX.auto.process(reason)
+    translate.then(=>
+      # if it's been re-marked during the run, let that handle the mark if any
+      @mark(ae, 'done') if @db.autoexport.get(ae.$loki).status == 'running'
+      Zotero.BetterBibTeX.debug("auto.process: finished #{Zotero.BetterBibTeX.auto.running}: done")
+      return Promise.resolve()
+    ).catch(=>
+      # if it's been re-marked during the run, let that handle the mark if any
+      @mark(ae, 'error') if @db.autoexport.get(ae.$loki).status == 'running'
+      Zotero.BetterBibTeX.debug("auto.process: finished #{Zotero.BetterBibTeX.auto.running}: error")
+      return Promise.resolve()
+    ).then(=>
+      @running = null
+      @updated()
+      @process(reason)
+      return null
     )
-    translation.translate()

@@ -224,10 +224,16 @@ DOWNLOADS.each_pair{|dir, files|
   }
 }
 
-file 'chrome/content/zotero-better-bibtex/translators.js' => Dir['resource/translators/*.yml'] + ['Rakefile'] do |t|
+file 'chrome/content/zotero-better-bibtex/translator-metadata.js' => Dir['resource/translators/*.yml'] + ['Rakefile'] do |t|
   translators = Dir['resource/translators/*.yml'].collect{|header| header = YAML::load_file(header) }.select{|header| header.is_a?(Hash) && header['label'] }
   open(t.name, 'w') {|f|
-    f.puts("Zotero.BetterBibTeX.Translators = #{JSON.pretty_generate(translators)};")
+    names = []
+    translators.each{|tr|
+      names << "Zotero.BetterBibTeX.Translators.#{tr['label'].gsub(' ', '')}"
+      f.puts("#{names[-1]} = Zotero.BetterBibTeX.Translators.#{tr['label'].gsub(' ', '').downcase} = Zotero.BetterBibTeX.Translators['#{tr['translatorID']}'] = #{JSON.pretty_generate(tr)};")
+    }
+
+    f.puts("Zotero.BetterBibTeX.Translators.all = [#{names.join(', ')}];")
   }
 end
 
@@ -749,6 +755,8 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
   puts "Tests running: JURISM=#{ENV['JURISM'] || 'false'} #{cucumber}"
   if ENV['CI'] == 'true'
     sh cucumber
+    logdir = ENV['LOGS'] || '.'
+    sh "rm -f #{logdir}/*.log #{logdir}/*.debug"
   else
     begin
       if OS.mac?
@@ -758,7 +766,7 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
       end
     ensure
       sh "sed -re 's/\\x1b[^m]*m//g' cucumber.run | col -b > cucumber.log"
-      #sh "rm -f cucumber.run"
+      sh "rm -f cucumber.run"
     end
   end
 end
@@ -1054,63 +1062,6 @@ end
 
 file 'wiki/Configuration.md' => ['lib/PreferencesDoc.rb', 'defaults/preferences/defaults.yml', 'chrome/content/zotero-better-bibtex/xul/preferences.xul', 'chrome/locale/en-US/zotero-better-bibtex/zotero-better-bibtex.dtd'] do |t|
   PreferencesDoc.new(t)
-end
-
-task :doc do
-  preferences = {}
-  defaults = {}
-
-  YAML::load_file('defaults/preferences/defaults.yml').each_pair{|pref, default|
-    preferences["extensions.zotero.translators.better-bibtex.#{pref}"] = 'Hidden'
-    defaults["extensions.zotero.translators.better-bibtex.#{pref}"] = default
-  }
-
-  settings = Nokogiri::XML(open('chrome/content/zotero-better-bibtex/preferences.xul'))
-  settings.remove_namespaces!
-
-  panels = [
-    'Citation keys',
-    'Export',
-    'Journal abbreviations',
-    'Automatic export',
-    'Advanced'
-  ]
-  settings.xpath('//tabpanel').each_with_index{|panel, panelnr|
-    panel.xpath('.//*[@preference]').each{|pref|
-      name = settings.at("//preference[@id='#{pref['preference']}']")['name']
-      preferences[name] = panels[panelnr]
-    }
-  }
-
-  documented = {}
-
-  section = nil
-  IO.readlines('wiki/Configuration.md').each{|line|
-    line.strip!
-    if line =~ /^## /
-      section = line.sub(/^##/, '').strip
-      next
-    end
-
-    if line =~ /^<!-- (.*) -->/
-      pref = $1.strip
-      documented[pref] = section
-    end
-  }
-
-  documented.keys.each{|pref|
-    if !preferences[pref]
-      puts "Documented obsolete preference #{documented[pref]} / #{pref}"
-    elsif preferences[pref] != documented[pref]
-      puts "#{pref} documented in #{documented[pref]} but visible in #{preferences[pref]}"
-    end
-  }
-  preferences.keys.each{|pref|
-    if !documented[pref]
-      heading = "## #{pref.sub(/.*\./, '')} <!-- #{pref} -->"
-      puts "Undocumented preference #{preferences[pref]} / #{heading} (#{defaults[pref]})"
-    end
-  }
 end
 
 task :s3form do
