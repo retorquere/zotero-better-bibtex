@@ -22,7 +22,7 @@ Zotero.BetterBibTeX = new class
       @activeAddons[addon.id] = addon.version
     # fallback for ZSA
     for guid in ['zotero@chnm.gmu.edu', 'juris-m@juris-m.github.io']
-      @activeAddons[guid] = ZOTERO_CONFIG.VERSION if ZOTERO_CONFIG.GUID == guid
+      @activeAddons[guid] ||= ZOTERO_CONFIG.VERSION if ZOTERO_CONFIG.GUID == guid
 
     @release = @activeAddons['better-bibtex@iris-advies.com']
 
