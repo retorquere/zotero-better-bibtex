@@ -38,28 +38,26 @@ Zotero.BetterBibTeX = new class
 
   versionConflict: ->
     if version = @activeAddons['zotfile@columbia.edu'] && Services.vc.compare(version, '4.2.6') < 0
-      return '''
-        Better BibTeX has been disabled because it has detected conflicting extension "ZotFile" 4.2.5 or
-        earlier. After upgrading to 4.2.6, Better BibTeX will start up as usual. A pre-release of ZotFile 4.2.6 can be
-        found at
-
-        https://addons.mozilla.org/en-US/firefox/addon/zotfile/versions/
-      '''
+      return """
+        Better BibTeX has been disabled because it has detected conflicting extension "ZotFile" #{version}.
+        After upgrading to ZotFile to 4.2.6, Better BibTeX will start up as usual.
+      """
 
     if version = @activeAddons['zoteromaps@zotero.org'] && Services.vc.compare(version, '1.0.10.1') < 0
-      return '''
-        Better BibTeX has been disabled because it has detected conflicting extension "zotero-maps" 1.0.10 or
-        earlier. Unfortunately this plugin appears to be abandoned, and their issue tracker at
+      return """
+        Better BibTeX has been disabled because it has detected conflicting extension "zotero-maps" #{version}. Versions
+        up to and including 1.0.10 interfere with Better BibTeX; unfortunately this plugin appears to be abandoned, and
+        their issue tracker at
 
         https://github.com/zotero/zotero-maps
 
         is not enabled.
-      '''
+      """
 
     if version = @activeAddons['zutilo@www.wesailatdawn.com'] && Services.vc.compare(version, '1.2.10.1') <= 0
-      return '''
-        Better BibTeX has been disabled because it has detected conflicting extension "zutilo" 1.2.10.1 or
-        earlier. If have proposed a fix at
+      return """
+        Better BibTeX has been disabled because it has detected conflicting extension "zutilo" #{version}. Zutilo
+        versions 1.2.10.1 and earlier interfere with Better BibTeX; If have proposed a fix at
 
         https://github.com/willsALMANJ/Zutilo/issues/42
 
@@ -68,19 +66,19 @@ Zotero.BetterBibTeX = new class
         https://addons.mozilla.org/en-US/firefox/addon/zutilo-utility-for-zotero/versions/
 
         should work; alternately, you can uninstall Zutilo.
-      '''
+      """
 
     if version = @activeAddons['{359f0058-a6ca-443e-8dd8-09868141bebc}'] && Services.vc.compare(version, '1.2.3') <= 0
-      return '''
-        Better BibTeX has been disabled because it has detected conflicting extension "recoll-firefox" 1.2.3 or
-        earlier. If have proposed a fix for recall-firefox at
+      return """
+        Better BibTeX has been disabled because it has detected conflicting extension "recoll-firefox" #{version}.
+        Recoll-firefox 1.2.3 and earlier interfere with Better BibTeX; if have proposed a fix for recall-firefox at
 
         https://sourceforge.net/p/recollfirefox/discussion/general/thread/a31d3c89/
 
         Once that has been implemented, Better BibTeX will start up as usual.  Alternately, you can uninstall Recoll Firefox.
 
         In the meantime, unfortunately, Better BibTeX and recoll-firefox cannot co-exist.
-      '''
+      """
 
     switch
       when version = @activeAddons['zotero@chnm.gmu.edu']
@@ -89,7 +87,7 @@ Zotero.BetterBibTeX = new class
             return "Better BibTeX has been disabled because it found Zotero #{version}, but requires 4.0.28 or later."
 
           when Services.vc.compare(version.replace(/(\.SOURCE|beta[0-9]+)$/, ''), '5.0.0') >= 0
-            return "Better BibTeX has been disabled because is not compatible with Zotero version 5.0 or later."
+            return "Zotero #{version} found. Better BibTeX has been disabled because is not compatible with Zotero version 5.0 or later."
 
           when version.match(/(\.SOURCE|beta[0-9]+)$/)
             @flash(
@@ -103,7 +101,7 @@ Zotero.BetterBibTeX = new class
             return "Better BibTeX has been disabled because it found Juris-M #{version}, but requires 4.0.29.12m98 or later."
 
           when Services.vc.compare(version.replace(/(\.SOURCE|beta[0-9]+)$/, ''), '5.0.0') >= 0
-            return "Better BibTeX has been disabled because is not compatible with Juris-M version 5.0 or later."
+            return "Juris-M #{version} found. Better BibTeX has been disabled because is not compatible with Juris-M version 5.0 or later."
 
           when version.match(/(\.SOURCE|beta[0-9]+)$/)
             @flash(
