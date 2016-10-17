@@ -20,6 +20,10 @@ Zotero.BetterBibTeX = new class
       Zotero.debug("Addon: #{addon.id} (#{addon.isActive}): #{addon.name} @ #{addon.version}")
       continue unless addon.isActive
       @activeAddons[addon.id] = addon.version
+    # fallback for ZSA
+    for guid in ['zotero@chnm.gmu.edu', 'juris-m@juris-m.github.io']
+      @activeAddons[guid] = ZOTERO_CONFIG.VERSION if ZOTERO_CONFIG.GUID == guid
+
     @release = @activeAddons['better-bibtex@iris-advies.com']
 
     @flash('Better BibTeX has been disabled', @disabled) if @disabled = @versionConflict()
