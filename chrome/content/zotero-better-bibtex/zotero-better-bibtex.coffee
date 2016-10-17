@@ -114,7 +114,7 @@ Zotero.BetterBibTeX = new class
             )
 
       else
-        @flash('Neither Zotero nor Juris-M seem to be installed.')'
+        @flash('Neither Zotero nor Juris-M seem to be installed.')
 
     if Zotero.isConnector
       return """
