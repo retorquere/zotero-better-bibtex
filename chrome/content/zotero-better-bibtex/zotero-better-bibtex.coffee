@@ -37,13 +37,13 @@ Zotero.BetterBibTeX = new class
     return Async.waitForSyncCallback(callback)
 
   versionConflict: ->
-    if version = @activeAddons['zotfile@columbia.edu'] && Services.vc.compare(version, '4.2.6') < 0
+    if (version = @activeAddons['zotfile@columbia.edu']) && Services.vc.compare(version, '4.2.6') < 0
       return """
         Better BibTeX has been disabled because it has detected conflicting extension "ZotFile" #{version}.
         After upgrading to ZotFile to 4.2.6, Better BibTeX will start up as usual.
       """
 
-    if version = @activeAddons['zoteromaps@zotero.org'] && Services.vc.compare(version, '1.0.10.1') < 0
+    if (version = @activeAddons['zoteromaps@zotero.org']) && Services.vc.compare(version, '1.0.10.1') < 0
       return """
         Better BibTeX has been disabled because it has detected conflicting extension "zotero-maps" #{version}. Versions
         up to and including 1.0.10 interfere with Better BibTeX; unfortunately this plugin appears to be abandoned, and
@@ -54,7 +54,7 @@ Zotero.BetterBibTeX = new class
         is not enabled.
       """
 
-    if version = @activeAddons['zutilo@www.wesailatdawn.com'] && Services.vc.compare(version, '1.2.10.1') <= 0
+    if (version = @activeAddons['zutilo@www.wesailatdawn.com']) && Services.vc.compare(version, '1.2.10.1') <= 0
       return """
         Better BibTeX has been disabled because it has detected conflicting extension "zutilo" #{version}. Zutilo
         versions 1.2.10.1 and earlier interfere with Better BibTeX; If have proposed a fix at
@@ -68,7 +68,7 @@ Zotero.BetterBibTeX = new class
         should work; alternately, you can uninstall Zutilo.
       """
 
-    if version = @activeAddons['{359f0058-a6ca-443e-8dd8-09868141bebc}'] && Services.vc.compare(version, '1.2.3') <= 0
+    if (version = @activeAddons['{359f0058-a6ca-443e-8dd8-09868141bebc}']) && Services.vc.compare(version, '1.2.3') <= 0
       return """
         Better BibTeX has been disabled because it has detected conflicting extension "recoll-firefox" #{version}.
         Recoll-firefox 1.2.3 and earlier interfere with Better BibTeX; if have proposed a fix for recall-firefox at
