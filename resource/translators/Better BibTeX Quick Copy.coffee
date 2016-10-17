@@ -1,13 +1,19 @@
 Mode =
+  gitbook: ->
+    citations = []
+    while item = Translator.nextItem()
+      citations.push("{{ \"#{item.__citekey__}\" | cite }}")
+    Zotero.write(citations.join(''))
+
   atom: ->
     keys = []
     while item = Translator.nextItem()
       Translator.debug('item:', item)
       keys.push(item.__citekey__)
     if keys.length == 1
-      return "[](#@#{keys[0]})"
+      Zotero.write("[](#@#{keys[0]})")
     else
-      return "[](?@#{keys.join(',')})"
+      Zotero.write("[](?@#{keys.join(',')})")
 
   latex: ->
     keys = []

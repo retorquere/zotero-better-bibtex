@@ -183,6 +183,7 @@
                         <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.pandoc;" value="pandoc"/>
                         <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.orgmode;" value="orgmode"/>
                         <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.atom;" value="atom"/>
+                        <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.gitbook;" value="gitbook"/>
                       </menupopup>
                     </menulist>
                   </row>
