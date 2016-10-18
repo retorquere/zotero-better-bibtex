@@ -331,6 +331,7 @@ Zotero.BetterBibTeX.init = ->
 
   @Translators.install()
 
+  Zotero.BetterBibTeX.debug('CSL Loaded:', ("#{typeof m}: #{m}" for m of Zotero.BetterBibTeX.CSL.DateParser))
   for k, months of Zotero.BetterBibTeX.Locales.months
     Zotero.BetterBibTeX.CSL.DateParser.addDateParserMonths(months)
 
