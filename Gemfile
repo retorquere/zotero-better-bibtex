@@ -28,7 +28,7 @@ gem 'recursive-open-struct'
 gem 'rest-client'
 gem 'rspec'
 gem 'rubyzip', '>= 1.0.0' # will load new rubyzip version
-gem 'selenium-webdriver' # , '2.45.0.dev3'
+gem 'selenium-webdriver' , '2.53.4'
 gem 'sqlite3'
 gem 'travis'
 gem 'travis_parallel_sentinel'
