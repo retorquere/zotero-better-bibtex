@@ -509,6 +509,7 @@ Zotero.BetterBibTeX.init = ->
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
 
+      Zotero.BetterBibTeX.debug('Zotero.Translate.Export::_prepareTranslation:', {translatorID})
       @_itemGetter._BetterBibTeX = Zotero.BetterBibTeX.Translators[translatorID]
       @_itemGetter._exportFileData = @_displayOptions.exportFileData
 
@@ -520,6 +521,7 @@ Zotero.BetterBibTeX.init = ->
   Zotero.Translate.ItemGetter::nextItem = ((original) ->
     return ->
       ### don't mess with this unless I know it's in BBT ###
+      Zotero.BetterBibTeX.debug('Zotero.Translate.ItemGetter::nextItem:', {exportFiledata: @_exportFileData, legacy: @legacy, BBT: @_BetterBibTeX})
       return original.apply(@, arguments) if @legacy || !@_BetterBibTeX
 
       ###
