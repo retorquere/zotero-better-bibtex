@@ -239,6 +239,7 @@ class Zotero.BetterBibTeX.PatternFormatter
       return ''  unless authors
       author = authors[m || 0]
       author = author.substring(0, n)  if author && n
+      Zotero.BetterBibTeX.debug('formatter.auth:', author)
       return author ? ''
 
     authorLast: (onlyEditors, withInitials) ->
