@@ -104,6 +104,9 @@ Zotero.BetterBibTeX = new class
           when Services.vc.compare(version.replace(/(\.SOURCE|beta[0-9]+)$/, ''), '4.0.29.12.97') < 0
             return "Better BibTeX has been disabled because it found Juris-M #{version}, but requires 4.0.29.12m97 or later."
 
+          when Services.vc.compare(version.replace(/(\.SOURCE|beta[0-9]+)$/, ''), '4.0.29.12.98') < 0
+            @flash("Juris-M #{version} has known incompatibilities with Better BibTeX -- for full compatibility, install 4.0.29.12m98 or later (m98beta will do)", 20)
+
           when Services.vc.compare(version.replace(/(\.SOURCE|beta[0-9]+)$/, ''), '5.0.0') >= 0
             return "Juris-M #{version} found. Better BibTeX has been disabled because is not compatible with Juris-M version 5.0 or later."
 
@@ -145,7 +148,7 @@ Zotero.BetterBibTeX = new class
       Zotero.debug(str, level)
     console.log(str)
 
-  flash: (title, body) ->
+  flash: (title, body, timeout = 8) ->
     try
       @debug('flash:', title, body)
       pw = new Zotero.ProgressWindow()
@@ -154,7 +157,7 @@ Zotero.BetterBibTeX = new class
       body = body.join("\n") if Array.isArray(body)
       pw.addDescription(body)
       pw.show()
-      pw.startCloseTimer(8000)
+      pw.startCloseTimer(timeout * 1000)
     catch err
       @error('@flash failed:', {title, body}, err)
 
