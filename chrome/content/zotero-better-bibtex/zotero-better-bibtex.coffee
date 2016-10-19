@@ -501,10 +501,8 @@ Zotero.BetterBibTeX.init = ->
       return original.apply(@, arguments)
     )(Zotero.Translate.Export::translate)
 
-  Zotero.BetterBibTeX.debug('monkey-patching Zotero.Translate.Export::', Object.keys(Zotero.Translate.Export::))
   ### monkey-patch _prepareTranslation to notify itemgetter whether we're doing exportFileData ###
   Zotero.Translate.Export::_prepareTranslation = ((original) ->
-    Zotero.BetterBibTeX.debug('monkey-patching Zotero.Translate.Export::_prepareTranslation', typeof original)
     return ->
       r = original.apply(@, arguments)
 
@@ -519,14 +517,12 @@ Zotero.BetterBibTeX.init = ->
       return r
     )(Zotero.Translate.Export::_prepareTranslation)
 
-  Zotero.BetterBibTeX.debug('monkey-patching Zotero.Translate.ItemGetter::', Object.keys(Zotero.Translate.ItemGetter::))
   ### monkey-patch Zotero.Translate.ItemGetter::nextItem to fetch from pre-serialization cache. ###
   ### object serialization is approx 80% of the work being done while translating! Seriously! ###
   Zotero.Translate.ItemGetter::nextItem = ((original) ->
     Zotero.BetterBibTeX.debug('monkey-patching Zotero.Translate.ItemGetter::nextItem', typeof original)
     return ->
       ### don't mess with this unless I know it's in BBT ###
-      Zotero.BetterBibTeX.debug('Zotero.Translate.ItemGetter::nextItem:', {exportFiledata: @_exportFileData, legacy: @legacy, BBT: @_BetterBibTeX})
       return original.apply(@, arguments) if @legacy || !@_BetterBibTeX
 
       ###
