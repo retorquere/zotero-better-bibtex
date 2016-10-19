@@ -748,21 +748,6 @@ Zotero.BetterBibTeX.safeGet = (ids) ->
 
 Zotero.BetterBibTeX.allowAutoPin = -> Zotero.Prefs.get('sync.autoSync') or not Zotero.Sync.Server.enabled
 
-Zotero.BetterBibTeX.exportGroup = ->
-  zoteroPane = Zotero.getActiveZoteroPane()
-  itemGroup = zoteroPane.collectionsView._getItemAtRow(zoteroPane.collectionsView.selection.currentIndex)
-  return unless itemGroup.isGroup()
-
-  group = Zotero.Groups.get(itemGroup.ref.id)
-  if !Zotero.Items.getAll(false, group.libraryID)
-    @flash('Cannot export empty group')
-    return
-
-  exporter = new Zotero_File_Exporter()
-  exporter.collection = group
-  exporter.name = group.name
-  exporter.save()
-
 class Zotero.BetterBibTeX.XmlNode
   constructor: (@namespace, @root, @doc) ->
     if !@doc
