@@ -424,7 +424,7 @@ file 'resource/translators/titlecaser.js' => ['resource/translators/titlecaser-c
 end
 
 file 'chrome/content/zotero-better-bibtex/lib/citeproc.js' => 'Rakefile' do |t|
-  bundled = true
+  bundled = false
 
   cleanly(t.name) do
     if bundled

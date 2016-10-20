@@ -7,7 +7,8 @@ if not Zotero.BetterBibTeX
         Zotero.debug('BBT: ' + script)
         loader.loadSubScript("chrome://zotero-better-bibtex/content/#{script}")
       catch err
-        Zotero.debug('BBT: ' + script + ' load failed: ' + err)
+        Zotero.BetterBibTeX.disabled = "#{script} load failed: #{err}" if Zotero.BetterBibTeX
+        Zotero.debug("BBT: #{script} load failed: #{err}")
         loader = null
         break
 
@@ -21,8 +22,9 @@ if not Zotero.BetterBibTeX
           try
             Zotero.BetterBibTeX.init()
           catch err
+            Zotero.BetterBibTeX.disabled = "Initialize failed: #{err}"
             Zotero.debug('BBT: failed to initialize: ' + err)
           return
         ), false)
       catch err
-        Zotero.debug('BBT: failed to schedule init: ' + err)
+        Zotero.BetterBibTeX.disabled = "Initialize failed: #{err}"

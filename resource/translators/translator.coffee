@@ -352,6 +352,7 @@ Translator.nextItem = ->
 
   while item = Zotero.nextItem()
     continue if item.itemType == 'note' || item.itemType == 'attachment'
+    Translator.debug('fetched item:', item)
     if @caching
       cached = Zotero.BetterBibTeX.cache.fetch(item.itemID, @context)
       if cached?.citekey
