@@ -43,6 +43,7 @@ files:
 - chrome/content/zotero-better-bibtex/include.js
 - chrome/content/zotero-better-bibtex/zotero-better-bibtex.js
 - chrome/content/zotero-better-bibtex/lib/lokijs.js
+- chrome/content/zotero-better-bibtex/lib/translit.js
 - chrome/content/zotero-better-bibtex/lib/citeproc.js
 - chrome/content/zotero-better-bibtex/lib/vardump.js
 - chrome/content/zotero-better-bibtex/lib/fold-to-ascii.js

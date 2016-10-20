@@ -334,6 +334,7 @@ Zotero.BetterBibTeX.init = ->
 
   @Translators.install()
 
+  Zotero.BetterBibTeX.debug('CSL Loaded:', ("#{typeof m}: #{m}" for m of Zotero.BetterBibTeX.CSL.DateParser))
   for k, months of Zotero.BetterBibTeX.Locales.months
     Zotero.BetterBibTeX.CSL.DateParser.addDateParserMonths(months)
 
@@ -512,6 +513,7 @@ Zotero.BetterBibTeX.init = ->
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
 
+      Zotero.BetterBibTeX.debug('Zotero.Translate.Export::_prepareTranslation:', {translatorID})
       @_itemGetter._BetterBibTeX = Zotero.BetterBibTeX.Translators[translatorID]
       @_itemGetter._exportFileData = @_displayOptions.exportFileData
 
@@ -521,6 +523,7 @@ Zotero.BetterBibTeX.init = ->
   ### monkey-patch Zotero.Translate.ItemGetter::nextItem to fetch from pre-serialization cache. ###
   ### object serialization is approx 80% of the work being done while translating! Seriously! ###
   Zotero.Translate.ItemGetter::nextItem = ((original) ->
+    Zotero.BetterBibTeX.debug('monkey-patching Zotero.Translate.ItemGetter::nextItem', typeof original)
     return ->
       ### don't mess with this unless I know it's in BBT ###
       return original.apply(@, arguments) if @legacy || !@_BetterBibTeX
@@ -747,21 +750,6 @@ Zotero.BetterBibTeX.safeGet = (ids) ->
   return all
 
 Zotero.BetterBibTeX.allowAutoPin = -> Zotero.Prefs.get('sync.autoSync') or not Zotero.Sync.Server.enabled
-
-Zotero.BetterBibTeX.exportGroup = ->
-  zoteroPane = Zotero.getActiveZoteroPane()
-  itemGroup = zoteroPane.collectionsView._getItemAtRow(zoteroPane.collectionsView.selection.currentIndex)
-  return unless itemGroup.isGroup()
-
-  group = Zotero.Groups.get(itemGroup.ref.id)
-  if !Zotero.Items.getAll(false, group.libraryID)
-    @flash('Cannot export empty group')
-    return
-
-  exporter = new Zotero_File_Exporter()
-  exporter.collection = group
-  exporter.name = group.name
-  exporter.save()
 
 class Zotero.BetterBibTeX.XmlNode
   constructor: (@namespace, @root, @doc) ->

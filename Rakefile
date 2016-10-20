@@ -424,7 +424,7 @@ file 'resource/translators/titlecaser.js' => ['resource/translators/titlecaser-c
 end
 
 file 'chrome/content/zotero-better-bibtex/lib/citeproc.js' => 'Rakefile' do |t|
-  bundled = true
+  bundled = false
 
   cleanly(t.name) do
     if bundled
@@ -651,12 +651,25 @@ file 'chrome/content/zotero-better-bibtex/lib/lokijs.js' => 'Rakefile' do |t|
   browserify("Zotero.BetterBibTeX.LokiJS = require('lokijs');", t.name)
 end
 
+file 'chrome/content/zotero-better-bibtex/lib/translit.js' => 'Rakefile' do |t|
+  cleanly(t.name) do
+    FileUtils.cp('node_modules/transliteration/lib/browser/transliteration.js', t.name)
+    graspe(t, 'window', 'Zotero.BetterBibTeX.Transliterate')
+    File.rewrite(t.name){|js|
+      """
+        Zotero.BetterBibTeX.Transliterate = { document: {} };
+        #{js};
+      """
+    }
+  end
+end
+
 file 'chrome/content/zotero-better-bibtex/lib/vardump.js' => 'Rakefile' do |t|
   browserify("Zotero.BetterBibTeX.varDump = require('util').inspect;", t.name)
 end
 
 file 'chrome/content/zotero-better-bibtex/lib/fold-to-ascii.js' => 'Rakefile' do |t|
-  browserify("Zotero.BetterBibTeX.removeDiacritics = require('fold-to-ascii').fold;", t.name)
+  browserify("Zotero.BetterBibTeX.fold2ASCII = require('fold-to-ascii').fold;", t.name)
 end
 
 file 'chrome/content/zotero-better-bibtex/lib/punycode.js' => 'Rakefile' do |t|

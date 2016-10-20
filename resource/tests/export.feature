@@ -17,6 +17,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | transliteration for citekey #580                                                               | 1           |
      | CSL status = biblatex pubstate #573                                                            | 1           |
      | Title case of latex greek text on biblatex export #564                                         | 2           |
      | pre not working in Extra field #559                                                            | 1           |

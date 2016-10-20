@@ -10,6 +10,11 @@ class Zotero.BetterBibTeX.PatternFormatter
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
     word: Zotero.Utilities.XRegExp("[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+)*", 'g')
 
+  removeDiacritics: (str) ->
+    str = Zotero.BetterBibTeX.Transliterate.transl(str || '')
+    str = Zotero.BetterBibTeX.fold2ASCII(str)
+    return str
+
   getLanguages: ->
     delete @language
     @languages = {}
@@ -23,7 +28,7 @@ class Zotero.BetterBibTeX.PatternFormatter
         for lang in Object.keys(creator.multi._key)
           @languages[lang] = true
     @languages = [null].concat(Object.keys(@languages))
-    Zotero.BetterBibTeX.debug('formatting for:', @languages)
+    Zotero.BetterBibTeX.debug('PatternFormatter.getLanguages: formatting for:', @languages)
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
@@ -85,11 +90,11 @@ class Zotero.BetterBibTeX.PatternFormatter
       continue unless longest
       result += longest.replace(/[\s{},]/g, '')
 
-    result = Zotero.BetterBibTeX.removeDiacritics(result) if @fold
+    result = @removeDiacritics(result) if @fold
     return result
 
   evaluate: (step) ->
-    Zotero.BetterBibTeX.debug('evaluate', typeof step.method, step)
+    Zotero.BetterBibTeX.debug('PatternFormatter.evaluate:', typeof step.method, step)
 
     value = step.method.apply(@, step.arguments) || ''
     return value if typeof(value) == 'function'
@@ -102,7 +107,7 @@ class Zotero.BetterBibTeX.PatternFormatter
     return value
 
   clean: (str) ->
-    return @safechars(Zotero.BetterBibTeX.removeDiacritics(str || '')).trim()
+    return @safechars(@removeDiacritics(str)).trim()
 
   safechars: (str) ->
     return Zotero.Utilities.XRegExp.replace(str, @re.unsafechars, '', 'all')
@@ -149,7 +154,7 @@ class Zotero.BetterBibTeX.PatternFormatter
       if name != ''
         if withInitials && creator.firstName
           initials = Zotero.Utilities.XRegExp.replace(creator.firstName, @re.caseNotUpperTitle, '', 'all')
-          initials = Zotero.BetterBibTeX.removeDiacritics(initials)
+          initials = @removeDiacritics(initials)
           initials = Zotero.Utilities.XRegExp.replace(initials, @re.caseNotUpper, '', 'all')
           name += initials
       else
@@ -409,7 +414,7 @@ class Zotero.BetterBibTeX.PatternFormatter
       return Zotero.Utilities.XRegExp.replace(value || '', @re.alphanum, '', 'all').split(/\s+/).join(' ').trim()
 
     fold: (value) ->
-      return Zotero.BetterBibTeX.removeDiacritics(value || '').split(/\s+/).join(' ').trim()
+      return @removeDiacritics(value).split(/\s+/).join(' ').trim()
 
     capitalize: (value) ->
       return (value || '').replace(/((^|\s)[a-z])/g, (m) -> m.toUpperCase())
