@@ -34,7 +34,7 @@ method
 
       var method = Zotero.BetterBibTeX.PatternFormatter.prototype.methods[name];
       if (typeof method === 'function') {
-        return {method: method, scrub: scrub, arguments: [editorsOnly, (flag === 'initials')].concat(params)};
+        return {name: name, method: method, scrub: scrub, arguments: [editorsOnly, (flag === 'initials')].concat(params)};
       } else {
         Zotero.BetterBibTeX.debug('invalid pattern:', name, 'method:', typeof method);
         throw new Error('invalid pattern "' + name + '"');
@@ -42,15 +42,15 @@ method
     }
   / '>' chars:[0-9]+ {
       var method = Zotero.BetterBibTeX.PatternFormatter.prototype.methods['>'];
-      return {method: method, scrub: false, arguments: [parseInt(chars)]};
+      return {name: '>', method: method, scrub: false, arguments: [parseInt(chars)]};
     }
   / name:[0\.a-zA-Z]+ flag:flag? params:mparams? {
       name = name.join('')
       var method = Zotero.BetterBibTeX.PatternFormatter.prototype.methods[name];
       if (method) {
-        return {method: method, scrub: (name != 'journal' && name != 'zotero'), arguments: params || []};
+        return {name: name, method: method, scrub: (name != 'journal' && name != 'zotero'), arguments: params || []};
       } else {
-        return {method: Zotero.BetterBibTeX.PatternFormatter.prototype.methods.property, scrub: false, arguments: [name]};
+        return {name: name, method: Zotero.BetterBibTeX.PatternFormatter.prototype.methods.property, scrub: false, arguments: [name]};
       }
     }
 

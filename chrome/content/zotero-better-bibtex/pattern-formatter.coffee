@@ -10,7 +10,10 @@ class Zotero.BetterBibTeX.PatternFormatter
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g')
     word: Zotero.Utilities.XRegExp("[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+)*", 'g')
 
-  removeDiacritics: (str) -> Zotero.BetterBibTeX.Transliterate.transl(Zotero.BetterBibTeX.fold2ASCII(str || ''))
+  removeDiacritics: (str) ->
+    str = Zotero.BetterBibTeX.Transliterate.transl(str || '')
+    str = Zotero.BetterBibTeX.fold2ASCII(str)
+    return str
 
   getLanguages: ->
     delete @language
@@ -25,7 +28,7 @@ class Zotero.BetterBibTeX.PatternFormatter
         for lang in Object.keys(creator.multi._key)
           @languages[lang] = true
     @languages = [null].concat(Object.keys(@languages))
-    Zotero.BetterBibTeX.debug('formatting for:', @languages)
+    Zotero.BetterBibTeX.debug('PatternFormatter.getLanguages: formatting for:', @languages)
 
   format: (item) ->
     @item = Zotero.BetterBibTeX.serialized.get(item)
@@ -91,7 +94,7 @@ class Zotero.BetterBibTeX.PatternFormatter
     return result
 
   evaluate: (step) ->
-    Zotero.BetterBibTeX.debug('evaluate', typeof step.method, step)
+    Zotero.BetterBibTeX.debug('PatternFormatter.evaluate:', typeof step.method, step)
 
     value = step.method.apply(@, step.arguments) || ''
     return value if typeof(value) == 'function'
@@ -238,11 +241,9 @@ class Zotero.BetterBibTeX.PatternFormatter
 
     auth: (onlyEditors, withInitials, n, m) ->
       authors = @creators(onlyEditors, withInitials)
-      Zotero.BetterBibTeX.debug('formatter.auth:', authors)
       return ''  unless authors
       author = authors[m || 0]
       author = author.substring(0, n)  if author && n
-      Zotero.BetterBibTeX.debug('formatter.auth:', author)
       return author ? ''
 
     authorLast: (onlyEditors, withInitials) ->
