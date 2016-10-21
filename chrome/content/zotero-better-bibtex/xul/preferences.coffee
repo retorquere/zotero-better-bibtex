@@ -161,7 +161,7 @@ BetterBibTeXAutoExportPref =
       Zotero.BetterBibTeX.debug('failed to prepare', ae, err)
       return
 
-    Zotero.BetterBibTeX.auto.run(ae, translate)
+    Zotero.BetterBibTeX.auto.run(ae, translate, 'manual refresh')
 
   exportType: (id) ->
     return switch

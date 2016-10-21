@@ -171,9 +171,9 @@ Zotero.BetterBibTeX.auto = new class
       break if translate = @prepare(ae)
       @mark(ae, 'error')
 
-    @run(translate, ae)
+    @run(translate, ae, reason)
 
-  run: (ae, translate) ->
+  run: (ae, translate, reason) ->
     if !translate
       Zotero.BetterBibTeX.debug('auto.process: no pending jobs')
       return
@@ -186,12 +186,12 @@ Zotero.BetterBibTeX.auto = new class
     translate.then(=>
       # if it's been re-marked during the run, let that handle the mark if any
       @mark(ae, 'done') if @db.autoexport.get(ae.$loki).status == 'running'
-      Zotero.BetterBibTeX.debug("auto.run: finished #{Zotero.BetterBibTeX.auto.running}: done")
+      Zotero.BetterBibTeX.debug("auto.run: finished #{@running}: done")
       return Promise.resolve()
     ).catch(=>
       # if it's been re-marked during the run, let that handle the mark if any
       @mark(ae, 'error') if @db.autoexport.get(ae.$loki).status == 'running'
-      Zotero.BetterBibTeX.debug("auto.run: finished #{Zotero.BetterBibTeX.auto.running}: error")
+      Zotero.BetterBibTeX.debug("auto.run: finished #{@running}: error")
       return Promise.resolve()
     ).then(=>
       @running = null
