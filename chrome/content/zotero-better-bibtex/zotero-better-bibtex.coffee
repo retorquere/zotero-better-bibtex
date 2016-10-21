@@ -439,7 +439,7 @@ Zotero.BetterBibTeX.init = ->
       ### requested translator ###
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
-      Zotero.BetterBibTeX.debug('export: ', translatorID)
+      Zotero.BetterBibTeX.debug('Zotero.Translate.Export::translate: ', translatorID)
       return original.apply(@, arguments) unless translatorID
 
       ### pick up sentinel from patched Zotero_File_Interface.exportCollection in zoteroPane.coffee ###
@@ -460,7 +460,7 @@ Zotero.BetterBibTeX.init = ->
           @_displayOptions.exportPath = @location.parent.path
         @_displayOptions.exportFilename = @location.leafName
 
-      Zotero.BetterBibTeX.debug("export", @_export, " to #{if @_displayOptions?.exportFileData then 'directory' else 'file'}", @location.path, 'using', @_displayOptions)
+      Zotero.BetterBibTeX.debug("Zotero.Translate.Export::translate: export", @_export, " to #{if @_displayOptions?.exportFileData then 'directory' else 'file'}", @location.path, 'using', @_displayOptions)
 
       ### If no capture, we're done ###
       return original.apply(@, arguments) unless @_displayOptions?['Keep updated'] && !@_displayOptions.exportFileData

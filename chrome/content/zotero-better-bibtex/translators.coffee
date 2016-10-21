@@ -59,7 +59,7 @@ Zotero.BetterBibTeX.Translators =
           switch key
             when 'library' then translation.setLibraryID(value)
             when 'items' then translation.setItems(value)
-            when 'collection' then translation.setCollection(value)
+            when 'collection' then translation.setCollection(if typeof value == 'number' then Zotero.Collections.get(value) else value)
 
         translation.setTranslator(translator)
         translation.setDisplayOptions(displayOptions) if displayOptions && Object.keys(displayOptions).length != 0
