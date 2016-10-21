@@ -16,7 +16,8 @@ Zotero.BetterBibTeX.endpoints.collection.init = (url, data, sendResponseCallback
       sendResponseCallback(404, 'text/plain', "Could not export bibliography '#{collection}': no format specified")
       return
 
-    translator = path.pop()
+    translator = path.pop().toLowerCase()
+    translator = Zotero.BetterBibTeX.Translators.getID(translator) || Zotero.BetterBibTeX.Translators.getID('better' + translator)
     path = path.join('.')
     path = "/0/#{path}" if path.charAt(0) != '/'
     path = path.split('/')
@@ -39,7 +40,7 @@ Zotero.BetterBibTeX.endpoints.collection.init = (url, data, sendResponseCallback
     col ||= Zotero.Collections.getByLibraryAndKey(libid, key)
     throw "#{collectionkey} not found" unless col
 
-    Zotero.BetterBibTeX.Translators.translate(Zotero.BetterBibTeX.Translators.getID(translator), {collection: col}, Zotero.BetterBibTeX.displayOptions(url)).then((result) ->
+    Zotero.BetterBibTeX.Translators.translate(translator, {collection: col}, Zotero.BetterBibTeX.displayOptions(url)).then((result) ->
       sendResponseCallback(200, 'text/plain', result)
     ).catch((err) ->
       sendResponseCallback(500, 'text/plain', '' + err)
