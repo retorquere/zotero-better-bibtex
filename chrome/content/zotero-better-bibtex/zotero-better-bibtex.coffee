@@ -537,15 +537,14 @@ Zotero.BetterBibTeX.init = ->
         id = @_itemsLeft[0]?.id
         item = original.apply(@, arguments)
         Zotero.BetterBibTeX.serialized.fixup(item, id) if item
-        return item
 
-      while @_itemsLeft.length != 0
-        item = Zotero.BetterBibTeX.serialized.get(@_itemsLeft.shift())
-        continue unless item
+      else
+        while @_itemsLeft.length != 0
+          item = Zotero.BetterBibTeX.serialized.get(@_itemsLeft.shift())
+          break if item
 
-        return item
-
-      return false
+      Zotero.BetterBibTeX.debug('Zotero.Translate.ItemGetter::nextItem:', {itemID: item?.itemID, itemType: item?.itemType})
+      return item || false
     )(Zotero.Translate.ItemGetter::nextItem)
 
   ### monkey-patch zotfile wildcard table to add bibtex key ###
