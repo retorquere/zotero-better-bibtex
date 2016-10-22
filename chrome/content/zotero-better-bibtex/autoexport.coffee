@@ -171,7 +171,7 @@ Zotero.BetterBibTeX.auto = new class
       break if translate = @prepare(ae)
       @mark(ae, 'error')
 
-    @run(translate, ae, reason)
+    @run(ae, translate, reason)
 
   run: (ae, translate, reason) ->
     if !translate
