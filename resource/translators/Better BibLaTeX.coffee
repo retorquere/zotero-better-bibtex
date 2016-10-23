@@ -202,8 +202,8 @@ Reference::typeMap =
     book               : 'book'
     bookSection        : 'incollection'
     journalArticle     : 'article'
-    magazineArticle    : 'article'
-    newspaperArticle   : 'article'
+    magazineArticle    : {type: 'article', subtype: 'magazine'}
+    newspaperArticle   : {type: 'article', subtype: 'newspaper'}
     thesis             : 'thesis'
     email              : 'letter'
     letter             : 'letter'
