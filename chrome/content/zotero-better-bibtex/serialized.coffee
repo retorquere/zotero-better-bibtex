@@ -135,9 +135,15 @@ Zotero.BetterBibTeX.serialized = new class
 
   get: (zoteroItem) ->
     ### we may be passed a serialized item ###
+    Zotero.BetterBibTeX.debug('serialized.get:', {
+      type: if typeof zoteroItem.getField == 'function' then 'ZoteroItem' else 'serialized'
+      itemType: zoteroItem.itemType
+      itemID: zoteroItem.itemID
+      uri: zoteroItem.uri
+    })
     return zoteroItem if zoteroItem.itemType && zoteroItem.itemID && zoteroItem.uri
 
-    itemID = parseInt(if zoteroItem.getField then zoteroItem.id else zoteroItem.itemID)
+    itemID = parseInt(if typeof zoteroItem.getField == 'function' then zoteroItem.id else zoteroItem.itemID)
     item = @db.serialized.findOne({itemID})
 
     if item

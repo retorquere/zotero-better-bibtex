@@ -543,7 +543,7 @@ Zotero.BetterBibTeX.init = ->
           item = Zotero.BetterBibTeX.serialized.get(@_itemsLeft.shift())
           break if item
 
-      Zotero.BetterBibTeX.debug('Zotero.Translate.ItemGetter::nextItem:', {_exportFileData: @_exportFileData, itemID: item?.itemID, itemType: item?.itemType})
+      Zotero.BetterBibTeX.debug('Zotero.Translate.ItemGetter::nextItem:', {_exportFileData: @_exportFileData, uri: item?.uri, itemID: item?.itemID, itemType: item?.itemType})
       return item || false
     )(Zotero.Translate.ItemGetter::nextItem)
 
