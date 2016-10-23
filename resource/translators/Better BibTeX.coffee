@@ -22,19 +22,6 @@ Translator.fieldMap = {
   publisher:        { import: [ 'school', 'institution', 'publisher' ], enc: 'literal' }
 }
 
-Translator.typeMap = {
-# BibTeX                              Zotero
-  'book booklet manual proceedings collection':  'book'
-  'incollection inbook inreference':  'bookSection'
-  'article misc':                     'journalArticle magazineArticle newspaperArticle'
-  'phdthesis mastersthesis thesis':   'thesis'
-  unpublished:                        'manuscript'
-  patent:                             'patent'
-  'inproceedings conference':         'conferencePaper'
-  techreport:                         'report'
-  misc:                               'letter interview film artwork webpage'
-}
-
 Translator.fieldEncoding = {
   url: 'url'
   doi: 'verbatim'
@@ -80,6 +67,60 @@ Reference::addCreators = ->
   @add({ name: 'editor', value: editors, enc: 'creators' })
   @add({ name: 'translator', value: translators, enc: 'creators' })
   @add({ name: 'collaborator', value: collaborators, enc: 'creators' })
+
+Reference::typeMap =
+  csl:
+    article               : 'article'
+    'article-magazine'    : 'article'
+    'article-newspaper'   : 'article'
+    'article-journal'     : 'article'
+    review                : 'article'
+    'review-book'         : 'article'
+    bill                  : 'misc'
+    broadcast             : 'misc'
+    dataset               : 'misc'
+    figure                : 'misc'
+    graphic               : 'misc'
+    interview             : 'misc'
+    legislation           : 'misc'
+    legal_case            : 'misc'
+    map                   : 'misc'
+    motion_picture        : 'misc'
+    musical_score         : 'misc'
+    patent                : 'misc'
+    post                  : 'misc'
+    'post-weblog'         : 'misc'
+    personal_communication: 'misc'
+    song                  : 'misc'
+    speech                : 'misc'
+    treaty                : 'misc'
+    webpage               : 'misc'
+    book                  : 'book'
+    chapter               : 'incollection'
+    entry                 : 'incollection'
+    'entry-dictionary'    : 'incollection'
+    'entry-encyclopedia'  : 'incollection'
+    manuscript            : 'unpublished'
+    pamphlet              : 'booklet'
+    'paper-conference'    : 'inproceedings'
+    report                : 'techreport'
+    thesis                : 'phdthesis'
+  zotero:
+    book            : 'book'
+    bookSection     : 'incollection'
+    journalArticle  : 'article'
+    magazineArticle : 'article'
+    newspaperArticle: 'article'
+    thesis          : 'phdthesis'
+    manuscript      : 'unpublished'
+    patent          : 'patent'
+    conferencePaper : 'inproceedings'
+    report          : 'techreport'
+    letter          : 'misc'
+    interview       : 'misc'
+    film            : 'misc'
+    artwork         : 'misc'
+    webpage         : 'misc'
 
 doExport = ->
   Zotero.write('\n')
@@ -194,7 +235,7 @@ JabRef.importGroup = (group) ->
 
 class ZoteroItem
   constructor: (@bibtex) ->
-    @type = Translator.typeMap.BibTeX2Zotero[Zotero.Utilities.trimInternal(@bibtex.__type__.toLowerCase())] || 'journalArticle'
+    @type = @typeMap[Zotero.Utilities.trimInternal(@bibtex.__type__.toLowerCase())] || 'journalArticle'
     @item = new Zotero.Item(@type)
     @item.itemID = @bibtex.__key__
     Translator.log("new reference: #{@item.itemID}")
@@ -205,6 +246,26 @@ class ZoteroItem
       @item.tags ?= []
       @item.tags.push(Translator.rawLaTag)
     @item.complete()
+
+  typeMap:
+    book:           'book'
+    booklet:        'book'
+    manual:         'book'
+    proceedings:    'book'
+    collection:     'book'
+    incollection:   'bookSection'
+    inbook:         'bookSection'
+    inreference:    'bookSection'
+    article:        'journalArticle'
+    misc:           'journalArticle'
+    phdthesis:      'thesis'
+    mastersthesis:  'thesis'
+    thesis:         'thesis'
+    unpublished:    'manuscript'
+    patent:         'patent'
+    inproceedings:  'conferencePaper'
+    conference:     'conferencePaper'
+    techreport:     'report'
 
 ZoteroItem::keywordClean = (k) ->
   return k.replace(/^[\s{]+|[}\s]+$/g, '').trim()

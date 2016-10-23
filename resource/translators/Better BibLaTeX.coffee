@@ -19,31 +19,6 @@ Translator.fieldMap = {
   type:             { name: 'type' }
 }
 
-Translator.typeMap = {
-  # BibTeX                            Zotero
-  'book booklet manual proceedings':  'book'
-  'incollection inbook':              'bookSection'
-  'article misc':                     'journalArticle magazineArticle newspaperArticle'
-  thesis:                             'thesis'
-  letter:                             'email letter'
-  movie:                              'film'
-  artwork:                            'artwork'
-  # =online because someone thinks that any object property starting with 'on' on any kind of object installs an event handler on a DOM
-  # node
-  '=online':                          'blogPost forumPost webpage'
-  inproceedings:                      'conferencePaper'
-  report:                             'report'
-  legislation:                        'statute bill'
-  jurisdiction:                       'case hearing'
-  patent:                             'patent'
-  audio:                              'audioRecording podcast radioBroadcast'
-  video:                              'videoRecording tvBroadcast'
-  software:                           'computerProgram'
-  unpublished:                        'manuscript presentation'
-  inreference:                        'encyclopediaArticle dictionaryEntry'
-  misc:                               'interview map instantMessage document'
-}
-
 Translator.fieldEncoding = {
   url: 'url'
   doi: 'verbatim'
@@ -185,6 +160,79 @@ Reference::addCreators = ->
 
   @add({ editoratype: 'collaborator' }) if creators.editora.length > 0
   @add({ editorbtype: 'redactor' }) if creators.editorb.length > 0
+
+Reference::typeMap =
+  csl:
+    article               : 'article'
+    'article-journal'     : 'article'
+    'article-magazine'    : {type: 'article', subtype: 'magazine'}
+    'article-newspaper'   : {type: 'article', subtype: 'newspaper'}
+    bill                  : 'legislation'
+    legislation           : 'legislation'
+    book                  : 'book'
+    broadcast             : {type: 'misc', subtype: 'broadcast'}
+    chapter               : 'incollection'
+    dataset               : 'data'
+    entry                 : 'inreference'
+    'entry-dictionary'    : 'inreference'
+    'entry-encyclopedia'  : 'inreference'
+    figure                : 'image'
+    graphic               : 'image'
+    interview             : {type: 'misc', subtype: 'interview'}
+    legal_case            : 'jurisdiction'
+    manuscript            : 'unpublished'
+    map                   : {type: 'misc', subtype: 'map'}
+    motion_picture        : 'movie'
+    musical_score         : 'audio'
+    pamphlet              : 'booklet'
+    'paper-conference'    : 'inproceedings'
+    patent                : 'patent'
+    post                  : 'online'
+    'post-weblog'         : 'online'
+    webpage               : 'online'
+    personal_communication: 'letter'
+    report                : 'report'
+    review                : 'review'
+    'review-book'         : 'review'
+    song                  : 'music'
+    speech                : {type: 'misc', subtype: 'speech'}
+    thesis                : 'thesis'
+    treaty                : 'legal'
+  zotero:
+    book               : 'book'
+    bookSection        : 'incollection'
+    journalArticle     : 'article'
+    magazineArticle    : 'article'
+    newspaperArticle   : 'article'
+    thesis             : 'thesis'
+    email              : 'letter'
+    letter             : 'letter'
+    film               : 'movie'
+    artwork            : 'artwork'
+    blogPost           : 'online'
+    forumPost          : 'online'
+    webpage            : 'online'
+    conferencePaper    : 'inproceedings'
+    report             : 'report'
+    statute            : 'legislation'
+    bill               : 'legislation'
+    case               : 'jurisdiction'
+    hearing            : 'jurisdiction'
+    patent             : 'patent'
+    audioRecording     : 'audio'
+    podcast            : 'audio'
+    radioBroadcast     : 'audio'
+    videoRecording     : 'video'
+    tvBroadcast        : 'video'
+    computerProgram    : 'software'
+    manuscript         : 'unpublished'
+    presentation       : 'unpublished'
+    encyclopediaArticle: 'inreference'
+    dictionaryEntry    : 'inreference'
+    interview          : 'misc'
+    map                : 'misc'
+    instantMessage     : 'misc'
+    document           : 'misc'
 
 doExport = ->
   Zotero.write('\n')
