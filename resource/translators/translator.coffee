@@ -150,7 +150,7 @@ Translator.CSLVariables = {
   recipient:                      { type: 'creator' }
   'reviewed-author':              { type: 'creator' }
   translator:                     { type: 'creator' }
-  type:                           { field: clsType }
+  type:                           { field: 'cslType' }
 }
 for name, v of Translator.CSLVariables
   v.name = name
