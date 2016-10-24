@@ -134,14 +134,14 @@ Zotero.BetterBibTeX.serialized = new class
     @db.serialized.removeWhere({itemID: parseInt(itemID)})
 
   get: (zoteroItem) ->
-    ### we may be passed a serialized item ###
+    ### we may be passed a fully serialized item ###
     Zotero.BetterBibTeX.debug('serialized.get:', {
       type: if typeof zoteroItem.getField == 'function' then 'ZoteroItem' else 'serialized'
       itemType: zoteroItem.itemType
       itemID: zoteroItem.itemID
       uri: zoteroItem.uri
     })
-    return zoteroItem if zoteroItem.itemType && zoteroItem.itemID && zoteroItem.uri
+    return zoteroItem if typeof zoteroItem.getField != 'function' && zoteroItem.itemType && zoteroItem.itemID && zoteroItem.uri
 
     itemID = parseInt(if typeof zoteroItem.getField == 'function' then zoteroItem.id else zoteroItem.itemID)
     item = @db.serialized.findOne({itemID})
@@ -152,7 +152,7 @@ Zotero.BetterBibTeX.serialized = new class
     else
       Zotero.BetterBibTeX.debug('serialized.get: miss', itemID)
       @stats.miss++
-      zoteroItem = Zotero.Items.get(itemID) unless typeof zoteroItem.isAttachment == 'function'
+      zoteroItem = Zotero.Items.get(itemID) unless typeof zoteroItem.getField == 'function'
 
       if zoteroItem.isAttachment()
         item = Zotero.Translate.ItemGetter::_attachmentToArray(zoteroItem)
@@ -162,13 +162,12 @@ Zotero.BetterBibTeX.serialized = new class
       if item
         @fixup(item, itemID)
         item.attachmentIDs = zoteroItem.getAttachments() unless item.itemType in ['note', 'attachment']
-        item.attachmentIDs ||= []
       else
         item = {itemID, itemType: 'cache-miss'}
 
       @db.serialized.insert(item)
 
+    item.attachments = (@get({itemID: id}) for id in item.attachmentIDs) if item.attachmentIDs && item.attachmentIDs.length != 0
     Zotero.BetterBibTeX.debug('serialized.get: return', {itemType: item.itemType, itemID: item.itemID})
     return null if item.itemType == 'cache-miss'
-    item.attachments = (@get({itemID: id}) for id in item.attachmentIDs) unless item.itemType in ['note', 'attachment']
     return JSON.parse(JSON.stringify(item))
