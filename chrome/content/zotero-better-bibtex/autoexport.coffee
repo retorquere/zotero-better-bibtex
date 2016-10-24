@@ -151,6 +151,10 @@ Zotero.BetterBibTeX.auto = new class
   process: (reason) ->
     Zotero.BetterBibTeX.debug("auto.process: started (#{reason}), idle: #{@idle}")
 
+    unless Zotero.BetterBibTeX.initialized
+      Zotero.BetterBibTeX.debug('auto.process: Better BibTeX is not yet initialized')
+      return
+
     if @running
       Zotero.BetterBibTeX.debug('auto.process: export already running')
       return

@@ -255,7 +255,6 @@ Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
 
 Zotero.BetterBibTeX.init = ->
   return if @initialized || @disabled
-  @initialized = true
 
   @testing = (@Pref.get('tests') != '')
 
@@ -598,13 +597,15 @@ Zotero.BetterBibTeX.init = ->
   }
   AddonManager.addAddonListener(uninstaller)
 
-  if @testing
-    tests = @Pref.get('tests')
-    @Pref.set('tests', '')
-    try
-      loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader)
-      loader.loadSubScript("chrome://zotero-better-bibtex/content/test/include.js")
-      @Test.run(tests.trim().split(/\s+/))
+  #if @testing
+  #  tests = @Pref.get('tests')
+  #  @Pref.set('tests', '')
+  #  try
+  #    loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader)
+  #    loader.loadSubScript("chrome://zotero-better-bibtex/content/test/include.js")
+  #    @Test.run(tests.trim().split(/\s+/))
+
+  @initialized = true
 
 Zotero.BetterBibTeX.createFile = (paths...) ->
   f = Zotero.getZoteroDirectory()
