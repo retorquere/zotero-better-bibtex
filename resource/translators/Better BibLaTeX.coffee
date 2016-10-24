@@ -61,7 +61,7 @@ Translator.fieldEncoding = {
 
 class DateField
   constructor: (date, locale, formatted, literal) ->
-    parsed = Zotero.BetterBibTeX.parseDateToObject(date, locale)
+    parsed = Zotero.BetterBibTeX.parseDateToObject(date, locale, true)
 
     switch
       when !parsed
@@ -69,6 +69,12 @@ class DateField
 
       when parsed.literal
         @field = { name: literal, value: date }
+
+      when (parsed.extended || parsed.empty) && (parsed.extended_end || parsed.empty_end)
+        @field = { name: formatted, value: (if parsed.empty then '' else parsed.extended) + '/' + (if parsed.empty_end then '' else parsed.extended_end)}
+
+      when parsed.extended
+        @field = { name: formatted, value: parsed.extended }
 
       when (parsed.year || parsed.empty) && (parsed.year_end || parsed.empty_end)
         @field = { name: formatted, value: @format(parsed) + '/' + @format(parsed, '_end') }
