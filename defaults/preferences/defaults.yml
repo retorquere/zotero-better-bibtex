@@ -33,6 +33,7 @@ jabrefGroups: true
 defaultDateParserLocale: ''
 bibtexParticleNoOp: false
 biblatexExtendedNameFormat: false
+biblatexExtendedDateFormat: false
 quickCopyMode: latex
 jurismPreferredLanguage: zh-alalc97
 ZotFile: true
