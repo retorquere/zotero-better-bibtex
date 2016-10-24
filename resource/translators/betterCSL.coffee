@@ -54,11 +54,7 @@ doExport = ->
       csl = Zotero.Utilities.itemToCSLJSON(item)
       csl['archive-place'] ?= item.place
 
-      if item.cslType
-        if item.cslType in ValidCSLTypes
-          csl['type'] = item.cslType
-        else
-          csl['type'] = 'no-type'
+      csl['type'] = item.cslType if item.cslType in ValidCSLTypes
 
       delete csl.authority
       csl.type = 'motion_picture' if item.itemType == 'videoRecording' && csl.type == 'video'

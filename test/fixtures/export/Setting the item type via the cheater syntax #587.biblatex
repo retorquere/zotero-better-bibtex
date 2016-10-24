@@ -1,0 +1,64 @@
+@booklet{clark_mesopotamia:_1957,
+  abstract = {Example from CMoS, 16e, 14.249},
+  author = {Clark, Hazel V.},
+  date = {1957},
+  location = {{Mesopotamia, OH}},
+  publisher = {{Trumbull County Historical Society}},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Mesopotamia: Between Two Rivers}
+}
+
+@data{_object_????,
+  abstract = {Example from CMoS, 16e, 14.272},
+  journaltitle = {NASA/IPAC Extragalactic Database},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Object Name {{IRAS F00400}}+4059},
+  url = {http://nedwww.ipac.caltech.edu/},
+  urldate = {2009-10-06}
+}
+
+@audio{mozart_sonatas_1960,
+  abstract = {Example from CMoS, 16e, 14.269
+“Prepared from the autographs and earliest printed sources by Nathan
+Broder”},
+  author = {Mozart, Wolfgang Amadeus},
+  date = {1960},
+  edition = {Rev. ed.},
+  editor = {Broder, Nathan},
+  location = {{Bryn Mawr, PA}},
+  publisher = {{Theodore Presser}},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Sonatas and Fantasies for the Piano}
+}
+
+@review{ratliff_mystery_1999,
+  abstract = {Example from CMoS, 16e, 14.215
+“ed. and trans. John Charles Chasteen”},
+  annotation = {biblatex-chicago example, adapted from http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib
+Original annotation:
+*16th edition only.* A Review entry presenting a review from a scholarly journaltitle, hence no entrysubtype needed.~~Note the bibstrings in the title of the review, and the formatting of the title of the book reviewed there.~~Also note the use of $\backslash$parteditandtrans.~~The author-date system doesn't absolutely require the use of these mechanisms, which were invented to cope with the differences between notes and bibliography in the other Chicago style.~~Still, although simply writing "edited and translated by" yourself will suffice, using these mechanisms will make your .bib file work across multiple languages, and will also allow it to work, with fewer modifications, in the notes $\backslash$\& bibliography style, should that be needed.~~See next entry.
+~
+Example from CMoS, 16e, 14.125},
+  author = {Ratliff, Ben},
+  date = {1999-04},
+  editora = {{Hermano Vianna}},
+  editoratype = {collaborator},
+  journaltitle = {Lingua Franca},
+  langid = {american},
+  pages = {B13--B14},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {The Mystery of Samba: {{Popular}} Music and National Identity in {{Brazil}}},
+  volume = {9}
+}
+
+@review{kamp_deconstructing_2006,
+  abstract = {Example from CMoS, 16e, 14.125},
+  author = {Kamp, David},
+  date = {2006-04-23},
+  editora = {Pollan, Michael},
+  editoratype = {collaborator},
+  langid = {american},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Deconstructing Dinner},
+  url = {http://www.nytimes.com/2006/04/23/books/review/23kamp.html.}
+}
