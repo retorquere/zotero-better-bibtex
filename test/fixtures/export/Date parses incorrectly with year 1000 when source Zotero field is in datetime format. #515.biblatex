@@ -2,6 +2,7 @@
   abstract = {Voters in Switzerland overwhelmingly reject a proposal to introduce a guaranteed monthly income for all citizens.},
   author = {Barker, Anne},
   date = {2016-06-06},
+  entrysubtype = {newspaper},
   journaltitle = {ABC News},
   langid = {australian},
   rights = {http://www.abc.net.au/conditions.htm\#UseOfContent},
