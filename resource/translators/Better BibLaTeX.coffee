@@ -83,6 +83,12 @@ class DateField
     return v if v.length >= pad.length
     return (pad + v).slice(-pad.length)
 
+  year: (y) ->
+    if Math.abs(y) > 999
+      return '' + y
+    else
+      return (if y < 0 then '-' else '-') + ('000' + Math.abs(y)).slice(-4)
+
   format: (v, suffix = '') ->
     _v = {}
     for f in ['circa', 'uncertain', 'extended', 'empty', 'year', 'month', 'day']
@@ -91,16 +97,16 @@ class DateField
     switch
       when _v.empty                       then  date = ''
       when _v.extended                    then  date = _v.extended
-      when _v.year && _v.month && _v.day  then  date = "#{_v.year}-#{@pad(_v.month, '00')}-#{@pad(_v.day, '00')}"
-      when _v.year && _v.month            then  date = "#{_v.year}-#{@pad(_v.month, '00')}"
-      else                                      date = '' + _v.year
+      when _v.year && _v.month && _v.day  then  date = "#{@year(_v.year)}-#{@pad(_v.month, '00')}-#{@pad(_v.day, '00')}"
+      when _v.year && _v.month            then  date = "#{@year(_v.year)}-#{@pad(_v.month, '00')}"
+      else                                      date = @year(_v.year)
 
     if Translator.biblatexExtendedDateFormat
+      date += '?' if _v.uncertain
       # well this is fairly dense... the date field is not an verbatim field, so the 'circa' symbol ('~') ought to mean a
       # NBSP... but some magic happens in that field (always with the magic, BibLaTeX...). But hey, if I insert an NBSP,
       # guess what that gets translated to!
       date += '\u00A0' if _v.circa
-      date += '?' if _v.uncertain
     return date
 
 Reference::requiredFields =
