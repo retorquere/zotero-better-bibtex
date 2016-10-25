@@ -18,7 +18,7 @@ doExport = ->
       delete csl.authority
       csl.type = 'motion_picture' if item.itemType == 'videoRecording' && csl.type == 'video'
 
-      csl.issued = Zotero.BetterBibTeX.parseDateToArray(item.date) if csl.issued && item.date
+      csl.issued = Zotero.BetterBibTeX.parseDateToArray(item.date, {cslNull: true}) if csl.issued && item.date
 
       Translator.debug('extracted:', fields)
       for name, value of fields
@@ -26,7 +26,7 @@ doExport = ->
 
         switch Translator.CSLVariables[name].type
           when 'date'
-            csl[name] = Zotero.BetterBibTeX.parseDateToArray(value.value)
+            csl[name] = Zotero.BetterBibTeX.parseDateToArray(value.value, {cslNull: true})
 
           when 'creator'
             creators = []

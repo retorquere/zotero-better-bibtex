@@ -323,8 +323,12 @@ Zotero.BetterBibTeX.init = ->
         Zotero.BetterBibTeX.CSL.parseParticles(name)
         Zotero.BetterBibTeX.CSL.parseParticles(name)
     }
-    parseDateToObject: (sandbox, date, locale, extended) -> Zotero.BetterBibTeX.DateParser::parseDateToObject(date, {extended, locale, verbatimDetection: true})
-    parseDateToArray: (sandbox, date, locale, extended) -> Zotero.BetterBibTeX.DateParser::parseDateToArray(date, {extended, locale, verbatimDetection: true})
+    parseDateToObject: (sandbox, date, options = {}) ->
+      options.verbatimDetection = true
+      return Zotero.BetterBibTeX.DateParser::parseDateToObject(date, options)
+    parseDateToArray: (sandbox, date, options = {}) ->
+      options.verbatimDetection = true
+      return Zotero.BetterBibTeX.DateParser::parseDateToArray(date, options)
   }
 
   for own name, endpoint of @endpoints
@@ -906,6 +910,7 @@ class Zotero.BetterBibTeX.DateParser
     @source = @source.trim() if @source
     @zoteroLocale ?= Zotero.locale.toLowerCase()
     @extended = options.extended
+    @cslNull = options.cslNull
 
     return unless @source
 
@@ -1065,7 +1070,10 @@ class Zotero.BetterBibTeX.DateParser
 
   year: (y) ->
     y = parseInt(y)
-    y -= 1 if y <= 0
+
+    # 360: CSL doesn't do 'null', so zero means null, and all negative dates must be bumped one down
+    y -= 1 if y <= 0 && @cslNull
+
     return y
 
   parse: ->

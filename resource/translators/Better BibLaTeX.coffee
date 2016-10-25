@@ -61,7 +61,7 @@ Translator.fieldEncoding = {
 
 class DateField
   constructor: (date, locale, formatted, literal) ->
-    parsed = Zotero.BetterBibTeX.parseDateToObject(date, locale, Translator.biblatexExtendedDateFormat)
+    parsed = Zotero.BetterBibTeX.parseDateToObject(date, {locale, extended: Translator.biblatexExtendedDateFormat})
 
     switch
       when !parsed

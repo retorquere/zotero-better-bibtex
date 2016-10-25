@@ -117,7 +117,7 @@ doExport = ->
     ref.addCreators()
 
     if item.date
-      date = Zotero.BetterBibTeX.parseDateToObject(item.date, item.language)
+      date = Zotero.BetterBibTeX.parseDateToObject(item.date, {locale: item.language})
       if date.literal || date.year_end
         ref.add({ year: item.date })
       else
