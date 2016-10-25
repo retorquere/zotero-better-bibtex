@@ -75,7 +75,7 @@ Zotero.BetterBibTeX.endpoints.library.init = (url, data, sendResponseCallback) -
       sendResponseCallback(404, 'text/plain', "Could not export bibliography '#{library}': no format specified")
       return
 
-    translator = Zotero.BetterBibTeX.Translator.getID(format)
+    translator = Zotero.BetterBibTeX.Translators.getID(format)
     if !translator
       sendResponseCallback(404, 'text/plain', "Could not export bibliography '#{library}': unsupported format #{format}")
       return
