@@ -3,8 +3,10 @@ Components.utils.import("resource://zotero/config.js")
 Zotero.BetterBibTeX.serialized = new class
   fixup: (item, itemID) ->
 
+    Zotero.BetterBibTeX.debug('serialized.fixup:', {itemID: item.itemID, itemType: item.itemType, patchID: itemID})
     item.itemID ?= itemID
     item.itemID = parseInt(item.itemID)
+    Zotero.BetterBibTeX.debug('serialized.fixup.post:', {itemID: item.itemID, itemType: item.itemType, patchID: itemID})
 
     item.tags = ((if typeof tag == 'object' then tag.tag else tag) for tag in item.tags)
 
@@ -119,7 +121,6 @@ Zotero.BetterBibTeX.serialized = new class
     }
 
   reset: (reason) ->
-    Zotero.BetterBibTeX.debug('serialized.reset:', new Error(reason))
     @db.serialized.removeDataOnly()
     @stats = {
       clear: 0
@@ -133,39 +134,40 @@ Zotero.BetterBibTeX.serialized = new class
     @db.serialized.removeWhere({itemID: parseInt(itemID)})
 
   get: (zoteroItem) ->
-    ### we may be passed a serialized item ###
-    return zoteroItem if zoteroItem.itemType && zoteroItem.itemID && zoteroItem.uri
+    ### we may be passed a fully serialized item ###
+    Zotero.BetterBibTeX.debug('serialized.get:', {
+      type: if typeof zoteroItem.getField == 'function' then 'ZoteroItem' else 'serialized'
+      itemType: zoteroItem.itemType
+      itemID: zoteroItem.itemID
+      uri: zoteroItem.uri
+    })
+    return zoteroItem if typeof zoteroItem.getField != 'function' && zoteroItem.itemType && zoteroItem.itemID && zoteroItem.uri
 
-    itemID = parseInt(if zoteroItem.getField then zoteroItem.id else zoteroItem.itemID)
+    itemID = parseInt(if typeof zoteroItem.getField == 'function' then zoteroItem.id else zoteroItem.itemID)
     item = @db.serialized.findOne({itemID})
 
     if item
-      Zotero.BetterBibTeX.debug('serialized: hit', itemID)
+      Zotero.BetterBibTeX.debug('serialized.get: hit', itemID)
       @stats.hit++
     else
-      Zotero.BetterBibTeX.debug('serialized: miss', itemID)
+      Zotero.BetterBibTeX.debug('serialized.get: miss', itemID)
       @stats.miss++
-      zoteroItem = Zotero.Items.get(itemID) unless typeof zoteroItem.isAttachment == 'function'
+      zoteroItem = Zotero.Items.get(itemID) unless typeof zoteroItem.getField == 'function'
 
       if zoteroItem.isAttachment()
         item = Zotero.Translate.ItemGetter::_attachmentToArray(zoteroItem)
       else
         item = Zotero.Utilities.Internal.itemToExportFormat(zoteroItem)
 
-      switch
-        when !item
-          item = {itemID, itemType: 'cache-miss'}
-
-        when item.itemType in ['note', 'attachment']
-          @fixup(item, itemID)
-          item.attachmentIDs = []
-
-        else
-          @fixup(item, itemID)
-          item.attachmentIDs = zoteroItem.getAttachments() || []
+      if item
+        @fixup(item, itemID)
+        item.attachmentIDs = zoteroItem.getAttachments() unless item.itemType in ['note', 'attachment']
+      else
+        item = {itemID, itemType: 'cache-miss'}
 
       @db.serialized.insert(item)
 
+    item.attachments = (@get({itemID: id}) for id in item.attachmentIDs) if item.attachmentIDs && item.attachmentIDs.length != 0
+    Zotero.BetterBibTeX.debug('serialized.get: return', {itemType: item.itemType, itemID: item.itemID})
     return null if item.itemType == 'cache-miss'
-    item.attachments = (@get({itemID: id}) for id in item.attachmentIDs) unless item.itemType in ['note', 'attachment']
     return JSON.parse(JSON.stringify(item))

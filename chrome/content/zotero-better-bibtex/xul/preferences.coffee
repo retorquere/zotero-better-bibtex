@@ -156,20 +156,12 @@ BetterBibTeXAutoExportPref =
       return
 
     try
-      translation = Zotero.BetterBibTeX.auto.prepare(ae)
+      translate = Zotero.BetterBibTeX.auto.prepare(ae)
     catch err
       Zotero.BetterBibTeX.debug('failed to prepare', ae, err)
       return
 
-    if !translation
-      Zotero.BetterBibTeX.auto.mark(ae, 'done')
-      return
-
-    translation.setHandler('done', (obj, worked) ->
-      Zotero.BetterBibTeX.auto.mark(ae, (if worked then 'done' else 'error'))
-      Zotero.BetterBibTeX.auto.updated()
-    )
-    translation.translate()
+    Zotero.BetterBibTeX.auto.run(ae, translate, 'manual refresh')
 
   exportType: (id) ->
     return switch
