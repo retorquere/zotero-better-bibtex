@@ -959,7 +959,7 @@ class Zotero.BetterBibTeX.DateParser
       return {
         year: @year(m[1])
         uncertain: (if m[2] == '?' then true else undefined)
-        circa: (if m[3] == '?' then true else undefined)
+        circa: (if m[3] == '~' then true else undefined)
       }
 
     ### CSL dateparser doesn't recognize d?/m/y ###
