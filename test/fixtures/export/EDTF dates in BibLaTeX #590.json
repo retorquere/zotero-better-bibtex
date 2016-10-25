@@ -49,12 +49,17 @@
       "exportNotes": true
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "newspaperArticle",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
       "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
       "publicationTitle": "ABC News",
@@ -71,16 +76,25 @@
           "firstName": "Anne"
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 377,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "barker_2016_turkey"
     },
     {
       "itemType": "newspaperArticle",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
       "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
       "publicationTitle": "ABC News",
@@ -97,16 +111,25 @@
           "firstName": "Anne"
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 377,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "barker_2016_turkey"
     },
     {
       "itemType": "newspaperArticle",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
       "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
       "publicationTitle": "ABC News",
@@ -123,12 +146,404 @@
           "firstName": "Anne"
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 377,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "-0876",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "Turkey divided between secular and Islamist rule",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker4",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "1723~",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "Turkey divided between secular and Islamist rule",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker5",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "1723?",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "Turkey divided between secular and Islamist rule",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker6",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "1723?~",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "Turkey divided between secular and Islamist rule",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker7",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "1988/1992",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "Turkey divided between secular and Islamist rule",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker8",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "2004-22",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "Turkey divided between secular and Islamist rule",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker9",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "199u",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "Turkey divided between secular and Islamist rule",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker10",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "19uu",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "Turkey divided between secular and Islamist rule",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker11",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "1999-uu",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "Turkey divided between secular and Islamist rule",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker12",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "1999-01-uu",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "Turkey divided between secular and Islamist rule",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker13",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "1999-uu-uu",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "Turkey divided between secular and Islamist rule",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker14",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
       "__citekey__": "barker_2016_turkey"
     }
   ],
-  "cache": {}
+  "cache": {
+  }
 }

@@ -95,8 +95,12 @@ class DateField
       when _v.year && _v.month            then  date = "#{_v.year}-#{@pad(_v.month, '00')}"
       else                                      date = '' + _v.year
 
-    date += '~' if Translator.biblatexExtendedDateFormat && _v.circa
-    date += '?' if Translator.biblatexExtendedDateFormat && _v.uncertain
+    if Translator.biblatexExtendedDateFormat
+      # well this is fairly dense... the date field is not an verbatim field, so the 'circa' symbol ('~') ought to mean a
+      # NBSP... but some magic happens in that field (always with the magic, BibLaTeX...). But hey, if I insert an NBSP,
+      # guess what that gets translated to!
+      date += '\u00A0' if _v.circa
+      date += '?' if _v.uncertain
     return date
 
 Reference::requiredFields =
