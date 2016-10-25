@@ -18,7 +18,7 @@ if !ZoteroPane_Local.BetterBibTeX
 
         path = [encodeURIComponent(collection.name)]
         while collection.parent
-          collection = collection.parent
+          collection = Zotero.Collections.get(collection.parent)
           path.unshift(encodeURIComponent(collection.name))
         path = "collection?/#{collection.libraryID || 0}/" + path.join('/') + extension
 
