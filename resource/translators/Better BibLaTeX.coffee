@@ -85,14 +85,19 @@ class DateField
 
   format: (v, suffix = '') ->
     _v = {}
-    for f in ['extended', 'empty', 'year', 'month', 'day']
+    for f in ['circa', 'uncertain', 'extended', 'empty', 'year', 'month', 'day']
       _v[f] = v["#{f}#{suffix}"]
 
-    return '' if _v.empty
-    return _v.extended if v.extended
-    return "#{_v.year}-#{@pad(_v.month, '00')}-#{@pad(_v.day, '00')}" if _v.year && _v.month && _v.day
-    return "#{_v.year}-#{@pad(_v.month, '00')}" if _v.year && _v.month
-    return '' + _v.year
+    switch
+      when _v.empty                       then  date = ''
+      when _v.extended                    then  date = _v.extended
+      when _v.year && _v.month && _v.day  then  date = "#{_v.year}-#{@pad(_v.month, '00')}-#{@pad(_v.day, '00')}"
+      when _v.year && _v.month            then  date = "#{_v.year}-#{@pad(_v.month, '00')}"
+      else                                      date = '' + _v.year
+
+    date += '~' if Translator.biblatexExtendedDateFormat && _v.circa
+    date += '?' if Translator.biblatexExtendedDateFormat && _v.uncertain
+    return date
 
 Reference::requiredFields =
   article: ['author', 'title', 'journaltitle', 'year/date']

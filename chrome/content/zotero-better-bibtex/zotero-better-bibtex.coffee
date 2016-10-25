@@ -964,7 +964,7 @@ class Zotero.BetterBibTeX.DateParser
 
     if @extended && date.match(@isodate)
       return {
-        extended: date
+        extended: date.replace(/[~\?]/g, '')
         uncertain: (if date.indexOf('?') > 0 then true else undefined)
         circa: (if date.indexOf('~') > 0 then true else undefined)
       }
