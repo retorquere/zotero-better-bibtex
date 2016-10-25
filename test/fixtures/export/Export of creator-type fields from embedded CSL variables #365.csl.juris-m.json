@@ -1,0 +1,75 @@
+[
+  {
+    "director": [ { "family": "Doe", "given": "John" }, { "family": "Roe", "given": "Rob" } ],
+    "id": "Doe2015",
+    "issued": { "date-parts": [ [ 2015 ] ] },
+    "publisher": "The Distributor",
+    "publisher-place": "US/GB",
+    "title": "A film",
+    "type": "motion_picture"
+  },
+  {
+    "author": [ { "family": "Author", "given": "Ann" } ],
+    "editor": [ { "family": "Editrix", "given": "Emma" }, { "family": "Editor", "given": "Ed" } ],
+    "event-place": "Place",
+    "archive-place": "Place",
+    "genre": "working paper",
+    "id": "Author2015",
+    "issued": { "date-parts": [ [ 2015 ] ] },
+    "note": "{:X-genre: xxx}",
+    "number": "77",
+    "publisher": "Institution",
+    "publisher-place": "Place",
+    "title": "A report",
+    "type": "report"
+  },
+  {
+    "director": [ { "family": "Kubrick", "given": "Stanley" } ],
+    "id": "Kubrick1964",
+    "issued": { "date-parts": [ [ 1964 ] ] },
+    "title-short": "Dr. Strangelove",
+    "title": "Dr. Strangelove or: how I learned to stop worrying and love the bomb",
+    "type": "broadcast"
+  },
+  {
+    "container-title": "Friends",
+    "dimensions": "22 min",
+    "director": [ { "family": "Mancuso", "given": "Gail" } ],
+    "event-place": "US",
+    "archive-place": "US",
+    "id": "friends:leia:tv",
+    "issued": { "date-parts": [ [ 1996, 9, 16 ] ] },
+    "language": "en-US",
+    "number": "1",
+    "publisher": "NBC",
+    "publisher-place": "US",
+    "title": "The one with the Princess Leia fantasy",
+    "type": "broadcast",
+    "volume": "3"
+  },
+  {
+    "container-title": "Friends",
+    "dimensions": "22 min",
+    "author": [ { "family": "Mancuso", "given": "Gail" } ],
+    "event-place": "US",
+    "archive-place": "US",
+    "id": "friends:leia:dvd",
+    "issued": { "date-parts": [ [ 2003 ] ] },
+    "language": "en-US",
+    "medium": "DVD",
+    "number": "1",
+    "original-date": { "date-parts": [ [ 1996, 9, 16 ] ] },
+    "original-publisher": "NBC",
+    "publisher": "Warner Home Video",
+    "publisher-place": "US",
+    "title": "The one with the Princess Leia fantasy",
+    "type": "video",
+    "volume": "3"
+  },
+  {
+    "editor": [ { "family": "Xxx", "given": "", "isInstitution": 1 } ],
+    "id": "emptybook",
+    "note": "{:X-genre: xxx}",
+    "type": "entry-encyclopedia"
+  }
+]
