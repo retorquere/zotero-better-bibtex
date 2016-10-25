@@ -61,7 +61,7 @@ Translator.fieldEncoding = {
 
 class DateField
   constructor: (date, locale, formatted, literal) ->
-    parsed = Zotero.BetterBibTeX.parseDateToObject(date, locale, true)
+    parsed = Zotero.BetterBibTeX.parseDateToObject(date, locale, Translator.biblatexExtendedDateFormat)
 
     switch
       when !parsed
@@ -70,16 +70,10 @@ class DateField
       when parsed.literal
         @field = { name: literal, value: date }
 
-      when (parsed.extended || parsed.empty) && (parsed.extended_end || parsed.empty_end)
-        @field = { name: formatted, value: (if parsed.empty then '' else parsed.extended) + '/' + (if parsed.empty_end then '' else parsed.extended_end)}
-
-      when parsed.extended
-        @field = { name: formatted, value: parsed.extended }
-
-      when (parsed.year || parsed.empty) && (parsed.year_end || parsed.empty_end)
+      when (parsed.extended || parsed.year || parsed.empty) && (parsed.extended_end || parsed.year_end || parsed.empty_end)
         @field = { name: formatted, value: @format(parsed) + '/' + @format(parsed, '_end') }
 
-      when parsed.year
+      when parsed.year || parsed.extended
         @field = { name: formatted, value: @format(parsed) }
 
       else
@@ -91,10 +85,11 @@ class DateField
 
   format: (v, suffix = '') ->
     _v = {}
-    for f in ['empty', 'year', 'month', 'day']
+    for f in ['extended', 'empty', 'year', 'month', 'day']
       _v[f] = v["#{f}#{suffix}"]
 
     return '' if _v.empty
+    return _v.extended if v.extended
     return "#{_v.year}-#{@pad(_v.month, '00')}-#{@pad(_v.day, '00')}" if _v.year && _v.month && _v.day
     return "#{_v.year}-#{@pad(_v.month, '00')}" if _v.year && _v.month
     return '' + _v.year

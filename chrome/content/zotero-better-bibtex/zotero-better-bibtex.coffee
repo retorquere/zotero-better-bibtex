@@ -962,7 +962,7 @@ class Zotero.BetterBibTeX.DateParser
     date = date.trim()
     return {empty: true} if date == ''
 
-    if @extended && Zotero.BetterBibTeX.Pref.get('biblatexExtendedDateFormat') && date.match(@isodate)
+    if @extended && date.match(@isodate)
       return {
         extended: date
         uncertain: (if date.indexOf('?') > 0 then true else undefined)
