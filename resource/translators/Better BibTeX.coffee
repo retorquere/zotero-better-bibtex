@@ -71,55 +71,55 @@ Reference::addCreators = ->
 Reference::typeMap =
   csl:
     article               : 'article'
+    'article-journal'     : 'article'
     'article-magazine'    : 'article'
     'article-newspaper'   : 'article'
-    'article-journal'     : 'article'
-    review                : 'article'
-    'review-book'         : 'article'
     bill                  : 'misc'
-    broadcast             : 'misc'
-    dataset               : 'misc'
-    figure                : 'misc'
-    graphic               : 'misc'
-    interview             : 'misc'
-    legislation           : 'misc'
-    legal_case            : 'misc'
-    map                   : 'misc'
-    motion_picture        : 'misc'
-    musical_score         : 'misc'
-    patent                : 'misc'
-    post                  : 'misc'
-    'post-weblog'         : 'misc'
-    personal_communication: 'misc'
-    song                  : 'misc'
-    speech                : 'misc'
-    treaty                : 'misc'
-    webpage               : 'misc'
     book                  : 'book'
+    broadcast             : 'misc'
     chapter               : 'incollection'
+    dataset               : 'misc'
     entry                 : 'incollection'
     'entry-dictionary'    : 'incollection'
     'entry-encyclopedia'  : 'incollection'
+    figure                : 'misc'
+    graphic               : 'misc'
+    interview             : 'misc'
+    legal_case            : 'misc'
+    legislation           : 'misc'
     manuscript            : 'unpublished'
+    map                   : 'misc'
+    motion_picture        : 'misc'
+    musical_score         : 'misc'
     pamphlet              : 'booklet'
     'paper-conference'    : 'inproceedings'
+    patent                : 'misc'
+    personal_communication: 'misc'
+    post                  : 'misc'
+    'post-weblog'         : 'misc'
     report                : 'techreport'
+    review                : 'article'
+    'review-book'         : 'article'
+    song                  : 'misc'
+    speech                : 'misc'
     thesis                : 'phdthesis'
+    treaty                : 'misc'
+    webpage               : 'misc'
   zotero:
+    artwork         : 'misc'
     book            : 'book'
     bookSection     : 'incollection'
-    journalArticle  : 'article'
-    magazineArticle : 'article'
-    newspaperArticle: 'article'
-    thesis          : 'phdthesis'
-    manuscript      : 'unpublished'
-    patent          : 'patent'
     conferencePaper : 'inproceedings'
-    report          : 'techreport'
-    letter          : 'misc'
-    interview       : 'misc'
     film            : 'misc'
-    artwork         : 'misc'
+    interview       : 'misc'
+    journalArticle  : 'article'
+    letter          : 'misc'
+    magazineArticle : 'article'
+    manuscript      : 'unpublished'
+    newspaperArticle: 'article'
+    patent          : 'patent'
+    report          : 'techreport'
+    thesis          : 'phdthesis'
     webpage         : 'misc'
 
 doExport = ->
@@ -136,22 +136,22 @@ doExport = ->
       when 'note', 'true' # that's what you get when you change pref type
         ref.add({ name: (if ref.referencetype in ['misc', 'booklet'] then 'howpublished' else 'note'), allowDuplicates: true, value: item.url, enc: 'url'})
       else
-        ref.add({ name: 'howpublished', allowDuplicates: true, value: item.url, enc: 'url'}) if item.itemType == 'webpage'
+        ref.add({ name: 'howpublished', allowDuplicates: true, value: item.url, enc: 'url'}) if item.__type__ in ['webpage', 'post', 'post-weblog']
 
     switch
-      when item.itemType in ['bookSection', 'conferencePaper']
+      when item.__type__ in ['bookSection', 'conferencePaper', 'chapter']
         ref.add({ name: 'booktitle',  caseConversion: true, value: item.publicationTitle, preserveBibTeXVariables: true })
       when ref.isBibVar(item.publicationTitle)
         ref.add({ name: 'journal', value: item.publicationTitle, preserveBibTeXVariables: true })
       else
         ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.journalAbbrev(item) || item.publicationTitle, preserveBibTeXVariables: true })
 
-    switch item.itemType
+    switch item.__type__
       when 'thesis' then ref.add({ school: item.publisher })
       when 'report' then ref.add({ institution: item.institution || item.publisher })
       else               ref.add({ name: 'publisher', value: item.publisher, enc: 'literal' })
 
-    if item.itemType == 'thesis' && item.thesisType in ['mastersthesis', 'phdthesis']
+    if item.__type__ == 'thesis' && item.thesisType in ['mastersthesis', 'phdthesis']
       ref.referencetype = item.thesisType
       ref.remove('type')
 
@@ -343,10 +343,10 @@ ZoteroItem::$institution = ZoteroItem::$organization = (value) ->
   @item.backupPublisher = value
 
 ZoteroItem::$number = (value) ->
-  switch @item.itemType
-    when 'report'               then @item.reportNumber = value
-    when 'book', 'bookSection'  then @item.seriesNumber = value
-    when 'patent'               then @item.patentNumber = value
+  switch @item.__type__
+    when 'report'                         then @item.reportNumber = value
+    when 'book', 'bookSection', 'chapter' then @item.seriesNumber = value
+    when 'patent'                         then @item.patentNumber = value
     else                             @item.issue = value
 
 ZoteroItem::$month = (value) ->
@@ -372,7 +372,7 @@ ZoteroItem::$year = (value) ->
     @item.date = value
 
 ZoteroItem::$pages = (value) ->
-  if @item.itemType in ['book', 'thesis', 'manuscript']
+  if @item.__type__ in ['book', 'thesis', 'manuscript']
     @item.numPages = value
   else
     @item.pages = value.replace(/--/g, '-')
@@ -448,7 +448,7 @@ ZoteroItem::import = () ->
       continue
     @addToExtraData(field, value)
 
-  if @item.itemType == 'conferencePaper' and @item.publicationTitle and not @item.proceedingsTitle
+  if @item.__type__ in ['conferencePaper', 'paper-conference'] and @item.publicationTitle and not @item.proceedingsTitle
     @item.proceedingsTitle = @item.publicationTitle
     delete @item.publicationTitle
 

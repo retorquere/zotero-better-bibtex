@@ -54,6 +54,7 @@ class Reference
       Translator.debug('detected language:', {language: @language, english: @english})
 
     @override = Translator.extractFields(@item)
+    @item.__type__ = @item.cslType || @item.itemType
     Translator.debug('postextract: item:', @item)
     Translator.debug('postextract: overrides:', @override)
 

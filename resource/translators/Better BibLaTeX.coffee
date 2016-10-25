@@ -168,7 +168,6 @@ Reference::typeMap =
     'article-magazine'    : {type: 'article', subtype: 'magazine'}
     'article-newspaper'   : {type: 'article', subtype: 'newspaper'}
     bill                  : 'legislation'
-    legislation           : 'legislation'
     book                  : 'book'
     broadcast             : {type: 'misc', subtype: 'broadcast'}
     chapter               : 'incollection'
@@ -180,6 +179,7 @@ Reference::typeMap =
     graphic               : 'image'
     interview             : {type: 'misc', subtype: 'interview'}
     legal_case            : 'jurisdiction'
+    legislation           : 'legislation'
     manuscript            : 'unpublished'
     map                   : {type: 'misc', subtype: 'map'}
     motion_picture        : 'movie'
@@ -187,10 +187,9 @@ Reference::typeMap =
     pamphlet              : 'booklet'
     'paper-conference'    : 'inproceedings'
     patent                : 'patent'
+    personal_communication: 'letter'
     post                  : 'online'
     'post-weblog'         : 'online'
-    webpage               : 'online'
-    personal_communication: 'letter'
     report                : 'report'
     review                : 'review'
     'review-book'         : 'review'
@@ -198,49 +197,50 @@ Reference::typeMap =
     speech                : {type: 'misc', subtype: 'speech'}
     thesis                : 'thesis'
     treaty                : 'legal'
+    webpage               : 'online'
   zotero:
+    artwork            : 'artwork'
+    audioRecording     : 'audio'
+    bill               : 'legislation'
+    blogPost           : 'online'
     book               : 'book'
     bookSection        : 'incollection'
-    journalArticle     : 'article'
-    magazineArticle    : {type: 'article', subtype: 'magazine'}
-    newspaperArticle   : {type: 'article', subtype: 'newspaper'}
-    thesis             : 'thesis'
-    email              : 'letter'
-    letter             : 'letter'
-    film               : 'movie'
-    artwork            : 'artwork'
-    blogPost           : 'online'
-    forumPost          : 'online'
-    webpage            : 'online'
+    case               : 'jurisdiction'
+    computerProgram    : 'software'
     conferencePaper    : 'inproceedings'
+    dictionaryEntry    : 'inreference'
+    document           : 'misc'
+    email              : 'letter'
+    encyclopediaArticle: 'inreference'
+    film               : 'movie'
+    forumPost          : 'online'
+    hearing            : 'jurisdiction'
+    instantMessage     : 'misc'
+    interview          : 'misc'
+    journalArticle     : 'article'
+    letter             : 'letter'
+    magazineArticle    : {type: 'article', subtype: 'magazine'}
+    manuscript         : 'unpublished'
+    map                : 'misc'
+    newspaperArticle   : {type: 'article', subtype: 'newspaper'}
+    patent             : 'patent'
+    podcast            : 'audio'
+    presentation       : 'unpublished'
+    radioBroadcast     : 'audio'
     report             : 'report'
     statute            : 'legislation'
-    bill               : 'legislation'
-    case               : 'jurisdiction'
-    hearing            : 'jurisdiction'
-    patent             : 'patent'
-    audioRecording     : 'audio'
-    podcast            : 'audio'
-    radioBroadcast     : 'audio'
-    videoRecording     : 'video'
+    thesis             : 'thesis'
     tvBroadcast        : 'video'
-    computerProgram    : 'software'
-    manuscript         : 'unpublished'
-    presentation       : 'unpublished'
-    encyclopediaArticle: 'inreference'
-    dictionaryEntry    : 'inreference'
-    interview          : 'misc'
-    map                : 'misc'
-    instantMessage     : 'misc'
-    document           : 'misc'
+    videoRecording     : 'video'
+    webpage            : 'online'
 
 doExport = ->
   Zotero.write('\n')
   while item = Translator.nextItem()
     ref = new Reference(item)
 
-    ref.referencetype = 'inbook' if item.itemType == 'bookSection' and ref.hasCreator('bookAuthor')
-    ref.referencetype = 'collection' if item.itemType == 'book' and not ref.hasCreator('author') and ref.hasCreator('editor')
+    ref.referencetype = 'inbook' if item.__type__ in ['bookSection', 'chapter'] and ref.hasCreator('bookAuthor')
+    ref.referencetype = 'collection' if item.__type__ == 'book' and not ref.hasCreator('author') and ref.hasCreator('editor')
     ref.referencetype = 'mvbook' if ref.referencetype == 'book' and item.numberOfVolumes
 
     if m = item.url?.match(/^http:\/\/www.jstor.org\/stable\/([\S]+)$/i)
@@ -298,22 +298,22 @@ doExport = ->
     ref.add({ number: item.seriesNumber || item.number })
     ref.add({ name: (if isNaN(parseInt(item.issue)) || (( '' + parseInt(item.issue)) != ('' + item.issue))  then 'issue' else 'number'), value: item.issue })
 
-    switch item.itemType
-      when 'case', 'gazette'
+    switch item.__type__
+      when 'case', 'gazette', 'legal_case'
         ref.add({ name: 'journaltitle', value: item.reporter, preserveBibTeXVariables: true })
-      when 'statute'
+      when 'statute', 'bill', 'legislation'
         ref.add({ name: 'journaltitle', value: item.code, preserveBibTeXVariables: true })
 
     if item.publicationTitle
-      switch item.itemType
-        when 'bookSection', 'conferencePaper', 'dictionaryEntry', 'encyclopediaArticle'
+      switch item.__type__
+        when 'bookSection', 'conferencePaper', 'dictionaryEntry', 'encyclopediaArticle', 'chapter'
           ref.add({ name: 'booktitle', value: item.bookTitle || item.publicationTitle, preserveBibTeXVariables: true, caseConversion: true})
 
-        when 'magazineArticle', 'newspaperArticle'
+        when 'magazineArticle', 'newspaperArticle', 'article-magazine', 'article-newspaper'
           ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true})
-          ref.add({ journalsubtitle: item.section }) if item.itemType == 'newspaperArticle'
+          ref.add({ journalsubtitle: item.section }) if item.__type__ in ['newspaperArticle', 'article-newspaper']
 
-        when 'journalArticle'
+        when 'journalArticle', 'article', 'article-journal'
           if ref.isBibVar(item.publicationTitle)
             ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
           else
@@ -348,18 +348,18 @@ doExport = ->
 
     ref.add({ series: item.seriesTitle || item.series })
 
-    switch item.itemType
+    switch item.__type__
       when 'report', 'thesis'
         ref.add({ name: 'institution', value: item.institution || item.publisher || item.university, enc: 'literal' })
 
-      when 'case', 'hearing'
+      when 'case', 'hearing', 'legal_case'
         ref.add({ name: 'institution', value: item.court, enc: 'literal' })
 
       else
         ref.add({ name: 'publisher', value: item.publisher, enc: 'literal' })
 
-    switch item.itemType
-      when 'letter' then ref.add({ name: 'type', value: item.letterType || 'Letter', caseConversion: true, replace: true })
+    switch item.__type__
+      when 'letter', 'personal_communication' then ref.add({ name: 'type', value: item.letterType || 'Letter', caseConversion: true, replace: true })
 
       when 'email'  then ref.add({ name: 'type', value: 'E-mail', caseConversion: true, replace: true })
 
@@ -419,15 +419,15 @@ doExport = ->
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
     if item.volumeTitle # #381
-      Translator.debug('volumeTitle: true, itemType:', item.itemType, 'has:', Object.keys(ref.has))
-      if item.itemType == 'book' && ref.has.title
-        Translator.debug('volumeTitle: for book, itemType:', item.itemType, 'has:', Object.keys(ref.has))
+      Translator.debug('volumeTitle: true, type:', item._type__, 'has:', Object.keys(ref.has))
+      if item.__type__ == 'book' && ref.has.title
+        Translator.debug('volumeTitle: for book, type:', item.__type__, 'has:', Object.keys(ref.has))
         ref.add({name: 'maintitle', value: item.volumeTitle, caseConversion: true })
         [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]
         [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
 
-      if item.itemType == 'bookSection' && ref.has.booktitle
-        Translator.debug('volumeTitle: for bookSection, itemType:', item.itemType, 'has:', Object.keys(ref.has))
+      if item.__type__ in ['bookSection', 'chapter'] && ref.has.booktitle
+        Translator.debug('volumeTitle: for bookSection, type:', item.__type__, 'has:', Object.keys(ref.has))
         ref.add({name: 'maintitle', value: item.volumeTitle, caseConversion: true })
         [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]
         [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]

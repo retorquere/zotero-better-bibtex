@@ -83,9 +83,9 @@ Translator.CSLVariables = {
   'collection-title':             {}
   'container-title':
     BibLaTeX: ->
-      switch @item.itemType
-        when 'film', 'tvBroadcast', 'videoRecording' then 'booktitle'
-        when 'bookSection' then 'maintitle'
+      switch @item.__type__
+        when 'film', 'tvBroadcast', 'videoRecording', 'motion_picture' then 'booktitle'
+        when 'bookSection', 'chapter' then 'maintitle'
         else 'journaltitle'
 
   'container-title-short':        {}
