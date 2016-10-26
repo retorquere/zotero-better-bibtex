@@ -2,15 +2,16 @@
 machine:
   ruby:
     version: '2.2.4'
+---
 dependencies:
   pre:
-  - |
-    if [ ! -x firefox/firefox ]; then
-      wget -O firefox-esr.tar.bz2 'https://download.mozilla.org/?product=firefox-esr-latest&os=linux64&lang=en-US'
-      tar xjf firefox-esr.tar.bz2
-      firefox=`which firefox`
-      sudo rm -f $firefox
-      sudo ln -s `pwd`/firefox/firefox $firefox
+  - |-
+    if [ ! -x firefox/firefox ]; then;
+      wget -O firefox-esr.tar.bz2 'https://download.mozilla.org/?product=firefox-esr-latest&os=linux64&lang=en-US';
+      tar xjf firefox-esr.tar.bz2;
+      firefox=`which firefox`;
+      sudo rm -f $firefox;
+      sudo ln -s `pwd`/firefox/firefox $firefox;
     fi
   cache_directories:
   - test/fixtures/profiles
