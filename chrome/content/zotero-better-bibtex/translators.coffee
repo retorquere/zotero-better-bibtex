@@ -106,7 +106,7 @@ Zotero.BetterBibTeX.Translators =
     catch err
       Zotero.BetterBibTeX.debug('Translator.load', translator, 'failed:', err)
 
-  getID: (name) -> @[name.replace(/\s/g, '')]?.translatorID
+  getID: (name) -> (@[name.replace(/\s/g, '')] || @['better' + name.replace(/\s/g, '')])?.translatorID
 
   getName: (id) -> @[id]?.label || "translator:#{id}"
 

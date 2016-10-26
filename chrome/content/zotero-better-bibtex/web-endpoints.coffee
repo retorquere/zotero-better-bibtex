@@ -17,7 +17,7 @@ Zotero.BetterBibTeX.endpoints.collection.init = (url, data, sendResponseCallback
       return
 
     translator = path.pop().toLowerCase()
-    translator = Zotero.BetterBibTeX.Translators.getID(translator) || Zotero.BetterBibTeX.Translators.getID('better' + translator)
+    translator = Zotero.BetterBibTeX.Translators.getID(translator)
     path = path.join('.')
     path = "/0/#{path}" if path.charAt(0) != '/'
     path = path.split('/')
@@ -75,7 +75,7 @@ Zotero.BetterBibTeX.endpoints.library.init = (url, data, sendResponseCallback) -
       sendResponseCallback(404, 'text/plain', "Could not export bibliography '#{library}': no format specified")
       return
 
-    translator = Zotero.BetterBibTeX.Translator.getID(format)
+    translator = Zotero.BetterBibTeX.Translators.getID(format)
     if !translator
       sendResponseCallback(404, 'text/plain', "Could not export bibliography '#{library}': unsupported format #{format}")
       return
@@ -104,7 +104,8 @@ Zotero.BetterBibTeX.endpoints.selected.init = (url, data, sendResponseCallback) 
   zoteroPane = Zotero.getActiveZoteroPane()
   items = Zotero.Items.get((item.id for item of zoteroPane.getSelectedItems()))
 
-  Zotero.BetterBibTeX.Translators.translate(Zotero.BetterBibTeX.Translators.getID(translator), {items}, Zotero.BetterBibTeX.displayOptions(url)).then((result) ->
+  translator = Zotero.BetterBibTeX.Translators.getID(translator)
+  Zotero.BetterBibTeX.Translators.translate(translator, {items}, Zotero.BetterBibTeX.displayOptions(url)).then((result) ->
     sendResponseCallback(200, 'text/plain', result)
   ).catch((err) ->
     sendResponseCallback(500, 'text/plain', '' + err)

@@ -16,10 +16,10 @@ if !ZoteroPane_Local.BetterBibTeX
         collection = collectionsView.getSelectedCollection()
         url = "collection?/#{collection.libraryID || 0}/#{collection.key + extension}"
 
-        path = [collection.name]
+        path = [encodeURIComponent(collection.name)]
         while collection.parent
-          collection = collection.parent
-          path.unshift(collection.name)
+          collection = Zotero.Collections.get(collection.parent)
+          path.unshift(encodeURIComponent(collection.name))
         path = "collection?/#{collection.libraryID || 0}/" + path.join('/') + extension
 
       if itemGroup.isLibrary(true)
