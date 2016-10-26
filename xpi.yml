@@ -42,6 +42,7 @@ files:
 - chrome.manifest
 - chrome/content/zotero-better-bibtex/include.js
 - chrome/content/zotero-better-bibtex/zotero-better-bibtex.js
+- chrome/content/zotero-better-bibtex/lib/edtf.js
 - chrome/content/zotero-better-bibtex/lib/lokijs.js
 - chrome/content/zotero-better-bibtex/lib/translit.js
 - chrome/content/zotero-better-bibtex/lib/citeproc.js

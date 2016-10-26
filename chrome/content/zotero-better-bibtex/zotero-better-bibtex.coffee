@@ -909,7 +909,7 @@ class Zotero.BetterBibTeX.DateParser
   constructor: (@source, options = {}) ->
     @source = @source.trim() if @source
     @zoteroLocale ?= Zotero.locale.toLowerCase()
-    @extended = options.extended
+    @edtf = options.edtf
     @cslNull = options.cslNull
 
     return unless @source
@@ -950,29 +950,9 @@ class Zotero.BetterBibTeX.DateParser
     [date.month, date.day] = [date.day, date.month]
 
   cruft: new Zotero.Utilities.XRegExp("[^\\p{Letter}\\p{Number}]+", 'g')
-  isodate: ///
-    ^
-    (-?[0-9]{3,4}-[0-9]{1,2}-[0-9]{1,2})
-
-    (T[0-9]{2}:[0-9]{2}
-      (:[0-9]{2}
-        (Z|[-+][0-9]{1,2}(:[0-9]{1,2})?)?
-      )?
-    )?
-
-    (\?~|~\?|~|\?)?
-    $
-    ///
   parsedate: (date) ->
     date = date.trim()
     return {empty: true} if date == ''
-
-    if @extended && date.match(@isodate)
-      return {
-        extended: date.replace(/[~\?]/g, '')
-        uncertain: (if date.indexOf('?') > 0 then true else undefined)
-        circa: (if date.indexOf('~') > 0 then true else undefined)
-      }
 
     ### TODO: https://bitbucket.org/fbennett/citeproc-js/issues/189/8-juli-2011-parsed-as-literal ###
     date = date.replace(/^([0-9]+)\.\s+([a-z])/i, '$1 $2')
@@ -1052,14 +1032,12 @@ class Zotero.BetterBibTeX.DateParser
 
       return {
         empty: range[0].empty
-        extended: range[0].extended
         year: range[0].year
         month: range[0].month
         day: range[0].day
         circa: range[0].circa
 
         empty_end: range[1].empty
-        extended_end: range[1].extended
         year_end: range[1].year
         month_end: range[1].month
         day_end: range[1].day
@@ -1077,6 +1055,10 @@ class Zotero.BetterBibTeX.DateParser
     return y
 
   parse: ->
+    if @edtf
+      try
+        return { edtf: Zotero.BetterBibTeX.EDTF(@source).edtf }
+
     return {} if !@source || @source in ['--', '/', '_']
 
     candidate = @parserange(['--', '_', '/', '-'])

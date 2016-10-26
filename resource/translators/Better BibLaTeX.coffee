@@ -36,7 +36,7 @@ Translator.fieldEncoding = {
 
 class DateField
   constructor: (date, locale, formatted, literal) ->
-    parsed = Zotero.BetterBibTeX.parseDateToObject(date, {locale, extended: Translator.biblatexExtendedDateFormat})
+    parsed = Zotero.BetterBibTeX.parseDateToObject(date, {locale, edtf: Translator.biblatexExtendedDateFormat})
 
     switch
       when !parsed
@@ -45,10 +45,13 @@ class DateField
       when parsed.literal
         @field = { name: literal, value: date }
 
-      when (parsed.extended || parsed.year || parsed.empty) && (parsed.extended_end || parsed.year_end || parsed.empty_end)
+      when parsed.edtf
+        @field = { name: literal, value: parsed.edtf }
+
+      when (parsed.year || parsed.empty) && (parsed.year_end || parsed.empty_end)
         @field = { name: formatted, value: @format(parsed) + '/' + @format(parsed, '_end') }
 
-      when parsed.year || parsed.extended
+      when parsed.year
         @field = { name: formatted, value: @format(parsed) }
 
       else
@@ -66,12 +69,11 @@ class DateField
 
   format: (v, suffix = '') ->
     _v = {}
-    for f in ['circa', 'uncertain', 'extended', 'empty', 'year', 'month', 'day']
+    for f in ['circa', 'uncertain', 'empty', 'year', 'month', 'day']
       _v[f] = v["#{f}#{suffix}"]
 
     switch
       when _v.empty                       then  date = ''
-      when _v.extended                    then  date = _v.extended
       when _v.year && _v.month && _v.day  then  date = "#{@year(_v.year)}-#{@pad(_v.month, '00')}-#{@pad(_v.day, '00')}"
       when _v.year && _v.month            then  date = "#{@year(_v.year)}-#{@pad(_v.month, '00')}"
       else                                      date = @year(_v.year)

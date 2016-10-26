@@ -651,6 +651,10 @@ file 'chrome/content/zotero-better-bibtex/lib/lokijs.js' => 'Rakefile' do |t|
   browserify("Zotero.BetterBibTeX.LokiJS = require('lokijs');", t.name)
 end
 
+file 'chrome/content/zotero-better-bibtex/lib/edtf.js' => 'Rakefile' do |t|
+  browserify("Zotero.BetterBibTeX.EDTF = require('edtf');", t.name)
+end
+
 file 'chrome/content/zotero-better-bibtex/lib/translit.js' => 'Rakefile' do |t|
   cleanly(t.name) do
     FileUtils.cp('node_modules/transliteration/lib/browser/transliteration.js', t.name)
