@@ -2,7 +2,6 @@
 machine:
   ruby:
     version: '2.2.4'
----
 dependencies:
   pre:
   - |-
@@ -16,7 +15,7 @@ dependencies:
   cache_directories:
   - test/fixtures/profiles
   - test/fixtures/plugins
-	- firefox
+  - firefox
 test:
   override:
   - ? |-
