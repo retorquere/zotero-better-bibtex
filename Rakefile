@@ -652,15 +652,15 @@ file 'chrome/content/zotero-better-bibtex/lib/lokijs.js' => 'Rakefile' do |t|
 end
 
 file 'chrome/content/zotero-better-bibtex/lib/edtf.js' => 'Rakefile' do |t|
-  cleanly(t.name) do
-    browserify("Zotero.BetterBibTeX.EDTF = require('edtf');", t.name)
-    Tempfile.create(['edtf', '.js'], '.') do |tmp|
-      # babel chokes on the 00
-      tmp.write(open(t.name).read.sub('[24, 00, 00]', '[24, 0, 0]'))
-      tmp.close
-      sh "#{NODEBIN}/babel --compact false #{tmp.path.shellescape} -o #{t.name.shellescape}"
-    end
-  end
+  browserify("Zotero.BetterBibTeX.EDTF = require('edtf');", t.name)
+#  cleanly(t.name) do
+#    Tempfile.create(['edtf', '.js'], '.') do |tmp|
+#      # babel chokes on the 00
+#      tmp.write(open(t.name).read.sub('[24, 00, 00]', '[24, 0, 0]'))
+#      tmp.close
+#      sh "#{NODEBIN}/babel --compact false #{tmp.path.shellescape} -o #{t.name.shellescape}"
+#    end
+#  end
 end
 
 file 'chrome/content/zotero-better-bibtex/lib/translit.js' => 'Rakefile' do |t|
