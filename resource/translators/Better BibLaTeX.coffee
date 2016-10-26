@@ -46,7 +46,10 @@ class DateField
         @field = { name: literal, value: date }
 
       when parsed.edtf
-        @field = { name: literal, value: parsed.edtf }
+        # well this is fairly dense... the date field is not an verbatim field, so the 'circa' symbol ('~') ought to mean a
+        # NBSP... but some magic happens in that field (always with the magic, BibLaTeX...). But hey, if I insert an NBSP,
+        # guess what that gets translated to!
+        @field = { name: formatted, value: parsed.edtf.replace(/~/g, '\u00A0') }
 
       when (parsed.year || parsed.empty) && (parsed.year_end || parsed.empty_end)
         @field = { name: formatted, value: @format(parsed) + '/' + @format(parsed, '_end') }
