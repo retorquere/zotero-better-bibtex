@@ -2,12 +2,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.4.0)
-    aws-sdk (2.6.10)
-      aws-sdk-resources (= 2.6.10)
-    aws-sdk-core (2.6.10)
+    aws-sdk (2.6.14)
+      aws-sdk-resources (= 2.6.14)
+    aws-sdk-core (2.6.14)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.6.10)
-      aws-sdk-core (= 2.6.10)
+    aws-sdk-resources (2.6.14)
+      aws-sdk-core (= 2.6.14)
     backports (3.6.8)
     bibtex-ruby (4.4.2)
       latex-decode (~> 0.0)
@@ -110,7 +110,7 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
-    octokit (4.3.0)
+    octokit (4.4.1)
       sawyer (~> 0.7.0, >= 0.5.3)
     os (0.9.6)
     posix-spawn (0.3.11)
@@ -241,4 +241,4 @@ DEPENDENCIES
   zip-zip
 
 BUNDLED WITH
-   1.13.5
+   1.13.6
