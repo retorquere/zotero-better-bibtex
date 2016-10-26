@@ -658,7 +658,7 @@ file 'chrome/content/zotero-better-bibtex/lib/edtf.js' => 'Rakefile' do |t|
       # babel chokes on the 00
       tmp.write(open(t.name).read.sub('[24, 00, 00]', '[24, 0, 0]'))
       tmp.close
-      sh "#{NODEBIN}/babel --compact false --plugins transform-es2015-classes #{tmp.path.shellescape} -o #{t.name.shellescape}"
+      sh "#{NODEBIN}/babel --compact false #{tmp.path.shellescape} -o #{t.name.shellescape}"
     end
   end
 end

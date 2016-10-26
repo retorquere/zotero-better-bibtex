@@ -32,5 +32,9 @@
     "marked": "^0.3.5",
     "pegjs": "^0.9.0",
     "transliteration": "^1.1.11"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0"
   }
 }
