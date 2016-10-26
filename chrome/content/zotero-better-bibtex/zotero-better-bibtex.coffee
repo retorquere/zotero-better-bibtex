@@ -1060,7 +1060,7 @@ class Zotero.BetterBibTeX.DateParser
         # will throw an error if it's not an EDTF date/time
         # X <-> u because of https://github.com/inukshuk/edtf.js/issues/5
         # Currently doesn't recognize circa+uncertain https://github.com/inukshuk/edtf.js/issues/6
-        Zotero.BetterBibTeX.EDTF(@source.replace(/u/g, 'X'))
+        Zotero.BetterBibTeX.EDTF(@source.replace(/u/g, 'X').replace(/\?~/g, '%'))
         return { edtf: @source }
 
     return {} if !@source || @source in ['--', '/', '_']
