@@ -22,19 +22,6 @@ Translator.fieldMap = {
   publisher:        { import: [ 'school', 'institution', 'publisher' ], enc: 'literal' }
 }
 
-Translator.typeMap = {
-# BibTeX                              Zotero
-  'book booklet manual proceedings collection':  'book'
-  'incollection inbook inreference':  'bookSection'
-  'article misc':                     'journalArticle magazineArticle newspaperArticle'
-  'phdthesis mastersthesis thesis':   'thesis'
-  unpublished:                        'manuscript'
-  patent:                             'patent'
-  'inproceedings conference':         'conferencePaper'
-  techreport:                         'report'
-  misc:                               'letter interview film artwork webpage'
-}
-
 Translator.fieldEncoding = {
   url: 'url'
   doi: 'verbatim'
@@ -81,6 +68,60 @@ Reference::addCreators = ->
   @add({ name: 'translator', value: translators, enc: 'creators' })
   @add({ name: 'collaborator', value: collaborators, enc: 'creators' })
 
+Reference::typeMap =
+  csl:
+    article               : 'article'
+    'article-journal'     : 'article'
+    'article-magazine'    : 'article'
+    'article-newspaper'   : 'article'
+    bill                  : 'misc'
+    book                  : 'book'
+    broadcast             : 'misc'
+    chapter               : 'incollection'
+    dataset               : 'misc'
+    entry                 : 'incollection'
+    'entry-dictionary'    : 'incollection'
+    'entry-encyclopedia'  : 'incollection'
+    figure                : 'misc'
+    graphic               : 'misc'
+    interview             : 'misc'
+    legal_case            : 'misc'
+    legislation           : 'misc'
+    manuscript            : 'unpublished'
+    map                   : 'misc'
+    motion_picture        : 'misc'
+    musical_score         : 'misc'
+    pamphlet              : 'booklet'
+    'paper-conference'    : 'inproceedings'
+    patent                : 'misc'
+    personal_communication: 'misc'
+    post                  : 'misc'
+    'post-weblog'         : 'misc'
+    report                : 'techreport'
+    review                : 'article'
+    'review-book'         : 'article'
+    song                  : 'misc'
+    speech                : 'misc'
+    thesis                : 'phdthesis'
+    treaty                : 'misc'
+    webpage               : 'misc'
+  zotero:
+    artwork         : 'misc'
+    book            : 'book'
+    bookSection     : 'incollection'
+    conferencePaper : 'inproceedings'
+    film            : 'misc'
+    interview       : 'misc'
+    journalArticle  : 'article'
+    letter          : 'misc'
+    magazineArticle : 'article'
+    manuscript      : 'unpublished'
+    newspaperArticle: 'article'
+    patent          : 'patent'
+    report          : 'techreport'
+    thesis          : 'phdthesis'
+    webpage         : 'misc'
+
 doExport = ->
   Zotero.write('\n')
   while item = Translator.nextItem()
@@ -95,22 +136,22 @@ doExport = ->
       when 'note', 'true' # that's what you get when you change pref type
         ref.add({ name: (if ref.referencetype in ['misc', 'booklet'] then 'howpublished' else 'note'), allowDuplicates: true, value: item.url, enc: 'url'})
       else
-        ref.add({ name: 'howpublished', allowDuplicates: true, value: item.url, enc: 'url'}) if item.itemType == 'webpage'
+        ref.add({ name: 'howpublished', allowDuplicates: true, value: item.url, enc: 'url'}) if item.__type__ in ['webpage', 'post', 'post-weblog']
 
     switch
-      when item.itemType in ['bookSection', 'conferencePaper']
+      when item.__type__ in ['bookSection', 'conferencePaper', 'chapter']
         ref.add({ name: 'booktitle',  caseConversion: true, value: item.publicationTitle, preserveBibTeXVariables: true })
       when ref.isBibVar(item.publicationTitle)
         ref.add({ name: 'journal', value: item.publicationTitle, preserveBibTeXVariables: true })
       else
         ref.add({ name: 'journal', value: Translator.useJournalAbbreviation && Zotero.BetterBibTeX.journalAbbrev(item) || item.publicationTitle, preserveBibTeXVariables: true })
 
-    switch item.itemType
+    switch item.__type__
       when 'thesis' then ref.add({ school: item.publisher })
       when 'report' then ref.add({ institution: item.institution || item.publisher })
       else               ref.add({ name: 'publisher', value: item.publisher, enc: 'literal' })
 
-    if item.itemType == 'thesis' && item.thesisType in ['mastersthesis', 'phdthesis']
+    if item.__type__ == 'thesis' && item.thesisType in ['mastersthesis', 'phdthesis']
       ref.referencetype = item.thesisType
       ref.remove('type')
 
@@ -194,7 +235,7 @@ JabRef.importGroup = (group) ->
 
 class ZoteroItem
   constructor: (@bibtex) ->
-    @type = Translator.typeMap.BibTeX2Zotero[Zotero.Utilities.trimInternal(@bibtex.__type__.toLowerCase())] || 'journalArticle'
+    @type = @typeMap[Zotero.Utilities.trimInternal(@bibtex.__type__.toLowerCase())] || 'journalArticle'
     @item = new Zotero.Item(@type)
     @item.itemID = @bibtex.__key__
     Translator.log("new reference: #{@item.itemID}")
@@ -205,6 +246,26 @@ class ZoteroItem
       @item.tags ?= []
       @item.tags.push(Translator.rawLaTag)
     @item.complete()
+
+  typeMap:
+    book:           'book'
+    booklet:        'book'
+    manual:         'book'
+    proceedings:    'book'
+    collection:     'book'
+    incollection:   'bookSection'
+    inbook:         'bookSection'
+    inreference:    'bookSection'
+    article:        'journalArticle'
+    misc:           'journalArticle'
+    phdthesis:      'thesis'
+    mastersthesis:  'thesis'
+    thesis:         'thesis'
+    unpublished:    'manuscript'
+    patent:         'patent'
+    inproceedings:  'conferencePaper'
+    conference:     'conferencePaper'
+    techreport:     'report'
 
 ZoteroItem::keywordClean = (k) ->
   return k.replace(/^[\s{]+|[}\s]+$/g, '').trim()
@@ -282,10 +343,10 @@ ZoteroItem::$institution = ZoteroItem::$organization = (value) ->
   @item.backupPublisher = value
 
 ZoteroItem::$number = (value) ->
-  switch @item.itemType
-    when 'report'               then @item.reportNumber = value
-    when 'book', 'bookSection'  then @item.seriesNumber = value
-    when 'patent'               then @item.patentNumber = value
+  switch @item.__type__
+    when 'report'                         then @item.reportNumber = value
+    when 'book', 'bookSection', 'chapter' then @item.seriesNumber = value
+    when 'patent'                         then @item.patentNumber = value
     else                             @item.issue = value
 
 ZoteroItem::$month = (value) ->
@@ -311,7 +372,7 @@ ZoteroItem::$year = (value) ->
     @item.date = value
 
 ZoteroItem::$pages = (value) ->
-  if @item.itemType in ['book', 'thesis', 'manuscript']
+  if @item.__type__ in ['book', 'thesis', 'manuscript']
     @item.numPages = value
   else
     @item.pages = value.replace(/--/g, '-')
@@ -387,7 +448,7 @@ ZoteroItem::import = () ->
       continue
     @addToExtraData(field, value)
 
-  if @item.itemType == 'conferencePaper' and @item.publicationTitle and not @item.proceedingsTitle
+  if @item.__type__ in ['conferencePaper', 'paper-conference'] and @item.publicationTitle and not @item.proceedingsTitle
     @item.proceedingsTitle = @item.publicationTitle
     delete @item.publicationTitle
 

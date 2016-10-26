@@ -10,7 +10,7 @@ Zotero.BetterBibTeX.auto = new class
         @db.autoexport.update(ae)
 
   mark: (ae, status, reason) ->
-    Zotero.BetterBibTeX.debug('mark:', {ae, status})
+    Zotero.BetterBibTeX.debug('auto.mark:', {ae, status})
     ae.updated = (new Date()).toLocaleString()
     ae.status = status
     @db.autoexport.update(ae)
@@ -38,7 +38,7 @@ Zotero.BetterBibTeX.auto = new class
       win.BetterBibTeXAutoExportPref.refresh(true)
 
   add: (collection, path, context) ->
-    Zotero.BetterBibTeX.debug("auto-export set up for #{collection} to #{path}")
+    Zotero.BetterBibTeX.debug("auto.add: auto-export set up for #{collection} to #{path}")
 
     @db.autoexport.removeWhere({path})
 
@@ -69,7 +69,7 @@ Zotero.BetterBibTeX.auto = new class
       @markSearch(ae.collection.replace('search:', ''), "#{reason}, assume search might be updated")
 
     if collections.length > 0
-      Zotero.BetterBibTeX.debug('marking:', collections, 'from', (o.collection for o in @db.autoexport.data))
+      Zotero.BetterBibTeX.debug('auto.markIDs:', collections, 'from', (o.collection for o in @db.autoexport.data))
       for ae in @db.autoexport.where((o) -> o.collection in collections)
         @mark(ae, 'pending', reason)
 
@@ -141,15 +141,6 @@ Zotero.BetterBibTeX.auto = new class
     return Zotero.BetterBibTeX.Translators.translate(ae.translatorID, items, { exportCharset: ae.exportCharset, exportNotes: ae.exportNotes, useJournalAbbreviation: ae.useJournalAbbreviation }, path)
 
   schedule: (reason) ->
-    #if Zotero.Sync.Server.syncInProgress || Zotero.Sync.Storage.syncInProgress
-    #  Zotero.BetterBibTeX.debug('auto.delay:', reason)
-    #  clearTimeout(@delayed) if @delayed
-    #  @delayed = setTimeout(->
-    #    Zotero.BetterBibTeX.auto.delayed = null
-    #    Zotero.BetterBibTeX.auto.schedule(reason)
-    #  , 5000)
-    #  return
-
     Zotero.BetterBibTeX.debug('auto.schedule:', reason)
     clearTimeout(@scheduled) if @scheduled
     @scheduled = setTimeout(->
@@ -159,6 +150,10 @@ Zotero.BetterBibTeX.auto = new class
 
   process: (reason) ->
     Zotero.BetterBibTeX.debug("auto.process: started (#{reason}), idle: #{@idle}")
+
+    unless Zotero.BetterBibTeX.initialized
+      Zotero.BetterBibTeX.debug('auto.process: Better BibTeX is not yet initialized')
+      return
 
     if @running
       Zotero.BetterBibTeX.debug('auto.process: export already running')
@@ -180,24 +175,27 @@ Zotero.BetterBibTeX.auto = new class
       break if translate = @prepare(ae)
       @mark(ae, 'error')
 
+    @run(ae, translate, reason)
+
+  run: (ae, translate, reason) ->
     if !translate
       Zotero.BetterBibTeX.debug('auto.process: no pending jobs')
       return
 
     @running = '' + ae.$loki
-    Zotero.BetterBibTeX.debug('auto.process: starting', ae)
+    Zotero.BetterBibTeX.debug('auto.run: starting', ae)
     @mark(ae, 'running')
     @updated()
 
     translate.then(=>
       # if it's been re-marked during the run, let that handle the mark if any
       @mark(ae, 'done') if @db.autoexport.get(ae.$loki).status == 'running'
-      Zotero.BetterBibTeX.debug("auto.process: finished #{Zotero.BetterBibTeX.auto.running}: done")
+      Zotero.BetterBibTeX.debug("auto.run: finished #{@running}: done")
       return Promise.resolve()
     ).catch(=>
       # if it's been re-marked during the run, let that handle the mark if any
       @mark(ae, 'error') if @db.autoexport.get(ae.$loki).status == 'running'
-      Zotero.BetterBibTeX.debug("auto.process: finished #{Zotero.BetterBibTeX.auto.running}: error")
+      Zotero.BetterBibTeX.debug("auto.run: finished #{@running}: error")
       return Promise.resolve()
     ).then(=>
       @running = null

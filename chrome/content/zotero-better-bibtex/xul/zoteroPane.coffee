@@ -37,13 +37,7 @@ if !ZoteroPane_Local.BetterBibTeX
   ### monkey-patch buildCollectionContextMenu to add group library export ###
   ZoteroPane_Local.buildCollectionContextMenu = ((original) ->
     return ->
-      zv = ZOTERO_CONFIG.VERSION.split('.')
-      if parseInt(zv[0]) >= 4 && parseInt(zv[1]) == 0 && parseInt(zv[1]) <= 26
-        itemGroup = @collectionsView._getItemAtRow(@collectionsView.selection.currentIndex)
-
-        menuItem = @document.getElementById('zotero-better-bibtex-export-group')
-        menuItem.setAttribute('disabled', false)
-        menuItem.setAttribute('hidden', !itemGroup.isGroup())
+      itemGroup = @collectionsView._getItemAtRow(@collectionsView.selection.currentIndex)
 
       for id in ['zotero-better-bibtex-show-export-url', 'zotero-better-bibtex-report-errors']
         menuItem = @document.getElementById(id)

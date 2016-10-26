@@ -255,7 +255,6 @@ Zotero.BetterBibTeX.idleObserver = observe: (subject, topic, data) ->
 
 Zotero.BetterBibTeX.init = ->
   return if @initialized || @disabled
-  @initialized = true
 
   @testing = (@Pref.get('tests') != '')
 
@@ -443,7 +442,7 @@ Zotero.BetterBibTeX.init = ->
       ### requested translator ###
       translatorID = @translator?[0]
       translatorID = translatorID.translatorID if translatorID.translatorID
-      Zotero.BetterBibTeX.debug('export: ', translatorID)
+      Zotero.BetterBibTeX.debug('Zotero.Translate.Export::translate: ', translatorID)
       return original.apply(@, arguments) unless translatorID
 
       ### pick up sentinel from patched Zotero_File_Interface.exportCollection in zoteroPane.coffee ###
@@ -464,7 +463,7 @@ Zotero.BetterBibTeX.init = ->
           @_displayOptions.exportPath = @location.parent.path
         @_displayOptions.exportFilename = @location.leafName
 
-      Zotero.BetterBibTeX.debug("export", @_export, " to #{if @_displayOptions?.exportFileData then 'directory' else 'file'}", @location.path, 'using', @_displayOptions)
+      Zotero.BetterBibTeX.debug("Zotero.Translate.Export::translate: export", @_export, " to #{if @_displayOptions?.exportFileData then 'directory' else 'file'}", @location.path, 'using', @_displayOptions)
 
       ### If no capture, we're done ###
       return original.apply(@, arguments) unless @_displayOptions?['Keep updated'] && !@_displayOptions.exportFileData
@@ -541,15 +540,14 @@ Zotero.BetterBibTeX.init = ->
         id = @_itemsLeft[0]?.id
         item = original.apply(@, arguments)
         Zotero.BetterBibTeX.serialized.fixup(item, id) if item
-        return item
 
-      while @_itemsLeft.length != 0
-        item = Zotero.BetterBibTeX.serialized.get(@_itemsLeft.shift())
-        continue unless item
+      else
+        while @_itemsLeft.length != 0
+          item = Zotero.BetterBibTeX.serialized.get(@_itemsLeft.shift())
+          break if item
 
-        return item
-
-      return false
+      Zotero.BetterBibTeX.debug('Zotero.Translate.ItemGetter::nextItem:', {_exportFileData: @_exportFileData, uri: item?.uri, itemID: item?.itemID, itemType: item?.itemType})
+      return item || false
     )(Zotero.Translate.ItemGetter::nextItem)
 
   ### monkey-patch zotfile wildcard table to add bibtex key ###
@@ -603,13 +601,15 @@ Zotero.BetterBibTeX.init = ->
   }
   AddonManager.addAddonListener(uninstaller)
 
-  if @testing
-    tests = @Pref.get('tests')
-    @Pref.set('tests', '')
-    try
-      loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader)
-      loader.loadSubScript("chrome://zotero-better-bibtex/content/test/include.js")
-      @Test.run(tests.trim().split(/\s+/))
+  #if @testing
+  #  tests = @Pref.get('tests')
+  #  @Pref.set('tests', '')
+  #  try
+  #    loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader)
+  #    loader.loadSubScript("chrome://zotero-better-bibtex/content/test/include.js")
+  #    @Test.run(tests.trim().split(/\s+/))
+
+  @initialized = true
 
 Zotero.BetterBibTeX.createFile = (paths...) ->
   f = Zotero.getZoteroDirectory()

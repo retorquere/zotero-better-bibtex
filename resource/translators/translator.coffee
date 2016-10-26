@@ -83,9 +83,9 @@ Translator.CSLVariables = {
   'collection-title':             {}
   'container-title':
     BibLaTeX: ->
-      switch @item.itemType
-        when 'film', 'tvBroadcast', 'videoRecording' then 'booktitle'
-        when 'bookSection' then 'maintitle'
+      switch @item.__type__
+        when 'film', 'tvBroadcast', 'videoRecording', 'motion_picture' then 'booktitle'
+        when 'bookSection', 'chapter' then 'maintitle'
         else 'journaltitle'
 
   'container-title-short':        {}
@@ -150,6 +150,7 @@ Translator.CSLVariables = {
   recipient:                      { type: 'creator' }
   'reviewed-author':              { type: 'creator' }
   translator:                     { type: 'creator' }
+  type:                           { field: 'cslType' }
 }
 for name, v of Translator.CSLVariables
   v.name = name
@@ -279,25 +280,6 @@ Translator.initialize = ->
     when @BetterBibLaTeX || @CollectedNotes then !@asciiBibLaTeX
     when @BetterBibTeX then !@asciiBibTeX
     else true
-
-  if @typeMap
-    typeMap = @typeMap
-    @typeMap = {
-      BibTeX2Zotero: Object.create(null)
-      Zotero2BibTeX: Object.create(null)
-    }
-
-    for own bibtex, zotero of typeMap
-      # =online because someone assumes that any property starting with 'on' on any kind of object installs an event handler on a DOM
-      # node
-      bibtex = bibtex.replace(/^=/, '').trim().split(/\s+/)
-      zotero = zotero.trim().split(/\s+/)
-
-      for type in bibtex
-        @typeMap.BibTeX2Zotero[type] ?= zotero[0]
-
-      for type in zotero
-        @typeMap.Zotero2BibTeX[type] ?= bibtex[0]
 
   if Zotero.getHiddenPref('better-bibtex.debug')
     @debug = @debug_on

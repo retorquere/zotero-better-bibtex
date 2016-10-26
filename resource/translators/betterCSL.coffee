@@ -1,3 +1,41 @@
+ValidCSLTypes = [
+  'article'
+  'article-magazine'
+  'article-newspaper'
+  'article-journal'
+  'review'
+  'review-book'
+  'bill'
+  'broadcast'
+  'dataset'
+  'figure'
+  'graphic'
+  'interview'
+  'legislation'
+  'legal_case'
+  'map'
+  'motion_picture'
+  'musical_score'
+  'patent'
+  'post'
+  'post-weblog'
+  'personal_communication'
+  'song'
+  'speech'
+  'treaty'
+  'webpage'
+  'book'
+  'chapter'
+  'entry'
+  'entry-dictionary'
+  'entry-encyclopedia'
+  'manuscript'
+  'pamphlet'
+  'paper-conference'
+  'report'
+  'thesis'
+]
+
 doExport = ->
   items = []
   while item = Zotero.nextItem()
@@ -15,8 +53,11 @@ doExport = ->
 
       csl = Zotero.Utilities.itemToCSLJSON(item)
       csl['archive-place'] ?= item.place
+
+      csl.type = item.cslType if item.cslType in ValidCSLTypes
+
       delete csl.authority
-      csl.type = 'motion_picture' if item.itemType == 'videoRecording' && csl.type == 'video'
+      csl.type = 'motion_picture' if item.__type__ == 'videoRecording' && csl.type == 'video'
 
       csl.issued = Zotero.BetterBibTeX.parseDateToArray(item.date, {cslNull: true}) if csl.issued && item.date
 

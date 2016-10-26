@@ -53,11 +53,15 @@ class Reference
       @english = @language in ['american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'USenglish', 'UKenglish']
       Translator.debug('detected language:', {language: @language, english: @english})
 
-    @referencetype = Translator.typeMap.Zotero2BibTeX[@item.itemType] || 'misc'
-
     @override = Translator.extractFields(@item)
+    @item.__type__ = @item.cslType || @item.itemType
     Translator.debug('postextract: item:', @item)
     Translator.debug('postextract: overrides:', @override)
+
+    @referencetype = @typeMap.csl[@item.cslType] || @typeMap.zotero[@item.itemType] || 'misc'
+    if @referencetype.type
+      @add({ entrysubtype: @referencetype.subtype }) if @referencetype.subtype
+      @referencetype = @referencetype.type
 
     for own attr, f of Translator.fieldMap || {}
       @add(@clone(f, @item[attr])) if f.name
