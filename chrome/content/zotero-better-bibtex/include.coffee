@@ -7,8 +7,11 @@ if not Zotero.BetterBibTeX
         Zotero.debug('BBT: ' + script)
         loader.loadSubScript("chrome://zotero-better-bibtex/content/#{script}")
       catch err
-        Zotero.BetterBibTeX.disabled = "#{script} load failed: #{err}" if Zotero.BetterBibTeX
-        Zotero.debug("BBT: #{script} load failed: #{err}")
+        if Zotero.BetterBibTeX
+          Zotero.BetterBibTeX.disabled = "#{script} load failed: #{err}"
+          Zotero.BetterBibTeX.debug("BBT: #{script} load failed:", err)
+        else
+          Zotero.debug("BBT: #{script} load failed: #{err}")
         loader = null
         break
 
