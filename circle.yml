@@ -4,9 +4,9 @@ machine:
     version: '2.2.4'
 dependencies:
   pre:
-  - echo sudo apt-get update
+  - sudo apt-get update
   - echo sudo apt-get install libpango1.0-0
-  - echo sudo apt-get install firefox
+  - sudo apt-get install firefox
   cache_directories:
   - test/fixtures/profiles
   - test/fixtures/plugins
