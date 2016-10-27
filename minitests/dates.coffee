@@ -2,7 +2,7 @@ locales = Object.keys(Zotero.BetterBibTeX.Locales.months)
 console.log('' + locales.length + ' locales')
 locales.sort()
 for locale, i in locales
-  Zotero.BetterBibTeX.CSLDateParser.addDateParserMonths(Zotero.BetterBibTeX.Locales.months[locale])
+  Zotero.BetterBibTeX.CSL.DateParser.addDateParserMonths(Zotero.BetterBibTeX.Locales.months[locale])
 
 #console.log(Zotero.DateParser.parseDateToArray('2014-12-31/2015-01-01'))
 #console.log(Zotero.DateParser.parseDateToObject('2014-12-31/2015-01-01'))
@@ -16,4 +16,5 @@ for locale, i in locales
 #console.log(Zotero.DateParser.parseDateToObject("März 1, 2008"))
 
 #console.log(Zotero.BetterBibTeX.CSLDateParser.parseDateToObject("März 1, 2008"))
-console.log(Zotero.BetterBibTeX.CSLDateParser.parseDateToObject("8. juli 2011"))
+#console.log(Zotero.BetterBibTeX.DateParser::parseDateToObject("8. juli 2011"))
+console.log(Zotero.BetterBibTeX.DateParser::parseDateToObject("2014-12-31/2015-01-01"))

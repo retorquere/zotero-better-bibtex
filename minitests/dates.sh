@@ -8,11 +8,12 @@ cd ..
 
 OFFLINE=true
 rm -f minitests/test.js
-echo "var Zotero = { CiteProc: { CSL: { DATE_PARTS_ALL: ['year', 'month', 'day', 'season'] } }, debug: function(msg) { console.log(msg); }, BetterBibTeX: { CSLMonths: {}}  };" >> minitests/test.js
 
-for src in chrome/content/zotero-better-bibtex/csl-dateparser.js chrome/content/zotero-better-bibtex/csl-localedata.js resource/translators/xregexp-all.js minitests/dates.js ; do
-  rake $src
-  cat $src >> minitests/test.js
-done
+SRC="minitests/dates-pre.js chrome/content/zotero-better-bibtex/lib/citeproc.js chrome/content/zotero-better-bibtex/csl-localedata.js resource/translators/xregexp-all.js chrome/content/zotero-better-bibtex/dateparser.js minitests/dates.js"
+
+rake $SRC
+cat $SRC >> minitests/test.js
+
+sed -i'' 's/Zotero.Utilities.XRegExp/XRegExp/' minitests/test.js
 
 node minitests/test.js

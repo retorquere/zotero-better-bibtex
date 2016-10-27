@@ -147,8 +147,8 @@ class Zotero.BetterBibTeX.DateParser
       interval = {
         type: 'Interval'
         verbatim: @source
-        from: (new Zotero.BetterBibTeX.DateParser(m[1].trim())).date
-        to: (new Zotero.BetterBibTeX.DateParser(m[2].trim())).date
+        from: (new Zotero.BetterBibTeX.DateParser(interval[0].trim())).date
+        to: (new Zotero.BetterBibTeX.DateParser(interval[1].trim())).date
       }
 
       continue unless interval.from.type in ['Date', 'Season'] && interval.to.type in ['Date', 'Season']
