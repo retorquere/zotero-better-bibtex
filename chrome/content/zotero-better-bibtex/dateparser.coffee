@@ -199,7 +199,12 @@ class Zotero.BetterBibTeX.DateParser
     catch err
       return null
 
-    return @normalize_edtf(parsed)
+    try
+      return @normalize_edtf(parsed)
+    catch err
+      return null if err.ignore
+      Zotero.BetterBibTeX.debug('dateparser.parse_edtf:', err)
+      throw err
 
   normalize_edtf: (parsed) ->
     if parsed in [ Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]
@@ -255,6 +260,10 @@ class Zotero.BetterBibTeX.DateParser
         n.uncertain = true if parsed.uncertain || from.uncertain || to.uncertain
         n.approximate = true if parsed.approximate || from.approximate || to.approximate
         return n
+
+      when 'Century'
+        # ignore century -- 11/2011 is parsed as a range from 11th century to 2011, while this clearly means nov 2011
+        throw { ignore: true }
 
       else
         throw "Unexpected date type #{JSON.stringify(parsed)}"
