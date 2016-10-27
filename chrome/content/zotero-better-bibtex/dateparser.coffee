@@ -173,13 +173,6 @@ class Zotero.BetterBibTeX.DateParser
         repubdate.origdate = origdate
         return repubdate
 
-    if m = @source.match(/^y(-?[0-9]+)$/)
-      return {
-        type: 'Date'
-        edtf: true
-        year: parseInt(m[1])
-      }
-
     parsed = @parse_edtf(@source)
     return parsed if (@edtf && parsed) || parsed?.year || parsed?.from?.year
 
@@ -199,7 +192,7 @@ class Zotero.BetterBibTeX.DateParser
     try
       # will throw an error if it's not an EDTF date/time
       # replaces are because edtf.js parses the WD ISO norm rather than EDTF: https://github.com/inukshuk/edtf.js/issues/6
-      parsed = Zotero.BetterBibTeX.EDTF.parse(date.replace(/unknown/g, '*').replace(/open/g, '').replace(/u/g, 'X').replace(/\?~/g, '%'))
+      parsed = Zotero.BetterBibTeX.EDTF.parse(date.replace(/^y/, 'Y').replace(/unknown/g, '*').replace(/open/g, '').replace(/u/g, 'X').replace(/\?~/g, '%'))
     catch err
       return null
 
