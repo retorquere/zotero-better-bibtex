@@ -135,36 +135,31 @@ class Reference
   # @param {field} field to encode
   # @return {String} unmodified `field.value`
   ###
-  isodate: (v, suffix = '') ->
-    year = v["year#{suffix}"]
-    return null unless year
+  isodate: (date) ->
+    return null unless date && date.year && date.type in ['Date', 'Season']
 
-    month = v["month#{suffix}"]
-    month = "0#{month}".slice(-2) if month
-    day = v["day#{suffix}"]
-    day = "0#{day}".slice(-2) if day
-
-    date = '' + year
-    if month
-      date += "-#{month}"
-      date += "-#{day}" if day
-    return date
+    iso = '' + date.year
+    if date.month
+      iso += '-' + ('0' + date.month).slice(-2)
+      iso += '-' + ('0' + date.day).slice(-2) if date.dat
+    return iso
 
   enc_date: (f) ->
     return null unless f.value
 
     value = f.value
-    value = Zotero.BetterBibTeX.parseDateToObject(value, @item.language) if typeof f.value == 'string'
+    parsed = Zotero.BetterBibTeX.parseDateToObject(value, @item.language) if typeof f.value == 'string'
 
-    if value.literal
-      return '\\bibstring{nodate}' if value.literal == 'n.d.'
-      return @enc_latex(@clone(f, value.literal))
+    if parsed.type == 'Verbatim'
+      return '\\bibstring{nodate}' if f.value == 'n.d.'
+      return @enc_latex(@clone(f, f.value))
 
-    date = @isodate(value)
+    date = @isodate(parsed.from || parsed)
     return null unless date
 
-    enddate = @isodate(value, '_end')
-    date += "/#{enddate}" if enddate
+    if parsed.to
+      enddate = @isodate(parsed.to)
+      date += "/#{enddate}" if enddate
 
     return @enc_latex({value: date})
 

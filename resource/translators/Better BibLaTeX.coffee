@@ -42,23 +42,28 @@ class DateField
       when !parsed
         @field = {}
 
-      when parsed.literal
+      when !parsed.type
+        throw "Failed to parse #{date}: #{JSON.stringify(parsed)}"
+
+      when parsed.type == 'Verbatim'
         @field = { name: literal, value: date }
 
-      when parsed.edtf
-        # well this is fairly dense... the date field is not an verbatim field, so the 'circa' symbol ('~') ought to mean a
-        # NBSP... but some magic happens in that field (always with the magic, BibLaTeX...). But hey, if I insert an NBSP,
-        # guess what that gets translated to!
-        @field = { name: formatted, value: parsed.edtf.replace(/~/g, '\u00A0') }
+      when parsed.edtf && Translator.biblatexExtendedDateFormat
+        @field = { name: formatted, value: date.replace(/~/g, '\u00A0') }
 
-      when (parsed.year || parsed.empty) && (parsed.year_end || parsed.empty_end)
-        @field = { name: formatted, value: @format(parsed) + '/' + @format(parsed, '_end') }
+      when parsed.type == 'Interval'
+        @field = { name: formatted, value: @format(parsed.from) + '/' + @format(parsed.to) }
 
       when parsed.year
         @field = { name: formatted, value: @format(parsed) }
 
       else
         @field = {}
+
+    # well this is fairly dense... the date field is not an verbatim field, so the 'circa' symbol ('~') ought to mean a
+    # NBSP... but some magic happens in that field (always with the magic, BibLaTeX...). But hey, if I insert an NBSP,
+    # guess what that gets translated to!
+    @field.value = @field.value.replace(/~/g, '\u00A0') if @field.value
 
   pad: (v, pad) ->
     return v if v.length >= pad.length
@@ -70,24 +75,17 @@ class DateField
     else
       return (if y < 0 then '-' else '-') + ('000' + Math.abs(y)).slice(-4)
 
-  format: (v, suffix = '') ->
-    _v = {}
-    for f in ['circa', 'uncertain', 'empty', 'year', 'month', 'day']
-      _v[f] = v["#{f}#{suffix}"]
-
+  format: (date) ->
     switch
-      when _v.empty                       then  date = ''
-      when _v.year && _v.month && _v.day  then  date = "#{@year(_v.year)}-#{@pad(_v.month, '00')}-#{@pad(_v.day, '00')}"
-      when _v.year && _v.month            then  date = "#{@year(_v.year)}-#{@pad(_v.month, '00')}"
-      else                                      date = @year(_v.year)
+      when date.year && date.month && date.day  then  formatted = "#{@year(date.year)}-#{@pad(date.month, '00')}-#{@pad(date.day, '00')}"
+      when date.year && date.month              then  formatted = "#{@year(date.year)}-#{@pad(date.month, '00')}"
+      when date.year                            then  formatted = @year(date.year)
+      else                                            formatted = ''
 
     if Translator.biblatexExtendedDateFormat
-      date += '?' if _v.uncertain
-      # well this is fairly dense... the date field is not an verbatim field, so the 'circa' symbol ('~') ought to mean a
-      # NBSP... but some magic happens in that field (always with the magic, BibLaTeX...). But hey, if I insert an NBSP,
-      # guess what that gets translated to!
-      date += '\u00A0' if _v.circa
-    return date
+      formatted += '?' if date.uncertain
+      formatted += '~' if date.approximate
+    return formatted
 
 Reference::requiredFields =
   article: ['author', 'title', 'journaltitle', 'year/date']

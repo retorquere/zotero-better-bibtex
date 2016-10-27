@@ -49,6 +49,7 @@ files:
 - chrome/content/zotero-better-bibtex/lib/vardump.js
 - chrome/content/zotero-better-bibtex/lib/fold-to-ascii.js
 - chrome/content/zotero-better-bibtex/lib/punycode.js
+- chrome/content/zotero-better-bibtex/dateparser.js
 - chrome/content/zotero-better-bibtex/preferences.js
 - chrome/content/zotero-better-bibtex/translators.js
 - chrome/content/zotero-better-bibtex/translator-metadata.js

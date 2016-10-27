@@ -39,9 +39,15 @@ class Zotero.BetterBibTeX.PatternFormatter
     delete @year
     delete @month
     if @item.date
-      date = Zotero.BetterBibTeX.DateParser::parseDateToObject(@item.date, {locale: @item.language, verbatimDetection: false})
+      date = Zotero.BetterBibTeX.DateParser::parseDateToObject(@item.date, {locale: @item.language})
       if date
-        if date.literal
+        date = date.origdate if date.origdate
+        date = date.from if date.type == 'Interval'
+
+      switch date?.type || 'Verbatim'
+        when 'Verbatim'
+          # strToDate is a lot less accurate than the BBT+CSL dateparser, but it sometimes extracts year-ish things that
+          # ours doesn't
           date = Zotero.Date.strToDate(@item.date)
 
           @year = parseInt(date.year)
@@ -51,10 +57,15 @@ class Zotero.BetterBibTeX.PatternFormatter
           @month = parseInt(date.month)
           delete @month if isNaN(@month)
 
-        else
+        when 'Date'
           @year = date.year
           @month = date.month
 
+        when 'Season'
+          @year = date.year
+
+        else
+          throw "Unexpected parsed date #{JSON.stringify(date)}"
 
     for candidate in @patterns[0]
       delete @postfix
