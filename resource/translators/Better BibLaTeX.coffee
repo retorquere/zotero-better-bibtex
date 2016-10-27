@@ -34,36 +34,39 @@ Translator.fieldEncoding = {
   verbc: 'verbatim'
 }
 
-class DateField
-  constructor: (date, locale, formatted, literal) ->
-    parsed = Zotero.BetterBibTeX.parseDateToObject(date, {locale, edtf: Translator.biblatexExtendedDateFormat})
-
+DateField =
+  field: (date, formatted, literal) ->
     switch
-      when !parsed
-        @field = {}
+      when !date
+        field = {}
 
-      when !parsed.type
-        throw "Failed to parse #{date}: #{JSON.stringify(parsed)}"
+      when !date.type
+        throw "Failed to parse #{date}: #{JSON.stringify(date)}"
 
-      when parsed.type == 'Verbatim'
-        @field = { name: literal, value: date }
+      when date.type == 'Verbatim'
+        field = { name: literal, value: date }
 
-      when parsed.edtf && Translator.biblatexExtendedDateFormat
-        @field = { name: formatted, value: date.replace(/~/g, '\u00A0') }
+      when date.edtf && Translator.biblatexExtendedDateFormat
+        field = { name: formatted, value: date.replace(/~/g, '\u00A0') }
 
-      when parsed.type == 'Interval'
-        @field = { name: formatted, value: @format(parsed.from) + '/' + @format(parsed.to) }
+      when date.type == 'Interval'
+        field = { name: formatted, value: @format(date.from) + '/' + @format(date.to) }
 
-      when parsed.year
-        @field = { name: formatted, value: @format(parsed) }
+      when date.year
+        field = { name: formatted, value: @format(date) }
 
       else
-        @field = {}
+        field = {}
 
     # well this is fairly dense... the date field is not an verbatim field, so the 'circa' symbol ('~') ought to mean a
     # NBSP... but some magic happens in that field (always with the magic, BibLaTeX...). But hey, if I insert an NBSP,
     # guess what that gets translated to!
-    @field.value = @field.value.replace(/~/g, '\u00A0') if @field.value
+
+    return {} unless field.name && field.value
+
+    field.value = @field.value.replace(/~/g, '\u00A0') if @field.value
+
+    return field
 
   pad: (v, pad) ->
     return v if v.length >= pad.length
@@ -408,11 +411,9 @@ doExport = ->
     ref.add({ urldate: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate && item.url
 
     if item.date
-      if m = item.date.match(/^\[([0-9]+)\]\s+(.*)/)
-        ref.add({ origdate: m[1] })
-        ref.add((new DateField(m[2], item.language, 'date', 'year')).field)
-      else
-        ref.add((new DateField(item.date, item.language, 'date', 'year')).field)
+      date = Zotero.BetterBibTeX.parseDateToObject(item.date, {locale: item.language, edtf: Translator.biblatexExtendedDateFormat})
+      ref.add(DateField.field(date, 'date', 'year'))
+      ref.add(DateField.field(date.origdate, 'origdate', 'origdate'))
 
     switch
       when item.pages

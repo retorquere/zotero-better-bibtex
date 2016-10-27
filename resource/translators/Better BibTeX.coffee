@@ -159,11 +159,15 @@ doExport = ->
 
     if item.date
       date = Zotero.BetterBibTeX.parseDateToObject(item.date, {locale: item.language})
-      if !date || date.type in ['Verbatim', 'Interval']
-        ref.add({ year: item.date })
-      else
-        ref.add({ name: 'month', value: months[date.month - 1], bare: true }) if date.month
-        ref.add({ year: '' + date.year })
+      switch
+        when !date || date.type in ['Verbatim', 'Interval']
+          ref.add({ year: item.date })
+        when typeof date.year == 'number'
+          ref.add({ name: 'month', value: months[date.month - 1], bare: true }) if date.month
+          if date.origdate && (typeof date.origdate.year == 'number')
+            ref.add({ year: "[#{date.origdate.year}] #{date.year}" })
+          else
+            ref.add({ year: '' + date.year })
 
     ref.add({ name: 'note', value: item.extra, allowDuplicates: true })
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
