@@ -4,20 +4,27 @@ class Zotero.BetterBibTeX.DateParser
 
   toArray: (date) ->
     ### [ 0 ] instead if [0, 0]; see https://github.com/retorquere/zotero-better-bibtex/issues/360#issuecomment-143540469 ###
+    Zotero.BetterBibTeX.debug('dateparser.toArray:', date)
     return [ 0 ] unless date.type in ['Date', 'Season']
 
-    return null unless date.year
+    return null unless (typeof date.year) == 'number' || (typeof (date.from?.year)) == 'number'
 
-    arr = [ date.year ]
+    # 360: CSL doesn't do 'null', so zero means null, and all negative dates must be bumped one down
+    if date.year <= 0
+      arr = [ date.year - 1 ]
+    else
+      arr = [ date.year ]
+
     if date.month
       arr.push(date.month)
       arr.push(date.day) if date.day
     return arr
 
   array: ->
-    date1 = @toArray(@date.from || @date)
-    return {literal: @source} unless date1
+    date1 = @date.from || @date
+    return {literal: @source} if date1.type == 'Verbatim'
 
+    date1 = @toArray(date1)
     date2 = @toArray(@date.to) if @date.to
 
     array = {'date-parts': (if date2 then [date1, date2] else [date1])}
@@ -28,7 +35,6 @@ class Zotero.BetterBibTeX.DateParser
     @source = @source.trim() if @source
     @zoteroLocale ?= Zotero.locale.toLowerCase()
     @edtf = options.edtf
-    @cslNull = options.cslNull
 
     return unless @source
 
@@ -78,7 +84,7 @@ class Zotero.BetterBibTeX.DateParser
     if m = date.match(/^(-?[0-9]{3,4})(\?)?(~)?$/)
       return {
         type: 'Date'
-        year: @year(m[1])
+        year: parseInt(m[1])
         uncertain: (if m[2] == '?' then true else undefined)
         approximate: (if m[3] == '~' then true else undefined)
       }
@@ -100,7 +106,7 @@ class Zotero.BetterBibTeX.DateParser
     if m = date.match(/^(-?[0-9]{3,4})[-\.\s\/]([0-9]{1,2})([-\.\s\/]([0-9]{1,2}))?(\?)?(~)?$/)
       parsed = {
         type: 'Date'
-        year: @year(m[1])
+        year: parseInt(m[1])
         month: parseInt(m[2])
         day: parseInt(m[4]) || undefined
         uncertain: (if m[5] == '?' then true else undefined)
@@ -127,7 +133,7 @@ class Zotero.BetterBibTeX.DateParser
     shape = Zotero.Utilities.XRegExp.replace(shape.trim(), @cruft, ' ', 'all')
     shape = shape.split(' ')
 
-    fields = (if parsed.year then 1 else 0) + (if parsed.month then 1 else 0) + (if parsed.day then 1 else 0)
+    fields = (if (typeof parsed.year) == 'number' then 1 else 0) + (if parsed.month then 1 else 0) + (if parsed.day then 1 else 0)
 
     if fields == 3 || shape.length == fields
       parsed.type = 'Date'
@@ -157,14 +163,6 @@ class Zotero.BetterBibTeX.DateParser
 
     return null
 
-  year: (y) ->
-    y = parseInt(y)
-
-    # 360: CSL doesn't do 'null', so zero means null, and all negative dates must be bumped one down
-    y -= 1 if y <= 0 && @cslNull
-
-    return y
-
   parse: ->
     if m = @source.match(/^\[([^\[\]]+)\]([^\[\]]*)/)
       repubdate = m[2].trim()
@@ -179,7 +177,7 @@ class Zotero.BetterBibTeX.DateParser
         return repubdate
 
     parsed = @parse_edtf(@source)
-    return parsed if (@edtf && parsed) || parsed?.year || parsed?.from?.year
+    return parsed if (@edtf && parsed) || (typeof (parsed?.year) == 'number') || (typeof (parsed?.from?.year) == 'number')
 
     return { type: 'Verbatim', verbatim: @source } if !@source || @source in ['--', '/', '_']
 
