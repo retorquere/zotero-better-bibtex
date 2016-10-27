@@ -213,7 +213,7 @@ class Zotero.BetterBibTeX.DateParser
         verbatim: @source
       }
 
-    unspecified = if parsed.unspecified then new edtf.Bitmask(parsed.unspecified) else undefined
+    unspecified = if parsed.unspecified then new Zotero.BetterBibTeX.EDTF.Bitmask(parsed.unspecified) else undefined
 
     switch parsed.type
       when 'Date'
