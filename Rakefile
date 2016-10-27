@@ -654,8 +654,8 @@ end
 file 'chrome/content/zotero-better-bibtex/lib/edtf.js' => 'Rakefile' do |t|
   cleanly(t.name) do
     Tempfile.create(['edtf', '.js'], '.') do |tmp|
+      browserify("require('babel-polyfill'); Zotero.BetterBibTeX.EDTF = require('edtf');", t.name)
       # babel chokes on the 00
-      browserify("Zotero.BetterBibTeX.EDTF = require('edtf');", t.name)
       tmp.write(open(t.name).read.sub('[24, 00, 00]', '[24, 0, 0]'))
       tmp.close
       sh "#{NODEBIN}/babel --compact false #{tmp.path.shellescape} -o #{t.name.shellescape}"
