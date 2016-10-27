@@ -141,7 +141,7 @@ class Reference
     iso = '' + date.year
     if date.month
       iso += '-' + ('0' + date.month).slice(-2)
-      iso += '-' + ('0' + date.day).slice(-2) if date.dat
+      iso += '-' + ('0' + date.day).slice(-2) if date.day
     return iso
 
   enc_date: (f) ->
