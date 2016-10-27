@@ -169,11 +169,7 @@ class Zotero.BetterBibTeX.DateParser
     if m = @source.match(/^\[([^\[\]]+)\]([^\[\]]*)/)
       origdate = (new Zotero.BetterBibTeX.DateParser(m[1].trim())).date
 
-      repubdate = m[2].trim()
-      if repubdate
-        repubdate = (new Zotero.BetterBibTeX.DateParser(repubdate)).date
-      else
-        repubdate = { type: 'Unknown', verbatim: '' }
+      repubdate = (new Zotero.BetterBibTeX.DateParser(m[2].trim() || m[1].trim())).date
       if origdate.type in ['Date', 'Season', 'Interval'] && repubdate.type in ['Date', 'Season', 'Interval', 'Unknown']
         repubdate.origdate = origdate
         return repubdate
