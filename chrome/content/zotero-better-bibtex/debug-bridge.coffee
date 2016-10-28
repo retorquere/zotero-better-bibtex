@@ -19,10 +19,10 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   for key in Zotero.BetterBibTeX.Pref.branch.getChildList('')
     Zotero.BetterBibTeX.Pref.clear(key)
 
-  Zotero.Items.erase((item.id for item in Zotero.Items.getAll()))
+  Zotero.Items.erase((item.id for item in Zotero.Items.getAll() || []))
 
   ### notes don't get erased in bulk?! ###
-  for item in Zotero.Items.getAll()
+  for item in Zotero.Items.getAll() || []
     item.erase()
 
   Zotero.Collections.erase((coll.id for coll in Zotero.getCollections()))
@@ -34,8 +34,8 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.BetterBibTeX.keymanager.reset()
   Zotero.BetterBibTeX.JournalAbbrev.reset()
 
-  items = Zotero.Items.getAll()
-  return true if items.length
+  items = Zotero.Items.getAll() || []
+  return true if items.length == 0
   err = JSON.stringify((item.toArray() for item in items))
   throw "reset failed -- #{items.length} items left in library -- #{err}"
 
@@ -52,7 +52,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.librarySize = ->
     references: 0
   }
 
-  for item in Zotero.Items.getAll()
+  for item in Zotero.Items.getAll() || []
     switch item.itemTypeID
       when 1  then  items.notes++
       when 14 then  items.attachments++

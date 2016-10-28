@@ -35,7 +35,7 @@ Zotero.BetterBibTeX.keymanager = new class
 
   prime: ->
     assigned = (key.itemID for key in @db.keys.find())
-    unassigned = (item.id for item in Zotero.Items.getAll() when not item.id in assigned)
+    unassigned = (item.id for item in (Zotero.Items.getAll() || []) when not item.id in assigned)
 
     if unassigned.length > 100
       return unless Services.prompt.confirm(null, 'Filling citation key cache', """
@@ -197,7 +197,7 @@ Zotero.BetterBibTeX.keymanager = new class
     return @verify(key)
 
   scan: (items) ->
-    items ||= (item.id for item in Zotero.Items.getAll() when (extra = item.getField('extra')) && extra.match(/(bibtex:)|(biblatexcitekey[\[{])/))
+    items ||= (item.id for item in (Zotero.Items.getAll() || []) when (extra = item.getField('extra')) && extra.match(/(bibtex:)|(biblatexcitekey[\[{])/))
 
     return [] if items.length == 0
     if typeof items[0] in ['number', 'string']
