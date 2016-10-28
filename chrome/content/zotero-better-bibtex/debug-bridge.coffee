@@ -96,18 +96,13 @@ Zotero.BetterBibTeX.DebugBridge.methods.serializedState = -> Zotero.BetterBibTeX
 Zotero.BetterBibTeX.DebugBridge.methods.cacheStats = -> {serialized: Zotero.BetterBibTeX.serialized.stats, cache: Zotero.BetterBibTeX.cache.stats }
 
 Zotero.BetterBibTeX.DebugBridge.methods.find = (attribute, value, select) ->
-  attribute = attribute.replace(/[^a-zA-Z]/, '')
-  sql = "select i.itemID as itemID
-         from items i
-         join itemData id on i.itemID = id.itemID
-         join itemDataValues idv on idv.valueID = id.valueID
-         join fields f on id.fieldID = f.fieldID
-         where f.fieldName = '#{attribute}' and not i.itemID in (select itemID from deletedItems) and idv.value = ?"
+  s = new Zotero.Search()
+  s.addCondition('field', 'is', value)
+  ids = s.search()
+  throw new Error("No item found with #{attribute} = '#{value}'") unless ids && ids.length != 0
+  throw new Error("Multiple items found with #{attribute} = '#{value}'") unless ids.length == 1
 
-  id = Zotero.DB.valueQuery(sql, [value])
-  throw new Error("No item found with #{attribute} = '#{value}'") unless id
-
-  id = parseInt(id)
+  id = ids[0]
   return id unless select
 
   for attempt in [1..10]
