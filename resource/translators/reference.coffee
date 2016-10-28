@@ -654,9 +654,8 @@ class Reference
       if ! @has.booktitle.value.match(/:|Proceedings|Companion| '/) || @has.booktitle.value.match(/\.|workshop|conference|symposium/)
         report.push("% Unsure about the formatting of the booktitle")
 
-    if @has.title && !Translator.suppressTitleCase
-      if Zotero.BetterBibTeX.CSL.titleCase(@has.title.value) == @has.title.value
-        report.push("% Title looks like it was stored in title-case in Zotero")
+    if @has.title && !Translator.suppressTitleCase && @has.title.value.match(/\s/) && Zotero.BetterBibTeX.CSL.titleCase(@has.title.value) == @has.title.value
+      report.push("% Title looks like it was stored in title-case in Zotero")
 
     return report.join("\n")
 
