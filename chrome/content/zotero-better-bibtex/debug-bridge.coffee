@@ -22,7 +22,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.Items.erase((item.id for item in Zotero.Items.getAll()))
 
   ### notes don't get erased in bulk?! ###
-  for item in Zotero.Items.setAll()
+  for item in Zotero.Items.getAll()
     item.erase()
 
   Zotero.Collections.erase((coll.id for coll in Zotero.getCollections()))
