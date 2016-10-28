@@ -738,15 +738,6 @@ Zotero.BetterBibTeX.getContentsFromURL = (url) ->
   catch err
     throw new Error("Failed to load #{url}: #{err.message || err.name}")
 
-Zotero.BetterBibTeX.safeGetAll = ->
-  try
-    all = Zotero.Items.getAll()
-    all = [all] if all and not Array.isArray(all)
-  catch err
-    all = false
-  if not all then all = []
-  return all
-
 Zotero.BetterBibTeX.safeGet = (ids) ->
   return [] if ids.length == 0
   all = Zotero.Items.get(ids)

@@ -19,10 +19,10 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   for key in Zotero.BetterBibTeX.Pref.branch.getChildList('')
     Zotero.BetterBibTeX.Pref.clear(key)
 
-  Zotero.Items.erase((item.id for item in Zotero.BetterBibTeX.safeGetAll()))
+  Zotero.Items.erase((item.id for item in Zotero.Items.getAll()))
 
   ### notes don't get erased in bulk?! ###
-  for item in Zotero.BetterBibTeX.safeGetAll()
+  for item in Zotero.Items.setAll()
     item.erase()
 
   Zotero.Collections.erase((coll.id for coll in Zotero.getCollections()))
@@ -35,7 +35,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.BetterBibTeX.JournalAbbrev.reset()
 
   return true if Zotero.DB.valueQuery('select count(*) from items') == 0
-  err = JSON.stringify((item.toArray() for item in Zotero.BetterBibTeX.safeGetAll()))
+  err = JSON.stringify((item.toArray() for item in Zotero.Items.getAll()))
   throw "reset failed -- Library not empty -- #{err}"
 
 Zotero.BetterBibTeX.DebugBridge.methods.import = (filename) ->
@@ -46,16 +46,17 @@ Zotero.BetterBibTeX.DebugBridge.methods.import = (filename) ->
 
 Zotero.BetterBibTeX.DebugBridge.methods.librarySize = ->
   items = {
-    references: 0
     notes: 0
     attachments: 0
+    references: 0
   }
-  for count in Zotero.DB.query("
-          select count(*) as nr, case itemtypeID when 1 then 'notes' when 14 then 'attachments' else 'references' end as itemType
-          from items i
-          where not i.itemID in (select d.itemID from deletedItems d)
-          group by 2")
-    items[count.itemType] = parseInt(count.nr)
+
+  for item in Zotero.Items.getAll()
+    switch item.itemTypeID
+      when 1  then  items.notes++
+      when 14 then  items.attachments++
+      else          items.references++
+
   Zotero.BetterBibTeX.debug('librarySize:', items)
   return items
 
