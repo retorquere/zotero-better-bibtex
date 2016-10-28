@@ -17,7 +17,6 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
-     | EDTF dates in BibLaTeX #590                                                                    | 14          |
      | transliteration for citekey #580                                                               | 1           |
      | CSL status = biblatex pubstate #573                                                            | 1           |
      | Title case of latex greek text on biblatex export #564                                         | 2           |
@@ -54,6 +53,7 @@ Scenario Outline: BibLaTeX Export
      | condense in cite key format not working #308                                                   | 1           |
      | csquotes #302                                                                                  | 2           |
      | italics in title - capitalization #541                                                         | 1           |
+#     | EDTF dates in BibLaTeX #590                                                                    | 14          |
 
 @test-cluster-1 @bblt-1 @bblt @435 @293 @381
 Scenario Outline: BibLaTeX Export

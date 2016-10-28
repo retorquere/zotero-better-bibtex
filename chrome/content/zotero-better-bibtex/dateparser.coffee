@@ -176,8 +176,11 @@ class Zotero.BetterBibTeX.DateParser
         repubdate.origdate = origdate
         return repubdate
 
-    parsed = @parse_edtf(@source)
-    return parsed if (@edtf && parsed) || (typeof (parsed?.year) == 'number') || (typeof (parsed?.from?.year) == 'number')
+    # Disabled in xpi.yml until the port to 5.0 is finished -- Zotero standalone is build on FF 39 (!!) for linux, and EDTF doesn't
+    # run there.
+    if Zotero.BetterBibTeX.EDTF
+      parsed = @parse_edtf(@source)
+      return parsed if (@edtf && parsed) || (typeof (parsed?.year) == 'number') || (typeof (parsed?.from?.year) == 'number')
 
     return { type: 'Verbatim', verbatim: @source } if !@source || @source in ['--', '/', '_']
 
