@@ -100,7 +100,6 @@ Zotero.BetterBibTeX.DebugBridge.methods.find = (attribute, value, select) ->
   s.addCondition('field', 'is', value)
   ids = s.search()
   throw new Error("No item found with #{attribute} = '#{value}'") unless ids && ids.length != 0
-  throw new Error("Multiple items found with #{attribute} = '#{value}'") unless ids.length == 1
 
   id = ids[0]
   return id unless select
