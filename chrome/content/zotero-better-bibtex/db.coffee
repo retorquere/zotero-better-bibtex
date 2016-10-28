@@ -4,25 +4,6 @@ Components.utils.import('resource://gre/modules/FileUtils.jsm')
 Zotero.BetterBibTeX.DBStore = new class
   backups: 4
 
-  constructor: ->
-    # this will go away in 5.0
-    dbName = 'betterbibtex-lokijs'
-    file = Zotero.getZoteroDatabase(dbName)
-    Zotero.BetterBibTeX.debug('DBStore: looking for', file.path)
-    if file.exists()
-      try
-        Zotero.BetterBibTeX.debug('DBStore: migrating', dbName)
-        store = new Zotero.DBConnection(dbName)
-        for row in store.query("SELECT name, data FROM lokijs WHERE name IN ('cache.json', 'db.json')")
-          Zotero.BetterBibTeX.debug('DBStore: migrating', row, row.name)
-          @saveDatabase(row.name, row.data, ->)
-        store.closeDatabase(true)
-        file.moveTo(null, file.leafName + '.migrated')
-      catch err
-        Zotero.BetterBibTeX.flash("Failed to migrate #{file.path}; the database has been backup up, please file an error report")
-        Zotero.BetterBibTeX.debug('DBStore: migration failed:', err)
-        file.moveTo(null, file.leafName + '.failedmigration')
-
   versioned: (name, id) ->
     return name unless id
     return "#{name}.#{id}"
@@ -297,8 +278,7 @@ Zotero.BetterBibTeX.DB = new class
     Zotero.debug('DB.initialize: ready')
 
   purge: ->
-    itemIDs = Zotero.DB.columnQuery('select itemID from items except select itemID from deletedItems')
-    itemIDs = (parseInt(id) for id in itemIDs)
+    itemIDs = (item.id for item in Zotero.Items.getAll())
     @keys.removeWhere((o) -> o.itemID not in itemIDs)
     @cache.removeWhere((o) -> o.itemID not in itemIDs)
     @serialized.removeWhere((o) -> o.itemID not in itemIDs)

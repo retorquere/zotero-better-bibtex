@@ -15,16 +15,6 @@ Zotero.BetterBibTeX.keymanager = new class
   embeddedKeyRE: /\bbibtex: *([^\s\r\n]+)/
   andersJohanssonKeyRE: /\bbiblatexcitekey\[([^\]]+)\]/
 
-  findKeysSQL: "select i.itemID as itemID, i.libraryID as libraryID, idv.value as extra
-                from items i
-                join itemData id on i.itemID = id.itemID
-                join itemDataValues idv on idv.valueID = id.valueID
-                join fields f on id.fieldID = f.fieldID
-                where f.fieldName = 'extra' and not i.itemID in (select itemID from deletedItems)
-                      and (idv.value like ? or idv.value like ? or idv.value like ?)"
-  # Mozilla SQLite.jsm **errors out** if you have a literal LIKE. Mozilla has gone off the freaking rocker
-  findKeysSQLparams: ['%bibtex:%', '%biblatexcitekey[%', '%biblatexcitekey{%']
-
   sort: (a, b) ->
     # Zotero only uses second-level precision
     # a.dateAdded.localeCompare(b.dateAdded)
@@ -209,7 +199,8 @@ Zotero.BetterBibTeX.keymanager = new class
     return @verify(key)
 
   scan: (items) ->
-    items ||= (item.itemID for item in Zotero.DB.query(@findKeysSQL, @findKeysSQLparams))
+    items ||= (item.id for item in Zotero.Items.getAll() when (extra = item.getField('extra')) && extra.match(/(bibtex:)|(biblatexcitekey[\[{])/))
+
     return [] if items.length == 0
     if typeof items[0] in ['number', 'string']
       items = Zotero.Items.get(items)

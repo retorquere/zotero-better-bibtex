@@ -34,8 +34,9 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.BetterBibTeX.keymanager.reset()
   Zotero.BetterBibTeX.JournalAbbrev.reset()
 
-  return true if Zotero.DB.valueQuery('select count(*) from items') == 0
-  err = JSON.stringify((item.toArray() for item in Zotero.Items.getAll()))
+  items = Zotero.Items.getAll()
+  return true if items.length == 0
+  err = JSON.stringify((item.toArray() for item in items))
   throw "reset failed -- Library not empty -- #{err}"
 
 Zotero.BetterBibTeX.DebugBridge.methods.import = (filename) ->
