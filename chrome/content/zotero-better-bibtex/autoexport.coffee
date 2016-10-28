@@ -63,7 +63,7 @@ Zotero.BetterBibTeX.auto = new class
     collections = ("collection:#{id}" for id in collections)
 
     libraries = {}
-    for items in Zotero.Items.get(ids)
+    for item in Zotero.Items.get(ids)
       if item.libraryID
         libraries["library:#{libraryID}"] = true
       else
