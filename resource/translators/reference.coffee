@@ -645,17 +645,21 @@ class Reference
 
     if @referencetype == 'article' && @has.journal
       report.push("% BibLaTeX uses journaltitle, not journal") if Translator.BetterBibLaTeX
-      report.push("% Abbreviated journal title #{@has.journal.value}") if @has.journal.value.indexOf('.') >= 0
+      report.push("% ? Abbreviated journal title #{@has.journal.value}") if @has.journal.value.indexOf('.') >= 0
 
     if @referencetype == 'article' && @has.journaltitle
-      report.push("% Abbreviated journal title #{@has.journaltitle.value}") if @has.journaltitle.value.indexOf('.') >= 0
+      report.push("% ? Abbreviated journal title #{@has.journaltitle.value}") if @has.journaltitle.value.indexOf('.') >= 0
 
     if @referencetype == 'inproceedings' and @has.booktitle
       if ! @has.booktitle.value.match(/:|Proceedings|Companion| '/) || @has.booktitle.value.match(/\.|workshop|conference|symposium/)
-        report.push("% Unsure about the formatting of the booktitle")
+        report.push("% ? Unsure about the formatting of the booktitle")
 
-    if @has.title && !Translator.suppressTitleCase && @has.title.value.match(/\s/) && Zotero.BetterBibTeX.CSL.titleCase(@has.title.value) == @has.title.value
-      report.push("% Title looks like it was stored in title-case in Zotero")
+    if @has.title && !Translator.suppressTitleCase
+      titleCased = Zotero.BetterBibTeX.CSL.titleCase(@has.title.value) == @has.title.value
+      if @has.title.value.match(/\s/)
+        report.push("% ? Title looks like it was stored in title-case in Zotero") if titleCased
+      else
+        report.push("% ? Title looks like it was stored in lower-case in Zotero") unless titleCased
 
     return report.join("\n")
 
