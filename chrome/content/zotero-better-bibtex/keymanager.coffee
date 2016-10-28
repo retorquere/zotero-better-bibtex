@@ -34,21 +34,19 @@ Zotero.BetterBibTeX.keymanager = new class
     return (@clone(key) for key in @db.keys.find())
 
   prime: ->
-    sql = "select i.itemID as itemID from items i where itemTypeID not in (1, 14) and not i.itemID in (select itemID from deletedItems)"
     assigned = (key.itemID for key in @db.keys.find())
-    sql += " and not i.itemID in #{Zotero.BetterBibTeX.DB.SQLite.Set(assigned)}" if assigned.length > 0
+    unassigned = (item.id for item in Zotero.Items.getAll() when not item.id in assigned)
 
-    items = Zotero.DB.columnQuery(sql)
-    if items.length > 100
+    if unassigned.length > 100
       return unless Services.prompt.confirm(null, 'Filling citation key cache', """
-          You have requested a scan over all citation keys, but have #{items.length} references for which the citation key must still be calculated.
+          You have requested a scan over all citation keys, but have #{unassigned.length} references for which the citation key must still be calculated.
           This might take a long time, and Zotero will freeze while it's calculating them.
           If you click 'Cancel' now, the scan will only occur over the citation keys you happen to have in place.
 
           Do you wish to proceed calculating all citation keys now?
       """)
 
-    for itemID in items
+    for itemID in unassigned
       @get({itemID}, 'on-export')
     return
 

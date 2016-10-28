@@ -35,9 +35,9 @@ Zotero.BetterBibTeX.DebugBridge.methods.reset = ->
   Zotero.BetterBibTeX.JournalAbbrev.reset()
 
   items = Zotero.Items.getAll()
-  return true if items.length == 0
+  return true if items.length
   err = JSON.stringify((item.toArray() for item in items))
-  throw "reset failed -- Library not empty -- #{err}"
+  throw "reset failed -- #{items.length} items left in library -- #{err}"
 
 Zotero.BetterBibTeX.DebugBridge.methods.import = (filename) ->
   file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile)
