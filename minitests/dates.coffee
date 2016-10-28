@@ -17,4 +17,5 @@ for locale, i in locales
 
 #console.log(Zotero.BetterBibTeX.CSLDateParser.parseDateToObject("März 1, 2008"))
 #console.log(Zotero.BetterBibTeX.DateParser::parseDateToObject("8. juli 2011"))
-console.log(Zotero.BetterBibTeX.DateParser::parseDateToObject("11/2011"))
+#console.log(Zotero.BetterBibTeX.DateParser::parseDateToObject("11/2011"))
+console.log("1999-09-29/", Zotero.BetterBibTeX.DateParser::parseDateToObject("1999-09-29/"))

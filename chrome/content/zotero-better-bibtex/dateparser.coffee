@@ -136,8 +136,29 @@ class Zotero.BetterBibTeX.DateParser
     fields = (if (typeof parsed.year) == 'number' then 1 else 0) + (if parsed.month then 1 else 0) + (if parsed.day then 1 else 0)
 
     if fields == 3 || shape.length == fields
-      parsed.type = 'Date'
-      return parsed
+      if typeof parsed.year_end == 'number'
+        return {
+          type: 'Interval'
+          from: {
+            type: 'Date'
+            year: parsed.year
+            month: parsed.month
+            day: parsed.day
+          }
+          to: {
+            type: 'Date'
+            year: parsed.year_end
+            month: parsed.month_end
+            day: parsed.day_end
+          }
+        }
+      else
+        return {
+          type: 'Date'
+          year: parsed.year
+          month: parsed.month
+          day: parsed.day
+        }
 
     return null
 
@@ -148,7 +169,7 @@ class Zotero.BetterBibTeX.DateParser
       continue if sep == '-' && @source.match(/^-[0-9]{3,4}/)
 
       interval = @source.split(sep)
-      continue unless interval.length == 2 && interval[0].trim() && interval[1].trim()
+      continue unless interval.length == 2
 
       interval = {
         type: 'Interval'
@@ -156,8 +177,11 @@ class Zotero.BetterBibTeX.DateParser
         from: (new Zotero.BetterBibTeX.DateParser(interval[0].trim())).date
         to: (new Zotero.BetterBibTeX.DateParser(interval[1].trim())).date
       }
+      interval.from = { type: 'Unknown', verbatim: ''} if typeof interval.from == 'undefined'
+      interval.to = { type: 'Unknown', verbatim: ''} if typeof interval.to == 'undefined'
 
-      continue unless interval.from.type in ['Date', 'Season'] && interval.to.type in ['Date', 'Season']
+      continue if interval.from.type == 'Unknown' && interval.to.type == 'Unknown'
+      continue unless interval.from.type in ['Date', 'Season', 'Unknown'] && interval.to.type in ['Date', 'Season', 'Unknown']
 
       return interval
 
@@ -251,8 +275,8 @@ class Zotero.BetterBibTeX.DateParser
         return n
 
       when 'Interval'
-        from = if parsed.values[0] then @normalize_edtf(parsed.values[0]) else { type: 'Open', edtf: true }
-        to = if parsed.values[1] then @normalize_edtf(parsed.values[1]) else { type: 'Open', edtf: true }
+        from = if parsed.values[0] then @normalize_edtf(parsed.values[0]) else { type: 'Unknown', edtf: true }
+        to = if parsed.values[1] then @normalize_edtf(parsed.values[1]) else { type: 'Unknown', edtf: true }
         n = {
           type: 'Interval'
           edtf: true

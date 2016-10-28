@@ -17,6 +17,8 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Oriental dates trip up date parser #389                                                        | 1           |
+     | Non-ascii in dates is not matched by date parser #376                                          | 1           |
      | transliteration for citekey #580                                                               | 1           |
      | CSL status = biblatex pubstate #573                                                            | 1           |
      | Title case of latex greek text on biblatex export #564                                         | 2           |
@@ -45,8 +47,6 @@ Scenario Outline: BibLaTeX Export
      | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201     | 1           |
      | Export mapping for reporter field #219                                                         | 1           |
      | Fields in Extra should override defaults                                                       | 1           |
-     | Non-ascii in dates is not matched by date parser #376                                          | 1           |
-     | Oriental dates trip up date parser #389                                                        | 1           |
      | Spaces not stripped from citation keys #294                                                    | 1           |
      | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | auth leaves punctuation in citation key #310                                                   | 1           |

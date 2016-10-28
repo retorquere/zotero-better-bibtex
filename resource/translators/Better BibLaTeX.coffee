@@ -44,7 +44,7 @@ DateField =
         throw "Failed to parse #{date}: #{JSON.stringify(date)}"
 
       when date.type == 'Verbatim'
-        field = { name: literal, value: date }
+        field = { name: literal, value: date.verbatim }
 
       when date.edtf && Translator.biblatexExtendedDateFormat
         field = { name: formatted, value: date.replace(/~/g, '\u00A0') }
@@ -64,7 +64,7 @@ DateField =
 
     return {} unless field.name && field.value
 
-    field.value = @field.value.replace(/~/g, '\u00A0') if @field.value
+    field.value = field.value.replace(/~/g, '\u00A0') if field.value
 
     return field
 
@@ -88,6 +88,7 @@ DateField =
     if Translator.biblatexExtendedDateFormat
       formatted += '?' if date.uncertain
       formatted += '~' if date.approximate
+
     return formatted
 
 Reference::requiredFields =
