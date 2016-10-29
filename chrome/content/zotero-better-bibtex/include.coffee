@@ -17,17 +17,14 @@ if not Zotero.BetterBibTeX
 
     if loader
       Zotero.debug('BBT: all loaded')
-      try
-        Zotero.debug('BBT: scheduling init')
-        window.addEventListener('load', (load = (event) ->
-          Zotero.debug('BBT: init')
-          window.removeEventListener('load', load, false) #remove listener, no longer needed
-          try
-            Zotero.BetterBibTeX.init()
-          catch err
-            Zotero.BetterBibTeX.disabled = "Initialize failed: #{err}"
-            Zotero.debug('BBT: failed to initialize: ' + err)
-          return
-        ), false)
-      catch err
-        Zotero.BetterBibTeX.disabled = "Initialize failed: #{err}"
+      Zotero.debug('BBT: scheduling init')
+      window.addEventListener('load', (load = (event) ->
+        Zotero.debug('BBT: init')
+        window.removeEventListener('load', load, false) #remove listener, no longer needed
+        try
+          Zotero.BetterBibTeX.init()
+        catch err
+          Zotero.BetterBibTeX.disabled = "Initialize failed: #{err}"
+          Zotero.debug('BBT: failed to initialize: ' + err)
+        return
+      ), false)
