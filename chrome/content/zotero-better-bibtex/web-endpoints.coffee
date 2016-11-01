@@ -122,31 +122,20 @@ Zotero.BetterBibTeX.endpoints.schomd.init = (url, data, sendResponseCallback) ->
     ### the schomd methods search by citekey -- the cache needs to be fully primed for this to work ###
     Zotero.BetterBibTeX.keymanager.prime()
 
-    result = Zotero.BetterBibTeX.schomd['jsonrpc_' + req.method].apply(Zotero.BetterBibTeX.schomd, req.params)
-    if typeof result?.then == 'function'
+    try
+      result = Zotero.BetterBibTeX.schomd['jsonrpc_' + req.method].apply(Zotero.BetterBibTeX.schomd, req.params)
+      result = Promise.resolve(result) unless result && typeof (result.then) == 'function'
       result = result.then((result) ->
-        return JSON.stringify({
+        sendResponseCallback(200, 'application/json', JSON.stringify({
           jsonrpc: (if req.jsonrpc then req.jsonrpc else undefined)
           id: (if req.id || (typeof req.id) == 'number' then req.id else null)
           result
-        })
+        }))
       ).catch((e) ->
-        return JSON.stringify({
-          jsonrpc: (if req.jsonrpc then req.jsonrpc else undefined)
-          id: (if req.id || (typeof req.id) == 'number' then req.id else null)
-          result: e.message || e.name
-        })
+        sendResponseCallback(500, 'application/json', JSON.stringify({jsonrpc: '2.0', error: {code: 5000, message: '' + e}, id: null}))
       )
-    else
-      result = JSON.stringify({
-        jsonrpc: (if req.jsonrpc then req.jsonrpc else undefined)
-        id: (if req.id || (typeof req.id) == 'number' then req.id else null)
-        result
-      })
-  catch err
-    result = JSON.stringify({jsonrpc: '2.0', error: {code: 5000, message: '' + err + "\n" + err.stack}, id: null})
-
-  return sendResponseCallback(200, 'application/json', result)
+    catch err
+      sendResponseCallback(500, 'application/json', JSON.stringify({jsonrpc: '2.0', error: {code: 5000, message: '' + err + "\n" + err.stack}, id: null}))
 
 Zotero.BetterBibTeX.endpoints.cayw = { supportedMethods: ['GET'] }
 Zotero.BetterBibTeX.endpoints.cayw.init = (url, data, sendResponseCallback) ->
