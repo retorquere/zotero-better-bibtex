@@ -11,6 +11,8 @@ require 'shellwords'
 require 'nokogiri'
 require 'mechanize'
 require 'open-uri'
+require 'net/http'
+require 'uri'
 
 #$DEBUG=true
 
@@ -541,4 +543,21 @@ end
 Then(/^the picks for (.+) should match \/(.*)\/$/) do |format, regexp|
   found = $Firefox.BetterBibTeX.cayw(@caywPicks, format)
   expect(found).to match(/#{regexp}/)
+end
+
+Then(/^a schomd (.+) request using '(.+)' should match '(.+)'$/) do |method, params, expected|
+  header = {'Content-Type': 'text/json'}
+  schomd = {'method': method, 'params': JSON.parse(params) }
+
+  uri = URI.parse('http://127.0.0.1:23119/better-bibtex/schomd')
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Post.new(uri.request_uri, header)
+  request.body = schomd.to_json
+
+  # Send the request
+  response = http.request(request)
+
+  expected = JSON.parse(open(File.join('test/fixtures', expected)).read)
+  found = JSON.parse(response.body.strip)
+  expect(found).to eq(expected)
 end
