@@ -29,8 +29,6 @@ test:
             else
               export JURISMBETA=true
             fi
-            echo "JURISM=$JURISM"
-            echo "JURISMBETA=$JURISMBETA"
             LOGS=$CIRCLE_ARTIFACTS CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1" bundle exec rake test
             ;;
         *)  if [ "$NIGHTLY" = "true" ]; then
@@ -38,8 +36,6 @@ test:
             else
               export JURISMBETA=true
             fi
-            echo "JURISM=$JURISM"
-            echo "JURISMBETA=$JURISMBETA"
             LOGS=$CIRCLE_ARTIFACTS CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1" bundle exec rake test
             ;;
       esac
