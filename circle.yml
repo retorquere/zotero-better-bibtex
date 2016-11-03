@@ -24,9 +24,19 @@ test:
             ;;
         1)  LOGS=$CIRCLE_ARTIFACTS JURISM=false CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1" bundle exec rake test
             ;;
-        2)  LOGS=$CIRCLE_ARTIFACTS JURISMBETA=true  CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1" bundle exec rake test
+        2)  if [ "$NIGHTLY" = "true" ]; then
+              export JURISM=true
+            else
+              export JURISMBETA=true
+            fi
+            LOGS=$CIRCLE_ARTIFACTS CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1" bundle exec rake test
             ;;
-        *)  LOGS=$CIRCLE_ARTIFACTS JURISMBETA=true  CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1" bundle exec rake test
+        *)  if [ "$NIGHTLY" = "true" ]; then
+              export JURISM=true
+            else
+              export JURISMBETA=true
+            fi
+            LOGS=$CIRCLE_ARTIFACTS CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1" bundle exec rake test
             ;;
       esac
     : parallel: true
