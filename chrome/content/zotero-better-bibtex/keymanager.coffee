@@ -197,7 +197,14 @@ Zotero.BetterBibTeX.keymanager = new class
     return @verify(key)
 
   scan: (items) ->
-    items ||= (item.id for item in (Zotero.Items.getAll() || []) when (extra = item.getField('extra')) && extra.match(/(bibtex:)|(biblatexcitekey[\[{])/))
+    if !items
+      items = []
+      for item in Zotero.Items.getAll() || []
+        extra = item.getField('extra')
+        continue unless extra
+        Zotero.BetterBibTeX.debug('keymanager.scan:', extra, typeof extra)
+        continue unless extra.match(/(bibtex:)|(biblatexcitekey[\[{])/)
+        items.push(item)
 
     return [] if items.length == 0
     if typeof items[0] in ['number', 'string']
