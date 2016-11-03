@@ -65,7 +65,7 @@ Zotero.BetterBibTeX.auto = new class
     libraries = {}
     for item in Zotero.Items.get(ids)
       if item.libraryID
-        libraries["library:#{libraryID}"] = true
+        libraries["library:#{item.libraryID}"] = true
       else
         libraries.library = true
     collections = collections.concat(Object.keys(libraries))
