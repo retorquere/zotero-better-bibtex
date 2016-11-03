@@ -356,7 +356,7 @@ Translator.complete = ->
   @exportGroups()
 
   preamble = []
-  preamble.push('\\DeclarePrefChars{' + @unique_chars(@preamble.DeclarePrefChars) + '}') if @preamble.DeclarePrefChars
+  preamble.push("\ifdefined\DeclarePrefChars\DeclarePrefChars{'’-}\else\fi") if @preamble.DeclarePrefChars
   preamble.push('\\newcommand{\\noopsort}[1]{}') if @preamble.noopsort
   if preamble.length > 0
     preamble = ('"' + cmd + ' "' for cmd in preamble)
