@@ -34,10 +34,13 @@ Zotero_BetterBibTeX_ErrorReport =
     return new Promise((resolve, reject) =>
       Zotero.getSystemInfo((info) =>
         try
+          settings = "Settings:\n"
+          for key in Zotero.BetterBibTeX.Pref.branch.getChildList('')
+            settings += "  #{key}: #{Zotero.BetterBibTeX.Pref.get(key)}\n"
           @errorlog = {
             info: info
             errors: Zotero.getErrors(true).join('\n')
-            full: Zotero.Debug.get()
+            full: settings + Zotero.Debug.get()
           }
 
           debug = @errorlog.full.split("\n")
