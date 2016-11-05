@@ -202,12 +202,13 @@ Zotero.BetterBibTeX.keymanager = new class
       for item in Zotero.Items.getAll() || []
         extra = item.getField('extra')
         continue unless extra
-        Zotero.BetterBibTeX.debug('keymanager.scan:', extra, typeof extra)
-        try
-          continue unless extra.match(/(bibtex:)|(biblatexcitekey[\[{])/)
-          items.push(item)
-        catch err
-          Zotero.BetterBibTeX.debug('keymanager.scan:', extra, typeof extra, Object.keys(item), err)
+
+        #600: Juris-M will return a number rather than a string if the extra field has only a number
+        if typeof extra != 'string'
+          Zotero.BetterBibTeX.debug('keymanager.scan: item with non-string extra', {id: item.id, title: item.getField('title'), extra, type: typeof extra})
+          continue
+        continue unless extra.match(/(bibtex:)|(biblatexcitekey[\[{])/)
+        items.push(item)
 
     return [] if items.length == 0
     if typeof items[0] in ['number', 'string']
