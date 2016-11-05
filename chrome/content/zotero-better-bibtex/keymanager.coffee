@@ -203,8 +203,11 @@ Zotero.BetterBibTeX.keymanager = new class
         extra = item.getField('extra')
         continue unless extra
         Zotero.BetterBibTeX.debug('keymanager.scan:', extra, typeof extra)
-        continue unless extra.match(/(bibtex:)|(biblatexcitekey[\[{])/)
-        items.push(item)
+        try
+          continue unless extra.match(/(bibtex:)|(biblatexcitekey[\[{])/)
+          items.push(item)
+        catch err
+          Zotero.BetterBibTeX.debug('keymanager.scan:', extra, typeof extra, Object.keys(item), err)
 
     return [] if items.length == 0
     if typeof items[0] in ['number', 'string']
