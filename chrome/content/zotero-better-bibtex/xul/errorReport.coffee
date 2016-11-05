@@ -57,11 +57,17 @@ Zotero_BetterBibTeX_ErrorReport =
               active.push(info)
           info = ''
           if active.length > 0
-            active.sort()
-            info += "\nActive addons:\n" + active.join('')
+            active.sort((a, b) -> a.toLowerCase().localeCompare(b.toLowerCase()))
+            info += "Active addons:\n" + active.join('')
           if disabled.length > 0
-            disabled.sort()
-            info += "\nDisabled addons:\n" + disabled.join('')
+            disabled.sort((a, b) -> a.toLowerCase().localeCompare(b.toLowerCase()))
+            info += "Disabled addons:\n" + disabled.join('')
+
+          settings = []
+          for key in Zotero.BetterBibTeX.Pref.branch.getChildList('')
+            settings.push("  #{key} = #{JSON.stringify(Zotero.BetterBibTeX.Pref.get(key))}\n")
+          settings.sort((a, b) -> a.toLowerCase().localeCompare(b.toLowerCase()))
+          info += "Settings:\n" + settings.join('')
 
           for guid in ['zotero@chnm.gmu.edu', 'juris-m@juris-m.github.io']
             continue unless ZOTERO_CONFIG.GUID == guid
