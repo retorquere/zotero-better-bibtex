@@ -18,7 +18,7 @@ Zotero.BetterBibTeX = new class
     addons = Async.waitForSyncCallback(callback)
     for addon in addons
       Zotero.debug("Addon: #{addon.id} (#{addon.isActive}): #{addon.name} @ #{addon.version}")
-      continue unless addon.appDisabled || addon.userDisabled # addon.isActive
+      continue if addon.appDisabled || addon.userDisabled # unless addon.isActive
       @activeAddons[addon.id] = addon.version
     # fallback for ZSA
     for guid in ['zotero@chnm.gmu.edu', 'juris-m@juris-m.github.io']
