@@ -35,7 +35,7 @@ Zotero.BetterBibTeX.keymanager = new class
 
   prime: ->
     assigned = (key.itemID for key in @db.keys.find())
-    unassigned = (item.id for item in (Zotero.Items.getAll() || []) when not item.id in assigned)
+    unassigned = (item.id for item in Zotero.BetterBibTeX.DB.getAll() when not item.id in assigned)
 
     if unassigned.length > 100
       return unless Services.prompt.confirm(null, 'Filling citation key cache', """
@@ -199,7 +199,7 @@ Zotero.BetterBibTeX.keymanager = new class
   scan: (items) ->
     if !items
       items = []
-      for item in Zotero.Items.getAll() || []
+      for item in Zotero.BetterBibTeX.DB.getAll()
         extra = item.getField('extra')
         continue unless extra
 

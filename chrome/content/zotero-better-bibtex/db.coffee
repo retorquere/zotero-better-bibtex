@@ -63,6 +63,13 @@ Zotero.BetterBibTeX.DBStore = new class
 Zotero.BetterBibTeX.DB = new class
   cacheExpiry: Date.now() - (1000 * 60 * 60 * 24 * 30)
 
+  getAll: ->
+    items = Zotero.Items.getAll() || []
+    for groupID in Zotero.Groups.getAll()
+      libraryID = Zotero.Groups.getLibraryIDFromGroupID(groupID)
+      items = items.concat(Zotero.Items.getAll(false, libraryID) || [])
+    return items
+
   constructor: ->
     @load()
     idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
@@ -278,7 +285,7 @@ Zotero.BetterBibTeX.DB = new class
     Zotero.debug('DB.initialize: ready')
 
   purge: ->
-    itemIDs = (item.id for item in Zotero.Items.getAll() || [])
+    itemIDs = (item.id for item in @getAll())
     @keys.removeWhere((o) -> o.itemID not in itemIDs)
     @cache.removeWhere((o) -> o.itemID not in itemIDs)
     @serialized.removeWhere((o) -> o.itemID not in itemIDs)
