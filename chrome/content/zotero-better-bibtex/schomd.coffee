@@ -220,5 +220,7 @@ Zotero.BetterBibTeX.schomd.jsonrpc_bibtex = (keys, {translator, libraryID, displ
   displayOptions ||= {}
 
   return Zotero.BetterBibTeX.Translators.translate(Zotero.BetterBibTeX.Translators.getID(translator), {items}, displayOptions).then((bibtex)->
-    return bibtex + "\n" + missing
+    bibtex = [bibtex.trim() + "\n"]
+    bibtex.push(missing) if missing
+    return bibtex.join("\n")
   )
