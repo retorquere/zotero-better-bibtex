@@ -65,8 +65,8 @@ Zotero.BetterBibTeX.DB = new class
 
   getAll: ->
     items = Zotero.Items.getAll() || []
-    for groupID in Zotero.Groups.getAll()
-      libraryID = Zotero.Groups.getLibraryIDFromGroupID(groupID)
+    for group in Zotero.Groups.getAll()
+      libraryID = Zotero.Groups.getLibraryIDFromGroupID(group.id)
       items = items.concat(Zotero.Items.getAll(false, libraryID) || [])
     return items
 
