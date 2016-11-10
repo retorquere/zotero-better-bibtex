@@ -1,5 +1,5 @@
-# Components.utils.importGlobalProperties(['Blob'])
 Components.utils.import('resource://zotero/config.js')
+Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
 Zotero_BetterBibTeX_ErrorReport =
   submit: (filename, data) ->
@@ -32,10 +32,58 @@ Zotero_BetterBibTeX_ErrorReport =
 
   getSystemInfo: ->
     return new Promise((resolve, reject) =>
-      Zotero.getSystemInfo((info) =>
+      AddonManager.getAllAddons((addons)=>
         try
+          versions = {}
+          standalone = false
+
+          types = {
+            2:    'extension'
+            4:    'theme'
+            8:    'locale'
+            32:   'multiple item package'
+            64:   'spell check dictionary'
+            128:  'telemetry experiment'
+            256:  'WebExtension experiment'
+          }
+          active = []
+          disabled = []
+          for addon in addons
+            versions[addon.id] = addon.version unless addon.appDisabled || addon.userDisabled
+            info = "  #{addon.name} (#{types['' + addon.type] || addon.type}): #{addon.version}\n"
+            if addon.appDisabled || addon.userDisabled
+              disabled.push(info)
+            else
+              active.push(info)
+          info = ''
+          if active.length > 0
+            active.sort((a, b) -> a.toLowerCase().localeCompare(b.toLowerCase()))
+            info += "Active addons:\n" + active.join('')
+          if disabled.length > 0
+            disabled.sort((a, b) -> a.toLowerCase().localeCompare(b.toLowerCase()))
+            info += "Disabled addons:\n" + disabled.join('')
+
+          settings = []
+          for key in Zotero.BetterBibTeX.Pref.branch.getChildList('')
+            settings.push("  #{key} = #{JSON.stringify(Zotero.BetterBibTeX.Pref.get(key))}\n")
+          settings.sort((a, b) -> a.toLowerCase().localeCompare(b.toLowerCase()))
+          info += "Settings:\n" + settings.join('')
+
+          for guid in ['zotero@chnm.gmu.edu', 'juris-m@juris-m.github.io']
+            continue unless ZOTERO_CONFIG.GUID == guid
+            continue if versions[guid]
+            versions[guid] = ZOTERO_CONFIG.VERSION
+            versions[guid + '-standalone'] = true
+
+          header = ''
+          appInfo = Components.classes['@mozilla.org/xre/app-info;1'].getService(Components.interfaces.nsIXULAppInfo)
+          header += "Platform: #{Zotero.platform} #{Zotero.oscpu}\n"
+          header += "Application: #{appInfo.name} #{appInfo.version} #{Zotero.locale}\n"
+          header += "Zotero#{if versions['zotero@chnm.gmu.edu-standalone'] then ' standalone' else ''}: #{versions['zotero@chnm.gmu.edu']}\n" if versions['zotero@chnm.gmu.edu']
+          header += "Juris-M#{if versions['juris-m@juris-m.github.io-standalone'] then ' standalone' else ''}: #{versions['juris-m@juris-m.github.io']}\n" if versions['juris-m@juris-m.github.io']
+
           @errorlog = {
-            info: info
+            info: header + info
             errors: Zotero.getErrors(true).join('\n')
             full: Zotero.Debug.get()
           }

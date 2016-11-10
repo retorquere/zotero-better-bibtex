@@ -35,7 +35,7 @@ Zotero.BetterBibTeX.keymanager = new class
 
   prime: ->
     assigned = (key.itemID for key in @db.keys.find())
-    unassigned = (item.id for item in (Zotero.Items.getAll() || []) when not item.id in assigned)
+    unassigned = (item.id for item in Zotero.BetterBibTeX.DB.getAll() when not item.id in assigned)
 
     if unassigned.length > 100
       return unless Services.prompt.confirm(null, 'Filling citation key cache', """
@@ -197,7 +197,18 @@ Zotero.BetterBibTeX.keymanager = new class
     return @verify(key)
 
   scan: (items) ->
-    items ||= (item.id for item in (Zotero.Items.getAll() || []) when (extra = item.getField('extra')) && extra.match(/(bibtex:)|(biblatexcitekey[\[{])/))
+    if !items
+      items = []
+      for item in Zotero.BetterBibTeX.DB.getAll()
+        extra = item.getField('extra')
+        continue unless extra
+
+        #600: Juris-M will return a number rather than a string if the extra field has only a number
+        if typeof extra != 'string'
+          Zotero.BetterBibTeX.debug('keymanager.scan: item with non-string extra', {id: item.id, title: item.getField('title'), extra, type: typeof extra})
+          continue
+        continue unless extra.match(/(bibtex:)|(biblatexcitekey[\[{])/)
+        items.push(item)
 
     return [] if items.length == 0
     if typeof items[0] in ['number', 'string']

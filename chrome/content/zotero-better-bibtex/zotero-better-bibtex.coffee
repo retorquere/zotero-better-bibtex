@@ -18,7 +18,7 @@ Zotero.BetterBibTeX = new class
     addons = Async.waitForSyncCallback(callback)
     for addon in addons
       Zotero.debug("Addon: #{addon.id} (#{addon.isActive}): #{addon.name} @ #{addon.version}")
-      continue unless addon.isActive
+      continue if addon.appDisabled || addon.userDisabled # unless addon.isActive
       @activeAddons[addon.id] = addon.version
     # fallback for ZSA
     for guid in ['zotero@chnm.gmu.edu', 'juris-m@juris-m.github.io']
@@ -105,7 +105,7 @@ Zotero.BetterBibTeX = new class
             return "Better BibTeX has been disabled because it found Juris-M #{version}, but requires 4.0.29.12m95 or later."
 
           when Services.vc.compare(version.replace(/(\.SOURCE|beta[0-9]+)$/, ''), '4.0.29.12.98') < 0
-            @flash("Juris-M #{version} has known incompatibilities with Better BibTeX -- for full compatibility, install 4.0.29.12m98 or later (m98beta will do)", 20)
+            @flash("Juris-M #{version} has known incompatibilities with Better BibTeX", "for full compatibility, install 4.0.29.12m98 or later (m98beta will do)", 20)
 
           when Services.vc.compare(version.replace(/(\.SOURCE|beta[0-9]+)$/, ''), '5.0.0') >= 0
             return "Juris-M #{version} found. Better BibTeX has been disabled because is not compatible with Juris-M version 5.0 or later."
