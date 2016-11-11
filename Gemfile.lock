@@ -121,7 +121,7 @@ GEM
       yajl-ruby (~> 1.2.0)
     rainbow (2.1.0)
     rake (11.3.0)
-    rake-xpi (0.0.39)
+    rake-xpi (0.0.40)
       aws-sdk
       faraday-http-cache
       jwt
