@@ -30,14 +30,14 @@ test:
             if [ "$ISSET" = "0" ]; then
               export JURISMBETA=true
             fi
-            echo `set | grep JURISM` testset 1
+            echo `set | grep ^JURISM` testset 1
             LOGS=$CIRCLE_ARTIFACTS CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1" bundle exec rake test
             ;;
         *)  ISSET=`set | grep -c ^JURISM`
             if [ "$ISSET" = "0" ]; then
               export JURISMBETA=true
             fi
-            echo `set | grep JURISM` testset 2
+            echo `set | grep ^JURISM` testset 2
             LOGS=$CIRCLE_ARTIFACTS CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1" bundle exec rake test
             ;;
       esac
