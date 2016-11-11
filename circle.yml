@@ -20,26 +20,20 @@ test:
   override:
   - ? |-
       case $CIRCLE_NODE_INDEX in
-        0)  echo ZOTERO testset 1
-            LOGS=$CIRCLE_ARTIFACTS JURISM=false CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1" bundle exec rake test
-            ;;
-        1)  echo ZOTERO testset 2
-            LOGS=$CIRCLE_ARTIFACTS JURISM=false CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1" bundle exec rake test
-            ;;
-        2)  ISSET=`set | grep -c ^JURISM`
-            if [ "$ISSET" = "0" ]; then
-              export JURISMBETA=true
-            fi
-            echo `set | grep ^JURISM` testset 1
-            LOGS=$CIRCLE_ARTIFACTS CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1" bundle exec rake test
-            ;;
-        *)  ISSET=`set | grep -c ^JURISM`
-            if [ "$ISSET" = "0" ]; then
-              export JURISMBETA=true
-            fi
-            echo `set | grep ^JURISM` testset 2
-            LOGS=$CIRCLE_ARTIFACTS CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1" bundle exec rake test
-            ;;
+        2|3)  if [ "$NIGHTLY" = "true" ]; then
+                export JURISM=true
+              elif [ "$DOWNGRADE" = "true" ]; then
+                export JURISMM95=true
+              else
+                export JURISMBETA=true
+              fi
+              ;;
+      esac
+      case $CIRCLE_NODE_INDEX in
+        0|2)  LOGS=$CIRCLE_ARTIFACTS CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1" bundle exec rake test
+              ;;
+        *)    LOGS=$CIRCLE_ARTIFACTS CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1" bundle exec rake test
+              ;;
       esac
     : parallel: true
 general:
