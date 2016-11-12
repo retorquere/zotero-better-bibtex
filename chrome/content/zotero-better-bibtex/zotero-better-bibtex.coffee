@@ -102,7 +102,7 @@ Zotero.BetterBibTeX = new class
       when version = @activeAddons['juris-m@juris-m.github.io']?.replace('m', '.')
         switch
           when Services.vc.compare(version.replace(/(\.SOURCE|beta[0-9]+)$/, ''), '4.0.29.12.95') == 0
-            @flash("Juris-M #{@activeAddons['juris-m@juris-m.github.io']} works but is unsupported", "Juris-M #{@activeAddons['juris-m@juris-m.github.io']} seems to work with Better BibTeX, but is unsupported; for support, install 4.0.29.12m98 or later", 20)
+            return null
 
           when Services.vc.compare(version.replace(/(\.SOURCE|beta[0-9]+)$/, ''), '4.0.29.12.98') < 0
             return "Juris-M #{@activeAddons['juris-m@juris-m.github.io']} found. Better BibTeX has been disabled because is not compatible with Juris-M version 4.0.29.12m98 or earlier."
