@@ -20,7 +20,11 @@ test:
   override:
   - ? |-
       case $CIRCLE_NODE_INDEX in
-        2|3)  export JURISM=true
+        2|3)  if [ "$STANDALONE" = "true" ]; then
+                export JURISMSTANDALONE=true
+              else
+                export JURISM=true
+              fi
               ;;
       esac
       case $CIRCLE_NODE_INDEX in
