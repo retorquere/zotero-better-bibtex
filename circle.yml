@@ -20,13 +20,7 @@ test:
   override:
   - ? |-
       case $CIRCLE_NODE_INDEX in
-        2|3)  if [ "$NIGHTLY" = "true" ]; then
-                export JURISM=true
-              elif [ "$DOWNGRADE" = "true" ]; then
-                export JURISMM95=true
-              else
-                export JURISMBETA=true
-              fi
+        2|3)  export JURISM=true
               ;;
       esac
       case $CIRCLE_NODE_INDEX in
