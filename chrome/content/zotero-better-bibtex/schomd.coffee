@@ -203,12 +203,24 @@ Zotero.BetterBibTeX.schomd.jsonrpc_search = (term) ->
 
 
 Zotero.BetterBibTeX.schomd.jsonrpc_bibtex = (keys, {translator, libraryID, displayOptions} = {}) ->
-  itemIDs = @itemIDs(keys, {libraryID})
+  itemIDs = []
+  missing = []
+  for id, i in @itemIDs(keys, {libraryID})
+    if typeof id == 'number'
+      itemIDs.push(id)
+    else
+      missing.push(keys[i])
+  missing = missing.join(', ')
+  missing = "% could not find: #{missing}" if missing
 
-  return '' if itemIDs.length == 0
+  return missing if itemIDs.length == 0
 
   items = Zotero.Items.get(itemIDs)
   translator ||= 'betterbiblatex'
   displayOptions ||= {}
 
-  return Zotero.BetterBibTeX.Translators.translate(Zotero.BetterBibTeX.Translators.getID(translator), {items}, displayOptions)
+  return Zotero.BetterBibTeX.Translators.translate(Zotero.BetterBibTeX.Translators.getID(translator), {items}, displayOptions).then((bibtex)->
+    bibtex = [bibtex.trim() + "\n"]
+    bibtex.push(missing) if missing
+    return bibtex.join("\n")
+  )
