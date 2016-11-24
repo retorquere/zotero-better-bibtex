@@ -50,7 +50,7 @@ Scenario Outline: Better BibTeX Import
   | Better BibTeX.011                                                           | 1           |
   | Better BibTeX.012                                                           | 1           |
   | Better BibTeX.013                                                           | 2           |
-  | Better BibTeX.014                                                           | 1           |
+  # | Better BibTeX.014                                                           | 1           |
   | Better BibTeX.015                                                           | 1           |
   | Literal names                                                               | 1           |
   | Author splitter failure                                                     | 1           |
