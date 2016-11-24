@@ -95,6 +95,7 @@ class UnicodeConverter
         #next if latex.length < 2
         next if latex =~ /^[A-Za-z]+$/
         next if latex != '~' && latex.length <= 2 && latex[0] != '\\'
+        next if latex =~ /^\\+\_$/
         latex.strip!
         next if done[latex]
         done[latex] = true
