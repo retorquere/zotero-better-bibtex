@@ -78,6 +78,44 @@ class UnicodeConverter
     }
   end
 
+  def fidus(target)
+    download(false)
+    open(target, 'w'){|js|
+      done = {}
+      table = {}
+      @chars.execute("SELECT charcode, latex, description FROM mapping WHERE latex_to_unicode = 'true' ORDER BY charcode, preference"){|mapping|
+        charcode, latex, desc = *mapping
+        next if latex =~ /^[a-z]+$/i || latex.strip == ''
+        next if charcode < 256 && latex == charcode.chr
+
+        latex = latex[1..-2] if latex =~ /^\{[^{}]+\}$/
+        latex.sub!(/\{\}$/, '')
+        #latex = latex[1..-2] if latex =~ /^{.+}$/ && latex !~ /}{/
+        #latex.sub!(/{}$/, '')
+        #next if latex.length < 2
+        next if latex =~ /^[A-Za-z]+$/
+        next if latex != '~' && latex.length <= 2 && latex[0] != '\\'
+        latex.strip!
+        next if done[latex]
+        done[latex] = true
+
+        table[charcode] ||= []
+        table[charcode] << Regexp.escape(latex)
+      }
+
+      last = table.keys.length - 1
+      puts last
+      js.puts('export const TeXSpecialChars = [')
+      table.sort_by{|charcode, latex| latex.sort_by{|l| l.length}[-1].length }.reverse.each_with_index{|map, i|
+        charcode, re = *map
+        re = re.join('|')
+        comma = (i == last) ? '' : ','
+        js.puts("  [#{re.to_json}, #{char(charcode)}]#{comma}")
+      }
+      js.puts('];')
+    }
+  end
+
   def patch_bibtex(target)
     target = File.expand_path(target)
 
@@ -610,5 +648,5 @@ class UnicodeConverter
 end
 
 if __FILE__ == $0
-  UnicodeConverter.new.zotero_patch('BibTeX.js')
+  UnicodeConverter.new.fidus('const.js')
 end
