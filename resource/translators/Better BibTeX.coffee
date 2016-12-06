@@ -399,7 +399,7 @@ ZoteroItem::$keywords = ZoteroItem::$keyword = (value) ->
   keywords = value.split(/\s+/) if keywords.length == 1
   @item.tags = (@keywordClean(kw) for kw in keywords)
 
-ZoteroItem::$comment = ZoteroItem::$annote = ZoteroItem::$review = ZoteroItem::$notes = (value) ->
+ZoteroItem::$annotation = ZoteroItem::$comment = ZoteroItem::$annote = ZoteroItem::$review = ZoteroItem::$notes = (value) ->
   @item.notes.push({note: Zotero.Utilities.text2html(value)})
 
 ZoteroItem::$file = (value) ->
