@@ -847,7 +847,7 @@ rule '.js' => '.pegjs' do |t|
       declaration += "if (typeof #{v} === 'undefined') { #{v} = {}; }\n"
       result
     }
-    sh "#{NODEBIN}/pegjs -e #{var.shellescape} #{t.source.shellescape} #{t.name.shellescape}"
+    sh "#{NODEBIN}/pegjs --format globals -e #{var.shellescape} -o #{t.name.shellescape} #{t.source.shellescape}"
     File.rewrite(t.name){|js|
       declaration + js
     }
