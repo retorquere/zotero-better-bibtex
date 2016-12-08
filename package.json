@@ -21,7 +21,7 @@
     "coffee-script": "^1.10.0",
     "coffeelint": "^1.15.7",
     "edtf": "^2.0.0",
-    "fold-to-ascii": "^4.0.0",
+    "fold-to-ascii": "^2.0.2",
     "grasp": "^0.5.0",
     "he": "^1.1.0",
     "js-beautify": "^1.6.2",
