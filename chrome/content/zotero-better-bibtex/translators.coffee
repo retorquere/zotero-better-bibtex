@@ -81,7 +81,6 @@ Zotero.BetterBibTeX.Translators =
     catch err
       Zotero.BetterBibTeX.debug('Translator.load: ', translator, 'could not be loaded:', err)
       throw err
-    code += "\n\n#{@postscript}" if translator.BetterBibTeX?.postscript
 
     Zotero.BetterBibTeX.debug('Translator.load header:', translator)
     try
@@ -109,19 +108,3 @@ Zotero.BetterBibTeX.Translators =
   getID: (name) -> (@[name.replace(/\s/g, '')] || @['better' + name.replace(/\s/g, '')])?.translatorID
 
   getName: (id) -> @[id]?.label || "translator:#{id}"
-
-  postscript: """
-    Translator.initialize = (function(original) {
-      return function() {
-        if (this.initialized) {
-          return;
-        }
-        original.apply(this, arguments);
-        try {
-          return Reference.prototype.postscript = new Function(Translator.postscript);
-        } catch (err) {
-          return Translator.debug('postscript failed to compile:', err, Translator.postscript);
-        }
-      };
-    })(Translator.initialize);
-    """

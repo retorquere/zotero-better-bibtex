@@ -23,6 +23,5 @@ BetterBibTeX:
   - latex_unicode_mapping
   - BetterBibTeXParserSupport
   - BetterBibTeXParser
-  postscript: true
 priority: 199
 inRepository: true

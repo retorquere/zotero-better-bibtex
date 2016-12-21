@@ -123,6 +123,8 @@ Reference::typeMap =
     webpage         : 'misc'
 
 doExport = ->
+  Translator.installPostscript()
+
   Zotero.write('\n')
   while item = Translator.nextItem()
     ref = new Reference(item)

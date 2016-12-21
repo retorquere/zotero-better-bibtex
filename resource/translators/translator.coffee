@@ -1,5 +1,14 @@
 Translator = {}
 
+Translator.installPostscript = ->
+  postscript = Zotero.getHiddenPref('better-bibtex.postscript')
+  return unless typeof postscript == 'string' && postscript.trim() != ''
+  try
+    Reference::postscript = new Function(postscript)
+    Zotero.debug("Installed postscript: #{JSON.stringify(postscript)}")
+  catch err
+    Zotero.debug("Failed to compile postscript: #{err}\n\n#{JSON.stringify(postscript)}")
+
 Translator._log = (level, msg...) ->
   str = []
   for m in msg

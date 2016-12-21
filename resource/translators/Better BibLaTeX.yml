@@ -20,6 +20,5 @@ BetterBibTeX:
   - markupparser
   - unicode_translator
   - latex_unicode_mapping
-  postscript: true
 priority: 50
 inRepository: true
