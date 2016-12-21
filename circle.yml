@@ -35,6 +35,8 @@ test:
       esac
     : parallel: true
 general:
+  artifacts:
+    - zotero-better-bibtex.xpi
   branches:
     ignore:
       - gh-pages
