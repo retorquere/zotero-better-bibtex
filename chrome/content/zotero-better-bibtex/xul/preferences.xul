@@ -406,7 +406,10 @@
 
           <tabpanel id="better-bibtex-prefs-advanced" orient="vertical">
             <label value="&zotero.better-bibtex.postscript;"/>
-            <textbox flex="1" multiline="true" preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript"/>
+            <textbox flex="1" multiline="true" preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript"
+                  onblur="BetterBibTeXPref.checkPostscript();"
+                  oninput="BetterBibTeXPref.checkPostscript();"
+                  onkeypress="setTimeout(function() { BetterBibTeXPref.checkPostscript() }, 1);"/>
             <!-- Snippet of javascript to run [[after each reference generation|Scripting]]. -->
             <hbox>
               <checkbox label="&zotero.better-bibtex.debug;" preference="pref-better-bibtex-debug"/>

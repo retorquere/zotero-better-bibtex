@@ -59,6 +59,18 @@ BetterBibTeXPref =
       else
         Zotero.BetterBibTeX.Pref.clear('citekeyFormat')
 
+  checkPostscript: ->
+    postscript = document.getElementById('zotero-better-bibtex-postscript')
+
+    error = false
+    try
+      new Function(postscript.value)
+    catch err
+      error = '' + err
+
+    postscript.setAttribute('style', (if error then '-moz-appearance: none !important; background-color: DarkOrange' else ''))
+    postscript.setAttribute('tooltiptext', error || '')
+
   paneUnload: ->
     try
       Zotero.BetterBibTeX.PatternParser.parse(Zotero.BetterBibTeX.Pref.get('citekeyFormat'))
