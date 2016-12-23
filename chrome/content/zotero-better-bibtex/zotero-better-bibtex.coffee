@@ -375,7 +375,7 @@ Zotero.BetterBibTeX.init = ->
     return (data) ->
       r = original.apply(@, arguments)
       try
-        setTimeout((-> Zotero.BetterBibTeX.itemChanged.notify('modify', 'item', [data.item.id], [])), 1000)
+        setTimeout((-> Zotero.BetterBibTeX.itemChanged('modify', 'item', [data.item.id], [])), 1000)
       catch e
         Zotero.BetterBibTeX.debug('Zotero.Sync.Storage.processDownload:', e)
       return r
@@ -574,7 +574,7 @@ Zotero.BetterBibTeX.init = ->
   )
 
   nids = []
-  nids.push(Zotero.Notifier.registerObserver(@itemChanged, ['item']))
+  nids.push(Zotero.Notifier.registerObserver({ notify: (event, type, ids, extraData) => setTimeout((=> @itemChanged(event, type, ids, extraData)), 500) }, ['item']))
   nids.push(Zotero.Notifier.registerObserver(@collectionChanged, ['collection']))
   nids.push(Zotero.Notifier.registerObserver(@itemAdded, ['collection-item']))
   window.addEventListener('unload', ((e) -> Zotero.Notifier.unregisterObserver(id) for id in nids), false)
@@ -683,7 +683,7 @@ Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
   extraData = ("collection:#{id}" for id in extraData)
   @DB.autoexport.removeWhere((o) -> o.collection in extraData)
 
-Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
+Zotero.BetterBibTeX.itemChanged = (event, type, ids, extraData) ->
   Zotero.BetterBibTeX.debug("itemChanged:", {event, type, ids, extraData})
 
   return unless type == 'item' && event in ['delete', 'trash', 'add', 'modify']
@@ -716,7 +716,6 @@ Zotero.BetterBibTeX.itemChanged = notify: ((event, type, ids, extraData) ->
     @cache.remove({itemID})
 
   @auto.markIDs(ids, 'itemChanged')
-).bind(Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.displayOptions = (url) ->
   params = {}
