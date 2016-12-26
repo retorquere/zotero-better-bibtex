@@ -574,7 +574,7 @@ Zotero.BetterBibTeX.init = ->
   )
 
   nids = []
-  nids.push(Zotero.Notifier.registerObserver({ notify: (event, type, ids, extraData) => setTimeout((=> @itemChanged(event, type, ids, extraData)), 1) }, ['item']))
+  nids.push(Zotero.Notifier.registerObserver({ notify: (event, type, ids, extraData) => setTimeout((=> @itemChanged(event, type, ids, extraData)), @Pref.get('itemObserverDelay')) }, ['item']))
   nids.push(Zotero.Notifier.registerObserver(@collectionChanged, ['collection']))
   nids.push(Zotero.Notifier.registerObserver(@itemAdded, ['collection-item']))
   window.addEventListener('unload', ((e) -> Zotero.Notifier.unregisterObserver(id) for id in nids), false)

@@ -8,6 +8,7 @@ autoExport: idle
 autoExportIdleWait: 10
 cacheFlushInterval: 5
 confirmCacheResetSize: 1000
+itemObserverDelay: 0
 caching: true
 citeCommand: cite
 citekeyFormat: "[zotero]"
