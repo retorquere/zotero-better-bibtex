@@ -58,8 +58,17 @@ Zotero.BetterBibTeX.auto = new class
   markIDs: (ids, reason) ->
     return if ids.length == 0
 
-    collections = Zotero.Collections.getCollectionsContainingItems(ids, true) || []
-    collections = @withParentCollections(collections) unless collections.length == 0
+    collections = Zotero.DB.columnQuery("""
+      WITH RECURSIVE affected (collectionID) AS (
+        SELECT collectionID FROM collectionItems WHERE itemID IN #{Zotero.BetterBibTeX.DB.SQLite.Set(ids)}
+
+        UNION ALL
+
+        SELECT parentCollectionID FROM collections JOIN affected ON collections.collectionID = affected.collectionID
+      )
+      SELECT DISTINCT collectionID FROM affected
+    """)
+
     collections = ("collection:#{id}" for id in collections)
 
     libraries = {}
