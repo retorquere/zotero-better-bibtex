@@ -305,11 +305,7 @@ def normalize_library(library, nocollections)
     university url videoRecordingFormat volume websiteTitle websiteType
   }
   # item order doesn't matter, but for my tests I need them to be stable
-  library['items'].sort!{|a, b|
-    a = fields.collect{|attr| a[attr].to_s}.join('::')
-    b = fields.collect{|attr| b[attr].to_s}.join('::')
-    a <=> b
-  }
+  library['items'].sort_by!{|item| fields.collect{|field| item[field].to_s } }
 
   idmap = {}
   library['items'].each_with_index{|item, i| idmap[item['itemID']] = i }
@@ -343,10 +339,8 @@ def normalize_library(library, nocollections)
 
     # attachment order doesn't matter
     item['attachments'] ||= []
-    item['attachments'].each{|a| a['path'] = File.basename(File.dirname(a['path'])) + '/' + File.basename(a['path']) if a['path'] }
-    item['attachments'].sort!{|a, b|
-      (a['url'].to_s + '::' + a['path'].to_s) <=> (b['url'].to_s + '::' + b['path'].to_s)
-    }
+    item['attachments'].each{|att| att.delete('path')}
+    item['attachments'].sort_by!{|att| %w{title url mimeType}.collect{|field| att[field]} }
 
     item['note'] = Nokogiri::HTML(item['note']).inner_text.gsub(/[\s\n]+/, ' ').strip if item['note']
     item.delete('__citekey__')
