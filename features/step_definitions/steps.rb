@@ -13,6 +13,7 @@ require 'mechanize'
 require 'open-uri'
 require 'net/http'
 require 'uri'
+require 'neatjson'
 
 #$DEBUG=true
 
@@ -290,8 +291,13 @@ def normalize_library(library, nocollections)
   library.delete('config')
   library.delete('id')
 
-  idmap = library['items'].collect{|item| item['itemID']}
-  idmap = idmap.zip((0..idmap.length - 1).to_a).to_h
+  library['items'].sort!{|a, b|
+    a = %w{title extra}.collect{|attr| a[attr]}.compact.join('::')
+    b = %w{title extra}.collect{|attr| b[attr]}.compact.join('::')
+    a <=> b
+  }
+  idmap = {}
+  library['items'].each_with_index{|item, i| idmap[item['itemID']] = i }
 
   library['collections'] = [] if nocollections
 
@@ -311,6 +317,7 @@ def normalize_library(library, nocollections)
   library['items'].each_with_index{|item, i|
     item['itemID'] = i
     item.delete('multi')
+    item.delete('accessDate')
 
     item['creators'] ||= []
     item['creators'].each{|creator|
@@ -329,7 +336,7 @@ def normalize_library(library, nocollections)
 
   renum = lambda{|collection|
     collection.delete('id')
-    collection['items'] = collection['items'].collect{|id| idmap[id]} if collection['items']
+    collection['items'] = collection['items'].collect{|id| idmap[id]}.sort if collection['items']
     collection['collections'].each{|sub| renum.call(sub) } if collection['collections']
   }
 
@@ -345,7 +352,8 @@ Then /^the library (without collections )?should match '(.+)'$/ do |nocollection
   throw "library is not a hash!" unless found.is_a?(Hash)
   normalize_library(found, nocollections)
 
-  expect(JSON.pretty_generate(found)).to eq(JSON.pretty_generate(expected))
+  options = { wrap: 40, sort: true }
+  expect(JSON.neat_generate(found, options)).to eq(JSON.neat_generate(expected, options))
 end
 
 def preferenceValue(value)
