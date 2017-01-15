@@ -3,6 +3,10 @@
   // Zotero.debug('parser options:' + JSON.stringify(options));
   var csquotes = bibtex.options.csquotes || '\u201C\u201D';
   var mathMode = false;
+  function plaintext(str) {
+    if (mathMode) { str = str.replace(/[A-Z]+/gi, function(chars) { return '<i>' + chars + '</i>'; }); }
+    return str;
+  }
 
   function say(str) {
     bibtex.log(str);
@@ -91,7 +95,7 @@ raw
   / '{' text:raw* '}'             { return new String('{' + text.join('') + '}') }
 
 string
-  = text:plaintext                { return text }
+  = text:plaintext                { return plaintext(text); }
   / lookup
   / "\\mbox{}"                    { return "\u200B"; }
   / "\\\\"                        { return "\n" }
