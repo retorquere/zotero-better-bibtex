@@ -830,11 +830,9 @@ file 'resource/translators/latex_unicode_mapping.coffee' => UnicodeConverter.cac
     UnicodeConverter.new.mapping(t.name)
   end
 end
-file 'resource/translators/BetterBibTeXParser.pegjs' => [ 'resource/translators/BetterBibTeXParser.grammar', UnicodeConverter.cache ] do |t|
+file 'resource/translators/BetterBibTeXParser.pegjs' => [ 'lib/unicode_table.rb', UnicodeConverter.cache ] do |t|
   puts "#{t.name} outdated"
-  cleanly(t.name) do
-    UnicodeConverter.new.patterns(t.source, t.name)
-  end
+  UnicodeConverter.new.patterns(t.name)
 end
 
 rule '.js' => '.pegjs' do |t|

@@ -497,7 +497,7 @@ class UnicodeConverter
     save(target, source)
   end
 
-  def patterns(source, target)
+  def patterns(grammar)
     download(false)
 
     patterns = {
@@ -574,32 +574,38 @@ class UnicodeConverter
       } || raise("No pattern for #{latex.inspect}")
     }
 
-    open(target, 'w'){|t|
-      t.puts(open(source).read)
-      t.puts "lookup\n"
-      prefix = nil
-
-      patterns.each_with_index {|(re, state), i|
-        next if state[:exclude] # || state[:count].to_i == 0
-        #next unless p.max > 1
-        if prefix.nil?
-          prefix = "  ="
-        else
-          prefix = "  /"
-        end
-        rule = prefix
-        rule += " text:(#{pegjs_re(re)})"
-        rule = rule.ljust(70, ' ')
-
-        rule += " terminator" unless state[:terminated]
-        rule = rule.ljust(85, ' ')
-        rule += " &{ return lookup(text, #{i}); }"
-        rule = rule.ljust(110, ' ')
-        rule += "{ return lookup(text); }"
-
-        t.puts rule
-      }
+    _grammar = ''
+    IO.readlines(grammar).each{|line|
+      break if line =~ /^lookup(\s|$)/
+      _grammar += line
     }
+
+    _grammar += "lookup /* ===== DON'T TOUCH THIS -- GENERATED CODE -- SEE lib/unicode_table.rb ===== */\n"
+
+    prefix = nil
+    patterns.each_with_index {|(re, state), i|
+      next if state[:exclude] # || state[:count].to_i == 0
+      #next unless p.max > 1
+      if prefix.nil?
+        prefix = "  ="
+      else
+        prefix = "  /"
+      end
+      rule = prefix
+      rule += " text:(#{pegjs_re(re)})"
+      rule = rule.ljust(70, ' ')
+
+      rule += " terminator" unless state[:terminated]
+      rule = rule.ljust(85, ' ')
+      rule += " &{ return lookup(text, #{i}); }"
+      rule = rule.ljust(110, ' ')
+      rule += "{ return lookup(text); }"
+
+      _grammar += rule + "\n"
+    }
+
+    open(grammar + '.tmp', 'w'){|f| f.puts(_grammar) }
+    File.rename(grammar + '.tmp', grammar)
   end
 
   def pegjs_re(re)

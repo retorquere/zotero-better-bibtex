@@ -184,7 +184,7 @@ groupchars
 _
   = w:[ \t\n\r]+
 
-lookup
+lookup /* ===== DON'T TOUCH THIS -- GENERATED CODE -- SEE lib/unicode_table.rb ===== */
   = text:("\\fontencoding{" [^}]+ "}\\selectfont\\char" [0-9]+)        terminator     &{ return lookup(text, 0); }{ return lookup(text); }
   / text:("\\acute{\\ddot{\\" [a-z]+ "}}")                                            &{ return lookup(text, 1); }{ return lookup(text); }
   / text:("\\cyrchar{\\'\\" [a-zA-Z]+ "}")                                            &{ return lookup(text, 2); }{ return lookup(text); }
