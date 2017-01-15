@@ -28,3 +28,4 @@ wiki
 *.sqlite
 *.deb
 .DS_Store
+resource/translators/BetterBibTeXParser.pegjs
