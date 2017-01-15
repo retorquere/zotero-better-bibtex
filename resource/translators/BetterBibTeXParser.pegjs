@@ -98,7 +98,7 @@ string
   / bracket:[\[\]]                { return bracket }
   / "\\" text:quotedchar          { return text }
   / text:_+                       { return ' ' }
-  / [#&]+                         { return '' } /* macro parameters, table separator */
+  / [#$&]+                        { return '' } /* macro parameters, unused math mode, table separator */
   / '_' text:param                { return '<sub>' + text + '</sub>' }
   / '^' text:param                { return '<sup>' + text + '</sup>' }
   / "\\vphantom" text:bracedparam { return '' }
