@@ -345,7 +345,7 @@ Then /^the library (without collections )?should match '(.+)'$/ do |nocollection
   throw "library is not a hash!" unless found.is_a?(Hash)
   normalize_library(found, nocollections)
 
-  expect(found.to_yaml).to eq(expected.to_yaml)
+  expect(JSON.pretty_generate(found)).to eq(JSON.pretty_generate(expected))
 end
 
 def preferenceValue(value)
