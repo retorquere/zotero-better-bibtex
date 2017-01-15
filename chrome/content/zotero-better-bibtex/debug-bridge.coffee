@@ -71,6 +71,7 @@ Zotero.BetterBibTeX.DebugBridge.methods.exportToString = (translator, displayOpt
 
 Zotero.BetterBibTeX.DebugBridge.methods.exportToFile = (translator, displayOptions, filename) ->
   file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile)
+  Zotero.debug('exporting to local file' + filename)
   file.initWithPath(filename)
 
   if translator.substring(0,3) == 'id:'
