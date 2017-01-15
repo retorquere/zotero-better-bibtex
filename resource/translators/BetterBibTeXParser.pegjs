@@ -2,6 +2,7 @@
   var bibtex = new BetterBibTeXParserSupport(options);
   // Zotero.debug('parser options:' + JSON.stringify(options));
   var csquotes = bibtex.options.csquotes || '\u201C\u201D';
+  var mathMode = false;
 
   function say(str) {
     bibtex.log(str);
@@ -97,7 +98,8 @@ string
   / bracket:[\[\]]                { return bracket }
   / "\\" text:quotedchar          { return text }
   / text:_+                       { return ' ' }
-  / [#$&]+                        { return '' } /* macro parameters, math mode, table separator */
+  / "$"                           { mathMode = !mathMode; return ''; }
+  / [#&]+                         { return '' } /* macro parameters, table separator */
   / '_' text:param                { return '<sub>' + text + '</sub>' }
   / '^' text:param                { return '<sup>' + text + '</sup>' }
   / "\\vphantom" text:bracedparam { return '' }
@@ -109,7 +111,7 @@ string
   / "\\textbf" text:bracedparam   { return '<b>' + text + '</b>' }
   / "\\textsc" text:bracedparam   { return '<span style="font-variant: small-caps;">' + text + '</span>' }
   / '{' text:string* '}'          { return new String(bibtex.flatten(text)) } // use 'new String', not 'String', because only 'new String' will match 'instanceof'!
-  / '$' text:string* '$'          { return bibtex.flatten(text) }
+  /* / '$' text:string* '$'          { return bibtex.flatten(text) } */
   /* / "%" [^\n]* "\n"            { return '' }          comment */
   / '%'                           { return '%' } // this doesn't feel right
   / "\\" command:[^a-z] ('[' key_value* ']')?  param:param { return bibtex.command(command, param); /* single-char command */ }
