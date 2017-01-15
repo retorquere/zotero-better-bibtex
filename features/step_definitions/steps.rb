@@ -339,7 +339,10 @@ def normalize_library(library, nocollections)
 
     # attachment order doesn't matter
     item['attachments'] ||= []
-    item['attachments'].each{|att| att.delete('path')}
+    item['attachments'].each{|att|
+      att.delete('path')
+      scrubhash.call(att)
+    }
     item['attachments'].sort_by!{|att| %w{title url mimeType}.collect{|field| att[field]} }
 
     item['note'] = Nokogiri::HTML(item['note']).inner_text.gsub(/[\s\n]+/, ' ').strip if item['note']
