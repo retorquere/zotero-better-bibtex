@@ -90,7 +90,7 @@ raw
   / '{' text:raw* '}'             { return new String('{' + text.join('') + '}') }
 
 string
-  = text:plaintext                { return plaintext(text); }
+  = text:plaintext                { return text; }
   / '$' text:plaintext '$'        { return text.replace(/[A-Z]+/gi, function(chars) { return '<i>' + chars + '</i>'; }); }
   / lookup
   / "\\mbox{}"                    { return "\u200B"; }
