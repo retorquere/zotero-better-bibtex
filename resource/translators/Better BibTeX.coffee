@@ -209,7 +209,7 @@ doImport = ->
     data = ''
     while (read = Zotero.read(0x100000)) != false
       data += read
-    bib = BetterBibTeXParser.parse(data, {csquotes: Translator.csquotes, raw: Translator.rawImports})
+    bib = BetterBibTeXParser.parse(data, {mathMode: Translator.mathMode, csquotes: Translator.csquotes, raw: Translator.rawImports})
 
     for ref in bib.references
       new ZoteroItem(ref)
