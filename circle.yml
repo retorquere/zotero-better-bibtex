@@ -20,19 +20,19 @@ test:
   override:
   - ? |-
       case $CIRCLE_NODE_INDEX in
-        2|3)  if [ "$STANDALONE" = "true" ]; then
-                export JURISMSTANDALONE=true
-              else
-                export JURISM=true
-              fi
+        0|1)  export JURISM=false
               ;;
-      esac
+        *)    export JURISM=true
+              ;;
       case $CIRCLE_NODE_INDEX in
-        0|2)  LOGS=$CIRCLE_ARTIFACTS CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1" bundle exec rake test
+        0|2)  export CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1"
               ;;
-        *)    LOGS=$CIRCLE_ARTIFACTS CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1" bundle exec rake test
+        *)    export CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1"
               ;;
       esac
+
+      export LOGS=$CIRCLE_ARTIFACTS
+      bundle exec rake test
     : parallel: true
 general:
   artifacts:
