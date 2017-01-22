@@ -24,6 +24,7 @@ test:
               ;;
         *)    export JURISM=true
               ;;
+      esac
       case $CIRCLE_NODE_INDEX in
         0|2)  export CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1"
               ;;
