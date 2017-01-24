@@ -357,7 +357,8 @@ Translator.nextItem = ->
     item.__citekey__ ||= Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
 
     @citekeys[item.itemID] = item.__citekey__
-    JabRef.assignGroups(@collections)
+    Translator.debug("Translator: assignGroups: #{item.itemID}")
+    JabRef.assignGroups(@collections, item)
     return item
 
   return null
@@ -411,13 +412,14 @@ JabRef =
     return result
 
   assignGroups: (collection, item) ->
-    return unless @jabrefGroups
-
     collection = {items: [], collections: collection} if Array.isArray(collection)
+
+    Translator.debug("assignGroups: #{item.itemID} in #{collection.items}?")
+    return unless Translator.jabrefGroups
 
     if item.itemID in collection.items
       item.groups ||= []
-      item.groups.append(collection.name)
+      item.groups.push(collection.name)
       item.groups.sort() if Translator.testing
 
     for coll in collection.collections
