@@ -259,7 +259,7 @@ JabRef.collections = {}
 JabRef.collect = (group) ->
   JabRef.collections[group.name] = group
   for child in group.collections
-    JabRef.groupsDict(child)
+    JabRef.collect(child)
 
 class ZoteroItem
   constructor: (@bibtex) ->
