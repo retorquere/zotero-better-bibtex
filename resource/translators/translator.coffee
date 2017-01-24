@@ -357,6 +357,7 @@ Translator.nextItem = ->
     item.__citekey__ ||= Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
 
     @citekeys[item.itemID] = item.__citekey__
+    JabRef.assignGroups(@collections)
     return item
 
   return null
@@ -395,8 +396,11 @@ JabRef =
 
   exportGroup: (collection, level) ->
     group = ["#{level} ExplicitGroup:#{collection.name}", 0]
-    references = (Translator.citekeys[id] for id in collection.items)
-    references.sort() if Translator.testing
+
+    # references = (Translator.citekeys[id] for id in collection.items)
+    # references.sort() if Translator.testing
+    references = [] # new JabRef groups format.
+
     group = group.concat(references)
     group.push('')
     group = @serialize(group, ';')
@@ -406,3 +410,15 @@ JabRef =
       result = result.concat(JabRef.exportGroup(coll, level + 1))
     return result
 
+  assignGroups: (collection, item) ->
+    return unless @jabrefGroups
+
+    collection = {items: [], collections: collection} if Array.isArray(collection)
+
+    if item.itemID in collection.items
+      item.groups ||= []
+      item.groups.append(collection.name)
+      item.groups.sort() if Translator.testing
+
+    for coll in collection.collections
+      JabRef.assignGroups(coll, item)
