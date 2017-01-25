@@ -387,13 +387,13 @@ Translator.exportGroups = ->
     groups = groups.concat(JabRef.exportGroup(collection, 1))
   @debug('exportGroups: serialize', groups)
 
-  Zotero.write(JabRef.serialize(groups, ';\n', true) + ';\n}\n')
+  Zotero.write(JabRef.serialize(groups, true) + ';\n}\n')
 
 JabRef =
-  serialize: (arr, sep, wrap) ->
-    arr = (('' + v).replace(/;/g, "\\;") for v in arr)
+  serialize: (arr, wrap) ->
+    arr = (('' + v).replace(/\\/, "\\\\").replace(/;/g, "\\;") for v in arr)
     arr = (v.match(/.{1,70}/g).join("\n") for v in arr) if wrap
-    return arr.join(sep)
+    return arr.join(wrap ? ";\n" : ';')
 
   exportGroup: (collection, level) ->
     group = ["#{level} ExplicitGroup:#{collection.name}", 0]
@@ -404,7 +404,7 @@ JabRef =
 
     group = group.concat(references)
     group.push('')
-    group = @serialize(group, ';')
+    group = @serialize(group)
 
     result = [group]
     for coll in collection.collections
