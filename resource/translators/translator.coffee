@@ -377,23 +377,22 @@ Translator.exportGroups = ->
   @debug('exportGroups:', @collections)
   return if @collections.length == 0 || !@jabrefGroups
 
-  Zotero.write('@comment{jabref-meta: groupsversion:3;}\n')
+  // Zotero.write('@comment{jabref-meta: groupsversion:3;}\n')
   Zotero.write('@comment{jabref-meta: groupstree:\n')
   Zotero.write('0 AllEntriesGroup:;\n')
 
-  @debug('exportGroups: getting groups')
   groups = []
   for collection in @collections
     groups = groups.concat(JabRef.exportGroup(collection, 1))
-  @debug('exportGroups: serialize', groups)
+  Zotero.write(JabRef.serialize(groups, true) + ';\n')
 
-  Zotero.write(JabRef.serialize(groups, true) + ';\n}\n')
+  Zotero.write('}\n')
 
 JabRef =
   serialize: (arr, wrap) ->
     arr = (('' + v).replace(/\\/, "\\\\").replace(/;/g, "\\;") for v in arr)
     arr = (v.match(/.{1,70}/g).join("\n") for v in arr) if wrap
-    return arr.join(wrap ? ";\n" : ';')
+    return arr.join(if wrap then ";\n" else ';')
 
   exportGroup: (collection, level) ->
     group = ["#{level} ExplicitGroup:#{collection.name}", 0]
