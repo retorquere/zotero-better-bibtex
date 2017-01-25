@@ -98,8 +98,8 @@
         <preference name="extensions.zotero.translators.better-bibtex.tests"                    id="pref-better-bibtex-tests"                   type="string"/>
         <!-- Unit tests to run -->
 
-        <preference name="extensions.zotero.translators.better-bibtex.jabrefGroups"             id="pref-better-bibtex-jabrefGroups"            type="bool"/>
-        <!-- Export JabRef groups for collections. -->
+        <preference name="extensions.zotero.translators.better-bibtex.jabrefGroups" id="pref-better-bibtex-jabrefGroups"                        type="int"/>
+        <!-- Export JabRef groups for collections. zero means disable. -->
 
         <preference name="extensions.zotero.translators.better-bibtex.defaultDateParserLocale"  id="pref-better-bibtex-defaultDateParserLocale" type="string"/>
         <!--

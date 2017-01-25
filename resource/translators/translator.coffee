@@ -377,7 +377,15 @@ Translator.exportGroups = ->
   @debug('exportGroups:', @collections)
   return if @collections.length == 0 || !@jabrefGroups
 
-  Zotero.write("@comment{jabref-meta: databaseType:#{if Translator.BetterBibLaTeX then 'biblatex' else 'bibtex'};}\n")
+  switch
+    when @jabrefGroups == 3
+      meta = 'groupsversion:3'
+    when Translator.BetterBibLaTeX
+      meta = 'databaseType:biblatex'
+    else
+      meta = 'databaseType:bibtex'
+
+  Zotero.write("@comment{jabref-meta: #{meta};\n")
   Zotero.write('@comment{jabref-meta: groupstree:\n')
   Zotero.write('0 AllEntriesGroup:;\n')
 
@@ -397,9 +405,11 @@ JabRef =
   exportGroup: (collection, level) ->
     group = ["#{level} ExplicitGroup:#{collection.name}", 0]
 
-    # references = (Translator.citekeys[id] for id in collection.items)
-    # references.sort() if Translator.testing
-    references = [] # new JabRef groups format.
+    if Translator.jabrefGroups == 3
+      references = (Translator.citekeys[id] for id in collection.items)
+      references.sort() if Translator.testing
+    else
+      references = []
 
     group = group.concat(references)
     group.push('')
@@ -411,10 +421,9 @@ JabRef =
     return result
 
   assignGroups: (collection, item) ->
-    collection = {items: [], collections: collection} if Array.isArray(collection)
+    return unless Translator.jabrefGroups == 4
 
-    Translator.debug("assignGroups: #{item.itemID} in #{collection.items}?")
-    return unless Translator.jabrefGroups
+    collection = {items: [], collections: collection} if Array.isArray(collection)
 
     if item.itemID in collection.items
       item.groups ||= []
