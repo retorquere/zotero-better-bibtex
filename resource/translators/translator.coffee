@@ -385,7 +385,7 @@ Translator.exportGroups = ->
     else
       meta = 'databaseType:bibtex'
 
-  Zotero.write("@comment{jabref-meta: #{meta};\n")
+  Zotero.write("@comment{jabref-meta: #{meta};}\n")
   Zotero.write('@comment{jabref-meta: groupstree:\n')
   Zotero.write('0 AllEntriesGroup:;\n')
 
