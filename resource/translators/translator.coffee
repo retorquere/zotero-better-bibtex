@@ -377,7 +377,7 @@ Translator.exportGroups = ->
   @debug('exportGroups:', @collections)
   return if @collections.length == 0 || !@jabrefGroups
 
-  // Zotero.write('@comment{jabref-meta: groupsversion:3;}\n')
+  # Zotero.write('@comment{jabref-meta: groupsversion:3;}\n')
   Zotero.write('@comment{jabref-meta: groupstree:\n')
   Zotero.write('0 AllEntriesGroup:;\n')
 
