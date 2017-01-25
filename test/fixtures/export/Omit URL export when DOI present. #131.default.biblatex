@@ -50,7 +50,7 @@
   volume = {93}
 }
 
-@comment{jabref-meta: groupsversion:3;}
+@comment{jabref-meta: databaseType:biblatex;}
 @comment{jabref-meta: groupstree:
 0 AllEntriesGroup:;
 1 ExplicitGroup:Omit URL export when DOI present. #131\;0\;;
