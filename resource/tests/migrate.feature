@@ -1,7 +1,7 @@
 Feature: Key migration
 
 Background:
-  When I set preference .jabrefGroups to false
+  When I set preference .jabrefGroups to 0
   And I set preference .defaultDateParserLocale to en-GB
 
 

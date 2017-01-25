@@ -3,7 +3,7 @@ Feature: Export
 
 Background:
   When I set preference .citekeyFormat to [auth][year]
-  And I set preference .jabrefGroups to false
+  And I set preference .jabrefGroups to 0
   And I set preference .titleCase to true
   And I set preference .defaultDateParserLocale to en-GB
   And I set preference .bibtexURL to 'note'
@@ -150,7 +150,9 @@ Scenario Outline: BibTeX Export
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json'
   And I set preference .DOIandURL to both
-  And I set preference .jabrefGroups to true
+  And I set preference .jabrefGroups to 3
+  Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.groups3.biblatex'
+  And I set preference .jabrefGroups to 4
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.default.biblatex'
   And I set preference .DOIandURL to doi
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.prefer-DOI.biblatex'
