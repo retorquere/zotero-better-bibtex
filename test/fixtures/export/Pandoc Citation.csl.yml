@@ -62,7 +62,6 @@ references:
   number-of-pages: '139'
   source: Internet Archive
   event-place: Oxford
-  archive-place: Oxford
   URL: 'https://archive.org/details/gospelaccording00goog'
   language: English
   editor:
@@ -86,7 +85,6 @@ references:
   publisher: Pontifical Institute of Mediaeval Studies
   publisher-place: Toronto
   event-place: Toronto
-  archive-place: Toronto
   author:
     - family: Dunning
       given: Andrew N.J.
