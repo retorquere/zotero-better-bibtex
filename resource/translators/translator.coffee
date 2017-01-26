@@ -387,39 +387,11 @@ Translator.exportGroups = ->
 
   Zotero.write("@comment{jabref-meta: #{meta};}\n")
   Zotero.write('@comment{jabref-meta: groupstree:\n')
-  Zotero.write('0 AllEntriesGroup:;\n')
-
-  groups = []
-  for collection in @collections
-    groups = groups.concat(JabRef.exportGroup(collection, 1))
-  Zotero.write(JabRef.serialize(groups, true) + ';\n')
-
+  Zotero.write(JabRef.exportGroup({collections: @collections}))
+  Zotero.write(';\n')
   Zotero.write('}\n')
 
 JabRef =
-  serialize: (arr, wrap) ->
-    arr = (('' + v).replace(/\\/, "\\\\").replace(/;/g, "\\;") for v in arr)
-    arr = (v.match(/.{1,70}/g).join("\n") for v in arr) if wrap
-    return arr.join(if wrap then ";\n" else ';')
-
-  exportGroup: (collection, level) ->
-    group = ["#{level} ExplicitGroup:#{collection.name}", 0]
-
-    if Translator.jabrefGroups == 3
-      references = (Translator.citekeys[id] for id in collection.items)
-      references.sort() if Translator.testing
-    else
-      references = []
-
-    group = group.concat(references)
-    group.push('')
-    group = @serialize(group)
-
-    result = [group]
-    for coll in collection.collections
-      result = result.concat(JabRef.exportGroup(coll, level + 1))
-    return result
-
   assignGroups: (collection, item) ->
     return unless Translator.jabrefGroups == 4
 
@@ -432,3 +404,28 @@ JabRef =
 
     for coll in collection.collections
       JabRef.assignGroups(coll, item)
+
+  serialize: (list, wrap) ->
+    serialized = (elt.replace(/\\/g, '\\\\').replace(/;/g, '\\;') for elt in list)
+    serialized = (v.match(/.{1,70}/g).join("\n") for v in serialized) if wrap
+    return serialized.join(if wrap then ";\n" else ';')
+
+  exportGroup: (collection, level = 0) ->
+    if level
+      collected = ["#{level} ExplicitGroup:#{collection.name}", '0']
+      if Translator.jabrefGroups == 3
+        references = (Translator.citekeys[id] for id in (collection.items || []) when Translator.citekeys[id])
+        references.sort() if Translator.testing
+        collected = collected.concat(references)
+    else
+      collected = ['0 AllEntriesGroup:']
+
+    collected = [@serialize(collected)]
+
+    for child in collection.collections || []
+      collected = collected.concat(@exportGroup(child, level + 1))
+
+    if level
+      return collected
+    else
+      return @serialize(collected, true)
