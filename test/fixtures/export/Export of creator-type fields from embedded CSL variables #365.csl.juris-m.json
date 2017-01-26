@@ -11,7 +11,6 @@
   {
     "author": [ { "family": "Author", "given": "Ann" } ],
     "editor": [ { "family": "Editrix", "given": "Emma" }, { "family": "Editor", "given": "Ed" } ],
-    "event-place": "Place",
     "genre": "working paper",
     "id": "Author2015",
     "issued": { "date-parts": [ [ 2015 ] ] },
@@ -34,7 +33,6 @@
     "container-title": "Friends",
     "dimensions": "22 min",
     "director": [ { "family": "Mancuso", "given": "Gail" } ],
-    "event-place": "US",
     "id": "friends:leia:tv",
     "issued": { "date-parts": [ [ 1996, 9, 16 ] ] },
     "language": "en-US",
@@ -49,7 +47,6 @@
     "container-title": "Friends",
     "dimensions": "22 min",
     "author": [ { "family": "Mancuso", "given": "Gail" } ],
-    "event-place": "US",
     "id": "friends:leia:dvd",
     "issued": { "date-parts": [ [ 2003 ] ] },
     "language": "en-US",

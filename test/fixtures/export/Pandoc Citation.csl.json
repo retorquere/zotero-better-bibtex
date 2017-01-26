@@ -85,7 +85,6 @@
         "given": "John"
       }
     ],
-    "event-place": "Oxford",
     "id": "Wordsworth1883",
     "issued": {
       "date-parts": [ [ 1883 ] ]
@@ -108,7 +107,6 @@
     ],
     "collection-number": "33",
     "collection-title": "Toronto Medieval Latin Texts",
-    "event-place": "Toronto",
     "id": "Dunning2016",
     "issued": {
       "date-parts": [ [ 2016 ] ]
