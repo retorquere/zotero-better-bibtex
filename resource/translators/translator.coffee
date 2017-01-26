@@ -407,7 +407,7 @@ JabRef =
 
   serialize: (list, wrap) ->
     serialized = (elt.replace(/\\/g, '\\\\').replace(/;/g, '\\;') for elt in list)
-    serialized = (v.match(/.{1,70}/g).join("\n") for v in serialized) if wrap
+    serialized = (elt.match(/.{1,70}/g).join("\n") for elt in serialized) if wrap
     return serialized.join(if wrap then ";\n" else ';')
 
   exportGroup: (collection, level = 0) ->
@@ -417,6 +417,8 @@ JabRef =
         references = (Translator.citekeys[id] for id in (collection.items || []) when Translator.citekeys[id])
         references.sort() if Translator.testing
         collected = collected.concat(references)
+      # what is the meaning of the empty cell at the end, JabRef?
+      collected = collected.concat([''])
     else
       collected = ['0 AllEntriesGroup:']
 
