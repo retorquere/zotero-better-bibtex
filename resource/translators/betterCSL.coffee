@@ -53,6 +53,14 @@ doExport = ->
 
       csl = Zotero.Utilities.itemToCSLJSON(item)
 
+      # 637
+      delete csl['publisher-place']
+      delete csl['archive-place']
+      delete csl['event-place']
+      delete csl['original-publisher-place']
+      delete csl['publisher-place']
+      csl[if item.itemType == 'presentation' then 'event-place' else 'publisher-place'] = item.place if item.place
+
       csl.type = item.cslType if item.cslType in ValidCSLTypes
 
       delete csl.authority
