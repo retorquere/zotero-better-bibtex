@@ -2,7 +2,8 @@
 
 require 'sqlite3'
 
-DB = SQLite3::Database.new(ARGV[0] || '/Users/emile/Library/Application Support/Firefox/Profiles/dcdxff67.Juris-M/zotero/jurism.sqlite')
+#DB = SQLite3::Database.new(ARGV[0] || '/Users/emile/Library/Application Support/Firefox/Profiles/dcdxff67.Juris-M/zotero/jurism.sqlite')
+DB = SQLite3::Database.new(ARGV[0] || '/Users/emile/Library/Application Support/Firefox/Profiles/hl5v4vx7.default/zotero/zotero.sqlite')
 
 mapping = {}
 DB.execute("""
