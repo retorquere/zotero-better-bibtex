@@ -4,6 +4,7 @@ titleCase = (string) ->
 titles = [
   "The physical volcanology of the 1600 eruption of Huaynaputina, with <pre>\\LaTeX</pre>!"
   "The physical volcanology of the 1600 eruption of Huaynaputina, with                  !"
+  "The physical\u00A0volcanology of the 1600 eruption of Huaynaputina"
 ]
 
 for title in titles

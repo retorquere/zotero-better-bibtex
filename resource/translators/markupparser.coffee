@@ -146,7 +146,8 @@ class Translator.MarkupParser
 
     if options.caseConversion
       unless Translator.suppressTitleCase
-        @titleCased = Zotero.BetterBibTeX.CSL.titleCase(@innerText(@handler.root))
+        # https://github.com/Juris-M/citeproc-js/issues/30
+        @titleCased = Zotero.BetterBibTeX.CSL.titleCase(@innerText(@handler.root).replace(/\u00A0/g, ' '))
         @titleCase(@handler.root)
 
       @simplify(@handler.root)
@@ -229,7 +230,17 @@ class Translator.MarkupParser
 
   titleCase: (node) ->
     if node.name == '#text'
-      node.text = @titleCased.substr(node.pos, node.text.length) if node.pos?
+      # https://github.com/Juris-M/citeproc-js/issues/30
+      # node.text = @titleCased.substr(node.pos, node.text.length) if node.pos?
+      if node.pos?
+        recased = ''
+        for char, i in @titleCased.substr(node.pos, node.text.length).split('')
+          if node.text[i] == '\u00A0'
+            recased += '\u00A0'
+          else
+            recased += char
+        node.text = recased
+
     else
       for child in node.children
         @titleCase(child) unless child.nocase
