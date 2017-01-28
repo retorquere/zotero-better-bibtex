@@ -160,9 +160,14 @@ class Translator.MarkupParser
   innerText: (node, text = '') ->
     switch node.name
       when '#text'
+        # the Array construct makes sure that the text is placed at the exact position it has in the origin string,
+        # adding spaces as necessary
         text += Array((node.pos - text.length) + 1).join(' ') + node.text if node.pos?
       when 'pre'
-        # don't confuse the title caser with spurious markup, but MUST NOT change the string length
+        # don't confuse the title caser with spurious markup, but MUST NOT change the string length. Without this,
+        # the CSL title caser would consider last words in a title that actually have a following <pre> block the last
+        # word and would capitalize it. The prevents that behavior by adding the contents of the <pre> block, but it
+        # will be ignored by the BBT title caser, which only title-cases #text blocks
         text += node.text.replace(/</g, '[').replace(/>/g, ']')
       else
         for child in node.children
