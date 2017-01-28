@@ -8,13 +8,9 @@ cd ..
 
 OFFLINE=true
 rm -f minitests/test.js
-echo "var CSL = { Output: {}  };" >> minitests/test.js
+echo "var Zotero = { BetterBibTeX: {}  };" >> minitests/test.js
 
-if ! [ -f minitests/csl-formatters.js ]; then
-  curl -o minitests/csl-formatters.js https://bitbucket.org/fbennett/citeproc-js/raw/tip/src/formatters.js
-fi
-cat minitests/csl-formatters.js >> minitests/test.js
-for src in minitests/titleCase.js ; do
+for src in chrome/content/zotero-better-bibtex/lib/citeproc.js minitests/titleCase.js ; do
   rake $src
   cat $src >> minitests/test.js
 done
