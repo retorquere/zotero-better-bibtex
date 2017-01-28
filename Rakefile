@@ -440,17 +440,13 @@ file 'chrome/content/zotero-better-bibtex/lib/citeproc.js' => 'Rakefile' do |t|
 
           open('https://raw.githubusercontent.com/zotero/zotero/4.0/chrome/content/zotero/xpcom/citeproc-prereqs.js').read + src + """
             CSL.BetterBibTeX = {
-              state:  function() {
-                return {
-                  opt: {
-                    lang: 'en'
-                  },
-                  locale: {
-                    en: {
-                      opts: {
-                        'skip-words': CSL.SKIP_WORDS,
-                        'skip-words-regexp': (function #{makeRegExp})(CSL.SKIP_WORDS)
-                      }
+              state: {
+                opt: { lang: 'en' },
+                locale: {
+                  en: {
+                    opts: {
+                      'skip-words': CSL.SKIP_WORDS,
+                      'skip-words-regexp': (function #{makeRegExp})(CSL.SKIP_WORDS)
                     }
                   }
                 }

@@ -158,11 +158,15 @@ class Translator.MarkupParser
     return @handler.root
 
   innerText: (node, text = '') ->
-    if node.name == '#text'
-      text += Array((node.pos - text.length) + 1).join(' ') + node.text if node.pos?
-    else
-      for child in node.children
-        text = @innerText(child, text)
+    switch node.name
+      when '#text'
+        text += Array((node.pos - text.length) + 1).join(' ') + node.text if node.pos?
+      when 'pre'
+        # don't confuse the title caser with spurious markup, but MUST NOT change the string length
+        text += node.text.replace(/</g, '[').replace(/>/g, ']')
+      else
+        for child in node.children
+          text = @innerText(child, text)
     return text
 
   unwrapNocase: (node) ->
@@ -302,7 +306,7 @@ class Translator.MarkupParser
     pre: (text) ->
       throw "Expectd 'pre' tag, found '#{@elems[0].name}'" unless @elems[0].name == 'pre'
       throw "Text already set on pre tag'" if @elems[0].text
-      throw "Prei must not have children" if @elems[0].children && @elems[0].children.length > 0
+      throw "Pre must not have children" if @elems[0].children && @elems[0].children.length > 0
       @elems[0].text = text
 
     chars: (text, pos) ->
