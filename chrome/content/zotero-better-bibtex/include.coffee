@@ -24,7 +24,7 @@ if not Zotero.BetterBibTeX
         try
           Zotero.BetterBibTeX.init()
         catch err
-          Zotero.BetterBibTeX.disabled = "Initialize failed: #{err}"
-          Zotero.debug('BBT: failed to initialize: ' + err + "\n\n" + err.stack)
+          Zotero.BetterBibTeX.disabled = "Better BibTeX initialization failed: #{err}\n\n#{err.stack}"
+          Zotero.debug("Better BibTeX initialization failed: #{err}\n\n#{err.stack}")
         return
       ), false)
