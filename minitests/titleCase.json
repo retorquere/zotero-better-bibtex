@@ -44,5 +44,10 @@
   "Getting <span class=\"nocase\">Back Into Place</span>: <span class=\"nocase\">Toward</span> a <span class=\"nocase\">Renewed Understanding</span> of the <span class=\"nocase\">Place</span>-world":
     "Getting <span class=\"nocase\">Back Into Place</span>: <span class=\"nocase\">Toward</span> a <span class=\"nocase\">Renewed Understanding</span> of the <span class=\"nocase\">Place</span>-World",
   "Mapping the <span class=\"nocase\">Dynamics</span> of <span class=\"nocase\">Science</span> and <span class=\"nocase\">Technology</span>: <span class=\"nocase\">Sociology</span> of <span class=\"nocase\">Science</span> in the <span class=\"nocase\">Real World</span>":
-    "Mapping the <span class=\"nocase\">Dynamics</span> of <span class=\"nocase\">Science</span> and <span class=\"nocase\">Technology</span>: <span class=\"nocase\">Sociology</span> of <span class=\"nocase\">Science</span> in the <span class=\"nocase\">Real World</span>"
+    "Mapping the <span class=\"nocase\">Dynamics</span> of <span class=\"nocase\">Science</span> and <span class=\"nocase\">Technology</span>: <span class=\"nocase\">Sociology</span> of <span class=\"nocase\">Science</span> in the <span class=\"nocase\">Real World</span>",
+  
+  "non-breaking space: ; accented characters: ñ and ñ; tilde in URL: http://example.com/~user":"Non-Breaking Space: ; Accented Characters: Ñ and ñ; Tilde in URL: http://example.com/~user",
+
+  "Test Title with space quad, space semi-colon, space colon, space comma, space nbsp":
+    "_Test Title with space quad, space semi-colon, space colon, space comma, space nbsp"
 }

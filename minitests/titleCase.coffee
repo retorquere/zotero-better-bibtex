@@ -11,5 +11,7 @@ for input, expected of titles
   if found != expected
     console.log('input:', display(input))
     console.log('output:', display(found))
+    console.log('  (or):', found)
     console.log('expected:', display(expected))
+    console.log('    (or):', expected)
     console.log('')
