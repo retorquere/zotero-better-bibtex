@@ -357,6 +357,8 @@ Translator.nextItem = ->
     item.__citekey__ ||= Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
 
     @citekeys[item.itemID] = item.__citekey__
+    Translator.debug("Translator: assignGroups: #{item.itemID}")
+    JabRef.assignGroups(@collections, item)
     return item
 
   return null
@@ -375,34 +377,57 @@ Translator.exportGroups = ->
   @debug('exportGroups:', @collections)
   return if @collections.length == 0 || !@jabrefGroups
 
-  Zotero.write('@comment{jabref-meta: groupsversion:3;}\n')
+  switch
+    when @jabrefGroups == 3
+      meta = 'groupsversion:3'
+    when Translator.BetterBibLaTeX
+      meta = 'databaseType:biblatex'
+    else
+      meta = 'databaseType:bibtex'
+
+  Zotero.write("@comment{jabref-meta: #{meta};}\n")
   Zotero.write('@comment{jabref-meta: groupstree:\n')
-  Zotero.write('0 AllEntriesGroup:;\n')
-
-  @debug('exportGroups: getting groups')
-  groups = []
-  for collection in @collections
-    groups = groups.concat(JabRef.exportGroup(collection, 1))
-  @debug('exportGroups: serialize', groups)
-
-  Zotero.write(JabRef.serialize(groups, ';\n', true) + ';\n}\n')
+  Zotero.write(JabRef.exportGroup({collections: @collections}))
+  Zotero.write(';\n')
+  Zotero.write('}\n')
 
 JabRef =
-  serialize: (arr, sep, wrap) ->
-    arr = (('' + v).replace(/;/g, "\\;") for v in arr)
-    arr = (v.match(/.{1,70}/g).join("\n") for v in arr) if wrap
-    return arr.join(sep)
+  assignGroups: (collection, item) ->
+    return unless Translator.jabrefGroups == 4
 
-  exportGroup: (collection, level) ->
-    group = ["#{level} ExplicitGroup:#{collection.name}", 0]
-    references = (Translator.citekeys[id] for id in collection.items)
-    references.sort() if Translator.testing
-    group = group.concat(references)
-    group.push('')
-    group = @serialize(group, ';')
+    collection = {items: [], collections: collection} if Array.isArray(collection)
 
-    result = [group]
+    if item.itemID in collection.items
+      item.groups ||= []
+      item.groups.push(collection.name)
+      item.groups.sort() if Translator.testing
+
     for coll in collection.collections
-      result = result.concat(JabRef.exportGroup(coll, level + 1))
-    return result
+      JabRef.assignGroups(coll, item)
 
+  serialize: (list, wrap) ->
+    serialized = (elt.replace(/\\/g, '\\\\').replace(/;/g, '\\;') for elt in list)
+    serialized = (elt.match(/.{1,70}/g).join("\n") for elt in serialized) if wrap
+    return serialized.join(if wrap then ";\n" else ';')
+
+  exportGroup: (collection, level = 0) ->
+    if level
+      collected = ["#{level} ExplicitGroup:#{collection.name}", '0']
+      if Translator.jabrefGroups == 3
+        references = (Translator.citekeys[id] for id in (collection.items || []) when Translator.citekeys[id])
+        references.sort() if Translator.testing
+        collected = collected.concat(references)
+      # what is the meaning of the empty cell at the end, JabRef?
+      collected = collected.concat([''])
+    else
+      collected = ['0 AllEntriesGroup:']
+
+    collected = [@serialize(collected)]
+
+    for child in collection.collections || []
+      collected = collected.concat(@exportGroup(child, level + 1))
+
+    if level
+      return collected
+    else
+      return @serialize(collected, true)

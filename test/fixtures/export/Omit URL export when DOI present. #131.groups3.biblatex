@@ -1,7 +1,7 @@
 
 @inproceedings{CapEA11,
   author = {Cappello, Franck and Jacquelin, Mathias and Marchal, Loris and Robert, Yves and Snir, Marc},
-  booktitle = {High Performance Computing ({{HiPC}}), 2011 18th International Conference On},
+  booktitle = {High {{Performance Computing}} ({{HiPC}}), 2011 18th International Conference On},
   date = {2011},
   doi = {10.1109/HiPC.2011.6152428},
   keywords = {bdec15,zotero_testcase},
@@ -45,5 +45,12 @@
   url = {http://journals.ametsoc.org/doi/abs/10.1175/BAMS-D-11-00094.1},
   urldate = {2012-04-17},
   volume = {93}
+}
+
+@comment{jabref-meta: groupsversion:3;}
+@comment{jabref-meta: groupstree:
+0 AllEntriesGroup:;
+1 ExplicitGroup:Omit URL export when DOI present. #131\;0\;CapEA11\;Cu
+mEA14\;TayEA11\;;
 }
 

@@ -521,6 +521,8 @@ class Reference
           when 'doi' then @remove('url')
           when 'url' then @remove('doi')
 
+    @add({ groups: @item.groups.join(',') }) if @item.groups
+
     fields = []
     for own name, value of @override
       # psuedo-var, sets the reference type

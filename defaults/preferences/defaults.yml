@@ -30,7 +30,7 @@ skipWords: a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,a
 tests: ''
 warnBulkModify: 10
 postscript: ''
-jabrefGroups: true
+jabrefGroups: 4
 defaultDateParserLocale: ''
 bibtexParticleNoOp: false
 biblatexExtendedNameFormat: false
@@ -40,4 +40,3 @@ jurismPreferredLanguage: zh-alalc97
 ZotFile: true
 qualityReport: false
 suppressTitleCase: false
-mathMode: false

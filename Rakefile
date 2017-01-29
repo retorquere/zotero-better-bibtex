@@ -432,22 +432,30 @@ file 'chrome/content/zotero-better-bibtex/lib/citeproc.js' => 'Rakefile' do |t|
     else
       Tempfile.create(['citeproc', '.js'], '/tmp') do |mod|
         download('https://raw.githubusercontent.com/Juris-M/citeproc-js/master/citeproc.js', mod.path)
-        sh "#{NODEBIN}/grasp -i -e 'thedate[DATE_PARTS_ALL[i]]' --replace 'thedate[CSL.DATE_PARTS_ALL[i]]' #{mod.path.shellescape}"
-        sh "#{NODEBIN}/grasp -i -e 'if (!Array.indexOf) { _$ }' --replace '' #{mod.path.shellescape}"
+        makeRegExp = nil
         File.rewrite(mod.path){|src|
-          patched = StringIO.new(src).readlines.collect{|line|
-            if line.strip == 'if (!m1split[i-1].match(/[:\\?\\!]\\s*$/)) {'
-              line.sub(/if.*{/, 'if (i > 0 && !m1split[i-1].match(/[:\\?\\!]\\s*$/)) {')
-            else
-              line
-            end
-          }.join('')
-          open('https://raw.githubusercontent.com/zotero/zotero/4.0/chrome/content/zotero/xpcom/citeproc-prereqs.js').read + patched + """
+          src =~ /function\s+makeRegExp\s*(\(lst\).*?\})/m
+          makeRegExp = $1
+          raise "makeRegExp not found" unless makeRegExp.to_s.strip != ''
+
+          open('https://raw.githubusercontent.com/zotero/zotero/4.0/chrome/content/zotero/xpcom/citeproc-prereqs.js').read + src + """
+            CSL.BetterBibTeX = {
+              state: {
+                opt: { lang: 'en' },
+                locale: {
+                  en: {
+                    opts: {
+                      'skip-words': CSL.SKIP_WORDS,
+                      'skip-words-regexp': (function #{makeRegExp})(CSL.SKIP_WORDS)
+                    }
+                  }
+                }
+              }
+            }
+
             var exports = module.exports = CSL;
           """
         }
-        sh "#{NODEBIN}/grasp -i -e 'xmldata.open($a, $b, $c);' --replace 'xmldata.dontopen({{a}}, {{b}}, {{c}});' #{mod.path.shellescape}"
-        sh "#{NODEBIN}/grasp -i -e 'doc.createElement' --replace 'doc.dontcreateElement' #{mod.path.shellescape}"
   
         browserify("Zotero.BetterBibTeX.CSL = require(#{File.absolute_path(mod.path).to_json});", t.name)
       end

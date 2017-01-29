@@ -3,7 +3,7 @@ Feature: Import
 
 Background:
   Given I set preference .citekeyFormat to [auth][year]
-  And I set preference .jabrefGroups to false
+  And I set preference .jabrefGroups to 0
   And I set preference .defaultDateParserLocale to en-GB
 
 @i1

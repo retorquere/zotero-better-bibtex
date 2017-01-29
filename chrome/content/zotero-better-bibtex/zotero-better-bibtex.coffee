@@ -301,21 +301,7 @@ Zotero.BetterBibTeX.init = ->
       stats:  (sandbox)            -> Zotero.BetterBibTeX.cacheHistory
     }
     CSL: {
-      state: {
-        opt: {
-          lang: 'en'
-        },
-        locale: {
-          en: {
-            opts: {
-              'skip-words': Zotero.BetterBibTeX.CSL.SKIP_WORDS,
-              'skip-words-regexp': new RegExp( '(?:(?:[?!:]*\\s+|-|^)(?:' + Zotero.BetterBibTeX.CSL.SKIP_WORDS.map((term) -> term.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]\s*/g, '\\$&')).join('|') + ')(?=[!?:]*\\s+|-|$))', 'g')
-            }
-          }
-        }
-      },
-      titleCase: (sandbox, text) ->
-        return Zotero.BetterBibTeX.CSL.Output.Formatters.title(Zotero.Translate.Export::Sandbox.BetterBibTeX.CSL.state, text)
+      titleCase: (sandbox, text) -> Zotero.BetterBibTeX.CSL.Output.Formatters.title(Zotero.BetterBibTeX.CSL.BetterBibTeX.state, text)
 
       parseParticles: (sandbox, name) ->
         ### twice to work around https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping ###
