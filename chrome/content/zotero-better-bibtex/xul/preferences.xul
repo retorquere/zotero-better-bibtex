@@ -319,7 +319,7 @@
                 simply more pleasing to have things like accented characters translated to their equivalent LaTeX constructs on export.
               -->
               <checkbox preference="pref-better-bibtex-biblatexExtendedNameFormat" label="&zotero.better-bibtex.prefs.export.biblatex.extendedNameFormat;"/>
-              <!-- Use the extended biber 2.7 format for names with particles - ony works in BibLaTeX 3.5 or later -->
+              <!-- Use the extended biber 2.7 format for names with particles - only works in BibLaTeX 3.5 or later -->
             </groupbox>
 
             <groupbox>
@@ -452,7 +452,7 @@
             -->
             <checkbox id="id-better-bibtex-preferences-raw-imports" preference="pref-better-bibtex-rawImports" label="&zotero.better-bibtex.raw-imports;"/>
             <!--
-              Enables [[hardcore|From Unicode to LaTeX and Back Again#you-are-a-hardcore-latex-user]] mode. You like
+              Enables [[hardcore|Unnecessarily-complicated-BibTeX-output%3F#you-are-a-hardcore-latex-user]] mode. You like
               Zotero in some ways, but really just want it to be a BibTeX manager. If
               you enable this, any BibTeX files you import will retain all the LaTeX commands they have, and marks the
               entry to be exported without any translation.
