@@ -345,18 +345,19 @@ class UnicodeConverter
   def read(xml)
     pbar = nil
     mapping = nil
-    open(xml,
-      content_length_proc: lambda {|t|
-        if t && t > 0
-          pbar = ProgressBar.new(xml, t)
-          pbar.file_transfer_mode
-        end
-      },
-      progress_proc: lambda {|s|
-        pbar.set s if pbar
-    }) {|f|
-      mapping = Nokogiri::XML(f)
-    }
+#    open(xml,
+#      content_length_proc: lambda {|t|
+#        if t && t > 0
+#          pbar = ProgressBar.create(title: xml, t)
+#          pbar.file_transfer_mode
+#        end
+#      },
+#      progress_proc: lambda {|s|
+#        pbar.set s if pbar
+#    }) {|f|
+#      mapping = Nokogiri::XML(f)
+#    }
+    open(xml){|f| mapping = Nokogiri::XML(f) }
 
     mapping.xpath('//character').each{|char|
       latex = char.at('.//latex')
@@ -404,14 +405,22 @@ class UnicodeConverter
     @prefer = []
     # prefered option is braces-over-traling-space because of miktex bug that doesn't ignore spaces after commands
     # https://github.com/retorquere/zotero-better-bibtex/issues/69
-    @chars.create_function('rank', 1) do |func, latex, mode|
+    @chars.create_function('rank', 3) do |func, charcode, latex, mode|
       latex = latex.to_s
       tests = [
         lambda{ latex == '\\mbox{}' },
         lambda{ @prefer.include?(latex) },
         lambda{ latex !~ /\\/ || latex == "\\$" || latex =~ /^\\[^a-zA-Z0-9]$/ || latex =~ /^\\\^[1-3]$/ },
+
+        # added because of https://github.com/retorquere/zotero-better-bibtex/issues/620
+        # lambda{ charcode.chr(Encoding::UTF_8) =~ /^[[:alpha:]]$/ && latex =~ /^{.+}$/ },
+        # this only prefers this way of encoding for accented :alpha:, leaving as much as possible of the cleanup
+        # working
+        lambda{ ![0x00D7, 0x00F7].include?(charcode) && (0x00C0 .. 0x024F) === charcode && latex =~ /^{.+}$/ },
+
         lambda{ latex =~ /^(\\[0-9a-zA-Z]+)+{}$/ },
         lambda{ latex =~ /^{.+}$/ },
+
         lambda{ latex =~ /}/ },
         lambda{ true }
       ]
@@ -461,7 +470,7 @@ class UnicodeConverter
           END
       """)
 
-      @chars.execute("UPDATE mapping SET preference = rank(latex, mode)")
+      @chars.execute("UPDATE mapping SET preference = rank(charcode, latex, mode)")
       preference = {}
       @chars.execute("""
               SELECT charcode, latex
