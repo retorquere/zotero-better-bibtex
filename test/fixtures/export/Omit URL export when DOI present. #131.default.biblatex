@@ -1,9 +1,10 @@
 
 @inproceedings{CapEA11,
   author = {Cappello, Franck and Jacquelin, Mathias and Marchal, Loris and Robert, Yves and Snir, Marc},
-  booktitle = {High {{Performance Computing}} ({{HiPC}}), 2011 18th International Conference on},
+  booktitle = {High {{Performance Computing}} ({{HiPC}}), 2011 18th International Conference On},
   date = {2011},
   doi = {10.1109/HiPC.2011.6152428},
+  groups = {Omit URL export when DOI present. \#131},
   keywords = {bdec15,zotero_testcase},
   pages = {1--10},
   publisher = {{IEEE}},
@@ -19,6 +20,7 @@
   booktitle = {Proceedings of the International Conference for {{High Performance Computing}}, {{Networking}}, {{Storage}} and {{Analysis}}},
   date = {2014},
   doi = {10.1109/SC.2014.72},
+  groups = {Omit URL export when DOI present. \#131},
   isbn = {978-1-4799-5500-8},
   keywords = {bdec15,zotero_testcase},
   location = {{Piscataway, NJ, USA}},
@@ -35,6 +37,7 @@
   author = {Taylor, Karl E. and Stouffer, Ronald J. and Meehl, Gerald A.},
   date = {2011-10-07},
   doi = {10.1175/BAMS-D-11-00094.1},
+  groups = {Omit URL export when DOI present. \#131},
   issn = {0003-0007, 1520-0477},
   journaltitle = {Bulletin of the American Meteorological Society},
   keywords = {bdec15,jasmin13a,p-12-iam,p-gmdm41,zotero_testcase},
@@ -47,10 +50,9 @@
   volume = {93}
 }
 
-@comment{jabref-meta: groupsversion:3;}
+@comment{jabref-meta: databaseType:biblatex;}
 @comment{jabref-meta: groupstree:
 0 AllEntriesGroup:;
-1 ExplicitGroup:Omit URL export when DOI present. #131\;0\;CapEA11\;Cu
-mEA14\;TayEA11\;;
+1 ExplicitGroup:Omit URL export when DOI present. #131\;0\;;
 }
 

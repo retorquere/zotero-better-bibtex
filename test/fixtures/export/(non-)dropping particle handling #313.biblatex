@@ -66,56 +66,56 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {bugreports\_{{ApostropheOnParticle}}}
+  title = {Bugreports\_{{ApostropheOnParticle}}}
 }
 
 @article{bugreports_AsmJournals,
   author = {Doe Co.},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {bugreports\_{{AsmJournals}}}
+  title = {Bugreports\_{{AsmJournals}}}
 }
 
 @article{bugreports_DemoPageFullCiteCruftOnSubsequent,
   author = {{U.S. Bureau of the Census}},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {bugreports\_{{DemoPageFullCiteCruftOnSubsequent}}}
+  title = {Bugreports\_{{DemoPageFullCiteCruftOnSubsequent}}}
 }
 
 @article{bugreports_DuplicateSpaces,
   author = {D'Arcus, Bruce},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {bugreports\_{{DuplicateSpaces}}}
+  title = {Bugreports\_{{DuplicateSpaces}}}
 }
 
 @article{bugreports_DuplicateSpaces3,
   author = {Family Name, N},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {bugreports\_{{DuplicateSpaces3}}}
+  title = {Bugreports\_{{DuplicateSpaces3}}}
 }
 
 @article{bugreports_GreekStyleProblems,
   author = {Καρυωτάκης, Κώστας},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {bugreports\_{{GreekStyleProblems}}}
+  title = {Bugreports\_{{GreekStyleProblems}}}
 }
 
 @article{bugreports_ProcessorHang1,
   author = {Reynoso-Santos, R. and Soto-Pinto, L. and Tejeda-Cruz, C. and Williams-Linera, G.},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {bugreports\_{{ProcessorHang1}}}
+  title = {Bugreports\_{{ProcessorHang1}}}
 }
 
 @article{bugreports_YearSuffixInHarvard1,
   author = {{Africa News}},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {bugreports\_{{YearSuffixInHarvard1}}}
+  title = {Bugreports\_{{YearSuffixInHarvard1}}}
 }
 
 @article{bugreports_parseName,
@@ -123,7 +123,7 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {bugreports\_{{parseName}}}
+  title = {Bugreports\_{{parseName}}}
 }
 
 @article{decorations_AndTermUnaffectedByNameDecorations,
@@ -131,7 +131,7 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {decorations\_{{AndTermUnaffectedByNameDecorations}}}
+  title = {Decorations\_{{AndTermUnaffectedByNameDecorations}}}
 }
 
 @article{disambiguate_CitationLabelInData,
@@ -139,35 +139,35 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {disambiguate\_{{CitationLabelInData}}}
+  title = {Disambiguate\_{{CitationLabelInData}}}
 }
 
 @article{disambiguate_FailWithYearSuffix,
   author = {{Caritas Europa} and {JRS-Europe}},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {disambiguate\_{{FailWithYearSuffix}}}
+  title = {Disambiguate\_{{FailWithYearSuffix}}}
 }
 
 @article{disambiguate_YearCollapseWithInstitution,
   author = {Smith Co},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {disambiguate\_{{YearCollapseWithInstitution}}}
+  title = {Disambiguate\_{{YearCollapseWithInstitution}}}
 }
 
 @article{display_SecondFieldAlignMigratePunctuation,
   author = {Bennett, Jr., Frank G.},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {display\_{{SecondFieldAlignMigratePunctuation}}}
+  title = {Display\_{{SecondFieldAlignMigratePunctuation}}}
 }
 
 @article{group_ComplexNesting,
   author = {Doe Inc.},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {group\_{{ComplexNesting}}}
+  title = {Group\_{{ComplexNesting}}}
 }
 
 @article{integration_DuplicateItem,
@@ -175,7 +175,7 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {integration\_{{DuplicateItem}}}
+  title = {Integration\_{{DuplicateItem}}}
 }
 
 @article{magic_CapitalizeFirstOccurringNameParticle,
@@ -183,7 +183,7 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {magic\_{{CapitalizeFirstOccurringNameParticle}}}
+  title = {Magic\_{{CapitalizeFirstOccurringNameParticle}}}
 }
 
 @article{magic_NameParticle,
@@ -191,42 +191,42 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {magic\_{{NameParticle}}}
+  title = {Magic\_{{NameParticle}}}
 }
 
 @article{magic_SuppressDuplicateVariableRendering,
   author = {{Blob}},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {magic\_{{SuppressDuplicateVariableRendering}}}
+  title = {Magic\_{{SuppressDuplicateVariableRendering}}}
 }
 
 @article{name_ArticularNameAsSortOrder,
   author = {Doe, III, James},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{ArticularNameAsSortOrder}}}
+  title = {Name\_{{ArticularNameAsSortOrder}}}
 }
 
 @article{name_ArticularShortFormCommaSuffix,
   author = {Doe, Jr, James},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{ArticularShortFormCommaSuffix}}}
+  title = {Name\_{{ArticularShortFormCommaSuffix}}}
 }
 
 @article{name_ArticularWithComma,
   author = {Doe, Jr., Jeffrey},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{ArticularWithComma}}}
+  title = {Name\_{{ArticularWithComma}}}
 }
 
 @article{name_Delimiter,
   author = {Noakes Inc.},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{Delimiter}}}
+  title = {Name\_{{Delimiter}}}
 }
 
 @article{name_FormattingOfParticles,
@@ -234,7 +234,7 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{FormattingOfParticles}}}
+  title = {Name\_{{FormattingOfParticles}}}
 }
 
 @article{name_HyphenatedNonDroppingParticle1,
@@ -242,21 +242,21 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{HyphenatedNonDroppingParticle1}}}
+  title = {Name\_{{HyphenatedNonDroppingParticle1}}}
 }
 
 @article{name_Institution,
   author = {{Multi-National United}},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{Institution}}}
+  title = {Name\_{{Institution}}}
 }
 
 @article{name_InstitutionDecoration,
   author = {{São Paulo (Estado)}},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{InstitutionDecoration}}}
+  title = {Name\_{{InstitutionDecoration}}}
 }
 
 @article{name_MixedFormatsInitialSortOrderAllWithDecorationsEtAl,
@@ -264,14 +264,14 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{MixedFormatsInitialSortOrderAllWithDecorationsEtAl}}}
+  title = {Name\_{{MixedFormatsInitialSortOrderAllWithDecorationsEtAl}}}
 }
 
 @article{name_MultipleLiteral,
   author = {{Alfred Benzon Foundation} and {James Benson Foundation} and {John Candy Foundation}},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{MultipleLiteral}}}
+  title = {Name\_{{MultipleLiteral}}}
 }
 
 @article{name_ParseNames,
@@ -279,14 +279,14 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{ParseNames}}}
+  title = {Name\_{{ParseNames}}}
 }
 
 @article{name_ParsedDroppingParticleWithAffixes,
   author = {de La Fontaine, Jean},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{ParsedDroppingParticleWithAffixes}}}
+  title = {Name\_{{ParsedDroppingParticleWithAffixes}}}
 }
 
 @article{name_ParsedNonDroppingParticleWithAffixes,
@@ -294,7 +294,7 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{ParsedNonDroppingParticleWithAffixes}}}
+  title = {Name\_{{ParsedNonDroppingParticleWithAffixes}}}
 }
 
 @article{name_ParsedNonDroppingParticleWithApostrophe,
@@ -302,7 +302,7 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{ParsedNonDroppingParticleWithApostrophe}}}
+  title = {Name\_{{ParsedNonDroppingParticleWithApostrophe}}}
 }
 
 @article{name_ParticleCaps1,
@@ -310,14 +310,14 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{ParticleCaps1}}}
+  title = {Name\_{{ParticleCaps1}}}
 }
 
 @article{name_ParticleCaps3,
   author = {{Van Dyke}, Dick},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{ParticleCaps3}}}
+  title = {Name\_{{ParticleCaps3}}}
 }
 
 @article{name_ParticleFormatting,
@@ -325,7 +325,7 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{ParticleFormatting}}}
+  title = {Name\_{{ParticleFormatting}}}
 }
 
 @article{name_ParticlesDemoteNonDroppingNever,
@@ -333,7 +333,7 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{ParticlesDemoteNonDroppingNever}}}
+  title = {Name\_{{ParticlesDemoteNonDroppingNever}}}
 }
 
 @article{name_WesternArticularLowercase,
@@ -341,7 +341,7 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{WesternArticularLowercase}}}
+  title = {Name\_{{WesternArticularLowercase}}}
 }
 
 @article{name_namepartAffixes,
@@ -349,7 +349,7 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {name\_{{namepartAffixes}}}
+  title = {Name\_{{namepartAffixes}}}
 }
 
 @article{nameorder_Long,
@@ -357,35 +357,35 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {nameorder\_{{Long}}}
+  title = {Nameorder\_{{Long}}}
 }
 
 @article{position_IbidWithSuffix,
   author = {Al-Khatib Organization},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {position\_{{IbidWithSuffix}}}
+  title = {Position\_{{IbidWithSuffix}}}
 }
 
 @article{sort_ChangeInNameSort,
   author = {{De Quincey}, Alan},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {sort\_{{ChangeInNameSort}}}
+  title = {Sort\_{{ChangeInNameSort}}}
 }
 
 @article{sort_ChicagoYearSuffix1,
   author = {Beijing Zoo and {Beijing Zoo}},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {sort\_{{ChicagoYearSuffix1}}}
+  title = {Sort\_{{ChicagoYearSuffix1}}}
 }
 
 @article{sort_FamilyOnly,
   author = {ANZ Group},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {sort\_{{FamilyOnly}}}
+  title = {Sort\_{{FamilyOnly}}}
 }
 
 @article{sort_LeadingApostropheOnNameParticle,
@@ -393,7 +393,7 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {sort\_{{LeadingApostropheOnNameParticle}}}
+  title = {Sort\_{{LeadingApostropheOnNameParticle}}}
 }
 
 @article{sort_NameParticleInNameSortFalse,
@@ -401,14 +401,14 @@
   keywords = {imported},
   options = {useprefix=true},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {sort\_{{NameParticleInNameSortFalse}}}
+  title = {Sort\_{{NameParticleInNameSortFalse}}}
 }
 
 @article{sort_NameVariable,
   author = {[F]linders, Jacob},
   keywords = {imported},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {sort\_{{NameVariable}}}
+  title = {Sort\_{{NameVariable}}}
 }
 
 @preamble{ "\ifdefined\DeclarePrefChars\DeclarePrefChars{'’-}\else\fi " }

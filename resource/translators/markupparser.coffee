@@ -146,7 +146,8 @@ class Translator.MarkupParser
 
     if options.caseConversion
       unless Translator.suppressTitleCase
-        @titleCased = Zotero.BetterBibTeX.CSL.titleCase(@innerText(@handler.root))
+        # https://github.com/Juris-M/citeproc-js/issues/30
+        @titleCased = Zotero.BetterBibTeX.CSL.titleCase(@innerText(@handler.root).replace(/[\u00A0\u2003\u2004\u205F\u2009]/g, ' '))
         @titleCase(@handler.root)
 
       @simplify(@handler.root)
@@ -158,11 +159,20 @@ class Translator.MarkupParser
     return @handler.root
 
   innerText: (node, text = '') ->
-    if node.name == '#text'
-      text += Array((node.pos - text.length) + 1).join(' ') + node.text if node.pos?
-    else
-      for child in node.children
-        text = @innerText(child, text)
+    switch node.name
+      when '#text'
+        # the Array construct makes sure that the text is placed at the exact position it has in the origin string,
+        # adding spaces as necessary
+        text += Array((node.pos - text.length) + 1).join(' ') + node.text if node.pos?
+      when 'pre'
+        # don't confuse the title caser with spurious markup, but MUST NOT change the string length. Without this,
+        # the CSL title caser would consider last words in a title that actually have a following <pre> block the last
+        # word and would capitalize it. The prevents that behavior by adding the contents of the <pre> block, but it
+        # will be ignored by the BBT title caser, which only title-cases #text blocks
+        text += node.text.replace(/</g, '[').replace(/>/g, ']')
+      else
+        for child in node.children
+          text = @innerText(child, text)
     return text
 
   unwrapNocase: (node) ->
@@ -220,7 +230,18 @@ class Translator.MarkupParser
 
   titleCase: (node) ->
     if node.name == '#text'
-      node.text = @titleCased.substr(node.pos, node.text.length) if node.pos?
+      # https://github.com/Juris-M/citeproc-js/issues/30
+      # node.text = @titleCased.substr(node.pos, node.text.length) if node.pos?
+      if node.pos?
+        spaces = '\u2003\u2004\u205F\u2009\u00A0'.split('')
+        recased = ''
+        for char, i in @titleCased.substr(node.pos, node.text.length).split('')
+          if node.text[i] in spaces
+            recased += node.text[i]
+          else
+            recased += char
+        node.text = recased
+
     else
       for child in node.children
         @titleCase(child) unless child.nocase
@@ -302,7 +323,7 @@ class Translator.MarkupParser
     pre: (text) ->
       throw "Expectd 'pre' tag, found '#{@elems[0].name}'" unless @elems[0].name == 'pre'
       throw "Text already set on pre tag'" if @elems[0].text
-      throw "Prei must not have children" if @elems[0].children && @elems[0].children.length > 0
+      throw "Pre must not have children" if @elems[0].children && @elems[0].children.length > 0
       @elems[0].text = text
 
     chars: (text, pos) ->

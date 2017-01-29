@@ -211,7 +211,23 @@ doImport = ->
       data += read
     bib = BetterBibTeXParser.parse(data, {mathMode: Translator.mathMode, csquotes: Translator.csquotes, raw: Translator.rawImports})
 
+    for coll in bib.collections
+      JabRef.collect(coll)
+
     for ref in bib.references
+      # JabRef groups
+      if ref.groups
+        for group in ref.groups.split(',')
+          group = group.trim()
+          switch
+            when group == ''
+              Translator.log("#{ref.__key__} specifies empty group name")
+            when !JabRef.collections[group]
+              Translator.log("#{ref.__key__} specifies non-existant group #{group}")
+            else
+              JabRef.collections[group].items.append(ref.__key__)
+        delete ref.groups
+
       new ZoteroItem(ref)
 
     for coll in bib.collections
@@ -238,6 +254,12 @@ JabRef.importGroup = (group) ->
     collection.children.push(JabRef.importGroup(child))
   collection.complete()
   return collection
+
+JabRef.collections = {}
+JabRef.collect = (group) ->
+  JabRef.collections[group.name] = group
+  for child in group.collections
+    JabRef.collect(child)
 
 class ZoteroItem
   constructor: (@bibtex) ->

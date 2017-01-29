@@ -178,9 +178,10 @@ groupelement
   = chars:groupchars+ { return chars.join('') }
 
 groupchars
-  = "\\" [\r\n]* "\\" [\r\n] char:. { return char }
-  / [\r\n]+                         { return '' }
-  / chars:[^\\;\r\n]+               { return chars.join('') }
+  = "\\" [\r\n]* "\\" [\r\n]* "\\" [\r\n]* "\\" { return '\\' }
+  / "\\" [\r\n]* "\\" [\r\n]* char:.            { return char }
+  / [\r\n]+                                     { return '' }
+  / chars:[^\\;\r\n]+                           { return chars.join('') }
 _
   = w:[ \t\n\r]+
 

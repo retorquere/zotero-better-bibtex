@@ -98,8 +98,10 @@
         <preference name="extensions.zotero.translators.better-bibtex.tests"                    id="pref-better-bibtex-tests"                   type="string"/>
         <!-- Unit tests to run -->
 
-        <preference name="extensions.zotero.translators.better-bibtex.jabrefGroups"             id="pref-better-bibtex-jabrefGroups"            type="bool"/>
-        <!-- Export JabRef groups for collections. -->
+        <preference name="extensions.zotero.translators.better-bibtex.jabrefGroups" id="pref-better-bibtex-jabrefGroups"                        type="int"/>
+        <!-- Export JabRef groups for collections. zero means disable, "3" means format 3, which is (IMO) opinion better
+             but depracated (but JabRef will read it for the foreseeable future), "4" means the new format.
+        -->
 
         <preference name="extensions.zotero.translators.better-bibtex.defaultDateParserLocale"  id="pref-better-bibtex-defaultDateParserLocale" type="string"/>
         <!--
@@ -116,12 +118,29 @@
         <preference name="extensions.zotero.translators.better-bibtex.qualityReport"            id="pref-better-bibtex-qualityReport"           type="bool"/>
         <!-- Generate quality reports for exported references.  -->
 
+        <preference name="extensions.zotero.translators.better-bibtex.biblatexExtendedDateFormat" id="pref-better-bibtex-biblatexExtendedDateFormat" type="bool"/>
+        <!--
+          Support for ambiguous dates
+        -->
+
         <preference name="extensions.zotero.translators.better-bibtex.biblatexExtendedNameFormat" id="pref-better-bibtex-biblatexExtendedNameFormat" type="bool"/>
+        <!--
+          In the latest release, biblatex has a new (less ambiguous) way to store creator names. It's technically
+          superior, but the LaTeX world moves slowly, so many people won't have it yet. But if you're an early adapter,
+          you can enable it here
+        -->
 
         <preference name="extensions.zotero.translators.better-bibtex.suppressTitleCase" id="pref-better-bibtex-suppressTitleCase" type="bool"/>
         <!--
           If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
           casing, set this preference to "true" to suppress [title casing for English references](Unnecessarily-complicated-BibTeX-output%3F#mapping-fields).
+        -->
+
+        <preference name="extensions.zotero.translators.better-bibtex.itemObserverDelay" id="pref-better-bibtex-itemObserverDelay" type="int"/>
+        <!--
+          I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
+          retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets
+          the number of microseconds BBT should wait after being notified before acting on the changed references.
         -->
 
       </preferences>
@@ -300,7 +319,7 @@
                 simply more pleasing to have things like accented characters translated to their equivalent LaTeX constructs on export.
               -->
               <checkbox preference="pref-better-bibtex-biblatexExtendedNameFormat" label="&zotero.better-bibtex.prefs.export.biblatex.extendedNameFormat;"/>
-              <!-- Use the extended biber 2.7 format for names with particles - ony works in BibLaTeX 3.5 or later -->
+              <!-- Use the extended biber 2.7 format for names with particles - only works in BibLaTeX 3.5 or later -->
             </groupbox>
 
             <groupbox>
@@ -433,7 +452,7 @@
             -->
             <checkbox id="id-better-bibtex-preferences-raw-imports" preference="pref-better-bibtex-rawImports" label="&zotero.better-bibtex.raw-imports;"/>
             <!--
-              Enables [[hardcore|From Unicode to LaTeX and Back Again#you-are-a-hardcore-latex-user]] mode. You like
+              Enables [[hardcore|Unnecessarily-complicated-BibTeX-output#you-are-a-hardcore-latex-user]] mode. You like
               Zotero in some ways, but really just want it to be a BibTeX manager. If
               you enable this, any BibTeX files you import will retain all the LaTeX commands they have, and marks the
               entry to be exported without any translation.
