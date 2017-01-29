@@ -286,6 +286,7 @@ Zotero.BetterBibTeX.DB = new class
 
   purge: ->
     itemIDs = (item.id for item in @getAll())
+    Zotero.BetterBibTeX.debug('purge:, allitems=', itemIDs, 'keys=', @keys.data, 'cache=', @cache.data, 'serialized=', @serialized.data)
     @keys.removeWhere((o) -> o.itemID not in itemIDs)
     @cache.removeWhere((o) -> o.itemID not in itemIDs)
     @serialized.removeWhere((o) -> o.itemID not in itemIDs)
