@@ -9,7 +9,7 @@ if not Zotero.BetterBibTeX
         if script == 'lib/lokijs.js'
           Zotero.BetterBibTeX.LokiJS.Collection::remove = ((original) ->
             return (doc) ->
-              Zotero.debug("Zotero.BetterBibTeX.LokiJS.Collection::remove(#{JSON.stringify(doc)})")
+              Zotero.debug("Zotero.BetterBibTeX.LokiJS.Collection::remove(#{typeof doc}:#{JSON.stringify(doc)})")
               return original.apply(@, arguments)
           )(Zotero.BetterBibTeX.LokiJS.Collection::remove)
 
