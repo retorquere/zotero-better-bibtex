@@ -9,10 +9,8 @@ if not Zotero.BetterBibTeX
         if script == 'lib/lokijs.js'
           Zotero.BetterBibTeX.LokiJS.Collection::remove = ((original) ->
             return (doc) ->
-              Zotero.debug("Zotero.BetterBibTeX.LokiJS.Collection::remove(#{typeof doc}:#{JSON.stringify(doc)})")
               if typeof doc == 'number'
-                doc = this.get(doc)
-                Zotero.debug("Zotero.BetterBibTeX.LokiJS.Collection::remove-by-id(#{typeof doc}:#{JSON.stringify(doc)})")
+                Zotero.debug("#{Zotero.BetterBibTeX.release}: Zotero.BetterBibTeX.LokiJS.Collection::remove-by-id(#{typeof doc}:#{JSON.stringify(this.get(doc))})")
               return original.apply(@, arguments)
           )(Zotero.BetterBibTeX.LokiJS.Collection::remove)
 

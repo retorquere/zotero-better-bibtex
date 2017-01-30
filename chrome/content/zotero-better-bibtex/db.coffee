@@ -291,7 +291,7 @@ Zotero.BetterBibTeX.DB = new class
     orphaned = (o) -> o.itemID not in itemIDs
     @collection.keys.removeWhere(orphaned)
     @collection.cache.removeWhere(orphaned)
-    Zotero.debug("purge.serialized:, #{JSON.stringify(@collection.serialized.data.filter(orphaned))}")
+    Zotero.debug("#{Zotero.BetterBibTeX.release}: purge.serialized:, #{JSON.stringify(@collection.serialized.data.filter(orphaned))}")
     @collection.serialized.removeWhere(orphaned)
 
   touch: (itemID) ->
