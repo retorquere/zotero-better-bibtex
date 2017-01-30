@@ -52,7 +52,7 @@ Zotero.BetterBibTeX.auto = new class
       updated: (new Date()).toLocaleString()
     })
     @updated()
-    Zotero.BetterBibTeX.DB.collection.save('main')
+    Zotero.BetterBibTeX.DB.save('main')
 
   markIDs: (ids, reason) ->
     return if ids.length == 0

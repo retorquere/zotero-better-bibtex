@@ -92,7 +92,7 @@ Zotero.BetterBibTeX.cache = new class
     ]})
 
     if cached
-      Zotero.BetterBibTeX.DB.collection.cacheAccess[cached.$loki] = Date.now()
+      Zotero.BetterBibTeX.DB.cacheAccess[cached.$loki] = Date.now()
       @stats.hit++
       Zotero.BetterBibTeX.debug('cache.fetch: hit')
     else
