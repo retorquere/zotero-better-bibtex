@@ -658,16 +658,16 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
 
   collections = @auto.withParentCollections(collections) if collections.length != 0
   collections = ("collection:#{id}" for id in collections)
-  Zotero.BetterBibTeX.debug('marking:', collections, 'from', (o.collection for o in @DB.autoexport.data))
+  Zotero.BetterBibTeX.debug('marking:', collections, 'from', (o.collection for o in @DB.collection.autoexport.data))
   if collections.length > 0
-    for ae in @DB.autoexport.where((o) -> o.collection in collections)
+    for ae in @DB.collection.autoexport.where((o) -> o.collection in collections)
       @auto.mark(ae, 'pending', "itemAdded: #{collections}")
 ).bind(Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
   return unless event == 'delete' && extraData.length > 0
   extraData = ("collection:#{id}" for id in extraData)
-  @DB.autoexport.removeWhere((o) -> o.collection in extraData)
+  @DB.collection.autoexport.removeWhere((o) -> o.collection in extraData)
 
 Zotero.BetterBibTeX.itemChanged = (event, type, ids, extraData) ->
   Zotero.BetterBibTeX.debug("itemChanged:", {event, type, ids, extraData})
