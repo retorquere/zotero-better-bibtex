@@ -2,7 +2,6 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 
 Zotero.BetterBibTeX.keymanager = new class
   constructor: ->
-    @db = Zotero.BetterBibTeX.DB
     @log = Zotero.BetterBibTeX.log
 
   ###
@@ -31,10 +30,10 @@ Zotero.BetterBibTeX.keymanager = new class
     return _v
 
   cache: ->
-    return (@clone(key) for key in @db.keys.find())
+    return (@clone(key) for key in Zotero.BetterBibTeX.DB.collection.keys.find())
 
   prime: ->
-    assigned = (key.itemID for key in @db.keys.find())
+    assigned = (key.itemID for key in Zotero.BetterBibTeX.DB.collection.keys.find())
     unassigned = (item.id for item in Zotero.BetterBibTeX.DB.getAll() when not item.id in assigned)
 
     if unassigned.length > 100
@@ -51,7 +50,7 @@ Zotero.BetterBibTeX.keymanager = new class
     return
 
   reset: ->
-    @db.keys.removeWhere((obj) -> true) # causes cache drop
+    Zotero.BetterBibTeX.DB.collection.keys.removeWhere((obj) -> true) # causes cache drop
     @scan()
 
   patternHash: ->
@@ -66,7 +65,7 @@ Zotero.BetterBibTeX.keymanager = new class
     # compensate for #545
     ckf = Zotero.BetterBibTeX.Pref.get('citekeyFormat')
     Zotero.BetterBibTeX.debug('keymanager.clearDynamic:', current)
-    @db.keys.removeWhere((obj) ->
+    Zotero.BetterBibTeX.DB.collection.keys.removeWhere((obj) ->
       return false if !obj.citekeyFormat || obj.citekeyFormat in [current, ckf]
       affected.push(obj.itemID)
       return true
@@ -108,7 +107,7 @@ Zotero.BetterBibTeX.keymanager = new class
 
     libraryID = @integer(if item.libraryID == undefined then Zotero.DB.valueQuery('select libraryID from items where itemID = ?', [item.itemID]) else item.libraryID)
     itemID = @integer(item.itemID)
-    in_use = (key.citekey for key in @db.keys.where((o) -> o.libraryID == libraryID && o.itemID != itemID && o.citekey.indexOf(citekey) == 0))
+    in_use = (key.citekey for key in Zotero.BetterBibTeX.DB.collection.keys.where((o) -> o.libraryID == libraryID && o.itemID != itemID && o.citekey.indexOf(citekey) == 0))
     postfix = { n: 0, c: '' }
     while (citekey + postfix.c) in in_use
       postfix.n++
@@ -134,7 +133,7 @@ Zotero.BetterBibTeX.keymanager = new class
       if action == 'set'
         affected = items.length
       else
-        affected = @db.keys.where((key) -> key.itemID in ids && !key.citekeyFormat).length
+        affected = Zotero.BetterBibTeX.DB.collection.keys.where((key) -> key.itemID in ids && !key.citekeyFormat).length
 
       if affected > warn
         params = { treshold: warn, response: null }
@@ -178,17 +177,17 @@ Zotero.BetterBibTeX.keymanager = new class
     libraryID = @integer(item.libraryID)
 
     citekeyFormat = if pin then null else @patternHash()
-    key = @db.keys.findOne({itemID})
+    key = Zotero.BetterBibTeX.DB.collection.keys.findOne({itemID})
     return @verify(key) if key && key.citekey == citekey && key.citekeyFormat == citekeyFormat
 
     if key
       key.citekey = citekey
       key.citekeyFormat = citekeyFormat
       key.libraryID = libraryID
-      @db.keys.update(key)
+      Zotero.BetterBibTeX.DB.collection.keys.update(key)
     else
       key = {itemID, libraryID, citekey, citekeyFormat}
-      @db.keys.insert(key)
+      Zotero.BetterBibTeX.DB.collection.keys.insert(key)
 
     @save(item, citekey) if pin
 
@@ -230,22 +229,22 @@ Zotero.BetterBibTeX.keymanager = new class
       itemID = @integer(item.id)
       libraryID = @integer(item.libraryID)
 
-      @db.keys.removeWhere({$and: [{libraryID}, {citekeyFormat: null}, {citekey}]}) if change
+      Zotero.BetterBibTeX.DB.collection.keys.removeWhere({$and: [{libraryID}, {citekeyFormat: null}, {citekey}]}) if change
 
       pinned.push(itemID)
 
-      if cached = @db.keys.findOne({itemID})
+      if cached = Zotero.BetterBibTeX.DB.collection.keys.findOne({itemID})
         cached.citekey = citekey
         cached.citekeyFormat = null
         cached.libraryID = libraryID
-        @db.keys.update(cached)
+        Zotero.BetterBibTeX.DB.collection.keys.update(cached)
       else
-        @db.keys.insert({itemID, libraryID, citekey: citekey, citekeyFormat: null})
+        Zotero.BetterBibTeX.DB.collection.keys.insert({itemID, libraryID, citekey: citekey, citekeyFormat: null})
 
     return pinned
 
   remove: (item, soft) ->
-    @db.keys.removeWhere({itemID: @integer(item.itemID)})
+    Zotero.BetterBibTeX.DB.collection.keys.removeWhere({itemID: @integer(item.itemID)})
     @save(item) unless soft # only use soft remove if you know a hard set follows!
 
   eligible: (item) ->
@@ -303,7 +302,7 @@ Zotero.BetterBibTeX.keymanager = new class
     ###
 
     pin = (pinmode == Zotero.BetterBibTeX.Pref.get('pinCitekeys'))
-    cached = @db.keys.findOne({itemID: @integer(item.itemID)})
+    cached = Zotero.BetterBibTeX.DB.collection.keys.findOne({itemID: @integer(item.itemID)})
 
     ### store new cache item if we have a miss or if a re-pin is requested ###
     cached = @assign(item, pin) if !cached || (pin && cached.citekeyFormat)
@@ -316,7 +315,7 @@ Zotero.BetterBibTeX.keymanager = new class
 
     resolved = {}
     for citekey in citekeys
-      resolved[citekey] = @db.keys.findObject({citekey, libraryID})
+      resolved[citekey] = Zotero.BetterBibTeX.DB.collection.keys.findObject({citekey, libraryID})
     return resolved
 
   alternates: (item) ->

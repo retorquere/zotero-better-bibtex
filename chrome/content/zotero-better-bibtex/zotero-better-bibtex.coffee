@@ -282,7 +282,7 @@ Zotero.BetterBibTeX.init = ->
     @flash("Citation key rescan finished")
 
   if Zotero.BetterBibTeX.DB.cacheReset
-    for ae in Zotero.BetterBibTeX.auto.db.autoexport.data
+    for ae in Zotero.BetterBibTeX.DB.collection.autoexport.data
       Zotero.BetterBibTeX.auto.mark(ae, 'pending', 'cache reset')
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
@@ -339,7 +339,7 @@ Zotero.BetterBibTeX.init = ->
       ids = original.call(@, false) || []
 
       Zotero.BetterBibTeX.debug('search: looking for', searchText, 'to add to', ids)
-      for key in Zotero.BetterBibTeX.keymanager.db.keys.where((k) -> k.citekey.toLowerCase().indexOf(searchText) >= 0)
+      for key in Zotero.BetterBibTeX.DB.collection.keys.where((k) -> k.citekey.toLowerCase().indexOf(searchText) >= 0)
         ids.push('' + key.itemID) unless ids.indexOf('' + key.itemID) >= 0
 
       return false if ids.length == 0
@@ -375,7 +375,7 @@ Zotero.BetterBibTeX.init = ->
         libraryKey.reverse()
         [citekey, libraryID] = libraryKey
         libraryID = libraryID || null
-        item = Zotero.BetterBibTeX.DB.keys.findObject({citekey, libraryID})
+        item = Zotero.BetterBibTeX.DB.collection.keys.findObject({citekey, libraryID})
         return false unless item && item.itemID
         item = Zotero.Items.get(item.itemID)
         return false unless item
@@ -658,16 +658,16 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
 
   collections = @auto.withParentCollections(collections) if collections.length != 0
   collections = ("collection:#{id}" for id in collections)
-  Zotero.BetterBibTeX.debug('marking:', collections, 'from', (o.collection for o in @DB.autoexport.data))
+  Zotero.BetterBibTeX.debug('marking:', collections, 'from', (o.collection for o in @DB.collection.autoexport.data))
   if collections.length > 0
-    for ae in @DB.autoexport.where((o) -> o.collection in collections)
+    for ae in @DB.collection.autoexport.where((o) -> o.collection in collections)
       @auto.mark(ae, 'pending', "itemAdded: #{collections}")
 ).bind(Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
   return unless event == 'delete' && extraData.length > 0
   extraData = ("collection:#{id}" for id in extraData)
-  @DB.autoexport.removeWhere((o) -> o.collection in extraData)
+  @DB.collection.autoexport.removeWhere((o) -> o.collection in extraData)
 
 Zotero.BetterBibTeX.itemChanged = (event, type, ids, extraData) ->
   Zotero.BetterBibTeX.debug("itemChanged:", {event, type, ids, extraData})
@@ -690,7 +690,7 @@ Zotero.BetterBibTeX.itemChanged = (event, type, ids, extraData) ->
 
   pinned = if event in ['add', 'modify'] then @keymanager.scan(references) else []
 
-  @DB.keys.removeWhere((k) -> k.itemID in ids && !(k.itemID in pinned))
+  @DB.collection.keys.removeWhere((k) -> k.itemID in ids && !(k.itemID in pinned))
 
   if event in ['add', 'modify']
     for item in references

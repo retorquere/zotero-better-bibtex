@@ -1,19 +1,18 @@
 Zotero.BetterBibTeX.auto = new class
   constructor: ->
-    @db = Zotero.BetterBibTeX.DB
     @search = {}
     @idle = false
 
-    for ae in @db.autoexport.data
+    for ae in Zotero.BetterBibTeX.DB.collection.autoexport.data
       if ae.status == 'running'
         ae.status = 'pending'
-        @db.autoexport.update(ae)
+        Zotero.BetterBibTeX.DB.collection.autoexport.update(ae)
 
   mark: (ae, status, reason) ->
     Zotero.BetterBibTeX.debug('auto.mark:', {ae, status})
     ae.updated = (new Date()).toLocaleString()
     ae.status = status
-    @db.autoexport.update(ae)
+    Zotero.BetterBibTeX.DB.collection.autoexport.update(ae)
 
     @schedule(reason || 'no reason provided') if status == 'pending'
 
@@ -27,7 +26,7 @@ Zotero.BetterBibTeX.auto = new class
 
     @search[parseInt(search.id)] = items
 
-    ae = @db.autoexport.findObject({collection: "search:#{id}"})
+    ae = Zotero.BetterBibTeX.DB.collection.autoexport.findObject({collection: "search:#{id}"})
     @mark(ae, 'pending', reason) if ae
 
   updated: ->
@@ -40,9 +39,9 @@ Zotero.BetterBibTeX.auto = new class
   add: (collection, path, context) ->
     Zotero.BetterBibTeX.debug("auto.add: auto-export set up for #{collection} to #{path}")
 
-    @db.autoexport.removeWhere({path})
+    Zotero.BetterBibTeX.DB.collection.autoexport.removeWhere({path})
 
-    @db.autoexport.insert({
+    Zotero.BetterBibTeX.DB.collection.autoexport.insert({
       collection
       path
       translatorID: context.translatorID
@@ -53,7 +52,7 @@ Zotero.BetterBibTeX.auto = new class
       updated: (new Date()).toLocaleString()
     })
     @updated()
-    @db.save('main')
+    Zotero.BetterBibTeX.DB.save('main')
 
   markIDs: (ids, reason) ->
     return if ids.length == 0
@@ -79,12 +78,12 @@ Zotero.BetterBibTeX.auto = new class
         libraries.library = true
     collections = collections.concat(Object.keys(libraries))
 
-    for ae in @db.autoexport.where((o) -> o.collection.indexOf('search:') == 0)
+    for ae in Zotero.BetterBibTeX.DB.collection.autoexport.where((o) -> o.collection.indexOf('search:') == 0)
       @markSearch(ae.collection.replace('search:', ''), "#{reason}, assume search might be updated")
 
     if collections.length > 0
-      Zotero.BetterBibTeX.debug('auto.markIDs:', collections, 'from', (o.collection for o in @db.autoexport.data))
-      for ae in @db.autoexport.where((o) -> o.collection in collections)
+      Zotero.BetterBibTeX.debug('auto.markIDs:', collections, 'from', (o.collection for o in Zotero.BetterBibTeX.DB.collection.autoexport.data))
+      for ae in Zotero.BetterBibTeX.DB.collection.autoexport.where((o) -> o.collection in collections)
         @mark(ae, 'pending', reason)
 
   withParentCollections: (collections) ->
@@ -99,11 +98,11 @@ Zotero.BetterBibTeX.auto = new class
     return collections.concat(Object.keys(parents))
 
   clear: ->
-    @db.autoexport.removeDataOnly()
+    Zotero.BetterBibTeX.DB.collection.autoexport.removeDataOnly()
     @updated()
 
   reset: ->
-    for ae in @db.autoexport.data
+    for ae in Zotero.BetterBibTeX.DB.collection.autoexport.data
       @mark(ae, 'pending', 'reset')
     @updated()
 
@@ -180,7 +179,7 @@ Zotero.BetterBibTeX.auto = new class
     skip = {error: [], done: []}
 
     translate = null
-    for ae in @db.autoexport.findObjects({status: 'pending'})
+    for ae in Zotero.BetterBibTeX.DB.collection.autoexport.findObjects({status: 'pending'})
       break if translate = @prepare(ae)
       @mark(ae, 'error')
 
@@ -198,12 +197,12 @@ Zotero.BetterBibTeX.auto = new class
 
     translate.then(=>
       # if it's been re-marked during the run, let that handle the mark if any
-      @mark(ae, 'done') if @db.autoexport.get(ae.$loki).status == 'running'
+      @mark(ae, 'done') if Zotero.BetterBibTeX.DB.collection.autoexport.get(ae.$loki).status == 'running'
       Zotero.BetterBibTeX.debug("auto.run: finished #{@running}: done")
       return Promise.resolve()
     ).catch(=>
       # if it's been re-marked during the run, let that handle the mark if any
-      @mark(ae, 'error') if @db.autoexport.get(ae.$loki).status == 'running'
+      @mark(ae, 'error') if Zotero.BetterBibTeX.DB.collection.autoexport.get(ae.$loki).status == 'running'
       Zotero.BetterBibTeX.debug("auto.run: finished #{@running}: error")
       return Promise.resolve()
     ).then(=>

@@ -113,7 +113,6 @@ Zotero.BetterBibTeX.serialized = new class
     return item
 
   constructor: ->
-    @db = Zotero.BetterBibTeX.DB
     @stats = {
       clear: 0
       hit: 0
@@ -121,7 +120,7 @@ Zotero.BetterBibTeX.serialized = new class
     }
 
   reset: (reason) ->
-    @db.serialized.removeDataOnly()
+    Zotero.BetterBibTeX.DB.collection.serialized.removeDataOnly()
     @stats = {
       clear: 0
       hit: 0
@@ -131,7 +130,7 @@ Zotero.BetterBibTeX.serialized = new class
   remove: (itemID) ->
     Zotero.BetterBibTeX.debug('serialized.remove:', {itemID})
     @stats.clear++
-    @db.serialized.removeWhere({itemID: parseInt(itemID)})
+    Zotero.BetterBibTeX.DB.collection.serialized.removeWhere({itemID: parseInt(itemID)})
 
   get: (zoteroItem) ->
     ### we may be passed a fully serialized item ###
@@ -144,7 +143,7 @@ Zotero.BetterBibTeX.serialized = new class
     return zoteroItem if typeof zoteroItem.getField != 'function' && zoteroItem.itemType && zoteroItem.itemID && zoteroItem.uri
 
     itemID = parseInt(if typeof zoteroItem.getField == 'function' then zoteroItem.id else zoteroItem.itemID)
-    item = @db.serialized.findOne({itemID})
+    item = Zotero.BetterBibTeX.DB.collection.serialized.findOne({itemID})
 
     if item
       Zotero.BetterBibTeX.debug('serialized.get: hit', itemID)
@@ -165,7 +164,7 @@ Zotero.BetterBibTeX.serialized = new class
       else
         item = {itemID, itemType: 'cache-miss'}
 
-      @db.serialized.insert(item)
+      Zotero.BetterBibTeX.DB.collection.serialized.insert(item)
 
     item.attachments = (@get({itemID: id}) for id in item.attachmentIDs) if item.attachmentIDs && item.attachmentIDs.length != 0
     Zotero.BetterBibTeX.debug('serialized.get: return', {itemType: item.itemType, itemID: item.itemID})

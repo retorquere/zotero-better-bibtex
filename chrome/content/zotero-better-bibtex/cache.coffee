@@ -1,6 +1,5 @@
 Zotero.BetterBibTeX.cache = new class
   constructor: ->
-    @db = Zotero.BetterBibTeX.DB
     @stats = {
       hit: 0
       miss: 0
@@ -47,10 +46,10 @@ Zotero.BetterBibTeX.cache = new class
   remove: (what) ->
     @stats.clear++
     what.itemID = @integer(what.itemID) unless what.itemID == undefined
-    @db.cache.removeWhere(what)
+    Zotero.BetterBibTeX.DB.collection.cache.removeWhere(what)
 
   reset: (reason) ->
-    @db.cache.removeDataOnly()
+    Zotero.BetterBibTeX.DB.collection.cache.removeDataOnly()
     @stats = {
       hit: 0
       miss: 0
@@ -74,7 +73,7 @@ Zotero.BetterBibTeX.cache = new class
 
   dump: (itemIDs) ->
     itemIDs = (parseInt(id) for id in itemIDs)
-    cache = (@clone(cached) for cached in @db.cache.where((o) -> o.itemID in itemIDs))
+    cache = (@clone(cached) for cached in Zotero.BetterBibTeX.DB.collection.cache.where((o) -> o.itemID in itemIDs))
     return cache
 
   fetch: (itemID, context) ->
@@ -84,7 +83,7 @@ Zotero.BetterBibTeX.cache = new class
     ### file paths vary if exportFileData is on ###
     return if context.exportFileData
 
-    cached = @db.cache.findOne({'$and': [
+    cached = Zotero.BetterBibTeX.DB.collection.cache.findOne({'$and': [
       { itemID: @integer(itemID) }
       { exportCharset: context.exportCharset }
       { exportNotes: context.exportNotes }
@@ -93,7 +92,7 @@ Zotero.BetterBibTeX.cache = new class
     ]})
 
     if cached
-      @db.cacheAccess[cached.$loki] = Date.now()
+      Zotero.BetterBibTeX.DB.cacheAccess[cached.$loki] = Date.now()
       @stats.hit++
       Zotero.BetterBibTeX.debug('cache.fetch: hit')
     else
@@ -108,16 +107,16 @@ Zotero.BetterBibTeX.cache = new class
       return
 
     record = @record(itemID, context)
-    cached = @db.cache.findObject(record)
+    cached = Zotero.BetterBibTeX.DB.collection.cache.findObject(record)
     if cached
       cached.citekey = citekey
       cached.bibtex = bibtex
       cached.data = data
       cached.accessed = Date.now()
-      @db.cache.update(cached)
+      Zotero.BetterBibTeX.DB.collection.cache.update(cached)
     else
       record.citekey = citekey
       record.bibtex = bibtex
       record.data = data
       record.accessed = Date.now()
-      @db.cache.insert(record)
+      Zotero.BetterBibTeX.DB.collection.cache.insert(record)
