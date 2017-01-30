@@ -288,10 +288,11 @@ Zotero.BetterBibTeX.DB = new class
 
   purge: ->
     itemIDs = (item.id for item in @getAll())
-    Zotero.debug("purge:, allitems=#{JSON.stringify(itemIDs)}, keys=#{JSON.stringify(@collection.keys.data)}, cache=#{JSON.stringify(@collection.cache.data)}, serialized=#{JSON.stringify(@collection.serialized.data)}")
-    @collection.keys.removeWhere((o) -> o.itemID not in itemIDs)
-    @collection.cache.removeWhere((o) -> o.itemID not in itemIDs)
-    @collection.serialized.removeWhere((o) -> o.itemID not in itemIDs)
+    orphaned = (o) -> o.itemID not in itemIDs
+    @collection.keys.removeWhere(orphaned)
+    @collection.cache.removeWhere(orphaned)
+    Zotero.debug("purge.serialized:, #{JSON.stringify(@collection.serialized.data.filter(orphaned))}")
+    @collection.serialized.removeWhere(orphaned)
 
   touch: (itemID) ->
     Zotero.BetterBibTeX.debug('touch:', itemID)
