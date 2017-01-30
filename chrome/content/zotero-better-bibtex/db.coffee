@@ -107,36 +107,38 @@ Zotero.BetterBibTeX.DB = new class
     @db.main.loadDatabase()
     @db.volatile.loadDatabase()
 
-    @db.metadata = @db.main.getCollection('metadata') || @db.main.addCollection('metadata')
-    if @db.metadata.data.length != 0 && !@db.metadata.data[0].$loki
+    @collection = {}
+
+    @collection.metadata = @db.main.getCollection('metadata') || @db.main.addCollection('metadata')
+    if @collection.metadata.data.length != 0 && !@collection.metadata.data[0].$loki
       # I stored corrupted data in metadata at some point -- oy vey.
       @db.main.removeCollection('metadata')
-      @db.metadata = @db.main.addCollection('metadata')
-    @db.metadata.insert({}) if @db.metadata.data.length == 0
-    @metadata = @db.metadata.data[0]
+      @collection.metadata = @db.main.addCollection('metadata')
+    @collection.metadata.insert({}) if @collection.metadata.data.length == 0
+    @metadata = @collection.metadata.data[0]
 
     if !@metadata.cacheReap
       @metadata.cacheReap = Date.now()
-      @db.metadata.update(@metadata)
+      @collection.metadata.update(@metadata)
     Zotero.BetterBibTeX.debug('db: loaded, metadata:', @metadata)
 
-    @cache = @db.volatile.getCollection('cache')
-    @cache ||= @db.volatile.addCollection('cache', { indices: ['itemID'] })
-    delete @cache.binaryIndices.getCollections
-    delete @cache.binaryIndices.exportCharset
-    delete @cache.binaryIndices.exportNotes
-    delete @cache.binaryIndices.translatorID
-    delete @cache.binaryIndices.useJournalAbbreviation
+    @collection.cache = @db.volatile.getCollection('cache')
+    @collection.cache ||= @db.volatile.addCollection('cache', { indices: ['itemID'] })
+    delete @collection.cache.binaryIndices.getCollections
+    delete @collection.cache.binaryIndices.exportCharset
+    delete @collection.cache.binaryIndices.exportNotes
+    delete @collection.cache.binaryIndices.translatorID
+    delete @collection.cache.binaryIndices.useJournalAbbreviation
     @cacheAccess = {}
 
-    @serialized = @db.volatile.getCollection('serialized')
-    @serialized ||= @db.volatile.addCollection('serialized', { indices: ['itemID', 'uri'] })
+    @collection.serialized = @db.volatile.getCollection('serialized')
+    @collection.serialized ||= @db.volatile.addCollection('serialized', { indices: ['itemID', 'uri'] })
 
-    @keys = @db.main.getCollection('keys')
-    @keys ||= @db.main.addCollection('keys', {indices: ['itemID', 'libraryID', 'citekey']})
+    @collection.keys = @db.main.getCollection('keys')
+    @collection.keys ||= @db.main.addCollection('keys', {indices: ['itemID', 'libraryID', 'citekey']})
 
-    @autoexport = @db.main.getCollection('autoexport')
-    @autoexport ||= @db.main.addCollection('autoexport', {indices: ['collection', 'path', 'exportCharset', 'exportNotes', 'translatorID', 'useJournalAbbreviation']})
+    @collection.autoexport = @db.main.getCollection('autoexport')
+    @collection.autoexport ||= @db.main.addCollection('autoexport', {indices: ['collection', 'path', 'exportCharset', 'exportNotes', 'translatorID', 'useJournalAbbreviation']})
 
     # # in case I need to update the indices:
     # #
@@ -184,7 +186,7 @@ Zotero.BetterBibTeX.DB = new class
         ###
         confirmCacheResetSize = Zotero.BetterBibTeX.Pref.get('confirmCacheResetSize')
 
-        if confirmCacheResetSize && Math.max(@cache.data.length, @serialized.data.length) > confirmCacheResetSize
+        if confirmCacheResetSize && Math.max(@collection.cache.data.length, @collection.serialized.data.length) > confirmCacheResetSize
           prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(Components.interfaces.nsIPromptService)
           ###
           # 1 is magic (https://bugzilla.mozilla.org/show_bug.cgi?id=345067)
@@ -223,7 +225,7 @@ Zotero.BetterBibTeX.DB = new class
             """
               You have #{doneIt}. This usually means output generation for Bib(La)TeX has changed, and it is recommended to clear the cache in order for these changes to take effect.
 
-              Since you have a large library, with #{Math.max(@cache.data.length, @serialized.data.length)} entries cached, this may lead to a slow first (auto)export as the cache is refilled.
+              Since you have a large library, with #{Math.max(@collection.cache.data.length, @collection.serialized.data.length)} entries cached, this may lead to a slow first (auto)export as the cache is refilled.
 
               If you don't care about the changes introduced in #{Zotero.BetterBibTeX.release}, and you want to keep your old cache, you may consider skipping this step.
 
@@ -241,8 +243,8 @@ Zotero.BetterBibTeX.DB = new class
 
     if @cacheReset
       Zotero.BetterBibTeX.debug('reset cache: roger roger')
-      @serialized.removeDataOnly()
-      @cache.removeDataOnly()
+      @collection.serialized.removeDataOnly()
+      @collection.cache.removeDataOnly()
       if typeof @cacheReset == 'number'
         @cacheReset = @cacheReset - 1
         @cacheReset = 0 if @cacheReset < 0
@@ -251,67 +253,67 @@ Zotero.BetterBibTeX.DB = new class
       else
         Zotero.debug("DB.initialize, cache.load reset after upgrade from #{@metadata.BetterBibTeX} to #{Zotero.BetterBibTeX.release}")
 
-    @keys.on('insert', (key) =>
+    @collection.keys.on('insert', (key) =>
       if !key.citekeyFormat && Zotero.BetterBibTeX.Pref.get('keyConflictPolicy') == 'change'
         ### removewhere will trigger 'delete' for the conflicts, which will take care of their cache dependents ###
-        @keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
-      @cache.removeWhere({itemID: key.itemID})
+        @collection.keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
+      @collection.cache.removeWhere({itemID: key.itemID})
     )
-    @keys.on('update', (key) =>
+    @collection.keys.on('update', (key) =>
       if !key.citekeyFormat && Zotero.BetterBibTeX.Pref.get('keyConflictPolicy') == 'change'
-        @keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
+        @collection.keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
 
-      @cache.removeWhere({itemID: key.itemID})
+      @collection.cache.removeWhere({itemID: key.itemID})
     )
-    @keys.on('delete', (key) =>
-      @keys.removeWhere({itemID: key.itemID})
-      @cache.removeWhere({itemID: key.itemID})
+    @collection.keys.on('delete', (key) =>
+      @collection.keys.removeWhere({itemID: key.itemID})
+      @collection.cache.removeWhere({itemID: key.itemID})
     )
-    @autoexport.on('delete', (key) ->
-      Zotero.BetterBibTeX.debug('@autoexport.on(delete)', key)
+    @collection.autoexport.on('delete', (key) ->
+      Zotero.BetterBibTeX.debug('@collection.autoexport.on(delete)', key)
     )
-    @autoexport.on('insert', (key) ->
-      Zotero.BetterBibTeX.debug('@autoexport.on(insert)', key)
+    @collection.autoexport.on('insert', (key) ->
+      Zotero.BetterBibTeX.debug('@collection.autoexport.on(insert)', key)
     )
-    @autoexport.on('update', (key) ->
-      Zotero.BetterBibTeX.debug('@autoexport.on(update)', key)
+    @collection.autoexport.on('update', (key) ->
+      Zotero.BetterBibTeX.debug('@collection.autoexport.on(update)', key)
     )
 
     if @upgradeNeeded
       for k, v of @upgradeNeeded
         @metadata[k] = v
-      @db.metadata.update(@metadata)
+      @collection.metadata.update(@metadata)
 
     Zotero.debug('DB.initialize: ready')
 
   purge: ->
     itemIDs = (item.id for item in @getAll())
-    @keys.removeWhere((o) -> o.itemID not in itemIDs)
-    @cache.removeWhere((o) -> o.itemID not in itemIDs)
-    @serialized.removeWhere((o) -> o.itemID not in itemIDs)
+    @collection.keys.removeWhere((o) -> o.itemID not in itemIDs)
+    @collection.cache.removeWhere((o) -> o.itemID not in itemIDs)
+    @collection.serialized.removeWhere((o) -> o.itemID not in itemIDs)
 
   touch: (itemID) ->
     Zotero.BetterBibTeX.debug('touch:', itemID)
-    @cache.removeWhere({itemID})
-    @serialized.removeWhere({itemID})
-    @keys.removeWhere((o) -> o.itemID == itemID && o.citekeyFormat)
+    @collection.cache.removeWhere({itemID})
+    @collection.serialized.removeWhere({itemID})
+    @collection.keys.removeWhere((o) -> o.itemID == itemID && o.citekeyFormat)
 
   save: (mode) ->
-    Zotero.BetterBibTeX.debug('DB.save:', {mode, serialized: @serialized.data.length})
+    Zotero.BetterBibTeX.debug('DB.save:', {mode, serialized: @collection.serialized.data.length})
     throw new Error("Unexpected mode '#{mode}'") unless mode in ['main', 'all', 'force']
 
     if mode in ['force', 'all']
       Zotero.BetterBibTeX.debug('purging cache: start')
       try
         for id, timestamp of @cacheAccess
-          item = @cache.get(id)
+          item = @collection.cache.get(id)
           continue unless item
           item.accessed = timestamp
-          @cache.update(item)
+          @collection.cache.update(item)
         if @metadata.cacheReap < @cacheExpiry
           @metadata.cacheReap = Date.now()
-          @db.metadata.update(@metadata)
-          @cache.removeWhere((o) => (o.accessed || 0) < @cacheExpiry)
+          @collection.metadata.update(@metadata)
+          @collection.cache.removeWhere((o) => (o.accessed || 0) < @cacheExpiry)
       catch err
         Zotero.BetterBibTeX.error('failed to purge cache:', {message: err.message || err.name}, err)
 
