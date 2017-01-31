@@ -3,7 +3,7 @@ Zotero.BetterBibTeX.auto = new class
     @search = {}
     @idle = false
 
-    for ae in Zotero.BetterBibTeX.DB.collection.autoexport.data
+    for ae in Zotero.BetterBibTeX.DB.collection.autoexport.find()
       if ae.status == 'running'
         ae.status = 'pending'
         Zotero.BetterBibTeX.DB.collection.autoexport.update(ae)
@@ -82,7 +82,7 @@ Zotero.BetterBibTeX.auto = new class
       @markSearch(ae.collection.replace('search:', ''), "#{reason}, assume search might be updated")
 
     if collections.length > 0
-      Zotero.BetterBibTeX.debug('auto.markIDs:', collections, 'from', (o.collection for o in Zotero.BetterBibTeX.DB.collection.autoexport.data))
+      Zotero.BetterBibTeX.debug('auto.markIDs:', collections, 'from', (o.collection for o in Zotero.BetterBibTeX.DB.collection.autoexport.find()))
       for ae in Zotero.BetterBibTeX.DB.collection.autoexport.where((o) -> o.collection in collections)
         @mark(ae, 'pending', reason)
 
@@ -102,7 +102,7 @@ Zotero.BetterBibTeX.auto = new class
     @updated()
 
   reset: ->
-    for ae in Zotero.BetterBibTeX.DB.collection.autoexport.data
+    for ae in Zotero.BetterBibTeX.DB.collection.autoexport.find()
       @mark(ae, 'pending', 'reset')
     @updated()
 

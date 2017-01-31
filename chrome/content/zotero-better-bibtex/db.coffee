@@ -110,12 +110,14 @@ Zotero.BetterBibTeX.DB = new class
     @collection = {}
 
     @collection.metadata = @db.main.getCollection('metadata') || @db.main.addCollection('metadata')
-    if @collection.metadata.data.length != 0 && !@collection.metadata.data[0].$loki
-      # I stored corrupted data in metadata at some point -- oy vey.
-      @db.main.removeCollection('metadata')
-      @collection.metadata = @db.main.addCollection('metadata')
-    @collection.metadata.insert({}) if @collection.metadata.data.length == 0
-    @metadata = @collection.metadata.data[0]
+    # I stored corrupted data in metadata at some point -- oy vey.
+    if @collection.metadata.count() != 0
+      @metadata = @collection.metadata.find()[0]
+      if typeof @metadata != 'object' || !@metadata.$loki
+        @db.main.removeCollection('metadata')
+        @collection.metadata = @db.main.addCollection('metadata')
+    @collection.metadata.insert({}) if @collection.metadata.count() == 0
+    @metadata = @collection.metadata.find()[0]
 
     if !@metadata.cacheReap
       @metadata.cacheReap = Date.now()
@@ -139,6 +141,10 @@ Zotero.BetterBibTeX.DB = new class
 
     @collection.autoexport = @db.main.getCollection('autoexport')
     @collection.autoexport ||= @db.main.addCollection('autoexport', {indices: ['collection', 'path', 'exportCharset', 'exportNotes', 'translatorID', 'useJournalAbbreviation']})
+
+    # after the last collection is created, make sure cloneObjects is on also for existing databases
+    for name, coll of @collection
+      coll.cloneObjects = true
 
     # # in case I need to update the indices:
     # #
@@ -186,7 +192,7 @@ Zotero.BetterBibTeX.DB = new class
         ###
         confirmCacheResetSize = Zotero.BetterBibTeX.Pref.get('confirmCacheResetSize')
 
-        if confirmCacheResetSize && Math.max(@collection.cache.data.length, @collection.serialized.data.length) > confirmCacheResetSize
+        if confirmCacheResetSize && Math.max(@collection.cache.count(), @collection.serialized.count()) > confirmCacheResetSize
           prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(Components.interfaces.nsIPromptService)
           ###
           # 1 is magic (https://bugzilla.mozilla.org/show_bug.cgi?id=345067)
@@ -225,7 +231,7 @@ Zotero.BetterBibTeX.DB = new class
             """
               You have #{doneIt}. This usually means output generation for Bib(La)TeX has changed, and it is recommended to clear the cache in order for these changes to take effect.
 
-              Since you have a large library, with #{Math.max(@collection.cache.data.length, @collection.serialized.data.length)} entries cached, this may lead to a slow first (auto)export as the cache is refilled.
+              Since you have a large library, with #{Math.max(@collection.cache.count(), @collection.serialized.count())} entries cached, this may lead to a slow first (auto)export as the cache is refilled.
 
               If you don't care about the changes introduced in #{Zotero.BetterBibTeX.release}, and you want to keep your old cache, you may consider skipping this step.
 
@@ -291,7 +297,6 @@ Zotero.BetterBibTeX.DB = new class
     orphaned = (o) -> o.itemID not in itemIDs
     @collection.keys.removeWhere(orphaned)
     @collection.cache.removeWhere(orphaned)
-    Zotero.debug("#{Zotero.BetterBibTeX.release}: purge.serialized:, #{JSON.stringify(@collection.serialized.data.filter(orphaned))}")
     @collection.serialized.removeWhere(orphaned)
 
   touch: (itemID) ->
@@ -301,7 +306,7 @@ Zotero.BetterBibTeX.DB = new class
     @collection.keys.removeWhere((o) -> o.itemID == itemID && o.citekeyFormat)
 
   save: (mode) ->
-    Zotero.BetterBibTeX.debug('DB.save:', {mode, serialized: @collection.serialized.data.length})
+    Zotero.BetterBibTeX.debug('DB.save:', {mode, serialized: @collection.serialized.count()})
     throw new Error("Unexpected mode '#{mode}'") unless mode in ['main', 'all', 'force']
 
     if mode in ['force', 'all']

@@ -282,7 +282,7 @@ Zotero.BetterBibTeX.init = ->
     @flash("Citation key rescan finished")
 
   if Zotero.BetterBibTeX.DB.cacheReset
-    for ae in Zotero.BetterBibTeX.DB.collection.autoexport.data
+    for ae in Zotero.BetterBibTeX.DB.collection.autoexport.find()
       Zotero.BetterBibTeX.auto.mark(ae, 'pending', 'cache reset')
 
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
@@ -658,7 +658,7 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
 
   collections = @auto.withParentCollections(collections) if collections.length != 0
   collections = ("collection:#{id}" for id in collections)
-  Zotero.BetterBibTeX.debug('marking:', collections, 'from', (o.collection for o in @DB.collection.autoexport.data))
+  Zotero.BetterBibTeX.debug('marking:', collections, 'from', (o.collection for o in @DB.collection.autoexport.find()))
   if collections.length > 0
     for ae in @DB.collection.autoexport.where((o) -> o.collection in collections)
       @auto.mark(ae, 'pending', "itemAdded: #{collections}")
