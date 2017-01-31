@@ -6,13 +6,6 @@ if not Zotero.BetterBibTeX
       try
         Zotero.debug('BBT: loading ' + script)
         loader.loadSubScript("chrome://zotero-better-bibtex/content/#{script}")
-        if script == 'lib/lokijs.js'
-          Zotero.BetterBibTeX.LokiJS.Collection::remove = ((original) ->
-            return (doc) ->
-              if typeof doc == 'number'
-                Zotero.debug("#{Zotero.BetterBibTeX.release}: Zotero.BetterBibTeX.LokiJS.Collection::remove-by-id(#{typeof doc}:#{JSON.stringify(this.get(doc))})")
-              return original.apply(@, arguments)
-          )(Zotero.BetterBibTeX.LokiJS.Collection::remove)
 
       catch err
         if Zotero.BetterBibTeX
