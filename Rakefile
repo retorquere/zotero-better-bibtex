@@ -755,6 +755,9 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
   #sh "bundle list"
   #sh "npm list"
 
+  # verify we're on the latest version of the npm-installed packages
+  sh "#{NODEBIN}/ncu --error-level 2"
+
   XPI.getxpis
 
   features = 'resource/tests'
