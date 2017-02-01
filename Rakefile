@@ -756,7 +756,9 @@ task :test, [:tag] => [XPI.xpi] + Dir['test/fixtures/*/*.coffee'].collect{|js| j
   #sh "npm list"
 
   # verify we're on the latest version of the npm-installed packages
-  sh "#{NODEBIN}/ncu --error-level 2"
+  # exclude fold-to-ascii until we're Zotero 5.0 only, because recent fold-to-ascii requires ES5, and Zotero standalone
+  # 4.x builds on an ancient Firefox which doesn't support it
+  sh "#{NODEBIN}/ncu --reject fold-to-ascii --error-level 2"
 
   XPI.getxpis
 
