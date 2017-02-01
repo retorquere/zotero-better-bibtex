@@ -50,7 +50,7 @@ Zotero.BetterBibTeX.keymanager = new class
     return
 
   reset: ->
-    Zotero.BetterBibTeX.DB.collection.keys.removeDataOnly() -- triggers a cache drop
+    Zotero.BetterBibTeX.DB.collection.keys.removeDataOnly() # triggers a cache drop
     @scan()
 
   patternHash: ->

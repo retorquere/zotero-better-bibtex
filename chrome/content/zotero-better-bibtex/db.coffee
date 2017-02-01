@@ -340,9 +340,9 @@ Zotero.BetterBibTeX.DB = new class
           @collection.metadata.update(@metadata)
           @collection.cache.findAndRemove({
             $or: [
-              {accessed: {$exists: false},
-              {accessed: {$eq: null},
-              {accessed: {$lt: @cacheExpiry}
+              {accessed: {$exists: false}},
+              {accessed: {$eq: null}},
+              {accessed: {$lt: @cacheExpiry}}
             ]
           })
       catch err
