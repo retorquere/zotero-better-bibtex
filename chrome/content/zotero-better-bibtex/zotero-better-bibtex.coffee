@@ -667,7 +667,7 @@ Zotero.BetterBibTeX.itemAdded = notify: ((event, type, collection_items) ->
 Zotero.BetterBibTeX.collectionChanged = notify: (event, type, ids, extraData) ->
   return unless event == 'delete' && extraData.length > 0
   extraData = ("collection:#{id}" for id in extraData)
-  @DB.collection.autoexport.removeWhere((o) -> o.collection in extraData)
+  @DB.collection.autoexport.findAndRemove({collection: {$in: extraData}})
 
 Zotero.BetterBibTeX.itemChanged = (event, type, ids, extraData) ->
   Zotero.BetterBibTeX.debug("itemChanged:", {event, type, ids, extraData})
@@ -690,7 +690,7 @@ Zotero.BetterBibTeX.itemChanged = (event, type, ids, extraData) ->
 
   pinned = if event in ['add', 'modify'] then @keymanager.scan(references) else []
 
-  @DB.collection.keys.removeWhere((k) -> k.itemID in ids && !(k.itemID in pinned))
+  @DB.collection.keys.findAndRemove({$and: [{itemID: {$in: ids}}, {itemID: {$nin: pinned}}]})
 
   if event in ['add', 'modify']
     for item in references

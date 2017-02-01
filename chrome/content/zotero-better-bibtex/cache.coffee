@@ -46,7 +46,7 @@ Zotero.BetterBibTeX.cache = new class
   remove: (what) ->
     @stats.clear++
     what.itemID = @integer(what.itemID) unless what.itemID == undefined
-    Zotero.BetterBibTeX.DB.collection.cache.removeWhere(what)
+    Zotero.BetterBibTeX.DB.collection.cache.findAndRemove(what)
 
   reset: (reason) ->
     Zotero.BetterBibTeX.DB.collection.cache.removeDataOnly()

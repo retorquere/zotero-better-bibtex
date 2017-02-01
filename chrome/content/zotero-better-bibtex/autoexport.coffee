@@ -39,7 +39,7 @@ Zotero.BetterBibTeX.auto = new class
   add: (collection, path, context) ->
     Zotero.BetterBibTeX.debug("auto.add: auto-export set up for #{collection} to #{path}")
 
-    Zotero.BetterBibTeX.DB.collection.autoexport.removeWhere({path})
+    Zotero.BetterBibTeX.DB.collection.autoexport.findAndRemove({path})
 
     Zotero.BetterBibTeX.DB.collection.autoexport.insert({
       collection
