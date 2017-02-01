@@ -130,7 +130,7 @@ Zotero.BetterBibTeX.serialized = new class
   remove: (itemID) ->
     Zotero.BetterBibTeX.debug('serialized.remove:', {itemID})
     @stats.clear++
-    Zotero.BetterBibTeX.DB.collection.serialized.removeWhere({itemID: parseInt(itemID)})
+    Zotero.BetterBibTeX.DB.collection.serialized.findAndRemove({itemID: parseInt(itemID)})
 
   get: (zoteroItem) ->
     ### we may be passed a fully serialized item ###

@@ -261,19 +261,33 @@ Zotero.BetterBibTeX.DB = new class
 
     @collection.keys.on('insert', (key) =>
       if !key.citekeyFormat && Zotero.BetterBibTeX.Pref.get('keyConflictPolicy') == 'change'
-        ### removewhere will trigger 'delete' for the conflicts, which will take care of their cache dependents ###
-        @collection.keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
-      @collection.cache.removeWhere({itemID: key.itemID})
+        ### findAndRemove will trigger 'delete' for the conflicts, which will take care of their cache dependents ###
+        @collection.keys.findAndRemove({
+          $and: [
+            {citekey: key.citekey},
+            {libraryID: key.libraryID},
+            {itemID: {$ne: key.itemID}},
+            {citekeyFormat: {$ne: null}}
+          ]
+        })
+      @collection.cache.findAndRemove({itemID: key.itemID})
     )
     @collection.keys.on('update', (key) =>
       if !key.citekeyFormat && Zotero.BetterBibTeX.Pref.get('keyConflictPolicy') == 'change'
-        @collection.keys.removeWhere((o) -> o.citekey == key.citekey && o.libraryID == key.libraryID && o.itemID != key.itemID && o.citekeyFormat)
+        @collection.keys.findAndRemove({
+          $and: [
+            {citekey: key.citekey},
+            {libraryID: key.libraryID},
+            {itemID: {$ne: key.itemID}},
+            {citekeyFormat: {$ne: null}}
+          ]
+        })
 
-      @collection.cache.removeWhere({itemID: key.itemID})
+      @collection.cache.findAndRemove({itemID: key.itemID})
     )
     @collection.keys.on('delete', (key) =>
-      @collection.keys.removeWhere({itemID: key.itemID})
-      @collection.cache.removeWhere({itemID: key.itemID})
+      @collection.keys.findAndRemove({itemID: key.itemID})
+      @collection.cache.findAndRemove({itemID: key.itemID})
     )
     @collection.autoexport.on('delete', (key) ->
       Zotero.BetterBibTeX.debug('@collection.autoexport.on(delete)', key)
@@ -294,16 +308,20 @@ Zotero.BetterBibTeX.DB = new class
 
   purge: ->
     itemIDs = (item.id for item in @getAll())
-    orphaned = (o) -> o.itemID not in itemIDs
-    @collection.keys.removeWhere(orphaned)
-    @collection.cache.removeWhere(orphaned)
-    @collection.serialized.removeWhere(orphaned)
+    @collection.keys.findAndRemove({itemID: {$nin: itemIDs}})
+    @collection.cache.findAndRemove({itemID: {$nin: itemIDs}})
+    @collection.serialized.findAndRemove({itemID: {$nin: itemIDs}})
 
   touch: (itemID) ->
     Zotero.BetterBibTeX.debug('touch:', itemID)
-    @collection.cache.removeWhere({itemID})
-    @collection.serialized.removeWhere({itemID})
-    @collection.keys.removeWhere((o) -> o.itemID == itemID && o.citekeyFormat)
+    @collection.cache.findAndRemove({itemID})
+    @collection.serialized.findAndRemove({itemID})
+    @collection.keys.findAndRemove({
+      $and: [
+        {itemID},
+        {citekeyFormat: {$ne: null}}
+      ]
+    })
 
   save: (mode) ->
     Zotero.BetterBibTeX.debug('DB.save:', {mode, serialized: @collection.serialized.count()})
@@ -320,7 +338,13 @@ Zotero.BetterBibTeX.DB = new class
         if @metadata.cacheReap < @cacheExpiry
           @metadata.cacheReap = Date.now()
           @collection.metadata.update(@metadata)
-          @collection.cache.removeWhere((o) => (o.accessed || 0) < @cacheExpiry)
+          @collection.cache.findAndRemove({
+            $or: [
+              {accessed: {$exists: false}},
+              {accessed: {$eq: null}},
+              {accessed: {$lt: @cacheExpiry}}
+            ]
+          })
       catch err
         Zotero.BetterBibTeX.error('failed to purge cache:', {message: err.message || err.name}, err)
 

@@ -50,7 +50,7 @@ Zotero.BetterBibTeX.keymanager = new class
     return
 
   reset: ->
-    Zotero.BetterBibTeX.DB.collection.keys.removeWhere((obj) -> true) # causes cache drop
+    Zotero.BetterBibTeX.DB.collection.keys.removeDataOnly() # triggers a cache drop
     @scan()
 
   patternHash: ->
@@ -65,11 +65,15 @@ Zotero.BetterBibTeX.keymanager = new class
     # compensate for #545
     ckf = Zotero.BetterBibTeX.Pref.get('citekeyFormat')
     Zotero.BetterBibTeX.debug('keymanager.clearDynamic:', current)
-    Zotero.BetterBibTeX.DB.collection.keys.removeWhere((obj) ->
-      return false if !obj.citekeyFormat || obj.citekeyFormat in [current, ckf]
-      affected.push(obj.itemID)
-      return true
-    )
+
+    affected = Zotero.BetterBibTeX.DB.collection.keys.find({
+      $and: [
+        {citekeyFormat: {$ne: null}},
+        {citekeyFormat: {$nin: [current, ckf]}}
+      ]
+    })
+    Zotero.BetterBibTeX.DB.collection.keys.remove(affected)
+    affected = (key.itemID for key in affected)
     return affected
 
   extract: (item, insitu) ->
@@ -229,7 +233,13 @@ Zotero.BetterBibTeX.keymanager = new class
       itemID = @integer(item.id)
       libraryID = @integer(item.libraryID)
 
-      Zotero.BetterBibTeX.DB.collection.keys.removeWhere({$and: [{libraryID}, {citekeyFormat: null}, {citekey}]}) if change
+      Zotero.BetterBibTeX.DB.collection.keys.findAndRemove({
+        $and: [
+          {libraryID},
+          {citekeyFormat: null},
+          {citekey}
+        ]
+      }) if change
 
       pinned.push(itemID)
 
@@ -244,7 +254,7 @@ Zotero.BetterBibTeX.keymanager = new class
     return pinned
 
   remove: (item, soft) ->
-    Zotero.BetterBibTeX.DB.collection.keys.removeWhere({itemID: @integer(item.itemID)})
+    Zotero.BetterBibTeX.DB.collection.keys.findAndRemove({itemID: @integer(item.itemID)})
     @save(item) unless soft # only use soft remove if you know a hard set follows!
 
   eligible: (item) ->
