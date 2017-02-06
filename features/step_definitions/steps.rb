@@ -47,7 +47,7 @@ def loadZotero
   $Firefox = OpenStruct.new
 
   profile = Selenium::WebDriver::Firefox::Profile.new(File.expand_path('test/fixtures/profiles/default'))
-  profile.log_file = File.expand_path(File.join(File.dirname(__FILE__), '../../firefox-console.log'))
+  profile.log_file = File.expand_path(File.join(File.dirname(__FILE__), "#{ENV['LOGS'] || '.'}/firefox-console.log"))
 
   say "Installing plugins..."
   (Dir['*.xpi'] + Dir['test/fixtures/plugins/*.xpi']).each{|xpi|

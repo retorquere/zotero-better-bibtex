@@ -27,7 +27,7 @@ BetterBibTeXPref =
       document.getElementById('better-bibtex-prefs-tabpanels').selectedIndex = disabled
       document.getElementById('zotero-better-bibtex-disabled-message').value = Zotero.BetterBibTeX.disabled
 
-    document.getElementById('better-bibtex-preferences-cache-stats').value = "#{Math.max(Zotero.BetterBibTeX.DB.cache.data.length, Zotero.BetterBibTeX.DB.serialized.data.length)} in cache"
+    document.getElementById('better-bibtex-preferences-cache-stats').value = "#{Math.max(Zotero.BetterBibTeX.DB.collection.cache.data.length, Zotero.BetterBibTeX.DB.collection.serialized.data.length)} in cache"
     # document.getElementById('better-bibtex-preferences-zombies').setAttribute('label', "Purge zombies: #{JSON.stringify(Zotero.BetterBibTeX.DB.zombies())}")
 
     BetterBibTeXPref.savedPattern = Zotero.BetterBibTeX.Pref.get('citekeyFormat')
@@ -152,7 +152,7 @@ BetterBibTeXAutoExportPref =
     return if selected < 0
 
     id = exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')
-    Zotero.BetterBibTeX.DB.autoexport.remove(parseInt(id))
+    Zotero.BetterBibTeX.DB.collection.autoexport.remove(parseInt(id))
     @refresh()
 
   mark: ->
@@ -162,7 +162,7 @@ BetterBibTeXAutoExportPref =
 
     id = parseInt(exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport'))
 
-    ae = Zotero.BetterBibTeX.DB.autoexport.get(id)
+    ae = Zotero.BetterBibTeX.DB.collection.autoexport.get(id)
     if !ae
       Zotero.BetterBibTeX.debug('No autoexport', id)
       return
@@ -209,7 +209,7 @@ BetterBibTeXAutoExportPref =
 
     tree = new BetterBibTeXAutoExport('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', exportlist, document)
 
-    for ae in Zotero.BetterBibTeX.DB.autoexport.chain().simplesort('path').data()
+    for ae in Zotero.BetterBibTeX.DB.collection.autoexport.chain().simplesort('path').data()
       Zotero.BetterBibTeX.debug('refresh:', {id: ae.$loki, status: ae.status})
       status = "#{ae.status} (#{ae.updated})"
       tree.treeitem({autoexport: "#{ae['$loki']}", '': ->

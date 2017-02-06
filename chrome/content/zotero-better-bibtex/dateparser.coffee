@@ -200,6 +200,22 @@ class Zotero.BetterBibTeX.DateParser
         repubdate.origdate = origdate
         return repubdate
 
+    # date parsing bites. Exception rules before we hit the citeproc parser, whhich deems these date ranges. Which
+    # they're not -- come on, year ranges should take at least 4 digits for the year, even < 999
+    Zotero.BetterBibTeX.debug('dateparser:', @source, @source.match(/^(-?[0-9]{3,4})-([0-9]{1,2})$/))
+    if m = @source.match(/^(-?[0-9]{3,4})[-/]([0-9]{1,2})$/)
+      return {
+        type: 'Date'
+        year: parseInt(m[1])
+        month: parseInt(m[2])
+      }
+    if m = @source.match(/^(-?[0-9]{1,2})[-/]([0-9]{3,4})$/)
+      return {
+        type: 'Date'
+        year: parseInt(m[2])
+        month: parseInt(m[1])
+      }
+
     # Disabled in xpi.yml until the port to 5.0 is finished -- Zotero standalone is build on FF 39 (!!) for linux, and EDTF doesn't
     # run there.
     if Zotero.BetterBibTeX.EDTF

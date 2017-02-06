@@ -4,8 +4,9 @@ if not Zotero.BetterBibTeX
 
     for script in ["zotero-better-bibtex.js","lib/lokijs.js","lib/translit.js","lib/citeproc.js","lib/vardump.js","lib/fold-to-ascii.js","lib/punycode.js","dateparser.js","preferences.js","translators.js","translator-metadata.js","db.js","csl-localedata.js","pattern-formatter.js","Zotero.BetterBibTeX.PatternParser.js","keymanager.js","journalAbbrev.js","web-endpoints.js","schomd.js","cayw.js","debug-bridge.js","cache.js","autoexport.js","serialized.js"]
       try
-        Zotero.debug('BBT: ' + script)
+        Zotero.debug('BBT: loading ' + script)
         loader.loadSubScript("chrome://zotero-better-bibtex/content/#{script}")
+
       catch err
         if Zotero.BetterBibTeX
           Zotero.BetterBibTeX.disabled = "#{script} load failed: #{err}"
