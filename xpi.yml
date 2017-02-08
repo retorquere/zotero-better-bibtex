@@ -31,6 +31,7 @@ test:
   xpis:
     download:
     - https://github.com/retorquere/zotero-debug-bridge/releases/download/update.rdf/update.rdf
+    - https://www.zotero.org/download/integration-libreoffice.rdf
     - default: https://www.zotero.org/download/update.rdf
     - jurism: https://juris-m.github.io/zotero/update.rdf
     - jurismstandalone: https://github.com/Juris-M/zotero/releases/download/v4.0.29.12m95/jurism-v4.0.29.12m95-fx.xpi
