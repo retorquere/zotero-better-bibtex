@@ -8,9 +8,11 @@ cd ..
 
 OFFLINE=true
 rm -f minitests/test.js
-echo "var Zotero = { BetterBibTeX: {}  };" >> minitests/test.js
+cp minitests/citeproc.js minitests/test.js
+# echo "var Zotero = { BetterBibTeX: {}  };" >> minitests/test.js
 
-for src in chrome/content/zotero-better-bibtex/lib/citeproc.js minitests/titleCase.js ; do
+#for src in chrome/content/zotero-better-bibtex/lib/citeproc.js minitests/titleCase.js ; do
+for src in minitests/titleCase.js ; do
   rake $src
   cat $src >> minitests/test.js
 done

@@ -45,10 +45,10 @@ files:
 - chrome/content/zotero-better-bibtex/zotero-better-bibtex.js
 - chrome/content/zotero-better-bibtex/lib/lokijs.js
 - chrome/content/zotero-better-bibtex/lib/translit.js
-- chrome/content/zotero-better-bibtex/lib/citeproc.js
 - chrome/content/zotero-better-bibtex/lib/vardump.js
 - chrome/content/zotero-better-bibtex/lib/fold-to-ascii.js
 - chrome/content/zotero-better-bibtex/lib/punycode.js
+- chrome/content/zotero-better-bibtex/csl-loader.js
 - chrome/content/zotero-better-bibtex/dateparser.js
 - chrome/content/zotero-better-bibtex/preferences.js
 - chrome/content/zotero-better-bibtex/translators.js
@@ -96,6 +96,7 @@ files:
 - chrome/skin/default/zotero-better-bibtex/preferences.css
 - defaults/preferences/defaults.js
 - install.rdf
+- resource/lib/citeproc.js
 - resource/reports/cacheActivity.txt
 - resource/translators/Better BibLaTeX.json
 - resource/translators/Better BibLaTeX.translator

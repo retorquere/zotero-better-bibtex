@@ -1,5 +1,19 @@
-titleCase = (string) ->
-  return Zotero.BetterBibTeX.CSL.Output.Formatters.title(Zotero.BetterBibTeX.CSL.BetterBibTeX.state, string)
+makeRegExp = (lst) -> new RegExp('(?:(?:[?!:]*\\s+|-|^)(?:' + lst.slice().join('|') + ')(?=[!?:]*\\s+|-|$))', 'g')
+
+state = {
+  opt: { lang: 'en' },
+  locale: {
+    en: {
+      opts: {
+        'skip-words': CSL.SKIP_WORDS,
+        'skip-words-regexp': makeRegExp(CSL.SKIP_WORDS)
+      }
+    }
+  }
+}
+titleCase = (text) -> CSL.Output.Formatters.title(state, text)
+
+console.log('parse particles:', CSL.parseParticles({family: 'Heyns', given: 'Emiliano'}))
 
 titles = require('./titleCase.json')
 

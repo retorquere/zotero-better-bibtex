@@ -270,43 +270,12 @@ def grasp(t, from, to)
   system "./node_modules/.bin/grasp -i '#{from.gsub('"', "\\\"")}' --replace '#{to.gsub('"', "\\\"")}' #{t.name.shellescape}" || exit(1)
 end
 
-file 'chrome/content/zotero-better-bibtex/lib/citeproc.js' => 'Rakefile' do |t|
-  bundled = false
-
+file 'resource/lib/citeproc.js' => 'Rakefile' do |t|
   cleanly(t.name) do
-    if bundled
-      open(t.name, 'w'){|f| f.puts('Zotero.BetterBibTeX.CSL = Zotero.CiteProc.CSL;') }
-    else
-      Tempfile.create(['citeproc', '.js'], '/tmp') do |mod|
-        download('https://raw.githubusercontent.com/Juris-M/citeproc-js/master/citeproc.js', mod.path)
-        makeRegExp = nil
-        File.rewrite(mod.path){|src|
-          src =~ /function\s+makeRegExp\s*(\(lst\).*?\})/m
-          makeRegExp = $1
-          raise "makeRegExp not found" unless makeRegExp.to_s.strip != ''
-
-          open('https://raw.githubusercontent.com/zotero/zotero/4.0/chrome/content/zotero/xpcom/citeproc-prereqs.js').read + src + """
-            CSL.BetterBibTeX = {
-              state: {
-                opt: { lang: 'en' },
-                locale: {
-                  en: {
-                    opts: {
-                      'skip-words': CSL.SKIP_WORDS,
-                      'skip-words-regexp': (function #{makeRegExp})(CSL.SKIP_WORDS)
-                    }
-                  }
-                }
-              }
-            }
-
-            var exports = module.exports = CSL;
-          """
-        }
-  
-        browserify("Zotero.BetterBibTeX.CSL = require(#{File.absolute_path(mod.path).to_json});", t.name)
-      end
-    end
+    open(t.name, 'w') {|f|
+      f.puts(open('https://raw.githubusercontent.com/Juris-M/citeproc-js/master/citeproc.js').read)
+      f.puts('var EXPORTED_SYMBOLS = ["CSL"];')
+    }
   end
 end
 
