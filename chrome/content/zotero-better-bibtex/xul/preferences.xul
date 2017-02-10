@@ -43,6 +43,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.autoAbbrev"               id="pref-better-bibtex-autoAbbrev"              type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.autoExport"               id="pref-better-bibtex-autoExport"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.citeCommand"              id="pref-better-bibtex-citeCommand"             type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopyPandocBrackets"  id="pref-better-bibtex-quickCopyPandocBrackets" type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.citekeyFormat"            id="pref-better-bibtex-citekeyFormat"           type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.citekeyFold"              id="pref-better-bibtex-citekeyFold"             type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.debug"                    id="pref-better-bibtex-debug"                   type="bool"/>
@@ -207,7 +208,7 @@
                     </menulist>
                   </row>
                   <row>
-                    <label>&zotero.better-bibtex.prefs.citekey.quickCopy.command;</label>
+                    <label>&zotero.better-bibtex.prefs.citekey.quickCopy.latex.command;</label>
                     <textbox size="10" id="id-better-bibtex-preferences-citeCommand" preference="pref-better-bibtex-citeCommand"
                       onchange="BetterBibTeXPref.update();"
                       onkeypress="setTimeout(function() { BetterBibTeXPref.update() }, 1);"/>
@@ -216,6 +217,14 @@
                       Quick Copy" as the default export format for quick copy, then set the desired LaTeX citation
                       command here. If you set this to `citep`, drag-and-drop citations will yield
                       `\citep{key1,key2,...}`
+                    -->
+                  </row>
+                  <row>
+                    <checkbox id="id-better-bibtex-preferences-quickCopyPandocBrackets"
+                      preference="pref-better-bibtex-quickCopyPandocBrackets"
+                      label="&zotero.better-bibtex.prefs.citekey.quickCopy.pandoc.brackets;"/>
+                    <!--
+                      Surround pandoc citations with brackets.
                     -->
                   </row>
                 </rows>

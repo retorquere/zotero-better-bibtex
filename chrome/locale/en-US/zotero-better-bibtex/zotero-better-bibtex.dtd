@@ -67,7 +67,8 @@ If you are OK with sending this data, please click &quot;Continue&quot; and post
 <!ENTITY zotero.better-bibtex.prefs.citekey.citekeys "Citation keys">
 <!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy "Quick copy/drag-and-drop citations">
 <!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy.format "QuickCopy format">
-<!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy.command "LaTeX command">
+<!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy.latex.command "LaTeX command">
+<!ENTITY zotero.better-bibtex.prefs.citekey.quickCopy.pandoc.brackets "Surround Pandoc citations with brackets">
 <!ENTITY zotero.better-bibtex.prefs.citekey.fold "Force citation key to ASCII">
 <!ENTITY zotero.better-bibtex.prefs.citekey.format "Citation key format">
 

@@ -37,7 +37,9 @@ Mode =
     keys = []
     while item = Translator.nextItem()
       keys.push("@#{item.__citekey__}")
-    Zotero.write(keys.join('; '))
+    keys = keys.join('; ')
+    keys = "[#{keys}]" if Zotero.getHiddenPref('better-bibtex.quickCopyPandocBrackets')
+    Zotero.write(keys)
 
   orgmode: ->
     while item = Translator.nextItem()
