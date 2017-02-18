@@ -1,4 +1,4 @@
-Components.utils.import("resource://zotero-better-bibtex/lib/citeproc.js", Zotero.BetterBibTeX);
+Components.utils.import("resource://zotero-better-bibtex/lib/citeproc.js", Zotero.BetterBibTeX)
 
 Zotero.BetterBibTeX.TitleCaser = {
   state: {
