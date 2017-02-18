@@ -13,19 +13,21 @@ state = {
 }
 titleCase = (text) -> CSL.Output.Formatters.title(state, text)
 
-console.log('parse particles:', CSL.parseParticles({family: 'Heyns', given: 'Emiliano'}))
+console.log(titleCase("/ ' '"))
 
-titles = require('./titleCase.json')
+# console.log('parse particles:', CSL.parseParticles({family: 'Heyns', given: 'Emiliano'}))
 
-display = (text) ->
-  return text.replace(/[^\x00-\x7F]/g, (match) -> "\\u#{('0000' + match.charCodeAt(0).toString(16).toUpperCase()).slice(-4)}")
+# titles = require('./titleCase.json')
 
-for input, expected of titles
-  found = titleCase(input)
-  if found != expected
-    console.log('input:', display(input))
-    console.log('output:', display(found))
-    console.log('  (or):', found)
-    console.log('expected:', display(expected))
-    console.log('    (or):', expected)
-    console.log('')
+# display = (text) ->
+#  return text.replace(/[^\x00-\x7F]/g, (match) -> "\\u#{('0000' + match.charCodeAt(0).toString(16).toUpperCase()).slice(-4)}")
+
+# for input, expected of titles
+#   found = titleCase(input)
+#   if found != expected
+#     console.log('input:', display(input))
+#     console.log('output:', display(found))
+#     console.log('  (or):', found)
+#     console.log('expected:', display(expected))
+#     console.log('    (or):', expected)
+#     console.log('')
