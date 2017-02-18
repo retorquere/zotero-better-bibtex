@@ -273,7 +273,12 @@ end
 file 'resource/lib/citeproc.js' => 'Rakefile' do |t|
   cleanly(t.name) do
     open(t.name, 'w') {|f|
-      f.puts(open('https://raw.githubusercontent.com/Juris-M/citeproc-js/master/citeproc.js').read)
+      citeproc = open('https://raw.githubusercontent.com/Juris-M/citeproc-js/master/citeproc.js').read
+      citeproc.sub!(
+        'var quotePos = config.quoteState[i].pos;',
+        'var quotePos = (typeof config.quoteState[i].pos == "number") ? config.quoteState[i].pos : config.quoteState[i].positions;'
+      )
+      f.puts(citeproc)
       f.puts('var EXPORTED_SYMBOLS = ["CSL"];')
     }
   end
