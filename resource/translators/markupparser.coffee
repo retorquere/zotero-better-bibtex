@@ -146,8 +146,7 @@ class Translator.MarkupParser
 
     if options.caseConversion
       unless Translator.suppressTitleCase
-        # https://github.com/Juris-M/citeproc-js/issues/30
-        @titleCased = Zotero.BetterBibTeX.CSL.titleCase(@innerText(@handler.root).replace(/[\u00A0\u2003\u2004\u205F\u2009]/g, ' '))
+        @titleCased = Zotero.BetterBibTeX.CSL.titleCase(@innerText(@handler.root))
         @titleCase(@handler.root)
 
       @simplify(@handler.root)
