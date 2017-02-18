@@ -36,6 +36,7 @@ bibtexParticleNoOp: false
 biblatexExtendedNameFormat: false
 biblatexExtendedDateFormat: false
 quickCopyMode: latex
+quickCopyPandocBrackets: false
 jurismPreferredLanguage: zh-alalc97
 ZotFile: true
 qualityReport: false

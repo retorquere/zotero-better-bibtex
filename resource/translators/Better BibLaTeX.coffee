@@ -407,7 +407,7 @@ doExport = ->
 
     ref.add({ howpublished: item.presentationType || item.manuscriptType })
 
-    ref.add({ name: 'note', value: item.meetingName, allowDuplicates: true, html: true })
+    ref.add({ name: 'eventtitle', value: item.meetingName, caseConversion: true })
 
     ref.addCreators()
 

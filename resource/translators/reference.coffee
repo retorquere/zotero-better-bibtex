@@ -458,10 +458,14 @@ class Reference
   ###
   add: (field) ->
     if !field.name
-      for name, value of field
-        field = {name, value}
-        break
-      return unless field.name && field.value
+      keys = Object.keys(field)
+      switch keys.length
+        when 0 # name -> undefined/null
+          return
+        when 1
+          field = {name: keys[0], value: field[keys[0]]}
+        else
+          throw "Quick-add mode expects exactly one name -> value mapping, found #{JSON.stringify(field)} (#{(new Error()).stack})"
 
     if ! field.bibtex
       return if typeof field.value != 'number' && not field.value
