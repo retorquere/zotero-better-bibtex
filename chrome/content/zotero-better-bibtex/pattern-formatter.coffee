@@ -151,7 +151,18 @@ class Zotero.BetterBibTeX.PatternFormatter
     doc = doc.documentElement if doc.nodeType == 9 # DOCUMENT_NODE
     return doc.textContent
 
-  creators: (onlyEditors, withInitials) ->
+  initial: (creator) ->
+    return '' unless creator.firstName
+
+    if m = creator.firstName.match(/(.+)\u0097/)
+      initial = m[1]
+    else
+      initial = creator.firstName[0]
+    initial = @removeDiacritics(initial)
+
+    return initial
+
+  creators: (onlyEditors, options = {}) ->
     return [] unless @item.creators?.length
 
     creators = {}
@@ -160,10 +171,14 @@ class Zotero.BetterBibTeX.PatternFormatter
       continue if onlyEditors && creator.creatorType not in ['editor', 'seriesEditor']
 
       name = creator.multi?._key?[@language] || creator
-      name = @innerText(name.name || name.lastName)
+
+      if options.initialOnly
+        name = @initial(creator)
+      else
+        name = @innerText(name.name || name.lastName)
 
       if name != ''
-        if withInitials && creator.firstName
+        if options.withInitials && creator.firstName
           initials = Zotero.Utilities.XRegExp.replace(creator.firstName, @re.caseNotUpperTitle, '', 'all')
           initials = @removeDiacritics(initials)
           initials = Zotero.Utilities.XRegExp.replace(initials, @re.caseNotUpper, '', 'all')
@@ -251,22 +266,32 @@ class Zotero.BetterBibTeX.PatternFormatter
     key: -> @item.key
 
     auth: (onlyEditors, withInitials, n, m) ->
-      authors = @creators(onlyEditors, withInitials)
-      return ''  unless authors
+      authors = @creators(onlyEditors, {withInitials})
+      return '' unless authors?.length
       author = authors[m || 0]
       author = author.substring(0, n)  if author && n
       return author ? ''
 
+    authForeIni: (onlyEditors) ->
+      authors = @creators(onlyEditors, {initialOnly: true})
+      return '' unless authors?.length
+      return authors[0]
+
+    authorLastForeIni: (onlyEditors) ->
+      authors = @creators(onlyEditors, {initialOnly: true})
+      return '' unless authors?.length
+      return authors[authors.length - 1]
+
     authorLast: (onlyEditors, withInitials) ->
-      authors = @creators(onlyEditors, withInitials)
-      return '' unless authors
+      authors = @creators(onlyEditors, {withInitials})
+      return '' unless authors?.length
       return authors[authors.length - 1] ? ''
 
     journal: -> Zotero.BetterBibTeX.JournalAbbrev.get(@item) || @prop('publicationTitle')
 
     authors: (onlyEditors, withInitials, n) ->
-      authors = @creators(onlyEditors, withInitials)
-      return '' unless authors
+      authors = @creators(onlyEditors, {withInitials})
+      return '' unless authors?.length
 
       if n
         etal = (authors.length > n)
@@ -277,8 +302,8 @@ class Zotero.BetterBibTeX.PatternFormatter
       return authors
 
     authorsAlpha: (onlyEditors, withInitials) ->
-      authors = @creators(onlyEditors, withInitials)
-      return '' unless authors
+      authors = @creators(onlyEditors, {withInitials})
+      return '' unless authors?.length
 
       return switch authors.length
         when 1
@@ -291,38 +316,38 @@ class Zotero.BetterBibTeX.PatternFormatter
           return (author.substring(0, 1) for author in authors.slice(0, 3)).join('') + '+'
 
     authIni: (onlyEditors, withInitials, n) ->
-      authors = @creators(onlyEditors, withInitials)
-      return '' unless authors
+      authors = @creators(onlyEditors, {withInitials})
+      return '' unless authors?.length
       return (author.substring(0, n) for author in authors).join('.')
 
     authorIni: (onlyEditors, withInitials) ->
-      authors = @creators(onlyEditors, withInitials)
-      return ''  unless authors
+      authors = @creators(onlyEditors, {withInitials})
+      return '' unless authors?.length
       firstAuthor = authors.shift()
       return [firstAuthor.substring(0, 5)].concat(((name.substring(0, 1) for name in auth).join('.') for auth in authors)).join('.')
 
     'auth.auth.ea': (onlyEditors, withInitials) ->
-      authors = @creators(onlyEditors, withInitials)
-      return '' unless authors
+      authors = @creators(onlyEditors, {withInitials})
+      return '' unless authors?.length
       return authors.slice(0, 2).concat((if authors.length > 2 then ['ea'] else [])).join('.')
 
     'authEtAl': (onlyEditors, withInitials) ->
-      authors = @creators(onlyEditors, withInitials)
-      return '' unless authors
+      authors = @creators(onlyEditors, {withInitials})
+      return '' unless authors?.length
 
       return authors.join('') if authors.length == 2
       return authors.slice(0, 1).concat((if authors.length > 1 then ['EtAl'] else [])).join('')
 
     'auth.etal': (onlyEditors, withInitials) ->
-      authors = @creators(onlyEditors, withInitials)
-      return '' unless authors
+      authors = @creators(onlyEditors, {withInitials})
+      return '' unless authors?.length
 
       return authors.join('.') if authors.length == 2
       return authors.slice(0, 1).concat((if authors.length > 1 then ['etal'] else [])).join('.')
 
     authshort: (onlyEditors, withInitials) ->
-      authors = @creators(onlyEditors, withInitials)
-      return '' unless authors
+      authors = @creators(onlyEditors, {withInitials})
+      return '' unless authors?.length
 
       switch authors.length
         when 0

@@ -301,7 +301,7 @@ Zotero.BetterBibTeX.init = ->
       stats:  (sandbox)            -> Zotero.BetterBibTeX.cacheHistory
     }
     CSL: {
-      titleCase: (sandbox, text) -> Zotero.BetterBibTeX.CSL.Output.Formatters.title(Zotero.BetterBibTeX.CSL.BetterBibTeX.state, text)
+      titleCase: (sandbox, text) -> Zotero.BetterBibTeX.TitleCaser.titleCase(text)
 
       parseParticles: (sandbox, name) ->
         ### twice to work around https://bitbucket.org/fbennett/citeproc-js/issues/183/particle-parser-returning-non-dropping ###
