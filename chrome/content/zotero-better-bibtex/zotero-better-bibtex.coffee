@@ -327,6 +327,18 @@ Zotero.BetterBibTeX.init = ->
   for k, months of Zotero.BetterBibTeX.Locales.months
     Zotero.BetterBibTeX.CSL.DateParser.addDateParserMonths(months)
 
+  ###
+    monkey-patch Zotero.Utilities.Internal.itemToExportFormat to add the itemID back. As long as most of Zotero still uses the itemID internally,
+    *why* remove it?
+  ###
+  Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
+    return (zoteroItem, legacy) ->
+      # could move caching here... but that assumes I am sure my cache invalidation is 100% safe
+      serialized = original.apply(@, arguments)
+      serialized.itemID = parseInt(zoteroItem.itemID)
+      return serialized
+  )(Zotero.Utilities.Internal.itemToExportFormat)
+
   ### monkey-patch Zotero.Search::search to allow searching for citekey ###
   Zotero.Search::search = ((original) ->
     return (asTempTable) ->
@@ -499,12 +511,10 @@ Zotero.BetterBibTeX.init = ->
       r = original.apply(@, arguments)
 
       ### caching shortcut sentinels ###
-      translatorID = @translator?[0]
-      translatorID = translatorID.translatorID if translatorID.translatorID
-
-      Zotero.BetterBibTeX.debug('Zotero.Translate.Export::_prepareTranslation:', {translatorID})
-      @_itemGetter._BetterBibTeX = Zotero.BetterBibTeX.Translators[translatorID]
-      @_itemGetter._exportFileData = @_displayOptions.exportFileData
+      if @_translatorInfo && @_translatorInfo.configOptions && @_translatorInfo.configOptions.serializationCache
+        @_itemGetter.__caching__ = {
+          exportFileData: @_displayOptions.exportFileData,
+        }
 
       return r
     )(Zotero.Translate.Export::_prepareTranslation)
@@ -515,24 +525,25 @@ Zotero.BetterBibTeX.init = ->
     Zotero.BetterBibTeX.debug('monkey-patching Zotero.Translate.ItemGetter::nextItem', typeof original)
     return ->
       ### don't mess with this unless I know it's in BBT ###
-      return original.apply(@, arguments) if @legacy || !@_BetterBibTeX
+      return original.apply(@, arguments) if @legacy || !@__caching__
 
       ###
         If I wanted to access serialized items when exporting file data, I'd have to pass "@" to serialized.get
         and call attachmentToArray.call(itemGetter, ...) there rather than ::attachmentToArray(...) so attachmentToArray would have access to
-        @_exportFileDirectory
+        @__caching__.exportFileDirectory
+        TODO: This needs some major simplification
       ###
-      if @_exportFileData
+      if @__caching__.exportFileData
         id = @_itemsLeft[0]?.id
         item = original.apply(@, arguments)
-        Zotero.BetterBibTeX.serialized.fixup(item, id) if item
+        Zotero.BetterBibTeX.serialized.fixup(item) if item
 
       else
         while @_itemsLeft.length != 0
           item = Zotero.BetterBibTeX.serialized.get(@_itemsLeft.shift())
           break if item
 
-      Zotero.BetterBibTeX.debug('Zotero.Translate.ItemGetter::nextItem:', {_exportFileData: @_exportFileData, uri: item?.uri, itemID: item?.itemID, itemType: item?.itemType})
+      Zotero.BetterBibTeX.debug('Zotero.Translate.ItemGetter::nextItem:', {caching: @__caching__, uri: item?.uri, itemID: item?.itemID, itemType: item?.itemType})
       return item || false
     )(Zotero.Translate.ItemGetter::nextItem)
 

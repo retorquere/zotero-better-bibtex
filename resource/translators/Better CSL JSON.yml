@@ -5,6 +5,8 @@ creator: Emiliano heyns
 target: json
 minVersion: 4.0.27
 maxVersion: ''
+configOptions:
+  serializationCache: true
 displayOptions:
   Keep updated: false
 translatorType: 2

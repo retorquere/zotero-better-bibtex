@@ -8,6 +8,7 @@ minVersion: 4.0.27
 maxVersion: ''
 configOptions:
   getCollections: true
+  serializationCache: true
 displayOptions:
   exportNotes: false
   exportFileData: false

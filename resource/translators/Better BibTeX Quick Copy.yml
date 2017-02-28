@@ -6,6 +6,8 @@ target: txt
 minVersion: 4.0.27
 maxVersion: ''
 displayOptions: 
+configOptions:
+  serializationCache: true
 translatorType: 2
 browserSupport: gcsv
 priority: 100

@@ -1,12 +1,7 @@
 Components.utils.import("resource://zotero/config.js")
 
 Zotero.BetterBibTeX.serialized = new class
-  fixup: (item, itemID) ->
-
-    Zotero.BetterBibTeX.debug('serialized.fixup:', {itemID: item.itemID, itemType: item.itemType, patchID: itemID})
-    item.itemID ?= itemID
-    item.itemID = parseInt(item.itemID)
-    Zotero.BetterBibTeX.debug('serialized.fixup.post:', {itemID: item.itemID, itemType: item.itemType, patchID: itemID})
+  fixup: (item) ->
 
     item.tags = ((if typeof tag == 'object' then tag.tag else tag) for tag in item.tags)
 
@@ -159,7 +154,7 @@ Zotero.BetterBibTeX.serialized = new class
         item = Zotero.Utilities.Internal.itemToExportFormat(zoteroItem)
 
       if item
-        @fixup(item, itemID)
+        @fixup(item)
         item.attachmentIDs = zoteroItem.getAttachments() unless item.itemType in ['note', 'attachment']
       else
         item = {itemID, itemType: 'cache-miss'}
