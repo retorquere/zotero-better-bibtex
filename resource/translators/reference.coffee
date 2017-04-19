@@ -496,7 +496,7 @@ class Reference
 
       field.bibtex = "#{value}"
 
-    field.bibtex = field.bibtex.normalize('NFKC') if @normalize
+    # field.bibtex = field.bibtex.normalize('NFKC') if @normalize
     @fields.push(field)
     @has[field.name] = field
     Translator.debug('added:', field)
