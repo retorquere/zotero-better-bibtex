@@ -37,6 +37,7 @@ Scenario Outline: Better BibTeX Import
   Examples:
   | file                                                                        | references  |
   | Math formatting lost on import #627                                         | 1           |
+  | zbb (quietly) chokes on this .bib #664                                      | 1           |
   | Better BibLaTeX import improvements #549                                    | 9           |
   | Biblatex Annotation Import Bug #613                                         | 1           |
   | Better BibTeX.008                                                           | 1           |
