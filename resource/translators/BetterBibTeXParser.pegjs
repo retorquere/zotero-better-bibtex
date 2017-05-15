@@ -41,6 +41,7 @@ citekey
 
 field
   = _* key:attachmenttype _* '=' _* val:attachments _* (',' _*)? { return {key: 'file', type: 'file', value: bibtex.filterattachments(val || [], key)}; }
+  / _* 'local-zo-url-'i [0-9]+ _* '=' file:bracedvalue _* (',' _*)? { return {key: 'file', type: 'file', value: [bibtex.attachment([file])]}; }
   / _* key:creatortype _* '=' _* val:bracedvalue _* ("," _*)? { return {key: key.toLowerCase(), type: 'creator', value: bibtex.Creators.parse(val)}; }
   / key_value
 
