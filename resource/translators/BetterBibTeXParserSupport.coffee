@@ -219,7 +219,7 @@ class BetterBibTeXParserSupport
         attachment.mimeType = parts.shift() ? ''
 
     attachment.title = 'Attachment' unless attachment.title && attachment.title != ''
-    attachment.mimeType = 'application/pdf' if attachment.mimeType.match(/pdf/i) || attachment.path.match(/\.pdf$/i)
+    attachment.mimeType = 'application/pdf' if attachment.mimeType?.match(/pdf/i) || attachment.path.match(/\.pdf$/i)
     attachment.path = attachment.path.replace(/\\/g, '/')
     attachment.path = attachment.path.replace(/^\.\//, '')
     attachment.path = "file:///#{attachment.path}"  if attachment.path.match(/^[a-z]:\//i)

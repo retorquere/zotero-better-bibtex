@@ -38,6 +38,7 @@ Scenario Outline: Better BibTeX Import
   | file                                                                        | references  |
   | support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667           | 1           |
   | Math formatting lost on import #627                                         | 1           |
+  | zbb (quietly) chokes on this .bib #664                                      | 1           |
   | Better BibLaTeX import improvements #549                                    | 9           |
   | Biblatex Annotation Import Bug #613                                         | 1           |
   | Better BibTeX.008                                                           | 1           |
