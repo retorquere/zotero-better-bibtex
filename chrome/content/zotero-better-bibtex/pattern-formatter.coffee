@@ -265,6 +265,15 @@ class Zotero.BetterBibTeX.PatternFormatter
 
     key: -> @item.key
 
+    attachment: ->
+      return '' if !@item.attachments || !@item.attachments.length
+
+      attachment = @item.attachments[0]
+
+      file = attachment.title || attachment.defaultPath || attachment.localPath || ''
+      file = file.replace(/.*[\\\/]/, '').replace(/\.[^\.]+$/, '')
+      return file || ''
+
     auth: (onlyEditors, withInitials, n, m) ->
       authors = @creators(onlyEditors, {withInitials})
       return '' unless authors?.length

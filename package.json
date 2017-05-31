@@ -31,5 +31,8 @@
     "npm-check-updates": "^2.11.0",
     "pegjs": "^0.10.0",
     "transliteration": "^1.5.3"
+  },
+  "devDependencies": {
+    "jpm": "^1.3.1"
   }
 }
