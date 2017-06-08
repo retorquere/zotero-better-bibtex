@@ -280,6 +280,7 @@ Zotero.BetterBibTeX.init = ->
     @DB.purge()
     setTimeout((-> Zotero.BetterBibTeX.auto.markIDs(changed, 'scanCiteKeys')), 5000) if !Zotero.BetterBibTeX.DB.cacheReset && changed.length != 0
     @flash("Citation key rescan finished")
+    @Pref.set('scanCitekeys', false)
 
   if Zotero.BetterBibTeX.DB.cacheReset
     for ae in Zotero.BetterBibTeX.DB.collection.autoexport.find()
