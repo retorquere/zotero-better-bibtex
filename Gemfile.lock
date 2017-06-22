@@ -7,13 +7,13 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     addressable (2.4.0)
-    aws-sdk (2.9.25)
-      aws-sdk-resources (= 2.9.25)
-    aws-sdk-core (2.9.25)
+    aws-sdk (2.10.1)
+      aws-sdk-resources (= 2.10.1)
+    aws-sdk-core (2.10.1)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.9.25)
-      aws-sdk-core (= 2.9.25)
+    aws-sdk-resources (2.10.1)
+      aws-sdk-core (= 2.10.1)
     aws-sigv4 (1.0.0)
     backports (3.8.0)
     bibtex-ruby (4.4.3)
@@ -93,7 +93,7 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
-    mini_portile2 (2.1.0)
+    mini_portile2 (2.2.0)
     minitest (5.10.2)
     moving_average (0.1.1)
     multi_json (1.12.1)
@@ -107,8 +107,8 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
     netrc (0.11.0)
-    nokogiri (1.7.2)
-      mini_portile2 (~> 2.1.0)
+    nokogiri (1.8.0)
+      mini_portile2 (~> 2.2.0)
     ntlm-http (0.1.1)
     octokit (4.7.0)
       sawyer (~> 0.8.0, >= 0.5.3)
@@ -138,7 +138,7 @@ GEM
       versionomy
       zip-zip
     rchardet (1.6.1)
-    recursive-open-struct (1.0.4)
+    recursive-open-struct (1.0.5)
     regexp_parser (0.4.3)
     rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
@@ -243,4 +243,4 @@ DEPENDENCIES
   zip-zip
 
 BUNDLED WITH
-   1.15.0
+   1.15.1

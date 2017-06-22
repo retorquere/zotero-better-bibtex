@@ -36,7 +36,12 @@ ValidCSLTypes = [
   'thesis'
 ]
 
+class Reference
+  postscript: (reference, item) ->
+
 doExport = ->
+  Translator.installPostscript()
+
   items = []
   while item = Zotero.nextItem()
     continue if item.itemType == 'note' || item.itemType == 'attachment'
@@ -109,6 +114,8 @@ doExport = ->
       if csl.accessed && csl.accessed.raw && (m = csl.accessed.raw.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/))
         csl.accessed = {"date-parts": [[ m[1], parseInt(m[2]), parseInt(m[3]) ]]}
       delete csl.genre if csl.type == 'broadcast' && csl.genre == 'television broadcast'
+
+      Reference::postscript(csl, item)
 
       csl = serialize(csl)
       Zotero.BetterBibTeX.cache.store(item.itemID, Translator.header, citekey, csl)

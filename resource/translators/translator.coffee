@@ -4,7 +4,13 @@ Translator.installPostscript = ->
   postscript = Zotero.getHiddenPref('better-bibtex.postscript')
   return unless typeof postscript == 'string' && postscript.trim() != ''
   try
-    Reference::postscript = new Function(postscript)
+    Reference::postscript = new Function('reference', 'item', """
+      try {
+          #{postscript}
+      } catch (err) {
+        Translator.debug('postscript error:', err.message || err.name);
+      }
+    """)
     Zotero.debug("Installed postscript: #{JSON.stringify(postscript)}")
   catch err
     Zotero.debug("Failed to compile postscript: #{err}\n\n#{JSON.stringify(postscript)}")

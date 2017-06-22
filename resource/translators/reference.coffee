@@ -516,7 +516,7 @@ class Reference
 
   normalize: (typeof (''.normalize) == 'function')
 
-  postscript: ->
+  postscript: (reference, item) ->
 
   complete: ->
     if Translator.DOIandURL != 'both'
@@ -598,10 +598,7 @@ class Reference
 
     @add({name: 'type', value: @referencetype}) if @fields.length == 0
 
-    try
-      @postscript()
-    catch err
-      Translator.debug('postscript error:', err.message || err.name)
+    @postscript(@, @item)
 
     # sort fields for stable tests
     @fields.sort((a, b) -> ("#{a.name} = #{a.value}").localeCompare(("#{b.name} = #{b.value}"))) if Translator.testing
