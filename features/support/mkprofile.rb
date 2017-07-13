@@ -4,6 +4,7 @@ require 'os'
 require 'inifile'
 require 'yaml'
 require 'fileutils'
+require 'selenium/webdriver'
 
 if OS.linux?
   profiles_dir = File.expand_path('~/.zotero/zotero/')
@@ -30,8 +31,6 @@ class IniFile
 end
 
 profiles = IniFile.load(File.join(profiles_dir, 'profiles.ini'))
-
-profiles['General']['StartWithLastProfile'] = 0
 
 profile_name = 'BBTZ5TEST'
 profile_dir = File.expand_path("~/.#{profile_name}.profile")
@@ -62,18 +61,15 @@ end
 
 profiles.write_compact
 
+profile = Selenium::WebDriver::Firefox::Profile.new(File.expand_path('test/fixtures/profile/profile'))
+profile.log_file = File.expand_path(File.join(File.dirname(__FILE__), "#{ENV['LOGS'] || '.'}/firefox-console.log"))
+
+puts "Installing plugins..."
+profile.add_extension('/home/emile/Downloads/mozrepl-1.1.2-fx.xpi')
+
+profile['extensions.zotero.dataDir'] = data_dir
+profile['extensions.checkCompatibility.5.0'] = false
+
 FileUtils.rm_rf(profile_dir)
-FileUtils.rm_rf(data_dir)
-
-FileUtils.cp_r(File.join(File.dirname(__FILE__), '../../test/fixtures/profile/profile'), profile_dir)
-FileUtils.cp_r(File.join(File.dirname(__FILE__), '../../test/fixtures/profile/data'), data_dir)
-
-File.open(File.join(profile_dir, 'prefs.js'), 'w'){|prefs|
-  File.readlines(File.join(File.dirname(__FILE__), '../../test/fixtures/profile/profile/prefs.js')).each{|pref|
-    if pref.start_with?('user_pref("extensions.zotero.dataDir",')
-      prefs.puts("user_pref(\"extensions.zotero.dataDir\", #{data_dir.inspect});")
-    else
-      prefs.puts(pref)
-    end
-  }
-}
+FileUtils.cp_r(profile.layout_on_disk, profile_dir)
+puts profile_dir
