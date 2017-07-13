@@ -6,23 +6,25 @@ if (!Zotero.DebugBridge) {
 
     Zotero.DebugBridge = {};
     Zotero.DebugBridge.Execute = function() {};
-    Zotero.DebugBridge.prototype = {
+    Zotero.Server.Endpoints["/debug-bridge/execute"] = Zotero.DebugBridge.Execute;
+    Zotero.DebugBridge.Execute.prototype = {
       supportedMethods: ["POST"],
       supportedDataTypes: '*',
       permitBookmarklet: false,
   
       init: Zotero.Promise.coroutine(function* (options) {
+        Zotero.debug('debug-bridge: executing ' + JSON.stringify(options.data));
         let action = Zotero.Promise.coroutine(new GeneratorFunction(options.data));
         let response;
         try {
           response = yield action();
         } catch (err) {
-          return [500, "application/text", '' + err];
+          Zotero.debug('debug bridge failed: ' + err);
+          return [500, "application/text", 'debug bridge failed: ' + err];
         }
         return [201, "application/json", JSON.stringify(response)];
       })
     };
-    Zotero.Server.Endpoints["/debug-bridge/execute"] = Zotero.Server.Connector.Import;
     Zotero.debug('debug bridge endpoint installed');
   })();
 }
