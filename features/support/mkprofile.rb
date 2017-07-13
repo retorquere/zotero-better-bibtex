@@ -87,7 +87,7 @@ Zip::File.open(debug_bridge, Zip::File::CREATE) do |zipfile|
     end
   end
 end
-#profile.add_extension(debug_bridge)
+profile.add_extension(debug_bridge)
 
 profile['extensions.zotero.dataDir'] = data_dir
 profile['extensions.checkCompatibility.5.0'] = false
