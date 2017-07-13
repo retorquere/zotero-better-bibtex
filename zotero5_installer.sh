@@ -19,11 +19,30 @@
 # You should have received a copy of the GNU General Public License
 # along with qnotero.  If not, see <http://www.gnu.org/licenses/>.
 
-VERSION="5.0.2"
 ARCH="x86_64"
 TMP="/tmp/zotero.tar.bz2"
 DEST_FOLDER=zotero
 EXEC=zotero
+if [ `uname -m` == "x86_64" ]; then
+  ARCH="x86_64"
+else
+  ARCH="i686"
+fi
+
+VERSION=$(python - <<SCRIPT
+import urllib2
+import json
+import re
+import platform
+response = urllib2.urlopen('https://zotero.org/download/')
+for line in response.read().split('\n'):
+  if not '"standaloneVersions"' in line: continue
+  line = re.sub(r'.*Downloads,', '', line)
+  line = re.sub(r'\),', '', line)
+  versions = json.loads(line)
+  print versions['standaloneVersions']['linux-$ARCH']
+SCRIPT
+)
 
 if [ -z "$ZOTERO_INSTALL" ]; then
   echo ">>> This script will download and install Zotero standalone on your system."
