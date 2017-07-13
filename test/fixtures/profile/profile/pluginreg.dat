@@ -7,9 +7,5 @@ Arch:x86_64-gcc3:$
 [PLUGINS]
 
 [INVALID]
-/Library/Internet Plug-Ins/Quartz Composer.webplugin:$
-1476927837000:$
-/Library/Internet Plug-Ins/JavaAppletPlugin.plugin:$
-1489568354000:$
-/Library/Internet Plug-Ins/Disabled Plug-Ins:$
-1491366278000:$
+/usr/lib/mozilla/plugins/libgnome-shell-browser-plugin.so:$
+1494887782000:$
