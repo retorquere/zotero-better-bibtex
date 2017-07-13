@@ -32,9 +32,16 @@ class IniFile
   end
 end
 
-profiles = IniFile.load(File.join(profiles_dir, 'profiles.ini'))
+FileUtils.mkdir_p(profiles_dir)
+profiles = File.join(profiles_dir, 'profiles.ini')
+File.open(profiles, "w") {} unless File.file?(profiles)
+profiles = IniFile.load(profiles)
 
-profiles['General']['StartWithLastProfile'] = 1
+if !profiles.has_section?('General')
+  profiles['General'] = { 'StartWithLastProfile' => 1 }
+else
+  profiles['General']['StartWithLastProfile'] = 1
+end
 
 profile_name = 'BBTZ5TEST'
 profile_dir = File.expand_path("~/.#{profile_name}.profile")
@@ -65,12 +72,22 @@ end
 
 profiles.write_compact
 
-fixtures = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures/profile'))
-profile = Selenium::WebDriver::Firefox::Profile.new(File.join(fixtures, 'profile'))
+fixtures = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures'))
+profile = Selenium::WebDriver::Firefox::Profile.new(File.join(fixtures, 'profile/profile'))
 profile.log_file = File.expand_path(File.join(File.dirname(__FILE__), "#{ENV['LOGS'] || '.'}/firefox-console.log"))
 
 puts "Installing plugins..."
-profile.add_extension('/home/emile/Downloads/mozrepl-1.1.2-fx.xpi')
+debug_bridge = File.join(fixtures, 'debug-bridge/debug-bridge.xpi')
+File.delete(debug_bridge) if File.file?(debug_bridge)
+Zip::File.open(debug_bridge, Zip::File::CREATE) do |zipfile|
+  Dir.chdir(File.dirname(debug_bridge)) do
+    Dir.glob("**/*").reject {|fn| File.extname(fn) == '.xpi' || File.directory?(fn) }.each do |file|
+      puts "Adding #{file} #{File.file?(file)}"
+      zipfile.add(file, File.expand_path(file))
+    end
+  end
+end
+#profile.add_extension(debug_bridge)
 
 profile['extensions.zotero.dataDir'] = data_dir
 profile['extensions.checkCompatibility.5.0'] = false
@@ -78,5 +95,5 @@ profile['extensions.checkCompatibility.5.0'] = false
 FileUtils.rm_rf(profile_dir)
 FileUtils.cp_r(profile.layout_on_disk, profile_dir)
 FileUtils.rm_rf(data_dir)
-FileUtils.cp_r(File.join(fixtures, 'data'), data_dir)
+FileUtils.cp_r(File.join(fixtures, 'profile/data'), data_dir)
 puts profile_dir
