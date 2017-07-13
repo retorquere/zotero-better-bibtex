@@ -1,0 +1,5 @@
+content	zotero-debug-bridge				chrome/content
+locale	zotero-debug-bridge	en-US		chrome/locale/en-US
+skin	zotero-debug-bridge	default		chrome/skin/default
+
+overlay chrome://zotero/content/zoteroPane.xul  chrome://zotero-debug-bridge/overlay.xul
