@@ -72,4 +72,6 @@ profile['extensions.checkCompatibility.5.0'] = false
 
 FileUtils.rm_rf(profile_dir)
 FileUtils.cp_r(profile.layout_on_disk, profile_dir)
+FileUtils.rm_rf(data_dir)
+FileUtils.cp_r(File.expand_path('test/fixtures/profile/data'), data_dir)
 puts profile_dir
