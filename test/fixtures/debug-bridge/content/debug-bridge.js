@@ -1,5 +1,7 @@
+Zotero.debug('debug bridge load attempt');
 if (!Zotero.DebugBridge) {
   (function() {
+    Zotero.debug('Installing debug bridge');
     var GeneratorFunction = Object.getPrototypeOf(function*(){}).constructor;
 
     Zotero.DebugBridge = {};
@@ -21,5 +23,6 @@ if (!Zotero.DebugBridge) {
       })
     };
     Zotero.Server.Endpoints["/debug-bridge/execute"] = Zotero.Server.Connector.Import;
+    Zotero.debug('debug bridge endpoint installed');
   })();
 }
