@@ -5,6 +5,7 @@ const ModuleFilenameHelpers = require('webpack/lib/ModuleFilenameHelpers');
 const jxon = require('jxon');
 const fs = require('fs');
 const path = require('path');
+const version = require('./version');
 
 function InstallRDFPlugin(options) {
   this.options = options || {}
@@ -25,7 +26,7 @@ InstallRDFPlugin.prototype.apply = function(compiler) {
         var pkg = require(chunk.entryModule.resource);
         var install_rdf = fs.readFileSync(path.join(__dirname, '..', 'install.rdf'), 'utf8');
         install_rdf = jxon.stringToJs(install_rdf);
-        install_rdf.RDF.Description['em:version'] = pkg.version; // fudge ID here for debug builds
+        install_rdf.RDF.Description['em:version'] = version;
         install_rdf = jxon.jsToString(install_rdf);
 
         for (let file of chunk.files.filter(ModuleFilenameHelpers.matchObject.bind(undefined, options))) {
