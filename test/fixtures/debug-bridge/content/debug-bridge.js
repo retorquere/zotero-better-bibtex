@@ -1,7 +1,9 @@
 Zotero.debug('debug bridge load attempt');
 if (!Zotero.DebugBridge) {
-  (function() {
-    Zotero.debug('Installing debug bridge');
+  Zotero.debug('Installing debug bridge');
+  Zotero.Promise.coroutine(function* () {
+    yield Zotero.initializationPromise;
+
     var GeneratorFunction = Object.getPrototypeOf(function*(){}).constructor;
 
     Zotero.DebugBridge = {};
