@@ -1,5 +1,7 @@
 if (!Zotero.DebugBridge) {
-  (function() {
+  Zotero.Promise.coroutine(function* () {
+    yield Zotero.initializationPromise;
+
     var GeneratorFunction = Object.getPrototypeOf(function*(){}).constructor;
 
     Zotero.DebugBridge = {};
