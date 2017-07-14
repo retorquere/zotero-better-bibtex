@@ -21,7 +21,9 @@ PreferencesPlugin.prototype.apply = function(compiler) {
       var prefs = fs.readFileSync(path.join(__dirname, '..', 'defaults/preferences/defaults.yml'), 'utf8');
       prefs = yaml.safeLoad(prefs);
 
-      var js = Object.keys(prefs).map(key => `pref(${JSON.stringify(key)}, ${JSON.stringify(prefs[key])});`).join("\n") + "\n";
+      var js = Object.keys(prefs);
+      js.sort(function (a, b) { return a.toLowerCase().localeCompare(b.toLowerCase()); });
+      js = js.map(key => `pref(${JSON.stringify(key)}, ${JSON.stringify(prefs[key])});`).join("\n") + "\n";
       compilation.assets['defaults/preferences/defaults.js'] = new ConcatSource(js);
       callback();
       return;
