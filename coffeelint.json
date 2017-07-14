@@ -41,7 +41,7 @@
 
   "no_implicit_braces": { "level": "ignore", "strict": true },
 
-  "no_implicit_parens": { "strict": true, "level": "error" },
+  "no_implicit_parens": { "level": "warn" },
 
   "no_interpolation_in_single_quotes": { "level": "error" },
 
@@ -65,5 +65,9 @@
 
   "prefer_english_operator": { "level": "ignore", "doubleNotLevel": "ignore" },
 
-  "space_operators": { "level": "error" }
+  "space_operators": { "level": "error" },
+
+  "no_implicit_returns": {
+    "module": "coffeelint-no-implicit-returns"
+  }
 }

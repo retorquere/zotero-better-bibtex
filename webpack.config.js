@@ -28,7 +28,7 @@ module.exports = [
     ],
     context: path.resolve(__dirname, './content'),
     entry: {
-      betterbibtex: './better-bibtex.coffee'
+      betterbibtex: './main.coffee'
     },
     output: {
       path: path.resolve(__dirname, './build/content'),
