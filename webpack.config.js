@@ -19,11 +19,15 @@ function zip_map(root) {
   });
 }
 
+const clean = [ 'build '].concat(
+  fs.readdirSync(path.join(__dirname, 'xpi')).filter(xpi => xpi.endsWith('.xpi')).map(xpi => path.join(__dirname, 'xpi', xpi))
+);
+
 module.exports = [
   // must be first because of CleanWebpackPlugin
   {
     plugins: [
-      new CleanWebpackPlugin(['build']),
+      new CleanWebpackPlugin(clean),
       CommonsPlugin
     ],
     context: path.resolve(__dirname, './content'),
@@ -61,14 +65,14 @@ module.exports = [
 
       new ZipFilesPlugin({
         entries: zip_map('build'),
-        output: path.join(__dirname, `zotero-better-bibtex-${version}`),
+        output: path.join(__dirname, 'xpi', `zotero-better-bibtex-${version}`),
         format: 'zip',
         ext: 'xpi',
       }),
       // only for debugging
       new ZipFilesPlugin({
         entries: zip_map('test/fixtures/debug-bridge'),
-        output: path.join(__dirname, 'debug-bridge'),
+        output: path.join(__dirname, 'xpi', 'debug-bridge'),
         format: 'zip',
         ext: 'xpi',
       })

@@ -77,20 +77,11 @@ profile = Selenium::WebDriver::Firefox::Profile.new(File.join(fixtures, 'profile
 profile.log_file = File.expand_path(File.join(File.dirname(__FILE__), "#{ENV['LOGS'] || '.'}/firefox-console.log"))
 
 puts "Installing plugins..."
-debug_bridge = File.join(fixtures, 'debug-bridge/debug-bridge.xpi')
-File.delete(debug_bridge) if File.file?(debug_bridge)
-Zip::File.open(debug_bridge, Zip::File::CREATE) do |zipfile|
-  Dir.chdir(File.dirname(debug_bridge)) do
-    Dir.glob("**/*").reject {|fn| File.extname(fn) == '.xpi' || File.directory?(fn) }.each do |file|
-      puts "Adding #{file} #{File.file?(file)}"
-      zipfile.add(file, File.expand_path(file))
-    end
-  end
-end
-profile.add_extension(debug_bridge)
+plugins = File.expand_path(File.join(File.dirname(__FILE__), '../../xpi/*.xpi'))
+Dir[plugins].each{|plugin| profile.add_extension(plugin) }
 
 profile['extensions.zotero.dataDir'] = data_dir
-profile['extensions.checkCompatibility.5.0'] = false
+#profile['extensions.checkCompatibility.5.0'] = false
 
 FileUtils.rm_rf(profile_dir)
 FileUtils.cp_r(profile.layout_on_disk, profile_dir)
