@@ -16,14 +16,11 @@ InstallRDFPlugin.prototype.apply = function(compiler) {
   var options = this.options;
   var self = this;
 
-  console.log(compiler.options.entry);
-
   compiler.plugin('compilation', function (compilation) {
     compilation.plugin('optimize-chunk-assets', function (chunks, callback) {
       for (let chunk of chunks) {
         if ('isInitial' in chunk && !chunk.isInitial()) continue;
 
-        var pkg = require(chunk.entryModule.resource);
         var install_rdf = fs.readFileSync(path.join(__dirname, '..', 'install.rdf'), 'utf8');
         install_rdf = jxon.stringToJs(install_rdf);
         install_rdf.RDF.Description['em:version'] = version;

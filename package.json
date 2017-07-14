@@ -7,9 +7,11 @@
     "test": "test"
   },
   "dependencies": {
+    "js-yaml": "^3.9.0",
     "jxon": "^2.0.0-beta.5"
   },
   "devDependencies": {
+    "clean-webpack-plugin": "^0.1.16",
     "copy-webpack-plugin": "^4.0.1",
     "webpack": "^3.2.0",
     "zip-webpack-plugin": "^1.1.0"
