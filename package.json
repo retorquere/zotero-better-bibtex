@@ -1,0 +1,30 @@
+{
+  "name": "zotero-better-bibtex",
+  "version": "5.0.0",
+  "description": "Better BibTeX support for Zotero",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "jxon": "^2.0.0-beta.5"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^4.0.1",
+    "webpack": "^3.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/retorquere/zotero-better-bibtex.git"
+  },
+  "author": "Emiliano Heyns",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/retorquere/zotero-better-bibtex/issues"
+  },
+  "homepage": "https://github.com/retorquere/zotero-better-bibtex#readme"
+}

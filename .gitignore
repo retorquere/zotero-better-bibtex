@@ -7,7 +7,6 @@
 *.keys
 *.serialized
 .bundle
-*.js
 *.translator
 *.js.map
 *.tmp
