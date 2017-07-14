@@ -18,7 +18,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "ignore-loader": "^0.1.2",
     "webpack": "^3.2.0",
-    "zip-webpack-plugin": "^1.1.0"
+    "webpack-zip-files-plugin": "^1.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
