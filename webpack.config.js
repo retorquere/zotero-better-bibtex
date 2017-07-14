@@ -19,7 +19,12 @@ function zip_map(root) {
   });
 }
 
-const clean = [ 'build '].concat(
+if (!fs.existsSync(path.join(__dirname, 'build'))) {
+  fs.mkdirSync(path.join(__dirname, 'build'));
+}
+const clean = [].concat(
+  fs.readdirSync(path.join(__dirname, 'build')).map(f => path.join(__dirname, 'build', f))
+).concat(
   fs.readdirSync(path.join(__dirname, 'xpi')).filter(xpi => xpi.endsWith('.xpi')).map(xpi => path.join(__dirname, 'xpi', xpi))
 );
 
