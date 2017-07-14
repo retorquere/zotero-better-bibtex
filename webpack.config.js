@@ -6,7 +6,7 @@ const InstallRDFPlugin = require('./webpack/install-rdf');
 const PreferencesPlugin = require('./webpack/preferences');
 const ZipPlugin = require('zip-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const CommonsPlugin = new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.bundle.js' })
+const CommonsPlugin = new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' })
 
 const version = require('./webpack/version');
 
