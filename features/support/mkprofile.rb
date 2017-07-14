@@ -5,11 +5,14 @@ require 'inifile'
 require 'yaml'
 require 'fileutils'
 require 'selenium/webdriver'
+require 'httparty'
 
 if OS.linux?
   profiles_dir = File.expand_path('~/.zotero/zotero')
+  zotero_bin = File.expand_path('~/bin/zotero/zotero')
 elsif OS.mac?
   profiles_dir = File.expand_path('~/Library/Application Support/Zotero')
+  zotero_bin = File.expand_path('/Applications/Zotero.app/Contents/MacOS/zotero')
 else
   puts OS.report
   exit 1
@@ -83,8 +86,33 @@ Dir[plugins].each{|plugin| profile.add_extension(plugin) }
 profile['extensions.zotero.dataDir'] = data_dir
 #profile['extensions.checkCompatibility.5.0'] = false
 
+profile['extensions.checkCompatibility.5.0'] = false
+profile['extensions.zotero.dataDir'] = data_dir
+profile['extensions.zotero.debug.log'] = true
+profile['extensions.zotero.debug.store'] = true
+profile['extensions.zotero.debug.time'] = true
+profile['extensions.zotero.firstRun2'] = false
+profile['extensions.zotero.firstRunGuidance'] = false
+profile['extensions.zotero.reportTranslationFailure'] = false
+
 FileUtils.rm_rf(profile_dir)
 FileUtils.cp_r(profile.layout_on_disk, profile_dir)
 FileUtils.rm_rf(data_dir)
 FileUtils.cp_r(File.join(fixtures, 'profile/data'), data_dir)
 puts profile_dir
+
+job1 = fork do
+  exec "#{zotero_bin} -P BBTZ5TEST > /dev/null 2>&1"
+end
+Process.detach(job1)
+sleep(5)
+
+result = HTTParty.get("http://127.0.0.1:23119/connector/ping")
+puts result
+
+result = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", headers: { 'Content-Type' => 'text/plain' }, body: """
+  var appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
+  appStartup.quit(Components.interfaces.nsIAppStartup.eAttemptQuit);
+""")
+
+puts result
