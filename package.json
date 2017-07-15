@@ -9,7 +9,8 @@
   "dependencies": {
     "js-yaml": "^3.9.0",
     "jxon": "^2.0.0-beta.5",
-    "lokijs": "^1.5.0"
+    "lokijs": "^1.5.0",
+    "xml": "^1.0.1"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.16",
@@ -19,6 +20,7 @@
     "coffeelint-no-implicit-returns": "0.0.6",
     "copy-webpack-plugin": "^4.0.1",
     "ignore-loader": "^0.1.2",
+    "pretty-data": "^0.40.0",
     "webpack": "^3.2.0",
     "webpack-zip-files-plugin": "^1.0.0"
   },

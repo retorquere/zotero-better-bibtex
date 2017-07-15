@@ -18,21 +18,23 @@ function zip_map(root) {
     return { src: path.join(__dirname, root, f), dist: path.relative(__dirname, f) };
   });
 }
+function clean() {
+  return [].concat(
+    fs.readdirSync(path.join(__dirname, 'build')).map(f => path.join(__dirname, 'build', f))
+  ).concat(
+    fs.readdirSync(path.join(__dirname, 'xpi')).filter(xpi => xpi.endsWith('.xpi')).map(xpi => path.join(__dirname, 'xpi', xpi))
+  );
+}
 
 if (!fs.existsSync(path.join(__dirname, 'build'))) {
   fs.mkdirSync(path.join(__dirname, 'build'));
 }
-const clean = [].concat(
-  fs.readdirSync(path.join(__dirname, 'build')).map(f => path.join(__dirname, 'build', f))
-).concat(
-  fs.readdirSync(path.join(__dirname, 'xpi')).filter(xpi => xpi.endsWith('.xpi')).map(xpi => path.join(__dirname, 'xpi', xpi))
-);
 
 module.exports = [
   // must be first because of CleanWebpackPlugin
   {
     plugins: [
-      new CleanWebpackPlugin(clean),
+      new CleanWebpackPlugin(clean()),
       CommonsPlugin
     ],
     context: path.resolve(__dirname, './content'),

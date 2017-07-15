@@ -27,5 +27,5 @@
   <!-- Include the main extension logic -->
   <script src="chrome://zotero/content/include.js"/>
   <script src="chrome://zotero-better-bibtex/content/common.js"/>
-  <script src="chrome://zotero-better-bibtex/content/zoteroPane.js"/>
+  <script src="chrome://zotero-better-bibtex/content/betterbibtex.js"/>
 </overlay>

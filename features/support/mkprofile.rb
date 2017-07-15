@@ -6,6 +6,8 @@ require 'yaml'
 require 'fileutils'
 require 'selenium/webdriver'
 require 'httparty'
+require 'shellwords'
+require 'benchmark'
 
 if OS.linux?
   profiles_dir = File.expand_path('~/.zotero/zotero')
@@ -101,18 +103,36 @@ FileUtils.rm_rf(data_dir)
 FileUtils.cp_r(File.join(fixtures, 'profile/data'), data_dir)
 puts profile_dir
 
-job1 = fork do
-  exec "#{zotero_bin} -P BBTZ5TEST > /dev/null 2>&1"
-end
-Process.detach(job1)
-sleep(5)
+#job1 = fork do
+  #exec "#{zotero_bin} -P BBTZ5TEST -ZoteroDebugText -ZoteroSkipBundledFiles > #{File.expand_path('~/.BBTZ5TEST.log').shellescape} 2>&1"
+#end
+#Process.detach(job1)
+pid = Process.fork{ system("#{zotero_bin} -P BBTZ5TEST -ZoteroDebugText -ZoteroSkipBundledFiles > #{File.expand_path('~/.BBTZ5TEST.log').shellescape} 2>&1") }
+at_exit { Process.kill("HUP", pid) }
 
-result = HTTParty.get("http://127.0.0.1:23119/connector/ping")
-puts result
+puts Benchmark.measure {
+  attempts = 0
+  while true
+    begin
+      sleep(1)
+      result = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", headers: { 'Content-Type' => 'text/plain' }, body: """
+        Zotero.debug('BBT: waiting for Zotero ready...');
+        yield Zotero.Schema.schemaUpdatePromise;
+        Zotero.debug('BBT: Zotero ready');
+        return true;
+      """)
+      puts result
+      break
+    rescue Errno::ECONNREFUSED => e
+      print '.'
+      attempts += 1
+      raise "Could not connect to Zotero after #{attempts} attempts" if attempts >= 60
+    end
+  end
+}
 
 result = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", headers: { 'Content-Type' => 'text/plain' }, body: """
   var appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
   appStartup.quit(Components.interfaces.nsIAppStartup.eAttemptQuit);
 """)
-
 puts result
