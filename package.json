@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "js-yaml": "^3.9.0",
+    "json-stringify-safe": "^5.0.1",
     "jxon": "^2.0.0-beta.5",
     "lokijs": "^1.5.0",
     "xml": "^1.0.1"
@@ -20,14 +21,15 @@
     "coffeelint-no-implicit-returns": "0.0.6",
     "copy-webpack-plugin": "^4.0.1",
     "ignore-loader": "^0.1.2",
+    "node-archiver": "^0.3.0",
     "pretty-data": "^0.40.0",
-    "webpack": "^3.2.0",
-    "webpack-zip-files-plugin": "^1.0.0"
+    "webpack": "^3.2.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prestart": "coffeelint content",
-    "start": "webpack"
+    "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -rf xpi/*",
+    "build": "coffeelint content && webpack",
+    "postbuild": "node webpack/zipup.js build zotero-better-bibtex && node webpack/zipup.js test/fixtures/debug-bridge debug-bridge"
   },
   "repository": {
     "type": "git",

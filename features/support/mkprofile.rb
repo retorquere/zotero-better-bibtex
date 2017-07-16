@@ -75,6 +75,7 @@ module BBT
   profile = Selenium::WebDriver::Firefox::Profile.new(File.join(fixtures, 'profile/profile'))
   #profile.log_file = File.expand_path(File.join(File.dirname(__FILE__), "#{ENV['LOGS'] || '.'}/firefox-console.log"))
   
+  system("npm run build") || raise("Build failed")
   plugins = File.expand_path(File.join(File.dirname(__FILE__), '../../xpi/*.xpi'))
   Dir[plugins].each{|plugin|
     puts "Installing #{plugin}"
@@ -104,9 +105,9 @@ module BBT
       begin
         sleep(1)
         result = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", headers: { 'Content-Type' => 'text/plain' }, body: """
-          Zotero.debug('BBT: waiting for Zotero ready...');
+          Zotero.debug('{better-bibtex:debug bridge}: waiting for Zotero ready...');
           yield Zotero.Schema.schemaUpdatePromise;
-          Zotero.debug('BBT: Zotero ready');
+          Zotero.debug('{better-bibtex:debug bridge}: Zotero ready');
           return true;
         """)
         if result.body.to_s.strip == 'true'
