@@ -1,0 +1,143 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.6.36-travis-2437",
+    "preferences": {
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "attachmentsNoMetadata": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoAbbrev": false,
+      "autoExport": "idle",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "confirmCacheResetSize": 1000,
+      "caching": true,
+      "citeCommand": "cite",
+      "citekeyFormat": "[auth][year]",
+      "citekeyFold": true,
+      "debug": true,
+      "DOIandURL": "url",
+      "csquotes": "",
+      "keyConflictPolicy": "change",
+      "langID": "babel",
+      "pinCitekeys": "manual",
+      "preserveBibTeXVariables": false,
+      "rawImports": false,
+      "scanCitekeys": false,
+      "showCitekeys": true,
+      "showItemIDs": false,
+      "skipFields": "file,isbn,issn,abstract,keywords,copyright,language,timestamp,urldate,note",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "tests": "",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "jabrefGroups": false,
+      "defaultDateParserLocale": ""
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemType": "bookSection",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://link.springer.com/chapter/10.1007/978-3-322-99962-7_7",
+      "rights": "©2002 VS Verlag für Sozialwissenschaften | Springer Fachmedien Wiesbaden GmbH, Wiesbaden",
+      "publisher": "VS Verlag für Sozialwissenschaften",
+      "language": "de",
+      "pages": "145-160",
+      "ISBN": "978-3-322-99963-4 978-3-322-99962-7",
+      "date": "[1990]2002",
+      "extra": "DOI: 10.1007/978-3-322-99962-7_7",
+      "accessDate": "2016-01-23 11:04:33",
+      "libraryCatalog": "link.springer.com",
+      "title": "Sozialpolitik und Bevölkerungsprozeß",
+      "bookTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Kaufmann",
+          "firstName": "Franz-Xaver"
+        },
+        {
+          "creatorType": "editor",
+          "lastName": "Kauffmann",
+          "firstName": "Franz-Xaver"
+        }
+      ],
+      "attachments": [
+        {
+          "path": "/Users/uwe/Documents/Arbeit/library/Kaufmann/Kaufmann_1990_Sozialpolitik und Bevölkerungsprozeß.pdf",
+          "title": "Kaufmann_1990_Sozialpolitik und Bevölkerungsprozeß.pdf",
+          "mimeType": "application/pdf"
+        }
+      ],
+      "notes": [
+
+      ],
+      "itemID": 362,
+      "publicationTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen",
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemType": "bookSection",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://link.springer.com/chapter/10.1007/978-3-322-99962-7_11",
+      "rights": "©2002 VS Verlag für Sozialwissenschaften | Springer Fachmedien Wiesbaden GmbH, Wiesbaden",
+      "publisher": "VS Verlag für Sozialwissenschaften",
+      "pages": "241-260",
+      "ISBN": "978-3-322-99963-4 978-3-322-99962-7",
+      "date": "[1997]2002",
+      "extra": "DOI: 10.1007/978-3-322-99962-7_11",
+      "accessDate": "2016-01-23 11:04:33",
+      "libraryCatalog": "link.springer.com",
+      "language": "de",
+      "title": "Schwindet die integrative Funktion des Sozialstaates?",
+      "bookTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Kaufmann",
+          "firstName": "Franz-Xaver"
+        },
+        {
+          "creatorType": "editor",
+          "lastName": "Kauffmann",
+          "firstName": "Franz-Xaver"
+        }
+      ],
+      "attachments": [
+        {
+          "path": "/Users/uwe/Documents/Arbeit/library/Kaufmann/Kaufmann_1997_Schwindet die integrative Funktion des Sozialstaates.pdf",
+          "title": "Kaufmann_1997_Schwindet die integrative Funktion des Sozialstaates.pdf",
+          "mimeType": "application/pdf"
+        }
+      ],
+      "notes": [
+
+      ],
+      "itemID": 386,
+      "publicationTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen",
+      "seeAlso": [
+
+      ]
+    }
+  ]
+}

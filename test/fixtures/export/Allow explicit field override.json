@@ -1,0 +1,64 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "0.9.6",
+    "preferences": {
+      "citekeyFormat": "[auth:lower][year]",
+      "skipFields": "abstract,file",
+      "langID": "babel",
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "pinCitekeys": "manual",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemID": 375,
+      "itemType": "journalArticle",
+      "url": "http://www.nuprl.org/html/verification/",
+      "date": "2014",
+      "extra": "http://www.nuprl.org/html/verification/\n\nbiblatexdata[origdate=1856;origtitle=An Old Title;timestamp=2011.03.22]\nbibtex: anand2014technicalreportformally",
+      "title": "Technical Report : Towards a Formally Verified Proof Assistant",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Abhishek",
+          "lastName": "Anand",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Vincent",
+          "lastName": "Rahli",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "attachments": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    }
+  ]
+}

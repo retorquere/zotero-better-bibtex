@@ -1,0 +1,131 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.6.43-manchineel-1460112009",
+    "preferences": {
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "attachmentsNoMetadata": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoAbbrev": false,
+      "autoExport": "immediate",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "confirmCacheResetSize": 1000,
+      "caching": true,
+      "citeCommand": "cite",
+      "citekeyFormat": "[zotero][authors]",
+      "citekeyFold": true,
+      "debug": true,
+      "DOIandURL": "both",
+      "csquotes": "",
+      "keyConflictPolicy": "keep",
+      "langID": "babel",
+      "pinCitekeys": "manual",
+      "preserveBibTeXVariables": true,
+      "rawImports": false,
+      "scanCitekeys": false,
+      "showCitekeys": false,
+      "showItemIDs": false,
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "tests": "",
+      "warnBulkModify": 10,
+      "postscript": "this.add({ name: 'x-audience', value: 'international' });\nthis.add({ name: 'x-popularlevel', value: 'no' });\nthis.add({ name: 'x-peereviewing', value: 'yes' });\nthis.add({ name: 'x-proceedings', value: 'yes' });\nthis.add({ name: 'x-invitedcommunication', value: 'yes' });\nif (this.has.language) {\n  this.has.language.name = 'x-language';\n}\nif (this.item.itemType = 'report' && this.has.type) {\n  this.has.type.name = 'x-reporttype';\n}\n",
+      "jabrefGroups": true,
+      "defaultDateParserLocale": ""
+    },
+    "options": {
+      "exportPath": "/Users/emile/Downloads",
+      "exportFilename": "Exported Items.json",
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemType": "conferencePaper",
+      "tags": [
+        "Keyword 1",
+        "Keyword 2"
+      ],
+      "relations": {
+      },
+      "pages": "300-301",
+      "date": "February 2016",
+      "extra": "bibtex: test_citation1",
+      "DOI": "10.1109/JPROC.2016.2526118",
+      "abstractNote": "Abstract here",
+      "title": "Test Title With 100 μJ, 200 μJ Energy, and ±0.1% Accuracy, 0.2 mm² Size, and -50 dB Attenuation",
+      "proceedingsTitle": "IEEE_J_PROC",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "J."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Smith",
+          "firstName": "R."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 69,
+      "publicationTitle": "IEEE_J_PROC",
+      "seeAlso": [
+
+      ],
+      "__citekey__": "doe_test_2016DoeSmith"
+    },
+    {
+      "itemType": "conferencePaper",
+      "tags": [
+        "Keyword 1",
+        "Keyword 2"
+      ],
+      "relations": {
+      },
+      "pages": "300-301",
+      "date": "February 2016",
+      "extra": "bibtex: test_citation2",
+      "DOI": "10.1109/JPROC.2016.2526118",
+      "abstractNote": "Abstract here",
+      "title": "Test Title with space quad, space semi-colon, space colon, space comma, space nbsp",
+      "proceedingsTitle": "IEEE_J_PROC",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "J."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Smith",
+          "firstName": "R."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 70,
+      "publicationTitle": "IEEE_J_PROC",
+      "seeAlso": [
+
+      ],
+      "__citekey__": "doe_test_2016DoeSmith"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+@article{1e, author = "01e",  title = {Blah  \emph{emph} and \enquote{enquote}.},}
+@article{1b, author = "01b",  title = {Blah  \mkbibemph{mkbibemph} and \mkbibquote{mkbibquote}.},}
+@book{2e,    author = "02e",  title = {Blah  \emph{emph} and \enquote{enquote}.},}
+@book{2b,    author = "02b",  title = {Blah  \mkbibemph{mkbibemph} and \mkbibquote{mkbibquote}.},}
+
+Doesn't import as a thesis reference
+
+@Thesis{Bennett2003,
+  Title = {Xenonika: medical texts associated with xenones in the late Byzantine period},
+  Author = {Bennett, David Christopher},
+  Date = {2003},
+  Institution = {University of London},
+  Type = {Ph.D.},
+}
+
+An example of the \mkbibemph command:
+
+@Incollection{Cooper2013,
+Title = {Byzantium between East and West: Competing Hellenisms in the \mkbibemph{Alexiad} of Anna Komnene and her Contemporaries},
+Author = {Glen Cooper},
+Crossref = {Classen2013},
+Date = {2013},
+Pages = {263-87}
+}
+
+A journal article with the journaltitle field:
+
+@Article{Correns1891,
+Title = {Die dem Boethius fälschlich zugeschriebene Abhandlung des Dominicus Gundisalvi {'De} unitate'},
+Date = {1891},
+Journaltitle = {Beiträge zur Geschichte der Philosophie des Mittelalters},
+Pages = {1-11},
+Volume = {1},
+Editor = {Correns, Paul},
+}
+
+An example of the (somewhat weird) biblatex-chicago Inreference entry type:
+
+@Inreference{Algar1985,
+Title = {Encyclopedia Iranica},
+Lista = {Besmallah: in exegesis, jurisprudence, and cultural life},
+Author = {Algar, Hamid},
+Date = {1985},
+Pages = {172-4},
+Volume = {4}
+}
+
+And finally, an example of the Collection entry type:
+
+@Collection{Arsdall2012,
+Title = {Herbs and Healers from the Ancient Mediterranean through the Medieval West: Essays in Honor of John M. Riddle},
+Date = {2012},
+Editor = {Anne van Arsdall and Timothy Graham},
+Location = {Burlington, VT},
+Publisher = {Ashgate},
+}

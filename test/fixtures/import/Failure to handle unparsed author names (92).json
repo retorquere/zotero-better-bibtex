@@ -1,0 +1,59 @@
+{
+  "items": [
+    {
+      "itemType": "bookSection",
+      "series": "SpringerMaterials - The Landolt-Börnstein Database",
+      "volume": "III/41c",
+      "publisher": "Springer-Verlag",
+      "date": "1998",
+      "extra": "bibtex: Madelung_1998_LB_10681727_56 \nbibtex[owner=Francesco]",
+      "title": "Cuprous oxide (Cu<sub>2</sub>O) crystal structure, lattice parameters",
+      "bookTitle": "Landolt-Börnstein",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "O.",
+          "lastName": "Madelung",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "others"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "O.",
+          "lastName": "Madelung",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "U.",
+          "lastName": "Rössler",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "M.",
+          "lastName": "Schulz",
+          "fieldMode": ""
+        }
+      ],
+      "publicationTitle": "Landolt-Börnstein",
+      "itemID": 0
+    }
+  ],
+  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+  "collections": [
+    {
+      "name": "Failure to handle unparsed author names (92)",
+      "collections": [
+
+      ],
+      "items": [
+        0
+      ]
+    }
+  ]
+}

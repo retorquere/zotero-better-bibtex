@@ -1,0 +1,66 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.5.11",
+    "preferences": {
+    },
+    "options": {
+      "skipFields": [
+        ""
+      ],
+      "jabrefGroups": true,
+      "postscript": "",
+      "csquotes": "",
+      "preserveCaps": "all",
+      "fancyURLs": false,
+      "langID": "babel",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false,
+      "preserveBibTeXVariables": false,
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "volume": "56",
+      "issue": "2",
+      "pages": "110-113",
+      "publicationTitle": "Modern Language Notes",
+      "ISSN": "01496611",
+      "date": "1941",
+      "DOI": "10.2307/2911510",
+      "language": "fr-FR",
+      "title": "Le poêle de Descartes",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Spitzer",
+          "firstName": "Leo"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 275,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "spitzer_poele_1941"
+    }
+  ]
+}

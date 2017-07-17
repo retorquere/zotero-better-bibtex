@@ -1,0 +1,1109 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.2.23",
+    "preferences": {
+      "csquotes": "«»“”",
+      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "skipFields": "abstract,file,editora,editoratype,editorb,editorbtype",
+      "langID": "babel",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
+      "pinCitekeys": "manual",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false,
+      "preserveBibTeXVariables": false
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "title": "<span class=\"nocase\">(abbé d' Aubignac) (François Hédelin)</span>",
+      "extra": "bibtex: abbot3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "abbé d' Aubignac",
+          "firstName": "François Hédelin"
+        }
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "<span class=\"nocase\">(Aubignac) (François Hédelin, abbé d')</span>",
+      "extra": "relies on paricleParser fallback detection\nbibtex: abbot1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Aubignac",
+          "firstName": "François Hédelin, abbé d'"
+        }
+      ]
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "International Library of Philosophy and Scientific Method",
+      "place": "Londres",
+      "publisher": "Routledge & Kegan Paul",
+      "ISBN": "0-7100-3616-7",
+      "date": "1963",
+      "extra": "bibtex: fixedkey",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "language": "anglais",
+      "title": "Norm and Action. A Logical Enquiry",
+      "shortTitle": "Norm and Action",
+      "numPages": "xviii+214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Humboldt",
+          "firstName": "Alexander von"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Gooding",
+          "firstName": "Cuba, Jr."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "La Fontaine",
+          "firstName": "Jean de"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "von Wright",
+          "firstName": "Georg Henrik Auto"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "\"von Wright\"",
+          "firstName": "Georg Henrik Explicit"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2066,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "vonwright_norm_1963"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "place": "Oxford",
+      "publisher": "Hart Publishing",
+      "ISBN": "978-1-84946-324-9",
+      "date": "2013",
+      "language": "en",
+      "title": "Reading HLA Hart's: <i>The Concept of Law</i>",
+      "numPages": "vi+309",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "lastName": "Almeida",
+          "firstName": "Luís d'"
+        },
+        {
+          "creatorType": "editor",
+          "lastName": "Edwards",
+          "firstName": "James"
+        },
+        {
+          "creatorType": "editor",
+          "lastName": "Dolcetti",
+          "firstName": "Andrea"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 5934,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "almeida_reading_2013"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "place": "Lexington Kentucky",
+      "publisher": "CreateSpace Independent Publishing Platform",
+      "ISBN": "978-1-4793-4771-1",
+      "date": "2013",
+      "title": "Citations, Out of the Box",
+      "numPages": "137",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Bennett",
+          "firstName": "Frank G.,! Jr."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 5921,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "bennett_citations_2013"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "place": "New York",
+      "publisher": "Grosset & Dunlap",
+      "date": "1968",
+      "title": "\"I have a dream\" : the quotations of Martin Luther King JR",
+      "numPages": "154",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "King",
+          "firstName": "Martin Luther, Jr."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 5920,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "king_have_1968"
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "bugreports_ApostropheOnParticle",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "d' Jones",
+          "firstName": "John"
+        }
+      ],
+      "extra": "bibtex: bugreports_ApostropheOnParticle",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "bugreports_AsmJournals",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe Co."
+        }
+      ],
+      "extra": "bibtex: bugreports_AsmJournals",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "bugreports_DemoPageFullCiteCruftOnSubsequent",
+      "creators": [
+        {
+          "lastName": "U.S. Bureau of the Census",
+          "fieldMode": 1
+        }
+      ],
+      "extra": "bibtex: bugreports_DemoPageFullCiteCruftOnSubsequent",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "bugreports_DuplicateSpaces",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "D'Arcus",
+          "firstName": "Bruce"
+        }
+      ],
+      "extra": "bibtex: bugreports_DuplicateSpaces",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "bugreports_DuplicateSpaces3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Family Name",
+          "firstName": "N"
+        }
+      ],
+      "extra": "bibtex: bugreports_DuplicateSpaces3",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "bugreports_GreekStyleProblems",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Καρυωτάκης",
+          "firstName": "Κώστας"
+        }
+      ],
+      "extra": "bibtex: bugreports_GreekStyleProblems",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "bugreports_ProcessorHang1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Reynoso-Santos",
+          "firstName": "R."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Soto-Pinto",
+          "firstName": "L."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Tejeda-Cruz",
+          "firstName": "C."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Williams-Linera",
+          "firstName": "G."
+        }
+      ],
+      "extra": "bibtex: bugreports_ProcessorHang1",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "bugreports_YearSuffixInHarvard1",
+      "creators": [
+        {
+          "lastName": "Africa News",
+          "fieldMode": 1
+        }
+      ],
+      "extra": "bibtex: bugreports_YearSuffixInHarvard1",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "bugreports_parseName",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "van Happel",
+          "firstName": "Eduard"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "von Hoppel",
+          "firstName": "Gustav"
+        }
+      ],
+      "extra": "bibtex: bugreports_parseName",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "decorations_AndTermUnaffectedByNameDecorations",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "John, III"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van Roe",
+          "firstName": "Jane"
+        }
+      ],
+      "extra": "bibtex: decorations_AndTermUnaffectedByNameDecorations",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "disambiguate_CitationLabelInData",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "von Dipheria",
+          "firstName": "Doug"
+        }
+      ],
+      "extra": "bibtex: disambiguate_CitationLabelInData",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "disambiguate_FailWithYearSuffix",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Caritas Europa",
+          "fieldMode": 1
+        },
+        {
+          "creatorType": "author",
+          "lastName": "JRS-Europe",
+          "fieldMode": 1
+        }
+      ],
+      "extra": "bibtex: disambiguate_FailWithYearSuffix",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "disambiguate_YearCollapseWithInstitution",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Smith Co"
+        }
+      ],
+      "extra": "bibtex: disambiguate_YearCollapseWithInstitution",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "display_SecondFieldAlignMigratePunctuation",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Bennett",
+          "firstName": "Frank G., Jr."
+        }
+      ],
+      "extra": "bibtex: display_SecondFieldAlignMigratePunctuation",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "group_ComplexNesting",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe Inc."
+        }
+      ],
+      "extra": "bibtex: group_ComplexNesting",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "integration_DuplicateItem",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "la Berge",
+          "firstName": "S. P"
+        }
+      ],
+      "extra": "bibtex: integration_DuplicateItem",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "magic_CapitalizeFirstOccurringNameParticle",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "de Simone",
+          "firstName": "Samuel"
+        }
+      ],
+      "extra": "bibtex: magic_CapitalizeFirstOccurringNameParticle",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "magic_NameParticle",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "von Doe",
+          "firstName": "John"
+        }
+      ],
+      "extra": "bibtex: magic_NameParticle",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "magic_SuppressDuplicateVariableRendering",
+      "creators": [
+        {
+          "lastName": "Blob",
+          "fieldMode": 1
+        }
+      ],
+      "extra": "bibtex: magic_SuppressDuplicateVariableRendering",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_ArticularNameAsSortOrder",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "James, III"
+        }
+      ],
+      "extra": "bibtex: name_ArticularNameAsSortOrder",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_ArticularShortFormCommaSuffix",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "James, Jr"
+        }
+      ],
+      "extra": "bibtex: name_ArticularShortFormCommaSuffix",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_ArticularWithComma",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe",
+          "firstName": "Jeffrey, Jr."
+        }
+      ],
+      "extra": "bibtex: name_ArticularWithComma",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_Delimiter",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Noakes Inc."
+        }
+      ],
+      "extra": "bibtex: name_Delimiter",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_FormattingOfParticles",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "van der Meer",
+          "firstName": "Gerard"
+        }
+      ],
+      "extra": "bibtex: name_FormattingOfParticles",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_HyphenatedNonDroppingParticle1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "al-One",
+          "firstName": "Alan"
+        }
+      ],
+      "extra": "bibtex: name_HyphenatedNonDroppingParticle1",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_Institution",
+      "creators": [
+        {
+          "lastName": "Multi-National United",
+          "fieldMode": 1
+        }
+      ],
+      "extra": "bibtex: name_Institution",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_InstitutionDecoration",
+      "creators": [
+        {
+          "lastName": "São Paulo (Estado)",
+          "fieldMode": 1
+        }
+      ],
+      "extra": "bibtex: name_InstitutionDecoration",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_MixedFormatsInitialSortOrderAllWithDecorationsEtAl",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "van Winkle",
+          "firstName": "Rip"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Thucydides",
+          "firstName": "Carl, III"
+        }
+      ],
+      "extra": "bibtex: name_MixedFormatsInitialSortOrderAllWithDecorationsEtAl",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_MultipleLiteral",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Alfred Benzon Foundation",
+          "fieldMode": 1
+        },
+        {
+          "creatorType": "author",
+          "lastName": "James Benson Foundation",
+          "fieldMode": 1
+        },
+        {
+          "creatorType": "author",
+          "lastName": "John Candy Foundation",
+          "fieldMode": 1
+        }
+      ],
+      "extra": "bibtex: name_MultipleLiteral",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_ParseNames",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "van der Vlist",
+          "firstName": "Eric"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van Gogh",
+          "firstName": "Vincent"
+        }
+      ],
+      "extra": "bibtex: name_ParseNames",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_ParsedDroppingParticleWithAffixes",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "La Fontaine",
+          "firstName": "Jean de"
+        }
+      ],
+      "extra": "bibtex: name_ParsedDroppingParticleWithAffixes",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_ParsedNonDroppingParticleWithAffixes",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "la Fontaine",
+          "firstName": "Jean de"
+        }
+      ],
+      "extra": "bibtex: name_ParsedNonDroppingParticleWithAffixes",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_ParsedNonDroppingParticleWithApostrophe",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "d'Aubignac",
+          "firstName": "François Hédelin, abbé d'"
+        }
+      ],
+      "extra": "bibtex: name_ParsedNonDroppingParticleWithApostrophe",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_ParticleCaps1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "van One",
+          "firstName": "Onename"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van Two",
+          "firstName": "Twoname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van Three",
+          "firstName": "Threename"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Van Four",
+          "firstName": "Fourname"
+        }
+      ],
+      "extra": "bibtex: name_ParticleCaps1",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_ParticleCaps3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "\"Van Dyke\"",
+          "firstName": "Dick"
+        }
+      ],
+      "extra": "bibtex: name_ParticleCaps3",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_ParticleFormatting",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "de la Doe",
+          "firstName": "John"
+        }
+      ],
+      "extra": "bibtex: name_ParticleFormatting",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_ParticlesDemoteNonDroppingNever",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Las Familyname",
+          "firstName": "Givenname de"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "del Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Di Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Da Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Do Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Des Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Lou Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Pietro Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "de Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "La Familyname",
+          "firstName": "Givenname de"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Le Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "La Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "L'Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Saint Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Sainte Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "St. Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Ste. Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van de Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van der Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van den Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "vander Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "v.d. Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "vd Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "van het Familyname",
+          "firstName": "Givenname"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "ver Familyname",
+          "firstName": "Givenname"
+        }
+      ],
+      "extra": "bibtex: name_ParticlesDemoteNonDroppingNever",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_WesternArticularLowercase",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "van Doe",
+          "firstName": "Jacques"
+        }
+      ],
+      "extra": "bibtex: name_WesternArticularLowercase",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "name_namepartAffixes",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "de La Fontaine",
+          "firstName": "Jean, III"
+        }
+      ],
+      "extra": "bibtex: name_namepartAffixes",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "nameorder_Long",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "de la Martinière",
+          "firstName": "Gérard, III"
+        }
+      ],
+      "extra": "bibtex: nameorder_Long",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "position_IbidWithSuffix",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Al-Khatib Organization"
+        }
+      ],
+      "extra": "bibtex: position_IbidWithSuffix",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "sort_ChangeInNameSort",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "\"De Quincey\"",
+          "firstName": "Alan"
+        }
+      ],
+      "extra": "bibtex: sort_ChangeInNameSort",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "sort_ChicagoYearSuffix1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Beijing Zoo"
+        },
+        {
+          "lastName": "Beijing Zoo",
+          "fieldMode": 1
+        }
+      ],
+      "extra": "bibtex: sort_ChicagoYearSuffix1",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "sort_FamilyOnly",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "ANZ Group"
+        }
+      ],
+      "extra": "bibtex: sort_FamilyOnly",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "sort_LeadingApostropheOnNameParticle",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "'t Horvath",
+          "firstName": "Peter A.C."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "in 't Horvath",
+          "firstName": "Peter A.D."
+        }
+      ],
+      "extra": "bibtex: sort_LeadingApostropheOnNameParticle",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "sort_NameParticleInNameSortFalse",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "di Noakes",
+          "firstName": "John"
+        }
+      ],
+      "extra": "bibtex: sort_NameParticleInNameSortFalse",
+      "tags": [
+        "imported"
+      ]
+    },
+    {
+      "itemType": "journalArticle",
+      "title": "sort_NameVariable",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "[F]linders",
+          "firstName": "Jacob"
+        }
+      ],
+      "extra": "bibtex: sort_NameVariable",
+      "tags": [
+        "imported"
+      ]
+    }
+  ]
+}

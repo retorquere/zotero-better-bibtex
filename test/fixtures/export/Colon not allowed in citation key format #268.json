@@ -1,0 +1,73 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.0.19",
+    "preferences": {
+      "citekeyFormat": "[auth:lower:nopunct]:[year][Title:lower:nopunct:skipwords:select,1,1][0]",
+      "skipWords": "a,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,das,de,del,der,des,despite,die,do,down,during,ein,eine,einem,einen,einer,eines,el,except,for,from,in,inside,into,is,l,la,las,le,les,like,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,while,with,within,without,yet,zu,zum",
+      "skipFields": "",
+      "langID": "babel",
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "pinCitekeys": "manual",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false,
+      "preserveBibTeXVariables": false
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemType": "book",
+      "tags": [
+        "Language Arts & Disciplines / Library & Information Science / General",
+        "Law / International",
+        "Neckam SMF",
+        "Neckam, Alexander, 1157-1217",
+        "Political Science / Human Rights"
+      ],
+      "relations": {
+      },
+      "place": "Oxford",
+      "publisher": "Clarendon Press",
+      "ISBN": "978-0-19-820756-6",
+      "date": "1999",
+      "libraryCatalog": "Google Books",
+      "language": "en",
+      "abstractNote": "This history of the books of Reading Abbey covers the period from the abbey's foundation to its dissolution, and also charts the dispersal of the book collections up until c.1610. It provides valuable evidence for intellectual life and the use of books in a medieval monastery. By continuing the story beyond the Dissolution of the Monasteries, and charting the initial stages of the dispersal of the Abbey's books (many into the large institutional collections which are their homes today), Alan Coates makes a valuable contribution to our understanding of the fate of monastic books and book-collecting in the second half of the sixteenth century.",
+      "title": "English medieval books: the Reading Abbey collections from foundation to dispersal",
+      "shortTitle": "English Medieval Books",
+      "numPages": "246",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Coates",
+          "firstName": "Alan"
+        }
+      ],
+      "attachments": [
+        {
+          "title": "Google Books Link",
+          "mimeType": "text/html",
+          "url": "http://books.google.co.uk/books?id=gZVtP5dONY8C"
+        }
+      ],
+      "notes": [
+        "<p>p. 94, ref. to SMF ms</p>"
+      ],
+      "itemID": 4064,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "coates:1999english"
+    }
+  ]
+}

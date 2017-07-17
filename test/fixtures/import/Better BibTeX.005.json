@@ -1,0 +1,37 @@
+{
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "creators": [
+        {
+          "firstName": "A",
+          "lastName": "Oliveira",
+          "creatorType": "author"
+        }
+      ],
+      "issue": "29",
+      "title": "USGS monitoring ecological impacts",
+      "volume": "107",
+      "publicationTitle": "Oil & Gas Journal",
+      "date": "2009",
+      "pages": "29",
+      "extra": "bibtex: Oliveira_2009",
+      "itemID": 0
+    }
+  ],
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON"
+  },
+  "collections": [
+    {
+      "name": "Better BibTeX.005",
+      "collections": [
+
+      ],
+      "items": [
+        0
+      ]
+    }
+  ]
+}

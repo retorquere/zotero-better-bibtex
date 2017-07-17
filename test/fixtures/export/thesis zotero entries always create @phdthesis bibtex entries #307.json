@@ -1,0 +1,96 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "0.7.33",
+    "preferences": {
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": false,
+      "attachmentsNoMetadata": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
+      "autoAbbrev": true,
+      "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize:fold:alphanum]",
+      "DOIandURL": "both",
+      "skipFields": "abstract,note,file"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false,
+      "Export collections": true
+    }
+  },
+  "items": [
+    {
+      "itemID": 94,
+      "itemType": "thesis",
+      "thesisType": "mastersthesis",
+      "date": "2011",
+      "language": "norsk",
+      "title": "Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Sune Brøndum",
+          "lastName": "Wøller",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+        "<p>CTR-Projekt</p>"
+      ],
+      "attachments": [
+        {
+          "path": "/home/sune/Dropbox/Articles/Wøller/Woller - 2011 - Det multiple arkaeologiske objekt.pdf",
+          "title": "Woller - 2011 - Det multiple arkaeologiske objekt.pdf",
+          "mimeType": "application/pdf",
+          "url": ""
+        }
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 94,
+      "itemType": "thesis",
+      "thesisType": "phdthesis",
+      "date": "2011",
+      "language": "norsk",
+      "title": "CTR Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Sune Brøndum",
+          "lastName": "Wøller",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+        "<p>CTR-Projekt</p>"
+      ],
+      "attachments": [
+        {
+          "path": "/home/sune/Dropbox/Articles/Wøller/Woller - 2011 - Det multiple arkaeologiske objekt.pdf",
+          "title": "Woller - 2011 - Det multiple arkaeologiske objekt.pdf",
+          "mimeType": "application/pdf",
+          "url": ""
+        }
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    }
+  ]
+}

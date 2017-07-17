@@ -1,0 +1,38 @@
+{
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "url": "http://linkinghub.elsevier.com/retrieve/pii/S0021961410002107",
+      "volume": "42",
+      "issue": "11",
+      "pages": "1379-1385",
+      "publicationTitle": "The Journal of Chemical Thermodynamics",
+      "ISSN": "00219614",
+      "date": "11/2010",
+      "DOI": "10.1016/j.jct.2010.06.007",
+      "accessDate": "2014-06-18 10:30:55",
+      "libraryCatalog": "CrossRef",
+      "language": "en",
+      "title": "(Liquid+liquid) equilibrium of <span class=\"nocase\">{water+phenol+(1-butanol, or 2-butanol, or tert-butanol)}</span> systems",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Leonardo Hadlich",
+          "lastName": "de Oliveira"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Martín",
+          "lastName": "Aznar"
+        }
+      ]
+    }
+  ],
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "citekeyFormat": "[auth][year]-[shorttitle]"
+    }
+  }
+}

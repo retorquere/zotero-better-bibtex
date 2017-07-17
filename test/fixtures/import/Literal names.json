@@ -1,0 +1,148 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON"
+  },
+  "collections": [
+    {
+      "name": "Literal names",
+      "collections": [
+
+      ],
+      "items": [
+        0
+      ]
+    }
+  ],
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "creators": [
+        {
+          "firstName": "Comilla",
+          "lastName": "Sasson",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Hendrika",
+          "lastName": "Meischke",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Benjamin S",
+          "lastName": "Abella",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Robert A",
+          "lastName": "Berg",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Bentley J",
+          "lastName": "Bobrow",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Paul S",
+          "lastName": "Chan",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Elisabeth Dowling",
+          "lastName": "Root",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Michele",
+          "lastName": "Heisler",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jerrold H",
+          "lastName": "Levy",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Mark",
+          "lastName": "Link",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Frederick",
+          "lastName": "Masoudi",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Marcus",
+          "lastName": "Ong",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Michael R",
+          "lastName": "Sayre",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "John S",
+          "lastName": "Rumsfeld",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Thomas D",
+          "lastName": "Rea",
+          "creatorType": "author"
+        },
+        {
+          "lastName": "American Heart Association Council on Quality of Care and Outcomes Research",
+          "creatorType": "author",
+          "fieldMode": 1
+        },
+        {
+          "lastName": "Emergency Cardiovascular Care Committee",
+          "creatorType": "author",
+          "fieldMode": 1
+        },
+        {
+          "lastName": "Council on Cardiopulmonary, Critical Care, Perioperative and Resuscitation",
+          "creatorType": "author",
+          "fieldMode": 1
+        },
+        {
+          "lastName": "Council on Clinical Cardiology",
+          "creatorType": "author",
+          "fieldMode": 1
+        },
+        {
+          "lastName": "Council on Cardiovascular Surgery and Anesthesia",
+          "creatorType": "author",
+          "fieldMode": 1
+        }
+      ],
+      "tags": [
+        "Administrative Personnel",
+        "American Heart Association",
+        "Cardiopulmonary Resuscitation",
+        "Community Health Services",
+        "Health Personnel",
+        "Heart Arrest",
+        "Humans",
+        "Leadership",
+        "Public Health",
+        "United States"
+      ],
+      "extra": "PMID: 23439512 \nbibtex: sasson_increasing_2013",
+      "ISSN": "1524-4539",
+      "shortTitle": "Increasing cardiopulmonary resuscitation provision in communities with low bystander cardiopulmonary resuscitation rates",
+      "DOI": "10.1161/CIR.0b013e318288b4dd",
+      "language": "eng",
+      "issue": "12",
+      "title": "Increasing cardiopulmonary resuscitation provision in communities with low bystander cardiopulmonary resuscitation rates: a science advisory from the American Heart Association for healthcare providers, policymakers, public health departments, and community leaders",
+      "volume": "127",
+      "publicationTitle": "Circulation",
+      "date": "March 2013",
+      "pages": "1342-1350",
+      "itemID": 0
+    }
+  ]
+}

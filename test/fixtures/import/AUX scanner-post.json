@@ -1,0 +1,4922 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "0.11.10",
+    "preferences": {
+      "citekeyFormat": "[auth][year]",
+      "skipFields": "",
+      "langID": "babel",
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "pinCitekeys": "manual",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false
+    }
+  },
+  "collections": [
+    {
+      "name": "AUX scanner",
+      "collections": [
+
+      ],
+      "items": [
+        9,
+        224
+      ]
+    },
+    {
+      "name": "AUX scanner-pre",
+      "collections": [
+
+      ],
+      "items": [
+        1,
+        2,
+        3,
+        4,
+        7,
+        8,
+        9,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        32,
+        34,
+        35,
+        37,
+        38,
+        40,
+        42,
+        43,
+        44,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        54,
+        55,
+        57,
+        58,
+        59,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        72,
+        73,
+        75,
+        77,
+        78,
+        81,
+        82,
+        83,
+        85,
+        86,
+        88,
+        89,
+        90,
+        91,
+        93,
+        94,
+        95,
+        96,
+        98,
+        99,
+        101,
+        102,
+        103,
+        105,
+        107,
+        109,
+        110,
+        111,
+        113,
+        114,
+        115,
+        116,
+        117,
+        119,
+        121,
+        122,
+        123,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        133,
+        136,
+        137,
+        138,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        159,
+        160,
+        161,
+        163,
+        164,
+        165,
+        167,
+        168,
+        169,
+        173,
+        179,
+        182,
+        184,
+        185,
+        187,
+        188,
+        191,
+        193,
+        194,
+        196,
+        197,
+        199,
+        201,
+        204,
+        206,
+        208,
+        210,
+        211,
+        213,
+        215,
+        217,
+        219,
+        221
+      ]
+    }
+  ],
+  "items": [
+    {
+      "itemID": 1,
+      "itemType": "book",
+      "url": "http://nanowares.wordpress.com/2011/09/30/logic-apparently-off-limits-in-the-law/",
+      "date": "2011",
+      "title": "Logic apparently off limits in the law",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Koepsell",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 2,
+      "itemType": "book",
+      "url": "http://www.gnu.org/software/year2000.html",
+      "date": "January 2012",
+      "title": "Words to Avoid (or Use with Care) Because They Are Loaded or Confusing",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Inc.",
+          "lastName": "Free Software Foundation",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 3,
+      "itemType": "book",
+      "publisher": "Columbia University Press",
+      "date": "2005",
+      "title": "Political Liberalism",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Rawls",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 4,
+      "itemType": "book",
+      "publisher": "Open Court Publishing",
+      "ISBN": "0-8126-9537-2",
+      "date": "2003",
+      "title": "The ontology of cyberspace: Philosophy, law, and the future of intellectual property",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "David R",
+          "lastName": "Koepsell",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "orphaned"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 7,
+      "itemType": "book",
+      "publisher": "University of Wisconsin Press",
+      "date": "1964",
+      "callNumber": "lc64010261",
+      "extra": "bibtex: bergmann1964logic",
+      "title": "Logic and reality",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "Bergmann",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 8,
+      "itemType": "journalArticle",
+      "url": "http://mind.oxfordjournals.org/content/XCIII/370/194.short",
+      "volume": "XCIII",
+      "issue": "370",
+      "pages": "194–214",
+      "publicationTitle": "Mind",
+      "date": "1984",
+      "DOI": "http://dx.doi.org/10.1093/mind/XCIII.370.194",
+      "title": "On the Nature of Rights",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Raz",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 9,
+      "itemType": "book",
+      "publisher": "Transaction Publishers",
+      "date": "2010",
+      "extra": "bibtex: sheehan2010heidegger",
+      "title": "Heidegger: The Man and the Thinker",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Thomas",
+          "lastName": "Sheehan",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 10,
+      "itemType": "conferencePaper",
+      "volume": "Vol. 31",
+      "pages": "Pg.–Pg. 593",
+      "date": "2008",
+      "title": "Demystifying the Right to Exclude: Of Property, Inviolability, and Automatic Injunctions.",
+      "proceedingsTitle": "Harvard Journal of Law and Public Policy",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Balganesh",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Harvard Journal of Law and Public Policy"
+    },
+    {
+      "itemID": 12,
+      "itemType": "journalArticle",
+      "url": "http://link.springer.com/article/10.1007/s11673-007-9072-3",
+      "volume": "4",
+      "issue": "3",
+      "pages": "171–179",
+      "publicationTitle": "Journal of Bioethical Inquiry",
+      "date": "2007",
+      "extra": "bibtex: yu2007confucian",
+      "accessDate": "2013-09-27 07:31:37",
+      "libraryCatalog": "Google Scholar",
+      "title": "A Confucian view of personhood and bioethics",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Erika",
+          "lastName": "Yu",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ruiping",
+          "lastName": "Fan",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 14,
+      "itemType": "book",
+      "publisher": "University of Chicago Press, Chicago",
+      "ISBN": "0-226-50079-9 0-226-50078-0",
+      "date": "2001",
+      "language": "English",
+      "title": "Nature and empire: science and the colonial enterprise",
+      "numPages": "323",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Roy M.",
+          "lastName": "MacLeod",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 16,
+      "itemType": "bookSection",
+      "url": "http://dx.doi.org/10.1007/3-540-45632-5_24",
+      "series": "Lecture Notes in Computer Science",
+      "volume": "2408",
+      "publisher": "Springer Berlin Heidelberg",
+      "pages": "605–625",
+      "ISBN": "978-3-540-43960-8",
+      "date": "2002",
+      "language": "English",
+      "title": "Simply the Best: A Case for Abduction",
+      "bookTitle": "Computational Logic: Logic Programming and Beyond",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Stathis",
+          "lastName": "Psillos",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "AntonisC.",
+          "lastName": "Kakas",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Fariba",
+          "lastName": "Sadri",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "IBE"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Computational Logic: Logic Programming and Beyond"
+    },
+    {
+      "itemID": 18,
+      "itemType": "book",
+      "publisher": "Pennsylvania State University Press",
+      "date": "2005",
+      "extra": "bibtex: verbeek2005things",
+      "title": "What Things Do: Philosophical Reflections On Technology, Agency, And Design",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Peter-Paul",
+          "lastName": "Verbeek",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 20,
+      "itemType": "book",
+      "publisher": "University of Chicago Press",
+      "date": "1949",
+      "title": "Critique of Practical Reason and Other Writings in Moral Philosophy",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "I.",
+          "lastName": "Kant",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "L.W.",
+          "lastName": "Beck",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 21,
+      "itemType": "book",
+      "publisher": "University of Chicago Press, Chicago",
+      "date": "1967",
+      "title": "The linguistic turn; recent essays in philosophical method, edited and with an introd. by Richard Rorty",
+      "numPages": "393",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Richard",
+          "lastName": "Rorty",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 22,
+      "itemType": "bookSection",
+      "publisher": "President's Council on Bioethics",
+      "date": "2008",
+      "title": "Human Dignity From a Neurophilosophical Perspective",
+      "bookTitle": "Human Dignity and Bioethics: Essays Commissioned by the President's Council on Bioethics",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "P.",
+          "lastName": "Churchland",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Human Dignity and Bioethics: Essays Commissioned by the President's Council on Bioethics"
+    },
+    {
+      "itemID": 23,
+      "itemType": "book",
+      "publisher": "Cambridge University Press",
+      "date": "1988",
+      "title": "Two Treatises of Government",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Locke",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P.",
+          "lastName": "Laslett",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 24,
+      "itemType": "book",
+      "url": "http://philsci-archive.pitt.edu/1080/",
+      "date": "2002",
+      "abstractNote": "The purpose of this paper is to suggest that models in scientific practice can be conceived of as epistemic artefacts. Approaching models this way accommodates many such things that working scientists themselves call models but which the semantic conception of models does not duly recognize as such. That models are epistemic artefacts implies, firstly, that they cannot be understood apart from purposeful human activity. Secondly, it implies that they are somehow materialized inhabitants of the intersubjective field of human activity. Thirdly, it implies that models can function also as knowledge objects. We argue that models as epistemic artefacts give knowledge in many other ways than just via direct representative links. To substantiate our view we use an example of a language-technological artefact, a parser.",
+      "title": "A Parser as an Epistemic Artefact: A Material View on Models",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Tarja",
+          "lastName": "Knuuttila",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Atro",
+          "lastName": "Voutilainen",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "explanation",
+        "idealization",
+        "models",
+        "philosophy of science",
+        "technology"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 25,
+      "itemType": "book",
+      "publisher": "Rutgers University Press",
+      "date": "1989",
+      "title": "Owning Scientific and Technical Information: Value and Ethical Issues",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Dreyfuss",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "V.",
+          "lastName": "Weil",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.W.",
+          "lastName": "Snapper",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 26,
+      "itemType": "journalArticle",
+      "url": "http://www.jstor.org/stable/10.1086/505233",
+      "rights": "Copyright © 2006 The University of Chicago Press",
+      "volume": "116",
+      "issue": "4",
+      "pages": "656-679",
+      "publicationTitle": "Ethics",
+      "ISSN": "0014-1704",
+      "date": "July 1, 2006",
+      "extra": "ArticleType: research-article / Full publication date: July 2006 / Copyright © 2006 The University of Chicago Press",
+      "journalAbbreviation": "Ethics",
+      "DOI": "10.1086/505233",
+      "accessDate": "2013-10-01 20:33:37",
+      "libraryCatalog": "JSTOR",
+      "title": "The Reversal Test: Eliminating Status Quo Bias in Applied Ethics",
+      "shortTitle": "The Reversal Test",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "by Nick",
+          "lastName": "Bostrom",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Toby",
+          "lastName": "Ord",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "ethics",
+        "human enhancement",
+        "status quo"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 28,
+      "itemType": "journalArticle",
+      "url": "http://www.webcitation.org/6702LuOok",
+      "publicationTitle": "PBS",
+      "date": "August 2007",
+      "title": "The Case Against Perfection (interview)",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Sandel",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Goldstein",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 29,
+      "itemType": "book",
+      "url": "http://www.gnu.org/copyleft/",
+      "date": "June 2012",
+      "title": "What is Copyleft?",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Inc.",
+          "lastName": "Free Software Foundation",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 30,
+      "itemType": "journalArticle",
+      "volume": "28",
+      "pages": "pp. 63-94",
+      "publicationTitle": "Proceedings of the Aristotelian Society, Supplementary Volumes",
+      "date": "1954",
+      "extra": "bibtex: ayerrhees1954symposium",
+      "language": "English",
+      "title": "Symposium: Can There Be a Private Language?",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A. J.",
+          "lastName": "Ayer",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Rhees",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 32,
+      "itemType": "book",
+      "url": "http://www.amazon.com/exec/obidos/redirect?tag=citeulike07-20&path=ASIN/0061319694",
+      "publisher": "Harper Torchbooks",
+      "ISBN": "0-06-131969-4",
+      "date": "February 1982",
+      "extra": "bibtex: heidegger1977question",
+      "abstractNote": "\"To read Heidegger is to set out on an adventure. The essays in this volume–intriguing, challenging, and often baffling to the reader–call him always to abandon all superficial scanning and to enter wholeheartedly into the serious pursuit of thinking....</P><P>\"Heidegger is not a 'primitive' or a 'romanitic.' He is not one who seeks escape from the burdens and responsibilities of contemporary life into serenity, either through the re-creating of some idyllic past or through the exalting of some simple experience. Finally, Heidegger is not a foe of technology and science. He neither disdains nor rejects them as though they were only destructive of human life.</P><P>\"The roots of Heidegger's hinking lie deep in the Western philosophical tradition. Yet that thinking is unique in many of its aspects, in its language, and in its leterary expression. In the development of this thought Heidegger has been taught chiefly by the Greeks, by German idealism, by phenomenology, and by the scholastic theological tradition. In him these and other elements have been fused by his genius of sensitivity and intellect into a very individual philosophical expression.\" –William Lovitt, <I>from the Introduction</I>",
+      "title": "The Question Concerning Technology, and Other Essays",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Martin",
+          "lastName": "Heidegger",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "philosophy",
+        "science",
+        "technology"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 34,
+      "itemType": "book",
+      "publisher": "Harvard University Press",
+      "date": "1999",
+      "title": "A Theory of Justice, Revised Edition",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Rawls",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 35,
+      "itemType": "journalArticle",
+      "url": "http://ant.sagepub.com/content/6/1/12.abstract",
+      "volume": "6",
+      "issue": "1",
+      "pages": "12–29",
+      "publicationTitle": "Anthropological Theory",
+      "date": "2006",
+      "DOI": "http://dx.doi.org/10.1177/1463499606061731",
+      "abstractNote": "This article extends and develops a theory I began in my book, The Construction of Social Reality. Its aim is to explore social ontology in a way that will make it clear that social ontology is both created by human actions and attitudes but at the same time has an epistemically objective existence and is part of the natural world. The fundamental concepts necessary to explain its creation and continued existence are: the distinction between observer-relative and observer-independent phenomena, the distinction between the epistemic and the ontological senses of the objective–subjective distinction, the notions of collective intentionality, the assignment of function, and constitutive rules. The upshot of the discussion is that the basic notion in institutional ontology is that of a status function. Status functions are the glue that holds society together because they create deontic powers, powers that work by creating desire-independent reasons for action. Thus, social ontology locks into human rationality. I discuss some of the implications of this work for sociology and anthropology.",
+      "title": "Social ontology: Some basic principles",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John R.",
+          "lastName": "Searle",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "read"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 37,
+      "itemType": "book",
+      "place": "Chicago and LaSalle, Illinios",
+      "publisher": "Open Court Classics",
+      "date": "1918",
+      "title": "The Philosophy of Logical Atomism",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Bertrand",
+          "lastName": "Russell",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 38,
+      "itemType": "journalArticle",
+      "url": "http://www.ingentaconnect.com/content/rodopi/cpm/2011/00000008/00000001/art00006",
+      "volume": "8",
+      "issue": "1",
+      "pages": "61-84",
+      "publicationTitle": "Contemporary Pragmatism",
+      "date": "2011",
+      "abstractNote": "The linguistic turn is a central aspect of Richard Rorty's philosophy, informing his early critiques of foundationalism in <I>Philosophy and the Mirror of Nature</I> and subsequent critiques of authoritarianism in <I>Contingency, Irony, and Solidarity</I>. It is argued that we should interpret the linguistic turn as a methodological suggestion for how philosophy can take a non-foundational perspective on normativity. It is then argued that although Rorty did not succeed in explicating normativity without foundations (or authority without authoritarianism), we should take seriously the ambition motivating his project. But taking that ambition seriously may require reconsidering the linguistic turn.",
+      "title": "Rorty's Linguistic Turn: Why (More Than) Language Matters to Philosophy",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Colin",
+          "lastName": "Koopman",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 40,
+      "itemType": "book",
+      "series": "International encyclopedia of unified science",
+      "publisher": "University of Chicago Press",
+      "ISBN": "978-0-226-45808-3",
+      "date": "1996",
+      "callNumber": "96013195",
+      "title": "The Structure of Scientific Revolutions",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T.S.",
+          "lastName": "Kuhn",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 42,
+      "itemType": "journalArticle",
+      "url": "http://www.gnu.org/gnu/manifesto.html",
+      "volume": "10",
+      "issue": "3",
+      "publicationTitle": "Dr. Dobb's Journal of Software Tools",
+      "ISSN": "1044-789X",
+      "date": "March 1985",
+      "title": "The GNU Manifesto",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Richard",
+          "lastName": "Stallman",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 43,
+      "itemType": "book",
+      "publisher": "Bloomsbury Academic",
+      "date": "2011",
+      "title": "Innovation and Nanotechnology: Converging Technologies And The End of Intellectual Property",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Koepsell",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 44,
+      "itemType": "book",
+      "series": "New waves in philosophy",
+      "publisher": "Palgrave Macmillan",
+      "date": "2008",
+      "title": "New Waves in Philosophy of Technology",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "J.K.B.",
+          "lastName": "Olsen",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "E.",
+          "lastName": "Selinger",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "S.",
+          "lastName": "Riis",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P.",
+          "lastName": "Brey",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 46,
+      "itemType": "book",
+      "url": "http://figureground.ca/interviews/don-ihde/",
+      "publisher": "Figure/Ground Communication",
+      "date": "September 2010",
+      "title": "Don Ihde interview",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "",
+          "lastName": "Laureano Ralon",
+          "fieldMode": 1
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 47,
+      "itemType": "book",
+      "publisher": "M. Nijhoff",
+      "date": "1978",
+      "extra": "bibtex: Smyth1978",
+      "title": "Forms of Intuition: An Historical Introduction to the Transcendental Aesthetic",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Richard A.",
+          "lastName": "Smyth",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 48,
+      "itemType": "book",
+      "publisher": "Oxford University Press",
+      "date": "1997",
+      "title": "The Nature and Process of Law",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Honore",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P.",
+          "lastName": "Smith",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 49,
+      "itemType": "journalArticle",
+      "volume": "244",
+      "pages": "124–132",
+      "publicationTitle": "Scientific American",
+      "date": "1981",
+      "extra": "bibtex: fodor1981mindbody",
+      "title": "The Mind/Body Problem",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jerry",
+          "lastName": "Fodor",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 50,
+      "itemType": "book",
+      "publisher": "Blackwell",
+      "ISBN": "978-0-631-16940-6",
+      "date": "1975",
+      "callNumber": "69020428",
+      "extra": "bibtex: wittgenstein1975certainty",
+      "title": "On certainty",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Wittgenstein",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "G.E.M.",
+          "lastName": "Anscombe",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "G.H.",
+          "lastName": "Wright",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 51,
+      "itemType": "book",
+      "url": "http://books.google.nl/books?id=2P-Lc872b1UC",
+      "series": "SUNY Series in Contemporary Continental Philosophy",
+      "publisher": "State University of New York Press",
+      "ISBN": "978-1-4384-3275-5",
+      "date": "1996",
+      "callNumber": "2010015994",
+      "extra": "bibtex: heidegger1996beingandtime",
+      "title": "Being and Time",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Heidegger",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Stambaugh",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.J.",
+          "lastName": "Schmidt",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+        "<p>Translation by Stambaugh, Joan</p>"
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 54,
+      "itemType": "book",
+      "publisher": "J. Johnson",
+      "date": "1798",
+      "title": "An Essay on the Principle of Population",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T.R.",
+          "lastName": "Malthus",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 55,
+      "itemType": "book",
+      "url": "http://books.google.nl/books?id=b8YtAAAAYAAJ",
+      "series": "The Language and Thought Series",
+      "publisher": "Harvester Wheatsheaf",
+      "ISBN": "978-0-85527-309-5",
+      "date": "1976",
+      "callNumber": "gb77000591",
+      "extra": "bibtex: fodor1976language",
+      "title": "The Language of Thought",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.A.",
+          "lastName": "Fodor",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 57,
+      "itemType": "book",
+      "date": "1908",
+      "title": "Also sprach Zarathustra",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "F.W",
+          "lastName": "Nietzsche",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 58,
+      "itemType": "book",
+      "publisher": "Doubleday-Doran",
+      "date": "1789",
+      "title": "An introduction to the principles of morals and legislation",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jeremy",
+          "lastName": "Bentham",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 59,
+      "itemType": "journalArticle",
+      "volume": "74",
+      "issue": "1",
+      "pages": "51–71",
+      "publicationTitle": "Ethnos",
+      "date": "2009",
+      "extra": "bibtex: leach2009freedom",
+      "title": "Freedom imagined: morality and aesthetics in open source software design",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "James",
+          "lastName": "Leach",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Dawn",
+          "lastName": "Nafus",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Bernhard",
+          "lastName": "Krieger",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 61,
+      "itemType": "book",
+      "date": "1641",
+      "extra": "bibtex: descartes1641meditations",
+      "title": "Meditations on first philosophy",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Descartes",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 62,
+      "itemType": "book",
+      "publisher": "Basil Blackwell",
+      "date": "1991",
+      "extra": "bibtex: hacker1991appearance",
+      "title": "Appearance and reality: a philosophical investigation into perception and perceptual qualities",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "P.M.S.",
+          "lastName": "Hacker",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 63,
+      "itemType": "bookSection",
+      "publisher": "Oxford University Press",
+      "pages": "424–43",
+      "date": "2009",
+      "abstractNote": "In the middle of the twentieth century a dispute erupted between the chief architect of Logical Empiricism, Rudolf Carnap, and Logical Empiricisms chief reformer, Willard van Orman Quine – who was attempting to save what he took to be its main insights by recasting them in a more acceptable form. Though both eschewed metaphysics of the traditional apriori sort, and both were intent on making the investigation of science the center of philosophy, they disagreed about how to do so. Part of the disagreement involved the nature of ontological disputes. The central documents in the debate are: (i) Quines 1948 article, On What There Is,textquotedblright which tells us how to discern ontological..",
+      "title": "Ontology, Analyticity, and Meaning : The Quine-Carnap Dispute",
+      "bookTitle": "Metametaphysics: New Essays on the Foundations of Ontology",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Scott",
+          "lastName": "Soames",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Metametaphysics: New Essays on the Foundations of Ontology"
+    },
+    {
+      "itemID": 64,
+      "itemType": "bookSection",
+      "publisher": "Routledge",
+      "date": "2007",
+      "abstractNote": "Internalism and Epistemology is a powerful articulation and defense of a classical answer to an enduring question: What is the nature of rational belief? In opposition to prevailing philosophical fashion, the book argues that epistemic externalism leads, not just to skepticism, but to epistemic nihilism - the denial of the very possibility of justification. And it defends a subtle and sophisticated internalism against criticisms that have widely but mistakenly been thought to be decisive. Beginning with an internalist response to the Gettier problem, the authors deal with the problem of the connection to truth, stressing the distinction between success and rationality as critical to its resolution. They develop a metaregress argument against externalism that has devastating consequences for any view according to which epistemic principles are contingent. The same argument does not, they argue, affect the version of internalism they espouse, since its epistemic principles are analytic and knowable a priori. The final chapter addresses the problem of induction and shows that its solution turns critically on the distinction between success and rationality - the very distinction that lies at the heart of the dispute between internalists and externalists. Provocative, probing, and deliberately unfashionable, Internalism and Epistemology is a ringing defense of internalism that will interest specialists and students alike. It is essential reading for anyone who suspects that rumors of the death of traditional epistemology have been greatly exaggerated.",
+      "title": "Internalism and Epistemology : The Architecture of Reason",
+      "bookTitle": "The Analytic Turn: Analysis in Early Analytic Philosophy and Phenomenology",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Timothy",
+          "lastName": "McGrew",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Lydia",
+          "lastName": "McGrew",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "The Analytic Turn: Analysis in Early Analytic Philosophy and Phenomenology"
+    },
+    {
+      "itemID": 65,
+      "itemType": "bookSection",
+      "publisher": "Free Software Foundation, Inc.",
+      "pages": "251",
+      "date": "2010",
+      "title": "Why Software Should Be Free",
+      "bookTitle": "Free Software, Free Society: Selected Essays of Richard M. Stallman",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Richard",
+          "lastName": "Stallman",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Free Software, Free Society: Selected Essays of Richard M. Stallman"
+    },
+    {
+      "itemID": 66,
+      "itemType": "book",
+      "place": "Oxford",
+      "publisher": "Basil Blackwell",
+      "date": "1953",
+      "callNumber": "PI",
+      "extra": "bibtex: wittgenstein1953PI\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN\nbibtex: zotero-0-C8BKZ6JN",
+      "title": "Philosophical Investigations",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Wittgenstein",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 67,
+      "itemType": "webpage",
+      "url": "http://www.informationweek.com/news/personal-tech/digital-content/218600600",
+      "date": "July 2009",
+      "extra": "bibtex: gage2009amazon",
+      "abstractNote": "CEO Jeff Bezos said removing copies of e-books from customers' Kindles was \"stupid, thoughtless, and painfully out of line with our principles.\"",
+      "websiteTitle": "InformationWeek",
+      "title": "Amazon Apologizes For Kindle Flap",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Deborah",
+          "lastName": "Gage",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "InformationWeek"
+    },
+    {
+      "itemID": 68,
+      "itemType": "book",
+      "publisher": "Oxford, The Clarendon Press",
+      "date": "1927",
+      "title": "Ethical studies",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "F. H.",
+          "lastName": "Bradley",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 69,
+      "itemType": "journalArticle",
+      "url": "http://www.sciencedirect.com/science/article/pii/S0140673604162090",
+      "volume": "363",
+      "issue": "9421",
+      "pages": "1633– 1641",
+      "publicationTitle": "The Lancet",
+      "date": "2004",
+      "DOI": "http://dx.doi.org/10.1016/S0140-6736(04)16209-0",
+      "title": "Preimplantation genetic diagnosis",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "K.",
+          "lastName": "Sermon",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "van Steirteghem",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "I.",
+          "lastName": "Liebaers",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 70,
+      "itemType": "journalArticle",
+      "volume": "12",
+      "issue": "2",
+      "pages": "159–176",
+      "publicationTitle": "International Journal of Philosophical Studies",
+      "date": "2004",
+      "extra": "bibtex: law20045pla",
+      "abstractNote": "This paper distinguishes five key interpretations of the argument presented by Wittgenstein in Philosophical Investigations I, \\S258. I also argue that on none of these five interpretations is the argument cogent. The paper is primarily concerned with the most popular interpretation of the argument: that which that makes it rest upon the principle that one can be said to follow a rule only if there exists a 'useable criterion of successful performance' (Pears) or 'operational standard of correctness' (Glock) for its correct application. This principle, I suggest, is untrue. The private language argument upon which it rests therefore fails.",
+      "title": "Five Private Language Arguments",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Stephen",
+          "lastName": "Law",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 72,
+      "itemType": "book",
+      "publisher": "Macmillan",
+      "date": "1968",
+      "title": "Wittgenstein: the Philosophical Investigations",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "Pitcher",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 73,
+      "itemType": "journalArticle",
+      "url": "http://www.jstor.org/stable/762754",
+      "rights": "Copyright © 1999 The Johns Hopkins University Press",
+      "volume": "21",
+      "issue": "4",
+      "pages": "pp. 980-1008",
+      "publicationTitle": "Human Rights Quarterly",
+      "ISSN": "02750392",
+      "date": "1999",
+      "extra": "bibtex: 1999",
+      "language": "English",
+      "title": "Social Movements and the Social Construction of Human Rights",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Neil",
+          "lastName": "Stammers",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 75,
+      "itemType": "journalArticle",
+      "url": "http://www.jetpress.org/volume14/bostrom.pdf",
+      "volume": "14",
+      "issue": "1",
+      "pages": "1–25",
+      "publicationTitle": "Journal of Evolution and Technology",
+      "date": "2005",
+      "extra": "bibtex: bostrom2005history",
+      "accessDate": "2013-09-27 08:15:45",
+      "libraryCatalog": "Google Scholar",
+      "title": "A history of transhumanist thought",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Nick",
+          "lastName": "Bostrom",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 77,
+      "itemType": "conferencePaper",
+      "volume": "vol. 122",
+      "pages": "pg.–pg. 1569",
+      "date": "2009",
+      "title": "Foreseeability and Copyright Incentives",
+      "proceedingsTitle": "Harvard Law Review",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Balganesh",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Harvard Law Review"
+    },
+    {
+      "itemID": 78,
+      "itemType": "journalArticle",
+      "url": "http://doc.utwente.nl/61020/",
+      "volume": "7",
+      "issue": "3",
+      "pages": "387–395",
+      "publicationTitle": "Phenomenology and the Cognitive Sciences",
+      "date": "September 2008",
+      "abstractNote": "This article investigates the types of intentionality involved in human-technology relations. It aims to augment Don Ihde's analysis of the relations between human beings and technological artifacts, by analyzing a number of concrete examples at the limits of Ihde's analysis. The article distinguishes and analyzes three types of \"cyborg intentionality,\" which all involve specific blends of the human and the technological. Technologically mediated intentionality occurs when human intentionality takes place \"through\" technological artifacts; hybrid intentionality occurs when the technological actually merges with the human; and composite intentionality is the addition of human intentionality and the intentionality of technological artifacts.",
+      "title": "Cyborg intentionality: Rethinking the phenomenology of human-technology relations",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Peter-Paul",
+          "lastName": "Verbeek",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 81,
+      "itemType": "book",
+      "url": "http://www.gnu.org/education/edu-schools.html",
+      "date": "June 2010",
+      "title": "Why Schools Should Exclusively Use Free Software",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Inc.",
+          "lastName": "Free Software Foundation",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 82,
+      "itemType": "conferencePaper",
+      "url": "http://www.webcitation.org/query?url=http%3A%2F%2Fwww.wtec.org%2FConvergingTechnologies%2F1%2FNBIC_report.pdf&date=2011-03-04",
+      "date": "June 2009",
+      "title": "Science and Technology and the Triple D (Disease, Disability, Defect)",
+      "proceedingsTitle": "Converging Technologies for Improving Human Performance",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "Wolbring",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Converging Technologies for Improving Human Performance"
+    },
+    {
+      "itemID": 83,
+      "itemType": "book",
+      "series": "Routledge Classics",
+      "publisher": "Taylor & Francis Ltd.",
+      "ISBN": "978-0-415-58482-1",
+      "date": "2010",
+      "extra": "Article: The Origin of the Work of Art",
+      "title": "Basic Writings: Martin Heidegger",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Heidegger",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.F.",
+          "lastName": "Krell",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+        "<p>Article: The Origin of the Work of Art</p>"
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 85,
+      "itemType": "journalArticle",
+      "volume": "23",
+      "pages": "121–123",
+      "publicationTitle": "Analysis",
+      "date": "1963",
+      "title": "Is justified true belief knowledge?",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "Gettier",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 86,
+      "itemType": "bookSection",
+      "publisher": "Palgrave Macmillan",
+      "date": "2007",
+      "title": "Ethical Issues in Human Enhancement",
+      "bookTitle": "New Waves in Applied Ethics",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Nick",
+          "lastName": "Bostrom",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Rebecca",
+          "lastName": "Roache",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "orphaned"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "New Waves in Applied Ethics"
+    },
+    {
+      "itemID": 88,
+      "itemType": "book",
+      "publisher": "Parker, Son and Bourn",
+      "date": "1863",
+      "title": "Utilitarianism",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.S.",
+          "lastName": "Mill",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 89,
+      "itemType": "book",
+      "publisher": "Cambridge University Press",
+      "date": "1926",
+      "seriesNumber": "v. 1",
+      "title": "An economic history of modern Britain: The early Railway Age 1820-1850",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.H.",
+          "lastName": "Clapham",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.H.",
+          "lastName": "Clapham",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 90,
+      "itemType": "webpage",
+      "url": "http://bits.blogs.nytimes.com/2010/02/12/do-e-readers-cause-eye-strain/",
+      "date": "2010-02-12",
+      "extra": "bibtex: bilton2010strain",
+      "accessDate": "2013-10-03 19:19:35",
+      "abstractNote": "Despite what your mother might have told you, doctors say that looking at an electronic screen doesn&#8217;t hurt the eyes. Ergonomics and lighting play a much bigger role in eye strain.",
+      "websiteTitle": "Bits Blog",
+      "title": "Do E-Readers Cause Eye Strain?",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Nick",
+          "lastName": "Bilton",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "Amazon Kindle",
+        "Amazon.com Inc",
+        "Apple Inc",
+        "Computer Monitors",
+        "Computers and the Internet",
+        "Cornell University",
+        "E Ink",
+        "E Ink Corp",
+        "Ergonomics",
+        "Eyes and Eyesight",
+        "Fatigue",
+        "Handheld Computers",
+        "Hedge Alan",
+        "Massachusetts Institute of Technology",
+        "Media Lab",
+        "University of North Carolina",
+        "consumer electronics",
+        "iPad"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Bits Blog"
+    },
+    {
+      "itemID": 91,
+      "itemType": "journalArticle",
+      "url": "http://dx.doi.org/10.1007/s11016-005-3431-7",
+      "volume": "14",
+      "issue": "3",
+      "pages": "331–361",
+      "publicationTitle": "Metascience",
+      "ISSN": "0815-0796",
+      "date": "2005",
+      "DOI": "10.1007/s11016-005-3431-7",
+      "language": "English",
+      "title": "Wouldn't it be Lovely: Explanation and Scientific Realism",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "James",
+          "lastName": "Ladyman",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "loveliness"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 93,
+      "itemType": "book",
+      "publisher": "Routledge",
+      "date": "1993",
+      "title": "Wittgenstein: rethinking the inner",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "P.",
+          "lastName": "Johnston",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 94,
+      "itemType": "book",
+      "publisher": "Clarendon Press",
+      "date": "1988",
+      "title": "The false prison: a study of the development of Wittgenstein's philosophy",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Pears",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 95,
+      "itemType": "journalArticle",
+      "volume": "vol. 30",
+      "pages": "p935–949",
+      "publicationTitle": "Social Studies of Science",
+      "date": "December 2000",
+      "DOI": "10.1177/030631200030006006",
+      "abstractNote": "In the period from 1300 to 1600 three strata of intellectual activity must be distinguished: university scholars, humanists, and artisans. Both university scholars and humanists were rationally trained. Their methods, however, were determined by their professional conditions and differed substantially from the methods of science. Both professors and humanistic literati distinguished liberal from mechanical arts and despised manual labor, experimentation, and dissection. Craftsmen were the pioneers of causal thinking in this period. Certain groups of superior manual laborers (artist-engineers, surgeons, the makers of nautical and musical instruments, surveyors, navigators, gunners) experimented, dissected, and used quantitative methods. The measuring instruments of the navigators, surveyors, and gunners were the forerunners of the later physical instruments. The craftsmen, however, lacked methodical intellectual training. Thus the two components of the scientific method were separated by the social barrier: logical training was reserved for upper-class scholars; experimentation, causal interest, and quantitative method were left to more or less plebeian artisans. Science was born when, with the progress of technology, the experimental method eventually overcame the social prejudice against manual labor and was adopted by rationally trained scholars. This was accomplished about 1600 (Gilbert, Galileo, Bacon). At the same time the scholastic method of disputation and the humanistic ideal of individual glory were superseded by the ideals of control of nature and advancement of learning through scientific co-operation. In a somewhat different way, sociologically, modern astronomy developed. The whole process was imbedded in the advance of early capitalistic society, which weakened collective-mindedness, magical thinking, and belief in authority and which furthered worldly, causal, rational, and quantitative thinking.",
+      "title": "The Sociological Roots of Science",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Edgar",
+          "lastName": "Zilsel",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 96,
+      "itemType": "bookSection",
+      "url": "http://plato.stanford.edu/archives/sum2012/entries/private-language/",
+      "edition": "Summer 2012",
+      "date": "2012",
+      "extra": "bibtex: sep-private-language",
+      "accessDate": "2013-10-11 09:15:31",
+      "libraryCatalog": "Stanford Encyclopedia of Philosophy",
+      "abstractNote": "The idea of a private language was made famous in philosophy by Ludwig Wittgenstein, who in §243 of his book Philosophical Investigations explained it thus: “The words of this language are to refer to what can be known only to the speaker; to his immediate, private, sensations. So another cannot understand the  language.”[1] This is not intended to cover (easily imaginable) cases of recordingone's experiences in a personal code, for such a code, however obscurein fact, could in principle be deciphered. What Wittgenstein had inmind is a language conceived as necessarily comprehensibleonly to its single originator because the things which define itsvocabulary are necessarily inaccessible to others. , “But in a fairy tale the pot too can see and hear!” (Certainly; but it can also talk.), In a logically perfect language, there will be one word and no more for every simple object, and everything that is not simple will be expressed by a combination of words, by a combination derived, of course, from the words for the simple things that enter in, one word for each simple component. A language of that sort will be completely analytic, and will show at a glance the logical structure of the facts asserted or denied. … A logically perfect language, if it could be constructed, would not only be intolerably prolix, but, as regards its vocabulary, would be very largely private to one speaker. That is to say, all the names that it would use would be private to that speaker and could not enter into the language of another speaker., Many philosophers have taken ‘I remember the connection right’ to mean ‘I use “S” when and only when I really have S’. They then take Wittgenstein's argument to be based on scepticism about memory: how can you be sure that you have remembered aright when next you call a sensation ‘S’? …",
+      "title": "Private Language",
+      "bookTitle": "The Stanford Encyclopedia of Philosophy",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Stewart",
+          "lastName": "Candlish",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "George",
+          "lastName": "Wrisley",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Edward N.",
+          "lastName": "Zalta",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "Russell, Bertrand",
+        "Wittgenstein, Ludwig",
+        "language of thought hypothesis",
+        "other minds",
+        "self-knowledge"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "The Stanford Encyclopedia of Philosophy"
+    },
+    {
+      "itemID": 98,
+      "itemType": "book",
+      "series": "Cambridge Medicine",
+      "publisher": "Cambridge University Press",
+      "date": "2010",
+      "title": "The Cambridge Medical Ethics Workbook",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Dickenson",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Huxtable",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Parker",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 99,
+      "itemType": "book",
+      "url": "http://books.google.com/books?hl=en&lr=&id=qS3pJL_BcdkC&oi=fnd&pg=PA1&dq=Technology+and+the+Character+of+Contemporary+Life++Albert+Borgmann&ots=TCoU2lKISE&sig=ag0Sp-0RFHjIjGPrb5pX6KN6i0w",
+      "publisher": "University of Chicago Press",
+      "date": "1987",
+      "extra": "bibtex: borgmann1987technology",
+      "accessDate": "2013-09-27 09:08:34",
+      "libraryCatalog": "Google Scholar",
+      "title": "Technology and the character of contemporary life: A philosophical inquiry",
+      "shortTitle": "Technology and the character of contemporary life",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Albert",
+          "lastName": "Borgmann",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 101,
+      "itemType": "book",
+      "publisher": "Cambridge University Press",
+      "date": "1998",
+      "callNumber": "CPR",
+      "title": "Critique of Pure Reason",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Immanuel",
+          "lastName": "Kant",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 102,
+      "itemType": "book",
+      "publisher": "Longmans, Green and co.",
+      "date": "1936",
+      "title": "The skilled labourer, 1760-1832",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.L.",
+          "lastName": "Hammond",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Hammond",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 103,
+      "itemType": "book",
+      "series": "science * culture",
+      "publisher": "University of Chicago Press",
+      "ISBN": "978-0-226-13948-7",
+      "date": "2006",
+      "callNumber": "05026032",
+      "seriesNumber": "v. 13",
+      "title": "The Intelligibility of Nature: How Science Makes Sense of the World",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "P.",
+          "lastName": "Dear",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "explanation"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 105,
+      "itemType": "conferencePaper",
+      "date": "2009",
+      "title": "Ten Paradoxes",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Andrew",
+          "lastName": "Feenberg",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 107,
+      "itemType": "book",
+      "url": "http://books.google.nl/books?id=GfCINAAACAAJ",
+      "series": "ESSENTIAL WORKS OF MICHEL FOUCAULT",
+      "publisher": "New Press",
+      "ISBN": "978-1-56584-352-3",
+      "date": "1997",
+      "callNumber": "96031819",
+      "title": "Ethics: Subjectivity and Truth",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Foucault",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P.",
+          "lastName": "Rabinow",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Hurley",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 109,
+      "itemType": "journalArticle",
+      "volume": "1",
+      "pages": "213–231",
+      "publicationTitle": "East Asian Science, Technology and Society: An International Journal",
+      "date": "2007",
+      "DOI": "http://dx.doi.org/10.1007/s12280-007-9022-5",
+      "title": "Science in Cultural Borderlands: Methodological Reflections on the Study of Science, European Imperialism, and Cultural Encounter",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Fa",
+          "lastName": "ti Fan",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 110,
+      "itemType": "book",
+      "url": "http://www.iep.utm.edu/wittgens/",
+      "publisher": "Internet Encyclopedia of Philosophy",
+      "date": "August 2004",
+      "title": "Ludwig Wittgenstein",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Duncan J.",
+          "lastName": "Richter",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 111,
+      "itemType": "journalArticle",
+      "url": "http://www.sciencedirect.com/science/article/pii/S0362331999000439",
+      "volume": "36",
+      "issue": "4",
+      "pages": "615 - 621",
+      "publicationTitle": "The Social Science Journal",
+      "ISSN": "0362-3319",
+      "date": "1999",
+      "DOI": "10.1016/S0362-3319(99)00043-9",
+      "title": "Was the truth ever meant to explain much? A critique of Nancy Cartwright",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Michael X",
+          "lastName": "Ashooh",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Paul C.L",
+          "lastName": "Tang",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "explanation"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 113,
+      "itemType": "book",
+      "series": "Routledge philosophy guidebooks",
+      "publisher": "Routledge",
+      "date": "1997",
+      "extra": "bibtex: mcginn1997routledge",
+      "title": "Wittgenstein and the Philosophical investigations",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "McGinn",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 114,
+      "itemType": "bookSection",
+      "publisher": "New York: Columbia University Press",
+      "date": "1969",
+      "callNumber": "EN",
+      "title": "Epistemology Naturalized",
+      "bookTitle": "Ontological Relativity and Other Essays",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "W. V.",
+          "lastName": "Quine",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Ontological Relativity and Other Essays"
+    },
+    {
+      "itemID": 115,
+      "itemType": "book",
+      "place": "London",
+      "publisher": "Routledge",
+      "date": "1959",
+      "extra": "bibtex: popper1959logic",
+      "title": "The Logic of Scientific Discovery",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Karl R.",
+          "lastName": "Popper",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "philosophy",
+        "science"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 116,
+      "itemType": "book",
+      "url": "http://www.gnu.org/philosophy/open-source-misses-the-point.html",
+      "date": "October 2011",
+      "title": "Why Open Source misses the point of Free Software",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Inc.",
+          "lastName": "Free Software Foundation",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 117,
+      "itemType": "journalArticle",
+      "volume": "156",
+      "issue": "3775",
+      "pages": "611–622",
+      "publicationTitle": "Science",
+      "date": "1967",
+      "DOI": "10.1126/science.156.3775.611",
+      "abstractNote": "There is no need to summarize the features of this simplified model, which describes the manner in which modern science was transmitted to the lands beyond Western Europe. The graph of Fig. 1 and the examples drawn from science in various lands should have made them clear. It may be in order, however, to reiterate that there is nothing about the phases of my model that is cosmically or metaphysically necessary. I am satisfied if my attempt will interest others to go beyond my crude analysis and make a systematic investigation of the diffusion of Western science throughout the world.Such an investigation would include a comparative appraisal of the development of science in different national, cultural, and social settings and would mark the beginnings of truly comparative studies in the history and sociology of science. The present lack of comparative studies in these disciplines can be attributed to the widespread belief that science is strictly an international endeavor. In one sense this is true.As Sir Isaac Newton remarked in his Principia (49), \"the descent of stones in Europe and in America\" must both be explained by one set of physical laws. Yet, we cannot ignore the peculiar environment in which members of a national group of scientists are trained and carry on their research.While I do not hold with the Nazi theorists that science is a direct reflection of the racial or national spirit (50), neither do I accept Chekhov's dictum (51) that \"there is no national science just as there is no national multiplication table. . . .\" In emphasizing the international nature of scientific inquiry we have forgotten that science exists in a local social setting. If that setting does not decisively mold the conceptual growth of science, it can at least affect the number and types of individuals who are free to participate in the internal development of science. Perhaps the effect is more profound; only future scholarship can determine the depth of its influence.",
+      "title": "The Spread of Western Science",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "George",
+          "lastName": "Basalla",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 119,
+      "itemType": "book",
+      "url": "http://books.google.nl/books?id=N5I3hNIS_yIC",
+      "publisher": "Harvard University Press",
+      "ISBN": "978-0-674-95401-4",
+      "date": "1982",
+      "callNumber": "81020070",
+      "extra": "bibtex: kripke1982wittgenstein",
+      "title": "Wittgenstein on Rules and Private Language: An Elementary Exposition",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S.A.",
+          "lastName": "Kripke",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 121,
+      "itemType": "book",
+      "series": "Economic history of England",
+      "publisher": "Black",
+      "date": "1934",
+      "title": "The economic history of England: The Age of Mercantilism",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "Lipson",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 122,
+      "itemType": "bookSection",
+      "url": "http://www.gnu.org/philosophy/free-sw.html",
+      "date": "January 2012",
+      "title": "What is free software?",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Inc.",
+          "lastName": "Free Software Foundation",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 123,
+      "itemType": "journalArticle",
+      "url": "http://www.jstor.org/stable/2707166",
+      "rights": "Copyright © 1943 University of Pennsylvania Press",
+      "volume": "4",
+      "issue": "4",
+      "pages": "pp. 400-428",
+      "publicationTitle": "Journal of the History of Ideas",
+      "ISSN": "00225037",
+      "date": "1943",
+      "language": "English",
+      "title": "Galileo and Plato",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Alexandre",
+          "lastName": "Koyré",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 125,
+      "itemType": "book",
+      "publisher": "Stanford University Press",
+      "date": "1998",
+      "title": "Technics and Time: The fault of Epimetheus",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Stiegler",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 126,
+      "itemType": "book",
+      "publisher": "Harvard University Press",
+      "date": "2001",
+      "title": "Justice As Fairness: A Restatement",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Rawls",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "Kelly",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 127,
+      "itemType": "journalArticle",
+      "url": "http://newtongarver.com/?q=node/10",
+      "volume": "38",
+      "pages": "23–34",
+      "publicationTitle": "Philosophic Exchange: Annual Proceedings",
+      "date": "2007",
+      "abstractNote": "In the first part of his career Wittgenstein was a logician of first rank, along with Gottlob Frege and Bertrand Russell. His first book, the 'Tractatus Logico-philosophicus', not only incorporated and deepened the new symbolic logic that was due primarily to Frege and Russell but also developed new tools for the clarification of thought by means of logical analysis. Frege, Russell, and Wittgenstein, along with G. E. Moore, are the pillars of the \"linguistic turn\" in philosophy. Wittgenstein, however, came to disagree with the other three in fundamental ways, and the divergence resulted in (or perhaps consisted in) pushing epistemology into the back seat. In this paper I will largely ignore the first part of Wittgenstein's career in order to concentrate on how his later work contrasts with both \"ordinary language philosophy\" and mainline academic philosophy.",
+      "title": "Wittgenstein's Radical Alternative: How Wittgenstein Completed the Linguistic Turn Replacing Analysis with Grammar As Method Replacing Knowledge with Clarity As Goal.",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Newton",
+          "lastName": "Garver",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 128,
+      "itemType": "bookSection",
+      "url": "http://www.britannica.com/EBchecked/topic/346336/logical-positivism",
+      "date": "2011",
+      "extra": "bibtex: 2011logicalpositivism\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT\nbibtex: zotero-0-NPN8SRMT",
+      "title": "Logical Positivism",
+      "bookTitle": "Encyclopædia Britannica",
+      "creators": [
+
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Encyclopædia Britannica"
+    },
+    {
+      "itemID": 129,
+      "itemType": "book",
+      "place": "Beijing; Cambridge; Farnham; Köln",
+      "publisher": "O.Reilly",
+      "ISBN": "0-596-00287-4",
+      "date": "2002",
+      "abstractNote": "Verlagsinfo (vgl. http://www.oreilly.com/catalog/freedom/): Free as in Freedom interweaves biographical snapshots of GNU project founder Richard Stallman with the political, social and economic history of the free software movement. It examines Stallman.s unique personality and how that personality has been at turns a driving force and a drawback in terms of the movement.s overall success. Free as in Freedom examines one man.s 20-year attempt to codify and communicate the ethics of 1970s era .hacking. culture in such a way that later generations might easily share and build upon the knowledge of their computing forebears. The book documents Stallman.s personal evolution from teenage misfit to prescient adult hacker to political leader and examines how that evolution has shaped the free software movement. Like Alan Greenspan in the financial sector, Richard Stallman has assumed the role of tribal elder within the hacking community, a community that bills itself as anarchic and averse to central leadership or authority. How did this paradox come about? Free as in Freedom provides an answer. It also looks at how the latest twists and turns in the software marketplace have diminished Stallman.s leadership role in some areas while augmenting it in others. Finally, Free as in Freedom examines both Stallman and the free software movement from historical viewpoint. Will future generations see Stallman as a genius or crackpot? The answer to that question depends partly on which side of the free software debate the reader currently stands and partly upon the reader.s own outlook for the future. 100 years from now, when terms such as .computer,. .operating system. and perhaps even .software. itself seem hopelessly quaint, will Richard Stallman.s particular vision of freedom still resonate, or will it have taken its place alongside other utopian concepts on the .ash-heap of history?.",
+      "title": "Free as in freedom. Richard Stallman.s crusade for free software",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Sam",
+          "lastName": "Williams",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "Stallman",
+        "freesoftware",
+        "fsf",
+        "gnu"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 130,
+      "itemType": "book",
+      "series": "Foundations of communication",
+      "publisher": "W. de Gruyter",
+      "date": "1991",
+      "extra": "bibtex: puhl1991meaningscepticism",
+      "title": "Meaning scepticism",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "K.",
+          "lastName": "Puhl",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 131,
+      "itemType": "bookSection",
+      "publisher": "Taylor & Francis",
+      "date": "2005",
+      "extra": "bibtex: habermas2005future",
+      "title": "The Grown and the Made",
+      "bookTitle": "The Future of Human Nature",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jürgen",
+          "lastName": "Habermas",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "The Future of Human Nature"
+    },
+    {
+      "itemID": 133,
+      "itemType": "webpage",
+      "url": "http://www.drdobbs.com/the-ethics-of-free-software/184414581",
+      "date": "2000-03-01",
+      "accessDate": "2013-10-02 13:43:30",
+      "abstractNote": "Software tools and techniques for global software development. Dr. Dobb's features articles, source code, blogs,forums,video tutorials, and audio podcasts, as well as articles from Dr. Dobb's Journal, BYTE.com, C/C++ Users Journal, and Software Development magazine.",
+      "websiteTitle": "Dr. Dobb's",
+      "title": "The Ethics of Free Software",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Bertrand",
+          "lastName": "Meyer",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "orphaned"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Dr. Dobb's"
+    },
+    {
+      "itemID": 136,
+      "itemType": "book",
+      "series": "Economic history of Great Britain",
+      "publisher": "Longmans, Green",
+      "date": "1931",
+      "callNumber": "32002914",
+      "title": "The economic history of England (1760-1860).",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Redford",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 137,
+      "itemType": "book",
+      "series": "Synthese library",
+      "publisher": "Kluwer",
+      "date": "1995",
+      "extra": "bibtex: egidi1995wittgenstein",
+      "title": "Wittgenstein: mind and language",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Egidi",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 138,
+      "itemType": "book",
+      "url": "http://books.google.com/books?hl=en&lr=&id=zw97Rccw7mMC&oi=fnd&pg=PR7&dq=Human+Rights+As+Social+Construction&ots=a6FJ8CR81S&sig=5Z8Q6oJG7YUfZYRKiMZQfwtAXtw",
+      "publisher": "Cambridge University Press",
+      "date": "2012",
+      "extra": "bibtex: gregg2012human",
+      "accessDate": "2013-09-27 07:36:26",
+      "libraryCatalog": "Google Scholar",
+      "title": "Human rights as social construction",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Benjamin",
+          "lastName": "Gregg",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 140,
+      "itemType": "journalArticle",
+      "url": "http://ieet.org/index.php/IEET/more/bostrom20070122",
+      "publicationTitle": "SF Diplomat",
+      "date": "2007",
+      "title": "Nick Bostrom on the future, transhumanism and the end of the world",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "N.",
+          "lastName": "Bostrom",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "McCalmont",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 141,
+      "itemType": "book",
+      "series": "The History of Sexuality, Volume 2",
+      "publisher": "Knopf Doubleday Publishing Group",
+      "date": "1990",
+      "title": "The History of Sexuality: The use of pleasure",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Foucault",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 142,
+      "itemType": "book",
+      "series": "The Blackwell philosopher dictionaries",
+      "publisher": "Blackwell",
+      "date": "1996",
+      "title": "A Wittgenstein dictionary",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "H.J.",
+          "lastName": "Glock",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 143,
+      "itemType": "book",
+      "url": "http://www.gnu.org/software/year2000.html",
+      "date": "October 2011",
+      "title": "GNU Software in the Year 2000",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Inc.",
+          "lastName": "Free Software Foundation",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 144,
+      "itemType": "book",
+      "series": "The History of Sexuality",
+      "publisher": "Knopf Doubleday Publishing Group",
+      "date": "1988",
+      "title": "The History of Sexuality: The care of the self",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Foucault",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 145,
+      "itemType": "journalArticle",
+      "url": "http://humrep.oxfordjournals.org/content/17/1/11.abstract",
+      "volume": "17",
+      "issue": "1",
+      "pages": "11–12",
+      "publicationTitle": "Human Reproduction",
+      "date": "2002",
+      "DOI": "10.1093/humrep/17.1.11",
+      "abstractNote": "We describe our experience with the use of embryo biopsy and fluorescent in-situ hybridization (FISH) in order to sex embryos for the purpose of family balancing in a private IVF clinic in India from April 1999ï¿½April 2001. Embryos were biopsied and analysed on day 3, cultured in sequential media, and then transferred on day 4 or day 5 after morphological selection of the best embryos. From a total of 42 cycles started, we achieved 14 clinical pregnancies and have had nine live births so far with five ongoing pregnancies. This is the first report of the use of preimplantation sex selection for family balancing in India, where couples place a premium on having baby boys, and the social and ethical aspects of the use of this technology in this setting are discussed.",
+      "title": "Preimplantation sex selection for family balancing in India",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Malpani",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Malpani",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Modi",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 146,
+      "itemType": "conferencePaper",
+      "url": "http://www.webcitation.org/query?url=http%3A%2F%2Fwww.wtec.org%2FConvergingTechnologies%2F1%2FNBIC_report.pdf&date=2011-03-04",
+      "date": "June 2009",
+      "title": "Executive Summary",
+      "proceedingsTitle": "Converging Technologies for Improving Human Performance",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Roco",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "W.",
+          "lastName": "Bainbridge",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Converging Technologies for Improving Human Performance"
+    },
+    {
+      "itemID": 147,
+      "itemType": "bookSection",
+      "series": "Death and anti-death series",
+      "publisher": "Ria University Press",
+      "ISBN": "978-0-9743472-2-6",
+      "date": "2005",
+      "title": "Death and Anti-Death, Volume 2: Two Hundred Years After Kant, Fifty Years After Turing",
+      "bookTitle": "Death and Anti-Death, Volume 2: Two Hundred Years After Kant, Fifty Years After Turing",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "N.",
+          "lastName": "Bostrom",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Tandy",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.C.W.",
+          "lastName": "Ettinger",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Death and Anti-Death, Volume 2: Two Hundred Years After Kant, Fifty Years After Turing"
+    },
+    {
+      "itemID": 148,
+      "itemType": "journalArticle",
+      "url": "http://www.people.fas.harvard.edu/ korsgaar/CPR.CMK.Interview.pdf",
+      "volume": "Interviews on Moral and Political Philosophy",
+      "publicationTitle": "Constructions of Practical Reason",
+      "date": "2002",
+      "title": "Internalism and the Sources of Normativity",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "H.",
+          "lastName": "Pauer-Studer",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 149,
+      "itemType": "journalArticle",
+      "volume": "3",
+      "issue": "2",
+      "pages": "133–156",
+      "publicationTitle": "European Journal for Philosophy of Science",
+      "date": "2013",
+      "extra": "bibtex: montano2013beauty",
+      "title": "Beauty in science: a new model of the role of aesthetic evaluations in science",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ulianov",
+          "lastName": "Montano",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "aesthetics",
+        "affection",
+        "emotion",
+        "epistemology",
+        "loveliness",
+        "philosophy of science"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 152,
+      "itemType": "journalArticle",
+      "volume": "2",
+      "pages": "21–38",
+      "publicationTitle": "Review of Metaphysics",
+      "date": "1948",
+      "callNumber": "WTI",
+      "title": "On What There Is",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "W. V.",
+          "lastName": "Quine",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 153,
+      "itemType": "book",
+      "publisher": "Cambridge U.P., London",
+      "ISBN": "052107200",
+      "date": "1969",
+      "title": "The unbound Prometheus; technological change and industrial development in Western Europe from 1750 to the present",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "American Council",
+          "lastName": "of Learned Societies",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "David S",
+          "lastName": "Landes",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 154,
+      "itemType": "journalArticle",
+      "url": "http://www.earlymoderntexts.com/pdf/descprin.pdf",
+      "date": "2008",
+      "extra": "bibtex: bennet2008principles",
+      "title": "Principles of Philosophy",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jonathan",
+          "lastName": "Bennett",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 155,
+      "itemType": "book",
+      "publisher": "De Gruyter",
+      "date": "1965",
+      "title": "Die Stufen des organischen und der Mensch: Einleitung in die philosophische Anthropologie",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "H.",
+          "lastName": "Plessner",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 156,
+      "itemType": "book",
+      "url": "http://www.ram.org/ramblings/philosophy/fmp/free-software-philosophy.html",
+      "date": "February 1999",
+      "title": "Philosophies of Free Software and Intellectual Property",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Watson",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 157,
+      "itemType": "bookSection",
+      "url": "http://plato.stanford.edu/archives/sum2011/entries/intellectual-property/",
+      "edition": "Summer 2011",
+      "date": "2011",
+      "extra": "bibtex: sep-intellectual-property",
+      "accessDate": "2013-10-03 19:57:14",
+      "libraryCatalog": "Stanford Encyclopedia of Philosophy",
+      "abstractNote": "Intellectual property is generally characterized as non-physicalproperty that is the product of original thought. Typically,rights do not surround the abstract non-physical entity; rather,intellectual property rights surround the control of physicalmanifestations or expressions of ideas. Intellectual propertyprotects rights to ideas by protecting rights to produce and controlphysical instantiations of those ideas.",
+      "title": "Intellectual Property",
+      "bookTitle": "The Stanford Encyclopedia of Philosophy",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Adam",
+          "lastName": "Moore",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Edward N.",
+          "lastName": "Zalta",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "Hegel, Georg Wilhelm Friedrich",
+        "Locke, John",
+        "Marx, Karl",
+        "consequentialism",
+        "desert",
+        "freedom: of speech",
+        "property and ownership",
+        "rights"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "The Stanford Encyclopedia of Philosophy"
+    },
+    {
+      "itemID": 159,
+      "itemType": "book",
+      "series": "The Indiana series in the philosophy of technology",
+      "publisher": "Indiana University Press",
+      "ISBN": "978-0-253-32900-4",
+      "date": "1990",
+      "callNumber": "89045472",
+      "extra": "bibtex: ihde1990technology",
+      "title": "Technology and the lifeworld: from garden to earth",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Ihde",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 160,
+      "itemType": "book",
+      "publisher": "University Press of America",
+      "date": "1941",
+      "title": "History as the story of liberty",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Croce",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 161,
+      "itemType": "book",
+      "url": "http://books.google.nl/books?id=yDre-S2rzAsC",
+      "series": "Rethinking the Western Tradition",
+      "publisher": "Yale University Press",
+      "ISBN": "978-0-300-09487-9",
+      "date": "2002",
+      "callNumber": "2002002605",
+      "title": "Groundwork for the Metaphysics of Morals",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "I.",
+          "lastName": "Kant",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.W.",
+          "lastName": "Wood",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.J.B.",
+          "lastName": "Schneewind",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 163,
+      "itemType": "book",
+      "place": "Cambridge New York",
+      "publisher": "Cambridge University Press",
+      "date": "1996",
+      "title": "The sources of normativity",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Christine",
+          "lastName": "Korsgaard",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 164,
+      "itemType": "book",
+      "url": "http://www.iep.utm.edu/kantmeta/#SH8a",
+      "date": "June 2005",
+      "title": "Immanuel Kant: Metaphysics",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "McCormick",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 165,
+      "itemType": "book",
+      "publisher": "Rowman & Littlefield Publishers",
+      "ISBN": "978-0-7425-1489-8",
+      "date": "2004",
+      "callNumber": "2003023573",
+      "extra": "bibtex: kaplan2004readings",
+      "title": "Readings in the philosophy of technology",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "D.M.",
+          "lastName": "Kaplan",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+        "<p>A Phenomenology of Technics</p>"
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 167,
+      "itemType": "book",
+      "publisher": "Allen Lane The Penguin Press, London",
+      "date": "1973",
+      "extra": "bibtex: kenny2006wittgenstein",
+      "title": "Wittgenstein",
+      "numPages": "ix, 240 p.",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Anthony",
+          "lastName": "Kenny",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 168,
+      "itemType": "book",
+      "publisher": "Princeton University Press",
+      "date": "1979",
+      "title": "Philosophy and the mirror of nature",
+      "numPages": "401",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Richard",
+          "lastName": "Rorty",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 169,
+      "itemType": "journalArticle",
+      "url": "http://www.math.hu-berlin.de/~rippel/data/WS09/Wittgenstein_-_%20TLP_-_en.pdf",
+      "publicationTitle": "With a translation by DF Pears and BF McGuinness,(London: Routledge and Kegan Paul, 1961). Philosophical Investigations",
+      "date": "1921",
+      "extra": "bibtex: wittgenstein1921TLP\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN\nbibtex: zotero-0-V8485BXN",
+      "accessDate": "2013-09-27 14:21:01",
+      "libraryCatalog": "Google Scholar",
+      "title": "Tractatus Logico-Philosophicus",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ludwig",
+          "lastName": "Wittgenstein",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "orphaned"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 173,
+      "itemType": "journalArticle",
+      "volume": "4",
+      "issue": "2",
+      "pages": "20–40",
+      "publicationTitle": "Revue Internationale De Philosophie",
+      "date": "1950",
+      "callNumber": "ESO",
+      "title": "Empiricism, Semantics, and Ontology",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Rudolf",
+          "lastName": "Carnap",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+        "<p><strong>Extracted Annotations (27 March 2014 12:44:25)</strong></p>\n<p><em>Some semanticists say that certain expressions <br />�· designate certain entities, and among these designated entities they in­<br />·<br />. elude not only concrete material things but also abstract entities, e.g., <br />properties as designated by predicates and propositions as designated by <br />· sentences.1 Others object strongly to this procedure as violating the basic <br />·principles of empiricism and leading back to a metaphysical ontology of <br />the Platonic kind. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">note on p.21</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"Some s/ma$Qicists say 0ha1; cert^in exp'essions �· designate certain entities, and among these designated entities they in · . elud; not only con.rete mat/(ial +wiFgs but also abstract en6ities, e.@., prop&lt;rt|es aN de igna#ed) b8; Jrid3ca)es and propoN}tio4s as eesignatef b9; 0C s/ntences.1 OtherN \"bjec5; stron@ly to this Krocedure a s violatinr thj basic ·prin8}ples of empirDcism and leadins back t o a metapxysic!l ontHlory of 3heA \\latonik3nd.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">Carnap 1950:21</a>)</p>\n<p><em>To be real in the scientifi c sense means to be an element of the system; . <br />hence this concept cannot be meaningfully applied to the system itself. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">note on p.22</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"T3U be Vea=v 5Bv the scientific AeE Kef means to \\e an1 &amp;lemtnt of 2he9 systemO M henae Qhi )1 cRMce\\w cannot be FeaM:N.,~ABy aOP?5%dn a L n x/e L@C tem' ;}oeA'.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">Carnap 1950:22</a>)</p>\n<p><em> Unfortunately, these philosophers have so far. <br />not given a formulation of their question in terms of the common scientifi c . <br />language. Therefore our judgment must be that they have not succeeded. <br />in giv ing to the external question and t o the possible answers any cognitive <br />content. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">note on p.24</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"U&amp;f+2&lt;E'a&gt;e!H,I t%es eR )^flosowhers ha v e I9Y far. ntt given a for'!l/t5on of t'eir ques?ios in OeH5JY :!Y @/e $o6mon &gt;cix8tific N lanXuage. TherPfore our judg'ent mus@ be3 t%a+ t0sy -]vt not JTcceeded.Y in g* v i# g t o t% e extOrnag que&gt;?ion and t 9 the ICZY/b7ej a?WheSXj an!$coX n i ti v o content.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">Carnap 1950:24</a>)</p>\n<!-- {\"zotfile\":{}} -->",
+        "<p><strong>Extracted Annotations (27 March 2014 12:44:50)</strong></p>\n<p><em>Some semanticists say that certain expressions <br />�· designate certain entities, and among these designated entities they in­<br />·<br />. elude not only concrete material things but also abstract entities, e.g., <br />properties as designated by predicates and propositions as designated by <br />· sentences.1 Others object strongly to this procedure as violating the basic <br />·principles of empiricism and leading back to a metaphysical ontology of <br />the Platonic kind. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">note on p.21</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"Some s/ma$Qicists say 0ha1; cert^in exp'essions �· designate certain entities, and among these designated entities they in · . elud; not only con.rete mat/(ial +wiFgs but also abstract en6ities, e.@., prop&lt;rt|es aN de igna#ed) b8; Jrid3ca)es and propoN}tio4s as eesignatef b9; 0C s/ntences.1 OtherN \"bjec5; stron@ly to this Krocedure a s violatinr thj basic ·prin8}ples of empirDcism and leadins back t o a metapxysic!l ontHlory of 3heA \\latonik3nd.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">Carnap 1950:21</a>)</p>\n<p><em>To be real in the scientifi c sense means to be an element of the system; . <br />hence this concept cannot be meaningfully applied to the system itself. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">note on p.22</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"T3U be Vea=v 5Bv the scientific AeE Kef means to \\e an1 &amp;lemtnt of 2he9 systemO M henae Qhi )1 cRMce\\w cannot be FeaM:N.,~ABy aOP?5%dn a L n x/e L@C tem' ;}oeA'.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">Carnap 1950:22</a>)</p>\n<p><em> Unfortunately, these philosophers have so far. <br />not given a formulation of their question in terms of the common scientifi c . <br />language. Therefore our judgment must be that they have not succeeded. <br />in giv ing to the external question and t o the possible answers any cognitive <br />content. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">note on p.24</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"U&amp;f+2&lt;E'a&gt;e!H,I t%es eR )^flosowhers ha v e I9Y far. ntt given a for'!l/t5on of t'eir ques?ios in OeH5JY :!Y @/e $o6mon &gt;cix8tific N lanXuage. TherPfore our judg'ent mus@ be3 t%a+ t0sy -]vt not JTcceeded.Y in g* v i# g t o t% e extOrnag que&gt;?ion and t 9 the ICZY/b7ej a?WheSXj an!$coX n i ti v o content.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">Carnap 1950:24</a>)</p>\n<!-- {\"zotfile\":{}} -->",
+        "<p><strong>Extracted Annotations (27 March 2014 12:44:51)</strong></p>\n<p><em>Some semanticists say that certain expressions <br />�· designate certain entities, and among these designated entities they in­<br />·<br />. elude not only concrete material things but also abstract entities, e.g., <br />properties as designated by predicates and propositions as designated by <br />· sentences.1 Others object strongly to this procedure as violating the basic <br />·principles of empiricism and leading back to a metaphysical ontology of <br />the Platonic kind. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">note on p.21</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"Some s/ma$Qicists say 0ha1; cert^in exp'essions �· designate certain entities, and among these designated entities they in · . elud; not only con.rete mat/(ial +wiFgs but also abstract en6ities, e.@., prop&lt;rt|es aN de igna#ed) b8; Jrid3ca)es and propoN}tio4s as eesignatef b9; 0C s/ntences.1 OtherN \"bjec5; stron@ly to this Krocedure a s violatinr thj basic ·prin8}ples of empirDcism and leadins back t o a metapxysic!l ontHlory of 3heA \\latonik3nd.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">Carnap 1950:21</a>)</p>\n<p><em>To be real in the scientifi c sense means to be an element of the system; . <br />hence this concept cannot be meaningfully applied to the system itself. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">note on p.22</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"T3U be Vea=v 5Bv the scientific AeE Kef means to \\e an1 &amp;lemtnt of 2he9 systemO M henae Qhi )1 cRMce\\w cannot be FeaM:N.,~ABy aOP?5%dn a L n x/e L@C tem' ;}oeA'.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">Carnap 1950:22</a>)</p>\n<p><em> Unfortunately, these philosophers have so far. <br />not given a formulation of their question in terms of the common scientifi c . <br />language. Therefore our judgment must be that they have not succeeded. <br />in giv ing to the external question and t o the possible answers any cognitive <br />content. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">note on p.24</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"U&amp;f+2&lt;E'a&gt;e!H,I t%es eR )^flosowhers ha v e I9Y far. ntt given a for'!l/t5on of t'eir ques?ios in OeH5JY :!Y @/e $o6mon &gt;cix8tific N lanXuage. TherPfore our judg'ent mus@ be3 t%a+ t0sy -]vt not JTcceeded.Y in g* v i# g t o t% e extOrnag que&gt;?ion and t 9 the ICZY/b7ej a?WheSXj an!$coX n i ti v o content.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">Carnap 1950:24</a>)</p>\n<!-- {\"zotfile\":{}} -->",
+        "<p><strong>Extracted Annotations (vrijdag 14 februari 2014 21:20:26)</strong></p>\n<p><em>Some semanticists say that certain expressions <br />�· designate certain entities, and among these designated entities they in­<br />·<br />. elude not only concrete material things but also abstract entities, e.g., <br />properties as designated by predicates and propositions as designated by <br />· sentences.1 Others object strongly to this procedure as violating the basic <br />·principles of empiricism and leading back to a metaphysical ontology of <br />the Platonic kind. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">note on p.21</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"Some s/ma$Qicists say 0ha1; cert^in exp'essions �· designate certain entities, and among these designated entities they in · . elud; not only con.rete mat/(ial +wiFgs but also abstract en6ities, e.@., prop&lt;rt|es aN de igna#ed) b8; Jrid3ca)es and propoN}tio4s as eesignatef b9; 0C s/ntences.1 OtherN \"bjec5; stron@ly to this Krocedure a s violatinr thj basic ·prin8}ples of empirDcism and leadins back t o a metapxysic!l ontHlory of 3heA \\latonik3nd.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">Carnap 1950:21</a>)</p>\n<p><em>To be real in the scientifi c sense means to be an element of the system; . <br />hence this concept cannot be meaningfully applied to the system itself. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">note on p.22</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"T3U be Vea=v 5Bv the scientific AeE Kef means to \\e an1 &amp;lemtnt of 2he9 systemO M henae Qhi )1 cRMce\\w cannot be FeaM:N.,~ABy aOP?5%dn a L n x/e L@C tem' ;}oeA'.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">Carnap 1950:22</a>)</p>\n<p><em> Unfortunately, these philosophers have so far. <br />not given a formulation of their question in terms of the common scientifi c . <br />language. Therefore our judgment must be that they have not succeeded. <br />in giv ing to the external question and t o the possible answers any cognitive <br />content. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">note on p.24</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"U&amp;f+2&lt;E'a&gt;e!H,I t%es eR )^flosowhers ha v e I9Y far. ntt given a for'!l/t5on of t'eir ques?ios in OeH5JY :!Y @/e $o6mon &gt;cix8tific N lanXuage. TherPfore our judg'ent mus@ be3 t%a+ t0sy -]vt not JTcceeded.Y in g* v i# g t o t% e extOrnag que&gt;?ion and t 9 the ICZY/b7ej a?WheSXj an!$coX n i ti v o content.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">Carnap 1950:24</a>)</p>\n<!-- {\"zotfile\":{}} -->"
+      ],
+      "tags": [
+        "meaning",
+        "metaphysics"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 179,
+      "itemType": "journalArticle",
+      "volume": "19",
+      "issue": "3",
+      "pages": "202–214",
+      "publicationTitle": "Bioethics",
+      "date": "2005",
+      "extra": "bibtex: bostrom2005defense",
+      "title": "In defense of posthuman dignity",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Nick",
+          "lastName": "Bostrom",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "orphaned"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 182,
+      "itemType": "journalArticle",
+      "url": "http://doc.utwente.nl/61021/",
+      "volume": "31",
+      "issue": "1",
+      "pages": "11–26",
+      "publicationTitle": "Human Studies",
+      "date": "October 2008",
+      "abstractNote": "This article analyzes the moral relevance of technological artifacts and its possible role in ethical theory, by taking the postphenomenological approach that has developed around the work of Don Ihde into the domain of ethics. By elaborating a postphenomenological analysis of the mediating role of ultrasound in moral decisions about abortion, the article argues that technologies embody morality and help to constitute moral subjectivity. This technological mediation of the moral subject is subsequently addressed in terms of Michel Foucault?s ethical position, in which ethics is about actively co-shaping one?s moral subjectivity. Integrating Foucauldian ethics and postphenomenology, the article argues that the technological mediation of moral subjectivity should be at the heart of an ethical approach that takes the moral dimensions of technology seriously.",
+      "title": "Obstetric Ultrasound and the Technological Mediation of Morality: A Postphenomenological Analysis",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Peter-Paul",
+          "lastName": "Verbeek",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "Foucault",
+        "ethics of technology",
+        "orphaned",
+        "philosophy of technology",
+        "postphenomenology",
+        "ultrasound"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 184,
+      "itemType": "book",
+      "publisher": "Northwestern University Press",
+      "date": "1980",
+      "title": "The Foundations of Arithmetic: A Logico-Mathematical Enquiry Into the Concept of Number",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "Frege",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.L.",
+          "lastName": "Austin",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 185,
+      "itemType": "journalArticle",
+      "volume": "17",
+      "issue": "2",
+      "pages": "79–98",
+      "publicationTitle": "History and Technology: An International Journal",
+      "date": "2000",
+      "abstractNote": "The European exploration of the Pacific Ocean in the latter half of the eighteenth century is usually presented as part of the Enlightenment's quest for pure knowledge, knowledge which was shared freely in the \"Republic of Letters\". In this essay, however, these expeditions are set against the background of a ferocious struggle between western European states to dominate the world, bringing together national political, commercial, military, and learned institutions, showing them to be more akin to today's \"big science\" than to an activity of free-minded, autonomous, gentlemen. The holistic approach developed to apprehend \"big science\" in today's world is thus used to reexamine scientific cooperation as well as the circulation of men, objects, texts (including maps) and ideas in the politico-economic context of early modern Britain, France and Holland, the relationship between this \"big science\" and eighteenth-century, western European society, and how these shaped European scientific culture and identity. The paper ends with some reflections on the contrast between \"big scientific\" activity in the two periods.",
+      "title": "18th-Century pacific voyages of discovery, \"big science\", and the shaping of an European scientific and technological culture",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Kapil",
+          "lastName": "Raj",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "history of science",
+        "technology"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 187,
+      "itemType": "book",
+      "url": "http://books.google.nl/books?id=KSZDAAAACAAJ",
+      "series": "Religious Traditions of the World",
+      "publisher": "Waveland Press",
+      "date": "1998",
+      "title": "Confucius: The Secular As Sacred",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "H.",
+          "lastName": "Fingarette",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 188,
+      "itemType": "webpage",
+      "url": "http://www.scu.edu/ethics/practicing/decision/framework.html",
+      "title": "A Framework for Thinking Ethically",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "",
+          "lastName": "Markkula Center for Applied Ethics",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 191,
+      "itemType": "book",
+      "publisher": "Oxford University Press",
+      "ISBN": "978-0-19-517957-6",
+      "date": "2006",
+      "libraryCatalog": "Google Books",
+      "language": "en",
+      "abstractNote": "The best-selling first edition of Law 101 provided readers with a vividly written and indispensable portrait of our nation's legal system. Now, in this revised edition, Jay M. Feinman offers an updated survey of American law, spiced with new anecdotes and cases, and incorporating fresh material on topics ranging from the President's war powers, to intellectual property, standard form contracts, and eminent domain.  Here is an exceptionally clear introduction to law, covering the main subjects found in the first year of law school, giving us a basic understanding of how it all works. Readers are introduced to every aspect of the legal system, from constitutional law and the litigation process to tort law, contract law, property law, and criminal law. Feinman illuminates each discussion with many intriguing, outrageous, and infamous cases, from the scalding coffee case that cost McDonald's half a million dollars, to the sensational murder trial in Victorian London that led to the legal definition of insanity, to the epochal decision in Marbury v. Madison that gave the Supreme Court the power to declare state and federal laws unconstitutional. He broadens the reader's legal vocabulary, clarifying the meaning of everything from \"due process\" and \"equal protection\" in constitutional law, to the distinction between \"murder\" and \"manslaughter\" in criminal law. Perhaps most important, we learn that though the law is voluminous and complex, it is accessible to all.  Everyone who wants a better grasp of current legal issues--from students contemplating law school, to journalists covering the legislature or the courts, to fans of Court TV--will find here a wonderful source of information: a complete, clear, and colorful map of the American legal system.   \"An entertaining and informative introduction to the law.... For journalists, those interested in the law, and fans of television law dramas, this book should be required reading.\"--Library Journal",
+      "title": "Law One Hundred and One",
+      "numPages": "379",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jay M.",
+          "lastName": "Feinman",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "Law / Reference"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 193,
+      "itemType": "book",
+      "url": "http://www.un.org/en/documents/udhr/",
+      "date": "December 1948",
+      "abstractNote": "On December 10, 1948 the General Assembly of the United Nations adopted and proclaimed the Universal Declaration of Human Rights the full text of which appears in the following pages. Following this historic act the Assembly called upon all Member countries to publicize the text of the Declaration and \"to cause it to be disseminated, displayed, read and expounded principally in schools and other educational institutions, without distinction based on the political status of countries or territories.\"",
+      "title": "The Universal Declaration of Human Rights",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "United",
+          "lastName": "Nations",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "UDHR"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 194,
+      "itemType": "webpage",
+      "url": "http://www.gnu.org/prep/standards/standards.html",
+      "date": "2011",
+      "title": "GNU Coding Standards",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Inc.",
+          "lastName": "Free Software Foundation",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 196,
+      "itemType": "book",
+      "series": "The International Library of Ethics, Law and Technology",
+      "volume": "2",
+      "publisher": "Springer Netherlands",
+      "date": "2009",
+      "title": "Medical Enhancement and Posthumanity",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "B.",
+          "lastName": "Gordijn",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "R.",
+          "lastName": "Chadwick",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "N.",
+          "lastName": "Bostrom",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 197,
+      "itemType": "journalArticle",
+      "volume": "31",
+      "issue": "1/2",
+      "pages": "457–484",
+      "publicationTitle": "Philosophical Topics",
+      "date": "2003",
+      "abstractNote": "Kant begins the First Section of the Groundwork with a statement that is one of the most memorable in all his writings: “There is nothing it is possible to think of anywhere in the world, or indeed anything at all outside it, that can be held to be good without limitation, excepting only a good will” (Ak 4:393).[i] Due to the textual prominence of this claim, readers of the Groundwork have usually proceeded to read that work, and Kant’s other ethical works as well, on the assumption that the truth of that assertion, and therefore the conception of the good will, both occupy a fundamental place in Kantian ethics. The assumption, however, becomes increasingly hard to sustain as we gain more familiarity with Kant’s ethical writings and better understanding of his ethical theory.[ii] As for the concept of the good will, Kant does avow the intention of “developing” it (Ak 4:397), and he goes on to thematize concepts that he thinks of as related to the good will (the moral worth of an action, acting from duty). But he never provides an explicit account of what he takes a ‘good will’ to be.[iii].",
+      "title": "The Good Will",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Allen",
+          "lastName": "Wood",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 199,
+      "itemType": "journalArticle",
+      "date": "2003",
+      "title": "Why hackers do what they do: Understanding motivation and effort in free/open source software projects",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Karim",
+          "lastName": "Lakhani",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Robert",
+          "lastName": "Wolf",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 201,
+      "itemType": "journalArticle",
+      "url": "http://link.springer.com/article/10.1007/s13347-011-0015-x",
+      "volume": "24",
+      "issue": "3",
+      "pages": "251–268",
+      "publicationTitle": "Philosophy & Technology",
+      "date": "2011",
+      "extra": "bibtex: vallor2011carebots",
+      "accessDate": "2013-09-20 14:18:20",
+      "libraryCatalog": "Google Scholar",
+      "title": "Carebots and caregivers: Sustaining the ethical ideal of care in the twenty-first century",
+      "shortTitle": "Carebots and caregivers",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Shannon",
+          "lastName": "Vallor",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+        "<b>Extracted Annotations (zondag 20 oktober 2013 19:21:08)</b><p>\"The virtues are conventionally understood as dispositional states of character that can be regarded as excellent, insofar as they promote human flourishing.\" (<a href=\"zotero://open-pdf/0_252XGMIH/7\">Vallor 2011:257</a>)</p><p>\"I would like simply to outline two important moral virtues that arguably rely upon caregiving practices for their development: reciprocity and empathy.\" (<a href=\"zotero://open-pdf/0_252XGMIH/7\">Vallor 2011:257</a>)</p><p>\"4.1 Reciprocity\" (<a href=\"zotero://open-pdf/0_252XGMIH/7\">Vallor 2011:257</a>)</p><p>\"4.2 Empathy\" (<a href=\"zotero://open-pdf/0_252XGMIH/8\">Vallor 2011:258</a>)</p><p>\"the integration of emotion and reason in human persons\" (<a href=\"zotero://open-pdf/0_252XGMIH/8\">Vallor 2011:258</a>)</p><p>\"Empathy is an emotive/perceptual capacity to feel with another sentient being, to co-experience, in a significant way, the joys and sufferings of another.\" (<a href=\"zotero://open-pdf/0_252XGMIH/8\">Vallor 2011:258</a>)</p><p>\"For most of us, empathy is a quivering flame constantly vulnerable to being extinguished by apathy or cynicism,\" (<a href=\"zotero://open-pdf/0_252XGMIH/9\">Vallor 2011:259</a>)</p><p>\"Like virtue ethics, care ethics takes its orientation from the goods internal to practices rather than external moral criteria.\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"Rather than holding the virtues themselves to be ethical desiderata, care ethics takes virtue to be merely an outgrowth of the caring relation that is the primary ethical good.\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"“ This caring for self, for the ethical self, can emerge only from a caring for others ” (14)\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"Noddings identifies two central criteria for a genuinely caring commitment — namely, engrossment and motivational displacement (16). Engrossment is an orientation to the reality of the other, as opposed to my own reality.\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"Motivational displacement is the resultant feeling that “ I must do something ” (14),\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"(14), I must act to respond to the other ' s reality, “ to reduce the pain, to fill the need, to actualize the dream ” (14)\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"is also worth noting that on Noddings ' view, caring relations need to be reciprocal if caregivers are going to be sustained.\" (<a href=\"zotero://open-pdf/0_252XGMIH/11\">Vallor 2011:261</a>)</p>"
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 204,
+      "itemType": "book",
+      "url": "http://books.google.nl/books?id=XHNxT1wikPEC",
+      "publisher": "Wiley",
+      "ISBN": "978-1-4443-9571-6",
+      "date": "2011",
+      "extra": "bibtex: vandepoel2011ethicstechnologyengineering",
+      "title": "Ethics, Technology, and Engineering: An Introduction",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "I.",
+          "lastName": "van de Poel",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Royakkers",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 206,
+      "itemType": "conferencePaper",
+      "url": "http://doc.utwente.nl/61025/",
+      "date": "2007",
+      "abstractNote": "This paper analyzes the moral relevance of technological artifacts and its possible role in ethical theory, by taking the postphenomenological approach that has developed around the work of Don Ihde into the domain of ethics. By elaborating a postphenomenological analysis of the mediating role of ultrasound in moral decisions about abortion, the article argues that technologies embody morality, and help to constitute moral subjectivity. This technological mediation of the moral subject is subsequently addressed in terms of Michel Foucault?s ethical position, in which ethics is about actively co?shaping one?s moral subjectivity. Integrating Foucauldian ethics and postphenomenology, the article argues that the technologicalmediation ofmoral subjectivity should be at the heart of an ethical approach that takes the moral dimensions of technology seriously.",
+      "title": "The Technological Mediation of Morality - A Post-Phenomenological Approach to Moral Subjectivity and Moral Objectivity",
+      "proceedingsTitle": "Workshop Moral Agency and Technical Artifacts, NIAS",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Peter-Paul",
+          "lastName": "Verbeek",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Workshop Moral Agency and Technical Artifacts, NIAS"
+    },
+    {
+      "itemID": 208,
+      "itemType": "book",
+      "url": "http://books.google.nl/books?id=oaYwimWy1xkC",
+      "series": "Cambridge Collections Online",
+      "publisher": "Cambridge University Press",
+      "ISBN": "978-0-521-84082-8",
+      "date": "2005",
+      "callNumber": "20055777",
+      "title": "The Cambridge Companion to Foucault",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "Gutting",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 210,
+      "itemType": "bookSection",
+      "url": "http://plato.stanford.edu/archives/win2011/entries/moral-epistemology/",
+      "edition": "Winter 2011",
+      "date": "2011",
+      "title": "Moral Epistemology",
+      "bookTitle": "The Stanford Encyclopedia of Philosophy",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Richmond",
+          "lastName": "Campbell",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Edward N.",
+          "lastName": "Zalta",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "The Stanford Encyclopedia of Philosophy"
+    },
+    {
+      "itemID": 211,
+      "itemType": "book",
+      "title": "Moral Epistemology (Stanford Encyclopedia of Philosophy)",
+      "creators": [
+
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "orphaned"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 213,
+      "itemType": "book",
+      "title": "Groundwork for the Metaphysic of Morals (Bennett, Kant)",
+      "creators": [
+
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "orphaned"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 215,
+      "itemType": "book",
+      "title": "Grounding for the Metaphysics of Morals (Kant)",
+      "creators": [
+
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "orphaned"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 217,
+      "itemType": "book",
+      "title": "Kant's Grounding for the Metaphysics of Morals (UNC Philosophy)",
+      "creators": [
+
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "orphaned"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 219,
+      "itemType": "book",
+      "title": "Groundwork of the Metaphysic of Morals",
+      "creators": [
+
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+        "orphaned"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 221,
+      "itemType": "book",
+      "publisher": "Cambridge University Press",
+      "date": "2010",
+      "title": "An introduction to Kant's moral philosophy",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jennifer K",
+          "lastName": "Uleman",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 224,
+      "itemType": "note",
+      "note": "<html xmlns=\"http://www.w3.org/1999/xhtml\"><div><p><b>BibTeX AUX scan</b></p><p>Missing references:</p><ul><li>carnap:meaning-and-synonymy</li><li>carnap:ontology</li><li>CarnapR:logss</li><li>dowden1979theory</li><li>duhem1991aim</li><li>field1980science</li><li>floridi:gettier</li><li>frege1980foundations</li><li>gettier:jtb</li><li>grice:defense-of-dogma</li><li>iep:carnap</li><li>kant:pure-reason</li><li>mcgrew:architectureofreason</li><li>prie:twod79</li><li>quine:carnap-logical-truth</li><li>quine:epistemology-naturalized</li><li>quine:indispensability</li><li>quine:twodogmas</li><li>quine:what-there-is</li><li>quine:wob</li><li>Quine1960-QUIWO</li><li>Quine1986-QUIPOL-2</li><li>Quine1987-QUIIOT</li><li>Schilpp1963-SCHTPO-38</li><li>searle:social-ontology</li><li>smyth:formsofintuition</li><li>soames2003philosophical</li><li>Vuillemin1979-VUIODA</li></ul></div></html>",
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "creators": [
+
+      ],
+      "notes": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    }
+  ]
+}

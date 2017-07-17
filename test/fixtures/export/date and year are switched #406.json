@@ -1,0 +1,184 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.6.6",
+    "preferences": {
+      "citekeyFormat": "[auth:lower]_[veryshorttitle:lower]_[year]",
+      "skipFields": "",
+      "jabrefGroups": false,
+      "postscript": "",
+      "csquotes": "",
+      "langID": "babel",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false,
+      "preserveBibTeXVariables": false,
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "edition": "2",
+      "publisher": "Prentice Hall",
+      "ISBN": "978-0-13-014400-3",
+      "date": "22.08.2000",
+      "title": "Introduction to Graph Theory",
+      "numPages": "470",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "West",
+          "firstName": "Douglas Brent"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 60,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "west_introduction_"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "place": "Masterthesis, Fakultät Statistik",
+      "publisher": "TU Dortmund",
+      "date": "2012.09.27",
+      "title": "Modellierung niederfrequenter Schwingungen in einem elektrischen Energienetz",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Skubala",
+          "firstName": "Adam"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 50,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "skubala_modellierung_2014"
+    },
+    {
+      "itemType": "journalArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "volume": "115",
+      "issue": "7",
+      "pages": "49 - 68",
+      "publicationTitle": "Electrical Engineering in Japan",
+      "date": "1995.12",
+      "DOI": "10.1002/eej.4391150705",
+      "title": "Development of a new two-input PSS to control low-frequency oscillation in interconnecting power systems and the study of a low-frequency oscillation model",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Michigami",
+          "firstName": "Tsutomu"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 31,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "michigami_development_2014"
+    },
+    {
+      "itemType": "report",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://dx.doi.org/10.17877/DE290R-13190",
+      "place": "Eldorado",
+      "date": "2014.02.11",
+      "institution": "Technische Universität Dortmund",
+      "reportNumber": "2003/32864",
+      "title": "Stability Analysis and Clustering of Electrical Transmission Systems",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Brato",
+          "firstName": "Sebastian"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Surmann",
+          "firstName": "Dirk"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Krey",
+          "firstName": "Sebastian"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Götze",
+          "firstName": "Jürgen"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Ligges",
+          "firstName": "Uwe"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Weihs",
+          "firstName": "Claus"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 10,
+      "publisher": "Technische Universität Dortmund",
+      "number": "2003/32864",
+      "seeAlso": [
+
+      ],
+      "__citekey__": "brato_stability_2014"
+    }
+  ]
+}

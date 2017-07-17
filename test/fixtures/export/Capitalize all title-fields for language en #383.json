@@ -1,0 +1,223 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.6.5",
+    "preferences": {
+      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
+      "skipFields": "timestamp",
+      "jabrefGroups": false,
+      "postscript": "",
+      "csquotes": "",
+      "langID": "babel",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false,
+      "preserveBibTeXVariables": false,
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "language": "en-GB",
+      "title": "A carbocyclic carbene as an efficient catalyst ligand for C–C coupling reactions",
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 323,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "_carbocyclic"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "language": "en-US",
+      "title": "Alkanethiolate gold cluster molecules with core diameters from 1.5 to 5.2 <span class=\"nocase\">nm</span>",
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 324,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "_alkanethiolate"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "language": "en-US",
+      "title": "A stochastic model of TCP Reno congestion avoidance and control",
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 325,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "_stochastic"
+    },
+    {
+      "itemType": "journalArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "language": "en-US",
+      "title": "Effect of immobilization on catalytic characteristics of saturated Pd-N-heterocyclic carbenes in Mizoroki-Heck reactions",
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 326,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "_effect"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "language": "fr-FR",
+      "abstractNote": "in French, so no case conversion, nor protection.",
+      "title": "Estimateur d'un défaut de fonctionnement d'un modulateur en quadrature et étage de modulation l'utilisant",
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 327,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "_estimateur"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "language": "en-US",
+      "title": "High-speed digital-to-RF converter",
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 328,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "_highspeed"
+    },
+    {
+      "itemType": "journalArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "language": "en-GB",
+      "title": "Pleistocene <i><span class=\"nocase\">Homo sapiens</span></i> from Middle Awash, Ethiopia",
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 329,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "_pleistocene"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "abstractNote": "Zotero’s “Language” field empty, so “en-US” is assumed.",
+      "title": "Some remarks on <span class=\"nocase\">’t Hooft’s</span> S-matrix for black holes",
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 330,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "_remarks"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "0.8.7",
+    "preferences": {
+      "attachmentsNoMetadata": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoAbbrev": true,
+      "citekeyFormat": "[authors][shortyear]",
+      "skipFields": "file,abstract"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "Export collections": false
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemID": 6,
+      "itemType": "journalArticle",
+      "url": "http://arxiv.org/abs/1412.2970",
+      "publicationTitle": "arXiv:1412.2970 [math-ph, physics:quant-ph]",
+      "date": "2014-12-09",
+      "extra": "arXiv: 1412.2970",
+      "accessDate": "2015-02-07 13:25:26",
+      "libraryCatalog": "arXiv.org",
+      "abstractNote": "We consider translation invariant gapped quantum spin systems satisfying the Lieb-Robinson bound and containing single particle states in a ground state representation. Following the Haag-Ruelle approach from relativistic quantum field theory, we construct states describing collisions of several particles, and define the corresponding $S$-matrix. We also obtain some general restrictions on the shape of the energy-momentum spectrum. For the purpose of our analysis we adapt the concepts of almost local observables and energy-momentum transfer (or Arveson spectrum) from relativistic QFT to the lattice setting. Our results hold, in particular, in the Ising model in strong transverse magnetic fields.",
+      "title": "Lieb-Robinson bounds, Arveson spectrum and Haag-Ruelle scattering theory for gapped quantum spin systems",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Sven",
+          "lastName": "Bachmann",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Wojciech",
+          "lastName": "Dybalski",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Pieter",
+          "lastName": "Naaijkens",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "attachments": [
+        {
+          "path": "/Users/denizstiegemann/Library/Application Support/Zotero/Profiles/f8xleype.default/zotero/storage/6QUH3QBM/Bachmann et al. - 2014 - Lieb-Robinson bounds, Arveson spectrum and Haag-Ru.pdf",
+          "title": "arXiv:1412.2970 PDF",
+          "mimeType": "application/pdf",
+          "url": "http://www.arxiv.org/pdf/1412.2970.pdf"
+        },
+        {
+          "path": "/Users/denizstiegemann/Library/Application Support/Zotero/Profiles/f8xleype.default/zotero/storage/SSZQ2349/1412.html",
+          "title": "arXiv.org Snapshot",
+          "mimeType": "text/html",
+          "url": "http://arxiv.org/abs/1412.2970"
+        }
+      ],
+      "tags": [
+        "Lieb-Robinson bounds",
+        "Mathematical Physics",
+        "Quantum Physics"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    }
+  ]
+}

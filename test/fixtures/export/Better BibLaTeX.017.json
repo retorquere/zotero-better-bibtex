@@ -1,0 +1,31 @@
+{
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "creators": [
+        {
+          "firstName": "Kendra",
+          "lastName": "Arbesman von Secondname",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        "Vulcanian eruptions",
+        "breadcrust",
+        "plinian"
+      ],
+      "publicationTitle": "Title, with comma",
+      "DOI": "10.1175/1520-0493(1987)115<1606:GARSPP>2.0.CO;2",
+      "title": "The physical: violent volcanology of the 1600 eruption of Huaynaputina, southern Peru",
+      "volume": "62",
+      "date": "2001"
+    }
+  ],
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "citekeyFormat": "[auth:lower][year]"
+    }
+  }
+}

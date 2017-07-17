@@ -1,0 +1,106 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.6.3",
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    },
+    "preferences": {
+      "skipFields": "timestamp",
+      "jabrefGroups": false,
+      "postscript": "",
+      "csquotes": "",
+      "langID": "babel",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false,
+      "preserveBibTeXVariables": false,
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "citekeyFormat": "[title:lower]"
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "place": "Trinidad and Tobago",
+      "publisher": "Miller, Smith and Jones",
+      "extra": "original-publisher-place: Saint Kitts and Nevis\noriginal-publisher: Doe and Company",
+      "title": "Publisher",
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 321,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "_publisher"
+    },
+    {
+      "itemType": "report",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "institution": "Office of Information Management and Communications",
+      "title": "Institution",
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 320,
+      "publisher": "Office of Information Management and Communications",
+      "seeAlso": [
+
+      ],
+      "__citekey__": "_institution"
+    },
+    {
+      "itemType": "thesis",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "university": "University of Saint Kitts and Nevis",
+      "title": "University",
+      "creators": [
+
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 322,
+      "publisher": "University of Saint Kitts and Nevis",
+      "seeAlso": [
+
+      ],
+      "__citekey__": "_university"
+    }
+  ]
+}

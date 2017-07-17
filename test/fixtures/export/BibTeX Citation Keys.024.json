@@ -1,0 +1,108 @@
+{
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "creators": [
+        {
+          "firstName": "Nancy K",
+          "lastName": "Adams",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Shanaka L",
+          "lastName": "DeSilva",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Steven",
+          "lastName": "Self",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Guido",
+          "lastName": "Salas",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Steven",
+          "lastName": "Schubring",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jason L",
+          "lastName": "Permenter",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Kendra",
+          "lastName": "Arbesman",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        "Vulcanian eruptions",
+        "breadcrust",
+        "plinian"
+      ],
+      "publicationTitle": "Bulletin of Volcanology",
+      "pages": "493-518",
+      "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
+      "volume": "62",
+      "date": "2001"
+    },
+    {
+      "itemType": "journalArticle",
+      "creators": [
+        {
+          "firstName": "Nancy K",
+          "lastName": "Adams",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Shanaka L",
+          "lastName": "DeSilva",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Steven",
+          "lastName": "Self",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Guido",
+          "lastName": "Salas",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Steven",
+          "lastName": "Schubring",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jason L",
+          "lastName": "Permenter",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Kendra",
+          "lastName": "Arbesman",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        "Vulcanian eruptions",
+        "breadcrust",
+        "plinian"
+      ],
+      "publicationTitle": "Bulletin of Volcanology",
+      "pages": "493-518",
+      "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
+      "volume": "62",
+      "date": "2001"
+    }
+  ],
+  "config": {
+    "label": "BetterBibTeX JSON",
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
+  }
+}

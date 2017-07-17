@@ -1,0 +1,63 @@
+{
+  "items": [
+    {
+      "itemType": "book",
+      "creators": [
+        {
+          "firstName": "Milton",
+          "lastName": "Abramowitz",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Irene A.",
+          "lastName": "Stegun",
+          "creatorType": "author"
+        }
+      ],
+      "place": "New York",
+      "edition": "ninth Dover printing, tenth GPO printing",
+      "title": "Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables",
+      "publisher": "Dover",
+      "date": "1964",
+      "extra": "bibtex: abramowitz+stegun",
+      "itemID": 0
+    },
+    {
+      "itemType": "book",
+      "creators": [
+        {
+          "firstName": "Joe",
+          "lastName": "Torre",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Tom",
+          "lastName": "Verducci",
+          "creatorType": "author"
+        }
+      ],
+      "ISBN": "0-385-52740-3",
+      "publisher": "Doubleday",
+      "title": "The Yankee Years",
+      "date": "2008",
+      "extra": "bibtex: Torre2008",
+      "itemID": 1
+    }
+  ],
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON"
+  },
+  "collections": [
+    {
+      "name": "Better BibTeX.002",
+      "collections": [
+
+      ],
+      "items": [
+        0,
+        1
+      ]
+    }
+  ]
+}

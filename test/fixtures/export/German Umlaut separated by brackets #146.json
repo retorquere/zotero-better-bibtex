@@ -1,0 +1,64 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "0.7.11",
+    "preferences": {
+      "citekeyFormat": "[auth][year]",
+      "skipFields": "keywords,abstract,file",
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/ieee"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "Export collections": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemID": 8,
+      "itemType": "book",
+      "place": "Berlin; Frankfurt am Main",
+      "publisher": "VDE-Verl. ; Verl.- und Wirtschaftsges. der Elektrizitätswerke",
+      "ISBN": "3800721414  9783800721412  3802204697  9783802204692",
+      "date": "1995",
+      "libraryCatalog": "Open WorldCat",
+      "language": "German",
+      "title": "Planung öffentlicher Elektrizitätsverteilungs-Systeme",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Wolfgang",
+          "lastName": "Kaufmann",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+        "<p>\"Der Gleichzeitigkeitsgrad g (n) der Spitzenlastanteile Ps von Wohnungen wurde<br />aus Messungen statistisch ermittelt [2.3]. Eine gute Näherung für die Praxis<br />ist die Gleichung (2.5) :\" (S. 2.3)</p>\n<p>Keine Notwendigkeit, in ihrem Grundlegendem Charakter völlig verschiedenartige Belastungen (PV, Wärmepumpe) in dieses Schema zu pressen.</p>"
+      ],
+      "attachments": [
+        {
+          "path": "/home/paul/.zotero/zotero/mkdppg69.default/zotero/storage/ABWG6PHI/KAUFMANN PLANUNG OFFENTLICHER ELEKTRIZITATSVERTEILUNGSSYSTEME.pdf",
+          "title": "KAUFMANN PLANUNG OFFENTLICHER ELEKTRIZITATSVERTEILUNGSSYSTEME.pdf",
+          "mimeType": "application/pdf",
+          "url": ""
+        }
+      ],
+      "tags": [
+        "Gleichzeitigkeitsfaktor",
+        "Niederspannung",
+        "Verteilnetz"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    }
+  ]
+}

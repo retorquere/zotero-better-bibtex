@@ -1,0 +1,140 @@
+{
+  "items": [
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "01e"
+        }
+      ],
+      "extra": "bibtex: 1e",
+      "itemType": "journalArticle",
+      "title": "Blah <i>emph</i> and “enquote”."
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "01b"
+        }
+      ],
+      "extra": "bibtex: 1b",
+      "itemType": "journalArticle",
+      "title": "Blah <i>mkbibemph</i> and “mkbibquote”."
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "02e"
+        }
+      ],
+      "extra": "bibtex: 2e",
+      "itemType": "book",
+      "title": "Blah <i>emph</i> and “enquote”."
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "02b"
+        }
+      ],
+      "extra": "bibtex: 2b",
+      "itemType": "book",
+      "title": "Blah <i>mkbibemph</i> and “mkbibquote”."
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "David Christopher",
+          "lastName": "Bennett"
+        }
+      ],
+      "date": "2003",
+      "extra": "bibtex: Bennett2003",
+      "itemType": "thesis",
+      "publisher": "University of London",
+      "thesisType": "Ph.D.",
+      "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
+      "type": "Ph.D.",
+      "university": "University of London"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Glen",
+          "lastName": "Cooper"
+        }
+      ],
+      "date": "2013",
+      "extra": "bibtex: Cooper2013 \nbibtex[crossref=Classen2013]",
+      "itemType": "bookSection",
+      "pages": "263-87",
+      "title": "Byzantium between East and West: Competing Hellenisms in the <i>Alexiad</i> of Anna Komnene and her Contemporaries"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Paul",
+          "lastName": "Correns"
+        }
+      ],
+      "date": "1891",
+      "extra": "bibtex: Correns1891",
+      "itemType": "journalArticle",
+      "pages": "1-11",
+      "publicationTitle": "Beiträge zur Geschichte der Philosophie des Mittelalters",
+      "title": "Die dem Boethius fälschlich zugeschriebene Abhandlung des Dominicus Gundisalvi 'De unitate'",
+      "volume": "1"
+    },
+    {
+      "bookTitle": "Encyclopedia Iranica",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Hamid",
+          "lastName": "Algar"
+        }
+      ],
+      "date": "1985",
+      "extra": "bibtex: Algar1985",
+      "itemType": "bookSection",
+      "pages": "172-4",
+      "publicationTitle": "Encyclopedia Iranica",
+      "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
+      "volume": "4"
+    },
+    {
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Anne van",
+          "lastName": "Arsdall"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Timothy",
+          "lastName": "Graham"
+        }
+      ],
+      "date": "2012",
+      "extra": "bibtex: Arsdall2012",
+      "itemType": "book",
+      "place": "Burlington, VT",
+      "publisher": "Ashgate",
+      "title": "Herbs and Healers from the Ancient Mediterranean through the Medieval West: Essays in Honor of John M. Riddle"
+    }
+  ],
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON"
+  }
+}

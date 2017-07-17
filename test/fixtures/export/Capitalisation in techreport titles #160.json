@@ -1,0 +1,69 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "0.7.32",
+    "preferences": {
+      "attachmentsNoMetadata": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoAbbrev": true,
+      "citekeyFormat": "[auth]_[year]",
+      "DOIandURL": "doi",
+      "rawImports": false
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "Export collections": false
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemID": 136,
+      "itemType": "report",
+      "url": "http://www.dfvf.dk/Files/Filer/Zoonosecentret/Publikationer/Salinpork/SALINPORK_final_report.pdf",
+      "date": "2000",
+      "institution": "Royal Veterinary and Agricultural University, Department of Animal Health and Animal Science, Division of Ethology and Health",
+      "title": "<i>Salmonella</i> in Pork (SALINPORK): Pre-harvest and Harvest Control Options Based on Epidemiologic, Diagnostic and Economic Research: Final Report",
+      "shortTitle": "<i>Salmonella</i> in Pork (SALINPORK): Pre-harvest and Harvest Control Options Based on Epidemiologic, Diagnostic and Economic Research: Final Report",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Hald",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.M.A.L.F.",
+          "lastName": "Wong",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "attachments": [
+        {
+          "path": "C:\\UserData\\ZoteroDatabase\\storage\\8BTMWQHX\\SALINPORK_final_report.pdf",
+          "title": "SALINPORK_final_report.pdf",
+          "mimeType": "application/pdf",
+          "url": ""
+        }
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publisher": "Royal Veterinary and Agricultural University, Department of Animal Health and Animal Science, Division of Ethology and Health"
+    }
+  ]
+}

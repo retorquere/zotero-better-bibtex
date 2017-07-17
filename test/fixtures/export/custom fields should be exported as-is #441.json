@@ -1,0 +1,106 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.6.31-travis-2383",
+    "preferences": {
+      "asciiBibLaTeX": true,
+      "asciiBibTeX": true,
+      "attachmentsNoMetadata": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoAbbrev": true,
+      "autoExport": "on-change",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "confirmCacheResetSize": 1000,
+      "caching": true,
+      "citeCommand": "cite",
+      "citekeyFormat": "[auth][year]",
+      "citekeyFold": true,
+      "debug": true,
+      "DOIandURL": "both",
+      "csquotes": "",
+      "keyConflictPolicy": "keep",
+      "langID": "babel",
+      "pinCitekeys": "manual",
+      "preserveBibTeXVariables": false,
+      "rawImports": false,
+      "scanCitekeys": false,
+      "showCitekeys": true,
+      "showItemIDs": false,
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "tests": "",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "jabrefGroups": false,
+      "defaultDateParserLocale": "en-GB"
+    },
+    "options": {
+      "exportPath": "/home/emile/zotero/better-bibtex",
+      "exportFilename": "Exported Items.json",
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "tags": [
+        "Air entrainment",
+        "Cavity subpressure",
+        "Civil engineering",
+        "High speed jets",
+        "Jet length",
+        "Jets",
+        "Pressure effects",
+        "Scale effect",
+        "Spillway aerators",
+        "Spillways",
+        "Structural design",
+        "Water aeration",
+        "aerator",
+        "jet flow",
+        "spillway"
+      ],
+      "relations": {
+      },
+      "volume": "29",
+      "issue": "6",
+      "pages": "885-898",
+      "publicationTitle": "Canadian Journal of Civil Engineering",
+      "ISSN": "03151468 (ISSN)",
+      "date": "2002",
+      "extra": "bibtex[related=key_2;relatedtype=bytranslator]",
+      "abstractNote": "The characteristics of high-speed air-entrained jet flow over a spillway aerator were investigated using experimental data. Three different ramp designs (as well as the case of no ramp) were tested in a channel where the bed slope was adjusted to 0, 0.17, and 0.57, respectively. The effects of aerator geometry and flow condition on the air-entrainment process within the water jet and on the pressure fluctuations in the impact region are the main focus of the investigation. An extensive data analysis was performed for the data obtained from this study and from a similar laboratory study conducted by another investigator. Experimental relations were derived for nondimensional parameters of jet length, aerator cavity subpressure number, and aeration rates through the lower and upper nappes of the water jet. Scale effects for lower nappe aeration and aerator cavity subpressure number were considered and a good correlation was determined with prototype aerator measurements of Emborcaçao, Foz do Areia, and Keban dams for lower nappe aeration and Guri Dam for aerator cavity subpressure numbers. An aerator without a ramp may be subjected to excessive pressure fluctuations at the impact region due to insufficient air entrainment.",
+      "title": "High-speed jet flows over spillway aerators",
+      "shortTitle": "High-speed jet flows over spillway aerators",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Kökpinar",
+          "firstName": "Mehmet Ali"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Göğüş",
+          "firstName": "Mustafa"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 9,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "Kokpinar2002"
+    }
+  ]
+}

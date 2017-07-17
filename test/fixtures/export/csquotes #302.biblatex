@@ -1,0 +1,28 @@
+
+@article{tusseau_critique_2009,
+  author = {Tusseau, Guillaume},
+  date = {2009},
+  journaltitle = {Revue française de droit administratif},
+  langid = {french},
+  number = {4},
+  pages = {641--656},
+  shortjournal = {RFDA},
+  shorttitle = {Critique d'une métanotion fonctionnelle},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Critique d'une métanotion fonctionnelle. La notion (trop) fonctionnelle de \mkbibquote{notion fonctionnelle}}
+}
+
+@article{searle_how_1964,
+  author = {Searle, John R.},
+  date = {1964},
+  doi = {10.2307/2183201},
+  issn = {00318108},
+  journaltitle = {The Philosophical Review},
+  langid = {english},
+  number = {1},
+  pages = {43--58},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {How to Derive "{{Ought}}" from "{{Is}}"},
+  volume = {73}
+}
+

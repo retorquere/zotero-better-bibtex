@@ -1,0 +1,109 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.5.11",
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    },
+    "preferences": {
+      "skipFields": "",
+      "postscript": "",
+      "csquotes": "",
+      "langID": "babel",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false,
+      "preserveBibTeXVariables": false,
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "Oxford classical texts CSL-VAR",
+      "volume": "4",
+      "place": "Oxford",
+      "publisher": "Clarendon Press",
+      "date": "1902",
+      "extra": "{:volume-title: Clitophon, Republic, Timaeus, Critias}",
+      "language": "en-GB",
+      "title": "Opera",
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Plato"
+        },
+        {
+          "creatorType": "editor",
+          "lastName": "Burnet",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 276,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "plato_opera_1902"
+    },
+    {
+      "itemType": "bookSection",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "series": "Oxford classical texts",
+      "volume": "4",
+      "place": "Oxford",
+      "publisher": "Clarendon Press",
+      "pages": "327-621",
+      "date": "1901",
+      "extra": "volume-title: Clitophon, Republic, Timaeus, Critias",
+      "language": "en-GB",
+      "title": "Republic",
+      "bookTitle": "Opera",
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Plato"
+        },
+        {
+          "creatorType": "editor",
+          "lastName": "Burnet",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 277,
+      "publicationTitle": "Opera",
+      "seeAlso": [
+
+      ],
+      "__citekey__": "plato_republic_1902"
+    }
+  ]
+}

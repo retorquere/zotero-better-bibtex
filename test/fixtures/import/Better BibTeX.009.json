@@ -1,0 +1,211 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "0.8.40",
+    "preferences": {
+      "citekeyFormat": "[auth][year]",
+      "skipFields": "",
+      "langID": "babel",
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "",
+      "pinCitekeys": "manual",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false
+    },
+    "options": {
+      "exportFileData": false
+    }
+  },
+  "collections": [
+    {
+      "name": "Better BibTeX.009",
+      "collections": [
+
+      ],
+      "items": [
+        1,
+        3,
+        6
+      ]
+    }
+  ],
+  "items": [
+    {
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "volume": "62",
+      "pages": "493-518",
+      "publicationTitle": "Bulletin of Volcanology",
+      "date": "2001",
+      "extra": "bibtex: Adams2001",
+      "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Nancy K",
+          "lastName": "Adams",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Shanaka L",
+          "lastName": "DeSilva",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven",
+          "lastName": "Self",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Guido",
+          "lastName": "Salas",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven",
+          "lastName": "Schubring",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jason L",
+          "lastName": "Permenter",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Kendra",
+          "lastName": "Arbesman",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "attachments": [
+        {
+          "path": "/tmp/webdriver-rb-profilecopy20150416-23495-crcjql/zotero/storage/23F72225/Adams_Huaynaputina.pdf",
+          "title": "Attachment",
+          "mimeType": "application/pdf",
+          "url": ""
+        }
+      ],
+      "tags": [
+        "Vulcanian eruptions",
+        "breadcrust",
+        "plinian"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 3,
+      "itemType": "journalArticle",
+      "volume": "62",
+      "pages": "493-518",
+      "publicationTitle": "Bulletin of Volcanology",
+      "date": "2001",
+      "extra": "bibtex: Adams2002",
+      "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Nancy K",
+          "lastName": "Adams",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Shanaka L",
+          "lastName": "DeSilva",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven",
+          "lastName": "Self",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Guido",
+          "lastName": "Salas",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven",
+          "lastName": "Schubring",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jason L",
+          "lastName": "Permenter",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Kendra",
+          "lastName": "Arbesman",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "attachments": [
+        {
+          "path": "/tmp/webdriver-rb-profilecopy20150416-23495-crcjql/zotero/storage/H2DWW7E7/Adams_Huaynaputina.pdf",
+          "title": "Attachment",
+          "mimeType": "application/pdf",
+          "url": ""
+        }
+      ],
+      "tags": [
+        "Vulcanian eruptions",
+        "breadcrust",
+        "plinian"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemID": 6,
+      "itemType": "note",
+      "note": "<html xmlns=\"http://www.w3.org/1999/xhtml\"><div><p><b>Better BibTeX could not import</b></p> <pre>@misc{emptyreference,\n  \n}\n</pre></div></html>",
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "creators": [
+
+      ],
+      "notes": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "attachments": [
+
+      ]
+    }
+  ]
+}

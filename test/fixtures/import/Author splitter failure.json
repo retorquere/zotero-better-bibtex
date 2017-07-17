@@ -1,0 +1,81 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "url": "",
+      "rights": "",
+      "series": "",
+      "volume": "93",
+      "issue": "",
+      "pages": "613-620",
+      "publicationTitle": "Physica Status Solidi (a)",
+      "ISSN": "",
+      "date": "1986",
+      "callNumber": "",
+      "archiveLocation": "",
+      "extra": "bibtex: Abu-Zeid_1986",
+      "journalAbbreviation": "",
+      "DOI": "10.1002/pssa.2210930226",
+      "accessDate": "",
+      "seriesTitle": "",
+      "seriesText": "",
+      "libraryCatalog": "",
+      "language": "",
+      "abstractNote": "",
+      "title": "Determination of the Thickness and Refractive Index of Cu<sub>2</sub>O Thin Film Using Thermal and Optical Interferometry",
+      "shortTitle": "",
+      "archive": "",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M. E.",
+          "lastName": "Abu-Zeid",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A. E.",
+          "lastName": "Rakhshani",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A. A.",
+          "lastName": "Al-Jassar",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Y. A.",
+          "lastName": "Youssef",
+          "fieldMode": ""
+        }
+      ],
+      "related": [
+
+      ],
+      "itemID": 0
+    }
+  ],
+  "collections": [
+    {
+      "name": "Author splitter failure",
+      "collections": [
+
+      ],
+      "items": [
+        0
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "title": "non-breaking space: ; accented characters: ñ and ñ; tilde in URL: http://example.com/~user",
+      "extra": "bibtex: test-ticket1661"
+    }
+  ],
+  "config": {
+    "label": "BetterBibTeX JSON",
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db"
+  }
+}

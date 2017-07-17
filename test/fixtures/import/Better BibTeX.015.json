@@ -1,0 +1,50 @@
+{
+  "items": [
+    {
+      "itemType": "bookSection",
+      "publisher": "John Wiley & Sons",
+      "pages": "125-143",
+      "date": "2007",
+      "extra": "bibtex: robinson2007theoriesglobalization \nbibtex[collaborator=Ritzer, George]",
+      "title": "Theories of globalization",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "William I",
+          "lastName": "Robinson"
+        }
+      ],
+      "notes": [
+        "<p>Extracted Annotations (zondag 17 november 2013 15:45:35) &quot;What is the relationship between globalization and the nation-state? Is the nation-state being undermined?&quot; (Robinson 2007:127) Relatedly, to what extent is the relationship between social structure and territoriality being redefined by globalization? Is there a deterritorialization of social relations under globalization? What is the relationship between the local and the global? How are space and time being reconfigured? (note on p.127) &quot;Relatedly, to what extent is the relationship between social structure and territoriality being redefined by globalization? Is there a deterritorialization of social&quot; (Robinson 2007:127) &quot;relations under globalization? What is the relationship between the local and the global? How are space and time being reconfigured?&quot; (Robinson 2007:128) &quot;THE NETWORK SOCIETY Manuel Castells&apos; groundbreaking trilogy, The Rise of the Network Society (1996, 1997, 1998), exemplifies a &apos;technologistic&apos; approach to globalization&quot; (Robinson 2007:132) &quot;&apos;communication decisively shapes culture because we do not see . . . reality as it &apos;is&apos; but as our languages are&apos;. He adds, &apos;we are not living in a global village, but in customized cottages, globally produced and locally distributed&apos; (1996: 370).&quot; (Robinson 2007:133)</p>"
+      ],
+      "attachments": [
+        {
+          "title": "Robinson_2007_Theories of globalization.pdf",
+          "mimeType": "application/pdf",
+          "path": "file:///C:/Users/emile/AppData/Roaming/Mozilla/Firefox/Profiles/0x93cdp7.default/zotero/storage/F64PVIN4/Robinson_2007_Theories of globalization.pdf"
+        }
+      ],
+      "tags": [
+        "orphaned"
+      ],
+      "publicationTitle": "The Blackwell companion to globalization",
+      "bookTitle": "The Blackwell companion to globalization",
+      "itemID": 0
+    }
+  ],
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON"
+  },
+  "collections": [
+    {
+      "name": "Better BibTeX.015",
+      "collections": [
+
+      ],
+      "items": [
+        0
+      ]
+    }
+  ]
+}

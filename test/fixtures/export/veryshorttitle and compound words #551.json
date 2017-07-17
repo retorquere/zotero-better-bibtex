@@ -1,0 +1,254 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.6.75",
+    "preferences": {
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "attachmentsNoMetadata": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/pnas",
+      "autoAbbrev": false,
+      "autoExport": "idle",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "cacheReset": 0,
+      "confirmCacheResetSize": 1000,
+      "caching": true,
+      "citeCommand": "cite",
+      "citekeyFormat": "[auth:lower]_[veryshorttitle:lower:fold]_[year]",
+      "citekeyFold": true,
+      "debug": false,
+      "DOIandURL": "both",
+      "bibtexURL": "off",
+      "csquotes": "",
+      "keyConflictPolicy": "keep",
+      "langID": "babel",
+      "pinCitekeys": "manual",
+      "preserveBibTeXVariables": false,
+      "rawImports": false,
+      "scanCitekeys": false,
+      "showCitekeys": true,
+      "showItemIDs": false,
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "tests": "",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "jabrefGroups": false,
+      "defaultDateParserLocale": "",
+      "parseParticles": true,
+      "titleCaseLowerCase": "about above across afore after against along alongside amid amidst among amongst anenst apropos apud around as aside astride at athwart atop barring before behind below beneath beside besides between beyond but by circa despite down during except for forenenst from given in inside into lest like modulo near next notwithstanding of off on onto out over per plus pro qua sans since than through thru throughout thruout till to toward towards under underneath until unto up upon versus vs. v. vs v via vis-à-vis with within without according to ahead of apart from as for as of as per as regards aside from back to because of close to due to except for far from inside of instead of near to next to on to out from out of outside of prior to pursuant to rather than regardless of such as that of up to where as or yet so and nor a an the de d' von van c et ca thru according ahead apart regards back because close due far instead outside prior pursuant rather regardless such their where",
+      "quickCopyMode": "latex",
+      "jurismPreferredLanguage": "zh-alalc97",
+      "ZotFile": true
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://rspb.royalsocietypublishing.org/content/276/1655/355",
+      "volume": "276",
+      "issue": "1655",
+      "pages": "355-360",
+      "publicationTitle": "Proceedings of the Royal Society B: Biological Sciences",
+      "ISSN": "0962-8452, 1471-2954",
+      "date": "01/22/2009",
+      "extra": "PMID: 18826935",
+      "journalAbbreviation": "Proc. R. Soc. B",
+      "DOI": "10.1098/rspb.2008.1060",
+      "accessDate": "2014-11-07 09:51:46",
+      "libraryCatalog": "rspb.royalsocietypublishing.org",
+      "language": "en",
+      "abstractNote": "A distinctive feature of human behaviour is the widespread occurrence of cooperation among unrelated individuals. Explaining the maintenance of costly within-group cooperation is a challenge because the incentive to free ride on the efforts of other group members is expected to lead to decay of cooperation. However, the costs of cooperation can be diminished or overcome when there is competition at a higher level of organizational hierarchy. Here we show that competition between groups resolves the paradigmatic ‘public goods’ social dilemma and increases within-group cooperation and overall productivity. Further, group competition intensifies the moral emotions of anger and guilt associated with violations of the cooperative norm. The results suggest an important role for group conflict in the evolution of human cooperation and moral emotions.",
+      "title": "Between-group competition and human cooperation",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Puurtinen",
+          "firstName": "Mikael"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Mappes",
+          "firstName": "Tapio"
+        }
+      ],
+      "attachments": [
+        {
+          "path": "/Users/McKarlo/Academia/Papers/Puurtinen, Mappes 2009 Between-group competition and human cooperation.pdf",
+          "title": "Puurtinen, Mappes 2009 Between-group competition and human cooperation.pdf",
+          "mimeType": "application/pdf"
+        },
+        {
+          "title": "Puurtinen, Mappes 2009 Game instructions.doc",
+          "mimeType": "application/msword"
+        }
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2688,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "puurtinen_group_1988"
+    },
+    {
+      "itemType": "bookSection",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "place": "Bruxelles",
+      "publisher": "De Boeck",
+      "ISBN": "2-8041-4660-X 978-2-8041-4660-3",
+      "date": "2003",
+      "libraryCatalog": "Open WorldCat",
+      "language": "English",
+      "title": "The co-evolution of love and hate",
+      "bookTitle": "Cultural diversity versus economic solidarity: proceedings of the Seventh Francqui Colloquium, Brussels, 28 February-1 March 2003",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "lastName": "Parijs",
+          "firstName": "Philippe van"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Bowles",
+          "firstName": "Samuel"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Choi",
+          "firstName": "Jung-Kyoo"
+        }
+      ],
+      "attachments": [
+        {
+          "path": "/Users/McKarlo/Academia/Books/Parijs 2003 Cultural Diversity versus Economic Solidarity.pdf",
+          "title": "Parijs 2003 Cultural Diversity versus Economic Solidarity.pdf",
+          "mimeType": "application/pdf"
+        }
+      ],
+      "notes": [
+
+      ],
+      "itemID": 360,
+      "publicationTitle": "Cultural diversity versus economic solidarity: proceedings of the Seventh Francqui Colloquium, Brussels, 28 February-1 March 2003",
+      "seeAlso": [
+
+      ],
+      "__citekey__": "bowles_co_1988"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "place": "Boston, MA",
+      "publisher": "Ginn",
+      "date": "1906",
+      "libraryCatalog": "Open WorldCat",
+      "language": "English",
+      "title": "Folkways: a study of the social importance of usages, manners, customs, mores, and morals",
+      "shortTitle": "Folkways",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Sumner",
+          "firstName": "William Graham"
+        }
+      ],
+      "attachments": [
+        {
+          "path": "/Users/McKarlo/Academia/Books/Sumner 1906 Folkways.pdf",
+          "title": "Sumner 1906 Folkways.pdf",
+          "mimeType": "application/pdf"
+        }
+      ],
+      "notes": [
+
+      ],
+      "itemID": 1730,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "sumner_folkways:_1906"
+    },
+    {
+      "itemType": "journalArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://pss.sagepub.com/content/early/2013/11/08/0956797613493444",
+      "volume": "25",
+      "issue": "1",
+      "pages": "47-57",
+      "publicationTitle": "Psychological Science",
+      "ISSN": "0956-7976, 1467-9280",
+      "date": "2014",
+      "extra": "PMID: 24220626",
+      "journalAbbreviation": "Psychological Science",
+      "DOI": "10.1177/0956797613493444",
+      "accessDate": "2014-01-08 13:28:09",
+      "libraryCatalog": "pss.sagepub.com",
+      "language": "en",
+      "abstractNote": "In suggesting that new nations often coalesce in the decades following war, historians have posed an important psychological question: Does the experience of war generate an enduring elevation in people’s egalitarian motivations toward their in-group? We administered social-choice tasks to more than 1,000 children and adults differentially affected by wars in the Republic of Georgia and Sierra Leone. We found that greater exposure to war created a lasting increase in people’s egalitarian motivations toward their in-group, but not their out-groups, during a developmental window starting in middle childhood (around 7 years of age) and ending in early adulthood (around 20 years of age). Outside this window, war had no measurable impact on social motivations in young children and had only muted effects on the motivations of older adults. These “war effects” are broadly consistent with predictions from evolutionary approaches that emphasize the importance of group cooperation in defending against external threats, though they also highlight key areas in need of greater theoretical development.",
+      "title": "War’s Enduring Effects on the Development of Egalitarian Motivations and In-Group Biases",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Bauer",
+          "firstName": "Michal"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Cassar",
+          "firstName": "Alessandra"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Chytilová",
+          "firstName": "Julie"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Henrich",
+          "firstName": "Joseph"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 1983,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "bauer_wars_2014"
+    }
+  ],
+  "cache": {
+  }
+}

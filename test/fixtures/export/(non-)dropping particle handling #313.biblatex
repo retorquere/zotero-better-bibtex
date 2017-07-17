@@ -1,0 +1,414 @@
+
+@article{abbot3,
+  author = {abbé d' Aubignac, François Hédelin},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {{{(abbé d' Aubignac) (François Hédelin)}}}
+}
+
+@article{abbot1,
+  author = {Aubignac, abbé d', François Hédelin},
+  note = {relies on paricleParser fallback detection},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {{{(Aubignac) (François Hédelin, abbé d')}}}
+}
+
+@book{fixedkey,
+  author = {von Humboldt, Alexander and Gooding, Jr., Cuba and de La Fontaine, Jean and von Wright, Georg Henrik Auto and {von Wright}, Georg Henrik Explicit},
+  date = {1963},
+  isbn = {0-7100-3616-7},
+  langid = {anglais},
+  location = {{Londres}},
+  options = {useprefix=true},
+  pagetotal = {xviii+214},
+  publisher = {{Routledge \& Kegan Paul}},
+  series = {International Library of Philosophy and Scientific Method},
+  shorttitle = {Norm and Action},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Norm and Action. A Logical Enquiry}
+}
+
+@collection{almeida_reading_2013,
+  date = {2013},
+  editor = {d' Almeida, Luís and Edwards, James and Dolcetti, Andrea},
+  isbn = {978-1-84946-324-9},
+  langid = {english},
+  location = {{Oxford}},
+  pagetotal = {vi+309},
+  publisher = {{Hart Publishing}},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Reading {{HLA Hart}}'s: {{{\emph{The Concept}}}}{\emph{ of }}{{{\emph{Law}}}}}
+}
+
+@book{bennett_citations_2013,
+  author = {Bennett, Jr., Frank G.},
+  date = {2013},
+  isbn = {978-1-4793-4771-1},
+  location = {{Lexington Kentucky}},
+  pagetotal = {137},
+  publisher = {{CreateSpace Independent Publishing Platform}},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Citations, {{Out}} of the {{Box}}}
+}
+
+@book{king_have_1968,
+  author = {King, Jr., Martin Luther},
+  date = {1968},
+  location = {{New York}},
+  pagetotal = {154},
+  publisher = {{Grosset \& Dunlap}},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {"{{I}} Have a Dream" : The Quotations of {{Martin Luther King JR}}}
+}
+
+@article{bugreports_ApostropheOnParticle,
+  author = {d' Jones, John},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Bugreports\_{{ApostropheOnParticle}}}
+}
+
+@article{bugreports_AsmJournals,
+  author = {Doe Co.},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Bugreports\_{{AsmJournals}}}
+}
+
+@article{bugreports_DemoPageFullCiteCruftOnSubsequent,
+  author = {{U.S. Bureau of the Census}},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Bugreports\_{{DemoPageFullCiteCruftOnSubsequent}}}
+}
+
+@article{bugreports_DuplicateSpaces,
+  author = {D'Arcus, Bruce},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Bugreports\_{{DuplicateSpaces}}}
+}
+
+@article{bugreports_DuplicateSpaces3,
+  author = {Family Name, N},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Bugreports\_{{DuplicateSpaces3}}}
+}
+
+@article{bugreports_GreekStyleProblems,
+  author = {Καρυωτάκης, Κώστας},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Bugreports\_{{GreekStyleProblems}}}
+}
+
+@article{bugreports_ProcessorHang1,
+  author = {Reynoso-Santos, R. and Soto-Pinto, L. and Tejeda-Cruz, C. and Williams-Linera, G.},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Bugreports\_{{ProcessorHang1}}}
+}
+
+@article{bugreports_YearSuffixInHarvard1,
+  author = {{Africa News}},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Bugreports\_{{YearSuffixInHarvard1}}}
+}
+
+@article{bugreports_parseName,
+  author = {van Happel, Eduard and von Hoppel, Gustav},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Bugreports\_{{parseName}}}
+}
+
+@article{decorations_AndTermUnaffectedByNameDecorations,
+  author = {Doe, III, John and van Roe, Jane},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Decorations\_{{AndTermUnaffectedByNameDecorations}}}
+}
+
+@article{disambiguate_CitationLabelInData,
+  author = {von Dipheria, Doug},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Disambiguate\_{{CitationLabelInData}}}
+}
+
+@article{disambiguate_FailWithYearSuffix,
+  author = {{Caritas Europa} and {JRS-Europe}},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Disambiguate\_{{FailWithYearSuffix}}}
+}
+
+@article{disambiguate_YearCollapseWithInstitution,
+  author = {Smith Co},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Disambiguate\_{{YearCollapseWithInstitution}}}
+}
+
+@article{display_SecondFieldAlignMigratePunctuation,
+  author = {Bennett, Jr., Frank G.},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Display\_{{SecondFieldAlignMigratePunctuation}}}
+}
+
+@article{group_ComplexNesting,
+  author = {Doe Inc.},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Group\_{{ComplexNesting}}}
+}
+
+@article{integration_DuplicateItem,
+  author = {la Berge, S. P},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Integration\_{{DuplicateItem}}}
+}
+
+@article{magic_CapitalizeFirstOccurringNameParticle,
+  author = {de Simone, Samuel},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Magic\_{{CapitalizeFirstOccurringNameParticle}}}
+}
+
+@article{magic_NameParticle,
+  author = {von Doe, John},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Magic\_{{NameParticle}}}
+}
+
+@article{magic_SuppressDuplicateVariableRendering,
+  author = {{Blob}},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Magic\_{{SuppressDuplicateVariableRendering}}}
+}
+
+@article{name_ArticularNameAsSortOrder,
+  author = {Doe, III, James},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{ArticularNameAsSortOrder}}}
+}
+
+@article{name_ArticularShortFormCommaSuffix,
+  author = {Doe, Jr, James},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{ArticularShortFormCommaSuffix}}}
+}
+
+@article{name_ArticularWithComma,
+  author = {Doe, Jr., Jeffrey},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{ArticularWithComma}}}
+}
+
+@article{name_Delimiter,
+  author = {Noakes Inc.},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{Delimiter}}}
+}
+
+@article{name_FormattingOfParticles,
+  author = {van der Meer, Gerard},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{FormattingOfParticles}}}
+}
+
+@article{name_HyphenatedNonDroppingParticle1,
+  author = {al- One, Alan},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{HyphenatedNonDroppingParticle1}}}
+}
+
+@article{name_Institution,
+  author = {{Multi-National United}},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{Institution}}}
+}
+
+@article{name_InstitutionDecoration,
+  author = {{São Paulo (Estado)}},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{InstitutionDecoration}}}
+}
+
+@article{name_MixedFormatsInitialSortOrderAllWithDecorationsEtAl,
+  author = {van Winkle, Rip and Thucydides, III, Carl},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{MixedFormatsInitialSortOrderAllWithDecorationsEtAl}}}
+}
+
+@article{name_MultipleLiteral,
+  author = {{Alfred Benzon Foundation} and {James Benson Foundation} and {John Candy Foundation}},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{MultipleLiteral}}}
+}
+
+@article{name_ParseNames,
+  author = {van der Vlist, Eric and van Gogh, Vincent},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{ParseNames}}}
+}
+
+@article{name_ParsedDroppingParticleWithAffixes,
+  author = {de La Fontaine, Jean},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{ParsedDroppingParticleWithAffixes}}}
+}
+
+@article{name_ParsedNonDroppingParticleWithAffixes,
+  author = {de la Fontaine, Jean},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{ParsedNonDroppingParticleWithAffixes}}}
+}
+
+@article{name_ParsedNonDroppingParticleWithApostrophe,
+  author = {d' Aubignac, abbé d', François Hédelin},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{ParsedNonDroppingParticleWithApostrophe}}}
+}
+
+@article{name_ParticleCaps1,
+  author = {van One, Onename and van Two, Twoname and van Three, Threename and Van Four, Fourname},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{ParticleCaps1}}}
+}
+
+@article{name_ParticleCaps3,
+  author = {{Van Dyke}, Dick},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{ParticleCaps3}}}
+}
+
+@article{name_ParticleFormatting,
+  author = {de la Doe, John},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{ParticleFormatting}}}
+}
+
+@article{name_ParticlesDemoteNonDroppingNever,
+  author = {de Las Familyname, Givenname and del Familyname, Givenname and Di Familyname, Givenname and Da Familyname, Givenname and Do Familyname, Givenname and Des Familyname, Givenname and Lou Familyname, Givenname and Pietro Familyname, Givenname and de Familyname, Givenname and de La Familyname, Givenname and Le Familyname, Givenname and La Familyname, Givenname and L'Familyname, Givenname and Saint Familyname, Givenname and Sainte Familyname, Givenname and St. Familyname, Givenname and Ste. Familyname, Givenname and van Familyname, Givenname and van de Familyname, Givenname and van der Familyname, Givenname and van den Familyname, Givenname and vander Familyname, Givenname and v.d. Familyname, Givenname and vd Familyname, Givenname and van het Familyname, Givenname and ver Familyname, Givenname},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{ParticlesDemoteNonDroppingNever}}}
+}
+
+@article{name_WesternArticularLowercase,
+  author = {van Doe, Jacques},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{WesternArticularLowercase}}}
+}
+
+@article{name_namepartAffixes,
+  author = {de La Fontaine, III, Jean},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Name\_{{namepartAffixes}}}
+}
+
+@article{nameorder_Long,
+  author = {de la Martinière, III, Gérard},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Nameorder\_{{Long}}}
+}
+
+@article{position_IbidWithSuffix,
+  author = {Al-Khatib Organization},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Position\_{{IbidWithSuffix}}}
+}
+
+@article{sort_ChangeInNameSort,
+  author = {{De Quincey}, Alan},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Sort\_{{ChangeInNameSort}}}
+}
+
+@article{sort_ChicagoYearSuffix1,
+  author = {Beijing Zoo and {Beijing Zoo}},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Sort\_{{ChicagoYearSuffix1}}}
+}
+
+@article{sort_FamilyOnly,
+  author = {ANZ Group},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Sort\_{{FamilyOnly}}}
+}
+
+@article{sort_LeadingApostropheOnNameParticle,
+  author = {'t Horvath, Peter A.C. and in 't Horvath, Peter A.D.},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Sort\_{{LeadingApostropheOnNameParticle}}}
+}
+
+@article{sort_NameParticleInNameSortFalse,
+  author = {di Noakes, John},
+  keywords = {imported},
+  options = {useprefix=true},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Sort\_{{NameParticleInNameSortFalse}}}
+}
+
+@article{sort_NameVariable,
+  author = {[F]linders, Jacob},
+  keywords = {imported},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Sort\_{{NameVariable}}}
+}
+
+@preamble{ "\ifdefined\DeclarePrefChars\DeclarePrefChars{'’-}\else\fi " }

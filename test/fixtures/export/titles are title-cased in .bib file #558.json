@@ -1,0 +1,165 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.6.75-manchineel-1475880266",
+    "preferences": {
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "attachmentsNoMetadata": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/ieee",
+      "autoAbbrev": true,
+      "autoExport": "immediate",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "confirmCacheResetSize": 1000,
+      "caching": true,
+      "citeCommand": "cite",
+      "citekeyFormat": "[zotero]",
+      "citekeyFold": true,
+      "debug": true,
+      "DOIandURL": "both",
+      "bibtexURL": "off",
+      "csquotes": "",
+      "keyConflictPolicy": "keep",
+      "langID": "babel",
+      "pinCitekeys": "manual",
+      "preserveBibTeXVariables": false,
+      "rawImports": false,
+      "scanCitekeys": true,
+      "showCitekeys": true,
+      "showItemIDs": true,
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "tests": "",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "jabrefGroups": false,
+      "defaultDateParserLocale": "",
+      "bibtexParticleNoOp": false,
+      "biblatexExtendedNameFormat": false,
+      "quickCopyMode": "citekeys",
+      "jurismPreferredLanguage": "zh-alalc97",
+      "ZotFile": true,
+      "qualityReport": false
+    },
+    "options": {
+      "exportPath": "/Users/emile/zotero/better-bibtex",
+      "exportFilename": "Exported Items.json",
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.ajemjournal.com/article/S0735-6757(14)00421-5/abstract",
+      "volume": "32",
+      "issue": "9",
+      "pages": "1016-1023",
+      "publicationTitle": "The American Journal of Emergency Medicine",
+      "ISSN": "0735-6757, 1532-8171",
+      "date": "2014-09-01",
+      "extra": "PMID: 25037278",
+      "journalAbbreviation": "The American Journal of Emergency Medicine",
+      "DOI": "10.1016/j.ajem.2014.05.052",
+      "accessDate": "2016-10-07 22:48:15",
+      "libraryCatalog": "www.ajemjournal.com",
+      "language": "English",
+      "abstractNote": "Introduction\nEmergency department (ED) visits increase during the influenza seasons. It is essential to identify statistically significant correlates in order to develop an accurate forecasting model for ED visits. Forecasting influenza-like-illness (ILI)-related ED visits can significantly help in developing robust resource management strategies at the EDs.\nMethods\nWe first performed correlation analyses to understand temporal correlations between several predictors of ILI-related ED visits. We used the data available for Douglas County, the biggest county in Nebraska, for Omaha, the biggest city in the state, and for a major hospital in Omaha. The data set included total and positive influenza test results from the hospital (ie, Antigen rapid (Ag) and Respiratory Syncytial Virus Infection (RSV) tests); an Internet-based influenza surveillance system data, that is, Google Flu Trends, for both Nebraska and Omaha; total ED visits in Douglas County attributable to ILI; and ILI surveillance network data for Douglas County and Nebraska as the predictors and data for the hospital's ILI-related ED visits as the dependent variable. We used Seasonal Autoregressive Integrated Moving Average and Holt Winters methods with3 linear regression models to forecast ILI-related ED visits at the hospital and evaluated model performances by comparing the root means square errors (RMSEs).\nResults\nBecause of strong positive correlations with ILI-related ED visits between 2008 and 2012, we validated the use of Google Flu Trends data as a predictor in an ED influenza surveillance tool. Of the 5 forecasting models we have tested, linear regression models performed significantly better when Google Flu Trends data were included as a predictor. Regression models including Google Flu Trends data as a predictor variable have lower RMSE, and the lowest is achieved when all other variables are also included in the model in our forecasting experiments for the first 5 weeks of 2013 (with RMSE = 57.61).\nConclusions\nGoogle Flu Trends data statistically improve the performance of predicting ILI-related ED visits in Douglas County, and this result can be generalized to other communities. Timely and accurate estimates of ED volume during the influenza season, as well as during pandemic outbreaks, can help hospitals plan their ED resources accordingly and lower their costs by optimizing supplies and staffing and can improve service quality by decreasing ED wait times and overcrowding.",
+      "title": "Using Google Flu Trends data in forecasting influenza-like-illness related ED visits in Omaha, Nebraska",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Araz",
+          "firstName": "Ozgur M."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Bentley",
+          "firstName": "Dan"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Muelleman",
+          "firstName": "Robert L."
+        }
+      ],
+      "attachments": [
+        {
+          "title": "PubMed entry",
+          "mimeType": "text/html",
+          "url": "http://www.ncbi.nlm.nih.gov/pubmed/25037278,%2025037278"
+        },
+        {
+          "path": "/Users/emile/Library/Application Support/Firefox/Profiles/kiqihaam.clean/zotero/storage/FF2FBVVR/abstract.html",
+          "title": "Snapshot",
+          "mimeType": "text/html",
+          "url": "http://www.ajemjournal.com/article/S0735-6757(14)00421-5/abstract"
+        }
+      ],
+      "notes": [
+
+      ],
+      "itemID": 1087,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "araz_using_2014"
+    },
+    {
+      "itemType": "journalArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.nature.com/articles/srep08154",
+      "volume": "5",
+      "pages": "8154",
+      "publicationTitle": "Scientific Reports",
+      "ISSN": "2045-2322",
+      "date": "2015-1-29",
+      "DOI": "10.1038/srep08154",
+      "accessDate": "2016-10-07 23:09:18",
+      "libraryCatalog": "CrossRef",
+      "title": "Using networks to combine “Big Data” and traditional surveillance to improve influenza predictions",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Davidson",
+          "firstName": "Michael W."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Haim",
+          "firstName": "Dotan A."
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Radin",
+          "firstName": "Jennifer M."
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 1092,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "davidson_using_2015"
+    }
+  ]
+}

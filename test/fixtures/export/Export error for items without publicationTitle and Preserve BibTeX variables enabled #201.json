@@ -1,0 +1,250 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "0.10.22",
+    "preferences": {
+      "citekeyFormat": "[auth][year]",
+      "skipFields": "file,keywords,abstract,copyright,language,timestamp",
+      "langID": "babel",
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/physical-review-d",
+      "pinCitekeys": "manual",
+      "rawImports": true,
+      "DOIandURL": "url",
+      "attachmentsNoMetadata": false
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "preserveBibTeXVariables": true,
+      "Preserve BibTeX variables": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemID": 124,
+      "itemType": "book",
+      "publisher": "Caltech",
+      "date": "2006",
+      "title": "Applications of Classical Physics",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Roger D.",
+          "lastName": "Blandford",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Kip S.",
+          "lastName": "Thorne",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "attachments": [
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/R3ZJPVXZ/0_Intro.pdf",
+          "title": "00 - Intro",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/AZJVKW5X/1_PhysicsInEuclideanSpaceAndFlatSpacetime_GeometricViewpoint.pdf",
+          "title": "01 - Physics in Euclidean Space and Flat Spacetime: Geometric Viewpoint",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/3EUC7FJK/2_KineticTheory.pdf",
+          "title": "02 - Kinetic Theory",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/2PCVP58V/3_StatisticalMechanics.pdf",
+          "title": "03 - Statistical Mechanics",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/62ADWJ3A/4_StatisticalThermodynamics.pdf",
+          "title": "04 - Statistical Thermodynamics",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/4KFXEK23/5_RandomProcesses.pdf",
+          "title": "05 - Random Processes",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/77RVDTNB/6_GeometricOptics.pdf",
+          "title": "06 - Geometric Optics",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/M4VR5QFT/7_Diffraction.pdf",
+          "title": "07 - Diffraction",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/332EREUG/8_Interference.pdf",
+          "title": "08 - Interference",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/ZXGXJASK/9_NonlinearOptics.pdf",
+          "title": "09 - Nonlinear Optics",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/IHVNJVUG/10_Elastostatics.pdf",
+          "title": "10 - Elastostatics",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/MPXQHDJG/11_Elastodynamics.pdf",
+          "title": "11 - Elastodynamics",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/W2FGCI65/12_FoundationsOfFluidDynamics.pdf",
+          "title": "12 - Foundations of Fluid Dynamics",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/XSH7Z6UJ/13_Vorticity.pdf",
+          "title": "13 - Vorticity",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/27ZJ78ZX/14_Turbulence.pdf",
+          "title": "14 - Turbulence",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/RNWUDGNF/15_WavesAndRotatingFlows.pdf",
+          "title": "15 - Waves and Rotating Flows",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/QHWI37S2/16_CompressibleAndSupersonicFlow.pdf",
+          "title": "16 - Compressible and Supersonic Flow",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/GXJ4T4E2/17_Convection.pdf",
+          "title": "17 - Convection",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/VUXET3M7/18_Magnetohydrodynamics.pdf",
+          "title": "18 - Magnetohydrodynamics",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/ASB28SWD/19_TheParticleKineticsOfPlasma.pdf",
+          "title": "19 - The Particle Kinetics of Plasma",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/TCEMWCF7/20_WavesInColdDensePlasmas_Two-FluidFormalism.pdf",
+          "title": "20 - Waves in Cold, Dense Plasmas: Two-Fluid Formalism",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/R9TGWJ9V/21_KineticTheoryOfWarmPlasmas.pdf",
+          "title": "21 - Kinetic Theory of Warm Plasmas",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/W3ANNI8I/22_NonlinearDynamicsOfPlasmas.pdf",
+          "title": "22 - Nonlinear Dynamics of Plasmas",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/HFXTJ4A8/23_FromSpecialToGeneralRelativity.pdf",
+          "title": "23 - From Special to General Relativity",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/XIQEN5BC/24_FundamentalConceptsOfGeneralRelativity.pdf",
+          "title": "24 - Fundamental Concepts of General Relativity",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/TN568UIM/25_RelativisticStarsAndBlackHoles.pdf",
+          "title": "25 - Relativistic Stars and Black Holes",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/WW4N5AFF/26_GravitationalWavesAndExperimentalTestsOfGeneralRelativity.pdf",
+          "title": "26 - Gravitational Waves and Experimental Tests of General Relativity",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/GNFB5IT6/27_Cosmology.pdf",
+          "title": "27 - Cosmology",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/WWKTA3E8/A_Concept-BasedOutlineOfBook.pdf",
+          "title": "A - A Concept-Based Outline of the Book",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/WXDVDRZ5/B_SomeUnifyingConcepts.pdf",
+          "title": "B - Some Unifying Concepts",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/boyle/Library/Application Support/Firefox/Profiles/l1i89wc9.default/zotero/storage/7Q3B5XIZ/ViscousFlowReversal.mov",
+          "title": "Viscous Flow Reversal",
+          "mimeType": "video/quicktime",
+          "url": ""
+        }
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    }
+  ]
+}

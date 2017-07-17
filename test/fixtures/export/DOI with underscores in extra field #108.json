@@ -1,0 +1,60 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "0.6.44",
+    "preferences": {
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "Export collections": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemID": 203,
+      "itemType": "bookSection",
+      "publisher": "Springer",
+      "pages": "120–136",
+      "date": "1999",
+      "extra": "bibtex: koopman_efficient_99\nbiblatexdata[doi=10.1007/3-540-48515-5_8]",
+      "libraryCatalog": "Google Scholar",
+      "title": "Efficient combinator parsers",
+      "bookTitle": "Implementation of Functional Languages",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Pieter",
+          "lastName": "Koopman",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Rinus",
+          "lastName": "Plasmeijer",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "attachments": [
+
+      ],
+      "tags": [
+
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Implementation of Functional Languages"
+    }
+  ]
+}

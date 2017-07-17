@@ -1,0 +1,239 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "0.7.1",
+    "preferences": {
+      "citekeyFormat": "[auth][year]",
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/american-medical-association"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "Export collections": false
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemID": 3149,
+      "itemType": "conferencePaper",
+      "url": "http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=6152428",
+      "publisher": "IEEE",
+      "pages": "1–10",
+      "date": "2011",
+      "extra": "bibtex: CapEA11",
+      "DOI": "10.1109/HiPC.2011.6152428",
+      "accessDate": "2014-10-23 05:48:04",
+      "libraryCatalog": "Google Scholar",
+      "title": "Comparing archival policies for Blue Waters",
+      "proceedingsTitle": "High Performance Computing (HiPC), 2011 18th international conference on",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Franck",
+          "lastName": "Cappello",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Mathias",
+          "lastName": "Jacquelin",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Loris",
+          "lastName": "Marchal",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yves",
+          "lastName": "Robert",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Marc",
+          "lastName": "Snir",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "attachments": [
+        {
+          "path": "/Users/BNL28/zotero-storage/storage/NZFDBFKI/06152428.pdf",
+          "title": "06152428.pdf",
+          "mimeType": "application/pdf",
+          "url": ""
+        }
+      ],
+      "tags": [
+        "bdec15",
+        "zotero_testcase"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "High Performance Computing (HiPC), 2011 18th international conference on"
+    },
+    {
+      "itemID": 3433,
+      "itemType": "conferencePaper",
+      "url": "http://dx.doi.org/10.1109/SC.2014.72",
+      "series": "SC '14",
+      "place": "Piscataway, NJ, USA",
+      "publisher": "IEEE Press",
+      "pages": "819–829",
+      "ISBN": "978-1-4799-5500-8",
+      "date": "2014",
+      "extra": "bibtex: CumEA14",
+      "DOI": "10.1109/SC.2014.72",
+      "accessDate": "2015-01-12 12:29:55",
+      "libraryCatalog": "ACM Digital Library",
+      "abstractNote": "We study the energy used by a production-level regional climate and weather simulation code on a distributed memory system with hybrid CPU-GPU nodes. The code is optimised for both processor architectures, for which we investigate both time and energy to solution. Operational constraints for time to solution can be met with both processor types, although on different numbers of nodes. Energy to solution is a factor 3 lower with GPUs, but strong scaling can be pushed to larger node counts with CPUs to minimize time to solution. Our data shows that an affine relationship exists between energy and nodehours consumed by the simulation. We use this property to devise a simple and practical methodology for optimising for energy efficiency that can be applied to other applications, which we demonstrate with the HPCG benchmark. We conclude with a discussion about the relationship to the commonly-used GF/Watt metric.",
+      "title": "Application centric energy-efficiency study of distributed multi-core and hybrid CPU-GPU systems",
+      "proceedingsTitle": "Proceedings of the international conference for High Performance Computing, Networking, Storage and Analysis",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ben",
+          "lastName": "Cumming",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Gilles",
+          "lastName": "Fourestey",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Oliver",
+          "lastName": "Fuhrer",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Tobias",
+          "lastName": "Gysi",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Massimiliano",
+          "lastName": "Fatica",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Thomas C.",
+          "lastName": "Schulthess",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "attachments": [
+        {
+          "path": "/Users/BNL28/zotero-storage/storage/FKSJTBGQ/Cumming et al. - 2014 - Application Centric Energy-efficiency Study of Dis.pdf",
+          "title": "ACM Full Text PDF",
+          "mimeType": "application/pdf",
+          "url": "http://dl.acm.org/ft_gateway.cfm?id=2683683&type=pdf"
+        }
+      ],
+      "tags": [
+        "bdec15",
+        "zotero_testcase"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ],
+      "publicationTitle": "Proceedings of the International Conference for High Performance Computing, Networking, Storage and Analysis"
+    },
+    {
+      "itemID": 542,
+      "itemType": "journalArticle",
+      "url": "http://journals.ametsoc.org/doi/abs/10.1175/BAMS-D-11-00094.1",
+      "volume": "93",
+      "pages": "485--498",
+      "publicationTitle": "Bulletin of the American Meteorological Society",
+      "ISSN": "0003-0007, 1520-0477",
+      "date": "2011-10-07",
+      "extra": "bibtex: TayEA11",
+      "DOI": "10.1175/BAMS-D-11-00094.1",
+      "accessDate": "2012-04-17 10:25:06",
+      "libraryCatalog": "CrossRef",
+      "title": "An overview of CMIP5 and the Experiment Design",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Karl E.",
+          "lastName": "Taylor",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ronald J.",
+          "lastName": "Stouffer",
+          "fieldMode": ""
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Gerald A.",
+          "lastName": "Meehl",
+          "fieldMode": ""
+        }
+      ],
+      "notes": [
+
+      ],
+      "attachments": [
+        {
+          "path": "/Users/BNL28/zotero-storage/storage/P2JMZW55/BAMS-D-11-00094.html",
+          "title": "AMS Journals Online - An Overview of CMIP5 and the Experiment Design",
+          "mimeType": "text/html",
+          "url": "http://journals.ametsoc.org/doi/abs/10.1175/BAMS-D-11-00094.1"
+        },
+        {
+          "path": "/Users/BNL28/zotero-storage/storage/98CC5K2T/TaylorEA_2011_An_Overview_of_CMIP5_and_the_Experiment.pdf",
+          "title": "TaylorEA_2011_An_Overview_of_CMIP5_and_the_Experiment.pdf",
+          "mimeType": "application/pdf",
+          "url": ""
+        },
+        {
+          "path": "/Users/BNL28/zotero-storage/storage/EUR4SAEG/Taylor et al. - 2011 - An Overview of CMIP5 and the Experiment Design.pdf",
+          "title": "Taylor et al. - 2011 - An Overview of CMIP5 and the Experiment Design.pdf",
+          "mimeType": "application/pdf",
+          "url": ""
+        }
+      ],
+      "tags": [
+        "bdec15",
+        "jasmin13a",
+        "p-12-iam",
+        "p-gmdm41",
+        "zotero_testcase"
+      ],
+      "related": [
+
+      ],
+      "seeAlso": [
+
+      ]
+    }
+  ]
+}

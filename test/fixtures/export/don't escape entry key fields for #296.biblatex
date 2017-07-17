@@ -1,0 +1,16 @@
+@incollection{eisenmann_actes_1983,
+  author = {Eisenmann, Charles},
+  booktitle = {Cours de droit administratif},
+  crossref = {eisenmann_cours_1982},
+  date = {1983},
+  isbn = {2-275-01408-X},
+  langid = {french},
+  location = {{Paris}},
+  pages = {9--332},
+  publisher = {{LGDJ}},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Les actes de l’Administration [1949-1950]},
+  volume = {t. 2},
+  volumes = {2 vol. (786, xxiv+908 p.)}
+}
+

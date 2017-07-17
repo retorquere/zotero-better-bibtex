@@ -1,0 +1,43 @@
+@book{west_introduction_2000,
+  author = {West, Douglas Brent},
+  date = {2000-08-22},
+  edition = {2},
+  isbn = {978-0-13-014400-3},
+  pagetotal = {470},
+  publisher = {{Prentice Hall}},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Introduction to {{Graph Theory}}}
+}
+
+@book{skubala_modellierung_2012,
+  author = {Skubala, Adam},
+  date = {2012-09-27},
+  location = {{Masterthesis, Fakultät Statistik}},
+  publisher = {{TU Dortmund}},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Modellierung Niederfrequenter {{Schwingungen}} in Einem Elektrischen {{Energienetz}}}
+}
+
+@article{michigami_development_1995,
+  author = {Michigami, Tsutomu},
+  date = {1995-12},
+  doi = {10.1002/eej.4391150705},
+  journaltitle = {Electrical Engineering in Japan},
+  number = {7},
+  pages = {49 -- 68},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Development of a New Two-Input {{PSS}} to Control Low-Frequency Oscillation in Interconnecting Power Systems and the Study of a Low-Frequency Oscillation Model},
+  volume = {115}
+}
+
+@report{brato_stability_2014,
+  author = {Brato, Sebastian and Surmann, Dirk and Krey, Sebastian and Götze, Jürgen and Ligges, Uwe and Weihs, Claus},
+  date = {2014-02-11},
+  institution = {{Technische Universität Dortmund}},
+  location = {{Eldorado}},
+  number = {2003/32864},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Stability {{Analysis}} and {{Clustering}} of {{Electrical Transmission Systems}}},
+  url = {http://dx.doi.org/10.17877/DE290R-13190}
+}
+

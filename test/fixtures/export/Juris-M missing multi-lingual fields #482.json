@@ -1,0 +1,180 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.6.51-circle-2379",
+    "preferences": {
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "attachmentsNoMetadata": false,
+      "autoAbbrevStyle": "http://citationstylist.org/styles/mlz-cms-full",
+      "autoAbbrev": true,
+      "autoExport": "idle",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "confirmCacheResetSize": 1000,
+      "caching": true,
+      "citeCommand": "cite",
+      "citekeyFormat": "[auth][year][0]",
+      "citekeyFold": false,
+      "debug": false,
+      "DOIandURL": "doi",
+      "bibtexURL": "off",
+      "csquotes": "",
+      "keyConflictPolicy": "keep",
+      "langID": "babel",
+      "pinCitekeys": "manual",
+      "preserveBibTeXVariables": false,
+      "rawImports": false,
+      "scanCitekeys": false,
+      "showCitekeys": false,
+      "showItemIDs": false,
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "tests": "",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "jabrefGroups": false,
+      "defaultDateParserLocale": "",
+      "quickCopyMode": "latex",
+      "jurismPreferredLanguage": "zh-alalc97"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemType": "webpage",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "multi": {
+        "main": {
+          "websiteTitle": "zh",
+          "title": "zh"
+        },
+        "_keys": {
+          "websiteTitle": {
+            "zh-alalc97": "Zhōngguó lèishū kù"
+          },
+          "title": {
+            "en": "Database of Chinese Encyclopeadias",
+            "zh-alalc97": "Zhōngguó lèishū kù"
+          }
+        }
+      },
+      "url": "http://server.wenzibase.com",
+      "date": "n.d.",
+      "extra": "bibtex: leishuku",
+      "accessDate": "2016-04-20 13:56:34",
+      "websiteType": "Full-text databse",
+      "language": "zh",
+      "websiteTitle": "中國類書庫",
+      "title": "中國類書庫",
+      "shortTitle": "leishuku",
+      "creators": [
+        {
+          "creatorType": "author",
+          "multi": {
+            "_key": {
+              "en": {
+                "lastName": "Erudition",
+                "firstName": ""
+              },
+              "zh-alalc97": {
+                "lastName": "Ài rú shēng",
+                "firstName": ""
+              }
+            }
+          },
+          "fieldMode": 1,
+          "lastName": "愛如生"
+        }
+      ],
+      "attachments": [
+        {
+          "path": "/Users/halalpha/Library/Application Support/Firefox/Profiles/sklfgs3h.default/zotero/storage/ZF99V7IR/imgres.html",
+          "title": "Google-Ergebnis für http://crossasia.org/uploads/tx_sbbtyponewsletter/rte/RTEmagicC_erudition.png.png",
+          "mimeType": "text/html",
+          "url": "http://images.google.de/imgres?imgurl=http%3A%2F%2Fcrossasia.org%2Fuploads%2Ftx_sbbtyponewsletter%2Frte%2FRTEmagicC_erudition.png.png&imgrefurl=http%3A%2F%2Fcrossasia.org%2F%3Fid%3D87%26uid%3D9%26mode%3Dshow&h=320&w=400&tbnid=or5rTkD9cHD4fM%3A&docid=plbH3vbR5bRz7M&itg=1&ei=uoAXV-q3O8LWarr9vogB&tbm=isch&iact=rc&uact=3&dur=472&page=3&start=44&ndsp=21&ved=0ahUKEwjq_JOApp3MAhVCqxoKHbq-DxEQMwiaASg8MDw&bih=616&biw=1277"
+        }
+      ],
+      "notes": [
+
+      ],
+      "itemID": 6701,
+      "type": "Full-text databse",
+      "publicationTitle": "中國類書庫",
+      "seeAlso": [
+
+      ],
+      "__citekey__": "Airushengn.d."
+    },
+    {
+      "itemType": "thesis",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "multi": {
+        "main": {
+          "university": "zh",
+          "title": "zh"
+        },
+        "_keys": {
+          "title": {
+            "en": "Publishing and Culture in Ming-Qing period : The Scholar-Beauty Novels as an Example"
+          }
+        }
+      },
+      "url": "http://ndltd.ncl.edu.tw/cgi-bin/gs32/gsweb.cgi?o=dnclcdr&s=id=%22091NCNU0493006%22.&searchmode=basic",
+      "date": "2003",
+      "extra": "bibtex: yan_cairong__2003",
+      "thesisType": "Ph.D. Dissertation",
+      "language": "Chinese",
+      "university": "國立暨南國際大學",
+      "title": "明清時期出版與文化─以「才子佳人」小說為中心",
+      "numPages": "214",
+      "creators": [
+        {
+          "creatorType": "author",
+          "multi": {
+            "_key": {
+              "zh-alalc97": {
+                "lastName": "Yan Cairong",
+                "firstName": ""
+              }
+            }
+          },
+          "fieldMode": 1,
+          "lastName": "顏采容"
+        }
+      ],
+      "attachments": [
+        {
+          "path": "/Users/halalpha/Library/Application Support/Firefox/Profiles/sklfgs3h.default/zotero/storage/K9JJ2XHZ/Yan Cairong 顏采容 Ming-Qing Publishing Culture 明清時期出版與文化─以「才子佳人」小說為中心 (200X).pdf",
+          "title": "Yan Cairong 顏采容 Ming-Qing Publishing Culture 明清時期出版與文化─以「才子佳人」小說為中心 (200X).pdf",
+          "mimeType": "application/pdf"
+        }
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2796,
+      "type": "Ph.D. Dissertation",
+      "publisher": "國立暨南國際大學",
+      "seeAlso": [
+
+      ],
+      "__citekey__": "YanCairong2003"
+    }
+  ]
+}

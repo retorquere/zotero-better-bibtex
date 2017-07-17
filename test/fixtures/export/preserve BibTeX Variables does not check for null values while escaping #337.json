@@ -1,0 +1,80 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.3.0",
+    "preferences": {
+      "csquotes": "",
+      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "skipFields": "",
+      "langID": "babel",
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/american-geophysical-union",
+      "pinCitekeys": "manual",
+      "rawImports": false,
+      "DOIandURL": "doi",
+      "attachmentsNoMetadata": false,
+      "preserveBibTeXVariables": true
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections": [
+
+  ],
+  "items": [
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.nap.edu/openbook.php?record_id=203",
+      "publisher": "The National Academies Press",
+      "ISBN": "978-0-309-02928-5",
+      "date": "1980",
+      "title": "Continental Tectonics",
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Geophysics Study Committee"
+        },
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Geophysics Research Board"
+        },
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Assembly of Mathematical and Physical Sciences, National Research Council"
+        }
+      ],
+      "attachments": [
+        {
+          "path": "F:\\zotero\\storage\\KKHBRPFG\\Geophysics Study Committee et al. - 1980 - Continental Tectonics.pdf",
+          "title": "Geophysics Study Committee et al. - 1980 - Continental Tectonics.pdf",
+          "mimeType": "application/pdf"
+        },
+        {
+          "path": "F:\\zotero\\storage\\W6W367NI\\Unconfirmed 957294.crdownload",
+          "title": "Unconfirmed 957294.crdownload",
+          "mimeType": "application/pdf"
+        }
+      ],
+      "notes": [
+
+      ],
+      "itemID": 386,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "geophysicsstudycommittee_continental_1980"
+    }
+  ]
+}

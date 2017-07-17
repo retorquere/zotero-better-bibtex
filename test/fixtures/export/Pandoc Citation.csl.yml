@@ -1,0 +1,93 @@
+---
+references:
+- id: Adams2001
+  type: article-journal
+  title: 'The physical volcanology of the 1600 eruption of **Huaynaputina**, southern Peru'
+  container-title: Bulletin of Volcanology
+  page: 493-518
+  volume: '62'
+  author:
+    - family: Adams
+      given: Nancy K
+    - family: DeSilva
+      given: Shanaka L
+    - family: Self
+      given: Steven
+    - family: Salas
+      given: Guido
+    - family: Schubring
+      given: Steven
+    - family: Permenter
+      given: Jason L
+    - family: Arbesman
+      given: Kendra
+  issued:
+    date-parts:
+      - - 2014
+        - 12
+        - 31
+      - - 2015
+        - 1
+        - 1
+
+- id: Berndt1994
+  type: article-journal
+  title: 'Skizze zur Auslegungsgeschichte der Bücher *Prouerbia* und *Ecclesiastes* in der abendländischen Kirche'
+  container-title: Sacris Erudiri
+  page: 5-32
+  volume: '34'
+  source: MetaPress
+  URL: 'http://dx.doi.org/10.1484/J.SE.2.303788'
+  DOI: 10.1484/J.SE.2.303788
+  language: German
+  author:
+    - family: Berndt
+      given: Rainer
+  issued:
+    date-parts:
+      - - 1994
+  accessed:
+    date-parts:
+      - - '2014'
+        - 10
+        - 2
+
+- id: Wordsworth1883
+  type: book
+  title: 'The Gospel according to St. Matthew, from the St. Germain ms. (g~1~), now numbered Lat. 11553 in the National Library at Paris'
+  collection-title: Old-Latin Biblical Texts
+  collection-number: '1'
+  publisher: Clarendon Press
+  publisher-place: Oxford
+  number-of-pages: '139'
+  source: Internet Archive
+  URL: 'https://archive.org/details/gospelaccording00goog'
+  language: English
+  editor:
+    - family: Wordsworth
+      given: John
+  issued:
+    date-parts:
+      - - 1883
+  accessed:
+    date-parts:
+      - - '2014'
+        - 4
+        - 29
+  title-short: The Gospel according to St. Matthew
+
+- id: Dunning2016
+  type: book
+  title: 'Samuel Presbiter: Notes from the school of William de Montibus. <span class="nocase">Collecta ex diuersis auditis in scola magistri Willelmi de Monte</span>'
+  collection-title: Toronto Medieval Latin Texts
+  collection-number: '33'
+  publisher: Pontifical Institute of Mediaeval Studies
+  publisher-place: Toronto
+  author:
+    - family: Dunning
+      given: Andrew N.J.
+  issued:
+    date-parts:
+      - - 2016
+  title-short: Notes from the school of William de Montibus
+...
