@@ -54,27 +54,27 @@ module.exports = [
     ]
   },
 
-  /*
   {
     resolveLoader: {
       alias: {
-        'pegjs-loader': path.join(__dirname, './src/webpack/pegjs-loader'),
+        'pegjs-loader': path.join(__dirname, './webpack/pegjs-loader'),
       },
     },
     plugins: [ new TranslatorHeaderPlugin() ],
-    context: path.resolve(__dirname, './src/resource'),
+    context: path.resolve(__dirname, './resource'),
     entry: {
-      'Better BibLaTeX': './Better BibLaTeX.coffee',
-      'Better BibTeX': './Better BibTeX.coffee',
-      'Better BibTeX Quick Copy': './Better BibTeX Quick Copy.coffee',
-      'Better CSL JSON': './Better CSL JSON.coffee',
-      'Better CSL YAML': './Better CSL YAML.coffee',
-      'BetterBibTeX JSON': './BetterBibTeX JSON.coffee',
-      'Collected Notes': './Collected Notes.coffee',
+      'BetterBibTeX Lossless': './BetterBibTeX Lossless.coffee',
+      // 'Better BibLaTeX': './Better BibLaTeX.coffee',
+      // 'Better BibTeX': './Better BibTeX.coffee',
+      // 'Better BibTeX Quick Copy': './Better BibTeX Quick Copy.coffee',
+      // 'Better CSL JSON': './Better CSL JSON.coffee',
+      // 'Better CSL YAML': './Better CSL YAML.coffee',
+      // 'Collected Notes': './Collected Notes.coffee',
     },
     output: {
-      path: path.resolve(__dirname, './resource'),
+      path: path.resolve(__dirname, './build/resource'),
       filename: '[name].js',
+      jsonpFunction: 'webpackedBetterBibTeXTranslator',
     },
     module: {
       rules: [
@@ -83,5 +83,4 @@ module.exports = [
       ]
     }
   },
-  */
 ];

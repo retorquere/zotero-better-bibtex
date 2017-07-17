@@ -29,7 +29,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -rf xpi/*",
-    "build": "coffeelint content && webpack",
+    "build": "coffeelint content resource && webpack",
     "postbuild": "node webpack/zipup.js build zotero-better-bibtex && node webpack/zipup.js test/fixtures/debug-bridge debug-bridge"
   },
   "repository": {

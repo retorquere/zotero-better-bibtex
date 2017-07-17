@@ -1,0 +1,20 @@
+{
+  "translatorID": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+  "label": "BetterBibTeX Lossless",
+  "creator": "Emiliano Heyns",
+  "target": "json",
+  "minVersion": "3.0b3",
+  "maxVersion": "",
+  "configOptions": {
+    "getCollections": true,
+    "serializationCache": true
+  },
+  "displayOptions": {
+    "exportNotes": true,
+    "exportFileData": false
+  },
+  "translatorType": 3,
+  "browserSupport": "gcsv",
+  "priority": 100,
+  "inRepository": true
+}

@@ -15,8 +15,8 @@ const Header = `
 
 var BetterBibTeX = {
   initialize: function () {},
-  release: <%- JSON.stringify(version) %>,
-  <%- JSON.stringify(header.label.replace(/[^a-z]/ig, '')) %>: true,
+  version: <%- JSON.stringify(version) %>,
+  <%- header.label.replace(/[^a-z]/ig, '') %>: true,
   // header == ZOTERO_TRANSLATOR_INFO -- maybe pick it from there
   header: <%- JSON.stringify(header) %>,
   preferences: <%- JSON.stringify(preferences) %>,
