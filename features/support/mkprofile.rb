@@ -121,7 +121,7 @@ module BBT
       end
     end
   }
-  
+
   at_exit {
     result = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", headers: { 'Content-Type' => 'text/plain' }, body: """
       var appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
@@ -130,4 +130,13 @@ module BBT
     sleep(5)
     Process.kill("HUP", pid)
   }
+
+  result = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", headers: { 'Content-Type' => 'text/plain' }, body: """
+    var file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile);
+    var filename = #{File.expand_path(File.join(File.dirname(__FILE__), '../../sample-item.xml')).to_json};
+    file.initWithPath(filename);
+    yield Zotero_File_Interface.importFile(file, false);
+    return filename;
+  """)
+  puts result
 end

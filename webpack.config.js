@@ -9,10 +9,24 @@ const TranslatorHeaderPlugin = require('./webpack/translator-header-plugin');
 const CommonsPlugin = new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' })
 
 const version = require('./webpack/version');
+const translators = require('./webpack/translators');
 
 if (!fs.existsSync(path.join(__dirname, 'build'))) {
   fs.mkdirSync(path.join(__dirname, 'build'));
 }
+if (!fs.existsSync(path.join(__dirname, 'gen'))) {
+  fs.mkdirSync(path.join(__dirname, 'gen'));
+}
+
+var tr = {byId: {}, byName: {}, byLabel: {}};
+
+translators().forEach(header => {
+  var header = require(path.join(__dirname, 'resource', header + '.json'));
+  tr.byId[header.translatorID] = header;
+  tr.byName[header.label] = header;
+  tr.byLabel[header.label.replace(/[^a-zA-Z]/g, '')] = header;
+});
+fs.writeFileSync(path.join(__dirname, 'gen/translators.json'), JSON.stringify(tr, null, 2));
 
 module.exports = [
   {
@@ -26,7 +40,7 @@ module.exports = [
     output: {
       path: path.resolve(__dirname, './build/content'),
       filename: '[name].js',
-      jsonpFunction: 'webpackedBetterBibTeX',
+      jsonpFunction: 'BetterBibTeXLoader',
     },
     module: {
       rules: [
@@ -62,15 +76,11 @@ module.exports = [
     },
     plugins: [ new TranslatorHeaderPlugin() ],
     context: path.resolve(__dirname, './resource'),
-    entry: {
-      'BetterBibTeX Lossless': './BetterBibTeX Lossless.coffee',
-      // 'Better BibLaTeX': './Better BibLaTeX.coffee',
-      // 'Better BibTeX': './Better BibTeX.coffee',
-      // 'Better BibTeX Quick Copy': './Better BibTeX Quick Copy.coffee',
-      // 'Better CSL JSON': './Better CSL JSON.coffee',
-      // 'Better CSL YAML': './Better CSL YAML.coffee',
-      // 'Collected Notes': './Collected Notes.coffee',
-    },
+    entry: translators().reduce((entries, f) => {
+      var translator = f.replace(/\.json$/, '');
+      entries[translator] = `./${translator}.coffee`;
+      return entries
+    }, {}),
     output: {
       path: path.resolve(__dirname, './build/resource'),
       filename: '[name].js',
