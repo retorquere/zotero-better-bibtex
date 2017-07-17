@@ -1,10 +1,10 @@
 stringify = require('json-stringify-safe')
 
 module.exports = (msg...) ->
-  if typeof Translator == 'undefined'
+  if typeof BetterBibTeX == 'undefined'
     return unless Zotero.Debug.enabled
   else
-    return unless Translator.preferences.debug
+    return unless BetterBibTeX.preferences.debug
 
   str = []
   for m in msg
@@ -18,8 +18,8 @@ module.exports = (msg...) ->
     str.push(m) if m
   str = str.join(' ')
 
-  if typeof Translator == 'undefined'
+  if typeof BetterBibTeX == 'undefined'
     Zotero.debug("{better-bibtex}: #{str}")
   else
-    Zotero.debug("{better-bibtex:#{Translator.header.label}}: #{str}")
+    Zotero.debug("{better-bibtex:#{BetterBibTeX.header.label}}: #{str}")
   return

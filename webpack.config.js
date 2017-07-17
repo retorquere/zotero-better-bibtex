@@ -3,8 +3,9 @@ const fs = require('fs');
 
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const InstallRDFPlugin = require('./webpack/install-rdf');
-const PreferencesPlugin = require('./webpack/preferences');
+const InstallRDFPlugin = require('./webpack/install-rdf-plugin');
+const PreferencesPlugin = require('./webpack/preferences-plugin');
+const TranslatorHeaderPlugin = require('./webpack/translator-header-plugin');
 const CommonsPlugin = new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' })
 
 const version = require('./webpack/version');
@@ -24,7 +25,8 @@ module.exports = [
     },
     output: {
       path: path.resolve(__dirname, './build/content'),
-      filename: '[name].js'
+      filename: '[name].js',
+      jsonpFunction: 'webpackedBetterBibTeX',
     },
     module: {
       rules: [
@@ -51,4 +53,35 @@ module.exports = [
       )
     ]
   },
+
+  /*
+  {
+    resolveLoader: {
+      alias: {
+        'pegjs-loader': path.join(__dirname, './src/webpack/pegjs-loader'),
+      },
+    },
+    plugins: [ new TranslatorHeaderPlugin() ],
+    context: path.resolve(__dirname, './src/resource'),
+    entry: {
+      'Better BibLaTeX': './Better BibLaTeX.coffee',
+      'Better BibTeX': './Better BibTeX.coffee',
+      'Better BibTeX Quick Copy': './Better BibTeX Quick Copy.coffee',
+      'Better CSL JSON': './Better CSL JSON.coffee',
+      'Better CSL YAML': './Better CSL YAML.coffee',
+      'BetterBibTeX JSON': './BetterBibTeX JSON.coffee',
+      'Collected Notes': './Collected Notes.coffee',
+    },
+    output: {
+      path: path.resolve(__dirname, './resource'),
+      filename: '[name].js',
+    },
+    module: {
+      rules: [
+        { test: /\.coffee$/, use: [ 'coffee-loader' ] },
+        { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
+      ]
+    }
+  },
+  */
 ];
