@@ -11,11 +11,19 @@ BBT.init = Zotero.Promise.coroutine ->
   return
 
 Zotero.Promise.coroutine(->
+  bbtReady = Zotero.Promise.defer()
+  Zotero.BetterBibTeX = {
+    ready: bbtReady.promise
+  }
+
   debug('starting, waiting for schema...')
+
   yield Zotero.Schema.schemaUpdatePromise
   debug('schema done')
   yield BBT.init()
   yield Translators.init()
+
+  bbtReady.resolve(true)
   debug('started')
   return
 )()

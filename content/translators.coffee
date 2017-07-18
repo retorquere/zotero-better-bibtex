@@ -15,6 +15,7 @@ class Translators
       @install(header)
 
     yield Zotero.Translators.reinit()
+    debug('Translator.init() ready')
     return
 
   uninstall: (label, id) ->

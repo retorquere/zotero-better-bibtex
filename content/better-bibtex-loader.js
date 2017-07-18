@@ -1,4 +1,4 @@
-if (typeof BetterBibTeXLoader === 'undefined') {
+if (!Zotero.BetterBibTeX) {
   (function() {
     try {
       Zotero.debug("{better-bibtex}: loading better-bibtex.js");

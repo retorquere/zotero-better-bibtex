@@ -22,7 +22,7 @@ PreferencesPlugin.prototype.apply = function(compiler) {
 
       var js = Object.keys(prefs);
       js.sort(function (a, b) { return a.toLowerCase().localeCompare(b.toLowerCase()); });
-      js = js.map(key => `pref(${JSON.stringify(key)}, ${JSON.stringify(prefs[key])});`).join("\n") + "\n";
+      js = js.map(key => `pref(${JSON.stringify('extensions.zotero.translators.better-bibtex.' + key)}, ${JSON.stringify(prefs[key])});`).join("\n") + "\n";
       compilation.assets['defaults/preferences/defaults.js'] = new ConcatSource(js);
       callback();
       return;

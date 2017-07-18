@@ -108,6 +108,8 @@ module BBT
           Zotero.debug('{better-bibtex:debug bridge}: waiting for Zotero ready...');
           yield Zotero.Schema.schemaUpdatePromise;
           Zotero.debug('{better-bibtex:debug bridge}: Zotero ready');
+          yield Zotero.BetterBibTeX.ready;
+          Zotero.debug('{better-bibtex:debug bridge}: BetterBibTeX ready');
           return true;
         """)
         if result.body.to_s.strip == 'true'
@@ -123,17 +125,17 @@ module BBT
   }
 
   at_exit {
-    result = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", headers: { 'Content-Type' => 'text/plain' }, body: """
+    result = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", timeout: 10, headers: { 'Content-Type' => 'text/plain' }, body: """
       var appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
       appStartup.quit(Components.interfaces.nsIAppStartup.eAttemptQuit);
     """)
     sleep(5)
     Process.kill("HUP", pid)
-  }
+  } unless ENV['KEEP_ZOTERO_RUNNING'] == 'true'
 
-  result = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", headers: { 'Content-Type' => 'text/plain' }, body: """
+  result = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", timeout: 10, headers: { 'Content-Type' => 'text/plain' }, body: """
     var file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile);
-    var filename = #{File.expand_path(File.join(File.dirname(__FILE__), '../../sample-item.xml')).to_json};
+    var filename = #{File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures/export/(non-)dropping particle handling #313.json')).to_json};
     file.initWithPath(filename);
     yield Zotero_File_Interface.importFile(file, false);
     return filename;

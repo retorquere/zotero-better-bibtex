@@ -66,7 +66,7 @@ var BetterBibTeX = {
     BetterBibTeX.doImport()
   }
 <% } %>
-`;
+`.trim();
 
 TranslatorHeaderPlugin.prototype.apply = function(compiler) {
   var options = this.options;
