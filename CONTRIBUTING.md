@@ -1,4 +1,4 @@
-# Very rudimantary instructions to get you going on BBT coding
+# Very rudimentary instructions to get you going on BBT coding
 
 ## Zotero
 
