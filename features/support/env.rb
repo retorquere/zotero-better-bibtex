@@ -42,10 +42,9 @@ def execute(options)
 
   case response.code
     when 200, 201
-      # assume it has been parsed by HTTParty?
-      return response.body
+      return response.parsed_response
     when 500
-      raise HTTPInternalError.new
+      raise HTTPInternalError.new(response.body)
     when 404
       raise HTTPNotFoundError.new
     else
