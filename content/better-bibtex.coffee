@@ -1,5 +1,6 @@
 debug = require('./debug.coffee')
 Translators = require('./translators.coffee')
+KeyManager = require('./keymanager.coffee')
 
 BBT = {}
 
@@ -19,11 +20,13 @@ Zotero.Promise.coroutine(->
   debug('starting, waiting for schema...')
 
   yield Zotero.Schema.schemaUpdatePromise
-  debug('schema done')
+  debug('zotero schema done')
+
   yield BBT.init()
   yield Translators.init()
+  yield KeyManager.init()
+  debug('started')
 
   bbtReady.resolve(true)
-  debug('started')
   return
 )()

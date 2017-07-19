@@ -26,6 +26,32 @@ class IniFile
   end
 end
 
+class HTTPInternalError < StandardError; end
+class HTTPNotFoundError < StandardError; end
+
+def execute(options)
+  options = {script: options} if options.is_a?(String)
+  options = {
+    timeout: 10,
+    headers: { 'Content-Type' => 'text/plain' },
+  }.merge(options || {})
+  options[:query] = options.delete(:args)
+  options[:body] = options.delete(:script)
+
+  response = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", options)
+
+  case response.code
+    when 200, 201
+      return JSON.parse(response.body)
+    when 500
+      raise HTTPInternalError.new
+    when 404
+      raise HTTPNotFoundError.new
+    else
+      raise "Unexpected response code #{response.code.inspect}"
+  end
+end
+
 module BBT
   if OS.linux?
     profiles = File.expand_path('~/.zotero/zotero')
@@ -104,7 +130,7 @@ module BBT
     while true
       begin
         sleep(1)
-        result = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", headers: { 'Content-Type' => 'text/plain' }, body: """
+        result = execute(timeout: 60, script: """
           Zotero.debug('{better-bibtex:debug bridge}: waiting for Zotero ready...');
           yield Zotero.Schema.schemaUpdatePromise;
           Zotero.debug('{better-bibtex:debug bridge}: Zotero ready');
@@ -112,11 +138,11 @@ module BBT
           Zotero.debug('{better-bibtex:debug bridge}: BetterBibTeX ready');
           return true;
         """)
-        if result.body.to_s.strip == 'true'
+        if result
           puts "Zotero Running"
           break
         end
-      rescue Errno::ECONNREFUSED => e
+      rescue Errno::ECONNREFUSED, Net::ReadTimeout, HTTPNotFoundError
         print '.'
         attempts += 1
         raise "Could not connect to Zotero after #{attempts} attempts" if attempts >= 60
@@ -125,7 +151,7 @@ module BBT
   }
 
   at_exit {
-    result = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", timeout: 10, headers: { 'Content-Type' => 'text/plain' }, body: """
+    execute("""
       var appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
       appStartup.quit(Components.interfaces.nsIAppStartup.eAttemptQuit);
     """)
@@ -133,12 +159,14 @@ module BBT
     Process.kill("HUP", pid)
   } unless ENV['KEEP_ZOTERO_RUNNING'] == 'true'
 
-  result = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", timeout: 10, headers: { 'Content-Type' => 'text/plain' }, body: """
-    var file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile);
-    var filename = #{File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures/export/(non-)dropping particle handling #313.json')).to_json};
-    file.initWithPath(filename);
-    yield Zotero_File_Interface.importFile(file, false);
-    return filename;
-  """)
-  puts result
+  execute(
+    # args: { filename: File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures/export/(non-)dropping particle handling #313.json')) },
+    args: { filename: '/Users/emile/github/better-bibtex/My Library.json' },
+    script: """
+      var file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile);
+      file.initWithPath(args.filename);
+      yield Zotero_File_Interface.importFile(file, false);
+      return args.filename;
+    """
+  )
 end

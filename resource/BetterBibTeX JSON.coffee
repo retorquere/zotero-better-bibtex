@@ -2,7 +2,6 @@ debug = require('../content/debug.coffee')
 collections = require('./lib/collections.coffee')
 
 scrub = (item) ->
-  delete item.__citekey__
   delete item.libraryID
   delete item.key
   delete item.uniqueFields
@@ -13,7 +12,15 @@ scrub = (item) ->
 
   delete item.collections
 
-  item.attachments = ({ path: attachment.localPath, title: attachment.title, mimeType: attachment.mimeType, url: attachment.url } for attachment in item.attachments || [])
+  item.attachments = ({
+    path: attachment.localPath,
+    title: attachment.title,
+    url: attachment.url
+    linkMode: attachment.linkMode,
+    contentType: attachment.contentType || undefined,
+    mimeType: attachment.mimeType || undefined,
+  } for attachment in item.attachments || [])
+
   item.notes = (note.note.trim() for note in item.notes || [])
 
   item.tags = (tag.tag for tag in item.tags || [])
@@ -28,14 +35,6 @@ scrub = (item) ->
         delete item[attr] if val.trim() == ''
       when 'undefined'
         delete item[attr]
-
-  citekeys = Zotero.BetterBibTeX.keymanager.alternates(item)
-  switch
-    when !citekeys or citekeys.length == 0 then
-    when citekeys.length == 1
-      item.__citekey__ = citekeys[0]
-    else
-      item.__citekeys__ = citekeys
 
   return item
 
@@ -72,8 +71,6 @@ BetterBibTeX.doImport = ->
   return
 
 BetterBibTeX.doExport = ->
-  Exporter = new Exporter()
-
   data = {
     config: {
       id: BetterBibTeX.header.translatorID
