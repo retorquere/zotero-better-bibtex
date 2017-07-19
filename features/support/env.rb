@@ -42,7 +42,8 @@ def execute(options)
 
   case response.code
     when 200, 201
-      return JSON.parse(response.body)
+      # assume it has been parsed by HTTParty?
+      return response.body
     when 500
       raise HTTPInternalError.new
     when 404
