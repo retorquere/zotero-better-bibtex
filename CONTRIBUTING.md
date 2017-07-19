@@ -8,7 +8,8 @@ everything to work and I'll happily document it here, but I can't help you.
 
 ## Getting the repo
 
-Run `git clone https://github.com/retorquere/zotero-better-bibtex.git` or `git clone git@github.com:<your username>/zotero-better-bibtex.git` if you have forked the repo so you can submit pull requests
+1. Run `git clone https://github.com/retorquere/zotero-better-bibtex.git` or `git clone git@github.com:<your username>/zotero-better-bibtex.git` if you have forked the repo so you can submit pull requests
+2. Run `git submodule update --init --recursive`
 
 ## Ruby for the test chain
 
