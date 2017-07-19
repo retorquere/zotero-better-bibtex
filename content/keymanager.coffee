@@ -6,7 +6,7 @@ class KeyManager
     @query = {
       field: {}
       type: {}
-      url: 'zotero://better-bibtex/citekey'
+      url: 'https://zotero/better-bibtex/citekey'
     }
 
     for field in yield Zotero.DB.queryAsync("select fieldID, fieldName from fields where fieldName in ('title', 'url')") # 110, 1

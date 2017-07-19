@@ -9,14 +9,15 @@ scrub = (item) ->
   delete item.dateModified
   delete item.uri
   delete item.attachmentIDs
+  delete item.relations
 
   delete item.collections
 
   item.attachments = ({
-    path: attachment.localPath,
-    title: attachment.title,
-    url: attachment.url
-    linkMode: attachment.linkMode,
+    path: attachment.localPath || undefined,
+    title: attachment.title || undefined,
+    url: attachment.url || undefined,
+    linkMode: if typeof attachment.linkMode == 'number' then attachment.linkMode else undefined,
     contentType: attachment.contentType || undefined,
     mimeType: attachment.mimeType || undefined,
   } for attachment in item.attachments || [])
