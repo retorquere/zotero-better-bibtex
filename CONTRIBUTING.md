@@ -6,6 +6,11 @@ If you're on Linux, install the latest Zotero release using the `zotero5_install
 ~/bin/zotero. If you're on MacOS, just install the latest Zotero 5. If you're on Windows, please let me know how you got
 everything to work and I'll happily document it here, but I can't help you.
 
+## Getting the repo
+
+1. Run `git clone https://github.com/retorquere/zotero-better-bibtex.git` or `git clone git@github.com:<your username>/zotero-better-bibtex.git` if you have forked the repo so you can submit pull requests
+2. Run `git checkout z5`
+
 ## Ruby for the test chain
 
 1. Install [rvm](https://rvm.io/) and change to the BBT checkout. This should install ruby 2.3
