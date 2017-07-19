@@ -14,6 +14,7 @@
     "xml": "^1.0.1"
   },
   "devDependencies": {
+    "archiver": "^2.0.0",
     "clean-webpack-plugin": "^0.1.16",
     "coffee-loader": "^0.7.3",
     "coffee-script": "^1.12.6",
@@ -24,12 +25,16 @@
     "ignore-loader": "^0.1.2",
     "node-archiver": "^0.3.0",
     "pretty-data": "^0.40.0",
+    "shelljs": "^0.7.8",
+    "uglify-es-webpack-plugin": "0.0.3",
     "webpack": "^3.2.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "coffeelint content resource",
+    "webpack": "webpack",
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -rf xpi/*",
-    "build": "coffeelint content resource && webpack",
+    "build": "npm run lint && npm run webpack",
     "postbuild": "node webpack/zipup.js build zotero-better-bibtex && node webpack/zipup.js test/fixtures/debug-bridge debug-bridge"
   },
   "repository": {

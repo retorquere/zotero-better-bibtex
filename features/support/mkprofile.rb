@@ -160,8 +160,7 @@ module BBT
   } unless ENV['KEEP_ZOTERO_RUNNING'] == 'true'
 
   execute(
-    # args: { filename: File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures/export/(non-)dropping particle handling #313.json')) },
-    args: { filename: '/Users/emile/github/better-bibtex/My Library.json' },
+    args: { filename: File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures/export/(non-)dropping particle handling #313.json')) },
     script: """
       var file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile);
       file.initWithPath(args.filename);
