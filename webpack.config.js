@@ -12,6 +12,7 @@ const UglifyEsPlugin = require('uglify-es-webpack-plugin');
 
 const version = require('./webpack/version');
 const translators = require('./webpack/translators');
+const locales = require('./webpack/locales');
 
 console.log('make build dirs');
 if (!fs.existsSync(path.join(__dirname, 'build'))) {
@@ -33,6 +34,9 @@ fs.writeFileSync(path.join(__dirname, 'gen/translators.json'), JSON.stringify(tr
 
 console.log('update citeproc');
 if (shell.exec('git submodule update --depth 1 -- citeproc-js').code != 0) throw 'Citeproc update failed';
+
+console.log('locales');
+locales(path.join(__dirname, 'citeproc-js/locale'), path.join(__dirname, 'gen/csl-locales.json'));
 
 console.log("let's roll");
 module.exports = [

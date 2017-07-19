@@ -23,11 +23,13 @@
     "copy-webpack-plugin": "^4.0.1",
     "ejs": "^2.5.6",
     "ignore-loader": "^0.1.2",
+    "lodash": "^4.17.4",
     "node-archiver": "^0.3.0",
     "pretty-data": "^0.40.0",
     "shelljs": "^0.7.8",
     "uglify-es-webpack-plugin": "0.0.3",
-    "webpack": "^3.2.0"
+    "webpack": "^3.2.0",
+    "xml-parser": "^1.2.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
