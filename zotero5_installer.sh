@@ -81,6 +81,8 @@ if [ -z "$ZOTERO_INSTALL_VERSION" ]; then
   echo ">>> Please input the version of Zotero."
   echo ">>> (default=$VERSION)"
   read INPUT
+elif [ "$ZOTERO_INSTALL_VERSION" = "auto" ]; then
+  INPUT=$VERSION
 else
   INPUT=$ZOTERO_INSTALL_VERSION
 fi

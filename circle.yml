@@ -1,0 +1,45 @@
+---
+machine:
+  ruby:
+    version: '2.3.0'
+  node:
+    version: '7.7.0'
+dependencies:
+  pre:
+  - |-
+    mkdir -p ~/bin
+    if [ ! -x ~/bin/zotero/zotero]; then
+      ZOTERO_INSTALL=y ZOTERO_INSTALL_DEST=l ZOTERO_INSTALL_VERSION=auto ZOTERO_INSTALL_NUKE_DEST=y ./zotero5_installer.sh
+    fi;
+  cache_directories:
+  - bin
+test:
+  override:
+  - ? |-
+      case $CIRCLE_NODE_INDEX in
+        0|1)  export JURISM=false
+              ;;
+        *)    export JURISM=true
+              ;;
+      esac
+      case $CIRCLE_NODE_INDEX in
+        0|2)  export CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1"
+              ;;
+        *)    export CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1"
+              ;;
+      esac
+
+      export LOGS=$CIRCLE_ARTIFACTS
+      cucumber
+    : parallel: true
+general:
+  artifacts:
+    - zotero-better-bibtex.xpi
+  branches:
+    ignore:
+      - gh-pages
+deployment:
+  all:
+    branch: "/.*/"
+    commands:
+    - echo bundle exec rake publish
