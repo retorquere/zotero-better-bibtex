@@ -7,10 +7,15 @@
     "test": "test"
   },
   "dependencies": {
+    "eventemitter3": "^2.0.3",
+    "fold-to-ascii": "^4.0.0",
     "js-yaml": "^3.9.0",
     "json-stringify-safe": "^5.0.1",
     "jxon": "^2.0.0-beta.5",
     "lokijs": "^1.5.0",
+    "pegjs": "^0.10.0",
+    "punycode": "^2.1.0",
+    "transliteration": "^1.6.2",
     "xml": "^1.0.1"
   },
   "devDependencies": {

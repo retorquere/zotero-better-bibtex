@@ -3,7 +3,7 @@ debug = require('./debug.coffee')
 translators = require('../gen/translators.json')
 
 class Translators
-  init: Zotero.Promise.coroutine ->
+  init: Zotero.Promise.coroutine(->
     debug('Translator.init()')
     yield Zotero.Translators.init()
 
@@ -17,6 +17,7 @@ class Translators
     yield Zotero.Translators.reinit()
     debug('Translator.init() ready')
     return
+  )
 
   uninstall: (label, id) ->
     try

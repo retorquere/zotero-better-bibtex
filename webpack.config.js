@@ -42,6 +42,11 @@ console.log("let's roll");
 module.exports = [
   // main app logic
   {
+    resolveLoader: {
+      alias: {
+        'pegjs-loader': path.join(__dirname, './webpack/pegjs-loader'),
+      },
+    },
     plugins: [
       CommonsPlugin,
       /* tree shaking
@@ -58,14 +63,19 @@ module.exports = [
     entry: {
       "better-bibtex": './better-bibtex.coffee'
     },
+    devtool: 'source-map',
     output: {
       path: path.resolve(__dirname, './build/content'),
       filename: '[name].js',
       jsonpFunction: 'BetterBibTeXLoader',
+      devtoolLineToLine: true,
+      sourceMapFilename: "./[name].js.map",
+      pathinfo: true,
     },
     module: {
       rules: [
-        { test: /\.coffee$/, use: [ 'coffee-loader' ] },
+        { test: /\.coffee$/, use: [ {loader: 'coffee-loader', options: { sourceMap: true} } ] },
+        { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
       ]
     },
   },
@@ -85,7 +95,7 @@ module.exports = [
           { from: 'content/**/*' },
           { from: 'chrome.manifest' },
         ],
-        { ignore: [ '*.coffee' ], copyUnmodified: true }
+        { ignore: [ '*.coffee', '*.pegjs' ], copyUnmodified: true }
       )
     ]
   },
@@ -104,14 +114,17 @@ module.exports = [
       entries[translator] = `./${translator}.coffee`;
       return entries
     }, {}),
+    devtool: 'source-map',
     output: {
       path: path.resolve(__dirname, './build/resource'),
       filename: '[name].js',
-      jsonpFunction: 'webpackedBetterBibTeXTranslator',
+      devtoolLineToLine: true,
+      sourceMapFilename: "./[name].js.map",
+      pathinfo: true,
     },
     module: {
       rules: [
-        { test: /\.coffee$/, use: [ 'coffee-loader' ] },
+        { test: /\.coffee$/, use: [ {loader: 'coffee-loader', options: { sourceMap: true} } ] },
         { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
       ]
     }

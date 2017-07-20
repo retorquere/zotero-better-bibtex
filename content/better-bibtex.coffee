@@ -5,11 +5,9 @@ citeproc = require('../citeproc-js/citeproc').CSL
 
 BBT = {}
 
-BBT.init = Zotero.Promise.coroutine ->
+BBT.init = ->
   debug('init')
-  items = yield Zotero.Items.getAll(0) # main lib for now
-  for item in items
-    Zotero.debug('BBT:' + item.id)
+
   return
 
 Zotero.Promise.coroutine(->
@@ -23,7 +21,7 @@ Zotero.Promise.coroutine(->
   yield Zotero.Schema.schemaUpdatePromise
   debug('zotero schema done')
 
-  yield BBT.init()
+  BBT.init()
   yield Translators.init()
   yield KeyManager.init()
   debug('started')

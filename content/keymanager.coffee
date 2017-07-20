@@ -1,4 +1,5 @@
 debug = require('./debug.coffee')
+parser = require('./keymanager/pattern-parser.pegjs')
 
 class KeyManager
   init: Zotero.Promise.coroutine(->
