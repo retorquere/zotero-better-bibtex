@@ -129,4 +129,29 @@ module.exports = [
       ]
     }
   },
+
+  // minitests
+  {
+    resolveLoader: {
+      alias: {
+        'pegjs-loader': path.join(__dirname, './webpack/pegjs-loader'),
+      },
+    },
+    context: path.resolve(__dirname, './minitests'),
+    entry: {
+      'pfunc': './pfunc.js'
+    },
+    output: {
+      path: path.resolve(__dirname, './minitests/build'),
+      filename: '[name].js',
+      devtoolLineToLine: true,
+      pathinfo: true,
+    },
+    module: {
+      rules: [
+        { test: /\.coffee$/, use: [ {loader: 'coffee-loader', options: { sourceMap: true} } ] },
+        { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
+      ]
+    }
+  },
 ];

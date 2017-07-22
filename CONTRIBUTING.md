@@ -20,8 +20,9 @@ everything to work and I'll happily document it here, but I can't help you.
 ## Node for the build chain
 
 1. Install node 7.10 however appropriate for your platform
-2. Run `npm install`
-3. Run `npm run build`
+2. Update npm to the latest npm by running `npm install npm@latest -g`
+3. Run `npm install`
+4. Run `npm run build`
 
 This should leave you with two XPI files in the `xpi` directory
 

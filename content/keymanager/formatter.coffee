@@ -1,6 +1,6 @@
 flash = require('../flash.coffee')
 Prefs = require('../preferences.coffee')
-parser = require('./citekey-pattern-parser.pegjs')
+parser = require('./formatter.pegjs')
 events = require('../events.coffee')
 dateparser = require('../dateparser.coffee')
 transliterate = require('transliteration')
@@ -23,6 +23,7 @@ class PatternFormatter
 
   update: ->
     @skipWords = Prefs.get('skipWords').split(',').map((word) -> word.trim()).filter((word) -> word)
+    @fold = Prefs.get('citekeyFold')
 
     for attempt in ['get', 'reset']
       if attempt == 'reset'
@@ -30,11 +31,11 @@ class PatternFormatter
         Prefs.clear('citekeyFormat')
 
       try
-        @pattern = parser.parse(Prefs.get('citekeyFormat'), {methods: @methods, filters: @filters})
+        @generate = new Function('item', parser.parse(Prefs.get('citekeyFormat'), {methods: @methods, filters: @filters}))
+        break
       catch err
         debug('Error parsing citekey pattern', {pattern: Prefs.get('citekeyFormat')}, err)
 
-    @fold = Prefs.get('citekeyFold')
     return
 
   re:
@@ -50,35 +51,16 @@ class PatternFormatter
     str = fold2ascii(str)
     return str
 
-  getLanguages: ->
-    delete @language
-    @languages = {}
-
-    if @item.multi && @item.multi._keys
-      for field, variants of @item.multi._keys
-        for lang in Object.keys(variants)
-          @languages[lang] = true
-    if @item.creators
-      for creator in @item.creators
-        continue unless creator.multi && creator.multi._key
-        for lang in Object.keys(creator.multi._key)
-          @languages[lang] = true
-    @languages = [null].concat(Object.keys(@languages))
-    debug('PatternFormatter.getLanguages: formatting for:', @languages)
-    return
-
   format: (item) ->
-    ### TODO: benchmark this ###
-    @item = Zotero.Utilities.Internal.itemToExportFormat(item, false, true)
-    @item.itemID = item.id
+    @item = item # Zotero.Utilities.Internal.itemToExportFormat(item, false, true)
 
-    return {} if @item.itemType in ['attachment', 'note']
-    @getLanguages()
+    return {} if @item.isAttachment() || @item.isNote()
 
     delete @year
     delete @month
-    if @item.date
-      date = dateparser.parseDateToObject(@item.date, {locale: @item.language})
+    item_date = @item.getField('date', true)
+    if item_date
+      date = dateparser.parseDateToObject(item_date, {locale: @item.getField('language')})
       if date
         date = date.origdate if date.origdate
         date = date.from if date.type == 'Interval'
@@ -87,11 +69,11 @@ class PatternFormatter
         when 'Verbatim'
           # strToDate is a lot less accurate than the BBT+CSL dateparser, but it sometimes extracts year-ish things that
           # ours doesn't
-          date = Zotero.Date.strToDate(@item.date)
+          date = Zotero.Date.strToDate(item_date)
 
           @year = parseInt(date.year)
           delete @year if isNaN(@year)
-          @year ?= @item.date
+          @year ?= item_date
 
           @month = parseInt(date.month)
           delete @month if isNaN(@month)
@@ -106,40 +88,9 @@ class PatternFormatter
         else
           throw "Unexpected parsed date #{JSON.stringify(date)}"
 
-    for candidate in @patterns[0]
-      delete @postfix
-      citekey = @concat(candidate)
-      return {citekey, postfix: @postfix} if citekey != ''
-    return {}
-
-  concat: (pattern) ->
-    result = ''
-    for part in pattern
-      longest = ''
-      for @language in @languages
-        candidate = @evaluate(part)
-        if typeof(candidate) == 'function'
-          return '' unless candidate.call(null, result)
-        else
-          longest = candidate if candidate.length > longest.length
-      continue unless longest
-      result += longest.replace(/[\s{},]/g, '')
-
-    result = @removeDiacritics(result) if @fold
-    return result
-
-  evaluate: (step) ->
-    debug('PatternFormatter.evaluate:', typeof step.method, step)
-
-    value = step.method.apply(@, step.arguments) || ''
-    return value if typeof(value) == 'function'
-
-    value = @clean(value) if step.scrub
-
-    for filter in step.filters
-      value = @filters[filter.filter].apply(@, [value].concat(filter.arguments)) || ''
-
-    return value
+    citekey = @generate()
+    citekey.citekey = @removeDiacritics(citekey.citekey) if citekey.citekey && @fold
+    return citekey
 
   clean: (str) ->
     return @safechars(@removeDiacritics(str)).trim()
@@ -187,6 +138,7 @@ class PatternFormatter
     return initial
 
   creators: (onlyEditors, options = {}) ->
+    throw new Error('TODO: figure out getCreators')
     return [] unless @item.creators?.length
 
     creators = {}
@@ -244,7 +196,6 @@ class PatternFormatter
 
   methods:
     zotero: ->
-      @postfix = '0'
       key = ''
 
       creator = (@item.creators || [])[0]
@@ -261,22 +212,14 @@ class PatternFormatter
       key += '_'
 
       year = '????'
-      if @item.date
-        date = Zotero.Date.strToDate(@item.date)
+      item_date = @item.getField('date', true)
+      if item_date
+        date = Zotero.Date.strToDate(item_date)
         year = date.year if date.year && @zotero.numberRe.test(date.year)
       key += year
 
       key = Zotero.Utilities.removeDiacritics(key.toLowerCase(), true)
       return key.replace(@zotero.citeKeyCleanRe, '')
-
-    '0': (text) ->
-      @postfix = '0'
-      return ''
-
-    literal: (text) -> text
-
-    '>': (chars) ->
-      return (text) -> (text && text.length > chars)
 
     property: (name) -> @innerText(@prop(name) || @prop(name[0].toLowerCase() + name.slice(1)) || '')
 

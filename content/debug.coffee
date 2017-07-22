@@ -1,10 +1,11 @@
 stringify = require('json-stringify-safe')
 
 module.exports = (msg...) ->
-  if typeof BetterBibTeX == 'undefined'
-    return unless Zotero.Debug.enabled
-  else
-    return unless BetterBibTeX.preferences.debug
+  if typeof Zotero != 'undefined' # not in minitest
+    if typeof BetterBibTeX == 'undefined'
+      return unless Zotero.Debug.enabled
+    else
+      return unless BetterBibTeX.preferences.debug
 
   str = []
   for m in msg
@@ -19,7 +20,13 @@ module.exports = (msg...) ->
   str = str.join(' ')
 
   if typeof BetterBibTeX == 'undefined'
-    Zotero.debug("{better-bibtex}: #{str}")
+    str = "{better-bibtex}: #{str}"
   else
-    Zotero.debug("{better-bibtex:#{BetterBibTeX.header.label}}: #{str}")
+    str = "{better-bibtex:#{BetterBibTeX.header.label}}: #{str}"
+
+  if typeof Zotero == 'undefined'
+    console.log(str)
+  else
+    Zotero.debug(str)
+
   return
