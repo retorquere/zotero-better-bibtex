@@ -5,7 +5,7 @@ scrub = (o) ->
   return o unless typeof o == 'object' && !Array.isArray(o)
 
   for k, v of o
-    if typeof v == 'undefined' || v == false || v == true || k == 'parser'
+    if typeof v == 'undefined' || v == false || v == true
       delete o[k]
     else
       scrub(v)
@@ -34,6 +34,8 @@ for raw, cooked of dates
   parsed = scrub(dateparser(raw))
   scrub(cooked)
   continue if deepEqual(parsed, cooked)
-  console.log(raw, cooked, parsed)
+  console.log('input:', raw)
+  console.log('expected:', JSON.stringify(cooked))
+  console.log('found:', JSON.stringify(parsed))
   throw new Error(raw)
 
