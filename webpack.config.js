@@ -63,7 +63,7 @@ module.exports = [
     entry: {
       "better-bibtex": './better-bibtex.coffee'
     },
-    devtool: 'source-map',
+    devtool: '#source-map',
     output: {
       path: path.resolve(__dirname, './build/content'),
       filename: '[name].js',
@@ -114,7 +114,7 @@ module.exports = [
       entries[translator] = `./${translator}.coffee`;
       return entries
     }, {}),
-    devtool: 'source-map',
+    devtool: '#source-map',
     output: {
       path: path.resolve(__dirname, './build/resource'),
       filename: '[name].js',

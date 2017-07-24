@@ -116,6 +116,8 @@ module BBT
   profile['extensions.zotero.firstRun2'] = false
   profile['extensions.zotero.firstRunGuidance'] = false
   profile['extensions.zotero.reportTranslationFailure'] = false
+
+  profile['devtools.source-map.locations.enabled'] = true
   
   FileUtils.rm_rf(profile_tgt)
   FileUtils.cp_r(profile.layout_on_disk, profile_tgt)

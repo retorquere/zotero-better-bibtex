@@ -27,6 +27,6 @@ class Serializer
 #    for id in ids
 #      delete cache[id] if entry.accessed
 
-  get: (item) -> Zotero.Utilities.Internal.itemToExportFormat(item)
+  get: (item) -> Zotero.Utilities.Internal.itemToExportFormat(item, false, true)
 
 module.exports = new Serializer()

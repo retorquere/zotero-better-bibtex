@@ -1,7 +1,6 @@
 flash = require('../flash.coffee')
 Prefs = require('../preferences.coffee')
 parser = require('./formatter.pegjs')
-events = require('../events.coffee')
 dateparser = require('../dateparser.coffee')
 transliterate = require('transliteration').transliterate
 fold2ascii = require('fold-to-ascii').fold
@@ -10,13 +9,13 @@ journalAbbrev = require('../journal-abbrev.coffee')
 serializer = require('../serializer.coffee')
 
 class PatternFormatter
-  constructor: ->
+  constructor: (@keymanager)->
     Prefs.observe((subject, topic, data) =>
       key = data.split('.')
       key = key[key.length - 1]
-      @update() if key in ['autoAbbrev', 'autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
-
-      events.emit('citekey-changed')
+      if key in ['autoAbbrev', 'autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
+        @update()
+        @keymanager.patternChanged().catch(err -> debug('PatternFormatter.KeyManager.patternChanged error:', err))
 
       return
     )
@@ -441,4 +440,4 @@ class PatternFormatter
 #
 #    chars: (text) -> @text += text
 
-module.exports = new PatternFormatter()
+module.exports = PatternFormatter
