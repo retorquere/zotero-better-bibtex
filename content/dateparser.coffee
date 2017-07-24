@@ -1,38 +1,14 @@
 edtf = require('edtf')
 edtfy = require('edtfy')
-locale = require('../gen/dateparser.json')
+months = require('../gen/dateparser.json')
 
-months = {
-  names: Object.keys(locale.month)
-  re: {}
-}
-months.names.sort((a, b) -> b.length - a.length)
 for month in months.names
   months.re[month] = new RegExp(month, 'i')
 
-month_names = [
-  'january',
-  'february',
-  'march',
-  'april',
-  'may',
-  'june',
-  'july',
-  'august',
-  'september',
-  'october',
-  'november',
-  'december',
-  'spring',
-  'summer',
-  'autumn',
-  'winter',
-]
-
 #regex = {
-#  My: new RegExp('^(' + month_names.join('|') + ')\\s([0-9]{3,})$', 'i'),
-#  Mdy: new RegExp('^(' + month_names.join('|') + ')\\s([0-9]{1,2})\\s*,\\s*([0-9]{3,})$', 'i'),
-#  dMy: new RegExp('^([0-9]{1,2})\\.?\\s+(' + month_names.join('|') + ')\\s+([0-9]{3,})$', 'i'),
+#  My: new RegExp('^(' + months.english.join('|') + ')\\s([0-9]{3,})$', 'i'),
+#  Mdy: new RegExp('^(' + months.english.join('|') + ')\\s([0-9]{1,2})\\s*,\\s*([0-9]{3,})$', 'i'),
+#  dMy: new RegExp('^([0-9]{1,2})\\.?\\s+(' + months.english.join('|') + ')\\s+([0-9]{3,})$', 'i'),
 #}
 
 normalize_edtf = (date) ->
@@ -96,20 +72,20 @@ parse = (raw) ->
 #  if m = regex.dMy.exec(trimmed)
 #    year = parseInt(m[3])
 #    day = parseInt(m[1])
-#    month = month_names.indexOf(m[2]) + 1
+#    month = months.english.indexOf(m[2]) + 1
 #    month += 8 if month > 12
 #    return { parser: 'dMy', date: { year, month, day } }
 
 #  if m = regex.Mdy.exec(trimmed)
 #    year = parseInt(m[3])
 #    day = parseInt(m[2])
-#    month = month_names.indexOf(m[1]) + 1
+#    month = months.english.indexOf(m[1]) + 1
 #    month += 8 if month > 12
 #    return { parser: 'Mdy', date: { year, month, day } }
 
 #  if m = regex.My.exec(trimmed)
 #    year = parseInt(m[2])
-#    month = month_names.indexOf(m[1]) + 1
+#    month = months.english.indexOf(m[1]) + 1
 #    month += 8 if month > 12
 #    return { parser: 'My', date: { year, month } }
 

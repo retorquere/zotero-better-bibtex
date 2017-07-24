@@ -4,9 +4,7 @@ const parse = require('xml-parser');
 
 module.exports = function(srcdir, tgt) {
   var result = {
-    months: {},
-    dateOrder: {},
-    month: {}
+    map: {}
   };
 
   var translate = {
@@ -27,6 +25,9 @@ module.exports = function(srcdir, tgt) {
 		'season-03': 'autumn',
 		'season-04': 'winter',
 	};
+  var keys = Object.keys(translate)
+  keys.sort()
+  result.english = keys.map(function(k) { return translate[k]; })
 
   var locales = require(path.join(srcdir, 'locales.json'));
 
@@ -48,9 +49,11 @@ module.exports = function(srcdir, tgt) {
     months.forEach(function(month) {
       let name = month.content.toLowerCase().replace(/\./g, '').trim();
       if (name.match(/^[0-9]+$/)) { return; }
-      if (result.month[name]) { console.log(`ignoring ${month.attributes.name} ${name}`); return }
-      result.month[name] = translate[month.attributes.name];
+      if (result.map[name] && result.map[name] != translate[month.attributes.name]) { console.log(`ignoring ${month.attributes.name} ${name}`); return }
+      result.map[name] = translate[month.attributes.name];
     })
+    result.names = Object.keys(result.map);
+    result.names.sort(function(a, b) { return b.length - a.length })
   })
 
   /*
