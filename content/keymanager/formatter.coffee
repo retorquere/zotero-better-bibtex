@@ -60,14 +60,12 @@ class PatternFormatter
     delete @year
     delete @month
     if @item.date
-      date = dateparser.parseDateToObject(@item.date, {locale: @item.language})
-      if date
-        date = date.origdate if date.origdate
-        date = date.from if date.type == 'Interval'
+      date = dateparser(@item.date)
+      date = date.from if date.from
 
-      switch date?.type || 'Verbatim'
-        when 'Verbatim'
-          # strToDate is a lot less accurate than the BBT+CSL dateparser, but it sometimes extracts year-ish things that
+      switch date?.type || 'verbatim'
+        when 'verbatim'
+          # strToDate is a lot less accurate than the BBT+EDTF dateparser, but it sometimes extracts year-ish things that
           # ours doesn't
           date = Zotero.Date.strToDate(@item.date)
 
@@ -78,12 +76,13 @@ class PatternFormatter
           @month = parseInt(date.month)
           delete @month if isNaN(@month)
 
-        when 'Date'
+        when 'date'
+          date = date.orig || date.date
           @year = date.year
           @month = date.month
 
-        when 'Season'
-          @year = date.year
+        when 'season'
+          @year = date.date.year
 
         else
           throw "Unexpected parsed date #{JSON.stringify(date)}"

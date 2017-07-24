@@ -12,3 +12,4 @@ module.exports = (title, body, timeout = 8) ->
     pw.startCloseTimer(timeout * 1000)
   catch err
     debug('@flash failed:', {title, body}, err)
+  return

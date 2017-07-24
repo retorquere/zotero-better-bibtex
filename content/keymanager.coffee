@@ -83,7 +83,8 @@ class KeyManager
       [dynamic, citekey] = (@citekeyRE.exec(item.extra || '') || ['*', ''])
       proposed = @formatter.format(item)
 
-      if citekey && !citekeys[item.ibraryID][citekey] # let's see if we can keep this citekey
+      # let's see if we can keep this citekey
+      if citekey && !citekeys[item.ibraryID][citekey]
         # citekey is unchanged and also not taken -- rare
         if citekey == proposed.citekey
           citekeys[item.ibraryID][citekey] = true
@@ -99,8 +100,11 @@ class KeyManager
               citekeys[item.ibraryID][citekey] = true
               continue
 
+      # perhaps no postfixing is required
       if !citekeys[item.ibraryID][proposed.citekey]
         citekey = proposed.citekey
+
+      # seek free postfix
       else
         postfix = 1
         while true
