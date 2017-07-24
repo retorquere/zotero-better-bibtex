@@ -52,6 +52,83 @@ def execute(options)
   end
 end
 
+def normalize_library(library, collections=false)
+  library.delete('keymanager')
+  library.delete('cache')
+  library.delete('config')
+  library.delete('id')
+
+  fields = %w{
+    DOI ISBN ISSN abstractNote applicationNumber archive archiveLocation assignee
+    bookTitle callNumber caseName code conferenceName country court creators
+    date dateDecided dateEnacted distributor docketNumber edition encyclopediaTitle episodeNumber
+    extra filingDate firstPage institution issue issueDate issuingAuthority itemID
+    itemType journalAbbreviation jurisdiction key language legalStatus libraryCatalog manuscriptType
+    medium multi nameOfAct network note notes numPages number
+    numberOfVolumes pages patentNumber place priorityNumbers proceedingsTitle programTitle publicLawNumber
+    publicationTitle publisher references related relations reportNumber reportType reporter
+    reporterVolume rights runningTime section seeAlso series seriesNumber seriesText
+    seriesTitle shortTitle status studio tags thesisType title type
+    university url videoRecordingFormat volume websiteTitle websiteType
+  }
+  # item order doesn't matter, but for my tests I need them to be stable
+  library['items'].sort_by!{|item| fields.collect{|field| item[field].to_s } }
+
+  idmap = {}
+  library['items'].each_with_index{|item, i| idmap[item['itemID']] = i }
+
+  library['collections'] = [] unless collections
+
+  scrubhash = lambda{|hash|
+    hash.keys.each{|k|
+      case hash[k]
+        when Array, Hash
+          hash.delete(k) if hash[k].empty?
+        when String
+          hash.delete(k) if hash[k].strip == ''
+        when NilClass
+          hash.delete(k)
+      end
+    }
+  }
+
+  library['items'].each_with_index{|item, i|
+    item['itemID'] = i
+    item.delete('multi')
+    item.delete('accessDate')
+
+    item['creators'] ||= []
+    item['creators'].each{|creator|
+      creator.delete('creatorID')
+      creator.delete('multi')
+      scrubhash.call(creator)
+    }
+
+    # attachment order doesn't matter
+    item['attachments'] ||= []
+    item['attachments'].each{|att|
+      att.delete('path')
+      scrubhash.call(att)
+    }
+    item['attachments'].sort_by!{|att| %w{title url mimeType}.collect{|field| att[field]} }
+
+    item['note'] = Nokogiri::HTML(item['note']).inner_text.gsub(/[\s\n]+/, ' ').strip if item['note']
+    item.delete('__citekey__')
+    item.delete('__citekeys__')
+
+    scrubhash.call(item)
+  }
+
+  renum = lambda{|collection|
+    collection.delete('id')
+    # item order doesn't matter
+    collection['items'] = collection['items'].collect{|id| idmap[id]}.sort if collection['items']
+    collection['collections'].each{|sub| renum.call(sub) } if collection['collections']
+  }
+
+  renum.call({'collections' => library['collections']})
+end
+
 module BBT
   if OS.linux?
     profiles = File.expand_path('~/.zotero/zotero')
@@ -116,6 +193,7 @@ module BBT
   profile['extensions.zotero.firstRun2'] = false
   profile['extensions.zotero.firstRunGuidance'] = false
   profile['extensions.zotero.reportTranslationFailure'] = false
+  profile['extensions.zotero.better-bibtex.testing'] = true
 
   profile['devtools.source-map.locations.enabled'] = true
   

@@ -40,6 +40,8 @@ class MarkupParser
         attrs[name] = value
       @handler.start(tagName, attrs)
 
+    return
+
   parseEndTag: (tag, tagName) ->
     # If no tag name is provided, clean shop
     if !tagName
@@ -75,9 +77,9 @@ class MarkupParser
     last = html
 
     ### add enquote psuedo-tags. Pseudo-tags are used here because they're cleanly removable for the pre block ###
-    if Translator.preferences.csquotes
-      html = html.replace(///[#{Translator.preferences.csquotes.open.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]\s*/g, "\\$&")}]\s*///g, "\x0E")
-      html = html.replace(///\s*[#{Translator.preferences.csquotes.close.replace(/\s*[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")}]///g, "\x0F")
+    if BetterBibTeX.preferences.csquotes
+      html = html.replace(///[#{BetterBibTeX.preferences.csquotes.open.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]\s*/g, "\\$&")}]\s*///g, "\x0E")
+      html = html.replace(///\s*[#{BetterBibTeX.preferences.csquotes.close.replace(/\s*[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")}]///g, "\x0F")
 
     length = html.length
     while html
@@ -145,7 +147,7 @@ class MarkupParser
     @parseEndTag()
 
     if options.caseConversion
-      unless Translator.preferences.suppressTitleCase
+      unless BetterBibTeX.preferences.suppressTitleCase
         @titleCased = Zotero.BetterBibTeX.CSL.titleCase(@innerText(@handler.root))
         @titleCase(@handler.root)
 
@@ -227,6 +229,8 @@ class MarkupParser
         for child in node.children
           @simplify(child, isNoCased || node.nocase)
 
+    return
+
   titleCase: (node) ->
     if node.name == '#text'
       # https://github.com/Juris-M/citeproc-js/issues/30
@@ -244,6 +248,8 @@ class MarkupParser
     else
       for child in node.children
         @titleCase(child) unless child.nocase
+
+    return
 
   class AST
     re:
@@ -296,6 +302,7 @@ class MarkupParser
       @root = {name: 'span', children: [], attr: {}, class: {}}
       @elems = [@root]
       @sentenceStart = true
+      return
 
     start: (name, attr, unary) ->
       tag = {name, attr, class: {}, children: []}
@@ -308,9 +315,11 @@ class MarkupParser
 
       @elems[0].children.push(tag)
       @elems.unshift(tag)
+      return
 
     end: ->
       @elems.shift()
+      return
 
     plaintext: (text, pos) ->
       l = @elems[0].children.length
@@ -319,11 +328,14 @@ class MarkupParser
       else
         @elems[0].children[l - 1].text += text
 
+      return
+
     pre: (text) ->
       throw "Expectd 'pre' tag, found '#{@elems[0].name}'" unless @elems[0].name == 'pre'
       throw "Text already set on pre tag'" if @elems[0].text
       throw "Pre must not have children" if @elems[0].children && @elems[0].children.length > 0
       @elems[0].text = text
+      return
 
     chars: (text, pos) ->
       if !(@caseConversion && pos?)
@@ -367,5 +379,7 @@ class MarkupParser
             #console.log('char:', text[0])
             @plaintext(text[0], pos + (length - text.length))
             text = text.substring(1)
+
+      return
 
 module.exports = new MarkupParser()

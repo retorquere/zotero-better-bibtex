@@ -17,24 +17,24 @@ class Exporter
     @attachmentCounter = 0
 
     # TODO: disable temporarily because this translator ID doesn't trigger itemID adding
-    @caching = !Translator.options.exportFileData
+    @caching = !BetterBibTeX.options.exportFileData
 
     @unicode = switch
-      when Translator.BetterBibLaTeX || Translator.CollectedNotes then !Translator.preferences.asciiBibLaTeX
-      when Translator.BetterBibTeX then !Translator.preferences.asciiBibTeX
+      when BetterBibTeX.BetterBibLaTeX || BetterBibTeX.CollectedNotes then !BetterBibTeX.preferences.asciiBibLaTeX
+      when BetterBibTeX.BetterBibTeX then !BetterBibTeX.preferences.asciiBibTeX
       else true
 
     @collections = []
-    if Zotero.nextCollection && Translator.header.configOptions?.getCollections
+    if Zotero.nextCollection && BetterBibTeX.header.configOptions?.getCollections
       while collection = Zotero.nextCollection()
         debug('adding collection:', collection)
         @collections.push(@sanitizeCollection(collection))
 
     @context = {
-      exportCharset: (Translator.options.exportCharset || 'UTF-8').toUpperCase()
-      exportNotes: !!Translator.options.exportNotes
-      translatorID: Translator.header.translatorID
-      useJournalAbbreviation: !!Translator.options.useJournalAbbreviation
+      exportCharset: (BetterBibTeX.options.exportCharset || 'UTF-8').toUpperCase()
+      exportNotes: !!BetterBibTeX.options.exportNotes
+      translatorID: BetterBibTeX.header.translatorID
+      useJournalAbbreviation: !!BetterBibTeX.options.useJournalAbbreviation
     }
 
   # candidate for removal
@@ -63,7 +63,7 @@ class Exporter
     'collection-title':             {}
     'container-title':
       BibLaTeX: ->
-        switch @item.__type__
+        return switch @item.__type__
           when 'film', 'tvBroadcast', 'videoRecording', 'motion_picture' then 'booktitle'
           when 'bookSection', 'chapter' then 'maintitle'
           else 'journaltitle'
@@ -230,7 +230,7 @@ class Exporter
         when 'collection' then sane.collections.push(@sanitizeCollection(c))
         else              throw "Unexpected collection member type '#{c.type}'"
 
-    sane.collections.sort( ( (a, b) -> a.name.localeCompare(b.name) ) ) if Translator.preferences.tests
+    sane.collections.sort( ( (a, b) -> a.name.localeCompare(b.name) ) ) if BetterBibTeX.preferences.testing
 
     return sane
 
@@ -244,14 +244,15 @@ class Exporter
     while item = Zotero.nextItem()
       continue if item.itemType == 'note' || item.itemType == 'attachment'
       debug('fetched item:', item)
-      if @caching
-        cached = Zotero.BetterBibTeX.cache.fetch(item.itemID, @context)
-        if cached?.citekey
-          debug('nextItem: cached')
-          @citekeys[item.itemID] = cached.citekey
-          Zotero.write(cached.bibtex)
-          @preamble.DeclarePrefChars += cached.data.DeclarePrefChars if cached.data.DeclarePrefChars
-          continue
+# TODO: caching?
+#      if @caching
+#        cached = Zotero.BetterBibTeX.cache.fetch(item.itemID, @context)
+#        if cached?.citekey
+#          debug('nextItem: cached')
+#          @citekeys[item.itemID] = cached.citekey
+#          Zotero.write(cached.bibtex)
+#          @preamble.DeclarePrefChars += cached.data.DeclarePrefChars if cached.data.DeclarePrefChars
+#          continue
 
       Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
       item.__citekey__ ||= Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
@@ -272,15 +273,16 @@ class Exporter
     if preamble.length > 0
       preamble = ('"' + cmd + ' "' for cmd in preamble)
       Zotero.write("@preamble{ " + preamble.join(" \n # ") + " }\n")
+    return
 
   exportGroups: ->
     debug('exportGroups:', @collections)
-    return if @collections.length == 0 || !Translator.preferences.jabrefGroups
+    return if @collections.length == 0 || !BetterBibTeX.preferences.jabrefGroups
 
     switch
-      when Translator.preferences.jabrefGroups == 3
+      when BetterBibTeX.preferences.jabrefGroups == 3
         meta = 'groupsversion:3'
-      when Translator.BetterBibLaTeX
+      when BetterBibTeX.BetterBibLaTeX
         meta = 'databaseType:biblatex'
       else
         meta = 'databaseType:bibtex'
@@ -290,19 +292,21 @@ class Exporter
     Zotero.write(@JabRef_exportGroup({collections: @collections}))
     Zotero.write(';\n')
     Zotero.write('}\n')
+    return
 
   JabRef_assignGroups: (collection, item) ->
-    return unless Translator.preferences.jabrefGroups == 4
+    return unless BetterBibTeX.preferences.jabrefGroups == 4
 
     collection = {items: [], collections: collection} if Array.isArray(collection)
 
     if item.itemID in collection.items
       item.groups ||= []
       item.groups.push(collection.name)
-      item.groups.sort() if Translator.preferences.tests
+      item.groups.sort() if BetterBibTeX.preferences.testing
 
     for coll in collection.collections
       @JabRef_assignGroups(coll, item)
+    return
 
   JabRef_serialize: (list, wrap) ->
     serialized = (elt.replace(/\\/g, '\\\\').replace(/;/g, '\\;') for elt in list)
@@ -312,9 +316,9 @@ class Exporter
   JabRef_exportGroup: (collection, level = 0) ->
     if level
       collected = ["#{level} ExplicitGroup:#{collection.name}", '0']
-      if Translator.preferences.jabrefGroups == 3
+      if BetterBibTeX.preferences.jabrefGroups == 3
         references = (@citekeys[id] for id in (collection.items || []) when @citekeys[id])
-        references.sort() if Translator.preferences.tests
+        references.sort() if BetterBibTeX.preferences.testing
         collected = collected.concat(references)
       # what is the meaning of the empty cell at the end, JabRef?
       collected = collected.concat([''])

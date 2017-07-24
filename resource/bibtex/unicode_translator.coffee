@@ -83,7 +83,7 @@ class HTML
         latex = "\n\\item ..."
 
       when 'enquote'
-        if Translator.BetterBibTeX
+        if BetterBibTeX.BetterBibTeX
           latex = '\\enquote{...}'
         else
           latex = '\\mkbibquote{...}'
@@ -112,11 +112,13 @@ class HTML
 
     @stack.shift()
 
+    return
+
   embrace: (latex, condition) ->
     ### holy mother of %^$#^%$@ the bib(la)tex case conversion rules are insane ###
     ### https://github.com/retorquere/zotero-better-bibtex/issues/541 ###
     ### https://github.com/plk/biblatex/issues/459 ... oy! ###
-    @embraced ?= @options.caseConversion && (((@latex || latex)[0] != '\\') || Translator.BetterBibTeX)
+    @embraced ?= @options.caseConversion && (((@latex || latex)[0] != '\\') || BetterBibTeX.BetterBibTeX)
     return latex unless @embraced && condition
     return '{' + latex + '}'
 
@@ -155,3 +157,5 @@ class HTML
     latex = latex.replace(/([^\\])({})+([^ 0-9a-z])/ig, '$1$3')
 
     @latex += latex
+
+    return

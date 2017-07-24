@@ -121,6 +121,7 @@ Reference::addCreators = ->
 
   @add({ editoratype: 'collaborator' }) if creators.editora.length > 0
   @add({ editorbtype: 'redactor' }) if creators.editorb.length > 0
+  return
 
 Reference::typeMap =
   csl:
@@ -195,11 +196,12 @@ Reference::typeMap =
     videoRecording     : 'video'
     webpage            : 'online'
 
-Translator.initialize = ->
+BetterBibTeX.initialize = ->
   Reference.installPostscript()
+  return
 
 DateField =
-  field: (date, formatted, literal) ->
+  field: (date, formatted, verbatim) ->
     switch
       when !date
         field = {}
@@ -207,13 +209,17 @@ DateField =
       when !date.type
         throw "Failed to parse #{date}: #{JSON.stringify(date)}"
 
-      when date.type == 'Verbatim'
-        field = { name: literal, value: date.verbatim }
+      when date.type == 'verbatim'
+        field = { name: verbatim, value: date.verbatim }
 
-      when date.edtf && Translator.preferences.biblatexExtendedDateFormat
-        field = { name: formatted, value: date.replace(/~/g, '\u00A0') }
+# TODO: what happens here?
+#      when date.edtf && BetterBibTeX.preferences.biblatexExtendedDateFormat
+#        field = { name: formatted, value: date.replace(/~/g, '\u00A0') }
 
-      when date.type == 'Interval'
+      when date.type == 'date'
+        field = { name: formatted, value: @format(date.date) }
+
+      when date.type == 'interval'
         field = { name: formatted, value: @format(date.from) + '/' + @format(date.to) }
 
       when date.year
@@ -249,13 +255,13 @@ DateField =
       when date.year                            then  formatted = @year(date.year)
       else                                            formatted = ''
 
-    if Translator.preferences.biblatexExtendedDateFormat
+    if BetterBibTeX.preferences.biblatexExtendedDateFormat
       formatted += '?' if date.uncertain
       formatted += '~' if date.approximate
 
     return formatted
 
-Translator.doExport = ->
+BetterBibTeX.doExport = ->
   Exporter = new Exporter()
 
   Zotero.write('\n')
@@ -358,15 +364,14 @@ Translator.doExport = ->
           if ref.isBibVar(item.publicationTitle)
             ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
           else
-            abbr = Zotero.BetterBibTeX.journalAbbrev(item)
-            if Translator.options.useJournalAbbreviation && abbr
-              ref.add({ name: 'journaltitle', value: abbr, preserveBibTeXVariables: true })
-            else if Translator.BetterBibLaTeX && item.publicationTitle.match(/arxiv:/i)
+            if BetterBibTeX.options.useJournalAbbreviation && item.journalAbbrev
+              ref.add({ name: 'journaltitle', value: item.journalAbbrev, preserveBibTeXVariables: true })
+            else if BetterBibTeX.BetterBibLaTeX && item.publicationTitle.match(/arxiv:/i)
               ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
-              ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true })
+              ref.add({ name: 'shortjournal', value: item.journalAbbrev, preserveBibTeXVariables: true })
             else
               ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
-              ref.add({ name: 'shortjournal', value: abbr, preserveBibTeXVariables: true })
+              ref.add({ name: 'shortjournal', value: item.journalAbbrev, preserveBibTeXVariables: true })
 
         else
           ref.add({ journaltitle: item.publicationTitle}) if ! ref.has.journaltitle && item.publicationTitle != item.title
@@ -432,7 +437,7 @@ Translator.doExport = ->
     ref.add({ urldate: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate && item.url
 
     if item.date
-      date = Zotero.BetterBibTeX.parseDateToObject(item.date, {locale: item.language, edtf: Translator.preferences.biblatexExtendedDateFormat})
+      date = Zotero.BetterBibTeX.parseDate(item.date)
       ref.add(DateField.field(date, 'date', 'year'))
       ref.add(DateField.field(date.origdate, 'origdate', 'origdate'))
 
@@ -447,7 +452,7 @@ Translator.doExport = ->
     ref.add({ name: (if ref.has.note then 'annotation' else 'note'), value: item.extra, allowDuplicates: true })
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
-    if item.notes and Translator.options.exportNotes
+    if item.notes and BetterBibTeX.options.exportNotes
       for note in item.notes
         ref.add({ name: 'annotation', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true, html: true })
 
