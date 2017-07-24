@@ -1,7 +1,7 @@
 debug = require('./debug.coffee')
 Translators = require('./translators.coffee')
 KeyManager = require('./keymanager.coffee')
-citeproc = require('../citeproc-js/citeproc').CSL
+require('./serializer.coffee')
 
 BBT = {}
 

@@ -7,6 +7,7 @@ transliterate = require('transliteration')
 fold2ascii = require('fold-to-ascii')
 punycode = require('punycode')
 journalAbbrev = require('../journal-abbrev.coffee')
+serializer = require('../serializer.coffee')
 
 class PatternFormatter
   constructor: ->
@@ -31,7 +32,7 @@ class PatternFormatter
         Prefs.clear('citekeyFormat')
 
       try
-        @generate = new Function('item', parser.parse(Prefs.get('citekeyFormat'), {methods: @methods, filters: @filters}))
+        @generate = new Function(parser.parse(Prefs.get('citekeyFormat'), {methods: @methods, filters: @filters}))
         break
       catch err
         debug('Error parsing citekey pattern', {pattern: Prefs.get('citekeyFormat')}, err)
@@ -52,15 +53,14 @@ class PatternFormatter
     return str
 
   format: (item) ->
-    @item = item # Zotero.Utilities.Internal.itemToExportFormat(item, false, true)
+    @item = serializer.get(item)
 
-    return {} if @item.isAttachment() || @item.isNote()
+    return {} if @item.itemType in ['attachment', 'note']
 
     delete @year
     delete @month
-    item_date = @item.getField('date', true)
-    if item_date
-      date = dateparser.parseDateToObject(item_date, {locale: @item.getField('language')})
+    if @item.date
+      date = dateparser.parseDateToObject(@item.date, {locale: @item.language})
       if date
         date = date.origdate if date.origdate
         date = date.from if date.type == 'Interval'
@@ -69,11 +69,11 @@ class PatternFormatter
         when 'Verbatim'
           # strToDate is a lot less accurate than the BBT+CSL dateparser, but it sometimes extracts year-ish things that
           # ours doesn't
-          date = Zotero.Date.strToDate(item_date)
+          date = Zotero.Date.strToDate(@item.date)
 
           @year = parseInt(date.year)
           delete @year if isNaN(@year)
-          @year ?= item_date
+          @year ?= @item.date
 
           @month = parseInt(date.month)
           delete @month if isNaN(@month)
@@ -89,6 +89,7 @@ class PatternFormatter
           throw "Unexpected parsed date #{JSON.stringify(date)}"
 
     citekey = @generate()
+    citekey.citekey ||= "zotero-#{@item.itemID}"
     citekey.citekey = @removeDiacritics(citekey.citekey) if citekey.citekey && @fold
     return citekey
 
@@ -138,7 +139,6 @@ class PatternFormatter
     return initial
 
   creators: (onlyEditors, options = {}) ->
-    throw new Error('TODO: figure out getCreators')
     return [] unless @item.creators?.length
 
     creators = {}
@@ -191,8 +191,8 @@ class PatternFormatter
     citeKeyCleanRe: /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+/g
 
   prop: (name) ->
-    return @item[name] unless @language
-    return @item.multi?._keys?[name]?[@language]
+    # TODO: return stuff from multi if present in order of language preference
+    return @item[name]
 
   methods:
     zotero: ->
@@ -212,9 +212,8 @@ class PatternFormatter
       key += '_'
 
       year = '????'
-      item_date = @item.getField('date', true)
-      if item_date
-        date = Zotero.Date.strToDate(item_date)
+      if @item.date
+        date = Zotero.Date.strToDate(@item.date)
         year = date.year if date.year && @zotero.numberRe.test(date.year)
       key += year
 
@@ -433,14 +432,14 @@ class PatternFormatter
     nopunct: (value) ->
       return Zotero.Utilities.XRegExp.replace(value || '', @re.punct, '', 'all')
 
-  ### TODO: What is this for? ###
-  HTML: class
-    constructor: (html) ->
-      @text = ''
-      @HTMLtoDOM.Parser(html, @)
-
-    cdata: (text) -> @text += text
-
-    chars: (text) -> @text += text
+#  ### TODO: What is this for? ###
+#  HTML: class
+#    constructor: (html) ->
+#      @text = ''
+#      @HTMLtoDOM.Parser(html, @)
+#
+#    cdata: (text) -> @text += text
+#
+#    chars: (text) -> @text += text
 
 module.exports = new PatternFormatter()

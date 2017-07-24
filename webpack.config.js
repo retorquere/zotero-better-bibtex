@@ -12,7 +12,7 @@ const UglifyEsPlugin = require('uglify-es-webpack-plugin');
 
 const version = require('./webpack/version');
 const translators = require('./webpack/translators');
-const locales = require('./webpack/locales');
+const dateparser = require('./webpack/dateparser');
 
 console.log('make build dirs');
 if (!fs.existsSync(path.join(__dirname, 'build'))) {
@@ -35,8 +35,8 @@ fs.writeFileSync(path.join(__dirname, 'gen/translators.json'), JSON.stringify(tr
 console.log('update citeproc');
 if (shell.exec('git submodule update --depth 1 -- citeproc-js').code != 0) throw 'Citeproc update failed';
 
-console.log('locales');
-locales(path.join(__dirname, 'citeproc-js/locale'), path.join(__dirname, 'gen/csl-locales.json'));
+console.log('dateparser');
+locales(path.join(__dirname, 'citeproc-js/locale'), path.join(__dirname, 'gen/dateparser.json'));
 
 console.log("let's roll");
 module.exports = [
@@ -106,7 +106,7 @@ module.exports = [
       alias: {
         'pegjs-loader': path.join(__dirname, './webpack/pegjs-loader'),
       },
-    },
+   },
     plugins: [ new TranslatorHeaderPlugin() ],
     context: path.resolve(__dirname, './resource'),
     entry: translators().reduce((entries, f) => {
@@ -139,7 +139,8 @@ module.exports = [
     },
     context: path.resolve(__dirname, './minitests'),
     entry: {
-      'pfunc': './pfunc.js'
+      'pfunc': './pfunc.js',
+      'dateparser': './dateparser.coffee'
     },
     output: {
       path: path.resolve(__dirname, './minitests/build'),

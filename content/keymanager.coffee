@@ -1,72 +1,121 @@
 debug = require('./debug.coffee')
+co = Zotero.Promise.coroutine
 
 class KeyManager
-  init: Zotero.Promise.coroutine(->
+  init: co(->
     debug('KeyManager.init()')
     @query = {
       field: {}
       type: {}
-      url: 'https://zotero/better-bibtex/citekey'
     }
 
-    for field in yield Zotero.DB.queryAsync("select fieldID, fieldName from fields where fieldName in ('title', 'url')") # 110, 1
+    for field in yield Zotero.DB.queryAsync("select fieldID, fieldName from fields where fieldName in ('extra')")
       @query.field[field.fieldName] = field.fieldID
     for type in yield Zotero.DB.queryAsync("select itemTypeID, typeName from itemTypes where typeName in ('note', 'attachment')") # 1, 14
       @query.type[type.typeName] = type.itemTypeID
 
-    @query.citekeys = """
-      select attachment.itemID, attachment.parentItemID, title_value.valueID, title_value.value as citekey
-      from itemAttachments attachment
-      join itemData title on title.fieldID = #{@query.field.title} and title.itemID = attachment.itemID
-      join itemDataValues title_value on title_value.valueID = title.valueID
-      join itemData url on url.fieldID = #{@query.field.url} and url.itemID = attachment.itemID
-      join itemDataValues url_value on url_value.valueID = url.valueID and url_value.value = '#{@query.url}'
-      where attachment.linkMode = #{Zotero.Attachments.LINK_MODE_LINKED_URL}
-    """
-
-    items = """
-      with citekey as (#{@query.citekeys})
-      select item.itemID
+    @query.select = """
+      select item.itemID, item.libraryID, extra.value as extra
       from items item
-      left join citekey on citekey.parentItemID = item.itemID
-      where citekey.parentItemID is null
+      left join itemData field on field.fieldID = #{@query.field.extra} and field.itemID = item.itemID
+      left join itemDataValues extra on extra.valueID = field.valueID
+      where item.itemTypeId not in (#{@query.type.attachment}, #{@query.type.note})
     """
 
-    items = yield Zotero.DB.queryAsync(items)
-    for item in (items || [])
-      Zotero.debug("No citation key: #{item.itemID}")
-      ## TODO: generate new key here
-
-    ## TODO: Possibly only do these scans when extensions.zotero.translators.better-bibtex.scanCitekeys is set, then reset it
-
-    ## TODO: find items with more than one citekey and delete all but one
-
-    ## TODO: scan for 'bibtex:...' keys and move them to attachments
+    @formatter = require('./keymanager/formatter.coffee')
 
     @observerID = Zotero.Notifier.registerObserver(@, ['item'], 'BetterBibTeX.KeyManager', 100)
+
+    yield @update()
 
     debug('KeyManager.init() done')
     return
   )
 
-  notify: Zotero.Promise.coroutine((action, type, ids, extraData) ->
+  notify: co((action, type, ids, extraData) ->
     debug('KeyManager.notify', {action, type, ids, extraData})
 
-    ## test for field updates https://groups.google.com/d/msg/zotero-dev/naAxXIbpDhU/7rM-5IKGBQAJ
+    ## TODO: test for field updates https://groups.google.com/d/msg/zotero-dev/naAxXIbpDhU/7rM-5IKGBQAJ
+
+    ## skip saves we caused ourselves
     ids = (id for id in ids when !extraData[id].BetterBibTeX)
     debug('KeyManager.notify', {ids})
 
-    for item in yield Zotero.Items.getAsync(ids)
-      continue if item.isAttachment() || item.isNote()
-      # continue if item.getField('extra')
-      debug('KeyManager.notify: change extra', item.id)
-
-      ## generate citation key if not pinned, store in attachment not extra
-      item.setField('extra', 'updated')
-      yield item.saveTx({
-        notifierData: { BetterBibTeX: true }
-      })
+    yield @update(ids)
 
     return
   )
+
+  citekeyRE: /(?:^|\n)bibtex(\*?):([^\n]+)(?:\n|$)/
+
+  # update finds all references without citation keys, and all dynamic references that are marked to be overridden -- either
+  # an array of ids, or the string '*' for all dynamic references (only to be used when the pattern changes)
+  update: co((override = []) ->
+    citekeys = {}
+    update = []
+
+    start = new Date()
+    debug('citekey scan start')
+    items = yield Zotero.DB.queryAsync(@query.select)
+    for item in items
+      citekeys[item.libraryID] ||= {}
+
+      [dynamic, citekey] = (@citekeyRE.exec(item.extra || '') || ['*', ''])
+      switch
+        when !dynamic
+          citekeys[item.ibraryID][citekey] = true
+
+        when override == '*' || (override.length && item.itemID in override)
+          update.push(item.itemID)
+
+        else
+          citekeys[item.ibraryID][citekey] = true
+    debug('citekey scan complete:', new Date() - start)
+
+    return unless update.length
+
+    basechar = 'a'.charCodeAt(0) - 1
+
+    items = yield Zotero.Items.get(update)
+    for item in items
+      extra = item.getField('extra') || ''
+
+      [dynamic, citekey] = (@citekeyRE.exec(item.extra || '') || ['*', ''])
+      proposed = @formatter.format(item)
+
+      if citekey && !citekeys[item.ibraryID][citekey] # let's see if we can keep this citekey
+        # citekey is unchanged and also not taken -- rare
+        if citekey == proposed.citekey
+          citekeys[item.ibraryID][citekey] = true
+          continue
+
+        if citekey.startsWith(proposed.citekey)
+          if proposed.postfix == '0'
+            if citekey.substr(proposed.citekey.length).match(/-[0-9]+$/)
+              citekeys[item.ibraryID][citekey] = true
+              continue
+          else
+            if citekey.substr(proposed.citekey.length).match(/[a-z]$/)
+              citekeys[item.ibraryID][citekey] = true
+              continue
+
+      if !citekeys[item.ibraryID][proposed.citekey]
+        citekey = proposed.citekey
+      else
+        postfix = 1
+        while true
+          citekey = proposed.citekey + (if proposed.postfix == '0' then '-' + postfix else String.fromCharCode(basechar + postfix))
+          break unless citekeys[item.ibraryID][citekey]
+          postfix += 1
+
+      extra = extra.replace(@citekeyRE, "\n").trim()
+      extra += "\nbibtex*:" + citekey
+      extra = extra.trim()
+
+      item.setField('extra', extra)
+      yield item.saveTx({ notifierData: { BetterBibTeX: true } })
+
+    return
+  )
+
 module.exports = new KeyManager()
