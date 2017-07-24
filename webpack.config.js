@@ -36,7 +36,7 @@ console.log('update citeproc');
 if (shell.exec('git submodule update --depth 1 -- citeproc-js').code != 0) throw 'Citeproc update failed';
 
 console.log('dateparser');
-locales(path.join(__dirname, 'citeproc-js/locale'), path.join(__dirname, 'gen/dateparser.json'));
+dateparser(path.join(__dirname, 'citeproc-js/locale'), path.join(__dirname, 'gen/dateparser.json'));
 
 console.log("let's roll");
 module.exports = [
