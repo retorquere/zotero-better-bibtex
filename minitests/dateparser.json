@@ -1,12 +1,12 @@
 {
   "1963": {
-    "parser": "y",
+    "type": "date",
     "date": {
       "year": 1963
     }
   },
   "23/12/2010": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2010,
       "month": 12,
@@ -14,7 +14,7 @@
     }
   },
   "18/05/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 5,
@@ -22,7 +22,7 @@
     }
   },
   "2014-11-17 03:49:00": {
-    "parser": "ymd",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 11,
@@ -30,14 +30,14 @@
     }
   },
   "2/2016": {
-    "parser": "my",
+    "type": "date",
     "date": {
       "year": 2016,
       "month": 2
     }
   },
   "2013-05-21": {
-    "parser": "ymd",
+    "type": "date",
     "date": {
       "year": 2013,
       "month": 5,
@@ -55,21 +55,21 @@
     }
   },
   "October 2006": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2006,
       "month": 10
     }
   },
   "11/2010": {
-    "parser": "my",
+    "type": "date",
     "date": {
       "year": 2010,
       "month": 11
     }
   },
   "July 7, 2008": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2008,
       "month": 7,
@@ -77,7 +77,7 @@
     }
   },
   "01/01/1989": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 1989,
       "month": 1,
@@ -85,14 +85,14 @@
     }
   },
   "September 2014": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 9
     }
   },
   "April 21, 2009": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2009,
       "month": 4,
@@ -100,14 +100,14 @@
     }
   },
   "November 2000": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2000,
       "month": 11
     }
   },
   "30/5/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 5,
@@ -115,7 +115,7 @@
     }
   },
   "August 1, 2000": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2000,
       "month": 8,
@@ -123,7 +123,7 @@
     }
   },
   "29/8/2014": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 8,
@@ -131,7 +131,7 @@
     }
   },
   "August 1, 2010": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2010,
       "month": 8,
@@ -139,7 +139,7 @@
     }
   },
   "9/9/2010": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2010,
       "month": 9,
@@ -147,7 +147,7 @@
     }
   },
   "2010/04/07": {
-    "parser": "ymd",
+    "type": "date",
     "date": {
       "year": 2010,
       "month": 4,
@@ -155,7 +155,7 @@
     }
   },
   "2/10/1961": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 1961,
       "month": 10,
@@ -163,7 +163,7 @@
     }
   },
   "6/9/2007": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2007,
       "month": 9,
@@ -171,7 +171,7 @@
     }
   },
   "8/8/2014": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 8,
@@ -179,7 +179,7 @@
     }
   },
   "9/6/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 6,
@@ -187,21 +187,21 @@
     }
   },
   "November 1944": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1944,
       "month": 11
     }
   },
   "01/2009": {
-    "parser": "my",
+    "type": "date",
     "date": {
       "year": 2009,
       "month": 1
     }
   },
   "February 28, 2013": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2013,
       "month": 2,
@@ -209,7 +209,7 @@
     }
   },
   "31/10/1960": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 1960,
       "month": 10,
@@ -225,7 +225,7 @@
     }
   },
   "05/01/1992": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 1992,
       "month": 1,
@@ -233,7 +233,7 @@
     }
   },
   "12/4/2007": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2007,
       "month": 4,
@@ -241,7 +241,7 @@
     }
   },
   "2013-11-15T00:01:03": {
-    "parser": "ymd",
+    "type": "date",
     "date": {
       "year": 2013,
       "month": 11,
@@ -249,7 +249,7 @@
     }
   },
   "25/7/2014": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 7,
@@ -257,7 +257,7 @@
     }
   },
   "12/21/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 21,
@@ -265,14 +265,14 @@
     }
   },
   "June 2012": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2012,
       "month": 6
     }
   },
   "2014-07-01T15:09:55Z": {
-    "parser": "ymd",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 7,
@@ -280,7 +280,7 @@
     }
   },
   "09/01/2001": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2001,
       "month": 1,
@@ -288,7 +288,7 @@
     }
   },
   "4/1/2008": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2008,
       "month": 1,
@@ -296,14 +296,14 @@
     }
   },
   "September 2005": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2005,
       "month": 9
     }
   },
   "15/12/1959": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 1959,
       "month": 12,
@@ -311,7 +311,7 @@
     }
   },
   "February 15, 2009": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2009,
       "month": 2,
@@ -319,7 +319,7 @@
     }
   },
   "7/10/1958": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 1958,
       "month": 10,
@@ -327,14 +327,14 @@
     }
   },
   "December 1982": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1982,
       "month": 12
     }
   },
   "June 1, 1985": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1985,
       "month": 6,
@@ -342,7 +342,7 @@
     }
   },
   "June 27, 2014": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 6,
@@ -358,7 +358,7 @@
     }
   },
   "May 1, 1996": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1996,
       "month": 5,
@@ -374,7 +374,7 @@
     }
   },
   "12/5/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 5,
@@ -382,21 +382,21 @@
     }
   },
   "April 2000": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2000,
       "month": 4
     }
   },
   "June 2005": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2005,
       "month": 6
     }
   },
   "30/9/1960": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 1960,
       "month": 9,
@@ -404,21 +404,21 @@
     }
   },
   "2011-11": {
-    "parser": "ym",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 11
     }
   },
   "January 1943": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1943,
       "month": 1
     }
   },
   "14/11 2012": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2012,
       "month": 11,
@@ -426,7 +426,7 @@
     }
   },
   "December 1, 2010": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2010,
       "month": 12,
@@ -434,7 +434,7 @@
     }
   },
   "September 1, 1996": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1996,
       "month": 9,
@@ -442,21 +442,21 @@
     }
   },
   "March 1987": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1987,
       "month": 3
     }
   },
   "March 1996": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1996,
       "month": 3
     }
   },
   "May 2, 1990": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1990,
       "month": 5,
@@ -464,7 +464,7 @@
     }
   },
   "April 1, 1986": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1986,
       "month": 4,
@@ -472,7 +472,7 @@
     }
   },
   "8. juli 2011": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 7,
@@ -480,7 +480,7 @@
     }
   },
   "17/6/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 6,
@@ -488,14 +488,14 @@
     }
   },
   "1987-01": {
-    "parser": "ym",
+    "type": "date",
     "date": {
       "year": 1987,
       "month": 1
     }
   },
   "4/7/2014": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 7,
@@ -503,7 +503,7 @@
     }
   },
   "05/01/2005": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2005,
       "month": 1,
@@ -511,7 +511,7 @@
     }
   },
   "January 1, 1997": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1997,
       "month": 1,
@@ -519,7 +519,7 @@
     }
   },
   "2/5/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 5,
@@ -527,21 +527,21 @@
     }
   },
   "November 2004": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2004,
       "month": 11
     }
   },
   "1978-01": {
-    "parser": "ym",
+    "type": "date",
     "date": {
       "year": 1978,
       "month": 1
     }
   },
   "05/10/2014": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 10,
@@ -549,7 +549,7 @@
     }
   },
   "2/12/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 12,
@@ -557,7 +557,7 @@
     }
   },
   "10/11/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 11,
@@ -565,7 +565,7 @@
     }
   },
   "08/01/2010": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2010,
       "month": 1,
@@ -573,14 +573,14 @@
     }
   },
   "January 2011": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 1
     }
   },
   "2013/06/09": {
-    "parser": "ymd",
+    "type": "date",
     "date": {
       "year": 2013,
       "month": 6,
@@ -588,7 +588,7 @@
     }
   },
   "April 1, 1987": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1987,
       "month": 4,
@@ -596,7 +596,7 @@
     }
   },
   "January 1, 2004": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2004,
       "month": 1,
@@ -604,7 +604,7 @@
     }
   },
   "10/6/2008": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2008,
       "month": 6,
@@ -612,7 +612,7 @@
     }
   },
   "14/10/1960": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 1960,
       "month": 10,
@@ -620,14 +620,14 @@
     }
   },
   "October 2007": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2007,
       "month": 10
     }
   },
   "15/9/1971": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 1971,
       "month": 9,
@@ -635,7 +635,7 @@
     }
   },
   "22/6/2012": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2012,
       "month": 6,
@@ -643,7 +643,7 @@
     }
   },
   "06/01/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 1,
@@ -651,7 +651,7 @@
     }
   },
   "October 1, 2006": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2006,
       "month": 10,
@@ -659,21 +659,21 @@
     }
   },
   "March 2012": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2012,
       "month": 3
     }
   },
   "September 2008": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2008,
       "month": 9
     }
   },
   "September 1, 2005": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2005,
       "month": 9,
@@ -681,14 +681,14 @@
     }
   },
   "December 2008": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2008,
       "month": 12
     }
   },
   "13/5/2008": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2008,
       "month": 5,
@@ -696,7 +696,7 @@
     }
   },
   "24/11/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 11,
@@ -704,7 +704,7 @@
     }
   },
   "February 1, 2006": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2006,
       "month": 2,
@@ -712,7 +712,7 @@
     }
   },
   "July 1, 2006": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2006,
       "month": 7,
@@ -720,7 +720,7 @@
     }
   },
   "11/01/2004": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2004,
       "month": 1,
@@ -728,7 +728,7 @@
     }
   },
   "28/11/2012": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2012,
       "month": 11,
@@ -736,7 +736,7 @@
     }
   },
   "7/2/2008": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2008,
       "month": 2,
@@ -744,7 +744,7 @@
     }
   },
   "18/7/2014": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 7,
@@ -752,7 +752,7 @@
     }
   },
   "27/8/1957": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 1957,
       "month": 8,
@@ -760,7 +760,7 @@
     }
   },
   "29/5/2012": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2012,
       "month": 5,
@@ -768,14 +768,14 @@
     }
   },
   "Januar 1945": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1945,
       "month": 1
     }
   },
   "18/12/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 12,
@@ -783,7 +783,7 @@
     }
   },
   "October 31, 2011": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 10,
@@ -791,7 +791,7 @@
     }
   },
   "8/3/2012": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2012,
       "month": 3,
@@ -799,7 +799,7 @@
     }
   },
   "17/5/1968": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 1968,
       "month": 5,
@@ -807,7 +807,7 @@
     }
   },
   "January 1, 1972": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1972,
       "month": 1,
@@ -815,7 +815,7 @@
     }
   },
   "15/1/1958": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 1958,
       "month": 1,
@@ -823,7 +823,7 @@
     }
   },
   "14/3/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 3,
@@ -831,14 +831,14 @@
     }
   },
   "12/1963": {
-    "parser": "my",
+    "type": "date",
     "date": {
       "year": 1963,
       "month": 12
     }
   },
   "26/11/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 11,
@@ -846,7 +846,7 @@
     }
   },
   "12/01/2002": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2002,
       "month": 1,
@@ -854,14 +854,14 @@
     }
   },
   "September 2003": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2003,
       "month": 9
     }
   },
   "2012/06/08": {
-    "parser": "ymd",
+    "type": "date",
     "date": {
       "year": 2012,
       "month": 6,
@@ -869,7 +869,7 @@
     }
   },
   "9/8/2012": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2012,
       "month": 8,
@@ -877,7 +877,7 @@
     }
   },
   "7/4/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 4,
@@ -885,7 +885,7 @@
     }
   },
   "5/9/1958": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 1958,
       "month": 9,
@@ -893,7 +893,7 @@
     }
   },
   "1/10/2013": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2013,
       "month": 10,
@@ -901,7 +901,7 @@
     }
   },
   "May 7, 2004": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2004,
       "month": 5,
@@ -909,7 +909,7 @@
     }
   },
   "28/8/2014": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 8,
@@ -917,14 +917,14 @@
     }
   },
   "February 1998": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1998,
       "month": 2
     }
   },
   "19/5/1952": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 1952,
       "month": 5,
@@ -932,7 +932,7 @@
     }
   },
   "13/1/2011": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 1,
@@ -940,14 +940,14 @@
     }
   },
   "June 2004": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2004,
       "month": 6
     }
   },
   "January 1, 2010": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2010,
       "month": 1,
@@ -955,7 +955,7 @@
     }
   },
   "13/1/2014": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 1,
@@ -963,7 +963,7 @@
     }
   },
   "April 1, 2000": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2000,
       "month": 4,
@@ -971,7 +971,7 @@
     }
   },
   "10/1/2012": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2012,
       "month": 1,
@@ -979,7 +979,7 @@
     }
   },
   "September 1, 1988": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1988,
       "month": 9,
@@ -987,14 +987,14 @@
     }
   },
   "11/1997": {
-    "parser": "my",
+    "type": "date",
     "date": {
       "year": 1997,
       "month": 11
     }
   },
   "June 1, 1991": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1991,
       "month": 6,
@@ -1002,28 +1002,28 @@
     }
   },
   "March 2009": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2009,
       "month": 3
     }
   },
   "08/2012": {
-    "parser": "my",
+    "type": "date",
     "date": {
       "year": 2012,
       "month": 8
     }
   },
   "Autumn 2001": {
-    "parser": "edtf",
+    "type": "season",
     "date": {
       "year": 2001,
-      "month": 23
+      "season": "autumn"
     }
   },
   "10/9/1963": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 1963,
       "month": 9,
@@ -1031,7 +1031,7 @@
     }
   },
   "2006/09/11": {
-    "parser": "ymd",
+    "type": "date",
     "date": {
       "year": 2006,
       "month": 9,
@@ -1039,7 +1039,7 @@
     }
   },
   "22.08.2000": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2000,
       "month": 8,
@@ -1047,7 +1047,7 @@
     }
   },
   "2012.09.27": {
-    "parser": "ymd",
+    "type": "date",
     "date": {
       "year": 2012,
       "month": 9,
@@ -1055,14 +1055,14 @@
     }
   },
   "1995.12": {
-    "parser": "ym",
+    "type": "date",
     "date": {
       "year": 1995,
       "month": 12
     }
   },
   "2014.02.11": {
-    "parser": "ymd",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 2,
@@ -1070,8 +1070,9 @@
     }
   },
   "2014-12-31/2015-01-01": {
+    "type": "interval",
     "from": {
-      "parser": "ymd",
+      "type": "date",
       "date": {
         "year": 2014,
         "month": 12,
@@ -1079,7 +1080,7 @@
       }
     },
     "to": {
-      "parser": "ymd",
+      "type": "date",
       "date": {
         "year": 2015,
         "month": 1,
@@ -1088,9 +1089,9 @@
     }
   },
   "2014-12-31/": {
-    "parser": "edtf",
+    "type": "interval",
     "from": {
-      "parser": "edtf",
+      "type": "date",
       "date": {
         "year": 2014,
         "month": 12,
@@ -1098,18 +1099,19 @@
       }
     },
     "to": {
-      "open": true
+      "type": "open"
     }
   },
   "-0333": {
-    "parser": "y",
+    "type": "date",
     "date": {
       "year": -333
     }
   },
   "-0099-07-12/-0043-03-15": {
+    "type": "interval",
     "from": {
-      "parser": "edtf",
+      "type": "date",
       "date": {
         "year": -99,
         "month": 7,
@@ -1117,7 +1119,7 @@
       }
     },
     "to": {
-      "parser": "edtf",
+      "type": "date",
       "date": {
         "year": -43,
         "month": 3,
@@ -1126,7 +1128,7 @@
     }
   },
   "2016-06-06T15:26:37+1000": {
-    "parser": "ymd",
+    "type": "date",
     "date": {
       "year": 2016,
       "month": 6,
@@ -1134,7 +1136,7 @@
     }
   },
   "May 15, 2014": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 5,
@@ -1142,7 +1144,7 @@
     }
   },
   "2016-07-18T20:26:06": {
-    "parser": "ymd",
+    "type": "date",
     "date": {
       "year": 2016,
       "month": 7,
@@ -1150,7 +1152,7 @@
     }
   },
   "2016-07-18T20:26:06+10:00": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2016,
       "month": 7,
@@ -1158,7 +1160,7 @@
     }
   },
   "2016-07-18T20:26:06Z": {
-    "parser": "ymd",
+    "type": "date",
     "date": {
       "year": 2016,
       "month": 7,
@@ -1166,69 +1168,70 @@
     }
   },
   "-0876": {
-    "parser": "y",
+    "type": "date",
     "date": {
       "year": -876
     }
   },
   "1723~": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1723,
       "approximate": true
     }
   },
   "1723?": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1723,
       "uncertain": true
     }
   },
   "1723?~": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1723,
       "approximate": true
     }
   },
   "1988/1992": {
+    "type": "interval",
     "from": {
-      "parser": "y",
+      "type": "date",
       "date": {
         "year": 1988
       }
     },
     "to": {
-      "parser": "y",
+      "type": "date",
       "date": {
         "year": 1992
       }
     }
   },
   "2004-22": {
-    "parser": "ym",
+    "type": "date",
     "date": {
       "year": 2004,
       "month": 22
     }
   },
   "199u": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1990,
       "approximate": true
     }
   },
   "19uu": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1900,
       "approximate": true
     }
   },
   "1999-uu": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1999,
       "month": 1,
@@ -1236,7 +1239,7 @@
     }
   },
   "1999-01-uu": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1999,
       "month": 1,
@@ -1245,7 +1248,7 @@
     }
   },
   "1999-uu-uu": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1999,
       "month": 1,
@@ -1254,11 +1257,11 @@
     }
   },
   "Forthcoming": {
-    "parser": "literal",
-    "literal": "Forthcoming"
+    "type": "verbatim",
+    "verbatim": "Forthcoming"
   },
   "10/06/2014": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 6,
@@ -1282,7 +1285,7 @@
     }
   },
   "2006/09/23": {
-    "parser": "ymd",
+    "type": "date",
     "date": {
       "year": 2006,
       "month": 9,
@@ -1290,15 +1293,15 @@
     }
   },
   "11/2011": {
-    "parser": "my",
+    "type": "date",
     "date": {
       "year": 2011,
       "month": 11
     }
   },
   "n.d.": {
-    "parser": "literal",
-    "literal": "n.d."
+    "type": "verbatim",
+    "verbatim": "n.d."
   },
   "2004 [1929]": {
     "orig": {
@@ -1309,14 +1312,14 @@
     }
   },
   "2014-10": {
-    "parser": "ym",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 10
     }
   },
   "März 1, 2008": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2008,
       "month": 3,
@@ -1325,13 +1328,13 @@
   },
   "1897/1913": {
     "from": {
-      "parser": "y",
+      "type": "date",
       "date": {
         "year": 1897
       }
     },
     "to": {
-      "parser": "y",
+      "type": "date",
       "date": {
         "year": 1913
       }
@@ -1339,13 +1342,13 @@
   },
   "1897-1913": {
     "from": {
-      "parser": "y",
+      "type": "date",
       "date": {
         "year": 1897
       }
     },
     "to": {
-      "parser": "y",
+      "type": "date",
       "date": {
         "year": 1913
       }
@@ -1353,20 +1356,20 @@
   },
   "1897_1913": {
     "from": {
-      "parser": "y",
+      "type": "date",
       "date": {
         "year": 1897
       }
     },
     "to": {
-      "parser": "y",
+      "type": "date",
       "date": {
         "year": 1913
       }
     }
   },
   "四月 1, 1976": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 1976,
       "month": 4,
@@ -1374,14 +1377,14 @@
     }
   },
   "1999-04": {
-    "parser": "ym",
+    "type": "date",
     "date": {
       "year": 1999,
       "month": 4
     }
   },
   "September 20, 2006": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2006,
       "month": 9,
@@ -1389,7 +1392,7 @@
     }
   },
   "Apr 03 2014": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2014,
       "month": 4,
@@ -1397,7 +1400,7 @@
     }
   },
   "15 juin 2009": {
-    "parser": "edtf",
+    "type": "date",
     "date": {
       "year": 2009,
       "month": 6,
@@ -1405,7 +1408,7 @@
     }
   },
   "01/22/2009": {
-    "parser": "dmy",
+    "type": "date",
     "date": {
       "year": 2009,
       "month": 1,
