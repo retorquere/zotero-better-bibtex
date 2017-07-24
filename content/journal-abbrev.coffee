@@ -1,12 +1,17 @@
 Prefs = require('./preferences.coffee')
 
 class JournalAbbrev
-  constructor: ->
+  init: Zotero.Promise.coroutine(->
+    yield Zotero.Styles.init()
+
     Prefs.observe((subject, topic, data) =>
       @reset() if data.endsWith('.autoAbbrev') || data.endsWith('.autoAbbrevStyle')
       return
     )
     @reset()
+
+    return
+  )
 
   reset: ->
     @abbrev = Prefs.get('autoAbbrev')
@@ -44,3 +49,5 @@ class JournalAbbrev
 
     @abbrevs['default']?['container-title']?[key] || Zotero.Cite.getAbbreviation(@style, @abbrevs, 'default', 'container-title', key)
     return @abbrevs['default']?['container-title']?[key] || key
+
+module.exports = new JournalAbbrev()

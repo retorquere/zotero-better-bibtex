@@ -3,8 +3,8 @@ Prefs = require('../preferences.coffee')
 parser = require('./formatter.pegjs')
 events = require('../events.coffee')
 dateparser = require('../dateparser.coffee')
-transliterate = require('transliteration')
-fold2ascii = require('fold-to-ascii')
+transliterate = require('transliteration').transliterate
+fold2ascii = require('fold-to-ascii').fold
 punycode = require('punycode')
 journalAbbrev = require('../journal-abbrev.coffee')
 serializer = require('../serializer.coffee')
@@ -48,7 +48,7 @@ class PatternFormatter
     word: Zotero.Utilities.XRegExp("[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+)*", 'g')
 
   removeDiacritics: (str) ->
-    str = transliterate.transl(str || '')
+    str = transliterate(str || '')
     str = fold2ascii(str)
     return str
 

@@ -42,9 +42,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "coffeelint content resource",
     "webpack": "webpack",
-    "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -rf xpi/*",
+    "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -rf xpi/* && mkdir -p gen && rm -rf gen/*",
     "build": "npm run lint && npm run webpack",
-    "postbuild": "node webpack/zipup.js build zotero-better-bibtex && node webpack/zipup.js test/fixtures/debug-bridge debug-bridge"
+    "postbuild": "node webpack/zipup.js build zotero-better-bibtex && node webpack/zipup.js test/fixtures/debug-bridge debug-bridge",
+    "minitest": "npm run webpack && node ./minitests/build/dateparser.js"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,7 @@
 debug = require('./debug.coffee')
 Translators = require('./translators.coffee')
 KeyManager = require('./keymanager.coffee')
+JournalAbbrev = require('./journal-abbrev.coffee')
 require('./serializer.coffee')
 
 BBT = {}
@@ -22,6 +23,7 @@ Zotero.Promise.coroutine(->
   debug('zotero schema done')
 
   BBT.init()
+  yield JournalAbbrev.init()
   yield Translators.init()
   yield KeyManager.init()
   debug('started')

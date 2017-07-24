@@ -155,7 +155,17 @@ module BBT
       var appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
       appStartup.quit(Components.interfaces.nsIAppStartup.eAttemptQuit);
     """)
-    sleep(5)
-    Process.kill("HUP", pid)
+    stopped = false
+    1.upto(5){
+			sleep(1)
+      begin
+        Process::kill 0, pid
+      rescue Errno::ESRCH
+	      stopped = true
+        break
+        false
+      end
+    }
+    Process.kill("HUP", pid) unless stopped
   } unless ENV['KEEP_ZOTERO_RUNNING'] == 'true'
 end
