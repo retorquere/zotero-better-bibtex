@@ -1,4 +1,4 @@
-debug = require('../content/debug.coffee')
+debug = require('./lib/debug.coffee')
 collections = require('./lib/collections.coffee')
 
 scrub = (item) ->

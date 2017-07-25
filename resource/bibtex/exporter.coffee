@@ -1,5 +1,6 @@
-debug = require('../../content/debug.coffee')
+debug = require('../lib/debug.coffee')
 JSON5 = require('json5')
+getCiteKey = require('../../content/getCiteKey.coffee')
 
 class Exporter
   constructor: ->
@@ -254,10 +255,8 @@ class Exporter
 #          @preamble.DeclarePrefChars += cached.data.DeclarePrefChars if cached.data.DeclarePrefChars
 #          continue
 
-      Zotero.BetterBibTeX.keymanager.extract(item, 'nextItem')
-      item.__citekey__ ||= Zotero.BetterBibTeX.keymanager.get(item, 'on-export').citekey
+      @citekeys[item.itemID] = item.__citekey__ = getCiteKey(item).citekey
 
-      @citekeys[item.itemID] = item.__citekey__
       debug("Translator: assignGroups: #{item.itemID}")
       @JabRef_assignGroups(@collections, item)
       return item

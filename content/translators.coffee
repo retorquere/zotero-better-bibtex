@@ -4,8 +4,9 @@ translators = require('../gen/translators.json')
 
 class Translators
   init: Zotero.Promise.coroutine(->
-    debug('Translator.init()')
+    debug('Translator.init: waiting for translators...')
     yield Zotero.Translators.init()
+    debug('Translator.init: translators ready')
 
     if Prefs.get('removeStock')
       @uninstall('BibLaTeX', 'b6e39b57-8942-4d11-8259-342c46ce395f')
@@ -14,8 +15,9 @@ class Translators
     for id, header of translators.byId
       @install(header)
 
+    debug('Translator.init: reinit translators...')
     yield Zotero.Translators.reinit()
-    debug('Translator.init() ready')
+    debug('Translator.init: ready')
     return
   )
 

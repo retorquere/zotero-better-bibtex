@@ -139,7 +139,7 @@ module.exports = [
     },
     context: path.resolve(__dirname, './minitests'),
     entry: {
-      'pfunc': './pfunc.js',
+      'pfunc': './pfunc.coffee',
       'dateparser': './dateparser.coffee'
     },
     output: {

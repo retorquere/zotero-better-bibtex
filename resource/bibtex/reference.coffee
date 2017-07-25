@@ -1,6 +1,6 @@
 ### XRegExp = require('xregexp') ###
 XRegExp = Zotero.Utilities.XRegExp
-debug = require('../../content/debug.coffee')
+debug = require('../lib/debug.coffee')
 Exporter = require('./exporter.coffee')
 text2latex = require('./unicode_translator.coffee').text2latex
 
@@ -35,8 +35,6 @@ class Reference
   constructor: (@item) ->
     # has to be constructed at runtime here because a static version would be cached by the Zotero translation framework
     Reference::Exporter ||= new Exporter()
-
-    @timestamp = Zotero.getHiddenPref('better-bibtex.test.timestamp') if BetterBibTeX.preferences.testing
 
     @fields = []
     @has = Object.create(null)
@@ -74,7 +72,11 @@ class Reference
       @add({ entrysubtype: @referencetype.subtype }) if @referencetype.subtype
       @referencetype = @referencetype.type
 
-    @add({name: 'timestamp', value: @timestamp || @item.dateModified || @item.dateAdded})
+    if BetterBibTeX.preferences.testing
+      debug('timestamp for testing')
+      @add({name: 'timestamp', value: '2015-02-24 12:14:36 +0100'})
+    else
+      @add({name: 'timestamp', value: @item.dateModified || @item.dateAdded})
 
     switch
       when (@item.libraryCatalog || '').toLowerCase() in ['arxiv.org', 'arxiv'] && (@item.arXiv = @arXiv.parse(@item.publicationTitle))
@@ -327,7 +329,7 @@ class Reference
         when creator.lastName || creator.firstName
           name = {family: creator.lastName || '', given: creator.firstName || ''}
 
-          Zotero.BetterBibTeX.CSL.parseParticles(name)
+          Zotero.BetterBibTeX.parseParticles(name)
 
           unless BetterBibTeX.BetterBibLaTeX && BetterBibTeX.preferences.biblatexExtendedNameFormat
             @useprefix ||= !!name['non-dropping-particle']
@@ -389,11 +391,12 @@ class Reference
     # sort tags for stable tests
     tags.sort() if BetterBibTeX.preferences.testing
 
+    debug('enc_tags:', tags)
     tags = for tag in tags
       if BetterBibTeX.BetterBibTeX
-        tag = tag.replace(/([#\\%&])/g, '\\$1')
+        tag = tag.tag.replace(/([#\\%&])/g, '\\$1')
       else
-        tag = tag.replace(/([#%\\])/g, '\\$1')
+        tag = tag.tag.replace(/([#%\\])/g, '\\$1')
 
       # the , -> ; is unfortunate, but I see no other way
       tag = tag.replace(/,/g, ';')
@@ -607,7 +610,7 @@ class Reference
 
     @postscript(@, @item)
 
-    for name in BetterBibTeX.skipFields
+    for name in BetterBibTeX.preferences.skipFields
       @remove(name)
 
     # sort fields for stable tests
@@ -622,7 +625,8 @@ class Reference
 
     @data.DeclarePrefChars = @Exporter.unique_chars(@data.DeclarePrefChars)
 
-    Zotero.BetterBibTeX.cache.store(@item.itemID, @Exporter.context, @item.__citekey__, ref, @data) if @Exporter.caching
+    ### TODO: caching ###
+    # Zotero.BetterBibTeX.cache.store(@item.itemID, @Exporter.context, @item.__citekey__, ref, @data) if @Exporter.caching
 
     @Exporter.preamble.DeclarePrefChars += @data.DeclarePrefChars if @data.DeclarePrefChars
     debug('item.complete:', {data: @data, preamble: @Exporter.preamble})
@@ -664,7 +668,7 @@ class Reference
         report.push("% ? Unsure about the formatting of the booktitle")
 
     if @has.title && !BetterBibTeX.preferences.suppressTitleCase
-      titleCased = Zotero.BetterBibTeX.CSL.titleCase(@has.title.value) == @has.title.value
+      titleCased = Zotero.BetterBibTeX.titleCase(@has.title.value) == @has.title.value
       if @has.title.value.match(/\s/)
         report.push("% ? Title looks like it was stored in title-case in Zotero") if titleCased
       else

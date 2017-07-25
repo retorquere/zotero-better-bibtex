@@ -148,7 +148,7 @@ class MarkupParser
 
     if options.caseConversion
       unless BetterBibTeX.preferences.suppressTitleCase
-        @titleCased = Zotero.BetterBibTeX.CSL.titleCase(@innerText(@handler.root))
+        @titleCased = Zotero.BetterBibTeX.titleCase(@innerText(@handler.root))
         @titleCase(@handler.root)
 
       @simplify(@handler.root)

@@ -1,6 +1,6 @@
 Reference = require('./bibtex/reference.coffee')
 Exporter = require('./bibtex/exporter.coffee')
-debug = require('../content/debug.coffee')
+debug = require('./lib/debug.coffee')
 
 Reference::fieldEncoding = {
   url: 'url'

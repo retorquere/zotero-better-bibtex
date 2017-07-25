@@ -9,17 +9,7 @@ journalAbbrev = require('../journal-abbrev.coffee')
 serializer = require('../serializer.coffee')
 
 class PatternFormatter
-  constructor: (@keymanager)->
-    Prefs.observe((subject, topic, data) =>
-      key = data.split('.')
-      key = key[key.length - 1]
-      if key in ['autoAbbrev', 'autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
-        @update()
-        @keymanager.patternChanged().catch(err -> debug('PatternFormatter.KeyManager.patternChanged error:', err))
-
-      return
-    )
-    @update()
+  constructor: -> @update()
 
   update: ->
     @skipWords = Prefs.get('skipWords').split(',').map((word) -> word.trim()).filter((word) -> word)

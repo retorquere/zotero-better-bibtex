@@ -1,6 +1,6 @@
 Exporter = require('./exporter.coffee')
 MarkupParser = require('../lib/markupparser.coffee')
-debug = require('../../content/debug.coffee')
+debug = require('../lib/debug.coffee')
 Mapping = require('./unicode_translator.json')
 
 ### XRegExp = require('xregexp') ###

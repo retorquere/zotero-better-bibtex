@@ -28,7 +28,6 @@ Zotero.Promise.coroutine(->
   }
 
   debug('starting, waiting for schema...')
-
   yield Zotero.Schema.schemaUpdatePromise
   debug('zotero schema done')
 

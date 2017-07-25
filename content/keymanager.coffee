@@ -2,10 +2,11 @@ debug = require('./debug.coffee')
 Prefs = require('./preferences.coffee')
 co = Zotero.Promise.coroutine
 Formatter = require('./keymanager/formatter.coffee')
+getCiteKey = require('./getCiteKey.coffee')
 
 class KeyManager
   init: co(->
-    debug('KeyManager.init()')
+    debug('KeyManager.init...')
     @query = {
       field: {}
       type: {}
@@ -25,7 +26,16 @@ class KeyManager
       Prefs.set('scanCitekeys', false)
       debug('KeyManager.init: scanning for unset keys finished')
 
-    debug('KeyManager.init() done')
+    debug('KeyManager.init: done')
+
+    Prefs.observe((subject, topic, data) =>
+      key = data.split('.')
+      key = key[key.length - 1]
+      if key in ['autoAbbrev', 'autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
+        @formatter.update()
+        @patternChanged().catch(err -> debug('KeyManager.patternChanged error:', err))
+      return
+    )
     return
   )
 
@@ -55,8 +65,8 @@ class KeyManager
       where item.itemTypeId not in (#{@query.type.attachment}, #{@query.type.note}) and item.itemID not in (select itemID from deletedItems)
     """)
     for item in items
-      [_, dynamic, citekey] = (@citekeyRE.exec(item.extra || '') || ['*', ''])
-      unset.push(item.itemID) unless citekey
+      citekey = getCiteKey(item)
+      unset.push(item.itemID) unless citekey.citekey
     return unset
   )
 
@@ -70,8 +80,8 @@ class KeyManager
       where item.itemTypeId not in (#{@query.type.attachment}, #{@query.type.note}) and item.itemID not in (select itemID from deletedItems)
     """)
     for item in items
-      [_, dynamic, citekey] = (@citekeyRE.exec(item.extra || '') || ['*', ''])
-      dyn.push(item.itemID) if dynamic || !citekey
+      citekey = getCiteKey(item)
+      dyn.push(item.itemID) if citekey.dynamic || !citekey.citekey
     yield @update(dyn)
     return
   )
@@ -99,8 +109,8 @@ class KeyManager
       continue
       citekeys[item.libraryID] ||= {}
 
-      [_, dynamic, citekey] = (@citekeyRE.exec(item.extra || '') || ['*', ''])
-      citekeys[item.libraryID][citekey] = true if !dynamic || !item.itemID in ids
+      citekey = getCiteKey(item)
+      citekeys[item.libraryID][citekey.citekey] = true if !citekey.dynamic || !item.itemID in ids
     debug('Keymanager.update: citekey scan complete:', new Date() - start)
 
     debug('KeyManager.update', {citekeys})
@@ -111,15 +121,16 @@ class KeyManager
     debug('KeyManager.update:', {update: update.length, items: items.length})
     for item in items
       citekeys[item.libraryID] ||= {}
-      extra = item.getField('extra') || ''
+      extra = {extra: item.getField('extra') || ''}
 
-      [_, dynamic, citekey] = (@citekeyRE.exec(extra || '') || ['*', ''])
+      citekey = getCiteKey(extra)
 
-      continue unless dynamic
+      continue unless citekey.dynamic
+      citekey = citekey.citekey
 
       proposed = @formatter.format(item)
 
-      debug('KeyManager.update:', {id: item.id, library: item.libraryID, extra, found: {dynamic, citekey}, proposed, keys: citekeys[item.libraryID]})
+      debug('KeyManager.update:', {id: item.id, library: item.libraryID, extra, found: citekey, proposed, keys: citekeys[item.libraryID]})
 
       # let's see if we can keep this citekey
       if citekey && !citekeys[item.libraryID][citekey]
@@ -158,11 +169,7 @@ class KeyManager
       debug('KeyManager.update: new', {citekey})
       citekeys[item.libraryID][citekey] = true
 
-      extra = extra.replace(@citekeyRE, "\n").trim()
-      extra += "\nbibtex*:" + citekey
-      extra = extra.trim()
-
-      item.setField('extra', extra)
+      item.setField('extra', (extra.extra + "\nbibtex*:" + citekey).trim())
       debug('Keymanager.update: setting citekey:', item.id, citekey)
       yield item.saveTx({ notifierData: { BetterBibTeX: true } })
 

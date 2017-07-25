@@ -1,7 +1,10 @@
 Prefs = require('./preferences.coffee')
+debug = require('./debug.coffee')
 
 class JournalAbbrev
   init: Zotero.Promise.coroutine(->
+
+    debug('JournalAbbrev.init: waiting for styles...')
     yield Zotero.Styles.init()
 
     Prefs.observe((subject, topic, data) =>
@@ -9,6 +12,7 @@ class JournalAbbrev
       return
     )
     @reset()
+    debug('JournalAbbrev.init: done')
 
     return
   )

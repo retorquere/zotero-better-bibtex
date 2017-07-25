@@ -6,6 +6,8 @@ Before do |scenario|
     Zotero.Prefs.prefBranch.getChildList(prefix).forEach(function(key) {
       Zotero.Prefs.clear(prefix + '.' + key);
     })
+    Zotero.Prefs.set(prefix + '.debug', true);
+    Zotero.Prefs.set(prefix + '.testing', true);
     var items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     yield Zotero.Items.erase(items);
     yield Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID);
@@ -72,6 +74,7 @@ Then /^a library export using (['"])([^\1]+)\1 should match (['"])([^\3]+)\3$/ d
   end
   
   expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', library))
+  expected = File.read(expected)
   found = execute(
     args: { translatorID: translator },
     script: """
@@ -92,5 +95,7 @@ Then /^a library export using (['"])([^\1]+)\1 should match (['"])([^\3]+)\3$/ d
       return lib
     """
   )
-  expect(normalize_library(expected)).to eq(normalize_library(found))
+
+  expect(expected.strip).to eq(found.strip)
+  # expect(normalize_library(expected)).to eq(normalize_library(found))
 end

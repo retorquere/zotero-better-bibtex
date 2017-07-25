@@ -28,7 +28,7 @@ PROFILE_DIR = File.expand_path(profile['IsRelative'] == 1 ? File.join(PROFILES_D
 
 DATA_DIR = File.expand_path('~/Zotero')
 
-TEMPLATE_STASH = File.join(File.dirname(__FILE__), '../../test/fixtures/profile')
+TEMPLATE_STASH = File.join(File.dirname(__FILE__), '../test/fixtures/profile')
 FileUtils.rm_rf(File.join(TEMPLATE_STASH, 'profile'))
 FileUtils.cp_r(PROFILE_DIR, File.join(TEMPLATE_STASH, 'profile'))
 FileUtils.rm_rf(File.join(TEMPLATE_STASH, 'data'))

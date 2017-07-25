@@ -38,8 +38,8 @@ method
       var editorsOnly = (creators === 'edtr' || creators === 'editors');
       if (editorsOnly) creators = (creators == 'edtr') ? 'auth' : 'authors';
 
-      if (flags && flags != 'initials') throw new Error("Unsupported flag " + flags + " in pattern")
-      var withInituals = (flags == 'initials');
+      if (flag && flag != 'initials') throw new Error("Unsupported flag " + flag + " in pattern")
+      var withInitials = (flag == 'initials');
 
       var method = creators + name.join('');
       if (!options.methods[method]) throw new Error("Invalid method '" + method + "' in citekey pattern")
