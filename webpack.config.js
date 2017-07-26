@@ -130,7 +130,8 @@ module.exports = [
     context: path.resolve(__dirname, './minitests'),
     entry: {
       'pfunc': './pfunc.coffee',
-      'dateparser': './dateparser.coffee'
+      'dateparser': './dateparser.coffee',
+      'text2latex': './text2latex.coffee',
     },
     output: {
       path: path.resolve(__dirname, './minitests/build'),

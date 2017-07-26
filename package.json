@@ -20,7 +20,8 @@
     "pegjs": "^0.10.0",
     "punycode": "^2.1.0",
     "transliteration": "^1.6.2",
-    "xml": "^1.0.1"
+    "xml": "^1.0.1",
+    "xregexp": "^3.2.0"
   },
   "devDependencies": {
     "archiver": "^2.0.0",
@@ -36,13 +37,13 @@
     "node-archiver": "^0.3.0",
     "pretty-data": "^0.40.0",
     "shelljs": "^0.7.8",
-    "uglify-es-webpack-plugin": "0.0.3",
-    "webpack": "^3.2.0",
+    "uglify-es-webpack-plugin": "0.10.0",
+    "webpack": "^3.4.1",
     "xml-parser": "^1.2.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "coffeelint content resource",
+    "lint": "coffeelint content resource minitests",
     "webpack": "webpack",
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -rf xpi/* && mkdir -p gen && rm -rf gen/*",
     "build": "npm run lint && npm run webpack",

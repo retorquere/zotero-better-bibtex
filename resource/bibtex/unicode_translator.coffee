@@ -1,4 +1,3 @@
-Exporter = require('./exporter.coffee')
 MarkupParser = require('../lib/markupparser.coffee')
 debug = require('../lib/debug.coffee')
 Mapping = require('./unicode_translator.json')
@@ -24,10 +23,9 @@ module.exports = Text2LaTeX
 class HTML
   constructor: (html, @options = {}) ->
     # has to be constructed at runtime here because a static version would be cached by the Zotero translation framework
-    HTML::Exporter ||= new Exporter()
 
     @latex = ''
-    @mapping = (if @Exporter.unicode then Mapping.toLaTeX.unicode else Mapping.toLaTeX.ascii)
+    @mapping = (if @options.unicode then Mapping.toLaTeX.unicode else Mapping.toLaTeX.ascii)
     @stack = []
 
     @walk(MarkupParser.parse(html, @options))

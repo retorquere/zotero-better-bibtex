@@ -378,7 +378,7 @@ class Reference
     return f.value if f.raw || raw
 
     caseConversion = @caseConversion[f.name] || f.caseConversion
-    value = text2latex(f.value, {mode: (if f.html then 'html' else 'text'), caseConversion: caseConversion && @english})
+    value = text2latex(f.value, {unicode: @Exporter.unicode, mode: (if f.html then 'html' else 'text'), caseConversion: caseConversion && @english})
     value = "{#{value}}" if caseConversion && BetterBibTeX.BetterBibTeX && !@english
 
     value = new String("{#{value}}") if f.value instanceof String
