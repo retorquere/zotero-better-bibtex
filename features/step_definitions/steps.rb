@@ -33,21 +33,37 @@ When /^I set preference ([^\s]+) to (.*)$/ do |pref, value|
 end
 
 When /^I import (\d+) references from (['"])([^\2]+)\2$/ do |n, quote, json|
+  source = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', json))
+
+  script = """
+    // preferences from #{source}
+    var prefix = 'translators.better-bibtex';
+  """
+  prefs = JSON.parse(File.read(source))['config']['preferences'] || {}
+  prefs.each_pair{|p, v|
+    v = v.join(',') if v.is_a?(Array)
+    script += """
+      Zotero.Prefs.set(prefix + '.#{p}', #{v.to_json});
+    """
+  }
+  execute(script)
+
   imported = execute(
     timeout: 30,
-    args: { filename: File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', json)) },
+    args: { filename: source },
     script: """
+      Zotero.debug('importing ' + args.filename);
       var file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile);
       file.initWithPath(args.filename);
 
-      var items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, false, true);
+      var items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true);
       var before = items.length;
 
       Zotero.debug('{better-bibtex} starting import at ' + new Date());
       yield Zotero_File_Interface.importFile(file, false);
       Zotero.debug('{better-bibtex} import finished at ' + new Date());
 
-      var items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, false, true);
+      var items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true);
       var after = items.length;
 
       Zotero.debug('{better-bibtex} found ' + (after - before) + ' items');
@@ -59,7 +75,7 @@ end
 
 Then /^the library should have (\d+) references/ do |n|
   library = execute("""
-      var items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, false, true);
+      var items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true);
       return items.length;
     """
   )
@@ -96,6 +112,6 @@ Then /^a library export using (['"])([^\1]+)\1 should match (['"])([^\3]+)\3$/ d
     """
   )
 
-  expect(expected.strip).to eq(found.strip)
+  expect(found.strip).to eq(expected.strip)
   # expect(normalize_library(expected)).to eq(normalize_library(found))
 end

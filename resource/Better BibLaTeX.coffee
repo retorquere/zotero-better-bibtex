@@ -1,6 +1,7 @@
 Reference = require('./bibtex/reference.coffee')
 Exporter = require('./bibtex/exporter.coffee')
 debug = require('./lib/debug.coffee')
+datefield = require('./bibtex/datefield.coffee')
 
 Reference::fieldEncoding = {
   url: 'url'
@@ -200,68 +201,9 @@ BetterBibTeX.initialize = ->
   Reference.installPostscript()
   return
 
-DateField =
-  field: (date, formatted, verbatim) ->
-    switch
-      when !date
-        field = {}
-
-      when !date.type
-        throw "Failed to parse #{date}: #{JSON.stringify(date)}"
-
-      when date.type == 'verbatim'
-        field = { name: verbatim, value: date.verbatim }
-
-# TODO: what happens here?
-#      when date.edtf && BetterBibTeX.preferences.biblatexExtendedDateFormat
-#        field = { name: formatted, value: date.replace(/~/g, '\u00A0') }
-
-      when date.type == 'date'
-        field = { name: formatted, value: @format(date.date) }
-
-      when date.type == 'interval'
-        field = { name: formatted, value: @format(date.from) + '/' + @format(date.to) }
-
-      when date.year
-        field = { name: formatted, value: @format(date) }
-
-      else
-        field = {}
-
-    # well this is fairly dense... the date field is not an verbatim field, so the 'circa' symbol ('~') ought to mean a
-    # NBSP... but some magic happens in that field (always with the magic, BibLaTeX...). But hey, if I insert an NBSP,
-    # guess what that gets translated to!
-
-    return {} unless field.name && field.value
-
-    field.value = field.value.replace(/~/g, '\u00A0') if field.value
-
-    return field
-
-  pad: (v, pad) ->
-    return v if v.length >= pad.length
-    return (pad + v).slice(-pad.length)
-
-  year: (y) ->
-    if Math.abs(y) > 999
-      return '' + y
-    else
-      return (if y < 0 then '-' else '-') + ('000' + Math.abs(y)).slice(-4)
-
-  format: (date) ->
-    switch
-      when date.year && date.month && date.day  then  formatted = "#{@year(date.year)}-#{@pad(date.month, '00')}-#{@pad(date.day, '00')}"
-      when date.year && date.month              then  formatted = "#{@year(date.year)}-#{@pad(date.month, '00')}"
-      when date.year                            then  formatted = @year(date.year)
-      else                                            formatted = ''
-
-    if BetterBibTeX.preferences.biblatexExtendedDateFormat
-      formatted += '?' if date.uncertain
-      formatted += '~' if date.approximate
-
-    return formatted
-
 BetterBibTeX.doExport = ->
+  debug('Translation started with prefs', BetterBibTeX.preferences)
+
   Exporter = new Exporter()
 
   Zotero.write('\n')
@@ -438,8 +380,9 @@ BetterBibTeX.doExport = ->
 
     if item.date
       date = Zotero.BetterBibTeX.parseDate(item.date)
-      ref.add(DateField.field(date, 'date', 'year'))
-      ref.add(DateField.field(date.origdate, 'origdate', 'origdate'))
+      debug('found date', date)
+      ref.add(datefield(date, 'date', 'year'))
+      ref.add(datefield(date.origdate, 'origdate', 'origdate'))
 
     switch
       when item.pages

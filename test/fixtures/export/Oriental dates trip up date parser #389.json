@@ -4,8 +4,6 @@
     "label": "BetterBibTeX JSON",
     "release": "1.6.3",
     "preferences": {
-    },
-    "options": {
       "skipFields": [
         ""
       ],
@@ -16,7 +14,7 @@
       "fancyURLs": false,
       "langID": "babel",
       "rawImports": false,
-      "DOIandURL": "doi",
+      "DOIandURL": "both",
       "attachmentsNoMetadata": false,
       "preserveBibTeXVariables": false,
       "asciiBibLaTeX": false,

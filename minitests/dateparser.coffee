@@ -1,4 +1,11 @@
-dateparser = require('../content/dateparser.coffee')
+global.Zotero = {
+  Debug: {
+    enabled: true
+  },
+  debug: (str) -> console.log(str)
+}
+
+parseDate = require('../content/dateparser.coffee')
 dates = require('./dateparser.json')
 
 scrub = (o) ->
@@ -31,7 +38,7 @@ deepEqual = (a, b) ->
   return true
 
 for raw, cooked of dates
-  parsed = scrub(dateparser(raw))
+  parsed = scrub(parseDate(raw))
   scrub(cooked)
   continue if deepEqual(parsed, cooked)
   console.log('input:', raw)
@@ -39,3 +46,4 @@ for raw, cooked of dates
   console.log('found:', JSON.stringify(parsed))
   throw new Error(raw)
 
+console.log(scrub(parseDate("März 1, 2008")))

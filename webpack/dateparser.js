@@ -1,10 +1,20 @@
 const path = require('path');
 const fs = require('fs');
 const parse = require('xml-parser');
+const punycode = require('punycode')
+
+function uchar(cp) {
+  if (cp >= 0x20 && cp <= 0x7E) return String.fromCharCode(cp);
+  return "\\u" + ('0000' + cp.toString(16)).slice(-4)
+}
+
+function normalized(str) {
+  return '"' + punycode.ucs2.decode(str).map(function(cp) { return uchar(cp) }).join('') + '"';
+}
 
 module.exports = function(srcdir, tgt) {
   var result = {
-    map: {}
+    // map: {}
   };
 
   var translate = {
@@ -25,9 +35,12 @@ module.exports = function(srcdir, tgt) {
 		'season-03': 'autumn',
 		'season-04': 'winter',
 	};
+
+  /*
   var keys = Object.keys(translate)
   keys.sort()
   result.english = keys.map(function(k) { return translate[k]; })
+  */
 
   var locales = require(path.join(srcdir, 'locales.json'));
 
@@ -47,14 +60,14 @@ module.exports = function(srcdir, tgt) {
 
     months = locale.root.children.find(e => e.name == 'terms').children.filter(e => e.attributes.name.startsWith('month-') || e.attributes.name.startsWith('season-'));
     months.forEach(function(month) {
-      let name = month.content.toLowerCase().replace(/\./g, '').trim();
+      let name = month.content.toLowerCase().replace(/\./g, '').trim().normalize('NFKC');
       if (name.match(/^[0-9]+$/)) { return; }
-      if (result.map[name] && result.map[name] != translate[month.attributes.name]) { console.log(`ignoring ${month.attributes.name} ${name}`); return }
-      result.map[name] = translate[month.attributes.name];
+      if (result[name] && result[name] != translate[month.attributes.name]) { console.log(`ignoring ${month.attributes.name} ${name}`); return }
+      result[name] = translate[month.attributes.name];
     })
-    result.names = Object.keys(result.map);
-    result.names.sort(function(a, b) { return b.length - a.length })
   })
+  // result.names = Object.keys(result.map);
+  // result.names.sort(function(a, b) { return b.length - a.length })
 
   /*
   Object.keys(locales['language-names']).forEach(full => {
@@ -65,4 +78,5 @@ module.exports = function(srcdir, tgt) {
   */
 
   fs.writeFileSync(tgt, JSON.stringify(result, null, 2));
+  // fs.writeFileSync(tgt, script, {encoding: 'ucs2'});
 }

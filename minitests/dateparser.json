@@ -1,4 +1,12 @@
 {
+  "März 1, 2008": {
+    "type": "date",
+    "date": {
+      "year": 2008,
+      "month": 3,
+      "day": 1
+    }
+  },
   "1963": {
     "type": "date",
     "date": {
@@ -1316,14 +1324,6 @@
     "date": {
       "year": 2014,
       "month": 10
-    }
-  },
-  "März 1, 2008": {
-    "type": "date",
-    "date": {
-      "year": 2008,
-      "month": 3,
-      "day": 1
     }
   },
   "1897/1913": {

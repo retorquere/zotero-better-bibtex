@@ -36,17 +36,29 @@ console.log('update citeproc');
 if (shell.exec('git submodule update --depth 1 -- citeproc-js').code != 0) throw 'Citeproc update failed';
 
 console.log('dateparser');
-dateparser(path.join(__dirname, 'citeproc-js/locale'), path.join(__dirname, 'gen/dateparser.json'));
+dateparser(path.join(__dirname, 'citeproc-js/locale'), path.join(__dirname, 'gen/dateparser-data.json'));
 
 console.log("let's roll");
+
+var common = {
+  resolveLoader: {
+    alias: {
+      'pegjs-loader': path.join(__dirname, './webpack/pegjs-loader'),
+      'json-loader': path.join(__dirname, './webpack/json-loader'),
+    },
+  },
+  module: {
+    rules: [
+      { test: /\.coffee$/, use: [ {loader: 'coffee-loader', options: { sourceMap: true} } ] },
+      { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
+      { test: /\.json$/, use: [ 'json-loader' ] },
+    ]
+  },
+}
+
 module.exports = [
   // main app logic
-  {
-    resolveLoader: {
-      alias: {
-        'pegjs-loader': path.join(__dirname, './webpack/pegjs-loader'),
-      },
-    },
+  Object.assign({}, common, {
     plugins: [
       CommonsPlugin,
       /* tree shaking
@@ -72,16 +84,10 @@ module.exports = [
       sourceMapFilename: "./[name].js.map",
       pathinfo: true,
     },
-    module: {
-      rules: [
-        { test: /\.coffee$/, use: [ {loader: 'coffee-loader', options: { sourceMap: true} } ] },
-        { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
-      ]
-    },
-  },
+  }),
 
   // static files
-  {
+  Object.assign({}, common, {
     entry: './package.json',
     output: {
       path: path.join(__dirname, 'build'),
@@ -95,18 +101,13 @@ module.exports = [
           { from: 'content/**/*' },
           { from: 'chrome.manifest' },
         ],
-        { ignore: [ '*.coffee', '*.pegjs' ], copyUnmodified: true }
+        { ignore: [ '*.json', '*.coffee', '*.pegjs' ], copyUnmodified: true }
       )
     ]
-  },
+  }),
 
   // translators
-  {
-    resolveLoader: {
-      alias: {
-        'pegjs-loader': path.join(__dirname, './webpack/pegjs-loader'),
-      },
-   },
+  Object.assign({}, common, {
     plugins: [ new TranslatorHeaderPlugin() ],
     context: path.resolve(__dirname, './resource'),
     entry: translators().reduce((entries, f) => {
@@ -122,21 +123,10 @@ module.exports = [
       sourceMapFilename: "./[name].js.map",
       pathinfo: true,
     },
-    module: {
-      rules: [
-        { test: /\.coffee$/, use: [ {loader: 'coffee-loader', options: { sourceMap: true} } ] },
-        { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
-      ]
-    }
-  },
+  }),
 
   // minitests
-  {
-    resolveLoader: {
-      alias: {
-        'pegjs-loader': path.join(__dirname, './webpack/pegjs-loader'),
-      },
-    },
+  Object.assign({}, common, {
     context: path.resolve(__dirname, './minitests'),
     entry: {
       'pfunc': './pfunc.coffee',
@@ -148,11 +138,5 @@ module.exports = [
       devtoolLineToLine: true,
       pathinfo: true,
     },
-    module: {
-      rules: [
-        { test: /\.coffee$/, use: [ {loader: 'coffee-loader', options: { sourceMap: true} } ] },
-        { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
-      ]
-    }
-  },
+  }),
 ];

@@ -1,10 +1,12 @@
 edtf = require('edtf')
 edtfy = require('edtfy')
-months = require('../gen/dateparser.json')
+debug = require('./debug.coffee')
+escapeStringRegexp = require('escape-string-regexp')
 
-months.re = {}
-for month in months.names
-  months.re[month] = new RegExp(month, 'i')
+months = require('../gen/dateparser-data.json')
+months_re = Object.keys(months)
+months_re.sort((a, b) -> b.length - a.length)
+months_re = new RegExp(months_re.map((month) -> escapeStringRegexp(month)).join('|'), 'i')
 
 #regex = {
 #  My: new RegExp('^(' + months.english.join('|') + ')\\s([0-9]{3,})$', 'i'),
@@ -51,6 +53,7 @@ parse_edtf = (date) ->
   return normalize_edtf(parsed)
 
 parse = (raw) ->
+  debug('dateparser: parsing', raw)
   return {type: 'open'} if raw.trim() == ''
 
   for sep in ['-', '/', '_']
@@ -60,12 +63,8 @@ parse = (raw) ->
         to = parse(m[1])
         return { type: 'interval', from, to } if from.type in ['date', 'open'] && to.type in ['date', 'open']
 
-  cleaned = raw
-
-  for month in months.names
-    if months.re[month].test(raw)
-      cleaned = cleaned.replace(months.re[month], months.map[month])
-      break
+  cleaned = raw.normalize('NFKC').replace(months_re, ((month) -> months[month.toLowerCase()]))
+  debug('dateparser:', raw, 'cleaned up to', cleaned)
 
   trimmed = cleaned.trim().replace(/(\s+|T)[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|\+[0-9]{2}:?[0-9]{2})?$/, '').toLowerCase()
 

@@ -3,7 +3,7 @@ Translators = require('./translators.coffee')
 KeyManager = require('./keymanager.coffee')
 JournalAbbrev = require('./journal-abbrev.coffee')
 require('./serializer.coffee')
-dateparser = require('./dateparser.coffee')
+parseDate = require('./dateparser.coffee')
 citeproc = require('./citeproc.coffee')
 titleCase = require('./title-case.coffee')
 
@@ -14,7 +14,7 @@ BBT.init = ->
 
   ### bugger this, I don't want megabytes of shared code in the translators ###
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
-    parseDate: (sandbox, date) -> dateparser(date)
+    parseDate: (sandbox, date) -> parseDate(date)
     parseParticles: (sandbox, name) -> citeproc.parseParticles(name) # && citeproc.parseParticles(name)
     titleCase: (sandbox, text) -> titleCase(text)
   }

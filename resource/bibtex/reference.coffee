@@ -522,10 +522,10 @@ class Reference
   ###
   remove: (name) ->
     return unless @has[name]
+    debug('remove field', name)
     removed = @has[name]
     delete @has[name]
     @fields = (field for field in @fields when field.name != name)
-    debug('field removed:', name)
     return removed
 
   normalize: (typeof (''.normalize) == 'function')

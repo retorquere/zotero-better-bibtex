@@ -9,6 +9,7 @@
   "dependencies": {
     "edtf": "^2.1.0",
     "edtfy": "0.0.8",
+    "escape-string-regexp": "^1.0.5",
     "eventemitter3": "^2.0.3",
     "fold-to-ascii": "^4.0.0",
     "js-yaml": "^3.9.0",
