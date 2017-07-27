@@ -146,7 +146,7 @@ class Reference
   # @return {String} unmodified `field.value`
   ###
   isodate: (date) ->
-    return null unless date && date.year && date.type in ['Date', 'Season']
+    return null unless date && date.year && date.type in ['date', 'season']
 
     iso = '' + date.year
     if date.month
@@ -158,9 +158,9 @@ class Reference
     return null unless f.value
 
     value = f.value
-    parsed = Zotero.BetterBibTeX.parseDateToObject(value, @item.language) if typeof f.value == 'string'
+    parsed = Zotero.BetterBibTeX.parseDate(value, @item.language) if typeof f.value == 'string'
 
-    if parsed.type == 'Verbatim'
+    if parsed.type == 'verbatim'
       return '\\bibstring{nodate}' if f.value == 'n.d.'
       return @enc_latex(@clone(f, f.value))
 

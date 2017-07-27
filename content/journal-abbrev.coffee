@@ -46,22 +46,21 @@ class JournalAbbrev
     return
 
   get: (serialized_item) ->
-    debug('JournalAbbrev.get', {source: serialized_item.publicationTitle || serialized_item.reporter || serialized_item.code, active: @active, arxive: serialized_item.arXiv?.source == 'publicationTitle'})
     return serialized_item.journalAbbreviation if serialized_item.journalAbbreviation
     return null unless serialized_item.itemType in ['conferencePaper', 'journalArticle', 'bill', 'case', 'statute']
+    return null unless @active
 
-    debug('JournalAbbrev.get: arxiv?')
+    journal = serialized_item.publicationTitle || serialized_item.reporter || serialized_item.code
+    return null unless journal
+
     # don't even try to auto-abbrev arxiv IDs.
     ### TODO: How did the arXiv id's get into the serialized object? ###
     return null if serialized_item.arXiv?.source == 'publicationTitle'
 
-    return unless @active
+    @abbrevs['default']?['container-title']?[journal] || Zotero.Cite.getAbbreviation(@style, @abbrevs, 'default', 'container-title', journal)
 
-    key = serialized_item.publicationTitle || serialized_item.reporter || serialized_item.code
-    return unless key
-
-    @abbrevs['default']?['container-title']?[key] || Zotero.Cite.getAbbreviation(@style, @abbrevs, 'default', 'container-title', key)
-    debug('JournalAbbrev.get=', key, @abbrevs['default']?['container-title']?[key])
-    return @abbrevs['default']?['container-title']?[key] || key
+    abbr = @abbrevs['default']?['container-title']?[journal]
+    return null if abbr == journal
+    return abbr || journal
 
 module.exports = new JournalAbbrev()

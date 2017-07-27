@@ -308,9 +308,10 @@ BetterBibTeX.doExport = ->
           else
             if BetterBibTeX.options.useJournalAbbreviation && item.journalAbbreviation
               ref.add({ name: 'journaltitle', value: item.journalAbbreviation, preserveBibTeXVariables: true })
-            else if BetterBibTeX.BetterBibLaTeX && item.publicationTitle.match(/arxiv:/i)
-              ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
-              ref.add({ name: 'shortjournal', value: item.journalAbbreviation, preserveBibTeXVariables: true })
+            # TODO: what's going on here?
+            #else if BetterBibTeX.BetterBibLaTeX && item.publicationTitle.match(/arxiv:/i)
+            #  ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
+            #  ref.add({ name: 'shortjournal', value: item.journalAbbreviation, preserveBibTeXVariables: true })
             else
               ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
               ref.add({ name: 'shortjournal', value: item.journalAbbreviation, preserveBibTeXVariables: true })
