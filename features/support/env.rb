@@ -8,6 +8,7 @@ require 'selenium/webdriver'
 require 'httparty'
 require 'shellwords'
 require 'benchmark'
+require 'json'
 
 class IniFile
   def write_compact( opts = {} )
@@ -35,8 +36,8 @@ def execute(options)
     timeout: 10,
     headers: { 'Content-Type' => 'text/plain' },
   }.merge(options || {})
-  options[:query] = options.delete(:args)
-  options[:body] = options.delete(:script)
+  args = options.delete(:args) || {}
+  options[:body] = "var args = #{args.to_json};\n" + options.delete(:script)
 
   response = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", options)
 

@@ -284,7 +284,7 @@ BetterBibTeX.doExport = ->
     ref.add({ pagetotal: item.numPages })
     ref.add({ type: item.type })
 
-    ref.add({ number: item.seriesNumber || item.number })
+    ref.add({ number: item.seriesNumber || item.number || item.docketNumber })
     ref.add({ name: (if isNaN(parseInt(item.issue)) || (( '' + parseInt(item.issue)) != ('' + item.issue))  then 'issue' else 'number'), value: item.issue })
 
     switch item.__type__
@@ -306,14 +306,14 @@ BetterBibTeX.doExport = ->
           if ref.isBibVar(item.publicationTitle)
             ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
           else
-            if BetterBibTeX.options.useJournalAbbreviation && item.journalAbbrev
-              ref.add({ name: 'journaltitle', value: item.journalAbbrev, preserveBibTeXVariables: true })
+            if BetterBibTeX.options.useJournalAbbreviation && item.journalAbbreviation
+              ref.add({ name: 'journaltitle', value: item.journalAbbreviation, preserveBibTeXVariables: true })
             else if BetterBibTeX.BetterBibLaTeX && item.publicationTitle.match(/arxiv:/i)
               ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
-              ref.add({ name: 'shortjournal', value: item.journalAbbrev, preserveBibTeXVariables: true })
+              ref.add({ name: 'shortjournal', value: item.journalAbbreviation, preserveBibTeXVariables: true })
             else
               ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
-              ref.add({ name: 'shortjournal', value: item.journalAbbrev, preserveBibTeXVariables: true })
+              ref.add({ name: 'shortjournal', value: item.journalAbbreviation, preserveBibTeXVariables: true })
 
         else
           ref.add({ journaltitle: item.publicationTitle}) if ! ref.has.journaltitle && item.publicationTitle != item.title

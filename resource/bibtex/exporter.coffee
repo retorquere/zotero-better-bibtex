@@ -242,8 +242,8 @@ class Exporter
     return uniq
 
   nextItem: ->
-    while item = Zotero.nextItem()
-      continue if item.itemType == 'note' || item.itemType == 'attachment'
+    while item = Zotero.BetterBibTeX.simplifyFields(Zotero.nextItem())
+      continue if item.itemType in ['note', 'attachment']
       debug('fetched item:', item)
 # TODO: caching?
 #      if @caching

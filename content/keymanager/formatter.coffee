@@ -7,11 +7,13 @@ fold2ascii = require('fold-to-ascii').fold
 punycode = require('punycode')
 journalAbbrev = require('../journal-abbrev.coffee')
 serializer = require('../serializer.coffee')
+debug = require('../debug.coffee')
 
 class PatternFormatter
   constructor: -> @update()
 
   update: ->
+    debug('PatternFormatter.update')
     @skipWords = Prefs.get('skipWords').split(',').map((word) -> word.trim()).filter((word) -> word)
     @fold = Prefs.get('citekeyFold')
 
@@ -24,8 +26,9 @@ class PatternFormatter
         @generate = new Function(parser.parse(Prefs.get('citekeyFormat'), {methods: @methods, filters: @filters}))
         break
       catch err
-        debug('Error parsing citekey pattern', {pattern: Prefs.get('citekeyFormat')}, err)
+        debug('PatternFormatter.update: Error parsing citekey pattern', {pattern: Prefs.get('citekeyFormat')}, err)
 
+    debug('PatternFormatter.update:', Prefs.get('citekeyFormat'))
     return
 
   re:
@@ -42,7 +45,7 @@ class PatternFormatter
     return str
 
   format: (item) ->
-    @item = serializer.get(item)
+    @item = serializer.simplify(serializer.get(item))
 
     return {} if @item.itemType in ['attachment', 'note']
 

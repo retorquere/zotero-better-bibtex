@@ -1,4 +1,5 @@
 abbrevs = require('./journal-abbrev.coffee')
+debug = require('./debug.coffee')
 
 cache = {}
 
@@ -15,7 +16,7 @@ Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
       cache[id][key].itemID = cache[id][key].id = parseInt(id)
 
     ### set journal abbrev ###
-    cache[id][key].journalAbbrev = abbrevs.get(cache[id][key])
+    cache[id][key].journalAbbreviation = abbrevs.get(cache[id][key])
 
     return cache[id][key]
   )(Zotero.Utilities.Internal.itemToExportFormat)
@@ -26,6 +27,34 @@ class Serializer
 #    ids = yield Zotero.DB.columnQueryAsync('select itemID from items where itemID not in (select itemID from deletedItems)')
 #    for id in ids
 #      delete cache[id] if entry.accessed
+
+  init: Zotero.Promise.coroutine(->
+    debug('Serializer.init')
+    mapping = yield Zotero.DB.queryAsync("""
+      SELECT bf.fieldName as baseName, it.typeName, f.fieldName
+      FROM baseFieldMappingsCombined bfmc
+      join fields bf on bf.fieldID = bfmc.baseFieldID
+      join fields f on f.fieldID = bfmc.fieldID
+      join itemTypes it on it.itemTypeID = bfmc.itemTypeID
+      order by it.typeName, bf.fieldName
+    """)
+
+    mapping = mapping.reduce((map, alias) ->
+      map[alias.baseName] ||= {}
+      map[alias.baseName]['item.' + alias.fieldName] = true
+      return map
+    , {})
+
+    simplify = ''
+    for baseName, aliases of mapping
+      simplify += "if (item.#{baseName} == null) { item.#{baseName} = #{Object.keys(aliases).join(' || ')}; }\n"
+    simplify += 'return item;'
+
+    debug('Serializer.init: simplify =', simplify)
+    @simplify = new Function('item', simplify)
+    debug('Serializer.init: done')
+    return
+  )
 
   get: (item) -> Zotero.Utilities.Internal.itemToExportFormat(item, false, true)
 

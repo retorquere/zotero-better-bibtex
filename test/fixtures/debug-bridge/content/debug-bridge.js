@@ -16,7 +16,7 @@ if (!Zotero.DebugBridge) {
   
       init: Zotero.Promise.coroutine(function* (options) {
         Zotero.debug('debug-bridge: executing ' + JSON.stringify(options.data));
-        let action = Zotero.Promise.coroutine(new GeneratorFunction('args', options.data));
+        let action = Zotero.Promise.coroutine(new GeneratorFunction(options.data));
         let response;
         try {
           response = yield action(options.query);

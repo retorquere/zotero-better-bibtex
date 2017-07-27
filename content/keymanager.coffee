@@ -28,12 +28,10 @@ class KeyManager
 
     debug('KeyManager.init: done')
 
-    Prefs.observe((subject, topic, data) =>
-      key = data.split('.')
-      key = key[key.length - 1]
-      if key in ['autoAbbrev', 'autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
+    Prefs.onChange((pref) =>
+      if pref in ['autoAbbrev', 'autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
         @formatter.update()
-        @patternChanged().catch(err -> debug('KeyManager.patternChanged error:', err))
+        @patternChanged().catch((err) -> debug('KeyManager.patternChanged error:', err))
       return
     )
     return

@@ -1,8 +1,11 @@
 debug = require('./debug.coffee')
+
+require('./preferences.coffee') # initializes the prefs observer
+
 Translators = require('./translators.coffee')
 KeyManager = require('./keymanager.coffee')
 JournalAbbrev = require('./journal-abbrev.coffee')
-require('./serializer.coffee')
+Serializer = require('./serializer.coffee')
 parseDate = require('./dateparser.coffee')
 citeproc = require('./citeproc.coffee')
 titleCase = require('./title-case.coffee')
@@ -17,6 +20,7 @@ BBT.init = ->
     parseDate: (sandbox, date) -> parseDate(date)
     parseParticles: (sandbox, name) -> citeproc.parseParticles(name) # && citeproc.parseParticles(name)
     titleCase: (sandbox, text) -> titleCase(text)
+    simplifyFields: (sandbox, item) -> Serializer.simplify(item)
   }
 
   return
@@ -32,6 +36,7 @@ Zotero.Promise.coroutine(->
   debug('zotero schema done')
 
   BBT.init()
+  Serializer.init()
   yield JournalAbbrev.init()
   yield Translators.init()
   yield KeyManager.init()

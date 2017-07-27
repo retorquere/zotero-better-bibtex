@@ -14,6 +14,8 @@ Before do |scenario|
     var items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     if (items.length != 0) throw new Error('library not empty after reset')
   """) unless scenario.source_tag_names.include?('@noreset')
+
+  @displayOptions = {}
 end
 
 When /^I set preference ([^\s]+) to (.*)$/ do |pref, value|
@@ -39,7 +41,9 @@ When /^I import (\d+) references from (['"])([^\2]+)\2$/ do |n, quote, json|
     // preferences from #{source}
     var prefix = 'translators.better-bibtex';
   """
-  prefs = JSON.parse(File.read(source))['config']['preferences'] || {}
+
+  config = JSON.parse(File.read(source))['config'] || {}
+  prefs = config['preferences'] || {}
   prefs.each_pair{|p, v|
     v = v.join(',') if v.is_a?(Array)
     script += """
@@ -47,6 +51,7 @@ When /^I import (\d+) references from (['"])([^\2]+)\2$/ do |n, quote, json|
     """
   }
   execute(script)
+  @displayOptions = config['options'] || {}
 
   imported = execute(
     timeout: 30,
@@ -92,12 +97,13 @@ Then /^a library export using (['"])([^\1]+)\1 should match (['"])([^\3]+)\3$/ d
   expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', library))
   expected = File.read(expected)
   found = execute(
-    args: { translatorID: translator },
+    args: { translatorID: translator, displayOptions: @displayOptions },
     script: """
       var translation = new Zotero.Promise(function (resolve, reject) {
         var translation = new Zotero.Translate.Export();
         translation.setLibraryID(Zotero.Libraries.userLibraryID);
-        translation.setTranslator(args.translatorID);
+        translation.setTranslator(args.translatorID)
+        translation.setDisplayOptions(args.displayOptions);
         translation.setHandler('done', function(obj, success) {
           if (success && obj && obj.string) {
             resolve(obj.string);

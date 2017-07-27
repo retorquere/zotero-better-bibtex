@@ -1,31 +1,42 @@
 debug = require('./debug.coffee')
+events = require('./events.coffee')
 
 class Preferences
   prefix: 'translators.better-bibtex'
 
-  key: (key) -> "#{@prefix}.#{key}"
+  constructor: ->
+    prefService = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService)
+    @branch = prefService.getBranch("extensions.zotero.#{@prefix}.")
+    @branch.addObserver('', @, false)
 
-  set: (key, value) ->
-    debug("Prefs.set(#{key}):", value)
-    Zotero.Prefs.set(@key(key), value)
+  key: (pref) -> "#{@prefix}.#{pref}"
+
+  set: (pref, value) ->
+    debug('Prefs.set', pref, value)
+    Zotero.Prefs.set(@key(pref), value)
     return
 
-  get: (key) ->
+  get: (pref) ->
     try
-      return Zotero.Prefs.get(@key(key))
-    catch err
-      debug("Prefs.get(#{key}):", err)
+      return Zotero.Prefs.get(@key(pref))
+    catch
       return null
 
-  clear: (key) ->
+  clear: (pref) ->
     try
-      Zotero.Prefs.clear(@key(key))
+      Zotero.Prefs.clear(@key(pref))
     catch err
-      debug('Prefs.clear', key, err)
+      debug('Prefs.clear', pref, err)
+
     return
 
-  observe: (observer) ->
-    Zotero.Prefs.prefBranch.addObserver(@prefix, { observe: observer}, false)
+  observe: (branch, topic, pref) ->
+    debug('preference', pref, 'changed to', @get(pref))
+    events.emit('preference-changed', pref)
+    return
+
+  onChange: (observer) ->
+    events.on('preference-changed', observer)
     return
 
 module.exports = new Preferences()

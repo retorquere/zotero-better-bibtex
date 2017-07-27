@@ -7,7 +7,7 @@ if (!Zotero.BetterBibTeX) {
       loader.loadSubScript("chrome://zotero-better-bibtex/content/better-bibtex.js");
       Zotero.debug("{better-bibtex}: better-bibtex.js loaded");
     } catch (err) {
-      Zotero.debug("{better-bibtex}: better-bibtex.js load failed: " + err);
+      Zotero.debug("{better-bibtex}: better-bibtex.js load failed: " + err + "\n" + err.stack);
     }
   })();
 }
