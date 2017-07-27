@@ -1,7 +1,7 @@
 flash = require('../flash.coffee')
 Prefs = require('../preferences.coffee')
 parser = require('./formatter.pegjs')
-dateparser = require('../dateparser.coffee')
+parseDate = require('../dateparser.coffee')
 transliterate = require('transliteration').transliterate
 fold2ascii = require('fold-to-ascii').fold
 punycode = require('punycode')
@@ -52,8 +52,8 @@ class PatternFormatter
     delete @year
     delete @month
     if @item.date
-      date = dateparser(@item.date)
-      date = date.from if date.from
+      date = parseDate(@item.date)
+      date = (date.from || date.to) if date.type == 'interval'
 
       switch date?.type || 'verbatim'
         when 'verbatim'
@@ -69,12 +69,12 @@ class PatternFormatter
           delete @month if isNaN(@month)
 
         when 'date'
-          date = date.orig || date.date
+          date = date.orig || date
           @year = date.year
           @month = date.month
 
         when 'season'
-          @year = date.date.year
+          @year = date.year
 
         else
           throw "Unexpected parsed date #{JSON.stringify(date)}"

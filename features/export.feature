@@ -17,6 +17,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
      | csquotes #302                                                                                  | 2           |
      | Oriental dates trip up date parser #389                                                        | 1           |
      | Non-ascii in dates is not matched by date parser #376                                          | 1           |
@@ -36,7 +37,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.006                                                                            | 1           |
      | Better BibLaTeX.007                                                                            | 1           |
      | Better BibLaTeX.009                                                                            | 2           |
-     | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
      | BibTeX variable support for journal titles. #309                                               | 1           |
      | Book converted to mvbook #288                                                                  | 1           |
      | Book sections have book title for journal in citekey #409                                      | 1           |

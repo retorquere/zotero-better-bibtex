@@ -38,7 +38,7 @@ module.exports = (date, formatted_field, verbatim_field) ->
 #        field = { name: formatted_field, value: date.replace(/~/g, '\u00A0') }
 
     when date.type == 'date'
-      field = { name: formatted_field, value: format(date.date) }
+      field = { name: formatted_field, value: format(date) }
 
     when date.type == 'interval'
       field = { name: formatted_field, value: format(date.from) + '/' + format(date.to) }

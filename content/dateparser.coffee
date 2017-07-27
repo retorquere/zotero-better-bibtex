@@ -21,7 +21,7 @@ normalize_edtf = (date) ->
       year = date.values[0]
       month = if typeof date.values[1] == 'number' then date.values[1] + 1 else undefined
       day = date.values[2]
-      return { type: 'date', date: { year, month, day, approximate: date.approximate || !!date.unspecified, uncertain: date.uncertain } }
+      return { type: 'date', year, month, day, approximate: date.approximate || !!date.unspecified, uncertain: date.uncertain }
 
 #    when 'Set'
 #      if date.values.length == 1
@@ -35,7 +35,7 @@ normalize_edtf = (date) ->
 
     when 'Season'
       throw new Error("Unexpected season #{date.values[1]}") unless 21 <= date.values[1] <= 24
-      return { type: 'season', date: { year: date.values[0], season: ['spring', 'summer', 'autumn', 'winter'][date.values[1] - 21] } }
+      return { type: 'season', year: date.values[0], season: ['spring', 'summer', 'autumn', 'winter'][date.values[1] - 21] }
 
     else
       throw new Error(JSON.stringify(date))
@@ -74,27 +74,27 @@ parse = (raw) ->
 #    day = parseInt(m[1])
 #    month = months.english.indexOf(m[2]) + 1
 #    month += 8 if month > 12
-#    return { type: 'date', date: { year, month, day } }
+#    return { type: 'date', year, month, day }
 
 #  if m = regex.Mdy.exec(trimmed)
 #    year = parseInt(m[3])
 #    day = parseInt(m[2])
 #    month = months.english.indexOf(m[1]) + 1
 #    month += 8 if month > 12
-#    return { type: 'date', date: { year, month, day } }
+#    return { type: 'date', year, month, day }
 
 #  if m = regex.My.exec(trimmed)
 #    year = parseInt(m[2])
 #    month = months.english.indexOf(m[1]) + 1
 #    month += 8 if month > 12
-#    return { type: 'date', date: { year, month } }
+#    return { type: 'date', year, month }
 
   if m = /^(-?[0-9]{3,})([-\/\.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(trimmed)
     year = parseInt(m[1])
     month = parseInt(m[3])
     day = if m[5] then parseInt(m[5]) else undefined
     [day, month] = [month, day] if day && month > 12 && day < 12
-    return { type: 'date', date: { year, month, day } }
+    return { type: 'date', year, month, day }
 
   if m = /^([0-9]{1,2})([-\/\. ])([0-9]{1,2})([-\/\. ])([0-9]{3,})$/.exec(trimmed)
     year = parseInt(m[5])
@@ -102,34 +102,36 @@ parse = (raw) ->
     day = parseInt(m[1])
     [day, month] = [month, day] if m[1] == '/' # silly yanks
     [day, month] = [month, day] if month > 12 && day < 12
-    return { type: 'date', date: { year, month, day } }
+    return { type: 'date', year, month, day }
 
   if m = /^([0-9]{1,2})[-\/\.]([0-9]{3,})$/.exec(trimmed)
     year = parseInt(m[2])
     month = parseInt(m[1])
-    return { type: 'date', date: { year, month } }
+    return { type: 'date', year, month }
 
   if m = /^([0-9]{3,})[-\/\.]([0-9]{1,2})$/.exec(trimmed)
     year = parseInt(m[1])
     month = parseInt(m[2])
-    return { type: 'date', date: { year, month } }
+    return { type: 'date', year, month }
 
 #  if m = /^(-?[0-9]{3,})([?~]*)$/.exec(trimmed)
-#    return { type: 'date', date: { year: parseInt(m[1]), approximate: m[2].indexOf('~') >=0, uncertain: m[2].indexOf('?') >= 0} }
+#    return { type: 'date', year: parseInt(m[1]), approximate: m[2].indexOf('~') >=0, uncertain: m[2].indexOf('?') >= 0 }
 
   if m = /^\[(-?[0-9]+)\]$/.exec(trimmed)
-    return { orig: { year: parseInt(m[1]) } }
+    return { type: 'date', orig: { type: 'date', year: parseInt(m[1]) } }
 
   if m = /^\[(-?[0-9]+)\]\s*(-?[0-9]+)$/.exec(trimmed)
     return {
-      orig: { year: parseInt(m[1]) },
-      date: { year: parseInt(m[2]) }
+      type: 'date',
+      year: parseInt(m[2]),
+      orig: { type: 'date', year: parseInt(m[1]) },
     }
 
   if m = /^(-?[0-9]+)\s*\[(-?[0-9]+)\]$/.exec(trimmed)
     return {
+      type: 'date',
+      year: parseInt(m[1]),
       orig: { year: parseInt(m[2]) },
-      date: { year: parseInt(m[1]) }
     }
 
   parsed = parse_edtf(cleaned)
