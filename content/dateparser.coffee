@@ -6,7 +6,8 @@ escapeStringRegexp = require('escape-string-regexp')
 months = require('../gen/dateparser-data.json')
 months_re = Object.keys(months)
 months_re.sort((a, b) -> b.length - a.length)
-months_re = new RegExp(months_re.map((month) -> escapeStringRegexp(month)).join('|'), 'i')
+months_re = months_re.join('|')
+months_re = new RegExp(months_re, 'i')
 
 #regex = {
 #  My: new RegExp('^(' + months.english.join('|') + ')\\s([0-9]{3,})$', 'i'),
@@ -63,7 +64,7 @@ parse = (raw) ->
         to = parse(m[1])
         return { type: 'interval', from, to } if from.type in ['date', 'open'] && to.type in ['date', 'open']
 
-  cleaned = raw.normalize('NFKC').replace(months_re, ((month) -> months[month.toLowerCase()]))
+  cleaned = raw.normalize('NFC').replace(months_re, ((month) -> months[month.toLowerCase()]))
   debug('dateparser:', raw, 'cleaned up to', cleaned)
 
   trimmed = cleaned.trim().replace(/(\s+|T)[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|\+[0-9]{2}:?[0-9]{2})?$/, '').toLowerCase()

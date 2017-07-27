@@ -385,7 +385,7 @@ class Reference
     return value
 
   enc_tags: (f) ->
-    tags = (tag for tag in f.value || [] when tag && tag != BetterBibTeX.preferences.rawLaTag)
+    tags = (tag.tag for tag in f.value || [] when tag && tag.tag && tag.tag != BetterBibTeX.preferences.rawLaTag)
     return null if tags.length == 0
 
     # sort tags for stable tests
@@ -394,9 +394,9 @@ class Reference
     debug('enc_tags:', tags)
     tags = for tag in tags
       if BetterBibTeX.BetterBibTeX
-        tag = tag.tag.replace(/([#\\%&])/g, '\\$1')
+        tag = tag.replace(/([#\\%&])/g, '\\$1')
       else
-        tag = tag.tag.replace(/([#%\\])/g, '\\$1')
+        tag = tag.replace(/([#%\\])/g, '\\$1')
 
       # the , -> ; is unfortunate, but I see no other way
       tag = tag.replace(/,/g, ';')

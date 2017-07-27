@@ -8,7 +8,6 @@ const InstallRDFPlugin = require('./webpack/install-rdf-plugin');
 const PreferencesPlugin = require('./webpack/preferences-plugin');
 const TranslatorHeaderPlugin = require('./webpack/translator-header-plugin');
 const CommonsPlugin = new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' })
-const UglifyEsPlugin = require('uglify-es-webpack-plugin');
 
 const version = require('./webpack/version');
 const translators = require('./webpack/translators');
@@ -61,15 +60,6 @@ module.exports = [
   Object.assign({}, common, {
     plugins: [
       CommonsPlugin,
-      /* tree shaking
-      new UglifyEsPlugin({
-        compress: false,
-        mangle: false,
-        output: {
-          beautify: true,
-        },
-      })
-      */
     ],
     context: path.resolve(__dirname, './content'),
     entry: {
