@@ -37,5 +37,6 @@
   "qualityReport": false,
   "suppressTitleCase": false,
   "debug": false,
-  "testing": false
+  "testing": false,
+  "rawLaTag": "#LaTeX"
 }

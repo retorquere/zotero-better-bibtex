@@ -15,7 +15,7 @@
       "confirmCacheResetSize": 1000,
       "caching": true,
       "citeCommand": "cite",
-      "citekeyFormat": "[auth][year]",
+      "citekeyFormat": "[auth][origyear]",
       "citekeyFold": true,
       "debug": true,
       "DOIandURL": "url",

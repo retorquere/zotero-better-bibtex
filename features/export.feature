@@ -17,6 +17,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Math parts in title #113                                                                       | 1           |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
      | map csl-json variables #293                                                                    | 2           |
      | Fields in Extra should override defaults                                                       | 1           |
@@ -80,7 +81,6 @@ Scenario Outline: BibLaTeX Export
      | HTML Fragment separator escaped in url #140 #147                                               | 1           |
      | Export Newspaper Article misses section field #132                                             | 1           |
      | Exporting of single-field author lacks braces #130                                             | 1           |
-     | Math parts in title #113                                                                       | 1           |
      | Hang on non-file attachment export #112 - URL export broken #114                               | 2           |
      | DOI with underscores in extra field #108                                                       | 1           |
      | underscores in URL fields should not be escaped #104                                           | 1           |
@@ -132,7 +132,7 @@ Scenario Outline: BibLaTeX Export
 ### Other ###
 @test-cluster-1 @131
 Scenario: Omit URL export when DOI present. #131
-  When I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json'
+  When I import 3 references with 2 attachments from 'export/Omit URL export when DOI present. #131.json' into a new collection
   And I set preference .DOIandURL to both
   And I set preference .jabrefGroups to 3
   Then a library export using 'Better BibLaTeX' should match 'export/Omit URL export when DOI present. #131.groups3.biblatex'

@@ -385,7 +385,7 @@ class Reference
     return value
 
   enc_tags: (f) ->
-    tags = (tag.tag for tag in f.value || [] when tag && tag.tag && tag.tag != BetterBibTeX.preferences.rawLaTag)
+    tags = (tag for tag in f.value || [] when tag && tag != BetterBibTeX.preferences.rawLaTag)
     return null if tags.length == 0
 
     # sort tags for stable tests

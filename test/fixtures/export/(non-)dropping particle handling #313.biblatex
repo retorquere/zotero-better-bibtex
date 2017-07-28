@@ -28,7 +28,7 @@
   title = {Norm and Action. A Logical Enquiry}
 }
 
-@collection{Almeida2013,
+@collection{almeida_reading_2013,
   date = {2013},
   editor = {d' Almeida, Luís and Edwards, James and Dolcetti, Andrea},
   isbn = {978-1-84946-324-9},
@@ -40,7 +40,7 @@
   title = {Reading {{HLA Hart}}'s: {{{\emph{The Concept}}}}{\emph{ of }}{{{\emph{Law}}}}}
 }
 
-@book{Bennett2013,
+@book{bennett_citations_2013,
   author = {Bennett, Jr., Frank G.},
   date = {2013},
   isbn = {978-1-4793-4771-1},
@@ -51,7 +51,7 @@
   title = {Citations, {{Out}} of the {{Box}}}
 }
 
-@book{King1968,
+@book{king_have_1968,
   author = {King, Jr., Martin Luther},
   date = {1968},
   location = {{New York}},

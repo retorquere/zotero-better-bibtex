@@ -48,6 +48,7 @@ class Serializer
     simplify = ''
     for baseName, aliases of mapping
       simplify += "if (item.#{baseName} == null) { item.#{baseName} = #{Object.keys(aliases).join(' || ')}; }\n"
+    simplify += 'item.tags = item.tags ? item.tags.map(function(tag) { return tag.tag }) : [];'
     simplify += 'return item;'
 
     debug('Serializer.init: simplify =', simplify)

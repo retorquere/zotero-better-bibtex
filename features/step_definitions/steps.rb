@@ -41,8 +41,11 @@ When /^I set preference ([^\s]+) to (.*)$/ do |pref, value|
   )
 end
 
-When /^I import (\d+) references from (['"])([^\2]+)\2$/ do |n, quote, json|
+When /^I import (\d+) references (?:with (\d+) attachments )?from (['"])([^\3]+)\3( into a new collection)?$/ do |references, attachments, quote, json, createNewCollection|
   source = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', json))
+
+  references = Integer(references)
+  attachments = attachments.nil? ? 0 : Integer(attachments)
 
   script = """
     // preferences from #{source}
@@ -62,7 +65,7 @@ When /^I import (\d+) references from (['"])([^\2]+)\2$/ do |n, quote, json|
 
   imported = execute(
     timeout: 30,
-    args: { filename: source },
+    args: { filename: source, createNewCollection: !!createNewCollection },
     script: """
       Zotero.debug('importing ' + args.filename);
       var file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile);
@@ -72,7 +75,7 @@ When /^I import (\d+) references from (['"])([^\2]+)\2$/ do |n, quote, json|
       var before = items.length;
 
       Zotero.debug('{better-bibtex} starting import at ' + new Date());
-      yield Zotero_File_Interface.importFile(file, false);
+      yield Zotero_File_Interface.importFile(file, args.createNewCollection);
       Zotero.debug('{better-bibtex} import finished at ' + new Date());
 
       var items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true);
@@ -82,7 +85,7 @@ When /^I import (\d+) references from (['"])([^\2]+)\2$/ do |n, quote, json|
       return (after - before);
     """
   )
-  expect(imported).to eq(Integer(n))
+  expect(imported).to eq(Integer(references))
 end
 
 Then /^the library should have (\d+) references/ do |n|
