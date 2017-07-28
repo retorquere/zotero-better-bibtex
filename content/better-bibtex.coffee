@@ -1,4 +1,5 @@
 debug = require('./debug.coffee')
+edtf = require('edtf')
 
 require('./preferences.coffee') # initializes the prefs observer
 
@@ -18,6 +19,12 @@ BBT.init = ->
   ### bugger this, I don't want megabytes of shared code in the translators ###
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     parseDate: (sandbox, date) -> parseDate(date)
+    isEDTF: (sandbox, date) ->
+      try
+        edtf.parse(date)
+        return true
+      catch
+        return false
     parseParticles: (sandbox, name) -> citeproc.parseParticles(name) # && citeproc.parseParticles(name)
     titleCase: (sandbox, text) -> titleCase(text)
     simplifyFields: (sandbox, item) -> Serializer.simplify(item)

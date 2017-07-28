@@ -91,7 +91,7 @@
 @article{barker7_1723_turkey,
   abstract = {Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.},
   author = {Barker7, Anne},
-  date = {1723?~},
+  date = {1723~},
   entrysubtype = {newspaper},
   journaltitle = {ABC News},
   langid = {australian},
@@ -133,10 +133,10 @@
   urldate = {2016-07-24}
 }
 
-@article{barker10_199u_turkey,
+@article{barker10_1990_turkey,
   abstract = {Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.},
   author = {Barker10, Anne},
-  date = {199u},
+  date = {1990~},
   entrysubtype = {newspaper},
   journaltitle = {ABC News},
   langid = {australian},
@@ -148,10 +148,10 @@
   urldate = {2016-07-24}
 }
 
-@article{barker11_19uu_turkey,
+@article{barker11_1900_turkey,
   abstract = {Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.},
   author = {Barker11, Anne},
-  date = {19uu},
+  date = {1900~},
   entrysubtype = {newspaper},
   journaltitle = {ABC News},
   langid = {australian},
@@ -166,7 +166,7 @@
 @article{barker12_1999_turkey,
   abstract = {Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.},
   author = {Barker12, Anne},
-  date = {1999-uu},
+  date = {1999-01~},
   entrysubtype = {newspaper},
   journaltitle = {ABC News},
   langid = {australian},
@@ -181,7 +181,7 @@
 @article{barker13_1999_turkey,
   abstract = {Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.},
   author = {Barker13, Anne},
-  date = {1999-01-uu},
+  date = {1999-01-01~},
   entrysubtype = {newspaper},
   journaltitle = {ABC News},
   langid = {australian},
@@ -196,7 +196,7 @@
 @article{barker14_1999_turkey,
   abstract = {Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.},
   author = {Barker14, Anne},
-  date = {1999-uu-uu},
+  date = {1999-01-01~},
   entrysubtype = {newspaper},
   journaltitle = {ABC News},
   langid = {australian},

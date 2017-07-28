@@ -4,7 +4,7 @@
     "label": "BetterBibTeX JSON",
     "release": "1.0.5",
     "preferences": {
-      "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]>[auth][year]",
+      "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]",
       "skipFields": "",
       "langID": "babel",
       "autoAbbrev": true,

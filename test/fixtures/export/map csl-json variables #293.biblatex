@@ -19,6 +19,7 @@
 Trad. de : "Vom Wesen und Wert der Demokratie" - Tübingen : J.C.B.  Mohr, 1929.
 Fac-sim. de la 2e éd., Paris : Sirey : 1932.},
   author = {Kelsen, Hans},
+  date = {2004},
   edition = {2},
   isbn = {2-247-04268-6},
   langid = {french},
@@ -32,7 +33,6 @@ Fac-sim. de la 2e éd., Paris : Sirey : 1932.},
   series = {Bibliothèque Dalloz},
   timestamp = {2015-02-24 12:14:36 +0100},
   title = {La démocratie. Sa nature, sa valeur},
-  translator = {Eisenmann, Charles},
-  year = {2004 [1929]}
+  translator = {Eisenmann, Charles}
 }
 

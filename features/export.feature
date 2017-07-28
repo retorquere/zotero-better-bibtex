@@ -17,6 +17,8 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
+     | map csl-json variables #293                                                                    | 2           |
      | Fields in Extra should override defaults                                                       | 1           |
      | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
      | csquotes #302                                                                                  | 2           |
@@ -54,54 +56,51 @@ Scenario Outline: BibLaTeX Export
      | condense in cite key format not working #308                                                   | 1           |
      | italics in title - capitalization #541                                                         | 1           |
      | EDTF dates in BibLaTeX #590                                                                    | 14          |
-     | file                                                                               | references  |
-     | biblatex export of phdthesis does not case-protect -type- #435                     | 1           |
-     | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381       | 2           |
-     | Better BibLaTeX.019                                                                | 1           |
-     | Extra semicolon in biblatexadata causes export failure #133                        | 2           |
-     | Ignore HTML tags when generating citation key #264                                 | 1           |
-     | map csl-json variables #293                                                        | 2           |
-     | Export Forthcoming as Forthcoming                                                  | 1           |
-     | CSL variables only recognized when in lowercase #408                               | 1           |
-     | date and year are switched #406                                                    | 4           |
-     | Do not caps-protect literal lists #391                                             | 3           |
-     | biblatex; Language tag xx is exported, xx-XX is not #380                           | 1           |
-     | Normalize date ranges in citekeys #356                                             | 3           |
-     | remove the field if the override is empty #303                                     | 1           |
-     | markup small-caps, superscript, italics #301                                       | 2           |
-     | don't escape entry key fields for #296                                             | 1           |
-     | typo stature-statute (zotero item type) #284                                       | 1           |
-     | bookSection is always converted to @inbook, never @incollection #282               | 1           |
-     | referencetype= does not work #278                                                  | 1           |
-     | BBT export of square brackets in date #245 -- xref should not be escaped #246      | 3           |
-     | References with multiple notes fail to export #174                                 | 1           |
-     | Better BibTeX does not use biblatex fields eprint and eprinttype #170              | 1           |
-     | Capitalisation in techreport titles #160                                           | 1           |
-     | German Umlaut separated by brackets #146                                           | 1           |
-     | HTML Fragment separator escaped in url #140 #147                                   | 1           |
-     | Export Newspaper Article misses section field #132                                 | 1           |
-     | Exporting of single-field author lacks braces #130                                 | 1           |
-     | Math parts in title #113                                                           | 1           |
-     | Hang on non-file attachment export #112 - URL export broken #114                   | 2           |
-     | DOI with underscores in extra field #108                                           | 1           |
-     | underscores in URL fields should not be escaped #104                               | 1           |
-     | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105  | 1           |
-     | Better BibLaTeX.023                                                                | 1           |
-     | Better BibLaTeX.022                                                                | 1           |
-     | Better BibLaTeX.021                                                                | 1           |
-     | Better BibLaTeX.020                                                                | 1           |
-     | Better BibLaTeX.017                                                                | 1           |
-     | Better BibLaTeX.016                                                                | 1           |
-     | Better BibLaTeX.015                                                                | 1           |
-     | Better BibLaTeX.014                                                                | 1           | must wait for fidus parser
-     | Better BibLaTeX.013                                                                | 1           |
-     | Better BibLaTeX.012                                                                | 1           |
-     | Better BibLaTeX.011                                                                | 1           |
-     | Better BibLaTeX.010                                                                | 1           |
-     | Malformed HTML                                                                     | 1           |
-     | Better BibLaTeX.stable-keys                                                        | 6           |
-     | Allow explicit field override                                                      | 1           |
-     | Juris-M missing multi-lingual fields #482                                          | 2           |
+     | biblatex export of phdthesis does not case-protect -type- #435                                 | 1           |
+     | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381                   | 2           |
+     | Better BibLaTeX.019                                                                            | 1           |
+     | Extra semicolon in biblatexadata causes export failure #133                                    | 2           |
+     | Ignore HTML tags when generating citation key #264                                             | 1           |
+     | Export Forthcoming as Forthcoming                                                              | 1           |
+     | CSL variables only recognized when in lowercase #408                                           | 1           |
+     | date and year are switched #406                                                                | 4           |
+     | Do not caps-protect literal lists #391                                                         | 3           |
+     | biblatex; Language tag xx is exported, xx-XX is not #380                                       | 1           |
+     | Normalize date ranges in citekeys #356                                                         | 3           |
+     | remove the field if the override is empty #303                                                 | 1           |
+     | markup small-caps, superscript, italics #301                                                   | 2           |
+     | don't escape entry key fields for #296                                                         | 1           |
+     | typo stature-statute (zotero item type) #284                                                   | 1           |
+     | bookSection is always converted to @inbook, never @incollection #282                           | 1           |
+     | referencetype= does not work #278                                                              | 1           |
+     | References with multiple notes fail to export #174                                             | 1           |
+     | Better BibTeX does not use biblatex fields eprint and eprinttype #170                          | 1           |
+     | Capitalisation in techreport titles #160                                                       | 1           |
+     | German Umlaut separated by brackets #146                                                       | 1           |
+     | HTML Fragment separator escaped in url #140 #147                                               | 1           |
+     | Export Newspaper Article misses section field #132                                             | 1           |
+     | Exporting of single-field author lacks braces #130                                             | 1           |
+     | Math parts in title #113                                                                       | 1           |
+     | Hang on non-file attachment export #112 - URL export broken #114                               | 2           |
+     | DOI with underscores in extra field #108                                                       | 1           |
+     | underscores in URL fields should not be escaped #104                                           | 1           |
+     | Shortjournal does not get exported to biblatex format #102 - biblatexcitekey #105              | 1           |
+     | Better BibLaTeX.023                                                                            | 1           |
+     | Better BibLaTeX.022                                                                            | 1           |
+     | Better BibLaTeX.021                                                                            | 1           |
+     | Better BibLaTeX.020                                                                            | 1           |
+     | Better BibLaTeX.017                                                                            | 1           |
+     | Better BibLaTeX.016                                                                            | 1           |
+     | Better BibLaTeX.015                                                                            | 1           |
+#     | Better BibLaTeX.014                                                                            | 1           | must wait for fidus parser
+     | Better BibLaTeX.013                                                                            | 1           |
+     | Better BibLaTeX.012                                                                            | 1           |
+     | Better BibLaTeX.011                                                                            | 1           |
+     | Better BibLaTeX.010                                                                            | 1           |
+     | Malformed HTML                                                                                 | 1           |
+     | Better BibLaTeX.stable-keys                                                                    | 6           |
+     | Allow explicit field override                                                                  | 1           |
+     | Juris-M missing multi-lingual fields #482                                                      | 2           |
 
 ### BibTeX cookie-cutter ###
 

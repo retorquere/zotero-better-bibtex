@@ -256,6 +256,9 @@ class Exporter
 #          continue
 
       @citekeys[item.itemID] = item.__citekey__ = getCiteKey(item).citekey
+      if !@citekeys[item.itemID]
+        debug(new Error('No citation key found in'), item)
+        throw new Error('No citation key in ' + JSON.stringify(item))
 
       debug("Translator: assignGroups: #{item.itemID}")
       @JabRef_assignGroups(@collections, item)

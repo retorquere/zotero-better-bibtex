@@ -381,10 +381,12 @@ BetterBibTeX.doExport = ->
     ref.add({ urldate: Zotero.Utilities.strToISO(item.accessDate) }) if item.accessDate && item.url
 
     if item.date
-      date = Zotero.BetterBibTeX.parseDate(item.date)
-      debug('found date', date)
-      ref.add(datefield(date, 'date', 'year'))
-      ref.add(datefield(date.origdate, 'origdate', 'origdate'))
+      if BetterBibTeX.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(item.date)
+        ref.add({ name: 'date', value: item.date, enc: 'verbatim' })
+      else
+        date = Zotero.BetterBibTeX.parseDate(item.date)
+        ref.add(datefield(date, 'date', 'year'))
+        ref.add(datefield(date.orig, 'origdate', 'origdate'))
 
     switch
       when item.pages

@@ -118,6 +118,8 @@ class KeyManager
     items = yield Zotero.Items.getAsync(ids)
     debug('KeyManager.update:', {update: update.length, items: items.length})
     for item in items
+      continue if item.isNote() || item.isAttachment()
+
       citekeys[item.libraryID] ||= {}
       extra = {extra: item.getField('extra') || ''}
 

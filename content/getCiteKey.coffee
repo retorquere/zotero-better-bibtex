@@ -1,4 +1,5 @@
-re = /(?:^|\n)bibtex(\*?):([^\n]+)(?:\n|$)/
+#re = /(?:^|\n)bibtex(\*?):([^\n]+)(?:\n|$)/
+re = /(?:^|\n|\s)bibtex(\*?):\s*([^\s\n]+)(?:\s|\n|$)/
 
 module.exports = (item) ->
   item.extra ||= ''
