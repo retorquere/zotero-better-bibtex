@@ -23,6 +23,9 @@ var BetterBibTeX = {
   options: <%- JSON.stringify(header.displayOptions || {}) %>,
 
   getConfig: function() {
+    this.debugEnabled = Zotero.BetterBibTeX.debugEnabled();
+    this.unicode = true;
+
     var key;
     for (key in this.options) {
       this.options[key] = Zotero.getOption(key)

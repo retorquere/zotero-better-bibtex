@@ -1,3 +1,4 @@
+edtf = require('edtf')
 global.Zotero = {
   Debug: {
     enabled: true
@@ -38,12 +39,17 @@ deepEqual = (a, b) ->
   return true
 
 for raw, cooked of dates
+  try
+    edtf.parse(raw)
+    console.log("#{raw} is edtf")
+  catch
+    console.log("#{raw} is not edtf")
   parsed = scrub(parseDate(raw))
   scrub(cooked)
   continue if deepEqual(parsed, cooked)
   console.log('input:', raw)
   console.log('expected:', JSON.stringify(cooked))
-  console.log('found:', JSON.stringify(parsed))
+  console.log('found:   ', JSON.stringify(parsed))
   throw new Error(raw)
 
 console.log(scrub(parseDate("März 1, 2008")))

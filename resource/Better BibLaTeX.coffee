@@ -199,6 +199,7 @@ Reference::typeMap =
 
 BetterBibTeX.initialize = ->
   Reference.installPostscript()
+  BetterBibTeX.unicode = !BetterBibTeX.preferences.asciiBibLaTeX
   return
 
 BetterBibTeX.doExport = ->

@@ -1,1110 +1,838 @@
 {
   "März 1, 2008": {
     "type": "date",
-    "date": {
-      "year": 2008,
-      "month": 3,
-      "day": 1
-    }
+    "year": 2008,
+    "month": 3,
+    "day": 1
   },
   "1963": {
     "type": "date",
-    "date": {
-      "year": 1963
-    }
+    "year": 1963
   },
   "23/12/2010": {
     "type": "date",
-    "date": {
-      "year": 2010,
-      "month": 12,
-      "day": 23
-    }
+    "year": 2010,
+    "month": 12,
+    "day": 23
   },
   "18/05/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 5,
-      "day": 18
-    }
+    "year": 2011,
+    "month": 5,
+    "day": 18
   },
   "2014-11-17 03:49:00": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 11,
-      "day": 17
-    }
+    "year": 2014,
+    "month": 11,
+    "day": 17
   },
   "2/2016": {
     "type": "date",
-    "date": {
-      "year": 2016,
-      "month": 2
-    }
+    "year": 2016,
+    "month": 2
   },
   "2013-05-21": {
     "type": "date",
-    "date": {
-      "year": 2013,
-      "month": 5,
-      "day": 21
-    }
+    "year": 2013,
+    "month": 5,
+    "day": 21
   },
   "[2014]": {
     "orig": {
-      "year": 2014
-    }
+      "year": 2014,
+      "type": "date"
+    },
+    "type": "date"
   },
   "[2007]": {
     "orig": {
-      "year": 2007
-    }
+      "year": 2007,
+      "type": "date"
+    },
+    "type": "date"
   },
   "October 2006": {
     "type": "date",
-    "date": {
-      "year": 2006,
-      "month": 10
-    }
+    "year": 2006,
+    "month": 10
   },
   "11/2010": {
     "type": "date",
-    "date": {
-      "year": 2010,
-      "month": 11
-    }
+    "year": 2010,
+    "month": 11
   },
   "July 7, 2008": {
     "type": "date",
-    "date": {
-      "year": 2008,
-      "month": 7,
-      "day": 7
-    }
+    "year": 2008,
+    "month": 7,
+    "day": 7
   },
   "01/01/1989": {
     "type": "date",
-    "date": {
-      "year": 1989,
-      "month": 1,
-      "day": 1
-    }
+    "year": 1989,
+    "month": 1,
+    "day": 1
   },
   "September 2014": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 9
-    }
+    "year": 2014,
+    "month": 9
   },
   "April 21, 2009": {
     "type": "date",
-    "date": {
-      "year": 2009,
-      "month": 4,
-      "day": 21
-    }
+    "year": 2009,
+    "month": 4,
+    "day": 21
   },
   "November 2000": {
     "type": "date",
-    "date": {
-      "year": 2000,
-      "month": 11
-    }
+    "year": 2000,
+    "month": 11
   },
   "30/5/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 5,
-      "day": 30
-    }
+    "year": 2011,
+    "month": 5,
+    "day": 30
   },
   "August 1, 2000": {
     "type": "date",
-    "date": {
-      "year": 2000,
-      "month": 8,
-      "day": 1
-    }
+    "year": 2000,
+    "month": 8,
+    "day": 1
   },
   "29/8/2014": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 8,
-      "day": 29
-    }
+    "year": 2014,
+    "month": 8,
+    "day": 29
   },
   "August 1, 2010": {
     "type": "date",
-    "date": {
-      "year": 2010,
-      "month": 8,
-      "day": 1
-    }
+    "year": 2010,
+    "month": 8,
+    "day": 1
   },
   "9/9/2010": {
     "type": "date",
-    "date": {
-      "year": 2010,
-      "month": 9,
-      "day": 9
-    }
+    "year": 2010,
+    "month": 9,
+    "day": 9
   },
   "2010/04/07": {
     "type": "date",
-    "date": {
-      "year": 2010,
-      "month": 4,
-      "day": 7
-    }
+    "year": 2010,
+    "month": 4,
+    "day": 7
   },
   "2/10/1961": {
     "type": "date",
-    "date": {
-      "year": 1961,
-      "month": 10,
-      "day": 2
-    }
+    "year": 1961,
+    "month": 10,
+    "day": 2
   },
   "6/9/2007": {
     "type": "date",
-    "date": {
-      "year": 2007,
-      "month": 9,
-      "day": 6
-    }
+    "year": 2007,
+    "month": 9,
+    "day": 6
   },
   "8/8/2014": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 8,
-      "day": 8
-    }
+    "year": 2014,
+    "month": 8,
+    "day": 8
   },
   "9/6/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 6,
-      "day": 9
-    }
+    "year": 2011,
+    "month": 6,
+    "day": 9
   },
   "November 1944": {
     "type": "date",
-    "date": {
-      "year": 1944,
-      "month": 11
-    }
+    "year": 1944,
+    "month": 11
   },
   "01/2009": {
     "type": "date",
-    "date": {
-      "year": 2009,
-      "month": 1
-    }
+    "year": 2009,
+    "month": 1
   },
   "February 28, 2013": {
     "type": "date",
-    "date": {
-      "year": 2013,
-      "month": 2,
-      "day": 28
-    }
+    "year": 2013,
+    "month": 2,
+    "day": 28
   },
   "31/10/1960": {
     "type": "date",
-    "date": {
-      "year": 1960,
-      "month": 10,
-      "day": 31
-    }
+    "year": 1960,
+    "month": 10,
+    "day": 31
   },
   "1875 [2004]": {
     "orig": {
-      "year": 2004
+      "year": 2004,
+      "type": "date"
     },
-    "date": {
-      "year": 1875
-    }
+    "type": "date",
+    "year": 1875
   },
   "05/01/1992": {
     "type": "date",
-    "date": {
-      "year": 1992,
-      "month": 1,
-      "day": 5
-    }
+    "year": 1992,
+    "month": 1,
+    "day": 5
   },
   "12/4/2007": {
     "type": "date",
-    "date": {
-      "year": 2007,
-      "month": 4,
-      "day": 12
-    }
+    "year": 2007,
+    "month": 4,
+    "day": 12
   },
   "2013-11-15T00:01:03": {
     "type": "date",
-    "date": {
-      "year": 2013,
-      "month": 11,
-      "day": 15
-    }
+    "year": 2013,
+    "month": 11,
+    "day": 15
   },
   "25/7/2014": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 7,
-      "day": 25
-    }
+    "year": 2014,
+    "month": 7,
+    "day": 25
   },
   "12/21/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 21,
-      "day": 12
-    }
+    "year": 2011,
+    "month": 21,
+    "day": 12
   },
   "June 2012": {
     "type": "date",
-    "date": {
-      "year": 2012,
-      "month": 6
-    }
+    "year": 2012,
+    "month": 6
   },
   "2014-07-01T15:09:55Z": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 7,
-      "day": 1
-    }
+    "year": 2014,
+    "month": 7,
+    "day": 1
   },
   "09/01/2001": {
     "type": "date",
-    "date": {
-      "year": 2001,
-      "month": 1,
-      "day": 9
-    }
+    "year": 2001,
+    "month": 1,
+    "day": 9
   },
   "4/1/2008": {
     "type": "date",
-    "date": {
-      "year": 2008,
-      "month": 1,
-      "day": 4
-    }
+    "year": 2008,
+    "month": 1,
+    "day": 4
   },
   "September 2005": {
     "type": "date",
-    "date": {
-      "year": 2005,
-      "month": 9
-    }
+    "year": 2005,
+    "month": 9
   },
   "15/12/1959": {
     "type": "date",
-    "date": {
-      "year": 1959,
-      "month": 12,
-      "day": 15
-    }
+    "year": 1959,
+    "month": 12,
+    "day": 15
   },
   "February 15, 2009": {
     "type": "date",
-    "date": {
-      "year": 2009,
-      "month": 2,
-      "day": 15
-    }
+    "year": 2009,
+    "month": 2,
+    "day": 15
   },
   "7/10/1958": {
     "type": "date",
-    "date": {
-      "year": 1958,
-      "month": 10,
-      "day": 7
-    }
+    "year": 1958,
+    "month": 10,
+    "day": 7
   },
   "December 1982": {
     "type": "date",
-    "date": {
-      "year": 1982,
-      "month": 12
-    }
+    "year": 1982,
+    "month": 12
   },
   "June 1, 1985": {
     "type": "date",
-    "date": {
-      "year": 1985,
-      "month": 6,
-      "day": 1
-    }
+    "year": 1985,
+    "month": 6,
+    "day": 1
   },
   "June 27, 2014": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 6,
-      "day": 27
-    }
+    "year": 2014,
+    "month": 6,
+    "day": 27
   },
   "1996 [1985]": {
     "orig": {
-      "year": 1985
+      "year": 1985,
+      "type": "date"
     },
-    "date": {
-      "year": 1996
-    }
+    "type": "date",
+    "year": 1996
   },
   "May 1, 1996": {
     "type": "date",
-    "date": {
-      "year": 1996,
-      "month": 5,
-      "day": 1
-    }
+    "year": 1996,
+    "month": 5,
+    "day": 1
   },
   "1989 [1987]": {
     "orig": {
-      "year": 1987
+      "year": 1987,
+      "type": "date"
     },
-    "date": {
-      "year": 1989
-    }
+    "type": "date",
+    "year": 1989
   },
   "12/5/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 5,
-      "day": 12
-    }
+    "year": 2011,
+    "month": 5,
+    "day": 12
   },
   "April 2000": {
     "type": "date",
-    "date": {
-      "year": 2000,
-      "month": 4
-    }
+    "year": 2000,
+    "month": 4
   },
   "June 2005": {
     "type": "date",
-    "date": {
-      "year": 2005,
-      "month": 6
-    }
+    "year": 2005,
+    "month": 6
   },
   "30/9/1960": {
     "type": "date",
-    "date": {
-      "year": 1960,
-      "month": 9,
-      "day": 30
-    }
+    "year": 1960,
+    "month": 9,
+    "day": 30
   },
   "2011-11": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 11
-    }
+    "year": 2011,
+    "month": 11
   },
   "January 1943": {
     "type": "date",
-    "date": {
-      "year": 1943,
-      "month": 1
-    }
+    "year": 1943,
+    "month": 1
   },
   "14/11 2012": {
     "type": "date",
-    "date": {
-      "year": 2012,
-      "month": 11,
-      "day": 14
-    }
+    "year": 2012,
+    "month": 11,
+    "day": 14
   },
   "December 1, 2010": {
     "type": "date",
-    "date": {
-      "year": 2010,
-      "month": 12,
-      "day": 1
-    }
+    "year": 2010,
+    "month": 12,
+    "day": 1
   },
   "September 1, 1996": {
     "type": "date",
-    "date": {
-      "year": 1996,
-      "month": 9,
-      "day": 1
-    }
+    "year": 1996,
+    "month": 9,
+    "day": 1
   },
   "March 1987": {
     "type": "date",
-    "date": {
-      "year": 1987,
-      "month": 3
-    }
+    "year": 1987,
+    "month": 3
   },
   "March 1996": {
     "type": "date",
-    "date": {
-      "year": 1996,
-      "month": 3
-    }
+    "year": 1996,
+    "month": 3
   },
   "May 2, 1990": {
     "type": "date",
-    "date": {
-      "year": 1990,
-      "month": 5,
-      "day": 2
-    }
+    "year": 1990,
+    "month": 5,
+    "day": 2
   },
   "April 1, 1986": {
     "type": "date",
-    "date": {
-      "year": 1986,
-      "month": 4,
-      "day": 1
-    }
+    "year": 1986,
+    "month": 4,
+    "day": 1
   },
   "8. juli 2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 7,
-      "day": 8
-    }
+    "year": 2011,
+    "month": 7,
+    "day": 8
   },
   "17/6/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 6,
-      "day": 17
-    }
+    "year": 2011,
+    "month": 6,
+    "day": 17
   },
   "1987-01": {
     "type": "date",
-    "date": {
-      "year": 1987,
-      "month": 1
-    }
+    "year": 1987,
+    "month": 1
   },
   "4/7/2014": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 7,
-      "day": 4
-    }
+    "year": 2014,
+    "month": 7,
+    "day": 4
   },
   "05/01/2005": {
     "type": "date",
-    "date": {
-      "year": 2005,
-      "month": 1,
-      "day": 5
-    }
+    "year": 2005,
+    "month": 1,
+    "day": 5
   },
   "January 1, 1997": {
     "type": "date",
-    "date": {
-      "year": 1997,
-      "month": 1,
-      "day": 1
-    }
+    "year": 1997,
+    "month": 1,
+    "day": 1
   },
   "2/5/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 5,
-      "day": 2
-    }
+    "year": 2011,
+    "month": 5,
+    "day": 2
   },
   "November 2004": {
     "type": "date",
-    "date": {
-      "year": 2004,
-      "month": 11
-    }
+    "year": 2004,
+    "month": 11
   },
   "1978-01": {
     "type": "date",
-    "date": {
-      "year": 1978,
-      "month": 1
-    }
+    "year": 1978,
+    "month": 1
   },
   "05/10/2014": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 10,
-      "day": 5
-    }
+    "year": 2014,
+    "month": 10,
+    "day": 5
   },
   "2/12/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 12,
-      "day": 2
-    }
+    "year": 2011,
+    "month": 12,
+    "day": 2
   },
   "10/11/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 11,
-      "day": 10
-    }
+    "year": 2011,
+    "month": 11,
+    "day": 10
   },
   "08/01/2010": {
     "type": "date",
-    "date": {
-      "year": 2010,
-      "month": 1,
-      "day": 8
-    }
+    "year": 2010,
+    "month": 1,
+    "day": 8
   },
   "January 2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 1
-    }
+    "year": 2011,
+    "month": 1
   },
   "2013/06/09": {
     "type": "date",
-    "date": {
-      "year": 2013,
-      "month": 6,
-      "day": 9
-    }
+    "year": 2013,
+    "month": 6,
+    "day": 9
   },
   "April 1, 1987": {
     "type": "date",
-    "date": {
-      "year": 1987,
-      "month": 4,
-      "day": 1
-    }
+    "year": 1987,
+    "month": 4,
+    "day": 1
   },
   "January 1, 2004": {
     "type": "date",
-    "date": {
-      "year": 2004,
-      "month": 1,
-      "day": 1
-    }
+    "year": 2004,
+    "month": 1,
+    "day": 1
   },
   "10/6/2008": {
     "type": "date",
-    "date": {
-      "year": 2008,
-      "month": 6,
-      "day": 10
-    }
+    "year": 2008,
+    "month": 6,
+    "day": 10
   },
   "14/10/1960": {
     "type": "date",
-    "date": {
-      "year": 1960,
-      "month": 10,
-      "day": 14
-    }
+    "year": 1960,
+    "month": 10,
+    "day": 14
   },
   "October 2007": {
     "type": "date",
-    "date": {
-      "year": 2007,
-      "month": 10
-    }
+    "year": 2007,
+    "month": 10
   },
   "15/9/1971": {
     "type": "date",
-    "date": {
-      "year": 1971,
-      "month": 9,
-      "day": 15
-    }
+    "year": 1971,
+    "month": 9,
+    "day": 15
   },
   "22/6/2012": {
     "type": "date",
-    "date": {
-      "year": 2012,
-      "month": 6,
-      "day": 22
-    }
+    "year": 2012,
+    "month": 6,
+    "day": 22
   },
   "06/01/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 1,
-      "day": 6
-    }
+    "year": 2011,
+    "month": 1,
+    "day": 6
   },
   "October 1, 2006": {
     "type": "date",
-    "date": {
-      "year": 2006,
-      "month": 10,
-      "day": 1
-    }
+    "year": 2006,
+    "month": 10,
+    "day": 1
   },
   "March 2012": {
     "type": "date",
-    "date": {
-      "year": 2012,
-      "month": 3
-    }
+    "year": 2012,
+    "month": 3
   },
   "September 2008": {
     "type": "date",
-    "date": {
-      "year": 2008,
-      "month": 9
-    }
+    "year": 2008,
+    "month": 9
   },
   "September 1, 2005": {
     "type": "date",
-    "date": {
-      "year": 2005,
-      "month": 9,
-      "day": 1
-    }
+    "year": 2005,
+    "month": 9,
+    "day": 1
   },
   "December 2008": {
     "type": "date",
-    "date": {
-      "year": 2008,
-      "month": 12
-    }
+    "year": 2008,
+    "month": 12
   },
   "13/5/2008": {
     "type": "date",
-    "date": {
-      "year": 2008,
-      "month": 5,
-      "day": 13
-    }
+    "year": 2008,
+    "month": 5,
+    "day": 13
   },
   "24/11/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 11,
-      "day": 24
-    }
+    "year": 2011,
+    "month": 11,
+    "day": 24
   },
   "February 1, 2006": {
     "type": "date",
-    "date": {
-      "year": 2006,
-      "month": 2,
-      "day": 1
-    }
+    "year": 2006,
+    "month": 2,
+    "day": 1
   },
   "July 1, 2006": {
     "type": "date",
-    "date": {
-      "year": 2006,
-      "month": 7,
-      "day": 1
-    }
+    "year": 2006,
+    "month": 7,
+    "day": 1
   },
   "11/01/2004": {
     "type": "date",
-    "date": {
-      "year": 2004,
-      "month": 1,
-      "day": 11
-    }
+    "year": 2004,
+    "month": 1,
+    "day": 11
   },
   "28/11/2012": {
     "type": "date",
-    "date": {
-      "year": 2012,
-      "month": 11,
-      "day": 28
-    }
+    "year": 2012,
+    "month": 11,
+    "day": 28
   },
   "7/2/2008": {
     "type": "date",
-    "date": {
-      "year": 2008,
-      "month": 2,
-      "day": 7
-    }
+    "year": 2008,
+    "month": 2,
+    "day": 7
   },
   "18/7/2014": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 7,
-      "day": 18
-    }
+    "year": 2014,
+    "month": 7,
+    "day": 18
   },
   "27/8/1957": {
     "type": "date",
-    "date": {
-      "year": 1957,
-      "month": 8,
-      "day": 27
-    }
+    "year": 1957,
+    "month": 8,
+    "day": 27
   },
   "29/5/2012": {
     "type": "date",
-    "date": {
-      "year": 2012,
-      "month": 5,
-      "day": 29
-    }
+    "year": 2012,
+    "month": 5,
+    "day": 29
   },
   "Januar 1945": {
     "type": "date",
-    "date": {
-      "year": 1945,
-      "month": 1
-    }
+    "year": 1945,
+    "month": 1
   },
   "18/12/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 12,
-      "day": 18
-    }
+    "year": 2011,
+    "month": 12,
+    "day": 18
   },
   "October 31, 2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 10,
-      "day": 31
-    }
+    "year": 2011,
+    "month": 10,
+    "day": 31
   },
   "8/3/2012": {
     "type": "date",
-    "date": {
-      "year": 2012,
-      "month": 3,
-      "day": 8
-    }
+    "year": 2012,
+    "month": 3,
+    "day": 8
   },
   "17/5/1968": {
     "type": "date",
-    "date": {
-      "year": 1968,
-      "month": 5,
-      "day": 17
-    }
+    "year": 1968,
+    "month": 5,
+    "day": 17
   },
   "January 1, 1972": {
     "type": "date",
-    "date": {
-      "year": 1972,
-      "month": 1,
-      "day": 1
-    }
+    "year": 1972,
+    "month": 1,
+    "day": 1
   },
   "15/1/1958": {
     "type": "date",
-    "date": {
-      "year": 1958,
-      "month": 1,
-      "day": 15
-    }
+    "year": 1958,
+    "month": 1,
+    "day": 15
   },
   "14/3/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 3,
-      "day": 14
-    }
+    "year": 2011,
+    "month": 3,
+    "day": 14
   },
   "12/1963": {
     "type": "date",
-    "date": {
-      "year": 1963,
-      "month": 12
-    }
+    "year": 1963,
+    "month": 12
   },
   "26/11/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 11,
-      "day": 26
-    }
+    "year": 2011,
+    "month": 11,
+    "day": 26
   },
   "12/01/2002": {
     "type": "date",
-    "date": {
-      "year": 2002,
-      "month": 1,
-      "day": 12
-    }
+    "year": 2002,
+    "month": 1,
+    "day": 12
   },
   "September 2003": {
     "type": "date",
-    "date": {
-      "year": 2003,
-      "month": 9
-    }
+    "year": 2003,
+    "month": 9
   },
   "2012/06/08": {
     "type": "date",
-    "date": {
-      "year": 2012,
-      "month": 6,
-      "day": 8
-    }
+    "year": 2012,
+    "month": 6,
+    "day": 8
   },
   "9/8/2012": {
     "type": "date",
-    "date": {
-      "year": 2012,
-      "month": 8,
-      "day": 9
-    }
+    "year": 2012,
+    "month": 8,
+    "day": 9
   },
   "7/4/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 4,
-      "day": 7
-    }
+    "year": 2011,
+    "month": 4,
+    "day": 7
   },
   "5/9/1958": {
     "type": "date",
-    "date": {
-      "year": 1958,
-      "month": 9,
-      "day": 5
-    }
+    "year": 1958,
+    "month": 9,
+    "day": 5
   },
   "1/10/2013": {
     "type": "date",
-    "date": {
-      "year": 2013,
-      "month": 10,
-      "day": 1
-    }
+    "year": 2013,
+    "month": 10,
+    "day": 1
   },
   "May 7, 2004": {
     "type": "date",
-    "date": {
-      "year": 2004,
-      "month": 5,
-      "day": 7
-    }
+    "year": 2004,
+    "month": 5,
+    "day": 7
   },
   "28/8/2014": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 8,
-      "day": 28
-    }
+    "year": 2014,
+    "month": 8,
+    "day": 28
   },
   "February 1998": {
     "type": "date",
-    "date": {
-      "year": 1998,
-      "month": 2
-    }
+    "year": 1998,
+    "month": 2
   },
   "19/5/1952": {
     "type": "date",
-    "date": {
-      "year": 1952,
-      "month": 5,
-      "day": 19
-    }
+    "year": 1952,
+    "month": 5,
+    "day": 19
   },
   "13/1/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 1,
-      "day": 13
-    }
+    "year": 2011,
+    "month": 1,
+    "day": 13
   },
   "June 2004": {
     "type": "date",
-    "date": {
-      "year": 2004,
-      "month": 6
-    }
+    "year": 2004,
+    "month": 6
   },
   "January 1, 2010": {
     "type": "date",
-    "date": {
-      "year": 2010,
-      "month": 1,
-      "day": 1
-    }
+    "year": 2010,
+    "month": 1,
+    "day": 1
   },
   "13/1/2014": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 1,
-      "day": 13
-    }
+    "year": 2014,
+    "month": 1,
+    "day": 13
   },
   "April 1, 2000": {
     "type": "date",
-    "date": {
-      "year": 2000,
-      "month": 4,
-      "day": 1
-    }
+    "year": 2000,
+    "month": 4,
+    "day": 1
   },
   "10/1/2012": {
     "type": "date",
-    "date": {
-      "year": 2012,
-      "month": 1,
-      "day": 10
-    }
+    "year": 2012,
+    "month": 1,
+    "day": 10
   },
   "September 1, 1988": {
     "type": "date",
-    "date": {
-      "year": 1988,
-      "month": 9,
-      "day": 1
-    }
+    "year": 1988,
+    "month": 9,
+    "day": 1
   },
   "11/1997": {
     "type": "date",
-    "date": {
-      "year": 1997,
-      "month": 11
-    }
+    "year": 1997,
+    "month": 11
   },
   "June 1, 1991": {
     "type": "date",
-    "date": {
-      "year": 1991,
-      "month": 6,
-      "day": 1
-    }
+    "year": 1991,
+    "month": 6,
+    "day": 1
   },
   "March 2009": {
     "type": "date",
-    "date": {
-      "year": 2009,
-      "month": 3
-    }
+    "year": 2009,
+    "month": 3
   },
   "08/2012": {
     "type": "date",
-    "date": {
-      "year": 2012,
-      "month": 8
-    }
+    "year": 2012,
+    "month": 8
   },
   "Autumn 2001": {
     "type": "season",
-    "date": {
-      "year": 2001,
-      "season": "autumn"
-    }
+    "year": 2001,
+    "season": "autumn"
   },
   "10/9/1963": {
     "type": "date",
-    "date": {
-      "year": 1963,
-      "month": 9,
-      "day": 10
-    }
+    "year": 1963,
+    "month": 9,
+    "day": 10
   },
   "2006/09/11": {
     "type": "date",
-    "date": {
-      "year": 2006,
-      "month": 9,
-      "day": 11
-    }
+    "year": 2006,
+    "month": 9,
+    "day": 11
   },
   "22.08.2000": {
     "type": "date",
-    "date": {
-      "year": 2000,
-      "month": 8,
-      "day": 22
-    }
+    "year": 2000,
+    "month": 8,
+    "day": 22
   },
   "2012.09.27": {
     "type": "date",
-    "date": {
-      "year": 2012,
-      "month": 9,
-      "day": 27
-    }
+    "year": 2012,
+    "month": 9,
+    "day": 27
   },
   "1995.12": {
     "type": "date",
-    "date": {
-      "year": 1995,
-      "month": 12
-    }
+    "year": 1995,
+    "month": 12
   },
   "2014.02.11": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 2,
-      "day": 11
-    }
+    "year": 2014,
+    "month": 2,
+    "day": 11
   },
   "2014-12-31/2015-01-01": {
     "type": "interval",
     "from": {
       "type": "date",
-      "date": {
-        "year": 2014,
-        "month": 12,
-        "day": 31
-      }
+      "year": 2014,
+      "month": 12,
+      "day": 31
     },
     "to": {
       "type": "date",
-      "date": {
-        "year": 2015,
-        "month": 1,
-        "day": 1
-      }
+      "year": 2015,
+      "month": 1,
+      "day": 1
     }
   },
   "2014-12-31/": {
     "type": "interval",
     "from": {
       "type": "date",
-      "date": {
-        "year": 2014,
-        "month": 12,
-        "day": 31
-      }
+      "year": 2014,
+      "month": 12,
+      "day": 31
     },
     "to": {
       "type": "open"
@@ -1112,157 +840,117 @@
   },
   "-0333": {
     "type": "date",
-    "date": {
-      "year": -333
-    }
+    "year": -333
   },
   "-0099-07-12/-0043-03-15": {
     "type": "interval",
     "from": {
       "type": "date",
-      "date": {
-        "year": -99,
-        "month": 7,
-        "day": 12
-      }
+      "year": -99,
+      "month": 7,
+      "day": 12
     },
     "to": {
       "type": "date",
-      "date": {
-        "year": -43,
-        "month": 3,
-        "day": 15
-      }
+      "year": -43,
+      "month": 3,
+      "day": 15
     }
   },
   "2016-06-06T15:26:37+1000": {
     "type": "date",
-    "date": {
-      "year": 2016,
-      "month": 6,
-      "day": 6
-    }
+    "year": 2016,
+    "month": 6,
+    "day": 6
   },
   "May 15, 2014": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 5,
-      "day": 15
-    }
+    "year": 2014,
+    "month": 5,
+    "day": 15
   },
   "2016-07-18T20:26:06": {
     "type": "date",
-    "date": {
-      "year": 2016,
-      "month": 7,
-      "day": 18
-    }
+    "year": 2016,
+    "month": 7,
+    "day": 18
   },
   "2016-07-18T20:26:06+10:00": {
     "type": "date",
-    "date": {
-      "year": 2016,
-      "month": 7,
-      "day": 18
-    }
+    "year": 2016,
+    "month": 7,
+    "day": 18
   },
   "2016-07-18T20:26:06Z": {
     "type": "date",
-    "date": {
-      "year": 2016,
-      "month": 7,
-      "day": 18
-    }
+    "year": 2016,
+    "month": 7,
+    "day": 18
   },
   "-0876": {
     "type": "date",
-    "date": {
-      "year": -876
-    }
+    "year": -876
   },
   "1723~": {
     "type": "date",
-    "date": {
-      "year": 1723,
-      "approximate": true
-    }
+    "year": 1723,
+    "approximate": true
   },
   "1723?": {
     "type": "date",
-    "date": {
-      "year": 1723,
-      "uncertain": true
-    }
+    "year": 1723,
+    "uncertain": true
   },
   "1723?~": {
     "type": "date",
-    "date": {
-      "year": 1723,
-      "approximate": true
-    }
+    "year": 1723,
+    "approximate": true
   },
   "1988/1992": {
     "type": "interval",
     "from": {
       "type": "date",
-      "date": {
-        "year": 1988
-      }
+      "year": 1988
     },
     "to": {
       "type": "date",
-      "date": {
-        "year": 1992
-      }
+      "year": 1992
     }
   },
   "2004-22": {
     "type": "date",
-    "date": {
-      "year": 2004,
-      "month": 22
-    }
+    "year": 2004,
+    "month": 22
   },
   "199u": {
     "type": "date",
-    "date": {
-      "year": 1990,
-      "approximate": true
-    }
+    "year": 1990,
+    "approximate": true
   },
   "19uu": {
     "type": "date",
-    "date": {
-      "year": 1900,
-      "approximate": true
-    }
+    "year": 1900,
+    "approximate": true
   },
   "1999-uu": {
     "type": "date",
-    "date": {
-      "year": 1999,
-      "month": 1,
-      "approximate": true
-    }
+    "year": 1999,
+    "month": 1,
+    "approximate": true
   },
   "1999-01-uu": {
     "type": "date",
-    "date": {
-      "year": 1999,
-      "month": 1,
-      "day": 1,
-      "approximate": true
-    }
+    "year": 1999,
+    "month": 1,
+    "day": 1,
+    "approximate": true
   },
   "1999-uu-uu": {
     "type": "date",
-    "date": {
-      "year": 1999,
-      "month": 1,
-      "day": 1,
-      "approximate": true
-    }
+    "year": 1999,
+    "month": 1,
+    "day": 1,
+    "approximate": true
   },
   "Forthcoming": {
     "type": "verbatim",
@@ -1270,42 +958,36 @@
   },
   "10/06/2014": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 6,
-      "day": 10
-    }
+    "year": 2014,
+    "month": 6,
+    "day": 10
   },
   "[1990]2002": {
     "orig": {
-      "year": 1990
+      "year": 1990,
+      "type": "date"
     },
-    "date": {
-      "year": 2002
-    }
+    "type": "date",
+    "year": 2002
   },
   "[1997]2002": {
     "orig": {
-      "year": 1997
+      "year": 1997,
+      "type": "date"
     },
-    "date": {
-      "year": 2002
-    }
+    "type": "date",
+    "year": 2002
   },
   "2006/09/23": {
     "type": "date",
-    "date": {
-      "year": 2006,
-      "month": 9,
-      "day": 23
-    }
+    "year": 2006,
+    "month": 9,
+    "day": 23
   },
   "11/2011": {
     "type": "date",
-    "date": {
-      "year": 2011,
-      "month": 11
-    }
+    "year": 2011,
+    "month": 11
   },
   "n.d.": {
     "type": "verbatim",
@@ -1313,109 +995,83 @@
   },
   "2004 [1929]": {
     "orig": {
-      "year": 1929
+      "year": 1929,
+      "type": "date"
     },
-    "date": {
-      "year": 2004
-    }
+    "type": "date",
+    "year": 2004
   },
   "2014-10": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 10
-    }
+    "year": 2014,
+    "month": 10
   },
   "1897/1913": {
     "from": {
       "type": "date",
-      "date": {
-        "year": 1897
-      }
+      "year": 1897
     },
     "to": {
       "type": "date",
-      "date": {
-        "year": 1913
-      }
+      "year": 1913
     },
     "type": "interval"
   },
   "1897-1913": {
     "from": {
       "type": "date",
-      "date": {
-        "year": 1897
-      }
+      "year": 1897
     },
     "to": {
       "type": "date",
-      "date": {
-        "year": 1913
-      }
+      "year": 1913
     },
     "type": "interval"
   },
   "1897_1913": {
     "from": {
       "type": "date",
-      "date": {
-        "year": 1897
-      }
+      "year": 1897
     },
     "to": {
       "type": "date",
-      "date": {
-        "year": 1913
-      }
+      "year": 1913
     },
     "type": "interval"
   },
   "四月 1, 1976": {
     "type": "date",
-    "date": {
-      "year": 1976,
-      "month": 4,
-      "day": 1
-    }
+    "year": 1976,
+    "month": 4,
+    "day": 1
   },
   "1999-04": {
     "type": "date",
-    "date": {
-      "year": 1999,
-      "month": 4
-    }
+    "year": 1999,
+    "month": 4
   },
   "September 20, 2006": {
     "type": "date",
-    "date": {
-      "year": 2006,
-      "month": 9,
-      "day": 20
-    }
+    "year": 2006,
+    "month": 9,
+    "day": 20
   },
   "Apr 03 2014": {
     "type": "date",
-    "date": {
-      "year": 2014,
-      "month": 4,
-      "day": 3
-    }
+    "year": 2014,
+    "month": 4,
+    "day": 3
   },
   "15 juin 2009": {
     "type": "date",
-    "date": {
-      "year": 2009,
-      "month": 6,
-      "day": 15
-    }
+    "year": 2009,
+    "month": 6,
+    "day": 15
   },
   "01/22/2009": {
     "type": "date",
-    "date": {
-      "year": 2009,
-      "month": 1,
-      "day": 22
-    }
+    "year": 2009,
+    "month": 1,
+    "day": 22
   }
 }

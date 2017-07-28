@@ -1,13 +1,20 @@
 TRANSLATORS = JSON.parse(File.read(File.join(File.dirname(__FILE__), '../../gen/translators.json')))
+PREFERENCES = JSON.parse(File.read(File.join(File.dirname(__FILE__), '../../defaults/preferences/defaults.json')))
 
 Before do |scenario|
+  resetprefs = PREFERENCES.collect{|k, v|
+    if k == 'debug' || k == 'testing'
+      nil
+    else
+      "Zotero.Prefs.set(prefix + #{k.to_json}, #{v.to_json});"
+    end
+  }.compact.join("\n")
+
   execute("""
-    var prefix = 'translators.better-bibtex'
-    Zotero.Prefs.prefBranch.getChildList(prefix).forEach(function(key) {
-      Zotero.Prefs.clear(prefix + '.' + key);
-    })
-    Zotero.Prefs.set(prefix + '.debug', true);
-    Zotero.Prefs.set(prefix + '.testing', true);
+    var prefix = 'translators.better-bibtex.'
+    #{resetprefs}
+    Zotero.Prefs.set(prefix + 'debug', true);
+    Zotero.Prefs.set(prefix + 'testing', true);
     var items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     yield Zotero.Items.erase(items);
     yield Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID);

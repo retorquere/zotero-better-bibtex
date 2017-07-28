@@ -25,7 +25,7 @@ normalize_edtf = (date) ->
 
 #    when 'Set'
 #      if date.values.length == 1
-#        return { type: 'set', orig: { year: date.values[0].values[0] } }
+#        return { type: 'set', orig: { type: 'date', year: date.values[0].values[0] } }
 
     when 'Interval'
       throw new Error(JSON.stringify(date)) unless date.values.length == 2
@@ -131,7 +131,7 @@ parse = (raw) ->
     return {
       type: 'date',
       year: parseInt(m[1]),
-      orig: { year: parseInt(m[2]) },
+      orig: { type: 'date', year: parseInt(m[2]) },
     }
 
   parsed = parse_edtf(cleaned)

@@ -17,6 +17,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Fields in Extra should override defaults                                                       | 1           |
      | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
      | csquotes #302                                                                                  | 2           |
      | Oriental dates trip up date parser #389                                                        | 1           |
@@ -47,7 +48,6 @@ Scenario Outline: BibLaTeX Export
      | Dollar sign in title not properly escaped #485                                                 | 1           |
      | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201     | 1           |
      | Export mapping for reporter field #219                                                         | 1           |
-     | Fields in Extra should override defaults                                                       | 1           |
      | Spaces not stripped from citation keys #294                                                    | 1           |
      | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | auth leaves punctuation in citation key #310                                                   | 1           |

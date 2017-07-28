@@ -1,10 +1,12 @@
 stringify = require('json-stringify-safe')
 
-module.exports = (msg) ->
+module.exports = (prefix, msg) ->
+  err = false
   str = ''
   for m in msg
     switch
       when m instanceof Error
+        err = true
         m = "<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>"
       when m instanceof String || typeof m == 'string'
         # pass
@@ -13,4 +15,6 @@ module.exports = (msg) ->
 
     str += m + ' ' if m
 
-  return str
+  prefix += ':ERROR' if err
+
+  return "{#{prefix}} #{str}"

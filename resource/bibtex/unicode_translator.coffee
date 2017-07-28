@@ -25,7 +25,8 @@ class HTML
     # has to be constructed at runtime here because a static version would be cached by the Zotero translation framework
 
     @latex = ''
-    @mapping = (if @options.unicode then Mapping.toLaTeX.unicode else Mapping.toLaTeX.ascii)
+    @mapping = (if BetterBibTeX.unicode then Mapping.toLaTeX.unicode else Mapping.toLaTeX.ascii)
+
     @stack = []
 
     @walk(MarkupParser.parse(html, @options))

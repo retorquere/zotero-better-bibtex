@@ -21,6 +21,11 @@ BBT.init = ->
     parseParticles: (sandbox, name) -> citeproc.parseParticles(name) # && citeproc.parseParticles(name)
     titleCase: (sandbox, text) -> titleCase(text)
     simplifyFields: (sandbox, item) -> Serializer.simplify(item)
+    debugEnabled: (sandbox) -> Zotero.Debug.enabled
+  }
+  Zotero.Translate.Import::Sandbox.BetterBibTeX = {
+    simplifyFields: (sandbox, item) -> Serializer.simplify(item)
+    debugEnabled: (sandbox) -> Zotero.Debug.enabled
   }
 
   return
