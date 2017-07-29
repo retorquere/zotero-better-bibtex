@@ -2,7 +2,7 @@
 checkout:
   post:
     - git submodule sync
-    - git submodule update --init
+    - git submodule update --init --recursive
 machine:
   ruby:
     version: '2.4.1'
