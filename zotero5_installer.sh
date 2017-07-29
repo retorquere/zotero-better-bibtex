@@ -67,14 +67,13 @@ fi
 if [ "$INPUT" != "g" ]; then
   echo ">>> Installing locally"
   DEST="$HOME/bin"
-  MENU_PATH="$HOME/.local/share/applications/zotero.desktop"
   MENU_DIR="$HOME/.local/share/applications"
 else
   echo ">>> Installing globally"
   DEST="/opt"
-  MENU_PATH="/usr/share/applications/zotero.desktop"
   MENU_DIR="/usr/share/applications"
 fi
+MENU_PATH="$MENU_DIR/zotero.desktop"
 
 if [ -z "$ZOTERO_INSTALL_VERSION" ]; then
   echo ">>> Please input the version of Zotero."
@@ -143,7 +142,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-if [ -f $MENU_DIR ]; then
+if [ ! -d $MENU_DIR ]; then
   echo ">>> Creating $MENU_DIR"
   mkdir -p $MENU_DIR
 fi
