@@ -37,6 +37,9 @@ test:
       esac
 
       export LOGS=$CIRCLE_ARTIFACTS
+      gem install bundler
+      bundle update
+      npm update
       bundle exec cucumber $CIRCLE_TESTS
       cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
     : parallel: true
