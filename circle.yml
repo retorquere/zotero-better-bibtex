@@ -16,7 +16,7 @@ dependencies:
       ZOTERO_INSTALL=y ZOTERO_INSTALL_DEST=l ZOTERO_INSTALL_VERSION=auto ZOTERO_INSTALL_NUKE_DEST=y ./zotero5_installer.sh
     #fi;
   cache_directories:
-  - bin
+  - binx
 test:
   override:
   - ? |-
