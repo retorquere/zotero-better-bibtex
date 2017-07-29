@@ -11,6 +11,7 @@ machine:
 dependencies:
   pre:
   - |-
+    mkdir -p ~/bin/zotero
     rm -rf ~/bin/zotero
     mkdir -p ~/bin/zotero
     #if [ ! -x ~/bin/zotero/zotero ]; then
