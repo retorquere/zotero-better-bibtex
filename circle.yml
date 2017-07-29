@@ -20,6 +20,7 @@ dependencies:
 test:
   override:
   - ? |-
+      set -e
       case $CIRCLE_NODE_INDEX in
         0|1)  export JURISM=false
               ;;
