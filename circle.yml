@@ -35,6 +35,8 @@ test:
 
       export LOGS=$CIRCLE_ARTIFACTS
       bundle exec cucumber $CIRCLE_TESTS
+      cp ~/.BBTZ5TEST.log $CIRCLE_ARTIFACTS/zotero.log
+      cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
     : parallel: true
 general:
   artifacts:
