@@ -5,19 +5,19 @@ checkout:
     - git submodule update --init
 machine:
   ruby:
-    version: '2.3.0'
+    version: '2.4'
   node:
     version: '7.10.0'
 dependencies:
   pre:
   - |-
-    rm -rf ~/bin
-    mkdir -p ~/bin
-    if [ ! -x ~/bin/zotero/zotero ]; then
+    rm -rf ~/bin/zotero
+    mkdir -p ~/bin/zotero
+    #if [ ! -x ~/bin/zotero/zotero ]; then
       ZOTERO_INSTALL=y ZOTERO_INSTALL_DEST=l ZOTERO_INSTALL_VERSION=auto ZOTERO_INSTALL_NUKE_DEST=y ./zotero5_installer.sh
-    fi;
+    #fi;
   cache_directories:
-  - binx
+  - bin
 test:
   override:
   - ? |-
