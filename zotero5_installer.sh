@@ -91,17 +91,13 @@ fi
 
 URL="https://www.zotero.org/download/client/dl?channel=release&platform=linux-$ARCH&version=$VERSION"
 
-if [ "$CIRCLECI" = "true" ]; then
-  TMP="~/zotero-$VERSION.tar.bz2"
-else
-  TMP="/tmp/zotero.tar.bz2"
-fi
+TMP="/tmp/zotero.tar.bz2"
 
 echo ">>> Downloading Zotero standalone $VERSION for $ARCH"
 echo ">>> URL: $URL"
-echo ">>> Locatoin: $TMP"
+echo ">>> Location: $TMP"
 
-curl $URL -o "$TMP"
+curl -L "$URL" -o "$TMP"
 if [ $? -ne 0 -o ! -f "$TMP" ]; then
   echo ">>> Failed to download Zotero"
   echo ">>> Aborting installation, sorry!"
