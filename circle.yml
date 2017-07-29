@@ -5,7 +5,7 @@ checkout:
     - git submodule update --init
 machine:
   ruby:
-    version: '2.4'
+    version: '2.4.1'
   node:
     version: '7.10.0'
 dependencies:
