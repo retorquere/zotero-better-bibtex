@@ -12,6 +12,8 @@ machine:
 dependencies:
   pre:
   - |-
+    node -v
+    sudo npm install -g npm
     mkdir -p ~/bin/zotero
     #if [ ! -x ~/bin/zotero/zotero ]; then
       ZOTERO_INSTALL=y ZOTERO_INSTALL_DEST=l ZOTERO_INSTALL_VERSION=auto ZOTERO_INSTALL_NUKE_DEST=y ./zotero5_installer.sh
@@ -21,8 +23,6 @@ dependencies:
 test:
   override:
   - ? |-
-      node -v
-      sudo npm install -g npm
       set -e
       case $CIRCLE_NODE_INDEX in
         0|1)  export JURISM=false
