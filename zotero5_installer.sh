@@ -20,7 +20,6 @@
 # along with qnotero.  If not, see <http://www.gnu.org/licenses/>.
 
 ARCH="x86_64"
-TMP="/tmp/zotero.tar.bz2"
 DEST_FOLDER=zotero
 EXEC=zotero
 if [ `uname -m` == "x86_64" ]; then
@@ -94,6 +93,12 @@ URL="https://www.zotero.org/download/client/dl?channel=release&platform=linux-$A
 
 echo ">>> Downloading Zotero standalone $VERSION for $ARCH"
 echo ">>> URL: $URL"
+
+if [ "$CIRCLECI" = "true" ]; then
+  TMP="~/zotero-$VERSION.tar.bz2"
+else
+  TMP="/tmp/zotero.tar.bz2"
+fi
 
 curl $URL -o $TMP
 if [ $? -ne 0 ]; then
