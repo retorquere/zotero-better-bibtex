@@ -215,7 +215,8 @@ module BBT
   FileUtils.rm_rf(data_tgt)
   FileUtils.cp_r(File.join(fixtures, 'profile/data'), data_tgt)
   
-  pid = Process.fork{ system("#{zotero} -P BBTZ5TEST -ZoteroDebugText > #{File.expand_path('~/.BBTZ5TEST.log').shellescape} 2>&1") }
+  logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], 'zotero.log') : '~/.BBTZ5TEST.log')
+  pid = Process.fork{ system("#{zotero} -P BBTZ5TEST -ZoteroDebugText > #{logfile.shellescape} 2>&1") }
   
   puts Benchmark.measure {
     print "Starting Zotero."
