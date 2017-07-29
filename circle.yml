@@ -1,4 +1,5 @@
 ---
+version: 1.0
 checkout:
   post:
     - git submodule sync
@@ -49,4 +50,4 @@ deployment:
   all:
     branch: "/.*/"
     commands:
-    - echo bundle exec rake publish
+    - echo bundle exec rake publish $CIRCLE_TAG
