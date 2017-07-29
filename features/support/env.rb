@@ -10,6 +10,18 @@ require 'shellwords'
 require 'benchmark'
 require 'json'
 
+if !OS.mac?
+  require 'headless'
+  $headless ||= false
+  unless $headless
+    $headless = Headless.new(display: 100) # reserve 100 for BetterBibTeX
+    $headless.start
+  end
+  at_exit do
+    $headless.destroy if $headless
+  end
+end
+
 class IniFile
   def write_compact( opts = {} )
     filename = opts.fetch(:filename, @filename)

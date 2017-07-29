@@ -12,7 +12,7 @@ dependencies:
   pre:
   - |-
     mkdir -p ~/bin
-    if [ ! -x ~/bin/zotero/zotero]; then
+    if [ ! -x ~/bin/zotero/zotero ]; then
       ZOTERO_INSTALL=y ZOTERO_INSTALL_DEST=l ZOTERO_INSTALL_VERSION=auto ZOTERO_INSTALL_NUKE_DEST=y ./zotero5_installer.sh
     fi;
   cache_directories:
