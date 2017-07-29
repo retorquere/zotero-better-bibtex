@@ -15,7 +15,7 @@ if (!Zotero.DebugBridge) {
       permitBookmarklet: false,
   
       init: Zotero.Promise.coroutine(function* (options) {
-        Zotero.debug('debug-bridge: executing ' + JSON.stringify(options.data));
+        Zotero.debug("debug-bridge: executing\n" + options.data);
         let action = Zotero.Promise.coroutine(new GeneratorFunction(options.data));
         let response;
         try {
@@ -24,7 +24,7 @@ if (!Zotero.DebugBridge) {
           response = JSON.stringify(response);
         } catch (err) {
           Zotero.debug('debug-bridge failed: ' + err);
-          return [500, "application/text", 'debug-bridge failed: ' + err];
+          return [500, "application/text", 'debug-bridge failed: ' + err + "\n" + err.stack];
         }
         Zotero.debug('debug-bridge succeeded: ' + response);
         return [201, "application/json", response];

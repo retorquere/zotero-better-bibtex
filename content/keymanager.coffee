@@ -5,6 +5,27 @@ Formatter = require('./keymanager/formatter.coffee')
 getCiteKey = require('./getCiteKey.coffee')
 
 class KeyManager
+  pin: co((id, pin) ->
+    item = yield Zotero.Items.getAsync(id)
+    extra = {extra: item.getField('extra')}
+    citekey = getCiteKey(extra)
+    return if pin && !citekey.dynamic
+    return if !pin && citekey.dynamic
+    item.setField('extra', "#{extra.extra}\nbibtex#{if pin then '' else '*'}:#{citekey.citekey}".trim())
+    yield item.saveTx({ notifierData: { BetterBibTeX: true } })
+    return
+  )
+
+  refresh: co((id) ->
+    item = yield Zotero.Items.getAsync(id)
+    extra = {extra: item.getField('extra')}
+    citekey = getCiteKey(extra)
+    return unless citekey.dynamic
+    item.setField('extra', extra.extra)
+    yield item.saveTx() # the save will be picked up by the notifier, no key will be found, and a new one will be assigned
+    return
+  )
+
   init: co(->
     debug('KeyManager.init...')
     @query = {
@@ -31,7 +52,7 @@ class KeyManager
     Prefs.onChange((pref) =>
       if pref in ['autoAbbrev', 'autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
         @formatter.update()
-        @patternChanged().catch((err) -> debug('KeyManager.patternChanged error:', err))
+        co(=> yield @patternChanged())()
       return
     )
     return
@@ -63,7 +84,7 @@ class KeyManager
       where item.itemTypeId not in (#{@query.type.attachment}, #{@query.type.note}) and item.itemID not in (select itemID from deletedItems)
     """)
     for item in items
-      citekey = getCiteKey(item)
+      citekey = getCiteKey({extra: item.extra})
       unset.push(item.itemID) unless citekey.citekey
     return unset
   )
@@ -78,8 +99,9 @@ class KeyManager
       where item.itemTypeId not in (#{@query.type.attachment}, #{@query.type.note}) and item.itemID not in (select itemID from deletedItems)
     """)
     for item in items
-      citekey = getCiteKey(item)
+      citekey = getCiteKey({extra: item.extra})
       dyn.push(item.itemID) if citekey.dynamic || !citekey.citekey
+    debug('KeyManager.patternChanged', dyn)
     yield @update(dyn)
     return
   )
@@ -170,7 +192,7 @@ class KeyManager
       citekeys[item.libraryID][citekey] = true
 
       item.setField('extra', (extra.extra + "\nbibtex*:" + citekey).trim())
-      debug('Keymanager.update: setting citekey:', item.id, citekey)
+      debug('itemToExport Keymanager.update: setting citekey:', item.id, citekey, item.clientDateModified)
       yield item.saveTx({ notifierData: { BetterBibTeX: true } })
 
     return

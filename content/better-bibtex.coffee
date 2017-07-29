@@ -52,6 +52,7 @@ Zotero.Promise.coroutine(->
   yield JournalAbbrev.init()
   yield Translators.init()
   yield KeyManager.init()
+  Zotero.BetterBibTeX.TestSupport = require('./test/support.coffee')
   debug('started')
 
   bbtReady.resolve(true)

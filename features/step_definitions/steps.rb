@@ -1,35 +1,18 @@
+require 'fileutils'
+
 TRANSLATORS = JSON.parse(File.read(File.join(File.dirname(__FILE__), '../../gen/translators.json')))
-PREFERENCES = JSON.parse(File.read(File.join(File.dirname(__FILE__), '../../defaults/preferences/defaults.json')))
 
 Before do |scenario|
-  resetprefs = PREFERENCES.collect{|k, v|
-    if k == 'debug' || k == 'testing'
-      nil
-    else
-      "Zotero.Prefs.set(prefix + #{k.to_json}, #{v.to_json});"
-    end
-  }.compact.join("\n")
-
-  execute("""
-    var prefix = 'translators.better-bibtex.'
-    #{resetprefs}
-    Zotero.Prefs.set(prefix + 'debug', true);
-    Zotero.Prefs.set(prefix + 'testing', true);
-    var items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
-    yield Zotero.Items.erase(items);
-    yield Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID);
-    var items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
-    if (items.length != 0) throw new Error('library not empty after reset')
-  """) unless scenario.source_tag_names.include?('@noreset')
-
+  execute('yield Zotero.BetterBibTeX.TestSupport.reset()') unless scenario.source_tag_names.include?('@noreset')
   @displayOptions = {}
+  @selected = nil
 end
 
 When /^I set preference ([^\s]+) to (.*)$/ do |pref, value|
   pref = 'translators.better-bibtex' + pref if pref[0] == '.'
   value = value.strip
-  if value =~ /^(['"])([^\2]+)\2$/
-    value = $2
+  if value =~ /^"([^"]*)"$/
+    value = $1
   elsif value =~ /^[0-9]+$/
     value = Integer(value)
   elsif value == 'true' || value == 'false'
@@ -41,50 +24,35 @@ When /^I set preference ([^\s]+) to (.*)$/ do |pref, value|
   )
 end
 
-When /^I import (\d+) references (?:with (\d+) attachments )?from (['"])([^\3]+)\3( into a new collection)?$/ do |references, attachments, quote, json, createNewCollection|
-  source = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', json))
+When /^I import (\d+) references? (?:with (\d+) attachments? )?from "([^"]+)"(?: into (a new collection|"([^"]+)"))?$/ do |references, attachments, source, createNewCollection, collectionName|
+  source = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', source))
+
+  if source =~ /\.json$/i
+    config = JSON.parse(File.read(source))['config'] || {}
+    preferences = config['preferences'] || {}
+    @displayOptions = config['options'] || {}
+  else
+    @displayOptions = {}
+    preferences = nil
+  end
 
   references = Integer(references)
   attachments = attachments.nil? ? 0 : Integer(attachments)
 
-  script = """
-    // preferences from #{source}
-    var prefix = 'translators.better-bibtex';
-  """
-
-  config = JSON.parse(File.read(source))['config'] || {}
-  prefs = config['preferences'] || {}
-  prefs.each_pair{|p, v|
-    v = v.join(',') if v.is_a?(Array)
-    script += """
-      Zotero.Prefs.set(prefix + '.#{p}', #{v.to_json});
-    """
+  imported = nil
+  Dir.mktmpdir{|dir|
+    createNewCollection = !!(createNewCollection || collectionName)
+    if collectionName
+      orig = source
+      source = File.expand_path(File.join(dir, collectionName))
+      FileUtils.cp(orig, source)
+    end
+    imported = execute(
+      timeout: 30,
+      args: { filename: source, preferences: preferences, createNewCollection: createNewCollection },
+      script: 'return yield Zotero.BetterBibTeX.TestSupport.importFile(args.filename, args.createNewCollection, args.preferences)'
+    )
   }
-  execute(script)
-  @displayOptions = config['options'] || {}
-
-  imported = execute(
-    timeout: 30,
-    args: { filename: source, createNewCollection: !!createNewCollection },
-    script: """
-      Zotero.debug('importing ' + args.filename);
-      var file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile);
-      file.initWithPath(args.filename);
-
-      var items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true);
-      var before = items.length;
-
-      Zotero.debug('{better-bibtex} starting import at ' + new Date());
-      yield Zotero_File_Interface.importFile(file, args.createNewCollection);
-      Zotero.debug('{better-bibtex} import finished at ' + new Date());
-
-      var items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true);
-      var after = items.length;
-
-      Zotero.debug('{better-bibtex} found ' + (after - before) + ' items');
-      return (after - before);
-    """
-  )
   expect(imported).to eq(Integer(references))
 end
 
@@ -97,7 +65,7 @@ Then /^the library should have (\d+) references/ do |n|
   expect(library).to eq(Integer(n))
 end
 
-Then /^a library export using (['"])([^\1]+)\1 should match (['"])([^\3]+)\3$/ do |q1, translator, q2, library|
+Then /^a library export using "([^"]+)" should match "([^"]+)"$/ do |translator, library|
   if translator =~ /^id:(.+)$/
     translator = $1
   else
@@ -108,26 +76,34 @@ Then /^a library export using (['"])([^\1]+)\1 should match (['"])([^\3]+)\3$/ d
   expected = File.read(expected)
   found = execute(
     args: { translatorID: translator, displayOptions: @displayOptions },
-    script: """
-      var translation = new Zotero.Promise(function (resolve, reject) {
-        var translation = new Zotero.Translate.Export();
-        translation.setLibraryID(Zotero.Libraries.userLibraryID);
-        translation.setTranslator(args.translatorID)
-        translation.setDisplayOptions(args.displayOptions);
-        translation.setHandler('done', function(obj, success) {
-          if (success && obj && obj.string) {
-            resolve(obj.string);
-          } else {
-            reject('translation failed');
-          }
-        })
-        translation.translate();
-      })
-      var lib = yield translation
-      return lib
-    """
+    script: 'return yield Zotero.BetterBibTeX.TestSupport.exportLibrary(args.translatorID, args.displayOptions)'
   )
 
   expect(found.strip).to eq(expected.strip)
   # expect(normalize_library(expected)).to eq(normalize_library(found))
+end
+
+When(/^I select the first item where ([^\s]+) = "([^"]+)"$/) do |attribute, value|
+	@selected = execute(
+		args: { attribute: attribute, value: value },
+		script: 'return yield Zotero.BetterBibTeX.TestSupport.select(args.attribute, args.value)'
+  )
+	expect(@selected).not_to be(nil)
+  sleep 3
+end
+
+When(/^I remove the selected item$/) do
+	execute(
+	  args: {id: @selected},
+	  script: 'yield Zotero.Items.trashTx([args.id])'
+	)
+end
+
+When(/^I (pin|unpin|refresh) the citation key?$/) do |action|
+	sleep 3
+	execute(
+		args: { itemID: @selected, action: action },
+		script: 'yield Zotero.BetterBibTeX.TestSupport.pinCiteKey(args.itemID, args.action)'
+  )
+  sleep 3
 end

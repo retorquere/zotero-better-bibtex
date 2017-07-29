@@ -256,6 +256,7 @@ class Exporter
 #          continue
 
       @citekeys[item.itemID] = item.__citekey__ = getCiteKey(item).citekey
+      debug('citation key extracted', item.__citekey__)
       if !@citekeys[item.itemID]
         debug(new Error('No citation key found in'), item)
         throw new Error('No citation key in ' + JSON.stringify(item))
