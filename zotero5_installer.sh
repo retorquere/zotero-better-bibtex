@@ -145,7 +145,7 @@ fi
 
 if [ -f $MENU_DIR ]; then
   echo ">>> Creating $MENU_DIR"
-  mkdir $MENU_DIR
+  mkdir -p $MENU_DIR
 fi
 
 echo ">>> Creating menu entry"
