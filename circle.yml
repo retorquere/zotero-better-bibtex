@@ -34,7 +34,7 @@ test:
       esac
 
       export LOGS=$CIRCLE_ARTIFACTS
-      cucumber
+      bundle exec cucumber $CIRCLE_TESTS
     : parallel: true
 general:
   artifacts:
