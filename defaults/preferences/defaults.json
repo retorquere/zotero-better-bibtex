@@ -9,7 +9,7 @@
   "cacheFlushInterval": 5,
   "itemObserverDelay": 100,
   "citeCommand": "cite",
-  "citekeyFormat": "[zotero]",
+  "citekeyFormat": "[auth][shorttitle][year]",
   "citekeyFold": true,
   "DOIandURL": "both",
   "bibtexURL": "off",
