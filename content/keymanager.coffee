@@ -62,14 +62,6 @@ class KeyManager
   notify: co((action, type, ids, extraData) ->
     debug('KeyManager.notify', {action, type, ids, extraData})
 
-    _action = switch action
-      when 'add', 'modify' then 'updated'
-      when 'delete', 'trash' then 'deleted'
-      else action
-    events.emit("#{type}-#{_action}", (if action == 'delete' then extraData else ids), extraData)
-
-    debug('KeyManager.notify', {action, type, ids, extraData})
-
     ## TODO: test for field updates https://groups.google.com/d/msg/zotero-dev/naAxXIbpDhU/7rM-5IKGBQAJ
 
     ## skip saves we caused ourselves

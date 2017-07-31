@@ -17,6 +17,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+#     | Multiple locations and-or publishers and BibLaTeX export #689                                  | 1           | #    deferred
      | Math parts in title #113                                                                       | 1           |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
      | map csl-json variables #293                                                                    | 2           |
