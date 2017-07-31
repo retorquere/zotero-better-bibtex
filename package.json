@@ -38,8 +38,9 @@
     "jsesc": "^2.5.1",
     "lodash": "^4.17.4",
     "node-archiver": "^0.3.0",
-    "octokat": "^0.9.1",
     "pretty-data": "^0.40.0",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1",
     "shelljs": "^0.7.8",
     "webpack": "^3.4.1",
     "xml-parser": "^1.2.1"
