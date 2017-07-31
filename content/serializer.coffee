@@ -1,40 +1,9 @@
 abbrevs = require('./journal-abbrev.coffee')
 debug = require('./debug.coffee')
 
-cache = {}
-
-Zotero.Item::save = ((original) ->
-  return (options) ->
-    debug('itemToExportFormat: delete', this.id)
-    delete cache[this.id]
-    return original.apply(@, arguments)
-  )(Zotero.Item::save)
-
-Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
-  return (zoteroItem, legacy, skipChildItems) ->
-    ###
-      not safe to cache the results based on any field in the item because items are not reliably marked as changed. 'dateModified' is only updated for
-      visual changes, and 'clientDateModified' is alwasy empty here (so far). What 'version' does? I have no idea.
-    ###
-
-    id = zoteroItem.id
-    cache[id] ||= { }
-
-    key = "legacy:#{!!legacy},skipChildItems:#{!!skipChildItems}"
-    if !cache[id][key]
-      cache[id][key] = original.apply(@, arguments)
-      cache[id][key].itemID = cache[id][key].id = parseInt(id)
-      debug('itemToExportFormat: caching', {id, key, extra: cache[id][key].extra})
-    else
-      debug('itemToExportFormat: got', {id, key, extra: cache[id][key].extra})
-
-    ### set journal abbrev ###
-    cache[id][key].journalAbbreviation = abbrevs.get(cache[id][key])
-
-    return cache[id][key]
-  )(Zotero.Utilities.Internal.itemToExportFormat)
-
 class Serializer
+  cache: {}
+
 #  # prune cache on old accessed
 #  prune: Zotero.Promise.coroutine(->
 #    ids = yield Zotero.DB.columnQueryAsync('select itemID from items where itemID not in (select itemID from deletedItems)')
@@ -70,6 +39,26 @@ class Serializer
     return
   )
 
-  get: (item) -> Zotero.Utilities.Internal.itemToExportFormat(item, false, true)
+  remove: (itemID) ->
+    delete @cache[itemID]
+    return
+
+  key: (legacy, skipChildItems) -> "legacy=#{!!legacy},skipChildItems=#{!!skipChildItems}"
+
+  fetch: (itemID, legacy, skipChildItems) ->
+    serializedZoteroItem = @cache[itemID]?[@key(legacy, skipChildItems)]
+    return null unless serializedZoteroItem
+    serializedZoteroItem.itemID = itemID
+    serializedZoteroItem.journalAbbreviation = abbrevs.get(serializedZoteroItem)
+    return serializedZoteroItem
+
+  store: (itemID, serializedZoteroItem, legacy, skipChildItems) ->
+    @cache[itemID] ||= {}
+    @cache[itemID][@key(legacy, skipChildItems)] = serializedZoteroItem
+    serializedZoteroItem.itemID = itemID
+    serializedZoteroItem.journalAbbreviation = abbrevs.get(serializedZoteroItem)
+    return serializedZoteroItem
+
+  serialize: (item) -> Zotero.Utilities.Internal.itemToExportFormat(item, false, true)
 
 module.exports = new Serializer()

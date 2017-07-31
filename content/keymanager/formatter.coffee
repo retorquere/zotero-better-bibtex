@@ -6,7 +6,7 @@ transliterate = require('transliteration').transliterate
 fold2ascii = require('fold-to-ascii').fold
 punycode = require('punycode')
 journalAbbrev = require('../journal-abbrev.coffee')
-serializer = require('../serializer.coffee')
+Serializer = require('../serializer.coffee')
 debug = require('../debug.coffee')
 
 class PatternFormatter
@@ -45,7 +45,7 @@ class PatternFormatter
     return str
 
   format: (item) ->
-    @item = serializer.simplify(serializer.get(item))
+    @item = Serializer.simplify(Serializer.serialize(item))
 
     return {} if @item.itemType in ['attachment', 'note']
 

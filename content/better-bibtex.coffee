@@ -12,6 +12,9 @@ citeproc = require('./citeproc.coffee')
 titleCase = require('./title-case.coffee')
 events = require('./events.coffee')
 
+###
+  MONKEY PATCHES
+###
 ### bugger this, I don't want megabytes of shared code in the translators ###
 Zotero.Translate.Export::Sandbox.BetterBibTeX = {
   parseDate: (sandbox, date) -> parseDate(date)
@@ -31,10 +34,36 @@ Zotero.Translate.Import::Sandbox.BetterBibTeX = {
   debugEnabled: (sandbox) -> Zotero.Debug.enabled
 }
 
+###
+  not safe to cache the results based on any field in the item because items are not reliably marked as changed. 'dateModified' is only updated for
+  visual changes, and 'clientDateModified' is alwasy empty here (so far). What 'version' does? I have no idea.
+###
+Zotero.Item::save = ((original) ->
+  return (options) ->
+    Serializer.remove(this.id)
+    return original.apply(@, arguments)
+)(Zotero.Item::save)
+Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
+  return (zoteroItem, legacy, skipChildItems) ->
+    try
+      return Serializer.fetch(zoteroItem.id, legacy, skipChildItems) || Serializer.store(zoteroItem.id, original.apply(@, arguments), legacy, skipChildItems)
+    catch err # fallback for safety for non-BBT
+      debug('Zotero.Item::save', err)
+      return original.apply(@, arguments)
+)(Zotero.Utilities.Internal.itemToExportFormat)
+
+###
+  EVENTS
+###
+
 events.on('item-updated', ->
   debug('events.triggered: item-updated', Array.prototype.slice.call(arguments))
   return
 )
+
+###
+  INIT
+###
 
 Zotero.Promise.coroutine(->
   bbtReady = Zotero.Promise.defer()
