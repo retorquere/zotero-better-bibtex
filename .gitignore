@@ -30,4 +30,3 @@ wiki
 *.deb
 .DS_Store
 .env
-package-lock.json
