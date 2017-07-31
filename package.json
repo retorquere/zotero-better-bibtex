@@ -25,17 +25,20 @@
   },
   "devDependencies": {
     "archiver": "^2.0.0",
+    "bluebird": "^3.5.0",
     "clean-webpack-plugin": "^0.1.16",
     "coffee-loader": "^0.7.3",
     "coffee-script": "^1.12.6",
     "coffeelint": "^1.16.0",
     "coffeelint-no-implicit-returns": "0.0.6",
     "copy-webpack-plugin": "^4.0.1",
+    "dotenv": "^4.0.0",
     "ejs": "^2.5.6",
     "ignore-loader": "^0.1.2",
     "jsesc": "^2.5.1",
     "lodash": "^4.17.4",
     "node-archiver": "^0.3.0",
+    "octokat": "^0.9.1",
     "pretty-data": "^0.40.0",
     "shelljs": "^0.7.8",
     "webpack": "^3.4.1",
@@ -48,7 +51,8 @@
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -rf xpi/* && mkdir -p gen && rm -rf gen/*",
     "build": "npm run lint && npm run webpack",
     "postbuild": "node webpack/zipup.js build zotero-better-bibtex && node webpack/zipup.js test/fixtures/debug-bridge debug-bridge",
-    "minitest": "npm run webpack && node ./minitests/build/dateparser.js"
+    "minitest": "npm run webpack && node ./minitests/build/dateparser.js",
+    "release": "coffee webpack/release.coffee"
   },
   "repository": {
     "type": "git",

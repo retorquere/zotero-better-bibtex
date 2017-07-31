@@ -29,3 +29,4 @@ wiki
 *.sqlite
 *.deb
 .DS_Store
+.env
