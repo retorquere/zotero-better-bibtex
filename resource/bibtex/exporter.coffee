@@ -1,6 +1,7 @@
 debug = require('../lib/debug.coffee')
 JSON5 = require('json5')
 getCiteKey = require('../../content/getCiteKey.coffee')
+JabRef = require('./jabref.coffee')
 
 class Exporter
   constructor: ->
@@ -14,7 +15,6 @@ class Exporter
       v.name = name
 
     @preamble = {DeclarePrefChars: ''}
-    @citekeys = {}
     @attachmentCounter = 0
 
     # TODO: disable temporarily because this translator ID doesn't trigger itemID adding
@@ -30,6 +30,7 @@ class Exporter
       while collection = Zotero.nextCollection()
         debug('adding collection:', collection)
         @collections.push(@sanitizeCollection(collection))
+    @jabref = new JabRef(@collections)
 
     @context = {
       exportCharset: (BetterBibTeX.options.exportCharset || 'UTF-8').toUpperCase()
@@ -255,20 +256,20 @@ class Exporter
 #          @preamble.DeclarePrefChars += cached.data.DeclarePrefChars if cached.data.DeclarePrefChars
 #          continue
 
-      @citekeys[item.itemID] = item.__citekey__ = getCiteKey(item).citekey
+      @jabref.citekeys[item.itemID] = item.__citekey__ = getCiteKey(item).citekey
       debug('citation key extracted', item.__citekey__)
-      if !@citekeys[item.itemID]
+      if !item.__citekey__
         debug(new Error('No citation key found in'), item)
         throw new Error('No citation key in ' + JSON.stringify(item))
 
       debug("Translator: assignGroups: #{item.itemID}")
-      @JabRef_assignGroups(@collections, item)
+      @jabref.assignToGroups(item)
       return item
 
     return null
 
   complete: ->
-    @exportGroups()
+    @jabref.exportGroups()
 
     preamble = []
     preamble.push("\\ifdefined\\DeclarePrefChars\\DeclarePrefChars{'’-}\\else\\fi") if @preamble.DeclarePrefChars
@@ -277,65 +278,5 @@ class Exporter
       preamble = ('"' + cmd + ' "' for cmd in preamble)
       Zotero.write("@preamble{ " + preamble.join(" \n # ") + " }\n")
     return
-
-  exportGroups: ->
-    debug('exportGroups:', @collections)
-    return if @collections.length == 0 || !BetterBibTeX.preferences.jabrefGroups
-
-    switch
-      when BetterBibTeX.preferences.jabrefGroups == 3
-        meta = 'groupsversion:3'
-      when BetterBibTeX.BetterBibLaTeX
-        meta = 'databaseType:biblatex'
-      else
-        meta = 'databaseType:bibtex'
-
-    Zotero.write("@comment{jabref-meta: #{meta};}\n")
-    Zotero.write('@comment{jabref-meta: groupstree:\n')
-    Zotero.write(@JabRef_exportGroup({collections: @collections}))
-    Zotero.write(';\n')
-    Zotero.write('}\n')
-    return
-
-  JabRef_assignGroups: (collection, item) ->
-    return unless BetterBibTeX.preferences.jabrefGroups == 4
-
-    collection = {items: [], collections: collection} if Array.isArray(collection)
-
-    if item.itemID in collection.items
-      item.groups ||= []
-      item.groups.push(collection.name)
-      item.groups.sort() if BetterBibTeX.preferences.testing
-
-    for coll in collection.collections
-      @JabRef_assignGroups(coll, item)
-    return
-
-  JabRef_serialize: (list, wrap) ->
-    serialized = (elt.replace(/\\/g, '\\\\').replace(/;/g, '\\;') for elt in list)
-    serialized = (elt.match(/.{1,70}/g).join("\n") for elt in serialized) if wrap
-    return serialized.join(if wrap then ";\n" else ';')
-
-  JabRef_exportGroup: (collection, level = 0) ->
-    if level
-      collected = ["#{level} ExplicitGroup:#{collection.name}", '0']
-      if BetterBibTeX.preferences.jabrefGroups == 3
-        references = (@citekeys[id] for id in (collection.items || []) when @citekeys[id])
-        references.sort() if BetterBibTeX.preferences.testing
-        collected = collected.concat(references)
-      # what is the meaning of the empty cell at the end, JabRef?
-      collected = collected.concat([''])
-    else
-      collected = ['0 AllEntriesGroup:']
-
-    collected = [@JabRef_serialize(collected)]
-
-    for child in collection.collections || []
-      collected = collected.concat(@JabRef_exportGroup(child, level + 1))
-
-    if level
-      return collected
-    else
-      return @JabRef_serialize(collected, true)
 
 module.exports = Exporter
