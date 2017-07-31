@@ -7,7 +7,7 @@ class JournalAbbrev
     debug('JournalAbbrev.init: waiting for styles...')
     yield Zotero.Styles.init()
 
-    Prefs.onChange((pref) =>
+    events.on('preference-changed', (pref) =>
       return unless pref in ['autoAbbrev', 'autoAbbrevStyle']
 
       debug('JournalAbbrev.preference-changed:', {pref})

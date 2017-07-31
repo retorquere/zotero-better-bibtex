@@ -35,8 +35,4 @@ class Preferences
     events.emit('preference-changed', pref)
     return
 
-  onChange: (observer) ->
-    events.on('preference-changed', observer)
-    return
-
 module.exports = new Preferences()

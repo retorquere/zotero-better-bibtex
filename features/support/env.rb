@@ -10,7 +10,7 @@ require 'shellwords'
 require 'benchmark'
 require 'json'
 
-if !OS.mac?
+if !OS.mac? && (ENV['XVFB'] || 'true') == 'true'
   require 'headless'
   $headless ||= false
   unless $headless

@@ -3,6 +3,7 @@ Prefs = require('./preferences.coffee')
 co = Zotero.Promise.coroutine
 Formatter = require('./keymanager/formatter.coffee')
 getCiteKey = require('./getCiteKey.coffee')
+events = require('./events.coffee')
 
 class KeyManager
   pin: co((id, pin) ->
@@ -49,7 +50,7 @@ class KeyManager
 
     debug('KeyManager.init: done')
 
-    Prefs.onChange((pref) =>
+    events.on('preference-changed', (pref) =>
       if pref in ['autoAbbrev', 'autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
         @formatter.update()
         co(=> yield @patternChanged())()
@@ -59,6 +60,14 @@ class KeyManager
   )
 
   notify: co((action, type, ids, extraData) ->
+    debug('KeyManager.notify', {action, type, ids, extraData})
+
+    _action = switch action
+      when 'add', 'modify' then 'updated'
+      when 'delete', 'trash' then 'deleted'
+      else action
+    events.emit("#{type}-#{_action}", (if action == 'delete' then extraData else ids), extraData)
+
     debug('KeyManager.notify', {action, type, ids, extraData})
 
     ## TODO: test for field updates https://groups.google.com/d/msg/zotero-dev/naAxXIbpDhU/7rM-5IKGBQAJ
