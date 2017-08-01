@@ -53,33 +53,6 @@ Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
 )(Zotero.Utilities.Internal.itemToExportFormat)
 
 ###
-  EVENTS
-###
-
-Zotero.Notifier.registerObserver({
-  notify: (action, type, ids, extraData) ->
-    debug('events.notify', {action, type, ids, extraData})
-
-    switch action
-      when 'add', 'modify'
-        action = 'updated'
-      when 'delete', 'trash'
-        action = 'deleted'
-
-    events.emit("#{type}-#{action}", ids, extraData)
-    return
-}, ['item'], 'BetterBibTeX', 1)
-
-events.on('item-updated', ->
-  debug('events.triggered:', events.event, Array.prototype.slice.call(arguments))
-  return
-)
-events.on('item-deleted', ->
-  debug('events.triggered:', events.event, Array.prototype.slice.call(arguments))
-  return
-)
-
-###
   INIT
 ###
 

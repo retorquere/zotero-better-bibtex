@@ -35,9 +35,20 @@ class Serializer
 
     debug('Serializer.init: simplify =', simplify)
     @simplify = new Function('item', simplify)
+
+    Zotero.Notifier.registerObserver(@, ['item'], 'BetterBibTeX', 1)
+
     debug('Serializer.init: done')
     return
   )
+
+  notify: (action, type, ids, extraData) ->
+    debug('Serializer.notify', {action, type, ids, extraData})
+
+    if action in ['delete', 'trash']
+      for id in ids
+        delete @cache[id]
+    return
 
   remove: (itemID) ->
     delete @cache[itemID]
