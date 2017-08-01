@@ -13,6 +13,7 @@ function normalized(str) {
 }
 
 module.exports = function(srcdir, tgt) {
+  console.log('generating date parser data')
   var result = {
     // map: {}
   };
@@ -62,7 +63,7 @@ module.exports = function(srcdir, tgt) {
     months.forEach(function(month) {
       let name = month.content.toLowerCase().replace(/\./g, '').trim().normalize('NFKC');
       if (name.match(/^[0-9]+$/)) { return; }
-      if (result[name] && result[name] != translate[month.attributes.name]) { console.log(`ignoring ${month.attributes.name} ${name}`); return }
+      if (result[name] && result[name] != translate[month.attributes.name]) { console.log(`  ignoring ${month.attributes.name} ${name}`); return }
       result[name] = translate[month.attributes.name];
     })
   })

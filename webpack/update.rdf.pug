@@ -1,0 +1,22 @@
+doctype xml
+RDF:RDF(xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#")
+  RDF:Description(about="urn:mozilla:extension:better-bibtex@iris-advies.com")
+    em:updates
+      RDF:Seq
+        RDF:li
+          RDF:Description
+            em:version= version
+            em:targetApplication
+              RDF:Description
+                em:id zotero@chnm.gmu.edu
+                em:minVersion 5.0
+                em:maxVersion 5.0.*
+                em:updateLink https://github.com/retorquere/zotero-better-bibtex/releases/download/#{version}/zotero-better-bibtex-#{version}.xpi
+                em:updateInfoURL https://retorquere.github.io/zotero-better-bibtex/CHANGELOG.html
+            em:targetApplication
+              RDF:Description
+                em:id juris-m@juris-m.github.io
+                em:minVersion 5.0
+                em:maxVersion 5.0.*
+                em:updateLink https://github.com/retorquere/zotero-better-bibtex/releases/download/#{version}/zotero-better-bibtex-#{version}.xpi
+                em:updateInfoURL https://retorquere.github.io/zotero-better-bibtex/CHANGELOG.html

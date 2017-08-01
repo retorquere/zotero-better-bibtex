@@ -3,15 +3,15 @@ const fs = require('fs');
 const shell = require('shelljs');
 
 const webpack = require('webpack');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const InstallRDFPlugin = require('./webpack/install-rdf-plugin');
-const PreferencesPlugin = require('./webpack/preferences-plugin');
 const TranslatorHeaderPlugin = require('./webpack/translator-header-plugin');
 const CommonsPlugin = new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' })
 
 const version = require('./webpack/version');
 const translators = require('./webpack/translators');
 const dateparser = require('./webpack/dateparser');
+const rdf = require('./webpack/rdf');
+const preferences = require('./webpack/preferences');
+const assets = require('./webpack/copy-assets');
 
 console.log('make build dirs');
 if (!fs.existsSync(path.join(__dirname, 'build'))) {
@@ -34,8 +34,10 @@ fs.writeFileSync(path.join(__dirname, 'gen/translators.json'), JSON.stringify(tr
 console.log('update citeproc');
 if (shell.exec('git submodule update --depth 1 -- citeproc-js').code != 0) throw 'Citeproc update failed';
 
-console.log('dateparser');
 dateparser(path.join(__dirname, 'citeproc-js/locale'), path.join(__dirname, 'gen/dateparser-data.json'));
+rdf();
+preferences();
+assets();
 
 console.log("let's roll");
 
@@ -74,26 +76,6 @@ module.exports = [
       sourceMapFilename: "./[name].js.map",
       pathinfo: true,
     },
-  }),
-
-  // static files
-  Object.assign({}, common, {
-    entry: './package.json',
-    output: {
-      path: path.join(__dirname, 'build'),
-      filename: 'install.rdf'
-    },
-    plugins: [
-      new InstallRDFPlugin(),
-      new PreferencesPlugin(),
-      new CopyWebpackPlugin(
-        [
-          { from: 'content/**/*' },
-          { from: 'chrome.manifest' },
-        ],
-        { ignore: [ '*.json', '*.coffee', '*.pegjs' ], copyUnmodified: true }
-      )
-    ]
   }),
 
   // translators
