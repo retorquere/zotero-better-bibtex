@@ -19,6 +19,8 @@ module.exports = function() {
   var files = [];
 
   files = files.concat(glob.sync('content/**/*.*', { cwd: path.join(__dirname, '..'), mark: true }).filter(include))
+  files = files.concat(glob.sync('skin/**/*.*', { cwd: path.join(__dirname, '..'), mark: true }).filter(include))
+  files = files.concat(glob.sync('locale/**/*.*', { cwd: path.join(__dirname, '..'), mark: true }).filter(include))
   files.push('chrome.manifest')
 
   console.log('copying assets');

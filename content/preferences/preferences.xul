@@ -1,0 +1,497 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://global/skin/global.css"?>
+<?xml-stylesheet href="chrome://browser/skin/preferences/preferences.css"?>
+<?xml-stylesheet href="chrome://zotero/skin/preferences.css"?>
+<?xml-stylesheet href="chrome://zotero/skin/zotero.css"?>
+<?xml-stylesheet href="chrome://zotero-platform/content/overlay.css"?>
+<?xml-stylesheet href="chrome://zotero-better-bibtex/skin/preferences.css"?>
+
+<!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
+
+<overlay id="zotero-better-bibtex-preferences"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  xmlns:html="http://www.w3.org/1999/xhtml">
+
+  <!-- Include the main extension logic -->
+  <script src="chrome://zotero/content/include.js"/>
+
+  <prefwindow id="zotero-prefs">
+    <prefpane id="zotero-prefpane-better-bibtex"
+            insertafter="zotero-prefpane-advanced"
+            label="&zotero.better-bibtex.preferences.prefpane.better-bibtex;"
+            image="chrome://zotero-better-bibtex/skin/bibtex.svg"
+            onpaneload="Zotero.BetterBibTeX.prefPane.onLoad();"
+            helpTopic="BetterBibTeX"
+            >
+      <!--
+      The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab 'Better Bib(La)TeX'.
+
+      The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which
+      only have hidden preferences). The defaults should just work, but here's an attempt to describe what they do.
+
+      **Making any change here will drop your entire export cache.** This is usually not a problem unless you have a
+      really large library, but you can read about what is involved [[here|Performance]].
+      -->
+      <preferences id="zotero-preferences-cite">
+        <preference name="extensions.zotero.httpServer.enabled"                                 id="pref-better-bibtex-server"                  type="bool"/>
+        <preference name="extensions.zotero.recursiveCollections"                               id="pref-better-bibtex-recursive"               type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.DOIandURL"                id="pref-better-bibtex-DOIandURL"               type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.asciiBibLaTeX"            id="pref-better-bibtex-asciiBibLaTeX"           type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.asciiBibTeX"              id="pref-better-bibtex-asciiBibTeX"             type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.attachmentsNoMetadata"    id="pref-better-bibtex-attachmentsNoMetadata"   type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.autoAbbrev"               id="pref-better-bibtex-autoAbbrev"              type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.autoExport"               id="pref-better-bibtex-autoExport"              type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.citeCommand"              id="pref-better-bibtex-citeCommand"             type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopyPandocBrackets"  id="pref-better-bibtex-quickCopyPandocBrackets" type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.citekeyFormat"            id="pref-better-bibtex-citekeyFormat"           type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.citekeyFold"              id="pref-better-bibtex-citekeyFold"             type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.debug"                    id="pref-better-bibtex-debug"                   type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.keyConflictPolicy"        id="pref-better-bibtex-keyConflictPolicy"       type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.langID"                   id="pref-better-bibtex-langID"                  type="string"/>
+        <!-- Switches between `babel` and `polyglossia`, except I haven't gotten around to polyglossia yet. -->
+        <preference name="extensions.zotero.translators.better-bibtex.pinCitekeys"              id="pref-better-bibtex-pinCitekeys"             type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.preserveBibTeXVariables"  id="pref-better-bibtex-preserveBibTeXVariables" type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.rawImports"               id="pref-better-bibtex-rawImports"              type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.ZotFile"                  id="pref-better-bibtex-ZotFile"                 type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.scanCitekeys"             id="pref-better-bibtex-scanCitekeys"            type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.showCitekeys"             id="pref-better-bibtex-showCitekeys"            type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.showItemIDs"              id="pref-better-bibtex-showItemIDs"             type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.bibtexParticleNoOp"       id="pref-better-bibtex-bibtexParticleNoOp"      type="bool"/>
+        <preference name="extensions.zotero.translators.better-bibtex.skipFields"               id="pref-better-bibtex-skipFields"              type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.bibtexURL"                id="pref-better-bibtex-bibtexURL"               type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.warnBulkModify"           id="pref-better-bibtex-warnBulkModify"          type="int"/>
+        <!--
+          For those who are curious about what the "Clear/Generate BibTeX key" right-click options do, this will warn
+          you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing
+          all your citation keys at once.
+        -->
+        <preference name="extensions.zotero.translators.better-bibtex.postscript"               id="pref-better-bibtex-postscript"              type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopyMode"            id="pref-better-bibtex-quickCopyMode"           type="string"/>
+
+        <preference name="extensions.zotero.translators.better-bibtex.autoAbbrevStyle"          id="pref-better-bibtex-autoAbbrevStyle"         type="string"/>
+        <preference name="extensions.zotero.translators.better-bibtex.autoExportIdleWait"       id="pref-better-bibtex-autoExportIdleWait"      type="int"/>
+        <!-- Number of seconds to wait after your system goes idle before kicking off auto-exports. -->
+        <preference name="extensions.zotero.translators.better-bibtex.cacheFlushInterval"       id="pref-better-bibtex-cacheFlushInterval"      type="int"/>
+        <!--
+          How often the Better BibTeX database should be saved to disk. Defaults to once every 5 seconds. Note that
+          your database is always saved when your computer goes idle, or when you exit Zotero.
+        -->
+        <preference name="extensions.zotero.translators.better-bibtex.confirmCacheResetSize"    id="pref-better-bibtex-confirmCacheResetSize"   type="int"/>
+        <!--
+          On upgrading to a new version, Better BibTeX drops your cache to make sure you get the latest export
+          implementation. For large libraries, this may be undesirable because Better BibTeX updates frequently, and export on an empty
+          cache is really slow. If you have more than N entries in your cache, you will be asked if you want to keep the cache (and forego
+          the benefits of the upgrade until the relevant entries change to change their cache).
+        -->
+        <preference name="extensions.zotero.translators.better-bibtex.caching"                  id="pref-better-bibtex-caching"                 type="bool"/>
+        <!--
+          You really want this on. Better BibTeX has a very involved process of generating BibTeX output, and the
+          caching mechanism makes sure it doesn't happen any more frequently than necessary.
+        -->
+
+        <preference name="extensions.zotero.translators.better-bibtex.csquotes"                 id="pref-better-bibtex-csquotes"                type="string"/>
+        <!-- Enables [csquotes](Unnecessarily-complicated-BibTeX-output%3F#hidden-features) support. -->
+
+        <preference name="extensions.zotero.translators.better-bibtex.skipWords"                id="pref-better-bibtex-skipWords"               type="string"/>
+        <!-- list of words to skip in title when generating citation keys -->
+
+        <preference name="extensions.zotero.translators.better-bibtex.tests"                    id="pref-better-bibtex-tests"                   type="string"/>
+        <!-- Unit tests to run -->
+
+        <preference name="extensions.zotero.translators.better-bibtex.jabrefGroups" id="pref-better-bibtex-jabrefGroups"                        type="int"/>
+        <!-- Export JabRef groups for collections. zero means disable, "3" means format 3, which is (IMO) opinion better
+             but depracated (but JabRef will read it for the foreseeable future), "4" means the new format.
+        -->
+
+        <preference name="extensions.zotero.translators.better-bibtex.defaultDateParserLocale"  id="pref-better-bibtex-defaultDateParserLocale" type="string"/>
+        <!--
+          The Better BibTeX date parser uses locale hints when provided with ambiguous dates such as 1/2/2008 (which is
+          either 1st of February, or 2nd of Januari). Better BibTeX will first look at the language specified in your reference and
+          fall back to your system locale otherwise, but if you add a language code here, this will be used as a fallback. I use
+          `en-GB` here myself as I generally prefer the en-US locale for my systems, but not the wacky idea of date formatting
+          that comes with it.
+        -->
+
+        <preference name="extensions.zotero.translators.better-bibtex.jurismPreferredLanguage"  id="pref-better-bibtex-jurismPreferredLanguage" type="string"/>
+        <!-- When language alternates are present in Juris-M, this is the language BBT will pick. -->
+
+        <preference name="extensions.zotero.translators.better-bibtex.qualityReport"            id="pref-better-bibtex-qualityReport"           type="bool"/>
+        <!-- Generate quality reports for exported references.  -->
+
+        <preference name="extensions.zotero.translators.better-bibtex.biblatexExtendedDateFormat" id="pref-better-bibtex-biblatexExtendedDateFormat" type="bool"/>
+        <!--
+          Support for ambiguous dates
+        -->
+
+        <preference name="extensions.zotero.translators.better-bibtex.biblatexExtendedNameFormat" id="pref-better-bibtex-biblatexExtendedNameFormat" type="bool"/>
+        <!--
+          In the latest release, biblatex has a new (less ambiguous) way to store creator names. It's technically
+          superior, but the LaTeX world moves slowly, so many people won't have it yet. But if you're an early adapter,
+          you can enable it here
+        -->
+
+        <preference name="extensions.zotero.translators.better-bibtex.suppressTitleCase" id="pref-better-bibtex-suppressTitleCase" type="bool"/>
+        <!--
+          If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
+          casing, set this preference to "true" to suppress [title casing for English references](Unnecessarily-complicated-BibTeX-output%3F#mapping-fields).
+        -->
+
+        <preference name="extensions.zotero.translators.better-bibtex.itemObserverDelay" id="pref-better-bibtex-itemObserverDelay" type="int"/>
+        <!--
+          I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
+          retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets
+          the number of microseconds BBT should wait after being notified before acting on the changed references.
+        -->
+
+      </preferences>
+      <tabbox id="better-bibtex-prefs-tabbox">
+        <tabs id="better-bibtex-prefs-tabs">
+          <tab label="&zotero.better-bibtex.prefs.citekey;"/>
+          <tab label="&zotero.better-bibtex.prefs.export;"/>
+          <tab label="&zotero.better-bibtex.prefs.journal-abbrev;"/>
+          <tab id="better-bibtex-prefs-auto-export" label="&zotero.better-bibtex.prefs.auto-export;"/>
+          <tab label="&zotero.better-bibtex.prefs.debug;"/>
+          <tab id="better-bibtex-prefs-disabled" label="&zotero.better-bibtex.prefs.disabled;"/>
+        </tabs>
+
+        <tabpanels id="better-bibtex-prefs-tabpanels">
+          <tabpanel id="better-bibtex-prefs-citation-keys" orient="vertical">
+            <groupbox>
+              <caption label="&zotero.better-bibtex.prefs.citekey.citekeys;"/>
+              <hbox>
+                <label>&zotero.better-bibtex.prefs.citekey.format;</label>
+                <textbox size="40" id="id-better-bibtex-preferences-citekeyFormat" preference="pref-better-bibtex-citekeyFormat"
+                  onfocus="Zotero.BetterBibTeX.prefPane.saveCitekeyFormat();"
+                  onblur="Zotero.BetterBibTeX.prefPane.checkCitekeyFormat();"
+                  oninput="Zotero.BetterBibTeX.prefPane.update();"
+                  onkeypress="setTimeout(function() { Zotero.BetterBibTeX.prefPane.update() }, 1);"/>
+                <!--
+                  Set the pattern used to generate citation keys. The format of the keys is documented [[here|Citation-Keys]].
+                -->
+              </hbox>
+              <checkbox preference="pref-better-bibtex-citekeyFold" label="&zotero.better-bibtex.prefs.citekey.fold;"/>
+              <!--
+                If you have deviated from the default citation key format pattern by [[specifying your own|Citation-Keys]], you may
+                wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the
+                appropriate place in your pattern, but checking this checkbox will just apply `fold` to all your keys.
+              -->
+              <checkbox id="id-better-bibtex-preferences-show-citekey" preference="pref-better-bibtex-showCitekeys" label="&zotero.better-bibtex.prefs.citekey.show;"/>
+              <!--
+                If you enable this, the `extra` column in the Zotero reference list (if you have selected it to be
+                shown) will display the citation key instead of the extra field.
+              -->
+            </groupbox>
+            <groupbox>
+              <caption label="&zotero.better-bibtex.prefs.citekey.quickCopy;"/>
+              <grid flex="1">
+                <columns>
+                  <column/>
+                  <column flex="1"/>
+                </columns>
+                <rows>
+                  <row>
+                    <label>&zotero.better-bibtex.prefs.citekey.quickCopy.format;</label>
+                    <menulist preference="pref-better-bibtex-quickCopyMode" preference-editable="true">
+                      <!--
+                        Used for drag-and-drop/quick copy citations. You can select the output format here: LaTeX (in
+                        combination with the Citation command preference), Pandoc, or Org-mode
+                      -->
+                      <menupopup>
+                        <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.latex;" value="latex"/>
+                        <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.citekeys;" value="citekeys"/>
+                        <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.pandoc;" value="pandoc"/>
+                        <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.orgmode;" value="orgmode"/>
+                        <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.atom;" value="atom"/>
+                        <menuitem label="&zotero.better-bibtex.prefs.citekey.quickCopy.gitbook;" value="gitbook"/>
+                      </menupopup>
+                    </menulist>
+                  </row>
+                  <row>
+                    <label>&zotero.better-bibtex.prefs.citekey.quickCopy.latex.command;</label>
+                    <textbox size="10" id="id-better-bibtex-preferences-citeCommand" preference="pref-better-bibtex-citeCommand"
+                      onchange="Zotero.BetterBibTeX.prefPane.update();"
+                      onkeypress="setTimeout(function() { Zotero.BetterBibTeX.prefPane.update() }, 1);"/>
+                    <!--
+                      Used for drag-and-drop/quick copy citations. In the Zotero "Export" pane, choose, "Better BibTeX
+                      Quick Copy" as the default export format for quick copy, then set the desired LaTeX citation
+                      command here. If you set this to `citep`, drag-and-drop citations will yield
+                      `\citep{key1,key2,...}`
+                    -->
+                  </row>
+                  <row>
+                    <checkbox id="id-better-bibtex-preferences-quickCopyPandocBrackets"
+                      preference="pref-better-bibtex-quickCopyPandocBrackets"
+                      label="&zotero.better-bibtex.prefs.citekey.quickCopy.pandoc.brackets;"/>
+                    <!--
+                      Surround pandoc citations with brackets.
+                    -->
+                  </row>
+                </rows>
+              </grid>
+            </groupbox>
+
+            <groupbox>
+              <caption label="&zotero.better-bibtex.prefs.citekey.update;"/>
+              <description>&zotero.better-bibtex.prefs.citekey.update.pin.description;</description>
+              <grid flex="1">
+                <columns>
+                  <column/>
+                  <column flex="1"/>
+                </columns>
+                <rows>
+                  <row>
+                    <label>&zotero.better-bibtex.prefs.citekey.update.pin;</label>
+                    <radiogroup id="id-better-bibtex-preferences-pin-citekeys"
+                      orient="horizontal"
+                      preference="pref-better-bibtex-pinCitekeys"
+                      oncommand="Zotero.BetterBibTeX.prefPane.update();">
+                      <!--
+                        By default, Better BibTeX assigns dynamic keys to your references; if your reference changes, your citation key will
+                        also likely change (depending on which fields you changed). If you don't want this, you can "pin" the citation key; if
+                        you have `bibtex: <something>` in the `extra` field of your reference, `<something>` will be used as the citation key
+                        regardless of what your reference says.
+
+                        You can have Better BibTeX do this pinning for you automatically. This behavior is off by default, but you can have it
+                        automatically pin the key after the first change to the reference (this generally means at reference creation), or at
+                        export (and auto-exports count as exports). This is mainly useful to do if you share your library, to make sure you and
+                        your co-authors have the same keys, or if you work from multiple workstations. Please note that "on change" does not
+                        mean that the reference will be re-pinned on change. Once pinned, no more changes are made to your keys by Better BibTeX
+                        itself.
+
+                        **Note**: This option requires webdav/zotero sync to be off, or automatic. If you don't sync your references/attachments,
+                        it's considered off. If you have syncing set up but not on automatic, this option will be greyed out. Each pinned key
+                        change (or clearing of a pinned key) means a change to the reference, and that means the item will be synced if you have
+                        that set up. Bulk key changes causing bulk reference changes (which can easily happen if you have on-export and you
+                        export your full library) could overwhelm the Zotero sync service if presented all at once; automatic syncing
+                        ameliorates that problem. Not doing this would risk sync being permanently impossible, as the Zotero server will
+                        kick you out if a sync takes too long.
+                      -->
+
+                      <radio id="id-better-bibtex-preferences-pin-citekeys-manual" label="&zotero.better-bibtex.prefs.citekey.update.pin.manual;" value="manual"/>
+                      <radio id="id-better-bibtex-preferences-pin-citekeys-on-change" label="&zotero.better-bibtex.prefs.citekey.update.pin.on-change;" value="on-change"/>
+                      <radio id="id-better-bibtex-preferences-pin-citekeys-on-export" label="&zotero.better-bibtex.prefs.citekey.update.pin.on-export;" value="on-export"/>
+                    </radiogroup>
+                  </row>
+                  <row>
+                    <label>&zotero.better-bibtex.prefs.citekey.update.conflict;</label>
+                    <radiogroup id="id-better-bibtex-preferences-key-conflict-policy" orient="horizontal" preference="pref-better-bibtex-keyConflictPolicy" oncommand="Zotero.BetterBibTeX.prefPane.update();">
+                      <!--
+                        This determines what happens if you pin a key to a value that is already in use in a different
+                        reference but not pinned there. Neither are ideal, you just get to pick your poison. The options are:
+                      -->
+                      <radio id="id-better-bibtex-preferences-key-conflict-policy-change" label="&zotero.better-bibtex.prefs.citekey.update.conflict.change;" value="change"/>
+                      <!-- Change the non-pinned key by adding a postfix character. This means the citation key changes which could be problematic for existing papers. -->
+                      <radio id="id-better-bibtex-preferences-key-conflict-policy-keep" label="&zotero.better-bibtex.prefs.citekey.update.conflict.keep;" value="keep"/>
+                      <!-- Keep the non-pinned key as-is. This means your library now has duplicate keys. -->
+                    </radiogroup>
+                  </row>
+                </rows>
+              </grid>
+            </groupbox>
+          </tabpanel>
+
+          <tabpanel id="better-bibtex-prefs-export" orient="vertical">
+            <groupbox>
+              <caption label="&zotero.better-bibtex.prefs.export.bibtex;"/>
+              <checkbox preference="pref-better-bibtex-asciiBibTeX" label="&zotero.better-bibtex.prefs.export.bibtex.ascii;"/>
+              <!--
+                BibTeX has really spotty Unicode support, so you generally want this on. It will translate things like accented characters to their equivalent LaTeX constructs on export.
+              -->
+              <checkbox preference="pref-better-bibtex-bibtexParticleNoOp" label="&zotero.better-bibtex.prefs.export.fields.bibtexParticleNoOp;"/>
+              <!--
+                Name handling is a lot more complex than I had ever thought it to be. A *lot* more complex. BibTeX has
+                really limited ways of dealing with names with particles (van, von, de, etc). If you turn this on, BBT
+                will add code to have `van Gogh` sorted under `Gogh`.
+              -->
+              <hbox>
+                <label>&zotero.better-bibtex.prefs.export.bibtex.URLs;</label>
+                <radiogroup preference="pref-better-bibtex-bibtexURL" orient="horizontal">
+                  <!--
+                    BibLaTeX supports urls in your references natively; BibTeX does not. For this reason, URLs are
+                    omitted from BibTeX exports by default. Using this setting you can have them added to your exports either in a `note`
+                    field (not as clean, but compatible with BibTeX out of the box), or in an `url` field (requires extra packages to be loaded,
+                    or bibtex will error out).
+                  -->
+                  <radio label="&zotero.better-bibtex.prefs.export.bibtex.URLs.off;" value="off"/>
+                  <radio label="&zotero.better-bibtex.prefs.export.bibtex.URLs.note;" value="note"/>
+                  <radio label="&zotero.better-bibtex.prefs.export.bibtex.URLs.url;" value="url"/>
+                </radiogroup>
+              </hbox>
+            </groupbox>
+
+            <groupbox>
+              <caption label="&zotero.better-bibtex.prefs.export.biblatex;"/>
+              <checkbox preference="pref-better-bibtex-asciiBibLaTeX" label="&zotero.better-bibtex.prefs.export.biblatex.ascii;"/>
+              <!--
+                BibLaTeX actually has really good Unicode support, so you generally want this off. But for some geezers such as me it is
+                simply more pleasing to have things like accented characters translated to their equivalent LaTeX constructs on export.
+              -->
+              <checkbox preference="pref-better-bibtex-biblatexExtendedNameFormat" label="&zotero.better-bibtex.prefs.export.biblatex.extendedNameFormat;"/>
+              <!-- Use the extended biber 2.7 format for names with particles - only works in BibLaTeX 3.5 or later -->
+            </groupbox>
+
+            <groupbox>
+              <caption label="&zotero.better-bibtex.prefs.export.fields;"/>
+              <checkbox preference="pref-better-bibtex-preserveBibTeXVariables" label="&zotero.better-bibtex.prefs.export.fields.preserveBibTeXVariables;"/>
+              <!--
+                When enabled, single-word strings will be assumed to be externally-defined @string vars, and thus not
+                surrounded by braces. If you don't know what this means, leave it off.
+              -->
+              <checkbox preference="pref-better-bibtex-attachmentsNoMetadata" label="&zotero.better-bibtex.prefs.export.fields.attachmentsNoMetadata;"/>
+              <!--
+                By default, Better BibTeX will export attachments including a title and their mimetype, in a format supported by JabRef.
+                Many but not all BibTeX managers support this format, but if yours (like emacs ebib) doesn't, enable this to export only the filename.
+              -->
+              <grid>
+                <columns><column/><column flex="1"/></columns>
+                <rows>
+                  <row>
+                    <label>&zotero.better-bibtex.prefs.export.fields.doi-and-url;</label>
+                    <radiogroup orient="horizontal" preference="pref-better-bibtex-DOIandURL">
+                      <!--
+                        Does what it says on the tin, really. If a reference has both a DOI and an URL, you can choose to have them both exported, or either one of them.
+                      -->
+                      <radio label="&zotero.better-bibtex.prefs.export.fields.doi-and-url.both;" value="both"/>
+                      <radio label="&zotero.better-bibtex.prefs.export.fields.doi-and-url.DOI;" value="doi"/>
+                      <radio label="&zotero.better-bibtex.prefs.export.fields.doi-and-url.URL;" value="url"/>
+                    </radiogroup>
+                  </row>
+                  <row>
+                    <label>&zotero.better-bibtex.prefs.export.fields.skip;</label>
+                    <textbox size="80" id="id-better-bibtex-preferences-skipFields" preference="pref-better-bibtex-skipFields"
+                      oninput="Zotero.BetterBibTeX.prefPane.update();"
+                      onkeypress="setTimeout(function() { Zotero.BetterBibTeX.prefPane.update() }, 1);"/>
+                    <!--
+                      If there are some fields you don't want in your bibtex files (such as `note` for example), add a
+                      list of them here, separated by comma's.
+                    -->
+                  </row>
+                </rows>
+              </grid>
+            </groupbox>
+            <checkbox id="id-better-bibtex-preferences-getCollections" preference="pref-better-bibtex-recursive" label="&zotero.better-bibtex.prefs.export.recursiveCollections;"/>
+
+            <description id="id-zotero-better-bibtex-server-warning" hidden="true" style="color: red">&zotero.better-bibtex.prefs.export.server.warning;</description>
+            <checkbox id="id-better-bibtex-preferences-server-enabled" preference="pref-better-bibtex-server" oncommand="Zotero.BetterBibTeX.prefPane.update();" label="&zotero.better-bibtex.prefs.export.server.enabled;"/>
+          </tabpanel>
+
+          <tabpanel id="better-bibtex-prefs-journal-abbreviations" orient="vertical">
+            <vbox>
+              <checkbox id="id-better-bibtex-preferences-autoAbbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" preference="pref-better-bibtex-autoAbbrev"/>
+              <!--
+                If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.
+              -->
+              <label>&zotero.better-bibtex.preferences.auto-abbrev.style;</label>
+              <listbox id="better-bibtex-abbrev-style" docpreference="pref-better-bibtex-autoAbbrevStyle" onselect="Zotero.BetterBibTeX.prefPane.styleChanged()"/>
+              <!-- Select the style for auto-abbreviation. -->
+            </vbox>
+          </tabpanel>
+
+          <tabpanel id="better-bibtex-prefs-journal-automatic-export" orient="vertical">
+            <vbox flex="1">
+              <label>&zotero.better-bibtex.auto-export.add;</label>
+              <hbox>
+                <label>&zotero.better-bibtex.prefs.auto-export;</label>
+                <radiogroup id="id-better-bibtex-preferences-auto-export" orient="horizontal" preference="pref-better-bibtex-autoExport">
+                  <!-- Determines when [[automatic exports|Push-and-Pull-Export]] are kicked off: -->
+  
+                  <radio id="id-better-bibtex-preferences-auto-export-off" label="&zotero.better-bibtex.prefs.auto-export.off;" value="off"/>
+                  <!-- disable automatic exports (but still marks them when changes occur) -->
+                  <radio id="id-better-bibtex-preferences-auto-export-immediate" label="&zotero.better-bibtex.prefs.auto-export.immediate;" value="immediate"/>
+                  <!-- export whenever a reference in the export changes/is added/is removed. -->
+                  <radio id="id-better-bibtex-preferences-auto-export-idle" label="&zotero.better-bibtex.prefs.auto-export.idle;" value="idle"/>
+                  <!-- export marked collections when your computer is idle. You mostly want this if your computer is performance-constrained (aka slow) -->
+                </radiogroup>
+              </hbox>
+              <hbox>
+                <tree id="better-bibtex-export-list" flex="1" seltype="single" height="200" editable="false">
+                  <treecols>
+                    <treecol id="better-bibtex-preferences-auto-export-collection" label="&zotero.better-bibtex.auto-export.collection;" editable="false" flex="1" persist="width ordinal hidden" primary="true"/>
+                    <splitter class="tree-splitter"/>
+                    <treecol id="better-bibtex-preferences-auto-export-status" label="&zotero.better-bibtex.auto-export.status;" editable="false" flex="1" persist="width ordinal hidden"/>
+                    <splitter class="tree-splitter"/>
+                    <treecol id="better-bibtex-preferences-auto-export-target" label="&zotero.better-bibtex.auto-export.target;" editable="false" flex="1" persist="width ordinal hidden"/>
+                    <splitter class="tree-splitter"/>
+                    <treecol id="better-bibtex-preferences-auto-export-translator" label="&zotero.better-bibtex.auto-export.translator;" editable="false" flex="1" persist="width ordinal hidden"/>
+                    <splitter class="tree-splitter"/>
+                    <treecol id="better-bibtex-preferences-auto-export-charset" label="&zotero.better-bibtex.auto-export.charset;" editable="true" flex="1" persist="width ordinal hidden"/>
+                    <splitter class="tree-splitter"/>
+                    <treecol id="better-bibtex-preferences-auto-export-auto-abbrev" label="&zotero.better-bibtex.auto-export.auto-abbrev;" editable="false" flex="1" persist="width ordinal hidden"/>
+                    <splitter class="tree-splitter"/>
+                    <treecol id="better-bibtex-preferences-auto-export-notes" label="&zotero.better-bibtex.auto-export.notes;" editable="false" flex="1" persist="width ordinal hidden"/>
+                  </treecols>
+                  <treechildren id="better-bibtex-auto-exports"/>
+                </tree>
+              </hbox>
+              <hbox>
+                <button id="auto-export-remove" label="&zotero.better-bibtex.auto-export.remove;" oncommand="BetterBibTeXAutoExportPref.remove()"/>
+                <button id="auto-export-mark" label="&zotero.better-bibtex.auto-export.mark;" oncommand="BetterBibTeXAutoExportPref.mark()"/>
+                <button id="auto-export-refresh" label="&zotero.better-bibtex.auto-export.refresh;" oncommand="BetterBibTeXAutoExportPref.refresh()"/>
+              </hbox>
+            </vbox>
+          </tabpanel>
+
+          <tabpanel id="better-bibtex-prefs-advanced" orient="vertical">
+            <label value="&zotero.better-bibtex.postscript;"/>
+            <textbox flex="1" multiline="true" preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript"
+                  onblur="Zotero.BetterBibTeX.prefPane.checkPostscript();"
+                  oninput="Zotero.BetterBibTeX.prefPane.checkPostscript();"
+                  onkeypress="setTimeout(function() { Zotero.BetterBibTeX.prefPane.checkPostscript() }, 1);"/>
+            <!-- Snippet of javascript to run [[after each reference generation|Scripting]]. -->
+            <hbox>
+              <checkbox label="&zotero.better-bibtex.debug;" preference="pref-better-bibtex-debug"/>
+              <!--
+                This will generate more verbose logs. This really does affect performance, so only enable this if you're
+                trying to diagnose a problem in Better BibTeX.
+              -->
+              <button label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors()"/>
+            </hbox>
+            <checkbox label="&zotero.better-bibtex.show-item-id;" preference="pref-better-bibtex-showItemIDs"/>
+            <!--
+              If you enable this, the `call number` column in the Zotero reference list (if you have selected it to be
+              shown) will display the internal reference ID instead of the call number field. Only useful for debugging.
+            -->
+            <checkbox label="&zotero.better-bibtex.rescan-citekeys;" preference="pref-better-bibtex-scanCitekeys"/>
+            <!--
+              There have been occasions where Better BibTeX seemed to ignore keys you have specified manually by having
+              `bibtex: <whatever>` in the `extra` field of your reference. I haven't seen this in ages, but enabling this and then restarting
+              Zotero will force a re-scan to find them. This slows down startup tremendously if you have a big library. The checkbox
+              will automatically clear after restart.
+            -->
+            <checkbox id="id-better-bibtex-preferences-raw-imports" preference="pref-better-bibtex-rawImports" label="&zotero.better-bibtex.raw-imports;"/>
+            <!--
+              Enables [[hardcore|Unnecessarily-complicated-BibTeX-output#you-are-a-hardcore-latex-user]] mode. You like
+              Zotero in some ways, but really just want it to be a BibTeX manager. If
+              you enable this, any BibTeX files you import will retain all the LaTeX commands they have, and marks the
+              entry to be exported without any translation.
+            -->
+            <checkbox preference="pref-better-bibtex-ZotFile" label="&zotero.better-bibtex.prefs.advanced.zotFile;"/>
+            <!--
+              Adds a '%b' formatter to Zotfile which retrieves the BibTeX citation key. This is going to be deprecated
+              soon, as it's much safer to have this done on the ZotFile side.
+            -->
+            <button label="&zotero.better-bibtex.resetCache;" oncommand="Zotero.BetterBibTeX.prefPane.cacheReset()"/>
+            <description id="better-bibtex-preferences-cacheActivity-enabled">
+              <html:a target="_blank" href="http://localhost:23119/better-bibtex/cacheActivity?http://localhost:23119/better-bibtex/cacheActivity">&zotero.better-bibtex.prefs.advanced.cacheActivity;</html:a>
+            </description>
+            <label id="better-bibtex-preferences-cacheActivity-disabled">&zotero.better-bibtex.prefs.advanced.cacheActivity.disabled;</label>
+
+            <label>&zotero.better-bibtex.prefs.bulkWarning;</label>
+            <textbox size="5" preference="pref-better-bibtex-warnBulkModify"/>
+            <label id="better-bibtex-preferences-cache-stats"/>
+            <label height="20px;" style="margin-bottom: 0px"/>
+          </tabpanel>
+
+          <tabpanel> <!-- disabled -->
+            <textbox flex="1" multiline="true" id="zotero-better-bibtex-disabled-message" class="plain" readonly="true"/>
+          </tabpanel>
+        </tabpanels>
+      </tabbox>
+      <label height="40px;" style="margin-bottom: 0px"/>
+    </prefpane>
+  </prefwindow>
+
+  <script src="chrome://zotero/content/include.js"/>
+  <script src="chrome://zotero-better-bibtex/content/preferences/preferences.js"/><!-- needs to be included every time anew to bind window and document -->
+</overlay>

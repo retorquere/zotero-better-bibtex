@@ -50,7 +50,7 @@ var common = {
   },
   module: {
     rules: [
-      { test: /\.coffee$/, use: [ {loader: 'coffee-loader', options: { sourceMap: true} } ] },
+      { test: /\.coffee$/, use: [ {loader: 'coffee-loader', options: { sourceMap: false } } ] },
       { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
       { test: /\.json$/, use: [ 'json-loader' ] },
     ]
@@ -65,15 +65,16 @@ module.exports = [
     ],
     context: path.resolve(__dirname, './content'),
     entry: {
-      "better-bibtex": './better-bibtex.coffee'
+      "better-bibtex": './better-bibtex.coffee',
+      "preferences/preferences": './preferences/preferences.coffee',
     },
-    devtool: '#source-map',
+    // devtool: '#source-map',
     output: {
       path: path.resolve(__dirname, './build/content'),
       filename: '[name].js',
       jsonpFunction: 'BetterBibTeXLoader',
       devtoolLineToLine: true,
-      sourceMapFilename: "./[name].js.map",
+      // sourceMapFilename: "./[name].js.map",
       pathinfo: true,
     },
   }),
@@ -87,12 +88,12 @@ module.exports = [
       entries[translator] = `./${translator}.coffee`;
       return entries
     }, {}),
-    devtool: '#source-map',
+    // devtool: '#source-map',
     output: {
       path: path.resolve(__dirname, './build/resource'),
       filename: '[name].js',
       devtoolLineToLine: true,
-      sourceMapFilename: "./[name].js.map",
+      // sourceMapFilename: "./[name].js.map",
       pathinfo: true,
     },
   }),

@@ -1,0 +1,19 @@
+#zotero-better-bibtex-item-first-row-label > label {
+  text-align: right;
+  font-weight: bold;
+  margin-left: 5px !important;
+  margin-right: 0 !important;
+
+  border: 1px solid transparent;
+
+  margin-top: 1px !important;
+  margin-bottom: 1px !important;
+  -moz-box-pack: start;
+  -moz-margin-start: 1px !important;
+  -moz-margin-end: 5px !important;
+  padding: 0 2px 0 2px;
+}
+
+.citekey-dynamic {
+  font-style: italic;
+}

@@ -23,13 +23,15 @@ class PatternFormatter
         Prefs.clear('citekeyFormat')
 
       try
-        @generate = new Function(parser.parse(Prefs.get('citekeyFormat'), {methods: @methods, filters: @filters}))
+        @generate = new Function(@parsePattern(Prefs.get('citekeyFormat')))
         break
       catch err
         debug('PatternFormatter.update: Error parsing citekey pattern', {pattern: Prefs.get('citekeyFormat')}, err)
 
     debug('PatternFormatter.update:', Prefs.get('citekeyFormat'))
     return
+
+  parsePattern: (pattern) -> parser.parse(pattern, {methods: PatternFormatter::methods, filters: PatternFormatter::filters})
 
   re:
     unsafechars: Zotero.Utilities.XRegExp("[^-\\p{L}0-9_!$*+./;?\\[\\]]")
