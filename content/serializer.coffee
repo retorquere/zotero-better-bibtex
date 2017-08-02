@@ -1,8 +1,20 @@
 abbrevs = require('./journal-abbrev.coffee')
 debug = require('./debug.coffee')
+Loki = require('./loki.coffee')
 
 class Serializer
-  cache: {}
+  cache: Loki('cache').addCollection('cache', {
+    indices: [ 'itemID', 'legacy', 'skipChildItems' ],
+    schema: {
+      type: 'object'
+      properties: {
+        itemID: { type: 'integer' }
+        legacy: { coerce: 'boolean', default: false }
+        skipChildItems: { coerce: 'boolean', default: false }
+      }
+      required: [ 'itemID', 'legacy', 'skipChildItems' ]
+    }
+  })
 
 #  # prune cache on old accessed
 #  prune: Zotero.Promise.coroutine(->
@@ -46,27 +58,25 @@ class Serializer
     debug('Serializer.notify', {action, type, ids, extraData})
 
     if action in ['delete', 'trash']
-      for id in ids
-        delete @cache[id]
+      @cache.findAndRemove({ itemID : { $in : ids } })
+
     return
 
   remove: (itemID) ->
-    delete @cache[itemID]
+    @cache.findAndRemove({ itemID })
     return
 
-  key: (legacy, skipChildItems) -> "legacy=#{!!legacy},skipChildItems=#{!!skipChildItems}"
-
   fetch: (itemID, legacy, skipChildItems) ->
-    serializedZoteroItem = @cache[itemID]?[@key(legacy, skipChildItems)]
+    serializedZoteroItem = @cache.findOne({ itemID, legacy: !!legacy, skipChildItems: !!skipChildItems})
     return null unless serializedZoteroItem
-    serializedZoteroItem.itemID = itemID
+    serializedZoteroItem = serializedZoteroItem.item
     serializedZoteroItem.journalAbbreviation = abbrevs.get(serializedZoteroItem)
     return serializedZoteroItem
 
   store: (itemID, serializedZoteroItem, legacy, skipChildItems) ->
-    @cache[itemID] ||= {}
-    @cache[itemID][@key(legacy, skipChildItems)] = serializedZoteroItem
     serializedZoteroItem.itemID = itemID
+    @cache.insert({itemID, legacy, skipChildItems, item: serializedZoteroItem})
+
     serializedZoteroItem.journalAbbreviation = abbrevs.get(serializedZoteroItem)
     return serializedZoteroItem
 

@@ -12,6 +12,7 @@ const dateparser = require('./webpack/dateparser');
 const rdf = require('./webpack/rdf');
 const preferences = require('./webpack/preferences');
 const assets = require('./webpack/copy-assets');
+const _ = require('lodash')
 
 console.log('make build dirs');
 if (!fs.existsSync(path.join(__dirname, 'build'))) {
@@ -42,6 +43,9 @@ assets();
 console.log("let's roll");
 
 var common = {
+  node: {
+    fs: 'empty'
+  },
   resolveLoader: {
     alias: {
       'pegjs-loader': path.join(__dirname, './webpack/pegjs-loader'),
@@ -59,7 +63,7 @@ var common = {
 
 module.exports = [
   // main app logic
-  Object.assign({}, common, {
+  _.merge({}, common, {
     plugins: [
       CommonsPlugin,
     ],
@@ -80,7 +84,7 @@ module.exports = [
   }),
 
   // translators
-  Object.assign({}, common, {
+  _.merge({}, common, {
     plugins: [ new TranslatorHeaderPlugin() ],
     context: path.resolve(__dirname, './resource'),
     entry: translators().reduce((entries, f) => {
@@ -99,7 +103,7 @@ module.exports = [
   }),
 
   // minitests
-  Object.assign({}, common, {
+  _.merge({}, common, {
     context: path.resolve(__dirname, './minitests'),
     entry: {
       'pfunc': './pfunc.coffee',

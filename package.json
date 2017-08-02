@@ -38,7 +38,7 @@
     "lodash": "^4.17.4",
     "node-archiver": "^0.3.0",
     "pretty-data": "^0.40.0",
-    "pug": "^2.0.0-rc.2",
+    "pug": "^2.0.0-rc.3",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
     "shelljs": "^0.7.8",
