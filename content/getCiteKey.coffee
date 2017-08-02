@@ -8,21 +8,19 @@ module.exports = (extra) ->
     extra = ''
 
   citekey = ''
-  dynamic = false
+  pinned = false
 
   extra = extra.replace(bibtex, (m, _dynamic, _citekey) ->
     citekey = _citekey
-    dynamic = _dynamic
+    pinned = !_dynamic
     return "\n"
   ).trim()
 
   if !citekey
     extra = extra.replace(biblatexcitekey, (m, _citekey) ->
       citekey = _citekey
-      dynamic = false
+      pinned = true
       return "\n"
     ).trim()
 
-  dynamic = true unless citekey
-
-  return {extra, citekey, dynamic}
+  return {extra, citekey, pinned}

@@ -16,8 +16,8 @@ class KeyManager
       yield item.saveTx()
       return
 
-    return if pin && !citekey.dynamic
-    return if !pin && citekey.dynamic
+    return if pin && citekey.pinned
+    return if !pin && !citekey.pinned
     item.setField('extra', "#{citekey.extra}\nbibtex#{if pin then '' else '*'}:#{citekey.citekey}".trim())
     debug('KeyManager.pin', pin, id)
     yield item.saveTx({ notifierData: { BetterBibTeX: true } })
@@ -27,7 +27,7 @@ class KeyManager
   refresh: co((id) ->
     item = yield Zotero.Items.getAsync(id)
     citekey = getCiteKey(item.getField('extra'))
-    return unless citekey.dynamic
+    return if citekey.pinned
     item.setField('extra', citekey.extra)
     debug('KeyManager.refresh', id)
     yield item.saveTx() # the save will be picked up by the notifier, no key will be found, and a new one will be assigned
@@ -110,7 +110,7 @@ class KeyManager
     """)
     for item in items
       citekey = getCiteKey(item.extra)
-      dyn.push(item.itemID) if citekey.dynamic || !citekey.citekey
+      dyn.push(item.itemID) if !citekey.pinned || !citekey.citekey
     debug('KeyManager.patternChanged', dyn)
     yield @update(dyn)
     return
@@ -143,10 +143,10 @@ class KeyManager
       citekey = getCiteKey(item.extra)
 
       # ignore citation keys that may be changed below
-      citekeys[item.libraryID][citekey.citekey] = true unless citekey.dynamic && item.itemID in ids
+      citekeys[item.libraryID][citekey.citekey] = true unless !citekey.pinned && item.itemID in ids
 
       # make note of existing not included in this update dynamic keys -- if key conflicy resolution = 'change', we'll need them later
-      if citekey.dynamic && item.itemID not in ids
+      if !citekey.pinned && item.itemID not in ids
         dynamic[item.libraryID][citekey.citekey] ||= []
         dynamic[item.libraryID][citekey.citekey].push(item.itemID)
     debug('Keymanager.update: citekey scan complete:', new Date() - start)
@@ -165,7 +165,7 @@ class KeyManager
 
       citekey = getCiteKey(item.getField('extra'))
 
-      if !citekey.dynamic # remember pinned keys for conflict resolution but nothing further needs to be done
+      if citekey.pinned # remember pinned keys for conflict resolution but nothing further needs to be done
         pinned[item.libraryID] ||= []
         pinned[item.libraryID].push(citekey.citekey)
         continue
