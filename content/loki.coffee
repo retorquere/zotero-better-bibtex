@@ -6,9 +6,9 @@ validator = new Ajv({ useDefaults: true, coerceTypes: true })
 validator.addKeyword('coerce', {
   modifying: true,
   compile: (type) ->
-    validateCoerced = validator.compile(type: type)
+    validateCoerced = validator.compile({ type })
     return (data, dataPath, parentData, parentDataProperty) ->
-      msg = "Unable to coerce #{typeof data} to #{type}"
+      msg = "Unable to coerce #{typeof data} '#{data}' to #{type}"
 
       switch type
         when 'float', 'number'

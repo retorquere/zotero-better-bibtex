@@ -16,6 +16,10 @@ module.exports =
     items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     yield Zotero.Items.erase(items)
     yield Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID)
+
+    for collection in Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID, true)
+      yield collection.eraseTx()
+
     items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     throw new Error('library not empty after reset') if items.length != 0
     return

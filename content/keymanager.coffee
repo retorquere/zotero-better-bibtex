@@ -4,6 +4,7 @@ co = Zotero.Promise.coroutine
 Formatter = require('./keymanager/formatter.coffee')
 getCiteKey = require('./getCiteKey.coffee')
 events = require('./events.coffee')
+Loki = require('./loki.coffee')
 
 class KeyManager
   pin: co((id, pin) ->
@@ -13,6 +14,7 @@ class KeyManager
     if !citekey.citekey
       item.setField('extra', citekey.extra)
       debug('KeyManager.pin, no citekey found, refreshing', id)
+      # unmarked save will trigger citekey generation
       yield item.saveTx()
       return
 
@@ -74,7 +76,7 @@ class KeyManager
     ## TODO: test for field updates https://groups.google.com/d/msg/zotero-dev/naAxXIbpDhU/7rM-5IKGBQAJ
 
     ## skip saves we caused ourselves
-    ids = (id for id in ids when !extraData[id].BetterBibTeX)
+    ids = (id for id in ids when !extraData[id]?.BetterBibTeX)
     debug('KeyManager.notify', {ids})
 
     yield @update(ids)
@@ -91,7 +93,7 @@ class KeyManager
       from items item
       left join itemData field on field.fieldID = #{@query.field.extra} and field.itemID = item.itemID
       left join itemDataValues extra on extra.valueID = field.valueID
-      where item.itemTypeId not in (#{@query.type.attachment}, #{@query.type.note}) and item.itemID not in (select itemID from deletedItems)
+      where item.itemTypeID not in (#{@query.type.attachment}, #{@query.type.note}) and item.itemID not in (select itemID from deletedItems)
     """)
     for item in items
       citekey = getCiteKey(item.extra)
@@ -106,7 +108,7 @@ class KeyManager
       from items item
       join itemData field on field.fieldID = #{@query.field.extra} and field.itemID = item.itemID
       join itemDataValues extra on extra.valueID = field.valueID
-      where item.itemTypeId not in (#{@query.type.attachment}, #{@query.type.note}) and item.itemID not in (select itemID from deletedItems)
+      where item.itemTypeID not in (#{@query.type.attachment}, #{@query.type.note}) and item.itemID not in (select itemID from deletedItems)
     """)
     for item in items
       citekey = getCiteKey(item.extra)
@@ -122,116 +124,117 @@ class KeyManager
     debug('KeyManager.update', {ids})
     return unless ids.length
 
-    citekeys = {}
-    dynamic = {}
-    update = []
+    citekeys = yield @scan(ids)
 
-    # scan for existing citekeys to avoid duplicates
-    start = new Date()
-    debug('Keymanager.update: citekey scan start')
-    items = yield Zotero.DB.queryAsync("""
-      select item.itemID, item.libraryID, extra.value as extra
-      from items item
-      join itemData field on field.itemID = item.itemID
-      join itemDataValues extra on extra.valueID = field.valueID
-      where field.fieldID = #{@query.field.extra} and field.itemID not in (select itemID from deletedItems)
-    """)
-    for item in items
-      citekeys[item.libraryID] ||= {}
-      dynamic[item.libraryID] ||= {}
+    save = []
 
-      citekey = getCiteKey(item.extra)
-
-      # ignore citation keys that may be changed below
-      citekeys[item.libraryID][citekey.citekey] = true unless !citekey.pinned && item.itemID in ids
-
-      # make note of existing not included in this update dynamic keys -- if key conflicy resolution = 'change', we'll need them later
-      if !citekey.pinned && item.itemID not in ids
-        dynamic[item.libraryID][citekey.citekey] ||= []
-        dynamic[item.libraryID][citekey.citekey].push(item.itemID)
-    debug('Keymanager.update: citekey scan complete:', new Date() - start)
-
-    debug('KeyManager.update', {citekeys})
-
-    basechar = 'a'.charCodeAt(0) - 1
-
-    pinned = {}
-    items = yield Zotero.Items.getAsync(ids)
-    debug('KeyManager.update:', {update: update.length, items: items.length})
-    for item in items
-      continue if item.isNote() || item.isAttachment()
-
-      citekeys[item.libraryID] ||= {}
-
-      citekey = getCiteKey(item.getField('extra'))
-
-      if citekey.pinned # remember pinned keys for conflict resolution but nothing further needs to be done
-        pinned[item.libraryID] ||= []
-        pinned[item.libraryID].push(citekey.citekey)
-        continue
-
-      proposed = @formatter.format(item)
-
-      debug('KeyManager.update:', {id: item.id, library: item.libraryID, found: citekey, proposed, keys: citekeys[item.libraryID]})
-
-      # let's see if we can keep this citekey
-      if citekey.citekey && !citekeys[item.libraryID][citekey.citekey]
-        # citekey is unchanged and also not taken -- rare
-        if citekey.citekey == proposed.citekey
-          citekeys[item.libraryID][citekey.citekey] = true
-          debug('KeyManager.update: keeping', citekey.citekey)
-          continue
-
-        # citekey with postfix is free, keep it
-        if citekey.citekey.startsWith(proposed.citekey)
-          if proposed.postfix == '0'
-            if citekey.citekey.substr(proposed.citekey.length).match(/-[0-9]+$/)
-              citekeys[item.libraryID][citekey.citekey] = true
-              debug('KeyManager.update: keeping', citekey.citekey)
-              continue
-          else
-            if citekey.citekey.substr(proposed.citekey.length).match(/[a-z]$/)
-              citekeys[item.libraryID][citekey.citekey] = true
-              debug('KeyManager.update: keeping', citekey.citekey)
-              continue
-
-      debug('KeyManager.update: discarding', citekey.citekey) if citekey.citekey
-
-      # perhaps no postfixing is required
-      if !citekeys[item.libraryID][proposed.citekey]
-        citekey.citekey = proposed.citekey
-
-      # seek free postfix
+    # update all dynamic keys where necessary
+    for item in citekeys.find({update: true, pinned: false})
+      citekey = yield @findKey(item, citekeys)
+      if citekey != item.citekey
+        debug('KeyManager.update:', item.itemID, 'changed citation key from', item.citekey, 'to', citekey)
+        item.item.setField('extra', item.extra + "\nbibtex*:" + citekey)
+        save.push(item.item)
       else
-        postfix = 1
-        while true
-          citekey.citekey = proposed.citekey + (if proposed.postfix == '0' then '-' + postfix else String.fromCharCode(basechar + postfix))
-          break unless citekeys[item.libraryID][citekey.citekey]
-          postfix += 1
+        debug('KeyManager.update:', item.itemID, 'keeping', item.citekey)
 
-      debug('KeyManager.update: new', citekey.citekey)
-      citekeys[item.libraryID][citekey.citekey] = true
+      # not sure if this is necessary anymore?
+      item.update = false
+      item.citekey = citekey
+      citekeys.update(item)
 
-      item.setField('extra', (citekey.extra + "\nbibtex*:" + citekey.citekey).trim())
-      debug('itemToExport Keymanager.update: setting citekey:', item.id, citekey, item.clientDateModified)
+    # find all dynamic conflicts
+    if Prefs.get('keyConflictPolicy') != 'keep'
+      for pinned in citekeys.find({ update: true, pinned: true })
+        for item in citekeys.find({ libraryID: pinned.libraryID, pinned: false, citekey: pinned.citekey })
+          throw new Error('this should have been handled in the loop above!') if item.item
+          citekey = yield @findKey(item, citekeys)
+          throw new Error('this should not have been found') if citekey == item.citekey
+          throw new Error('item not set') unless item.item
+
+          debug('KeyManager.update:', item.itemID, 'changed citation key from', item.citekey, 'to', citekey)
+          item.item.setField('extra', item.extra + "\nbibtex*:" + citekey)
+          save.push(item.item)
+
+    # defer to the end because man I hate async this could potentially cause race conditions
+    for item in save
+      debug('KeyManager.update: saving', item.id)
       yield item.saveTx({ notifierData: { BetterBibTeX: true } })
 
-    if Prefs.get('keyConflictPolicy') != 'keep'
-      reset = []
-      for libraryID, citekeys of dynamic                                  # dynamic citekeys by library ID
-        for citekey, itemIDs of citekeys                                  # all dynamic-key references that have that citekey
-          continue unless citekey in (pinned[libraryID]?[citekey] || [])  # if that citekey is not freshly pinned, move along
-          reset = reset.concat(itemIDs)
-
-      if reset.length
-        reset = yield Zotero.Items.get(reset)
-        for item in reset
-          getCiteKey(item.getField('extra'))
-          item.setField('extra', citekey.extra.trim())
-          debug('Keymanager.update: clearing citekey:', item.id)
-          yield item.saveTx()
-
+    debug('KeyManager.update done')
     return
+  )
+
+  scan: co((ids) ->
+    start = new Date()
+    debug('Keymanager.scan: citekey scan start')
+
+    keys = Loki('keys').addCollection('keys', {
+      indices: [ 'itemID', 'libraryID', 'citekey', 'pinned' ],
+      schema: {
+        type: 'object'
+        properties: {
+          itemID: { type: 'integer' }
+          libraryID: { type: 'integer' }
+          citekey: { type: 'string' }
+          pinned: { coerce: 'boolean', default: false }
+          update: { coerce: 'boolean', default: false }
+          extra: { coerce: 'string', default: '' }
+        }
+        required: [ 'itemID', 'libraryID', 'citekey', 'extra', 'update' ]
+      }
+    })
+
+    update = ids.reduce(((acc, id) -> acc[id] = true; return acc), {})
+
+    items = yield Zotero.DB.queryAsync("""
+      select item.itemID, item.libraryID, extra.value as extra, item.itemTypeID
+      from items item
+      left join itemData field on field.itemID = item.itemID and field.fieldID = #{@query.field.extra}
+      left join itemDataValues extra on extra.valueID = field.valueID
+      where item.itemID not in (select itemID from deletedItems)
+        and item.itemTypeID not in (#{@query.type.attachment}, #{@query.type.note})
+    """)
+    for item in items
+      key = keys.insert(Object.assign(getCiteKey(item.extra), {
+        update: update[item.itemID],
+        itemID: item.itemID,
+        libraryID: item.libraryID,
+      }))
+      debug('Keymanager.scan: got', {itemID: item.itemID, extra: item.extra, key})
+
+    debug('Keymanager.scan: citekey scan complete:', new Date() - start)
+
+    return keys
+  )
+
+  postfixBaseChar: 'a'.charCodeAt(0) - 1
+  postfixRE: {
+    zotero: /^(-[0-9]+)?$/
+    bbt: /^([a-z])?$/
+  }
+  findKey: co((item, keys) ->
+    item.item ||= yield Zotero.Items.getAsync(item.itemID)
+    proposed = @formatter.format(item.item)
+
+    # item already has proposed citekey
+    if item.citekey.slice(0, proposed.citekey.length) == proposed.citekey &&
+      item.citekey.slice(proposed.citekey.length).match(if proposed.postfix == '0' then @postfixRE.zotero else @postfixRE.bbt) &&
+      !keys.findOne({ $and: [ { libraryID: item.libraryID }, { citekey: item.citekey }, { itemID: { $ne: item.itemID } } ] })
+        return item.citekey
+
+    # unpostfixed citekey is available
+    if !keys.findOne({ libraryID: item.libraryID, citekey: proposed.citekey })
+      return proposed.citekey
+
+    postfix = 1
+    while true
+      throw new Error('Postfix out of bounds') if proposed.postfix != '0' && postfix > 26
+      citekey = proposed.citekey + (if proposed.postfix == '0' then '-' + postfix else String.fromCharCode(@postfixBaseChar + postfix))
+      return citekey unless keys.findOne({ libraryID: item.libraryID,  citekey })
+      postfix += 1
+
+    return null
   )
 
 module.exports = new KeyManager()

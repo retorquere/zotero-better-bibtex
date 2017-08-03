@@ -17,9 +17,11 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Normalize date ranges in citekeys #356                                                         | 3           |
+     | CSL status = biblatex pubstate #573                                                            | 1           |
+     | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
 #     | Multiple locations and-or publishers and BibLaTeX export #689                                  | 1           | #    deferred
      | Math parts in title #113                                                                       | 1           |
-     | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
      | map csl-json variables #293                                                                    | 2           |
      | Fields in Extra should override defaults                                                       | 1           |
      | BibLaTeX; export CSL override 'issued' to date or year #351                                    | 1           |
@@ -27,7 +29,6 @@ Scenario Outline: BibLaTeX Export
      | Oriental dates trip up date parser #389                                                        | 1           |
      | Non-ascii in dates is not matched by date parser #376                                          | 1           |
      | transliteration for citekey #580                                                               | 1           |
-     | CSL status = biblatex pubstate #573                                                            | 1           |
      | Title case of latex greek text on biblatex export #564                                         | 2           |
      | pre not working in Extra field #559                                                            | 1           |
      | @jurisdiction; map court,authority to institution #326                                         | 1           |
@@ -68,7 +69,6 @@ Scenario Outline: BibLaTeX Export
      | date and year are switched #406                                                                | 4           |
      | Do not caps-protect literal lists #391                                                         | 3           |
      | biblatex; Language tag xx is exported, xx-XX is not #380                                       | 1           |
-     | Normalize date ranges in citekeys #356                                                         | 3           |
      | remove the field if the override is empty #303                                                 | 1           |
      | markup small-caps, superscript, italics #301                                                   | 2           |
      | don't escape entry key fields for #296                                                         | 1           |
