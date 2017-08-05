@@ -1,5 +1,5 @@
 Reference = require('./bibtex/reference.coffee')
-Exporter = require('./bibtex/exporter.coffee')
+Exporter = require('./lib/exporter.coffee')
 debug = require('./lib/debug.coffee')
 datefield = require('./bibtex/datefield.coffee')
 

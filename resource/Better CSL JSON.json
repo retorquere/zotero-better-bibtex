@@ -1,0 +1,18 @@
+{
+  "translatorID": "f4b52ab0-f878-4556-85a0-c7aeedd09dfc",
+  "label": "Better CSL JSON",
+  "creator": "Emiliano heyns",
+  "target": "json",
+  "minVersion": "4.0.27",
+  "maxVersion": "",
+  "displayOptions": {
+    "Keep updated": false
+  },
+  "translatorType": 2,
+  "browserSupport": "gcsv",
+  "configOptions": {
+    "serializationCache": true
+  },
+  "inRepository": true,
+  "priority": 100
+}

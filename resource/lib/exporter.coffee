@@ -1,7 +1,7 @@
 debug = require('../lib/debug.coffee')
 JSON5 = require('json5')
 getCiteKey = require('../../content/getCiteKey.coffee')
-JabRef = require('./jabref.coffee')
+JabRef = require('../bibtex/jabref.coffee') # not so nice... BibTeX-specific code in general exporter lib
 
 class Exporter
   constructor: ->

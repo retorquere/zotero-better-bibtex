@@ -1,0 +1,18 @@
+{
+  "translatorID": "0f238e69-043e-4882-93bf-342de007de19",
+  "label": "Better CSL YAML",
+  "creator": "Emiliano heyns",
+  "target": "yaml",
+  "minVersion": "4.0.27",
+  "maxVersion": "",
+  "displayOptions": {
+    "Keep updated": false
+  },
+  "translatorType": 2,
+  "browserSupport": "gcsv",
+  "configOptions": {
+    "serializationCache": true
+  },
+  "priority": 100,
+  "inRepository": true
+}

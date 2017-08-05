@@ -1,7 +1,7 @@
 ### XRegExp = require('xregexp') ###
 XRegExp = Zotero.Utilities.XRegExp
 debug = require('../lib/debug.coffee')
-Exporter = require('./exporter.coffee')
+Exporter = require('../lib/exporter.coffee')
 text2latex = require('./unicode_translator.coffee').text2latex
 
 ###

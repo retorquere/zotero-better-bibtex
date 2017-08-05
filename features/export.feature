@@ -216,38 +216,38 @@ Scenario: two ISSN number are freezing browser #110 / Generating keys and export
 #   And I set preference .citekeyFormat to [auth+initials][year]
 #  Then a library export using "Better BibTeX" should match "export/Include first name initial(s) in cite key generation pattern (86).bibtex"
 
-#@372 @pandoc
-#Scenario: BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372
-#  When I import 1 reference from "export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.json"
-#  Then a library export using "Better CSL JSON" should match "export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.csl.json"
+@372 @pandoc
+Scenario: BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372
+  When I import 1 reference from "export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.json"
+  Then a library export using "Better CSL JSON" should match "export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.csl.json"
 
 @365 @pandoc
 Scenario: Export of creator-type fields from embedded CSL variables #365
   When I import 6 references from "export/Export of creator-type fields from embedded CSL variables #365.json"
   Then a library export using "Better BibLaTeX" should match "export/Export of creator-type fields from embedded CSL variables #365.biblatex"
-#  And a library export using "Better CSL JSON" should match "export/Export of creator-type fields from embedded CSL variables #365.csl.json"
+  And a library export using "Better CSL JSON" should match "export/Export of creator-type fields from embedded CSL variables #365.csl.json"
 
 @587
 Scenario: Setting the item type via the cheater syntax #587
   When I import 5 references from "export/Setting the item type via the cheater syntax #587.json"
   Then a library export using "Better BibLaTeX" should match "export/Setting the item type via the cheater syntax #587.biblatex"
 #  And a library export using "Better BibTeX" should match "export/Setting the item type via the cheater syntax #587.bibtex"
-#  And a library export using "Better CSL JSON" should match "export/Setting the item type via the cheater syntax #587.csl.json"
+  And a library export using "Better CSL JSON" should match "export/Setting the item type via the cheater syntax #587.csl.json"
 
-#@360 @pandoc
-#Scenario: Date export to Better CSL-JSON #360
-#  When I import 6 references from "export/Date export to Better CSL-JSON #360.json"
-#  And a library export using "Better CSL JSON" should match "export/Date export to Better CSL-JSON #360.csl.json"
+@360 @pandoc
+Scenario: Date export to Better CSL-JSON #360
+  When I import 6 references from "export/Date export to Better CSL-JSON #360.json"
+  And a library export using "Better CSL JSON" should match "export/Date export to Better CSL-JSON #360.csl.json"
 
-#@432 @447 @pandoc @598
-#Scenario: Pandoc/LaTeX/SCHOMD Citation Export
-#  When I import 4 references with 3 attachments from "export/Pandoc Citation.json"
+@432 @447 @pandoc @598
+Scenario: Pandoc/LaTeX/SCHOMD Citation Export
+  When I import 4 references with 3 attachments from "export/Pandoc Citation.json"
 #  And I set preference .quickCopyMode to "pandoc"
 #  Then a library export using "Better BibTeX Quick Copy" should match "export/Pandoc Citation.pandoc"
 #  When I set preference .quickCopyMode to "latex"
 #  Then a library export using "Better BibTeX Quick Copy" should match "export/Pandoc Citation.latex"
-#  And a library export using "Better CSL JSON" should match "export/Pandoc Citation.csl.json"
-#  And a library export using "Better CSL YAML" should match "export/Pandoc Citation.csl.yml"
+  And a library export using "Better CSL JSON" should match "export/Pandoc Citation.csl.json"
+  And a library export using "Better CSL YAML" should match "export/Pandoc Citation.csl.yml"
 #  And a schomd bibtex request using '[["Berndt1994"],{"translator":"biblatex"}]' should match "export/Pandoc Citation.schomd.json"
 
 #@journal-abbrev @bbt
