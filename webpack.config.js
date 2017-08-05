@@ -4,7 +4,7 @@ const shell = require('shelljs');
 
 const webpack = require('webpack');
 const TranslatorHeaderPlugin = require('./webpack/translator-header-plugin');
-const CommonsPlugin = new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' })
+// const CommonsPlugin = new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' })
 
 const version = require('./webpack/version');
 const translators = require('./webpack/translators');
@@ -65,18 +65,18 @@ module.exports = [
   // main app logic
   _.merge({}, common, {
     plugins: [
-      CommonsPlugin,
+      // new webpack.DefinePlugin({ global: {} })
     ],
     context: path.resolve(__dirname, './content'),
     entry: {
       "better-bibtex": './better-bibtex.coffee',
-      "preferences/preferences": './preferences/preferences.coffee',
+      // "preferences/preferences": './preferences/preferences.coffee',
     },
     // devtool: '#source-map',
     output: {
       path: path.resolve(__dirname, './build/content'),
       filename: '[name].js',
-      jsonpFunction: 'BetterBibTeXLoader',
+      jsonpFunction: 'WebPackedBetterBibTeX',
       devtoolLineToLine: true,
       // sourceMapFilename: "./[name].js.map",
       pathinfo: true,

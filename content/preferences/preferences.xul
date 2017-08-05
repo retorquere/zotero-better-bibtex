@@ -21,7 +21,6 @@
             insertafter="zotero-prefpane-advanced"
             label="&zotero.better-bibtex.preferences.prefpane.better-bibtex;"
             image="chrome://zotero-better-bibtex/skin/bibtex.svg"
-            onpaneload="Zotero.BetterBibTeX.prefPane.onLoad();"
             helpTopic="BetterBibTeX"
             >
       <!--
@@ -34,7 +33,6 @@
       really large library, but you can read about what is involved [[here|Performance]].
       -->
       <preferences id="zotero-preferences-cite">
-        <preference name="extensions.zotero.httpServer.enabled"                                 id="pref-better-bibtex-server"                  type="bool"/>
         <preference name="extensions.zotero.recursiveCollections"                               id="pref-better-bibtex-recursive"               type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.DOIandURL"                id="pref-better-bibtex-DOIandURL"               type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.asciiBibLaTeX"            id="pref-better-bibtex-asciiBibLaTeX"           type="bool"/>
@@ -152,7 +150,6 @@
           <tab label="&zotero.better-bibtex.prefs.journal-abbrev;"/>
           <tab id="better-bibtex-prefs-auto-export" label="&zotero.better-bibtex.prefs.auto-export;"/>
           <tab label="&zotero.better-bibtex.prefs.debug;"/>
-          <tab id="better-bibtex-prefs-disabled" label="&zotero.better-bibtex.prefs.disabled;"/>
         </tabs>
 
         <tabpanels id="better-bibtex-prefs-tabpanels">
@@ -233,20 +230,20 @@
 
             <groupbox>
               <caption label="&zotero.better-bibtex.prefs.citekey.update;"/>
-              <description>&zotero.better-bibtex.prefs.citekey.update.pin.description;</description>
+              <!-- description>&zotero.better-bibtex.prefs.citekey.update.pin.description;</description -->
               <grid flex="1">
                 <columns>
                   <column/>
                   <column flex="1"/>
                 </columns>
                 <rows>
+                      <!--
                   <row>
                     <label>&zotero.better-bibtex.prefs.citekey.update.pin;</label>
                     <radiogroup id="id-better-bibtex-preferences-pin-citekeys"
                       orient="horizontal"
                       preference="pref-better-bibtex-pinCitekeys"
                       oncommand="Zotero.BetterBibTeX.prefPane.update();">
-                      <!--
                         By default, Better BibTeX assigns dynamic keys to your references; if your reference changes, your citation key will
                         also likely change (depending on which fields you changed). If you don't want this, you can "pin" the citation key; if
                         you have `bibtex: <something>` in the `extra` field of your reference, `<something>` will be used as the citation key
@@ -266,13 +263,13 @@
                         export your full library) could overwhelm the Zotero sync service if presented all at once; automatic syncing
                         ameliorates that problem. Not doing this would risk sync being permanently impossible, as the Zotero server will
                         kick you out if a sync takes too long.
-                      -->
 
                       <radio id="id-better-bibtex-preferences-pin-citekeys-manual" label="&zotero.better-bibtex.prefs.citekey.update.pin.manual;" value="manual"/>
                       <radio id="id-better-bibtex-preferences-pin-citekeys-on-change" label="&zotero.better-bibtex.prefs.citekey.update.pin.on-change;" value="on-change"/>
                       <radio id="id-better-bibtex-preferences-pin-citekeys-on-export" label="&zotero.better-bibtex.prefs.citekey.update.pin.on-export;" value="on-export"/>
                     </radiogroup>
                   </row>
+                      -->
                   <row>
                     <label>&zotero.better-bibtex.prefs.citekey.update.conflict;</label>
                     <radiogroup id="id-better-bibtex-preferences-key-conflict-policy" orient="horizontal" preference="pref-better-bibtex-keyConflictPolicy" oncommand="Zotero.BetterBibTeX.prefPane.update();">
@@ -372,8 +369,6 @@
             </groupbox>
             <checkbox id="id-better-bibtex-preferences-getCollections" preference="pref-better-bibtex-recursive" label="&zotero.better-bibtex.prefs.export.recursiveCollections;"/>
 
-            <description id="id-zotero-better-bibtex-server-warning" hidden="true" style="color: red">&zotero.better-bibtex.prefs.export.server.warning;</description>
-            <checkbox id="id-better-bibtex-preferences-server-enabled" preference="pref-better-bibtex-server" oncommand="Zotero.BetterBibTeX.prefPane.update();" label="&zotero.better-bibtex.prefs.export.server.enabled;"/>
           </tabpanel>
 
           <tabpanel id="better-bibtex-prefs-journal-abbreviations" orient="vertical">
@@ -472,10 +467,6 @@
               soon, as it's much safer to have this done on the ZotFile side.
             -->
             <button label="&zotero.better-bibtex.resetCache;" oncommand="Zotero.BetterBibTeX.prefPane.cacheReset()"/>
-            <description id="better-bibtex-preferences-cacheActivity-enabled">
-              <html:a target="_blank" href="http://localhost:23119/better-bibtex/cacheActivity?http://localhost:23119/better-bibtex/cacheActivity">&zotero.better-bibtex.prefs.advanced.cacheActivity;</html:a>
-            </description>
-            <label id="better-bibtex-preferences-cacheActivity-disabled">&zotero.better-bibtex.prefs.advanced.cacheActivity.disabled;</label>
 
             <label>&zotero.better-bibtex.prefs.bulkWarning;</label>
             <textbox size="5" preference="pref-better-bibtex-warnBulkModify"/>
@@ -483,9 +474,6 @@
             <label height="20px;" style="margin-bottom: 0px"/>
           </tabpanel>
 
-          <tabpanel> <!-- disabled -->
-            <textbox flex="1" multiline="true" id="zotero-better-bibtex-disabled-message" class="plain" readonly="true"/>
-          </tabpanel>
         </tabpanels>
       </tabbox>
       <label height="40px;" style="margin-bottom: 0px"/>
@@ -493,5 +481,6 @@
   </prefwindow>
 
   <script src="chrome://zotero/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/preferences/preferences.js"/><!-- needs to be included every time anew to bind window and document -->
+  <script src="chrome://zotero/content/preferences/preferences.js"/>
+  <script src="chrome://zotero-better-bibtex/content/preferences/load.js"/>
 </overlay>

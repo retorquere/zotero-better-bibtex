@@ -160,8 +160,6 @@ module BBT
   
   if !profiles_ini.has_section?('General')
     profiles_ini['General'] = { 'StartWithLastProfile' => 1 }
-  else
-    profiles_ini['General']['StartWithLastProfile'] = 1
   end
   
   profile_name = 'BBTZ5TEST'
@@ -206,7 +204,7 @@ module BBT
   profile['extensions.zotero.firstRun2'] = false
   profile['extensions.zotero.firstRunGuidance'] = false
   profile['extensions.zotero.reportTranslationFailure'] = false
-  profile['extensions.zotero.better-bibtex.testing'] = true
+  profile['extensions.zotero.translators.better-bibtex.testing'] = true
 
   profile['devtools.source-map.locations.enabled'] = true
   

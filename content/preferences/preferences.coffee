@@ -2,16 +2,18 @@ Prefs = require('../preferences.coffee')
 debug = require('../debug.coffee')
 parsePattern = require('../keymanager/formatter.coffee')::parsePattern
 
-Zotero.BetterBibTeX.prefPane = new class
+class PrefPane
   # AutoExport: require('./auto-export.coffee')
 
-  onLoad: ->
+  onLoad: (@global) ->
+    return if typeof @global.Zotero_Preferences == 'undefined'
+
     if !@openHelpLink
-      @openHelpLink = Zotero_Preferences.openHelpLink
-      Zotero_Preferences.openHelpLink = ->
-        helpTopic = document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic
+      @openHelpLink = @global.Zotero_Preferences.openHelpLink
+      @global.Zotero_Preferences.openHelpLink = ->
+        helpTopic = @global.document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic
         if helpTopic == 'BetterBibTeX'
-          id = document.getElementById('better-bibtex-prefs-tabbox').selectedPanel.id
+          id = @global.document.getElementById('better-bibtex-prefs-tabbox').selectedPanel.id
           return unless id
           url = 'https://github.com/retorquere/zotero-better-bibtex/wiki/Configuration#' + id.replace('better-bibtex-prefs-', '')
           ### Just a temporary fix until https://github.com/zotero/zotero/issues/949 is fixed ###
@@ -20,17 +22,17 @@ Zotero.BetterBibTeX.prefPane = new class
           else
             @openURL(url)
         else
-          Zotero.BetterBibTeX.prefPaneopenHelpLink.apply(@, arguments)
+          @openHelpLink.apply(@, arguments)
         return
 
     @savedPattern = Prefs.get('citekeyFormat')
     @saveCitekeyFormat()
     @update()
 
-    debug('prefs pane loaded:', document.location.hash)
-    if document.location.hash == '#better-bibtex'
+    debug('prefs pane loaded:', @global.document.location.hash)
+    if @global.document.location.hash == '#better-bibtex'
       ### TODO: runs into the 'TypeError: aId is undefined' problem for some reason. ###
-      setTimeout((-> document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex'))), 500)
+      setTimeout((-> @global.document.getElementById('zotero-prefs').showPane(@global.document.getElementById('zotero-prefpane-better-bibtex'))), 500)
     return
 
   onUnload: ->
@@ -54,7 +56,7 @@ Zotero.BetterBibTeX.prefPane = new class
   saveCitekeyFormat: -> @savedPattern = Prefs.get('citekeyFormat')
 
   checkCitekeyFormat: ->
-    keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    keyformat = @global.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     try
       parsePattern(keyformat.value)
       @savedPattern = keyformat.value
@@ -72,7 +74,7 @@ Zotero.BetterBibTeX.prefPane = new class
     return
 
   checkPostscript: ->
-    postscript = document.getElementById('zotero-better-bibtex-postscript')
+    postscript = @global.document.getElementById('zotero-better-bibtex-postscript')
 
     error = false
     try
@@ -86,20 +88,24 @@ Zotero.BetterBibTeX.prefPane = new class
     return
 
   styleChanged: (index) ->
-    stylebox = document.getElementById('better-bibtex-abbrev-style')
+    stylebox = @global.document.getElementById('better-bibtex-abbrev-style')
     selectedItem = if typeof index != 'undefined' then stylebox.getItemAtIndex(index) else stylebox.selectedItem
     styleID = selectedItem.getAttribute('value')
     Prefs.set('autoAbbrevStyle', styleID)
     return
 
   display: (id, text) ->
-    elt = document.getElementById(id)
+    elt = @global.document.getElementById(id)
     elt.value = text
     elt.setAttribute('tooltiptext', text) if text != ''
     return
 
   update: ->
-    keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    keyformat = @global.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    debug('loading preference pane: update', {
+      keyformat: if keyformat? then typeof keyformat else 'null',
+      value: if keyformat then typeof keyformat.value else 'keyformat not found'
+    })
 
     patternError = null
     try
@@ -111,26 +117,31 @@ Zotero.BetterBibTeX.prefPane = new class
     keyformat.setAttribute('style', (if patternError then '-moz-appearance: none !important; background-color: DarkOrange' else ''))
     keyformat.setAttribute('tooltiptext', '' + (patternError || ''))
 
-    styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
+    Zotero.Styles.init().then(=>
+      styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
+      debug('prefPane: found styles', styles)
 
-    stylebox = document.getElementById('better-bibtex-abbrev-style')
-    refill = stylebox.children.length == 0
-    selectedStyle = Prefs.get('autoAbbrevStyle')
-    selectedIndex = -1
-    for style, i in styles
-      if refill
-        itemNode = document.createElement('listitem')
-        itemNode.setAttribute('value', style.styleID)
-        itemNode.setAttribute('label', style.title)
-        stylebox.appendChild(itemNode)
-      if style.styleID == selectedStyle then selectedIndex = i
-    selectedIndex = 0 if selectedIndex == -1
-    @styleChanged(selectedIndex)
+      stylebox = @global.document.getElementById('better-bibtex-abbrev-style')
+      refill = stylebox.children.length == 0
+      selectedStyle = Prefs.get('autoAbbrevStyle')
+      selectedIndex = -1
+      for style, i in styles
+        if refill
+          itemNode = @global.document.createElement('listitem')
+          itemNode.setAttribute('value', style.styleID)
+          itemNode.setAttribute('label', style.title)
+          stylebox.appendChild(itemNode)
+        if style.styleID == selectedStyle then selectedIndex = i
+      selectedIndex = 0 if selectedIndex == -1
+      @styleChanged(selectedIndex)
 
-    window.setTimeout((->
-      stylebox.ensureIndexIsVisible(selectedIndex)
-      stylebox.selectedIndex = selectedIndex
-      return), 0)
+      @global.window.setTimeout((->
+        stylebox.ensureIndexIsVisible(selectedIndex)
+        stylebox.selectedIndex = selectedIndex
+        return), 0)
+
+      return
+    )
 
     # TODO: @AutoExport.refresh()
 
@@ -141,3 +152,4 @@ Zotero.BetterBibTeX.prefPane = new class
 #    @cache.reset('user request')
 #    @serialized.reset('user request')
 
+module.exports = new PrefPane()

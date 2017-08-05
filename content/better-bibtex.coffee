@@ -1,7 +1,9 @@
 debug = require('./debug.coffee')
 edtf = require('edtf')
 
-require('./preferences.coffee') # initializes the prefs observer
+Zotero.BetterBibTeX.prefPane = require('./preferences/preferences.coffee')
+
+Prefs = require('./preferences.coffee') # needs to be here early, initializes the prefs observer
 
 Translators = require('./translators.coffee')
 KeyManager = require('./keymanager.coffee')
@@ -57,22 +59,36 @@ Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
 ###
 
 Zotero.Promise.coroutine(->
-  bbtReady = Zotero.Promise.defer()
-  Zotero.BetterBibTeX = {
-    ready: bbtReady.promise
-  }
+  ready = Zotero.Promise.defer()
+  Zotero.BetterBibTeX.ready = ready.promise
 
-  debug('starting, waiting for schema...')
+  start = new Date()
+  debug('starting...')
+
   yield Zotero.Schema.schemaUpdatePromise
-  debug('zotero schema done')
+  debug('starting, schema ready @', (new Date() - start) / 1000.0, 's')
 
   Serializer.init()
-  yield JournalAbbrev.init()
-  yield Translators.init()
-  yield KeyManager.init()
-  Zotero.BetterBibTeX.TestSupport = require('./test/support.coffee')
-  debug('started')
+  debug('starting, serializer ready @', (new Date() - start) / 1000.0, 's')
 
-  bbtReady.resolve(true)
+  JournalAbbrev.init()
+  debug('starting, journal abbrev ready @', (new Date() - start) / 1000.0, 's')
+
+  yield Translators.init()
+  debug('starting, translators ready @', (new Date() - start) / 1000.0, 's')
+
+  # must start after the schemaUpdatePromise
+  yield KeyManager.init()
+  debug('starting, keymanager @', (new Date() - start) / 1000.0, 's')
+
+  if Prefs.get('testing')
+    Zotero.BetterBibTeX.TestSupport = require('./test/support.coffee')
+    debug('starting, test support @', (new Date() - start) / 1000.0, 's')
+  else
+    debug('starting, skipping test support')
+
+  debug('starting took', (new Date() - start) / 1000.0, 's')
+
+  ready.resolve(true)
   return
 )()

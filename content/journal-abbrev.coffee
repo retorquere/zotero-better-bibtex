@@ -3,10 +3,7 @@ debug = require('./debug.coffee')
 events = require('./events.coffee')
 
 class JournalAbbrev
-  init: Zotero.Promise.coroutine(->
-    debug('JournalAbbrev.init: waiting for styles...')
-    yield Zotero.Styles.init()
-
+  init: ->
     events.on('preference-changed', (pref) =>
       return unless pref in ['autoAbbrev', 'autoAbbrevStyle']
 
@@ -17,9 +14,7 @@ class JournalAbbrev
 
     @reset()
     debug('JournalAbbrev.init: done')
-
     return
-  )
 
   reset: ->
     debug('JournalAbbrev.reset')
