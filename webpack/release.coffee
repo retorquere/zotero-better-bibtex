@@ -64,6 +64,7 @@ do Bluebird.coroutine(->
       continue if i < 10 && asset.name != xpi
       yield github.repos.deleteAsset(Object.assign({ id: asset.id }, repo))
 
+    console.log("uploading #{xpi} to builds")
     yield github.repos.uploadAsset(Object.assign({ id: release.builds.data.id, name: xpi, filePath: path.join(__dirname, "../xpi/#{xpi}")}, repo))
 
     # yield release.builds.upload(xpi, 'application/x-xpinstall', fs.readFileSync(path.join(__dirname, "../xpi/#{xpi}")))
