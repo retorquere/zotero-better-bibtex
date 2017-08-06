@@ -56,15 +56,14 @@ do Bluebird.coroutine(->
       console.log('no release for builds')
       process.exit(1)
 
-    # console.log(release.builds.data)
+    xpi = "zotero-better-bibtex-#{version}.xpi"
+
     assets = yield github.repos.getAssets(Object.assign({ id: release.builds.data.id}, repo))
     assets.data.sort((a, b) -> (new Date(b.created_at)).getTime() - (new Date(a.created_at)).getTime())
     for asset, i in assets.data
-      continue if i < 1
+      continue if i < 10 && asset.name != xpi
       yield github.repos.deleteAsset(Object.assign({ id: asset.id }, repo))
-      console.log(i, asset.id, asset.name, asset.created_at)
 
-    xpi = "zotero-better-bibtex-#{version}.xpi"
     yield github.repos.uploadAsset(Object.assign({ id: release.builds.data.id, name: xpi, filePath: path.join(__dirname, "../xpi/#{xpi}")}, repo))
 
     # yield release.builds.upload(xpi, 'application/x-xpinstall', fs.readFileSync(path.join(__dirname, "../xpi/#{xpi}")))
