@@ -1,11 +1,12 @@
 Prefs = require('./preferences.coffee')
 debug = require('./debug.coffee')
 events = require('./events.coffee')
+zotero_config = require('./zotero-config.coffee')
 
 class JournalAbbrev
   init: ->
     events.on('preference-changed', (pref) =>
-      return unless pref in ['autoAbbrev', 'autoAbbrevStyle']
+      return unless pref == 'autoAbbrevStyle'
 
       debug('JournalAbbrev.preference-changed:', {pref})
       @reset()
@@ -18,8 +19,8 @@ class JournalAbbrev
 
   reset: ->
     debug('JournalAbbrev.reset')
-    @active = Prefs.get('autoAbbrev')
-    @style = Prefs.get('autoAbbrevStyle') || (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)[0].styleID
+    @style = Prefs.get('autoAbbrevStyle')
+    @style ||= (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)[0].styleID if zotero_config.isJurisM
 
     @abbrevs = {
       default: {
@@ -37,13 +38,12 @@ class JournalAbbrev
         "title-phrase": { }
       }
     }
-    debug('JournalAbbrev.reset:', {active: @active, style: @style})
+    debug('JournalAbbrev.reset:', {style: @style})
     return
 
   get: (serialized_item) ->
     return serialized_item.journalAbbreviation if serialized_item.journalAbbreviation
     return null unless serialized_item.itemType in ['conferencePaper', 'journalArticle', 'bill', 'case', 'statute']
-    return null unless @active
 
     journal = serialized_item.publicationTitle || serialized_item.reporter || serialized_item.code
     return null unless journal

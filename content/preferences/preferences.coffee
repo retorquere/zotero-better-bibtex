@@ -1,12 +1,15 @@
 Prefs = require('../preferences.coffee')
 debug = require('../debug.coffee')
 parsePattern = require('../keymanager/formatter.coffee')::parsePattern
+zotero_config = require('../zotero-config.coffee')
 
 class PrefPane
   # AutoExport: require('./auto-export.coffee')
 
   onLoad: (@global) ->
     return if typeof @global.Zotero_Preferences == 'undefined'
+
+    @global.document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !zotero.isJurisM)
 
     if !@openHelpLink
       @openHelpLink = @global.Zotero_Preferences.openHelpLink
@@ -88,6 +91,8 @@ class PrefPane
     return
 
   styleChanged: (index) ->
+    return unless zotero.isJurisM
+
     stylebox = @global.document.getElementById('better-bibtex-abbrev-style')
     selectedItem = if typeof index != 'undefined' then stylebox.getItemAtIndex(index) else stylebox.selectedItem
     styleID = selectedItem.getAttribute('value')
@@ -117,31 +122,32 @@ class PrefPane
     keyformat.setAttribute('style', (if patternError then '-moz-appearance: none !important; background-color: DarkOrange' else ''))
     keyformat.setAttribute('tooltiptext', '' + (patternError || ''))
 
-    Zotero.Styles.init().then(=>
-      styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
-      debug('prefPane: found styles', styles)
+    if zotero.isJurisM
+      Zotero.Styles.init().then(=>
+        styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
+        debug('prefPane: found styles', styles)
 
-      stylebox = @global.document.getElementById('better-bibtex-abbrev-style')
-      refill = stylebox.children.length == 0
-      selectedStyle = Prefs.get('autoAbbrevStyle')
-      selectedIndex = -1
-      for style, i in styles
-        if refill
-          itemNode = @global.document.createElement('listitem')
-          itemNode.setAttribute('value', style.styleID)
-          itemNode.setAttribute('label', style.title)
-          stylebox.appendChild(itemNode)
-        if style.styleID == selectedStyle then selectedIndex = i
-      selectedIndex = 0 if selectedIndex == -1
-      @styleChanged(selectedIndex)
+        stylebox = @global.document.getElementById('better-bibtex-abbrev-style')
+        refill = stylebox.children.length == 0
+        selectedStyle = Prefs.get('autoAbbrevStyle')
+        selectedIndex = -1
+        for style, i in styles
+          if refill
+            itemNode = @global.document.createElement('listitem')
+            itemNode.setAttribute('value', style.styleID)
+            itemNode.setAttribute('label', style.title)
+            stylebox.appendChild(itemNode)
+          if style.styleID == selectedStyle then selectedIndex = i
+        selectedIndex = 0 if selectedIndex == -1
+        @styleChanged(selectedIndex)
 
-      @global.window.setTimeout((->
-        stylebox.ensureIndexIsVisible(selectedIndex)
-        stylebox.selectedIndex = selectedIndex
-        return), 0)
+        @global.window.setTimeout((->
+          stylebox.ensureIndexIsVisible(selectedIndex)
+          stylebox.selectedIndex = selectedIndex
+          return), 0)
 
-      return
-    )
+        return
+      )
 
     # TODO: @AutoExport.refresh()
 

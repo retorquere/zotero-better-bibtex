@@ -70,14 +70,14 @@ class Serializer
     serializedZoteroItem = @cache.findOne({ itemID, legacy: !!legacy, skipChildItems: !!skipChildItems})
     return null unless serializedZoteroItem
     serializedZoteroItem = serializedZoteroItem.item
-    serializedZoteroItem.journalAbbreviation = abbrevs.get(serializedZoteroItem)
+    serializedZoteroItem.journalAbbreviation ||= abbrevs.get(serializedZoteroItem)
     return serializedZoteroItem
 
   store: (itemID, serializedZoteroItem, legacy, skipChildItems) ->
     serializedZoteroItem.itemID = itemID
     @cache.insert({itemID, legacy, skipChildItems, item: serializedZoteroItem})
 
-    serializedZoteroItem.journalAbbreviation = abbrevs.get(serializedZoteroItem)
+    serializedZoteroItem.journalAbbreviation ||= abbrevs.get(serializedZoteroItem)
     return serializedZoteroItem
 
   serialize: (item) -> Zotero.Utilities.Internal.itemToExportFormat(item, false, true)

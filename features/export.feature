@@ -255,7 +255,6 @@ Scenario: Pandoc/LaTeX/SCHOMD Citation Export
 #  Given I import 1 reference with 1 attachment from "export/Better BibTeX.029.json"
 #  And I set preferences:
 #    | .citekeyFormat    | [authors][year][journal]          |
-#    | .autoAbbrev       | true                              |
 #    | .autoAbbrevStyle  | http://www.zotero.org/styles/cell |
 #    | .pinCitekeys      | on-export                         |
 #  Then the following library export should match "export/Better BibTeX.029.bibtex":
@@ -267,7 +266,6 @@ Scenario: Pandoc/LaTeX/SCHOMD Citation Export
 #  Given I import 1 reference from "export/Journal abbreviations exported in bibtex (81).json"
 #  And I set preferences:
 #    | .citekeyFormat          | [authors2][year][journal:nopunct] |
-#    | .autoAbbrev             | true                              |
 #    | .autoAbbrevStyle        | http://www.zotero.org/styles/cell |
 #    | .pinCitekeys            | on-export                         |
 #  Then the following library export should match "export/Journal abbreviations exported in bibtex (81).bibtex":

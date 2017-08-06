@@ -1,13 +1,13 @@
 KeyManager = require('../keymanager.coffee')
 debug = require('../debug.coffee')
 co = Zotero.Promise.coroutine
+pref_defaults = require('../../defaults/preferences/defaults.json')
 
 module.exports =
   reset: co(->
-    prefs = require('../../defaults/preferences/defaults.json')
 
     prefix = 'translators.better-bibtex.'
-    for pref, value of prefs
+    for pref, value of pref_defaults
       continue if pref in ['debug', 'testing']
       Zotero.Prefs.set(prefix + pref, value)
 
@@ -29,9 +29,11 @@ module.exports =
     preferences ||= {}
     if Object.keys(preferences).length
       debug("importing references and preferences from #{source}")
-      prefix = 'translators.better-bibtex'
       for pref, value of preferences
-        Zotero.Prefs.set("#{prefix}.#{pref}", value)
+        debug("#{if typeof pref_defaults[pref] == 'undefined' then 'not ' else ''}setting preference #{pref} to #{value}")
+        continue if typeof pref_defaults[pref] == 'undefined'
+        value = value.join(',') if Array.isArray(value)
+        Zotero.Prefs.set("translators.better-bibtex.#{pref}", value)
     else
       debug("importing references from #{source}")
 

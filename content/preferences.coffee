@@ -1,12 +1,13 @@
 debug = require('./debug.coffee')
 events = require('./events.coffee')
+zotero_config = require('./zotero-config.coffee')
 
 class Preferences
   prefix: 'translators.better-bibtex'
 
   constructor: ->
     prefService = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService)
-    @branch = prefService.getBranch("extensions.zotero.#{@prefix}.")
+    @branch = prefService.getBranch("#{zotero_config.PREF_BRANCH}#{@prefix}.")
     @branch.addObserver('', @, false)
 
   key: (pref) -> "#{@prefix}.#{pref}"

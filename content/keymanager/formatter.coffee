@@ -13,22 +13,25 @@ class PatternFormatter
   constructor: -> @update()
 
   update: ->
-    debug('PatternFormatter.update')
+    debug('PatternFormatter.update:')
     @skipWords = Prefs.get('skipWords').split(',').map((word) -> word.trim()).filter((word) -> word)
     @fold = Prefs.get('citekeyFold')
 
     for attempt in ['get', 'reset']
       if attempt == 'reset'
-        flash("Malformed citation pattern '#{Prefs.get('citekeyFormat')}', resetting to default")
+        debug("PatternFormatter.update: malformed citekeyFormat '#{@citekeyFormat}', resetting to default")
+        flash("Malformed citation pattern '#{@citekeyFormat}', resetting to default")
         Prefs.clear('citekeyFormat')
+      @citekeyFormat = Prefs.get('citekeyFormat')
 
       try
-        @generate = new Function(@parsePattern(Prefs.get('citekeyFormat')))
+        debug("PatternFormatter.update: trying citekeyFormat #{@citekeyFormat}...")
+        @generate = new Function(@parsePattern(@citekeyFormat))
         break
       catch err
-        debug('PatternFormatter.update: Error parsing citekey pattern', {pattern: Prefs.get('citekeyFormat')}, err)
+        debug('PatternFormatter.update: Error parsing citekeyFormat ', {pattern: @citekeyFormat}, err)
 
-    debug('PatternFormatter.update:', Prefs.get('citekeyFormat'))
+    debug('PatternFormatter.update: citekeyFormat=', @citekeyFormat)
     return
 
   parsePattern: (pattern) -> parser.parse(pattern, {methods: PatternFormatter::methods, filters: PatternFormatter::filters})

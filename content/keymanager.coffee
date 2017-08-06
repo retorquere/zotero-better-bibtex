@@ -60,7 +60,7 @@ class KeyManager
     debug('KeyManager.init: done')
 
     events.on('preference-changed', (pref) =>
-      if pref in ['autoAbbrev', 'autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
+      if pref in ['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
         @formatter.update()
         co(=> yield @patternChanged())()
       return
@@ -132,7 +132,7 @@ class KeyManager
     for item in citekeys.find({update: true, pinned: false})
       citekey = yield @findKey(item, citekeys)
       if citekey != item.citekey
-        debug('KeyManager.update:', item.itemID, 'changed citation key from', item.citekey, 'to', citekey)
+        debug('KeyManager.update:', item.itemID, 'changed citation key from', item.citekey, 'to', citekey, 'using', @formatter.citekeyFormat)
         item.item.setField('extra', item.extra + "\nbibtex*:" + citekey)
         save.push(item.item)
       else

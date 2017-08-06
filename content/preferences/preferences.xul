@@ -38,7 +38,6 @@
         <preference name="extensions.zotero.translators.better-bibtex.asciiBibLaTeX"            id="pref-better-bibtex-asciiBibLaTeX"           type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.asciiBibTeX"              id="pref-better-bibtex-asciiBibTeX"             type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.attachmentsNoMetadata"    id="pref-better-bibtex-attachmentsNoMetadata"   type="bool"/>
-        <preference name="extensions.zotero.translators.better-bibtex.autoAbbrev"               id="pref-better-bibtex-autoAbbrev"              type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.autoExport"               id="pref-better-bibtex-autoExport"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.citeCommand"              id="pref-better-bibtex-citeCommand"             type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.quickCopyPandocBrackets"  id="pref-better-bibtex-quickCopyPandocBrackets" type="bool"/>
@@ -147,7 +146,7 @@
         <tabs id="better-bibtex-prefs-tabs">
           <tab label="&zotero.better-bibtex.prefs.citekey;"/>
           <tab label="&zotero.better-bibtex.prefs.export;"/>
-          <tab label="&zotero.better-bibtex.prefs.journal-abbrev;"/>
+          <tab id="better-bibtex-prefs-tab-journal-abbrev" label="&zotero.better-bibtex.prefs.journal-abbrev;"/>
           <tab id="better-bibtex-prefs-auto-export" label="&zotero.better-bibtex.prefs.auto-export;"/>
           <tab label="&zotero.better-bibtex.prefs.debug;"/>
         </tabs>
@@ -373,10 +372,6 @@
 
           <tabpanel id="better-bibtex-prefs-journal-abbreviations" orient="vertical">
             <vbox>
-              <checkbox id="id-better-bibtex-preferences-autoAbbrev" label="&zotero.better-bibtex.preferences.auto-abbrev;" preference="pref-better-bibtex-autoAbbrev"/>
-              <!--
-                If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.
-              -->
               <label>&zotero.better-bibtex.preferences.auto-abbrev.style;</label>
               <listbox id="better-bibtex-abbrev-style" docpreference="pref-better-bibtex-autoAbbrevStyle" onselect="Zotero.BetterBibTeX.prefPane.styleChanged()"/>
               <!-- Select the style for auto-abbreviation. -->

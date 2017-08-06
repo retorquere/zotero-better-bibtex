@@ -223,11 +223,14 @@ module BBT
       begin
         sleep(1)
         result = execute(timeout: 60, script: """
+          if (!Zotero.BetterBibTeX.ready) return false;
+
           /*
           Zotero.debug('{better-bibtex:debug bridge}: waiting for Zotero ready...');
           yield Zotero.Schema.schemaUpdatePromise;
           Zotero.debug('{better-bibtex:debug bridge}: Zotero ready');
           */
+
           yield Zotero.BetterBibTeX.ready;
           Zotero.debug('{better-bibtex:debug bridge}: BetterBibTeX ready');
           return true;
