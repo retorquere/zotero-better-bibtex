@@ -4,7 +4,7 @@ version = require('./version')
 path = require('path')
 
 Bluebird = require('bluebird')
-GitHubApi = require("github");
+GitHubApi = require("github")
 
 process.exit() if process.env.CI_PULL_REQUEST
 
@@ -20,7 +20,7 @@ github = new GitHubApi({
   timeout: 5000
 })
 
-github.authenticate({ type: "token", token: process.env.GITHUB_TOKEN });
+github.authenticate({ type: "token", token: process.env.GITHUB_TOKEN })
 repo = { owner: 'retorquere', repo: 'zotero-better-bibtex' }
 
 do Bluebird.coroutine(->
@@ -36,6 +36,8 @@ do Bluebird.coroutine(->
       release[id] = yield github.repos.getReleaseByTag(Object.assign({ tag: tag }, repo))
       console.log("#{tag} found")
 
+  xpi = "zotero-better-bibtex-#{version}.xpi"
+
   if process.env.CIRCLE_TAG
     if release.current
       console.log("release #{process.env.CIRCLE_TAG} exists, bailing")
@@ -45,18 +47,26 @@ do Bluebird.coroutine(->
       console.log("release 'static-files' does not exists, bailing")
       process.exit(1)
 
-    assets = yield github.repos.getAssets(Object.assign({ id: release.static.id}, repo))
-    update_rdf = assets.find((asset) -> asset.name == 'update.rdf')
-    repo.releases.assets(update_rdf.id).remove() if update_rdf
 
-    yield release.static.upload('update.rdf', 'application/rdf+xml', fs.readFileSync(path.join(__dirname, '../gen/update.rdf')))
+    # upload XPI
+    release.current = yield github.repos.createRelease(Object.assign({ tag_name: process.env.CIRCLE_TAG }, repo))
+
+    console.log("uploading #{xpi} to #{process.env.CIRCLE_TAG}")
+    # application/x-xpinstall
+    yield github.repos.uploadAsset(Object.assign({ id: release.current.data.id, name: xpi, filePath: path.join(__dirname, "../xpi/#{xpi}")}, repo))
+
+    # update update.rdf
+    assets = yield github.repos.getAssets(Object.assign({ id: release.static.data.id}, repo))
+    update_rdf = assets.data.find((asset) -> asset.name == 'update.rdf')
+    yield github.repos.deleteAsset(Object.assign({ id: update_rdf.id }, repo)) if update_rdf
+
+    # 'application/rdf+xml'
+    yield github.repos.uploadAsset(Object.assign({ id: release.static.data.id, name: 'update.rdf', filePath: path.join(__dirname, "../gen/update.rdf")}, repo))
 
   else
     if !release.builds
       console.log('no release for builds')
       process.exit(1)
-
-    xpi = "zotero-better-bibtex-#{version}.xpi"
 
     assets = yield github.repos.getAssets(Object.assign({ id: release.builds.data.id}, repo))
     assets.data.sort((a, b) -> (new Date(b.created_at)).getTime() - (new Date(a.created_at)).getTime())
@@ -65,7 +75,8 @@ do Bluebird.coroutine(->
       yield github.repos.deleteAsset(Object.assign({ id: asset.id }, repo))
 
     console.log("uploading #{xpi} to builds")
+    # application/x-xpinstall
     yield github.repos.uploadAsset(Object.assign({ id: release.builds.data.id, name: xpi, filePath: path.join(__dirname, "../xpi/#{xpi}")}, repo))
 
-    # yield release.builds.upload(xpi, 'application/x-xpinstall', fs.readFileSync(path.join(__dirname, "../xpi/#{xpi}")))
+  return
 )

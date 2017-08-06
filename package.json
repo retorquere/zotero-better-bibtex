@@ -48,7 +48,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "coffeelint content resource minitests",
+    "lint": "coffeelint content resource minitests webpack",
     "webpack": "webpack",
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -rf xpi/* && mkdir -p gen && rm -rf gen/*",
     "build": "npm run lint && npm run webpack",
