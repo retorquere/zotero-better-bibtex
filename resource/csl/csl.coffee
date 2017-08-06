@@ -41,24 +41,33 @@ ValidCSLTypes = [
 ]
 
 date2csl = (date) ->
-  throw new Error("Expected date, got #{date.type}") unless date.type == 'date'
-  csl = [date.year]
-  if date.month
-    csl.push(date.month)
-    if date.day
-      csl.push(date.day)
-  return csl
+  switch date.type
+    when 'open'
+      return [0]
+
+    when 'date'
+      csl = [if date.year > 0 then date.year else date.year - 1]
+      if date.month
+        csl.push(date.month)
+        if date.day
+          csl.push(date.day)
+      return csl
+
+  throw new Error("Expected date or open, got #{date.type}") unless date.type in ['date', 'open']
+  return
 parseDate = (date) ->
   parsed = Zotero.BetterBibTeX.parseDate(date)
   switch parsed.type
     when 'date'
-      return { 'date-parts': [ date2csl(parsed) ] }
+      csl = { 'date-parts': [ date2csl(parsed) ] }
+      csl.circa = true if parsed.approximate
+      return csl
 
     when 'interval'
       return { 'date-parts': [ date2csl(parsed.from), date2csl(parsed.to) ] }
 
     when 'verbatim'
-      return { raw: parsed.verbatim }
+      return { literal: parsed.verbatim }
 
     else
       throw new Error("Unexpected date type #{parsed.type}")
@@ -116,7 +125,7 @@ class CSLExporter
               creators = []
               for creator in value.value
                 creator = {family: creator.name || creator.lastName || '', given: creator.firstName || '', isInstitution: (if creator.name then 1 else undefined)}
-                Zotero.BetterBibTeX.CSL.parseParticles(creator)
+                Zotero.BetterBibTeX.parseParticles(creator)
                 creators.push(creator)
 
               csl[name] = creators

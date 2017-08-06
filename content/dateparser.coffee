@@ -44,7 +44,8 @@ parse_edtf = (date) ->
   try
     parsed = edtf.parse(edtfy(date.replace(/\. /, ' '))) # 8. july 2011
   catch err
-    throw err unless err.name == 'SyntaxError' || err.token
+    debug('edtfy failed:', err, {message: err.message})
+    throw err unless err.name == 'SyntaxError' || err.token || err.message == 'Invalid year'
     try
       parsed = edtf.parse(date.replace('?~', '~').replace(/u/g, 'X'))
     catch err
@@ -57,7 +58,7 @@ parse = (raw) ->
   debug('dateparser: parsing', raw)
   return {type: 'open'} if raw.trim() == ''
 
-  for sep in ['-', '/', '_']
+  for sep in ['--', '-', '/', '_']
     if (m = raw.split(sep)).length == 2 # potential range
       if (m[0].length > 2 || (sep == '/' && m[0].length == 0)) && (m[1].length > 2 || (sep == '/' && m[1].length == 0))
         from = parse(m[0])

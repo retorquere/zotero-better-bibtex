@@ -65,6 +65,19 @@ Zotero.Promise.coroutine(->
   start = new Date()
   debug('starting...')
 
+  if Prefs.get('testing')
+    Zotero.BetterBibTeX.TestSupport = require('./test/support.coffee')
+    debug('starting, test support @', (new Date() - start) / 1000.0, 's')
+  else
+    debug('starting, skipping test support')
+  debug('starting, test support ready @', (new Date() - start) / 1000.0, 's')
+
+  yield Translators.init()
+  debug('starting, translators ready @', (new Date() - start) / 1000.0, 's')
+
+  # should be safe to start tests at this point. I hate async.
+  ready.resolve(true)
+
   yield Zotero.Schema.schemaUpdatePromise
   debug('starting, schema ready @', (new Date() - start) / 1000.0, 's')
 
@@ -74,21 +87,11 @@ Zotero.Promise.coroutine(->
   JournalAbbrev.init()
   debug('starting, journal abbrev ready @', (new Date() - start) / 1000.0, 's')
 
-  yield Translators.init()
-  debug('starting, translators ready @', (new Date() - start) / 1000.0, 's')
-
   # must start after the schemaUpdatePromise
   yield KeyManager.init()
   debug('starting, keymanager @', (new Date() - start) / 1000.0, 's')
 
-  if Prefs.get('testing')
-    Zotero.BetterBibTeX.TestSupport = require('./test/support.coffee')
-    debug('starting, test support @', (new Date() - start) / 1000.0, 's')
-  else
-    debug('starting, skipping test support')
-
   debug('starting took', (new Date() - start) / 1000.0, 's')
 
-  ready.resolve(true)
   return
 )()

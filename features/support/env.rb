@@ -223,9 +223,11 @@ module BBT
       begin
         sleep(1)
         result = execute(timeout: 60, script: """
+          /*
           Zotero.debug('{better-bibtex:debug bridge}: waiting for Zotero ready...');
           yield Zotero.Schema.schemaUpdatePromise;
           Zotero.debug('{better-bibtex:debug bridge}: Zotero ready');
+          */
           yield Zotero.BetterBibTeX.ready;
           Zotero.debug('{better-bibtex:debug bridge}: BetterBibTeX ready');
           return true;
@@ -235,10 +237,10 @@ module BBT
           break
         end
       rescue Errno::ECONNREFUSED, Net::ReadTimeout, HTTPNotFoundError
-        print '.'
         attempts += 1
         raise "Could not connect to Zotero after #{attempts} attempts" if attempts >= 60
       end
+      print '.'
     end
   }
 
