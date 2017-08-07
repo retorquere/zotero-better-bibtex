@@ -60,6 +60,7 @@ class KeyManager
     debug('KeyManager.init: done')
 
     events.on('preference-changed', (pref) =>
+      debug('KeyManager.pref changed', pref)
       if pref in ['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
         @formatter.update()
         co(=> yield @patternChanged())()

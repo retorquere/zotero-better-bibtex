@@ -9,7 +9,7 @@ class PrefPane
   onLoad: (@global) ->
     return if typeof @global.Zotero_Preferences == 'undefined'
 
-    @global.document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !zotero.isJurisM)
+    @global.document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !zotero_config.isJurisM)
 
     if !@openHelpLink
       @openHelpLink = @global.Zotero_Preferences.openHelpLink
@@ -28,8 +28,7 @@ class PrefPane
           @openHelpLink.apply(@, arguments)
         return
 
-    @savedPattern = Prefs.get('citekeyFormat')
-    @saveCitekeyFormat()
+    @getCitekeyFormat()
     @update()
 
     debug('prefs pane loaded:', @global.document.location.hash)
@@ -38,42 +37,32 @@ class PrefPane
       setTimeout((-> @global.document.getElementById('zotero-prefs').showPane(@global.document.getElementById('zotero-prefpane-better-bibtex'))), 500)
     return
 
-  onUnload: ->
-    try
-      parsePattern(Prefs.get('citekeyFormat'))
-      return
-    catch err
-      debug('error parsing pattern', Prefs.get('citekeyFormat'), err)
-
-    if @savedPattern
-      try
-        parsePattern(@savedPattern)
-        Prefs.set('citekeyFormat', @savedPattern)
-        return
-      catch err
-        debug('error parsing saved pattern', @savedPattern, err)
-
-    Prefs.clear('citekeyFormat')
+  getCitekeyFormat: ->
+    keyformat = @global.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    keyformat.value = Prefs.get('citekeyFormat')
     return
-
-  saveCitekeyFormat: -> @savedPattern = Prefs.get('citekeyFormat')
 
   checkCitekeyFormat: ->
     keyformat = @global.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+
+    msg = ''
     try
       parsePattern(keyformat.value)
-      @savedPattern = keyformat.value
+      msg = ''
     catch err
-      if @savedPattern
-        try
-          parsePattern(@savedPattern)
-        catch
-          @savedPattern = null
+      msg = '' + err
 
-      if @savedPattern
-        Prefs.set('citekeyFormat', @savedPattern)
-      else
-        Prefs.clear('citekeyFormat')
+    keyformat.setAttribute('style', (if msg then '-moz-appearance: none !important; background-color: DarkOrange' else ''))
+    keyformat.setAttribute('tooltiptext', msg)
+    return
+
+  saveCitekeyFormat: ->
+    keyformat = @global.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    try
+      parsePattern(keyformat.value)
+      Prefs.set('citekeyFormat', keyformat.value)
+    catch
+      @getCitekeyFormat()
     return
 
   checkPostscript: ->
@@ -91,7 +80,7 @@ class PrefPane
     return
 
   styleChanged: (index) ->
-    return unless zotero.isJurisM
+    return unless zotero_config.isJurisM
 
     stylebox = @global.document.getElementById('better-bibtex-abbrev-style')
     selectedItem = if typeof index != 'undefined' then stylebox.getItemAtIndex(index) else stylebox.selectedItem
@@ -106,11 +95,7 @@ class PrefPane
     return
 
   update: ->
-    keyformat = @global.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-    debug('loading preference pane: update', {
-      keyformat: if keyformat? then typeof keyformat else 'null',
-      value: if keyformat then typeof keyformat.value else 'keyformat not found'
-    })
+    @checkCitekeyFormat()
 
     patternError = null
     try
@@ -118,11 +103,7 @@ class PrefPane
     catch err
       patternError = err
 
-    debug('parsed pattern', keyformat.value, ':', !patternError, patternError)
-    keyformat.setAttribute('style', (if patternError then '-moz-appearance: none !important; background-color: DarkOrange' else ''))
-    keyformat.setAttribute('tooltiptext', '' + (patternError || ''))
-
-    if zotero.isJurisM
+    if zotero_config.isJurisM
       Zotero.Styles.init().then(=>
         styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
         debug('prefPane: found styles', styles)
