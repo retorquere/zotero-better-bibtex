@@ -35,6 +35,7 @@
   "jurismPreferredLanguage": "zh-alalc97",
   "qualityReport": false,
   "suppressTitleCase": false,
+  "parseParticles": true,
   "debug": false,
   "testing": false,
   "rawLaTag": "#LaTeX"

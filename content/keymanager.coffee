@@ -60,6 +60,7 @@ class KeyManager
     debug('KeyManager.init: done')
 
     events.on('preference-changed', (pref) =>
+      debug('KeyManager.pref changed', pref)
       if pref in ['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
         @formatter.update()
         co(=> yield @patternChanged())()
@@ -83,8 +84,6 @@ class KeyManager
 
     return
   )
-
-  citekeyRE: /(?:^|\n)bibtex(\*?):\s*([^\n]+)(?:\n|$)/
 
   unset: co(->
     unset = []
@@ -169,7 +168,7 @@ class KeyManager
     start = new Date()
     debug('Keymanager.scan: citekey scan start')
 
-    keys = Loki('keys').addCollection('keys', {
+    keys = Loki('keys').schemaCollection('keys', {
       indices: [ 'itemID', 'libraryID', 'citekey', 'pinned' ],
       schema: {
         type: 'object'

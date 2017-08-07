@@ -7,6 +7,7 @@
     "test": "test"
   },
   "dependencies": {
+    "biblatex-csl-converter": "^0.21.8",
     "edtf": "^2.1.0",
     "edtfy": "0.0.8",
     "escape-string-regexp": "^1.0.5",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "archiver": "^2.0.0",
+    "aws-s3-form": "^0.3.5",
     "bluebird": "^3.5.0",
     "clean-webpack-plugin": "^0.1.16",
     "coffee-loader": "^0.7.3",
@@ -32,7 +34,6 @@
     "dotenv": "^4.0.0",
     "ejs": "^2.5.6",
     "fs-extra": "^4.0.1",
-    "github": "^9.2.0",
     "glob": "^7.1.2",
     "ignore-loader": "^0.1.2",
     "jsesc": "^2.5.1",
@@ -43,6 +44,7 @@
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
     "shelljs": "^0.7.8",
+    "uri-templates": "^0.2.0",
     "webpack": "^3.4.1",
     "xml-parser": "^1.2.1"
   },
@@ -55,7 +57,8 @@
     "postbuild": "node webpack/zipup.js build zotero-better-bibtex && node webpack/zipup.js test/fixtures/debug-bridge debug-bridge",
     "minitest": "npm run webpack && node ./minitests/build/dateparser.js",
     "release": "coffee webpack/release.coffee",
-    "start": "KEEP_ZOTERO_RUNNING=true cucumber --fail-fast --tags @none"
+    "start": "KEEP_ZOTERO_RUNNING=true cucumber --fail-fast --tags @none",
+    "s3form": "coffee webpack/s3form.coffee"
   },
   "repository": {
     "type": "git",

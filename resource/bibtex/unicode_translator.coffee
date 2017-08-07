@@ -13,7 +13,7 @@ Text2LaTeX =
   html2latex: (html, options) ->
     options.mode ||= 'html'
     latex = (new HTML(html, options)).latex
-    latex = latex.replace(/(\\\\)+\s*\n\n/g, "\n\n")
+    latex = latex.replace(/(\\\\)+[^\S\n]*\n\n/g, "\n\n")
     latex = latex.replace(/\n\n\n+/g, "\n\n")
     latex = latex.replace(/{}([}])/g, '$1')
     return latex

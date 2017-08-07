@@ -33,7 +33,6 @@
       really large library, but you can read about what is involved [[here|Performance]].
       -->
       <preferences id="zotero-preferences-cite">
-        <preference name="extensions.zotero.recursiveCollections"                               id="pref-better-bibtex-recursive"               type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.DOIandURL"                id="pref-better-bibtex-DOIandURL"               type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.asciiBibLaTeX"            id="pref-better-bibtex-asciiBibLaTeX"           type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.asciiBibTeX"              id="pref-better-bibtex-asciiBibTeX"             type="bool"/>
@@ -41,7 +40,7 @@
         <preference name="extensions.zotero.translators.better-bibtex.autoExport"               id="pref-better-bibtex-autoExport"              type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.citeCommand"              id="pref-better-bibtex-citeCommand"             type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.quickCopyPandocBrackets"  id="pref-better-bibtex-quickCopyPandocBrackets" type="bool"/>
-        <preference name="extensions.zotero.translators.better-bibtex.citekeyFormat"            id="pref-better-bibtex-citekeyFormat"           type="string"/>
+        <!-- preference name="extensions.zotero.translators.better-bibtex.citekeyFormat" id="pref-better-bibtex-citekeyFormat"           type="string"/ -->
         <preference name="extensions.zotero.translators.better-bibtex.citekeyFold"              id="pref-better-bibtex-citekeyFold"             type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.debug"                    id="pref-better-bibtex-debug"                   type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.keyConflictPolicy"        id="pref-better-bibtex-keyConflictPolicy"       type="string"/>
@@ -50,7 +49,6 @@
         <preference name="extensions.zotero.translators.better-bibtex.pinCitekeys"              id="pref-better-bibtex-pinCitekeys"             type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.preserveBibTeXVariables"  id="pref-better-bibtex-preserveBibTeXVariables" type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.rawImports"               id="pref-better-bibtex-rawImports"              type="bool"/>
-        <preference name="extensions.zotero.translators.better-bibtex.ZotFile"                  id="pref-better-bibtex-ZotFile"                 type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.scanCitekeys"             id="pref-better-bibtex-scanCitekeys"            type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.showCitekeys"             id="pref-better-bibtex-showCitekeys"            type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.showItemIDs"              id="pref-better-bibtex-showItemIDs"             type="bool"/>
@@ -157,11 +155,11 @@
               <caption label="&zotero.better-bibtex.prefs.citekey.citekeys;"/>
               <hbox>
                 <label>&zotero.better-bibtex.prefs.citekey.format;</label>
-                <textbox size="40" id="id-better-bibtex-preferences-citekeyFormat" preference="pref-better-bibtex-citekeyFormat"
-                  onfocus="Zotero.BetterBibTeX.prefPane.saveCitekeyFormat();"
-                  onblur="Zotero.BetterBibTeX.prefPane.checkCitekeyFormat();"
-                  oninput="Zotero.BetterBibTeX.prefPane.update();"
-                  onkeypress="setTimeout(function() { Zotero.BetterBibTeX.prefPane.update() }, 1);"/>
+                <textbox size="40" id="id-better-bibtex-preferences-citekeyFormat" nopreference="pref-better-bibtex-citekeyFormat"
+                  onfocus="Zotero.BetterBibTeX.prefPane.getCitekeyFormat();"
+                  onblur="Zotero.BetterBibTeX.prefPane.saveCitekeyFormat();"
+                  oninput="Zotero.BetterBibTeX.prefPane.checkCitekeyFormat();"
+                  onkeypress="setTimeout(function() { Zotero.BetterBibTeX.prefPane.checkCitekeyFormat() }, 1);"/>
                 <!--
                   Set the pattern used to generate citation keys. The format of the keys is documented [[here|Citation-Keys]].
                 -->
@@ -366,7 +364,6 @@
                 </rows>
               </grid>
             </groupbox>
-            <checkbox id="id-better-bibtex-preferences-getCollections" preference="pref-better-bibtex-recursive" label="&zotero.better-bibtex.prefs.export.recursiveCollections;"/>
 
           </tabpanel>
 
@@ -455,11 +452,6 @@
               Zotero in some ways, but really just want it to be a BibTeX manager. If
               you enable this, any BibTeX files you import will retain all the LaTeX commands they have, and marks the
               entry to be exported without any translation.
-            -->
-            <checkbox preference="pref-better-bibtex-ZotFile" label="&zotero.better-bibtex.prefs.advanced.zotFile;"/>
-            <!--
-              Adds a '%b' formatter to Zotfile which retrieves the BibTeX citation key. This is going to be deprecated
-              soon, as it's much safer to have this done on the ZotFile side.
             -->
             <button label="&zotero.better-bibtex.resetCache;" oncommand="Zotero.BetterBibTeX.prefPane.cacheReset()"/>
 

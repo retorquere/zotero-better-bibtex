@@ -97,13 +97,13 @@ class Reference
     # new-style IDs
     # arXiv:0707.3168 [hep-th]
     # arXiv:YYMM.NNNNv# [category]
-    new: /^arxiv:([0-9]{4}\.[0-9]+)(v[0-9]+)?(\s+\[(.*)\])?$/i
+    new: /^arxiv:([0-9]{4}\.[0-9]+)(v[0-9]+)?([^\S\n]+\[(.*)\])?$/i
 
     # arXiv:arch-ive/YYMMNNNv# or arXiv:arch-ive/YYMMNNNv# [category]
-    old: /^arxiv:([a-z]+-[a-z]+\/[0-9]{7})(v[0-9]+)?(\s+\[(.*)\])?$/i
+    old: /^arxiv:([a-z]+-[a-z]+\/[0-9]{7})(v[0-9]+)?([^\S\n]+\[(.*)\])?$/i
 
     # bare
-    bare: /^arxiv:\s*([\S]+)/i
+    bare: /^arxiv:[^\S\n]*([\S]+)/i
 
     parse: (id) ->
       return undefined unless id
@@ -329,7 +329,7 @@ class Reference
         when creator.lastName || creator.firstName
           name = {family: creator.lastName || '', given: creator.firstName || ''}
 
-          Zotero.BetterBibTeX.parseParticles(name)
+          Zotero.BetterBibTeX.parseParticles(name) if BetterBibTeX.preferences.parseParticles
 
           unless BetterBibTeX.BetterBibLaTeX && BetterBibTeX.preferences.biblatexExtendedNameFormat
             @useprefix ||= !!name['non-dropping-particle']
@@ -637,6 +637,7 @@ class Reference
       value = ('' + text).replace(/([#\\%&{}])/g, '\\$1')
     else
       value = ('' + text).replace(/([\\{}])/g, '\\$1')
+    # TODO: @Exporter.unicode -> BetterBibTeX.unicode ?
     value = value.replace(/[^\x21-\x7E]/g, ((chr) -> '\\%' + ('00' + chr.charCodeAt(0).toString(16).slice(-2)))) if not @Exporter.unicode
     return value
 
