@@ -168,7 +168,7 @@ class KeyManager
     start = new Date()
     debug('Keymanager.scan: citekey scan start')
 
-    keys = Loki('keys').addCollection('keys', {
+    keys = Loki('keys').schemaCollection('keys', {
       indices: [ 'itemID', 'libraryID', 'citekey', 'pinned' ],
       schema: {
         type: 'object'

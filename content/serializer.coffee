@@ -1,9 +1,9 @@
 abbrevs = require('./journal-abbrev.coffee')
 debug = require('./debug.coffee')
-Loki = require('./loki.coffee')
+DB = require('./db.coffee')
 
 class Serializer
-  cache: Loki('cache').addCollection('cache', {
+  cache: DB.schemaCollection('serialized', {
     indices: [ 'itemID', 'legacy', 'skipChildItems' ],
     schema: {
       type: 'object'
