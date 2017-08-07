@@ -9,20 +9,40 @@ Before do |scenario|
   @selected = nil
 end
 
-When /^I set preference ([^\s]+) to (.*)$/ do |pref, value|
-  pref = 'translators.better-bibtex' + pref if pref[0] == '.'
-  value = value.strip
-  if value =~ /^"([^"]*)"$/
-    value = $1
-  elsif value =~ /^[0-9]+$/
-    value = Integer(value)
-  elsif value == 'true' || value == 'false'
-    value = (value == 'true')
-  end
+def preferenceValue(value)
+  value.strip!
+  return true if value == 'true'
+  return false if value == 'false'
+  return Integer(value) if value =~ /^[0-9]+$/
+  return value[1..-2] if value =~ /^'[^']+'$/
+  return value[1..-2] if value =~ /^"[^"]+"$/
+  return value
+end
+def setPreferences(prefs)
+  args = { prefs: {} }
+  prefs.each_pair{|pref, value|
+    pref = "translators.better-bibtex#{pref}" if pref[0] == '.'
+    value = preferenceValue(value)
+    value = open(File.expand_path(File.join('test/fixtures', value))).read if pref == 'translators.better-bibtex.postscript'
+    args[:prefs][pref] = value
+  }
+
   execute(
-    args: {pref: pref, value: value},
-    script: "Zotero.Prefs.set(args.pref, args.value);"
+    args: args,
+    script: """
+      for (var pref in args.prefs) {
+        Zotero.Prefs.set(pref, args.prefs[pref]);
+      }
+    """
   )
+end
+When(/^I set the following preferences:$/) do |table|
+  setPreferences(table.rows_hash)
+end
+When /^I set preference ([^\s]+) to (.*)$/ do |pref, value|
+  prefs = {}
+  prefs[pref] = value
+  setPreferences(prefs)
 end
 
 When /^I import (\d+) references? (?:with (\d+) attachments? )?from "([^"]+)"(?: into (a new collection|"([^"]+)"))?$/ do |references, attachments, source, createNewCollection, collectionName|
@@ -161,7 +181,7 @@ def normalize_library(library, nocollections=true)
 
   renum.call({'collections' => library['collections']})
 end
-Then /^a library export using "([^"]+)" should match "([^"]+)"$/ do |translator, library|
+def exportLibrary(translator, library, displayOptions)
   if translator =~ /^id:(.+)$/
     translator = $1
   else
@@ -171,7 +191,7 @@ Then /^a library export using "([^"]+)" should match "([^"]+)"$/ do |translator,
   expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', library))
   expected = File.read(expected)
   found = execute(
-    args: { translatorID: translator, displayOptions: @displayOptions },
+    args: { translatorID: translator, displayOptions: @displayOptions.merge(displayOptions) },
     script: 'return yield Zotero.BetterBibTeX.TestSupport.exportLibrary(args.translatorID, args.displayOptions)'
   )
 
@@ -186,6 +206,12 @@ Then /^a library export using "([^"]+)" should match "([^"]+)"$/ do |translator,
   end
 
   expect(found.strip).to eq(expected.strip)
+end
+Then /^a library export using "([^"]+)" should match "([^"]+)"$/ do |translator, library|
+	exportLibrary(translator, library, {})
+end
+Then /^a library export using "([^"]+)" with the following export options should match "([^"]+)"$/ do |translator, library, table|
+	exportLibrary(translator, library, table.rows_hash)
 end
 
 When(/^I select the first item where ([^\s]+) = "([^"]+)"$/) do |attribute, value|

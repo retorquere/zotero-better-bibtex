@@ -84,8 +84,6 @@ class KeyManager
     return
   )
 
-  citekeyRE: /(?:^|\n)bibtex(\*?):\s*([^\n]+)(?:\n|$)/
-
   unset: co(->
     unset = []
     items = yield Zotero.DB.queryAsync("""

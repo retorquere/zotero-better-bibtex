@@ -20,11 +20,6 @@ class Exporter
     # TODO: disable temporarily because this translator ID doesn't trigger itemID adding
     @caching = !BetterBibTeX.options.exportFileData
 
-    @unicode = switch
-      when BetterBibTeX.BetterBibLaTeX || BetterBibTeX.CollectedNotes then !BetterBibTeX.preferences.asciiBibLaTeX
-      when BetterBibTeX.BetterBibTeX then !BetterBibTeX.preferences.asciiBibTeX
-      else true
-
     @collections = []
     if Zotero.nextCollection && BetterBibTeX.header.configOptions?.getCollections
       while collection = Zotero.nextCollection()
@@ -153,7 +148,7 @@ class Exporter
     if m
       item.extra = item.extra.replace(m[0], '').trim()
       for assignment in m[3].split(';')
-        data = assignment.match(/^([^=]+)=\s*(.*)/)
+        data = assignment.match(/^([^=]+)=[^\S\n]*(.*)/)
         if data
           fields[data[1].toLowerCase()] = {value: data[2], format: 'naive', raw: !m[2]}
         else
@@ -177,7 +172,7 @@ class Exporter
           fields[name.toLowerCase()] = {value, format: 'json', raw }
 
     ### fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/ ###
-    item.extra = item.extra.replace(/{:([^:]+):\s*([^}]+)}/g, (m, name, value) =>
+    item.extra = item.extra.replace(/{:([^:]+):[^\S\n]*([^}]+)}/g, (m, name, value) =>
       cslvar = @CSLVariable(name)
       return m unless cslvar
 
