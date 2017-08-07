@@ -10,7 +10,7 @@ require 'shellwords'
 require 'benchmark'
 require 'json'
 
-if !OS.mac? && !ENV['KEEP_ZOTERO_RUNNING']
+if !OS.mac? && ENV['KEEP_ZOTERO_RUNNING'] != 'show'
   require 'headless'
   $headless ||= false
   unless $headless
