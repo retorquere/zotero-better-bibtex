@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/overlay.css" type="text/css"?>
-<!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
+<!DOCTYPE overlay SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
 
-<overlay id="zotero-better-bibtex-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<overlay id="zotero-better-bibtex-zoteroPane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <!-- stringbundleset id="stringbundleset">
     <stringbundle id="zotero-better-bibtex-strings" src="chrome://zotero-better-bibtex/locale/better-bibtex.properties"/>
   </stringbundleset -->
 
-  <!-- menupopup id="zotero-tb-actions-popup">
-    <menuitem insertafter="zotero-tb-actions-reportErrors" label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors()"/>
-    <menuitem insertafter="zotero-tb-actions-plugins-separator" label="&zotero.better-bibtex.auxScanner;" oncommand="new Zotero.BetterBibTeX.AUXScanner(window)"/>
-  </menupopup -->
+  <menupopup id="zotero-tb-actions-popup">
+    <menuitem insertafter="zotero-tb-actions-reportErrors" label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start()"/>
+    <!-- menuitem insertafter="zotero-tb-actions-plugins-separator" label="&zotero.better-bibtex.auxScanner;" oncommand="new Zotero.BetterBibTeX.AUXScanner(window)"/ -->
+  </menupopup>
 
   <!-- menupopup id="zotero-collectionmenu">
     <menuseparator id="zotero-better-bibtex-collectionmenu-separator"/>
@@ -26,5 +26,24 @@
 
   <!-- Include the main extension logic -->
   <script src="chrome://zotero/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/loader.js"/>
+  <script>
+    <![CDATA[
+      Zotero.debug("{better-bibtex}: overlay loaded");
+
+      if (!Zotero.BetterBibTeX) {
+        Zotero.BetterBibTeX = {};
+
+        window.addEventListener('load', function() {
+          try {
+            Zotero.debug("{better-bibtex}: loading better-bibtex.js");
+            var loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader);
+            loader.loadSubScript("chrome://zotero-better-bibtex/content/better-bibtex.js");
+            Zotero.debug("{better-bibtex}: better-bibtex.js loaded");
+          } catch (err) {
+            Zotero.debug("{better-bibtex:ERROR}: better-bibtex.js load failed: " + err + "\n" + err.stack);
+          }
+        }, false)
+      }
+    ]]>
+  </script>
 </overlay>

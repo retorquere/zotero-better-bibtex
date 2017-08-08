@@ -4,6 +4,7 @@
 <!ENTITY zotero.better-bibtex.citekey.set "Generate BibTeX key">
 <!ENTITY zotero.better-bibtex.citekey.clear "Clear BibTeX key">
 <!ENTITY zotero.better-bibtex.preferences.prefpane.better-bibtex "Better BibTeX">
+<!ENTITY zotero.better-bibtex.menu.better-bibtex "Better BibTeX">
 
 <!ENTITY zotero.better-bibtex.prefs.disabled "Better BibTeX has been disabled">
 <!ENTITY zotero.better-bibtex.prefs.journal-abbrev "Journal abbreviations">
@@ -33,7 +34,9 @@
 <!ENTITY zotero.better-bibtex.reportErrors "Report Better BibTeX Errors...">
 <!ENTITY zotero.better-bibtex.errorReport.review "The data below is about to submitted to Better BibTeX for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
 
-If you are OK with sending this data, please click &quot;Continue&quot; and post the debug ID presented in the next screen in the issue tracker at https://github.com/retorquere/zotero-better-bibtex/issue">
+If you are OK with sending this data, please click &quot;Next&quot; and post the debug ID presented in the next screen in the issue tracker at
+
+https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY zotero.better-bibtex.errorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this Report ID, a description of the problem, and any steps necessary to reproduce it.">
 <!ENTITY zotero.better-bibtex.errorReport.notReviewed "Error reports can not reviewed unless referred to in the GitHub issue tracker.">
 <!ENTITY zotero.better-bibtex.errorReport.reportID "Report ID:">

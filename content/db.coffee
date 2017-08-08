@@ -1,5 +1,6 @@
 Loki = require('./loki.coffee')
 
+# TODO: re-enable when I figure out where I want to save to
 DB = Loki('db.json', { autosave: false })
 
 DB.loadDatabase()

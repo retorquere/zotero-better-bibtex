@@ -1,10 +1,12 @@
 Prefs = require('./preferences.coffee')
 debug = require('./debug.coffee')
-translators = require('../gen/translators.json')
 
 class Translators
+
   init: Zotero.Promise.coroutine(->
     start = new Date()
+    Object.assign(@, require('../gen/translators.json'))
+
     debug('Translator.init: waiting for translators...')
     yield Zotero.Translators.init()
     debug('Translator.init: translators ready @', (new Date() - start))
@@ -13,7 +15,7 @@ class Translators
       @uninstall('BibLaTeX', 'b6e39b57-8942-4d11-8259-342c46ce395f')
       @uninstall('BibTeX', '9cb70025-a888-4a29-a210-93ec52da40d4')
 
-    for id, header of translators.byId
+    for id, header of @byId
       @install(header)
       debug('Translator.init: installed', header.label, '@', (new Date() - start))
 
@@ -67,5 +69,39 @@ class Translators
       debug('Translator.load', header, 'failed:', err)
 
     return
+
+  translate: Zotero.Promise.coroutine((translatorID, displayOptions, items, path) ->
+    items ||= {}
+    translation = new Zotero.Promise((resolve, reject) ->
+      translation = new Zotero.Translate.Export()
+
+      todo = Object.keys(items)[0]
+      items = items[todo]
+      if ! items?
+        todo = 'library'
+        id = Zotero.Libraries.userLibraryID
+      switch todo
+        when 'library' then translation.setLibraryID(items)
+        when 'items' then translation.setItems(items)
+        # TODO: check whether Zotero.Collections.get is async
+        when 'collection' then translation.setCollection(if typeof value == 'number' then Zotero.Collections.get(value) else value)
+
+      translation.setLibraryID(Zotero.Libraries.userLibraryID)
+      translation.setTranslator(translatorID)
+      translation.setDisplayOptions(displayOptions) if displayOptions && Object.keys(displayOptions).length != 0
+      translation.setLocation(path) if path
+      translation.setHandler('done', (obj, success) ->
+        if success
+          return resolve(obj?.string)
+        else
+          return reject('translation failed')
+      )
+      translation.translate()
+      return
+    )
+
+    return yield translation
+  )
+
 
 module.exports = new Translators()

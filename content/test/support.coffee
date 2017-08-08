@@ -2,6 +2,7 @@ KeyManager = require('../keymanager.coffee')
 debug = require('../debug.coffee')
 co = Zotero.Promise.coroutine
 pref_defaults = require('../../defaults/preferences/defaults.json')
+Translators = require('../translators.coffee')
 
 module.exports =
   reset: co(->
@@ -55,22 +56,7 @@ module.exports =
   )
 
   exportLibrary: co((translatorID, displayOptions) ->
-    displayOptions ||= {}
-    translation = new Zotero.Promise((resolve, reject) ->
-      translation = new Zotero.Translate.Export()
-      translation.setLibraryID(Zotero.Libraries.userLibraryID)
-      translation.setTranslator(translatorID)
-      translation.setDisplayOptions(displayOptions)
-      translation.setHandler('done', (obj, success) ->
-        if (success && obj && obj.string)
-          return resolve(obj.string)
-        else
-          return reject('translation failed')
-      )
-      translation.translate()
-      return
-    )
-    return yield translation
+    return yield Translators.translate(translatorID, displayOptions)
   )
 
   select: co((field, value) ->

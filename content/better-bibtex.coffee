@@ -1,7 +1,8 @@
 debug = require('./debug.coffee')
 edtf = require('edtf')
 
-Zotero.BetterBibTeX.prefPane = require('./preferences/preferences.coffee')
+Zotero.BetterBibTeX.PrefPane = require('./preferences/preferences.coffee')
+Zotero.BetterBibTeX.ErrorReport = require('./error-report/error-report.coffee')
 
 Prefs = require('./preferences.coffee') # needs to be here early, initializes the prefs observer
 

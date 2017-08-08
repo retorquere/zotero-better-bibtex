@@ -6,13 +6,14 @@ zotero_config = require('../zotero-config.coffee')
 class PrefPane
   # AutoExport: require('./auto-export.coffee')
 
-  onLoad: (@global) ->
+  constructor: (@global) ->
+    debug('PrefPane.new: loading...')
     return if typeof @global.Zotero_Preferences == 'undefined'
 
     @global.document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !zotero_config.isJurisM)
 
-    if !@openHelpLink
-      @openHelpLink = @global.Zotero_Preferences.openHelpLink
+    if !@global.Zotero_Preferences.openHelpLink.BetterBibTeX
+      @global.Zotero_Preferences.openHelpLink.BetterBibTeX = @global.Zotero_Preferences.openHelpLink
       @global.Zotero_Preferences.openHelpLink = ->
         helpTopic = @global.document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic
         if helpTopic == 'BetterBibTeX'
@@ -25,21 +26,24 @@ class PrefPane
           else
             @openURL(url)
         else
-          @openHelpLink.apply(@, arguments)
+          @global.Zotero_Preferences.openHelpLink.BetterBibTeX.apply(@, arguments)
         return
 
     @getCitekeyFormat()
     @update()
 
-    debug('prefs pane loaded:', @global.document.location.hash)
+    debug('PrefPane.new loaded @', @global.document.location.hash)
+
     if @global.document.location.hash == '#better-bibtex'
       ### TODO: runs into the 'TypeError: aId is undefined' problem for some reason. ###
       setTimeout((-> @global.document.getElementById('zotero-prefs').showPane(@global.document.getElementById('zotero-prefpane-better-bibtex'))), 500)
-    return
+    debug('PrefPane.new: ready')
 
   getCitekeyFormat: ->
+    debug('PrefPane.getCitekeyFormat...')
     keyformat = @global.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     keyformat.value = Prefs.get('citekeyFormat')
+    debug('PrefPane.getCitekeyFormat got', keyformat.value)
     return
 
   checkCitekeyFormat: ->
@@ -72,7 +76,7 @@ class PrefPane
     try
       new Function(postscript.value)
     catch err
-      debug('error compiling postscript:', err)
+      debug('PrefPane.checkPostscript: error compiling postscript:', err)
       error = '' + err
 
     postscript.setAttribute('style', (if error then '-moz-appearance: none !important; background-color: DarkOrange' else ''))
@@ -106,7 +110,7 @@ class PrefPane
     if zotero_config.isJurisM
       Zotero.Styles.init().then(=>
         styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
-        debug('prefPane: found styles', styles)
+        debug('prefPane.update: found styles', styles)
 
         stylebox = @global.document.getElementById('better-bibtex-abbrev-style')
         refill = stylebox.children.length == 0
@@ -122,7 +126,7 @@ class PrefPane
         selectedIndex = 0 if selectedIndex == -1
         @styleChanged(selectedIndex)
 
-        @global.window.setTimeout((->
+        setTimeout((->
           stylebox.ensureIndexIsVisible(selectedIndex)
           stylebox.selectedIndex = selectedIndex
           return), 0)
@@ -139,4 +143,4 @@ class PrefPane
 #    @cache.reset('user request')
 #    @serialized.reset('user request')
 
-module.exports = new PrefPane()
+module.exports = PrefPane
