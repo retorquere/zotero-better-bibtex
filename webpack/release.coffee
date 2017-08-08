@@ -16,26 +16,6 @@ if process.env.CIRCLE_BRANCH.startsWith('@')
   console.log("Not releasing #{process.env.CIRCLE_BRANCH}")
   process.exit(1)
 
-if process.env.CIRCLE_BRANCH.startsWith('nr-')
-
-do Bluebird.coroutine(->
-  console.log('finding releases')
-  release = {
-    static: 'static-files',
-    current: "v#{pkg.version}",
-    builds: 'builds',
-  }
-
-  for id, tag of release
-    try
-      release[id] = yield github("/releases/tags/#{tag}")
-      console.log("#{tag} found")
-
-  xpi = "zotero-better-bibtex-#{version}.xpi"
-
-  if process.env.CIRCLE_TAG
-    if release.current
-
 do Bluebird.coroutine(->
   console.log('finding releases')
   release = {
