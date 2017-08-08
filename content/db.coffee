@@ -1,6 +1,6 @@
 Loki = require('./loki.coffee')
 
-DB = Loki('db.json', { autosave: true })
+DB = Loki('db.json', { autosave: false })
 
 DB.loadDatabase()
 
