@@ -18,11 +18,11 @@
     <menuitem id="zotero-better-bibtex-report-errors" label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors('collection')"/>
   </menupopup -->
 
-  <!-- menupopup id="zotero-itemmenu">
-    <menuitem id="id-zotero-better-bibtex-set-citekey" label="&zotero.better-bibtex.citekey.set;" oncommand="Zotero.BetterBibTeX.keymanager.selected('set');"/>
-    <menuitem id="id-zotero-better-bibtex-clear-citekey" label="&zotero.better-bibtex.citekey.clear;" oncommand="Zotero.BetterBibTeX.keymanager.selected('reset');"/>
-    <menuitem label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.reportErrors('items')"/>
-  </menupopup -->
+  <menupopup id="zotero-itemmenu">
+    <!-- menuitem id="id-zotero-better-bibtex-set-citekey" label="&zotero.better-bibtex.citekey.set;" oncommand="Zotero.BetterBibTeX.keymanager.selected('set');"/>
+    <menuitem id="id-zotero-better-bibtex-clear-citekey" label="&zotero.better-bibtex.citekey.clear;" oncommand="Zotero.BetterBibTeX.keymanager.selected('reset');"/ -->
+    <menuitem label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start('items')"/>
+  </menupopup>
 
   <!-- Include the main extension logic -->
   <script src="chrome://zotero/content/include.js"/>

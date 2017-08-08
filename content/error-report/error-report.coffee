@@ -29,8 +29,9 @@ class ErrorReport
     @errorlog.truncated = @errorlog.truncated.join("\n")
 
     if @params.items
+      debug('ErrorReport::init items', @params.items)
       yield Zotero.BetterBibTeX.ready # because we need the translators to have been loaded
-      @errorlog.references = yield Translators.translate(Translators.byLabel.BetterBibTeXJSON.translatorID, displayOptions, @params.items)
+      @errorlog.references = yield Translators.translate(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true}, @params.items)
       debug('ErrorReport::init references', @errorlog.references)
 
     debug('ErrorReport.init:', Object.keys(@errorlog))
@@ -38,7 +39,7 @@ class ErrorReport
     @global.document.getElementById('better-bibtex-error-errors').value = @errorlog.errors
     @global.document.getElementById('better-bibtex-error-log').value = @errorlog.truncated
     @global.document.getElementById('better-bibtex-error-references').value = @errorlog.references.substring(0, 5000) if @errorlog.references
-    @global.document.getElementById('better-bibtex-error-tab-references').hidden = !@params.references
+    @global.document.getElementById('better-bibtex-error-tab-references').hidden = !@errorlog.references
 
     continueButton.focus()
     continueButton.disabled = false

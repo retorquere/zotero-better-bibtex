@@ -1,4 +1,5 @@
 debug = require('./debug.coffee')
+flash = require('./flash.coffee')
 edtf = require('edtf')
 
 Zotero.BetterBibTeX.PrefPane = require('./preferences/preferences.coffee')
@@ -62,6 +63,7 @@ Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
 
 Zotero.Promise.coroutine(->
   ready = Zotero.Promise.defer()
+  flash('waiting for Zotero to load translators')
   Zotero.BetterBibTeX.ready = ready.promise
 
   start = new Date()
@@ -79,6 +81,7 @@ Zotero.Promise.coroutine(->
 
   # should be safe to start tests at this point. I hate async.
   ready.resolve(true)
+  flash('Zotero translators loaded')
 
   yield Zotero.Schema.schemaUpdatePromise
   debug('starting, schema ready @', (new Date() - start) / 1000.0, 's')
