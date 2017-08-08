@@ -2,6 +2,7 @@ debug = require('../lib/debug.coffee')
 JSON5 = require('json5')
 getCiteKey = require('../../content/getCiteKey.coffee')
 JabRef = require('../bibtex/jabref.coffee') # not so nice... BibTeX-specific code in general exporter lib
+collections = require('./collections.coffee')
 
 class Exporter
   constructor: ->
@@ -20,11 +21,7 @@ class Exporter
     # TODO: disable temporarily because this translator ID doesn't trigger itemID adding
     @caching = !BetterBibTeX.options.exportFileData
 
-    @collections = []
-    if Zotero.nextCollection && BetterBibTeX.header.configOptions?.getCollections
-      while collection = Zotero.nextCollection()
-        debug('adding collection:', collection)
-        @collections.push(@sanitizeCollection(collection))
+    @collections = collections()
     @jabref = new JabRef(@collections)
 
     @context = {
@@ -212,24 +209,6 @@ class Exporter
 
     return fields
 
-
-  # The default collection structure passed is beyond screwed up.
-  sanitizeCollection: (coll) ->
-    sane = {
-      name: coll.name
-      collections: []
-      items: []
-    }
-
-    for c in coll.children || coll.descendents
-      switch c.type
-        when 'item'       then sane.items.push(c.id)
-        when 'collection' then sane.collections.push(@sanitizeCollection(c))
-        else              throw "Unexpected collection member type '#{c.type}'"
-
-    sane.collections.sort( ( (a, b) -> a.name.localeCompare(b.name) ) ) if BetterBibTeX.preferences.testing
-
-    return sane
 
   unique_chars: (str) ->
     uniq = ''
